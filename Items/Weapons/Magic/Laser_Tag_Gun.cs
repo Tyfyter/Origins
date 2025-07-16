@@ -22,7 +22,8 @@ namespace Origins.Items.Weapons.Magic {
 			animation = new DrawAnimationManual(1);
 			Main.RegisterItemAnimation(Item.type, animation);
 			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
+			ItemID.Sets.IsSpaceGun[Type] = true;
+			OriginsSets.Items.DamageBonusScale[Type] = 0.05f;
 		}
 		public bool? Hardmode => true;
 		public override void SetDefaults() {
@@ -52,32 +53,10 @@ namespace Origins.Items.Weapons.Magic {
 			.AddTile(ModContent.TileType<Fabricator>())
 			.Register();
 		}
-		public override void UpdateInventory(Player player) {
-		}
-		static int GetCritMod(Player player) {
-			OriginPlayer modPlayer = player.GetModPlayer<OriginPlayer>();
-			int critMod = 0;
-			if ((modPlayer.oldBonuses & 1) != 0 || modPlayer.fiberglassSet || modPlayer.fiberglassDagger) {
-				critMod = -50;
-			}
-			if ((modPlayer.oldBonuses & 2) != 0 || modPlayer.felnumSet) {
-				critMod = -64;
-			}
-			return critMod;
-		}
-		public override void ModifyWeaponCrit(Player player, ref float crit) {
-			if (player.HeldItem.type != Item.type) crit += GetCritMod(player);
-		}
-		/*public override Vector2? HoldoutOffset() {
-			return new Vector2(3-(11*Main.player[Item.playerIndexTheItemIsReservedFor].direction),0);
-		}*/
 		public override void HoldItem(Player player) {
 			if (player.itemAnimation != 0) {
 				player.GetModPlayer<OriginPlayer>().itemLayerWrench = true;
 			}
-			int critMod = GetCritMod(player);
-			player.GetCritChance(DamageClass.Ranged) += critMod;
-			player.GetCritChance(DamageClass.Magic) += critMod;
 		}
 	}
 	public class Laser_Tag_Laser : ModProjectile {
