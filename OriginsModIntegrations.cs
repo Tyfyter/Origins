@@ -83,6 +83,7 @@ namespace Origins {
 		Func<object[], object> holidayForceChanged;
 		public static void HolidayForceChanged() => instance.holidayForceChanged([]);
 		public static Condition AprilFools => new("Mods.Origins.Conditions.AprilFools", () => CheckAprilFools());
+		public static Condition NotAprilFools => new(LocalizedText.Empty, () => !CheckAprilFools());
 		ModKeybind goToKeybindKeybind;
 		public static bool GoToKeybindKeybindPressed => instance.goToKeybindKeybind?.JustPressed ?? false;
 		Action<ModKeybind> goToKeybind;

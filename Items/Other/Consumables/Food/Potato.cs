@@ -45,6 +45,18 @@ namespace Origins.Items.Other.Consumables.Food {
 			.AddIngredient(this)
 			.AddTile(TileID.DemonAltar)
 			.Register();
+
+			Recipe.Create(ItemID.PotatoChips)
+			.AddIngredient(this)
+			.AddTile(TileID.CookingPots)
+			.AddCondition(OriginsModIntegrations.NotAprilFools)
+			.Register();
+
+			Recipe.Create(ItemID.PotatoChips)
+			.AddIngredient(this)
+			.AddTile(TileID.DemonAltar)
+			.AddCondition(OriginsModIntegrations.AprilFools)
+			.Register();
 		}
 	}
 }
