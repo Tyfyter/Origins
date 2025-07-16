@@ -95,45 +95,129 @@ namespace Origins.NPCs.Riven {
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void AI() {
-			const float attack_range = 16 * 16;
-			if (NPC.ai[3] == 0) {
-				NPC.defense = NPC.defDefense;
-				NPC.TargetClosestUpgraded();
-				NPCAimedTarget target = NPC.GetTargetData();
-				if (!target.Invalid) {
-					if (NPC.DistanceSQ(target.Center) < attack_range * attack_range) {
-						if (++NPC.localAI[3] > 30) {
-							NPC.ai[3] = 1 + NPC.NewNPC(
-								NPC.GetSource_FromAI(),
-								(int)NPC.Center.X,
-								(int)NPC.Center.Y,
-								ModContent.NPCType<Amoebeye_P>(),
-								ai3: NPC.whoAmI
-							);
-							SoundEngine.PlaySound(Main.rand.NextBool() ? SoundID.Item111 : SoundID.Item112, NPC.Center);
-						} else {
-							Vector2 offset = Main.rand.NextVector2CircularEdge(32, 32);
-							Vector2 pos = NPC.Center + offset;
-							for (int i = Main.rand.Next(3, 6); i-- > 0;) {
-								Gore.NewGore(NPC.GetSource_FromAI(), pos, offset * -0.125f + NPC.velocity, ModContent.GoreType<R_Effect_Blood1_Small>());
-							}
-						}
-					} else if (NPC.localAI[3] > 0) NPC.localAI[3]--;
-				}
-			} else if (NPC.aiStyle == NPCAIStyleID.None) {
-				NPC.rotation = NPC.velocity.X * 0.1f;
-				NPCAimedTarget target = NPC.GetTargetData();
-				Vector2 vectorToTargetPosition = target.Center - NPC.Center;
-				float speed = 16f;
-				float inertia = 32f;
-				vectorToTargetPosition.Normalize();
-				vectorToTargetPosition *= speed;
-				NPC.velocity = (NPC.velocity * (inertia - 1) + vectorToTargetPosition) / inertia;
-				Vector2 nextVel = Collision.TileCollision(NPC.position, NPC.velocity, NPC.width, NPC.height, true, true);
-				if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
-				if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
+			// This is so it doesn't get stuck in tiles, escapes if stuck
+			bool stuckInTiles = Collision.SolidCollision(NPC.position, NPC.width, NPC.height);
+			if (stuckInTiles) {
+				NPC.velocity.Y = -2f;
+				NPC.velocity.X += Main.rand.NextBool() ? 0.5f : -0.5f;
+				if (Collision.SolidCollision(NPC.position + new Vector2(0, -16), NPC.width, NPC.height))
+					NPC.noTileCollide = true;
+				else
+					NPC.noTileCollide = false;
+			} else {
+				NPC.noTileCollide = false;
 			}
+
+			// This is so it targets the player correctly
+			NPC.TargetClosestUpgraded();
+			NPCAimedTarget target = NPC.GetTargetData();
+			if (target.Invalid)
+				return;
+
+			Vector2 targetCenter = target.Center;
+
+			const float attackRange = 16 * 16;
+
+			// Check if current Amoebeye child is alive and if it can spawn a new one
+			bool canSpawnProjectile = false;
+			if (NPC.ai[3] == 0) {
+				canSpawnProjectile = true; // No child
+				NPC.localAI[2] = 0; // Reset timer
+			} else {
+				NPC.localAI[2]++; 
+				// See if it's still alive
+				int idx = (int)NPC.ai[3] - 1;
+				if (idx >= 0 && idx < Main.npc.Length && Main.npc[idx].active && Main.npc[idx].type == Amoebeye_P.ID) {
+					if (NPC.localAI[2] >= 1500) {
+						canSpawnProjectile = true; // If its been over 25 seconds and the player hasn't killed it, spawn a new one
+					}
+				} else {
+					canSpawnProjectile = true; // It died
+					NPC.ai[3] = 0; // Clear reference
+					NPC.localAI[2] = 0;
+				}
+			}
+
+			if (NPC.ai[0] == 0) {
+				// Hovers over the player
+				Vector2 hoverPos = targetCenter + new Vector2(0, -150);
+				Vector2 toHover = hoverPos - NPC.Center;
+
+				float speed = 4f;
+				float inertia = 40f;
+				if (toHover.Length() > 300f) {
+					speed = 8f;
+					inertia = 20f;
+				}
+
+				Vector2 desiredVelocity = toHover.SafeNormalize(Vector2.UnitY) * speed;
+				NPC.velocity = (NPC.velocity * (inertia - 1) + desiredVelocity) / inertia;
+
+				// Spawn logic
+				if (canSpawnProjectile && NPC.DistanceSQ(targetCenter) < attackRange * attackRange) {
+					if (++NPC.localAI[3] > 30) {
+						// Spawn the Amoebeye_P
+						int newIdx = NPC.NewNPC(
+							NPC.GetSource_FromAI(),
+							(int)NPC.Center.X,
+							(int)NPC.Center.Y,
+							ModContent.NPCType<Amoebeye_P>(),
+							ai3: NPC.whoAmI
+						);
+						NPC.ai[3] = newIdx + 1;
+						NPC.localAI[2] = 0; // Reset lifespan timer
+						SoundEngine.PlaySound(Main.rand.NextBool() ? SoundID.Item111 : SoundID.Item112, NPC.Center);
+						NPC.localAI[3] = 0;
+					} else {
+						Vector2 offset = Main.rand.NextVector2CircularEdge(32, 32);
+						Vector2 pos = NPC.Center + offset;
+						for (int i = Main.rand.Next(3, 6); i-- > 0;) {
+							Gore.NewGore(NPC.GetSource_FromAI(), pos, offset * -0.125f + NPC.velocity, ModContent.GoreType<R_Effect_Blood1_Small>());
+						}
+					}
+				} else if (NPC.localAI[3] > 0) {
+					NPC.localAI[3]--;
+				}
+
+				// Occasionally ascend, hovering-type AI so it floats properly
+				if (++NPC.localAI[0] > 300) {
+					NPC.ai[0] = 1;
+					NPC.localAI[0] = 0;
+				}
+			} else if (NPC.ai[0] == 1) {
+				// Ascend
+				Vector2 ascendPos = NPC.Center + new Vector2(0, -200);
+				Vector2 toAscend = ascendPos - NPC.Center;
+				float speed = 6f;
+				float inertia = 30f;
+				Vector2 desiredVelocity = toAscend.SafeNormalize(Vector2.UnitY) * speed;
+				NPC.velocity = (NPC.velocity * (inertia - 1) + desiredVelocity) / inertia;
+
+				if (++NPC.localAI[0] > 60) {
+					NPC.ai[0] = 2;
+					NPC.localAI[0] = 0;
+				}
+			} else if (NPC.ai[0] == 2) {
+				// Dive to the player to try to attack
+				Vector2 toPlayer = targetCenter - NPC.Center;
+				float speed = 12f;
+				float inertia = 10f;
+				Vector2 desiredVelocity = toPlayer.SafeNormalize(Vector2.UnitY) * speed;
+				NPC.velocity = (NPC.velocity * (inertia - 1) + desiredVelocity) / inertia;
+
+				if (toPlayer.Length() < 100f) {
+					NPC.ai[0] = 0;
+				}
+			}
+
+			// makes sure its always facing the right direction
+			if (NPC.velocity.X != 0)
+				NPC.spriteDirection = NPC.velocity.X > 0 ? 1 : -1;
+
+			NPC.rotation = NPC.velocity.X * 0.05f;
 		}
+
+
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 7) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 98) % 392, 70, 96);
@@ -159,6 +243,8 @@ namespace Origins.NPCs.Riven {
 			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, glowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
 		}
 	}
+
+	// Amoebeye projectile the little bubbles that follow the Amoebeye
 	public class Amoebeye_P : ModNPC, IRivenEnemy, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 58, 60);
 		public int AnimationFrames => 4;
