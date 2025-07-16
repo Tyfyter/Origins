@@ -1272,7 +1272,7 @@ TILES:
 (X) Exoskeletal Baobab Tree*
 (^) Exoskeletal Tree*
 (ᗢ) Fungarust*
-(#2/3, ^2) Fuzzvine !!!
+(☻) Fuzzvine !!!
 (^) Gel Blister*
 (X) Heat Vent
 (^) Hydrothermal Vent
@@ -1294,7 +1294,7 @@ TILES:
 (^) Venus Coral
 (^) Wilting Rose*
 (X) Witherleaf Tree
-(#2, ^2) Wrycoral* !!!
+(☻) Wrycoral* !!!
 
 (^) A Perfect World
 (^) Deceptive Beauty
@@ -1320,7 +1320,7 @@ TILES:
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
-(#2, ^2) Music Box (The Dive) !!!
+(#2?, ^2) Music Box (The Dive) !!!
 (#, ^2) Otherworldly Music Box (Defiled Wastelands) !!!
 
 (^) Defiled Amalgamation Relic*
