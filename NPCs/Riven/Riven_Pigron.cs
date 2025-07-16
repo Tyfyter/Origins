@@ -41,6 +41,7 @@ namespace Origins.NPCs.Riven {
 			NPC.DeathSound = SoundID.NPCDeath30;
 			NPC.knockBackResist = 0.5f;
 			NPC.value = 2000f;
+			AIType = NPCID.PigronCrimson;
 			AnimationType = NPCID.PigronCrimson;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive_Ice_Biome>().Type

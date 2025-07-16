@@ -40,6 +40,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = SoundID.NPCDeath30;
 			NPC.knockBackResist = 0.5f;
 			NPC.value = 2000f;
+			AIType = NPCID.PigronCorruption;
 			AnimationType = NPCID.PigronCorruption;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands_Ice_Biome>().Type
