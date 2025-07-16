@@ -98,6 +98,11 @@ namespace Origins.Tiles.Riven {
 				if (TileEntity.TryGet(i, j, out Shelf_Coral_TE tileEntity)) tileEntity.isStoodOn = true;
 			}
 		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			drawData.glowTexture = this.GetGlowTexture(drawData.tileCache.TileColor);
+			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY, 16, 28);
+			drawData.glowColor = GlowColor;
+		}
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
