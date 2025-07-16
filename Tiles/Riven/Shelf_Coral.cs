@@ -119,12 +119,14 @@ namespace Origins.Tiles.Riven {
 			switch (CurrentState) {
 				case State.Out:
 				const int time = 15;
+				const int ticks_per_frame = 3;
 				if (isStoodOn) {
+					if (timer == 0) ;// sound here
 					if (++timer >= time) CurrentState = State.GoingIn;
 				} else if (timer > 0 && ++timer >= time) {
 					timer = 0;
 				}
-				frameNum = Math.Min(timer / 3, 4);
+				frameNum = Math.Min(timer / ticks_per_frame, 4);
 				break;
 				case State.GoingIn:
 				if (timer.Warmup(4 * 5)) CurrentState = State.In;
@@ -140,6 +142,7 @@ namespace Origins.Tiles.Riven {
 				break;
 			}
 			isStoodOn = false;
+			frameNum = Math.Min(frameNum, 6);
 			frameNum *= 34;
 			for (int i = 0; i < 3; i++) {
 				Framing.GetTileSafely(Position.X + i, Position.Y).TileFrameY = (short)frameNum;

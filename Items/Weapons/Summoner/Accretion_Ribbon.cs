@@ -56,6 +56,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.friendly = true;
 			Projectile.hide = true;
 			Projectile.manualDirectionChange = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_ItemUse itemUse) {
@@ -80,9 +81,10 @@ namespace Origins.Items.Weapons.Summoner {
 				player.velocity.X = float.Clamp(player.velocity.X + Projectile.direction * 0.2f, -maxXVel, maxXVel);
 				Projectile.velocity = Projectile.velocity.RotatedBy(0.35f * Projectile.direction);
 			} else {
-				PolarVec2 vel = (PolarVec2)Projectile.velocity;
-				GeometryUtils.AngularSmoothing(ref vel.Theta, (Main.MouseWorld - player.MountedCenter).ToRotation(), 0.3f);
-				Vector2 velocity = (Vector2)vel;
+				Vector2 diff = Main.MouseWorld - player.MountedCenter;
+				Projectile.ai[0] = Math.Min(diff.Length(), 162);
+				Vector2 velocity = Projectile.velocity;
+				MathUtils.LinearSmoothing(ref velocity, diff.SafeNormalize(default), 1);
 				if (Projectile.velocity != velocity) {
 					Projectile.velocity = velocity;
 					Projectile.netUpdate = true;
@@ -92,22 +94,28 @@ namespace Origins.Items.Weapons.Summoner {
 					Projectile.velocity = Projectile.velocity.RotatedBy(0.4f * MathF.Sin((player.itemAnimation / (float)player.itemAnimationMax) * MathHelper.TwoPi + MathHelper.Pi));
 				}
 			}
-			Projectile.position = player.MountedCenter + (Projectile.velocity * 162).Floor();
+			Projectile.position = player.MountedCenter + (Projectile.velocity * Projectile.ai[0]).Floor();
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			player.heldProj = Projectile.whoAmI;
-			for (int i = 0; i < Projectile.localNPCImmunity.Length; i++) {
-				if (Projectile.localNPCImmunity[i] != 0) {
+			for (int i = 0; i < partialImmunity.Length; i++) {
+				if (partialImmunity[i]) {
 					NPC npc = Main.npc[i];
 					if (!npc.active || !Projectile.Colliding(default, npc.Hitbox)) {
-						Projectile.localNPCImmunity[i] = 0;
+						partialImmunity[i] = false;
 					}
 				}
 			}
 		}
+		readonly bool[] partialImmunity = new bool[Main.maxNPCs];
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Main.player[Projectile.owner].Center.X);
+			if (partialImmunity[target.whoAmI]) {
+				modifiers.SourceDamage *= 0.1f;
+				modifiers.Knockback *= 0.5f;
+			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			partialImmunity[target.whoAmI] = true;
 			target.AddBuff(Accretion_Ribbon_Buff.ID, 240);
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
