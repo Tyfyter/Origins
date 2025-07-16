@@ -95,7 +95,7 @@ namespace Origins.Items.Weapons.Magic {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<LightningImmuneFixBuff>(), 4);
+			target.AddBuff(ModContent.BuffType<LightningImmuneFixBuff>(), 6);
 			target.AddBuff(ModContent.BuffType<Electrified_Debuff>(), 240);
 		}
 		public override bool? CanHitNPC(NPC target) {
