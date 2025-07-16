@@ -131,8 +131,8 @@ namespace Origins.Tiles.Riven {
 				}
 			}
 			Tile below = Main.tile[i, j + 1];
-			if (!below.HasTile && WorldGen.genRand.NextBool(50)) {
-				if (WorldGen.genRand.NextBool(50 - existing)) {
+			if (!below.HasTile && WorldGen.genRand.NextBool(30)) {
+				if (WorldGen.genRand.NextBool(20 - (int)float.Ceiling(existing * 0.5f))) {
 					if (TileExtenstions.CanActuallyPlace(i, j + 1, wrycoral, WorldGen.genRand.Next(3), 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
 						TileObject.Place(objectData);
 					}

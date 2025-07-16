@@ -38,7 +38,7 @@ namespace Origins.Tiles.Riven {
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
 			TileObjectData.newTile.StyleHorizontal = true;
-			TileObjectData.newTile.RandomStyleRange = 3;
+			TileObjectData.newTile.RandomStyleRange = 0;
 			TileObjectData.addTile(Type);
 
 
