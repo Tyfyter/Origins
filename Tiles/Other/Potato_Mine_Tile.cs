@@ -125,6 +125,8 @@ namespace Origins.Tiles.Other {
 			Explode();
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			target.immune = true;
+			target.AddImmuneTime(info.CooldownCounter, 2);
 			Explode();
 		}
 		void Explode() {
