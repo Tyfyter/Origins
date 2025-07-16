@@ -37,7 +37,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.IchorSticker);
-			NPC.aiStyle = NPCAIStyleID.Hovering;
+			NPC.aiStyle = NPCAIStyleID.None;
 			NPC.lifeMax = 300;
 			NPC.defense = 60;
 			NPC.damage = 52;
@@ -70,7 +70,8 @@ namespace Origins.NPCs.Riven {
 				SoundEngine.PlaySound(SoundID.Zombie47.WithPitch(-2f).WithVolume(0.35f), NPC.Center);
 				SoundEngine.PlaySound(Origins.Sounds.WCIdle.WithPitchRange(1.35f, 1.55f).WithVolume(0.15f), NPC.Center);
 			}
-			NPC.aiStyle = NPCAIStyleID.Hovering;
+			NPC.aiStyle = NPCAIStyleID.None;
+
 			if (NPC.ai[3] != 0) {
 				NPC.defense = 0;
 				bool isAggro = NPC.ai[3] == -1;
@@ -235,6 +236,10 @@ namespace Origins.NPCs.Riven {
 				NPC.frameCounter = 0;
 			}
 			NPC.spriteDirection = 1;
+
+			if (NPC.velocity.X != 0f) {
+				NPC.spriteDirection = NPC.velocity.X > 0f ? 1 : -1;
+			}
 		}
 		public override Color? GetAlpha(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
