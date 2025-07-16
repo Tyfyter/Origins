@@ -108,7 +108,7 @@ TOWN NPC Quests:
 (^) Guide - Troubling Trouble
 (^) Merchant - To the Skies!*
 (^) Merchant - The Greatest Sin of All, Gambling*
-(X) Painter Apprentice !!!
+(X) Painter - Painter Apprentice !!!
 (^) Party Girl - Livin' Up the Party
 (^) Stylist - Running Dry
 (^) Stylist - Slick Styling
