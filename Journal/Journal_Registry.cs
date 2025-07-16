@@ -19,6 +19,7 @@ namespace Origins.Journal {
 		}
 		static void On_NPCWasChatWithTracker_RegisterChatStartWith(On_NPCWasChatWithTracker.orig_RegisterChatStartWith orig, NPCWasChatWithTracker self, NPC npc) {
 			if (!string.IsNullOrWhiteSpace(OriginsSets.NPCs.JournalEntries[npc.type])) Main.LocalPlayer.OriginPlayer().UnlockJournalEntry(OriginsSets.NPCs.JournalEntries[npc.type]);
+			orig(self, npc);
 		}
 		public void Unload() {
 			Entries = null;
