@@ -351,7 +351,7 @@ NPC DIALOGUE:
 
 ARMOR:
 |---
-(♦) Aether Armor !!! (set bonus implemented differently than original plan deliberately, review redesign)
+(#2, ^2) Aether Armor !!!
 (^) Ancient Defiled Armor*
 (^) Ancient Felnum Armor*
 (^) Ancient Riven Armor*
@@ -911,7 +911,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(◘) Accretion Ribbon !!!
+(#2, ^2) Accretion Ribbon !!!
 (^) Aether Opal
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
@@ -1272,7 +1272,7 @@ TILES:
 (X) Exoskeletal Baobab Tree*
 (^) Exoskeletal Tree*
 (ᗢ) Fungarust*
-(☻) Fuzzvine !!!
+(#2, ^2) Fuzzvine !!!
 (^) Gel Blister*
 (X) Heat Vent
 (^) Hydrothermal Vent
@@ -1294,7 +1294,7 @@ TILES:
 (^) Venus Coral
 (^) Wilting Rose*
 (X) Witherleaf Tree
-(☻) Wrycoral* !!!
+(^) Wrycoral*
 
 (^) A Perfect World
 (^) Deceptive Beauty
