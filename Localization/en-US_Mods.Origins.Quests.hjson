@@ -435,7 +435,7 @@ Painter: {
 		Inquire: Ay! I've been looking for paintings across the world, but some skeletons keep telling me they've only been able to find them underground. Why are they underground, I don't know but I want them. Gimme some of them and I'll let you in on a little secret to absolutely wreck havoc in paint ball. You in?
 		Start: start
 		ReadyToComplete: complete?
-		Complete: Oh, good stuff! You got 10 of them as requested. So, for my part of the deal I present to you the "{$Mods.Origins.Items.Spray_N_Pray.DisplayName}"! She's a beauty ain't she? She uses paint buckets for ammo 'cause she's really messy! Oh yeah!
+		Complete: Oh, good stuff! You got {0} of them as requested. So, for my part of the deal I present to you the "{$Mods.Origins.Items.Spray_N_Pray.DisplayName}"! She's a beauty ain't she? She uses paint buckets for ammo 'cause she's really messy! Oh yeah!
 	}
 }
 

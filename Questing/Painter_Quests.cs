@@ -62,7 +62,7 @@ namespace Origins.Questing {
 				inventory,
 				((i) => PaintingsNotFromVendor[i.type], paintingTarget)
 			);
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Painter.Spray_N_Pray_Quest.Complete");
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Painter.Spray_N_Pray_Quest.Complete", paintingTarget);
 			Stage = 2;
 			ShouldSync = true;
 		}

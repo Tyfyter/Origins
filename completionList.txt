@@ -133,6 +133,7 @@ VANILLA MODIFICATIONS:
 (^) Proximity Mine Launcher to use Canisters*
 (^) Snow Armor is now craftable°
 (^) Wooden armor buffs*
+(^) Rain armor buffs
 ---
 
 
