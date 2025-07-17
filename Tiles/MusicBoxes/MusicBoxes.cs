@@ -451,9 +451,17 @@ namespace Origins.Tiles.MusicBoxes {
 		public override Color MapColor => new(87, 35, 178);
 		public override int MusicSlot => Origins.Music.TheDive;
 		public override int DustType => DustID.GemAmethyst;
+		public override Music_Box_Item CreateItem() => new Music_Box_TD_Item(this);
 		public class Music_Box_TD_Item(Music_Box tile) : Music_Box_Item(tile) {
 			public override void Update(ref float gravity, ref float maxFallSpeed) {
-				if (Item.newAndShiny && !NPC.AnyNPCs(NPCType<Shimmer_Construct>())) Item.TurnToAir();
+				if (Item.newAndShiny) {
+					if (!NPC.AnyNPCs(NPCType<Shimmer_Construct>())) {
+						Item.TurnToAir();
+					} else if (!Item.shimmered) {
+						Item.shimmered = true;
+						Item.shimmerTime = 1;
+					}
+				}
 			}
 		}
 	}
