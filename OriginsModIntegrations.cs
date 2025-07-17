@@ -738,6 +738,7 @@ namespace Origins {
 			}
 			PaintingsNotFromVendor[ItemType<GrayDPaintingItem>()] = true;
 		}
+		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosRecipes() {
 			Recipe.Create(ItemType<Brine_Key>())
 				.AddRecipeGroup("Origins:AnyBrineBanner", 10)
