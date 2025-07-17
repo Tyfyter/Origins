@@ -69,6 +69,7 @@ using Origins.Items.Mounts;
 using Terraria.ModLoader.Config;
 using Origins.NPCs.Brine;
 using Terraria.GameContent.Shaders;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -1953,7 +1954,7 @@ namespace Origins {
 				} else {
 					return new Color(0, 0, 0, 0);
 				}
-			} else if (Filters.Scene["Origins:ShimmerConstructPhase3"].Active) {
+			} else if ((SC_Phase_Three_Underlay.alwaysLightAllTiles || !Main.LocalPlayer.ZoneShimmer) && Filters.Scene["Origins:ShimmerConstructPhase3"].Active) {
 				Color color = orig(self, i, j, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 				if (color.R == 0 && color.G == 0 && color.B == 0) color.R = 1;
 				return color;

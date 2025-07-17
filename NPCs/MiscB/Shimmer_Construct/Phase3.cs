@@ -22,6 +22,7 @@ using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Audio;
 using Terraria.Graphics.Light;
+using System.Diagnostics;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -597,8 +598,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class SC_Phase_Three_Underlay() : Overlay(EffectPriority.High, RenderLayers.Walls), ILoadable {
 		readonly ArmorShaderData simpleMaskShader = new(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "SimpleMask");
 		public override void Activate(Vector2 position, params object[] args) => Mode = OverlayMode.Active;
-		public override void Deactivate(params object[] args) => Mode = OverlayMode.Inactive;
+		public override void Deactivate(params object[] args) {
+			Mode = OverlayMode.FadeOut;
+			Opacity = 0;
+		}
 		public override void Draw(SpriteBatch spriteBatch) {
+			alwaysLightAllTiles = false;
 			if (renderTarget is null) {
 				Main.QueueMainThreadAction(SetupRenderTargets);
 				Main.OnResolutionChanged += Resize;
@@ -639,6 +644,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Origins.shaderOroboros.Stack(simpleMaskShader);
 			Origins.shaderOroboros.Release();
 		}
+		public static bool alwaysLightAllTiles = false;
 
 		public static SC_Phase_Three_Underlay instance;
 		public override bool IsVisible() => ModContent.GetInstance<SC_Phase_Three_Overlay>().IsVisible();
@@ -739,7 +745,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void Deactivate(params object[] args) {
 			active = false;
-			Mode = OverlayMode.Inactive;
+			Mode = OverlayMode.FadeOut;
+			Opacity = 0;
 		}
 		public override bool IsVisible() => active;
 		public void Load(Mod mod) { }

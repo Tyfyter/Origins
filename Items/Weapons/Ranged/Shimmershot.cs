@@ -239,6 +239,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.DefenseEffectiveness *= 1.5f; // to make it not effectively gain a ton of armor piercing on charged shots
 			modifiers.CritDamage *= 1.5f;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
