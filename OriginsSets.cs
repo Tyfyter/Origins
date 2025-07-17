@@ -31,6 +31,7 @@ namespace Origins {
 				ItemID.TheHorsemansBlade
 			);
 			public static bool[] ItemsThatCanChannelWithRightClick { get; } = ItemID.Sets.Factory.CreateBoolSet();
+			public static bool[] PaintingsNotFromVendor { get; } = ItemID.Sets.Factory.CreateBoolSet();
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Projectiles {

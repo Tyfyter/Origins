@@ -32,6 +32,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using static Tyfyter.Utils.UITools;
 using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
+using static Origins.OriginsSets.Items;
 
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
@@ -421,6 +422,12 @@ namespace Origins {
 				//recipe.requiredItem = recipe.requiredItem.Select((it) => it.type == ItemID.Deathweed ? new Item(roseID) : it.CloneByID()).ToList();
 				//Mod.Logger.Info("adding procedural recipe: " + recipe.Stringify());
 				//recipe.Create();
+
+				foreach (AbstractNPCShop shop in NPCShopDatabase.AllShops) {
+					if (shop is NPCShop npcShop) {
+					foreach (NPCShop.Entry item in npcShop.Entries) PaintingsNotFromVendor[item.Item.type] = false;
+					}
+				}
 			}
 		}
 		public override void ModifyLightingBrightness(ref float scale) {

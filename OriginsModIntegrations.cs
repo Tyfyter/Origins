@@ -55,6 +55,11 @@ using Origins.NPCs.MiscB;
 using Terraria.GameContent;
 using Microsoft.Build.Tasks;
 using static Terraria.ModLoader.ModContent;
+using static Origins.OriginsSets.Items;
+using ThoriumMod.Items.Painting;
+using ThoriumMod.Tiles;
+using ThoriumMod.Items.Donate;
+using Fargowiltas.Items.Tiles;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -154,7 +159,7 @@ namespace Origins {
 		public static void PostSetupContent(Mod mod) {
 			if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist)) {
 				static Func<bool> IfEvil<T>() where T : AltBiome {
-					AltBiome biome = ModContent.GetInstance<T>();
+					AltBiome biome = GetInstance<T>();
 					return () => Main.drunkWorld || WorldBiomeManager.GetWorldEvil(true) == biome || ModLoader.HasMod("BothEvils");
 				}
 				bossChecklist.Call("LogBoss",
@@ -162,38 +167,38 @@ namespace Origins {
 					nameof(Defiled_Amalgamation).Replace("_", ""),
 					3f,
 					() => NPC.downedBoss2,
-					ModContent.NPCType<Defiled_Amalgamation>(),
+					NPCType<Defiled_Amalgamation>(),
 					new Dictionary<string, object> {
 						["availability"] = IfEvil<Defiled_Wastelands_Alt_Biome>(),
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Defiled_Amalgamation.BossChecklistIntegration.SpawnCondition"),
-						["spawnItems"] = ModContent.ItemType<Nerve_Impulse_Manipulator>(),
+						["spawnItems"] = ItemType<Nerve_Impulse_Manipulator>(),
 						["collectibles"] = new List<int> {
 							RelicTileBase.ItemType<Defiled_Amalgamation_Relic>(),
 							TrophyTileBase.ItemType<Defiled_Amalgamation_Trophy>(),
-							ModContent.ItemType<Defiled_Amalgamation_Mask>(),
-							ModContent.ItemType<Blockus_Tube>(),
+							ItemType<Defiled_Amalgamation_Mask>(),
+							ItemType<Blockus_Tube>(),
 						}
 					}
 				);
-				Asset<Texture2D> wcHeadTexture = ModContent.Request<Texture2D>(typeof(World_Cracker_Head).GetDefaultTMLName());
-				Asset<Texture2D> wcBodyTexture = ModContent.Request<Texture2D>(typeof(World_Cracker_Body).GetDefaultTMLName());
-				Asset<Texture2D> wcTailTexture = ModContent.Request<Texture2D>(typeof(World_Cracker_Tail).GetDefaultTMLName());
-				Asset<Texture2D> wcArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
+				Asset<Texture2D> wcHeadTexture = Request<Texture2D>(typeof(World_Cracker_Head).GetDefaultTMLName());
+				Asset<Texture2D> wcBodyTexture = Request<Texture2D>(typeof(World_Cracker_Body).GetDefaultTMLName());
+				Asset<Texture2D> wcTailTexture = Request<Texture2D>(typeof(World_Cracker_Tail).GetDefaultTMLName());
+				Asset<Texture2D> wcArmorTexture = Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
 				bossChecklist.Call("LogBoss",
 					mod,
 					"WorldCracker",
 					3f,
 					() => NPC.downedBoss2,
-					new List<int> { ModContent.NPCType<World_Cracker_Head>(), ModContent.NPCType<World_Cracker_Body>(), ModContent.NPCType<World_Cracker_Tail>() },
+					new List<int> { NPCType<World_Cracker_Head>(), NPCType<World_Cracker_Body>(), NPCType<World_Cracker_Tail>() },
 					new Dictionary<string, object> {
 						["availability"] = IfEvil<Riven_Hive_Alt_Biome>(),
-						["spawnItems"] = ModContent.ItemType<Sus_Ice_Cream>(),
+						["spawnItems"] = ItemType<Sus_Ice_Cream>(),
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.World_Cracker_Head.BossChecklistIntegration.SpawnCondition"),
 						["collectibles"] = new List<int> {
 							RelicTileBase.ItemType<World_Cracker_Relic>(),
 							TrophyTileBase.ItemType<World_Cracker_Trophy>(),
-							ModContent.ItemType<World_Cracker_Mask>(),
-							ModContent.ItemType<Fleshy_Globe>(),
+							ItemType<World_Cracker_Mask>(),
+							ItemType<Fleshy_Globe>(),
 						},
 						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
 							void DrawSegment(Rectangle frame, Vector2 position, Texture2D baseTexture, int @switch) {
@@ -237,20 +242,20 @@ namespace Origins {
 						}
 					}
 				);
-				Asset<Texture2D> fwTexture = ModContent.Request<Texture2D>("Origins/UI/Fiberglass_Weaver_Preview");
+				Asset<Texture2D> fwTexture = Request<Texture2D>("Origins/UI/Fiberglass_Weaver_Preview");
 				bossChecklist.Call("LogBoss",
 					mod,
 					nameof(Fiberglass_Weaver).Replace("_", ""),
 					2.1f,
 					() => Boss_Tracker.Instance.downedFiberglassWeaver,
-					ModContent.NPCType<Fiberglass_Weaver>(),
+					NPCType<Fiberglass_Weaver>(),
 					new Dictionary<string, object> {
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Fiberglass_Weaver.BossChecklistIntegration.SpawnCondition"),
-						["spawnItems"] = ModContent.ItemType<Shaped_Glass>(),
+						["spawnItems"] = ItemType<Shaped_Glass>(),
 						["collectibles"] = new List<int> {
 							RelicTileBase.ItemType<Fiberglass_Weaver_Relic>(),
 							TrophyTileBase.ItemType<Fiberglass_Weaver_Trophy>(),
-							ModContent.ItemType<Fiberglass_Weaver_Head>()
+							ItemType<Fiberglass_Weaver_Head>()
 						},
 						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
 							SpriteBatchState state = spriteBatch.GetState();
@@ -263,28 +268,28 @@ namespace Origins {
 						}
 					}
 				);
-				Asset<Texture2D> ldTexture = ModContent.Request<Texture2D>("Origins/NPCs/Brine/Boss/Rock_Bottom");
+				Asset<Texture2D> ldTexture = Request<Texture2D>("Origins/NPCs/Brine/Boss/Rock_Bottom");
 				bossChecklist.Call("LogBoss",
 					mod,
 					nameof(Lost_Diver).Replace("_", ""),
 					7.3f,
 					() => Boss_Tracker.Instance.downedLostDiver,
 					new List<int> {
-						ModContent.NPCType<Lost_Diver>(),
-						ModContent.NPCType<Lost_Diver_Transformation>(),
-						ModContent.NPCType<Mildew_Carrion>()
+						NPCType<Lost_Diver>(),
+						NPCType<Lost_Diver_Transformation>(),
+						NPCType<Mildew_Carrion>()
 					},
 					new Dictionary<string, object> {
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Lost_Diver.BossChecklistIntegration.SpawnCondition"),
-						["spawnItems"] = ModContent.ItemType<Lost_Picture_Frame>(),
+						["spawnItems"] = ItemType<Lost_Picture_Frame>(),
 						["collectibles"] = new List<int> {
 							RelicTileBase.ItemType<Lost_Diver_Relic>(),
 							TrophyTileBase.ItemType<Lost_Diver_Trophy>(),
-							ModContent.ItemType<Lost_Diver_Helmet>(),
-							ModContent.ItemType<Lost_Diver_Chest>(),
-							ModContent.ItemType<Lost_Diver_Greaves>()
+							ItemType<Lost_Diver_Helmet>(),
+							ItemType<Lost_Diver_Chest>(),
+							ItemType<Lost_Diver_Greaves>()
 						},
-						["overrideHeadTextures"] = ModContent.GetInstance<Lost_Diver>().BossHeadTexture,
+						["overrideHeadTextures"] = GetInstance<Lost_Diver>().BossHeadTexture,
 						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
 							SpriteBatchState state = spriteBatch.GetState();
 							spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
@@ -301,7 +306,7 @@ namespace Origins {
 					nameof(Shimmer_Construct).Replace("_", ""),
 					6.91f,
 					() => Boss_Tracker.Instance.downedShimmerConstruct,
-					ModContent.NPCType<Shimmer_Construct>(),
+					NPCType<Shimmer_Construct>(),
 					new Dictionary<string, object> {
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Shimmer_Construct.BossChecklistIntegration.SpawnCondition"),
 						["collectibles"] = new List<int> {
@@ -315,7 +320,7 @@ namespace Origins {
 					nameof(Chambersite_Sentinel).Replace("_", ""),
 					7.2f,
 					() => Boss_Tracker.Instance.downedChambersiteSentinel,
-					ModContent.NPCType<Chambersite_Sentinel>(),
+					NPCType<Chambersite_Sentinel>(),
 					new Dictionary<string, object> {
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Chambersite_Sentinel.BossChecklistIntegration.SpawnCondition"),
 						["overrideHeadTextures"] = "Terraria/Images/MagicPixel"
@@ -323,11 +328,11 @@ namespace Origins {
 				);
 			}
 			if (ModLoader.TryGetMod("Fargowiltas", out instance.fargosMutant)) {
-				FargosMutant.Call("AddSummon", 3, ModContent.ItemType<Nerve_Impulse_Manipulator>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
-				FargosMutant.Call("AddSummon", 3, ModContent.ItemType<Sus_Ice_Cream>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
-				FargosMutant.Call("AddSummon", 2.1, ModContent.ItemType<Shaped_Glass>(), () => Boss_Tracker.Instance.downedFiberglassWeaver, Item.buyPrice(gold: 8));
-				FargosMutant.Call("AddSummon", 7.3, ModContent.ItemType<Lost_Picture_Frame>(), () => Boss_Tracker.Instance.downedLostDiver, Item.buyPrice(gold: 22));
-				FargosMutant.Call("AddSummon", 6.8, ModContent.ItemType<Aether_Orb>(), () => Boss_Tracker.Instance.downedShimmerConstruct, Item.buyPrice(gold: 18));
+				FargosMutant.Call("AddSummon", 3, ItemType<Nerve_Impulse_Manipulator>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
+				FargosMutant.Call("AddSummon", 3, ItemType<Sus_Ice_Cream>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
+				FargosMutant.Call("AddSummon", 2.1, ItemType<Shaped_Glass>(), () => Boss_Tracker.Instance.downedFiberglassWeaver, Item.buyPrice(gold: 8));
+				FargosMutant.Call("AddSummon", 7.3, ItemType<Lost_Picture_Frame>(), () => Boss_Tracker.Instance.downedLostDiver, Item.buyPrice(gold: 22));
+				FargosMutant.Call("AddSummon", 6.8, ItemType<Aether_Orb>(), () => Boss_Tracker.Instance.downedShimmerConstruct, Item.buyPrice(gold: 18));
 			}
 
 			void AddModdedNPCAssimilation<TDebuff>(string name, AssimilationAmount assimilationAmount, HashSet<int> set = null) where TDebuff : AssimilationDebuff {
@@ -341,7 +346,7 @@ namespace Origins {
 					AssimilationLoader.AddProjectileAssimilation<TDebuff>(id, assimilationAmount);
 					if (NPCID.Search.TryGetId(creditNPC, out id)) {
 						BiomeNPCGlobals.assimilationDisplayOverrides.TryAdd(id, []);
-						BiomeNPCGlobals.assimilationDisplayOverrides[id][ModContent.GetInstance<TDebuff>().AssimilationType] = assimilationAmount;
+						BiomeNPCGlobals.assimilationDisplayOverrides[id][GetInstance<TDebuff>().AssimilationType] = assimilationAmount;
 					}
 				}
 			}
@@ -380,7 +385,7 @@ namespace Origins {
 							);
 							c.EmitLdsfld(ArmorSetFeatureHelper.GetField("sets", BindingFlags.NonPublic | BindingFlags.Static));
 							c.EmitDelegate<Action<List<Tuple<Item, Item, Item, string, int>>>>(sets => {
-								int hatType = ModContent.ItemType<Lucky_Hat>();
+								int hatType = ItemType<Lucky_Hat>();
 								bool firstHat = true;
 								sets.RemoveAll(i => {
 									if (i.Item1.type == hatType) {
@@ -413,12 +418,12 @@ namespace Origins {
 				globalLootViewer.Call("IgnoreConditionWhenHighLighting", DropConditions.PlayerInteraction);
 			}
 			if (ModLoader.TryGetMod("EpikV2", out instance.epikV2)) {
-				EpikV2.Call("AddModEvilBiome", ModContent.GetInstance<Defiled_Wastelands>());
-				EpikV2.Call("AddModEvilBiome", ModContent.GetInstance<Riven_Hive>());
+				EpikV2.Call("AddModEvilBiome", GetInstance<Defiled_Wastelands>());
+				EpikV2.Call("AddModEvilBiome", GetInstance<Riven_Hive>());
 				/*EpikV2.Call("AddBiomeKey",
-					ModContent.ItemType<Defiled_Biome_Keybrand>(),
-					ModContent.ItemType<Defiled_Key>(),
-					ModContent.TileType<Defiled_Dungeon_Chest>(),
+					ItemType<Defiled_Biome_Keybrand>(),
+					ItemType<Defiled_Key>(),
+					TileType<Defiled_Dungeon_Chest>(),
 					36,
 					ItemID.CorruptionKey
 				);*///just here so it can eventually be used
@@ -466,7 +471,7 @@ namespace Origins {
 				if (GetTotalStats is not null) {
 					MonoModHooks.Modify(GetTotalStats, il => {
 						ILCursor c = new(il);
-						if(c.TryGotoNext(MoveType.Before, 
+						if (c.TryGotoNext(MoveType.Before,
 							i => i.MatchLdsfld(aequus.Code.GetType("Aequus.Common.DamageClasses.AequusDamageClasses"), "DamageClasses")
 						)) {
 							c.Remove();
@@ -476,6 +481,11 @@ namespace Origins {
 						}
 					});
 				}
+
+				foreach (ModItem itm in aequus.GetContent<ModItem>()) {
+					if (itm.GetType().Namespace == "Aequus.Content.Tiles.Paintings")
+						PaintingsNotFromVendor[itm.Type] = true;
+				}
 			}
 			if (ModLoader.TryGetMod("SpiritMod", out Mod spiritMod)) {
 				if (spiritMod.Code.GetType("SpiritMod.GlobalClasses.Items.GlyphGlobalItem")?.GetMethod("CanBeAppliedTo", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static) is MethodInfo CanBeAppliedTo) {
@@ -484,20 +494,25 @@ namespace Origins {
 						return orig(player, item);
 					});
 				}
+
+				foreach (ModItem itm in spiritMod.GetContent<ModItem>()) {
+					if (itm.GetType().Namespace == "SpiritMod.Items.Placeable.Furniture.Paintings")
+						PaintingsNotFromVendor[itm.Type] = true;
+				}
 			}
 			if (ModLoader.HasMod("ferventarms")) compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.FerventArms"));
 			if (ModLoader.TryGetMod("Munchies", out Mod munchies)) {
 				munchies.Call("AddSingleConsumable",
 					Origins.instance,
 					"1.4.2",
-					ModContent.GetInstance<Mojo_Injection>(),
+					GetInstance<Mojo_Injection>(),
 					"player",
 					() => Main.LocalPlayer.OriginPlayer().mojoInjection
 				);
 				munchies.Call("AddSingleConsumable",
 					Origins.instance,
 					"1.4.2",
-					ModContent.GetInstance<Crown_Jewel>(),
+					GetInstance<Crown_Jewel>(),
 					"player",
 					() => Main.LocalPlayer.OriginPlayer().crownJewel
 				);
@@ -623,7 +638,7 @@ namespace Origins {
 		static void LoadThorium() {
 			MonoModHooks.Add(
 				typeof(BardItem).GetMethod("SetDefaults", BindingFlags.Public | BindingFlags.Instance),
-				(Action<Action<BardItem>, BardItem>)([JITWhenModsEnabled("ThoriumMod")](orig, self) => {
+				(Action<Action<BardItem>, BardItem>)([JITWhenModsEnabled("ThoriumMod")] (orig, self) => {
 					orig(self);
 					if (self is IBardDamageClassOverride classOverride) {
 						self.Item.DamageType = classOverride.DamageType;
@@ -632,7 +647,7 @@ namespace Origins {
 			);
 			MonoModHooks.Add(
 				typeof(BardProjectile).GetMethod("SetDefaults", BindingFlags.Public | BindingFlags.Instance),
-				(Action<Action<BardProjectile>, BardProjectile>)([JITWhenModsEnabled("ThoriumMod")](orig, self) => {
+				(Action<Action<BardProjectile>, BardProjectile>)([JITWhenModsEnabled("ThoriumMod")] (orig, self) => {
 					orig(self);
 					if (self is IBardDamageClassOverride classOverride) {
 						self.Projectile.DamageType = classOverride.DamageType;
@@ -686,63 +701,72 @@ namespace Origins {
 		}
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void AddThoriumRecipes() {
-			ModLargeGem.AddCrossModLargeGem(ModContent.GetInstance<LargeOpal>(), "ThoriumMod/Items/Misc/LargeOpal_Glow");
-			ModLargeGem.AddCrossModLargeGem(ModContent.GetInstance<LargeAquamarine>(), "ThoriumMod/Items/Misc/LargeAquamarine_Glow");
-			ModLargeGem.AddCrossModLargeGem(ModContent.GetInstance<LargePrismite>(), "ThoriumMod/Items/Misc/LargePrismite_Glow");
-			Recipe.Create(ModContent.ItemType<Asylum_Whistle>())
+			ModLargeGem.AddCrossModLargeGem(GetInstance<LargeOpal>(), "ThoriumMod/Items/Misc/LargeOpal_Glow");
+			ModLargeGem.AddCrossModLargeGem(GetInstance<LargeAquamarine>(), "ThoriumMod/Items/Misc/LargeAquamarine_Glow");
+			ModLargeGem.AddCrossModLargeGem(GetInstance<LargePrismite>(), "ThoriumMod/Items/Misc/LargePrismite_Glow");
+			Recipe.Create(ItemType<Asylum_Whistle>())
 			.AddIngredient<aDarksteelAlloy>(15)
 			.AddTile(TileID.Anvils)
 			.Register();
 
-			Recipe.Create(ModContent.ItemType<Bomb_Handling_Device>())
+			Recipe.Create(ItemType<Bomb_Handling_Device>())
 			.AddIngredient<aDarksteelAlloy>(15)
 			.AddTile(TileID.Anvils)
 			.Register();
 
-			Recipe.Create(ModContent.ItemType<Brine_Dungeon_Chest_Item>(), 10)
+			Recipe.Create(ItemType<Brine_Dungeon_Chest_Item>(), 10)
 				.AddIngredient<Brine_Key>()
 				.AddIngredient(ItemID.Chest, 10)
 				.AddTile(TileID.Anvils)
 				.Register();
 
-			Recipe.Create(ModContent.ItemType<Defiled_Dungeon_Chest_Item>(), 10)
+			Recipe.Create(ItemType<Defiled_Dungeon_Chest_Item>(), 10)
 				.AddIngredient<Defiled_Key>()
 				.AddIngredient(ItemID.Chest, 10)
 				.AddTile(TileID.Anvils)
 				.Register();
 
-			Recipe.Create(ModContent.ItemType<Riven_Dungeon_Chest_Item>(), 10)
+			Recipe.Create(ItemType<Riven_Dungeon_Chest_Item>(), 10)
 				.AddIngredient<Riven_Key>()
 				.AddIngredient(ItemID.Chest, 10)
 				.AddTile(TileID.Anvils)
 				.Register();
+
+			foreach (ModItem itm in instance.thorium.GetContent<ModItem>()) {
+				if (itm is not BlankPainting && itm.GetType().Namespace == "ThoriumMod.Items.Painting")
+					PaintingsNotFromVendor[itm.Type] = true;
+			}
+			PaintingsNotFromVendor[ItemType<GrayDPaintingItem>()] = true;
 		}
 		static void AddFargosRecipes() {
-			Recipe.Create(ModContent.ItemType<Brine_Key>())
+			Recipe.Create(ItemType<Brine_Key>())
 				.AddRecipeGroup("Origins:AnyBrineBanner", 10)
 				.AddCondition(Condition.Hardmode)
 				.AddTile(TileID.Solidifier);
-			Recipe.Create(ModContent.ItemType<Defiled_Key>())
-				.AddIngredient(Item.NPCtoBanner(ModContent.NPCType<Defiled_Banner_NPC>()), 10)
+			Recipe.Create(ItemType<Defiled_Key>())
+				.AddIngredient(Item.NPCtoBanner(NPCType<Defiled_Banner_NPC>()), 10)
 				.AddCondition(Condition.Hardmode)
 				.AddTile(TileID.Solidifier);
-			Recipe.Create(ModContent.ItemType<Riven_Key>())
+			Recipe.Create(ItemType<Riven_Key>())
 				.AddRecipeGroup("Origins:AnyRivenBanner", 10)
 				.AddCondition(Condition.Hardmode)
 				.AddTile(TileID.Solidifier);
 
-			Recipe.Create(ModContent.ItemType<The_Foot>())
-				.AddIngredient(ModContent.ItemType<Brine_Key>())
+			Recipe.Create(ItemType<The_Foot>())
+				.AddIngredient(ItemType<Brine_Key>())
 				.AddCondition(Condition.DownedPlantera)
 				.AddTile(TileID.MythrilAnvil);
-			Recipe.Create(ModContent.ItemType<Missing_File>())
-				.AddIngredient(ModContent.ItemType<Defiled_Key>())
+			Recipe.Create(ItemType<Missing_File>())
+				.AddIngredient(ItemType<Defiled_Key>())
 				.AddCondition(Condition.DownedPlantera)
 				.AddTile(TileID.MythrilAnvil);
-			Recipe.Create(ModContent.ItemType<Plasma_Cutter>())
-				.AddIngredient(ModContent.ItemType<Riven_Key>())
+			Recipe.Create(ItemType<Plasma_Cutter>())
+				.AddIngredient(ItemType<Riven_Key>())
 				.AddCondition(Condition.DownedPlantera)
 				.AddTile(TileID.MythrilAnvil);
+
+			PaintingsNotFromVendor[ItemType<EchPainting>()] = true;
+			PaintingsNotFromVendor[ItemType<WiresPainting>()] = true;
 		}
 		[JITWhenModsEnabled("MagicStorage")]
 		static void AddMagicStorageGroups() {
@@ -769,8 +793,8 @@ namespace Origins {
 			for (int i = 0; i < NPCID.Sets.AllNPCs.Length; i++) {
 				NPC npc = ContentSamples.NpcsByNetId[i];
 				if (npc?.ModNPC is not null) {
-					if (npc.ModNPC.SpawnModBiomes.Contains(ModContent.GetInstance<Brine_Pool>().Type)) brine.Add(GetBanner(i));
-					if (npc.ModNPC.SpawnModBiomes.Contains(ModContent.GetInstance<Riven_Hive_Alt_Biome>().Type) || npc.ModNPC.SpawnModBiomes.Contains(ModContent.GetInstance<Riven_Hive>().Type)) riven.Add(GetBanner(i));
+					if (npc.ModNPC.SpawnModBiomes.Contains(GetInstance<Brine_Pool>().Type)) brine.Add(GetBanner(i));
+					if (npc.ModNPC.SpawnModBiomes.Contains(GetInstance<Riven_Hive_Alt_Biome>().Type) || npc.ModNPC.SpawnModBiomes.Contains(GetInstance<Riven_Hive>().Type)) riven.Add(GetBanner(i));
 				}
 			}
 

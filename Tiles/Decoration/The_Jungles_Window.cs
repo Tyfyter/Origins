@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -25,6 +24,9 @@ namespace Origins.Tiles.Decoration {
 		}
 	}
 	public class The_Jungles_Window_Item : ModItem {
+		public override void SetStaticDefaults() {
+			OriginsSets.Items.PaintingsNotFromVendor[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<The_Jungles_Window>());
 			Item.value = Item.sellPrice(gold: 2);

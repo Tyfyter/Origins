@@ -417,6 +417,28 @@ Tax_Collector: {
 	}
 }
 
+Painter: {
+	Spray_N_Pray_Quest: {
+		Name: Painter Apprentice
+		Journal:
+			'''
+			{$Mods.Origins.Quests.Painter.Spray_N_Pray_Quest.Name}
+			Client: [npcname:Painter]
+
+			'{$Mods.Origins.Quests.Painter.Spray_N_Pray_Quest.Inquire}'
+			Can't use paintings that are sold
+
+			- [qs{2}:Obtain {1} of any painting ({0}/{1})]
+			- [qs{3}:Give {1} paintings to <npcname:Painter>]
+			Unlocks: [i:Origins/Spray_N_Pray]
+			'''
+		Inquire: Ay! I've been looking for paintings across the world, but some skeletons keep telling me they've only been able to find them underground. Why are they underground, I don't know but I want them. Gimme some of them and I'll let you in on a little secret to absolutely wreck havoc in paint ball. You in?
+		Start: start
+		ReadyToComplete: complete?
+		Complete: Oh, good stuff! You got 10 of them as requested. So, for my part of the deal I present to you the "{$Mods.Origins.Items.Spray_N_Pray.DisplayName}"! She's a beauty ain't she? She uses paint buckets for ammo 'cause she's really messy! Oh yeah!
+	}
+}
+
 Brine_Fiend: {
 	Quest_Menu: Yeah, what? Oh, you wanna help with something? I got work for yah.
 

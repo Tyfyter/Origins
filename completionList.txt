@@ -108,7 +108,7 @@ TOWN NPC Quests:
 (^) Guide - Troubling Trouble
 (^) Merchant - To the Skies!*
 (^) Merchant - The Greatest Sin of All, Gambling*
-(X) Painter - Painter Apprentice !!!
+(^3) Painter - Painter Apprentice !!! (finalize the related text)
 (^) Party Girl - Livin' Up the Party
 (^) Stylist - Running Dry
 (^) Stylist - Slick Styling
@@ -1183,7 +1183,7 @@ TILES:
 (X) Type-III Fortified Steel Wall
 
 (^) Alkahest Torch*
-(^) Amoeba Buggy Cage*
+(^3) Amoeba Buggy Cage* !!! (using vanilla buggy recolors)
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
@@ -1201,7 +1201,7 @@ TILES:
 (^) Chambersite Gemstone (Defiled)°
 (^) Chambersite Gemstone (Riven)°
 (^) Chambersite Squirrel Cage°
-(^3) Cicada 3301 Cage° !!! (using temp sprites)
+(^3) Cicada 3301 Cage° !!! (using vanilla buggy recolors)
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*

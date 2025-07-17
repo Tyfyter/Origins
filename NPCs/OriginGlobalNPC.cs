@@ -163,6 +163,10 @@ namespace Origins.NPCs {
 					shop.Add<Partybringer>(Quest.QuestCondition<Tax_Collector_Hat_Quest>());
 					break;
 				}
+				case NPCID.Painter: {
+					shop.Add<Spray_N_Pray>(Quest.QuestCondition<Spray_N_Pray_Quest>());
+					break;
+				}
 			}
 		}
 

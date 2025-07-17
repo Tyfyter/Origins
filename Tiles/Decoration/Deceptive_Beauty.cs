@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -25,6 +24,9 @@ namespace Origins.Tiles.Decoration {
 		}
 	}
 	public class Deceptive_Beauty_Item : ModItem {
+		public override void SetStaticDefaults() {
+			OriginsSets.Items.PaintingsNotFromVendor[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Deceptive_Beauty>());
 			Item.value = Item.sellPrice(gold: 2);
