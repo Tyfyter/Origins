@@ -62,7 +62,7 @@ namespace Origins.NPCs.Brine {
 		public new virtual float SpawnChance(NPCSpawnInfo spawnInfo) => 0;
 		public override bool CanHitNPC(NPC target) => TargetNPCTypes.Contains(target.type) || target.ModNPC is not IBrinePoolNPC;
 		public virtual bool CanTargetNPC(NPC other) {
-			if (other.type == NPCID.TargetDummy) return false;
+			if (OriginsSets.NPCs.TargetDummies[other.type]) return false;
 			return other.wet && CanHitNPC(other);
 		}
 		public virtual bool CanTargetPlayer(Player player) {

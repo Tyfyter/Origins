@@ -594,7 +594,7 @@ namespace Origins.Items {
 			valueMult *= 1.25f;
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
-			if (target.type == NPCID.TargetDummy) return;
+			if (OriginsSets.NPCs.TargetDummies[target.type]) return;
 			Projectile ownerMinion = MinionGlobalProjectile.GetOwnerMinion(projectile);
 			if (ownerMinion?.ModProjectile is IArtifactMinion artifactMinion && artifactMinion.Life < artifactMinion.MaxLife) {
 				float oldHealth = artifactMinion.Life;

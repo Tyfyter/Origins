@@ -150,7 +150,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool CanHitNPC(NPC target) => TargetTypes.Contains(target.type) || (target.ModNPC is not IBrinePoolNPC && !SegmentTypes.Contains(target.type));
 		public virtual bool CanTargetNPC(NPC other) {
-			if (other.type == NPCID.TargetDummy) return false;
+			if (OriginsSets.NPCs.TargetDummies[other.type]) return false;
 			return other.wet && CanHitNPC(other);
 		}
 		public virtual bool CheckTargetLOS(Vector2 target) => true;

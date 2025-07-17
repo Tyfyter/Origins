@@ -332,7 +332,7 @@ namespace Origins {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (hit.Crit && target.type != NPCID.TargetDummy) {
+			if (hit.Crit && !OriginsSets.NPCs.TargetDummies[target.type]) {
 				if (dimStarlight && dimStarlightCooldown < 1) {
 					int item = Item.NewItem(Player.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
 					dimStarlightCooldown = 300;

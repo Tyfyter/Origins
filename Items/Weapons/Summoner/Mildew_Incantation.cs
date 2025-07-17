@@ -172,7 +172,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override bool? CanHitNPC(NPC target) {
 			if (Projectile.ai[0] != -1) return Projectile.ai[0] == target.whoAmI;
-			if (target.type == NPCID.TargetDummy) return false;
+			if (OriginsSets.NPCs.TargetDummies[target.type]) return false;
 			return base.CanHitNPC(target);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {

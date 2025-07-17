@@ -63,7 +63,7 @@ namespace Origins.NPCs.Brine {
 				new LeadingConditionRule(new Conditions.IsHardmode()).WithOnSuccess(ItemDropRule.Food(ModContent.ItemType<Caeser_Salad>(), 40))
 			));
 		}
-		public override bool CanTargetNPC(NPC other) => other.type != NPCID.TargetDummy && CanHitNPC(other);
+		public override bool CanTargetNPC(NPC other) => !OriginsSets.NPCs.TargetDummies[other.type] && CanHitNPC(other);
 		public override bool CanTargetPlayer(Player player) => !player.invis;
 		public int Frame {
 			get => NPC.frame.Y / NPC.frame.Height;

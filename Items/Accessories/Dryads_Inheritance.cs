@@ -112,7 +112,7 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		bool AppliesToEnemy(NPC npc, float radius) {
-			if (npc.type == NPCID.TargetDummy || !npc.active) return false;
+			if (OriginsSets.NPCs.TargetDummies[npc.type] || !npc.active) return false;
 			if (npc.friendly || npc.lifeMax <= 5 || npc.dontTakeDamage) return false;
 			if (Projectile.Distance(Projectile.Center.Clamp(npc.Hitbox)) >= radius) return false;
 			int buffIndex = npc.FindBuffIndex(BuffID.DryadsWardDebuff);

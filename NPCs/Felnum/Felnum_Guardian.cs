@@ -64,7 +64,7 @@ namespace Origins.NPCs.Felnum {
 		public override bool? CanFallThroughPlatforms() => true;
 		SlotId soundSlot;
 		public static bool ShouldChaseNPC(NPC npc, Vector2 center, ref NPC dummyTarget) {
-			if (npc.type == NPCID.TargetDummy) {
+			if (OriginsSets.NPCs.TargetDummies[npc.type]) {
 				if (npc.DistanceSQ(center) < (dummyTarget?.DistanceSQ(center) ?? float.PositiveInfinity)) dummyTarget = npc;
 				return false;
 			}

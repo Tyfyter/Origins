@@ -13,7 +13,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			Origins.SpecialPrefix[Type] = true;
 		}
-		public override bool CanRoll(Item item) => !item.CountsAsClass(DamageClass.Summon);
+		public override bool CanRoll(Item item) => !item.CountsAsClass(DamageClass.Summon) && !OriginsSets.Items.InvalidForDefiledPrefix[item.type];
 		public override float RollChance(Item item) {
 			if (Main.LocalPlayer.InModBiome<Defiled_Wastelands>()) return 1;
 			if (OriginSystem.Instance.hasDefiled) return 0.5f;
@@ -25,6 +25,7 @@ namespace Origins.Items {
 			manaMult *= 1.1f;
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
+			if (OriginsSets.NPCs.TargetDummies[target.type]) return;
 			if (projectile.ModProjectile is Defiled_Spike_Explosion or Defiled_Spike_Explosion_Spike) return;
 			ref int timer = ref projectile.GetEffectTimer<Defiled_Prefix_Mana_Steal_Timer>();
 			if (Main.rand.Next(120) < timer) {

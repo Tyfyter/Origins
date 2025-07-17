@@ -32,6 +32,8 @@ namespace Origins {
 			);
 			public static bool[] ItemsThatCanChannelWithRightClick { get; } = ItemID.Sets.Factory.CreateBoolSet();
 			public static bool[] PaintingsNotFromVendor { get; } = ItemID.Sets.Factory.CreateBoolSet();
+			public static bool[] InvalidForDefiledPrefix { get; } = ItemID.Sets.Factory.CreateNamedSet(nameof(InvalidForDefiledPrefix))
+			.RegisterBoolSet();
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Projectiles {
@@ -105,6 +107,9 @@ namespace Origins {
 				NPCID.Retinazer, () => NPC.downedMechBoss2,
 				NPCID.Spazmatism, () => false
 			);
+			public static bool[] TargetDummies { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(TargetDummies)}")
+			.Description("Used to prevent exploits from some on-hit effects")
+			.RegisterBoolSet(NPCID.TargetDummy);
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Tiles {
