@@ -5,10 +5,12 @@ using Origins.Items.Materials;
 using Origins.Items.Other.Testing;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
@@ -126,7 +128,9 @@ namespace Origins.Tiles.Riven {
 				const int time = 15;
 				const int ticks_per_frame = 3;
 				if (isStoodOn) {
-					if (timer == 0) ;// sound here
+					if (timer == 0) {
+						SoundEngine.PlaySound(SoundID.NPCDeath3.WithPitch(0.5f).WithVolume(0.4f)/*, Tile.Center*/);
+					}
 					if (++timer >= time) CurrentState = State.GoingIn;
 				} else if (timer > 0 && ++timer >= time) {
 					timer = 0;
@@ -134,7 +138,10 @@ namespace Origins.Tiles.Riven {
 				frameNum = Math.Min(timer / ticks_per_frame, 4);
 				break;
 				case State.GoingIn:
-				if (timer.Warmup(4 * 5)) CurrentState = State.In;
+				if (timer.Warmup(4 * 5)) {
+					SoundEngine.PlaySound(SoundID.Item131.WithVolume(0.4f)/*, Tile.Center*/);
+					CurrentState = State.In;
+				}
 				frameNum = Math.Max(4, 2 + timer / 4);
 				break;
 				case State.In:
@@ -142,8 +149,10 @@ namespace Origins.Tiles.Riven {
 				frameNum = 7;
 				break;
 				case State.ComingOut:
-				if (timer.Warmup(6 * 3)) CurrentState = State.Out;
-				else frameNum = 7 - timer / 6;
+				if (timer.Warmup(6 * 3)) {
+					CurrentState = State.Out;
+					SoundEngine.PlaySound(SoundID.Item97.WithPitch(2f).WithVolume(0.4f)/*, Tile.Center*/);
+				} else frameNum = 7 - timer / 6;
 				break;
 			}
 			isStoodOn = false;

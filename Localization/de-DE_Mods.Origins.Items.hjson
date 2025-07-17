@@ -6490,7 +6490,12 @@ Hand_Cannon: {
 
 Accretion_Ribbon: {
 	// DisplayName: Accretion Ribbon
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Waves around a damaging ribbon
+		Hold right click to do fancy aerobic tricks
+		'I don't know. Wave it around or something!'
+		''' */
 }
 
 Shelf_Coral_Item: {
