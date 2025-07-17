@@ -29,6 +29,7 @@ namespace Origins.NPCs {
 		internal bool mildewWhipDebuff = false;
 		internal bool ocotilloFingerDebuff = false;
 		internal bool acridSpoutDebuff = false;
+		internal bool accretionRibbonDebuff = false;
 		internal bool brineIncantationDebuff = false;
 		internal bool injectIncantationDebuff = false;
 		internal bool mildewIncantationDebuff = false;
@@ -85,6 +86,7 @@ namespace Origins.NPCs {
 			mildewWhipDebuff = false;
 			ocotilloFingerDebuff = false;
 			acridSpoutDebuff = false;
+			accretionRibbonDebuff = false;
 			amebolizeDebuff = false;
 			beeAfraidDebuff = false;
 			hibernalIncantationDebuff = false;

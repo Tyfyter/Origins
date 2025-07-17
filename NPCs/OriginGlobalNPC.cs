@@ -365,6 +365,9 @@ namespace Origins.NPCs {
 				if (acridSpoutDebuff) {
 					damageBoost += 6f;
 				}
+				if (accretionRibbonDebuff) {
+					damageBoost += 6f;
+				}
 				if (hibernalIncantationDebuff) {
 					damageBoost += 4f;
 				}

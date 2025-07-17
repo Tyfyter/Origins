@@ -65,7 +65,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
-			if (player.HeldItem.ModItem is not Accretion_Ribbon) {
+			if (!player.active || player.dead || player.HeldItem.ModItem is not Accretion_Ribbon) {
 				Projectile.Kill();
 				return;
 			}
@@ -116,6 +116,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			partialImmunity[target.whoAmI] = true;
+			if (target.life > 0 && target.CanBeChasedBy()) Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 			target.AddBuff(Accretion_Ribbon_Buff.ID, 240);
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
@@ -190,7 +191,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
-			npc.GetGlobalNPC<OriginGlobalNPC>().acridSpoutDebuff = true;
+			npc.GetGlobalNPC<OriginGlobalNPC>().accretionRibbonDebuff = true;
 		}
 	}
 }
