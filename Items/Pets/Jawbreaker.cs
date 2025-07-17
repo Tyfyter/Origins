@@ -1,11 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Armor.Aetherite;
 using Origins.Items.Pets;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using PegasusLib;
 using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,14 +15,12 @@ namespace Origins.Items.Pets {
 		public string[] Categories => [
 			"Pet"
 		];
-		public override string Texture => $"Terraria/Images/Item_{ItemID.CrystalShard}";
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Master;
 			Item.master = true;
 		}
-
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {
 			if (player.whoAmI == Main.myPlayer && player.itemTime == 0) {
 				player.AddBuff(Item.buffType, 3600);
