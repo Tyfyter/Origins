@@ -83,18 +83,18 @@ namespace Origins.Items.Weapons.Magic {
 		internal static float GetArmDrawAngle(Player player) {
 			return Math.Max((player.itemAnimation / (float)player.itemAnimationMax) * 6 - 5, 0) * (MathHelper.PiOver2 * 0.85f) * player.direction;
 		}
+		public override void ModifyManaCost(Player player, ref float reduce, ref float mult) {
+			foreach (Projectile proj in Main.ActiveProjectiles) {
+				if (proj.owner == player.whoAmI && proj.type == Item.shoot && proj.ai[1] >= 1) {
+					mult = 0;
+					break;
+				}
+			}
+		}
 	}
 	public class Pike_of_Deepneus_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Pike_of_Deepneus";
-		public new AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
-		public override void SetStaticDefaults() {
-			if (!Main.dedServ) {
-				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
-			}
-		}
-		public override void Unload() {
-			GlowTexture = default;
-		}
+		AutoLoadingAsset<Texture2D> glowTexture = "Origins/Items/Weapons/Magic/Pike_of_Deepneus_Glow";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Daybreak);
 			Projectile.DamageType = DamageClass.Magic;
@@ -185,7 +185,7 @@ namespace Origins.Items.Weapons.Magic {
 			Vector2 origin = new Vector2(30 + 25 * Projectile.direction, 9);
 			float scale = Projectile.scale;
 			SpriteEffects spriteEffects = Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-			Main.EntitySpriteDraw(
+			DrawData data = new(
 				TextureAssets.Projectile[Type].Value,
 				position,
 				null,
@@ -195,19 +195,10 @@ namespace Origins.Items.Weapons.Magic {
 				scale,
 				spriteEffects,
 			0);
-			if (GlowTexture.IsLoaded) {
-				Main.EntitySpriteDraw(
-					GlowTexture,
-					position,
-					null,
-					Color.White,
-					rotation,
-					origin,
-					scale,
-					spriteEffects,
-					0
-				);
-			}
+			Main.EntitySpriteDraw(data);
+			data.texture = glowTexture;
+			data.color = Color.White;
+			Main.EntitySpriteDraw(data);
 			return false;
 		}
 	}
