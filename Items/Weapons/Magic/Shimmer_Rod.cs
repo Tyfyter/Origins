@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Other.Dyes;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -29,13 +30,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {
-				int ball = ModContent.ProjectileType<Shimmer_Cloud_Ball>();
-				int cloud = ModContent.ProjectileType<Shimmer_Cloud_P>();
-				foreach (Projectile projectile in Main.ActiveProjectiles) {
-					if (projectile.owner == player.whoAmI && (projectile.type == ball || projectile.type == cloud)) {
-						projectile.Kill();
-					}
-				}
+				OriginExtensions.FadeOutOldProjectilesAtLimit([ModContent.ProjectileType<Shimmer_Cloud_P>(), ModContent.ProjectileType<Shimmer_Cloud_Ball>()], 1, 52);
 				return false;
 			}
 			return true;
@@ -231,7 +226,8 @@ namespace Origins.Items.Weapons.Magic {
 				if (inShimmer == 1) {
 					Projectile.velocity.Y = -Projectile.velocity.Y;
 					Projectile.ai[1] += (Projectile.Center.Y - Projectile.ai[1]) * 2;
-					Projectile.ai[2] = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
+					const float mirrorAngle = MathHelper.PiOver2;
+					Projectile.ai[2] = mirrorAngle - GeometryUtils.AngleDif(mirrorAngle, Projectile.ai[2], out int dir) * dir;
 				}
 			}
 
