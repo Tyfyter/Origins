@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Tiles.Dusk;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
@@ -39,13 +40,25 @@ namespace Origins.Items.Weapons.Magic {
 		public override string Texture => "Terraria/Images/Projectile_125";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.DiamondBolt);
-			Projectile.penetrate = 1;
+			Projectile.penetrate = 2;
 			Projectile.extraUpdates = 1;
 		}
 		public override void AI() {
 			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.GemDiamond, 0f, 0f, 0, new Color(255, 0, 255), 1f);
 			dust.noGravity = true;
 			dust.velocity /= 2;
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			Collision.HitTiles(Projectile.oldPosition, oldVelocity, Projectile.width, Projectile.height);
+			return true;
+		}
+		public override void OnKill(int timeLeft) {
+			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
+			Projectile.velocity *= 0.5f;
+			for (int i = 0; i < 8; i++) {
+				Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.GemDiamond, Projectile.velocity.X, Projectile.velocity.Y, 0, new Color(255, 0, 255), 1f);
+				dust.noGravity = true;
+			}
 		}
 	}
 }
