@@ -38,6 +38,7 @@ namespace Origins.Items.Weapons.Magic {
 			NPCTypeAliases[NPCID.MoonLordHand] = NPCID.MoonLordCore;
 			NPCTypeAliases[NPCID.MoonLordHead] = NPCID.MoonLordCore;
 			NPCTypeAliases[NPCID.MoonLordLeechBlob] = NPCID.MoonLordCore;
+			NPCTypeAliases[NPCID.PirateShipCannon] = NPCID.PirateShip;
 		}
 		public override void Unload() {
 			NPCTypeAliases = null;
@@ -110,7 +111,8 @@ namespace Origins.Items.Weapons.Magic {
 				try {
 					HashSet<int> realNPCs = [];
 					foreach (NPC npc in Main.ActiveNPCs) {
-						realNPCs.Add(npc.netID);
+						if (IsInvalidNPC(npc, out int npcType)) continue;
+						realNPCs.Add(npcType);
 					}
 					drawingMissingFileUI = true;
 					GraphicsUtils.drawingEffect = true;
