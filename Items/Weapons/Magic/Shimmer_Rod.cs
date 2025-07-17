@@ -325,9 +325,11 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.aiStyle = 0;
 			Projectile.width = 4;
 			Projectile.height = 4;
+			Projectile.hide = true;
 		}
 		public override void AI() {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			Projectile.hide = false;
 			if (Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height) && Collision.shimmer) {
 				Projectile.velocity.Y -= 0.2f;
 			}
