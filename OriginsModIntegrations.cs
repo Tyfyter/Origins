@@ -518,6 +518,9 @@ namespace Origins {
 				);
 			}
 		}
+		public static void SetStaticDefaults() {
+			if (instance.fargosMutant is not null) SetFargosStaticDefaults();
+		}
 		public static void AddRecipes() {
 			if (instance.thorium is not null) AddThoriumRecipes();
 			if (instance.fargosMutant is not null) AddFargosRecipes();
@@ -737,6 +740,10 @@ namespace Origins {
 					PaintingsNotFromVendor[itm.Type] = true;
 			}
 			PaintingsNotFromVendor[ItemType<GrayDPaintingItem>()] = true;
+		}
+		[JITWhenModsEnabled(nameof(Fargowiltas))]
+		static void SetFargosStaticDefaults() {
+			OriginsSets.NPCs.TargetDummies[NPCType<Fargowiltas.NPCs.SuperDummy>()] = true;
 		}
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosRecipes() {

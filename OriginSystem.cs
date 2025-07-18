@@ -64,6 +64,7 @@ namespace Origins {
 			}
 			queuedUIStates = null;
 			DamageClasses.Patch();
+			OriginsModIntegrations.SetStaticDefaults();
 		}
 		public override void Unload() {
 			queuedUIStates = null;
