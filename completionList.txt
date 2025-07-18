@@ -51,15 +51,15 @@ BOSSES AND MINI-BOSSES:
 |---
 (^) Chambersite Sentinel
 (X) D2L2 "Warsaw"
-(#, ^2, 々) Grand Corruptor
-(#, ^2, 々) Ichor Storm
+(%2, ^2, 々) Grand Corruptor
+(%2, ^2, 々) Ichor Storm
 (X) Zombie Paladin
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
 (#2/3, ^2) Shimmer Construct !!! 
 (#, ^2) Trenchmaker
-(#2, ^2) World Cracker* !!! (mouth anims and sounds)
+(#2, ^2) World Cracker* !!! (mouth anims)
 
 (X) Corrupt Harvester
 (^) Lost Diver/Mildew Carrion°
@@ -125,15 +125,15 @@ VANILLA MODIFICATIONS:
 (ᗢ) Recipes General*
 
 (^) Advanced weapon functionality in PVP*
-(^) Boss Immunities (make every boss immune to anything with Stun)*
-(^) Demolitionist (to sell different items based on peat sold)*
+(^) Boss Resistances (make every boss immune to anything with Stun)*
+(^) Demolitionist sells Explosive Powder at all times*
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
 (^) Explosive Defense Punishment (increased affliction from defense)*
 (^) Harpoon (new weapon to introduce sub-class)*
 (^) Proximity Mine Launcher to use Canisters*
+(^) Rain armor buffs*
 (^) Snow Armor is now craftable°
 (^) Wooden armor buffs*
-(^) Rain armor buffs
 ---
 
 
@@ -141,13 +141,14 @@ WORLD GENERATION:
 |---
 (X) Ashen Factory
 (X) Ashen Outpost
-(X) Ashen Overworld
+(X) Ashen Scrapyard
 (^) Brine Pool
 (^) Defiled Wastelands
 (^) Fiberglass Undergrowth
 (X) Fractured Isles
 (^) Limestone Cave
 (#2) Riven Hive !!!
+(X) The Dawn
 (#2, 々) The Dusk
 
 (X) Defiled Egregore
@@ -156,6 +157,7 @@ WORLD GENERATION:
 (X) Defiled Mazes
 
 (^) Chambersite Conversion
+(^) Felnum Veins
 ---
 
 
@@ -912,7 +914,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(#2, ^2) Accretion Ribbon !!!
+(#3, ^2) Accretion Ribbon !!!
 (^) Aether Opal
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
