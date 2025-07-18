@@ -603,6 +603,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void Load() => instance = this;
 		public override void Draw(SpriteBatch spriteBatch) {
 			alwaysLightAllTiles = false;
+			if (renderTarget is null) return;
+			if (spriteBatch is null) return;
+			ModContent.GetInstance<SC_Scene_Effect>().AddArea();
 			base.Draw(spriteBatch);
 		}
 		public static bool alwaysLightAllTiles = false;
@@ -616,7 +619,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	public abstract class SC_Phase_Three_BG_layer(RenderLayers layer) : Overlay(EffectPriority.High, layer), ILoadable {
 		readonly ArmorShaderData simpleMaskShader = new(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "SimpleMask");
-		public bool IsActive => Mode == OverlayMode.Active;
 		public override void Activate(Vector2 position, params object[] args) => Mode = OverlayMode.Active;
 		public override void Deactivate(params object[] args) {
 			Mode = OverlayMode.FadeOut;
@@ -633,7 +635,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				return;
 			}
 			if (spriteBatch is null) return;
-			ModContent.GetInstance<SC_Scene_Effect>().AddArea();
+			layersRenderedThisFrame[index] = true;
 			SpriteBatchState state = spriteBatch.GetState();
 			if (!Main.gamePaused) {
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
@@ -664,14 +666,23 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override bool IsVisible() => ModContent.GetInstance<SC_Phase_Three_Overlay>().IsVisible();
 		public override void Update(GameTime gameTime) { }
 		static readonly List<SC_Phase_Three_BG_layer> layers = [];
-		public static IEnumerable<SC_Phase_Three_BG_layer> GetActiveLayers() {
+		static readonly List<bool> layersRenderedThisFrame = [];
+		internal static void ClearRenderedLayerTracker() {
 			for (int i = 0; i < layers.Count; i++) {
-				if (layers[i].IsActive) yield return layers[i];
+				layersRenderedThisFrame[i] = false;
 			}
 		}
+		public static IEnumerable<SC_Phase_Three_BG_layer> GetActiveLayers() {
+			for (int i = 0; i < layers.Count; i++) {
+				if (layersRenderedThisFrame[i]) yield return layers[i];
+			}
+		}
+		int index;
 		public void Load(Mod mod) {
 			Load();
+			index = layers.Count;
 			layers.Add(this);
+			layersRenderedThisFrame.Add(false);
 		}
 		public new abstract void Load();
 		public void Unload() {
@@ -752,6 +763,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Main.graphics.GraphicsDevice.Textures[1] = maskTexture;
 			Origins.shaderOroboros.Stack(maskShader);
 			Origins.shaderOroboros.Release();
+
+			SC_Phase_Three_BG_layer.ClearRenderedLayerTracker();
 
 			for (int i = 0; i < renderTargetsToDispose.Count; i++) {
 				renderTargetsToDispose[i].Dispose();
