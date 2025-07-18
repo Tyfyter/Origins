@@ -4657,8 +4657,8 @@ namespace Origins {
 				.Where(text => text.CanFormatWith(format))
 			.ToArray())
 			.FormatWith(format);
-		public static void AddBanner(this ModNPC self) {
-			self.Mod.AddContent(new Banner(self));
+		public static void AddBanner(this ModNPC self, int? killsRequired = null) {
+			self.Mod.AddContent(new Banner(self, killsRequired));
 			BannerGlobalNPC.NPCTypesWithBanners.Add(self.GetType());
 		}
 		public static Dictionary<Type, Func<IItemDropRule, IEnumerable<IItemDropRule>>> ruleChildFinders = new() {

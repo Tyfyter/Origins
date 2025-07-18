@@ -16,8 +16,9 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Banners {
 	[Autoload(false)]
-	public class Banner(ModNPC npc) : ModTile {
+	public class Banner(ModNPC npc, int? killsRequired = null) : ModTile {
 		public ModNPC NPC => npc;
+		internal int? killsRequired = killsRequired;
 		public override string Name => npc.Name + "_Banner";
 		public override void Load() {
 			Mod.AddContent(new Banner_Item(this));
@@ -79,6 +80,10 @@ namespace Origins.Tiles.Banners {
 			}
 		}
 		public override void Load() => BannerGlobalNPC.BannerItems.Add(this);
+		public override void SetStaticDefaults() {
+			_ = tile.NPC.Name;
+			if (tile.killsRequired is int killsRequired) ItemID.Sets.KillsToBanner[Type] = killsRequired;
+		}
 		internal void CacheItemType() {
 			if (BannerGlobalNPC.NPCTypesWithBanners.Contains(tile.NPC.GetType())) BannerGlobalNPC.NPCToBannerItem.Add(tile.NPC.Type, Type);
 		}
