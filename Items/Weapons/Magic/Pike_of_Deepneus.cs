@@ -85,8 +85,8 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void ModifyManaCost(Player player, ref float reduce, ref float mult) {
 			foreach (Projectile proj in Main.ActiveProjectiles) {
-				if (proj.owner == player.whoAmI && proj.type == Item.shoot && proj.ai[1] >= 1) {
-					mult = 0;
+				if (proj.owner == player.whoAmI && proj.type == Item.shoot && proj.ai[0] != 0) {
+					if (proj.ai[1] >= 1) mult = 0;
 					break;
 				}
 			}
