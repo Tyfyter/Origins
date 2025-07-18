@@ -432,7 +432,7 @@ Painter: {
 			Unlocks: [i:Origins/Spray_N_Pray]
 			'''
 		Inquire: Ay! I've been looking for paintings across the world, but some skeletons keep telling me they've only been able to find them underground. Why are they underground? I don't know but I want them. Gimme some of them and I'll let you in on a little secret to absolutely wreck havoc in paint ball. You in?
-		Start: Great! You won't regret! Though, just don't sell them to me, aight? Things you sell to me just magically disappear once you leave!
+		Start: Great! You won't regret it! Though, just don't sell them to me, aight? Things you sell to me just magically disappear once you leave!
 		ReadyToComplete: Ay, you got the goods?
 		Complete: Oh, goodie! You got {0} of them as requested. So, for my part of the deal I present to you the "{$Mods.Origins.Items.Spray_N_Pray.DisplayName}"! She's a beauty ain't she? She uses paint buckets for ammo 'cause she's really messy! Oh yeah!
 	}
