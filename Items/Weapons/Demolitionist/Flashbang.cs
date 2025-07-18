@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -75,11 +76,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 25;
 			Projectile.tileCollide = false;
 			Projectile.alpha = 100;
+			Projectile.hide = true;
 		}
 		public override void AI() {
 			Lighting.AddLight(Projectile.Center, new Vector3(1, 1, 1));
 		}
-        public override bool PreDraw(ref Color lightColor) {
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+			overWiresUI.Add(index);
+		}
+		public override bool PreDraw(ref Color lightColor) {
 			const float scale = 2f;
 			Main.spriteBatch.Restart(SpriteSortMode.Immediate);
 			DrawData data = new(
