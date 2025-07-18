@@ -732,6 +732,9 @@ namespace Origins {
 	public interface IDrawOverArmProjectile {
 		DrawData GetDrawData();
 	}
+	public interface IPreDrawSceneProjectile {
+		void PreDrawScene();
+	}
 	public interface IUnloadable {
 		void Unload();
 	}

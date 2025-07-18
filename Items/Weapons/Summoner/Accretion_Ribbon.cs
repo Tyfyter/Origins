@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 		}
 	}
-	public class Accretion_Ribbon_P : ModProjectile {
+	public class Accretion_Ribbon_P : ModProjectile, IPreDrawSceneProjectile {
 		public override string Texture => base.Texture + "ole";
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.IsAWhip[Type] = false; // can't be a whip rn because that overrides custom collision
@@ -130,7 +130,9 @@ namespace Origins.Items.Weapons.Summoner {
 					}
 				}
 			}
-			Accretion_Ribbon_Overlay.EnsureActive();
+			if (player.teleportTime >= 0.9f) {
+				Array.Clear(Projectile.oldPos);
+			}
 		}
 		readonly int[] partialImmunity = new int[Main.maxNPCs];
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
@@ -168,11 +170,14 @@ namespace Origins.Items.Weapons.Summoner {
 				oldRot[i] = (projectile.oldPos[i] - projectile.oldPos[i - 1]).ToRotation();
 			}
 			oldRot[0] = projectile.rotation;
+			if (GeometryUtils.AngleDif(oldRot[1], projectile.rotation, out _) > GeometryUtils.AngleDif(oldRot[1], projectile.rotation  + MathHelper.Pi, out _)) {
+				oldRot[0] = projectile.rotation + MathHelper.Pi;
+			}
 			miscShaderData.Apply();
 			_vertexStrip.PrepareStrip(projectile.oldPos, oldRot, _ => Color.White, _ => size, -Main.screenPosition, projectile.oldPos.Length, includeBacksides: true);
 			_vertexStrip.DrawTrail();
 		}
-		public void DrawTrailMask() {
+		public void PreDrawScene() {
 			if (middleRenderTarget is null) {
 				Main.QueueMainThreadAction(SetupRenderTargets);
 				Main.OnResolutionChanged += Resize;
@@ -256,36 +261,6 @@ namespace Origins.Items.Weapons.Summoner {
 			if (middleRenderTarget is not null && !middleRenderTarget.IsDisposed) return;
 			middleRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 			edgeRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
-		}
-	}
-	class Accretion_Ribbon_Overlay() : Overlay(EffectPriority.VeryHigh, RenderLayers.InWorldUI), ILoadable {
-		const string name = "Origins:AccretionRibbonOverlay";
-		public override void Activate(Vector2 position, params object[] args) {
-			Mode = OverlayMode.Active;
-		}
-		public override void Deactivate(params object[] args) {
-			Opacity = 0;
-			Mode = OverlayMode.FadeOut;
-		}
-		public override void Draw(SpriteBatch spriteBatch) {
-			foreach (Projectile proj in Main.ActiveProjectiles) {
-				if (proj.ModProjectile is Accretion_Ribbon_P ribbon) ribbon.DrawTrailMask();
-			}
-		}
-		public override bool IsVisible() => true;
-		public void Load(Mod mod) {
-			Overlays.Scene[name] = this;
-		}
-
-		public void Unload() {
-			Overlays.Scene[name] = null;
-		}
-		public override void Update(GameTime gameTime) { }
-		public static void EnsureActive() {
-			Accretion_Ribbon_Overlay overlay = ModContent.GetInstance<Accretion_Ribbon_Overlay>();
-			if (overlay.Mode != OverlayMode.Active) {
-				Overlays.Scene.Activate(name);
-			}
 		}
 	}
 	public class Accretion_Ribbon_Buff : ModBuff {

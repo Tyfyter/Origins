@@ -33,6 +33,7 @@ using Terraria.UI;
 using static Tyfyter.Utils.UITools;
 using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 using static Origins.OriginsSets.Items;
+using Terraria.Graphics;
 
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
@@ -661,6 +662,11 @@ namespace Origins {
 		}
 		public override void PostUpdateInvasions() {
 			Debugging.LogFirstRun(PostUpdateInvasions);
+		}
+		public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform) {
+			foreach (Projectile proj in Main.ActiveProjectiles) {
+				if (proj.ModProjectile is IPreDrawSceneProjectile preDrawer) preDrawer.PreDrawScene();
+			}
 		}
 	}
 	public class TempleBiome : ModBiome {
