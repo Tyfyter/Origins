@@ -1,10 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
-using Origins.Items.Materials;
-using Origins.Tiles.Other;
-using ReLogic.Content;
-using System;
+﻿using Origins.Dev;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -13,7 +7,6 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.Items.Accessories {
 	public class Strange_Computer : ModItem, ICustomWikiStat {

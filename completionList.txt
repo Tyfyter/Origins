@@ -108,7 +108,7 @@ TOWN NPC Quests:
 (^) Guide - Troubling Trouble
 (^) Merchant - To the Skies!*
 (^) Merchant - The Greatest Sin of All, Gambling*
-(^3) Painter - Painter Apprentice !!! (finalize the related text)
+(^) Painter - Painter Apprentice
 (^) Party Girl - Livin' Up the Party
 (^) Stylist - Running Dry
 (^) Stylist - Slick Styling
@@ -1186,7 +1186,7 @@ TILES:
 (X) Type-III Fortified Steel Wall
 
 (^) Alkahest Torch*
-(^3) Amoeba Buggy Cage* !!! (using vanilla buggy recolors)
+(@4, ^3) Amoeba Buggy Cage* !!! (using vanilla buggy recolors)
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
@@ -1204,7 +1204,7 @@ TILES:
 (^) Chambersite Gemstone (Defiled)°
 (^) Chambersite Gemstone (Riven)°
 (^) Chambersite Squirrel Cage°
-(^3) Cicada 3301 Cage° !!! (using vanilla buggy recolors)
+(@4, ^3) Cicada 3301 Cage° !!! (using vanilla buggy recolors)
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
@@ -1323,7 +1323,7 @@ TILES:
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
-(#2?, ^2) Music Box (The Dive) !!!
+(#2, ^2) Music Box (The Dive) !!!
 (#, ^2) Otherworldly Music Box (Defiled Wastelands) !!!
 
 (^) Defiled Amalgamation Relic*
@@ -1558,7 +1558,7 @@ MOUNTS & PETS:
 |---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(#2?, ^2) Jawbreaker (Stellar Spark) !!!
+(#2, ^2) Jawbreaker (Stellar Spark) !!!
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
 
