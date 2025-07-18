@@ -1,18 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Graphics;
 using Origins.Items.Materials;
 using Origins.NPCs;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using PegasusLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
-using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,9 +21,10 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void SetDefaults() {
 			Item.dye = 0;
-			Item.DefaultToWhip(ModContent.ProjectileType<Accretion_Ribbon_P>(), 34, 5, 1, 28);
-			Item.value = Item.sellPrice(gold: 4, silver: 60);
-			Item.rare = ItemRarityID.LightRed;
+			Item.DefaultToWhip(ModContent.ProjectileType<Accretion_Ribbon_P>(), 40, 5, 1, 28);
+			Item.value = Item.sellPrice(gold: 2, silver: 60);
+			Item.rare = ItemRarityID.Orange;
+			Item.maxStack = 1;
 		}
 		public override bool MeleePrefix() => true;
 		public override void AddRecipes() {
@@ -64,6 +60,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.hide = true;
 			Projectile.manualDirectionChange = true;
 			Projectile.localNPCHitCooldown = 10;
+			Projectile.ArmorPenetration += 9;
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override void OnSpawn(IEntitySource source) {

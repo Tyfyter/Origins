@@ -6494,6 +6494,7 @@ Accretion_Ribbon: {
 		'''
 		Waves around a damaging ribbon
 		Hold right click to do fancy aerobic tricks
+		Hold left and right click for speen
 		6 summon tag damage
 		{$CommonItemTooltip.Whips}
 		'I don't know. Wave it around or something!'

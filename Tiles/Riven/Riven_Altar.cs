@@ -54,7 +54,7 @@ namespace Origins.Tiles.Riven {
 			WorldGen.SmashAltar(i, j);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			float glowValue = GlowValue * 1.5f;
+			float glowValue = GlowValue * 3f;
 			r = 0.02f * glowValue;
 			g = 0.1f * glowValue;
 			b = 0.2f * glowValue;
