@@ -53,6 +53,19 @@ float4 NoArmorShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : C
 	return tex2D(uImage0, coords) * sampleColor;
 }
 
+float4 Erase(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	float4 value = tex2D(uImage0, coords) - tex2D(uImage1, coords).a * sampleColor;
+	if (value.r < 0)
+		value.r = 0;
+	if (value.g < 0)
+		value.g = 0;
+	if (value.b < 0)
+		value.b = 0;
+	if (value.a < 0)
+		value.a = 0;
+	return value;
+}
+
 technique Technique1 {
 	pass MultiplyRGBA {
 		PixelShader = compile ps_2_0 MultiplyRGBA();
@@ -62,5 +75,8 @@ technique Technique1 {
 	}
 	pass NoArmorShader {
 		PixelShader = compile ps_2_0 NoArmorShader();
+	}
+	pass Erase {
+		PixelShader = compile ps_2_0 Erase();
 	}
 }

@@ -1,23 +1,31 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
 using Origins.Items.Materials;
 using Origins.NPCs;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using PegasusLib;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Policy;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
+using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Accretion_Ribbon : ModItem {
+		internal static ArmorShaderData EraseShader { get; set; }
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			EraseShader = GameShaders.Armor.BindShader(Type, new ArmorShaderData(Mod.Assets.Request<Effect>("Effects/Misc"), "Erase"));
 		}
 		public override void SetDefaults() {
+			Item.dye = 0;
 			Item.DefaultToWhip(ModContent.ProjectileType<Accretion_Ribbon_P>(), 34, 5, 1, 28);
 			Item.value = Item.sellPrice(gold: 4, silver: 60);
 			Item.rare = ItemRarityID.LightRed;
@@ -122,6 +130,7 @@ namespace Origins.Items.Weapons.Summoner {
 					}
 				}
 			}
+			Accretion_Ribbon_Overlay.EnsureActive();
 		}
 		readonly int[] partialImmunity = new int[Main.maxNPCs];
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
@@ -147,34 +156,37 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 
 		private static VertexStrip _vertexStrip = new();
-		public override bool PreDraw(ref Color lightColor) {
-			if (renderTarget is null) {
-				Main.QueueMainThreadAction(SetupRenderTargets);
-				Main.OnResolutionChanged += Resize;
-				return false;
-			}
-			Origins.shaderOroboros.Capture();
+		static void DrawTrail(Projectile projectile, float size) {
 
 			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Identity"];
 			miscShaderData.UseImage0(TextureAssets.MagicPixel);
 			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
 			miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 0, 1, 1));
 			float[] oldRot;
-			oldRot = new float[Projectile.oldPos.Length];
-			for (int i = 1; i < Projectile.oldPos.Length; i++) {
-				oldRot[i] = (Projectile.oldPos[i] - Projectile.oldPos[i - 1]).ToRotation();
+			oldRot = new float[projectile.oldPos.Length];
+			for (int i = 1; i < projectile.oldPos.Length; i++) {
+				oldRot[i] = (projectile.oldPos[i] - projectile.oldPos[i - 1]).ToRotation();
 			}
-			oldRot[0] = oldRot[1];
+			oldRot[0] = projectile.rotation;
 			miscShaderData.Apply();
-			float size = 4 * Projectile.scale;
-			_vertexStrip.PrepareStrip(Projectile.oldPos, oldRot, (GetLightColor) => new(120, 80, 225), _ => size, -Main.screenPosition, Projectile.oldPos.Length, includeBacksides: true);
+			_vertexStrip.PrepareStrip(projectile.oldPos, oldRot, _ => Color.White, _ => size, -Main.screenPosition, projectile.oldPos.Length, includeBacksides: true);
 			_vertexStrip.DrawTrail();
+		}
+		public void DrawTrailMask() {
+			if (middleRenderTarget is null) {
+				Main.QueueMainThreadAction(SetupRenderTargets);
+				Main.OnResolutionChanged += Resize;
+				return;
+			}
+			Origins.shaderOroboros.Capture();
 
-			Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
+			DrawTrail(Projectile, 4 * Projectile.scale);
+
+			Origins.shaderOroboros.DrawContents(middleRenderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
 			Origins.shaderOroboros.Reset(default);
-			Vector2 center = renderTarget.Size() * 0.5f;
+			Vector2 center = middleRenderTarget.Size() * 0.5f;
 			SC_Phase_Three_Overlay.drawDatas.Add(new(
-				renderTarget,
+				middleRenderTarget,
 				center,
 				null,
 				Color.White,
@@ -183,6 +195,35 @@ namespace Origins.Items.Weapons.Summoner {
 				Vector2.One / Main.GameViewMatrix.Zoom,
 				SpriteEffects.None
 			));
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (middleRenderTarget is null) {
+				Main.QueueMainThreadAction(SetupRenderTargets);
+				Main.OnResolutionChanged += Resize;
+				return false;
+			}
+
+			Origins.shaderOroboros.Capture();
+
+			DrawTrail(Projectile, 4 * Projectile.scale + 2);
+
+			Main.graphics.GraphicsDevice.Textures[1] = middleRenderTarget;
+			Accretion_Ribbon.EraseShader.Shader.Parameters["uImageSize1"]?.SetValue(new Vector2(middleRenderTarget.Width, middleRenderTarget.Height));
+			Origins.shaderOroboros.Stack(Accretion_Ribbon.EraseShader);
+			Origins.shaderOroboros.DrawContents(edgeRenderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
+			Origins.shaderOroboros.Reset(default);
+			Vector2 center = edgeRenderTarget.Size() * 0.5f;
+			Main.EntitySpriteDraw(
+				edgeRenderTarget,
+				center,
+				null,
+				Color.White,
+				0,
+				center,
+				Vector2.One / Main.GameViewMatrix.Zoom,
+				SpriteEffects.None
+			);
+
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			Main.EntitySpriteDraw(
 				texture,
@@ -190,27 +231,61 @@ namespace Origins.Items.Weapons.Summoner {
 				null,
 				lightColor,
 				Projectile.rotation,
-				texture.Size() - (Vector2.One * 3),
+				texture.Size() - new Vector2(3, 6),
 				Projectile.scale,
 				SpriteEffects.None
 			);
 			return false;
 		}
 		public override void OnKill(int timeLeft) {
-			if (renderTarget is not null) {
-				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref renderTarget);
+			if (middleRenderTarget is not null) {
+				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref middleRenderTarget);
+				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref edgeRenderTarget);
 				Main.OnResolutionChanged -= Resize;
 			}
 		}
-		internal RenderTarget2D renderTarget;
+		internal RenderTarget2D middleRenderTarget;
+		internal RenderTarget2D edgeRenderTarget;
 		public void Resize(Vector2 _) {
 			if (Main.dedServ) return;
-			SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref renderTarget);
+			SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref middleRenderTarget);
+			SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref edgeRenderTarget);
 			SetupRenderTargets();
 		}
 		void SetupRenderTargets() {
-			if (renderTarget is not null && !renderTarget.IsDisposed) return;
-			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+			if (middleRenderTarget is not null && !middleRenderTarget.IsDisposed) return;
+			middleRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+			edgeRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+		}
+	}
+	class Accretion_Ribbon_Overlay() : Overlay(EffectPriority.VeryHigh, RenderLayers.InWorldUI), ILoadable {
+		const string name = "Origins:AccretionRibbonOverlay";
+		public override void Activate(Vector2 position, params object[] args) {
+			Mode = OverlayMode.Active;
+		}
+		public override void Deactivate(params object[] args) {
+			Opacity = 0;
+			Mode = OverlayMode.FadeOut;
+		}
+		public override void Draw(SpriteBatch spriteBatch) {
+			foreach (Projectile proj in Main.ActiveProjectiles) {
+				if (proj.ModProjectile is Accretion_Ribbon_P ribbon) ribbon.DrawTrailMask();
+			}
+		}
+		public override bool IsVisible() => true;
+		public void Load(Mod mod) {
+			Overlays.Scene[name] = this;
+		}
+
+		public void Unload() {
+			Overlays.Scene[name] = null;
+		}
+		public override void Update(GameTime gameTime) { }
+		public static void EnsureActive() {
+			Accretion_Ribbon_Overlay overlay = ModContent.GetInstance<Accretion_Ribbon_Overlay>();
+			if (overlay.Mode != OverlayMode.Active) {
+				Overlays.Scene.Activate(name);
+			}
 		}
 	}
 	public class Accretion_Ribbon_Buff : ModBuff {
