@@ -30,7 +30,7 @@ namespace Origins.Items.Pets {
 			("", SpriteGenerator.GenerateAnimationSprite(ModContent.Request<Texture2D>(typeof(Juvenile_Amalgamation).GetDefaultTMLName(), AssetRequestMode.ImmediateLoad).Value, Main.projFrames[projectileID], 5)),
 		];*/
 	}
-	public class Stellar_Spark : ModProjectile {
+	public class Stellar_Spark : ModProjectile, ITriggerSCBackground {
 		public override string Texture => $"Terraria/Images/NPC_{NPCID.ServantofCthulhu}";
 		public override void SetStaticDefaults() {
 			Jawbreaker.projectileID = Projectile.type;
@@ -159,9 +159,9 @@ namespace Origins.Items.Pets {
 			#endregion
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			if (SC_Phase_Three_Overlay.drawnMaskSources.Add(Projectile)) {
+			if (SC_Phase_Three_Midlay.DrawnMaskSources.Add(Projectile)) {
 				Texture2D circle = TextureAssets.Projectile[Type].Value;
-				SC_Phase_Three_Overlay.drawDatas.Add(new(
+				SC_Phase_Three_Midlay.DrawDatas.Add(new(
 					circle,
 					Projectile.position - Main.screenPosition,
 					null,

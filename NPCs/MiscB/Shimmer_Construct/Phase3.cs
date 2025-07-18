@@ -595,15 +595,38 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 	}
-	public class SC_Phase_Three_Underlay() : Overlay(EffectPriority.High, RenderLayers.Walls), ILoadable {
+	public class SC_Phase_Three_Underlay() : SC_Phase_Three_BG_layer(RenderLayers.Walls) {
+		public static List<DrawData> DrawDatas => instance.drawDatas;
+		public static HashSet<object> DrawnMaskSources => instance.drawnMaskSources;
+
+		public static SC_Phase_Three_Underlay instance;
+		public override void Load() => instance = this;
+		public override void Draw(SpriteBatch spriteBatch) {
+			alwaysLightAllTiles = false;
+			base.Draw(spriteBatch);
+		}
+		public static bool alwaysLightAllTiles = false;
+	}
+	public class SC_Phase_Three_Midlay() : SC_Phase_Three_BG_layer(RenderLayers.TilesAndNPCs) {
+		public static List<DrawData> DrawDatas => instance.drawDatas;
+		public static HashSet<object> DrawnMaskSources => instance.drawnMaskSources;
+
+		public static SC_Phase_Three_Midlay instance;
+		public override void Load() => instance = this;
+	}
+	public abstract class SC_Phase_Three_BG_layer(RenderLayers layer) : Overlay(EffectPriority.High, layer), ILoadable {
 		readonly ArmorShaderData simpleMaskShader = new(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "SimpleMask");
+		public bool IsActive => Mode == OverlayMode.Active;
 		public override void Activate(Vector2 position, params object[] args) => Mode = OverlayMode.Active;
 		public override void Deactivate(params object[] args) {
 			Mode = OverlayMode.FadeOut;
 			Opacity = 0;
 		}
+		public List<DrawData> drawDatas = [];
+		public HashSet<object> drawnMaskSources = [];
+		public virtual float Brightness => 0.8f;
+		public virtual float Alpha => 1f;
 		public override void Draw(SpriteBatch spriteBatch) {
-			alwaysLightAllTiles = false;
 			if (renderTarget is null) {
 				Main.QueueMainThreadAction(SetupRenderTargets);
 				Main.OnResolutionChanged += Resize;
@@ -618,60 +641,39 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					spriteBatch.Restart(state);
 					Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 					Main.graphics.GraphicsDevice.Clear(Color.Transparent);
-					for (int i = 0; i < SC_Phase_Three_Overlay.drawDatas.Count; i++) {
-						SC_Phase_Three_Overlay.drawDatas[i].Draw(spriteBatch);
+					for (int i = 0; i < drawDatas.Count; i++) {
+						drawDatas[i].Draw(spriteBatch);
 					}
 				} finally {
 					spriteBatch.End();
 					spriteBatch.UseOldRenderTargets(oldRenderTargets);
 					spriteBatch.Begin(state);
 				}
-				SC_Phase_Three_Overlay.drawDatas.Clear();
-				SC_Phase_Three_Overlay.drawnMaskSources.Clear();
-				for (int i = 0; i < SC_Phase_Three_Overlay.renderTargetsToDispose.Count; i++) {
-					SC_Phase_Three_Overlay.renderTargetsToDispose[i].Dispose();
-				}
-				SC_Phase_Three_Overlay.renderTargetsToDispose.Clear();
+				drawDatas.Clear();
+				drawnMaskSources.Clear();
 			} else {
 				spriteBatch.Restart(state);
 			}
-			if (SC_Phase_Three_Overlay.drawDatas.Count > 100) SC_Phase_Three_Overlay.drawDatas.RemoveRange(0, SC_Phase_Three_Overlay.drawDatas.Count - 99);
+			if (drawDatas.Count > 100) drawDatas.RemoveRange(0, drawDatas.Count - 99);
 			Origins.shaderOroboros.Capture(spriteBatch);
-			const float brightness = 0.8f;
-			const float alpha = 1f;
-			spriteBatch.Draw(sc_BGs[SurfaceFrame].Value, new Rectangle(0, 0, Main.ScreenSize.X, Main.ScreenSize.Y), new(brightness, brightness, brightness, alpha));
+			spriteBatch.Draw(SC_Phase_Three_Overlay.CurrentBG, new Rectangle(0, 0, Main.ScreenSize.X, Main.ScreenSize.Y), new(Brightness, Brightness, Brightness, Alpha));
 			Main.graphics.GraphicsDevice.Textures[1] = renderTarget;
 			Origins.shaderOroboros.Stack(simpleMaskShader);
 			Origins.shaderOroboros.Release();
 		}
-		public static bool alwaysLightAllTiles = false;
-
-		public static SC_Phase_Three_Underlay instance;
 		public override bool IsVisible() => ModContent.GetInstance<SC_Phase_Three_Overlay>().IsVisible();
-		private double SurfaceFrameCounter;
-		private int SurfaceFrame = 6;
-		private int pingpongCounter = 1;
-		private Asset<Texture2D>[] sc_BGs;
-		private const int bgsAmount = 30;
-		public override void Update(GameTime gameTime) {
-			SurfaceFrameCounter += Math.Round(gameTime.ElapsedGameTime.Divide(TimeSpan.FromSeconds(1 / 60d)));
-			const double frames_per_frame = 2;
-			while (SurfaceFrameCounter >= frames_per_frame) {
-				// remove the first 5 frame since it makes me want to throw up 
-				if (SurfaceFrame == 5 || SurfaceFrame + 1 > bgsAmount - 1)
-					pingpongCounter *= -1;
-				SurfaceFrame += pingpongCounter;
-				SurfaceFrameCounter -= frames_per_frame;
+		public override void Update(GameTime gameTime) { }
+		static readonly List<SC_Phase_Three_BG_layer> layers = [];
+		public static IEnumerable<SC_Phase_Three_BG_layer> GetActiveLayers() {
+			for (int i = 0; i < layers.Count; i++) {
+				if (layers[i].IsActive) yield return layers[i];
 			}
 		}
-
 		public void Load(Mod mod) {
-			instance = this;
-			sc_BGs = new Asset<Texture2D>[bgsAmount];
-			for (int i = 1; i < bgsAmount; i++) {
-				sc_BGs[i] = ModContent.Request<Texture2D>("Origins/Textures/Backgrounds/SC_BG/SC_BG" + i);
-			}
+			Load();
+			layers.Add(this);
 		}
+		public new abstract void Load();
 		public void Unload() {
 			if (renderTarget is not null) {
 				Main.QueueMainThreadAction(renderTarget.Dispose);
@@ -695,8 +697,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		readonly ArmorShaderData maskShader = new(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "Mask");
 		internal bool active = false;
 		float opacity;
-		public static List<DrawData> drawDatas = [];
-		public static HashSet<object> drawnMaskSources = [];
 		static readonly BlendState realAlphaSourceBlend = new() {
 			ColorSourceBlend = Blend.One,
 			AlphaSourceBlend = Blend.One,
@@ -704,9 +704,29 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			AlphaDestinationBlend = Blend.InverseSourceAlpha
 		};
 		public override void Draw(SpriteBatch spriteBatch) {
-			if (SC_Phase_Three_Underlay.instance.renderTarget is null) return;
+			if (renderTarget is null) {
+				Main.QueueMainThreadAction(SetupRenderTargets);
+				Main.OnResolutionChanged += Resize;
+				return;
+			}
 			if (spriteBatch is null) return;
+			SC_Phase_Three_BG_layer[] layers = SC_Phase_Three_BG_layer.GetActiveLayers().ToArray();
+			if (layers.Length <= 0) return;
 			SpriteBatchState state = spriteBatch.GetState();
+			Texture2D maskTexture;
+			if (layers.Length <= 1) {
+				maskTexture = layers[0].renderTarget;
+			} else {
+				Origins.shaderOroboros.Capture(spriteBatch);
+				spriteBatch.Restart(state, blendState: realAlphaSourceBlend, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
+				for (int i = 0; i < layers.Length; i++) {
+					if (layers[i].renderTarget is null) continue;
+					spriteBatch.Draw(layers[i].renderTarget, Vector2.Zero, Color.White);
+				}
+				Origins.shaderOroboros.DrawContents(renderTarget);
+				Origins.shaderOroboros.Reset(default);
+				maskTexture = renderTarget;
+			}
 			Origins.shaderOroboros.Capture(spriteBatch);
 			spriteBatch.Restart(state, blendState: realAlphaSourceBlend, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.AnisotropicWrap);
 			Vector2 size = new(texture.Width() * (int)MathF.Ceiling(Main.screenWidth / (float)texture.Width()), texture.Height() * (int)MathF.Ceiling(Main.screenHeight / (float)texture.Height()));
@@ -729,16 +749,38 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			const float brightness = 0.1f;
 			const float alpha = 0.1f;
 			maskShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(brightness, brightness, brightness, alpha));
-			Main.graphics.GraphicsDevice.Textures[1] = SC_Phase_Three_Underlay.instance.renderTarget;
+			Main.graphics.GraphicsDevice.Textures[1] = maskTexture;
 			Origins.shaderOroboros.Stack(maskShader);
 			Origins.shaderOroboros.Release();
+
+			for (int i = 0; i < renderTargetsToDispose.Count; i++) {
+				renderTargetsToDispose[i].Dispose();
+			}
+			renderTargetsToDispose.Clear();
 		}
 		internal static readonly List<RenderTarget2D> renderTargetsToDispose = [];
 		public static void SendRenderTargetForDisposal(ref RenderTarget2D renderTarget) {
 			renderTargetsToDispose.Add(renderTarget);
 			renderTarget = null;
 		}
-		public override void Update(GameTime gameTime) { }
+		private double SurfaceFrameCounter;
+		private int SurfaceFrame = 6;
+		private int pingpongCounter = 1;
+		private Asset<Texture2D>[] sc_BGs;
+		private const int bgsAmount = 30;
+		public static Texture2D CurrentBG => instance.sc_BGs[instance.SurfaceFrame].Value;
+		public override void Update(GameTime gameTime) {
+			SurfaceFrameCounter += Math.Round(gameTime.ElapsedGameTime.Divide(TimeSpan.FromSeconds(1 / 60d)));
+			const double frames_per_frame = 2;
+			while (SurfaceFrameCounter >= frames_per_frame) {
+				// remove the first 5 frame since it makes me want to throw up 
+				if (SurfaceFrame == 5 || SurfaceFrame + 1 > bgsAmount - 1)
+					pingpongCounter *= -1;
+				SurfaceFrame += pingpongCounter;
+				SurfaceFrameCounter -= frames_per_frame;
+			}
+		}
+
 		public override void Activate(Vector2 position, params object[] args) {
 			Mode = OverlayMode.Active;
 			if (active.TrySet(true)) opacity = Main.rand.NextFloat(0.6f, 0.85f);
@@ -749,7 +791,33 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Opacity = 0;
 		}
 		public override bool IsVisible() => active;
-		public void Load(Mod mod) { }
-		public void Unload() { }
+		public static SC_Phase_Three_Overlay instance;
+		public void Load(Mod mod) {
+			instance = this;
+			sc_BGs = new Asset<Texture2D>[bgsAmount];
+			for (int i = 1; i < bgsAmount; i++) {
+				sc_BGs[i] = ModContent.Request<Texture2D>("Origins/Textures/Backgrounds/SC_BG/SC_BG" + i);
+			}
+		}
+		public void Unload() {
+			for (int i = 0; i < renderTargetsToDispose.Count; i++) {
+				renderTargetsToDispose[i].Dispose();
+			}
+			renderTargetsToDispose.Clear();
+			if (renderTarget is not null) {
+				Main.QueueMainThreadAction(renderTarget.Dispose);
+				Main.OnResolutionChanged -= Resize;
+			}
+		}
+		internal RenderTarget2D renderTarget;
+		public void Resize(Vector2 _) {
+			if (Main.dedServ) return;
+			renderTarget.Dispose();
+			SetupRenderTargets();
+		}
+		void SetupRenderTargets() {
+			if (renderTarget is not null && !renderTarget.IsDisposed) return;
+			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+		}
 	}
 }

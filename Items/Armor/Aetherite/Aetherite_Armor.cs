@@ -73,7 +73,7 @@ namespace Origins.Items.Armor.Aetherite {
 			.Register();
 		}
 	}
-	public class Aetherite_Aura_P : ModProjectile {
+	public class Aetherite_Aura_P : ModProjectile, ITriggerSCBackground {
 		public override string Texture => "Terraria/Images/Misc/StarDustSky/Planet";
 		public override void SetDefaults() {
 			Projectile.width = 0;
@@ -95,9 +95,9 @@ namespace Origins.Items.Armor.Aetherite {
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			if (SC_Phase_Three_Overlay.drawnMaskSources.Add(Projectile)) {
+			if (SC_Phase_Three_Underlay.DrawnMaskSources.Add(Projectile)) {
 				Texture2D circle = TextureAssets.Projectile[Type].Value;
-				SC_Phase_Three_Overlay.drawDatas.Add(new(
+				SC_Phase_Three_Underlay.DrawDatas.Add(new(
 					circle,
 					Projectile.position - Main.screenPosition,
 					null,

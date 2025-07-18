@@ -684,20 +684,21 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			if (!phase3Active) {
 				foreach (Projectile projectile in Main.ActiveProjectiles) {
-					if (projectile.ModProjectile is Aetherite_Aura_P or Stellar_Spark or Shimmershot_Aura or Hand_Cannon_Portal or Accretion_Ribbon_P) {
+					if (projectile.ModProjectile is ITriggerSCBackground trigger && trigger.TriggerSCBackground) {
 						phase3Active = true;
 						break;
 					}
 				}
 			}
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Underlay", phase3Active, sourcePos);
+			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Midlay", phase3Active, sourcePos);
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", phase3Active, sourcePos);
 		}
 		public void AddArea() {
-			if (scale == 0 || !SC_Phase_Three_Overlay.drawnMaskSources.Add(this)) return;
+			if (scale == 0 || !SC_Phase_Three_Underlay.DrawnMaskSources.Add(this)) return;
 			SC_Phase_Three_Underlay.alwaysLightAllTiles = true;
 			if (float.IsFinite(scale)) {
-				SC_Phase_Three_Overlay.drawDatas.Add(new(
+				SC_Phase_Three_Underlay.DrawDatas.Add(new(
 					circle.Value,
 					sourcePos - Main.screenPosition,
 					null,
@@ -707,13 +708,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					scale = Vector2.One * scale
 				});
 			} else {
-				SC_Phase_Three_Overlay.drawDatas.Add(new(
+				SC_Phase_Three_Underlay.DrawDatas.Add(new(
 					TextureAssets.MagicPixel.Value,
 					new Rectangle(0, 0, Main.screenWidth, Main.screenHeight),
 					Color.White
 				));
 			}
 		}
+	}
+	public interface ITriggerSCBackground {
+		public bool TriggerSCBackground => true;
 	}
 	public class Boss_Bar_SC : ModBossBar {
 		int bossHeadIndex = -1;

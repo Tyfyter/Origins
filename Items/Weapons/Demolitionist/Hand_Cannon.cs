@@ -84,7 +84,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 		}
 	}
-	public class Hand_Cannon_Portal : ModProjectile, ICanisterProjectile {
+	public class Hand_Cannon_Portal : ModProjectile, ICanisterProjectile, ITriggerSCBackground {
 		public override string Texture => "Terraria/Images/Extra_98";
 		public AutoLoadingAsset<Texture2D> OuterTexture { get; } = "";
 		public AutoLoadingAsset<Texture2D> InnerTexture { get; } = "";
@@ -134,10 +134,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
-			if (SC_Phase_Three_Overlay.drawnMaskSources.Add(Projectile)) {
+			if (SC_Phase_Three_Midlay.DrawnMaskSources.Add(Projectile)) {
 				Texture2D circle = TextureAssets.Projectile[Type].Value;
 				for (int i = 0; i < Projectile.ai[0]; i++) {
-					SC_Phase_Three_Overlay.drawDatas.Add(new(
+					SC_Phase_Three_Midlay.DrawDatas.Add(new(
 						circle,
 						Projectile.position - Main.screenPosition,
 						null,

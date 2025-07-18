@@ -18,6 +18,7 @@ using Origins.Projectiles;
 using Origins.Graphics;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs.MiscB.Shimmer_Construct;
+using System.Drawing;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Shimmershot : ModItem {
@@ -64,7 +65,7 @@ namespace Origins.Items.Weapons.Ranged {
 			.Register();
 		}
 	}
-	public class Shimmershot_P : ModProjectile {
+	public class Shimmershot_P : ModProjectile, IPreDrawSceneProjectile, ITriggerSCBackground {
 		public override string Texture => typeof(Shimmershot).GetDefaultTMLName();
 		public static int BarrelOffset => 2;
 		public override void SetDefaults() {
@@ -124,6 +125,7 @@ namespace Origins.Items.Weapons.Ranged {
 				Projectile.rotation = Projectile.velocity.ToRotation();
 				if (Main.myPlayer == Projectile.owner && --Projectile.ai[0] <= 0) {
 					if (Projectile.ai[2] != -1) {
+						originPlayer.luckyHatSetTime = 0;
 						if (Main.mouseLeft && Projectile.ai[2] != -1) {
 							ActuallyShoot();
 						} else if (!player.channel) {
@@ -138,7 +140,7 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 			//Projectile.position.Y += player.gravDir * 2f;
 		}
-		bool ActuallyShoot() {
+		public virtual bool ActuallyShoot() {
 			Player player = Main.player[Projectile.owner];
 			Vector2 position = Projectile.position;
 			position += position.DirectionTo(Main.MouseWorld).RotatedBy(player.direction * -MathHelper.PiOver2) * BarrelOffset;
@@ -172,7 +174,7 @@ namespace Origins.Items.Weapons.Ranged {
 			return false;
 		}
 		public override bool ShouldUpdatePosition() => false;
-		public override bool PreDraw(ref Color lightColor) {
+		public DrawData GetDrawData(Color lightColor) {
 			SpriteEffects dir = Main.player[Projectile.owner].direction == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			if (Main.player[Projectile.owner].gravDir == -1f) {
 				dir ^= SpriteEffects.FlipVertically;
@@ -180,9 +182,9 @@ namespace Origins.Items.Weapons.Ranged {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			Vector2 origin = new Vector2(27, 12);
 			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
-			Main.EntitySpriteDraw(
+			return new(
 				texture,
-				Projectile.position - Main.screenPosition,
+				(Projectile.position - Main.screenPosition).Floor(),
 				frame,
 				lightColor,
 				Projectile.rotation,
@@ -190,6 +192,21 @@ namespace Origins.Items.Weapons.Ranged {
 				Projectile.scale,
 				dir
 			);
+		}
+		public void PreDrawScene() {
+			bool charged = Projectile.localAI[0] >= Projectile.localAI[1];
+			MathUtils.LinearSmoothing(ref Projectile.localAI[2], charged.ToInt(), 1f / (charged ? 6 : 4));
+			if (Projectile.localAI[2] > 0) {
+				DrawData data = GetDrawData(Color.White * Projectile.localAI[2]);
+				Vector2 basePos = data.position;
+				for (int i = 0; i < 4; i++) {
+					data.position = basePos + (data.rotation + MathHelper.PiOver2 * i).ToRotationVector2() * 2 * Projectile.scale;
+					SC_Phase_Three_Midlay.DrawDatas.Add(data);
+				}
+			}
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Main.EntitySpriteDraw(GetDrawData(lightColor));
 			return false;
 		}
 	}
@@ -245,7 +262,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 		}
 	}
-	public class Shimmershot_Aura : ModProjectile {
+	public class Shimmershot_Aura : ModProjectile, ITriggerSCBackground {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailCacheLength[Type] = 30;
@@ -356,7 +373,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
 			Origins.shaderOroboros.Reset(default);
 			Vector2 center = renderTarget.Size() * 0.5f;
-			SC_Phase_Three_Overlay.drawDatas.Add(new(
+			SC_Phase_Three_Midlay.DrawDatas.Add(new(
 				renderTarget,
 				center,
 				null,
@@ -383,6 +400,19 @@ namespace Origins.Items.Weapons.Ranged {
 		void SetupRenderTargets() {
 			if (renderTarget is not null && !renderTarget.IsDisposed) return;
 			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+		}
+	}
+	// joke variation
+	public class Shimmershotgun : Shimmershot {
+		public override string Texture => typeof(Shimmershot).GetDefaultTMLName();
+		public override void AddRecipes() { }
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (base.Shoot(player, source, position, velocity, type, damage, knockback)) {
+				for (int i = 0; i < 5; i++) {
+					Projectile.NewProjectile(source, position, velocity.RotatedByRandom((i + 1) * 0.1f), type, damage, knockback);
+				}
+			}
+			return false;
 		}
 	}
 }

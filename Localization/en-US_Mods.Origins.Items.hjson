@@ -6505,3 +6505,8 @@ Shelf_Coral_Item: {
 	DisplayName: Shelf Coral Item
 	Tooltip: ""
 }
+
+Shimmershotgun: {
+	DisplayName: Shimmershotgun
+	Tooltip: "'The best designated marksman shotgun not on the market'"
+}

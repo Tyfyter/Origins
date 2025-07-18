@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 		}
 	}
-	public class Accretion_Ribbon_P : ModProjectile, IPreDrawSceneProjectile {
+	public class Accretion_Ribbon_P : ModProjectile, IPreDrawSceneProjectile, ITriggerSCBackground {
 		public override string Texture => base.Texture + "ole";
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.IsAWhip[Type] = false; // can't be a whip rn because that overrides custom collision
@@ -187,7 +187,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Origins.shaderOroboros.DrawContents(middleRenderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
 			Origins.shaderOroboros.Reset(default);
 			Vector2 center = middleRenderTarget.Size() * 0.5f;
-			SC_Phase_Three_Overlay.drawDatas.Add(new(
+			SC_Phase_Three_Midlay.DrawDatas.Add(new(
 				middleRenderTarget,
 				center,
 				null,
