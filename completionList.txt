@@ -914,7 +914,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(#3, ^2) Accretion Ribbon !!!
+(☻) Accretion Ribbon !!!
 (^) Aether Opal
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*

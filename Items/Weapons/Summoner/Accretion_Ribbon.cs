@@ -106,6 +106,7 @@ namespace Origins.Items.Weapons.Summoner {
 				if (player.ItemAnimationActive) {
 					Projectile.velocity = Projectile.velocity.RotatedBy(0.4f * MathF.Sin((player.itemAnimation / (float)player.itemAnimationMax) * MathHelper.TwoPi + MathHelper.Pi));
 				}
+				player.ChangeDir(Math.Sign(velocity.X));
 			}
 			Vector2 centerDiff = player.MountedCenter - player.position;
 			Projectile.position = Vector2.Lerp(player.oldPosition, player.position, 1 - (Projectile.numUpdates + 1) / (float)Projectile.MaxUpdates) + centerDiff + (Projectile.velocity * Projectile.ai[0]).Floor();

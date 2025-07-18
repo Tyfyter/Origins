@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.useTime = 4;
 			Item.width = 36;
 			Item.height = 16;
-			Item.useAmmo = ItemID.Gel;
+			Item.useAmmo = AmmoID.Gel;
 			Item.shoot = ModContent.ProjectileType<Sleetfire_P>();
 			Item.shootSpeed = 7f;
 			Item.reuseDelay = 9;
