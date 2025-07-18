@@ -746,7 +746,7 @@ MELEE WEAPONS:
 
 (^) Amenonuhoko*
 (^) Amoebash*
-(^) Boomboom
+(^) Boomboom*
 (^) Chambersite Phasesaber
 (^) Crystal Cutters*
 (^) Depth Charge*
@@ -859,7 +859,7 @@ MAGIC WEAPONS:
 |---
 (^) Area Denial*
 (^) Avulsion*
-(^) Beginner's Tome
+(^) Beginner's Tome*
 (^) Cryostike*
 (^) Eaterboros*
 (^) Eternabrite
@@ -871,18 +871,18 @@ MAGIC WEAPONS:
 (^) Nerve Flan
 (^) Shimmerstar Staff
 (^) Splitsplash*
-(^) Tones of Agony
+(^) Tones of Agony*
 
 (^) Bled Out Staff*
 (^) Brine Haze
 (^) Chemical Laser*
 (^) Communion*
 (^) Dew Justice*
-(^) Dismay
+(^) Dismay*
 (^) Eternanite
-(⛥) Innermost Manifest
+(⛥) Innermost Manifest*
 (^) Seam Beam*
-(^) Shimmer Rod
+(^) Shimmer Rod*
 (^) Shinedown
 (X) Siphon Staff
 (^) Splashid*
@@ -891,7 +891,7 @@ MAGIC WEAPONS:
 (X) True Nerve Flan
 
 (^) Amber of Embers*
-(^) Breach
+(^) Breach*
 (^) Hævateinn*
 (^) Haunted Vase
 (^) Missing File*
