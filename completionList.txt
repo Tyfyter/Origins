@@ -354,7 +354,7 @@ NPC DIALOGUE:
 
 ARMOR:
 |---
-(☻) Aether Armor !!!
+(^) Aether Armor
 (^) Ancient Defiled Armor*
 (^) Ancient Felnum Armor*
 (^) Ancient Riven Armor*
@@ -914,7 +914,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(☻) Accretion Ribbon !!!
+(#2, ^2) Accretion Ribbon !!!
 (^) Aether Opal
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*

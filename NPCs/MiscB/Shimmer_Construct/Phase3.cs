@@ -609,7 +609,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			if (spriteBatch is null) return;
 			ModContent.GetInstance<SC_Scene_Effect>().AddArea();
-			if (drawDatas.Count > 0) alwaysLightAllTiles = true;
+			//if (drawDatas.Count > 0) alwaysLightAllTiles = true;
 			base.Draw(spriteBatch);
 		}
 		public static bool alwaysLightAllTiles = false;

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -104,6 +105,8 @@ namespace Origins.Items.Armor.Aetherite {
 			}
 			float radius = MaxRadius * Projectile.scale;
 			if (positions.TryPeek(out Vector2 next) && next.WithinRange(Projectile.position, radius)) {
+				SoundEngine.PlaySound(SoundID.Item88, Projectile.Center);
+				SoundEngine.PlaySound(SoundID.Item91.WithPitchRange(1.65f, 1.8f).WithVolume(0.75f), Projectile.Center);
 				Projectile.SpawnProjectile(null,
 					positions.Pop(),
 					Vector2.Zero,
