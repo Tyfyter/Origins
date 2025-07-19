@@ -457,7 +457,7 @@ Lazy_Cloak: {
 	DisplayName: Lazy Cloak
 	Tooltip:
 		'''
-		Chases after marked enemies
+		Chases after tagged enemies
 		'It just doesn't want to do all the work'
 		'''
 }
@@ -6255,7 +6255,7 @@ Otherworldly_Cloak: {
 	DisplayName: Otherworldly Cloak
 	Tooltip:
 		'''
-		Chases after marked enemies
+		Chases after tagged enemies
 		Allows for a super high jump and negates fall damage
 		Your gravity while jumping is reduced
 		Holding down increases your falling acceleration
@@ -6270,7 +6270,7 @@ Master_Magician_Cloak: {
 		Automatically use mana potions when needed
 		Causes stars to fall after taking damage
 		Stars restore mana when collected
-		Chases after marked enemies
+		Chases after tagged enemies
 		Allows for a super high jump and negates fall damage
 		Your gravity while jumping is reduced
 		Holding down increases your falling acceleration

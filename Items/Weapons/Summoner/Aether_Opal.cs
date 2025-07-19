@@ -255,7 +255,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (foundTarget) {
 				if (++Projectile.ai[0] >= attack_time) {
 					int mode = projDistanceFromTarget > 16 * 10 ? 0 : 1;
-					SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item9.WithPitchRange(-1f, -0.2f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item60.WithPitchRange(-1f, -0.2f), Projectile.Center);
 					int count = 6;
 					for (int i = count; i > 0; i--) {
 						Projectile.SpawnProjectile(
