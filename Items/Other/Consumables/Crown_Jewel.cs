@@ -31,8 +31,8 @@ namespace Origins.Items.Other.Consumables {
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this, "");
 			GameShaders.Armor.BindShader(Type, new ArmorShaderData(
-				Mod.Assets.Request<Effect>("Effects/Crown_Jewel_Caustics"),
-				"Crown_Jewel_Caustics"
+				Mod.Assets.Request<Effect>("Effects/Item_Caustics"),
+				"Crown_Jewel"
 			))
 			.UseImage(TextureAssets.Extra[193]);
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);

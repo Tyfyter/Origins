@@ -35,10 +35,6 @@ Loading description file: CoordinateMaskFilter.fx... Done!
 Compiling font... Done!
 Compiling font content file: CoordinateMaskFilter.xnb... Done!
 
-Loading description file: Crown_Jewel_Caustics.fx... Done!
-Compiling font... Done!
-Compiling font content file: Crown_Jewel_Caustics.xnb... Done!
-
 Loading description file: DefiledIndicator.fx... Done!
 Compiling font... Done!
 Compiling font content file: DefiledIndicator.xnb... Done!
@@ -70,6 +66,10 @@ Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
 File: HolidayHairDye.fx
 Done!
 Compiling font content file: HolidayHairDye.xnb... Done!
+
+Loading description file: Item_Caustics.fx... Done!
+Compiling font... Done!
+Compiling font content file: Item_Caustics.xnb... Done!
 
 Loading description file: Journal.fx... Done!
 Compiling font... Warning: Warning compiling Journal.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them

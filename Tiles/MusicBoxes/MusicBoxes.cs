@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.Projectiles.Magic;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
@@ -7,13 +8,16 @@ using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Reflection;
 using Origins.World.BiomeData;
 using PegasusLib;
+using PegasusLib.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -96,7 +100,7 @@ namespace Origins.Tiles.MusicBoxes {
 		public override string Name => tile.Name + "_Item";
 		public override LocalizedText DisplayName => Language.GetText("Mods.Origins.Tiles." + tile.Name);
 		public override LocalizedText Tooltip => LocalizedText.Empty;
-		protected override bool CloneNewInstances => true;
+		protected sealed override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.CanGetPrefixes[Type] = false; // music boxes can't get prefixes in vanilla
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox; // recorded music boxes transform into the basic form in shimmer
@@ -453,6 +457,15 @@ namespace Origins.Tiles.MusicBoxes {
 		public override int DustType => DustID.GemAmethyst;
 		public override Music_Box_Item CreateItem() => new Music_Box_TD_Item(this);
 		public class Music_Box_TD_Item(Music_Box tile) : Music_Box_Item(tile) {
+			public static int ShaderID { get; private set; }
+			public override void SetStaticDefaults() {
+				GameShaders.Armor.BindShader(Type, new ArmorShaderData(
+					Mod.Assets.Request<Effect>("Effects/Item_Caustics"),
+					"The_Dive"
+				));
+				ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
+			}
+			AutoLoadingAsset<Texture2D> glowTexture = "Terraria/Images/Misc/Perlin";
 			public override void Update(ref float gravity, ref float maxFallSpeed) {
 				if (Item.newAndShiny) {
 					if (!NPC.AnyNPCs(NPCType<Shimmer_Construct>())) {
@@ -461,6 +474,26 @@ namespace Origins.Tiles.MusicBoxes {
 						Item.shimmered = true;
 						Item.shimmerTime = 1;
 					}
+				}
+			}
+			public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
+				SpriteBatchState state = spriteBatch.GetState();
+				try {
+					spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate);
+					Texture2D texture = glowTexture;
+					DrawData data = new() {
+						texture = texture,
+						position = Item.Center - Main.screenPosition,
+						color = Color.Plum,
+						rotation = 0f,
+						scale = new Vector2(scale),
+						shader = ShaderID,
+						origin = texture.Size() * 0.5f
+					};
+					GameShaders.Armor.ApplySecondary(ShaderID, null, data);
+					data.Draw(spriteBatch);
+				} finally {
+					spriteBatch.Restart(state);
 				}
 			}
 		}
