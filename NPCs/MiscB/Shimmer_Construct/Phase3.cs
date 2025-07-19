@@ -119,7 +119,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				ID = Type;
 			}
 			public override void SetDefaults() {
-				Projectile.damage = 48/* + (4 * difficultyMult)*/;
 				Projectile.friendly = false;
 				Projectile.hostile = true;
 				Projectile.timeLeft = 60 * 20;
@@ -603,9 +602,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void Load() => instance = this;
 		public override void Draw(SpriteBatch spriteBatch) {
 			alwaysLightAllTiles = false;
-			if (renderTarget is null) return;
+			if (renderTarget is null) {
+				Main.QueueMainThreadAction(SetupRenderTargets);
+				Main.OnResolutionChanged += Resize;
+				return;
+			}
 			if (spriteBatch is null) return;
 			ModContent.GetInstance<SC_Scene_Effect>().AddArea();
+			if (drawDatas.Count > 0) alwaysLightAllTiles = true;
 			base.Draw(spriteBatch);
 		}
 		public static bool alwaysLightAllTiles = false;
@@ -697,7 +701,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			renderTarget.Dispose();
 			SetupRenderTargets();
 		}
-		void SetupRenderTargets() {
+		protected void SetupRenderTargets() {
 			if (renderTarget is not null && !renderTarget.IsDisposed) return;
 			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 		}

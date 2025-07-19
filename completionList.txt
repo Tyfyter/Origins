@@ -354,7 +354,7 @@ NPC DIALOGUE:
 
 ARMOR:
 |---
-(#2, ^2) Aether Armor !!!
+(☻) Aether Armor !!!
 (^) Ancient Defiled Armor*
 (^) Ancient Felnum Armor*
 (^) Ancient Riven Armor*

@@ -696,7 +696,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public void AddArea() {
 			if (scale == 0 || !SC_Phase_Three_Underlay.DrawnMaskSources.Add(this)) return;
-			SC_Phase_Three_Underlay.alwaysLightAllTiles = true;
 			if (float.IsFinite(scale)) {
 				SC_Phase_Three_Underlay.DrawDatas.Add(new(
 					circle.Value,

@@ -1835,7 +1835,7 @@ Projectiles: {
 	Constellation_Star.DisplayName: Constellation Star
 	Actual_Constellation.DisplayName: Actual Constellation
 	Voltefuse_Star.DisplayName: Voltefuse Star
-	Shimmer_Landmines.DisplayName: Shimmer Landmines
+	Shimmer_Landmines.DisplayName: Shimmer Star
 	Shotgun_Indicator.DisplayName: Shotgun Indicator
 	Amnestic_Rose_Alt_Flower_P.DisplayName: Amnestic Rose Flower
 	Amnestic_Rose_Alt_Goo_Ball.DisplayName: Amnestic Rose Goo Ball
@@ -1850,12 +1850,13 @@ Projectiles: {
 	Stellar_Spark.DisplayName: Stellar Spark
 	Riven_Protoform_Hook.DisplayName: Riven Protoform Hook
 	Miter_Saw_P.DisplayName: Miter Saw
-	Shimmershot_P.DisplayName: Shimmershot P
+	Shimmershot_P.DisplayName: Shimmershot
 	Shimmershot_Aura.DisplayName: Shimmershot Aura
 	Shimmershot_Bullet.DisplayName: Shimmershot Bullet
 	Hand_Cannon_P.DisplayName: Hand Cannon
 	Hand_Cannon_Portal.DisplayName: Hand Cannon Portal
-	Accretion_Ribbon_P.DisplayName: Accretion Ribbon P
+	Accretion_Ribbon_P.DisplayName: Accretion Ribbon
+	Friendly_Shimmer_Landmine.DisplayName: Shimmer Star
 }
 
 Prefixes: {

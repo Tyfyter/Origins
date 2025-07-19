@@ -4650,6 +4650,7 @@ namespace Origins {
 				}
 			}
 		}
+		public static bool IsLocallyOwned(this Projectile projectile) => projectile.owner == Main.myPlayer;
 	}
 	public static class ContentExtensions {
 		public static LocalizedText[] GetChildren(this LanguageTree languageTree) => languageTree.Values.Select(tree => tree.value).ToArray();

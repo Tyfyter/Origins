@@ -1856,6 +1856,7 @@ Projectiles: {
 	// Hand_Cannon_P.DisplayName: Hand Cannon
 	// Hand_Cannon_Portal.DisplayName: Hand Cannon Portal
 	// Accretion_Ribbon_P.DisplayName: Accretion Ribbon P
+	// Friendly_Shimmer_Landmine.DisplayName: Friendly Shimmer Landmine
 }
 
 Prefixes: {
