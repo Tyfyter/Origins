@@ -21,5 +21,12 @@ namespace Origins.Items.Accessories {
 			player.OriginPlayer().resizingGlove = true;
 			player.autoReuseGlove = true;
 		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient(ItemID.PowerGlove)
+			.AddIngredient<Resizing_Glove>()
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
+		}
 	}
 }

@@ -1,5 +1,6 @@
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.Audio;
@@ -30,6 +31,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Recipe.Create(Type, 6)
 			.AddIngredient(ItemID.Grenade, 6)
 			.AddIngredient(ModContent.ItemType<Felnum_Ore_Item>())
+			.AddTile(TileID.Anvils)
+			.Register();
+
+			Recipe.Create(Type, 18)
+			.AddIngredient(ItemID.Grenade, 18)
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>())
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

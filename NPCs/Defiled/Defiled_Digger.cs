@@ -193,7 +193,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
-				NPC current = Main.npc[NPC.realLife];
+				NPC current = Main.npc.GetIfInRange(NPC.realLife, NPC);
 				while (current.ai[0] != 0) {
 					deathEffect(current);
 					current = Main.npc[(int)current.ai[0]];
