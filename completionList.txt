@@ -720,6 +720,7 @@ MELEE WEAPONS:
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
 (^) Cool Sword
+(X) Splitting Image
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*

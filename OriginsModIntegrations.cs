@@ -517,6 +517,9 @@ namespace Origins {
 					() => Main.LocalPlayer.OriginPlayer().crownJewel
 				);
 			}
+			if (ModLoader.TryGetMod("miningcracks_take_on_luiafk", out Mod luiafk)) {
+				OriginsSets.NPCs.TargetDummies[luiafk.Find<ModNPC>("Deeps").Type] = true;
+			}
 		}
 		public static void SetStaticDefaults() {
 			if (instance.fargosMutant is not null) SetFargosStaticDefaults();
@@ -794,6 +797,7 @@ namespace Origins {
 			AddItemsToGroup(GetGroup("MagicStorage:AnyBookcase"), ModCompatSets.AnyBookcases);
 			AddItemsToGroup(GetGroup("MagicStorage:AnyCampfire"), ModCompatSets.AnyCampfires);
 		}
+		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosGroups() {
 			static int GetBanner(int npc) => Item.NPCtoBanner(npc);
 			List<int> brine = [];
