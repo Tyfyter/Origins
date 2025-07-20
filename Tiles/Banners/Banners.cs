@@ -82,7 +82,7 @@ namespace Origins.Tiles.Banners {
 		public override void Load() => BannerGlobalNPC.BannerItems.Add(this);
 		public override void SetStaticDefaults() {
 			_ = tile.NPC.Name;
-			ItemID.Sets.KillsToBanner[Type] = killsRequired;
+			ItemID.Sets.KillsToBanner[Type] = tile.killsRequired;
 		}
 		internal void CacheItemType() {
 			if (BannerGlobalNPC.NPCTypesWithBanners.Contains(tile.NPC.GetType())) BannerGlobalNPC.NPCToBannerItem.Add(tile.NPC.Type, Type);

@@ -15,7 +15,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscB {
 	public class Chambersite_Sentinel : ModNPC {
-		public override void Load() => this.AddBanner(20);
+		public override void Load() => this.AddBanner(25);
 		public override void SetStaticDefaults() {
 		}
 		public override void SetDefaults() {
