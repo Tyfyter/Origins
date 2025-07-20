@@ -46,7 +46,7 @@ namespace Origins.Questing {
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
 		public override bool CanStart(NPC npc) {
-			return npc.type == NPCID.Painter && Stage == 0;
+			return npc.type == NPCID.Painter && Stage == 0 && Main.hardMode;
 		}
 		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Painter.Spray_N_Pray_Quest.Inquire");
 		public override void OnAccept(NPC npc) {

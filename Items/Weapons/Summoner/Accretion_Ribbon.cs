@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static ArmorShaderData EraseShader { get; set; }
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
-			EraseShader = GameShaders.Armor.BindShader(Type, new ArmorShaderData(Mod.Assets.Request<Effect>("Effects/Misc"), "Erase"));
+			EraseShader = new(Mod.Assets.Request<Effect>("Effects/Misc"), "Erase");
 		}
 		public override void SetDefaults() {
 			Item.dye = 0;
