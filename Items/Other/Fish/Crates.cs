@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Materials;
@@ -10,15 +9,12 @@ using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using static System.Reflection.Metadata.BlobBuilder;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Terraria.ID.ItemID;
 using static Terraria.ModLoader.ModContent;
 
@@ -27,7 +23,6 @@ namespace Origins.Items.Other.Fish {
 	public class Chunky_Crate : Fishing_Crate_Item {
 		public override Color MapColor => new(200, 200, 200);
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
-
 			IItemDropRule[] defiled = [
 				Defiled_Wastelands.FissureDropRule,
 				BiomeChest_GoldCoin,
@@ -46,8 +41,8 @@ namespace Origins.Items.Other.Fish {
 	public class Bilious_Crate : Fishing_Crate_Item {
 		public override Color MapColor => new(100, 100, 100);
 		public override bool Hardmode => true;
+		public override int ShimmerResult => ItemType<Chunky_Crate>();
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
-
 			IItemDropRule[] defiled = [
 				Defiled_Wastelands.FissureDropRule,
 				BiomeChest_GoldCoin,
@@ -96,6 +91,7 @@ namespace Origins.Items.Other.Fish {
 	public class Festering_Crate : Fishing_Crate_Item {
 		public override Color MapColor => new(100, 100, 100);
 		public override Color TileGlowColor => new(0.394f, 0.879f, 0.912f);
+		public override int ShimmerResult => ItemType<Crusty_Crate>();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Origins.AddGlowMask(this);
@@ -122,7 +118,6 @@ namespace Origins.Items.Other.Fish {
 	public class Residual_Crate : Fishing_Crate_Item {
 		public override Color MapColor => new(0, 100, 102);
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
-
 			IItemDropRule[] brine = [
 				new OneFromRulesRule(1,
 					ItemDropRule.NotScalingWithLuck(ItemType<Brineglow_Item>(), 1, 5, 16),
@@ -152,6 +147,7 @@ namespace Origins.Items.Other.Fish {
 	public class Basic_Crate : Fishing_Crate_Item {
 		public override Color MapColor => new(0, 62, 64);
 		public override bool Hardmode => true;
+		public override int ShimmerResult => ItemType<Residual_Crate>();
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			IItemDropRule[] brine = [
 				new OneFromRulesRule(1,
@@ -193,6 +189,7 @@ namespace Origins.Items.Other.Fish {
 		public virtual Color TileGlowColor => Color.Black;
 		public virtual float TileGlowLightAmount => 0.01f;
 		public virtual float TileGlowFancyLightAmount => 0.2f;
+		public virtual int ShimmerResult {  get; set; }
 		public abstract Color MapColor { get; }
 		public static IItemDropRule BiomeChest_GoldCoin => ItemDropRule.Common(GoldCoin, 4, 5, 13);//normally NotScalingWithLuck
 		public static IItemDropRule BiomeCrate_SoulOfNight => ItemDropRule.NotScalingWithLuck(SoulofNight, 2, 2, 5);
@@ -256,6 +253,7 @@ namespace Origins.Items.Other.Fish {
 		public override void SetStaticDefaults() {
 			Sets.IsFishingCrate[Type] = true;
 			Sets.IsFishingCrateHardmode[Type] = Hardmode;
+			if (ShimmerResult > 0) Sets.ShimmerTransformToItem[Type] = ShimmerResult;
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
