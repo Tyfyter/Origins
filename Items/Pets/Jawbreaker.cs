@@ -30,8 +30,8 @@ namespace Origins.Items.Pets {
 			("", SpriteGenerator.GenerateAnimationSprite(ModContent.Request<Texture2D>(typeof(Juvenile_Amalgamation).GetDefaultTMLName(), AssetRequestMode.ImmediateLoad).Value, Main.projFrames[projectileID], 5)),
 		];*/
 	}
-	public class Stellar_Spark : ModProjectile, ITriggerSCBackground {
-		public override string Texture => $"Terraria/Images/NPC_{NPCID.ServantofCthulhu}";
+	public class Stellar_Spark : ModProjectile, IPreDrawSceneProjectile, ITriggerSCBackground {
+		public override string Texture => "Terraria/Images/Misc/StarDustSky/Planet";
 		public override void SetStaticDefaults() {
 			Jawbreaker.projectileID = Projectile.type;
 			// Sets the amount of frames this minion has on its spritesheet
@@ -150,7 +150,7 @@ namespace Origins.Items.Pets {
 
 			// Some visuals here
 			if (Projectile.ai[1] == 1 && Projectile.ai[0] == 0) {
-				if (MathUtils.LinearSmoothing(ref Projectile.ai[2], 1f, 1 / 60f)) Projectile.ai[0] = 1;
+				if (MathUtils.LinearSmoothing(ref Projectile.ai[2], 0.6f, 1 / 60f)) Projectile.ai[0] = 1;
 			} else if (Projectile.ai[1] == 1 && ++Projectile.ai[0] > 600) {
 				if (MathUtils.LinearSmoothing(ref Projectile.ai[2], 0, 1 / 60f)) {
 					Projectile.ai[1] = Projectile.ai[0] = 0;
@@ -159,19 +159,22 @@ namespace Origins.Items.Pets {
 			#endregion
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			default(ShimmerConstructSDF).Draw(Projectile.Center - Main.screenPosition, Projectile.rotation, new Vector2(256, 256) / 2.5f);
+			return false;
+		}
+		public void PreDrawScene() {
 			if (SC_Phase_Three_Midlay.DrawnMaskSources.Add(Projectile)) {
 				Texture2D circle = TextureAssets.Projectile[Type].Value;
 				SC_Phase_Three_Midlay.DrawDatas.Add(new(
 					circle,
-					Projectile.position - Main.screenPosition,
+					Projectile.Center - Main.screenPosition,
 					null,
 					Color.White
 				) {
 					origin = circle.Size() * 0.5f,
-					scale = Vector2.One * Projectile.scale
+					scale = Vector2.One * Projectile.scale * Projectile.ai[2]
 				});
 			}
-			return false;
 		}
 	}/*
 	public class Aetherite_Crystal_Entry : JournalEntry {

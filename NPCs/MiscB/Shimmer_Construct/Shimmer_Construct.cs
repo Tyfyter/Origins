@@ -362,7 +362,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 position = NPC.Center;
 			if (IsInPhase3 || (deathAnimationTime > 100)) {
-				default(ShimmerConstructSDF).Draw(position - screenPos, NPC.rotation);
+				default(ShimmerConstructSDF).Draw(position - screenPos, NPC.rotation, new Vector2(256, 256));
 			}
 			if (deathAnimationTime > 0) {
 				if (deathAnimationTime >= shattertime) {
@@ -754,14 +754,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	public struct ShimmerConstructSDF {
 		private static VertexRectangle rect = new VertexRectangle();
-		public void Draw(Vector2 position, float rotation) {
+		public void Draw(Vector2 position, float rotation, Vector2 size) {
 			MiscShaderData shader = GameShaders.Misc["Origins:ShimmerConstructSDF"];
 			shader.UseColor(Color.CornflowerBlue);
 			shader.UseSecondaryColor(Color.MediumPurple);
 			shader.UseImage1(TextureAssets.Extra[193]);
 			//shader.UseImage2(ModContent.Request<Texture2D>("Origins/Textures/SC_Mask"));
 			shader.Apply();
-			rect.Draw(position, Color.White, new Vector2(256, 256), rotation, position);
+			rect.Draw(position, Color.White, size, rotation, position);
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 		}
 	}

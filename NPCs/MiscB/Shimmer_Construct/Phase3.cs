@@ -708,7 +708,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	}
 	public class SC_Phase_Three_Overlay() : Overlay(EffectPriority.High, RenderLayers.ForegroundWater), ILoadable {
 		readonly Asset<Texture2D> texture = ModContent.Request<Texture2D>("Origins/Textures/Shimmer_Construct_BG");
-		readonly ArmorShaderData invertAnimateShader = GameShaders.Armor.BindShader(ItemID.HallowedBar, new ArmorShaderData(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "InvertAnimate"));
+		readonly ArmorShaderData invertAnimateShader = new(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "InvertAnimate");
 		readonly ArmorShaderData maskShader = new(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "Mask");
 		internal bool active = false;
 		float opacity;
