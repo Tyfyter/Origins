@@ -4661,7 +4661,7 @@ namespace Origins {
 				.Where(text => text.CanFormatWith(format))
 			.ToArray())
 			.FormatWith(format);
-		public static void AddBanner(this ModNPC self, int? killsRequired = null) {
+		public static void AddBanner(this ModNPC self, int killsRequired = 50) {
 			self.Mod.AddContent(new Banner(self, killsRequired));
 			BannerGlobalNPC.NPCTypesWithBanners.Add(self.GetType());
 		}
