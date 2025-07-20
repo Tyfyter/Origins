@@ -2698,7 +2698,6 @@ SetBonuses: {
 	/* Aetherite:
 		'''
 		Able to temporarily open a shimmering rift
-		The rift significantly slows enemies and their projectiles down
 		Random damaging aether stars will appear in this dimension
 		Teleports the player and all entities back where they last were afterwards
 		15 second cooldown
