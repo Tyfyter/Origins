@@ -57,7 +57,7 @@ namespace Origins.Items.Pets {
 		}
 
 		public override void AI() {
-			if (/*Main.rand.NextBool(650) &&*/ Projectile.ai[1] == 0) Projectile.ai[1] = 1;
+			if (Main.rand.NextBool(650) && Projectile.ai[1] == 0) Projectile.ai[1] = 1;
 			Player player = Main.player[Projectile.owner];
 
 			#region Active check
@@ -151,9 +151,9 @@ namespace Origins.Items.Pets {
 
 			// Some visuals here
 			if (Projectile.ai[1] == 1 && Projectile.ai[0] == 0) {
-				if (MathUtils.LinearSmoothing(ref Projectile.ai[2], 0.6f, 1 / 60f)) Projectile.ai[0] = 1;
-			} else if (Projectile.ai[1] == 1 && Projectile.ai[0]++ > 300) {
-				if (MathUtils.LinearSmoothing(ref Projectile.ai[2], 0, 1 / 60f)) {
+				if (MathUtils.LinearSmoothing(ref Projectile.ai[2], 4.6f, 4 / 60f)) Projectile.ai[0] = 1;
+			} else if (Projectile.ai[1] == 1 && Projectile.ai[0]++ > 600) {
+				if (MathUtils.LinearSmoothing(ref Projectile.ai[2], 0, 6 / 60f)) {
 					Projectile.ai[1] = Projectile.ai[0] = 0;
 				}
 			}
