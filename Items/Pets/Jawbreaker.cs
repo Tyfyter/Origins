@@ -33,7 +33,7 @@ namespace Origins.Items.Pets {
 		];*/
 	}
 	public class Stellar_Spark : ModProjectile, IPreDrawSceneProjectile, ITriggerSCBackground {
-		public override string Texture => "Terraria/Images/Misc/StarDustSky/Planet";
+		public override string Texture => "Terraria/Images/Misc/Ripples";
 		public override void SetStaticDefaults() {
 			Jawbreaker.projectileID = Projectile.type;
 			// Sets the amount of frames this minion has on its spritesheet
@@ -161,15 +161,15 @@ namespace Origins.Items.Pets {
 		}
 		public DrawData GetDrawData(Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
-			Vector2 origin = texture.Size() * 0.5f;
+			Rectangle frame = texture.Frame(verticalFrames: 2, frameY: 1);
 			return new(
 				texture,
 				(Projectile.Center - Main.screenPosition).Floor(),
-				null,
+				frame,
 				lightColor,
 				0,
-				origin,
-				Vector2.One,
+				frame.Size() * 0.5f,
+				Vector2.One * Projectile.scale * Projectile.ai[2],
 				SpriteEffects.None
 			);
 		}
@@ -185,7 +185,7 @@ namespace Origins.Items.Pets {
 			Origins.shaderOroboros.Capture();
 
 			if (Projectile.ai[2] > 0) {
-				DrawData data = GetDrawData(Color.White * Projectile.ai[2]);
+				DrawData data = GetDrawData(Color.White);
 				Vector2 basePos = data.position;
 				for (int i = 0; i < 4; i++) {
 					data.position = basePos + (MathHelper.PiOver2 * i).ToRotationVector2() * 2;
@@ -206,7 +206,7 @@ namespace Origins.Items.Pets {
 				Color.White,
 				0,
 				center,
-				(Vector2.One / Main.GameViewMatrix.Zoom) * Projectile.scale * Projectile.ai[2],
+				Vector2.One,
 				SpriteEffects.None
 			);/*
 
@@ -231,7 +231,7 @@ namespace Origins.Items.Pets {
 			}
 			Origins.shaderOroboros.Capture();
 
-			Main.EntitySpriteDraw(GetDrawData(Color.White * Projectile.ai[2]));
+			Main.EntitySpriteDraw(GetDrawData(Color.White));
 
 			Origins.shaderOroboros.DrawContents(middleRenderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
 			Origins.shaderOroboros.Reset(default);
@@ -243,7 +243,7 @@ namespace Origins.Items.Pets {
 				Color.White,
 				0,
 				center,
-				Vector2.One * Projectile.scale * Projectile.ai[2],
+				Vector2.One,
 				SpriteEffects.None
 			));/*
 			if (SC_Phase_Three_Midlay.DrawnMaskSources.Add(Projectile)) {
