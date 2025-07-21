@@ -1252,6 +1252,11 @@ Buffs: {
 		// DisplayName: Accretion Ribbon Buff
 		// Description: Mods.Origins.Buffs.Accretion_Ribbon_Buff.Description
 	}
+
+	Goo_Wall_Debuff: {
+		// DisplayName: Goo Wall Debuff
+		// Description: Mods.Origins.Buffs.Goo_Wall_Debuff.Description
+	}
 }
 
 DamageClassName: {
@@ -1857,6 +1862,9 @@ Projectiles: {
 	// Hand_Cannon_Portal.DisplayName: Hand Cannon Portal
 	// Accretion_Ribbon_P.DisplayName: Accretion Ribbon
 	// Friendly_Shimmer_Landmine.DisplayName: Shimmer Star
+	// Splitting_Image_Chunk.DisplayName: Splitting Image
+	// Splitting_Image_Slash.DisplayName: Splitting Image
+	// Splitting_Image_Chunk_Spawn.DisplayName: Splitting Image
 }
 
 Prefixes: {

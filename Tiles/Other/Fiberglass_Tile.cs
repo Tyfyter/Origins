@@ -23,6 +23,7 @@ namespace Origins.Tiles.Other {
 			Main.tileMergeDirt[Type] = false;
 			AddMapEntry(new Color(42, 116, 160));
 			DustType = DustID.Everscream;
+			HitSound = SoundID.Shatter;
 		}
 		public override bool KillSound(int i, int j, bool fail) {
 			if (!fail) SoundEngine.PlaySound(SoundID.Shatter, new Vector2(i * 16, j * 16));

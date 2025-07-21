@@ -23,6 +23,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetDefaults(NPC entity) {
 			entity.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
+			entity.buffImmune[Goo_Wall_Debuff.ID] = true;
 		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
 			if (npc.poisoned) {

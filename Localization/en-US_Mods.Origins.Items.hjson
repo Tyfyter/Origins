@@ -6510,3 +6510,8 @@ Shimmershotgun: {
 	DisplayName: Shimmershotgun
 	Tooltip: "'The best designated marksman shotgun not on the market'"
 }
+
+Splitting_Image: {
+	DisplayName: Splitting Image
+	Tooltip: ""
+}

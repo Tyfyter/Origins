@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Pets;
+using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using PegasusLib;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -44,8 +46,7 @@ namespace Origins.Items.Pets {
 
 		public override void SetDefaults() {
 			Projectile.timeLeft = 5;
-			Projectile.width = 20;
-			Projectile.height = 30;
+			Projectile.Size = new(16 * 3);
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
 		}
@@ -56,7 +57,7 @@ namespace Origins.Items.Pets {
 		}
 
 		public override void AI() {
-			if (Main.rand.NextBool(650) && Projectile.ai[1] == 0) Projectile.ai[1] = 1;
+			if (/*Main.rand.NextBool(650) &&*/ Projectile.ai[1] == 0) Projectile.ai[1] = 1;
 			Player player = Main.player[Projectile.owner];
 
 			#region Active check
@@ -151,18 +152,100 @@ namespace Origins.Items.Pets {
 			// Some visuals here
 			if (Projectile.ai[1] == 1 && Projectile.ai[0] == 0) {
 				if (MathUtils.LinearSmoothing(ref Projectile.ai[2], 0.6f, 1 / 60f)) Projectile.ai[0] = 1;
-			} else if (Projectile.ai[1] == 1 && ++Projectile.ai[0] > 600) {
+			} else if (Projectile.ai[1] == 1 && Projectile.ai[0]++ > 300) {
 				if (MathUtils.LinearSmoothing(ref Projectile.ai[2], 0, 1 / 60f)) {
 					Projectile.ai[1] = Projectile.ai[0] = 0;
 				}
 			}
 			#endregion
 		}
+		public DrawData GetDrawData(Color lightColor) {
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Vector2 origin = texture.Size() * 0.5f;
+			return new(
+				texture,
+				(Projectile.Center - Main.screenPosition).Floor(),
+				null,
+				lightColor,
+				0,
+				origin,
+				Vector2.One,
+				SpriteEffects.None
+			);
+		}
 		public override bool PreDraw(ref Color lightColor) {
-			default(ShimmerConstructSDF).Draw(Projectile.Center - Main.screenPosition, Projectile.rotation, new Vector2(256, 256) / 2.5f);
+			default(ShimmerConstructSDF).Draw(Projectile.Center - Main.screenPosition, Projectile.rotation, new Vector2(256, 256) / 3f);
+
+			if (middleRenderTarget is null) {
+				Main.QueueMainThreadAction(SetupRenderTargets);
+				Main.OnResolutionChanged += Resize;
+				return false;
+			}
+
+			Origins.shaderOroboros.Capture();
+
+			if (Projectile.ai[2] > 0) {
+				DrawData data = GetDrawData(Color.White * Projectile.ai[2]);
+				Vector2 basePos = data.position;
+				for (int i = 0; i < 4; i++) {
+					data.position = basePos + (MathHelper.PiOver2 * i).ToRotationVector2() * 2;
+					Main.EntitySpriteDraw(data);
+				}
+			}
+
+			Main.graphics.GraphicsDevice.Textures[1] = middleRenderTarget;
+			Accretion_Ribbon.EraseShader.Shader.Parameters["uImageSize1"]?.SetValue(new Vector2(middleRenderTarget.Width, middleRenderTarget.Height));
+			Origins.shaderOroboros.Stack(Accretion_Ribbon.EraseShader);
+			Origins.shaderOroboros.DrawContents(edgeRenderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
+			Origins.shaderOroboros.Reset(default);
+			Vector2 center = edgeRenderTarget.Size() * 0.5f;
+			Main.EntitySpriteDraw(
+				edgeRenderTarget,
+				center,
+				null,
+				Color.White,
+				0,
+				center,
+				(Vector2.One / Main.GameViewMatrix.Zoom) * Projectile.scale * Projectile.ai[2],
+				SpriteEffects.None
+			);/*
+
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.Center - Main.screenPosition,
+				null,
+				lightColor,
+				Projectile.rotation,
+				texture.Size() - new Vector2(3, 6),
+				Projectile.scale,
+				SpriteEffects.None
+			);*/
 			return false;
 		}
 		public void PreDrawScene() {
+			if (middleRenderTarget is null) {
+				Main.QueueMainThreadAction(SetupRenderTargets);
+				Main.OnResolutionChanged += Resize;
+				return;
+			}
+			Origins.shaderOroboros.Capture();
+
+			Main.EntitySpriteDraw(GetDrawData(Color.White * Projectile.ai[2]));
+
+			Origins.shaderOroboros.DrawContents(middleRenderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
+			Origins.shaderOroboros.Reset(default);
+			Vector2 center = middleRenderTarget.Size() * 0.5f;
+			SC_Phase_Three_Midlay.DrawDatas.Add(new(
+				middleRenderTarget,
+				center,
+				null,
+				Color.White,
+				0,
+				center,
+				Vector2.One * Projectile.scale * Projectile.ai[2],
+				SpriteEffects.None
+			));/*
 			if (SC_Phase_Three_Midlay.DrawnMaskSources.Add(Projectile)) {
 				Texture2D circle = TextureAssets.Projectile[Type].Value;
 				SC_Phase_Three_Midlay.DrawDatas.Add(new(
@@ -174,7 +257,27 @@ namespace Origins.Items.Pets {
 					origin = circle.Size() * 0.5f,
 					scale = Vector2.One * Projectile.scale * Projectile.ai[2]
 				});
+			}*/
+		}
+		public override void OnKill(int timeLeft) {
+			if (middleRenderTarget is not null) {
+				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref middleRenderTarget);
+				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref edgeRenderTarget);
+				Main.OnResolutionChanged -= Resize;
 			}
+		}
+		internal RenderTarget2D middleRenderTarget;
+		internal RenderTarget2D edgeRenderTarget;
+		public void Resize(Vector2 _) {
+			if (Main.dedServ) return;
+			SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref middleRenderTarget);
+			SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref edgeRenderTarget);
+			SetupRenderTargets();
+		}
+		void SetupRenderTargets() {
+			if (middleRenderTarget is not null && !middleRenderTarget.IsDisposed) return;
+			middleRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+			edgeRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 		}
 	}/*
 	public class Aetherite_Crystal_Entry : JournalEntry {

@@ -8,6 +8,7 @@ using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Layers;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
+using Origins.NPCs.Riven;
 using Origins.Projectiles.Misc;
 using PegasusLib;
 using System;
@@ -392,6 +393,7 @@ namespace Origins {
 		public int relayRodStrength = 0;
 		public bool weakShimmer = false;
 		public bool compositeFrontArmWasEnabled = false;
+		public bool walledDebuff = false;
 		#endregion
 
 		#region keybinds
@@ -1091,6 +1093,13 @@ namespace Origins {
 			if (timeSinceRainedOn < int.MaxValue) timeSinceRainedOn++;
 			moveSpeedMult = 1;
 			upsideDown = false;
+			walledDebuff = false;
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc?.ModNPC is Goo_Wall && npc.Hitbox.Intersects(Player.Hitbox)) {
+					walledDebuff = true;
+					continue;
+				}
+			}
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;

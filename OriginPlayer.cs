@@ -48,6 +48,10 @@ namespace Origins {
 				Player.velocity *= 1.006f;
 				Player.ignoreWater = true;
 			}
+			if (walledDebuff) {
+				Player.velocity *= 0.4f;
+				Player.velocity.Y *= 0.9f;
+			}
 			if (Player.ownedProjectileCounts[ModContent.ProjectileType<Latchkey_P>()] > 0) {
 				Player.tongued = true;
 			}
