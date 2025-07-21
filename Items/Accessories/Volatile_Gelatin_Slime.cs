@@ -64,6 +64,7 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Volatile_Gelatin_Global : GlobalProjectile {
+		public override bool IsLoadingEnabled(Mod mod) => OriginConfig.Instance.VolatileGelatin;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) => entity.type == ProjectileID.VolatileGelatinBall;
 		public override void SetDefaults(Projectile entity) {
 			entity.DamageType = DamageClasses.Explosive;
@@ -76,6 +77,7 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Volatile_Gelatin_Slime_Global : GlobalNPC {
+		public override bool IsLoadingEnabled(Mod mod) => OriginConfig.Instance.VolatileGelatin;
 		internal static List<int> cachedNPCs;
 		internal static bool anyActive;
 		public static ScreenTarget SlimeTarget { get; private set; }

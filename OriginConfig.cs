@@ -58,6 +58,9 @@ namespace Origins {
 		[DefaultValue(true), ReloadRequired]
 		public bool VolatileGelatin = true;
 
+		[DefaultValue(true), ReloadRequired]
+		public bool FrostHydra = true;
+
 		[Header("Other")]
 
 		[DefaultValue(true)]

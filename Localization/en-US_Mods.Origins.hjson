@@ -1865,6 +1865,7 @@ Projectiles: {
 	Splitting_Image_Chunk.DisplayName: Splitting Image
 	Splitting_Image_Slash.DisplayName: Splitting Image
 	Splitting_Image_Chunk_Spawn.DisplayName: Splitting Image
+	Frost_Hydra_Sustained_Blast.DisplayName: Frost Hydra
 }
 
 Prefixes: {
@@ -2326,7 +2327,7 @@ Configs: {
 
 		VolatileGelatin: {
 			Label: Volatile Gelatin boosts
-			Tooltip: Allows Volatile Gelatin's minion damage to count as explosive and benefit from bonuses
+			Tooltip: Volatile Gelatin's attacks count as explosive damage and coat enemies in highly explosive gel
 		}
 
 		Assimilation: {
@@ -2341,6 +2342,11 @@ Configs: {
 
 		AddDebuff: Makes {0} inflict the {1} debuff
 		ThunderSpear.Tooltip: Makes {0} inflict the {1} debuff
+
+		FrostHydra: {
+			Label: "{$ItemName.StaffoftheFrostHydra}"
+			Tooltip: Frost Hydra now shoots bursts of frost at nearby targets, and its long-range shots now explode, gaining extra benefit from summon tag damage
+		}
 	}
 
 	DebugConfig: {
