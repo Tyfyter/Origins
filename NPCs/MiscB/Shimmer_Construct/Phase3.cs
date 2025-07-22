@@ -654,7 +654,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			if (spriteBatch is null) return;
 			layersRenderedThisFrame[index] = true;
-			SpriteBatchState state = spriteBatch.GetState();
+			SpriteBatchState state = spriteBatch.GetState() with { rasterizerState = RasterizerState.CullNone };
 			if (!Main.gamePaused) {
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
 				try {
