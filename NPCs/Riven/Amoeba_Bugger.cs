@@ -8,7 +8,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 
 namespace Origins.NPCs.Riven {
-	public class Amoeba_Bugger : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+	public class Amoeba_Bugger : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC, ICustomWikiStat {
 		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.03f;
 		public Rectangle DrawRect => new(0, 0, 48, 32);
@@ -18,6 +18,7 @@ namespace Origins.NPCs.Riven {
 			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.PositiveNPCTypesExcludedFromDeathTally[Type] = true;
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Bat;
 			NPC.lifeMax = 45;

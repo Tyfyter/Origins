@@ -16,7 +16,7 @@ using Terraria.ModLoader;
 using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Brine {
-	public class Mildew_Creeper : Brine_Pool_NPC, IMeleeCollisionDataNPC, IWikiNPC {
+	public class Mildew_Creeper : Brine_Pool_NPC, IMeleeCollisionDataNPC, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, -8, 50, 112);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
@@ -30,6 +30,7 @@ namespace Origins.NPCs.Brine {
 			};
 			FriendlyNPCTypes.Add(Type);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.aiStyle = -1;

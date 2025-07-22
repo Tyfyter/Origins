@@ -9,6 +9,7 @@ namespace Origins.Items.Materials {
 			ItemID.Sets.ExtractinatorMode[Type] = Type;
 			Item.ResearchUnlockCount = 20;
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useAnimation = 15;

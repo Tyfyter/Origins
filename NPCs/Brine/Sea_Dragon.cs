@@ -19,7 +19,7 @@ using Terraria.ModLoader;
 using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Brine {
-	public class Sea_Dragon : Brine_Pool_NPC, IWikiNPC, IJournalEntrySource {
+	public class Sea_Dragon : Brine_Pool_NPC, IWikiNPC, IJournalEntrySource, ICustomWikiStat {
 		public string EntryName => "Origins/" + typeof(Sea_Dragon_Entry).Name;
 		public class Sea_Dragon_Entry : JournalEntry {
 			public override string TextKey => "Sea_Dragon";
@@ -44,6 +44,7 @@ namespace Origins.NPCs.Brine {
 			TargetNPCTypes.Add(ModContent.NPCType<Brine_Latcher>());
 			PredatorNPCTypes.Add(ModContent.NPCType<Carpalfish>());
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 210;

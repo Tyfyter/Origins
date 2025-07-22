@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using Terraria;
@@ -7,10 +6,9 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.Riven {
-	public class Riven_Mummy : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+	public class Riven_Mummy : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 6, 40, 48);
 		public int AnimationFrames => 16;
 		public int FrameDuration => 2;
@@ -25,6 +23,7 @@ namespace Origins.NPCs.Riven {
 			Main.npcFrameCount[NPC.type] = 16;
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.Fighter;

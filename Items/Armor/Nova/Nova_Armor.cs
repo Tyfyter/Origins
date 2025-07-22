@@ -13,6 +13,7 @@ namespace Origins.Items.Armor.Nova {
             "ExplosiveBoostGear",
 			"SelfDamageProtek"
 		];
+		public bool? Hardmode => true;
         public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);
 		}

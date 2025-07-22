@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Shattered_Ghoul : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+	public class Shattered_Ghoul : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 6, 36, 52);
 		public int AnimationFrames => 16;
 		public int FrameDuration => 1;
@@ -24,6 +24,7 @@ namespace Origins.NPCs.Defiled {
 			Main.npcFrameCount[NPC.type] = 8;
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DesertGhoulCorruption);
 			NPC.aiStyle = NPCAIStyleID.Fighter;

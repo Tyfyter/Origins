@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
@@ -13,7 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Riven_Mimic : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+	public class Riven_Mimic : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 4, 60, 50);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
@@ -27,6 +26,7 @@ namespace Origins.NPCs.Riven {
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire3] = true;
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.width = 28;
 			NPC.height = 44;

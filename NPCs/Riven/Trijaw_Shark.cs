@@ -1,11 +1,6 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Other.Consumables.Food;
-using Origins.Items.Weapons.Summoner;
-using Origins.LootConditions;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -14,12 +9,9 @@ using Terraria.GameContent.Events;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Misc.Physics;
-using ThoriumMod.Empowerments;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Origins.NPCs.Riven {
-	public class Trijaw_Shark : Glowing_Mod_NPC, ICustomCollisionNPC, IWikiNPC {
+	public class Trijaw_Shark : Glowing_Mod_NPC, ICustomCollisionNPC, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, -6, 96, 40);
 		public int AnimationFrames => 16;
 		public int FrameDuration => 1;
@@ -36,6 +28,7 @@ namespace Origins.NPCs.Riven {
 			};
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.noGravity = true;
 			NPC.aiStyle = NPCAIStyleID.Sand_Shark;

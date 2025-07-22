@@ -23,6 +23,7 @@ namespace Origins.Items.Armor.Amber {
 			"ExplosiveBoostGear",
 			"SelfDamageProtek"
 		];
+		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
 		}

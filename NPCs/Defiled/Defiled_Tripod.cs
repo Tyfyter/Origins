@@ -19,7 +19,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Tripod : Glowing_Mod_NPC, ICustomCollisionNPC, IDefiledEnemy, IWikiNPC {
+	public class Defiled_Tripod : Glowing_Mod_NPC, ICustomCollisionNPC, IDefiledEnemy, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 4, 98, 100);
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
@@ -39,6 +39,7 @@ namespace Origins.NPCs.Defiled {
 			};
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.None;//NPCAIStyleID.Fighter;
 			NPC.lifeMax = 475;

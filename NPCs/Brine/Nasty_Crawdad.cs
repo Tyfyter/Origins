@@ -1,26 +1,19 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
-using Origins.NPCs.Fiberglass;
-using Origins.Projectiles;
-using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Brine {
-	public class Nasty_Crawdad : Brine_Pool_NPC {
+	public class Nasty_Crawdad : Brine_Pool_NPC, ICustomWikiStat {
 		[CloneByReference]
 		public HashSet<int> PredatorNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
@@ -32,6 +25,7 @@ namespace Origins.NPCs.Brine {
 			TargetNPCTypes.Add(ModContent.NPCType<Shotgunfish>());
 			PredatorNPCTypes.Add(ModContent.NPCType<Shotgunfish>());
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Crawdad);
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;

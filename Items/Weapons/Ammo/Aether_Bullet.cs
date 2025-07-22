@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedBullet);
-			Item.damage = 12;
+			Item.damage = 11;
 			Item.shoot = ModContent.ProjectileType<Aether_Bullet_P>();
 			Item.shootSpeed = 5f;
 			Item.knockBack = 4f;

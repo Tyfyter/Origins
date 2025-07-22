@@ -15,7 +15,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Barnacle_Mound : ModNPC, IRivenEnemy, IWikiNPC {
+	public class Barnacle_Mound : ModNPC, IRivenEnemy, IWikiNPC, ICustomWikiStat {
 		public override void Load() => this.AddBanner();
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var asset) ? asset : null))?.Value;
@@ -31,6 +31,7 @@ namespace Origins.NPCs.Riven {
 			};
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BloodJelly);
 			NPC.aiStyle = 0;

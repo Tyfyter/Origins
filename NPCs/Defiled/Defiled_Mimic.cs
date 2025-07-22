@@ -12,7 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Mimic : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+	public class Defiled_Mimic : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 0, 60, 50);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
@@ -24,6 +24,7 @@ namespace Origins.NPCs.Defiled {
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire3] = true;
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.width = 28;
 			NPC.height = 44;

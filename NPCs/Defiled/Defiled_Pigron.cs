@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Pigron : ModNPC, IDefiledEnemy, ICustomWikiStat, IWikiNPC {
+	public class Defiled_Pigron : ModNPC, IDefiledEnemy, ICustomWikiStat, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(-8, 16, 80, 66);
 		public int AnimationFrames => 56;
 		public int FrameDuration => 1;
@@ -29,6 +29,7 @@ namespace Origins.NPCs.Defiled {
 				PortraitPositionYOverride = -12f
 			});
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.width = 44;
 			NPC.height = 36;
