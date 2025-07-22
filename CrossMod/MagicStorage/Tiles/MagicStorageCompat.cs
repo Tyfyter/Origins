@@ -29,6 +29,7 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 		public override int MaterialItem => ModContent.ItemType<TMaterial>();
 		public override int NextUpgradeItem => ModContent.ItemType<TNextUpgradeItem>();
 	}
+	[ExtendsFromMod(nameof(MagicStorage))]
 	public class MagicStorageValidityCheckerFixer : ILoadable {
 		public void Load(Mod mod) {
 			MonoModHooks.Add(typeof(TEStorageUnit).GetMethod(nameof(TEStorageUnit.ValidTile)), (orig_ValidTile orig, TEStorageUnit self, in Tile tile) => {
