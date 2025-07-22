@@ -65,7 +65,10 @@ namespace Origins.Tiles.Riven {
 			//soundType = SoundID.Grass;
 
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetCollision;
+
+			Origins.PotType.Add(Type, ((ushort)ModContent.TileType<Riven_Pot>(), 0, 0));
 		}
+
 		static void OffsetCollision(Tile tile, ref float y, ref int height) {
 			int frameY = tile.TileFrameY / 34;
 			switch (frameY) {
@@ -129,7 +132,7 @@ namespace Origins.Tiles.Riven {
 				const int ticks_per_frame = 3;
 				if (isStoodOn) {
 					if (timer == 0) {
-						SoundEngine.PlaySound(SoundID.NPCDeath3.WithPitch(0.5f).WithVolume(0.4f)/*, Tile.Center*/);
+						SoundEngine.PlaySound(SoundID.NPCDeath3.WithPitch(0.5f).WithVolume(0.4f), Position.ToWorldCoordinates());
 					}
 					if (++timer >= time) CurrentState = State.GoingIn;
 				} else if (timer > 0 && ++timer >= time) {
@@ -139,8 +142,21 @@ namespace Origins.Tiles.Riven {
 				break;
 				case State.GoingIn:
 				if (timer.Warmup(4 * 5)) {
-					SoundEngine.PlaySound(SoundID.Item131.WithVolume(0.4f)/*, Tile.Center*/);
+					SoundEngine.PlaySound(SoundID.Item131.WithVolume(0.4f), Position.ToWorldCoordinates());
 					CurrentState = State.In;
+					for (int i = 0; i < 3; i++) {
+						Point pos = new(Position.X + i, Position.Y - 1);
+						TileObjectData data = TileObjectData.GetTileData(Framing.GetTileSafely(pos));
+						if (data is null) continue;
+						if (!data.AnchorBottom.type.HasFlag(AnchorType.SolidTile) && !data.AnchorBottom.type.HasFlag(AnchorType.SolidWithTop)) continue;
+						int startX = TileObjectData.TopLeft(pos.X, pos.Y).X;
+						for (int j = data.AnchorBottom.checkStart; j < data.AnchorBottom.tileCount; j++) {
+							if (startX + j == i) {
+								WorldGen.KillTile(pos.X, pos.Y);
+								break;
+							}
+						}
+					}
 				}
 				frameNum = Math.Max(4, 2 + timer / 4);
 				break;
@@ -151,7 +167,7 @@ namespace Origins.Tiles.Riven {
 				case State.ComingOut:
 				if (timer.Warmup(6 * 3)) {
 					CurrentState = State.Out;
-					SoundEngine.PlaySound(SoundID.Item97.WithPitch(2f).WithVolume(0.4f)/*, Tile.Center*/);
+					SoundEngine.PlaySound(SoundID.Item97.WithPitch(2f).WithVolume(0.4f), Position.ToWorldCoordinates());
 				} else frameNum = 7 - timer / 6;
 				break;
 			}

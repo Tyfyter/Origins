@@ -34,6 +34,7 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
@@ -558,7 +559,44 @@ namespace Origins.World.BiomeData {
 						if (tries-- > 0) break;
 					}
 				}
-				NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1, Y1);
+				List<Point> validCoralSpots = [];
+				static bool AllMatch(params (int solid, int i, int j)[] values) {
+					for (int i = 0; i < values.Length; i++) {
+						bool isSolid = Framing.GetTileSafely(values[i].i, values[i].j).HasFullSolidTile();
+						if (isSolid != (values[i].solid != 0)) return false;
+					}
+					return true;
+				}
+				for (int i0 = 0; i0 < genRange.Width; i0++) {
+					int i1 = i0 + genRange.X;
+					for (int j0 = 0; j0 < genRange.Height; j0++) {
+						int j1 = j0 + genRange.Y;
+						if (validCoralSpots.Contains(new(i1, j1 - 1))) continue;
+						//if tiles go  ___ 
+						//            X___X
+						//             ___ 
+						if (AllMatch(  (0, i1 - 1, j1 - 1), (0, i1, j1 - 1), (0, i1 + 1, j1 - 1),
+							(1, i1 - 2, j1), (0, i1 - 1, j1), (0, i1, j1), (0, i1 + 1, j1), (1, i1 + 2, j1),
+									   (0, i1 - 1, j1 + 1), (0, i1, j1 + 1), (0, i1 + 1, j1 + 1)
+							)) {
+							validCoralSpots.Add(new(i1, j1));
+							//if (validCoralSpots.Count == 1) Main.LocalPlayer.Center = new(i1 * 16 + 8, j1 * 16 + 8);
+						}
+					}
+				}
+				int maxCoral = 20;
+				int shelfCoral = ModContent.TileType<Shelf_Coral>();
+				while (validCoralSpots.Count > 0 && maxCoral-->0) {
+					int rand = Main.rand.Next(validCoralSpots.Count);
+					Point coralPos = validCoralSpots[rand];
+					if (TileExtenstions.CanActuallyPlace(coralPos.X, coralPos.Y, shelfCoral, 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
+						TileObjectData.CallPostPlacementPlayerHook(coralPos.X, coralPos.Y, shelfCoral, objectData.style, 0, objectData.alternate, objectData);
+					} else {
+						maxCoral++;
+					}
+					validCoralSpots.RemoveAt(rand);
+				}
+				NetMessage.SendTileSquare(-1, X0, Y0, X1, Y1);
 			}
 			public static void StartHive_Old(int i, int j) {
 				const float strength = 2.4f;

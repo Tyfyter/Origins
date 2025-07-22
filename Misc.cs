@@ -4543,7 +4543,7 @@ namespace Origins {
 		}
 		public static bool CanActuallyPlace(int i, int j, int type, int style, int dir, out TileObject objectData, bool onlyCheck = false, int? forcedRandom = null, bool checkStay = false, bool cut = true) {
 			if (TileObject.CanPlace(i, j, type, style, dir, out objectData, onlyCheck, forcedRandom, checkStay)) {
-				TileObjectData tileData = TileObjectData.GetTileData(type, objectData.style);
+				TileObjectData tileData = TileObjectData.GetTileData(type, objectData.style, objectData.alternate);
 
 				int left = i - tileData.Origin.X;
 				int top = j - tileData.Origin.Y;
