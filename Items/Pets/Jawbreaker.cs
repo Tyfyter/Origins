@@ -163,6 +163,8 @@ namespace Origins.Items.Pets {
 		public DrawData GetDrawData(Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			Rectangle frame = texture.Frame(verticalFrames: 2, frameY: 1);
+			frame.Y += 2;
+			frame.Height -= 2;
 			return new(
 				texture,
 				(Projectile.Center - Main.screenPosition).Floor(),
