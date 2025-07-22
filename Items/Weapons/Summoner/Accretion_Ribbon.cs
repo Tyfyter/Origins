@@ -6,6 +6,7 @@ using PegasusLib;
 using PegasusLib.Graphics;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
@@ -26,7 +27,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.value = Item.sellPrice(gold: 2, silver: 60);
 			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 1;
-			Item.UseSound = SoundID.Item46.WithPitch(-2f);
+			//Item.UseSound = SoundID.Item46.WithPitch(-2f);
 		}
 		public override bool MeleePrefix() => true;
 		public override void AddRecipes() {
@@ -90,6 +91,7 @@ namespace Origins.Items.Weapons.Summoner {
 					if (player.velocity.Y == 0) {
 						player.velocity += new Vector2(Projectile.direction * 2, -1) * (5.01f + player.jumpSpeedBoost);
 					}
+					SoundEngine.PlaySound(SoundID.DD2_MonkStaffSwing, player.MountedCenter);
 				}
 				player.velocity.X = float.Clamp(player.velocity.X + Projectile.direction * 0.07f, -maxXVel, maxXVel);
 				float compensation = first ? 3 : 1;
