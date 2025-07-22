@@ -59,7 +59,7 @@ BOSSES AND MINI-BOSSES:
 ($, ^2/3) Fiberglass Weaver*
 (#2/3, ^2) Shimmer Construct !!! 
 (#, ^2) Trenchmaker
-(#2, ^2) World Cracker* !!! (but when would the mouth animations ever play?)
+(#2, ^2) World Cracker* !!! (armor to draw on-top of everything else)
 
 (X) Corrupt Harvester
 (^) Lost Diver/Mildew Carrion°
@@ -1559,7 +1559,7 @@ MOUNTS & PETS:
 |---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(☻) Jawbreaker (Stellar Spark) !!!
+(#2/3, ^2) Jawbreaker (Stellar Spark) !!!
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
 
@@ -1750,7 +1750,7 @@ VOLUME I MUSIC:
 (X) Quantux
 (^) World Cracker
 (X) Seer
-(☻) Shimmer Construct !!! (Phase III cuts and looping)
+(#2) Shimmer Construct !!! (Phase III cuts and looping)
 (X) Tearror
 (X) Trenchmaker
 
