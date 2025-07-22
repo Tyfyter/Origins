@@ -89,12 +89,17 @@ namespace Origins.Items.Weapons.Summoner {
 					first = true;
 					Projectile.direction = player.direction;
 					if (player.velocity.Y == 0) {
-						player.velocity += new Vector2(Projectile.direction * 2, -1) * (5.01f + player.jumpSpeedBoost);
+						player.velocity += new Vector2(Projectile.direction * 2, -player.gravDir) * (5.01f + player.jumpSpeedBoost);
 					}
-					SoundEngine.PlaySound(SoundID.DD2_MonkStaffSwing, player.MountedCenter);
 				}
 				player.velocity.X = float.Clamp(player.velocity.X + Projectile.direction * 0.07f, -maxXVel, maxXVel);
 				float compensation = first ? 3 : 1;
+				if (first) Projectile.soundDelay -= 2;
+				if (Projectile.soundDelay <= 0) {
+					SoundEngine.PlaySound(SoundID.DD2_MonkStaffSwing, player.MountedCenter);
+					Projectile.soundDelay = player.itemAnimationMax * Projectile.MaxUpdates;
+				}
+				compensation *= player.gravDir;
 				Projectile.velocity = Projectile.velocity.RotatedBy((MathHelper.PiOver2 * Projectile.direction * compensation / 0.75f) / player.itemAnimationMax);
 				if (player.altFunctionUse != 2) Projectile.direction = 0;
 			} else if (Projectile.owner == Main.myPlayer) {
@@ -210,7 +215,9 @@ namespace Origins.Items.Weapons.Summoner {
 				return false;
 			}
 
+			Main.spriteBatch.Restart(Main.spriteBatch.GetState(), rasterizerState: RasterizerState.CullNone);
 			Origins.shaderOroboros.Capture();
+			Main.spriteBatch.Restart(Main.spriteBatch.GetState(), transformMatrix: Main.GameViewMatrix.ZoomMatrix);
 
 			DrawTrail(Projectile, 4 * Projectile.scale + 2);
 

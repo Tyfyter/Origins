@@ -915,7 +915,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 |---
-(#2, ^2) Accretion Ribbon !!!
+(☻) Accretion Ribbon !!!
 (^) Aether Opal
 (^) Amebolize Incantation*
 (^) Bee Afraid Incantation*
@@ -1559,7 +1559,7 @@ MOUNTS & PETS:
 |---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(#2/3, ^2) Jawbreaker (Stellar Spark) !!!
+(☻) Jawbreaker (Stellar Spark) !!!
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
 

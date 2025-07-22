@@ -272,7 +272,6 @@ namespace Origins.Items.Pets {
 
 namespace Origins.Buffs {
 	public class Stellar_Spark_Buff : ModBuff {
-		public override string Texture => $"Terraria/Images/Item_{ItemID.CrystalShard}";
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
