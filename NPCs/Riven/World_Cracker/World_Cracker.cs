@@ -34,7 +34,7 @@ using Terraria.ModLoader;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
 namespace Origins.NPCs.Riven.World_Cracker {
-	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy, ICustomWikiStat {
+	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy, ICustomWikiStat, IDrawWCArmor {
 		public AssimilationAmount? Assimilation => 0.08f;
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
@@ -412,6 +412,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
+			if (isHighestIndex) DrawAllArmor(NPC, spriteBatch, screenPos);
+		}
+		public void DrawSegmentArmor(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			DrawArmor(ArmorTexture, spriteBatch, screenPos + new Vector2(0, 12), drawColor, NPC.frame.Y / NPC.frame.Width, 4, NPC, 3, new Vector2(-15, 8));
 		}
 		void SetBaseSpeed() {
@@ -477,11 +480,21 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.Center = Main.npc[closest].Center;
 			return false;
 		}
+		public static void DrawAllArmor(NPC head, SpriteBatch spriteBatch, Vector2 screenPos) {
+			int tailType = ModContent.NPCType<World_Cracker_Tail>();
+			NPC current = head;
+			while (current is not null) {
+				if (current.ModNPC is IDrawWCArmor armorDrawer) {
+					armorDrawer.DrawSegmentArmor(spriteBatch, screenPos, Lighting.GetColor(current.Center.ToTileCoordinates()));
+				}
+				current = current.type == tailType ? null : Main.npc[(int)current.ai[0]];
+			}
+		}
 		public void ModifyWikiStats(JObject data) {
 			data["SpriteWidth"] = 449;
 		}
 	}
-	public class World_Cracker_Body : WormBody, ILoadExtraTextures, IRivenEnemy {
+	public class World_Cracker_Body : WormBody, ILoadExtraTextures, IRivenEnemy, IDrawWCArmor {
 		public AssimilationAmount? Assimilation => 0.06f;
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
@@ -569,8 +582,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			data.texture = GlowTexture;
 			data.color = Riven_Hive.GetGlowAlpha(drawColor);
 			data.Draw(spriteBatch);
-			DrawArmor(ArmorTexture, spriteBatch, screenPos, drawColor, (int)NPC.frameCounter, 3, NPC, 3);
+			if (isHighestIndex) DrawAllArmor(HeadSegment, spriteBatch, screenPos);
 			return false;
+		}
+		public void DrawSegmentArmor(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			DrawArmor(ArmorTexture, spriteBatch, screenPos, drawColor, (int)NPC.frameCounter, 3, NPC, 3);
 		}
 		public override void Init() {
 			NPC.frameCounter = NPC.whoAmI % 2;
@@ -636,6 +652,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, Riven_Hive.GetGlowAlpha(drawColor));
+			if (isHighestIndex) DrawAllArmor(HeadSegment, spriteBatch, screenPos);
 		}
 		public override void Init() {
 			CommonWormInit(this);
@@ -857,5 +874,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			OriginPlayer.InflictTorn(target, 300);
 		}
+	}
+	public interface IDrawWCArmor {
+		void DrawSegmentArmor(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor);
 	}
 }
