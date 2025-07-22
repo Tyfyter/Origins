@@ -3,6 +3,7 @@ using Origins.Items.Pets;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using PegasusLib;
+using PegasusLib.Graphics;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -182,6 +183,7 @@ namespace Origins.Items.Pets {
 				return false;
 			}
 
+			Main.spriteBatch.Restart(Main.spriteBatch.GetState(), rasterizerState: RasterizerState.CullNone, transformMatrix: Matrix.Identity);
 			Origins.shaderOroboros.Capture();
 
 			if (Projectile.ai[2] > 0) {
@@ -196,7 +198,7 @@ namespace Origins.Items.Pets {
 			Main.graphics.GraphicsDevice.Textures[1] = middleRenderTarget;
 			Accretion_Ribbon.EraseShader.Shader.Parameters["uImageSize1"]?.SetValue(new Vector2(middleRenderTarget.Width, middleRenderTarget.Height));
 			Origins.shaderOroboros.Stack(Accretion_Ribbon.EraseShader);
-			Origins.shaderOroboros.DrawContents(edgeRenderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
+			Origins.shaderOroboros.DrawContents(edgeRenderTarget, Color.White, Matrix.Identity);
 			Origins.shaderOroboros.Reset(default);
 			Vector2 center = edgeRenderTarget.Size() * 0.5f;
 			Main.EntitySpriteDraw(
@@ -207,7 +209,7 @@ namespace Origins.Items.Pets {
 				0,
 				center,
 				Vector2.One,
-				SpriteEffects.None
+				Main.GameViewMatrix.Effects
 			);/*
 
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
@@ -230,13 +232,14 @@ namespace Origins.Items.Pets {
 				return;
 			}
 			Origins.shaderOroboros.Capture();
+			Main.spriteBatch.Restart(Main.spriteBatch.GetState(), rasterizerState: RasterizerState.CullNone);
 
 			Main.EntitySpriteDraw(GetDrawData(Color.White));
 
 			Origins.shaderOroboros.DrawContents(middleRenderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
 			Origins.shaderOroboros.Reset(default);
 			Vector2 center = middleRenderTarget.Size() * 0.5f;
-			SC_Phase_Three_Midlay.DrawDatas.Add(new(
+			SC_Phase_Three_Underlay.DrawDatas.Add(new(
 				middleRenderTarget,
 				center,
 				null,
@@ -245,19 +248,7 @@ namespace Origins.Items.Pets {
 				center,
 				Vector2.One,
 				SpriteEffects.None
-			));/*
-			if (SC_Phase_Three_Midlay.DrawnMaskSources.Add(Projectile)) {
-				Texture2D circle = TextureAssets.Projectile[Type].Value;
-				SC_Phase_Three_Midlay.DrawDatas.Add(new(
-					circle,
-					Projectile.Center - Main.screenPosition,
-					null,
-					Color.White
-				) {
-					origin = circle.Size() * 0.5f,
-					scale = Vector2.One * Projectile.scale * Projectile.ai[2]
-				});
-			}*/
+			));
 		}
 		public override void OnKill(int timeLeft) {
 			if (middleRenderTarget is not null) {
