@@ -822,7 +822,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			}
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
-			target.AddBuff(BuffID.Shimmer, 91);
+			if (NPCID.Sets.ShimmerTransformToNPC[target.type] != -1 || NPCID.Sets.ShimmerTransformToItem[target.type] != -1 || NPCID.Sets.ShimmerTownTransform[target.type]) {
+				target.AddBuff(BuffID.Shimmer, 91);
+			}
 		}
 		public void AI(Projectile projectile, bool child) {
 			projectile.velocity *= 0.99f;

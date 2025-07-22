@@ -178,8 +178,24 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				}
 			}
 			ProcessShoot(NPC);
-			NPC.frame.Y = NPC.frame.Height * 1;
 			//Acceleration *= MathF.Max((0.8f -  * 5, 1);
+			if (++NPC.frameCounter >= 6) {
+				NPC.frameCounter = 0;
+				int frame = NPC.frame.Y / NPC.frame.Height;
+				if (OriginsModIntegrations.CheckAprilFools()) {
+					frame = frame == 0 ? 2 : 0;
+				} else {
+					Vector2 direction = playerTarget.MountedCenter - NPC.Center;
+					float dist = direction.Length();
+					direction /= dist;
+					if (dist == 0 || (Vector2.Dot(direction, NPC.velocity.SafeNormalize(default)) > 0f && CollisionExt.Raymarch(NPC.Center, direction, dist) >= dist)) {
+						frame--;
+					} else {
+						frame++;
+					}
+				}
+				NPC.frame.Y = NPC.frame.Height * int.Clamp(frame, 0, 2);
+			}
 		}
 		public static void ProcessShoot(NPC npc) {
 			NPC headNPC = npc.realLife >= 0 ? Main.npc[npc.realLife] : npc;

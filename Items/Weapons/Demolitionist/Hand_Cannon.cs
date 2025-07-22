@@ -82,7 +82,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
-			if (!OriginsModIntegrations.CheckAprilFools()) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
 				float targetWeight = 4.5f;
 				Vector2 targetDiff = default;
 				NPC target = default;
