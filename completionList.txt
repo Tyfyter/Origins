@@ -953,7 +953,7 @@ SUMMONER WEAPONS:
 (X) Entropy Incantation
 (X) Fizzler Staff
 (#, ^2) Forsaken Desire
-(^) Huff Puffer Bait
+(^) Huff Puffer Bait*
 (^) Mildew Incantation
 (^) Mildew Whip
 (X) Obsidian Bone
@@ -1132,7 +1132,7 @@ TILES:
 (^) Hardened Defiled Sand*
 (X) Harmony Brick°
 (X) Lihzarhd Bomb Trap
-(^) Limestone
+(^) Limestone*
 (^) Lost Ore*
 (^) Marrowick*
 (^) Mildew Block°
@@ -1192,7 +1192,7 @@ TILES:
 (^) Bile Torch*
 (X) Bilious Incense
 (^) Brine Dungeon Chest
-(^) Brine Water Fountain
+(^) Brine Water Fountain*
 (@, ^3) Bug Cage° (using temp sprites)
 (X) Cancer Block°
 (X) Cancer Furniture°
@@ -1210,10 +1210,10 @@ TILES:
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
 (^) Defiled Dungeon Chest*
-(^) Defiled Monolith
+(^) Defiled Monolith*
 (X) Defiled Pylon°
 (^) Defiled Torch*
-(^) Defiled Water Fountain
+(^) Defiled Water Fountain*
 (X) Dusk Dungeon Chest°
 (X) Edenwood Furniture°
 (^) Encrusted Brick
@@ -1243,7 +1243,7 @@ TILES:
 (^) Riven Campfire*
 (^) Riven Dungeon Chest*
 (^) Riven Torch*
-(^) Riven Water Fountain
+(^) Riven Water Fountain*
 (X) Rusty Locker
 (X) Sanguinite Brick
 (X) Security Door
@@ -1385,7 +1385,7 @@ MATERIALS:
 (^) Respyrite*
 
 (^) Busted Servo*
-(^) Geothermal Sludge
+(^) Geothermal Sludge*
 (^) Nova Fragment*
 (^) Power Core
 (^) Rotor*
@@ -1449,7 +1449,7 @@ CONSUMABLES:
 (^) Mojo Flask*
 (^) Protean Potion*
 (^) Purification Potion*
-(^) Super Mojo Flask
+(^) Super Mojo Flask*
 (X) Mega Mojo Flask
 (^) Voidsight Potion°
 
@@ -1522,11 +1522,11 @@ CONSUMABLES:
 (^) Crusty Crate*
 (#2, ^2, 々) Defiled Loot Box°
 (^) Festering Crate*
-(X) Holy Crate*
+(X) Holy Crate
 (^) Pointy Crate*
-(^) Residual Crate
+(^) Residual Crate*
 (#2, ^2, 々) Riven Loot Box°
-(X) Twilight Crate*
+(X) Twilight Crate
 
 (^) Gooey Water*
 (^) Holiday Hair Dye*

@@ -1,14 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -54,6 +51,7 @@ namespace Origins.NPCs.Brine {
 			TargetNPCTypes.Add(ModContent.NPCType<Sea_Dragon>());
 			TargetNPCTypes.Add(ModContent.NPCType<Brine_Latcher>());
 		}
+		public bool? Hardmode => true;
 		public override void Unload() {
 			TargetTypes = null;
 			SegmentTypes = null;

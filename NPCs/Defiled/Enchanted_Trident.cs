@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Enchanted_Trident : ModNPC, IDefiledEnemy, IWikiNPC {
+	public class Enchanted_Trident : ModNPC, IDefiledEnemy, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 2, 76, 76);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
@@ -22,6 +22,7 @@ namespace Origins.NPCs.Defiled {
 				PortraitScale = 1
 			};
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CursedHammer);
 			NPC.aiStyle = NPCAIStyleID.Flying_Weapon;

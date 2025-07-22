@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using Terraria;
@@ -9,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Torn_Ghoul : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+	public class Torn_Ghoul : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 6, 36, 52);
 		public int AnimationFrames => 16;
 		public int FrameDuration => 1;
@@ -23,6 +22,7 @@ namespace Origins.NPCs.Riven {
 			Main.npcFrameCount[NPC.type] = 8;
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DesertGhoulCorruption);
 			NPC.aiStyle = NPCAIStyleID.Fighter;

@@ -152,7 +152,7 @@ namespace Origins.NPCs {
 				case NPCID.WitchDoctor: {
 					shop.InsertAfter(ItemID.CorruptWaterFountain, WaterFountain.ItemType<Defiled_Fountain>());
 					shop.InsertAfter(WaterFountain.ItemType<Defiled_Fountain>(), WaterFountain.ItemType<Riven_Fountain>());
-					shop.InsertAfter(WaterFountain.ItemType<Riven_Fountain>(), WaterFountain.ItemType<Brine_Fountain>());
+					shop.InsertAfter(ItemID.JungleWaterFountain, WaterFountain.ItemType<Brine_Fountain>());
 					break;
 				}
 				case NPCID.Mechanic: {

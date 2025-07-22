@@ -12,7 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Asphyxiator : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+	public class Defiled_Asphyxiator : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 0, 92, 58);
 		public int AnimationFrames => 36;
 		public int FrameDuration => 1;
@@ -26,6 +26,7 @@ namespace Origins.NPCs.Defiled {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 475;

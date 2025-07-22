@@ -1,32 +1,21 @@
-﻿using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.NPCs.ExoMechs;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Accessories;
-using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
-using Origins.Items.Other.Consumables.Food;
-using Origins.Items.Weapons.Magic;
-using Origins.Misc;
-using Origins.NPCs.Defiled;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Brine {
-	public class Carpalfish : Brine_Pool_NPC, IItemObtainabilityProvider, IWikiNPC {
+	public class Carpalfish : Brine_Pool_NPC, IItemObtainabilityProvider, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 0, 80, 30);
 		public int AnimationFrames => 16;
 		public int FrameDuration => 4;
@@ -41,6 +30,7 @@ namespace Origins.NPCs.Brine {
 			TargetNPCTypes.Add(ModContent.NPCType<King_Crab>());
 			TargetNPCTypes.Add(ModContent.NPCType<Sea_Dragon>());
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 300;

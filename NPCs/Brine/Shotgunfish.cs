@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Tiles.Brine;
@@ -15,7 +16,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Brine {
-	public class Shotgunfish : Brine_Pool_NPC {
+	public class Shotgunfish : Brine_Pool_NPC, ICustomWikiStat {
 		[CloneByReference]
 		public HashSet<int> PreyNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
@@ -28,6 +29,7 @@ namespace Origins.NPCs.Brine {
 			TargetNPCTypes.Add(ModContent.NPCType<Mildew_Creeper>());
 			PreyNPCTypes.Add(ModContent.NPCType<Nasty_Crawdad>());
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 140;

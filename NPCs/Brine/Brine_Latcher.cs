@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -13,7 +14,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Brine {
-	public class Brine_Latcher_Swarm : Brine_Pool_NPC {
+	public class Brine_Latcher_Swarm : Brine_Pool_NPC, ICustomWikiStat {
 		public override string Texture => typeof(Brine_Latcher).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
@@ -55,6 +56,7 @@ namespace Origins.NPCs.Brine {
 			//TargetNPCTypes.Add(ModContent.NPCType<Mildew_Creeper>());
 			PreyNPCTypes.Add(ModContent.NPCType<Airsnatcher>());
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 40;

@@ -29,6 +29,7 @@ namespace Origins.NPCs.Defiled {
 				PortraitPositionYOverride = -12f
 			});
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.width = 44;
 			NPC.height = 36;

@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.NPCs.Brine {
-	public class King_Crab : Brine_Pool_NPC, IWikiNPC {
+	public class King_Crab : Brine_Pool_NPC, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 0, 62, 60);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
@@ -31,6 +31,7 @@ namespace Origins.NPCs.Brine {
 			TargetNPCTypes.Add(ModContent.NPCType<Mildew_Creeper>());
 			TargetNPCTypes.Add(ModContent.NPCType<Carpalfish>());
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 500;

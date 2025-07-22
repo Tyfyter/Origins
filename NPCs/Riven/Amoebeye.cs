@@ -15,7 +15,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Amoebeye : ModNPC, IRivenEnemy, IWikiNPC, IJournalEntrySource {
+	public class Amoebeye : ModNPC, IRivenEnemy, IWikiNPC, IJournalEntrySource, ICustomWikiStat {
 		public string EntryName => "Origins/" + typeof(Amoebeye_Entry).Name;
 		public class Amoebeye_Entry : JournalEntry {
 			public override string TextKey => "Amoebeye";
@@ -35,6 +35,7 @@ namespace Origins.NPCs.Riven {
 			ID = Type;
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.IchorSticker);
 			NPC.aiStyle = NPCAIStyleID.Hovering;
