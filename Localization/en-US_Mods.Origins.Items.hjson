@@ -6515,6 +6515,7 @@ Splitting_Image: {
 	DisplayName: Splitting Image
 	Tooltip: ""
 }
+
 Defiled_Storage_Core.DisplayName: Defiled Storage Core
 Encrusted_Storage_Core.DisplayName: Encrusted Storage Core
 Sanguinite_Storage_Core.DisplayName: Sanguinite Storage Core

@@ -185,7 +185,8 @@ namespace Origins.Items.Pets {
 				return false;
 			}
 
-			Main.spriteBatch.Restart(Main.spriteBatch.GetState(), rasterizerState: RasterizerState.CullNone, transformMatrix: Matrix.Identity);
+			SpriteBatchState state = Main.spriteBatch.GetState() with {  rasterizerState = RasterizerState.CullNone };
+			Main.spriteBatch.Restart(state, transformMatrix: Main.GameViewMatrix.ZoomMatrix);
 			Origins.shaderOroboros.Capture();
 
 			if (Projectile.ai[2] > 0) {
@@ -203,6 +204,7 @@ namespace Origins.Items.Pets {
 			Origins.shaderOroboros.DrawContents(edgeRenderTarget, Color.White, Matrix.Identity);
 			Origins.shaderOroboros.Reset(default);
 			Vector2 center = edgeRenderTarget.Size() * 0.5f;
+			Main.spriteBatch.Restart(state, transformMatrix: Matrix.Identity);
 			Main.EntitySpriteDraw(
 				edgeRenderTarget,
 				center,
@@ -212,19 +214,9 @@ namespace Origins.Items.Pets {
 				center,
 				Vector2.One,
 				Main.GameViewMatrix.Effects
-			);/*
+			);
+			Main.spriteBatch.Restart(state);
 
-			Texture2D texture = TextureAssets.Projectile[Type].Value;
-			Main.EntitySpriteDraw(
-				texture,
-				Projectile.Center - Main.screenPosition,
-				null,
-				lightColor,
-				Projectile.rotation,
-				texture.Size() - new Vector2(3, 6),
-				Projectile.scale,
-				SpriteEffects.None
-			);*/
 			return false;
 		}
 		public void PreDrawScene() {
@@ -248,7 +240,7 @@ namespace Origins.Items.Pets {
 				Color.White,
 				0,
 				center,
-				Vector2.One,
+				Vector2.One / Main.GameViewMatrix.Zoom,
 				SpriteEffects.None
 			));
 		}
