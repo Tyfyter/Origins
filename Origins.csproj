@@ -36,7 +36,7 @@
 			<HintPath>..\ModAssemblies\ThoriumMod.dll</HintPath>
 		</Reference>
 		<Reference Include="MagicStorage">
-			<HintPath>..\ModAssemblies\MagicStorage_v0.6.0.3.dll</HintPath>
+			<HintPath>..\ModAssemblies\MagicStorage_v0.7.0.8.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
