@@ -19,6 +19,8 @@ using Origins.Graphics;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using System.Drawing;
+using PegasusLib.Graphics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Shimmershot : ModItem {
@@ -193,19 +195,31 @@ namespace Origins.Items.Weapons.Ranged {
 				dir
 			);
 		}
+
 		public void PreDrawScene() {
 			bool charged = Projectile.localAI[0] >= Projectile.localAI[1];
 			MathUtils.LinearSmoothing(ref Projectile.localAI[2], charged.ToInt(), 1f / (charged ? 6 : 4));
-			if (Projectile.localAI[2] > 0) {
-				DrawData data = GetDrawData(Color.White * Projectile.localAI[2]);
-				Vector2 basePos = data.position;
-				for (int i = 0; i < 4; i++) {
-					data.position = basePos + (data.rotation + MathHelper.PiOver2 * i).ToRotationVector2() * 2 * Projectile.scale;
-					SC_Phase_Three_Midlay.DrawDatas.Add(data);
-				}
+			if (Projectile.localAI[2] > 0 && !Main.player[Projectile.owner].OriginPlayer().weakShimmer) {
+				SC_Phase_Three_Midlay.DrawDatas.AddRange(Outlineify(GetDrawData(Color.White * Projectile.localAI[2])));
+			}
+		}
+		public IEnumerable<DrawData> Outlineify(DrawData data) {
+			Vector2 basePos = data.position;
+			for (int i = 0; i < 4; i++) {
+				data.position = basePos + (data.rotation + MathHelper.PiOver2 * i).ToRotationVector2() * 2 * Projectile.scale;
+				yield return data;
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			if (Main.player[Projectile.owner].OriginPlayer().weakShimmer) {
+				SpriteBatchState state = Main.spriteBatch.GetState();
+				Main.spriteBatch.Restart(state, SpriteSortMode.Immediate);
+				foreach (DrawData data in Outlineify(GetDrawData(Color.White * Projectile.localAI[2]) with { shader = ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex })) {
+					GameShaders.Armor.Apply(ContentSamples.CommonlyUsedContentSamples.ColorOnlyShaderIndex, Projectile, data);
+					data.Draw(Main.spriteBatch);
+				}
+				Main.spriteBatch.Restart(state);
+			}
 			Main.EntitySpriteDraw(GetDrawData(lightColor));
 			return false;
 		}
