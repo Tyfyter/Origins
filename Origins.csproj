@@ -11,7 +11,7 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="AltLibrary">
-			<HintPath>..\ModAssemblies\AltLibrary_v1.2.dll</HintPath>
+			<HintPath>..\ModAssemblies\AltLibrary_v2.1.dll</HintPath>
 		</Reference>
 		<Reference Include="BetterDialogue">
 			<HintPath>..\ModAssemblies\BetterDialogue_v1.1.5.3.dll</HintPath>
@@ -29,7 +29,7 @@
 			<HintPath>..\ModAssemblies\ThoriumMod.dll</HintPath>
 		</Reference>
 		<Reference Include="MagicStorage">
-			<HintPath>..\ModAssemblies\MagicStorage_v0.6.0.3.dll</HintPath>
+			<HintPath>..\ModAssemblies\MagicStorage_v0.7.0.8.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">

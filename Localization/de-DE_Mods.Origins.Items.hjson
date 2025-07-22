@@ -5949,3 +5949,7 @@ Lost_Brick_Wall_Item: {
 	// DisplayName: Lost Brick Wall
 	// Tooltip: ""
 }
+
+// Defiled_Storage_Core.DisplayName: Defiled Storage Core
+// Encrusted_Storage_Core.DisplayName: Encrusted Storage Core
+// Sanguinite_Storage_Core.DisplayName: Sanguinite Storage Core

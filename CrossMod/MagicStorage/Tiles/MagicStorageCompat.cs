@@ -1,213 +1,140 @@
-﻿using MagicStorage.Components;
-using Terraria.DataStructures;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
-using Terraria.Localization;
-using MagicStorage;
-using Terraria.Audio;
 using Terraria.ID;
 using Origins.Items.Materials;
-using Microsoft.Xna.Framework.Graphics;
 using MagicStorageItems = MagicStorage.Items;
+using MagicStorage.CrossMod.Storage;
+using MagicStorage.Items;
+using MagicStorage.Components;
+using StorageUnit = MagicStorage.Components.StorageUnit;
 
 namespace Origins.CrossMod.MagicStorage.Tiles {
 	[ExtendsFromMod(nameof(MagicStorage))]
-	public class Defiled_Storage_Unit() : OriginsStorageUnit<Defiled_Bar, MagicStorageItems.UpgradeHellstone, MagicStorageItems.StorageUnitHellstone>(1) { }
-	[ExtendsFromMod(nameof(MagicStorage))]
-	public class Encrusted_Storage_Unit() : OriginsStorageUnit<Encrusted_Bar, MagicStorageItems.UpgradeHellstone, MagicStorageItems.StorageUnitHellstone>(1) { }
-	[ExtendsFromMod(nameof(MagicStorage))]
-	public class Sanguinite_Storage_Unit() : OriginsStorageUnit<Sanguinite_Bar, MagicStorageItems.UpgradeHellstone, MagicStorageItems.StorageUnitHellstone>(1) { }
-	[ExtendsFromMod(nameof(MagicStorage))]
-	public class OriginsStorageUpgrading : GlobalTile {
-		public override void Load() {
-			MonoModHooks.Add(typeof(TEStorageUnit).GetMethod(nameof(TEStorageUnit.ValidTile)), ValidTile);
-		}
-		delegate bool orig_ValidTile(TEStorageUnit self, in Tile tile);
-		static bool ValidTile(orig_ValidTile orig, TEStorageUnit self, in Tile tile) {
-			if (TileLoader.GetTile(tile.TileType) is StorageUnit && tile.TileFrameX % 36 == 0 && tile.TileFrameY % 36 == 0) return true;
-			return orig(self, tile);
-		}
-		public override void RightClick(int i, int j, int type) {
-			TryUpgradeStorage(i, j, type);
-		}
-		public static void SetTypeAndStyle(int i, int j, ushort type, int style) {
-			Main.tile[i, j].TileType = type;
-			Main.tile[i + 1, j].TileType = type;
-			Main.tile[i, j + 1].TileType = type;
-			Main.tile[i + 1, j + 1].TileType = type;
-
-			Main.tile[i, j].TileFrameY = (short)(36 * style);
-			Main.tile[i + 1, j].TileFrameY = (short)(36 * style);
-			Main.tile[i, j + 1].TileFrameY = (short)(36 * style + 18);
-			Main.tile[i + 1, j + 1].TileFrameY = (short)(36 * style + 18);
-		}
-		internal static int GetCapacityForPrevStyle(int style) {
-			style--;
-			if (style == 8) return 4;
-			if (style > 1) style--;
-			int num2 = style + 1;
-			if (num2 > 4) num2++;
-			if (num2 > 6) num2++;
-			if (num2 > 8) num2 += 7;
-			return 40 * num2;
-		}
-		public static void TryUpgradeStorage(int i, int j, int type) {
-			if (Main.tile[i, j].TileFrameX % 36 == 18) i--;
-			if (Main.tile[i, j].TileFrameY % 36 == 18) j--;
-			Player player = Main.LocalPlayer;
-			Item item = player.HeldItem;
-			if (item?.ModItem is not OriginsStorageUpgrade upgradeItem) return;
-			if (TileEntity.ByPosition.TryGetValue(new Point16(i, j), out TileEntity te) && te is TEStorageUnit storageUnitTE) {
-				if (storageUnitTE.Capacity != GetCapacityForPrevStyle(upgradeItem.Unit.Tier)) return;
-			} else {
-				storageUnitTE = null;
-			}
-			SetTypeAndStyle(i, j, upgradeItem.Unit.Type, upgradeItem.Unit.Tier);
-			player.tileInteractionHappened = true;
-			if (storageUnitTE is not null) {
-				storageUnitTE.UpdateTileFrame();
-				NetMessage.SendTileSquare(Main.myPlayer, i, j, 2, 2);
-				TEStorageHeart heart = storageUnitTE.GetHeart();
-				if (heart != null) {
-					switch (Main.netMode) {
-						case NetmodeID.SinglePlayer:
-						heart.ResetCompactStage();
-						break;
-
-						default:
-						NetHelper.SendResetCompactStage(heart.Position);
-						break;
-					}
-				}
-				item.stack--;
-				if (item.stack <= 0) item.SetDefaults();
-				if (player.selectedItem == 58) Main.mouseItem = item.Clone();
-				if (player.selectedItem == 58) {
-					Main.mouseItem.stack--;
-					if (Main.mouseItem.stack <= 0) Main.mouseItem.TurnToAir();
-				} else {
-					item.stack--;
-					if (item.stack <= 0) item.TurnToAir();
-				}
-				player.ConsumeItem(item.type);
-				SoundEngine.PlaySound(in SoundID.MaxMana, storageUnitTE.Position.ToWorldCoordinates());
-				Dust.NewDustPerfect(storageUnitTE.Position.ToWorldCoordinates(), 110, Vector2.Zero, 0, Color.Green, 2f);
-			}
-		}
+	public class Defiled_Storage_Tier() : OriginsStorageTier<Defiled_Bar, UpgradeHellstone>(1) {
+		public override StorageUnitTier UpgradesFrom => Basic;
+		public override StorageUnitTier UpgradesTo => Hellstone;
 	}
 	[ExtendsFromMod(nameof(MagicStorage))]
-	public class OriginsStorageUnit<TMaterial, TNextUpgradeItem, TNextUnitItem>(int tier) : OriginsStorageUnit(tier) where TMaterial : ModItem where TNextUpgradeItem : ModItem where TNextUnitItem : ModItem {
+	public class Encrusted_Storage_Tier() : OriginsStorageTier<Encrusted_Bar, UpgradeHellstone>(1) {
+		public override StorageUnitTier UpgradesFrom => Basic;
+		public override StorageUnitTier UpgradesTo => Hellstone;
+	}
+	[ExtendsFromMod(nameof(MagicStorage))]
+	public class Sanguinite_Storage_Tier() : OriginsStorageTier<Sanguinite_Bar, UpgradeHellstone>(1) {
+		public override StorageUnitTier UpgradesFrom => Basic;
+		public override StorageUnitTier UpgradesTo => Hellstone;
+	}
+	[ExtendsFromMod(nameof(MagicStorage))]
+	public abstract class OriginsStorageTier<TMaterial, TNextUpgradeItem>(int tier) : OriginsStorageTier(tier) where TMaterial : ModItem where TNextUpgradeItem : ModItem {
 		public override int MaterialItem => ModContent.ItemType<TMaterial>();
 		public override int NextUpgradeItem => ModContent.ItemType<TNextUpgradeItem>();
-		public override int NextUnitItem => ModContent.ItemType<TNextUnitItem>();
+	}
+	public class MagicStorageValidityCheckerFixer : ILoadable {
+		public void Load(Mod mod) {
+			MonoModHooks.Add(typeof(TEStorageUnit).GetMethod(nameof(TEStorageUnit.ValidTile)), (orig_ValidTile orig, TEStorageUnit self, in Tile tile) => {
+				if (tile.TileFrameX % 36 == 0 && tile.TileFrameY % 36 == 0) return TileLoader.GetTile(tile.TileType) is StorageUnit || orig(self, tile);
+				return false;
+			});
+		}
+		delegate bool orig_ValidTile(TEStorageUnit self, in Tile tile);
+		delegate bool hook_ValidTile(orig_ValidTile orig, TEStorageUnit self, in Tile tile);
+		public void Unload() {}
 	}
 	[ExtendsFromMod(nameof(MagicStorage))]
-	public abstract class OriginsStorageUnit(int tier) : StorageUnit {
-		public int Tier { get; } = tier;
+	public abstract class OriginsStorageTier(int tier) : StorageUnitTier {
+		internal int upgradeItemType;
+		internal int coreItemType;
+		internal int storageUnitItemType;
+		internal int storageUnitTileType;
 		public abstract int MaterialItem { get; }
-		public OriginsStorageUpgrade UpgradeItem { get; private set; }
-		public virtual int NextUpgradeStyle => Tier + 1;
 		public abstract int NextUpgradeItem { get; }
-		public abstract int NextUnitItem { get; }
+		public abstract StorageUnitTier UpgradesFrom { get; }
+		public abstract StorageUnitTier UpgradesTo { get; }
+		public override int UpgradeItemType => upgradeItemType;
+		public override int CoreItemType => coreItemType;
+		public override int Capacity => 40 * (tier + 1);
+		public override int StorageUnitItemType => storageUnitItemType;
+		public override int StorageUnitTileType => storageUnitTileType;
+		public string BaseName => Name[..^"_Tier".Length];
 		public override void Load() {
-			UpgradeItem = new(this);
-			Mod.AddContent(UpgradeItem);
-			Mod.AddContent(new OriginsStorageUnitItem(this));
+			base.Load();
+			Mod.AddContent(new OriginsStorageUnit(this));
+			Mod.AddContent(new OriginsStorageUpgrade(this));
+			Mod.AddContent(new OriginsStorageCore(this));
 		}
-		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			if (Main.tile[i, j].TileFrameX % 36 == 18) i--;
-			if (Main.tile[i, j].TileFrameY % 36 == 6) j--;
-			if (TileEntity.ByPosition.ContainsKey(new Point16(i, j)) && Main.tile[i, j].TileFrameX / 36 % 3 != 0) fail = true;
-		}
-		public override bool CanExplode(int i, int j) {
-			bool fail = false;
-			bool discard = false;
-			bool discard2 = false;
-			KillTile(i, j, ref fail, ref discard, ref discard2);
-			return !fail;
-		}
-		public override bool RightClick(int i, int j) {
-			if (Main.tile[i, j].TileFrameX % 36 == 18) i--;
-			if (Main.tile[i, j].TileFrameY % 36 == 18) j--;
-			Player player = Main.LocalPlayer;
-			Item item = player.HeldItem;
-			if (!TileEntity.ByPosition.TryGetValue(new Point16(i, j), out TileEntity te) || te is not TEStorageUnit storageUnitTE) storageUnitTE = null;
-			if (item?.type == NextUpgradeItem) {
-				OriginsStorageUpgrading.SetTypeAndStyle(i, j, (ushort)ModContent.TileType<StorageUnit>(), Tier);
-				return base.RightClick(i, j);
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			if (UpgradesFrom != null) {
+				SetUpgradeableFrom(UpgradesFrom);
 			}
-			Main.LocalPlayer.tileInteractionHappened = true;
-			string obj = storageUnitTE.Inactive ? Language.GetTextValue("Mods.MagicStorage.Inactive") : Language.GetTextValue("Mods.MagicStorage.Active");
-			string fullnessString = Language.GetTextValue("Mods.MagicStorage.Capacity", storageUnitTE.NumItems, storageUnitTE.Capacity);
-			Main.NewText(obj + ", " + fullnessString);
-			return false;
+			if (UpgradesTo != null) {
+				SetUpgradeableTo(UpgradesTo);
+			}
 		}
-		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			Tile tile = Main.tile[i, j];
-			Vector2 vector = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
-			Vector2 position = vector + 16f * new Vector2(i, j) - Main.screenPosition;
-			Rectangle value = new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16);
-			Color color = Lighting.GetColor(i, j, Color.White);
-			Color color2 = Color.Lerp(Color.White, color, 0.5f);
-			spriteBatch.Draw(ModContent.Request<Texture2D>(Texture + "_Glow").Value, position, value, color2);
+		public override void Frame(StorageUnitFullness fullness, bool active, out int frameX, out int frameY) {
+			frameX = (int)fullness * 36;
+			if (!active) {
+				frameX += 108;
+			}
+			frameY = 0;
 		}
+		public override void GetState(int frameX, int frameY, out StorageUnitFullness fullness, out bool active) {
+			fullness = (StorageUnitFullness)(frameX / 36 % 3);
+			active = frameX < 108;
+		}
+		public override bool IsValidTile(int frameX, int frameY) => true;
 	}
 	[ExtendsFromMod(nameof(MagicStorage))]
-	public class OriginsStorageUpgrade(OriginsStorageUnit unit) : ModItem {
-		public OriginsStorageUnit Unit { get; } = unit;
-		public override string Name => Unit.Name[..^"_Unit".Length] + "_Upgrade";
+	public class OriginsStorageUpgrade(OriginsStorageTier tier) : BaseStorageUpgradeItem {
+		public override StorageUnitTier Tier => tier;
+		public override string Name => tier.BaseName + "_Upgrade";
 		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 10;
-		}
-		public override void SetDefaults() {
-			Item.width = 12;
-			Item.height = 12;
-			Item.maxStack = 99;
-			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(0, 0, 32);
+			base.SetStaticDefaults();
+			tier.upgradeItemType = Type;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient(Unit.MaterialItem, 10)
+			.AddIngredient(tier.MaterialItem, 10)
 			.AddIngredient(ItemID.Amethyst)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
 	}
+	[ExtendsFromMod(nameof(MagicStorage))]
+	public class OriginsStorageUnit(OriginsStorageTier tier) : StorageUnit {
+		public override string Name => Tier.BaseName + "_Unit";
+		public override void Load() {
+			base.Load();
+			Mod.AddContent(new OriginsStorageUnitItem(this));
+		}
+		public OriginsStorageTier Tier { get; } = tier;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			Tier.storageUnitTileType = Type;
+		}
+		public override int ItemType(int frameX, int frameY) => Tier.storageUnitItemType;
+	}
 
 	[ExtendsFromMod(nameof(MagicStorage))]
-	public class OriginsStorageUnitItem(OriginsStorageUnit unit) : ModItem {
+	public class OriginsStorageUnitItem(OriginsStorageUnit unit) : BaseStorageUnitItem {
 		public override string Name => Unit.Name + "_Item";
 		public OriginsStorageUnit Unit { get; } = unit;
+		public override StorageUnitTier Tier => Unit.Tier;
 		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 10;
+			base.SetStaticDefaults();
+			Unit.Tier.storageUnitItemType = Type;
 		}
-		public override void SetDefaults() {
-			Item.width = 26;
-			Item.height = 26;
-			Item.maxStack = 99;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.consumable = true;
-			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(0, 0, 32);
-			Item.createTile = Unit.Type;
-			Item.placeStyle = Unit.Tier;
-		}
-		public override void AddRecipes() {
-			CreateRecipe()
-			.AddIngredient<MagicStorageItems.StorageUnit>()
-			.AddIngredient(Unit.UpgradeItem.Type)
-			.Register();
-			Recipe.Create(Unit.NextUnitItem)
-			.AddIngredient(Type)
-			.AddIngredient(Unit.NextUpgradeItem)
-			.Register();
+	}
+	[ExtendsFromMod(nameof(MagicStorage))]
+	public class OriginsStorageCore(OriginsStorageTier tier) : BaseStorageCore {
+		public override string Name => tier.BaseName + "_Core";
+		public override StorageUnitTier Tier => tier;
+		protected override bool CloneNewInstances => true;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			tier.coreItemType = Type;
 		}
 	}
 }
