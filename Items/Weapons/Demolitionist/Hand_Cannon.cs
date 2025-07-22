@@ -127,7 +127,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.height = 0;
 			Projectile.friendly = false;
 			Projectile.tileCollide = false;
-			Projectile.timeLeft = 14;
+			Projectile.timeLeft = 18;
 			OriginsSets.Projectiles.ApplyLifetimeModifiers[Type] = false;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
@@ -140,7 +140,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			player.compositeFrontArm.stretch = Player.CompositeArmStretchAmount.Full;
 			Projectile.position = player.GetCompositeArmPosition(false) + Projectile.velocity.SafeNormalize(default) * 12;
 			player.compositeFrontArm.stretch = oldStretch;
-			if (Projectile.timeLeft > 6) {
+			if (Projectile.timeLeft > 10) {
 				if (Projectile.ai[0] <= 4) {
 					if (++Projectile.ai[0] > 4) {
 						SoundEngine.PlaySound(SoundID.Item60.WithPitchRange(0.15f, 0.3f).WithVolume(1f), Projectile.position);
@@ -156,7 +156,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					}
 				}
 			} else {
-				Projectile.ai[0] = Projectile.timeLeft - 1;
+				Projectile.ai[0] = Projectile.timeLeft - 5;
 				if (Projectile.ai[0] <= 0) Projectile.active = false;
 			}
 		}
