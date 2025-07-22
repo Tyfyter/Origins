@@ -1245,7 +1245,7 @@ Buffs: {
 
 	Stellar_Spark_Buff: {
 		DisplayName: Stellar Spark
-		Description: Mods.Origins.Buffs.Stellar_Spark_Buff.Description
+		Description: Arabel's got her eye on you
 	}
 
 	Accretion_Ribbon_Buff: {

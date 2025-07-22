@@ -1324,7 +1324,7 @@ TILES:
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
-(☻) Music Box (The Dive) !!!
+(^) Music Box (The Dive)
 (#, ^2) Otherworldly Music Box (Defiled Wastelands) !!!
 
 (^) Defiled Amalgamation Relic*
