@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Pigron : ModNPC, IDefiledEnemy, ICustomWikiStat, IWikiNPC, ICustomWikiStat {
+	public class Defiled_Pigron : ModNPC, IDefiledEnemy, ICustomWikiStat, IWikiNPC {
 		public Rectangle DrawRect => new(-8, 16, 80, 66);
 		public int AnimationFrames => 56;
 		public int FrameDuration => 1;
