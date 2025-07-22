@@ -594,7 +594,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 	}
-	public class SC_Phase_Three_Underlay() : SC_Phase_Three_BG_layer(RenderLayers.Walls) {
+	public class SC_Phase_Three_Underlay() : SC_Phase_Three_BG_Layer(RenderLayers.Walls) {
 		public static List<DrawData> DrawDatas => instance.drawDatas;
 		public static HashSet<object> DrawnMaskSources => instance.drawnMaskSources;
 
@@ -613,15 +613,29 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			base.Draw(spriteBatch);
 		}
 		public static bool alwaysLightAllTiles = false;
+		public static void AddMinLightArea(Vector2 pos, float range) {
+			range += 16;
+			minLightAreas.Add((pos, range));
+		}
+		internal static List<(Vector2 pos, float range)> minLightAreas = [];
+		public static bool ForcedLit(int i, int j) {
+			for (int k = 0; k < minLightAreas.Count; k++) {
+				if (minLightAreas[k].pos.WithinRange(new Vector2(i * 16 + 8, j * 16 + 8), minLightAreas[k].range)) return true;
+			}
+			return false;
+		}
 	}
-	public class SC_Phase_Three_Midlay() : SC_Phase_Three_BG_layer(RenderLayers.TilesAndNPCs) {
+	public class SC_Phase_Three_Midlay() : SC_Phase_Three_BG_Layer(RenderLayers.TilesAndNPCs) {
 		public static List<DrawData> DrawDatas => instance.drawDatas;
 		public static HashSet<object> DrawnMaskSources => instance.drawnMaskSources;
 
 		public static SC_Phase_Three_Midlay instance;
 		public override void Load() => instance = this;
+		public override void Draw(SpriteBatch spriteBatch) {
+			base.Draw(spriteBatch);
+		}
 	}
-	public abstract class SC_Phase_Three_BG_layer(RenderLayers layer) : Overlay(EffectPriority.High, layer), ILoadable {
+	public abstract class SC_Phase_Three_BG_Layer(RenderLayers layer) : Overlay(EffectPriority.High, layer), ILoadable {
 		readonly ArmorShaderData simpleMaskShader = new(ModContent.Request<Effect>("Origins/Effects/ShimmerConstruct"), "SimpleMask");
 		public override void Activate(Vector2 position, params object[] args) => Mode = OverlayMode.Active;
 		public override void Deactivate(params object[] args) {
@@ -644,39 +658,47 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			if (!Main.gamePaused) {
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
 				try {
-					spriteBatch.Restart(state);
+					spriteBatch.End();
 					Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
+					spriteBatch.Begin(state);
 					Main.graphics.GraphicsDevice.Clear(Color.Transparent);
 					for (int i = 0; i < drawDatas.Count; i++) {
 						drawDatas[i].Draw(spriteBatch);
 					}
 				} finally {
 					spriteBatch.End();
-					spriteBatch.UseOldRenderTargets(oldRenderTargets);
+					spriteBatch.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
 					spriteBatch.Begin(state);
 				}
 				drawDatas.Clear();
 				drawnMaskSources.Clear();
-			} else {
-				spriteBatch.Restart(state);
 			}
 			if (drawDatas.Count > 100) drawDatas.RemoveRange(0, drawDatas.Count - 99);
 			Origins.shaderOroboros.Capture(spriteBatch);
-			spriteBatch.Draw(SC_Phase_Three_Overlay.CurrentBG, new Rectangle(0, 0, Main.ScreenSize.X, Main.ScreenSize.Y), new(Brightness, Brightness, Brightness, Alpha));
+			Main.spriteBatch.Restart(Main.spriteBatch.GetState(), transformMatrix: Main.GameViewMatrix.EffectMatrix);
+			spriteBatch.Draw(
+				SC_Phase_Three_Overlay.CurrentBG,
+				new Rectangle(0, 0, Main.ScreenSize.X, Main.ScreenSize.Y),
+				null,
+				new(Brightness, Brightness, Brightness, Alpha),
+				0,
+				Vector2.Zero,
+				Main.GameViewMatrix.Effects,
+			0);
 			Main.graphics.GraphicsDevice.Textures[1] = renderTarget;
 			Origins.shaderOroboros.Stack(simpleMaskShader);
 			Origins.shaderOroboros.Release();
 		}
 		public override bool IsVisible() => ModContent.GetInstance<SC_Phase_Three_Overlay>().IsVisible();
 		public override void Update(GameTime gameTime) { }
-		static readonly List<SC_Phase_Three_BG_layer> layers = [];
+		static readonly List<SC_Phase_Three_BG_Layer> layers = [];
 		static readonly List<bool> layersRenderedThisFrame = [];
 		internal static void ClearRenderedLayerTracker() {
 			for (int i = 0; i < layers.Count; i++) {
 				layersRenderedThisFrame[i] = false;
 			}
 		}
-		public static IEnumerable<SC_Phase_Three_BG_layer> GetActiveLayers() {
+		public static IEnumerable<SC_Phase_Three_BG_Layer> GetActiveLayers() {
 			for (int i = 0; i < layers.Count; i++) {
 				if (layersRenderedThisFrame[i]) yield return layers[i];
 			}
@@ -725,7 +747,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				return;
 			}
 			if (spriteBatch is null) return;
-			SC_Phase_Three_BG_layer[] layers = SC_Phase_Three_BG_layer.GetActiveLayers().ToArray();
+			SC_Phase_Three_BG_Layer[] layers = SC_Phase_Three_BG_Layer.GetActiveLayers().ToArray();
 			if (layers.Length <= 0) return;
 			SpriteBatchState state = spriteBatch.GetState();
 			Texture2D maskTexture;
@@ -733,7 +755,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				maskTexture = layers[0].renderTarget;
 			} else {
 				Origins.shaderOroboros.Capture(spriteBatch);
-				spriteBatch.Restart(state, blendState: realAlphaSourceBlend, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
+				spriteBatch.Restart(state, blendState: realAlphaSourceBlend, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap, transformMatrix: Matrix.Identity);
 				for (int i = 0; i < layers.Length; i++) {
 					if (layers[i].renderTarget is null) continue;
 					spriteBatch.Draw(layers[i].renderTarget, Vector2.Zero, Color.White);
@@ -768,7 +790,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Origins.shaderOroboros.Stack(maskShader);
 			Origins.shaderOroboros.Release();
 
-			SC_Phase_Three_BG_layer.ClearRenderedLayerTracker();
+			SC_Phase_Three_BG_Layer.ClearRenderedLayerTracker();
 
 			for (int i = 0; i < renderTargetsToDispose.Count; i++) {
 				renderTargetsToDispose[i].Dispose();

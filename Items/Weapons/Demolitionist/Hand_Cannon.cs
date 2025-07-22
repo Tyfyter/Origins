@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				<= 1 => Player.CompositeArmStretchAmount.Quarter,
 				<= 2 => Player.CompositeArmStretchAmount.ThreeQuarters,
 				_ => Player.CompositeArmStretchAmount.Full
-			}, player.itemRotation - player.direction * MathHelper.PiOver2);
+			}, player.itemRotation * player.gravDir - player.direction * MathHelper.PiOver2);
 		}
 	}
 	public class Hand_Cannon_P : ModProjectile, ICanisterProjectile {
@@ -82,6 +82,33 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			if (!OriginsModIntegrations.CheckAprilFools()) {
+				float targetWeight = 4.5f;
+				Vector2 targetDiff = default;
+				NPC target = default;
+				foreach (NPC potential in Main.ActiveNPCs) {
+					if (potential.type == NPCID.Shimmerfly) {
+						Vector2 currentDiff = potential.Center - Projectile.Center;
+						float dist = currentDiff.Length();
+						currentDiff /= dist;
+						float weight = Vector2.Dot(Projectile.velocity, currentDiff) * (300f / (dist + 100));
+						if (weight > targetWeight && Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, potential.position, potential.width, potential.height)) {
+							targetWeight = weight;
+							targetDiff = currentDiff;
+							target = potential;
+						}
+					}
+				}
+				if (target is not null) {
+					PolarVec2 velocity = (PolarVec2)Projectile.velocity;
+					OriginExtensions.AngularSmoothing(
+						ref velocity.Theta,
+						(target.DirectionFrom(Projectile.Center)).ToRotation(),
+						0.01f + velocity.R * 0.005f * Origins.HomingEffectivenessMultiplier[Projectile.type]
+					);
+					Projectile.velocity = (Vector2)velocity;
+				}
+			}
 		}
 	}
 	public class Hand_Cannon_Portal : ModProjectile, ICanisterProjectile, ITriggerSCBackground {

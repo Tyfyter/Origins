@@ -102,7 +102,7 @@ namespace Origins.UI {
 				if (wasSpritebatchRunning) {
 					Main.spriteBatch.Begin(state);
 				}
-				Main.spriteBatch.UseOldRenderTargets(oldRenderTargets);
+				Main.spriteBatch.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
 			}
 			public override void Update() {
 				if (renderTarget is null) SetupRenderTarget();

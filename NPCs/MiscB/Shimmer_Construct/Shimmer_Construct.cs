@@ -707,6 +707,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					scale = Vector2.One * scale
 				});
 			} else {
+				SC_Phase_Three_Underlay.alwaysLightAllTiles = true;
 				SC_Phase_Three_Underlay.DrawDatas.Add(new(
 					TextureAssets.MagicPixel.Value,
 					new Rectangle(0, 0, Main.screenWidth, Main.screenHeight),

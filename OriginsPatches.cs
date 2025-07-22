@@ -1954,16 +1954,16 @@ namespace Origins {
 				} else {
 					return new Color(0, 0, 0, 0);
 				}
-			} else if ((SC_Phase_Three_Underlay.alwaysLightAllTiles || !Main.LocalPlayer.ZoneShimmer) && Filters.Scene["Origins:ShimmerConstructPhase3"].Active) {
-				Color color = orig(self, i, j, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
+			} else if ((SC_Phase_Three_Underlay.alwaysLightAllTiles || SC_Phase_Three_Underlay.ForcedLit(i, j)) && Filters.Scene["Origins:ShimmerConstructPhase3"].Active) {
+				Color color = orig(self, j, i, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 				if (color.R == 0 && color.G == 0 && color.B == 0) color.R = 1;
 				return color;
 			} else if (Filters.Scene["Origins:ZoneDusk"].Active) {
-				Color color = orig(self, i, j, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
+				Color color = orig(self, j, i, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 				if (color.R == 0 && color.G == 0 && color.B == 0) color.R = 1;
 				return color;
 			} else {
-				return orig(self, i, j, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
+				return orig(self, j, i, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 			}
 		}
 		static bool _IsSolidForSonar(Tile tile) {

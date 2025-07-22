@@ -34,6 +34,7 @@ using static Tyfyter.Utils.UITools;
 using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 using static Origins.OriginsSets.Items;
 using Terraria.Graphics;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
@@ -664,6 +665,7 @@ namespace Origins {
 			Debugging.LogFirstRun(PostUpdateInvasions);
 		}
 		public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform) {
+			SC_Phase_Three_Underlay.minLightAreas.Clear();
 			foreach (Projectile proj in Main.ActiveProjectiles) {
 				if (proj.ModProjectile is IPreDrawSceneProjectile preDrawer) preDrawer.PreDrawScene();
 			}

@@ -3,6 +3,7 @@ using Origins.Items.Materials;
 using Origins.NPCs;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using PegasusLib;
+using PegasusLib.Graphics;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -117,7 +118,7 @@ namespace Origins.Items.Weapons.Summoner {
 				<= 2 => Player.CompositeArmStretchAmount.Quarter,
 				<= 3 => Player.CompositeArmStretchAmount.ThreeQuarters,
 				_ => Player.CompositeArmStretchAmount.Full
-			}, Projectile.rotation);
+			}, Projectile.rotation * Main.LocalPlayer.gravDir + MathHelper.PiOver2 * (Main.LocalPlayer.gravDir - 1));
 			player.heldProj = Projectile.whoAmI;
 			for (int i = 0; i < partialImmunity.Length; i++) {
 				if (partialImmunity[i] > 0) {
@@ -225,7 +226,7 @@ namespace Origins.Items.Weapons.Summoner {
 				0,
 				center,
 				Vector2.One / Main.GameViewMatrix.Zoom,
-				SpriteEffects.None
+				Main.GameViewMatrix.Effects
 			);
 
 			Texture2D texture = TextureAssets.Projectile[Type].Value;

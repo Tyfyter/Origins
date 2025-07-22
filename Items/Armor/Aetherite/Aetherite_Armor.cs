@@ -135,6 +135,7 @@ namespace Origins.Items.Armor.Aetherite {
 					origin = circle.Size() * 0.5f,
 					scale = Vector2.One * Projectile.scale
 				});
+				SC_Phase_Three_Underlay.AddMinLightArea(Projectile.position, (MaxRadius + 32) * Projectile.scale);
 			}
 		}
 	}
