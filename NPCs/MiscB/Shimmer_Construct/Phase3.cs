@@ -655,25 +655,24 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			if (spriteBatch is null) return;
 			layersRenderedThisFrame[index] = true;
 			SpriteBatchState state = spriteBatch.GetState() with { rasterizerState = RasterizerState.CullNone };
-			if (!Main.gamePaused) {
-				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
-				try {
-					spriteBatch.End();
-					Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
-					spriteBatch.Begin(state);
-					Main.graphics.GraphicsDevice.Clear(Color.Transparent);
-					for (int i = 0; i < drawDatas.Count; i++) {
-						drawDatas[i].Draw(spriteBatch);
-					}
-				} finally {
-					spriteBatch.End();
-					spriteBatch.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
-					spriteBatch.Begin(state);
+
+			RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
+			try {
+				spriteBatch.End();
+				Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
+				spriteBatch.Begin(state);
+				Main.graphics.GraphicsDevice.Clear(Color.Transparent);
+				for (int i = 0; i < drawDatas.Count; i++) {
+					drawDatas[i].Draw(spriteBatch);
 				}
-				drawDatas.Clear();
-				drawnMaskSources.Clear();
+			} finally {
+				spriteBatch.End();
+				spriteBatch.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
+				spriteBatch.Begin(state);
 			}
-			if (drawDatas.Count > 100) drawDatas.RemoveRange(0, drawDatas.Count - 99);
+			drawDatas.Clear();
+			drawnMaskSources.Clear();
+
 			Origins.shaderOroboros.Capture(spriteBatch);
 			Main.spriteBatch.Restart(Main.spriteBatch.GetState(), transformMatrix: Main.GameViewMatrix.EffectMatrix);
 			spriteBatch.Draw(

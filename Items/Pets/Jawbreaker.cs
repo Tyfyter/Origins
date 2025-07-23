@@ -34,7 +34,6 @@ namespace Origins.Items.Pets {
 		];*/
 	}
 	public class Stellar_Spark : ModProjectile, IPreDrawSceneProjectile, ITriggerSCBackground {
-		public override string Texture => "Terraria/Images/Misc/Ripples";
 		public override void SetStaticDefaults() {
 			Jawbreaker.projectileID = Projectile.type;
 			// Sets the amount of frames this minion has on its spritesheet
@@ -152,9 +151,9 @@ namespace Origins.Items.Pets {
 
 			// Some visuals here
 			if (Projectile.ai[1] == 1 && Projectile.ai[0] == 0) {
-				if (MathUtils.LinearSmoothing(ref Projectile.ai[2], 4.6f, 4 / 60f)) Projectile.ai[0] = 1;
+				if (MathUtils.LinearSmoothing(ref Projectile.ai[2], 1f, 1 / 60f)) Projectile.ai[0] = 1;
 			} else if (Projectile.ai[1] == 1 && Projectile.ai[0]++ > 600) {
-				if (MathUtils.LinearSmoothing(ref Projectile.ai[2], 0, 6 / 60f)) {
+				if (MathUtils.LinearSmoothing(ref Projectile.ai[2], 0, 1.5f / 60f)) {
 					Projectile.ai[1] = Projectile.ai[0] = 0;
 				}
 			}
@@ -162,17 +161,14 @@ namespace Origins.Items.Pets {
 		}
 		public DrawData GetDrawData(Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
-			Rectangle frame = texture.Frame(verticalFrames: 2, frameY: 1);
-			frame.Y += 2;
-			frame.Height -= 2;
 			return new(
 				texture,
 				(Projectile.Center - Main.screenPosition).Floor(),
-				frame,
+				null,
 				lightColor,
 				0,
-				frame.Size() * 0.5f,
-				Vector2.One * Projectile.scale * Projectile.ai[2],
+				texture.Size() * 0.5f,
+				Projectile.scale * Projectile.ai[2],
 				SpriteEffects.None
 			);
 		}
@@ -193,7 +189,7 @@ namespace Origins.Items.Pets {
 				DrawData data = GetDrawData(Color.White);
 				Vector2 basePos = data.position;
 				for (int i = 0; i < 4; i++) {
-					data.position = basePos + (MathHelper.PiOver2 * i).ToRotationVector2() * 2;
+					data.position = basePos + (MathHelper.PiOver2 * i).ToRotationVector2() * 2 * (data.scale + Vector2.One);
 					Main.EntitySpriteDraw(data);
 				}
 			}
@@ -225,6 +221,7 @@ namespace Origins.Items.Pets {
 				Main.OnResolutionChanged += Resize;
 				return;
 			}
+			if (!SC_Phase_Three_Underlay.DrawnMaskSources.Add(this)) return;
 			Origins.shaderOroboros.Capture();
 			Main.spriteBatch.Restart(Main.spriteBatch.GetState(), rasterizerState: RasterizerState.CullNone);
 
