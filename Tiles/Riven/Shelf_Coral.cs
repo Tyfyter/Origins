@@ -146,12 +146,17 @@ namespace Origins.Tiles.Riven {
 					CurrentState = State.In;
 					for (int i = 0; i < 3; i++) {
 						Point pos = new(Position.X + i, Position.Y - 1);
-						TileObjectData data = TileObjectData.GetTileData(Framing.GetTileSafely(pos));
+						Tile tile = Framing.GetTileSafely(pos);
+						if (TileID.Sets.ReplaceTileBreakUp[tile.TileType]) {
+							WorldGen.KillTile(pos.X, pos.Y);
+							continue;
+						}
+						TileObjectData data = TileObjectData.GetTileData(tile);
 						if (data is null) continue;
 						if (!data.AnchorBottom.type.HasFlag(AnchorType.SolidTile) && !data.AnchorBottom.type.HasFlag(AnchorType.SolidWithTop)) continue;
 						int startX = TileObjectData.TopLeft(pos.X, pos.Y).X;
 						for (int j = data.AnchorBottom.checkStart; j < data.AnchorBottom.tileCount; j++) {
-							if (startX + j == i) {
+							if (startX + j == pos.X) {
 								WorldGen.KillTile(pos.X, pos.Y);
 								break;
 							}
