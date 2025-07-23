@@ -12,7 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Jawbreaker : ModItem /*, ICustomWikiStat, ICustomPetFrames, IJournalEntrySource<Blockus_Tube_Entry> */ {
+	public class Jawbreaker : ModItem /*, ICustomWikiStat, ICustomPetFrames */ {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public string[] Categories => [
@@ -159,6 +159,48 @@ namespace Origins.Items.Pets {
 			}
 			#endregion
 		}
+		public override void PostDraw(Color lightColor) {
+			// for player select screen
+			for (int i = 0; i < chunks.Length; i++) chunks[i].Update(this);
+		}
+		Chunk[] chunks = [];
+		struct Chunk(int type, Vector2 position) {
+			public float rotation;
+			public Vector2 position = position;
+			public Vector2 velocity = Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * 32);
+			public Vector2 offset = Vector2.Zero;
+			public readonly Vector2 VisualPostion => position + offset;
+			public int ID = type;
+			public void Update(Stellar_Spark spark) {
+				float offsetLength = offset.Length();
+				if (offsetLength > 0) {
+					offset -= offset * (Math.Min(16, offsetLength) / offsetLength);
+					offset *= 0.97f;
+				}
+				// need a way to automatically set the offset bc it only looks correct on 1 resolution
+				if (spark.Projectile.isAPreviewDummy) offset = new Vector2(94, 110) * Main.UIScale;
+				float speed = 0.15f + (ID % 3) * 0.01f;
+				velocity = velocity.RotatedBy(speed);
+				position = spark.Projectile.Center + velocity;
+				rotation += speed + velocity.X * 0.01f;
+
+				position += velocity;
+			}
+			public readonly bool Draw(Stellar_Spark spark) {
+				Main.instance.LoadGore(ID);
+				Main.EntitySpriteDraw(
+					TextureAssets.Gore[ID].Value,
+					VisualPostion - Main.screenPosition,
+					null,
+					Color.White,
+					rotation,
+					TextureAssets.Gore[ID].Size() * 0.5f,
+					1,
+					SpriteEffects.None,
+				0f);
+				return false;
+			}
+		}
 		public DrawData GetDrawData(Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			return new(
@@ -173,7 +215,8 @@ namespace Origins.Items.Pets {
 			);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			default(ShimmerConstructSDF).Draw(Projectile.Center - Main.screenPosition, Projectile.rotation, new Vector2(256, 256) / 3f);
+			Vector2 position = Projectile.Center;
+			default(ShimmerConstructSDF).Draw(position - Main.screenPosition, Projectile.rotation, new Vector2(256, 256) / 3f);
 
 			if (middleRenderTarget is null) {
 				Main.QueueMainThreadAction(SetupRenderTargets);
@@ -212,7 +255,18 @@ namespace Origins.Items.Pets {
 				Main.GameViewMatrix.Effects
 			);
 			Main.spriteBatch.Restart(state);
-
+			if (chunks.Length <= 0) {
+				chunks = [
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing2"), position + new Vector2(18 * Projectile.direction, 27).RotatedBy(Projectile.rotation)),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing2"), position + new Vector2(-26 * Projectile.direction, 31).RotatedBy(Projectile.rotation)),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing1"), position + new Vector2(48 * Projectile.direction, -12).RotatedBy(Projectile.rotation)),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing_Medium2"), position + new Vector2(14 * Projectile.direction, 14).RotatedBy(Projectile.rotation)),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing_Medium1"), position + new Vector2(-23 * Projectile.direction, -57).RotatedBy(Projectile.rotation)),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing1"), position + new Vector2(22 * Projectile.direction, -57).RotatedBy(Projectile.rotation))
+				];
+			}
+			for (int i = 0; i < chunks.Length; i++) chunks[i].Draw(this);
+			position += Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * 12);
 			return false;
 		}
 		public void PreDrawScene() {
@@ -261,10 +315,7 @@ namespace Origins.Items.Pets {
 			middleRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 			edgeRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 		}
-	}/*
-	public class Aetherite_Crystal_Entry : JournalEntry {
-		public override JournalSortIndex SortIndex => new("The_Defiled", 18);
-	}*/
+	}
 }
 
 namespace Origins.Buffs {
