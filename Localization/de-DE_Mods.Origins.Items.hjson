@@ -224,7 +224,7 @@ Venom_Fang: {
 	/* Tooltip:
 		'''
 		Attacks inflict Toxic Shock
-		Effects are stronger while Acrid Armor is equipped
+		Effects are stronger while {§Acrid} Armor is equipped
 		''' */
 }
 
@@ -947,12 +947,12 @@ Abysswalker_Hood: {
 }
 
 Acrid_Breastplate: {
-	// DisplayName: Acrid Breastplate
+	// DisplayName: "{§Acrid} Breastplate"
 	// Tooltip: Increased life regeneration
 }
 
 Acrid_Dome: {
-	// DisplayName: Acrid Dome
+	// DisplayName: "{§Acrid} Dome"
 	/* Tooltip:
 		'''
 		10% increased explosive critical chance and throwing velocity
@@ -962,12 +962,12 @@ Acrid_Dome: {
 }
 
 Acrid_Greaves: {
-	// DisplayName: Acrid Greaves
+	// DisplayName: "{§Acrid} Greaves"
 	// Tooltip: Grants the ability to swim
 }
 
 Acrid_Headgear: {
-	// DisplayName: Acrid Headgear
+	// DisplayName: "{§Acrid} Headgear"
 	/* Tooltip:
 		'''
 		10% increased magic damage and 25% reduced mana cost
@@ -977,7 +977,7 @@ Acrid_Headgear: {
 }
 
 Acrid_Helm: {
-	// DisplayName: Acrid Helm
+	// DisplayName: "{§Acrid} Helm"
 	/* Tooltip:
 		'''
 		10% increased melee damage and speed
@@ -987,7 +987,7 @@ Acrid_Helm: {
 }
 
 Acrid_Mask: {
-	// DisplayName: Acrid Mask
+	// DisplayName: "{§Acrid} Mask"
 	/* Tooltip:
 		'''
 		10% increased summoning damage
@@ -998,7 +998,7 @@ Acrid_Mask: {
 }
 
 Acrid_Visor: {
-	// DisplayName: Acrid Visor
+	// DisplayName: "{§Acrid} Visor"
 	/* Tooltip:
 		'''
 		20% increased ranged attack speed
@@ -2059,17 +2059,17 @@ Suspicious_Looking_Pebble: {
 }
 
 Acrid_Drill: {
-	// DisplayName: Acrid Drill
+	// DisplayName: "{§Acrid} Drill"
 	// Tooltip: Increased mining speed when submerged
 }
 
 Acrid_Hamaxe: {
-	// DisplayName: Acrid Hamaxe
+	// DisplayName: "{§Acrid} Hamaxe"
 	// Tooltip: Increased mining speed when submerged
 }
 
 Acrid_Pickaxe: {
-	// DisplayName: Acrid Pickaxe
+	// DisplayName: "{§Acrid} Pickaxe"
 	// Tooltip: Increased mining speed when submerged
 }
 
@@ -2845,7 +2845,7 @@ Potato_Launcher: {
 }
 
 Acrid_Impaler: {
-	// DisplayName: Acrid Impaler
+	// DisplayName: "{§Acrid} Impaler"
 	/* Tooltip:
 		'''
 		Uses harpoons as ammo
@@ -4187,7 +4187,7 @@ Defiled_Grass_Wall_Placed_Unsafe_Item: {
 }
 
 Acrid_Handcannon: {
-	// DisplayName: Acrid Handcannon
+	// DisplayName: "{§Acrid} Handcannon"
 	// Tooltip: Releases brine droplets upon slug detonation
 }
 
@@ -4271,7 +4271,7 @@ Dart_Crossbow: {
 }
 
 Acrid_Dye: {
-	// DisplayName: Acrid Dye
+	// DisplayName: "{§Acrid} Dye"
 	// Tooltip: ""
 }
 
@@ -5116,12 +5116,12 @@ Crawdaddys_Revenge: {
 }
 
 Acrid_Laser_Rod: {
-	// DisplayName: Acrid Laser Rod
+	// DisplayName: "{§Acrid} Laser Rod"
 	// Tooltip: The bobber will light up the area around it
 }
 
 Acrid_Beam_Thrusters: {
-	// DisplayName: Acrid Beam Thrusters
+	// DisplayName: "{§Acrid} Beam Thrusters"
 	// Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 }
 
@@ -5375,7 +5375,7 @@ Explosive_Barrel: {
 }
 
 Acrid_Spout: {
-	// DisplayName: Acrid Spout
+	// DisplayName: "{§Acrid} Spout"
 	/* Tooltip:
 		'''
 		Spews droplets of brine
@@ -5582,7 +5582,7 @@ Venom_Shield: {
 	/* Tooltip:
 		'''
 		Attacks inflict Toxic Shock
-		Effects are stronger while Acrid Armor is equipped
+		Effects are stronger while {§Acrid} Armor is equipped
 		Grants immunity to knockback and fire blocks
 		All damage received is reflected to 3 nearby enemies
 		Allows the player to dash into the enemy

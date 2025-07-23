@@ -1085,7 +1085,7 @@ Buffs: {
 	}
 
 	Acrid_Spout_Buff: {
-		// DisplayName: Acrid Spout Buff
+		// DisplayName: "{§Acrid} Spout Buff"
 		// Description: Mods.Origins.Buffs.Acrid_Spout_Buff.Description
 	}
 
@@ -1314,7 +1314,7 @@ Projectiles: {
 	// Defiled_Blight_P.DisplayName: "{§Defiled} Blight"
 	// Meberoid.DisplayName: Meberoid
 	// Platformer_Mech.DisplayName: Platformer Mech
-	// Acrid_Drill_P.DisplayName: Acrid Drill
+	// Acrid_Drill_P.DisplayName: "{§Acrid} Drill"
 	// Amoeba_Hook_P.DisplayName: Amoeba Hook
 	// Lightning_Rod_Bobber.DisplayName: Lightning Rod Bobber
 	// Parasitic_Bobber.DisplayName: Parasitic Bobber
@@ -1541,7 +1541,7 @@ Projectiles: {
 	// Switchblade_Shortsword_P.DisplayName: Switchblade
 	// Amber_Shard.DisplayName: Amber Shard
 	// Metal_Slug_Explosion.DisplayName: Metal Slug Explosion
-	// Acrid_Slug_P.DisplayName: Acrid Slug
+	// Acrid_Slug_P.DisplayName: "{§Acrid} Slug"
 	// Sapphire_Aura.DisplayName: Sapphire Aura
 	// Abrasion_Blaster_Charge_P.DisplayName: Abrasion Blaster
 	// Abrasion_Blaster_P.DisplayName: Abrasion Blaster
@@ -1706,7 +1706,7 @@ Projectiles: {
 	// Friendly_Relay_Signal.DisplayName: Friendly Relay Signal
 	// Sixth_Spline_Battery.DisplayName: Sixth Spline Battery
 	// Crawdaddys_Revenge_P.DisplayName: Crawdaddy's Claw
-	// Acrid_Laser_Rod_Bobber.DisplayName: Acrid Laser Rod Bobber
+	// Acrid_Laser_Rod_Bobber.DisplayName: "{§Acrid} Laser Rod Bobber"
 	// Hydrolantern_Use.DisplayName: Hydrolantern
 	// Airsnatcher_Bubble.DisplayName: Airsnatcher Bubble
 	// Unsatisfied_Soul.DisplayName: Unsatisfied Soul
@@ -1731,8 +1731,8 @@ Projectiles: {
 	// Lost_Diver_Harpoon.DisplayName: Lost Diver Harpoon
 	// Lost_Diver_Mildew_Whip.DisplayName: Lost Diver Mildew Whip
 	// Explosive_Barrel_P.DisplayName: Explosive Barrel
-	// Acrid_Spout_P.DisplayName: Acrid Spout
-	// Acrid_Spout_Droplet.DisplayName: Acrid Spout Droplet
+	// Acrid_Spout_P.DisplayName: "{§Acrid} Spout"
+	// Acrid_Spout_Droplet.DisplayName: "{§Acrid} Spout Droplet"
 	// Boomboom_P.DisplayName: Boomboom
 	// Brine_Fiend_Boomboom.DisplayName: Brine Fiend Boomboom
 	// Fumethrower_P.DisplayName: Fumethrower
