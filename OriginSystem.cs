@@ -314,6 +314,7 @@ namespace Origins {
 			Debugging.firstUpdate = false;
 		}
 		public static int GemStaffRecipeGroupID { get; private set; }
+		public static int GemPhasebladeRecipeGroupID { get; private set; }
 		public static int DeathweedRecipeGroupID { get; private set; }
 		public static int RottenChunkRecipeGroupID { get; private set; }
 		public static int ShadowScaleRecipeGroupID { get; private set; }
@@ -330,6 +331,15 @@ namespace Origins {
 				ItemID.RubyStaff,
 				ItemID.SapphireStaff,
 				ItemID.TopazStaff
+			]));
+			GemPhasebladeRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Gem Phaseblades", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.GemPhaseblades").Value, [
+				ItemID.OrangePhaseblade,
+				ItemID.PurplePhaseblade,
+				ItemID.WhitePhaseblade,
+				ItemID.GreenPhaseblade,
+				ItemID.RedPhaseblade,
+				ItemID.BluePhaseblade,
+				ItemID.YellowPhaseblade
 			]));
 			EvilBoomerangRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Evil Boomerangs", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.EvilBoomerangs").Value, [
 				ModContent.ItemType<Dark_Spiral>(),

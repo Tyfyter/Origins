@@ -1,4 +1,5 @@
 using Origins.Projectiles;
+using Origins.Tiles.Other;
 using PegasusLib;
 using Terraria;
 using Terraria.ID;
@@ -33,6 +34,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox) => noHitbox = player.altFunctionUse != 0;
 		public override bool CanShoot(Player player) => player.altFunctionUse != 0;
 		public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Item.shoot] <= 0;
+		public override void AddRecipes() => CreateRecipe().AddRecipeGroup("Origins:Gem Phaseblades").AddIngredient<Chambersite_Item>(25).AddTile(TileID.MythrilAnvil).Register();
 	}
 	public class Chambersite_Phasesaber_P : ModProjectile {
 		public override string Texture => typeof(Chambersite_Phasesaber).GetDefaultTMLName();
@@ -44,8 +46,8 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.aiStyle = ProjAIStyleID.Boomerang;
 			Projectile.penetrate = -1;
 			Projectile.extraUpdates = 1;
-			Projectile.width = 68;
-			Projectile.height = 68;
+			Projectile.width = 48;
+			Projectile.height = 48;
 			Projectile.scale = 1f;
 			DrawOriginOffsetX = 0;
 			DrawOriginOffsetY = 0;

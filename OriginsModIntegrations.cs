@@ -64,6 +64,8 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Summoner;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Other.Fish;
+using static Origins.OriginSystem;
+using ThoriumMod.Items.MeleeItems;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -534,6 +536,7 @@ namespace Origins {
 		}
 		public static void AddRecipeGroups() {
 			if (ModLoader.TryGetMod("MagicStorage", out _)) AddMagicStorageGroups();
+			if (instance.thorium is not null) AddThoriumRecipeGroups();
 			if (instance.fargosMutant is not null) AddFargosGroups();
 		}
 		public void Unload() {
@@ -747,6 +750,11 @@ namespace Origins {
 					PaintingsNotFromVendor[itm.Type] = true;
 			}
 			PaintingsNotFromVendor[ItemType<GrayDPaintingItem>()] = true;
+		}
+		[JITWhenModsEnabled("ThoriumMod")]
+		static void AddThoriumRecipeGroups() {
+			RecipeGroup.recipeGroups[GemPhasebladeRecipeGroupID].ValidItems.Add(ItemType<CyanPhaseblade>());
+			RecipeGroup.recipeGroups[GemPhasebladeRecipeGroupID].ValidItems.Add(ItemType<PinkPhaseblade>());
 		}
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void SetFargosStaticDefaults() {
