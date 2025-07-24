@@ -305,7 +305,7 @@ Dryad: {
 			Unlocks: [i:Origins/Bloombomb]
 			'''
 		Inquire: Hello again, [player:_]. Ready for some more cleansing today? I have another task for you to cleanse a decent amount of the [evil:world] for me. I've got some [itemname:Origins/Bloombomb]s for cheap if you could help!
-		Start: Oh. I didn't think you'd be dying to cleanse the [evil:world] over some [itemname:Origins/Bloombomb]s, to be all that honest. Thanks anyway.
+		Start: Oh. I didn't think you'd be dying to cleanse the [evil:world] over some [itemname:Origins/Bloombomb]s to be all that honest. Thanks anyway.
 		ReadyToComplete: Great work, Terrarian. You did good. However, I am unable to offer you [itemname:Origins/Bloombomb]s until you click that button above me.
 		Complete: Now. For your reward...
 	}
