@@ -1,4 +1,5 @@
 ﻿using Origins.Items.Materials;
+using Origins.Journal;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
-	public class Constellation : ModItem {
+	public class Constellation : ModItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Constellation_Entry).Name;
+		public class Constellation_Entry : JournalEntry {
+			public override string TextKey => "Constellation";
+			public override JournalSortIndex SortIndex => new("Arabel", 3);
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodBow);
 			Item.damage = 20;

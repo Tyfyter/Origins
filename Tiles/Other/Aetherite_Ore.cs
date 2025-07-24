@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
+using Origins.Journal;
 using PegasusLib;
 using Terraria;
 using Terraria.ID;
@@ -23,7 +24,12 @@ namespace Origins.Tiles.Other {
             HitSound = SoundID.Tink;
         }
 	}
-	public class Aetherite_Ore_Item : ModItem, ICustomWikiStat {
+	public class Aetherite_Ore_Item : ModItem, ICustomWikiStat, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Aetherite_Ore_Entry).Name;
+		public class Aetherite_Ore_Entry : JournalEntry {
+			public override string TextKey => "Aetherite_Ore";
+			public override JournalSortIndex SortIndex => new("Arabel", 6);
+		}
 		public string[] Categories => [
 			"Ore"
 		];

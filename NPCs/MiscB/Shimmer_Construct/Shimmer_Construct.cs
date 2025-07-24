@@ -11,6 +11,7 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
+using Origins.Journal;
 using Origins.LootConditions;
 using Origins.Music;
 using Origins.Tiles.BossDrops;
@@ -39,7 +40,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	[AutoloadBossHead]
-	public class Shimmer_Construct : ModNPC {
+	public class Shimmer_Construct : ModNPC, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Shimmer_Construct_Entry).Name;
+		public class Shimmer_Construct_Entry : JournalEntry {
+			public override string TextKey => "Shimmer_Construct";
+			public override JournalSortIndex SortIndex => new("Arabel", 5);
+		}
 		protected readonly static List<AIState> aiStates = [];
 		public readonly int[] previousStates = new int[6];
 		public bool IsInPhase2 => isInPhase2;// NPC.life * 2 < NPC.lifeMax;

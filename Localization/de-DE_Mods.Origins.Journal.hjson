@@ -7,7 +7,7 @@ TabName: {
 
 Arabel: {
 	// DisplayName: Arabel
-	// SeriesLength: "4"
+	// SeriesLength: "6"
 	/* Shimmerstar_Staff.Text:
 		'''
 		[header:Shimmerstar Staff (1/{$SeriesLength})]
@@ -56,13 +56,16 @@ Arabel: {
 			''' */
 	}
 
-	/* Aetherite_Ore.Text:
-		'''
-		[header:Aetherite Ore (6/{$SeriesLength})]
-		[jimage/sc2.2d:Origins/Tiles/Other/Aetherite_Ore_Item]
-		*****
-		I've imprisoned myself in hopes of never being found. A laden guilt I just can't shake off; failure as both a mother and wife. I could not save them; I can't even save myself. Forever stuck in limbo, unable to age and thoughts trilled by voices that aren't mine. Don't come looking for me. Even if you overcome my creations, I will never accept my life as it is now. Let me rest, in my own starfield.
-		''' */
+	Aetherite_Ore: {
+		/* Text:
+			'''
+			[header:Aetherite Ore (6/{$SeriesLength})]
+			[jimage/sc2.2d:Origins/Tiles/Other/Aetherite_Ore_Item]
+			*****
+			I've imprisoned myself in hopes of never being found. A laden guilt I just can't shake off; failure as both a mother and wife. I could not save them; I can't even save myself. Forever stuck in limbo, unable to age and thoughts trilled by voices that aren't mine. Don't come looking for me. Even if you overcome my creations, I will never accept my life as it is now. Let me rest, in my own starfield.
+			''' */
+		// Name: Aetherite Ore Entry
+	}
 }
 
 Lost_Crone: {
