@@ -96,13 +96,14 @@ namespace Origins.Items.Weapons.Ranged {
 				if (Projectile.localAI[0].Warmup(Projectile.localAI[1])) {
 					SoundEngine.PlaySound(SoundID.Item25.WithPitchOffset(1)); // full charge sound
 					SoundEngine.PlaySound(SoundID.Zombie103.WithPitch(2f));
+					Main.NewText("Beep");
 				}
 				if (player.channel) {
 					if (SoundEngine.TryGetActiveSound(chargeSound, out ActiveSound sound)) {
 						MathUtils.LinearSmoothing(ref sound.Volume, Projectile.localAI[0] < 0 ? 0f : 0.75f, 1f / 20);
 					} else {
 						int type = Type;
-						chargeSound = SoundEngine.PlaySound(SoundID.Item92.WithVolume(0.35f), null, soundInstance => {
+						chargeSound = SoundEngine.PlaySound(Origins.Sounds.LightningCharging, null, soundInstance => {
 							soundInstance.Pitch = Math.Max(Projectile.localAI[0] / Projectile.localAI[1], 0);
 							return Projectile.active && Projectile.type == type;
 						});
