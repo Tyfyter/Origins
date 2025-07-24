@@ -119,7 +119,7 @@ Goblin_Tinkerer: {
 			Unlocks: [i:Origins/Turbo_Reel]
 			''' */
 		// Inquire: Hey, Terrarian! I was wondering if you could possibly fetch me five iron or lead bars, two chains, some adhesive and a watch? I have a project I'm working on that you might want to join in on!
-		// Start: Excellent! Now go reel in those goods and you won't be dissappointed by the result!
+		// Start: Excellent! Now go reel in those goods and you won't be disappointed by the result!
 		// ReadyToComplete: How was your adventure, Terrarian? Do you have the supplies?
 		// Complete: Sweet! With your hard work I have invented the turbo reel! You can use it to make things return to you faster!
 	}
@@ -396,6 +396,8 @@ Cyborg: {
 }
 
 Tax_Collector: {
+	// Quest_Menu: What.
+
 	Tax_Collector_Ghosts_Quest: {
 		// Name: A Night of Uninterrupted Sleep
 		/* Journal:

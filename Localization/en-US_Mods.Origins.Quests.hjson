@@ -396,6 +396,8 @@ Cyborg: {
 }
 
 Tax_Collector: {
+	Quest_Menu: What.
+
 	Tax_Collector_Ghosts_Quest: {
 		Name: A Night of Uninterrupted Sleep
 		Journal:
