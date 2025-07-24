@@ -57,14 +57,14 @@ Arabel: {
 	}
 
 	Aetherite_Ore: {
+		// Name: "{$Items.Aetherite_Ore_Item.DisplayName}"
 		/* Text:
 			'''
-			[header:Aetherite Ore (6/{$SeriesLength})]
+			[header:{$Items.Aetherite_Ore_Item.DisplayName} (6/{$SeriesLength})]
 			[jimage/sc2.2d:Origins/Tiles/Other/Aetherite_Ore_Item]
 			*****
 			I've imprisoned myself in hopes of never being found. A laden guilt I just can't shake off; failure as both a mother and wife. I could not save them; I can't even save myself. Forever stuck in limbo, unable to age and thoughts trilled by voices that aren't mine. Don't come looking for me. Even if you overcome my creations, I will never accept my life as it is now. Let me rest, in my own starfield.
 			''' */
-		// Name: Aetherite Ore Entry
 	}
 }
 
