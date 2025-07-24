@@ -96,7 +96,6 @@ namespace Origins.Items.Weapons.Ranged {
 				if (Projectile.localAI[0].Warmup(Projectile.localAI[1])) {
 					SoundEngine.PlaySound(SoundID.Item25.WithPitchOffset(1)); // full charge sound
 					SoundEngine.PlaySound(SoundID.Zombie103.WithPitch(2f));
-					Main.NewText("Beep");
 				}
 				if (player.channel) {
 					if (SoundEngine.TryGetActiveSound(chargeSound, out ActiveSound sound)) {
@@ -111,7 +110,7 @@ namespace Origins.Items.Weapons.Ranged {
 				}
 			}
 			if (!player.noItems && !player.CCed) {
-				Vector2 position = player.MountedCenter + (new Vector2(8, -6 * player.direction).RotatedBy(Projectile.rotation - MathHelper.PiOver2)).Floor();
+				Vector2 position = player.MountedCenter + (new Vector2(8, -6 * player.direction * player.gravDir).RotatedBy(Projectile.rotation - MathHelper.PiOver2)).Floor();
 				Projectile.position = position;
 				position += position.DirectionTo(Main.MouseWorld).RotatedBy(player.direction * MathHelper.PiOver2) * BarrelOffset;
 				if (Main.myPlayer == Projectile.owner && (Main.mouseRight || (Projectile.ai[0] <= 1 && Projectile.ai[2] != -1 && Main.mouseLeft))) {
@@ -141,7 +140,6 @@ namespace Origins.Items.Weapons.Ranged {
 			} else {
 				Projectile.Kill();
 			}
-			//Projectile.position.Y += player.gravDir * 2f;
 		}
 		public virtual bool ActuallyShoot() {
 			Player player = Main.player[Projectile.owner];
