@@ -25,7 +25,7 @@
 // Amebic_Slime: With its viscosity unchanged, it behaves like most slimes... the only difference is that it tends to easily digest whatever it absorbs.
 // Amoeba_Bugger: These nasty bugs thrive in conditions like the {§Riven_Hive} feeding on flesh decayed from the barnacles. They also love it fresh whenever available.
 // Barnacle_Bunny: Bunnies are pure beings that cannot normally adapt to the {§Riven_Hive}'s ecosystem, but will be easily capable of under the effects of a Blood Moon.
-// Barnacle_Mound: Barnacle mounds act as a self-contained ecosystem of microbes, buggers, and the {§Riven} of course.
+// Barnacle_Mound: Barnacle mounds act as a self-contained ecosystem of microbes, buggers and the {§Riven} of course.
 // Barnacleback: Barnaclebacks are a keystone species to the {§Riven_Hive}, working hard to maintain it. Their presence is a sure sign that any progress cleansing the Hive is futile.
 // Bottomfeeder: Goldfish naturally evolve into dangerous, insolveable carnivores in the {§Riven_Hive} which is only further catalyzed by the Blood Moon.
 // Cleaver_Head: A vicious defender of the {§Riven_Hive}, the Cleaver hides in burrows of spug flesh awaiting any trespassers of its territory.
@@ -99,4 +99,4 @@ Chambersite_Squirrel: "{$Bestiary_FlavorText.npc_GemSquirrelAmethyst}"
 // Shimmer_Construct: A mysterious sentient geode created by magic when a large-and-similar-enough being from this world has contacted the Shimmer.
 // Chambersite_Sentinel: Guardians of darkness. They oversee and safeguard the world evil, but only appear nearby chambersite deposits.
 // Ancient_Riven_Fighter: A cousin species of the {§Riven} Protoform that didn't inherit the big-body genes or tail, but at least it has the same springiness!
-// Goo_Wall: bestiary text here
+// Goo_Wall: Gooey film used for trapping bugs that leech off of the Hive.

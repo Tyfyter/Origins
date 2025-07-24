@@ -14,6 +14,9 @@ using ThoriumMod.Items.ZRemoved;
 using Origins.Tiles.Brine;
 using PegasusLib;
 using Origins.Tiles.Riven;
+using AltLibrary.Common.Systems;
+using System.Text;
+using Terraria.ObjectData;
 
 namespace Origins.Items.Other.Testing {
 	public class Blood_Mushroom_Soup : ModItem {
@@ -538,6 +541,59 @@ namespace Origins.Items.Other.Testing {
 		}
 		public void Unload() { }
 	}
+	public class Shelf_Coral_Testing_Mode : WorldgenTestingMode {
+		static Dictionary<char, Predicate<Tile>> coralPredicates => new() {
+			['X'] = OriginExtensions.HasFullSolidTile,
+			['_'] = tile => !tile.HasTile
+		};
+		TilePatternMatcher centeredCoral = new(
+			"""
+					X_O_X
+					 ___ 
+					""",
+			coralPredicates
+		);
+		TilePatternMatcher leftCoral = new(
+			"""
+					XO__
+					X___
+					""",
+			coralPredicates
+		);
+		TilePatternMatcher rightCoral = new(
+			"""
+					__OX
+					___X
+					""",
+			coralPredicates
+		);
+		public override SortOrder SortPosition => SortOrder.New;
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			StringBuilder text = new("Shelf Coral placement: ");
+			Point coralPos = new(Player.tileTargetX, Player.tileTargetY);
+			if (centeredCoral.Matches(coralPos)) {
+				text.Append("Centered");
+			} else if (rightCoral.Matches(coralPos)) {
+				text.Append("Right");
+			} else if (leftCoral.Matches(coralPos)) {
+				text.Append("Left");
+			} else {
+				text.Append("None");
+			}
+			return text.ToString();
+		}
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Player.tileTargetX);
+			parameters.Enqueue(Player.tileTargetY);
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			Point coralPos = new((int)parameters.Dequeue(), (int)parameters.Dequeue());
+			if (TileExtenstions.CanActuallyPlace(coralPos.X, coralPos.Y, ModContent.TileType<Shelf_Coral>(), 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
+				TileObjectData.CallPostPlacementPlayerHook(coralPos.X, coralPos.Y, ModContent.TileType<Shelf_Coral>(), objectData.style, 0, objectData.alternate, objectData);
+			}
+		}
+	}
 	public class Start_Riven_Testing_Mode : WorldgenTestingMode {
 		public override SortOrder SortPosition => SortOrder.New;
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Start Riven Hive";
@@ -547,6 +603,7 @@ namespace Origins.Items.Other.Testing {
 			Apply(parameters);
 		}
 		public override void Apply(LinkedQueue<object> parameters) {
+			WorldBiomeGeneration.ChangeRange.ResetRange();
 			Riven_Hive.Gen.StartHive((int)parameters.Dequeue(), (int)parameters.Dequeue());
 		}
 	}

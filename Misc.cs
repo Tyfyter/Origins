@@ -38,11 +38,6 @@ using Terraria.GameInput;
 using Terraria.GameContent.Creative;
 using Terraria.Enums;
 using Origins.Tiles.Other;
-using Newtonsoft.Json.Linq;
-using Terraria.GameContent.Events;
-using Origins.Backgrounds;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using ThoriumMod.Projectiles;
 using System.Numerics;
 
 namespace Origins {

@@ -560,27 +560,51 @@ namespace Origins.World.BiomeData {
 					}
 				}
 				List<Point> validCoralSpots = [];
-				static bool AllMatch(params (int solid, int i, int j)[] values) {
-					for (int i = 0; i < values.Length; i++) {
-						bool isSolid = Framing.GetTileSafely(values[i].i, values[i].j).HasFullSolidTile();
-						if (isSolid != (values[i].solid != 0)) return false;
-					}
-					return true;
-				}
+				Rectangle playerHitbox = new(0, 0, 20, 40);
+				Rectangle fallPastHitbox = new(0, 0, 20, 40 * 2);
+				Dictionary<char, Predicate<Tile>> coralPredicates = new() {
+					['X'] = OriginExtensions.HasFullSolidTile,
+					['_'] = tile => !tile.HasTile
+				};
+				TilePatternMatcher centeredCoral = new(
+					"""
+					X_O_X
+					 ___ 
+					""",
+					coralPredicates
+				);
+				TilePatternMatcher leftCoral = new(
+					"""
+					XO__
+					X___
+					""",
+					coralPredicates
+				);
+				TilePatternMatcher rightCoral = new(
+					"""
+					__OX
+					___X
+					""",
+					coralPredicates
+				);
 				for (int i0 = 0; i0 < genRange.Width; i0++) {
 					int i1 = i0 + genRange.X;
 					for (int j0 = 0; j0 < genRange.Height; j0++) {
 						int j1 = j0 + genRange.Y;
 						if (validCoralSpots.Contains(new(i1, j1 - 1))) continue;
-						//if tiles go  ___ 
-						//            X___X
-						//             ___ 
-						if (AllMatch(  (0, i1 - 1, j1 - 1), (0, i1, j1 - 1), (0, i1 + 1, j1 - 1),
-							(1, i1 - 2, j1), (0, i1 - 1, j1), (0, i1, j1), (0, i1 + 1, j1), (1, i1 + 2, j1),
-									   (0, i1 - 1, j1 + 1), (0, i1, j1 + 1), (0, i1 + 1, j1 + 1)
-							)) {
-							validCoralSpots.Add(new(i1, j1));
-							//if (validCoralSpots.Count == 1) Main.LocalPlayer.Center = new(i1 * 16 + 8, j1 * 16 + 8);
+						playerHitbox.Location = new(i1 * 16 - 10, j1 * 16 - 40);
+						if (playerHitbox.OverlapsAnyTiles()) continue;
+						Point coralPos = new(i1, j1);
+						if (centeredCoral.Matches(coralPos)) {
+							validCoralSpots.Add(coralPos);
+						} else {
+							if (rightCoral.Matches(coralPos)) {
+								fallPastHitbox.Location = new((i1 + 3) * 16, j1 * 16 + 8 - 40);
+								if (fallPastHitbox.OverlapsAnyTiles()) validCoralSpots.Add(coralPos);
+							} else if (leftCoral.Matches(coralPos)) {
+								fallPastHitbox.Location = new((i1 - 2) * 16 - 20, j1 * 16 + 8 - 40);
+								if (fallPastHitbox.OverlapsAnyTiles()) validCoralSpots.Add(coralPos);
+							}
 						}
 					}
 				}

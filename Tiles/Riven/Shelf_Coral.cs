@@ -24,6 +24,24 @@ namespace Origins.Tiles.Riven {
 		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			int frameY = tile.TileFrameY / 34;
+			switch (frameY) {
+				case 5:
+				int frameX = tile.TileFrameX / 18;
+				int altX = frameX / 3;
+				frameX %= 3;
+				switch ((altX, frameX)) {
+					case (0, 2):
+					case (1, 0) or (1, 2):
+					case (2, 0):
+					return;
+				}
+				break;
+
+				default:
+				if (frameY > 5) return;
+				break;
+			}
 			color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
 		}
 		public override void SetStaticDefaults() {
