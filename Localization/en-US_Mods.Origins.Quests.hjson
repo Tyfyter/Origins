@@ -418,6 +418,8 @@ Tax_Collector: {
 }
 
 Painter: {
+	Quest_Menu: Ay? You wanna sit still and let me make a portrait?
+
 	Spray_N_Pray_Quest: {
 		Name: Painter Apprentice
 		Journal:
