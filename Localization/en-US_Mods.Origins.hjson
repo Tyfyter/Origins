@@ -2283,6 +2283,11 @@ Configs: {
 			Label: Show Rarity In Hotbar
 			Tooltip: ""
 		}
+
+		ScrollWheelDirection: {
+			Label: Scroll Wheel Direction
+			Tooltip: ""
+		}
 	}
 
 	OriginConfig: {
@@ -2583,6 +2588,13 @@ Configs: {
 		World.Label: World
 		Map.Label: Map
 		Housing.Label: Housing Menu
+	}
+
+	Scroll_Wheel_Direction: {
+		Tooltip: ""
+		Normal.Label: Normal
+		Inverted.Label: Inverted
+		Disabled.Label: Disabled
 	}
 }
 

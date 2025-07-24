@@ -162,6 +162,8 @@ namespace Origins {
 		public bool ShowLockedEntries = true;
 		[DefaultValue(true)]
 		public bool EntryCategoryHeaders = true;
+		[DefaultValue(Scroll_Wheel_Direction.Normal)]
+		public Scroll_Wheel_Direction ScrollWheelDirection = Scroll_Wheel_Direction.Normal;
 
 		[DefaultValue(Journal_Default_UI_Mode.Quest_List)]
 		public Journal_Default_UI_Mode DefaultJournalMode = Journal_Default_UI_Mode.Quest_List;
@@ -183,6 +185,11 @@ namespace Origins {
 				LanguageManager.Instance.SetLanguage(culture);
 			}
 		}
+	}
+	public enum Scroll_Wheel_Direction {
+		Normal,
+		Inverted,
+		Disabled
 	}
 	public class LaserTagConfig : ModConfig {
 		public static LaserTagConfig Instance => OriginClientConfig.Instance.laserTagConfig;

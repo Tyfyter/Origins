@@ -42,6 +42,7 @@ namespace Origins.UI {
 		Journal_UI_Mode mode = Journal_UI_Mode.Normal_Page;
 		ArmorShaderData currentEffect = null;
 		Color inkColor;
+		int scrollWheelValue = 0;
 		public override void OnInitialize() {
 			this.RemoveAllChildren();
 			baseElement = new UIElement();
@@ -545,6 +546,21 @@ namespace Origins.UI {
 			}
 			#region arrows
 			if (canDrawArrows) {
+				scrollWheelValue += PlayerInput.ScrollWheelDeltaForUI;
+				int scrollOffset = 0;
+				if (Math.Abs(scrollWheelValue) >= 120) {
+					switch (OriginClientConfig.Instance.ScrollWheelDirection) {
+						case Scroll_Wheel_Direction.Normal:
+						scrollOffset -= Math.Sign(scrollWheelValue) * 2;
+						break;
+						case Scroll_Wheel_Direction.Inverted:
+						scrollOffset += Math.Sign(scrollWheelValue) * 2;
+						break;
+						case Scroll_Wheel_Direction.Disabled:
+						scrollWheelValue = 0;
+						break;
+					}
+				}
 				Texture2D arrows = ArrowsTexture;
 				Rectangle frame = arrows.Frame(verticalFrames: 3);
 				Rectangle area = new(0, 0, frame.Width, frame.Height);
@@ -556,7 +572,7 @@ namespace Origins.UI {
 					frame.Y = frame.Height * 0;
 					if (area.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
 						if (Main.mouseLeft && Main.mouseLeftRelease) {
-							pageOffset += 2;
+							scrollOffset = 2;
 						}
 						spriteBatch.Draw(
 							arrows,
@@ -589,6 +605,8 @@ namespace Origins.UI {
 						frame,
 						Color.Black
 					);
+				} else if (scrollWheelValue < 0) {
+					scrollWheelValue = 0;
 				}
 				if (pageOffset > 0) {
 					Vector2 position = new(bounds.X + xMarginOuter - frame.Width / 2, bounds.Y + bounds.Height - yMargin * 0.8f);
@@ -597,7 +615,7 @@ namespace Origins.UI {
 					frame.Y = frame.Height * 1;
 					if (area.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
 						if (Main.mouseLeft && Main.mouseLeftRelease) {
-							pageOffset = Math.Max(pageOffset - 2, 0);
+							scrollOffset = -2;
 						}
 						spriteBatch.Draw(
 							arrows,
@@ -630,6 +648,12 @@ namespace Origins.UI {
 						frame,
 						Color.Black
 					);
+				} else if (scrollWheelValue > 0) {
+					scrollWheelValue = 0;
+				}
+				if (scrollOffset != 0) {
+					pageOffset = Math.Clamp(pageOffset + scrollOffset, 0, (pages?.Count ?? 0) - 2);
+					scrollWheelValue = 0;
 				}
 				if (mode is Journal_UI_Mode.Normal_Page or Journal_UI_Mode.Quest_Page) {
 					Vector2 position = new(bounds.X + xMarginOuter * 0.7f, bounds.Y + yMargin * 0.5f);
