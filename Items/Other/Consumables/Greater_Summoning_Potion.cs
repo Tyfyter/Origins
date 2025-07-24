@@ -1,7 +1,10 @@
-﻿using Origins.Buffs;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.Items.Accessories;
 using Origins.Items.Other.Fish;
 using Origins.Tiles.Brine;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,6 +28,22 @@ namespace Origins.Items.Other.Consumables {
 			.AddIngredient(ItemID.Moonglow)
 			.AddTile(TileID.Bottles)
 			.Register();
+		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Greater_Summoning_Potion).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Greater_Summoning_Potion).GetDefaultTMLName() + "_AF";
+		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Item[Type] = afTexture;
+			} else {
+				TextureAssets.Item[Type] = normalTexture;
+			}
+		}
+		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Item[Type] = afTexture;
+			} else {
+				TextureAssets.Item[Type] = normalTexture;
+			}
 		}
 	}
 }

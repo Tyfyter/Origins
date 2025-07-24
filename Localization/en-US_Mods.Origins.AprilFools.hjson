@@ -63,6 +63,8 @@ Items: {
 
 	Tripod_Nip.DisplayName: Cat Nip
 	Amnestic_Rose.Tooltip: I forgor [i:1274]
+	Greater_Summoning_Potion.DisplayName: Greater Summoning Potato
+	Focus_Crystal.DisplayName: Nose of Focus
 }
 
 Dialogue.Brine_Fiend.InteractionWind: It fucken WIMDY!

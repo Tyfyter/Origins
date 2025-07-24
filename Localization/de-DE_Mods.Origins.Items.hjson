@@ -6502,7 +6502,7 @@ Accretion_Ribbon: {
 }
 
 Shelf_Coral_Item: {
-	// DisplayName: Shelf Coral Item
+	// DisplayName: Shelf Coral
 	// Tooltip: ""
 }
 
@@ -6516,6 +6516,6 @@ Splitting_Image: {
 	// Tooltip: ""
 }
 
-// Defiled_Storage_Core.DisplayName: Defiled Storage Core
+// Defiled_Storage_Core.DisplayName: "{§Defiled} Storage Core"
 // Encrusted_Storage_Core.DisplayName: Encrusted Storage Core
 // Sanguinite_Storage_Core.DisplayName: Sanguinite Storage Core

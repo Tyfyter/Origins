@@ -36,9 +36,6 @@ namespace Origins.Items.Pets {
 	public class Stellar_Spark : ModProjectile, IPreDrawSceneProjectile, ITriggerSCBackground {
 		public override void SetStaticDefaults() {
 			Jawbreaker.projectileID = Projectile.type;
-			// Sets the amount of frames this minion has on its spritesheet
-			Main.projFrames[Projectile.type] = 2;
-
 			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[Projectile.type] = true;
