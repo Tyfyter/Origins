@@ -58,6 +58,11 @@ namespace Origins.Items.Pets {
 			return false;
 		}
 
+		private Vector2 GetTarget(int i) {
+			Vector2 targetTarget = (legs[i].start + new Vector2(0, 0)) * new Vector2(3f, 7f);
+			Vector2 targetWithinRange = ((targetTarget - legs[i].start).WithMaxLength(TotalLegLength * 0.6f) + legs[i].start);
+			return targetWithinRange.RotatedBy(Projectile.rotation) + Projectile.Center;
+		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 
@@ -129,13 +134,6 @@ namespace Origins.Items.Pets {
 			#region Animation and visuals
 			if (Projectile.velocity != Vector2.Zero) AngularSmoothing(ref Projectile.rotation, Projectile.velocity.ToRotation() + MathHelper.PiOver2, 0.1f);
 
-			// This is a simple "loop through all frames from top to bottom" animation
-			Vector2 GetTarget(int i) {
-				Vector2 targetTarget = (legs[i].start + new Vector2(0, 0)) * new Vector2(3f, 7f);
-				Vector2 targetWithinRange = ((targetTarget - legs[i].start).WithMaxLength(TotalLegLength * 0.6f) + legs[i].start);
-				return targetWithinRange.RotatedBy(Projectile.rotation) + Projectile.Center;
-			} 
-			// Some visuals here
 			if (legs is null) {
 				legs = new Arm[8];
 				legsGrounded = new bool[8];
@@ -163,6 +161,7 @@ namespace Origins.Items.Pets {
 					legTargets[i] = GetTarget(i);
 				}
 			}
+			// Some visuals here
 			switch ((int)Projectile.ai[0]) {
 				case 0: {
 					for (int i = 0; i < 8; i++) {
@@ -239,10 +238,42 @@ namespace Origins.Items.Pets {
 		public bool AdjacentLegsGrounded(int leg) => LegGrounded(leg - 2) && LegGrounded(leg ^ 1) && LegGrounded(leg + 2);
 		public bool LegGrounded(int leg) => (!legs.IndexInRange(leg)) || legsGrounded[leg];
 		public override bool PreDraw(ref Color lightColor) {
-			if (legs is null) return false;
+			if (legs is null) {
+				legs = new Arm[8];
+				legsGrounded = new bool[8];
+				legTargets = new Vector2[8];
+				for (int i = 0; i < 8; i++) {
+					legsGrounded[i] = true;
+					legs[i] = new Arm() {
+						bone0 = new PolarVec2(UpperLegLength, 0),
+						bone1 = new PolarVec2(LowerLegLength, 0)
+					};
+					switch (i / 2) {
+						case 0:
+						legs[i].start = new Vector2(i % 2 == 0 ? -22 : 22, -30);
+						break;
+						case 1:
+						legs[i].start = new Vector2(i % 2 == 0 ? -29 : 29, -14);
+						break;
+						case 2:
+						legs[i].start = new Vector2(i % 2 == 0 ? -29 : 29, 7);
+						break;
+						case 3:
+						legs[i].start = new Vector2(i % 2 == 0 ? -25 : 25, 24);
+						break;
+					}
+					legTargets[i] = GetTarget(i);
+				}
+			}
+			if (Projectile.isAPreviewDummy) {
+				Projectile.velocity += new Vector2(1, 0);
+				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+				Projectile.position -= new Vector2(0, 10);
+			}
 			for (int i = 0; i < 8; i++) {
 				bool flip = (i % 2 != 0) == i < 4;
 				Vector2 baseStart = legs[i].start;
+				if (Projectile.isAPreviewDummy) legTargets[i] = GetTarget(i);
 				legs[i].start = legs[i].start.RotatedBy(Projectile.rotation) + Projectile.Center;
 				float[] targets = legs[i].GetTargetAngles(legTargets[i], flip);
 				if (AngularSmoothing(ref legs[i].bone0.Theta, targets[0], 0.3f) && AngularSmoothing(ref legs[i].bone1.Theta, targets[1], 0.5f)) {
