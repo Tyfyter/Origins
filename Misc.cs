@@ -1805,6 +1805,12 @@ namespace Origins {
 			}
 			return o;
 		}
+		public static bool Contains<TSource>(this IEnumerable<TSource> source, IEnumerable<TSource> value) {
+			foreach (TSource element in value) {
+				if (source.Contains(element)) return true;
+			}
+			return false;
+		}
 		public static Vector2 OldPos(this Projectile self, int index) {
 			return index == -1 ? self.position : self.oldPos[index];
 		}

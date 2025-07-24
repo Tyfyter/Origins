@@ -60,6 +60,10 @@ using ThoriumMod.Items.Painting;
 using ThoriumMod.Tiles;
 using ThoriumMod.Items.Donate;
 using Fargowiltas.Items.Tiles;
+using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Summoner;
+using Origins.Items.Weapons.Ranged;
+using Origins.Items.Other.Fish;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -750,34 +754,116 @@ namespace Origins {
 		}
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosRecipes() {
-			Recipe.Create(ItemType<Brine_Key>())
+			// until brine pool enemies have banners
+			/* Recipe.Create(ItemType<Brine_Key>())
 				.AddRecipeGroup("Origins:AnyBrineBanner", 10)
 				.AddCondition(Condition.Hardmode)
-				.AddTile(TileID.Solidifier);
+				.AddTile(TileID.Solidifier)
+				.DisableDecraft()
+				.Register();*/
 			Recipe.Create(ItemType<Defiled_Key>())
-				.AddIngredient(Item.NPCtoBanner(NPCType<Defiled_Banner_NPC>()), 10)
+				.AddRecipeGroup("Origins:AnyDefiledBanner", 10)
 				.AddCondition(Condition.Hardmode)
-				.AddTile(TileID.Solidifier);
+				.AddTile(TileID.Solidifier)
+				.DisableDecraft()
+				.Register();
 			Recipe.Create(ItemType<Riven_Key>())
 				.AddRecipeGroup("Origins:AnyRivenBanner", 10)
 				.AddCondition(Condition.Hardmode)
-				.AddTile(TileID.Solidifier);
+				.AddTile(TileID.Solidifier)
+				.DisableDecraft()
+				.Register();
 
 			Recipe.Create(ItemType<The_Foot>())
 				.AddIngredient(ItemType<Brine_Key>())
 				.AddCondition(Condition.DownedPlantera)
-				.AddTile(TileID.MythrilAnvil);
+				.AddTile(TileID.MythrilAnvil)
+				.DisableDecraft()
+				.Register();
 			Recipe.Create(ItemType<Missing_File>())
 				.AddIngredient(ItemType<Defiled_Key>())
 				.AddCondition(Condition.DownedPlantera)
-				.AddTile(TileID.MythrilAnvil);
+				.AddTile(TileID.MythrilAnvil)
+				.DisableDecraft()
+				.Register();
 			Recipe.Create(ItemType<Plasma_Cutter>())
 				.AddIngredient(ItemType<Riven_Key>())
 				.AddCondition(Condition.DownedPlantera)
-				.AddTile(TileID.MythrilAnvil);
+				.AddTile(TileID.MythrilAnvil)
+				.DisableDecraft()
+				.Register();
 
 			PaintingsNotFromVendor[ItemType<EchPainting>()] = true;
 			PaintingsNotFromVendor[ItemType<WiresPainting>()] = true;
+
+			#region Crate Recipes
+			static void CrateRecipe(int result, int resultAmount = 1, int crate = 0, int crateHard = 0, int crateAmount = 1, int extraItem = 0, params Condition[] conditions) {
+				if (crate > 0) {
+					Recipe r = Recipe.Create(result, resultAmount)
+					.AddIngredient(crate, crateAmount);
+					if (extraItem > 0) r.AddIngredient(extraItem);
+					r.AddTile(TileID.WorkBenches);
+					foreach (Condition con in conditions) r.AddCondition(con);
+					r.DisableDecraft()
+					.Register();
+				}
+				if (crateHard > 0) {
+					Recipe r = Recipe.Create(result, resultAmount)
+					.AddIngredient(crateHard, crateAmount);
+					if (extraItem > 0) r.AddIngredient(extraItem);
+					r.AddTile(TileID.WorkBenches);
+					foreach (Condition con in conditions) r.AddCondition(con);
+					r.DisableDecraft()
+					.Register();
+				}
+			}
+
+			CrateRecipe(ItemType<Cyah_Nara>(), crate: ItemID.WoodenCrate, crateHard: ItemID.WoodenCrateHard, crateAmount: 3);
+			CrateRecipe(ItemType<Bang_Snap>(), 50, ItemID.WoodenCrate, ItemID.WoodenCrateHard);
+			CrateRecipe(ItemType<Woodsprite_Staff>(), crate: ItemID.WoodenCrate, crateHard: ItemID.WoodenCrateHard, crateAmount: 3);
+
+			CrateRecipe(ItemType<Boiler>(), crate: ItemID.LavaCrate, crateHard: ItemID.LavaCrateHard, extraItem: ItemID.ShadowKey);
+			CrateRecipe(ItemType<Firespit>(), crate: ItemID.LavaCrate, crateHard: ItemID.LavaCrateHard, extraItem: ItemID.ShadowKey);
+			CrateRecipe(ItemType<Dragons_Breath>(), crate: ItemID.LavaCrate, crateHard: ItemID.LavaCrateHard, crateAmount: 3, extraItem: ItemID.ShadowKey);
+			CrateRecipe(ItemType<Hand_Grenade_Launcher>(), crate: ItemID.LavaCrate, crateHard: ItemID.LavaCrateHard, extraItem: ItemID.ShadowKey);
+
+			CrateRecipe(ItemType<Cryostrike>(), crate: ItemID.FrozenCrate, crateHard: ItemID.FrozenCrateHard);
+
+			CrateRecipe(ItemType<Bomb_Charm>(), crate: ItemID.GoldenCrate, crateHard: ItemID.GoldenCrateHard);
+			CrateRecipe(ItemType<Beginners_Tome>(), crate: ItemID.GoldenCrate, crateHard: ItemID.GoldenCrateHard, crateAmount: 3);
+			CrateRecipe(ItemType<Nitro_Crate>(), crate: ItemID.GoldenCrate, crateHard: ItemID.GoldenCrateHard, crateAmount: 3);
+			CrateRecipe(ItemType<Broken_Terratotem>(), crate: ItemID.GoldenCrate, crateHard: ItemID.GoldenCrateHard);
+			CrateRecipe(ItemType<Magic_Tripwire>(), crate: ItemID.GoldenCrate, crateHard: ItemID.GoldenCrateHard, crateAmount: 3);
+			CrateRecipe(ItemType<Trap_Charm>(), crate: ItemID.GoldenCrate, crateHard: ItemID.GoldenCrateHard, crateAmount: 3);
+
+			CrateRecipe(ItemType<Tones_Of_Agony>(), crate: ItemID.DungeonFishingCrate, crateHard: ItemID.DungeonFishingCrateHard, extraItem: ItemID.GoldenKey);
+			CrateRecipe(ItemType<Asylum_Whistle>(), crate: ItemID.DungeonFishingCrate, crateHard: ItemID.DungeonFishingCrateHard, crateAmount: 3, extraItem: ItemID.GoldenKey);
+			CrateRecipe(ItemType<Bomb_Launcher>(), crate: ItemID.DungeonFishingCrate, crateHard: ItemID.DungeonFishingCrateHard, extraItem: ItemID.GoldenKey);
+			CrateRecipe(ItemType<Bomb_Handling_Device>(), crate: ItemID.DungeonFishingCrate, crateHard: ItemID.DungeonFishingCrateHard, extraItem: ItemID.GoldenKey);
+
+			CrateRecipe(ItemType<Desert_Crown>(), crate: ItemID.OasisCrate, crateHard: ItemID.OasisCrateHard);
+
+			CrateRecipe(ItemType<Messy_Leech>(), crate: ItemID.JungleFishingCrate, crateHard: ItemID.JungleFishingCrateHard);
+
+			CrateRecipe(ItemType<Huff_Puffer_Bait>(), crate: ItemType<Residual_Crate>(), crateHard: ItemType<Basic_Crate>(), crateAmount: 3);
+
+			CrateRecipe(ItemType<Knee_Slapper>(), crateHard: ItemType<Bilious_Crate>());
+			CrateRecipe(ItemType<Manasynk>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>());
+			CrateRecipe(ItemType<Kruncher>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>());
+			CrateRecipe(ItemType<Dim_Starlight>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>());
+			CrateRecipe(ItemType<Monolith_Rod>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>());
+			CrateRecipe(ItemType<Krakram>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>());
+			CrateRecipe(ItemType<Suspicious_Looking_Pebble>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>());
+
+			CrateRecipe(ItemType<Scabcoral_Lyre>(), crateHard: ItemType<Festering_Crate>());
+			CrateRecipe(ItemType<Ocotoral_Bud>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
+			CrateRecipe(ItemType<Riven_Splitter>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
+			CrateRecipe(ItemType<Amebolize_Incantation>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
+			CrateRecipe(ItemType<Splitsplash>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
+			CrateRecipe(ItemType<Riverang>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
+			CrateRecipe(ItemType<Amoeba_Toy>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
+			CrateRecipe(ItemType<Primordial_Soup>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
+			#endregion
 		}
 		[JITWhenModsEnabled("MagicStorage")]
 		static void AddMagicStorageGroups() {
@@ -801,17 +887,43 @@ namespace Origins {
 		static void AddFargosGroups() {
 			static int GetBanner(int npc) => Item.NPCtoBanner(npc);
 			List<int> brine = [];
+			List<int> defiled = [];
+			int[] defiledBiomes = {
+				GetInstance<Defiled_Wastelands>().Type,
+				GetInstance<Underground_Defiled_Wastelands_Biome>().Type,
+				GetInstance<Defiled_Wastelands_Desert>().Type,
+				GetInstance<Defiled_Wastelands_Underground_Desert>().Type,
+				GetInstance<Defiled_Wastelands_Ice_Biome>().Type,
+				GetInstance<Defiled_Wastelands_Ocean>().Type
+			};
 			List<int> riven = [];
+			int[] rivenBiomes = {
+				GetInstance<Riven_Hive>().Type,
+				GetInstance<Underground_Riven_Hive_Biome>().Type,
+				GetInstance<Riven_Hive_Desert>().Type,
+				GetInstance<Riven_Hive_Underground_Desert>().Type,
+				GetInstance<Riven_Hive_Ice_Biome>().Type,
+				GetInstance<Riven_Hive_Ocean>().Type
+			};
+			int[] bannedBanners = {
+				GetBanner(NPCID.PigronHallow),
+				GetBanner(NPCID.DesertGhoul)
+			};
 			for (int i = 0; i < NPCID.Sets.AllNPCs.Length; i++) {
 				NPC npc = ContentSamples.NpcsByNetId[i];
 				if (npc?.ModNPC is not null) {
-					if (npc.ModNPC.SpawnModBiomes.Contains(GetInstance<Brine_Pool>().Type)) brine.Add(GetBanner(i));
-					if (npc.ModNPC.SpawnModBiomes.Contains(GetInstance<Riven_Hive_Alt_Biome>().Type) || npc.ModNPC.SpawnModBiomes.Contains(GetInstance<Riven_Hive>().Type)) riven.Add(GetBanner(i));
+					if (npc.ModNPC.SpawnModBiomes.Contains(GetInstance<Brine_Pool>().Type) && GetBanner(i) > 0 && !brine.Contains(Item.BannerToItem(GetBanner(i))))
+						brine.Add(Item.BannerToItem(GetBanner(i)));
+					if (npc.ModNPC.SpawnModBiomes.Contains(defiledBiomes) && GetBanner(i) > 0 && !bannedBanners.Contains(GetBanner(i)) && !defiled.Contains(Item.BannerToItem(GetBanner(i))))
+						defiled.Add(Item.BannerToItem(GetBanner(i)));
+					if (npc.ModNPC.SpawnModBiomes.Contains(rivenBiomes) && GetBanner(i) > 0 && !bannedBanners.Contains(GetBanner(i)) && !riven.Contains(Item.BannerToItem(GetBanner(i))))
+						riven.Add(Item.BannerToItem(GetBanner(i)));
 				}
 			}
-
-			RecipeGroup.RegisterGroup("Origins:AnyBrineBanner", new(() => Language.GetTextValueWith("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Brine_Pool")), [.. brine]));
-			RecipeGroup.RegisterGroup("Origins:AnyRivenBanner", new(() => Language.GetTextValueWith("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Riven_Hive")), [.. riven]));
+			// until brine pool enemies have banners
+			//RecipeGroup.RegisterGroup("Origins:AnyBrineBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Brine_Pool.DisplayName")), [.. brine]));
+			RecipeGroup.RegisterGroup("Origins:AnyDefiledBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Defiled_Wastelands.DisplayName")), [.. defiled]));
+			RecipeGroup.RegisterGroup("Origins:AnyRivenBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Riven_Hive.DisplayName")), [.. riven]));
 		}
 	}
 	public interface ICustomWikiDestination {
