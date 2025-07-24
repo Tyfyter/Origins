@@ -621,6 +621,13 @@ namespace Origins {
 			}
 		}
 		public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot) {
+			if (shimmerShieldDashTime != 0 && NPCID.Sets.ProjectileNPC[npc.type]) {
+				if (npc.immune[Player.whoAmI] == 0) {
+					npc.SimpleStrikeNPC(1, Player.direction);
+					npc.immune[Player.whoAmI] = 6;
+				}
+				return false;
+			}
 			if (emergencyBeeCanister && (npc.type == NPCID.Bee || npc.type == NPCID.BeeSmall)) return npc.playerInteraction[Player.whoAmI];
 			return true;
 		}
