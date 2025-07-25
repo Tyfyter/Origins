@@ -542,44 +542,18 @@ namespace Origins.Items.Other.Testing {
 		public void Unload() { }
 	}
 	public class Shelf_Coral_Testing_Mode : WorldgenTestingMode {
-		static Dictionary<char, Predicate<Tile>> coralPredicates => new() {
-			['X'] = OriginExtensions.HasFullSolidTile,
-			['_'] = tile => !tile.HasTile
-		};
-		TilePatternMatcher centeredCoral = new(
-			"""
-					X_O_X
-					 ___ 
-					""",
-			coralPredicates
-		);
-		TilePatternMatcher leftCoral = new(
-			"""
-					XO__
-					X___
-					""",
-			coralPredicates
-		);
-		TilePatternMatcher rightCoral = new(
-			"""
-					__OX
-					___X
-					""",
-			coralPredicates
-		);
 		public override SortOrder SortPosition => SortOrder.New;
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			StringBuilder text = new("Shelf Coral placement: ");
 			Point coralPos = new(Player.tileTargetX, Player.tileTargetY);
-			if (centeredCoral.Matches(coralPos)) {
-				text.Append("Centered");
-			} else if (rightCoral.Matches(coralPos)) {
-				text.Append("Right");
-			} else if (leftCoral.Matches(coralPos)) {
-				text.Append("Left");
-			} else {
-				text.Append("None");
+			Shelf_Coral shelfCoral = ModContent.GetInstance<Shelf_Coral>();
+			for (int k = 0; k < shelfCoral.patterns.Length; k++) {
+				if (shelfCoral.patterns[k].pattern.Matches(coralPos) && (shelfCoral.patterns[k].extraChecks?.Invoke(Player.tileTargetX, Player.tileTargetY, true) ?? true)){
+					text.Append(shelfCoral.patterns[k].name);
+					return text.ToString();
+				}
 			}
+			text.Append("None");
 			return text.ToString();
 		}
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {

@@ -1298,7 +1298,7 @@ TILES:
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
-(#2, ^2) Shelf Coral !!! (just needs worldgen)
+(☻) Shelf Coral !!!
 (^) Soulspore*
 (ᗢ) Surveysprout*
 (^) Tangela Bramble

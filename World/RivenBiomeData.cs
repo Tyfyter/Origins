@@ -560,61 +560,23 @@ namespace Origins.World.BiomeData {
 					}
 				}
 				List<Point> validCoralSpots = [];
-				Rectangle playerHitbox = new(0, 0, 20, 40);
-				Rectangle fallPastHitbox = new(0, 0, 20, 40 * 2);
-				Dictionary<char, Predicate<Tile>> coralPredicates = new() {
-					['X'] = OriginExtensions.HasFullSolidTile,
-					['_'] = tile => !tile.HasTile
-				};
-				TilePatternMatcher centeredCoral = new(
-					"""
-					X_O_X
-					 ___ 
-					""",
-					coralPredicates
-				);
-				TilePatternMatcher leftCoral = new(
-					"""
-					XO__
-					X___
-					""",
-					coralPredicates
-				);
-				TilePatternMatcher rightCoral = new(
-					"""
-					__OX
-					___X
-					""",
-					coralPredicates
-				);
+				Shelf_Coral shelfCoral = ModContent.GetInstance<Shelf_Coral>();
 				for (int i0 = 0; i0 < genRange.Width; i0++) {
 					int i1 = i0 + genRange.X;
 					for (int j0 = 0; j0 < genRange.Height; j0++) {
 						int j1 = j0 + genRange.Y;
 						if (validCoralSpots.Contains(new(i1, j1 - 1))) continue;
-						playerHitbox.Location = new(i1 * 16 - 10, j1 * 16 - 40);
-						if (playerHitbox.OverlapsAnyTiles()) continue;
-						Point coralPos = new(i1, j1);
-						if (centeredCoral.Matches(coralPos)) {
-							validCoralSpots.Add(coralPos);
-						} else {
-							if (rightCoral.Matches(coralPos)) {
-								fallPastHitbox.Location = new((i1 + 3) * 16, j1 * 16 + 8 - 40);
-								if (fallPastHitbox.OverlapsAnyTiles()) validCoralSpots.Add(coralPos);
-							} else if (leftCoral.Matches(coralPos)) {
-								fallPastHitbox.Location = new((i1 - 2) * 16 - 20, j1 * 16 + 8 - 40);
-								if (fallPastHitbox.OverlapsAnyTiles()) validCoralSpots.Add(coralPos);
-							}
+						if (shelfCoral.CanGenerate(i1, j1)) {
+							validCoralSpots.Add(new(i1, j1));
 						}
 					}
 				}
 				int maxCoral = 20;
-				int shelfCoral = ModContent.TileType<Shelf_Coral>();
 				while (validCoralSpots.Count > 0 && maxCoral-->0) {
 					int rand = Main.rand.Next(validCoralSpots.Count);
 					Point coralPos = validCoralSpots[rand];
-					if (TileExtenstions.CanActuallyPlace(coralPos.X, coralPos.Y, shelfCoral, 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
-						TileObjectData.CallPostPlacementPlayerHook(coralPos.X, coralPos.Y, shelfCoral, objectData.style, 0, objectData.alternate, objectData);
+					if (TileExtenstions.CanActuallyPlace(coralPos.X, coralPos.Y, shelfCoral.Type, 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
+						TileObjectData.CallPostPlacementPlayerHook(coralPos.X, coralPos.Y, shelfCoral.Type, objectData.style, 0, objectData.alternate, objectData);
 					} else {
 						maxCoral++;
 					}

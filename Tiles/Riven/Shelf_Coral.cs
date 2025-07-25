@@ -1,9 +1,6 @@
-﻿using Humanizer;
-using MagicStorage;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Testing;
-using Origins.Tiles.Brine;
+using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -15,7 +12,6 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Riven {
@@ -84,6 +80,8 @@ namespace Origins.Tiles.Riven {
 
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetCollision;
 
+			DustType = Riven_Hive.DefaultTileDust;
+
 			Origins.PotType.Add(Type, ((ushort)ModContent.TileType<Riven_Pot>(), 0, 0));
 		}
 
@@ -128,10 +126,117 @@ namespace Origins.Tiles.Riven {
 		}
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		static Rectangle playerHitbox = new(0, 0, 20, 40);
+		static Rectangle fallPastHitbox = new(0, 0, 20, 40 * 2);
+		static Rectangle fallThroughHitbox = new(0, 0, 20, 40 * 2);
+		public delegate bool GenerationCheck(int i, int j, bool checkCramped);
+		public (string name, TilePatternMatcher pattern, GenerationCheck extraChecks)[] patterns = [..SetupPatterns()];
+		static IEnumerable<(string name, TilePatternMatcher pattern, GenerationCheck extraChecks)> SetupPatterns() {
+			Dictionary<char, Predicate<Tile>> coralPredicates = new() {
+				['X'] = OriginExtensions.HasFullSolidTile,
+				['_'] = tile => !tile.HasTile,
+				['L'] = tile => OriginExtensions.HasFullSolidTile(tile) && (tile.BlockType == BlockType.Solid || tile.RightSlope),
+				['R'] = tile => OriginExtensions.HasFullSolidTile(tile) && (tile.BlockType == BlockType.Solid || tile.LeftSlope),
+				['|'] = tile => !tile.TileIsType(ModContent.TileType<Shelf_Coral>()),
+				['A'] = tile => tile.LiquidAmount >= 128 && tile.LiquidType == LiquidID.Water,
+			};
+			yield return ("Centered", new(
+				"""
+				  |  
+				  |  
+				  |  
+				X_O_X
+				 ___ 
+				""",
+				coralPredicates
+			), (i, j, checkCramped) => {
+				playerHitbox.Location = new(i * 16 + 8 - 10, j * 16 - 40);
+				return !playerHitbox.OverlapsAnyTiles();
+			});
+
+			yield return ("Left (Soup)", new(
+				"""
+				  | 
+				  | 
+				  | 
+				RO__
+				R___
+				 AAA
+				""",
+				coralPredicates
+			), null);
+			yield return ("Right (Soup)", new(
+				"""
+				 |  
+				 |  
+				 |  
+				__OL
+				___L
+				AAA 
+				""",
+				coralPredicates
+			), null);
+
+			yield return ("Left", new(
+				"""
+				  | 
+				  | 
+				  | 
+				RO__
+				R___
+				""",
+				coralPredicates
+			), (i, j, checkCramped) => {
+				playerHitbox.Location = new((i + 1) * 16 + 8 - 10, j * 16 - 40);
+				if (playerHitbox.OverlapsAnyTiles()) return false;
+				if (!checkCramped) return true;
+				fallPastHitbox.Location = new((i + 3) * 16, j * 16 + 8 - 40);
+				fallThroughHitbox.Location = new((i + 1) * 16, j * 16 + 8 - 40);
+				return fallPastHitbox.OverlapsAnyTiles() && !fallThroughHitbox.OverlapsAnyTiles();
+			});
+			yield return ("Right", new(
+				"""
+				 |  
+				 |  
+				 |  
+				__OL
+				___L
+				""",
+				coralPredicates
+			), (i, j, checkCramped) => {
+				playerHitbox.Location = new((i - 1) * 16 + 8 - 10, j * 16 - 40);
+				if (playerHitbox.OverlapsAnyTiles()) return false;
+				if (!checkCramped) return true;
+				fallPastHitbox.Location = new((i - 3) * 16 - 16, j * 16 + 8 - 40);
+				fallThroughHitbox.Location = new((i - 2) * 16, j * 16 + 8 - 40);
+				return fallPastHitbox.OverlapsAnyTiles() && !fallThroughHitbox.OverlapsAnyTiles();
+			});
+		}
+		public bool CanGenerate(int i, int j, bool checkCramped = true) {
+			playerHitbox.Location = new(i * 16 - 10, j * 16 - 40);
+			if (playerHitbox.OverlapsAnyTiles()) return false;
+			Point coralPos = new(i, j);
+			for (int k = 0; k < patterns.Length; k++) {
+				if (patterns[k].pattern.Matches(coralPos) && (patterns[k].extraChecks?.Invoke(i, j, checkCramped) ?? true)) return true;
+			}
+			return false;
+		}
 	}
 	public class Shelf_Coral_TE : ModTileEntity {
 		private int timer;
-		public State CurrentState { get; private set; }
+		State _currentState;
+		public State CurrentState {
+			get => _currentState;
+			set {
+				if (_currentState.TrySet(value)) {
+					timer = 0;
+					if (Main.netMode == NetmodeID.Server) {
+						// The TileEntitySharing message will trigger NetSend, manually syncing the changed data.
+						NetMessage.SendData(MessageID.TileEntitySharing, number: ID);
+					}
+				}
+			}
+		}
 		public bool isStoodOn = false;
 		public override void NetSend(BinaryWriter writer) {
 			writer.Write((int)CurrentState);
@@ -199,13 +304,6 @@ namespace Origins.Tiles.Riven {
 			frameNum *= 34;
 			for (int i = 0; i < 3; i++) {
 				Framing.GetTileSafely(Position.X + i, Position.Y).TileFrameY = (short)frameNum;
-			}
-			if (CurrentState != oldState) {
-				timer = 0;
-				if (Main.netMode == NetmodeID.Server) {
-					// The TileEntitySharing message will trigger NetSend, manually syncing the changed data.
-					NetMessage.SendData(MessageID.TileEntitySharing, number: ID);
-				}
 			}
 		}
 		public override bool IsTileValidForEntity(int x, int y) {
