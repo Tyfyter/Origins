@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Vanity.Dev {
@@ -22,6 +23,7 @@ namespace Origins.Items.Armor.Vanity.Dev {
 			OriginGlobalItem.OriginsDevSetRule.options = OriginGlobalItem.OriginsDevSetRule.options.Concat([
 				rule
 			]).ToArray();
+			ItemID.Sets.OpenableBag[Type] = true;
 		}
 		public IEnumerable<int> ProvideItemObtainability() => GetDrops().SelectMany(w => {
 			List<DropRateInfo> drops = [];

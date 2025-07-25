@@ -1,13 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using PegasusLib;
 using PegasusLib.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -197,7 +200,7 @@ namespace Origins.Items.Pets {
 				return false;
 			}
 		}
-		public DrawData GetDrawData(Color lightColor) {
+		public DrawData GetAuraDrawData(Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			return new(
 				texture,
@@ -210,22 +213,47 @@ namespace Origins.Items.Pets {
 				SpriteEffects.None
 			);
 		}
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+			if (drawAuraInBackground) {
+				behindNPCsAndTiles.Add(index);
+			} else {
+				behindNPCs.Add(index);
+			}
+		}
 		public override bool PreDraw(ref Color lightColor) {
 			Vector2 position = Projectile.Center;
-			default(ShimmerConstructSDF).Draw(position - Main.screenPosition, Projectile.rotation, new Vector2(256, 256) / 3f);
+			if (DrawOrder.LastDrawnOverlayLayer <= RenderLayers.Walls) DrawAuraOutline();
 
+			if (DrawOrder.LastDrawnOverlayLayer <= RenderLayers.Walls) return false;
+			default(ShimmerConstructSDF).Draw(position - Main.screenPosition, Projectile.rotation, new Vector2(256, 256) / 3f);
+			if (chunks.Length <= 0) {
+				chunks = [
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing2"), position + new Vector2(18 * Projectile.direction, 27).RotatedBy(Projectile.rotation)),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing2"), position + new Vector2(-26 * Projectile.direction, 31).RotatedBy(Projectile.rotation)),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing1"), position + new Vector2(48 * Projectile.direction, -12).RotatedBy(Projectile.rotation)),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing_Medium2"), position + new Vector2(14 * Projectile.direction, 14).RotatedBy(Projectile.rotation)),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing_Medium1"), position + new Vector2(-23 * Projectile.direction, -57).RotatedBy(Projectile.rotation)),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing1"), position + new Vector2(22 * Projectile.direction, -57).RotatedBy(Projectile.rotation))
+				];
+			}
+			for (int i = 0; i < chunks.Length; i++) chunks[i].Draw(this);
+			position += Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * 12);
+			return false;
+		}
+
+		private void DrawAuraOutline() {
 			if (middleRenderTarget is null) {
 				Main.QueueMainThreadAction(SetupRenderTargets);
 				Main.OnResolutionChanged += Resize;
-				return false;
+				return;
 			}
 
-			SpriteBatchState state = Main.spriteBatch.GetState() with {  rasterizerState = RasterizerState.CullNone };
+			SpriteBatchState state = Main.spriteBatch.GetState() with { rasterizerState = RasterizerState.CullNone };
 			Main.spriteBatch.Restart(state, transformMatrix: Main.GameViewMatrix.ZoomMatrix);
 			Origins.shaderOroboros.Capture();
 
 			if (Projectile.ai[2] > 0) {
-				DrawData data = GetDrawData(Color.White);
+				DrawData data = GetAuraDrawData(Color.White);
 				Vector2 basePos = data.position;
 				for (int i = 0; i < 4; i++) {
 					data.position = basePos + (MathHelper.PiOver2 * i).ToRotationVector2() * 2 * (data.scale + Vector2.One);
@@ -251,36 +279,35 @@ namespace Origins.Items.Pets {
 				Main.GameViewMatrix.Effects
 			);
 			Main.spriteBatch.Restart(state);
-			if (chunks.Length <= 0) {
-				chunks = [
-					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing2"), position + new Vector2(18 * Projectile.direction, 27).RotatedBy(Projectile.rotation)),
-					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing2"), position + new Vector2(-26 * Projectile.direction, 31).RotatedBy(Projectile.rotation)),
-					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing1"), position + new Vector2(48 * Projectile.direction, -12).RotatedBy(Projectile.rotation)),
-					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing_Medium2"), position + new Vector2(14 * Projectile.direction, 14).RotatedBy(Projectile.rotation)),
-					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing_Medium1"), position + new Vector2(-23 * Projectile.direction, -57).RotatedBy(Projectile.rotation)),
-					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing1"), position + new Vector2(22 * Projectile.direction, -57).RotatedBy(Projectile.rotation))
-				];
-			}
-			for (int i = 0; i < chunks.Length; i++) chunks[i].Draw(this);
-			position += Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * 12);
-			return false;
 		}
+		bool drawAuraInBackground = true;
 		public void PreDrawScene() {
 			if (middleRenderTarget is null) {
 				Main.QueueMainThreadAction(SetupRenderTargets);
 				Main.OnResolutionChanged += Resize;
 				return;
 			}
-			if (!SC_Phase_Three_Underlay.DrawnMaskSources.Add(this)) return;
+			List<DrawData> DrawDatas = SC_Phase_Three_Underlay.DrawDatas;
+			HashSet<object> DrawnMaskSources = SC_Phase_Three_Underlay.DrawnMaskSources;
+			drawAuraInBackground = true;
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc.ModNPC is Shimmer_Construct shimmerConstruct && shimmerConstruct.IsInPhase3) {
+					//DrawDatas = SC_Phase_Three_Midlay.DrawDatas;
+					//DrawnMaskSources = SC_Phase_Three_Midlay.DrawnMaskSources;
+					drawAuraInBackground = false;
+					break;
+				}
+			}
+			if (!DrawnMaskSources.Add(this)) return;
 			Origins.shaderOroboros.Capture();
 			Main.spriteBatch.Restart(Main.spriteBatch.GetState(), rasterizerState: RasterizerState.CullNone);
 
-			Main.EntitySpriteDraw(GetDrawData(Color.White));
+			Main.EntitySpriteDraw(GetAuraDrawData(Color.White));
 
 			Origins.shaderOroboros.DrawContents(middleRenderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
 			Origins.shaderOroboros.Reset(default);
 			Vector2 center = middleRenderTarget.Size() * 0.5f;
-			SC_Phase_Three_Underlay.DrawDatas.Add(new(
+			DrawDatas.Add(new(
 				middleRenderTarget,
 				center,
 				null,
