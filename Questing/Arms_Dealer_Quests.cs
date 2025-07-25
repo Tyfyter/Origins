@@ -29,6 +29,9 @@ namespace Origins.Questing {
 		public override bool SaveToWorld => true;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
+		public override void Load() {
+			Mod.AddContent(new Lost_Shardcannon_Chat_Button(this));
+		}
 		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.ArmsDealer && !ShowInJournal();
 		}
@@ -106,7 +109,7 @@ namespace Origins.Questing {
 		public override string Name => $"{base.Name}_{Quest.Name}";
 		public override double Priority => 101;
 		public override void OnClick(NPC npc, Player player) {
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.WhereGun");
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.YouLostThatGunIGaveYou");
 			Shardcannon_Quest.GiveGun();
 		}
 		public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.ILostThatGunYouGaveMe");
@@ -164,6 +167,9 @@ namespace Origins.Questing {
 		public override bool SaveToWorld => true;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
+		public override void Load() {
+			Mod.AddContent(new Lost_Harpoon_Burst_Rifle_Chat_Button(this));
+		}
 		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.ArmsDealer && NPC.downedMechBossAny && !ShowInJournal() && ModContent.GetInstance<Shardcannon_Quest>().Completed;
 		}
@@ -241,7 +247,7 @@ namespace Origins.Questing {
 		public override string Name => $"{base.Name}_{Quest.Name}";
 		public override double Priority => 101;
 		public override void OnClick(NPC npc, Player player) {
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.WhereGun");
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.YouLostThatGunIGaveYou");
 			Harpoon_Burst_Rifle_Quest.GiveGun();
 		}
 		public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.ILostThatGunYouGaveMe");

@@ -186,7 +186,8 @@ Arms_Dealer: {
 		ReadyToComplete: All done? Not too bad?
 		Complete: Thanks for the info. I'll fix the imperfections, but otherwise sounds like it will sell big. If you liked it a lot, be sure to check out my wares.
 		WhereGun: Where the gun at, bud?
-		ILostThatGunYouGaveMe: HEY! I can't just make these things poof outta thin air. You're lucky I have a back-up!
+		YouLostThatGunIGaveYou: HEY! I can't just make these things poof outta thin air. You're lucky I have a back-up!
+		ILostThatGunYouGaveMe: Lost Gun
 	}
 
 	Harpoon_Burst_Rifle: {
@@ -206,7 +207,8 @@ Arms_Dealer: {
 		ReadyToComplete: Welcome back. You got the deets for me?
 		Complete: Don't worry. This is why I ask you to try my new stuff out. That spread will be fixed, I assure you!
 		WhereGun: Where the gun at, bud?
-		ILostThatGunYouGaveMe: HEY! I can't just make these things poof outta thin air. You're lucky I have a back-up!
+		YouLostThatGunIGaveYou: HEY! I can't just make these things poof outta thin air. You're lucky I have a back-up!
+		ILostThatGunYouGaveMe: Lost Gun
 	}
 }
 

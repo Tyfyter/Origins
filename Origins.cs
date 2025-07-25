@@ -840,6 +840,7 @@ namespace Origins {
 				JournalEntry.AddJournalEntry(ref OriginsSets.NPCs.JournalEntries[npc.Type], source.EntryName);
 			}
 			ModContent.GetInstance<Explosive_Weapons_Entry>().AddEntryToItems();
+			ForcedDialectCompatibility.PostSetupContent();
 		}
 		/// <summary>
 		/// Set here rather than in the initializer so that they can be changed freely

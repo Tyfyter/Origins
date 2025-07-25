@@ -2187,7 +2187,10 @@ Configs: {
 			Tooltip: Requires a specified key binding to be used twice in a short time-frame for set bonus abilities to trigger
 		}
 
-		Headers.Journal: "{§Journal} options"
+		Headers: {
+			Journal: "{§Journal} options"
+			Compatibility: Compatibility
+		}
 
 		TabbyJournal: {
 			Label: Alternate {§Journal} layout
@@ -2288,6 +2291,11 @@ Configs: {
 		ScrollWheelDirection: {
 			Label: Scroll Wheel Direction
 			Tooltip: ""
+		}
+
+		npcsNotToForceDialectOn: {
+			Label: NPCs Not To Force Dialect On
+			Tooltip: By default, Terraria Origins enables Dialect compatibility for all NPCs, if this somehow causes issues with an NPC, you can use this to prevent it.
 		}
 	}
 

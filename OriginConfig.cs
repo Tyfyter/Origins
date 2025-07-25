@@ -167,6 +167,9 @@ namespace Origins {
 
 		[DefaultValue(Journal_Default_UI_Mode.Quest_List)]
 		public Journal_Default_UI_Mode DefaultJournalMode = Journal_Default_UI_Mode.Quest_List;
+
+		[Header("Compatibility"), ReloadRequired]
+		public List<NPCDefinition> npcsNotToForceDialectOn = [];
 		internal void Save() {
 			Directory.CreateDirectory(ConfigManager.ModConfigPath);
 			string filename = Mod.Name + "_" + Name + ".json";
