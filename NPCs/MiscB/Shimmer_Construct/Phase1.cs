@@ -534,6 +534,26 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.dontTakeDamage = true;
 			return false;
 		}
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				Main.instance.LoadItem(ItemID.Handgun);
+				Vector2 diff = NPC.Center - Main.LocalPlayer.MountedCenter;
+
+				spriteBatch.Draw(
+					TextureAssets.Item[ItemID.Handgun].Value,
+					NPC.Center - screenPos,
+					null,
+					drawColor,
+					diff.ToRotation() + (diff.X > 0 ? 0 : MathHelper.Pi),
+					TextureAssets.Item[ItemID.Handgun].Size() * 0.5f,
+					1.5f,
+					diff.X > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+					0
+				);
+				return false;
+			}
+			return true;
+		}
 	}
 	public class Shimmer_Chunk1 : Shimmer_Construct_Health_Chunk { }
 	public class Shimmer_Chunk2 : Shimmer_Construct_Health_Chunk { }
