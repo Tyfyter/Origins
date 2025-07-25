@@ -793,7 +793,7 @@ RANGED WEAPONS:
 (^) Blotopus*
 (^) Bolt Gun*
 (^) Chipper Knife*
-(#2, ^2) Constellation !!!
+(#2, ^2) Constellation !!! (hey @max029472, even if the rework isn't done, we can't test for bugs you haven't found or anything until we have access to it)
 (^) Endowood Bow*
 (^) Felnum Longbow
 (^) Fiberglass Bow*
