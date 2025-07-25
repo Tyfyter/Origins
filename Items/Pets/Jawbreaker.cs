@@ -164,32 +164,22 @@ namespace Origins.Items.Pets {
 			for (int i = 0; i < chunks.Length; i++) chunks[i].Update(this);
 		}
 		Chunk[] chunks = [];
-		struct Chunk(int type, Vector2 position) {
+		struct Chunk(int type, Vector2 position, int index) {
 			public float rotation;
 			public Vector2 position = position;
-			public Vector2 velocity = Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * 32);
-			public Vector2 offset = Vector2.Zero;
-			public readonly Vector2 VisualPostion => position + offset;
+			public Vector2 velocity = new(0, 16 + index * 8);
 			public int ID = type;
 			public void Update(Stellar_Spark spark) {
-				float offsetLength = offset.Length();
-				if (offsetLength > 0) {
-					offset -= offset * (Math.Min(16, offsetLength) / offsetLength);
-					offset *= 0.97f;
-				}
-
-				float speed = 0.15f + (ID % 3) * 0.01f;
+				float speed = 0.075f + index * 0.005f;
 				velocity = velocity.RotatedBy(speed);
 				position = spark.Projectile.Center + velocity;
-				rotation += speed + velocity.X * 0.01f;
-
-				position += velocity;
+				rotation += speed * 0.5f;
 			}
 			public readonly bool Draw(Stellar_Spark spark) {
 				Main.instance.LoadGore(ID);
 				Main.EntitySpriteDraw(
 					TextureAssets.Gore[ID].Value,
-					VisualPostion - Main.screenPosition,
+					position - Main.screenPosition,
 					null,
 					Color.White,
 					rotation,
@@ -228,12 +218,12 @@ namespace Origins.Items.Pets {
 			default(ShimmerConstructSDF).Draw(position - Main.screenPosition, Projectile.rotation, new Vector2(256, 256) / 3f);
 			if (chunks.Length <= 0) {
 				chunks = [
-					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing2"), position + new Vector2(18 * Projectile.direction, 27).RotatedBy(Projectile.rotation)),
-					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing2"), position + new Vector2(-26 * Projectile.direction, 31).RotatedBy(Projectile.rotation)),
-					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing1"), position + new Vector2(48 * Projectile.direction, -12).RotatedBy(Projectile.rotation)),
-					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing_Medium2"), position + new Vector2(14 * Projectile.direction, 14).RotatedBy(Projectile.rotation)),
-					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing_Medium1"), position + new Vector2(-23 * Projectile.direction, -57).RotatedBy(Projectile.rotation)),
-					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing1"), position + new Vector2(22 * Projectile.direction, -57).RotatedBy(Projectile.rotation))
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing2"), position + new Vector2(18 * Projectile.direction, 27).RotatedBy(Projectile.rotation), 1),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing2"), position + new Vector2(-26 * Projectile.direction, 31).RotatedBy(Projectile.rotation), 2),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing1"), position + new Vector2(48 * Projectile.direction, -12).RotatedBy(Projectile.rotation), 3),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing_Medium2"), position + new Vector2(14 * Projectile.direction, 14).RotatedBy(Projectile.rotation), 4),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing_Medium1"), position + new Vector2(-23 * Projectile.direction, -57).RotatedBy(Projectile.rotation), 5),
+					new(Mod.GetGoreSlot("Gores/NPCs/Shimmer_Thing1"), position + new Vector2(22 * Projectile.direction, -57).RotatedBy(Projectile.rotation), 6)
 				];
 			}
 			for (int i = 0; i < chunks.Length; i++) chunks[i].Draw(this);
