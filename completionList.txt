@@ -109,6 +109,7 @@ TOWN NPC Quests:
 (^) Merchant - To the Skies!*
 (^) Merchant - The Greatest Sin of All, Gambling*
 (^) Painter - Painter Apprentice
+(X) Party Girl - Confetti Fun
 (^) Party Girl - Livin' Up the Party
 (^) Stylist - Running Dry
 (^) Stylist - Slick Styling
@@ -154,6 +155,7 @@ WORLD GENERATION:
 (X) Defiled Egregore
 (X) The Cosmos
 
+(X) Cubekon Temple
 (X) Defiled Mazes
 
 (^) Chambersite Conversion
@@ -218,18 +220,19 @@ ENEMY NPCS:
 (^) Felnum Slime*
 (#2, ^2) Flagellant* !!! (flagellash whipping behavior)
 (^) Flying Exoskeleton*
-(#, ^2) Goo Wall !!!
+(#2, ^2) Goo Wall !!!
 (^) Graveshield Zombie*
 (X) Hammerhand
+(X) Limestone Creeper
 (^) Optiphage*
 (X) Packhunter
 (X) Pinwheel
 (^) Pustule Jellyfish*
+(X) QM-76 'Quakemaker'
 (X) Repairboy
 (^) Riven Penguin*
 (^) Riven Protoform*
 (X) Rivenpotamus
-(X) Scanner Scout
 (^) Shattered Goldfish*
 (^) Shimmer Drone
 (X) Shooter Creeper
@@ -244,7 +247,6 @@ ENEMY NPCS:
 (^) Amoebeye*
 (^) Amoebic Mummy*
 (^) Amoeba Bugger*
-(X) Angel
 (^) Barnacle Mound*
 (X) Beckonbug
 (^) Brine Latcher
@@ -253,15 +255,16 @@ ENEMY NPCS:
 (^) Defiled Asphyxiator*
 (^) Defiled Mimic*
 (^) Defiled Pigron*
-(X) Defiled Shooter
 (^) Defiled Squid*
 (X) Defiled Surveyor
 (^) Defiled Tripod*
 (^) Defiled Watcher*
+(X) Defiled Weaver
 (X) Depth Crawler
-(X) Holy Governor
-(X) Holy Warrior
+(X) False Geometry
+(X) Hive Mind
 (^) Leaf Snapper
+(X) Madman
 (^) King Crab
 (^) Mildew Creeper
 (^) Mitoworm*
@@ -291,11 +294,14 @@ ENEMY NPCS:
 (@2, #) Illusionary
 (X) Lamp Oil Tender
 (X) Meteor Crawler
-(X) Prosperer
 (X) Tiny Skeleton Sniper
 
+(X) Asteroid Siren
 (#, ^2, 々) Blox
 (#, ^2, 々) Cubix
+(X) Endyean Centurion
+(X) Endyean Pod
+(X) Endyean Sentinel
 (X) I.C.A.R.U.S. Swarm Drone
 (#, ^2, 々) Tetrix
 ---
@@ -999,7 +1005,7 @@ EXPLOSIVE WEAPONS:
 (^) Ace Shrapnel*
 (^) Ameballoon*
 (^) Bang Snap*
-(^) Bloombomb*
+(@4, ^3) Bloombomb*
 (^) Bombardment*
 (^) Bomb Launcher
 (^) Brainade*
@@ -1219,6 +1225,7 @@ TILES:
 (^) Encrusted Brick
 (^) Endowood Furniture*
 (X) Floodlight
+(X) Hyrax Cage
 (X) Large Container
 (^) Laser Tag Console*
 (^) Limestone Furniture
@@ -1234,6 +1241,7 @@ TILES:
 (X) Nova Furniture°
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
+(X) Pocket Dimension Monolith
 (X) Ravel Lock: 21
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Stacker
@@ -1416,6 +1424,7 @@ CRITTERS AND FISH:
 (^) Chambersite Bunny
 (^) Chambersite Squirrel
 (^) Cicada 3301*
+(X) Hyrax
 
 (^) Bilemouth*
 (^) Bobbit Worm
