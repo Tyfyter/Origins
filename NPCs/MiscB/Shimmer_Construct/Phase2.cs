@@ -10,6 +10,12 @@ using Origins.Items.Weapons.Magic;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using System.IO;
+using MagicStorage.CrossMod;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
+using Terraria.Graphics;
+using Origins.Items.Weapons.Ranged;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseTwoIdleState : AIState {
@@ -168,7 +174,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 	}
-
 	public class SpawnDronesStateState : AIState {
 		#region stats
 		public static float SpawnCount => 2 + (2 *DifficultyMult);
@@ -228,6 +233,58 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			if (!CollisionExt.CanHitRay(boss.NPC.Center, boss.NPC.targetRect.Center())) return 0;
 			return weight * (1 - drones / (float)threshold);
+		}
+	}
+	public class ShimmershotState : AIState {
+		#region stats
+		public static float Startup => 90 - DifficultyMult * 5;
+		public static float Endlag => 90 - DifficultyMult * 5;
+		public static int ShotDamage => (int)(15 + 9 * DifficultyMult);
+		public static float ShotVelocity => 6;
+		/// <param name="progress">How much of the startup time has elapsed, 0-1</param>
+		public static float TurnRate(float progress) => ((MathF.Pow(progress, 2) - MathF.Pow(progress, 3)) / 0.14815f) * 0.1f;
+		#endregion stats
+		public override void Load() {
+			PhaseTwoIdleState.aiStates.Add(this);
+		}
+		public override void DoAIState(Shimmer_Construct boss) {
+			NPC npc = boss.NPC;
+			Vector2 diff = npc.GetTargetData().Center - npc.Center;
+			if (++npc.ai[0] < Startup) {
+				GeometryUtils.AngularSmoothing(ref npc.rotation, diff.ToRotation(), TurnRate(npc.ai[0] / Startup));
+			} else if (npc.ai[1].TrySet(1)) {
+				diff = diff.SafeNormalize(Vector2.Zero);
+				SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
+				npc.SpawnProjectile(null,
+					npc.Center,
+					diff * ShotVelocity,
+					ModContent.ProjectileType<SC_Shimmershot_Bullet>(),
+					ShotDamage,
+					1
+				);
+			} else if (npc.ai[0] > Startup + Endlag) SetAIState(boss, StateIndex<AutomaticIdleState>());
+		}
+		public override void StartAIState(Shimmer_Construct boss) {
+			NPC npc = boss.NPC;
+			npc.ai[0] = 0;
+		}
+		public class SC_Shimmershot_Bullet : Shimmershot_Bullet {
+			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VenomBullet;
+			public override int AuraID => SC_Shimmershot_Aura.ID;
+			public override void SetDefaults() {
+				base.SetDefaults();
+				Projectile.friendly = false;
+				Projectile.hostile = true;
+			}
+		}
+		public class SC_Shimmershot_Aura : Shimmershot_Aura {
+			public override string Texture => typeof(Shimmershot_Aura).GetDefaultTMLName();
+			public static new int ID { get; private set; }
+			public override void SetDefaults() {
+				base.SetDefaults();
+				Projectile.friendly = false;
+				Projectile.hostile = true;
+			}
 		}
 	}
 }

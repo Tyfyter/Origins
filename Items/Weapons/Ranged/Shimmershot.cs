@@ -20,7 +20,8 @@ using Origins.Items.Weapons.Magic;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using System.Drawing;
 using PegasusLib.Graphics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Reflection;
+using static Origins.NPCs.MiscB.Shimmer_Construct.ShimmershotState;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Shimmershot : ModItem {
@@ -225,6 +226,7 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class Shimmershot_Bullet : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VenomBullet;
+		public virtual int AuraID => Shimmershot_Aura.ID;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BulletHighVelocity);
 			Projectile.aiStyle = -1;
@@ -242,19 +244,24 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 			int auraProjIndex = (int)Projectile.ai[1] - 1;
 			if (auraProjIndex < 0) {
-				if (Projectile.owner == Main.myPlayer) Projectile.ai[1] = Projectile.NewProjectile(
+				Projectile.ai[1] = (Projectile.SpawnProjectile(
 					Projectile.GetSource_FromAI(),
 					Projectile.position,
 					default,
-					Shimmershot_Aura.ID,
+					AuraID,
 					Projectile.damage / 2,
 					0,
-					Projectile.owner,
 					Projectile.whoAmI
-				) + 1;
+				)?.identity ?? -1) + 1;
 			} else {
-				Projectile auraProj = Main.projectile[auraProjIndex];
-				if (auraProj.active && auraProj.type == Shimmershot_Aura.ID) {
+				Projectile auraProj = null;
+				foreach (Projectile other in Main.ActiveProjectiles) {
+					if (other.identity == auraProjIndex && other.owner == Projectile.owner) {
+						auraProj = other;
+						break;
+					}
+				}
+				if ((auraProj?.active ?? false) && auraProj.type == AuraID) {
 					auraProj.position = Projectile.Center;
 					auraProj.rotation = Projectile.rotation;
 				} else {
@@ -272,8 +279,6 @@ namespace Origins.Items.Weapons.Ranged {
 			modifiers.DefenseEffectiveness *= 1.5f; // to make it not effectively gain a ton of armor piercing on charged shots
 			modifiers.CritDamage *= 1.5f;
 		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-		}
 	}
 	public class Shimmershot_Aura : ModProjectile, ITriggerSCBackground {
 		public static int ID { get; private set; }
@@ -281,7 +286,7 @@ namespace Origins.Items.Weapons.Ranged {
 			ProjectileID.Sets.TrailCacheLength[Type] = 30;
 			ProjectileID.Sets.TrailingMode[Type] = -1;
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 16 * 400;
-			ID = Type;
+			if (GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, Type);
 		}
 		public override void SetDefaults() {
 			Projectile.hide = true;
@@ -344,8 +349,6 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) => behindProjectiles.Add(index);
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-		}
 		private static VertexStrip _vertexStrip = new();
 		public override bool PreDraw(ref Color lightColor) {
 			if (renderTarget is null) {

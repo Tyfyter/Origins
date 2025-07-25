@@ -1869,6 +1869,8 @@ Projectiles: {
 	// Splitting_Image_Chunk_Spawn.DisplayName: Splitting Image
 	// Frost_Hydra_Sustained_Blast.DisplayName: Frost Hydra
 	// Flagellant_Whip.DisplayName: Flagellant Whip
+	// SC_Shimmershot_Aura.DisplayName: S C Shimmershot Aura
+	// SC_Shimmershot_Bullet.DisplayName: S C Shimmershot Bullet
 }
 
 Prefixes: {
