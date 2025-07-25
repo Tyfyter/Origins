@@ -174,8 +174,7 @@ namespace Origins.Items.Pets {
 					offset -= offset * (Math.Min(16, offsetLength) / offsetLength);
 					offset *= 0.97f;
 				}
-				// need a way to automatically set the offset bc it only looks correct on 1 resolution
-				if (spark.Projectile.isAPreviewDummy) offset = new Vector2(94, 110) * Main.UIScale;
+
 				float speed = 0.15f + (ID % 3) * 0.01f;
 				velocity = velocity.RotatedBy(speed);
 				position = spark.Projectile.Center + velocity;
