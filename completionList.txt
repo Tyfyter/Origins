@@ -1568,7 +1568,7 @@ MOUNTS & PETS:
 |---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(^2) Jawbreaker (Stellar Spark) !!! (needs the chunks placed and animated correctly)
+(☻) Jawbreaker (Stellar Spark) !!! (needs the chunks placed and animated correctly)
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
 
