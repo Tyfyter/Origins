@@ -12,7 +12,7 @@ namespace Origins.Tiles.Limestone {
 			TileID.Sets.isDesertBiomeSand[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
-			TileID.Sets.Conversion.Sandstone[Type] = true;
+			//TileID.Sets.Conversion.Sandstone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			AddMapEntry(new Color(180, 172, 134));
 			AddDefiledTile();
