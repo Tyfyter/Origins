@@ -1868,6 +1868,7 @@ Projectiles: {
 	// Splitting_Image_Slash.DisplayName: Splitting Image
 	// Splitting_Image_Chunk_Spawn.DisplayName: Splitting Image
 	// Frost_Hydra_Sustained_Blast.DisplayName: Frost Hydra
+	// Flagellant_Whip.DisplayName: Flagellant Whip
 }
 
 Prefixes: {

@@ -4093,37 +4093,39 @@ namespace Origins {
 		}
 		public static void DoJellyfishAI(this NPC npc, float lungeThreshold = 0.2f, float lungeSpeed = 7f, Vector3 glowColor = default, bool canDoZappy = true) {
 			bool isZappy = false;
-			if (npc.wet && npc.ai[1] == 1f) {
-				isZappy = true;
-			} else {
-				npc.dontTakeDamage = false;
-			}
-
-			if (Main.expertMode && canDoZappy) {
-				if (npc.wet) {
-					if (npc.HasValidTarget && Main.player[npc.target].wet && Collision.CanHit(npc.position, npc.width, npc.height, Main.player[npc.target].position, Main.player[npc.target].width, Main.player[npc.target].height) && Main.player[npc.target].Center.IsWithin(npc.Center, 150f)) {
-						if (npc.ai[1] == 0f) {
-							npc.ai[2] += 2f;
-						} else {
-							npc.ai[2] -= 0.25f;
-						}
-					}
-
-					if (isZappy) {
-						npc.dontTakeDamage = true;
-						npc.ai[2] += 1f;
-						if (npc.ai[2] >= 120f)
-							npc.ai[1] = 0f;
-					} else {
-						npc.ai[2] += 1f;
-						if (npc.ai[2] >= 420f) {
-							npc.ai[1] = 1f;
-							npc.ai[2] = 0f;
-						}
-					}
+			if (canDoZappy) {
+				if (npc.wet && npc.ai[1] == 1f) {
+					isZappy = true;
 				} else {
-					npc.ai[1] = 0f;
-					npc.ai[2] = 0f;
+					npc.dontTakeDamage = false;
+				}
+
+				if (Main.expertMode) {
+					if (npc.wet) {
+						if (npc.HasValidTarget && Main.player[npc.target].wet && Main.player[npc.target].Center.IsWithin(npc.Center, 150f) && Collision.CanHit(npc.position, npc.width, npc.height, Main.player[npc.target].position, Main.player[npc.target].width, Main.player[npc.target].height)) {
+							if (npc.ai[1] == 0f) {
+								npc.ai[2] += 2f;
+							} else {
+								npc.ai[2] -= 0.25f;
+							}
+						}
+
+						if (isZappy) {
+							npc.dontTakeDamage = true;
+							npc.ai[2] += 1f;
+							if (npc.ai[2] >= 120f)
+								npc.ai[1] = 0f;
+						} else {
+							npc.ai[2] += 1f;
+							if (npc.ai[2] >= 420f) {
+								npc.ai[1] = 1f;
+								npc.ai[2] = 0f;
+							}
+						}
+					} else {
+						npc.ai[1] = 0f;
+						npc.ai[2] = 0f;
+					}
 				}
 			}
 

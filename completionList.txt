@@ -218,7 +218,7 @@ ENEMY NPCS:
 (^) Felnum Einheri*
 (^) Felnum Guardian*
 (^) Felnum Slime*
-(#2, ^2) Flagellant* !!! (flagellash whipping behavior)
+(☻) Flagellant* !!! (flagellash whipping behavior)
 (^) Flying Exoskeleton*
 (#2, ^2) Goo Wall !!!
 (^) Graveshield Zombie*
@@ -445,7 +445,7 @@ ACCESSORIES:
 (^) Charm of Naivety
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
-(#2, ^2) Control Locus* !!! (needs rework implemented)
+(⛥, #2, ^2) Control Locus* !!! (needs rework implemented)
 (^) Coologne*
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
@@ -591,7 +591,7 @@ ACCESSORIES:
 (^) Strange Tooth*
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
-(#2, ^2) Weakpoint Analyzer* !!! (needs rework implemented)
+(⛥, #2, ^2) Weakpoint Analyzer* !!! (needs rework implemented)
 (^) Wishing Glass
 
 (^) Agility Core°
@@ -1333,7 +1333,7 @@ TILES:
 (@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
 (^) Music Box (The Dive)
-(#, ^2) Otherworldly Music Box (Defiled Wastelands) !!!
+(#, ^2) Otherworldly Music Box (Defiled Wastelands) (shouldn't be marked as important unless it currently has an obtain method and song)
 
 (^) Defiled Amalgamation Relic*
 (^) Defiled Amalgamation Trophy*

@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Items.Materials;
 using System.Collections.Generic;
@@ -10,7 +9,6 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
 	public class Flagellash : ModItem {
 		static short glowmask;
