@@ -14,6 +14,8 @@ using Origins.Items.Other.Dyes;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent.Liquid;
 using Terraria.Audio;
+using System.IO;
+using System.Diagnostics.Contracts;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseOneIdleState : AIState {
@@ -316,8 +318,46 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Projectile.tileCollide = false;
 			}
 			public override void AI() {
+				if (Main.getGoodWorld && Projectile.localAI[0] == 0) {
+					Projectile.localAI[0] = 1;
+					float bestRot = 0;
+					int bestLength = 0;
+					float baseRot = Main.rand.NextFloat(MathHelper.TwoPi);
+					Rectangle hitbox = new(0, 0, 4, 4);
+					Vector2 direction = default;
+					if (Main.npc.GetIfInRange((int)Projectile.ai[2]) is NPC construct) {
+						direction = Projectile.DirectionTo(construct.targetRect.Center());
+					}
+					for (int i = 0; i < 24; i++) {
+						float rot = i * MathHelper.TwoPi / 24f + baseRot;
+						Vector2 unit = Vector2.UnitY.RotatedBy(rot);
+						if (Vector2.Dot(direction, unit) < -0.2f) continue;
+						unit *= 5;
+						Vector2 pos = Projectile.Center;
+						bool tileCollide = false;
+						int length = 0;
+						while (length < 180) {
+							pos += unit;
+							if (hitbox.Recentered(pos).OverlapsAnyTiles()) {
+								if (tileCollide) break;
+							} else {
+								tileCollide = true;
+							}
+							Tile tile = Framing.GetTileSafely(pos.ToTileCoordinates());
+							if (tile.LiquidType == LiquidID.Shimmer && tile.LiquidAmount > 64) {
+								unit.Y = -Math.Abs(unit.Y);
+							}
+							length++;
+						}
+						if (length > bestLength || (length == bestLength && Main.rand.NextBool(3))) {
+							bestRot = rot;
+							bestLength = length;
+						}
+					}
+					Projectile.rotation = bestRot;
+				}
 				if (++Projectile.ai[1] % 10f < 1) {
-					Vector2 unit = Vector2.UnitY;
+					Vector2 unit = Vector2.UnitY.RotatedBy(Projectile.rotation);
 					Vector2 perp = new(unit.Y, -unit.X);
 					Projectile.NewProjectile(
 						Projectile.GetSource_FromAI(),
@@ -331,8 +371,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					);
 					if (Projectile.timeLeft > 52) {
 						if (Main.npc.GetIfInRange((int)Projectile.ai[2]) is NPC construct) {
-							if (!construct.active || construct.type != ModContent.NPCType<Shimmer_Construct>() || (Projectile.Center.X - construct.targetRect.Center.X) * Projectile.ai[0] > 16 * 20) {
+							if (!construct.active || construct.type != ModContent.NPCType<Shimmer_Construct>()) {
 								Projectile.timeLeft = 52;
+							} else if (Projectile.rotation == 0) {
+								if ((Projectile.Center.X - construct.targetRect.Center.X) * Projectile.ai[0] > 16 * 20) {
+									Projectile.timeLeft = 52;
+								}
+							} else {
+								if (Vector2.Dot(Projectile.DirectionTo(construct.targetRect.Center()), Vector2.UnitY.RotatedBy(Projectile.rotation)) < -0.2f) {
+									Projectile.timeLeft = 52;
+								}
 							}
 						}
 					}
@@ -344,6 +392,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					if (Projectile.frame > 5)
 						Projectile.frame = 0;
 				}
+			}
+			public override void SendExtraAI(BinaryWriter writer) {
+				writer.Write(Projectile.rotation);
+			}
+			public override void ReceiveExtraAI(BinaryReader reader) {
+				Projectile.rotation = reader.ReadSingle();
 			}
 			public override bool PreDraw(ref Color lightColor) {
 				if (!GraphicsUtils.drawingEffect) {
@@ -381,10 +435,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Projectile.width = 4;
 				Projectile.height = 4;
 				Projectile.tileCollide = false;
+				Projectile.hide = true;
 				CooldownSlot = ImmunityCooldownID.WrongBugNet;
 			}
 			public override void AI() {
 				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+				Projectile.hide = false;
 				if (Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height) && Collision.shimmer) {
 					Projectile.velocity.Y -= 0.2f;
 				}
