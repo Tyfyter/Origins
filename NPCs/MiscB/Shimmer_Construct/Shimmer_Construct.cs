@@ -401,6 +401,19 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				NPC.scale,
 				SpriteEffects.None
 			);
+			if (aiStates[NPC.aiAction] is DoubleCircleState) {
+				Vector2 targetCenter = NPC.GetTargetData().Center;
+				Main.EntitySpriteDraw(
+					TextureAssets.Npc[Type].Value,
+					targetCenter + (targetCenter - position) - screenPos,
+					NPC.frame,
+					drawColor.MultiplyRGBA(new(0.8f, 0f, 1f, 0.6f)),
+					NPC.rotation + MathHelper.Pi,
+					NPC.Size / 1.5f,
+					NPC.scale,
+					SpriteEffects.None
+				);
+			}
 			return false;
 		}
 		public override bool PreKill() {

@@ -55,12 +55,34 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.ai[2] *= DashSpeedMultiplier;
 		}
 	}
-	public class FastCircleState : CircleState {
+	public class DoubleCircleState : CircleState {
 		#region stats
 		public static new float ShotRate => 16 - DifficultyMult * 0.75f;
 		#endregion stats
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
+		}
+		public override void DoAIState(Shimmer_Construct boss) {
+			NPC npc = boss.NPC;
+			Vector2 targetCenter = npc.GetTargetData().Center;
+			Vector2 diff = targetCenter - npc.Center;
+			Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
+			Vector2 targetDiff = direction.RotatedBy(npc.direction) * 16 * 30;
+			npc.velocity = diff.DirectionFrom(targetDiff) * MoveSpeed;
+			int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
+			if (shotsToHaveFired > npc.ai[1]) {
+				SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
+				int side = (npc.ai[1] % 2 == 0).ToDirectionInt();
+				npc.SpawnProjectile(null,
+					targetCenter - diff * side,
+					direction * ShotVelocity * side,
+					Shimmer_Construct_Bullet.ID,
+					ShotDamage,
+					1
+				);
+				npc.ai[1]++;
+			}
+			if (npc.ai[0] > Duration) SetAIState(boss, StateIndex<AutomaticIdleState>());
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
