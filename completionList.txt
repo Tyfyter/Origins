@@ -57,7 +57,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(#2/3, ^2) Shimmer Construct !!! 
+(☻) Shimmer Construct !!! 
 (#, ^2) Trenchmaker
 (^) World Cracker*
 
