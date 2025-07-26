@@ -133,6 +133,7 @@ namespace Origins.NPCs.Riven {
 				if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
 				if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
 			}
+			if (NPC.aiStyle == NPCAIStyleID.Hovering) NPC.spriteDirection = NPC.direction;
 		}
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 7) {

@@ -1869,10 +1869,10 @@ Projectiles: {
 	// Splitting_Image_Chunk_Spawn.DisplayName: Splitting Image
 	// Frost_Hydra_Sustained_Blast.DisplayName: Frost Hydra
 	// Flagellant_Whip.DisplayName: Flagellant Whip
-	// SC_Shimmershot_Aura.DisplayName: S C Shimmershot Aura
-	// SC_Shimmershot_Bullet.DisplayName: S C Shimmershot Bullet
-	// SC_Firework.DisplayName: S C Firework
-	// SC_Firework_Spark.DisplayName: S C Firework Spark
+	// SC_Shimmershot_Aura.DisplayName: Shimmershot Aura
+	// SC_Shimmershot_Bullet.DisplayName: Shimmershot
+	// SC_Firework.DisplayName: Shimmerwork
+	// SC_Firework_Spark.DisplayName: Shimmerwork Spark
 }
 
 Prefixes: {
