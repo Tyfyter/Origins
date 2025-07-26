@@ -329,7 +329,7 @@ STATUS EFFECTS:
 (^) Corrupt Assimilation*
 (^) Crimson Assimilation*
 (^) Defiled Assimilation*
-(X) Hallowed Assimilation
+(#, ^2) Hallow Assimilation
 (^) Impeding Shrapnel*
 (^) Mana Buffer*
 (X) Quantum Flames
@@ -1005,7 +1005,7 @@ EXPLOSIVE WEAPONS:
 (^) Ace Shrapnel*
 (^) Ameballoon*
 (^) Bang Snap*
-(@4, ^3) Bloombomb*
+(^) Bloombomb*
 (^) Bombardment*
 (^) Bomb Launcher
 (^) Brainade*
