@@ -13,7 +13,6 @@ using Terraria.Graphics.Effects;
 using Origins.Items.Other.Dyes;
 using Terraria.Graphics.Shaders;
 using ReLogic.Content;
-using Origins.Reflection;
 using PegasusLib;
 using Origins.Items.Weapons.Magic;
 using Terraria.Utilities;
@@ -22,7 +21,6 @@ using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Audio;
 using Terraria.Graphics.Light;
-using System.Diagnostics;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -425,6 +423,108 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public class Shimmer_Turret_Chunk1 : Shimmer_Construct_Turret_Chunk { }
 		public class Shimmer_Turret_Chunk2 : Shimmer_Construct_Turret_Chunk { }
 		public class Shimmer_Turret_Chunk3 : Shimmer_Construct_Turret_Chunk { }
+	}
+	public class ReverseRainState : AIState {
+		#region stats
+#pragma warning disable IDE0060 // Remove unused parameter
+		public static int ShotDamage => (int)(29 + 4 * DifficultyMult);
+		public static int SparkCount => (int)(4 + DifficultyMult * 2);
+		public static float ShotSpeed => 16;
+		public static float SparkSpeed => Main.rand.NextFloat(8, 12);
+		public static float TurnRate => 0.2f;
+		public static int Startup => 60;
+		public static int EndLag => 30;
+#pragma warning restore IDE0060 // Remove unused parameter
+		#endregion stats
+		public override void Load() {
+			PhaseThreeIdleState.aiStates.Add(this);
+		}
+		public override void DoAIState(Shimmer_Construct boss) {
+			NPC npc = boss.NPC;
+			Vector2 diff = npc.GetTargetData().Center - npc.Center;
+			GeometryUtils.AngularSmoothing(ref npc.rotation, diff.ToRotation(), TurnRate);
+			npc.velocity += npc.DirectionTo(npc.GetTargetData().Center - Vector2.UnitY * 16 * 15) * 0.5f;
+			npc.velocity *= 0.97f;
+			if (++npc.ai[0] > Startup && npc.ai[1].TrySet(1)) {
+				SoundEngine.PlaySound(SoundID.Item121.WithPitchRange(0.15f, 0.4f), npc.Center);
+				npc.SpawnProjectile(null,
+					npc.Center,
+					(diff + Vector2.UnitY * 16 * 20).SafeNormalize(default) * ShotSpeed,
+					ModContent.ProjectileType<SC_Firework>(),
+					ShotDamage,
+					1,
+					-(diff.Length() / ShotSpeed)
+				);
+			}
+			if (npc.ai[0] > Startup + EndLag) SetAIState(boss, StateIndex<AutomaticIdleState>());
+		}
+		public class SC_Firework : ModProjectile {
+			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.HallowBossRainbowStreak;
+			public override void SetStaticDefaults() {
+				ProjectileID.Sets.TrailingMode[Type] = 3;
+				ProjectileID.Sets.TrailCacheLength[Type] = 30;
+			}
+			public override void SetDefaults() {
+				Projectile.width = 24;
+				Projectile.height = 24;
+				Projectile.tileCollide = false;
+				Projectile.hostile = true;
+				Projectile.scale = 1.5f;
+			}
+			public override void OnSpawn(IEntitySource source) {
+				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 2f);
+			}
+			public override void AI() {
+				Projectile.velocity = Projectile.velocity.RotatedBy(Math.Clamp(Math.Cos(Projectile.ai[1] * Projectile.ai[0] * 0.5f), -0.1f, 0.1f) * Projectile.ai[1]);
+				if (!Projectile.IsLocallyOwned()) return;
+				if (Main.rand.Next(60, 90) < ++Projectile.ai[0]) {
+					int type = ModContent.ProjectileType<SC_Firework_Spark>();
+					for (int i = SparkCount; i > 0; i--) {
+						Projectile.SpawnProjectile(Projectile.GetSource_Death(),
+							Projectile.Center,
+							Main.rand.NextVector2CircularEdge(1, 1) * SparkSpeed,
+							type,
+							ShotDamage,
+							1
+						);
+					}
+					Projectile.Kill();
+				}
+			}
+			public override bool PreDraw(ref Color lightColor) {
+				Shimmerstar_Staff_P.DrawShimmerstar(Projectile);
+				return false;
+			}
+		}
+		public class SC_Firework_Spark : ModProjectile {
+			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.HallowBossRainbowStreak;
+			public override void SetStaticDefaults() {
+				ProjectileID.Sets.TrailingMode[Type] = 3;
+				ProjectileID.Sets.TrailCacheLength[Type] = 30;
+			}
+			public override void SetDefaults() {
+				Projectile.width = 24;
+				Projectile.height = 24;
+				Projectile.tileCollide = false;
+				Projectile.hostile = true;
+			}
+			public override void OnSpawn(IEntitySource source) {
+				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 1.5f);
+			}
+			public override void AI() {
+				Projectile.velocity *= 0.98f;
+				Projectile.velocity.Y -= 0.2f;
+				Projectile.velocity = Projectile.velocity.RotatedBy(Math.Clamp(Math.Cos(Projectile.ai[1] * Projectile.ai[0] * 0.5f), -0.1f, 0.1f) * Projectile.ai[1]);
+				if (!Projectile.IsLocallyOwned()) return;
+				if (Main.rand.Next(240, 360) < ++Projectile.ai[0]) {
+					Projectile.Kill();
+				}
+			}
+			public override bool PreDraw(ref Color lightColor) {
+				Shimmerstar_Staff_P.DrawShimmerstar(Projectile);
+				return false;
+			}
+		}
 	}
 	public class Weak_Shimmer_Debuff : ModBuff {
 		public override string Texture => "Terraria/Images/Buff_" + BuffID.Shimmer;
