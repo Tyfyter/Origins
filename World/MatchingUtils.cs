@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.ID;
 
 namespace Origins.World {
 	public class TilePatternMatcher {
@@ -36,6 +37,64 @@ namespace Origins.World {
 				}
 			}
 			return true;
+		}
+	}
+	public ref struct AreaAnalysis {
+		int minX;
+		int minY;
+		int maxX;
+		int maxY;
+		bool broke;
+		HashSet<Point> walked;
+		public readonly int MinX => minX;
+		public readonly int MinY => minY;
+		public readonly int MaxX => maxX;
+		public readonly int MaxY => maxY;
+		public readonly bool Broke => broke;
+		public readonly IReadOnlySet<Point> Walked => walked;
+		public delegate bool Breaker(AreaAnalysis analysis);
+		public delegate bool Counter(Point position);
+		public static AreaAnalysis March(int i, int j, Point[] directions, Counter shouldCount, Breaker shouldBreak) {
+			AreaAnalysis analysis = new() {
+				minX = i,
+				maxX = i,
+				minY = j,
+				maxY = j,
+				walked = []
+			};
+			analysis.DoMarch(new(i, j), directions.Reverse().ToArray(), shouldCount, shouldBreak);
+			return analysis;
+		}
+		void DoMarch(Point start, Span<Point> directions, Counter shouldCount, Breaker shouldBreak) {
+			Stack<Point> queue = new();
+			queue.Push(start);
+			walked.Add(start);
+			while (queue.TryPop(out Point position)) {
+				if (shouldCount(position)) {
+					Min(ref minX, position.X);
+					Max(ref maxX, position.X);
+					Min(ref minY, position.Y);
+					Max(ref maxY, position.Y);
+					for (int i = 0; i < directions.Length; i++) {
+						Point next = directions[i];
+						next.X += position.X;
+						next.Y += position.Y;
+						if (walked.Add(next)) {
+							queue.Push(next);
+						}
+					}
+				}
+				if (shouldBreak(this)) {
+					broke = true;
+					break;
+				}
+			}
+		}
+		static void Min(ref int current, int @new) {
+			if (current > @new) current = @new;
+		}
+		static void Max(ref int current, int @new) {
+			if (current < @new) current = @new;
 		}
 	}
 }

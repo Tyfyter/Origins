@@ -541,8 +541,30 @@ namespace Origins.Items.Other.Testing {
 		}
 		public void Unload() { }
 	}
-	public class Shelf_Coral_Testing_Mode : WorldgenTestingMode {
+	public class Area_Analysis_Testing_Mode : WorldgenTestingMode {
 		public override SortOrder SortPosition => SortOrder.New;
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Analyze";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Player.tileTargetX);
+			parameters.Enqueue(Player.tileTargetY);
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			int x = (int)parameters.Dequeue();
+			int y = (int)parameters.Dequeue();
+			Point[] directions = [
+				new(1, 0), new(-1, 0),
+				new(2, 0), new(-2, 0),
+				new(0, 1), new(0, -1)
+			];
+			ushort fleshBlockType = (ushort)ModContent.TileType<Riven_Flesh>();
+
+			if (AreaAnalysis.March(x, y, directions, pos => Math.Abs(pos.Y - y) < 20 && Framing.GetTileSafely(pos).TileIsType(fleshBlockType), a => a.MaxX - a.MinX >= 100).Broke) {
+				Framing.GetTileSafely(x, y).TileType = TileID.AmberGemspark;
+			}
+		}
+	}
+	public class Shelf_Coral_Testing_Mode : WorldgenTestingMode {
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			StringBuilder text = new("Shelf Coral placement: ");
 			Point coralPos = new(Player.tileTargetX, Player.tileTargetY);
@@ -569,7 +591,6 @@ namespace Origins.Items.Other.Testing {
 		}
 	}
 	public class Start_Riven_Testing_Mode : WorldgenTestingMode {
-		public override SortOrder SortPosition => SortOrder.New;
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Start Riven Hive";
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			parameters.Enqueue(Player.tileTargetX);

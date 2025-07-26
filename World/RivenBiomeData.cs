@@ -269,6 +269,7 @@ namespace Origins.World.BiomeData {
 				}
 				WorldBiomeGeneration.ChangeRange.AddChangeToRange(X0, Y0);
 				WorldBiomeGeneration.ChangeRange.AddChangeToRange(X1, Y1);
+				Point[] directions = [new(1, 0), new(-1, 0), new(0, 1), new(0, -1)];
 				for (int index = 0; index < features.Count; index++) {
 					(int x, int y, FeatureType type, bool rightSide) = features[index];
 					tile = Main.tile[x, y];
@@ -282,6 +283,9 @@ namespace Origins.World.BiomeData {
 							oreType: oreID,
 							oreRarity: 50
 						);
+						if (AreaAnalysis.March(x, y, directions, pos => Math.Abs(pos.Y - y) < 20 && Framing.GetTileSafely(pos).TileIsType(fleshBlockType), a => a.MaxX - a.MinX >= 100).Broke) {
+							Framing.GetTileSafely(x, y).TileType = TileID.AmberGemspark;
+						}
 						break;
 						case FeatureType.CUSP:
 						GenRunners.SpikeRunner(x, y,
