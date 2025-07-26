@@ -1784,7 +1784,7 @@ Projectiles: {
 	// Mildew_Carrion_Spore3.DisplayName: "{§Mildew_Carrion} Spore"
 	// Mildew_Incantation_P.DisplayName: Mildew Incantation
 	// Mildew_Incantation_Creeper.DisplayName: Mildew Incantation Creeper
-	// Eye_Of_Aether_P.DisplayName: Eye Of Aether
+	// Eye_Of_Aether_P.DisplayName: Eye of Aether
 	// Soul_Snatcher_P.DisplayName: Soul Snatcher
 	// Soul_Snatcher_Spin.DisplayName: Soul Snatcher Spin
 	// Tangela_Tether_P.DisplayName: "{§Tangela} Tether"
@@ -2739,7 +2739,7 @@ SetBonuses: {
 	/* Aetherite:
 		'''
 		Able to temporarily open a shimmering rift
-		Random damaging aether stars will appear in this dimension
+		Random damaging starmines will appear in this dimension
 		Teleports the player and all entities back where they last were afterwards
 		15 second cooldown
 		''' */

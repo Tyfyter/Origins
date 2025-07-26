@@ -3,6 +3,7 @@
 
 Guide: {
 	// Quest_Menu: Need some advice?
+	// GivenConfetti: Oh, hey! Can't wait to celebrate!
 
 	Quest_Quest: {
 		// Name: Get Questing!
@@ -41,6 +42,7 @@ Guide: {
 
 Merchant: {
 	// Quest_Menu: Got time to go on a little quest for me?
+	// GivenConfetti: What is this for? Oh, a party? I'll be ready.
 
 	Blue_Bovine: {
 		// Name: To the Skies!
@@ -81,6 +83,7 @@ Merchant: {
 
 PartyGirl: {
 	// Quest_Menu: Hiya! You wanna party?! Me too!
+	// GivenConfetti: Confetti for me?! I'm already good to go, haha!
 
 	Happy_Grenade: {
 		// Name: Confetti Fun
@@ -124,6 +127,7 @@ PartyGirl: {
 GoblinTinkerer: {
 	// Quest_Menu: Oh, Terrarian! Good to see you. There is much work to be done.
 	// Generic.Mechanic: the Mechanic
+	// GivenConfetti: Confetti wasn't on my list of materials... but it does bring me some good ideas!
 
 	Turbo_Reel: {
 		// Name: Reel In the Goods
@@ -190,6 +194,7 @@ GoblinTinkerer: {
 
 ArmsDealer: {
 	// Quest_Menu: What's up? You ready to make holes in some enemies?
+	// GivenConfetti: What can I even use confetti for? Party Bullets?
 
 	Shardcannon: {
 		// Name: Live Fire
@@ -236,6 +241,7 @@ ArmsDealer: {
 
 Zoologist: {
 	// Quest_Menu: Heyyy! You interested to save some critters, yah?
+	// GivenConfetti: Hwow! It's confetti! Thasss so kewl!
 
 	Discount_1_Quest: {
 		// Name: Save the Critters!
@@ -297,6 +303,7 @@ Zoologist: {
 
 Dryad: {
 	// Quest_Menu: As this world's righteous guardian, the responsibility of cleansing the evils is up to you. What will you do, Terrarian?
+	// GivenConfetti: Thanks, but this isn't my style of partying. I prefer dancing around effigies and singing hymns, personally.
 
 	Cleansing_Station: {
 		// Name: I'll Give You a Deal
@@ -337,6 +344,7 @@ Dryad: {
 
 Stylist: {
 	// Quest_Menu: You here for a cut? No? You want to help..? Who even goes out of their way to thank a barber... I suppose I can have some help.
+	// GivenConfetti: I suppose I can look into tied hairstyles, but wouldn't we need something more tolerant to water, Terrarian?
 
 	Magic_Hair_Spray: {
 		// Name: Running Dry
@@ -398,6 +406,7 @@ Stylist: {
 
 Cyborg: {
 	// Quest_Menu: There are some tasks I've assigned to an adventurer like yourself. Confirm or deny?
+	// GivenConfetti: Confetti-- processing request. Recieving confetti was entirely off my calculations, but it is promising evidence of universal alterations. Satisfactory. One must be unpredictable to truly alter outcomes.
 
 	Advanced_Imaging: {
 		// Name: Sensor Upgrade
@@ -421,6 +430,7 @@ Cyborg: {
 
 TaxCollector: {
 	// Quest_Menu: What.
+	// GivenConfetti: Do you even know who I am? Scram!
 
 	Tax_Collector_Ghosts_Quest: {
 		// Name: A Night of Uninterrupted Sleep
@@ -445,6 +455,7 @@ TaxCollector: {
 
 Painter: {
 	// Quest_Menu: Ay? You wanna sit still and let me make a portrait?
+	// GivenConfetti: Such bright colors! It inspires me to do something brilliant! Thank you!
 
 	Spray_N_Pray_Quest: {
 		// Name: Painter Apprentice
@@ -468,6 +479,7 @@ Painter: {
 
 Brine_Fiend: {
 	// Quest_Menu: Yeah, what? Oh, you wanna help with something? I got work for yah.
+	// GivenConfetti: A party, huh? Since she's just giving away confetti does that mean I can bring fog juice this time? I swear I made it to where it won't melt your house down.
 
 	Alkaliegis: {
 		// Name: Basic Brewery
@@ -511,3 +523,28 @@ Brine_Fiend: {
 		// Complete: Thank you. I wanted to do something special since she always does so for us. I found an interesting plastic thing in the Brine the other day. Had to tussle with a pack of sea dragons for it, so you better enjoy it.
 	}
 }
+
+// Nurse.GivenConfetti: If it's not important please don't bother me. No, you can't even use confetti as a tourniquet. Just keep drinking your potions.
+// DyeTrader.GivenConfetti: Marvelous! I am excited for the party! This confetti will do well for bringing excitement!
+// Golfer.GivenConfetti: A club? Wait what? You said "club". Ohhhh, you meant that kind of club. I guess that explains what the confetti is for.
+// Angler.GivenConfetti: Confetti?! I love confetti! It makes me excited because it always means there's cake and steamed grouper nearby!
+// Demolitionist.GivenConfetti: Confetti? It'd be an excellent fuze if it wasn't so fragile. Oh, it's for the party. Well, I'll be ready to make it a blast then!
+// Tavernkeep.GivenConfetti: Confetti. It'll be nice to have in my bar.
+// WitchDoctor.GivenConfetti: This will be nice to have. Even when not in a party setting, I can still use it for my ornaments. Thank you.
+// Clothier.GivenConfetti: Oh, how vivacious! I'll make good use of it.
+// Mechanic.GivenConfetti: It all comes in the same variety as the wire I have. Maybe you should give it around instead!
+// Pirate.GivenConfetti: Ah! What a surprise! Now I'll be the one ready to give a surprise when it's party time!
+// Truffle.GivenConfetti: This confetti stuff likes to stick to me for some reason. You best keep it. Even if I tried throwing it, it wouldn't get off my hands. Thanks anyway.
+// Wizard.GivenConfetti: Oh, how nifty.
+// Steam_Punker.GivenConfetti: Great! Now we just need the fog machines and firework cannons!
+// Santa.GivenConfetti: Hoho! Giving gifts is supposed to be my pleasure!
+
+Princess: {
+	// GivenConfetti: Aww~! Confetti! I'll be ready for any party that comes my way thanks to you, my loyal subject!
+	// BrineFiendNearby: <Name of Brine Fiend> is so cool and is so good at brewing! It's so fun to hang out with her!
+	// CubekonTinkerer: <Name of Cubekon Tinkerer> is so smart and laid-back! I'm grateful we can come to terms despite our differences!
+	// DefiledEffigyNearby: I'm sad for them, but I couldn't seem to understand what they were all about before they tried infecting me! I'd rather keep my distance as much as my heart aches for them.
+}
+
+// TravellingMerchant.GivenConfetti: Oh, what is this? I haven't seen this before. This will make a fine addition to my collection.
+// SkeletonMerchant.GivenConfetti: Sorry, but what party will I be throwing all alone down here?

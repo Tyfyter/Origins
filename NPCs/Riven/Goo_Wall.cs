@@ -1,14 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
-using Origins.Dev;
+﻿using Origins.Buffs;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using PegasusLib;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -24,7 +18,7 @@ namespace Origins.NPCs.Riven {
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
-			NPC.lifeMax = 60;
+			NPC.lifeMax = 560;
 			NPC.damage = 0;
 			NPC.width = 52;
 			NPC.height = 160;

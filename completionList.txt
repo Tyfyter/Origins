@@ -109,7 +109,7 @@ TOWN NPC Quests:
 (^) Merchant - To the Skies!*
 (^) Merchant - The Greatest Sin of All, Gambling*
 (^) Painter - Painter Apprentice
-(☻) Party Girl - Confetti Fun
+(^) Party Girl - Confetti Fun
 (^) Party Girl - Livin' Up the Party
 (^) Stylist - Running Dry
 (^) Stylist - Slick Styling
@@ -218,9 +218,9 @@ ENEMY NPCS:
 (^) Felnum Einheri*
 (^) Felnum Guardian*
 (^) Felnum Slime*
-(☻) Flagellant* !!! (flagellash whipping behavior)
+(^) Flagellant*
 (^) Flying Exoskeleton*
-(☻) Goo Wall !!!
+(#2, ^2) Goo Wall !!!
 (^) Graveshield Zombie*
 (X) Hammerhand
 (X) Limestone Creeper
@@ -1284,7 +1284,7 @@ TILES:
 (X) Exoskeletal Baobab Tree*
 (^) Exoskeletal Tree*
 (ᗢ) Fungarust*
-(☻) Fuzzvine !!!
+(#2, ^2) Fuzzvine !!! (still need to slow minions)
 (^) Gel Blister*
 (X) Heat Vent
 (^) Hydrothermal Vent
@@ -1298,7 +1298,7 @@ TILES:
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
-(☻) Shelf Coral !!!
+(^) Shelf Coral
 (^) Soulspore*
 (ᗢ) Surveysprout*
 (^) Tangela Bramble
@@ -1568,7 +1568,7 @@ MOUNTS & PETS:
 |---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(☻) Jawbreaker (Stellar Spark) !!! (needs the chunks placed and animated correctly)
+(#2, ^2) Jawbreaker (Stellar Spark) !!! (just needs the chunks placed closer to the center)
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
 
