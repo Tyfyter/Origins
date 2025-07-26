@@ -9,6 +9,7 @@ using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
 	public class Shardcannon_Quest : Quest {
+		public const string loc_key = "Mods.Origins.Quests.ArmsDealer.Shardcannon.";
 		//backing field for Stage property
 		int stage = 0;
 		int progress = 0;
@@ -39,23 +40,23 @@ namespace Origins.Questing {
 			if (Stage < 1) Stage = 1;// - set stage to 1 (kill harpies)
 			LocalPlayerStarted = true;
 			GiveGun();
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.Start");
+			Main.npcChatText = Language.GetTextValue(loc_key + "Start");
 		}
-		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.Inquire");
+		public override string GetInquireText(NPC npc) => Language.GetTextValue(loc_key + "Inquire");
 		public override bool CanComplete(NPC npc) => npc.type == NPCID.ArmsDealer && Stage == 2;
-		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Arms_Dealer.Shardcannon.ReadyToComplete").Value;
+		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister(loc_key + "ReadyToComplete").Value;
 		public override void OnComplete(NPC npc) {
 			for (int i = 0; i < Main.InventoryItemSlotsCount; i++) {
 				Item item = Main.LocalPlayer.inventory[i];
 				if (item.type == ModContent.ItemType<Shardcannon>() && item.prefix == ModContent.PrefixType<Imperfect_Prefix>()) {
 					item.TurnToAir();
-					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.Complete");
+					Main.npcChatText = Language.GetTextValue(loc_key + "Complete");
 					Stage = 3;
 					ShouldSync = true;
 					return;
 				}
 			}
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.WhereGun");
+			Main.npcChatText = Language.GetTextValue(loc_key + "WhereGun");
 			Stage = 3;
 			ShouldSync = true;
 		}
@@ -75,14 +76,14 @@ namespace Origins.Questing {
 		public override bool ShowInJournal() => Completed || (base.ShowInJournal() && LocalPlayerStarted);
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
-				"Mods.Origins.Quests.Arms_Dealer.Shardcannon.Journal", //translation key
+				loc_key + "Journal", //translation key
 				progress,
 				target,
 				StageTagOption(progress >= target) //used in a quest stage tag to show the stage as completed
 			);
 		}
 		public override void SetStaticDefaults() {
-			NameKey = "Mods.Origins.Quests.Arms_Dealer.Shardcannon.Name";
+			NameKey = loc_key + "Name";
 		}
 		public override void SaveData(TagCompound tag) {
 			//save stage and kills
@@ -109,10 +110,10 @@ namespace Origins.Questing {
 		public override string Name => $"{base.Name}_{Quest.Name}";
 		public override double Priority => 101;
 		public override void OnClick(NPC npc, Player player) {
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.YouLostThatGunIGaveYou");
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.ArmsDealer.Shardcannon.YouLostThatGunIGaveYou");
 			Shardcannon_Quest.GiveGun();
 		}
-		public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.ILostThatGunYouGaveMe");
+		public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Origins.Quests.ArmsDealer.Shardcannon.ILostThatGunYouGaveMe");
 		public override bool IsActive(NPC npc, Player player) {
 			if (Questing.QuestListSelected || npc.type != NPCID.ArmsDealer) return false;
 			static bool IsShardcannon(Item item) {
@@ -147,6 +148,7 @@ namespace Origins.Questing {
 		}
 	}
 	public class Harpoon_Burst_Rifle_Quest : Quest {
+		public string loc_key = "Mods.Origins.Quests.ArmsDealer.Harpoon_Burst_Rifle.";
 		//backing field for Stage property
 		int stage = 0;
 		int progress = 0;
@@ -177,23 +179,23 @@ namespace Origins.Questing {
 			if (Stage < 1) Stage = 1;// - set stage to 1 (kill harpies)
 			LocalPlayerStarted = true;
 			GiveGun();
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.Start");
+			Main.npcChatText = Language.GetTextValue(loc_key + "Start");
 		}
-		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.Inquire");
+		public override string GetInquireText(NPC npc) => Language.GetTextValue(loc_key + "Inquire");
 		public override bool CanComplete(NPC npc) => npc.type == NPCID.ArmsDealer && Stage == 2;
-		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.ReadyToComplete").Value;
+		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister(loc_key + "ReadyToComplete").Value;
 		public override void OnComplete(NPC npc) {
 			for (int i = 0; i < Main.InventoryItemSlotsCount; i++) {
 				Item item = Main.LocalPlayer.inventory[i];
 				if (item.type == ModContent.ItemType<Harpoon_Burst_Rifle>() && item.prefix == ModContent.PrefixType<Imperfect_Prefix>()) {
 					item.TurnToAir();
-					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.Complete");
+					Main.npcChatText = Language.GetTextValue(loc_key + "Complete");
 					Stage = 3;
 					ShouldSync = true;
 					return;
 				}
 			}
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.WhereGun");
+			Main.npcChatText = Language.GetTextValue(loc_key + "WhereGun");
 			Stage = 3;
 			ShouldSync = true;
 		}
@@ -213,14 +215,14 @@ namespace Origins.Questing {
 		public override bool ShowInJournal() => Completed || (base.ShowInJournal() && LocalPlayerStarted);
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
-				"Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.Journal", //translation key
+				loc_key + "Journal", //translation key
 				progress,
 				target,
 				StageTagOption(progress >= target) //used in a quest stage tag to show the stage as completed
 			);
 		}
 		public override void SetStaticDefaults() {
-			NameKey = "Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.Name";
+			NameKey = loc_key + "Name";
 		}
 		public override void SaveData(TagCompound tag) {
 			//save stage and kills
@@ -247,10 +249,10 @@ namespace Origins.Questing {
 		public override string Name => $"{base.Name}_{Quest.Name}";
 		public override double Priority => 101;
 		public override void OnClick(NPC npc, Player player) {
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.YouLostThatGunIGaveYou");
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.ArmsDealer.Harpoon_Burst_Rifle.YouLostThatGunIGaveYou");
 			Harpoon_Burst_Rifle_Quest.GiveGun();
 		}
-		public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.ILostThatGunYouGaveMe");
+		public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Origins.Quests.ArmsDealer.Harpoon_Burst_Rifle.ILostThatGunYouGaveMe");
 		public override bool IsActive(NPC npc, Player player) {
 			if (Questing.QuestListSelected || npc.type != NPCID.ArmsDealer) return false;
 			static bool IsShardcannon(Item item) {

@@ -1,3 +1,6 @@
+Common.GivenConfetti: Thanks for the {$ItemName.Confetti}.
+Squirrel.GivenConfetti: *happy squeak about {$ItemName.Confetti}*
+
 Guide: {
 	Quest_Menu: Need some advice?
 
@@ -76,17 +79,36 @@ Merchant: {
 	}
 }
 
-Party_Girl: {
+PartyGirl: {
 	Quest_Menu: Hiya! You wanna party?! Me too!
+
+	Happy_Grenade: {
+		Name: Confetti Fun
+		Journal:
+			'''
+			{$Mods.Origins.Quests.PartyGirl.Happy_Grenade.Name}
+			Client: [npcname:PartyGirl]
+
+			'{$Mods.Origins.Quests.PartyGirl.Happy_Grenade.Inquire}'
+
+			- [qs{3}:Give any {1} Town NPCs {2} Confetti ({0}/{1})]
+			Unlocks: [i:PartyGirlGrenade]
+			'''
+		Inquire: HI! So, I would like to prepare for a party sometime soon and nobody else seems to be prepared for it. Can you give everyone some confetti? Someone’s got to throw the confetti so I figured everyone can!
+		Start: Sweet!
+		ReadyToComplete: All good to go?
+		Complete: Haha! Now everyone’s forced to participate in the fun! Quite the role model!
+		RequestConfettiGiving: Give {0} {$ItemName.Confetti}
+	}
 
 	Tax_Collector_Hat: {
 		Name: Livin' Up the Party
 		Journal:
 			'''
-			{$Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.Name}
+			{$Mods.Origins.Quests.PartyGirl.Tax_Collector_Hat.Name}
 			Client: [npcname:PartyGirl]
 
-			'{$Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.Inquire}'
+			'{$Mods.Origins.Quests.PartyGirl.Tax_Collector_Hat.Inquire}'
 
 			- [qs{0}:Get <npcname:TaxCollector> to wear a party hat]
 			Unlocks: [i:Origins/Partybringer]
@@ -99,7 +121,7 @@ Party_Girl: {
 	}
 }
 
-Goblin_Tinkerer: {
+GoblinTinkerer: {
 	Quest_Menu: Oh, Terrarian! Good to see you. There is much work to be done.
 	Generic.Mechanic: the Mechanic
 
@@ -166,17 +188,17 @@ Goblin_Tinkerer: {
 	}
 }
 
-Arms_Dealer: {
+ArmsDealer: {
 	Quest_Menu: What's up? You ready to make holes in some enemies?
 
 	Shardcannon: {
 		Name: Live Fire
 		Journal:
 			'''
-			{$Mods.Origins.Quests.Arms_Dealer.Shardcannon.Name}
+			{$Mods.Origins.Quests.ArmsDealer.Shardcannon.Name}
 			Client: [npcname:ArmsDealer]
 
-			'{$Mods.Origins.Quests.Arms_Dealer.Shardcannon.Inquire}'
+			'{$Mods.Origins.Quests.ArmsDealer.Shardcannon.Inquire}'
 
 			- [qs{2}:Slay {1} Enemies with the Imperfect Shardcannon ({0}/{1})]
 			Unlocks: [i:Origins/Shardcannon]
@@ -194,10 +216,10 @@ Arms_Dealer: {
 		Name: Three Times the Charm
 		Journal:
 			'''
-			{$Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.Name}
+			{$Mods.Origins.Quests.ArmsDealer.Harpoon_Burst_Rifle.Name}
 			Client: [npcname:ArmsDealer]
 
-			'{$Mods.Origins.Quests.Arms_Dealer.Harpoon_Burst_Rifle.Inquire}'
+			'{$Mods.Origins.Quests.ArmsDealer.Harpoon_Burst_Rifle.Inquire}'
 
 			- [qs{2}:Slay {1} Enemies with the <imperfect:Origins/Harpoon_Burst_Rifle> ({0}/{1})]
 			Unlocks: [i:Origins/Harpoon_Burst_Rifle]
@@ -397,17 +419,17 @@ Cyborg: {
 	}
 }
 
-Tax_Collector: {
+TaxCollector: {
 	Quest_Menu: What.
 
 	Tax_Collector_Ghosts_Quest: {
 		Name: A Night of Uninterrupted Sleep
 		Journal:
 			'''
-			{$Mods.Origins.Quests.Tax_Collector.Tax_Collector_Ghosts_Quest.Name}
+			{$Mods.Origins.Quests.TaxCollector.Tax_Collector_Ghosts_Quest.Name}
 			Client: [npcname:TaxCollector]
 
-			'{$Mods.Origins.Quests.Tax_Collector.Tax_Collector_Ghosts_Quest.Inquire}'
+			'{$Mods.Origins.Quests.Tax_Collector.TaxCollector_Ghosts_Quest.Inquire}'
 			He said the first spirit told him of the others: "Expect the first tonight, when the bell tolls one, expect the second on the stroke of two, The third, more mercurial, shall appear in his own good time."
 
 			- [qs{1}:Vanquish the spirits ({0}/4)]

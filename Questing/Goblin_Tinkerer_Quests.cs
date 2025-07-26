@@ -7,6 +7,7 @@ using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
 	public class Turbo_Reel_Quest : Quest {
+		public const string loc_key = "Mods.Origins.Quests.GoblinTinkerer.Turbo_Reel.";
 		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
@@ -69,14 +70,14 @@ namespace Origins.Questing {
 		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.GoblinTinkerer && Stage == 0;
 		}
-		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Inquire");
+		public override string GetInquireText(NPC npc) => Language.GetTextValue(loc_key + "Inquire");
 		public override void OnAccept(NPC npc) {
 			Stage = 1;
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Start");
+			Main.npcChatText = Language.GetTextValue(loc_key + "Start");
 			ShouldSync = true;
 		}
 		public override bool CanComplete(NPC npc) => npc.type == NPCID.GoblinTinkerer && HasRequiredItems;
-		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.ReadyToComplete").Value;
+		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister(loc_key + "ReadyToComplete").Value;
 		public override void OnComplete(NPC npc) {
 			Item[] inventory = Main.LocalPlayer.inventory;
 			RecipeGroup ironBarGroup = RecipeGroup.recipeGroups[RecipeGroupID.IronBar];
@@ -87,13 +88,13 @@ namespace Origins.Questing {
 				((i) => i.type == ItemID.Chain, chainTarget),
 				((i) => ironBarGroup.ContainsItem(i.type), ironBarTarget)
 			);
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Complete");
+			Main.npcChatText = Language.GetTextValue(loc_key + "Complete");
 			Stage = 2;
 			ShouldSync = true;
 		}
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
-				"Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Journal", //translation key
+				loc_key + "Journal", //translation key
 
 				ironBars,
 				ironBarTarget,
@@ -111,7 +112,7 @@ namespace Origins.Questing {
 			);
 		}
 		public override void SetStaticDefaults() {
-			NameKey = "Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Name";
+			NameKey = loc_key + "Name";
 		}
 		public override void SaveData(TagCompound tag) {
 			//save stage and kills
@@ -124,6 +125,7 @@ namespace Origins.Questing {
 		}
 	}
 	public class Gun_Glove_Quest : Quest {
+		public string loc_key = "Mods.Origins.Quests.GoblinTinkerer.Gun_Glove.";
 		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
@@ -184,14 +186,14 @@ namespace Origins.Questing {
 		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.GoblinTinkerer && Stage == 0 && ModContent.GetInstance<Turbo_Reel_Quest>().Completed;
 		}
-		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Inquire");
+		public override string GetInquireText(NPC npc) => Language.GetTextValue(loc_key + "Inquire");
 		public override void OnAccept(NPC npc) {
 			Stage = 1;
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Start");
+			Main.npcChatText = Language.GetTextValue(loc_key + "Start");
 			ShouldSync = true;
 		}
 		public override bool CanComplete(NPC npc) => npc.type == NPCID.GoblinTinkerer && HasRequiredItems;
-		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.ReadyToComplete").Value;
+		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister(loc_key + "ReadyToComplete").Value;
 		public override void OnComplete(NPC npc) {
 			Item[] inventory = Main.LocalPlayer.inventory;
 			RecipeGroup ironBarGroup = RecipeGroup.recipeGroups[RecipeGroupID.IronBar];
@@ -201,13 +203,13 @@ namespace Origins.Questing {
 				((i) => i.type == ItemID.FlintlockPistol, 1),
 				((i) => i.type == ItemID.ZombieArm, 1)
 			);
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Complete");
+			Main.npcChatText = Language.GetTextValue(loc_key + "Complete");
 			Stage = 2;
 			ShouldSync = true;
 		}
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
-				"Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Journal", //translation key
+				loc_key + "Journal", //translation key
 
 				leather,
 				leatherTarget,
@@ -219,7 +221,7 @@ namespace Origins.Questing {
 			);
 		}
 		public override void SetStaticDefaults() {
-			NameKey = "Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Name";
+			NameKey = loc_key + "Name";
 		}
 		public override void SaveData(TagCompound tag) {
 			//save stage and kills
@@ -296,16 +298,16 @@ namespace Origins.Questing {
 			return npc.type == NPCID.GoblinTinkerer && Stage == 0 && Main.hardMode && ModContent.GetInstance<Gun_Glove_Quest>().Completed;
 		}
 		public override string GetInquireText(NPC npc) => Language.GetTextValue(
-							"Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Inquire",
-							NPC.GetFirstNPCNameOrNull(NPCID.Mechanic) ?? Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Generic.Mechanic")
+							"Mods.Origins.Quests.GoblinTinkerer.Rocket_Boosted_Minecart.Inquire",
+							NPC.GetFirstNPCNameOrNull(NPCID.Mechanic) ?? Language.GetTextValue("Mods.Origins.Quests.GoblinTinkerer.Generic.Mechanic")
 						);
 		public override void OnAccept(NPC npc) {
 			Stage = 1;
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Start");
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.GoblinTinkerer.Rocket_Boosted_Minecart.Start");
 			ShouldSync = true;
 		}
 		public override bool CanComplete(NPC npc) => npc.type == NPCID.GoblinTinkerer && HasRequiredItems;
-		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.ReadyToComplete").Value;
+		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.GoblinTinkerer.Rocket_Boosted_Minecart.ReadyToComplete").Value;
 		public override void OnComplete(NPC npc) {
 			Item[] inventory = Main.LocalPlayer.inventory;
 			ConsumeItems(
@@ -315,13 +317,13 @@ namespace Origins.Questing {
 				((i) => i.type == ModContent.ItemType<Adhesive_Wrap>(), adhesiveWrapTarget),
 				((i) => i.type == ItemID.AdamantiteBar || i.type == ItemID.TitaniumBar, adamantiteBarTarget)
 			);
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Complete");
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.GoblinTinkerer.Rocket_Boosted_Minecart.Complete");
 			Stage = 2;
 			ShouldSync = true;
 		}
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
-				"Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Journal", //translation key
+				"Mods.Origins.Quests.GoblinTinkerer.Rocket_Boosted_Minecart.Journal", //translation key
 
 				StageTagOption(hasMinecart),
 
@@ -339,7 +341,7 @@ namespace Origins.Questing {
 			);
 		}
 		public override void SetStaticDefaults() {
-			NameKey = "Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Name";
+			NameKey = "Mods.Origins.Quests.GoblinTinkerer.Rocket_Boosted_Minecart.Name";
 		}
 		public override void SaveData(TagCompound tag) {
 			//save stage and kills

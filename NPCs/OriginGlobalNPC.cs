@@ -31,6 +31,7 @@ using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -160,7 +161,8 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.PartyGirl: {
-					shop.Add<Partybringer>(Quest.QuestCondition<Tax_Collector_Hat_Quest>());
+					shop.Add(ItemID.PartyGirlGrenade, [Quest.QuestCondition<Happy_Grenade_Quest>(), Condition.PlayerCarriesItem(ItemID.PartyGirlGrenade).Not()]);
+					shop.Add<Partybringer>(Quest.QuestCondition<Tax_Collector_Quests>());
 					break;
 				}
 				case NPCID.Painter: {

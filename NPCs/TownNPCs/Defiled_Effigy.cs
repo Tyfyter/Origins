@@ -42,6 +42,8 @@ namespace Origins.NPCs.TownNPCs {
 			//TODO: remove when added
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiaryUnimplemented;
 			TownNPCStayingHomeless = true;
+			BetterDialogue.BetterDialogue.SupportedNPCs.Add(Type);
+			BetterDialogue.BetterDialogue.RegisterShoppableNPC(Type);
 		}
 		public override void SetDefaults() {
 			NPC.width = 18;
