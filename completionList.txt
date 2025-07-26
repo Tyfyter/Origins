@@ -220,7 +220,7 @@ ENEMY NPCS:
 (^) Felnum Slime*
 (☻) Flagellant* !!! (flagellash whipping behavior)
 (^) Flying Exoskeleton*
-(#2, ^2) Goo Wall !!!
+(☻) Goo Wall !!!
 (^) Graveshield Zombie*
 (X) Hammerhand
 (X) Limestone Creeper
