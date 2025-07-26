@@ -446,7 +446,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.velocity += npc.DirectionTo(npc.GetTargetData().Center - Vector2.UnitY * 16 * 15) * 0.5f;
 			npc.velocity *= 0.97f;
 			if (++npc.ai[0] > Startup && npc.ai[1].TrySet(1)) {
-				SoundEngine.PlaySound(SoundID.Item121.WithPitchRange(0.15f, 0.4f), npc.Center);
+				SoundEngine.PlaySound(SoundID.Item163, npc.Center);
 				npc.SpawnProjectile(null,
 					npc.Center,
 					(diff + Vector2.UnitY * 16 * 20).SafeNormalize(default) * ShotSpeed,
@@ -509,6 +509,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Projectile.hostile = true;
 			}
 			public override void OnSpawn(IEntitySource source) {
+				SoundEngine.PlaySound(SoundID.Item176, Projectile.Center);
+				SoundEngine.PlaySound(SoundID.Zombie83.WithPitch(-2f), Projectile.Center);
+				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitch(2f), Projectile.Center);
 				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 1.5f);
 			}
 			public override void AI() {

@@ -550,7 +550,7 @@ The_Ashen: {
 	Defective_Mortar_Shell.Text:
 		'''
 		[header:Defective Mortar Shell (2/{$SeriesLength})]
-		[jimage/sc3d:Origins/Items/Weapons/Summon/Defective_Mortar_Shell]
+		[jimage/sc3d:Origins/Items/Weapons/Summoner/Defective_Mortar_Shell]
 		*****
 		I saw no point in it. If they were to seek dominion, then why turn around and give away their advancements to those who obviously wanted to bring them down? My foresight had only made my relations with my Subjects more tense. My only directive was to support them and ensure the survival of the Mechanicus, but they were often the reason of extraneous circumstances.
 		'''

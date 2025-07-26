@@ -278,6 +278,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					ShotDamage,
 					1
 				);
+				SoundEngine.PlaySound(SoundID.Item67.WithPitch(-2f), npc.Center);
+				SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f), npc.Center);
 			} else if (npc.ai[0] > Startup + Endlag) SetAIState(boss, StateIndex<AutomaticIdleState>());
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
@@ -285,7 +287,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.ai[0] = 0;
 		}
 		public class SC_Shimmershot_Bullet : Shimmershot_Bullet {
-			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VenomBullet;
+			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.StarWrath;
 			public override int AuraID => SC_Shimmershot_Aura.ID;
 			public override void SetDefaults() {
 				base.SetDefaults();
