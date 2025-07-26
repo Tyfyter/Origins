@@ -214,7 +214,7 @@ namespace Origins.Items.Pets {
 			Vector2 position = Projectile.Center;
 			if (DrawOrder.LastDrawnOverlayLayer <= RenderLayers.Walls) DrawAuraOutline();
 
-			if (DrawOrder.LastDrawnOverlayLayer <= RenderLayers.Walls) return false;
+			if (Projectile.isAPreviewDummy && DrawOrder.LastDrawnOverlayLayer <= RenderLayers.Walls) return false;
 			default(ShimmerConstructSDF).Draw(position - Main.screenPosition, Projectile.rotation, new Vector2(256, 256) / 3f);
 			if (chunks.Length <= 0) {
 				chunks = [
