@@ -10,11 +10,6 @@ using Origins.Items.Weapons.Magic;
 using Terraria.DataStructures;
 using Terraria.Audio;
 using System.IO;
-using MagicStorage.CrossMod;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
-using Terraria.Graphics;
 using Origins.Items.Weapons.Ranged;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
@@ -138,7 +133,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				ID = Type;
 			}
 			public override void SetDefaults() {
-				Projectile.damage = 38/* + (9 * difficultyMult)*/;
 				Projectile.friendly = false;
 				Projectile.hostile = true;
 				Projectile.aiStyle = 0;

@@ -138,6 +138,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			} else {
 				NPC.velocity = Vector2.Zero;
 				NPC.dontTakeDamage = true;
+				NPC.aiAction = StateIndex<AutomaticIdleState>();
 				if (++deathAnimationTime >= DeathAnimationTime) {
 					if (Main.expertMode) {
 						NPC.lifeMax = (int)(NPC.lifeMax * PhaseThreeIdleState.HealthMultiplier);
