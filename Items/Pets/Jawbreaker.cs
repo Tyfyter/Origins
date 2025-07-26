@@ -43,7 +43,6 @@ namespace Origins.Items.Pets {
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[Projectile.type] = true;
 		}
-
 		public override void SetDefaults() {
 			Projectile.timeLeft = 5;
 			Projectile.Size = new(16 * 3);
@@ -55,7 +54,6 @@ namespace Origins.Items.Pets {
 		public override bool? CanCutTiles() {
 			return false;
 		}
-
 		public override void AI() {
 			if (Main.rand.NextBool(650) && Projectile.ai[1] == 0) Projectile.ai[1] = 1;
 			Player player = Main.player[Projectile.owner];
@@ -163,6 +161,7 @@ namespace Origins.Items.Pets {
 			// for player select screen
 			for (int i = 0; i < chunks.Length; i++) chunks[i].Update(this);
 		}
+
 		Chunk[] chunks = [];
 		struct Chunk(int type, Vector2 position, int index) {
 			public float rotation;
@@ -214,7 +213,7 @@ namespace Origins.Items.Pets {
 			Vector2 position = Projectile.Center;
 			if (DrawOrder.LastDrawnOverlayLayer <= RenderLayers.Walls) DrawAuraOutline();
 
-			if (Projectile.isAPreviewDummy && DrawOrder.LastDrawnOverlayLayer <= RenderLayers.Walls) return false;
+			if (!Projectile.isAPreviewDummy && DrawOrder.LastDrawnOverlayLayer <= RenderLayers.Walls) return false;
 			default(ShimmerConstructSDF).Draw(position - Main.screenPosition, Projectile.rotation, new Vector2(256, 256) / 3f);
 			if (chunks.Length <= 0) {
 				chunks = [

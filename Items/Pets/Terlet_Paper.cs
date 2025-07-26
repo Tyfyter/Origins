@@ -5,6 +5,7 @@ using Origins.NPCs.Fiberglass;
 using PegasusLib;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -41,6 +42,8 @@ namespace Origins.Items.Pets {
 		public override void SetStaticDefaults() {
 			Terlet_Paper.projectileID = Projectile.type;
 
+			ProjectileID.Sets.CharacterPreviewAnimations[Type].WithCode(TerletSpooderAnim);
+
 			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[Projectile.type] = true;
@@ -63,6 +66,27 @@ namespace Origins.Items.Pets {
 			Vector2 targetWithinRange = ((targetTarget - legs[i].start).WithMaxLength(TotalLegLength * 0.6f) + legs[i].start);
 			return targetWithinRange.RotatedBy(Projectile.rotation) + Projectile.Center;
 		}
+		private SettingsForCharacterPreview.CustomAnimationCode TerletSpooderAnim = new((proj, walking) => {
+			if (proj.ModProjectile is not Terlet_Paper_P paper) return;
+			if (paper.legs is null) return;
+			for (int i = 0; i < 8; i++) {
+				Vector2 target = paper.GetTarget(i);
+				Vector2 endPoint = paper.GetLegEndPoint(i);
+				if (walking) {
+					float inertia = 48f;
+					proj.velocity = proj.velocity * (inertia - 1) / inertia;
+				} else paper.legTargets[i] = target;
+				if (!endPoint.WithinRange(target, 48)) {
+					proj.velocity *= 0.7f;
+					paper.legsGrounded[i] = false;
+				} else if (paper.AdjacentLegsGrounded(i) && !endPoint.WithinRange(target, proj.velocity.IsWithin(Vector2.Zero, 0.1f) ? 4 : 16)) {
+					paper.legsGrounded[i] = false;
+				}
+				if (!paper.legsGrounded[i]) {
+					paper.legTargets[i] = target;
+				}
+			}
+		});
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 
@@ -266,14 +290,12 @@ namespace Origins.Items.Pets {
 				}
 			}
 			if (Projectile.isAPreviewDummy) {
-				Projectile.velocity += new Vector2(1, 0);
 				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 				Projectile.position -= new Vector2(0, 10);
 			}
 			for (int i = 0; i < 8; i++) {
 				bool flip = (i % 2 != 0) == i < 4;
 				Vector2 baseStart = legs[i].start;
-				if (Projectile.isAPreviewDummy) legTargets[i] = GetTarget(i);
 				legs[i].start = legs[i].start.RotatedBy(Projectile.rotation) + Projectile.Center;
 				float[] targets = legs[i].GetTargetAngles(legTargets[i], flip);
 				if (AngularSmoothing(ref legs[i].bone0.Theta, targets[0], 0.3f) && AngularSmoothing(ref legs[i].bone1.Theta, targets[1], 0.5f)) {

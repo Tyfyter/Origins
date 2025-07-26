@@ -161,7 +161,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.PartyGirl: {
-					shop.Add(ItemID.PartyGirlGrenade, [Quest.QuestCondition<Happy_Grenade_Quest>(), Condition.PlayerCarriesItem(ItemID.PartyGirlGrenade).Not()]);
+					shop.InsertAfter(ItemID.PartyGirlGrenade, ItemID.PartyGirlGrenade, [Quest.QuestCondition<Happy_Grenade_Quest>(), Condition.PlayerCarriesItem(ItemID.PartyGirlGrenade).Not()]);
 					shop.Add<Partybringer>(Quest.QuestCondition<Tax_Collector_Quests>());
 					break;
 				}
