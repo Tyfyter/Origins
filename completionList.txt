@@ -109,7 +109,7 @@ TOWN NPC Quests:
 (^) Merchant - To the Skies!*
 (^) Merchant - The Greatest Sin of All, Gambling*
 (^) Painter - Painter Apprentice
-(X) Party Girl - Confetti Fun
+(☻) Party Girl - Confetti Fun
 (^) Party Girl - Livin' Up the Party
 (^) Stylist - Running Dry
 (^) Stylist - Slick Styling
