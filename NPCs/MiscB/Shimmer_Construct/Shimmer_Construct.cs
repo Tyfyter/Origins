@@ -146,12 +146,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						isInPhase3 = true;
 						NPC.netUpdate = true;
 						if (!NetmodeActive.MultiplayerClient) {
-							int num = Item.NewItem(NPC.GetSource_FromThis(), (int)(Main.leftWorld + 640f + 16f + 64f), (int)(Main.bottomWorld - 640f - 64f - 64f), 0, 0, Music_Box.ItemType<Music_Box_TD>());
+							int num = Item.NewItem(NPC.GetSource_FromThis("ArabelCage"), (int)(Main.leftWorld + 640f + 16f + 64f), (int)(Main.bottomWorld - 640f - 64f - 64f), 0, 0, Music_Box.ItemType<Music_Box_TD>());
 							Main.item[num].newAndShiny = true;
 							if (Main.netMode == NetmodeID.MultiplayerClient)
 								NetMessage.SendData(MessageID.SyncItem, -1, -1, null, num);
 
-							num = Item.NewItem(NPC.GetSource_FromThis(), (int)(Main.rightWorld - 640f - 32f - 64f), (int)(Main.bottomWorld - 640f - 64f - 64f), 0, 0, Music_Box.ItemType<Music_Box_TD>());
+							num = Item.NewItem(NPC.GetSource_FromThis("ArabelCage"), (int)(Main.rightWorld - 640f - 32f - 64f), (int)(Main.bottomWorld - 640f - 64f - 64f), 0, 0, Music_Box.ItemType<Music_Box_TD>());
 							Main.item[num].newAndShiny = true;
 							if (Main.netMode == NetmodeID.MultiplayerClient)
 								NetMessage.SendData(MessageID.SyncItem, -1, -1, null, num);

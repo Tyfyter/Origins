@@ -21,7 +21,9 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
+using Terraria.Utilities;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.MusicBoxes {
@@ -107,6 +109,10 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToMusicBox(tile.Type, 0);
+			Item.maxStack = 1;
+		}
+		public override bool? PrefixChance(int pre, UnifiedRandom rand) {
+			return false;
 		}
 		public void ModifyWikiStats(JObject data) {
 			Dictionary<string, int> musicByPath = MusicMethods.musicByPath.GetValue();
@@ -203,7 +209,7 @@ namespace Origins.Tiles.MusicBoxes {
 						tile.Slope = (SlopeType)(frameTime + 1);
 					}
 				}
-			} else if(tile.TileFrameNumber > 0) {
+			} else if (tile.TileFrameNumber > 0) {
 				frameXOffset += 36;
 				frameYOffset += (tile.TileFrameNumber - 1) * 36;
 				if (tile.TileFrameNumber > 0) {
@@ -457,17 +463,26 @@ namespace Origins.Tiles.MusicBoxes {
 		public override int DustType => DustID.GemAmethyst;
 		public override Music_Box_Item CreateItem() => new Music_Box_TD_Item(this);
 		public class Music_Box_TD_Item(Music_Box tile) : Music_Box_Item(tile) {
-			public static int ShaderID { get; private set; }
+			AutoLoadingAsset<Texture2D> glowTexture = "Terraria/Images/Misc/Perlin";
+			public static ArmorShaderData Shader { get; private set; }
+			bool ArabelCage = false;
 			public override void SetStaticDefaults() {
-				GameShaders.Armor.BindShader(Type, new ArmorShaderData(
+				Shader = new ArmorShaderData(
 					Mod.Assets.Request<Effect>("Effects/Item_Caustics"),
 					"The_Dive"
-				));
-				ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
+				);
 			}
-			AutoLoadingAsset<Texture2D> glowTexture = "Terraria/Images/Misc/Perlin";
+			public override void SetDefaults() {
+				base.SetDefaults();
+			}
+			public override void OnSpawn(IEntitySource source) {
+				ArabelCage = source.Context == "ArabelCage";
+			}
+			public override void UpdateInventory(Player player) => ArabelCage = false;
+			public override void UpdateAccessory(Player player, bool hideVisual) => ArabelCage = false;
+			public override void UpdateVanity(Player player) => ArabelCage = false;
 			public override void Update(ref float gravity, ref float maxFallSpeed) {
-				if (Item.newAndShiny) {
+				if (ArabelCage && Item.newAndShiny) {
 					if (!NPC.AnyNPCs(NPCType<Shimmer_Construct>())) {
 						Item.TurnToAir();
 					} else if (!Item.shimmered) {
@@ -477,24 +492,31 @@ namespace Origins.Tiles.MusicBoxes {
 				}
 			}
 			public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
-				SpriteBatchState state = spriteBatch.GetState();
-				try {
-					spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate);
-					Texture2D texture = glowTexture;
-					DrawData data = new() {
-						texture = texture,
-						position = Item.Center - Main.screenPosition,
-						color = Color.Plum,
-						rotation = 0f,
-						scale = new Vector2(scale),
-						shader = ShaderID,
-						origin = texture.Size() * 0.5f
-					};
-					GameShaders.Armor.ApplySecondary(ShaderID, null, data);
-					data.Draw(spriteBatch);
-				} finally {
-					spriteBatch.Restart(state);
+				if (ArabelCage && Item.newAndShiny) {
+					SpriteBatchState state = spriteBatch.GetState();
+					try {
+						spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate);
+						Texture2D texture = glowTexture;
+						DrawData data = new() {
+							texture = texture,
+							position = Item.Center - Main.screenPosition,
+							color = Color.Plum,
+							rotation = 0f,
+							scale = new Vector2(scale),
+							origin = texture.Size() * 0.5f
+						};
+						Shader.Apply(Item, data);
+						data.Draw(spriteBatch);
+					} finally {
+						spriteBatch.Restart(state);
+					}
 				}
+			}
+			public override void SaveData(TagCompound tag) {
+				tag.Add("TDArabelCage", ArabelCage);
+			}
+			public override void LoadData(TagCompound tag) {
+				ArabelCage = tag.SafeGet<bool>("TDArabelCage");
 			}
 		}
 	}
