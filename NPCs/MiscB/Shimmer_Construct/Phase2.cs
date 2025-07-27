@@ -255,7 +255,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		#region stats
 		public static float Startup => 90 - DifficultyMult * 5;
 		public static float Endlag => 90 - DifficultyMult * 5;
-		public static int ShotDamage => (int)(15 + 9 * DifficultyMult);
+		public static int ShotDamage => (int)(15 + 19 * DifficultyMult);
 		public static float ShotVelocity => 6;
 		/// <param name="progress">How much of the startup time has elapsed, 0-1</param>
 		public static float TurnRate(float progress) => ((MathF.Pow(progress, 2) - MathF.Pow(progress, 3)) / 0.14815f) * 0.1f;
@@ -293,6 +293,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				base.SetDefaults();
 				Projectile.friendly = false;
 				Projectile.hostile = true;
+			}
+			public override void AI() {
+				base.AI();
+
+				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 + MathHelper.Pi;
 			}
 		}
 		public class SC_Shimmershot_Aura : Shimmershot_Aura {

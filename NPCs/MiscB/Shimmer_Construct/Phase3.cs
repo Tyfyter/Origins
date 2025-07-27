@@ -511,7 +511,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public override void OnSpawn(IEntitySource source) {
 				SoundEngine.PlaySound(SoundID.Item176, Projectile.Center);
 				SoundEngine.PlaySound(SoundID.Zombie83.WithPitch(-2f), Projectile.Center);
-				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitch(2f), Projectile.Center);
+				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(0.8f), Projectile.Center);
 				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 1.5f);
 			}
 			public override void AI() {
