@@ -1,6 +1,4 @@
-﻿using CalamityMod.Projectiles.Magic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Graphics;
@@ -15,7 +13,6 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -472,12 +469,7 @@ namespace Origins.Tiles.MusicBoxes {
 					"The_Dive"
 				);
 			}
-			public override void SetDefaults() {
-				base.SetDefaults();
-			}
-			public override void OnSpawn(IEntitySource source) {
-				ArabelCage = source.Context == "ArabelCage";
-			}
+			public override void OnSpawn(IEntitySource source) => ArabelCage = source.Context == "ArabelCage";
 			public override void UpdateInventory(Player player) => ArabelCage = false;
 			public override void UpdateAccessory(Player player, bool hideVisual) => ArabelCage = false;
 			public override void UpdateVanity(Player player) => ArabelCage = false;
