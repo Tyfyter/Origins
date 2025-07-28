@@ -226,7 +226,7 @@ ENEMY NPCS:
 (X) Limestone Creeper
 (^) Optiphage*
 (X) Packhunter
-(X) Pinwheel
+(#, ^2) Pinwheel
 (^) Pustule Jellyfish*
 (X) QM-76 'Quakemaker'
 (X) Repairboy
@@ -265,6 +265,7 @@ ENEMY NPCS:
 (X) Hive Mind
 (^) Leaf Snapper
 (X) Madman
+(X) Molten Aberration
 (^) King Crab
 (^) Mildew Creeper
 (^) Mitoworm*
@@ -316,6 +317,7 @@ EVENTS:
 (#, %2) Riven Invasion
 (X) War of the World
 
+(X) Coronal Storm
 (X) Test of the Ancients
 
 (X) Evvillll
