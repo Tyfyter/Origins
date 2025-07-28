@@ -22,6 +22,7 @@ $2: Needs sound (SFX/music is composed but not implemented)
 ^3: Partial completion (code completed)
 ^4: Partial completion (sound completed)
 ^5: Partial completion, but requires tML update to implement
+^6: Partial completion, entry refers to multiple disticnt parts
 
 X: No progress
 *: Wiki entry available
@@ -635,9 +636,9 @@ VANITY:
 (X) Steampunk Mechanist Set
 (^) Sunflower Sandals*
 
-(X) DIO's Set
+(^6, @, #) DIO's Set (everything but wings currently unimplemented, wings using placeholder texture)
 (^) First Dream
-(^) Tyfyter's Set*
+(^6, @, #) Tyfyter's Set* (wings)
 
 (^) Acrid Dye
 (^) Amber Dye
