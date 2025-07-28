@@ -238,16 +238,19 @@ namespace Origins.Items.Pets {
 			}
 
 			SpriteBatchState state = Main.spriteBatch.GetState() with { rasterizerState = RasterizerState.CullNone };
-			Main.spriteBatch.Restart(state, transformMatrix: Main.GameViewMatrix.ZoomMatrix);
+			Main.spriteBatch.Restart(state, SpriteSortMode.Immediate, transformMatrix: Main.GameViewMatrix.ZoomMatrix);
 			Origins.shaderOroboros.Capture();
 
 			if (Projectile.ai[2] > 0) {
 				DrawData data = GetAuraDrawData(Color.White);
 				Vector2 basePos = data.position;
+				int shader = Main.CurrentDrawnEntityShader;
+				Main.CurrentDrawnEntityShader = 0;
 				for (int i = 0; i < 4; i++) {
 					data.position = basePos + (MathHelper.PiOver2 * i).ToRotationVector2() * 2 * (data.scale + Vector2.One);
 					Main.EntitySpriteDraw(data);
 				}
+				Main.CurrentDrawnEntityShader = shader;
 			}
 
 			Main.graphics.GraphicsDevice.Textures[1] = middleRenderTarget;
