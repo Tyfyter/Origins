@@ -1261,8 +1261,8 @@ Buffs: {
 	}
 
 	No_Fallthrough_Buff: {
-		// DisplayName: No Fallthrough Buff
-		// Description: Mods.Origins.Buffs.No_Fallthrough_Buff.Description
+		// DisplayName: Firmly Grounded
+		// Description: You're tired of falling
 	}
 }
 

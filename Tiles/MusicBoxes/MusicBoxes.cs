@@ -9,6 +9,7 @@ using PegasusLib;
 using PegasusLib.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Terraria;
@@ -18,7 +19,6 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.Utilities;
 using static Terraria.ModLoader.ModContent;
@@ -470,11 +470,8 @@ namespace Origins.Tiles.MusicBoxes {
 				);
 			}
 			public override void OnSpawn(IEntitySource source) => ArabelCage = source.Context == "ArabelCage";
-			public override void UpdateInventory(Player player) => ArabelCage = false;
-			public override void UpdateAccessory(Player player, bool hideVisual) => ArabelCage = false;
-			public override void UpdateVanity(Player player) => ArabelCage = false;
 			public override void Update(ref float gravity, ref float maxFallSpeed) {
-				if (ArabelCage && Item.newAndShiny) {
+				if (ArabelCage) {
 					if (!NPC.AnyNPCs(NPCType<Shimmer_Construct>())) {
 						Item.TurnToAir();
 					} else if (!Item.shimmered) {
@@ -483,8 +480,12 @@ namespace Origins.Tiles.MusicBoxes {
 					}
 				}
 			}
+			public override bool OnPickup(Player player) {
+				ArabelCage = false;
+				return base.OnPickup(player);
+			}
 			public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
-				if (ArabelCage && Item.newAndShiny) {
+				if (ArabelCage) {
 					SpriteBatchState state = spriteBatch.GetState();
 					try {
 						spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate);
@@ -504,11 +505,11 @@ namespace Origins.Tiles.MusicBoxes {
 					}
 				}
 			}
-			public override void SaveData(TagCompound tag) {
-				tag.Add("TDArabelCage", ArabelCage);
+			public override void NetSend(BinaryWriter writer) {
+				writer.Write(ArabelCage);
 			}
-			public override void LoadData(TagCompound tag) {
-				ArabelCage = tag.SafeGet<bool>("TDArabelCage");
+			public override void NetReceive(BinaryReader reader) {
+				ArabelCage = reader.ReadBoolean();
 			}
 		}
 	}
