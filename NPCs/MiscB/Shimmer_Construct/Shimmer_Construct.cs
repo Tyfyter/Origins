@@ -328,6 +328,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						offset -= offset * (Math.Min(16, offsetLength) / offsetLength);
 						offset *= 0.97f;
 					}
+					if (velocity == default) velocity = new(0, 32 + (ID % 10) * 8);
 					float speed = 0.15f + (ID % 10) * 0.01f;
 					velocity = velocity.RotatedBy(speed);
 					position = construct.NPC.Center + velocity;
@@ -366,6 +367,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				0f);
 				return false;
 			}
+			public override readonly string ToString() => $"type:{ID}, velocity:{velocity}, position:{position}, offset:{offset}, ";
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 position = NPC.Center;
