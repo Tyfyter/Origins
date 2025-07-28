@@ -166,7 +166,7 @@ namespace Origins.Items.Pets {
 		struct Chunk(int type, Vector2 position, int index) {
 			public float rotation;
 			public Vector2 position = position;
-			public Vector2 velocity = new(0, 16 + index * 8);
+			public Vector2 velocity = new(0, 12 + index * 6);
 			public int ID = type;
 			public void Update(Stellar_Spark spark) {
 				float speed = 0.075f + index * 0.005f;
