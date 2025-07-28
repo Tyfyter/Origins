@@ -145,27 +145,23 @@ namespace Origins.Projectiles {
 				}
 				if (!contextArgs.Contains(multishot_context) && !contextArgs.Contains(no_multishot_context)) {
 					int bocShadows = 0;
+					float bocShadowDamageChance = 0.08f;
 					if (originPlayer.weakpointAnalyzer && projectile.CountsAsClass(DamageClass.Ranged) && projectile.aiStyle != ProjAIStyleID.HeldProjectile) {
 						bocShadows = 2;
-					} else if (originPlayer.controlLocus && projectile.aiStyle != ProjAIStyleID.HeldProjectile) {
+					}
+					if (originPlayer.controlLocus && projectile.aiStyle != ProjAIStyleID.HeldProjectile) {
 						if (projectile.CountsAsClass(DamageClasses.Explosive)) bocShadows = 2;
-						if (projectile.CountsAsClass(DamageClass.Ranged)) bocShadows = OriginsSets.Projectiles.RangedControlLocusDuplicateCount[projectile.type];
+						if (projectile.CountsAsClass(DamageClass.Ranged)) bocShadows = 2;
+						bocShadowDamageChance = Math.Max(bocShadowDamageChance, 0.12f);
 					}
-					EntitySource_ItemUse multishotSource = null;
-					int ammoID = ItemID.None;
-					if (bocShadows > 0) {// separate if statement for future multishot sources
-						multishotSource = itemUseSource.WithContext(source.Context, multishot_context, nameof(OriginPlayer.weakpointAnalyzer));
-						if (itemUseSource is EntitySource_ItemUse_WithAmmo sourceWAmmo) {
-							ammoID = sourceWAmmo.AmmoItemIdUsed;
-						}
-					}
+					EntitySource_ItemUse multishotSource;
 					if (bocShadows > 0 && projectile.damage > 0) {
+						multishotSource = itemUseSource.WithContext(source.Context, multishot_context, nameof(OriginPlayer.weakpointAnalyzer));
 						for (int i = bocShadows; i-- > 0;) {
 							float rot = MathHelper.TwoPi * ((i + 1f) / (bocShadows + 1f)) + Main.rand.NextFloat(-0.3f, 0.3f);
 							Vector2 _position = projectile.position.RotatedBy(rot, Main.MouseWorld);
 							Vector2 _velocity = projectile.velocity.RotatedBy(rot);
-							bool free = itemUseSource.Player.IsAmmoFreeThisShot(itemUseSource.Item, new(ammoID), projectile.type);
-							int _damage = free ? projectile.damage : 0;
+							int _damage = Main.rand.NextFloat(1) < bocShadowDamageChance ? projectile.damage : 0;
 							Projectile.NewProjectile(multishotSource, _position, _velocity, projectile.type, _damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1], projectile.ai[2]);
 						}
 					}

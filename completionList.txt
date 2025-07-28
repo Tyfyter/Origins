@@ -447,7 +447,7 @@ ACCESSORIES:
 (^) Charm of Naivety
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
-(⛥, #2, ^2) Control Locus* !!! (needs rework implemented)
+(☻) Control Locus* !!!
 (^) Coologne*
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
@@ -593,7 +593,7 @@ ACCESSORIES:
 (^) Strange Tooth*
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
-(⛥, #2, ^2) Weakpoint Analyzer* !!! (needs rework implemented)
+(☻) Weakpoint Analyzer* !!!
 (^) Wishing Glass
 
 (^) Agility Core°
@@ -1286,7 +1286,7 @@ TILES:
 (X) Exoskeletal Baobab Tree*
 (^) Exoskeletal Tree*
 (ᗢ) Fungarust*
-(#2, ^2) Fuzzvine !!! (still need to slow minions)
+(☻) Fuzzvine !!! (already slows minions)
 (^) Gel Blister*
 (X) Heat Vent
 (^) Hydrothermal Vent
@@ -1570,7 +1570,7 @@ MOUNTS & PETS:
 |---
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
-(#2, ^2) Jawbreaker (Stellar Spark) !!! (just needs the chunks placed closer to the center)
+(☻) Jawbreaker (Stellar Spark) !!! (see https://github.com/Tyfyter/Origins/commit/1fa93a104ef4f0af58debe952ebfd667ab873b4f if you want to tweak the distance)
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
 
@@ -1761,7 +1761,7 @@ VOLUME I MUSIC:
 (X) Quantux
 (^) World Cracker
 (X) Seer
-(#3) Shimmer Construct !!! (my ears)
+(☻) Shimmer Construct !!! (fixed your ears)
 (X) Tearror
 (X) Trenchmaker
 

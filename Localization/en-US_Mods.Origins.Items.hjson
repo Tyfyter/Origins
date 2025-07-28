@@ -3550,8 +3550,8 @@ Weakpoint_Analyzer: {
 	DisplayName: Weakpoint Analyzer
 	Tooltip:
 		'''
-		Ranged projectiles are duplicated twice
-		Duplicates have a chance to deal damage equal to your ammo conservation chance
+		Creates two illusory copies of your ranged projectiles
+		Illusions have an 8% chance to deal damage
 		8% chance to save ammo
 		'''
 }
@@ -3752,9 +3752,8 @@ Control_Locus: {
 	DisplayName: Control Locus
 	Tooltip:
 		'''
-		Ranged projectiles are duplicated 5 times
-		Explosive projectiles are duplicated twice
-		All duplicated projectiles actually deal damage based on whether or not ammo was consumed
+		Creates two illusory copies of your ranged and explosive projectiles
+		Illusions have an 12% chance to deal damage
 		12% chance not to consume ammo
 		'''
 }
