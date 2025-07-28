@@ -227,6 +227,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Shimmershot_Bullet : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VenomBullet;
 		public virtual int AuraID => Shimmershot_Aura.ID;
+		public virtual float AuraDamage => 0.5f;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BulletHighVelocity);
 			Projectile.aiStyle = -1;
@@ -249,7 +250,7 @@ namespace Origins.Items.Weapons.Ranged {
 					Projectile.position,
 					default,
 					AuraID,
-					Projectile.damage / 2,
+					(int)(Projectile.damage * AuraDamage),
 					0,
 					Projectile.whoAmI
 				)?.identity ?? -1) + 1;
