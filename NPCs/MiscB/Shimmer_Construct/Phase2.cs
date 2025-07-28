@@ -286,6 +286,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC npc = boss.NPC;
 			npc.ai[0] = 0;
 		}
+		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
+			if (!boss.IsInPhase3 && !CollisionExt.CanHitRay(boss.NPC.Center, boss.NPC.targetRect.Center())) return 0;
+			return base.GetWeight(boss, previousStates);
+		}
 		public class SC_Shimmershot_Bullet : Shimmershot_Bullet {
 			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.StarWrath;
 			public override int AuraID => SC_Shimmershot_Aura.ID;
