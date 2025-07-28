@@ -1259,6 +1259,11 @@ Buffs: {
 		DisplayName: Goo Wall Debuff
 		Description: Mods.Origins.Buffs.Goo_Wall_Debuff.Description
 	}
+
+	No_Fallthrough_Buff: {
+		DisplayName: Firmly Grounded
+		Description: You're tired of falling
+	}
 }
 
 DamageClassName: {

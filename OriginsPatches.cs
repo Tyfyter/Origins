@@ -244,7 +244,29 @@ namespace Origins {
 				} else {
 					LogError("Could not find GetHurtTile call in Player.Update");
 				}
-
+				c = new(il);
+				int fallThrough = -1;
+				int ignorePlats = -1;
+				if (c.TryGotoNext(MoveType.Before,
+					i => i.MatchLdarg0(),
+					i => i.MatchLdloc(out fallThrough),
+					i => i.MatchLdloc(out ignorePlats),
+					i => i.MatchCall<Player>(nameof(Player.DryCollision))
+				) && c.TryGotoPrev(MoveType.After,
+					i => i.MatchCall(typeof(PlayerLoader), nameof(PlayerLoader.PreUpdateMovement))
+				)) {
+					c.EmitLdarg0();
+					c.EmitLdloca(fallThrough);
+					c.EmitLdloca(ignorePlats);
+					c.EmitDelegate(static (Player player, ref bool fallThrough, ref bool ignorePlats) => {
+						if (player.OriginPlayer().noFallThrough.TrySet(false)) {
+							fallThrough = false;
+							ignorePlats = false;
+						}
+					});
+				} else {
+					LogError("Could not find platform fallthrough management in Player.Update");
+				}
 			};
 			On_ShopHelper.GetShoppingSettings += OriginGlobalNPC.ShopHelper_GetShoppingSettings;
 			On_Player.HurtModifiers.ToHurtInfo += (On_Player.HurtModifiers.orig_ToHurtInfo orig, ref Player.HurtModifiers self, int damage, int defense, float defenseEffectiveness, float knockback, bool knockbackImmune) => {

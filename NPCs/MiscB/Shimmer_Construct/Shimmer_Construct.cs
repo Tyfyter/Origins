@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
@@ -490,6 +491,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 		static void DoTeleports(List<(Player player, Vector2 position)> teleports) {
+			int noFallThrough = BuffType<No_Fallthrough_Buff>();
 			for (int i = 0; i < teleports.Count; i++) {
 				(Player player, Vector2 position) = teleports[i];
 				ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
@@ -500,6 +502,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					PositionInWorld = player.Bottom
 				});
 				player.velocity = Vector2.Zero;
+				player.AddBuff(noFallThrough, 30);
 			}
 			if (Main.netMode != NetmodeID.SinglePlayer) {
 				ModPacket packet = Origins.instance.GetPacket();
