@@ -510,6 +510,7 @@ namespace Origins {
 		public bool doubleTapDown = false;
 		public bool forceDrown = false;
 		public bool forceFallthrough = false;
+		public bool noFallThrough = false;
 		public int timeSinceRainedOn = 0;
 		/// <summary>
 		/// not set to true by alt uses
