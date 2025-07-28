@@ -17,6 +17,7 @@ using Origins.Tiles.Riven;
 using AltLibrary.Common.Systems;
 using System.Text;
 using Terraria.ObjectData;
+using CalamityMod.Projectiles.Boss;
 
 namespace Origins.Items.Other.Testing {
 	public class Blood_Mushroom_Soup : ModItem {
@@ -541,8 +542,21 @@ namespace Origins.Items.Other.Testing {
 		}
 		public void Unload() { }
 	}
-	public class Area_Analysis_Testing_Mode : WorldgenTestingMode {
+	public class Flange_Testing_Mode : WorldgenTestingMode {
 		public override SortOrder SortPosition => SortOrder.New;
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Flange";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			TileExtenstions.TryPlace(
+				Player.tileTargetX,
+				Player.tileTargetY,
+				Main.LocalPlayer.controlSmart ? (ushort)ModContent.TileType<Large_Marrowick_Flange>() : (ushort)ModContent.TileType<Marrowick_Flange>()
+			);
+		}
+	}
+	public class Area_Analysis_Testing_Mode : WorldgenTestingMode {
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Analyze";
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			parameters.Enqueue(Player.tileTargetX);

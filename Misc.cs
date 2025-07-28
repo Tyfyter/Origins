@@ -4544,6 +4544,9 @@ namespace Origins {
 			DoFrameCheck(i, j, out int up, out int down, out int left, out int right, out int upLeft, out int upRight, out int downLeft, out int downRight, map);
 			DoFraming(i, j, resetFrame, up, down, left, right, upLeft, upRight, downLeft, downRight, frames);
 		}
+		public static bool TryPlace(int i, int j, int type, int style = 0, int dir = 0, int? forcedRandom = null, bool cut = true) {
+			return CanActuallyPlace(i, j, type, style, dir, out TileObject objectData, forcedRandom: forcedRandom, checkStay: true, cut: cut) && TileObject.Place(objectData);
+		}
 		public static bool CanActuallyPlace(int i, int j, int type, int style, int dir, out TileObject objectData, bool onlyCheck = false, int? forcedRandom = null, bool checkStay = false, bool cut = true) {
 			if (TileObject.CanPlace(i, j, type, style, dir, out objectData, onlyCheck, forcedRandom, checkStay)) {
 				TileObjectData tileData = TileObjectData.GetTileData(type, objectData.style, objectData.alternate);

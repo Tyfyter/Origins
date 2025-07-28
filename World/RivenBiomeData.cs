@@ -510,6 +510,19 @@ namespace Origins.World.BiomeData {
 						}
 					}
 				}
+				ushort flange = (ushort)ModContent.TileType<Marrowick_Flange>();
+				ushort largeFlange = (ushort)ModContent.TileType<Large_Marrowick_Flange>();
+				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
+					int tries = 18;
+					int x = genRange.X + genRand.Next(0, genRange.Width);
+					int y = genRand.Next(Math.Min((int)Main.worldSurface - 60, genRange.Y - 1), Math.Min((int)Main.worldSurface, genRange.Y + genRange.Height)) - 1;
+					while (!Framing.GetTileSafely(x, y + 1).HasSolidTile()) y++;
+					while (Framing.GetTileSafely(x, y).HasSolidTile()) y--;
+					while (!TileExtenstions.TryPlace(x, y, genRand.NextBool() ? largeFlange : flange)) {
+						y--;
+						if (tries-- > 0) break;
+					}
+				}
 				ushort rivenAltar = (ushort)ModContent.TileType<Riven_Altar>();
 				for (int i0 = genRand.Next(10, 15); i0-- > 0;) {
 					int tries = 0;
@@ -548,7 +561,8 @@ namespace Origins.World.BiomeData {
 					int tries = 18;
 					int x = genRange.X + genRand.Next(0, genRange.Width);
 					int y = genRange.Y + genRand.Next(0, genRange.Height) - 1;
-					while (!PlaceObject(x, y, genRand.NextBool(3) ? coralPile : rivenLargePile)) {
+					ushort type = genRand.NextBool(3) ? coralPile : rivenLargePile;
+					while (!PlaceObject(x, y, type, random: TileObjectData.GetTileData(type, 0).RandomStyleRange)) {
 						y--;
 						if (tries-- > 0) break;
 					}
@@ -558,7 +572,7 @@ namespace Origins.World.BiomeData {
 					int tries = 18;
 					int x = genRange.X + genRand.Next(0, genRange.Width);
 					int y = genRange.Y + genRand.Next(0, genRange.Height) - 1;
-					while (!PlaceObject(x, y, rivenMediumPile)) {
+					while (!PlaceObject(x, y, rivenMediumPile, random: TileObjectData.GetTileData(rivenMediumPile, 0).RandomStyleRange)) {
 						y--;
 						if (tries-- > 0) break;
 					}

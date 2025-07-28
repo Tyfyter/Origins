@@ -29,7 +29,8 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.newTile.RandomStyleRange = 3;
 
 			TileObjectData.addTile(Type);
-			//soundType = SoundID.Grass;
+
+			DustType = DustID.TintablePaint;
 		}
 		public override bool CanDrop(int i, int j) => true;
 		public override void RandomUpdate(int i, int j) {
