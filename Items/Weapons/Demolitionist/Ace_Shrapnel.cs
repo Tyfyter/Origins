@@ -9,8 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Ace_Shrapnel : ModItem, ICustomWikiStat {
-		public string EntryName => "Origins/" + typeof(Ace_Shrapnel_Entry).Name;
+	public class Ace_Shrapnel : ModItem, IJournalEntrySource<Ace_Shrapnel.Ace_Shrapnel_Entry>, ICustomWikiStat {
 		public class Ace_Shrapnel_Entry : JournalEntry {
 			public override string TextKey => "Ace_Shrapnel";
 			public override JournalSortIndex SortIndex => new("The_Ashen", 3);
