@@ -35,6 +35,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			aiStates.Add(ModContent.GetInstance<MagicMissilesState>());
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
+			boss.Hover(0.2f);
 			NPC npc = boss.NPC;
 			npc.TargetClosest();
 			npc.velocity += npc.DirectionTo(npc.GetTargetData().Center - Vector2.UnitY * 16 * 15) * 0.5f;
@@ -63,9 +64,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
 		}
-		Stack<Vector2> positions = new();
+		readonly Stack<Vector2> positions = new();
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
+			npc.velocity *= 0.97f;
+			boss.Hover();
 			Vector2 targetPos = npc.GetTargetData().Center;
 			npc.velocity += npc.DirectionTo(targetPos - Vector2.UnitY * 16 * 15) * 0.5f;
 			for (int i = 0; i < 2; i++) {
@@ -235,6 +238,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			PhaseThreeIdleState.aiStates.Add(this);
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
+			boss.Hover();
 			NPC npc = boss.NPC;
 			GeometryUtils.AngularSmoothing(ref npc.ai[2], (npc.GetTargetData().Center - npc.Center).ToRotation(), TurnRate);
 			npc.rotation = npc.ai[2];
@@ -441,6 +445,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
+			npc.velocity *= 0.97f;
+			boss.Hover();
 			Vector2 diff = npc.GetTargetData().Center - npc.Center;
 			GeometryUtils.AngularSmoothing(ref npc.rotation, diff.ToRotation(), TurnRate);
 			npc.velocity += npc.DirectionTo(npc.GetTargetData().Center - Vector2.UnitY * 16 * 15) * 0.5f;

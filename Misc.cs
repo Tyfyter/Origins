@@ -1603,6 +1603,11 @@ namespace Origins {
 		public static Vector2 Quantize(this Vector2 vector, float size) {
 			return (vector / size).Floor() * size;
 		}
+		public static Vector2 Normalized(this Vector2 vector, out float magnitude) {
+			magnitude = vector.Length();
+			if (magnitude > 0) vector /= magnitude;
+			return vector;
+		}
 		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox) {
 			float xoffset = 10f;
 			float yoffset = 24f;

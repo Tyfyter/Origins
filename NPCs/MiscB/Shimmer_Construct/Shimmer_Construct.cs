@@ -164,7 +164,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					}
 				}
 			}
-			if (!IsInPhase3 && NPC.GetLifePercent() < 0.5f) isInPhase2 = true;
+			if (!IsInPhase3 && NPC.GetLifePercent() <= 0.5f) isInPhase2 = true;
 			for (int i = 0; i < chunks.Length; i++) chunks[i].Update(this);
 			if (NetmodeActive.Server) {
 				for (int i = 0; i < NPC.playerInteraction.Length; i++) {
@@ -626,6 +626,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 			SetAIState(boss, states);
+		}
+		public void Hover(float hoverSpeed = 0.1f) {
+			Vector2 direction = (NPC.Center.Clamp(NPC.GetTargetData().Hitbox) - NPC.GetTargetData().Center.Clamp(NPC.Hitbox)).Normalized(out float dist);
+			if (dist > 16 * 20) {
+				NPC.velocity += direction * hoverSpeed;
+			} else if (dist < 16 * 3) {
+				NPC.velocity -= direction * hoverSpeed;
+			} else {
+				NPC.velocity -= direction * Vector2.Dot(NPC.velocity.Normalized(out float maxReduction), direction) * Math.Min(hoverSpeed * 0.5f, maxReduction);
+			}
 		}
 		public override Color? GetAlpha(Color drawColor) => Color.White * NPC.Opacity;
 		public class AutomaticIdleState : AIState {

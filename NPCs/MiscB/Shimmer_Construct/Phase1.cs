@@ -33,6 +33,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			return false;
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
+			boss.Hover(0.2f);
 			NPC npc = boss.NPC;
 			if (npc.life == npc.lifeMax && !AnyHealthChunks()) {
 				int count = Main.rand.RandomRound(2 + ContentExtensions.DifficultyDamageMultiplier);

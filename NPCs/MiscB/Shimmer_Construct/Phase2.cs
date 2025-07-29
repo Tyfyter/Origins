@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.Audio;
 using System.IO;
 using Origins.Items.Weapons.Ranged;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseTwoIdleState : AIState {
@@ -24,6 +25,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			aiStates.Add(ModContent.GetInstance<SpawnCloudsState>());
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
+			boss.Hover(0.2f);
 			NPC npc = boss.NPC;
 			npc.TargetClosest();
 			npc.velocity *= 0.97f;
@@ -96,6 +98,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
+			npc.velocity *= 0.97f;
+			boss.Hover();
+
 			if (++npc.ai[0] >= npc.ai[1]) {
 				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f), npc.Center);
 				SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f), npc.Center);
@@ -207,6 +212,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
+			npc.velocity *= 0.97f;
+			boss.Hover();
 
 			const float spin_spawn_ratio = 2f;
 			float spinAccelFactor = npc.ai[1] * spin_spawn_ratio;
@@ -265,6 +272,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
+			npc.velocity *= 0.97f;
+			boss.Hover();
 			Vector2 diff = npc.GetTargetData().Center - npc.Center;
 			if (++npc.ai[0] < Startup) {
 				GeometryUtils.AngularSmoothing(ref npc.rotation, diff.ToRotation(), TurnRate(npc.ai[0] / Startup));
