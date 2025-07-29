@@ -86,6 +86,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			OriginPlayer originPlayer = player.OriginPlayer();
+			Debugging.ChatOverhead(Projectile.ai[2]);
 			if (Projectile.ai[2] == 1) {
 				SoundEngine.PlaySound(SoundID.Item67.WithPitch(-2f), Projectile.position);
 				SoundEngine.PlaySound(SoundID.Item142, Projectile.position);
@@ -103,7 +104,7 @@ namespace Origins.Items.Weapons.Ranged {
 						MathUtils.LinearSmoothing(ref sound.Volume, Projectile.localAI[0] < 0 ? 0f : 0.75f, 1f / 20);
 					} else {
 						int type = Type;
-						chargeSound = SoundEngine.PlaySound(Origins.Sounds.LightningCharging, null, soundInstance => {
+						chargeSound = SoundEngine.PlaySound(Origins.Sounds.ShimmershotCharging, null, soundInstance => {
 							soundInstance.Pitch = Math.Max(Projectile.localAI[0] / Projectile.localAI[1], 0);
 							return Projectile.active && Projectile.type == type;
 						});

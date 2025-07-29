@@ -636,9 +636,9 @@ VANITY:
 (X) Steampunk Mechanist Set
 (^) Sunflower Sandals*
 
-(^6, @, #) DIO's Set (everything but wings currently unimplemented, wings using placeholder texture)
+(^6, @, #) DIO's Set !!! (everything but wings currently unimplemented, wings using placeholder texture)
 (^) First Dream
-(^6, @, #) Tyfyter's Set* (wings)
+(^6, @, #) Tyfyter's Set* !!! (wings)
 
 (^) Acrid Dye
 (^) Amber Dye
@@ -682,8 +682,8 @@ WINGS:
 (X) Fibron Thruster Array
 (X) Nova Backblaster
 
-(X) Vampiric Spell
-(X) Tyfyter's Wings
+(@, ^3) Vampiric Spell !!!
+(X) Tyfyter's Wings !!!
 ---
 
 

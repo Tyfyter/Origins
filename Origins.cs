@@ -1071,6 +1071,10 @@ namespace Origins {
 			public static SoundStyle[] LightningSounds = [];
 			public static SoundStyle LittleZap = SoundID.Roar;
 
+			public static SoundStyle ShimmershotCharging = new("Origins/Sounds/Custom/SoftCharge", SoundType.Sound) {
+				IsLooped = true
+			};
+
 			public static SoundStyle Bonk = SoundID.Roar;
 			public static SoundStyle Journal = SoundID.Roar;
 			public static void Unload() {
