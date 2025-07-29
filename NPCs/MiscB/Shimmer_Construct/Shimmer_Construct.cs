@@ -728,6 +728,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Underlay", phase3Active, sourcePos);
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Midlay", phase3Active, sourcePos);
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", phase3Active, sourcePos);
+			if (boss?.IsInPhase3 ?? false) {
+
+			}
 		}
 		public void AddArea() {
 			if (scale == 0 || !SC_Phase_Three_Underlay.DrawnMaskSources.Add(this)) return;

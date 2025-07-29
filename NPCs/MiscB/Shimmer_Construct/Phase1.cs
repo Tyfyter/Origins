@@ -516,7 +516,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					NPC.localAI[1] = 0;
 					NPC.localAI[2] = 0;
 				}
-				NPC.ai[3] += Math.Min(NPC.velocity.Length() * 1.5f + 1, 16);
+				NPC.ai[3] += Math.Clamp(NPC.velocity.Length() * 1.5f + 1, 6, 16);
 				if (distance < 0) DoStrike();
 			}
 		}

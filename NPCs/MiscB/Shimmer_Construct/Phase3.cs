@@ -21,6 +21,7 @@ using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Audio;
 using Terraria.Graphics.Light;
+using ReLogic.Utilities;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -685,7 +686,15 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					player.DelBuff(buffIndex--);
 				}
 			}
+			if (player.whoAmI == Main.myPlayer && !SoundEngine.TryGetActiveSound(ambienceSlot, out _)) {
+				ambienceSlot = SoundEngine.PlaySound(Origins.Sounds.ShimmerConstructAmbience, updateCallback: sound => {
+					MathUtils.LinearSmoothing(ref sound.Volume, OriginPlayer.LocalOriginPlayer.weakShimmer.ToInt(), 1f / (60 * 5));
+					return sound.Volume > 0;
+				});
+				if (SoundEngine.TryGetActiveSound(ambienceSlot, out ActiveSound sound)) sound.Volume = 0;
+			}
 		}
+		SlotId ambienceSlot;
 		public override void Update(NPC npc, ref int buffIndex) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().lazyCloakShimmer = true;
 			bool isBlocked = false;

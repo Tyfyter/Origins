@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
-using Origins.NPCs;
-using Origins.Tiles.Other;
 using PegasusLib;
 using ReLogic.Utilities;
 using System;
@@ -15,13 +13,9 @@ using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Projectiles;
-using Origins.Graphics;
-using Origins.Items.Weapons.Magic;
 using Origins.NPCs.MiscB.Shimmer_Construct;
-using System.Drawing;
 using PegasusLib.Graphics;
 using System.Reflection;
-using static Origins.NPCs.MiscB.Shimmer_Construct.ShimmershotState;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Shimmershot : ModItem {

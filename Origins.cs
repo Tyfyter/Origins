@@ -1025,7 +1025,7 @@ namespace Origins {
 			public static int AncientBrinePool;
 
 			public static int ShimmerConstruct = MusicID.OtherworldlyBoss2;
-			public static int ShimmerConstructPhase3 = MusicID.OtherworldlyBoss2;
+			public static int ShimmerConstructPhase3 = 0;
 
 			public static int Dusk;
 
@@ -1072,6 +1072,9 @@ namespace Origins {
 			public static SoundStyle LittleZap = SoundID.Roar;
 
 			public static SoundStyle ShimmershotCharging = new("Origins/Sounds/Custom/SoftCharge", SoundType.Sound) {
+				IsLooped = true
+			};
+			public static SoundStyle ShimmerConstructAmbience = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience", SoundType.Ambient) {
 				IsLooped = true
 			};
 
