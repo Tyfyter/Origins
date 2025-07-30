@@ -10,8 +10,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using static Terraria.GameContent.Animations.IL_Actions.Sprites;
-using static Terraria.GameContent.Drawing.TileDrawing;
 
 namespace Origins.Tiles.Riven {
 	public class Fuzzvine : OriginTile {
@@ -43,7 +41,7 @@ namespace Origins.Tiles.Riven {
 			HitSound = SoundID.Grass;
 			DustType = DustID.BlueMoss;
 			AltVines.AddVine(Type, AnchorTiles);
-			OriginsSets.Tiles.MinionSlowdown[Type] = 0.25f;
+			OriginsSets.Tiles.MinionSlowdown[Type] = 2f;
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile below = Framing.GetTileSafely(i, j + 1);
