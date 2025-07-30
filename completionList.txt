@@ -149,7 +149,7 @@ WORLD GENERATION:
 (^) Fiberglass Undergrowth
 (X) Fractured Isles
 (^) Limestone Cave
-(#2) Riven Hive !!!
+(☻) Riven Hive !!!
 (X) The Dawn
 (#2, 々) The Dusk
 
