@@ -18,6 +18,7 @@ using AltLibrary.Common.Systems;
 using System.Text;
 using Terraria.ObjectData;
 using CalamityMod.Projectiles.Boss;
+using Terraria.Utilities;
 
 namespace Origins.Items.Other.Testing {
 	public class Blood_Mushroom_Soup : ModItem {
@@ -542,20 +543,6 @@ namespace Origins.Items.Other.Testing {
 		}
 		public void Unload() { }
 	}
-	public class Flange_Testing_Mode : WorldgenTestingMode {
-		public override SortOrder SortPosition => SortOrder.New;
-		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Flange";
-		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
-			Apply(parameters);
-		}
-		public override void Apply(LinkedQueue<object> parameters) {
-			TileExtenstions.TryPlace(
-				Player.tileTargetX,
-				Player.tileTargetY,
-				Main.LocalPlayer.controlSmart ? (ushort)ModContent.TileType<Large_Marrowick_Flange>() : (ushort)ModContent.TileType<Marrowick_Flange>()
-			);
-		}
-	}
 	public class Area_Analysis_Testing_Mode : WorldgenTestingMode {
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Analyze";
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
@@ -617,6 +604,7 @@ namespace Origins.Items.Other.Testing {
 		}
 	}
 	public class Carver_Testing_Mode : WorldgenTestingMode {
+		public override SortOrder SortPosition => SortOrder.New;
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			Carver.DoCarve(
 				GetFilter(out Vector2 posMin, out Vector2 posMax),
@@ -637,21 +625,39 @@ namespace Origins.Items.Other.Testing {
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			Apply(parameters);
 		}
+		static int seed = 0;
 		static Carver.Filter GetFilter(out Vector2 posMin, out Vector2 posMax) {
 			posMin = new(float.PositiveInfinity);
 			posMax = new(float.NegativeInfinity);
 			PlayerInput.SetZoom_MouseInWorld();
-			Vector2 direction = (Main.MouseWorld - Main.LocalPlayer.MountedCenter).SafeNormalize(Vector2.UnitX);
-			float dist = CollisionExt.Raymarch(Main.LocalPlayer.MountedCenter, direction, 16 * 50);
-			return Carver.ActiveTileInSet(TileID.Sets.AllTiles)
-			+ Carver.Circle((Main.LocalPlayer.MountedCenter + direction * (dist + 6 * 16)) / 16, 3, direction.ToRotation() + MathHelper.PiOver2, 1, ref posMin, ref posMax);
+			UnifiedRandom genRand = new(seed);
+			float rotation = genRand.NextFloat(0, MathHelper.TwoPi);
+
+			float range = genRand.NextFloat(0.2f, 0.6f);//"fan" width
+			Vector2 turningPoint = Main.MouseWorld / 16 + rotation.ToRotationVector2() * genRand.NextFloat(5, 10);
+			if (!genRand.NextBool(8)) rotation += MathHelper.PiOver2;
+			Carver.Filter[] lemons = new Carver.Filter[genRand.Next(3, 7)];
+			for (int k = 0; k < lemons.Length; k++) {
+				lemons[k] = Carver.PointyLemon(
+					(Main.MouseWorld / 16).RotatedBy(k * range, turningPoint),
+					scale: genRand.NextFloat(6, 10),
+					rotation: rotation + k * range,
+					aspectRatio: genRand.NextFloat(3, 6),
+					roundness: genRand.NextFloat(1, 2),
+					ref posMin,
+					ref posMax
+				);
+			}
+			return Carver.Or(lemons);
 		}
 		public override void Apply(LinkedQueue<object> parameters) {
 			ushort oreID = (ushort)ModContent.TileType<Amoeba_Fluid>();
 			Carver.DoCarve(
 				GetFilter(out Vector2 posMin, out Vector2 posMax),
 				pos => {
-					Framing.GetTileSafely(pos.ToPoint()).TileType = oreID;
+					Tile tile = Framing.GetTileSafely(pos.ToPoint());
+					tile.HasTile = true;
+					tile.TileType = oreID;
 					return 1;
 				},
 				posMin,
@@ -661,6 +667,7 @@ namespace Origins.Items.Other.Testing {
 			posMin = new(MathF.Floor(posMin.X), MathF.Floor(posMin.Y));
 			posMax = new(MathF.Ceiling(posMax.X), MathF.Ceiling(posMax.Y));
 			WorldGen.RangeFrame((int)posMin.X, (int)posMin.Y, (int)posMax.X, (int)posMax.Y);
+			seed++;
 		}
 	}
 	public class Auto_Slope_Testing_Mode : WorldgenTestingMode {

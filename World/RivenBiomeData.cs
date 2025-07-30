@@ -428,26 +428,52 @@ namespace Origins.World.BiomeData {
 						}
 						ushort tileType = fleshBlockType;
 						ushort wallType = fleshWallType;
+						Vector2 posMin = new(float.PositiveInfinity);
+						Vector2 posMax = new(float.NegativeInfinity);
+						Carver.Filter shape;
 						switch (genRand.Next(1)) { // add possibilities to add possibilities
-							case 0:
+							default:
 							tileType = calcifiedTile;
 							wallType = calcifiedWall;
+							shape = Carver.PointyLemon(
+								specklePos,
+								scale: genRand.NextFloat(6, 10),
+								rotation: genRand.NextFloat(0, MathHelper.TwoPi),
+								aspectRatio: genRand.NextFloat(3, 6),
+								roundness: genRand.NextFloat(1, 2),
+								ref posMin,
+								ref posMax
+							);
 							break;
+
+							case 4: { // fanana 
+								tileType = calcifiedTile;
+								wallType = calcifiedWall;
+								float rotation = genRand.NextFloat(0, MathHelper.TwoPi);
+
+								float range = genRand.NextFloat(0.2f, 0.6f); // fan/banana width
+								Vector2 turningPoint = specklePos + rotation.ToRotationVector2() * genRand.NextFloat(5, 10);
+								if (!genRand.NextBool(8)) rotation += MathHelper.PiOver2; // fan/banana selection
+								Carver.Filter[] lemons = new Carver.Filter[genRand.Next(3, 7)];
+								for (int k = 0; k < lemons.Length; k++) {
+									lemons[k] = Carver.PointyLemon(
+										specklePos.RotatedBy(k * range, turningPoint),
+										scale: genRand.NextFloat(6, 10),
+										rotation: rotation + k * range,
+										aspectRatio: genRand.NextFloat(3, 6),
+										roundness: genRand.NextFloat(1, 2),
+										ref posMin,
+										ref posMax
+									);
+								}
+								shape = Carver.Or(lemons);
+								break;
+							}
 						}
 						Carver.Filter filter = Carver.TileFilter(tile => (tile.HasTile && replaceableTiles[tile.TileType]) || (!foreground && tile.WallType == fleshWallType));
 						if (foreground) filter += Carver.ActiveTileInSet(replaceableTiles);
-						Vector2 posMin = new(float.PositiveInfinity);
-						Vector2 posMax = new(float.NegativeInfinity);
 						// tweak to change the shape and size of the calcified areas
-						filter += Carver.PointyLemon(
-							specklePos,
-							scale: genRand.NextFloat(6, 10),
-							rotation: genRand.NextFloat(0, MathHelper.TwoPi),
-							aspectRatio: genRand.NextFloat(3, 6),
-							roundness: genRand.NextFloat(1, 2),
-							ref posMin,
-							ref posMax
-						);
+						filter += shape;
 
 						if (Carver.DoCarve(
 							filter,

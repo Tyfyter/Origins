@@ -9,6 +9,18 @@ using Terraria.ID;
 namespace Origins.World {
 	public class Carver {
 		public delegate void Filter(Vector2 pos, ref bool output);
+		public static Filter Or(params Filter[] filters) {
+			void DoFilter(Vector2 pos, ref bool output) {
+				if (!output) return;
+				output = false;
+				for (int i = 0; i < filters.Length && !output; i++) {
+					bool current = true;
+					filters[i](pos, ref current);
+					output = current;
+				}
+			}
+			return DoFilter;
+		}
 		public static Filter PointyLemon(Vector2 center, float scale, float rotation, float aspectRatio, float roundness, ref Vector2 posMin, ref Vector2 posMax) {
 			float sin = MathF.Sin(rotation);
 			float cos = MathF.Cos(rotation);
