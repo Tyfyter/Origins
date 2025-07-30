@@ -34,7 +34,11 @@ namespace Origins.Items.Weapons.Melee {
 		public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox) => noHitbox = player.altFunctionUse != 0;
 		public override bool CanShoot(Player player) => player.altFunctionUse != 0;
 		public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Item.shoot] <= 0;
-		public override void AddRecipes() => CreateRecipe().AddRecipeGroup("Origins:Gem Phaseblades").AddIngredient<Chambersite_Item>(25).AddTile(TileID.MythrilAnvil).Register();
+		public override void AddRecipes() => CreateRecipe()
+			.AddRecipeGroup("Origins:Gem Phaseblades")
+			.AddIngredient<Chambersite_Item>(2)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 	}
 	public class Chambersite_Phasesaber_P : ModProjectile {
 		public override string Texture => typeof(Chambersite_Phasesaber).GetDefaultTMLName();
