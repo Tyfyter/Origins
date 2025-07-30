@@ -355,8 +355,39 @@ namespace Origins.World.BiomeData {
 					tile.HasTile = true;
 				}
 				Rectangle genRange = WorldBiomeGeneration.ChangeRange.GetRange();
+				ushort barnacleWall = (ushort)OriginsWall.GetWallID<Barnacle_Wall>(WallVersion.Natural);
 				{// speckle
-					// tweak this to make calcified areas closer together
+					for (int k = genRand.Next(1, 4); k-- > 0;) {
+						int x = genRange.X + genRand.Next(genRange.Width);
+						int y = genRange.Y + genRand.Next(genRange.Height);
+						Vector2 barnPos = new(x, y);
+						const float smoothness = 16;
+						for (int l = 0; l < smoothness; l++) {
+							Vector2 posMin = new(float.PositiveInfinity);
+							Vector2 posMax = new(float.NegativeInfinity);
+							int size = genRand.Next(10, 30);
+							Vector2 offset = genRand.NextFloat(0, MathHelper.TwoPi).ToRotationVector2() * (size + genRand.NextFloat(5, 10));
+							Carver.DoCarve(
+								Carver.TileFilter(tile => tile.WallType == fleshWallType)
+								+ Carver.Circle(// tweak to change the shape and size of the barnacled areas
+									barnPos + offset,
+									scale: size,
+									rotation: genRand.NextFloat(0, MathHelper.TwoPi),
+									aspectRatio: genRand.NextFloat(1, 1.4f),
+									ref posMin,
+									ref posMax
+								),
+								pos => {
+									Framing.GetTileSafely(pos.ToPoint()).WallType = barnacleWall;
+									return 1;
+								},
+								posMin,
+								posMax
+							);
+						}
+					}
+
+					// tweak this to make mottling closer
 					const float spread = 7;
 					bool[] replaceableTiles = TileID.Sets.Factory.CreateBoolSet(fleshBlockType, gooBlockType);
 					Tuple<Vector2, double>[] poss;
@@ -364,30 +395,34 @@ namespace Origins.World.BiomeData {
 					do {
 						poss = genRand.PoissonDiskSampling(genRange, v => {
 							Tile tile = Framing.GetTileSafely(v.ToPoint());
-							return tile.WallType == fleshWallType || (tile.HasTile && replaceableTiles[tile.TileType]);
+							return tile.WallType == fleshWallType || tile.WallType == barnacleWall || (tile.HasTile && replaceableTiles[tile.TileType]);
 						}, spread).Select(v => new Tuple<Vector2, double>(v, 1)).ToArray();
 					} while (poss.Length <= 1 && --tries > 0);
 					WeightedRandom<Vector2> positions = new(genRand, poss);
 					// tweak this to make more barnicled areas
 					int count = (int)(Main.maxTilesX * 3E-03 * genRand.NextFloat(0.9f, 1f));
-					ushort barnacleWall = (ushort)OriginsWall.GetWallID<Barnacle_Wall>(WallVersion.Natural);
 					while (count-- > 0 && positions.elements.Count > 0) {
 						Vector2 specklePos = positions.Pop();
 						Tile startTile = Framing.GetTileSafely(specklePos.ToPoint());
-						if (startTile.WallType != fleshWallType) {
+						if (startTile.WallType != fleshWallType && startTile.WallType != barnacleWall) {
 							count++;
 							continue;
 						}
-						ushort wallType = fleshWallType;
+						ushort startWallType = startTile.WallType;
+						ushort wallType = startWallType;
 						switch (genRand.Next(1)) { // add possibilities to add possibilities
 							case 0:
-							wallType = barnacleWall;
+							if (startWallType == fleshWallType) {
+								wallType = barnacleWall;
+							} else {
+								wallType = fleshWallType;
+							}
 							break;
 						}
 						Vector2 posMin = new(float.PositiveInfinity);
 						Vector2 posMax = new(float.NegativeInfinity);
 						if (Carver.DoCarve(
-							Carver.TileFilter(tile => tile.WallType == fleshWallType)
+							Carver.TileFilter(tile => tile.WallType == startWallType)
 							+ Carver.PointyLemon(// tweak to change the shape and size of the barnacled areas
 								specklePos,
 								scale: genRand.NextFloat(6, 10),
