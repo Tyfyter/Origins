@@ -225,7 +225,7 @@ namespace Origins.World.BiomeData {
 								continue;
 							}
 							if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
-								if (compY > j && OriginExtensions.IsTileReplacable(x, y)) {
+								if (OriginExtensions.IsTileReplacable(x, y)) {
 									tile.HasTile = false;
 								} else if (tile.HasTile && Main.tileSolid[tile.TileType]) {
 									tile.TileType = fleshBlockType;
@@ -283,9 +283,9 @@ namespace Origins.World.BiomeData {
 							oreType: oreID,
 							oreRarity: 50
 						);
-						if (AreaAnalysis.March(x, y, directions, pos => Math.Abs(pos.Y - y) < 20 && Framing.GetTileSafely(pos).TileIsType(fleshBlockType), a => a.MaxX - a.MinX >= 100).Broke) {
+						/*if (AreaAnalysis.March(x, y, directions, pos => Math.Abs(pos.Y - y) < 20 && Framing.GetTileSafely(pos).TileIsType(fleshBlockType), a => a.MaxX - a.MinX >= 100).Broke) {
 							Framing.GetTileSafely(x, y).TileType = TileID.AmberGemspark;
-						}
+						}*/
 						break;
 						case FeatureType.CUSP:
 						GenRunners.SpikeRunner(x, y,
@@ -510,6 +510,12 @@ namespace Origins.World.BiomeData {
 						}
 					}
 				}
+
+				/*for (int i0 = 0; i0 < genRange.Width; i0++) {
+					int x = genRange.X + i0;
+					int y = genRange.Y;
+					while (!Framing.GetTileSafely(x, y).HasSolidTile()) y++;
+				}*/
 				ushort flange = (ushort)ModContent.TileType<Marrowick_Flange>();
 				ushort largeFlange = (ushort)ModContent.TileType<Large_Marrowick_Flange>();
 				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
@@ -1100,6 +1106,7 @@ namespace Origins.World.BiomeData {
 				Rectangle range = WorldBiomeGeneration.ChangeRange.GetRange();
 				WorldBiomeGeneration.EvilBiomeGenRanges.Add(range);
 				AltBiome biome = ModContent.GetInstance<Riven_Hive_Alt_Biome>();
+				ushort grass = (ushort)ModContent.TileType<Riven_Grass>();
 				for (int i = range.Left; i < range.Right; i++) {
 					int slopeFactor = Math.Min(Math.Min(i - range.Left, range.Right - i), 99);
 					for (int j = range.Top - 10; j < range.Bottom; j++) {
@@ -1109,6 +1116,9 @@ namespace Origins.World.BiomeData {
 						if (tile.HasTile) {
 							AltLibrary.Core.ALConvert.ConvertTile(i, j, biome);
 							AltLibrary.Core.ALConvert.ConvertWall(i, j, biome);
+							if (tile.TileType == TileID.Dirt && (!Framing.GetTileSafely(i - 1, j).HasTile || !Framing.GetTileSafely(i + 1, j).HasTile || !Framing.GetTileSafely(i, j - 1).HasTile || !Framing.GetTileSafely(i, j + 1).HasTile)) {
+								tile.TileType = grass;
+							}
 						}
 					}
 				}
