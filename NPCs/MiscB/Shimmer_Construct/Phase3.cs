@@ -698,12 +698,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					ambienceSlot = SoundEngine.PlaySound(Origins.Sounds.ShimmerConstructAmbienceLoop, updateCallback: UpdateCallback);
 					if (playOutro) SoundEngine.PlaySound(Origins.Sounds.ShimmerConstructAmbienceOutro);
 					playOutro = true;
-					Main.NewText("Start loop");
 				} else {
 					ambienceSlot = SoundEngine.PlaySound(Origins.Sounds.ShimmerConstructAmbienceIntro, updateCallback: UpdateCallback);
 					if (SoundEngine.TryGetActiveSound(ambienceSlot, out ActiveSound sound)) sound.Volume = 0;
 					playOutro = false;
-					Main.NewText("Start itnro");
 				}
 			}
 		}
