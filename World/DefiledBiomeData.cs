@@ -959,7 +959,7 @@ namespace Origins.World.BiomeData {
 				for (int i = range.Left; i < range.Right; i++) {
 					int slopeFactor = Math.Min(Math.Min(i - range.Left, range.Right - i), 99);
 					for (int j = range.Top - 10; j < range.Bottom; j++) {
-						if (genRand.NextBool(5) &&  genRand.Next(slopeFactor, 100) < 20) break;
+						if (genRand.NextBool(5) && genRand.Next(slopeFactor, 100) < 20) continue;
 						if (range.Bottom - j < 5 && genRand.NextBool(5)) break;
 						Tile tile = Framing.GetTileSafely(i, j);
 						if (tile.HasTile) {

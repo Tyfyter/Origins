@@ -1,0 +1,4 @@
+
+
+* Friendly Guardians no longer politely leave room for Servants of You or Little Protozoa to get in line with them, as the aforementioned minions don't believe in order
+* Slightly changed the shape of evil biome horizontal edges
