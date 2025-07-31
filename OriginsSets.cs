@@ -9,7 +9,6 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Armor.Vanity.Dev.DevSet<TIconic>;
 
 namespace Origins {
 	public static class OriginsSets {
