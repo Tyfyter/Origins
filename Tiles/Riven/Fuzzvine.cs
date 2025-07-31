@@ -41,7 +41,7 @@ namespace Origins.Tiles.Riven {
 			HitSound = SoundID.Grass;
 			DustType = DustID.BlueMoss;
 			AltVines.AddVine(Type, AnchorTiles);
-			OriginsSets.Tiles.MinionSlowdown[Type] = 2f;
+			OriginsSets.Tiles.MinionSlowdown[Type] = 0.25f;
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile below = Framing.GetTileSafely(i, j + 1);
@@ -93,7 +93,6 @@ namespace Origins.Tiles.Riven {
 			tile.TileFrameX = (short)(tile.TileFrameNumber * 18);
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
-			OriginsSets.Tiles.MinionSlowdown[Type] = 0.25f;
 			if (!Framing.GetTileSafely(i, j - 1).TileIsType(Type)) {
 				Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.Vine);
 			}
@@ -138,7 +137,6 @@ namespace Origins.Tiles.Riven {
 			OriginsSets.Tiles.MinionSlowdown[Type] = 0.50f;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
-			OriginsSets.Tiles.MinionSlowdown[Type] = 0.50f;
 			if (TileObjectData.IsTopLeft(Main.tile[i, j])) {
 				Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.MultiTileVine);
 			}

@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Items.Armor.Vanity.Dev.DevSet<TIconic>;
 
 namespace Origins {
 	public static class OriginsSets {
@@ -123,7 +125,16 @@ namespace Origins {
 				TileID.Diamond, TileID.Ruby
 			);
 			public static MultitileCollisionOffsetter[] MultitileCollisionOffset { get; } = TileID.Sets.Factory.CreateCustomSet<MultitileCollisionOffsetter>(null);
-			public static float[] MinionSlowdown { get; } = TileID.Sets.Factory.CreateFloatSet(0);
+			public readonly struct SlowdownPercent {
+				readonly float value;
+				SlowdownPercent(float value) {
+					System.Diagnostics.Debug.Assert(value >= 0 && value <= 1, "Slowdown percentage cannot be less than 0% or greater than 100%");
+					this.value = value;
+				}
+				public static implicit operator SlowdownPercent(float value) => new(value);
+				public static implicit operator float(SlowdownPercent value) => value.value;
+			}
+			public static SlowdownPercent[] MinionSlowdown { get; } = TileID.Sets.Factory.CreateCustomSet<SlowdownPercent>(0);
 		}
 		public delegate void MultitileCollisionOffsetter(Tile tile, ref float y, ref int height);
 		[ReinitializeDuringResizeArrays]
