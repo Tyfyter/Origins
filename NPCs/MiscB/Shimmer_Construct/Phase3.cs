@@ -687,13 +687,28 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 			if (player.whoAmI == Main.myPlayer && !SoundEngine.TryGetActiveSound(ambienceSlot, out _)) {
-				ambienceSlot = SoundEngine.PlaySound(Origins.Sounds.ShimmerConstructAmbience, updateCallback: sound => {
+				bool UpdateCallback(ActiveSound sound) {
 					MathUtils.LinearSmoothing(ref sound.Volume, OriginPlayer.LocalOriginPlayer.weakShimmer.ToInt(), 1f / (60 * 5));
+					unchecked {
+						startLoopUntil = Origins.gameFrameCount + 10;
+					}
 					return sound.Volume > 0;
-				});
-				if (SoundEngine.TryGetActiveSound(ambienceSlot, out ActiveSound sound)) sound.Volume = 0;
+				}
+				if (Origins.gameFrameCount < startLoopUntil) {
+					ambienceSlot = SoundEngine.PlaySound(Origins.Sounds.ShimmerConstructAmbienceLoop, updateCallback: UpdateCallback);
+					if (playOutro) SoundEngine.PlaySound(Origins.Sounds.ShimmerConstructAmbienceOutro);
+					playOutro = true;
+					Main.NewText("Start loop");
+				} else {
+					ambienceSlot = SoundEngine.PlaySound(Origins.Sounds.ShimmerConstructAmbienceIntro, updateCallback: UpdateCallback);
+					if (SoundEngine.TryGetActiveSound(ambienceSlot, out ActiveSound sound)) sound.Volume = 0;
+					playOutro = false;
+					Main.NewText("Start itnro");
+				}
 			}
 		}
+		uint startLoopUntil = 0;
+		bool playOutro = false;
 		SlotId ambienceSlot;
 		public override void Update(NPC npc, ref int buffIndex) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().lazyCloakShimmer = true;
