@@ -91,6 +91,7 @@ namespace Origins {
 			public static bool[] ApplyLifetimeModifiers { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(ApplyLifetimeModifiers))
 			.Description("Controls whether compatible projectile lifetime modification effects will apply to the projectile type")
 			.RegisterBoolSet(true);
+			public static bool[] UsesTypeSpecificMinionPos { get; } = ProjectileID.Sets.Factory.CreateBoolSet();
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class NPCs {

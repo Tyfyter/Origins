@@ -86,6 +86,17 @@ namespace Origins.Projectiles {
 				if (Origins.ArtifactMinion[proj.type]) damage = damage.CombineWith(Main.player[proj.owner].OriginPlayer().artifactDamage);
 				return damage;
 			});
+			c.GotoNext(MoveType.Before,
+				il => il.MatchLdarg0(),
+				il => il.MatchCall<Projectile>(nameof(Projectile.AI))
+			);
+			c.EmitLdarg0();
+			c.EmitDelegate((Projectile projectile) => {
+				if (projectile.numUpdates == -1 && OriginsSets.Projectiles.UsesTypeSpecificMinionPos[projectile.type]) {
+					Player owner = Main.player[projectile.owner];
+					projectile.minionPos = owner.OriginPlayer().GetNewMinionIndexByType(projectile.type);
+				}
+			});
 		}
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
 			return entity.IsMinionOrSentryRelated;

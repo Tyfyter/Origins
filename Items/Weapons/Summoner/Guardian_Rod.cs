@@ -78,6 +78,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Main.projPet[Type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
+			OriginsSets.Projectiles.UsesTypeSpecificMinionPos[Type] = true;
 			ID = Type;
 		}
 

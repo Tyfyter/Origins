@@ -520,6 +520,7 @@ namespace Origins {
 		public List<string> journalText = [];
 		public float moveSpeedMult = 1;
 		public bool upsideDown = false;
+		int[] minionCountByType = ProjectileID.Sets.Factory.CreateIntSet();
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
 			oldBonuses = 0;
@@ -1093,6 +1094,7 @@ namespace Origins {
 			shieldGlow = -1;
 			if (timeSinceRainedOn < int.MaxValue) timeSinceRainedOn++;
 			moveSpeedMult = 1;
+			Array.Clear(minionCountByType);
 			upsideDown = false;
 			walledDebuff = false;
 			foreach (NPC npc in Main.ActiveNPCs) {
@@ -1147,5 +1149,6 @@ namespace Origins {
 				necromanaUsedThisUse = true;
 			}
 		}
+		internal int GetNewMinionIndexByType(int type) => minionCountByType[type]++;
 	}
 }
