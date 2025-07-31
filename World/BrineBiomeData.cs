@@ -76,6 +76,12 @@ namespace Origins.World.BiomeData {
 			public override bool IsActive(NPCSpawnInfo spawnInfo) => IsInBrinePool(spawnInfo);
 		}
 		public static class Gen {
+			internal delegate IEnumerable<(int min, int max, int padding)> InvalidRangeHandler(object pass, int minPriority);
+			internal static InvalidRangeHandler JungleAvoider => _JungleAvoider;
+			static IEnumerable<(int min, int max, int padding)> _JungleAvoider(object pass, int minPriority) {
+				int brineX = ModContent.GetInstance<OriginSystem>().brineCenter.X;
+				yield return (brineX - 100, brineX + 100, 50);
+			}
 			public static void BrineStart(int i, int j) {
 				WorldBiomeGeneration.ChangeRange.ResetRange();
 				float angle0 = genRand.NextFloat(MathHelper.TwoPi);

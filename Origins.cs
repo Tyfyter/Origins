@@ -61,6 +61,8 @@ using Origins.Dusts;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using NVorbis;
 using static Origins.OriginsSets.Items;
+using Origins.World.BiomeData;
+using AltLibrary.Core.Generation;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -712,7 +714,7 @@ namespace Origins {
 				FargosMutant.Call("AddCaughtNPC", "Defiled_Effigy_Item", MC.NPCType<Defiled_Effigy>(), Name);
 				// FargosMutant.Call("AddCaughtNPC", "Cubekon_Tinkerer_Item", MC.NPCType<Cubekon_Tinkerer>(), Name); // for future
 			}
-
+			AltLibrary.AltLibrary.Instance.Call("AddInvalidRangeHandler", "Origins:BrinePool", Brine_Pool.Gen.JungleAvoider, 6);
 #if DEBUG
 			for (int i = 0; i < ItemID.Count; i++) OriginGlobalItem.AddVanillaTooltips(i, [], true);
 			MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);

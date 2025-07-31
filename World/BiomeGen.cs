@@ -1,15 +1,12 @@
 using AltLibrary.Common.Systems;
-using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
 using Origins.Tiles.Defiled;
-using Origins.Tiles.Dusk;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib;
-using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,13 +51,10 @@ namespace Origins {
 			}
 			}));*/
 			#endregion _
-			int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
+			int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Jungle"));
 			if (genIndex != -1) {
-				tasks.Insert(++genIndex, new PassLegacy("Finish Dusk", Dusk.Gen.FinishDusk));
-				tasks.Insert(++genIndex, new PassLegacy("Brine Pool", delegate (GenerationProgress progress, GameConfiguration _) {
-					Mod.Logger.Info("Pooling Brine");
-					progress.Message = "Pooling Brine";
-					//for (int i = 0; i < Main.maxTilesX / 5000; i++) {
+				tasks.Insert(++genIndex, new PassLegacy("Find Brine Pool Spot", delegate (GenerationProgress progress, GameConfiguration _) {
+					progress.Message = Mod.GetLocalization("GenPass.PickPrinePoolPos.DisplayName", () => "Finding a nice spot to pool brine").Value;
 					int tries = 0;
 					retry:
 					int X = WorldGen.genRand.Next(GenVars.JungleX - 100, GenVars.JungleX + 100);
@@ -73,14 +67,15 @@ namespace Origins {
 					}
 					if (++tries < 1000 && (!GenVars.structures.CanPlace(new Rectangle(X, Y, 1, 1), 48) || WorldBiomeGeneration.EvilBiomeGenRanges.Any(r => r.Contains(X, Y)))) goto retry;
 					Mod.Logger.Info("BrineGen:" + X + ", " + Y);
-					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
-					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);
-					//WorldGen.digTunnel(X, 500, 5, 5, 10, 10, true);
-					//WorldGen.digTunnel(X, Y, 3, 0, 30, 6, true);
-					//WorldGen.digTunnel(X, Y, 0, 90, 25, 50, true);
-					Brine_Pool.Gen.BrineStart(X, Y);
 					brineCenter = new(X, Y);
-					//}
+				}));
+			}
+			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
+			if (genIndex != -1) {
+				tasks.Insert(++genIndex, new PassLegacy("Finish Dusk", Dusk.Gen.FinishDusk));
+				tasks.Insert(++genIndex, new PassLegacy("Brine Pool", delegate (GenerationProgress progress, GameConfiguration _) {
+					progress.Message = Mod.GetLocalization("GenPass.PrinePool.DisplayName", () => "Pooling Brine").Value;
+					Brine_Pool.Gen.BrineStart(brineCenter.X, brineCenter.Y);
 				}));
 				tasks.Insert(++genIndex, new PassLegacy("Fiberglass Undergrowth", delegate (GenerationProgress progress, GameConfiguration __) {
 					Mod.Logger.Info("Fiberglass Undergrowth");

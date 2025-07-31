@@ -65,7 +65,7 @@ namespace Origins {
 		Point fiberglassMax;
 		HashSet<Point> fiberglassFrameSet;
 		//Task fiberglassFrameTask;
-		Point brineCenter;
+		public Point brineCenter;
 		public bool forceThunderstorm = false;
 		public int forceThunderstormDelay = 0;
 
