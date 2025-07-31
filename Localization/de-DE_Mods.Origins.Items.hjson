@@ -6518,3 +6518,8 @@ Splitting_Image: {
 // Defiled_Storage_Core.DisplayName: "{§Defiled} Storage Core"
 // Encrusted_Storage_Core.DisplayName: Encrusted Storage Core
 // Sanguinite_Storage_Core.DisplayName: Sanguinite Storage Core
+
+Procedural_Sprite_Generator: {
+	// DisplayName: Procedural Sprite Generator
+	// Tooltip: ""
+}

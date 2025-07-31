@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Projectiles;
 using PegasusLib;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -92,6 +93,9 @@ namespace Origins {
 			.Description("Controls whether compatible projectile lifetime modification effects will apply to the projectile type")
 			.RegisterBoolSet(true);
 			public static bool[] UsesTypeSpecificMinionPos { get; } = ProjectileID.Sets.Factory.CreateBoolSet();
+			/*public static AssetSource<Texture2D>[][] ExtraTextures { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(ExtraTextures))
+			.Description("Additional textures used by the projectile, ")
+			.RegisterCustomSet<AssetSource<Texture2D>[]>([]);*/
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class NPCs {
