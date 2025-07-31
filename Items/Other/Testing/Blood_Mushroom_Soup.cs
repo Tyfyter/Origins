@@ -6,18 +6,13 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 using Origins.World.BiomeData;
 using static Origins.Items.Other.Testing.Blood_Mushroom_Soup;
 using Terraria.GameInput;
-using ThoriumMod.Items.ZRemoved;
-using Origins.Tiles.Brine;
-using PegasusLib;
 using Origins.Tiles.Riven;
 using AltLibrary.Common.Systems;
 using System.Text;
 using Terraria.ObjectData;
-using CalamityMod.Projectiles.Boss;
 using Terraria.Utilities;
 
 namespace Origins.Items.Other.Testing {
@@ -631,24 +626,15 @@ namespace Origins.Items.Other.Testing {
 			posMax = new(float.NegativeInfinity);
 			PlayerInput.SetZoom_MouseInWorld();
 			UnifiedRandom genRand = new(seed);
-			float rotation = genRand.NextFloat(0, MathHelper.TwoPi);
 
-			float range = genRand.NextFloat(0.2f, 0.6f);//"fan" width
-			Vector2 turningPoint = Main.MouseWorld / 16 + rotation.ToRotationVector2() * genRand.NextFloat(5, 10);
-			if (!genRand.NextBool(8)) rotation += MathHelper.PiOver2;
-			Carver.Filter[] lemons = new Carver.Filter[genRand.Next(3, 7)];
-			for (int k = 0; k < lemons.Length; k++) {
-				lemons[k] = Carver.PointyLemon(
-					(Main.MouseWorld / 16).RotatedBy(k * range, turningPoint),
-					scale: genRand.NextFloat(6, 10),
-					rotation: rotation + k * range,
-					aspectRatio: genRand.NextFloat(3, 6),
-					roundness: genRand.NextFloat(1, 2),
-					ref posMin,
-					ref posMax
-				);
-			}
-			return Carver.Or(lemons);
+			return Carver.Circle(// tweak to change the shape and size of the barnacled areas
+				Main.MouseWorld / 16,
+				scale: genRand.Next(5, 15),
+				rotation: genRand.NextFloat(0, MathHelper.TwoPi),
+				aspectRatio: genRand.NextFloat(1, 1.4f),
+				ref posMin,
+				ref posMax
+			);
 		}
 		public override void Apply(LinkedQueue<object> parameters) {
 			ushort oreID = (ushort)ModContent.TileType<Amoeba_Fluid>();

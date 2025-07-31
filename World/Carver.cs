@@ -41,8 +41,8 @@ namespace Origins.World {
 		public static Filter Circle(Vector2 center, float scale, float rotation, float aspectRatio, ref Vector2 posMin, ref Vector2 posMax) {
 			float sin = MathF.Sin(rotation);
 			float cos = MathF.Cos(rotation);
-			Vector2 a = new Vector2(1, aspectRatio).RotatedBy(rotation) * scale * 0.5f;
-			Vector2 b = new Vector2(-1, aspectRatio).RotatedBy(rotation) * scale * 0.5f;
+			Vector2 a = new Vector2(1, aspectRatio).RotatedBy(rotation) * scale;
+			Vector2 b = new Vector2(-1, aspectRatio).RotatedBy(rotation) * scale;
 			posMin = Vector2.Min(posMin, center + Vector2.Min(Vector2.Min(a, b), Vector2.Min(-a, -b)));
 			posMax = Vector2.Max(posMax, center + Vector2.Max(Vector2.Max(a, b), Vector2.Max(-a, -b)));
 			void DoFilter(Vector2 pos, ref bool output) {
