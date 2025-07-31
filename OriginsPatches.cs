@@ -743,7 +743,22 @@ namespace Origins {
 			} catch (Exception e) {
 				if (Origins.LogLoadingILError(nameof(IL_Collision_TileCollision_OffsetBookcases), e)) throw;
 			}
+			/*try {
+				IL_ActiveSound.Update += EnablePocketDimensionAmbienceWhenPaused;
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError(nameof(EnablePocketDimensionAmbienceWhenPaused), e)) throw;
+			}*/
 		}
+
+		/*static void EnablePocketDimensionAmbienceWhenPaused(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdsfld<Main>(nameof(Main.gameInactive))
+			);
+			c.EmitLdarg0();
+			c.EmitDelegate(static (bool gameInactive, ActiveSound sound) => gameInactive && !sound.Style.SoundPath.StartsWith("Origins/Sounds/Custom/Ambience"));
+		}*/
+
 		internal static void IL_Collision_TileCollision_OffsetBookcases(ILContext il) {
 			ILCursor c = new(il);
 			int tile = -1;
