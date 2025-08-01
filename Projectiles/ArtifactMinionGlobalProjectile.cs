@@ -237,28 +237,34 @@ namespace Origins.Projectiles {
 				}
 			}
 		}
+		public static bool IsSacrificingMinions { get; private set; }
 		private static void On_Player_FreeUpPetsAndMinions(On_Player.orig_FreeUpPetsAndMinions orig, Player self, Item sItem) {
-			if (Origins.ArtifactMinion.GetIfInRange(sItem.shoot)) {
-				List<(Projectile projectile, float antiPriority)> existingMinions = [];
-				float totalUsedSlots = 0f;
-				foreach (Projectile other in Main.ActiveProjectiles) {
-					if (other.owner != self.whoAmI || !other.minion || other.ModProjectile is not IArtifactMinion artifactMinion) {
-						continue;
+			IsSacrificingMinions = true;
+			try {
+				if (Origins.ArtifactMinion.GetIfInRange(sItem.shoot)) {
+					List<(Projectile projectile, float antiPriority)> existingMinions = [];
+					float totalUsedSlots = 0f;
+					foreach (Projectile other in Main.ActiveProjectiles) {
+						if (other.owner != self.whoAmI || !other.minion || other.ModProjectile is not IArtifactMinion artifactMinion) {
+							continue;
+						}
+						existingMinions.Add((other, (artifactMinion.Life / artifactMinion.MaxLife) * other.minionSlots));
+						totalUsedSlots += other.minionSlots;
 					}
-					existingMinions.Add((other, (artifactMinion.Life / artifactMinion.MaxLife) * other.minionSlots));
-					totalUsedSlots += other.minionSlots;
-				}
-				float neededSlots = ItemID.Sets.StaffMinionSlotsRequired[sItem.type] - (self.maxMinions - totalUsedSlots);
-				if (neededSlots > 0) {
-					existingMinions = existingMinions.OrderBy(m => m.antiPriority).ToList();
-					for (int i = 0; i < existingMinions.Count && neededSlots > 0; i++) {
-						neededSlots -= existingMinions[i].projectile.minionSlots;
-						existingMinions[i].projectile.Kill();
+					float neededSlots = ItemID.Sets.StaffMinionSlotsRequired[sItem.type] - (self.maxMinions - totalUsedSlots);
+					if (neededSlots > 0) {
+						existingMinions = existingMinions.OrderBy(m => m.antiPriority).ToList();
+						for (int i = 0; i < existingMinions.Count && neededSlots > 0; i++) {
+							neededSlots -= existingMinions[i].projectile.minionSlots;
+							existingMinions[i].projectile.Kill();
+						}
 					}
+					if (neededSlots <= 0) return;
 				}
-				if (neededSlots <= 0) return;
+				orig(self, sItem);
+			} finally {
+				IsSacrificingMinions = false;
 			}
-			orig(self, sItem);
 		}
 	}
 	public interface IArtifactMinion {
