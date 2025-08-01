@@ -33,8 +33,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			return false;
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
-			boss.Hover(0.2f);
 			NPC npc = boss.NPC;
+			GeometryUtils.AngularSmoothing(ref npc.rotation, npc.AngleTo(npc.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
+			boss.Hover(0.2f);
 			if (npc.life == npc.lifeMax && !AnyHealthChunks()) {
 				int count = Main.rand.RandomRound(2 + ContentExtensions.DifficultyDamageMultiplier);
 				int[] chunks = [
@@ -102,6 +103,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
 			Vector2 targetDiff = direction.RotatedBy(npc.direction) * 16 * 30;
 			npc.velocity = diff.DirectionFrom(targetDiff) * MoveSpeed;
+			npc.rotation = direction.ToRotation() - MathHelper.PiOver2;
 			int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
 			if (shotsToHaveFired > npc.ai[1]) {
 				SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);

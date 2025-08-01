@@ -295,18 +295,19 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AI() {
 			Projectile ownerProj = null;
-			foreach (Projectile other in Main.ActiveProjectiles) {
-				if (other.identity == Projectile.ai[0] && other.owner == Projectile.owner) {
-					ownerProj = other;
-					break;
+			if (Projectile.ai[0] >= 0) {
+				foreach (Projectile other in Main.ActiveProjectiles) {
+					if (other.identity == Projectile.ai[0] && other.owner == Projectile.owner) {
+						ownerProj = other;
+						break;
+					}
 				}
 			}
-			if (ownerProj?.active ?? false) {
+			if ((ownerProj?.active ?? false) && ownerProj.ModProjectile is Shimmershot_Bullet) {
 				Projectile.scale = ownerProj.scale;
 				Projectile.Center = ownerProj.Center;
 				Projectile.rotation = ownerProj.rotation;
 			} else {
-				Projectile.Center = ownerProj.Center;
 				Projectile.ai[0] = -1;
 			}
 			for (int i = Projectile.oldPos.Length - 1; i > 0; i--) {

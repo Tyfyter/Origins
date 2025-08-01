@@ -25,8 +25,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			aiStates.Add(ModContent.GetInstance<SpawnCloudsState>());
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
-			boss.Hover(0.2f);
 			NPC npc = boss.NPC;
+			GeometryUtils.AngularSmoothing(ref npc.rotation, npc.AngleTo(npc.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
+			boss.Hover(0.2f);
 			npc.TargetClosest();
 			npc.velocity *= 0.97f;
 			if (++npc.ai[0] > IdleTime && Main.netMode != NetmodeID.MultiplayerClient) {
@@ -261,6 +262,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class ShimmershotState : AIState {
 		#region stats
 		public static float Startup => 90 - DifficultyMult * 5;
+		public static float Shootlag => 6; // frames of freeze
 		public static float Endlag => 90 - DifficultyMult * 5;
 		public static int ShotDamage => (int)(15 + 19 * DifficultyMult);
 		public static float ShotVelocity => 6;
@@ -272,12 +274,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			npc.velocity *= 0.97f;
-			boss.Hover();
+			if (npc.ai[0] < Startup || npc.ai[0] > Startup + Shootlag) {
+				npc.velocity *= 0.97f;
+				boss.Hover();
+			} else {
+				npc.velocity = Vector2.Zero;
+			}
 			Vector2 diff = npc.GetTargetData().Center - npc.Center;
 			if (++npc.ai[0] < Startup) {
 				GeometryUtils.AngularSmoothing(ref npc.rotation, diff.ToRotation(), TurnRate(npc.ai[0] / Startup));
-			} else if (npc.ai[1].TrySet(1)) {
+			} else if (npc.ai[0] >= Startup + Shootlag && npc.ai[1].TrySet(1)) {
 				diff = diff.SafeNormalize(Vector2.Zero);
 				SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
 				npc.SpawnProjectile(null,
@@ -309,7 +315,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			public override void AI() {
 				base.AI();
-
 				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 + MathHelper.Pi;
 			}
 		}

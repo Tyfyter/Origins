@@ -36,8 +36,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			aiStates.Add(ModContent.GetInstance<MagicMissilesState>());
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
-			boss.Hover(0.2f);
 			NPC npc = boss.NPC;
+			GeometryUtils.AngularSmoothing(ref npc.rotation, npc.AngleTo(npc.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
+			boss.Hover(0.2f);
 			npc.TargetClosest();
 			npc.velocity += npc.DirectionTo(npc.GetTargetData().Center - Vector2.UnitY * 16 * 15) * 0.5f;
 			npc.velocity *= 0.97f;
@@ -68,6 +69,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		readonly Stack<Vector2> positions = new();
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
+			GeometryUtils.AngularSmoothing(ref npc.rotation, npc.AngleTo(npc.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
 			npc.velocity *= 0.97f;
 			boss.Hover();
 			Vector2 targetPos = npc.GetTargetData().Center;
@@ -348,6 +350,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
+			GeometryUtils.AngularSmoothing(ref npc.rotation, npc.AngleTo(npc.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
 			SoundEngine.PlaySound(SoundID.Item28, npc.Center);
 			npc.SpawnNPC(null,
 				(int)npc.Center.X,
