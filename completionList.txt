@@ -58,7 +58,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(☻, #2/3, ^2/4) Shimmer Construct !!! (ambience persistance+line-up, SS charge visuals)
+(#2/3, ^2/4) Shimmer Construct !!! (ambience persistance+line-up, SS charge visuals)
 (#, ^2) Trenchmaker
 (^) World Cracker*
 
@@ -448,7 +448,7 @@ ACCESSORIES:
 (^) Charm of Naivety
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
-(☻) Control Locus* !!!
+(^3) Control Locus* !!!
 (^) Coologne*
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
@@ -594,7 +594,7 @@ ACCESSORIES:
 (^) Strange Tooth*
 (^) Terrarian Voodoo Doll*
 (^) Third Eye*
-(☻) Weakpoint Analyzer* !!!
+(^) Weakpoint Analyzer*
 (^) Wishing Glass
 
 (^) Agility Core°
@@ -1293,7 +1293,7 @@ TILES:
 (^) Hydrothermal Vent
 (^) Limestone Rubble
 (^) Marrowick Coral
-(☻) Marrowick Flange !!!
+(^3) Marrowick Flange !!!
 (X) Modular Light Fixture
 (X) Moonshine°
 (^) Ocotillo
