@@ -1809,6 +1809,7 @@ namespace Origins {
 			} else {
 				orig(proj, out timeToFlyOut, out segments, out rangeMultiplier);
 			}
+			if (OriginConfig.Instance.VanillaWhipScale && proj.TryGetGlobalProjectile(out VanillaWhipScaleSupport scaleSupport)) rangeMultiplier *= scaleSupport.ScaleModifier;
 		}
 		#region mining
 		private void On_Player_ItemCheck_UseMiningTools_TryHittingWall(On_Player.orig_ItemCheck_UseMiningTools_TryHittingWall orig, Player self, Item sItem, int wX, int wY) {
