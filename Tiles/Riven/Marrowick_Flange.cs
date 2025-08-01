@@ -17,7 +17,7 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
 			TileObjectData.newTile.Height = 5;
 			TileObjectData.newTile.Origin = new Point16(0, TileObjectData.newTile.Height - 1);
-			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
+			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height - 1).Concat([18]).ToArray();
 
 			TileObjectData.newTile.RandomStyleRange = 3;
 
@@ -39,7 +39,7 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
 			TileObjectData.newTile.Height = 9;
 			TileObjectData.newTile.Origin = new Point16(0, TileObjectData.newTile.Height - 1);
-			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
+			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height - 1).Concat([18]).ToArray();
 
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.StyleHorizontal = true;
