@@ -427,7 +427,7 @@ namespace Origins.World.BiomeData {
 								specklePos,
 								scale: genRand.NextFloat(6, 10),
 								rotation: genRand.NextFloat(0, MathHelper.TwoPi),
-								aspectRatio: genRand.NextFloat(1, 2),
+								aspectRatio: genRand.NextFloat(1.1f, 2),
 								roundness: genRand.NextFloat(1, 2),
 								ref posMin,
 								ref posMax

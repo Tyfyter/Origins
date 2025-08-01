@@ -627,11 +627,12 @@ namespace Origins.Items.Other.Testing {
 			PlayerInput.SetZoom_MouseInWorld();
 			UnifiedRandom genRand = new(seed);
 
-			return Carver.Circle(// tweak to change the shape and size of the barnacled areas
+			return Carver.PointyLemon(// tweak to change the shape and size of the barnacled areas
 				Main.MouseWorld / 16,
 				scale: genRand.Next(5, 15),
 				rotation: genRand.NextFloat(0, MathHelper.TwoPi),
-				aspectRatio: genRand.NextFloat(1, 1.4f),
+				aspectRatio: 1.1f,
+				0.5f,
 				ref posMin,
 				ref posMax
 			);

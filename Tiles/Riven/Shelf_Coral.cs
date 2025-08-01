@@ -334,6 +334,7 @@ namespace Origins.Tiles.Riven {
 			}
 		}
 		public override bool IsTileValidForEntity(int x, int y) {
+			if (x < 0 || y < 0) return false;
 			Tile tile = Main.tile[x, y];
 			return tile.HasTile && tile.TileType == ModContent.TileType<Shelf_Coral>();
 		}
