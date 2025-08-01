@@ -162,6 +162,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.height = 96;
 			Projectile.friendly = true;
 			Projectile.tileCollide = false;
+			Projectile.hide = true;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 5;
 		}

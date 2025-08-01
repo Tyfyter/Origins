@@ -66,7 +66,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 5;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
-			Projectile.hide = true;
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
