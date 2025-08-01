@@ -493,6 +493,12 @@ GuideAdvice: {
 Words: {
 	2ndrefcasualmale: boy
 	2ndrefcasualfemale: girl
+
+	SelectByTag: {
+		Person: person
+		Person;Male;Casual: boy
+		Person;Female;Casual: girl
+	}
 }
 
 Doubles: {
