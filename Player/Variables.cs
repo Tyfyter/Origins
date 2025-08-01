@@ -320,6 +320,7 @@ namespace Origins {
 		public Vector2 wishingGlassOffset = default;
 		public bool shimmerShield = false;
 		public int shimmerShieldDashTime = 0;
+		public int? dashBaseDamage = 0;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -738,11 +739,7 @@ namespace Origins {
 					SoundEngine.PlaySound(SoundID.NPCDeath13.WithVolumeScale(0.75f), Player.position);
 				}
 			}
-			if (resizingGlove) {
-				const float strength = 2f;
-				if (Player.ItemAnimationJustStarted) resizingGloveScale = Math.Clamp(Main.rand.NextFloat(1 / strength, float.BitIncrement(strength)), 0.75f, 2);
-				resizingGlove = false;
-			}
+			resizingGlove = false;
 			wishingGlassEquipTime.Cooldown();
 			if (wishingGlassCooldown.Cooldown()) {
 				if (wishingGlassVisible) {
@@ -791,6 +788,7 @@ namespace Origins {
 			wishingGlassVisible = false;
 			wishingGlassDye = 0;
 			shimmerShield = false;
+			dashBaseDamage = null;
 			lotteryTicketItem = null;
 
 			

@@ -2372,6 +2372,11 @@ Configs: {
 			// Label: "{$ItemName.StaffoftheFrostHydra}"
 			// Tooltip: Frost Hydra now shoots bursts of frost at nearby targets, and its long-range shots now explode, gaining extra benefit from summon tag damage
 		}
+
+		VanillaWhipScale: {
+			// Label: Vanilla Whip Scale Support
+			// Tooltip: Makes whips from vanilla Terraria and other mods support scale modifiers
+		}
 	}
 
 	DebugConfig: {

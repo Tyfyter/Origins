@@ -230,7 +230,7 @@ namespace Origins.Items.Mounts {
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => drawInfo.drawPlayer.OriginPlayer().ravel;
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.MountFront);
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
-			if (drawInfo.drawPlayer.heldProj >= 0 && drawInfo.shadow == 0f) {
+			if (drawInfo.drawPlayer.heldProj >= 0 && drawInfo.projectileDrawPosition != -1 && drawInfo.shadow == 0f) {
 				drawInfo.projectileDrawPosition = drawInfo.DrawDataCache.Count;
 			}
 		}

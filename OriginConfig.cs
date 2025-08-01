@@ -51,6 +51,8 @@ namespace Origins {
 		[LabelKey($"$ItemName.{nameof(ItemID.ThunderSpear)}"), DefaultValue(true)]
 		[TooltipKey(add_debuff_tooltip), TooltipArgs($"$ItemName.{nameof(ItemID.ThunderSpear)}", "$Buffs.Static_Shock_Debuff.DisplayName")]
 		public bool ThunderSpear = true;
+		[DefaultValue(true)]
+		public bool VanillaWhipScale = true;
 
 		[DefaultValue(true), ReloadRequired]
 		public bool RoyalGel = true;

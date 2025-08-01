@@ -66,6 +66,7 @@ namespace Origins.Projectiles {
 		public bool neuralNetworkHit = false;
 		public bool crawdadNetworkEffect = false;
 		public Vector2? weakpointAnalyzerTarget = default;
+		public bool weakpointAnalyzerFake = false;
 		public Vector2 extraGravity = default;
 		public bool shouldUnmiss = false;
 		public bool[] alreadyUnmissed = new bool[Main.maxNPCs];
@@ -124,6 +125,7 @@ namespace Origins.Projectiles {
 				projectile.originalDamage = projectile.damage;
 			if (contextArgs.Contains(nameof(OriginPlayer.weakpointAnalyzer))) {
 				weakpointAnalyzerTarget = Main.MouseWorld;
+				weakpointAnalyzerFake = contextArgs.Contains("fake");
 			}
 			if (projectile.friendly && projectile.TryGetOwner(out Player player) && player.OriginPlayer().weakShimmer) weakShimmer = true;
 			if (source is EntitySource_ItemUse itemUseSource) {
@@ -162,7 +164,7 @@ namespace Origins.Projectiles {
 							Vector2 _position = projectile.position.RotatedBy(rot, Main.MouseWorld);
 							Vector2 _velocity = projectile.velocity.RotatedBy(rot);
 							int _damage = Main.rand.NextFloat(1) < bocShadowDamageChance ? projectile.damage : 0;
-							Projectile.NewProjectile(multishotSource, _position, _velocity, projectile.type, _damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1], projectile.ai[2]);
+							Projectile.NewProjectile(_damage == 0 ? multishotSource.WithContext(multishotSource.Context, "fake") : multishotSource, _position, _velocity, projectile.type, _damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1], projectile.ai[2]);
 						}
 					}
 					if (originPlayer.emergencyBeeCanister && (projectile.type is ProjectileID.Bee or ProjectileID.GiantBee) && Main.rand.NextBool(3)) {
@@ -488,6 +490,10 @@ namespace Origins.Projectiles {
 				if (OriginConfig.Instance.ThunderSpear && Main.rand.NextBool(3)) Static_Shock_Debuff.Inflict(target, Main.rand.Next(90, 180));
 				break;
 			}
+		}
+		public override bool? CanHitNPC(Projectile projectile, NPC target) {
+			if (weakpointAnalyzerFake) return false;
+			return base.CanHitNPC(projectile, target);
 		}
 		public override bool CanHitPlayer(Projectile projectile, Player target) {
 			return ownerSafe ? target.whoAmI != projectile.owner : true;
