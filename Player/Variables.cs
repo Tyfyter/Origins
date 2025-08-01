@@ -320,6 +320,7 @@ namespace Origins {
 		public Vector2 wishingGlassOffset = default;
 		public bool shimmerShield = false;
 		public int shimmerShieldDashTime = 0;
+		public int? dashBaseDamage = 0;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -791,6 +792,7 @@ namespace Origins {
 			wishingGlassVisible = false;
 			wishingGlassDye = 0;
 			shimmerShield = false;
+			dashBaseDamage = null;
 			lotteryTicketItem = null;
 
 			

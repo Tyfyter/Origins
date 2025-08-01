@@ -722,6 +722,18 @@ namespace Origins {
 					processingDash = false;
 				}
 			};
+			try {
+				IL_Player.DashMovement += il => {
+					ILCursor c = new(il);
+					c.GotoNext(MoveType.After,
+						i => i.MatchLdcR4(30f)
+					);
+					c.EmitLdarg0();
+					c.EmitDelegate(static (float damage, Player player) => player?.OriginPlayer()?.dashBaseDamage ?? damage);
+				};
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError("SetDashBaseDamage", e)) throw;
+			}
 			IL_WaterShaderData.DrawWaves += Brine_Pool_NPC.DisableRipples;
 			On_Player.SlopingCollision += (On_Player.orig_SlopingCollision orig, Player self, bool fallThrough, bool ignorePlats) => {
 				Debugging.LogFirstRun(self.SlopingCollision);

@@ -26,6 +26,7 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.retributionShield = true;
 			originPlayer.retributionShieldItem = Item;
+			originPlayer.dashBaseDamage = Item.damage;
 			originPlayer.dashHitDebuffs.Add((Toxic_Shock_Debuff.ID, 180..280));
 		}
 		public override void AddRecipes() {
