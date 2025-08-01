@@ -1293,7 +1293,7 @@ TILES:
 (^) Hydrothermal Vent
 (^) Limestone Rubble
 (^) Marrowick Coral
-(☻) Marrowick Flange !!!
+(^) Marrowick Flange !!!
 (X) Modular Light Fixture
 (X) Moonshine°
 (^) Ocotillo
