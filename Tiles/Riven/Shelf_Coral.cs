@@ -49,6 +49,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileNoFail[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileSolidTop[Type] = true;
+			TileID.Sets.FramesOnKillWall[Type] = true;
 			AddMapEntry(new Color(40, 165, 240));
 
 			TileObjectData.newTile.Width = 3;
@@ -108,7 +109,33 @@ namespace Origins.Tiles.Riven {
 				break;
 			}
 		}
-		public override bool CanDrop(int i, int j) => true;
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			int frameX = tile.TileFrameX / 18;
+			int altX = frameX / 3;
+			if (altX != (frameX % 3)) return true;
+			static bool IsValidAnchor(int i, int j, bool right) {
+				Tile tile = Framing.GetTileSafely(i, j);
+				if (!tile.HasFullSolidTile()) return false;
+				if (tile.BlockType == BlockType.Solid) return true;
+				return right ? tile.LeftSlope : tile.RightSlope;
+			}
+			bool shouldBreak = false;
+			switch (altX) {
+				case 0:
+				shouldBreak = !IsValidAnchor(i - 1, j, true);
+				break;
+				case 2:
+				shouldBreak = !IsValidAnchor(i + 1, j, false);
+				break;
+			}
+			if (shouldBreak) {
+				tile.HasTile = false;
+				WorldGen.SquareTileFrame(i, j);
+				return false;
+			}
+			return base.TileFrame(i, j, ref resetFrame, ref noBreak);
+		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
 			// When the tile is removed, we need to remove the Tile Entity as well.
