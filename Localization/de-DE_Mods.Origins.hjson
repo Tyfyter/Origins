@@ -2374,8 +2374,8 @@ Configs: {
 		}
 
 		VanillaWhipScale: {
-			// Label: Vanilla Whip Scale
-			// Tooltip: ""
+			// Label: Vanilla Whip Scale Support
+			// Tooltip: Makes whips from vanilla Terraria and other mods support scale modifiers
 		}
 	}
 

@@ -80,8 +80,7 @@ namespace Origins {
 			if (ammo.CountsAsClass(DamageClasses.Explosive)) {
 				if (endlessExplosives && Main.rand.NextBool(15, 100)) return false;
 				if (controlLocus && Main.rand.NextBool(12, 100)) return false;
-			} else
-			if (ammo.CountsAsClass(DamageClass.Ranged)) {
+			} else if (ammo.CountsAsClass(DamageClass.Ranged)) {
 				if (weakpointAnalyzer && Main.rand.NextBool(8, 100)) return false;
 				if (controlLocus && Main.rand.NextBool(12, 100)) return false;
 			}
