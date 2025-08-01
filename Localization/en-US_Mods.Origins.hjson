@@ -496,8 +496,8 @@ Words: {
 
 	SelectByTag: {
 		Person: person
-		Person;Male;Casual: boy
-		Person;Female;Casual: girl
+		Person;Male!;Casual?: boy
+		Person;Female!;Casual?: girl
 	}
 }
 
