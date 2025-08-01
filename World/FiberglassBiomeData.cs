@@ -35,6 +35,7 @@ namespace Origins.World.BiomeData {
 				AddSpawn<Enchanted_Fiberglass_Bow>(1);
 				AddSpawn<Enchanted_Fiberglass_Pistol>(1);
 				AddSpawn<Enchanted_Fiberglass_Cannon>(1);
+				Enchanted_Fiberglass_Slime.AddSpawns(this);
 				AddSpawn<Fiberglass_Weaver>(0.025f);
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) => spawnInfo.SpawnTileType == ModContent.TileType<Fiberglass_Tile>();
