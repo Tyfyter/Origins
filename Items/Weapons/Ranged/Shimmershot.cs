@@ -247,7 +247,7 @@ namespace Origins.Items.Weapons.Ranged {
 					AuraID,
 					(int)(Projectile.damage * AuraDamage),
 					0,
-					Projectile.whoAmI
+					Projectile.identity
 				)?.identity ?? -1) + 1;
 			} else {
 				Projectile auraProj = null;
@@ -294,17 +294,20 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.tileCollide = false;
 		}
 		public override void AI() {
-			int auraProj = (int)Projectile.ai[0];
-			if (auraProj >= 0) {
-				Projectile ownerProj = Main.projectile[auraProj];
-				if (ownerProj.active) {
-					Projectile.scale = ownerProj.scale;
-					Projectile.Center = ownerProj.Center;
-					Projectile.rotation = ownerProj.rotation;
-				} else {
-					Projectile.Center = ownerProj.Center;
-					Projectile.ai[0] = -1;
+			Projectile ownerProj = null;
+			foreach (Projectile other in Main.ActiveProjectiles) {
+				if (other.identity == Projectile.ai[0] && other.owner == Projectile.owner) {
+					ownerProj = other;
+					break;
 				}
+			}
+			if (ownerProj?.active ?? false) {
+				Projectile.scale = ownerProj.scale;
+				Projectile.Center = ownerProj.Center;
+				Projectile.rotation = ownerProj.rotation;
+			} else {
+				Projectile.Center = ownerProj.Center;
+				Projectile.ai[0] = -1;
 			}
 			for (int i = Projectile.oldPos.Length - 1; i > 0; i--) {
 				Projectile.oldPos[i] = Projectile.oldPos[i - 1];
