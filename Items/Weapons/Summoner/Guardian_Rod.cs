@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Origins.DamageBonusScale[Type] = 1.5f;
 		}
 		public override void SetDefaults() {
-			Item.damage = 30;
+			Item.damage = 27;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 10;
 			Item.shootSpeed = 9f;

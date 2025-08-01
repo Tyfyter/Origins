@@ -25,7 +25,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Summoner {
 	public class Aether_Opal : ModItem, ICustomWikiStat {
 		public override void SetDefaults() {
-			Item.damage = 23;
+			Item.damage = 21;
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 4;
 			Item.mana = 10;
@@ -131,10 +131,7 @@ namespace Origins.Buffs {
 namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Shimmer_Guardian : ModProjectile {
 		public static int GetModifiedDamage(int baseDamage, int extraSlotsUsed) {
-			if (Main.hardMode)
-				return (int)(baseDamage * (1 + 0.75f * extraSlotsUsed));
-			else
-				return (int)(baseDamage * (1 + 0.5f * extraSlotsUsed));
+			return (int)(baseDamage * (1 + 0.5f * extraSlotsUsed));
 		}
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
