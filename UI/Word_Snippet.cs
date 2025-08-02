@@ -15,7 +15,7 @@ namespace Origins.UI {
 		};
 		public class Word_Snippet : TextSnippet {
 			readonly LocalizedText l10n;
-			public Word_Snippet(string _tags) {
+			public Word_Snippet(string _tags, Color baseColor) : base(_tags, baseColor) {
 				float bestTagCount = float.NegativeInfinity;
 				List<WordTag> tags = WordTag.ParseList(_tags);
 				LanguageTree tree = TextUtils.LanguageTree.Find($"Mods.Origins.Words.SelectByTag");
@@ -123,6 +123,6 @@ namespace Origins.UI {
 				Optional
 			}
 		}
-		public TextSnippet Parse(string text, Color baseColor = default, string options = null) => new Word_Snippet(text);
+		public TextSnippet Parse(string text, Color baseColor = default, string options = null) => new Word_Snippet(text, baseColor);
 	}
 }
