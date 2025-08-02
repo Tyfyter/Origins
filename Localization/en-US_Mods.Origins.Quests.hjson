@@ -116,6 +116,7 @@ PartyGirl: {
 			'{$Inquire}'
 
 			- [qs{3}:Give any {1} Town NPCs {2} Confetti ({0}/{1})]
+			- [qs{4}:Tell the client that everyone has {$ItemName.Confetti}]
 			Unlocks: [i:PartyGirlGrenade]
 			'''
 		Inquire: HI! So, I would like to prepare for a party sometime soon and nobody else seems to be prepared for it. Can you give everyone some confetti? Someone’s got to throw the confetti so I figured everyone can!
