@@ -1,5 +1,26 @@
-// Common.GivenConfetti: Thanks for the {$ItemName.Confetti}.
-// Squirrel.GivenConfetti: *happy squeak about {$ItemName.Confetti}*
+Common: {
+	Quest_Menu: {
+		// 0: Whatch want?
+		// 1: Need something?
+		// 2: Looking for something?
+	}
+
+	GivenConfetti: {
+		// 0: Thanks for the {$ItemName.Confetti}.
+		// 1: Ay {$ItemName.Confetti}! Gotta ask [npcname:PartyGirl] when's the party.
+		// 2: So you're the new confetti delivery [word:Person!;{LocalPlayerGender}!;Casual?] for [npcname:PartyGirl]? Thanks a bunch.
+	}
+}
+
+Squirrel: {
+	// Quest_Menu: *questioning squeak*
+	// GivenConfetti: *happy squeak about {$ItemName.Confetti}*
+}
+
+LumberJack: {
+	// Quest_Menu: Here for some wood, [player:_]?
+	// GivenConfetti: I remember what tree this pile of {$ItemName.Confetti} came from, was a good day when I chopped that tree down.
+}
 
 Guide: {
 	// Quest_Menu: Need some advice?

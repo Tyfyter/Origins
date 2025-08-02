@@ -1,4 +1,5 @@
-﻿using PegasusLib;
+﻿using Origins.Tiles;
+using PegasusLib;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -23,25 +24,21 @@ namespace Origins.Questing {
 			SoundEngine.PlaySound(SoundID.Grab, npc.Center);
 			HGQuest.npcsGivenConfetti.Add(npc.type);
 			string textKey = $"Mods.Origins.Quests.{npc.ModNPC?.Name ?? NPCID.Search.GetName(npc.type)}.GivenConfetti";
-			if (!Language.Exists(textKey)) textKey = $"Mods.Origins.Quests.Common.GivenConfetti{Main.rand.Next(3)}";
-			if (!Language.Exists(textKey)) textKey = "Mods.Origins.Quests.Common.GivenConfetti";
+			if (!Language.Exists(textKey)) textKey = $"Mods.Origins.Quests.Common.GivenConfetti.{Main.rand.Next(3)}";
 			Main.npcChatText = Language.GetOrRegister(textKey).Value;
 		}
 		public override string Text(NPC npc, Player player) => Language.GetOrRegister("Mods.Origins.Quests.PartyGirl.Happy_Grenade.RequestConfettiGiving").Format(Happy_Grenade_Quest.confettiToGive);
 		public override bool IsActive(NPC npc, Player player) {
-			if (Questing.QuestListSelected) return false;
-			bool hasEnoughConfetti = false;
-			foreach (Item item in player.inventory) {
-				if (item.active && item.type == ItemID.Confetti && item.stack >= Happy_Grenade_Quest.confettiToGive) hasEnoughConfetti = true;
-			}
-			return npc.type != NPCID.PartyGirl && !NPCID.Sets.IsTownPet[npc.type] && !NPCID.Sets.IsTownSlime[npc.type] && !HGQuest.npcsGivenConfetti.Contains(npc.type) && Quest.Stage == 1 && hasEnoughConfetti && !HGQuest.HasGivenAllConfetti;
+			if (!Questing.QuestListSelected) return false;
+			return quest.HasQuestButton(npc, player);
 		}
 	}
 	public class Happy_Grenade_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.PartyGirl.Happy_Grenade.";
+		public QuestChatButton Button { get; protected set; }
 		public override bool SaveToWorld => true;
 		public override void Load() {
-			Mod.AddContent(new Happy_Grenade_Quest_Chat_Button(this));
+			Mod.AddContent(Button = new Happy_Grenade_Quest_Chat_Button(this));
 		}
 		//backing field for Stage property
 		int stage = 0;
@@ -60,6 +57,13 @@ namespace Origins.Questing {
 		public bool HasGivenAllConfetti => (npcsGivenConfetti ?? []).Count + (unloadedConfettiNPCs ?? []).Count >= npcsToGiveConfetti;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
+		public override bool HasQuestButton(NPC npc, Player player) {
+			bool hasEnoughConfetti = false;
+			foreach (Item item in player.inventory) {
+				if (item.active && item.type == ItemID.Confetti && item.stack >= confettiToGive) hasEnoughConfetti = true;
+			}
+			return npc.type != NPCID.PartyGirl && !NPCID.Sets.IsTownPet[npc.type] && !NPCID.Sets.IsTownSlime[npc.type] && !npcsGivenConfetti.Contains(npc.type) && Stage == 1 && hasEnoughConfetti && !HasGivenAllConfetti;
+		}
 		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.PartyGirl && Stage == 0;
 		}

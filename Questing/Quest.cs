@@ -49,6 +49,7 @@ namespace Origins.Questing {
 		public virtual string GetJournalPage() {
 			return "";
 		}
+		public virtual bool HasQuestButton(NPC npc, Player player) => false;
 		public virtual void SaveData(TagCompound tag) { }
 		public virtual void LoadData(TagCompound tag) { }
 		#region events
@@ -137,13 +138,14 @@ namespace Origins.Questing {
 			if (CanEnterQuestList(npc)) {
 				QuestListSelected = true;
 				string textKey = $"Mods.Origins.Quests.{npc.ModNPC?.Name ?? NPCID.Search.GetName(npc.type)}.Quest_Menu";
-				if (Language.Exists(textKey)) Main.npcChatText = Language.GetOrRegister(textKey).Value;
+				if (!Language.Exists(textKey)) textKey = $"Mods.Origins.Quests.Common.Quest_Menu.{Main.rand.Next(3)}";
+				Main.npcChatText = Language.GetOrRegister(textKey).Value;
 			} else {
 				QuestListSelected = false;
 				Main.npcChatText = npc.GetChat();
 			}
 		}
-		public static bool CanEnterQuestList(NPC npc) => Quest_Registry.Quests.Any(q => q.CanStart(npc) || (!q.Completed && q.CanComplete(npc)));
+		public static bool CanEnterQuestList(NPC npc) => Quest_Registry.Quests.Any(q => q.CanStart(npc) || (!q.Completed && q.CanComplete(npc)) || q.HasQuestButton(npc, Main.LocalPlayer));
 	}
 	public class ConditionalNPCPreferenceTrait : NPCPreferenceTrait, IShopPersonalityTrait {
 		public Condition condition;

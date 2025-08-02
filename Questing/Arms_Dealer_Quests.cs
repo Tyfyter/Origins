@@ -10,6 +10,7 @@ using Terraria.ModLoader.IO;
 namespace Origins.Questing {
 	public class Shardcannon_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.ArmsDealer.Shardcannon.";
+		public QuestChatButton Button { get; protected set; }
 		//backing field for Stage property
 		int stage = 0;
 		int progress = 0;
@@ -31,7 +32,38 @@ namespace Origins.Questing {
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
 		public override void Load() {
-			Mod.AddContent(new Lost_Shardcannon_Chat_Button(this));
+			Mod.AddContent(Button = new Lost_Shardcannon_Chat_Button(this));
+		}
+		public override bool HasQuestButton(NPC npc, Player player) {
+			static bool IsShardcannon(Item item) {
+				return item.type == Shardcannon.ID && item.prefix == Imperfect_Prefix.ID && item.stack > 0;
+			}
+			static bool HasShardcannon(Item[] inventory) {
+				for (int i = 0; i < inventory.Length; i++) {
+					Item item = inventory[i];
+					if (IsShardcannon(item)) {
+						return true;
+					}
+				}
+				return false;
+			}
+			if (HasShardcannon(player.inventory)) {
+				return false;
+			}
+			if (IsShardcannon(player.inventory[Main.InventorySlotsTotal]) || IsShardcannon(player.trashItem)) return false;
+			if (HasShardcannon(player.bank.item)) {
+				return false;
+			}
+			if (HasShardcannon(player.bank2.item)) {
+				return false;
+			}
+			if (HasShardcannon(player.bank3.item)) {
+				return false;
+			}
+			if (HasShardcannon(player.bank4.item)) {
+				return false;
+			}
+			return Stage == 1;
 		}
 		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.ArmsDealer && !ShowInJournal();
@@ -115,40 +147,13 @@ namespace Origins.Questing {
 		}
 		public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Origins.Quests.ArmsDealer.Shardcannon.ILostThatGunYouGaveMe");
 		public override bool IsActive(NPC npc, Player player) {
-			if (Questing.QuestListSelected || npc.type != NPCID.ArmsDealer) return false;
-			static bool IsShardcannon(Item item) {
-				return item.type == Shardcannon.ID && item.prefix == Imperfect_Prefix.ID && item.stack > 0;
-			}
-			static bool HasShardcannon(Item[] inventory) {
-				for (int i = 0; i < inventory.Length; i++) {
-					Item item = inventory[i];
-					if (IsShardcannon(item)) {
-						return true;
-					}
-				}
-				return false;
-			}
-			if (HasShardcannon(Main.LocalPlayer.inventory)) {
-				return false;
-			}
-			if (IsShardcannon(Main.LocalPlayer.inventory[Main.InventorySlotsTotal]) || IsShardcannon(Main.LocalPlayer.trashItem)) return false;
-			if (HasShardcannon(Main.LocalPlayer.bank.item)) {
-				return false;
-			}
-			if (HasShardcannon(Main.LocalPlayer.bank2.item)) {
-				return false;
-			}
-			if (HasShardcannon(Main.LocalPlayer.bank3.item)) {
-				return false;
-			}
-			if (HasShardcannon(Main.LocalPlayer.bank4.item)) {
-				return false;
-			}
-			return Quest.Stage == 1;
+			if (!Questing.QuestListSelected || npc.type != NPCID.ArmsDealer) return false;
+			return Quest.HasQuestButton(npc, player);
 		}
 	}
 	public class Harpoon_Burst_Rifle_Quest : Quest {
 		public string loc_key = "Mods.Origins.Quests.ArmsDealer.Harpoon_Burst_Rifle.";
+		public QuestChatButton Button { get; protected set; }
 		//backing field for Stage property
 		int stage = 0;
 		int progress = 0;
@@ -170,7 +175,38 @@ namespace Origins.Questing {
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
 		public override void Load() {
-			Mod.AddContent(new Lost_Harpoon_Burst_Rifle_Chat_Button(this));
+			Mod.AddContent(Button = new Lost_Harpoon_Burst_Rifle_Chat_Button(this));
+		}
+		public override bool HasQuestButton(NPC npc, Player player) {
+			static bool IsShardcannon(Item item) {
+				return item.type == Harpoon_Burst_Rifle.ID && item.prefix == Imperfect_Prefix.ID && item.stack > 0;
+			}
+			static bool HasShardcannon(Item[] inventory) {
+				for (int i = 0; i < inventory.Length; i++) {
+					Item item = inventory[i];
+					if (IsShardcannon(item)) {
+						return true;
+					}
+				}
+				return false;
+			}
+			if (HasShardcannon(player.inventory)) {
+				return false;
+			}
+			if (IsShardcannon(player.inventory[Main.InventorySlotsTotal]) || IsShardcannon(player.trashItem)) return false;
+			if (HasShardcannon(player.bank.item)) {
+				return false;
+			}
+			if (HasShardcannon(player.bank2.item)) {
+				return false;
+			}
+			if (HasShardcannon(player.bank3.item)) {
+				return false;
+			}
+			if (HasShardcannon(player.bank4.item)) {
+				return false;
+			}
+			return Stage == 1;
 		}
 		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.ArmsDealer && NPC.downedMechBossAny && !ShowInJournal() && ModContent.GetInstance<Shardcannon_Quest>().Completed;
@@ -255,35 +291,7 @@ namespace Origins.Questing {
 		public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Origins.Quests.ArmsDealer.Harpoon_Burst_Rifle.ILostThatGunYouGaveMe");
 		public override bool IsActive(NPC npc, Player player) {
 			if (Questing.QuestListSelected || npc.type != NPCID.ArmsDealer) return false;
-			static bool IsShardcannon(Item item) {
-				return item.type == Harpoon_Burst_Rifle.ID && item.prefix == Imperfect_Prefix.ID && item.stack > 0;
-			}
-			static bool HasShardcannon(Item[] inventory) {
-				for (int i = 0; i < inventory.Length; i++) {
-					Item item = inventory[i];
-					if (IsShardcannon(item)) {
-						return true;
-					}
-				}
-				return false;
-			}
-			if (HasShardcannon(Main.LocalPlayer.inventory)) {
-				return false;
-			}
-			if (IsShardcannon(Main.LocalPlayer.inventory[Main.InventorySlotsTotal]) || IsShardcannon(Main.LocalPlayer.trashItem)) return false;
-			if (HasShardcannon(Main.LocalPlayer.bank.item)) {
-				return false;
-			}
-			if (HasShardcannon(Main.LocalPlayer.bank2.item)) {
-				return false;
-			}
-			if (HasShardcannon(Main.LocalPlayer.bank3.item)) {
-				return false;
-			}
-			if (HasShardcannon(Main.LocalPlayer.bank4.item)) {
-				return false;
-			}
-			return Quest.Stage == 1;
+			return quest.HasQuestButton(npc, player);
 		}
 	}
 }
