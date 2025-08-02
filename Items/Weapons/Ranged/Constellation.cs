@@ -1,5 +1,6 @@
-﻿using Origins.Items.Materials;
-using Origins.Journal;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics.Primitives;
+using Origins.Items.Materials;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -7,16 +8,14 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.NPCs.Defiled.Boss.DA_Body_Part;
 
 namespace Origins.Items.Weapons.Ranged {
-	public class Constellation : ModItem, IJournalEntrySource {
-		public string EntryName => "Origins/" + typeof(Constellation_Entry).Name;
-		public class Constellation_Entry : JournalEntry {
-			public override string TextKey => "Constellation";
-			public override JournalSortIndex SortIndex => new("Arabel", 3);
-		}
+	public class Constellation : ModItem {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodBow);
 			Item.damage = 20;
@@ -27,6 +26,8 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.shoot = ModContent.ProjectileType<Constellation_P>();
 			Item.value = Item.sellPrice(gold: 1, silver: 60);
 			Item.rare = ItemRarityID.Orange;
+			Item.useAnimation = 30;
+			Item.useTime = 30;
 		}
 		public override Vector2? HoldoutOffset() => new(-4f, 0);
 		public override void AddRecipes() {
@@ -36,19 +37,23 @@ namespace Origins.Items.Weapons.Ranged {
 			.Register();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			Projectile.NewProjectile(
-				source,
-				position,
-				velocity,
-				Item.shoot,
-				damage,
-				knockback,
-				ai0: type == ProjectileID.WoodenArrowFriendly ? Item.shoot : type
-			);
+			float GID = Main.rand.NextFloat();
+			for (int i = 0; i < 2; ++i) {
+				Projectile.NewProjectile(
+					source,
+					position,
+					velocity.RotatedBy(Main.rand.NextFloat(-0.35f, 0.35f)),
+					Item.shoot,
+					damage,
+					knockback,
+					ai2: GID
+				);
+			}
 			return false;
 		}
 	}
 	public class Constellation_P : ModProjectile {
+
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 5;
 		}
@@ -62,18 +67,24 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_ItemUse) {
-				TargetPos = Main.MouseWorld;
+				float mouseLength = Projectile.Distance(Main.MouseWorld);
+				float targetDist = mouseLength * Main.rand.NextFloat(0.75f, 1.25f);
 				Projectile.localAI[1] = Projectile.velocity.Length();
+				TargetFrames = targetDist / Projectile.localAI[1];
 			}
 		}
-		public Vector2 TargetPos {
-			get => new(Projectile.ai[1], Projectile.ai[2]);
-			set => (Projectile.ai[1], Projectile.ai[2]) = value;
+		public float TargetFrames {
+			get => Projectile.ai[0];
+			set => Projectile.ai[0] = value;
 		}
 		public override void AI() {
-			if (Projectile.ai[0] != 0) {
-				Vector2 combined = Projectile.velocity * (TargetPos - Projectile.Center);
-				if (combined.X <= 0 && combined.Y <= 0) Projectile.Kill();
+			Projectile.ai[1]++;
+
+			if (Projectile.ai[1] > Projectile.ai[0]) {
+				Projectile.velocity *= 0.9f; //slow and stop
+				if (Projectile.ai[1] > Projectile.ai[0] + 30) { //die after slowing for 30 frames
+					Projectile.Kill();
+				}
 			}
 			float inShimmer = Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height) && Collision.shimmer ? 1 : 0;
 			if (Projectile.localAI[0] != inShimmer) {
@@ -105,137 +116,164 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void OnKill(int timeLeft) {
 			if (Projectile.ai[0] != 0) {
-				int type = ModContent.ProjectileType<Actual_Constellation>();
-				List<Actual_Constellation> inRangeOf = [];
-				Vector2 center = Projectile.Center;
-				const float max_dist_sq = 16 * 16 * 15 * 15;
-				int highestTimeLeft = 0;
-				foreach (Projectile other in Main.ActiveProjectiles) {
-					if (other.type == type && other.owner == Projectile.owner && other.ModProjectile is Actual_Constellation otherConstellation) {
-						if (otherConstellation.nodes.Count < 5 && otherConstellation.nodes.Any(node => node.Position.DistanceSQ(center) < max_dist_sq)) {
-							inRangeOf.Add(other.ModProjectile as Actual_Constellation);
-							if (highestTimeLeft < other.timeLeft) highestTimeLeft = other.timeLeft;
-						}
-					}
-				}
-				if (inRangeOf.Count > 0) {
-					if (inRangeOf.Count > 1) {
-						inRangeOf[0].Merge(inRangeOf.Skip(1).SelectMany(c => c.nodes));
-						for (int i = 1; i < inRangeOf.Count; i++) {
-							inRangeOf[i].Projectile.active = false;
-						}
-					}
-					inRangeOf[0].AddNode(Projectile.position, Projectile.damage, Projectile.knockBack, Projectile.localAI[1], (int)Projectile.ai[0]);
-					inRangeOf[0].Projectile.timeLeft = highestTimeLeft + 60;
-				} else {
-					Projectile.SpawnProjectile(null,
+				int type = ModContent.ProjectileType<ConstellationNode>();
+				if (Projectile.TryGetOwner(out Player _)) {
+					Projectile.NewProjectile(
+						Projectile.GetSource_Death(),
 						Projectile.Center,
-						default,
+						Vector2.Zero,
 						type,
 						Projectile.damage,
 						Projectile.knockBack,
-						Projectile.ai[0],
-						Projectile.localAI[1]
+						Projectile.owner,
+						ai0: Projectile.ai[2]
 					);
 				}
 			}
 		}
 		public override Color? GetAlpha(Color lightColor) => new(1f, 1f, 1f, 0.9f);
 	}
-	public class Actual_Constellation : ModProjectile {
+
+	public class ConstellationNode : ModProjectile {
+
+		private const float FADE_TIME = 30f;
+		private const float EXPNDRPR = 0.25f;
+
+		public float GroupID => Projectile.ai[0];
+
+		public bool GroupRoot {
+			get => Projectile.ai[1] == 1;
+			set => Projectile.ai[1] = value ? 1 : 0;
+		}
+
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MagicMissile;
+
 		public override void SetDefaults() {
 			Projectile.tileCollide = false;
-			Projectile.width = 0;
-			Projectile.height = 0;
-			Projectile.timeLeft = 5 * 60;
+			Projectile.width = 15;
+			Projectile.height = 15;
+			Projectile.timeLeft = 10 * 60;
+			Projectile.penetrate = -1;
+			Projectile.hostile = false;
+			Projectile.friendly = true;
 		}
-		public List<Constellation_Node> nodes = [];
-		public List<UnorderedTuple<int>> nodeConnections = [];
-		public void Merge(IEnumerable<Constellation_Node> nodes) {
-			foreach (Constellation_Node node in nodes) {
-				AddNode(node);
-			}
-		}
-		public void AddNode(Vector2 position, int damage, float knockback, float speed, int type) {
-			AddNode(new(position, damage, knockback, speed, type));
-		}
-		public void AddNode(Constellation_Node node) {
-			int newNode = nodes.Count;
-			nodes.Add(node);
-			for (int i = 0; i < nodes.Count; i++) {
-				const float max_dist_sq = 16 * 16 * 15 * 15;
-				if (nodes[i].Position.DistanceSQ(node.Position) < max_dist_sq) {
-					bool cross = false;
-					for (int j = 0; !cross && j < nodeConnections.Count; j++) {
-						if (nodeConnections[j].a == i || nodeConnections[j].b == i || nodeConnections[j].a == newNode || nodeConnections[j].b == newNode) continue;
-						Vector2 aStart = nodes[nodeConnections[j].a].Position, aEnd = nodes[nodeConnections[j].b].Position;
-						Vector2 bStart = node.Position, bEnd = nodes[i].Position;
-						cross = Collision.CheckLinevLine(aStart, aEnd, bStart, bEnd).Length > 0;
+		public List<Projectile> Nodes {
+			get {
+				List<Projectile> cns = new();
+				foreach (Projectile p in Main.ActiveProjectiles) {
+					if (p.ai[0] == Projectile.ai[0] && Projectile.owner == p.owner && p.ModProjectile is ConstellationNode cn) {
+						cns.Add(p);
 					}
-					if (cross) continue;
-					UnorderedTuple<int> tuple = new(newNode, i);
-					if (!nodeConnections.Contains(tuple)) nodeConnections.Add(tuple);
 				}
+				return cns;
 			}
+		}
+		public List<UnorderedTuple<int>> NodeConnections {
+			get {
+				List<UnorderedTuple<int>> connections = new();
+				var n = Nodes.Count;
+				for (int i = 0; i < n; i++) {
+					for (int j = i + 1; j < n; j++) {  // Start from i+1 to avoid duplicates
+						connections.Add((i, j));
+					}
+				}
+				return connections;
+			}
+		}
+
+		public override void OnSpawn(IEntitySource source) {
+			GroupRoot = Nodes.Count == 1;
 		}
 		public override void AI() {
-			if (nodes.Count == 0) nodes.Add(new(Projectile.position, Projectile.damage, Projectile.knockBack, Projectile.ai[1], (int)Projectile.ai[0]));
 			if (Projectile.owner != Main.myPlayer) Projectile.timeLeft = 5;
 			if (Projectile.timeLeft > 5 * 60) Projectile.timeLeft = 5 * 60;
-			if (nodes.Count >= 5) Projectile.timeLeft -= 20;
+
+			if (Nodes.Count > 1)
+				Projectile.frameCounter++;
 		}
-		public override void OnKill(int timeLeft) {
-			Vector2 targetPos = Vector2.Zero;
-			float targetWeight = 16 * 20;
-			bool foundTarget = Main.player[Projectile.owner].DoHoming((target) => {
-				Vector2 currentPos = target.Center;
-				float dist = nodes.Min(node => Math.Abs(node.Position.X - currentPos.X) + Math.Abs(node.Position.Y - currentPos.Y));
-				if (target is Player) dist *= 2.5f;
-				if (dist < targetWeight) {
-					targetWeight = dist;
-					targetPos = currentPos;
-					return true;
-				}
-				return false;
-			});
-			for (int i = 0; i < nodes.Count; i++) {
-				Vector2 dir = foundTarget ? nodes[i].Position.DirectionTo(targetPos) : Main.rand.NextVector2CircularEdge(1, 1);
-				Projectile.SpawnProjectile(null,
-					nodes[i].Position,
-					dir * Projectile.ai[1],
-					(int)Projectile.ai[0],
-					Projectile.damage,
-					Projectile.knockBack
-				);
-			}
+
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+			behindNPCs.Add(index);
+			base.DrawBehind(index, behindNPCsAndTiles, behindNPCs, behindProjectiles, overPlayers, overWiresUI);
 		}
+
+		private float Progress => Projectile.timeLeft > FADE_TIME ? MathF.Min(Projectile.frameCounter / FADE_TIME, 1f) : MathF.Max(Projectile.timeLeft / FADE_TIME, 0f);
+
+		private float DrawWidth => MathHelper.Clamp(Progress * (1 + EXPNDRPR) - EXPNDRPR, 0f, 1f);
+
 		public override bool PreDraw(ref Color lightColor) {
-			for (int i = 0; i < nodeConnections.Count; i++) {
-				OriginExtensions.DrawLightningArc(Main.spriteBatch,
-					[nodes[nodeConnections[i].a].Position, nodes[nodeConnections[i].b].Position],
-					offset: -Main.screenPosition,
-					colors: [
-						(0.15f, new Color(80, 204, 219, 0) * 0.5f),
-						(0.1f, new Color(80, 251, 255, 0) * 0.5f),
-						(0.05f, new Color(200, 255, 255, 0) * 0.5f)
-					]
-				);
-			}
-			DrawData data = new(
+			if (GroupRoot) {
+				if (Nodes.Count > 1) {
+					for (int i = 0; i < NodeConnections.Count; i++) {
+						var ca = Nodes[NodeConnections[i].a].Center - Main.screenPosition;
+						var cb = Nodes[NodeConnections[i].b].Center - Main.screenPosition;
+
+						cb = Vector2.Lerp(ca, cb, Progress);
+
+						ModContent.GetInstance<ConstellationDrawSystem>().AddDrawPoint(ca, cb, DrawWidth);
+					}
+					for (int i = 0; i < NodeConnections.Count; i++) {
+						var ca = Nodes[NodeConnections[i].a].Center - Main.screenPosition;
+						var cb = Nodes[NodeConnections[i].b].Center - Main.screenPosition;
+						cb = Vector2.Lerp(ca, cb, Progress);
+						OriginExtensions.DrawLightningArc(Main.spriteBatch,
+							[ca, cb],
+							colors: [
+								(0.15f, new Color(80, 204, 219, 0) * 0.5f),
+								(0.1f, new Color(80, 251, 255, 0) * 0.5f),
+								(0.05f, new Color(200, 255, 255, 0) * 0.5f)
+							]
+						);
+					}
+				}
+				DrawData data = new(
 				TextureAssets.Projectile[Type].Value,
 				Vector2.Zero,
 				null,
 				Color.White
-			) {
-				origin = TextureAssets.Projectile[Type].Size() * 0.5f
-			};
-			for (int i = 0; i < nodes.Count; i++) {
-				data.position = nodes[i].Position - Main.screenPosition;
-				Main.EntitySpriteDraw(data);
+				) {
+					origin = TextureAssets.Projectile[Type].Size() * 0.5f,
+					scale = new Vector2(Progress)
+				};
+				for (int i = 0; i < Nodes.Count; i++) {
+					data.position = Nodes[i].Center - Main.screenPosition;
+					Main.EntitySpriteDraw(data);
+				}
 			}
 			return false;
 		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			if (GroupRoot) {
+				foreach (var c in NodeConnections) {
+					float _ = 0;
+					Vector2 start = Nodes[c.a].Center;
+					Vector2 b = Nodes[c.b].Center;
+					Vector2 end = Vector2.Lerp(start, b, Progress);
+					if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, DrawWidth, ref _)) {
+						return true;
+					}
+				}
+			}
+			return projHitbox.Intersects(targetHitbox);
+		}
+
 		public record struct Constellation_Node(Vector2 Position, int Damage, float Knockback, float Speed, int Type);
+	}
+	public class ConstellationDrawSystem : ModSystem {
+
+		private List<(Vector2, Vector2, float)> drawPoints = [];
+
+		public void AddDrawPoint(Vector2 start, Vector2 end, float progress) {
+			drawPoints.Add((start, end, progress));
+		}
+
+		public override void PostDrawTiles() {
+			Main.spriteBatch.Begin();
+			foreach (var drawPoint in drawPoints) {
+				OriginExtensions.DrawConstellationLine(Main.spriteBatch, drawPoint.Item1, drawPoint.Item2, 20f * drawPoint.Item3);
+			}
+			drawPoints.Clear();
+			Main.spriteBatch.End();
+		}
 	}
 }
