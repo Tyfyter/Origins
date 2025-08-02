@@ -1433,12 +1433,13 @@ Tendon_Shirt: {
 // Defiled_Amalgamation_Mask.DisplayName: "{§Defiled} Amalgamation Mask"
 // Fiberglass_Weaver_Head.DisplayName: Fiberglass Weaver Head
 // World_Cracker_Mask.DisplayName: World Cracker Mask
+// TODev: "'Great for impersonating Origins devs!'"
 
 Plague_Texan_Jacket: {
 	// DisplayName: Plague Texan's Surprisingly Affordable Style
 	/* Tooltip:
 		'''
-		'Great for impersonating Origins devs!'
+		{$TODev}
 
 		''' */
 }
@@ -1447,7 +1448,7 @@ Plague_Texan_Jeans: {
 	// DisplayName: Plague Texan's Jeans
 	/* Tooltip:
 		'''
-		'Great for impersonating Origins devs!'
+		{$TODev}
 
 		''' */
 }
@@ -1456,7 +1457,16 @@ Plague_Texan_Mask: {
 	// DisplayName: Plague Texan's Visage
 	/* Tooltip:
 		'''
-		'Great for impersonating Origins devs!'
+		{$TODev}
+
+		''' */
+}
+
+SceneYMK_Wings: {
+	// DisplayName: Moonlight Glint's Excessively Dyed Wings
+	/* Tooltip:
+		'''
+		{$TODev}
 
 		''' */
 }
@@ -1465,7 +1475,7 @@ Plague_Texan_Sight: {
 	// DisplayName: Plague Texan's Gift
 	/* Tooltip:
 		'''
-		'Great for impersonating Origins devs!'
+		{$TODev}
 		Foresight is '20/20'
 		''' */
 }

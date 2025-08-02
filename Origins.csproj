@@ -30,7 +30,7 @@
 			<HintPath>..\ModAssemblies\Fargowiltas_v3.3.6.2.dll</HintPath>
 		</Reference>
 		<Reference Include="PegasusLib">
-			<HintPath>..\ModAssemblies\PegasusLib_v1.0.6.4.dll</HintPath>
+			<HintPath>..\ModAssemblies\PegasusLib_v1.0.7.1.dll</HintPath>
 		</Reference>
 		<Reference Include="ThoriumMod">
 			<HintPath>..\ModAssemblies\ThoriumMod.dll</HintPath>

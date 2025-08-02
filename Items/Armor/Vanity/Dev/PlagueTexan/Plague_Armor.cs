@@ -1,7 +1,9 @@
 using Origins.Dev;
+using Origins.Items.Armor.Vanity.Dev.KonoDioDa;
 using Origins.Items.Pets;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,6 +14,7 @@ namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 			yield return ModContent.ItemType<Plague_Texan_Jacket>();
 			yield return ModContent.ItemType<Plague_Texan_Jeans>();
 			yield return ModContent.ItemType<Plague_Texan_Sight>();
+			yield return new(ItemDropRule.ByCondition(DropConditions.HardmodeBossBag, ModContent.ItemType<SceneYMK_Wings>()));
 			yield return ModContent.ItemType<Chromatic_Scale>();
 		}
 	}

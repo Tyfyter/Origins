@@ -58,7 +58,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(#2/3, ^2/4) Shimmer Construct !!! (ambience persistance+line-up, SS charge visuals)
+(@2 (Ss charge visuals), #2/3, ^4) Shimmer Construct !!!
 (#, ^2) Trenchmaker
 (^) World Cracker*
 
@@ -149,7 +149,7 @@ WORLD GENERATION:
 (^) Fiberglass Undergrowth
 (X) Fractured Isles
 (^) Limestone Cave
-(#2/3) Riven Hive !!!
+(☻) Riven Hive !!!
 (X) The Dawn
 (#2, 々) The Dusk
 
@@ -213,7 +213,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Bow*
 (^) Enchanted Fiberglass Cannon*
 (^) Enchanted Fiberglass Pistol*
-(#2, ^2) Enchanted Fiberglass Slime !!! (use new anims and variants)
+(☻) Enchanted Fiberglass Slime !!! (use new anims and variants)
 (^) Enchanted Fiberglass Sword*
 (^) Fae Nymph (Whimsical Girl)°
 (^) Felnum Einheri*
@@ -448,7 +448,7 @@ ACCESSORIES:
 (^) Charm of Naivety
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
-(^3) Control Locus* !!!
+(☻) Control Locus* !!!
 (^) Coologne*
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
@@ -683,7 +683,7 @@ WINGS:
 (X) Nova Backblaster
 
 (@, ^3) Vampiric Spell !!!
-(X) Tyfyter's Wings !!!
+(@, ^3) Tyfyter's Wings !!!
 ---
 
 
