@@ -312,8 +312,8 @@ namespace Origins.Tiles.Riven {
 							}
 						}
 					}
-				}
-				frameNum = Math.Max(4, 2 + timer / 4);
+					frameNum = 7;
+				} else frameNum = Math.Max(4, 2 + timer / 4);
 				break;
 				case State.In:
 				if (timer.Warmup(60 * 5)) CurrentState = State.ComingOut;
