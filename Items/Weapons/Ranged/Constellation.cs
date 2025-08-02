@@ -17,7 +17,7 @@ using static Origins.Journal.JournalEntry;
 using static Origins.NPCs.Defiled.Boss.DA_Body_Part;
 
 namespace Origins.Items.Weapons.Ranged {
-	public class Constellation : ModItem {
+	public class Constellation : ModItem, IJournalEntrySource {
 		public string EntryName => "Origins/" + typeof(Constellation_Entry).Name;
 		public class Constellation_Entry : JournalEntry {
 			public override string TextKey => "Constellation";
