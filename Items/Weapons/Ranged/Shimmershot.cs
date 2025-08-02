@@ -136,6 +136,10 @@ namespace Origins.Items.Weapons.Ranged {
 			} else {
 				Projectile.Kill();
 			}
+			if (Projectile.localAI[0] >= Projectile.localAI[1]) {
+				Projectile.position += Main.rand.NextFloat(MathHelper.TwoPi).ToRotationVector2() * Main.rand.NextFloat(0.3f, 0.6f);
+				Projectile.rotation += Main.rand.NextFloat(0.02f) * Main.rand.NextBool().ToDirectionInt();
+			}
 		}
 		public virtual bool ActuallyShoot() {
 			Player player = Main.player[Projectile.owner];
