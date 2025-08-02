@@ -495,9 +495,36 @@ Words: {
 	// 2ndrefcasualfemale: girl
 
 	SelectByTag: {
-		// Person: person
-		// Person;Male!;Casual?: boy
-		// Person;Female!;Casual?: girl
+		// Fallback: gleeblesnort
+
+		Person!: {
+			// "": person
+			// Person;Male!;Casual?: boy
+			// Person;Female!;Casual?: girl
+		}
+
+		Pronoun!: {
+			Female!: {
+				// Subject!: she
+				// Object!: her
+				// Possessive!;Dependent?: her
+				// Possessive!;Independent: hers
+				// Reflexive: herself
+			}
+
+			Male!: {
+				// Subject!: he
+				// Object!: him
+				// Possessive!: his
+				// Reflexive!: himself
+			}
+
+			Neuter!: {
+				// "": it
+				// Possessive!: its
+				// Reflexive!: itself
+			}
+		}
 	}
 }
 

@@ -4665,6 +4665,14 @@ namespace Origins {
 	}
 	public static class ContentExtensions {
 		public static LocalizedText[] GetChildren(this LanguageTree languageTree) => languageTree.Values.Select(tree => tree.value).ToArray();
+		public static IEnumerable<LanguageTree> GetDescendants(this LanguageTree languageTree, bool includeSelf = false) {
+			if (includeSelf && languageTree.value.Key != languageTree.value.Value) yield return languageTree;
+			foreach (LanguageTree branch in languageTree.Values) {
+				foreach (LanguageTree item in branch.GetDescendants(true)) {
+					yield return item;
+				}
+			}
+		}
 		public static LocalizedText SelectFrom(this LanguageTree languageTree, params object[] formatArgs) => Main.rand.Next(languageTree.GetChildren()).WithFormatArgs(formatArgs);
 		public static string SelectFromFormatArg(this LanguageTree languageTree, object format, UnifiedRandom rand = null) => (rand ?? Main.rand)
 			.Next(languageTree.Values

@@ -17,12 +17,12 @@ namespace Origins.UI {
 			readonly LocalizedText l10n;
 			public Word_Snippet(string _tags) {
 				float bestTagCount = float.NegativeInfinity;
-				List<WordTag> tags = _tags.Split(';').Select(WordTag.Parse).ToList();
+				List<WordTag> tags = WordTag.ParseList(_tags);
 				LanguageTree tree = TextUtils.LanguageTree.Find($"Mods.Origins.Words.SelectByTag");
-				LocalizedText[] options = tree.Children;
+				LocalizedText[] options = tree.GetDescendants(false).Select(tree => tree.value).ToArray();
 				//StringBuilder stringBuilder = new();
 				for (int i = 0; i < options.Length; i++) {
-					List<WordTag> optionTags = options[i].Key.Split('.')[^1].Split(';').Select(WordTag.Parse).ToList();
+					List<WordTag> optionTags = WordTag.ParseList(options[i].Key);
 					float matchQuality = WordTag.GetMatch(tags, optionTags, out float match, out float mismatch);
 					if (bestTagCount < matchQuality) {
 						bestTagCount = matchQuality;
@@ -41,6 +41,9 @@ namespace Origins.UI {
 			public readonly string Text { get; } = text;
 			public readonly TagImportance Importance { get; } = importance;
 			static readonly Regex tagRegex = new("({(\\w+)}|\\w+)(.*)");
+			public static List<WordTag> ParseList(string text) {
+				return text.Split("SelectByTag.")[^1].Split([';', '.'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(Parse).ToList();
+			}
 			public static WordTag Parse(string text) {
 				Match match = tagRegex.Match(text);
 				string tagText;
