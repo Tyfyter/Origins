@@ -1,6 +1,7 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Origins.Items.Materials;
+using Origins.Journal;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics.Primitives;
-using Origins.Items.Materials;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,16 @@ using Terraria.GameContent.Drawing;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Journal.JournalEntry;
 using static Origins.NPCs.Defiled.Boss.DA_Body_Part;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Constellation : ModItem {
+		public string EntryName => "Origins/" + typeof(Constellation_Entry).Name;
+		public class Constellation_Entry : JournalEntry {
+			public override string TextKey => "Constellation";
+			public override JournalSortIndex SortIndex => new("Arabel", 3);
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodBow);
 			Item.damage = 20;
