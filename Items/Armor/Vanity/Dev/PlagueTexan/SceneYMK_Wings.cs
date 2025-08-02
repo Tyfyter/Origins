@@ -21,6 +21,7 @@ public class SceneYMK_Wings : ModItem {
 	}
 	public override void SetDefaults() {
 		Item.DefaultToAccessory();
+		Item.rare = AltCyanRarity.ID;
 		Item.wingSlot = WingsID;
 	}
 
