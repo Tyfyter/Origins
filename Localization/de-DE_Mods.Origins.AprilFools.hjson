@@ -146,6 +146,13 @@ NPCs: {
 	// Defiled_Amalgamation.DisplayName: District Attorney
 	// Defiled_Tripod.DisplayName: Blŏkusland™ Certified Weaponized Catgirl
 	// Ancient_Riven_Fighter.DisplayName: Ancient Riven Knownolimitsoform
+	// Shimmer_Chunk1.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Chunk2.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Chunk3.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Turret_Chunk1.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Turret_Chunk2.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Turret_Chunk3.DisplayName: "{$ItemName.Handgun}"
+	// Goo_Wall: Sticky Wall
 }
 
 // Bestiary.Leaf_Snapper: Hello!

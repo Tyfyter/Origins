@@ -4670,12 +4670,12 @@ Lost_Ore.DisplayName: Mods.Origins.Items.Lost_Ore.DisplayName
 
 Plague_Texan_Set: {
 	DisplayName: Plague Texan Set
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Chee_Set: {
 	DisplayName: Chee Set
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Slag_Bucket: {
@@ -6354,7 +6354,7 @@ Aetherite_Ore_Item: {
 
 Kono_Dio_Da_Set: {
 	DisplayName: Dio Set
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Kono_Dio_Da_Wings: {
