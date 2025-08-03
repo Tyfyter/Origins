@@ -759,16 +759,18 @@ namespace Origins {
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void SetFargosStaticDefaults() {
 			OriginsSets.NPCs.TargetDummies[NPCType<Fargowiltas.NPCs.SuperDummy>()] = true;
+
+			PaintingsNotFromVendor[ItemType<EchPainting>()] = true;
+			PaintingsNotFromVendor[ItemType<WiresPainting>()] = true;
 		}
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosRecipes() {
-			// until brine pool enemies have banners
-			/* Recipe.Create(ItemType<Brine_Key>())
-				.AddRecipeGroup("Origins:AnyBrineBanner", 10)
-				.AddCondition(Condition.Hardmode)
-				.AddTile(TileID.Solidifier)
-				.DisableDecraft()
-				.Register();*/
+			Recipe.Create(ItemType<Brine_Key>())
+			   .AddRecipeGroup("Origins:AnyBrineBanner", 10)
+			   .AddCondition(Condition.Hardmode)
+			   .AddTile(TileID.Solidifier)
+			   .DisableDecraft()
+			   .Register();
 			Recipe.Create(ItemType<Defiled_Key>())
 				.AddRecipeGroup("Origins:AnyDefiledBanner", 10)
 				.AddCondition(Condition.Hardmode)
@@ -800,9 +802,6 @@ namespace Origins {
 				.AddTile(TileID.MythrilAnvil)
 				.DisableDecraft()
 				.Register();
-
-			PaintingsNotFromVendor[ItemType<EchPainting>()] = true;
-			PaintingsNotFromVendor[ItemType<WiresPainting>()] = true;
 
 			#region Crate Recipes
 			static void CrateRecipe(int result, int resultAmount = 1, int crate = 0, int crateHard = 0, int crateAmount = 1, int extraItem = 0, params Condition[] conditions) {
@@ -928,8 +927,8 @@ namespace Origins {
 						riven.Add(Item.BannerToItem(GetBanner(i)));
 				}
 			}
-			// until brine pool enemies have banners
-			//RecipeGroup.RegisterGroup("Origins:AnyBrineBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Brine_Pool.DisplayName")), [.. brine]));
+
+			RecipeGroup.RegisterGroup("Origins:AnyBrineBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Brine_Pool.DisplayName")), [.. brine]));
 			RecipeGroup.RegisterGroup("Origins:AnyDefiledBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Defiled_Wastelands.DisplayName")), [.. defiled]));
 			RecipeGroup.RegisterGroup("Origins:AnyRivenBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Riven_Hive.DisplayName")), [.. riven]));
 		}

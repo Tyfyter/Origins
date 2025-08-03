@@ -27,6 +27,9 @@ namespace Origins.NPCs.Brine {
 		[CloneByReference]
 		public HashSet<int> TargetNPCTypes { get; private set; } = [];
 		protected override bool CloneNewInstances => true;
+		public override void Load() {
+			if (Mod.FileExists($"Tiles/Banners/{Name}_Banner_Item.rawimg")) this.AddBanner();
+		}
 		public override void SetStaticDefaults() {
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
