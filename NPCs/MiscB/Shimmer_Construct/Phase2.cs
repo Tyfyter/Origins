@@ -67,6 +67,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
 			Vector2 targetDiff = direction.RotatedBy(npc.direction) * 16 * 30;
 			npc.velocity = diff.DirectionFrom(targetDiff) * MoveSpeed;
+			npc.rotation = direction.ToRotation() - MathHelper.PiOver2;
 			int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
 			if (shotsToHaveFired > npc.ai[1]) {
 				SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
