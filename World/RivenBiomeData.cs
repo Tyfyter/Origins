@@ -357,6 +357,7 @@ namespace Origins.World.BiomeData {
 				Rectangle genRange = WorldBiomeGeneration.ChangeRange.GetRange();
 				ushort barnacleWall = (ushort)OriginsWall.GetWallID<Barnacle_Wall>(WallVersion.Natural);
 				{// speckle
+					const float barnacling_scale = 0.8f;
 					for (int k = genRand.Next(1, 4); k-- > 0;) {
 						int x = genRange.X + genRand.Next(genRange.Width);
 						int y = genRange.Y + genRand.Next(genRange.Height);
@@ -365,13 +366,13 @@ namespace Origins.World.BiomeData {
 						for (int l = 0; l < smoothness; l++) {
 							Vector2 posMin = new(float.PositiveInfinity);
 							Vector2 posMax = new(float.NegativeInfinity);
-							int size = genRand.Next(10, 30);
+							float size = genRand.NextFloat(10, 30);
 							Vector2 offset = genRand.NextFloat(0, MathHelper.TwoPi).ToRotationVector2() * (size + genRand.NextFloat(5, 10));
 							Carver.DoCarve(
 								Carver.TileFilter(tile => tile.WallType == fleshWallType)
 								+ Carver.Circle(// tweak to change the shape and size of the barnacled areas
-									barnPos + offset,
-									scale: size,
+									barnPos + offset * barnacling_scale,
+									scale: size * barnacling_scale,
 									rotation: genRand.NextFloat(0, MathHelper.TwoPi),
 									aspectRatio: genRand.NextFloat(1, 1.4f),
 									ref posMin,
