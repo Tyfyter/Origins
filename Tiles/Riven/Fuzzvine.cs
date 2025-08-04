@@ -62,7 +62,7 @@ namespace Origins.Tiles.Riven {
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
-			if (!above.HasTile || (above.TileType != Type && (!AnchorTiles.Contains(above.TileType) || above.TopSlope))) {
+			if (!above.HasTile || (above.TileType != Type && (!AnchorTiles.Contains(above.TileType) || !above.HasSolidFace(TileExtenstions.TileSide.Bottom)))) {
 				WorldGen.KillTile(i, j);
 				return false;
 			}

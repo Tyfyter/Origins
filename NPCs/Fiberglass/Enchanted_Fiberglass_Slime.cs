@@ -73,6 +73,7 @@ namespace Origins.NPCs.Fiberglass {
 				}
 				NPC.hide = true;
 			}
+			NPC.chaseable = !NPC.hide;
 		}
 		public override bool? CanBeHitByItem(Player player, Item item) => NPC.hide ? false : null;
 		public override bool? CanBeHitByProjectile(Projectile projectile) => NPC.hide ? false : null;
@@ -91,7 +92,7 @@ namespace Origins.NPCs.Fiberglass {
 			oldGlass[0] = NPC.hide;
 		}
 		public override void DrawBehind(int index) {
-			Main.instance.DrawCacheNPCsMoonMoon.Add(index);
+			if (NPC.hide) Main.instance.DrawCacheNPCsMoonMoon.Add(index);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shaped_Glass>(), 25));

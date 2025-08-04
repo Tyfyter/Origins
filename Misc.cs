@@ -4646,6 +4646,31 @@ namespace Origins {
 				TileObject.Place(objectData);
 			}
 		}
+		public static bool HasSolidFace(this Tile tile, TileSide side) {
+			if (tile.BlockType == BlockType.Solid) return true;
+			switch (side) {
+				case TileSide.Top:
+				return tile.BlockType is BlockType.SlopeUpLeft or BlockType.SlopeUpRight;
+
+				case TileSide.Bottom:
+				return tile.BlockType is BlockType.HalfBlock or BlockType.SlopeDownLeft or BlockType.SlopeDownRight;
+
+				case TileSide.Left:
+				return tile.BlockType is BlockType.SlopeDownLeft or BlockType.SlopeUpLeft;
+
+				case TileSide.Right:
+				return tile.BlockType is BlockType.SlopeDownRight or BlockType.SlopeUpRight;
+
+				default:
+				throw new ArgumentException($"Invalid tile side {side}", nameof(side));
+			}
+		}
+		public enum TileSide {
+			Top,
+			Bottom,
+			Left,
+			Right
+		}
 	}
 	public static class ProjectileExtensions {
 		public static void DoBoomerangAI(this Projectile projectile, Entity owner, float returnSpeed = 9f, float returnAcceleration = 0.4f, bool doSound = true) {

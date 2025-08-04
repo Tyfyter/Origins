@@ -70,6 +70,11 @@ Items: {
 		+8% ranged and explosive critical strike chance
 		'The Western look goes well with anything you wear, but it looks even better with nothing ( ͡° ͜ʖ ͡°)'
 		''' */
+	/* Shaped_Glass.Tooltip:
+		'''
+		{$Mods.Origins.Items.Shaped_Glass.Tooltip}
+		'No it doesn't halve your health for double damage.'
+		''' */
 }
 
 // Prefixes.Wholesome_Prefix.DisplayName: Holesome
@@ -141,6 +146,14 @@ NPCs: {
 	// Defiled_Amalgamation.DisplayName: District Attorney
 	// Defiled_Tripod.DisplayName: Blŏkusland™ Certified Weaponized Catgirl
 	// Ancient_Riven_Fighter.DisplayName: Ancient Riven Knownolimitsoform
+	// Shimmer_Chunk1.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Chunk2.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Chunk3.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Turret_Chunk1.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Turret_Chunk2.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Turret_Chunk3.DisplayName: "{$ItemName.Handgun}"
+	// Goo_Wall: Sticky Wall
+	// Enchanted_Fiberglass_Slime.DisplayName: Enchanted Fiberglasss Lime
 }
 
 // Bestiary.Leaf_Snapper: Hello!

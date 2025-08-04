@@ -149,7 +149,7 @@ WORLD GENERATION:
 (^) Fiberglass Undergrowth
 (X) Fractured Isles
 (^) Limestone Cave
-(☻) Riven Hive !!!
+(#2) Riven Hive !!!
 (X) The Dawn
 (#2, 々) The Dusk
 
@@ -213,7 +213,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Bow*
 (^) Enchanted Fiberglass Cannon*
 (^) Enchanted Fiberglass Pistol*
-(☻) Enchanted Fiberglass Slime !!! (use new anims and variants)
+(^) Enchanted Fiberglass Slime
 (^) Enchanted Fiberglass Sword*
 (^) Fae Nymph (Whimsical Girl)°
 (^) Felnum Einheri*
@@ -636,8 +636,8 @@ VANITY:
 (X) Steampunk Mechanist Set
 (^) Sunflower Sandals*
 
-(@, #, ^6) DIO's Set !!! (everything but wings currently unimplemented, wings using placeholder texture)
-(^) First Dream
+(#2, ^2/6) DIO's Set !!! (everything but wings currently unimplemented, wings using placeholder texture)
+(@, #2) First Dream !!! (Byteloss)
 (@, #, ^6) Tyfyter's Set* !!! (wings)
 
 (^) Acrid Dye
@@ -810,7 +810,7 @@ RANGED WEAPONS:
 (^) Neural Network*
 (^) Riven Splitter*
 (^) Shardcannon*
-(^) Shimmershot
+(#3, ^2/4) Shimmershot !!!
 (^) Sleetfire*
 (^) Sunflower Seed Shooter*
 (^) Tendon Tear*
@@ -1660,6 +1660,8 @@ CROSS-MOD CONTENT:
 (^) Fargo's Fountain biome change
 (ᗢ) Fargo's sell boss/rare npc summons
 (ᗢ) Fargo's sell evil woods
+(ᗢ) Luiafk Skeleton Merchant update
+(ᗢ) Luiafk Mobile Merchant sells Merchant stuff
 
 (X) Contagion Assimilation
 

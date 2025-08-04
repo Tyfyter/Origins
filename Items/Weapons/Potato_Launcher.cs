@@ -1,17 +1,15 @@
-using Microsoft.Xna.Framework;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Projectiles;
-using Origins.Tiles.Other;
 using PegasusLib;
+using System;
 using Terraria;
-using Terraria.DataStructures;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons {
-    public class Potato_Launcher : ModItem {
-        public override void SetDefaults() {
+	public class Potato_Launcher : ModItem {
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FlintlockPistol);
 			Item.damage = 17;
 			Item.DamageType = DamageClass.Generic;
@@ -37,8 +35,8 @@ namespace Origins.Items.Weapons {
 			}
 			position += velocity.SafeNormalize(default).RotatedBy(player.direction * -MathHelper.PiOver2) * 6;
 		}
-        public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
-    }
+		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
+	}
 	public class Potato_P : ModProjectile {
 		public override string Texture => "Origins/Items/Other/Consumables/Food/Potato";
 		public override void SetStaticDefaults() {
@@ -115,6 +113,43 @@ namespace Origins.Items.Weapons {
 			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
 			Projectile.Damage();
 			Projectile.Kill();
+		}
+	}
+	public class Greater_Summoning_Potato_P : Potato_P {
+		public static int ID { get; private set; }
+		public override string Texture => "Origins/Items/Other/Consumables/Greater_Summoning_Potion_AF";
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ID = Type;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			CloneTgt(target, hit.Knockback);
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			CloneTgt(target, info.Knockback);
+		}
+		void CloneTgt(Entity target, float knockback) {
+			int entityID = int.MinValue;
+			if (target is Player plr) {
+				if (plr.Male) entityID = NPCID.SmallBaldZombie;
+				else entityID = NPCID.BigFemaleZombie;
+			} else if (target is NPC npc && !OriginsSets.NPCs.TargetDummies[npc.type]) entityID = npc.netID;
+			if (entityID != int.MinValue) {
+				if (NetmodeActive.MultiplayerClient) {
+					ModPacket packet = Origins.instance.GetPacket();
+					packet.Write(Origins.NetMessageType.clone_npc);
+					packet.WritePackedVector2(target.Center);
+					packet.Write(entityID);
+					packet.WritePackedVector2(target.velocity);
+					packet.Send();
+				} else if (NetmodeActive.SinglePlayer) {
+					NPC npc = NPC.NewNPCDirect(target.GetSource_FromThis(), target.Center, entityID);
+					npc.velocity = target.velocity * MathF.Pow(1.2f, npc.knockBackResist);
+					npc.value = 0;
+					npc.SpawnedFromStatue = true;
+					SoundEngine.PlaySound(SoundID.Item2, target.position);
+				}
+			}
 		}
 	}
 }

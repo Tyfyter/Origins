@@ -81,11 +81,11 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
 			Item.vanity = true;
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Cyan;
 			Item.value = Item.sellPrice(gold: 1);
 		}
 		void SetNameOverride() {
-			Item.SetNameOverride(Lang.GetItemName(Item.type).Format(this.GetLocalization($"Mode_{modes[mode].Name}")));
+			Item.SetNameOverride($"{DisplayName.Value} ({this.GetLocalization($"Mode_{modes[mode].Name}")})");
 		}
 		public override bool CanRightClick() => !ItemSlot.ShiftInUse;
 		public override void RightClick(Player player) {

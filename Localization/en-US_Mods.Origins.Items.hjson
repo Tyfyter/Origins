@@ -1434,6 +1434,7 @@ Defiled_Amalgamation_Mask.DisplayName: "{§Defiled} Amalgamation Mask"
 Fiberglass_Weaver_Head.DisplayName: Fiberglass Weaver Head
 World_Cracker_Mask.DisplayName: World Cracker Mask
 TODev: "'Great for impersonating Origins devs!'"
+DioSet: "'You thought it was a dev set, but it was me, Dio!'"
 
 Plague_Texan_Jacket: {
 	DisplayName: Plague Texan's Surprisingly Affordable Style
@@ -4670,12 +4671,12 @@ Lost_Ore.DisplayName: Mods.Origins.Items.Lost_Ore.DisplayName
 
 Plague_Texan_Set: {
 	DisplayName: Plague Texan Set
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Chee_Set: {
 	DisplayName: Chee Set
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Slag_Bucket: {
@@ -5249,7 +5250,7 @@ Retaliatory_Tendril: {
 }
 
 First_Dream: {
-	DisplayName: First Dream ({0})
+	DisplayName: First Dream
 	Mode_Chrersis: Chrersis
 	Mode_Diver: Diver
 	Tooltip:
@@ -5763,6 +5764,11 @@ Ashen_Chest: {
 
 Greater_Summoning_Potion: {
 	DisplayName: Greater Summoning Potion
+	Tooltip: Increases your max number of minions by 2
+}
+
+Greater_Summoning_Potato: {
+	DisplayName: Greater Summoning Potato
 	Tooltip: Increases your max number of minions by 2
 }
 
@@ -6354,12 +6360,56 @@ Aetherite_Ore_Item: {
 
 Kono_Dio_Da_Set: {
 	DisplayName: Dio Set
-	Tooltip: ""
+	Tooltip:
+		'''
+		{$DioSet}
+		{$CommonItemTooltip.RightClickToOpen}
+		'''
 }
 
 Kono_Dio_Da_Wings: {
 	DisplayName: Vampiric Spell
-	Tooltip: ""
+	Tooltip:
+		'''
+		{$DioSet}
+		{$TODev}
+		'''
+}
+
+Dio_Breastplate: {
+	DisplayName: Dio's Ornate Shirt
+	Tooltip:
+		'''
+		{$DioSet}
+		{$TODev}
+		'''
+}
+
+Dio_Greaves: {
+	DisplayName: Dio's Eccentric Breeches
+	Tooltip:
+		'''
+		{$DioSet}
+		{$TODev}
+		'''
+}
+
+Dio_Helmet: {
+	DisplayName: Dio's Hair
+	Tooltip:
+		'''
+		{$DioSet}
+		{$TODev}
+		'''
+}
+
+Dio_Scarf: {
+	DisplayName: Dio's Scarf
+	Tooltip:
+		'''
+		{$DioSet}
+		{$TODev}
+		'''
 }
 
 Calcified_Riven_Flesh_Item: {

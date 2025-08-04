@@ -157,14 +157,14 @@ namespace Origins.Tiles.Riven {
 		static Rectangle fallPastHitbox = new(0, 0, 20, 40 * 2);
 		static Rectangle fallThroughHitbox = new(0, 0, 20, 40 * 2);
 		public delegate bool GenerationCheck(int i, int j, bool checkCramped);
-		public (string name, TilePatternMatcher pattern, GenerationCheck extraChecks)[] patterns = [..SetupPatterns()];
-		static IEnumerable<(string name, TilePatternMatcher pattern, GenerationCheck extraChecks)> SetupPatterns() {
+		public (string name, TilePatternMatcher pattern, GenerationCheck extraChecks, double weight)[] patterns = [..SetupPatterns()];
+		static IEnumerable<(string name, TilePatternMatcher pattern, GenerationCheck extraChecks, double weight)> SetupPatterns() {
 			Dictionary<char, Predicate<Tile>> coralPredicates = new() {
 				['X'] = OriginExtensions.HasFullSolidTile,
 				['_'] = tile => !tile.HasTile,
 				['L'] = tile => OriginExtensions.HasFullSolidTile(tile) && (tile.BlockType == BlockType.Solid || tile.RightSlope),
 				['R'] = tile => OriginExtensions.HasFullSolidTile(tile) && (tile.BlockType == BlockType.Solid || tile.LeftSlope),
-				['|'] = tile => !tile.TileIsType(ModContent.TileType<Shelf_Coral>()),
+				['|'] = tile => !tile.TileIsType(ModContent.TileType<Shelf_Coral>()) && (tile.LiquidAmount < 64 || tile.LiquidType != LiquidID.Water),
 				['A'] = tile => tile.LiquidAmount >= 128 && tile.LiquidType == LiquidID.Water,
 			};
 			yield return ("Centered", new(
@@ -179,7 +179,7 @@ namespace Origins.Tiles.Riven {
 			), (i, j, checkCramped) => {
 				playerHitbox.Location = new(i * 16 + 8 - 10, j * 16 - 40);
 				return !playerHitbox.OverlapsAnyTiles();
-			});
+			}, 1);
 
 			yield return ("Left (Soup)", new(
 				"""
@@ -191,7 +191,7 @@ namespace Origins.Tiles.Riven {
 				 AAA
 				""",
 				coralPredicates
-			), null);
+			), null, 1);
 			yield return ("Right (Soup)", new(
 				"""
 				 |  
@@ -202,7 +202,7 @@ namespace Origins.Tiles.Riven {
 				AAA 
 				""",
 				coralPredicates
-			), null);
+			), null, 1);
 
 			yield return ("Left", new(
 				"""
@@ -220,7 +220,7 @@ namespace Origins.Tiles.Riven {
 				fallPastHitbox.Location = new((i + 3) * 16, j * 16 + 8 - 40);
 				fallThroughHitbox.Location = new((i + 1) * 16, j * 16 + 8 - 40);
 				return fallPastHitbox.OverlapsAnyTiles() && !fallThroughHitbox.OverlapsAnyTiles();
-			});
+			}, 1);
 			yield return ("Right", new(
 				"""
 				 |  
@@ -237,16 +237,31 @@ namespace Origins.Tiles.Riven {
 				fallPastHitbox.Location = new((i - 3) * 16 - 16, j * 16 + 8 - 40);
 				fallThroughHitbox.Location = new((i - 2) * 16, j * 16 + 8 - 40);
 				return fallPastHitbox.OverlapsAnyTiles() && !fallThroughHitbox.OverlapsAnyTiles();
-			});
+			}, 1);
+
+			yield return ("Open", new(
+				"""
+				  |  
+				  |  
+				  |  
+				__O__
+				 ___ 
+				""",
+				coralPredicates
+			), (i, j, checkCramped) => {
+				playerHitbox.Location = new(i * 16 + 8 - 10, j * 16 - 40);
+				return !playerHitbox.OverlapsAnyTiles();
+			}, 0.03);
 		}
-		public bool CanGenerate(int i, int j, bool checkCramped = true) {
+		public bool CanGenerate(int i, int j, out double weight, bool checkCramped = true) {
 			playerHitbox.Location = new(i * 16 - 10, j * 16 - 40);
+			weight = 0;
 			if (playerHitbox.OverlapsAnyTiles()) return false;
 			Point coralPos = new(i, j);
 			for (int k = 0; k < patterns.Length; k++) {
-				if (patterns[k].pattern.Matches(coralPos) && (patterns[k].extraChecks?.Invoke(i, j, checkCramped) ?? true)) return true;
+				if (patterns[k].pattern.Matches(coralPos) && (patterns[k].extraChecks?.Invoke(i, j, checkCramped) ?? true)) weight += patterns[k].weight;
 			}
-			return false;
+			return weight > 0;
 		}
 	}
 	public class Shelf_Coral_TE : ModTileEntity {

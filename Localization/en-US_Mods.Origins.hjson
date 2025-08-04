@@ -1912,6 +1912,7 @@ Projectiles: {
 	SC_Firework.DisplayName: Shimmerwork
 	SC_Firework_Spark.DisplayName: Shimmerwork Spark
 	ConstellationNode.DisplayName: Constellation Node
+	Greater_Summoning_Potato_P.DisplayName: Greater Summoning Potato
 }
 
 Prefixes: {

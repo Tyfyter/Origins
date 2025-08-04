@@ -58,11 +58,12 @@ namespace Origins.Questing {
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
 		public override bool HasQuestButton(NPC npc, Player player) {
-			bool hasEnoughConfetti = false;
+			int confettiAmount = 0;
 			foreach (Item item in player.inventory) {
-				if (item.active && item.type == ItemID.Confetti && item.stack >= confettiToGive) hasEnoughConfetti = true;
+				if (item.active && item.type == ItemID.Confetti) confettiAmount += item.stack;
 			}
-			return npc.type != NPCID.PartyGirl && !NPCID.Sets.IsTownPet[npc.type] && !NPCID.Sets.IsTownSlime[npc.type] && !npcsGivenConfetti.Contains(npc.type) && Stage == 1 && hasEnoughConfetti && !HasGivenAllConfetti;
+			if (npc.type == NPCID.PartyGirl || NPCID.Sets.IsTownPet[npc.type] || NPCID.Sets.IsTownSlime[npc.type] || OriginsSets.NPCs.TargetDummies[npc.type]) return false;
+			return !npcsGivenConfetti.Contains(npc.type) && Stage == 1 && confettiAmount >= confettiToGive && !HasGivenAllConfetti;
 		}
 		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.PartyGirl && Stage == 0;
@@ -87,7 +88,8 @@ namespace Origins.Questing {
 				Completed ? npcsToGiveConfetti : npcsGivenConfetti.Count,
 				npcsToGiveConfetti,
 				confettiToGive,
-				StageTagOption(HasGivenAllConfetti)
+				StageTagOption(HasGivenAllConfetti),
+				StageTagOption(Completed)
 			);
 		}
 		public override void SetStaticDefaults() {

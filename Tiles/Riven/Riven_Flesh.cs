@@ -131,8 +131,9 @@ namespace Origins.Tiles.Riven {
 					if (Main.tile[i + k, j + l].TileIsType(wrycoral)) existing++;
 				}
 			}
+			Tile tile = Main.tile[i, j];
 			Tile below = Main.tile[i, j + 1];
-			if (!below.HasTile && WorldGen.genRand.NextBool(30)) {
+			if (!below.HasTile && tile.HasSolidFace(TileExtenstions.TileSide.Bottom) && WorldGen.genRand.NextBool(30)) {
 				if (WorldGen.genRand.NextBool(5)) {
 					if (TileExtenstions.CanActuallyPlace(i, j + 1, WorldGen.genRand.NextBool(Math.Max(20 - existing, 1)) ? wrycoral : TileType<Fuzzvine_Lorg>(), WorldGen.genRand.Next(3), 0, out TileObject objectData, onlyCheck: false, checkStay: true, cut: false)) {
 						TileObject.Place(objectData);
@@ -145,7 +146,7 @@ namespace Origins.Tiles.Riven {
 				//Main.LocalPlayer.Teleport(new Vector2(i, j).ToWorldCoordinates(), 1);
 			}
 			Tile above = Framing.GetTileSafely(i, j - 1);
-			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
+			if (!above.HasTile && tile.BlockType == BlockType.Solid) {
 				if (WorldGen.genRand.NextBool(250)) {
 					above.ResetToType((ushort)ModContent.TileType<Acetabularia>());
 				} else if (WorldGen.genRand.NextBool(10) && TileExtenstions.CanActuallyPlace(i, j - 1, WorldGen.genRand.NextBool(3) ? TileType<Marrowick_Coral>() : TileType<Riven_Large_Foliage>(), 0, 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {

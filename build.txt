@@ -6,4 +6,4 @@ buildIgnore = *.csproj, *.xcf, *.user, obj\*, bin\*, .vs\*, Items\Weapons\Felnum
 includePDB = false
 sortAfter = CalamityMod, WingSlot, AltLibrary, ThoriumMod, ColoredDamageTypes, MusicDisplay, ProceduralMusicLib, Fargowiltas
 modReferences = AltLibrary, BetterDialogue, PegasusLib
-weakReferences = ThoriumMod, CalamityMod, MagicStorage, Fargowiltas
+weakReferences = ThoriumMod, CalamityMod, MagicStorage, Fargowiltas, miningcracks_take_on_luiafk

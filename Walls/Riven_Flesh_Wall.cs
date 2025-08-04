@@ -19,9 +19,8 @@ namespace Origins.Walls {
 			DustType = Riven_Hive.DefaultTileDust;
 		}
 		public override void RandomUpdate(int i, int j) {
-			// normally we'd also include some randomness, but a wall in a place that matches one of the patterns getting randomly updated is rare enough on its own
 			Shelf_Coral shelfCoral = GetInstance<Shelf_Coral>();
-			if (shelfCoral.CanGenerate(i, j) && TileExtenstions.CanActuallyPlace(i, j, shelfCoral.Type, 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
+			if (shelfCoral.CanGenerate(i, j, out double weight) && weight > WorldGen.genRand.NextFloat() && TileExtenstions.CanActuallyPlace(i, j, shelfCoral.Type, 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
 				Point16 topLeft = TileObjectData.TopLeft(i, j);
 
 				int id = GetInstance<Shelf_Coral_TE>().Place(topLeft.X, topLeft.Y);
