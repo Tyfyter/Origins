@@ -254,7 +254,17 @@ namespace Origins {
 						short i = reader.ReadInt16();
 						short j = reader.ReadInt16();
 						bool on = reader.ReadBoolean();
-						if (TileLoader.GetTile(Framing.GetTileSafely(i, j).TileType) is ModGemLock gemLock) gemLock.ToggleGemLock(i, j, on); 
+						if (TileLoader.GetTile(Framing.GetTileSafely(i, j).TileType) is ModGemLock gemLock) gemLock.ToggleGemLock(i, j, on);
+						break;
+					}
+
+					case clone_npc: {
+						Vector2 position = reader.ReadPackedVector2();
+						NPC npc = NPC.NewNPCDirect(Entity.GetSource_None(), position, reader.ReadInt32());
+						npc.velocity = reader.ReadPackedVector2() * MathF.Pow(1.2f, npc.knockBackResist);
+						npc.value = 0;
+						npc.SpawnedFromStatue = true;
+						SoundEngine.PlaySound(SoundID.Item2, position);
 						break;
 					}
 
@@ -308,7 +318,7 @@ namespace Origins {
 							Knockback = reader.ReadSingle(),
 						};
 						int armorPenetration = reader.ReadInt32();
-						NPCs.Riven.World_Cracker.World_Cracker_Head.DamageArmor(npc, hit, armorPenetration, fromNet:true);
+						NPCs.Riven.World_Cracker.World_Cracker_Head.DamageArmor(npc, hit, armorPenetration, fromNet: true);
 
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the other clients
@@ -532,6 +542,7 @@ namespace Origins {
 			internal const byte mass_teleport = 29;
 			internal const byte shinedown_spawn_shadows = 30;
 			internal const byte sync_npc_interactions = 31;
+			internal const byte clone_npc = 32;
 		}
 	}
 	public interface IChestSyncRecipient {

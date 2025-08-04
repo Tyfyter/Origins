@@ -5766,6 +5766,11 @@ Greater_Summoning_Potion: {
 	Tooltip: Increases your max number of minions by 2
 }
 
+Greater_Summoning_Potato: {
+	DisplayName: Greater Summoning Potato
+	Tooltip: Increases your max number of minions by 2
+}
+
 Fake_Defiled_Altar_Item: {
 	DisplayName: "{§Defiled} Altar"
 	Tooltip: A placeable {§Defiled} Altar. Cannot be mined to get hardmode ores

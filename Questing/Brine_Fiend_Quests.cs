@@ -32,11 +32,11 @@ namespace Origins.Questing {
 						hasTitanPotion = false;
 					};
 					UpdateInventoryEvent = (item) => {
-						if (item.type == ModContent.ItemType<Greater_Summoning_Potion>()) {
+						if (item?.ModItem is Greater_Summoning_Potion) {
 							hasSummonPotion = true;
 						} else if (item.type == ItemID.TeleportationPotion) {
 							hasTeleportPotion = true;
-						}else if (item.type == ItemID.TitanPotion) {
+						} else if (item.type == ItemID.TitanPotion) {
 							hasTitanPotion = true;
 						}
 						if (!hasNotified && HasRequiredItems) {
@@ -72,7 +72,7 @@ namespace Origins.Questing {
 			Item[] inventory = Main.LocalPlayer.inventory;
 			ConsumeItems(
 				inventory,
-				((i) => i.type == ModContent.ItemType<Greater_Summoning_Potion>(), 1),
+				((i) => i?.ModItem is Greater_Summoning_Potion, 1),
 				((i) => i.type == ItemID.TeleportationPotion, 1),
 				((i) => i.type == ItemID.TitanPotion, 1)
 			);

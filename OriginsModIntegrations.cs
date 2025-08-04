@@ -36,28 +36,19 @@ using Origins.Buffs;
 using Origins.NPCs.Brine.Boss;
 using Origins.Tiles.Riven;
 using Origins.Tiles.Defiled;
-using Origins.Tiles.Endowood;
-using Origins.Tiles.Marrowick;
 using Origins.Tiles.Brine;
-using Origins.CrossMod.MagicStorage.Tiles;
 using Origins.Items.Materials;
-using Origins.NPCs.Defiled;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.CrossMod.Fargos.Items;
 using Origins.Items.Other;
 using ThoriumMod.Items.Misc;
-using Fargowiltas.Common.Configs;
-using Origins.Water;
 using Origins.Items.Armor.Other;
 using Origins.NPCs.MiscB;
-using Terraria.GameContent;
-using Microsoft.Build.Tasks;
 using static Terraria.ModLoader.ModContent;
 using static Origins.OriginsSets.Items;
 using ThoriumMod.Items.Painting;
-using ThoriumMod.Tiles;
 using ThoriumMod.Items.Donate;
 using Fargowiltas.Items.Tiles;
 using Origins.Items.Weapons.Demolitionist;
@@ -527,9 +518,6 @@ namespace Origins {
 				OriginsSets.NPCs.TargetDummies[luiafk.Find<ModNPC>("Deeps").Type] = true;
 			}
 		}
-		public static void SetStaticDefaults() {
-			if (instance.fargosMutant is not null) SetFargosStaticDefaults();
-		}
 		public static void AddRecipes() {
 			if (instance.thorium is not null) AddThoriumRecipes();
 			if (instance.fargosMutant is not null) AddFargosRecipes();
@@ -765,6 +753,7 @@ namespace Origins {
 		}
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosRecipes() {
+			#region Keys
 			Recipe.Create(ItemType<Brine_Key>())
 			   .AddRecipeGroup("Origins:AnyBrineBanner", 10)
 			   .AddCondition(Condition.Hardmode)
@@ -802,7 +791,7 @@ namespace Origins {
 				.AddTile(TileID.MythrilAnvil)
 				.DisableDecraft()
 				.Register();
-
+			#endregion
 			#region Crate Recipes
 			static void CrateRecipe(int result, int resultAmount = 1, int crate = 0, int crateHard = 0, int crateAmount = 1, int extraItem = 0, params Condition[] conditions) {
 				if (crate > 0) {
@@ -871,6 +860,8 @@ namespace Origins {
 			CrateRecipe(ItemType<Amoeba_Toy>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
 			CrateRecipe(ItemType<Primordial_Soup>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
 			#endregion
+
+			SetFargosStaticDefaults();
 		}
 		[JITWhenModsEnabled("MagicStorage")]
 		static void AddMagicStorageGroups() {

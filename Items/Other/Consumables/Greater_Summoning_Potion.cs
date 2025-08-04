@@ -1,25 +1,36 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
-using Origins.Items.Accessories;
+﻿using Origins.Buffs;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Other.Fish;
-using Origins.Tiles.Brine;
+using Origins.Items.Weapons;
 using Terraria;
-using Terraria.GameContent;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Greater_Summoning_Potion : ModItem {
+		public static int ID { get; private set; }
 		public string[] Categories => [
 			"Potion"
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
+			ID = Type;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WrathPotion);
 			Item.buffType = Greater_Summoning_Buff.ID;
 			Item.value = Item.sellPrice(silver: 2);
+		}
+		public override void Update(ref float gravity, ref float maxFallSpeed) {
+			int stack = Item.stack;
+			if (OriginsModIntegrations.CheckAprilFools()) Item.SetDefaults(Greater_Summoning_Potato.ID);
+			Item.stack = stack;
+		}
+		public override void UpdateInventory(Player player) {
+			int stack = Item.stack;
+			if (OriginsModIntegrations.CheckAprilFools()) Item.SetDefaults(Greater_Summoning_Potato.ID);
+			Item.stack = stack;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -29,21 +40,51 @@ namespace Origins.Items.Other.Consumables {
 			.AddTile(TileID.Bottles)
 			.Register();
 		}
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Greater_Summoning_Potion).GetDefaultTMLName();
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Greater_Summoning_Potion).GetDefaultTMLName() + "_AF";
-		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Item[Type] = afTexture;
-			} else {
-				TextureAssets.Item[Type] = normalTexture;
-			}
+	}
+	public class Greater_Summoning_Potato : Greater_Summoning_Potion {
+		public override string Texture => base.Texture.Replace("Potato", "Potion_AF");
+		public static new int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ItemID.Sets.FoodParticleColors[Type] = [
+				new Color(216, 209, 135),
+				new Color(116, 170, 45),
+				new Color(181, 148, 58)
+			];
+			ItemID.Sets.IsFood[Type] = true;
+			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
+			ID = Type;
 		}
-		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Item[Type] = afTexture;
-			} else {
-				TextureAssets.Item[Type] = normalTexture;
-			}
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Item.useStyle = ItemUseStyleID.EatFood;
+			Item.UseSound = SoundID.Item2;
+			Item.ammo = AmmoID.None;
+			Item.shoot = Greater_Summoning_Potato_P.ID;
+		}
+		public override bool? CanBeChosenAsAmmo(Item weapon, Player player) {
+			return weapon.useAmmo == ModContent.ItemType<Potato>();
+		}
+		public override void Update(ref float gravity, ref float maxFallSpeed) {
+			int stack = Item.stack;
+			if (!OriginsModIntegrations.CheckAprilFools()) Item.SetDefaults(Greater_Summoning_Potion.ID);
+			Item.stack = stack;
+		}
+		public override void UpdateInventory(Player player) {
+			int stack = Item.stack;
+			if (!OriginsModIntegrations.CheckAprilFools()) Item.SetDefaults(Greater_Summoning_Potion.ID);
+			Item.stack = stack;
+		}
+		public override bool CanShoot(Player player) {
+			return false;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.BottledWater)
+			.AddIngredient(ModContent.ItemType<Toadfish>())
+			.AddIngredient(ItemID.Moonglow)
+			.AddTile(TileID.Bottles)
+			.Register()
+			.DisableRecipe();
 		}
 	}
 }
