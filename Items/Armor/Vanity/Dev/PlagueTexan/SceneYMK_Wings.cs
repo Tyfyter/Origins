@@ -9,20 +9,17 @@ using PegasusLib;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan; 
+[AutoloadEquip(EquipType.Wings)]
 public class SceneYMK_Wings : ModItem {
-	public override string Texture => "ModLoader/UnloadedItem";
 	public static int WingsID { get; private set; }
-	public override void Load() {
-		WingsID = EquipLoader.AddEquipTexture(Mod, $"ModLoader/UnloadedWall", EquipType.Wings, this);
-	}
 
 	public override void SetStaticDefaults() {
-		ArmorIDs.Wing.Sets.Stats[WingsID] = new(150, 7f, hasHoldDownHoverFeatures: true);
+		ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new(150, 7f, hasHoldDownHoverFeatures: true);
 	}
 	public override void SetDefaults() {
 		Item.DefaultToAccessory();
 		Item.rare = AltCyanRarity.ID;
-		Item.wingSlot = WingsID;
+		WingsID = Item.wingSlot;
 	}
 
 	public override bool WingUpdate(Player player, bool inUse) {
