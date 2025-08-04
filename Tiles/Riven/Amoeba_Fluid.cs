@@ -30,7 +30,7 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			AddMapEntry(new Color(0, 200, 200));
 			MinPick = 10;
-			MineResist = 8f;
+			MineResist = 3f;
 			HitSound = SoundID.NPCHit13;
 			DustType = DustID.Water_Desert;
 		}
