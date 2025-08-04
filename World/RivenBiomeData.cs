@@ -401,7 +401,7 @@ namespace Origins.World.BiomeData {
 					} while (poss.Length <= 1 && --tries > 0);
 					WeightedRandom<Vector2> positions = new(genRand, poss);
 					// tweak this to make more barnicled areas
-					int count = (int)(Main.maxTilesX * 3E-03 * genRand.NextFloat(0.9f, 1f));
+					int count = (int)(Main.maxTilesX * 5E-03 * genRand.NextFloat(0.9f, 1f));
 					while (count-- > 0 && positions.elements.Count > 0) {
 						Vector2 specklePos = positions.Pop();
 						Tile startTile = Framing.GetTileSafely(specklePos.ToPoint());
