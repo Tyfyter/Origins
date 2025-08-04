@@ -637,7 +637,7 @@ VANITY:
 (^) Sunflower Sandals*
 
 (#2, ^2/6) DIO's Set !!! (everything but wings currently unimplemented, wings using placeholder texture)
-(^) First Dream
+(@, #2) First Dream !!! (Byteloss)
 (@, #, ^6) Tyfyter's Set* !!! (wings)
 
 (^) Acrid Dye
