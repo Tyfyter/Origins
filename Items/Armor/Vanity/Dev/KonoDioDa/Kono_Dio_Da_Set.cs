@@ -30,9 +30,6 @@ namespace Origins.Items.Armor.Vanity.Dev.KonoDioDa {
 		public int HeadItemID => Type;
 		public int BodyItemID => ModContent.ItemType<Dio_Breastplate>();
 		public int LegsItemID => ModContent.ItemType<Dio_Greaves>();
-		public override void SetStaticDefaults() {
-			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
-		}
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = ItemRarityID.Cyan;
