@@ -119,6 +119,7 @@ namespace Origins.Items.Weapons {
 		public static int ID { get; private set; }
 		public override string Texture => "Origins/Items/Other/Consumables/Greater_Summoning_Potion_AF";
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			ID = Type;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
