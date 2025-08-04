@@ -1,4 +1,5 @@
-﻿using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
+﻿using Origins.Dev;
+using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Melee;
 using PegasusLib;
@@ -17,7 +18,50 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Vanity.Dev.KonoDioDa {
 	public class Kono_Dio_Da_Set : DevSet<Kono_Dio_Da_Wings> {
 		public override IEnumerable<ItemTypeDropRuleWrapper> GetDrops() {
+			yield return ModContent.ItemType<Dio_Helmet>();
+			yield return ModContent.ItemType<Dio_Breastplate>();
+			yield return ModContent.ItemType<Dio_Greaves>();
 			yield return new(ItemDropRule.ByCondition(DropConditions.HardmodeBossBag, ModContent.ItemType<Kono_Dio_Da_Wings>()));
+		}
+	}
+	[AutoloadEquip(EquipType.Head)]
+	public class Dio_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
+		public string ArmorSetName => "Plague_Texan_Vanity";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Dio_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Dio_Greaves>();
+		public override void SetStaticDefaults() {
+			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
+		}
+		public override void SetDefaults() {
+			Item.vanity = true;
+			Item.rare = ItemRarityID.Cyan;
+		}
+	}
+	[AutoloadEquip(EquipType.Neck)]
+	public class Dio_Scarf : ModItem, INoSeperateWikiPage {
+		public override void SetDefaults() {
+			Item.DefaultToAccessory();
+			Item.vanity = true;
+			Item.rare = ItemRarityID.Cyan;
+		}
+	}
+	[AutoloadEquip(EquipType.Body)]
+	public class Dio_Breastplate : ModItem, INoSeperateWikiPage {
+		public override void SetStaticDefaults() {
+			ArmorIDs.Body.Sets.HidesHands[Item.bodySlot] = false;
+		}
+		public override void SetDefaults() {
+			Item.vanity = true;
+			Item.rare = ItemRarityID.Cyan;
+		}
+	}
+	[AutoloadEquip(EquipType.Legs)]
+	public class Dio_Greaves : ModItem, INoSeperateWikiPage {
+
+		public override void SetDefaults() {
+			Item.vanity = true;
+			Item.rare = ItemRarityID.Cyan;
 		}
 	}
 	public class Kono_Dio_Da_Wings : ModItem {
