@@ -46,14 +46,14 @@ namespace Origins.Tiles.Riven {
 		public override void RandomUpdate(int i, int j) {
 			Tile below = Framing.GetTileSafely(i, j + 1);
 			if (!below.HasTile) {
-				const int min_chance = 6;
+				const int max_length = 9;
 				int count = 1;
-				for (int k = 1; k < min_chance; k++) {
+				for (int k = 1; k < max_length; k++) {
 					if (!Framing.GetTileSafely(i, j - k).TileIsType(Type)) break;
 					count++;
-					if (count >= min_chance) break;
+					if (count >= max_length) return;
 				}
-				if (true || WorldGen.genRand.NextBool(1 + count / 2)) {
+				if (WorldGen.genRand.NextBool(1 + count / 2)) {
 					below.TileType = Type;
 					below.HasTile = true;
 					WorldGen.TileFrame(i, j, true);
