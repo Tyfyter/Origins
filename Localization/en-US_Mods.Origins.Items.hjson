@@ -6360,7 +6360,7 @@ Aetherite_Ore_Item: {
 
 Kono_Dio_Da_Set: {
 	DisplayName: Dio Set
-	Tooltip: 
+	Tooltip:
 		'''
 		{$DioSet}
 		{$CommonItemTooltip.RightClickToOpen}

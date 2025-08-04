@@ -153,6 +153,7 @@ NPCs: {
 	// Shimmer_Turret_Chunk2.DisplayName: "{$ItemName.Handgun}"
 	// Shimmer_Turret_Chunk3.DisplayName: "{$ItemName.Handgun}"
 	// Goo_Wall: Sticky Wall
+	// Enchanted_Fiberglass_Slime.DisplayName: Enchanted Fiberglasss Lime
 }
 
 // Bestiary.Leaf_Snapper: Hello!

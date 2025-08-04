@@ -6360,7 +6360,11 @@ Aetherite_Ore_Item: {
 
 Kono_Dio_Da_Set: {
 	// DisplayName: Dio Set
-	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+	/* Tooltip:
+		'''
+		{$DioSet}
+		{$CommonItemTooltip.RightClickToOpen}
+		''' */
 }
 
 Kono_Dio_Da_Wings: {
@@ -6382,7 +6386,7 @@ Dio_Breastplate: {
 }
 
 Dio_Greaves: {
-	// DisplayName: Dio's Oversized Boots
+	// DisplayName: Dio's Eccentric Breeches
 	/* Tooltip:
 		'''
 		{$DioSet}
