@@ -111,6 +111,7 @@ namespace Origins {
 			public static bool[] TargetDummies { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(TargetDummies)}")
 			.Description("Used to prevent exploits from some on-hit effects")
 			.RegisterBoolSet(NPCID.TargetDummy);
+			public static Action<NPC>[] CustomExpertScaling { get; } = NPCID.Sets.Factory.CreateCustomSet<Action<NPC>>(null);
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Tiles {

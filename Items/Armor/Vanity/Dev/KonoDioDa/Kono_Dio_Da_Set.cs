@@ -38,14 +38,6 @@ namespace Origins.Items.Armor.Vanity.Dev.KonoDioDa {
 			Item.rare = ItemRarityID.Cyan;
 		}
 	}
-	[AutoloadEquip(EquipType.Neck)]
-	public class Dio_Scarf : ModItem, INoSeperateWikiPage {
-		public override void SetDefaults() {
-			Item.DefaultToAccessory();
-			Item.vanity = true;
-			Item.rare = ItemRarityID.Cyan;
-		}
-	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Dio_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
@@ -64,8 +56,9 @@ namespace Origins.Items.Armor.Vanity.Dev.KonoDioDa {
 			Item.rare = ItemRarityID.Cyan;
 		}
 	}
+	[AutoloadEquip(EquipType.Neck)]
 	public class Kono_Dio_Da_Wings : ModItem {
-		public override string Texture => "Terraria/Images/Item_17";
+		public override string Texture => "Origins/Items/Armor/Vanity/Dev/KonoDioDa/Dio_Scarf";
 		public static int WingsID { get; private set; }
 		public override void Load() {
 			WingsID = EquipLoader.AddEquipTexture(Mod, $"{GetType().GetDefaultTMLName()}_{EquipType.Wings}", EquipType.Wings, this);
@@ -88,10 +81,11 @@ namespace Origins.Items.Armor.Vanity.Dev.KonoDioDa {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory();
 			Item.wingSlot = WingsID;
+			Item.rare = ItemRarityID.Cyan;
 		}
 		public override bool WingUpdate(Player player, bool inUse) => true;
 		public override void EquipFrameEffects(Player player, EquipType type) {
-			if (player.controlJump) {
+			if (player.controlJump && type == EquipType.Wings) {
 				player.OriginPlayer().upsideDown ^= true;
 				player.bodyFrame.Y = 280;
 			}

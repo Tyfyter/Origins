@@ -1467,6 +1467,7 @@ SceneYMK_Wings: {
 	// DisplayName: Moonlight Glint's Excessively Dyed Wings
 	/* Tooltip:
 		'''
+		{$CommonItemTooltip.FlightAndSlowfall}
 		{$TODev}
 
 		''' */
@@ -6371,6 +6372,7 @@ Kono_Dio_Da_Wings: {
 	// DisplayName: Vampiric Spell
 	/* Tooltip:
 		'''
+		{$CommonItemTooltip.FlightAndSlowfall}
 		{$DioSet}
 		{$TODev}
 		''' */
@@ -6396,15 +6398,6 @@ Dio_Greaves: {
 
 Dio_Helmet: {
 	// DisplayName: Dio's Hair
-	/* Tooltip:
-		'''
-		{$DioSet}
-		{$TODev}
-		''' */
-}
-
-Dio_Scarf: {
-	// DisplayName: Dio's Scarf
 	/* Tooltip:
 		'''
 		{$DioSet}
