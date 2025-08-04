@@ -164,7 +164,7 @@ namespace Origins.Tiles.Riven {
 				['_'] = tile => !tile.HasTile,
 				['L'] = tile => OriginExtensions.HasFullSolidTile(tile) && (tile.BlockType == BlockType.Solid || tile.RightSlope),
 				['R'] = tile => OriginExtensions.HasFullSolidTile(tile) && (tile.BlockType == BlockType.Solid || tile.LeftSlope),
-				['|'] = tile => !tile.TileIsType(ModContent.TileType<Shelf_Coral>()),
+				['|'] = tile => !tile.TileIsType(ModContent.TileType<Shelf_Coral>()) && (tile.LiquidAmount < 64 || tile.LiquidType != LiquidID.Water),
 				['A'] = tile => tile.LiquidAmount >= 128 && tile.LiquidType == LiquidID.Water,
 			};
 			yield return ("Centered", new(

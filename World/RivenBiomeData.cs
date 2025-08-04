@@ -644,6 +644,14 @@ namespace Origins.World.BiomeData {
 						if (tries-- > 0) break;
 					}
 				}
+				for (int i0 = 0; i0 < genRange.Width; i0++) {
+					int i1 = i0 + genRange.X;
+					for (int j0 = genRange.Height; j0 >= 0; j0--) {
+						int j1 = j0 + genRange.Y;
+						if (Main.tile[i1, j1].LiquidAmount != 0)
+							LiquidMethods.SettleWaterAt(i1, j1);
+					}
+				}
 				List<Point> validCoralSpots = [];
 				Shelf_Coral shelfCoral = ModContent.GetInstance<Shelf_Coral>();
 				for (int i0 = 0; i0 < genRange.Width; i0++) {
@@ -660,7 +668,7 @@ namespace Origins.World.BiomeData {
 				while (validCoralSpots.Count > 0 && maxCoral-->0) {
 					int rand = Main.rand.Next(validCoralSpots.Count);
 					Point coralPos = validCoralSpots[rand];
-					if (TileExtenstions.CanActuallyPlace(coralPos.X, coralPos.Y, shelfCoral.Type, 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
+					if (shelfCoral.CanGenerate(coralPos.X, coralPos.Y) && TileExtenstions.CanActuallyPlace(coralPos.X, coralPos.Y, shelfCoral.Type, 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
 						TileObjectData.CallPostPlacementPlayerHook(coralPos.X, coralPos.Y, shelfCoral.Type, objectData.style, 0, objectData.alternate, objectData);
 					} else {
 						maxCoral++;
