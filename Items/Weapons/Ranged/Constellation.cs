@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Ranged {
 			.Register();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			float GID = Main.rand.NextFloat();
+			float GID = Main.rand.NextFloat(float.Epsilon, 1);
 			for (int i = 0; i < 2; ++i) {
 				Projectile.NewProjectile(
 					source,
@@ -144,6 +144,7 @@ namespace Origins.Items.Weapons.Ranged {
 			get => Projectile.ai[1] == 1;
 			set => Projectile.ai[1] = value ? 1 : 0;
 		}
+		public bool IsLinked => Projectile.ai[0] == (int)Projectile.ai[0];
 
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MagicMissile;
 
@@ -156,39 +157,27 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.hostile = false;
 			Projectile.friendly = true;
 		}
-		public List<Projectile> Nodes {
-			get {
-				List<Projectile> cns = new();
-				foreach (Projectile p in Main.ActiveProjectiles) {
-					if (p.ai[0] == Projectile.ai[0] && Projectile.owner == p.owner && p.ModProjectile is ConstellationNode cn) {
-						cns.Add(p);
-					}
-				}
-				return cns;
-			}
-		}
-		public List<UnorderedTuple<int>> NodeConnections {
-			get {
-				List<UnorderedTuple<int>> connections = new();
-				var n = Nodes.Count;
-				for (int i = 0; i < n; i++) {
-					for (int j = i + 1; j < n; j++) {  // Start from i+1 to avoid duplicates
-						connections.Add((i, j));
-					}
-				}
-				return connections;
-			}
-		}
 
 		public override void OnSpawn(IEntitySource source) {
-			GroupRoot = Nodes.Count == 1;
+			GroupRoot = true;
 		}
 		public override void AI() {
 			if (Projectile.owner != Main.myPlayer) Projectile.timeLeft = 5;
 			if (Projectile.timeLeft > 5 * 60) Projectile.timeLeft = 5 * 60;
 
-			if (Nodes.Count > 1)
+			if (IsLinked)
 				Projectile.frameCounter++;
+			else {
+				foreach (Projectile other in Main.ActiveProjectiles) {
+					if (other == Projectile) continue;
+					if (other.ai[0] == Projectile.ai[0] && Projectile.owner == other.owner && other.ModProjectile is ConstellationNode) {
+						other.ai[0] = Projectile.identity;
+						Projectile.ai[0] = other.identity;
+						GroupRoot = false;
+						break;
+					}
+				}
+			}
 		}
 
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
@@ -202,55 +191,46 @@ namespace Origins.Items.Weapons.Ranged {
 
 		public override bool PreDraw(ref Color lightColor) {
 			if (GroupRoot) {
-				if (Nodes.Count > 1) {
-					for (int i = 0; i < NodeConnections.Count; i++) {
-						var ca = Nodes[NodeConnections[i].a].Center - Main.screenPosition;
-						var cb = Nodes[NodeConnections[i].b].Center - Main.screenPosition;
-
-						cb = Vector2.Lerp(ca, cb, Progress);
-
-						ModContent.GetInstance<ConstellationDrawSystem>().AddDrawPoint(ca, cb, DrawWidth);
-					}
-					for (int i = 0; i < NodeConnections.Count; i++) {
-						var ca = Nodes[NodeConnections[i].a].Center - Main.screenPosition;
-						var cb = Nodes[NodeConnections[i].b].Center - Main.screenPosition;
-						cb = Vector2.Lerp(ca, cb, Progress);
-						OriginExtensions.DrawLightningArc(Main.spriteBatch,
-							[ca, cb],
-							colors: [
-								(0.15f, new Color(80, 204, 219, 0) * 0.5f),
-								(0.1f, new Color(80, 251, 255, 0) * 0.5f),
-								(0.05f, new Color(200, 255, 255, 0) * 0.5f)
-							]
-						);
-					}
-				}
 				DrawData data = new(
-				TextureAssets.Projectile[Type].Value,
-				Vector2.Zero,
-				null,
-				Color.White
+					TextureAssets.Projectile[Type].Value,
+					Vector2.Zero,
+					null,
+					Color.White
 				) {
 					origin = TextureAssets.Projectile[Type].Size() * 0.5f,
 					scale = new Vector2(Progress)
 				};
-				for (int i = 0; i < Nodes.Count; i++) {
-					data.position = Nodes[i].Center - Main.screenPosition;
+				if (IsLinked && Projectile.GetRelatedProjectile(0) is Projectile other) {
+					Vector2 ca = Projectile.Center - Main.screenPosition;
+					Vector2 cb = other.Center - Main.screenPosition;
+
+					cb = Vector2.Lerp(ca, cb, Progress);
+
+					ModContent.GetInstance<ConstellationDrawSystem>().AddDrawPoint(ca, cb, DrawWidth);
+					OriginExtensions.DrawLightningArc(Main.spriteBatch,
+						[ca, cb],
+						colors: [
+							(0.15f, new Color(80, 204, 219, 0) * 0.5f),
+								(0.1f, new Color(80, 251, 255, 0) * 0.5f),
+								(0.05f, new Color(200, 255, 255, 0) * 0.5f)
+						]
+					);
+					data.position = other.Center - Main.screenPosition;
 					Main.EntitySpriteDraw(data);
 				}
+				data.position = Projectile.Center - Main.screenPosition;
+				Main.EntitySpriteDraw(data);
 			}
 			return false;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			if (GroupRoot) {
-				foreach (var c in NodeConnections) {
-					float _ = 0;
-					Vector2 start = Nodes[c.a].Center;
-					Vector2 b = Nodes[c.b].Center;
-					Vector2 end = Vector2.Lerp(start, b, Progress);
-					if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, DrawWidth, ref _)) {
-						return true;
-					}
+			if (GroupRoot && IsLinked && Projectile.GetRelatedProjectile(0) is Projectile other) {
+				float _ = 0;
+				Vector2 start = Projectile.Center;
+				Vector2 b = other.Center;
+				Vector2 end = Vector2.Lerp(start, b, Progress);
+				if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, DrawWidth, ref _)) {
+					return true;
 				}
 			}
 			return projHitbox.Intersects(targetHitbox);
@@ -260,7 +240,7 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class ConstellationDrawSystem : ModSystem {
 
-		private List<(Vector2, Vector2, float)> drawPoints = [];
+		private readonly List<(Vector2, Vector2, float)> drawPoints = [];
 
 		public void AddDrawPoint(Vector2 start, Vector2 end, float progress) {
 			drawPoints.Add((start, end, progress));
@@ -268,8 +248,8 @@ namespace Origins.Items.Weapons.Ranged {
 
 		public override void PostDrawTiles() {
 			Main.spriteBatch.Begin();
-			foreach (var drawPoint in drawPoints) {
-				OriginExtensions.DrawConstellationLine(Main.spriteBatch, drawPoint.Item1, drawPoint.Item2, 20f * drawPoint.Item3);
+			foreach ((Vector2 start, Vector2 end, float progress) in drawPoints) {
+				OriginExtensions.DrawConstellationLine(Main.spriteBatch, start, end, 20f * progress);
 			}
 			drawPoints.Clear();
 			Main.spriteBatch.End();
