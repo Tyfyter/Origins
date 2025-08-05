@@ -8,6 +8,7 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			WallID.Sets.Conversion.Stone[Type] = true;
+			OriginsSets.Walls.RivenWalls[Type] = WallVersion == WallVersion.Natural;
 		}
 	}
 }

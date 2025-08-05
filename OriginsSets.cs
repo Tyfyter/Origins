@@ -134,6 +134,11 @@ namespace Origins {
 		}
 		public delegate void MultitileCollisionOffsetter(Tile tile, ref float y, ref int height);
 		[ReinitializeDuringResizeArrays]
+		public static class Walls {
+			public static bool[] RivenWalls { get; } = WallID.Sets.Factory.CreateNamedSet(nameof(RivenWalls))
+			.RegisterBoolSet(false);
+		}
+		[ReinitializeDuringResizeArrays]
 		public static class Prefixes {
 			public static bool[] SpecialPrefix { get; } = PrefixID.Sets.Factory.CreateNamedSet(nameof(SpecialPrefix))
 			.Description("Denotes prefixes which have effects other than stat changes")

@@ -471,6 +471,7 @@ namespace Origins.World.BiomeData {
 							default:
 							tileType = calcifiedTile;
 							wallType = calcifiedWall;
+							// tweak to change the shape and size of the calcified areas
 							shape = Carver.PointyLemon(
 								specklePos,
 								scale: genRand.NextFloat(6, 10),
@@ -485,6 +486,7 @@ namespace Origins.World.BiomeData {
 							case 4: { // fanana 
 								tileType = calcifiedTile;
 								wallType = calcifiedWall;
+								// tweak to change the shape and size of the calcified areas
 								float rotation = genRand.NextFloat(0, MathHelper.TwoPi);
 
 								float range = genRand.NextFloat(0.2f, 0.6f); // fan/banana width
@@ -508,7 +510,6 @@ namespace Origins.World.BiomeData {
 						}
 						Carver.Filter filter = Carver.TileFilter(tile => (tile.HasTile && replaceableTiles[tile.TileType]) || (!foreground && tile.WallType == fleshWallType));
 						if (foreground) filter += Carver.ActiveTileInSet(replaceableTiles);
-						// tweak to change the shape and size of the calcified areas
 						filter += shape;
 
 						if (Carver.DoCarve(
@@ -780,12 +781,13 @@ namespace Origins.World.BiomeData {
 							continue;
 						}
 						if (OriginExtensions.IsTileReplacable(x, y)) {
-							if (Main.tile[x, y].WallType != fleshWallID) {
-								Main.tile[x, y].ResetToType(fleshID);
+							Tile tile = Main.tile[x, y];
+							if (!OriginsSets.Walls.RivenWalls[tile.WallType]) {
+								tile.ResetToType(fleshID);
+								tile.WallType = fleshWallID;
 							}
-							Main.tile[x, y].WallType = fleshWallID;
 							if ((diff < 35 * sizeMult - 5 || ((y - j) * (y - j)) + (x - i) * (x - i) < 25 * sizeMult * sizeMult)) {
-								Main.tile[x, y].SetActive(false);
+								tile.SetActive(false);
 								if (diff > 34 * sizeMult - 5 && Main.tile[x, y + 1].TileIsType(fleshID)) {
 									lesionPlacementSpots.Enqueue(new Point(x, y));
 								}
@@ -794,8 +796,8 @@ namespace Origins.World.BiomeData {
 						}
 					}
 				}
-				List<Point> validLesionPlacementSpots = new List<Point>();
-				bool CheckPos(int x, int y) {
+				List<Point> validLesionPlacementSpots = [];
+				static bool CheckPos(int x, int y) {
 					return !Main.tile[x, y].HasTile && !Main.tile[x, y - 1].HasTile && Main.tile[x, y + 1].HasTile && Main.tile[x, y + 1].Slope == SlopeType.Solid;
 				}
 				while (lesionPlacementSpots.Count > 0) {
@@ -825,7 +827,7 @@ namespace Origins.World.BiomeData {
 				}
 				bool placedBlister = false;
 				while (!placedBlister) {
-					placedBlister |= PlaceTile(i2 + genRand.Next(-2, 3), j2 + genRand.Next(-2, 3), blisterID);
+					placedBlister = PlaceTile(i2 + genRand.Next(-2, 3), j2 + genRand.Next(-2, 3), blisterID);
 				}
 				DoScar(
 					new(i2, j2),
@@ -1083,6 +1085,7 @@ namespace Origins.World.BiomeData {
 			AddTileConversion(ModContent.TileType<Riven_Grass>(), TileID.Grass);
 			AddTileConversion(ModContent.TileType<Riven_Jungle_Grass>(), TileID.JungleGrass);
 			AddTileConversion(ModContent.TileType<Riven_Flesh>(), TileID.Stone);
+			AddTileConversion(ModContent.TileType<Calcified_Riven_Flesh>(), ModContent.TileType<Calcified_Riven_Flesh>());
 			AddTileConversion(ModContent.TileType<Silica>(), TileID.Sand);
 			AddTileConversion(ModContent.TileType<Quartz>(), TileID.Sandstone);
 			AddTileConversion(ModContent.TileType<Brittle_Quartz>(), TileID.HardenedSand);
@@ -1109,6 +1112,8 @@ namespace Origins.World.BiomeData {
 			BloodBunny = ModContent.NPCType<Barnacle_Bunny>();
 			BloodPenguin = ModContent.NPCType<Riven_Penguin>();
 			BloodGoldfish = ModContent.NPCType<Bottomfeeder>();
+
+			AddWallConversions(OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural), OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural));
 
 			AddWallConversions<Riven_Flesh_Wall>(
 				WallID.Stone,
