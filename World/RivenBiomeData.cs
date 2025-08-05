@@ -167,20 +167,20 @@ namespace Origins.World.BiomeData {
 				int X1 = 0;
 				int Y0 = int.MaxValue;
 				int Y1 = 0;
-				List<(int x, int y, FeatureType type, bool rightSide)> features = new();
+				List<(int x, int y, FeatureType type, bool rightSide)> features = [];
 
 				float targetTwist = genRand.NextFloat(-0.5f, 0.5f);
 				PolarVec2 speed = new PolarVec2(8, genRand.NextFloat(-0.5f, 0.5f) + MathHelper.PiOver2);
 				double strength = 32;
 				double baseStrength = strength;
 				strength = Math.Pow(strength, 2);
-				double wallThickness = 24;
+				const double wall_thickness = 24;
 				float decay = 1;
 				while (strength > 16) {
-					int minX = (int)(pos.X - (strength + wallThickness) * 0.5);
-					int maxX = (int)(pos.X + (strength + wallThickness) * 0.5);
-					int minY = (int)(pos.Y - (strength + wallThickness) * 0.5);
-					int maxY = (int)(pos.Y + (strength + wallThickness) * 0.5);
+					int minX = (int)(pos.X - (strength + wall_thickness) * 0.5);
+					int maxX = (int)(pos.X + (strength + wall_thickness) * 0.5);
+					int minY = (int)(pos.Y - (strength + wall_thickness) * 0.5);
+					int maxY = (int)(pos.Y + (strength + wall_thickness) * 0.5);
 					if (minX < 1) {
 						minX = 1;
 					}
@@ -202,7 +202,7 @@ namespace Origins.World.BiomeData {
 							int compY = (int)(y + wallOffset);
 							if (dist > strength) {
 								double d = Math.Sqrt(dist);
-								if (d < baseStrength + wallThickness && OriginExtensions.IsTileReplacable(x, y)) {
+								if (d < baseStrength + wall_thickness && OriginExtensions.IsTileReplacable(x, y)) {
 									if (tile.WallType != fleshWallType) {
 										if (compY > j || (tile.HasTile && Main.tileSolid[tile.TileType])) {
 											SpreadRivenGrass(x, y);
@@ -225,6 +225,23 @@ namespace Origins.World.BiomeData {
 								continue;
 							}
 							if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
+								if (TileID.Sets.Falling[tile.TileType]) {
+									Vector2 posMin = new(float.PositiveInfinity);
+									Vector2 posMax = new(float.NegativeInfinity);
+									Carver.DoCarve(
+										Carver.Climb(new(x, y), pos => {
+											if (!OriginExtensions.IsTileReplacable((int)pos.X, (int)pos.Y)) return false;
+											Tile tile = Framing.GetTileSafely(pos.ToPoint());
+											return tile.HasTile && TileID.Sets.Falling[tile.TileType];
+										}, ref posMin, ref posMax),
+										pos => {
+											Tile tile = Framing.GetTileSafely(pos.ToPoint());
+											tile.HasTile = false;
+											return 0;
+										},
+										posMin, posMax
+									);
+								}
 								if (OriginExtensions.IsTileReplacable(x, y)) {
 									tile.HasTile = false;
 								} else if (tile.HasTile && Main.tileSolid[tile.TileType]) {
@@ -267,6 +284,7 @@ namespace Origins.World.BiomeData {
 				if (Y1 > Main.maxTilesY - 1) {
 					Y1 = Main.maxTilesY - 1;
 				}
+				strength = Math.Pow(baseStrength, 2);
 				WorldBiomeGeneration.ChangeRange.AddChangeToRange(X0, Y0);
 				WorldBiomeGeneration.ChangeRange.AddChangeToRange(X1, Y1);
 				Point[] directions = [new(1, 0), new(-1, 0), new(0, 1), new(0, -1)];
@@ -1178,6 +1196,19 @@ namespace Origins.World.BiomeData {
 				WorldBiomeGeneration.ChangeRange.AddChangeToRange(evilBiomePositionWestBound, minY);
 				WorldBiomeGeneration.ChangeRange.AddChangeToRange(evilBiomePositionEastBound, minY);
 				Rectangle range = WorldBiomeGeneration.ChangeRange.GetRange();
+				bool anyTiles;
+				int extendedMinY = minY;
+				do {
+					anyTiles = false;
+					extendedMinY--;
+					for (int i = range.Left; i < range.Right && !anyTiles; i++) {
+						anyTiles = Framing.GetTileSafely(i, extendedMinY).HasTile;
+					}
+				} while (anyTiles);
+				extendedMinY++;
+				WorldBiomeGeneration.ChangeRange.AddChangeToRange(evilBiomePosition, extendedMinY);
+				range = WorldBiomeGeneration.ChangeRange.GetRange();
+
 				WorldBiomeGeneration.EvilBiomeGenRanges.Add(range);
 				AltBiome biome = ModContent.GetInstance<Riven_Hive_Alt_Biome>();
 				ushort grass = (ushort)ModContent.TileType<Riven_Grass>();

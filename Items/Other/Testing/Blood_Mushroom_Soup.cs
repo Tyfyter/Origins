@@ -88,6 +88,7 @@ namespace Origins.Items.Other.Testing {
 					int O = 0;
 					int OwO = 0 / O;
 				}
+				PlayerInput.SetZoom_UI();
 			}
 		}
 		/*
@@ -627,7 +628,11 @@ namespace Origins.Items.Other.Testing {
 			PlayerInput.SetZoom_MouseInWorld();
 			UnifiedRandom genRand = new(seed);
 
-			return Carver.PointyLemon(// tweak to change the shape and size of the barnacled areas
+			return Carver.Climb(Main.MouseWorld / 16, pos => {
+				if (!OriginExtensions.IsTileReplacable((int)pos.X, (int)pos.Y)) return false;
+				Tile tile = Framing.GetTileSafely(pos.ToPoint());
+				return tile.HasTile && TileID.Sets.Falling[tile.TileType];
+			}, ref posMin, ref posMax);/*Carver.PointyLemon(// tweak to change the shape and size of the barnacled areas
 				Main.MouseWorld / 16,
 				scale: genRand.Next(5, 15),
 				rotation: genRand.NextFloat(0, MathHelper.TwoPi),
@@ -635,7 +640,7 @@ namespace Origins.Items.Other.Testing {
 				0.5f,
 				ref posMin,
 				ref posMax
-			);
+			);*/
 		}
 		public override void Apply(LinkedQueue<object> parameters) {
 			ushort oreID = (ushort)ModContent.TileType<Amoeba_Fluid>();
