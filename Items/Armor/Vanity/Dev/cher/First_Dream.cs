@@ -1,4 +1,5 @@
 ﻿using Humanizer;
+using Origins.Layers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,10 +22,12 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 			On_ItemSlot.SwapVanityEquip += On_ItemSlot_SwapVanityEquip;
 			On_Player.UpdateVisibleAccessory += On_Player_UpdateVisibleAccessory;
 			int AddTexture(string name, EquipType equipType, params Action<int>[] sets) {
-				int id = EquipLoader.AddEquipTexture(Mod, "Origins/Items/Armor/Vanity/Dev/cher/" + name, equipType, name: name);
+				string path = "Origins/Items/Armor/Vanity/Dev/cher/" + name;
+				int id = EquipLoader.AddEquipTexture(Mod, path, equipType, name: name);
 				for (int i = 0; i < sets.Length; i++) {
 					setValues.Add((id, sets[i]));
 				}
+				if (ModContent.HasAsset(path + "_Glow")) setValues.Add((id, id => Accessory_Glow_Layer.AddGlowMask(equipType, id, path + "_Glow")));
 				return id;
 			}
 			modes.Add(new("Chrersis", new(

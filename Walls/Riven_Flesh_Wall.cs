@@ -13,6 +13,7 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			WallID.Sets.Conversion.Stone[Type] = true;
 			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
+			OriginsSets.Walls.RivenWalls[Type] = true;
 			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
 			AddMapEntry(new Color(40, 140, 200));
 			DustType = DustID.GemEmerald;
@@ -20,7 +21,7 @@ namespace Origins.Walls {
 		}
 		public override void RandomUpdate(int i, int j) {
 			Shelf_Coral shelfCoral = GetInstance<Shelf_Coral>();
-			if (shelfCoral.CanGenerate(i, j, out double weight) && weight > WorldGen.genRand.NextFloat() && TileExtenstions.CanActuallyPlace(i, j, shelfCoral.Type, 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
+			if (shelfCoral.CanGenerate(i, j, out double weight) && weight * weight > WorldGen.genRand.NextFloat() && TileExtenstions.CanActuallyPlace(i, j, shelfCoral.Type, 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
 				Point16 topLeft = TileObjectData.TopLeft(i, j);
 
 				int id = GetInstance<Shelf_Coral_TE>().Place(topLeft.X, topLeft.Y);
@@ -33,6 +34,7 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.wallHouse[Type] = true;
+			OriginsSets.Walls.RivenWalls[Type] = false;
 		}
 		public override void RandomUpdate(int i, int j) { }
 	}

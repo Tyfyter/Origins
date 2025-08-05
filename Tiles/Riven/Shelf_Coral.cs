@@ -40,6 +40,20 @@ namespace Origins.Tiles.Riven {
 			}
 			color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
 		}
+		public override void Load() {
+			this.SetupGlowKeys();
+			On_Projectile.AI_007_GrapplingHooks_CanTileBeLatchedOnTo += On_Projectile_AI_007_GrapplingHooks_CanTileBeLatchedOnTo;
+		}
+
+		bool On_Projectile_AI_007_GrapplingHooks_CanTileBeLatchedOnTo(On_Projectile.orig_AI_007_GrapplingHooks_CanTileBeLatchedOnTo orig, Projectile self, int x, int y) {
+			if (orig(self, x, y)) {
+				Tile tile = Main.tile[x, y];
+				if (tile.TileType != Type) return true;
+				return tile.TileFrameY / 34 <= 5;
+			}
+			return false;
+		}
+
 		public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
@@ -151,7 +165,6 @@ namespace Origins.Tiles.Riven {
 			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY, 16, 28);
 			drawData.glowColor = GlowColor;
 		}
-		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		static Rectangle playerHitbox = new(0, 0, 20, 40);
 		static Rectangle fallPastHitbox = new(0, 0, 20, 40 * 2);

@@ -31,7 +31,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using static Tyfyter.Utils.UITools;
-using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 using static Origins.OriginsSets.Items;
 using Terraria.Graphics;
 using Origins.NPCs.MiscB.Shimmer_Construct;

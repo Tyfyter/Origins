@@ -46,6 +46,9 @@ RecipeGroups: {
 	// EvilGunMagazines: Any Evil Gun Magazine
 	// AnyBanner: Any {0} Banner
 	// GolfBalls: Any Golf Ball
+	// EvilMushrooms: Any Evil Mushroom
+	// EvilFish: Any Evil Fish
+	// EvilFishWeapons: Any Evil Fish Weapon
 }
 
 Status_Messages: {

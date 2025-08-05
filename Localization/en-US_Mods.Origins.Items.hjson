@@ -1468,6 +1468,7 @@ SceneYMK_Wings: {
 	Tooltip:
 		'''
 		{$TODev}
+		{$CommonItemTooltip.FlightAndSlowfall}
 
 		'''
 }
@@ -6368,11 +6369,12 @@ Kono_Dio_Da_Set: {
 }
 
 Kono_Dio_Da_Wings: {
-	DisplayName: Vampiric Spell
+	DisplayName: Dio's Scarf
 	Tooltip:
 		'''
 		{$DioSet}
 		{$TODev}
+		Inexplicably allows flight and slow fall
 		'''
 }
 
@@ -6396,15 +6398,6 @@ Dio_Greaves: {
 
 Dio_Helmet: {
 	DisplayName: Dio's Hair
-	Tooltip:
-		'''
-		{$DioSet}
-		{$TODev}
-		'''
-}
-
-Dio_Scarf: {
-	DisplayName: Dio's Scarf
 	Tooltip:
 		'''
 		{$DioSet}

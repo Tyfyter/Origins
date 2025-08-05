@@ -357,6 +357,7 @@ namespace Origins.World.BiomeData {
 				Rectangle genRange = WorldBiomeGeneration.ChangeRange.GetRange();
 				ushort barnacleWall = (ushort)OriginsWall.GetWallID<Barnacle_Wall>(WallVersion.Natural);
 				{// speckle
+					const float barnacling_scale = 0.8f;
 					for (int k = genRand.Next(1, 4); k-- > 0;) {
 						int x = genRange.X + genRand.Next(genRange.Width);
 						int y = genRange.Y + genRand.Next(genRange.Height);
@@ -365,13 +366,13 @@ namespace Origins.World.BiomeData {
 						for (int l = 0; l < smoothness; l++) {
 							Vector2 posMin = new(float.PositiveInfinity);
 							Vector2 posMax = new(float.NegativeInfinity);
-							int size = genRand.Next(10, 30);
+							float size = genRand.NextFloat(10, 30);
 							Vector2 offset = genRand.NextFloat(0, MathHelper.TwoPi).ToRotationVector2() * (size + genRand.NextFloat(5, 10));
 							Carver.DoCarve(
 								Carver.TileFilter(tile => tile.WallType == fleshWallType)
 								+ Carver.Circle(// tweak to change the shape and size of the barnacled areas
-									barnPos + offset,
-									scale: size,
+									barnPos + offset * barnacling_scale,
+									scale: size * barnacling_scale,
 									rotation: genRand.NextFloat(0, MathHelper.TwoPi),
 									aspectRatio: genRand.NextFloat(1, 1.4f),
 									ref posMin,
@@ -400,7 +401,7 @@ namespace Origins.World.BiomeData {
 					} while (poss.Length <= 1 && --tries > 0);
 					WeightedRandom<Vector2> positions = new(genRand, poss);
 					// tweak this to make more barnicled areas
-					int count = (int)(Main.maxTilesX * 3E-03 * genRand.NextFloat(0.9f, 1f));
+					int count = (int)(Main.maxTilesX * 5E-03 * genRand.NextFloat(0.9f, 1f));
 					while (count-- > 0 && positions.elements.Count > 0) {
 						Vector2 specklePos = positions.Pop();
 						Tile startTile = Framing.GetTileSafely(specklePos.ToPoint());
@@ -470,6 +471,7 @@ namespace Origins.World.BiomeData {
 							default:
 							tileType = calcifiedTile;
 							wallType = calcifiedWall;
+							// tweak to change the shape and size of the calcified areas
 							shape = Carver.PointyLemon(
 								specklePos,
 								scale: genRand.NextFloat(6, 10),
@@ -484,6 +486,7 @@ namespace Origins.World.BiomeData {
 							case 4: { // fanana 
 								tileType = calcifiedTile;
 								wallType = calcifiedWall;
+								// tweak to change the shape and size of the calcified areas
 								float rotation = genRand.NextFloat(0, MathHelper.TwoPi);
 
 								float range = genRand.NextFloat(0.2f, 0.6f); // fan/banana width
@@ -507,7 +510,6 @@ namespace Origins.World.BiomeData {
 						}
 						Carver.Filter filter = Carver.TileFilter(tile => (tile.HasTile && replaceableTiles[tile.TileType]) || (!foreground && tile.WallType == fleshWallType));
 						if (foreground) filter += Carver.ActiveTileInSet(replaceableTiles);
-						// tweak to change the shape and size of the calcified areas
 						filter += shape;
 
 						if (Carver.DoCarve(
@@ -779,12 +781,13 @@ namespace Origins.World.BiomeData {
 							continue;
 						}
 						if (OriginExtensions.IsTileReplacable(x, y)) {
-							if (Main.tile[x, y].WallType != fleshWallID) {
-								Main.tile[x, y].ResetToType(fleshID);
+							Tile tile = Main.tile[x, y];
+							if (!OriginsSets.Walls.RivenWalls[tile.WallType]) {
+								tile.ResetToType(fleshID);
+								tile.WallType = fleshWallID;
 							}
-							Main.tile[x, y].WallType = fleshWallID;
 							if ((diff < 35 * sizeMult - 5 || ((y - j) * (y - j)) + (x - i) * (x - i) < 25 * sizeMult * sizeMult)) {
-								Main.tile[x, y].SetActive(false);
+								tile.SetActive(false);
 								if (diff > 34 * sizeMult - 5 && Main.tile[x, y + 1].TileIsType(fleshID)) {
 									lesionPlacementSpots.Enqueue(new Point(x, y));
 								}
@@ -793,8 +796,8 @@ namespace Origins.World.BiomeData {
 						}
 					}
 				}
-				List<Point> validLesionPlacementSpots = new List<Point>();
-				bool CheckPos(int x, int y) {
+				List<Point> validLesionPlacementSpots = [];
+				static bool CheckPos(int x, int y) {
 					return !Main.tile[x, y].HasTile && !Main.tile[x, y - 1].HasTile && Main.tile[x, y + 1].HasTile && Main.tile[x, y + 1].Slope == SlopeType.Solid;
 				}
 				while (lesionPlacementSpots.Count > 0) {
@@ -824,7 +827,7 @@ namespace Origins.World.BiomeData {
 				}
 				bool placedBlister = false;
 				while (!placedBlister) {
-					placedBlister |= PlaceTile(i2 + genRand.Next(-2, 3), j2 + genRand.Next(-2, 3), blisterID);
+					placedBlister = PlaceTile(i2 + genRand.Next(-2, 3), j2 + genRand.Next(-2, 3), blisterID);
 				}
 				DoScar(
 					new(i2, j2),
@@ -1082,6 +1085,7 @@ namespace Origins.World.BiomeData {
 			AddTileConversion(ModContent.TileType<Riven_Grass>(), TileID.Grass);
 			AddTileConversion(ModContent.TileType<Riven_Jungle_Grass>(), TileID.JungleGrass);
 			AddTileConversion(ModContent.TileType<Riven_Flesh>(), TileID.Stone);
+			AddTileConversion(ModContent.TileType<Calcified_Riven_Flesh>(), ModContent.TileType<Calcified_Riven_Flesh>());
 			AddTileConversion(ModContent.TileType<Silica>(), TileID.Sand);
 			AddTileConversion(ModContent.TileType<Quartz>(), TileID.Sandstone);
 			AddTileConversion(ModContent.TileType<Brittle_Quartz>(), TileID.HardenedSand);
@@ -1108,6 +1112,8 @@ namespace Origins.World.BiomeData {
 			BloodBunny = ModContent.NPCType<Barnacle_Bunny>();
 			BloodPenguin = ModContent.NPCType<Riven_Penguin>();
 			BloodGoldfish = ModContent.NPCType<Bottomfeeder>();
+
+			AddWallConversions(OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural), OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural));
 
 			AddWallConversions<Riven_Flesh_Wall>(
 				WallID.Stone,
@@ -1183,11 +1189,11 @@ namespace Origins.World.BiomeData {
 						Tile tile = Framing.GetTileSafely(i, j);
 						if (tile.HasTile) {
 							AltLibrary.Core.ALConvert.ConvertTile(i, j, biome);
-							AltLibrary.Core.ALConvert.ConvertWall(i, j, biome);
 							if (tile.TileType == TileID.Dirt && (!Framing.GetTileSafely(i - 1, j).HasTile || !Framing.GetTileSafely(i + 1, j).HasTile || !Framing.GetTileSafely(i, j - 1).HasTile || !Framing.GetTileSafely(i, j + 1).HasTile)) {
 								tile.TileType = grass;
 							}
 						}
+						AltLibrary.Core.ALConvert.ConvertWall(i, j, biome);
 					}
 				}
 				OriginSystem.Instance.hasRiven = true;

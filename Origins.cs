@@ -4,6 +4,7 @@ global using Vector3 = Microsoft.Xna.Framework.Vector3;
 global using Vector4 = Microsoft.Xna.Framework.Vector4;
 global using Color = Microsoft.Xna.Framework.Color;
 global using Rectangle = Microsoft.Xna.Framework.Rectangle;
+global using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Gores.NPCs;
 using Origins.Items.Accessories;
@@ -50,6 +51,7 @@ using Origins.Backgrounds;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using static Origins.OriginsSets.Items;
 using Origins.World.BiomeData;
+using Origins.Layers;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -101,9 +103,6 @@ namespace Origins {
 		public static int RiftHeadArmorID { get; private set; }
 		public static int RiftBodyArmorID { get; private set; }
 		public static int RiftLegsArmorID { get; private set; }
-		public static Dictionary<int, AutoCastingAsset<Texture2D>> HelmetGlowMasks { get; private set; }
-		public static Dictionary<int, AutoCastingAsset<Texture2D>> BreastplateGlowMasks { get; private set; }
-		public static Dictionary<int, AutoCastingAsset<Texture2D>> LeggingGlowMasks { get; private set; }
 		public static Dictionary<int, AutoCastingAsset<Texture2D>> TorsoLegLayers { get; private set; }
 
 		#endregion Armor IDs
@@ -360,9 +359,6 @@ namespace Origins {
 			PotType = new();
 			PileType = new();
 
-			HelmetGlowMasks = new();
-			BreastplateGlowMasks = new();
-			LeggingGlowMasks = new();
 			TorsoLegLayers = new();
 
 			OriginExtensions.initExt();
@@ -740,9 +736,6 @@ namespace Origins {
 			Journal_UI_Open.TabsTexture = null;
 			OriginExtensions.drawPlayerItemPos = null;
 			Tolruk.glowmasks = null;
-			HelmetGlowMasks = null;
-			BreastplateGlowMasks = null;
-			LeggingGlowMasks = null;
 			TorsoLegLayers = null;
 			instance = null;
 			OriginExtensions.unInitExt();
@@ -952,18 +945,18 @@ namespace Origins {
 		internal static void AddBreastplateGlowmask(ModItem modItem, string suffix = "_Glow") => AddBreastplateGlowmask(modItem.Item.bodySlot, $"{modItem.Texture}_{EquipType.Body}{suffix}");
 		internal static void AddLeggingGlowMask(ModItem modItem, string suffix = "_Glow") => AddLeggingGlowMask(modItem.Item.legSlot, $"{modItem.Texture}_{EquipType.Legs}{suffix}");
 		internal static void AddHelmetGlowmask(int armorID, string texture) {
-			if (Main.netMode != NetmodeID.Server && MC.RequestIfExists(texture, out Asset<Texture2D> asset)) {
-				HelmetGlowMasks.Add(armorID, asset);
+			if (Main.netMode != NetmodeID.Server && MC.HasAsset(texture)) {
+				Accessory_Glow_Layer.AddGlowMask(EquipType.Head, armorID, texture);
 			}
 		}
 		internal static void AddBreastplateGlowmask(int armorID, string texture) {
 			if (Main.netMode != NetmodeID.Server && MC.RequestIfExists(texture, out Asset<Texture2D> asset)) {
-				BreastplateGlowMasks.Add(armorID, asset);
+				Accessory_Glow_Layer.AddGlowMask(EquipType.Body, armorID, texture);
 			}
 		}
 		internal static void AddLeggingGlowMask(int armorID, string texture) {
 			if (Main.netMode != NetmodeID.Server && MC.RequestIfExists(texture, out Asset<Texture2D> asset)) {
-				LeggingGlowMasks.Add(armorID, asset);
+				Accessory_Glow_Layer.AddGlowMask(EquipType.Legs, armorID, texture);
 			}
 		}
 		internal static void ResizeArrays() {

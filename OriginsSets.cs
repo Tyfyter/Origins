@@ -111,6 +111,7 @@ namespace Origins {
 			public static bool[] TargetDummies { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(TargetDummies)}")
 			.Description("Used to prevent exploits from some on-hit effects")
 			.RegisterBoolSet(NPCID.TargetDummy);
+			public static Action<NPC>[] CustomExpertScaling { get; } = NPCID.Sets.Factory.CreateCustomSet<Action<NPC>>(null);
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Tiles {
@@ -132,6 +133,11 @@ namespace Origins {
 			public static SlowdownPercent[] MinionSlowdown { get; } = TileID.Sets.Factory.CreateCustomSet<SlowdownPercent>(0);
 		}
 		public delegate void MultitileCollisionOffsetter(Tile tile, ref float y, ref int height);
+		[ReinitializeDuringResizeArrays]
+		public static class Walls {
+			public static bool[] RivenWalls { get; } = WallID.Sets.Factory.CreateNamedSet(nameof(RivenWalls))
+			.RegisterBoolSet(false);
+		}
 		[ReinitializeDuringResizeArrays]
 		public static class Prefixes {
 			public static bool[] SpecialPrefix { get; } = PrefixID.Sets.Factory.CreateNamedSet(nameof(SpecialPrefix))

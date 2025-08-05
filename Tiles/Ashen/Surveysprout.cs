@@ -153,12 +153,5 @@ namespace Origins.Tiles.Ashen {
 	public class Surveysprout_Item : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 20);
 		public override bool Hardmode => false;
-		public override void SetStaticDefaults() {
-			ItemID.Sets.ShimmerTransformToItem[ItemID.Deathweed] = ModContent.ItemType<Wilting_Rose_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wilting_Rose_Item>()] = ModContent.ItemType<Wrycoral_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wrycoral_Item>()] = ModContent.ItemType<Surveysprout_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Surveysprout_Item>()] = ItemID.Deathweed;
-			Item.ResearchUnlockCount = 25;
-		}
 	}
 }
