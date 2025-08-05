@@ -637,7 +637,7 @@ VANITY:
 (^) Sunflower Sandals*
 
 (☻) DIO's Set !!!
-(@, #2) First Dream !!! (Byteloss)
+(@, ^3) First Dream !!! (Byteloss)
 (@, #, ^6) Tyfyter's Set* !!! (wings)
 
 (^) Acrid Dye
@@ -682,7 +682,7 @@ WINGS:
 (X) Fibron Thruster Array
 (X) Nova Backblaster
 
-(@, ^3) Vampiric Spell !!!
+(☻) Vampiric Spell !!!
 (@, ^3) Tyfyter's Wings !!!
 ---
 
