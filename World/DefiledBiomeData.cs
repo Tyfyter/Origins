@@ -858,14 +858,13 @@ namespace Origins.World.BiomeData {
 			BloodGoldfish = ModContent.NPCType<Shattered_Goldfish>();
 
 			AddWallConversions<Defiled_Stone_Wall>(
-				WallID.Stone,
+				WallID.Cave7Unsafe,
 				WallID.CaveUnsafe,
 				WallID.Cave2Unsafe,
 				WallID.Cave3Unsafe,
 				WallID.Cave4Unsafe,
 				WallID.Cave5Unsafe,
 				WallID.Cave6Unsafe,
-				WallID.Cave7Unsafe,
 				WallID.Cave8Unsafe,
 				WallID.EbonstoneUnsafe,
 				WallID.CorruptionUnsafe1,
@@ -876,7 +875,8 @@ namespace Origins.World.BiomeData {
 				WallID.CrimsonUnsafe1,
 				WallID.CrimsonUnsafe2,
 				WallID.CrimsonUnsafe3,
-				WallID.CrimsonUnsafe4
+				WallID.CrimsonUnsafe4,
+				WallID.Stone
 			);
 			AddWallConversions<Defiled_Sandstone_Wall>(
 				WallID.Sandstone,
