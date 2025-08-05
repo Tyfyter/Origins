@@ -1189,11 +1189,11 @@ namespace Origins.World.BiomeData {
 						Tile tile = Framing.GetTileSafely(i, j);
 						if (tile.HasTile) {
 							AltLibrary.Core.ALConvert.ConvertTile(i, j, biome);
-							AltLibrary.Core.ALConvert.ConvertWall(i, j, biome);
 							if (tile.TileType == TileID.Dirt && (!Framing.GetTileSafely(i - 1, j).HasTile || !Framing.GetTileSafely(i + 1, j).HasTile || !Framing.GetTileSafely(i, j - 1).HasTile || !Framing.GetTileSafely(i, j + 1).HasTile)) {
 								tile.TileType = grass;
 							}
 						}
+						AltLibrary.Core.ALConvert.ConvertWall(i, j, biome);
 					}
 				}
 				OriginSystem.Instance.hasRiven = true;
