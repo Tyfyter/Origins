@@ -173,6 +173,8 @@ namespace Origins.Items.Weapons.Ranged {
 					if (other.ai[0] == Projectile.ai[0] && Projectile.owner == other.owner && other.ModProjectile is ConstellationNode) {
 						other.ai[0] = Projectile.identity;
 						Projectile.ai[0] = other.identity;
+						Projectile.netUpdate = true;
+						other.netUpdate = true;
 						GroupRoot = false;
 						break;
 					}
