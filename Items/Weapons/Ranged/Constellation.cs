@@ -1,20 +1,12 @@
 ﻿using Origins.Items.Materials;
 using Origins.Journal;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Graphics.Primitives;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Drawing;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Journal.JournalEntry;
-using static Origins.NPCs.Defiled.Boss.DA_Body_Part;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Constellation : ModItem, IJournalEntrySource {
