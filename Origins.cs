@@ -4,6 +4,7 @@ global using Vector3 = Microsoft.Xna.Framework.Vector3;
 global using Vector4 = Microsoft.Xna.Framework.Vector4;
 global using Color = Microsoft.Xna.Framework.Color;
 global using Rectangle = Microsoft.Xna.Framework.Rectangle;
+global using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Gores.NPCs;
 using Origins.Items.Accessories;

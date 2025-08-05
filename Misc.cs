@@ -39,6 +39,8 @@ using Terraria.GameContent.Creative;
 using Terraria.Enums;
 using Origins.Tiles.Other;
 using System.Numerics;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
 
 namespace Origins {
 	#region classes
@@ -2729,6 +2731,27 @@ namespace Origins {
 		public static void InsertIntoShimmerCycle(int type, int after) {
 			ItemID.Sets.ShimmerTransformToItem[type] = ItemID.Sets.ShimmerTransformToItem[after];
 			ItemID.Sets.ShimmerTransformToItem[after] = type;
+		}
+		public static void CreateEvilShimmerCycle(this RecipeGroup recipeGroup, int corrupt, int crimson, int defiled, int riven, int ashen) {
+			List<string> exceptions = [];
+			if (!recipeGroup.ValidItems.Contains(corrupt)) exceptions.Add(Lang.GetItemNameValue(corrupt));
+			if (!recipeGroup.ValidItems.Contains(crimson)) exceptions.Add(Lang.GetItemNameValue(crimson));
+			if (!recipeGroup.ValidItems.Contains(defiled)) exceptions.Add(Lang.GetItemNameValue(defiled));
+			if (!recipeGroup.ValidItems.Contains(riven)) exceptions.Add(Lang.GetItemNameValue(riven));
+			if (!recipeGroup.ValidItems.Contains(ashen)) exceptions.Add(Lang.GetItemNameValue(ashen));
+			if (exceptions.Count > 0) throw new ArgumentException("Invalid arguments, item(s) not present in recipe group: ", $"[{string.Join(", ", exceptions)}]");
+
+			if (corrupt != crimson) ItemID.Sets.ShimmerTransformToItem[corrupt] = crimson;
+			ItemID.Sets.ShimmerTransformToItem[crimson] = defiled;
+			ItemID.Sets.ShimmerTransformToItem[defiled] = riven;
+			ItemID.Sets.ShimmerTransformToItem[riven] = ashen;
+			ItemID.Sets.ShimmerTransformToItem[ashen] = corrupt;
+			int last = ashen;
+			foreach (int item in recipeGroup.ValidItems) {
+				if (item == corrupt || item == crimson || item == defiled || item == riven || item == ashen) continue;
+				InsertIntoShimmerCycle(item, last);
+				last = item;
+			}
 		}
 		public static void RegisterForUnload(this IUnloadable unloadable) {
 			Origins.unloadables.Add(unloadable);

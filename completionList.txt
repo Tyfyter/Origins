@@ -636,7 +636,7 @@ VANITY:
 (X) Steampunk Mechanist Set
 (^) Sunflower Sandals*
 
-(#2, ^2/6) DIO's Set !!! (everything but wings currently unimplemented, wings using placeholder texture)
+(☻) DIO's Set !!!
 (@, #2) First Dream !!! (Byteloss)
 (@, #, ^6) Tyfyter's Set* !!! (wings)
 
