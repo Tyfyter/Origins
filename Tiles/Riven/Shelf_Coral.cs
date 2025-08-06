@@ -182,9 +182,9 @@ namespace Origins.Tiles.Riven {
 			};
 			yield return ("Centered", new(
 				"""
-				  |  
-				  |  
-				  |  
+				 ||| 
+				 ||| 
+				 ||| 
 				X_O_X
 				 ___ 
 				""",
@@ -196,9 +196,9 @@ namespace Origins.Tiles.Riven {
 
 			yield return ("Left (Soup)", new(
 				"""
-				  | 
-				  | 
-				  | 
+				 |||
+				 |||
+				 |||
 				RO__
 				R___
 				 AAA
@@ -207,9 +207,9 @@ namespace Origins.Tiles.Riven {
 			), null, 1);
 			yield return ("Right (Soup)", new(
 				"""
-				 |  
-				 |  
-				 |  
+				||| 
+				||| 
+				||| 
 				__OL
 				___L
 				AAA 
@@ -219,9 +219,9 @@ namespace Origins.Tiles.Riven {
 
 			yield return ("Left", new(
 				"""
-				  | 
-				  | 
-				  | 
+				 |||
+				 |||
+				 |||
 				RO__
 				R___
 				""",
@@ -236,9 +236,9 @@ namespace Origins.Tiles.Riven {
 			}, 1);
 			yield return ("Right", new(
 				"""
-				 |  
-				 |  
-				 |  
+				||| 
+				||| 
+				||| 
 				__OL
 				___L
 				""",
@@ -254,9 +254,9 @@ namespace Origins.Tiles.Riven {
 
 			yield return ("Open", new(
 				"""
-				  |  
-				  |  
-				  |  
+				 ||| 
+				 ||| 
+				 ||| 
 				__O__
 				 ___ 
 				""",

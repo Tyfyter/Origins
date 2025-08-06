@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -21,7 +22,7 @@ namespace Origins.Walls {
 		}
 		public override void RandomUpdate(int i, int j) {
 			Shelf_Coral shelfCoral = GetInstance<Shelf_Coral>();
-			if (shelfCoral.CanGenerate(i, j, out double weight) && weight * weight > WorldGen.genRand.NextFloat() && TileExtenstions.CanActuallyPlace(i, j, shelfCoral.Type, 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
+			if (shelfCoral.CanGenerate(i, j, out double weight) && Math.Pow(weight, 4) > WorldGen.genRand.NextFloat() && TileExtenstions.CanActuallyPlace(i, j, shelfCoral.Type, 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
 				Point16 topLeft = TileObjectData.TopLeft(i, j);
 
 				int id = GetInstance<Shelf_Coral_TE>().Place(topLeft.X, topLeft.Y);
