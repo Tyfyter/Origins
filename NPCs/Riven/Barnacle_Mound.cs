@@ -36,6 +36,7 @@ namespace Origins.NPCs.Riven {
 			NPC.CloneDefaults(NPCID.BloodJelly);
 			NPC.aiStyle = 0;
 			NPC.noGravity = true;
+			NPC.noTileCollide = true;
 			NPC.lifeMax = 90;
 			NPC.defense = 18;
 			NPC.damage = 0;
@@ -82,9 +83,9 @@ namespace Origins.NPCs.Riven {
 					if (newDist < dist) {
 						dist = newDist;
 						bestPosition = NPC.Center + directions[i] * (dist - offsetLen);
+						NPC.rotation = directions[i].ToRotation() - MathHelper.PiOver2;
 					}
 				}
-				NPC.rotation = (bestPosition - NPC.Center).ToRotation() - MathHelper.PiOver2;
 				NPC.Center = bestPosition;
 				NPC.oldVelocity = Vector2.Zero;
 				NPC.oldPosition = NPC.position;
