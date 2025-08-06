@@ -1610,6 +1610,10 @@ namespace Origins {
 			if (magnitude > 0) vector /= magnitude;
 			return vector;
 		}
+		public static Vector2 Abs(this Vector2 vector, out Vector2 signs) {
+			signs = new(Math.Sign(vector.X), Math.Sign(vector.Y));
+			return vector * signs;
+		}
 		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox) {
 			float xoffset = 10f;
 			float yoffset = 24f;

@@ -1,5 +1,9 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.Items.Weapons.Magic;
+using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
@@ -14,19 +18,22 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using static tModPorter.ProgressUpdate;
 
 namespace Origins.NPCs.Riven {
-	public class Goo_Wall : ModNPC, IRivenEnemy/*, IWikiNPC*/ {
+	public class Goo_Wall : ModNPC, IRivenEnemy, IMultiHitboxNPC/*, IWikiNPC*/ {
 		public AssimilationAmount? Assimilation => 0.0001f;
+		public Rectangle[] Hitboxes { get; private set; }
 		public override void SetStaticDefaults() {
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.lifeMax = 560;
 			NPC.damage = 0;
-			NPC.width = 0;
-			NPC.height = 0;
+			NPC.width = 26;
+			NPC.height = 26;
 			NPC.friendly = false;
+			NPC.noGravity = true;
 			NPC.knockBackResist = 0;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type
@@ -36,33 +43,26 @@ namespace Origins.NPCs.Riven {
 		private int minTileRange = (160);
 		private int maxTileRange = (160) * 2;
 		private List<Vector2> raysAvailable = [];
+		public Vector2 Anchor1 => Vector2.Lerp(Anchor2, NPC.Center, 2);
+		public Vector2 Anchor2 => new(NPC.ai[1], NPC.ai[2]);
 		public new virtual float SpawnChance(NPCSpawnInfo spawnInfo) {
 			minTileRange = 160;
 			maxTileRange = 160 * 2;
-			int initialDegree = 30;
-			int raysToCast = 7;
+			const int rays_to_cast = 7;
+			float betweenRays = MathHelper.ToRadians(60) / 7;
 			raysAvailable = [];
 			Vector2 spawn = new(spawnInfo.SpawnTileX * 16, spawnInfo.SpawnTileY * 16 + 16);
-			for (int i = -raysToCast; i < raysToCast; i++) {
-				Vector2 dir = (-Vector2.UnitY).RotatedBy(i * MathHelper.ToRadians(initialDegree));
+			for (int i = -rays_to_cast; i < rays_to_cast; i++) {
+				Vector2 dir = -Vector2.UnitY.RotatedBy(i * betweenRays);
 				float ray = CollisionExt.Raymarch(spawn, dir, float.BitIncrement(maxTileRange));
 
 				if (ray >= minTileRange && ray <= maxTileRange) {
-					Vector2 rayPos = (dir * ray) + spawn;
+					Vector2 rayPos = (dir * (ray + 1)) + spawn;
 					Tile tile = Main.tile[rayPos.ToTileCoordinates()];
 					if (tile.HasFullSolidTile())
 						raysAvailable.Add(rayPos);
 				}
 			}
-
-			Main.NewText($"Ray count: {raysAvailable.Count}");
-
-			string str = string.Empty;
-			for (int i = 0; i < raysAvailable.Count; i++) {
-				if (!string.IsNullOrEmpty(str)) str += ", ";
-				str += $"index{i}: {raysAvailable[i]}";
-			}
-			Main.NewText(str);
 
 			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Wall * Math.Sign(raysAvailable.Count);
 		}
@@ -76,53 +76,72 @@ namespace Origins.NPCs.Riven {
 		}
 		public override int SpawnNPC(int tileX, int tileY) {
 			Vector2 pickedRay = raysAvailable[Main.rand.Next(raysAvailable.Count)];
-
-			NPC npc = NPC.NewNPCDirect(null, tileX * 16 + 8, tileY * 16 + 8, Type);
-			(npc.ai[1], npc.ai[2]) = pickedRay;
-			return npc.whoAmI;
+			Vector2 pos = Vector2.Lerp(new(tileX * 16 + 8, tileY * 16 + 8), pickedRay, 0.5f);
+			return NPC.NewNPC(null, (int)pos.X, (int)(pos.Y + NPC.height / 2), Type, ai1: pickedRay.X, ai2: pickedRay.Y);
 		}
 
-		private List<(Vector2 start, Vector2 end)> lines = new(4);
+		private (Vector2 start, Vector2 end)[] lines;
 		private bool InsideWall(Entity tgt) {
-			lines.Clear();
-			Vector2 anchor = new(NPC.ai[1], NPC.ai[2]);
-			Vector2 diff = (NPC.Bottom - anchor).RotatedBy(MathHelper.PiOver2);
-			diff.Normalize();
-			diff *= 26;
+			if (lines is null) {
+				Vector2 anchor = Anchor2;
+				Vector2 position = Anchor1;
+				Vector2 perp = (position - anchor).RotatedBy(MathHelper.PiOver2).Normalized(out _) * 26;
 
-			Vector2 vert1 = NPC.Bottom + diff * 26;
-			Vector2 vert2 = anchor - diff * 26;
-			Vector2 vert3 = anchor + diff * 26;
-			Vector2 vert4 = NPC.Bottom - diff * 26;
+				Vector2 vert1 = position + perp;
+				Vector2 vert2 = anchor + perp;
+				Vector2 vert3 = anchor - perp;
+				Vector2 vert4 = position - perp;
 
-			lines.AddRange([(vert1, vert2), (vert2, vert3), (vert3, vert4), (vert4, vert1)]);
+				lines = [(vert1, vert2), (vert2, vert3), (vert3, vert4), (vert4, vert1)];
+			}
 
-			return CollisionExtensions.PolygonIntersectsRect([.. lines], tgt.Hitbox);
+			return CollisionExtensions.PolygonIntersectsRect(lines, tgt.Hitbox);
 		}
 
-		public NPCSpawnInfo SpawnPool(Player plr) {
-			Point playerTile = plr.Center.ToTileCoordinates();
+		public NPCSpawnInfo SpawnInfo(Player plr) {
+			Point playerTile = plr.Bottom.ToTileCoordinates();
 			Point npcTile = NPC.Center.ToTileCoordinates();
-			NPCSpawnInfo spawnPool = new() {
+			NPCSpawnInfo spawnInfo = new() {
 				PlayerFloorX = playerTile.X,
-				PlayerFloorY = playerTile.Y + 8,
+				PlayerFloorY = playerTile.Y + 1,
 				Player = plr,
 				SpawnTileX = npcTile.X,
-				SpawnTileY = npcTile.Y + 8,
+				SpawnTileY = npcTile.Y,
 				SpawnTileType = ModContent.TileType<Riven_Flesh>()
 			};
-			(int x, int y) = (spawnPool.SpawnTileX, spawnPool.SpawnTileY);
+			(int x, int y) = (spawnInfo.SpawnTileX, spawnInfo.SpawnTileY);
 			(Tile tile1, Tile tile2) = (Main.tile[x, y + 1], Main.tile[x, y + 2]);
 			bool isWet = tile1.LiquidAmount > 0 && tile2.LiquidAmount > 0 && (tile1.LiquidType == LiquidID.Honey || tile1.LiquidType == LiquidID.Water);
-			spawnPool.Water = isWet;
-			spawnPool.Player = plr;
-			return spawnPool;
+			spawnInfo.Water = isWet;
+			spawnInfo.Player = plr;
+			return spawnInfo;
 		}
 		private static void PlayEnterSound(Entity tgt) => SoundEngine.PlaySound(SoundID.Shimmer2, tgt.Center);
+		void EnsureHitboxes() {
+			if (Hitboxes is null) {
+				Vector2 anchor = Anchor2;
+				Vector2 position = Anchor1;
+				Hitboxes = new Rectangle[8];
+				Rectangle box = new(0, 0, 52, 52);
+
+				Vector2 unitSquared = (anchor - position).Normalized(out _).Abs(out Vector2 signs);
+				unitSquared *= signs / Math.Max(unitSquared.X, unitSquared.Y);
+				Vector2 half = box.Size() * 0.5f;
+				for (int i = 0; i < Hitboxes.Length; i++) {
+					float progress = i / (float)(Hitboxes.Length - 1);
+					Vector2 pos = Vector2.Lerp(position, anchor, progress) - half + Vector2.Lerp(-unitSquared, unitSquared, progress);
+					box.X = (int)pos.X;
+					box.Y = (int)pos.Y;
+					Hitboxes[i] = box;
+				}
+			}
+		}
 		public override void AI() {
+			Vector2 anchor = Anchor2;
+			Vector2 position = Anchor1;
+			EnsureHitboxes();
 			NPC.ai[0]--;
-			Vector2 anchor = new(NPC.ai[1], NPC.ai[2]);
-			FixExploitManEaters.ProtectSpot(NPC.position.ToTileCoordinates().X, NPC.position.ToTileCoordinates().Y);
+			FixExploitManEaters.ProtectSpot(position.ToTileCoordinates().X, position.ToTileCoordinates().Y);
 			FixExploitManEaters.ProtectSpot(anchor.ToTileCoordinates().X, anchor.ToTileCoordinates().Y);
 			
 			foreach (NPC tgt in Main.ActiveNPCs) {
@@ -143,9 +162,10 @@ namespace Origins.NPCs.Riven {
 					if (NPC.ai[0] <= 0) {
 						WeightedRandom<int> pool = new(Main.rand);
 						SpawnPool selectedPool = ModContent.GetInstance<Riven_Hive.SpawnRates>();
+						NPCSpawnInfo spawnInfo = SpawnInfo(tgt);
 						for (int k = 0; k < selectedPool.Spawns.Count; k++) {
 							(int npcType, SpawnRate condition) = selectedPool.Spawns[k];
-							if (npcType != Type) pool.Add(npcType, condition.Rate(SpawnPool(tgt)));
+							if (npcType != Type) pool.Add(npcType, condition.Rate(spawnInfo));
 						}
 						NPC spawn = NPC.NewNPCDirect(NPC.GetSource_ReleaseEntity(), NPC.Center, pool.Get());
 						NetMessage.SendData(MessageID.SyncNPC, number: spawn.whoAmI);
@@ -158,14 +178,12 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Vector2 anchor = new(NPC.ai[1], NPC.ai[2]);
-			Vector2 origin = NPC.Bottom;
+			Vector2 anchor = Anchor2;
+			Vector2 origin = Anchor1;
 			float rot = origin.DirectionTo(anchor).ToRotation() + MathHelper.PiOver2;
 			float dst = origin.Distance(anchor);
 
 			Texture2D texture = TextureAssets.Npc[Type].Value;
-
-			//spriteBatch.DrawLine(Color.White, origin, anchor);
 
 			Rectangle frame = new(0, 182, 52, 18);
 			Main.EntitySpriteDraw(texture, origin - screenPos, frame, GetAlpha(drawColor).Value, rot, new(frame.Width * 0.5f, 0), 1, SpriteEffects.None);
@@ -175,13 +193,29 @@ namespace Origins.NPCs.Riven {
 
 			frame = new(0, 0, 52, 18);
 			Main.EntitySpriteDraw(texture, anchor - screenPos, frame, GetAlpha(drawColor).Value, rot, new(frame.Width * 0.5f, 18), 1, SpriteEffects.None);
+			if (Hitboxes is null) return false;
+			for (int i = 0; i < Hitboxes.Length; i++) {
+				Rectangle box = Hitboxes[i];
+				spriteBatch.DrawLine(Color.White, box.TopLeft(), box.TopRight());
+				spriteBatch.DrawLine(Color.White, box.TopRight(), box.BottomRight());
+				spriteBatch.DrawLine(Color.White, box.BottomRight(), box.BottomLeft());
+				spriteBatch.DrawLine(Color.White, box.BottomLeft(), box.TopLeft());
+			}
 			return false;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
+				Vector2 anchor = Anchor2;
+				Vector2 position = Anchor1;
+				Vector2 perp = (position - anchor).RotatedBy(MathHelper.PiOver2).Normalized(out _) * 26;
+				float oneInclusive = float.BitIncrement(1);
 				for (int i = 0; i < 15; i++) {
-					//Vector2.Lerp()
-					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
+					Origins.instance.SpawnGoreByName(
+						NPC.GetSource_Death(),
+						Vector2.Lerp(position, anchor, Main.rand.NextFloat(oneInclusive)) + Vector2.Lerp(-perp, perp, Main.rand.NextFloat(oneInclusive)),
+						NPC.velocity,
+						"Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)
+					);
 				}
 			}
 		}

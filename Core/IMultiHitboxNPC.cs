@@ -46,7 +46,7 @@ namespace Origins.Core {
 					int minY = int.MaxValue;
 					int maxY = int.MinValue;
 					for (int j = 0; j < multiHitboxNPC.Hitboxes.Length; j++) {
-						Rectangle box = multiHitboxNPC.Hitboxes[i];
+						Rectangle box = multiHitboxNPC.Hitboxes[j];
 						Min(ref minX, box.X);
 						Max(ref maxX, box.Right);
 						Min(ref minY, box.Y);

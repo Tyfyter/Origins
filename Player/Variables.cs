@@ -1096,9 +1096,9 @@ namespace Origins {
 			upsideDown = false;
 			walledDebuff = false;
 			foreach (NPC npc in Main.ActiveNPCs) {
-				if (npc?.ModNPC is Goo_Wall && npc.Hitbox.Intersects(Player.Hitbox)) {
+				if (npc?.ModNPC is Goo_Wall gooWall && gooWall.InsideWall(Player)) {
 					walledDebuff = true;
-					continue;
+					break;
 				}
 			}
 		}
