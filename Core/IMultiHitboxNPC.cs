@@ -19,6 +19,7 @@ namespace Origins.Core {
 		static void IL_Projectile_Damage(ILContext il) {
 			ILCursor c = new(il);
 			ILLabel normalNPC = default;
+			ILLabel notNormalNPC = default;
 			int i = -1;
 			int colliding = -1;
 			int projHitbox = -1;
@@ -32,7 +33,7 @@ namespace Origins.Core {
 			);
 			c.GotoLabel(normalNPC);
 			Debug.Assert(c.Previous.Previous.MatchStloc(out colliding));
-			Debug.Assert(c.Previous.MatchBr(out ILLabel notNormalNPC));
+			Debug.Assert(c.Previous.MatchBr(out notNormalNPC));
 			Debug.Assert(c.Next.Next.MatchLdloc(out projHitbox));
 			c.EmitLdarg0();
 			c.EmitLdloc(i);
