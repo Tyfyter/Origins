@@ -221,7 +221,7 @@ ENEMY NPCS:
 (^) Felnum Slime*
 (^) Flagellant*
 (^) Flying Exoskeleton*
-(#3, ^2) Goo Wall !!!
+(^) Goo Wall
 (^) Graveshield Zombie*
 (X) Hammerhand
 (X) Limestone Creeper
@@ -810,7 +810,7 @@ RANGED WEAPONS:
 (^) Neural Network*
 (^) Riven Splitter*
 (^) Shardcannon*
-(#3, ^2/4) Shimmershot !!!
+(^? (I have no idea how it just started working on its own)) Shimmershot
 (^) Sleetfire*
 (^) Sunflower Seed Shooter*
 (^) Tendon Tear*

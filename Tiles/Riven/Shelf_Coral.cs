@@ -156,7 +156,12 @@ namespace Origins.Tiles.Riven {
 			ModContent.GetInstance<Shelf_Coral_TE>().Kill(i, j);
 		}
 		public override void FloorVisuals(Player player) {
-			foreach ((int i, int j) in Collision.GetTilesIn(player.BottomLeft, player.BottomRight + Vector2.UnitY)) {
+			if (player.velocity.Y != 0) return;
+			Vector2 bottomLeft = player.BottomLeft;
+			float distToCoral = float.Ceiling(bottomLeft.Y / 16) * 16 - bottomLeft.Y;
+			if (distToCoral > 4) return;
+			Vector2 offset = new(0, distToCoral);
+			foreach ((int i, int j) in Collision.GetTilesIn(bottomLeft + offset, player.BottomRight + offset + Vector2.UnitY)) {
 				if (TileEntity.TryGet(i, j, out Shelf_Coral_TE tileEntity)) tileEntity.isStoodOn = true;
 			}
 		}
