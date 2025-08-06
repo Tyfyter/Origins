@@ -81,7 +81,7 @@ namespace Origins.NPCs.Riven {
 		}
 
 		private (Vector2 start, Vector2 end)[] lines;
-		private bool InsideWall(Entity tgt) {
+		public bool InsideWall(Entity tgt) {
 			if (lines is null) {
 				Vector2 anchor = Anchor2;
 				Vector2 position = Anchor1;
