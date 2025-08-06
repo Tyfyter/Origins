@@ -8,6 +8,7 @@ using Origins.World.BiomeData;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
@@ -106,6 +107,7 @@ namespace Origins.Tiles.Other {
 			}
 			originPlayer.mojoFlaskChargesUsed = 0;
 			Main.LocalPlayer.AddBuff(Purifying_Buff.ID, 120);
+			SoundEngine.PlaySound(SoundID.Item4, Main.LocalPlayer.Center);
 			return true;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
