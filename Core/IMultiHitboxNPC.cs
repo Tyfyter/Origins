@@ -1,11 +1,6 @@
 ﻿using MonoMod.Cil;
 using ReLogic.Threading;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,11 +11,13 @@ namespace Origins.Core {
 			IMultiHitboxNPC.SpawningEnabled = true;
 			try {
 				IL_Projectile.Damage += IL_Projectile_Damage;
+				IL_Player.ProcessHitAgainstNPC += IL_Player_ProcessHitAgainstNPC;
 			} catch (Exception e) {
 				IMultiHitboxNPC.SpawningEnabled = false;
-				if (Origins.LogLoadingILError($"{nameof(MultiHitboxNPC)}.{nameof(IL_Projectile_Damage)}", e)) throw;
+				if (Origins.LogLoadingILError($"{nameof(MultiHitboxNPC)}", e)) throw;
 			}
 		}
+
 		public void Unload() { }
 		static void IL_Projectile_Damage(ILContext il) {
 			ILCursor c = new(il);
@@ -74,6 +71,27 @@ namespace Origins.Core {
 				return false;
 			});
 			c.EmitBrtrue(notNormalNPC);
+		}
+
+		static void IL_Player_ProcessHitAgainstNPC(ILContext il) {
+			ILCursor c = new(il);
+			int itemRectangle = -1;
+			c.GotoNext(MoveType.After,
+				il => il.MatchLdarga(out itemRectangle),
+				il => il.MatchLdloc(out _),
+				il => il.MatchCall<Rectangle>(nameof(Rectangle.Intersects))
+			);
+			c.EmitLdloc(itemRectangle);
+			c.EmitLdarg(5);
+			c.EmitDelegate((bool intersected, Rectangle itemRectangle, int i) => {
+				if (Main.npc[i].ModNPC is IMultiHitboxNPC multiHitboxNPC) {
+					for (int j = 0; j < multiHitboxNPC.Hitboxes.Length; j++) {
+						if (itemRectangle.Intersects(multiHitboxNPC.Hitboxes[j])) return true;
+					}
+					return false;
+				}
+				return intersected;
+			});
 		}
 		static void Min(ref int current, int @new) {
 			if (current > @new) current = @new;
