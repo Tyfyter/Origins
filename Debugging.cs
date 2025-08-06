@@ -16,6 +16,9 @@ namespace Origins {
 		internal static void ChatOverhead(object message, int duration = 5) {
 			ChatOverhead(message.ToString(), duration);
 		}
+		internal static void Assert(bool value, Exception exception) {
+			if (!value) throw exception;
+		}
 		static bool firstFirstUpdate = true;
 		internal static bool firstUpdate = false;
 		//Running OriginSystem.PreUpdatePlayers for the first time

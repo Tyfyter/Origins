@@ -13,7 +13,13 @@ using Terraria.ModLoader;
 namespace Origins.Core {
 	class MultiHitboxNPC : ILoadable {
 		public void Load(Mod mod) {
-			IL_Projectile.Damage += IL_Projectile_Damage;
+			IMultiHitboxNPC.SpawningEnabled = true;
+			try {
+				IL_Projectile.Damage += IL_Projectile_Damage;
+			} catch (Exception e) {
+				IMultiHitboxNPC.SpawningEnabled = false;
+				if (Origins.LogLoadingILError($"{nameof(MultiHitboxNPC)}.{nameof(IL_Projectile_Damage)}", e)) throw;
+			}
 		}
 		public void Unload() { }
 		static void IL_Projectile_Damage(ILContext il) {
@@ -32,9 +38,9 @@ namespace Origins.Core {
 				il => il.MatchBneUn(out normalNPC)
 			);
 			c.GotoLabel(normalNPC);
-			Debug.Assert(c.Previous.Previous.MatchStloc(out colliding));
-			Debug.Assert(c.Previous.MatchBr(out notNormalNPC));
-			Debug.Assert(c.Next.Next.MatchLdloc(out projHitbox));
+			Debugging.Assert(c.Previous.Previous.MatchStloc(out colliding), new Exception("Could not find x = Projectile.Colliding"));
+			Debugging.Assert(c.Previous.MatchBr(out notNormalNPC), new Exception("Could not find x = Projectile.Colliding"));
+			Debugging.Assert(c.Next.Next.MatchLdloc(out projHitbox), new Exception("Could not find x = Projectile.Colliding"));
 			c.EmitLdarg0();
 			c.EmitLdloc(i);
 			c.EmitLdloca(colliding);
@@ -77,6 +83,7 @@ namespace Origins.Core {
 		}
 	}
 	public interface IMultiHitboxNPC {
+		public static bool SpawningEnabled = true;
 		public Rectangle[] Hitboxes { get; }
 	}
 }

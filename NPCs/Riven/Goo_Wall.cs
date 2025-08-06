@@ -75,6 +75,7 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 5, 8));
 		}
 		public override int SpawnNPC(int tileX, int tileY) {
+			if (!IMultiHitboxNPC.SpawningEnabled) return Main.maxNPCs;
 			Vector2 pickedRay = raysAvailable[Main.rand.Next(raysAvailable.Count)];
 			Vector2 pos = Vector2.Lerp(new(tileX * 16 + 8, tileY * 16 + 8), pickedRay, 0.5f);
 			return NPC.NewNPC(null, (int)pos.X, (int)(pos.Y + NPC.height / 2), Type, ai1: pickedRay.X, ai2: pickedRay.Y);
