@@ -105,8 +105,11 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GreenSolution);
-			Item.shoot = ModContent.ProjectileType<Gray_Solution_P>() - ProjectileID.PureSpray;
+			Item.shoot = ModContent.ProjectileType<Gray_Solution_P>();
 			Item.value = Item.sellPrice(silver: 3);
+		}
+		public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback) {
+			type -= ProjectileID.PureSpray;
 		}
 	}
 	public class Gray_Solution_P : ModProjectile {
@@ -125,8 +128,11 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GreenSolution);
-			Item.shoot = ModContent.ProjectileType<Teal_Solution_P>() - ProjectileID.PureSpray;
+			Item.shoot = ModContent.ProjectileType<Teal_Solution_P>();
 			Item.value = Item.sellPrice(silver: 3);
+		}
+		public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback) {
+			type -= ProjectileID.PureSpray;
 		}
 	}
 	public class Teal_Solution_P : ModProjectile {
