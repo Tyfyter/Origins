@@ -1,7 +1,4 @@
-﻿using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Core;
 using Origins.Items.Weapons.Demolitionist;
@@ -18,7 +15,6 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using static tModPorter.ProgressUpdate;
 
 namespace Origins.NPCs.Riven {
 	public class Goo_Wall : ModNPC, IRivenEnemy, IMultiHitboxNPC/*, IWikiNPC*/ {
@@ -35,6 +31,8 @@ namespace Origins.NPCs.Riven {
 			NPC.friendly = false;
 			NPC.noGravity = true;
 			NPC.knockBackResist = 0;
+			NPC.HitSound = SoundID.NPCHit9;
+			NPC.DeathSound = SoundID.NPCDeath23;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type
 			];
