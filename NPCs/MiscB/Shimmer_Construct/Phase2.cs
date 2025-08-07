@@ -283,7 +283,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			Vector2 diff = npc.GetTargetData().Center - npc.Center;
 			if (++npc.ai[0] < Startup) {
-				GeometryUtils.AngularSmoothing(ref npc.rotation, diff.ToRotation(), TurnRate(npc.ai[0] / Startup));
+				GeometryUtils.AngularSmoothing(ref npc.rotation, diff.ToRotation() - MathHelper.PiOver2, TurnRate(npc.ai[0] / Startup));
 			} else if (npc.ai[0] >= Startup + Shootlag && npc.ai[1].TrySet(1)) {
 				diff = diff.SafeNormalize(Vector2.Zero);
 				SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
