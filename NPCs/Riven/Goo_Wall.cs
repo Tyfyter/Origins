@@ -37,9 +37,6 @@ namespace Origins.NPCs.Riven {
 				ModContent.GetInstance<Riven_Hive>().Type
 			];
 		}
-
-		private int minTileRange = (160);
-		private int maxTileRange = (160) * 2;
 		private List<Vector2> raysAvailable = [];
 		public Vector2 Anchor1 => Vector2.Lerp(Anchor2, NPC.Center, 2);
 		public Vector2 Anchor2 => new(NPC.ai[1], NPC.ai[2]);
@@ -57,10 +54,16 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 		public new virtual float SpawnChance(NPCSpawnInfo spawnInfo) {
-			minTileRange = 160;
-			maxTileRange = 160 * 2;
+			const int minTileRange = 160;
+			const int maxTileRange = 160 * 2;
+			Vector2 pos = new(spawnInfo.SpawnTileX * 16 + 8, spawnInfo.SpawnTileY * 16 + 8);
+			foreach (NPC other in Main.ActiveNPCs) {
+				if (other.ModNPC is Goo_Wall gooWall && (other.WithinRange(pos, maxTileRange) || gooWall.Anchor1.WithinRange(pos, maxTileRange) || gooWall.Anchor2.WithinRange(pos, maxTileRange))) {
+					return 0;
+				}
+			}
 			const int rays_to_cast = 7;
-			float betweenRays = MathHelper.ToRadians(60) / 7;
+			float betweenRays = MathHelper.ToRadians(60) / rays_to_cast;
 			raysAvailable = [];
 			Vector2 spawn = new(spawnInfo.SpawnTileX * 16, spawnInfo.SpawnTileY * 16 + 16);
 			for (int i = -rays_to_cast; i < rays_to_cast; i++) {
