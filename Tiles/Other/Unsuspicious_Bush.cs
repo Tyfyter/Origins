@@ -1,11 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
 using Origins.World.BiomeData;
 using System;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -34,7 +36,7 @@ namespace Origins.Tiles.Other {
 		}
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => false;
 		public override bool RightClick(int i, int j) {
-			OriginSystem.Instance.ForceAF ^= true;
+			new Unsuspicious_Bush_Action(!OriginSystem.Instance.ForceAF).Perform();
 			return true;
 		}
 	}
@@ -44,6 +46,18 @@ namespace Origins.Tiles.Other {
 			Item.value = Item.sellPrice(gold: 0);
 			Item.rare = ItemRarityID.Green;
 			Item.placeStyle = 0;
+		}
+	}
+	public record class Unsuspicious_Bush_Action(bool On) : SyncedAction {
+		public Unsuspicious_Bush_Action() : this(false) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			On = reader.ReadBoolean()
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write(On);
+		}
+		protected override void Perform() {
+			OriginSystem.Instance.ForceAF = On;
 		}
 	}
 }
