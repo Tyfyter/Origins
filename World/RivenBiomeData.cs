@@ -1131,6 +1131,11 @@ namespace Origins.World.BiomeData {
 			BloodGoldfish = ModContent.NPCType<Bottomfeeder>();
 
 			AddWallConversions(OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural), OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural));
+			
+			AddWallConversions(OriginsWall.GetWallID<Barnacle_Wall>(WallVersion.Natural),
+				WallID.RocksUnsafe1,
+				WallID.Rocks1Echo
+			);
 
 			AddWallConversions<Riven_Flesh_Wall>(
 				WallID.Cave7Unsafe,
