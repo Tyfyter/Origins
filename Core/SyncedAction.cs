@@ -8,6 +8,7 @@ namespace Origins.Core {
 		public static SyncedAction Get(int type) => actions[type];
 		private ushort type;
 		public virtual bool ServerOnly => false;
+		protected virtual bool ShouldPerform => true;
 		public void Load(Mod mod) {
 			type = (ushort)actions.Count;
 			actions.Add(this);
@@ -21,6 +22,7 @@ namespace Origins.Core {
 		/// </summary>
 		/// <param name="fromClient"></param>
 		public void Perform(int fromClient = -2) {
+			if (!ShouldPerform) return;
 			if (NetmodeActive.Server || !ServerOnly) Perform();
 			if ((NetmodeActive.Server && !ServerOnly) || (NetmodeActive.MultiplayerClient && fromClient == -2)) {
 				Send(ignoreClient: fromClient);
