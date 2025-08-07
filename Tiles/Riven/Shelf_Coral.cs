@@ -339,7 +339,15 @@ namespace Origins.Tiles.Riven {
 					if (timer == 0) {
 						SoundEngine.PlaySound(SoundID.NPCDeath3.WithPitch(0.5f).WithVolume(0.4f), Position.ToWorldCoordinates());
 					}
-					if (++timer >= time) CurrentState = State.GoingIn;
+					if (++timer >= time) {
+						bool anythingBlocking = false;
+						for (int i = 0; i < 3 && !anythingBlocking; i++) {
+							Point pos = new(Position.X + i, Position.Y - 1);
+							Tile tile = Framing.GetTileSafely(pos);
+							anythingBlocking = tile.HasTile && TileID.Sets.PreventsTileRemovalIfOnTopOfIt[tile.TileType];
+						}
+						if (!anythingBlocking) CurrentState = State.GoingIn;
+					}
 				} else if (timer > 0 && ++timer >= time) {
 					timer = 0;
 				}
