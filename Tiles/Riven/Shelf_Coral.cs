@@ -8,9 +8,11 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -155,16 +157,6 @@ namespace Origins.Tiles.Riven {
 			// When the tile is removed, we need to remove the Tile Entity as well.
 			ModContent.GetInstance<Shelf_Coral_TE>().Kill(i, j);
 		}
-		public override void FloorVisuals(Player player) {
-			if (player.velocity.Y != 0) return;
-			Vector2 bottomLeft = player.BottomLeft;
-			float distToCoral = float.Ceiling(bottomLeft.Y / 16) * 16 - bottomLeft.Y;
-			if (distToCoral > 4) return;
-			Vector2 offset = new(0, distToCoral);
-			foreach ((int i, int j) in Collision.GetTilesIn(bottomLeft + offset, player.BottomRight + offset + Vector2.UnitY)) {
-				if (TileEntity.TryGet(i, j, out Shelf_Coral_TE tileEntity)) tileEntity.isStoodOn = true;
-			}
-		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			drawData.glowTexture = this.GetGlowTexture(drawData.tileCache.TileColor);
 			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY, 16, 28);
@@ -288,6 +280,7 @@ namespace Origins.Tiles.Riven {
 		public State CurrentState {
 			get => _currentState;
 			set {
+				if (NetmodeActive.MultiplayerClient) return;
 				if (_currentState.TrySet(value)) {
 					timer = 0;
 					if (Main.netMode == NetmodeID.Server) {
@@ -301,14 +294,46 @@ namespace Origins.Tiles.Riven {
 		public override void NetSend(BinaryWriter writer) {
 			writer.Write((int)CurrentState);
 			writer.Write((int)timer);
+			writer.Write(isStoodOn);
 		}
 		public override void NetReceive(BinaryReader reader) {
-			CurrentState = (State)reader.ReadInt32();
+			_currentState = (State)reader.ReadInt32();
 			timer = reader.ReadInt32();
+			isStoodOn = reader.ReadBoolean();
+		}
+		bool wasLocalPlayerStanding = false;
+		void ProcessStanding() {
+			isStoodOn = false;
+			Rectangle coralTop = new(Position.X * 16, Position.Y * 16, 3 * 16, 1);
+			bool shouldForceSync = NetmodeActive.MultiplayerClient && (wasLocalPlayerStanding != (Main.LocalPlayer.velocity.Y == 0));
+			wasLocalPlayerStanding = Main.LocalPlayer.velocity.Y == 0;
+			foreach (Player player in Main.ActivePlayers) {
+				if (player.velocity.Y != 0) continue;
+				Vector2 bottomLeft = player.BottomLeft;
+				float distToCoral = float.Ceiling(bottomLeft.Y / 16) * 16 - bottomLeft.Y;
+				if (distToCoral > 4) continue;
+				Vector2 offset = new(0, distToCoral);
+				Rectangle playerBottom = OriginExtensions.BoxOf(bottomLeft + offset, player.BottomRight + offset + Vector2.UnitY);
+				isStoodOn = playerBottom.Intersects(coralTop);
+				if (isStoodOn) {
+					if (player.whoAmI == Main.myPlayer && shouldForceSync) {
+						Main.NewText("Beep");
+						if (NetmodeActive.MultiplayerClient) NetMessage.SendData(MessageID.PlayerControls, Main.myPlayer);
+					}
+					return;
+				}
+			}
 		}
 		public override void Update() {
 			State oldState = CurrentState;
 			int frameNum = 0;
+			bool wasStoodOn = isStoodOn;
+			ProcessStanding();
+			if (isStoodOn != wasStoodOn && !NetmodeActive.MultiplayerClient) {
+				NetMessage.SendData(MessageID.TileEntitySharing, number: ID);
+			}
+			//if (NetmodeActive.Server) ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"{Main.player[0].velocity}: {isStoodOn} {timer}"), Color.LightSeaGreen);
+			Debugging.ChatOverhead(isStoodOn);
 			switch (CurrentState) {
 				case State.Out:
 				const int time = 15;
@@ -359,7 +384,6 @@ namespace Origins.Tiles.Riven {
 				} else frameNum = 7 - timer / 6;
 				break;
 			}
-			isStoodOn = false;
 			frameNum = Math.Min(frameNum, 6);
 			frameNum *= 34;
 			for (int i = 0; i < 3; i++) {
