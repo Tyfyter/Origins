@@ -81,7 +81,7 @@ namespace Origins.Core {
 				il => il.MatchLdloc(out _),
 				il => il.MatchCall<Rectangle>(nameof(Rectangle.Intersects))
 			);
-			c.EmitLdloc(itemRectangle);
+			c.EmitLdarg(itemRectangle);
 			c.EmitLdarg(5);
 			c.EmitDelegate((bool intersected, Rectangle itemRectangle, int i) => {
 				if (Main.npc[i].ModNPC is IMultiHitboxNPC multiHitboxNPC) {

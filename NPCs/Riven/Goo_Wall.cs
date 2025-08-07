@@ -43,6 +43,19 @@ namespace Origins.NPCs.Riven {
 		private List<Vector2> raysAvailable = [];
 		public Vector2 Anchor1 => Vector2.Lerp(Anchor2, NPC.Center, 2);
 		public Vector2 Anchor2 => new(NPC.ai[1], NPC.ai[2]);
+		public override void ModifyHoverBoundingBox(ref Rectangle boundingBox) {
+			if (Hitboxes is null) {
+				boundingBox = default;
+				return;
+			}
+			Rectangle mouseRectangle = new((int)(Main.mouseX + Main.screenPosition.X), (int)(Main.mouseY + Main.screenPosition.Y), 1, 1);
+			for (int i = 0; i < Hitboxes.Length; i++) {
+				if (Hitboxes[i].Intersects(mouseRectangle)) {
+					boundingBox = Hitboxes[i];
+					return;
+				}
+			}
+		}
 		public new virtual float SpawnChance(NPCSpawnInfo spawnInfo) {
 			minTileRange = 160;
 			maxTileRange = 160 * 2;
