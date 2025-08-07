@@ -317,7 +317,6 @@ namespace Origins.Tiles.Riven {
 				isStoodOn = playerBottom.Intersects(coralTop);
 				if (isStoodOn) {
 					if (player.whoAmI == Main.myPlayer && shouldForceSync) {
-						Main.NewText("Beep");
 						if (NetmodeActive.MultiplayerClient) NetMessage.SendData(MessageID.PlayerControls, Main.myPlayer);
 					}
 					return;
@@ -332,8 +331,6 @@ namespace Origins.Tiles.Riven {
 			if (isStoodOn != wasStoodOn && !NetmodeActive.MultiplayerClient) {
 				NetMessage.SendData(MessageID.TileEntitySharing, number: ID);
 			}
-			//if (NetmodeActive.Server) ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"{Main.player[0].velocity}: {isStoodOn} {timer}"), Color.LightSeaGreen);
-			Debugging.ChatOverhead(isStoodOn);
 			switch (CurrentState) {
 				case State.Out:
 				const int time = 15;
