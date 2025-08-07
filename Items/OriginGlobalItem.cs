@@ -160,6 +160,7 @@ namespace Origins.Items {
 			if (originPlayer.resizingGlove && player.ItemAnimationJustStarted) {
 				const float strength = 2f;
 				originPlayer.resizingGloveScale = Math.Clamp(Main.rand.NextFloat(1 / strength, float.BitIncrement(strength)), 0.75f, 2);
+				new Resizing_Glove_Action(player, originPlayer.resizingGloveScale).Send();
 			}
 			if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed)) {
 				scale *= originPlayer.meleeScaleMultiplier;

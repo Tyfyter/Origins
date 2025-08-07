@@ -1,4 +1,6 @@
-﻿using Origins.Dev;
+﻿using Origins.Core;
+using Origins.Dev;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,6 +20,20 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.OriginPlayer().resizingGlove = true;
 			player.autoReuseGlove = true;
+		}
+	}
+	public record class Resizing_Glove_Action(Player Player, float Scale) : SyncedAction {
+		public Resizing_Glove_Action() : this(default, default) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			Player = Main.player[reader.ReadByte()],
+			Scale = reader.ReadSingle()
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write(Player.whoAmI);
+			writer.Write(Scale);
+		}
+		protected override void Perform() {
+			Player.OriginPlayer().resizingGloveScale = Scale;
 		}
 	}
 }

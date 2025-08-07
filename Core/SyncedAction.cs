@@ -27,6 +27,7 @@ namespace Origins.Core {
 			}
 		}
 		public void Send(int toClient = -1, int ignoreClient = -1) {
+			if (NetmodeActive.MultiplayerClient) return;
 			ModPacket packet = Origins.instance.GetPacket();
 			packet.Write(Origins.NetMessageType.synced_action);
 			packet.Write(type);
