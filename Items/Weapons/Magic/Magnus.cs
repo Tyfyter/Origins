@@ -29,6 +29,7 @@ namespace Origins.Items.Weapons.Magic {
         public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Origins.DamageBonusScale[Type] = 1.5f;
+			OriginsSets.Items.FelnumItem[Type] = true;
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
 		public override void SetDefaults() {

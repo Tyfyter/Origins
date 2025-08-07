@@ -35,6 +35,7 @@ namespace Origins.Items.Weapons.Ranged {
 				Origins.AddGlowMask(Texture + "_Glow_10")
 			];
 			Origins.DamageBonusScale[Type] = 1.5f;
+			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.damage = 37;

@@ -18,6 +18,7 @@ namespace Origins.Items.Weapons.Melee {
 		];
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
+			OriginsSets.Items.FelnumItem[Type] = true;
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 		}
 		public override void SetDefaults() {

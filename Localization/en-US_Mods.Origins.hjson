@@ -2895,3 +2895,5 @@ ExtraDyeSlots: {
 	SceneYMK_Dye_Slot_1.DisplayText: "{$LegacyInterface.57}"
 	SceneYMK_Dye_Slot_2.DisplayText: "{$LegacyInterface.57}"
 }
+
+CritType.Felnum_Crit_Type: Mods.Origins.CritType.Felnum_Crit_Type

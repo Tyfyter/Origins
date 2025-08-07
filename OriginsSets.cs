@@ -19,6 +19,7 @@ namespace Origins {
 			public static bool[] ItemsThatAllowRemoteRightClick { get; } = ItemID.Sets.Factory.CreateBoolSet();
 			// not named because it controls a change to vanilla mechanics only present in TO, likely to be moved to PegasusLib
 			public static float[] DamageBonusScale { get; } = ItemID.Sets.Factory.CreateFloatSet(1f);
+			public static bool[] FelnumItem { get; } = ItemID.Sets.Factory.CreateBoolSet();
 			public static string[] JournalEntries { get; } = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Items)}_{nameof(JournalEntries)}")
 			.Description("Controls which items are associated with which journal entries, multiple entries can be assigned by separating them with semicolons")
 			.RegisterCustomSet<string>(null);

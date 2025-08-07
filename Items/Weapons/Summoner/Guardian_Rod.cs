@@ -26,6 +26,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 			Origins.DamageBonusScale[Type] = 1.5f;
+			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.damage = 27;

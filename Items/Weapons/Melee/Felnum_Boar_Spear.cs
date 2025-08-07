@@ -15,6 +15,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.Spears[Type] = true;
 			Origins.DamageBonusScale[Type] = 1.5f;
+			OriginsSets.Items.FelnumItem[Type] = true;
 			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {

@@ -9,6 +9,7 @@ namespace Origins.Items.Weapons {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.GolfBallDyedBrown;
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
+			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GolfBall);

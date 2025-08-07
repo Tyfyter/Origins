@@ -12,6 +12,7 @@ namespace Origins.Items.Weapons.Ranged {
         ];
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
+			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldBow);

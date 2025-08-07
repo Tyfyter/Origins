@@ -17,6 +17,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
 			Origins.DamageBonusScale[Type] = 1.5f;
+			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);

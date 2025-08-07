@@ -24,6 +24,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
+			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.useStyle = ItemUseStyleID.Shoot;

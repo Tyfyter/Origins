@@ -8,6 +8,7 @@ namespace Origins.Items.Tools {
 	public class Felnum_Pickaxe : ModItem {
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
+			OriginsSets.Items.FelnumItem[Type] = true;
 			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {

@@ -17,6 +17,7 @@ namespace Origins.Items.Tools {
 	public class Lightning_Rod : ModItem {
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 2f;
+			OriginsSets.Items.FelnumItem[Type] = true;
 			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
