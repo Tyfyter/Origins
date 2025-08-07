@@ -75,6 +75,13 @@ Items: {
 		{$Mods.Origins.Items.Shaped_Glass.Tooltip}
 		'No it doesn't halve your health for double damage.'
 		''' */
+
+	Amoeba_Fluid_Item: {
+		// DisplayName: Amoeba? Fluid
+		// Tooltip: Bouncy! ?! Bouncy!
+	}
+
+	// Terlet_Paper.Tooltip: Summons a kawaii cta
 }
 
 // Prefixes.Wholesome_Prefix.DisplayName: Holesome
@@ -154,6 +161,7 @@ NPCs: {
 	// Shimmer_Turret_Chunk3.DisplayName: "{$ItemName.Handgun}"
 	// Goo_Wall: Sticky Wall
 	// Enchanted_Fiberglass_Slime.DisplayName: Enchanted Fiberglasss Lime
+	// Fiberglass_Weaver.DisplayName: Fiberglass Cat
 }
 
 // Bestiary.Leaf_Snapper: Hello!

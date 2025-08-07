@@ -10,6 +10,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
+using Origins.NPCs.MiscE;
 using Origins.Tiles.BossDrops;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -119,6 +120,7 @@ namespace Origins.NPCs.Fiberglass {
 			if (target.Invalid) {
 				target.Position = spawnPosition.Value;
 			}
+			NPC.spriteDirection = Math.Sign(NPC.velocity.X);
 			switch ((int)NPC.ai[0]) {
 				case 0: {
 					AngularSmoothing(ref NPC.rotation, NPC.AngleTo(target.Center) + MathHelper.PiOver2, 0.05f);
@@ -283,23 +285,35 @@ namespace Origins.NPCs.Fiberglass {
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Terlet_Paper>(), 4));
 			npcLoot.Add(new LeadingConditionRule(new Conditions.IsMasterMode()).WithOnSuccess(weaponDropRule));
 		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Fiberglass_Weaver).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Fiberglass_Weaver).GetDefaultTMLName() + "_AF";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Main.CurrentDrawnEntityShader = Terraria.Graphics.Shaders.GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveDye);
-			if (legs is null) return false;
-			for (int i = 0; i < 8; i++) {
-				bool flip = (i % 2 != 0) == i < 4;
-				Vector2 baseStart = legs[i].start;
-				legs[i].start = legs[i].start.RotatedBy(NPC.rotation) + NPC.Center;
-				float[] targets = legs[i].GetTargetAngles(legTargets[i], flip);
-				AngularSmoothing(ref legs[i].bone0.Theta, targets[0], 0.3f);
-				AngularSmoothing(ref legs[i].bone1.Theta, targets[1], NPC.ai[0] == 2 && NPC.ai[2] == i ? 1f : 0.3f);
+			float rotation = NPC.rotation;
+			float scale = 1;
+			SpriteEffects effect = SpriteEffects.None;
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Npc[Type] = afTexture;
+				rotation = 0;
+				effect = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			} else {
+				TextureAssets.Npc[Type] = normalTexture;
+				Main.CurrentDrawnEntityShader = Terraria.Graphics.Shaders.GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveDye);
+				if (legs is null) return false;
+				for (int i = 0; i < 8; i++) {
+					bool flip = (i % 2 != 0) == i < 4;
+					Vector2 baseStart = legs[i].start;
+					legs[i].start = legs[i].start.RotatedBy(NPC.rotation) + NPC.Center;
+					float[] targets = legs[i].GetTargetAngles(legTargets[i], flip);
+					AngularSmoothing(ref legs[i].bone0.Theta, targets[0], 0.3f);
+					AngularSmoothing(ref legs[i].bone1.Theta, targets[1], NPC.ai[0] == 2 && NPC.ai[2] == i ? 1f : 0.3f);
 
-				Vector2 screenStart = legs[i].start - screenPos;
-				Main.EntitySpriteDraw(UpperLegTexture, screenStart, null, drawColor, legs[i].bone0.Theta, new Vector2(5, flip ? 3 : 9), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
-				Main.EntitySpriteDraw(LowerLegTexture, screenStart + (Vector2)legs[i].bone0, null, drawColor, legs[i].bone0.Theta + legs[i].bone1.Theta, new Vector2(6, flip ? 2 : 6), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
-				legs[i].start = baseStart;
+					Vector2 screenStart = legs[i].start - screenPos;
+					Main.EntitySpriteDraw(UpperLegTexture, screenStart, null, drawColor, legs[i].bone0.Theta, new Vector2(5, flip ? 3 : 9), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
+					Main.EntitySpriteDraw(LowerLegTexture, screenStart + (Vector2)legs[i].bone0, null, drawColor, legs[i].bone0.Theta + legs[i].bone1.Theta, new Vector2(6, flip ? 2 : 6), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
+					legs[i].start = baseStart;
+				}
 			}
-			Main.EntitySpriteDraw(TextureAssets.Npc[Type].Value, NPC.Center - screenPos, null, drawColor, NPC.rotation, new Vector2(34, 70), 1f, SpriteEffects.None, 0);
+			Main.EntitySpriteDraw(TextureAssets.Npc[Type].Value, NPC.Center - screenPos, null, drawColor, rotation, TextureAssets.Npc[Type].Size() / 2, scale, effect, 0);
 			return false;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
