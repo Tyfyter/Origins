@@ -16,15 +16,22 @@ namespace Origins.Core {
 		public SyncedAction Read(BinaryReader reader) {
 			return NetReceive(reader);
 		}
+		/// <summary>
+		/// Performs the action, then sends it if appropriate
+		/// </summary>
+		/// <param name="fromClient"></param>
 		public void Perform(int fromClient = -2) {
-			Perform();
+			if (NetmodeActive.Server || !ServerOnly) Perform();
 			if ((NetmodeActive.Server && !ServerOnly) || (NetmodeActive.MultiplayerClient && fromClient == -2)) {
-				ModPacket packet = Origins.instance.GetPacket();
-				packet.Write(Origins.NetMessageType.synced_action);
-				packet.Write(type);
-				NetSend(packet);
-				packet.Send(ignoreClient: fromClient);
+				Send(ignoreClient: fromClient);
 			}
+		}
+		public void Send(int toClient = -1, int ignoreClient = -1) {
+			ModPacket packet = Origins.instance.GetPacket();
+			packet.Write(Origins.NetMessageType.synced_action);
+			packet.Write(type);
+			NetSend(packet);
+			packet.Send(toClient, ignoreClient);
 		}
 		protected abstract void Perform();
 		public abstract SyncedAction NetReceive(BinaryReader reader);
