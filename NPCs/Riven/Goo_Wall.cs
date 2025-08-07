@@ -179,19 +179,25 @@ namespace Origins.NPCs.Riven {
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 anchor = Anchor2;
 			Vector2 origin = Anchor1;
+			Vector2 scale = new(1);
+			if (NPC.IsABestiaryIconDummy) {
+				anchor = NPC.Center - new Vector2(0, 50);
+				origin = Vector2.Lerp(anchor, NPC.Center, 2);
+				scale = new(0.8f, 1);
+			}
 			float rot = origin.DirectionTo(anchor).ToRotation() + MathHelper.PiOver2;
 			float dst = origin.Distance(anchor);
 
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 
 			Rectangle frame = new(0, 182, 52, 18);
-			Main.EntitySpriteDraw(texture, origin - screenPos, frame, GetAlpha(drawColor).Value, rot, new(frame.Width * 0.5f, 0), 1, SpriteEffects.None);
+			Main.EntitySpriteDraw(texture, origin - screenPos, frame, GetAlpha(drawColor).Value, rot, new(frame.Width * 0.5f, 0), scale, SpriteEffects.None);
 
 			frame = new(0, 20, 52, 160);
-			Main.EntitySpriteDraw(texture, anchor - screenPos, frame, GetAlpha(drawColor).Value, rot, new(frame.Width * 0.5f, 0), new Vector2(1, (dst / frame.Height)), SpriteEffects.None);
+			Main.EntitySpriteDraw(texture, anchor - screenPos, frame, GetAlpha(drawColor).Value, rot, new(frame.Width * 0.5f, 0), scale * new Vector2(1, dst / frame.Height), SpriteEffects.None);
 
 			frame = new(0, 0, 52, 18);
-			Main.EntitySpriteDraw(texture, anchor - screenPos, frame, GetAlpha(drawColor).Value, rot, new(frame.Width * 0.5f, 18), 1, SpriteEffects.None);
+			Main.EntitySpriteDraw(texture, anchor - screenPos, frame, GetAlpha(drawColor).Value, rot, new(frame.Width * 0.5f, 18), scale, SpriteEffects.None);
 			return false;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
