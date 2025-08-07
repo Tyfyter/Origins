@@ -395,6 +395,8 @@ namespace Origins {
 		public bool weakShimmer = false;
 		public bool compositeFrontArmWasEnabled = false;
 		public bool walledDebuff = false;
+
+		public bool sendBuffs = false;
 		#endregion
 
 		#region keybinds

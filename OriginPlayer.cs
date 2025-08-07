@@ -603,6 +603,10 @@ namespace Origins {
 			}
 			if (MojoInjectionActive) Mojo_Injection.UpdateEffect(this);
 			if (CrownJewelActive) Crown_Jewel.UpdateEffect(this);
+			if (sendBuffs && Player.whoAmI == Main.myPlayer && !NetmodeActive.SinglePlayer) {
+				NetMessage.SendData(MessageID.PlayerBuffs, number: Main.myPlayer);
+			}
+			sendBuffs = false;
 		}
 		public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
 			if (hasPotatOS) {

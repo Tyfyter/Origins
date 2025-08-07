@@ -687,6 +687,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					player.buffTime[buffIndex]++;
 				} else {
 					player.DelBuff(buffIndex--);
+					if (player.whoAmI == Main.myPlayer) player.OriginPlayer().sendBuffs = true;
 				}
 			}
 			if (player.whoAmI == Main.myPlayer && !SoundEngine.TryGetActiveSound(ambienceSlot, out _)) {
