@@ -80,7 +80,6 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			OriginPlayer originPlayer = player.OriginPlayer();
-			Debugging.ChatOverhead(Projectile.ai[2]);
 			if (Projectile.ai[2] == 1) {
 				SoundEngine.PlaySound(SoundID.Item67.WithPitch(-2f), Projectile.position);
 				SoundEngine.PlaySound(SoundID.Item142, Projectile.position);
