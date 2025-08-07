@@ -1,6 +1,7 @@
 ﻿using Origins.Items.Pets;
 using Origins.LootConditions;
 using Origins.NPCs;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,20 @@ namespace Origins.Items.Armor.Vanity.Dev {
 		}
 		public record struct ItemTypeDropRuleWrapper(IItemDropRule Rule) {
 			public static implicit operator ItemTypeDropRuleWrapper(int drop) => new(ItemDropRule.Common(drop));
+		}
+		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			List<DropRateInfo> drops = [];
+			foreach (ItemTypeDropRuleWrapper rule in GetDrops()) {
+				DropRateInfoChainFeed ratesInfo = new(1f);
+				rule.Rule.ReportDroprates(drops, ratesInfo);
+			}
+			for (int i = 0; i < drops.Count; i++) {
+				StringBuilder text = new($"[i:{drops[i].itemId}] {Lang.GetItemNameValue(drops[i].itemId)}");
+				if ((drops[i].conditions?.Count ?? 0) > 0) text.Append($" ({TextUtils.Format("Mods.PegasusLib.ListAll", drops[i].conditions.Select(c => c.GetConditionDescription()).ToArray())})");
+				tooltips.Add(new(Mod, "Drop" + i, text.ToString()) {
+					OverrideColor = PegasusLib.PegasusLib.GetRarityColor(ContentSamples.ItemsByType[drops[i].itemId].rare)
+				});
+			}
 		}
 	}
 }

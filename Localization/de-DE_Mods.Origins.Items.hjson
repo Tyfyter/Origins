@@ -4672,12 +4672,12 @@ Eaterboros: {
 
 Plague_Texan_Set: {
 	// DisplayName: Plague Texan Set
-	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+	// Tooltip: ""
 }
 
 Chee_Set: {
 	// DisplayName: Chee Set
-	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+	// Tooltip: ""
 }
 
 Slag_Bucket: {
@@ -6361,11 +6361,7 @@ Aetherite_Ore_Item: {
 
 Kono_Dio_Da_Set: {
 	// DisplayName: Dio Set
-	/* Tooltip:
-		'''
-		{$DioSet}
-		{$CommonItemTooltip.RightClickToOpen}
-		''' */
+	// Tooltip: "{$DioSet}"
 }
 
 Kono_Dio_Da_Wings: {
