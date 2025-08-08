@@ -18,6 +18,7 @@ using Origins.Music;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.MusicBoxes;
 using Origins.Tiles.Other;
+using Origins.Tiles.Riven;
 using PegasusLib;
 using ReLogic.Content;
 using System;
@@ -366,6 +367,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			public override readonly string ToString() => $"type:{ID}, velocity:{velocity}, position:{position}, offset:{offset}, ";
 		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Shimmer_Construct).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Shimmer_Construct).GetDefaultTMLName() + "_AF";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 position = NPC.Center;
 			if (IsInPhase3 || (deathAnimationTime > 100)) {
@@ -392,8 +395,29 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				position += Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * MathF.Pow(deathAnimationTime / shattertime, 1.5f) * 12);
 			}
+
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Npc[Type] = afTexture;
+				NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
+					Position = new Vector2(0, 50),
+					PortraitPositionXOverride = 2,
+					PortraitPositionYOverride = 80,
+					Rotation = MathHelper.Pi,
+					Scale = 1.2f,
+					PortraitScale = 2
+				};
+			} else {
+				TextureAssets.Npc[Type] = normalTexture;
+				NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
+					Position = new Vector2(25, -30),
+					Rotation = 0.7f,
+					Frame = 6
+				};
+			}
+			Texture2D texture = TextureAssets.Npc[Type].Value;
+
 			Main.EntitySpriteDraw(
-				TextureAssets.Npc[Type].Value,
+				texture,
 				position - screenPos,
 				NPC.frame,
 				drawColor,
@@ -405,7 +429,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			if (aiStates[NPC.aiAction] is DoubleCircleState) {
 				Vector2 targetCenter = NPC.GetTargetData().Center;
 				Main.EntitySpriteDraw(
-					TextureAssets.Npc[Type].Value,
+					texture,
 					targetCenter + (targetCenter - position) - screenPos,
 					NPC.frame,
 					drawColor.MultiplyRGBA(new(0.8f, 0f, 1f, 0.6f)),

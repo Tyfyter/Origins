@@ -158,6 +158,7 @@ NPCs: {
 	Defiled_Amalgamation.DisplayName: District Attorney
 	Defiled_Tripod.DisplayName: Blŏkusland™ Certified Weaponized Catgirl
 	Ancient_Riven_Fighter.DisplayName: Ancient Riven Knownolimitsoform
+	Shimmer_Construct.DisplayName: Shimmer Villager
 	Shimmer_Chunk1.DisplayName: "{$ItemName.Handgun}"
 	Shimmer_Chunk2.DisplayName: "{$ItemName.Handgun}"
 	Shimmer_Chunk3.DisplayName: "{$ItemName.Handgun}"
@@ -176,6 +177,14 @@ Bestiary: {
 		{$Mods.Origins.Bestiary.Goo_Wall}
 
 		Smells faintly like Elmer's glue
+		'''
+	Shimmer_Construct:
+		'''
+		          Hrrmm.
+
+		I receive: 9999 platinum coins
+
+		You receive: [wiggle:1 raw cod]
 		'''
 }
 
