@@ -2914,4 +2914,8 @@ CritType: {
 	Miter_Saw_Crit_Type: Mods.Origins.CritType.Miter_Saw_Crit_Type
 	SlammyHammer: Mods.Origins.CritType.Amoebash_Crit_Type
 	Soldering_Iron_Crit_Type: Mods.Origins.CritType.Soldering_Iron_Crit_Type
+	Piledriver_Crit_Type: Mods.Origins.CritType.Piledriver_Crit_Type
+	Meteor_Crit_Type: Mods.Origins.CritType.Meteor_Crit_Type
+	Communion_Type: Mods.Origins.CritType.Communion_Type
+	The_Bird_Crit_Type: Mods.Origins.CritType.The_Bird_Crit_Type
 }

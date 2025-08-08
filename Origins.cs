@@ -1127,11 +1127,17 @@ namespace Origins {
 				foreach (ModItem item in instance.GetContent<ModItem>()) {
 					if (item.DisplayName.Value.Contains("<PH>")) AddReason($"{item.Name} has placeholder name");
 				}
+				foreach (IBrokenContent item in instance.GetContent<IBrokenContent>()) {
+					AddReason($"{item.GetType()}: {item.BrokenReason}");
+				}
 #if DEBUG
 				AddReason("Mod was last built in DEBUG configuration");
 #endif
 				return reason;
 			}
 		}
+	}
+	internal interface IBrokenContent : ILoadable {
+		public string BrokenReason { get; }
 	}
 }

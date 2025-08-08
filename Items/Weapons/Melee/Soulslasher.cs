@@ -153,7 +153,8 @@ namespace Origins.Items.Weapons.Melee {
 			return false;
 		}
 	}
-	public class Soulslasher_Crit_Type : CritType<Soulslasher> {
+	public class Soulslasher_Crit_Type : CritType<Soulslasher>, IBrokenContent {
+		public string BrokenReason => "Needs balancing";
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ModProjectile is Soulslasher_Swing;
 		public override float CritMultiplier(Player player, Item item) => 1.4f;
 	}

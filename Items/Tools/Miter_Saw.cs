@@ -136,7 +136,8 @@ namespace Origins.Items.Tools {
 			Projectile.frameCounter = (Projectile.frameCounter + 1) % 4;
 		}
 	}
-	public class Miter_Saw_Crit_Type : CritType<Miter_Saw> {
+	public class Miter_Saw_Crit_Type : CritType<Miter_Saw>, IBrokenContent {
+		public string BrokenReason => "Needs alt-function condition, Needs balancing";
 		static int CritThreshold => 4;
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
 			if (projectile is null) {
