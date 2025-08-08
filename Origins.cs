@@ -1128,7 +1128,7 @@ namespace Origins {
 					if (item.DisplayName.Value.Contains("<PH>")) AddReason($"{item.Name} has placeholder name");
 				}
 				foreach (IBrokenContent item in instance.GetContent<IBrokenContent>()) {
-					AddReason($"{item.GetType()}: {item.BrokenReason}");
+					AddReason($"{item.GetType().Name}: {item.BrokenReason}");
 				}
 #if DEBUG
 				AddReason("Mod was last built in DEBUG configuration");
