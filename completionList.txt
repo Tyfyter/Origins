@@ -810,7 +810,7 @@ RANGED WEAPONS:
 (^) Neural Network*
 (^) Riven Splitter*
 (^) Shardcannon*
-(^? (I have no idea how it just started working on its own)) Shimmershot
+(#3, ^2) Shimmershot !!!
 (^) Sleetfire*
 (^) Sunflower Seed Shooter*
 (^) Tendon Tear*

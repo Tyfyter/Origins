@@ -86,7 +86,7 @@ namespace Origins.NPCs.Riven {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 5, 8));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 7, 11));
 		}
 		public override int SpawnNPC(int tileX, int tileY) {
 			if (!IMultiHitboxNPC.SpawningEnabled) return Main.maxNPCs;
