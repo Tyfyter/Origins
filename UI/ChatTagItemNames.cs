@@ -5,7 +5,6 @@ using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Origins.UI {
 	public class ChatTagItemNames : ILoadable {
@@ -13,6 +12,7 @@ namespace Origins.UI {
 			On_Main.GUIHotbarDrawInner += On_Main_GUIHotbarDrawInner;
 			MonoModHooks.Add(typeof(DynamicSpriteFont).GetMethod("InternalDraw", BindingFlags.NonPublic | BindingFlags.Instance), (orig_InternalDraw orig, DynamicSpriteFont self, string text, SpriteBatch spriteBatch, Vector2 startPosition, Color color, float rotation, Vector2 origin, ref Vector2 scale, SpriteEffects spriteEffects, float depth) => {
 				Wiggle_Handler.origin = origin;
+				Centered_Snippet_Handler.origin = origin;
 				if (isDrawingPopup) {
 					using Flag<bool> flag = new(() => ref isDrawingPopup, false);
 					ChatManager.DrawColorCodedString(spriteBatch, self, ChatManager.ParseMessage(text, color).ToArray(), startPosition, color, rotation, Vector2.Zero, scale, out _, 0);

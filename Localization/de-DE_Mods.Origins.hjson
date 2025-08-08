@@ -2911,7 +2911,7 @@ CritType: {
 	// VVVV Leave this one as is VVVV
 	// Missing_File_Crit_Type: Mods.Origins.CritType.Missing_File_Crit_Type
 	// Flak_Crit_Type: Mods.Origins.CritType.Flak_Crit_Type
-	// Miter_Saw_Type: Mods.Origins.CritType.Miter_Saw_Type
+	// Miter_Saw_Crit_Type: Mods.Origins.CritType.Miter_Saw_Crit_Type
 	// SlammyHammer: Mods.Origins.CritType.Amoebash_Crit_Type
 	// Soldering_Iron_Crit_Type: Mods.Origins.CritType.Soldering_Iron_Crit_Type
 }

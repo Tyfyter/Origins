@@ -178,7 +178,14 @@ Bestiary: {
 
 		Smells faintly like Elmer's glue
 		''' */
-	// Shimmer_Construct: Hrrmm.
+	/* Shimmer_Construct:
+		'''
+		[centered:Hrrmm.]
+
+		I receive: 9999 platinum coins
+
+		You receive: [wiggle:1 raw cod]
+		''' */
 }
 
 /* SetBonuses.Rubber:
