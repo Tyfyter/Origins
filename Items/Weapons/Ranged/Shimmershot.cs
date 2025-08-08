@@ -86,8 +86,8 @@ namespace Origins.Items.Weapons.Ranged {
 				SoundEngine.PlaySound(Origins.Sounds.HeavyCannon, Projectile.position);
 				Projectile.ai[2] = 0;
 			}
+			if (Projectile.localAI[1] == 0) Projectile.localAI[1] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
 			if (Main.myPlayer == Projectile.owner) { // charging
-				if (Projectile.localAI[1] == 0) Projectile.localAI[1] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
 				if (Projectile.localAI[0].Warmup(Projectile.localAI[1])) {
 					SoundEngine.PlaySound(SoundID.Item25.WithPitchOffset(1)); // full charge sound
 					SoundEngine.PlaySound(SoundID.Zombie103.WithPitch(2f));
