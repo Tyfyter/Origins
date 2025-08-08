@@ -25,7 +25,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetDefaults() {
 			NPC.lifeMax = 560;
-			NPC.damage = 0;
+			NPC.damage = 1;
 			NPC.width = 26;
 			NPC.height = 26;
 			NPC.friendly = false;
@@ -158,7 +158,7 @@ namespace Origins.NPCs.Riven {
 			NPC.ai[0]--;
 			FixExploitManEaters.ProtectSpot(position.ToTileCoordinates().X, position.ToTileCoordinates().Y);
 			FixExploitManEaters.ProtectSpot(anchor.ToTileCoordinates().X, anchor.ToTileCoordinates().Y);
-			
+
 			foreach (NPC tgt in Main.ActiveNPCs) {
 				if (tgt?.ModNPC is not IRivenEnemy && InsideWall(tgt)) {
 					tgt.velocity *= 0.4f;
@@ -187,33 +187,39 @@ namespace Origins.NPCs.Riven {
 						SoundEngine.PlaySound(SoundID.NPCDeath1.WithPitch(0.4f).WithVolumeScale(0.5f), tgt.Center);
 						SoundEngine.PlaySound(SoundID.Item102.WithPitch(1), tgt.Center);
 						if (spawn.active) NPC.ai[0] = 8 * 60;
-						//if (spawn.active) NPC.ai[0] = 60;
 					}
 				}
 			}
 		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Goo_Wall).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Goo_Wall).GetDefaultTMLName() + "_AF";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 anchor = Anchor2;
 			Vector2 origin = Anchor1;
 			Vector2 scale = new(1);
+			Color color = GetAlpha(drawColor).Value;
 			if (NPC.IsABestiaryIconDummy) {
 				anchor = NPC.Center - new Vector2(0, 50);
 				origin = Vector2.Lerp(anchor, NPC.Center, 2);
 				scale = new(0.8f, 1);
+				color = color.MultiplyRGBA(new(0.9f, 0.9f, 0.9f));
 			}
 			float rot = origin.DirectionTo(anchor).ToRotation() + MathHelper.PiOver2;
 			float dst = origin.Distance(anchor);
 
+			if (OriginsModIntegrations.CheckAprilFools()) TextureAssets.Npc[Type] = afTexture;
+			else TextureAssets.Npc[Type] = normalTexture;
+
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 
 			Rectangle frame = new(0, 182, 52, 18);
-			Main.EntitySpriteDraw(texture, origin - screenPos, frame, GetAlpha(drawColor).Value, rot, new(frame.Width * 0.5f, 0), scale, SpriteEffects.None);
+			Main.EntitySpriteDraw(texture, origin - screenPos, frame, color, rot, new(frame.Width * 0.5f, 0), scale, SpriteEffects.None);
 
 			frame = new(0, 20, 52, 160);
-			Main.EntitySpriteDraw(texture, anchor - screenPos, frame, GetAlpha(drawColor).Value, rot, new(frame.Width * 0.5f, 0), scale * new Vector2(1, dst / frame.Height), SpriteEffects.None);
+			Main.EntitySpriteDraw(texture, anchor - screenPos, frame, color, rot, new(frame.Width * 0.5f, 0), scale * new Vector2(1, dst / frame.Height), SpriteEffects.None);
 
 			frame = new(0, 0, 52, 18);
-			Main.EntitySpriteDraw(texture, anchor - screenPos, frame, GetAlpha(drawColor).Value, rot, new(frame.Width * 0.5f, 18), scale, SpriteEffects.None);
+			Main.EntitySpriteDraw(texture, anchor - screenPos, frame, color, rot, new(frame.Width * 0.5f, 18), scale, SpriteEffects.None);
 			return false;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
