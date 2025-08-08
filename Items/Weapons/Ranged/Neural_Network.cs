@@ -1,14 +1,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.CrossMod;
 using Origins.Dev;
-using Origins.Items.Weapons.Melee;
 using ReLogic.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
+
 namespace Origins.Items.Weapons.Ranged {
 	public class Neural_Network : ModItem, ICustomWikiStat {
 		public string[] Categories => [
