@@ -59,9 +59,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static int AreaWidth => 60;
 		public static int AreaHeight => 80;
 		/// <summary>
-		/// I'm not actually 100% sure what unit this is in
+		/// I'm not actually 100% sure what unit this is in, but it gets more dense the lower it is
 		/// </summary>
-		public static float Density => 16 * (27 - DifficultyMult * 2);
+		public static float Density => 16 * (30 - DifficultyMult * 2);
 		#endregion stats
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
@@ -103,7 +103,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Vector2 basePos = npc.GetTargetData().Center;
 				basePos.Y = lowestHeight + AreaYOffset;
 				Rectangle area = OriginExtensions.BoxOf(basePos - new Vector2(AreaWidth * 16, 0), basePos + new Vector2(AreaWidth * 16, AreaHeight * 16));
-				List<Vector2> newPositions = OriginExtensions.PoissonDiskSampling(Main.rand, area, Density);
+				List<Vector2> newPositions = Main.rand.PoissonDiskSampling(area, Density);
 				positions.Clear();
 				while (newPositions.Count > 0) {
 					int rand = Main.rand.Next(newPositions.Count);

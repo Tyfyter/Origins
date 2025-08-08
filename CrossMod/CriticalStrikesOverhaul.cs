@@ -94,6 +94,7 @@ namespace Origins.CrossMod {
 		public sealed override bool ForceForItem(Item item) => item.ModItem is TItem;
 	}
 	public class Felnum_Crit_Type : CritType {
+		public override LocalizedText Description => OriginsModIntegrations.CheckAprilFools() ? base.Description : CritMod.GetLocalization($"CritTypes.FoeIsWet.Description");
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
 			return target.wet || target.HasBuff(BuffID.Wet);
 		}

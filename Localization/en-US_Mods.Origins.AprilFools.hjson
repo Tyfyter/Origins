@@ -193,3 +193,5 @@ SetBonuses.Rubber:
 	Immunity to Static Shock, Electrified, and traffic laws
 	Reduces damage taken by 5%
 	'''
+
+CritType.Felnum_Crit_Type: Critically strikes while the target is covered in wet
