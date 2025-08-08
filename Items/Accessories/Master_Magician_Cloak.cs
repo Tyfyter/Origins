@@ -18,19 +18,17 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			base.UpdateAccessory(player, hideVisual);
-			if (player.OriginPlayer().lazyCloaksOffPlayer[Item.frontSlot] <= 0) {
-				player.jumpSpeedBoost += 12;
-				player.noFallDmg = true;
-				if (player.controlJump) {
-					player.gravity = 0.15f;
-				} else if (player.controlDown && player.velocity.Y != 0f) {
-					player.gravity = 1.4f;
-				}
-				player.manaFlower = true;
-				player.manaCost -= 0.08f;
-				player.starCloakItem = Item;
-				player.starCloakItem_manaCloakOverrideItem = Item;
+			player.jumpSpeedBoost += 12;
+			player.noFallDmg = true;
+			if (player.controlJump) {
+				player.gravity = 0.15f;
+			} else if (player.controlDown && player.velocity.Y != 0f) {
+				player.gravity = 1.4f;
 			}
+			player.manaFlower = true;
+			player.manaCost -= 0.08f;
+			player.starCloakItem = Item;
+			player.starCloakItem_manaCloakOverrideItem = Item;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
