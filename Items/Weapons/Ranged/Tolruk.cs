@@ -13,6 +13,7 @@ using ReLogic.Utilities;
 using Origins.Items.Weapons.Magic;
 using Origins.Buffs;
 using Origins.Items.Tools;
+using Origins.CrossMod;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Tolruk : ModItem, ICustomWikiStat {
@@ -35,6 +36,7 @@ namespace Origins.Items.Weapons.Ranged {
 				Origins.AddGlowMask(Texture + "_Glow_10")
 			];
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
 			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {

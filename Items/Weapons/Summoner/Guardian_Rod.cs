@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner;
@@ -26,6 +27,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
 			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {

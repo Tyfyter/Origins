@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MonoMod.Cil;
+using Origins.Items.Tools;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -6,13 +8,31 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.CrossMod {
+	[ReinitializeDuringResizeArrays]
 	public abstract class CritType : ILoadable {
+		public static void SetCritType<TCritType>(int type) where TCritType : CritType {
+			if (ModEnabled) ForcedCritTypes[type] = ModContent.GetInstance<TCritType>();
+		}
+		static CritType[] ForcedCritTypes = ItemID.Sets.Factory.CreateCustomSet<CritType>(null);
 		class CriticalStrikesOverhaul : ModSystem {
 			public const string mod_name = "CritRework";
 			public static List<CritType> critTypes = [];
-			public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod(mod_name);
+			public override bool IsLoadingEnabled(Mod mod) => ModEnabled;
 			public override void PostSetupContent() {
 				Mod critMod = CritMod;
+				if (critMod.Version == new Version(1, 0, 1)) {
+					Type ModCalledCritType = critMod.Code.GetType("CritRework.Content.CritTypes.ModCalledCritType");
+					MonoModHooks.Modify(
+						ModCalledCritType.GetConstructor([typeof(Mod), typeof(bool), typeof(Func<Player, Item, Projectile, NPC, NPC.HitModifiers, bool>), typeof(Func<Player, Item, float>), typeof(Func<Item, bool>), typeof(Func<Item, bool>), typeof(LocalizedText), typeof(string)]),
+						il => {
+							ILCursor c = new(il);
+							c.GotoNext(MoveType.Before, static i => i.MatchRet());
+							c.EmitLdarg(0);
+							c.EmitLdarg(5);
+							c.EmitStfld(ModCalledCritType.GetField("forceOnItem"));
+						}
+					);
+				}
 				for (int i = 0; i < critTypes.Count; i++) {
 					CritType critType = critTypes[i];
 					critMod.Call("AddCritType",
@@ -22,9 +42,19 @@ namespace Origins.CrossMod {
 						(Func<Player, Item, float>)critType.CritMultiplier,
 						(Func<Item, bool>)critType.ForceForItem,
 						(Func<Item, bool>)critType.AllowedForItem,
-						Language.GetOrRegister($"Mods.{Mod.Name}.CritType.{critType.GetType().Name}"),
+						critType.Description,
 						critType.GetType().Name
 					);
+				}
+				RefreshForcedCritType(Indestructible_Saddle.ID);
+			}
+			static void RefreshForcedCritType(int type) {
+				Item item = ContentSamples.ItemsByType[type];
+				foreach (GlobalItem global in item.EntityGlobals) {
+					if (global?.Name == "CritItem") {
+						global.SetDefaults(item);
+						break;
+					}
 				}
 			}
 			public override void Unload() {
@@ -32,21 +62,45 @@ namespace Origins.CrossMod {
 			}
 		}
 		public virtual bool InRandomPool => false;
-		public static Mod CritMod => ModLoader.GetMod(CriticalStrikesOverhaul.mod_name);
+		static Mod critMod;
+		public static Mod CritMod => critMod ??= ModLoader.GetMod(CriticalStrikesOverhaul.mod_name);
+		static bool? modEnabled;
+		public static bool ModEnabled => modEnabled ??= ModLoader.HasMod(CriticalStrikesOverhaul.mod_name);
+		public virtual LocalizedText Description => Language.GetOrRegister($"Mods.Origins.CritType.{GetType().Name}");
 		public void Load(Mod mod) {
-			if (ModLoader.HasMod(CriticalStrikesOverhaul.mod_name)) CriticalStrikesOverhaul.critTypes.Add(this);
+			if (ModEnabled) CriticalStrikesOverhaul.critTypes.Add(this);
 		}
 		public void Unload() { }
 		public abstract bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers);
 		public abstract float CritMultiplier(Player player, Item item);
-		public abstract bool ForceForItem(Item item);
+		public virtual bool ForceForItem(Item item) => ForcedCritTypes[item.type] == this;
 		public virtual bool AllowedForItem(Item item) => ForceForItem(item);
+		protected class CritModPlayer : ModPlayer {
+			public override string Name => "CritRework_" + base.Name;
+			public override bool IsLoadingEnabled(Mod mod) => ModEnabled;
+		}
+		protected class CritGlobalProjectile : GlobalProjectile {
+			public override string Name => "CritRework_" + base.Name;
+			public override bool InstancePerEntity => true;
+			public override bool IsLoadingEnabled(Mod mod) => ModEnabled;
+		}
+		protected class CritGlobalNPC : GlobalNPC {
+			public override string Name => "CritRework_" + base.Name;
+			public override bool InstancePerEntity => true;
+			public override bool IsLoadingEnabled(Mod mod) => ModEnabled;
+		}
+	}
+	public abstract class CritType<TItem> : CritType where TItem : ModItem {
+		public sealed override bool ForceForItem(Item item) => item.ModItem is TItem;
 	}
 	public class Felnum_Crit_Type : CritType {
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
 			return target.wet || target.HasBuff(BuffID.Wet);
 		}
 		public override float CritMultiplier(Player player, Item item) => 1.4f;
-		public override bool ForceForItem(Item item) => OriginsSets.Items.FelnumItem[item.type];
+	}
+	public class Flak_Crit_Type : CritType {
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => !target.collideX && !target.collideY;
+		public override float CritMultiplier(Player player, Item item) => 1.4f;
 	}
 }

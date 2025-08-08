@@ -1,17 +1,12 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins;
+using Origins.CrossMod;
 using Origins.Dev;
-using Origins.Gores.NPCs;
 using Origins.Items.Materials;
-using Origins.Journal;
-using Origins.NPCs;
+using Origins.Items.Weapons.Melee;
 using Origins.Projectiles;
 using Origins.Tiles.Other;
-using Origins.World.BiomeData;
-using PegasusLib;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -19,7 +14,7 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
+
 namespace Origins.Items.Tools {
 	public class Impactaxe : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -187,5 +182,9 @@ namespace Origins.Items.Tools {
 			}
 			base.AI();
 		}
+	}
+	public class Impactaxe_Crit_Type : CritType<Impactaxe> {
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ModProjectile is Impactaxe_Smash;
+		public override float CritMultiplier(Player player, Item item) => 1.4f;
 	}
 }

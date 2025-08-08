@@ -1,17 +1,15 @@
-using Origins.Tiles.Defiled;
-using Origins.Tiles.Riven;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.NPCs.Dungeon;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.GameContent;
-using CalamityMod.NPCs.TownNPCs;
-using ThoriumMod.Empowerments;
 using Terraria.DataStructures;
 using Origins.Projectiles;
+using Origins.CrossMod;
+using Origins.Items.Weapons.Ranged;
+using PegasusLib;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Explosive_Barrel : ModItem, ICustomWikiStat {
@@ -118,11 +116,18 @@ namespace Origins.Items.Weapons.Demolitionist {
 					}
 					Projectile.frameCounter = 0;
 				}
+				float speed = Projectile.velocity.X;
 				Vector4 slopeCollision = Collision.SlopeCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
 				Projectile.position = slopeCollision.XY();
 				Projectile.velocity = slopeCollision.ZW();
 				Projectile.velocity = Collision.TileCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
-				if (Projectile.velocity.X == 0) Projectile.Kill();
+				if (Projectile.velocity.X != speed) {
+					if (CritType.ModEnabled && Projectile.ai[1].TrySet(1)) {
+						Projectile.velocity.X = -speed;
+					} else {
+						Projectile.Kill();
+					}
+				}
 			}
 
 		}
@@ -145,5 +150,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			0);
 			return false;
 		}
+	}
+	public class Explosive_Barrel_Crit_Type : CritType<Explosive_Barrel> {
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ai[1] > 0;
+		public override float CritMultiplier(Player player, Item item) => 3f;
 	}
 }

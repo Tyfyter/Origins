@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Projectiles;
@@ -152,7 +153,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			SoundEngine.PlaySound(SoundID.Item45);
-			if (Projectile.ai[0] == 1) {
+			if (Projectile.ai[0] == 1 && !CritType.ModEnabled) {
 				modifiers.CritDamage *= 1 + Projectile.CritChance / 50f;
 				modifiers.SetCrit();
 			}
@@ -185,5 +186,9 @@ namespace Origins.Items.Weapons.Melee {
 			);
 			return false;
 		}
+	}
+	public class Soldering_Iron_Crit_Type : CritType<Soldering_Iron> {
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ai[0] == 1;
+		public override float CritMultiplier(Player player, Item item) => 1.4f;
 	}
 }

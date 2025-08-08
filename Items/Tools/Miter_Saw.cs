@@ -1,8 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Melee;
 using System;
+using System.Numerics;
+using System.Threading;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -130,6 +134,27 @@ namespace Origins.Items.Tools {
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation * player.gravDir - MathHelper.PiOver2 * player.direction);
 			player.heldProj = Projectile.whoAmI;
 			Projectile.frameCounter = (Projectile.frameCounter + 1) % 4;
+		}
+	}
+	public class Miter_Saw_Crit_Type : CritType<Miter_Saw> {
+		static int CritThreshold => 4;
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
+			if (projectile is null) {
+				return player.GetModPlayer<Miter_Saw_Player>().IncrementHit();
+			} else {
+				//todo: design alt fire crit condition
+				return false;
+			}
+		}
+		public override float CritMultiplier(Player player, Item item) => 1.2f;
+		class Miter_Saw_Player : CritModPlayer {
+			int hitNumber = 0;
+			public override void ResetEffects() {
+				if (Player.ItemAnimationEndingOrEnded) {
+					hitNumber = 0;
+				}
+			}
+			public bool IncrementHit() => ++hitNumber >= CritThreshold;
 		}
 	}
 }

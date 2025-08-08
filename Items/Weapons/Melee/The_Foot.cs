@@ -16,6 +16,8 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Projectiles;
+using Origins.CrossMod;
+using Terraria.Localization;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Foot : ModItem, ICustomWikiStat {
@@ -83,7 +85,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void OnHitTiles(Vector2 position, Vector2 direction) {
 			The_Foot.DoSlam(Projectile, position, direction);
 		}
-		static bool forcedCrit = false;
+		internal static bool forcedCrit = false;
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;
 			forcedCrit = false;
@@ -266,5 +268,10 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			return false;
 		}
+	}
+	public class The_Foot_Crit_Type : CritType<The_Foot> {
+		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.CritType.SlammyHammer");
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => The_Foot_Smash.forcedCrit;
+		public override float CritMultiplier(Player player, Item item) => 2f;
 	}
 }

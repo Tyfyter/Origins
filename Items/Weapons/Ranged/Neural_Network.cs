@@ -1,11 +1,14 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Dev;
+using Origins.Items.Weapons.Melee;
 using ReLogic.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Empowerments;
 namespace Origins.Items.Weapons.Ranged {
 	public class Neural_Network : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -91,5 +94,13 @@ namespace Origins.Items.Weapons.Ranged {
 				packet.Send(-1, Main.myPlayer);
 			}
 		}
+	}
+	public class Neural_Network_Crit_Type : CritType<Neural_Network> {
+		static int CritThreshold => 20;
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
+			int buffIndex = player.FindBuffIndex(ModContent.BuffType<Neural_Network_Buff>());
+			return buffIndex >= 0 && player.buffTime[buffIndex] >= CritThreshold;
+		}
+		public override float CritMultiplier(Player player, Item item) => 1.1f;
 	}
 }

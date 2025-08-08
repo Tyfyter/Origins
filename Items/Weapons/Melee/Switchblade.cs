@@ -13,6 +13,8 @@ using Origins.Items.Tools;
 using System.Collections.Generic;
 using Origins.Projectiles;
 using Newtonsoft.Json.Linq;
+using Origins.CrossMod;
+using ThoriumMod.Items.ThrownItems;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Switchblade_Broadsword : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
@@ -46,6 +48,7 @@ namespace Origins.Items.Weapons.Melee {
 			if (Main.netMode != NetmodeID.SinglePlayer) {
 				NetMessage.SendData(MessageID.SyncEquipment, -1, -1, null, player.whoAmI, player.selectedItem);
 			}
+			Switchblade_Crit_Type.StartCritTime(player);
 			return false;
 		}
 		public override void AddRecipes() {
@@ -96,6 +99,7 @@ namespace Origins.Items.Weapons.Melee {
 			if (Main.netMode != NetmodeID.SinglePlayer) {
 				NetMessage.SendData(MessageID.SyncEquipment, -1, -1, null, player.whoAmI, player.selectedItem);
 			}
+			Switchblade_Crit_Type.StartCritTime(player);
 			return false;
 		}
 	}
@@ -159,6 +163,24 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally
 			);
 			return false;
+		}
+	}
+	public class Switchblade_Crit_Type : CritType {
+		static int CritDuration => 60 * 3;
+		static int SpamProtectionGracePeriod => 30;
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => player.GetModPlayer<Switchblade_Crit_Player>().timeSinceSwitch < CritDuration;
+		public override float CritMultiplier(Player player, Item item) => 1.4f;
+		public override bool ForceForItem(Item item) => item.ModItem is Switchblade_Broadsword or Switchblade_Shortsword;
+		public static void StartCritTime(Player player) {
+			if (!player.TryGetModPlayer(out Switchblade_Crit_Player global)) return;
+			if (global.timeSinceSwitch > CritDuration - SpamProtectionGracePeriod) {
+				global.timeSinceSwitch = 0;
+			}
+		}
+		class Switchblade_Crit_Player : CritModPlayer {
+			public int timeSinceSwitch = CritDuration;
+			public override bool IsLoadingEnabled(Mod mod) => ModEnabled;
+			public override void ResetEffects() => timeSinceSwitch.Warmup(CritDuration);
 		}
 	}
 }
