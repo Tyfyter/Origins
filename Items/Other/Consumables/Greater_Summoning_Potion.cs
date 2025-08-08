@@ -1,4 +1,6 @@
-﻿using Origins.Buffs;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Newtonsoft.Json.Linq;
+using Origins.Buffs;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Other.Fish;
 using Origins.Items.Weapons;
@@ -18,7 +20,17 @@ namespace Origins.Items.Other.Consumables {
 			ID = Type;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.WrathPotion);
+			Item.UseSound = SoundID.Item3;
+			Item.useStyle = ItemUseStyleID.DrinkLiquid;
+			Item.useTurn = true;
+			Item.useAnimation = 17;
+			Item.useTime = 17;
+			Item.maxStack = Item.CommonMaxStack;
+			Item.consumable = true;
+			Item.width = 14;
+			Item.height = 24;
+			Item.buffTime = 4 * 60 * 60;
+			Item.rare = ItemRarityID.Blue;
 			Item.buffType = Greater_Summoning_Buff.ID;
 			Item.value = Item.sellPrice(silver: 2);
 		}
@@ -42,9 +54,9 @@ namespace Origins.Items.Other.Consumables {
 			.Register();
 		}
 	}
-	public class Greater_Summoning_Potato : Greater_Summoning_Potion {
+	public class Greater_Summoning_Potato : ModItem {
 		public override string Texture => base.Texture.Replace("Potato", "Potion_AF");
-		public static new int ID { get; private set; }
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ItemID.Sets.FoodParticleColors[Type] = [
 				new Color(216, 209, 135),
@@ -53,18 +65,15 @@ namespace Origins.Items.Other.Consumables {
 			];
 			ItemID.Sets.IsFood[Type] = true;
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
+			ContentSamples.CreativeResearchItemPersistentIdOverride[Type] = ModContent.ItemType<Greater_Summoning_Potion>();
 			ID = Type;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
-			Item.useStyle = ItemUseStyleID.EatFood;
-			Item.UseSound = SoundID.Item2;
-			Item.ammo = AmmoID.None;
+			Item.DefaultToFood(14, 24, Greater_Summoning_Buff.ID, 4 * 60 * 60);
 			Item.shoot = Greater_Summoning_Potato_P.ID;
 		}
-		public override bool? CanBeChosenAsAmmo(Item weapon, Player player) {
-			return weapon.useAmmo == ModContent.ItemType<Potato>();
-		}
+		public override bool? CanBeChosenAsAmmo(Item weapon, Player player) => weapon.useAmmo == ModContent.ItemType<Potato>();
 		public override void Update(ref float gravity, ref float maxFallSpeed) {
 			int stack = Item.stack;
 			if (!OriginsModIntegrations.CheckAprilFools()) Item.SetDefaults(Greater_Summoning_Potion.ID);
