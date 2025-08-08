@@ -88,6 +88,8 @@ namespace Origins.NPCs.Riven {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 7, 11));
 		}
+		public override bool CanHitNPC(NPC target) => false;
+		public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
 		public override int SpawnNPC(int tileX, int tileY) {
 			if (!IMultiHitboxNPC.SpawningEnabled) return Main.maxNPCs;
 			Vector2 pickedRay = raysAvailable[Main.rand.Next(raysAvailable.Count)];
