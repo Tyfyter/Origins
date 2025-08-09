@@ -463,7 +463,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					ModContent.ProjectileType<SC_Firework>(),
 					ShotDamage,
 					1,
-					-(diff.Length() / ShotSpeed)
+					-(diff.Length() / ShotSpeed),
+					Main.rand.NextFloat(0.5f, 2f)
 				);
 			}
 			if (npc.ai[0] > Startup + EndLag) SetAIState(boss, StateIndex<AutomaticIdleState>());
@@ -481,13 +482,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Projectile.hostile = true;
 				Projectile.scale = 1.5f;
 			}
-			public override void OnSpawn(IEntitySource source) {
-				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 2f);
-			}
 			public override void AI() {
-				Projectile.velocity = Projectile.velocity.RotatedBy(Math.Clamp(Math.Cos(Projectile.ai[1] * Projectile.ai[0] * 0.5f), -0.1f, 0.1f) * Projectile.ai[1]);
+				Debugging.ChatOverhead($"_______\n{Projectile.ai[0]}\n{Projectile.ai[1]}");
+				Projectile.velocity = Projectile.velocity.RotatedBy(Math.Clamp(Math.Cos(Projectile.ai[1] * ++Projectile.ai[0] * 0.5f), -0.1f, 0.1f) * Projectile.ai[1]);
 				if (!Projectile.IsLocallyOwned()) return;
-				if (Main.rand.Next(60, 90) < ++Projectile.ai[0]) {
+				if (Main.rand.Next(60, 90) < Projectile.ai[0]) {
 					int type = ModContent.ProjectileType<SC_Firework_Spark>();
 					for (int i = SparkCount; i > 0; i--) {
 						Projectile.SpawnProjectile(Projectile.GetSource_Death(),
@@ -495,11 +494,17 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 							Main.rand.NextVector2CircularEdge(1, 1) * SparkSpeed,
 							type,
 							ShotDamage,
-							1
+							1,
+							ai1: Main.rand.NextFloat(0.5f, 1.5f)
 						);
 					}
 					Projectile.Kill();
 				}
+			}
+			public override void OnKill(int timeLeft) {
+				SoundEngine.PlaySound(SoundID.Item176, Projectile.Center);
+				SoundEngine.PlaySound(SoundID.Zombie83.WithPitch(-2f), Projectile.Center);
+				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(0.8f), Projectile.Center);
 			}
 			public override bool PreDraw(ref Color lightColor) {
 				Shimmerstar_Staff_P.DrawShimmerstar(Projectile);
@@ -518,18 +523,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Projectile.tileCollide = false;
 				Projectile.hostile = true;
 			}
-			public override void OnSpawn(IEntitySource source) {
-				SoundEngine.PlaySound(SoundID.Item176, Projectile.Center);
-				SoundEngine.PlaySound(SoundID.Zombie83.WithPitch(-2f), Projectile.Center);
-				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(0.8f), Projectile.Center);
-				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 1.5f);
-			}
 			public override void AI() {
 				Projectile.velocity *= 0.98f;
 				Projectile.velocity.Y -= 0.2f;
-				Projectile.velocity = Projectile.velocity.RotatedBy(Math.Clamp(Math.Cos(Projectile.ai[1] * Projectile.ai[0] * 0.5f), -0.1f, 0.1f) * Projectile.ai[1]);
+				Projectile.velocity = Projectile.velocity.RotatedBy(Math.Clamp(Math.Cos(Projectile.ai[1] * ++Projectile.ai[0] * 0.5f), -0.1f, 0.1f) * Projectile.ai[1]);
 				if (!Projectile.IsLocallyOwned()) return;
-				if (Main.rand.Next(240, 360) < ++Projectile.ai[0]) {
+				if (Main.rand.Next(240, 360) < Projectile.ai[0]) {
 					Projectile.Kill();
 				}
 			}

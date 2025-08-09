@@ -355,7 +355,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Main.instance.LoadGore(ID);
 				Main.spriteBatch.Draw(
 					TextureAssets.Gore[ID].Value,
-					VisualPostion - Main.screenPosition,
+					VisualPostion + construct.NPC.netOffset - Main.screenPosition,
 					null,
 					construct.isInPhase3 ? Color.White : Lighting.GetColor(lightPos),
 					rotation,
@@ -370,7 +370,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Shimmer_Construct).GetDefaultTMLName();
 		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Shimmer_Construct).GetDefaultTMLName() + "_AF";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Vector2 position = NPC.Center;
+			Vector2 position = NPC.Center + NPC.netOffset;
 			if (IsInPhase3 || (deathAnimationTime > 100)) {
 				default(ShimmerConstructSDF).Draw(position - screenPos, NPC.rotation, new Vector2(256, 256));
 			}
@@ -765,6 +765,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					origin = circle.Size() * 0.5f,
 					scale = Vector2.One * scale
 				});
+				SC_Phase_Three_Underlay.AddMinLightArea(sourcePos, (circle.Width() * 0.5f + 32) * scale);
 			} else {
 				SC_Phase_Three_Underlay.alwaysLightAllTiles = true;
 				SC_Phase_Three_Underlay.DrawDatas.Add(new(
