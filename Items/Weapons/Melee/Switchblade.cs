@@ -1,20 +1,18 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Origins.Dev;
-using Terraria.GameContent.Prefixes;
-using Terraria.GameContent;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.DataStructures;
-using Terraria.Audio;
-using Origins.Items.Tools;
-using System.Collections.Generic;
-using Origins.Projectiles;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.CrossMod;
-using ThoriumMod.Items.ThrownItems;
+using Origins.Dev;
+using Origins.Items.Materials;
+using Origins.Items.Tools;
+using Origins.Projectiles;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.GameContent.Prefixes;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Switchblade_Broadsword : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
@@ -168,9 +166,13 @@ namespace Origins.Items.Weapons.Melee {
 	public class Switchblade_Crit_Type : CritType {
 		static int CritDuration => 60 * 3;
 		static int SpamProtectionGracePeriod => 30;
+		public override LocalizedText Description => base.Description.WithFormatArgs(CritDuration / 60f);
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => player.GetModPlayer<Switchblade_Crit_Player>().timeSinceSwitch < CritDuration;
 		public override float CritMultiplier(Player player, Item item) => 1.4f;
-		public override bool ForceForItem(Item item) => item.ModItem is Switchblade_Broadsword or Switchblade_Shortsword;
+		public override void PreSetup() {
+			ForcedCritTypes[ModContent.ItemType<Switchblade_Shortsword>()] = this;
+			ForcedCritTypes[ModContent.ItemType<Switchblade_Broadsword>()] = this;
+		}
 		public static void StartCritTime(Player player) {
 			if (!player.TryGetModPlayer(out Switchblade_Crit_Player global)) return;
 			if (global.timeSinceSwitch > CritDuration - SpamProtectionGracePeriod) {

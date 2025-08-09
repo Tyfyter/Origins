@@ -32,7 +32,8 @@ using static Tyfyter.Utils.KinematicUtils;
 
 namespace Origins.NPCs.Fiberglass {
 	[AutoloadBossHead]
-	public class Fiberglass_Weaver : ModNPC, IMeleeCollisionDataNPC, ICustomWikiStat {
+	public class Fiberglass_Weaver : ModNPC, IMeleeCollisionDataNPC, ICustomWikiStat, IBrokenContent {
+		public string BrokenReason => "Needs rebalancing";
 		static AutoLoadingAsset<Texture2D> UpperLegTexture = "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Leg_Upper";
 		static AutoLoadingAsset<Texture2D> LowerLegTexture = "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Leg_Lower";
 		Arm[] legs;

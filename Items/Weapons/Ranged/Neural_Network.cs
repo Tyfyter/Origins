@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
@@ -97,6 +98,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Neural_Network_Crit_Type : CritType<Neural_Network>, IBrokenContent {
 		public string BrokenReason => "Needs balancing";
 		static int CritThreshold => 30;
+		public override LocalizedText Description => base.Description.WithFormatArgs(CritThreshold);
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
 			int buffIndex = player.FindBuffIndex(ModContent.BuffType<Neural_Network_Buff>());
 			return buffIndex >= 0 && player.buffTime[buffIndex] >= CritThreshold;

@@ -12,6 +12,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
@@ -234,6 +235,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 	}
 	public class The_Bird_Crit_Type : CritType<The_Bird> {
+		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.CritType.PerfectTiming");
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => (projectile?.ModProjectile as The_Bird_Swing)?.forcedCrit ?? false;
 		public override float CritMultiplier(Player player, Item item) => 2f;
 	}

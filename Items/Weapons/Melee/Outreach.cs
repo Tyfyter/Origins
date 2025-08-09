@@ -188,6 +188,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 	}
 	public class Soldering_Iron_Crit_Type : CritType<Soldering_Iron> {
+		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.CritType.PerfectTiming");
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ai[0] == 1;
 		public override float CritMultiplier(Player player, Item item) => 1.8f + (player.GetWeaponCrit(item) / 100f);
 	}

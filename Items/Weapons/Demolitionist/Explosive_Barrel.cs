@@ -1,15 +1,16 @@
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.NPCs.Dungeon;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using Terraria.DataStructures;
-using Origins.Projectiles;
 using Origins.CrossMod;
+using Origins.Dev;
 using Origins.Items.Weapons.Ranged;
+using Origins.NPCs.Dungeon;
+using Origins.Projectiles;
 using PegasusLib;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Explosive_Barrel : ModItem, ICustomWikiStat {
@@ -153,6 +154,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Explosive_Barrel_Crit_Type : CritType<Explosive_Barrel>, IBrokenContent {
 		public string BrokenReason => "Needs balancing";
+		public override LocalizedText Description => CritMod.GetLocalization($"CritTypes.ShadowbeamStaff.Description");
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ai[1] > 0;
 		public override float CritMultiplier(Player player, Item item) => 3f;
 	}

@@ -13,6 +13,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 namespace Origins.Items.Tools {
@@ -293,7 +294,8 @@ namespace Origins.Items.Tools {
 	}
 	public class Indestructible_Saddle_Crit_Type : CritType<Indestructible_Saddle>, IBrokenContent {
 		public string BrokenReason => "Needs balancing";
-		static int CritThreshold => 60;
+		static int CritThreshold => 120;
+		public override LocalizedText Description => base.Description.WithFormatArgs(CritThreshold / 60f);
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile.ai[2] <= CritThreshold;
 		public override float CritMultiplier(Player player, Item item) => 3f;
 	}
