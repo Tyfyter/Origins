@@ -49,6 +49,7 @@ namespace Origins {
 
 		#region armor/set bonuses
 		public bool ashenKBReduction = false;
+		public bool fiberglassHelmet = false;
 		public bool fiberglassSet = false;
 		public bool oldCryostenSet = false;
 		public bool oldCryostenHelmet = false;
@@ -529,6 +530,7 @@ namespace Origins {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
 			if (felnumSet) oldBonuses |= 2;
+			fiberglassHelmet = false;
 			fiberglassSet = false;
 			oldCryostenSet = false;
 			oldCryostenHelmet = false;

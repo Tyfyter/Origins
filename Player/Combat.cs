@@ -221,6 +221,9 @@ namespace Origins {
 					target.AddBuff(type, Main.rand.Next(duration.Start.Value, duration.End.Value + 1));
 				}
 			}
+			if (fiberglassHelmet == true) {
+				modifiers.CritDamage.Flat += 4;
+			}
 		}
 		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */ {
 			//enemyDefense = NPC.GetDefense;

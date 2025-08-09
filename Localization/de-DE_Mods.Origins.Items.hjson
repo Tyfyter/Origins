@@ -1175,17 +1175,29 @@ Felnum_Helmet: {
 
 Fiberglass_Body: {
 	// DisplayName: Fiberglass Pauldrons
-	// Tooltip: "'These don't seem very protective'"
+	/* Tooltip:
+		'''
+		Weapon damage increased by 2
+		'These don't seem very protective'
+		''' */
 }
 
 Fiberglass_Helmet: {
 	// DisplayName: Fiberglass Helmet
-	// Tooltip: "'This doesn't seem very protective'"
+	/* Tooltip:
+		'''
+		Critical damage increased by 4
+		'This doesn't seem very protective'
+		''' */
 }
 
 Fiberglass_Legs: {
 	// DisplayName: Fiberglass Boots
-	// Tooltip: "'These don't seem very protective'"
+	/* Tooltip:
+		'''
+		10% increased movement speed
+		'These don't seem very protective'
+		''' */
 }
 
 Lost_Breastplate: {
