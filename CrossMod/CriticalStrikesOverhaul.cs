@@ -32,21 +32,6 @@ namespace Origins.CrossMod {
 							c.EmitStfld(ModCalledCritType.GetField("forceOnItem"));
 						}
 					);
-					Type CritItem = critMod.Code.GetType("CritRework.Common.Globals.CritItem");
-					MonoModHooks.Modify(
-						CritItem.GetMethod(nameof(GlobalItem.LoadData)),
-						il => {
-							ILCursor c = new(il);
-							c.EmitLdarg(0);
-							c.EmitLdarg(1);
-							c.EmitLdarg(2);
-							c.EmitDelegate((object self, Item item, object tag) => {
-								if (item?.ModItem is Miter_Saw) {
-
-								}
-							});
-						}
-					);
 				}
 				for (int i = 0; i < critTypes.Count; i++) {
 					CritType critType = critTypes[i];
