@@ -57,6 +57,7 @@ using Origins.Items.Weapons.Ranged;
 using Origins.Items.Other.Fish;
 using static Origins.OriginSystem;
 using ThoriumMod.Items.MeleeItems;
+using Terraria.GameContent;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -152,7 +153,7 @@ namespace Origins {
 			}
 		}
 		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
-		static bool DefaultCheckAprilFools() => (DateTime.Today.Month == 4 && DateTime.Today.Day == 1) || OriginSystem.Instance.ForceAF;
+		static bool DefaultCheckAprilFools() => (DateTime.Today.Month == 4 && DateTime.Today.Day == 1) || Instance.ForceAF;
 		public static void PostSetupContent(Mod mod) {
 			if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist)) {
 				static Func<bool> IfEvil<T>() where T : AltBiome {
@@ -240,10 +241,11 @@ namespace Origins {
 					}
 				);
 				Asset<Texture2D> fwTexture = Request<Texture2D>("Origins/UI/Fiberglass_Weaver_Preview");
+				Asset<Texture2D> fwAFTexture = Request<Texture2D>(typeof(Fiberglass_Weaver).GetDefaultTMLName() + "_AF");
 				bossChecklist.Call("LogBoss",
 					mod,
 					nameof(Fiberglass_Weaver).Replace("_", ""),
-					2.1f,
+					5.1f,
 					() => Boss_Tracker.Instance.downedFiberglassWeaver,
 					NPCType<Fiberglass_Weaver>(),
 					new Dictionary<string, object> {
@@ -258,7 +260,10 @@ namespace Origins {
 							SpriteBatchState state = spriteBatch.GetState();
 							spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
 							try {
-								spriteBatch.Draw(fwTexture.Value, area.Center(), null, color, 0, fwTexture.Size() * 0.5f, 2, SpriteEffects.None, 0);
+								Texture2D tex = fwTexture.Value;
+								if (CheckAprilFools()) tex = fwAFTexture.Value;
+
+								spriteBatch.Draw(tex, area.Center(), null, color, 0, tex.Size() * 0.5f, 2, SpriteEffects.None, 0);
 							} finally {
 								spriteBatch.Restart(state);
 							}
@@ -298,6 +303,8 @@ namespace Origins {
 						}
 					}
 				);
+				Asset<Texture2D> scTexture = Request<Texture2D>(typeof(Shimmer_Construct).GetDefaultTMLName());
+				Asset<Texture2D> scAFTexture = Request<Texture2D>(typeof(Shimmer_Construct).GetDefaultTMLName() + "_AF");
 				bossChecklist.Call("LogBoss",
 					mod,
 					nameof(Shimmer_Construct).Replace("_", ""),
@@ -309,6 +316,24 @@ namespace Origins {
 						["collectibles"] = new List<int> {
 							RelicTileBase.ItemType<Shimmer_Construct_Relic>(),
 							TrophyTileBase.ItemType<Shimmer_Construct_Trophy>()
+						},
+						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
+							SpriteBatchState state = spriteBatch.GetState();
+							spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
+							try {
+								Texture2D tex = scTexture.Value;
+								Rectangle frame = new(0, 996, 134, 166);
+								float rot = 0;
+								if (CheckAprilFools()) {
+									tex = scAFTexture.Value;
+									frame = new(0, 0, 134, 166);
+									rot = MathHelper.Pi;
+								}
+
+								spriteBatch.Draw(tex, area.Center(), frame, color, rot, frame.Size() * 0.5f, 1, SpriteEffects.None, 0);
+							} finally {
+								spriteBatch.Restart(state);
+							}
 						}
 					}
 				);
@@ -327,7 +352,7 @@ namespace Origins {
 			if (ModLoader.TryGetMod("Fargowiltas", out instance.fargosMutant)) {
 				FargosMutant.Call("AddSummon", 3, ItemType<Nerve_Impulse_Manipulator>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
 				FargosMutant.Call("AddSummon", 3, ItemType<Sus_Ice_Cream>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
-				FargosMutant.Call("AddSummon", 2.1, ItemType<Shaped_Glass>(), () => Boss_Tracker.Instance.downedFiberglassWeaver, Item.buyPrice(gold: 8));
+				FargosMutant.Call("AddSummon", 5.1, ItemType<Shaped_Glass>(), () => Boss_Tracker.Instance.downedFiberglassWeaver, Item.buyPrice(gold: 8));
 				FargosMutant.Call("AddSummon", 7.3, ItemType<Lost_Picture_Frame>(), () => Boss_Tracker.Instance.downedLostDiver, Item.buyPrice(gold: 22));
 				FargosMutant.Call("AddSummon", 6.8, ItemType<Aether_Orb>(), () => Boss_Tracker.Instance.downedShimmerConstruct, Item.buyPrice(gold: 18));
 			}
