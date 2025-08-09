@@ -335,7 +335,7 @@ STATUS EFFECTS:
 (#, ^2) Hallow Assimilation
 (^) Impeding Shrapnel*
 (^) Mana Buffer*
-(X) Quantum Flames
+(X) Quantum Vitiation
 (^) Rasterized*
 (^) Riven Assimilation*
 (^) Shadefire*
@@ -395,22 +395,21 @@ ARMOR:
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
-(^) Chambersite Armor°
+(^) Chambersite Commander Armor°
 (X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*
-(X) Riven Diver Armor
 (^) Sapphire Mediator Armor*
 (X) Warlord Armor
 
 (X) Ancient Chromtain Armor
 (X) Ancient Eyndum Armor
 (X) Ascendant Armor°
-(^) Chromtain Armor°
+(%2, ^) Chromtain Armor°
 (@4, #2) Eyndum Armor°
-(X) Locus Armor°
 (X) Nano Armor°
 (^) Nova Armor*
+(X) Quantum Armor°
 
 (^) Ancient Hallowed Visage*
 (^) Chambersite Robe
@@ -678,8 +677,7 @@ WINGS:
 (X) Phantom Thrusters
 
 (X) Ascendant Wings
-(X) Booster Pack
-(X) Fibron Thruster Array
+(X) EVA Thruster Array
 (X) Nova Backblaster
 
 (^) Vampiric Spell
@@ -715,9 +713,11 @@ TOOLS:
 
 (^) Impactaxe*
 
-(X) Ahe
 (X) Nova Bomb
-(X) Terraformer
+(X) Perihelion Chainsaw
+(X) Perihelion Drill
+(X) Perihelion Jackhammer
+(X) Perihelion Pickaxe
 
 (^) Pincushion*
 ---
@@ -1406,13 +1406,13 @@ MATERIALS:
 (X) Armor Piece Blueprint°
 (^) Chromtain Bar°
 (X) Core Blueprint°
+(X) Cosmic Plating°
 (X) Endyean Ceramic°
 (X) Ethereal Ash°
-(@4, ^3) Fibron Plating°
 (^) Formium Bar°
 (^) Formium Scrap°
 (^) Lunar Token°
-(^) Material-36 Bundle°
+(X) Nanite Lump
 (^) Qube°
 (X) Weapon Blueprint°
 

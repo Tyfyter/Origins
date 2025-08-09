@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Projectiles;
@@ -67,7 +66,7 @@ namespace Origins.Items.Armor.Sapphire {
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetAttackSpeed(DamageClass.Magic) += 0.15f;
+			player.GetAttackSpeed(DamageClass.Magic) += 0.2f;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -88,7 +87,7 @@ namespace Origins.Items.Armor.Sapphire {
 		}
 		public override void UpdateEquip(Player player) {
 			player.moveSpeed += 0.2f;
-			player.manaCost *= 0.92f;
+			player.manaCost *= 0.85f;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

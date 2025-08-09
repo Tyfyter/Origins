@@ -1267,7 +1267,7 @@ Nova_Greaves: {
 	Tooltip:
 		'''
 		4% increased explosive damage and critical strike chance
-		15% increased movement speed
+		25% increased movement speed
 		'''
 }
 
@@ -1402,19 +1402,19 @@ Sapphire_Tights: {
 	DisplayName: Sapphire Mediator Tights
 	Tooltip:
 		'''
-		+10% movement speed
-		8% reduced mana cost
+		+20% movement speed
+		15% reduced mana cost
 		'''
 }
 
 Sapphire_Vest: {
 	DisplayName: Sapphire Mediator Vest
-	Tooltip: +15% magic speed
+	Tooltip: +20% magic attack speed
 }
 
 Soulhide_Coat: {
 	DisplayName: Soulhide Coat
-	Tooltip: +12% melee weapon speed
+	Tooltip: +12% melee attack speed
 }
 
 Soulhide_Guards: {

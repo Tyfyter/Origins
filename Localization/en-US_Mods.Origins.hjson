@@ -2747,7 +2747,7 @@ SetBonuses: {
 	Blast:
 		'''
 		-25% self-damage
-		Allows you to go berserk after recieving any kind of damage
+		Allows you to go berserk after receiving any kind of damage
 		All explosive combat stats are increased by 50% while berserked
 		'''
 	Rubber:
