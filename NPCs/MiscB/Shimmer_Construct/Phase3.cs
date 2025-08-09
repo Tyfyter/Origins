@@ -483,7 +483,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Projectile.scale = 1.5f;
 			}
 			public override void AI() {
-				Debugging.ChatOverhead($"_______\n{Projectile.ai[0]}\n{Projectile.ai[1]}");
 				Projectile.velocity = Projectile.velocity.RotatedBy(Math.Clamp(Math.Cos(Projectile.ai[1] * ++Projectile.ai[0] * 0.5f), -0.1f, 0.1f) * Projectile.ai[1]);
 				if (!Projectile.IsLocallyOwned()) return;
 				if (Main.rand.Next(60, 90) < Projectile.ai[0]) {
