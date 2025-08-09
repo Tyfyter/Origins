@@ -13,7 +13,7 @@ namespace Origins.CrossMod {
 		public static void SetCritType<TCritType>(int type) where TCritType : CritType {
 			if (ModEnabled) ForcedCritTypes[type] = ModContent.GetInstance<TCritType>();
 		}
-		static CritType[] ForcedCritTypes = ItemID.Sets.Factory.CreateCustomSet<CritType>(null);
+		protected static CritType[] ForcedCritTypes = ItemID.Sets.Factory.CreateCustomSet<CritType>(null);
 		class CriticalStrikesOverhaul : ModSystem {
 			public const string mod_name = "CritRework";
 			public static List<CritType> critTypes = [];
@@ -32,9 +32,26 @@ namespace Origins.CrossMod {
 							c.EmitStfld(ModCalledCritType.GetField("forceOnItem"));
 						}
 					);
+					Type CritItem = critMod.Code.GetType("CritRework.Common.Globals.CritItem");
+					MonoModHooks.Modify(
+						CritItem.GetMethod(nameof(GlobalItem.LoadData)),
+						il => {
+							ILCursor c = new(il);
+							c.EmitLdarg(0);
+							c.EmitLdarg(1);
+							c.EmitLdarg(2);
+							c.EmitDelegate((object self, Item item, object tag) => {
+								if (item?.ModItem is Miter_Saw) {
+
+								}
+							});
+						}
+					);
 				}
 				for (int i = 0; i < critTypes.Count; i++) {
 					CritType critType = critTypes[i];
+					critType.PreSetup();
+					string internalName = $"{Mod.Name}/{critType.GetType().Name}";
 					critMod.Call("AddCritType",
 						Mod,
 						critType.InRandomPool,
@@ -43,7 +60,7 @@ namespace Origins.CrossMod {
 						(Func<Item, bool>)critType.ForceForItem,
 						(Func<Item, bool>)critType.AllowedForItem,
 						critType.Description,
-						critType.GetType().Name
+						internalName
 					);
 				}
 				RefreshForcedCritType(Indestructible_Saddle.ID);
@@ -74,7 +91,8 @@ namespace Origins.CrossMod {
 		public abstract bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers);
 		public abstract float CritMultiplier(Player player, Item item);
 		public virtual bool ForceForItem(Item item) => ForcedCritTypes[item.type] == this;
-		public virtual bool AllowedForItem(Item item) => ForceForItem(item);
+		public virtual bool AllowedForItem(Item item) => ForcedCritTypes[item.type] == this;
+		public virtual void PreSetup() { }
 		protected class CritModPlayer : ModPlayer {
 			public override string Name => "CritRework_" + base.Name;
 			public override bool IsLoadingEnabled(Mod mod) => ModEnabled;
@@ -91,7 +109,12 @@ namespace Origins.CrossMod {
 		}
 	}
 	public abstract class CritType<TItem> : CritType where TItem : ModItem {
-		public sealed override bool ForceForItem(Item item) => item.ModItem is TItem;
+		public override void PreSetup() {
+			ForcedCritTypes[ModContent.ItemType<TItem>()] = this;
+			if (this is Miter_Saw_Crit_Type) {
+
+			}
+		}
 	}
 	public class Felnum_Crit_Type : CritType {
 		public override LocalizedText Description => OriginsModIntegrations.CheckAprilFools() ? base.Description : CritMod.GetLocalization($"CritTypes.FoeIsWet.Description");

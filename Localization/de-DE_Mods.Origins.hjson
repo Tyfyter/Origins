@@ -2897,24 +2897,22 @@ ExtraDyeSlots: {
 }
 
 CritType: {
+	// SlammyHammer: Critically strikes when crushing the target against blocks
+	// PerfectTiming: Critically strikes on perfectly timed attacks
 	// Impactaxe_Crit_Type: Critically strikes on direct hits
-	// Indestructible_Saddle_Crit_Type: Mods.Origins.CritType.Indestructible_Saddle_Crit_Type
+	// Indestructible_Saddle_Crit_Type: Critically strikes during the last {0:0.##} seconds of the time limit
 	// Dreikan_Crit_Type: Critically strikes when hitting the same target with all 3 shots
-	// Explosive_Barrel_Crit_Type: Mods.Origins.CritType.Explosive_Barrel_Crit_Type
-	// Self_Destruct_Crit_Type: Mods.Origins.CritType.Self_Destruct_Crit_Type
+	// Self_Destruct_Crit_Type: Critically strikes when the user is below {0:P0} health
 	// Laser_Tag_Gun_Crit_Type: Critically strikes 50% of the time
 	// Soul_Snatcher_Crit_Type: Critically strikes while empowered
 	// Soulslasher_Crit_Type: Critically strikes on direct hits
-	// Switchblade_Crit_Type: Mods.Origins.CritType.Switchblade_Crit_Type
-	// Neural_Network_Crit_Type: Mods.Origins.CritType.Neural_Network_Crit_Type
+	// Switchblade_Crit_Type: Critically strikes for {0:0.##} seconds after switching modes
+	// Neural_Network_Crit_Type: Critically strikes while above {0} adaptation charges
 	// VVVV Leave this one as is VVVV
 	// Missing_File_Crit_Type: Mods.Origins.CritType.Missing_File_Crit_Type
-	// Flak_Crit_Type: Mods.Origins.CritType.Flak_Crit_Type
-	// Miter_Saw_Crit_Type: Mods.Origins.CritType.Miter_Saw_Crit_Type
-	// SlammyHammer: Mods.Origins.CritType.Amoebash_Crit_Type
-	// Soldering_Iron_Crit_Type: Mods.Origins.CritType.Soldering_Iron_Crit_Type
-	// Piledriver_Crit_Type: Mods.Origins.CritType.Piledriver_Crit_Type
-	// Meteor_Crit_Type: Mods.Origins.CritType.Meteor_Crit_Type
-	// Communion_Type: Mods.Origins.CritType.Communion_Type
-	// The_Bird_Crit_Type: Mods.Origins.CritType.The_Bird_Crit_Type
+	// Flak_Crit_Type: Critically strikes when hitting airborne targets
+	// Miter_Saw_Crit_Type: Critically strikes after several consecutive hits
+	// Piledriver_Crit_Type: Critically strikes on alternate attacks
+	// Meteor_Crit_Type: Critically strikes when falling onto airborne targets
+	// Communion_Type: Critically strikes when hitting the same target multiple times
 }

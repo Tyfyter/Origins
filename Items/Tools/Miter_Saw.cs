@@ -17,6 +17,7 @@ namespace Origins.Items.Tools {
 			"OtherMelee"
 		];
 		static AutoCastingAsset<Texture2D> useTexture;
+		static AutoLoadingAsset<Texture2D> smearTexture = typeof(Miter_Saw).GetDefaultTMLName() + "_Smear";
 		public override void SetStaticDefaults() {
 			useTexture = ModContent.Request<Texture2D>(Texture + "_Use");
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
@@ -106,13 +107,25 @@ namespace Origins.Items.Tools {
 
 			int frameSource = player.itemAnimation;
 			if (Main.projectile.GetIfInRange(player.heldProj) is Projectile heldProj) frameSource = heldProj.frameCounter;
+			float rotation = itemRotation + (MathHelper.Pi * 0.75f) * direction;
 			drawInfo.DrawDataCache.Add(new DrawData(
 				texture,
 				player.GetCompositeArmPosition(false) - Main.screenPosition,
-				texture.Frame(verticalFrames: 2, frameY: (frameSource % 4) / 2),
+				texture.Frame(verticalFrames: 2, frameY: (frameSource % 4) / 3),
 				Item.GetAlpha(lightColor),
-				itemRotation + (MathHelper.Pi * 0.75f) * direction,
+				rotation,
 				new Vector2(11, direction == 1 ? 27 : 7),
+				scale,
+				drawInfo.itemEffect,
+				1
+			));
+			drawInfo.DrawDataCache.Add(new DrawData(
+				smearTexture,
+				player.GetCompositeArmPosition(false) + new Vector2(13, direction * -15).RotatedBy(rotation) * scale - Main.screenPosition,
+				smearTexture.Frame(verticalFrames: 6, frameY: Miter_Saw_Crit_Type.CritAnimation(player, (frameSource / 2) % 4)),
+				Color.Lerp(Item.GetAlpha(lightColor), Color.White, 0.75f),
+				rotation,
+				new Vector2(12, 12),
 				scale,
 				drawInfo.itemEffect,
 				1
@@ -132,11 +145,11 @@ namespace Origins.Items.Tools {
 			Player player = Main.player[Projectile.owner];
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation * player.gravDir - MathHelper.PiOver2 * player.direction);
 			player.heldProj = Projectile.whoAmI;
-			Projectile.frameCounter = (Projectile.frameCounter + 1) % 4;
+			Projectile.frameCounter = (Projectile.frameCounter + 1);
 		}
 	}
 	public class Miter_Saw_Crit_Type : CritType<Miter_Saw>, IBrokenContent {
-		public string BrokenReason => "Needs alt-function condition, Needs balancing";
+		public string BrokenReason => "Needs balancing";
 		static int PrimaryCritThreshold => 3;
 		static int SecondaryCritThreshold => 60;
 		static int SecondaryCritMaxCharge => SecondaryCritThreshold + 30;
@@ -148,9 +161,29 @@ namespace Origins.Items.Tools {
 			}
 		}
 		public override float CritMultiplier(Player player, Item item) => 1.2f;
+		public static int CritAnimation(Player player, int baseFrame) {
+			if (!player.TryGetModPlayer(out Miter_Saw_Player sawPlayer)) return 6;
+			bool charged;
+			if (player.altFunctionUse != 2) {
+				charged = sawPlayer.primaryHitNumber >= PrimaryCritThreshold;
+			} else {
+				charged = sawPlayer.IsSecondaryCharged;
+			}
+			const int frames_per_frame = 3;
+			if (charged) {
+				if (sawPlayer.critAnimation <= frames_per_frame * 2) sawPlayer.critAnimation++;
+			} else {
+				if (sawPlayer.critAnimation > 0) sawPlayer.critAnimation--;
+			}
+			if (sawPlayer.critAnimation < frames_per_frame * 2) {
+				return 6 - (int)Math.Ceiling(sawPlayer.critAnimation / (float)frames_per_frame);
+			}
+			return baseFrame;
+		}
 		class Miter_Saw_Player : CritModPlayer {
-			int primaryHitNumber = 0;
+			public int primaryHitNumber = 0;
 			float secondaryHitCharge;
+			public int critAnimation = 0;
 			public float SecondaryHitCharge {
 				get => secondaryHitCharge;
 				set {
@@ -161,6 +194,7 @@ namespace Origins.Items.Tools {
 				if (Player.ItemAnimationEndingOrEnded || Player.HeldItem.ModItem is not Miter_Saw) {
 					primaryHitNumber = 0;
 					SecondaryHitCharge = 0;
+					critAnimation = 0;
 				}
 				if (SecondaryHitCharge > 0) SecondaryHitCharge--;
 				if (SecondaryHitCharge > SecondaryCritMaxCharge) SecondaryHitCharge = SecondaryCritMaxCharge;
