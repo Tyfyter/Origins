@@ -2897,7 +2897,6 @@ ExtraDyeSlots: {
 }
 
 CritType: {
-	// Felnum_Crit_Type: Critically strikes while the target is covered in wet
 	// Impactaxe_Crit_Type: Critically strikes on direct hits
 	// Indestructible_Saddle_Crit_Type: Mods.Origins.CritType.Indestructible_Saddle_Crit_Type
 	// Dreikan_Crit_Type: Critically strikes when hitting the same target with all 3 shots

@@ -1,20 +1,17 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Melee;
+using PegasusLib;
 using System;
-using System.Numerics;
-using System.Threading;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Items.Donate;
 
 namespace Origins.Items.Tools {
 	public class Miter_Saw : ModItem, ICustomDrawItem, ICustomWikiStat {
+		public static float MaxHitsPerAnimation => 8;
 		public string[] Categories => [
 			"ToolWeapon",
 			"OtherMelee"
@@ -64,7 +61,7 @@ namespace Origins.Items.Tools {
 				(int)size
 			);
 			itemHitbox = hitbox;
-			int cd = player.itemAnimationMax / 8;
+			int cd = Main.rand.RandomRound(player.itemAnimationMax / MaxHitsPerAnimation);
 			if (player.attackCD > cd) player.attackCD = cd;
 			player.ResetMeleeHitCooldowns();
 		}
@@ -100,11 +97,13 @@ namespace Origins.Items.Tools {
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
 			Player player = drawInfo.drawPlayer;
 			float itemRotation = player.itemRotation - MathHelper.PiOver2 * player.gravDir;
-
+			float direction = player.direction * player.gravDir;
+			float scale = player.GetAdjustedItemScale(Item);
 			Texture2D texture = useTexture.Value;
 			if (drawInfo.itemEffect.HasFlag(SpriteEffects.FlipHorizontally)) {
 				drawInfo.itemEffect ^= SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally;
 			}
+
 			int frameSource = player.itemAnimation;
 			if (Main.projectile.GetIfInRange(player.heldProj) is Projectile heldProj) frameSource = heldProj.frameCounter;
 			drawInfo.DrawDataCache.Add(new DrawData(
@@ -112,9 +111,9 @@ namespace Origins.Items.Tools {
 				player.GetCompositeArmPosition(false) - Main.screenPosition,
 				texture.Frame(verticalFrames: 2, frameY: (frameSource % 4) / 2),
 				Item.GetAlpha(lightColor),
-				itemRotation + (MathHelper.Pi * 0.75f) * player.direction * player.gravDir,
-				new Vector2(11, player.direction * player.gravDir == 1 ? 27 : 7),
-				player.GetAdjustedItemScale(Item),
+				itemRotation + (MathHelper.Pi * 0.75f) * direction,
+				new Vector2(11, direction == 1 ? 27 : 7),
+				scale,
 				drawInfo.itemEffect,
 				1
 			));
@@ -138,24 +137,40 @@ namespace Origins.Items.Tools {
 	}
 	public class Miter_Saw_Crit_Type : CritType<Miter_Saw>, IBrokenContent {
 		public string BrokenReason => "Needs alt-function condition, Needs balancing";
-		static int CritThreshold => 4;
+		static int PrimaryCritThreshold => 3;
+		static int SecondaryCritThreshold => 60;
+		static int SecondaryCritMaxCharge => SecondaryCritThreshold + 30;
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
-			if (projectile is null) {
-				return player.GetModPlayer<Miter_Saw_Player>().IncrementHit();
+			if (player.altFunctionUse != 2) {
+				return player.GetModPlayer<Miter_Saw_Player>().IncrementPrimaryHit();
 			} else {
-				//todo: design alt fire crit condition
-				return false;
+				return player.GetModPlayer<Miter_Saw_Player>().CheckSecondaryHit();
 			}
 		}
 		public override float CritMultiplier(Player player, Item item) => 1.2f;
 		class Miter_Saw_Player : CritModPlayer {
-			int hitNumber = 0;
-			public override void ResetEffects() {
-				if (Player.ItemAnimationEndingOrEnded) {
-					hitNumber = 0;
+			int primaryHitNumber = 0;
+			float secondaryHitCharge;
+			public float SecondaryHitCharge {
+				get => secondaryHitCharge;
+				set {
+					secondaryHitCharge = Math.Max(value, 0);
 				}
 			}
-			public bool IncrementHit() => ++hitNumber >= CritThreshold;
+			public override void ResetEffects() {
+				if (Player.ItemAnimationEndingOrEnded || Player.HeldItem.ModItem is not Miter_Saw) {
+					primaryHitNumber = 0;
+					SecondaryHitCharge = 0;
+				}
+				if (SecondaryHitCharge > 0) SecondaryHitCharge--;
+				if (SecondaryHitCharge > SecondaryCritMaxCharge) SecondaryHitCharge = SecondaryCritMaxCharge;
+			}
+			public bool IncrementPrimaryHit() => ++primaryHitNumber >= PrimaryCritThreshold;
+			public bool CheckSecondaryHit() {
+				SecondaryHitCharge += (Player.itemAnimationMax / Miter_Saw.MaxHitsPerAnimation) * 2;
+				return IsSecondaryCharged;
+			}
+			public bool IsSecondaryCharged => SecondaryHitCharge >= SecondaryCritThreshold;
 		}
 	}
 }
