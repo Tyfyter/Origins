@@ -1158,19 +1158,19 @@ Felnum_Breastplate: {
 	// DisplayName: Felnum Breastplate
 	/* Tooltip:
 		'''
-		2% increased damage
+		5% increased damage
 		5% increased movement speed
 		''' */
 }
 
 Felnum_Greaves: {
 	// DisplayName: Felnum Greaves
-	// Tooltip: 5% increased movement speed
+	// Tooltip: 10% increased movement speed
 }
 
 Felnum_Helmet: {
 	// DisplayName: Felnum Helmet
-	// Tooltip: 4% increased damage
+	// Tooltip: 5% increased damage
 }
 
 Fiberglass_Body: {
