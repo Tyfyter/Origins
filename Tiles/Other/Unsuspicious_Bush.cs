@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
@@ -57,6 +58,7 @@ namespace Origins.Tiles.Other {
 			writer.Write(On);
 		}
 		protected override void Perform() {
+			ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"Server: {(Main.dedServ ? Main.dedServ : Main.LocalPlayer.name)}, AF: {On}"), Color.White);
 			OriginSystem.Instance.ForceAF = On;
 		}
 	}
