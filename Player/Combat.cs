@@ -222,7 +222,7 @@ namespace Origins {
 				}
 			}
 			if (fiberglassHelmet == true) {
-				modifiers.CritDamage.Flat += 4;
+				modifiers.CritDamage.Base += 10;
 			}
 		}
 		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */ {

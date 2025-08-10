@@ -1186,7 +1186,7 @@ Fiberglass_Helmet: {
 	// DisplayName: Fiberglass Helmet
 	/* Tooltip:
 		'''
-		Critical damage increased by 4
+		Critical damage increased by 10
 		'This doesn't seem very protective'
 		''' */
 }
