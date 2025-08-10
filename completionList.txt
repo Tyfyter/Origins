@@ -614,25 +614,17 @@ VANITY:
 (^) Lost Diver set
 (X) Miscreant Mask
 (X) Quantux Mask
-(^) World Cracker Mask*
-(X) Severus' Hat
 (^) Shimmer Construct Mask
 (#, ^2) Trenchmaker Mask
+(^) World Cracker Mask*
 
-(X) Abyssal Outcast Set
 (X) Amebic Protector Set
-(X) Ashen Exploder Set
 (X) Chunk Protector Set
-(X) Corrupted Knight Set
 (^) Cranivore Beanie*
-(X) Crimson Ranger Set
 (X) Decay Protector Set
-(X) Defiled Sorcerer Set
 (^) Felnum Shock Glasses*
 (X) Gore Protector Set
 (^) Newsboy Cap*
-(X) Riven Druid Set
-(X) Steampunk Mechanist Set
 (^) Sunflower Sandals*
 
 (^) DIO's Set
@@ -643,13 +635,10 @@ VANITY:
 (^) Amber Dye
 (X) Ancient Riven Dye
 (^) Anti-gray Dye
-(X) Ashen Dye
-(X) Defiled Dye
 (^) High Contrast Dye
 (^) Lotusy Dye
 (X) Nova Dye
 (ᗢ) Rasterized Dye
-(X) Riven Dye
 (^) Shimmer Dye
 (^) Tangela Dye
 ---
@@ -671,8 +660,9 @@ UTILITIES:
 
 WINGS:
 |---
-(^) Acrid Beam Thrusters
 (X) Gills
+
+(^) Acrid Beam Thrusters
 (X) Marrowick Mantle
 (X) Phantom Thrusters
 
@@ -680,7 +670,8 @@ WINGS:
 (X) EVA Thruster Array
 (X) Nova Backblaster
 
-(^) Vampiric Spell
+(^) Dio's Scarf
+(X) Flight Hoodie
 (@, ^3) Tyfyter's Wings !!!
 ---
 
@@ -1110,7 +1101,7 @@ GENERIC WEAPONS:
 TILES:
 |---
 (^) Aetherite Ore
-(^) Amoeba Fluid*
+(#2, ^2) Amoeba Fluid* !!!
 (^) Angelic Cloud*
 (^) Baryte*
 (^) Batholith°
@@ -1118,7 +1109,7 @@ TILES:
 (^) Bomb Trap
 (^) Brittle Quartz*
 (X) Brown Ice
-(^) Calcified Spug Flesh
+(#2, ^2) Calcified Spug Flesh !!!
 (X) Catwalk
 (^) Chambersite
 (X) Cubekon Altar°
@@ -1158,7 +1149,7 @@ TILES:
 (X) Sootgrass°
 (X) Sootstone
 (X) Space Goo
-(^) Spug Flesh*
+(#2, ^2) Spug Flesh* !!!
 (X) Truss Block
 (@4, ^3) Twilith*
 (X) Type-I Fortified Steel Block
@@ -1196,7 +1187,7 @@ TILES:
 (X) Type-III Fortified Steel Wall
 
 (^) Alkahest Torch*
-(@4, ^3) Amoeba Buggy Cage* !!! (using vanilla buggy recolors)
+(^) Amoeba Buggy Cage*
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
@@ -1214,7 +1205,7 @@ TILES:
 (^) Chambersite Gemstone (Defiled)°
 (^) Chambersite Gemstone (Riven)°
 (^) Chambersite Squirrel Cage°
-(@4, ^3) Cicada 3301 Cage° !!! (using vanilla buggy recolors)
+(^) Cicada 3301 Cage°
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
