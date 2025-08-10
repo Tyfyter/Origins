@@ -35,6 +35,29 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 			AddMapEntry(Color.MediumPurple, CreateMapEntryName());
 		}
 	}
+	[ExtendsFromMod(nameof(MagicStorage)), Autoload(false)]
+	public class Fake_Altar_Item(ModTile tile) : ModItem {
+		public override string Name => tile.Name + "_Item";
+		public override string Texture => tile.GetType().ToString().Replace(".", "/") + "_Item";
+		public event Action<Item> ExtraDefaults;
+		public event Action<Item> OnAddRecipes;
+		protected override bool CloneNewInstances => true;
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+			Item.ResearchUnlockCount = 5;
+			ModCompatSets.AnyFakeDemonAltars[Type] = true;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ModContent.ItemType<DemonAltar>());
+			Item.createTile = tile.Type;
+		}
+		public override void AddRecipes() {
+			if (OnAddRecipes is not null) {
+				OnAddRecipes(Item);
+				OnAddRecipes = null;
+			}
+		}
+	}
 	public class Fake_Defiled_Altar : Evil_Altar_Tile {
 		public Fake_Defiled_Altar() : base("Defiled/Defiled_Altar") { }
 		public override void OnLoad() {
@@ -71,21 +94,4 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 			};
 		}
 	}*/
-	[ExtendsFromMod(nameof(MagicStorage)), Autoload(false)]
-	public class Fake_Altar_Item(ModTile tile) : ModItem {
-		public override string Name => tile.Name + "_Item";
-		public override string Texture => tile.GetType().ToString().Replace(".", "/") + "_Item";
-		public event Action<Item> ExtraDefaults;
-		public event Action<Item> OnAddRecipes;
-		protected override bool CloneNewInstances => true;
-		public override void SetStaticDefaults() {
-			Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 5;
-			ModCompatSets.AnyFakeDemonAltars[Type] = true;
-		}
-		public override void SetDefaults() {
-			Item.CloneDefaults(ModContent.ItemType<DemonAltar>());
-			Item.createTile = tile.Type;
-		}
-	}
 }
