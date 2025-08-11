@@ -187,60 +187,62 @@ namespace Origins.Items.Pets {
 			#region Animation and visuals
 			if (Projectile.velocity != Vector2.Zero) AngularSmoothing(ref Projectile.rotation, Projectile.velocity.ToRotation() + MathHelper.PiOver2, 0.1f);
 
-			CreateLegs();
-			// Some visuals here
-			switch ((int)Projectile.ai[0]) {
-				case 0: {
-					for (int i = 0; i < 8; i++) {
-						Vector2 target = GetTarget(i);
-						Vector2 endPoint = GetLegEndPoint(i);
-						/*Dust.NewDustPerfect(target, 6, Vector2.Zero).noGravity = true;
-						Dust.NewDustPerfect(endPoint, endPoint.WithinRange(target, 4) ? 27 : 29, Vector2.Zero).noGravity = true;*/
-						if (!endPoint.WithinRange(target, 48)) {
-							Projectile.velocity *= 0.7f;
-							legsGrounded[i] = false;
-						} else if (AdjacentLegsGrounded(i) && !endPoint.WithinRange(target, Projectile.velocity.IsWithin(Vector2.Zero, 0.1f) ? 4 : 16)) {
-							legsGrounded[i] = false;
+			if (!OriginsModIntegrations.CheckAprilFools()) {
+				CreateLegs();
+				// Some visuals here
+				switch ((int)Projectile.ai[0]) {
+					case 0: {
+						for (int i = 0; i < 8; i++) {
+							Vector2 target = GetTarget(i);
+							Vector2 endPoint = GetLegEndPoint(i);
+							/*Dust.NewDustPerfect(target, 6, Vector2.Zero).noGravity = true;
+							Dust.NewDustPerfect(endPoint, endPoint.WithinRange(target, 4) ? 27 : 29, Vector2.Zero).noGravity = true;*/
+							if (!endPoint.WithinRange(target, 48)) {
+								Projectile.velocity *= 0.7f;
+								legsGrounded[i] = false;
+							} else if (AdjacentLegsGrounded(i) && !endPoint.WithinRange(target, Projectile.velocity.IsWithin(Vector2.Zero, 0.1f) ? 4 : 16)) {
+								legsGrounded[i] = false;
+							}
+							if (!legsGrounded[i]) {
+								legTargets[i] = target;
+							}
 						}
-						if (!legsGrounded[i]) {
-							legTargets[i] = target;
-						}
-					}
-					if (++Projectile.ai[1] > 240) {
-						Projectile.ai[1] = 0;
-						//Projectile.ai[0] = Main.rand.Next(0, 2);
-					}
-					break;
-				}
-				case 1: {
-					Projectile.ai[1] += 1f;
-					float leg0Factor = (float)Math.Sin(Projectile.ai[1] / 3);
-					float leg0Factor2 = (float)Math.Cos(Projectile.ai[1] / 3);
-					float leg1Factor = (float)Math.Sin(Projectile.ai[1] / 3 + Math.PI);
-					float leg1Factor2 = (float)Math.Cos(Projectile.ai[1] / 3 + 0.1);
-					//legTargets[0] = Projectile.Center + (Vector2)new PolarVec2(84 + (8 * leg0Factor), Projectile.rotation - MathHelper.PiOver2 + 0.09f + leg0Factor2 * 0.10f);
-					//legTargets[1] = Projectile.Center + (Vector2)new PolarVec2(86 + (8 * leg1Factor), Projectile.rotation - MathHelper.PiOver2 - 0.09f - leg1Factor2 * 0.10f);
-					for (int i = 2; i < 8; i++) {
-						Vector2 legStart = legs[i].start.RotatedBy(Projectile.rotation) + Projectile.Center;
-						if (legStart.DistanceSQ(legTargets[i]) > (TotalLegLength * TotalLegLength)) {
-							legTargets[i] = Fiberglass_Weaver.GetStandPosition(
-								((legs[i].start + new Vector2(0, ((i % 2 == 0) ^ (i % 4 < 2) ? -5 : 5))) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.7f + Projectile.Center,
-								legStart,
-								TotalLegLength
-							);
-						}
-					}
-					if (Projectile.ai[1] > 90) {
-						if (Main.netMode != NetmodeID.MultiplayerClient) {
+						if (++Projectile.ai[1] > 240) {
 							Projectile.ai[1] = 0;
-							Projectile.ai[0] = 0;
+							//Projectile.ai[0] = Main.rand.Next(0, 2);
 						}
+						break;
 					}
-					break;
-				}
-				default: {
-					Projectile.ai[0] = 0;
-					goto case 0;
+					case 1: {
+						Projectile.ai[1] += 1f;
+						float leg0Factor = (float)Math.Sin(Projectile.ai[1] / 3);
+						float leg0Factor2 = (float)Math.Cos(Projectile.ai[1] / 3);
+						float leg1Factor = (float)Math.Sin(Projectile.ai[1] / 3 + Math.PI);
+						float leg1Factor2 = (float)Math.Cos(Projectile.ai[1] / 3 + 0.1);
+						//legTargets[0] = Projectile.Center + (Vector2)new PolarVec2(84 + (8 * leg0Factor), Projectile.rotation - MathHelper.PiOver2 + 0.09f + leg0Factor2 * 0.10f);
+						//legTargets[1] = Projectile.Center + (Vector2)new PolarVec2(86 + (8 * leg1Factor), Projectile.rotation - MathHelper.PiOver2 - 0.09f - leg1Factor2 * 0.10f);
+						for (int i = 2; i < 8; i++) {
+							Vector2 legStart = legs[i].start.RotatedBy(Projectile.rotation) + Projectile.Center;
+							if (legStart.DistanceSQ(legTargets[i]) > (TotalLegLength * TotalLegLength)) {
+								legTargets[i] = Fiberglass_Weaver.GetStandPosition(
+									((legs[i].start + new Vector2(0, ((i % 2 == 0) ^ (i % 4 < 2) ? -5 : 5))) * new Vector2(1, 1)).RotatedBy(Projectile.rotation) * 1.7f + Projectile.Center,
+									legStart,
+									TotalLegLength
+								);
+							}
+						}
+						if (Projectile.ai[1] > 90) {
+							if (Main.netMode != NetmodeID.MultiplayerClient) {
+								Projectile.ai[1] = 0;
+								Projectile.ai[0] = 0;
+							}
+						}
+						break;
+					}
+					default: {
+						Projectile.ai[0] = 0;
+						goto case 0;
+					}
 				}
 			}
 
@@ -272,7 +274,6 @@ namespace Origins.Items.Pets {
 			float rotation = Projectile.rotation;
 			float scale = 1;
 			SpriteEffects effect = SpriteEffects.None;
-			CreateLegs();
 			if (Projectile.isAPreviewDummy) {
 				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 				Projectile.position -= new Vector2(0, 10);
@@ -282,6 +283,7 @@ namespace Origins.Items.Pets {
 				rotation = 0;
 				effect = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			} else {
+				CreateLegs();
 				TextureAssets.Projectile[Type] = normalTexture;
 				for (int i = 0; i < 8; i++) {
 					bool flip = (i % 2 != 0) == i < 4;
