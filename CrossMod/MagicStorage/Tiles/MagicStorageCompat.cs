@@ -93,6 +93,7 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			tier.upgradeItemType = Type;
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
@@ -126,6 +127,7 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Unit.Tier.storageUnitItemType = Type;
+			Item.rare = ItemRarityID.Blue;
 		}
 	}
 	[ExtendsFromMod(nameof(MagicStorage))]
@@ -136,6 +138,7 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			tier.coreItemType = Type;
+			Item.rare = ItemRarityID.Blue;
 		}
 	}
 }
