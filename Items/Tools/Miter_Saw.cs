@@ -201,7 +201,7 @@ namespace Origins.Items.Tools {
 			}
 			public bool IncrementPrimaryHit() => ++primaryHitNumber >= PrimaryCritThreshold;
 			public bool CheckSecondaryHit() {
-				SecondaryHitCharge += (Player.itemAnimationMax / Miter_Saw.MaxHitsPerAnimation) * 2;
+				SecondaryHitCharge += (Player.itemAnimationMax / Miter_Saw.MaxHitsPerAnimation) * 2 + 4;
 				return IsSecondaryCharged;
 			}
 			public bool IsSecondaryCharged => SecondaryHitCharge >= SecondaryCritThreshold;
