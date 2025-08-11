@@ -122,6 +122,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		bool[] oldPlayerInteraction = new bool[Main.maxPlayers + 1];
 		public override void AI() {
+			NPC.netOffset *= 0;
 			if (NPC.shimmerTransparency > 0) {
 				NPC.shimmerTransparency -= 0.005f;
 				if (NPC.shimmerTransparency < 0) NPC.shimmerTransparency = 0;
@@ -178,6 +179,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 			if (IsInPhase3) {
+				if (NetmodeActive.MultiplayerClient) {
+					NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, Main.myPlayer);
+				}
 				if (Main.rand.NextBool(3))
 					Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2CircularEdge(32, 32), ModContent.DustType<ShimmerConstructDust>(), Main.rand.NextVector2Circular(15, 15), Scale: 1).noGravity = true;
 				Rectangle npcRect = NPC.Hitbox;
