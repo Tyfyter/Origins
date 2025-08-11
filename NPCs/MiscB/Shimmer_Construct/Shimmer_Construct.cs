@@ -179,7 +179,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 			if (IsInPhase3) {
-				if (NetmodeActive.MultiplayerClient) {
+				if (NetmodeActive.MultiplayerClient && Main.LocalPlayer.HasBuff(Weak_Shimmer_Debuff.ID)) {
 					NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, Main.myPlayer);
 				}
 				if (Main.rand.NextBool(3))
