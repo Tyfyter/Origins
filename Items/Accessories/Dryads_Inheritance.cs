@@ -37,6 +37,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClass.Generic) *= 1.05f;
 			player.longInvince = true;
+			player.SporeSac(Item);
 			player.sporeSac = true;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.guardedHeart = true;
