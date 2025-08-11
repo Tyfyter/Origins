@@ -30,7 +30,7 @@ namespace Origins.Questing {
 		public override string Text(NPC npc, Player player) => Language.GetOrRegister("Mods.Origins.Quests.PartyGirl.Happy_Grenade.RequestConfettiGiving").Format(Happy_Grenade_Quest.confettiToGive);
 		public override bool IsActive(NPC npc, Player player) {
 			if (!Questing.QuestListSelected) return false;
-			return quest.HasQuestButton(npc, player);
+			return Quest.HasQuestButton(npc, player);
 		}
 	}
 	public class Happy_Grenade_Quest : Quest {

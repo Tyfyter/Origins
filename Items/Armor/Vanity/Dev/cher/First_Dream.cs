@@ -97,8 +97,14 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 			if (mode >= modes.Count) mode = 0;
 		}
 		public override void UpdateInventory(Player player) => SetNameOverride();
-		public override void UpdateVanity(Player player) => SetNameOverride();
-		public override void UpdateAccessory(Player player, bool hideVisual) => SetNameOverride();
+		public override void UpdateVanity(Player player) {
+			SetNameOverride();
+			modes[mode].UpdateVanity?.Invoke(player);
+		}
+		public override void UpdateAccessory(Player player, bool hideVisual) {
+			SetNameOverride();
+			if (!hideVisual) UpdateVanity(player);
+		}
 		public override void Update(ref float gravity, ref float maxFallSpeed) => SetNameOverride();
 		public override void SaveData(TagCompound tag) {
 			tag["mode"] = mode;
@@ -112,6 +118,6 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 		public override void NetReceive(BinaryReader reader) {
 			mode = reader.ReadByte();
 		}
-		public record struct First_Dream_Mode(string Name, ItemSlotSet Slots);
+		public record struct First_Dream_Mode(string Name, ItemSlotSet Slots, Action<Player> UpdateVanity = null);
 	}
 }
