@@ -554,7 +554,7 @@ namespace Origins.Items.Other.Testing {
 				new(2, 0), new(-2, 0),
 				new(0, 1), new(0, -1)
 			];
-			ushort fleshBlockType = (ushort)ModContent.TileType<Riven_Flesh>();
+			ushort fleshBlockType = (ushort)ModContent.TileType<Spug_Flesh>();
 
 			if (AreaAnalysis.March(x, y, directions, pos => Math.Abs(pos.Y - y) < 20 && Framing.GetTileSafely(pos).TileIsType(fleshBlockType), a => a.MaxX - a.MinX >= 100).Broke) {
 				Framing.GetTileSafely(x, y).TileType = TileID.AmberGemspark;

@@ -154,7 +154,7 @@ namespace Origins.World.BiomeData {
 			}
 			public static void StartHive(int i, int j) {
 				Vector2 pos = new Vector2(i, j);
-				ushort fleshBlockType = (ushort)ModContent.TileType<Riven_Flesh>();
+				ushort fleshBlockType = (ushort)ModContent.TileType<Spug_Flesh>();
 				ushort fleshWallType = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
 				ushort gooBlockType = (ushort)ModContent.TileType<Amoeba_Fluid>();
 				int oreID = ModContent.TileType<Encrusted_Ore>();
@@ -695,7 +695,7 @@ namespace Origins.World.BiomeData {
 			public static void StartHive_Old(int i, int j) {
 				const float strength = 2.4f;
 				const float wallThickness = 4f;
-				ushort fleshID = (ushort)ModContent.TileType<Riven_Flesh>();
+				ushort fleshID = (ushort)ModContent.TileType<Spug_Flesh>();
 				ushort weakFleshID = TileID.CrackedBlueDungeonBrick;
 				ushort fleshWallID = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
 				int j2 = j;
@@ -774,7 +774,7 @@ namespace Origins.World.BiomeData {
 				HiveCave_Old((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
 			}
 			public static Point HiveCave_Old(int i, int j, float sizeMult = 1f) {
-				ushort fleshID = (ushort)ModContent.TileType<Riven_Flesh>();
+				ushort fleshID = (ushort)ModContent.TileType<Spug_Flesh>();
 				ushort fleshWallID = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
 				ushort blisterID = (ushort)ModContent.TileType<Gel_Blister>();
 				int i2 = i + (int)(genRand.Next(-26, 26) * sizeMult);
@@ -860,7 +860,7 @@ namespace Origins.World.BiomeData {
 				start *= 16;
 				Vector2 direction = angle.ToRotationVector2();
 				float dist = CollisionExt.Raymarch(start, direction, 16 * 50);
-				Carver.Filter filter = Carver.ActiveTileInSet(TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Riven_Flesh>()))
+				Carver.Filter filter = Carver.ActiveTileInSet(TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Spug_Flesh>()))
 				+ Carver.PointyLemon((start + direction * dist) / 16, scale, direction.ToRotation() + MathHelper.PiOver2, aspectRatio, roundness, ref posMin, ref posMax);
 
 				Carver.DoCarve(
@@ -1099,7 +1099,7 @@ namespace Origins.World.BiomeData {
 
 			AddTileConversion(ModContent.TileType<Riven_Grass>(), TileID.Grass);
 			AddTileConversion(ModContent.TileType<Riven_Jungle_Grass>(), TileID.JungleGrass);
-			AddTileConversion(ModContent.TileType<Riven_Flesh>(), TileID.Stone);
+			AddTileConversion(ModContent.TileType<Spug_Flesh>(), TileID.Stone);
 			AddTileConversion(ModContent.TileType<Calcified_Riven_Flesh>(), ModContent.TileType<Calcified_Riven_Flesh>());
 			AddTileConversion(ModContent.TileType<Silica>(), TileID.Sand);
 			AddTileConversion(ModContent.TileType<Quartz>(), TileID.Sandstone);

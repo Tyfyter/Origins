@@ -2,6 +2,7 @@
 using Origins.Journal;
 using Origins.World.BiomeData;
 using System;
+using System.Collections.Generic;
 using System.Reflection.Metadata;
 using Terraria;
 using Terraria.GameContent;
@@ -10,11 +11,12 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-	public class Riven_Flesh : OriginTile, IRivenTile, IGlowingModTile {
-        public string[] Categories => [
-            "Stone"
-        ];
-        public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+	[LegacyName("Riven_Flesh")]
+	public class Spug_Flesh : ComplexFrameTile, IRivenTile, IGlowingModTile {
+		public string[] Categories => [
+			"Stone"
+		];
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
@@ -25,7 +27,7 @@ namespace Origins.Tiles.Riven {
 		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Flesh_Glow");
+				GlowTexture = Request<Texture2D>(Texture + "_Glow");
 			}
 			Origins.PotType.Add(Type, ((ushort)TileType<Riven_Pot>(), 0, 0));
 			Main.tileSolid[Type] = true;
@@ -35,49 +37,39 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
-			/*Main.tileMergeDirt[Type] = true;
-            Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
-            Main.tileMerge[Type][TileID.Stone] = true;
-            for(int i = 0; i < TileLoader.TileCount; i++) {
-                Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
-            }*/
+
 			AddMapEntry(new Color(0, 125, 200));
 			//soundType = SoundID.NPCDeath1;
 			MinPick = 65;
 			MineResist = 1.5f;
 			DustType = Riven_Hive.DefaultTileDust;
 		}
-		bool recursion = false;
-		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			if (recursion) {
-				return true;
+		protected override IEnumerable<TileOverlay> GetOverlays() {
+			yield return new TileMergeOverlay(Texture + "_Calcified_Overlay", TileType<Calcified_Riven_Flesh>());
+		}
+		public override void PostTileFrame(int i, int j, int up, int down, int left, int right, int upLeft, int upRight, int downLeft, int downRight) {
+			if (WorldGen.genRand.NextBool(12) && !CheckOtherTilesGlow(i, j)) {
+				Main.tile[i, j].TileFrameY += 270;
 			}
-			recursion = true;
-			WorldGen.TileFrame(i, j, resetFrame, noBreak);
-			recursion = false;
-			Tile tile = Main.tile[i, j];
-			if ((!WorldGen.genRand.NextBool(tile.TileFrameX == 54 ? 12 : 8)) || CheckOtherTilesGlow(i, j)) {
-				Main.tile[i, j].TileFrameY += 90;
-			}
-			return false;
 		}
 		bool CheckOtherTilesGlow(int i, int j) {
-			if (Main.tile[i + 1, j].TileIsType(Type) && Main.tile[i + 1, j].TileFrameY < 90) {
+			if (Main.tile[i + 1, j].TileIsType(Type) && Main.tile[i + 1, j].TileFrameY > 270) {
 				return true;
 			}
-			if (Main.tile[i - 1, j].TileIsType(Type) && Main.tile[i - 1, j].TileFrameY < 90) {
+			if (Main.tile[i - 1, j].TileIsType(Type) && Main.tile[i - 1, j].TileFrameY > 270) {
 				return true;
 			}
-			if (Main.tile[i, j + 1].TileIsType(Type) && Main.tile[i, j + 1].TileFrameY < 90) {
+			if (Main.tile[i, j + 1].TileIsType(Type) && Main.tile[i, j + 1].TileFrameY > 270) {
 				return true;
 			}
-			if (Main.tile[i, j - 1].TileIsType(Type) && Main.tile[i, j - 1].TileFrameY < 90) {
+			if (Main.tile[i, j - 1].TileIsType(Type) && Main.tile[i, j - 1].TileFrameY > 270) {
 				return true;
 			}
 			return false;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
+			base.PostDraw(i, j, spriteBatch);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = g = b = 0;
@@ -119,9 +111,6 @@ namespace Origins.Tiles.Riven {
 				return true;
 			}
 			return false;
-		}
-		static bool CheckOtherTilesActive(int i, int j) {
-			return !(Main.tile[i + 1, j].HasTile && Main.tile[i + 1, j].HasTile && Main.tile[i + 1, j].HasTile && Main.tile[i + 1, j].HasTile);
 		}
 		public override void RandomUpdate(int i, int j) {
 			int wrycoral = TileType<Hanging_Wrycoral>();
@@ -171,7 +160,7 @@ namespace Origins.Tiles.Riven {
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
 		}
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(ModContent.TileType<Riven_Flesh>());
+			Item.DefaultToPlaceableTile(ModContent.TileType<Spug_Flesh>());
 		}
 	}
 }

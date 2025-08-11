@@ -18,7 +18,7 @@ namespace Origins.Tiles.Riven {
 			AnchorTiles = [
 				ModContent.TileType<Riven_Grass>(),
 				ModContent.TileType<Riven_Jungle_Grass>(),
-				ModContent.TileType<Riven_Flesh>()
+				ModContent.TileType<Spug_Flesh>()
 			];
 			//Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
@@ -122,7 +122,7 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.newTile.AnchorValidTiles = [
 				ModContent.TileType<Riven_Grass>(),
 				ModContent.TileType<Riven_Jungle_Grass>(),
-				ModContent.TileType<Riven_Flesh>()
+				ModContent.TileType<Spug_Flesh>()
 			];
 			TileObjectData.newTile.CoordinateHeights = [..Enumerable.Repeat(16, TileObjectData.newTile.Height)];
 			TileObjectData.newTile.StyleHorizontal = true;

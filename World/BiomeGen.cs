@@ -391,7 +391,7 @@ namespace Origins {
 				iceType = (ushort)TileType<Defiled_Ice>();
 				break;
 				case evil_riven:
-				stoneType = (ushort)TileType<Riven_Flesh>();
+				stoneType = (ushort)TileType<Spug_Flesh>();
 				grassType = stoneType;
 				plantType = (ushort)TileType<Riven_Foliage>();
 				sandType = stoneType;

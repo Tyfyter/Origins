@@ -124,7 +124,7 @@ namespace Origins.NPCs.Riven {
 				Player = plr,
 				SpawnTileX = npcTile.X,
 				SpawnTileY = npcTile.Y,
-				SpawnTileType = ModContent.TileType<Riven_Flesh>()
+				SpawnTileType = ModContent.TileType<Spug_Flesh>()
 			};
 			(int x, int y) = (spawnInfo.SpawnTileX, spawnInfo.SpawnTileY);
 			(Tile tile1, Tile tile2) = (Main.tile[x, y + 1], Main.tile[x, y + 2]);
