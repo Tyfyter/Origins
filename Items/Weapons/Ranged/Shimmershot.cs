@@ -16,6 +16,7 @@ using Origins.Projectiles;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using PegasusLib.Graphics;
 using System.Reflection;
+using System.IO;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Shimmershot : ModItem {
@@ -91,6 +92,7 @@ namespace Origins.Items.Weapons.Ranged {
 				if (Projectile.localAI[0].Warmup(Projectile.localAI[1])) {
 					SoundEngine.PlaySound(SoundID.Item25.WithPitchOffset(1)); // full charge sound
 					SoundEngine.PlaySound(SoundID.Zombie103.WithPitch(2f));
+					Projectile.netUpdate = true;
 				}
 				if (player.channel) {
 					if (SoundEngine.TryGetActiveSound(chargeSound, out ActiveSound sound)) {
@@ -220,6 +222,14 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 			Main.EntitySpriteDraw(GetDrawData(lightColor));
 			return false;
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(Projectile.localAI[0]);
+			writer.Write(Projectile.localAI[1]);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			Projectile.localAI[0] = reader.ReadSingle();
+			Projectile.localAI[1] = reader.ReadSingle();
 		}
 	}
 	public class Shimmershot_Bullet : ModProjectile {
