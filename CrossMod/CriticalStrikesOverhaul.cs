@@ -1,11 +1,13 @@
 ﻿using MonoMod.Cil;
 using Origins.Items.Tools;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace Origins.CrossMod {
 	[ReinitializeDuringResizeArrays]
@@ -30,6 +32,19 @@ namespace Origins.CrossMod {
 							c.EmitLdarg(0);
 							c.EmitLdarg(5);
 							c.EmitStfld(ModCalledCritType.GetField("forceOnItem"));
+						}
+					);
+					Type CritItem = critMod.Code.GetType("CritRework.Common.Globals.CritItem");
+					MonoModHooks.Modify(
+						CritItem.GetMethod(nameof(GlobalItem.LoadData)),
+						il => {
+							ILCursor c = new(il);
+							c.EmitLdarg(2);
+							c.EmitDelegate((TagCompound tag) => {
+								if (tag.SafeGet<string>("critType") == "CritRework.Content.CritTypes.ModCalledCritType") {
+									tag.Remove("critType");
+								}
+							});
 						}
 					);
 				}
