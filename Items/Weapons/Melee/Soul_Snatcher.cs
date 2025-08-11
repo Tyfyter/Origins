@@ -179,6 +179,7 @@ namespace Origins.Items.Weapons.Melee {
 		public static AutoLoadingAsset<Texture2D> empoweredTexture = typeof(Soul_Snatcher).GetDefaultTMLName() + "_Empowered";
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+			ProjectileID.Sets.NoMeleeSpeedVelocityScaling[Type] = true;
 			empoweredTexture.LoadAsset();
 		}
 		public override void SetDefaults() {
@@ -221,11 +222,11 @@ namespace Origins.Items.Weapons.Melee {
 			float oldFactor = MovementFactor;
 			if (!player.frozen) {
 				if (player.itemAnimation < player.itemAnimationMax / 2) {
-					MovementFactor -= 2.1f;
+					MovementFactor -= 1.8f;
 				} else if (player.itemAnimation > player.itemAnimationMax / 2 + 1) {
-					MovementFactor += 2.2f;
+					MovementFactor += 2.4f;
 				}
-				if (MovementFactor > 20) MovementFactor = 20;
+				if (MovementFactor > 24) MovementFactor = 24;
 			}
 			Projectile.position += Projectile.velocity * MovementFactor * Projectile.scale;
 			oldFactor -= MovementFactor;
