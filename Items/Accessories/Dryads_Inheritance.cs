@@ -39,6 +39,8 @@ namespace Origins.Items.Accessories {
 			player.longInvince = true;
 			player.SporeSac(Item);
 			player.sporeSac = true;
+			player.starCloakItem = Item;
+			player.starCloakItem_starVeilOverrideItem = Item;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.guardedHeart = true;
 			originPlayer.dryadNecklace = true;
