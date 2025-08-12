@@ -60,6 +60,7 @@ using ThoriumMod.Items.MeleeItems;
 using Terraria.GameContent;
 using Origins.NPCs.Corrupt;
 using Origins.NPCs.Crimson;
+using Terraria.DataStructures;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -183,6 +184,7 @@ namespace Origins {
 				Asset<Texture2D> wcHeadTexture = Request<Texture2D>(typeof(World_Cracker_Head).GetDefaultTMLName());
 				Asset<Texture2D> wcBodyTexture = Request<Texture2D>(typeof(World_Cracker_Body).GetDefaultTMLName());
 				Asset<Texture2D> wcTailTexture = Request<Texture2D>(typeof(World_Cracker_Tail).GetDefaultTMLName());
+				Asset<Texture2D> wcHeadArmorTexture = Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Head_Armor");
 				Asset<Texture2D> wcArmorTexture = Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
 				bossChecklist.Call("LogBoss",
 					mod,
@@ -201,43 +203,86 @@ namespace Origins {
 							ItemType<Fleshy_Globe>(),
 						},
 						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
-							void DrawSegment(Rectangle frame, Vector2 position, Texture2D baseTexture, int @switch) {
-								switch (@switch) {
-									case 0:
-									spriteBatch.Draw(
-										baseTexture,
-										position,
-										null,
-										color,
-										MathHelper.PiOver2,
-										baseTexture.Size() * 0.5f,
-										1,
-										0,
-									0);
-									break;
-									case 1:
-									Vector2 halfSize = frame.Size() / 2;
-									spriteBatch.Draw(
-										wcArmorTexture.Value,
-										position,
-										frame,
-										color,
-										MathHelper.PiOver2,
-										halfSize,
-										1,
-										0,
-									0);
-									break;
+							if (CheckAprilFools()) {
+								void DrawSegment(Rectangle frame, Vector2 position, Texture2D baseTexture, int @switch) {
+									switch (@switch) {
+										case 0:
+										spriteBatch.Draw(
+											baseTexture,
+											position,
+											null,
+											color,
+											MathHelper.PiOver2,
+											baseTexture.Size() * 0.5f,
+											1,
+											0,
+										0);
+										break;
+										case 1:
+										Vector2 halfSize = frame.Size() / 2;
+										spriteBatch.Draw(
+											wcArmorTexture.Value,
+											position,
+											frame,
+											color,
+											MathHelper.PiOver2,
+											halfSize,
+											1,
+											0,
+										0);
+										break;
+									}
 								}
+								Vector2 center = area.Center();
+								Vector2 diff = new(0, 48);
+								for (int j = 0; j < 2; j++) {
+									DrawSegment(new Rectangle(168, 0, 52, 56), center + diff * 3, wcTailTexture.Value, j);
+									for (int i = 3; i-- > -2;) {
+										DrawSegment(new Rectangle(104, 60 * Math.Abs(i % 2), 62, 58), center + diff * i, wcBodyTexture.Value, j);
+									}
+									DrawSegment(new Rectangle(0, 0, 102, 58), center + diff * -3, wcHeadTexture.Value, j);
+								}
+								return;
 							}
-							Vector2 center = area.Center();
-							Vector2 diff = new(0, 48);
-							for (int j = 0; j < 2; j++) {
-								DrawSegment(new Rectangle(168, 0, 52, 56), center + diff * 3, wcTailTexture.Value, j);
-								for (int i = 3; i-- > -2;) {
-									DrawSegment(new Rectangle(104, 60 * Math.Abs(i % 2), 62, 58), center + diff * i, wcBodyTexture.Value, j);
+							DrawData MakeData(int part, Vector2 pos, float rot, SpriteEffects effects = SpriteEffects.None) {
+								Texture2D texture;
+								Rectangle? frame = null;
+								switch (part) {
+									case 0:
+									texture = wcHeadTexture.Value;
+									frame = texture.Frame(verticalFrames: 4);
+									break;
+
+									case 1 or 2 or 3:
+									texture = wcBodyTexture.Value;
+									frame = texture.Frame(3, frameX: part - 1);
+									break;
+
+									case 4:
+									texture = wcTailTexture.Value;
+									break;
+
+									default:
+									return default;
 								}
-								DrawSegment(new Rectangle(0, 0, 102, 58), center + diff * -3, wcHeadTexture.Value, j);
+								Vector2 origin = texture.Size() * 0.5f;
+								if (frame.HasValue) origin = frame.Value.Size() * 0.5f;
+								return new DrawData(texture, pos, frame, Color.White, rot, origin, 1, effects);
+							}
+							DrawData[] datas = [
+
+							];
+							for (int i = 0; i < datas.Length; i++) {
+								datas[i].Draw(spriteBatch);
+							}
+							for (int i = 0; i < datas.Length; i++) {
+								if (i == 0) {
+									datas[i].texture = wcHeadArmorTexture.Value;
+									datas[i].origin += new Vector2(-15, 8).Apply(datas[i].effect, default);
+								} else if (i != datas.Length - 1) {
+									datas[i].texture = wcArmorTexture.Value;
+								} else continue;
+								datas[i].Draw(spriteBatch);
 							}
 						}
 					}
