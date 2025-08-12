@@ -1,17 +1,24 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Core {
 	public abstract record class SyncedAction : ILoadable {
 		static readonly List<SyncedAction> actions = [];
+		static readonly Dictionary<Type, ushort> actionIDsByType = [];
 		public static SyncedAction Get(int type) => actions[type];
+		protected SyncedAction() {
+			actionIDsByType?.TryGetValue(GetType(), out type);
+		}
 		private ushort type;
 		public virtual bool ServerOnly => false;
 		protected virtual bool ShouldPerform => true;
 		public void Load(Mod mod) {
 			type = (ushort)actions.Count;
 			actions.Add(this);
+			actionIDsByType.Add(GetType(), type);
 		}
 		public void Unload() { }
 		public SyncedAction Read(BinaryReader reader) {
