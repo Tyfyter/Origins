@@ -1,5 +1,6 @@
 ﻿using Origins.Core;
 using Origins.Dev;
+using System;
 using System.IO;
 using Terraria;
 using Terraria.ID;
@@ -12,6 +13,18 @@ namespace Origins.Items.Accessories {
 			"Combat",
 			"MeleeBoostAcc"
 		];
+		public override void Load() {
+			On_Player.ItemCheck_StartActualUse += On_Player_ItemCheck_StartActualUse;
+		}
+		static void On_Player_ItemCheck_StartActualUse(On_Player.orig_ItemCheck_StartActualUse orig, Player self, Item sItem) {
+			orig(self, sItem);
+			if (self.whoAmI != Main.myPlayer) return;
+			OriginPlayer originPlayer = self.OriginPlayer();
+			if (originPlayer.resizingGlove) {
+				const float strength = 2f;
+				new Resizing_Glove_Action(self, Math.Clamp(Main.rand.NextFloat(1 / strength, float.BitIncrement(strength)), 0.75f, 2)).Perform();
+			}
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 26);
 			Item.value = Item.sellPrice(gold: 2);
@@ -29,7 +42,7 @@ namespace Origins.Items.Accessories {
 			Scale = reader.ReadSingle()
 		};
 		public override void NetSend(BinaryWriter writer) {
-			writer.Write(Player.whoAmI);
+			writer.Write((byte)Player.whoAmI);
 			writer.Write(Scale);
 		}
 		protected override void Perform() {

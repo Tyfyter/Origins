@@ -587,7 +587,7 @@ namespace Origins.Items.Weapons.Magic {
 			Target = reader.ReadPackedVector2()
 		};
 		public override void NetSend(BinaryWriter writer) {
-			writer.Write(Player.whoAmI);
+			writer.Write((byte)Player.whoAmI);
 			writer.WritePackedVector2(Target);
 		}
 		protected override void Perform() {
