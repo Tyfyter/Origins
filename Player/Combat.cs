@@ -11,6 +11,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs;
 using Origins.NPCs.Brine;
+using Origins.NPCs.Crimson;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.MiscE;
 using Origins.Projectiles;

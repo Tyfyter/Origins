@@ -1109,7 +1109,7 @@ TILES:
 (^) Bomb Trap
 (^) Brittle Quartz*
 (X) Brown Ice
-(#2, ^2) Calcified Spug Flesh !!!
+(#2, ^2) Calcified Spug Flesh
 (X) Catwalk
 (^) Chambersite
 (X) Cubekon Altar°

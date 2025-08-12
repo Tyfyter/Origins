@@ -14,6 +14,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.Brine;
+using Origins.NPCs.Crimson;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Defiled.Boss;
 using Origins.NPCs.MiscE;

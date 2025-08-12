@@ -1,8 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Weapons.Summoner;
+using Origins.Items.Armor.Vanity.Other;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -11,41 +10,42 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.NPCs.MiscE {
-    public class Optiphage : ModNPC, IWikiNPC {
-		public Rectangle DrawRect => new(0, 0, 16, 30);
-		public int AnimationFrames => 2;
-		public int FrameDuration => 8;
+namespace Origins.NPCs.Corrupt {
+    public class Cranivore : ModNPC, IWikiNPC {
+		public Rectangle DrawRect => new(0, 0, 18, 34);
+		public int AnimationFrames => 1;
+		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public static new AutoCastingAsset<Texture2D> HeadTexture { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 2;
 			if (!Main.dedServ) {
-				HeadTexture = Mod.Assets.Request<Texture2D>("NPCs/MiscE/Optiphage_Head");
+				HeadTexture = Mod.Assets.Request<Texture2D>("NPCs/Corrupt/Cranivore_Head");
 			}
 			CorruptGlobalNPC.NPCTypes.Add(Type);
-			AssimilationLoader.AddNPCAssimilation<Corrupt_Assimilation>(Type, 0.02f);
+			AssimilationLoader.AddNPCAssimilation<Corrupt_Assimilation>(Type, 0.03f);
 		}
 		public override void Unload() {
 			HeadTexture = null;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.DemonEye);
-			NPC.aiStyle = 85;
-			NPC.lifeMax = 14;
-			NPC.defense = 2;
-			NPC.damage = 14;
-			NPC.width = 16;
-			NPC.height = 16;
+			NPC.aiStyle = NPCAIStyleID.Demon_Eye;
+			NPC.lifeMax = 28;
+			NPC.defense = 5;
+			NPC.damage = 16;
+			NPC.width = 32;
+			NPC.height = 32;
 			NPC.friendly = false;
 			NPC.noGravity = true;
-			NPC.aiStyle = NPCAIStyleID.Demon_Eye;
-			NPC.value = 34;
+			NPC.HitSound = SoundID.NPCHit1;
+			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.knockBackResist = 0.8f;
+			NPC.value = 56;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
 			if (!spawnInfo.Player.ZoneCorrupt) return 0;
-			return 0.05f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
+			return 0.07f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
@@ -54,7 +54,8 @@ namespace Origins.NPCs.MiscE {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ItemID.RottenChunk, 5));
+			npcLoot.Add(ItemDropRule.Common(ItemID.RottenChunk, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Cranivore_Beanie>(), 15));
 		}
 		public override void AI() {
 			if (NPC.aiStyle == NPCAIStyleID.Star_Cell) {
@@ -63,8 +64,8 @@ namespace Origins.NPCs.MiscE {
 					NPC.aiStyle = NPCAIStyleID.Demon_Eye;
 				}else if (NPC.ai[0] == 1f) {
 					Player targetPlayer = Main.player[NPC.target];
-					NPC.BottomRight = targetPlayer.Center;
-					targetPlayer.AddBuff(Optiphage_Debuff.ID, 5);
+					NPC.Top = targetPlayer.Top;
+					targetPlayer.AddBuff(Buffs.Cranivore_Debuff.ID, 5);
 				}
 			} else {
 				NPCAimedTarget target = NPC.GetTargetData();
@@ -73,7 +74,7 @@ namespace Origins.NPCs.MiscE {
 				NPC.spriteDirection = NPC.direction;
 				NPC.hide = false;
 				if (++NPC.frameCounter > 5) {
-					NPC.frame = new Rectangle(0, (NPC.frame.Y + 30) % 60, 16, 30);
+					NPC.frame = new Rectangle(0, (NPC.frame.Y + 34) % 68, 18, 34);
 					NPC.frameCounter = 0;
 				}
 			}
@@ -99,13 +100,13 @@ namespace Origins.NPCs.MiscE {
 				}
 				Player targetPlayer = Main.player[NPC.target];
 				Main.EntitySpriteDraw(
-					HeadTexture,
-					(targetPlayer.Top.Floor() + new Vector2(0, 8 + targetPlayer.gfxOffY) + Main.OffsetsPlayerHeadgear[targetPlayer.bodyFrame.Y / targetPlayer.bodyFrame.Height]) - screenPos,
-					null,
-					drawColor,
-					targetPlayer.headRotation,
-					new Vector2(8 - targetPlayer.direction * 8, 2),
-					NPC.scale,
+				HeadTexture,
+				(targetPlayer.Top.Floor() + new Vector2(0, targetPlayer.gfxOffY - 2) + Main.OffsetsPlayerHeadgear[targetPlayer.bodyFrame.Y / targetPlayer.bodyFrame.Height]) - screenPos,
+				null,
+				drawColor,
+				targetPlayer.headRotation,
+				new Vector2(11 - targetPlayer.direction * 4, 2),
+				NPC.scale,
 					targetPlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 				0);
 				return false;

@@ -2,7 +2,6 @@
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
-using Origins.NPCs.Defiled;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -11,7 +10,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.NPCs.MiscE {
+namespace Origins.NPCs.Crimson {
 	public class Crimbrain : ModNPC, IWikiNPC {
 		public Rectangle DrawRect => new(0, 36, 34, 28);
 		public int AnimationFrames => 32;

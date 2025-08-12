@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.NPCs.Corrupt;
+using Origins.NPCs.Crimson;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;

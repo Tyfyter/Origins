@@ -58,6 +58,8 @@ using Origins.Items.Other.Fish;
 using static Origins.OriginSystem;
 using ThoriumMod.Items.MeleeItems;
 using Terraria.GameContent;
+using Origins.NPCs.Corrupt;
+using Origins.NPCs.Crimson;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {

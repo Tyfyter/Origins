@@ -4013,6 +4013,7 @@ CORE_Generator: {
 		Enables autouse for all explosive weapons
 		Shoots rockets as you swing
 		Additionally causes stars to fall and canisters from your inventory to release after taking damage
+		'Entropy really is a good alternative to coffee'
 		''' */
 }
 
