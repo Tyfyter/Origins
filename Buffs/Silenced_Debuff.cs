@@ -12,7 +12,7 @@ namespace Origins.Buffs {
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().silencedDebuff = true;
-			if (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) npc.buffTime[buffIndex] -= 19;
+			if (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) npc.buffTime[buffIndex] -= 9;
 		}
 	}
 }
