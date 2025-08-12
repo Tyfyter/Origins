@@ -61,6 +61,7 @@ using Terraria.GameContent;
 using Origins.NPCs.Corrupt;
 using Origins.NPCs.Crimson;
 using Terraria.DataStructures;
+using Microsoft.Xna.Framework.Input;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -157,6 +158,46 @@ namespace Origins {
 		}
 		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
 		static bool DefaultCheckAprilFools() => (DateTime.Today.Month == 4 && DateTime.Today.Day == 1) || Instance.ForceAF;
+		static class BCSpriteConstructor {
+			public static List<(int part, Vector2 pos, float rot, SpriteEffects effects)> parts = [];
+			public static int partNum = 0;
+			public static Vector2 partPos = default;
+			public static float partRot = 0;
+			public static SpriteEffects partEffects = SpriteEffects.None;
+			public static MouseState oldMouse = default;
+			public static KeyboardState oldKeyboard = default;
+			public static void SetupArrangement(int maxParts) {
+				if (!DebugConfig.Instance.DebugMode) return;
+				MouseState currentMouse = Mouse.GetState();
+				KeyboardState currentKB = Keyboard.GetState();
+				parts.RemoveAll(p => p.part < 0 || p.part > maxParts);
+				if (partNum < 0) partNum = maxParts;
+				if (partNum > maxParts) partNum = 0;
+				if (Main.hasFocus) {
+					partPos = Main.MouseScreen;
+					int scrollDiff = currentMouse.ScrollWheelValue - oldMouse.ScrollWheelValue;
+					if (scrollDiff != 0) {
+						if (currentMouse.RightButton == ButtonState.Pressed) {
+							partRot += scrollDiff * 0.001f;
+						} else {
+							partNum += scrollDiff / 120;
+							if (partNum < 0) partNum = maxParts;
+							if (partNum > maxParts) partNum = 0;
+						}
+					}
+					if (currentMouse.XButton1 == ButtonState.Pressed && oldMouse.XButton1 == ButtonState.Released) partEffects ^= SpriteEffects.FlipHorizontally;
+					if (currentMouse.XButton2 == ButtonState.Pressed && oldMouse.XButton2 == ButtonState.Released) partEffects ^= SpriteEffects.FlipVertically;
+					if (currentMouse.XButton2 == ButtonState.Pressed && oldMouse.XButton2 == ButtonState.Released) partEffects ^= SpriteEffects.FlipVertically;
+					if (currentMouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released) parts.Add((partNum, partPos, partRot, partEffects));
+					if (parts.Count > 0 && currentKB.IsKeyDown(Keys.Back) && oldKeyboard.IsKeyUp(Keys.Back)) parts.RemoveAt(parts.Count - 1);
+					if (parts.Count > 0 && currentKB.IsKeyDown(Keys.End) && oldKeyboard.IsKeyUp(Keys.End)) {
+						Origins.instance.Logger.Info(string.Join('\n', parts.Select(p => $"{p.part}, new({p.pos.X},{p.pos.Y}), {p.rot}f, SpriteEffects.{p.effects}")));
+					}
+				}
+				oldMouse = currentMouse;
+				oldKeyboard = currentKB;
+			}
+		}
 		public static void PostSetupContent(Mod mod) {
 			if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist)) {
 				static Func<bool> IfEvil<T>() where T : AltBiome {
@@ -269,18 +310,25 @@ namespace Origins {
 								if (frame.HasValue) origin = frame.Value.Size() * 0.5f;
 								return new DrawData(texture, pos, frame, Color.White, rot, origin, 1, effects);
 							}
+							BCSpriteConstructor.SetupArrangement(4);
 							DrawData[] datas = [
-
+								..BCSpriteConstructor.parts.Select(d => MakeData(d.part, d.pos, d.rot, d.effects)),
+								MakeData(BCSpriteConstructor.partNum, BCSpriteConstructor.partPos, BCSpriteConstructor.partRot, BCSpriteConstructor.partEffects)
 							];
 							for (int i = 0; i < datas.Length; i++) {
 								datas[i].Draw(spriteBatch);
 							}
 							for (int i = 0; i < datas.Length; i++) {
-								if (i == 0) {
+								if (datas[i].texture == wcHeadTexture.Value) {
 									datas[i].texture = wcHeadArmorTexture.Value;
-									datas[i].origin += new Vector2(-15, 8).Apply(datas[i].effect, default);
-								} else if (i != datas.Length - 1) {
+									Rectangle frame = wcHeadArmorTexture.Frame(4, 3);
+									datas[i].sourceRect = frame;
+									datas[i].origin = frame.Size() * 0.5f + new Vector2(15, 8).Apply(datas[i].effect, default);
+								} else if (datas[i].texture == wcBodyTexture.Value) {
 									datas[i].texture = wcArmorTexture.Value;
+									Rectangle frame = wcArmorTexture.Frame(3, 3, frameX: datas[i].sourceRect.Value.X / wcBodyTexture.Frame(3).Width);
+									datas[i].sourceRect = frame;
+									datas[i].origin = frame.Size() * 0.5f;
 								} else continue;
 								datas[i].Draw(spriteBatch);
 							}
