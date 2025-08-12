@@ -23,8 +23,10 @@ using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
@@ -603,7 +605,18 @@ namespace Origins {
 			}
 			if (MojoInjectionActive) Mojo_Injection.UpdateEffect(this);
 			if (CrownJewelActive) Crown_Jewel.UpdateEffect(this);
+			StringBuilder builder = new();
+			for (int i = 0; i < Player.buffType.Length; i++) {
+				if (Player.buffType[i] != 0 && Player.buffTime[i] != 0) {
+					if (builder.Length > 0) builder.Append(", ");
+					builder.Append(Lang.GetBuffName(Player.buffType[i]));
+				}
+			}
+#if DEBUG
+			Player.chatOverhead.NewMessage(builder.ToString(), 5);
+#endif
 			if (sendBuffs && Player.whoAmI == Main.myPlayer && !NetmodeActive.SinglePlayer) {
+				Debugging.ChatMessage(builder, true);
 				NetMessage.SendData(MessageID.PlayerBuffs, number: Main.myPlayer);
 			}
 			sendBuffs = false;
