@@ -46,7 +46,6 @@ namespace Origins.Items.Accessories {
 			writer.Write(Scale);
 		}
 		protected override void Perform() {
-			Origins.instance.Logger.Debug(this);
 			Player.OriginPlayer().resizingGloveScale = Scale;
 		}
 	}
