@@ -3328,7 +3328,7 @@ Riven_Dungeon_Chest_Item: {
 }
 
 Riven_Flesh_Item: {
-	DisplayName: Spug Flesh
+	DisplayName: "{§Spug} Flesh"
 	Tooltip: ""
 }
 
@@ -3378,7 +3378,7 @@ Harmony_Brick_Wall_Item: {
 }
 
 Riven_Flesh_Wall_Item: {
-	DisplayName: Spug Flesh Wall
+	DisplayName: "{§Spug} Flesh Wall"
 	Tooltip: ""
 }
 
@@ -6414,12 +6414,12 @@ Dio_Helmet: {
 }
 
 Calcified_Riven_Flesh_Item: {
-	DisplayName: Calcified Riven Flesh
+	DisplayName: Calcified {§Spug} Flesh
 	Tooltip: ""
 }
 
 Calcified_Riven_Flesh_Wall_Safe_Item: {
-	DisplayName: Calcified Riven Flesh Wall
+	DisplayName: Calcified {§Spug} Flesh Wall
 	Tooltip: ""
 }
 

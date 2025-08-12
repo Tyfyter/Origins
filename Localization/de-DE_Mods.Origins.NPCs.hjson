@@ -265,7 +265,7 @@ Dryad: {
 	// DefiledHeartDown: That's it for the {§Defiled}. Finish it up.
 	// BeforeDefeatS: Have you tried using purification powder on... wait a minute...
 	// BeforeDefeatDA: Have you tried using purification powder on {§Defiled} Stone?
-	// BeforeDefeatWC: Have you tried using purification powder on Spug Flesh?
+	// BeforeDefeatWC: Have you tried using purification powder on {§Spug} Flesh?
 
 	PurifySuccess: {
 		// 0: I thank you for not succumbing to evil. Hopefully this'll help keep the fight in you.
