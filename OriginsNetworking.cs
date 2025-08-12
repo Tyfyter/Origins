@@ -38,7 +38,7 @@ namespace Origins {
 					case world_cracker_hit:
 					case sync_guid:
 					case inflict_assimilation:
-					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn:
+					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn or laser_tag_score:
 					case custom_knockback:
 					case entity_interaction:
 					case soul_snatcher_activate:
