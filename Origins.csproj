@@ -24,7 +24,7 @@
 		  <HintPath>..\ModAssemblies\miningcracks_take_on_luiafk.dll</HintPath>
 		</Reference>
 		<Reference Include="PegasusLib">
-			<HintPath>..\ModAssemblies\PegasusLib_v1.0.7.1.dll</HintPath>
+			<HintPath>..\ModAssemblies\PegasusLib_v1.0.8.dll</HintPath>
 		</Reference>
 		<Reference Include="ThoriumMod">
 			<HintPath>..\ModAssemblies\ThoriumMod.dll</HintPath>
