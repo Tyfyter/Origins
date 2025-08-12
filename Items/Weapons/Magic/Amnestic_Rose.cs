@@ -591,6 +591,7 @@ namespace Origins.Items.Weapons.Magic {
 			writer.WritePackedVector2(Target);
 		}
 		protected override void Perform() {
+			Origins.instance.Logger.Debug(this);
 			Player.OriginPlayer().relativeTarget = Target;
 		}
 	}
