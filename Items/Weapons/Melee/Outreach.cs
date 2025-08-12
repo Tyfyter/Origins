@@ -151,6 +151,14 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			Projectile.EmitEnchantmentVisualsAt(Projectile.position - Projectile.velocity * flaskOffsetAmount * Projectile.scale, Projectile.width, Projectile.height);
 		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			Rectangle hitbox = projHitbox;
+			hitbox.Offset((Projectile.velocity.Normalized(out _) * -30).ToPoint());
+			if (hitbox.Intersects(targetHitbox)) return true;
+			hitbox.Offset((Projectile.velocity.Normalized(out _) * 40).ToPoint());
+			if (hitbox.Intersects(targetHitbox)) return true;
+			return base.Colliding(projHitbox, targetHitbox);
+		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			SoundEngine.PlaySound(SoundID.Item45);
 			if (Projectile.ai[0] == 1 && !CritType.ModEnabled) {
@@ -190,6 +198,6 @@ namespace Origins.Items.Weapons.Melee {
 	public class Soldering_Iron_Crit_Type : CritType<Soldering_Iron> {
 		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.CritType.PerfectTiming");
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ai[0] == 1;
-		public override float CritMultiplier(Player player, Item item) => 1.8f + (player.GetWeaponCrit(item) / 100f);
+		public override float CritMultiplier(Player player, Item item) => 2f + (player.GetWeaponCrit(item) / 100f);
 	}
 }
