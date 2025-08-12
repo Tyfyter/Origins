@@ -134,7 +134,7 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
-			Item.rare = tier.ItemRarity;
+			Item.rare = Unit.tier.ItemRarity;
 		}
 	}
 	[ExtendsFromMod(nameof(MagicStorage))]
