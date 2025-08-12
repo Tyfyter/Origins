@@ -102,6 +102,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC npc = boss.NPC;
 			npc.velocity *= 0.97f;
 			boss.Hover();
+			GeometryUtils.AngularSmoothing(ref npc.rotation, npc.AngleTo(npc.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
 
 			if (++npc.ai[0] >= npc.ai[1]) {
 				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f), npc.Center);
