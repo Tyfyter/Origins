@@ -200,6 +200,9 @@ namespace Origins {
 					}
 				}
 			}
+			for (int i = 0; i < OriginTile.LateSetupActions.Count; i++) {
+				OriginTile.LateSetupActions[i]();
+			}
 			if (OriginConfig.Instance.GrassMerge) {
 				List<int> grasses = new List<int>() { };
 				for (int i = 0; i < TileLoader.TileCount; i++) {

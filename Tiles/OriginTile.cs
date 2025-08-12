@@ -14,6 +14,7 @@ namespace Origins.Tiles {
 	public abstract class OriginTile : ModTile {
 		public static List<OriginTile> IDs { get; internal set; }
 		public static List<int> DefiledTiles { get; internal set; }
+		internal static List<Action> LateSetupActions { get; set; } = [];
 		public int mergeID = -1;
 		public override void Load() {
 			if (IDs != null) {
@@ -51,8 +52,9 @@ namespace Origins.Tiles {
 		protected sealed override void SetDefaults() {
 			overlays = [..GetOverlays()];
 			for (int i = 0; i < overlays.Length; i++) {
-				overlays[i].SetupTexture();
-				overlays[i].SetupOther(this);
+				TileOverlay tileOverlay = overlays[i];
+				tileOverlay.SetupTexture();
+				LateSetupActions.Add(() => tileOverlay.SetupOther(this));
 			}
 			SetStaticDefaults();
 		}
@@ -63,6 +65,7 @@ namespace Origins.Tiles {
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			if (!TileDrawing.IsVisible(tile)) return;
+			_ = this;
 			for (int k = 0; k < overlays.Length; k++) {
 				overlays[k].Draw(i, j, tile, spriteBatch);
 			}
@@ -79,39 +82,83 @@ namespace Origins.Tiles {
 			public virtual void SetupOther(ModTile tile) { }
 			public abstract void Draw(int i, int j, Tile tile, SpriteBatch spriteBatch);
 		}
-		protected class TileMergeOverlay(string texturePath, int tileType, int parentFrameHeight = 270) : TileOverlay {
+		protected class TileMergeOverlay(string texturePath, bool[] tileTypes, int parentFrameHeight = 270) : TileOverlay {
+			public TileMergeOverlay(string texturePath, int tileType, int parentFrameHeight = 270) : this(texturePath, [tileType], parentFrameHeight) { }
+			public TileMergeOverlay(string texturePath, int[] tileTypes, int parentFrameHeight = 270) : this(texturePath, TileID.Sets.Factory.CreateBoolSet(tileTypes), parentFrameHeight) { }
 			protected override string TexturePath => texturePath;
+			//down:╷
+			//up:╵
+			//left:╴
+			//right:╶
+			// ┼ │ ─ ┌┐ └┘ ├ ┤ ┬ ┴
+			static readonly Dictionary<char, Direction[]> directionsByDirection = new() {
+				['╷'] = [Direction.Down],
+				['╵'] = [Direction.Up],
+				['╴'] = [Direction.Left],
+				['╶'] = [Direction.Right],
+				['┼'] = [Direction.Down, Direction.Up, Direction.Left, Direction.Right],
+				['│'] = [Direction.Down, Direction.Up],
+				['─'] = [Direction.Left, Direction.Right],
+				['┌'] = [Direction.Down, Direction.Right],
+				['┐'] = [Direction.Down, Direction.Left],
+				['└'] = [Direction.Up, Direction.Right],
+				['┘'] = [Direction.Up, Direction.Left],
+				['├'] = [Direction.Down, Direction.Up, Direction.Right],
+				['┤'] = [Direction.Down, Direction.Up, Direction.Left],
+				['┬'] = [Direction.Down, Direction.Left, Direction.Right],
+				['┴'] = [Direction.Up, Direction.Left, Direction.Right]
+			};
+			static readonly string[] directionsByFrame = [
+				"├┬┬┬┤│╷╷╷╶┼┼╴───",
+				"├┼┼┼┤│┼┼┼╶┼┼╴───",
+				"├┴┴┴┤│┼┼┼╶┼┼╴│││",
+				"┌┐┌┐┌┐╵╵╵    │││",
+				"└┘└┘└┘───       ",
+				"┼┼┌┐└┘ ╵┴┴┴╷╶   ",
+				"┼┼└┘└┘ ╵┬┬┬╷╶   ",
+				"┼┼┌┐└┘ ╵┤├│╷╶   ",
+				"┼┼└┘┌┐ ╷┤├│╵╴   ",
+				"┼┼┌┐┌┐ ╷┤├│╵╴   ",
+				"┼┼└┘┌┐ ╷───╵╴   ",
+				"┌┌┌┐┐┐          ",
+				"└└└┘┘┘          ",
+				"                ",
+				"                "
+			];
 			public override void SetupOther(ModTile tile) {
-				Main.tileMerge[tile.Type][tileType] = true;
-				Main.tileMerge[tileType][tile.Type] = true;
+				for (int i = 0; i < tileTypes.Length; i++) {
+					if (!tileTypes[i]) continue;
+					Main.tileMerge[tile.Type][i] = true;
+					Main.tileMerge[i][tile.Type] = true;
+				}
 			}
 			public override void Draw(int i, int j, Tile tile, SpriteBatch spriteBatch) {
-				void Do(params int[] directions) {
+				void Do(params Direction[] directions) {
 					for (int k = 0; k < directions.Length; k++) {
-						int direction = directions[k];
-						Tile tile;
+						Direction direction = directions[k];
+						Tile blendTile;
 						switch (direction) {
-							case 0:
-							tile = Framing.GetTileSafely(i, j + 1);
-							if (tile.TopSlope || tile.IsHalfBlock) return;
+							case Direction.Down:
+							blendTile = Framing.GetTileSafely(i, j + 1);
+							if (blendTile.TopSlope || blendTile.IsHalfBlock) continue;
 							break;
-							case 1:
-							tile = Framing.GetTileSafely(i, j - 1);
-							if (tile.BottomSlope) return;
+							case Direction.Up:
+							blendTile = Framing.GetTileSafely(i, j - 1);
+							if (blendTile.BottomSlope) continue;
 							break;
-							case 2:
-							tile = Framing.GetTileSafely(i - 1, j);
-							if (tile.LeftSlope || tile.IsHalfBlock) return;
+							case Direction.Left:
+							blendTile = Framing.GetTileSafely(i - 1, j);
+							if (blendTile.LeftSlope || blendTile.IsHalfBlock) continue;
 							break;
-							case 3:
-							tile = Framing.GetTileSafely(i + 1, j);
-							if (tile.RightSlope || tile.IsHalfBlock) return;
+							case Direction.Right:
+							blendTile = Framing.GetTileSafely(i + 1, j);
+							if (blendTile.RightSlope || blendTile.IsHalfBlock) continue;
 							break;
 							default:
-							return;
+							continue;
 						}
-						if (!tile.TileIsType(tileType)) return;
-						Rectangle frame = new(direction * 18, tile.TileFrameNumber * 18, 16, 16);
+						if (!blendTile.HasTile || !tileTypes[blendTile.TileType]) continue;
+						Rectangle frame = new((int)(direction) * 18, blendTile.TileFrameNumber * 18, 16, 16);
 						Vector2 offset = new(Main.offScreenRange, Main.offScreenRange);
 						if (Main.drawToScreen) {
 							offset = Vector2.Zero;
@@ -122,9 +169,9 @@ namespace Origins.Tiles {
 						int flatX = 14;
 						int kScaleX = -2;
 						Vector2 position = new Vector2(i * 16f, j * 16f) + offset - Main.screenPosition;
-						Color color = Lighting.GetColor(i, j);
-						Texture2D texture = Texture.Value;
-						switch (tile.BlockType) {
+						Color color = GetColor(Lighting.GetColor(i, j));
+						Texture2D texture = CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(GlowPaintKey, blendTile.TileColor, Texture);
+						switch (blendTile.BlockType) {
 							case BlockType.HalfBlock:
 							case BlockType.Solid:
 							spriteBatch.Draw(texture, position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
@@ -164,71 +211,16 @@ namespace Origins.Tiles {
 						}
 					}
 				}
-				switch ((tile.TileFrameX / 18, (tile.TileFrameY % parentFrameHeight) / 18)) {
-					case (0, 0) or (0, 1) or (0, 2):
-					Do(0, 1, 3);
-					break;
-					case (1, 0) or (2, 0) or (3, 0):
-					Do(0, 2, 3);
-					break;
-					case (1, 1) or (2, 1) or (3, 1):
-					Do(0, 1, 2, 3);
-					break;
-					case (1, 2) or (2, 2) or (3, 2):
-					Do(1, 2, 3);
-					break;
-					case (4, 0) or (4, 1) or (4, 2):
-					Do(0, 1, 2);
-					break;
-
-					case (5, 0) or (5, 1) or (5, 2):
-					Do(0, 1);
-					break;
-
-					case (6, 0) or (7, 0) or (8, 0):
-					Do(0);
-					break;
-					case (6, 1) or (7, 1) or (8, 1):
-					Do(0, 1, 2, 3);
-					break;
-					case (6, 2) or (7, 2) or (8, 2):
-					Do(0, 1, 2, 3);
-					break;
-					case (6, 3) or (7, 3) or (8, 3):
-					Do(1);
-					break;
-
-					case (9, 0) or (9, 1) or (9, 2):
-					Do(3);
-					break;
-					case (10, 0) or (10, 1) or (10, 2):
-					Do(0, 1, 2, 3);
-					break;
-					case (11, 0) or (11, 1) or (11, 2):
-					Do(0, 1, 2, 3);
-					break;
-					case (12, 0) or (12, 1) or (12, 2):
-					Do(2);
-					break;
-
-
-					case (0, 3) or (2, 3) or (4, 3):
-					Do(0, 3);
-					break;
-					case (1, 3) or (3, 3) or (5, 3):
-					Do(0, 2);
-					break;
-					case (0, 4) or (2, 4) or (4, 4):
-					Do(1, 3);
-					break;
-					case (1, 4) or (3, 4) or (5, 4):
-					Do(1, 2);
-					break;
-
-					case (6, 4) or (7, 4) or (8, 4):
-					Do(2, 3);
-					break;
+				if (directionsByDirection.TryGetValue(directionsByFrame[(tile.TileFrameY % parentFrameHeight) / 18][tile.TileFrameX / 18], out Direction[] directions)) {
+					Do(directions);
 				}
+			}
+			public virtual Color GetColor(Color color) => color;
+			enum Direction {
+				Down,
+				Up,
+				Left,
+				Right
 			}
 		}
 	}

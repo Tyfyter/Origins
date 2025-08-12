@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Consumables;
 using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -8,7 +9,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-	public class Amoeba_Fluid : OriginTile, IRivenTile, IGlowingModTile {
+	public class Amoeba_Fluid : ComplexFrameTile, IRivenTile, IGlowingModTile {
 		public string[] Categories => [
 			"OtherBlock"
 		];
@@ -27,6 +28,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = true;
 			Main.tileBouncy[Type] = true;
+			Main.tileMergeDirt[Type] = true;
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			AddMapEntry(new Color(0, 200, 200));
@@ -34,6 +36,11 @@ namespace Origins.Tiles.Riven {
 			MineResist = 3f;
 			HitSound = SoundID.NPCHit13;
 			DustType = DustID.Water_Desert;
+		}
+		protected override IEnumerable<TileOverlay> GetOverlays() {
+			yield return new TileMergeOverlay("Origins/Tiles/Riven/Mud_Overlay", TileID.Sets.Mud);
+			yield return new TileMergeOverlay(Texture + "_Spug_Overlay", TileType<Spug_Flesh>());
+			yield return new TileMergeOverlay(Texture + "_Calcified_Overlay", TileType<Calcified_Riven_Flesh>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (OriginsModIntegrations.CheckAprilFools()) {
@@ -60,6 +67,7 @@ namespace Origins.Tiles.Riven {
 				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Amoeba_Fluid_Glow");
 			}
 			this.DrawTileGlow(i, j, spriteBatch);
+			base.PostDraw(i, j, spriteBatch);
 		}
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
