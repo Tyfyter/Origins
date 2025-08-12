@@ -156,6 +156,7 @@ namespace Origins.Items {
 			if (Origins.itemGlowmasks[item.type] is not 0 and not -1) item.glowMask = Origins.itemGlowmasks[item.type];
 		}
 		public override void ModifyItemScale(Item item, Player player, ref float scale) {
+			OriginPlayer originPlayer = player.OriginPlayer();
 			if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed)) {
 				scale *= originPlayer.meleeScaleMultiplier;
 				if (originPlayer.resizingGlove) scale *= originPlayer.resizingGloveScale;
