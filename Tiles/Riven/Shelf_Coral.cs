@@ -304,7 +304,7 @@ namespace Origins.Tiles.Riven {
 		bool wasLocalPlayerStanding = false;
 		void ProcessStanding() {
 			isStoodOn = false;
-			Rectangle coralTop = new(Position.X * 16, Position.Y * 16, 3 * 16, 1);
+			Rectangle coralTop = new(Position.X * 16 - 1, Position.Y * 16, 3 * 16 + 2, 1);
 			bool shouldForceSync = NetmodeActive.MultiplayerClient && (wasLocalPlayerStanding != (Main.LocalPlayer.velocity.Y == 0));
 			wasLocalPlayerStanding = Main.LocalPlayer.velocity.Y == 0;
 			foreach (Player player in Main.ActivePlayers) {
