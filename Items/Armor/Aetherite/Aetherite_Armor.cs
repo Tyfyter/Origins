@@ -99,7 +99,10 @@ namespace Origins.Items.Armor.Aetherite {
 						positions.Push(newPositions[i]);
 					}
 				}
-				if (MathUtils.LinearSmoothing(ref Projectile.scale, 1, 1 / 60f)) Projectile.ai[0] = 1;
+				if (MathUtils.LinearSmoothing(ref Projectile.scale, 1, 1 / 60f)) {
+					Projectile.ai[0] = 1;
+					Projectile.netUpdate = true;
+				}
 			} else if (++Projectile.ai[0] > 600) {
 				if (MathUtils.LinearSmoothing(ref Projectile.scale, 0, 1 / 60f)) Projectile.Kill();
 			}
@@ -166,6 +169,7 @@ namespace Origins.Items.Armor.Aetherite {
 		public override void AI() {
 			float GetTargetOpacity() {
 				Projectile owner = Projectile.GetRelatedProjectile(0);
+				CombatText.NewText(Projectile.Hitbox with { Width = 0, Height = 0 }, Color.White, owner.ToString());
 				if (owner?.active ?? false) {
 					float radius = Aetherite_Aura_P.MaxRadius * owner.scale;
 					if (Projectile.Center.WithinRange(owner.position, radius)) {

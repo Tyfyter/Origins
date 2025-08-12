@@ -317,7 +317,7 @@ namespace Origins.Tiles.Riven {
 				isStoodOn = playerBottom.Intersects(coralTop);
 				if (isStoodOn) {
 					if (player.whoAmI == Main.myPlayer && shouldForceSync) {
-						NetMessage.SendData(MessageID.PlayerControls, Main.myPlayer);
+						NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, Main.myPlayer);
 					}
 					return;
 				}
