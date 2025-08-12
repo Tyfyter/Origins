@@ -166,7 +166,7 @@ namespace Origins {
 			public static SpriteEffects partEffects = SpriteEffects.None;
 			public static MouseState oldMouse = default;
 			public static KeyboardState oldKeyboard = default;
-			public static void SetupArrangement(int maxParts) {
+			public static void SetupArrangement(int maxParts, Vector2 center) {
 				if (!DebugConfig.Instance.DebugMode) return;
 				MouseState currentMouse = Mouse.GetState();
 				KeyboardState currentKB = Keyboard.GetState();
@@ -187,11 +187,10 @@ namespace Origins {
 					}
 					if (currentMouse.XButton1 == ButtonState.Pressed && oldMouse.XButton1 == ButtonState.Released) partEffects ^= SpriteEffects.FlipHorizontally;
 					if (currentMouse.XButton2 == ButtonState.Pressed && oldMouse.XButton2 == ButtonState.Released) partEffects ^= SpriteEffects.FlipVertically;
-					if (currentMouse.XButton2 == ButtonState.Pressed && oldMouse.XButton2 == ButtonState.Released) partEffects ^= SpriteEffects.FlipVertically;
 					if (currentMouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released) parts.Add((partNum, partPos, partRot, partEffects));
 					if (parts.Count > 0 && currentKB.IsKeyDown(Keys.Back) && oldKeyboard.IsKeyUp(Keys.Back)) parts.RemoveAt(parts.Count - 1);
 					if (parts.Count > 0 && currentKB.IsKeyDown(Keys.End) && oldKeyboard.IsKeyUp(Keys.End)) {
-						Origins.instance.Logger.Info(string.Join('\n', parts.Select(p => $"{p.part}, new({p.pos.X},{p.pos.Y}), {p.rot}f, SpriteEffects.{p.effects}")));
+						Origins.instance.Logger.Info(string.Join('\n', parts.Select(p => $"({p.part}, new Vector2({p.pos.X - center.X}, {p.pos.Y - center.Y}) + center, {p.rot}f, SpriteEffects.{p.effects})")));
 					}
 				}
 				oldMouse = currentMouse;
@@ -244,6 +243,7 @@ namespace Origins {
 							ItemType<Fleshy_Globe>(),
 						},
 						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
+							Vector2 center = area.Center();
 							if (CheckAprilFools()) {
 								void DrawSegment(Rectangle frame, Vector2 position, Texture2D baseTexture, int @switch) {
 									switch (@switch) {
@@ -274,7 +274,6 @@ namespace Origins {
 										break;
 									}
 								}
-								Vector2 center = area.Center();
 								Vector2 diff = new(0, 48);
 								for (int j = 0; j < 2; j++) {
 									DrawSegment(new Rectangle(168, 0, 52, 56), center + diff * 3, wcTailTexture.Value, j);
@@ -310,11 +309,21 @@ namespace Origins {
 								if (frame.HasValue) origin = frame.Value.Size() * 0.5f;
 								return new DrawData(texture, pos, frame, Color.White, rot, origin, 1, effects);
 							}
-							BCSpriteConstructor.SetupArrangement(4);
+							/*
+							BCSpriteConstructor.SetupArrangement(4, center);
 							DrawData[] datas = [
 								..BCSpriteConstructor.parts.Select(d => MakeData(d.part, d.pos, d.rot, d.effects)),
 								MakeData(BCSpriteConstructor.partNum, BCSpriteConstructor.partPos, BCSpriteConstructor.partRot, BCSpriteConstructor.partEffects)
-							];
+							];/*/
+							DrawData[] datas = [
+								MakeData(0, new Vector2(-91, -142) + center, -0.120000005f, SpriteEffects.None),
+								MakeData(1, new Vector2(2, -139) + center, 0.36f, SpriteEffects.None),
+								MakeData(2, new Vector2(68, -86) + center, 1.08f, SpriteEffects.None),
+								MakeData(1, new Vector2(94, -1) + center, 1.5600001f, SpriteEffects.None),
+								MakeData(2, new Vector2(64, 75) + center, 2.2799997f, SpriteEffects.None),
+								MakeData(3, new Vector2(-12, 125) + center, 2.7599993f, SpriteEffects.None),
+								MakeData(4, new Vector2(-104, 138) + center, 3.119999f, SpriteEffects.None)
+							];//*/
 							for (int i = 0; i < datas.Length; i++) {
 								datas[i].Draw(spriteBatch);
 							}
