@@ -63,6 +63,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		/// </summary>
 		public static float Density => 16 * (30 - DifficultyMult * 2);
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
 		}
@@ -237,6 +238,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static Color IndicatorColor(int time) => Color.White;
 #pragma warning restore IDE0060 // Remove unused parameter
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
 		}
@@ -344,6 +346,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		//will slide vertically if y distance to player is greater than this
 		public static float SlideYRange => 16 * 20;
 		#endregion stats
+		public override bool Ranged => true;
 		static List<int> Types { get; } = [];
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
@@ -444,6 +447,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static int EndLag => 30;
 #pragma warning restore IDE0060 // Remove unused parameter
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
 		}

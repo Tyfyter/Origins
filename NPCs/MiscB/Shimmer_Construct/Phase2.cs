@@ -57,6 +57,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		#region stats
 		public static new float ShotRate => 16 - DifficultyMult * 0.75f;
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
 		}
@@ -95,6 +96,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static float ShotCount => 5 + DifficultyMult;
 		public static float ExtraIdleTime => DifficultyMult * 8;
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
 		}
@@ -210,6 +212,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static int SpinDownAnim => 4;
 		public static int CanUseThreshold => 4;
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
 		}
@@ -271,6 +274,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		/// <param name="progress">How much of the startup time has elapsed, 0-1</param>
 		public static float TurnRate(float progress) => ((MathF.Pow(progress, 2) - MathF.Pow(progress, 3)) / 0.14815f) * 0.1f;
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
 		}
@@ -314,6 +318,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				base.SetDefaults();
 				Projectile.friendly = false;
 				Projectile.hostile = true;
+				Projectile.tileCollide = false;
 			}
 			public override void AI() {
 				base.AI();

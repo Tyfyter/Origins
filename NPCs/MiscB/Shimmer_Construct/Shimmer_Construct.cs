@@ -701,9 +701,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public virtual double GetWeight(Shimmer_Construct boss, int[] previousStates) {
 				int index = Array.IndexOf(previousStates, Index);
 				if (index == -1) index = previousStates.Length;
-				return index / (float)previousStates.Length + (ContentExtensions.DifficultyDamageMultiplier - 0.5f) * 0.1f;
+				float disincentivization = 1f;
+				if (Ranged) {
+					for (int i = 0; i < previousStates.Length; i++) {
+						if (aiStates[previousStates[i]].Ranged) disincentivization *= 0.4f + ContentExtensions.DifficultyDamageMultiplier * 0.1f;
+					}
+				}
+				return (index / (float)previousStates.Length + (ContentExtensions.DifficultyDamageMultiplier - 0.5f) * 0.1f) * disincentivization;
 			}
 			public virtual void TrackState(int[] previousStates) => previousStates.Roll(Index);
+			public virtual bool Ranged => false;
 			public void Unload() { }
 			protected static float DifficultyMult => ContentExtensions.DifficultyDamageMultiplier;
 		}
