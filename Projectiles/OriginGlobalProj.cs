@@ -189,6 +189,7 @@ namespace Origins.Projectiles {
 					neuralNetworkHit = parentGlobalProjectile.neuralNetworkHit;
 					crawdadNetworkEffect = parentGlobalProjectile.crawdadNetworkEffect;
 					fiberglassLifesteal = parentGlobalProjectile.fiberglassLifesteal;
+					weakpointAnalyzerFake = parentGlobalProjectile.weakpointAnalyzerFake;
 					if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = parentGlobalProjectile.felnumBonus;
 
 					ModPrefix projPrefix = PrefixLoader.GetPrefix(Prefix);
