@@ -313,25 +313,24 @@ namespace Origins {
 			}
 			if (cursedVoice && Main.myPlayer == Player.whoAmI) {
 				Player.AddBuff(cursedVoiceItem.buffType, 5);
-				if (cursedVoiceCooldown <= 0 && Player.MouthPosition is Vector2 mouthPosition && Keybindings.ForbiddenVoice.JustPressed && Player.CheckMana(cursedVoiceItem.mana, true)) {
-					Player.manaRegenDelay = (int)Player.maxRegenDelay;
-					Projectile.NewProjectileDirect(
-						Player.GetSource_Accessory(cursedVoiceItem),
-						mouthPosition,
-						Vector2.Zero,
-						cursedVoiceItem.shoot,
-						Player.GetWeaponDamage(cursedVoiceItem),
-						Player.GetWeaponKnockback(cursedVoiceItem),
-						Player.whoAmI
-					);
-					cursedVoiceCooldown = cursedVoiceCooldownMax = CombinedHooks.TotalUseTime(cursedVoiceItem.useTime, Player, cursedVoiceItem);
-					bool longerExpertDebuff = BuffID.Sets.LongerExpertDebuff[cursedVoiceItem.buffType];
-					try {
-						BuffID.Sets.LongerExpertDebuff[cursedVoiceItem.buffType] = false;
-						Player.AddBuff(cursedVoiceItem.buffType, cursedVoiceCooldown);
-					} finally {
-						BuffID.Sets.LongerExpertDebuff[cursedVoiceItem.buffType] = longerExpertDebuff;
+				if (cursedVoiceCooldown <= 0) {
+					if (Player.MouthPosition is Vector2 mouthPosition && Keybindings.ForbiddenVoice.JustPressed && Player.CheckMana(cursedVoiceItem.mana, true)) {
+						Player.manaRegenDelay = (int)Player.maxRegenDelay;
+						Projectile.NewProjectileDirect(
+							Player.GetSource_Accessory(cursedVoiceItem),
+							mouthPosition,
+							Vector2.Zero,
+							cursedVoiceItem.shoot,
+							Player.GetWeaponDamage(cursedVoiceItem),
+							Player.GetWeaponKnockback(cursedVoiceItem),
+							Player.whoAmI
+						);
+						cursedVoiceCooldown = cursedVoiceCooldownMax = CombinedHooks.TotalUseTime(cursedVoiceItem.useTime, Player, cursedVoiceItem);
 					}
+				} else {
+					int index = Player.FindBuffIndex(cursedVoiceItem.buffType);
+					int time = cursedVoiceCooldown + 59;
+					if (index != -1 && Player.buffTime[index] < time) Player.buffTime[index] = time;
 				}
 			}
 			if (goldenLotus && Main.myPlayer == Player.whoAmI) {
