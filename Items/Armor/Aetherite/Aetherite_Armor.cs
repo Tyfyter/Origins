@@ -81,6 +81,9 @@ namespace Origins.Items.Armor.Aetherite {
 	}
 	public class Aetherite_Aura_P : ModProjectile, IPreDrawSceneProjectile, ITriggerSCBackground {
 		public override string Texture => "Terraria/Images/Misc/StarDustSky/Planet";
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.NeedsUUID[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.width = 0;
 			Projectile.height = 0;
@@ -115,7 +118,8 @@ namespace Origins.Items.Armor.Aetherite {
 					Vector2.Zero,
 					Friendly_Shimmer_Landmine.ID,
 					30,
-					1
+					1,
+					Projectile.projUUID
 				);
 			}
 			foreach (Player player in Main.ActivePlayers) {
@@ -161,15 +165,9 @@ namespace Origins.Items.Armor.Aetherite {
 			Projectile.tileCollide = false;
 			Projectile.scale = 0.85f;
 		}
-		public override void OnSpawn(IEntitySource source) {
-			if (source is EntitySource_Parent parentSoruce && parentSoruce.Entity is Projectile parent) {
-				Projectile.ai[0] = parent.identity;
-			}
-		}
 		public override void AI() {
 			float GetTargetOpacity() {
-				Projectile owner = Projectile.GetRelatedProjectile(0);
-				CombatText.NewText(Projectile.Hitbox with { Width = 0, Height = 0 }, Color.White, owner.ToString());
+				Projectile owner = Main.projectile.GetIfInRange(Projectile.GetByUUID(Projectile.owner, Projectile.ai[0]));
 				if (owner?.active ?? false) {
 					float radius = Aetherite_Aura_P.MaxRadius * owner.scale;
 					if (Projectile.Center.WithinRange(owner.position, radius)) {
