@@ -7,6 +7,7 @@ using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using ReLogic.Content;
 using Origins.Walls;
+using PegasusLib.Graphics;
 
 namespace Origins.Backgrounds {
 	public class Fiberglass_Background() : Overlay(EffectPriority.VeryHigh, RenderLayers.Background) {
@@ -50,6 +51,11 @@ namespace Origins.Backgrounds {
 					}
 				}
 				Main.graphics.GraphicsDevice.Textures[1] = Fiberglass_Wall.BackgroundMaskTarget;
+				Matrix matrix = Matrix.Identity;
+				if (OriginsModIntegrations.FancyLighting is not null) {
+					matrix = Matrix.Invert(Main.GameViewMatrix.TransformationMatrix);
+				}
+				Fiberglass_Wall.MaskShader.Shader.Parameters["uImageMatrix1"]?.SetValue(matrix);
 				Fiberglass_Wall.MaskShader.Shader.Parameters["uImageSize1"]?.SetValue(new Vector2(Fiberglass_Wall.BackgroundMaskTarget.Width, Fiberglass_Wall.BackgroundMaskTarget.Height));
 				Fiberglass_Wall.MaskShader.Shader.Parameters["uOffset"].SetValue(Main.sceneWallPos - Main.screenPosition);
 				Fiberglass_Wall.MaskShader.Shader.Parameters["uTargetPosition"].SetValue(new Vector2(Main.offScreenRange));
