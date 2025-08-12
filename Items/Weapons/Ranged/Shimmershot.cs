@@ -96,13 +96,15 @@ namespace Origins.Items.Weapons.Ranged {
 				}
 				if (player.channel) {
 					if (SoundEngine.TryGetActiveSound(chargeSound, out ActiveSound sound)) {
-						MathUtils.LinearSmoothing(ref sound.Volume, Projectile.localAI[0] < 0 ? 0f : 0.75f, 1f / 20);
+						MathUtils.LinearSmoothing(ref sound.Volume, (Projectile.localAI[0] < 0 || !player.channel) ? 0f : 0.75f, 1f / 20);
 					} else {
 						int type = Type;
 						chargeSound = SoundEngine.PlaySound(Origins.Sounds.ShimmershotCharging, null, soundInstance => {
 							soundInstance.Pitch = Math.Max(Projectile.localAI[0] / Projectile.localAI[1], 0);
 							return Projectile.active && Projectile.type == type;
 						});
+						SoundEngine.TryGetActiveSound(chargeSound, out sound);
+						sound.Volume = 1 / 20f;
 					}
 				}
 			}
