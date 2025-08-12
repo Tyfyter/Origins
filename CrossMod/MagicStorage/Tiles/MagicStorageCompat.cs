@@ -51,6 +51,7 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 		public abstract int NextUpgradeItem { get; }
 		public abstract StorageUnitTier UpgradesFrom { get; }
 		public abstract StorageUnitTier UpgradesTo { get; }
+		public virtual int ItemRarity => ItemRarityID.Blue;
 		public override int UpgradeItemType => upgradeItemType;
 		public override int CoreItemType => coreItemType;
 		public override int Capacity => 40 * (tier + 1);
@@ -93,7 +94,10 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			tier.upgradeItemType = Type;
-			Item.rare = ItemRarityID.Blue;
+		}
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Item.rare = tier.ItemRarity;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
@@ -127,7 +131,10 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Unit.Tier.storageUnitItemType = Type;
-			Item.rare = ItemRarityID.Blue;
+		}
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Item.rare = tier.ItemRarity;
 		}
 	}
 	[ExtendsFromMod(nameof(MagicStorage))]
@@ -138,7 +145,10 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			tier.coreItemType = Type;
-			Item.rare = ItemRarityID.Blue;
+		}
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Item.rare = tier.ItemRarity;
 		}
 	}
 }
