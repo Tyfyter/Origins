@@ -604,18 +604,7 @@ namespace Origins {
 			}
 			if (MojoInjectionActive) Mojo_Injection.UpdateEffect(this);
 			if (CrownJewelActive) Crown_Jewel.UpdateEffect(this);
-			StringBuilder builder = new();
-			for (int i = 0; i < Player.buffType.Length; i++) {
-				if (Player.buffType[i] != 0 && Player.buffTime[i] != 0) {
-					if (builder.Length > 0) builder.Append(", ");
-					builder.Append(Lang.GetBuffName(Player.buffType[i]));
-				}
-			}
-#if DEBUG
-			Player.chatOverhead.NewMessage(builder.ToString(), 5);
-#endif
 			if (sendBuffs && Player.whoAmI == Main.myPlayer && !NetmodeActive.SinglePlayer) {
-				Debugging.ChatMessage(builder, true);
 				NetMessage.SendData(MessageID.PlayerBuffs, number: Main.myPlayer);
 			}
 			sendBuffs = false;
