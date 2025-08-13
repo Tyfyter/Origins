@@ -7,4 +7,4 @@ includePDB = false
 sortAfter = CalamityMod, WingSlot, AltLibrary, ThoriumMod, ColoredDamageTypes, MusicDisplay, ProceduralMusicLib, Fargowiltas
 sortBefore = CritRework
 modReferences = AltLibrary, BetterDialogue, PegasusLib
-weakReferences = ThoriumMod, CalamityMod, MagicStorage, Fargowiltas, miningcracks_take_on_luiafk
+weakReferences = ThoriumMod, CalamityMod, MagicStorage, Fargowiltas, miningcracks_take_on_luiafk, AlchemistNPCLite

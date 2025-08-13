@@ -158,6 +158,7 @@ namespace Origins.Tiles.Other {
 			// DefaultToTorch sets various properties common to torch placing items. Hover over DefaultToTorch in Visual Studio to see the specific properties set.
 			// Of particular note to torches are Item.holdStyle, Item.flame, and Item.noWet. 
 			Item.DefaultToTorch(TileType<Shadow_Torch_Tile>(), 0, false);
+			Item.rare = ItemRarityID.Blue;
 			Item.value = 50;
 		}
 

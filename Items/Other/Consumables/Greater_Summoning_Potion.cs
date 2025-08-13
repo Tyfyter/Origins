@@ -50,7 +50,7 @@ namespace Origins.Items.Other.Consumables {
 			.AddIngredient(ModContent.ItemType<Toadfish>())
 			.AddIngredient(ItemID.Moonglow)
 			.AddTile(TileID.Bottles)
-			.AddCondition(OriginsModIntegrations.AprilFools.Not())
+			.AddCondition(OriginsModIntegrations.NotAprilFools)
 			.Register();
 		}
 	}

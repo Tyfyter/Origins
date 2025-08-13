@@ -79,6 +79,7 @@ namespace Origins.Tiles {
 
 		public void Unload() { }
 		readonly Dictionary<Type, ModTile> tilesByType = [];
+		public IReadOnlyDictionary<Type, ModTile> TilesByType => tilesByType;
 		public static TTile Get<TSet, TTile>() where TSet : FurnitureSet where TTile : ModTile {
 			ModTile tile = null;
 			ModContent.GetInstance<TSet>()?.tilesByType?.TryGetValue(typeof(TTile), out tile);

@@ -1,67 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using ReLogic.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.World.BiomeData;
-using System.Reflection;
-using Origins.Tiles;
-using Origins.NPCs.MiscE;
-using MonoMod.Cil;
-using Terraria.Localization;
-using Origins.Dev;
-using System.Linq;
-using ThoriumMod;
-using Mono.Cecil.Cil;
-using Mono.Cecil;
-using Origins.Items;
-using Origins.Items.Other.Consumables;
-using Origins.NPCs.Defiled.Boss;
-using Origins.NPCs.Riven.World_Cracker;
+﻿using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Systems;
-using AltLibrary.Common.AltBiomes;
-using Origins.Items.Armor.Vanity.BossMasks;
-using Origins.Tiles.BossDrops;
-using Origins.Items.Pets;
-using Origins.NPCs.Fiberglass;
-using Origins.NPCs;
-using PegasusLib.Graphics;
-using ThoriumMod.Projectiles.Bard;
-using ThoriumMod.Items;
-using ThoriumMod.Items.Darksteel;
-using Origins.Items.Accessories;
-using Origins.Buffs;
-using Origins.NPCs.Brine.Boss;
-using Origins.Tiles.Riven;
-using Origins.Tiles.Defiled;
-using Origins.Tiles.Brine;
-using Origins.Items.Materials;
-using Origins.Items.Weapons.Melee;
-using Origins.Items.Weapons.Magic;
-using Origins.NPCs.MiscB.Shimmer_Construct;
-using Origins.CrossMod.Fargos.Items;
-using Origins.Items.Other;
-using ThoriumMod.Items.Misc;
-using Origins.Items.Armor.Other;
-using Origins.NPCs.MiscB;
-using static Terraria.ModLoader.ModContent;
-using static Origins.OriginsSets.Items;
-using ThoriumMod.Items.Painting;
-using ThoriumMod.Items.Donate;
 using Fargowiltas.Items.Tiles;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Summoner;
-using Origins.Items.Weapons.Ranged;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using Newtonsoft.Json.Linq;
+using Origins.Buffs;
+using Origins.CrossMod.Fargos.Items;
+using Origins.Dev;
+using Origins.Items;
+using Origins.Items.Accessories;
+using Origins.Items.Armor.Other;
+using Origins.Items.Armor.Vanity.BossMasks;
+using Origins.Items.Materials;
+using Origins.Items.Other;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Fish;
-using static Origins.OriginSystem;
-using ThoriumMod.Items.MeleeItems;
-using Terraria.GameContent;
+using Origins.Items.Pets;
+using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
+using Origins.NPCs;
+using Origins.NPCs.Brine.Boss;
 using Origins.NPCs.Corrupt;
 using Origins.NPCs.Crimson;
+using Origins.NPCs.Defiled.Boss;
+using Origins.NPCs.Fiberglass;
+using Origins.NPCs.MiscB;
+using Origins.NPCs.MiscB.Shimmer_Construct;
+using Origins.NPCs.MiscE;
+using Origins.NPCs.Riven.World_Cracker;
+using Origins.Tiles;
+using Origins.Tiles.BossDrops;
+using Origins.Tiles.Brine;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
+using Origins.World.BiomeData;
+using PegasusLib.Graphics;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Terraria;
 using Terraria.DataStructures;
-using Microsoft.Xna.Framework.Input;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using ThoriumMod;
+using ThoriumMod.Items;
+using ThoriumMod.Items.Darksteel;
+using ThoriumMod.Items.Donate;
+using ThoriumMod.Items.MeleeItems;
+using ThoriumMod.Items.Misc;
+using ThoriumMod.Items.Painting;
+using ThoriumMod.Projectiles.Bard;
+using static Origins.OriginsSets.Items;
+using static Origins.OriginSystem;
+using static Terraria.ModLoader.ModContent;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -90,7 +91,7 @@ namespace Origins {
 		Func<object[], object> holidayForceChanged;
 		public static void HolidayForceChanged() => instance.holidayForceChanged([]);
 		public static Condition AprilFools => new("Mods.Origins.Conditions.AprilFools", () => CheckAprilFools());
-		public static Condition NotAprilFools => new(LocalizedText.Empty, () => !CheckAprilFools());
+		public static Condition NotAprilFools => new(Language.GetOrRegister("Mods.Origins.Conditions.Not").WithFormatArgs(AprilFools.Description), () => !CheckAprilFools());
 		ModKeybind goToKeybindKeybind;
 		public static bool GoToKeybindKeybindPressed => instance.goToKeybindKeybind?.JustPressed ?? false;
 		Action<ModKeybind> goToKeybind;
@@ -349,7 +350,7 @@ namespace Origins {
 				bossChecklist.Call("LogBoss",
 					mod,
 					nameof(Fiberglass_Weaver).Replace("_", ""),
-					5.1f,
+					4.7f,
 					() => Boss_Tracker.Instance.downedFiberglassWeaver,
 					NPCType<Fiberglass_Weaver>(),
 					new Dictionary<string, object> {
@@ -456,7 +457,7 @@ namespace Origins {
 			if (ModLoader.TryGetMod("Fargowiltas", out instance.fargosMutant)) {
 				FargosMutant.Call("AddSummon", 3, ItemType<Nerve_Impulse_Manipulator>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
 				FargosMutant.Call("AddSummon", 3, ItemType<Sus_Ice_Cream>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
-				FargosMutant.Call("AddSummon", 5.1, ItemType<Shaped_Glass>(), () => Boss_Tracker.Instance.downedFiberglassWeaver, Item.buyPrice(gold: 8));
+				FargosMutant.Call("AddSummon", 4.7, ItemType<Shaped_Glass>(), () => Boss_Tracker.Instance.downedFiberglassWeaver, Item.buyPrice(gold: 15));
 				FargosMutant.Call("AddSummon", 7.3, ItemType<Lost_Picture_Frame>(), () => Boss_Tracker.Instance.downedLostDiver, Item.buyPrice(gold: 22));
 				FargosMutant.Call("AddSummon", 6.8, ItemType<Aether_Orb>(), () => Boss_Tracker.Instance.downedShimmerConstruct, Item.buyPrice(gold: 18));
 			}
@@ -646,6 +647,8 @@ namespace Origins {
 			if (ModLoader.TryGetMod("miningcracks_take_on_luiafk", out Mod luiafk)) {
 				OriginsSets.NPCs.TargetDummies[luiafk.Find<ModNPC>("Deeps").Type] = true;
 			}
+
+			conditionalCompatRecommendations.Add((() => ModLoader.HasMod("AlchemistNPCLite") && !(ModLoader.HasMod("ShopExtender") || ModLoader.HasMod("ShopExpander")), Language.GetText("Mods.Origins.ModCompatNotes.AlchemistShops")));
 		}
 		public static void AddRecipes() {
 			if (instance.thorium is not null) AddThoriumRecipes();

@@ -1647,6 +1647,7 @@ AMMO:
 
 CROSS-MOD CONTENT:
 |---
+(☻) AlchemistNPC Lite sell TO stuff
 (ᗢ) Fargo's caught npcs
 (^) Fargo's Fountain biome change
 (ᗢ) Fargo's sell boss/rare npc summons

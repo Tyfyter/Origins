@@ -8,6 +8,9 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<ItemGroup>
+		<Reference Include="AlchemistNPCLite">
+		  <HintPath>..\ModAssemblies\AlchemistNPCLite_v1.9.8.dll</HintPath>
+		</Reference>
 		<Reference Include="AltLibrary">
 			<HintPath>..\ModAssemblies\AltLibrary_v2.1.dll</HintPath>
 		</Reference>
@@ -24,7 +27,7 @@
 		  <HintPath>..\ModAssemblies\miningcracks_take_on_luiafk.dll</HintPath>
 		</Reference>
 		<Reference Include="PegasusLib">
-			<HintPath>..\ModAssemblies\PegasusLib_v1.0.8.dll</HintPath>
+		  <HintPath>..\ModAssemblies\PegasusLib_v1.0.8.dll</HintPath>
 		</Reference>
 		<Reference Include="ThoriumMod">
 			<HintPath>..\ModAssemblies\ThoriumMod.dll</HintPath>
