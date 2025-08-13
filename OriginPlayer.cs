@@ -167,14 +167,13 @@ namespace Origins {
 					if (Player.velocity.Y * gravDir > Player.gravity * gravDir) {
 						Player.velocity.Y = Player.gravity;
 					}
-					Projectile.NewProjectile(
+					Player.SpawnProjectile(
 						Player.GetSource_Misc("refactor"),
 						Player.Center + new Vector2(Player.width * dashDirection, 0),
 						new Vector2(dashDirection * keyDashSpeed, 0),
 						ModContent.ProjectileType<Latchkey_P>(),
 						0,
-						0,
-						Player.whoAmI
+						0
 					);
 					SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithVolumeScale(0.75f), Player.position);
 					dashDelay = 10 + 6;
