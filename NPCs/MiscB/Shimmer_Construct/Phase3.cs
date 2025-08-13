@@ -40,7 +40,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			GeometryUtils.AngularSmoothing(ref npc.rotation, npc.AngleTo(npc.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
 			boss.Hover(0.2f);
 			npc.TargetClosest();
-			npc.velocity += npc.DirectionTo(npc.GetTargetData().Center - Vector2.UnitY * 16 * 15) * 0.5f;
+			Vector2 hoverTarget = npc.GetTargetData().Center - Vector2.UnitY * 16 * 15;
+			npc.velocity += (hoverTarget - npc.Center).Normalized(out float distance) * 0.5f;
+			if (distance > 16 * 250) {
+				npc.Center = hoverTarget;
+			}
 			npc.velocity *= 0.97f;
 			if (++npc.ai[0] > (60 - ContentExtensions.DifficultyDamageMultiplier * 10) && Main.netMode != NetmodeID.MultiplayerClient) {
 				if (aiStates.Select(state => state.Index).All(boss.previousStates.Contains)) Array.Fill(boss.previousStates, Index);
