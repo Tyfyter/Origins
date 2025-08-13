@@ -497,7 +497,8 @@ namespace Origins.Projectiles {
 			return base.CanHitNPC(projectile, target);
 		}
 		public override bool CanHitPlayer(Projectile projectile, Player target) {
-			return ownerSafe ? target.whoAmI != projectile.owner : true;
+			if (weakpointAnalyzerFake) return false;
+			return !ownerSafe || target.whoAmI != projectile.owner;
 		}
 		public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info) {
 			if (BiomeNPCGlobals.ProjectileAssimilationAmounts.TryGetValue(projectile.type, out Dictionary<int, AssimilationAmount> assimilationValues)) {
