@@ -2770,7 +2770,11 @@ Felnum_Boar_Spear: {
 
 Fiberglass_Sword: {
 	DisplayName: Fiberglass Sword
-	Tooltip: "'Be careful, it's sharp'"
+	Tooltip:
+		'''
+		<right> to throw
+		'Be careful, it's sharp'
+		'''
 }
 
 Knee_Slapper: {
@@ -6160,7 +6164,7 @@ Shimmer_Dynamite: {
 
 Chambersite_Phasesaber: {
 	DisplayName: Chambersite Phasesaber
-	Tooltip: Can be thrown at enemies, but it doesn't glow!
+	Tooltip: <Right> to throw, but it doesn't glow!
 }
 
 Bile_Harpoon: {

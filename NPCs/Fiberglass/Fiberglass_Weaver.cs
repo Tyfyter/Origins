@@ -64,8 +64,8 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.boss = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
-			NPC.damage = 14;
-			NPC.lifeMax = 1400;
+			NPC.damage = 25;
+			NPC.lifeMax = 2000;
 			NPC.defense = 26;
 			NPC.aiStyle = 0;
 			NPC.width = NPC.height = 68;
@@ -259,7 +259,7 @@ namespace Origins.NPCs.Fiberglass {
 				hitbox.Offset((int)offset.X, (int)offset.Y);
 				if (hitbox.Intersects(victimHitbox)) {
 					npcRect = hitbox;
-					damageMultiplier = NPC.ai[0] == 3 ? 3 : 1.5f;
+					damageMultiplier = NPC.ai[0] == 3 ? 1 : 1.5f;
 					return;
 				}
 			}
