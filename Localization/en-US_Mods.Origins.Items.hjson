@@ -2126,6 +2126,7 @@ Felnum_Hamaxe: {
 	Tooltip:
 		'''
 		<right> to throw
+		Receives 50% higher damage bonuses
 		'Its strikes sound like thunder'
 		'''
 }
@@ -2135,6 +2136,7 @@ Felnum_Pickaxe: {
 	Tooltip:
 		'''
 		Able to mine Hellstone
+		Receives 50% higher damage bonuses
 		'Its strikes sound like thunder'
 		'''
 }
@@ -2431,7 +2433,11 @@ Explosive_Golf_Ball: {
 
 Felnum_Shock_Grenade: {
 	DisplayName: Felnum Shock Grenade
-	Tooltip: "'Quite shocking'"
+	Tooltip:
+		'''
+		Receives 50% higher damage bonuses
+		'Quite shocking'
+		'''
 }
 
 Flakjack: {
@@ -5025,6 +5031,7 @@ Felnum_Sword: {
 		'''
 		Inflicts Static Shock
 		<right> to stab
+		Receives 50% higher damage bonuses
 		'''
 }
 
