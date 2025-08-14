@@ -1818,6 +1818,12 @@ namespace Origins {
 			}
 			return false;
 		}
+		public delegate bool TryGetter<TSource, TResult>(TSource source, out TResult result);
+		public static IEnumerable<TResult> TrySelect<TSource, TResult>(this IEnumerable<TSource> source, TryGetter<TSource, TResult> tryGetter) {
+			foreach (TSource item in source) {
+				if (tryGetter(item, out TResult result)) yield return result;
+			}
+		}
 		public static Vector2 OldPos(this Projectile self, int index) {
 			return index == -1 ? self.position : self.oldPos[index];
 		}
