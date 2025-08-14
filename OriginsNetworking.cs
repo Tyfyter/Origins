@@ -273,14 +273,6 @@ namespace Origins {
 						break;
 					}
 
-					case spawn_close_on_player: {
-						Player player = Main.player[reader.ReadUInt16()];
-						IEntitySource source = NPC.GetSource_None();
-						if (reader.ReadBoolean()) source = NPC.GetBossSpawnSource(player.whoAmI);
-						NPC.NewNPCDirect(source, reader.ReadPackedVector2(), reader.ReadInt32());
-						break;
-					}
-
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on server");
 					break;

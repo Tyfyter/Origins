@@ -2871,22 +2871,6 @@ namespace Origins {
 				packet.Send();
 			}
 		}
-		public static void SpawnCloseOn(this Player player, int type, bool announce = false) {
-			if (Main.netMode != NetmodeID.MultiplayerClient) {
-				IEntitySource source = NPC.GetSource_None();
-				if (announce) source = NPC.GetBossSpawnSource(player.whoAmI);
-				Vector2 pos = new(player.Center.X + Main.rand.NextFloat(-800, 800), player.Center.Y + Main.rand.NextFloat(-800, -250));
-				NPC.NewNPCDirect(source, pos, type);
-			} else {
-				ModPacket packet = Origins.instance.GetPacket();
-				packet.Write(Origins.NetMessageType.spawn_close_on_player);
-				packet.Write((ushort)player.whoAmI);
-				packet.Write(announce);
-				packet.WritePackedVector2(new(player.Center.X + Main.rand.NextFloat(-800, 800), player.Center.Y + Main.rand.NextFloat(-800, -250)));
-				packet.Write(type);
-				packet.Send();
-			}
-		}
 		public static void AddChambersiteConversions(this AltBiome biome, int tile, int wall) {
 			biome.AddTileConversion(ModContent.TileType<Chambersite>(), TileID.ExposedGems, false, false, false);
 
