@@ -13,7 +13,7 @@ namespace Origins.CrossMod.Fargos.Items {
 		public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod("Fargowiltas");
 
 		public override void SetStaticDefaults() {
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 10;
+			Item.ResearchUnlockCount = 10;
 		}
 
 		public override void SetDefaults() {
@@ -56,7 +56,7 @@ namespace Origins.CrossMod.Fargos.Items {
 	}
 	public abstract class TORenewal_P<TProj, TBiome>(bool supreme = false) : ModProjectile where TProj : ModProjectile where TBiome : AltBiome {
 
-		public override bool IsLoadingEnabled(Mod mod) => !ModLoader.HasMod("Fargoswiltas");
+		public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod("Fargoswiltas");
 
 		public override void SetDefaults() {
 			Projectile.width = 20;
