@@ -32,7 +32,8 @@ namespace Origins.Items.Armor.Other {
 		}
 		public override void ArmorSetShadows(Player player) {
 			if (player.body is ArmorIDs.Body.HallowedPlateMail or ArmorIDs.Body.AncientHallowedPlateMail && player.legs is ArmorIDs.Legs.HallowedGreaves or ArmorIDs.Body.AncientHallowedPlateMail) {
-				player.armorEffectDrawShadowSubtle = true;
+				player.armorEffectDrawOutlines = true;
+				player.armorEffectDrawShadow = true;
 			}
 		}
 		public override void UpdateArmorSet(Player player) {
