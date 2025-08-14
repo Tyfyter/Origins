@@ -1,27 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Terraria.ID;
-using Terraria;
-using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
-using Terraria.ModLoader;
+﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
-using Microsoft.Xna.Framework.Graphics;
-using PegasusLib.Graphics;
-using Terraria.DataStructures;
-using Terraria.Graphics.Effects;
+using Origins.Core;
 using Origins.Items.Other.Dyes;
-using Terraria.Graphics.Shaders;
-using ReLogic.Content;
-using PegasusLib;
 using Origins.Items.Weapons.Magic;
-using Terraria.Utilities;
 using Origins.Projectiles;
+using PegasusLib;
+using PegasusLib.Graphics;
+using ReLogic.Content;
+using ReLogic.Utilities;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
-using Terraria.Audio;
+using Terraria.Graphics.Effects;
 using Terraria.Graphics.Light;
-using ReLogic.Utilities;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.Utilities;
+using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -692,8 +694,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (isBlocked) {
 					player.buffTime[buffIndex]++;
 				} else {
-					player.DelBuff(buffIndex--);
-					if (player.whoAmI == Main.myPlayer) player.OriginPlayer().sendBuffs = true;
+					new Remove_Shimmer_Action(player).Perform();
 				}
 			}
 			if (player.whoAmI == Main.myPlayer && !SoundEngine.TryGetActiveSound(ambienceSlot, out _)) {
@@ -997,6 +998,19 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		void SetupRenderTargets() {
 			if (renderTarget is not null && !renderTarget.IsDisposed) return;
 			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+		}
+	}
+	public record class Remove_Shimmer_Action(Player Player) : SyncedAction {
+		public override bool ServerOnly => true;
+		public Remove_Shimmer_Action() : this(default(Player)) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			Player = Main.player[reader.ReadByte()]
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write((byte)Player.whoAmI);
+		}
+		protected override void Perform() {
+			Player.ClearBuff(Weak_Shimmer_Debuff.ID);
 		}
 	}
 }

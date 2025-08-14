@@ -36,7 +36,7 @@ namespace Origins.CrossMod.Fargos.Items {
 	*/
 	public record class TOSummons_Action(int PlayerID, int Type, Vector2 Pos) : SyncedAction {
 		public override bool ServerOnly => true;
-		public TOSummons_Action() : this(Main.maxPlayers, int.MinValue, Vector2.Zero) { }
+		public TOSummons_Action() : this(default, default, default) { }
 		public override SyncedAction NetReceive(BinaryReader reader) => this with {
 			PlayerID = reader.ReadInt16(),
 			Type = reader.ReadInt32(),
