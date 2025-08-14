@@ -1,46 +1,47 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using AltLibrary.Common.AltBiomes;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod.Fargos.Items;
+using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Reflection;
+using Origins.Tiles;
+using Origins.Tiles.Banners;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
+using Origins.Tiles.Riven;
+using Origins.Walls;
+using PegasusLib;
+using PegasusLib.Graphics;
+using ReLogic.Content;
+using ReLogic.Graphics;
+using ReLogic.Reflection;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.ModLoader;
-using Terraria.ID;
-using System.Runtime.CompilerServices;
-using System.Reflection;
-using Terraria.Utilities;
-using System.Collections;
-using Terraria.ModLoader.IO;
-using Origins.Tiles;
-using ReLogic.Content;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.ModLoader.Exceptions;
-using ReLogic.Reflection;
-using Terraria.Localization;
-using ReLogic.Graphics;
-using System.Reflection.Emit;
-using Terraria.Map;
-using Origins.Reflection;
-using Terraria.GameContent.Bestiary;
-using System.Diagnostics.CodeAnalysis;
-using AltLibrary.Common.AltBiomes;
-using Origins.Walls;
-using Terraria.GameContent.Drawing;
-using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Tiles.Banners;
-using Terraria.ObjectData;
-using PegasusLib;
-using PegasusLib.Graphics;
-using Terraria.GameInput;
-using Terraria.GameContent.Creative;
 using Terraria.Enums;
-using Origins.Tiles.Other;
-using System.Numerics;
-using Origins.Tiles.Defiled;
-using Origins.Tiles.Riven;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Creative;
+using Terraria.GameContent.Drawing;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.GameInput;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.Map;
+using Terraria.ModLoader;
+using Terraria.ModLoader.Exceptions;
+using Terraria.ModLoader.IO;
+using Terraria.ObjectData;
+using Terraria.Utilities;
 
 namespace Origins {
 	#region classes
@@ -2866,6 +2867,22 @@ namespace Origins {
 				ModPacket packet = Origins.instance.GetPacket();
 				packet.Write(Origins.NetMessageType.spawn_boss_on_player);
 				packet.Write((ushort)player.whoAmI);
+				packet.Write(type);
+				packet.Send();
+			}
+		}
+		public static void SpawnCloseOn(this Player player, int type, bool announce = false) {
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				IEntitySource source = NPC.GetSource_None();
+				if (announce) source = NPC.GetBossSpawnSource(player.whoAmI);
+				Vector2 pos = new(player.Center.X + Main.rand.NextFloat(-800, 800), player.Center.Y + Main.rand.NextFloat(-800, -250));
+				NPC.NewNPCDirect(source, pos, type);
+			} else {
+				ModPacket packet = Origins.instance.GetPacket();
+				packet.Write(Origins.NetMessageType.spawn_close_on_player);
+				packet.Write((ushort)player.whoAmI);
+				packet.Write(announce);
+				packet.WritePackedVector2(new(player.Center.X + Main.rand.NextFloat(-800, 800), player.Center.Y + Main.rand.NextFloat(-800, -250)));
 				packet.Write(type);
 				packet.Send();
 			}

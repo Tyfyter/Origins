@@ -1,4 +1,5 @@
 ﻿using Origins.Core;
+using Origins.CrossMod.Fargos.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
@@ -12,6 +13,7 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -268,6 +270,14 @@ namespace Origins {
 						npc.value = 0;
 						npc.SpawnedFromStatue = true;
 						SoundEngine.PlaySound(SoundID.Item2, position);
+						break;
+					}
+
+					case spawn_close_on_player: {
+						Player player = Main.player[reader.ReadUInt16()];
+						IEntitySource source = NPC.GetSource_None();
+						if (reader.ReadBoolean()) source = NPC.GetBossSpawnSource(player.whoAmI);
+						NPC.NewNPCDirect(source, reader.ReadPackedVector2(), reader.ReadInt32());
 						break;
 					}
 
@@ -552,6 +562,7 @@ namespace Origins {
 			internal const byte sync_npc_interactions = 31;
 			internal const byte clone_npc = 32;
 			internal const byte synced_action = 33;
+			internal const byte spawn_close_on_player = 34;
 		}
 	}
 	public interface IChestSyncRecipient {

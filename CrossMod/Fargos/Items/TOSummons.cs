@@ -10,7 +10,7 @@ namespace Origins.CrossMod.Fargos.Items {
 	public abstract class TOSummons<TSummon> : ModItem where TSummon : ModNPC {
 		public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod("Fargowiltas");
 		public override void SetStaticDefaults() {
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 3;
+			Item.ResearchUnlockCount = 3;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WormFood);
@@ -18,11 +18,8 @@ namespace Origins.CrossMod.Fargos.Items {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override bool? UseItem(Player player) {
-			if (player.whoAmI == Main.myPlayer) {
-				Vector2 pos = new(player.Center.X + Main.rand.NextFloat(-800, 800), player.Center.Y + Main.rand.NextFloat(-800, -250));
-				NPC.NewNPCDirect(NPC.GetBossSpawnSource(player.whoAmI), pos, ModContent.NPCType<TSummon>());
-				SoundEngine.PlaySound(SoundID.Roar, player.Center);
-			}
+			SoundEngine.PlaySound(SoundID.Roar, player.Center);
+			player.SpawnCloseOn(ModContent.NPCType<TSummon>(), true);
 			return true;
 		}
 	}
