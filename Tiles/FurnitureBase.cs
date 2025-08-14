@@ -786,11 +786,13 @@ namespace Origins.Tiles {
 		public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 6 : 3;
 		}
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			ExtraAnimate();
+		}
 		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
 			Main.critterCage = true;
 			Tile tile = Framing.GetTileSafely(i, j);
 			int frameIndex;
-			ExtraAnimate();
 			if (CageKind != CageKinds.BigCage) frameIndex = TileDrawing.GetSmallAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
 			else frameIndex = TileDrawing.GetBigAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
 			frameYOffset = offsetY = FrameIndexArray[frameIndex] * AnimationFrameHeight;
