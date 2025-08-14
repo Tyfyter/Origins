@@ -22,32 +22,6 @@ namespace Origins.CrossMod {
 			public override bool IsLoadingEnabled(Mod mod) => ModEnabled;
 			public override void PostSetupContent() {
 				Mod critMod = CritMod;
-				if (critMod.Version == new Version(1, 0, 1)) {
-					Type ModCalledCritType = critMod.Code.GetType("CritRework.Content.CritTypes.ModCalledCritType");
-					MonoModHooks.Modify(
-						ModCalledCritType.GetConstructor([typeof(Mod), typeof(bool), typeof(Func<Player, Item, Projectile, NPC, NPC.HitModifiers, bool>), typeof(Func<Player, Item, float>), typeof(Func<Item, bool>), typeof(Func<Item, bool>), typeof(LocalizedText), typeof(string)]),
-						il => {
-							ILCursor c = new(il);
-							c.GotoNext(MoveType.Before, static i => i.MatchRet());
-							c.EmitLdarg(0);
-							c.EmitLdarg(5);
-							c.EmitStfld(ModCalledCritType.GetField("forceOnItem"));
-						}
-					);
-					Type CritItem = critMod.Code.GetType("CritRework.Common.Globals.CritItem");
-					MonoModHooks.Modify(
-						CritItem.GetMethod(nameof(GlobalItem.LoadData)),
-						il => {
-							ILCursor c = new(il);
-							c.EmitLdarg(2);
-							c.EmitDelegate((TagCompound tag) => {
-								if (tag.SafeGet<string>("critType") == "CritRework.Content.CritTypes.ModCalledCritType") {
-									tag.Remove("critType");
-								}
-							});
-						}
-					);
-				}
 				for (int i = 0; i < critTypes.Count; i++) {
 					CritType critType = critTypes[i];
 					critType.PreSetup();
