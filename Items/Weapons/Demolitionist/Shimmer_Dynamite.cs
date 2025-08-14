@@ -68,6 +68,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnKill(int timeLeft) {
 			if (Main.player[Projectile.owner].OriginPlayer().pincushion) return;
+			if (!Projectile.IsLocallyOwned()) return;
 			const int rad = 8;
 			Vector2 center = Projectile.Center / 16;
 			int x = (int)center.X;
