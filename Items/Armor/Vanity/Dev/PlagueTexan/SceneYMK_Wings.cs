@@ -84,15 +84,15 @@ public class SceneYMK_Dye_Slot_0() : SceneYMK_Dye_Slot(player => ref player.cSce
 public class SceneYMK_Dye_Slot_1() : SceneYMK_Dye_Slot(player => ref player.cSceneMYKDye1) { }
 public class SceneYMK_Dye_Slot_2() : SceneYMK_Dye_Slot(player => ref player.cSceneMYKDye2) { }
 public class SceneYMK_Wings_Layer : PlayerDrawLayer {
-	AutoLoadingAsset<Texture2D> feathers0 = "Origins/Items/Armor/Vanity/Dev/PlagueTexan/SceneYMK_Wings_Feathers_0";
-	AutoLoadingAsset<Texture2D> feathers1 = "Origins/Items/Armor/Vanity/Dev/PlagueTexan/SceneYMK_Wings_Feathers_1";
-	AutoLoadingAsset<Texture2D> feathers2 = "Origins/Items/Armor/Vanity/Dev/PlagueTexan/SceneYMK_Wings_Feathers_2";
+	AutoLoadingAsset<Texture2D> feathers0 = typeof(SceneYMK_Wings).GetDefaultTMLName() + "_Feathers_0";
+	AutoLoadingAsset<Texture2D> feathers1 = typeof(SceneYMK_Wings).GetDefaultTMLName() + "_Feathers_1";
+	AutoLoadingAsset<Texture2D> feathers2 = typeof(SceneYMK_Wings).GetDefaultTMLName() + "_Feathers_2";
 	public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => drawInfo.drawPlayer.wings == SceneYMK_Wings.WingsID;
 	public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Wings);
 	protected override void Draw(ref PlayerDrawSet drawInfo) {
 		for (int i = drawInfo.DrawDataCache.Count - 1; i >= 0; i--) {
 			DrawData data = drawInfo.DrawDataCache[i];
-			if (data.texture == TextureAssets.Item[drawInfo.heldItem.type]?.Value) {
+			if (data.texture == TextureAssets.Wings[SceneYMK_Wings.WingsID]?.Value) {
 				OriginsDyeSlots dyes = drawInfo.drawPlayer.GetModPlayer<OriginsDyeSlots>();
 
 				data.texture = feathers0;
