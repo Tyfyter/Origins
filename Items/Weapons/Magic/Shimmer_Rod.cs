@@ -2,7 +2,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
+using Origins.Items.Materials;
 using Origins.Items.Other.Dyes;
+using Origins.Tiles.Other;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -18,14 +20,18 @@ namespace Origins.Items.Weapons.Magic {
 		public string[] Categories => [
 			"OtherMagic"
 		];
-		public override void SetStaticDefaults() {
-			ItemID.Sets.ShimmerTransformToItem[ItemID.NimbusRod] = Type;
-		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.NimbusRod);
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.shoot = ModContent.ProjectileType<Shimmer_Cloud_Held>();
 			Item.channel = true;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.NimbusRod)
+			.AddIngredient(ModContent.ItemType<Aetherite_Bar>(), 10)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
