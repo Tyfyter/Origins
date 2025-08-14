@@ -84,9 +84,9 @@ namespace Origins.Walls {
 
 			RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
 			Main.graphics.GraphicsDevice.SetRenderTarget(BackgroundMaskTarget);
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
-			Main.tileBatch.Begin();
+			Main.tileBatch.Begin(Main.GameViewMatrix.ZoomMatrix);
 
 			VertexColors vertices;
 			VertexColors _glowPaintColors = new(Color.White);
