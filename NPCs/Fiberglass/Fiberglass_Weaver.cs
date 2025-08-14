@@ -24,6 +24,8 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
@@ -114,7 +116,7 @@ namespace Origins.NPCs.Fiberglass {
 			float jumpSpeed = 10 + DifficultyMult * 2;
 			spawnPosition ??= target.Position;
 			if (target.Type == NPCTargetType.Player && !Main.player[NPC.target].InModBiome<Fiberglass_Undergrowth>()) {
-				if (NPC.ai[3] < 240) NPC.ai[3] += 0.067f;
+				if (NPC.ai[3] < 180) NPC.ai[3] += 0.333f;
 			} else {
 				NPC.ai[3] = 0;
 			}
@@ -362,7 +364,7 @@ namespace Origins.NPCs.Fiberglass {
 				new(Projectile.ai[0], Projectile.ai[1]),
 				8,
 				8,
-				Main.tileSolid
+				Main.tileSolid.CombineSets(Main.tileSolidTop, (a, b) => a && !b)
 			);
 			if (Projectile.ai[0] != vel.X || Projectile.ai[1] != vel.Y) {
 				Projectile.ai[0] = 0;
@@ -392,12 +394,41 @@ namespace Origins.NPCs.Fiberglass {
 			Projectile.localAI[0] = reader.ReadSingle();
 			Projectile.localAI[1] = reader.ReadSingle();
 		}
+		readonly float frameA = Main.rand.NextFloat();
+		readonly float frameB = Main.rand.NextFloat();
+		private static readonly VertexStrip _vertexStrip = new();
 		public override bool PreDraw(ref Color lightColor) {
-			Vector2 pos = new Vector2(Projectile.Center.X - Main.screenPosition.X, Projectile.Center.Y - Main.screenPosition.Y);
 			Vector2 diff = OtherEndPos + new Vector2(4) - Projectile.Center;
 			Vector2 scale = new Vector2(diff.Length(), 2);
 
-			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, pos, null, Color.White * 0.8f, diff.ToRotation(), new Vector2(0f, 0.5f), scale, SpriteEffects.None, 0);
+			MiscShaderData miscShaderData = GameShaders.Misc["Origins:AnimatedTrail"];
+			int num = 1;//1
+			int num2 = 0;//0
+			int num3 = 0;//0
+			float w = 0f;//0.6f
+			miscShaderData.UseShaderSpecificData(new Vector4(num, num2, num3, w));
+			miscShaderData.UseImage0(TextureAssets.Extra[194]);
+			miscShaderData.UseImage1(TextureAssets.Extra[193]);
+			//miscShaderData.UseImage0(TextureAssets.Extra[189]);
+			float uTime = (float)Main.timeForVisualEffects / 22;
+			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(1.5f, 0, 0, 0));
+			miscShaderData.Shader.Parameters["uAlphaMatrix1"].SetValue(new Vector4(1.05f, 0, 0, 0));
+			miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(frameA, 0, 1, 1));
+			miscShaderData.Shader.Parameters["uSourceRect1"].SetValue(new Vector4(frameB, 0, 1, 1));
+			miscShaderData.Apply();
+			const int verts = 128;
+			float[] rot = new float[verts + 1];
+			Vector2[] pos = new Vector2[verts + 1];
+			Vector2 start = new Vector2(Projectile.Center.X, Projectile.Center.Y);
+			Vector2 end = OtherEndPos;
+			float rotation = (end - start).ToRotation();
+			for (int i = 0; i < verts + 1; i++) {
+				rot[i] = rotation;
+				pos[i] = Vector2.Lerp(start, end, i / (float)verts);
+			}
+			_vertexStrip.PrepareStrip(pos, rot, progress => Lighting.GetColor(Vector2.Lerp(start, end, progress).ToTileCoordinates()), _ => 8, -Main.screenPosition, pos.Length, includeBacksides: true);
+			_vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			return false;
 		}
 	}

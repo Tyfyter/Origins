@@ -1824,6 +1824,14 @@ namespace Origins {
 				if (tryGetter(item, out TResult result)) yield return result;
 			}
 		}
+		public static TResult[] CombineSets<TResult, T1, T2>(this T1[] set1, T2[] set2, Func<T1, T2, TResult> operation) {
+			Debugging.Assert(set2.Length == set1.Length, new ArgumentException("Sets must have the same length"));
+			TResult[] result = new TResult[set1.Length];
+			for (int i = 0; i < result.Length; i++) {
+				result[i] = operation(set1[i], set2[i]);
+			}
+			return result;
+		}
 		public static Vector2 OldPos(this Projectile self, int index) {
 			return index == -1 ? self.position : self.oldPos[index];
 		}
