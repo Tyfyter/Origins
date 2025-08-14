@@ -114,7 +114,7 @@ namespace Origins.NPCs.Fiberglass {
 				}
 			}
 			float jumpSpeed = 10 + DifficultyMult * 2;
-			spawnPosition ??= target.Position;
+			spawnPosition ??= NPC.Center;
 			if (target.Type == NPCTargetType.Player && !Main.player[NPC.target].InModBiome<Fiberglass_Undergrowth>()) {
 				if (NPC.ai[3] < 180) NPC.ai[3] += 0.333f;
 			} else {
