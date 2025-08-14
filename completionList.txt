@@ -719,7 +719,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(@4 (sword not involved in swing)) Cool Sword
+(^) Cool Sword
 (X) Splitting Image
 (^) Cyah Nara*
 (^) Dark Spiral*
@@ -1089,10 +1089,8 @@ GENERIC WEAPONS:
 (^) Generic Weapon*
 (^) Potato Launcher*
 
-(X) Hyperstatic Gauss Cannon
 (X) Pressurized Supersoaker
 (X) Super Generic Weapon
-(X) Tesla Net Gun
 
 (X) Mega Generic Weapon
 ---
