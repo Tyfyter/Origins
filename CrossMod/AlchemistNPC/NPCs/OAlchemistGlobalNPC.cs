@@ -33,11 +33,12 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 					shop.Add(new Item(Music_Box.ItemType<Music_Box_DC>()) { shopCustomPrice = 100000 }, Condition.Hardmode);
 					shop.Add(new Item(Music_Box.ItemType<Music_Box_RH>()) { shopCustomPrice = 100000 }, Condition.Hardmode);
 					shop.Add(new Item(Music_Box.ItemType<Music_Box_BP>()) { shopCustomPrice = 100000 }, Condition.Hardmode);
+					shop.Add(new Item(Music_Box.ItemType<Music_Box_FU>()) { shopCustomPrice = 100000 }, Condition.Hardmode);
+					shop.Add(new Item(Music_Box.ItemType<Music_Box_TD>()) { shopCustomPrice = 100000 }, Condition.Hardmode);
+					shop.Add(new Item(Music_Box.ItemType<Otherworldly_Music_Box_DW>()) { shopCustomPrice = 100000 }, Condition.Hardmode);
 					shop.Add(new Item(Music_Box.ItemType<Ancient_Music_Box_DW>()) { shopCustomPrice = 100000 }, Condition.Hardmode);
 					shop.Add(new Item(Music_Box.ItemType<Ancient_Music_Box_RH>()) { shopCustomPrice = 100000 }, Condition.Hardmode);
 					shop.Add(new Item(Music_Box.ItemType<Ancient_Music_Box_BP>()) { shopCustomPrice = 100000 }, Quest.QuestCondition<Old_Brine_Music_Box_Quest>());
-					shop.Add(new Item(Music_Box.ItemType<Music_Box_FU>()) { shopCustomPrice = 100000 }, Condition.Hardmode);
-					shop.Add(new Item(Music_Box.ItemType<Music_Box_TD>()) { shopCustomPrice = 100000 }, Condition.Hardmode);
 				}
 			}
 			if (shop.NpcType == NPCType<Alchemist>()) {

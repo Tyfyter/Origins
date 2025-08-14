@@ -1021,6 +1021,7 @@ namespace Origins {
 			public static int Dusk;
 
 			public static int Defiled = MusicID.OtherworldlyMushrooms;
+			public static int OtherworldlyDefiled = MusicID.OtherworldlyCorruption;
 			public static int UndergroundDefiled = MusicID.OtherworldlyUGHallow;
 			public static int DefiledBoss = MusicID.OtherworldlyBoss1;
 			public static int AncientDefiled;

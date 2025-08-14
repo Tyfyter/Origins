@@ -2200,6 +2200,7 @@ Tiles: {
 	// Hanging_Wrycoral.MapEntry: Hanging Wrycoral
 	// Fuzzvine.MapEntry: Fuzzvine
 	// Fuzzvine_Lorg.MapEntry: "{$Fuzzvine}"
+	// Otherworldly_Music_Box_DW: Otherworldly Music Box ({§Defiled_Wastelands})
 }
 
 MapObject: {
