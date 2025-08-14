@@ -537,6 +537,7 @@ namespace Origins {
 				Player.buffImmune[BuffID.Poisoned] = true;
 			}
 			if (rubberBody) modifiers.SourceDamage *= 0.9f;
+			if (proj.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerFake) modifiers.Cancel();
 			hitIsSelfDamage = false;
 			if (proj.owner == Player.whoAmI && !proj.hostile && proj.CountsAsClass(DamageClasses.Explosive)) {
 				hitIsSelfDamage = true;
