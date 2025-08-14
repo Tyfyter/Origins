@@ -153,10 +153,10 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						//FurnitureSet.Get<_Furniture, FurnitureSet_Chandelier>().Item.Type,
 						FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Chandelier>().Item.Type];
 
-					shop.InsertAfter(ItemID.ShadewoodChandelier, new Item(items[0]) { shopCustomPrice = 500 });
-					shop.InsertAfter(items[0], new Item(items[1]) { shopCustomPrice = 500 });
-					//shop.InsertAfter(items[1], new Item(items[2]) { shopCustomPrice = 500 }); // the ashen wood candle
-					shop.InsertAfter(ItemID.GraniteChandelier, new Item(items[2]) { shopCustomPrice = 500 });
+					shop.InsertAfter(ItemID.ShadewoodChandelier, new Item(items[0]) { shopCustomPrice = 1200 });
+					shop.InsertAfter(items[0], new Item(items[1]) { shopCustomPrice = 1200 });
+					//shop.InsertAfter(items[1], new Item(items[2]) { shopCustomPrice = 1200 }); // the ashen wood candle
+					shop.InsertAfter(ItemID.GraniteChandelier, new Item(items[2]) { shopCustomPrice = 1200 });
 				}
 				if (shop.Name == Architect.Candelabra) {
 					List<int> items = [
