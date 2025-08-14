@@ -25,6 +25,7 @@ using static Origins.NPCs.Boss_Tracker;
 namespace Origins.CrossMod.AlchemistNPC.NPCs {
 	[ExtendsFromMod(nameof(AlchemistNPCLite))]
 	public class OAlchemistGlobalNPC : GlobalNPC {
+		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.ModNPC?.Mod is AlchemistNPCLite.AlchemistNPCLite;
 		public override void ModifyShop(NPCShop shop) {
 			if (shop.NpcType == NPCType<Musician>()) {
 				if (shop.Name == Musician.Sh5) {
