@@ -30,7 +30,7 @@ namespace Origins.Core {
 		/// <param name="fromClient"></param>
 		public void Perform(int fromClient = -2) {
 			if (!ShouldPerform) return;
-			if (NetmodeActive.Server || !ServerOnly) Perform();
+			if (!NetmodeActive.MultiplayerClient || !ServerOnly) Perform();
 			if ((NetmodeActive.Server && !ServerOnly) || (NetmodeActive.MultiplayerClient && fromClient == -2)) {
 				Send(ignoreClient: fromClient);
 			}

@@ -35,6 +35,7 @@ namespace Origins.CrossMod.Fargos.Items {
 	public class Ashen_Chest : TOSummons<Ashen_Mimic> { }
 	*/
 	public record class TOSummons_Action(int PlayerID, int Type, Vector2 Pos) : SyncedAction {
+		public override bool ServerOnly => true;
 		public TOSummons_Action() : this(Main.maxPlayers, int.MinValue, Vector2.Zero) { }
 		public override SyncedAction NetReceive(BinaryReader reader) => this with {
 			PlayerID = reader.ReadInt16(),
