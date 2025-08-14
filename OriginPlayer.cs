@@ -92,7 +92,7 @@ namespace Origins {
 						if (collidingY && oldYSign > 0) Player.position.Y -= 1;
 					}
 				}
-			} else if (riptideSet && !Player.mount.Active) {
+			} else if ((riptideSet && !Player.mount.Active) || riptideDashTime != 0) {
 				otherDash = true;
 				Player.dashType = 0;
 				Player.dashTime = 0;
