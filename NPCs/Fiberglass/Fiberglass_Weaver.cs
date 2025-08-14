@@ -225,6 +225,8 @@ namespace Origins.NPCs.Fiberglass {
 					goto case 0;
 				}
 			}
+			if (NPC.HasValidTarget) NPC.DiscourageDespawn(60 * 5);
+			else NPC.EncourageDespawn(60);
 		}
 		public static Vector2 GetStandPosition(Vector2 target, Vector2 legStart, float legth) {//candidate
 			HashSet<Point> checkedPoints = new HashSet<Point>();
