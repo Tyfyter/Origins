@@ -267,7 +267,7 @@ namespace Origins.NPCs.Fiberglass {
 			}
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			armorDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>());
+			armorDropRule = ItemDropRule.FewFromOptionsNotScalingWithLuck(2, 1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>());
 			weaponDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1,
 				ModContent.ItemType<Fiberglass_Bow>(),
 				ModContent.ItemType<Fiberglass_Sword>(),
