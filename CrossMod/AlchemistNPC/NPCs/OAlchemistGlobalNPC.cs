@@ -173,6 +173,7 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 			}
 			if (shop.NpcType == NPCType<Jeweler>()) {
 				if (shop.Name == Jeweler.Other) {
+					shop.InsertAfter(ItemID.BandofStarpower, new Item(ItemType<Dim_Starlight>()) { shopCustomPrice = 30000 }, Condition.DownedEowOrBoc);
 					shop.InsertAfter(ItemID.BandofRegeneration, new Item(ItemType<Bomb_Charm>()) { shopCustomPrice = 50000 }, Condition.DownedEowOrBoc);
 					shop.InsertAfter(ItemType<Bomb_Charm>(), new Item(ItemType<Lightning_Ring>()) { shopCustomPrice = 55000 }, Conditions[nameof(Boss_Tracker.downedShimmerConstruct)]);
 					shop.InsertAfter(ItemID.Diamond, new Item(ItemType<Chambersite_Item>()) { shopCustomPrice = 9000 }, Condition.Hardmode);
