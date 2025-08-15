@@ -14,6 +14,7 @@ namespace Origins.Backgrounds {
 		public override void Activate(Vector2 position, params object[] args) { }
 		public override void Deactivate(params object[] args) { }
 		public override void Draw(SpriteBatch spriteBatch) {
+			if (!Lighting.NotRetro) return;
 			if (Fiberglass_Wall.BackgroundMaskTarget is not null) {
 				Color drawColor = Color.White * Opacity;
 				Texture2D farTexture = TextureAssets.Background[BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Fiberglass_Background3")].Value;
@@ -66,6 +67,7 @@ namespace Origins.Backgrounds {
 		}
 		public override bool IsVisible() => Fiberglass_Wall.AnyWallsVisible;
 		public override void Update(GameTime gameTime) {
+			if (!Lighting.NotRetro) return;
 			Opacity = Fiberglass_Wall.AnyWallsVisible.ToInt();
 		}
 	}

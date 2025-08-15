@@ -51,6 +51,7 @@ namespace Origins.Walls {
 		}
 		static void On_Main_RenderWalls(On_Main.orig_RenderWalls orig, Main self) {
 			orig(self);
+			if (!Lighting.NotRetro) return;
 			if (drawWalls is null) return;
 			if (OriginsModIntegrations.FancyLighting is not null) {
 				RenderTarget2D wallTarget = Main.instance.wallTarget;
@@ -117,6 +118,7 @@ namespace Origins.Walls {
 			Main.graphics.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (!Lighting.NotRetro) return true;
 			if (!drawingFancyLight && (OriginsModIntegrations.FancyLighting is null || drawWalls.Count <= 0)) drawWalls.Push(new(i, j));
 			return true;
 		}
