@@ -242,19 +242,6 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Element36_Bundle : MaterialItem {
-		public override int Value => Item.sellPrice(gold: 1);
-		public override int Rare => ItemRarityID.Purple;
-		public override bool Hardmode => true;
-		public override void AddRecipes() {
-			Recipe.Create(Type)
-			.AddIngredient(ItemID.FragmentNebula)
-			.AddIngredient(ModContent.ItemType<Fibron_Plating>(), 4)
-			.AddIngredient(ModContent.ItemType<Formium_Bar>())
-			.AddTile(TileID.Anvils) //Interstellar Sampler also not implemented
-			.Register();
-		}
-	}
 	public class Encrusted_Bar : MaterialItem, ICustomWikiStat {
 		string[] ICustomWikiStat.Categories => [
 			"Bar",
