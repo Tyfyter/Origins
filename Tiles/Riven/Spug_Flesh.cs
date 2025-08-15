@@ -82,37 +82,25 @@ namespace Origins.Tiles.Riven {
 				b = 0.2f * GlowValue;
 			}
 		}
+		const string scar_layout =
+		"_XXX____X_______" +
+		"_XXX_X_X__X_____" +
+		"_XXX_XX____X____" +
+		"__X___X__X__ X__" +
+		"_X_____X_       " +
+		"_XX___X__X__X   " +
+		"____X________   " +
+		"X__X____X__X_   " +
+		"__X____X_X___ __" +
+		"___X_______X____" +
+		"X_________X_____" +
+		"__X__X_X____ ___" +
+		"_X____       ___" +
+		"______       ___" +
+		"__X__X       ___";
 		static bool HasScar(Tile tile) {
-			if (tile.TileFrameY >= 90) return false;
-			switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {
-				case (1, 0):
-				case (2, 0):
-				case (3, 0):
-
-				case (1, 1):
-				case (2, 1):
-				case (3, 1):
-
-				case (1, 2):
-				case (2, 2):
-				case (3, 2):
-
-				case (1, 4):
-				case (2, 3):
-				case (5, 1):
-				case (5, 2):
-				case (6, 2):
-				case (6, 3):
-				case (7, 1):
-				case (7, 4):
-				case (8, 0):
-				case (8, 3):
-				case (9, 3):
-				case (10, 1):
-				case (11, 2):
-				return true;
-			}
-			return false;
+			if (tile.TileFrameY < 270) return false;
+			return scar_layout[tile.TileFrameX / 18 + ((tile.TileFrameY % 270) / 18) * 16] == 'X';
 		}
 		public override void RandomUpdate(int i, int j) {
 			int wrycoral = TileType<Hanging_Wrycoral>();
