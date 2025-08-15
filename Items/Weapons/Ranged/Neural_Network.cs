@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.CrossMod;
 using Origins.Dev;
+using Origins.Items.Materials;
 using ReLogic.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -32,6 +33,13 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
 			int buffIndex = player.FindBuffIndex(ModContent.BuffType<Neural_Network_Buff>());
 			if (buffIndex >= 0) damage.Base -= 0.13f * player.buffTime[buffIndex];
+		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient<NE8>(10)
+			.AddIngredient<Sanguinite_Bar>(15)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Neural_Network_Buff : ModBuff {
