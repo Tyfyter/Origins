@@ -1070,14 +1070,18 @@ namespace Origins {
 				const int DashUp = 1;
 				const int DashRight = 2;
 				const int DashLeft = 3;
-				if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15) {
-					dashDirection = 1;
-				} else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15) {
-					dashDirection = -1;
-				} else if (Player.controlUp && Player.releaseUp && Player.doubleTapCardinalTimer[DashUp] < 15) {
-					dashDirectionY = -1;
-				} else if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15) {
-					dashDirectionY = 1;
+				if (Player.whoAmI == Main.myPlayer) {
+					if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15) {
+						dashDirection = 1;
+					} else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15) {
+						dashDirection = -1;
+					}
+					if (Player.controlUp && Player.releaseUp && Player.doubleTapCardinalTimer[DashUp] < 15) {
+						dashDirectionY = -1;
+					} else if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15) {
+						dashDirectionY = 1;
+					}
+					new Dash_Action(Player, dashDirection, dashDirectionY).Send();
 				}
 			} else {
 				dashDelay--;
