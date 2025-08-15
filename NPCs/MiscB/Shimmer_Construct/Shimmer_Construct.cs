@@ -5,6 +5,7 @@ using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Aetherite;
 using Origins.Items.Armor.Vanity.BossMasks;
+using Origins.Items.Other.Dyes;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Demolitionist;
@@ -20,6 +21,7 @@ using Origins.Tiles.MusicBoxes;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using PegasusLib;
+using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections;
@@ -432,6 +434,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			);
 			if (aiStates[NPC.aiAction] is DoubleCircleState) {
 				Vector2 targetCenter = NPC.GetTargetData().Center;
+				Main.CurrentDrawnEntityShader = Shimmer_Dye.ShaderID;
+				SpriteBatchState state = Main.spriteBatch.GetState();
+				Main.spriteBatch.Restart(state, SpriteSortMode.Immediate);
 				Main.EntitySpriteDraw(
 					texture,
 					targetCenter + (targetCenter - position) - screenPos,
@@ -442,6 +447,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					NPC.scale,
 					SpriteEffects.None
 				);
+				Main.spriteBatch.Restart(state);
 			}
 			return false;
 		}

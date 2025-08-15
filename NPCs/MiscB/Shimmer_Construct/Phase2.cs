@@ -302,7 +302,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				SoundEngine.PlaySound(SoundID.Item67.WithPitch(-2f), npc.Center);
 				SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f), npc.Center);
 			} else {
-				GeometryUtils.AngularSmoothing(ref npc.rotation, npc.AngleTo(npc.GetTargetData().Center) - MathHelper.PiOver2, Utils.GetLerpValue(npc.ai[0], Startup, Startup + Endlag) * 0.3f);
+				GeometryUtils.AngularSmoothing(ref npc.rotation, npc.AngleTo(npc.GetTargetData().Center) - MathHelper.PiOver2, Utils.GetLerpValue(Startup, Startup + Endlag, npc.ai[0]) * 0.3f);
 				if (npc.ai[0] > Startup + Endlag) SetAIState(boss, StateIndex<AutomaticIdleState>());
 			}
 		}
