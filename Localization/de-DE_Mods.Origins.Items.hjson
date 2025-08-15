@@ -6596,3 +6596,8 @@ Procedural_Sprite_Generator: {
 	// DisplayName: Procedural Sprite Generator
 	// Tooltip: ""
 }
+
+Astral_Scythe: {
+	// DisplayName: Astral Scythe
+	// Tooltip: ""
+}

@@ -44,27 +44,6 @@ namespace Origins.Items.Other.Fish {
 			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Bonehead_Jellyfish.Location");
 		}
 	}
-	public class Duskarp : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 2;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.width = 26;
-			Item.height = 26;
-			Item.rare = ItemRarityID.Orange;
-			Item.value = Item.sellPrice(silver: 20);
-			//Item.DefaultToQuestFish();
-		}
-		public override bool IsAnglerQuestAvailable() {
-			return false;
-		}
-		public override bool IsQuestFish() => false;
-		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
-			description = Language.GetTextValue("Mods.Origins.FishQuest.Duskarp.Description");
-			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Duskarp.Location");
-		}
-	}
 	public class Bobbit_Worm : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 2;
