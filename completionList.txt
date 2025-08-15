@@ -1229,7 +1229,7 @@ TILES:
 (X) Nova Furniture°
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
-(X) Pocket Dimension Monolith !!!
+(#, ^2) Pocket Dimension Monolith !!!
 (X) Ravel Lock: 21
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Stacker
@@ -1319,7 +1319,7 @@ TILES:
 (@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
 (^) Music Box (The Dive)
-(#, ^2) Otherworldly Music Box (Defiled Wastelands) (shouldn't be marked as important unless it currently has an obtain method and song)
+(^) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Relic*
 (^) Defiled Amalgamation Trophy*
