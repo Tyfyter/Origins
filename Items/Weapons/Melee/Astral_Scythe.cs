@@ -19,7 +19,8 @@ using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Origins.Items.Weapons.Melee {
-	public class Splitting_Image : ModItem {
+	[LegacyName("Splitting_Image")]
+	public class Astral_Scythe : ModItem {
 		public bool altMode { get; set; }
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
@@ -34,7 +35,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.height = 98;
 			Item.useTime = 28;
 			Item.useAnimation = 28;
-			Item.shoot = ModContent.ProjectileType<Splitting_Image_Slash>();
+			Item.shoot = ModContent.ProjectileType<Astral_Scythe_Slash>();
 			Item.shootSpeed = 6;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 6;
@@ -64,9 +65,9 @@ namespace Origins.Items.Weapons.Melee {
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (player.altFunctionUse == 2) {
 				if (altMode) {
-					type = Splitting_Image_Chunk_Spawn.ID;
+					type = Astral_Scythe_Chunk_Spawn.ID;
 				} else {
-					type = Splitting_Image_Chunk_Spawn.ID;
+					type = Astral_Scythe_Chunk_Spawn.ID;
 					position = Main.MouseWorld;
 				}
 				damage = (int)(damage / 1.3f);
@@ -76,7 +77,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 	}
-	public class Splitting_Image_Slash : ModProjectile, IPreDrawSceneProjectile, ITriggerSCBackground {
+	public class Astral_Scythe_Slash : ModProjectile, IPreDrawSceneProjectile, ITriggerSCBackground {
 		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.TerraBlade2Shot}";
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
@@ -240,7 +241,7 @@ namespace Origins.Items.Weapons.Melee {
 			edgeRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 		}
 	}
-	public class Splitting_Image_Chunk_Spawn : ModProjectile, IPreDrawSceneProjectile, ITriggerSCBackground {
+	public class Astral_Scythe_Chunk_Spawn : ModProjectile, IPreDrawSceneProjectile, ITriggerSCBackground {
 		public override string Texture => "Terraria/Images/Misc/StarDustSky/Planet";
 		public static int ID { get; private set; }
 		public override void SetDefaults() {
@@ -256,8 +257,8 @@ namespace Origins.Items.Weapons.Melee {
 				if (MathUtils.LinearSmoothing(ref Projectile.ai[1], 0.6f, 1 / 60f)) Projectile.ai[0] = 1;
 			} else if (Projectile.ai[0]++ > 3 * 60) {
 				if (Projectile.localAI[0] == -1) {
-					Projectile.localAI[0] = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(10, 0), default, Splitting_Image_Chunk.ID, Projectile.damage, Projectile.knockBack, Projectile.owner);
-					Projectile.localAI[1] = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + new Vector2(10, 0), default, Splitting_Image_Chunk.ID, Projectile.damage, Projectile.knockBack, Projectile.owner);
+					Projectile.localAI[0] = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(10, 0), default, Astral_Scythe_Chunk.ID, Projectile.damage, Projectile.knockBack, Projectile.owner);
+					Projectile.localAI[1] = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + new Vector2(10, 0), default, Astral_Scythe_Chunk.ID, Projectile.damage, Projectile.knockBack, Projectile.owner);
 				}
 				if (MathUtils.LinearSmoothing(ref Projectile.ai[1], 0, 1 / 60f)) {
 					Projectile.ai[0] = 0;
@@ -347,7 +348,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.localAI[1] = reader.ReadSingle();
 		}
 	}
-	public class Splitting_Image_Chunk : ModProjectile {
+	public class Astral_Scythe_Chunk : ModProjectile {
 		public override string Texture => typeof(Shimmer_Chunk1).GetDefaultTMLName();
 		//private AutoLoadingAsset<Texture2D>[] textures = [];
 		public static int ID { get; private set; }
@@ -378,7 +379,7 @@ namespace Origins.Items.Weapons.Melee {
 				if (i == Main.npc.Length - 1) {
 					for (int j = 0; j < Main.projectile.Length; j++) {
 						Projectile tgt1 = Main.projectile[j];
-						if (tgt1.active && tgt1?.ModProjectile is Splitting_Image_Chunk) {
+						if (tgt1.active && tgt1?.ModProjectile is Astral_Scythe_Chunk) {
 							DoExplode(tgt1);
 							break;
 
