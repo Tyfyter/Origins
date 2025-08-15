@@ -86,9 +86,9 @@ namespace Origins.Items.Other.Fish {
 						new ItemFishingLoot(ItemType<Bonehead_Jellyfish>(), (_, attempt) => attempt.questFish == ItemType<Bonehead_Jellyfish>()),
 						new ItemFishingLoot(ItemType<Tearracuda>(), (_, _) => true)
 					), (_, attempt) => attempt.uncommon)
-				)),
+				))
 		#endregion riven
-		#region dusk
+		/*#region dusk
 				((player, _) => player.InModBiome<Dusk>() ? 1 : 0, new OrderedFishingLoot(
 					new LeadingConditionFishLoot(
 						new OrderedFishingLoot(
@@ -96,7 +96,7 @@ namespace Origins.Items.Other.Fish {
 						new ItemFishingLoot(ItemType<Duskarp>(), (_, _) => true)
 					), (_, attempt) => attempt.uncommon)
 				))
-		#endregion dusk
+		#endregion dusk*/
 			),
 
 		#region jungle

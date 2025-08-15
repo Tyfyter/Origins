@@ -67,7 +67,6 @@ BOSSES AND MINI-BOSSES:
 (X) Snowdrop
 
 (X) Crimson King
-(X) Duskord
 (X) Leviathan of the Riven
 (X) Mechamalgamation
 (X) Miscreant
@@ -85,7 +84,7 @@ TOWN NPCs:
 (^) Brine Fiend
 (ᗢ) Defiled Effigy
 
-(%2, X) Dusk Trader
+(%2, X) The Author
 
 (%2, X) Cubekon Tinkerer
 ---
@@ -151,7 +150,7 @@ WORLD GENERATION:
 (^) Limestone Cave
 (^) Riven Hive
 (X) The Dawn
-(#2, 々) The Dusk
+(#2, 々) Repentance
 
 (X) Defiled Egregore
 (X) The Cosmos
@@ -357,7 +356,7 @@ NPC DIALOGUE:
 (^) Acid Freak
 (^) Cubekon Tinkerer
 (^) Defiled Effigy
-(^) Dusk Trader
+(X) The Author
 ---
 
 
@@ -608,7 +607,6 @@ ACCESSORIES:
 VANITY:
 |---
 (^) Defiled Amalgamation Mask*
-(X) Duskord Mask
 (^) Fiberglass Weaver Head*
 (X) I.C.A.R.U.S. Mask
 (^) Lost Diver set
@@ -716,11 +714,11 @@ TOOLS:
 
 MELEE WEAPONS:
 |---
+(X) Astral Scythe !!!
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
 (^) Cool Sword
-(X) Splitting Image
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -811,13 +809,11 @@ RANGED WEAPONS:
 (^) Unstrung Fiberglass Bow*
 (#, ^2) Welding Torch
 (^) 2-in-1 Shotty*
-(^) 3-in-1 Shotty*
 
 (^) Acrid Impaler*
 (^) Adamantite Harpoon Gun*
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
-(X) Bloodshot
 (^) Boat Rocker
 (^) Boiler*
 (^) Cobalt Harpoon Gun*
@@ -841,6 +837,7 @@ RANGED WEAPONS:
 (^) Spray 'N Pray
 (^) Tiny Sniper*
 (^) Titanium Harpoon Gun*
+(^) 3-in-1 Shotty*
 
 (^) Astoxo*
 (^) Chambersite Minigun
@@ -864,6 +861,7 @@ MAGIC WEAPONS:
 (^) Avulsion*
 (^) Beginner's Tome*
 (^) Cryostike*
+(X) Dream Catcher !!!
 (^) Eaterboros*
 (^) Eternabrite
 (^) Hot Potato
@@ -1040,6 +1038,7 @@ EXPLOSIVE WEAPONS:
 (^) Acrid Handcannon*
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
+(X) Bloodshot
 (^) Boomphracken
 (^) Chambersite Mine Launcher
 (^) Crystal Bomb*
@@ -1099,7 +1098,7 @@ GENERIC WEAPONS:
 TILES:
 |---
 (^) Aetherite Ore
-(#2, ^2) Amoeba Fluid* !!!
+(^) Amoeba Fluid*
 (^) Angelic Cloud*
 (^) Baryte*
 (^) Batholith°
@@ -1107,7 +1106,7 @@ TILES:
 (^) Bomb Trap
 (^) Brittle Quartz*
 (X) Brown Ice
-(#2, ^2) Calcified Spug Flesh
+(^) Calcified Spug Flesh
 (X) Catwalk
 (^) Chambersite
 (X) Cubekon Altar°
@@ -1118,7 +1117,6 @@ TILES:
 (^) Defiled Sand*
 (^) Defiled Sandstone*
 (^) Defiled Stone*
-(^) Dusklight°
 (X) Edengrass°
 (^) Edenwood°
 (^) Eitrite Ore*
@@ -1147,9 +1145,8 @@ TILES:
 (X) Sootgrass°
 (X) Sootstone
 (X) Space Goo
-(#2, ^2) Spug Flesh* !!!
+(^) Spug Flesh*
 (X) Truss Block
-(@4, ^3) Twilith*
 (X) Type-I Fortified Steel Block
 (X) Type-II Fortified Steel Block
 (X) Type-III Fortified Steel Block
@@ -1212,7 +1209,6 @@ TILES:
 (X) Defiled Pylon°
 (^) Defiled Torch*
 (^) Defiled Water Fountain*
-(X) Dusk Dungeon Chest°
 (X) Edenwood Furniture°
 (^) Encrusted Brick
 (^) Endowood Furniture*
@@ -1233,7 +1229,7 @@ TILES:
 (X) Nova Furniture°
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
-(X) Pocket Dimension Monolith
+(X) Pocket Dimension Monolith !!!
 (X) Ravel Lock: 21
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Stacker
@@ -1284,7 +1280,6 @@ TILES:
 (^) Marrowick Coral
 (^) Marrowick Flange
 (X) Modular Light Fixture
-(X) Moonshine°
 (^) Ocotillo
 (X) Petrified Baobab Tree*
 (^) Petrified Tree*
@@ -1303,7 +1298,6 @@ TILES:
 (^) A Perfect World
 (^) Deceptive Beauty
 (X) Four Corners
-(X) Light And Dark
 (^) The Jungle's Window
 (X) There's Five of Them Now
 (X) What's Out There
@@ -1318,9 +1312,9 @@ TILES:
 (X) Music Box (Defiled Egregore)
 (X) Music Box (Defiled Mimic Route)
 (^) Music Box (Defiled Wastelands)
-(X) Music Box (Dusk)
 (@, #, $2) Music Box (Eutrophic Sea)
 (^) Music Box (Fiberglass Undergrowth)
+(X) Music Box (Repentance)
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
@@ -1400,7 +1394,6 @@ MATERIALS:
 (X) Ethereal Ash°
 (^) Formium Bar°
 (^) Formium Scrap°
-(^) Lunar Token°
 (X) Nanite Lump
 (^) Qube°
 (X) Weapon Blueprint°
@@ -1421,7 +1414,6 @@ CRITTERS AND FISH:
 (^) Bilemouth*
 (^) Bobbit Worm
 (^) Bonehead Jellyfish*
-(^) Duskarp°
 (^) Fiberbass
 (^) Polyeel*
 (^) Prikish*
@@ -1527,7 +1519,6 @@ CONSUMABLES:
 (^) Pointy Crate*
 (^) Residual Crate*
 (#2, ^2, 々) Riven Loot Box°
-(X) Twilight Crate
 
 (^) Gooey Water*
 (^) Holiday Hair Dye*
@@ -1541,7 +1532,6 @@ CONSUMABLES:
 (^) Brine Key
 (^) Dawn Key°
 (^) Defiled Key*
-(^) Dusk Key°
 (^) Hell Key°
 (X) Mechanical Keys
 (^) Mushroom Key°
@@ -1645,7 +1635,7 @@ AMMO:
 
 CROSS-MOD CONTENT:
 |---
-(☻) AlchemistNPC Lite sell TO stuff
+(^) AlchemistNPC Lite sell TO stuff
 (ᗢ) Fargo's caught npcs
 (^) Fargo's Fountain biome change
 (ᗢ) Fargo's sell boss/rare npc summons
@@ -1701,12 +1691,12 @@ UI:
 (^) Defiled Snow Icon
 (^) Defiled Underground Desert
 (^) Defiled Wastelands Icon
-(^) Dusk Icon
-(X) Dusk Map/Bestiary Backdrop
 (^) Eutrophic Sea Icon
 (^) Fiberglass Icon
 (^) Fiberglass Map/Bestiary Backdrop
 (X) Fractured Isles Icon
+(X) Repentance Icon
+(X) Repentance Map/Bestiary Backdrop
 (^) Riven Caverns Icon
 (^) Riven Desert Icon
 (^) Riven Hive Icon
@@ -1736,15 +1726,14 @@ VOLUME I MUSIC:
 (X) Defiled Wastelands - Egregore
 (X) Defiled Wastelands - Mimic Route
 (^) Eutrophic Sea
-(^) Fiberglass Caves
+(^) Fiberglass Undergrowth
 (X) Fractured Isles
+(X) Repentance
 (^) Riven Hive
-(X) The Dusk
 (X) Underground Riven Hive
 
 (X) Crimson King
 (^) Defiled Amalgamation
-(X) Duskord
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S.
 (X) Leviathan of the Riven
