@@ -98,7 +98,11 @@ namespace Origins.CrossMod {
 		public override float CritMultiplier(Player player, Item item) => 1.4f;
 	}
 	public class Flak_Crit_Type : CritType {
-		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => !target.collideX && !target.collideY;
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => !IsGrounded(target);
 		public override float CritMultiplier(Player player, Item item) => 1.4f;
+		static bool IsGrounded(NPC npc) {
+			if (OriginsSets.NPCs.CustomGroundedCheck[npc.type] is not null) return OriginsSets.NPCs.CustomGroundedCheck[npc.type](npc);
+			return npc.collideY;
+		}
 	}
 }

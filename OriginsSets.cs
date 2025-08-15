@@ -113,7 +113,9 @@ namespace Origins {
 			.Description("Used to prevent exploits from some on-hit effects")
 			.RegisterBoolSet(NPCID.TargetDummy);
 			public static Action<NPC>[] CustomExpertScaling { get; } = NPCID.Sets.Factory.CreateCustomSet<Action<NPC>>(null);
-		}
+			public static Predicate<NPC>[] CustomGroundedCheck { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(PegasusLib)}/{nameof(CustomGroundedCheck)}")
+			.RegisterCustomSet<Predicate<NPC>>(null);
+	}
 		[ReinitializeDuringResizeArrays]
 		public static class Tiles {
 			public static int[] PlacementItem { get; } = TileID.Sets.Factory.CreateIntSet(-1);
