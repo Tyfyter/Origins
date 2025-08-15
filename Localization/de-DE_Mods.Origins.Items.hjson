@@ -5424,7 +5424,7 @@ Liars_Tongue: {
 	/* Tooltip:
 		'''
 		You are Silenced, press <key> to silence everyone else too
-		Gain up to 10% damage resistance over time by not speaking
+		Gain up to 27% damage resistance over time by not speaking
 		''' */
 }
 
