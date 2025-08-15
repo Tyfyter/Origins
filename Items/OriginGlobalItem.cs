@@ -177,6 +177,13 @@ namespace Origins.Items {
 			if (player.OriginPlayer().wishingGlassActive) return false;
 			return true;
 		}
+		public override bool ConsumeItem(Item item, Player player) {
+			if (player.OriginPlayer().wishingGlassActive && item.CountsAsClass(DamageClass.Throwing)) {
+				if (item.CountsAsClass(DamageClasses.Explosive)) return Main.rand.NextFloat() >= item.useAnimation * 0.0175f;
+				return false;
+			}
+			return base.ConsumeItem(item, player);
+		}
 		public override void UpdateEquip(Item item, Player player) {
 			switch (item.type) {
 				case ItemID.MiningHelmet:
