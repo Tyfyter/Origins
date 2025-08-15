@@ -72,7 +72,7 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.Add(new Item(ItemType<Sanguinite_Ore_Item>()) { shopCustomPrice = 1500 });
 						shop.Add(new Item(ItemType<NE8>()) { shopCustomPrice = 10000 });
 						shop.Add(new Item(ItemType<Biocomponent10>()) { shopCustomPrice = 10000 });
-						shop.Add(new Item(ItemType<Aetherite_Ore_Item>()) { shopCustomPrice = 1500 });
+						shop.Add(new Item(ItemType<Aetherite_Ore_Item>()) { shopCustomPrice = 1500 }, Conditions[nameof(Boss_Tracker.downedShimmerConstruct)]);
 						shop.Add(new Item(ItemType<Nova_Fragment>()) { shopCustomPrice = 100000 }, Condition.DownedMoonLord);
 						break;
 
