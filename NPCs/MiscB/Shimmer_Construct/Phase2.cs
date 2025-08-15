@@ -272,7 +272,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static int ShotDamage => (int)(15 + 19 * DifficultyMult);
 		public static float ShotVelocity => 6;
 		/// <param name="progress">How much of the startup time has elapsed, 0-1</param>
-		public static float TurnRate(float progress) => ((MathF.Pow(progress, 2) - MathF.Pow(progress, 3)) / 0.14815f) * 0.1f;
+		public static float TurnRate(float progress) {
+			progress = Math.Min(progress * 1.08f, 1);
+			return ((MathF.Pow(progress, 2) - MathF.Pow(progress, 3)) / 0.14815f) * 0.1f;
+		}
 		#endregion stats
 		public override bool Ranged => true;
 		public override void Load() {
