@@ -53,6 +53,14 @@ namespace Origins.Tiles.Other {
 					IngameFancyUI.OpenUIState(new Laser_Tag_Rules_UI());
 				}
 				return true;
+			} else if (!Main.LocalPlayer.OriginPlayer().laserTagVest) {
+				if (!justCheck) {
+					Main.LocalPlayer.SetTalkNPC(-1);
+					Main.npcChatCornerItem = 0;
+					SoundEngine.PlaySound(SoundID.MenuOpen);
+					IngameFancyUI.OpenUIState(new Laser_Tag_Rules_UI());
+				}
+				return true;
 			}
 			return false;
 		}

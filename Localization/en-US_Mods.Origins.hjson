@@ -65,6 +65,7 @@ Laser_Tag: {
 	CTGNeedOwnGem: Don't allow Teams with their gem stolen to score
 	Building: Allow Building
 	StartButton: Start
+	CancelButton: Cancel Laser Tag
 	RespawnTime: Revive Time
 	ShortTime: $60!:{0:0.##} Seconds$
 	LongTime: $60!:{0:#0}:$$60:{0:00}$
