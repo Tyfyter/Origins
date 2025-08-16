@@ -41,6 +41,16 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Exceptions;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
+using PegasusLib;
+using PegasusLib.Graphics;
+using Terraria.GameInput;
+using Terraria.GameContent.Creative;
+using Terraria.Enums;
+using Origins.Tiles.Other;
+using System.Numerics;
+using Terraria.Graphics.Shaders;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
 using Terraria.Utilities;
 
 namespace Origins {
@@ -3001,6 +3011,60 @@ namespace Origins {
 				0,
 			0);
 		}
+		public static void DrawConstellationLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width = 20, float distort = 20, float waveSpeed = 0.03f) {
+			var shader = GameShaders.Misc["Origins:Constellation"];
+			shader.UseSaturation(width);
+			shader.UseOpacity(distort);
+
+			var space = ModContent.Request<Texture2D>("Origins/Items/Weapons/Ranged/Constellation_Fill");
+
+			var screenPos = Main.screenPosition / new Vector2(Main.screenWidth, Main.screenHeight);
+			var source = new Rectangle(0, 0, space.Width(), space.Height());
+
+			shader.UseImage0(space);
+
+			Main.spriteBatch.End();
+			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+
+			var minX = (int)Math.Min(start.X, end.X);
+			var minY = (int)Math.Min(start.Y, end.Y);
+			var maxX = (int)Math.Max(start.X, end.X);
+			var maxY = (int)Math.Max(start.Y, end.Y);
+
+			int offset = (int)20;
+			var dest = new Rectangle(
+				minX - offset,
+				minY - offset,
+				maxX - minX + offset * 2,
+				maxY - minY + offset * 2
+			);
+			var speed = 0.1f;
+			shader.UseColor(speed, speed, 0f);
+			shader.UseShaderSpecificData(
+			new Vector4(screenPos, dest.Width, dest.Height)
+			);
+
+			var uv1 = dest.MapUV(start.ToPoint());
+			var uv2 = dest.MapUV(end.ToPoint());
+			var pack = new Vector4(uv1.X, uv1.Y, uv2.X, uv2.Y);
+			shader.Shader.Parameters["uNodePositions"].SetValue(pack);
+
+			shader.Apply();
+
+			DrawData rect = new(
+				space.Value,
+				dest,
+				source,
+				Color.White,
+				0f,
+				Vector2.Zero,
+				SpriteEffects.None
+			);
+
+			rect.Draw(spriteBatch);
+
+			Main.spriteBatch.Restart();
+		}
 		public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key, Func<TValue> fallback) {
 			if (self.TryGetValue(key, out TValue value)) return value;
 			value = fallback();
@@ -4820,6 +4884,15 @@ namespace Origins {
 				}
 				return Main.GameModeInfo.EnemyDamageMultiplier;
 			}
+		}
+		public static Vector2 MapUV(this Rectangle rect, Point point) {
+			float U = (point.X - rect.Left) / (float)(rect.Right - rect.Left);
+			float V = (point.Y - rect.Bottom) / (float)(rect.Top - rect.Bottom);
+
+			return new Vector2(
+				MathHelper.Clamp(U, 0, 1),
+				MathHelper.Clamp(1f - V, 0, 1)
+			);
 		}
 		public static bool IsWithin(this Entity a, Entity b, float range) => a.Center.Clamp(b.Hitbox).IsWithin(b.Center.Clamp(a.Hitbox), range);
 		public static bool IsWithin(this Rectangle hitbox, Vector2 position, float range) => position.IsWithin(position.Clamp(hitbox), range);
