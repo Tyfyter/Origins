@@ -90,7 +90,7 @@ namespace Origins.UI {
 			float telemetryLength = 0;
 			switch (mode) {
 				case Journal_UI_Mode.Normal_Page:
-				//lineSpace *= Main.UIScale;
+				lineSpace *= MathF.Pow(Main.UIScale, 0.25f);
 				break;
 				case Journal_UI_Mode.Search_Page:
 				lineSpace *= Main.UIScale;
