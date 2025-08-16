@@ -583,6 +583,7 @@ ACCESSORIES:
 (^) Forbidden Voice (Cursed)*
 (^) Forbidden Voice (Uncursed)*
 (X) Glitter Glue
+(X) Lunatic's Rune
 (^) Mysterious Spray*
 (X) Retool Arm
 (X) Robo-tail

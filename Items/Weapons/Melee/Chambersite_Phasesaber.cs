@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Item.shoot] <= 0;
 		public override void AddRecipes() => CreateRecipe()
 			.AddRecipeGroup("Origins:Gem Phaseblades")
-			.AddIngredient<Chambersite_Item>(2)
+			.AddIngredient<Chambersite_Item>(4)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 	}

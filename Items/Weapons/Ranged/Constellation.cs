@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodBow);
-			Item.damage = 20;
+			Item.damage = 15;
 			Item.width = 26;
 			Item.height = 62;
 			Item.shootSpeed += 4;
