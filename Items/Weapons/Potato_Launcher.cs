@@ -135,7 +135,6 @@ namespace Origins.Items.Weapons {
 	}
 
 	public record class Greater_Summoning_Potato_Action(int type, Vector2 position, Vector2 velocity) : SyncedAction {
-		public override bool ServerOnly => true;
 		public Greater_Summoning_Potato_Action() : this(default, default, default) { }
 		public override SyncedAction NetReceive(BinaryReader reader) => this with {
 			type = reader.ReadInt32(),
@@ -148,10 +147,12 @@ namespace Origins.Items.Weapons {
 			writer.WritePackedVector2(velocity);
 		}
 		protected override void Perform() {
-			NPC npc = NPC.NewNPCDirect(NPC.GetSource_None(), position, type);
-			npc.velocity = velocity * MathF.Pow(1.2f, npc.knockBackResist);
-			npc.value = 0;
-			npc.SpawnedFromStatue = true;
+			if (!NetmodeActive.MultiplayerClient) {
+				NPC npc = NPC.NewNPCDirect(NPC.GetSource_None(), position, type);
+				npc.velocity = velocity * MathF.Pow(1.2f, npc.knockBackResist);
+				npc.value = 0;
+				npc.SpawnedFromStatue = true;
+			}
 			SoundEngine.PlaySound(SoundID.Item2, position);
 		}
 	}
