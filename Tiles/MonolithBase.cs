@@ -43,8 +43,9 @@ namespace Origins.Tiles {
 		public virtual int Height => 3;
 		public abstract int Frames { get; }
 		public abstract Color MapColor { get; }
+		public MonolithItem Item { get; private set; }
 		public sealed override void Load() {
-			Mod.AddContent(new MonolithItem(this));
+			Mod.AddContent(Item = new MonolithItem(this));
 			OnLoad();
 		}
 		public virtual void OnLoad() { }
