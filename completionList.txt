@@ -785,7 +785,7 @@ RANGED WEAPONS:
 (^) Blotopus*
 (^) Bolt Gun*
 (^) Chipper Knife*
-(#2, ^2) Constellation !!! (hey @max029472, even if the rework isn't done, we can't test for bugs you haven't found or anything until we have access to it)
+(☻) Constellation !!!
 (^) Endowood Bow*
 (^) Felnum Longbow
 (^) Fiberglass Bow*
@@ -1229,7 +1229,7 @@ TILES:
 (X) Nova Furniture°
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
-(#, ^2) Pocket Dimension Monolith !!!
+(☻) Pocket Dimension Monolith !!!
 (X) Ravel Lock: 21
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Stacker

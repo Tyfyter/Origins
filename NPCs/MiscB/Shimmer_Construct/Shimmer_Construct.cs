@@ -727,6 +727,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		float scale = 0;
 		Vector2 sourcePos;
 		Shimmer_Construct boss;
+		float monolithProgress;
 		public override void SpecialVisuals(Player player, bool isActive) {
 			bool phase3Active = false;
 			boss = null;
@@ -755,6 +756,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			} else {
 				scale = 0;
 			}
+			phase3Active |= monolithProgress > 0 || (OriginPlayer.LocalOriginPlayer?.ShimmerConstructMonolith ?? false);
 			if (!phase3Active) {
 				foreach (Projectile projectile in Main.ActiveProjectiles) {
 					if (projectile.ModProjectile is ITriggerSCBackground trigger && trigger.TriggerSCBackground) {
@@ -766,9 +768,17 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Underlay", phase3Active, sourcePos);
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Midlay", phase3Active, sourcePos);
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", phase3Active, sourcePos);
-			if (boss?.IsInPhase3 ?? false) {
-
+		}
+		public void DoMonolith() {
+			if (monolithProgress > 0) {
+				SC_Phase_Three_Underlay.alwaysLightAllTiles = true;
+				SC_Phase_Three_Underlay.DrawDatas.Add(new(
+					TextureAssets.MagicPixel.Value,
+					new Rectangle(0, 0, Main.screenWidth, Main.screenHeight),
+					Color.White * monolithProgress
+				));
 			}
+			MathUtils.LinearSmoothing(ref monolithProgress, (OriginPlayer.LocalOriginPlayer?.ShimmerConstructMonolith ?? false).ToInt(), OriginSystem.biomeShaderSmoothing);
 		}
 		public void AddArea() {
 			if (scale == 0 || !SC_Phase_Three_Underlay.DrawnMaskSources.Add(this)) return;

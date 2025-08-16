@@ -6601,3 +6601,8 @@ Astral_Scythe: {
 	// DisplayName: Astral Scythe
 	// Tooltip: ""
 }
+
+Pocket_Dimension_Monolith_Item: {
+	// DisplayName: Mods.Origins.Items.Pocket_Dimension_Monolith_Item.DisplayName
+	// Tooltip: ""
+}

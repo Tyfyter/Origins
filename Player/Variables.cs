@@ -8,6 +8,7 @@ using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Layers;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.NPCs.Riven;
 using Origins.Projectiles.Misc;
 using PegasusLib;
@@ -352,10 +353,10 @@ namespace Origins {
 		public float ZoneVoidProgressSmoothed = 0;
 
 		public float ZoneDefiledProgress = 0;
-		int DefiledMonolithTime = 0;
+		int defiledMonolithTime = 0;
 		public bool DefiledMonolith {
-			get => DefiledMonolithTime > 0;
-			set => DefiledMonolithTime = value ? 5 : Math.Max(DefiledMonolithTime - 1, 0);
+			get => defiledMonolithTime > 0;
+			set => defiledMonolithTime = value ? 5 : Math.Max(defiledMonolithTime - 1, 0);
 		}
 		public float ZoneDefiledProgressSmoothed = 0;
 
@@ -368,6 +369,11 @@ namespace Origins {
 		public bool ZoneFiberglass { get; internal set; } = false;
 		public float ZoneFiberglassProgress = 0;
 		public float ZoneFiberglassProgressSmoothed = 0;
+		int shimmerConstructMonolithTime = 0;
+		public bool ShimmerConstructMonolith {
+			get => shimmerConstructMonolithTime > 0;
+			set => shimmerConstructMonolithTime = value ? 5 : Math.Max(shimmerConstructMonolithTime - 1, 0);
+		}
 		#endregion
 
 		#region buffs

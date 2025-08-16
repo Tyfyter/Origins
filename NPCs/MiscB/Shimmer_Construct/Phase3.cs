@@ -750,7 +750,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				return;
 			}
 			if (spriteBatch is null) return;
-			ModContent.GetInstance<SC_Scene_Effect>().AddArea();
+			SC_Scene_Effect effect = ModContent.GetInstance<SC_Scene_Effect>();
+			effect.AddArea();
+			effect.DoMonolith();
+			if (!Main.gamePaused && OriginPlayer.LocalOriginPlayer is not null) OriginPlayer.LocalOriginPlayer.ShimmerConstructMonolith = false;
 			//if (drawDatas.Count > 0) alwaysLightAllTiles = true;
 			base.Draw(spriteBatch);
 		}
