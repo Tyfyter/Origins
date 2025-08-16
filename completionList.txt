@@ -846,8 +846,6 @@ RANGED WEAPONS:
 (^) Dreikan
 (X) EAC Thunder°
 (X) Fungi Pipe
-(^) Laser Tag Gun*
-(X) Laser Tag Shotgun
 (X) Shroomshot
 (^) Tolruk*
 
@@ -897,6 +895,8 @@ MAGIC WEAPONS:
 (^) Hævateinn*
 (^) Haunted Vase
 (^) Missing File*
+(^) Laser Tag Gun*
+(X) Laser Tag Shotgun
 (♫) Phantom Fury
 (^) Pike of Deepneus
 (^) Plasma Cutter*
@@ -1230,7 +1230,7 @@ TILES:
 (X) Nova Furniture°
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
-(☻) Pocket Dimension Monolith !!!
+(#2, ^2) Pocket Dimension Monolith !!!
 (X) Ravel Lock: 21
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Stacker

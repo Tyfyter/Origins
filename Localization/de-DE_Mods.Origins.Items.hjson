@@ -6583,11 +6583,6 @@ Shimmershotgun: {
 	// Tooltip: "'The best designated marksman shotgun not on the market'"
 }
 
-Splitting_Image: {
-	// DisplayName: Splitting Image
-	// Tooltip: ""
-}
-
 // Defiled_Storage_Core.DisplayName: "{§Defiled} Storage Core"
 // Encrusted_Storage_Core.DisplayName: Encrusted Storage Core
 // Sanguinite_Storage_Core.DisplayName: Sanguinite Storage Core
@@ -6603,6 +6598,10 @@ Astral_Scythe: {
 }
 
 Pocket_Dimension_Monolith_Item: {
-	// DisplayName: Mods.Origins.Items.Pocket_Dimension_Monolith_Item.DisplayName
-	// Tooltip: ""
+	// DisplayName: Pocket Dimension Monolith
+	/* Tooltip:
+		'''
+		'Unveil the hiding place of a powerful sorceress'
+		Can be used to open/close a portal to a pocket dimension
+		''' */
 }

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.NPCs.MiscB.Shimmer_Construct;
 using Terraria;
 using Terraria.ModLoader;
 
