@@ -135,8 +135,11 @@ namespace Origins.Items.Weapons.Ranged {
 
 	public class ConstellationNode : ModProjectile {
 
-		private const float FADE_TIME = 30f;
-		private const float EXPNDRPR = 0.25f;
+		private const float fade_time = 30f;
+		/// <summary>
+		/// ?
+		/// </summary>
+		private const float expand_ratio_proportions = 0.25f;
 
 		public float GroupID => Projectile.ai[0];
 
@@ -187,9 +190,9 @@ namespace Origins.Items.Weapons.Ranged {
 			base.DrawBehind(index, behindNPCsAndTiles, behindNPCs, behindProjectiles, overPlayers, overWiresUI);
 		}
 
-		private float Progress => Projectile.timeLeft > FADE_TIME ? MathF.Min(Projectile.frameCounter / FADE_TIME, 1f) : MathF.Max(Projectile.timeLeft / FADE_TIME, 0f);
+		private float Progress => Projectile.timeLeft > fade_time ? MathF.Min(Projectile.frameCounter / fade_time, 1f) : MathF.Max(Projectile.timeLeft / fade_time, 0f);
 
-		private float DrawWidth => MathHelper.Clamp(Progress * (1 + EXPNDRPR) - EXPNDRPR, 0f, 1f);
+		private float DrawWidth => MathHelper.Clamp(Progress * (1 + expand_ratio_proportions) - expand_ratio_proportions, 0f, 1f);
 
 		public override bool PreDraw(ref Color lightColor) {
 			if (GroupRoot) {
