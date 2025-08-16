@@ -34,6 +34,7 @@ using static Tyfyter.Utils.UITools;
 using static Origins.OriginsSets.Items;
 using Terraria.Graphics;
 using Origins.NPCs.MiscB.Shimmer_Construct;
+using Terraria.DataStructures;
 
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
@@ -302,6 +303,14 @@ namespace Origins {
 				}
 			}
 			lastHour = hour;
+			if (NetmodeActive.MultiplayerClient) {
+				int shelf = ModContent.TileEntityType<Shelf_Coral_TE>();
+				TileEntity.UpdateStart();
+				foreach (TileEntity value in TileEntity.ByID.Values) {
+					if (value.type == shelf) value.Update();
+				}
+				TileEntity.UpdateEnd();
+			}
 		}
 		public override void PostUpdateEverything() {
 			Debugging.LogFirstRun(PostUpdateEverything);

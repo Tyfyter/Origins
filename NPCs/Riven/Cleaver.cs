@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Items.Weapons.Demolitionist;

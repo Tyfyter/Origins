@@ -11,6 +11,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs;
 using Origins.NPCs.Brine;
+using Origins.NPCs.Crimson;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.MiscE;
 using Origins.Projectiles;
@@ -220,6 +221,9 @@ namespace Origins {
 					(int type, Range duration) = dashHitDebuffs[i];
 					target.AddBuff(type, Main.rand.Next(duration.Start.Value, duration.End.Value + 1));
 				}
+			}
+			if (fiberglassHelmet == true) {
+				modifiers.CritDamage.Base += 10;
 			}
 		}
 		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */ {
@@ -533,6 +537,7 @@ namespace Origins {
 				Player.buffImmune[BuffID.Poisoned] = true;
 			}
 			if (rubberBody) modifiers.SourceDamage *= 0.9f;
+			if (proj.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerFake) modifiers.Cancel();
 			hitIsSelfDamage = false;
 			if (proj.owner == Player.whoAmI && !proj.hostile && proj.CountsAsClass(DamageClasses.Explosive)) {
 				hitIsSelfDamage = true;

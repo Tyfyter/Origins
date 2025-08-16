@@ -200,6 +200,9 @@ namespace Origins {
 					}
 				}
 			}
+			for (int i = 0; i < OriginTile.LateSetupActions.Count; i++) {
+				OriginTile.LateSetupActions[i]();
+			}
 			if (OriginConfig.Instance.GrassMerge) {
 				List<int> grasses = new List<int>() { };
 				for (int i = 0; i < TileLoader.TileCount; i++) {
@@ -568,6 +571,9 @@ namespace Origins {
 			]);
 			ChatManager.Register<Word_Snippet_Handler>([
 				"word"
+			]);
+			ChatManager.Register<Centered_Snippet_Handler>([
+				"centered"
 			]);
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
@@ -1018,6 +1024,7 @@ namespace Origins {
 			public static int Dusk;
 
 			public static int Defiled = MusicID.OtherworldlyMushrooms;
+			public static int OtherworldlyDefiled = MusicID.OtherworldlyCorruption;
 			public static int UndergroundDefiled = MusicID.OtherworldlyUGHallow;
 			public static int DefiledBoss = MusicID.OtherworldlyBoss1;
 			public static int AncientDefiled;
@@ -1127,11 +1134,17 @@ namespace Origins {
 				foreach (ModItem item in instance.GetContent<ModItem>()) {
 					if (item.DisplayName.Value.Contains("<PH>")) AddReason($"{item.Name} has placeholder name");
 				}
+				foreach (IBrokenContent item in instance.GetContent<IBrokenContent>()) {
+					AddReason($"{item.GetType().Name}: {item.BrokenReason}");
+				}
 #if DEBUG
 				AddReason("Mod was last built in DEBUG configuration");
 #endif
 				return reason;
 			}
 		}
+	}
+	internal interface IBrokenContent : ILoadable {
+		public string BrokenReason { get; }
 	}
 }

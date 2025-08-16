@@ -242,19 +242,6 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Element36_Bundle : MaterialItem {
-		public override int Value => Item.sellPrice(gold: 1);
-		public override int Rare => ItemRarityID.Purple;
-		public override bool Hardmode => true;
-		public override void AddRecipes() {
-			Recipe.Create(Type)
-			.AddIngredient(ItemID.FragmentNebula)
-			.AddIngredient(ModContent.ItemType<Fibron_Plating>(), 4)
-			.AddIngredient(ModContent.ItemType<Formium_Bar>())
-			.AddTile(TileID.Anvils) //Interstellar Sampler also not implemented
-			.Register();
-		}
-	}
 	public class Encrusted_Bar : MaterialItem, ICustomWikiStat {
 		string[] ICustomWikiStat.Categories => [
 			"Bar",
@@ -320,18 +307,6 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(silver: 10);
 		public override int Rare => ItemRarityID.Purple;
 		public override bool Hardmode => true;
-	}
-	public class Lunar_Token : MaterialItem {
-		public override bool HasGlowmask => true;
-		public override string GlowTexture => Texture;
-		public override int ResearchUnlockCount => 100;
-		public override int Value => -1;
-		public override int Rare => ItemRarityID.Cyan;
-		public override bool Hardmode => true;
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
-		}
 	}
 	public class Magic_Hair_Spray : MaterialItem {
 		public override int ResearchUnlockCount => 1;
@@ -564,7 +539,6 @@ namespace Origins.Items.Materials {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Defiled_Dungeon_Chest_Item>();
 		}
 	}
-	public class Dusk_Key : Dawn_Key { }
 	public class Hell_Key : Dawn_Key { }
 	public class Mushroom_Key : Dawn_Key { }
 	public class Ocean_Key : Dawn_Key { }

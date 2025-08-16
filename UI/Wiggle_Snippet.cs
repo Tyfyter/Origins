@@ -44,7 +44,7 @@ namespace Origins.UI {
 			Options snoptions = new(WiggleWidth: 16);
 			SnippetHelper.ParseOptions(options,
 				SnippetOption.CreateFloatOption("t", v => snoptions.Speed = v),
-				SnippetOption.CreateFloatOption("x", v => snoptions.Speed = v),
+				SnippetOption.CreateFloatOption("x", v => snoptions.WiggleWidth = v),
 				SnippetOption.CreateFloatOption("y", v => snoptions.WiggleScale = v)
 			);
 			return new Wiggle_Snippet(text, snoptions, baseColor, 1);

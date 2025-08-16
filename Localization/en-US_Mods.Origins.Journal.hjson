@@ -48,7 +48,7 @@ Arabel: {
 		Text:
 			'''
 			[header:{§Mods.Origins.NPCs.Shimmer_Construct.DisplayName} (5/{$SeriesLength})]
-			[jportrait/s1dw300h48:Origins/Shimmer_Construct]
+			[jportrait/s1dw300h225lh80:Origins/Shimmer_Construct]
 
 
 			*****
@@ -164,7 +164,7 @@ Riven: {
 
 
 			*****
-			The hive has since had many species born from its spug-flesh-ridden insides. Species like the Protoform and Barnaclebacks. Again, no intelligence here, just really adaptable like their host parasite.
+			The hive has since had many species born from its {§spug}-flesh-ridden insides. Species like the Protoform and Barnaclebacks. Again, no intelligence here, just really adaptable like their host parasite.
 			'''
 	}
 
@@ -201,7 +201,7 @@ Riven: {
 		Name: "{$Items.Riven_Flesh_Item.DisplayName}"
 		Text:
 			'''
-			[header:Spug Flesh (12/{$SeriesLength})]
+			[header:{§Spug} Flesh (12/{$SeriesLength})]
 			[jimage/sc3d:Origins/Tiles/Riven/Riven_Flesh_Item]
 
 

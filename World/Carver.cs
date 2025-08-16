@@ -77,6 +77,21 @@ namespace Origins.World {
 			}
 			return DoFilter;
 		}
+		public static Filter Climb(Vector2 start, Predicate<Vector2> predicate, ref Vector2 posMin, ref Vector2 posMax) {
+			start = start.Floor();
+			Vector2 end = start;
+			do {
+				end.Y--;
+			} while (predicate(end));
+			end.Y++;
+			posMin = Vector2.Min(posMin, end);
+			posMax = Vector2.Max(posMax, start);
+			void DoFilter(Vector2 pos, ref bool output) {
+				if (!output) return;
+				output = predicate(pos);
+			}
+			return DoFilter;
+		}
 		public static int DoCarve(Filter filter, Func<Vector2, int> action, Vector2 posMin, Vector2 posMax, int matchThreshold = 0) {
 			posMin = new(MathF.Floor(posMin.X), MathF.Floor(posMin.Y));
 			posMax = new(MathF.Ceiling(posMax.X), MathF.Ceiling(posMax.Y));

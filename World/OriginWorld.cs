@@ -230,7 +230,7 @@ namespace Origins {
 				+ tileCounts[ModContent.TileType<Hardened_Defiled_Sand>()]
 				+ tileCounts[ModContent.TileType<Defiled_Ice>()];
 
-			rivenTiles = tileCounts[ModContent.TileType<Riven_Flesh>()]
+			rivenTiles = tileCounts[ModContent.TileType<Spug_Flesh>()]
 				+ tileCounts[ModContent.TileType<Riven_Grass>()]
 				+ tileCounts[ModContent.TileType<Riven_Jungle_Grass>()]
 				+ tileCounts[ModContent.TileType<Silica>()]

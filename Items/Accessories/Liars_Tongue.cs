@@ -32,5 +32,12 @@ namespace Origins.Items.Accessories {
 			tooltips.SubstituteKeybind(Keybindings.ForbiddenVoice);
 		}
 		public override bool MeleePrefix() => true;
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient(ItemID.WormScarf)
+			.AddIngredient<Forbidden_Voice>()
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
+		}
 	}
 }

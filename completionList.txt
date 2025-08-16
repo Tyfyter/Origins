@@ -67,7 +67,6 @@ BOSSES AND MINI-BOSSES:
 (X) Snowdrop
 
 (X) Crimson King
-(X) Duskord
 (X) Leviathan of the Riven
 (X) Mechamalgamation
 (X) Miscreant
@@ -85,7 +84,7 @@ TOWN NPCs:
 (^) Brine Fiend
 (ᗢ) Defiled Effigy
 
-(%2, X) Dusk Trader
+(%2, X) The Author
 
 (%2, X) Cubekon Tinkerer
 ---
@@ -149,9 +148,9 @@ WORLD GENERATION:
 (^) Fiberglass Undergrowth
 (X) Fractured Isles
 (^) Limestone Cave
-(#2) Riven Hive !!!
+(^) Riven Hive
 (X) The Dawn
-(#2, 々) The Dusk
+(#2, 々) Repentance
 
 (X) Defiled Egregore
 (X) The Cosmos
@@ -221,7 +220,7 @@ ENEMY NPCS:
 (^) Felnum Slime*
 (^) Flagellant*
 (^) Flying Exoskeleton*
-(#2, ^2) Goo Wall !!!
+(^) Goo Wall
 (^) Graveshield Zombie*
 (X) Hammerhand
 (X) Limestone Creeper
@@ -335,7 +334,7 @@ STATUS EFFECTS:
 (#, ^2) Hallow Assimilation
 (^) Impeding Shrapnel*
 (^) Mana Buffer*
-(X) Quantum Flames
+(X) Quantum Vitiation
 (^) Rasterized*
 (^) Riven Assimilation*
 (^) Shadefire*
@@ -357,7 +356,7 @@ NPC DIALOGUE:
 (^) Acid Freak
 (^) Cubekon Tinkerer
 (^) Defiled Effigy
-(^) Dusk Trader
+(X) The Author
 ---
 
 
@@ -395,22 +394,21 @@ ARMOR:
 (X) Ruby Ranger Armor°
 
 (^) Blast Armor*
-(^) Chambersite Armor°
+(^) Chambersite Commander Armor°
 (X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*
-(X) Riven Diver Armor
 (^) Sapphire Mediator Armor*
 (X) Warlord Armor
 
 (X) Ancient Chromtain Armor
 (X) Ancient Eyndum Armor
 (X) Ascendant Armor°
-(^) Chromtain Armor°
+(%2, ^) Chromtain Armor°
 (@4, #2) Eyndum Armor°
-(X) Locus Armor°
 (X) Nano Armor°
 (^) Nova Armor*
+(X) Quantum Armor°
 
 (^) Ancient Hallowed Visage*
 (^) Chambersite Robe
@@ -448,7 +446,7 @@ ACCESSORIES:
 (^) Charm of Naivety
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
-(☻) Control Locus* !!!
+(^3) Control Locus* !!!
 (^) Coologne*
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
@@ -609,48 +607,36 @@ ACCESSORIES:
 VANITY:
 |---
 (^) Defiled Amalgamation Mask*
-(X) Duskord Mask
 (^) Fiberglass Weaver Head*
 (X) I.C.A.R.U.S. Mask
 (^) Lost Diver set
 (X) Miscreant Mask
 (X) Quantux Mask
-(^) World Cracker Mask*
-(X) Severus' Hat
 (^) Shimmer Construct Mask
 (#, ^2) Trenchmaker Mask
+(^) World Cracker Mask*
 
-(X) Abyssal Outcast Set
 (X) Amebic Protector Set
-(X) Ashen Exploder Set
 (X) Chunk Protector Set
-(X) Corrupted Knight Set
 (^) Cranivore Beanie*
-(X) Crimson Ranger Set
 (X) Decay Protector Set
-(X) Defiled Sorcerer Set
 (^) Felnum Shock Glasses*
 (X) Gore Protector Set
 (^) Newsboy Cap*
-(X) Riven Druid Set
-(X) Steampunk Mechanist Set
 (^) Sunflower Sandals*
 
-(☻) DIO's Set !!!
-(@, ^3) First Dream !!! (If that's really all of the spritesheet for the new one, you can add it really easily)
+(^) DIO's Set
+(@, ^3) First Dream !!! (Byteloss)
 (@, #, ^6) Tyfyter's Set* !!! (wings)
 
 (^) Acrid Dye
 (^) Amber Dye
 (X) Ancient Riven Dye
 (^) Anti-gray Dye
-(X) Ashen Dye
-(X) Defiled Dye
 (^) High Contrast Dye
 (^) Lotusy Dye
 (X) Nova Dye
 (ᗢ) Rasterized Dye
-(X) Riven Dye
 (^) Shimmer Dye
 (^) Tangela Dye
 ---
@@ -672,17 +658,18 @@ UTILITIES:
 
 WINGS:
 |---
-(^) Acrid Beam Thrusters
 (X) Gills
+
+(^) Acrid Beam Thrusters
 (X) Marrowick Mantle
 (X) Phantom Thrusters
 
 (X) Ascendant Wings
-(X) Booster Pack
-(X) Fibron Thruster Array
+(X) EVA Thruster Array
 (X) Nova Backblaster
 
-(☻) Vampiric Spell !!!
+(^) Dio's Scarf
+(X) Flight Hoodie
 (@, ^3) Tyfyter's Wings !!!
 ---
 
@@ -715,9 +702,11 @@ TOOLS:
 
 (^) Impactaxe*
 
-(X) Ahe
 (X) Nova Bomb
-(X) Terraformer
+(X) Perihelion Chainsaw
+(X) Perihelion Drill
+(X) Perihelion Jackhammer
+(X) Perihelion Pickaxe
 
 (^) Pincushion*
 ---
@@ -725,11 +714,11 @@ TOOLS:
 
 MELEE WEAPONS:
 |---
+(X) Astral Scythe !!!
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
 (^) Cool Sword
-(X) Splitting Image
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -810,7 +799,7 @@ RANGED WEAPONS:
 (^) Neural Network*
 (^) Riven Splitter*
 (^) Shardcannon*
-(#3, ^2/4) Shimmershot !!!
+(#3, ^2) Shimmershot !!!
 (^) Sleetfire*
 (^) Sunflower Seed Shooter*
 (^) Tendon Tear*
@@ -820,13 +809,11 @@ RANGED WEAPONS:
 (^) Unstrung Fiberglass Bow*
 (#, ^2) Welding Torch
 (^) 2-in-1 Shotty*
-(^) 3-in-1 Shotty*
 
 (^) Acrid Impaler*
 (^) Adamantite Harpoon Gun*
 (^) Bleeding Obsidian Kunai*
 (X) Blenderbuss
-(X) Bloodshot
 (^) Boat Rocker
 (^) Boiler*
 (^) Cobalt Harpoon Gun*
@@ -850,6 +837,7 @@ RANGED WEAPONS:
 (^) Spray 'N Pray
 (^) Tiny Sniper*
 (^) Titanium Harpoon Gun*
+(^) 3-in-1 Shotty*
 
 (^) Astoxo*
 (^) Chambersite Minigun
@@ -873,6 +861,7 @@ MAGIC WEAPONS:
 (^) Avulsion*
 (^) Beginner's Tome*
 (^) Cryostike*
+(X) Dream Catcher !!!
 (^) Eaterboros*
 (^) Eternabrite
 (^) Hot Potato
@@ -1049,6 +1038,7 @@ EXPLOSIVE WEAPONS:
 (^) Acrid Handcannon*
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
+(X) Bloodshot
 (^) Boomphracken
 (^) Chambersite Mine Launcher
 (^) Crystal Bomb*
@@ -1098,10 +1088,8 @@ GENERIC WEAPONS:
 (^) Generic Weapon*
 (^) Potato Launcher*
 
-(X) Hyperstatic Gauss Cannon
 (X) Pressurized Supersoaker
 (X) Super Generic Weapon
-(X) Tesla Net Gun
 
 (X) Mega Generic Weapon
 ---
@@ -1129,7 +1117,6 @@ TILES:
 (^) Defiled Sand*
 (^) Defiled Sandstone*
 (^) Defiled Stone*
-(^) Dusklight°
 (X) Edengrass°
 (^) Edenwood°
 (^) Eitrite Ore*
@@ -1160,7 +1147,6 @@ TILES:
 (X) Space Goo
 (^) Spug Flesh*
 (X) Truss Block
-(@4, ^3) Twilith*
 (X) Type-I Fortified Steel Block
 (X) Type-II Fortified Steel Block
 (X) Type-III Fortified Steel Block
@@ -1196,7 +1182,7 @@ TILES:
 (X) Type-III Fortified Steel Wall
 
 (^) Alkahest Torch*
-(@4, ^3) Amoeba Buggy Cage* !!! (using vanilla buggy recolors)
+(^) Amoeba Buggy Cage*
 (X) Ashen Dungeon Chest
 (^) Bile Torch*
 (X) Bilious Incense
@@ -1214,7 +1200,7 @@ TILES:
 (^) Chambersite Gemstone (Defiled)°
 (^) Chambersite Gemstone (Riven)°
 (^) Chambersite Squirrel Cage°
-(@4, ^3) Cicada 3301 Cage° !!! (using vanilla buggy recolors)
+(^) Cicada 3301 Cage°
 (X) Cubekon Node
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
@@ -1223,7 +1209,6 @@ TILES:
 (X) Defiled Pylon°
 (^) Defiled Torch*
 (^) Defiled Water Fountain*
-(X) Dusk Dungeon Chest°
 (X) Edenwood Furniture°
 (^) Encrusted Brick
 (^) Endowood Furniture*
@@ -1244,7 +1229,7 @@ TILES:
 (X) Nova Furniture°
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
-(X) Pocket Dimension Monolith
+(#, ^2) Pocket Dimension Monolith !!!
 (X) Ravel Lock: 21
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Stacker
@@ -1295,7 +1280,6 @@ TILES:
 (^) Marrowick Coral
 (^) Marrowick Flange
 (X) Modular Light Fixture
-(X) Moonshine°
 (^) Ocotillo
 (X) Petrified Baobab Tree*
 (^) Petrified Tree*
@@ -1314,7 +1298,6 @@ TILES:
 (^) A Perfect World
 (^) Deceptive Beauty
 (X) Four Corners
-(X) Light And Dark
 (^) The Jungle's Window
 (X) There's Five of Them Now
 (X) What's Out There
@@ -1329,14 +1312,14 @@ TILES:
 (X) Music Box (Defiled Egregore)
 (X) Music Box (Defiled Mimic Route)
 (^) Music Box (Defiled Wastelands)
-(X) Music Box (Dusk)
 (@, #, $2) Music Box (Eutrophic Sea)
 (^) Music Box (Fiberglass Undergrowth)
+(X) Music Box (Repentance)
 (X) Music Box (Rivenran)
 (@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
 (^) Music Box (The Dive)
-(#, ^2) Otherworldly Music Box (Defiled Wastelands) (shouldn't be marked as important unless it currently has an obtain method and song)
+(^) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Relic*
 (^) Defiled Amalgamation Trophy*
@@ -1406,13 +1389,12 @@ MATERIALS:
 (X) Armor Piece Blueprint°
 (^) Chromtain Bar°
 (X) Core Blueprint°
+(X) Cosmic Plating°
 (X) Endyean Ceramic°
 (X) Ethereal Ash°
-(@4, ^3) Fibron Plating°
 (^) Formium Bar°
 (^) Formium Scrap°
-(^) Lunar Token°
-(^) Material-36 Bundle°
+(X) Nanite Lump
 (^) Qube°
 (X) Weapon Blueprint°
 
@@ -1432,7 +1414,6 @@ CRITTERS AND FISH:
 (^) Bilemouth*
 (^) Bobbit Worm
 (^) Bonehead Jellyfish*
-(^) Duskarp°
 (^) Fiberbass
 (^) Polyeel*
 (^) Prikish*
@@ -1538,7 +1519,6 @@ CONSUMABLES:
 (^) Pointy Crate*
 (^) Residual Crate*
 (#2, ^2, 々) Riven Loot Box°
-(X) Twilight Crate
 
 (^) Gooey Water*
 (^) Holiday Hair Dye*
@@ -1552,7 +1532,6 @@ CONSUMABLES:
 (^) Brine Key
 (^) Dawn Key°
 (^) Defiled Key*
-(^) Dusk Key°
 (^) Hell Key°
 (X) Mechanical Keys
 (^) Mushroom Key°
@@ -1656,6 +1635,7 @@ AMMO:
 
 CROSS-MOD CONTENT:
 |---
+(^) AlchemistNPC Lite sell TO stuff
 (ᗢ) Fargo's caught npcs
 (^) Fargo's Fountain biome change
 (ᗢ) Fargo's sell boss/rare npc summons
@@ -1711,12 +1691,12 @@ UI:
 (^) Defiled Snow Icon
 (^) Defiled Underground Desert
 (^) Defiled Wastelands Icon
-(^) Dusk Icon
-(X) Dusk Map/Bestiary Backdrop
 (^) Eutrophic Sea Icon
 (^) Fiberglass Icon
 (^) Fiberglass Map/Bestiary Backdrop
 (X) Fractured Isles Icon
+(X) Repentance Icon
+(X) Repentance Map/Bestiary Backdrop
 (^) Riven Caverns Icon
 (^) Riven Desert Icon
 (^) Riven Hive Icon
@@ -1746,15 +1726,14 @@ VOLUME I MUSIC:
 (X) Defiled Wastelands - Egregore
 (X) Defiled Wastelands - Mimic Route
 (^) Eutrophic Sea
-(^) Fiberglass Caves
+(^) Fiberglass Undergrowth
 (X) Fractured Isles
+(X) Repentance
 (^) Riven Hive
-(X) The Dusk
 (X) Underground Riven Hive
 
 (X) Crimson King
 (^) Defiled Amalgamation
-(X) Duskord
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S.
 (X) Leviathan of the Riven

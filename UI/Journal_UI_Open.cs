@@ -90,7 +90,7 @@ namespace Origins.UI {
 			float telemetryLength = 0;
 			switch (mode) {
 				case Journal_UI_Mode.Normal_Page:
-				//lineSpace *= Main.UIScale;
+				lineSpace *= MathF.Pow(Main.UIScale, 0.25f);
 				break;
 				case Journal_UI_Mode.Search_Page:
 				lineSpace *= Main.UIScale;
@@ -111,7 +111,7 @@ namespace Origins.UI {
 				if (textSnippet.UniqueDraw(justCheckingString: true, out Vector2 size, Main.spriteBatch, cursor, baseColor, snippetScale)) {
 					cursor.X += size.X * baseScale.X * snippetScale;
 					currentPage.Add(textSnippet);
-					minNewLines = Math.Max(minNewLines, (int)Math.Ceiling(size.Y / (lineSpace * num3 * Main.UIScale)));
+					minNewLines = Math.Max(minNewLines, (int)Math.Round(size.Y / (lineSpace * num3)));
 					float minCursorY = cursor.Y + lineSpace * minNewLines;
 					while (cursor.X > bounds.Width) {
 						cursor.Y += lineSpace * num3;

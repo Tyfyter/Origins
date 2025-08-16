@@ -8,9 +8,11 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -155,11 +157,6 @@ namespace Origins.Tiles.Riven {
 			// When the tile is removed, we need to remove the Tile Entity as well.
 			ModContent.GetInstance<Shelf_Coral_TE>().Kill(i, j);
 		}
-		public override void FloorVisuals(Player player) {
-			foreach ((int i, int j) in Collision.GetTilesIn(player.BottomLeft, player.BottomRight + Vector2.UnitY)) {
-				if (TileEntity.TryGet(i, j, out Shelf_Coral_TE tileEntity)) tileEntity.isStoodOn = true;
-			}
-		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			drawData.glowTexture = this.GetGlowTexture(drawData.tileCache.TileColor);
 			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY, 16, 28);
@@ -182,9 +179,9 @@ namespace Origins.Tiles.Riven {
 			};
 			yield return ("Centered", new(
 				"""
-				  |  
-				  |  
-				  |  
+				 ||| 
+				 ||| 
+				 ||| 
 				X_O_X
 				 ___ 
 				""",
@@ -196,9 +193,9 @@ namespace Origins.Tiles.Riven {
 
 			yield return ("Left (Soup)", new(
 				"""
-				  | 
-				  | 
-				  | 
+				 |||
+				 |||
+				 |||
 				RO__
 				R___
 				 AAA
@@ -207,9 +204,9 @@ namespace Origins.Tiles.Riven {
 			), null, 1);
 			yield return ("Right (Soup)", new(
 				"""
-				 |  
-				 |  
-				 |  
+				||| 
+				||| 
+				||| 
 				__OL
 				___L
 				AAA 
@@ -219,9 +216,9 @@ namespace Origins.Tiles.Riven {
 
 			yield return ("Left", new(
 				"""
-				  | 
-				  | 
-				  | 
+				 |||
+				 |||
+				 |||
 				RO__
 				R___
 				""",
@@ -236,9 +233,9 @@ namespace Origins.Tiles.Riven {
 			}, 1);
 			yield return ("Right", new(
 				"""
-				 |  
-				 |  
-				 |  
+				||| 
+				||| 
+				||| 
 				__OL
 				___L
 				""",
@@ -254,9 +251,9 @@ namespace Origins.Tiles.Riven {
 
 			yield return ("Open", new(
 				"""
-				  |  
-				  |  
-				  |  
+				 ||| 
+				 ||| 
+				 ||| 
 				__O__
 				 ___ 
 				""",
@@ -283,6 +280,7 @@ namespace Origins.Tiles.Riven {
 		public State CurrentState {
 			get => _currentState;
 			set {
+				if (NetmodeActive.MultiplayerClient) return;
 				if (_currentState.TrySet(value)) {
 					timer = 0;
 					if (Main.netMode == NetmodeID.Server) {
@@ -296,14 +294,43 @@ namespace Origins.Tiles.Riven {
 		public override void NetSend(BinaryWriter writer) {
 			writer.Write((int)CurrentState);
 			writer.Write((int)timer);
+			writer.Write(isStoodOn);
 		}
 		public override void NetReceive(BinaryReader reader) {
-			CurrentState = (State)reader.ReadInt32();
+			_currentState = (State)reader.ReadInt32();
 			timer = reader.ReadInt32();
+			isStoodOn = reader.ReadBoolean();
+		}
+		bool wasLocalPlayerStanding = false;
+		void ProcessStanding() {
+			isStoodOn = false;
+			Rectangle coralTop = new(Position.X * 16 - 1, Position.Y * 16, 3 * 16 + 2, 1);
+			bool shouldForceSync = NetmodeActive.MultiplayerClient && (wasLocalPlayerStanding != (Main.LocalPlayer.velocity.Y == 0));
+			wasLocalPlayerStanding = Main.LocalPlayer.velocity.Y == 0;
+			foreach (Player player in Main.ActivePlayers) {
+				if (player.velocity.Y != 0) continue;
+				Vector2 bottomLeft = player.BottomLeft;
+				float distToCoral = float.Ceiling(bottomLeft.Y / 16) * 16 - bottomLeft.Y;
+				if (distToCoral > 4) continue;
+				Vector2 offset = new(0, distToCoral);
+				Rectangle playerBottom = OriginExtensions.BoxOf(bottomLeft + offset, player.BottomRight + offset + Vector2.UnitY);
+				isStoodOn = playerBottom.Intersects(coralTop);
+				if (isStoodOn) {
+					if (player.whoAmI == Main.myPlayer && shouldForceSync) {
+						NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, Main.myPlayer);
+					}
+					return;
+				}
+			}
 		}
 		public override void Update() {
 			State oldState = CurrentState;
 			int frameNum = 0;
+			bool wasStoodOn = isStoodOn;
+			ProcessStanding();
+			if (isStoodOn != wasStoodOn && !NetmodeActive.MultiplayerClient) {
+				NetMessage.SendData(MessageID.TileEntitySharing, number: ID);
+			}
 			switch (CurrentState) {
 				case State.Out:
 				const int time = 15;
@@ -312,7 +339,15 @@ namespace Origins.Tiles.Riven {
 					if (timer == 0) {
 						SoundEngine.PlaySound(SoundID.NPCDeath3.WithPitch(0.5f).WithVolume(0.4f), Position.ToWorldCoordinates());
 					}
-					if (++timer >= time) CurrentState = State.GoingIn;
+					if (++timer >= time) {
+						bool anythingBlocking = false;
+						for (int i = 0; i < 3 && !anythingBlocking; i++) {
+							Point pos = new(Position.X + i, Position.Y - 1);
+							Tile tile = Framing.GetTileSafely(pos);
+							anythingBlocking = tile.HasTile && TileID.Sets.PreventsTileRemovalIfOnTopOfIt[tile.TileType];
+						}
+						if (!anythingBlocking) CurrentState = State.GoingIn;
+					}
 				} else if (timer > 0 && ++timer >= time) {
 					timer = 0;
 				}
@@ -354,7 +389,6 @@ namespace Origins.Tiles.Riven {
 				} else frameNum = 7 - timer / 6;
 				break;
 			}
-			isStoodOn = false;
 			frameNum = Math.Min(frameNum, 6);
 			frameNum *= 34;
 			for (int i = 0; i < 3; i++) {

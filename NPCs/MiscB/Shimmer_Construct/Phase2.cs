@@ -34,6 +34,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (aiStates.Select(state => state.Index).All(boss.previousStates.Contains)) Array.Fill(boss.previousStates, Index);
 				SelectAIState(boss, aiStates);
 			}
+			if (npc.HasValidTarget) npc.DiscourageDespawn(60 * 5);
+			else npc.EncourageDespawn(60);
 		}
 		public override void TrackState(int[] previousStates) { }
 		public static List<AIState> aiStates = [];
@@ -57,6 +59,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		#region stats
 		public static new float ShotRate => 16 - DifficultyMult * 0.75f;
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
 		}
@@ -95,6 +98,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static float ShotCount => 5 + DifficultyMult;
 		public static float ExtraIdleTime => DifficultyMult * 8;
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
 		}
@@ -102,6 +106,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC npc = boss.NPC;
 			npc.velocity *= 0.97f;
 			boss.Hover();
+			GeometryUtils.AngularSmoothing(ref npc.rotation, npc.AngleTo(npc.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
 
 			if (++npc.ai[0] >= npc.ai[1]) {
 				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.15f, 0.4f).WithVolume(0.5f), npc.Center);
@@ -170,7 +175,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					}
 				} else {
 					Projectile.timeLeft -= 19;
-					Debugging.ChatOverhead(Projectile.ai[0]);
 				}
 				if (Projectile.ai[1] < 28) Projectile.velocity *= 0.97f;
 				else if (Projectile.ai[1] <= 32) Projectile.velocity *= 0.9f;
@@ -209,6 +213,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static int SpinDownAnim => 4;
 		public static int CanUseThreshold => 4;
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
 		}
@@ -263,28 +268,28 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class ShimmershotState : AIState {
 		#region stats
 		public static float Startup => 90 - DifficultyMult * 5;
-		public static float Shootlag => 6; // frames of freeze
 		public static float Endlag => 90 - DifficultyMult * 5;
 		public static int ShotDamage => (int)(15 + 19 * DifficultyMult);
 		public static float ShotVelocity => 6;
 		/// <param name="progress">How much of the startup time has elapsed, 0-1</param>
-		public static float TurnRate(float progress) => ((MathF.Pow(progress, 2) - MathF.Pow(progress, 3)) / 0.14815f) * 0.1f;
+		public static float TurnRate(float progress) {
+			progress = Math.Min(progress * 1.08f, 1);
+			return ((MathF.Pow(progress, 2) - MathF.Pow(progress, 3)) / 0.14815f) * 0.1f;
+		}
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
 		}
 		public override void DoAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
-			if (npc.ai[0] < Startup || npc.ai[0] > Startup + Shootlag) {
-				npc.velocity *= 0.97f;
-				boss.Hover();
-			} else {
-				npc.velocity = Vector2.Zero;
-			}
+			npc.velocity *= 0.97f;
+			boss.Hover();
+
 			Vector2 diff = npc.GetTargetData().Center - npc.Center;
 			if (++npc.ai[0] < Startup) {
-				GeometryUtils.AngularSmoothing(ref npc.rotation, diff.ToRotation(), TurnRate(npc.ai[0] / Startup));
-			} else if (npc.ai[0] >= Startup + Shootlag && npc.ai[1].TrySet(1)) {
+				GeometryUtils.AngularSmoothing(ref npc.rotation, diff.ToRotation() - MathHelper.PiOver2, TurnRate(npc.ai[0] / Startup));
+			} else if (npc.ai[0] >= Startup && npc.ai[1].TrySet(1)) {
 				diff = diff.SafeNormalize(Vector2.Zero);
 				SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
 				npc.SpawnProjectile(null,
@@ -296,7 +301,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				);
 				SoundEngine.PlaySound(SoundID.Item67.WithPitch(-2f), npc.Center);
 				SoundEngine.PlaySound(SoundID.Item43.WithPitch(2f), npc.Center);
-			} else if (npc.ai[0] > Startup + Endlag) SetAIState(boss, StateIndex<AutomaticIdleState>());
+			} else {
+				GeometryUtils.AngularSmoothing(ref npc.rotation, npc.AngleTo(npc.GetTargetData().Center) - MathHelper.PiOver2, Utils.GetLerpValue(Startup, Startup + Endlag, npc.ai[0]) * 0.3f);
+				if (npc.ai[0] > Startup + Endlag) SetAIState(boss, StateIndex<AutomaticIdleState>());
+			}
 		}
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
@@ -313,6 +321,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				base.SetDefaults();
 				Projectile.friendly = false;
 				Projectile.hostile = true;
+				Projectile.tileCollide = false;
 			}
 			public override void AI() {
 				base.AI();

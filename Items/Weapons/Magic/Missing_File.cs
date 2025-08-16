@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Other.Dyes;
+using Origins.Items.Weapons.Ranged;
 using Origins.Journal;
 using Origins.Projectiles.Weapons;
 using Origins.UI;
@@ -15,6 +17,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.NPCs.BossViscount;
 
 namespace Origins.Items.Weapons.Magic {
 	[LegacyName("Defiled_Dungeon_Chest_Placeholder_Item")]
@@ -197,8 +200,10 @@ namespace Origins.Items.Weapons.Magic {
 								Item item = Main.LocalPlayer.HeldItem;
 								IEntitySource source = Main.LocalPlayer.GetSource_ItemUse(item);
 								int damage = Main.LocalPlayer.GetWeaponDamage(item);
+								int count = 0;
 								foreach (NPC targetNPC in Main.ActiveNPCs) {
 									if (!IsInvalidNPC(targetNPC, out int asTarget) && asTarget == npcType) {
+										count++;
 										SoundEngine.PlaySound(SoundID.Meowmere, targetNPC.Center);
 										Projectile.NewProjectile(
 											source,
@@ -212,6 +217,7 @@ namespace Origins.Items.Weapons.Magic {
 										);
 									}
 								}
+								Missing_File_Crit_Type.SetCount(Main.LocalPlayer, count);
 							}
 							targets.Clear();
 							break;
@@ -237,6 +243,19 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			public bool Fake => fake;
 			public bool Real => !fake;
+		}
+	}
+	public class Missing_File_Crit_Type : CritType<Missing_File>, IBrokenContent {
+		public string BrokenReason => "Needs balancing";
+		static int CritThreshold => 3;
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => player.GetModPlayer<Missing_File_Player>().hitCount >= CritThreshold;
+		public override float CritMultiplier(Player player, Item item) => 1.35f;
+		public static void SetCount(Player player, int count) {
+			if (!player.TryGetModPlayer(out Missing_File_Player global)) return;
+			global.hitCount = count;
+		}
+		class Missing_File_Player : CritModPlayer {
+			public int hitCount;
 		}
 	}
 }

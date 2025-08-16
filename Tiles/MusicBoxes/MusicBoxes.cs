@@ -513,4 +513,25 @@ namespace Origins.Tiles.MusicBoxes {
 			}
 		}
 	}
+	public class Otherworldly_Music_Box_DW : Music_Box {
+		public override string[] Categories => [
+			"Hardmode"
+		];
+		public override Color MapColor => new(255, 255, 255);
+		public override int MusicSlot => Origins.Music.OtherworldlyDefiled;
+		public override int DustType => Defiled_Wastelands.DefaultTileDust;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			AnimationFrameHeight = 36;
+		}
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			if (++frameCounter >= 8) {
+				frameCounter = 0;
+				frame = ++frame % 4;
+			}
+		}
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			if (Main.tile[i, j].TileFrameX < 36) frameYOffset = 0;
+		}
+	}
 }

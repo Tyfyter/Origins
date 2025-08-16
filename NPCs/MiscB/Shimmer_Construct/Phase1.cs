@@ -59,6 +59,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (aiStates.Select(state => state.Index).All(boss.previousStates.Contains)) Array.Fill(boss.previousStates, Index);
 				SelectAIState(boss, aiStates);
 			}
+			if (npc.HasValidTarget) npc.DiscourageDespawn(60 * 5);
+			else npc.EncourageDespawn(60);
 		}
 		public override void TrackState(int[] previousStates) { }
 		public static List<AIState> aiStates = [];
@@ -94,6 +96,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static float MoveSpeed => 6.5f + ContentExtensions.DifficultyDamageMultiplier * 0.5f;
 		public static int Duration => 120;
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 		}

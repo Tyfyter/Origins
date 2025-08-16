@@ -67,6 +67,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ExplosiveGlobalProjectile.ExplosionVisual(Projectile.Hitbox, SoundID.Item14);
 		}
 		public override void OnKill(int timeLeft) {
+			if (Main.player[Projectile.owner].OriginPlayer().pincushion) return;
+			if (!Projectile.IsLocallyOwned()) return;
 			const int rad = 8;
 			Vector2 center = Projectile.Center / 16;
 			int x = (int)center.X;
@@ -125,12 +127,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 									}
 									break;
 								}
+
 								case TileID.ExposedGems:
 								if (tile.TileFrameX >= 18) {
 									tile.TileFrameX -= 18;
 									needsSync = true;
 								}
 								break;
+
 								default:
 								TransformToTile(OriginsSets.Tiles.ShimmerTransformToTile[tile.TileType]);
 								break;

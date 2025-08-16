@@ -65,6 +65,7 @@ Laser_Tag: {
 	CTGNeedOwnGem: Don't allow Teams with their gem stolen to score
 	Building: Allow Building
 	StartButton: Start
+	CancelButton: Cancel Laser Tag
 	RespawnTime: Revive Time
 	ShortTime: $60!:{0:0.##} Seconds$
 	LongTime: $60!:{0:#0}:$$60:{0:00}$
@@ -448,6 +449,8 @@ Generic: {
 	Tangela: Tangela
 	Journal: Journal
 	Acrid: Acrid
+	Spug: Spug
+	spug: spug
 }
 
 AltBiomes: {
@@ -1916,6 +1919,9 @@ Projectiles: {
 	SC_Firework_Spark.DisplayName: Shimmerwork Spark
 	ConstellationNode.DisplayName: Constellation Node
 	Greater_Summoning_Potato_P.DisplayName: Greater Summoning Potato
+	Astral_Scythe_Chunk.DisplayName: Astral Scythe Chunk
+	Astral_Scythe_Chunk_Spawn.DisplayName: Astral Scythe Chunk Spawn
+	Astral_Scythe_Slash.DisplayName: Astral Scythe Slash
 }
 
 Prefixes: {
@@ -2199,6 +2205,7 @@ Tiles: {
 	Hanging_Wrycoral.MapEntry: Hanging Wrycoral
 	Fuzzvine.MapEntry: Fuzzvine
 	Fuzzvine_Lorg.MapEntry: "{$Fuzzvine}"
+	Otherworldly_Music_Box_DW: Otherworldly Music Box ({§Defiled_Wastelands})
 }
 
 MapObject: {
@@ -2748,7 +2755,7 @@ SetBonuses: {
 	Blast:
 		'''
 		-25% self-damage
-		Allows you to go berserk after recieving any kind of damage
+		Allows you to go berserk after receiving any kind of damage
 		All explosive combat stats are increased by 50% while berserked
 		'''
 	Rubber:
@@ -2895,4 +2902,25 @@ ExtraDyeSlots: {
 	SceneYMK_Dye_Slot_0.DisplayText: "{$LegacyInterface.57}"
 	SceneYMK_Dye_Slot_1.DisplayText: "{$LegacyInterface.57}"
 	SceneYMK_Dye_Slot_2.DisplayText: "{$LegacyInterface.57}"
+}
+
+CritType: {
+	SlammyHammer: Critically strikes when crushing the target against blocks
+	PerfectTiming: Critically strikes on perfectly timed attacks
+	Impactaxe_Crit_Type: Critically strikes on direct hits
+	Indestructible_Saddle_Crit_Type: Critically strikes during the last {0:0.##} seconds of the time limit
+	Dreikan_Crit_Type: Critically strikes when hitting the same target with all 3 shots
+	Self_Destruct_Crit_Type: Critically strikes when the user is below {0:P0} health
+	Laser_Tag_Gun_Crit_Type: Critically strikes 50% of the time
+	Soul_Snatcher_Crit_Type: Critically strikes while empowered
+	Soulslasher_Crit_Type: Critically strikes on direct hits
+	Switchblade_Crit_Type: Critically strikes for {0:0.##} seconds after switching modes
+	Neural_Network_Crit_Type: Critically strikes while above {0} adaptation charges
+	// VVVV Leave this one as is VVVV
+	Missing_File_Crit_Type: Mods.Origins.CritType.Missing_File_Crit_Type
+	Flak_Crit_Type: Critically strikes when hitting airborne targets
+	Miter_Saw_Crit_Type: Critically strikes after several consecutive hits
+	Piledriver_Crit_Type: Critically strikes on alternate attacks
+	Meteor_Crit_Type: Critically strikes when falling onto airborne targets
+	Communion_Type: Critically strikes when hitting the same target multiple times
 }

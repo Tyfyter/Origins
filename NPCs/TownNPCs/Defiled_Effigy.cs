@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Magic;
+using Origins.Tiles.MusicBoxes;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
@@ -108,6 +109,7 @@ namespace Origins.NPCs.TownNPCs {
 		public override void AddShops() {
 			new NPCShop(Type)
 			.Add<Nerve_Flan_Food>()
+			.Add(Music_Box.ItemType<Otherworldly_Music_Box_DW>())
 			.Register();
 		}
 

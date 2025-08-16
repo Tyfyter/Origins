@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.NPCs.MiscE {
+namespace Origins.NPCs.Crimson {
 	public class CrimsonGlobalNPC : GlobalNPC {
 		public static HashSet<int> NPCTypes { get; private set; } = [
 			NPCID.BloodCrawler,

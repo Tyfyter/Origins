@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Tools;
 using Origins.Projectiles;
@@ -178,6 +179,7 @@ namespace Origins.Items.Weapons.Melee {
 		public static AutoLoadingAsset<Texture2D> empoweredTexture = typeof(Soul_Snatcher).GetDefaultTMLName() + "_Empowered";
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+			ProjectileID.Sets.NoMeleeSpeedVelocityScaling[Type] = true;
 			empoweredTexture.LoadAsset();
 		}
 		public override void SetDefaults() {
@@ -198,7 +200,7 @@ namespace Origins.Items.Weapons.Melee {
 			set => Projectile.ai[0] = value;
 		}
 		#region empowered state
-		bool empowered = false;
+		public bool empowered = false;
 		public override void OnSpawn(IEntitySource source) {
 			empowered = Main.player[Projectile.owner].OriginPlayer().soulSnatcherActive;
 			Projectile.netUpdate = true;
@@ -220,11 +222,11 @@ namespace Origins.Items.Weapons.Melee {
 			float oldFactor = MovementFactor;
 			if (!player.frozen) {
 				if (player.itemAnimation < player.itemAnimationMax / 2) {
-					MovementFactor -= 2.1f;
+					MovementFactor -= 1.8f;
 				} else if (player.itemAnimation > player.itemAnimationMax / 2 + 1) {
-					MovementFactor += 2.2f;
+					MovementFactor += 2.4f;
 				}
-				if (MovementFactor > 20) MovementFactor = 20;
+				if (MovementFactor > 24) MovementFactor = 24;
 			}
 			Projectile.position += Projectile.velocity * MovementFactor * Projectile.scale;
 			oldFactor -= MovementFactor;
@@ -307,7 +309,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.scale = 1f;
 		}
 		#region empowered state
-		bool empowered = false;
+		public bool empowered = false;
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write(empowered);
 		}
@@ -548,5 +550,14 @@ namespace Origins.Items.Weapons.Melee {
 				}
 			}
 		}
+	}
+	public class Soul_Snatcher_Crit_Type : CritType<Soul_Snatcher>, IBrokenContent {
+		public string BrokenReason => "Needs balancing";
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
+			if (projectile?.ModProjectile is Soul_Snatcher_P stab) return stab.empowered;
+			if (projectile?.ModProjectile is Soul_Snatcher_Spin spin) return spin.empowered;
+			return false;
+		}
+		public override float CritMultiplier(Player player, Item item) => 1.2f;
 	}
 }

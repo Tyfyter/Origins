@@ -1,4 +1,5 @@
 using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -8,6 +9,8 @@ namespace Origins.Items.Tools {
 	public class Felnum_Pickaxe : ModItem {
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {

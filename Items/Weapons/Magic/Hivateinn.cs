@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Buffs;
+using Origins.CrossMod;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Hivateinn : ModItem, ICustomWikiStat {
@@ -17,6 +18,8 @@ namespace Origins.Items.Weapons.Magic {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);

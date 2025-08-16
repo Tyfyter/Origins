@@ -1158,34 +1158,46 @@ Felnum_Breastplate: {
 	// DisplayName: Felnum Breastplate
 	/* Tooltip:
 		'''
-		2% increased damage
+		5% increased damage
 		5% increased movement speed
 		''' */
 }
 
 Felnum_Greaves: {
 	// DisplayName: Felnum Greaves
-	// Tooltip: 5% increased movement speed
+	// Tooltip: 10% increased movement speed
 }
 
 Felnum_Helmet: {
 	// DisplayName: Felnum Helmet
-	// Tooltip: 4% increased damage
+	// Tooltip: 5% increased damage
 }
 
 Fiberglass_Body: {
 	// DisplayName: Fiberglass Pauldrons
-	// Tooltip: "'These don't seem very protective'"
+	/* Tooltip:
+		'''
+		Weapon damage increased by 2
+		'These don't seem very protective'
+		''' */
 }
 
 Fiberglass_Helmet: {
 	// DisplayName: Fiberglass Helmet
-	// Tooltip: "'This doesn't seem very protective'"
+	/* Tooltip:
+		'''
+		Critical damage increased by 10
+		'This doesn't seem very protective'
+		''' */
 }
 
 Fiberglass_Legs: {
 	// DisplayName: Fiberglass Boots
-	// Tooltip: "'These don't seem very protective'"
+	/* Tooltip:
+		'''
+		10% increased movement speed
+		'These don't seem very protective'
+		''' */
 }
 
 Lost_Breastplate: {
@@ -1255,7 +1267,7 @@ Nova_Greaves: {
 	/* Tooltip:
 		'''
 		4% increased explosive damage and critical strike chance
-		15% increased movement speed
+		25% increased movement speed
 		''' */
 }
 
@@ -1390,19 +1402,19 @@ Sapphire_Tights: {
 	// DisplayName: Sapphire Mediator Tights
 	/* Tooltip:
 		'''
-		+10% movement speed
-		8% reduced mana cost
+		+20% movement speed
+		15% reduced mana cost
 		''' */
 }
 
 Sapphire_Vest: {
 	// DisplayName: Sapphire Mediator Vest
-	// Tooltip: +15% magic speed
+	// Tooltip: +20% magic attack speed
 }
 
 Soulhide_Coat: {
 	// DisplayName: Soulhide Coat
-	// Tooltip: +12% melee weapon speed
+	// Tooltip: +12% melee attack speed
 }
 
 Soulhide_Guards: {
@@ -2114,6 +2126,7 @@ Felnum_Hamaxe: {
 	/* Tooltip:
 		'''
 		<right> to throw
+		Receives 50% higher damage bonuses
 		'Its strikes sound like thunder'
 		''' */
 }
@@ -2123,6 +2136,7 @@ Felnum_Pickaxe: {
 	/* Tooltip:
 		'''
 		Able to mine Hellstone
+		Receives 50% higher damage bonuses
 		'Its strikes sound like thunder'
 		''' */
 }
@@ -2419,7 +2433,11 @@ Explosive_Golf_Ball: {
 
 Felnum_Shock_Grenade: {
 	// DisplayName: Felnum Shock Grenade
-	// Tooltip: "'Quite shocking'"
+	/* Tooltip:
+		'''
+		Receives 50% higher damage bonuses
+		'Quite shocking'
+		''' */
 }
 
 Flakjack: {
@@ -2758,7 +2776,11 @@ Felnum_Boar_Spear: {
 
 Fiberglass_Sword: {
 	// DisplayName: Fiberglass Sword
-	// Tooltip: "'Be careful, it's sharp'"
+	/* Tooltip:
+		'''
+		<right> to throw
+		'Be careful, it's sharp'
+		''' */
 }
 
 Knee_Slapper: {
@@ -3316,7 +3338,7 @@ Riven_Dungeon_Chest_Item: {
 }
 
 Riven_Flesh_Item: {
-	// DisplayName: Spug Flesh
+	// DisplayName: "{§Spug} Flesh"
 	// Tooltip: ""
 }
 
@@ -3366,7 +3388,7 @@ Harmony_Brick_Wall_Item: {
 }
 
 Riven_Flesh_Wall_Item: {
-	// DisplayName: Spug Flesh Wall
+	// DisplayName: "{§Spug} Flesh Wall"
 	// Tooltip: ""
 }
 
@@ -4001,6 +4023,7 @@ CORE_Generator: {
 		Enables autouse for all explosive weapons
 		Shoots rockets as you swing
 		Additionally causes stars to fall and canisters from your inventory to release after taking damage
+		'Entropy really is a good alternative to coffee'
 		''' */
 }
 
@@ -4672,12 +4695,12 @@ Eaterboros: {
 
 Plague_Texan_Set: {
 	// DisplayName: Plague Texan Set
-	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+	// Tooltip: ""
 }
 
 Chee_Set: {
 	// DisplayName: Chee Set
-	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+	// Tooltip: ""
 }
 
 Slag_Bucket: {
@@ -5008,6 +5031,7 @@ Felnum_Sword: {
 		'''
 		Inflicts Static Shock
 		<right> to stab
+		Receives 50% higher damage bonuses
 		''' */
 }
 
@@ -5400,7 +5424,7 @@ Liars_Tongue: {
 	/* Tooltip:
 		'''
 		You are Silenced, press <key> to silence everyone else too
-		Gain up to 10% damage resistance over time by not speaking
+		Gain up to 27% damage resistance over time by not speaking
 		''' */
 }
 
@@ -6147,7 +6171,7 @@ Shimmer_Dynamite: {
 
 Chambersite_Phasesaber: {
 	// DisplayName: Chambersite Phasesaber
-	// Tooltip: Can be thrown at enemies, but it doesn't glow!
+	// Tooltip: <Right> to throw, but it doesn't glow!
 }
 
 Bile_Harpoon: {
@@ -6361,11 +6385,7 @@ Aetherite_Ore_Item: {
 
 Kono_Dio_Da_Set: {
 	// DisplayName: Dio Set
-	/* Tooltip:
-		'''
-		{$DioSet}
-		{$CommonItemTooltip.RightClickToOpen}
-		''' */
+	// Tooltip: "{$DioSet}"
 }
 
 Kono_Dio_Da_Wings: {
@@ -6406,12 +6426,12 @@ Dio_Helmet: {
 }
 
 Calcified_Riven_Flesh_Item: {
-	// DisplayName: Calcified Riven Flesh
+	// DisplayName: Calcified {§Spug} Flesh
 	// Tooltip: ""
 }
 
 Calcified_Riven_Flesh_Wall_Safe_Item: {
-	// DisplayName: Calcified Riven Flesh Wall
+	// DisplayName: Calcified {§Spug} Flesh Wall
 	// Tooltip: ""
 }
 
@@ -6574,5 +6594,10 @@ Splitting_Image: {
 
 Procedural_Sprite_Generator: {
 	// DisplayName: Procedural Sprite Generator
+	// Tooltip: ""
+}
+
+Astral_Scythe: {
+	// DisplayName: Astral Scythe
 	// Tooltip: ""
 }

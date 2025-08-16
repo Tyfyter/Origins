@@ -259,7 +259,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			int healing = Main.rand.RandomRound(damageDone / 3f);
+			int healing = Main.rand.RandomRound(1 + ((damageDone-3) / 5f));
 			if (healing > 0) Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Woodsprite_Lifesteal>(), healing, 0, Projectile.owner);
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {

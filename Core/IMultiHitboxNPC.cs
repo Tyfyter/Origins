@@ -1,11 +1,6 @@
 ﻿using MonoMod.Cil;
 using ReLogic.Threading;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,12 +8,21 @@ using Terraria.ModLoader;
 namespace Origins.Core {
 	class MultiHitboxNPC : ILoadable {
 		public void Load(Mod mod) {
-			IL_Projectile.Damage += IL_Projectile_Damage;
+			IMultiHitboxNPC.SpawningEnabled = true;
+			try {
+				IL_Projectile.Damage += IL_Projectile_Damage;
+				IL_Player.ProcessHitAgainstNPC += IL_Player_ProcessHitAgainstNPC;
+			} catch (Exception e) {
+				IMultiHitboxNPC.SpawningEnabled = false;
+				if (Origins.LogLoadingILError($"{nameof(MultiHitboxNPC)}", e)) throw;
+			}
 		}
+
 		public void Unload() { }
 		static void IL_Projectile_Damage(ILContext il) {
 			ILCursor c = new(il);
 			ILLabel normalNPC = default;
+			ILLabel notNormalNPC = default;
 			int i = -1;
 			int colliding = -1;
 			int projHitbox = -1;
@@ -31,9 +35,9 @@ namespace Origins.Core {
 				il => il.MatchBneUn(out normalNPC)
 			);
 			c.GotoLabel(normalNPC);
-			Debug.Assert(c.Previous.Previous.MatchStloc(out colliding));
-			Debug.Assert(c.Previous.MatchBr(out ILLabel notNormalNPC));
-			Debug.Assert(c.Next.Next.MatchLdloc(out projHitbox));
+			Debugging.Assert(c.Previous.Previous.MatchStloc(out colliding), new Exception("Could not find x = Projectile.Colliding"));
+			Debugging.Assert(c.Previous.MatchBr(out notNormalNPC), new Exception("Could not find x = Projectile.Colliding"));
+			Debugging.Assert(c.Next.Next.MatchLdloc(out projHitbox), new Exception("Could not find x = Projectile.Colliding"));
 			c.EmitLdarg0();
 			c.EmitLdloc(i);
 			c.EmitLdloca(colliding);
@@ -46,7 +50,7 @@ namespace Origins.Core {
 					int minY = int.MaxValue;
 					int maxY = int.MinValue;
 					for (int j = 0; j < multiHitboxNPC.Hitboxes.Length; j++) {
-						Rectangle box = multiHitboxNPC.Hitboxes[i];
+						Rectangle box = multiHitboxNPC.Hitboxes[j];
 						Min(ref minX, box.X);
 						Max(ref maxX, box.Right);
 						Min(ref minY, box.Y);
@@ -68,6 +72,27 @@ namespace Origins.Core {
 			});
 			c.EmitBrtrue(notNormalNPC);
 		}
+
+		static void IL_Player_ProcessHitAgainstNPC(ILContext il) {
+			ILCursor c = new(il);
+			int itemRectangle = -1;
+			c.GotoNext(MoveType.After,
+				il => il.MatchLdarga(out itemRectangle),
+				il => il.MatchLdloc(out _),
+				il => il.MatchCall<Rectangle>(nameof(Rectangle.Intersects))
+			);
+			c.EmitLdarg(itemRectangle);
+			c.EmitLdarg(5);
+			c.EmitDelegate((bool intersected, Rectangle itemRectangle, int i) => {
+				if (Main.npc[i].ModNPC is IMultiHitboxNPC multiHitboxNPC) {
+					for (int j = 0; j < multiHitboxNPC.Hitboxes.Length; j++) {
+						if (itemRectangle.Intersects(multiHitboxNPC.Hitboxes[j])) return true;
+					}
+					return false;
+				}
+				return intersected;
+			});
+		}
 		static void Min(ref int current, int @new) {
 			if (current > @new) current = @new;
 		}
@@ -76,6 +101,7 @@ namespace Origins.Core {
 		}
 	}
 	public interface IMultiHitboxNPC {
+		public static bool SpawningEnabled = true;
 		public Rectangle[] Hitboxes { get; }
 	}
 }

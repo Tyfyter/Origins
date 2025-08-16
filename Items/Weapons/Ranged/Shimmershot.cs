@@ -16,6 +16,7 @@ using Origins.Projectiles;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using PegasusLib.Graphics;
 using System.Reflection;
+using System.IO;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Shimmershot : ModItem {
@@ -80,28 +81,30 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			OriginPlayer originPlayer = player.OriginPlayer();
-			Debugging.ChatOverhead(Projectile.ai[2]);
 			if (Projectile.ai[2] == 1) {
 				SoundEngine.PlaySound(SoundID.Item67.WithPitch(-2f), Projectile.position);
 				SoundEngine.PlaySound(SoundID.Item142, Projectile.position);
 				SoundEngine.PlaySound(Origins.Sounds.HeavyCannon, Projectile.position);
 				Projectile.ai[2] = 0;
 			}
+			if (Projectile.localAI[1] == 0) Projectile.localAI[1] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
 			if (Main.myPlayer == Projectile.owner) { // charging
-				if (Projectile.localAI[1] == 0) Projectile.localAI[1] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
 				if (Projectile.localAI[0].Warmup(Projectile.localAI[1])) {
 					SoundEngine.PlaySound(SoundID.Item25.WithPitchOffset(1)); // full charge sound
 					SoundEngine.PlaySound(SoundID.Zombie103.WithPitch(2f));
+					Projectile.netUpdate = true;
 				}
 				if (player.channel) {
 					if (SoundEngine.TryGetActiveSound(chargeSound, out ActiveSound sound)) {
-						MathUtils.LinearSmoothing(ref sound.Volume, Projectile.localAI[0] < 0 ? 0f : 0.75f, 1f / 20);
+						MathUtils.LinearSmoothing(ref sound.Volume, (Projectile.localAI[0] < 0 || !player.channel) ? 0f : 0.75f, 1f / 20);
 					} else {
 						int type = Type;
 						chargeSound = SoundEngine.PlaySound(Origins.Sounds.ShimmershotCharging, null, soundInstance => {
 							soundInstance.Pitch = Math.Max(Projectile.localAI[0] / Projectile.localAI[1], 0);
 							return Projectile.active && Projectile.type == type;
 						});
+						SoundEngine.TryGetActiveSound(chargeSound, out sound);
+						sound.Volume = 1 / 20f;
 					}
 				}
 			}
@@ -221,6 +224,14 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 			Main.EntitySpriteDraw(GetDrawData(lightColor));
 			return false;
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(Projectile.localAI[0]);
+			writer.Write(Projectile.localAI[1]);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			Projectile.localAI[0] = reader.ReadSingle();
+			Projectile.localAI[1] = reader.ReadSingle();
 		}
 	}
 	public class Shimmershot_Bullet : ModProjectile {

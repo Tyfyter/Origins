@@ -291,7 +291,7 @@ namespace Origins.Questing {
 		public override string Text(NPC npc, Player player) => Language.GetTextValue("Mods.Origins.Quests.ArmsDealer.Harpoon_Burst_Rifle.ILostThatGunYouGaveMe");
 		public override bool IsActive(NPC npc, Player player) {
 			if (Questing.QuestListSelected || npc.type != NPCID.ArmsDealer) return false;
-			return quest.HasQuestButton(npc, player);
+			return Quest.HasQuestButton(npc, player);
 		}
 	}
 }

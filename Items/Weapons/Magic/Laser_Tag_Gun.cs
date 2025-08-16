@@ -1,15 +1,19 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Melee;
 using Origins.Tiles.Other;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Laser_Tag_Gun : AnimatedModItem, IElementalItem, ICustomWikiStat {
+		public static int CritDamage => 123;
 		static short glowmask;
 		public string[] Categories => [
 			"MagicGun"
@@ -79,7 +83,7 @@ namespace Origins.Items.Weapons.Magic {
 			} catch (Exception) { }
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.CritDamage *= 123 * 0.5f;
+			if (!CritType.ModEnabled) modifiers.CritDamage *= Laser_Tag_Gun.CritDamage * 0.5f;
 		}
 		public static void OnHitPvP(Projectile proj, Player target) {
 			target.AddBuff(BuffID.Cursed, 600);
@@ -98,5 +102,9 @@ namespace Origins.Items.Weapons.Magic {
 			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, color, Projectile.rotation, new Vector2(42, 1), Projectile.scale, SpriteEffects.None, 1);
 			return false;
 		}
+	}
+	public class Laser_Tag_Gun_Crit_Type : CritType<Laser_Tag_Gun> {
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => Main.rand.NextBool();
+		public override float CritMultiplier(Player player, Item item) => Laser_Tag_Gun.CritDamage; // crit damage already modified in ModifyHitNPC
 	}
 }

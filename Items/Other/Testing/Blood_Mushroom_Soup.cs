@@ -88,6 +88,7 @@ namespace Origins.Items.Other.Testing {
 					int O = 0;
 					int OwO = 0 / O;
 				}
+				PlayerInput.SetZoom_UI();
 			}
 		}
 		/*
@@ -553,7 +554,7 @@ namespace Origins.Items.Other.Testing {
 				new(2, 0), new(-2, 0),
 				new(0, 1), new(0, -1)
 			];
-			ushort fleshBlockType = (ushort)ModContent.TileType<Riven_Flesh>();
+			ushort fleshBlockType = (ushort)ModContent.TileType<Spug_Flesh>();
 
 			if (AreaAnalysis.March(x, y, directions, pos => Math.Abs(pos.Y - y) < 20 && Framing.GetTileSafely(pos).TileIsType(fleshBlockType), a => a.MaxX - a.MinX >= 100).Broke) {
 				Framing.GetTileSafely(x, y).TileType = TileID.AmberGemspark;
@@ -627,7 +628,11 @@ namespace Origins.Items.Other.Testing {
 			PlayerInput.SetZoom_MouseInWorld();
 			UnifiedRandom genRand = new(seed);
 
-			return Carver.PointyLemon(// tweak to change the shape and size of the barnacled areas
+			return Carver.Climb(Main.MouseWorld / 16, pos => {
+				if (!OriginExtensions.IsTileReplacable((int)pos.X, (int)pos.Y)) return false;
+				Tile tile = Framing.GetTileSafely(pos.ToPoint());
+				return tile.HasTile && TileID.Sets.Falling[tile.TileType];
+			}, ref posMin, ref posMax);/*Carver.PointyLemon(// tweak to change the shape and size of the barnacled areas
 				Main.MouseWorld / 16,
 				scale: genRand.Next(5, 15),
 				rotation: genRand.NextFloat(0, MathHelper.TwoPi),
@@ -635,7 +640,7 @@ namespace Origins.Items.Other.Testing {
 				0.5f,
 				ref posMin,
 				ref posMax
-			);
+			);*/
 		}
 		public override void Apply(LinkedQueue<object> parameters) {
 			ushort oreID = (ushort)ModContent.TileType<Amoeba_Fluid>();

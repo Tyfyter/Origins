@@ -45,7 +45,6 @@ namespace Origins.Projectiles {
 		//bool init = true;
 		public float felnumBonus = 0;
 		public bool viperEffect = false;
-		public bool ownerSafe = false;
 		public int killLink = -1;
 		int updateCountBoost = 0;
 		public int UpdateCountBoost => updateCountBoost;
@@ -189,6 +188,7 @@ namespace Origins.Projectiles {
 					neuralNetworkHit = parentGlobalProjectile.neuralNetworkHit;
 					crawdadNetworkEffect = parentGlobalProjectile.crawdadNetworkEffect;
 					fiberglassLifesteal = parentGlobalProjectile.fiberglassLifesteal;
+					weakpointAnalyzerFake = parentGlobalProjectile.weakpointAnalyzerFake;
 					if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = parentGlobalProjectile.felnumBonus;
 
 					ModPrefix projPrefix = PrefixLoader.GetPrefix(Prefix);
@@ -494,9 +494,6 @@ namespace Origins.Projectiles {
 		public override bool? CanHitNPC(Projectile projectile, NPC target) {
 			if (weakpointAnalyzerFake) return false;
 			return base.CanHitNPC(projectile, target);
-		}
-		public override bool CanHitPlayer(Projectile projectile, Player target) {
-			return ownerSafe ? target.whoAmI != projectile.owner : true;
 		}
 		public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info) {
 			if (BiomeNPCGlobals.ProjectileAssimilationAmounts.TryGetValue(projectile.type, out Dictionary<int, AssimilationAmount> assimilationValues)) {

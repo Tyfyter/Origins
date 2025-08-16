@@ -63,7 +63,7 @@ namespace Origins.Tiles.Riven {
 		public static int[] AnchorTypes => [
 			ModContent.TileType<Riven_Grass>(),
 			ModContent.TileType<Silica>(),
-			ModContent.TileType<Riven_Flesh>(),
+			ModContent.TileType<Spug_Flesh>(),
 			ModContent.TileType<Riven_Jungle_Grass>()
 		];
 		public override void SetStaticDefaults() {

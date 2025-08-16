@@ -1,62 +1,68 @@
-﻿using System;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using ReLogic.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.World.BiomeData;
-using System.Reflection;
-using Origins.Tiles;
-using Origins.NPCs.MiscE;
-using MonoMod.Cil;
-using Terraria.Localization;
-using Origins.Dev;
-using System.Linq;
-using ThoriumMod;
-using Mono.Cecil.Cil;
-using Mono.Cecil;
-using Origins.Items;
-using Origins.Items.Other.Consumables;
-using Origins.NPCs.Defiled.Boss;
-using Origins.NPCs.Riven.World_Cracker;
+﻿using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Systems;
-using AltLibrary.Common.AltBiomes;
+using Fargowiltas.Items.Tiles;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using Newtonsoft.Json.Linq;
+using Origins.Buffs;
+using Origins.CrossMod.Fargos.Items;
+using Origins.Dev;
+using Origins.Items;
+using Origins.Items.Accessories;
+using Origins.Items.Armor.Other;
 using Origins.Items.Armor.Vanity.BossMasks;
-using Origins.Tiles.BossDrops;
+using Origins.Items.Materials;
+using Origins.Items.Other;
+using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Fish;
 using Origins.Items.Pets;
-using Origins.NPCs.Fiberglass;
+using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
+using Origins.NPCs.Brine.Boss;
+using Origins.NPCs.Corrupt;
+using Origins.NPCs.Crimson;
+using Origins.NPCs.Defiled.Boss;
+using Origins.NPCs.Fiberglass;
+using Origins.NPCs.MiscB;
+using Origins.NPCs.MiscB.Shimmer_Construct;
+using Origins.NPCs.MiscE;
+using Origins.NPCs.Riven.World_Cracker;
+using Origins.Tiles;
+using Origins.Tiles.BossDrops;
+using Origins.Tiles.Brine;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
+using Origins.World.BiomeData;
 using PegasusLib.Graphics;
-using ThoriumMod.Projectiles.Bard;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using ThoriumMod;
 using ThoriumMod.Items;
 using ThoriumMod.Items.Darksteel;
-using Origins.Items.Accessories;
-using Origins.Buffs;
-using Origins.NPCs.Brine.Boss;
-using Origins.Tiles.Riven;
-using Origins.Tiles.Defiled;
-using Origins.Tiles.Brine;
-using Origins.Items.Materials;
-using Origins.Items.Weapons.Melee;
-using Origins.Items.Weapons.Magic;
-using Origins.NPCs.MiscB.Shimmer_Construct;
-using Origins.CrossMod.Fargos.Items;
-using Origins.Items.Other;
-using ThoriumMod.Items.Misc;
-using Origins.Items.Armor.Other;
-using Origins.NPCs.MiscB;
-using static Terraria.ModLoader.ModContent;
-using static Origins.OriginsSets.Items;
-using ThoriumMod.Items.Painting;
 using ThoriumMod.Items.Donate;
-using Fargowiltas.Items.Tiles;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Summoner;
-using Origins.Items.Weapons.Ranged;
-using Origins.Items.Other.Fish;
-using static Origins.OriginSystem;
 using ThoriumMod.Items.MeleeItems;
+using ThoriumMod.Items.Misc;
+using ThoriumMod.Items.Painting;
+using ThoriumMod.Projectiles.Bard;
+using static Origins.OriginsSets.Items;
+using static Origins.OriginSystem;
+using static Terraria.ModLoader.ModContent;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -85,7 +91,7 @@ namespace Origins {
 		Func<object[], object> holidayForceChanged;
 		public static void HolidayForceChanged() => instance.holidayForceChanged([]);
 		public static Condition AprilFools => new("Mods.Origins.Conditions.AprilFools", () => CheckAprilFools());
-		public static Condition NotAprilFools => new(LocalizedText.Empty, () => !CheckAprilFools());
+		public static Condition NotAprilFools => new(Language.GetOrRegister("Mods.Origins.Conditions.Not").WithFormatArgs(AprilFools.Description), () => !CheckAprilFools());
 		ModKeybind goToKeybindKeybind;
 		public static bool GoToKeybindKeybindPressed => instance.goToKeybindKeybind?.JustPressed ?? false;
 		Action<ModKeybind> goToKeybind;
@@ -152,7 +158,46 @@ namespace Origins {
 			}
 		}
 		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
-		static bool DefaultCheckAprilFools() => (DateTime.Today.Month == 4 && DateTime.Today.Day == 1) || OriginSystem.Instance.ForceAF;
+		static bool DefaultCheckAprilFools() => (DateTime.Today.Month == 4 && DateTime.Today.Day == 1) || Instance.ForceAF;
+		static class BCSpriteConstructor {
+			public static List<(int part, Vector2 pos, float rot, SpriteEffects effects)> parts = [];
+			public static int partNum = 0;
+			public static Vector2 partPos = default;
+			public static float partRot = 0;
+			public static SpriteEffects partEffects = SpriteEffects.None;
+			public static MouseState oldMouse = default;
+			public static KeyboardState oldKeyboard = default;
+			public static void SetupArrangement(int maxParts, Vector2 center) {
+				if (!DebugConfig.Instance.DebugMode) return;
+				MouseState currentMouse = Mouse.GetState();
+				KeyboardState currentKB = Keyboard.GetState();
+				parts.RemoveAll(p => p.part < 0 || p.part > maxParts);
+				if (partNum < 0) partNum = maxParts;
+				if (partNum > maxParts) partNum = 0;
+				if (Main.hasFocus) {
+					partPos = Main.MouseScreen;
+					int scrollDiff = currentMouse.ScrollWheelValue - oldMouse.ScrollWheelValue;
+					if (scrollDiff != 0) {
+						if (currentMouse.RightButton == ButtonState.Pressed) {
+							partRot += scrollDiff * 0.001f;
+						} else {
+							partNum += scrollDiff / 120;
+							if (partNum < 0) partNum = maxParts;
+							if (partNum > maxParts) partNum = 0;
+						}
+					}
+					if (currentMouse.XButton1 == ButtonState.Pressed && oldMouse.XButton1 == ButtonState.Released) partEffects ^= SpriteEffects.FlipHorizontally;
+					if (currentMouse.XButton2 == ButtonState.Pressed && oldMouse.XButton2 == ButtonState.Released) partEffects ^= SpriteEffects.FlipVertically;
+					if (currentMouse.LeftButton == ButtonState.Pressed && oldMouse.LeftButton == ButtonState.Released) parts.Add((partNum, partPos, partRot, partEffects));
+					if (parts.Count > 0 && currentKB.IsKeyDown(Keys.Back) && oldKeyboard.IsKeyUp(Keys.Back)) parts.RemoveAt(parts.Count - 1);
+					if (parts.Count > 0 && currentKB.IsKeyDown(Keys.End) && oldKeyboard.IsKeyUp(Keys.End)) {
+						Origins.instance.Logger.Info(string.Join('\n', parts.Select(p => $"({p.part}, new Vector2({p.pos.X - center.X}, {p.pos.Y - center.Y}) + center, {p.rot}f, SpriteEffects.{p.effects})")));
+					}
+				}
+				oldMouse = currentMouse;
+				oldKeyboard = currentKB;
+			}
+		}
 		public static void PostSetupContent(Mod mod) {
 			if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist)) {
 				static Func<bool> IfEvil<T>() where T : AltBiome {
@@ -180,6 +225,7 @@ namespace Origins {
 				Asset<Texture2D> wcHeadTexture = Request<Texture2D>(typeof(World_Cracker_Head).GetDefaultTMLName());
 				Asset<Texture2D> wcBodyTexture = Request<Texture2D>(typeof(World_Cracker_Body).GetDefaultTMLName());
 				Asset<Texture2D> wcTailTexture = Request<Texture2D>(typeof(World_Cracker_Tail).GetDefaultTMLName());
+				Asset<Texture2D> wcHeadArmorTexture = Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Head_Armor");
 				Asset<Texture2D> wcArmorTexture = Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
 				bossChecklist.Call("LogBoss",
 					mod,
@@ -198,52 +244,113 @@ namespace Origins {
 							ItemType<Fleshy_Globe>(),
 						},
 						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
-							void DrawSegment(Rectangle frame, Vector2 position, Texture2D baseTexture, int @switch) {
-								switch (@switch) {
-									case 0:
-									spriteBatch.Draw(
-										baseTexture,
-										position,
-										null,
-										color,
-										MathHelper.PiOver2,
-										baseTexture.Size() * 0.5f,
-										1,
-										0,
-									0);
-									break;
-									case 1:
-									Vector2 halfSize = frame.Size() / 2;
-									spriteBatch.Draw(
-										wcArmorTexture.Value,
-										position,
-										frame,
-										color,
-										MathHelper.PiOver2,
-										halfSize,
-										1,
-										0,
-									0);
-									break;
-								}
-							}
 							Vector2 center = area.Center();
-							Vector2 diff = new(0, 48);
-							for (int j = 0; j < 2; j++) {
-								DrawSegment(new Rectangle(168, 0, 52, 56), center + diff * 3, wcTailTexture.Value, j);
-								for (int i = 3; i-- > -2;) {
-									DrawSegment(new Rectangle(104, 60 * Math.Abs(i % 2), 62, 58), center + diff * i, wcBodyTexture.Value, j);
+							if (CheckAprilFools()) {
+								void DrawSegment(Rectangle frame, Vector2 position, Texture2D baseTexture, int @switch) {
+									switch (@switch) {
+										case 0:
+										spriteBatch.Draw(
+											baseTexture,
+											position,
+											null,
+											color,
+											MathHelper.PiOver2,
+											baseTexture.Size() * 0.5f,
+											1,
+											0,
+										0);
+										break;
+										case 1:
+										Vector2 halfSize = frame.Size() / 2;
+										spriteBatch.Draw(
+											wcArmorTexture.Value,
+											position,
+											frame,
+											color,
+											MathHelper.PiOver2,
+											halfSize,
+											1,
+											0,
+										0);
+										break;
+									}
 								}
-								DrawSegment(new Rectangle(0, 0, 102, 58), center + diff * -3, wcHeadTexture.Value, j);
+								Vector2 diff = new(0, 48);
+								for (int j = 0; j < 2; j++) {
+									DrawSegment(new Rectangle(168, 0, 52, 56), center + diff * 3, wcTailTexture.Value, j);
+									for (int i = 3; i-- > -2;) {
+										DrawSegment(new Rectangle(104, 60 * Math.Abs(i % 2), 62, 58), center + diff * i, wcBodyTexture.Value, j);
+									}
+									DrawSegment(new Rectangle(0, 0, 102, 58), center + diff * -3, wcHeadTexture.Value, j);
+								}
+								return;
+							}
+							DrawData MakeData(int part, Vector2 pos, float rot, SpriteEffects effects = SpriteEffects.None) {
+								Texture2D texture;
+								Rectangle? frame = null;
+								switch (part) {
+									case 0:
+									texture = wcHeadTexture.Value;
+									frame = texture.Frame(verticalFrames: 4);
+									break;
+
+									case 1 or 2 or 3:
+									texture = wcBodyTexture.Value;
+									frame = texture.Frame(3, frameX: part - 1);
+									break;
+
+									case 4:
+									texture = wcTailTexture.Value;
+									break;
+
+									default:
+									return default;
+								}
+								Vector2 origin = texture.Size() * 0.5f;
+								if (frame.HasValue) origin = frame.Value.Size() * 0.5f;
+								return new DrawData(texture, pos, frame, Color.White, rot, origin, 1, effects);
+							}
+							/*
+							BCSpriteConstructor.SetupArrangement(4, center);
+							DrawData[] datas = [
+								..BCSpriteConstructor.parts.Select(d => MakeData(d.part, d.pos, d.rot, d.effects)),
+								MakeData(BCSpriteConstructor.partNum, BCSpriteConstructor.partPos, BCSpriteConstructor.partRot, BCSpriteConstructor.partEffects)
+							];/*/
+							DrawData[] datas = [
+								MakeData(0, new Vector2(-91, -142) + center, -0.120000005f, SpriteEffects.None),
+								MakeData(1, new Vector2(2, -139) + center, 0.36f, SpriteEffects.None),
+								MakeData(2, new Vector2(68, -86) + center, 1.08f, SpriteEffects.None),
+								MakeData(1, new Vector2(94, -1) + center, 1.5600001f, SpriteEffects.None),
+								MakeData(2, new Vector2(64, 75) + center, 2.2799997f, SpriteEffects.None),
+								MakeData(3, new Vector2(-12, 125) + center, 2.7599993f, SpriteEffects.None),
+								MakeData(4, new Vector2(-104, 138) + center, 3.119999f, SpriteEffects.None)
+							];//*/
+							for (int i = 0; i < datas.Length; i++) {
+								datas[i].Draw(spriteBatch);
+							}
+							for (int i = 0; i < datas.Length; i++) {
+								if (datas[i].texture == wcHeadTexture.Value) {
+									datas[i].texture = wcHeadArmorTexture.Value;
+									Rectangle frame = wcHeadArmorTexture.Frame(4, 3);
+									datas[i].sourceRect = frame;
+									datas[i].origin = frame.Size() * 0.5f + new Vector2(15, 8).Apply(datas[i].effect, default);
+								} else if (datas[i].texture == wcBodyTexture.Value) {
+									datas[i].texture = wcArmorTexture.Value;
+									Rectangle frame = wcArmorTexture.Frame(3, 3, frameX: datas[i].sourceRect.Value.X / wcBodyTexture.Frame(3).Width);
+									datas[i].sourceRect = frame;
+									datas[i].origin = frame.Size() * 0.5f;
+								} else continue;
+								datas[i].Draw(spriteBatch);
 							}
 						}
 					}
 				);
 				Asset<Texture2D> fwTexture = Request<Texture2D>("Origins/UI/Fiberglass_Weaver_Preview");
+				Asset<Texture2D> fwAFTexture = Request<Texture2D>(typeof(Fiberglass_Weaver).GetDefaultTMLName() + "_AF");
 				bossChecklist.Call("LogBoss",
 					mod,
 					nameof(Fiberglass_Weaver).Replace("_", ""),
-					2.1f,
+					4.7f,
 					() => Boss_Tracker.Instance.downedFiberglassWeaver,
 					NPCType<Fiberglass_Weaver>(),
 					new Dictionary<string, object> {
@@ -258,7 +365,10 @@ namespace Origins {
 							SpriteBatchState state = spriteBatch.GetState();
 							spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
 							try {
-								spriteBatch.Draw(fwTexture.Value, area.Center(), null, color, 0, fwTexture.Size() * 0.5f, 2, SpriteEffects.None, 0);
+								Texture2D tex = fwTexture.Value;
+								if (CheckAprilFools()) tex = fwAFTexture.Value;
+
+								spriteBatch.Draw(tex, area.Center(), null, color, 0, tex.Size() * 0.5f, 2, SpriteEffects.None, 0);
 							} finally {
 								spriteBatch.Restart(state);
 							}
@@ -298,6 +408,8 @@ namespace Origins {
 						}
 					}
 				);
+				Asset<Texture2D> scTexture = Request<Texture2D>(typeof(Shimmer_Construct).GetDefaultTMLName());
+				Asset<Texture2D> scAFTexture = Request<Texture2D>(typeof(Shimmer_Construct).GetDefaultTMLName() + "_AF");
 				bossChecklist.Call("LogBoss",
 					mod,
 					nameof(Shimmer_Construct).Replace("_", ""),
@@ -309,6 +421,24 @@ namespace Origins {
 						["collectibles"] = new List<int> {
 							RelicTileBase.ItemType<Shimmer_Construct_Relic>(),
 							TrophyTileBase.ItemType<Shimmer_Construct_Trophy>()
+						},
+						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
+							SpriteBatchState state = spriteBatch.GetState();
+							spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
+							try {
+								Texture2D tex = scTexture.Value;
+								Rectangle frame = new(0, 996, 134, 166);
+								float rot = 0;
+								if (CheckAprilFools()) {
+									tex = scAFTexture.Value;
+									frame = new(0, 0, 134, 166);
+									rot = MathHelper.Pi;
+								}
+
+								spriteBatch.Draw(tex, area.Center(), frame, color, rot, frame.Size() * 0.5f, 1, SpriteEffects.None, 0);
+							} finally {
+								spriteBatch.Restart(state);
+							}
 						}
 					}
 				);
@@ -327,7 +457,7 @@ namespace Origins {
 			if (ModLoader.TryGetMod("Fargowiltas", out instance.fargosMutant)) {
 				FargosMutant.Call("AddSummon", 3, ItemType<Nerve_Impulse_Manipulator>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
 				FargosMutant.Call("AddSummon", 3, ItemType<Sus_Ice_Cream>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
-				FargosMutant.Call("AddSummon", 2.1, ItemType<Shaped_Glass>(), () => Boss_Tracker.Instance.downedFiberglassWeaver, Item.buyPrice(gold: 8));
+				FargosMutant.Call("AddSummon", 4.7, ItemType<Shaped_Glass>(), () => Boss_Tracker.Instance.downedFiberglassWeaver, Item.buyPrice(gold: 15));
 				FargosMutant.Call("AddSummon", 7.3, ItemType<Lost_Picture_Frame>(), () => Boss_Tracker.Instance.downedLostDiver, Item.buyPrice(gold: 22));
 				FargosMutant.Call("AddSummon", 6.8, ItemType<Aether_Orb>(), () => Boss_Tracker.Instance.downedShimmerConstruct, Item.buyPrice(gold: 18));
 			}
@@ -517,6 +647,8 @@ namespace Origins {
 			if (ModLoader.TryGetMod("miningcracks_take_on_luiafk", out Mod luiafk)) {
 				OriginsSets.NPCs.TargetDummies[luiafk.Find<ModNPC>("Deeps").Type] = true;
 			}
+
+			conditionalCompatRecommendations.Add((() => ModLoader.HasMod("AlchemistNPCLite") && !(ModLoader.HasMod("ShopExtender") || ModLoader.HasMod("ShopExpander")), Language.GetText("Mods.Origins.ModCompatNotes.AlchemistShops")));
 		}
 		public static void AddRecipes() {
 			if (instance.thorium is not null) AddThoriumRecipes();

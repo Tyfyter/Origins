@@ -454,11 +454,13 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			if (!NPC.downedBoss2 || Main.rand.NextBool(2)) WorldGen.spawnMeteor = true;
 			NPC.SetEventFlagCleared(ref NPC.downedBoss2, GameEventClearedID.DefeatedEaterOfWorldsOrBrainOfChtulu);
 			Mod.Logger.Info($"SpecialOnKill on {Main.netMode}, life: {NPC.life}");
-			int tailType = TailType;
+			int bodyType = BodyType;
 			float dist = float.PositiveInfinity;
 			int closest = NPC.whoAmI;
 			NPC current = NPC;
+			bool[] visited = new bool[Main.maxNPCs];
 			while (current is not null) {
+				if (!visited[current.whoAmI].TrySet(true)) break;
 				for (int j = 0; j < Main.maxPlayers; j++) {
 					if (Main.player[j].active && !Main.player[j].dead) {
 						float currentDist = Main.player[j].DistanceSQ(current.Center);
@@ -475,7 +477,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 					current.oldVelocity,
 					"Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)
 				);
-				current = current.type == tailType ? null : Main.npc[(int)current.ai[0]];
+				current = (current.type == bodyType || current.type == Type) ? Main.npc[(int)current.ai[0]] : null;
 			}
 			NPC.Center = Main.npc[closest].Center;
 			return false;

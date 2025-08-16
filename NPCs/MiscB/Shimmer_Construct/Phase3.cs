@@ -1,27 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Terraria.ID;
-using Terraria;
-using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
-using Terraria.ModLoader;
+﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
-using Microsoft.Xna.Framework.Graphics;
-using PegasusLib.Graphics;
-using Terraria.DataStructures;
-using Terraria.Graphics.Effects;
+using Origins.Core;
 using Origins.Items.Other.Dyes;
-using Terraria.Graphics.Shaders;
-using ReLogic.Content;
-using PegasusLib;
 using Origins.Items.Weapons.Magic;
-using Terraria.Utilities;
 using Origins.Projectiles;
+using PegasusLib;
+using PegasusLib.Graphics;
+using ReLogic.Content;
+using ReLogic.Utilities;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
-using Terraria.Audio;
+using Terraria.Graphics.Effects;
 using Terraria.Graphics.Light;
-using ReLogic.Utilities;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.Utilities;
+using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseThreeIdleState : AIState {
@@ -40,7 +42,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			GeometryUtils.AngularSmoothing(ref npc.rotation, npc.AngleTo(npc.GetTargetData().Center) - MathHelper.PiOver2, 0.3f);
 			boss.Hover(0.2f);
 			npc.TargetClosest();
-			npc.velocity += npc.DirectionTo(npc.GetTargetData().Center - Vector2.UnitY * 16 * 15) * 0.5f;
+			Vector2 hoverTarget = npc.GetTargetData().Center - Vector2.UnitY * 16 * 15;
+			npc.velocity += (hoverTarget - npc.Center).Normalized(out float distance) * 0.5f;
+			if (distance > 16 * 250) {
+				npc.Center = hoverTarget;
+			}
 			npc.velocity *= 0.97f;
 			if (++npc.ai[0] > (60 - ContentExtensions.DifficultyDamageMultiplier * 10) && Main.netMode != NetmodeID.MultiplayerClient) {
 				if (aiStates.Select(state => state.Index).All(boss.previousStates.Contains)) Array.Fill(boss.previousStates, Index);
@@ -59,10 +65,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static int AreaWidth => 60;
 		public static int AreaHeight => 80;
 		/// <summary>
-		/// I'm not actually 100% sure what unit this is in
+		/// I'm not actually 100% sure what unit this is in, but it gets more dense the lower it is
 		/// </summary>
-		public static float Density => 16 * (27 - DifficultyMult * 2);
+		public static float Density => 16 * (30 - DifficultyMult * 2);
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
 		}
@@ -103,7 +110,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Vector2 basePos = npc.GetTargetData().Center;
 				basePos.Y = lowestHeight + AreaYOffset;
 				Rectangle area = OriginExtensions.BoxOf(basePos - new Vector2(AreaWidth * 16, 0), basePos + new Vector2(AreaWidth * 16, AreaHeight * 16));
-				List<Vector2> newPositions = OriginExtensions.PoissonDiskSampling(Main.rand, area, Density);
+				List<Vector2> newPositions = Main.rand.PoissonDiskSampling(area, Density);
 				positions.Clear();
 				while (newPositions.Count > 0) {
 					int rand = Main.rand.Next(newPositions.Count);
@@ -237,6 +244,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static Color IndicatorColor(int time) => Color.White;
 #pragma warning restore IDE0060 // Remove unused parameter
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
 		}
@@ -344,6 +352,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		//will slide vertically if y distance to player is greater than this
 		public static float SlideYRange => 16 * 20;
 		#endregion stats
+		public override bool Ranged => true;
 		static List<int> Types { get; } = [];
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
@@ -444,6 +453,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static int EndLag => 30;
 #pragma warning restore IDE0060 // Remove unused parameter
 		#endregion stats
+		public override bool Ranged => true;
 		public override void Load() {
 			PhaseThreeIdleState.aiStates.Add(this);
 		}
@@ -463,7 +473,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					ModContent.ProjectileType<SC_Firework>(),
 					ShotDamage,
 					1,
-					-(diff.Length() / ShotSpeed)
+					-(diff.Length() / ShotSpeed),
+					Main.rand.NextFloat(0.5f, 2f)
 				);
 			}
 			if (npc.ai[0] > Startup + EndLag) SetAIState(boss, StateIndex<AutomaticIdleState>());
@@ -481,13 +492,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Projectile.hostile = true;
 				Projectile.scale = 1.5f;
 			}
-			public override void OnSpawn(IEntitySource source) {
-				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 2f);
-			}
 			public override void AI() {
-				Projectile.velocity = Projectile.velocity.RotatedBy(Math.Clamp(Math.Cos(Projectile.ai[1] * Projectile.ai[0] * 0.5f), -0.1f, 0.1f) * Projectile.ai[1]);
+				Projectile.velocity = Projectile.velocity.RotatedBy(Math.Clamp(Math.Cos(Projectile.ai[1] * ++Projectile.ai[0] * 0.5f), -0.1f, 0.1f) * Projectile.ai[1]);
 				if (!Projectile.IsLocallyOwned()) return;
-				if (Main.rand.Next(60, 90) < ++Projectile.ai[0]) {
+				if (Main.rand.Next(60, 90) < Projectile.ai[0]) {
 					int type = ModContent.ProjectileType<SC_Firework_Spark>();
 					for (int i = SparkCount; i > 0; i--) {
 						Projectile.SpawnProjectile(Projectile.GetSource_Death(),
@@ -495,11 +503,17 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 							Main.rand.NextVector2CircularEdge(1, 1) * SparkSpeed,
 							type,
 							ShotDamage,
-							1
+							1,
+							ai1: Main.rand.NextFloat(0.5f, 1.5f)
 						);
 					}
 					Projectile.Kill();
 				}
+			}
+			public override void OnKill(int timeLeft) {
+				SoundEngine.PlaySound(SoundID.Item176, Projectile.Center);
+				SoundEngine.PlaySound(SoundID.Zombie83.WithPitch(-2f), Projectile.Center);
+				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(0.8f), Projectile.Center);
 			}
 			public override bool PreDraw(ref Color lightColor) {
 				Shimmerstar_Staff_P.DrawShimmerstar(Projectile);
@@ -518,18 +532,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Projectile.tileCollide = false;
 				Projectile.hostile = true;
 			}
-			public override void OnSpawn(IEntitySource source) {
-				SoundEngine.PlaySound(SoundID.Item176, Projectile.Center);
-				SoundEngine.PlaySound(SoundID.Zombie83.WithPitch(-2f), Projectile.Center);
-				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(0.8f), Projectile.Center);
-				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 1.5f);
-			}
 			public override void AI() {
 				Projectile.velocity *= 0.98f;
 				Projectile.velocity.Y -= 0.2f;
-				Projectile.velocity = Projectile.velocity.RotatedBy(Math.Clamp(Math.Cos(Projectile.ai[1] * Projectile.ai[0] * 0.5f), -0.1f, 0.1f) * Projectile.ai[1]);
+				Projectile.velocity = Projectile.velocity.RotatedBy(Math.Clamp(Math.Cos(Projectile.ai[1] * ++Projectile.ai[0] * 0.5f), -0.1f, 0.1f) * Projectile.ai[1]);
 				if (!Projectile.IsLocallyOwned()) return;
-				if (Main.rand.Next(240, 360) < ++Projectile.ai[0]) {
+				if (Main.rand.Next(240, 360) < Projectile.ai[0]) {
 					Projectile.Kill();
 				}
 			}
@@ -686,7 +694,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (isBlocked) {
 					player.buffTime[buffIndex]++;
 				} else {
-					player.DelBuff(buffIndex--);
+					new Remove_Shimmer_Action(player).Perform();
 				}
 			}
 			if (player.whoAmI == Main.myPlayer && !SoundEngine.TryGetActiveSound(ambienceSlot, out _)) {
@@ -990,6 +998,19 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		void SetupRenderTargets() {
 			if (renderTarget is not null && !renderTarget.IsDisposed) return;
 			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+		}
+	}
+	public record class Remove_Shimmer_Action(Player Player) : SyncedAction {
+		public override bool ServerOnly => true;
+		public Remove_Shimmer_Action() : this(default(Player)) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			Player = Main.player[reader.ReadByte()]
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write((byte)Player.whoAmI);
+		}
+		protected override void Perform() {
+			Player.ClearBuff(Weak_Shimmer_Debuff.ID);
 		}
 	}
 }

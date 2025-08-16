@@ -5,6 +5,7 @@ using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Aetherite;
 using Origins.Items.Armor.Vanity.BossMasks;
+using Origins.Items.Other.Dyes;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Demolitionist;
@@ -18,7 +19,9 @@ using Origins.Music;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.MusicBoxes;
 using Origins.Tiles.Other;
+using Origins.Tiles.Riven;
 using PegasusLib;
+using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections;
@@ -121,6 +124,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		bool[] oldPlayerInteraction = new bool[Main.maxPlayers + 1];
 		public override void AI() {
+			NPC.netOffset *= 0;
 			if (NPC.shimmerTransparency > 0) {
 				NPC.shimmerTransparency -= 0.005f;
 				if (NPC.shimmerTransparency < 0) NPC.shimmerTransparency = 0;
@@ -177,6 +181,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 			if (IsInPhase3) {
+				if (NetmodeActive.MultiplayerClient && Main.LocalPlayer.HasBuff(Weak_Shimmer_Debuff.ID)) {
+					NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, Main.myPlayer);
+				}
 				if (Main.rand.NextBool(3))
 					Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2CircularEdge(32, 32), ModContent.DustType<ShimmerConstructDust>(), Main.rand.NextVector2Circular(15, 15), Scale: 1).noGravity = true;
 				Rectangle npcRect = NPC.Hitbox;
@@ -354,7 +361,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Main.instance.LoadGore(ID);
 				Main.spriteBatch.Draw(
 					TextureAssets.Gore[ID].Value,
-					VisualPostion - Main.screenPosition,
+					VisualPostion + construct.NPC.netOffset - Main.screenPosition,
 					null,
 					construct.isInPhase3 ? Color.White : Lighting.GetColor(lightPos),
 					rotation,
@@ -366,8 +373,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			public override readonly string ToString() => $"type:{ID}, velocity:{velocity}, position:{position}, offset:{offset}, ";
 		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Shimmer_Construct).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Shimmer_Construct).GetDefaultTMLName() + "_AF";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Vector2 position = NPC.Center;
+			Vector2 position = NPC.Center + NPC.netOffset;
 			if (IsInPhase3 || (deathAnimationTime > 100)) {
 				default(ShimmerConstructSDF).Draw(position - screenPos, NPC.rotation, new Vector2(256, 256));
 			}
@@ -392,8 +401,29 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				position += Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * MathF.Pow(deathAnimationTime / shattertime, 1.5f) * 12);
 			}
+
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Npc[Type] = afTexture;
+				NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
+					Position = new Vector2(0, 50),
+					PortraitPositionXOverride = 2,
+					PortraitPositionYOverride = 80,
+					Rotation = MathHelper.Pi,
+					Scale = 1.2f,
+					PortraitScale = 2
+				};
+			} else {
+				TextureAssets.Npc[Type] = normalTexture;
+				NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
+					Position = new Vector2(25, -30),
+					Rotation = 0.7f,
+					Frame = 6
+				};
+			}
+			Texture2D texture = TextureAssets.Npc[Type].Value;
+
 			Main.EntitySpriteDraw(
-				TextureAssets.Npc[Type].Value,
+				texture,
 				position - screenPos,
 				NPC.frame,
 				drawColor,
@@ -404,8 +434,11 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			);
 			if (aiStates[NPC.aiAction] is DoubleCircleState) {
 				Vector2 targetCenter = NPC.GetTargetData().Center;
+				Main.CurrentDrawnEntityShader = Shimmer_Dye.ShaderID;
+				SpriteBatchState state = Main.spriteBatch.GetState();
+				Main.spriteBatch.Restart(state, SpriteSortMode.Immediate);
 				Main.EntitySpriteDraw(
-					TextureAssets.Npc[Type].Value,
+					texture,
 					targetCenter + (targetCenter - position) - screenPos,
 					NPC.frame,
 					drawColor.MultiplyRGBA(new(0.8f, 0f, 1f, 0.6f)),
@@ -414,6 +447,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					NPC.scale,
 					SpriteEffects.None
 				);
+				Main.spriteBatch.Restart(state);
 			}
 			return false;
 		}
@@ -673,9 +707,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public virtual double GetWeight(Shimmer_Construct boss, int[] previousStates) {
 				int index = Array.IndexOf(previousStates, Index);
 				if (index == -1) index = previousStates.Length;
-				return index / (float)previousStates.Length + (ContentExtensions.DifficultyDamageMultiplier - 0.5f) * 0.1f;
+				float disincentivization = 1f;
+				if (Ranged) {
+					for (int i = 0; i < previousStates.Length; i++) {
+						if (aiStates[previousStates[i]].Ranged) disincentivization *= 0.4f + ContentExtensions.DifficultyDamageMultiplier * 0.1f;
+					}
+				}
+				return (index / (float)previousStates.Length + (ContentExtensions.DifficultyDamageMultiplier - 0.5f) * 0.1f) * disincentivization;
 			}
 			public virtual void TrackState(int[] previousStates) => previousStates.Roll(Index);
+			public virtual bool Ranged => false;
 			public void Unload() { }
 			protected static float DifficultyMult => ContentExtensions.DifficultyDamageMultiplier;
 		}
@@ -741,6 +782,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					origin = circle.Size() * 0.5f,
 					scale = Vector2.One * scale
 				});
+				SC_Phase_Three_Underlay.AddMinLightArea(sourcePos, (circle.Width() * 0.5f + 32) * scale);
 			} else {
 				SC_Phase_Three_Underlay.alwaysLightAllTiles = true;
 				SC_Phase_Three_Underlay.DrawDatas.Add(new(

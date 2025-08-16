@@ -1,4 +1,6 @@
-﻿using Origins.Items.Accessories;
+﻿using Origins.Core;
+using Origins.CrossMod.Fargos.Items;
+using Origins.Items.Accessories;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
@@ -11,6 +13,7 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -37,11 +40,12 @@ namespace Origins {
 					case world_cracker_hit:
 					case sync_guid:
 					case inflict_assimilation:
-					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn:
+					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn or laser_tag_score:
 					case custom_knockback:
 					case entity_interaction:
 					case soul_snatcher_activate:
 					case shinedown_spawn_shadows:
+					case synced_action:
 					altHandle = true;
 					break;
 
@@ -169,6 +173,7 @@ namespace Origins {
 					case entity_interaction:
 					case soul_snatcher_activate:
 					case shinedown_spawn_shadows:
+					case synced_action:
 					altHandle = true;
 					break;
 
@@ -502,6 +507,11 @@ namespace Origins {
 						}
 						break;
 					}
+
+					case synced_action: {
+						SyncedAction.Get(reader.ReadUInt16()).Read(reader).Perform(whoAmI);
+						break;
+					}
 				}
 			}
 			//if (reader.BaseStream.Position != reader.BaseStream.Length) Logger.Warn($"Bad read flow (+{reader.BaseStream.Position - reader.BaseStream.Length}) in packet type {type}");
@@ -543,6 +553,8 @@ namespace Origins {
 			internal const byte shinedown_spawn_shadows = 30;
 			internal const byte sync_npc_interactions = 31;
 			internal const byte clone_npc = 32;
+			internal const byte synced_action = 33;
+			internal const byte spawn_close_on_player = 34;
 		}
 	}
 	public interface IChestSyncRecipient {

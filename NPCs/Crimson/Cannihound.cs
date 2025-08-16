@@ -13,7 +13,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.NPCs.MiscE {
+namespace Origins.NPCs.Crimson {
 	public class Cannihound : ModNPC, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 82, 50);
 		public int AnimationFrames => 120;

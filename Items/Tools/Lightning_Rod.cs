@@ -12,11 +12,14 @@ using Terraria.Audio;
 using Origins.Buffs;
 using PegasusLib;
 using Origins.NPCs.Felnum;
+using Origins.CrossMod;
 
 namespace Origins.Items.Tools {
 	public class Lightning_Rod : ModItem {
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 2f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {

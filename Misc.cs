@@ -1,36 +1,45 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using AltLibrary.Common.AltBiomes;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod.Fargos.Items;
+using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Reflection;
+using Origins.Tiles;
+using Origins.Tiles.Banners;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
+using Origins.Tiles.Riven;
+using Origins.Walls;
+using PegasusLib;
+using PegasusLib.Graphics;
+using ReLogic.Content;
+using ReLogic.Graphics;
+using ReLogic.Reflection;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent;
-using Terraria.ModLoader;
-using Terraria.ID;
-using System.Runtime.CompilerServices;
-using System.Reflection;
-using Terraria.Utilities;
-using System.Collections;
-using Terraria.ModLoader.IO;
-using Origins.Tiles;
-using ReLogic.Content;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.ModLoader.Exceptions;
-using ReLogic.Reflection;
-using Terraria.Localization;
-using ReLogic.Graphics;
-using System.Reflection.Emit;
-using Terraria.Map;
-using Origins.Reflection;
 using Terraria.GameContent.Bestiary;
-using System.Diagnostics.CodeAnalysis;
-using AltLibrary.Common.AltBiomes;
-using Origins.Walls;
+using Terraria.GameContent.Creative;
 using Terraria.GameContent.Drawing;
-using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Tiles.Banners;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.GameInput;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.Map;
+using Terraria.ModLoader;
+using Terraria.ModLoader.Exceptions;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using PegasusLib;
 using PegasusLib.Graphics;
@@ -42,6 +51,7 @@ using System.Numerics;
 using Terraria.Graphics.Shaders;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
+using Terraria.Utilities;
 
 namespace Origins {
 	#region classes
@@ -1611,6 +1621,10 @@ namespace Origins {
 			if (magnitude > 0) vector /= magnitude;
 			return vector;
 		}
+		public static Vector2 Abs(this Vector2 vector, out Vector2 signs) {
+			signs = new(Math.Sign(vector.X), Math.Sign(vector.Y));
+			return vector * signs;
+		}
 		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox) {
 			float xoffset = 10f;
 			float yoffset = 24f;
@@ -1813,6 +1827,20 @@ namespace Origins {
 				if (source.Contains(element)) return true;
 			}
 			return false;
+		}
+		public delegate bool TryGetter<TSource, TResult>(TSource source, out TResult result);
+		public static IEnumerable<TResult> TrySelect<TSource, TResult>(this IEnumerable<TSource> source, TryGetter<TSource, TResult> tryGetter) {
+			foreach (TSource item in source) {
+				if (tryGetter(item, out TResult result)) yield return result;
+			}
+		}
+		public static TResult[] CombineSets<TResult, T1, T2>(this T1[] set1, T2[] set2, Func<T1, T2, TResult> operation) {
+			Debugging.Assert(set2.Length == set1.Length, new ArgumentException("Sets must have the same length"));
+			TResult[] result = new TResult[set1.Length];
+			for (int i = 0; i < result.Length; i++) {
+				result[i] = operation(set1[i], set2[i]);
+			}
+			return result;
 		}
 		public static Vector2 OldPos(this Projectile self, int index) {
 			return index == -1 ? self.position : self.oldPos[index];

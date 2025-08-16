@@ -1,7 +1,9 @@
+using Origins.Core;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -123,33 +125,34 @@ namespace Origins.Items.Weapons {
 			ID = Type;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			CloneTgt(target, hit.Knockback);
+			if (target is NPC npc && !OriginsSets.NPCs.TargetDummies[npc.type]) new Greater_Summoning_Potato_Action(npc.netID, target.Center, target.velocity).Perform();
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			CloneTgt(target, info.Knockback);
+			int type = NPCID.SmallBaldZombie;
+			if (!target.Male) type = NPCID.BigFemaleZombie;
+			new Greater_Summoning_Potato_Action(type, target.Center, target.velocity).Perform();
 		}
-		void CloneTgt(Entity target, float knockback) {
-			int entityID = int.MinValue;
-			if (target is Player plr) {
-				if (plr.Male) entityID = NPCID.SmallBaldZombie;
-				else entityID = NPCID.BigFemaleZombie;
-			} else if (target is NPC npc && !OriginsSets.NPCs.TargetDummies[npc.type]) entityID = npc.netID;
-			if (entityID != int.MinValue) {
-				if (NetmodeActive.MultiplayerClient) {
-					ModPacket packet = Origins.instance.GetPacket();
-					packet.Write(Origins.NetMessageType.clone_npc);
-					packet.WritePackedVector2(target.Center);
-					packet.Write(entityID);
-					packet.WritePackedVector2(target.velocity);
-					packet.Send();
-				} else if (NetmodeActive.SinglePlayer) {
-					NPC npc = NPC.NewNPCDirect(target.GetSource_FromThis(), target.Center, entityID);
-					npc.velocity = target.velocity * MathF.Pow(1.2f, npc.knockBackResist);
-					npc.value = 0;
-					npc.SpawnedFromStatue = true;
-					SoundEngine.PlaySound(SoundID.Item2, target.position);
-				}
-			}
+	}
+
+	public record class Greater_Summoning_Potato_Action(int type, Vector2 position, Vector2 velocity) : SyncedAction {
+		public override bool ServerOnly => true;
+		public Greater_Summoning_Potato_Action() : this(default, default, default) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			type = reader.ReadInt32(),
+			position = reader.ReadPackedVector2(),
+			velocity = reader.ReadPackedVector2()
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write(type);
+			writer.WritePackedVector2(position);
+			writer.WritePackedVector2(velocity);
+		}
+		protected override void Perform() {
+			NPC npc = NPC.NewNPCDirect(NPC.GetSource_None(), position, type);
+			npc.velocity = velocity * MathF.Pow(1.2f, npc.knockBackResist);
+			npc.value = 0;
+			npc.SpawnedFromStatue = true;
+			SoundEngine.PlaySound(SoundID.Item2, position);
 		}
 	}
 }

@@ -11,6 +11,8 @@ Generic: {
 	Tangela: Clown Vomit
 	Journal: Lore/Quest Muffin
 	Acrid: Jelly Dog
+	Spug: Smug
+	spug: smug
 }
 
 GameTips.Journal: Having trouble keeping track of your quests? If only- ooh! 2 for one muffins!
@@ -75,6 +77,13 @@ Items: {
 		{$Mods.Origins.Items.Shaped_Glass.Tooltip}
 		'No it doesn't halve your health for double damage.'
 		'''
+
+	Amoeba_Fluid_Item: {
+		DisplayName: Amoeba Glue Slime
+		Tooltip: Bouncy! Squishy! Bouncy!
+	}
+
+	Terlet_Paper.Tooltip: Summons a kawaii cta
 }
 
 Prefixes.Wholesome_Prefix.DisplayName: Holesome
@@ -116,6 +125,11 @@ Buffs: {
 		I don't like this place, not one bit.
 		'''
 	Static_Shock_Debuff.Description: You've been grounded until you learn to conduct yourself properly
+
+	Terlet_Paper_Buff: {
+		DisplayName: Fiberglass Cta
+		Description: Kawaii cta tiem
+	}
 }
 
 DefiledRelaySignals: {
@@ -146,19 +160,39 @@ NPCs: {
 	Defiled_Amalgamation.DisplayName: District Attorney
 	Defiled_Tripod.DisplayName: Blŏkusland™ Certified Weaponized Catgirl
 	Ancient_Riven_Fighter.DisplayName: Ancient Riven Knownolimitsoform
+	Shimmer_Construct.DisplayName: Shimmer Villager
 	Shimmer_Chunk1.DisplayName: "{$ItemName.Handgun}"
 	Shimmer_Chunk2.DisplayName: "{$ItemName.Handgun}"
 	Shimmer_Chunk3.DisplayName: "{$ItemName.Handgun}"
 	Shimmer_Turret_Chunk1.DisplayName: "{$ItemName.Handgun}"
 	Shimmer_Turret_Chunk2.DisplayName: "{$ItemName.Handgun}"
 	Shimmer_Turret_Chunk3.DisplayName: "{$ItemName.Handgun}"
-	Goo_Wall: Sticky Wall
+	Goo_Wall.DisplayName: Sticky Wall
 	Enchanted_Fiberglass_Slime.DisplayName: Enchanted Fiberglasss Lime
+	Fiberglass_Weaver.DisplayName: Fiberglass Cat
 }
 
-Bestiary.Leaf_Snapper: Hello!
+Bestiary: {
+	Leaf_Snapper: Hello!
+	Goo_Wall:
+		'''
+		{$Mods.Origins.Bestiary.Goo_Wall}
+
+		Smells faintly like Elmer's glue
+		'''
+	Shimmer_Construct:
+		'''
+		[centered:Hrrmm.]
+
+		I receive: 9999 platinum coins
+
+		You receive: [wiggle:1 raw cod]
+		'''
+}
+
 SetBonuses.Rubber:
 	'''
 	Immunity to Static Shock, Electrified, and traffic laws
 	Reduces damage taken by 5%
 	'''
+CritType.Felnum_Crit_Type: Critically strikes while the target is covered in wet

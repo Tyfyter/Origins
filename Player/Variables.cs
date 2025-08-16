@@ -49,6 +49,7 @@ namespace Origins {
 
 		#region armor/set bonuses
 		public bool ashenKBReduction = false;
+		public bool fiberglassHelmet = false;
 		public bool fiberglassSet = false;
 		public bool oldCryostenSet = false;
 		public bool oldCryostenHelmet = false;
@@ -395,6 +396,8 @@ namespace Origins {
 		public bool weakShimmer = false;
 		public bool compositeFrontArmWasEnabled = false;
 		public bool walledDebuff = false;
+
+		public bool sendBuffs = false;
 		#endregion
 
 		#region keybinds
@@ -527,6 +530,7 @@ namespace Origins {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
 			if (felnumSet) oldBonuses |= 2;
+			fiberglassHelmet = false;
 			fiberglassSet = false;
 			oldCryostenSet = false;
 			oldCryostenHelmet = false;
@@ -1066,14 +1070,18 @@ namespace Origins {
 				const int DashUp = 1;
 				const int DashRight = 2;
 				const int DashLeft = 3;
-				if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15) {
-					dashDirection = 1;
-				} else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15) {
-					dashDirection = -1;
-				} else if (Player.controlUp && Player.releaseUp && Player.doubleTapCardinalTimer[DashUp] < 15) {
-					dashDirectionY = -1;
-				} else if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15) {
-					dashDirectionY = 1;
+				if (Player.whoAmI == Main.myPlayer) {
+					if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15) {
+						dashDirection = 1;
+					} else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15) {
+						dashDirection = -1;
+					}
+					if (Player.controlUp && Player.releaseUp && Player.doubleTapCardinalTimer[DashUp] < 15) {
+						dashDirectionY = -1;
+					} else if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15) {
+						dashDirectionY = 1;
+					}
+					new Dash_Action(Player, dashDirection, dashDirectionY).Send();
 				}
 			} else {
 				dashDelay--;
@@ -1096,9 +1104,9 @@ namespace Origins {
 			upsideDown = false;
 			walledDebuff = false;
 			foreach (NPC npc in Main.ActiveNPCs) {
-				if (npc?.ModNPC is Goo_Wall && npc.Hitbox.Intersects(Player.Hitbox)) {
+				if (npc?.ModNPC is Goo_Wall gooWall && gooWall.InsideWall(Player)) {
 					walledDebuff = true;
-					continue;
+					break;
 				}
 			}
 		}

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Dusts;
 using Origins.Graphics;
 using Origins.Items.Materials;
@@ -9,6 +10,7 @@ using Origins.Tiles.Defiled;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -176,7 +178,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void HoldItem(Player player) {
 			player.itemLocation = Vector2.Zero;
 			OriginPlayer originPlayer = player.OriginPlayer();
-			if (player.whoAmI == Main.myPlayer) originPlayer.relativeTarget = Main.MouseWorld - player.Bottom;
+			if (player.whoAmI == Main.myPlayer) new Set_Relative_Target_Action(player, Main.MouseWorld - player.Bottom).Perform();
 			if ((originPlayer.relativeTarget.X > 0) != (player.direction > 0)) {
 				player.ChangeDir(originPlayer.relativeTarget.X > 0 ? 1 : -1);
 				originPlayer.changedDir = true;
@@ -577,4 +579,19 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Amnestic_Rose_Alt_Goo_Floor : Amnestic_Rose_Goo_Floor { }
+	public record class Set_Relative_Target_Action(Player Player, Vector2 Target) : SyncedAction {
+		public Set_Relative_Target_Action() : this(default, default) { }
+		protected override bool ShouldPerform => Player.OriginPlayer().relativeTarget != Target;
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			Player = Main.player[reader.ReadByte()],
+			Target = reader.ReadPackedVector2()
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write((byte)Player.whoAmI);
+			writer.WritePackedVector2(Target);
+		}
+		protected override void Perform() {
+			Player.OriginPlayer().relativeTarget = Target;
+		}
+	}
 }

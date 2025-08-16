@@ -157,10 +157,6 @@ namespace Origins.Items {
 		}
 		public override void ModifyItemScale(Item item, Player player, ref float scale) {
 			OriginPlayer originPlayer = player.OriginPlayer();
-			if (originPlayer.resizingGlove && player.ItemAnimationJustStarted) {
-				const float strength = 2f;
-				originPlayer.resizingGloveScale = Math.Clamp(Main.rand.NextFloat(1 / strength, float.BitIncrement(strength)), 0.75f, 2);
-			}
 			if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed)) {
 				scale *= originPlayer.meleeScaleMultiplier;
 				if (originPlayer.resizingGlove) scale *= originPlayer.resizingGloveScale;
@@ -180,6 +176,13 @@ namespace Origins.Items {
 		public override bool NeedsAmmo(Item item, Player player) {
 			if (player.OriginPlayer().wishingGlassActive) return false;
 			return true;
+		}
+		public override bool ConsumeItem(Item item, Player player) {
+			if (player.OriginPlayer().wishingGlassActive && item.CountsAsClass(DamageClass.Throwing)) {
+				if (item.CountsAsClass(DamageClasses.Explosive)) return Main.rand.NextFloat() >= item.useAnimation * 0.0175f;
+				return false;
+			}
+			return base.ConsumeItem(item, player);
 		}
 		public override void UpdateEquip(Item item, Player player) {
 			switch (item.type) {

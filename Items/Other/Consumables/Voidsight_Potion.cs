@@ -1,5 +1,5 @@
 ﻿using Origins.Buffs;
-using Origins.Items.Other.Fish;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,7 +22,7 @@ namespace Origins.Items.Other.Consumables {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.Fireblossom)
 			.AddIngredient(ItemID.NightOwlPotion)
-			.AddIngredient(ModContent.ItemType<Duskarp>())
+			.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>())
 			.AddTile(TileID.Bottles)
 			.Register();
 		}

@@ -91,6 +91,20 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			if (++Projectile.frameCounter >= frame_time) {
 				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
 			}
+			const int HalfSpriteWidth = 50 / 2;
+
+			int HalfProjWidth = Projectile.width / 2;
+
+			// Vanilla configuration for "hitbox towards the end"
+			if (Projectile.spriteDirection == 1) {
+				DrawOriginOffsetX = -(HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = (int)-DrawOriginOffsetX * 2;
+				DrawOriginOffsetY = 0;
+			} else {
+				DrawOriginOffsetX = (HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = 0;
+				DrawOriginOffsetY = 0;
+			}
 		}
 		public override Color? GetAlpha(Color lightColor) => Riven_Hive.GetGlowAlpha(lightColor);
 	}
@@ -193,6 +207,20 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			Projectile.spriteDirection = Projectile.direction;
 			if (++Projectile.frameCounter >= Sonorous_Shredder_Projectile.frame_time) {
 				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
+			}
+			const int HalfSpriteWidth = 50 / 2;
+
+			int HalfProjWidth = Projectile.width / 2;
+
+			// Vanilla configuration for "hitbox towards the end"
+			if (Projectile.spriteDirection == 1) {
+				DrawOriginOffsetX = -(HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = (int)-DrawOriginOffsetX * 2;
+				DrawOriginOffsetY = 0;
+			} else {
+				DrawOriginOffsetX = (HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = 0;
+				DrawOriginOffsetY = 0;
 			}
 		}
 		public override Color? GetAlpha(Color lightColor) => Riven_Hive.GetGlowAlpha(lightColor);

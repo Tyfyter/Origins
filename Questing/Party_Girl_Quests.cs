@@ -30,7 +30,7 @@ namespace Origins.Questing {
 		public override string Text(NPC npc, Player player) => Language.GetOrRegister("Mods.Origins.Quests.PartyGirl.Happy_Grenade.RequestConfettiGiving").Format(Happy_Grenade_Quest.confettiToGive);
 		public override bool IsActive(NPC npc, Player player) {
 			if (!Questing.QuestListSelected) return false;
-			return quest.HasQuestButton(npc, player);
+			return Quest.HasQuestButton(npc, player);
 		}
 	}
 	public class Happy_Grenade_Quest : Quest {
@@ -120,7 +120,7 @@ namespace Origins.Questing {
 		public override void OnClick(NPC npc, Player player) {
 			Questing.QuestListSelected = true;
 			Questing.fromQuest = Quest;
-			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Tax_Collector.Tax_Collector_Ghosts_Quest.Request");
+			Main.npcChatText = Language.GetTextValue(Tax_Collector_Ghosts_Quest.loc_key + "Request");
 		}
 		public override string Text(NPC npc, Player player) => Language.GetOrRegister("Mods.Origins.Quests.PartyGirl.Tax_Collector_Hat.RequestHatWearing").Value;
 		public override bool IsActive(NPC npc, Player player) {

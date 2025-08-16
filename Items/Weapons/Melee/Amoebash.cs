@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Gores.NPCs;
 using Origins.Items.Accessories;
@@ -19,6 +20,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using ThoriumMod.Items.BardItems;
 using Tyfyter.Utils;
@@ -85,7 +87,7 @@ namespace Origins.Items.Weapons.Melee {
 				);
 			}
 		}
-		static bool forcedCrit = false;
+		internal static bool forcedCrit = false;
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;
 			forcedCrit = false;
@@ -149,5 +151,10 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override Color? GetAlpha(Color lightColor) => Riven_Hive.GetGlowAlpha(lightColor);
+	}
+	public class Amoebash_Crit_Type : CritType<Amoebash> {
+		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.CritType.SlammyHammer");
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => Amoebash_Smash.forcedCrit;
+		public override float CritMultiplier(Player player, Item item) => 2f;
 	}
 }

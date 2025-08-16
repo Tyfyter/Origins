@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Materials;
@@ -10,11 +11,14 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Boar_Spear : ModItem, ICustomWikiStat {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.Spears[Type] = true;
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {

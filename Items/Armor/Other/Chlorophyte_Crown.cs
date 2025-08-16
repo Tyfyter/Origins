@@ -23,6 +23,11 @@ namespace Origins.Items.Armor.Other {
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ItemID.ChlorophytePlateMail && legs.type == ItemID.ChlorophyteGreaves;
 		}
+		public override void ArmorSetShadows(Player player) {
+			if (player.body == ArmorIDs.Body.ChlorophytePlateMail && player.legs == ArmorIDs.Legs.ChlorophyteGreaves) {
+				player.armorEffectDrawShadowSubtle = true;
+			}
+		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("ArmorSetBonus.Chlorophyte") + "\n" + Language.GetTextValue("Mods.Origins.SetBonuses.Chlorohpyte_Summoner");
 			player.maxMinions += 2;

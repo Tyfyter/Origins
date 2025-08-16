@@ -20,6 +20,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.Graphics;
 using PegasusLib;
 using Origins.NPCs.Defiled;
+using Origins.CrossMod;
 namespace Origins.Items.Weapons.Magic {
 	public class Magnus : ModItem, ICustomWikiStat {
 		public const int baseDamage = 34;
@@ -29,6 +30,8 @@ namespace Origins.Items.Weapons.Magic {
         public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Origins.DamageBonusScale[Type] = 1.5f;
+			OriginsSets.Items.FelnumItem[Type] = true;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
 		public override void SetDefaults() {

@@ -20,11 +20,14 @@ using SteelSeries.GameSense;
 using Origins.NPCs.Defiled;
 using Origins.NPCs;
 using System.Collections.Generic;
+using Origins.CrossMod;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Tyrfing : ModItem, PegasusLib.ICustomDrawItem {
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			OriginsSets.Items.ItemsThatCanChannelWithRightClick[Type] = true;
 		}

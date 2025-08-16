@@ -25,6 +25,21 @@ namespace Origins.UI {
 	public class Laser_Tag_Rules_UI : UIState {
 		public static SoundStyle ClickSound => SoundID.Tink.WithVolumeScale(0.75f);
 		public override void OnInitialize() {
+			if (Laser_Tag_Console.LaserTagGameActive) {
+				UIButton<LocalizedText> cancelButton = new(Language.GetOrRegister("Mods.Origins.Laser_Tag.CancelButton"));
+				cancelButton.Width.Set(-10, 1f);
+				cancelButton.Height.Set(32, 0f);
+				cancelButton.Top.Set(-32, 1f);
+				cancelButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => {
+					IngameFancyUI.Close();
+					if (Main.netMode == NetmodeID.SinglePlayer) return;
+					ModPacket packet = Origins.instance.GetPacket();
+					packet.Write(Origins.NetMessageType.end_laser_tag);
+					packet.Send();
+				};
+				Append(cancelButton);
+				return;
+			}
 			UIElement panel = new UIPanel();
 			panel.Width.Set(0f, 0.875f);
 			panel.MaxWidth.Set(900f, 0f);

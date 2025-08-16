@@ -19,6 +19,7 @@ namespace Origins {
 			public static bool[] ItemsThatAllowRemoteRightClick { get; } = ItemID.Sets.Factory.CreateBoolSet();
 			// not named because it controls a change to vanilla mechanics only present in TO, likely to be moved to PegasusLib
 			public static float[] DamageBonusScale { get; } = ItemID.Sets.Factory.CreateFloatSet(1f);
+			public static bool[] FelnumItem { get; } = ItemID.Sets.Factory.CreateBoolSet();
 			public static string[] JournalEntries { get; } = ItemID.Sets.Factory.CreateNamedSet($"{nameof(Items)}_{nameof(JournalEntries)}")
 			.Description("Controls which items are associated with which journal entries, multiple entries can be assigned by separating them with semicolons")
 			.RegisterCustomSet<string>(null);
@@ -112,7 +113,9 @@ namespace Origins {
 			.Description("Used to prevent exploits from some on-hit effects")
 			.RegisterBoolSet(NPCID.TargetDummy);
 			public static Action<NPC>[] CustomExpertScaling { get; } = NPCID.Sets.Factory.CreateCustomSet<Action<NPC>>(null);
-		}
+			public static Predicate<NPC>[] CustomGroundedCheck { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(PegasusLib)}/{nameof(CustomGroundedCheck)}")
+			.RegisterCustomSet<Predicate<NPC>>(null);
+	}
 		[ReinitializeDuringResizeArrays]
 		public static class Tiles {
 			public static int[] PlacementItem { get; } = TileID.Sets.Factory.CreateIntSet(-1);

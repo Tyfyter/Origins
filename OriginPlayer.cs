@@ -23,8 +23,10 @@ using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
@@ -90,7 +92,7 @@ namespace Origins {
 						if (collidingY && oldYSign > 0) Player.position.Y -= 1;
 					}
 				}
-			} else if (riptideSet && !Player.mount.Active) {
+			} else if ((riptideSet && !Player.mount.Active) || riptideDashTime != 0) {
 				otherDash = true;
 				Player.dashType = 0;
 				Player.dashTime = 0;
@@ -165,14 +167,13 @@ namespace Origins {
 					if (Player.velocity.Y * gravDir > Player.gravity * gravDir) {
 						Player.velocity.Y = Player.gravity;
 					}
-					Projectile.NewProjectile(
+					Player.SpawnProjectile(
 						Player.GetSource_Misc("refactor"),
 						Player.Center + new Vector2(Player.width * dashDirection, 0),
 						new Vector2(dashDirection * keyDashSpeed, 0),
 						ModContent.ProjectileType<Latchkey_P>(),
 						0,
-						0,
-						Player.whoAmI
+						0
 					);
 					SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithVolumeScale(0.75f), Player.position);
 					dashDelay = 10 + 6;
@@ -497,7 +498,7 @@ namespace Origins {
 			}
 			Player.oldVelocity = Player.velocity;
 			rivenWet = false;
-			if (!weakShimmer && (Player.wet || WaterCollision(Player.position, Player.width, Player.height)) && !(Player.lavaWet || Player.honeyWet)) {
+			if (!weakShimmer && (Player.wet || WaterCollision(Player.position, Player.width, Player.height)) && !(Player.lavaWet || Player.honeyWet || Player.shimmerWet)) {
 				if (Player.InModBiome<Riven_Hive>()) {
 					rivenWet = true;
 					/*if (GameModeData.ExpertMode) {
@@ -603,6 +604,10 @@ namespace Origins {
 			}
 			if (MojoInjectionActive) Mojo_Injection.UpdateEffect(this);
 			if (CrownJewelActive) Crown_Jewel.UpdateEffect(this);
+			if (sendBuffs && Player.whoAmI == Main.myPlayer && !NetmodeActive.SinglePlayer) {
+				NetMessage.SendData(MessageID.PlayerBuffs, number: Main.myPlayer);
+			}
+			sendBuffs = false;
 		}
 		public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
 			if (hasPotatOS) {

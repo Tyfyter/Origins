@@ -1,4 +1,5 @@
-﻿using Origins.Dev;
+﻿using CalamityMod.Graphics.Renderers;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -21,6 +22,11 @@ namespace Origins.Items.Armor.Other {
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ItemID.ChlorophytePlateMail && legs.type == ItemID.ChlorophyteGreaves;
+		}
+		public override void ArmorSetShadows(Player player) {
+			if (player.body == ArmorIDs.Body.ChlorophytePlateMail && player.legs == ArmorIDs.Legs.ChlorophyteGreaves) {
+				player.armorEffectDrawShadowSubtle = true;
+			}
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("ArmorSetBonus.Chlorophyte");

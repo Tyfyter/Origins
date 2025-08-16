@@ -1,4 +1,5 @@
 using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Other;
@@ -15,6 +16,9 @@ namespace Origins.Items.Weapons.Demolitionist {
             "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {
+			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -26,7 +30,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(copper: 70);
 			Item.rare = ItemRarityID.Green;
             Item.ArmorPenetration += 4;
-        }
+		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 6)
 			.AddIngredient(ItemID.Grenade, 6)

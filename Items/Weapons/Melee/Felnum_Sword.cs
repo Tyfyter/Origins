@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Projectiles;
@@ -18,6 +19,8 @@ namespace Origins.Items.Weapons.Melee {
 		];
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 		}
 		public override void SetDefaults() {

@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ProjectileID.Grenade;
 			Item.UseSound = SoundID.Item36;
 			Item.shootSpeed = 5.35f;
-			Item.noMelee = false;
+			Item.noMelee = true;
 			Item.damage = 10;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.useAmmo = ItemID.Grenade;

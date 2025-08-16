@@ -441,7 +441,6 @@ NPCs/MiscE/Boulder_Mimic_Glow
 NPCs/MiscE/Cannihound
 NPCs/MiscE/Cloud_Elemental
 NPCs/MiscE/Cloud_Elemental_Fingergun
-NPCs/MiscE/NPC_48
 
 NPCs/Nova Pillar/Nova_Pillar_Glow
 NPCs/Nova Pillar/Nova_Pillar_Head_Boss

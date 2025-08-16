@@ -37,7 +37,7 @@ namespace Origins.Tiles.Other {
 		public override Color MapColor => new Color(200, 200, 200);
 	}
 	public class Chambersite_Ore_Riven_Flesh : Chambersite_Ore {
-		public override int StoneType => TileType<Riven_Flesh>();
+		public override int StoneType => TileType<Spug_Flesh>();
 		public override Color MapColor => new Color(0, 125, 200);
 	}
 }
