@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void SetDefaults() {
 			Item.damage = 38;
 			Item.knockBack = 6;
-			Item.DamageType = DamageClass.Summon;
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 			Item.mana = 10;
 			Item.width = 32;
 			Item.height = 32;
@@ -41,6 +41,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.shootSpeed = 1;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
+			Item.sentry = true;
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
@@ -72,7 +73,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 		public override void SetDefaults() {
 			//Projectile.CloneDefaults(ProjectileID.FrostHydra);
-			Projectile.DamageType = DamageClass.Summon;
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 			Projectile.width = 40;
 			Projectile.height = 40;
 			Projectile.tileCollide = true;
@@ -210,7 +211,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CursedBullet);
-			Projectile.DamageType = DamageClass.Summon;
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 			Projectile.width = 8;
 			Projectile.height = 8;
 			Projectile.aiStyle = 0;
