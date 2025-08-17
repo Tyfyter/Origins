@@ -1032,33 +1032,32 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
 (^) Sticky Link Grenade*
-(X) Ticking Bomb
-(X) Ticking Dynamite
+(#, ^2) Ticking Bomb
+(#, ^2) Ticking Dynamite
 (^) Voltefuse
 
 (^) Acrid Handcannon*
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
-(X) Bloodshot
+(#, ^2) Bloodshot
 (^) Boomphracken
 (^) Chambersite Mine Launcher
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (^) Grenade Lawnchair
 (^) Happy Bomb*
-(X) Rattlesnake
+(#, ^2) Rattlesnake
 (^) Rocket Rifle
-(X) Shroomcannon
 (^) Sonar Dynamite
 (ᗢ) Sonorous Shredder
 (^) Thermite Launcher*
 (^) Torpedo Tube
 
-(X) Autohandcannon
+(#, ^2) Autohandcannon
 (^) Bomboomstick
 (^) Chlorodynamite*
 (X) Chlorophyte Handcannon
-(X) Firework Cannon
+(#, ^2) Firework Cannon
 (X) Flarefury
 (X) Holy Hand Grenade
 (^) Mine Flayer*
@@ -1068,6 +1067,7 @@ EXPLOSIVE WEAPONS:
 (X) Oil Drum
 (^) Omni-directional Claymore*
 (^) Partybringer
+(X) Puffle
 (^) Rocodile
 (^) Self-Destruct*
 (X) Supernova
@@ -1231,8 +1231,8 @@ TILES:
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
 (#2, ^2) Pocket Dimension Monolith !!!
-(X) Ravel Lock: 21
 (X) Ravel Lock: Builder
+(X) Ravel Lock: Snake
 (X) Ravel Lock: Stacker
 (X) Ravel Locker
 (X) Residue Block°
