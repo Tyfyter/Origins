@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Other {
@@ -27,7 +28,16 @@ namespace Origins.Tiles.Other {
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = g = b = 0.01f;
 		}
-		public override void OnLoad() => this.SetupGlowKeys();
+		public override void OnLoad() {
+			this.SetupGlowKeys();
+			Item.OnAddRecipes += (item => {
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.ShimmerMonolith)
+				.AddIngredient<Aetherite_Ore_Item>(15)
+				.AddTile(TileID.Anvils)
+				.Register();
+			});
+		}
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 }

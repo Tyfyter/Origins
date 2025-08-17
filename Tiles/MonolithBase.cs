@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Tiles.Other;
+using System;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -21,6 +22,8 @@ namespace Origins.Tiles {
 		protected override bool CloneNewInstances => true;
 		public override string Texture => Tile.Texture + "_Item";
 		public override string Name => Tile.Name + "_Item";
+		public event Action<Item> ExtraDefaults;
+		public event Action<Item> OnAddRecipes;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 			Tile.RegisterItemDrop(Type);
@@ -31,12 +34,30 @@ namespace Origins.Tiles {
 			Item.value = Item.buyPrice(gold: 4);
 			Item.accessory = true;
 			Item.vanity = true;
+			if (ExtraDefaults is not null) {
+				ExtraDefaults(Item);
+				ExtraDefaults = null;
+			}
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			if (!hideVisual) UpdateVanity(player);
 		}
 		public override void UpdateVanity(Player player) {
 			if (player.whoAmI == Main.myPlayer) Tile.ApplyEffect();
+		}
+		public override void AddRecipes() {
+			if (OnAddRecipes is not null) {
+				OnAddRecipes(Item);
+				OnAddRecipes = null;
+			}
+		}
+		public MonolithItem WithExtraDefaults(Action<Item> extra) {
+			ExtraDefaults += extra;
+			return this;
+		}
+		public MonolithItem WithOnAddRecipes(Action<Item> recipes) {
+			OnAddRecipes += recipes;
+			return this;
 		}
 	}
 	public abstract class MonolithBase : ModTile {

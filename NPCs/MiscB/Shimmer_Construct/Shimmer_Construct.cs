@@ -486,7 +486,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<Jawbreaker>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ItemType<Wishing_Glass>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Shimmer_Construct_Relic>()));
-			//npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Pocket_Dimension_Monolith_Item>(), 10));
+			//npcLoot.Add(new DropBasedOnMasterMode(ItemDropRule.DropNothing(), ItemDropRule.Common(GetInstance<Pocket_Dimension_Monolith>().Item.Type, 10)));
 		}
 		Point averageShimmerSurfacePosition = Point.Zero;
 		bool noShimmer = false;
