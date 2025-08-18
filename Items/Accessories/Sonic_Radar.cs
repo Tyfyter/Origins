@@ -21,6 +21,7 @@ namespace Origins.Items.Accessories {
 			player.dangerSense = true;
 			player.findTreasure = true;
 			player.detectCreature = true;
+			Lighting.AddLight(player.MountedCenter, new Vector3(0.4f));
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
