@@ -114,7 +114,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
-				this.GetBestiaryFlavorText(),
+				this.GetBestiaryFlavorText(true),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
 			);
 		}

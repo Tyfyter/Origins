@@ -52,6 +52,7 @@ using Terraria.Graphics.Shaders;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Terraria.Utilities;
+using Origins.UI;
 
 namespace Origins {
 	#region classes
@@ -2793,9 +2794,11 @@ namespace Origins {
 				if (value.HasFlag(possibleFlags[i])) yield return possibleFlags[i];
 			}
 		}
-		public static FlavorTextBestiaryInfoElement GetBestiaryFlavorText(this ModNPC npc) {
-			Language.GetOrRegister($"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}", () => "bestiary text here");
-			return new FlavorTextBestiaryInfoElement($"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}");
+		public static IBestiaryInfoElement GetBestiaryFlavorText(this ModNPC npc, bool better = false) {
+			string key = $"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}";
+			Language.GetOrRegister(key, () => "bestiary text here");
+			if (better) return new BetterFlavorTextBestiaryInfoElement(key);
+			return new FlavorTextBestiaryInfoElement(key);
 		}
 		public static FlavorTextBestiaryInfoElement GetBestiaryFlavorText(int npcID) {
 			string flavorText = "";

@@ -18,7 +18,7 @@ namespace Origins.UI {
 				};
 				if (maxWidth < 0) return false;
 				if (justCheckingString || spriteBatch is null) return true;
-				ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, Text, BasePosition + Vector2.UnitX * maxWidth * 0.5f, color, 0, origin + Vector2.UnitX * textSize.X * 0.5f, new(scale));
+				ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, Text, BasePosition + Vector2.UnitX * maxWidth * 0.5f * scale, color, 0, origin + Vector2.UnitX * textSize.X * 0.5f * scale, new(scale));
 				return true;
 			}
 			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default, Color color = default, float scale = 1) {
