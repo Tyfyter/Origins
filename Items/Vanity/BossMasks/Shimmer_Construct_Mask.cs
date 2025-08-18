@@ -1,10 +1,11 @@
 using Origins.Dev;
+using Origins.Items.Armor;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Armor.Vanity.BossMasks {
+namespace Origins.Items.Vanity.BossMasks {
 	[AutoloadEquip(EquipType.Head)]
 	public class Shimmer_Construct_Mask: ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override LocalizedText Tooltip => LocalizedText.Empty;

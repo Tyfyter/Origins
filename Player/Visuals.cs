@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
-using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
+using Origins.Items.Vanity.Dev.PlagueTexan;
 using Origins.Items.Weapons.Ranged;
 using Origins.Layers;
 using Origins.Tiles.Defiled;

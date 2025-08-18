@@ -39,6 +39,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item177;
 			Item.autoReuse = false;
+			Item.sentry = true;
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override void ModifyManaCost(Player player, ref float reduce, ref float mult) {

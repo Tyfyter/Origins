@@ -1,13 +1,15 @@
 using Origins.Dev;
+using Origins.Items.Armor;
 using Origins.Items.Armor.Vanity.Dev.KonoDioDa;
 using Origins.Items.Pets;
+using Origins.Items.Vanity.Dev;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
+namespace Origins.Items.Vanity.Dev.PlagueTexan {
 	public class Plague_Texan_Set : DevSet<Plague_Texan_Mask> {
 		public override IEnumerable<ItemTypeDropRuleWrapper> GetDrops() {
 			yield return ModContent.ItemType<Plague_Texan_Mask>();
@@ -66,16 +68,12 @@ namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 			player.dangerSense = true;
 			player.detectCreature = true;
 			player.GetModPlayer<OriginPlayer>().plagueSightLight = true;
-			if (!hideVisual) {
-				ApplyVisuals(player);
-			}
+			if (!hideVisual) 				ApplyVisuals(player);
 		}
 		public static void ApplyVisuals(Player player) {
 			player.GetModPlayer<OriginPlayer>().plagueSight = true;
 			Color color = Color.Gold;
-			if (OriginExtensions.IsDevName(player.name, 1)) {
-				color = new Color(43, 185, 255);
-			}
+			if (OriginExtensions.IsDevName(player.name, 1)) 				color = new Color(43, 185, 255);
 			Lighting.AddLight(player.Center + new Vector2(3 * player.direction, -6), color.ToVector3() / 3f);
 		}
 	}

@@ -10,7 +10,6 @@ using Origins.Gores.NPCs;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Bleeding;
-using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
@@ -52,6 +51,7 @@ using Origins.NPCs.MiscB.Shimmer_Construct;
 using static Origins.OriginsSets.Items;
 using Origins.World.BiomeData;
 using Origins.Layers;
+using Origins.Items.Vanity.Dev.PlagueTexan;
 
 namespace Origins {
 	public partial class Origins : Mod {

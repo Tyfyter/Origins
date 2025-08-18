@@ -1,6 +1,8 @@
 ﻿using Origins.Dev;
+using Origins.Items.Armor;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Pets;
+using Origins.Items.Vanity.Dev;
 using Origins.Items.Weapons.Melee;
 using PegasusLib;
 using System;
@@ -15,7 +17,7 @@ using Terraria.Graphics.Renderers;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Armor.Vanity.Dev.KonoDioDa {
+namespace Origins.Items.Vanity.Dev.KonoDioDa {
 	public class Kono_Dio_Da_Set : DevSet<Kono_Dio_Da_Wings> {
 		public override IEnumerable<ItemTypeDropRuleWrapper> GetDrops() {
 			yield return ModContent.ItemType<Dio_Helmet>();
