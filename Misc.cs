@@ -2495,7 +2495,7 @@ namespace Origins {
 			int flatX = 14;
 			int kScaleX = -2;
 			Vector2 position = new Vector2(i * 16f, j * 16f) + offset - Main.screenPosition;
-			switch (tile.BlockType) {
+			switch (TileID.Sets.HasSlopeFrames[tile.TileType] ? BlockType.Solid : tile.BlockType) {
 				case BlockType.Solid:
 				spriteBatch.Draw(glowTexture, position, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16), glowColor, 0f, default, 1f, SpriteEffects.None, 0f);
 				break;
