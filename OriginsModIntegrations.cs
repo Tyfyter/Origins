@@ -1112,10 +1112,6 @@ namespace Origins {
 			RecipeGroup.RegisterGroup("Origins:AnyDefiledBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Defiled_Wastelands.DisplayName")), [.. defiled]));
 			RecipeGroup.RegisterGroup("Origins:AnyRivenBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Riven_Hive.DisplayName")), [.. riven]));
 		}
-		[JITWhenModsEnabled(nameof(ColoredDamageTypes))]
-		static void SetColoredTypes() {
-
-		}
 	}
 	public interface ICustomWikiDestination {
 		string WikiPageName { get; }
