@@ -10,8 +10,10 @@ using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Layers;
 using PegasusLib;
+using PegasusLib.Networking;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -534,13 +536,18 @@ namespace Origins {
 				if (Player.statLife <= 0) {
 					Player.lifeRegenCount = 0;
 					speed = 0.81f;
-					Player.KillMe(lastMildewDeathReason, 0, 0, lastMildewDeathPvP);
+					if (mildewHealth <= 0 && Player.whoAmI == Main.myPlayer) {
+						Player.KillMe(lastMildewDeathReason, 9999, 0, lastMildewDeathPvP);
+					}
 				} else if (Player.statLife < mildewHealth) {
 					Player.lifeRegenCount += 24;
 					speed = 0.1f;
 				}
 				MathUtils.LinearSmoothing(ref mildewHealth, Math.Min(Player.statLifeMax2 * 0.65f, Player.statLife), speed);
 			} else {
+				if (mildewHealth > 0 && Player.statLife <= 0 && Player.whoAmI == Main.myPlayer) {
+					Player.KillMe(lastMildewDeathReason, 9999, 0, lastMildewDeathPvP);
+				}
 				mildewHealth = 0;
 			}
 			if (necromancyPrefixMana > Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier) {
@@ -552,9 +559,13 @@ namespace Origins {
 			oldGravDir = Player.gravDir;
 		}
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource) {
-			if (mildewHeart && mildewHealth > 0) {
-				lastMildewDeathReason = damageSource;
-				lastMildewDeathPvP = pvp;
+			Mod.Logger.Info("Player died: " + damageSource.GetDeathText(Player.name));
+			if (mildewHeart) {
+				if (Player.whoAmI != Main.myPlayer) return damage >= 9999;
+				if (mildewHealth > 0) {
+					lastMildewDeathReason = damageSource;
+					lastMildewDeathPvP = pvp;
+				}
 				return mildewHealth <= 0;
 			}
 			return true;

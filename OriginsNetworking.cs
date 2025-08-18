@@ -94,14 +94,12 @@ namespace Origins {
 					);
 					break;
 
-					case sync_neural_network: {
-						Neural_Network_Buff.SetTime(Main.player[reader.ReadByte()], reader.ReadByte());
-					}
+					case sync_neural_network: 
+					Neural_Network_Buff.SetTime(Main.player[reader.ReadByte()], reader.ReadByte());
 					break;
 
-					case defiled_relay_message: {
-						Defiled_Relay.DisplayMessage(reader.ReadString());
-					}
+					case defiled_relay_message:
+					Defiled_Relay.DisplayMessage(reader.ReadString());
 					break;
 
 					case chest_sync or chest_sync_projectile: {
@@ -213,6 +211,7 @@ namespace Origins {
 
 					case sync_neural_network: {
 						ModPacket packet = GetPacket();
+						packet.Write(sync_neural_network);
 						packet.Write(reader.ReadByte());
 						packet.Write(reader.ReadByte());
 						packet.Send(-1, whoAmI);
@@ -221,6 +220,7 @@ namespace Origins {
 
 					case defiled_relay_message: {
 						ModPacket packet = GetPacket();
+						packet.Write(defiled_relay_message);
 						packet.Write(reader.ReadString());
 						packet.Send(-1, whoAmI);
 					}

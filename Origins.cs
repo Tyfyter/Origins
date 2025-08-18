@@ -712,7 +712,7 @@ namespace Origins {
 			AltLibrary.AltLibrary.Instance.Call("AddInvalidRangeHandler", "Origins:BrinePool", Brine_Pool.Gen.JungleAvoider, 6);
 #if DEBUG
 			for (int i = 0; i < ItemID.Count; i++) OriginGlobalItem.AddVanillaTooltips(i, [], true);
-			MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
+			MonoModHooks.Modify(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
 #endif
 		}
 		public override void Unload() {

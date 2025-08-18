@@ -1124,13 +1124,20 @@ namespace Origins {
 			if (TileLoader.GetTile(tileToCreate) is ICustomCanPlaceTile customCanPlaceTile) customCanPlaceTile.CanPlace(self, targetTile, sItem, ref tileToCreate, ref previewPlaceStyle, ref overrideCanPlace, ref forcedRandom);
 		}
 
-		delegate void orig_FCEH(object sender, FirstChanceExceptionEventArgs args);
-		static FastFieldInfo<Exception, string> _message = "_message";
-		static void FCEH(orig_FCEH orig, object sender, FirstChanceExceptionEventArgs args) {
-			if (args?.Exception is IOException ioException && ((ioException.Message?.Contains("bytes caused by Origins in HandlePacket") ?? false) || (ioException.Message?.Contains("bytes caused by ModDemoUtils in HandlePacket") ?? false))) {
-				_message.SetValue(ioException, _message.GetValue(ioException) + $" with packet type {lastPacketType}");
+		static void FCEH(ILContext il) {
+			ILCursor c = new(il);
+			int msg = -1;
+			if (c.TryGotoNext(i => i.MatchLdloc(out msg), i => i.MatchCallOrCallvirt(typeof(Console), nameof(Console.WriteLine))) 
+				&& c.TryGotoPrev(i => i.MatchStloc(msg))
+				&& c.TryGotoPrev(MoveType.After, i => i.MatchCallOrCallvirt<Exception>("get_" + nameof(Exception.Message)))
+				) {
+				c.EmitDelegate((string text) => {
+					if ((text?.Contains("bytes caused by Origins in HandlePacket") ?? false) || (text?.Contains("bytes caused by ModDemoUtils in HandlePacket") ?? false)) {
+						text += $" with packet type {lastPacketType}";
+					}
+					return text;
+				});
 			}
-			orig(sender, args);
 		}
 		private ReLogic.Utilities.SlotId On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback(On_SoundEngine.orig_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback orig, ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback) {
 			if (Strange_Computer.drawingStrangeLine) return ReLogic.Utilities.SlotId.Invalid;

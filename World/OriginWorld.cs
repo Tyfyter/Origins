@@ -576,8 +576,8 @@ namespace Origins {
 				tRiven = 1;
 			}
 			if (Main.netMode == NetmodeID.Server) {
-				ModPacket packet = Origins.instance.GetPacket(2);
-				packet.Write(MessageID.TileCounts);
+				ModPacket packet = Origins.instance.GetPacket(3);
+				packet.Write(Origins.NetMessageType.tile_counts);
 				packet.Write(tDefiled);
 				packet.Write(tRiven);
 			}

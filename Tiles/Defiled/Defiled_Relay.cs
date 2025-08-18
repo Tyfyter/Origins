@@ -118,6 +118,7 @@ namespace Origins.Tiles.Defiled {
 		public static void DisplayMessage(string key, bool fromNet = false) {
 			if (!fromNet && Main.netMode != NetmodeID.SinglePlayer && Origins.instance.NetID >= 0) {
 				ModPacket packet = Origins.instance.GetPacket();
+				packet.Write(Origins.NetMessageType.defiled_relay_message);
 				packet.Write(key);
 				packet.Send();
 			}
