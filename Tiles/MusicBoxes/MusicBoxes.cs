@@ -180,7 +180,7 @@ namespace Origins.Tiles.MusicBoxes {
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			drawData.glowColor = GlowColor;
 			drawData.glowSourceRect = new Rectangle(drawData.tileFrameX, drawData.tileFrameY, 18, 18);
-			drawData.glowTexture = GlowTexture;
+			drawData.glowTexture = this.GetGlowTexture(drawData.tileCache.TileColor);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			Tile tile = Main.tile[i, j];
