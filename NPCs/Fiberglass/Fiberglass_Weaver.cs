@@ -149,6 +149,9 @@ namespace Origins.NPCs.Fiberglass {
 					if (++NPC.ai[1] > 240 - NPC.ai[3]) {
 						NPC.ai[1] = 0;
 						NPC.ai[0] = Main.rand.Next(1, 3);
+						if (!NPC.WithinRange(target.Center, 16 * 100)) {
+							NPC.ai[0] = 1; // always lunge when over 100 blocks away
+						}
 					}
 					break;
 				}
