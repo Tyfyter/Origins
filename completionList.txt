@@ -628,7 +628,7 @@ VANITY:
 
 (^) DIO's Set
 (@, ^3) First Dream !!! (Byteloss)
-(@, #, ^6) Tyfyter's Set* !!! (wings)
+(^) Tyfyter's Set*
 
 (^) Acrid Dye
 (^) Amber Dye
@@ -671,7 +671,7 @@ WINGS:
 
 (^) Dio's Scarf
 (X) Flight Hoodie
-(@, ^3) Tyfyter's Wings !!!
+(@4, ^3) Tyfyter's Wings !!!
 ---
 
 
@@ -715,7 +715,7 @@ TOOLS:
 
 MELEE WEAPONS:
 |---
-(X) Astral Scythe !!!
+(@2, #) Astral Scythe !!!
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
@@ -786,7 +786,7 @@ RANGED WEAPONS:
 (^) Blotopus*
 (^) Bolt Gun*
 (^) Chipper Knife*
-(☻) Constellation !!!
+(#3, ^2) Constellation !!!
 (^) Endowood Bow*
 (^) Felnum Longbow
 (^) Fiberglass Bow*
@@ -800,7 +800,7 @@ RANGED WEAPONS:
 (^) Neural Network*
 (^) Riven Splitter*
 (^) Shardcannon*
-(#3, ^2) Shimmershot !!!
+(^) Shimmershot
 (^) Sleetfire*
 (^) Sunflower Seed Shooter*
 (^) Tendon Tear*
