@@ -1,6 +1,7 @@
 ﻿using Origins.Core;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Riven;
+using PegasusLib.Networking;
 using System.IO;
 using Terraria;
 using Terraria.Audio;

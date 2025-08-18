@@ -6,6 +6,7 @@ using Origins.NPCs.Defiled;
 using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
 using Origins.World.BiomeData;
+using PegasusLib.Networking;
 using System;
 using System.IO;
 using System.Linq;

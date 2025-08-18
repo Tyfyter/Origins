@@ -6,6 +6,7 @@ using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
 using PegasusLib;
 using PegasusLib.Graphics;
+using PegasusLib.Networking;
 using ReLogic.Content;
 using ReLogic.Utilities;
 using System;

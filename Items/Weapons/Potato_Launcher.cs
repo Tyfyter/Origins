@@ -2,6 +2,7 @@ using Origins.Core;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Projectiles;
 using PegasusLib;
+using PegasusLib.Networking;
 using System;
 using System.IO;
 using Terraria;

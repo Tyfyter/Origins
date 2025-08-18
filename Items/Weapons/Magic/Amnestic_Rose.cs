@@ -8,6 +8,7 @@ using Origins.Items.Materials;
 using Origins.NPCs;
 using Origins.Tiles.Defiled;
 using PegasusLib;
+using PegasusLib.Networking;
 using System;
 using System.Collections.Generic;
 using System.IO;
