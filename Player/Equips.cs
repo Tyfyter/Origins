@@ -536,8 +536,10 @@ namespace Origins {
 				if (Player.statLife <= 0) {
 					Player.lifeRegenCount = 0;
 					speed = 0.81f;
-					if (mildewHealth <= 0 && Player.whoAmI == Main.myPlayer) {
-						Player.KillMe(lastMildewDeathReason, 9999, 0, lastMildewDeathPvP);
+					if (Player.whoAmI == Main.myPlayer) {
+						if (mildewHealth <= 0) Player.KillMe(lastMildewDeathReason, 9999, 0, lastMildewDeathPvP);
+					} else {
+						Player.statLife = 1;
 					}
 				} else if (Player.statLife < mildewHealth) {
 					Player.lifeRegenCount += 24;
