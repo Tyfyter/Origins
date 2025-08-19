@@ -1645,7 +1645,12 @@ CROSS-MOD CONTENT:
 (ᗢ) Luiafk Skeleton Merchant update
 (ᗢ) Luiafk Mobile Merchant sells Merchant stuff
 
-(X) Contagion Assimilation
+(#, ^2) Confection Assimilation
+(#, ^2) Contagion Assimilation
+(#, ^2) Hunger
+(#, ^2) Sugar Crash
+(#, ^2) Sugar Rush
+(@2, #) Sugarcoat
 
 (^) Aether Orb
 (々) Ashen Chest
