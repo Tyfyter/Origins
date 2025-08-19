@@ -16,7 +16,8 @@ namespace Origins.Items.Weapons.Ranged {
         public override void SetStaticDefaults() {
             ItemID.Sets.ShimmerTransformToItem[ItemID.MagicDagger] = ModContent.ItemType<Bleeding_Obsidian_Kunai>();
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bleeding_Obsidian_Kunai>()] = ItemID.MagicDagger;
-        }
+			Item.ResearchUnlockCount = Item.maxStack;
+		}
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);
 			Item.damage = 38;
@@ -29,6 +30,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.shoot = ModContent.ProjectileType<Bleeding_Obsidian_Kunai_P>();
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Pink;
+			Item.AllowReforgeForStackableItem = true;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
