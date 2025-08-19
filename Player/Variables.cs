@@ -1058,6 +1058,12 @@ namespace Origins {
 			}
 			oldVelocities.Insert(0, Player.velocity);
 			while (oldVelocities.Count > 20) oldVelocities.RemoveAt(20);
+			if (tornCurrentSeverity >= 0.99f && Player.whoAmI == Main.myPlayer && !Player.dead && Player.statLifeMax2 <= 0) {
+				mildewHealth = 0;
+				Player.KillMe(PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Torn").SelectFrom(Player.name).ToNetworkText()),
+					9999, 0
+				);
+			}
 			#region check if a dash should start
 			dashDirection = 0;
 			dashDirectionY = 0;

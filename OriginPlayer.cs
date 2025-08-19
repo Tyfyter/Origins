@@ -579,7 +579,7 @@ namespace Origins {
 			mana.Base += quantumInjectors * Quantum_Injector.mana_per_use;
 			if (tornCurrentSeverity > 0) {
 				health *= 1 - tornCurrentSeverity;
-				if (tornCurrentSeverity >= 1 && Player.whoAmI == Main.myPlayer) {
+				if (tornCurrentSeverity >= 1 && Player.whoAmI == Main.myPlayer && !Player.dead) {
 					mildewHealth = 0;
 					Player.KillMe(PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Torn").SelectFrom(Player.name).ToNetworkText()),
 						9999, 0

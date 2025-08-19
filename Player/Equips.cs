@@ -537,7 +537,9 @@ namespace Origins {
 					Player.lifeRegenCount = 0;
 					speed = 0.81f;
 					if (Player.whoAmI == Main.myPlayer) {
-						if (mildewHealth <= 0) Player.KillMe(lastMildewDeathReason, 9999, 0, lastMildewDeathPvP);
+						if (mildewHealth <= 0) {
+							Player.KillMe(lastMildewDeathReason, 9999, 0, lastMildewDeathPvP);
+						}
 					} else {
 						Player.statLife = 1;
 					}
@@ -561,7 +563,10 @@ namespace Origins {
 			oldGravDir = Player.gravDir;
 		}
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource) {
-			if (mildewHeart && (tornCurrentSeverity < 1 || Player.statLifeMax2 <= 0)) {
+			if (mildewHeart) {
+				if (tornCurrentSeverity >= 1 || Player.statLifeMax2 <= 0) {
+					mildewHealth = 0;
+				}
 				if (Player.whoAmI != Main.myPlayer) return damage >= 9999;
 				if (mildewHealth > 0) {
 					lastMildewDeathReason = damageSource;
