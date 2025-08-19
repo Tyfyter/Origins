@@ -561,7 +561,6 @@ namespace Origins {
 			oldGravDir = Player.gravDir;
 		}
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource) {
-			Mod.Logger.Info("Player died: " + damageSource.GetDeathText(Player.name));
 			if (mildewHeart) {
 				if (Player.whoAmI != Main.myPlayer) return damage >= 9999;
 				if (mildewHealth > 0) {
