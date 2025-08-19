@@ -64,7 +64,7 @@ namespace Origins.Items.Materials {
 		];
 		public override int Rare => ItemRarityID.Orange;
 		public override int ResearchUnlockCount => 25;
-		public override int Value => Item.sellPrice(silver: 1);
+		public override int Value => Item.sellPrice(silver: 50);
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();

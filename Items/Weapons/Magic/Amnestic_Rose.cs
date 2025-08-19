@@ -118,8 +118,8 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.SoulofNight, 100)
-			.AddIngredient<Black_Bile>(50)
+			.AddIngredient(ItemID.SoulofNight, 20)
+			.AddIngredient<Black_Bile>(10)
 			.AddIngredient<Wilting_Rose_Item>()
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
