@@ -77,7 +77,7 @@ namespace Origins.Items.Weapons.Melee {
 			Player player = Main.player[Projectile.owner];
 			if (Projectile.ai[1] != 0) {
 				float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
-				Projectile.rotation = MathHelper.Lerp(-2.25f, 1f, swingFactor) * Projectile.ai[1];
+				Projectile.rotation = MathHelper.Lerp(-2.25f, 1f, swingFactor) * Projectile.ai[1] * player.gravDir;
 				float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
 				Projectile.Center = player.MountedCenter - Projectile.velocity;
 				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
