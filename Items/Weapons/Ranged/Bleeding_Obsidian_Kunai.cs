@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs;
@@ -59,13 +60,13 @@ namespace Origins.Items.Weapons.Ranged {
 			dust.velocity *= 1.5f;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.Bleeding, 300);
+			target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
 			target.AddBuff(BuffID.CursedInferno, 120);
 			target.AddBuff(BuffID.Ichor, 180);
 			OriginGlobalNPC.InflictTorn(target, 300, 180, 0.1f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
-			target.AddBuff(BuffID.Bleeding, 300);
+			target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
 			target.AddBuff(BuffID.CursedInferno, 300);
 			target.AddBuff(BuffID.Ichor, 300);
 			OriginPlayer.InflictTorn(target, 300, targetSeverity: 1f - 0.9f);
