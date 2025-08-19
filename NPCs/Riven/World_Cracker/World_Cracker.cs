@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -30,6 +31,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
@@ -93,7 +95,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.damage = 30;
 			NPC.defense = 100;
 			NPC.lifeMax = 3800;
-			NPC.aiStyle = -1;
+			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.GravityMultiplier *= 0.5f;
 			NPC.value = Item.sellPrice(gold: 1);
 			NPC.HitSound = SoundID.NPCHit13;
@@ -147,8 +149,10 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			if (!playerTarget.InModBiome<Riven_Hive>()) NPC.target = Main.maxPlayers;
 			if (NPC.HasValidTarget) {
 				ForcedTargetPosition = playerTarget.MountedCenter - playerTarget.velocity * 32;
+				NPC.DiscourageDespawn(NPC.activeTime);
 			} else {
 				ForcedTargetPosition = new(NPC.Center.X, (Main.maxTilesY + 100) * 16);
+				NPC.EncourageDespawn(60 * 5);
 			}
 			float dot = Vector2.Dot(NPC.velocity.SafeNormalize(default), (ForcedTargetPosition.Value - NPC.Center).SafeNormalize(default));
 			CanFly = dot > 0.5f;
@@ -179,7 +183,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			}
 			ProcessShoot(NPC);
 			//Acceleration *= MathF.Max((0.8f -  * 5, 1);
-			if (++NPC.frameCounter >= 6) {
+			if (!NetmodeActive.Server && ++NPC.frameCounter >= 6) {
 				NPC.frameCounter = 0;
 				int frame = NPC.frame.Y / NPC.frame.Height;
 				if (OriginsModIntegrations.CheckAprilFools()) {
@@ -517,7 +521,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.width = NPC.height = 84;
 			NPC.damage = 20;
 			NPC.defense = 100;
-			NPC.aiStyle = -1;
+			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath20.WithPitchRange(0.2f, 0.38f);
 		}
@@ -536,6 +540,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				Lighting.AddLight(pos.X, pos.Y, 0, 0, 1 / 255f);
 			}
 		}
+		public override bool CheckActive() => !HeadSegment.active;
 		public override void FindFrame(int frameHeight) {
 			const int frame_width = 104;
 			if (NPC.frame.Width != frame_width - 2) {
@@ -617,7 +622,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.width = NPC.height = 76;
 			NPC.damage = 38;
 			NPC.defense = 20;
-			NPC.aiStyle = -1;
+			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath20.WithPitchRange(0.2f, 0.38f);
 		}
@@ -632,6 +637,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				Lighting.AddLight(pos.X, pos.Y, 0, 0, 1 / 255f);
 			}
 		}
+		public override bool CheckActive() => !HeadSegment.active;
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
 			base.OnHitByItem(player, item, hit, damageDone);
 			DamageArmor(NPC, hit, item.ArmorPenetration);
