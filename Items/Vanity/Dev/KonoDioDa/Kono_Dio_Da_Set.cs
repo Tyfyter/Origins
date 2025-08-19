@@ -57,7 +57,7 @@ namespace Origins.Items.Vanity.Dev.KonoDioDa {
 	}
 	[AutoloadEquip(EquipType.Neck)]
 	public class Kono_Dio_Da_Wings : ModItem {
-		public override string Texture => "Origins/Items/Armor/Vanity/Dev/KonoDioDa/Dio_Scarf";
+		public override string Texture => "Origins/Items/Vanity/Dev/KonoDioDa/Dio_Scarf";
 		public static int WingsID { get; private set; }
 		public override void Load() {
 			WingsID = EquipLoader.AddEquipTexture(Mod, $"{GetType().GetDefaultTMLName()}_{EquipType.Wings}", EquipType.Wings, this);

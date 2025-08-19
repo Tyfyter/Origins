@@ -22,7 +22,7 @@ namespace Origins.Items.Vanity.Dev.cher {
 			On_ItemSlot.SwapVanityEquip += On_ItemSlot_SwapVanityEquip;
 			On_Player.UpdateVisibleAccessory += On_Player_UpdateVisibleAccessory;
 			int AddTexture(string name, EquipType equipType, params Action<int>[] sets) {
-				string path = "Origins/Items/Armor/Vanity/Dev/cher/" + name;
+				string path = "Origins/Items/Vanity/Dev/cher/" + name;
 				int id = EquipLoader.AddEquipTexture(Mod, path, equipType, name: name);
 				for (int i = 0; i < sets.Length; i++) 					setValues.Add((id, sets[i]));
 				if (ModContent.HasAsset(path + "_Glow")) setValues.Add((id, id => Accessory_Glow_Layer.AddGlowMask(equipType, id, path + "_Glow")));
