@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
 
-namespace Origins.Items.Armor.Vanity.Dev.cher {
+namespace Origins.Items.Vanity.Dev.cher {
 	public class First_Dream : ModItem {
 		protected override bool CloneNewInstances => true;
 		[CloneByReference]
@@ -24,9 +24,7 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 			int AddTexture(string name, EquipType equipType, params Action<int>[] sets) {
 				string path = "Origins/Items/Armor/Vanity/Dev/cher/" + name;
 				int id = EquipLoader.AddEquipTexture(Mod, path, equipType, name: name);
-				for (int i = 0; i < sets.Length; i++) {
-					setValues.Add((id, sets[i]));
-				}
+				for (int i = 0; i < sets.Length; i++) 					setValues.Add((id, sets[i]));
 				if (ModContent.HasAsset(path + "_Glow")) setValues.Add((id, id => Accessory_Glow_Layer.AddGlowMask(equipType, id, path + "_Glow")));
 				return id;
 			}
@@ -76,9 +74,7 @@ namespace Origins.Items.Armor.Vanity.Dev.cher {
 			}
 		}
 		public override void SetStaticDefaults() {
-			for (int i = 0; i < setValues.Count; i++) {
-				setValues[i].func(setValues[i].id);
-			}
+			for (int i = 0; i < setValues.Count; i++) 				setValues[i].func(setValues[i].id);
 			setValues.Clear();
 		}
 		public override void SetDefaults() {

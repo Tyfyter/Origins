@@ -40,6 +40,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.shootSpeed = 1;
 			Item.noMelee = true;
 			Item.noUseGraphic = false;
+			Item.sentry = true;
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			for (int i = tooltips.Count - 1; i >= 0; i--) {

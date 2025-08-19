@@ -12,15 +12,13 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Armor.Vanity.Dev {
+namespace Origins.Items.Vanity.Dev {
 	public abstract class DevSet<TIconic> : ModItem, IItemObtainabilityProvider where TIconic : ModItem, new() {
 		public override string Texture => new TIconic().Texture;
 		public abstract IEnumerable<ItemTypeDropRuleWrapper> GetDrops();
 		public override void SetStaticDefaults() {
 			IItemDropRule rule = new DropAsSetRule(Type);
-			foreach (ItemTypeDropRuleWrapper drop in GetDrops()) {
-				rule.WithOnSuccess(drop.Rule);
-			}
+			foreach (ItemTypeDropRuleWrapper drop in GetDrops()) 				rule.WithOnSuccess(drop.Rule);
 			OriginGlobalItem.OriginsDevSetRule.options = OriginGlobalItem.OriginsDevSetRule.options.Concat([
 				rule
 			]).ToArray();

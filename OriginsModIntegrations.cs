@@ -13,7 +13,7 @@ using Origins.Dev;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Other;
-using Origins.Items.Armor.Vanity.BossMasks;
+using Origins.Items.Vanity.BossMasks;
 using Origins.Items.Materials;
 using Origins.Items.Other;
 using Origins.Items.Other.Consumables;
@@ -532,6 +532,63 @@ namespace Origins {
 					} catch (Exception ex) {
 						if (Origins.LogLoadingILError("RecipeBrowser_CalculateArmorSets_Fix", ex)) throw;
 					}
+				}
+			}
+			if (ModLoader.TryGetMod("ColoredDamageTypes", out Mod coloredDamageTypes)) {
+				Color explColor = new(234, 56, 103);
+				Color explCritColor = new(235, 0, 59);
+				Dictionary<DamageClass, (Color dmgColor, Color critColor)> colors = new() {
+					[DamageClass.Melee] = (new(254, 121, 2), new(253, 62, 3)),
+					[DamageClass.Ranged] = (new(34, 221, 151), new(33, 160, 141)),
+					[DamageClass.Magic] = (new(254, 126, 229), new(255, 31, 174)),
+					[DamageClass.Summon] = (new(136, 226, 25), new(14, 154, 230)),
+					[DamageClass.Throwing] = (new(161, 114, 74), new(175, 165, 103))
+				};
+
+				coloredDamageTypes.Call("AddDamageType",
+					DamageClasses.Explosive,
+					explColor,
+					explColor,
+					explCritColor
+				);
+				coloredDamageTypes.Call("AddDamageType",
+					DamageClasses.Incantation,
+					colors[DamageClass.Summon].dmgColor,
+					colors[DamageClass.Summon].dmgColor,
+					colors[DamageClass.Summon].critColor
+				);
+				coloredDamageTypes.Call("AddDamageType",
+					DamageClasses.MeleeMagic,
+					colors[DamageClass.Melee].dmgColor.MultiplyRGB(colors[DamageClass.Magic].dmgColor),
+					colors[DamageClass.Melee].dmgColor.MultiplyRGB(colors[DamageClass.Magic].dmgColor),
+					colors[DamageClass.Melee].critColor.MultiplyRGB(colors[DamageClass.Magic].critColor)
+				);
+				coloredDamageTypes.Call("AddDamageType",
+					DamageClasses.RangedMagic,
+					colors[DamageClass.Ranged].dmgColor.MultiplyRGB(colors[DamageClass.Magic].dmgColor),
+					colors[DamageClass.Ranged].dmgColor.MultiplyRGB(colors[DamageClass.Magic].dmgColor),
+					colors[DamageClass.Ranged].critColor.MultiplyRGB(colors[DamageClass.Magic].critColor)
+				);
+				coloredDamageTypes.Call("AddDamageType",
+					GetInstance<Chambersite_Mine_Launcher_Damage>(),
+					colors[DamageClass.Ranged].dmgColor.MultiplyRGB(explColor),
+					colors[DamageClass.Ranged].dmgColor.MultiplyRGB(explColor),
+					colors[DamageClass.Ranged].critColor.MultiplyRGB(explCritColor)
+				);
+
+				// if (coloredDamageTypes.TryFind("SentryClass", out DamageClass sentryClass)) colors.Add(sentryClass, default);
+
+				if (Thorium is not null) {
+					if (Thorium.TryFind("BardClass", out DamageClass bard)) colors.Add(bard, (new(), new()));
+				}
+
+				foreach (KeyValuePair<DamageClass, (Color dmgColor, Color critColor)> item in colors) {
+					coloredDamageTypes.Call("AddDamageType",
+						DamageClasses.ExplosiveVersion[item.Key],
+						item.Value.dmgColor.MultiplyRGB(explColor),
+						item.Value.dmgColor.MultiplyRGB(explColor),
+						item.Value.critColor.MultiplyRGB(explCritColor)
+					);
 				}
 			}
 		}

@@ -3,7 +3,7 @@ using Origins.Buffs;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Armor.Felnum;
-using Origins.Items.Armor.Vanity.Other;
+using Origins.Items.Vanity.Other;
 using Origins.Tiles.Other;
 using PegasusLib;
 using System;

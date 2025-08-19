@@ -36,6 +36,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.shootSpeed = 1;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
+			Item.sentry = true;
 			Item.glowMask = glowmask;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {

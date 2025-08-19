@@ -1,11 +1,12 @@
 using Origins.Dev;
+using Origins.Items.Armor;
 using Origins.Items.Pets;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Armor.Vanity.BossMasks {
+namespace Origins.Items.Vanity.BossMasks {
 	[AutoloadEquip(EquipType.Head)]
 	public class Lost_Diver_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public string ArmorSetName => "Lost_Diver_Vanity";

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Armor.Vanity.Other;
+using Origins.Items.Vanity.Other;
 using System;
 using Terraria;
 using Terraria.DataStructures;
