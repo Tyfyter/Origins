@@ -155,7 +155,17 @@ namespace Origins.Items.Weapons.Ranged {
 		public bool IsLinked => Projectile.ai[0] == (int)Projectile.ai[0];
 
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MagicMissile;
-
+		Projectile LinkedTo => Main.projectile.GetIfInRange(Projectile.GetByUUID(Projectile.owner, Projectile.ai[0]));
+		Vector2 _linkPosition;
+		public Vector2 LinkPosition {
+			get {
+				if (LinkedTo is Projectile proj) _linkPosition = proj.Center;
+				return _linkPosition;
+			}
+		}
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.NeedsUUID[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.tileCollide = false;
 			Projectile.width = 15;
@@ -181,6 +191,7 @@ namespace Origins.Items.Weapons.Ranged {
 					if (other.ai[0] == Projectile.ai[0] && Projectile.owner == other.owner && other.ModProjectile is ConstellationNode) {
 						other.ai[0] = Projectile.identity;
 						Projectile.ai[0] = other.identity;
+						other.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerFake = false;
 						Projectile.netUpdate = true;
 						other.netUpdate = true;
 						GroupRoot = false;
@@ -210,23 +221,26 @@ namespace Origins.Items.Weapons.Ranged {
 					origin = TextureAssets.Projectile[Type].Size() * 0.5f,
 					scale = new Vector2(Progress)
 				};
-				if (IsLinked && Projectile.GetRelatedProjectile(0) is Projectile other) {
-					Vector2 ca = Projectile.Center - Main.screenPosition;
-					Vector2 cb = other.Center - Main.screenPosition;
+				if (IsLinked) {
+					Vector2 b = LinkPosition;
+					if (b != default) {
+						Vector2 ca = Projectile.Center - Main.screenPosition;
+						Vector2 cb = b - Main.screenPosition;
 
-					cb = Vector2.Lerp(ca, cb, Progress);
+						cb = Vector2.Lerp(ca, cb, Progress);
 
-					ModContent.GetInstance<ConstellationDrawSystem>().AddDrawPoint(ca, cb, DrawWidth);
-					OriginExtensions.DrawLightningArc(Main.spriteBatch,
-						[ca, cb],
-						colors: [
-							(0.15f, new Color(80, 204, 219, 0) * 0.5f),
+						ModContent.GetInstance<ConstellationDrawSystem>().AddDrawPoint(ca, cb, DrawWidth);
+						OriginExtensions.DrawLightningArc(Main.spriteBatch,
+							[ca, cb],
+							colors: [
+								(0.15f, new Color(80, 204, 219, 0) * 0.5f),
 								(0.1f, new Color(80, 251, 255, 0) * 0.5f),
 								(0.05f, new Color(200, 255, 255, 0) * 0.5f)
-						]
-					);
-					data.position = other.Center - Main.screenPosition;
-					Main.EntitySpriteDraw(data);
+							]
+						);
+						data.position = b - Main.screenPosition;
+						Main.EntitySpriteDraw(data);
+					}
 				}
 				data.position = Projectile.Center - Main.screenPosition;
 				Main.EntitySpriteDraw(data);
@@ -234,10 +248,11 @@ namespace Origins.Items.Weapons.Ranged {
 			return false;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			if (GroupRoot && IsLinked && Projectile.GetRelatedProjectile(0) is Projectile other) {
+			if (GroupRoot && IsLinked) {
+				Vector2 b = LinkPosition;
+				if (b == default) return projHitbox.Intersects(targetHitbox);
 				float _ = 0;
 				Vector2 start = Projectile.Center;
-				Vector2 b = other.Center;
 				Vector2 end = Vector2.Lerp(start, b, Progress);
 				if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, DrawWidth, ref _)) {
 					return true;
