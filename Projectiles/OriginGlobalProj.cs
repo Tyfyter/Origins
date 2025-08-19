@@ -317,6 +317,9 @@ namespace Origins.Projectiles {
 					oldPositions[0] = projectile.Center;
 				}
 			}
+			if (weakpointAnalyzerFake) {
+				projectile.timeLeft -= 2;
+			}
 		}
 		public override void AI(Projectile projectile) {
 			if (prefix is IProjectileAIPrefix projectileAIPrefix) {
