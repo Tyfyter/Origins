@@ -416,6 +416,8 @@ DeathMessage: {
 	// Self_Damage_3: "{0} got carried away."
 	// Self_Damage_4: "{0} really let themselves go."
 	// Self_Damage_5: "{0} committed insurance fraud."
+	// Confection_Assimilation: "{0} had too many sweets."
+	// Contagion_Assimilation: "{0} couldn't stop picking their boogers."
 
 	Torn: {
 		// 0: "{0} watched their body dissolve."

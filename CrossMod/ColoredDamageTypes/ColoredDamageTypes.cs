@@ -16,7 +16,7 @@ namespace Origins.CrossMod.ColoredDamageTypes {
 		public static Mod ColoredTypesMod;
 		public static Color explColor = new(234, 56, 103);
 		public static Color explCritColor = new(235, 0, 59);
-		public static Dictionary<DamageClass, (Color dmgColor, Color critColor)> colors;
+		public static Dictionary<DamageClass, (Color dmgColor, Color critColor)> colors = [];
 
 		public override bool IsLoadingEnabled(Mod mod) {
 			return ModLoader.HasMod("ColoredDamageTypes");
@@ -51,38 +51,39 @@ namespace Origins.CrossMod.ColoredDamageTypes {
 		}
 		public override void PostSetupContent() {
 			Type DamageConfig = ColoredTypesMod.Code.GetType("ColoredDamageTypes.DamageConfig");
-			FieldInfo VanillaInstance = DamageConfig?.GetField("Instance", BindingFlags.NonPublic | BindingFlags.Instance);
-			FieldInfo VanillaVanilla = VanillaInstance.FieldType?.GetField("VanillaDmg", BindingFlags.NonPublic | BindingFlags.Instance);
-			FieldInfo VanillaMeleeDmg = VanillaVanilla.FieldType?.GetField("MeleeDmg", BindingFlags.NonPublic | BindingFlags.Instance);
-			FieldInfo VanillaRangeDmg = VanillaVanilla.FieldType?.GetField("RangedDmg", BindingFlags.NonPublic | BindingFlags.Instance);
-			FieldInfo VanillaMagicDmg = VanillaVanilla.FieldType?.GetField("MagicDmg", BindingFlags.NonPublic | BindingFlags.Instance);
-			FieldInfo VanillaThrowDmg = VanillaVanilla.FieldType?.GetField("ThrowingDmg", BindingFlags.NonPublic | BindingFlags.Instance);
-			FieldInfo VanillaSummonDmg = VanillaVanilla.FieldType?.GetField("SummonDmg", BindingFlags.NonPublic | BindingFlags.Instance);
-			FieldInfo VanillaSentryDmg = VanillaVanilla.FieldType?.GetField("SentryDmg", BindingFlags.NonPublic | BindingFlags.Instance);
-			Color MeleeColor = (Color)VanillaMeleeDmg.FieldType?.GetField("MeleeDamage", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(DamageConfig);
-			Color MeleeCritColor = (Color)VanillaMeleeDmg.FieldType?.GetField("MeleeDamageCrit", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(DamageConfig);
-			Color RangeColor = (Color)VanillaMeleeDmg.FieldType?.GetField("RangedDamage", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(DamageConfig);
-			Color RangeCritColor = (Color)VanillaMeleeDmg.FieldType?.GetField("RangedDamageCrit", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(DamageConfig);
-			Color MagicColor = (Color)VanillaMeleeDmg.FieldType?.GetField("MagicDamage", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(DamageConfig);
-			Color MagicCritColor = (Color)VanillaMeleeDmg.FieldType?.GetField("MagicDamageCrit", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(DamageConfig);
-			Color ThrowColor = (Color)VanillaMeleeDmg.FieldType?.GetField("ThrowingDamage", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(DamageConfig);
-			Color ThrowCritColor = (Color)VanillaMeleeDmg.FieldType?.GetField("ThrowingDamageCrit", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(DamageConfig);
-			Color SummonColor = (Color)VanillaMeleeDmg.FieldType?.GetField("SummonDamage", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(DamageConfig);
-			Color SummonCritColor = (Color)VanillaMeleeDmg.FieldType?.GetField("SummonDamageCrit", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(DamageConfig);
-			Color SentryColor = (Color)VanillaMeleeDmg.FieldType?.GetField("SentryDamage", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(DamageConfig);
-			Color SentryCritColor = (Color)VanillaMeleeDmg.FieldType?.GetField("SentryDamageCrit", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(DamageConfig);
+			FieldInfo VanillaDmg = DamageConfig.GetField("VanillaDmg");
+			object VanillaInstance = VanillaDmg.GetValue(DamageConfig.GetField("Instance").GetValue(null));
+			FieldInfo VanillaMeleeDmg = VanillaDmg.FieldType.GetField("MeleeDmg");
+			FieldInfo VanillaRangeDmg = VanillaDmg.FieldType.GetField("RangedDmg");
+			FieldInfo VanillaMagicDmg = VanillaDmg.FieldType.GetField("MagicDmg");
+			FieldInfo VanillaThrowDmg = VanillaDmg.FieldType.GetField("ThrowingDmg");
+			FieldInfo VanillaSummonDmg = VanillaDmg.FieldType.GetField("SummonDmg");
+			FieldInfo VanillaSentryDmg = VanillaDmg.FieldType.GetField("SentryDmg");
+			Color MeleeColor = (Color)VanillaMeleeDmg.FieldType.GetField("MeleeDamage").GetValue(VanillaMeleeDmg.GetValue(VanillaInstance));
+			Color MeleeCritColor = (Color)VanillaMeleeDmg.FieldType.GetField("MeleeDamageCrit").GetValue(VanillaMeleeDmg.GetValue(VanillaInstance));
+			Color RangeColor = (Color)VanillaRangeDmg.FieldType.GetField("RangedDamage").GetValue(VanillaRangeDmg.GetValue(VanillaInstance));
+			Color RangeCritColor = (Color)VanillaRangeDmg.FieldType.GetField("RangedDamageCrit").GetValue(VanillaRangeDmg.GetValue(VanillaInstance));
+			Color MagicColor = (Color)VanillaMagicDmg.FieldType.GetField("MagicDamage").GetValue(VanillaMagicDmg.GetValue(VanillaInstance));
+			Color MagicCritColor = (Color)VanillaMagicDmg.FieldType.GetField("MagicDamageCrit").GetValue(VanillaMagicDmg.GetValue(VanillaInstance));
+			Color ThrowColor = (Color)VanillaThrowDmg.FieldType.GetField("ThrowingDamage").GetValue(VanillaThrowDmg.GetValue(VanillaInstance));
+			Color ThrowCritColor = (Color)VanillaThrowDmg.FieldType.GetField("ThrowingDamageCrit").GetValue(VanillaThrowDmg.GetValue(VanillaInstance));
+			Color SummonColor = (Color)VanillaSummonDmg.FieldType.GetField("SummonDamage").GetValue(VanillaSummonDmg.GetValue(VanillaInstance));
+			Color SummonCritColor = (Color)VanillaSummonDmg.FieldType.GetField("SummonDamageCrit").GetValue(VanillaSummonDmg.GetValue(VanillaInstance));
+			Color SentryColor = (Color)VanillaSentryDmg.FieldType.GetField("SentryDamage").GetValue(VanillaSentryDmg.GetValue(VanillaInstance));
+			Color SentryCritColor = (Color)VanillaSentryDmg.FieldType.GetField("SentryDamageCrit").GetValue(VanillaSentryDmg.GetValue(VanillaInstance));
 
-			colors.Add(DamageClass.Melee, (MeleeColor,  MeleeCritColor));
+			DamageClass sentryClass = ColoredTypesMod.Find<DamageClass>("SentryClass");
+			colors.Add(DamageClass.Melee, (MeleeColor, MeleeCritColor));
+			colors.Add(DamageClass.MeleeNoSpeed, (MeleeColor, MeleeCritColor));
 			colors.Add(DamageClass.Ranged, (RangeColor, RangeCritColor));
 			colors.Add(DamageClass.Magic, (MagicColor, MagicCritColor));
 			colors.Add(DamageClass.Throwing, (ThrowColor, ThrowCritColor));
 			colors.Add(DamageClass.Summon, (SummonColor, SummonCritColor));
+			colors.Add(DamageClass.SummonMeleeSpeed, (SummonColor, SummonCritColor));
+			colors.Add(sentryClass, (SentryColor, SentryCritColor));
 
-			if (ColoredTypesMod.TryFind("SentryClass", out DamageClass sentryClass)) {
-				if (DamageClasses.ExplosiveVersion.ContainsKey(sentryClass)) DamageClasses.ExplosiveVersion[sentryClass] = ExplosiveSentry;
-				else DamageClasses.ExplosiveVersion.Add(sentryClass, ExplosiveSentry);
-				colors.Add(sentryClass, (SentryColor, SentryCritColor));
-			}
+			if (DamageClasses.ExplosiveVersion.ContainsKey(sentryClass)) DamageClasses.ExplosiveVersion[sentryClass] = ExplosiveSentry;
+			else DamageClasses.ExplosiveVersion.Add(sentryClass, ExplosiveSentry);
 
 			ColoredTypesMod.Call("AddDamageType",
 				DamageClasses.Explosive,
