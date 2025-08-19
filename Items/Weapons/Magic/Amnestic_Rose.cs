@@ -204,6 +204,7 @@ namespace Origins.Items.Weapons.Magic {
 			originPlayer.amnesticRoseHoldTime = 3;
 			UpdateJoints(originPlayer, originPlayer.amnesticRoseJoints);
 			if (originPlayer.amnesticRoseBloomTime.Cooldown()) {
+				new Set_Rose_Bloom_Time_Action(player, 0).Send();
 				Vector2 pos = GetEndPos(originPlayer.Player, originPlayer.amnesticRoseJoints) - 8 * Vector2.One;
 				for (int i = 0; i < 16; i++) {
 					Dust.NewDust(pos, 16, 16, ModContent.DustType<Rose_Dust>());
@@ -232,7 +233,7 @@ namespace Origins.Items.Weapons.Magic {
 				}
 				return false;
 			}
-			originPlayer.amnesticRoseBloomTime = (int)((60 + player.itemAnimationMax * 1.5f) * 0.5f * 8);
+			new Set_Rose_Bloom_Time_Action(player, (int)((60 + player.itemAnimationMax * 1.5f) * 0.5f * 8)).Perform();
 			player.AddBuff(Item.buffType, originPlayer.amnesticRoseBloomTime);
 			return true;
 		}
@@ -593,6 +594,21 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		protected override void Perform() {
 			Player.OriginPlayer().relativeTarget = Target;
+		}
+	}
+	public record class Set_Rose_Bloom_Time_Action(Player Player, int Value) : SyncedAction {
+		public Set_Rose_Bloom_Time_Action() : this(default, default) { }
+		protected override bool ShouldPerform => Player.OriginPlayer().amnesticRoseBloomTime != Value;
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			Player = Main.player[reader.ReadByte()],
+			Value = reader.ReadInt32()
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write((byte)Player.whoAmI);
+			writer.Write(Value);
+		}
+		protected override void Perform() {
+			Player.OriginPlayer().amnesticRoseBloomTime = Value;
 		}
 	}
 }
