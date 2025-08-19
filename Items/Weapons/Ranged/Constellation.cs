@@ -1,5 +1,6 @@
 ﻿using Origins.Items.Materials;
 using Origins.Journal;
+using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -170,10 +171,10 @@ namespace Origins.Items.Weapons.Ranged {
 
 			if (IsLinked)
 				Projectile.frameCounter++;
-			else {
+			else if (!Projectile.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerFake) {
 				foreach (Projectile other in Main.ActiveProjectiles) {
 					if (other == Projectile) continue;
-					if (other.ai[0] == Projectile.ai[0] && Projectile.owner == other.owner && other.ModProjectile is ConstellationNode) {
+					if (other.ai[0] == Projectile.ai[0] && Projectile.owner == other.owner && other.ModProjectile is ConstellationNode && !other.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerFake) {
 						other.ai[0] = Projectile.identity;
 						Projectile.ai[0] = other.identity;
 						Projectile.netUpdate = true;
