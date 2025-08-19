@@ -580,8 +580,9 @@ namespace Origins {
 			if (tornCurrentSeverity > 0) {
 				health *= 1 - tornCurrentSeverity;
 				if (tornCurrentSeverity >= 1 && Player.whoAmI == Main.myPlayer) {
+					mildewHealth = 0;
 					Player.KillMe(PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Torn").SelectFrom(Player.name).ToNetworkText()),
-						0, 0
+						9999, 0
 					);
 				}
 			}
