@@ -242,6 +242,7 @@ ENEMY NPCS:
 (X) Spiteful Flesh
 (X) The Claw
 (X) Tubefish
+(🤡) Creme-filled bat
 
 (^) Airsnatcher
 (^) Amoebeye*
