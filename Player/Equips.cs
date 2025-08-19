@@ -561,7 +561,7 @@ namespace Origins {
 			oldGravDir = Player.gravDir;
 		}
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource) {
-			if (mildewHeart && tornCurrentSeverity <= 1) {
+			if (mildewHeart && (tornCurrentSeverity < 1 || Player.statLifeMax2 <= 0)) {
 				if (Player.whoAmI != Main.myPlayer) return damage >= 9999;
 				if (mildewHealth > 0) {
 					lastMildewDeathReason = damageSource;
