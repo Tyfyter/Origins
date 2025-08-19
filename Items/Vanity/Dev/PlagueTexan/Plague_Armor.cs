@@ -1,6 +1,6 @@
 using Origins.Dev;
 using Origins.Items.Armor;
-using Origins.Items.Armor.Vanity.Dev.KonoDioDa;
+using Origins.Items.Vanity.Dev.KonoDioDa;
 using Origins.Items.Pets;
 using Origins.Items.Vanity.Dev;
 using System.Collections.Generic;

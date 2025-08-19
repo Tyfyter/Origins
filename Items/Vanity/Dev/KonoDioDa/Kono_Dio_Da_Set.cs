@@ -1,6 +1,6 @@
 ﻿using Origins.Dev;
 using Origins.Items.Armor;
-using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
+using Origins.Items.Vanity.Dev.PlagueTexan;
 using Origins.Items.Pets;
 using Origins.Items.Vanity.Dev;
 using Origins.Items.Weapons.Melee;
