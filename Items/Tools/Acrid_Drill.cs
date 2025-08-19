@@ -8,6 +8,7 @@ namespace Origins.Items.Tools {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
+			ItemID.Sets.IsDrill[Type] = true;
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
