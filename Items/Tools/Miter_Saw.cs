@@ -146,6 +146,7 @@ namespace Origins.Items.Tools {
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation * player.gravDir - MathHelper.PiOver2 * player.direction);
 			player.heldProj = Projectile.whoAmI;
 			Projectile.frameCounter = (Projectile.frameCounter + 1);
+			player.itemAnimationMax = CombinedHooks.TotalAnimationTime(player.HeldItem.useAnimation, player, player.HeldItem);
 		}
 	}
 	public class Miter_Saw_Crit_Type : CritType<Miter_Saw>, IBrokenContent {
