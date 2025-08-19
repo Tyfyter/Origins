@@ -27,7 +27,7 @@ namespace Origins.Items.Accessories {
 			Item.master = true;
 			Item.rare = ItemRarityID.Cyan;
 		}
-		public static Vector2 GetEyePos(Player player) => player.MountedCenter + new Vector2(5 * player.direction, -14);
+		public static Vector2 GetEyePos(Player player) => player.MountedCenter + new Vector2(5 * player.direction, player.gravDir * -14);
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.thirdEyeUseTime = Item.useTime;
