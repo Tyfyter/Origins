@@ -3015,41 +3015,41 @@ namespace Origins {
 			0);
 		}
 		public static void DrawConstellationLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width = 20, float distort = 20, float waveSpeed = 0.03f) {
-			var shader = GameShaders.Misc["Origins:Constellation"];
+			MiscShaderData shader = GameShaders.Misc["Origins:Constellation"];
 			shader.UseSaturation(width);
 			shader.UseOpacity(distort);
 
-			var space = ModContent.Request<Texture2D>("Origins/Items/Weapons/Ranged/Constellation_Fill");
+			Asset<Texture2D> space = ModContent.Request<Texture2D>("Origins/Items/Weapons/Ranged/Constellation_Fill");
 
-			var screenPos = Main.screenPosition / new Vector2(Main.screenWidth, Main.screenHeight);
-			var source = new Rectangle(0, 0, space.Width(), space.Height());
+			Vector2 screenPos = Main.screenPosition / new Vector2(Main.screenWidth, Main.screenHeight);
+			Rectangle source = new Rectangle(0, 0, space.Width(), space.Height());
 
 			shader.UseImage0(space);
 
 			Main.spriteBatch.End();
-			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
+			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-			var minX = (int)Math.Min(start.X, end.X);
-			var minY = (int)Math.Min(start.Y, end.Y);
-			var maxX = (int)Math.Max(start.X, end.X);
-			var maxY = (int)Math.Max(start.Y, end.Y);
+			int minX = (int)Math.Min(start.X, end.X);
+			int minY = (int)Math.Min(start.Y, end.Y);
+			int maxX = (int)Math.Max(start.X, end.X);
+			int maxY = (int)Math.Max(start.Y, end.Y);
 
 			int offset = (int)20;
-			var dest = new Rectangle(
+			Rectangle dest = new Rectangle(
 				minX - offset,
 				minY - offset,
 				maxX - minX + offset * 2,
 				maxY - minY + offset * 2
 			);
-			var speed = 0.1f;
+			float speed = 0.1f;
 			shader.UseColor(speed, speed, 0f);
 			shader.UseShaderSpecificData(
 			new Vector4(screenPos, dest.Width, dest.Height)
 			);
 
-			var uv1 = dest.MapUV(start.ToPoint());
-			var uv2 = dest.MapUV(end.ToPoint());
-			var pack = new Vector4(uv1.X, uv1.Y, uv2.X, uv2.Y);
+			Vector2 uv1 = dest.MapUV(start.ToPoint());
+			Vector2 uv2 = dest.MapUV(end.ToPoint());
+			Vector4 pack = new Vector4(uv1.X, uv1.Y, uv2.X, uv2.Y);
 			shader.Shader.Parameters["uNodePositions"].SetValue(pack);
 
 			shader.Apply();
