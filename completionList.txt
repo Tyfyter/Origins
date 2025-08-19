@@ -181,7 +181,7 @@ ENEMY NPCS:
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
 (^) Aqueoua
-(☻) Barnacleback* !!! (BBs spitting out Goo Walls)
+(^) Barnacleback*
 (^) Barnacle Bunny*
 (^) Bile Thrower*
 (X) Blotopus
@@ -197,6 +197,7 @@ ENEMY NPCS:
 (^) Conehead Zombie°
 (X) Corrupt Reaper
 (^) Cranivore*
+(🤡) Creme-filled Bat !!!
 (^) Crimbrain*
 (X) Crying Creeper
 (^) Defiled Broadcaster
@@ -242,7 +243,6 @@ ENEMY NPCS:
 (X) Spiteful Flesh
 (X) The Claw
 (X) Tubefish
-(🤡) Creme-filled bat
 
 (^) Airsnatcher
 (^) Amoebeye*
@@ -672,7 +672,7 @@ WINGS:
 
 (^) Dio's Scarf
 (X) Flight Hoodie
-(@4, ^3) Tyfyter's Wings !!!
+(#2, ^2) Tyfyter's Wings !!! (AF effect)
 ---
 
 
