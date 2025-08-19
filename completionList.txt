@@ -181,7 +181,7 @@ ENEMY NPCS:
 (^) Ancient Defiled Cyclops*
 (^) Ancient Defiled Phantom*
 (^) Aqueoua
-(#2, ^2) Barnacleback* !!! (BBs spitting out Goo Walls)
+(☻) Barnacleback* !!! (BBs spitting out Goo Walls)
 (^) Barnacle Bunny*
 (^) Bile Thrower*
 (X) Blotopus

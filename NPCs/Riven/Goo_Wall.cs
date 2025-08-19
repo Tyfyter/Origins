@@ -138,7 +138,7 @@ namespace Origins.NPCs.Riven {
 			if (Hitboxes is null) {
 				Vector2 anchor = Anchor2;
 				Vector2 position = Anchor1;
-				Hitboxes = new Rectangle[8];
+				Hitboxes = new Rectangle[12];
 				Rectangle box = new(0, 0, 52, 52);
 
 				Vector2 unitSquared = (anchor - position).Normalized(out _).Abs(out Vector2 signs);
@@ -222,6 +222,15 @@ namespace Origins.NPCs.Riven {
 
 			frame = new(0, 0, 52, 18);
 			Main.EntitySpriteDraw(texture, anchor - screenPos, frame, color, rot, new(frame.Width * 0.5f, 18), scale, SpriteEffects.None);
+
+			if (Hitboxes is null) return false;
+			for (int i = 0; i < Hitboxes.Length; i++) {
+				Rectangle box = Hitboxes[i];
+				spriteBatch.DrawLine(Color.White, box.TopLeft(), box.TopRight());
+				spriteBatch.DrawLine(Color.White, box.TopRight(), box.BottomRight());
+				spriteBatch.DrawLine(Color.White, box.BottomRight(), box.BottomLeft());
+				spriteBatch.DrawLine(Color.White, box.BottomLeft(), box.TopLeft());
+			}
 			return false;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
