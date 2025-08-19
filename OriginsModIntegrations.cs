@@ -3,10 +3,7 @@ using AltLibrary.Common.Systems;
 using Fargowiltas.Items.Tiles;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Mono.Cecil;
-using Mono.Cecil.Cil;
 using MonoMod.Cil;
-using Newtonsoft.Json.Linq;
 using Origins.Buffs;
 using Origins.CrossMod.Fargos.Items;
 using Origins.Dev;
@@ -32,7 +29,6 @@ using Origins.NPCs.Defiled.Boss;
 using Origins.NPCs.Fiberglass;
 using Origins.NPCs.MiscB;
 using Origins.NPCs.MiscB.Shimmer_Construct;
-using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.Tiles;
 using Origins.Tiles.BossDrops;
@@ -48,7 +44,6 @@ using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -130,31 +125,6 @@ namespace Origins {
 			if (ModLoader.TryGetMod("ItemSourceHelper", out Mod itemSourceHelper)) {
 				itemSourceHelper.Call("AddIconicWeapon", DamageClasses.Explosive.Type, (int)ItemID.Bomb);
 				itemSourceHelper.Call("AddShimmerFakeCondition", RecipeConditions.ShimmerTransmutation);
-			}
-			if (ModLoader.TryGetMod("ColoredDamageTypes", out Mod coloredDamageTypes)) {
-				static bool PushesDamageClass(ILContext il, Instruction instruction) {
-					if (instruction.MatchLdarg(out int arg)) return il.Method.Parameters[arg].ParameterType.FullName == il.Import(typeof(DamageClass)).FullName;
-					if (instruction.MatchLdloc(out int loc)) return il.Body.Variables[loc].VariableType.FullName == il.Import(typeof(DamageClass)).FullName;
-					if (instruction.MatchCallOrCallvirt(out MethodReference method)) return method.ReturnType.FullName == il.Import(typeof(DamageClass)).FullName;
-					if (instruction.MatchLdfld(out FieldReference field) || instruction.MatchLdsfld(out field)) return field.FieldType.FullName == il.Import(typeof(DamageClass)).FullName;
-					return false;
-				}
-				static void FixMethods(ILContext il) {
-					ILCursor c = new(il);
-					while (c.TryGotoNext(MoveType.Before,
-						i => i.MatchCallOrCallvirt<object>(nameof(ToString)) && PushesDamageClass(il, i.Previous)
-					)) {
-						c.Remove();
-						c.EmitCallvirt(typeof(ModType).GetMethod("get_" + nameof(ModType.FullName)));
-					}
-				}
-				foreach (MethodInfo method in coloredDamageTypes.GetType().GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly)) {
-					MonoModHooks.Modify(method, FixMethods);
-				}
-				foreach (MethodInfo method in coloredDamageTypes.Code.GetType("ColoredDamageTypes.DamageTypes")?.GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly) ?? []) {
-					MonoModHooks.Modify(method, FixMethods);
-				}
-				//MonoModHooks.Modify(coloredDamageTypes.GetType().GetMethod("LoadModdedDamageTypes", BindingFlags.Public | BindingFlags.Static), FixMethods);
 			}
 		}
 		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
@@ -532,63 +502,6 @@ namespace Origins {
 					} catch (Exception ex) {
 						if (Origins.LogLoadingILError("RecipeBrowser_CalculateArmorSets_Fix", ex)) throw;
 					}
-				}
-			}
-			if (ModLoader.TryGetMod("ColoredDamageTypes", out Mod coloredDamageTypes)) {
-				Color explColor = new(234, 56, 103);
-				Color explCritColor = new(235, 0, 59);
-				Dictionary<DamageClass, (Color dmgColor, Color critColor)> colors = new() {
-					[DamageClass.Melee] = (new(254, 121, 2), new(253, 62, 3)),
-					[DamageClass.Ranged] = (new(34, 221, 151), new(33, 160, 141)),
-					[DamageClass.Magic] = (new(254, 126, 229), new(255, 31, 174)),
-					[DamageClass.Summon] = (new(136, 226, 25), new(14, 154, 230)),
-					[DamageClass.Throwing] = (new(161, 114, 74), new(175, 165, 103))
-				};
-
-				coloredDamageTypes.Call("AddDamageType",
-					DamageClasses.Explosive,
-					explColor,
-					explColor,
-					explCritColor
-				);
-				coloredDamageTypes.Call("AddDamageType",
-					DamageClasses.Incantation,
-					colors[DamageClass.Summon].dmgColor,
-					colors[DamageClass.Summon].dmgColor,
-					colors[DamageClass.Summon].critColor
-				);
-				coloredDamageTypes.Call("AddDamageType",
-					DamageClasses.MeleeMagic,
-					colors[DamageClass.Melee].dmgColor.MultiplyRGB(colors[DamageClass.Magic].dmgColor),
-					colors[DamageClass.Melee].dmgColor.MultiplyRGB(colors[DamageClass.Magic].dmgColor),
-					colors[DamageClass.Melee].critColor.MultiplyRGB(colors[DamageClass.Magic].critColor)
-				);
-				coloredDamageTypes.Call("AddDamageType",
-					DamageClasses.RangedMagic,
-					colors[DamageClass.Ranged].dmgColor.MultiplyRGB(colors[DamageClass.Magic].dmgColor),
-					colors[DamageClass.Ranged].dmgColor.MultiplyRGB(colors[DamageClass.Magic].dmgColor),
-					colors[DamageClass.Ranged].critColor.MultiplyRGB(colors[DamageClass.Magic].critColor)
-				);
-				coloredDamageTypes.Call("AddDamageType",
-					GetInstance<Chambersite_Mine_Launcher_Damage>(),
-					colors[DamageClass.Ranged].dmgColor.MultiplyRGB(explColor),
-					colors[DamageClass.Ranged].dmgColor.MultiplyRGB(explColor),
-					colors[DamageClass.Ranged].critColor.MultiplyRGB(explCritColor)
-				);
-
-				// if (coloredDamageTypes.TryFind("SentryClass", out DamageClass sentryClass)) colors.Add(sentryClass, default);
-
-				if (Thorium is not null) {
-					if (Thorium.TryFind("BardClass", out DamageClass bard)) colors.Add(bard, (new(), new()));
-				}
-
-				foreach (KeyValuePair<DamageClass, (Color dmgColor, Color critColor)> item in colors) {
-					coloredDamageTypes.Call("AddDamageType",
-						DamageClasses.ExplosiveVersion[item.Key],
-						item.Value.dmgColor.MultiplyRGB(explColor),
-						item.Value.dmgColor.MultiplyRGB(explColor),
-						item.Value.critColor.MultiplyRGB(explCritColor)
-					);
 				}
 			}
 		}
