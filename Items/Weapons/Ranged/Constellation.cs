@@ -56,6 +56,10 @@ namespace Origins.Items.Weapons.Ranged {
 
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 5;
+			OriginsSets.Projectiles.WeakpointAnalyzerSpawnAction[Type] = (proj, i) => {
+				proj.ai[2] = (proj.ai[2] + (i + 1) * 0.01f) % 1;
+				if (proj.ai[2] == 0) proj.ai[2] = float.Epsilon;
+			};
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Ranged;
@@ -174,7 +178,7 @@ namespace Origins.Items.Weapons.Ranged {
 			else if (!Projectile.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerFake) {
 				foreach (Projectile other in Main.ActiveProjectiles) {
 					if (other == Projectile) continue;
-					if (other.ai[0] == Projectile.ai[0] && Projectile.owner == other.owner && other.ModProjectile is ConstellationNode && !other.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerFake) {
+					if (other.ai[0] == Projectile.ai[0] && Projectile.owner == other.owner && other.ModProjectile is ConstellationNode) {
 						other.ai[0] = Projectile.identity;
 						Projectile.ai[0] = other.identity;
 						Projectile.netUpdate = true;

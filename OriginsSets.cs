@@ -90,6 +90,9 @@ namespace Origins {
 					return true;
 				}
 			);
+			public static Action<Projectile, int>[] WeakpointAnalyzerSpawnAction { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(WeakpointAnalyzerSpawnAction))
+			.Description("If a projectile has an entry in this set, copies from Weakpoint Analyzer will run it when spawned")
+			.RegisterCustomSet<Action<Projectile, int>>(null);
 			public static bool[] ApplyLifetimeModifiers { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(ApplyLifetimeModifiers))
 			.Description("Controls whether compatible projectile lifetime modification effects will apply to the projectile type")
 			.RegisterBoolSet(true);

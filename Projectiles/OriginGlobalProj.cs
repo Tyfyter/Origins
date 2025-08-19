@@ -125,6 +125,15 @@ namespace Origins.Projectiles {
 			if (contextArgs.Contains(nameof(OriginPlayer.weakpointAnalyzer))) {
 				weakpointAnalyzerTarget = Main.MouseWorld;
 				weakpointAnalyzerFake = contextArgs.Contains("fake");
+				if (OriginsSets.Projectiles.WeakpointAnalyzerSpawnAction[projectile.type] is Action<Projectile, int> action) {
+					const string clone_prefix = $"{nameof(OriginPlayer.weakpointAnalyzer)}_clone";
+					for (int i = 0; i < contextArgs.Length; i++) {
+						if (contextArgs[i].StartsWith(clone_prefix) && int.TryParse(contextArgs[i][clone_prefix.Length..], out int cloneIndex)) {
+							action(projectile, cloneIndex);
+							break;
+						}
+					}
+				}
 			}
 			if (projectile.friendly && projectile.TryGetOwner(out Player player) && player.OriginPlayer().weakShimmer) weakShimmer = true;
 			if (source is EntitySource_ItemUse itemUseSource) {
@@ -159,11 +168,15 @@ namespace Origins.Projectiles {
 					if (bocShadows > 0 && projectile.damage > 0) {
 						multishotSource = itemUseSource.WithContext(source.Context, multishot_context, nameof(OriginPlayer.weakpointAnalyzer));
 						for (int i = bocShadows; i-- > 0;) {
+							EntitySource_ItemUse currentSource = multishotSource.WithContext(multishotSource.Context, $"{nameof(OriginPlayer.weakpointAnalyzer)}_clone{i}");
 							float rot = MathHelper.TwoPi * ((i + 1f) / (bocShadows + 1f)) + Main.rand.NextFloat(-0.3f, 0.3f);
 							Vector2 _position = projectile.position.RotatedBy(rot, Main.MouseWorld);
 							Vector2 _velocity = projectile.velocity.RotatedBy(rot);
-							int _damage = Main.rand.NextFloat(1) < bocShadowDamageChance ? projectile.damage : 0;
-							Projectile.NewProjectile(_damage == 0 ? multishotSource.WithContext(multishotSource.Context, "fake") : multishotSource, _position, _velocity, projectile.type, _damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1], projectile.ai[2]);
+							int _damage = projectile.damage;
+							if (Main.rand.NextFloat(1) >= bocShadowDamageChance) {
+								currentSource = currentSource.WithContext(currentSource.Context, "fake");
+							}
+							Projectile.NewProjectile(currentSource, _position, _velocity, projectile.type, _damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1], projectile.ai[2]);
 						}
 					}
 					if (originPlayer.emergencyBeeCanister && (projectile.type is ProjectileID.Bee or ProjectileID.GiantBee) && Main.rand.NextBool(3)) {
