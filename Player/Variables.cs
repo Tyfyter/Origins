@@ -353,11 +353,6 @@ namespace Origins {
 		public float ZoneVoidProgressSmoothed = 0;
 
 		public float ZoneDefiledProgress = 0;
-		int defiledMonolithTime = 0;
-		public bool DefiledMonolith {
-			get => defiledMonolithTime > 0;
-			set => defiledMonolithTime = value ? 5 : Math.Max(defiledMonolithTime - 1, 0);
-		}
 		public float ZoneDefiledProgressSmoothed = 0;
 
 		public float ZoneRivenProgress = 0;
@@ -369,11 +364,6 @@ namespace Origins {
 		public bool ZoneFiberglass { get; internal set; } = false;
 		public float ZoneFiberglassProgress = 0;
 		public float ZoneFiberglassProgressSmoothed = 0;
-		int shimmerConstructMonolithTime = 0;
-		public bool ShimmerConstructMonolith {
-			get => shimmerConstructMonolithTime > 0;
-			set => shimmerConstructMonolithTime = value ? 5 : Math.Max(shimmerConstructMonolithTime - 1, 0);
-		}
 		#endregion
 
 		#region buffs

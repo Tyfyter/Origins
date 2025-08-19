@@ -51,6 +51,7 @@ namespace Origins.World.BiomeData {
 		public override int BiomeTorchItemType => ModContent.ItemType<Defiled_Torch>();
 		public override int BiomeCampfireItemType => ModContent.ItemType<Defiled_Campfire_Item>();
 		public static bool forcedBiomeActive;
+		public static bool monolithActive;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			int defiledTiles = OriginSystem.defiledTiles;
@@ -70,8 +71,7 @@ namespace Origins.World.BiomeData {
 				ShaderTileCount
 			) / ShaderTileCount) * 0.9f;
 
-			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.DefiledMonolith ? 1 : originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
-			originPlayer.DefiledMonolith = false;
+			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, monolithActive ? 1 : originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
 
 			return defiledTiles > NeededTiles;
 		}

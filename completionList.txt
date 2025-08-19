@@ -446,7 +446,7 @@ ACCESSORIES:
 (^) Charm of Naivety
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
-(^3) Control Locus* !!!
+(☻) Control Locus* !!!
 (^) Coologne*
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
@@ -1230,7 +1230,7 @@ TILES:
 (X) Nova Furniture°
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
-(#2, ^2) Pocket Dimension Monolith !!!
+(☻) Pocket Dimension Monolith !!!
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Snake
 (X) Ravel Lock: Stacker

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Weapons.Summoner.Minions;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Questing;
 using Origins.Tiles;
 using Origins.Tiles.Brine;
@@ -10,6 +11,7 @@ using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.World;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -217,6 +219,9 @@ namespace Origins {
 			chambersiteTiles = 0;
 			chambersiteWalls = 0;
 			Array.Clear(Chambersite_Stone_Wall.wallCounts);
+
+			SC_Scene_Effect.monolithActive = true;
+			Defiled_Wastelands.monolithActive = true;
 		}
 
 		public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts) {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -19,7 +20,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileLighted[Type] = true;
 		}
 		public override void ApplyEffect() {
-			if (OriginPlayer.LocalOriginPlayer != null) OriginPlayer.LocalOriginPlayer.DefiledMonolith = true;
+			Defiled_Wastelands.monolithActive = true;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);

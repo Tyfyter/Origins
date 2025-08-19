@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,7 +22,7 @@ namespace Origins.Tiles.Other {
 			Main.tileLighted[Type] = true;
 		}
 		public override void ApplyEffect() {
-			if (OriginPlayer.LocalOriginPlayer is not null) OriginPlayer.LocalOriginPlayer.ShimmerConstructMonolith = true;
+			SC_Scene_Effect.monolithActive = true;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
