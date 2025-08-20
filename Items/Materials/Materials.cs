@@ -12,6 +12,7 @@ using PegasusLib;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
@@ -118,8 +119,51 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 		public override void OnSpawn(IEntitySource source) {
-			variant = Main.rand.Next(variantArray.Length);
-			if (variant == 2) variantColor = Main.rand.Next(1, grayVariantColors.Length);
+			if (source is EntitySource_ShakeTree shakeTree) {
+				Tile tile = Main.tile[shakeTree.TileCoords];
+
+				switch (tile.TileType) {
+					case TileID.Trees: {
+						ITree type = PlantLoader.GetTree(tile.TileType);
+						if (type is Petrified_Tree) {
+							variant = 1;
+						}
+						if (type is Exoskeletal_Tree) {
+							variant = 3;
+						}
+						switch (type.CountsAsTreeType) {
+							case TreeTypes.Corrupt: {
+								variant = 2;
+								variantColor = 1;
+								break;
+							}
+							case TreeTypes.Crimson: {
+								variant = 2;
+								variantColor = 1;
+								break;
+							}
+						}
+						break;
+					}
+
+					case TileID.TreeAmber:
+					case TileID.TreeAmethyst:
+					case TileID.TreeDiamond:
+					case TileID.TreeEmerald:
+					case TileID.TreeRuby:
+					case TileID.TreeSapphire:
+					case TileID.TreeTopaz: {
+						variant = 4;
+						break;
+					}
+
+					case TileID.TreeAsh: {
+						variant = 2;
+						variantColor = 3;
+						break;
+					}
+				}
+			}
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			TextureAssets.Item[Type] = variantArray[variant];
