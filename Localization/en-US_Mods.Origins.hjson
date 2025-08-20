@@ -693,6 +693,7 @@ Buffs: {
 	Rasterized_Debuff: {
 		DisplayName: Rasterized
 		Description: There goes all your bandwidth...
+		EffectDescription: Reduces movement speed and acceleration
 	}
 
 	Riven_Assimilation: {
@@ -724,6 +725,8 @@ Buffs: {
 	Torn_Debuff: {
 		DisplayName: Torn
 		Description: Your max life has been reduced!
+		EffectDescription: Reduces enemy effective health
+		EffectDescriptionSpecific: -{0:P0} effective health
 	}
 
 	Toxic_Shock_Debuff: {

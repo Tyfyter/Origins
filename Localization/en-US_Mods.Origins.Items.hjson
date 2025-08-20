@@ -2901,7 +2901,8 @@ Bleeding_Obsidian_Kunai: {
 	DisplayName: Bleeding Obsidian Kunai
 	Tooltip:
 		'''
-		Inflicts bleeding, cursed flames, ichor and torn
+
+		Inflicts [bufftip:CursedInferno], [bufftip:Ichor], [bufftip:Origins/Rasterized_Debuff], and [bufftip:Origins/Torn_Debuff]
 		'Be careful, it's sharp'
 		'''
 }

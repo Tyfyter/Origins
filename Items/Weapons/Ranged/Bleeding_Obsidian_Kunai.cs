@@ -8,13 +8,15 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Bleeding_Obsidian_Kunai : ModItem, ICustomWikiStat {
+	public class Bleeding_Obsidian_Kunai : ModItem, ICustomWikiStat, ITornSource {
 		public string[] Categories => [
 			"Torn",
 			"TornSource",
             "ExpendableWeapon"
         ];
-        public override void SetStaticDefaults() {
+		public static float TornSeverity => 0.1f;
+		float ITornSource.Severity => TornSeverity;
+		public override void SetStaticDefaults() {
             ItemID.Sets.ShimmerTransformToItem[ItemID.MagicDagger] = ModContent.ItemType<Bleeding_Obsidian_Kunai>();
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bleeding_Obsidian_Kunai>()] = ItemID.MagicDagger;
 			Item.ResearchUnlockCount = Item.maxStack;
@@ -60,16 +62,16 @@ namespace Origins.Items.Weapons.Ranged {
 			dust.velocity *= 1.5f;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
 			target.AddBuff(BuffID.CursedInferno, 120);
 			target.AddBuff(BuffID.Ichor, 180);
-			OriginGlobalNPC.InflictTorn(target, 300, 180, 0.1f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
+			OriginGlobalNPC.InflictTorn(target, 300, 180, Bleeding_Obsidian_Kunai.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
-			target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
 			target.AddBuff(BuffID.CursedInferno, 300);
 			target.AddBuff(BuffID.Ichor, 300);
-			OriginPlayer.InflictTorn(target, 300, targetSeverity: 1f - 0.9f);
+			target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
+			OriginPlayer.InflictTorn(target, 300, 180, Bleeding_Obsidian_Kunai.TornSeverity);
 		}
 	}
 }

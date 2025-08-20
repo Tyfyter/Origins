@@ -10,6 +10,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI.Chat;
 
 namespace Origins {
 	public static class OriginsSets {
@@ -143,6 +144,11 @@ namespace Origins {
 		public static class Walls {
 			public static bool[] RivenWalls { get; } = WallID.Sets.Factory.CreateNamedSet(nameof(RivenWalls))
 			.RegisterBoolSet(false);
+		}
+		[ReinitializeDuringResizeArrays]
+		public static class Buffs {
+			public static (Action<TextSnippet, Color> ModifyBuffSnippet, Action<List<string>, Item> ModifyBuffTip)[] BuffHintModifiers = BuffID.Sets.Factory.CreateNamedSet(nameof(PegasusLib), nameof(BuffHintModifiers))
+			.RegisterCustomSet<(Action<TextSnippet, Color> ModifyBuffSnippet, Action<List<string>, Item> ModifyBuffTip)>(default);
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Prefixes {
