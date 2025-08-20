@@ -1,4 +1,5 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Other.Consumables;
 using Origins.Journal;
 using Origins.Tiles.Ashen;
@@ -8,8 +9,10 @@ using Origins.Tiles.Dusk;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using PegasusLib;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -99,11 +102,42 @@ namespace Origins.Items.Materials {
 	}
 	public class Bark : MaterialItem {
 		public override bool Hardmode => false;
+		private static readonly AutoLoadingAsset<Texture2D>[] variantArray = [
+			typeof(Bark).GetDefaultTMLName(),
+			typeof(Bark).GetDefaultTMLName() + "_Endowood",
+			typeof(Bark).GetDefaultTMLName() + "_Gray",
+			typeof(Bark).GetDefaultTMLName() + "_Marrowick",
+			typeof(Bark).GetDefaultTMLName() + "_Stony"];
+		private static readonly Color[] grayVariantColors = [Color.Transparent, Color.MediumPurple, Color.IndianRed, Color.DarkGray]; // colors not final
+		public int variant = 0;
+		public int variantColor = 0;
 		public override void AddRecipes() {
 			Recipe.Create(ModContent.ItemType<Rubber>())
 			.AddIngredient(this)
 			.AddTile(TileID.GlassKiln)
 			.Register();
+		}
+		public override void OnSpawn(IEntitySource source) {
+			variant = Main.rand.Next(variantArray.Length);
+			if (variant == 2) variantColor = Main.rand.Next(1, grayVariantColors.Length);
+		}
+		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+			TextureAssets.Item[Type] = variantArray[variant];
+			Item.color = grayVariantColors[variantColor];
+			return true;
+		}
+		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
+			TextureAssets.Item[Type] = variantArray[variant];
+			Item.color = grayVariantColors[variantColor];
+			return true;
+		}
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write((byte)variant);
+			writer.Write((byte)variantColor);
+		}
+		public override void NetReceive(BinaryReader reader) {
+			variant = reader.ReadByte();
+			variantColor = reader.ReadByte();
 		}
 	}
 	public class Bat_Hide : MaterialItem {
