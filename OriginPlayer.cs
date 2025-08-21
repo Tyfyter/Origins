@@ -14,6 +14,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Journal;
 using Origins.NPCs;
 using Origins.NPCs.MiscB.Shimmer_Construct;
+using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles.Brine;
@@ -596,6 +597,11 @@ namespace Origins {
 			}
 		}
 		public override void PostUpdateBuffs() {
+			foreach (Projectile projectile in Main.ActiveProjectiles) {
+				if (projectile.owner == Player.whoAmI && projectile.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerTarget.HasValue) {
+					Player.ownedProjectileCounts[projectile.type]--;
+				}
+			}
 			if (Player.whoAmI == Main.myPlayer) {
 				foreach (Quest quest in Quest_Registry.Quests) {
 					if (quest.PreUpdateInventoryEvent is not null) {

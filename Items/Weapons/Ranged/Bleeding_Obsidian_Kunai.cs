@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
@@ -7,6 +6,7 @@ using Origins.Tiles.Dusk;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Ranged {
 	public class Bleeding_Obsidian_Kunai : ModItem, ICustomWikiStat, ITornSource {
 		public string[] Categories => [
@@ -49,11 +49,12 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Bleeding_Obsidian_Kunai_P : ModProjectile {
 		
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.PoisonDart);
-			Projectile.penetrate = 1;
-			Projectile.hostile = false;
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.width = 10;
+			Projectile.height = 10;
+			Projectile.aiStyle = 1;
 			Projectile.friendly = true;
-			Projectile.trap = false;
+			Projectile.penetrate = 1;
 			Projectile.timeLeft = 90;
 		}
 		public override void AI() {
