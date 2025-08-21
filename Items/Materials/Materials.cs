@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Items.Other.Consumables;
 using Origins.Journal;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
@@ -8,7 +7,6 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
-using PegasusLib;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
@@ -41,6 +39,8 @@ namespace Origins.Items.Materials {
 			Item.rare = Rare;
 			Item.value = Value;
 			Item.maxStack = Item.CommonMaxStack;
+			Item.width = 14;
+			Item.height = 14;
 			Item.glowMask = glowmask;
 		}
 	}
@@ -101,17 +101,29 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override int Rare => ItemRarityID.Orange;
 	}
-	public class Bark : MaterialItem {
-		public override bool Hardmode => false;
-		private static readonly AutoLoadingAsset<Texture2D>[] variantArray = [
-			typeof(Bark).GetDefaultTMLName(),
-			typeof(Bark).GetDefaultTMLName() + "_Endowood",
-			typeof(Bark).GetDefaultTMLName() + "_Gray",
-			typeof(Bark).GetDefaultTMLName() + "_Marrowick",
-			typeof(Bark).GetDefaultTMLName() + "_Stony"];
-		private static readonly Color[] grayVariantColors = [Color.Transparent, Color.MediumPurple, Color.IndianRed, Color.DarkGray]; // colors not final
+	public class Bark : AnimatedModItem, ICustomWikiStat {
+		public override LocalizedText Tooltip => LocalizedText.Empty;
+		bool? ICustomWikiStat.Hardmode => false;
+		private static readonly Color[] grayVariantColors = [Color.White, Color.MediumPurple, Color.IndianRed, Color.DarkGray]; // colors not final
 		public int variant = 0;
 		public int variantColor = 0;
+		static DrawAnimationManual animation;
+		public override DrawAnimation Animation {
+			get {
+				animation.Frame = variant;
+				return animation;
+			}
+		}
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 25;
+			animation = new DrawAnimationManual(5);
+			Main.RegisterItemAnimation(Item.type, animation);
+		}
+		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
+			Item.width = (int)(22 / 1.5f);
+			Item.height = (int)(32 / 1.5f);
+		}
 		public override void AddRecipes() {
 			Recipe.Create(ModContent.ItemType<Rubber>())
 			.AddIngredient(this)
@@ -124,14 +136,16 @@ namespace Origins.Items.Materials {
 
 				switch (tile.TileType) {
 					case TileID.Trees: {
-						ITree type = PlantLoader.GetTree(tile.TileType);
+						WorldGen.GetTreeBottom(shakeTree.TileCoords.X, shakeTree.TileCoords.Y, out int x, out int y);
+						int tileType = Main.tile[x, y].TileType;
+						ITree type = PlantLoader.GetTree(tileType);
 						if (type is Petrified_Tree) {
 							variant = 1;
 						}
 						if (type is Exoskeletal_Tree) {
 							variant = 3;
 						}
-						switch (type.CountsAsTreeType) {
+						switch (WorldGen.GetTreeType(tileType)) {
 							case TreeTypes.Corrupt: {
 								variant = 2;
 								variantColor = 1;
@@ -139,7 +153,7 @@ namespace Origins.Items.Materials {
 							}
 							case TreeTypes.Crimson: {
 								variant = 2;
-								variantColor = 1;
+								variantColor = 2;
 								break;
 							}
 						}
@@ -166,14 +180,17 @@ namespace Origins.Items.Materials {
 			}
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-			TextureAssets.Item[Type] = variantArray[variant];
+			Texture2D texture = TextureAssets.Item[Item.type].Value;
 			Item.color = grayVariantColors[variantColor];
-			return true;
+			spriteBatch.Draw(texture, position, Animation.GetFrame(texture), drawColor.MultiplyRGBA(itemColor), 0f, origin, scale, SpriteEffects.None, 0f);
+			return false;
 		}
 		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-			TextureAssets.Item[Type] = variantArray[variant];
+			Texture2D texture = TextureAssets.Item[Item.type].Value;
+			Rectangle frame = Animation.GetFrame(texture);
 			Item.color = grayVariantColors[variantColor];
-			return true;
+			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor.MultiplyRGBA(alphaColor.MultiplyRGBA(Item.color)), 0f, frame.Size() * 0.5f, scale, SpriteEffects.None, 0f);
+			return false;
 		}
 		public override void NetSend(BinaryWriter writer) {
 			writer.Write((byte)variant);
