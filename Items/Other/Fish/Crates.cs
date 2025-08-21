@@ -128,9 +128,9 @@ namespace Origins.Items.Other.Fish {
 					ItemDropRule.NotScalingWithLuck(ItemType<Riven_Splitter>()),
 					ItemDropRule.NotScalingWithLuck(ItemType<Amebolize_Incantation>()),
 					ItemDropRule.NotScalingWithLuck(ItemType<Splitsplash>()),
-					ItemDropRule.NotScalingWithLuck(ItemType < Riverang >()),
-					ItemDropRule.NotScalingWithLuck(ItemType < Amoeba_Toy >()),
-					ItemDropRule.NotScalingWithLuck(ItemType < Primordial_Soup >())
+					ItemDropRule.NotScalingWithLuck(ItemType<Riverang>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Amoeba_Toy>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Primordial_Soup>())
 				),
 				BiomeChest_GoldCoin,
 				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
@@ -292,7 +292,7 @@ namespace Origins.Items.Other.Fish {
 			Item.CloneDefaults(CrimsonFishingCrate);
 			Item.createTile = tile.Type;
 			Item.placeStyle = 0;
-			Item.rare = Hardmode ? ItemRarityID.LightRed : ItemRarityID.Green;
+			Item.rare = ItemRarityID.Green;
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {
 			itemGroup = ContentSamples.CreativeHelper.ItemGroup.Crates;
