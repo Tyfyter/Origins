@@ -116,7 +116,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			public int shotNumber = 0;
 			public override bool IsLoadingEnabled(Mod mod) => ModEnabled;
 			public override void OnSpawn(Projectile projectile, IEntitySource source) {
-				if (source is EntitySource_ItemUse itemUse) {
+				if (source is EntitySource_ItemUse itemUse && itemUse.Item.ModItem is Dreikan) {
 					shotNumber = itemUse.Player.ItemUsesThisAnimation;
 				}
 			}
@@ -139,6 +139,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 						hitNumber = 0;
 						return true;
 					}
+				} else if (number == 1) {
+					hitNumber = 1;
+					hitTimer = 30;
 				} else {
 					hitNumber = 0;
 					hitTimer = 0;
