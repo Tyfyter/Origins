@@ -261,13 +261,17 @@ namespace Origins {
 			typeof(ILoadable).GetMethod("Load").Invoke(newClass, [Origins.instance]);
 			return newClass;
 		}
-		public override bool GetEffectInheritance(DamageClass damageClass) => DamageClasses.Explosive.GetEffectInheritance(damageClass) || Ranged.GetEffectInheritance(damageClass);
-		public override bool GetPrefixInheritance(DamageClass damageClass) => DamageClasses.Explosive.GetsPrefixesFor(damageClass) || Ranged.GetsPrefixesFor(damageClass);
+		public override bool GetEffectInheritance(DamageClass damageClass) {
+			return damageClass == DamageClasses.ExplosiveVersion[Ranged] || DamageClasses.ExplosiveVersion[Ranged].GetEffectInheritance(damageClass);
+		}
+		public override bool GetPrefixInheritance(DamageClass damageClass) {
+			return damageClass == DamageClasses.ExplosiveVersion[Ranged] || DamageClasses.ExplosiveVersion[Ranged].GetEffectInheritance(damageClass);
+		}
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
 			if (damageClass == Generic) {
 				return StatInheritanceData.Full;
 			}
-			return DamageClasses.Explosive.GetModifierInheritance(damageClass);
+			return DamageClasses.ExplosiveVersion[Ranged].GetModifierInheritance(damageClass);
 		}
 		public override void SetDefaultStats(Player player) {
 			player.GetCritChance(this) -= 4;
