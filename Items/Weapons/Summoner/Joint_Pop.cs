@@ -23,7 +23,8 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override bool MeleePrefix() => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI).scale *= player.GetAdjustedItemScale(Item);
+			EntitySource_ItemUse_WithAmmo Source = new(source.Player, source.Item, source.AmmoItemIdUsed, OriginExtensions.MakeContext(source.Context, OriginGlobalProj.no_multishot_context));
+			Projectile.NewProjectileDirect(Source, position, velocity, type, damage, knockback, player.whoAmI).scale *= player.GetAdjustedItemScale(Item);
 			return false;
 		}
 	}

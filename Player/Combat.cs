@@ -277,7 +277,7 @@ namespace Origins {
 				target.AddBuff(BuffID.Wet, 180);
 				if (target.wet && Main.myPlayer == Player.whoAmI && faithBeadsItem is not null) {
 					Projectile.NewProjectile(
-						Player.GetSource_Accessory(faithBeadsItem),
+						Player.GetSource_Accessory(faithBeadsItem, OriginGlobalProj.no_multishot_context),
 						target.Center,
 						default,
 						faithBeadsItem.shoot,

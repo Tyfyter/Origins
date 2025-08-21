@@ -1,8 +1,4 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Fargowiltas.Items.Explosives;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.CrossMod;
 using Origins.Items.Materials;
@@ -15,9 +11,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
-using ThoriumMod.NPCs;
-using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Maelstrom_Incantation : ModItem, ICustomDrawItem {

@@ -53,7 +53,9 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse != 2) {
-				Projectile.NewProjectile(source, Main.MouseWorld - new Vector2(20, 40), default, type, Item.damage, Item.knockBack, player.whoAmI);
+
+				EntitySource_ItemUse_WithAmmo Source = new(source.Player, source.Item, source.AmmoItemIdUsed, OriginExtensions.MakeContext(source.Context, OriginGlobalProj.no_multishot_context));
+				Projectile.NewProjectile(Source, Main.MouseWorld - new Vector2(20, 40), default, type, Item.damage, Item.knockBack, player.whoAmI);
 				player.UpdateMaxTurrets();
 			}
 			return false;

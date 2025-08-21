@@ -1,4 +1,5 @@
-﻿using Origins.Buffs;
+﻿using Mono.Cecil;
+using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Items;
 using Origins.Items.Accessories;
@@ -9,6 +10,7 @@ using Origins.Items.Other;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Layers;
+using Origins.Projectiles;
 using PegasusLib;
 using PegasusLib.Networking;
 using System;
@@ -298,7 +300,7 @@ namespace Origins {
 								Vector2 diff = currentTarget.Center - Player.MountedCenter;
 								if (diff.LengthSquared() < maxDist) {
 									Projectile.NewProjectileDirect(
-										Player.GetSource_Accessory(explosiveArteryItem),
+										Player.GetSource_Accessory(explosiveArteryItem, OriginGlobalProj.no_multishot_context),
 										currentTarget.Center,
 										new Vector2(Math.Sign(diff.X), 0),
 										explosiveArteryItem.shoot,
@@ -411,7 +413,7 @@ namespace Origins {
 				Item item = protozoaFoodItem;
 				int damage = Player.GetWeaponDamage(item);
 				Projectile.NewProjectileDirect(
-					Player.GetSource_Accessory(item),
+					Player.GetSource_Accessory(item, OriginGlobalProj.no_multishot_context),
 					Player.Center,
 					OriginExtensions.Vec2FromPolar(Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi), Main.rand.NextFloat(1, 8)),
 					Mini_Protozoa_P.ID,

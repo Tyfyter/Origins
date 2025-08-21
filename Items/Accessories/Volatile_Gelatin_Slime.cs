@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Origins.Dev;
@@ -7,6 +6,7 @@ using Origins.Graphics;
 using Origins.Projectiles;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -92,7 +92,7 @@ namespace Origins.Items.Accessories {
 			if (slimeTime > 0 && (ExplosiveGlobalProjectile.IsExploding(projectile, true) || projectile.type is ProjectileID.Sunfury or ProjectileID.Flamelash)) {
 				slimeTime = 0;
 				Projectile.NewProjectile(
-					projectile.GetSource_OnHit(npc),
+					projectile.GetSource_OnHit(npc, OriginGlobalProj.no_multishot_context),
 					npc.Center,
 					default,
 					ModContent.ProjectileType<Volatile_Gelatin_Slime_Explosion>(),
@@ -107,8 +107,10 @@ namespace Origins.Items.Accessories {
 				for (int i = 0; i < npc.buffType.Length; i++) {
 					if(npc.buffTime[i] > 0 && npc.buffType[i] is BuffID.OnFire or BuffID.OnFire or BuffID.OnFire3) {
 						slimeTime = 0;
+						EntitySource_Buff Source = new(npc, npc.buffType[i], i, OriginGlobalProj.no_multishot_context);
+
 						Projectile.NewProjectile(
-							npc.GetSource_Buff(i),
+							Source,
 							npc.Center,
 							default,
 							ModContent.ProjectileType<Volatile_Gelatin_Slime_Explosion>(),
