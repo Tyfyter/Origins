@@ -824,7 +824,6 @@ namespace Origins {
 					}
 				}
 			}
-			SetProceduralSetValues();
 			foreach (ModItem item in MC.GetContent<ModItem>()) {
 				if (item is not IJournalEntrySource source) continue;
 				JournalEntry.AddJournalEntry(ref OriginsSets.Items.JournalEntries[item.Type], source.EntryName);
@@ -835,17 +834,6 @@ namespace Origins {
 			}
 			ModContent.GetInstance<Explosive_Weapons_Entry>().AddEntryToItems();
 			ForcedDialectCompatibility.PostSetupContent();
-		}
-		static void SetProceduralSetValues() {
-			for (int i = 0; i < ProjectileLoader.ProjectileCount; i++) {
-				switch (ContentSamples.ProjectilesByType[i].aiStyle) {
-					case ProjAIStyleID.Flail:
-					case ProjAIStyleID.HeldProjectile:
-					case ProjAIStyleID.Whip:
-					OriginsSets.Projectiles.NoMultishot[i] = true;
-					break;
-				}
-			}
 		}
 		private static void FixedDrawBreath(On_Main.orig_DrawInterface_Resources_Breath orig) {
 			Player localPlayer = Main.LocalPlayer;

@@ -262,6 +262,18 @@ namespace Origins {
 			/*public static AssetSource<Texture2D>[][] ExtraTextures { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(ExtraTextures))
 			.Description("Additional textures used by the projectile, ")
 			.RegisterCustomSet<AssetSource<Texture2D>[]>([]);*/
+			static Projectiles() {
+				foreach (KeyValuePair<int, Projectile> proj in ContentSamples.ProjectilesByType) {
+					if (!NoMultishot.IndexInRange(proj.Key)) continue;
+					switch (proj.Value.aiStyle) {
+						case ProjAIStyleID.Flail:
+						case ProjAIStyleID.HeldProjectile:
+						case ProjAIStyleID.Whip:
+						NoMultishot[proj.Key] = true;
+						break;
+					}
+				}
+			}
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class NPCs {
