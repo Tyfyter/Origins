@@ -124,6 +124,7 @@ namespace Origins.Items.Weapons.Melee {
 		public AutoLoadingAsset<Texture2D> ChainTexture = typeof(The_Foot).GetDefaultTMLName() + "_Chain";
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+			OriginsSets.Projectiles.NoMultishot[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.netImportant = true;

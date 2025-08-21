@@ -153,13 +153,13 @@ namespace Origins.Projectiles {
 				if (fromItemType == Neural_Network.ID) {
 					neuralNetworkEffect = true;
 				}
-				if (!contextArgs.Contains(multishot_context) && !contextArgs.Contains(no_multishot_context)) {
+				if (!contextArgs.Contains(multishot_context) && !contextArgs.Contains(no_multishot_context) && !OriginsSets.Projectiles.NoMultishot[projectile.type]) {
 					int bocShadows = 0;
 					float bocShadowDamageChance = 0.08f;
-					if (originPlayer.weakpointAnalyzer && projectile.CountsAsClass(DamageClass.Ranged) && projectile.aiStyle != ProjAIStyleID.HeldProjectile) {
+					if (originPlayer.weakpointAnalyzer && projectile.CountsAsClass(DamageClass.Ranged)) {
 						bocShadows = 2;
 					}
-					if (originPlayer.controlLocus && projectile.aiStyle != ProjAIStyleID.HeldProjectile) {
+					if (originPlayer.controlLocus) {
 						if (projectile.CountsAsClass(DamageClasses.Explosive)) bocShadows = 2;
 						if (projectile.CountsAsClass(DamageClass.Ranged)) bocShadows = 2;
 						bocShadowDamageChance = Math.Max(bocShadowDamageChance, 0.12f);

@@ -824,7 +824,7 @@ namespace Origins {
 					}
 				}
 			}
-			SetBalanceSetValues();
+			SetProceduralSetValues();
 			foreach (ModItem item in MC.GetContent<ModItem>()) {
 				if (item is not IJournalEntrySource source) continue;
 				JournalEntry.AddJournalEntry(ref OriginsSets.Items.JournalEntries[item.Type], source.EntryName);
@@ -836,35 +836,15 @@ namespace Origins {
 			ModContent.GetInstance<Explosive_Weapons_Entry>().AddEntryToItems();
 			ForcedDialectCompatibility.PostSetupContent();
 		}
-		/// <summary>
-		/// Set here rather than in the initializer so that they can be changed freely
-		/// </summary>
-		static void SetBalanceSetValues() {
-			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(OriginsSets.Projectiles.MagicTripwireRange, OriginsSets.Projectiles.MagicTripwireDetonationStyle);
-
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ScarabBomb] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.StyngerShrapnel] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ClusterFragmentsI] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ClusterFragmentsII] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.BloodCloudMoving] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.BloodCloudRaining] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.RainCloudMoving] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.RainCloudRaining] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.PrincessWeapon] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ClingerStaff] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.VilethornBase] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.VilethornTip] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.CrystalVileShardShaft] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.CrystalVileShardHead] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.NettleBurstLeft] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.NettleBurstRight] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.NettleBurstEnd] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.MedusaHead] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.PrincessWeapon] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.MagnetSphereBolt] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.InfernoFriendlyBlast] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.LastPrism] = 2f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.LastPrismLaser] = 2f;
+		static void SetProceduralSetValues() {
+			for (int i = 0; i < ProjectileLoader.ProjectileCount; i++) {
+				switch (ContentSamples.ProjectilesByType[i].aiStyle) {
+					case ProjAIStyleID.Flail:
+					case ProjAIStyleID.HeldProjectile:
+					OriginsSets.Projectiles.NoMultishot[i] = true;
+					break;
+				}
+			}
 		}
 		private static void FixedDrawBreath(On_Main.orig_DrawInterface_Resources_Breath orig) {
 			Player localPlayer = Main.LocalPlayer;
