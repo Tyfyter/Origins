@@ -1,9 +1,15 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
+using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
+using Origins.Items.Pets;
+using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
 using Origins.Tiles;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
@@ -24,7 +30,13 @@ namespace Origins.Items.Other.Fish {
 		public override Color MapColor => new(200, 200, 200);
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			IItemDropRule[] defiled = [
-				Defiled_Wastelands.FissureDropRule,
+				new OneFromRulesRule(1,
+					ItemDropRule.NotScalingWithLuck(ItemType<Kruncher>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Dim_Starlight>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Monolith_Rod>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Krakram>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Suspicious_Looking_Pebble>())
+				),
 				BiomeChest_GoldCoin,
 				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
 					new OneFromRulesRule(5, Ores),
@@ -44,7 +56,13 @@ namespace Origins.Items.Other.Fish {
 		public override int ShimmerResult => ItemType<Chunky_Crate>();
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			IItemDropRule[] defiled = [
-				Defiled_Wastelands.FissureDropRule,
+				new OneFromRulesRule(1,
+					ItemDropRule.NotScalingWithLuck(ItemType<Kruncher>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Dim_Starlight>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Monolith_Rod>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Krakram>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Suspicious_Looking_Pebble>())
+				),
 				BiomeChest_GoldCoin,
 				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
 					new OneFromRulesRule(5, [..Ores, ..HardmodeOres]),
@@ -74,8 +92,15 @@ namespace Origins.Items.Other.Fish {
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			IItemDropRule[] riven = [
-				Riven_Hive.LesionDropRule,
-				BiomeChest_GoldCoin, 
+				new OneFromRulesRule(1,
+					ItemDropRule.NotScalingWithLuck(ItemType<Riven_Splitter>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Amebolize_Incantation>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Splitsplash>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Riverang>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Amoeba_Toy>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Primordial_Soup>())
+				),
+				BiomeChest_GoldCoin,
 				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
 					new OneFromRulesRule(5, Ores),
 					new OneFromRulesRule(3, 2, Bars)),
@@ -99,7 +124,14 @@ namespace Origins.Items.Other.Fish {
 		public override bool Hardmode => true;
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			IItemDropRule[] riven = [
-				Riven_Hive.LesionDropRule,
+				new OneFromRulesRule(1,
+					ItemDropRule.NotScalingWithLuck(ItemType<Riven_Splitter>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Amebolize_Incantation>()),
+					ItemDropRule.NotScalingWithLuck(ItemType<Splitsplash>()),
+					ItemDropRule.NotScalingWithLuck(ItemType < Riverang >()),
+					ItemDropRule.NotScalingWithLuck(ItemType < Amoeba_Toy >()),
+					ItemDropRule.NotScalingWithLuck(ItemType < Primordial_Soup >())
+				),
 				BiomeChest_GoldCoin,
 				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
 					new OneFromRulesRule(5, [..Ores, ..HardmodeOres]),
@@ -189,7 +221,7 @@ namespace Origins.Items.Other.Fish {
 		public virtual Color TileGlowColor => Color.Black;
 		public virtual float TileGlowLightAmount => 0.01f;
 		public virtual float TileGlowFancyLightAmount => 0.2f;
-		public virtual int ShimmerResult {  get; set; }
+		public virtual int ShimmerResult { get; set; }
 		public abstract Color MapColor { get; }
 		public static IItemDropRule BiomeChest_GoldCoin => ItemDropRule.Common(GoldCoin, 4, 5, 13);//normally NotScalingWithLuck
 		public static IItemDropRule BiomeCrate_SoulOfNight => ItemDropRule.NotScalingWithLuck(SoulofNight, 2, 2, 5);
