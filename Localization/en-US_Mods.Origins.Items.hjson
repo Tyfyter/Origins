@@ -2423,7 +2423,11 @@ Defiled_Spirit: {
 
 Dreikan: {
 	DisplayName: Dreikan
-	Tooltip: Pronounced exactly how it looks: auf Deutsch
+	Tooltip:
+		'''
+		Converts [itemname:MusketBall] into {$Mods.Origins.Projectile.Dreikan_Shot.DisplayName}.
+		Pronounced exactly how it looks: auf Deutsch
+		'''
 }
 
 Explosive_Golf_Ball: {
