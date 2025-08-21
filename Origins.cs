@@ -841,6 +841,7 @@ namespace Origins {
 				switch (ContentSamples.ProjectilesByType[i].aiStyle) {
 					case ProjAIStyleID.Flail:
 					case ProjAIStyleID.HeldProjectile:
+					case ProjAIStyleID.Whip:
 					OriginsSets.Projectiles.NoMultishot[i] = true;
 					break;
 				}
