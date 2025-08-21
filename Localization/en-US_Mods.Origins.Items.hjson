@@ -2425,7 +2425,7 @@ Dreikan: {
 	DisplayName: Dreikan
 	Tooltip:
 		'''
-		Converts [itemname:MusketBall] into {$Mods.Origins.Projectile.Dreikan_Shot.DisplayName}.
+		Converts [itemname:MusketBall] into {$Projectiles.Dreikan_Shot.DisplayName}.
 		Pronounced exactly how it looks: auf Deutsch
 		'''
 }

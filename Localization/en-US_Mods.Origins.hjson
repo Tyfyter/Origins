@@ -2922,7 +2922,6 @@ CritType: {
 	Soulslasher_Crit_Type: Critically strikes on direct hits
 	Switchblade_Crit_Type: Critically strikes for {0:0.##} seconds after switching modes
 	Neural_Network_Crit_Type: Critically strikes while above {0} adaptation charges
-
 	// VVVV Leave this one as is VVVV
 	Missing_File_Crit_Type: Mods.Origins.CritType.Missing_File_Crit_Type
 	Flak_Crit_Type: Critically strikes when hitting airborne targets
