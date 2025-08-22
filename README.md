@@ -7,8 +7,11 @@ Wiki: https://tyfyter.github.io/OriginsWiki/
 
 This mod is a collaboration amongst Origins Dev Team since April of 2017.
 
-Programmer: Tyfyter2002, Reivax, Josh Wilson, John
-Artist: chrersis, forg
-Music: chrersis and gojisturba
+Programmer: Tyfyter2002, Reivax, Josh Wilson, John, Max
+Artist: chrersis
+Music: chrersis
 Sound designer: chrersis
-Wiki developer: chrersis, Jadams, Reivax
+Wiki developer: chrersis, Jadams, Reivax, Kono Dio Da
+Playtester: Kono Dio Da
+
+Huge thanks to gojisturba and forg for their contributions!
