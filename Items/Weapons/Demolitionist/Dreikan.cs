@@ -142,7 +142,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				} else if (number == 1) {
 					hitNumber = 1;
 					hitTimer = 30;
-				} else {
+				} else if (number != hitNumber || hitTimer <= 20) {
 					hitNumber = 0;
 					hitTimer = 0;
 				}
