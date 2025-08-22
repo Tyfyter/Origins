@@ -1448,14 +1448,14 @@ CONSUMABLES:
 (X) Mega Mojo Flask
 (^) Voidsight Potion°
 
-(X) Astringent Broth
-(X) Bitter Broth
+(#, ^2) Astringent Broth
+(#, ^2) Bitter Broth
 (^) Foul Broth*
 (^) Greasy Broth
 (^) Hearty Broth*
 (^) Light Broth°
-(X) Metallic Broth
-(X) Minishark Broth
+(#, ^2) Metallic Broth
+(#, ^2) Minishark Broth
 (^) Minty Broth°
 (^) Plain Broth°
 (^) Savory Broth°
@@ -1465,16 +1465,17 @@ CONSUMABLES:
 (^) Sweet Broth°
 (^) Umami Broth
 
-(X) Adrenaline
-(X) Bottomless Multi-Med
-(X) Brightsee
-(X) Fire Band
-(X) Medicinal Acid
-(X) Morphine
-(X) Multi-Med
-(X) Rasterwrap
-(X) Sanguis Pack
-(X) Unmarked Antidote
+(#, ^2) Adrenaline
+(#, ^2) Blood Pack
+(#, ^2) Bottomless Multi-Med
+(#, ^2) Brightsee
+(#, ^2) Fire Band
+(#, ^2) Medicinal Acid
+(#, ^2) Morphine
+(#, ^2) Multi-Med
+(#, ^2) Rasterwrap
+(#, ^2) Sanguis Pack
+(#, ^2) Unmarked Antidote
 
 (#, ^2) Bad Juju Stone
 (^) Bileberry*
