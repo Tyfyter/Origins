@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Tools;
 using Origins.Journal;
@@ -13,7 +14,9 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
-	public class Seam_Beam : ModItem, ICustomWikiStat, IJournalEntrySource {
+	public class Seam_Beam : ModItem, ICustomWikiStat, IJournalEntrySource, ITornSource {
+		public static float TornSeverity => 0.3f;
+		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			"Torn",
 			"TornSource",
@@ -81,7 +84,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 300, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 300, targetSeverity: Seam_Beam.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 
 		public override bool PreDraw(ref Color lightColor) {

@@ -1,7 +1,7 @@
 GenericTooltip: {
 	MinuteCooldown: "{0} minute cooldown"
 	SecondCooldown: "{0} second cooldown"
-	TornSeverity: +{0}% applied torn severity
+	TornSeverity: +{0}% applied [buffhint:Origins/Torn_Debuff] severity
 	ArtifactTag: "[c/ffb300:-Artifact Minion-]"
 	ConceptBy: Concept by {0}
 	ConceptAndSpriteBy: Concept and art by {0}
@@ -175,7 +175,7 @@ CFHES: {
 	DisplayName: C.F.H.E.S.
 	Tooltip:
 		'''
-		All explosives inflict 'On Fire!' and have a reduced fuse time
+		All explosives inflict [buffhint:OnFire] and have a reduced fuse time
 		60% increased explosive blast radius
 		Explosives will detonate near enemies
 		'''
@@ -185,8 +185,8 @@ Cirrhosis_Abhorrence: {
 	DisplayName: Cirrhosis' Abhorrence
 	Tooltip:
 		'''
-		All attacks inflict Bleeding and set enemies ablaze
-		Four of the nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
+		All attacks inflict [buffhint:Bleeding] and [buffhint/dnset enemies ablaze:OnFire3]
+		The four nearest enemies will be afflicted with [buffhint:Bleeding], [buffhint/On Fire:OnFire], and [buffhint:Origins/Rasterized_Debuff]
 		'''
 }
 
@@ -207,7 +207,7 @@ Coologne: {
 
 Danger_Barrel: {
 	DisplayName: Danger Barrel
-	Tooltip: All explosives inflict 'On Fire!' and have a reduced fuse time
+	Tooltip: All explosives inflict [buffhint:OnFire] and have a reduced fuse time
 }
 
 Dash_Ravel: {
@@ -223,7 +223,7 @@ Venom_Fang: {
 	DisplayName: Venom Fang
 	Tooltip:
 		'''
-		Attacks inflict Toxic Shock
+		Attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
 		Effects are stronger while {§Acrid} Armor is equipped
 		'''
 }
@@ -267,7 +267,7 @@ Dryads_Inheritance: {
 		'''
 		5% increased damage
 		Increases damage, movement speed, and length of invincibility after taking damage
-		Emit a damaging aura that inflicts poison
+		Emit a [buffhint/dndamaging aura:DryadsWardDebuff]
 		Summons spores over time that will damage enemies
 		'''
 }
@@ -300,7 +300,7 @@ Explosive_Artery: {
 	DisplayName: Explosive Artery
 	Tooltip:
 		'''
-		Nearby bleeding enemies occasionally explode
+		Nearby [buffhint:Bleeding] enemies occasionally explode
 		'Explosions happen near me 'cause I'm that cool!'
 		'''
 }
@@ -348,8 +348,8 @@ Fleshy_Figurine: {
 	DisplayName: Fleshy Figurine
 	Tooltip:
 		'''
-		Attacks tenderize targets
-		+20% Torn severity
+		Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+		+20% [buffhint:Origins/Torn_Debuff] severity
 		'''
 }
 
@@ -386,8 +386,8 @@ Haggard_Artery: {
 	DisplayName: Haggard Artery
 	Tooltip:
 		'''
-		All attacks inflict Bleeding
-		Nearby bleeding enemies occasionally explode
+		All attacks inflict [buffhint:Bleeding]
+		Nearby [buffhint:Bleeding] enemies occasionally explode
 		'''
 }
 
@@ -440,7 +440,7 @@ IWTPA_Standard: {
 
 Keepsake_Remains: {
 	DisplayName: Keepsake Remains
-	Tooltip: Increases armor penetration by 5 and attacks tenderize targets
+	Tooltip: Increases armor penetration by 5 and attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
 }
 
 Last_Descendant: {
@@ -473,7 +473,7 @@ Locket_Necklace: {
 
 Lousy_Liver: {
 	DisplayName: Lousy Liver
-	Tooltip: Three of the nearest enemies will be afflicted with Rasterized
+	Tooltip: The nearest three enemies will be [buffhint:Origins/Rasterized_Debuff]
 }
 
 Lovers_Leap: {
@@ -525,12 +525,12 @@ Mana_Drive: {
 
 Messy_Leech: {
 	DisplayName: Messy Leech
-	Tooltip: All attacks inflict Bleeding
+	Tooltip: All attacks inflict [buffhint:Bleeding]
 }
 
 Messy_Magma_Leech: {
 	DisplayName: Messy Magma Leech
-	Tooltip: All attacks inflict Bleeding and set enemies ablaze
+	Tooltip: All attacks inflict [buffhint:Bleeding] and [buffhint/dnset enemies ablaze:OnFire3]
 }
 
 Missile_Armcannon: {
@@ -602,7 +602,7 @@ Olid_Organ: {
 	Tooltip:
 		'''
 		5% increased damage and critical strike chance
-		All attacks inflict Toxic Shock
+		All attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
 		Enemies are less likely to target you
 		'''
 }
@@ -638,7 +638,7 @@ Plasma_Bag: {
 		Slightly increased regeneration
 		Debuff durations reduced by 30%
 		Does not affect Potion Sickness
-		Rapidly lose life when Bleeding
+		Rapidly lose life when [buffhint/self:Bleeding]
 		'''
 }
 
@@ -687,7 +687,7 @@ Protozoa_Food: {
 	Tooltip:
 		'''
 		+1 minion slot
-		Summons an amoeba pellet to chase after enemies and slow them down for every minion slot you have
+		Summons an amoeba pellet to chase after enemies and [buffhint:Origins/Slow_Debuff] them down for every minion slot you have
 		'''
 }
 
@@ -745,7 +745,7 @@ Scavenger_Bag: {
 	DisplayName: Scavenger Bag
 	Tooltip:
 		'''
-		Increases armor penetration by 5 and attacks tenderize targets
+		Increases armor penetration by 5 and attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
 		Increases your max number of minions by 1
 		Increases your summon damage by 15% and the knockback of your minions
 		'''
@@ -875,12 +875,12 @@ Superjump_Cape: {
 
 Symbiote_Skull: {
 	DisplayName: Symbiote Skull
-	Tooltip: Attacks tenderize targets
+	Tooltip: Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
 }
 
 Tainted_Flesh: {
 	DisplayName: Tainted Flesh
-	Tooltip: +10% Torn severity
+	Tooltip: +10% [buffhint:Origins/Torn_Debuff] severity
 }
 
 Third_Eye: {
@@ -926,7 +926,7 @@ Unsought_Organ: {
 		'''
 		All damage received is reflected to 3 nearby enemies
 		5% increased damage and critical strike chance
-		All attacks inflict Toxic Shock
+		All attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
 		Enemies are less likely to target you
 		'''
 }
@@ -1687,7 +1687,7 @@ Absorption_Potion: {
 
 Antisolve_Potion: {
 	DisplayName: Antisolve Potion
-	Tooltip: Grants immunity to 'Toxic Shock' and 'Torn'
+	Tooltip: Grants immunity to [buffhint/self:Origins/Toxic_Shock_Debuff] and [buffhint/self:Origins/Torn_Debuff]
 }
 
 Bile_Flask: {
@@ -1917,7 +1917,7 @@ Riven_Loot_Box: {
 
 Salt_Flask: {
 	DisplayName: Flask of Alkahest
-	Tooltip: Melee and Whip attacks tenderize targets
+	Tooltip: Melee and Whip attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
 }
 
 Sus_Ice_Cream: {
@@ -2168,12 +2168,12 @@ Strainer: {
 
 Alkahest_Arrow: {
 	DisplayName: Alkahest Arrow
-	Tooltip: Tenderizes the target
+	Tooltip: "Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]"
 }
 
 Alkahest_Bullet: {
 	DisplayName: Alkahest Bullet
-	Tooltip: Tenderizes the target
+	Tooltip: Attacks inflict [buffhint:Origins/Torn_Debuff]
 }
 
 Alkaline_Harpoon: {
@@ -2181,7 +2181,7 @@ Alkaline_Harpoon: {
 	Tooltip:
 		'''
 		Used as ammo for harpoon guns
-		Inflicts acid venom
+		Inflicts [buffhint:Venom]
 		'''
 }
 
@@ -2425,7 +2425,7 @@ Dreikan: {
 	DisplayName: Dreikan
 	Tooltip:
 		'''
-		Converts [itemname:MusketBall] into {$Projectiles.Dreikan_Shot.DisplayName}.
+		Converts [itemname:MusketBall]s into {$Projectiles.Dreikan_Shot.DisplayName}.
 		Pronounced exactly how it looks: auf Deutsch
 		'''
 }
@@ -2622,7 +2622,7 @@ Chemical_Laser: {
 
 Cryostrike: {
 	DisplayName: Cryostrike
-	Tooltip: Shoots a piercing icicle
+	Tooltip: Shoots a piercing icicle that inflicts [buffhint:Frostburn]
 }
 
 Dismay: {
@@ -2657,7 +2657,7 @@ Infusion: {
 
 Innermost_Manifest: {
 	DisplayName: Innermost Manifest
-	Tooltip: Attacks tenderize targets
+	Tooltip: Attacks inflict [buffhint:Origins/Torn_Debuff]
 }
 
 Laser_Tag_Gun: {
@@ -2710,7 +2710,7 @@ Rigged_Cubix: {
 
 Seam_Beam: {
 	DisplayName: Seam Beam
-	Tooltip: Attacks tenderize targets
+	Tooltip: Attacks inflict [buffhint:Origins/Torn_Debuff]
 }
 
 Splitsplash: {
@@ -2803,7 +2803,7 @@ Krakram: {
 
 Nematoclaw: {
 	DisplayName: Nematoclaw
-	Tooltip: Inflicts toxic shock
+	Tooltip: Inflicts [buffhint:Origins/Toxic_Shock_Debuff]
 }
 
 Nineball: {
@@ -2861,14 +2861,14 @@ Tyrfing: {
 
 Vorpal_Sword: {
 	DisplayName: Vorpal Sword
-	Tooltip: ""
+	Tooltip: Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]
 }
 
 Vorpal_Sword_Cursed: {
 	DisplayName: Vorpal Sword
 	Tooltip:
 		'''
-		Attacks tenderize targets
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
 		Will attack for you if in your inventory
 		'''
 }
@@ -2924,7 +2924,7 @@ Blotopus: {
 	DisplayName: Blotopus
 	Tooltip:
 		'''
-		Fires a stream of needles that bleed enemies
+		Fires a stream of needles that inflict [buffhint:Bleeding]
 		20% chance not consume ammo
 		'''
 }
@@ -3076,7 +3076,7 @@ Viper_Rifle: {
 	DisplayName: HNO-3 "Viper"
 	Tooltip:
 		'''
-		Has a chance to inflict Toxic Shock
+		Has a chance to inflict [buffhint:Origins/Toxic_Shock_Debuff]
 		Deals critical damage on otherwise afflicted enemies
 		'''
 }
@@ -3314,7 +3314,7 @@ Laser_Tag_Console_Item: {
 
 Traffic_Cone_Item: {
 	DisplayName: Traffic Cone
-	Tooltip: Slows enemies when placed
+	Tooltip: "[buffhint/dnSlows:Origins/Slow_Debuff] enemies when placed"
 }
 
 Acetabularia_Item: {
@@ -3526,7 +3526,7 @@ Ocotoral_Bud: {
 	Tooltip:
 		'''
 		Summons a mobile barnacle turret to fight for you
-		Attacks tenderize targets
+		Attacks [buffhint/dnRavage targets' health:Origins/Torn_Debuff]
 		'''
 }
 
@@ -3810,27 +3810,27 @@ Avulsion: {
 	Tooltip:
 		'''
 		Fires medium-range pulses
-		Attacks tenderize targets
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
 		'''
 }
 
 Primordial_Soup: {
 	DisplayName: Primordial Soup
-	Tooltip: Increased life regeneration based on the torn severity you're affected by
+	Tooltip: Increased life regeneration based on the [buffhint/self:Origins/Torn_Debuff] severity you're affected by
 }
 
 Bug_Trapper: {
 	DisplayName: Bug Trapper
-	Tooltip: Increased life regeneration and defense based on the torn severity you're affected by
+	Tooltip: Increased life regeneration and defense based on the [buffhint/self:Origins/Torn_Debuff] severity you're affected by
 }
 
 Playtimes_Over: {
 	DisplayName: Playtime's Over
 	Tooltip:
 		'''
-		Attacks tenderize targets
-		+20% applied torn severity
-		Increased life regeneration, defense and applied torn severity based on the severity you're affected by
+		Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+		+20% applied [buffhint:Origins/Torn_Debuff] severity
+		Increased life regeneration, defense and applied [buffhint/self:Origins/Torn_Debuff] severity based on the severity you're affected by
 		'''
 }
 
@@ -3900,14 +3900,14 @@ Marrowick_Bow: {
 
 Gelled_Knife: {
 	DisplayName: Gelled Knife
-	Tooltip: Applies progressively higher torn severities after every successful strike
+	Tooltip: Applies progressively higher [buffhint:Origins/Torn_Debuff] severities after every successful strike
 }
 
 Forbidden_Voice: {
 	DisplayName: Forbidden Voice
 	Tooltip:
 		'''
-		You are Silenced, press <key> to silence everyone else too
+		You are [buffhint/self:Silenced], press <key> to [buffhint/dnsilence:Silenced] everyone else too
 		Gain up to 10% damage resistance over time by not speaking
 		'''
 }
@@ -4358,7 +4358,7 @@ Alkahest_Canister: {
 	Tooltip:
 		'''
 		Releases alkahest drops upon impact
-		Tenderizes the target
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
 		'''
 }
 
@@ -4422,11 +4422,11 @@ True_Light_Disc: {
 
 Plasma_Cutter: {
 	DisplayName: Plasma Cutter
-	Tooltip:
-		'''
-		Inflicts torn with increasing severities depending on how many of the three pulses hit the target
-		Torn severities are twice as effective for this weapon
-		'''
+	Tooltip: 
+	'''
+	[buffhint/dnTenderizes:Origins/Torn_Debuff] the target
+	[buffhint:Origins/Torn_Debuff] is twice as effective for this weapon
+	'''
 }
 
 Ziptie: {
@@ -4532,7 +4532,7 @@ Alkahest_Dart: {
 	Tooltip:
 		'''
 		Leaves a trail of alkahest behind it
-		Tenderizes the target
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
 		'''
 }
 
@@ -4575,7 +4575,7 @@ Scrap_Compactor: {
 	Tooltip:
 		'''
 		Your explosives will explode into frenzied shrapnel
-		Nearby enemies below 40% and bosses below 10% of their max life whilst inflicted with Impeding Shrapnel will rapidly lose life
+		Nearby enemies below 40% and bosses below 10% of their max life whilst inflicted with [buffhint:Origins/Impeding_Shrapnel_Debuff] will rapidly lose life
 		'''
 }
 
@@ -4684,7 +4684,7 @@ Generic_Weapon: {
 
 Hemoptysis: {
 	DisplayName: Hemoptysis
-	Tooltip: Launch bloody phlegm that damages, slows and bleeds enemies
+	Tooltip: Launch bloody phlegm that damages, slows and [buffhint/dnbleeds:Bleeding] enemies
 }
 
 Eaterboros: {
@@ -4714,9 +4714,9 @@ Slag_Bucket: {
 		'''
 		40% damage reduction while above 80% of maximum life
 		All life regeneration has a 4-second buffer period before it is applied after getting hit while above half life
-		Grants immunity to knockback, fire blocks, and impeding shrapnel
+		Grants immunity to knockback, fire blocks, and [buffhint/self:Origins/Impeding_Shrapnel_Debuff]
 		All damage received is reflected to 3 nearby enemies
-		You regenerate life while on fire
+		You regenerate life while [buffhint/dnon fire|self:OnFire]
 		'''
 }
 
@@ -4725,9 +4725,9 @@ Slag_Bucket_Uncursed: {
 	Tooltip:
 		'''
 		15% damage reduction and increased life regeneration
-		Grants immunity to knockback, fire blocks, and impeding shrapnel
+		Grants immunity to knockback, fire blocks, and [buffhint/self:Origins/Impeding_Shrapnel_Debuff]
 		All damage received is reflected to 3 nearby enemies
-		You regenerate life while on fire
+		You regenerate life while [buffhint/dnon fire|self:OnFire]
 		'''
 }
 
@@ -4923,7 +4923,7 @@ Mildew_Whip: {
 	DisplayName: Mildew Whip
 	Tooltip:
 		'''
-		Has a chance to inflict Toxic Shock
+		Has a chance to inflict [buffhint:Origins/Toxic_Shock_Debuff]
 		7 summon tag damage
 		{$CommonItemTooltip.Whips}
 		'''
@@ -4988,7 +4988,7 @@ Bee_Canister: {
 
 Discharge_Canister: {
 	DisplayName: Discharge Canister
-	Tooltip: Inflicts Static Shock to enemies in its blast
+	Tooltip: Inflicts [buffhint:Origins/Static_Shock_Debuff] to enemies in its blast
 }
 
 MiningHelmet.BuffTooltip: 3% increased explosive critical strike chance
@@ -5016,11 +5016,7 @@ Replacement_Wall_Item: {
 
 Lightning_Ring: {
 	DisplayName: Lightning Ring
-	Tooltip:
-		'''
-		All attacks inflict Static Shock
-		Increases the shock chain range when using items that already inflict it
-		'''
+	Tooltip: All attacks inflict [buffhint:Origins/Mini_Static_Shock_Debuff]
 }
 
 CombineTooltips:
@@ -5034,7 +5030,7 @@ Felnum_Sword: {
 	DisplayName: Thunderbolt
 	Tooltip:
 		'''
-		Inflicts Static Shock
+		Inflicts [buffhint:Origins/Static_Shock_Debuff]
 		<right> to stab
 		Receives 50% higher damage bonuses
 		'''
@@ -5121,7 +5117,7 @@ Ocotillo_Finger: {
 	DisplayName: Ocotillo Finger
 	Tooltip:
 		'''
-		Has a chance to inflict Bleeding
+		Has a chance to inflict [buffhint:Bleeding]
 		2 summon tag damage
 		{$CommonItemTooltip.Whips}
 		'''
@@ -5131,7 +5127,7 @@ Brine_Convergence_Incantation: {
 	DisplayName: Brine Convergence Incantation
 	Tooltip:
 		'''
-		Inflicts Toxic Shock
+		Inflicts [buffhint:Origins/Toxic_Shock_Debuff]
 		6 summon tag damage
 		{$CommonItemTooltip.Whips}
 		'''
@@ -5209,7 +5205,7 @@ Torpedo_Tube: {
 	DisplayName: Torpedo Tube
 	Tooltip:
 		'''
-		Inflicts Cavitation
+		Inflicts [buffhint:Origins/Cavitation_Debuff]
 		Fires a torpedo that seeks enemies while submerged
 		'''
 }
@@ -5218,9 +5214,9 @@ Faith_Beads: {
 	DisplayName: Faith Beads
 	Tooltip:
 		'''
-		Immunity to Suffocation and reduces damage from loss of breath
+		Immunity to [buffhint/self:Suffocation] and reduces damage from loss of breath
 		Grants the ability to swim and easy movement through liquids
-		All of your attacks inflict Cavitation, Wet and have a chance to cause explosions underwater
+		All of your attacks inflict [buffhint:Origins/Cavitation_Debuff], [buffhint:Wet], and have a chance to cause explosions underwater
 		+40% explosive blast radius
 		'Only through struggle do we find ourselves'
 		'''
@@ -5235,8 +5231,8 @@ Watered_Down_Keytar: {
 	DisplayName: Watered-down Keytar
 	Tooltip:
 		'''
-		Left-click for a Toxic Shock-inflicting synth
-		Right-click for a cavitating bass
+		Left-click for a [buffhint:Origins/Toxic_Shock_Debuff]-inflicting synth
+		Right-click for a [buffhint/dncavitating:Origins/Cavitation_Debuff] bass
 		'''
 }
 
@@ -5297,7 +5293,7 @@ Tender_Flesh_Heart: {
 		Up to 65% of your max life is gradually converted into mildew health
 		Mildew health regenerates faster than regular health
 		Your death is delayed for as long as your max mildew health decays
-		Increased life regeneration, defense and mildew health conversion based on the torn severity you're affected by
+		Increased life regeneration, defense and mildew health conversion based on the [buffhint/self:Origins/Torn_Debuff] severity you're affected by
 		'''
 }
 
@@ -5428,7 +5424,7 @@ Liars_Tongue: {
 	DisplayName: Liar's Tongue
 	Tooltip:
 		'''
-		You are Silenced, press <key> to silence everyone else too
+		You are [buffhint/self:Silenced], press <key> to [buffhint/dnsilence:Silenced] everyone else too
 		Gain up to 27% damage resistance over time by not speaking
 		'''
 }
@@ -5452,7 +5448,7 @@ Mithrafin: {
 	DisplayName: Mithrafin
 	Tooltip:
 		'''
-		Extends any Poison, Acid Venom or Toxic Shock inflicted onto enemies
+		Extends any [buffhint/dnPoison:Poisoned], [buffhint:Venom], or [buffhint:Origins/Toxic_Shock_Debuff] inflicted onto enemies
 		Reduces the duration of these effects when applied to you
 		'''
 }
@@ -5543,8 +5539,8 @@ Sharp_Broth: {
 	DisplayName: Sharp Broth
 	Tooltip:
 		'''
-		Artifact minions inflict Electrified
-		All minions inflict Static Shock
+		Artifact minions inflict [buffhint:Origins/Electrified_Debuff]
+		All minions inflict [buffhint:Origins/Static_Shock_Debuff]
 		'''
 }
 
@@ -5552,8 +5548,8 @@ Minty_Broth: {
 	DisplayName: Minty Broth
 	Tooltip:
 		'''
-		All artifact minions have the Thorns effect
-		All minions inflict Frostburn for a small area around them
+		Artifact minions deal damage to nearby enemies when hurt
+		All minions inflict [buffhint:Frostburn2] in a small area around them
 		'''
 }
 
@@ -5580,7 +5576,7 @@ The_Foot: {
 	DisplayName: The Foot
 	Tooltip:
 		'''
-		Inflicts Toxic Shock
+		Inflicts [buffhint:Origins/Toxic_Shock_Debuff]
 		Releases an akaline aura when striking the ground
 		Hold and right-click to use it like a flail
 		Right-click and release to use it as an anchor
@@ -5621,7 +5617,7 @@ Venom_Shield: {
 	DisplayName: Venom Shield
 	Tooltip:
 		'''
-		Attacks inflict Toxic Shock
+		Attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
 		Effects are stronger while {§Acrid} Armor is equipped
 		Grants immunity to knockback and fire blocks
 		All damage received is reflected to 3 nearby enemies
@@ -5767,6 +5763,13 @@ Light_Broth: {
 Keytar: {
 	DisplayName: Keytar
 	Tooltip: Right click to alternate between different instruments!
+
+	Modes: {
+		0: Synth inflicts [buffhint:Venom] and [buffhint:Origins/Toxic_Shock_Debuff]
+		1: Bass inflicts [buffhint:Origins/Cavitation_Debuff]
+		2: Lead is 3x likely to deal critical hits
+	}
+
 	Mode0: Synth Mode
 	Mode1: Bass Mode
 	Mode2: Lead Mode
@@ -5869,7 +5872,7 @@ Umami_Broth: {
 	Tooltip:
 		'''
 		All minions inflict Acid Venom
-		Artifact minions also inflict Toxic Shock
+		Artifact minions also inflict [buffhint:Origins/Toxic_Shock_Debuff]
 		'''
 }
 
@@ -5939,8 +5942,8 @@ Greasy_Broth: {
 	DisplayName: Greasy Broth
 	Tooltip:
 		'''
-		All minions inflict Oiled
-		Artifact minions release greasy gas that burns enemies
+		All minions inflict [buffhint:Oiled]
+		Artifact minions release greasy gas that [buffhint/dnburns enemies:OnFire]
 		'''
 }
 
@@ -5949,7 +5952,7 @@ Savory_Broth: {
 	Tooltip:
 		'''
 		Increases debuff duration from minions by 20%
-		Artifact minions tenderize targets
+		Artifact minions [buffhint/dntenderize:Origins/Torn_Debuff] targets
 		'''
 }
 
@@ -5957,7 +5960,7 @@ Super_Mojo_Flask.DisplayName: Super Mojo Flask
 
 Spicy_Broth: {
 	DisplayName: Spicy Broth
-	Tooltip: Minions engulf enemies in flames
+	Tooltip: Minions [buffhint/dnengulf enemies in flames:OnFire3]
 }
 
 Tangela_Dye: {
@@ -6282,7 +6285,7 @@ Alkahest_Harpoon: {
 	Tooltip:
 		'''
 		Used as ammo for harpoon guns
-		Tenderizes the target
+		Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]
 		'''
 }
 

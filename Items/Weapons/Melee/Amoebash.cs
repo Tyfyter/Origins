@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Gores.NPCs;
@@ -25,8 +26,10 @@ using Terraria.ModLoader;
 using ThoriumMod.Items.BardItems;
 using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Melee {
-	public class Amoebash : ModItem, ICustomWikiStat {
-        public string[] Categories => [
+	public class Amoebash : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.4f;
+		float ITornSource.Severity => TornSeverity;
+		public string[] Categories => [
             "Sword"
         ];
 		public override void SetStaticDefaults() {
@@ -103,7 +106,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 120, targetSeverity: 0.4f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 120, targetSeverity: Amoebash.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 			target.velocity -= target.velocity * target.knockBackResist;
 			if (!float.IsNaN(hit.Knockback)) {
 				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation);

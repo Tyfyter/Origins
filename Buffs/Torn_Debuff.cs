@@ -14,6 +14,7 @@ using Terraria.Graphics.Effects;
 using Origins.Items.Accessories;
 using PegasusLib;
 using PegasusLib.Graphics;
+using PegasusLib.UI;
 
 namespace Origins.Buffs {
 	public class Torn_Debuff : ModBuff {
@@ -24,9 +25,9 @@ namespace Origins.Buffs {
 			Main.debuff[Type] = true;
 			EffectDescription = this.GetLocalization(nameof(EffectDescription));
 			EffectDescriptionSpecific = this.GetLocalization(nameof(EffectDescriptionSpecific));
-			OriginsSets.Buffs.BuffHintModifiers[Type] = (null,
-				(lines, item) => lines.Add(item?.ModItem is ITornSource tornSource ? EffectDescriptionSpecific.Format(tornSource.Severity) : EffectDescription.Value)
-			);
+			Buff_Hint_Handler.CombineBuffHintModifiers(Type, modifyBuffTip: (lines, item, player) => {
+				lines.Add(!player && (item?.ModItem is ITornSource tornSource) ? EffectDescriptionSpecific.Format(tornSource.Severity) : EffectDescription.Value);
+			});
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {

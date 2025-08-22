@@ -126,6 +126,11 @@ Buffs: {
 		''' */
 	// Static_Shock_Debuff.Description: You've been grounded until you learn to conduct yourself properly
 
+	Mini_Static_Shock_Debuff: {
+		// DisplayName: Static Shack
+		// Description: Those don't tend to move
+	}
+
 	Terlet_Paper_Buff: {
 		// DisplayName: Fiberglass Cta
 		// Description: Kawaii cta tiem

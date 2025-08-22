@@ -1,3 +1,4 @@
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs;
@@ -7,8 +8,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Avulsion : ModItem, ICustomWikiStat {
-        static short glowmask;
+	public class Avulsion : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.3f;
+		float ITornSource.Severity => TornSeverity;
+		static short glowmask;
         public string[] Categories => [
             "Torn",
             "TornSource",
@@ -63,7 +66,7 @@ namespace Origins.Items.Weapons.Magic {
             dust.velocity *= 2f;
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-            OriginGlobalNPC.InflictTorn(target, 480, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+            OriginGlobalNPC.InflictTorn(target, 480, targetSeverity: Avulsion.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
         }
     }
 }

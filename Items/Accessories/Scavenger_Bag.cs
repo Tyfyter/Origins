@@ -1,10 +1,13 @@
-﻿using Origins.Dev;
+﻿using Origins.Buffs;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
-	public class Scavenger_Bag : ModItem, ICustomWikiStat {
+	public class Scavenger_Bag : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.1f;
+		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			"Combat",
 			"Torn",

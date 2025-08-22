@@ -7,6 +7,7 @@ namespace Origins.Buffs {
 		public override string Texture => "Terraria/Images/Buff_32";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
+			Main.debuff[Type] = true;
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {

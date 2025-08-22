@@ -5,8 +5,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-	public class Salt_Flask : ModItem {
-        public string[] Categories => [
+	public class Salt_Flask : ModItem, ITornSource {
+		public static float TornSeverity => 0.2f;
+		float ITornSource.Severity => TornSeverity;
+		public string[] Categories => [
             "Potion"
         ];
         public override void SetStaticDefaults() {

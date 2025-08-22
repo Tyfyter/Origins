@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Journal;
@@ -14,8 +15,10 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
-	public class Vorpal_Sword : Uncursed_Cursed_Item<Vorpal_Sword_Cursed>, IJournalEntrySource, ICustomWikiStat {
-        public string[] Categories => [
+	public class Vorpal_Sword : Uncursed_Cursed_Item<Vorpal_Sword_Cursed>, IJournalEntrySource, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.4f;
+		float ITornSource.Severity => TornSeverity;
+		public string[] Categories => [
             "Sword"
         ];
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
@@ -222,7 +225,7 @@ namespace Origins.Items.Weapons.Melee {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 20, targetSeverity: 0.4f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 20, targetSeverity: Vorpal_Sword.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void CutTiles() {
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;

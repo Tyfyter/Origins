@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs;
@@ -8,7 +9,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
-	public class Innermost_Manifest : ModItem, ICustomWikiStat {
+	public class Innermost_Manifest : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.25f;
+		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			"Torn",
 			"TornSource",
@@ -84,7 +87,7 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.damage = 2;
 				Projectile.knockBack = 0;
 			}
-			OriginGlobalNPC.InflictTorn(target, 60, 120, 0.25f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 60, 120, Innermost_Manifest.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			behindNPCs.Add(index);

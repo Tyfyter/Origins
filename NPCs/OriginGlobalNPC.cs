@@ -29,6 +29,7 @@ using Origins.Walls;
 using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib;
+using PegasusLib.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -48,6 +49,7 @@ namespace Origins.NPCs {
 			NPCHappiness.Get(NPCID.PartyGirl)
 			.SetNPCAffection(NPCID.SantaClaus, AffectionLevel.Love)
 			.SetBiomeAffection<SpaceBiome>(AffectionLevel.Love);
+			Buff_Hint_Handler.ModifyTip(BuffID.Bleeding, 1);
 		}
 		public static ShoppingSettings ShopHelper_GetShoppingSettings(On_ShopHelper.orig_GetShoppingSettings orig, ShopHelper self, Player player, NPC npc) {
 			ShoppingSettings settings = orig(self, player, npc);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.NPCs;
 using System;
@@ -11,7 +12,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Summoner {
-	public class Ocotoral_Bud : ModItem, ICustomWikiStat {
+	public class Ocotoral_Bud : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.5f;
+		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			"Torn",
 			"TornSource"
@@ -314,7 +317,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 120, 300, 0.5f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 120, 300, Ocotoral_Bud.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 	}
 }

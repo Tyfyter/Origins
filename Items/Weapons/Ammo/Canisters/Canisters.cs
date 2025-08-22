@@ -590,7 +590,8 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
 	}
-	public class Alkahest_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
+	public class Alkahest_Canister : ModItem, ICanisterAmmo, ICustomWikiStat, ITornSource {
+		public float Severity => 0.35f;
 		static short glowmask;
 		public CanisterData GetCanisterData => new(new(61, 164, 196), new(255, 254, 156));
 		public bool? Hardmode => true;
@@ -613,7 +614,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			.Register();
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
-			OriginGlobalNPC.InflictTorn(target, 240, 180, 0.35f, source: Main.player[projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 240, 180, Severity, source: Main.player[projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public void OnKill(Projectile projectile, bool child) {
 			if (child) return;

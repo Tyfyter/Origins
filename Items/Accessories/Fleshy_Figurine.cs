@@ -1,11 +1,14 @@
-﻿using Origins.Dev;
+﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Fleshy_Figurine : ModItem, ICustomWikiStat, IJournalEntrySource<Fleshy_Figurine_Entry> {
+	public class Fleshy_Figurine : ModItem, ICustomWikiStat, IJournalEntrySource<Fleshy_Figurine_Entry>, ITornSource {
+		public static float TornSeverity => 0.1f;
+		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			"Combat",
 			"Torn",

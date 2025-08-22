@@ -1,4 +1,8 @@
 using Microsoft.Xna.Framework;
+using Origins.Buffs;
+using Origins.Dev;
+using Origins.Items.Materials;
+using Origins.NPCs;
 using Origins.Projectiles;
 using System;
 using Terraria;
@@ -6,11 +10,10 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.Items.Materials;
-using Origins.NPCs;
 namespace Origins.Items.Weapons.Ammo {
-	public class Alkahest_Harpoon : ModItem, ICustomWikiStat {
+	public class Alkahest_Harpoon : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.5f;
+		float ITornSource.Severity => TornSeverity;
 		public static int ID { get; private set; }
         public string[] Categories => [
             "Harpoon"
@@ -107,7 +110,7 @@ namespace Origins.Items.Weapons.Ammo {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 60, 180, 0.5f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 60, 180, Alkahest_Harpoon.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 	}
 }

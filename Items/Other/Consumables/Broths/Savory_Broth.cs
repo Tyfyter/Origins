@@ -1,18 +1,12 @@
 ﻿using Origins.Buffs;
 using Origins.NPCs;
 using Origins.Projectiles;
-using PegasusLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Broths {
-	public class Savory_Broth : BrothBase {
+	public class Savory_Broth : BrothBase, ITornSource {
+		public float Severity => 0.05f;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			ItemID.Sets.DrinkParticleColors[Type] = [
@@ -24,7 +18,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 		public override int Duration => 6;
 		public override void OnMinionHit(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (MinionGlobalProjectile.IsArtifact(proj) && proj.TryGetOwner(out Player player)) {
-				OriginGlobalNPC.InflictTorn(target, 90, 180, 0.05f, player.OriginPlayer());
+				OriginGlobalNPC.InflictTorn(target, 90, 180, Severity, player.OriginPlayer());
 			}
 		}
 	}

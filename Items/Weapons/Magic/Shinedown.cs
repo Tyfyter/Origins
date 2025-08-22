@@ -13,7 +13,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Shinedown : ModItem {
+	public class Shinedown : ModItem, ITornSource {
+		public static float TornSeverity => 0.3f;
+		float ITornSource.Severity => TornSeverity;
 		public static float ExtraManaPerEnemyPercent => 0.6f;
 		public static float FlatKnockbackAdjustment => 1f;
 		public override void SetStaticDefaults() {
@@ -225,7 +227,7 @@ namespace Origins.Items.Weapons.Magic {
 								break;
 
 								case 3:
-								OriginGlobalNPC.InflictTorn(npc, 60, 60, source: originPlayer);
+								OriginGlobalNPC.InflictTorn(npc, 60, 60, targetSeverity: Shinedown.TornSeverity, source: originPlayer);
 								break;
 							}
 						}

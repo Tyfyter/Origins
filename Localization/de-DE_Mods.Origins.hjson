@@ -725,13 +725,19 @@ Buffs: {
 	Torn_Debuff: {
 		// DisplayName: Torn
 		// Description: Your max life has been reduced!
-		// EffectDescription: Reduces enemy effective health
-		// EffectDescriptionSpecific: -{0:P0} effective health
+		// EffectDescription: Reduces effective health
+		// EffectDescriptionSpecific: Reduces effective health by up to {0:P0}
 	}
 
 	Toxic_Shock_Debuff: {
 		// DisplayName: Toxic Shock
 		// Description: The agony is getting to you
+		/* EffectDescription:
+			'''
+			1.3x critical damage taken
+			-20% defense
+			''' */
+		// StunDescription: Has a chance to stun the enemy
 	}
 
 	Voidsight_Buff: {
@@ -1063,6 +1069,7 @@ Buffs: {
 	Cavitation_Debuff: {
 		// DisplayName: Cavitation
 		// Description: You've got the wind knocked out of you
+		// EffectDescription: Can only be applied to wet targets
 	}
 
 	Mildew_Whip_Buff: {
@@ -1073,6 +1080,11 @@ Buffs: {
 	Static_Shock_Debuff: {
 		// DisplayName: Static Shock
 		// Description: It hurts to be near conductors!
+		/* EffectDescription:
+			'''
+			Arcs to nearby targets
+			Deals extra damage to wet and {§Defiled} targets
+			''' */
 	}
 
 	Static_Shock_Damage_Debuff: {
@@ -1086,8 +1098,14 @@ Buffs: {
 	}
 
 	Mini_Static_Shock_Debuff: {
-		// DisplayName: Static Shack
-		// Description: Those don't tend to move
+		// DisplayName: Static Buildup
+		// Description: Yowch
+		/* EffectDescription:
+			'''
+			Stacks with [buffhint:Origins/Static_Shock_Debuff] to increase its range, otherwise:
+			Deals 4 damage per second
+			{$Static_Shock_Debuff.EffectDescription}
+			''' */
 	}
 
 	Silenced_Debuff: {
@@ -1116,8 +1134,9 @@ Buffs: {
 	}
 
 	Electrified_Debuff: {
-		// DisplayName: Electrified Debuff
+		// DisplayName: Electrified
 		// Description: Mods.Origins.Buffs.Electrified_Debuff.Description
+		// EffectDescription: Deals extra damage to wet and {§Defiled} enemies
 	}
 
 	Old_Turtle_Buff: {
@@ -1144,8 +1163,8 @@ Buffs: {
 		// DisplayName: Sharp Broth
 		/* Description:
 			'''
-			Artifact minions inflict Electrified
-			All minions inflict Static Shock
+			Artifact minions inflict [buffhint:Origins/Electrified_Debuff]
+			All minions inflict [buffhint:Origins/Static_Shock_Debuff]
 			''' */
 	}
 
@@ -1154,7 +1173,7 @@ Buffs: {
 		/* Description:
 			'''
 			Artifact minions have the Thorns effect
-			All minions inflict Frostburn for a small area around them
+			All minions inflict [buffhint:Frostbite2] in a small area around them
 			''' */
 	}
 
@@ -1196,8 +1215,8 @@ Buffs: {
 		// DisplayName: Umami Broth
 		/* Description:
 			'''
-			All minions inflict Acid Venom
-			Artifact minions also inflict Toxic Shock
+			All minions inflict [buffhint:Venom]
+			Artifact minions also inflict [buffhint:Origins/Toxic_Shock_Debuff]
 			''' */
 	}
 
@@ -1215,7 +1234,7 @@ Buffs: {
 		// DisplayName: Greasy Broth
 		/* Description:
 			'''
-			All minions inflict Oiled
+			All minions inflict [buffhint:Oiled]
 			Artifact minions release greasy gas that burns enemies
 			''' */
 	}
@@ -2675,8 +2694,8 @@ Configs: {
 SetBonuses: {
 	/* Acrid:
 		'''
-		All attacks inflict Toxic Shock
-		Immunity to acid venom, poisoned and toxic shock
+		All attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
+		Immunity to [buffhint/self:Venom], [buffhint/self:Poisoned] and [buffhint/self:Origins/Toxic_Shock_Debuff]
 		Extends underwater breathing
 		''' */
 	/* Amber:
@@ -2783,9 +2802,9 @@ SetBonuses: {
 		''' */
 	/* Mildew:
 		'''
-		Grants immunity to Toxic Shock
-		All minions don mildew growths that inflict Acid Venom
-		All projectiles release mildew vines in their wake that also inflict Acid Venom
+		Grants immunity to [buffhint:Origins/Toxic_Shock_Debuff]
+		All minions don mildew growths that inflict [buffhint:Venom]
+		All projectiles release mildew vines in their wake that also inflict [buffhint:Venom]
 		''' */
 	// ChambersiteMagicHat: Chambersite Robe instead decreases maximum mana by 20
 	// ChambersiteWizardHat: +20% magic critical strike chance

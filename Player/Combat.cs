@@ -261,7 +261,7 @@ namespace Origins {
 					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
 				}
 				if (flaskSalt) {
-					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.2f, this);
+					OriginGlobalNPC.InflictTorn(target, 300, 180, Salt_Flask.TornSeverity, this);
 				}
 			}
 			if (futurephones) {
@@ -302,7 +302,7 @@ namespace Origins {
 					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
 				}
 				if (flaskSalt) {
-					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.2f, this);
+					OriginGlobalNPC.InflictTorn(target, 300, 180, Salt_Flask.TornSeverity, this);
 				}
 			}
 			if (futurephones && !proj.IsMinionOrSentryRelated) {
@@ -341,7 +341,7 @@ namespace Origins {
 				}
 			}
 			if (symbioteSkull) {
-				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 110), 60, 0.1f, this);
+				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 110), 60, Symbiote_Skull.TornSeverity, this);
 			}
 			if (acridSet) {
 				target.AddBuff(Toxic_Shock_Debuff.ID, 300);
@@ -363,7 +363,7 @@ namespace Origins {
 			}
 			if (magmaLeech) {
 				target.AddBuff(BuffID.Bleeding, 480);
-				target.AddBuff(BuffID.OnFire, Main.rand.Next(120, 361));
+				target.AddBuff(BuffID.OnFire3, Main.rand.Next(120, 361));
 			}
 			if (hit.DamageType.CountsAsClass<Explosive>()) {
 				if (dangerBarrel) {

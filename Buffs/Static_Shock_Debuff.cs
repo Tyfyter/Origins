@@ -1,6 +1,7 @@
 ﻿using Origins.NPCs;
 using Origins.NPCs.Defiled;
 using PegasusLib;
+using PegasusLib.UI;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -15,6 +16,7 @@ namespace Origins.Buffs {
 			BuffID.Sets.GrantImmunityWith[Type] = [
 				BuffID.Electrified
 			];
+			Buff_Hint_Handler.ModifyTip(Type, this is Mini_Static_Shock_Debuff ? 0 : 4, this.GetLocalization("EffectDescription").Key);
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.OriginPlayer().staticShock = true;

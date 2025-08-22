@@ -1,6 +1,5 @@
 ﻿using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Tiles.Other;
 using System;
@@ -91,8 +90,18 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 				);
 			}
 		}
+		public static void AddTooltips(List<TooltipLine> tooltips, int tagIndex = 1) {
+			tooltips.Insert(tagIndex, ModeTooltip);
+			int index = tooltips.FindIndex(l => l.Name == "Tooltip0");
+			for (int i = 0; i < 3; i++) {
+				string text = Language.GetTextValue("Mods.Origins.Items.Keytar.Modes." + i);
+				if (i == OriginPlayer.LocalOriginPlayer?.keytarMode) text = "-" + text;
+				tooltips.Insert(index++, new(Origins.instance, "ModeIndicator", text));
+			}
+			//
+		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			tooltips.Insert(1, ModeTooltip);
+			AddTooltips(tooltips);
 		}
 		public override bool? UseItem(Player player) {
 			if (player.altFunctionUse == 2) CycleMode(player);
@@ -269,7 +278,7 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			}
 		}
 		public override void BardModifyTooltips(List<TooltipLine> tooltips) {
-			tooltips.Insert(2, Keytar.ModeTooltip);
+			Keytar.AddTooltips(tooltips, 2);
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-6, 0);
 		public override bool AltFunctionUse(Player player) => true;

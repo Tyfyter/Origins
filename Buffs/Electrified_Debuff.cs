@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Origins.NPCs;
+using Origins.NPCs.Defiled;
+using PegasusLib.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
-using Origins.NPCs.Defiled;
-using Origins.NPCs;
 
 namespace Origins.Buffs {
 	public class Electrified_Debuff : ModBuff {
@@ -17,6 +18,7 @@ namespace Origins.Buffs {
 			BuffID.Sets.GrantImmunityWith[Type] = [
 				BuffID.Electrified
 			];
+			Buff_Hint_Handler.ModifyTip(Type, 20, this.GetLocalization("EffectDescription").Key);
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().electrified = true;

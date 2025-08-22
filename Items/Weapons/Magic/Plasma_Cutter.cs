@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.NPCs;
 using Origins.World.BiomeData;
+using PegasusLib.Sets;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -11,14 +13,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	[LegacyName("Riven_Dungeon_Chest_Placeholder_Item")]
-	public class Plasma_Cutter : ModItem, ICustomWikiStat {
+	public class Plasma_Cutter : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.15f;
+		float ITornSource.Severity => TornSeverity;
 		public const int baseDamage = 64;
-		static short glowmask;
 		public string[] Categories => [
 			"MagicGun"
 		];
 		public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
+			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.damage = 60;
@@ -37,7 +40,6 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.Yellow;
 			Item.value = Item.sellPrice(gold: 20);
 			Item.UseSound = Origins.Sounds.EnergyRipple.WithPitch(0.5f);
-			Item.glowMask = glowmask;
 		}
 		public override Vector2? HoldoutOffset() => Vector2.Zero;
 		public override bool? UseItem(Player player) {
@@ -103,7 +105,7 @@ namespace Origins.Items.Weapons.Magic {
 			//dust.velocity *= 8f;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 300, 180, 0.15f, Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 300, 180, Plasma_Cutter.TornSeverity, Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			float tornCurrentSeverity = target.GetGlobalNPC<OriginGlobalNPC>().tornCurrentSeverity;

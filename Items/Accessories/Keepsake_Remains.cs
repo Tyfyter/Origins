@@ -1,10 +1,13 @@
-﻿using Origins.Dev;
+﻿using Origins.Buffs;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
-	public class Keepsake_Remains : ModItem, ICustomWikiStat {
+	public class Keepsake_Remains : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.1f;
+		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			"Combat",
 			"Torn",
