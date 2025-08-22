@@ -42,9 +42,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			player.AddBuff(Item.buffType, 2);
-
-			EntitySource_ItemUse_WithAmmo Source = new(source.Player, source.Item, source.AmmoItemIdUsed, OriginExtensions.MakeContext(source.Context, OriginGlobalProj.no_multishot_context));
-			player.SpawnMinionOnCursor(Source, player.whoAmI, type, Item.damage + (int)player.GetTotalDamage(Item.DamageType).CombineWith(player.OriginPlayer().artifactDamage).GetInverse().ApplyTo(Item.damage), knockback);
+			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage + (int)player.GetTotalDamage(Item.DamageType).CombineWith(player.OriginPlayer().artifactDamage).GetInverse().ApplyTo(Item.damage), knockback);
 			//var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
 			//projectile.originalDamage = Item.damage;
 			return false;
@@ -98,6 +96,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
 			Origins.ForceFelnumShockOnShoot[Type] = true;
+			OriginsSets.Projectiles.NoMultishot[Type] = true;
 		}
 
 		public override void SetDefaults() {

@@ -50,6 +50,7 @@ namespace Origins.Items.Accessories {
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = false;
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+			OriginsSets.Projectiles.NoMultishot[Type] = true;
 		}
 
 		public override void SetDefaults() {

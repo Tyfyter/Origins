@@ -300,7 +300,7 @@ namespace Origins {
 								Vector2 diff = currentTarget.Center - Player.MountedCenter;
 								if (diff.LengthSquared() < maxDist) {
 									Projectile.NewProjectileDirect(
-										Player.GetSource_Accessory(explosiveArteryItem, OriginGlobalProj.no_multishot_context),
+										Player.GetSource_Accessory(explosiveArteryItem),
 										currentTarget.Center,
 										new Vector2(Math.Sign(diff.X), 0),
 										explosiveArteryItem.shoot,
@@ -413,7 +413,7 @@ namespace Origins {
 				Item item = protozoaFoodItem;
 				int damage = Player.GetWeaponDamage(item);
 				Projectile.NewProjectileDirect(
-					Player.GetSource_Accessory(item, OriginGlobalProj.no_multishot_context),
+					Player.GetSource_Accessory(item),
 					Player.Center,
 					OriginExtensions.Vec2FromPolar(Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi), Main.rand.NextFloat(1, 8)),
 					Mini_Protozoa_P.ID,

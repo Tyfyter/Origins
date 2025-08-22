@@ -110,7 +110,7 @@ namespace Origins.Items.Accessories {
 						EntitySource_Buff Source = new(npc, npc.buffType[i], i, OriginGlobalProj.no_multishot_context);
 
 						Projectile.NewProjectile(
-							Source,
+							npc.GetSource_Buff(i),
 							npc.Center,
 							default,
 							ModContent.ProjectileType<Volatile_Gelatin_Slime_Explosion>(),
@@ -194,6 +194,9 @@ namespace Origins.Items.Accessories {
 	}
 	public class Volatile_Gelatin_Slime_Explosion : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => $"Terraria/Images/Item_{ItemID.VolatileGelatin}";
+		public override void SetStaticDefaults() {
+			OriginsSets.Projectiles.NoMultishot[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.Explosive;
 			Projectile.width = 96;
