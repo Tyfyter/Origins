@@ -167,6 +167,7 @@ namespace Origins.Items.Weapons.Ranged {
 			ProjectileID.Sets.NeedsUUID[Type] = true;
 		}
 		public override void SetDefaults() {
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.tileCollide = false;
 			Projectile.width = 15;
 			Projectile.height = 15;
