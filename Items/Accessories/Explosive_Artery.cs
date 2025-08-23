@@ -30,6 +30,7 @@ namespace Origins.Items.Accessories {
 		public override string Texture => "Origins/Items/Accessories/Explosive_Artery";
 		public override void SetStaticDefaults() {
 			OriginsSets.Projectiles.NoMultishot[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.friendly = true;
 			Projectile.DamageType = DamageClasses.Explosive;
