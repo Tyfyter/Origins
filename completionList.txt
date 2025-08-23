@@ -66,12 +66,12 @@ BOSSES AND MINI-BOSSES:
 (^) Lost Diver/Mildew Carrion°
 (X) Snowdrop
 
+(X) Blue Lobster 'Tearror'
 (X) Crimson King
 (X) Leviathan of the Riven
 (X) Mechamalgamation
 (X) Miscreant
 (X) Seer
-(X) Tearror
 
 (%2) Origins final boss
 (X) I.C.A.R.U.S.
@@ -898,13 +898,11 @@ MAGIC WEAPONS:
 (^) Missing File*
 (^) Laser Tag Gun*
 (X) Laser Tag Shotgun
-(♫) Phantom Fury
 (^) Pike of Deepneus
 (^) Plasma Cutter*
 (X) Sapphire Shunter
 (X) Shocktrain
 (X) Spectra
-(X) Steam Blaster
 (^) The Calibrator*
 (X) True Seam Beam
 
@@ -958,10 +956,10 @@ SUMMONER WEAPONS:
 (^) Mildew Whip
 (X) Obsidian Bone
 (^) Old Brine Rock
-(X) Ornamental Riven Artifact
 (X) Riven Rain Rod
 (^) Scabcoral Lyre*
 (X) Snowman Trophy
+(X) Squiddo
 (X) Trirod
 (X) TV Remote
 (X) Wyvern Horn
@@ -969,7 +967,6 @@ SUMMONER WEAPONS:
 
 (X) Binding Incantation
 (X) Candlelight
-(X) Controller/Patrol Bot Controller
 (X) Core of Cogs
 (X) Culltivator
 (X) Cursor Brick
@@ -1628,8 +1625,8 @@ AMMO:
 
 (^) Resizable Mine VI*
 
-(X) Homing Rocket I
-(X) Homing Rocket II
+(#, ^2) Homing Rocket I
+(#, ^2) Homing Rocket II
 (^) Resizable Mine VII*
 (X) Resizable Mine VIII
 
@@ -1668,10 +1665,9 @@ CROSS-MOD CONTENT:
 (^) Defiled Storage Unit
 (^) Defiled Storage Upgrade
 (^) Defiled "Fake" Altar
-(X) Defiled Wave
+(#, ^2) Defiled Wave
 (^) Encrusted Storage Unit
 (^) Encrusted Storage Upgrade
-(X) Exploder's Soul
 (X) Fargo's Unlimited ammo items
 (X) Laden Pressure Incantation
 (^) Keytar
@@ -1743,6 +1739,7 @@ VOLUME I MUSIC:
 (^) Riven Hive
 (X) Underground Riven Hive
 
+(X) Blue Lobster 'Tearror'
 (X) Crimson King
 (^) Defiled Amalgamation
 (X) Fiberglass Weaver
@@ -1755,7 +1752,6 @@ VOLUME I MUSIC:
 (^) World Cracker
 (X) Seer
 (^) Shimmer Construct
-(X) Tearror
 (X) Trenchmaker
 
 (X) Ashen Invasion
