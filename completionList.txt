@@ -66,6 +66,7 @@ BOSSES AND MINI-BOSSES:
 (^) Lost Diver/Mildew Carrion°
 (X) Snowdrop
 
+(X) Arabel
 (X) Blue Lobster 'Tearror'
 (X) Crimson King
 (X) Leviathan of the Riven
@@ -84,6 +85,7 @@ TOWN NPCs:
 (^) Brine Fiend
 (ᗢ) Defiled Effigy
 
+(X) Arabel
 (%2, X) The Author
 
 (%2, X) Cubekon Tinkerer
@@ -94,6 +96,7 @@ TOWN NPC Quests:
 |---
 (^) TOWN NPC QUEST MECHANICS°
 
+(X) Arabel - My Love, My Life
 (^) Arms Dealer - Live Fire*
 (^) Arms Dealer - Three Times the Charm*
 (^) Brine Fiend - Basic Brewery
@@ -608,13 +611,18 @@ ACCESSORIES:
 
 VANITY:
 |---
+(X) Blue Lobster Hat
+(X) Crimson King Mask
 (^) Defiled Amalgamation Mask*
 (^) Fiberglass Weaver Head*
 (X) I.C.A.R.U.S. Mask
 (^) Lost Diver set
+(X) Mechamalgamation Mask
 (X) Miscreant Mask
 (X) Quantux Mask
+(X) Seer Mask
 (^) Shimmer Construct Mask
+(X) Snowdrop Mask
 (#, ^2) Trenchmaker Mask
 (^) World Cracker Mask*
 
@@ -970,17 +978,11 @@ SUMMONER WEAPONS:
 (X) Core of Cogs
 (X) Culltivator
 (X) Cursor Brick
-(X) Doom Incantation
-(X) Ego
 (X) Fiber Optic Whips
-(X) Ingress Incantation
 (X) Mojo Mask Staff
-(X) Peeping Tom's Incantation
 (X) Probe Controller
 (X) Ribatar
-(X) Seraphim Song
-(X, @2, #) SMART Wrench
-(X) Solstice Incantation
+(X) SMART Wrench
 (X) Technomancer 4000
 (#2, ^2) Terratotem !!!
 (X) Tonal Resonator
@@ -1379,6 +1381,7 @@ MATERIALS:
 
 (^) Busted Servo*
 (^) Geothermal Sludge*
+(X) Memory Fragment
 (^) Nova Fragment*
 (^) Power Core
 (^) Rotor*
@@ -1426,6 +1429,7 @@ CONSUMABLES:
 (^) Crown Jewel
 (X) Evil DNA
 (^) Mojo Injection*
+(X) Mother's Ward
 (^) Quantum Injector°
 (%2) The Defiled Will°
 
@@ -1439,6 +1443,7 @@ CONSUMABLES:
 (^) Greater Summoning Potion
 (^) Latchkey
 (^) Mojo Flask*
+(X) Potion of Projection !!!
 (^) Protean Potion*
 (^) Purification Potion*
 (^) Super Mojo Flask*
@@ -1498,6 +1503,7 @@ CONSUMABLES:
 (^) Shattered Stout*
 (^) Soul Spaghetti*
 (^) Sour Apple
+(X) Spearmint Tea
 (#, ^2) Sweet Tooth Shake
 (#, ^2) Tasty Booger
 (^) Vanilla Shake*
@@ -1739,6 +1745,7 @@ VOLUME I MUSIC:
 (^) Riven Hive
 (X) Underground Riven Hive
 
+(X) Arabel
 (X) Blue Lobster 'Tearror'
 (X) Crimson King
 (^) Defiled Amalgamation
@@ -1749,10 +1756,11 @@ VOLUME I MUSIC:
 (X) Mechamalgamation
 (X) Miscreant
 (X) Quantux
-(^) World Cracker
 (X) Seer
 (^) Shimmer Construct
+(X) Snowdrop
 (X) Trenchmaker
+(^) World Cracker
 
 (X) Ashen Invasion
 (X) Corruption Invasion
