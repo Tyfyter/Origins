@@ -2168,12 +2168,12 @@ Strainer: {
 
 Alkahest_Arrow: {
 	// DisplayName: Alkahest Arrow
-	// Tooltip: "[buffhint/dnTenderizes:Origins/Torn_Debuff] the target"
+	// Tooltip: Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]
 }
 
 Alkahest_Bullet: {
 	// DisplayName: Alkahest Bullet
-	// Tooltip: "[buffhint/dnTenderizes:Origins/Torn_Debuff] the target"
+	// Tooltip: Attacks inflict [buffhint:Origins/Torn_Debuff]
 }
 
 Alkaline_Harpoon: {
@@ -2181,7 +2181,7 @@ Alkaline_Harpoon: {
 	/* Tooltip:
 		'''
 		Used as ammo for harpoon guns
-		Inflicts acid venom
+		Inflicts [buffhint:Venom]
 		''' */
 }
 
@@ -2657,7 +2657,7 @@ Infusion: {
 
 Innermost_Manifest: {
 	// DisplayName: Innermost Manifest
-	// Tooltip: Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+	// Tooltip: Attacks inflict [buffhint:Origins/Torn_Debuff]
 }
 
 Laser_Tag_Gun: {
@@ -2710,7 +2710,7 @@ Rigged_Cubix: {
 
 Seam_Beam: {
 	// DisplayName: Seam Beam
-	// Tooltip: Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+	// Tooltip: Attacks inflict [buffhint:Origins/Torn_Debuff]
 }
 
 Splitsplash: {
@@ -2861,14 +2861,14 @@ Tyrfing: {
 
 Vorpal_Sword: {
 	// DisplayName: Vorpal Sword
-	// Tooltip: ""
+	// Tooltip: Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]
 }
 
 Vorpal_Sword_Cursed: {
 	// DisplayName: Vorpal Sword
 	/* Tooltip:
 		'''
-		Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
 		Will attack for you if in your inventory
 		''' */
 }
@@ -3526,7 +3526,7 @@ Ocotoral_Bud: {
 	/* Tooltip:
 		'''
 		Summons a mobile barnacle turret to fight for you
-		Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+		Attacks [buffhint/dnRavage targets' health:Origins/Torn_Debuff]
 		''' */
 }
 
@@ -3810,7 +3810,7 @@ Avulsion: {
 	/* Tooltip:
 		'''
 		Fires medium-range pulses
-		Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
 		''' */
 }
 
@@ -4358,7 +4358,7 @@ Alkahest_Canister: {
 	/* Tooltip:
 		'''
 		Releases alkahest drops upon impact
-		[buffhint/dnTenderizes:Origins/Torn_Debuff] the target
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
 		''' */
 }
 
@@ -4422,7 +4422,11 @@ True_Light_Disc: {
 
 Plasma_Cutter: {
 	// DisplayName: Plasma Cutter
-	// Tooltip: "[buffhint:Origins/Torn_Debuff] is twice as effective for this weapon"
+	/* Tooltip:
+		'''
+		[buffhint/dnTenderizes:Origins/Torn_Debuff] the target
+		[buffhint:Origins/Torn_Debuff] is twice as effective for this weapon
+		''' */
 }
 
 Ziptie: {
@@ -4528,7 +4532,7 @@ Alkahest_Dart: {
 	/* Tooltip:
 		'''
 		Leaves a trail of alkahest behind it
-		[buffhint/dnTenderizes:Origins/Torn_Debuff] the target
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
 		''' */
 }
 
@@ -5763,7 +5767,7 @@ Keytar: {
 	Modes: {
 		// 0: Synth inflicts [buffhint:Venom] and [buffhint:Origins/Toxic_Shock_Debuff]
 		// 1: Bass inflicts [buffhint:Origins/Cavitation_Debuff]
-		// 2: Lead
+		// 2: Lead is 3x likely to deal critical hits
 	}
 
 	// Mode0: Synth Mode
@@ -6281,7 +6285,7 @@ Alkahest_Harpoon: {
 	/* Tooltip:
 		'''
 		Used as ammo for harpoon guns
-		[buffhint/dnTenderizes:Origins/Torn_Debuff] the target
+		Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]
 		''' */
 }
 

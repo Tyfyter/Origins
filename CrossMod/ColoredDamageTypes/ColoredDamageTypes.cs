@@ -161,6 +161,40 @@ namespace Origins.CrossMod.ColoredDamageTypes {
 					item.Value.critColor.MultiplyRGB(explCritColor)
 				);
 			}
+
+			/*static void ModifyGlobalItem(ILContext il) {
+				ILCursor c = new(il);
+				if (c.TryGotoNext(MoveType.After,
+					i => i.M
+				))
+			}*/
+			/*static void UsePillarColors(ILContext il) {
+				ILCursor c = new(il);
+				if (c.TryGotoNext(MoveType.After,
+					i => i.MatchStfld(out FieldReference field) && field.Name == "ThrowingDamageCrit"
+				)) {
+					Type CustomConfig = ColoredTypesMod.Code.GetType("ColoredDamageTypes.zCrossModConfig");
+					FieldInfo CrossDmg = CustomConfig.GetField("CrossModDamageConfig");
+					IDictionary CustomInstance = (IDictionary)CrossDmg.GetValue(CustomConfig.GetField("Instance").GetValue(null));
+					Type DictValue = CrossDmg.FieldType.GenericTypeArguments[1];
+					FieldInfo TooltipColor = DictValue.GetField("TooltipColor");
+					FieldInfo DamageColor = DictValue.GetField("DamageColor");
+					FieldInfo CritDamageColor = DictValue.GetField("CritDamageColor");
+					foreach (DictionaryEntry obj in CustomInstance) {
+						DamageClass dClass = ModContent.Find<DamageClass>((string)obj.Key);
+						if (colors.ContainsKey(dClass) && DamageClasses.ExplosiveVersion.ContainsKey(dClass)) {
+							Color tipColor = (Color)TooltipColor.GetValue(obj.Value);
+							Color dmgColor = (Color)DamageColor.GetValue(obj.Value);
+							Color critColor = (Color)CritDamageColor.GetValue(obj.Value);
+							colors[dClass] = (tipColor,  dmgColor, critColor);
+						}
+					}
+				}
+			}*/
+			/*MethodInfo UpdateTooltips = ColoredTypesMod.Code.GetType("ColoredDamageTypes.ItemChanges")?.GetMethod("UpdateToolTips");
+			MonoModHooks.Modify(UpdateTooltips, ModifyGlobalItem);*/
+			/*MethodInfo OnChanged = ColoredTypesMod.Code.GetType("ColoredDamageTypes.Config")?.GetMethod("OnChanged");
+			MonoModHooks.Modify(OnChanged, UsePillarColors);*/
 		}
 	}
 }

@@ -504,6 +504,9 @@ namespace Origins {
 					}
 				}
 			}
+			if (ModLoader.TryGetMod("ColoredDamageTypesRedux", out Mod coloredRedux)) {
+				coloredRedux.Call("AddToPreset", "ColoredDamageTypesRedux/DefaultColorData", DamageClasses.Explosive.FullName, new Color(234, 56, 103), new Color(235, 0, 59));
+			}
 		}
 		public static void LateLoad() {
 			if (ModLoader.TryGetMod("ControllerConfigurator", out Mod controllerConfigurator) && controllerConfigurator.Call("GETGOTOKEYBINDKEYBIND") is ModKeybind keybind) {

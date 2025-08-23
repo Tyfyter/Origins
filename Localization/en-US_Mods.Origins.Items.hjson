@@ -2168,7 +2168,7 @@ Strainer: {
 
 Alkahest_Arrow: {
 	DisplayName: Alkahest Arrow
-	Tooltip: "Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]"
+	Tooltip: Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]
 }
 
 Alkahest_Bullet: {
@@ -4422,11 +4422,11 @@ True_Light_Disc: {
 
 Plasma_Cutter: {
 	DisplayName: Plasma Cutter
-	Tooltip: 
-	'''
-	[buffhint/dnTenderizes:Origins/Torn_Debuff] the target
-	[buffhint:Origins/Torn_Debuff] is twice as effective for this weapon
-	'''
+	Tooltip:
+		'''
+		[buffhint/dnTenderizes:Origins/Torn_Debuff] the target
+		[buffhint:Origins/Torn_Debuff] is twice as effective for this weapon
+		'''
 }
 
 Ziptie: {
