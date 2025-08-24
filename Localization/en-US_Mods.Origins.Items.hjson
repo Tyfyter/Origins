@@ -2352,7 +2352,11 @@ Bloombomb: {
 
 Bomb_Launcher: {
 	DisplayName: Bomb Launcher
-	Tooltip: Uses bombs as ammo
+	Tooltip:
+		'''
+		Uses bombs as ammo
+		<right> to use detonaate certain ammo at the end of the launcher
+		'''
 }
 
 Bombardment: {
