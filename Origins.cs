@@ -786,11 +786,10 @@ namespace Origins {
 		public override void PostSetupContent() {
 			Journal_Registry.SetupContent();
 			OriginsModIntegrations.PostSetupContent(this);
-			int blindDebuff = ModContent.BuffType<Blind_Debuff>();
 			for (int i = 0; i < NPCID.Sets.SpecificDebuffImmunity.Length; i++) {
 				bool?[] immunityData = NPCID.Sets.SpecificDebuffImmunity[i];
 				if (immunityData is not null) {
-					if (NPCID.Sets.ShouldBeCountedAsBoss[i] || ContentSamples.NpcsByNetId[i].boss) immunityData[blindDebuff] = true;
+					if (NPCID.Sets.ShouldBeCountedAsBoss[i] || ContentSamples.NpcsByNetId[i].boss) immunityData[Blind_Debuff.ID] = true;
 					if ((immunityData[BuffID.Confused] ?? false) && !RasterizeAdjustment.ContainsKey(i)) {
 						switch (i) {
 							case NPCID.KingSlime:

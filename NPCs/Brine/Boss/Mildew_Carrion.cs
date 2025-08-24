@@ -464,7 +464,7 @@ namespace Origins.NPCs.Brine.Boss {
 	public class Mildew_Carrion_Tentacle : ModNPC {
 		public static int DestructionCooldown => 300;
 		public override void SetStaticDefaults() {
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rasterized_Debuff>()] = true;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
@@ -673,7 +673,7 @@ namespace Origins.NPCs.Brine.Boss {
 	}
 	public class Mildew_Carrion_Tendril : ModNPC {
 		public override void SetStaticDefaults() {
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;

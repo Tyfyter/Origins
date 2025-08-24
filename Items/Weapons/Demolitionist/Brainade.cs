@@ -1,3 +1,4 @@
+using Origins.Buffs;
 using Origins.Dev;
 using Terraria;
 using Terraria.Audio;
@@ -12,6 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Confused, BuffID.Bleeding];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);

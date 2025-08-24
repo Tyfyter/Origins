@@ -55,7 +55,7 @@ namespace Origins.Buffs {
 			ID = Type;
 			Main.buffNoTimeDisplay[Type] = true;
 			BuffID.Sets.GrantImmunityWith[Type] = new() {
-				ModContent.BuffType<Toxic_Shock_Debuff>()
+				Toxic_Shock_Debuff.ID
 			};
 		}
 		public override void Update(Player player, ref int buffIndex) {

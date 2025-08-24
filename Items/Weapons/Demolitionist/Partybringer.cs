@@ -20,6 +20,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public string[] Categories => [
 			"Launcher"
 		];
+		public override void SetStaticDefaults() {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Blind_Debuff.ID];
+		}
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Partybringer_P>(64, 40, 8f, 46, 28, true);
 			Item.value = Item.buyPrice(gold: 7);
@@ -145,7 +148,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Blind_Debuff>(), 100);
+			target.AddBuff(Blind_Debuff.ID, 100);
 		}
 	}
 	public class Partybringer_Fog_Gore : ModGore {

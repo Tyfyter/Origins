@@ -4,7 +4,6 @@ using MonoMod.Cil;
 using Origins.Buffs;
 using Origins.CrossMod;
 using Origins.Dev;
-using Origins.Items.Tools;
 using Origins.Projectiles;
 using PegasusLib;
 using System;

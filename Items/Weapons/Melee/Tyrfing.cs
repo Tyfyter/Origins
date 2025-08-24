@@ -75,7 +75,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool CanShoot(Player player) => player.altFunctionUse == 2;
 		public override float UseSpeedMultiplier(Player player) => player.altFunctionUse == 2 ? 0.8f : 1;
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Electrified_Debuff>(), 180);
+			target.AddBuff(Electrified_Debuff.ID, 180);
 		}
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
 			if (drawInfo.drawPlayer.altFunctionUse == 2) return;
@@ -230,7 +230,7 @@ namespace Origins.Items.Weapons.Melee {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			int debuffID = ModContent.BuffType<Electrified_Debuff>();
+			int debuffID = Electrified_Debuff.ID;
 			int hasBuff = target.HasBuff(debuffID).ToInt();
 			float range_per_arc = 8 + hasBuff * 2;
 			const float max_chain_count = 3;

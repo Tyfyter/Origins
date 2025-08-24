@@ -8,13 +8,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Flashbang : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "ThrownExplosive",
+		public string[] Categories => [
+			"ThrownExplosive",
 			"IsGrenade",
-            "ExpendableWeapon"
-        ];
-        public override void SetStaticDefaults() {
+			"ExpendableWeapon"
+		];
+		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Confused, BuffID.Slow, BuffID.Darkness];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
@@ -24,8 +25,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Flashbang_P>();
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 15);
-            Item.ArmorPenetration += 4;
-        }
+			Item.ArmorPenetration += 4;
+		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 5)
 			.AddIngredient(ItemID.FallenStar)
@@ -62,8 +63,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.TryGetGlobalNPC(out Blind_Debuff_Global blindGlobal) && blindGlobal.blindable) {
-				target.AddBuff(ModContent.BuffType<Blind_Debuff>(), 120);
-			}else {
+				target.AddBuff(Blind_Debuff.ID, 120);
+			} else {
 				target.AddBuff(BuffID.Confused, 220);
 			}
 			target.AddBuff(BuffID.Slow, 300);
@@ -106,5 +107,5 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Main.spriteBatch.Restart();
 			return false;
 		}
-    }
+	}
 }

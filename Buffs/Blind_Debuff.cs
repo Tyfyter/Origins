@@ -12,8 +12,10 @@ using Terraria.ModLoader;
 namespace Origins.Buffs {
 	public class Blind_Debuff : ModBuff {
 		public override string Texture => "Terraria/Images/Buff_" + BuffID.Darkness;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
+			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
 			if (npc.TryGetGlobalNPC(out Blind_Debuff_Global global)) global.blinded = true;

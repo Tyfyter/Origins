@@ -1977,7 +1977,7 @@ Prefixes: {
 		DisplayName: Firestarter's
 		Description:
 			'''
-			Minions set foes ablaze
+			Minions [buffhint/dnset foes ablaze:OnFire3]
 			Minions explode upon death
 			'''
 		BadDescription: Minions lose health over time
@@ -2702,7 +2702,7 @@ SetBonuses: {
 		'''
 		-38% explosive blast radius
 		All explosives are preserved in amber and release amber shards upon detonation
-		Amber shards slow enemies, heal the player of any self-damage received, and decrease the defense of struck enemies by half
+		Amber shards [buffhint/dnSlows:Origins/Slow_Debuff] enemies, heal the player of any self-damage received, and decrease the defense of struck enemies by half
 		'''
 	Ashen:
 		'''
@@ -2765,7 +2765,7 @@ SetBonuses: {
 		All explosives inflict Impeding Shrapnel
 		Additional scrap drops from Ashen enemies
 		'''
-	Souldhide: Nearby enemies are weakened and afflicted with Shadefire
+	Souldhide: Nearby enemies are [buffhint/dnweakened:Weak] and afflicted with [buffhint:ShadowFlame]
 	Tendon: Mobility is based on remaining health
 	Miner:
 		'''

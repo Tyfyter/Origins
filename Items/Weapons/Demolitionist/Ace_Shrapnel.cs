@@ -17,6 +17,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public string[] Categories => [
 			"Launcher"
 		];
+		public override void SetStaticDefaults() {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Impeding_Shrapnel_Debuff.ID];
+		}
 		public override void SetDefaults() {
 			Item.DefaultToLauncher(12, 20, 54, 26);
 			Item.useTime = 1;

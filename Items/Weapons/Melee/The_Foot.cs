@@ -55,7 +55,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public static void DoHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), 600);
+			target.AddBuff(Toxic_Shock_Debuff.ID, 600);
 		}
 		public static void DoSlam(Projectile projectile, Vector2 position, Vector2 direction) {
 			Vector2 center = position + projectile.Size * 0.5f;
@@ -243,7 +243,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.idStaticNPCHitCooldown = 20;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), 60);
+			target.AddBuff(Toxic_Shock_Debuff.ID, 60);
 		}
 		public override void AI() {
 			Lighting.AddLight(Projectile.Center, 0, 0.4f, 0);

@@ -2187,17 +2187,17 @@ Alkaline_Harpoon: {
 
 Bile_Arrow: {
 	DisplayName: Bile Arrow
-	Tooltip: Stuns the target
+	Tooltip: "[buffhint/dnStuns:Origins/Rasterized_Debuff] the target"
 }
 
 Bile_Bullet: {
 	DisplayName: Bile Bullet
-	Tooltip: Stuns the target
+	Tooltip: "[buffhint/dnStuns:Origins/Rasterized_Debuff] the target"
 }
 
 Bile_Dart: {
 	DisplayName: Bile Dart
-	Tooltip: Stuns the target
+	Tooltip: "[buffhint/dnStuns:Origins/Rasterized_Debuff] the target"
 }
 
 Bouncy_Harpoon: {
@@ -2214,7 +2214,7 @@ Cursed_Harpoon: {
 	Tooltip:
 		'''
 		Used as ammo for harpoon guns
-		Inflicts cursed inferno
+		Inflicts [buffhint:CursedInferno]
 		'''
 }
 
@@ -2232,7 +2232,7 @@ Flammable_Harpoon: {
 	Tooltip:
 		'''
 		Used as ammo for harpoon guns
-		Sets enemies ablaze
+		Sets enemies [buffhint/dnablaze:OnFire]
 		'''
 }
 
@@ -2322,12 +2322,12 @@ Ace_Shrapnel_Old: {
 
 Alkaline_Bomb: {
 	DisplayName: Alkaline Bomb
-	Tooltip: Explodes into brine droplets
+	Tooltip: Explodes into [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff]
 }
 
 Alkaline_Grenade: {
 	DisplayName: Alkaline Grenade
-	Tooltip: Explodes into brine droplets
+	Tooltip: Explodes into [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff]
 }
 
 Ameballoon: {
@@ -2429,7 +2429,7 @@ Dreikan: {
 	DisplayName: Dreikan
 	Tooltip:
 		'''
-		Converts [itemname:MusketBall]s into {$Projectiles.Dreikan_Shot.DisplayName}.
+		Converts [itemname:MusketBall]s into [buffhint/dn{$Projectiles.Dreikan_Shot.DisplayName}:Daybreak].
 		Pronounced exactly how it looks: auf Deutsch
 		'''
 }
@@ -2455,7 +2455,7 @@ Flakjack: {
 
 Flashbang: {
 	DisplayName: Flashbang
-	Tooltip: Dazes enemies upon detonation
+	Tooltip: "[buffhint/dnDazes:Origins/Blind_Debuff] enemies upon detonation"
 }
 
 Floaty_Bomb: {
@@ -2480,12 +2480,12 @@ Happy_Bomb: {
 
 Hellfire_Bomb: {
 	DisplayName: Hellfire Bomb
-	Tooltip: Explodes into a lingering fire
+	Tooltip: Explodes into a [buffhint/dnlingering fire:OnFire3]
 }
 
 Hellfire_Grenade: {
 	DisplayName: Hellfire Grenade
-	Tooltip: Explodes into a lingering fire
+	Tooltip: Explodes into a [buffhint/dnlingering fire:OnFire3]
 }
 
 Impact_Bomb: {
@@ -2580,7 +2580,7 @@ Thermite_Launcher: {
 	Tooltip:
 		'''
 		Uses canisters as ordnance
-		Burn.
+		[buffhint/dnBurn.:OnFire3]
 		'''
 }
 
@@ -2621,7 +2621,7 @@ Bled_Out_Staff: {
 
 Chemical_Laser: {
 	DisplayName: Chemical Laser
-	Tooltip: Splits into brine droplets on impact
+	Tooltip: Splits into [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff] on impact
 }
 
 Cryostrike: {
@@ -2636,7 +2636,7 @@ Dismay: {
 
 Eternabrite: {
 	DisplayName: Eternabrite
-	Tooltip: Casts a forceful flame
+	Tooltip: Casts a forceful [buffhint/dnflame:OnFire]
 }
 
 Haunted_Vase: {
@@ -2651,7 +2651,7 @@ Hivateinn: {
 
 Hot_Potato: {
 	DisplayName: Hot Potato
-	Tooltip: "'Be careful, it's hot'"
+	Tooltip: "'Be careful, it's [buffhint/dnhot:OnFire]'"
 }
 
 Infusion: {
@@ -2724,7 +2724,7 @@ Splitsplash: {
 
 Splashid: {
 	DisplayName: Splashid
-	Tooltip: Shoots a flurry of brine droplets
+	Tooltip: Shoots a flurry of [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff]
 }
 
 Startillery: {
@@ -3586,7 +3586,7 @@ Neural_Network: {
 
 Eruption: {
 	DisplayName: Eruption
-	Tooltip: ""
+	Tooltip: At the end of the projectile's time creates a geyser of [buffhint/dnflames:OnFire]
 }
 
 Weakpoint_Analyzer: {
@@ -3786,7 +3786,7 @@ Cold_Snap: {
 	DisplayName: Cold Snap
 	Tooltip:
 		'''
-		Inflicts frostburn to struck enemies
+		Inflicts [buffhint:Frostburn] to struck enemies
 		Uses canisters as ordnance
 		'''
 }
@@ -4038,7 +4038,7 @@ CORE_Generator: {
 
 Napalm_Canister: {
 	DisplayName: Napalm Canister
-	Tooltip: Releases napalm after landing
+	Tooltip: Releases [buffhint/dnnapalm:OnFire] after landing
 }
 
 Futurephones: {
@@ -4231,7 +4231,7 @@ Defiled_Grass_Wall_Placed_Unsafe_Item: {
 
 Acrid_Handcannon: {
 	DisplayName: "{§Acrid} Handcannon"
-	Tooltip: Releases brine droplets upon slug detonation
+	Tooltip: Releases [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff] upon slug detonation
 }
 
 Newsboy_Cap: {
@@ -4334,17 +4334,17 @@ Shimmer_Dye: {
 
 Coolant_Canister: {
 	DisplayName: Coolant Canister
-	Tooltip: Inflicts frostburn to anything nearby upon impact
+	Tooltip: Inflicts [buffhint:Frostburn] to anything nearby upon impact
 }
 
 Cursed_Canister: {
 	DisplayName: Cursed Canister
-	Tooltip: Releases a lingering cursed inferno in its wake
+	Tooltip: Releases a lingering [buffhint:CursedInferno] in its wake
 }
 
 Bile_Canister: {
 	DisplayName: Bile Canister
-	Tooltip: Inflicts raster to anything nearby upon impact
+	Tooltip: Inflicts [buffhint:Origins/Rasterized_Debuff] to anything nearby upon impact
 }
 
 Flare_Launcher: {
@@ -4354,7 +4354,7 @@ Flare_Launcher: {
 
 Ichor_Canister: {
 	DisplayName: Ichor Canister
-	Tooltip: Inflicts ichor to anything nearby upon impact
+	Tooltip: Inflicts [buffhint:Ichor] to anything nearby upon impact
 }
 
 Alkahest_Canister: {
@@ -4368,7 +4368,7 @@ Alkahest_Canister: {
 
 Alkaline_Canister: {
 	DisplayName: Alkaline Canister
-	Tooltip: Releases brine droplets upon impact
+	Tooltip: Releases [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff] upon impact
 }
 
 Banner_Item: {
@@ -4458,7 +4458,7 @@ Breach: {
 	Tooltip:
 		'''
 		Casts a spirit-bound mass of black bile that explodes into miniature wisps
-		Enemies struck by this weapon recieve a brief raster
+		Enemies struck by this weapon recieve a brief [buffhint/dnraster:Origins/Rasterized_Debuff]
 		Self-damage recieved from this weapon replenishes mana
 		'''
 }
@@ -4562,7 +4562,7 @@ Chambersite_Gemspark_Wall_On_Safe_Item: {
 
 Dew_Justice: {
 	DisplayName: Dew Justice
-	Tooltip: Amebic gel particulates rise from nearby surfaces to bombard your target
+	Tooltip: "[buffhint/dnAmebic gel:Origins/Torn_Debuff] particulates rise from nearby surfaces to bombard your target"
 }
 
 Impactaxe: {
@@ -4688,7 +4688,7 @@ Generic_Weapon: {
 
 Hemoptysis: {
 	DisplayName: Hemoptysis
-	Tooltip: Launch bloody phlegm that damages, slows and [buffhint/dnbleeds:Bleeding] enemies
+	Tooltip: Launch bloody phlegm that damages, [buffhint:Origins/Slow_Debuff] and [buffhint/dnbleeds:Bleeding] enemies
 }
 
 Eaterboros: {
@@ -4852,7 +4852,7 @@ The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction: {
 
 Eternanite: {
 	DisplayName: Eternanite
-	Tooltip: Casts a forceful cloud of gaseous black bile
+	Tooltip: Casts a forceful cloud of gaseous [buffhint/dnblack bile:Origins/Rasterized_Debuff]
 }
 
 Cobalt_Harpoon_Gun: {
@@ -5614,7 +5614,7 @@ Fiberbass: {
 
 Regurgitator_Of_Souls: {
 	DisplayName: Regurgitator of Souls
-	Tooltip: Inflicts Shadefire
+	Tooltip: Inflicts [buffhint:Origins/Shadefire_Debuff]
 }
 
 Venom_Shield: {
@@ -5875,7 +5875,7 @@ Umami_Broth: {
 	DisplayName: Umami Broth
 	Tooltip:
 		'''
-		All minions inflict Acid Venom
+		All minions inflict [buffhint:Venom]
 		Artifact minions also inflict [buffhint:Origins/Toxic_Shock_Debuff]
 		'''
 }
@@ -5904,7 +5904,7 @@ Soul_Snatcher: {
 	Tooltip:
 		'''
 		Hold <right> to spin it around
-		Becomes empowered after striking enemies, inflicting Shadefire
+		Becomes empowered after striking enemies, inflicting [buffhint:Origins/Shadefire_Debuff]
 		Pressing <left> while empowered and holding <right> launches it
 		'''
 }
@@ -6013,7 +6013,7 @@ Residual_Crate: {
 
 Brine_Haze: {
 	DisplayName: Brine Haze
-	Tooltip: Releases clouds of brine that linger
+	Tooltip: Releases [buffhint/dnclouds of brine:Origins/Toxic_Shock_Debuff] that linger
 }
 
 Enchanted_Fiberglass_Wall_Item: {
@@ -6191,7 +6191,7 @@ Bile_Harpoon: {
 	Tooltip:
 		'''
 		Used as ammo for harpoon guns
-		Stuns the target
+		[buffhint/dnStuns:Origins/Rasterized_Debuff] the target
 		'''
 }
 
@@ -6297,7 +6297,7 @@ Amnestic_Rose: {
 	DisplayName: Amnestic Rose
 	Tooltip:
 		'''
-		Launches a rose that slows enemies
+		Launches a rose that inflict [buffhint:Origins/Slow_Debuff]
 		Sometimes steals mana
 		'A Rose, But for whom?'
 		'''
@@ -6348,7 +6348,7 @@ Ichor_Harpoon: {
 	Tooltip:
 		'''
 		Used as ammo for harpoon guns
-		Inflicts Ichor
+		Inflicts [buffhint:Ichor]
 		'''
 }
 

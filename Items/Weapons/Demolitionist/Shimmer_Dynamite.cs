@@ -1,3 +1,4 @@
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Projectiles;
 using System;
@@ -15,6 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Shimmer];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Dynamite);

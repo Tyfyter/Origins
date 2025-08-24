@@ -70,7 +70,7 @@ namespace Origins.Items.Weapons.Magic {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), 80);
+			target.AddBuff(Toxic_Shock_Debuff.ID, 80);
 		}
 		public override void OnKill(int timeLeft) {
 			if (Projectile.owner != Main.myPlayer) {

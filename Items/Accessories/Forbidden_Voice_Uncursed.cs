@@ -12,6 +12,9 @@ namespace Origins.Items.Accessories {
 		];
 		public string EntryName => "Origins/" + typeof(Forbidden_Voice_Entry).Name;
 		public override bool HasOwnTexture => true;
+		public override void SetStaticDefaults() {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Soulhide_Weakened_Debuff.ID];
+		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.damage = -1;

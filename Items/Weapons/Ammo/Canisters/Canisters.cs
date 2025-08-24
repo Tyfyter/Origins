@@ -672,6 +672,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 199;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Toxic_Shock_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.DefaultToCanister(30);

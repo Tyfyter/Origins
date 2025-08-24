@@ -20,6 +20,7 @@ namespace Origins.Items.Weapons.Magic {
 			Origins.DamageBonusScale[Type] = 1.5f;
 			CritType.SetCritType<Felnum_Crit_Type>(Type);
 			OriginsSets.Items.FelnumItem[Type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Electrified_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
@@ -99,7 +100,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(ModContent.BuffType<LightningImmuneFixBuff>(), 6);
-			target.AddBuff(ModContent.BuffType<Electrified_Debuff>(), 240);
+			target.AddBuff(Electrified_Debuff.ID, 240);
 		}
 		public override bool? CanHitNPC(NPC target) {
 			return target.HasBuff(ModContent.BuffType<LightningImmuneFixBuff>()) ? false : base.CanHitNPC(target);

@@ -1,7 +1,6 @@
 using Origins.Buffs;
 using Origins.CrossMod;
 using Origins.Dev;
-using Origins.Items.Tools;
 using PegasusLib;
 using System;
 using Terraria;
@@ -15,6 +14,7 @@ namespace Origins.Items.Weapons.Magic {
 		];
 		public override void SetStaticDefaults() {
 			Item.staff[Type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Rasterized_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Communion_P>(), 26, 10);

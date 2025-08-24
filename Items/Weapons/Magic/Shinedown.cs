@@ -20,6 +20,7 @@ namespace Origins.Items.Weapons.Magic {
 		public static float FlatKnockbackAdjustment => 1f;
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.CursedInferno, BuffID.Ichor, Rasterized_Debuff.ID, Torn_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);

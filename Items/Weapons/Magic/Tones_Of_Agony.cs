@@ -1,19 +1,20 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Terraria.GameContent;
 namespace Origins.Items.Weapons.Magic {
 	public class Tones_Of_Agony : ModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => [
             "SpellBook"
         ];
         public ushort Element => Elements.Earth;
+		public override void SetStaticDefaults() {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Bleeding];
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 40;

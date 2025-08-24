@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Other;
@@ -15,6 +16,7 @@ namespace Origins.Items.Weapons.Magic {
         ];
         public override void SetStaticDefaults() {
 			Item.staff[Type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.OnFire3];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Flamelash);
