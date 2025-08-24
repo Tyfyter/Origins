@@ -2355,7 +2355,7 @@ Bomb_Launcher: {
 	Tooltip:
 		'''
 		Uses bombs as ammo
-		<right> to use detonaate certain ammo at the end of the launcher
+		<right> to detonate some ammo from launcher
 		'''
 }
 
