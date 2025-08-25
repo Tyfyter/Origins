@@ -86,38 +86,12 @@ namespace Origins.UI {
 			//spriteBatch.Draw(Subtitle.Value, logoDrawCenter + logoRotation.ToRotationVector2() * 32 + (logoRotation + MathHelper.PiOver2).ToRotationVector2() * 100, null, drawColor, logoRotation, new(243 * 0.5f, 50), logoScale * 2, SpriteEffects.None, 0);
 		}
 	}
-	public class Aether_Mod_Menu : ModMenu, ITriggerSCBackground {
+	public class Aether_Mod_Menu : ModMenu {
 		public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>("Origins/UI/Logos/Shimmer_Terraria");
 		public override int Music => Origins.Music.TheDive;
 		public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<Placeholder_Surface_Background>();
 		public override string DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey("ModMenu.Aether")).Value;
-		public static void EnableShaderOnMenu(ILContext il) {
-			ILCursor c = new(il);
-			ILLabel aft = default;
-			c.GotoNext(MoveType.After,
-				static i => i.MatchLdsfld(typeof(Filters), nameof(Filters.Scene)),
-				static i => i.MatchLdstr("Sepia"),
-				static i => i.MatchCallvirt(out _),
-				static i => i.MatchCallvirt<Filter>(nameof(Filter.IsInUse)),
-				i => i.MatchBrfalse(out aft)
-			);
-			c.GotoLabel(aft);
-			c.EmitLdloca((VariableDefinition)c.Prev.Operand);
-			c.EmitDelegate((ref bool cantShade) => {
-				if (Main.gameMenu) {/*
-					if (MenuLoader.CurrentMenu is Aether_Mod_Menu) SC_Phase_Three_Overlay.instance.Activate(Main.screenPosition);
-					else SC_Phase_Three_Overlay.instance.Deactivate();*/
-				}
-			});
-		}
-		public override void Update(bool isOnTitleScreen) {/*
-			Main.LocalPlayer.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Underlay", isOnTitleScreen, Main.screenPosition);
-			Main.LocalPlayer.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Midlay", isOnTitleScreen, Main.screenPosition);
-			Main.LocalPlayer.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", isOnTitleScreen, Main.screenPosition);*/
-		}
-		public override void SetStaticDefaults() {
-		}
-		// Note: i was originally gonna have the logo have the shimmer dye effect but decided it didn't look good
+		public override bool IsAvailable => false; // Waiting on https://github.com/tModLoader/tModLoader/pull/4716
 		public override void PostDrawLogo(SpriteBatch spriteBatch, Vector2 logoDrawCenter, float logoRotation, float logoScale, Color drawColor) {
 			//Can't add Origins subtitle because it's as big as the actual logo
 			//spriteBatch.Draw(Subtitle.Value, logoDrawCenter + logoRotation.ToRotationVector2() * 32 + (logoRotation + MathHelper.PiOver2).ToRotationVector2() * 100, null, drawColor, logoRotation, new(243 * 0.5f, 50), logoScale * 2, SpriteEffects.None, 0);

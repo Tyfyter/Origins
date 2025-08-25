@@ -222,7 +222,6 @@ namespace Origins {
 			MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Ebonstone>(), MC.WallType<Chambersite_Ebonstone_Wall>());
 			MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Crimstone>(), MC.WallType<Chambersite_Crimstone_Wall>());
 			UnstableHooking.IL_Main_DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
-			UnstableHooking.IL_Main_DoDraw += Aether_Mod_Menu.EnableShaderOnMenu;
 			OriginsModIntegrations.LateLoad();
 			_ = OriginExtensions.StrikethroughFont;
 			for (int k = 0; k < ItemLoader.ItemCount; k++) {
