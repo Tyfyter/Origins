@@ -2948,4 +2948,5 @@ CritType: {
 	Piledriver_Crit_Type: Critically strikes on alternate attacks
 	Meteor_Crit_Type: Critically strikes when falling onto airborne targets
 	Communion_Type: Critically strikes when hitting the same target multiple times
+	Viper_Rifle_Crit_Type: Critically strikes on otherwise afflicted enemies
 }

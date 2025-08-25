@@ -1,6 +1,10 @@
-﻿using Origins.Dev;
+﻿using Origins.Buffs;
+using Origins.CrossMod;
+using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -54,6 +58,22 @@ namespace Origins.Items.Weapons.Ranged {
 			EntitySource_ItemUse_WithAmmo barrelSource = new(source.Player, source.Item, source.AmmoItemIdUsed, OriginExtensions.MakeContext(source.Context, OriginGlobalProj.no_multishot_context, "barrel"));
 			OriginGlobalProj.killLinkNext = Projectile.NewProjectile(barrelSource, position, unit * (dist / 20), type, damage, knockback, player.whoAmI);
 			return true;
+		}
+		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			for (int i = 0; i < tooltips.Count; i++) {
+				if (tooltips[i].Name == "Tooltip1" && ModLoader.HasMod("CritRework")) tooltips.RemoveAt(i);
+			}
+		}
+		public class Viper_Rifle_Crit_Type : CritType<Viper_Rifle> {
+			public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
+				for (int i = 0; i < target.buffType.Length; i++) {
+					if (Main.debuff[target.buffType[i]] && target.buffType[i] != Toxic_Shock_Debuff.ID) {
+						return true;
+					}
+				}
+				return false;
+			}
+			public override float CritMultiplier(Player player, Item item) => 1.4f;
 		}
 	}
 }

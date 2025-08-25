@@ -2717,9 +2717,9 @@ SetBonuses: {
 		''' */
 	/* Cryosten:
 		'''
-		All attacks inflict frostburn
+		All attacks inflict [buffhint:Frostburn]
 		+10% explosive velocity
-		Immunity to Frozen and Chilled
+		Immunity to [buffhint/self:Frozen] and [buffhint/self:Chilled]
 		''' */
 	// Defiled: Greatly increased maximum life
 	// Encrusted: Increases summon damage by up to 30% when over half health
@@ -2757,15 +2757,15 @@ SetBonuses: {
 		'''
 		Generate a massive aura that pushes away enemies and projectiles
 		harder the closer they are to you
-		Allies receive a minor boost in stats when in the aura
+		Allies receive a [buffhint/self/dnminor boost:Origins/Sapphire_Aura_Buff] in stats when in the aura
 		The aura fades as you run out of mana
 		''' */
 	/* Scavenger:
 		'''
-		All explosives inflict Impeding Shrapnel
+		All explosives inflict [buffhint:Origins/Impeding_Shrapnel_Debuff]
 		Additional scrap drops from Ashen enemies
 		''' */
-	// Souldhide: Nearby enemies are [buffhint/dnweakened:Weak] and afflicted with [buffhint:ShadowFlame]
+	// Souldhide: Nearby enemies are [buffhint:Origins/Soulhide_Weakened_Debuff] and afflicted with [buffhint:ShadowFlame]
 	// Tendon: Mobility is based on remaining health
 	/* Miner:
 		'''
@@ -2785,7 +2785,7 @@ SetBonuses: {
 		''' */
 	/* Rubber:
 		'''
-		Immunity to Static Shock and Electrified
+		Immunity to [buffhint:Origins/Static_Shock_Debuff] and [buffhint:Electrified]
 		+5% damage reduction
 		''' */
 	/* Extremophile:
@@ -2810,7 +2810,7 @@ SetBonuses: {
 	// ChambersiteWizardHat: +20% magic critical strike chance
 	/* ChambersiteCommander:
 		'''
-		Grants {$Mods.Origins.Buffs.Voidsight_Buff.DisplayName}
+		Grants [buffhint/self:Origins/Voidsight_Buff]
 		Increases your max number of minions by 1
 		+15% knockback
 		Allows you to temporarily summon a Chambersite Sentinel to fight. 
@@ -2948,4 +2948,5 @@ CritType: {
 	// Piledriver_Crit_Type: Critically strikes on alternate attacks
 	// Meteor_Crit_Type: Critically strikes when falling onto airborne targets
 	// Communion_Type: Critically strikes when hitting the same target multiple times
+	// Viper_Rifle_Crit_Type: Critically strikes on otherwise afflicted enemies
 }

@@ -3086,7 +3086,7 @@ Viper_Rifle: {
 	Tooltip:
 		'''
 		Has a chance to inflict [buffhint:Origins/Toxic_Shock_Debuff]
-		Deals critical damage on otherwise afflicted enemies
+		Critically strikes on otherwise afflicted enemies
 		'''
 }
 
