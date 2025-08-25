@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Viper_Rifle : ModItem, ICustomWikiStat {
 		static short glowmask;
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				global.viperEffect = true;
 				global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 2);
@@ -64,16 +64,16 @@ namespace Origins.Items.Weapons.Ranged {
 				if (tooltips[i].Name == "Tooltip1" && ModLoader.HasMod("CritRework")) tooltips.RemoveAt(i);
 			}
 		}
-		public class Viper_Rifle_Crit_Type : CritType<Viper_Rifle> {
-			public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
-				for (int i = 0; i < target.buffType.Length; i++) {
-					if (Main.debuff[target.buffType[i]] && target.buffType[i] != Toxic_Shock_Debuff.ID) {
-						return true;
-					}
+	}
+	public class Viper_Rifle_Crit_Type : CritType<Viper_Rifle> {
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
+			for (int i = 0; i < target.buffType.Length; i++) {
+				if (Main.debuff[target.buffType[i]] && target.buffType[i] != Toxic_Shock_Debuff.ID) {
+					return true;
 				}
-				return false;
 			}
-			public override float CritMultiplier(Player player, Item item) => 1.4f;
+			return false;
 		}
+		public override float CritMultiplier(Player player, Item item) => 1.4f;
 	}
 }
