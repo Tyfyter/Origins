@@ -35,7 +35,7 @@ namespace Origins.NPCs.Felnum {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.UndeadViking;
 			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Static_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Static_Shock_Debuff.ID] = true;
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;

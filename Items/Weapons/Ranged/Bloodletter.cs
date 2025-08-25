@@ -10,6 +10,9 @@ namespace Origins.Items.Weapons.Ranged {
         public new string[] Categories => [
             "HarpoonGun"
         ];
+		public override void SetStaticDefaults() {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Bleeding];
+		}
         public override void SetDefaults() {
 			Item.damage = 30;
 			Item.DamageType = DamageClass.Ranged;

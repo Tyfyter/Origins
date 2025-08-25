@@ -24,7 +24,7 @@ namespace Origins.Items.Armor.Rubber {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Rubber");
-			player.buffImmune[ModContent.BuffType<Static_Shock_Debuff>()] = true;
+			player.buffImmune[Static_Shock_Debuff.ID] = true;
 			player.buffImmune[BuffID.Electrified] = true;
 			player.endurance += (1 - player.endurance) * 0.05f;
 			if (OriginsModIntegrations.CheckAprilFools() && player.OriginPlayer().nearTrafficCone > 0) player.moveSpeed += 2f;

@@ -11,6 +11,7 @@ namespace Origins.Items.Weapons.Ranged {
 		];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Venom];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ElfMelter);

@@ -1,17 +1,10 @@
-using Microsoft.Xna.Framework;
-using Origins.Projectiles;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
 using System.IO;
 using PegasusLib;
-using System.Linq;
 using Terraria.GameContent;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.Audio;
 using System.Collections.Generic;
 using Terraria.Graphics.Shaders;
 using Terraria.Graphics;
@@ -21,6 +14,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Slow_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);

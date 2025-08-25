@@ -1,12 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Dev;
 using Origins.Projectiles.Weapons;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Firespit : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -17,6 +15,7 @@ namespace Origins.Items.Weapons.Ranged {
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.OnFire3];
 		}
 		public override void SetDefaults() {
 			Item.damage = 36;

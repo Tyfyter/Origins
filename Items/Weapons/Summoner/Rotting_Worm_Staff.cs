@@ -15,6 +15,7 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int projectileID = 0;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Poisoned];
 		}
 		public override void SetDefaults() {
 			Item.damage = 4;

@@ -19,6 +19,7 @@ namespace Origins.Items.Weapons.Summoner {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Slow_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.damage = 17;

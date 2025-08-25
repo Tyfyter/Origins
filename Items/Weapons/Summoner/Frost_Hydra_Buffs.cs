@@ -1,13 +1,8 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -19,6 +14,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override bool IsLoadingEnabled(Mod mod) => OriginConfig.Instance.FrostHydra;
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.type == ItemID.StaffoftheFrostHydra;
 		public override void SetDefaults(Item entity) {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[entity.type] = [Slow_Debuff.ID];
 			entity.damage = 75;
 		}
 	}

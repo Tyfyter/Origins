@@ -39,7 +39,7 @@ namespace Origins.NPCs.Felnum {
 			FriendlyNPCTypes.Add(ModContent.NPCType<Felnum_Ore_Slime>());
 			FriendlyNPCTypes.Add(ModContent.NPCType<Felnum_Einheri>());
 			FriendlyNPCTypes.Add(ModContent.NPCType<Cloud_Elemental>());
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Static_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Static_Shock_Debuff.ID] = true;
 		}
 		public override void Unload() => FriendlyNPCTypes = null;
 		public override void SetDefaults() {

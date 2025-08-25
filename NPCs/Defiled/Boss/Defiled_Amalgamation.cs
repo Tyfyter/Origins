@@ -644,7 +644,7 @@ namespace Origins.NPCs.Defiled.Boss {
 							SoundEngine.PlaySound(SoundID.Item123.WithPitch(2f), NPC.Center);
 
 							if (Main.netMode != NetmodeID.MultiplayerClient) {
-								int staticShock = NPC.FindBuffIndex(ModContent.BuffType<Static_Shock_Debuff>());
+								int staticShock = NPC.FindBuffIndex(Static_Shock_Debuff.ID);
 								if (staticShock >= 0) NPC.DelBuff(staticShock);
 								leg1 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg1, NPC.whoAmI);
 								leg2 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg2, NPC.whoAmI);

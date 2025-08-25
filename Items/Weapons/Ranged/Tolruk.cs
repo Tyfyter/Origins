@@ -38,6 +38,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Origins.DamageBonusScale[Type] = 1.5f;
 			CritType.SetCritType<Felnum_Crit_Type>(Type);
 			OriginsSets.Items.FelnumItem[Type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Electrified_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.damage = 37;

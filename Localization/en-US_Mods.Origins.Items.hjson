@@ -458,6 +458,7 @@ Lazy_Cloak: {
 	Tooltip:
 		'''
 		Chases after tagged enemies
+		Slams enemies when close
 		'It just doesn't want to do all the work'
 		'''
 }
@@ -473,7 +474,7 @@ Locket_Necklace: {
 
 Lousy_Liver: {
 	DisplayName: Lousy Liver
-	Tooltip: The nearest three enemies will be [buffhint:Origins/Rasterized_Debuff]
+	Tooltip: The nearest three enemies will be afflicted with [buffhint:Origins/Lousy_Liver_Debuff]
 }
 
 Lovers_Leap: {
@@ -677,7 +678,7 @@ Protomind: {
 		'''
 		Has a chance to create illusions and dodge an attack
 		Temporarily increase critical chance after a dodge
-		May confuse nearby enemies after being struck
+		May [buffhint/dnconfuse:Confused] nearby enemies after being struck
 		Magic projectiles slightly home towards targets
 		'''
 }
@@ -1692,7 +1693,7 @@ Antisolve_Potion: {
 
 Bile_Flask: {
 	DisplayName: Flask of Black Bile
-	Tooltip: Melee and Whip attacks stun enemies
+	Tooltip: Melee and Whip attacks [buffhint/dnstun:Origins/Rasterized_Debuff] enemies
 }
 
 Blue_Bovine: {
@@ -2470,7 +2471,11 @@ Grenado: {
 
 Hand_Grenade_Launcher: {
 	DisplayName: Hand Grenade Launcher
-	Tooltip: "'Doesn't this defeat the purpose of a hand grenade?'"
+	Tooltip:
+		'''
+		<right> to detonate some ammo from launcher
+		'Doesn't this defeat the purpose of a hand grenade?'
+		'''
 }
 
 Happy_Bomb: {
@@ -3776,7 +3781,7 @@ Joint_Pop: {
 	Tooltip:
 		'''
 		Striking with the tip will cause it to explode
-		The explosion will briefly slow enemies
+		The explosion will briefly [buffhint:Origins/Slow_Debuff] enemies
 		3 summon tag damage
 		{$CommonItemTooltip.Whips}
 		'''
@@ -4435,7 +4440,7 @@ Plasma_Cutter: {
 
 Ziptie: {
 	DisplayName: Ziptie
-	Tooltip: Striking three or more enemies at the same time briefly inflicts rasterized and increases attack speed
+	Tooltip: Striking three or more enemies at the same time briefly inflicts [buffhint:Origins/Rasterized_Debuff] and increases attack speed
 }
 
 Communion: {
@@ -4950,7 +4955,7 @@ Brine_Fountain_Item: {
 
 Chipper_Knife: {
 	DisplayName: Chipper Knife
-	Tooltip: Briefly rasters enemies
+	Tooltip: Briefly [buffhint/dnrasters:Origins/Rasterized_Debuff] enemies
 }
 
 Ancient_Felnum_Breastplate: {
@@ -5348,7 +5353,7 @@ Soldering_Iron: {
 
 Old_Brine_Rock: {
 	DisplayName: Old Brine Rock
-	Tooltip: Summons an armed leaf snapper to fight for you
+	Tooltip: Summons an [buffhint/dnarmed:Origins/Toxic_Shock_Debuff] leaf snapper to fight for you
 }
 
 Rebreather_Gear.DisplayName: Rebreather Gear
@@ -5356,7 +5361,7 @@ Sunder_Gut.DisplayName: Sunder Gut
 
 Laser_Line_Bow: {
 	DisplayName: Laser Line Bow
-	Tooltip: Fired arrows release brine rain in their wake
+	Tooltip: Fired arrows release [buffhint/dnbrine rain:Origins/Toxic_Shock_Debuff] in their wake
 }
 
 Guardian_Rod: {
@@ -6308,6 +6313,7 @@ Otherworldly_Cloak: {
 	Tooltip:
 		'''
 		Chases after tagged enemies
+		Slams enemies when close
 		Allows for a super high jump and negates fall damage
 		Your gravity while jumping is reduced
 		Holding down increases your falling acceleration
@@ -6323,6 +6329,7 @@ Master_Magician_Cloak: {
 		Causes stars to fall after taking damage
 		Stars restore mana when collected
 		Chases after tagged enemies
+		Slams enemies when close
 		Allows for a super high jump and negates fall damage
 		Your gravity while jumping is reduced
 		Holding down increases your falling acceleration

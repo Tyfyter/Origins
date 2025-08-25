@@ -30,6 +30,7 @@ namespace Origins.Items.Weapons.Melee {
 			OriginsSets.Items.FelnumItem[Type] = true;
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			OriginsSets.Items.ItemsThatCanChannelWithRightClick[Type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Electrified_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.damage = 62;
