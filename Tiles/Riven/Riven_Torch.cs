@@ -68,9 +68,7 @@ namespace Origins.Tiles.Riven {
 			player.cursorItemIconID = TileLoader.GetItemDropFromTypeAndStyle(Type, style);
 		}
 
-		public override float GetTorchLuck(Player player) {
-			return player.InModBiome<Riven_Hive>() ? 1f : -1f;
-		}
+		public override float GetTorchLuck(Player player) => player.InModBiome<Riven_Hive>().ToDirectionInt();
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = Main.rand.Next(1, 3);
 

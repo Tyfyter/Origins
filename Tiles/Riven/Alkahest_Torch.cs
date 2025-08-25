@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
 using Terraria.Enums;
@@ -64,6 +65,8 @@ namespace Origins.Tiles.Riven {
 			int style = TileObjectData.GetTileStyle(Main.tile[i, j]);
 			player.cursorItemIconID = TileLoader.GetItemDropFromTypeAndStyle(Type, style);
 		}
+
+		public override float GetTorchLuck(Player player) => player.InModBiome<Riven_Hive>().ToInt();
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = Main.rand.Next(1, 3);
 
