@@ -28,6 +28,7 @@ namespace Origins.Items.Other.Fish {
 					new LeadingConditionFishLoot(
 						new OrderedFishingLoot(
 						new ItemFishingLoot(ItemType<Bobbit_Worm>(), (_, attempt) => attempt.questFish == ItemType<Bobbit_Worm>()),
+						new ItemFishingLoot(ItemType<Mithrafin>(), (_, _) => Main.rand.NextBool(10)),
 						new ItemFishingLoot(ItemType<Toadfish>(), (_, _) => true)
 					), (_, attempt) => attempt.uncommon)
 				), (player, _) => player.InModBiome<Brine_Pool>()),
