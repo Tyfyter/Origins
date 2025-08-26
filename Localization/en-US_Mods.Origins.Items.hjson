@@ -3916,7 +3916,7 @@ Forbidden_Voice: {
 	DisplayName: Forbidden Voice
 	Tooltip:
 		'''
-		You are [buffhint/self:Silenced], press <key> to [buffhint/dnsilence:Silenced] everyone else too
+		You are [buffhint/self:Silenced], press <key> to [buffhint/dnsilence:Origins/Silenced_Debuff] everyone else too
 		Gain up to 10% damage resistance over time by not speaking
 		'''
 }
@@ -4454,7 +4454,7 @@ Forbidden_Voice_Uncursed: {
 		'''
 		10% increased melee damage
 		Increases the size of melee weapons
-		Your attacks weaken enemies
+		Your attacks [buffhint/dnweaken:Origins/Soulhide_Weakened_Debuff] enemies
 		'''
 }
 
@@ -4567,7 +4567,7 @@ Chambersite_Gemspark_Wall_On_Safe_Item: {
 
 Dew_Justice: {
 	DisplayName: Dew Justice
-	Tooltip: "[buffhint/dnAmebic gel:Origins/Torn_Debuff] particulates rise from nearby surfaces to bombard your target"
+	Tooltip: Amebic gel particulates rise from nearby surfaces to bombard your target
 }
 
 Impactaxe: {
@@ -4955,7 +4955,7 @@ Brine_Fountain_Item: {
 
 Chipper_Knife: {
 	DisplayName: Chipper Knife
-	Tooltip: Briefly [buffhint/dnrasters:Origins/Rasterized_Debuff] enemies
+	Tooltip: Briefly [buffhint/dnrasterizes:Origins/Rasterized_Debuff] enemies
 }
 
 Ancient_Felnum_Breastplate: {
@@ -5433,7 +5433,7 @@ Liars_Tongue: {
 	DisplayName: Liar's Tongue
 	Tooltip:
 		'''
-		You are [buffhint/self:Silenced], press <key> to [buffhint/dnsilence:Silenced] everyone else too
+		You are [buffhint/self:Silenced], press <key> to [buffhint/dnsilence:Origins/Silenced_Debuff] everyone else too
 		Gain up to 27% damage resistance over time by not speaking
 		'''
 }

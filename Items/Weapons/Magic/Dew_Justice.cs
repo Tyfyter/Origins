@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Magic {
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
-			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Slow_Debuff.ID];
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Torn_Debuff.ID, Slow_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			const int use_time = 9;

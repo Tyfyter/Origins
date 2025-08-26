@@ -505,7 +505,8 @@ namespace Origins {
 				}
 			}
 			if (ModLoader.TryGetMod("ColoredDamageTypesRedux", out Mod coloredRedux)) {
-				coloredRedux.Call("AddToPreset", "ColoredDamageTypesRedux/DefaultColorData", DamageClasses.Explosive.FullName, new Color(234, 56, 103), new Color(235, 0, 59));
+				coloredRedux.Call("AddToPreset", "ColoredDamageTypesRedux/DefaultColorData", DamageClasses.Explosive.FullName, new Color(255, 121, 27), new Color(255, 100, 0));
+				coloredRedux.Call("AddToPreset", "ColoredDamageTypesRedux/PillarsPreset", DamageClasses.Explosive.FullName, new Color(234, 56, 103), new Color(235, 0, 59));
 			}
 		}
 		public static void LateLoad() {

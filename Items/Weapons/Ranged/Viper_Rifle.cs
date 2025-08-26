@@ -12,7 +12,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Viper_Rifle : ModItem, ICustomWikiStat {
-		static short glowmask;
 		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				global.viperEffect = true;
@@ -22,7 +21,14 @@ namespace Origins.Items.Weapons.Ranged {
 					proj.timeLeft = 20;
 				}
 			});
-			glowmask = Origins.AddGlowMask(this);
+			Origins.AddGlowMask(this);
+			// Fixing things that Vanilla doesn't mark as debuffs because players can't get them, so that they cause crits.
+			Main.debuff[BuffID.Frostburn2] = true;
+			Main.debuff[BuffID.OnFire3] = true;
+			Main.debuff[BuffID.Oiled] = true;
+			Main.debuff[BuffID.Daybreak] = true;
+			Main.debuff[BuffID.Midas] = true;
+			Main.debuff[BuffID.DryadsWardDebuff] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);
@@ -36,7 +42,6 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = Origins.Sounds.HeavyCannon;
-			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -68,12 +73,13 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Viper_Rifle_Crit_Type : CritType<Viper_Rifle> {
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
 			for (int i = 0; i < target.buffType.Length; i++) {
-				if (Main.debuff[target.buffType[i]] && target.buffType[i] != Toxic_Shock_Debuff.ID) {
+				if (Main.debuff[target.buffType[i]] && target.buffType[i] != Toxic_Shock_Debuff.ID && target.buffType[i] != Toxic_Shock_Strengthen_Debuff.ID) {
 					return true;
 				}
 			}
 			return false;
 		}
-		public override float CritMultiplier(Player player, Item item) => 1.4f;
+		// high crit multiplier because it's losing random crits instead of gaining consistent crits, less than 2x because it's gaining crit damage bonuses
+		public override float CritMultiplier(Player player, Item item) => 1.8f;
 	}
 }

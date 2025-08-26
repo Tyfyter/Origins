@@ -784,6 +784,7 @@ Buffs: {
 	Lousy_Liver_Debuff: {
 		DisplayName: Liver Failure
 		Description: It smells of copper wire...
+		EffectDescription: "{$Rasterized_Debuff.EffectDescription}"
 	}
 
 	Ninja_Ravel_Mount_Buff: {
@@ -1112,6 +1113,11 @@ Buffs: {
 	Silenced_Debuff: {
 		DisplayName: Silenced Debuff
 		Description: Mods.Origins.Buffs.Silenced_Debuff.Description
+		EffectDescription:
+			'''
+			Prevents all projectile attacks
+			Massively reduced duration against bosses
+			'''
 	}
 
 	Ocotillo_Finger_Buff: {
