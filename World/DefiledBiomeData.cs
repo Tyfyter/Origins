@@ -181,6 +181,7 @@ namespace Origins.World.BiomeData {
 				List<Vector2> fissureCheckSpots = new List<Vector2>();
 				List<Vector2> nodes = [];
 				Vector2 airCheckVec;
+				List<Vector2> ends = [];
 				while (veins.Count > 0) {
 					current = veins.Dequeue();
 					int endChance = genRand.Next(1, 5) + genRand.Next(0, 4) + genRand.Next(0, 4);
@@ -214,6 +215,8 @@ namespace Origins.World.BiomeData {
 							}
 							if (endChance > current.generation) {
 								veins.Enqueue(next);
+							} else {
+								ends.Add(next.data.position);
 							}
 							nodes.Add(next.data.position);
 							break;
@@ -238,6 +241,8 @@ namespace Origins.World.BiomeData {
 							}
 							if (endChance > current.generation) {
 								veins.Enqueue(next);
+							} else {
+								ends.Add(next.data.position);
 							}
 							next = (current.generation + 2,
 								DefiledVeinRunner(
@@ -258,6 +263,8 @@ namespace Origins.World.BiomeData {
 							}
 							if (endChance > current.generation) {
 								veins.Enqueue(next);
+							} else {
+								ends.Add(next.data.position);
 							}
 							nodes.Add(next.data.position);
 							break;
@@ -292,6 +299,30 @@ namespace Origins.World.BiomeData {
 							nodes.Add(next.data.position);
 							break;
 						}
+					}
+				}
+				for (int k = 0; k < ends.Count; k++) {
+					bool canOpen = false;
+					int checkX = (int)ends[k].X;
+					int checkY = (int)ends[k].Y;
+					int l = 0;
+					for (; l < 20; l++) {
+						if (Framing.GetTileSafely(checkX, --checkY).HasFullSolidTile()) break;
+					}
+					if (l >= 20) continue;
+					l = 0;
+					for (; l < 40 && !canOpen; l++) canOpen = Framing.GetTileSafely(checkX, --checkY).HasFullSolidTile();
+					if (canOpen) {
+						DefiledVeinRunner(
+							checkX,
+							checkY,
+							strength * genRand.NextFloat(0.9f, 1.1f),
+							-Vector2.UnitY.RotatedBy(genRand.NextFloat(0, 0.1f) * genRand.NextBool().ToDirectionInt()),
+							Math.Max(l, genRand.NextFloat(distance * 0.8f, distance * 1.2f)),
+							stoneID,
+							wallThickness,
+							wallType: stoneWallID
+						);
 					}
 				}
 				ushort fissureID = (ushort)ModContent.TileType<Defiled_Relay>();
