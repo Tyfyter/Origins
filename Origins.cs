@@ -52,6 +52,7 @@ using static Origins.OriginsSets.Items;
 using Origins.World.BiomeData;
 using Origins.Layers;
 using Origins.Items.Vanity.Dev.PlagueTexan;
+using System.Text.RegularExpressions;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -784,8 +785,9 @@ namespace Origins {
 			currentScreenTarget = null;
 		}
 		public override void PostSetupContent() {
+			Regex safeGoreRegex = new("^(DF|FG|Felnum|Shimmer)", RegexOptions.Compiled);
 			foreach (SimpleModGore gore in GetContent<SimpleModGore>()) {
-				if (gore.Name.StartsWith("DF")) ChildSafety.SafeGore[gore.Type] = true;
+				if (safeGoreRegex.IsMatch(gore.Name)) ChildSafety.SafeGore[gore.Type] = true;
 			}
 			Journal_Registry.SetupContent();
 			OriginsModIntegrations.PostSetupContent(this);
