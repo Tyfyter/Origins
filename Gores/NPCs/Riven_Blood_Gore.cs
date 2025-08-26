@@ -1,18 +1,19 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
+using Origins.World.BiomeData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using static Origins.OriginExtensions;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Origins.Graphics;
 using Terraria.Audio;
-using Microsoft.Xna.Framework.Graphics;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Effects;
-using Origins.World.BiomeData;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Origins.OriginExtensions;
 
 namespace Origins.Gores.NPCs {
 	public class R_Effect_Blood1 : ModGore {
@@ -97,6 +98,7 @@ namespace Origins.Gores.NPCs {
 		public override string Texture => "Origins/Gores/NPCs/R_Effect_Blood1";
 		public override void SetStaticDefaults() {
 			GoreID.Sets.DisappearSpeedAlpha[Type] = 5;
+			ChildSafety.SafeGore[Type] = true;
 		}
 		public override void OnSpawn(Gore gore, IEntitySource source) {
 			gore.scale *= 0.5f;

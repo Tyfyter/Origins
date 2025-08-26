@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
+using Terraria;
+using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Gores {
 	public class Mulberry_Cloud_1 : ModGore {
 		public static List<ModGore> gores = [];
 		public override void SetStaticDefaults() {
+			ChildSafety.SafeGore[Type] = true;
 			UpdateType = 11;
 			gores.Add(this);
 		}

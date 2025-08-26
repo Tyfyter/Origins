@@ -53,6 +53,7 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Terraria.Utilities;
 using Origins.UI;
+using Origins.Gores.NPCs;
 
 namespace Origins {
 	#region classes
@@ -1555,7 +1556,7 @@ namespace Origins {
 		public static int GetGoreSlot(this Mod mod, string name) {
 			if (Main.netMode == NetmodeID.Server) return 0;
 			if (mod.TryFind(name, out ModGore modGore)) return modGore.Type;
-			return mod.TryFind(name.Split('/', 3)[^1], out modGore) ? modGore.Type : 0;
+			return mod.TryFind(name.Split('/')[^1], out modGore) ? modGore.Type : 0;
 		}
 		public static int SpawnGoreByName(this Mod mod, IEntitySource source, Vector2 Position, Vector2 Velocity, string name, float Scale = 1) {
 			if (Main.netMode == NetmodeID.Server) return 0;

@@ -484,7 +484,7 @@ namespace Origins {
 						}
 					}
 				};
-				List<string> files = GetFileNames();
+				/*List<string> files = GetFileNames();
 				for (int i = 0; i < files.Count; i++) {
 					string file = files[i];
 					string name = file.Split('/')[^1];
@@ -494,7 +494,7 @@ namespace Origins {
 					if (extension == "rawimg" && file.Contains("Gores") && !files.Contains(file.Replace(".rawimg", ".cs"))) {
 						AutoLoadGores.AddGore("Origins/" + file.Replace(".rawimg", null), this);
 					}
-				}
+				}*/
 
 				/*Task.Run(async () => {
 					await Task.Yield();
@@ -784,6 +784,9 @@ namespace Origins {
 			currentScreenTarget = null;
 		}
 		public override void PostSetupContent() {
+			foreach (SimpleModGore gore in GetContent<SimpleModGore>()) {
+				if (gore.Name.StartsWith("DF")) ChildSafety.SafeGore[gore.Type] = true;
+			}
 			Journal_Registry.SetupContent();
 			OriginsModIntegrations.PostSetupContent(this);
 			for (int i = 0; i < NPCID.Sets.SpecificDebuffImmunity.Length; i++) {
