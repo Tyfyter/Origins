@@ -241,8 +241,6 @@ namespace Origins.World.BiomeData {
 							}
 							if (endChance > current.generation) {
 								veins.Enqueue(next);
-							} else {
-								ends.Add(next.data.position);
 							}
 							next = (current.generation + 2,
 								DefiledVeinRunner(
@@ -263,8 +261,6 @@ namespace Origins.World.BiomeData {
 							}
 							if (endChance > current.generation) {
 								veins.Enqueue(next);
-							} else {
-								ends.Add(next.data.position);
 							}
 							nodes.Add(next.data.position);
 							break;
@@ -317,7 +313,7 @@ namespace Origins.World.BiomeData {
 							checkX,
 							checkY,
 							strength * genRand.NextFloat(0.9f, 1.1f),
-							-Vector2.UnitY.RotatedBy(genRand.NextFloat(0, 0.1f) * genRand.NextBool().ToDirectionInt()),
+							-Vector2.UnitY.RotatedBy(genRand.NextFloat(0.1f, 0.2f) * genRand.NextBool().ToDirectionInt()),
 							Math.Max(l, genRand.NextFloat(distance * 0.8f, distance * 1.2f)),
 							stoneID,
 							wallThickness,
