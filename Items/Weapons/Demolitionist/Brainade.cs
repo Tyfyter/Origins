@@ -1,4 +1,3 @@
-using Origins.Buffs;
 using Origins.Dev;
 using Terraria;
 using Terraria.Audio;
@@ -32,6 +31,12 @@ namespace Origins.Items.Weapons.Demolitionist {
             .AddIngredient(ItemID.Grenade, 25)
             .AddTile(TileID.Anvils)
             .Register();
+
+			Recipe.Create(Type, 75)
+			.AddIngredient(ItemID.CrimtaneBar)
+			.AddIngredient(ItemID.Grenade, 75)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Brainade_P : ModProjectile {

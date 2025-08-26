@@ -28,10 +28,9 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.ArmorPenetration += 1;
         }
 		public override void AddRecipes() {
-			Recipe.Create(Type, 15)
-			.AddIngredient(ItemID.Bomb, 15)
-			.AddIngredient(ItemID.Fireblossom)
-			.AddIngredient(ItemID.Hellstone, 5)
+			Recipe.Create(Type, 3)
+			.AddIngredient(ItemID.Bomb, 3)
+			.AddIngredient(ItemID.Hellstone)
 			.Register();
 		}
 	}

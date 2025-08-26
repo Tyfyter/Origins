@@ -194,7 +194,6 @@ ENEMY NPCS:
 (^) Cannihound
 (^) Catacomb Clearer
 (^) Cellarkeep*
-(^) Chunky Slime*
 (^) Cleaver*
 (^) Cloud Elemental°
 (^) Conehead Zombie°
@@ -869,7 +868,7 @@ MAGIC WEAPONS:
 (^) Avulsion*
 (^) Beginner's Tome*
 (^) Cryostike*
-(X) Dream Catcher !!!
+(#, ^2) Dream Catcher !!!
 (^) Eaterboros*
 (^) Eternabrite
 (^) Hot Potato
@@ -1443,7 +1442,7 @@ CONSUMABLES:
 (^) Greater Summoning Potion
 (^) Latchkey
 (^) Mojo Flask*
-(X) Potion of Projection !!!
+(#, ^2) Potion of Projection !!!
 (^) Protean Potion*
 (^) Purification Potion*
 (^) Super Mojo Flask*
