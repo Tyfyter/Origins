@@ -77,14 +77,13 @@ namespace Origins.Core {
 		static void IL_Player_ProcessHitAgainstNPC(ILContext il) {
 			ILCursor c = new(il);
 			int itemRectangle = -1;
+			int intersected = -1;
 			c.GotoNext(MoveType.After,
 				il => il.MatchLdarga(out itemRectangle),
 				il => il.MatchLdloc(out _),
 				il => il.MatchCall<Rectangle>(nameof(Rectangle.Intersects))
 			);
-			c.EmitLdarg(itemRectangle);
-			c.EmitLdarg(5);
-			c.EmitDelegate((bool intersected, Rectangle itemRectangle, int i) => {
+			static bool DoCollisionCheck(bool intersected, Rectangle itemRectangle, int i) {
 				if (Main.npc[i].ModNPC is IMultiHitboxNPC multiHitboxNPC) {
 					for (int j = 0; j < multiHitboxNPC.Hitboxes.Length; j++) {
 						if (itemRectangle.Intersects(multiHitboxNPC.Hitboxes[j])) return true;
@@ -92,7 +91,19 @@ namespace Origins.Core {
 					return false;
 				}
 				return intersected;
-			});
+			}
+			if (c.Next.MatchStloc(out intersected)) {
+				c.Index++;
+				c.EmitLdloc(intersected);
+				c.EmitLdarg(itemRectangle);
+				c.EmitLdarg(5);
+				c.EmitDelegate(DoCollisionCheck);
+				c.EmitStloc(intersected);
+			} else {
+				c.EmitLdarg(itemRectangle);
+				c.EmitLdarg(5);
+				c.EmitDelegate(DoCollisionCheck);
+			}
 		}
 		static void Min(ref int current, int @new) {
 			if (current > @new) current = @new;
