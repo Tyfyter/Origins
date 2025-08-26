@@ -761,7 +761,7 @@ namespace Origins {
 					}
 				})
 			);
-			if (typeof(ThoriumPlayer).GetField(nameof(ThoriumPlayer.breathOverMax)) is not null) OriginExtensions.OnIncreaseMaxBreath += [JITWhenModsEnabled("ThoriumMod")] (player, _) => player.GetModPlayer<ThoriumMod.ThoriumPlayer>().breathOverMax = true;
+			if (typeof(ThoriumPlayer).GetField(nameof(ThoriumPlayer.breathOverMax)) is not null) OriginExtensions.OnIncreaseMaxBreath += [JITWhenModsEnabled("ThoriumMod")] (player, _) => player.GetModPlayer<ThoriumPlayer>().breathOverMax = true;
 			(string name, float? assimilation)[] thoriumNPCs = [
 				("TheInnocent", 0.02f),
 				("FrostWormHead", null),
@@ -949,22 +949,22 @@ namespace Origins {
 
 			CrateRecipe(ItemType<Huff_Puffer_Bait>(), crate: ItemType<Residual_Crate>(), crateHard: ItemType<Basic_Crate>(), crateAmount: 3);
 
-			CrateRecipe(ItemType<Knee_Slapper>(), crateHard: ItemType<Bilious_Crate>());
-			CrateRecipe(ItemType<Manasynk>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>());
-			CrateRecipe(ItemType<Kruncher>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>());
-			CrateRecipe(ItemType<Dim_Starlight>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>());
-			CrateRecipe(ItemType<Monolith_Rod>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>());
-			CrateRecipe(ItemType<Krakram>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>());
-			CrateRecipe(ItemType<Suspicious_Looking_Pebble>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>());
+			CrateRecipe(ItemType<Knee_Slapper>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Manasynk>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Kruncher>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Dim_Starlight>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Monolith_Rod>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Krakram>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Suspicious_Looking_Pebble>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
 
-			CrateRecipe(ItemType<Scabcoral_Lyre>(), crateHard: ItemType<Festering_Crate>());
-			CrateRecipe(ItemType<Ocotoral_Bud>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
-			CrateRecipe(ItemType<Riven_Splitter>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
-			CrateRecipe(ItemType<Amebolize_Incantation>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
-			CrateRecipe(ItemType<Splitsplash>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
-			CrateRecipe(ItemType<Riverang>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
-			CrateRecipe(ItemType<Amoeba_Toy>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
-			CrateRecipe(ItemType<Primordial_Soup>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>());
+			CrateRecipe(ItemType<Scabcoral_Lyre>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Ocotoral_Bud>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Riven_Splitter>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Amebolize_Incantation>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Splitsplash>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Riverang>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Amoeba_Toy>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Primordial_Soup>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
 			#endregion
 
 			SetFargosStaticDefaults();
