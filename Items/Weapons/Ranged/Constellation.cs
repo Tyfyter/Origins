@@ -181,7 +181,13 @@ namespace Origins.Items.Weapons.Ranged {
 			GroupRoot = true;
 		}
 		public override void AI() {
-			if (Projectile.owner != Main.myPlayer) Projectile.timeLeft = 5;
+			if (Projectile.owner != Main.myPlayer) {
+				Projectile.timeLeft = 5;
+				if (IsLinked) {
+					Projectile proj = LinkedTo;
+					if (!proj.active || proj.ModProjectile is not ConstellationNode) Projectile.Kill();
+				}
+			}
 			if (Projectile.timeLeft > 5 * 60) Projectile.timeLeft = 5 * 60;
 
 			if (IsLinked)
@@ -190,8 +196,8 @@ namespace Origins.Items.Weapons.Ranged {
 				foreach (Projectile other in Main.ActiveProjectiles) {
 					if (other == Projectile) continue;
 					if (other.ai[0] == Projectile.ai[0] && Projectile.owner == other.owner && other.ModProjectile is ConstellationNode) {
-						other.ai[0] = Projectile.identity;
-						Projectile.ai[0] = other.identity;
+						other.ai[0] = Projectile.projUUID;
+						Projectile.ai[0] = other.projUUID;
 						other.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerFake = false;
 						Projectile.netUpdate = true;
 						other.netUpdate = true;
