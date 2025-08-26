@@ -58,6 +58,15 @@ using ThoriumMod.Projectiles.Bard;
 using static Origins.OriginsSets.Items;
 using static Origins.OriginSystem;
 using static Terraria.ModLoader.ModContent;
+using Origins.Items.Other.Consumables.Food;
+using Origins.NPCs.MiscE;
+using Origins.NPCs.Dungeon;
+using Origins.NPCs.Riven;
+using Origins.NPCs.Defiled;
+using Origins.NPCs.Brine;
+using Origins.Tiles.Other;
+using Origins.Items.Armor.Amber;
+using Origins.Items.Other.Consumables.Broths;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -507,6 +516,58 @@ namespace Origins {
 			if (ModLoader.TryGetMod("ColoredDamageTypesRedux", out Mod coloredRedux)) {
 				coloredRedux.Call("AddToPreset", "ColoredDamageTypesRedux/DefaultColorData", DamageClasses.Explosive.FullName, new Color(255, 121, 27), new Color(255, 100, 0));
 				coloredRedux.Call("AddToPreset", "ColoredDamageTypesRedux/PillarsPreset", DamageClasses.Explosive.FullName, new Color(234, 56, 103), new Color(235, 0, 59));
+			}
+			if (instance.thorium is not null) {
+				instance.thorium.Call("BirdFeederAddFruitsToBiome", "Evil", (int[])[ItemType<Bileberry>(), ItemType<Prickly_Pear>(), ItemType<Petrified_Prickly_Pear>(), ItemType<Pawpaw>(), ItemType<Periven>()]);
+				instance.thorium.Call("BirdFeederAddPotionsToBiome", "Evil", (int[])[ItemType<Fervor_Potion>(), ItemType<Protean_Potion>(), ItemType<Ambition_Potion>()]);
+
+				instance.thorium.Call("AddFlailProjectileID", NPCType<Shattered_Goldfish>());
+
+				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore>());
+				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Ebonstone>());
+				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Crimstone>());
+				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Defiled_Stone>());
+				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Riven_Flesh>());
+
+				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Conehead_Zombie>());
+				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Graveshield_Zombie>());
+				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Buckethead_Zombie>());
+				instance.thorium.Call("AddSkeletonRepellentNPCID", NPCType<Cellarkeep>());
+				instance.thorium.Call("AddSkeletonRepellentNPCID", NPCType<Catacomb_Clearer>());
+				instance.thorium.Call("AddFishRepellentNPCID", NPCType<Bottomfeeder>());
+				instance.thorium.Call("AddFishRepellentNPCID", NPCType<Shattered_Goldfish>());
+				instance.thorium.Call("AddFishRepellentNPCID", NPCType<Shotgunfish>());
+				instance.thorium.Call("AddFishRepellentNPCID", NPCType<Sea_Dragon>());
+				instance.thorium.Call("AddFishRepellentNPCID", NPCType<Carpalfish>());
+				instance.thorium.Call("AddFishRepellentNPCID", NPCType<Brine_Serpent_Head>());
+
+				instance.thorium.Call("AddPlayerDoTBuffID", BuffType<Cavitation_Debuff>());
+				instance.thorium.Call("AddPlayerDoTBuffID", BuffType<Mini_Static_Shock_Debuff>());
+				instance.thorium.Call("AddPlayerDoTBuffID", BuffType<Static_Shock_Debuff>());
+				instance.thorium.Call("AddPlayerDoTBuffID", BuffType<Static_Shock_Damage_Debuff>());
+				instance.thorium.Call("AddPlayerDoTBuffID", BuffType<Shadefire_Debuff>());
+				instance.thorium.Call("AddPlayerDoTBuffID", BuffType<On_Even_More_Fire>());
+
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Rasterized_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Toxic_Shock_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Toxic_Shock_Strengthen_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Lousy_Liver_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Impeding_Shrapnel_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Maelstrom_Buff_Damage>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Maelstrom_Buff_Zap>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Blind_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Slow_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Electrified_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Silenced_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Soulhide_Weakened_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Mithrafin_Poison_Extend_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Scrap_Barrier_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Slag_Bucket_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Amber_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Cannihound_Lure_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Defiled_Asphyxiator_Debuff>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Defiled_Asphyxiator_Debuff_2>());
+				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Defiled_Asphyxiator_Debuff_3>());
 			}
 		}
 		public static void LateLoad() {
