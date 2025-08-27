@@ -53,6 +53,7 @@ using Origins.World.BiomeData;
 using Origins.Layers;
 using Origins.Items.Vanity.Dev.PlagueTexan;
 using System.Text.RegularExpressions;
+using System.Text;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -1109,6 +1110,14 @@ namespace Origins {
 				}
 				foreach (IBrokenContent item in instance.GetContent<IBrokenContent>()) {
 					AddReason($"{item.GetType().Name}: {item.BrokenReason}");
+				}
+				const string completion_list = "completionList.txt";
+				if ((instance?.FileExists(completion_list) ?? false)) {
+					Regex clIssueRegex = new("^\\([^)]*(@|#|\\$|%)[^)]*\\).*!!!.*$", RegexOptions.Multiline | RegexOptions.Compiled);
+					string text = Encoding.UTF8.GetString(instance.GetFileBytes(completion_list));
+					foreach (Match item in (IEnumerable<Match>)clIssueRegex.Matches(text)) {
+						AddReason(item.Value);
+					}
 				}
 #if DEBUG
 				AddReason("Mod was last built in DEBUG configuration");
