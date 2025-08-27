@@ -3,6 +3,7 @@ using Origins.Dusts;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Layers;
@@ -447,6 +448,10 @@ namespace Origins {
 		/// Relative to Player.Bottom
 		/// </summary>
 		public Vector2 relativeTarget = Vector2.Zero;
+		public float dreamcatcherAngle = 0;
+		public float dreamcatcherRotSpeed = 0;
+		public int dreamcatcherHoldTime = 0;
+		public Vector2? dreamcatcherWorldPosition = null;
 		#endregion
 
 		#region visuals
@@ -926,6 +931,8 @@ namespace Origins {
 			shimmerGuardianMinion = false;
 			amnesticRoseHoldTime.Cooldown();
 			if (amnesticRoseHoldTime <= 0) amnesticRoseBloomTime.Cooldown();
+			Dream_Catcher.UpdateVisual(Player, ref dreamcatcherAngle, ref dreamcatcherRotSpeed);
+			if (dreamcatcherHoldTime.Cooldown()) dreamcatcherWorldPosition = null;
 
 			manaShielding = 0f;
 

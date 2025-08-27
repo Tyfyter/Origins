@@ -6624,3 +6624,8 @@ Pocket_Dimension_Monolith_Item: {
 		Can be used to open/close a portal to a pocket dimension
 		''' */
 }
+
+Dream_Catcher: {
+	// DisplayName: Dream Catcher
+	// Tooltip: ""
+}
