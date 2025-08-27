@@ -6303,7 +6303,7 @@ Amnestic_Rose: {
 	/* Tooltip:
 		'''
 		Launches a rose that inflict [buffhint:Origins/Slow_Debuff]
-		Sometimes steals mana
+		Steals mana from enemies struck by the rosebud
 		'A Rose, But for whom?'
 		''' */
 }

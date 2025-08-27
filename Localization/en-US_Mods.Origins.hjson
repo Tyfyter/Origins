@@ -1355,7 +1355,15 @@ DamageClassName: {
 }
 
 DamageClasses: {
-	Explosive.DisplayName: explosive damage
+	Explosive: {
+		DisplayName: explosive damage
+
+		ThoriumMod_TerrariumArmorAddClassFocus: {
+			Name: Explosive Focus
+			Description: Explosives pierce {0} defense
+		}
+	}
+
 	Ranged_Magic.DisplayName: ranged/magic damage
 	Incantation.DisplayName: summon damage
 	Thrown_Explosive.DisplayName: explosive damage (thrown)
