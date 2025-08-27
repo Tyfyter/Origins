@@ -723,11 +723,11 @@ TOOLS:
 
 MELEE WEAPONS:
 |---
-(@2, #) Astral Scythe !!!
+(@2?, #) Astral Scythe !!!
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(@2 (either swing animation needs to include sword, or needs to be marked as needing code)) Cool Sword
+(#2, ^2) Cool Sword !!!
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -794,7 +794,7 @@ RANGED WEAPONS:
 (^) Blotopus*
 (^) Bolt Gun*
 (^) Chipper Knife*
-(☻) Constellation !!!
+(#3, ^2) Constellation !!!
 (^) Endowood Bow*
 (^) Felnum Longbow
 (^) Fiberglass Bow*

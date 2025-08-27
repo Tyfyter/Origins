@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodBow);
-			Item.damage = 15;
+			Item.damage = 22;
 			Item.width = 26;
 			Item.height = 62;
 			Item.shootSpeed += 4;
@@ -185,7 +185,7 @@ namespace Origins.Items.Weapons.Ranged {
 				Projectile.timeLeft = 5;
 				if (IsLinked) {
 					Projectile proj = LinkedTo;
-					if (!proj.active || proj.ModProjectile is not ConstellationNode) Projectile.Kill();
+					if (!(proj?.active ?? false) || proj.ModProjectile is not ConstellationNode) Projectile.Kill();
 				}
 			}
 			if (Projectile.timeLeft > 5 * 60) Projectile.timeLeft = 5 * 60;
