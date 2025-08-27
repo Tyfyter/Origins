@@ -300,6 +300,7 @@ namespace Origins.Items.Weapons.Ranged {
 			if (GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, Type);
 		}
 		public override void SetDefaults() {
+			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.hide = true;
 			Projectile.width = Projectile.height = 0;
 			Projectile.friendly = true;
