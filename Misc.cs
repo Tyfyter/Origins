@@ -2337,7 +2337,6 @@ namespace Origins {
 			}
 			return 3;
 		}
-
 		public static bool Contains(this Rectangle area, Vector2 point) {
 			return area.Contains((int)point.X, (int)point.Y);
 		}

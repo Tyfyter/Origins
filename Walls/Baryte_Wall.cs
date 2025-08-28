@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.Dusts;
+using Origins.Graphics;
 using Origins.Items.Other.Testing;
 using Origins.Items.Tools;
 using Origins.Tiles.Brine;
@@ -109,7 +110,7 @@ namespace Origins.Walls {
 			if (lowestLanternDist > 1 - brightness) lowestLanternDist = 1 - brightness;
 			if (lowestLanternDist != 1) localValue *= lowestLanternDist;
 			if (Main.rand.NextFloat(1000) < Main.gfxQuality * 1000 * localValue * localValue * localValue * localValue) {
-				Dust.NewDustDirect(new Vector2(i - 1, j) * 16, 16, 16, Main.rand.Next(Brine_Cloud_Dust.dusts), newColor: new(65, 217, 169)).velocity *= 0.1f;
+				EfficientDust.NewDustDirect(new Vector2(i - 1, j) * 16, 16, 16, Main.rand.Next(Brine_Cloud_Dust.dusts), newColor: new(65, 217, 169)).velocity *= 0.1f;
 				//Gore.NewGorePerfect(Entity.GetSource_None(), new Vector2(i, j + Main.rand.NextFloat()) * 16, Vector2.UnitX * Main.rand.NextFloat(-1, 1), GoreID.LightningBunnySparks);
 			}
 		}
@@ -120,6 +121,8 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			dusts.Add(Type);
 			Deprioritized_Dust.Set[Type] = 1;
+			EfficientDust.DustTexture[Type] = Request<Texture2D>(Texture);
+			EfficientDust.UpdateDustCallback[Type] = (dust) => Update(dust);
 		}
 		public override void OnSpawn(Dust dust) {
 			dust.alpha = 254;
