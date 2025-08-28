@@ -28,9 +28,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.ArmorPenetration += 4;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 5)
+			Recipe.Create(Type, 25)
 			.AddIngredient(ItemID.FallenStar)
-			.AddIngredient(ItemID.Grenade, 5)
+			.AddIngredient(ItemID.Grenade, 25)
 			.Register();
 		}
 	}

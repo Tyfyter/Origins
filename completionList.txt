@@ -1080,6 +1080,7 @@ EXPLOSIVE WEAPONS:
 (X) Helix
 (^) Shimmer Dynamite
 (@4, #) Starburst
+(@, ^3) The Ultimate Firework Launcher Of Mega Destruction !!!
 ---
 
 
@@ -1109,7 +1110,6 @@ TILES:
 (^) Calcified Spug Flesh
 (X) Catwalk
 (^) Chambersite
-(X) Cubekon Altar°
 (^) Defiled Cactus*
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
@@ -1126,6 +1126,7 @@ TILES:
 (^) Fiberglass Block*
 (^) Gray Ice Block*
 (^) Hardened Defiled Sand*
+(X) Hardened Sootsand
 (X) Harmony Brick°
 (X) Lihzarhd Bomb Trap
 (^) Limestone*
@@ -1142,8 +1143,8 @@ TILES:
 (X) Scrap Heap
 (^) Silica*
 (^) Silicon Ore*
+(X) Soot Sandstone
 (X) Sootgrass°
-(X) Sootstone
 (X) Space Goo
 (^) Spug Flesh*
 (X) Truss Block
@@ -1171,13 +1172,16 @@ TILES:
 (@, ^3) Encrusted Brick Wall
 (^) Endowood Wall
 (^) Fiberglass Wall
+(^) Hardened Defiled Sand Wall
+(X) Hardened Sootsand Wall
 (^) Harmony Brick Wall
 (@, ^3) Lost Brick Wall
 (^) Marrowick Wall
 (X) Nova Brick Wall
 (^) Quartz Wall
 (^) Riven Grass Wall
-(X) Sheet Metal Wall
+(X) Soot Sandstone Wall
+(X) Sootsand Wall
 (^) Spug Flesh Wall
 (X) Type-III Fortified Steel Wall
 
@@ -1285,6 +1289,7 @@ TILES:
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
+(X) Sheet Metal
 (^) Shelf Coral
 (^) Soulspore*
 (ᗢ) Surveysprout*
