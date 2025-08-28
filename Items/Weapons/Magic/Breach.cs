@@ -108,6 +108,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.SpiritFlame);
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Projectile.hide = false;
 			Projectile.aiStyle = 0;
 			Projectile.width = 12;

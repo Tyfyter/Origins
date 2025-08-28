@@ -10,12 +10,12 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.Projectiles.Weapons {
 	public class Defiled_Spike_Explosion : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
 		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Projectile.timeLeft = 600;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.hide = true;

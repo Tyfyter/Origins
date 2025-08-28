@@ -46,6 +46,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override string Texture => typeof(Chemical_Laser).GetDefaultTMLName();
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ShadowBeamFriendly);
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Projectile.timeLeft = 250;
 			Projectile.friendly = true;
 			Projectile.aiStyle = 0;

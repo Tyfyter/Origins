@@ -29,6 +29,7 @@ namespace Origins.Items.Weapons.Magic {
 		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Projectile.friendly = true;
 			Projectile.timeLeft = 180;
 			Projectile.aiStyle = 2;
