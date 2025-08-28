@@ -577,6 +577,9 @@ namespace Origins {
 			ChatManager.Register<Centered_Snippet_Handler>([
 				"centered"
 			]);
+			ChatManager.Register<Glitch_Handler>([
+				"glitch"
+			]);
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
 				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,
