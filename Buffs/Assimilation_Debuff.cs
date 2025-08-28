@@ -161,7 +161,7 @@ namespace Origins.Buffs {
 	}
 	public class AssimilationGlobalBuff : GlobalBuff {
 		public override void Update(int type, Player player, ref int buffIndex) {
-			if (BiomeNPCGlobals.ProjectileAssimilationAmounts.TryGetValue(type, out Dictionary<int, AssimilationAmount> assimilationValues)) {
+			if (BiomeNPCGlobals.DebuffAssimilationAmounts.TryGetValue(type, out Dictionary<int, AssimilationAmount> assimilationValues)) {
 				foreach (KeyValuePair<int, AssimilationAmount> value in assimilationValues) {
 					player.GetAssimilation(value.Key).Percent += value.Value.GetValue(null, player);
 				}
