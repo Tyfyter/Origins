@@ -303,7 +303,7 @@ namespace Origins {
 			}
 			void AddModdedDebuffAssimilation<TDebuff>(string name, AssimilationAmount assimilationAmount) where TDebuff : AssimilationDebuff {
 				if (BuffID.Search.TryGetId(name, out int id)) {
-					AssimilationLoader.AddProjectileAssimilation<TDebuff>(id, assimilationAmount);
+					AssimilationLoader.AddDebuffAssimilation<TDebuff>(id, assimilationAmount);
 				}
 			}
 			AddModdedProjectileAssimilation<Corrupt_Assimilation>("ThoriumMod/VileSpit", 0.06f, "ThoriumMod/VileFloater");
