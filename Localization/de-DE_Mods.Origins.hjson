@@ -2958,7 +2958,7 @@ CritType: {
 	// Switchblade_Crit_Type: Critically strikes for {0:0.##} seconds after switching modes
 	// Neural_Network_Crit_Type: Critically strikes while above {0} adaptation charges
 	// VVVV Leave this one as is VVVV
-	// Missing_File_Crit_Type: Mods.Origins.CritType.Missing_File_Crit_Type
+	// Missing_File_Crit_Type: "[glitch/!@#$%^&*:Mods.Origins.CritType.Missing_File_Crit_Type]"
 	// Flak_Crit_Type: Critically strikes when hitting airborne targets
 	// Miter_Saw_Crit_Type: Critically strikes after several consecutive hits
 	// Piledriver_Crit_Type: Critically strikes on alternate attacks
