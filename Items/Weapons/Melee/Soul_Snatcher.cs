@@ -96,6 +96,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.channel = true;
+			Item.autoReuse = true;
 		}
 		public override void HoldItem(Player player) {
 			if (player.OriginPlayer().soulSnatcherActive) {
@@ -225,7 +226,8 @@ namespace Origins.Items.Weapons.Melee {
 				} else if (player.itemAnimation > player.itemAnimationMax / 2 + 1) {
 					MovementFactor += 2.4f;
 				}
-				if (MovementFactor > 24) MovementFactor = 24;
+				float speed = Projectile.velocity.Length();
+				if (MovementFactor * speed > 24 * 3.75f) MovementFactor = 24 * 3.75f / speed;
 			}
 			Projectile.position += Projectile.velocity * MovementFactor * Projectile.scale;
 			oldFactor -= MovementFactor;
