@@ -202,6 +202,7 @@ ENEMY NPCS:
 (🤡) Creme-filled Bat !!!
 (^) Crimbrain*
 (X) Crying Creeper
+(X) Defensive Turret
 (^) Defiled Broadcaster
 (^) Defiled Cyclops*
 (^) Defiled Digger*
@@ -869,7 +870,7 @@ MAGIC WEAPONS:
 (^) Beginner's Tome*
 (^) Cryostike*
 (#, ^2) Dream Catcher !!!
-(^) Eaterboros*
+(#2, ^2) Eaterboros* !!! (graphical code)
 (^) Eternabrite
 (^) Hot Potato
 (^) Infusion*
@@ -1187,16 +1188,12 @@ TILES:
 
 (^) Alkahest Torch*
 (^) Amoeba Buggy Cage*
-(X) Ashen Dungeon Chest
 (^) Bile Torch*
-(X) Bilious Incense
-(^) Brine Dungeon Chest
 (^) Brine Water Fountain*
 (@, ^3) Bug Cage° (using temp sprites)
 (X) Cancer Block°
 (X) Cancer Furniture°
 (^) Chambersite Bunny Cage°
-(^) Chambersite Gem Lock°
 (^) Chambersite Gemspark°
 (^) Chambersite Gemstone°
 (^) Chambersite Gemstone (Corruption)°
@@ -1205,32 +1202,49 @@ TILES:
 (^) Chambersite Gemstone (Riven)°
 (^) Chambersite Squirrel Cage°
 (^) Cicada 3301 Cage°
-(X) Cubekon Node
+(^) Defiled Torch*
+(^) Defiled Water Fountain*
+(X) Edenwood Furniture°
+(@4) Encrusted Brick
+(^) Endowood Furniture*
+(X) Floodlight
+(X) Hyrax Cage
+(X) Large Rusty Piping
+(^) Limestone Furniture
+(^) Living Alkahest Block*
+(^) Living Bile Block*
+(@4) Lost Brick
+(^) Marrowick Furniture*
+(X) Modular Light Fixture
+(X) Nova Brick°
+(X) Nova Fragment Block°
+(X) Nova Furniture°
+(X) Residue Block°
+(X) Residue Furniture°
+(^) Riven Torch*
+(^) Riven Water Fountain*
+(X) Rusty Piping
+(X) Sanguinite Brick
+(^) Shadow Torch°
+(X) Suit Locker
+(^) Traffic Cone*
+
+(X) Ashen Dungeon Chest
+(X) Bilious Incense
+(^) Brine Dungeon Chest
+(X) Cargo Elevator Door
+(^) Chambersite Gem Lock°
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
 (^) Defiled Dungeon Chest*
 (^) Defiled Monolith*
 (X) Defiled Pylon°
-(^) Defiled Torch*
-(^) Defiled Water Fountain*
-(X) Edenwood Furniture°
-(^) Encrusted Brick
-(^) Endowood Furniture*
-(X) Floodlight
-(X) Hyrax Cage
-(X) Large Container
+(X) Large Storage Container
 (^) Laser Tag Console*
-(^) Limestone Furniture
-(^) Living Alkahest Block*
-(^) Living Bile Block*
-(^) Lost Brick
-(^) Marrowick Furniture*
-(X) Medium Container
+(X) Locked Small Storage Container
+(X) Medium Storage Container
 (X) Modular Bunk
 (X) Mushroom Dungeon Chest°
-(X) Nova Brick°
-(X) Nova Fragment Block°
-(X) Nova Furniture°
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
 (^) Pocket Dimension Monolith
@@ -1238,18 +1252,11 @@ TILES:
 (X) Ravel Lock: Snake
 (X) Ravel Lock: Stacker
 (X) Ravel Locker
-(X) Residue Block°
-(X) Residue Furniture°
 (^) Riven Campfire*
 (^) Riven Dungeon Chest*
-(^) Riven Torch*
-(^) Riven Water Fountain*
 (X) Rusty Locker
-(X) Sanguinite Brick
 (X) Security Door
-(^) Shadow Torch°
-(X) Small Container
-(^) Traffic Cone*
+(X) Small Storage Container
 (#, ^5) Wilting Rose Planter Box
 (X) Wrycoral Planter Box
 
@@ -1259,6 +1266,7 @@ TILES:
 (^) Fabricator*
 (X) Flesh Shredder°
 (X) Interstellar Sampler°
+(X) Metal Presser
 (X) Qube Generator°
 (X) The Demaker
 (^) Unsuspicious Bush
@@ -1267,7 +1275,6 @@ TILES:
 (X) Ashen Scrap Foliage
 (X) Ashen Soot Foliage
 (^) Brineglow Vine*
-(X) Cargo Elevator Door
 (^) Defiled Foliage
 (々) Defiled Heart
 (^) Defiled Relay
@@ -1278,12 +1285,12 @@ TILES:
 (ᗢ) Fungarust*
 (^) Fuzzvine
 (^) Gel Blister*
+(X) Generation Station
 (X) Heat Vent
 (^) Hydrothermal Vent
 (^) Limestone Rubble
 (^) Marrowick Coral
 (^) Marrowick Flange
-(X) Modular Light Fixture
 (^) Ocotillo
 (X) Petrified Baobab Tree*
 (^) Petrified Tree*
@@ -1298,6 +1305,7 @@ TILES:
 (^) Venus Coral
 (^) Wilting Rose*
 (X) Witherleaf Tree
+(X) Workstation Extras
 (^) Wrycoral*
 
 (^) A Perfect World
@@ -1513,6 +1521,7 @@ CONSUMABLES:
 (^) Vanilla Shake*
 
 (^) Broken Record*
+(X) Distress Beacon
 (^) Nerve Impulse Manipulator*
 (^) Lost Picture Frame
 (X) Quantum Cell°
