@@ -7,6 +7,7 @@ using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
 using Origins.Items.Vanity.BossMasks;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
@@ -275,6 +276,7 @@ namespace Origins.NPCs.Fiberglass {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			armorDropRule = ItemDropRule.FewFromOptionsNotScalingWithLuck(2, 1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>());
 			weaponDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1,
+				ModContent.ItemType<Dream_Catcher>(),
 				ModContent.ItemType<Fiberglass_Bow>(),
 				ModContent.ItemType<Fiberglass_Sword>(),
 				ModContent.ItemType<Fiberglass_Pistol>(),

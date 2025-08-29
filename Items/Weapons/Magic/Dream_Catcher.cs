@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ranged;
-using Origins.Items.Weapons.Summoner;
 using PegasusLib;
 using ReLogic.Content;
 using System;
@@ -37,7 +36,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.knockBack = 0.5f;
 			Item.autoReuse = true;
 			Item.value = Item.sellPrice(gold: 2);
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Green;
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override void ModifyManaCost(Player player, ref float reduce, ref float mult) {

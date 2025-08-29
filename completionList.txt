@@ -869,7 +869,7 @@ MAGIC WEAPONS:
 (^) Avulsion*
 (^) Beginner's Tome*
 (^) Cryostike*
-(#, ^2) Dream Catcher !!!
+(^) Dream Catcher
 (#2, ^2) Eaterboros* !!! (graphical code)
 (^) Eternabrite
 (^) Hot Potato
