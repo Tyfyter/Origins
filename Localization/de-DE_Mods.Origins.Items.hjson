@@ -6627,5 +6627,9 @@ Pocket_Dimension_Monolith_Item: {
 
 Dream_Catcher: {
 	// DisplayName: Dream Catcher
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Rapidly fires shards and vines that pull enemies
+		<right> to deploy the dream catcher to the cursor
+		''' */
 }
