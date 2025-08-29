@@ -391,7 +391,7 @@ namespace Origins.Items.Weapons.Magic {
 			const int verts = 64;
 			float[] rot = new float[verts + 1];
 			Vector2[] pos = new Vector2[verts + 1];
-			Matrix matrix = Main.GameViewMatrix.TransformationMatrix;
+			Matrix matrix = Main.GameViewMatrix.ZoomMatrix;
 			float length = 96 * size;
 			size *= matrix.Right.X;
 			for (int i = 0; i < verts + 1; i++) {
