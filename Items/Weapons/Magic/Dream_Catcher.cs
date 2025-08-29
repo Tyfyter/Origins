@@ -358,5 +358,10 @@ namespace Origins.Items.Weapons.Magic {
 		readonly int[] playerImmune = new int[Main.maxPlayers];
 		public override bool CanHitPvp(Player target) => playerImmune[target.whoAmI] <= 0;
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) => playerImmune[target.whoAmI] = Projectile.localNPCHitCooldown;
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			(Projectile.ai[0], Projectile.ai[1]) = Projectile.Center;
+			Projectile.netUpdate = true;
+			return false;
+		}
 	}
 }
