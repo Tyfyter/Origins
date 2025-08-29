@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using MonoMod.Cil;
 using ReLogic.Content;
+using ReLogic.Threading;
 using System;
 using System.Linq;
 using Terraria;
@@ -39,10 +39,12 @@ namespace Origins.Graphics {
 			Main.spriteBatch.End();
 		}
 		static void UpdateDust() {
-			for (int i = 0; i < dust.Length; i++) {
-				Dust dust = EfficientDust.dust[i];
-				if (dust.active) UpdateDustCallback[dust.type](dust);
-			}
+			FastParallel.For(0, dust.Length, (fromInclusive, toExclusive, _) => {
+				for (int i = fromInclusive; i < toExclusive; i++) {
+					Dust dust = EfficientDust.dust[i];
+					if (dust.active) UpdateDustCallback[dust.type](dust);
+				}
+			});
 		}
 		static readonly Dust fakeDust = new();
 		public static Dust NewDustDirect(Vector2 Position, int Width, int Height, int Type, float SpeedX = 0f, float SpeedY = 0f, int Alpha = 0, Color newColor = default, float Scale = 1f) {
