@@ -1963,6 +1963,8 @@ Projectiles: {
 	Astral_Scythe_Chunk_Spawn.DisplayName: Astral Scythe Chunk Spawn
 	Astral_Scythe_Slash.DisplayName: Astral Scythe Slash
 	Dream_Catcher_Shard.DisplayName: Dream Catcher Shard
+	Dream_Catcher_Vine.DisplayName: Dream Catcher Vine
+	Dream_Catcher_P.DisplayName: Dream Catcher P
 }
 
 Prefixes: {
