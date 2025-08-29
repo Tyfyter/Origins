@@ -90,17 +90,17 @@ namespace Origins.Items.Weapons.Demolitionist {
 				frame = 0;
 				break;
 			}
-
+			Rectangle frameRect = new Rectangle(0, 32 * frame, 60, 30);
 			drawInfo.DrawDataCache.Add(new DrawData(
 				UseTexture,
 				pos,
-				new Rectangle(0, 32 * frame, 60, 30),
+				frameRect,
 				Item.GetAlpha(lightColor),
 				itemRotation,
-				drawOrigin,
+				new Vector2(10, 14).Apply(drawInfo.itemEffect, frameRect.Size()),
 				drawPlayer.GetAdjustedItemScale(Item),
-				drawInfo.itemEffect,
-				0));
+				drawInfo.itemEffect
+			));
 		}
 	}
 }
