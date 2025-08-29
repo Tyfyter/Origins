@@ -17,6 +17,7 @@ using Origins.NPCs.MiscE;
 using Origins.Projectiles;
 using Origins.Questing;
 using PegasusLib.ID;
+using PegasusLib.Sets;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -455,7 +456,7 @@ namespace Origins {
 				}
 			}
 			OriginGlobalNPC originGlobalNPC = target.GetGlobalNPC<OriginGlobalNPC>();
-			if (originGlobalNPC.amnesticRose) {
+			if (originGlobalNPC.amnesticRose && !OriginsSets.NPCs.TargetDummies[target.type]) {
 				float mana = 1 + MathF.Pow(damageDone * 0.1f, 0.5f);
 				if (target.ModNPC is IDefiledEnemy defiledEnemy) {
 					mana = Math.Min(mana, defiledEnemy.Mana);

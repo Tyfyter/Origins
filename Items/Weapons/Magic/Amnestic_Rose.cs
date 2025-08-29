@@ -9,6 +9,7 @@ using Origins.NPCs;
 using Origins.Tiles.Defiled;
 using PegasusLib;
 using PegasusLib.Networking;
+using PegasusLib.UI;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,7 +28,7 @@ namespace Origins.Items.Weapons.Magic {
 		static bool firstLoad = false;
 		public override LocalizedText DisplayName => Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(DisplayName)}");
 		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
-			Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(Tooltip)}"),
+			Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(Tooltip)}").WithFormatArgs(nameof(Amnestic_Rose_Buff)),
 			Language.GetText("Mods.Origins.Items.GenericTooltip.ConceptAndSpriteBy").WithFormatArgs("Calano")
 		);
 		public override void Load() {
@@ -405,10 +406,18 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Amnestic_Rose_Buff : ModBuff {
 		protected int projType;
+		LocalizedText DebuffName;
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
 			projType = ModContent.ProjectileType<Amnestic_Rose_Goo_Ball>();
+			DebuffName = this.GetLocalization("DebuffName");
+			Buff_Hint_Handler.ModifyTip(Type, 0, this.GetLocalization("EffectDescription").Key);
+			Buff_Hint_Handler.RemoveIcon(Type);
+			Buff_Hint_Handler.CombineBuffHintModifiers(Type, modifyBuffTip: (lines, item, player) => {
+				if (player) return;
+				lines[0] = lines[0].Replace(DisplayName.Value, DebuffName.Value);
+			});
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
 			OriginGlobalNPC originGlobalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
@@ -551,7 +560,7 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Amnestic_Rose_Alt : Amnestic_Rose {
 		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
-			Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(Tooltip)}"),
+			Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(Tooltip)}").WithFormatArgs(nameof(Amnestic_Rose_Alt_Buff)),
 			Language.GetText("Mods.Origins.Items.GenericTooltip.ConceptBy").WithFormatArgs("Calano")
 		);
 		public override void SetStaticDefaults() {

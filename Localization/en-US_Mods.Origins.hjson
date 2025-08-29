@@ -1288,6 +1288,12 @@ Buffs: {
 	Amnestic_Rose_Buff: {
 		DisplayName: Rose Regrowth
 		Description: The Rosebud is regrowing
+		EffectDescription:
+			'''
+			{$BuffDescription.Slow}
+			Attacking afflicted enemies will restore mana
+			'''
+		DebuffName: Fugue State
 	}
 
 	Otherworldly_Cloak_Buff: {
@@ -1301,8 +1307,10 @@ Buffs: {
 	}
 
 	Amnestic_Rose_Alt_Buff: {
-		DisplayName: Rose Regrowth
-		Description: The Rosebud is regrowing
+		DisplayName: "{$Amnestic_Rose_Buff.DisplayName}"
+		Description: "{$Amnestic_Rose_Buff.Description}"
+		EffectDescription: "{$Amnestic_Rose_Buff.EffectDescription}"
+		DebuffName: "{$Amnestic_Rose_Buff.DebuffName}"
 	}
 
 	Gelatin_Aspect_Buff: {
