@@ -657,6 +657,19 @@ namespace Origins {
 				//Mod.Logger.Info($"Running {nameof(PreUpdatePlayers)} in netmode {Main.netMode}");
 			}
 		}
+		static Stack<Point> QueuedTileFrames { get; } = new();
+		static bool isFramingQueuedTiles = false;
+		public static void QueueTileFrames(int i, int j) {
+			if (!isFramingQueuedTiles) QueuedTileFrames.Push(new(i, j));
+		}
+		public override void PostUpdatePlayers() {
+			try {
+				isFramingQueuedTiles = true;
+				while (QueuedTileFrames.TryPop(out Point pos)) WorldGen.TileFrame(pos.X, pos.Y);
+			} finally {
+				isFramingQueuedTiles = false;
+			}
+		}
 		public override void PreUpdateNPCs() {
 			Debugging.LogFirstRun(PreUpdateNPCs);
 		}
