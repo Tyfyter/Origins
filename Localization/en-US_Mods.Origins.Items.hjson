@@ -73,8 +73,10 @@ Automated_Returns_Handler: {
 	DisplayName: Automated Returns Handler
 	Tooltip:
 		'''
+		Increases movement speed and acceleration
+		Provides light when worn
 		Allows the ability to climb walls and dash
-		Greatly increased movement speed and return speed for grapple hooks and harpoon guns
+		Greatly increased return speed for grapple hooks and harpoon guns
 		Gives a 10% chance to dodge attacks
 		'''
 }
@@ -866,7 +868,12 @@ Strange_Computer: {
 
 Super_Turbo_Reel: {
 	DisplayName: Super Turbo Reel
-	Tooltip: Greatly increased movement speed and return speed for harpoon guns
+	Tooltip:
+		'''
+		Increases movement speed and acceleration
+		Provides light when worn
+		Greatly increased return speed for harpoon guns
+		'''
 }
 
 Superjump_Cape: {
@@ -2239,7 +2246,11 @@ Flammable_Harpoon: {
 
 Metal_Slug: {
 	DisplayName: Metal Slug
-	Tooltip: "'Great ammo for a really BIG gun'"
+	Tooltip:
+		'''
+		Used as ammo for handcannons
+		"'Great ammo for a really BIG gun'"
+		'''
 }
 
 Harpoon: {
@@ -4526,11 +4537,12 @@ Speed_Booster: {
 	DisplayName: Speed Booster
 	Tooltip:
 		'''
-		The wearer can run super fast and even faster after taking damage
-		Allows the user to climb walls and dash into enemies
-		Greatly increased movement speed and return speed for grapple hooks and harpoon guns
 		Allows flight
 		5% increased damage
+		Increases movement speed and acceleration, and even faster after taking damage
+		Provides light when worn
+		Allows the user to climb walls and dash into enemies
+		Greatly increased return speed for grapple hooks and harpoon guns
 		Gives a 10% chance to dodge attacks
 		Running fast for extended periods of time generates a charge for a powerful dash
 		'''

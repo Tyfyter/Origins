@@ -73,6 +73,7 @@ BOSSES AND MINI-BOSSES:
 (X) Mechamalgamation
 (X) Miscreant
 (X) Seer
+(X) SR-48 'The Phoenix'
 
 (%2) Origins final boss
 (X) I.C.A.R.U.S.
@@ -244,7 +245,6 @@ ENEMY NPCS:
 (^) Slime Worm (Slorm)*
 (^) Spider Amoeba*
 (X) Spiteful Flesh
-(X) The Claw
 (X) Tubefish
 
 (^) Airsnatcher
@@ -1067,12 +1067,14 @@ EXPLOSIVE WEAPONS:
 (X) Oil Drum
 (^) Omni-directional Claymore*
 (^) Partybringer
+(#, ^2) Pete's Peat Slugger
 (X) Puffle
 (^) Rocodile
 (^) Self-Destruct*
 (X) Supernova
 (X) The Heatseeker
 (X) The Rocketman
+(X) Thundercracker
 (X) Thundershot
 
 (@4, ^3) Black Hole Bomb°
@@ -1134,6 +1136,7 @@ TILES:
 (^) Lost Ore*
 (^) Marrowick*
 (^) Mildew Block°
+(X) Murky Sludge
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
 (^) Quartz Block*
@@ -1188,6 +1191,8 @@ TILES:
 
 (^) Alkahest Torch*
 (^) Amoeba Buggy Cage*
+(X) Background Door
+(X) Beacon Light
 (^) Bile Torch*
 (^) Brine Water Fountain*
 (@, ^3) Bug Cage° (using temp sprites)
@@ -1226,6 +1231,7 @@ TILES:
 (X) Rusty Piping
 (X) Sanguinite Brick
 (^) Shadow Torch°
+(X) Steel Support Beam
 (X) Suit Locker
 (^) Traffic Cone*
 
@@ -1233,6 +1239,7 @@ TILES:
 (X) Bilious Incense
 (^) Brine Dungeon Chest
 (X) Cargo Elevator Door
+(X) Cargo Elevator Door (Jammed)
 (^) Chambersite Gem Lock°
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
@@ -1266,6 +1273,7 @@ TILES:
 (^) Fabricator*
 (X) Flesh Shredder°
 (X) Interstellar Sampler°
+(X) Medicine Fabricator
 (X) Metal Presser
 (X) Qube Generator°
 (X) The Demaker
@@ -1521,6 +1529,7 @@ CONSUMABLES:
 (^) Vanilla Shake*
 
 (^) Broken Record*
+(X) Catalyst Cell
 (X) Distress Beacon
 (^) Nerve Impulse Manipulator*
 (^) Lost Picture Frame
