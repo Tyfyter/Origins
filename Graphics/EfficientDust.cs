@@ -21,11 +21,15 @@ namespace Origins.Graphics {
 		static void DrawDust() {
 			Rectangle rectangle = new((int)Main.screenPosition.X - 500 - 4, (int)Main.screenPosition.Y - 50 - 4, Main.screenWidth + 1000, Main.screenHeight + 100);
 			Color defaultColor = default;
+			Color black = Color.Black;
 			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
 			for (int i = 0; i < dust.Length; i++) {
 				Dust dust = EfficientDust.dust[i];
 				if (!dust.active || !rectangle.Contains(dust.position)) continue;
-				Color lightColor = dust.GetAlpha(Lighting.GetColor((int)(dust.position.X + 4f) / 16, (int)(dust.position.Y + 4f) / 16));
+				Color lightColor = Lighting.GetColor((int)(dust.position.X + 4f) / 16, (int)(dust.position.Y + 4f) / 16);
+				bool isBlack = lightColor == black;
+				lightColor = dust.GetAlpha(lightColor);
+				if (isBlack && lightColor == black) continue;
 				Texture2D texture = DustTexture[dust.type].Value;
 				Main.spriteBatch.Draw(texture, dust.position - Main.screenPosition, dust.frame, lightColor, dust.rotation, new Vector2(4f, 4f), dust.scale, SpriteEffects.None, 0f);
 				if (dust.color != defaultColor) {

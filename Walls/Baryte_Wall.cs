@@ -122,24 +122,24 @@ namespace Origins.Walls {
 			dusts.Add(Type);
 			Deprioritized_Dust.Set[Type] = 1;
 			EfficientDust.DustTexture[Type] = Request<Texture2D>(Texture);
-			EfficientDust.UpdateDustCallback[Type] = (dust) => Update(dust);
+			EfficientDust.UpdateDustCallback[Type] = DoUpdate;
 		}
 		public override void OnSpawn(Dust dust) {
 			dust.alpha = 254;
 			dust.fadeIn = 240;
 			dust.frame = Texture2D.Frame();
 		}
-		public override bool Update(Dust dust) {
+		public static void DoUpdate(Dust dust) {
 			dust.fadeIn -= GoreID.Sets.DisappearSpeed[GoreID.AmbientFloorCloud1];
 			if (dust.fadeIn <= 0) {
 				dust.active = false;
-				return false;
+				return;
 			}
 			bool flag = false;
 			Tile tile = Main.tile[dust.position.ToTileCoordinates()];
 			if (tile == null) {
 				dust.active = false;
-				return false;
+				return;
 			}
 			if (WorldGen.SolidTile(tile)) {
 				flag = true;
@@ -156,10 +156,13 @@ namespace Origins.Walls {
 				dust.alpha++;
 				if (dust.alpha >= 255) {
 					dust.active = false;
-					return false;
+					return;
 				}
 			}
 			dust.position += dust.velocity;
+		}
+		public override bool Update(Dust dust) {
+			DoUpdate(dust);
 			return false;
 		}
 		public override bool MidUpdate(Dust dust) {
