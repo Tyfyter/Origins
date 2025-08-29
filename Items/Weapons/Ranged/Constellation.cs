@@ -1,6 +1,7 @@
 ﻿using Origins.Items.Materials;
 using Origins.Journal;
 using Origins.Projectiles;
+using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -8,6 +9,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI.Chat;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Constellation : ModItem, IJournalEntrySource {
@@ -247,10 +249,12 @@ namespace Origins.Items.Weapons.Ranged {
 						);
 						data.position = b - Main.screenPosition;
 						Main.EntitySpriteDraw(data);
+						ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.ItemStack.Value, $"______\n{LinkedTo?.projUUID}\n{LinkedTo?.ai[0]}", data.position, Color.HotPink, 0, default, Vector2.One);
 					}
 				}
 				data.position = Projectile.Center - Main.screenPosition;
 				Main.EntitySpriteDraw(data);
+				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.ItemStack.Value, $"______\n{Projectile.projUUID}\n{Projectile.ai[0]}", data.position, Color.HotPink, 0, default, Vector2.One);
 			}
 			return false;
 		}
