@@ -1,7 +1,8 @@
-using Origins.Buffs;
 using Origins.Dev;
 using Origins.Projectiles;
+using PegasusLib.Networking;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
@@ -71,32 +72,61 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void OnKill(int timeLeft) {
 			if (Main.player[Projectile.owner].OriginPlayer().pincushion) return;
 			if (!Projectile.IsLocallyOwned()) return;
+			new Shimmer_Dynamite_Action(Projectile.Center / 16).Perform();
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.ModifyHitInfo += (ref NPC.HitInfo info) => {
+				if (NPCID.Sets.ShimmerTransformToNPC[target.type] >= 0 || NPCID.Sets.ShimmerTransformToItem[target.type] >= 0) {
+					if (info.Damage >= target.life) {
+						target.shimmerTransparency = 1;
+						info.Damage = target.life - 1;
+					}
+				}
+			};
+		}
+
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.Shimmer, 91);
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.Knockback *= 0;
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			target.AddBuff(BuffID.Shimmer, 60);
+		}
+	}
+	public record class Shimmer_Dynamite_Action(Vector2 Center) : SyncedAction {
+		public Shimmer_Dynamite_Action() : this(default(Vector2)) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			Center = reader.ReadPackedVector2()
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.WritePackedVector2(Center);
+		}
+		protected override void Perform() {
 			const int rad = 8;
-			Vector2 center = Projectile.Center / 16;
-			int x = (int)center.X;
-			int y = (int)center.Y;
+			int x = (int)Center.X;
+			int y = (int)Center.Y;
 			int minI = x - rad;
 			int maxI = x + rad;
 			int minJ = y - rad;
 			int maxJ = y + rad;
 			for (int i = minI; i <= maxI; i++) {
 				for (int j = minJ; j <= maxJ; j++) {
-					float num = Math.Abs(i - center.X);
-					float num2 = Math.Abs(j - center.Y);
+					float num = Math.Abs(i - Center.X);
+					float num2 = Math.Abs(j - Center.Y);
 					if (num * num + num2 * num2 >= rad * rad)
 						continue;
 
 					Tile tile = Main.tile[i, j];
 					if (Main.tile[i, j] != null) {
-						bool needsSync = false;
-						if (tile.HasTile && Projectile.CanExplodeTile(i, j)) {
+						if (tile.HasTile) {
 							void TransformToTile(int type) {
 								if (type >= 0) {
 									tile.TileType = (ushort)type;
 									if (tile.TileType == TileID.Torches) {
 										tile.TileFrameY = 23 * 22;
 									}
-									needsSync = true;
 								}
 							}
 							switch (tile.TileType) {
@@ -133,7 +163,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 								case TileID.ExposedGems:
 								if (tile.TileFrameX >= 18) {
 									tile.TileFrameX -= 18;
-									needsSync = true;
 								}
 								break;
 
@@ -145,34 +174,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 						switch (tile.LiquidType) {
 							case LiquidID.Water:
 							tile.LiquidType = LiquidID.Lava;
-							if (tile.LiquidAmount > 0) needsSync = true;
 							break;
 							case LiquidID.Lava:
 							tile.LiquidType = LiquidID.Honey;
-							if (tile.LiquidAmount > 0) needsSync = true;
 							break;
 							case LiquidID.Honey:
 							tile.LiquidType = LiquidID.Water;
-							if (tile.LiquidAmount > 0) needsSync = true;
 							break;
 						}
-						if (needsSync && Main.netMode != NetmodeID.SinglePlayer) {
-							NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, i, j);
-						}
 					}
-					/*for (int k = i - 1; k <= i + 1; k++) {
-						for (int l = j - 1; l <= j + 1; l++) {
-							if (Main.tile[k, l] != null && Main.tile[k, l].wall > 0 && wallSplode) {
-								if (!WallLoader.CanExplode(k, l, Main.tile[k, l].wall)) {
-									continue;
-								}
-
-								WorldGen.KillWall(k, l);
-								if (Main.tile[k, l].wall == 0 && Main.netMode != 0)
-									NetMessage.SendData(17, -1, -1, null, 2, k, l);
-							}
-						}
-					}*/
 				}
 			}
 			for (int i = minI; i <= maxI; i++) {
@@ -180,27 +190,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 					WorldGen.SquareTileFrame(i, j);
 				}
 			}
-			//WorldGen.RangeFrame(minI - 1, maxI + 1, minJ - 1, maxJ + 1);
-		}
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.ModifyHitInfo += (ref NPC.HitInfo info) => {
-				if (NPCID.Sets.ShimmerTransformToNPC[target.type] >= 0 || NPCID.Sets.ShimmerTransformToItem[target.type] >= 0) {
-					if (info.Damage >= target.life) {
-						target.shimmerTransparency = 1;
-						info.Damage = target.life - 1;
-					}
-				}
-			};
-		}
-
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.Shimmer, 91);
-		}
-		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
-			modifiers.Knockback *= 0;
-		}
-		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			target.AddBuff(BuffID.Shimmer, 60);
 		}
 	}
 }
