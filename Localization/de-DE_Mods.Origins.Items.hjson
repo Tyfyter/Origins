@@ -484,8 +484,8 @@ Lovers_Leap: {
 	/* Tooltip:
 		'''
 		5% increased damage
-		Allows flight
-		The wearer can run super fast and even faster after taking damage
+		Allows flight, super fast running
+		Increases damage and movement speed after taking damage
 		Allows the player to dash into the enemy
 		Double tap a direction
 		''' */
@@ -4537,9 +4537,9 @@ Speed_Booster: {
 	// DisplayName: Speed Booster
 	/* Tooltip:
 		'''
-		Allows flight
 		5% increased damage
-		Increases movement speed and acceleration, and even faster after taking damage
+		Allows flight, super fast running, and increased acceleration
+		Increases damage and movement speed after taking damage
 		Provides light when worn
 		Allows the user to climb walls and dash into enemies
 		Greatly increased return speed for grapple hooks and harpoon guns
