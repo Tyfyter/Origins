@@ -51,8 +51,9 @@ X: No progress
 BOSSES AND MINI-BOSSES:
 |---
 (^) Chambersite Sentinel
-(X) D2L2 "Warsaw"
+(X) D2L2 'Warsaw'
 (%2, ^2, 々) Grand Corruptor
+(X) HA-24 'Hawken'
 (%2, ^2, 々) Ichor Storm
 (X) Zombie Paladin
 
@@ -225,6 +226,7 @@ ENEMY NPCS:
 (^) Felnum Slime*
 (^) Flagellant*
 (^) Flying Exoskeleton*
+(X) Gas Mask Zombie
 (^) Goo Wall
 (^) Graveshield Zombie*
 (X) Hammerhand
@@ -232,6 +234,7 @@ ENEMY NPCS:
 (^) Optiphage*
 (X) Packhunter
 (#, ^2) Pinwheel
+(X) Power Suit Zombie
 (^) Pustule Jellyfish*
 (X) QM-76 'Quakemaker'
 (X) Repairboy
@@ -338,6 +341,7 @@ STATUS EFFECTS:
 (#, ^2) Hallow Assimilation
 (^) Impeding Shrapnel*
 (^) Mana Buffer*
+(X) Miasma
 (X) Quantum Vitiation
 (^) Rasterized*
 (^) Riven Assimilation*
@@ -440,6 +444,7 @@ ACCESSORIES:
 (^) Bomb Charm of Regeneration*
 (^) Bomb Handling Device*
 (^) Boomerang Magnet*
+(X) Breathing Unit
 (^) Brine-Leafed Clover*
 (^) Bug Trapper*
 (X) Builder's Touch
@@ -470,11 +475,13 @@ ACCESSORIES:
 (^) Fallacious Vase
 (^) Feather Cape
 (^) Feathery Crest
+(X) Filter Breather
 (^) Fleshy Figurine*
 (^) Focus Crystal*
 (^) Full Send
 (^) Futurephones*
 (^) Gaming Glove
+(X) Gas Mask
 (^) Golden Lotus
 (⛥) Grave Danger*
 (^) Gun Glove*
@@ -530,7 +537,6 @@ ACCESSORIES:
 (^) Protomind*
 (^) Razorwire*
 (^) Rebreather*
-(^) Rebreather Gear
 (^) Resin Shield*
 (^) Resizing Glove
 (^) Return To Sender*
@@ -633,6 +639,7 @@ VANITY:
 (^) Felnum Shock Glasses*
 (X) Gore Protector Set
 (^) Newsboy Cap*
+(X) Pernicious Enterprise Employee Set
 (^) Sunflower Sandals*
 
 (^) DIO's Set
@@ -1032,6 +1039,7 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb*
 (^) Sticky Link Grenade*
+(X) Tank Rifle
 (#, ^2) Ticking Bomb
 (#, ^2) Ticking Dynamite
 (^) Voltefuse
@@ -1181,6 +1189,7 @@ TILES:
 (^) Harmony Brick Wall
 (@, ^3) Lost Brick Wall
 (^) Marrowick Wall
+(X) Molten Steel Wall
 (X) Nova Brick Wall
 (^) Quartz Wall
 (^) Riven Grass Wall
@@ -1224,6 +1233,7 @@ TILES:
 (X) Nova Brick°
 (X) Nova Fragment Block°
 (X) Nova Furniture°
+(X) Peppered Moth Lamp
 (X) Residue Block°
 (X) Residue Furniture°
 (^) Riven Torch*
@@ -1432,6 +1442,7 @@ CRITTERS AND FISH:
 (^) Chambersite Squirrel
 (^) Cicada 3301*
 (X) Hyrax
+(X) Peppered Moth
 
 (^) Bilemouth*
 (^) Bobbit Worm
@@ -1615,6 +1626,7 @@ AMMO:
 |---
 (^) Aether Bullet
 (^) Aether Canister
+(X) Armor-Piercing Bullet
 (^) Bee Canister
 (^) Bouncy Harpoon*
 (^) Defiled Spirit*
@@ -1703,7 +1715,9 @@ CROSS-MOD CONTENT:
 (^) Encrusted Storage Unit
 (^) Encrusted Storage Upgrade
 (X) Fargo's Unlimited ammo items
+(X) High-powered Green Laser
 (X) Laden Pressure Incantation
+(X) Mech Figurine
 (^) Keytar
 (^) Riven Chest
 (^) Riven Renewal

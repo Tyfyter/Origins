@@ -1,6 +1,4 @@
-using Microsoft.Xna.Framework;
 using Origins.Dusts;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
 using Terraria;
