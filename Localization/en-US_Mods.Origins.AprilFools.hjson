@@ -40,8 +40,9 @@ Items: {
 	Hot_Potato.Tooltip: "'Be careful, it's a potato'"
 	Bottled_Brine.DisplayName: Pickle Jar
 	No_U_Card.Tooltip: The greatest 'fuck you' ever
-	Kruncher.DisplayName: Crunker
-	Ancient_Kruncher.DisplayName: Cranker
+	Kruncher.DisplayName: Chunky
+	Ancient_Kruncher.DisplayName: Cranky
+	Incision.DisplayName: Funky
 	Suspicious_Looking_Pebble.DisplayName: Sus Looking Unusually Round Pebble
 	Partybringer.Tooltip: Fires pleasants that bring present surprises
 	Unmisfire.Tooltip: Corrects your shitty aim
@@ -64,7 +65,7 @@ Items: {
 	}
 
 	Tripod_Nip.DisplayName: Cat Nip
-	Amnestic_Rose.Tooltip: I forgor [i:1274]
+	Amnestic_Rose.Tooltip: i forgor [i:1274]
 	Greater_Summoning_Potion.DisplayName: Greater Summoning Potato
 	Focus_Crystal.DisplayName: Nose of Focus
 	Lucky_Hat.Tooltip:
@@ -75,7 +76,7 @@ Items: {
 	Shaped_Glass.Tooltip:
 		'''
 		{$Mods.Origins.Items.Shaped_Glass.Tooltip}
-		'No it doesn't halve your health for double damage.'
+		'No, it doesn't halve your health for double damage.'
 		'''
 
 	Amoeba_Fluid_Item: {
@@ -84,6 +85,7 @@ Items: {
 	}
 
 	Terlet_Paper.Tooltip: Summons a kawaii cta
+	Laser_Tag_Gun.Tooltip: "'What does that do? I don't know, I haven't seen it before'"
 }
 
 Prefixes.Wholesome_Prefix.DisplayName: Holesome
@@ -197,7 +199,7 @@ Bestiary: {
 
 SetBonuses.Rubber:
 	'''
-	Immunity to Static Shock, Electrified, and traffic laws
+	Immunity to Static Shock, Electrified and traffic laws
 	Reduces damage taken by 5%
 	'''
 CritType.Felnum_Crit_Type: Critically strikes while the target is covered in wet
