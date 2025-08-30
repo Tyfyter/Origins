@@ -43,7 +43,7 @@ namespace Origins.Tiles.Defiled {
 		}
 		public static AutoLoadingAsset<Texture2D> tangelaTexture = typeof(Defiled_Heart).GetDefaultTMLName() + "_Tangela";
 		public void MinePower(int i, int j, int minePower, ref int damage) {
-			if (minePower < 90) {
+			if (minePower < 80) {
 				damage = 0;
 				HitSound = Origins.Sounds.DefiledIdle.WithPitch(-3f);
 			} else {
