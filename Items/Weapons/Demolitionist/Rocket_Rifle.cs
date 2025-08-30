@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return new Vector2(-6f, -6);
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			position += velocity.SafeNormalize(default).RotatedBy(player.direction * MathHelper.PiOver2) * -6;
+			position += velocity.SafeNormalize(default).RotatedBy(player.direction * MathHelper.PiOver2) * -6 * player.gravDir;
 		}
 	}
 	public class Rocket_Rifle_P : ModProjectile, ICanisterProjectile {

@@ -197,15 +197,16 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.noEnchantmentVisuals = true;
 			Projectile.hide = true;
 		}
+		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
-			Projectile.rotation = MathHelper.Lerp(-2.75f, 2f, swingFactor) * Projectile.ai[1];
+			Projectile.rotation = MathHelper.Lerp(-2.75f, 2f, swingFactor) * Projectile.ai[1] * player.gravDir;
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
-			Projectile.Center = player.MountedCenter - Projectile.velocity + (Vector2)new PolarVec2(32, realRotation);
 			Projectile.timeLeft = player.itemTime * Projectile.MaxUpdates;
 			player.heldProj = Projectile.whoAmI;
-			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
+			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation * player.gravDir - MathHelper.PiOver2);
+			Projectile.Center = player.GetCompositeArmPosition(false) + (Vector2)new PolarVec2(16, realRotation);
 
 			Vector2 vel = (Projectile.velocity.RotatedBy(Projectile.rotation) / 12f) * Projectile.width * 0.95f;
 			for (int j = 0; j <= 1; j++) {
@@ -234,15 +235,17 @@ namespace Origins.Items.Weapons.Melee {
 		}
 
 		public override bool PreDraw(ref Color lightColor) {
+			float gravDir = Main.player[Projectile.owner].gravDir;
+			SpriteEffects effects = Projectile.ai[1] * gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
 				Projectile.Center - Main.screenPosition,
 				null,
 				lightColor,
-				Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1]),
-				new Vector2(14, 25 + 11 * Projectile.ai[1]),// origin point in the sprite, 'round which the whole sword rotates
+				Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1] * gravDir),
+				new Vector2(14, 18).Apply(effects ^ SpriteEffects.FlipVertically, TextureAssets.Projectile[Type].Size()),
 				Projectile.scale,
-				Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically,
+				effects,
 				0
 			);
 			return false;

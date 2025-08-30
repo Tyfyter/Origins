@@ -124,6 +124,7 @@ namespace Origins.Items.Weapons.Magic {
 					Color hoverColor = Color.White;
 					ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(Rasterized_Dye.ShaderID, null);
 					SpriteBatchState state = spriteBatch.GetState();
+					spriteBatch.Restart(state, rasterizerState: RasterizerState.CullNone);
 					DrawData data = new(
 						texture,
 						Main.ScreenSize.ToVector2() * 0.5f,

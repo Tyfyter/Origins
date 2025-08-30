@@ -166,12 +166,12 @@ namespace Origins.Items.Weapons.Melee {
 				MaxAngle,
 				MinAngle,
 				MathHelper.Clamp(SwingFactor, 0, 1)
-			) * Projectile.ai[1];
+			) * Projectile.ai[1] * player.gravDir;
 
-			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
+			float realRotation = Projectile.rotation * player.gravDir + Projectile.velocity.ToRotation() * player.gravDir;
 			player.heldProj = Projectile.whoAmI;
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
-			Projectile.Center = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
+			Projectile.Center = player.GetCompositeArmPosition(false);
 			player.itemLocation = Projectile.Center + GeometryUtils.Vec2FromPolar(26, realRotation + 0.3f * player.direction);
 			player.itemRotation = player.compositeFrontArm.rotation;
 			player.direction = Math.Sign(Projectile.velocity.X);

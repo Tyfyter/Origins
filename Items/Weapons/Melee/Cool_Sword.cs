@@ -93,8 +93,8 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.ai[2] = 2;
 			}
 			player.heldProj = Projectile.whoAmI;
-			//player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
-			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2) + GeometryUtils.Vec2FromPolar(32, realRotation);
+			player.SetCompositeArmFront(false, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
+			Projectile.Center = player.GetCompositeArmPosition(false) + GeometryUtils.Vec2FromPolar(32, realRotation * player.gravDir);
 			if (swingFactor < 0.4f) {
 				player.bodyFrame.Y = player.bodyFrame.Height * 1;
 			} else if (swingFactor < 0.7f) {
@@ -131,7 +131,9 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			if (Projectile.ai[2] == 1) return false;
+			Player player = Main.player[Projectile.owner];
 			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * 0.4f;
+			vel.Y *= player.gravDir;
 			for (int j = 0; j <= ExtraHitboxes; j++) {
 				Rectangle hitbox = projHitbox;
 				Vector2 offset = vel * j;
@@ -146,14 +148,16 @@ namespace Origins.Items.Weapons.Melee {
 			//OriginGlobalNPC.InflictTorn(target, 20, targetSeverity: 0.4f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void CutTiles() {
+			Player player = Main.player[Projectile.owner];
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-			Vector2 end = Projectile.Center + Projectile.velocity.RotatedBy(Projectile.rotation).SafeNormalize(Vector2.UnitX) * 50f * Projectile.scale;
+			Vector2 end = Projectile.Center + Projectile.velocity.RotatedBy(Projectile.rotation).SafeNormalize(Vector2.UnitX) * new Vector2(1, player.gravDir) * 50f * Projectile.scale;
 			Utils.PlotTileLine(Projectile.Center, end, 80f * Projectile.scale, DelegateMethods.CutTiles);
 		}
 
 		public override bool PreDraw(ref Color lightColor) {
 			Player player = Main.player[Projectile.owner];
 			SpriteEffects effects = player.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically;
 			Rectangle slashFrame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: 11, frameY: (int)(8 * (1 - player.itemTime / (float)player.itemTimeMax)));
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
@@ -166,19 +170,19 @@ namespace Origins.Items.Weapons.Melee {
 				effects,
 				0
 			);
-			/*effects = player.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
-			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
+			effects = player.direction * player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+			if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally;
+			Texture2D texture = TextureAssets.Item[ModContent.ItemType<Cool_Sword>()].Value;
 			Main.EntitySpriteDraw(
-				TextureAssets.Projectile[Type].Value,
-				Projectile.Center - GeometryUtils.Vec2FromPolar(24, realRotation) - Main.screenPosition,
+				texture,
+				player.GetCompositeArmPosition(false) + GeometryUtils.Vec2FromPolar(8, (Projectile.rotation + Projectile.velocity.ToRotation()) * player.gravDir) - Main.screenPosition,
 				null,
 				lightColor,
-				realRotation + (MathHelper.PiOver4 * player.direction),
-				new Vector2(14, 8).Apply(effects ^ SpriteEffects.FlipVertically, TextureAssets.Projectile[Type].Size()),
+				Projectile.rotation * player.gravDir + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * player.direction * player.gravDir) - (player.gravDir < 0).Mul(MathHelper.PiOver2 * player.direction),
+				new Vector2(14, 8).Apply(effects ^ SpriteEffects.FlipVertically, texture.Size()),
 				Projectile.scale,
-				effects,
-				0
-			);*/
+				effects
+			);
 			return false;
 		}
 	}

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Projectiles;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -108,10 +109,11 @@ namespace Origins.Items.Weapons.Magic {
 			swingFactor = MathHelper.Lerp(MathF.Pow(swingFactor, 2f), MathF.Pow(swingFactor, 0.5f), swingFactor * swingFactor);
 			Projectile.rotation = MathHelper.Lerp(-2f, 2f, swingFactor) * Projectile.ai[1] * (1 + Projectile.localAI[2] / swing_angle_extend_factor);
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
-			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
 			Projectile.timeLeft = player.itemAnimation * Projectile.MaxUpdates;
 			player.heldProj = Projectile.whoAmI;
+
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
+			Projectile.Center = player.GetCompositeArmPosition(false) + (Vector2)new PolarVec2(0, realRotation);
 
 			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation - MathHelper.PiOver4 * Projectile.ai[1]) * Projectile.width * Projectile.scale;
 			Vector2 boxPos = default;
@@ -135,7 +137,8 @@ namespace Origins.Items.Weapons.Magic {
 		public override bool ShouldUpdatePosition() => false;
 		int collideIndex = -1;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation - MathHelper.PiOver4 * Projectile.ai[1]) * Projectile.width * Projectile.scale;
+			Player player = Main.player[Projectile.owner];
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation * player.gravDir - MathHelper.PiOver4 * Projectile.ai[1] * player.gravDir) * Projectile.width * Projectile.scale;
 			collideIndex = -1;
 			for (int j = 0; j <= Projectile.ai[2] + 1; j++) {
 				Rectangle hitbox = projHitbox;
@@ -149,7 +152,8 @@ namespace Origins.Items.Weapons.Magic {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (collideIndex != -1) {
 				if (Main.myPlayer == Projectile.owner) {
-					Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation - MathHelper.PiOver4 * Projectile.ai[1]) * Projectile.width * Projectile.scale;
+					Player player = Main.player[Projectile.owner];
+					Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation * player.gravDir - MathHelper.PiOver4 * Projectile.ai[1] * player.gravDir) * Projectile.width * Projectile.scale;
 					Vector2 halfSize = Projectile.Size * Projectile.scale / 2;
 					int projType = ModContent.ProjectileType<Eaterboros_Segment_Free>();
 					int lastProj = -1;
@@ -183,8 +187,10 @@ namespace Origins.Items.Weapons.Magic {
 			Utils.PlotTileLine(Projectile.Center, end, 80f * Projectile.scale, DelegateMethods.CutTiles);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			float rotation = Projectile.rotation + Projectile.velocity.ToRotation() - MathHelper.PiOver4 * Projectile.ai[1];
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation - MathHelper.PiOver4 * Projectile.ai[1]) * Projectile.width * Projectile.scale;
+			Player player = Main.player[Projectile.owner];
+			float rotation = Projectile.rotation * player.gravDir + Projectile.velocity.ToRotation() - MathHelper.PiOver4 * Projectile.ai[1] * player.gravDir;
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation * player.gravDir - MathHelper.PiOver4 * Projectile.ai[1] * player.gravDir) * Projectile.width * Projectile.scale;
+			SpriteEffects effects = Projectile.ai[1] * player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			for (int i = (int)Projectile.ai[2] + 2; --i > 0;) {
 				Main.EntitySpriteDraw(
 					eaterTexture,
@@ -194,7 +200,7 @@ namespace Origins.Items.Weapons.Magic {
 					rotation,
 					new Vector2(18, 5),// origin point in the sprite, 'round which the whole sword rotates
 					Projectile.scale,
-					Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically,
+					effects,
 					0
 				);
 			}
@@ -206,7 +212,7 @@ namespace Origins.Items.Weapons.Magic {
 				rotation,
 				new Vector2(0, 13),// origin point in the sprite, 'round which the whole sword rotates
 				Projectile.scale,
-				Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically,
+				effects,
 				0
 			);
 			return false;

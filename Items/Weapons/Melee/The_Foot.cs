@@ -91,7 +91,7 @@ namespace Origins.Items.Weapons.Melee {
 			forcedCrit = false;
 			if (!target.noTileCollide && float.IsNaN(Projectile.ai[2])) {
 				Rectangle hitbox = target.Hitbox;
-				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation + Projectile.ai[1] * 2.5f).SafeNormalize(default);
+				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation * Main.player[Projectile.owner].gravDir + Projectile.ai[1] * 2.5f).SafeNormalize(default);
 				hitbox.Offset((dir * 8).ToPoint());
 				if (hitbox.OverlapsAnyTiles(fallThrough: false)) {
 					Collision.HitTiles(hitbox.TopLeft(), dir, hitbox.Width, hitbox.Height);

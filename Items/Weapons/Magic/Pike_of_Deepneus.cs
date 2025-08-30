@@ -45,7 +45,7 @@ namespace Origins.Items.Weapons.Magic {
 			.Register();
 		}
 		public override void UseItemFrame(Player player) {
-			float rotation = player.itemRotation - MathHelper.PiOver2 - GetArmDrawAngle(player);
+			float rotation = player.itemRotation * player.gravDir - MathHelper.PiOver2 - GetArmDrawAngle(player);
 			player.SetCompositeArmFront(
 				true,
 				Player.CompositeArmStretchAmount.Full,
@@ -155,8 +155,8 @@ namespace Origins.Items.Weapons.Magic {
 				player.ChangeDir(Projectile.direction = Math.Sign(Projectile.velocity.X));
 				Projectile.rotation = player.itemRotation;
 				Projectile.Center = player.MountedCenter
-					+ new Vector2(player.direction * -4, -6)
-					+ OriginExtensions.Vec2FromPolar(player.itemRotation - Pike_of_Deepneus.GetArmDrawAngle(player), 16)
+					+ new Vector2(player.direction * -4, -6 * player.gravDir)
+					+ OriginExtensions.Vec2FromPolar(player.itemRotation - Pike_of_Deepneus.GetArmDrawAngle(player) * player.gravDir, 16)
 					+ Projectile.velocity.SafeNormalize(default) * 36;
 			} else {
 				Projectile.hide = false;
@@ -180,11 +180,16 @@ namespace Origins.Items.Weapons.Magic {
 			return true;
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			Player player = Main.player[Projectile.owner];
 			Vector2 position = Projectile.Center - Main.screenPosition;
-			float rotation = Projectile.rotation + (MathHelper.Pi * 0.8f * Projectile.direction - MathHelper.PiOver2);
-			Vector2 origin = new Vector2(30 + 25 * Projectile.direction, 9);
+			float rotation = Projectile.rotation + (MathHelper.Pi * 0.8f * Projectile.direction - MathHelper.PiOver2 * player.gravDir);
 			float scale = Projectile.scale;
 			SpriteEffects spriteEffects = Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			if (player.gravDir < 0) {
+				rotation -= MathHelper.PiOver2 * 1.2f * Projectile.direction;
+				spriteEffects ^= SpriteEffects.FlipHorizontally;
+			}
+			Vector2 origin = new Vector2(55, 9).Apply(spriteEffects, TextureAssets.Projectile[Type].Size());
 			DrawData data = new(
 				TextureAssets.Projectile[Type].Value,
 				position,

@@ -107,6 +107,7 @@ namespace Origins.Items.Tools {
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			Player player = Main.player[Projectile.owner];
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			Main.EntitySpriteDraw(
 				texture,
@@ -114,9 +115,9 @@ namespace Origins.Items.Tools {
 				texture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame),
 				lightColor,
 				Projectile.rotation,
-				new Vector2(50, 6 + (5 - 5 * Projectile.direction)),
+				new Vector2(50, 6 + (5 - 5 * Projectile.direction * player.gravDir)),
 				Projectile.scale,
-				Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically
+				Projectile.direction * player.gravDir == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically
 			);
 			return false;
 		}

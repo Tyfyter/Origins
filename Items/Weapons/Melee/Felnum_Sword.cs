@@ -4,6 +4,7 @@ using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Projectiles;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -57,7 +58,7 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Felnum_Sword_Slash : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Felnum_Sword";
-		float HitboxRotation => Projectile.rotation + MathHelper.PiOver4 * -0.5f * Projectile.ai[1];
+		float HitboxRotation => Projectile.rotation + MathHelper.PiOver4 * -0.5f * Projectile.ai[1] * Main.player[Projectile.owner].gravDir;
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 		}
@@ -78,15 +79,15 @@ namespace Origins.Items.Weapons.Melee {
 			if (Projectile.ai[1] != 0) {
 				float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
 				Projectile.rotation = MathHelper.Lerp(-2.25f, 1f, swingFactor) * Projectile.ai[1] * player.gravDir;
-				float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
+				float realRotation = Projectile.rotation * player.gravDir + Projectile.velocity.ToRotation();
 				Projectile.Center = player.MountedCenter - Projectile.velocity;
 				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
-				Projectile.Center = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
+				Projectile.Center = player.GetCompositeArmPosition(false);
 			} else {
 				float swingFactor = Math.Abs((player.itemTime / (float)player.itemTimeMax) * 1.5f - 0.5f);
 				Projectile.Center = player.MountedCenter + Projectile.velocity * (1 - swingFactor * swingFactor * swingFactor - 0.5f);
 			}
-				player.heldProj = Projectile.whoAmI;
+			player.heldProj = Projectile.whoAmI;
 			Projectile.timeLeft = player.itemTime * Projectile.MaxUpdates;
 
 			Vector2 vel = (Projectile.velocity.RotatedBy(HitboxRotation) / 12f) * Projectile.width * 0.95f;
@@ -124,6 +125,7 @@ namespace Origins.Items.Weapons.Melee {
 			} else {
 				rotation = Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1]);
 				origin = new Vector2(6, 31 + 25 * Projectile.ai[1]);
+				if (Main.player[Projectile.owner].gravDir < 0) rotation += MathHelper.PiOver4 * Projectile.ai[1];
 			}
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,

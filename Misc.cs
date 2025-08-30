@@ -3884,7 +3884,7 @@ namespace Origins {
 				};
 				bestiaryEntry.Icon.Update(info, screenPos, settings);
 				SpriteBatchState state = spriteBatch.GetState();
-				spriteBatch.Restart(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, Main.Rasterizer, null, Main.UIScaleMatrix, DepthStencilState.None);
+				spriteBatch.Restart(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, RasterizerState.CullNone, null, Main.UIScaleMatrix, DepthStencilState.None);
 				Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 				Main.graphics.GraphicsDevice.Clear(Color.Transparent);
 				bestiaryEntry.Icon.Draw(info, spriteBatch, settings);

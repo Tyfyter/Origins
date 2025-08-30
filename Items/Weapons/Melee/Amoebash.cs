@@ -96,7 +96,7 @@ namespace Origins.Items.Weapons.Melee {
 			forcedCrit = false;
 			if (!target.noTileCollide && float.IsNaN(Projectile.ai[2])) {
 				Rectangle hitbox = target.Hitbox;
-				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation + Projectile.ai[1] * 2.5f).SafeNormalize(default);
+				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation * Main.player[Projectile.owner].gravDir + Projectile.ai[1] * 2.5f).SafeNormalize(default);
 				hitbox.Offset((dir * 8).ToPoint());
 				if (hitbox.OverlapsAnyTiles(fallThrough: false)) {
 					Collision.HitTiles(hitbox.TopLeft(), dir, hitbox.Width, hitbox.Height);
@@ -109,7 +109,7 @@ namespace Origins.Items.Weapons.Melee {
 			OriginGlobalNPC.InflictTorn(target, 120, targetSeverity: Amoebash.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 			target.velocity -= target.velocity * target.knockBackResist;
 			if (!float.IsNaN(hit.Knockback)) {
-				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation);
+				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation * Main.player[Projectile.owner].gravDir);
 				if (!forcedCrit) dir += dir.RotatedBy(Projectile.ai[1] * MathHelper.PiOver2);
 				target.velocity += dir.SafeNormalize(default) * hit.Knockback;
 			}

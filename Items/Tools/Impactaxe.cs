@@ -6,6 +6,7 @@ using Origins.Items.Materials;
 using Origins.Items.Weapons.Melee;
 using Origins.Projectiles;
 using Origins.Tiles.Other;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -86,12 +87,12 @@ namespace Origins.Items.Tools {
 				Projectile.rotation = MathHelper.Lerp(-2.75f, 2f, swingFactor) * Projectile.ai[1];
 			}
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
-			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
 			Projectile.timeLeft = player.itemTime * Projectile.MaxUpdates;
 			player.heldProj = Projectile.whoAmI;
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
+			Projectile.Center = player.GetCompositeArmPosition(false);
 
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.95f * Projectile.scale;
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation * player.gravDir) / 12f * Projectile.width * 0.95f * Projectile.scale;
 			Vector2 boxPos = Projectile.position + vel;
 			Projectile.EmitEnchantmentVisualsAt(boxPos, Projectile.width, Projectile.height);
 			if (float.IsNaN(Projectile.ai[2])) {
@@ -106,7 +107,8 @@ namespace Origins.Items.Tools {
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.95f * Projectile.scale;
+			Player player = Main.player[Projectile.owner];
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation * player.gravDir) / 12f * Projectile.width * 0.95f * Projectile.scale;
 			projHitbox.Offset((int)vel.X, (int)vel.Y);
 			return projHitbox.Intersects(targetHitbox);
 		}
@@ -115,7 +117,8 @@ namespace Origins.Items.Tools {
 		}
 		void Explode(params int[] immuneTargets) {
 			if (float.IsNaN(Projectile.ai[2])) {
-				Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) / 12f * Projectile.width * 0.95f * Projectile.scale;
+				Player player = Main.player[Projectile.owner];
+				Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation * player.gravDir) / 12f * Projectile.width * 0.95f * Projectile.scale;
 				Vector2 boxPos = Projectile.position + vel;
 				Projectile.ai[2] = Projectile.rotation;
 				Vector2 slamDir = vel.RotatedBy(Projectile.ai[1] * MathHelper.PiOver2);
@@ -140,18 +143,20 @@ namespace Origins.Items.Tools {
 			}
 		}
 		public override void CutTiles() {
+			Player player = Main.player[Projectile.owner];
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
-			Vector2 end = Projectile.Center + Projectile.velocity.RotatedBy(Projectile.rotation).SafeNormalize(Vector2.UnitX) * 50f * Projectile.scale;
+			Vector2 end = Projectile.Center + Projectile.velocity.RotatedBy(Projectile.rotation * player.gravDir).SafeNormalize(Vector2.UnitX) * 50f * Projectile.scale;
 			Utils.PlotTileLine(Projectile.Center, end, 80f * Projectile.scale, DelegateMethods.CutTiles);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			SpriteEffects spriteEffects = Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+			Player player = Main.player[Projectile.owner];
+			SpriteEffects spriteEffects = Projectile.ai[1] * player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
 				Projectile.Center - Main.screenPosition,
 				null,
 				lightColor,
-				Projectile.rotation + Projectile.velocity.ToRotation() + MathHelper.PiOver4 * Projectile.ai[1],
+				Projectile.rotation * player.gravDir + Projectile.velocity.ToRotation() + MathHelper.PiOver4 * Projectile.ai[1] * player.gravDir,
 				new Vector2(10, 48).Apply(spriteEffects, TextureAssets.Projectile[Type].Size()),// origin point in the sprite, 'round which the whole sword rotates
 				Projectile.scale,
 				spriteEffects,

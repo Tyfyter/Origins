@@ -301,15 +301,17 @@ namespace Origins.Items.Weapons.Melee {
 		}
 
 		public override bool PreDraw(ref Color lightColor) {
+			float gravDir = Main.player[Projectile.owner].gravDir;
+			SpriteEffects effects = Projectile.ai[1] * gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
 				Projectile.Center - Main.screenPosition,
 				null,
 				lightColor,
-				Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1]),
-				new Vector2(14, 25 + 11 * Projectile.ai[1]),
+				Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1] * gravDir),
+				new Vector2(14, 18).Apply(effects ^ SpriteEffects.FlipVertically, TextureAssets.Projectile[Type].Size()),
 				Projectile.scale,
-				Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically,
+				effects,
 				0
 			);
 			return false;

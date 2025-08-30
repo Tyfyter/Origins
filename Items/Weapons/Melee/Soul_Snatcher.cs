@@ -410,7 +410,7 @@ namespace Origins.Items.Weapons.Melee {
 			player.heldProj = Projectile.whoAmI;
 			float baseSpeed = 0.095f;
 			if (empowered) baseSpeed += 0.015f;
-			Projectile.rotation += player.direction * baseSpeed * (28f / player.itemAnimationMax);
+			Projectile.rotation += player.direction * baseSpeed * (28f / player.itemAnimationMax) * player.gravDir;
 			if (Projectile.soundDelay <= 0) {
 				Projectile.soundDelay = Main.rand.RandomRound(MathHelper.TwoPi / (baseSpeed * (28f / player.itemAnimationMax)));
 				SoundEngine.PlaySound(SoundID.Item71.WithPitch(1.3f), Projectile.Center);
