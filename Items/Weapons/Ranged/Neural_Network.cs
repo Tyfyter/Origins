@@ -103,14 +103,13 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 		}
 	}
-	public class Neural_Network_Crit_Type : CritType<Neural_Network>, IBrokenContent {
-		public string BrokenReason => "Needs balancing";
+	public class Neural_Network_Crit_Type : CritType<Neural_Network>{
 		static int CritThreshold => 30;
 		public override LocalizedText Description => base.Description.WithFormatArgs(CritThreshold);
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
 			int buffIndex = player.FindBuffIndex(ModContent.BuffType<Neural_Network_Buff>());
 			return buffIndex >= 0 && player.buffTime[buffIndex] >= CritThreshold;
 		}
-		public override float CritMultiplier(Player player, Item item) => 1.15f;
+		public override float CritMultiplier(Player player, Item item) => 1.25f;
 	}
 }
