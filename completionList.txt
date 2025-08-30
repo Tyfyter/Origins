@@ -88,6 +88,7 @@ TOWN NPCs:
 (ᗢ) Defiled Effigy
 
 (X) Arabel
+(X) Mother Unit
 (%2, X) The Author
 
 (%2, X) Cubekon Tinkerer
