@@ -236,6 +236,11 @@ Cubekon_Tinkerer: {
 	}
 }
 
+Mother-Unit: {
+	LoreEntryHelp: {
+	}
+}
+
 // PartyGirl.TownNPCMood_PartyGirl.LoveBiome_Space: I finally got to go to space!!!
 // Defiled_Squid.DisplayName: "{§Defiled} Squid"
 // Savage_Whip.DisplayName: Savage Whip
