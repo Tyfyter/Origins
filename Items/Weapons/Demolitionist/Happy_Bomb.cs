@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.damage = 100;
 			Item.shootSpeed *= 1.5f;
 			Item.shoot = ModContent.ProjectileType<Happy_Bomb_P>();
-			Item.value = Item.sellPrice(silver: 75);
+			Item.value *= 13;
 			Item.rare = ItemRarityID.Pink;
 		}
 	}

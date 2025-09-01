@@ -1,15 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
+using Origins.Items.Weapons.Summoner.Minions;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.Items.Weapons.Summoner.Minions;
-using System.Collections.Generic;
 namespace Origins.Items.Weapons.Summoner {
 	public class Desert_Crown : ModItem, ICustomWikiStat {
 		static short glowmask;

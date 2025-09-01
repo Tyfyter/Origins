@@ -25,12 +25,19 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<TUDFLOMD_Rocket_Canister>(80, 10, 12f, 46, 28, true);
+			Item.DefaultToCanisterLauncher<TUDFLOMD_Rocket_Canister>(80, 12, 12f, 46, 28, true);
 			Item.useAnimation *= 3;
 			Item.reuseDelay = Item.useTime;
-			Item.value = Item.sellPrice(silver: 24);
+			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.Cyan;
-			Item.ArmorPenetration += 15;
+			//Item.ArmorPenetration += 15;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.LunarBar, 18)
+			.AddIngredient<Partybringer>()
+			.AddTile(TileID.LunarCraftingStation)
+			.Register();
 		}
 		public override bool? UseItem(Player player) {
 			SoundEngine.PlaySound(Item.UseSound, player.Center);

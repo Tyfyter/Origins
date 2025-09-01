@@ -2389,6 +2389,7 @@ Boomphracken: {
 	DisplayName: Boomphracken
 	Tooltip:
 		'''
+		Uses slugs as ammo
 		Allows you to quickly throw explosives in your inventory after use
 		'He works his work, I work mine'
 		'''
@@ -2462,7 +2463,7 @@ Felnum_Shock_Grenade: {
 
 Flakjack: {
 	DisplayName: Flakjack
-	Tooltip: Uses metal slugs as ammo
+	Tooltip: Uses slugs as ammo
 }
 
 Flashbang: {
@@ -4113,7 +4114,11 @@ Endowood_Dresser_Item: {
 
 Nova_Cascade: {
 	DisplayName: Nova Cascade
-	Tooltip: Causes an explosion after piercing enemies
+	Tooltip:
+		'''
+		Uses slugs as ammo
+		Causes an explosion after piercing enemies
+		'''
 }
 
 Switchblade_Broadsword: {
@@ -4247,7 +4252,11 @@ Defiled_Grass_Wall_Placed_Unsafe_Item: {
 
 Acrid_Handcannon: {
 	DisplayName: "{§Acrid} Handcannon"
-	Tooltip: Releases [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff] upon slug detonation
+	Tooltip:
+		'''
+		Uses slugs as ammo
+		Releases [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff] upon slug detonation
+		'''
 }
 
 Newsboy_Cap: {

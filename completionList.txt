@@ -59,7 +59,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(@2 (Ss charge visuals), #2/3, ^4) Shimmer Construct !!!
+(@2 (Ss charge visuals), #2, ^4) Shimmer Construct !!!
 (#, ^2) Trenchmaker
 (^) World Cracker*
 
@@ -1092,7 +1092,7 @@ EXPLOSIVE WEAPONS:
 (X) Helix
 (^) Shimmer Dynamite
 (@4, #) Starburst
-(@, ^3) The Ultimate Firework Launcher Of Mega Destruction !!!
+(#2, ^2) The Ultimate Firework Launcher Of Mega Destruction
 ---
 
 
@@ -1743,7 +1743,7 @@ UI:
 (^) Defiled Desert Icon
 (X) Defiled Egregore
 (X) Defiled Egregore Map/Bestiary Backdrop
-(@) Defiled Map/Bestiary Backdrop !!! (Underground DW Bestiary Backdrop)
+(@) Defiled Map/Bestiary Backdrop (Underground DW Bestiary Backdrop)
 (^) Defiled Snow Icon
 (^) Defiled Underground Desert
 (^) Defiled Wastelands Icon
