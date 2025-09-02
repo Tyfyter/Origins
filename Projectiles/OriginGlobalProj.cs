@@ -154,29 +154,31 @@ namespace Origins.Projectiles {
 					neuralNetworkEffect = true;
 				}
 				if (!contextArgs.Contains(multishot_context) && !contextArgs.Contains(no_multishot_context) && !OriginsSets.Projectiles.NoMultishot[projectile.type]) {
-					int bocShadows = 0;
-					float bocShadowDamageChance = 0.08f;
-					if (originPlayer.weakpointAnalyzer && projectile.CountsAsClass(DamageClass.Ranged)) {
-						bocShadows = 2;
-					}
-					if (originPlayer.controlLocus) {
-						if (projectile.CountsAsClass(DamageClasses.Explosive)) bocShadows = 2;
-						if (projectile.CountsAsClass(DamageClass.Ranged)) bocShadows = 2;
-						bocShadowDamageChance = Math.Max(bocShadowDamageChance, 0.12f);
-					}
 					EntitySource_ItemUse multishotSource;
-					if (bocShadows > 0 && projectile.damage > 0) {
-						multishotSource = itemUseSource.WithContext(source.Context, multishot_context, nameof(OriginPlayer.weakpointAnalyzer));
-						for (int i = bocShadows; i-- > 0;) {
-							EntitySource_ItemUse currentSource = multishotSource.WithContext(multishotSource.Context, $"{nameof(OriginPlayer.weakpointAnalyzer)}_clone{i}");
-							float rot = MathHelper.TwoPi * ((i + 1f) / (bocShadows + 1f)) + Main.rand.NextFloat(-0.3f, 0.3f);
-							Vector2 _position = projectile.position.RotatedBy(rot, Main.MouseWorld);
-							Vector2 _velocity = projectile.velocity.RotatedBy(rot);
-							int _damage = projectile.damage;
-							if (Main.rand.NextFloat(1) >= bocShadowDamageChance) {
-								currentSource = currentSource.WithContext(currentSource.Context, "fake");
+					if (!itemUseSource.Item.accessory || itemUseSource.Item.useStyle != ItemUseStyleID.None) {
+						int bocShadows = 0;
+						float bocShadowDamageChance = 0.08f;
+						if (originPlayer.weakpointAnalyzer && projectile.CountsAsClass(DamageClass.Ranged)) {
+							bocShadows = 2;
+						}
+						if (originPlayer.controlLocus) {
+							if (projectile.CountsAsClass(DamageClasses.Explosive)) bocShadows = 2;
+							if (projectile.CountsAsClass(DamageClass.Ranged)) bocShadows = 2;
+							bocShadowDamageChance = Math.Max(bocShadowDamageChance, 0.12f);
+						}
+						if (bocShadows > 0 && projectile.damage > 0) {
+							multishotSource = itemUseSource.WithContext(source.Context, multishot_context, nameof(OriginPlayer.weakpointAnalyzer));
+							for (int i = bocShadows; i-- > 0;) {
+								EntitySource_ItemUse currentSource = multishotSource.WithContext(multishotSource.Context, $"{nameof(OriginPlayer.weakpointAnalyzer)}_clone{i}");
+								float rot = MathHelper.TwoPi * ((i + 1f) / (bocShadows + 1f)) + Main.rand.NextFloat(-0.3f, 0.3f);
+								Vector2 _position = projectile.position.RotatedBy(rot, Main.MouseWorld);
+								Vector2 _velocity = projectile.velocity.RotatedBy(rot);
+								int _damage = projectile.damage;
+								if (Main.rand.NextFloat(1) >= bocShadowDamageChance) {
+									currentSource = currentSource.WithContext(currentSource.Context, "fake");
+								}
+								Projectile.NewProjectile(currentSource, _position, _velocity, projectile.type, _damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1], projectile.ai[2]);
 							}
-							Projectile.NewProjectile(currentSource, _position, _velocity, projectile.type, _damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1], projectile.ai[2]);
 						}
 					}
 					if (originPlayer.emergencyBeeCanister && (projectile.type is ProjectileID.Bee or ProjectileID.GiantBee) && Main.rand.NextBool(3)) {
