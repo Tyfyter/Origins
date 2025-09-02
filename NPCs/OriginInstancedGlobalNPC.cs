@@ -333,7 +333,7 @@ namespace Origins.NPCs {
 			shaders.Clear();
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				ArmorShaderData shaderData = GameShaders.Armor.GetSecondaryShader(Acrid_Dye.ShaderID, null);
-				shaderData.UseTargetPosition((npc.Center - Main.screenPosition) / Main.ScreenSize.ToVector2());
+				shaderData.UseTargetPosition(((npc.Center - Main.screenPosition) / Main.ScreenSize.ToVector2()).Apply(Main.GameViewMatrix.Effects, Vector2.One));
 				shaders.Add(shaderData);
 			}
 			if (rasterizedTime > 0) shaders.Add(GameShaders.Armor.GetSecondaryShader(Rasterized_Dye.ShaderID, null));
