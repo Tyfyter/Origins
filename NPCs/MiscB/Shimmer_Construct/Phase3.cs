@@ -11,6 +11,7 @@ using ReLogic.Content;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Terraria;
@@ -572,7 +573,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			} catch (Exception ex) {
 				if (Origins.LogLoadingILError(nameof(IL_Projectile_HandleMovement), ex)) throw;
 			}
-			On_Projectile.Update += (orig, self, i) => {
+			On_Projectile.Update += [DebuggerStepThrough](orig, self, i) => {
 				isUpdatingShimmeryThing = (self.TryGetGlobalProjectile(out OriginGlobalProj proj) && proj.weakShimmer);
 				try {
 					orig(self, i);
