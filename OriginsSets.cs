@@ -269,6 +269,10 @@ namespace Origins {
 						case ProjAIStyleID.Whip:
 						NoMultishot[proj.Key] = true;
 						break;
+
+						default:
+						if (proj.Value.minion || proj.Value.sentry) NoMultishot[proj.Key] = true;
+						break;
 					}
 				}
 			}
