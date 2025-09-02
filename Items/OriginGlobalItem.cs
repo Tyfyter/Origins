@@ -403,19 +403,9 @@ namespace Origins.Items {
 					break;
 				}
 				case ItemID.OasisCrate: {// shares drop rules with hardmode version by reference, adding to either adds to both
-					bool foundMain = false;
-					OneFromRulesRule rule = dropRules.FindDropRule<OneFromRulesRule>(dropRule => {
-						List<DropRateInfo> drops = [];
-						dropRule.ReportDroprates(drops, default);
-						return drops.Any(i => i.itemId == ItemID.AncientChisel);
-					});
-					if (rule is not null) {
-						rule.Add(
-							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Desert_Crown>())
-						);
-						foundMain = true;
+					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.AncientChisel, ModContent.ItemType<Desert_Crown>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
 					}
-					if (!foundMain) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
 					break;
 				}
 			}
