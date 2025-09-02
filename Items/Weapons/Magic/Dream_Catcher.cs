@@ -5,6 +5,7 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -26,7 +27,6 @@ namespace Origins.Items.Weapons.Magic {
 			Item.noMelee = true;
 			Item.DamageType = DamageClass.Magic;
 			Item.damage = 7;
-			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.useAnimation = 18;
 			Item.useTime = 6;
@@ -85,9 +85,15 @@ namespace Origins.Items.Weapons.Magic {
 				knockback *= 5;
 			}
 		}
-		public override void UseItemFrame(Player player) => HoldItemFrame(player);
-		public override void HoldItemFrame(Player player) {
+		public override void UseItemFrame(Player player) => DoFrame(player, true);
+		public override void HoldItemFrame(Player player) => DoFrame(player, false);
+		public void DoFrame(Player player, bool usingFrame) {
 			if (Main.menuMode is MenuID.FancyUI or MenuID.CharacterSelect) return;
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<Dream_Catcher_P>()] > 0) {
+				Item.holdStyle = ItemHoldStyleID.None;
+				return;
+			}
+			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 			OriginPlayer originPlayer = player.OriginPlayer();
 			player.SetCompositeArmBack(
 				true,
@@ -99,7 +105,7 @@ namespace Origins.Items.Weapons.Magic {
 			pos.Y -= 4 * player.gravDir;
 			if (originPlayer.dreamcatcherWorldPosition is Vector2 dreamcatcherWorldPosition) {
 				Vector2 diff = dreamcatcherWorldPosition - pos;
-				originPlayer.dreamcatcherRotSpeed += Math.Sign(diff.X) * Math.Abs(diff.X) * -0.005f;
+				originPlayer.dreamcatcherRotSpeed += Math.Sign(diff.X) * Math.Abs(diff.X) * -0.005f * (Math.Cos(originPlayer.dreamcatcherAngle) > 0 ? 1 : 0.25f);
 			}
 			originPlayer.dreamcatcherWorldPosition = pos;
 		}
@@ -113,6 +119,8 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public bool BackHand => false;
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
+			if (drawInfo.drawPlayer.ownedProjectileCounts[ModContent.ProjectileType<Dream_Catcher_P>()] > 0) return;
+			if (drawInfo.drawPlayer.dead || !drawInfo.drawPlayer.active) return;
 			Vector2 pos = drawInfo.drawPlayer.GetCompositeArmPosition(true);
 			pos.Y -= 4 * drawInfo.drawPlayer.gravDir;
 			if (drawInfo.drawPlayer.mount?.Active == true && drawInfo.drawPlayer.mount.Type == MountID.Wolf) {
@@ -335,6 +343,16 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			if (player.dead || !player.active) {
+				Mod.SpawnGoreByName(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, $"Gores/NPCs/FG{(Main.rand.NextBool() ? 1 : 3)}_Gore");
+				Mod.SpawnGoreByName(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, "Gores/NPCs/FG1_Gore");
+				Mod.SpawnGoreByName(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, "Gores/NPCs/FG3_Gore");
+				if (Main.rand.NextBool()) Mod.SpawnGoreByName(Projectile.GetSource_Death(), Projectile.position, Projectile.velocity, "Gores/NPCs/FG2_Gore");
+				SoundEngine.PlaySound(SoundID.Shatter, Projectile.Center);
+				Projectile.Kill();
+				return;
+			}
+			Projectile.timeLeft = 5;
 			if (player.manaRegenDelay < player.maxRegenDelay) player.manaRegenDelay = (int)player.maxRegenDelay;
 			Projectile.tileCollide = Projectile.ai[2] == 0;
 			switch (Projectile.ai[2]) {
