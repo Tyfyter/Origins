@@ -32,6 +32,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -763,11 +764,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					}
 				}
 			}
+
+			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Cheap", phase3Active, sourcePos);
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Underlay", phase3Active, sourcePos);
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Midlay", phase3Active, sourcePos);
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", phase3Active, sourcePos);
 		}
 		public void DoMonolith() {
+			if (!Lighting.NotRetro) return;
 			if (monolithProgress > 0) {
 				SC_Phase_Three_Underlay.alwaysLightAllTiles = true;
 				SC_Phase_Three_Underlay.DrawDatas.Add(new(
@@ -779,7 +783,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			MathUtils.LinearSmoothing(ref monolithProgress, monolithActive.ToInt(), OriginSystem.biomeShaderSmoothing);
 		}
 		public void AddArea() {
-			if (scale == 0 || !SC_Phase_Three_Underlay.DrawnMaskSources.Add(this)) return;
+			if (scale == 0 || !SC_Phase_Three_Underlay.DrawnMaskSources.Add(this) || !Lighting.NotRetro) return;
 			if (float.IsFinite(scale)) {
 				SC_Phase_Three_Underlay.DrawDatas.Add(new(
 					circle.Value,

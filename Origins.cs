@@ -391,9 +391,11 @@ namespace Origins {
 				Filters.Scene["Origins:ShimmerConstructPhase3Underlay"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
 				Filters.Scene["Origins:ShimmerConstructPhase3Midlay"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
 				Filters.Scene["Origins:ShimmerConstructPhase3"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
+				Filters.Scene["Origins:ShimmerConstructPhase3Cheap"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
 				Overlays.Scene["Origins:ShimmerConstructPhase3Underlay"] = ModContent.GetInstance<SC_Phase_Three_Underlay>();
 				Overlays.Scene["Origins:ShimmerConstructPhase3Midlay"] = ModContent.GetInstance<SC_Phase_Three_Midlay>();
 				Overlays.Scene["Origins:ShimmerConstructPhase3"] = ModContent.GetInstance<SC_Phase_Three_Overlay>();
+				Overlays.Scene["Origins:ShimmerConstructPhase3Cheap"] = new Cheap_SC_Phase_Three_Underlay();
 
 				Filters.Scene["Origins:MaskedRasterizeFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedRasterizeFilter"), "MaskedRasterizeFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:VolatileGelatinFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedPurpleJellyFilter"), "MaskedPurpleJellyFilter"), EffectPriority.VeryHigh);

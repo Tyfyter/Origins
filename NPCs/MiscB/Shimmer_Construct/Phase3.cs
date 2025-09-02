@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using MonoMod.Cil;
 using Origins.Core;
 using Origins.Items.Other.Dyes;
@@ -738,6 +739,33 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 	}
+	public class Cheap_SC_Phase_Three_Underlay() : Overlay(EffectPriority.High, RenderLayers.Walls) {
+		bool active = false;
+		public override void Activate(Vector2 position, params object[] args) => active = true;
+		public override void Deactivate(params object[] args) => active = false;
+		public override void Draw(SpriteBatch spriteBatch) {
+			float brightness = 0.8f * Opacity;
+			float alpha = 1f * Opacity;
+			spriteBatch.Draw(
+				SC_Phase_Three_Overlay.CurrentBG,
+				new Rectangle(0, 0, Main.ScreenSize.X, Main.ScreenSize.Y),
+				null,
+				new(brightness, brightness, brightness, alpha),
+				0,
+				Vector2.Zero,
+				Main.GameViewMatrix.Effects,
+			0);
+			SC_Phase_Three_Underlay.alwaysLightAllTiles = true;
+		}
+		public override bool IsVisible() => !Lighting.NotRetro;
+		public override void Update(GameTime gameTime) {
+			if (Lighting.NotRetro) return;
+			SC_Phase_Three_Overlay overlay = ModContent.GetInstance<SC_Phase_Three_Overlay>();
+			if (!overlay.IsVisible()) overlay.Update(gameTime);
+			Mode = active ? (Opacity >= 1 ? OverlayMode.Active : OverlayMode.FadeIn) : OverlayMode.FadeOut;
+			SC_Phase_Three_Underlay.alwaysLightAllTiles = false;
+		}
+	}
 	public class SC_Phase_Three_Underlay() : SC_Phase_Three_BG_Layer(RenderLayers.Walls) {
 		public static List<DrawData> DrawDatas => instance.drawDatas;
 		public static HashSet<object> DrawnMaskSources => instance.drawnMaskSources;
@@ -834,7 +862,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Origins.shaderOroboros.Stack(simpleMaskShader);
 			Origins.shaderOroboros.Release();
 		}
-		public override bool IsVisible() => ModContent.GetInstance<SC_Phase_Three_Overlay>().IsVisible();
+		public override bool IsVisible() => Lighting.NotRetro && ModContent.GetInstance<SC_Phase_Three_Overlay>().IsVisible();
 		public override void Update(GameTime gameTime) { }
 		static readonly List<SC_Phase_Three_BG_Layer> layers = [];
 		static readonly List<bool> layersRenderedThisFrame = [];
