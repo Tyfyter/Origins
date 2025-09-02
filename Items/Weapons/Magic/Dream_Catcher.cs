@@ -21,6 +21,9 @@ namespace Origins.Items.Weapons.Magic {
 				return _smolTexture.Value;
 			}
 		}
+		public override void SetStaticDefaults() {
+			ItemID.Sets.SkipsInitialUseSound[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 28;
@@ -35,6 +38,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.shootSpeed = 10f;
 			Item.knockBack = 0.5f;
 			Item.autoReuse = true;
+			Item.UseSound = SoundID.Item1;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Green;
 		}
@@ -45,13 +49,17 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override bool? UseItem(Player player) {
 			int dreamcatcherProj = ModContent.ProjectileType<Dream_Catcher_P>();
-			if (player.altFunctionUse == 2 && player.ItemAnimationJustStarted && player.ownedProjectileCounts[dreamcatcherProj] > 0) {
-				foreach (Projectile proj in Main.ActiveProjectiles) {
-					if (proj.owner == player.whoAmI && proj.type == dreamcatcherProj) {
-						proj.ai[2] = 1;
-						proj.netUpdate = true;
-						break;
+			if (player.altFunctionUse == 2 && player.ItemAnimationJustStarted) {
+				if (player.ownedProjectileCounts[dreamcatcherProj] > 0) {
+					foreach (Projectile proj in Main.ActiveProjectiles) {
+						if (proj.owner == player.whoAmI && proj.type == dreamcatcherProj) {
+							proj.ai[2] = 1;
+							proj.netUpdate = true;
+							break;
+						}
 					}
+				} else {
+					SoundEngine.PlaySound(Item.UseSound, player.MountedCenter);
 				}
 			}
 			return base.UseItem(player);
@@ -156,6 +164,10 @@ namespace Origins.Items.Weapons.Magic {
 			CooldownSlot = -2;
 		}
 		public override void AI() {
+			if (Projectile.soundDelay >= 0) {
+				SoundEngine.PlaySound(SoundID.Item39, Projectile.Center);
+				Projectile.soundDelay = -1;
+			}
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 		}
 		readonly bool[] hasHit = new bool[Main.maxPlayers];
@@ -186,6 +198,10 @@ namespace Origins.Items.Weapons.Magic {
 			}
 		}
 		public override void AI() {
+			if (Projectile.soundDelay >= 0) {
+				SoundEngine.PlaySound(SoundID.Item39, Projectile.Center);
+				Projectile.soundDelay = -1;
+			}
 			Entity target = null;
 			float knockbackMult = 0;
 			Entity owner = Projectile.ai[2] == -1 ? Main.player[Projectile.owner] : Projectile.GetRelatedProjectile(2);
