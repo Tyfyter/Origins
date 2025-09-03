@@ -8,7 +8,7 @@ Conditions: {
 	// Comma: "{0}, {1}"
 	// CommaAnd: "{0}, and {1}"
 	// QuestCompleted: After completing "{0}"
-	// PeatSoldCondition: After selling {0} peat moss to the Demolitionist
+	// PeatSoldCondition: After giving the Demolitionist {0} peat moss
 	// Brine: Mods.Origins.Conditions.Brine
 	// RivenWater: Amebic Gel
 	// ShimmerDecrafting: Shimmer decrafting only

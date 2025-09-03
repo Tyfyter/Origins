@@ -550,7 +550,30 @@ Brine_Fiend: {
 // DyeTrader.GivenConfetti: Marvelous! I am excited for the party! This confetti will do well for bringing excitement!
 // Golfer.GivenConfetti: A club? Wait what? You said "club". Ohhhh, you meant that kind of club. I guess that explains what the confetti is for.
 // Angler.GivenConfetti: Confetti?! I love confetti! It makes me excited because it always means there's cake and steamed grouper nearby!
-// Demolitionist.GivenConfetti: Confetti? It'd be an excellent fuze if it wasn't so fragile. Oh, it's for the party. Well, I'll be ready to make it a blast then!
+
+Demolitionist: {
+	// GivenConfetti: Confetti? It'd be an excellent fuze if it wasn't so fragile. Oh, it's for the party. Well, I'll be ready to make it a blast then!
+
+	Peat_Moss: {
+		// Name: Re-peat Customer
+		/* Journal:
+			'''
+			{$Name}
+			Client: [npcname:Demolitionist]
+
+			'{$Inquire}'
+
+			- [qs{0}:Give <npcname:Demolitionist> <itemname:Origins/Peat_Moss_Item> ({1}/{2})]
+			Unlocks:
+			{3}
+			''' */
+		// Inquire: missingno
+		// Start: missingno
+		// ReadyToComplete: missingno
+		// Complete: missingno
+	}
+}
+
 // Tavernkeep.GivenConfetti: Confetti. It'll be nice to have in my bar.
 // WitchDoctor.GivenConfetti: This will be nice to have. Even when not in a party setting, I can still use it for my ornaments. Thank you.
 // Clothier.GivenConfetti: Oh, how vivacious! I'll make good use of it.

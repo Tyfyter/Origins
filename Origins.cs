@@ -582,6 +582,9 @@ namespace Origins {
 			ChatManager.Register<Glitch_Handler>([
 				"glitch"
 			]);
+			ChatManager.Register<Item_And_Name_Handler>([
+				"qian"
+			]);
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
 				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,

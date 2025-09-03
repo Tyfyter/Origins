@@ -75,16 +75,20 @@ namespace Origins.Questing {
 		public int Type { get; internal set; }
 		public int NetID { get; internal set; } = -1;
 		public static string StageTagOption(bool completed) => completed ? "/completed" : "";
-		public static void ConsumeItems(Item[] inventory, params (Predicate<Item> match, int count)[] items) {
+		public static int[] ConsumeItems(Item[] inventory, params (Predicate<Item> match, int count)[] items) {
+			int[] counts = new int[items.Length];
 			for (int j = 0; j < inventory.Length; j++) {
 				Item item = inventory[j];
 				for (int i = 0; i < items.Length; i++) {
 					(Predicate<Item> match, int count) current = items[i];
+					if (current.count <= 0) continue;
 					if (current.match(item)) {
 						if (current.count >= item.stack) {
+							counts[i] += item.stack;
 							current.count -= item.stack;
 							item.TurnToAir();
 						} else {
+							counts[i] += current.count;
 							item.stack -= current.count;
 							current.count = 0;
 						}
@@ -92,6 +96,7 @@ namespace Origins.Questing {
 					}
 				}
 			}
+			return counts;
 		}
 		public void CheckSync() {
 			if (ShouldSync) {

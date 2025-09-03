@@ -71,7 +71,6 @@ namespace Origins.UI {
 			Vector2 baseScale = Vector2.One;
 			float x = font.MeasureString(" ").X;
 			float snippetScale;
-			float num3 = 0f;
 			List<TextSnippet> snippets = ChatManager.ParseMessage(text, baseColor);
 
 			List<List<TextSnippet>> snippetPages = [];
@@ -90,7 +89,7 @@ namespace Origins.UI {
 			float telemetryLength = 0;
 			switch (mode) {
 				case Journal_UI_Mode.Normal_Page:
-				lineSpace *= MathF.Pow(Main.UIScale, 0.25f);
+				//lineSpace *= MathF.Pow(Main.UIScale, 0.25f);
 				break;
 				case Journal_UI_Mode.Search_Page:
 				lineSpace *= Main.UIScale;
@@ -111,10 +110,11 @@ namespace Origins.UI {
 				if (textSnippet.UniqueDraw(justCheckingString: true, out Vector2 size, Main.spriteBatch, cursor, baseColor, snippetScale)) {
 					cursor.X += size.X * baseScale.X * snippetScale;
 					currentPage.Add(textSnippet);
-					minNewLines = Math.Max(minNewLines, (int)Math.Round(size.Y / (lineSpace * num3)));
+					minNewLines = Math.Max(minNewLines, (int)Math.Round(size.Y / lineSpace));
+					if (minNewLines == 1) minNewLines = 0;
 					float minCursorY = cursor.Y + lineSpace * minNewLines;
 					while (cursor.X > bounds.Width) {
-						cursor.Y += lineSpace * num3;
+						cursor.Y += lineSpace;
 						cursor.X -= bounds.Width;
 						currentPage.Add(new TextSnippet("\n"));
 					}
@@ -126,7 +126,7 @@ namespace Origins.UI {
 				if (textSnippet.GetType() != typeof(TextSnippet)) {
 					cursor.X += font.MeasureString(textSnippet.Text).X * baseScale.X * snippetScale;
 					if (cursor.X > bounds.Width) {
-						cursor.Y += font.LineSpacing * num3 * baseScale.Y;
+						cursor.Y += font.LineSpacing * baseScale.Y;
 						cursor.X = 0f;
 						if (cursor.Y > bounds.Height) {
 							finishPage();
@@ -147,13 +147,13 @@ namespace Origins.UI {
 						//result.Y = Math.Max(result.Y, cursor.Y);
 						if (minNewLines > 0) {
 							for (int k = 0; k < minNewLines; k++) {
-								cursor.Y += lineSpace * num3;
+								cursor.Y += lineSpace;
 								cursor.X = 0f;
 								currentPage.Add(new TextSnippet("\n"));
 							}
 							minNewLines = 0;
 						} else {
-							cursor.Y += lineSpace * num3;
+							cursor.Y += lineSpace;
 							cursor.X = 0f;
 							currentPage.Add(new TextSnippet("\n"));
 						}
@@ -162,7 +162,6 @@ namespace Origins.UI {
 							//snippetPages.Add(currentPage.ToArray());
 							//currentPage.Clear();
 						}
-						num3 = 0f;
 						realLine = false;
 						continue;
 					}
@@ -175,17 +174,13 @@ namespace Origins.UI {
 						float currentWordWidth = font.MeasureString(words[j]).X * baseScale.X * snippetScale;
 						if (cursor.X - 0f + currentWordWidth > bounds.Width) {
 							cursor.X = 0f;
-							cursor.Y += lineSpace * num3;
+							cursor.Y += lineSpace;
 							//result.Y = Math.Max(result.Y, cursor.Y);
-							if (cursor.Y + lineSpace * num3 > bounds.Height) {
+							if (cursor.Y > bounds.Height) {
 								finishPage();
 								//snippetPages.Add(currentPage.ToArray());
 								//currentPage.Clear();
 							}
-							num3 = 0f;
-						}
-						if (num3 < snippetScale) {
-							num3 = snippetScale;
 						}
 						Vector2 value = font.MeasureString(words[j]);
 						cursor.X += value.X * baseScale.X * snippetScale;
@@ -200,23 +195,22 @@ namespace Origins.UI {
 					if (lines.Length > lineNum && realLine) {
 						//result.Y = Math.Max(result.Y, cursor.Y);
 						if (minNewLines > 0) {
-							cursor.Y += lineSpace * num3;
+							cursor.Y += lineSpace;
 							cursor.X = 0f;
 							for (int k = 0; k < minNewLines; k++) {
 								currentPage.Add(new TextSnippet("\n"));
 							}
 							minNewLines = 0;
 						} else {
-							cursor.Y += lineSpace * num3;
-							cursor.X = 0f;
 							currentPage.Add(new TextSnippet("\n"));
+							cursor.Y += lineSpace;
+							cursor.X = 0f;
 						}
 						if (cursor.Y > bounds.Height) {
 							finishPage();
 							//snippetPages.Add(currentPage.ToArray());
 							//currentPage.Clear();
 						}
-						num3 = 0f;
 					}
 					realLine = true;
 				}

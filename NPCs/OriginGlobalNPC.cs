@@ -85,28 +85,9 @@ namespace Origins.NPCs {
 				}
 				case NPCID.Demolitionist: {
 					shop.Add(ItemID.ExplosivePowder, Condition.PreHardmode);
-					shop.Add<Peatball>(PeatSoldCondition(15));
-					shop.Add<Flashbang>(PeatSoldCondition(25));
-					shop.Add<IWTPA_Standard>(PeatSoldCondition(35));
-					shop.Add<Impact_Grenade>(PeatSoldCondition(40));
-					shop.Add<Defiled_Spirit>(PeatSoldCondition(50), WorldEvilBossCondition<Defiled_Wastelands_Alt_Biome>("Mods.Origins.Conditions.DownedDefiledAmalgamation"));
-					shop.Add<Ameballoon>(PeatSoldCondition(60), WorldEvilBossCondition<Riven_Hive_Alt_Biome>("Mods.Origins.Conditions.DownedWorldCracker"));
-					shop.Add<Impact_Bomb>(PeatSoldCondition(70));
-					shop.Add<Brainade>(PeatSoldCondition(81), Condition.DownedBrainOfCthulhu);
-					shop.Add<Link_Grenade>(PeatSoldCondition(85), ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>());
-					shop.Add<Nitro_Crate>(PeatSoldCondition(100));
-					shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125), WorldEvilBossCondition<Ashen_Alt_Biome>("Mods.Origins.Conditions.DownedScrapper"));
-					shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
-					shop.Add<Bomb_Artifact>(PeatSoldCondition(145));
-					shop.Add<Trash_Lid>(PeatSoldCondition(160));
-					shop.Add(ItemID.Beenade, PeatSoldCondition(170), Condition.NotTheBeesWorld);
-					shop.Add<Impact_Dynamite>(PeatSoldCondition(180), Condition.Hardmode);
-					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
-					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
-					shop.Add<Sonar_Dynamite>(PeatSoldCondition(230), Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
-					shop.Add<Indestructible_Saddle>(PeatSoldCondition(250), Condition.DownedMechBossAny);
-					shop.Add<Absorption_Potion>(PeatSoldCondition(350));
-					shop.Add<Caustica>(PeatSoldCondition(999), Condition.DownedGolem);
+					for (int i = 0; i < Peat_Moss_Quest.Rewards.Length; i++) {
+						shop.Add(Peat_Moss_Quest.Rewards[i].ItemID, Peat_Moss_Quest.Rewards[i].Conditions);
+					}
 					break;
 				}
 				case NPCID.Steampunker: {
