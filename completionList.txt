@@ -105,6 +105,7 @@ TOWN NPC Quests:
 (^) Brine Fiend - Basic Brewery
 (^) Brine Fiend - Get Freaky
 (^) Cyborg - Sensor Upgrade*
+(⚿) Demolitionist - Re-peat Customer
 (^) Dryad - I’ll Give You a Deal*
 (^) Dryad - Clearing the Way*
 (^) Goblin Tinkerer - Reel In the Goods*
