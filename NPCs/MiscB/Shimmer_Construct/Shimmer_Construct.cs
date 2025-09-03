@@ -727,6 +727,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		Shimmer_Construct boss;
 		float monolithProgress;
 		public static bool monolithActive;
+		public static bool cheapBG;
 		public override void SpecialVisuals(Player player, bool isActive) {
 			bool phase3Active = false;
 			boss = null;
@@ -756,6 +757,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				scale = 0;
 			}
 			phase3Active |= monolithProgress > 0 || monolithActive;
+			cheapBG = false;
+			if (!Lighting.NotRetro) cheapBG = phase3Active.TrySet(false);
 			if (!phase3Active) {
 				foreach (Projectile projectile in Main.ActiveProjectiles) {
 					if (projectile.ModProjectile is ITriggerSCBackground trigger && trigger.TriggerSCBackground) {
@@ -768,8 +771,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Cheap", false, sourcePos);
 				player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Underlay", false, sourcePos);
 			} else {
-				player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Cheap", phase3Active, sourcePos);
-				player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Underlay", phase3Active, sourcePos);
+				player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Cheap", cheapBG, sourcePos);
+				player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Underlay", phase3Active && !cheapBG, sourcePos);
 			}
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Midlay", phase3Active, sourcePos);
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", phase3Active, sourcePos);

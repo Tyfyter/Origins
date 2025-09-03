@@ -786,6 +786,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			//if (drawDatas.Count > 0) alwaysLightAllTiles = true;
 			base.Draw(spriteBatch);
 		}
+		public override bool IsVisible() => (Lighting.NotRetro || !SC_Scene_Effect.cheapBG) && base.IsVisible();
 		public static bool alwaysLightAllTiles = false;
 		public static void AddMinLightArea(Vector2 pos, float range) {
 			range += 16;
@@ -862,7 +863,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Origins.shaderOroboros.Stack(simpleMaskShader);
 			Origins.shaderOroboros.Release();
 		}
-		public override bool IsVisible() => Lighting.NotRetro && ModContent.GetInstance<SC_Phase_Three_Overlay>().IsVisible();
+		public override bool IsVisible() => ModContent.GetInstance<SC_Phase_Three_Overlay>().IsVisible();
 		public override void Update(GameTime gameTime) { }
 		static readonly List<SC_Phase_Three_BG_Layer> layers = [];
 		static readonly List<bool> layersRenderedThisFrame = [];
