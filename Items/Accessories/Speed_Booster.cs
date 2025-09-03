@@ -34,6 +34,7 @@ namespace Origins.Items.Accessories {
 				player.accRunSpeed += 3f;
 			}
 			player.rocketBoots = 2;
+			player.vanityRocketBoots = 2;
 			originPlayer.guardedHeart = true;
 			originPlayer.loversLeap = true;
 			originPlayer.loversLeapItem = Item;
