@@ -569,8 +569,8 @@ Demolitionist: {
 			''' */
 		// Inquire: missingno
 		// Start: missingno
-		// ReadyToComplete: missingno
-		// Complete: missingno
+		// ReadyToComplete: unneeded
+		// Complete: unneeded
 	}
 }
 

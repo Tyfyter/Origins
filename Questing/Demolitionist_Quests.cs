@@ -25,15 +25,26 @@ namespace Origins.Questing {
 		public override string Name => $"{base.Name}_{Quest.Name}";
 		public override double Priority => 101;
 		public override void OnClick(NPC npc, Player player) {
-			ModContent.GetInstance<OriginSystem>().peatSold += Quest.ConsumeItems(player.inventory, ((i) => i.ModItem is Peat_Moss_Item, Peat_Moss_Quest.Rewards[^1].PeatAmount - ModContent.GetInstance<OriginSystem>().peatSold))[0];
-			if (Main.netMode != NetmodeID.SinglePlayer) {
-				ModPacket packet = Mod.GetPacket();
-				packet.Write(Origins.NetMessageType.sync_peat);
-				packet.Write((short)OriginSystem.Instance.peatSold);
-				packet.Send(-1, player.whoAmI);
+			int mossGiven = Quest.ConsumeItems(player.inventory, ((i) => i.ModItem is Peat_Moss_Item, Peat_Moss_Quest.Rewards[^1].PeatAmount - ModContent.GetInstance<OriginSystem>().peatSold))[0];
+			ModContent.GetInstance<OriginSystem>().peatSold += mossGiven;
+			if (mossGiven > 0) {
+				if (!NetmodeActive.SinglePlayer) {
+					ModPacket packet = Mod.GetPacket();
+					packet.Write(Origins.NetMessageType.sync_peat);
+					packet.Write((short)OriginSystem.Instance.peatSold);
+					packet.Send(-1, player.whoAmI);
+				}
+				SoundEngine.PlaySound(SoundID.Grab, npc.Center);
+				Main.npcChatText = Language.GetOrRegister(Peat_Moss_Quest.lockey + "GaveMoss").Value;
+				int value = 35 * mossGiven;
+				void SpawnCoins(int type, int count) {
+					if (count > 0) Main.LocalPlayer.QuickSpawnItem(npc.GetSource_GiftOrReward(Quest.FullName), type, count);
+				}
+				SpawnCoins(ItemID.PlatinumCoin, (value / 1000000) % 100);
+				SpawnCoins(ItemID.GoldCoin, (value / 10000) % 100);
+				SpawnCoins(ItemID.SilverCoin, (value / 100) % 100);
+				SpawnCoins(ItemID.CopperCoin, value % 100);
 			}
-			SoundEngine.PlaySound(SoundID.Grab, npc.Center);
-			Main.npcChatText = Language.GetOrRegister(Peat_Moss_Quest.lockey + "GaveMoss").Value;
 		}
 		public override string Text(NPC npc, Player player) => Language.GetOrRegister(Peat_Moss_Quest.lockey + "GiveMoss").Value;
 		public override bool IsActive(NPC npc, Player player) {
