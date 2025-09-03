@@ -23,9 +23,6 @@
 		<Reference Include="Fargowiltas">
 			<HintPath>..\ModAssemblies\Fargowiltas_v3.3.6.2.dll</HintPath>
 		</Reference>
-		<Reference Include="miningcracks_take_on_luiafk">
-		  <HintPath>..\ModAssemblies\miningcracks_take_on_luiafk.dll</HintPath>
-		</Reference>
 		<Reference Include="PegasusLib">
 		  <HintPath>..\ModAssemblies\PegasusLib_v1.1.dll</HintPath>
 		</Reference>
