@@ -292,8 +292,7 @@ namespace Origins.Items.Tools {
 		public override int Size => 144;
 		public override bool DealsSelfDamage => true;
 	}
-	public class Indestructible_Saddle_Crit_Type : CritType<Indestructible_Saddle>, IBrokenContent {
-		public string BrokenReason => "Needs balancing";
+	public class Indestructible_Saddle_Crit_Type : CritType<Indestructible_Saddle> {
 		static int CritThreshold => 120;
 		public override LocalizedText Description => base.Description.WithFormatArgs(CritThreshold / 60f);
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile.ai[2] <= CritThreshold;

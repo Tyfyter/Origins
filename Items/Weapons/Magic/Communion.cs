@@ -146,8 +146,7 @@ namespace Origins.Items.Weapons.Magic {
 			end:;
 		}
 	}
-	public class Communion_Type : CritType<Communion>, IBrokenContent {
-		public string BrokenReason => "Needs balancing";
+	public class Communion_Type : CritType<Communion> {
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
 			return !((projectile?.ModProjectile as Communion_P)?.prevHits[target.whoAmI].TrySet(true) ?? true);
 		}

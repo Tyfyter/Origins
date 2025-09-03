@@ -186,8 +186,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return false;
 		}
 	}
-	public class Self_Destruct_Crit_Type : CritType<Self_Destruct>, IBrokenContent {
-		public string BrokenReason => "Needs balancing";
+	public class Self_Destruct_Crit_Type : CritType<Self_Destruct> {
 		static float CritThreshold => 0.3f; // hit is dealt after self-damage, so being brought below this by SD will make it crit on that use
 		public override LocalizedText Description => base.Description.WithFormatArgs(CritThreshold);
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => (player.statLife / (float)player.statLifeMax2) <= CritThreshold;

@@ -149,8 +149,7 @@ namespace Origins.Items.Tools {
 			player.itemAnimationMax = CombinedHooks.TotalAnimationTime(player.HeldItem.useAnimation, player, player.HeldItem);
 		}
 	}
-	public class Miter_Saw_Crit_Type : CritType<Miter_Saw>, IBrokenContent {
-		public string BrokenReason => "Needs balancing";
+	public class Miter_Saw_Crit_Type : CritType<Miter_Saw> {
 		static int PrimaryCritThreshold => 3;
 		static int SecondaryCritThreshold => 60;
 		static int SecondaryCritMaxCharge => SecondaryCritThreshold + 30;

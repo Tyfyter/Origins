@@ -246,8 +246,7 @@ namespace Origins.Items.Weapons.Magic {
 			public bool Real => !fake;
 		}
 	}
-	public class Missing_File_Crit_Type : CritType<Missing_File>, IBrokenContent {
-		public string BrokenReason => "Needs balancing";
+	public class Missing_File_Crit_Type : CritType<Missing_File> {
 		static int CritThreshold => 3;
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => player.GetModPlayer<Missing_File_Player>().hitCount >= CritThreshold;
 		public override float CritMultiplier(Player player, Item item) => 1.35f;

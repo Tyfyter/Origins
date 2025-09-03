@@ -152,8 +152,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return false;
 		}
 	}
-	public class Explosive_Barrel_Crit_Type : CritType<Explosive_Barrel>, IBrokenContent {
-		public string BrokenReason => "Needs balancing";
+	public class Explosive_Barrel_Crit_Type : CritType<Explosive_Barrel> {
 		public override LocalizedText Description => CritMod.GetLocalization($"CritTypes.ShadowbeamStaff.Description");
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ai[1] > 0;
 		public override float CritMultiplier(Player player, Item item) => 3f;

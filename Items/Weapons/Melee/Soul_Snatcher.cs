@@ -552,8 +552,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 	}
-	public class Soul_Snatcher_Crit_Type : CritType<Soul_Snatcher>, IBrokenContent {
-		public string BrokenReason => "Needs balancing";
+	public class Soul_Snatcher_Crit_Type : CritType<Soul_Snatcher> {
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
 			if (projectile?.ModProjectile is Soul_Snatcher_P stab) return stab.empowered;
 			if (projectile?.ModProjectile is Soul_Snatcher_Spin spin) return spin.empowered;

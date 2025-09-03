@@ -213,8 +213,7 @@ namespace Origins.Items.Tools {
 			}
 		}
 	}
-	public class Piledriver_Crit_Type : CritType<Piledriver>, IBrokenContent {
-		public string BrokenReason => "Needs balancing";
+	public class Piledriver_Crit_Type : CritType<Piledriver> {
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ai[2] == 2;
 		public override float CritMultiplier(Player player, Item item) => 1.8f + (player.GetWeaponCrit(item) / 100f);
 	}
