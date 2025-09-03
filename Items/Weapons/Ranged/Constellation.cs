@@ -194,7 +194,7 @@ namespace Origins.Items.Weapons.Ranged {
 
 			if (IsLinked)
 				Projectile.frameCounter++;
-			else if (!Projectile.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerFake) {
+			else if (Projectile.IsLocallyOwned() && !Projectile.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerFake) {
 				foreach (Projectile other in Main.ActiveProjectiles) {
 					if (other == Projectile) continue;
 					if (other.ai[0] == Projectile.ai[0] && Projectile.owner == other.owner && other.ModProjectile is ConstellationNode) {

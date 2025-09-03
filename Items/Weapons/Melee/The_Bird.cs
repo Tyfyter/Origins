@@ -140,6 +140,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.Center = player.MountedCenter;
 			if (player.channel) {
 				if (Projectile.owner == Main.myPlayer) {
+					// maybe needs 2 be Main.MouseWorld?
 					Projectile.velocity = (new Vector2(Player.tileTargetX, Player.tileTargetY).ToWorldCoordinates() - Projectile.Center).SafeNormalize(default);
 				}
 				Projectile.timeLeft = player.itemAnimationMax;
