@@ -49,6 +49,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Origins.MagicTripwireRange[Type] = 32;
 			Origins.MagicTripwireDetonationStyle[Type] = 1;
 			ProjectileID.Sets.Explosive[Type] = true;
+			ProjectileID.Sets.NeedsUUID[Type] = true;
 			Hydrolantern_Force_Global.ProjectileTypes.Add(Type);
 		}
 		public override void SetDefaults() {
@@ -142,7 +143,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.tileCollide = false;
 		}
 		public override void AI() {
-			Projectile parent = Main.projectile.FirstOrDefault(x => x.identity == Projectile.ai[0]);
+			Projectile parent = Projectile.GetRelatedProjectile(0);
 			Projectile.position = parent.Center;
 			if (Projectile.ai[1] > 1) Projectile.Kill();
 			Projectile.ai[1] += 1 / 30f;

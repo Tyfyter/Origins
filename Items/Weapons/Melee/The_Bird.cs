@@ -123,6 +123,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void SetDefaults() {
 			Projectile.friendly = false;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.width = 48;
 			Projectile.height = 48;
 			Projectile.timeLeft = 18;

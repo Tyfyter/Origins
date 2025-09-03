@@ -184,11 +184,11 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AI() {
 			if (Projectile.owner != Main.myPlayer) {
-				Projectile.timeLeft = 5;
 				if (IsLinked) {
 					Projectile proj = LinkedTo;
-					if (!(proj?.active ?? false) || proj.ModProjectile is not ConstellationNode) Projectile.Kill();
+					if (!(proj?.active ?? false) || proj.ModProjectile is not ConstellationNode) return;
 				}
+				Projectile.timeLeft = 5;
 			}
 			if (Projectile.timeLeft > 5 * 60) Projectile.timeLeft = 5 * 60;
 
