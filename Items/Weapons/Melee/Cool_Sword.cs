@@ -106,7 +106,7 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.position.Y += 8;
 			}
 
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * 0.4f;
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation * player.gravDir - MathHelper.PiOver4 * (player.gravDir - 1) * player.direction) * Projectile.width * 0.4f;
 			List<int> noSpawnStarIndices = new(ExtraHitboxes);
 			for (int j = 0; j <= ExtraHitboxes; j++) noSpawnStarIndices.Add(j);
 			float starThreshold = player.itemTimeMax / 10f;

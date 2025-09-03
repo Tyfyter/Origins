@@ -736,7 +736,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(#2, ^2) Cool Sword !!!
+(☻) Cool Sword !!!
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
