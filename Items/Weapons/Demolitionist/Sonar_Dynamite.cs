@@ -110,7 +110,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 						ModContent.ProjectileType<Sonar_Dynamite_Ping>(),
 						Projectile.damage,
 						0,
-						ai0: Projectile.identity
+						ai0: Projectile.projUUID
 					);
 				}
 				Projectile.ai[0] = 0;
