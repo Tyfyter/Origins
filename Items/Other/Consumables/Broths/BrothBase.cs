@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -31,14 +32,6 @@ namespace Origins.Items.Other.Consumables.Broths {
 			);
 			Item.useStyle = ItemUseStyleID.EatFood;
 		}
-		public override bool? UseItem(Player player) {
-			for (int i = 0; i < Player.MaxBuffs; i++) {
-				if (Origins.BrothBuffs[player.buffType[i]]) {
-					player.DelBuff(i--);
-				}
-			}
-			return true;
-		}
 		public virtual int Duration => 6;
 		public virtual void UpdateBuff(Player player, ref int buffIndex) { }
 		public virtual void ModifyMinionHit(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) { }
@@ -64,6 +57,17 @@ namespace Origins.Items.Other.Consumables.Broths {
 				}
 			}
 			return result;
+		}
+
+		internal static void On_Player_AddBuff_RemoveOldMeleeBuffsOfMatchingType(On_Player.orig_AddBuff_RemoveOldMeleeBuffsOfMatchingType orig, Player self, int type) {
+			orig(self, type);
+			if (Origins.BrothBuffs[type]) {
+				for (int i = self.buffType.Length - 1; i >= 0; i--) {
+					if (self.buffType[i] != type && Origins.BrothBuffs[self.buffType[i]]) {
+						self.DelBuff(i);
+					}
+				}
+			}
 		}
 	}
 	[Autoload(false)]

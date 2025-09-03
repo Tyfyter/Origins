@@ -598,6 +598,7 @@ namespace Origins {
 				c.EmitRet();
 			};
 			On_Player.QuickBuff_ShouldBotherUsingThisBuff += BrothBase.On_Player_QuickBuff_ShouldBotherUsingThisBuff;
+			On_Player.AddBuff_RemoveOldMeleeBuffsOfMatchingType += BrothBase.On_Player_AddBuff_RemoveOldMeleeBuffsOfMatchingType;
 			On_Main.CalculateWaterStyle += (orig, ignoreFountains) => {
 				int chosenStyle = Main.LocalPlayer.CurrentSceneEffect.waterStyle.value;
 				if (chosenStyle == ModContent.GetInstance<Riven_Water_Style>().Slot || chosenStyle == ModContent.GetInstance<Brine_Water_Style>().Slot) return chosenStyle;
