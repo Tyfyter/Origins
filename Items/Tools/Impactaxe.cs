@@ -188,8 +188,7 @@ namespace Origins.Items.Tools {
 			base.AI();
 		}
 	}
-	public class Impactaxe_Crit_Type : CritType<Impactaxe>, IBrokenContent {
-		public string BrokenReason => "Needs balancing";
+	public class Impactaxe_Crit_Type : CritType<Impactaxe> {
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ModProjectile is Impactaxe_Smash;
 		public override float CritMultiplier(Player player, Item item) => 1.4f;
 	}
