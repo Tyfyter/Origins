@@ -59,7 +59,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(@2 (Ss charge visuals), #2, ^4) Shimmer Construct !!!
+(#2, ^4) Shimmer Construct !!! (charge visuals do not modify sprite)
 (#, ^2) Trenchmaker
 (^) World Cracker*
 
@@ -236,7 +236,7 @@ ENEMY NPCS:
 (^) Optiphage*
 (X) Packhunter
 (#, ^2) Pinwheel
-(X) Power Suit Zombie
+(#, ^2) Power Suit Zombie
 (^) Pustule Jellyfish*
 (X) QM-76 'Quakemaker'
 (X) Repairboy
@@ -461,6 +461,7 @@ ACCESSORIES:
 (^) Coologne*
 (^) CORE Generator*
 (^) Counter-offensive Scarf*
+(X) CSTAA Jacket
 (^) Danger Barrel*
 (X) Decorative Ashes
 (^) Destructive Claws*
@@ -478,6 +479,7 @@ ACCESSORIES:
 (^) Feather Cape
 (^) Feathery Crest
 (X) Filter Breather
+(X) Flak Jacket
 (^) Fleshy Figurine*
 (^) Focus Crystal*
 (^) Full Send
@@ -562,6 +564,7 @@ ACCESSORIES:
 (^) Spirit Shard*
 (^) Stone Mask*
 (ᥢ) Strange Computer°
+(X) Stress Ball
 (^) Sunder Gut
 (^) Super Turbo Reel*
 (^) Superjump Cape*
@@ -718,6 +721,7 @@ TOOLS:
 (^) Acrid Pickaxe*
 (X) Bleeding Obsidian Hamaxe
 (X) Bleeding Obsidian Pickaxe
+(X) Screwdriver
 
 (^) Impactaxe*
 
@@ -733,7 +737,8 @@ TOOLS:
 
 MELEE WEAPONS:
 |---
-(@2?, #) Astral Scythe !!!
+(#, ^2) Astral Scythe !!!
+(X) Autoscopy
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
@@ -1367,6 +1372,8 @@ TILES:
 (々) Quantux Trophy*
 (^) Shimmer Construct Relic*
 (^) Shimmer Construct Trophy*
+(X) Trenchmaker Relic
+(X) Trenchmaker Trophy
 (^) World Cracker Relic*
 (^) World Cracker Trophy*
 ---
@@ -1452,6 +1459,7 @@ CRITTERS AND FISH:
 (^) Fiberbass
 (^) Polyeel*
 (^) Prikish*
+(X) Scrapfish
 (^) Tearracuda*
 (^) Toadfish
 ---
@@ -1595,10 +1603,12 @@ MOUNTS & PETS:
 (^) Blockus Tube (Juvenile Amalgamation)*
 (^) Fleshy Globe (Self-Contained Universe)*
 (^) Jawbreaker (Stellar Spark)
+(X) Robot Toy Controller (Toy Trenchmaker)
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)*
+(X) Dysfunctional Table Saw (Sprockey)
 (X) Rusty Cross Necklace (Guardian Angel)
 (^) Smith's Hammer (Walking Furnace)*
 (^) Suspicious Looking Pebble (Defiled Blight)*
