@@ -83,20 +83,12 @@ namespace Origins.Questing {
 		}
 		public override string GetInquireText(NPC npc) => Language.GetTextValue(lockey + "Inquire");
 		public override void OnAccept(NPC npc) {
-			Stage = 1;// - set stage to 1 (kill harpies)
 			Main.npcChatText = Language.GetTextValue(lockey + "Start");
 			LocalPlayerStarted = true;
 		}
-		public override bool CanComplete(NPC npc) {
-			return npc.type == NPCID.Demolitionist && Stage == 2;
-		}
-		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister(lockey + "ReadyToComplete").Value;
-		public override void OnComplete(NPC npc) {
-			Main.npcChatText = Language.GetTextValue(lockey + "Complete");
-			Stage = 3;
-			ShouldSync = true;
-			Main.LocalPlayer.QuickSpawnItem(npc.GetSource_GiftOrReward(FullName), ModContent.ItemType<Mojo_Flask>());
-		}
+		public override bool CanComplete(NPC npc) => false;
+		public override string ReadyToCompleteText(NPC npc) => "";
+		public override void OnComplete(NPC npc) { }
 		public override bool ShowInJournal() => Completed || (base.ShowInJournal() && LocalPlayerStarted);
 		public override string GetJournalPage() {
 			int peatSold = ModContent.GetInstance<OriginSystem>().peatSold;
@@ -126,21 +118,6 @@ namespace Origins.Questing {
 		}
 		public static void SetupItems() {
 			Rewards = GetItems().ToArray();
-		}
-		public override void SaveData(TagCompound tag) {
-			//save stage and kills
-			tag.Add("Stage", Stage);
-		}
-		public override void LoadData(TagCompound tag) {
-			//load stage and kills, note that it uses the Stage property so that it sets the event handlers
-			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
-			Stage = tag.SafeGet<int>("Stage");
-		}
-		public override void SendSync(BinaryWriter writer) {
-			writer.Write(Stage);
-		}
-		public override void ReceiveSync(BinaryReader reader) {
-			Stage = reader.ReadInt32();
 		}
 		public record class ShopItem(int ItemID, int PeatAmount, params Condition[] Conditions);
 		public record class ShopItem<TItem>(int PeatAmount, params Condition[] Conditions) : ShopItem(ModContent.ItemType<TItem>(), PeatAmount, [OriginGlobalNPC.PeatSoldCondition(PeatAmount), .. (Conditions ?? [])]) where TItem : ModItem;
