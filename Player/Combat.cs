@@ -618,7 +618,7 @@ namespace Origins {
 			if (shineSparkDashTime > 0) {
 				modifiers.FinalDamage *= 0;
 				modifiers.FinalDamage.Flat = int.MinValue;
-				npc.SimpleStrikeNPC(Player.GetWeaponDamage(loversLeapItem) * 15, Player.direction, true, 12);
+				npc.SimpleStrikeNPC(Player.GetWeaponDamage(loversLeapItem) * 15, Player.direction, true, 12, DamageClass.Generic);
 			}
 		}
 		public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot) {
