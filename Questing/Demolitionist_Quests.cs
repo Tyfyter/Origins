@@ -52,7 +52,8 @@ namespace Origins.Questing {
 			return Quest.HasQuestButton(npc, player);
 		}
 	}
-	public class Peat_Moss_Quest : Quest {
+	public class Peat_Moss_Quest : Quest, IBrokenContent {
+		public string BrokenReason => "Missing localizations";
 		public const string lockey = "Mods.Origins.Quests.Demolitionist.Peat_Moss.";
 		public static IEnumerable<ShopItem> GetItems() {
 			yield return new ShopItem<Peatball>(15);
