@@ -878,7 +878,7 @@ MAGIC WEAPONS:
 (^) Beginner's Tome*
 (^) Cryostike*
 (^) Dream Catcher
-(#2, ^2) Eaterboros* !!! (graphical code)
+(☻) Eaterboros* !!! (graphical code)
 (^) Eternabrite
 (^) Hot Potato
 (^) Infusion*
@@ -1475,7 +1475,7 @@ CONSUMABLES:
 (^) Greater Summoning Potion
 (^) Latchkey
 (^) Mojo Flask*
-(#, ^2) Potion of Projection !!!
+(#, ^2) Potion of Projection !!! (I'd argue it's not a priority until there's something to do there aside from fighting the boss)
 (^) Protean Potion*
 (^) Purification Potion*
 (^) Super Mojo Flask*
