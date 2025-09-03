@@ -217,7 +217,7 @@ namespace Origins.NPCs.Brine.Boss {
 			set => NPC.localAI[3] = (int)value;
 		}
 		public override bool CanTargetPlayer(Player player) => NPC.WithinRange(player.MountedCenter, 16 * 400);
-		public override bool CanTargetNPC(NPC other) => !OriginsSets.NPCs.TargetDummies[other.type] && NPC.WithinRange(other.Center, 16 * 400) && CanHitNPC(other);
+		public override bool CanTargetNPC(NPC other) => false;//!OriginsSets.NPCs.TargetDummies[other.type] && NPC.WithinRange(other.Center, 16 * 400) && CanHitNPC(other);
 		public override bool CanHitNPC(NPC target) => !Mildew_Creeper.FriendlyNPCTypes.Contains(target.type);
 		public override bool CheckTargetLOS(Vector2 target) => true;
 		public override float RippleTargetWeight(float magnitude, float distance) => 0;
