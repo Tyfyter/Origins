@@ -697,48 +697,6 @@ namespace Origins {
 			if (item.prefix == ModContent.PrefixType<Imperfect_Prefix>()) return false;
 			return true;
 		}
-		public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
-			if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss_Item>()) {
-				OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
-				if (originWorld.peatSold < 999) {
-					Item[] reAddSoldItems = new Item[shopInventory.Length];
-					if (item.stack >= 999 - originWorld.peatSold) {
-						item.stack -= 999 - originWorld.peatSold;
-						originWorld.peatSold = 999;
-					} else {
-						originWorld.peatSold += item.stack;
-						item.TurnToAir();
-					}
-					int nextSlot = 0;
-					int soldSlot = 0;
-					for (; ++nextSlot < shopInventory.Length && !shopInventory[nextSlot].IsAir;) {
-						if (shopInventory[nextSlot].buyOnce) {
-							reAddSoldItems[soldSlot] = new();
-							Utils.Swap(ref reAddSoldItems[soldSlot], ref shopInventory[nextSlot]);
-							soldSlot++;
-						}
-					}
-					Main.instance.shop[Main.npcShop].SetupShop(4);
-					for (int i = 0; i < reAddSoldItems.Length && reAddSoldItems[i] is not null; i++) {
-						for (int j = 0; j < shopInventory.Length; j++) {
-							if (shopInventory[j].IsAir) {
-								Utils.Swap(ref reAddSoldItems[i], ref shopInventory[j]);
-								break;
-							}
-						}
-					}
-					for (int i = 0; i < shopInventory.Length; i++) {
-						shopInventory[i] ??= new();
-					}
-					if (Main.netMode != NetmodeID.SinglePlayer) {
-						ModPacket packet = Mod.GetPacket();
-						packet.Write(Origins.NetMessageType.sync_peat);
-						packet.Write((short)OriginSystem.Instance.peatSold);
-						packet.Send(-1, Player.whoAmI);
-					}
-				}
-			}
-		}
 
 		public override void SaveData(TagCompound tag) {
 			if (eyndumCore is not null) {
