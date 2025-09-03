@@ -764,9 +764,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					}
 				}
 			}
-
-			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Cheap", phase3Active, sourcePos);
-			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Underlay", phase3Active, sourcePos);
+			if (Main.instance.DrawCacheNPCsMoonMoon.Count > 0) {
+				player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Cheap", false, sourcePos);
+				player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Underlay", false, sourcePos);
+			} else {
+				player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Cheap", phase3Active, sourcePos);
+				player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Underlay", phase3Active, sourcePos);
+			}
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3Midlay", phase3Active, sourcePos);
 			player.ManageSpecialBiomeVisuals("Origins:ShimmerConstructPhase3", phase3Active, sourcePos);
 		}
