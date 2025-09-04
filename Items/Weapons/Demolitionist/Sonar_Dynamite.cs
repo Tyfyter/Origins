@@ -101,7 +101,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					return;
 				}
 				SoundEngine.PlaySound(SoundID.Zombie82.WithPitch(-3).WithVolume(0.2f) with { MaxInstances = 0 }, Projectile.Center);
-				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitch(-4f) with { MaxInstances = 0 }, Projectile.Center);
+				SoundEngine.PlaySound(Origins.Sounds.DeepBoom with { MaxInstances = 0 }, Projectile.Center);
 				if (Projectile.owner == Main.myPlayer) {
 					Projectile.NewProjectileDirect(
 						Projectile.GetSource_FromAI(),

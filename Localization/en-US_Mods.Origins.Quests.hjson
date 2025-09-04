@@ -567,8 +567,8 @@ Demolitionist: {
 			Unlocks:
 			{3}
 			'''
-		Inquire: missingno
-		Start: missingno
+		Inquire: Hey, you wanna know my favorite pastime? Just goin' to some Jungle pond, rippin' up peat moss and throwin' it around. I loved the stuff since I was a wee-lad, and now I'm feelin' a little nostalgic.
+		Start: So, why don't you get some for me and I'll offer you some fine explosive stuffs I've been collecting durin' my excavations. Sound like a deal?
 		ReadyToComplete: unneeded
 		Complete: unneeded
 	}

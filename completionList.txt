@@ -196,6 +196,7 @@ ENEMY NPCS:
 (^) Boulder Mimic
 (^) Buckethead Zombie°
 (^) Cannihound
+(X) Cartwheeler
 (^) Catacomb Clearer
 (^) Cellarkeep*
 (^) Cleaver*
@@ -251,6 +252,7 @@ ENEMY NPCS:
 (^) Spider Amoeba*
 (X) Spiteful Flesh
 (X) Tubefish
+(X) Wind Pail
 
 (^) Airsnatcher
 (^) Amoebeye*
@@ -555,6 +557,7 @@ ACCESSORIES:
 (^) Shotgun Glove
 (^) Slag Bucket (Cursed)°
 (^) Slag Bucket (Uncursed)°
+(X) Smog Pod-4
 (^) Sniper's Mark*
 (^) Solar Panel*
 (^) Sonar Visor*
@@ -742,7 +745,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(☻) Cool Sword !!!
+(#2, ^2) Cool Sword !!!
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -884,7 +887,7 @@ MAGIC WEAPONS:
 (^) Beginner's Tome*
 (^) Cryostike*
 (^) Dream Catcher
-(☻) Eaterboros* !!! (graphical code)
+(^) Eaterboros*
 (^) Eternabrite
 (^) Hot Potato
 (^) Infusion*
@@ -1442,6 +1445,15 @@ MATERIALS:
 (^) Large Chambersite
 ---
 
+REAL JUNK/WORLD BUILDING ITEMS:
+|---
+(X) Worn Paper: Loose Wheel
+(X) Worn Paper: Self-Preservation
+(X) Worn Paper: Smog Test
+(X) Worn Paper: The Packing Slip
+(X) Worn Paper: They Found US
+---
+
 
 CRITTERS AND FISH:
 |---
@@ -1484,7 +1496,7 @@ CONSUMABLES:
 (^) Greater Summoning Potion
 (^) Latchkey
 (^) Mojo Flask*
-(#, ^2) Potion of Projection !!! (I'd argue it's not a priority until there's something to do there aside from fighting the boss)
+(#, ^2) Potion of Projection
 (^) Protean Potion*
 (^) Purification Potion*
 (^) Super Mojo Flask*
@@ -1817,10 +1829,12 @@ VOLUME I MUSIC:
 (^) World Cracker
 
 (X) Ashen Invasion
+(X) Coronal Storm
 (X) Corruption Invasion
 (X) Crimson Invasion
 (X) Defiled Invasion
 (X) Laser Tag Event
 (X) Riven Invasion
+(X) Smog Storm
 (X) Test of Ancients
 ---
