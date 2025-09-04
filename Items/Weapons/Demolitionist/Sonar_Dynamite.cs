@@ -144,9 +144,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			Projectile parent = Projectile.GetRelatedProjectile(0);
-			Projectile.position = parent.Center;
+			if (parent.ModProjectile is not Sonar_Dynamite_P) Projectile.ai[0] = -1;
+			else Projectile.position = parent.Center;
 			if (Projectile.ai[1] > 1) Projectile.Kill();
 			Projectile.ai[1] += 1 / 30f;
+			if (parent is null) return;
 			float range = 224.5f * Projectile.ai[1];
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (npc.CanBeChasedBy(Projectile) && Projectile.Center.Clamp(npc.Hitbox).WithinRange(Projectile.Center, range)) {
