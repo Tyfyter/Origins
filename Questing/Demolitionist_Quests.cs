@@ -6,6 +6,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
 using Origins.Tiles.Brine;
+using Origins.UI;
 using Origins.World;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
@@ -116,13 +117,14 @@ namespace Origins.Questing {
 			return $"[qian/{(item.Conditions.All(c => c.IsMet()) ? "u" : "")}text{string.Join(",", item.Conditions.Select(DeparseCondition))}:{item.ItemID}]";
 		}
 		static string DeparseCondition(Condition condition) {
-			if (condition.Description.BoundArgs is null) return condition.Description.Key;
 			StringBuilder builder = new(condition.Description.Key);
-			for (int i = 0; i < condition.Description.BoundArgs.Length; i++) {
+			for (int i = 0; i < (condition.Description.BoundArgs?.Length ?? 0); i++) {
 				builder.Append(';');
 				builder.Append(condition.Description.BoundArgs[i].ToString());
 			}
-			return builder.ToString();
+			string fullKey = builder.ToString();
+			Quest_Reward_Item_List_Handler.conditions.TryAdd(fullKey, condition);
+			return fullKey;
 		}
 		public override void SetStaticDefaults() {
 			NameKey = lockey + "Name";

@@ -24,7 +24,7 @@ Conditions: {
 	DownedFiberglassWeaver: After defeating the Fiberglass Weaver
 	DownedLostDiver: After defeating the Lost Diver
 	// could go with other glitchy-looking approaches, like "lockey.#####" or "missingno"
-	DownedScrapper: After defeating the MISSING_OBJECT_ERROR
+	DownedScrapper: After defeating the [glitch:MISSING_OBJECT_ERROR]
 	// DownedScrapper: After defeating the Scrapper
 	DownedDefiledMimic: After defeating a {§Defiled} Mimic, In hardmode
 	DownedRivenMimic: After defeating a {§Riven} Mimic, In hardmode
