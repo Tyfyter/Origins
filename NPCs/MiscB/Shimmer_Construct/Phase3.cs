@@ -1013,10 +1013,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 		public void Unload() {
-			for (int i = 0; i < renderTargetsToDispose.Count; i++) {
-				renderTargetsToDispose[i].Dispose();
-			}
-			renderTargetsToDispose.Clear();
+			Main.QueueMainThreadAction(() => {
+				for (int i = 0; i < renderTargetsToDispose.Count; i++) {
+					renderTargetsToDispose[i].Dispose();
+				}
+				renderTargetsToDispose.Clear();
+			});
 			if (renderTarget is not null) {
 				Main.QueueMainThreadAction(renderTarget.Dispose);
 				Main.OnResolutionChanged -= Resize;
