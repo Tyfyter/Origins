@@ -290,7 +290,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.timeLeft = 2;
 
 			#region Active check
-			Projectile meat = Projectile.GetRelatedProjectile(2);
+			Projectile meat = Projectile.GetRelatedProjectile_Depreciated(2);
 			if (meat is null || !meat.active || meat.type != Fresh_Meat_Artifact_P.ID || meat.ai[1] != Projectile.identity) {
 				if (Projectile.owner == Main.myPlayer) Projectile.Kill();
 				return;

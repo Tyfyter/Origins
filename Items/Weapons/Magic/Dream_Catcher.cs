@@ -204,7 +204,7 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			Entity target = null;
 			float knockbackMult = 0;
-			Entity owner = Projectile.ai[2] == -1 ? Main.player[Projectile.owner] : Projectile.GetRelatedProjectile(2);
+			Entity owner = Projectile.ai[2] == -1 ? Main.player[Projectile.owner] : Projectile.GetRelatedProjectile_Depreciated(2);
 			if (owner is null) {
 				if (!Projectile.ai[2].TrySet(-1)) Projectile.Kill();
 				return;
@@ -258,7 +258,7 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			FastRandom chainRandom = new(chainFrameSeed);
 			Vector2 chainDrawPosition = Projectile.Center;
-			Entity owner = Projectile.ai[2] == -1 ? Main.player[Projectile.owner] : Projectile.GetRelatedProjectile(2);
+			Entity owner = Projectile.ai[2] == -1 ? Main.player[Projectile.owner] : Projectile.GetRelatedProjectile_Depreciated(2);
 			if (owner is null) {
 				if (!Projectile.ai[2].TrySet(-1)) Projectile.Kill();
 				return false;

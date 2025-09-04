@@ -85,7 +85,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.netUpdate = true;
 				}
 			} else {
-				if (Projectile.GetRelatedProjectile(2)?.active ?? false) {
+				if (Projectile.GetRelatedProjectile_Depreciated(2)?.active ?? false) {
 					Projectile.timeLeft = FuseTime;
 					Projectile.localAI[1] = 1;
 					return;
@@ -167,7 +167,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					}
 				}
 			} else {
-				if (Projectile.GetRelatedProjectile(2)?.active ?? false) {
+				if (Projectile.GetRelatedProjectile_Depreciated(2)?.active ?? false) {
 					Projectile.timeLeft = MaxTime;
 					Projectile.ai[1] = 1;
 					return;

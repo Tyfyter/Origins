@@ -100,7 +100,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.ArmorPenetration += 100;
 		}
 		public override void AI() {
-			Projectile parent = Projectile.GetRelatedProjectile(0);
+			Projectile parent = Projectile.GetRelatedProjectile_Depreciated(0);
 			if (parent is null) {
 				Projectile.scale *= 0.95f;
 				Projectile.scale -= 0.05f;

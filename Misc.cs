@@ -1,15 +1,22 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.CrossMod.Fargos.Items;
+using Origins.Gores.NPCs;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Banners;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
+using Origins.Tiles.Riven;
+using Origins.UI;
 using Origins.Walls;
 using PegasusLib;
+using PegasusLib;
+using PegasusLib.Graphics;
 using PegasusLib.Graphics;
 using ReLogic.Content;
 using ReLogic.Graphics;
@@ -20,6 +27,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
+using System.Numerics;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
@@ -28,12 +36,16 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Creative;
 using Terraria.GameContent.Creative;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameInput;
+using Terraria.GameInput;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.Map;
@@ -41,19 +53,8 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Exceptions;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
-using PegasusLib;
-using PegasusLib.Graphics;
-using Terraria.GameInput;
-using Terraria.GameContent.Creative;
-using Terraria.Enums;
-using Origins.Tiles.Other;
-using System.Numerics;
-using Terraria.Graphics.Shaders;
-using Origins.Tiles.Defiled;
-using Origins.Tiles.Riven;
 using Terraria.Utilities;
-using Origins.UI;
-using Origins.Gores.NPCs;
+using static Origins.NPCs.Defiled.Boss.DA_Body_Part;
 
 namespace Origins {
 	#region classes
@@ -2108,6 +2109,12 @@ namespace Origins {
 			self.owner = owner;
 		}
 		public static Projectile GetRelatedProjectile(this Projectile self, int index) {
+			if (self.ai[0] >= 0 && self.owner < OriginSystem.projectilesByOwnerAndID.GetLength(0) && self.ai[0] < OriginSystem.projectilesByOwnerAndID.GetLength(1)) {
+				return OriginSystem.projectilesByOwnerAndID[self.owner, (int)self.ai[index]];
+			}
+			return null;
+		}
+		public static Projectile GetRelatedProjectile_Depreciated(this Projectile self, int index) {
 			int projIndex = Projectile.GetByUUID(self.owner, self.ai[index]);
 			return Main.projectile.IndexInRange(projIndex) ? Main.projectile[projIndex] : null;
 		}

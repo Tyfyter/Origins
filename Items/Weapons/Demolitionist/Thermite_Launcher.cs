@@ -94,7 +94,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AI() {
 			this.DoGravity(0.2f);
 			Projectile.rotation += Projectile.velocity.X * 0.1f;
-			Projectile auraProj = Projectile.GetRelatedProjectile(1);
+			Projectile auraProj = Projectile.GetRelatedProjectile_Depreciated(1);
 			if (auraProj is null) {
 				if (Projectile.owner == Main.myPlayer) Projectile.ai[1] = Projectile.NewProjectileDirect(
 					Projectile.GetSource_FromAI(),
@@ -149,7 +149,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			Lighting.AddLight(Projectile.Center, 1, 0.75f, 0);
-			Projectile ownerProj = Projectile.GetRelatedProjectile(0);
+			Projectile ownerProj = Projectile.GetRelatedProjectile_Depreciated(0);
 			if (ownerProj is null) {
 				Projectile.scale *= 0.85f;
 				Projectile.scale -= 0.15f;

@@ -121,7 +121,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Find target
 			int signalType = ModContent.ProjectileType<Friendly_Relay_Signal>();
 			if (Projectile.ai[2] != -1) {
-				if (Projectile.GetRelatedProjectile(2) is not Projectile proj || !(proj.active && proj.type == signalType)) {
+				if (Projectile.GetRelatedProjectile_Depreciated(2) is not Projectile proj || !(proj.active && proj.type == signalType)) {
 					Projectile.ai[2] = -1;
 				}
 			}

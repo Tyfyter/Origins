@@ -405,3 +405,18 @@ Shimmer_Turret_Chunk1.DisplayName: Shimmer Turret
 Shimmer_Turret_Chunk2.DisplayName: Shimmer Turret
 Shimmer_Turret_Chunk3.DisplayName: Shimmer Turret
 Goo_Wall.DisplayName: Amoebic Goo Wall
+
+Debug_Shoot_NPC: {
+	DisplayName: Debug_ Shoot_ N P C
+
+	TownNPCMood: {
+		Content: I am content.
+		NoHome: I hate not having a home.
+		FarFromHome: I am too far from home.
+		LoveSpace: I love having so much space.
+		DislikeCrowded: I dislike how crowded I am.
+		HateCrowded: I hate how crowded I am.
+		LikeNPC_Princess: I like {NPCName}.
+		Princess_LovesNPC: I like {NPCName}.
+	}
+}

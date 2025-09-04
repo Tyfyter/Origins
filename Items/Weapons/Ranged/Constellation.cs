@@ -4,10 +4,13 @@ using Origins.Projectiles;
 using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
@@ -121,20 +124,17 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.rotation = Projectile.velocity.ToRotation();
 		}
 		public override void OnKill(int timeLeft) {
-			if (Projectile.ai[0] != 0) {
-				int type = ModContent.ProjectileType<ConstellationNode>();
-				if (Projectile.TryGetOwner(out Player _)) {
-					Projectile.NewProjectile(
-						Projectile.GetSource_Death(),
-						Projectile.Center,
-						Vector2.Zero,
-						type,
-						Projectile.damage,
-						Projectile.knockBack,
-						Projectile.owner,
-						ai0: Projectile.ai[2]
-					);
-				}
+			if (Projectile.ai[0] != 0 && Projectile.IsLocallyOwned()) {
+				Projectile.NewProjectile(
+					Projectile.GetSource_Death(),
+					Projectile.Center,
+					Vector2.Zero,
+					ModContent.ProjectileType<ConstellationNode>(),
+					Projectile.damage,
+					Projectile.knockBack,
+					Projectile.owner,
+					ai0: Projectile.ai[2]
+				);
 			}
 		}
 		public override Color? GetAlpha(Color lightColor) => new(1f, 1f, 1f, 0.9f);
@@ -157,7 +157,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public bool IsLinked => Projectile.ai[0] == (int)Projectile.ai[0];
 
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MagicMissile;
-		Projectile LinkedTo => Main.projectile.GetIfInRange(Projectile.GetByUUID(Projectile.owner, Projectile.ai[0]));
+		Projectile LinkedTo => Projectile.GetRelatedProjectile(0);
 		Vector2 _linkPosition;
 		public Vector2 LinkPosition {
 			get {
@@ -166,7 +166,7 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 		}
 		public override void SetStaticDefaults() {
-			ProjectileID.Sets.NeedsUUID[Type] = true;
+			//ProjectileID.Sets.NeedsUUID[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Ranged;
@@ -184,11 +184,11 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AI() {
 			if (Projectile.owner != Main.myPlayer) {
+				Projectile.timeLeft = 5;
 				if (IsLinked) {
 					Projectile proj = LinkedTo;
 					if (!(proj?.active ?? false) || proj.ModProjectile is not ConstellationNode) return;
 				}
-				Projectile.timeLeft = 5;
 			}
 			if (Projectile.timeLeft > 5 * 60) Projectile.timeLeft = 5 * 60;
 
@@ -198,11 +198,12 @@ namespace Origins.Items.Weapons.Ranged {
 				foreach (Projectile other in Main.ActiveProjectiles) {
 					if (other == Projectile) continue;
 					if (other.ai[0] == Projectile.ai[0] && Projectile.owner == other.owner && other.ModProjectile is ConstellationNode) {
-						other.ai[0] = Projectile.projUUID;
-						Projectile.ai[0] = other.projUUID;
+						other.ai[0] = Projectile.identity;
+						Projectile.ai[0] = other.identity;
 						other.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerFake = false;
 						Projectile.netUpdate = true;
 						other.netUpdate = true;
+						NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, other.whoAmI);
 						GroupRoot = false;
 						break;
 					}
@@ -212,9 +213,7 @@ namespace Origins.Items.Weapons.Ranged {
 
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			behindNPCs.Add(index);
-			base.DrawBehind(index, behindNPCsAndTiles, behindNPCs, behindProjectiles, overPlayers, overWiresUI);
 		}
-
 		private float Progress => Projectile.timeLeft > fade_time ? MathF.Min(Projectile.frameCounter / fade_time, 1f) : MathF.Max(Projectile.timeLeft / fade_time, 0f);
 
 		private float DrawWidth => MathHelper.Clamp(Progress * (1 + expand_ratio_proportions) - expand_ratio_proportions, 0f, 1f);
@@ -249,12 +248,10 @@ namespace Origins.Items.Weapons.Ranged {
 						);
 						data.position = b - Main.screenPosition;
 						Main.EntitySpriteDraw(data);
-						ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.ItemStack.Value, $"______\n{LinkedTo?.projUUID}\n{LinkedTo?.ai[0]}", data.position, Color.HotPink, 0, default, Vector2.One);
 					}
 				}
 				data.position = Projectile.Center - Main.screenPosition;
 				Main.EntitySpriteDraw(data);
-				ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.ItemStack.Value, $"______\n{Projectile.projUUID}\n{Projectile.ai[0]}", data.position, Color.HotPink, 0, default, Vector2.One);
 			}
 			return false;
 		}
