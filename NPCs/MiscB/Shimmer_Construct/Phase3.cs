@@ -773,7 +773,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static SC_Phase_Three_Underlay instance;
 		public override void Load() => instance = this;
 		public override void Draw(SpriteBatch spriteBatch) {
-			alwaysLightAllTiles = false;
+			if (!SC_Scene_Effect.cheapBG) alwaysLightAllTiles = false;
 			if (renderTarget is null) {
 				Main.QueueMainThreadAction(SetupRenderTargets);
 				Main.OnResolutionChanged += Resize;

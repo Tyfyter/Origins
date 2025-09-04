@@ -34,6 +34,9 @@ namespace Origins.Items.Weapons.Magic {
 			.Register();
 		}
 		public override bool AltFunctionUse(Player player) => true;
+		public override void ModifyManaCost(Player player, ref float reduce, ref float mult) {
+			if (player.altFunctionUse == 2) mult = 0;
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {
 				OriginExtensions.FadeOutOldProjectilesAtLimit([ModContent.ProjectileType<Shimmer_Cloud_P>(), ModContent.ProjectileType<Shimmer_Cloud_Ball>()], 1, 52);

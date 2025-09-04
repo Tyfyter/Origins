@@ -110,7 +110,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 						ModContent.ProjectileType<Sonar_Dynamite_Ping>(),
 						Projectile.damage,
 						0,
-						ai0: Projectile.projUUID
+						ai0: Projectile.identity
 					);
 				}
 				Projectile.ai[0] = 0;
@@ -143,8 +143,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.tileCollide = false;
 		}
 		public override void AI() {
-			Projectile parent = Projectile.GetRelatedProjectile(0);
-			if (parent.ModProjectile is not Sonar_Dynamite_P) Projectile.ai[0] = -1;
+			Projectile parent = null;
+			if (Projectile.ai[0] >= 0 && Projectile.owner < OriginSystem.projectilesByOwnerAndID.GetLength(0) && Projectile.ai[0] < OriginSystem.projectilesByOwnerAndID.GetLength(1)) {
+				parent = OriginSystem.projectilesByOwnerAndID[Projectile.owner, (int)Projectile.ai[0]];
+			}
+			if (parent?.ModProjectile is not Sonar_Dynamite_P || !parent.active) Projectile.ai[0] = -1;
 			else Projectile.position = parent.Center;
 			if (Projectile.ai[1] > 1) Projectile.Kill();
 			Projectile.ai[1] += 1 / 30f;
@@ -152,7 +155,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			float range = 224.5f * Projectile.ai[1];
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (npc.CanBeChasedBy(Projectile) && Projectile.Center.Clamp(npc.Hitbox).WithinRange(Projectile.Center, range)) {
-					parent.timeLeft = 5;
+					if (Projectile.IsLocallyOwned()) parent.timeLeft = 5;
 					npc.GetGlobalNPC<OriginGlobalNPC>().sonarDynamiteTime = 5;
 				}
 			}

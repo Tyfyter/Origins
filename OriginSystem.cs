@@ -585,11 +585,15 @@ namespace Origins {
 			}
 			Time_Radices.Refresh();
 		}
+		public static Projectile[,] projectilesByOwnerAndID = new Projectile[Main.maxPlayers + 1, Main.maxProjectiles];
 		public override void PreUpdateProjectiles() {
 			Debugging.LogFirstRun(PreUpdateProjectiles);
 			OriginsGlobalBiome.isConversionFromProjectile = true;
+			Array.Clear(projectilesByOwnerAndID);
 			for (int i = 0; i < Main.maxProjectiles; i++) {
-				if (Main.projectile[i].TryGetGlobalProjectile(out OriginGlobalProj global) && global.isFromMitosis) {
+				Projectile projectile = Main.projectile[i];
+				projectilesByOwnerAndID[projectile.owner, projectile.identity] = projectile;
+				if (projectile.TryGetGlobalProjectile(out OriginGlobalProj global) && global.isFromMitosis) {
 					Main.player[Main.projectile[i].owner].ownedProjectileCounts[Main.projectile[i].type]--;
 				}
 			}
