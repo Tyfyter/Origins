@@ -20,6 +20,7 @@ namespace Origins.Items.Accessories {
 			Item.shoot = ModContent.ProjectileType<Power_Lotus_Seeker_Fairy>();
 			Item.knockBack = 8;
 			Item.rare = ItemRarityID.LightPurple;
+			Item.master = true;
 			Item.hasVanityEffects = true;
 			Item.value = Item.sellPrice(gold: 12);
 			Item.maxStack = 1;

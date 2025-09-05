@@ -28,6 +28,7 @@ namespace Origins.Items.Accessories {
 			Item.accessory = true;
 			Item.shoot = ModContent.ProjectileType<Protomind_P>();
 			Item.rare = ItemRarityID.LightPurple;
+			Item.expert = true;
 			Item.value = Item.sellPrice(gold: 3);
             Item.glowMask = glowmask;
         }

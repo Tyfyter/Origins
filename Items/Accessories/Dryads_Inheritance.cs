@@ -23,6 +23,7 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(26, 26);
 			Item.value = Item.sellPrice(gold: 8);
 			Item.rare = ItemRarityID.Lime;
+			Item.expert = true;
 			Item.shoot = ModContent.ProjectileType<Dryad_Ward>();
 			Item.accessory = true;
             Item.glowMask = glowmask;

@@ -26,6 +26,7 @@ namespace Origins.Items.Accessories {
 			if (noGloves) Item.handOnSlot = -1;
 			Item.knockBack = 8;
 			Item.rare = ItemRarityID.Pink;
+			Item.master = true;
 			Item.hasVanityEffects = true;
 			Item.value = Item.sellPrice(gold: 8);
 			Item.glowMask = glowmask;

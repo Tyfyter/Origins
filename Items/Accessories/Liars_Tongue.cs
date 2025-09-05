@@ -18,6 +18,7 @@ namespace Origins.Items.Accessories {
 			Item.shoot = ModContent.ProjectileType<Forbidden_Voice_P>();
 			Item.buffType = BuffID.Silenced;
 			Item.rare = CursedRarity.ID;
+			Item.master = true;
 			Item.value = Item.sellPrice(gold: 5);
 		}
 		public override bool CanUseItem(Player player) => false;
