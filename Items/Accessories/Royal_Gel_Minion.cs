@@ -87,7 +87,7 @@ namespace Origins.Items.Accessories {
 				}
 			}
 			if (Projectile.ai[2] >= 0) {
-				if ((Projectile.velocity.Y < -5.9f || Main.LocalPlayer.controlDown) && Projectile.ai[2] >= 0) {
+				if ((Projectile.velocity.Y < -5.9f) && Projectile.ai[2] >= 0) {
 					Projectile.ai[2] = 1;
 				} else if (Projectile.ai[2] == 1 && Projectile.velocity.Y >= 0) {
 					ShootSpikes();
