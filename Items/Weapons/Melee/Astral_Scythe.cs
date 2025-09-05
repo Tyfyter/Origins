@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useTurn = false;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Orange;
-			Item.UseSound = SoundID.Item71.WithPitch(-1.3f);
+			Item.UseSound = SoundID.Item71.WithPitch(-1f);
 			Item.autoReuse = false;
 		}
 		public override bool CanRightClick() => !ItemSlot.ShiftInUse;

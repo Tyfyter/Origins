@@ -439,7 +439,7 @@ namespace Origins.NPCs.Defiled.Boss {
 							oldPositions.Clear();
 							NPC.velocity.X *= 0.97f;
 							if (NPC.velocity.Y < 0) NPC.velocity.Y *= 0.97f;
-							//SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-1.2f).WithVolume(0.05f), NPC.Center);
+							//SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-1f).WithVolume(0.05f), NPC.Center);
 							NPC.collideX = NPC.collideY = false;
 							CheckTrappedCollision();
 							if (NPC.ai[1] - activeLength < TripleDashCD) {
@@ -546,7 +546,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									float realDifficultyMult = Math.Min(ContentExtensions.DifficultyDamageMultiplier, 3.666f);
 									int count = Main.rand.Next(6, 8) + Main.rand.RandomRound(realDifficultyMult * 2);
 									for (int i = count; i-- > 0;) {
-										SoundEngine.PlaySound(SoundID.Item62.WithPitch(2f), NPC.Center);
+										SoundEngine.PlaySound(SoundID.Item62.WithPitch(1f), NPC.Center);
 										Projectile.NewProjectileDirect(
 											NPC.GetSource_FromAI(),
 											NPC.targetRect.Center() - new Vector2((i - count * 0.5f) * (56 - realDifficultyMult * 8 + 34 + 24), 640),
@@ -640,8 +640,8 @@ namespace Origins.NPCs.Defiled.Boss {
 								Dust.NewDustPerfect(pos, DustID.AncientLight, NPC.Center.DirectionTo(pos) * 20);
 							}
 							SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1), NPC.Center);
-							SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithPitch(-5f), NPC.Center);
-							SoundEngine.PlaySound(SoundID.Item123.WithPitch(2f), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithPitch(-1f), NPC.Center);
+							SoundEngine.PlaySound(SoundID.Item123.WithPitch(1f), NPC.Center);
 
 							if (Main.netMode != NetmodeID.MultiplayerClient) {
 								int staticShock = NPC.FindBuffIndex(Static_Shock_Debuff.ID);
@@ -668,9 +668,9 @@ namespace Origins.NPCs.Defiled.Boss {
 
 						// parts regroup takes 1 second
 						if (NPC.ai[1] >= SplitDuration + SplitRegroupDuration) {
-							SoundEngine.PlaySound(SoundID.Item103.WithPitch(-2f), NPC.Center);
+							SoundEngine.PlaySound(SoundID.Item103.WithPitch(-1f), NPC.Center);
 							SoundEngine.PlaySound(SoundID.NPCHit42.WithPitch(-0.4f).WithVolume(0.5f), NPC.Center);
-							SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest.WithPitch(-5f), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest.WithPitch(-1f), NPC.Center);
 							SoundEngine.PlaySound(Origins.Sounds.Amalgamation.WithPitch(-0.2f), NPC.Center);
 							NPC.ShowNameOnHover = true;
 							NPC.dontTakeDamage = false;

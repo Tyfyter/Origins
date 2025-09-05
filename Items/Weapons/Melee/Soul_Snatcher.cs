@@ -413,7 +413,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.rotation += player.direction * baseSpeed * (28f / player.itemAnimationMax) * player.gravDir;
 			if (Projectile.soundDelay <= 0) {
 				Projectile.soundDelay = Main.rand.RandomRound(MathHelper.TwoPi / (baseSpeed * (28f / player.itemAnimationMax)));
-				SoundEngine.PlaySound(SoundID.Item71.WithPitch(1.3f), Projectile.Center);
+				SoundEngine.PlaySound(SoundID.Item71.WithPitch(1f), Projectile.Center);
 			}
 			Projectile.direction = player.direction;
 			Projectile.spriteDirection = player.direction;

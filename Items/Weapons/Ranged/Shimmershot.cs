@@ -82,7 +82,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Player player = Main.player[Projectile.owner];
 			OriginPlayer originPlayer = player.OriginPlayer();
 			if (Projectile.ai[2] == 1) {
-				SoundEngine.PlaySound(SoundID.Item67.WithPitch(-2f), Projectile.position);
+				SoundEngine.PlaySound(SoundID.Item67.WithPitch(-1f), Projectile.position);
 				SoundEngine.PlaySound(SoundID.Item142, Projectile.position);
 				SoundEngine.PlaySound(Origins.Sounds.HeavyCannon, Projectile.position);
 				Projectile.ai[2] = 0;
@@ -91,7 +91,7 @@ namespace Origins.Items.Weapons.Ranged {
 			if (Main.myPlayer == Projectile.owner) { // charging
 				if (Projectile.localAI[0].Warmup(Projectile.localAI[1])) {
 					SoundEngine.PlaySound(SoundID.Item25.WithPitchOffset(1)); // full charge sound
-					SoundEngine.PlaySound(SoundID.Zombie103.WithPitch(2f));
+					SoundEngine.PlaySound(SoundID.Zombie103.WithPitch(1f));
 					Projectile.netUpdate = true;
 				}
 				if (player.channel) {

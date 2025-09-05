@@ -46,7 +46,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.height = 26;
 			Item.accessory = false;
 			Item.useStyle = ItemUseStyleID.HoldUp;
-			Item.UseSound = SoundID.Item29.WithPitch(-3f).WithVolume(0.2f);
+			Item.UseSound = SoundID.Item29.WithPitch(-1f).WithVolume(0.2f);
 			Item.consumable = true;
 		}
 		public override void GrabRange(Player player, ref int grabRange) {

@@ -45,7 +45,7 @@ namespace Origins.Tiles.Defiled {
 		public void MinePower(int i, int j, int minePower, ref int damage) {
 			if (minePower < 80) {
 				damage = 0;
-				HitSound = Origins.Sounds.DefiledIdle.WithPitch(-3f);
+				HitSound = Origins.Sounds.DefiledIdle.WithPitch(-1f);
 			} else {
 				HitSound = Origins.Sounds.DefiledIdle;
 			}

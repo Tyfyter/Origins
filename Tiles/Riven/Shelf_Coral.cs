@@ -385,7 +385,7 @@ namespace Origins.Tiles.Riven {
 				case State.ComingOut:
 				if (timer.Warmup(6 * 3)) {
 					CurrentState = State.Out;
-					SoundEngine.PlaySound(SoundID.Item97.WithPitch(2f).WithVolume(0.4f), Position.ToWorldCoordinates());
+					SoundEngine.PlaySound(SoundID.Item97.WithPitch(1f).WithVolume(0.4f), Position.ToWorldCoordinates());
 				} else frameNum = 7 - timer / 6;
 				break;
 			}

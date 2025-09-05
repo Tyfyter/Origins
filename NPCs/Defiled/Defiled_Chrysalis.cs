@@ -50,7 +50,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(8)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-0.5f).WithVolume(0.4f), NPC.Center);
-			if (Main.rand.NextBool(4)) SoundEngine.PlaySound(SoundID.Item48.WithPitch(-3f).WithVolume(0.55f), NPC.Center);
+			if (Main.rand.NextBool(4)) SoundEngine.PlaySound(SoundID.Item48.WithPitch(-1f).WithVolume(0.55f), NPC.Center);
 			if (NPC.ai[0] <= 0) {
 				NPC.active = false;
 				return;

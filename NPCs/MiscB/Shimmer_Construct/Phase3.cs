@@ -515,7 +515,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			public override void OnKill(int timeLeft) {
 				SoundEngine.PlaySound(SoundID.Item176, Projectile.Center);
-				SoundEngine.PlaySound(SoundID.Zombie83.WithPitch(-2f), Projectile.Center);
+				SoundEngine.PlaySound(SoundID.Zombie83.WithPitch(-1f), Projectile.Center);
 				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(0.8f), Projectile.Center);
 			}
 			public override bool PreDraw(ref Color lightColor) {

@@ -582,7 +582,7 @@ namespace Origins {
 							newColor: Main.hslToRgb(Main.rand.NextFloat(6), 1, 0.5f)
 						);
 					}
-					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-2f), Player.position);
+					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-1f), Player.position);
 				}
 			}
 			Player.GetJumpState<Latchkey_Jump_Refresh>().Enable();

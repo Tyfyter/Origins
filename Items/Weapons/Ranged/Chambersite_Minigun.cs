@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.noUseGraphic = true;
 			Item.value = Item.sellPrice(gold: 8);
 			Item.rare = ItemRarityID.LightRed;
-			Item.UseSound = SoundID.Item36.WithPitch(2f);
+			Item.UseSound = SoundID.Item36.WithPitch(1f);
 		}
 		public static bool isShooting = false;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {

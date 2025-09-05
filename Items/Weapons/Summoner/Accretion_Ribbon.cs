@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.value = Item.sellPrice(gold: 2, silver: 60);
 			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 1;
-			//Item.UseSound = SoundID.Item46.WithPitch(-2f);
+			//Item.UseSound = SoundID.Item46.WithPitch(-1f);
 		}
 		public override bool MeleePrefix() => true;
 		public override void AddRecipes() {

@@ -145,7 +145,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					if (++Projectile.ai[0] > 4) {
 						SoundEngine.PlaySound(SoundID.Item60.WithPitchRange(0.15f, 0.3f).WithVolume(1f), Projectile.position);
 						SoundEngine.PlaySound(SoundID.Item142, Projectile.position);
-						SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitch(2f), Projectile.position);
+						SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitch(1f), Projectile.position);
 						Projectile.SpawnProjectile(null,
 							Projectile.position,
 							Projectile.velocity,

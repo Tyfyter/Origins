@@ -27,7 +27,7 @@ namespace Origins.NPCs.MiscB {
 			NPC.height = 47;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
-			NPC.DeathSound = SoundID.Item119.WithPitch(-2f);
+			NPC.DeathSound = SoundID.Item119.WithPitch(-1f);
 			NPC.knockBackResist = 0.75f;
 			NPC.value = 15000;
 		}

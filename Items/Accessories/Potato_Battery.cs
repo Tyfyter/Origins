@@ -137,7 +137,7 @@ namespace Origins.Items.Accessories {
 				Velocity = velocity ?? new Vector2(Main.rand.NextFloatDirection() * 7f, -2f + Main.rand.NextFloat() * -2f),
 				Color = new Color(242, 250, 255)
 			}, position);
-			SoundEngine.PlaySound(SoundID.NPCHit34.WithPitch(-2f), position);
+			SoundEngine.PlaySound(SoundID.NPCHit34.WithPitch(-1f), position);
 		}
 		public static bool IsBird(int npcType) {
 			switch (npcType) {

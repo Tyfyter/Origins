@@ -112,7 +112,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useTime = 40;
 			Item.useAnimation = 40;
 			Item.mana = 16;
-			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitch(2);
+			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitch(1);
 			Item.value = Item.sellPrice(gold: 3);
 			Item.rare = ItemRarityID.Pink;
 			Item.buffType = ModContent.BuffType<Amnestic_Rose_Buff>();
@@ -336,10 +336,10 @@ namespace Origins.Items.Weapons.Magic {
 		public override void AI() {
 			if (Projectile.ai[0] == 1) {
 				if (Projectile.ai[1] == 0) {
-					SoundEngine.PlaySound(SoundID.Item105.WithPitch(1.5f).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
-					SoundEngine.PlaySound(SoundID.Item76.WithPitch(2).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
-					SoundEngine.PlaySound(SoundID.Item123.WithPitch(2).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
-					SoundEngine.PlaySound(Origins.Sounds.defiledKill.WithPitch(2).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item105.WithPitch(1f).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item76.WithPitch(1).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item123.WithPitch(1).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
+					SoundEngine.PlaySound(Origins.Sounds.defiledKill.WithPitch(1).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
 				}
 				Projectile.localNPCHitCooldown = -1;
 				Projectile.ai[1] += 1 / 45f;

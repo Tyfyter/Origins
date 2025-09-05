@@ -51,7 +51,7 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 46;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit13;
-			NPC.DeathSound = SoundID.NPCDeath60.WithPitch(2f).WithVolume(0.5f);
+			NPC.DeathSound = SoundID.NPCDeath60.WithPitch(1f).WithVolume(0.5f);
 			NPC.value = 90;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type,
@@ -77,7 +77,7 @@ namespace Origins.NPCs.Riven {
 		public override bool? CanFallThroughPlatforms() => NPC.directionY == 1 && NPC.target >= 0 && NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
 		public override bool PreAI() {
 			if (Main.rand.NextBool(1000)) {
-				SoundEngine.PlaySound(SoundID.Zombie12.WithPitch(2f).WithVolume(0.35f), NPC.Center);
+				SoundEngine.PlaySound(SoundID.Zombie12.WithPitch(1f).WithVolume(0.35f), NPC.Center);
 				SoundEngine.PlaySound(Origins.Sounds.WCIdle.WithPitchRange(1.75f, 2f).WithVolume(0.35f), NPC.Center);
 			}
 			NPC.localAI[0]++;
@@ -86,7 +86,7 @@ namespace Origins.NPCs.Riven {
 				switch (NPC.aiAction) {
 					case 0:
 					if (SearchForGrapplePoint(out Vector2 direction)) {
-						SoundEngine.PlaySound(SoundID.Item95.WithPitch(2f).WithVolume(0.75f), NPC.Center);
+						SoundEngine.PlaySound(SoundID.Item95.WithPitch(1f).WithVolume(0.75f), NPC.Center);
 						NPC.ai[2] = NPC.SpawnProjectile(null,
 							NPC.Center,
 							direction * 16,
@@ -101,7 +101,7 @@ namespace Origins.NPCs.Riven {
 					}
 					NPC.aiAction = (int)(Main.GlobalTimeWrappedHourly % 2 + 1);
 					if (NPC.aiAction == 2) {
-						SoundEngine.PlaySound(SoundID.Item174.WithPitch(2f), NPC.Center);
+						SoundEngine.PlaySound(SoundID.Item174.WithPitch(1f), NPC.Center);
 						NPC.velocity = ((NPC.GetTargetData().Center - new Vector2(0, 16) - NPC.Center) * new Vector2(1, 4)).WithMaxLength(12);
 						NPC.collideX = false;
 						NPC.collideY = false;

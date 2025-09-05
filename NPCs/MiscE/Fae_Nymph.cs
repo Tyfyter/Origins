@@ -26,7 +26,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.width = 28;
 			NPC.height = 46;
 			NPC.friendly = false;
-			NPC.DeathSound = SoundID.Zombie113.WithPitch(2f).WithVolume(2f);
+			NPC.DeathSound = SoundID.Zombie113.WithPitch(1f).WithVolume(2f);
 			NPC.value = Item.buyPrice(gold: 2);
 			AIType = NPCID.Nymph;
 			AnimationType = NPCID.Nymph;

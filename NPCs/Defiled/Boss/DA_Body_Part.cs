@@ -257,7 +257,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			switch (NPC.aiAction) {
 				case 0: {
 					if (Timer >= 60) {
-						SoundEngine.PlaySound(Origins.Sounds.RivenBass.WithPitch(-4f).WithVolume(0.4f), NPC.Center);
+						SoundEngine.PlaySound(Origins.Sounds.RivenBass.WithPitch(-1f).WithVolume(0.4f), NPC.Center);
 						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithVolume(1.4f), NPC.Center);
 						if (Main.netMode != NetmodeID.MultiplayerClient) {
 							//center projectile removed for classic mode to make it sometimes better to stay still to dodge arm attacks

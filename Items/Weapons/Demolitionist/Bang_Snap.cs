@@ -80,7 +80,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
-			SoundEngine.PlaySound(SoundID.Item40.WithPitch(2f).WithVolume(1f), Projectile.Center);
+			SoundEngine.PlaySound(SoundID.Item40.WithPitch(1f).WithVolume(1f), Projectile.Center);
 		}
 	}
 }
