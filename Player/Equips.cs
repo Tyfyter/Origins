@@ -562,7 +562,6 @@ namespace Origins {
 				Player.manaRegenDelay = 0;
 				if (necromancyPrefixMana < Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier) necromancyPrefixMana = Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier;
 			}
-			oldGravDir = Player.gravDir;
 		}
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource) {
 			if (mildewHeart) {

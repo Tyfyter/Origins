@@ -126,10 +126,11 @@ namespace Origins.Items.Weapons.Magic {
 			.Register();
 		}
 		static Vector2 GetStartPosition(Player player) {
-			return player.MountedCenter - new Vector2(player.width * player.direction * 0.5f, -8);
+			return player.MountedCenter - new Vector2(player.width * player.direction * 0.5f, -8 * player.gravDir);
 		}
 		static void UpdateJoints(OriginPlayer originPlayer, PolarVec2[] joints) {
-			int playerDirection = originPlayer.Player.direction;
+			int gravDir = (int)originPlayer.Player.gravDir;
+			int playerDirection = originPlayer.Player.direction * gravDir;
 			float playerRotation = originPlayer.Player.fullRotation;
 			float diff;
 			int dir;
@@ -141,7 +142,7 @@ namespace Origins.Items.Weapons.Magic {
 					if (i > 0) {
 						prevRot = joints[i - 1].Theta;
 					} else {
-						prevRot = -MathHelper.PiOver2 - playerDirection * 1.5f;
+						prevRot = -MathHelper.PiOver2 * gravDir - playerDirection * 1.5f;
 						highMaxCurve = 0.75f;
 					}
 					diff = GeometryUtils.AngleDif(joints[i].Theta + playerRotation, prevRot, out dir);
@@ -150,9 +151,9 @@ namespace Origins.Items.Weapons.Magic {
 						joints[i].Theta += (diff - maxCurve) * dir;
 						atLimit++;
 					} else if (dir == playerDirection || diff < 0.2f) {
-						joints[i].Theta += 0.002f * originPlayer.Player.direction;
+						joints[i].Theta += 0.002f * playerDirection;
 					}else if (dir != playerDirection && diff > 0.8f) {
-						joints[i].Theta -= 0.002f * originPlayer.Player.direction;
+						joints[i].Theta -= 0.002f * playerDirection;
 					}
 				}
 				Vector2 pos = GetEndPos(originPlayer.Player, joints);
@@ -185,10 +186,14 @@ namespace Origins.Items.Weapons.Magic {
 				player.ChangeDir(originPlayer.relativeTarget.X > 0 ? 1 : -1);
 				originPlayer.changedDir = true;
 			}
-			if (originPlayer.changedDir || originPlayer.amnesticRoseHoldTime <= 0) {
+			if (originPlayer.changedDir || originPlayer.ChangedGravDir || originPlayer.amnesticRoseHoldTime <= 0) {
 				float startRot = 3;
 				if (player.direction == -1) startRot = MathHelper.Pi - startRot;
 				float unit = player.direction * 0.9f;
+				if (player.gravDir == -1) {
+					startRot = MathHelper.Pi - startRot;
+					unit *= player.gravDir * 2;
+				}
 				originPlayer.amnesticRoseJoints = [
 					new(40, startRot + unit),
 					new(40, startRot + unit * 2),
@@ -196,7 +201,7 @@ namespace Origins.Items.Weapons.Magic {
 					new(40, startRot + unit * 4),
 					new(28, startRot + unit * 5) // flower, 
 				];
-				if (originPlayer.changedDir) {
+				if (originPlayer.changedDir || originPlayer.ChangedGravDir) {
 					for (int i = 0; i < 20; i++) {
 						UpdateJoints(originPlayer, originPlayer.amnesticRoseJoints);
 					}

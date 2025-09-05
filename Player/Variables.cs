@@ -209,6 +209,7 @@ namespace Origins {
 		public int lastGravDir = 1;
 		public int lastDir = 1;
 		public bool changedDir = false;
+		public bool ChangedGravDir => Player.gravDir != oldGravDir;
 		public int nearbyBoundNPCTime = 0;
 		public int nearbyBoundNPCType = 0;
 		public bool resinShield = false;
