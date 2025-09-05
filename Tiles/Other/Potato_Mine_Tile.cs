@@ -34,17 +34,21 @@ namespace Origins.Tiles.Other {
 			TileObjectData.addTile(Type);
 			ID = Type;
 
-			int tileLoc = -1;
-			ILLabel label = default;
-			IL_Collision.SwitchTiles += (il) => new ILCursor(il)
-			.GotoNext(MoveType.After,
-				i => i.MatchLdloc(out tileLoc),
-				i => i.MatchLdcI4(TileID.PressurePlates),
-				i => i.MatchBeq(out label)
-			)
-			.EmitLdloc(tileLoc)
-			.EmitLdcI4(Type)
-			.EmitBeq(label);
+			try {
+				int tileLoc = -1;
+				ILLabel label = default;
+				IL_Collision.SwitchTiles += (il) => new ILCursor(il)
+				.GotoNext(MoveType.After,
+					i => i.MatchLdloc(out tileLoc),
+					i => i.MatchLdcI4(TileID.PressurePlates),
+					i => i.MatchBeq(out label)
+				)
+				.EmitLdloc(tileLoc)
+				.EmitLdcI4(Type)
+				.EmitBeq(label);
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError($"{nameof(Potato_Mine_Tile)}_BePressurePlate", e)) throw;
+			}
 			On_Wiring.HitSwitch += On_Wiring_HitSwitch;
 		}
 		private void On_Wiring_HitSwitch(On_Wiring.orig_HitSwitch orig, int i, int j) {
