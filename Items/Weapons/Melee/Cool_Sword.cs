@@ -156,21 +156,7 @@ namespace Origins.Items.Weapons.Melee {
 
 		public override bool PreDraw(ref Color lightColor) {
 			Player player = Main.player[Projectile.owner];
-			SpriteEffects effects = player.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-			if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically;
-			Rectangle slashFrame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: 11, frameY: (int)(8 * (1 - player.itemTime / (float)player.itemTimeMax)));
-			Main.EntitySpriteDraw(
-				TextureAssets.Projectile[Type].Value,
-				player.MountedCenter - Main.screenPosition,
-				slashFrame,
-				new Color(0.75f, 0.75f, 0.75f, 0.5f),
-				0,
-				new Vector2(217, 161).Apply(effects ^ SpriteEffects.FlipVertically, slashFrame.Size()),
-				Projectile.scale,
-				effects,
-				0
-			);
-			effects = player.direction * player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+			SpriteEffects effects = player.direction * player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally;
 			Texture2D texture = TextureAssets.Item[ModContent.ItemType<Cool_Sword>()].Value;
 			Main.EntitySpriteDraw(
@@ -182,6 +168,31 @@ namespace Origins.Items.Weapons.Melee {
 				new Vector2(14, 8).Apply(effects ^ SpriteEffects.FlipVertically, texture.Size()),
 				Projectile.scale,
 				effects
+			);
+			int frameNum = (int)(8 * (1 - player.itemTime / (float)player.itemTimeMax));
+			Rectangle slashFrame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: 11, frameY: frameNum);
+			float rotationOffset = frameNum switch {
+				1 => MathHelper.PiOver2 + MathHelper.PiOver4,
+				2 => 2.251824f - MathHelper.PiOver4,
+				3 => 1.613731f - MathHelper.PiOver4,
+				4 => 1.028523f - MathHelper.PiOver4,
+				5 => 0.6209881f - MathHelper.PiOver4,
+				6 => 0.1616175f - MathHelper.PiOver4,
+				7 => -0.2450442f - MathHelper.PiOver4,
+				_ => 0
+			} * player.direction * player.gravDir;
+			effects = player.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically;
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				player.MountedCenter - Main.screenPosition,
+				slashFrame,
+				new Color(0.75f, 0.75f, 0.75f, 0.5f),
+				Projectile.rotation * player.gravDir + rotationOffset,
+				new Vector2(217, 161).Apply(effects ^ SpriteEffects.FlipVertically, slashFrame.Size()),
+				Projectile.scale,
+				effects,
+				0
 			);
 			return false;
 		}
