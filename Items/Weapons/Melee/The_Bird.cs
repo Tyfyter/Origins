@@ -51,20 +51,20 @@ namespace Origins.Items.Weapons.Melee {
 				if (frame == 5) frame = 0;
 				switch (frame) {
 					case 0:
-					player.itemLocation = player.MountedCenter + new Vector2(-4 * player.direction, 4);
+					player.itemLocation = player.MountedCenter + new Vector2(-4 * player.direction, 4 * player.gravDir);
 					break;
 					case 4:
 					if (oldFrame != frame) SoundEngine.PlaySound(player.HeldItem.UseSound, player.MountedCenter);
-					player.itemLocation = player.MountedCenter + new Vector2(4 * player.direction, 8);
+					player.itemLocation = player.MountedCenter + new Vector2(4 * player.direction, 8 * player.gravDir);
 					break;
 					case 3:
-					player.itemLocation = player.MountedCenter + new Vector2(6 * player.direction, 8);
+					player.itemLocation = player.MountedCenter + new Vector2(6 * player.direction, 8 * player.gravDir);
 					break;
 					case 2:
-					player.itemLocation = player.MountedCenter + new Vector2(6 * player.direction, -8);
+					player.itemLocation = player.MountedCenter + new Vector2(6 * player.direction, -8 * player.gravDir);
 					break;
 				}
-				player.itemRotation = (progress * 3 - 0.5f) * player.direction;
+				player.itemRotation = (progress * 3 - 0.5f) * player.direction * player.gravDir;
 			}
 			player.bodyFrame.Y = player.bodyFrame.Height * frame;
 		}
@@ -145,9 +145,9 @@ namespace Origins.Items.Weapons.Melee {
 				}
 				Projectile.timeLeft = player.itemAnimationMax;
 				Projectile.hide = true;
-				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, Projectile.direction * (MathHelper.PiOver2 + Projectile.velocity.Y * 0.5f - 0.2f));
-				player.itemLocation = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
-				player.itemRotation = player.compositeFrontArm.rotation + MathHelper.PiOver4 * Projectile.direction * 3;
+				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, Projectile.direction * (MathHelper.PiOver2 + Projectile.velocity.Y * player.gravDir * 0.5f - 0.2f));
+				player.itemLocation = player.GetCompositeArmPosition(false);
+				player.itemRotation = player.compositeFrontArm.rotation + MathHelper.PiOver4 * Projectile.direction * player.gravDir * 3;
 				if (++Projectile.localAI[0] == player.itemAnimationMax) {
 					SoundEngine.PlaySound(SoundID.Item29.WithVolume(0.5f).WithPitchRange(1f, 1.2f), Projectile.Center);
 					ParticleOrchestrator.RequestParticleSpawn(false,
