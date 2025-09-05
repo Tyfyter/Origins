@@ -526,6 +526,7 @@ namespace Origins {
 		public float moveSpeedMult = 1;
 		public bool upsideDown = false;
 		int[] minionCountByType = ProjectileID.Sets.Factory.CreateIntSet();
+		public Speed_Booster.ConveyorBeltModifier conveyorBeltModifiers = null;
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
 			oldBonuses = 0;
@@ -1111,6 +1112,7 @@ namespace Origins {
 			moveSpeedMult = 1;
 			Array.Clear(minionCountByType);
 			upsideDown = false;
+			conveyorBeltModifiers = null;
 			walledDebuff = false;
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (npc?.ModNPC is Goo_Wall gooWall && gooWall.InsideWall(Player)) {
