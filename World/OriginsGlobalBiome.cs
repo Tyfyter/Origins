@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.World {
 	public class OriginsGlobalBiome : GlobalBiome {
 		[ThreadStatic]
-		public static bool isConversionFromProjectile = false;
+		public static bool isConversionFromProjectile;
 		public static bool isConvertingProjectilePlayerOwned = false;
 		public override void PostConvertTile(AltBiome oldBiome, AltBiome newBiome, int i, int j) {
 			if (WorldGen.generatingWorld) return;
