@@ -1,18 +1,13 @@
 ﻿using Origins.Items.Materials;
 using Origins.Journal;
 using Origins.Projectiles;
-using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Terraria;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Constellation : ModItem, IJournalEntrySource {
@@ -23,7 +18,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodBow);
-			Item.damage = 22;
+			Item.damage = 14;
 			Item.width = 26;
 			Item.height = 62;
 			Item.shootSpeed += 4;

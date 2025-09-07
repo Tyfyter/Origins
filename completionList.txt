@@ -59,7 +59,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(#2, ^4) Shimmer Construct !!! (charge visuals do not modify sprite)
+(#2, ^2/4) Shimmer Construct !!!
 (#, ^2) Trenchmaker
 (^) World Cracker*
 
@@ -105,7 +105,7 @@ TOWN NPC Quests:
 (^) Brine Fiend - Basic Brewery
 (^) Brine Fiend - Get Freaky
 (^) Cyborg - Sensor Upgrade*
-(⚿) Demolitionist - Re-peat Customer
+(^) Demolitionist - Re-peat Customer
 (^) Dryad - I’ll Give You a Deal*
 (^) Dryad - Clearing the Way*
 (^) Goblin Tinkerer - Reel In the Goods*
@@ -651,7 +651,7 @@ VANITY:
 (^) Sunflower Sandals*
 
 (^) DIO's Set
-(@, ^3) First Dream !!! (Byteloss)
+(#2, ^2) First Dream !!!
 (^) Tyfyter's Set*
 
 (^) Acrid Dye
@@ -745,7 +745,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(☻) Cool Sword !!!
+(#2, ^2) Cool Sword !!!
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -812,7 +812,7 @@ RANGED WEAPONS:
 (^) Blotopus*
 (^) Bolt Gun*
 (^) Chipper Knife*
-(☻) Constellation !!!
+(^) Constellation
 (^) Endowood Bow*
 (^) Felnum Longbow
 (^) Fiberglass Bow*
@@ -1442,6 +1442,7 @@ MATERIALS:
 (^) Qube°
 (X) Weapon Blueprint°
 
+(X) Armor+ Power-Up
 (^) Large Chambersite
 ---
 
