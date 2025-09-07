@@ -563,7 +563,7 @@ ACCESSORIES:
 (^) Sonar Visor*
 (^) Sonic Radar*
 (^) Sparking Flame Barrel*
-(^) Speed Booster*
+(#3) Speed Booster*
 (^) Spirit Shard*
 (^) Stone Mask*
 (ᥢ) Strange Computer°
