@@ -812,7 +812,7 @@ RANGED WEAPONS:
 (^) Blotopus*
 (^) Bolt Gun*
 (^) Chipper Knife*
-(^) Constellation
+(#3) Constellation
 (^) Endowood Bow*
 (^) Felnum Longbow
 (^) Fiberglass Bow*
@@ -1274,7 +1274,7 @@ TILES:
 (X) Mushroom Dungeon Chest°
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
-(^) Pocket Dimension Monolith
+(#3) Pocket Dimension Monolith
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Snake
 (X) Ravel Lock: Stacker
