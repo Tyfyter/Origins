@@ -5,6 +5,7 @@ using Origins.Projectiles;
 using Origins.Reflection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -33,11 +34,10 @@ namespace Origins.Tiles.Other {
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.addTile(Type);
 			ID = Type;
-
 			try {
 				int tileLoc = -1;
 				ILLabel label = default;
-				IL_Collision.SwitchTiles += (il) => new ILCursor(il)
+				IL_Collision.SwitchTiles += [DebuggerHidden] (il) => new ILCursor(il)
 				.GotoNext(MoveType.After,
 					i => i.MatchLdloc(out tileLoc),
 					i => i.MatchLdcI4(TileID.PressurePlates),
@@ -47,10 +47,11 @@ namespace Origins.Tiles.Other {
 				.EmitLdcI4(Type)
 				.EmitBeq(label);
 			} catch (Exception e) {
-				if (Origins.LogLoadingILError($"{nameof(Potato_Mine_Tile)}_BePressurePlate", e)) throw;
+				if (Origins.LogLoadingILError($"{nameof(Potato_Mine_Tile)}_BePressurePlate", e, (typeof(KeyNotFoundException), "Avalon", new(1, 3, 5)))) throw;
 			}
 			On_Wiring.HitSwitch += On_Wiring_HitSwitch;
 		}
+
 		private void On_Wiring_HitSwitch(On_Wiring.orig_HitSwitch orig, int i, int j) {
 			orig(i, j);
 			if (WorldGen.InWorld(i, j) && Main.tile[i, j].TileType == Type) {

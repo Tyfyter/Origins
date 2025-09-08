@@ -1094,16 +1094,19 @@ namespace Origins {
 			loggedErrors.Add((message, exception));
 		}
 		public static void LogLoadingWarning(LocalizedText message) {
-			instance.Logger.Warn(message.Value);
-			loadingWarnings.Add(message);
+			PegasusLib.PegasusLib.LogLoadingWarning(message);
 		}
-		public static bool LogLoadingILError(string methodName, Exception exception) {
+		public static bool LogLoadingILError(string methodName, Exception exception) => LogLoadingILError(methodName, exception, []);
+		public static bool LogLoadingILError(string methodName, Exception exception, params (Type exceptionType, string modName, Version modVersion)[] expect) {
 #if DEBUG
+			for (int i = 0; i < expect.Length; i++) {
+				if (exception.GetType() == expect[i].exceptionType && ModLoader.TryGetMod(expect[i].modName, out Mod mod) && mod.Version == expect[i].modVersion) goto expected;
+			}
 			return true;
-#else
-			Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.ILEditException").WithFormatArgs(methodName, exception));
-			return false;
 #endif
+			expected:
+			Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.ILEditException").WithFormatArgs(methodName));
+			return false;
 		}
 		// for DevHelper
 		static string DevHelpBrokenReason {
