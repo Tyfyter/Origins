@@ -1262,11 +1262,13 @@ TILES:
 (^) Traffic Cone*
 
 (X) Ashen Dungeon Chest
+(X) Batholith Grindstone°
 (X) Bilious Incense
 (^) Brine Dungeon Chest
 (X) Cargo Elevator Door
 (X) Cargo Elevator Door (Jammed)
 (^) Chambersite Gem Lock°
+(^) Cleansing Station*
 (X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
 (^) Defiled Dungeon Chest*
@@ -1280,7 +1282,8 @@ TILES:
 (X) Mushroom Dungeon Chest°
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
-(#3) Pocket Dimension Monolith
+(#3, ^2) Pocket Dimension Monolith !!!
+(X) Qube Generator°
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Snake
 (X) Ravel Lock: Stacker
@@ -1290,20 +1293,17 @@ TILES:
 (X) Rusty Locker
 (X) Security Door
 (X) Small Storage Container
+(^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box
 (X) Wrycoral Planter Box
 
-(X) Batholith Grindstone°
-(^) Cleansing Station*
 (X) Elderforge°
 (^) Fabricator*
 (X) Flesh Shredder°
 (X) Interstellar Sampler°
 (X) Medicine Fabricator
 (X) Metal Presser
-(X) Qube Generator°
 (X) The Demaker
-(^) Unsuspicious Bush
 
 (^) Acetabularia*
 (X) Ashen Scrap Foliage
