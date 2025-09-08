@@ -53,7 +53,6 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 	}
 	public class Constellation_P : ModProjectile {
-
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 5;
 			OriginsSets.Projectiles.WeakpointAnalyzerSpawnAction[Type] = (proj, i) => {
@@ -179,7 +178,6 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AI() {
 			if (Projectile.owner != Main.myPlayer) {
-				Projectile.timeLeft = 5;
 				if (IsLinked) {
 					Projectile proj = LinkedTo;
 					if (!(proj?.active ?? false) || proj.ModProjectile is not ConstellationNode) return;
