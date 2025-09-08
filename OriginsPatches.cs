@@ -1896,7 +1896,8 @@ namespace Origins {
 		internal static ShaderLayerTargetHandler shaderOroboros = new();
 		public static int drawPlayersWithShader = -1;
 		public static int keepPlayerShader = -1;
-		static int forcePlayerShader = -1;
+		internal static int forcePlayerShader = -1;
+		internal static bool resetKeepPlayerShader = false;
 		private static void On_PlayerDrawLayers_DrawPlayer_TransformDrawData(On_PlayerDrawLayers.orig_DrawPlayer_TransformDrawData orig, ref PlayerDrawSet drawinfo) {
 			orig(ref drawinfo);
 			if (forcePlayerShader >= 0) {
@@ -1909,14 +1910,19 @@ namespace Origins {
 			SpriteBatchState spriteBatchState = Main.spriteBatch.GetState();
 			bool shaded = false;
 			forcePlayerShader = -1;
+			resetKeepPlayerShader = keepPlayerShader == -1;
 			try {
 				OriginPlayer originPlayer = drawPlayer.GetModPlayer<OriginPlayer>();
-				if (drawPlayersWithShader < 0 && originPlayer.rasterizedTime > 0) {
-					if (keepPlayerShader == -1) keepPlayerShader = Anti_Gray_Dye.ShaderID;
+				if (drawPlayersWithShader < 0 && originPlayer.VisualRasterizedTime > 0) {
+					if (resetKeepPlayerShader) keepPlayerShader = Anti_Gray_Dye.ShaderID;
 					forcePlayerShader = Rasterized_Dye.ShaderID;
-				}
-				if (drawPlayersWithShader < 0 && (originPlayer.shineSparkCharge > 0 || originPlayer.shineSparkDashTime > 0)) {
+				} else if (drawPlayersWithShader < 0 && (originPlayer.shineSparkCharge > 0 || originPlayer.shineSparkDashTime > 0)) {
 					forcePlayerShader = Shimmer_Dye.ShaderID;
+				} else {
+					List<VisualEffectPlayer.VisualEffect> effects = drawPlayer.GetModPlayer<VisualEffectPlayer>().effects;
+					for (int i = 0; i < effects.Count; i++) {
+						if (effects[i].SetForcedShader()) break;
+					}
 				}
 				if (drawPlayersWithShader >= 0) {
 					forcePlayerShader = drawPlayersWithShader;
@@ -1924,7 +1930,6 @@ namespace Origins {
 						coordinateMaskFilter.Shader.Parameters["uOffset"].SetValue(drawPlayer.position);
 						coordinateMaskFilter.Shader.Parameters["uScale"].SetValue(1f);
 						coordinateMaskFilter.UseColor(new Vector3(originPlayer.tornOffset, originPlayer.tornCurrentSeverity));
-						//coordinateMaskFilter.UseOpacity(1);//supposed to be originPlayer.tornCurrentSeverity, but can't figure out how to fix blending
 					}
 					orig(self, camera, drawPlayer, position, rotation, rotationOrigin, shadow, alpha, scale, headOnly);
 					return;
@@ -1966,6 +1971,7 @@ namespace Origins {
 					Main.spriteBatch.Restart(spriteBatchState);
 				}
 				forcePlayerShader = -1;
+				if (resetKeepPlayerShader) keepPlayerShader = -1;
 			}
 		}
 

@@ -5314,6 +5314,7 @@ First_Dream: {
 		Right-click to change your appearance!
 		Makes you look like one of Origins' spriters!
 		'''
+	Mode_ByteLoss: "[glitch:ByteLoss]"
 }
 
 Tender_Flesh_Heart: {

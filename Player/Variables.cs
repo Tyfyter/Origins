@@ -371,6 +371,8 @@ namespace Origins {
 		#region buffs
 		public int rapidSpawnFrames = 0;
 		public int rasterizedTime = 0;
+		public int? visualRasterizedTime = null;
+		public int VisualRasterizedTime => visualRasterizedTime ?? rasterizedTime;
 		public bool toxicShock = false;
 		public bool tornDebuff = false;
 		public bool flaskBile = false;
@@ -999,6 +1001,7 @@ namespace Origins {
 			} else if (!Player.HasBuff<Defiled_Asphyxiator_Debuff_3>()) {
 				rasterizedTime = 0;
 			}
+			visualRasterizedTime = null;
 			Soul_Snatcher.UpdateCharge(Player, ref soulSnatcherTime, ref soulSnatcherActive);
 			plagueSight = false;
 			plagueSightLight = false;

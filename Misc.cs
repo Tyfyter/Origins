@@ -630,6 +630,81 @@ namespace Origins {
 			ApplySlot(ref player.balloon, balloonSlot);
 		}
 	}
+	public struct PlayerSlotSet {
+		public int headSlot;
+		public int bodySlot;
+		public int legSlot;
+		public int beardSlot;
+		public int backSlot;
+		public int faceSlot;
+		public int neckSlot;
+		public int shieldSlot;
+		public int wingSlot;
+		public int waistSlot;
+		public int shoeSlot;
+		public int frontSlot;
+		public int handOffSlot;
+		public int handOnSlot;
+		public int balloonSlot;
+		public int tailSlot;
+		public PlayerSlotSet(int headSlot = -2, int bodySlot = -2, int legSlot = -2, int beardSlot = -2, int backSlot = -2, int faceSlot = -2, int neckSlot = -2, int shieldSlot = -2, int wingSlot = -2, int waistSlot = -2, int shoeSlot = -2, int frontSlot = -2, int handOffSlot = -2, int handOnSlot = -2, int balloonSlot = -2, int tailSlot = -2) {
+			this.headSlot = headSlot;
+			this.bodySlot = bodySlot;
+			this.legSlot = legSlot;
+			this.beardSlot = beardSlot;
+			this.backSlot = backSlot;
+			this.faceSlot = faceSlot;
+			this.neckSlot = neckSlot;
+			this.shieldSlot = shieldSlot;
+			this.wingSlot = wingSlot;
+			this.waistSlot = waistSlot;
+			this.shoeSlot = shoeSlot;
+			this.frontSlot = frontSlot;
+			this.handOffSlot = handOffSlot;
+			this.handOnSlot = handOnSlot;
+			this.balloonSlot = balloonSlot;
+			this.tailSlot = tailSlot;
+		}
+		static void ApplySlot(ref int target, int value) {
+			if (value != -2) target = value;
+		}
+		public PlayerSlotSet(Player player) {
+			headSlot = player.head;
+			bodySlot = player.body;
+			legSlot = player.legs;
+			beardSlot = player.beard;
+			backSlot = player.back;
+			faceSlot = player.face;
+			neckSlot = player.neck;
+			shieldSlot = player.shield;
+			wingSlot = player.wings;
+			waistSlot = player.waist;
+			shoeSlot = player.shoe;
+			frontSlot = player.front;
+			handOffSlot = player.handoff;
+			handOnSlot = player.handon;
+			balloonSlot = player.balloon;
+			tailSlot = player.tail;
+		}
+		public readonly void Apply(Player player) {
+			ApplySlot(ref player.head, headSlot);
+			ApplySlot(ref player.body, bodySlot);
+			ApplySlot(ref player.legs, legSlot);
+			ApplySlot(ref player.beard, beardSlot);
+			ApplySlot(ref player.back, backSlot);
+			ApplySlot(ref player.face, faceSlot);
+			ApplySlot(ref player.neck, neckSlot);
+			ApplySlot(ref player.shield, shieldSlot);
+			ApplySlot(ref player.wings, wingSlot);
+			ApplySlot(ref player.waist, waistSlot);
+			ApplySlot(ref player.shoe, shoeSlot);
+			ApplySlot(ref player.front, frontSlot);
+			ApplySlot(ref player.handoff, handOffSlot);
+			ApplySlot(ref player.handon, handOnSlot);
+			ApplySlot(ref player.balloon, balloonSlot);
+			ApplySlot(ref player.tail, tailSlot);
+		}
+	}
 	public class GeneratorCache<TKey, TValue>(Func<TKey, TValue> generator) : IReadOnlyDictionary<TKey, TValue> {
 		readonly Dictionary<TKey, TValue> cache = new();
 		readonly Func<TKey, TValue> generator = generator;

@@ -9,6 +9,7 @@ using Origins.Layers;
 using Origins.Tiles.Defiled;
 using PegasusLib;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -164,6 +165,32 @@ namespace Origins {
 				if (zoom == -1) zoom = 0;
 				zoom += 0.5f;
 			}
+		}
+	}
+	public class VisualEffectPlayer : ModPlayer {
+		public List<VisualEffect> effects = [];
+		public override void ResetEffects() {
+			for (int i = effects.Count - 1; i >= 0; i--) {
+				effects[i].ResetEffects();
+				if (!effects[i].active) effects.RemoveAt(i);
+			}
+		}
+		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
+			for (int i = 0; i < effects.Count; i++) {
+				effects[i].ModifyDrawInfo(ref drawInfo);
+			}
+		}
+		public override void FrameEffects() {
+			for (int i = 0; i < effects.Count; i++) {
+				effects[i].FrameEffects(Player);
+			}
+		}
+		public abstract class VisualEffect {
+			public bool active = true;
+			public virtual void ResetEffects() { }
+			public virtual bool SetForcedShader() => false;
+			public virtual void ModifyDrawInfo(ref PlayerDrawSet drawInfo) { }
+			public virtual void FrameEffects(Player player) { }
 		}
 	}
 }

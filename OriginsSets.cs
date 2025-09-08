@@ -329,6 +329,7 @@ namespace Origins {
 		public static class Misc {
 			public static HashSet<(Effect effect, string pass)> BasicColorDyeShaderPasses = [];
 			public static bool[] BasicColorDyeShaders;
+			public static int ArmorShaderDataCount { get; private set; }
 			public static void SetupDyes() {
 				BasicColorDyeShaderPasses.Add((Main.pixelShader, "ArmorColored"));
 				BasicColorDyeShaderPasses.Add((Main.pixelShader, "ArmorColoredAndBlack"));
@@ -336,7 +337,8 @@ namespace Origins {
 				FastFieldInfo<ArmorShaderDataSet, List<ArmorShaderData>> _shaderData = "_shaderData";
 				FastFieldInfo<ShaderData, string> _passName = "_passName";
 				List<ArmorShaderData> shaders = _shaderData.GetValue(GameShaders.Armor);
-				BasicColorDyeShaders = new bool[shaders.Count + 1];
+				ArmorShaderDataCount = shaders.Count + 1;
+				BasicColorDyeShaders = new bool[ArmorShaderDataCount];
 				for (int i = 0; i < shaders.Count; i++) {
 					ArmorShaderData shader = shaders[i];
 					if (BasicColorDyeShaderPasses.Contains((shader.Shader, _passName.GetValue(shader)))) {
