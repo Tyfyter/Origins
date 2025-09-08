@@ -1381,6 +1381,8 @@ TILES:
 (々) Quantux Trophy*
 (^) Shimmer Construct Relic*
 (^) Shimmer Construct Trophy*
+(X) SR-48 Relic
+(X) SR-48 Trophy
 (X) Trenchmaker Relic
 (X) Trenchmaker Trophy
 (^) World Cracker Relic*
