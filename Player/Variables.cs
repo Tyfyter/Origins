@@ -453,6 +453,7 @@ namespace Origins {
 		public float dreamcatcherRotSpeed = 0;
 		public int dreamcatcherHoldTime = 0;
 		public Vector2? dreamcatcherWorldPosition = null;
+		public bool pocketDimensionMonolithActive = false;
 		#endregion
 
 		#region visuals
@@ -935,6 +936,7 @@ namespace Origins {
 			if (amnesticRoseHoldTime <= 0) amnesticRoseBloomTime.Cooldown();
 			Dream_Catcher.UpdateVisual(Player, ref dreamcatcherAngle, ref dreamcatcherRotSpeed);
 			if (dreamcatcherHoldTime.Cooldown()) dreamcatcherWorldPosition = null;
+			pocketDimensionMonolithActive = false;
 
 			manaShielding = 0f;
 

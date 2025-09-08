@@ -43,7 +43,7 @@ namespace Origins.Tiles {
 			if (!hideVisual) UpdateVanity(player);
 		}
 		public override void UpdateVanity(Player player) {
-			if (player.whoAmI == Main.myPlayer) Tile.ApplyEffect();
+			if (player.whoAmI == Main.myPlayer) Tile.ApplyEffectEquipped(player);
 		}
 		public override void AddRecipes() {
 			if (OnAddRecipes is not null) {
@@ -90,6 +90,7 @@ namespace Origins.Tiles {
 		public override void NearbyEffects(int i, int j, bool closer) {
 			if (closer && IsEnabled(i, j)) ApplyEffect();
 		}
+		public virtual void ApplyEffectEquipped(Player player) => ApplyEffect();
 		public abstract void ApplyEffect();
 		public override void MouseOver(int i, int j) {
 			Player player = Main.LocalPlayer;

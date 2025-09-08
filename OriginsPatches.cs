@@ -2012,7 +2012,7 @@ namespace Origins {
 				} else {
 					return new Color(0, 0, 0, 0);
 				}
-			} else if ((SC_Phase_Three_Underlay.alwaysLightAllTiles || SC_Phase_Three_Underlay.ForcedLit(i, j)) && Filters.Scene["Origins:ShimmerConstructPhase3"].Active) {
+			} else if ((SC_Phase_Three_Underlay.alwaysLightAllTiles || SC_Phase_Three_Underlay.ForcedLit(i, j)) && (Filters.Scene["Origins:ShimmerConstructPhase3"].Active || Filters.Scene["Origins:ShimmerConstructPhase3Cheap"].IsVisible())) {
 				Color color = orig(self, j, i, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 				if (color.R == 0 && color.G == 0 && color.B == 0) color.R = 1;
 				return color;

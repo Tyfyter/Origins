@@ -21,8 +21,11 @@ namespace Origins.Tiles.Other {
 			TileID.Sets.HasSlopeFrames[Type] = true;
 			Main.tileLighted[Type] = true;
 		}
+		public override void ApplyEffectEquipped(Player player) {
+			player.OriginPlayer().pocketDimensionMonolithActive = true;
+		}
 		public override void ApplyEffect() {
-			SC_Scene_Effect.monolithActive = true;
+			SC_Scene_Effect.monolithTileActive = true;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);

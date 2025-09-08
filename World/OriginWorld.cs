@@ -220,7 +220,7 @@ namespace Origins {
 			chambersiteWalls = 0;
 			Array.Clear(Chambersite_Stone_Wall.wallCounts);
 
-			SC_Scene_Effect.monolithActive = false;
+			SC_Scene_Effect.monolithTileActive = false;
 			Defiled_Wastelands.monolithActive = false;
 		}
 

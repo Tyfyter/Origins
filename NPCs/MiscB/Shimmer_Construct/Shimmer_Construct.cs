@@ -726,7 +726,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		Vector2 sourcePos;
 		Shimmer_Construct boss;
 		float monolithProgress;
-		public static bool monolithActive;
+		public static bool monolithTileActive;
+		public static bool MonolithActive => monolithTileActive || (OriginPlayer.LocalOriginPlayer?.pocketDimensionMonolithActive ?? false);
 		public static bool cheapBG;
 		public override void SpecialVisuals(Player player, bool isActive) {
 			bool phase3Active = false;
@@ -756,7 +757,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			} else {
 				scale = 0;
 			}
-			phase3Active |= monolithProgress > 0 || monolithActive;
+			phase3Active |= monolithProgress > 0 || MonolithActive;
 			cheapBG = false;
 			if (!Lighting.NotRetro) cheapBG = phase3Active.TrySet(false);
 			if (!phase3Active) {
@@ -787,7 +788,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					Color.White * monolithProgress
 				));
 			}
-			MathUtils.LinearSmoothing(ref monolithProgress, monolithActive.ToInt(), OriginSystem.biomeShaderSmoothing);
+			MathUtils.LinearSmoothing(ref monolithProgress, MonolithActive.ToInt(), OriginSystem.biomeShaderSmoothing);
 		}
 		public void AddArea() {
 			if (scale == 0 || !SC_Phase_Three_Underlay.DrawnMaskSources.Add(this) || !Lighting.NotRetro) return;
