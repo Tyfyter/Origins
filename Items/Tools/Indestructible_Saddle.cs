@@ -15,6 +15,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using ThoriumMod.Empowerments;
 using Tyfyter.Utils;
 namespace Origins.Items.Tools {
 	public class Indestructible_Saddle : ModItem, ICustomWikiStat {
@@ -154,12 +155,24 @@ namespace Origins.Items.Tools {
 				}
 			}
 			player.GoingDownWithGrapple = true;
+			bool doDismount = false;
+			Vector2 dismountVelocity = player.velocity;
 			if (Collision.SolidCollision(player.position + player.velocity, player.width, player.height)) {
 				player.mount._abilityCooldown /= 3;
+				player.Hurt(PlayerDeathReason.ByOther(0), (int)(player.velocity.Length() * 3), -player.direction, true, cooldownCounter: ImmunityCooldownID.WrongBugNet, dodgeable: false);
+				doDismount = true;
+			}
+			if (player.mount._abilityCooldown < MountData.abilityCooldown - 30 && player.controlJump && player.releaseJump) {
+				player.jump = Player.jumpHeight;
+				player.velocity.Y = Player.jumpSpeed * -1.5f;
+				player.position.Y -= 24;
+				doDismount = true;
+			}
+			if (doDismount) {
 				Projectile.NewProjectile(
 					player.GetSource_ItemUse(item),
 					position,
-					player.velocity,
+					dismountVelocity,
 					ModContent.ProjectileType<Indestructible_Saddle_Projectile>(),
 					player.GetWeaponDamage(item),
 					player.GetWeaponKnockback(item),
@@ -168,9 +181,7 @@ namespace Origins.Items.Tools {
 					player.direction,
 					player.mount._abilityCooldown
 				);
-				player.Hurt(PlayerDeathReason.ByOther(0), (int)(player.velocity.Length() * 3), -player.direction, true, cooldownCounter: ImmunityCooldownID.WrongBugNet, dodgeable: false);
 				player.mount.Dismount(player);
-				return;
 			}
 			//Dust.NewDustPerfect(player.position + player.fullRotationOrigin - new Vector2(0, 10), 27, Vector2.Zero).noGravity = true;
 		}
