@@ -1,15 +1,13 @@
-﻿using Microsoft.Build.Tasks;
-using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Journal;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
     public class Stone_Mask : ModItem, IJournalEntrySource, ICustomWikiStat {
@@ -18,7 +16,9 @@ namespace Origins.Items.Accessories {
 			"LoreItem"
         ];
         public string EntryName => "Origins/" + typeof(Stone_Mask_Entry).Name;
-
+		public override void SetStaticDefaults() {
+			ArmorIDs.Face.Sets.DrawInFaceUnderHairLayer[Item.faceSlot] = true;
+		}
         public override void SetDefaults() {
             Item.DefaultToAccessory(14, 22);
             Item.value = Item.sellPrice(gold: 10);
