@@ -539,6 +539,21 @@ namespace Origins.Items.Other.Testing {
 		}
 		public void Unload() { }
 	}
+	public class List_Worldgen_Testing_Mode : WorldgenTestingMode {
+		public override SortOrder SortPosition => SortOrder.New;
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "List World Generation Sources";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			System.Reflection.FieldInfo field = typeof(SystemLoader).GetField("HookModifyWorldGenTasks", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+			System.Reflection.FieldInfo defaultInstances = field.FieldType.GetField("defaultInstances", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+			ReadOnlySpan<ModSystem> readOnlySpan = (ModSystem[])defaultInstances.GetValue(field.GetValue(null));
+			for (int i = 0; i < readOnlySpan.Length; i++) {
+				Main.NewText(readOnlySpan[i]);
+			}
+		}
+	}
 	public class Area_Analysis_Testing_Mode : WorldgenTestingMode {
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Analyze";
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
@@ -600,7 +615,6 @@ namespace Origins.Items.Other.Testing {
 		}
 	}
 	public class Carver_Testing_Mode : WorldgenTestingMode {
-		public override SortOrder SortPosition => SortOrder.New;
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			Carver.DoCarve(
 				GetFilter(out Vector2 posMin, out Vector2 posMax),

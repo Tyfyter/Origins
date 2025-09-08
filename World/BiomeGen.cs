@@ -1,4 +1,5 @@
 using AltLibrary.Common.Systems;
+using Microsoft.Xna.Framework.Input;
 using Origins.Items.Accessories;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
@@ -323,7 +324,6 @@ namespace Origins {
 					Origins.instance.Logger.Info($"Generated {totalCount} chambersite walls over {tryCount} tries");
 				}));
 			}
-
 		}
 		public static bool HasTriggerWithinRange(int i, int j, int range) {
 			List<Point> currentPoints = [];
