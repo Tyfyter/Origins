@@ -131,7 +131,7 @@ namespace Origins.Items.Accessories {
 				player.Center = center;
 			}
 		}
-		static bool PreventItemPickup(Item item, Player player) {
+		public static bool PreventItemPickup(Item item, Player player) {
 			return item.shimmerTime != 0f
 				|| item.noGrabDelay != 0
 				|| item.playerIndexTheItemIsReservedFor != player.whoAmI

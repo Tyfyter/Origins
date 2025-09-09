@@ -1,22 +1,20 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Weapons.Magic;
+using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
-using PegasusLib;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.UI;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
-using ThoriumMod.NPCs;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Terratotem : ModItem, ICustomWikiStat {
@@ -424,11 +422,17 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile maskProj = Projectile.GetRelatedProjectile(0);
 			if ((maskProj?.active ?? false) && Projectile.whoAmI > maskProj.whoAmI && maskProj.ModProjectile is Terratotem_Mask_Base mask) mask.Draw(lightColor);
 		}
+		public override void OnKill(int timeLeft) {
+			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active) {
+				mask.Kill();
+			}
+		}
 	}
 	public abstract class Terratotem_Mask_Base : ModProjectile {
 		public AutoLoadingAsset<Texture2D> sideTexture;
 		public AutoLoadingAsset<Texture2D> sideGlowTexture;
 		public virtual int FrameCount => 1;
+		public virtual bool CanPickupItems => true;
 		public Terratotem_Mask_Base() {
 			sideTexture = GetType().GetDefaultTMLName() + "_Side";
 			sideGlowTexture = GetType().GetDefaultTMLName() + "_Side_Glow";
@@ -451,10 +455,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.extraUpdates = 1;
 			if (FrameCount > 1) Projectile.frame = Main.rand.Next(FrameCount);
 		}
+		protected TargetData targetData = new(TargetType.Slot, 0);
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.ai[1] = -1;
 		}
-		int[] othersTargettingCounts = new int[Main.maxNPCs];
+		readonly int[] othersTargetingCounts = new int[Main.maxNPCs];
+		readonly int[] othersTargetingItemsCounts = new int[Main.maxNPCs];
 		public override void AI() {
 			Projectile slot = Projectile.GetRelatedProjectile(0);
 			if (slot?.active != true) {
@@ -462,67 +468,102 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				return;
 			}
 			Projectile.timeLeft = 5;
-			Array.Clear(othersTargettingCounts);
+			Array.Clear(othersTargetingCounts);
+			Array.Clear(othersTargetingItemsCounts);
 			foreach (Projectile other in Main.ActiveProjectiles) {
 				if (other.whoAmI == Projectile.whoAmI) continue;
-				if (other.owner == Projectile.owner && other.ModProjectile is Terratotem_Mask_Base && other.ai[1] >= 0) {
-					othersTargettingCounts[(int)other.ai[1]]++;
+				if (other.owner == Projectile.owner && other.ModProjectile is Terratotem_Mask_Base otherMask) {
+					switch (otherMask.targetData.TargetType) {
+						case TargetType.NPC:
+						othersTargetingCounts[otherMask.targetData.Index]++;
+						break;
+
+						case TargetType.Item:
+						othersTargetingItemsCounts[otherMask.targetData.Index]++;
+						break;
+					}
 				}
 			}
 			float distanceFromTarget = 2000f;
-			Vector2 targetCenter = default;
 			bool hasPriorityTarget = false;
 			int sharingCount = int.MaxValue;
 			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
-				bool isCurrentTarget = npc.whoAmI == Projectile.ai[1];
+				bool isCurrentTarget = targetData.TargetType == TargetType.NPC && npc.whoAmI == targetData.Index;
 				if ((isCurrentTarget || isPriorityTarget || !hasPriorityTarget) && npc.CanBeChasedBy()) {
 					Vector2 pos = Projectile.position;
 					float between = Vector2.Distance(npc.Center, pos);
 					between *= isCurrentTarget ? 0 : 1;
 					bool closer = distanceFromTarget > between;
 					bool lineOfSight = Collision.CanHitLine(pos, 8, 8, npc.position, npc.width, npc.height);
-					if ((closer || sharingCount > othersTargettingCounts[npc.whoAmI] || !foundTarget) && lineOfSight) {
-						sharingCount = othersTargettingCounts[npc.whoAmI];
+					if ((closer || sharingCount > othersTargetingCounts[npc.whoAmI] || !foundTarget) && lineOfSight) {
+						sharingCount = othersTargetingCounts[npc.whoAmI];
 						distanceFromTarget = between;
-						targetCenter = npc.Center;
-						Projectile.ai[1] = npc.whoAmI;
+						targetData.Index = npc.whoAmI;
+						targetData.TargetType = TargetType.NPC;
 						foundTarget = true;
 						hasPriorityTarget = isPriorityTarget;
 					}
 				}
 			}
-			bool foundTarget = Main.player[Projectile.owner].GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
-			DoMaskBehavior();
-		}
-		public virtual void DoMaskBehavior() {
-			Projectile slot = Projectile.GetRelatedProjectile(0);
-			Vector2 targetPos;
-			bool intersecting = false;
-			switch ((int)Projectile.ai[1]) {
-				case -2:
-				targetPos = slot.Center;
-				if (Projectile.Center.WithinRange(targetPos, 16)) Projectile.ai[1] = -1;
-				break;
-				case -1:
+			Player player = Main.player[Projectile.owner];
+			TargetData oldTargetData = targetData;
+			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
+			if (targetData.TargetType == TargetType.Slot && CanPickupItems) {
+				float bestPickupPriority = 0;
+				for (int i = 0; i < Main.maxItems; i++) {
+					Item item = Main.item[i];
+					if (item.active) {
+						bool isCurrentTarget = targetData.TargetType == TargetType.Item && i == targetData.Index;
+						if (isCurrentTarget || targetData.TargetType != TargetType.Item) {
+							Vector2 pos = Projectile.position;
+							float between = Vector2.Distance(item.Center, pos);
+							between *= isCurrentTarget ? 0 : 1;
+							bool closer = distanceFromTarget > between;
+							bool lineOfSight = Collision.CanHitLine(pos, 8, 8, item.position, item.width, item.height);
+							float pickupPriority = GetItemPickupPriority(player, item);
+							if (pickupPriority <= bestPickupPriority) closer = false;
+							if (lineOfSight && (closer || pickupPriority > bestPickupPriority) && othersTargetingItemsCounts[i] <= 0 && !Terrarian_Voodoo_Doll.PreventItemPickup(item, player)) {
+								distanceFromTarget = between;
+								targetData.Index = i;
+								targetData.TargetType = TargetType.Item;
+							}
+						}
+					}
+				}
+			}
+			if (targetData != oldTargetData) {
+				Projectile.netUpdate = true;
+			}
+			if (targetData.TargetType != TargetType.Slot) Projectile.ai[1] = 0;
+			if (Projectile.ai[1] == -1) {
 				Projectile.Center = slot.Center;
 				Projectile.velocity = Vector2.Zero;
 				return;
-				default:
-				NPC target = Main.npc[(int)Projectile.ai[1]];
-				if (target.active && target.CanBeChasedBy(Projectile)) {
-					targetPos = target.Center;
-					intersecting = Projectile.Hitbox.Intersects(target.Hitbox);
-				} else {
-					Projectile.ai[1] = -2;
-					targetPos = slot.Center;
-				}
-				break;
 			}
+			DoMaskBehavior();
+		}
+		public virtual float GetItemPickupPriority(Player player, Item item) {
+			if (item.IsACoin) return float.Pow(2, item.type - ItemID.CopperCoin);
+			if (item.IsCurrency) return 2;
+			if (item.type is ItemID.Heart or ItemID.CandyApple or ItemID.CandyCane) return (1 - player.statLife / (float)player.statLifeMax2) * RarityLoader.RarityCount * 2;
+			return item.OriginalRarity;
+		}
+		public virtual void DoMaskBehavior() {
+			Rectangle targetRect = targetData.GetPosition(Projectile);
+			Vector2 targetPos = targetRect.Center();
 			float speed = 8f;
 			float inertia = 12f;
-			Vector2 directionToTarget = (targetPos - Projectile.Center).Normalized(out float distanceToTarget);
-			if (intersecting && Projectile.ai[1] >= 0) {
-				directionToTarget = directionToTarget.RotatedByRandom(3);
+			Vector2 directionToTarget = (targetPos - Projectile.Center).Normalized(out _);
+			if (Projectile.Hitbox.Intersects(targetRect)) {
+				switch (targetData.TargetType) {
+					case TargetType.Slot:
+					if (Projectile.Center.WithinRange(targetPos, 16)) Projectile.ai[1] = -1;
+					break;
+
+					case TargetType.NPC:
+					directionToTarget = directionToTarget.RotatedByRandom(3);
+					break;
+				}
 			}
 			Projectile.velocity = (Projectile.velocity * (inertia - 1) + directionToTarget * speed) / inertia;
 		}
@@ -571,11 +612,92 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (Projectile.whoAmI > Projectile.GetRelatedProjectile(0).whoAmI) Draw(lightColor);
 			return false;
 		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			targetData.Write(writer);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			targetData = TargetData.Read(reader);
+		}
+		public record struct TargetData(TargetType TargetType, int Index) {
+			public readonly void Write(BinaryWriter writer) {
+				writer.Write((byte)TargetType);
+				if (TargetType != TargetType.Slot) writer.Write(Index);
+			}
+			public static TargetData Read(BinaryReader reader) {
+				TargetData result = new() {
+					TargetType = (TargetType)reader.ReadByte()
+				};
+				if (result.TargetType != TargetType.Slot) result.Index = reader.ReadInt32();
+				return result;
+			}
+			public Rectangle GetPosition(Projectile projectile) {
+				switch (TargetType) {
+					case TargetType.NPC:
+					if (!Main.npc[Index].active || !Main.npc[Index].CanBeChasedBy(projectile)) {
+						TargetType = TargetType.Slot;
+						goto case TargetType.Slot;
+					}
+					return Main.npc[Index].Hitbox;
+
+					case TargetType.Item:
+					if (!Main.item[Index].active) {
+						TargetType = TargetType.Slot;
+						goto case TargetType.Slot;
+					}
+					return Main.item[Index].Hitbox;
+
+					default:
+					case TargetType.Slot:
+					return projectile.GetRelatedProjectile(0)?.Hitbox ?? projectile.Hitbox;
+				}
+			}
+		}
+		public enum TargetType : byte {
+			Slot,
+			NPC,
+			Item
+		}
 	}
 	public class Terratotem_Mask_Small : Terratotem_Mask_Base {
 		public override int FrameCount => 4;
+		public override bool CanPickupItems => false;
 	}
 	public class Terratotem_Mask_Medium : Terratotem_Mask_Base {
+		public override void DoMaskBehavior() {
+			if (Projectile.ai[2] > 0) {
+				Projectile.ai[2]--;
+				if (targetData.TargetType == TargetType.Item) {
+					Item item = Main.item[targetData.Index];
+					if (!item.active) return;
+					Player player = Main.player[Projectile.owner];
+					if (!Terrarian_Voodoo_Doll.PreventItemPickup(item, player) && Projectile.Hitbox.Intersects(Main.item[targetData.Index].Hitbox)) {
+						item.Center = player.Center;
+					}
+				}
+				return;
+			}
+			Rectangle targetRect = targetData.GetPosition(Projectile);
+			Vector2 targetPos = targetRect.Center();
+			if (targetData.TargetType != TargetType.Slot) {
+				Vector2 GetPosition(bool left) {
+					return left ? targetRect.Left() - new Vector2(32, 0) : targetRect.Right() + new Vector2(32, 0);
+				}
+				bool left = Projectile.Center.X < targetRect.Center.X;
+				targetPos = GetPosition(left);
+				targetPos.Y -= 24;
+				if (Projectile.Center.WithinRange(targetPos, 16)) {
+					Projectile.velocity = (targetRect.Center() - Projectile.Center).Normalized(out _) * 12;
+					Projectile.ai[2] = (GetPosition(!left).X - Projectile.Center.X) / Projectile.velocity.X;
+				}
+			}
+			float speed = 8f;
+			float inertia = 12f;
+			Vector2 directionToTarget = (targetPos - Projectile.Center).Normalized(out _);
+			if (Projectile.Hitbox.Intersects(targetRect) && targetData.TargetType == TargetType.Slot) {
+				if (Projectile.Center.WithinRange(targetPos, 16)) Projectile.ai[1] = -1;
+			}
+			Projectile.velocity = (Projectile.velocity * (inertia - 1) + directionToTarget * speed) / inertia;
+		}
 	}
 	public class Terratotem_Mask_Big : Terratotem_Mask_Base {
 	}
