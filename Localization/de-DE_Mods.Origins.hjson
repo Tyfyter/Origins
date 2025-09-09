@@ -1974,6 +1974,9 @@ Projectiles: {
 	// Dream_Catcher_Vine.DisplayName: Dream Catcher Vine
 	// Dream_Catcher_P.DisplayName: Dream Catcher P
 	// Terratotem_Tab.DisplayName: Terratotem Tab
+	// Terratotem_Mask_Small.DisplayName: Terratotem Mask Small
+	// Terratotem_Mask_Big.DisplayName: Terratotem Mask Big
+	// Terratotem_Mask_Medium.DisplayName: Terratotem Mask Medium
 }
 
 Prefixes: {

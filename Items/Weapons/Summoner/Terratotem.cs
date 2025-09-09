@@ -2,8 +2,10 @@
 using Mono.Cecil;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
+using PegasusLib;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +16,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod.Empowerments;
+using ThoriumMod.NPCs;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Terratotem : ModItem, ICustomWikiStat {
@@ -249,6 +252,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
+		public bool CanDie => Projectile.localAI[0] <= 0;
 		public float SacrificeAvoidance {
 			get {
 				if (Projectile.localAI[0] <= 0) {
@@ -355,8 +359,19 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public virtual int GetMask() {
 			GetBottom(out int count);
 			switch (count) {
+				case 1:
+				case 2:
+				case 5:
+				return ModContent.ProjectileType<Terratotem_Mask_Small>();
+
+				case 3:
+				case 6:
+				case 7:
+				return ModContent.ProjectileType<Terratotem_Mask_Medium>();
+
+				case 4:
 				default:
-				return ProjectileID.BeeArrow;
+				return ModContent.ProjectileType<Terratotem_Mask_Big>();
 			}
 		}
 		public override void AI() {
@@ -385,7 +400,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.velocity = Vector2.Zero;
 			}
 			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active) {
-
+				if (mask.ai[1] == -1) {
+					mask.Center = Projectile.Center;
+				}
 			} else if (Projectile.IsLocallyOwned()) {
 				mask = Projectile.NewProjectileDirect(
 					Projectile.GetSource_FromAI(),
@@ -400,7 +417,166 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.ai[0] = mask.identity;
 				Projectile.netUpdate = true;
 			}
+			Lighting.AddLight(Projectile.Center, 0.2f, 0.8f, 0.2f);
 			if (Projectile.localAI[0] <= 0) Life -= 0.25f;
 		}
+		public override void PostDraw(Color lightColor) {
+			Projectile maskProj = Projectile.GetRelatedProjectile(0);
+			if ((maskProj?.active ?? false) && Projectile.whoAmI > maskProj.whoAmI && maskProj.ModProjectile is Terratotem_Mask_Base mask) mask.Draw(lightColor);
+		}
+	}
+	public abstract class Terratotem_Mask_Base : ModProjectile {
+		public AutoLoadingAsset<Texture2D> sideTexture;
+		public AutoLoadingAsset<Texture2D> sideGlowTexture;
+		public virtual int FrameCount => 1;
+		public Terratotem_Mask_Base() {
+			sideTexture = GetType().GetDefaultTMLName() + "_Side";
+			sideGlowTexture = GetType().GetDefaultTMLName() + "_Side_Glow";
+		}
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.MinionShot[Type] = true;
+		}
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClass.Summon;
+			Projectile.width = 20;
+			Projectile.height = 20;
+			Projectile.tileCollide = false;
+			Projectile.friendly = true;
+			Projectile.minionSlots = 0f;
+			Projectile.penetrate = -1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 20;
+			Projectile.ignoreWater = true;
+			Projectile.netImportant = true;
+			Projectile.extraUpdates = 1;
+			if (FrameCount > 1) Projectile.frame = Main.rand.Next(FrameCount);
+		}
+		public override void OnSpawn(IEntitySource source) {
+			Projectile.ai[1] = -1;
+		}
+		int[] othersTargettingCounts = new int[Main.maxNPCs];
+		public override void AI() {
+			Projectile slot = Projectile.GetRelatedProjectile(0);
+			if (slot?.active != true) {
+				Projectile.Kill();
+				return;
+			}
+			Projectile.timeLeft = 5;
+			Array.Clear(othersTargettingCounts);
+			foreach (Projectile other in Main.ActiveProjectiles) {
+				if (other.whoAmI == Projectile.whoAmI) continue;
+				if (other.owner == Projectile.owner && other.ModProjectile is Terratotem_Mask_Base && other.ai[1] >= 0) {
+					othersTargettingCounts[(int)other.ai[1]]++;
+				}
+			}
+			float distanceFromTarget = 2000f;
+			Vector2 targetCenter = default;
+			bool hasPriorityTarget = false;
+			int sharingCount = int.MaxValue;
+			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
+				bool isCurrentTarget = npc.whoAmI == Projectile.ai[1];
+				if ((isCurrentTarget || isPriorityTarget || !hasPriorityTarget) && npc.CanBeChasedBy()) {
+					Vector2 pos = Projectile.position;
+					float between = Vector2.Distance(npc.Center, pos);
+					between *= isCurrentTarget ? 0 : 1;
+					bool closer = distanceFromTarget > between;
+					bool lineOfSight = Collision.CanHitLine(pos, 8, 8, npc.position, npc.width, npc.height);
+					if ((closer || sharingCount > othersTargettingCounts[npc.whoAmI] || !foundTarget) && lineOfSight) {
+						sharingCount = othersTargettingCounts[npc.whoAmI];
+						distanceFromTarget = between;
+						targetCenter = npc.Center;
+						Projectile.ai[1] = npc.whoAmI;
+						foundTarget = true;
+						hasPriorityTarget = isPriorityTarget;
+					}
+				}
+			}
+			bool foundTarget = Main.player[Projectile.owner].GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
+			DoMaskBehavior();
+		}
+		public virtual void DoMaskBehavior() {
+			Projectile slot = Projectile.GetRelatedProjectile(0);
+			Vector2 targetPos;
+			bool intersecting = false;
+			switch ((int)Projectile.ai[1]) {
+				case -2:
+				targetPos = slot.Center;
+				if (Projectile.Center.WithinRange(targetPos, 16)) Projectile.ai[1] = -1;
+				break;
+				case -1:
+				Projectile.Center = slot.Center;
+				Projectile.velocity = Vector2.Zero;
+				return;
+				default:
+				NPC target = Main.npc[(int)Projectile.ai[1]];
+				if (target.active && target.CanBeChasedBy(Projectile)) {
+					targetPos = target.Center;
+					intersecting = Projectile.Hitbox.Intersects(target.Hitbox);
+				} else {
+					Projectile.ai[1] = -2;
+					targetPos = slot.Center;
+				}
+				break;
+			}
+			float speed = 8f;
+			float inertia = 12f;
+			Vector2 directionToTarget = (targetPos - Projectile.Center).Normalized(out float distanceToTarget);
+			if (intersecting && Projectile.ai[1] >= 0) {
+				directionToTarget = directionToTarget.RotatedByRandom(3);
+			}
+			Projectile.velocity = (Projectile.velocity * (inertia - 1) + directionToTarget * speed) / inertia;
+		}
+		public void Draw(Color lightColor) {
+			if (Projectile.ai[1] == -1) {
+				Texture2D texture = TextureAssets.Projectile[Type].Value;
+				Rectangle frame = texture.Frame(FrameCount, frameX: Projectile.frame);
+				if (FrameCount > 1) frame.Width -= 2;
+				Main.EntitySpriteDraw(
+					texture,
+					Projectile.Bottom - Main.screenPosition,
+					frame,
+					lightColor,
+					Projectile.rotation,
+					frame.Size() * new Vector2(0.5f, 1),
+					Projectile.scale,
+					SpriteEffects.None
+				);
+			} else {
+				SpriteEffects effects = Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+				Rectangle frame = sideTexture.Frame(FrameCount, frameX: Projectile.frame);
+				if (FrameCount > 1) frame.Width -= 2;
+				Main.EntitySpriteDraw(
+					sideTexture,
+					Projectile.Bottom - Main.screenPosition,
+					frame,
+					lightColor,
+					Projectile.rotation,
+					frame.Size() * new Vector2(0.5f, 1),
+					Projectile.scale,
+					effects
+				);
+				Main.EntitySpriteDraw(
+					sideGlowTexture,
+					Projectile.Bottom - Main.screenPosition,
+					frame,
+					Color.White,
+					Projectile.rotation,
+					frame.Size() * new Vector2(0.5f, 1),
+					Projectile.scale,
+					effects
+				);
+			}
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (Projectile.whoAmI > Projectile.GetRelatedProjectile(0).whoAmI) Draw(lightColor);
+			return false;
+		}
+	}
+	public class Terratotem_Mask_Small : Terratotem_Mask_Base {
+		public override int FrameCount => 4;
+	}
+	public class Terratotem_Mask_Medium : Terratotem_Mask_Base {
+	}
+	public class Terratotem_Mask_Big : Terratotem_Mask_Base {
 	}
 }
