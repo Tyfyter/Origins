@@ -1005,7 +1005,7 @@ SUMMONER WEAPONS:
 (X) Ribatar
 (X) SMART Wrench
 (X) Technomancer 4000
-(#2, ^2) Terratotem !!!
+(◘) Terratotem !!!
 (X) Tonal Resonator
 (X) Vampire Fireflower in a Pot
 
