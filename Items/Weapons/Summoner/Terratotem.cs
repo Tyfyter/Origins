@@ -663,6 +663,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool CanPickupItems => false;
 	}
 	public class Terratotem_Mask_Medium : Terratotem_Mask_Base {
+		public override bool? CanDamage() => Projectile.ai[2] > 0;
 		public override void DoMaskBehavior() {
 			if (Projectile.ai[2] > 0) {
 				Projectile.ai[2]--;
@@ -700,5 +701,82 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	public class Terratotem_Mask_Big : Terratotem_Mask_Base {
+		public override bool? CanDamage() => Projectile.ai[2] >= 10 && Projectile.ai[2] <= 20;
+		public override void AI() {
+			base.AI();
+			if (Projectile.numUpdates == -1 && Projectile.ai[2] > 0 && Projectile.ai[2].Warmup(30)) Projectile.ai[2] = 0;
+		}
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			if (Projectile.ai[2] >= 10 && Projectile.ai[2] <= 20) {
+				hitbox.Inflate(hitbox.Width * 2, hitbox.Height * 2);
+			}
+		}
+		public override void DoMaskBehavior() {
+			if (Projectile.ai[2] > 0) {
+				if (Projectile.ai[2] >= 10 && Projectile.ai[2] <= 20 && targetData.TargetType == TargetType.Item) {
+					Player player = Main.player[Projectile.owner];
+					Rectangle hitbox = Projectile.Hitbox;
+					ModifyDamageHitbox(ref hitbox);
+					foreach (Item item in Main.ActiveItems) {
+						if (item.active && !Terrarian_Voodoo_Doll.PreventItemPickup(item, player) && hitbox.Intersects(item.Hitbox)) {
+							item.Center = player.Center;
+						}
+					}
+				}
+				Projectile.velocity *= 0.90f;
+				return;
+			}
+			Rectangle targetRect = targetData.GetPosition(Projectile);
+			Vector2 targetPos = targetRect.Center();
+			float speed = 8f;
+			float inertia = 12f;
+			Vector2 directionToTarget = (targetPos - Projectile.Center).Normalized(out _);
+			switch (targetData.TargetType) {
+				case TargetType.Item:
+				case TargetType.NPC:
+				Rectangle hitbox = Projectile.Hitbox;
+				ModifyDamageHitbox(ref hitbox);
+				if (Projectile.Hitbox.Intersects(targetRect)) {
+					speed = 0;
+					Projectile.ai[2] = 1;
+					Projectile.velocity *= 0.5f;
+				}
+				break;
+
+				default:
+				case TargetType.Slot:
+				if (Projectile.Hitbox.Intersects(targetRect)) {
+					if (Projectile.Center.WithinRange(targetPos, 16)) Projectile.ai[1] = -1;
+				}
+				break;
+			}
+			Projectile.velocity = (Projectile.velocity * (inertia - 1) + directionToTarget * speed) / inertia;
+		}
+		public override void PostDraw(Color lightColor) {
+			float attackFactor = 1 - Math.Abs(Projectile.ai[2] - 15) / 10f;
+			if (attackFactor <= 0) return;
+			Color color = Projectile.GetAlpha(new Color(180, 255, 180)) * attackFactor * attackFactor * 0.8f;
+			color.A = 0;
+			Main.instance.LoadProjectile(ProjectileID.MedusaHeadRay);
+			Texture2D texture = TextureAssets.Projectile[ProjectileID.MedusaHeadRay].Value;
+			Vector2 origin = texture.Size() * new Vector2(0.5f, 1f);
+			const float beams = 9f;
+
+			Vector2 basePos = Projectile.Center + Vector2.UnitY * Projectile.gfxOffY - Main.screenPosition;
+			for (int i = 0; i < beams; i++) {
+				float rotation = (i / (float)beams) * MathHelper.TwoPi - Main.GlobalTimeWrappedHourly + float.Sin(Main.GlobalTimeWrappedHourly * i) * 0.5f;
+				float scale = Projectile.scale * (0.15f + 0.6f * attackFactor);
+				Main.EntitySpriteDraw(
+					texture,
+					basePos + Projectile.rotation.ToRotationVector2().RotatedBy(MathHelper.TwoPi * (1f / beams) * i + Main.GlobalTimeWrappedHourly) * 4f * Projectile.scale,
+					null,
+					color,
+					rotation,
+					origin,
+					new Vector2(scale * 1.5f, scale),
+					SpriteEffects.None
+				);
+			}
+		}
 	}
 }
