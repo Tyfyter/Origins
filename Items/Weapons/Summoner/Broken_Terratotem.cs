@@ -57,6 +57,7 @@ namespace Origins.Buffs {
 		public override IEnumerable<int> ProjectileTypes() => [
 			Broken_Terratotem_Orb.ID,
 			Terratotem_Orb.ID,
+			Terratotem_Tab.ID,
 		];
 		public override bool IsArtifact => true;
 	}

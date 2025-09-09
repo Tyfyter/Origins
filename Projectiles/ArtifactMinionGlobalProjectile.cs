@@ -147,17 +147,7 @@ namespace Origins.Projectiles {
 											position = projectile.Top + new Vector2(0, projectile.gfxOffY - 24);
 										}
 										float light = Lighting.Brightness((int)position.X / 16, (int)(projectile.Center.Y + projectile.gfxOffY) / 16) * 0.5f + 0.5f;
-										if (artifact.Life > 0) {
-											Main.instance.DrawHealthBar(
-												position.X, position.Y,
-												(int)artifact.Life,
-												artifact.MaxLife,
-												light,
-												0.85f
-											);
-										} else {
-											artifact.DrawDeadHealthBar(position, light);
-										}
+										artifact.DrawHealthBar(position, light, false);
 									}
 								}
 							}
@@ -211,17 +201,9 @@ namespace Origins.Projectiles {
 				}
 				if (projectile.ModProjectile is IArtifactMinion artifact) {
 					if (drawParams.TextPosition.Y != startY) drawParams.TextPosition.Y += 2;
-					if (artifact.Life > 0) {
-						Main.instance.DrawHealthBar(
-							drawParams.TextPosition.X + posOffset.X, drawParams.TextPosition.Y + posOffset.Y,
-							(int)artifact.Life,
-							artifact.MaxLife,
-							drawParams.DrawColor.A / 255f,
-							0.85f,
-							true
-						);
-					} else {
-						artifact.DrawDeadHealthBar(drawParams.TextPosition + posOffset, drawParams.DrawColor.A / 255f);
+					if (!artifact.DrawHealthBar(drawParams.TextPosition + posOffset, drawParams.DrawColor.A / 255f, true)) {
+						if (drawParams.TextPosition.Y != startY) drawParams.TextPosition.Y -= 2;
+						continue;
 					}
 					if (!Main.mouseText && new Rectangle((int)drawParams.TextPosition.X, (int)drawParams.TextPosition.Y, 36, 12).Contains(Main.MouseScreen)) {
 						Main.LocalPlayer.mouseInterface = true;
@@ -241,15 +223,18 @@ namespace Origins.Projectiles {
 		private static void On_Player_FreeUpPetsAndMinions(On_Player.orig_FreeUpPetsAndMinions orig, Player self, Item sItem) {
 			IsSacrificingMinions = true;
 			try {
-				if (Origins.ArtifactMinion.GetIfInRange(sItem.shoot)) {
+				if (ItemID.Sets.StaffMinionSlotsRequired[sItem.type] > 0) {
 					List<(Projectile projectile, float antiPriority)> existingMinions = [];
 					float totalUsedSlots = 0f;
 					foreach (Projectile other in Main.ActiveProjectiles) {
-						if (other.owner != self.whoAmI || !other.minion || other.ModProjectile is not IArtifactMinion artifactMinion) {
+						if (other.owner != self.whoAmI || !other.minion) {
 							continue;
 						}
-						existingMinions.Add((other, (artifactMinion.Life / artifactMinion.MaxLife) * other.minionSlots));
 						totalUsedSlots += other.minionSlots;
+						if (other.ModProjectile is not IArtifactMinion artifactMinion) {
+							continue;
+						}
+						existingMinions.Add((other, artifactMinion.SacrificeAvoidance));
 					}
 					float neededSlots = ItemID.Sets.StaffMinionSlotsRequired[sItem.type] - (self.maxMinions - totalUsedSlots);
 					if (neededSlots > 0) {
@@ -273,17 +258,29 @@ namespace Origins.Projectiles {
 		void ModifyHurt(ref int damage, bool fromDoT) { }
 		void OnHurt(int damage, bool fromDoT) { }
 		bool CanDie => true;
-		void DrawDeadHealthBar(Vector2 position, float light) {
-			Main.spriteBatch.Draw(
-				TextureAssets.Hb2.Value,
-				position - Main.screenPosition,
-				null,
-				Color.Gray * light,
-				0f,
-				new Vector2(18f, 0),
-				0.85f,
-				SpriteEffects.None,
-			0);
+		float SacrificeAvoidance => (Life / MaxLife) * ((this as ModProjectile)?.Projectile?.minionSlots ?? 1);
+		bool DrawHealthBar(Vector2 position, float light, bool inBuffList) {
+			if (Life > 0) {
+				Main.instance.DrawHealthBar(
+					position.X, position.Y,
+					(int)Life,
+					MaxLife,
+					light,
+					0.85f
+				);
+			} else {
+				Main.spriteBatch.Draw(
+					TextureAssets.Hb2.Value,
+					position - Main.screenPosition,
+					null,
+					Color.Gray * light,
+					0f,
+					new Vector2(18f, 0),
+					0.85f,
+					SpriteEffects.None,
+				0);
+			}
+			return true;
 		}
 	}
 	public static class ArtifactMinionExtensions {

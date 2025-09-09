@@ -1,4 +1,6 @@
-﻿using Origins.Buffs;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
@@ -7,9 +9,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Empowerments;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Terratotem : ModItem, ICustomWikiStat {
@@ -245,6 +249,57 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
+		public float SacrificeAvoidance {
+			get {
+				if (Projectile.localAI[0] <= 0) {
+					return (Life / MaxLife) * Projectile.minionSlots;
+				}
+				GetBottom(out int count);
+				return 1 + 1f / count;
+			}
+		}
+		public bool DrawHealthBar(Vector2 position, float light, bool inBuffList) {
+			if (Projectile.localAI[0] > 0) return false;
+			if (!inBuffList) {
+				Projectile bottom = GetBottom(out _);
+				position = bottom.Bottom + new Vector2(0, bottom.gfxOffY + 2);
+			}
+			if (Life > 0) {
+				Main.instance.DrawHealthBar(
+					position.X, position.Y,
+					(int)Life,
+					MaxLife,
+					light,
+					0.85f
+				);
+			} else {
+				Main.spriteBatch.Draw(
+					TextureAssets.Hb2.Value,
+					position - Main.screenPosition,
+					null,
+					Color.Gray * light,
+					0f,
+					new Vector2(18f, 0),
+					0.85f,
+					SpriteEffects.None,
+				0);
+			}
+			return true;
+		}
+		Projectile GetBottom(out int count) {
+			Projectile current = Projectile;
+			HashSet<Projectile> walked = [current];
+			Projectile last = current;
+			while (current is not null) {
+				last = current;
+				current = current.GetRelatedProjectile(1);
+				if (current is null) break;
+				if (current.owner != Projectile.owner || current.type != Type) break;
+				if (!walked.Add(current)) break;
+			}
+			count = walked.Count;
+			return last;
+		}
 		public override void SetStaticDefaults() {
 			// Sets the amount of frames this minion has on its spritesheet
 			// This is necessary for right-click targeting
@@ -297,12 +352,30 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			Projectile.netUpdate = true;
 		}
+		public virtual int GetMask() {
+			GetBottom(out int count);
+			switch (count) {
+				default:
+				return ProjectileID.BeeArrow;
+			}
+		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+
+			if (player.dead || !player.active) {
+				player.ClearBuff(Terratotem_Buff.ID);
+			} else if (player.HasBuff(Terratotem_Buff.ID)) {
+				Projectile.timeLeft = 2;
+			}
+
+			Projectile.localAI[0].Cooldown();
 			Projectile below = Projectile.GetRelatedProjectile(1);
 			if (below?.active ?? false) {
-				Projectile.position = below.position - Vector2.UnitY * below.height;
+				Projectile bottom = GetBottom(out int count);
+				Projectile.position = bottom.position - Vector2.UnitY * Projectile.height * (count - 1);
+				if (bottom.whoAmI > Projectile.whoAmI) Projectile.position += player.velocity;
 				Projectile.velocity = Vector2.Zero;
+				below.localAI[0] = 2;
 			} else {
 				Vector2 idlePosition = player.Bottom;
 				idlePosition.X -= 48f * player.direction;
@@ -311,6 +384,23 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.position += vectorToIdlePosition;
 				Projectile.velocity = Vector2.Zero;
 			}
+			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active) {
+
+			} else if (Projectile.IsLocallyOwned()) {
+				mask = Projectile.NewProjectileDirect(
+					Projectile.GetSource_FromAI(),
+					Projectile.position,
+					Vector2.Zero,
+					GetMask(),
+					Projectile.damage,
+					Projectile.knockBack,
+					ai0: Projectile.identity
+				);
+				mask.originalDamage = Projectile.originalDamage;
+				Projectile.ai[0] = mask.identity;
+				Projectile.netUpdate = true;
+			}
+			if (Projectile.localAI[0] <= 0) Life -= 0.25f;
 		}
 	}
 }
