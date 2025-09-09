@@ -1973,6 +1973,7 @@ Projectiles: {
 	// Dream_Catcher_Shard.DisplayName: Dream Catcher Shard
 	// Dream_Catcher_Vine.DisplayName: Dream Catcher Vine
 	// Dream_Catcher_P.DisplayName: Dream Catcher P
+	// Terratotem_Tab.DisplayName: Terratotem Tab
 }
 
 Prefixes: {
@@ -2950,9 +2951,10 @@ DefiledRelaySignals: {
 }
 
 ExtraDyeSlots: {
-	// SceneYMK_Dye_Slot_0.DisplayText: "{$LegacyInterface.57}"
-	// SceneYMK_Dye_Slot_1.DisplayText: "{$LegacyInterface.57}"
-	// SceneYMK_Dye_Slot_2.DisplayText: "{$LegacyInterface.57}"
+	// SceneYMK_Dye_Slot_0.DisplayText: "{$LegacyInterface.57} (Green Primaries)"
+	// SceneYMK_Dye_Slot_1.DisplayText: "{$LegacyInterface.57} (Pink Primaries)"
+	// SceneYMK_Dye_Slot_2.DisplayText: "{$LegacyInterface.57} (Blue Primaries)"
+	// Futurephones_Glow_Dye_Slot.DisplayText: "{$LegacyInterface.57} (Lights)"
 }
 
 CritType: {

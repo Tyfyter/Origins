@@ -2184,7 +2184,7 @@ namespace Origins {
 			self.owner = owner;
 		}
 		public static Projectile GetRelatedProjectile(this Projectile self, int index) {
-			if (self.ai[0] >= 0 && self.owner < OriginSystem.projectilesByOwnerAndID.GetLength(0) && self.ai[0] < OriginSystem.projectilesByOwnerAndID.GetLength(1)) {
+			if (self.ai[index] >= 0 && self.owner < OriginSystem.projectilesByOwnerAndID.GetLength(0) && self.ai[index] < OriginSystem.projectilesByOwnerAndID.GetLength(1)) {
 				return OriginSystem.projectilesByOwnerAndID[self.owner, (int)self.ai[index]];
 			}
 			return null;

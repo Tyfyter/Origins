@@ -1,12 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -14,7 +10,7 @@ using Terraria.ModLoader;
 using PegasusLib;
 
 namespace Origins.Layers {
-	public record struct GlowData(AutoLoadingAsset<Texture2D> Texture, Func<Player, Color> ColorFunc);
+	public record struct GlowData(AutoLoadingAsset<Texture2D> Texture, Func<Player, Color> ColorFunc, Func<Player, int, int> ShaderFunc = null);
 	public abstract class Accessory_Glow_Layer(string playerSlot, PlayerDrawLayer parent, EquipType type) : PlayerDrawLayer {
 		readonly FastFieldInfo<Player, int> _playerSlot = new(playerSlot, BindingFlags.Public | BindingFlags.NonPublic);
 		readonly Dictionary<int, GlowData> glowMasks = [];
@@ -29,15 +25,16 @@ namespace Origins.Layers {
 					GlowData glowData = glowMasks[slotValue];
 					data.texture = glowData.Texture.Value;
 					data.color = glowData.ColorFunc(drawInfo.drawPlayer);
+					if (glowData.ShaderFunc is not null) data.shader = glowData.ShaderFunc(drawInfo.drawPlayer, data.shader);
 					drawInfo.DrawDataCache.Insert(i + 1, data);
 				}
 			}
 		}
-		public static void AddGlowMask<T>(int slot, string texture, Func<Player, Color> colorFunc = null) where T : Accessory_Glow_Layer {
-			ModContent.GetInstance<T>().glowMasks.Add(slot, new(texture, colorFunc ?? (_ => Color.White)));
+		public static void AddGlowMask<T>(int slot, string texture, Func<Player, Color> colorFunc = null, Func<Player, int, int> ShaderFunc = null) where T : Accessory_Glow_Layer {
+			ModContent.GetInstance<T>().glowMasks.Add(slot, new(texture, colorFunc ?? (_ => Color.White), ShaderFunc));
 		}
-		public static void AddGlowMask(EquipType equipType, int slot, string texture, Func<Player, Color> colorFunc = null) {
-			byEquipType[equipType].glowMasks.Add(slot, new(texture, colorFunc ?? (_ => Color.White)));
+		public static void AddGlowMask(EquipType equipType, int slot, string texture, Func<Player, Color> colorFunc = null, Func<Player, int, int> ShaderFunc = null) {
+			byEquipType[equipType].glowMasks.Add(slot, new(texture, colorFunc ?? (_ => Color.White), ShaderFunc));
 		}
 		public void LoadAllTextures() {
 			foreach (GlowData glowData in glowMasks.Values) {

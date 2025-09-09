@@ -10,10 +10,12 @@ namespace Origins {
 		public int? cSceneMYKDye0;
 		public int? cSceneMYKDye1;
 		public int? cSceneMYKDye2;
+		public int? cFuturephonesGlow;
 		public override void ResetEffects() {
 			cSceneMYKDye0 = null;
 			cSceneMYKDye1 = null;
 			cSceneMYKDye2 = null;
+			cFuturephonesGlow = null;
 		}
 	}
 }
