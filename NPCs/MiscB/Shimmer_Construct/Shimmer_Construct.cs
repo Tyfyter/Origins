@@ -419,13 +419,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 
+			Vector2 origin = NPC.Size / 1.5f;
 			Main.EntitySpriteDraw(
 				texture,
 				position - screenPos,
 				NPC.frame,
 				drawColor,
 				NPC.rotation,
-				NPC.Size / 1.5f,
+				origin,
 				NPC.scale,
 				SpriteEffects.None
 			);
@@ -440,11 +441,35 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					NPC.frame,
 					drawColor.MultiplyRGBA(new(0.8f, 0f, 1f, 0.6f)),
 					NPC.rotation + MathHelper.Pi,
-					NPC.Size / 1.5f,
+					origin,
 					NPC.scale,
 					SpriteEffects.None
 				);
 				Main.spriteBatch.Restart(state);
+			} else
+			if (aiStates[NPC.aiAction] is ShimmershotState && NPC.ai[1] == 0) {
+				texture = ShimmershotState.chargeVisual;
+				float chargeFrame = NPC.ai[0] * 4 / ShimmershotState.Startup;
+				Main.EntitySpriteDraw(
+					texture,
+					position - screenPos,
+					texture.Frame(verticalFrames: 5, frameY: (int)chargeFrame),
+					Color.White,
+					NPC.rotation,
+					origin,
+					NPC.scale,
+					SpriteEffects.None
+				);
+				Main.EntitySpriteDraw(
+					texture,
+					position - screenPos,
+					texture.Frame(verticalFrames: 5, frameY: (int)float.Ceiling(chargeFrame)),
+					Color.White * (chargeFrame - (int)chargeFrame),
+					NPC.rotation,
+					origin,
+					NPC.scale,
+					SpriteEffects.None
+				);
 			}
 			return false;
 		}

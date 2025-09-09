@@ -12,6 +12,7 @@ using Terraria.Audio;
 using System.IO;
 using Origins.Items.Weapons.Ranged;
 using Terraria.GameContent.ItemDropRules;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseTwoIdleState : AIState {
@@ -277,6 +278,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			return ((MathF.Pow(progress, 2) - MathF.Pow(progress, 3)) / 0.14815f) * 0.1f;
 		}
 		#endregion stats
+		public static AutoLoadingAsset<Texture2D> chargeVisual = typeof(Shimmer_Construct).GetDefaultTMLName() + "_Phase2_Charge";
 		public override bool Ranged => true;
 		public override void Load() {
 			PhaseTwoIdleState.aiStates.Add(this);
