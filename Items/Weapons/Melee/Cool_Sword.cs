@@ -156,9 +156,12 @@ namespace Origins.Items.Weapons.Melee {
 
 		public override bool PreDraw(ref Color lightColor) {
 			Player player = Main.player[Projectile.owner];
+			int frameNum = (int)(8 * (1 - player.itemTime / (float)player.itemTimeMax));
+
 			SpriteEffects effects = player.direction * player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally;
 			Texture2D texture = TextureAssets.Item[ModContent.ItemType<Cool_Sword>()].Value;
+			if (!player.controlDown) Projectile.rotation = -(GetSpriteRotation(frameNum) - MathHelper.PiOver4) * player.direction;
 			Main.EntitySpriteDraw(
 				texture,
 				player.GetCompositeArmPosition(false) + GeometryUtils.Vec2FromPolar(8, (Projectile.rotation + Projectile.velocity.ToRotation()) * player.gravDir) - Main.screenPosition,
@@ -169,18 +172,9 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.scale,
 				effects
 			);
-			int frameNum = (int)(8 * (1 - player.itemTime / (float)player.itemTimeMax));
+
 			Rectangle slashFrame = TextureAssets.Projectile[Type].Value.Frame(verticalFrames: 11, frameY: frameNum);
-			float rotationOffset = frameNum switch {
-				1 => MathHelper.PiOver2 + MathHelper.PiOver4,
-				2 => 2.251824f - MathHelper.PiOver4,
-				3 => 1.613731f - MathHelper.PiOver4,
-				4 => 1.028523f - MathHelper.PiOver4,
-				5 => 0.6209881f - MathHelper.PiOver4,
-				6 => 0.1616175f - MathHelper.PiOver4,
-				7 => -0.2450442f - MathHelper.PiOver4,
-				_ => 0
-			} * player.direction * player.gravDir;
+			float rotationOffset = (GetSpriteRotation(frameNum) - MathHelper.PiOver4) * player.direction * player.gravDir;
 			effects = player.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically;
 			Main.EntitySpriteDraw(
@@ -195,6 +189,19 @@ namespace Origins.Items.Weapons.Melee {
 				0
 			);
 			return false;
+		}
+
+		private static float GetSpriteRotation(int frameNum) {
+			return frameNum switch {
+				1 => MathHelper.Pi,
+				2 => 2.251824f,
+				3 => 1.613731f,
+				4 => 1.028523f,
+				5 => 0.6209881f,
+				6 => 0.1616175f,
+				7 => -0.2450442f,
+				_ => MathHelper.Pi
+			};
 		}
 	}
 	public class Cool_Sword_P : ModProjectile, ICanisterChildProjectile {
