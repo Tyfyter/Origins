@@ -419,7 +419,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 
-			Vector2 origin = NPC.Size / 1.5f;
+			Vector2 origin = new(67, 82);
 			Main.EntitySpriteDraw(
 				texture,
 				position - screenPos,

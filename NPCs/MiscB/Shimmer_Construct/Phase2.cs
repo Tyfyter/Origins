@@ -1,18 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Terraria.ID;
-using Terraria;
-using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
-using PegasusLib;
-using Terraria.ModLoader;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dusts;
 using Origins.Items.Weapons.Magic;
-using Terraria.DataStructures;
-using Terraria.Audio;
-using System.IO;
 using Origins.Items.Weapons.Ranged;
+using PegasusLib;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
-using Microsoft.Xna.Framework.Graphics;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseTwoIdleState : AIState {
@@ -291,6 +292,27 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			Vector2 diff = npc.GetTargetData().Center - npc.Center;
 			if (++npc.ai[0] < Startup) {
 				GeometryUtils.AngularSmoothing(ref npc.rotation, diff.ToRotation() - MathHelper.PiOver2, TurnRate(npc.ai[0] / Startup));
+				int dustType = ModContent.DustType<Following_Shimmer_Dust>();
+				float dist = Main.rand.NextFloat();
+				float invDist = 1 - dist;
+				Vector2 dir = (npc.rotation + MathHelper.PiOver2).ToRotationVector2();
+				Vector2 pos = npc.Center + dir * 60;
+				dir = dir.RotatedBy(Main.rand.NextFloat(invDist + MathHelper.PiOver4) * Main.rand.NextBool().ToDirectionInt());
+				Dust dust = Dust.NewDustDirect(
+					pos - Vector2.One * 8 * invDist,
+					(int)(16 * invDist),
+					(int)(16 * invDist),
+					dustType,
+					0f,
+					0f,
+					100,
+					default,
+					2.5f
+				);
+				dust.noGravity = true;
+				dust.velocity -= dir * (8 + dist * 4);
+				dust.position += dir * (80 + dist * 80);
+				dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(npc, 1);
 			} else if (npc.ai[0] >= Startup && npc.ai[1].TrySet(1)) {
 				diff = diff.SafeNormalize(Vector2.Zero);
 				SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);

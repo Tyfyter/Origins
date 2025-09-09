@@ -1,22 +1,23 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dusts;
 using Origins.Items.Materials;
+using Origins.NPCs.MiscB.Shimmer_Construct;
+using Origins.Projectiles;
 using PegasusLib;
+using PegasusLib.Graphics;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Projectiles;
-using Origins.NPCs.MiscB.Shimmer_Construct;
-using PegasusLib.Graphics;
-using System.Reflection;
-using System.IO;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Shimmershot : ModItem {
