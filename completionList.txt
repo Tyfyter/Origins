@@ -59,7 +59,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(☻) Shimmer Construct !!!
+(^) Shimmer Construct
 (#, ^2) Trenchmaker
 (^) World Cracker*
 
@@ -655,7 +655,7 @@ VANITY:
 (^) Sunflower Sandals*
 
 (^) DIO's Set
-(☻) First Dream !!!
+(^) First Dream
 (^) Tyfyter's Set*
 
 (^) Acrid Dye
@@ -816,7 +816,7 @@ RANGED WEAPONS:
 (^) Blotopus*
 (^) Bolt Gun*
 (^) Chipper Knife*
-(☻) Constellation !!!
+(^) Constellation
 (^) Endowood Bow*
 (^) Felnum Longbow
 (^) Fiberglass Bow*
@@ -1282,7 +1282,7 @@ TILES:
 (X) Mushroom Dungeon Chest°
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
-(☻) Pocket Dimension Monolith !!!
+(^) Pocket Dimension Monolith
 (X) Qube Generator°
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Snake
@@ -1368,17 +1368,29 @@ TILES:
 (^) Music Box (The Dive)
 (^) Otherworldly Music Box (Defiled Wastelands)
 
+(X) Arabel Relic
+(X) Arabel Trophy
+(X) Blue Lobster Relic
+(X) Blue Lobster Trophy
+(X) Crimson King Relic
+(X) Crimson King Trophy
 (^) Defiled Amalgamation Relic*
 (^) Defiled Amalgamation Trophy*
 (ᗢ) Enemy Banners*
 (^) Fiberglass Weaver Relic*
 (^) Fiberglass Weaver Trophy*
+(X) Leviathan of the Riven Relic
+(X) Leviathan of the Riven Trophy
 (^) Lost Diver Relic*
 (^) Lost Diver Trophy*
+(X) Mechamalgamation Relic
+(X) Mechamalgamation Trophy
 (々) Miscreant Relic*
 (々) Miscreant Trophy*
-(々) Quantux Relic*
-(々) Quantux Trophy*
+(X) Quantux Relic*
+(X) Quantux Trophy*
+(X) Seer Relic
+(X) Seer Trophy
 (^) Shimmer Construct Relic*
 (^) Shimmer Construct Trophy*
 (X) SR-48 Relic
@@ -1427,7 +1439,7 @@ MATERIALS:
 (^) Bleeding Obsidian Shard*
 (^) Brineglow*
 (^) Eitrite Bar*
-(^) Respyrite*
+(^) Phoenum*
 
 (^) Busted Servo*
 (^) Geothermal Sludge*

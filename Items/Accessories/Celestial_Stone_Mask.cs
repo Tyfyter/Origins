@@ -8,6 +8,9 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => [
 			"Combat"
 		];
+		public override void SetStaticDefaults() {
+			ArmorIDs.Face.Sets.DrawInFaceUnderHairLayer[Item.faceSlot] = true;
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 24);
 			Item.value = Item.sellPrice(gold: 18);

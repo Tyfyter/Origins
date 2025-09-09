@@ -333,6 +333,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void StartAIState(Shimmer_Construct boss) {
 			NPC npc = boss.NPC;
 			npc.ai[0] = 0;
+			SoundEngine.PlaySound(SoundID.Item15.WithPitch(-1).WithPitchVarience(0) with { MaxInstances = 0 }, npc.Center);
+			SoundEngine.PlaySound(SoundID.Item15.WithPitch(0).WithPitchVarience(0) with { MaxInstances = 0 }, npc.Center);
+			SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithPitch(-1), npc.Center);
 		}
 		public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
 			if (!boss.IsInPhase3 && !CollisionExt.CanHitRay(boss.NPC.Center, boss.NPC.targetRect.Center())) return 0;
