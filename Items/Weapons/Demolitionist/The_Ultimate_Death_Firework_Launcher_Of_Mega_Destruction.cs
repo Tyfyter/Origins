@@ -25,8 +25,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<TUDFLOMD_Rocket_Canister>(80, 12, 12f, 46, 28, true);
-			Item.useAnimation *= 3;
+			Item.DefaultToCanisterLauncher<TUDFLOMD_Rocket_Canister>(80, 9, 12f, 46, 28, true);
+			Item.useAnimation *= 4;
+			Item.useLimitPerAnimation = 4;
 			Item.reuseDelay = Item.useTime;
 			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.Cyan;
@@ -332,6 +333,22 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class TUDFLOMD_Rocket_Yellow : TUDFLOMD_Rocket {
 		public override Color Color => Color.Gold;
+		public override void AI() {
+			if (Target != -1) {
+				NPC target = Main.npc[Target];
+				if (target.CanBeChasedBy(Projectile)) {
+					float scaleFactor = 16f * Origins.HomingEffectivenessMultiplier[Projectile.type];
+
+					Vector2 targetVelocity = (target.Center - Projectile.Center).SafeNormalize(-Vector2.UnitY) * scaleFactor * (1 - Projectile.ai[1] / 200);
+					Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity.RotatedBy(Math.Sin(++Projectile.ai[1] * 0.25f) * 1), 0.083333336f);
+				} else {
+					Target = -1;
+				}
+			} else {
+				Projectile.velocity = Projectile.velocity.RotatedBy(Math.Sin(++Projectile.ai[2] * 0.25f - MathHelper.PiOver2) * 0.1f) * (1 - (Projectile.ai[2] / 120) * 0.02f);
+			}
+			base.AI();
+		}
 		public override void OnKill(int timeLeft) {
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
 			if (Projectile.owner == Main.myPlayer) {
