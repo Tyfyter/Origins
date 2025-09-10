@@ -1180,6 +1180,7 @@ TILES:
 (^) Riven Grass*
 (^) Riven Jungle Grass*
 (X) Rusty Piping
+(X) Sanguinite Brick
 (@4) Sanguinite Ore*
 (X) Scrap Heap
 (^) Silica*
@@ -1251,7 +1252,6 @@ TILES:
 (X) Residue Furniture°
 (^) Riven Torch*
 (^) Riven Water Fountain*
-(X) Sanguinite Brick
 (^) Shadow Torch°
 (^) Traffic Cone*
 
@@ -1268,9 +1268,9 @@ TILES:
 (^) Defiled Dungeon Chest*
 (^) Defiled Monolith*
 (X) Defiled Pylon°
+(X) Industrial Door
 (X) Large Storage Container
 (^) Laser Tag Console*
-(X) Locked Small Storage Container
 (X) Medium Storage Container
 (X) Modular Bunk
 (X) Mushroom Dungeon Chest°
@@ -1285,8 +1285,8 @@ TILES:
 (^) Riven Campfire*
 (^) Riven Dungeon Chest*
 (X) Rusty Locker
-(X) Security Door
 (X) Small Storage Container
+(X) Surveysprout Planter Box
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box
 (X) Wrycoral Planter Box
