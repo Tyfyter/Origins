@@ -1135,8 +1135,15 @@ TILES:
 (^) Brittle Quartz*
 (X) Brown Ice
 (^) Calcified Spug Flesh
+(X) Cancer Block°
 (X) Catwalk
 (^) Chambersite
+(^) Chambersite Gemspark°
+(^) Chambersite Gemstone°
+(^) Chambersite Gemstone (Corruption)°
+(^) Chambersite Gemstone (Crimson)°
+(^) Chambersite Gemstone (Defiled)°
+(^) Chambersite Gemstone (Riven)°
 (^) Defiled Cactus*
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
@@ -1147,6 +1154,7 @@ TILES:
 (X) Edengrass°
 (^) Edenwood°
 (^) Eitrite Ore*
+(@4) Encrusted Brick
 (^) Encrusted Ore*
 (^) Endowood*
 (^) Felnum Ore*
@@ -1157,16 +1165,21 @@ TILES:
 (X) Harmony Brick°
 (X) Lihzarhd Bomb Trap
 (^) Limestone*
+(@4) Lost Brick
 (^) Lost Ore*
 (^) Marrowick*
 (^) Mildew Block°
 (X) Murky Sludge
+(X) Nova Brick°
+(X) Nova Fragment Block°
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
 (^) Quartz Block*
+(X) Residue Block°
 (^) Riven Cactus*
 (^) Riven Grass*
 (^) Riven Jungle Grass*
+(X) Rusty Piping
 (@4) Sanguinite Ore*
 (X) Scrap Heap
 (^) Silica*
@@ -1217,45 +1230,29 @@ TILES:
 
 (^) Alkahest Torch*
 (^) Amoeba Buggy Cage*
-(X) Background Door
-(X) Beacon Light
 (^) Bile Torch*
 (^) Brine Water Fountain*
 (@, ^3) Bug Cage° (using temp sprites)
-(X) Cancer Block°
 (X) Cancer Furniture°
 (^) Chambersite Bunny Cage°
-(^) Chambersite Gemspark°
-(^) Chambersite Gemstone°
-(^) Chambersite Gemstone (Corruption)°
-(^) Chambersite Gemstone (Crimson)°
-(^) Chambersite Gemstone (Defiled)°
-(^) Chambersite Gemstone (Riven)°
 (^) Chambersite Squirrel Cage°
 (^) Cicada 3301 Cage°
 (^) Defiled Torch*
 (^) Defiled Water Fountain*
 (X) Edenwood Furniture°
-(@4) Encrusted Brick
 (^) Endowood Furniture*
 (X) Floodlight
 (X) Hyrax Cage
-(X) Large Rusty Piping
 (^) Limestone Furniture
 (^) Living Alkahest Block*
 (^) Living Bile Block*
-(@4) Lost Brick
 (^) Marrowick Furniture*
 (X) Modular Light Fixture
-(X) Nova Brick°
-(X) Nova Fragment Block°
 (X) Nova Furniture°
 (X) Peppered Moth Lamp
-(X) Residue Block°
 (X) Residue Furniture°
 (^) Riven Torch*
 (^) Riven Water Fountain*
-(X) Rusty Piping
 (X) Sanguinite Brick
 (^) Shadow Torch°
 (X) Steel Support Beam
@@ -1309,6 +1306,8 @@ TILES:
 (^) Acetabularia*
 (X) Ashen Scrap Foliage
 (X) Ashen Soot Foliage
+(X) Background Door
+(X) Beacon Light
 (^) Brineglow Vine*
 (^) Defiled Foliage
 (々) Defiled Heart
