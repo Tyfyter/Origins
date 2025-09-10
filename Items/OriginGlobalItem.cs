@@ -112,7 +112,7 @@ namespace Origins.Items {
 			if (item.PaintOrCoating) {
 				item.consumable = true;
 			}
-			if (item.damage is 0 or -1 && Origins.ExplosiveBaseDamage.TryGetValue(item.shoot, out int damage)) {
+			if (item.damage is 0 or -1 && (Origins.ExplosiveBaseDamage?.TryGetValue(item.shoot, out int damage) ?? false)) {
 				item.damage = damage;
 				statsModified = true;
 			}
@@ -153,7 +153,7 @@ namespace Origins.Items {
 			if (statsModified && !isOriginsItemCloningDefaults) {
 				item.StatsModifiedBy.Add(Mod);
 			}
-			if (Origins.itemGlowmasks[item.type] is not 0 and not -1) item.glowMask = Origins.itemGlowmasks[item.type];
+			if (Origins.itemGlowmasks?[item.type] is not 0 and not -1 and not null) item.glowMask = Origins.itemGlowmasks[item.type];
 		}
 		public override void ModifyItemScale(Item item, Player player, ref float scale) {
 			OriginPlayer originPlayer = player.OriginPlayer();
