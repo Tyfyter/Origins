@@ -13,7 +13,10 @@ namespace Origins.NPCs.MiscE {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.GiantFlyingFox] = Type;
 			Main.npcFrameCount[Type] = 5;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
+				PortraitPositionYOverride = -20,
+				Velocity = 1
+			};
 		}
 		public override void SetDefaults() {
 			NPC.width = 38;
@@ -29,7 +32,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
-				new GaslightingFlavorTextBestiaryInfoElement($"Mods.{Mod.Name}.Bestiary.{Name}", $"Mods.{Mod.Name}.Bestiary.{Name}_Alt"),
+				this.GetBestiaryFlavorText(alt: true),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
 			);
 		}
