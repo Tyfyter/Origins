@@ -1,9 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Dusts;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -15,8 +13,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
-using Tyfyter.Utils;
+
 namespace Origins.Items.Tools {
 	public class Indestructible_Saddle : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -157,6 +154,7 @@ namespace Origins.Items.Tools {
 			player.GoingDownWithGrapple = true;
 			bool doDismount = false;
 			Vector2 dismountVelocity = player.velocity;
+			int dismountDamage = player.GetWeaponDamage(item);
 			if (Collision.SolidCollision(player.position + player.velocity, player.width, player.height)) {
 				player.mount._abilityCooldown /= 3;
 				player.Hurt(PlayerDeathReason.ByOther(0), (int)(player.velocity.Length() * 3), -player.direction, true, cooldownCounter: ImmunityCooldownID.WrongBugNet, dodgeable: false);
@@ -166,6 +164,7 @@ namespace Origins.Items.Tools {
 				player.jump = Player.jumpHeight;
 				player.velocity.Y = Player.jumpSpeed * -1.5f;
 				player.position.Y -= 24;
+				dismountDamage /= 2;
 				doDismount = true;
 			}
 			if (doDismount) {
@@ -174,7 +173,7 @@ namespace Origins.Items.Tools {
 					position,
 					dismountVelocity,
 					ModContent.ProjectileType<Indestructible_Saddle_Projectile>(),
-					player.GetWeaponDamage(item),
+					dismountDamage,
 					player.GetWeaponKnockback(item),
 					player.whoAmI,
 					player.mount._frameExtraCounter,
