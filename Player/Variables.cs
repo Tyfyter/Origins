@@ -9,7 +9,6 @@ using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Layers;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
-using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.NPCs.Riven;
 using Origins.Projectiles.Misc;
 using PegasusLib;
@@ -531,6 +530,11 @@ namespace Origins {
 		public bool upsideDown = false;
 		int[] minionCountByType = ProjectileID.Sets.Factory.CreateIntSet();
 		public Speed_Booster.ConveyorBeltModifier conveyorBeltModifiers = null;
+		public const int maxScytheHitCombo = 3;
+		public int scytheHitCombo = 0;
+		public int maxDangerTime = 5 * 60;
+		public int dangerTime = 0;
+		public bool InDanger { get; private set; }
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
 			oldBonuses = 0;
@@ -1126,6 +1130,10 @@ namespace Origins {
 					break;
 				}
 			}
+			if (dangerTime <= 0) dangerTime = 0;
+			else dangerTime--;
+			InDanger = dangerTime > 0;
+			if (!InDanger) scytheHitCombo = 0;
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;

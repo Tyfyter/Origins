@@ -1,94 +1,117 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Items.Weapons.Summoner;
-using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
 using PegasusLib;
-using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI;
 
 namespace Origins.Items.Weapons.Melee {
 	[LegacyName("Splitting_Image")]
 	public class Astral_Scythe : ModItem {
-		public bool altMode { get; set; }
 		public override void SetStaticDefaults() {
-			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;
+			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
 		}
 		public override void SetDefaults() {
-			Item.damage = 42;
+			Item.damage = 64;
 			Item.DamageType = DamageClass.Melee;
 			Item.noUseGraphic = true;
-			Item.crit = -4;
+			Item.crit = -2;
+			Item.noMelee = true;
 			Item.width = 100;
 			Item.height = 98;
-			Item.useTime = 28;
-			Item.useAnimation = 28;
+			Item.useTime = 42;
+			Item.useAnimation = 42;
 			Item.shoot = ModContent.ProjectileType<Astral_Scythe_Slash>();
 			Item.shootSpeed = 6;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.knockBack = 6;
+			Item.knockBack = 8;
 			Item.useTurn = false;
-			Item.value = Item.sellPrice(gold: 1, silver: 50);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item71.WithPitch(-1f);
 			Item.autoReuse = false;
 		}
-		public override bool CanRightClick() => !ItemSlot.ShiftInUse;
-		public override void RightClick(Player player) {
-			altMode ^= true;
-		}
-		public override bool ConsumeItem(Player player) {
-			return false;
+		public override bool CanUseItem(Player player) {
+			if (OriginsModIntegrations.CheckAprilFools()) return true;
+			return !player.HasBuff<Astral_Scythe_Wait_Debuff>();
 		}
 		public override bool MeleePrefix() => true;
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient<Aetherite_Bar>(15)
+			.AddIngredient<Aetherite_Bar>(20)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
 		public override bool AltFunctionUse(Player player) {
-			return !altMode;
+			return !player.HasBuff<Astral_Scythe_Wait_Debuff>();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (player.altFunctionUse == 2) {
-				if (altMode) {
-					type = Astral_Scythe_Chunk_Spawn.ID;
-				} else {
-					type = Astral_Scythe_Chunk_Spawn.ID;
-					position = Main.MouseWorld;
-				}
-				damage = (int)(damage / 1.3f);
+				int frameReduction = player.itemAnimationMax / 2;
+				player.itemTime -= frameReduction;
+				player.itemTimeMax -= frameReduction;
+				player.itemAnimation -= frameReduction;
+				player.itemAnimationMax -= frameReduction;
+
+				type = 0;
+				damage = (int)(damage * 0.3f);
+				player.OriginPlayer().scytheHitCombo = 0;
+				player.AddBuff(Astral_Scythe_Wait_Debuff.ID, 3 * 60);
 			} else {
 				const float sqrt_2 = 1.4142135623731f;
 				velocity += new Vector2(sqrt_2 * player.direction, -sqrt_2);
+				if (OriginsModIntegrations.CheckAprilFools()) damage = (int)(damage * 0.5f);
 			}
 		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			int ai0 = 0;
+			if (OriginsModIntegrations.CheckAprilFools() && player.HasBuff<Astral_Scythe_Wait_Debuff>()) ai0 = 2;
+			else if (player.OriginPlayer().scytheHitCombo >= OriginPlayer.maxScytheHitCombo) ai0 = 1;
+
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, ai0: ai0);
+			return false;
+		}
+		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+			Texture2D texture = TextureAssets.Item[Type].Value;
+			Player player = Main.LocalPlayer;
+			bool hasDebuff = player.HasBuff<Astral_Scythe_Wait_Debuff>();
+
+			int variant = 0;
+			if (player.OriginPlayer().scytheHitCombo >= OriginPlayer.maxScytheHitCombo && !hasDebuff) variant = 2;
+			if (hasDebuff) variant = 1;
+
+			frame = texture.Frame(verticalFrames: 3, frameY: variant);
+			spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, drawColor, 0, origin, scale, SpriteEffects.None, 0);
+			return false;
+		}
 	}
-	public class Astral_Scythe_Slash : ModProjectile, IPreDrawSceneProjectile, ITriggerSCBackground {
-		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.TerraBlade2Shot}";
+	public class Astral_Scythe_Slash : ModProjectile {
+		public override string Texture => typeof(Astral_Scythe).GetDefaultTMLName();
+		public static int ExtraHitboxes => 1;
 		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = 3;
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.TerraBlade2Shot);
+			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
+			Projectile.width = 60;
+			Projectile.height = 60;
+			Projectile.aiStyle = 0;
+			Projectile.extraUpdates = 0;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.noEnchantmentVisuals = true;
 		}
-		public override void AI() {/*
+		public override bool ShouldUpdatePosition() => false;
+		public override void AI() {
+			if (Projectile.ai[0] == 2 && !OriginsModIntegrations.CheckAprilFools()) Projectile.Kill();
 			if (Projectile.ai[2] == 2) Projectile.ai[2] = 1;
 			if (Projectile.ai[2] == 1) {
 				Projectile.hide = true;
@@ -107,6 +130,8 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.active = false;
 				return;
 			}
+
+			if (Projectile.ai[0] >= 1) Projectile.Size = new(60 / 1.4f);
 			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
 			Projectile.rotation = MathHelper.Lerp(-2f, 1.3f, swingFactor) * player.direction;
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
@@ -115,8 +140,8 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.ai[2] = 2;
 			}
 			player.heldProj = Projectile.whoAmI;
-			//player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
-			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2) + GeometryUtils.Vec2FromPolar(32, realRotation);
+			player.SetCompositeArmFront(false, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
+			Projectile.Center = player.GetCompositeArmPosition(false) + GeometryUtils.Vec2FromPolar(32, realRotation * player.gravDir);
 			if (swingFactor < 0.4f) {
 				player.bodyFrame.Y = player.bodyFrame.Height * 1;
 			} else if (swingFactor < 0.7f) {
@@ -128,269 +153,133 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.position.Y += 8;
 			}
 
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * 0.4f;
-			List<int> noSpawnStarIndices = new(ExtraHitboxes);
-			for (int j = 0; j <= ExtraHitboxes; j++) noSpawnStarIndices.Add(j);
-			float starThreshold = player.itemTimeMax / 10f;
-			Projectile.ai[0]++;
-			while (Projectile.rotation < 1 && Projectile.ai[0] >= starThreshold && noSpawnStarIndices.Count > 0) {
-				noSpawnStarIndices.RemoveAt(Main.rand.Next(noSpawnStarIndices.Count));
-				Projectile.ai[0] -= starThreshold;
-			}
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation * player.gravDir - MathHelper.PiOver4 * (player.gravDir - 1) * player.direction) * Projectile.width * 0.13f;
 			for (int j = 0; j <= ExtraHitboxes; j++) {
 				Projectile.EmitEnchantmentVisualsAt(Projectile.position + vel * j, Projectile.width, Projectile.height);
-				if (!noSpawnStarIndices.Contains(j)) {
-					Projectile.SpawnProjectile(null,
-						Projectile.position + vel * j + new Vector2(Main.rand.NextFloat(Projectile.width), Main.rand.NextFloat(Projectile.height)),
-						(realRotation + 1 * player.direction).ToRotationVector2() * 4 + Projectile.velocity * Vector2.UnitX * 4,
-						ModContent.ProjectileType<Cool_Sword_P>(),
-						Projectile.damage / 3,
-						Projectile.knockBack,
-						Projectile.identity
-					);
-				}
-			}*/
+			}
 		}
-		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {/*
+		public override void OnSpawn(IEntitySource source) {
+			if (Projectile.ai[0] == 1) Projectile.NewProjectile(source, Projectile.position, Projectile.velocity, ModContent.ProjectileType<Astral_Scythe_Blade>(), (int)(Projectile.damage * 0.2f), Projectile.knockBack, Projectile.owner);
+		}
+		List<Rectangle> tmp = [];
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			if (Projectile.ai[2] == 1) return false;
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * 0.4f;
-			for (int j = 0; j <= ExtraHitboxes; j++) {
+			Player player = Main.player[Projectile.owner];
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * 0.13f;
+			vel.Y *= player.gravDir;
+			tmp.Clear();
+			int boxes = ExtraHitboxes;// - (Projectile.ai[0] >= 1 ? 1 : 0);
+			for (int j = 0; j <= boxes; j++) {
 				Rectangle hitbox = projHitbox;
 				Vector2 offset = vel * j;
 				hitbox.Offset((int)offset.X, (int)offset.Y);
+				tmp.Add(hitbox);
 				if (hitbox.Intersects(targetHitbox)) {
 					return true;
 				}
-			}*/
-			return base.Colliding(projHitbox, targetHitbox);
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			//OriginGlobalNPC.InflictTorn(target, 20, targetSeverity: 0.4f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
-		}
-		public override bool PreDraw(ref Color lightColor) {
-			if (middleRenderTarget is null) {
-				Main.QueueMainThreadAction(SetupRenderTargets);
-				Main.OnResolutionChanged += Resize;
-				return false;
 			}
-
-			Origins.shaderOroboros.Capture();
-
-			Main.graphics.GraphicsDevice.Textures[1] = middleRenderTarget;
-			Accretion_Ribbon.EraseShader.Shader.Parameters["uImageSize1"]?.SetValue(new Vector2(middleRenderTarget.Width, middleRenderTarget.Height));
-			Origins.shaderOroboros.Stack(Accretion_Ribbon.EraseShader);
-			Origins.shaderOroboros.DrawContents(edgeRenderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
-			Origins.shaderOroboros.Reset(default);
-			Vector2 center = edgeRenderTarget.Size() * 0.5f;
-			Main.EntitySpriteDraw(
-				edgeRenderTarget,
-				center,
-				null,
-				Color.White,
-				0,
-				center,
-				Vector2.One / Main.GameViewMatrix.Zoom,
-				SpriteEffects.None
-			);
-
-			Texture2D texture = TextureAssets.Projectile[Type].Value;
-			Main.EntitySpriteDraw(
-				texture,
-				Projectile.Center - Main.screenPosition,
-				null,
-				lightColor,
-				Projectile.rotation,
-				texture.Size() - new Vector2(3, 6),
-				Projectile.scale,
-				SpriteEffects.None
-			);
 			return false;
 		}
-		public void PreDrawScene() {
-			if (SC_Phase_Three_Midlay.DrawnMaskSources.Add(Projectile)) {
-				Texture2D circle = TextureAssets.Projectile[Type].Value;
-				SC_Phase_Three_Midlay.DrawDatas.Add(new(
-					circle,
-					Projectile.Center - Main.screenPosition,
-					null,
-					Color.White
-				) {
-					origin = circle.Size() * 0.5f,
-					scale = Vector2.One * Projectile.scale
-				});
-			}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			Player player = Main.player[Projectile.owner];
+			player.OriginPlayer().scytheHitCombo++;
 		}
-		public override void OnKill(int timeLeft) {
-			if (middleRenderTarget is not null) {
-				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref middleRenderTarget);
-				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref edgeRenderTarget);
-				Main.OnResolutionChanged -= Resize;
-			}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			Player player = Main.player[Projectile.owner];
+			player.OriginPlayer().scytheHitCombo++;
 		}
-		internal RenderTarget2D middleRenderTarget;
-		internal RenderTarget2D edgeRenderTarget;
-		public void Resize(Vector2 _) {
-			if (Main.dedServ) return;
-			SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref middleRenderTarget);
-			SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref edgeRenderTarget);
-			SetupRenderTargets();
+		public override void CutTiles() {
+			Player player = Main.player[Projectile.owner];
+			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
+			Vector2 end = Projectile.Center + Projectile.velocity.RotatedBy(Projectile.rotation).SafeNormalize(Vector2.UnitX) * new Vector2(1, player.gravDir) * 50f * Projectile.scale;
+			Utils.PlotTileLine(Projectile.Center, end, 80f * Projectile.scale, DelegateMethods.CutTiles);
 		}
-		void SetupRenderTargets() {
-			if (middleRenderTarget is not null && !middleRenderTarget.IsDisposed) return;
-			middleRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
-			edgeRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+
+		public static AutoLoadingAsset<Texture2D> bladelessTexture = typeof(Astral_Scythe).GetDefaultTMLName() + "_Topless";
+		public override bool PreDraw(ref Color lightColor) {
+			Player player = Main.player[Projectile.owner];
+			SpriteEffects effects = player.direction * player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+			if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally;
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Rectangle frame = texture.Frame(verticalFrames: 3, frameY: Projectile.ai[0] >= 1 ? 1 : 0);
+
+			Main.EntitySpriteDraw(
+				texture,
+				player.GetCompositeArmPosition(false) + GeometryUtils.Vec2FromPolar(8, (Projectile.rotation + Projectile.velocity.ToRotation()) * player.gravDir) - Main.screenPosition,
+				frame,
+				lightColor,
+				Projectile.rotation * player.gravDir + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * player.direction * player.gravDir) - (player.gravDir < 0).Mul(MathHelper.PiOver2 * player.direction),
+				new Vector2(14, 8).Apply(effects ^ SpriteEffects.FlipVertically, texture.Size() / 3),
+				Projectile.scale,
+				effects
+			);
+			foreach (Rectangle rct in tmp) rct.DrawDebugOutlineSprite(Color.Blue);
+			return false;
 		}
 	}
-	public class Astral_Scythe_Chunk_Spawn : ModProjectile, IPreDrawSceneProjectile, ITriggerSCBackground {
-		public override string Texture => "Terraria/Images/Misc/StarDustSky/Planet";
-		public static int ID { get; private set; }
+	public class Astral_Scythe_Blade : ModProjectile {
+		public override string Texture => "Origins/Gores/NPCs/Shimmer_Construct_Piece10";
+		public override void SetStaticDefaults() {
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+		}
 		public override void SetDefaults() {
-			Projectile.friendly = true;
-			Projectile.aiStyle = -1;
-			Projectile.tileCollide = false;
-			ID = Type;
-			Projectile.localAI = [-1, -1, 0];
+			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);
+			Projectile.width = 34;
+			Projectile.height = 54;
+			Projectile.aiStyle = 0;
+			Projectile.extraUpdates = 0;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
-			if (Projectile.ai[0] == 0) {
-				if (MathUtils.LinearSmoothing(ref Projectile.ai[1], 0.6f, 1 / 60f)) Projectile.ai[0] = 1;
-			} else if (Projectile.ai[0]++ > 3 * 60) {
-				if (Projectile.localAI[0] == -1) {
-					Projectile.localAI[0] = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - new Vector2(10, 0), default, Astral_Scythe_Chunk.ID, Projectile.damage, Projectile.knockBack, Projectile.owner);
-					Projectile.localAI[1] = Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + new Vector2(10, 0), default, Astral_Scythe_Chunk.ID, Projectile.damage, Projectile.knockBack, Projectile.owner);
-				}
-				if (MathUtils.LinearSmoothing(ref Projectile.ai[1], 0, 1 / 60f)) {
-					Projectile.ai[0] = 0;
-					Projectile.Kill();
-				}
+			Player player = Main.player[Projectile.owner];
+			Entity owner = Projectile.GetRelatedProjectile(2);
+			if (owner is null) {
+				if (!Projectile.ai[2].TrySet(-1)) Projectile.Kill();
+				return;
 			}
-		}
-		public override bool PreDraw(ref Color lightColor) {
-			if (middleRenderTarget is null) {
-				Main.QueueMainThreadAction(SetupRenderTargets);
-				Main.OnResolutionChanged += Resize;
-				return false;
-			}
+			Vector2 toOwner = (owner.Center - Projectile.Center).Normalized(out float dist);
 
-			Origins.shaderOroboros.Capture();
-
-			Main.graphics.GraphicsDevice.Textures[1] = middleRenderTarget;
-			Accretion_Ribbon.EraseShader.Shader.Parameters["uImageSize1"]?.SetValue(new Vector2(middleRenderTarget.Width, middleRenderTarget.Height));
-			Origins.shaderOroboros.Stack(Accretion_Ribbon.EraseShader);
-			Origins.shaderOroboros.DrawContents(edgeRenderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
-			Origins.shaderOroboros.Reset(default);
-			Vector2 center = edgeRenderTarget.Size() * 0.5f;
-			Main.EntitySpriteDraw(
-				edgeRenderTarget,
-				center,
-				null,
-				Color.White,
-				0,
-				center,
-				Vector2.One / Main.GameViewMatrix.Zoom,
-				SpriteEffects.None
-			);/*
-
-			Texture2D texture = TextureAssets.Projectile[Type].Value;
-			Main.EntitySpriteDraw(
-				texture,
-				Projectile.Center - Main.screenPosition,
-				null,
-				lightColor,
-				Projectile.rotation,
-				texture.Size() - new Vector2(3, 6),
-				Projectile.scale,
-				SpriteEffects.None
-			);*/
-			return false;
+			Projectile.position = owner.position;
 		}
-		public void PreDrawScene() {
-			if (SC_Phase_Three_Midlay.DrawnMaskSources.Add(Projectile)) {
-				Texture2D circle = TextureAssets.Projectile[Type].Value;
-				SC_Phase_Three_Midlay.DrawDatas.Add(new(
-					circle,
-					Projectile.Center - Main.screenPosition,
-					null,
-					Color.White
-				) {
-					origin = circle.Size() * 0.5f,
-					scale = Vector2.One * Projectile.scale * Projectile.ai[1]
-				});
-			}
-		}
-		public override void OnKill(int timeLeft) {
-			if (middleRenderTarget is not null) {
-				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref middleRenderTarget);
-				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref edgeRenderTarget);
-				Main.OnResolutionChanged -= Resize;
-			}
-		}
-		internal RenderTarget2D middleRenderTarget;
-		internal RenderTarget2D edgeRenderTarget;
-		public void Resize(Vector2 _) {
-			if (Main.dedServ) return;
-			SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref middleRenderTarget);
-			SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref edgeRenderTarget);
-			SetupRenderTargets();
-		}
-		void SetupRenderTargets() {
-			if (middleRenderTarget is not null && !middleRenderTarget.IsDisposed) return;
-			middleRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
-			edgeRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
-		}
-		public override void SendExtraAI(BinaryWriter writer) {
-			writer.Write(Projectile.localAI[0]);
-			writer.Write(Projectile.localAI[1]);
-		}
-		public override void ReceiveExtraAI(BinaryReader reader) {
-			Projectile.localAI[0] = reader.ReadSingle();
-			Projectile.localAI[1] = reader.ReadSingle();
-		}
-	}
-	public class Astral_Scythe_Chunk : ModProjectile {
-		public override string Texture => typeof(Shimmer_Chunk1).GetDefaultTMLName();
-		//private AutoLoadingAsset<Texture2D>[] textures = [];
-		public static int ID { get; private set; }
-		public override void SetDefaults() {
-			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
-			Projectile.friendly = true;
-			Projectile.width = 56;
-			Projectile.height = 56;
-			Projectile.aiStyle = -1;
-			Projectile.usesIDStaticNPCImmunity = true;
-			Projectile.idStaticNPCHitCooldown = 10;
-			Projectile.tileCollide = false;
-			Projectile.localAI[0] = Main.rand.Next(3);
-			ID = Type;
-		}
-		private void DoExplode(Entity? tgt) {
-			Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.position, new(), ProjectileID.TerraBlade2Shot, Projectile.damage, 0, Projectile.owner);
-			Projectile.active = false;
-			if (tgt is not null && tgt is Projectile) Projectile.active = false;
-		}
-		public override void AI() {
-			for (int i = 0; i < Main.npc.Length; i++) {
-				NPC tgt = Main.npc[i];
-				if (tgt.active && !tgt.friendly && !tgt.immortal && !OriginsSets.NPCs.TargetDummies[tgt.type] && Projectile.Hitbox.Intersects(tgt.Hitbox)) {
-					DoExplode(tgt);
+		public override void OnSpawn(IEntitySource source) {
+			int Proj = ModContent.ProjectileType<Astral_Scythe_Slash>();
+			Projectile.ai[2] = -1;
+			foreach (Projectile proj in Main.ActiveProjectiles) {
+				if (proj.owner == Projectile.owner && proj.type == Proj) {
+					Projectile.ai[2] = proj.identity;
 					break;
 				}
-				if (i == Main.npc.Length - 1) {
-					for (int j = 0; j < Main.projectile.Length; j++) {
-						Projectile tgt1 = Main.projectile[j];
-						if (tgt1.active && tgt1?.ModProjectile is Astral_Scythe_Chunk) {
-							DoExplode(tgt1);
-							break;
-
-						}
-					}
-				}
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			Player player = Main.player[Projectile.owner];
+			SpriteEffects effects = player.direction * player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+			if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally;
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
 
-			return true;
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.position - Main.screenPosition,
+				null,
+				lightColor,
+				Projectile.rotation * player.gravDir + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * player.direction * player.gravDir) - (player.gravDir < 0).Mul(MathHelper.PiOver2 * player.direction),
+				new Vector2(14, 8).Apply(effects ^ SpriteEffects.FlipVertically, texture.Size()),
+				Projectile.scale,
+				effects
+			);
+			Projectile.Hitbox.DrawDebugOutlineSprite(Color.Red);
+			return false;
+		}
+	}
+}
+namespace Origins.Buffs {
+	public class Astral_Scythe_Wait_Debuff : ModBuff {
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			Main.debuff[Type] = true;
+			ID = Type;
 		}
 	}
 }

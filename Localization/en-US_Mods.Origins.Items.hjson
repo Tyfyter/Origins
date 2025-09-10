@@ -6643,7 +6643,13 @@ Procedural_Sprite_Generator: {
 
 Astral_Scythe: {
 	DisplayName: Astral Scythe
-	Tooltip: ""
+	Tooltip:
+		'''
+		Upon 3 successful hits the blade of the scythe detatches to form a flail
+		<right> to explode the blade to release star mines around you, damage and range varying based on successful scythe hits
+		{$Debuff}
+		'''
+	Debuff: While the blade regenerates the scythe is unusable
 }
 
 Pocket_Dimension_Monolith_Item: {

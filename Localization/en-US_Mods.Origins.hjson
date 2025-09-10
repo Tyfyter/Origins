@@ -1342,6 +1342,11 @@ Buffs: {
 		DisplayName: Firmly Grounded
 		Description: You're tired of falling
 	}
+
+	Astral_Scythe_Wait_Debuff: {
+		DisplayName: Astral Scythe Cooldown
+		Description: Your scythe needs to rest.
+	}
 }
 
 DamageClassName: {
@@ -1977,6 +1982,7 @@ Projectiles: {
 	Terratotem_Mask_Small.DisplayName: Terratotem Mask Small
 	Terratotem_Mask_Big.DisplayName: Terratotem Mask Big
 	Terratotem_Mask_Medium.DisplayName: Terratotem Mask Medium
+	Astral_Scythe_Blade.DisplayName: Astral Scythe Blade
 }
 
 Prefixes: {

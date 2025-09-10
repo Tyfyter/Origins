@@ -86,6 +86,7 @@ Items: {
 
 	// Terlet_Paper.Tooltip: Summons a kawaii cta
 	// Peat_Moss_Item.DisplayName: PETA Moss
+	// Astral_Scythe.Debuff: While the blade regenerates the scythe can only bonk
 }
 
 // Prefixes.Wholesome_Prefix.DisplayName: Holesome

@@ -490,6 +490,8 @@ namespace Origins {
 					}
 				}
 			}
+
+			if (dangerTime < maxDangerTime) dangerTime = maxDangerTime;
 		}
 		#endregion
 		#region receiving
@@ -515,6 +517,8 @@ namespace Origins {
 				int damageMult = 1 + Player.wet.ToInt() + ((staticShock || miniStaticShock) && staticShockDamage).ToInt();
 				Player.lifeRegen -= 9 * damageMult;
 			}
+
+			if (Player.lifeRegen < 0 && dangerTime < maxDangerTime) dangerTime = maxDangerTime;
 		}
 		public override bool CanBeHitByProjectile(Projectile proj) {
 			if (shimmerShieldDashTime != 0 && OriginsSets.Projectiles.CanBeDeflected[proj.type]) {
@@ -1089,6 +1093,8 @@ namespace Origins {
 					if (npc.ModNPC is IPostHitPlayer postHitPlayer) postHitPlayer.PostHitPlayer(Player, info);
 				}
 			}
+
+			if (dangerTime < maxDangerTime) dangerTime = maxDangerTime;
 		}
 		#endregion
 		/// <param name="target">the potential target</param>
