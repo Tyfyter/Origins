@@ -67,6 +67,28 @@ namespace Origins.Items.Weapons.Summoner {
 }
 
 namespace Origins.Items.Weapons.Summoner.Minions {
+	#region balance
+	public partial class Terratotem_Mask_Small {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.SourceDamage *= 1f;
+		}
+	}
+	public partial class Terratotem_Mask_Medium {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.SourceDamage *= 1f;
+		}
+	}
+	public partial class Terratotem_Mask_Big {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.SourceDamage *= 1f;
+		}
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			if (Projectile.ai[2] >= 10 && Projectile.ai[2] <= 20) {
+				hitbox.Inflate(hitbox.Width * 2, hitbox.Height * 2);
+			}
+		}
+	}
+	#endregion balance
 	public class Terratotem_Orb : ModProjectile, IArtifactMinion {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
@@ -658,11 +680,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Item
 		}
 	}
-	public class Terratotem_Mask_Small : Terratotem_Mask_Base {
+	public partial class Terratotem_Mask_Small : Terratotem_Mask_Base {
 		public override int FrameCount => 4;
 		public override bool CanPickupItems => false;
 	}
-	public class Terratotem_Mask_Medium : Terratotem_Mask_Base {
+	public partial class Terratotem_Mask_Medium : Terratotem_Mask_Base {
 		public override bool? CanDamage() => Projectile.ai[2] > 0;
 		public override void DoMaskBehavior() {
 			if (Projectile.ai[2] > 0) {
@@ -700,16 +722,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.velocity = (Projectile.velocity * (inertia - 1) + directionToTarget * speed) / inertia;
 		}
 	}
-	public class Terratotem_Mask_Big : Terratotem_Mask_Base {
+	public partial class Terratotem_Mask_Big : Terratotem_Mask_Base {
 		public override bool? CanDamage() => Projectile.ai[2] >= 10 && Projectile.ai[2] <= 20;
 		public override void AI() {
 			base.AI();
 			if (Projectile.numUpdates == -1 && Projectile.ai[2] > 0 && Projectile.ai[2].Warmup(30)) Projectile.ai[2] = 0;
-		}
-		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-			if (Projectile.ai[2] >= 10 && Projectile.ai[2] <= 20) {
-				hitbox.Inflate(hitbox.Width * 2, hitbox.Height * 2);
-			}
 		}
 		public override void DoMaskBehavior() {
 			if (Projectile.ai[2] > 0) {
