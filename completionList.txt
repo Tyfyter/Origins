@@ -1241,13 +1241,11 @@ TILES:
 (^) Defiled Water Fountain*
 (X) Edenwood Furniture°
 (^) Endowood Furniture*
-(X) Floodlight
 (X) Hyrax Cage
 (^) Limestone Furniture
 (^) Living Alkahest Block*
 (^) Living Bile Block*
 (^) Marrowick Furniture*
-(X) Modular Light Fixture
 (X) Nova Furniture°
 (X) Peppered Moth Lamp
 (X) Residue Furniture°
@@ -1255,8 +1253,6 @@ TILES:
 (^) Riven Water Fountain*
 (X) Sanguinite Brick
 (^) Shadow Torch°
-(X) Steel Support Beam
-(X) Suit Locker
 (^) Traffic Cone*
 
 (X) Ashen Dungeon Chest
@@ -1316,6 +1312,7 @@ TILES:
 (X) Eden Tree°
 (X) Exoskeletal Baobab Tree*
 (^) Exoskeletal Tree*
+(X) Floodlight
 (ᗢ) Fungarust*
 (^) Fuzzvine
 (^) Gel Blister*
@@ -1325,6 +1322,7 @@ TILES:
 (^) Limestone Rubble
 (^) Marrowick Coral
 (^) Marrowick Flange
+(X) Modular Light Fixture
 (^) Ocotillo
 (X) Petrified Baobab Tree*
 (^) Petrified Tree*
@@ -1333,6 +1331,8 @@ TILES:
 (X) Sheet Metal
 (^) Shelf Coral
 (^) Soulspore*
+(X) Steel Support Beam
+(X) Suit Locker
 (ᗢ) Surveysprout*
 (^) Tangela Bramble
 (^) Underwater Vine
