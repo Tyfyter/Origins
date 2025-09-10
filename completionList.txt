@@ -204,7 +204,7 @@ ENEMY NPCS:
 (^) Conehead Zombie°
 (X) Corrupt Reaper
 (^) Cranivore*
-(🤡) Creme-filled Bat !!!
+(🤡) Creme-filled Bat
 (^) Crimbrain*
 (X) Crying Creeper
 (X) Defensive Turret
@@ -1005,7 +1005,7 @@ SUMMONER WEAPONS:
 (X) Ribatar
 (X) SMART Wrench
 (X) Technomancer 4000
-(◘) Terratotem !!!
+(#2, ^2) Terratotem !!!
 (X) Tonal Resonator
 (X) Vampire Fireflower in a Pot
 

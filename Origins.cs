@@ -1056,6 +1056,10 @@ namespace Origins {
 			public static SoundStyle ShimmerConstructAmbienceOutro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_End", SoundType.Ambient);
 
 			public static SoundStyle Bonk = SoundID.Roar;
+			public static SoundStyle BikeHorn = new("Origins/Sounds/Custom/BikeHorn", SoundType.Sound) {
+				PitchVariance = 0.5f,
+				MaxInstances = 0
+			};
 			public static SoundStyle BoneBreakBySoundEffectsFactory = new("Origins/Sounds/Custom/Bone_Break_By_SoundEffectsFactory", SoundType.Sound) {
 				PitchVariance = 0.5f,
 				MaxInstances = 0

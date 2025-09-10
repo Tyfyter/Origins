@@ -32,6 +32,9 @@ namespace Origins.NPCs.MiscE {
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
 			);
 		}
+		public override void AI() {
+			if (Main.rand.NextBool(250)) SoundEngine.PlaySound(Origins.Sounds.BikeHorn, NPC.Center);
+		}
 		public override bool PreAI() {
 			if (NPC.ai[3] > 0) {
 				NPC.immortal = true;

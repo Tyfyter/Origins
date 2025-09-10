@@ -1022,8 +1022,8 @@ Buffs: {
 	}
 
 	Terratotem_Buff: {
-		// DisplayName: Terratotem Buff
-		// Description: The reformed soul will protect you
+		// DisplayName: Terratotem
+		// Description: The tribe will serve you
 	}
 
 	Friendly_Zombie_Buff: {

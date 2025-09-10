@@ -4788,12 +4788,20 @@ Amebic_Gel_Wall_Placed_Unsafe_Item: {
 
 Broken_Terratotem: {
 	// DisplayName: Broken Terratotem
-	// Tooltip: Summons a lost soul to fight for you
+	/* Tooltip:
+		'''
+		Summons totems to fight for you
+		Higher totems have stronger attacks and bring items to you
+		''' */
 }
 
 Terratotem: {
 	// DisplayName: Terratotem
-	// Tooltip: Summons a reformed soul to fight for you
+	/* Tooltip:
+		'''
+		Summons totems to fight for you
+		Higher totems have stronger attacks and bring items to you
+		''' */
 }
 
 Inanimate_Zombie_Hand: {
