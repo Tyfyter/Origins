@@ -420,3 +420,5 @@ Debug_Shoot_NPC: {
 		Princess_LovesNPC: I like {NPCName}.
 	}
 }
+
+Creme_Filled_Bat.DisplayName: Creme Filled Bat

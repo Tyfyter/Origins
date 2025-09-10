@@ -6,6 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.NPCs {
 	public class Debug_Shoot_NPC : ModNPC {
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.TargetDummy;
+		public override void SetStaticDefaults() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+		}
 		public override void SetDefaults() {
 			NPC.width = 18;
 			NPC.height = 40;
