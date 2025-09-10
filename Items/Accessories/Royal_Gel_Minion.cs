@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.Dev;
 using Origins.Projectiles.Weapons;
 using System;
@@ -496,12 +498,13 @@ namespace Origins.Items.Accessories {
 			ProjectileID.Sets.MinionShot[Type] = true;
 		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.SpikedSlimeSpike);
+			Projectile.DamageType = DamageClass.Summon;
+			Projectile.alpha = 255;
+			Projectile.width = 6;
+			Projectile.height = 6;
 			Projectile.aiStyle = 1;
 			Projectile.penetrate = 3;
-			Projectile.npcProj = false;
 			Projectile.friendly = true;
-			Projectile.hostile = false;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 10;
 			//AIType = ProjectileID.SpikedSlimeSpike;
