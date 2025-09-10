@@ -1136,6 +1136,7 @@ TILES:
 (X) Brown Ice
 (^) Calcified Spug Flesh
 (X) Cancer Block°
+(@4, ^3) Carburite
 (X) Catwalk
 (^) Chambersite
 (^) Chambersite Gemspark°
