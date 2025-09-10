@@ -19,7 +19,7 @@ namespace Origins.Layers {
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 			int slotValue = _playerSlot.GetValue(drawInfo.drawPlayer);
 			Texture2D expectedTexture = GetTextureArray(type)[slotValue].Value;
-			for (int i = 0; i < drawInfo.DrawDataCache.Count; i++) {
+			for (int i = drawInfo.DrawDataCache.Count - 1; i >= 0; i--) {
 				DrawData data = drawInfo.DrawDataCache[i];
 				if (data.texture == expectedTexture) {
 					GlowData glowData = glowMasks[slotValue];
