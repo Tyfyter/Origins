@@ -47,6 +47,7 @@ namespace Origins.NPCs.MiscE {
 				NPC.rotation += NPC.ai[0] * 0.125f;
 				NPC.ai[0] *= 0.99f;
 				if (NPC.collideY) {
+					if (float.IsNaN(NPC.ai[0])) NPC.ai[0] = 0;
 					if (Math.Sign(NPC.velocity.X) != Math.Sign(NPC.ai[0]) || Math.Abs(NPC.velocity.X) < Math.Abs(NPC.ai[0] * 2)) {
 						NPC.velocity.X += NPC.ai[0] * 0.125f;
 						NPC.ai[0] *= 0.97f;
