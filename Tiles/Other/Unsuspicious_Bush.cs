@@ -1,22 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
-using Origins.Core;
-using Origins.NPCs.Defiled;
-using Origins.NPCs.MiscE;
-using Origins.NPCs.Riven;
-using Origins.World.BiomeData;
-using PegasusLib.Networking;
-using System;
+﻿using PegasusLib.Networking;
 using System.IO;
-using System.Linq;
 using Terraria;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -59,7 +47,6 @@ namespace Origins.Tiles.Other {
 			writer.Write(On);
 		}
 		protected override void Perform() {
-			ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral($"Server: {(Main.dedServ ? Main.dedServ : Main.LocalPlayer.name)}, AF: {On}"), Color.White);
 			OriginSystem.Instance.ForceAF = On;
 		}
 	}
