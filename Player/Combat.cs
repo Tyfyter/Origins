@@ -8,16 +8,13 @@ using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Magic;
 using Origins.NPCs;
 using Origins.NPCs.Brine;
 using Origins.NPCs.Crimson;
 using Origins.NPCs.Defiled;
-using Origins.NPCs.MiscE;
 using Origins.Projectiles;
 using Origins.Questing;
 using PegasusLib.ID;
-using PegasusLib.Sets;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -179,6 +176,13 @@ namespace Origins {
 				Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.GoldFlame, newColor: Color.Lime);
 			}
 			DoGunGlove();
+		}
+		public override void EmitEnchantmentVisualsAt(Projectile projectile, Vector2 boxPosition, int boxWidth, int boxHeight) {
+			if (flaskBile) {
+				Dust.NewDust(boxPosition, boxWidth, boxHeight, DustID.BloodWater, newColor: Color.Black);
+			} else if (flaskSalt) {
+				Dust.NewDust(boxPosition, boxWidth, boxHeight, DustID.GoldFlame, newColor: Color.Lime);
+			}
 		}
 		public void DoGunGlove() {
 			if (gunGlove && gunGloveCooldown <= 0) {
