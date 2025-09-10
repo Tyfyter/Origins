@@ -1,4 +1,5 @@
 ﻿using Origins.Gores.NPCs;
+using Origins.UI;
 using PegasusLib.ID;
 using System;
 using Terraria;
@@ -28,7 +29,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
-				this.GetBestiaryFlavorText(),
+				new GaslightingFlavorTextBestiaryInfoElement($"Mods.{Mod.Name}.Bestiary.{Name}", $"Mods.{Mod.Name}.Bestiary.{Name}_Alt"),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
 			);
 		}

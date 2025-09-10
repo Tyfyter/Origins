@@ -13,7 +13,7 @@ using Terraria.UI.Chat;
 
 namespace Origins.UI {
 	public class BetterFlavorTextBestiaryInfoElement(string languageKey) : FlavorTextBestiaryInfoElement(languageKey), IBestiaryInfoElement {
-		public string Key => FlavorTextBestiaryInfoElementMethods._key.GetValue(this);
+		public virtual string Key => FlavorTextBestiaryInfoElementMethods._key.GetValue(this);
 		public new UIElement ProvideUIElement(BestiaryUICollectionInfo info) {
 			if (info.UnlockState < BestiaryEntryUnlockState.CanShowStats_2) {
 				return null;
@@ -132,5 +132,8 @@ namespace Origins.UI {
 				OnTextChange?.Invoke();
 			}
 		}
+	}
+	public class GaslightingFlavorTextBestiaryInfoElement(string languageKey, string altLanguageKey) : BetterFlavorTextBestiaryInfoElement(languageKey) {
+		public override string Key => Main.rand.NextBool() ? altLanguageKey : FlavorTextBestiaryInfoElementMethods._key.GetValue(this);
 	}
 }
