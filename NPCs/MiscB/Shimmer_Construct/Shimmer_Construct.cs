@@ -16,6 +16,7 @@ using Origins.Music;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.MusicBoxes;
 using Origins.Tiles.Other;
+using Origins.UI;
 using PegasusLib;
 using PegasusLib.Graphics;
 using ReLogic.Content;
@@ -115,7 +116,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
-				this.GetBestiaryFlavorText(true),
+				this.GetBestiaryFlavorText(alt: true),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
 			);
 		}
@@ -402,12 +403,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			if (OriginsModIntegrations.CheckAprilFools()) {
 				TextureAssets.Npc[Type] = afTexture;
 				NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
-					Position = new Vector2(0, 50),
+					Position = new Vector2(0, 42),
 					PortraitPositionXOverride = 2,
-					PortraitPositionYOverride = 80,
+					PortraitPositionYOverride = 70,
 					Rotation = MathHelper.Pi,
 					Scale = 1.2f,
-					PortraitScale = 2
+					PortraitScale = 2,
+					Frame = 0
 				};
 			} else {
 				TextureAssets.Npc[Type] = normalTexture;

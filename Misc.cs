@@ -2876,10 +2876,16 @@ namespace Origins {
 				if (value.HasFlag(possibleFlags[i])) yield return possibleFlags[i];
 			}
 		}
-		public static IBestiaryInfoElement GetBestiaryFlavorText(this ModNPC npc, bool better = false) {
+		public static IBestiaryInfoElement GetBestiaryFlavorText(this ModNPC npc, bool better = false, bool alt = false) {
 			string key = $"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}";
 			Language.GetOrRegister(key, () => "bestiary text here");
-			if (better) return new BetterFlavorTextBestiaryInfoElement(key);
+			if (better || alt) {
+				if (alt) {
+					string altKey = key + "_Alt";
+					Language.GetOrRegister(altKey, () => "alt bestiary text here");
+					return new GaslightingFlavorTextBestiaryInfoElement(key, altKey);
+				} else return new BetterFlavorTextBestiaryInfoElement(key);
+			}
 			return new FlavorTextBestiaryInfoElement(key);
 		}
 		public static FlavorTextBestiaryInfoElement GetBestiaryFlavorText(int npcID) {
@@ -3054,18 +3060,25 @@ namespace Origins {
 		}
 		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			Vector2 pos = area.TopLeft() + offset;
-			for (int c = 0; c < area.Width; c += 2) {
+			int amt = 20; // as to try to not spawn to many dusts
+			for (int c = 0; c < area.Width; c += area.Width / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(c, 0), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
-			for (int c = 0; c < area.Height; c += 2) {
+			for (int c = 0; c < area.Height; c += area.Height / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(0, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
-			for (int c = 0; c < area.Width; c += 2) {
+			for (int c = 0; c < area.Width; c += area.Width / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(c, area.Height), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
-			for (int c = 0; c < area.Height; c += 2) {
+			for (int c = 0; c < area.Height; c += area.Height / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(area.Width, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
+		}
+		public static void DrawDebugOutlineSprite(this Rectangle area, Color color, Vector2 offset = default) {
+			DrawDebugLineSprite(area.TopLeft(), area.TopRight(), color, offset, true);
+			DrawDebugLineSprite(area.TopLeft(), area.BottomLeft(), color, offset, true);
+			DrawDebugLineSprite(area.TopRight(), area.BottomRight(), color, offset, true);
+			DrawDebugLineSprite(area.BottomLeft(), area.BottomRight(), color, offset, true);
 		}
 		public static void DrawDebugOutline(this Triangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
@@ -3078,16 +3091,24 @@ namespace Origins {
 				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
+		public static void DrawDebugOutlineSprite(this Triangle area, Color color, Vector2 offset = default) {
+			DrawDebugLineSprite(area.a, area.b, color, offset, true);
+			DrawDebugLineSprite(area.b, area.c, color, offset, true);
+			DrawDebugLineSprite(area.c, area.a, color, offset, true);
+		}
 		public static void DrawDebugLine(Vector2 a, Vector2 b, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
 				Dust.NewDustPerfect(offset + Vector2.Lerp(a, b, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugLineSprite(Vector2 a, Vector2 b, Color color, Vector2 offset = default) {
+		public static void DrawDebugLineSprite(Vector2 a, Vector2 b, Color color, Vector2 offset = default, bool countScreenPos = false) {
 			Vector2 diff = b - a;
+			Vector2 position = a + offset;
+			if (countScreenPos) position -= Main.screenPosition;
+
 			Main.spriteBatch.Draw(
 				TextureAssets.MagicPixel.Value,
-				a + offset,
+				position,
 				new Rectangle(0, 0, 2, 2),
 				color,
 				diff.ToRotation(),
