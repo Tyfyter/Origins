@@ -138,6 +138,12 @@ Buffs: {
 		// DisplayName: Fiberglass Cta
 		// Description: Kawaii cta tiem
 	}
+
+	/* Astral_Scythe_Wait_Debuff.Description:
+		'''
+		Your scythe needs to rest.
+		But ye shall [italicize:bonk].
+		''' */
 }
 
 DefiledRelaySignals: {

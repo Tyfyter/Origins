@@ -585,6 +585,11 @@ namespace Origins {
 			ChatManager.Register<Quest_Reward_Item_List_Handler>([
 				"qian"
 			]);
+			ChatManager.Register<Italics_Snippet_Handler>([
+				"italic",
+				"italics",
+				"italicize"
+			]);
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
 				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,
