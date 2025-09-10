@@ -533,6 +533,9 @@ namespace Origins {
 						shineSparkCharge -= dir;
 					}
 				}
+			} else {
+				shineSparkDashTime = 0;
+				shineSparkCharge = 0;
 			}
 			if (Player.controlJump) {
 				if (Player.controlRight) {
