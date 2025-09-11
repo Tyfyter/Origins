@@ -2413,6 +2413,11 @@ Configs: {
 			// Label: NPCs Not To Force Dialect On
 			// Tooltip: By default, Terraria Origins enables Dialect compatibility for all NPCs, if this somehow causes issues with an NPC, you can use this to prevent it.
 		}
+
+		ImproveChlorophiteBulletsPerformance: {
+			// Label: Improve Chlorophite Bullets' Performance
+			// Tooltip: Replaces
+		}
 	}
 
 	OriginConfig: {
