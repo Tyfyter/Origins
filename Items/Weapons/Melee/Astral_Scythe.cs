@@ -67,7 +67,7 @@ namespace Origins.Items.Weapons.Melee {
 			} else {
 				const float sqrt_2 = 1.4142135623731f;
 				velocity += new Vector2(sqrt_2 * player.direction, -sqrt_2);
-				if (OriginsModIntegrations.CheckAprilFools()) damage = (int)(damage * 0.5f);
+				if (OriginsModIntegrations.CheckAprilFools() && player.HasBuff<Astral_Scythe_Wait_Debuff>()) damage = (int)(damage * 0.5f);
 			}
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
@@ -195,7 +195,6 @@ namespace Origins.Items.Weapons.Melee {
 			Utils.PlotTileLine(Projectile.Center, end, 80f * Projectile.scale, DelegateMethods.CutTiles);
 		}
 
-		public static AutoLoadingAsset<Texture2D> bladelessTexture = typeof(Astral_Scythe).GetDefaultTMLName() + "_Topless";
 		public override bool PreDraw(ref Color lightColor) {
 			Player player = Main.player[Projectile.owner];
 			SpriteEffects effects = player.direction * player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
@@ -234,7 +233,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
-			Entity owner = Projectile.GetRelatedProjectile(2);
+			Entity owner = Projectile.GetRelatedProjectile_Depreciated(2);
 			if (owner is null) {
 				if (!Projectile.ai[2].TrySet(-1)) Projectile.Kill();
 				return;
@@ -279,6 +278,7 @@ namespace Origins.Buffs {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
+			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
 			ID = Type;
 		}
 	}

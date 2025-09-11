@@ -86,7 +86,7 @@ Items: {
 
 	Terlet_Paper.Tooltip: Summons a kawaii cta
 	Peat_Moss_Item.DisplayName: PETA Moss
-	Astral_Scythe.Debuff: While the blade regenerates the scythe can only bonk
+	Astral_Scythe.Debuff: While the blade regenerates the scythe can only [italic:bonk]
 }
 
 Prefixes.Wholesome_Prefix.DisplayName: Holesome
@@ -142,7 +142,7 @@ Buffs: {
 	Astral_Scythe_Wait_Debuff.Description:
 		'''
 		Your scythe needs to rest.
-		But ye shall [italicize:bonk].
+		[italic:But ye shall B O N K].
 		'''
 }
 
