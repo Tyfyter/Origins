@@ -1984,6 +1984,10 @@ Projectiles: {
 	// Terratotem_Mask_Big.DisplayName: Terratotem Mask Big
 	// Terratotem_Mask_Medium.DisplayName: Terratotem Mask Medium
 	// Astral_Scythe_Blade.DisplayName: Astral Scythe Blade
+	// Broken_Terratotem_Mask_Big.DisplayName: Broken Terratotem Mask Big
+	// Broken_Terratotem_Mask_Medium.DisplayName: Broken Terratotem Mask Medium
+	// Broken_Terratotem_Mask_Small.DisplayName: Broken Terratotem Mask Small
+	// Broken_Terratotem_Tab.DisplayName: Broken Terratotem Tab
 }
 
 Prefixes: {
@@ -2416,7 +2420,7 @@ Configs: {
 
 		ImproveChlorophiteBulletsPerformance: {
 			// Label: Improve Chlorophite Bullets' Performance
-			// Tooltip: Replaces
+			// Tooltip: Replaces chlorophite bullets' notoriously laggy visual effect with a more performant and arguably better-looking one.
 		}
 	}
 

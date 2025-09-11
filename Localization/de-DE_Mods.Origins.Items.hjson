@@ -4791,7 +4791,7 @@ Broken_Terratotem: {
 	/* Tooltip:
 		'''
 		Summons totems to fight for you
-		Higher totems have stronger attacks and bring items to you
+		Higher totems have stronger attacks and bring valuable items to you
 		''' */
 }
 
@@ -4800,7 +4800,7 @@ Terratotem: {
 	/* Tooltip:
 		'''
 		Summons totems to fight for you
-		Higher totems have stronger attacks and bring items to you
+		Higher totems have stronger attacks and bring valuable items to you
 		''' */
 }
 
