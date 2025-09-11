@@ -215,7 +215,7 @@ namespace Origins.Items.Weapons.Summoner {
 				return false;
 			}
 
-			Main.spriteBatch.Restart(Main.spriteBatch.GetState(), rasterizerState: RasterizerState.CullNone);
+			Main.spriteBatch.Restart(Main.spriteBatch.GetState().FixedCulling());
 			Origins.shaderOroboros.Capture();
 			Main.spriteBatch.Restart(Main.spriteBatch.GetState(), transformMatrix: Main.GameViewMatrix.ZoomMatrix);
 

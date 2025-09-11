@@ -1,22 +1,13 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.CrossMod.Fargos.Items;
-using Origins.Gores.NPCs;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Banners;
-using Origins.Tiles.Defiled;
-using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
-using Origins.Tiles.Other;
-using Origins.Tiles.Riven;
-using Origins.Tiles.Riven;
 using Origins.UI;
 using Origins.Walls;
 using PegasusLib;
-using PegasusLib;
-using PegasusLib.Graphics;
 using PegasusLib.Graphics;
 using ReLogic.Content;
 using ReLogic.Graphics;
@@ -27,7 +18,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
-using System.Numerics;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
@@ -36,14 +26,11 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Creative;
-using Terraria.GameContent.Creative;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.GameInput;
 using Terraria.GameInput;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -54,7 +41,7 @@ using Terraria.ModLoader.Exceptions;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.Utilities;
-using static Origins.NPCs.Defiled.Boss.DA_Body_Part;
+using static Origins.Tiles.Riven.Shelf_Coral_TE;
 
 namespace Origins {
 	#region classes
@@ -3308,6 +3295,10 @@ namespace Origins {
 		public static void Deconstruct(this Vector4 vector, out Vector2 XY, out Vector2 ZW) {
 			XY = vector.XY();
 			ZW = vector.ZW();
+		}
+		public static SpriteBatchState FixedCulling(this SpriteBatchState state) {
+			state.rasterizerState.CullMode = CullMode.None;
+			return state;
 		}
 		public static string GetInternalName(this RecipeGroup recipeGroup) {
 			foreach (KeyValuePair<string, int> item in RecipeGroup.recipeGroupIDs) {

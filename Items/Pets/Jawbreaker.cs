@@ -237,7 +237,7 @@ namespace Origins.Items.Pets {
 				return;
 			}
 
-			SpriteBatchState state = Main.spriteBatch.GetState() with { rasterizerState = RasterizerState.CullNone };
+			SpriteBatchState state = Main.spriteBatch.GetState().FixedCulling();
 			Main.spriteBatch.Restart(state, SpriteSortMode.Immediate, transformMatrix: Main.GameViewMatrix.ZoomMatrix);
 			Origins.shaderOroboros.Capture();
 
@@ -292,7 +292,7 @@ namespace Origins.Items.Pets {
 			}
 			if (!DrawnMaskSources.Add(this)) return;
 			Origins.shaderOroboros.Capture();
-			Main.spriteBatch.Restart(Main.spriteBatch.GetState(), rasterizerState: RasterizerState.CullNone);
+			Main.spriteBatch.Restart(Main.spriteBatch.GetState().FixedCulling());
 
 			Main.EntitySpriteDraw(GetAuraDrawData(Color.White));
 

@@ -19,7 +19,7 @@ namespace Origins.NPCs {
 		public void PrepareToDrawNPC(NPC npc) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().FillShaders(npc, shaders);
 			if (shaders.Count != 0) Origins.shaderOroboros.Capture();
-			if (!Lighting.NotRetro) Main.spriteBatch.Restart(Main.spriteBatch.GetState(), rasterizerState: RasterizerState.CullNone);
+			if (!Lighting.NotRetro) Main.spriteBatch.Restart(Main.spriteBatch.GetState().FixedCulling());
 		}
 		public void FinishDrawingNPC(NPC npc) {
 			if (shaders.Count != 0) {
