@@ -106,6 +106,9 @@ namespace Origins.NPCs.MiscE {
 				}
 			}
 		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Fairy_Lotus>(), 2, 1));
+		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
 				Mod.SpawnGoreByName(NPC.GetSource_Death(), NPC.position, NPC.velocity, $"Gores/NPC/{nameof(Fae_Nymph)}_Gore_1");

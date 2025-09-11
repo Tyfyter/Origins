@@ -124,6 +124,7 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 13));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Feathery_Crest>(), 30));
 				break;
+				case NPCID.LostGirl:
 				case NPCID.Nymph:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>()));
 				break;
