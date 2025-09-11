@@ -761,7 +761,12 @@ namespace Origins {
 			} catch (Exception e) {
 				if (Origins.LogLoadingILError(nameof(EnablePocketDimensionAmbienceWhenPaused), e)) throw;
 			}*/
+			MonoModHooks.Add(typeof(Player).GetProperty(nameof(Player.ShoppingZone_AnyBiome)).GetMethod, (orig_ShoppingZone_AnyBiome orig, Player self) => {
+				return orig(self) || self.InModBiome<Defiled_Wastelands>() || self.InModBiome<Riven_Hive>();
+			});
 		}
+		delegate bool orig_ShoppingZone_AnyBiome(Player self);
+		delegate bool hook_ShoppingZone_AnyBiome(orig_ShoppingZone_AnyBiome orig, Player self);
 
 		/*static void EnablePocketDimensionAmbienceWhenPaused(ILContext il) {
 			ILCursor c = new(il);
