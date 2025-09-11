@@ -27,10 +27,15 @@ namespace Origins.Items.Weapons.Magic {
 	public class Amnestic_Rose : ModItem {
 		static bool firstLoad = false;
 		public override LocalizedText DisplayName => Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(DisplayName)}");
-		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
-			Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(Tooltip)}").WithFormatArgs(nameof(Amnestic_Rose_Buff)),
-			Language.GetText("Mods.Origins.Items.GenericTooltip.ConceptAndSpriteBy").WithFormatArgs("Calano")
-		);
+		public override LocalizedText Tooltip => Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(Tooltip)}");
+		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			for (int i = tooltips.Count - 1; i >= 0; i--) {
+				if (tooltips[i].FullName.StartsWith("Terraria/Tooltip")) {
+					tooltips[i].Text += $"\n{Language.GetTextValue("Mods.Origins.Items.GenericTooltip.ConceptAndSpriteBy", "Calano")}";
+					break;
+				}
+			}
+		}
 		public override void Load() {
 			Mod.AddContent(new Amnestic_Rose_Layer(this));
 			if (!firstLoad.TrySet(true)) return;
@@ -564,10 +569,6 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Amnestic_Rose_Alt : Amnestic_Rose {
-		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
-			Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(Tooltip)}").WithFormatArgs(nameof(Amnestic_Rose_Alt_Buff)),
-			Language.GetText("Mods.Origins.Items.GenericTooltip.ConceptBy").WithFormatArgs("Calano")
-		);
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			thornID = ModContent.ProjectileType<Amnestic_Rose_Alt_Thorn>();

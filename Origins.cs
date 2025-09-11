@@ -590,6 +590,9 @@ namespace Origins {
 				"italics",
 				"italicize"
 			]);
+			ChatManager.Register<AF_Alt_Handler>([
+				"fool"
+			]);
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
 				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,

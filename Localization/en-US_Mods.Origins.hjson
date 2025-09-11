@@ -406,6 +406,7 @@ Interface: {
 	AcceptQuest: Accept
 	CompleteQuestGeneric: Complete quest
 	DryadPurify: Purify ({0})
+	AFSnippet: "[fool:{0}]"
 }
 
 DeathMessage: {
@@ -2986,4 +2987,5 @@ CritType: {
 	Meteor_Crit_Type: Critically strikes when falling onto airborne targets
 	Communion_Type: Critically strikes when hitting the same target multiple times
 	Viper_Rifle_Crit_Type: Critically strikes on otherwise afflicted enemies
+	Felnum_Crit_Type: "{$Mods.CritRework.CritTypes.FoeIsWet.Description}"
 }

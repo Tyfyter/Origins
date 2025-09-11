@@ -90,7 +90,7 @@ namespace Origins {
 			get => OriginClientConfig.Instance.DebugMenuButton.ForceAprilFools ?
 				() => true :
 				instance.checkAprilFools ??= ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib) ? HolidayLibCheckAprilFools(HolidayLib) : DefaultCheckAprilFools;
-			set => instance.checkAprilFools = value;
+			private set => instance.checkAprilFools = value;
 		}
 		Func<object[], object> holidayForceChanged;
 		public static void HolidayForceChanged() => instance.holidayForceChanged([]);

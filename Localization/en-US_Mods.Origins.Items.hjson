@@ -6332,7 +6332,7 @@ Amnestic_Rose: {
 	DisplayName: Amnestic Rose
 	Tooltip:
 		'''
-		Launches a rose that [buffhint/dnslows targets:Origins/{0}]
+		Launches a rose that [buffhint/dnslows targets:Origins/Amnestic_Rose_Buff]
 		Steals mana from enemies struck by the rosebud
 		'A Rose, But for whom?'
 		'''
