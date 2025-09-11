@@ -12,6 +12,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -711,6 +712,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				if (Projectile.Center.WithinRange(targetPos, 16)) {
 					Projectile.velocity = (targetRect.Center() - Projectile.Center).Normalized(out _) * 12;
 					Projectile.ai[2] = (GetPosition(!left).X - Projectile.Center.X) / Projectile.velocity.X;
+					ParticleOrchestrator.RequestParticleSpawn(clientOnly: false, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings {
+						PositionInWorld = targetRect.Center(),
+						UniqueInfoPiece = (byte)(0.2f * 255f),
+						MovementVector = Projectile.velocity.SafeNormalize(default)
+					}, Projectile.owner);
 				}
 			}
 			float speed = 8f;
