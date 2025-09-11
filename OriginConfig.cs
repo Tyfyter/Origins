@@ -151,6 +151,9 @@ namespace Origins {
 		[DefaultValue(false)]
 		public bool ShowRarityInHotbar = false;
 
+		[DefaultValue(true)]
+		public bool ImproveChlorophiteBulletsPerformance = true;
+
 		[DefaultValue(ArtifactMinionHealthbarStyles.Auto)]
 		public ArtifactMinionHealthbarStyles ArtifactMinionHealthbarStyle = ArtifactMinionHealthbarStyles.Auto;
 
