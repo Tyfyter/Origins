@@ -14,10 +14,16 @@ namespace Origins.UI {
 			readonly float amount;
 			public Italics_Snippet(string text, Color color, float amount) {
 				Text = text.Replace('<', '[').Replace('>', ']');
+				if (color == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255)) {
+					color = Color.White;
+				}
 				this.Color = color;
 				this.amount = amount;
 			}
 			public bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, float maxWidth, Vector2 position = default, Color color = default, float scale = 1) {
+				if (color.A == Main.mouseTextColor) {
+					color *= 255f / Main.mouseTextColor;
+				}
 				TextSnippet[] snippets = ChatManager.ParseMessage(Text, color).ToArray();
 				size = ChatManager.GetStringSize(FontAssets.MouseText.Value, snippets, new(scale), -1) + new Vector2(7 * Math.Abs(amount) * scale, 0);
 				if (justCheckingString || spriteBatch is null) return true;
