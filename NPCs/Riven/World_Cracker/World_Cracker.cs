@@ -22,16 +22,13 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
@@ -134,6 +131,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			};
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);
