@@ -443,6 +443,7 @@ ACCESSORIES:
 (^) Asylum Whistle*
 (^) A.S.H. Attack Relay*
 (^) Automated Returns Handler*
+(X) Bark Shield
 (^) Binding Book*
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
@@ -1364,7 +1365,6 @@ TILES:
 (^) Music Box (Fiberglass Undergrowth)
 (X) Music Box (Repentance)
 (X) Music Box (Rivenran)
-(@, #, $2) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
 (^) Music Box (The Dive)
 (^) Otherworldly Music Box (Defiled Wastelands)
