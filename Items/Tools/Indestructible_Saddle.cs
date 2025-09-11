@@ -211,7 +211,9 @@ namespace Origins.Items.Tools {
 			Main.projFrames[Type] = 4;
 		}
 		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.Explosive;
 			Projectile.width = Projectile.height = 0;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.friendly = true;
 		}
 		Vector2 HitboxMovement => new Vector2(16 * Projectile.ai[1], 0).RotatedBy(Projectile.ai[1] * Projectile.ai[0]);
