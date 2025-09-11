@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 70;
+			Item.damage = 27;
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 1f;
 			Item.mana = 48;
@@ -71,17 +71,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 	#region balance
 	public partial class Terratotem_Mask_Small {
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.SourceDamage *= 0.38f;
 		}
 	}
 	public partial class Terratotem_Mask_Medium {
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.SourceDamage *= 0.5f;
+			modifiers.SourceDamage *= 1.32f;
 		}
 	}
 	public partial class Terratotem_Mask_Big {
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.SourceDamage *= 0.6f;
+			modifiers.SourceDamage *= 1.58f;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
 			if (Projectile.ai[2] >= 10 && Projectile.ai[2] <= 20) {
