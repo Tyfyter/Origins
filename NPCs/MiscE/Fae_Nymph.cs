@@ -33,6 +33,9 @@ namespace Origins.NPCs.MiscE {
 			Banner = Item.NPCtoBanner(NPCID.Nymph);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<Whimsical_Girl>()], quickUnlock: true);
+			ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type] = ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<Whimsical_Girl>()];
+
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText(),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
