@@ -9,6 +9,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
@@ -70,17 +71,17 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 	#region balance
 	public partial class Terratotem_Mask_Small {
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.SourceDamage *= 1f;
+			modifiers.SourceDamage *= 0.38f;
 		}
 	}
 	public partial class Terratotem_Mask_Medium {
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.SourceDamage *= 1f;
+			modifiers.SourceDamage *= 0.5f;
 		}
 	}
 	public partial class Terratotem_Mask_Big {
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.SourceDamage *= 1f;
+			modifiers.SourceDamage *= 0.6f;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
 			if (Projectile.ai[2] >= 10 && Projectile.ai[2] <= 20) {
@@ -688,6 +689,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool? CanDamage() => Projectile.ai[2] > 0;
 		public override void DoMaskBehavior() {
 			if (Projectile.ai[2] > 0) {
+				SoundEngine.PlaySound(SoundID.NPCDeath55.WithPitch(1.5f).WithVolume(0.8f), Projectile.Center);
 				Projectile.ai[2]--;
 				if (targetData.TargetType == TargetType.Item) {
 					Item item = Main.item[targetData.Index];
@@ -754,6 +756,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Rectangle hitbox = Projectile.Hitbox;
 				ModifyDamageHitbox(ref hitbox);
 				if (Projectile.Hitbox.Intersects(targetRect)) {
+					SoundEngine.PlaySound(SoundID.Item130.WithPitch(-0.2f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item90.WithPitch(1f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item84.WithPitch(1f), Projectile.Center);
 					speed = 0;
 					Projectile.ai[2] = 1;
 					Projectile.velocity *= 0.5f;
