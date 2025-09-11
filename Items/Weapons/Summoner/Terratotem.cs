@@ -568,6 +568,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (item.IsACoin) return float.Pow(2, item.type - ItemID.CopperCoin);
 			if (item.IsCurrency) return 2;
 			if (item.type is ItemID.Heart or ItemID.CandyApple or ItemID.CandyCane) return (1 - player.statLife / (float)player.statLifeMax2) * RarityLoader.RarityCount * 2;
+			if (item.OriginalRarity < ItemRarityID.Gray) return item.value / 5000;
 			return item.OriginalRarity;
 		}
 		public virtual void DoMaskBehavior() {
