@@ -28,10 +28,11 @@ namespace Origins.Items.Weapons.Magic {
 		static bool firstLoad = false;
 		public override LocalizedText DisplayName => Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(DisplayName)}");
 		public override LocalizedText Tooltip => Mod.GetLocalization($"{LocalizationCategory}.{nameof(Amnestic_Rose)}.{nameof(Tooltip)}");
+		public virtual string creditKey => "ConceptBy";
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			for (int i = tooltips.Count - 1; i >= 0; i--) {
 				if (tooltips[i].FullName.StartsWith("Terraria/Tooltip")) {
-					tooltips[i].Text += $"\n{Language.GetTextValue("Mods.Origins.Items.GenericTooltip.ConceptAndSpriteBy", "Calano")}";
+					tooltips[i].Text += $"\n{Language.GetTextValue("Mods.Origins.Items.GenericTooltip." + creditKey, "Calano")}";
 					break;
 				}
 			}
@@ -569,6 +570,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Amnestic_Rose_Alt : Amnestic_Rose {
+		public override string creditKey => "ConceptAndSpriteBy";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			thornID = ModContent.ProjectileType<Amnestic_Rose_Alt_Thorn>();
