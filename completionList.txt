@@ -950,7 +950,7 @@ SUMMONER WEAPONS:
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact
 (^) Brainy Staff*
-(†) Broken Terratotem !!!
+(#2/3, ^2) Broken Terratotem !!!
 (^) Defective Mortar Shell
 (^) Desert Crown*
 (^) Eyeball Staff
@@ -1007,7 +1007,7 @@ SUMMONER WEAPONS:
 (X) Ribatar
 (X) SMART Wrench
 (X) Technomancer 4000
-(^) Terratotem !!!
+(#2, ^2) Terratotem !!!
 (X) Tonal Resonator
 (X) Vampire Fireflower in a Pot
 
@@ -1578,14 +1578,14 @@ CONSUMABLES:
 (^) Shattered Stout*
 (^) Soul Spaghetti*
 (^) Sour Apple
-(X) Spearmint Tea
+(#, ^2) Spearmint Tea
 (#, ^2) Sweet Tooth Shake
 (#, ^2) Tasty Booger
 (^) Vanilla Shake*
 
 (^) Broken Record*
 (X) Catalyst Cell
-(X) Distress Beacon
+(#, ^2) Distress Beacon
 (^) Nerve Impulse Manipulator*
 (^) Lost Picture Frame
 (X) Quantum Cell°
