@@ -57,26 +57,8 @@ namespace Origins.Buffs {
 
 namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Broken_Terratotem_Tab : Terratotem_Tab {
-		public static new int ID { get; private set; }
+		public static int ID { get; private set; }
 		public override string Texture => typeof(Terratotem_Tab).GetDefaultTMLName();
-		public override int GetMask() {
-			GetBottom(out int count);
-			switch (count) {
-				case 1:
-				case 2:
-				case 5:
-				return ModContent.ProjectileType<Broken_Terratotem_Mask_Small>();
-
-				case 3:
-				case 6:
-				case 7:
-				return ModContent.ProjectileType<Broken_Terratotem_Mask_Medium>();
-
-				case 4:
-				default:
-				return ModContent.ProjectileType<Broken_Terratotem_Mask_Big>();
-			}
-		}
 	}
 	public class Broken_Terratotem_Mask_Small : Terratotem_Mask_Small {
 		public override string Texture => typeof(Terratotem_Mask_Small).GetDefaultTMLName();
