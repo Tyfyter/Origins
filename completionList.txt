@@ -271,13 +271,14 @@ ENEMY NPCS:
 (X) Defiled Surveyor
 (^) Defiled Tripod*
 (^) Defiled Watcher*
-(X) Defiled Weaver
+(#, ^2) Defiled Weaver
 (X) Depth Crawler
 (X) False Geometry
 (X) Hive Mind
 (^) Leaf Snapper
 (X) Madman
 (X) Molten Aberration
+(X) Oil Ghoul
 (^) King Crab
 (^) Mildew Creeper
 (^) Mitoworm*
@@ -291,6 +292,7 @@ ENEMY NPCS:
 (^) Rock Bottom
 (X) Rotting Husk
 (^) Savage Whip*
+(X) Scrapyard Stryder
 (^) Sea Dragon°
 (^) Shattered Ghoul*
 (^) Shattered Mummy*
@@ -1146,6 +1148,7 @@ TILES:
 (^) Chambersite Gemstone (Crimson)°
 (^) Chambersite Gemstone (Defiled)°
 (^) Chambersite Gemstone (Riven)°
+(X) Chromtain Ore
 (^) Defiled Cactus*
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
@@ -1462,18 +1465,18 @@ MATERIALS:
 (X) Nanite Lump
 (^) Qube°
 (X) Weapon Blueprint°
-
-(X) Armor+ Power-Up
-(^) Large Chambersite
 ---
 
-REAL JUNK/WORLD BUILDING ITEMS:
+MISCELLANEOUS ITEMS:
 |---
+(X) Armor+ Power-Up
+(^) Defiled Mana
+(^) Large Chambersite
 (X) Worn Paper: Loose Wheel
 (X) Worn Paper: Self-Preservation
 (X) Worn Paper: Smog Test
 (X) Worn Paper: The Packing Slip
-(X) Worn Paper: They Found US
+(X) Worn Paper: They Found Us
 ---
 
 
