@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using MonoMod.Cil;
-using Origins.Core;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
@@ -383,7 +381,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public override string Texture => base.Texture.Replace("_Turret", "");
 			public override void SetStaticDefaults() {
 				NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+				SafeSetStaticDefaults();
+				ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 				Types.Add(Type);
+				Minions.Add(Type);
 			}
 			public override void AI() {
 				if (Main.npc.GetIfInRange((int)NPC.ai[0]) is not NPC owner || !owner.active) {

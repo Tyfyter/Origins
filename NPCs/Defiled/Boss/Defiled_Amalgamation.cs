@@ -8,13 +8,11 @@ using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
-using Origins.Items.Tools;
 using Origins.Items.Vanity.BossMasks;
 using Origins.Items.Weapons.Magic;
 using Origins.Journal;
 using Origins.LootConditions;
 using Origins.Music;
-using Origins.NPCs.Defiled.Boss;
 using Origins.Projectiles.Enemies;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Defiled;
@@ -26,7 +24,6 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -42,12 +39,11 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using Terraria.WorldBuilding;
 using static Origins.NPCs.Defiled.Boss.Defiled_Spike_Indicator;
 
 namespace Origins.NPCs.Defiled.Boss {
 	[AutoloadBossHead]
-	public class Defiled_Amalgamation : Glowing_Mod_NPC, IDefiledEnemy, ICustomWikiStat, IJournalEntrySource, IOutlineDrawer {
+	public class Defiled_Amalgamation : Glowing_Mod_NPC, IDefiledEnemy, ICustomWikiStat, IJournalEntrySource, IOutlineDrawer, IMinions {
 		static AutoLoadingAsset<Texture2D> RightArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm";
 		static AutoLoadingAsset<Texture2D> RightArmGlowTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm_Glow";
 		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
@@ -90,6 +86,9 @@ namespace Origins.NPCs.Defiled.Boss {
 			public override JournalSortIndex SortIndex => new("The_Defiled", 13);
 		}
 		internal static IItemDropRule normalDropRule;
+
+		public static List<int> Minions = [];
+		List<int> IMinions.BossMinions => Minions;
 		public override void Unload() {
 			normalDropRule = null;
 		}
@@ -104,6 +103,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				Scale = 0.75f,
 				PortraitScale = 1f,
 			};
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			ID = Type;
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Defiled_Wastelands>());
 			Origins.RasterizeAdjustment[Type] = (16, 0f, 0f);
@@ -212,6 +212,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public DrawData[] OutlineDrawDatas { get => outlineData; }
 		public int OutlineSteps { get => 8; }
 		public float OutlineOffset { get => MathF.Sin((float)Main.timeForVisualEffects * 0.3f) * 3; }
+
 		List<Vector2> oldPositions = [];
 		public override void AI() {
 			if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.Amalgamation, NPC.Center);

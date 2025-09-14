@@ -1,20 +1,21 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins;
 using Origins.Graphics;
-using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
+using Origins.World.BiomeData;
 using System;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
+using Terraria.GameContent.Bestiary;
 using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.ModLoader;
-using System.IO;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled.Boss {
 	public class DA_Body_Part : ModNPC, IOutlineDrawer, IDefiledEnemy, IOnHitByNPC {
@@ -44,9 +45,9 @@ namespace Origins.NPCs.Defiled.Boss {
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			Defiled_Amalgamation.Minions.Add(Type);
 		}
 		public override void SetDefaults() {
-
 			NPC.friendly = false;
 			NPC.aiStyle = -1;
 			NPC.width = NPC.height = 32;
@@ -58,9 +59,14 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.defense = 12;
 			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0f, 0.25f);
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(-1f, -0.75f);
+			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			];
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 		}
 		public enum Part : byte {
-
 			torso = 0,
 			arm = 1,
 			leg1 = 2,
@@ -117,8 +123,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			SetupPart();
 		}
 		ref float Timer => ref NPC.ai[3];
-		public DrawData[] OutlineDrawDatas =>
-		[
+		public DrawData[] OutlineDrawDatas => [
 			new(RightArmPath, NPC.Center, new Rectangle(0, (384 / 4) * currentFrame, 30, ((384 / 4))), Color.White, NPC.rotation - MathHelper.PiOver2, NPC.frame.Size() / 2f, 1f, NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0)
 		];
 

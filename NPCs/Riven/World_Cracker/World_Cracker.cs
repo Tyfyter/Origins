@@ -33,7 +33,7 @@ using Terraria.ModLoader;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
 namespace Origins.NPCs.Riven.World_Cracker {
-	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy, ICustomWikiStat, IDrawWCArmor {
+	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy, ICustomWikiStat, IDrawWCArmor, IMinions {
 		public AssimilationAmount? Assimilation => 0.08f;
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
@@ -54,6 +54,10 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		internal static IItemDropRule normalDropRule;
 		internal static IItemDropRule armorBreakDropRule;
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
+
+		public static List<int> Minions = [];
+		List<int> IMinions.BossMinions => Minions;
+
 		static int[] bossHeads = new int[4];
 		public override void Load() {
 			for (int i = 0; i < bossHeads.Length; i++) {
@@ -61,13 +65,13 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			}
 		}
 		public override void SetStaticDefaults() {
-			NPCID.Sets.NPCBestiaryDrawModifiers drawModifier = new() { // Influences how the NPC looks in the Bestiary
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/World_Cracker_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
-				Position = new Vector2(40f, 24f),
+				Position = new Vector2(40, 16),
 				PortraitPositionXOverride = 0f,
-				PortraitPositionYOverride = 12f
+				PortraitPositionYOverride = 12
 			};
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			if (!Main.dedServ) {
 				ArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Head_Armor");
 				HPBarArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor_Health_Bar");
@@ -429,7 +433,6 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			CommonWormInit(this);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-
 			normalDropRule = new LeadingSuccessRule();
 
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Encrusted_Ore_Item>(), 1, 140, 330));

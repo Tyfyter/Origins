@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -18,9 +18,12 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public AssimilationAmount? Assimilation => 0.03f;
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Flying_Exoskeleton";
+		public virtual void SafeSetStaticDefaults() { }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
 			NPCID.Sets.NPCBestiaryDrawOffset[NPC.type] = NPCExtensions.HideInBestiary;
+			SafeSetStaticDefaults();
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
 		}
 
@@ -36,11 +39,9 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.scale = 1.15f;
 			NPC.HitSound = SoundID.NPCHit2;
 			NPC.DeathSound = SoundID.NPCDeath2;
-		}
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.AddTags(
-				this.GetBestiaryFlavorText()
-			);
+			SpawnModBiomes = [
+				ModContent.GetInstance<Riven_Hive>().Type
+			];
 		}
 		public override bool CheckActive() {
 			int headType = ModContent.NPCType<World_Cracker_Head>();
@@ -141,7 +142,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 			Main.EntitySpriteDraw(
 				texture,
-				NPC.Center - Main.screenPosition,
+				NPC.Center - screenPos,
 				NPC.frame,
 				drawColor,
 				NPC.rotation,
@@ -160,7 +161,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			}
 			Main.EntitySpriteDraw(
 				GlowTexture,
-				NPC.Center - Main.screenPosition,
+				NPC.Center - screenPos,
 				NPC.frame,
 				glowColor,
 				NPC.rotation,

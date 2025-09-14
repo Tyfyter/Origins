@@ -97,6 +97,7 @@ namespace Origins.NPCs.Brine.Boss {
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = 0f
 			};
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 			Origins.RasterizeAdjustment[Type] = (10, 0.07f, 1f);
 		}

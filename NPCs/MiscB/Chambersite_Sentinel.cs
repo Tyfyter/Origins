@@ -17,6 +17,7 @@ namespace Origins.NPCs.MiscB {
 	public class Chambersite_Sentinel : ModNPC {
 		public override void Load() => this.AddBanner(25);
 		public override void SetStaticDefaults() {
+			ContentSamples.NpcBestiaryRarityStars[Type] = 4;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Drippler);
