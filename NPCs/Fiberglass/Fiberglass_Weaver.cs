@@ -58,6 +58,7 @@ namespace Origins.NPCs.Fiberglass {
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = -32f
 			};
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 		}
 		public override void Unload() {
 			armorDropRule = null;

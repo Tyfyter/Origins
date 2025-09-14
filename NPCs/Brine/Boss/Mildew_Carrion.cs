@@ -39,6 +39,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.CantTakeLunchMoney[Type] = false;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
 		public override void SetDefaults() {
@@ -158,8 +159,11 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 	}
 	[AutoloadBossHead]
-	public class Mildew_Carrion : Brine_Pool_NPC, IJournalEntrySource<Mildew_Carrion_Entry> {
+	public class Mildew_Carrion : Brine_Pool_NPC, IJournalEntrySource<Mildew_Carrion_Entry>, IMinions {
 		internal static IItemDropRule normalDropRule;
+
+		public static List<int> Minions = [];
+		List<int> IMinions.BossMinions => Minions;
 		public override bool AggressivePathfinding => true;
 
 		public override void SetStaticDefaults() {
@@ -174,6 +178,7 @@ namespace Origins.NPCs.Brine.Boss {
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = 0f
 			};
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			Origins.RasterizeAdjustment[Type] = (8, 0.05f, 0.8f);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
@@ -469,6 +474,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			Mildew_Carrion.Minions.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
 		public override void SetDefaults() {
@@ -677,6 +683,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			Mildew_Carrion.Minions.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
 		public override void SetDefaults() {

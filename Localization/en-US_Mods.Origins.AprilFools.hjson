@@ -181,6 +181,7 @@ NPCs: {
 	Shimmer_Turret_Chunk1.DisplayName: "{$ItemName.Handgun}"
 	Shimmer_Turret_Chunk2.DisplayName: "{$ItemName.Handgun}"
 	Shimmer_Turret_Chunk3.DisplayName: "{$ItemName.Handgun}"
+	Shimmer_Drone.DisplayName: Shimmer Crewmate
 	Goo_Wall.DisplayName: Sticky Wall
 	Enchanted_Fiberglass_Slime.DisplayName: Enchanted Fiberglasss Lime
 	Fiberglass_Weaver.DisplayName: Fiberglass Cat
@@ -203,6 +204,7 @@ Bestiary: {
 
 		You receive: [wiggle:1 raw cod]
 		'''
+	Shimmer_Chunk1: For his neutral special, he wields a gun.
 }
 
 SetBonuses.Rubber:

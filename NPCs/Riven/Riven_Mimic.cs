@@ -41,7 +41,6 @@ namespace Origins.NPCs.Riven {
 			NPC.rarity = 5;
 			AnimationType = NPCID.BigMimicCrimson;
 			SpawnModBiomes = [
-				ModContent.GetInstance<Riven_Hive>().Type,
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
 			];
 		}

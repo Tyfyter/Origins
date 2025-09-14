@@ -1,21 +1,21 @@
-﻿using Origins.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
+using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Magic;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Liquid;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
 using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
-using PegasusLib;
-using Terraria.Graphics.Shaders;
-using Origins.Items.Other.Dyes;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent.Liquid;
-using Terraria.Audio;
-using System.IO;
-using System.Diagnostics.Contracts;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	public class PhaseOneIdleState : AIState {
@@ -483,21 +483,49 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 	}
 	public abstract class Shimmer_Construct_Health_Chunk : ModNPC {
+		public virtual void SafeSetStaticDefaults() { }
 		public override void SetStaticDefaults() {
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			SafeSetStaticDefaults();
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
+			Minions.Add(Type);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.width = 56;
 			NPC.height = 56;
 			NPC.lifeMax = 1;
-			NPC.damage = 0;// also responsible for making it not scale with difficulty
+			NPC.damage = 1;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
 		}
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment) { // hopefully undoes the scaling
+			NPC.lifeMax = 1;
+			NPC.damage = 0;
+			NPC.value = 0;
+			NPC.knockBackResist = 1;
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText(),
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
+			);
+			foreach (IBestiaryInfoElement info in bestiaryEntry.Info) {
+				if (info is not NPCStatsReportInfoElement stats) continue;
+				stats.OnRefreshStats += Stats_OnRefreshStats;
+			}
+		}
+
+		private void Stats_OnRefreshStats(NPCStatsReportInfoElement element) {
+			BestiaryEntry constructEntry = BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(ModContent.NPCType<Shimmer_Construct>());
+			element.Damage = 0;
+			element.LifeMax = ((constructEntry.Info.Find(inf => inf is NPCStatsReportInfoElement) as NPCStatsReportInfoElement)?.LifeMax ?? 1) / Main.rand.RandomRound(2 + ContentExtensions.DifficultyDamageMultiplier) / 2;
+		}
+
 		public override void AI() {
+			NPC.damage = 0;
 			if (Main.npc.GetIfInRange((int)NPC.ai[0]) is not NPC owner) {
 				NPC.active = false;
 				return;
@@ -542,26 +570,42 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			if (OriginsModIntegrations.CheckAprilFools()) {
+				NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCID.Sets.NPCBestiaryDrawOffset[Type] with {
+					PortraitPositionYOverride = 5,
+					Position = new(0)
+				};
 				Main.instance.LoadItem(ItemID.Handgun);
+				Texture2D texture = TextureAssets.Item[ItemID.Handgun].Value;
 				Vector2 diff = NPC.Center - Main.LocalPlayer.MountedCenter;
+				if (NPC.IsABestiaryIconDummy) diff = Vector2.UnitX;
 
 				spriteBatch.Draw(
-					TextureAssets.Item[ItemID.Handgun].Value,
+					texture,
 					NPC.Center - screenPos,
 					null,
 					drawColor,
 					diff.ToRotation() + (diff.X > 0 ? 0 : MathHelper.Pi),
-					TextureAssets.Item[ItemID.Handgun].Size() * 0.5f,
+					texture.Size() * 0.5f,
 					1.5f,
 					diff.X > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 					0
 				);
 				return false;
 			}
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCID.Sets.NPCBestiaryDrawOffset[Type] with {
+				PortraitPositionYOverride = null,
+				Position = new(0, -5)
+			};
 			return true;
 		}
 	}
-	public class Shimmer_Chunk1 : Shimmer_Construct_Health_Chunk { }
+	public class Shimmer_Chunk1 : Shimmer_Construct_Health_Chunk {
+		public override void SafeSetStaticDefaults() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCID.Sets.NPCBestiaryDrawOffset[Type] with {
+				Hide = false
+			};
+		}
+	}
 	public class Shimmer_Chunk2 : Shimmer_Construct_Health_Chunk { }
 	public class Shimmer_Chunk3 : Shimmer_Construct_Health_Chunk { }
 }

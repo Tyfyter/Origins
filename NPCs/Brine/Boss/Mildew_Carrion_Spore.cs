@@ -1,11 +1,7 @@
 ﻿using MonoMod.Cil;
-using Origins.Buffs;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Shaders;
@@ -140,6 +136,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			Mildew_Carrion.Minions.Add(Type);
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();

@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,8 +12,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPCID.ServantofCthulhu] = Type;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Shimmer] = true;
-			NPCID.Sets.NPCBestiaryDrawOffset[NPC.type] = NPCExtensions.HideInBestiary;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
+				Position = new(1.5f, 7)
+			};
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+			Shimmer_Construct.Minions.Add(Type);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.ServantofCthulhu);
@@ -21,6 +26,12 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.HitSound = SoundID.DD2_CrystalCartImpact.WithPitch(1f).WithVolume(0.5f);
 			NPC.DeathSound = SoundID.Item101.WithVolume(0.6f);
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText(),
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
+			);
 		}
 		public override void OnSpawn(IEntitySource source) => NPC.ai[1] = -2;
 		public override void AI() {

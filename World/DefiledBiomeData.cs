@@ -767,7 +767,9 @@ namespace Origins.World.BiomeData {
 	public class Underground_Defiled_Wastelands_Biome : ModBiome {
 		public override int Music => Origins.Music.UndergroundDefiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
 		public override string BestiaryIcon => "Origins/UI/IconStonerDefiled";
+		public override string MapBackground => BackgroundPath;
 		public override float GetWeight(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress * 0.99f;
 		}

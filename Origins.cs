@@ -6,7 +6,6 @@ global using Color = Microsoft.Xna.Framework.Color;
 global using Rectangle = Microsoft.Xna.Framework.Rectangle;
 global using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Gores.NPCs;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Bleeding;
@@ -853,10 +852,10 @@ namespace Origins {
 				JournalEntry.AddJournalEntry(ref OriginsSets.Items.JournalEntries[item.Type], source.EntryName);
 			}
 			foreach (ModNPC npc in MC.GetContent<ModNPC>()) {
-				if (npc is not IJournalEntrySource source) continue;
-				JournalEntry.AddJournalEntry(ref OriginsSets.NPCs.JournalEntries[npc.Type], source.EntryName);
+				if (npc is IJournalEntrySource source) JournalEntry.AddJournalEntry(ref OriginsSets.NPCs.JournalEntries[npc.Type], source.EntryName);
+				if (npc is IMinions minions) NPCID.Sets.BossBestiaryPriority.InsertRange(NPCID.Sets.BossBestiaryPriority.IndexOf(npc.Type) + 1, minions.BossMinions);
 			}
-			ModContent.GetInstance<Explosive_Weapons_Entry>().AddEntryToItems();
+			MC.GetInstance<Explosive_Weapons_Entry>().AddEntryToItems();
 			ForcedDialectCompatibility.PostSetupContent();
 		}
 		private static void FixedDrawBreath(On_Main.orig_DrawInterface_Resources_Breath orig) {

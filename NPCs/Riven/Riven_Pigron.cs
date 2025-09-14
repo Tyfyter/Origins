@@ -29,6 +29,7 @@ namespace Origins.NPCs.Riven {
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = -12f
 			});
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 		}
 		public override void SetDefaults() {
 			NPC.width = 44;
@@ -57,7 +58,6 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(new ItemDropWithConditionRule(ItemID.HamBat, 25, 1, 1, new Conditions.DontStarveIsNotUp()));
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			bestiaryEntry.AddTags(
 				new FlavorTextBestiaryInfoElement("CommonBestiaryFlavor.Pigron")
 			);

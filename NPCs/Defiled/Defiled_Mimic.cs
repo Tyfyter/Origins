@@ -39,7 +39,6 @@ namespace Origins.NPCs.Defiled {
 			NPC.rarity = 5;
 			AnimationType = NPCID.BigMimicCorruption;
 			SpawnModBiomes = [
-				ModContent.GetInstance<Defiled_Wastelands>().Type,
 				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type,
 			];
 			this.CopyBanner<Defiled_Banner_NPC>();

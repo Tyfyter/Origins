@@ -1791,7 +1791,7 @@ UI:
 (^) Defiled Desert Icon
 (X) Defiled Egregore
 (X) Defiled Egregore Map/Bestiary Backdrop
-(@) Defiled Map/Bestiary Backdrop (Underground DW Bestiary Backdrop)
+(@) Defiled Map/Bestiary Backdrop (Underground DW Map Backdrop)
 (^) Defiled Snow Icon
 (^) Defiled Underground Desert
 (^) Defiled Wastelands Icon

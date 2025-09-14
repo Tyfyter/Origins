@@ -11,6 +11,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			NPCID.Sets.ImmuneToAllBuffs[Type] = true;
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 			ModContent.GetInstance<Brine_Pool.SpawnRates>().AddSpawn(Type, SpawnChance);

@@ -16,7 +16,6 @@ using Origins.Music;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.MusicBoxes;
 using Origins.Tiles.Other;
-using Origins.UI;
 using PegasusLib;
 using PegasusLib.Graphics;
 using ReLogic.Content;
@@ -33,7 +32,6 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -42,7 +40,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	[AutoloadBossHead]
-	public class Shimmer_Construct : ModNPC, IJournalEntrySource {
+	public class Shimmer_Construct : ModNPC, IJournalEntrySource, IMinions {
 		public string EntryName => "Origins/" + typeof(Shimmer_Construct_Entry).Name;
 		public class Shimmer_Construct_Entry : JournalEntry {
 			public override string TextKey => "Shimmer_Construct";
@@ -53,6 +51,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public bool IsInPhase2 => isInPhase2;// NPC.life * 2 < NPC.lifeMax;
 		public bool IsInPhase3 => isInPhase3;// Main.expertMode && NPC.life * 10 <= NPC.lifeMax;
 		internal static IItemDropRule normalDropRule;
+
+		public static List<int> Minions = [];
+		List<int> IMinions.BossMinions => Minions;
 		public override void Load() {
 			On_NPC.DoDeathEvents += static (On_NPC.orig_DoDeathEvents orig, NPC self, Player closestPlayer) => {
 				orig(self, closestPlayer);
@@ -92,6 +93,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Rotation = 0.7f,
 				Frame = 6
 			};
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			for (int i = 0; i < aiStates.Count; i++) aiStates[i].SetStaticDefaults();
 		}
 		public override void SetDefaults() {

@@ -41,7 +41,6 @@ using Terraria.ModLoader.Exceptions;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.Utilities;
-using static Origins.Tiles.Riven.Shelf_Coral_TE;
 
 namespace Origins {
 	#region classes
@@ -810,6 +809,9 @@ namespace Origins {
 	}
 	public interface IUnloadable {
 		void Unload();
+	}
+	public interface IMinions {
+		public List<int> BossMinions { get; }
 	}
 	public static class Elements {
 		public const ushort Fire = 1;
