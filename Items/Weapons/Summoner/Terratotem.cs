@@ -230,16 +230,19 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (below?.active ?? false) {
 				Projectile bottom = GetBottom(out int count);
 				Projectile.position = bottom.position - Vector2.UnitY * Projectile.height * (count - 1);
-				if (bottom.whoAmI > Projectile.whoAmI) Projectile.position += player.velocity;
+				if (bottom.whoAmI > Projectile.whoAmI) {
+					Projectile.position += new Vector2(bottom.localAI[1], bottom.localAI[2]);
+				}
 				Projectile.velocity = Vector2.Zero;
 				below.localAI[0] = 2;
 			} else {
 				Vector2 idlePosition = player.Bottom;
 				idlePosition.X -= 48f * player.direction;
 
-				Vector2 vectorToIdlePosition = idlePosition - Projectile.Bottom;
-				Projectile.position += vectorToIdlePosition;
-				Projectile.velocity = Vector2.Zero;
+				Projectile.velocity = new Vector2(Projectile.localAI[1], Projectile.localAI[2]);
+				Vector2 vectorToIdlePosition = (idlePosition - Projectile.Bottom).Normalized(out float dist);
+				float speed = dist > 16 * 50 ? 64 : 32;
+				(Projectile.localAI[1], Projectile.localAI[2]) = (Projectile.velocity + vectorToIdlePosition * Math.Min(dist, speed)) / 4;
 			}
 			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active) {
 				if (mask.ai[1] == -1) {
@@ -387,6 +390,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			DoMaskBehavior();
 		}
 		public virtual float GetItemPickupPriority(Player player, Item item) {
+			if (!player.ItemSpace(item).CanTakeItem) return 0;
 			if (item.IsACoin) return float.Pow(2, item.type - ItemID.CopperCoin);
 			if (item.IsCurrency) return 2;
 			if (item.type is ItemID.Heart or ItemID.CandyApple or ItemID.CandyCane) return (1 - player.statLife / (float)player.statLifeMax2) * RarityLoader.RarityCount * 2;
@@ -485,7 +489,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					return Main.npc[Index].Hitbox;
 
 					case TargetType.Item:
-					if (!Main.item[Index].active) {
+					if (!Main.item[Index].active || !Main.player[projectile.owner].ItemSpace(Main.item[Index]).CanTakeItem) {
 						TargetType = TargetType.Slot;
 						goto case TargetType.Slot;
 					}
