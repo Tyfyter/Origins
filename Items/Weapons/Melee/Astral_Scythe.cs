@@ -91,6 +91,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {
+				int scytheHitCombo = player.OriginPlayer().scytheHitCombo;
 				for (int i = 0; i < 8; i++) {
 					Projectile.NewProjectile(
 						source,
@@ -98,7 +99,8 @@ namespace Origins.Items.Weapons.Melee {
 						velocity * 12 + Main.rand.NextVector2Circular(1, 1) * 8,
 						type,
 						damage,
-						knockback
+						knockback,
+						ai0: scytheHitCombo
 					);
 				}
 				return false;
