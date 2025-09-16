@@ -748,7 +748,7 @@ TOOLS:
 
 MELEE WEAPONS:
 |---
-(#2, @2) Astral Scythe !!!
+(☻) Astral Scythe !!!
 (X) Autoscopy
 (^) Baseball Bat*
 (^) Bone Latcher*

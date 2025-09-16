@@ -1,12 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Items.Armor.Aetherite;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Magic;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
 using PegasusLib;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
@@ -14,6 +18,7 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod;
 
 namespace Origins.Items.Weapons.Melee {
 	[LegacyName("Splitting_Image")]
@@ -56,6 +61,13 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool AltFunctionUse(Player player) {
 			return !player.HasBuff<Astral_Scythe_Wait_Debuff>();
 		}
+		// alt fire sound here because it runs on all sides
+		public override bool? UseItem(Player player) {
+			if (player.altFunctionUse == 2) {
+				SoundEngine.PlaySound(SoundID.Shatter, player.MountedCenter);
+			}
+			return base.UseItem(player);
+		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (player.altFunctionUse == 2) {
 				int frameReduction = player.itemAnimationMax / 2;
@@ -64,10 +76,10 @@ namespace Origins.Items.Weapons.Melee {
 				player.itemAnimation -= frameReduction;
 				player.itemAnimationMax -= frameReduction;
 
-				type = 0;
 				damage = (int)(damage * 0.3f);
 				player.OriginPlayer().scytheHitCombo = 0;
 				player.AddBuff(Astral_Scythe_Wait_Debuff.ID, 3 * 60);
+				type = ModContent.ProjectileType<Astral_Scythe_Star>();
 			} else {
 				const float sqrt_2 = 1.4142135623731f;
 				velocity = new Vector2(sqrt_2 * player.direction, -sqrt_2) * velocity.Length();
@@ -75,6 +87,19 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (player.altFunctionUse == 2) {
+				for (int i = 0; i < 8; i++) {
+					Projectile.NewProjectile(
+						source,
+						position,
+						velocity * 12 + Main.rand.NextVector2Circular(1, 1) * 8,
+						type,
+						damage,
+						knockback
+					);
+				}
+				return false;
+			}
 			int ai0 = 0;
 			if (OriginsModIntegrations.CheckAprilFools() && player.HasBuff<Astral_Scythe_Wait_Debuff>()) ai0 = 2;
 			else if (player.OriginPlayer().scytheHitCombo >= OriginPlayer.maxScytheHitCombo) ai0 = 1;
@@ -88,8 +113,8 @@ namespace Origins.Items.Weapons.Melee {
 			bool hasDebuff = player.HasBuff<Astral_Scythe_Wait_Debuff>();
 
 			int variant = 0;
-			if (player.OriginPlayer().scytheHitCombo >= OriginPlayer.maxScytheHitCombo && !hasDebuff) variant = 2;
 			if (hasDebuff) variant = 1;
+			else if (player.OriginPlayer().scytheHitCombo >= OriginPlayer.maxScytheHitCombo) variant = 2;
 
 			frame = texture.Frame(verticalFrames: 3, frameY: variant);
 			spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, drawColor, 0, origin, scale, SpriteEffects.None, 0);
@@ -367,6 +392,67 @@ namespace Origins.Items.Weapons.Melee {
 		void SetupRenderTargets() {
 			if (renderTarget is not null && !renderTarget.IsDisposed) return;
 			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+		}
+	}
+	public class Astral_Scythe_Star : ModProjectile {
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainbowRodBullet;
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.TrailingMode[Type] = 3;
+			ProjectileID.Sets.TrailCacheLength[Type] = 30;
+			ProjectileID.Sets.NoLiquidDistortion[Type] = true;
+			ID = Type;
+		}
+		public override void SetDefaults() {
+			Projectile.friendly = true;
+			Projectile.timeLeft = 60 * 7;
+			Projectile.aiStyle = 0;
+			Projectile.penetrate = -1;
+			Projectile.width = 24;
+			Projectile.height = 24;
+			Projectile.tileCollide = false;
+			Projectile.scale = 0.85f;
+		}
+		public override void AI() {
+			Projectile.velocity *= 0.94f;
+
+			float angle = Projectile.velocity.ToRotation();
+			float targetOffset = 0.9f;
+			float targetAngle = 1;
+			float dist = float.BitIncrement(16 * 10);
+
+			bool foundTarget = Main.player[Projectile.owner].DoHoming((target) => {
+				Vector2 toHit = (Projectile.Center.Clamp(target.Hitbox.Add(target.velocity)) - Projectile.Center);
+				if (!Collision.CanHitLine(Projectile.Center + Projectile.velocity, 1, 1, Projectile.Center + toHit, 1, 1)) return false;
+				float tdist = toHit.Length();
+				float ta = (float)Math.Abs(GeometryUtils.AngleDif(toHit.ToRotation(), angle, out _));
+				if (target is Player) {
+					tdist *= 2.5f;
+					ta *= 2.5f;
+				}
+				if (tdist <= dist && ta <= targetOffset) {
+					targetAngle = ((target.Center + target.velocity) - Projectile.Center).ToRotation();
+					targetOffset = ta;
+					dist = tdist;
+					return true;
+				}
+				return false;
+			});
+			if (foundTarget) Projectile.velocity += new Vector2(1, 0).RotatedBy(targetAngle);
+			if (Projectile.timeLeft < 15) {
+				Projectile.Opacity = Projectile.timeLeft / 15f;
+			}
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			int direction = Math.Sign(target.Center.X - Projectile.Center.X);
+			if (direction == 0) direction = Main.rand.NextBool().ToDirectionInt();
+			modifiers.HitDirectionOverride = direction;
+			modifiers.KnockbackImmunityEffectiveness *= 0.8f;
+			modifiers.Knockback.Base += 6;
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Shimmerstar_Staff_P.DrawShimmerstar(Projectile);
+			return false;
 		}
 	}
 }
