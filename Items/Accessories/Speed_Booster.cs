@@ -97,6 +97,10 @@ namespace Origins.Items.Accessories {
 			player.blackBelt = true;
 			player.dashType = 1;
 			player.spikedBoots += 2;
+
+			DelegateMethods.v3_1 = originPlayer.shineSparkCharge > 0 ? new Vector3(0.8f, 0.5f, 0.9f) : new Vector3(0.9f, 0.8f, 0.5f);
+			Utils.PlotTileLine(player.Center, player.Center + player.velocity * 6f, 20f, DelegateMethods.CastLightOpen);
+			Utils.PlotTileLine(player.Left, player.Right, 20f, DelegateMethods.CastLightOpen);
 		}
 	}
 }

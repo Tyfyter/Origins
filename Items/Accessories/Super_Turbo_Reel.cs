@@ -16,6 +16,9 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.hasMagiluminescence = true;
 			player.GetModPlayer<OriginPlayer>().turboReel2 = true;
+			DelegateMethods.v3_1 = new Vector3(0.9f, 0.8f, 0.5f);
+			Utils.PlotTileLine(player.Center, player.Center + player.velocity * 6f, 20f, DelegateMethods.CastLightOpen);
+			Utils.PlotTileLine(player.Left, player.Right, 20f, DelegateMethods.CastLightOpen);
 		}
         public override void AddRecipes() {
             CreateRecipe()
