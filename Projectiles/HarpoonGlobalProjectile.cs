@@ -25,6 +25,7 @@ namespace Origins.Projectiles {
 		Entity boatRockerEmbed = null;
 		public int chainFrameSeed = -1;
 		public FastRandom chainRandom;
+		float oldWeakpointAnalyzerDist;
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
@@ -49,26 +50,36 @@ namespace Origins.Projectiles {
 			if (chainFrameSeed == -1) {
 				chainFrameSeed = Main.rand.Next(0, ushort.MaxValue);
 			}
-			if (projectile.TryGetOwner(out Player owner) && projectile.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerFake) {
-				projectile.aiStyle = 1;
-				if (!owner.active) {
+			OriginGlobalProj globalProj = projectile.GetGlobalProjectile<OriginGlobalProj>();
+			if (projectile.aiStyle == ProjAIStyleID.Harpoon && globalProj.weakpointAnalyzerTarget.HasValue) {
+				if (projectile.TryGetOwner(out Player owner) && globalProj.weakpointAnalyzerFake) {
 					projectile.aiStyle = 1;
+					if (!owner.active) {
+						projectile.aiStyle = 1;
+						return false;
+					}
+
+					Vector2 diff = (owner.Center - Vector2.UnitY * 2) - projectile.Center;
+					float distance = diff.Length();
+					if (projectile.ai[0] == 0f) {
+						if (distance > 700f)
+							projectile.aiStyle = 1;
+
+						projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
+						projectile.localAI[1] += 1f;
+						if (projectile.localAI[1] > 5f)
+							projectile.alpha = 0;
+					}
+					projectile.velocity.Y += 0.12f;
 					return false;
 				}
-
-				Vector2 diff = (owner.Center - Vector2.UnitY * 2) - projectile.Center;
-				float distance = diff.Length();
-				if (projectile.ai[0] == 0f) {
-					if (distance > 700f)
-						projectile.aiStyle = 1;
-
-					projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
-					projectile.localAI[1] += 1f;
-					if (projectile.localAI[1] > 5f)
-						projectile.alpha = 0;
+				float distSQ = projectile.DistanceSQ(globalProj.weakpointAnalyzerTarget.Value);
+				const float range = 128;
+				const float rangeSQ = range * range;
+				if (oldWeakpointAnalyzerDist < distSQ && MathHelper.Min(1f / (((distSQ * distSQ) / (rangeSQ * rangeSQ)) + 1), 1) < 0.01f) {
+					projectile.aiStyle = 1;
 				}
-				projectile.velocity.Y += 0.12f;
-				return false;
+				oldWeakpointAnalyzerDist = distSQ;
 			}
 			return true;
 		}
