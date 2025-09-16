@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item44;
 			Item.buffType = Terratotem_Buff.ID;
-			Item.shoot = Terratotem_Tab.ID;
+			Item.shoot = Broken_Terratotem_Tab.ID;
 			Item.noMelee = true;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
@@ -43,12 +43,22 @@ namespace Origins.Items.Weapons.Summoner {
 			return false;
 		}
 	}
+
+	public class Broken_Terratotem_Tab : Terratotem_Tab {
+		public override string Texture => typeof(Terratotem_Tab).GetDefaultTMLName();
+		public static new int ID { get; private set; }
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.minionSlots = 1f;
+		}
+	}
 }
 namespace Origins.Buffs {
 	public class Terratotem_Buff : MinionBuff {
 		public static int ID { get; private set; }
 		public override IEnumerable<int> ProjectileTypes() => [
 			Terratotem_Tab.ID,
+			Broken_Terratotem_Tab.ID,
 		];
 		public override bool IsArtifact => true;
 	}

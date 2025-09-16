@@ -51,6 +51,10 @@ namespace Origins.Items.Weapons.Summoner {
 			player.AddBuff(Item.buffType, 2);
 			Projectile projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, player.itemAnimation);
 			projectile.originalDamage = Item.damage;
+			for (float i = projectile.minionSlots; i < 1; i += projectile.minionSlots) {
+				projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, player.itemAnimation);
+				projectile.originalDamage = Item.damage;
+			}
 			return false;
 		}
 		public override void AddRecipes() {
@@ -140,7 +144,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				last = current;
 				current = current.GetRelatedProjectile(1);
 				if (current is null) break;
-				if (current.owner != Projectile.owner || current.type != Type) break;
+				if (current.owner != Projectile.owner || current.ModProjectile is not Terratotem_Tab) break;
 				if (!walked.Add(current)) break;
 			}
 			count = walked.Count;
@@ -165,7 +169,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
 			Projectile.minion = true;
-			Projectile.minionSlots = 1f;
+			Projectile.minionSlots = 0.5f;
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20;
@@ -182,7 +186,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			BitArray hasHat = new(Main.maxProjectiles);
 			foreach (Projectile other in Main.ActiveProjectiles) {
 				if (other.whoAmI == Projectile.whoAmI) continue;
-				if (other.owner == Projectile.owner && other.type == Type) {
+				if (other.owner == Projectile.owner && other.ModProjectile is Terratotem_Tab) {
 					if (other.ai[1] != -1) hasHat[(int)other.ai[1]] = true;
 					indices.Add(other.identity);
 				}
@@ -508,6 +512,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	public partial class Terratotem_Mask_Small : Terratotem_Mask_Base {
+		public override bool? CanDamage() => Projectile.ai[1] != -1;
 		public override int FrameCount => 4;
 		public override bool CanPickupItems => false;
 	}
