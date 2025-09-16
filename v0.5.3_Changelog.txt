@@ -15,6 +15,7 @@ Changes:
 ** Revamped the Riven Hive's generation and sprites
 * Journal now gives mechanic guides
 * Brine enemies now have banners
+* Disabled Fiberglass Undergrowth background in Retro and Trippy lighting modes for improved performance
 
 Balance:
 - Defiled prefix no longer works on target dummies
