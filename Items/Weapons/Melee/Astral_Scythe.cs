@@ -200,19 +200,16 @@ namespace Origins.Items.Weapons.Melee {
 				);
 			}
 		}
-		List<Rectangle> tmp = [];
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			if (Projectile.ai[2] == 1) return false;
 			Player player = Main.player[Projectile.owner];
 			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * 0.45f;
 			vel.Y *= player.gravDir;
-			tmp.Clear();
 			int boxes = ExtraHitboxes;// - (Projectile.ai[0] >= 1 ? 1 : 0);
 			for (int j = 0; j <= boxes; j++) {
 				Rectangle hitbox = projHitbox;
 				Vector2 offset = vel * (j + 0.5f);
 				hitbox.Offset((int)offset.X, (int)offset.Y);
-				tmp.Add(hitbox);
 				if (hitbox.Intersects(targetHitbox)) {
 					return true;
 				}
@@ -251,7 +248,6 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.scale,
 				effects
 			);
-			foreach (Rectangle rct in tmp) rct.DrawDebugOutlineSprite(Color.Blue);
 			return false;
 		}
 	}
