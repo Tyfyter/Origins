@@ -1147,7 +1147,7 @@ namespace Origins {
 				}
 				const string completion_list = "completionList.txt";
 				if ((instance?.FileExists(completion_list) ?? false)) {
-					Regex clIssueRegex = new("^\\([^)]*(@|#|\\$|%)[^)]*\\).*!!!.*$", RegexOptions.Multiline | RegexOptions.Compiled);
+					Regex clIssueRegex = new("^\\([^)]*(@|#|\\$|%|\u2421)[^)]*\\).*!!!.*$", RegexOptions.Multiline | RegexOptions.Compiled);
 					string text = Encoding.UTF8.GetString(instance.GetFileBytes(completion_list));
 					foreach (Match item in (IEnumerable<Match>)clIssueRegex.Matches(text)) {
 						AddReason(item.Value);
