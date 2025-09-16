@@ -43,6 +43,7 @@ X: No progress
 ᥢ: Can't be implemented in a stable manner (unicode hex code 1962)
 々: Missing prerequisite development (unicode hex code 3005)
 赏: Missing loot (unicode hex code 8D4F)
+␡: Needs removal (unicode hex code 2421)
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once
  + Additionally, specific requests can be mentioned in "()" after the entry]
@@ -155,6 +156,7 @@ WORLD GENERATION:
 (^) Limestone Cave
 (^) Riven Hive
 (#2, 々) Repentance
+(␡) Dusk
 
 (X) Defiled Egregore
 (X) The Cosmos
