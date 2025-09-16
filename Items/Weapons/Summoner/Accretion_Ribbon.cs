@@ -32,8 +32,8 @@ namespace Origins.Items.Weapons.Summoner {
 		public override bool MeleePrefix() => true;
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 10)
-			.AddTile(TileID.MythrilAnvil)
+			.AddIngredient(ModContent.ItemType<Aetherite_Bar>(), 10)
+			.AddTile(TileID.Anvils)
 			.Register();
 		}
 		public override bool CanShoot(Player player) => false;
