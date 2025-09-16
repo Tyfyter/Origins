@@ -1,4 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Core;
+using PegasusLib;
+using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,18 +32,16 @@ namespace Origins.Tiles.Dusk {
 		}
 	}
 	public class Dusk_Stone_Item : ModItem {
+		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 100;
-		}
-		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(TileType<Dusk_Stone>());
+			Item.ResearchUnlockCount = 0;
+			DepreciatedTransform.Set[Type] = ItemID.AshBlock;
 		}
 	}
 	public class Dusk_Stone_Liquid : Dusk_Stone {
 		public override string Texture => typeof(Dusk_Stone).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			RegisterItemDrop(ItemType<Dusk_Stone_Item>());
 			Main.tileMerge[Type][TileType<Dusk_Stone>()] = true;
 		}
 	}
