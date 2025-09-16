@@ -25,7 +25,7 @@ namespace Origins.Projectiles {
 		Entity boatRockerEmbed = null;
 		public int chainFrameSeed = -1;
 		public FastRandom chainRandom;
-		float oldWeakpointAnalyzerDist;
+		float oldWeakpointAnalyzerDist = float.PositiveInfinity;
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
