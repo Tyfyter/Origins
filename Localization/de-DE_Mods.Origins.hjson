@@ -2330,6 +2330,11 @@ Configs: {
 			// Label: Force April Fools
 			// Tooltip: ""
 		}
+
+		ExportVersionedLists: {
+			// Label: Export Version Lists
+			// Tooltip: ""
+		}
 	}
 
 	Journal_Default_UI_Mode: {
