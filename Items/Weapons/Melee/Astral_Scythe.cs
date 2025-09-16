@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
-using Origins.Items.Armor.Aetherite;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner;
@@ -10,8 +9,6 @@ using PegasusLib;
 using PegasusLib.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Security.Policy;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -21,7 +18,6 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod;
 
 namespace Origins.Items.Weapons.Melee {
 	[LegacyName("Splitting_Image")]
@@ -129,7 +125,6 @@ namespace Origins.Items.Weapons.Melee {
 
 			frame = texture.Frame(verticalFrames: 3, frameY: variant);
 			spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, drawColor, 0, origin, scale, SpriteEffects.None, 0);
-			Debugging.ChatOverhead(player.OriginPlayer().scytheHitCombo);
 			return false;
 		}
 	}
