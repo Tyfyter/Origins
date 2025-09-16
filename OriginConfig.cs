@@ -751,6 +751,23 @@ namespace Origins {
 				}
 			}
 		}
+		public bool ExportVersionedLists {
+			get => default;
+			set {
+				if (!value) return;
+				string basePath = Path.Combine(Program.SavePathShared, "ModSources", "Origins");
+				if (!Directory.Exists(basePath)) return;
+				string path = Path.Combine(basePath, "Info", Origins.instance.Version.ToString());
+				WriteFile(Origins.instance.GetContent<ModItem>().Select(item => item.Name), File.CreateText(path + "_Items.txt"));
+				WriteFile(Origins.instance.GetContent<ModNPC>().Select(item => item.Name), File.CreateText(path + "_NPCs.txt"));
+
+				static void WriteFile(IEnumerable<string> lines, StreamWriter writer) {
+					foreach (string line in lines.Order()) writer.WriteLine(line);
+					writer.Flush();
+					writer.Close();
+				}
+			}
+		}
 		public HashSet<string> IgnoredCompatibilitySuggestions { get; set; } = [];
 	}
 	public class AssetPathComparer : IComparer<string> {
