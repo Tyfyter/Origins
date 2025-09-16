@@ -4892,6 +4892,55 @@ namespace Origins {
 			}
 		}
 		public static bool IsLocallyOwned(this Projectile projectile) => projectile.owner == Main.myPlayer;
+
+		public static void FillWhipControlPoints(this Projectile proj, Vector2 playerArmPosition, List<Vector2> controlPoints, int useTimeMax, float useTime, float? useTimeForSize = null) {
+			useTimeForSize ??= useTimeMax;
+			int timeToFlyOut = useTimeMax * proj.MaxUpdates;
+			int segments = proj.WhipSettings.Segments;
+			float rangeMultiplier = proj.WhipSettings.RangeMultiplier;
+			float num = useTime / timeToFlyOut;
+			float num2 = 0.5f;
+			float num3 = 1f + num2;
+			float num4 = MathHelper.Pi * 10f * (1f - num * num3) * (-proj.spriteDirection) / segments;
+			float num5 = num * num3;
+			float num6 = 0f;
+			if (num5 > 1f) {
+				num6 = (num5 - 1f) / num2;
+				num5 = MathHelper.Lerp(1f, 0f, num6);
+			}
+			float num7 = (useTimeMax * 2) * num;
+			float num8 = proj.velocity.Length() * num7 * num5 * rangeMultiplier / segments;
+			float num9 = 1f;
+			Vector2 vector = playerArmPosition;
+			float num10 = -MathHelper.PiOver2;
+			Vector2 vector2 = vector;
+			float num11 = MathHelper.PiOver2 + MathHelper.PiOver2 * proj.spriteDirection;
+			Vector2 vector3 = vector;
+			float num12 = MathHelper.PiOver2;
+			controlPoints.Add(playerArmPosition);
+			for (int i = 0; i < segments; i++) {
+				float num13 = i / (float)segments;
+				float num14 = num4 * num13 * num9;
+				Vector2 vector4 = vector + num10.ToRotationVector2() * num8;
+				Vector2 vector5 = vector3 + num12.ToRotationVector2() * (num8 * 2f);
+				Vector2 vector6 = vector2 + num11.ToRotationVector2() * (num8 * 2f);
+				float num15 = 1f - num5;
+				float num16 = 1f - num15 * num15;
+				Vector2 value = Vector2.Lerp(vector5, vector4, num16 * 0.9f + 0.1f);
+				Vector2 vector7 = Vector2.Lerp(vector6, value, num16 * 0.7f + 0.3f);
+				Vector2 spinningpoint = playerArmPosition + (vector7 - playerArmPosition) * new Vector2(1f, num3);
+				float num17 = num6;
+				num17 *= num17;
+				Vector2 item = spinningpoint.RotatedBy(proj.rotation + 4.712389f * num17 * proj.spriteDirection, playerArmPosition);
+				controlPoints.Add(item);
+				num10 += num14;
+				num12 += num14;
+				num11 += num14;
+				vector = vector4;
+				vector3 = vector5;
+				vector2 = vector6;
+			}
+		}
 	}
 	public static class ContentExtensions {
 		public static LocalizedText[] GetChildren(this LanguageTree languageTree) => languageTree.Values.Select(tree => tree.value).ToArray();
