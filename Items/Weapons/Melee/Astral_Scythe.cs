@@ -80,7 +80,6 @@ namespace Origins.Items.Weapons.Melee {
 				player.itemAnimationMax -= frameReduction;
 
 				damage = (int)(damage * 0.3f);
-				player.OriginPlayer().scytheHitCombo = 0;
 				player.AddBuff(Astral_Scythe_Wait_Debuff.ID, 3 * 60);
 				type = ModContent.ProjectileType<Astral_Scythe_Star>();
 			} else {
@@ -103,6 +102,7 @@ namespace Origins.Items.Weapons.Melee {
 						ai0: scytheHitCombo
 					);
 				}
+				player.OriginPlayer().scytheHitCombo = 0;
 				return false;
 			}
 			int ai0 = 0;
