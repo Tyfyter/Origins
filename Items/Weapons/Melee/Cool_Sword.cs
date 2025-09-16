@@ -144,9 +144,6 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			return false;
 		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			//OriginGlobalNPC.InflictTorn(target, 20, targetSeverity: 0.4f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
-		}
 		public override void CutTiles() {
 			Player player = Main.player[Projectile.owner];
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
@@ -161,13 +158,13 @@ namespace Origins.Items.Weapons.Melee {
 			SpriteEffects effects = player.direction * player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally;
 			Texture2D texture = TextureAssets.Item[ModContent.ItemType<Cool_Sword>()].Value;
-			if (!player.controlDown) Projectile.rotation = -(GetSpriteRotation(frameNum) - MathHelper.PiOver4) * player.direction;
+			float rotation = -(GetSpriteRotation(frameNum) - MathHelper.PiOver4) * player.direction;
 			Main.EntitySpriteDraw(
 				texture,
-				player.GetCompositeArmPosition(false) + GeometryUtils.Vec2FromPolar(8, (Projectile.rotation + Projectile.velocity.ToRotation()) * player.gravDir) - Main.screenPosition,
+				player.GetCompositeArmPosition(false) + GeometryUtils.Vec2FromPolar(8, (rotation + Projectile.velocity.ToRotation()) * player.gravDir) - Main.screenPosition,
 				null,
 				lightColor,
-				Projectile.rotation * player.gravDir + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * player.direction * player.gravDir) - (player.gravDir < 0).Mul(MathHelper.PiOver2 * player.direction),
+				rotation * player.gravDir + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * player.direction * player.gravDir) - (player.gravDir < 0).Mul(MathHelper.PiOver2 * player.direction),
 				new Vector2(14, 8).Apply(effects ^ SpriteEffects.FlipVertically, texture.Size()),
 				Projectile.scale,
 				effects
@@ -182,7 +179,7 @@ namespace Origins.Items.Weapons.Melee {
 				player.MountedCenter - Main.screenPosition,
 				slashFrame,
 				new Color(0.75f, 0.75f, 0.75f, 0.5f),
-				Projectile.rotation * player.gravDir + rotationOffset,
+				rotation * player.gravDir + rotationOffset,
 				new Vector2(217, 161).Apply(effects ^ SpriteEffects.FlipVertically, slashFrame.Size()),
 				Projectile.scale,
 				effects,
