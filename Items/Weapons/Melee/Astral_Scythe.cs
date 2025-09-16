@@ -404,6 +404,7 @@ namespace Origins.Items.Weapons.Melee {
 			ID = Type;
 		}
 		public override void SetDefaults() {
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 60 * 7;
 			Projectile.aiStyle = 0;

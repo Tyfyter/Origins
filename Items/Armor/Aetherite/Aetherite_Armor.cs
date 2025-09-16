@@ -156,6 +156,7 @@ namespace Origins.Items.Armor.Aetherite {
 			ID = Type;
 		}
 		public override void SetDefaults() {
+			Projectile.DamageType = DamageClass.Generic;
 			Projectile.friendly = true;
 			Projectile.timeLeft = 60 * 15;
 			Projectile.aiStyle = 0;
