@@ -107,6 +107,7 @@ namespace Origins.NPCs.TownNPCs {
 		}
 
 		public override void AddShops() {
+			return; // temp, these show up in shop browsers
 			new NPCShop(Type)
 			.Add<Nerve_Flan_Food>()
 			.Add(Music_Box.ItemType<Otherworldly_Music_Box_DW>())

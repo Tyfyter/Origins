@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Fish;
@@ -762,10 +763,11 @@ namespace Origins {
 				WriteFile(Origins.instance.GetContent<ModNPC>().Select(item => item.Name), File.CreateText(path + "_NPCs.txt"));
 
 				static void WriteFile(IEnumerable<string> lines, StreamWriter writer) {
-					foreach (string line in lines.Order()) writer.WriteLine(line);
+					foreach (string line in lines.Order()) writer.Write(line + "\n");
 					writer.Flush();
 					writer.Close();
 				}
+				ModContent.GetInstance<ISHIntegration>()?.SetupVersionTags();
 			}
 		}
 		public HashSet<string> IgnoredCompatibilitySuggestions { get; set; } = [];

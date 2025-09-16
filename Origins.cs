@@ -53,6 +53,7 @@ using Origins.Layers;
 using Origins.Items.Vanity.Dev.PlagueTexan;
 using System.Text.RegularExpressions;
 using System.Text;
+using Origins.Core;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -131,6 +132,7 @@ namespace Origins {
 		public static List<ITicker> tickers = [];
 		public static List<object> loggedErrors = [];
 		public static List<LocalizedText> loadingWarnings = [];
+		internal static List<LateLoadable> lateLoadables = [];
 		public override uint ExtraPlayerBuffSlots => 4;
 		public Origins() {
 			instance = this;
@@ -734,6 +736,9 @@ namespace Origins {
 			for (int i = 0; i < ItemID.Count; i++) OriginGlobalItem.AddVanillaTooltips(i, [], true);
 			MonoModHooks.Modify(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
 #endif
+			for (int i = 0; i < lateLoadables.Count; i++) {
+				lateLoadables[i].Load();
+			}
 		}
 		public override void Unload() {
 			AssimilationLoader.Unload();

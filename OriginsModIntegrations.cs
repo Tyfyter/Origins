@@ -9,31 +9,40 @@ using Origins.CrossMod.Fargos.Items;
 using Origins.Dev;
 using Origins.Items;
 using Origins.Items.Accessories;
+using Origins.Items.Armor.Amber;
 using Origins.Items.Armor.Other;
-using Origins.Items.Vanity.BossMasks;
 using Origins.Items.Materials;
 using Origins.Items.Other;
 using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Broths;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Other.Fish;
 using Origins.Items.Pets;
+using Origins.Items.Vanity.BossMasks;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
+using Origins.NPCs.Brine;
 using Origins.NPCs.Brine.Boss;
 using Origins.NPCs.Corrupt;
 using Origins.NPCs.Crimson;
+using Origins.NPCs.Defiled;
 using Origins.NPCs.Defiled.Boss;
+using Origins.NPCs.Dungeon;
 using Origins.NPCs.Fiberglass;
 using Origins.NPCs.MiscB;
 using Origins.NPCs.MiscB.Shimmer_Construct;
+using Origins.NPCs.MiscE;
+using Origins.NPCs.Riven;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.Tiles;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using PegasusLib.Graphics;
@@ -42,6 +51,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -58,15 +69,6 @@ using ThoriumMod.Projectiles.Bard;
 using static Origins.OriginsSets.Items;
 using static Origins.OriginSystem;
 using static Terraria.ModLoader.ModContent;
-using Origins.Items.Other.Consumables.Food;
-using Origins.NPCs.MiscE;
-using Origins.NPCs.Dungeon;
-using Origins.NPCs.Riven;
-using Origins.NPCs.Defiled;
-using Origins.NPCs.Brine;
-using Origins.Tiles.Other;
-using Origins.Items.Armor.Amber;
-using Origins.Items.Other.Consumables.Broths;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -130,10 +132,6 @@ namespace Origins {
 			} else {
 				checkAprilFools = DefaultCheckAprilFools;
 				holidayForceChanged = _ => -1;
-			}
-			if (ModLoader.TryGetMod("ItemSourceHelper", out Mod itemSourceHelper)) {
-				itemSourceHelper.Call("AddIconicWeapon", DamageClasses.Explosive.Type, (int)ItemID.Bomb);
-				itemSourceHelper.Call("AddShimmerFakeCondition", RecipeConditions.ShimmerTransmutation);
 			}
 		}
 		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
