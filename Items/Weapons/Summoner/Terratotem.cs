@@ -14,7 +14,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -39,7 +38,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.useTime = 24;
 			Item.useAnimation = 24;
 			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.noUseGraphic = true;
+			Item.noUseGraphic = false;
 			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = ItemRarityID.Yellow;
 			Item.UseSound = SoundID.Item44;
@@ -266,7 +265,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.ai[0] = mask.identity;
 				Projectile.netUpdate = true;
 			}
-			Lighting.AddLight(Projectile.Center, 0.2f, 0.8f, 0.2f);
+			Lighting.AddLight(Projectile.Center, 0.2f, 0.8f, 0.5f);
 			if (Projectile.localAI[0] <= 0) Life -= 0.25f;
 		}
 		public override void PostDraw(Color lightColor) {

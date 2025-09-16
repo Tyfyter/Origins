@@ -52,25 +52,22 @@ BOSSES AND MINI-BOSSES:
 |---
 (^) Chambersite Sentinel
 (X) D2L2 'Warsaw'
-(%2, ^2, 々) Grand Corruptor
 (X) HA-24 'Hawken'
-(%2, ^2, 々) Ichor Storm
+(X, ^2) Ichor Storm
 (X) Zombie Paladin
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(^) Shimmer Construct
+(#2, ^2) Shimmer Construct !!! (shield SFX while Shimmer Pods present)
 (#, ^2) Trenchmaker
 (^) World Cracker*
 
-(X) Corrupt Harvester
 (^) Lost Diver/Mildew Carrion°
 (X) Snowdrop
 
 (X) Arabel
 (X) Blue Lobster 'Tearror'
 (X) Crimson King
-(X) Leviathan of the Riven
 (X) Mechamalgamation
 (X) Miscreant
 (X) Seer
@@ -157,7 +154,6 @@ WORLD GENERATION:
 (X) Fractured Isles
 (^) Limestone Cave
 (^) Riven Hive
-(X) The Dawn
 (#2, 々) Repentance
 
 (X) Defiled Egregore
@@ -329,7 +325,6 @@ EVENTS:
 (#, %2) Crimson Invasion
 (#, %2) Defiled Invasion
 (#, %2) Riven Invasion
-(X) War of the World
 
 (X) Coronal Storm
 (X) Test of the Ancients
@@ -410,7 +405,6 @@ ARMOR:
 
 (^) Blast Armor*
 (^) Chambersite Commander Armor°
-(X) Edenwood Armor°
 (X) Mimic Armor
 (^) Necromancer Armor*
 (^) Sapphire Mediator Armor*
@@ -703,7 +697,7 @@ WINGS:
 
 (^) Dio's Scarf
 (X) Flight Hoodie
-(^) Tyfyter's Wings
+(^) YMK Wings
 ---
 
 
@@ -753,7 +747,7 @@ MELEE WEAPONS:
 (^) Baseball Bat*
 (^) Bone Latcher*
 (^) Broken Fiberglass Sword*
-(#2, ^2) Cool Sword !!!
+(^) Cool Sword
 (^) Cyah Nara*
 (^) Dark Spiral*
 (^) Decimator*
@@ -952,7 +946,7 @@ SUMMONER WEAPONS:
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact
 (^) Brainy Staff*
-(^) Broken Terratotem
+(#2, ^2) Broken Terratotem !!! (just needs totem cap)
 (^) Defective Mortar Shell
 (^) Desert Crown*
 (^) Eyeball Staff
@@ -1009,7 +1003,7 @@ SUMMONER WEAPONS:
 (X) Ribatar
 (X) SMART Wrench
 (X) Technomancer 4000
-(^) Terratotem
+(#2, ^2) Terratotem !!! (just needs totem cap)
 (X) Tonal Resonator
 (X) Vampire Fireflower in a Pot
 
@@ -1130,7 +1124,6 @@ TILES:
 |---
 (^) Aetherite Ore
 (^) Amoeba Fluid*
-(^) Angelic Cloud*
 (^) Baryte*
 (^) Batholith°
 (^) Bleeding Obsidian*
@@ -1156,8 +1149,6 @@ TILES:
 (^) Defiled Sand*
 (^) Defiled Sandstone*
 (^) Defiled Stone*
-(X) Edengrass°
-(^) Edenwood°
 (^) Eitrite Ore*
 (@4) Encrusted Brick
 (^) Encrusted Ore*
@@ -1167,7 +1158,6 @@ TILES:
 (^) Gray Ice Block*
 (^) Hardened Defiled Sand*
 (X) Hardened Sootsand
-(X) Harmony Brick°
 (X) Lihzarhd Bomb Trap
 (^) Limestone*
 (@4) Lost Brick
@@ -1222,7 +1212,6 @@ TILES:
 (^) Fiberglass Wall
 (^) Hardened Defiled Sand Wall
 (X) Hardened Sootsand Wall
-(^) Harmony Brick Wall
 (@, ^3) Lost Brick Wall
 (^) Marrowick Wall
 (X) Molten Steel Wall
@@ -1268,7 +1257,6 @@ TILES:
 (X) Cargo Elevator Door (Jammed)
 (^) Chambersite Gem Lock°
 (^) Cleansing Station*
-(X) Dawn Dungeon Chest°
 (^) Defiled Campfire*
 (^) Defiled Dungeon Chest*
 (^) Defiled Monolith*
@@ -1314,7 +1302,6 @@ TILES:
 (々) Defiled Heart
 (^) Defiled Relay
 (^) Defiled Pot
-(X) Eden Tree°
 (X) Exoskeletal Baobab Tree*
 (^) Exoskeletal Tree*
 (X) Floodlight
@@ -1383,8 +1370,6 @@ TILES:
 (ᗢ) Enemy Banners*
 (^) Fiberglass Weaver Relic*
 (^) Fiberglass Weaver Trophy*
-(X) Leviathan of the Riven Relic
-(X) Leviathan of the Riven Trophy
 (^) Lost Diver Relic*
 (^) Lost Diver Trophy*
 (X) Mechamalgamation Relic
@@ -1596,18 +1581,12 @@ CONSUMABLES:
 (^) Suspicious Looking Ice Cream*
 (X) The Button°
 
-(X) Ashen Loot Box°
 (^) Basic Crate*
 (^) Bilious Crate*
-(#2, ^2, 々) Corruption Loot Box°
-(#2, ^2, 々) Crimson Loot Box°
 (^) Crusty Crate*
-(#2, ^2, 々) Defiled Loot Box°
 (^) Festering Crate*
-(X) Holy Crate
 (^) Pointy Crate*
 (^) Residual Crate*
-(#2, ^2, 々) Riven Loot Box°
 
 (^) Gooey Water*
 (^) Holiday Hair Dye*
@@ -1619,7 +1598,6 @@ CONSUMABLES:
 
 (X) Ashen Key
 (^) Brine Key
-(^) Dawn Key°
 (^) Defiled Key*
 (^) Hell Key°
 (X) Mechanical Keys
@@ -1646,7 +1624,6 @@ MOUNTS & PETS:
 
 (^) Amoeba Toy (Meberoid)*
 (X) Dysfunctional Table Saw (Sprockey)
-(X) Rusty Cross Necklace (Guardian Angel)
 (^) Smith's Hammer (Walking Furnace)*
 (^) Suspicious Looking Pebble (Defiled Blight)*
 
@@ -1785,8 +1762,6 @@ UI:
 (^) Brine Icon
 (^) Brine Map/Bestiary Backdrop
 (X) Cosmos Map/Bestiary Backdrop
-(^) Dawn Icon
-(X) Dawn Map/Bestiary Backdrop
 (^) Defiled Caverns Icon
 (^) Defiled Desert Icon
 (X) Defiled Egregore
@@ -1823,7 +1798,6 @@ VOLUME I MUSIC:
 (^) Brine Pool
 (X) Cosmos
 (X) Cubekon Temple
-(X) Dawn
 (^) Defiled Caverns
 (^) Defiled Wastelands
 (X) Defiled Wastelands - Egregocide Route
@@ -1842,7 +1816,6 @@ VOLUME I MUSIC:
 (^) Defiled Amalgamation
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S.
-(X) Leviathan of the Riven
 (^) Lost Diver/Mildew Carrion
 (X) Mechamalgamation
 (X) Miscreant
