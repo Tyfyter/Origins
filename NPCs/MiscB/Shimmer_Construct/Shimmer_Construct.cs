@@ -41,6 +41,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	[AutoloadBossHead]
 	public class Shimmer_Construct : ModNPC, IJournalEntrySource, IMinions {
+		internal static ArmorShaderData MatrixCombine { get; set; }
 		public string EntryName => "Origins/" + typeof(Shimmer_Construct_Entry).Name;
 		public class Shimmer_Construct_Entry : JournalEntry {
 			public override string TextKey => "Shimmer_Construct";
@@ -80,6 +81,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					self.ModNPC.OnSpawn(null);
 				}
 			};
+			MatrixCombine = new(Mod.Assets.Request<Effect>("Effects/MatrixCombine"), "MatrixCombine");
 		}
 		public override void Unload() {
 			normalDropRule = null;
@@ -476,6 +478,42 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				);
 			}
 			return false;
+		}
+		int shieldDownAnimation = 0;
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			float shieldDownProgress = shieldDownAnimation / 30f;
+			if (IsInPhase2 && shieldDownProgress < 1) shieldDownAnimation++;
+			if (shieldDownProgress >= 1) return;
+			SpriteBatchState state = spriteBatch.GetState();
+			spriteBatch.Restart(state, SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap);
+			Origins.shaderOroboros.Capture();
+			DrawData drawData = new(
+				Main.Assets.Request<Texture2D>("Images/Misc/Perlin").Value,
+				NPC.Center - screenPos,
+				new Rectangle(0, 0, 600, 400),
+				Color.White,
+				NPC.rotation,
+				new Vector2(300f, 200f),
+				NPC.scale * 0.75f,
+				0
+			);
+			GameShaders.Misc["ForceField"].UseColor(Vector3.One);
+			GameShaders.Misc["ForceField"].Apply(drawData);
+			drawData.Draw(spriteBatch);
+			if (shieldDownProgress > 0) {
+				Matrix positionMatrix = Matrix.Identity;
+				positionMatrix.Translation -= new Vector3(NPC.Center - screenPos, 0);
+				MatrixCombine.Shader.Parameters["uImageMatrix1"].SetValue(positionMatrix);
+				MatrixCombine.Shader.Parameters["uColorMatrix0"].SetValue(Matrix.Identity);
+				Matrix eraseMatrix = Matrix.Multiply(Matrix.Identity, -5 * shieldDownProgress);
+				eraseMatrix.Translation -= Vector3.One * shieldDownProgress * shieldDownProgress;
+				MatrixCombine.Shader.Parameters["uColorMatrix1"].SetValue(eraseMatrix);
+				MatrixCombine.UseImage(Origins.cellNoiseTexture.asset);
+				Origins.shaderOroboros.Stack(MatrixCombine);
+			}
+			Origins.shaderOroboros.Stack(GameShaders.Armor.GetSecondaryShader(Shimmer_Dye.ShaderID, null));
+			Origins.shaderOroboros.Release();
+			spriteBatch.Restart(state);
 		}
 		public override bool PreKill() {
 			if (IsInPhase3) {
