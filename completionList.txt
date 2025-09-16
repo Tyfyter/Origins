@@ -952,7 +952,7 @@ SUMMONER WEAPONS:
 (^) Bee Afraid Incantation*
 (^) Bomb Artifact
 (^) Brainy Staff*
-(^) Broken Terratotem !!!
+(^) Broken Terratotem
 (^) Defective Mortar Shell
 (^) Desert Crown*
 (^) Eyeball Staff
@@ -1009,7 +1009,7 @@ SUMMONER WEAPONS:
 (X) Ribatar
 (X) SMART Wrench
 (X) Technomancer 4000
-(^) Terratotem !!!
+(^) Terratotem
 (X) Tonal Resonator
 (X) Vampire Fireflower in a Pot
 
