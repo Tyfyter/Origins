@@ -6647,7 +6647,7 @@ Astral_Scythe: {
 		'''
 		Upon 3 successful hits the blade of the scythe detatches to form a flail
 		<right> to explode the blade to release star mines around you, damage and range varying based on successful scythe hits
-		[fool:Items.Astral_Scythe.Debuff]
+		{§Mods.Origins.Items.Astral_Scythe.Debuff}
 		''' */
 	// Debuff: While the blade regenerates the scythe is unusable
 }

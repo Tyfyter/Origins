@@ -21,7 +21,9 @@ namespace Origins.UI {
 				this.amount = amount;
 			}
 			public bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, float maxWidth, Vector2 position = default, Color color = default, float scale = 1) {
-				if (color.A == Main.mouseTextColor) {
+				if (color == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
+					color = Color.White;
+				} else if (color.A == Main.mouseTextColor) {
 					color *= 255f / Main.mouseTextColor;
 				}
 				TextSnippet[] snippets = ChatManager.ParseMessage(Text, color).ToArray();
