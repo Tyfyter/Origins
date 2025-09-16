@@ -1,6 +1,5 @@
 ﻿using Origins.Gores.NPCs;
-using Origins.UI;
-using PegasusLib.ID;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -86,6 +85,8 @@ namespace Origins.NPCs.MiscE {
 				}
 				return false;
 			}
+			NPC.spriteDirection = NPC.direction;
+			NPC.rotation = NPC.velocity.X * 0.1f;
 			return base.PreAI();
 		}
 		public override void FindFrame(int frameHeight) {
