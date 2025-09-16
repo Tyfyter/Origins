@@ -27,15 +27,15 @@ namespace Origins.Items.Weapons.Melee {
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
 		}
 		public override void SetDefaults() {
-			Item.damage = 64;
+			Item.damage = 68;
 			Item.DamageType = DamageClass.Melee;
 			Item.noUseGraphic = true;
 			Item.crit = -2;
 			Item.noMelee = true;
 			Item.width = 100;
 			Item.height = 98;
-			Item.useTime = 42;
-			Item.useAnimation = 42;
+			Item.useTime = 28;
+			Item.useAnimation = 28;
 			Item.shoot = ModContent.ProjectileType<Astral_Scythe_Slash>();
 			Item.shootSpeed = 1;
 			Item.useStyle = ItemUseStyleID.Swing;
@@ -75,7 +75,7 @@ namespace Origins.Items.Weapons.Melee {
 				player.itemAnimation -= frameReduction;
 				player.itemAnimationMax -= frameReduction;
 
-				damage = (int)(damage * 0.3f);
+				damage = (int)(damage * 0.75f);
 				player.AddBuff(Astral_Scythe_Wait_Debuff.ID, 60 * 4);
 				type = ModContent.ProjectileType<Astral_Scythe_Star>();
 			} else {

@@ -742,7 +742,7 @@ TOOLS:
 
 MELEE WEAPONS:
 |---
-(†) Astral Scythe !!! (balancing, m2 doesn't do the slash sound, m2 on AF without blade to make a generic bonk sound)
+(^) Astral Scythe
 (X) Autoscopy
 (^) Baseball Bat*
 (^) Bone Latcher*
