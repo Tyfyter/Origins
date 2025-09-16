@@ -14,6 +14,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"ExpendableWeapon"
 		];
 		public override void SetStaticDefaults() {
+			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;
 			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Confused, BuffID.Slow, BuffID.Darkness];
 		}

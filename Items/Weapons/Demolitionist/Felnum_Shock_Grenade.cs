@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
             "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {
+			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Origins.DamageBonusScale[Type] = 1.5f;
 			CritType.SetCritType<Felnum_Crit_Type>(Type);
 			OriginsSets.Items.FelnumItem[Type] = true;

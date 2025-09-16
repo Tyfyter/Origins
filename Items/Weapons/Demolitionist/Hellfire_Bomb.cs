@@ -14,6 +14,7 @@ namespace Origins.Items.Weapons.Demolitionist {
             "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {
+			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 99;
 		}
