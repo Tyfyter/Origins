@@ -159,6 +159,7 @@ namespace Origins.Items.Weapons.Melee {
 			if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally;
 			Texture2D texture = TextureAssets.Item[ModContent.ItemType<Cool_Sword>()].Value;
 			float rotation = -(GetSpriteRotation(frameNum) - MathHelper.PiOver4) * player.direction;
+			rotation = GetAlternateSpriteRotation(Projectile.rotation);
 			Main.EntitySpriteDraw(
 				texture,
 				player.GetCompositeArmPosition(false) + GeometryUtils.Vec2FromPolar(8, (rotation + Projectile.velocity.ToRotation()) * player.gravDir) - Main.screenPosition,
@@ -199,6 +200,9 @@ namespace Origins.Items.Weapons.Melee {
 				7 => -0.2450442f,
 				_ => MathHelper.Pi
 			};
+		}
+		static float GetAlternateSpriteRotation(float angle) {
+			return float.Round(angle * 16 / MathHelper.Pi) / MathHelper.Pi;
 		}
 	}
 	public class Cool_Sword_P : ModProjectile, ICanisterChildProjectile {
