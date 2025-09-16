@@ -80,7 +80,7 @@ namespace Origins.Items.Weapons.Melee {
 				player.itemAnimationMax -= frameReduction;
 
 				damage = (int)(damage * 0.3f);
-				player.AddBuff(Astral_Scythe_Wait_Debuff.ID, 3 * 60);
+				player.AddBuff(Astral_Scythe_Wait_Debuff.ID, 60 * 4);
 				type = ModContent.ProjectileType<Astral_Scythe_Star>();
 			} else {
 				const float sqrt_2 = 1.4142135623731f;
@@ -274,6 +274,14 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.WhipPointsForCollision.Clear();
 		}
 		public override bool ShouldUpdatePosition() => false;
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			Player player = Main.player[Projectile.owner];
+			player.OriginPlayer().scytheHitCombo++;
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			Player player = Main.player[Projectile.owner];
+			player.OriginPlayer().scytheHitCombo++;
+		}
 		public void SetupControlPoints() {
 			Projectile owner = Projectile.GetRelatedProjectile(2);
 			if (owner?.active != true) {
@@ -442,7 +450,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;
-			Projectile.timeLeft = 60 * 7;
+			Projectile.timeLeft = 60 * 5;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = -1;
 			Projectile.width = 24;
@@ -475,7 +483,7 @@ namespace Origins.Items.Weapons.Melee {
 				}
 				return false;
 			});
-			if (foundTarget) Projectile.velocity += new Vector2(1, 0).RotatedBy(targetAngle);
+			if (foundTarget) Projectile.velocity += new Vector2(0.7f, 0).RotatedBy(targetAngle);
 			if (Projectile.timeLeft < 15) {
 				Projectile.Opacity = Projectile.timeLeft / 15f;
 			}
