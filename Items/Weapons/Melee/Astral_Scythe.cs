@@ -3,12 +3,15 @@ using Origins.Buffs;
 using Origins.Items.Armor.Aetherite;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
 using PegasusLib;
+using PegasusLib.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Security.Policy;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -320,6 +323,34 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.Center = Projectile.WhipPointsForCollision[^1];
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			if (middleRenderTarget is null) {
+				Main.QueueMainThreadAction(SetupRenderTargets);
+				Main.OnResolutionChanged += Resize;
+			} else {
+				Main.spriteBatch.Restart(Main.spriteBatch.GetState().FixedCulling());
+				Origins.shaderOroboros.Capture();
+				Main.spriteBatch.Restart(Main.spriteBatch.GetState(), transformMatrix: Main.GameViewMatrix.ZoomMatrix);
+
+				DrawPath(4 * Projectile.scale + 2);
+
+				Main.graphics.GraphicsDevice.Textures[1] = middleRenderTarget;
+				Accretion_Ribbon.EraseShader.Shader.Parameters["uImageSize1"]?.SetValue(new Vector2(middleRenderTarget.Width, middleRenderTarget.Height));
+				Origins.shaderOroboros.Stack(Accretion_Ribbon.EraseShader);
+				Origins.shaderOroboros.DrawContents(edgeRenderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
+				Origins.shaderOroboros.Reset(default);
+				Vector2 center = edgeRenderTarget.Size() * 0.5f;
+				Main.EntitySpriteDraw(
+					edgeRenderTarget,
+					center,
+					null,
+					Color.White,
+					0,
+					center,
+					Vector2.One / Main.GameViewMatrix.Zoom,
+					Main.GameViewMatrix.Effects
+				);
+			}
+
 			Player player = Main.player[Projectile.owner];
 			SpriteEffects effects = player.direction * player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally;
@@ -337,19 +368,11 @@ namespace Origins.Items.Weapons.Melee {
 			);
 			return false;
 		}
-		internal RenderTarget2D renderTarget;
 		private static VertexStrip _vertexStrip = new();
-		public void PreDrawScene() {
-			if (renderTarget is null) {
-				Main.QueueMainThreadAction(SetupRenderTargets);
-				Main.OnResolutionChanged += Resize;
-				return;
-			}
-			Origins.shaderOroboros.Capture();
-
+		public void DrawPath(float size) {
 			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Identity"];
-			miscShaderData.UseImage0(TextureAssets.Extra[197]);
-			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(1, 0, 0, 0));
+			miscShaderData.UseImage0(TextureAssets.MagicPixel);
+			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
 			miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 0, 1, 1));
 			float[] oldRot = new float[Projectile.WhipPointsForCollision.Count];
 			for (int i = 0; i < Projectile.WhipPointsForCollision.Count - 1; i++) {
@@ -357,14 +380,24 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			oldRot[^1] = Projectile.rotation;
 			miscShaderData.Apply();
-			_vertexStrip.PrepareStrip(Projectile.WhipPointsForCollision.ToArray(), oldRot, _ => Color.White, _ => 16, -Main.screenPosition, Projectile.WhipPointsForCollision.Count, includeBacksides: true);
+			_vertexStrip.PrepareStrip(Projectile.WhipPointsForCollision.ToArray(), oldRot, _ => Color.White, _ => size, -Main.screenPosition, Projectile.WhipPointsForCollision.Count, includeBacksides: true);
 			_vertexStrip.DrawTrail();
+		}
+		public void PreDrawScene() {
+			if (middleRenderTarget is null) {
+				Main.QueueMainThreadAction(SetupRenderTargets);
+				Main.OnResolutionChanged += Resize;
+				return;
+			}
+			Origins.shaderOroboros.Capture();
 
-			Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
+			DrawPath(4 * Projectile.scale);
+
+			Origins.shaderOroboros.DrawContents(middleRenderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
 			Origins.shaderOroboros.Reset(default);
-			Vector2 center = renderTarget.Size() * 0.5f;
+			Vector2 center = middleRenderTarget.Size() * 0.5f;
 			SC_Phase_Three_Midlay.DrawDatas.Add(new(
-				renderTarget,
+				middleRenderTarget,
 				center,
 				null,
 				Color.White,
@@ -375,19 +408,24 @@ namespace Origins.Items.Weapons.Melee {
 			));
 		}
 		public override void OnKill(int timeLeft) {
-			if (renderTarget is not null) {
-				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref renderTarget);
+			if (middleRenderTarget is not null) {
+				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref middleRenderTarget);
+				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref edgeRenderTarget);
 				Main.OnResolutionChanged -= Resize;
 			}
 		}
+		internal RenderTarget2D middleRenderTarget;
+		internal RenderTarget2D edgeRenderTarget;
 		public void Resize(Vector2 _) {
 			if (Main.dedServ) return;
-			SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref renderTarget);
+			SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref middleRenderTarget);
+			SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref edgeRenderTarget);
 			SetupRenderTargets();
 		}
 		void SetupRenderTargets() {
-			if (renderTarget is not null && !renderTarget.IsDisposed) return;
-			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+			if (middleRenderTarget is not null && !middleRenderTarget.IsDisposed) return;
+			middleRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
+			edgeRenderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PreserveContents);
 		}
 	}
 	public class Astral_Scythe_Star : ModProjectile {
