@@ -22,7 +22,7 @@ namespace Origins.Tiles.Riven {
 			DustType = DustID.Ghost;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			TileExtenstions.DoFraming(i, j, resetFrame, map: [(Type, 1), (TileType<Silica>(), 2), (TileType<Quartz>(), 2)], TileExtenstions.ExtraTileBlending);
+			TileExtenstions.DoFraming(i, j, resetFrame, map: [(Type, 1), (TileType<Silica>(), 2), (TileType<Quartz>(), 1)], TileExtenstions.ExtraTileBlending);
 			return false;
 		}
 	}
