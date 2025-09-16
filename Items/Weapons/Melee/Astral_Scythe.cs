@@ -90,16 +90,22 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {
-				int scytheHitCombo = player.OriginPlayer().scytheHitCombo;
-				for (int i = 0; i < 8; i++) {
+				float comboBonus = player.OriginPlayer().scytheHitCombo / (float)OriginPlayer.maxScytheCombo;
+				// these are here for easier combo stat bonus adjustments
+				int extraMines = 4;
+				int extraDamage = 25;
+				int extraVelocity = 8;
+				int extraKB = 4;
+
+				for (int i = 0; i < 8 + Math.Floor(comboBonus * extraMines); i++) {
 					Projectile.NewProjectile(
 						source,
 						position,
-						velocity * 12 + Main.rand.NextVector2Circular(1, 1) * 8,
+						velocity * new Vector2(12 + MathF.Floor(comboBonus * extraVelocity)) + Main.rand.NextVector2Circular(1, 1) * 8,
 						type,
-						damage,
-						knockback,
-						ai0: scytheHitCombo
+						damage + (int)Math.Floor(comboBonus * extraDamage),
+						knockback + (comboBonus * extraKB),
+						ai0: comboBonus
 					);
 				}
 				player.OriginPlayer().scytheHitCombo = 0;
@@ -107,7 +113,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			int ai0 = 0;
 			if (OriginsModIntegrations.CheckAprilFools() && player.HasBuff<Astral_Scythe_Wait_Debuff>()) ai0 = 2;
-			else if (player.OriginPlayer().scytheHitCombo >= OriginPlayer.maxScytheHitCombo) ai0 = 1;
+			else if (player.OriginPlayer().scytheHitCombo >= OriginPlayer.scytheBladeDetachCombo) ai0 = 1;
 
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, ai0: ai0);
 			return false;
@@ -119,10 +125,11 @@ namespace Origins.Items.Weapons.Melee {
 
 			int variant = 0;
 			if (hasDebuff) variant = 1;
-			else if (player.OriginPlayer().scytheHitCombo >= OriginPlayer.maxScytheHitCombo) variant = 2;
+			else if (player.OriginPlayer().scytheHitCombo >= OriginPlayer.scytheBladeDetachCombo) variant = 2;
 
 			frame = texture.Frame(verticalFrames: 3, frameY: variant);
 			spriteBatch.Draw(TextureAssets.Item[Type].Value, position, frame, drawColor, 0, origin, scale, SpriteEffects.None, 0);
+			Debugging.ChatOverhead(player.OriginPlayer().scytheHitCombo);
 			return false;
 		}
 	}
@@ -483,7 +490,8 @@ namespace Origins.Items.Weapons.Melee {
 				}
 				return false;
 			});
-			if (foundTarget) Projectile.velocity += new Vector2(0.7f, 0).RotatedBy(targetAngle);
+			float extraHomingVelocity = 1.3f; // combo stat bonus
+			if (foundTarget) Projectile.velocity += new Vector2(0.7f + (Projectile.ai[0] * extraHomingVelocity), 0).RotatedBy(targetAngle);
 			if (Projectile.timeLeft < 15) {
 				Projectile.Opacity = Projectile.timeLeft / 15f;
 			}

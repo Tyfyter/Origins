@@ -530,9 +530,10 @@ namespace Origins {
 		public bool upsideDown = false;
 		int[] minionCountByType = ProjectileID.Sets.Factory.CreateIntSet();
 		public Speed_Booster.ConveyorBeltModifier conveyorBeltModifiers = null;
-		public const int maxScytheHitCombo = 3;
+		public const int scytheBladeDetachCombo = 3;
+		public const int maxScytheCombo = 10;
 		public int scytheHitCombo = 0;
-		public int maxDangerTime = 5 * 60;
+		public const int maxDangerTime = 5 * 60;
 		public int dangerTime = 0;
 		public bool InDanger { get; private set; }
 		public override void ResetEffects() {
@@ -1133,6 +1134,7 @@ namespace Origins {
 			if (dangerTime <= 0) dangerTime = 0;
 			else dangerTime--;
 			InDanger = dangerTime > 0;
+			if (scytheHitCombo > maxScytheCombo) scytheHitCombo = maxScytheCombo;
 			if (!InDanger) scytheHitCombo = 0;
 		}
 		internal static bool forceWetCollision;
