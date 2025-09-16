@@ -19,6 +19,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Terratotem : ModItem, ICustomWikiStat {
+		public static int MaxCount => 20;
 		public string[] Categories => [
 			"Artifact",
 			"Minion"
@@ -46,11 +47,14 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.shoot = Terratotem_Tab.ID;
 			Item.noMelee = true;
 		}
+		public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Terratotem_Tab.ID] + player.ownedProjectileCounts[Broken_Terratotem_Tab.ID] < MaxCount;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			player.AddBuff(Item.buffType, 2);
+			int totalCount = player.ownedProjectileCounts[Terratotem_Tab.ID] + player.ownedProjectileCounts[Broken_Terratotem_Tab.ID] + 1;
 			Projectile projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, player.itemAnimation);
 			projectile.originalDamage = Item.damage;
 			for (float i = projectile.minionSlots; i < 1; i += projectile.minionSlots) {
+				if (++totalCount > MaxCount) break;
 				projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, player.itemAnimation);
 				projectile.originalDamage = Item.damage;
 			}

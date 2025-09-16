@@ -36,6 +36,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.shoot = Broken_Terratotem_Tab.ID;
 			Item.noMelee = true;
 		}
+		public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Terratotem_Tab.ID] + player.ownedProjectileCounts[Broken_Terratotem_Tab.ID] < Terratotem.MaxCount;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			player.AddBuff(Item.buffType, 2);
 			Projectile projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, player.itemAnimation);
