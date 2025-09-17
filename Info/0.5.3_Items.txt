@@ -282,7 +282,6 @@ Danger_Barrel
 Dark_Spiral
 Dart_Crossbow
 Dash_Ravel
-Dawn_Key
 Deceptive_Beauty_Item
 Decimator
 Defective_Mortar_Shell

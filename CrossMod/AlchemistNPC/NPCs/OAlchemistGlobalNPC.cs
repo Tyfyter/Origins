@@ -7,7 +7,6 @@ using Origins.NPCs;
 using Origins.Questing;
 using Origins.Tiles;
 using Origins.Tiles.Ashen;
-using Origins.Tiles.Dawn;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Endowood;
 using Origins.Tiles.Limestone;
@@ -102,7 +101,6 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.InsertAfter(ItemID.Shadewood, new Item(ItemType<Endowood_Item>()) { shopCustomPrice = 10 });
 						shop.InsertAfter(ItemType<Endowood_Item>(), new Item(ItemType<Marrowick_Item>()) { shopCustomPrice = 10 });
 						//shop.InsertAfter(ItemType<Marrowick_Item>(), new Item(ItemType<>) { shopCustomPrice = 10}); // the wood of the ashen
-						//shop.InsertAfter(ItemID.AshWood, new Item(ItemType<Eden_Wood_Item>()) { shopCustomPrice = 5 }); // when the dawn is added
 						shop.InsertAfter(ItemID.CrimstoneBlock, new Item(ItemType<Defiled_Stone_Item>()) { shopCustomPrice = 5 });
 						shop.InsertAfter(ItemType<Defiled_Stone_Item>(), new Item(ItemType<Riven_Flesh_Item>()) { shopCustomPrice = 5 });
 						//shop.InsertAfter(ItemType<Riven_Flesh_Item>(), new Item(ItemType<>) { shopCustomPrice = 5}); // the stone of the ashen
@@ -110,10 +108,8 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.InsertAfter(ItemType<Defiled_Sand_Item>(), new Item(ItemType<Silica_Item>()) { shopCustomPrice = 5 });
 						//shop.InsertAfter(ItemType<Silica_Item>(), new Item(ItemType<>()) { shopCustomPrice = 5 }); // the sand of the ashen
 						shop.InsertAfter(ItemID.Granite, new Item(ItemType<Limestone_Item>()) { shopCustomPrice = 50 });
-						//shop.InsertAfter(ItemID.RainCloud, new Item(ItemType<Angelic_Cloud_Item>()) { shopCustomPrice = 100}); // when the dawn is added
 					}
 					if (shop.Name == "Building") {
-						//shop.InsertAfter(ItemID.GrayBrick, new Item(ItemType<Harmony_Brick_Item>()) { shopCustomPrice = 40 }); // when the dawn is added
 						/* shop.InsertAfter(ItemID.CrimstoneBrick, new Item(ItemType<>()) { shopCustomPrice = 10}); // Defiled Brick
 						shop.InsertAfter(ItemType<>(), new Item(ItemType<>()) { shopCustomPrice = 10 }); // Riven Brick
 						//shop.InsertAfter(ItemType<>(), new Item(ItemType<>()) { shopCustomPrice = 10 }); // Ashen Brick

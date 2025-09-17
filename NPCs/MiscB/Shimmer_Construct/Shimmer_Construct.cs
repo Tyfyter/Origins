@@ -168,9 +168,13 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 			if (!IsInPhase3 && NPC.GetLifePercent() <= 0.5f) {
-				if (isInPhase2.TrySet(true)) /*sound here*/;
+				if (isInPhase2.TrySet(true)) {
+					SoundEngine.PlaySound(SoundID.Item176.WithPitch(-0.5f), NPC.Center);
+					SoundEngine.PlaySound(SoundID.Splash, NPC.Center);
+					SoundEngine.PlaySound(SoundID.NPCHit42.WithPitch(-0.5f), NPC.Center);
+				}
 			}
-			for (int i = 0; i < chunks.Length; i++) chunks[i].Update(this);
+				for (int i = 0; i < chunks.Length; i++) chunks[i].Update(this);
 			if (NetmodeActive.Server) {
 				for (int i = 0; i < NPC.playerInteraction.Length; i++) {
 					if (NPC.playerInteraction[i] && !oldPlayerInteraction[i]) {
@@ -514,7 +518,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				MatrixCombine.UseImage(Origins.cellNoiseTexture.asset);
 				Origins.shaderOroboros.Stack(MatrixCombine);
 			}
-			Origins.shaderOroboros.Stack(GameShaders.Armor.GetSecondaryShader(Shimmer_Dye.ShaderID, null));
+				Origins.shaderOroboros.Stack(GameShaders.Armor.GetSecondaryShader(Shimmer_Dye.ShaderID, null));
 			Origins.shaderOroboros.Release();
 			spriteBatch.Restart(state);
 		}
