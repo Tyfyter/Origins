@@ -28,6 +28,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.DefaultToCanisterLauncher<TUDFLOMD_Rocket_Canister>(80, 9, 12f, 46, 28, true);
 			Item.useAnimation *= 4;
 			Item.useLimitPerAnimation = 4;
+			Item.knockBack = 3;
 			Item.reuseDelay = Item.useTime;
 			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.Cyan;
