@@ -743,7 +743,7 @@ TOOLS:
 
 MELEE WEAPONS:
 |---
-(#2, ^2) Astral Scythe !!! (make m2 not do the on use SFX, make m2 on AF without blade plays a generic bonk SFX when hitting an enemy)
+(^) Astral Scythe
 (X) Autoscopy
 (^) Baseball Bat*
 (^) Bone Latcher*

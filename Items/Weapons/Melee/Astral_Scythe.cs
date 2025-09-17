@@ -18,6 +18,7 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Origins;
 
 namespace Origins.Items.Weapons.Melee {
 	[LegacyName("Splitting_Image")]
@@ -225,11 +226,13 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Player player = Main.player[Projectile.owner];
-			player.OriginPlayer().scytheHitCombo++;
+			if (Projectile.ai[0] != 2) player.OriginPlayer().scytheHitCombo++;
+			else SoundEngine.PlaySound(Sounds.BonkByMrSoundEffect);
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			Player player = Main.player[Projectile.owner];
-			player.OriginPlayer().scytheHitCombo++;
+			if (Projectile.ai[0] != 2) player.OriginPlayer().scytheHitCombo++;
+			else SoundEngine.PlaySound(Sounds.BonkByMrSoundEffect);
 		}
 		public override void CutTiles() {
 			Player player = Main.player[Projectile.owner];

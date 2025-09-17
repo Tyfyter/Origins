@@ -1078,6 +1078,10 @@ namespace Origins {
 				PitchVariance = 0.5f,
 				MaxInstances = 0
 			};
+			public static SoundStyle BonkByMrSoundEffect = new("Origins/Sounds/Custom/Bonk", SoundType.Sound) {
+				PitchVariance = 0.5f,
+				MaxInstances = 0
+			};
 			public static SoundStyle Journal = SoundID.Roar;
 			public static void Unload() {
 				LightningSounds = null;
