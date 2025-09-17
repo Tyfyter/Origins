@@ -59,7 +59,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver*
-(#2, ^2) Shimmer Construct !!! (shield SFX while Shimmer Pods present)
+(☻) Shimmer Construct !!! (shield SFX while Shimmer Pods present)
 (#, ^2) Trenchmaker
 (^) World Cracker*
 
