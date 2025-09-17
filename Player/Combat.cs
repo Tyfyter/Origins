@@ -529,7 +529,9 @@ namespace Origins {
 					direction = proj.DirectionTo(attacker.MountedCenter);
 				}
 				proj.reflected = true;
-				if (proj.hostile) proj.damage *= 3;
+				float damageMult = Shimmer_Shield.ReflectionDamageMultiplier;
+				if (proj.hostile) damageMult *= Shimmer_Shield.ReflectionHostileDamageMultiplier;
+				proj.damage = Main.rand.RandomRound(proj.damage * damageMult);
 				proj.hostile = false;
 				proj.friendly = true;
 				float speed = Math.Max(12f / proj.MaxUpdates, proj.velocity.Length());

@@ -9,6 +9,8 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => [
 			"Movement"
 		];
+		public static float ReflectionDamageMultiplier => 2;
+		public static float ReflectionHostileDamageMultiplier => 2;
 		internal static int shieldSlot;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 32);
