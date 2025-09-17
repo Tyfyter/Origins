@@ -89,15 +89,6 @@ namespace Origins.Items.Other.Fish {
 					), (_, attempt) => attempt.uncommon)
 				))
 		#endregion riven
-		/*#region dusk
-				((player, _) => player.InModBiome<Dusk>() ? 1 : 0, new OrderedFishingLoot(
-					new LeadingConditionFishLoot(
-						new OrderedFishingLoot(
-						new ItemFishingLoot(ItemType<Duskarp>(), (_, attempt) => attempt.questFish == ItemType<Duskarp>()),
-						new ItemFishingLoot(ItemType<Duskarp>(), (_, _) => true)
-					), (_, attempt) => attempt.uncommon)
-				))
-		#endregion dusk*/
 			),
 
 		#region jungle

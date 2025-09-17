@@ -377,7 +377,6 @@ namespace Origins {
 				blackHoleShade = new MiscShaderData(Assets.Request<Effect>("Effects/BlackHole"), "BlackHole");
 
 				Filters.Scene["Origins:TestingShader"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/TestingShader"), "TestingShader"), EffectPriority.VeryHigh);
-				Filters.Scene["Origins:ZoneDusk"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/BiomeShade"), "VoidShade"), EffectPriority.High);
 				if (Filters.Scene["Origins:ZoneDefiled"]?.IsActive() ?? false) {
 					Filters.Scene["Origins:ZoneDefiled"].Deactivate();
 				}

@@ -490,8 +490,6 @@ namespace Origins {
 			On_FilterManager.BeginCapture += On_FilterManager_BeginCapture;
 			On_TileLightScanner.ApplyHellLight += On_TileLightScanner_ApplyHellLight;
 			On_Main.DrawBlack += On_Main_DrawBlack;
-			On_WorldGen.AddHellHouses += On_WorldGen_AddHellHouses;
-			On_WorldGen.HellFort += On_WorldGen_HellFort;
 			On_Item.CloneDefaults += On_Item_CloneDefaults;
 			On_Lighting.AddLight_int_int_float_float_float += On_Lighting_AddLight_int_int_float_float_float;
 			On_Dust.NewDust += On_Dust_NewDust;
@@ -1872,13 +1870,6 @@ namespace Origins {
 			}
 			return orig(i, j, X, Y, type);
 		}
-		private void On_WorldGen_AddHellHouses(On_WorldGen.orig_AddHellHouses orig) {
-			Dusk.Gen.GenerateDusk();
-			orig();
-		}
-		private void On_WorldGen_HellFort(On_WorldGen.orig_HellFort orig, int i, int j, ushort tileType, byte wallType) {
-			if (!Dusk.Gen.duskRect.Contains(i, j)) orig(i, j, tileType, wallType);
-		}
 		#endregion worldgen
 		#region graphics
 		private void On_Main_DrawBlack(On_Main.orig_DrawBlack orig, Main self, bool force) {
@@ -2024,10 +2015,6 @@ namespace Origins {
 					return new Color(0, 0, 0, 0);
 				}
 			} else if ((SC_Phase_Three_Underlay.alwaysLightAllTiles || SC_Phase_Three_Underlay.ForcedLit(i, j)) && (Filters.Scene["Origins:ShimmerConstructPhase3"].Active || Filters.Scene["Origins:ShimmerConstructPhase3Cheap"].IsVisible())) {
-				Color color = orig(self, j, i, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
-				if (color.R == 0 && color.G == 0 && color.B == 0) color.R = 1;
-				return color;
-			} else if (Filters.Scene["Origins:ZoneDusk"].Active) {
 				Color color = orig(self, j, i, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 				if (color.R == 0 && color.G == 0 && color.B == 0) color.R = 1;
 				return color;

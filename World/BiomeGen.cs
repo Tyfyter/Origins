@@ -73,7 +73,6 @@ namespace Origins {
 			}
 			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
 			if (genIndex != -1) {
-				tasks.Insert(++genIndex, new PassLegacy("Finish Dusk", Dusk.Gen.FinishDusk));
 				tasks.Insert(++genIndex, new PassLegacy("Brine Pool", delegate (GenerationProgress progress, GameConfiguration _) {
 					progress.Message = Mod.GetLocalization("GenPass.PrinePool.DisplayName", () => "Pooling Brine").Value;
 					Brine_Pool.Gen.BrineStart(brineCenter.X, brineCenter.Y);
