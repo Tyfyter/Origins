@@ -481,6 +481,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		int shieldDownAnimation = 0;
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (NPC.IsABestiaryIconDummy) return;
 			float shieldDownProgress = shieldDownAnimation / 30f;
 			if (IsInPhase2 && shieldDownProgress < 1) shieldDownAnimation++;
 			if (shieldDownProgress >= 1) return;
