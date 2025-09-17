@@ -40,6 +40,7 @@ namespace Origins.CrossMod {
 			itemSourceHelper.Call("AddShimmerFakeCondition", RecipeConditions.ShimmerTransmutation);
 			SetupVersionTags();
 			itemSourceHelper.Call("AddItemTagProvider", (Func<Item, IEnumerable<string>>)(item => {
+				if (item?.ModItem?.Mod is not Origins) return [];
 				bool DoSelect((string name, HashSet<string> items) value, out string result) {
 					result = $"{nameof(Origins)}_{value.name}";
 					return value.items.Contains(item?.ModItem?.Name);
