@@ -492,7 +492,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				NPC.Center - screenPos,
 				new Rectangle(0, 0, 600, 400),
 				Color.White,
-				NPC.rotation,
+				0,
 				new Vector2(300f, 200f),
 				NPC.scale * 0.75f,
 				0
