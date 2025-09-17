@@ -6,9 +6,9 @@ Additions:
 + Added Shinedown, a magic Weapon dropped by the Chambersite Sentinel
 + Added Aether Armor, Chambersite Commander Armor and Chambersite Magic Armor
 + Added 3 Shimmer Construct-related boss trophy items
-+ Added edible Nerve Flan and weapon Nerve Flan
++ Added edible Nerve Flan
 + Added Lazy Cloak, Resizing Glove, Shield of Shimmer and Wishing Glass
-+ Added Aether Opal, Cool Sword, Dream Catcher, Silicon Sword, Shinedown and Voltefuse weapons
++ Added Aether Opal, Cool Sword, Dream Catcher, Silicon Sword, Shinedown, Voltefuse, and Astral Scythe weapons
 + Added Aether Canister
 + Added Pocket Dimension Monolith, for the Shimmer Constructs effects
 + Added Amnestic Rose with another shimmerable re-skin, contest winner of the Origins Concept Competition
@@ -26,7 +26,6 @@ Additions:
 + Added The Ultimate Death Firework Launcher of Mega Destruction, a post-Moon Lord Rocket Launcher
 + Added the Dreamcatcher, a Fiberglass Magic weapon
 + Added mod integration for more mods, including Critical Strikes Overhaul and AlchemistNPC Lite
-+ Added a Shimmer menu theme 
 + Holding Shift while hovering over an item now describes the effects of the debuffs it applies
 + Added varying textures for Bark, similar to gel
 + Added more quests to complete
@@ -75,7 +74,7 @@ Changes:
 * Limestone has been added to the Granite and Marble Shimmer cycle
 * Blotopus now converts all bullet types instead of just Musket Balls
 * Hævateinn now hits enemies a consistent amount of times
-* Eitrite now between Titanium and Chlorophite in shimmer downgrading
+* Eitrite now between Titanium and Chlorophyte in shimmer downgrading
 
 Balance:
 - Defiled prefix no longer works on target dummies
@@ -144,7 +143,7 @@ Fixes:
 * Broths no longer appear to stack when using unlimited buff mods
 * Defiled Hearts can now be broken with the Pwnhammer
 * Lucky Hat no longer can float when barrel is destroyed
-* Nova Swarm now held right when facing either direction
+* Nova Swarm now held correctly when facing either direction
 * Evil torches now properly give torch luck
 * Mildew Heart kills the player properly
 * World Cracker has proper segment count in multiplayer
@@ -155,7 +154,7 @@ Fixes:
 * Felnum items now have damage boost in tooltip
 * Speed Booster glow now disappears when unequipping the item
 * Riptide dash finishes without set bonus
-* Fixed Demolitionist Hallowed/Chlorphite Helmets having the wrong visual in Multiplayer
+* Fixed Demolitionist Hallowed/Chlorophyte Helmets having the wrong visual in Multiplayer
 * Synchronized many effects properly in Multiplayer
 * Dryad's Inheritance now receives the effects of the Star Cloak
 * Cleansing Station now has a sound effect
@@ -163,7 +162,7 @@ Fixes:
 * Riven Altar glows brighter
 * Canisters now handle local immunity frames properly
 * Gun Glove functions more often
-* Defiled spawn effects no longer censored by disabling Blood & Gore
+* Defiled Chrysalis spawn effects no longer censored by disabling Blood & Gore
 * Chests added by Origins function correctly
 * Foul Broth no longer stops minions in their tracks
 * Priority Mail can be equipped by right clicking on it
