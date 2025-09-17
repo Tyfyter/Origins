@@ -69,7 +69,6 @@ Changes:
 * Flashbangs now provide more Flashbangs per Fallen Star used
 * Decreased size of Defiled Spikes
 * Shimmer Rod obtain method to being crafted with Nimbus Rod and Aetherite Bars
-* Amnestic Rose now cheaper to craft
 * Bleeding Obsidian Kunai now reforgable
 * Limestone has been added to the Granite and Marble Shimmer cycle
 * Blotopus now converts all bullet types instead of just Musket Balls
@@ -131,7 +130,7 @@ Fixes:
 * Fixed a variety of ways you could crash
 * The Bloated prefix for summon weapons no longer causes health bar flickering
 * Bombs added by Origins now allow the Demolitionist to move in
-* Super Turbo Reel and it's upgrades now have the glow from the Magiluminescence
+* Super Turbo Reel and its upgrades now have the glow from the Magiluminescence
 * Harpoons now work better with Weakpoint Analyzer
 * Weapons now use correct damage types
 * Proper loot is dropped when killing Fae Nymph in one hit
