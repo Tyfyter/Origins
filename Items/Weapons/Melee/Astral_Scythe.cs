@@ -470,7 +470,6 @@ namespace Origins.Items.Weapons.Melee {
 
 			bool foundTarget = Main.player[Projectile.owner].DoHoming((target) => {
 				Vector2 toHit = (Projectile.Center.Clamp(target.Hitbox.Add(target.velocity)) - Projectile.Center);
-				if (!Collision.CanHitLine(Projectile.Center + Projectile.velocity, 1, 1, Projectile.Center + toHit, 1, 1)) return false;
 				float tdist = toHit.Length();
 				float ta = (float)Math.Abs(GeometryUtils.AngleDif(toHit.ToRotation(), angle, out _));
 				if (target is Player) {
