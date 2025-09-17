@@ -41,6 +41,7 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+			TileID.Sets.GeneralPlacementTiles[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Height = 4;
 			TileObjectData.newTile.Origin = new(0, 3);
@@ -117,6 +118,7 @@ namespace Origins.Tiles.Defiled {
 		public static void DisplayMessage(string key, bool fromNet = false) {
 			if (!fromNet && Main.netMode != NetmodeID.SinglePlayer && Origins.instance.NetID >= 0) {
 				ModPacket packet = Origins.instance.GetPacket();
+				packet.Write(Origins.NetMessageType.defiled_relay_message);
 				packet.Write(key);
 				packet.Send();
 			}

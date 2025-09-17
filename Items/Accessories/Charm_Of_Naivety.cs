@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Charm_Of_Naivety : ModItem, ICustomWikiStat {
+		public bool? Hardmode => true;
 		public string[] Categories => [
 			"Vitality",
 			"ExplosiveBoostAcc",

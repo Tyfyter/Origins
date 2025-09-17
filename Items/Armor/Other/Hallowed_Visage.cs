@@ -30,6 +30,12 @@ namespace Origins.Items.Armor.Other {
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ItemID.HallowedPlateMail && legs.type == ItemID.HallowedGreaves;
 		}
+		public override void ArmorSetShadows(Player player) {
+			if (player.body is ArmorIDs.Body.HallowedPlateMail or ArmorIDs.Body.AncientHallowedPlateMail && player.legs is ArmorIDs.Legs.HallowedGreaves or ArmorIDs.Body.AncientHallowedPlateMail) {
+				player.armorEffectDrawOutlines = true;
+				player.armorEffectDrawShadow = true;
+			}
+		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("ArmorSetBonus.Hallowed");
 			player.onHitDodge = true;

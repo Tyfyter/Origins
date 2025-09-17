@@ -14,12 +14,20 @@ using Terraria.Graphics.Effects;
 using Origins.Items.Accessories;
 using PegasusLib;
 using PegasusLib.Graphics;
+using PegasusLib.UI;
 
 namespace Origins.Buffs {
 	public class Torn_Debuff : ModBuff {
 		public static int ID { get; private set; }
+		public LocalizedText EffectDescription;
+		public LocalizedText EffectDescriptionSpecific;
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
+			EffectDescription = this.GetLocalization(nameof(EffectDescription));
+			EffectDescriptionSpecific = this.GetLocalization(nameof(EffectDescriptionSpecific));
+			Buff_Hint_Handler.CombineBuffHintModifiers(Type, modifyBuffTip: (lines, item, player) => {
+				lines.Add(!player && (item?.ModItem is ITornSource tornSource) ? EffectDescriptionSpecific.Format(tornSource.Severity) : EffectDescription.Value);
+			});
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
@@ -153,6 +161,9 @@ namespace Origins.Buffs {
 			}
 			//spriteBatch.Draw(TornScreenTarget.RenderTarget, Vector2.Zero, Color.Blue);
 		}
+	}
+	public interface ITornSource {
+		float Severity { get; }
 	}
 	public class Torn_Decay_Debuff : Torn_Debuff {
 		public static new int ID { get; private set; }

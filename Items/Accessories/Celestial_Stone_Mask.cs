@@ -8,6 +8,9 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => [
 			"Combat"
 		];
+		public override void SetStaticDefaults() {
+			ArmorIDs.Face.Sets.DrawInFaceUnderHairLayer[Item.faceSlot] = true;
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 24);
 			Item.value = Item.sellPrice(gold: 18);
@@ -22,7 +25,7 @@ namespace Origins.Items.Accessories {
 			player.pickSpeed -= 0.25f;
 			player.GetKnockback(DamageClass.Summon).Base += 1;
 
-			player.moveSpeed *= 0.9f;
+			player.OriginPlayer().moveSpeedMult *= 0.9f;
 			player.jumpSpeedBoost -= 1.8f;
 		}
 

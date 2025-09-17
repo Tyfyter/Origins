@@ -21,7 +21,7 @@ namespace Origins.NPCs.Riven {
 		}
 		string ICustomWikiStat.CustomStatPath => "Riven_Pigron";
 		string ICustomWikiStat.CustomSpritePath => "Riven_Pigron";
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = Main.npcFrameCount[NPCID.PigronCrimson];
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new NPCID.Sets.NPCBestiaryDrawModifiers() {
@@ -29,6 +29,7 @@ namespace Origins.NPCs.Riven {
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = -12f
 			});
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 		}
 		public override void SetDefaults() {
 			NPC.width = 44;
@@ -41,6 +42,7 @@ namespace Origins.NPCs.Riven {
 			NPC.DeathSound = SoundID.NPCDeath30;
 			NPC.knockBackResist = 0.5f;
 			NPC.value = 2000f;
+			AIType = NPCID.PigronCrimson;
 			AnimationType = NPCID.PigronCrimson;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive_Ice_Biome>().Type
@@ -56,7 +58,6 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(new ItemDropWithConditionRule(ItemID.HamBat, 25, 1, 1, new Conditions.DontStarveIsNotUp()));
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			bestiaryEntry.AddTags(
 				new FlavorTextBestiaryInfoElement("CommonBestiaryFlavor.Pigron")
 			);

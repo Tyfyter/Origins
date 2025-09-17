@@ -13,12 +13,15 @@ using Terraria.Audio;
 using Origins.NPCs;
 
 namespace Origins.Items.Weapons.Magic {
-    public class Dew_Justice : ModItem, ICustomWikiStat {
-        public string[] Categories => [
+    public class Dew_Justice : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.3f;
+		float ITornSource.Severity => TornSeverity;
+		public string[] Categories => [
 			"SpellBook"
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Torn_Debuff.ID, Slow_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			const int use_time = 9;
@@ -106,7 +109,7 @@ namespace Origins.Items.Weapons.Magic {
 		Entity collisionEntity = null;
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Slow_Debuff.ID, 240);
-			OriginGlobalNPC.InflictTorn(target, 75);
+			OriginGlobalNPC.InflictTorn(target, 75, targetSeverity: Dew_Justice.TornSeverity);
 			collisionEntity = target;
 			Projectile.Kill();
 		}

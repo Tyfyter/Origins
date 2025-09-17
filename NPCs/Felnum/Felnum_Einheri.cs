@@ -35,7 +35,7 @@ namespace Origins.NPCs.Felnum {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.UndeadViking;
 			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Static_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Static_Shock_Debuff.ID] = true;
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
@@ -296,6 +296,30 @@ namespace Origins.NPCs.Felnum {
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
 				SoundEngine.PlaySound(SoundID.NPCHit37, NPC.Center);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-11 * NPC.direction, -20).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Felnum_Einheri_Gore_1")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-2 * NPC.direction, 9).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Felnum_Einheri_Gore_3")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(7 * NPC.direction, 23).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Felnum_Einheri_Gore_2")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(7 * NPC.direction, -5).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Felnum_Einheri_Gore_4")
+				);
 				Dust.NewDustPerfect(NPC.Center, ModContent.DustType<Felnum_Enemy_Death_Dust>());
 			} else {
 				SoundEngine.PlaySound(SoundID.NPCHit34, NPC.Center);

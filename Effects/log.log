@@ -31,13 +31,13 @@ File: BlackHole.fx
 Done!
 Compiling font content file: BlackHole.xnb... Done!
 
+Loading description file: ConstellationMod.fx... Done!
+Compiling font... Done!
+Compiling font content file: ConstellationMod.xnb... Done!
+
 Loading description file: CoordinateMaskFilter.fx... Done!
 Compiling font... Done!
 Compiling font content file: CoordinateMaskFilter.xnb... Done!
-
-Loading description file: Crown_Jewel_Caustics.fx... Done!
-Compiling font... Done!
-Compiling font content file: Crown_Jewel_Caustics.xnb... Done!
 
 Loading description file: DefiledIndicator.fx... Done!
 Compiling font... Done!
@@ -71,6 +71,10 @@ File: HolidayHairDye.fx
 Done!
 Compiling font content file: HolidayHairDye.xnb... Done!
 
+Loading description file: Item_Caustics.fx... Done!
+Compiling font... Done!
+Compiling font content file: Item_Caustics.xnb... Done!
+
 Loading description file: Journal.fx... Done!
 Compiling font... Warning: Warning compiling Journal.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
@@ -99,6 +103,10 @@ File: MaskedTornFilter.fx
 Done!
 Compiling font content file: MaskedTornFilter.xnb... Done!
 
+Loading description file: MatrixCombine.fx... Done!
+Compiling font... Done!
+Compiling font content file: MatrixCombine.xnb... Done!
+
 Loading description file: Misc.fx... Done!
 Compiling font... Done!
 Compiling font content file: Misc.xnb... Done!
@@ -122,12 +130,24 @@ Loading description file: RivenBloodCoating.fx... Done!
 Compiling font... Done!
 Compiling font content file: RivenBloodCoating.xnb... Done!
 
+Loading description file: SC_DustEffect.fx... Done!
+Compiling font... Done!
+Compiling font content file: SC_DustEffect.xnb... Done!
+
 Loading description file: Shimmer.fx... Done!
 Compiling font... Warning: Warning compiling Shimmer.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
 File: Shimmer.fx
 Done!
 Compiling font content file: Shimmer.xnb... Done!
+
+Loading description file: ShimmerConstruct.fx... Done!
+Compiling font... Done!
+Compiling font content file: ShimmerConstruct.xnb... Done!
+
+Loading description file: ShimmerConstructSDF.fx... Done!
+Compiling font... Done!
+Compiling font content file: ShimmerConstructSDF.xnb... Done!
 
 Loading description file: SilhouetteShader.fx... Done!
 Compiling font... Done!

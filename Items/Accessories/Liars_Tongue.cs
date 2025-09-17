@@ -18,6 +18,7 @@ namespace Origins.Items.Accessories {
 			Item.shoot = ModContent.ProjectileType<Forbidden_Voice_P>();
 			Item.buffType = BuffID.Silenced;
 			Item.rare = CursedRarity.ID;
+			Item.master = true;
 			Item.value = Item.sellPrice(gold: 5);
 		}
 		public override bool CanUseItem(Player player) => false;
@@ -32,5 +33,12 @@ namespace Origins.Items.Accessories {
 			tooltips.SubstituteKeybind(Keybindings.ForbiddenVoice);
 		}
 		public override bool MeleePrefix() => true;
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient(ItemID.WormScarf)
+			.AddIngredient<Forbidden_Voice>()
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
+		}
 	}
 }

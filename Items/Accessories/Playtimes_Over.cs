@@ -1,12 +1,15 @@
-﻿using Origins.Dev;
+﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Layers;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOff)]
-	public class Playtimes_Over : ModItem, ICustomWikiStat {
-        public string[] Categories => [
+	public class Playtimes_Over : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.1f;
+		float ITornSource.Severity => TornSeverity;
+		public string[] Categories => [
             "Vitality",
             "Torn",
             "TornSource"

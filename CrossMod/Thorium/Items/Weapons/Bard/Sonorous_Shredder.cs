@@ -1,5 +1,8 @@
 ﻿using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Projectiles;
+using Origins.Tiles.Other;
+using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -34,10 +37,18 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			item.UseSound = Origins.Sounds.RivenBass;
 			cost = 10;
 		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SoulofNight, 15)
+			.AddIngredient<Alkahest>(25)
+			.AddIngredient<Riven_Flesh_Item>(30)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
 		public override bool? UseItem(Player player) {
 			SoundEngine.PlaySound(Item.UseSound.Value.WithPitchOffset(
 				Math.Min(((Main.MouseWorld - player.Center) / new Vector2(Main.screenWidth * 0.4f, Main.screenHeight * 0.4f)).Length(), 1) * 2 - 1
-			));
+			), player.Center);
 			return null;
 		}
 		public override void SetDefaults() {
@@ -79,6 +90,20 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			Projectile.spriteDirection = Projectile.direction;
 			if (++Projectile.frameCounter >= frame_time) {
 				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
+			}
+			const int HalfSpriteWidth = 50 / 2;
+
+			int HalfProjWidth = Projectile.width / 2;
+
+			// Vanilla configuration for "hitbox towards the end"
+			if (Projectile.spriteDirection == 1) {
+				DrawOriginOffsetX = -(HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = (int)-DrawOriginOffsetX * 2;
+				DrawOriginOffsetY = 0;
+			} else {
+				DrawOriginOffsetX = (HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = 0;
+				DrawOriginOffsetY = 0;
 			}
 		}
 		public override Color? GetAlpha(Color lightColor) => Riven_Hive.GetGlowAlpha(lightColor);
@@ -131,6 +156,14 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			}
 			base.ModifyEmpowermentPool(player, target, empPool);
 		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.SoulofNight, 15)
+			.AddIngredient<Alkahest>(25)
+			.AddIngredient<Riven_Flesh_Item>(30)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
+		}
 		public string CustomStatPath => WikiPageExporter.GetWikiName(this) + "_Thorium";
 	}
 	[ExtendsFromMod("ThoriumMod")]
@@ -175,6 +208,20 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			if (++Projectile.frameCounter >= Sonorous_Shredder_Projectile.frame_time) {
 				if (++Projectile.frame >= Main.projFrames[Type]) Projectile.frame = 0;
 			}
+			const int HalfSpriteWidth = 50 / 2;
+
+			int HalfProjWidth = Projectile.width / 2;
+
+			// Vanilla configuration for "hitbox towards the end"
+			if (Projectile.spriteDirection == 1) {
+				DrawOriginOffsetX = -(HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = (int)-DrawOriginOffsetX * 2;
+				DrawOriginOffsetY = 0;
+			} else {
+				DrawOriginOffsetX = (HalfProjWidth - HalfSpriteWidth);
+				DrawOffsetX = 0;
+				DrawOriginOffsetY = 0;
+			}
 		}
 		public override Color? GetAlpha(Color lightColor) => Riven_Hive.GetGlowAlpha(lightColor);
 	}
@@ -191,6 +238,7 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 5;
+			Projectile.hide = true;
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {

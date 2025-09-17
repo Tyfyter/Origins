@@ -1,6 +1,7 @@
 ﻿using Origins.Buffs;
 using Origins.Dev;
 using Origins.Journal;
+using PegasusLib.UI;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,6 +34,7 @@ namespace Origins.Items.Accessories {
 			BuffID.Sets.GrantImmunityWith[Type] = [
 				ModContent.BuffType<Rasterized_Debuff>()
 			];
+			Buff_Hint_Handler.ModifyTip(Type, 0, this.GetLocalization("EffectDescription").Key);
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {

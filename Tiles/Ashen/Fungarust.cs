@@ -153,14 +153,5 @@ namespace Origins.Tiles.Ashen {
 	public class Fungarust_Item : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 10);
 		public override bool Hardmode => false;
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			ItemID.Sets.ShimmerTransformToItem[ItemID.VileMushroom] = ItemID.ViciousMushroom;
-			ItemID.Sets.ShimmerTransformToItem[ItemID.ViciousMushroom] = ModContent.ItemType<Soulspore_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Soulspore_Item>()] = ModContent.ItemType<Acetabularia_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Acetabularia_Item>()] = ModContent.ItemType<Fungarust_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Fungarust_Item>()] = ItemID.VileMushroom;
-			Item.ResearchUnlockCount = 25;
-		}
 	}
 }

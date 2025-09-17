@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.Projectiles;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -13,7 +13,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Brine {
-	public class Leaf_Snapper : Brine_Pool_NPC {
+	public class Leaf_Snapper : Brine_Pool_NPC, ICustomWikiStat {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 14;
@@ -24,6 +24,7 @@ namespace Origins.NPCs.Brine {
 			TargetNPCTypes.Add(ModContent.NPCType<Carpalfish>());
 			TargetNPCTypes.Add(ModContent.NPCType<Mildew_Creeper>());
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 140;

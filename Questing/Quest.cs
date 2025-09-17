@@ -49,6 +49,7 @@ namespace Origins.Questing {
 		public virtual string GetJournalPage() {
 			return "";
 		}
+		public virtual bool HasQuestButton(NPC npc, Player player) => false;
 		public virtual void SaveData(TagCompound tag) { }
 		public virtual void LoadData(TagCompound tag) { }
 		#region events
@@ -74,16 +75,20 @@ namespace Origins.Questing {
 		public int Type { get; internal set; }
 		public int NetID { get; internal set; } = -1;
 		public static string StageTagOption(bool completed) => completed ? "/completed" : "";
-		public static void ConsumeItems(Item[] inventory, params (Predicate<Item> match, int count)[] items) {
+		public static int[] ConsumeItems(Item[] inventory, params (Predicate<Item> match, int count)[] items) {
+			int[] counts = new int[items.Length];
 			for (int j = 0; j < inventory.Length; j++) {
 				Item item = inventory[j];
 				for (int i = 0; i < items.Length; i++) {
 					(Predicate<Item> match, int count) current = items[i];
+					if (current.count <= 0) continue;
 					if (current.match(item)) {
 						if (current.count >= item.stack) {
+							counts[i] += item.stack;
 							current.count -= item.stack;
 							item.TurnToAir();
 						} else {
+							counts[i] += current.count;
 							item.stack -= current.count;
 							current.count = 0;
 						}
@@ -91,6 +96,7 @@ namespace Origins.Questing {
 					}
 				}
 			}
+			return counts;
 		}
 		public void CheckSync() {
 			if (ShouldSync) {
@@ -137,13 +143,14 @@ namespace Origins.Questing {
 			if (CanEnterQuestList(npc)) {
 				QuestListSelected = true;
 				string textKey = $"Mods.Origins.Quests.{npc.ModNPC?.Name ?? NPCID.Search.GetName(npc.type)}.Quest_Menu";
-				if (Language.Exists(textKey)) Main.npcChatText = Language.GetOrRegister(textKey).Value;
+				if (!Language.Exists(textKey)) textKey = $"Mods.Origins.Quests.Common.Quest_Menu.{Main.rand.Next(3)}";
+				Main.npcChatText = Language.GetOrRegister(textKey).Value;
 			} else {
 				QuestListSelected = false;
 				Main.npcChatText = npc.GetChat();
 			}
 		}
-		public static bool CanEnterQuestList(NPC npc) => Quest_Registry.Quests.Any(q => q.CanStart(npc) || (!q.Completed && q.CanComplete(npc)));
+		public static bool CanEnterQuestList(NPC npc) => Quest_Registry.Quests.Any(q => q.CanStart(npc) || (!q.Completed && q.CanComplete(npc)) || q.HasQuestButton(npc, Main.LocalPlayer));
 	}
 	public class ConditionalNPCPreferenceTrait : NPCPreferenceTrait, IShopPersonalityTrait {
 		public Condition condition;

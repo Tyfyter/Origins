@@ -28,7 +28,9 @@ namespace Origins.NPCs.Defiled {
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = -12f
 			});
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.width = 44;
 			NPC.height = 36;
@@ -40,6 +42,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = SoundID.NPCDeath30;
 			NPC.knockBackResist = 0.5f;
 			NPC.value = 2000f;
+			AIType = NPCID.PigronCorruption;
 			AnimationType = NPCID.PigronCorruption;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands_Ice_Biome>().Type
@@ -60,7 +63,6 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(new ItemDropWithConditionRule(ItemID.HamBat, 25, 1, 1, new Conditions.DontStarveIsNotUp()));
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			bestiaryEntry.AddTags(
 				new FlavorTextBestiaryInfoElement("CommonBestiaryFlavor.Pigron")
 			);

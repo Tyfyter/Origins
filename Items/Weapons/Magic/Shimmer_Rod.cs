@@ -2,7 +2,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
+using Origins.Items.Materials;
 using Origins.Items.Other.Dyes;
+using Origins.Tiles.Other;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -11,30 +14,32 @@ using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Magic {
 	public class Shimmer_Rod : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			"OtherMagic"
 		];
-		public override void SetStaticDefaults() {
-			ItemID.Sets.ShimmerTransformToItem[ItemID.NimbusRod] = Type;
-		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.NimbusRod);
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.shoot = ModContent.ProjectileType<Shimmer_Cloud_Held>();
 			Item.channel = true;
 		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.NimbusRod)
+			.AddIngredient(ModContent.ItemType<Aetherite_Bar>(), 10)
+			.AddTile(TileID.Anvils)
+			.Register();
+		}
 		public override bool AltFunctionUse(Player player) => true;
+		public override void ModifyManaCost(Player player, ref float reduce, ref float mult) {
+			if (player.altFunctionUse == 2) mult = 0;
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {
-				int ball = ModContent.ProjectileType<Shimmer_Cloud_Ball>();
-				int cloud = ModContent.ProjectileType<Shimmer_Cloud_P>();
-				foreach (Projectile projectile in Main.ActiveProjectiles) {
-					if (projectile.owner == player.whoAmI && (projectile.type == ball || projectile.type == cloud)) {
-						projectile.Kill();
-					}
-				}
+				OriginExtensions.FadeOutOldProjectilesAtLimit([ModContent.ProjectileType<Shimmer_Cloud_P>(), ModContent.ProjectileType<Shimmer_Cloud_Ball>()], 1, 52);
 				return false;
 			}
 			return true;
@@ -97,14 +102,14 @@ namespace Origins.Items.Weapons.Magic {
 			if (Projectile.ai[2] == 0) {
 				owner.itemTime = owner.itemTimeMax;
 				owner.itemAnimation = owner.itemAnimationMax;
-				Projectile.Center = owner.itemLocation + new Vector2(24 * owner.direction, -24).RotatedBy(owner.itemRotation);
+				Projectile.Center = owner.itemLocation + new Vector2(24 * owner.direction, -24 * owner.gravDir).RotatedBy(owner.itemRotation);
 				if (!owner.channel && Main.myPlayer == Projectile.owner) {
 					Projectile.ai[2] = 1;
 					Projectile.localAI[0] = TargetRot;
 					Projectile.netUpdate = true;
 				}
 			} else {
-				Vector2 tan = new Vector2(24 * owner.direction, -24).RotatedBy(owner.itemRotation);
+				Vector2 tan = new Vector2(24 * owner.direction, -24 * owner.gravDir).RotatedBy(owner.itemRotation);
 				Projectile.Center = owner.itemLocation + tan;
 				if (Main.myPlayer == Projectile.owner) {
 					Vector2 diff = (TargetPos - Projectile.Center).SafeNormalize(Projectile.velocity);
@@ -230,7 +235,8 @@ namespace Origins.Items.Weapons.Magic {
 				if (inShimmer == 1) {
 					Projectile.velocity.Y = -Projectile.velocity.Y;
 					Projectile.ai[1] += (Projectile.Center.Y - Projectile.ai[1]) * 2;
-					Projectile.ai[2] = Projectile.velocity.ToRotation() - MathHelper.PiOver2;
+					const float mirrorAngle = MathHelper.PiOver2;
+					Projectile.ai[2] = mirrorAngle - GeometryUtils.AngleDif(mirrorAngle, Projectile.ai[2], out int dir) * dir;
 				}
 			}
 
@@ -324,9 +330,11 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.aiStyle = 0;
 			Projectile.width = 4;
 			Projectile.height = 4;
+			Projectile.hide = true;
 		}
 		public override void AI() {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			Projectile.hide = false;
 			if (Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height) && Collision.shimmer) {
 				Projectile.velocity.Y -= 0.2f;
 			}

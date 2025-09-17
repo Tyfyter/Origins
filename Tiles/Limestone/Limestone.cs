@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Walls;
-using Origins.World.BiomeData;
-using Terraria;
+﻿using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,11 +12,11 @@ namespace Origins.Tiles.Limestone {
 			TileID.Sets.isDesertBiomeSand[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
-			TileID.Sets.Conversion.Sandstone[Type] = true;
+			//TileID.Sets.Conversion.Sandstone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			AddMapEntry(new Color(180, 172, 134));
-			AddDefiledTile();
 			DustType = DustID.Sand;
+			HitSound = SoundID.Tink;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			TileExtenstions.DoFraming(i, j, resetFrame, map: [(Type, 1), (TileID.Sand, 2)], TileExtenstions.ExtraTileBlending);
@@ -29,6 +26,7 @@ namespace Origins.Tiles.Limestone {
 	public class Limestone_Item : ModItem {
 		public override void SetStaticDefaults() {
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.Sandstone, Type);
+			OriginExtensions.InsertIntoShimmerCycle(Type, ItemID.Granite);
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {

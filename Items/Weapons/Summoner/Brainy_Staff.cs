@@ -12,12 +12,13 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Brainy_Staff : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
 		public override void SetStaticDefaults() {
-			ItemID.Sets.StaffMinionSlotsRequired[Type] = 2;
+			ItemID.Sets.StaffMinionSlotsRequired[Type] = 1;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Confused];
 		}
 		public override void SetDefaults() {
 			Item.damage = 10;
 			Item.DamageType = DamageClass.Summon;
-			Item.mana = 16;
+			Item.mana = 10;
 			Item.width = 32;
 			Item.height = 32;
 			Item.useTime = 36;

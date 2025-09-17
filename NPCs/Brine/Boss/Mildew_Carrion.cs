@@ -3,9 +3,9 @@ using Origins.Buffs;
 using Origins.CrossMod.Thorium.Items.Weapons.Bard;
 using Origins.Gores.NPCs;
 using Origins.Items.Accessories;
-using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.LootBags;
+using Origins.Items.Vanity.BossMasks;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
@@ -39,6 +39,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.CantTakeLunchMoney[Type] = false;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
 		public override void SetDefaults() {
@@ -158,8 +159,11 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 	}
 	[AutoloadBossHead]
-	public class Mildew_Carrion : Brine_Pool_NPC, IJournalEntrySource<Mildew_Carrion_Entry> {
+	public class Mildew_Carrion : Brine_Pool_NPC, IJournalEntrySource<Mildew_Carrion_Entry>, IMinions {
 		internal static IItemDropRule normalDropRule;
+
+		public static List<int> Minions = [];
+		List<int> IMinions.BossMinions => Minions;
 		public override bool AggressivePathfinding => true;
 
 		public override void SetStaticDefaults() {
@@ -174,6 +178,7 @@ namespace Origins.NPCs.Brine.Boss {
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = 0f
 			};
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			Origins.RasterizeAdjustment[Type] = (8, 0.05f, 0.8f);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
@@ -188,7 +193,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.boss = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
-			NPC.damage = 24;
+			NPC.damage = 30;
 			NPC.lifeMax = GetMaxLife();
 			NPC.defense = 18;
 			NPC.aiStyle = 0;
@@ -217,7 +222,7 @@ namespace Origins.NPCs.Brine.Boss {
 			set => NPC.localAI[3] = (int)value;
 		}
 		public override bool CanTargetPlayer(Player player) => NPC.WithinRange(player.MountedCenter, 16 * 400);
-		public override bool CanTargetNPC(NPC other) => other.type != NPCID.TargetDummy && NPC.WithinRange(other.Center, 16 * 400) && CanHitNPC(other);
+		public override bool CanTargetNPC(NPC other) => false;//!OriginsSets.NPCs.TargetDummies[other.type] && NPC.WithinRange(other.Center, 16 * 400) && CanHitNPC(other);
 		public override bool CanHitNPC(NPC target) => !Mildew_Creeper.FriendlyNPCTypes.Contains(target.type);
 		public override bool CheckTargetLOS(Vector2 target) => true;
 		public override float RippleTargetWeight(float magnitude, float distance) => 0;
@@ -270,7 +275,7 @@ namespace Origins.NPCs.Brine.Boss {
 								NPC.Center,
 								sporeDirection,
 								Main.rand.Next(Mildew_Carrion_Spore.types),
-								30 + (int)(4 * difficultyMult),
+								30 + (int)(11 * difficultyMult),
 								2
 							);
 						}
@@ -464,11 +469,12 @@ namespace Origins.NPCs.Brine.Boss {
 	public class Mildew_Carrion_Tentacle : ModNPC {
 		public static int DestructionCooldown => 300;
 		public override void SetStaticDefaults() {
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rasterized_Debuff>()] = true;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			Mildew_Carrion.Minions.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
 		public override void SetDefaults() {
@@ -673,10 +679,11 @@ namespace Origins.NPCs.Brine.Boss {
 	}
 	public class Mildew_Carrion_Tendril : ModNPC {
 		public override void SetStaticDefaults() {
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			Mildew_Carrion.Minions.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}
 		public override void SetDefaults() {

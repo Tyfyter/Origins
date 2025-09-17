@@ -1,57 +1,47 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+﻿using AltLibrary.Common.AltBiomes;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Reflection;
+using Origins.Tiles;
+using Origins.Tiles.Banners;
+using Origins.Tiles.Dusk;
+using Origins.Tiles.Other;
+using Origins.UI;
+using Origins.Walls;
+using PegasusLib;
+using PegasusLib.Graphics;
+using ReLogic.Content;
+using ReLogic.Graphics;
+using ReLogic.Reflection;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Numerics;
+using System.Reflection;
+using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using System.Text;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.ModLoader;
-using Terraria.ID;
-using System.Runtime.CompilerServices;
-using System.Reflection;
-using Terraria.Utilities;
-using System.Collections;
-using Terraria.ModLoader.IO;
-using Tyfyter.Utils;
-using Origins.Tiles;
-using ReLogic.Content;
-using Terraria.GameContent.ItemDropRules;
-using Terraria.ModLoader.Exceptions;
-using ReLogic.Reflection;
-using Terraria.Localization;
-using ReLogic.Graphics;
-using System.Reflection.Emit;
-using Terraria.GameContent.Personalities;
-using Terraria.Map;
-using Origins.Reflection;
-using Terraria.GameContent.Bestiary;
-using System.Diagnostics.CodeAnalysis;
-using AltLibrary.Common.AltBiomes;
-using Origins.Walls;
-using Terraria.GameContent.Drawing;
-using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Tiles.Banners;
-using Terraria.ObjectData;
-using PegasusLib;
-using PegasusLib.Graphics;
-using Terraria.GameInput;
-using Terraria.UI;
-using Origins.Items.Other.Testing;
-using Stubble.Core.Helpers;
-using Terraria.GameContent.Creative;
-using CalamityMod.Items;
-using Terraria.Graphics.Light;
-using Origins.Tiles.Limestone;
 using Terraria.Enums;
-using Origins.World.BiomeData;
-using Origins.Tiles.Other;
-using Origins.Backgrounds;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using ThoriumMod.Projectiles;
-using System.Numerics;
+using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Creative;
+using Terraria.GameContent.Drawing;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.GameInput;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.Map;
+using Terraria.ModLoader;
+using Terraria.ModLoader.Exceptions;
+using Terraria.ModLoader.IO;
+using Terraria.ObjectData;
+using Terraria.Utilities;
 
 namespace Origins {
 	#region classes
@@ -356,8 +346,8 @@ namespace Origins {
 		}
 	}
 	public readonly struct UnorderedTuple<T>(T a, T b) : IEquatable<UnorderedTuple<T>> {
-		readonly T a = a;
-		readonly T b = b;
+		public readonly T a = a;
+		public readonly T b = b;
 
 		public bool Equals(UnorderedTuple<T> other) {
 			return other == this;
@@ -377,9 +367,6 @@ namespace Origins {
 		public override int GetHashCode() {
 			return a.GetHashCode() + b.GetHashCode();
 		}
-	}
-	public class KeyedPlayerDeathReason : PlayerDeathReason {
-		public string Key { get => SourceCustomReason; set => SourceCustomReason = value; }
 	}
 	public struct PlayerShaderSet {
 		public int cHead;
@@ -630,6 +617,81 @@ namespace Origins {
 			ApplySlot(ref player.balloon, balloonSlot);
 		}
 	}
+	public struct PlayerSlotSet {
+		public int headSlot;
+		public int bodySlot;
+		public int legSlot;
+		public int beardSlot;
+		public int backSlot;
+		public int faceSlot;
+		public int neckSlot;
+		public int shieldSlot;
+		public int wingSlot;
+		public int waistSlot;
+		public int shoeSlot;
+		public int frontSlot;
+		public int handOffSlot;
+		public int handOnSlot;
+		public int balloonSlot;
+		public int tailSlot;
+		public PlayerSlotSet(int headSlot = -2, int bodySlot = -2, int legSlot = -2, int beardSlot = -2, int backSlot = -2, int faceSlot = -2, int neckSlot = -2, int shieldSlot = -2, int wingSlot = -2, int waistSlot = -2, int shoeSlot = -2, int frontSlot = -2, int handOffSlot = -2, int handOnSlot = -2, int balloonSlot = -2, int tailSlot = -2) {
+			this.headSlot = headSlot;
+			this.bodySlot = bodySlot;
+			this.legSlot = legSlot;
+			this.beardSlot = beardSlot;
+			this.backSlot = backSlot;
+			this.faceSlot = faceSlot;
+			this.neckSlot = neckSlot;
+			this.shieldSlot = shieldSlot;
+			this.wingSlot = wingSlot;
+			this.waistSlot = waistSlot;
+			this.shoeSlot = shoeSlot;
+			this.frontSlot = frontSlot;
+			this.handOffSlot = handOffSlot;
+			this.handOnSlot = handOnSlot;
+			this.balloonSlot = balloonSlot;
+			this.tailSlot = tailSlot;
+		}
+		static void ApplySlot(ref int target, int value) {
+			if (value != -2) target = value;
+		}
+		public PlayerSlotSet(Player player) {
+			headSlot = player.head;
+			bodySlot = player.body;
+			legSlot = player.legs;
+			beardSlot = player.beard;
+			backSlot = player.back;
+			faceSlot = player.face;
+			neckSlot = player.neck;
+			shieldSlot = player.shield;
+			wingSlot = player.wings;
+			waistSlot = player.waist;
+			shoeSlot = player.shoe;
+			frontSlot = player.front;
+			handOffSlot = player.handoff;
+			handOnSlot = player.handon;
+			balloonSlot = player.balloon;
+			tailSlot = player.tail;
+		}
+		public readonly void Apply(Player player) {
+			ApplySlot(ref player.head, headSlot);
+			ApplySlot(ref player.body, bodySlot);
+			ApplySlot(ref player.legs, legSlot);
+			ApplySlot(ref player.beard, beardSlot);
+			ApplySlot(ref player.back, backSlot);
+			ApplySlot(ref player.face, faceSlot);
+			ApplySlot(ref player.neck, neckSlot);
+			ApplySlot(ref player.shield, shieldSlot);
+			ApplySlot(ref player.wings, wingSlot);
+			ApplySlot(ref player.waist, waistSlot);
+			ApplySlot(ref player.shoe, shoeSlot);
+			ApplySlot(ref player.front, frontSlot);
+			ApplySlot(ref player.handoff, handOffSlot);
+			ApplySlot(ref player.handon, handOnSlot);
+			ApplySlot(ref player.balloon, balloonSlot);
+			ApplySlot(ref player.tail, tailSlot);
+		}
+	}
 	public class GeneratorCache<TKey, TValue>(Func<TKey, TValue> generator) : IReadOnlyDictionary<TKey, TValue> {
 		readonly Dictionary<TKey, TValue> cache = new();
 		readonly Func<TKey, TValue> generator = generator;
@@ -743,8 +805,14 @@ namespace Origins {
 	public interface IDrawOverArmProjectile {
 		DrawData GetDrawData();
 	}
+	public interface IPreDrawSceneProjectile {
+		void PreDrawScene();
+	}
 	public interface IUnloadable {
 		void Unload();
+	}
+	public interface IMinions {
+		public List<int> BossMinions { get; }
 	}
 	public static class Elements {
 		public const ushort Fire = 1;
@@ -1554,11 +1622,15 @@ namespace Origins {
 		public static int GetGoreSlot(this Mod mod, string name) {
 			if (Main.netMode == NetmodeID.Server) return 0;
 			if (mod.TryFind(name, out ModGore modGore)) return modGore.Type;
-			return mod.TryFind(name.Split('/', 3)[^1], out modGore) ? modGore.Type : 0;
+			return mod.TryFind(name.Split('/')[^1], out modGore) ? modGore.Type : 0;
 		}
 		public static int SpawnGoreByName(this Mod mod, IEntitySource source, Vector2 Position, Vector2 Velocity, string name, float Scale = 1) {
 			if (Main.netMode == NetmodeID.Server) return 0;
 			return Gore.NewGore(source, Position, Velocity, mod.GetGoreSlot(name), Scale);
+		}
+		public static int SpawnGoreByType(IEntitySource source, Vector2 Position, Vector2 Velocity, int type, float Scale = 1) {
+			if (Main.netMode == NetmodeID.Server) return 0;
+			return Gore.NewGore(source, Position, Velocity, type, Scale);
 		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Vector2 DrawPlayerItemPos(float gravdir, int itemtype) {
@@ -1611,6 +1683,15 @@ namespace Origins {
 		}
 		public static Vector2 Quantize(this Vector2 vector, float size) {
 			return (vector / size).Floor() * size;
+		}
+		public static Vector2 Normalized(this Vector2 vector, out float magnitude) {
+			magnitude = vector.Length();
+			if (magnitude > 0) vector /= magnitude;
+			return vector;
+		}
+		public static Vector2 Abs(this Vector2 vector, out Vector2 signs) {
+			signs = new(Math.Sign(vector.X), Math.Sign(vector.Y));
+			return vector * signs;
 		}
 		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox) {
 			float xoffset = 10f;
@@ -1809,6 +1890,26 @@ namespace Origins {
 			}
 			return o;
 		}
+		public static bool Contains<TSource>(this IEnumerable<TSource> source, IEnumerable<TSource> value) {
+			foreach (TSource element in value) {
+				if (source.Contains(element)) return true;
+			}
+			return false;
+		}
+		public delegate bool TryGetter<TSource, TResult>(TSource source, out TResult result);
+		public static IEnumerable<TResult> TrySelect<TSource, TResult>(this IEnumerable<TSource> source, TryGetter<TSource, TResult> tryGetter) {
+			foreach (TSource item in source) {
+				if (tryGetter(item, out TResult result)) yield return result;
+			}
+		}
+		public static TResult[] CombineSets<TResult, T1, T2>(this T1[] set1, T2[] set2, Func<T1, T2, TResult> operation) {
+			Debugging.Assert(set2.Length == set1.Length, new ArgumentException("Sets must have the same length"));
+			TResult[] result = new TResult[set1.Length];
+			for (int i = 0; i < result.Length; i++) {
+				result[i] = operation(set1[i], set2[i]);
+			}
+			return result;
+		}
 		public static Vector2 OldPos(this Projectile self, int index) {
 			return index == -1 ? self.position : self.oldPos[index];
 		}
@@ -1931,7 +2032,7 @@ namespace Origins {
 		}
 		public static List<Vector2> PoissonDiskSampling(this UnifiedRandom rand, Rectangle area, float r, int k = 30) {
 			float cellSize = r / MathF.Sqrt(2);
-			static int Ceil(float value) => (int)MathF.Ceiling(value);
+			static int Ceil(float value) => (int)float.Ceiling(value);
 			SampleCells cells = new(Ceil(area.Width / cellSize), Ceil(area.Height / cellSize));
 			Vector2 topLeft = area.TopLeft();
 			List<Vector2> samples = [rand.NextVector2FromRectangle(area)];
@@ -1959,7 +2060,7 @@ namespace Origins {
 		}
 		public static List<Vector2> PoissonDiskSampling(this UnifiedRandom rand, Rectangle area, Predicate<Vector2> customShape, float r, int k = 30) {
 			float cellSize = r / MathF.Sqrt(2);
-			static int Ceil(float value) => (int)MathF.Ceiling(value);
+			static int Ceil(float value) => (int)float.Ceiling(value);
 			SampleCells cells = new(Ceil(area.Width / cellSize), Ceil(area.Height / cellSize));
 			Vector2 topLeft = area.TopLeft();
 			List<Vector2> samples = [rand.NextVector2FromRectangle(area)];
@@ -1971,7 +2072,7 @@ namespace Origins {
 				Vector2 newSample;
 				for (int i = 0; i < k; i++) {
 					newSample = currentSample + GeometryUtils.Vec2FromPolar(r * (1 + MathF.Sqrt(rand.NextFloat())), rand.NextFloat(MathHelper.TwoPi));
-					if (customShape(newSample) && cells[(newSample - topLeft) / cellSize] == -1) {
+					if (area.Contains(newSample) && customShape(newSample) && cells[(newSample - topLeft) / cellSize] == -1) {
 						goto foundPoint;
 					}
 				}
@@ -2073,6 +2174,12 @@ namespace Origins {
 			self.owner = owner;
 		}
 		public static Projectile GetRelatedProjectile(this Projectile self, int index) {
+			if (self.ai[index] >= 0 && self.owner < OriginSystem.projectilesByOwnerAndID.GetLength(0) && self.ai[index] < OriginSystem.projectilesByOwnerAndID.GetLength(1)) {
+				return OriginSystem.projectilesByOwnerAndID[self.owner, (int)self.ai[index]];
+			}
+			return null;
+		}
+		public static Projectile GetRelatedProjectile_Depreciated(this Projectile self, int index) {
 			int projIndex = Projectile.GetByUUID(self.owner, self.ai[index]);
 			return Main.projectile.IndexInRange(projIndex) ? Main.projectile[projIndex] : null;
 		}
@@ -2158,6 +2265,13 @@ namespace Origins {
 		public static T GetIfInRange<T>(this T[] array, int index, T fallback = default) {
 			if (!array.IndexInRange(index)) return fallback;
 			return array[index];
+		}
+		public static void Roll<T>(this T[] array, params T[] pushIn) {
+			if (pushIn.Length == 0) return;
+			for (int i = array.Length - 1; i >= 0; i--) {
+				int index = i - pushIn.Length;
+				array[i] = array.IndexInRange(index) ? array[index] : pushIn[i];
+			}
 		}
 		public static Rectangle BoxOf(Vector2 a, Vector2 b, float buffer) {
 			return BoxOf(a, b, new Vector2(buffer));
@@ -2295,7 +2409,6 @@ namespace Origins {
 			}
 			return 3;
 		}
-
 		public static bool Contains(this Rectangle area, Vector2 point) {
 			return area.Contains((int)point.X, (int)point.Y);
 		}
@@ -2369,7 +2482,7 @@ namespace Origins {
 					projRotation,
 					frames[frame].Size() * 0.5f,
 					Vector2.One,
-					SpriteEffects.None, 
+					SpriteEffects.None,
 				0);
 				data.shader = dye;
 				Main.EntitySpriteDraw(data);
@@ -2455,7 +2568,7 @@ namespace Origins {
 			int flatX = 14;
 			int kScaleX = -2;
 			Vector2 position = new Vector2(i * 16f, j * 16f) + offset - Main.screenPosition;
-			switch (tile.BlockType) {
+			switch (TileID.Sets.HasSlopeFrames[tile.TileType] ? BlockType.Solid : tile.BlockType) {
 				case BlockType.Solid:
 				spriteBatch.Draw(glowTexture, position, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16), glowColor, 0f, default, 1f, SpriteEffects.None, 0f);
 				break;
@@ -2571,6 +2684,17 @@ namespace Origins {
 				}
 			}
 			return false;
+		}
+		public delegate T Lerp<T>(T a, T b, float value);
+		public static T Bezier<T>(this Lerp<T> lerp, float progress, params T[] handles) {
+			do {
+				T[] nextHandles = new T[handles.Length - 1];
+				for (int i = 0; i < nextHandles.Length; i++) {
+					nextHandles[i] = lerp(handles[i], handles[i + 1], progress);
+				}
+				handles = nextHandles;
+			} while (handles.Length > 1);
+			return handles[0];
 		}
 		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params PrefixCategory[] prefixCategories) {
 			WeightedRandom<int> wr = new(rand);
@@ -2710,6 +2834,27 @@ namespace Origins {
 			ItemID.Sets.ShimmerTransformToItem[type] = ItemID.Sets.ShimmerTransformToItem[after];
 			ItemID.Sets.ShimmerTransformToItem[after] = type;
 		}
+		public static void CreateEvilShimmerCycle(this RecipeGroup recipeGroup, int corrupt, int crimson, int defiled, int riven, int ashen) {
+			List<string> exceptions = [];
+			if (!recipeGroup.ValidItems.Contains(corrupt)) exceptions.Add(Lang.GetItemNameValue(corrupt));
+			if (!recipeGroup.ValidItems.Contains(crimson)) exceptions.Add(Lang.GetItemNameValue(crimson));
+			if (!recipeGroup.ValidItems.Contains(defiled)) exceptions.Add(Lang.GetItemNameValue(defiled));
+			if (!recipeGroup.ValidItems.Contains(riven)) exceptions.Add(Lang.GetItemNameValue(riven));
+			if (!recipeGroup.ValidItems.Contains(ashen)) exceptions.Add(Lang.GetItemNameValue(ashen));
+			if (exceptions.Count > 0) throw new ArgumentException("Invalid arguments, item(s) not present in recipe group: ", $"[{string.Join(", ", exceptions)}]");
+
+			if (corrupt != crimson) ItemID.Sets.ShimmerTransformToItem[corrupt] = crimson;
+			ItemID.Sets.ShimmerTransformToItem[crimson] = defiled;
+			ItemID.Sets.ShimmerTransformToItem[defiled] = riven;
+			ItemID.Sets.ShimmerTransformToItem[riven] = ashen;
+			ItemID.Sets.ShimmerTransformToItem[ashen] = corrupt;
+			int last = ashen;
+			foreach (int item in recipeGroup.ValidItems) {
+				if (item == corrupt || item == crimson || item == defiled || item == riven || item == ashen) continue;
+				InsertIntoShimmerCycle(item, last);
+				last = item;
+			}
+		}
 		public static void RegisterForUnload(this IUnloadable unloadable) {
 			Origins.unloadables.Add(unloadable);
 		}
@@ -2721,9 +2866,29 @@ namespace Origins {
 				if (value.HasFlag(possibleFlags[i])) yield return possibleFlags[i];
 			}
 		}
-		public static FlavorTextBestiaryInfoElement GetBestiaryFlavorText(this ModNPC npc) {
-			Language.GetOrRegister($"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}", () => "bestiary text here");
-			return new FlavorTextBestiaryInfoElement($"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}");
+		public static IBestiaryInfoElement GetBestiaryFlavorText(this ModNPC npc, bool better = false, bool alt = false) {
+			string key = $"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}";
+			Language.GetOrRegister(key, () => "bestiary text here");
+			if (better || alt) {
+				if (alt) {
+					string altKey = key + "_Alt";
+					Language.GetOrRegister(altKey, () => "alt bestiary text here");
+					return new GaslightingFlavorTextBestiaryInfoElement(key, altKey);
+				} else return new BetterFlavorTextBestiaryInfoElement(key);
+			}
+			return new FlavorTextBestiaryInfoElement(key);
+		}
+		public static FlavorTextBestiaryInfoElement GetBestiaryFlavorText(int npcID) {
+			string flavorText = "";
+			if (npcID < NPCID.Count) {
+				string key = Lang.GetNPCName(npcID).Key;
+				key = key.Replace("NPCName.", "");
+				string text = "Bestiary_FlavorText.npc_" + key;
+				if (Language.Exists(text)) flavorText = text;
+			} else {
+				// get modded bestiary text, idk how
+			}
+			return new(flavorText);
 		}
 		public static string MakeContext(params string[] args) {
 			return new StringBuilder().AppendJoin(';', args.Where(a => !string.IsNullOrWhiteSpace(a))).ToString();
@@ -2815,12 +2980,12 @@ namespace Origins {
 			biome.AddTileConversion(ModContent.TileType<Chambersite>(), TileID.ExposedGems, false, false, false);
 
 			biome.AddTileConversion(tile, ModContent.TileType<Chambersite_Ore>(), extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Amethyst, oneWay: false, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Topaz, oneWay: false, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Sapphire, oneWay: false, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Emerald, oneWay: false, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Ruby, oneWay: false, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Diamond, oneWay: false, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Amethyst, oneWay: true, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Topaz, oneWay: true, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Sapphire, oneWay: true, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Emerald, oneWay: true, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Ruby, oneWay: true, extraFunctions: false);
+			biome.AddTileConversion(tile, TileID.Diamond, oneWay: true, extraFunctions: false);
 
 			biome.AddWallConversions(wall, ModContent.WallType<Chambersite_Stone_Wall>());
 			biome.AddWallConversions(wall,
@@ -2831,6 +2996,7 @@ namespace Origins {
 				WallID.RubyUnsafe,
 				WallID.DiamondUnsafe
 			);
+			biome.AddTileConversion(ModContent.TileType<Bleeding_Obsidian>(), TileID.Obsidian, false, false, false);
 		}
 		public static float SpecificTilesEnemyRate(this NPCSpawnInfo spawnInfo, HashSet<int> tiles, bool hardmode = false) {
 			if (hardmode && !Main.hardMode) return 0f;
@@ -2859,6 +3025,18 @@ namespace Origins {
 				if (count > limit) goto redo;
 			}
 		}
+		public static bool Cooldown(ref this float value, float to = 0, float rate = 1) => value.Cooldown<float>(to, rate);
+		public static bool Cooldown(ref this int value, int to = 0, int rate = 1) => value.Cooldown<int>(to, rate);
+		public static bool Cooldown<N>(ref this N value, N to, N rate) where N : struct, INumber<N> {
+			if (value > to) {
+				value -= rate;
+				if (value <= to) {
+					value = to;
+					return true;
+				}
+			}
+			return false;
+		}
 		public static bool Warmup(ref this float value, float to, float rate = 1) => value.Warmup<float>(to, rate);
 		public static bool Warmup(ref this int value, int to, int rate = 1) => value.Warmup<int>(to, rate);
 		public static bool Warmup<N>(ref this N value, N to, N rate) where N : struct, INumber<N> {
@@ -2873,18 +3051,25 @@ namespace Origins {
 		}
 		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			Vector2 pos = area.TopLeft() + offset;
-			for (int c = 0; c < area.Width; c += 2) {
+			int amt = 20; // as to try to not spawn to many dusts
+			for (int c = 0; c < area.Width; c += area.Width / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(c, 0), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
-			for (int c = 0; c < area.Height; c += 2) {
+			for (int c = 0; c < area.Height; c += area.Height / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(0, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
-			for (int c = 0; c < area.Width; c += 2) {
+			for (int c = 0; c < area.Width; c += area.Width / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(c, area.Height), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
-			for (int c = 0; c < area.Height; c += 2) {
+			for (int c = 0; c < area.Height; c += area.Height / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(area.Width, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
+		}
+		public static void DrawDebugOutlineSprite(this Rectangle area, Color color, Vector2 offset = default) {
+			DrawDebugLineSprite(area.TopLeft(), area.TopRight(), color, offset, true);
+			DrawDebugLineSprite(area.TopLeft(), area.BottomLeft(), color, offset, true);
+			DrawDebugLineSprite(area.TopRight(), area.BottomRight(), color, offset, true);
+			DrawDebugLineSprite(area.BottomLeft(), area.BottomRight(), color, offset, true);
 		}
 		public static void DrawDebugOutline(this Triangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
@@ -2897,16 +3082,24 @@ namespace Origins {
 				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
+		public static void DrawDebugOutlineSprite(this Triangle area, Color color, Vector2 offset = default) {
+			DrawDebugLineSprite(area.a, area.b, color, offset, true);
+			DrawDebugLineSprite(area.b, area.c, color, offset, true);
+			DrawDebugLineSprite(area.c, area.a, color, offset, true);
+		}
 		public static void DrawDebugLine(Vector2 a, Vector2 b, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
 				Dust.NewDustPerfect(offset + Vector2.Lerp(a, b, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugLineSprite(Vector2 a, Vector2 b, Color color, Vector2 offset = default) {
+		public static void DrawDebugLineSprite(Vector2 a, Vector2 b, Color color, Vector2 offset = default, bool countScreenPos = false) {
 			Vector2 diff = b - a;
+			Vector2 position = a + offset;
+			if (countScreenPos) position -= Main.screenPosition;
+
 			Main.spriteBatch.Draw(
 				TextureAssets.MagicPixel.Value,
-				a + offset,
+				position,
 				new Rectangle(0, 0, 2, 2),
 				color,
 				diff.ToRotation(),
@@ -2914,6 +3107,60 @@ namespace Origins {
 				new Vector2(diff.Length() * 0.5f, 1 * 0.5f),
 				0,
 			0);
+		}
+		public static void DrawConstellationLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width = 20, float distort = 20, float waveSpeed = 0.03f) {
+			MiscShaderData shader = GameShaders.Misc["Origins:Constellation"];
+			shader.UseSaturation(width);
+			shader.UseOpacity(distort);
+
+			Asset<Texture2D> space = ModContent.Request<Texture2D>("Origins/Items/Weapons/Ranged/Constellation_Fill");
+
+			Vector2 screenPos = Main.screenPosition / new Vector2(Main.screenWidth, Main.screenHeight);
+			Rectangle source = new Rectangle(0, 0, space.Width(), space.Height());
+
+			shader.UseImage0(space);
+
+			Main.spriteBatch.End();
+			Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+			int minX = (int)Math.Min(start.X, end.X);
+			int minY = (int)Math.Min(start.Y, end.Y);
+			int maxX = (int)Math.Max(start.X, end.X);
+			int maxY = (int)Math.Max(start.Y, end.Y);
+
+			int offset = (int)20;
+			Rectangle dest = new Rectangle(
+				minX - offset,
+				minY - offset,
+				maxX - minX + offset * 2,
+				maxY - minY + offset * 2
+			);
+			float speed = 0.1f;
+			shader.UseColor(speed, speed, 0f);
+			shader.UseShaderSpecificData(
+			new Vector4(screenPos, dest.Width, dest.Height)
+			);
+
+			Vector2 uv1 = dest.MapUV(start.ToPoint());
+			Vector2 uv2 = dest.MapUV(end.ToPoint());
+			Vector4 pack = new Vector4(uv1.X, uv1.Y, uv2.X, uv2.Y);
+			shader.Shader.Parameters["uNodePositions"].SetValue(pack);
+
+			shader.Apply();
+
+			DrawData rect = new(
+				space.Value,
+				dest,
+				source,
+				Color.White,
+				0f,
+				Vector2.Zero,
+				SpriteEffects.None
+			);
+
+			rect.Draw(spriteBatch);
+
+			Main.spriteBatch.Restart();
 		}
 		public static TValue GetOrAdd<TKey, TValue>(this IDictionary<TKey, TValue> self, TKey key, Func<TValue> fallback) {
 			if (self.TryGetValue(key, out TValue value)) return value;
@@ -2971,6 +3218,8 @@ namespace Origins {
 			while (Language.Exists($"{key}.{i}")) i++;
 			return Language.GetText($"{key}.{Main.rand.Next(i)}");
 		}
+		public static LanguageTree GetLocalizationTree(this ILocalizedModType self)
+			=> TextUtils.LanguageTree.Find(self.Mod.GetLocalizationKey($"{self.LocalizationCategory}.{self.Name}"));
 		public static void GetMultiTileTopLeft(int i, int j, TileObjectData data, out int left, out int top) {
 			Tile tile = Main.tile[i, j];
 			int innerFrameY = tile.TileFrameY % data.CoordinateFullHeight;
@@ -3038,6 +3287,11 @@ namespace Origins {
 			X = vector.X;
 			Y = vector.Y;
 		}
+		public static void Deconstruct(this Vector3 vector, out float X, out float Y, out float Z) {
+			X = vector.X;
+			Y = vector.Y;
+			Z = vector.Z;
+		}
 		public static void Deconstruct(this Point vector, out int X, out int Y) {
 			X = vector.X;
 			Y = vector.Y;
@@ -3045,6 +3299,10 @@ namespace Origins {
 		public static void Deconstruct(this Vector4 vector, out Vector2 XY, out Vector2 ZW) {
 			XY = vector.XY();
 			ZW = vector.ZW();
+		}
+		public static SpriteBatchState FixedCulling(this SpriteBatchState state) {
+			state.rasterizerState.CullMode = CullMode.None;
+			return state;
 		}
 		public static string GetInternalName(this RecipeGroup recipeGroup) {
 			foreach (KeyValuePair<string, int> item in RecipeGroup.recipeGroupIDs) {
@@ -3093,9 +3351,9 @@ namespace Origins {
 			shop.InsertAfter(targetItem, ModContent.ItemType<T>(), condition);
 		public static NPCShop InsertBefore<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
 			shop.InsertBefore(targetItem, ModContent.ItemType<T>(), condition);
-		public static NPCShop InsertAfter<TAfter, TNew>(this NPCShop shop, params Condition[] condition) where TAfter : ModItem where TNew : ModItem  =>
+		public static NPCShop InsertAfter<TAfter, TNew>(this NPCShop shop, params Condition[] condition) where TAfter : ModItem where TNew : ModItem =>
 			shop.InsertAfter(ModContent.ItemType<TAfter>(), ModContent.ItemType<TNew>(), condition);
-		public static NPCShop InsertBefore<TBefore, TNew>(this NPCShop shop, params Condition[] condition) where TBefore : ModItem where TNew : ModItem  =>
+		public static NPCShop InsertBefore<TBefore, TNew>(this NPCShop shop, params Condition[] condition) where TBefore : ModItem where TNew : ModItem =>
 			shop.InsertBefore(ModContent.ItemType<TBefore>(), ModContent.ItemType<TNew>(), condition);
 	}
 	public static class ConditionExtensions {
@@ -3448,13 +3706,13 @@ namespace Origins {
 			Vector2 point2 = point - normal;
 
 			float t = ((a.X - point.X) * (point.Y - point2.Y) - (a.Y - point.Y) * (point.X - point2.X))
-					/ ((a.X - b.X)     * (point.Y - point2.Y) - (a.Y - b.Y)     * (point.X - point2.X));
+					/ ((a.X - b.X) * (point.Y - point2.Y) - (a.Y - b.Y) * (point.X - point2.X));
 			progressOnSegment = t;
 			if (onlyWithinSegment && (t < 0 || t > 1)) {
 				return float.NaN;
 			}
 
-			float u = ((a.X - b.X) * (a.Y - point.Y)      - (a.Y - b.Y) * (a.X - point.X))
+			float u = ((a.X - b.X) * (a.Y - point.Y) - (a.Y - b.Y) * (a.X - point.X))
 					/ ((a.X - b.X) * (point.Y - point2.Y) - (a.Y - b.Y) * (point.X - point2.X));
 			return u;
 		}
@@ -3481,11 +3739,11 @@ namespace Origins {
 				Vector2 b = lines[i].end;
 				if (hasSize && Collision.CheckAABBvLineCollision2(rectPos, rectSize, a, b)) return true;
 				float t = ((a.X - rectPos.X) * (rectPos.Y) - (a.Y - rectPos.Y) * (rectPos.X))
-						/ ((a.X - b.X)       * (rectPos.Y) - (a.Y - b.Y)       * (rectPos.X));
+						/ ((a.X - b.X) * (rectPos.Y) - (a.Y - b.Y) * (rectPos.X));
 				if (t < 0 || t > 1) continue;
 
 				float u = ((a.X - b.X) * (a.Y - rectPos.Y) - (a.Y - b.Y) * (a.X - rectPos.X))
-						/ ((a.X - b.X) * (rectPos.Y)       - (a.Y - b.Y) * (rectPos.X));
+						/ ((a.X - b.X) * (rectPos.Y) - (a.Y - b.Y) * (rectPos.X));
 				if (u > 0 && u < 1) intersections++;
 			}
 			return intersections % 2 == 1;
@@ -3503,7 +3761,7 @@ namespace Origins {
 			return maxDist <= 0;
 		}*/
 		public static (Vector2 start, Vector2 end)[] FlipLines((Vector2 start, Vector2 end)[] lines) {
-			var output = new (Vector2 start, Vector2 end)[lines.Length];
+			(Vector2 start, Vector2 end)[] output = new (Vector2 start, Vector2 end)[lines.Length];
 			for (int i = 0; i < lines.Length; i++) {
 				output[i] = (lines[i].end, lines[i].start);
 			}
@@ -3724,7 +3982,7 @@ namespace Origins {
 				};
 				bestiaryEntry.Icon.Update(info, screenPos, settings);
 				SpriteBatchState state = spriteBatch.GetState();
-				spriteBatch.Restart(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, Main.Rasterizer, null, Main.UIScaleMatrix, DepthStencilState.None);
+				spriteBatch.Restart(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, RasterizerState.CullNone, null, Main.UIScaleMatrix, DepthStencilState.None);
 				Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 				Main.graphics.GraphicsDevice.Clear(Color.Transparent);
 				bestiaryEntry.Icon.Draw(info, spriteBatch, settings);
@@ -4047,37 +4305,39 @@ namespace Origins {
 		}
 		public static void DoJellyfishAI(this NPC npc, float lungeThreshold = 0.2f, float lungeSpeed = 7f, Vector3 glowColor = default, bool canDoZappy = true) {
 			bool isZappy = false;
-			if (npc.wet && npc.ai[1] == 1f) {
-				isZappy = true;
-			} else {
-				npc.dontTakeDamage = false;
-			}
-
-			if (Main.expertMode && canDoZappy) {
-				if (npc.wet) {
-					if (npc.HasValidTarget && Main.player[npc.target].wet && Collision.CanHit(npc.position, npc.width, npc.height, Main.player[npc.target].position, Main.player[npc.target].width, Main.player[npc.target].height) && Main.player[npc.target].Center.IsWithin(npc.Center, 150f)) {
-						if (npc.ai[1] == 0f) {
-							npc.ai[2] += 2f;
-						} else {
-							npc.ai[2] -= 0.25f;
-						}
-					}
-
-					if (isZappy) {
-						npc.dontTakeDamage = true;
-						npc.ai[2] += 1f;
-						if (npc.ai[2] >= 120f)
-							npc.ai[1] = 0f;
-					} else {
-						npc.ai[2] += 1f;
-						if (npc.ai[2] >= 420f) {
-							npc.ai[1] = 1f;
-							npc.ai[2] = 0f;
-						}
-					}
+			if (canDoZappy) {
+				if (npc.wet && npc.ai[1] == 1f) {
+					isZappy = true;
 				} else {
-					npc.ai[1] = 0f;
-					npc.ai[2] = 0f;
+					npc.dontTakeDamage = false;
+				}
+
+				if (Main.expertMode) {
+					if (npc.wet) {
+						if (npc.HasValidTarget && Main.player[npc.target].wet && Main.player[npc.target].Center.IsWithin(npc.Center, 150f) && Collision.CanHit(npc.position, npc.width, npc.height, Main.player[npc.target].position, Main.player[npc.target].width, Main.player[npc.target].height)) {
+							if (npc.ai[1] == 0f) {
+								npc.ai[2] += 2f;
+							} else {
+								npc.ai[2] -= 0.25f;
+							}
+						}
+
+						if (isZappy) {
+							npc.dontTakeDamage = true;
+							npc.ai[2] += 1f;
+							if (npc.ai[2] >= 120f)
+								npc.ai[1] = 0f;
+						} else {
+							npc.ai[2] += 1f;
+							if (npc.ai[2] >= 420f) {
+								npc.ai[1] = 1f;
+								npc.ai[2] = 0f;
+							}
+						}
+					} else {
+						npc.ai[1] = 0f;
+						npc.ai[2] = 0f;
+					}
 				}
 			}
 
@@ -4496,20 +4756,29 @@ namespace Origins {
 			DoFrameCheck(i, j, out int up, out int down, out int left, out int right, out int upLeft, out int upRight, out int downLeft, out int downRight, map);
 			DoFraming(i, j, resetFrame, up, down, left, right, upLeft, upRight, downLeft, downRight, frames);
 		}
-		public static bool CanActuallyPlace(int i, int j, int type, int style, int dir, out TileObject objectData, bool onlyCheck = false, int? forcedRandom = null, bool checkStay = false) {
+		public static bool TryPlace(int i, int j, int type, int style = 0, int dir = 0, int? forcedRandom = null, bool cut = true) {
+			return CanActuallyPlace(i, j, type, style, dir, out TileObject objectData, forcedRandom: forcedRandom, checkStay: true, cut: cut) && TileObject.Place(objectData);
+		}
+		public static bool CanActuallyPlace(int i, int j, int type, int style, int dir, out TileObject objectData, bool onlyCheck = false, int? forcedRandom = null, bool checkStay = false, bool cut = true) {
 			if (TileObject.CanPlace(i, j, type, style, dir, out objectData, onlyCheck, forcedRandom, checkStay)) {
-				TileObjectData tileData = TileObjectData.GetTileData(type, objectData.style);
+				TileObjectData tileData = TileObjectData.GetTileData(type, objectData.style, objectData.alternate);
 
 				int left = i - tileData.Origin.X;
 				int top = j - tileData.Origin.Y;
 				for (int y = 0; y < tileData.Height; y++) {
 					for (int x = 0; x < tileData.Width; x++) {
 						Tile tileSafely = Framing.GetTileSafely(left + x, top + y);
-						if (tileSafely.HasTile && !(Main.tileCut[tileSafely.TileType] || TileID.Sets.BreakableWhenPlacing[tileSafely.TileType])) {
+						if (tileSafely.HasTile && !(cut && (Main.tileCut[tileSafely.TileType] || TileID.Sets.BreakableWhenPlacing[tileSafely.TileType]))) {
 							return false;
 						}
 					}
 				}
+				/*for (int y = 0; y < tileData.Height; y++) {
+					tileData.AnchorLeft.
+				}
+				for (int x = 0; x < tileData.Width; x++) { 
+
+				}*/
 				return true;
 			}
 			return false;
@@ -4528,6 +4797,31 @@ namespace Origins {
 				}
 				TileObject.Place(objectData);
 			}
+		}
+		public static bool HasSolidFace(this Tile tile, TileSide side) {
+			if (tile.BlockType == BlockType.Solid) return true;
+			switch (side) {
+				case TileSide.Top:
+				return tile.BlockType is BlockType.SlopeUpLeft or BlockType.SlopeUpRight;
+
+				case TileSide.Bottom:
+				return tile.BlockType is BlockType.HalfBlock or BlockType.SlopeDownLeft or BlockType.SlopeDownRight;
+
+				case TileSide.Left:
+				return tile.BlockType is BlockType.SlopeDownLeft or BlockType.SlopeUpLeft;
+
+				case TileSide.Right:
+				return tile.BlockType is BlockType.SlopeDownRight or BlockType.SlopeUpRight;
+
+				default:
+				throw new ArgumentException($"Invalid tile side {side}", nameof(side));
+			}
+		}
+		public enum TileSide {
+			Top,
+			Bottom,
+			Left,
+			Right
 		}
 	}
 	public static class ProjectileExtensions {
@@ -4581,10 +4875,94 @@ namespace Origins {
 				}
 			}
 		}
+		public static void BulletShimmer(this Projectile projectile) {
+			if (projectile.shimmerWet) {
+				int x = (int)(projectile.Center.X / 16f);
+				int y = (int)(projectile.position.Y / 16f);
+				if (WorldGen.InWorld(x, y) && Main.tile[x, y] != null && Main.tile[x, y].LiquidAmount == byte.MaxValue && Main.tile[x, y].LiquidType == LiquidID.Shimmer && WorldGen.InWorld(x, y - 1) && Main.tile[x, y - 1] != null && Main.tile[x, y - 1].LiquidAmount > 0 && Main.tile[x, y - 1].LiquidType == LiquidID.Shimmer) {
+					projectile.Kill();
+				} else if (projectile.velocity.Y > 0f) {
+					projectile.velocity.Y *= -1f;
+					projectile.netUpdate = true;
+					if (projectile.timeLeft > 600)
+						projectile.timeLeft = 600;
+
+					projectile.timeLeft -= 60;
+					projectile.shimmerWet = false;
+					projectile.wet = false;
+				}
+			}
+		}
+		public static bool IsLocallyOwned(this Projectile projectile) => projectile.owner == Main.myPlayer;
+
+		public static void FillWhipControlPoints(this Projectile proj, Vector2 playerArmPosition, List<Vector2> controlPoints, int useTimeMax, float useTime, float? useTimeForSize = null) {
+			useTimeForSize ??= useTimeMax;
+			int timeToFlyOut = useTimeMax * proj.MaxUpdates;
+			int segments = proj.WhipSettings.Segments;
+			float rangeMultiplier = proj.WhipSettings.RangeMultiplier;
+			float num = useTime / timeToFlyOut;
+			float num2 = 0.5f;
+			float num3 = 1f + num2;
+			float num4 = MathHelper.Pi * 10f * (1f - num * num3) * (-proj.spriteDirection) / segments;
+			float num5 = num * num3;
+			float num6 = 0f;
+			if (num5 > 1f) {
+				num6 = (num5 - 1f) / num2;
+				num5 = MathHelper.Lerp(1f, 0f, num6);
+			}
+			float num7 = (useTimeMax * 2) * num;
+			float num8 = proj.velocity.Length() * num7 * num5 * rangeMultiplier / segments;
+			float num9 = 1f;
+			Vector2 vector = playerArmPosition;
+			float num10 = -MathHelper.PiOver2;
+			Vector2 vector2 = vector;
+			float num11 = MathHelper.PiOver2 + MathHelper.PiOver2 * proj.spriteDirection;
+			Vector2 vector3 = vector;
+			float num12 = MathHelper.PiOver2;
+			controlPoints.Add(playerArmPosition);
+			for (int i = 0; i < segments; i++) {
+				float num13 = i / (float)segments;
+				float num14 = num4 * num13 * num9;
+				Vector2 vector4 = vector + num10.ToRotationVector2() * num8;
+				Vector2 vector5 = vector3 + num12.ToRotationVector2() * (num8 * 2f);
+				Vector2 vector6 = vector2 + num11.ToRotationVector2() * (num8 * 2f);
+				float num15 = 1f - num5;
+				float num16 = 1f - num15 * num15;
+				Vector2 value = Vector2.Lerp(vector5, vector4, num16 * 0.9f + 0.1f);
+				Vector2 vector7 = Vector2.Lerp(vector6, value, num16 * 0.7f + 0.3f);
+				Vector2 spinningpoint = playerArmPosition + (vector7 - playerArmPosition) * new Vector2(1f, num3);
+				float num17 = num6;
+				num17 *= num17;
+				Vector2 item = spinningpoint.RotatedBy(proj.rotation + 4.712389f * num17 * proj.spriteDirection, playerArmPosition);
+				controlPoints.Add(item);
+				num10 += num14;
+				num12 += num14;
+				num11 += num14;
+				vector = vector4;
+				vector3 = vector5;
+				vector2 = vector6;
+			}
+		}
 	}
 	public static class ContentExtensions {
-		public static void AddBanner(this ModNPC self) {
-			self.Mod.AddContent(new Banner(self));
+		public static LocalizedText[] GetChildren(this LanguageTree languageTree) => languageTree.Values.Select(tree => tree.value).ToArray();
+		public static IEnumerable<LanguageTree> GetDescendants(this LanguageTree languageTree, bool includeSelf = false) {
+			if (includeSelf && languageTree.value.Key != languageTree.value.Value) yield return languageTree;
+			foreach (LanguageTree branch in languageTree.Values) {
+				foreach (LanguageTree item in branch.GetDescendants(true)) {
+					yield return item;
+				}
+			}
+		}
+		public static LocalizedText SelectFrom(this LanguageTree languageTree, params object[] formatArgs) => Main.rand.Next(languageTree.GetChildren()).WithFormatArgs(formatArgs);
+		public static string SelectFromFormatArg(this LanguageTree languageTree, object format, UnifiedRandom rand = null) => (rand ?? Main.rand)
+			.Next(languageTree.Values
+				.Select(tree => tree.value)
+				.Where(text => text.CanFormatWith(format))
+			.ToArray())
+			.FormatWith(format);
+		public static void AddBanner(this ModNPC self, int killsRequired = 50) {
+			self.Mod.AddContent(new Banner(self, killsRequired));
 			BannerGlobalNPC.NPCTypesWithBanners.Add(self.GetType());
 		}
 		public static Dictionary<Type, Func<IItemDropRule, IEnumerable<IItemDropRule>>> ruleChildFinders = new() {
@@ -4611,6 +4989,12 @@ namespace Origins {
 				rule.options[^i] = rules[^i];
 			}
 		}
+		public static void Add(this AlwaysAtleastOneSuccessDropRule rule, params IItemDropRule[] rules) {
+			Array.Resize(ref rule.rules, rule.rules.Length + rules.Length);
+			for (int i = 1; i <= rules.Length; i++) {
+				rule.rules[^i] = rules[^i];
+			}
+		}
 		public static void SubstituteKeybind(this List<TooltipLine> tooltips, ModKeybind keybind) {
 			InputMode inputMode = InputMode.Keyboard;
 			switch (PlayerInput.CurrentInputMode) {
@@ -4626,6 +5010,20 @@ namespace Origins {
 				OriginsModIntegrations.GoToKeybind(keybind);
 			}
 		}
+		public static string SubstituteKeybind(this string line, ModKeybind keybind) {
+			InputMode inputMode = InputMode.Keyboard;
+			switch (PlayerInput.CurrentInputMode) {
+				case InputMode.XBoxGamepad or InputMode.XBoxGamepadUI:
+				inputMode = InputMode.XBoxGamepad;
+				break;
+			}
+			string substitution = keybind.GetAssignedKeys(inputMode).FirstOrDefault() ?? Language.GetOrRegister("Mods.Origins.Generic.UnboundKey").Format(keybind.DisplayName);
+			line = line.Replace("<key>", substitution);
+			if (OriginsModIntegrations.GoToKeybindKeybindPressed) {
+				OriginsModIntegrations.GoToKeybind(keybind);
+			}
+			return line;
+		}
 		public static float DifficultyDamageMultiplier {
 			get {
 				if (Main.GameModeInfo.IsJourneyMode) {
@@ -4637,5 +5035,24 @@ namespace Origins {
 				return Main.GameModeInfo.EnemyDamageMultiplier;
 			}
 		}
+		public static Vector2 MapUV(this Rectangle rect, Point point) {
+			float U = (point.X - rect.Left) / (float)(rect.Right - rect.Left);
+			float V = (point.Y - rect.Bottom) / (float)(rect.Top - rect.Bottom);
+
+			return new Vector2(
+				MathHelper.Clamp(U, 0, 1),
+				MathHelper.Clamp(1f - V, 0, 1)
+			);
+		}
+		public static bool IsWithin(this Entity a, Entity b, float range) => a.Center.Clamp(b.Hitbox).IsWithin(b.Center.Clamp(a.Hitbox), range);
+		public static bool IsWithin(this Rectangle hitbox, Vector2 position, float range) => position.IsWithin(position.Clamp(hitbox), range);
+		public static bool IsWithinRectangular(this Entity a, Entity b, Vector2 range) => a.Center.Clamp(b.Hitbox).IsWithinRectangular(b.Center.Clamp(a.Hitbox), range);
+		public static bool IsWithinRectangular(this Vector2 a, Vector2 b, Vector2 range) => Abs(a - b).Between(Vector2.Zero, Abs(range));
+		static Vector2 Abs(Vector2 v) => new(Math.Abs(v.X), Math.Abs(v.Y));
+	}
+	public static class NetmodeActive {
+		public static bool SinglePlayer => Main.netMode == NetmodeID.SinglePlayer;
+		public static bool MultiplayerClient => Main.netMode == NetmodeID.MultiplayerClient;
+		public static bool Server => Main.netMode == NetmodeID.Server;
 	}
 }

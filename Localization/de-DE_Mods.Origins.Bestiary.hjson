@@ -25,10 +25,10 @@
 // Amebic_Slime: With its viscosity unchanged, it behaves like most slimes... the only difference is that it tends to easily digest whatever it absorbs.
 // Amoeba_Bugger: These nasty bugs thrive in conditions like the {§Riven_Hive} feeding on flesh decayed from the barnacles. They also love it fresh whenever available.
 // Barnacle_Bunny: Bunnies are pure beings that cannot normally adapt to the {§Riven_Hive}'s ecosystem, but will be easily capable of under the effects of a Blood Moon.
-// Barnacle_Mound: Barnacle mounds act as a self-contained ecosystem of microbes, buggers, and the {§Riven} of course.
+// Barnacle_Mound: Barnacle mounds act as a self-contained ecosystem of microbes, buggers and the {§Riven} of course.
 // Barnacleback: Barnaclebacks are a keystone species to the {§Riven_Hive}, working hard to maintain it. Their presence is a sure sign that any progress cleansing the Hive is futile.
 // Bottomfeeder: Goldfish naturally evolve into dangerous, insolveable carnivores in the {§Riven_Hive} which is only further catalyzed by the Blood Moon.
-// Cleaver_Head: A vicious defender of the {§Riven_Hive}, the Cleaver hides in burrows of spug flesh awaiting any trespassers of its territory.
+// Cleaver_Head: A vicious defender of the {§Riven_Hive}, the Cleaver hides in burrows of {§spug} flesh awaiting any trespassers of its territory.
 // Flagellant: A gentle swimmer in the amoeba-infested waters. It is flimsy and fragile, so travelers should be weary when approaching it.
 // Pustule_Jelly: A jellyfish that has adapted to the {§Riven_Hive}. The pustule is delicate and explodes whenever it needs to defend itself.
 // Riven_Fighter: The first creature born in the abominable {§Riven_Hive}. It is a very agile protector of its home.
@@ -43,7 +43,7 @@
 // Shattered_Ghoul: Ghouls warped to the {§Defiled} Will excrete horrid black bile that break down one's mental faculties upon the touch.
 // Torn_Ghoul: Ghouls adapted to the {§Riven}'s conditions release amebic gel containing alkahest, allowing them to break down any compounds it comes in contact with.
 // Amoebeye: Amoebeyes are the next evolutionary step for {§Mods.Origins.NPCs.Riven_Fighter.DisplayName}s ever since the {§Riven}'s expansion. They safeguard the hives to eliminate any threats to the ecosystem.
-// Defiled_Asphyxiator: The Asphyxiators are one of the Defiled's nastiest machinations, capable of wiping out anyone or anything not meant to be in its waters.
+// Defiled_Asphyxiator: The Asphyxiators are one of the {§Defiled}'s nastiest machinations, capable of wiping out anyone or anything not meant to be in its waters.
 // Etherealizer: She doesn't look it, but she's actually a really bad joker. Her tagline: "Somethings are best left ethrealized!"
 // Defiled_Effigy: A creation by the {§Defiled} in order to maintain its diplomacy with the Terrarian. Looks like a hand reaching towards the sky.
 // Defiled_Watcher: The Watcher is a more direct way for the {§Defiled} to look out for any foreign bodies that don't belong. Mainly, it's a way for the {§Defiled} to prevent its heart from being destroyed by the Terrarian.
@@ -67,7 +67,7 @@
 // Enchanted_Fiberglass_Bow: A bow made of fiberglass enchanted by the spirit of the Undergrowth to protect it from tampering.
 // Enchanted_Fiberglass_Sword: A sword made of fiberglass enchanted by the spirit of the Undergrowth to protect it from tampering.
 // Enchanted_Fiberglass_Pistol: A pistol made of fiberglass enchanted by the spirit of the Undergrowth to protect it from tampering.
-// Fiberglass_Weaver: A giant, spider-like entity responsible for carefully weaving the fiberglass undergrowth together.
+// Fiberglass_Weaver: A giant, spider-like entity responsible for carefully weaving the Fiberglass Undergrowth together.
 // Cloud_Elemental: A chill dude just vibing on his cloud. He doesn't mind your presence, he just doesn't know that lightning kills Terrarians.
 // Defiled_Mimic: Mimics which warp to the {§Defiled} grow larger and more powerful as a result. They can be birthed from ordinary chests by force.
 // Riven_Mimic: Mimics which evolve to the {§Riven_Hive}'s conditions grow larger and more powerful as a result. They can be birthed from ordinary chests by force.
@@ -90,7 +90,18 @@
 // Mildew_Carrion: A mildewy-blob of hate. It is grows faster than it is decays.
 // Spirit_Of_Christmas_Future_Tax_Collector: The Ghost of Christmas Yet to warn the Tax Collector of what's to come.
 // Spirit_Of_Christmas_Present_Tax_Collector: The Ghost of Christmas Present to give the Tax Collector another perspective of how he is now.
-// Defiled_Broadcaster: A very important {§Defiled_Antibody} for {§the_Defiled_Wastelands}. Surveys and gives an eye in the sky, but can weave together tangela and transport other {§Defiled_Antibodies} to intruders. Multiple Broadcasters supporting the same {§Defiled_Antibody} is likely to cause problems between them, however.
+// Defiled_Broadcaster: A very important {§Defiled_Antibody} for {§the_Defiled_Wastelands}. Surveys and gives an eye in the sky, but can weave together {§Tangela} and transport other {§Defiled_Antibodies} to intruders. Multiple Broadcasters supporting the same {§Defiled_Antibody} is likely to cause problems between them, however.
 // Enchanted_Fiberglass_Cannon: A cannon made of fiberglass enchanted by the spirit of the Undergrowth for pure malicious intent.
 // Enchanted_Fiberglass_Slime: A slime made of fiberglass enchanted by the spirit of the Undergrowth to protect it from tampering.
 // Abandoned_Bomb: You left him behind when he clearly had attachment issues, now he's going to blow you to pieces because you have detachment issues.
+Chambersite_Bunny: "{$Bestiary_FlavorText.npc_GemBunnyAmethyst}"
+Chambersite_Squirrel: "{$Bestiary_FlavorText.npc_GemSquirrelAmethyst}"
+// Shimmer_Construct: A mysterious, sentient geode created by magic when a large-and-similar-enough being from this world has contacted the Shimmer.
+// Shimmer_Construct_Alt: "{$Shimmer_Construct}"
+// Chambersite_Sentinel: Guardians of darkness. They oversee and safeguard the world evil, but only appear nearby chambersite deposits.
+// Ancient_Riven_Fighter: A cousin species of the {§Riven} Protoform that didn't inherit the big-body genes or tail, but at least it has the same springiness!
+// Goo_Wall: Gooey film used for trapping bugs that leech off of the Hive.
+// Creme_Filled_Bat: Interesting lil fellas that use flexible, creme-filled tubules in their wings to flap the way they do.
+// Creme_Filled_Bat_Alt: They break their bones every time they flap, and yet they're somehow intact to break again next flap.
+// Shimmer_Chunk1: Be advised: not ideal for use as laundry detergent or any consumption related challenges.
+// Shimmer_Drone: Mindless drones summoned from the Shimmer Construct, brought forth to protect their master by any means necessary.

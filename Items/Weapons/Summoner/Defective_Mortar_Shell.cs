@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Journal;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -9,11 +10,15 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Summoner {
-	public class Defective_Mortar_Shell : ModItem, ICustomWikiStat {
+	public class Defective_Mortar_Shell : ModItem, ICustomWikiStat, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Defective_Mortar_Shell_Entry).Name;
+		public class Defective_Mortar_Shell_Entry : JournalEntry {
+			public override string TextKey => "Defective_Mortar_Shell";
+			public override JournalSortIndex SortIndex => new("The_Ashen", 2);
+		}
 		public string[] Categories => [
-			"Torn",
-			"TornSource"
 		];
 		static short glowmask;
 		public override void SetStaticDefaults() {
@@ -22,8 +27,8 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void SetDefaults() {
 			Item.damage = 38;
 			Item.knockBack = 6;
-			Item.DamageType = DamageClass.Summon;
-			Item.mana = 12;
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
+			Item.mana = 10;
 			Item.width = 32;
 			Item.height = 32;
 			Item.useTime = 36;
@@ -36,6 +41,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.shootSpeed = 1;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
+			Item.sentry = true;
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
@@ -63,11 +69,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void SetStaticDefaults() {
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+			OriginsSets.Projectiles.NoMultishot[Type] = true;
 		}
 
 		public override void SetDefaults() {
 			//Projectile.CloneDefaults(ProjectileID.FrostHydra);
-			Projectile.DamageType = DamageClass.Summon;
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 			Projectile.width = 40;
 			Projectile.height = 40;
 			Projectile.tileCollide = true;
@@ -205,7 +212,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CursedBullet);
-			Projectile.DamageType = DamageClass.Summon;
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 			Projectile.width = 8;
 			Projectile.height = 8;
 			Projectile.aiStyle = 0;

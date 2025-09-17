@@ -15,6 +15,7 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(28, 22);
 			Item.value = Item.sellPrice(gold: 5, silver: 20);
 			Item.rare = ItemRarityID.LightPurple;
+			Item.expert = true;
 		}
         public override void AddRecipes() {
             CreateRecipe()
@@ -30,21 +31,12 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.refactoringPieces = true;
 			originPlayer.manaShielding += 0.1f;
+			player.endurance += (1 - player.endurance) * 0.1f;
 			if (!hideVisual) UpdateVanity(player);
 		}
 		public override void UpdateVanity(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.bindingBookVisual = true;
-			for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
-				if (player.armor[i] == Item) {
-					originPlayer.bindingBookDye = player.dye[i].dye;
-					break;
-				}
-				if (player.armor[i + 10] == Item) {
-					originPlayer.bindingBookDye = player.dye[i].dye;
-					break;
-				}
-			}
 			Physics.Chain[] chains = originPlayer.bindingBookChains;
 			for (int i = 0; i < chains.Length; i++) {
 				Physics.Chain chain = chains[i];
@@ -100,5 +92,6 @@ namespace Origins.Items.Accessories {
 				}
 			}
 		}
+		public override void UpdateItemDye(Player player, int dye, bool hideVisual) => player.OriginPlayer().bindingBookDye = dye;
 	}
 }

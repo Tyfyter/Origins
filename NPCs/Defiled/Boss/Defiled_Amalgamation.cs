@@ -5,16 +5,14 @@ using Origins.Dev;
 using Origins.Graphics;
 using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
-using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
-using Origins.Items.Tools;
+using Origins.Items.Vanity.BossMasks;
 using Origins.Items.Weapons.Magic;
 using Origins.Journal;
 using Origins.LootConditions;
 using Origins.Music;
-using Origins.NPCs.Defiled.Boss;
 using Origins.Projectiles.Enemies;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Defiled;
@@ -26,7 +24,6 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -42,12 +39,11 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using Terraria.WorldBuilding;
 using static Origins.NPCs.Defiled.Boss.Defiled_Spike_Indicator;
 
 namespace Origins.NPCs.Defiled.Boss {
 	[AutoloadBossHead]
-	public class Defiled_Amalgamation : Glowing_Mod_NPC, IDefiledEnemy, ICustomWikiStat, IJournalEntrySource, IOutlineDrawer {
+	public class Defiled_Amalgamation : Glowing_Mod_NPC, IDefiledEnemy, ICustomWikiStat, IJournalEntrySource, IOutlineDrawer, IMinions {
 		static AutoLoadingAsset<Texture2D> RightArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm";
 		static AutoLoadingAsset<Texture2D> RightArmGlowTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm_Glow";
 		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
@@ -90,6 +86,9 @@ namespace Origins.NPCs.Defiled.Boss {
 			public override JournalSortIndex SortIndex => new("The_Defiled", 13);
 		}
 		internal static IItemDropRule normalDropRule;
+
+		public static List<int> Minions = [];
+		List<int> IMinions.BossMinions => Minions;
 		public override void Unload() {
 			normalDropRule = null;
 		}
@@ -104,6 +103,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				Scale = 0.75f,
 				PortraitScale = 1f,
 			};
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			ID = Type;
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Defiled_Wastelands>());
 			Origins.RasterizeAdjustment[Type] = (16, 0f, 0f);
@@ -212,6 +212,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public DrawData[] OutlineDrawDatas { get => outlineData; }
 		public int OutlineSteps { get => 8; }
 		public float OutlineOffset { get => MathF.Sin((float)Main.timeForVisualEffects * 0.3f) * 3; }
+
 		List<Vector2> oldPositions = [];
 		public override void AI() {
 			if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.Amalgamation, NPC.Center);
@@ -439,7 +440,7 @@ namespace Origins.NPCs.Defiled.Boss {
 							oldPositions.Clear();
 							NPC.velocity.X *= 0.97f;
 							if (NPC.velocity.Y < 0) NPC.velocity.Y *= 0.97f;
-							//SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-1.2f).WithVolume(0.05f), NPC.Center);
+							//SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-1f).WithVolume(0.05f), NPC.Center);
 							NPC.collideX = NPC.collideY = false;
 							CheckTrappedCollision();
 							if (NPC.ai[1] - activeLength < TripleDashCD) {
@@ -546,7 +547,7 @@ namespace Origins.NPCs.Defiled.Boss {
 									float realDifficultyMult = Math.Min(ContentExtensions.DifficultyDamageMultiplier, 3.666f);
 									int count = Main.rand.Next(6, 8) + Main.rand.RandomRound(realDifficultyMult * 2);
 									for (int i = count; i-- > 0;) {
-										SoundEngine.PlaySound(SoundID.Item62.WithPitch(2f), NPC.Center);
+										SoundEngine.PlaySound(SoundID.Item62.WithPitch(1f), NPC.Center);
 										Projectile.NewProjectileDirect(
 											NPC.GetSource_FromAI(),
 											NPC.targetRect.Center() - new Vector2((i - count * 0.5f) * (56 - realDifficultyMult * 8 + 34 + 24), 640),
@@ -640,11 +641,11 @@ namespace Origins.NPCs.Defiled.Boss {
 								Dust.NewDustPerfect(pos, DustID.AncientLight, NPC.Center.DirectionTo(pos) * 20);
 							}
 							SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1), NPC.Center);
-							SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithPitch(-5f), NPC.Center);
-							SoundEngine.PlaySound(SoundID.Item123.WithPitch(2f), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithPitch(-1f), NPC.Center);
+							SoundEngine.PlaySound(SoundID.Item123.WithPitch(1f), NPC.Center);
 
 							if (Main.netMode != NetmodeID.MultiplayerClient) {
-								int staticShock = NPC.FindBuffIndex(ModContent.BuffType<Static_Shock_Debuff>());
+								int staticShock = NPC.FindBuffIndex(Static_Shock_Debuff.ID);
 								if (staticShock >= 0) NPC.DelBuff(staticShock);
 								leg1 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg1, NPC.whoAmI);
 								leg2 = NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<DA_Body_Part>(), 0, (int)DA_Body_Part.Part.leg2, NPC.whoAmI);
@@ -668,9 +669,9 @@ namespace Origins.NPCs.Defiled.Boss {
 
 						// parts regroup takes 1 second
 						if (NPC.ai[1] >= SplitDuration + SplitRegroupDuration) {
-							SoundEngine.PlaySound(SoundID.Item103.WithPitch(-2f), NPC.Center);
+							SoundEngine.PlaySound(SoundID.Item103.WithPitch(-1f), NPC.Center);
 							SoundEngine.PlaySound(SoundID.NPCHit42.WithPitch(-0.4f).WithVolume(0.5f), NPC.Center);
-							SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest.WithPitch(-5f), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest.WithPitch(-1f), NPC.Center);
 							SoundEngine.PlaySound(Origins.Sounds.Amalgamation.WithPitch(-0.2f), NPC.Center);
 							NPC.ShowNameOnHover = true;
 							NPC.dontTakeDamage = false;

@@ -55,7 +55,7 @@ namespace Origins.Tiles.Other {
 			Item.value = Item.sellPrice(silver: 1);
 		}
 		public override void AddRecipes() {
-			CreateRecipe()
+			CreateRecipe(20)
 			.AddIngredient(ItemID.Glass, 20)
 			.AddIngredient<Chambersite_Item>()
 			.AddTile(TileID.WorkBenches)

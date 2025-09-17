@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs.Critters;
@@ -9,7 +8,6 @@ using ReLogic.Content;
 using System;
 using System.IO;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -17,7 +15,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Barnacle_Mound : ModNPC, IRivenEnemy, IWikiNPC {
+	public class Barnacle_Mound : ModNPC, IRivenEnemy, IWikiNPC, ICustomWikiStat {
 		public override void Load() => this.AddBanner();
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var asset) ? asset : null))?.Value;
@@ -26,16 +24,19 @@ namespace Origins.NPCs.Riven {
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
+			Main.npcFrameCount[Type] = 13;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = new(0, 20),
 				PortraitPositionYOverride = 40
 			};
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BloodJelly);
 			NPC.aiStyle = 0;
 			NPC.noGravity = true;
+			NPC.noTileCollide = true;
 			NPC.lifeMax = 90;
 			NPC.defense = 18;
 			NPC.damage = 0;
@@ -48,9 +49,9 @@ namespace Origins.NPCs.Riven {
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
 			];
 		}
-        public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 3, 8));
-        }
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 3, 8));
+		}
 		public override void OnKill() {
 			if (Main.rand.NextBool(4, 7)) {
 				int type = ModContent.NPCType<Amoeba_Buggy>();
@@ -82,9 +83,9 @@ namespace Origins.NPCs.Riven {
 					if (newDist < dist) {
 						dist = newDist;
 						bestPosition = NPC.Center + directions[i] * (dist - offsetLen);
+						NPC.rotation = directions[i].ToRotation() - MathHelper.PiOver2;
 					}
 				}
-				NPC.rotation = (bestPosition - NPC.Center).ToRotation() - MathHelper.PiOver2;
 				NPC.Center = bestPosition;
 				NPC.oldVelocity = Vector2.Zero;
 				NPC.oldPosition = NPC.position;
@@ -93,12 +94,26 @@ namespace Origins.NPCs.Riven {
 				NPC.position = NPC.oldPosition;
 			}
 			NPC.TargetClosest(faceTarget: false);
-			if (Main.netMode != NetmodeID.MultiplayerClient && NPC.HasValidTarget && ++NPC.ai[0] > (Main.masterMode ? 420 : (Main.expertMode ? 540 : 600))) {
+			int spawnTime = (Main.masterMode ? 420 : (Main.expertMode ? 540 : 600)) + (int)NPC.ai[2];
+			if (Main.netMode != NetmodeID.MultiplayerClient && NPC.HasValidTarget && ++NPC.ai[0] > spawnTime) {
 				int type = ModContent.NPCType<Amoeba_Bugger>();
 				NPC.ai[0] = 0;
+				NPC.ai[2] = 0;
 				for (int i = Main.rand.Next(4, 7); i-- > 0;) {
 					NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.position.X, (int)NPC.position.Y, type, ai0: Main.rand.NextFloat(-4, 4), ai1: Main.rand.NextFloat(-4, 4));
-					NPC.ai[0] -= 30;
+					NPC.ai[2] += 30;
+				}
+			}
+			const float frame_time = 7;
+			if (NPC.ai[0] < frame_time * 6) {
+				NPC.frame.Y = ((int)(NPC.ai[0] / frame_time) + 7) * NPC.frame.Height;
+			} else {
+				float startTime = spawnTime - frame_time * 7;
+				if (NPC.ai[0] >= startTime) {
+					NPC.frame.Y = ((int)((NPC.ai[0] - startTime) / frame_time)) * NPC.frame.Height;
+				}
+				if (NPC.frame.Y < 0) {
+
 				}
 			}
 			NPC.velocity = Vector2.Zero;
@@ -121,7 +136,7 @@ namespace Origins.NPCs.Riven {
 			modifiers.DisableKnockback();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Vector2 halfSize = new Vector2(GlowTexture.Width / 2, GlowTexture.Height / Main.npcFrameCount[NPC.type]);
+			Vector2 halfSize = new Vector2(23, 32);
 			Vector2 position = NPC.Center + new Vector2(0, 12).RotatedBy(NPC.rotation);
 			spriteBatch.Draw(
 				TextureAssets.Npc[Type].Value,

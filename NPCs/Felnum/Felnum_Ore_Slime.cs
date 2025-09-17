@@ -29,7 +29,7 @@ namespace Origins.NPCs.Felnum {
 			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.ShimmerSlime;
 			NPCID.Sets.CanConvertIntoCopperSlimeTownNPC[Type] = true;
 			Main.npcFrameCount[Type] = 2;
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Static_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Static_Shock_Debuff.ID] = true;
 		}
 		public override void SetDefaults() {
 			NPC.width = 24;

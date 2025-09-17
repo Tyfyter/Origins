@@ -1,9 +1,10 @@
 author = Origins Dev Team
-version = 0.5.0.11
+version = 0.5.3
 displayName = Terraria Origins
 
-buildIgnore = *.csproj, *.xcf, *.user, obj\*, bin\*, .vs\*, Items\Weapons\Felnum\Tier2\Tolruk_Glow_Old\*, Music\Legacy\*, Old_Sprites\*, Items\Armor\Vanity\Terlet\PlagueCowboy(Old)\*
+buildIgnore = .git\*, *.csproj, *.xcf, *.user, obj\*, bin\*, .vs\*, Items\Weapons\Felnum\Tier2\Tolruk_Glow_Old\*, Music\Legacy\*, Old_Sprites\*, Items\Armor\Vanity\Terlet\PlagueCowboy(Old)\*
 includePDB = false
-sortAfter = CalamityMod, WingSlot, AltLibrary, ThoriumMod, ColoredDamageTypes, MusicDisplay, ProceduralMusicLib, Fargowiltas
+sortAfter = CalamityMod, WingSlot, AltLibrary, ThoriumMod, ColoredDamageTypes, MusicDisplay, ProceduralMusicLib, Fargowiltas, AlchemistNPCLite, miningcracks_take_on_luiafk
+sortBefore = CritRework
 modReferences = AltLibrary, BetterDialogue, PegasusLib
 weakReferences = ThoriumMod, CalamityMod, MagicStorage, Fargowiltas

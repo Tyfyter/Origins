@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Journal;
 using Origins.NPCs;
@@ -18,7 +19,9 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Origins.Dev.WikiPageExporter;
 namespace Origins.Items.Weapons.Melee {
-	public class Vorpal_Sword_Cursed : ModItem, IJournalEntrySource, ICustomWikiStat, ICustomLinkFormat {
+	public class Vorpal_Sword_Cursed : ModItem, IJournalEntrySource, ICustomWikiStat, ICustomLinkFormat, ITornSource {
+		public static float TornSeverity => 0.35f;
+		float ITornSource.Severity => TornSeverity;
 		static short glowmask;
         public string[] Categories => [
 			"Torn",
@@ -35,6 +38,7 @@ namespace Origins.Items.Weapons.Melee {
 			.Formatter();
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override void SetStaticDefaults() {
+			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}
@@ -288,7 +292,7 @@ namespace Origins.Items.Weapons.Melee {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 60, targetSeverity: 0.35f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 60, targetSeverity: Vorpal_Sword_Cursed.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void CutTiles() {
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
@@ -297,15 +301,17 @@ namespace Origins.Items.Weapons.Melee {
 		}
 
 		public override bool PreDraw(ref Color lightColor) {
+			float gravDir = Main.player[Projectile.owner].gravDir;
+			SpriteEffects effects = Projectile.ai[1] * gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
 				Projectile.Center - Main.screenPosition,
 				null,
 				lightColor,
-				Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1]),
-				new Vector2(14, 25 + 11 * Projectile.ai[1]),
+				Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1] * gravDir),
+				new Vector2(14, 18).Apply(effects ^ SpriteEffects.FlipVertically, TextureAssets.Projectile[Type].Size()),
 				Projectile.scale,
-				Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically,
+				effects,
 				0
 			);
 			return false;

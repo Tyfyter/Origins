@@ -53,7 +53,9 @@ namespace Origins.Items.Weapons.Melee {
 			float dist = 16 * 5;
 			dist *= dist;
 			int targetIndex = -1;
+			OriginGlobalProj globalProj = Projectile.GetGlobalProjectile<OriginGlobalProj>();
 			bool foundTarget = Main.player[Projectile.owner].DoHoming((target) => {
+				if (globalProj.alreadyUnmissed[target.whoAmI]) return false;
 				float newDist = Projectile.DistanceSQ(target.Center);
 				if (target.whoAmI == Projectile.ai[2]) newDist *= 0.25f;
 				if (newDist < dist) {
@@ -68,11 +70,11 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.ai[2] = targetIndex;
 			} else if (targetIndex != -1) {
 				if (Projectile.ai[0] == 0) Projectile.ai[1] = 0;
-				OriginGlobalProj globalProj = Projectile.GetGlobalProjectile<OriginGlobalProj>();
 
 				globalProj.unmissTargetPos = Main.npc[targetIndex].Center - Projectile.velocity;
 				globalProj.unmissAnimation = (int)++Projectile.localAI[0];
 				if (globalProj.unmissAnimation == 8) {
+					globalProj.alreadyUnmissed[targetIndex] = true;
 					(globalProj.unmissTargetPos, Projectile.Center) = (Projectile.Center, globalProj.unmissTargetPos);
 					Projectile.localAI[0] = 0;
 					Projectile.localAI[1] = 9;

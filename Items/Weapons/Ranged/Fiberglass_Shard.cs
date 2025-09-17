@@ -29,7 +29,8 @@ namespace Origins.Items.Weapons.Ranged {
 			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
 		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.PoisonDart);
+			Projectile.CloneDefaults(ProjectileID.ThrowingKnife);
+			Projectile.aiStyle = 1;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
 			Projectile.trap = false;

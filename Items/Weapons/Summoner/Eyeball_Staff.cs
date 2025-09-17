@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void SetDefaults() {
 			Item.damage = 8;
 			Item.DamageType = DamageClass.Summon;
-			Item.mana = 11;
+			Item.mana = 10;
 			Item.width = 32;
 			Item.height = 32;
 			Item.useTime = 36;

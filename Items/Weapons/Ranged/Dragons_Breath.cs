@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Items.Materials;
-using Origins.Reflection;
-using Origins.Tiles.Brine;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -15,6 +12,7 @@ namespace Origins.Items.Weapons.Ranged {
 		];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.OnFire3];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ElfMelter);

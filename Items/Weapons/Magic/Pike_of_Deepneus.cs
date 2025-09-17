@@ -45,7 +45,7 @@ namespace Origins.Items.Weapons.Magic {
 			.Register();
 		}
 		public override void UseItemFrame(Player player) {
-			float rotation = player.itemRotation - MathHelper.PiOver2 - GetArmDrawAngle(player);
+			float rotation = player.itemRotation * player.gravDir - MathHelper.PiOver2 - GetArmDrawAngle(player);
 			player.SetCompositeArmFront(
 				true,
 				Player.CompositeArmStretchAmount.Full,
@@ -83,18 +83,18 @@ namespace Origins.Items.Weapons.Magic {
 		internal static float GetArmDrawAngle(Player player) {
 			return Math.Max((player.itemAnimation / (float)player.itemAnimationMax) * 6 - 5, 0) * (MathHelper.PiOver2 * 0.85f) * player.direction;
 		}
+		public override void ModifyManaCost(Player player, ref float reduce, ref float mult) {
+			foreach (Projectile proj in Main.ActiveProjectiles) {
+				if (proj.owner == player.whoAmI && proj.type == Item.shoot && proj.ai[0] != 0) {
+					if (proj.ai[1] >= 1) mult = 0;
+					break;
+				}
+			}
+		}
 	}
 	public class Pike_of_Deepneus_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Pike_of_Deepneus";
-		public new AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
-		public override void SetStaticDefaults() {
-			if (!Main.dedServ) {
-				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
-			}
-		}
-		public override void Unload() {
-			GlowTexture = default;
-		}
+		AutoLoadingAsset<Texture2D> glowTexture = "Origins/Items/Weapons/Magic/Pike_of_Deepneus_Glow";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Daybreak);
 			Projectile.DamageType = DamageClass.Magic;
@@ -155,8 +155,8 @@ namespace Origins.Items.Weapons.Magic {
 				player.ChangeDir(Projectile.direction = Math.Sign(Projectile.velocity.X));
 				Projectile.rotation = player.itemRotation;
 				Projectile.Center = player.MountedCenter
-					+ new Vector2(player.direction * -4, -6)
-					+ OriginExtensions.Vec2FromPolar(player.itemRotation - Pike_of_Deepneus.GetArmDrawAngle(player), 16)
+					+ new Vector2(player.direction * -4, -6 * player.gravDir)
+					+ OriginExtensions.Vec2FromPolar(player.itemRotation - Pike_of_Deepneus.GetArmDrawAngle(player) * player.gravDir, 16)
 					+ Projectile.velocity.SafeNormalize(default) * 36;
 			} else {
 				Projectile.hide = false;
@@ -180,12 +180,17 @@ namespace Origins.Items.Weapons.Magic {
 			return true;
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			Player player = Main.player[Projectile.owner];
 			Vector2 position = Projectile.Center - Main.screenPosition;
-			float rotation = Projectile.rotation + (MathHelper.Pi * 0.8f * Projectile.direction - MathHelper.PiOver2);
-			Vector2 origin = new Vector2(30 + 25 * Projectile.direction, 9);
+			float rotation = Projectile.rotation + (MathHelper.Pi * 0.8f * Projectile.direction - MathHelper.PiOver2 * player.gravDir);
 			float scale = Projectile.scale;
 			SpriteEffects spriteEffects = Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-			Main.EntitySpriteDraw(
+			if (player.gravDir < 0) {
+				rotation -= MathHelper.PiOver2 * 1.2f * Projectile.direction;
+				spriteEffects ^= SpriteEffects.FlipHorizontally;
+			}
+			Vector2 origin = new Vector2(55, 9).Apply(spriteEffects, TextureAssets.Projectile[Type].Size());
+			DrawData data = new(
 				TextureAssets.Projectile[Type].Value,
 				position,
 				null,
@@ -195,19 +200,10 @@ namespace Origins.Items.Weapons.Magic {
 				scale,
 				spriteEffects,
 			0);
-			if (GlowTexture.IsLoaded) {
-				Main.EntitySpriteDraw(
-					GlowTexture,
-					position,
-					null,
-					Color.White,
-					rotation,
-					origin,
-					scale,
-					spriteEffects,
-					0
-				);
-			}
+			Main.EntitySpriteDraw(data);
+			data.texture = glowTexture;
+			data.color = Color.White;
+			Main.EntitySpriteDraw(data);
 			return false;
 		}
 	}

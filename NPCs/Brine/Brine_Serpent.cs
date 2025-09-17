@@ -1,14 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -42,7 +39,7 @@ namespace Origins.NPCs.Brine {
 				PortraitPositionXOverride = -96f
 			};
 			NPCID.Sets.UsesNewTargetting[Type] = true;
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 			ModContent.GetInstance<Brine_Pool.SpawnRates>().AddSpawn(Type, SpawnChance);
 			SegmentTypes = [
 				Type,
@@ -54,6 +51,7 @@ namespace Origins.NPCs.Brine {
 			TargetNPCTypes.Add(ModContent.NPCType<Sea_Dragon>());
 			TargetNPCTypes.Add(ModContent.NPCType<Brine_Latcher>());
 		}
+		public bool? Hardmode => true;
 		public override void Unload() {
 			TargetTypes = null;
 			SegmentTypes = null;
@@ -150,7 +148,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool CanHitNPC(NPC target) => TargetTypes.Contains(target.type) || (target.ModNPC is not IBrinePoolNPC && !SegmentTypes.Contains(target.type));
 		public virtual bool CanTargetNPC(NPC other) {
-			if (other.type == NPCID.TargetDummy) return false;
+			if (OriginsSets.NPCs.TargetDummies[other.type]) return false;
 			return other.wet && CanHitNPC(other);
 		}
 		public virtual bool CheckTargetLOS(Vector2 target) => true;
@@ -271,7 +269,7 @@ namespace Origins.NPCs.Brine {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 		}
 		public override bool SharesImmunityFrames => true;
 		public override float SegmentSeparation => 36;
@@ -312,7 +310,7 @@ namespace Origins.NPCs.Brine {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 		}
 		public override bool SharesImmunityFrames => true;
 		public override float SegmentSeparation => 36;
@@ -354,7 +352,7 @@ namespace Origins.NPCs.Brine {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();

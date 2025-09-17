@@ -1,5 +1,5 @@
-﻿using Origins.Dev;
-using Origins.Items.Other.Consumables;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Journal;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
@@ -7,8 +7,11 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -36,6 +39,8 @@ namespace Origins.Items.Materials {
 			Item.rare = Rare;
 			Item.value = Value;
 			Item.maxStack = Item.CommonMaxStack;
+			Item.width = 14;
+			Item.height = 14;
 			Item.glowMask = glowmask;
 		}
 	}
@@ -46,8 +51,8 @@ namespace Origins.Items.Materials {
 		public override void AddRecipes() {
 			Recipe.Create(Type, 9)
 			.AddIngredient(ModContent.ItemType<Silicon_Bar>())
-            .AddIngredient(ModContent.ItemType<Tree_Sap>(), 9)
-            .AddTile(TileID.WorkBenches)
+			.AddIngredient(ModContent.ItemType<Tree_Sap>(), 9)
+			.AddTile(TileID.WorkBenches)
 			.Register();
 
 			Recipe.Create(ItemID.AdhesiveBandage)
@@ -57,23 +62,34 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
+	public class Aetherite_Bar : MaterialItem {
+		public string[] Categories => [
+			"Bar"
+		];
+		public override int Rare => ItemRarityID.Orange;
+		public override int ResearchUnlockCount => 25;
+		public override int Value => Item.sellPrice(silver: 50);
+		public override bool Hardmode => false;
+		public override void Load() {
+			base.Load();
+			tileID = Bar_Tile.AddBarTile(this, new(219, 157, 255), DustID.PurpleCrystalShard);
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Aetherite_Ore_Item>(), 3)
+			.AddTile(TileID.Hellforge)
+			.Register();
+		}
+	}
 	public class Alkahest : MaterialItem, IJournalEntrySource {
-        public string[] Categories => [
-            "LoreItem"
-        ];
+		public string[] Categories => [
+			"LoreItem"
+		];
 		public string EntryName => "Origins/" + typeof(Alkahest_Mat_Entry).Name;
 		public override int ResearchUnlockCount => 25;
 		public override int Rare => ItemRarityID.Orange;
 		public override int Value => Item.sellPrice(silver: 9);
 		public override bool Hardmode => true;
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			ItemID.Sets.ShimmerTransformToItem[ItemID.CursedFlame] = ItemID.Ichor;
-			ItemID.Sets.ShimmerTransformToItem[ItemID.Ichor] = ModContent.ItemType<Black_Bile>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Black_Bile>()] = ModContent.ItemType<Alkahest>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Alkahest>()] = ModContent.ItemType<Respyrite>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Respyrite>()] = ItemID.CursedFlame;
-		}
 		public class Alkahest_Mat_Entry : JournalEntry {
 			public override string TextKey => "Alkahest";
 			public override JournalSortIndex SortIndex => new("Riven", 0);
@@ -85,13 +101,104 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override int Rare => ItemRarityID.Orange;
 	}
-	public class Bark : MaterialItem {
-		public override bool Hardmode => false;
+	public class Bark : AnimatedModItem, ICustomWikiStat {
+		public override LocalizedText Tooltip => LocalizedText.Empty;
+		bool? ICustomWikiStat.Hardmode => false;
+		private static readonly Color[] grayVariantColors = [Color.White, Color.MediumPurple, Color.IndianRed, Color.DarkGray]; // colors not final
+		public int variant = 0;
+		public int variantColor = 0;
+		static DrawAnimationManual animation;
+		public override DrawAnimation Animation {
+			get {
+				animation.Frame = variant;
+				return animation;
+			}
+		}
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 25;
+			animation = new DrawAnimationManual(5);
+			Main.RegisterItemAnimation(Item.type, animation);
+		}
+		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
+			Item.width = (int)(22 / 1.5f);
+			Item.height = (int)(32 / 1.5f);
+		}
 		public override void AddRecipes() {
 			Recipe.Create(ModContent.ItemType<Rubber>())
 			.AddIngredient(this)
 			.AddTile(TileID.GlassKiln)
 			.Register();
+		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_ShakeTree shakeTree) {
+				Tile tile = Main.tile[shakeTree.TileCoords];
+
+				switch (tile.TileType) {
+					case TileID.Trees: {
+						WorldGen.GetTreeBottom(shakeTree.TileCoords.X, shakeTree.TileCoords.Y, out int x, out int y);
+						int tileType = Main.tile[x, y].TileType;
+						ITree type = PlantLoader.GetTree(tileType);
+						if (type is Petrified_Tree) {
+							variant = 1;
+						}
+						if (type is Exoskeletal_Tree) {
+							variant = 3;
+						}
+						switch (WorldGen.GetTreeType(tileType)) {
+							case TreeTypes.Corrupt: {
+								variant = 2;
+								variantColor = 1;
+								break;
+							}
+							case TreeTypes.Crimson: {
+								variant = 2;
+								variantColor = 2;
+								break;
+							}
+						}
+						break;
+					}
+
+					case TileID.TreeAmber:
+					case TileID.TreeAmethyst:
+					case TileID.TreeDiamond:
+					case TileID.TreeEmerald:
+					case TileID.TreeRuby:
+					case TileID.TreeSapphire:
+					case TileID.TreeTopaz: {
+						variant = 4;
+						break;
+					}
+
+					case TileID.TreeAsh: {
+						variant = 2;
+						variantColor = 3;
+						break;
+					}
+				}
+			}
+		}
+		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+			Texture2D texture = TextureAssets.Item[Item.type].Value;
+			Item.color = grayVariantColors[variantColor];
+			spriteBatch.Draw(texture, position, Animation.GetFrame(texture), drawColor.MultiplyRGBA(itemColor), 0f, origin, scale, SpriteEffects.None, 0f);
+			return false;
+		}
+		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
+			Texture2D texture = TextureAssets.Item[Item.type].Value;
+			Rectangle frame = Animation.GetFrame(texture);
+			Item.color = grayVariantColors[variantColor];
+			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor.MultiplyRGBA(alphaColor.MultiplyRGBA(Item.color)), 0f, frame.Size() * 0.5f, scale, SpriteEffects.None, 0f);
+			return false;
+		}
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write((byte)variant);
+			writer.Write((byte)variantColor);
+		}
+		public override void NetReceive(BinaryReader reader) {
+			variant = reader.ReadByte();
+			variantColor = reader.ReadByte();
 		}
 	}
 	public class Bat_Hide : MaterialItem {
@@ -114,11 +221,6 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			ItemID.Sets.ShimmerTransformToItem[ItemID.RottenChunk] = ItemID.Vertebrae;
-			ItemID.Sets.ShimmerTransformToItem[ItemID.Vertebrae] = ModContent.ItemType<Strange_String>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Strange_String>()] = ModContent.ItemType<Bud_Barnacle>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bud_Barnacle>()] = ModContent.ItemType<Biocomponent10>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Biocomponent10>()] = ItemID.RottenChunk;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.UnholyArrow, 5)
@@ -129,9 +231,9 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Black_Bile : MaterialItem, IJournalEntrySource {
-        public string[] Categories => [
-            "LoreItem"
-        ];
+		public string[] Categories => [
+			"LoreItem"
+		];
 		public string EntryName => "Origins/" + typeof(Black_Bile_Entry).Name;
 		public override int Rare => ItemRarityID.Orange;
 		public override int Value => Item.sellPrice(silver: 10);
@@ -183,14 +285,14 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, new(109, 85, 85));
 		}
 	}
 	public class Defiled_Bar : MaterialItem, ICustomWikiStat, IJournalEntrySource {
-        public string[] Categories => [
-            "LoreItem",
+		public string[] Categories => [
+			"LoreItem",
 			"Bar"
-        ];
+		];
 		public string EntryName => "Origins/" + typeof(Defiled_Bar_Entry).Name;
 		public class Defiled_Bar_Entry : JournalEntry {
 			public override string TextKey => "Defiled_Bar";
@@ -201,7 +303,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this, dust: DustID.WhiteTorch);
+			tileID = Bar_Tile.AddBarTile(this, new(204, 204, 204), DustID.WhiteTorch);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -217,15 +319,9 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Mythril);
+			tileID = Bar_Tile.AddBarTile(this, new(127, 168, 220), DustID.Mythril);
 		}
-
-		public override void SetStaticDefaults() {
-            base.SetStaticDefaults();
-			ItemID.Sets.ShimmerTransformToItem[ItemID.HallowedBar] = ModContent.ItemType<Eitrite_Bar>();
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Eitrite_Bar>()] = ItemID.HallowedBar;
-        }
-        public override int Value => Item.sellPrice(silver: 81);
+		public override int Value => Item.sellPrice(silver: 81);
 		public override int Rare => ItemRarityID.Orange;
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -233,24 +329,11 @@ namespace Origins.Items.Materials {
 			.AddTile(TileID.AdamantiteForge)
 			.Register();
 
-            Recipe.Create(Type)
-            .AddRecipeGroup("AdamantiteBars")
-            .AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2)
-            .AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>(), 3)
-            .AddTile(TileID.MythrilAnvil)
-            .Register();
-		}
-	}
-	public class Element36_Bundle : MaterialItem {
-		public override int Value => Item.sellPrice(gold: 1);
-		public override int Rare => ItemRarityID.Purple;
-		public override bool Hardmode => true;
-		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.FragmentNebula)
-			.AddIngredient(ModContent.ItemType<Fibron_Plating>(), 4)
-			.AddIngredient(ModContent.ItemType<Formium_Bar>())
-			.AddTile(TileID.Anvils) //Interstellar Sampler also not implemented
+			.AddRecipeGroup("AdamantiteBars")
+			.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2)
+			.AddIngredient(ModContent.ItemType<Alkaliphiliac_Tissue>(), 3)
+			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
 	}
@@ -263,7 +346,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Astra);
+			tileID = Bar_Tile.AddBarTile(this, new(130, 129, 116), DustID.Astra);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -273,17 +356,17 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Felnum_Bar : MaterialItem, IJournalEntrySource, ICustomWikiStat {
-        public string[] Categories => [
-            "LoreItem",
+		public string[] Categories => [
+			"LoreItem",
 			"Bar"
-        ];
-        public override int Value => Item.sellPrice(silver: 40);
+		];
+		public override int Value => Item.sellPrice(silver: 40);
 		public override int Rare => ItemRarityID.Green;
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Electric);
+			tileID = Bar_Tile.AddBarTile(this, new(233, 173, 117), DustID.Electric);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -306,7 +389,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			tileID = Bar_Tile.AddBarTile(this, new(0, 148, 148));
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -319,18 +402,6 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(silver: 10);
 		public override int Rare => ItemRarityID.Purple;
 		public override bool Hardmode => true;
-	}
-	public class Lunar_Token : MaterialItem {
-		public override bool HasGlowmask => true;
-		public override string GlowTexture => Texture;
-		public override int ResearchUnlockCount => 100;
-		public override int Value => -1;
-		public override int Rare => ItemRarityID.Cyan;
-		public override bool Hardmode => true;
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
-		}
 	}
 	public class Magic_Hair_Spray : MaterialItem {
 		public override int ResearchUnlockCount => 1;
@@ -355,14 +426,6 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
 		public override bool Hardmode => false;
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			ItemID.Sets.ShimmerTransformToItem[ItemID.ShadowScale] = ItemID.TissueSample;
-			ItemID.Sets.ShimmerTransformToItem[ItemID.TissueSample] = ModContent.ItemType<Undead_Chunk>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Undead_Chunk>()] = ModContent.ItemType<Riven_Carapace>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Carapace>()] = ModContent.ItemType<NE8>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<NE8>()] = ItemID.ShadowScale;
-		}
 	}
 	public class Nova_Fragment : MaterialItem {
 		public override bool HasGlowmask => true;
@@ -454,7 +517,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Torch);
+			tileID = Bar_Tile.AddBarTile(this, new(255, 175, 0), DustID.Torch);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -471,7 +534,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this, dust: DustID.Lead);
+			tileID = Bar_Tile.AddBarTile(this, new(134, 134, 134), DustID.Lead);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -485,10 +548,10 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => false;
 		public override bool HasTooltip => true;
 		public override void AddRecipes() {
-            Recipe.Create(ItemID.UnholyArrow, 5)
+			Recipe.Create(ItemID.UnholyArrow, 5)
 			.AddIngredient(ItemID.WoodenArrow, 5)
-            .AddIngredient(Type)
-            .AddTile(TileID.Anvils)
+			.AddIngredient(Type)
+			.AddTile(TileID.Anvils)
 			.Register();
 		}
 	}
@@ -513,12 +576,12 @@ namespace Origins.Items.Materials {
 			.AddTile(TileID.GlassKiln)
 			.Register();
 
-            Recipe.Create(ItemID.LesserHealingPotion, 2)
-            .AddIngredient(ItemID.Bottle, 2)
-            .AddIngredient(ModContent.ItemType<Tree_Sap>())
-            .AddTile(TileID.Bottles)
-            .Register();
-        }
+			Recipe.Create(ItemID.LesserHealingPotion, 2)
+			.AddIngredient(ItemID.Bottle, 2)
+			.AddIngredient(ModContent.ItemType<Tree_Sap>())
+			.AddTile(TileID.Bottles)
+			.Register();
+		}
 	}
 	public class Undead_Chunk : MaterialItem, IJournalEntrySource {
 		public string EntryName => "Origins/" + typeof(Undead_Chunk_Entry).Name;
@@ -546,7 +609,7 @@ namespace Origins.Items.Materials {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.Ectoplasm)
-			//.AddIngredient(ModContent.ItemType<Aetherium_Bar>())
+			.AddIngredient(ModContent.ItemType<Aetherite_Bar>())
 			.AddIngredient(ModContent.ItemType<Felnum_Bar>())
 			.AddTile(TileID.AdamantiteForge)
 			.Register();
@@ -571,7 +634,6 @@ namespace Origins.Items.Materials {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Defiled_Dungeon_Chest_Item>();
 		}
 	}
-	public class Dusk_Key : Dawn_Key { }
 	public class Hell_Key : Dawn_Key { }
 	public class Mushroom_Key : Dawn_Key { }
 	public class Ocean_Key : Dawn_Key { }

@@ -1,14 +1,17 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
+using Origins.Dusts;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner.Minions;
-using Origins.Journal;
+using Origins.Layers;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
+using Origins.NPCs.Riven;
 using Origins.Projectiles.Misc;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -47,6 +50,7 @@ namespace Origins {
 
 		#region armor/set bonuses
 		public bool ashenKBReduction = false;
+		public bool fiberglassHelmet = false;
 		public bool fiberglassSet = false;
 		public bool oldCryostenSet = false;
 		public bool oldCryostenHelmet = false;
@@ -98,6 +102,7 @@ namespace Origins {
 		public bool LuckyHatSetActive => luckyHatSet && (luckyHatSetTime == -1 || luckyHatSetTime >= 90);
 		public bool mildewHead = false;
 		public bool mildewSet = false;
+		public bool chambersiteCommandoSet = false;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -110,7 +115,8 @@ namespace Origins {
 		public bool advancedImaging = false;
 		public bool venomFang = false;
 		public bool lightningRing = false;
-		public bool lazyCloakVisible = false;
+		public bool lazyCloakHidden = false;
+		public int[] lazyCloaksOffPlayer = ArmorIDs.Front.Sets.Factory.CreateIntSet();
 		public bool amebicVialVisible = false;
 		public byte amebicVialCooldown = 0;
 		public bool entangledEnergy = false;
@@ -200,6 +206,9 @@ namespace Origins {
 		public int[] potatOSQuoteCooldown;
 		public int[] protOSQuoteCooldown;
 		public int lastGravDir = 1;
+		public int lastDir = 1;
+		public bool changedDir = false;
+		public bool ChangedGravDir => Player.gravDir != oldGravDir;
 		public int nearbyBoundNPCTime = 0;
 		public int nearbyBoundNPCType = 0;
 		public bool resinShield = false;
@@ -285,6 +294,7 @@ namespace Origins {
 		public bool oldMithrafin = false;
 		public const float mithrafinSelfMult = 0.8f;
 		public bool fullSend = false;
+		public bool fullSendHorseshoeBonus = false;
 		public Item fullSendItem = null;
 		public Vector2 fullSendStartPos;
 		public Vector2 fullSendPos;
@@ -298,6 +308,23 @@ namespace Origins {
 		public bool goldenLotus = false;
 		public Item goldenLotusItem = null;
 		public int goldenLotusProj = -1;
+		public bool resizingGlove = false;
+		public float resizingGloveScale = 1f;
+		public bool WishingGlass {
+			get => wishingGlassEquipTime > 0;
+			set => wishingGlassEquipTime = value.Mul(2);
+		}
+		int wishingGlassEquipTime = 0;
+		public bool wishingGlassActive = false;
+		public int wishingGlassCooldown = 0;
+		public bool wishingGlassVisible = false;
+		public int wishingGlassAnimation = 0;
+		public int wishingGlassDye = -1;
+		public Vector2 wishingGlassOffset = default;
+		public bool shimmerShield = false;
+		public int shimmerShieldDashTime = 0;
+		public int? dashBaseDamage = 0;
+		public bool airTank = false;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -328,11 +355,6 @@ namespace Origins {
 		public float ZoneVoidProgressSmoothed = 0;
 
 		public float ZoneDefiledProgress = 0;
-		int DefiledMonolithTime = 0;
-		public bool DefiledMonolith {
-			get => DefiledMonolithTime > 0;
-			set => DefiledMonolithTime = value ? 5 : Math.Max(DefiledMonolithTime - 1, 0);
-		}
 		public float ZoneDefiledProgressSmoothed = 0;
 
 		public float ZoneRivenProgress = 0;
@@ -349,6 +371,8 @@ namespace Origins {
 		#region buffs
 		public int rapidSpawnFrames = 0;
 		public int rasterizedTime = 0;
+		public int? visualRasterizedTime = null;
+		public int VisualRasterizedTime => visualRasterizedTime ?? rasterizedTime;
 		public bool toxicShock = false;
 		public bool tornDebuff = false;
 		public bool flaskBile = false;
@@ -369,6 +393,11 @@ namespace Origins {
 		public bool staticShockDamage = false;
 		public int staticShockTime = 0;
 		public int relayRodStrength = 0;
+		public bool weakShimmer = false;
+		public bool compositeFrontArmWasEnabled = false;
+		public bool walledDebuff = false;
+
+		public bool sendBuffs = false;
 		#endregion
 
 		#region keybinds
@@ -412,6 +441,21 @@ namespace Origins {
 		public int keytarMode = 0;
 		public float soulSnatcherTime = 0;
 		public bool soulSnatcherActive = false;
+
+		public bool shimmerGuardianMinion = false;
+		public List<int> ownedLargeGems = [];
+		public int amnesticRoseHoldTime = 0;
+		public int amnesticRoseBloomTime = 0;
+		public PolarVec2[] amnesticRoseJoints = [];
+		/// <summary>
+		/// Relative to Player.Bottom
+		/// </summary>
+		public Vector2 relativeTarget = Vector2.Zero;
+		public float dreamcatcherAngle = 0;
+		public float dreamcatcherRotSpeed = 0;
+		public int dreamcatcherHoldTime = 0;
+		public Vector2? dreamcatcherWorldPosition = null;
+		public bool pocketDimensionMonolithActive = false;
 		#endregion
 
 		#region visuals
@@ -475,6 +519,7 @@ namespace Origins {
 		public bool doubleTapDown = false;
 		public bool forceDrown = false;
 		public bool forceFallthrough = false;
+		public bool noFallThrough = false;
 		public int timeSinceRainedOn = 0;
 		/// <summary>
 		/// not set to true by alt uses
@@ -482,11 +527,22 @@ namespace Origins {
 		public bool realControlUseItem = false;
 		public float oldNearbyActiveNPCs = 0;
 		public List<string> journalText = [];
+		public float moveSpeedMult = 1;
+		public bool upsideDown = false;
+		int[] minionCountByType = ProjectileID.Sets.Factory.CreateIntSet();
+		public Speed_Booster.ConveyorBeltModifier conveyorBeltModifiers = null;
+		public const int scytheBladeDetachCombo = 3;
+		public const int maxScytheCombo = 10;
+		public int scytheHitCombo = 0;
+		public const int maxDangerTime = 5 * 60;
+		public int dangerTime = 0;
+		public bool InDanger { get; private set; }
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
 			if (felnumSet) oldBonuses |= 2;
+			fiberglassHelmet = false;
 			fiberglassSet = false;
 			oldCryostenSet = false;
 			oldCryostenHelmet = false;
@@ -535,9 +591,10 @@ namespace Origins {
 							newColor: Main.hslToRgb(Main.rand.NextFloat(6), 1, 0.5f)
 						);
 					}
-					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-2f), Player.position);
+					SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitch(-1f), Player.position);
 				}
 			}
+			Player.GetJumpState<Latchkey_Jump_Refresh>().Enable();
 			rivenSet = false;
 			rivenSetBoost = false;
 			bleedingObsidianSet = false;
@@ -595,6 +652,7 @@ namespace Origins {
 			}
 			mildewHead = false;
 			mildewSet = false;
+			chambersiteCommandoSet = false;
 
 			setActiveAbility = 0;
 			if (setAbilityCooldown > 0) {
@@ -617,7 +675,8 @@ namespace Origins {
 			advancedImaging = false;
 			venomFang = false;
 			lightningRing = false;
-			lazyCloakVisible = false;
+			lazyCloakHidden = false;
+			for (int i = 0; i < lazyCloaksOffPlayer.Length; i++) lazyCloaksOffPlayer[i].Cooldown();
 			amebicVialVisible = false;
 			entangledEnergy = false;
 			entangledEnergyCount.Warmup(60, Entangled_Energy.MaxSecondsPerSecond);
@@ -674,6 +733,8 @@ namespace Origins {
 			dashHitDebuffs.Clear();
 			dashVase = false;
 			dashVaseDye = 0;
+			abyssalAnchorDye = 0;
+			bindingBookDye = 0;
 			goldenLotus = false;
 
 			trapCharm = false;
@@ -694,6 +755,57 @@ namespace Origins {
 					SoundEngine.PlaySound(SoundID.NPCDeath13.WithVolumeScale(0.75f), Player.position);
 				}
 			}
+			resizingGlove = false;
+			wishingGlassEquipTime.Cooldown();
+			if (wishingGlassCooldown.Cooldown()) {
+				if (wishingGlassVisible) {
+
+				} else {
+					int dustType = ModContent.DustType<Following_Shimmer_Dust>();
+					for (int i = 0; i < 20; i++) {
+						Dust dust = Dust.NewDustDirect(
+							Player.position,
+							Player.width,
+							Player.height,
+							dustType,
+							0f,
+							0f,
+							100,
+							default,
+							2.5f
+						);
+						dust.noGravity = true;
+						dust.velocity *= 11f;
+						dust.position -= dust.velocity * 12;
+						dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player, 1);
+
+						dust = Dust.NewDustDirect(
+							Player.position,
+							Player.width,
+							Player.height,
+							dustType,
+							0f,
+							0f,
+							100,
+							default,
+							1.5f
+						);
+						dust.noGravity = true;
+						dust.velocity *= 7f;
+						dust.position -= dust.velocity * 12;
+						dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player, 1);
+					}
+				}
+			}
+			wishingGlassActive = false;
+			wishingGlassOffset -= Player.velocity * (wishingGlassAnimation > Wishing_Glass_Layer.CooldownEndAnimationDuration ? 0 : 0.5f);
+			wishingGlassOffset *= wishingGlassAnimation > Wishing_Glass_Layer.CooldownEndAnimationDuration ? 0.7f : 0.85f;
+			Wishing_Glass_Layer.UpdateAnimation(ref wishingGlassAnimation, wishingGlassCooldown);
+			wishingGlassVisible = false;
+			wishingGlassDye = 0;
+			shimmerShield = false;
+			dashBaseDamage = null;
+			airTank = false;
 			lotteryTicketItem = null;
 
 			
@@ -814,6 +926,8 @@ namespace Origins {
 			miniStaticShock = false;
 			staticShockDamage = false;
 			if (!Player.HasBuff<Relay_Rod_Buff>()) relayRodStrength = 0;
+			weakShimmer = false;
+			compositeFrontArmWasEnabled = false;
 			broth = null;
 			if (staticBrothEffectCooldown > 0)
 				staticBrothEffectCooldown--;
@@ -825,6 +939,13 @@ namespace Origins {
 			
 			boatRockerAltUse = false;
 			boatRockerAltUse2 = false;
+
+			shimmerGuardianMinion = false;
+			amnesticRoseHoldTime.Cooldown();
+			if (amnesticRoseHoldTime <= 0) amnesticRoseBloomTime.Cooldown();
+			Dream_Catcher.UpdateVisual(Player, ref dreamcatcherAngle, ref dreamcatcherRotSpeed);
+			if (dreamcatcherHoldTime.Cooldown()) dreamcatcherWorldPosition = null;
+			pocketDimensionMonolithActive = false;
 
 			manaShielding = 0f;
 
@@ -887,6 +1008,7 @@ namespace Origins {
 			} else if (!Player.HasBuff<Defiled_Asphyxiator_Debuff_3>()) {
 				rasterizedTime = 0;
 			}
+			visualRasterizedTime = null;
 			Soul_Snatcher.UpdateCharge(Player, ref soulSnatcherTime, ref soulSnatcherActive);
 			plagueSight = false;
 			plagueSightLight = false;
@@ -957,6 +1079,12 @@ namespace Origins {
 			}
 			oldVelocities.Insert(0, Player.velocity);
 			while (oldVelocities.Count > 20) oldVelocities.RemoveAt(20);
+			if (tornCurrentSeverity >= 0.99f && Player.whoAmI == Main.myPlayer && !Player.dead && Player.statLifeMax2 <= 0) {
+				mildewHealth = 0;
+				Player.KillMe(PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Torn").SelectFrom(Player.name).ToNetworkText()),
+					9999, 0
+				);
+			}
 			#region check if a dash should start
 			dashDirection = 0;
 			dashDirectionY = 0;
@@ -965,14 +1093,18 @@ namespace Origins {
 				const int DashUp = 1;
 				const int DashRight = 2;
 				const int DashLeft = 3;
-				if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15) {
-					dashDirection = 1;
-				} else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15) {
-					dashDirection = -1;
-				} else if (Player.controlUp && Player.releaseUp && Player.doubleTapCardinalTimer[DashUp] < 15) {
-					dashDirectionY = -1;
-				} else if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15) {
-					dashDirectionY = 1;
+				if (Player.whoAmI == Main.myPlayer) {
+					if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15) {
+						dashDirection = 1;
+					} else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15) {
+						dashDirection = -1;
+					}
+					if (Player.controlUp && Player.releaseUp && Player.doubleTapCardinalTimer[DashUp] < 15) {
+						dashDirectionY = -1;
+					} else if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15) {
+						dashDirectionY = 1;
+					}
+					new Dash_Action(Player, dashDirection, dashDirectionY).Send();
 				}
 			} else {
 				dashDelay--;
@@ -984,11 +1116,28 @@ namespace Origins {
 				Player.honeyWet |= forceHoneyCollision = voodooDoll.honeyWet;
 				Player.shimmerWet |= forceShimmerCollision = voodooDoll.shimmerWet;
 			}
+			changedDir = lastDir.TrySet(Player.direction);
 			voodooDoll = null;
 			forceDrown = false;
 			heldProjOverArm = null;
 			shieldGlow = -1;
 			if (timeSinceRainedOn < int.MaxValue) timeSinceRainedOn++;
+			moveSpeedMult = 1;
+			Array.Clear(minionCountByType);
+			upsideDown = false;
+			conveyorBeltModifiers = null;
+			walledDebuff = false;
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc?.ModNPC is Goo_Wall gooWall && gooWall.InsideWall(Player)) {
+					walledDebuff = true;
+					break;
+				}
+			}
+			if (dangerTime <= 0) dangerTime = 0;
+			else dangerTime--;
+			InDanger = dangerTime > 0;
+			if (scytheHitCombo > maxScytheCombo) scytheHitCombo = maxScytheCombo;
+			if (!InDanger) scytheHitCombo = 0;
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;
@@ -1007,11 +1156,16 @@ namespace Origins {
 			talkingPet = index;
 			talkingPetTime = 2;
 		}
-		public void UnlockJournalEntry(string entryName) {
-			if (Player.whoAmI == Main.myPlayer && unlockedJournalEntries.Add(entryName)) {
-				unreadJournalEntries.Add(entryName);
-				SoundEngine.PlaySound(Origins.Sounds.Journal);
+		public void UnlockJournalEntry(string entryNames) {
+			if (!journalUnlocked) return;
+			bool playSound = false;
+			foreach (string entryName in entryNames.Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)) {
+				if (Player.whoAmI == Main.myPlayer && unlockedJournalEntries.Add(entryName)) {
+					unreadJournalEntries.Add(entryName);
+					playSound = true;
+				}
 			}
+			if (playSound) SoundEngine.PlaySound(Origins.Sounds.Journal);
 		}
 		bool necromanaUsedThisUse = false;
 		public override void OnConsumeMana(Item item, int manaConsumed) {
@@ -1030,5 +1184,6 @@ namespace Origins {
 				necromanaUsedThisUse = true;
 			}
 		}
+		internal int GetNewMinionIndexByType(int type) => minionCountByType[type]++;
 	}
 }

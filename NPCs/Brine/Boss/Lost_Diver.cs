@@ -97,6 +97,7 @@ namespace Origins.NPCs.Brine.Boss {
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = 0f
 			};
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 			Origins.RasterizeAdjustment[Type] = (10, 0.07f, 1f);
 		}
@@ -136,7 +137,7 @@ namespace Origins.NPCs.Brine.Boss {
 			set => NPC.localAI[3] = (int)value;
 		}
 		public override bool CanTargetPlayer(Player player) => NPC.WithinRange(player.MountedCenter, 16 * 400);
-		public override bool CanTargetNPC(NPC other) => other.type != NPCID.TargetDummy && NPC.WithinRange(other.Center, 16 * 400) && CanHitNPC(other);
+		public override bool CanTargetNPC(NPC other) => !OriginsSets.NPCs.TargetDummies[other.type] && NPC.WithinRange(other.Center, 16 * 400) && CanHitNPC(other);
 		public override bool CanHitNPC(NPC target) => !Mildew_Creeper.FriendlyNPCTypes.Contains(target.type);
 		public override bool CheckTargetLOS(Vector2 target) {
 			if (!NPC.wet) return true;
@@ -367,7 +368,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							direction.RotatedBy(NPC.direction * -0.5f) * speed,
 							ModContent.ProjectileType<Lost_Diver_Depth_Charge>(),
-							30 + (int)(5 * difficultyMult),
+							30 + (int)(15 * difficultyMult),
 							4,
 							ai2: NPC.whoAmI
 						).identity;
@@ -390,7 +391,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							direction * speed,
 							ModContent.ProjectileType<Lost_Diver_Torpedo_Tube>(),
-							26 + (int)(4 * difficultyMult),
+							26 + (int)(9 * difficultyMult),
 							4,
 							ai2: NPC.whoAmI
 						);
@@ -417,7 +418,7 @@ namespace Origins.NPCs.Brine.Boss {
 							NPC.Center,
 							direction * speed,
 							ModContent.ProjectileType<Lost_Diver_Mildew_Whip>(),
-							24 + (int)(5 * difficultyMult),
+							24 + (int)(11 * difficultyMult),
 							2,
 							ai2: NPC.whoAmI
 						).identity;

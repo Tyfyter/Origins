@@ -44,7 +44,7 @@ namespace Origins.Items.Accessories {
 	}
 	public class Brine_Leafed_Clover_1 : Brine_Leafed_Clover {
 		public override int Level => 1;
-		public override int NextLowerTier => ModContent.ItemType<Brine_Leafed_Clover_0>();
+		public override int NextLowerTier => ItemID.None;// ModContent.ItemType<Brine_Leafed_Clover_0>();
 	}
 	public class Brine_Leafed_Clover_2 : Brine_Leafed_Clover {
 		public override int Level => 2;

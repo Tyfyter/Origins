@@ -1,22 +1,26 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Graphics;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Reflection;
 using Origins.World.BiomeData;
 using PegasusLib;
+using PegasusLib.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using Terraria.Utilities;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.MusicBoxes {
@@ -54,7 +58,7 @@ namespace Origins.Tiles.MusicBoxes {
 			}
 		}
 		public override void Load() {
-			Item = new(this);
+			Item = CreateItem();
 			Mod.AddContent(Item);
 			musicBoxes.Add(this);
 		}
@@ -82,6 +86,7 @@ namespace Origins.Tiles.MusicBoxes {
 			player.cursorItemIconEnabled = true;
 			player.cursorItemIconID = Item.Type;
 		}
+		public virtual Music_Box_Item CreateItem() => new(this);
 	}
 	[Autoload(false)]
 	public class Music_Box_Item(Music_Box tile) : ModItem(), ICustomWikiStat {
@@ -94,13 +99,17 @@ namespace Origins.Tiles.MusicBoxes {
 		public override string Name => tile.Name + "_Item";
 		public override LocalizedText DisplayName => Language.GetText("Mods.Origins.Tiles." + tile.Name);
 		public override LocalizedText Tooltip => LocalizedText.Empty;
-		protected override bool CloneNewInstances => true;
+		protected sealed override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.CanGetPrefixes[Type] = false; // music boxes can't get prefixes in vanilla
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.MusicBox; // recorded music boxes transform into the basic form in shimmer
 		}
 		public override void SetDefaults() {
 			Item.DefaultToMusicBox(tile.Type, 0);
+			Item.maxStack = 1;
+		}
+		public override bool? PrefixChance(int pre, UnifiedRandom rand) {
+			return false;
 		}
 		public void ModifyWikiStats(JObject data) {
 			Dictionary<string, int> musicByPath = MusicMethods.musicByPath.GetValue();
@@ -171,7 +180,7 @@ namespace Origins.Tiles.MusicBoxes {
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			drawData.glowColor = GlowColor;
 			drawData.glowSourceRect = new Rectangle(drawData.tileFrameX, drawData.tileFrameY, 18, 18);
-			drawData.glowTexture = GlowTexture;
+			drawData.glowTexture = this.GetGlowTexture(drawData.tileCache.TileColor);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			Tile tile = Main.tile[i, j];
@@ -197,7 +206,7 @@ namespace Origins.Tiles.MusicBoxes {
 						tile.Slope = (SlopeType)(frameTime + 1);
 					}
 				}
-			} else if(tile.TileFrameNumber > 0) {
+			} else if (tile.TileFrameNumber > 0) {
 				frameXOffset += 36;
 				frameYOffset += (tile.TileFrameNumber - 1) * 36;
 				if (tile.TileFrameNumber > 0) {
@@ -444,5 +453,85 @@ namespace Origins.Tiles.MusicBoxes {
 		public override Color MapColor => new Color(146, 253, 250);
 		public override int MusicSlot => Origins.Music.Fiberglass;
 		public override int DustType => DustID.Glass;
+	}
+	public class Music_Box_TD : Music_Box {
+		public override Color MapColor => new(87, 35, 178);
+		public override int MusicSlot => Origins.Music.TheDive;
+		public override int DustType => DustID.GemAmethyst;
+		public override Music_Box_Item CreateItem() => new Music_Box_TD_Item(this);
+		public class Music_Box_TD_Item(Music_Box tile) : Music_Box_Item(tile) {
+			AutoLoadingAsset<Texture2D> glowTexture = "Terraria/Images/Misc/Perlin";
+			public static ArmorShaderData Shader { get; private set; }
+			bool ArabelCage = false;
+			public override void SetStaticDefaults() {
+				Shader = new ArmorShaderData(
+					Mod.Assets.Request<Effect>("Effects/Item_Caustics"),
+					"The_Dive"
+				);
+			}
+			public override void OnSpawn(IEntitySource source) => ArabelCage = source.Context == "ArabelCage";
+			public override void Update(ref float gravity, ref float maxFallSpeed) {
+				if (ArabelCage) {
+					if (!NPC.AnyNPCs(NPCType<Shimmer_Construct>())) {
+						Item.TurnToAir();
+					} else if (!Item.shimmered) {
+						Item.shimmered = true;
+						Item.shimmerTime = 1;
+					}
+				}
+			}
+			public override bool OnPickup(Player player) {
+				ArabelCage = false;
+				return base.OnPickup(player);
+			}
+			public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
+				if (ArabelCage) {
+					SpriteBatchState state = spriteBatch.GetState();
+					try {
+						spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate);
+						Texture2D texture = glowTexture;
+						DrawData data = new() {
+							texture = texture,
+							position = Item.Center - Main.screenPosition,
+							color = Color.Plum,
+							rotation = 0f,
+							scale = new Vector2(scale),
+							origin = texture.Size() * 0.5f
+						};
+						Shader.Apply(Item, data);
+						data.Draw(spriteBatch);
+					} finally {
+						spriteBatch.Restart(state);
+					}
+				}
+			}
+			public override void NetSend(BinaryWriter writer) {
+				writer.Write(ArabelCage);
+			}
+			public override void NetReceive(BinaryReader reader) {
+				ArabelCage = reader.ReadBoolean();
+			}
+		}
+	}
+	public class Otherworldly_Music_Box_DW : Music_Box {
+		public override string[] Categories => [
+			"Hardmode"
+		];
+		public override Color MapColor => new(255, 255, 255);
+		public override int MusicSlot => Origins.Music.OtherworldlyDefiled;
+		public override int DustType => Defiled_Wastelands.DefaultTileDust;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			AnimationFrameHeight = 36;
+		}
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			if (++frameCounter >= 8) {
+				frameCounter = 0;
+				frame = ++frame % 4;
+			}
+		}
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			if (Main.tile[i, j].TileFrameX < 36) frameYOffset = 0;
+		}
 	}
 }

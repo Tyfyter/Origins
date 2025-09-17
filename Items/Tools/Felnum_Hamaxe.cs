@@ -1,4 +1,5 @@
 using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
 using PegasusLib;
@@ -15,6 +16,8 @@ namespace Origins.Items.Tools {
 		];
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {

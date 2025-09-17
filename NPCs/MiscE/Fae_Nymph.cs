@@ -26,12 +26,16 @@ namespace Origins.NPCs.MiscE {
 			NPC.width = 28;
 			NPC.height = 46;
 			NPC.friendly = false;
+			NPC.DeathSound = SoundID.Zombie113.WithPitch(1f).WithVolume(2f);
 			NPC.value = Item.buyPrice(gold: 2);
 			AIType = NPCID.Nymph;
 			AnimationType = NPCID.Nymph;
 			Banner = Item.NPCtoBanner(NPCID.Nymph);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<Whimsical_Girl>()], quickUnlock: true);
+			ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type] = ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<Whimsical_Girl>()];
+
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText(),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
@@ -104,6 +108,9 @@ namespace Origins.NPCs.MiscE {
 					NPC.Transform(ModContent.NPCType<Fae_Nymph>());
 				}
 			}
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.NormalvsExpert(ModContent.ItemType<Fairy_Lotus>(), 2, 1));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {

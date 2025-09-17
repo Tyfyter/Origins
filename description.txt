@@ -22,3 +22,5 @@ We thank you for expressing interest in this mod and hope it brings you joy!
 
 If you have any questions, comments or a bug you have found from anything Origins-related, please reach out to us through our Discord server!
 If you would rather not join the server, instead e-mail us at developmentorigins@gmail.com
+
+One sound provided by SoundEffectsFactory.

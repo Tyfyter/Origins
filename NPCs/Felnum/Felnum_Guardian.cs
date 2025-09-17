@@ -39,7 +39,7 @@ namespace Origins.NPCs.Felnum {
 			FriendlyNPCTypes.Add(ModContent.NPCType<Felnum_Ore_Slime>());
 			FriendlyNPCTypes.Add(ModContent.NPCType<Felnum_Einheri>());
 			FriendlyNPCTypes.Add(ModContent.NPCType<Cloud_Elemental>());
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Static_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Static_Shock_Debuff.ID] = true;
 		}
 		public override void Unload() => FriendlyNPCTypes = null;
 		public override void SetDefaults() {
@@ -64,7 +64,7 @@ namespace Origins.NPCs.Felnum {
 		public override bool? CanFallThroughPlatforms() => true;
 		SlotId soundSlot;
 		public static bool ShouldChaseNPC(NPC npc, Vector2 center, ref NPC dummyTarget) {
-			if (npc.type == NPCID.TargetDummy) {
+			if (OriginsSets.NPCs.TargetDummies[npc.type]) {
 				if (npc.DistanceSQ(center) < (dummyTarget?.DistanceSQ(center) ?? float.PositiveInfinity)) dummyTarget = npc;
 				return false;
 			}

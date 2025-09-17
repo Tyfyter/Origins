@@ -43,8 +43,8 @@ namespace Origins.Items {
 					Vector2 pos = projectile.Center.Clamp(target.Hitbox);
 					spawnArea = new((int)pos.X, (int)pos.Y, 0, 0);
 				}
-				for (int i = 0; i < 6 + (spawnArea.Width * spawnArea.Height) * 0.01f; i++) {
-					Dust dust = Dust.NewDustDirect(spawnArea.TopLeft(), spawnArea.Width, spawnArea.Height, ModContent.DustType<Solution_D>(), 0f, 0f, 40, new(0, 80, 100), 1.1f);
+				for (int i = 0; i < 9 + (spawnArea.Width * spawnArea.Height) * 0.015f; i++) {
+					Dust dust = Dust.NewDustDirect(spawnArea.TopLeft(), spawnArea.Width, spawnArea.Height, ModContent.DustType<Solution_D>(), 0f, 0f, 40, new(0, 100, 125), 1.5f);
 					dust.noGravity = true;
 					dust.velocity += (dust.position - spawnArea.Center()).SafeNormalize(default) * 4;
 				}

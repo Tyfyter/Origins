@@ -17,8 +17,12 @@ namespace Origins.Projectiles {
 		float scaleModifier = 1f;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) => entity.CountsAsClass(DamageClass.Melee);
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
-			if (ApplyScaleToProjectile[projectile.type] && source is EntitySource_ItemUse itemUse) {
-				SetScaleModifier(projectile, itemUse.Player.GetAdjustedItemScale(itemUse.Item));
+			if (source is EntitySource_ItemUse itemUse) {
+				float scale = 1f;
+				OriginPlayer originPlayer = itemUse.Player.OriginPlayer();
+				if (ApplyScaleToProjectile[projectile.type]) scale = itemUse.Player.GetAdjustedItemScale(itemUse.Item);
+				if (originPlayer.resizingGlove) scale *= originPlayer.resizingGloveScale;
+				SetScaleModifier(projectile, scale);
 			}
 		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {

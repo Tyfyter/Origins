@@ -23,6 +23,7 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(26, 26);
 			Item.value = Item.sellPrice(gold: 8);
 			Item.rare = ItemRarityID.Lime;
+			Item.expert = true;
 			Item.shoot = ModContent.ProjectileType<Dryad_Ward>();
 			Item.accessory = true;
             Item.glowMask = glowmask;
@@ -37,7 +38,10 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClass.Generic) *= 1.05f;
 			player.longInvince = true;
+			player.SporeSac(Item);
 			player.sporeSac = true;
+			player.starCloakItem = Item;
+			player.starCloakItem_starVeilOverrideItem = Item;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.guardedHeart = true;
 			originPlayer.dryadNecklace = true;
@@ -112,7 +116,7 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		bool AppliesToEnemy(NPC npc, float radius) {
-			if (npc.type == NPCID.TargetDummy || !npc.active) return false;
+			if (OriginsSets.NPCs.TargetDummies[npc.type] || !npc.active) return false;
 			if (npc.friendly || npc.lifeMax <= 5 || npc.dontTakeDamage) return false;
 			if (Projectile.Distance(Projectile.Center.Clamp(npc.Hitbox)) >= radius) return false;
 			int buffIndex = npc.FindBuffIndex(BuffID.DryadsWardDebuff);

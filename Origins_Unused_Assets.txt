@@ -340,7 +340,7 @@ Music/Festering_Hives
 Music/Heart_Of_The_Beast
 Music/Heart_Of_The_Beast_Old
 Music/Living_By_a_Nerve
-Music/Pereunt_Unum_Scindendum
+Music/Scinditur_Pereunt
 Music/Rivendancer_2081
 Music/Shattered_Topography_Old
 Music/Stolen_Memories
@@ -441,7 +441,6 @@ NPCs/MiscE/Boulder_Mimic_Glow
 NPCs/MiscE/Cannihound
 NPCs/MiscE/Cloud_Elemental
 NPCs/MiscE/Cloud_Elemental_Fingergun
-NPCs/MiscE/NPC_48
 
 NPCs/Nova Pillar/Nova_Pillar_Glow
 NPCs/Nova Pillar/Nova_Pillar_Head_Boss

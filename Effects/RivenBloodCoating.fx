@@ -34,12 +34,27 @@ float4 RivenBloodCoating(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0)
 		float4(0.35, 1, 0.75, 0.2) * (1 - uIntensity),
 		tex2D(uImage1, (coords * uScreenResolution + uScreenPosition) / uImageSize1) * float4(0.394f, 0.879f, 0.912f, 1) * uIntensity,
 		(adjacents / (alpha * 3))
-	) * alpha; // + float4(0.6, 0, 0.8, 0) * color.a;
-	//
+	) * alpha;
+}
+
+float4 ChineseRivenBloodCoating(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	float2 worldCoords = (coords - float2(0.5, 0.5)) / uZoom + float2(0.5, 0.5);
+	float alpha = tex2D(uImage2, worldCoords).a;
+	float2 pixelX = float2(2 / uScreenResolution.x, 0) / uZoom;
+	float2 pixelY = float2(0, 2 / uScreenResolution.y) / uZoom;
+	float adjacents = tex2D(uImage2, worldCoords + pixelX).a + tex2D(uImage2, worldCoords - pixelX).a + tex2D(uImage2, worldCoords + pixelY).a + tex2D(uImage2, worldCoords - pixelY).a;
+	return tex2D(uImage0, coords) + lerp(
+		float4(0.5, 0.5, 0.5, 0.5),
+		float4(1, 1, 1, 1),
+		(adjacents / (alpha * 3))
+	) * alpha;
 }
 
 technique Technique1{
 	pass RivenBloodCoating {
 		PixelShader = compile ps_2_0 RivenBloodCoating();
+	}
+	pass ChineseRivenBloodCoating {
+		PixelShader = compile ps_2_0 ChineseRivenBloodCoating();
 	}
 }

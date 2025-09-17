@@ -1,6 +1,10 @@
-﻿using Terraria;
+﻿using BetterDialogue.UI.VanillaChatButtons;
+using MonoMod.Cil;
+using System;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace Origins.Items.Accessories {
     public class Priority_Mail : ModItem {
@@ -8,7 +12,30 @@ namespace Origins.Items.Accessories {
             "Combat",
 			"SummonBoostAcc"
         ];
-        public override void SetDefaults() {
+		public override void Load() {
+			try {
+				IL_ItemSlot.RightClick_ItemArray_int_int += (il) => {
+					ILCursor c = new(il);
+					c.GotoNext(MoveType.After,
+						i => i.MatchLdarg0(),//IL_00fe: ldarg.0
+						i => i.MatchLdarg2(),//IL_00ff: ldarg.2
+						i => i.MatchLdelemRef(),//IL_0100: ldelem.ref
+						i => i.MatchLdfld<Item>(nameof(Item.maxStack)),//IL_0101: ldfld int32 Terraria.Item::maxStack
+						i => i.MatchLdcI4(1),//IL_0106: ldc.i4.1
+						i => i.MatchBneUn(out _)//IL_0107: bne.un.s IL_011c
+					);
+					c.Index -= 2;
+					c.EmitLdarg0();
+					c.EmitLdarg2();
+					c.EmitLdelemRef();
+					c.EmitDelegate((int maxStack, Item item) => item.stack == 1 && item.accessory ? 1 : maxStack);
+				};
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError("EnableRightClickSwappingOnStackableAccessories", e)) throw;
+			}
+		}
+
+		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 28);
 			Item.maxStack = 2;
 			Item.accessory = true;

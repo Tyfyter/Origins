@@ -1,17 +1,22 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework;
+﻿using Mono.Cecil;
 using Origins.Buffs;
+using Origins.Dusts;
 using Origins.Items;
 using Origins.Items.Accessories;
+using Origins.Items.Armor.Aetherite;
+using Origins.Items.Armor.Chambersite;
 using Origins.Items.Mounts;
+using Origins.Items.Other;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
-using Origins.NPCs.Defiled;
+using Origins.Layers;
+using Origins.Projectiles;
 using PegasusLib;
+using PegasusLib.Networking;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -239,6 +244,17 @@ namespace Origins {
 			if (Player.miscEquips[3]?.ModItem is Ravel ravel) {
 				ravel.UpdateEquip(Player);
 			}
+			if (Player.gemCount == 9) {
+				ownedLargeGems.Clear();
+				for (int i = 0; i <= 58; i++) {
+					if (ModLargeGem.GemTextures[Player.inventory[i].type] is not null && !ownedLargeGems.Contains(Player.inventory[i].type)) {
+						ownedLargeGems.Add(Player.inventory[i].type);
+					}
+				}
+				ownedLargeGems.Sort();
+
+				if (Player.trashItem?.IsAir != true && ModLargeGem.GemTextures[Player.trashItem.type] is not null) Player.trashItem.SetDefaults();
+			}
 		}
 		public override void PostUpdateMiscEffects() {
 			Debugging.LogFirstRun(PostUpdateMiscEffects);
@@ -301,25 +317,24 @@ namespace Origins {
 			}
 			if (cursedVoice && Main.myPlayer == Player.whoAmI) {
 				Player.AddBuff(cursedVoiceItem.buffType, 5);
-				if (cursedVoiceCooldown <= 0 && Player.MouthPosition is Vector2 mouthPosition && Keybindings.ForbiddenVoice.JustPressed && Player.CheckMana(cursedVoiceItem.mana, true)) {
-					Player.manaRegenDelay = (int)Player.maxRegenDelay;
-					Projectile.NewProjectileDirect(
-						Player.GetSource_Accessory(cursedVoiceItem),
-						mouthPosition,
-						Vector2.Zero,
-						cursedVoiceItem.shoot,
-						Player.GetWeaponDamage(cursedVoiceItem),
-						Player.GetWeaponKnockback(cursedVoiceItem),
-						Player.whoAmI
-					);
-					cursedVoiceCooldown = cursedVoiceCooldownMax = CombinedHooks.TotalUseTime(cursedVoiceItem.useTime, Player, cursedVoiceItem);
-					bool longerExpertDebuff = BuffID.Sets.LongerExpertDebuff[cursedVoiceItem.buffType];
-					try {
-						BuffID.Sets.LongerExpertDebuff[cursedVoiceItem.buffType] = false;
-						Player.AddBuff(cursedVoiceItem.buffType, cursedVoiceCooldown);
-					} finally {
-						BuffID.Sets.LongerExpertDebuff[cursedVoiceItem.buffType] = longerExpertDebuff;
+				if (cursedVoiceCooldown <= 0) {
+					if (Player.MouthPosition is Vector2 mouthPosition && Keybindings.ForbiddenVoice.JustPressed && Player.CheckMana(cursedVoiceItem.mana, true)) {
+						Player.manaRegenDelay = (int)Player.maxRegenDelay;
+						Projectile.NewProjectileDirect(
+							Player.GetSource_Accessory(cursedVoiceItem),
+							mouthPosition,
+							Vector2.Zero,
+							cursedVoiceItem.shoot,
+							Player.GetWeaponDamage(cursedVoiceItem),
+							Player.GetWeaponKnockback(cursedVoiceItem),
+							Player.whoAmI
+						);
+						cursedVoiceCooldown = cursedVoiceCooldownMax = CombinedHooks.TotalUseTime(cursedVoiceItem.useTime, Player, cursedVoiceItem);
 					}
+				} else {
+					int index = Player.FindBuffIndex(cursedVoiceItem.buffType);
+					int time = cursedVoiceCooldown + 59;
+					if (index != -1 && Player.buffTime[index] < time) Player.buffTime[index] = time;
 				}
 			}
 			if (goldenLotus && Main.myPlayer == Player.whoAmI) {
@@ -351,7 +366,49 @@ namespace Origins {
 					}
 				}
 			}
-			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay:true)) {
+			if (WishingGlass && wishingGlassCooldown <= 0 && Player.GetModPlayer<SyncedKeybinds>().WishingGlass.JustPressed) {
+				if (wishingGlassVisible) {
+					Wishing_Glass_Layer.StartAnimation(ref wishingGlassAnimation);
+				} else {
+					int dustType = ModContent.DustType<Following_Shimmer_Dust>();
+					for (int i = 0; i < 20; i++) {
+						Dust dust = Dust.NewDustDirect(
+							Player.position,
+							Player.width,
+							Player.height,
+							dustType,
+							0f,
+							0f,
+							100,
+							default,
+							2.5f
+						);
+						dust.noGravity = true;
+						dust.velocity *= 7f;
+						dust.velocity += Player.velocity * 0.75f;
+						dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player);
+
+						dust = Dust.NewDustDirect(
+							Player.position,
+							Player.width,
+							Player.height,
+							dustType,
+							0f,
+							0f,
+							100,
+							default,
+							1.5f
+						);
+						dust.velocity *= 3f;
+						dust.velocity += Player.velocity * 0.75f;
+						dust.customData = new Following_Shimmer_Dust.FollowingDustSettings(Player);
+					}
+				}
+				if (Main.myPlayer == Player.whoAmI) {
+					Player.AddBuff(ModContent.BuffType<Wishing_Glass_Buff>(), 8 * 60);
+				}
+			}
+			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay: true)) {
 				//Player.manaRegenDelay = (int)Player.maxRegenDelay;
 				Item item = protozoaFoodItem;
 				int damage = Player.GetWeaponDamage(item);
@@ -445,7 +502,7 @@ namespace Origins {
 				Protomind.PlayRandomMessage(Protomind.QuoteType.Respawn, protOSQuoteCooldown, Player.Top);
 			}
 
-			if (cinderSealItem?.ModItem is not null && cinderSealCount > 0 && Player.immuneTime > 0) { 
+			if (cinderSealItem?.ModItem is not null && cinderSealCount > 0 && Player.immuneTime > 0) {
 				for (int i = 0; i < cinderSealCount; i++) {
 					Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash).noGravity = true;
 				}
@@ -481,13 +538,22 @@ namespace Origins {
 				if (Player.statLife <= 0) {
 					Player.lifeRegenCount = 0;
 					speed = 0.81f;
-					Player.KillMe(lastMildewDeathReason, 0, 0, lastMildewDeathPvP);
+					if (Player.whoAmI == Main.myPlayer) {
+						if (mildewHealth <= 0) {
+							Player.KillMe(lastMildewDeathReason, 9999, 0, lastMildewDeathPvP);
+						}
+					} else {
+						Player.statLife = 1;
+					}
 				} else if (Player.statLife < mildewHealth) {
 					Player.lifeRegenCount += 24;
 					speed = 0.1f;
 				}
 				MathUtils.LinearSmoothing(ref mildewHealth, Math.Min(Player.statLifeMax2 * 0.65f, Player.statLife), speed);
 			} else {
+				if (mildewHealth > 0 && Player.statLife <= 0 && Player.whoAmI == Main.myPlayer) {
+					Player.KillMe(lastMildewDeathReason, 9999, 0, lastMildewDeathPvP);
+				}
 				mildewHealth = 0;
 			}
 			if (necromancyPrefixMana > Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier) {
@@ -496,29 +562,23 @@ namespace Origins {
 				Player.manaRegenDelay = 0;
 				if (necromancyPrefixMana < Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier) necromancyPrefixMana = Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier;
 			}
-			oldGravDir = Player.gravDir;
 		}
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource) {
-			if (mildewHeart && mildewHealth > 0) {
-				lastMildewDeathReason = damageSource;
-				lastMildewDeathPvP = pvp;
+			if (mildewHeart) {
+				if (tornCurrentSeverity >= 1 || Player.statLifeMax2 <= 0) {
+					mildewHealth = 0;
+				}
+				if (Player.whoAmI != Main.myPlayer) return damage >= 9999;
+				if (mildewHealth > 0) {
+					lastMildewDeathReason = damageSource;
+					lastMildewDeathPvP = pvp;
+				}
 				return mildewHealth <= 0;
 			}
 			return true;
 		}
 		public override void UpdateDyes() {
 			Debugging.LogFirstRun(UpdateDyes);
-			if (dashVaseVisual) {
-				for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
-					if (Player.armor[i].ModItem is Fallacious_Vase) {
-						dashVaseDye = Player.dye[i].dye;
-					}
-					if (Player.armor[i + 10].ModItem is Fallacious_Vase) {
-						dashVaseDye = Player.dye[i].dye;
-						break;
-					}
-				}
-			}
 		}
 		public void ApplyEyndumSetBuffs() {
 			#region movement
@@ -574,7 +634,7 @@ namespace Origins {
 			#endregion
 		}
 		public void TriggerSetBonus(bool fromNet = false) {
-			if (setAbilityCooldown > 0) return;
+			if (setAbilityCooldown > 0 || Player.DeadOrGhost) return;
 			if (!fromNet && Main.netMode != NetmodeID.SinglePlayer) {
 
 			}
@@ -607,6 +667,33 @@ namespace Origins {
 					blastSetActive = true;
 					break;
 				}
+
+				case SetActiveAbility.aetherite_armor: {
+					setAbilityCooldown = 600;
+					Player.SpawnProjectile(null,
+						Player.MountedCenter,
+						Vector2.Zero,
+						ModContent.ProjectileType<Aetherite_Aura_P>(),
+						0,
+						0
+					);
+					break;
+				}
+
+				case SetActiveAbility.chambersite_armor: {
+					setAbilityCooldown = 1200;
+					int dmg = 90;
+					Player.SpawnProjectile(null,
+						Player.MountedCenter,
+						Vector2.Zero,
+						Chambersite_Commander_Sentinel.ID,
+						dmg,
+						1
+					).originalDamage = dmg;
+					Player.AddBuff(Chambersite_Commander_Sentinel_Buff.ID, 900);
+					break;
+				}
+
 				default:
 				break;
 			}
@@ -657,5 +744,7 @@ namespace Origins {
 	}
 	public static class SetActiveAbility {
 		public const int blast_armor = 4;
+		public const int aetherite_armor = 5;
+		public const int chambersite_armor = 6;
 	}
 }

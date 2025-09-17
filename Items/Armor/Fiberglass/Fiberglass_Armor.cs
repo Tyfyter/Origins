@@ -19,6 +19,9 @@ namespace Origins.Items.Armor.Fiberglass {
 			Item.defense = 5;
 			Item.value = Item.sellPrice(silver: 45);
 		}
+		public override void UpdateEquip(Player player) {
+			player.OriginPlayer().fiberglassHelmet = true;
+		}	
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Fiberglass_Body>() && legs.type == ModContent.ItemType<Fiberglass_Legs>();
 		}
@@ -46,6 +49,10 @@ namespace Origins.Items.Armor.Fiberglass {
 			Item.defense = 6;
 			Item.value = Item.sellPrice(silver: 75);
 		}
+		public override void UpdateEquip(Player player) {
+			player.GetDamage(DamageClass.Default).Flat += 2;
+			player.GetDamage(DamageClass.Generic).Flat += 2;
+		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Fiberglass_Legs : ModItem, INoSeperateWikiPage {
@@ -57,6 +64,9 @@ namespace Origins.Items.Armor.Fiberglass {
 		public override void SetDefaults() {
 			Item.defense = 5;
 			Item.value = Item.sellPrice(silver: 60);
+		}
+		public override void UpdateEquip(Player player) {
+			player.moveSpeed += 0.1f;
 		}
 	}
 }

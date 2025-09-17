@@ -1,17 +1,19 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
+using Origins.Dev;
+using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Items.Weapons.Melee;
 using Origins.Projectiles;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.Items.Weapons.Ammo.Canisters;
-using Terraria.GameContent;
-using PegasusLib;
-using Terraria.DataStructures;
-using Terraria.Audio;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Meteor : ModItem, ICustomWikiStat {
@@ -112,7 +114,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
-				Projectile.velocity.Y += 0.12f;
+				this.DoGravity(0.12f);
 				Projectile.rotation += Projectile.velocity.X * 0.075f;
 			} else if (++Projectile.ai[1] > 180) {
 				/*Projectile.NewProjectile(
@@ -133,7 +135,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;
-			if (Projectile.velocity.Y > 0 && (target.velocity.Y < 0 || !target.collideY)) {
+			if (Projectile.velocity.Y > 0 && (target.velocity.Y < 0 || !target.collideY) && !CritType.ModEnabled) {
 				modifiers.CritDamage += Projectile.CritChance / 100f;
 				modifiers.SetCrit();
 			}
@@ -287,5 +289,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.ai[0] = 1;
 			}
 		}
+	}
+	public class Meteor_Crit_Type : CritType<Meteor> {
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile.velocity.Y > 0 && (target.velocity.Y < 0 || !target.collideY);
+		public override float CritMultiplier(Player player, Item item) => 1.8f;
 	}
 }

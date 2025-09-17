@@ -24,6 +24,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"ExpendableWeapon"
 		];
 		public override void SetStaticDefaults() {
+			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -49,6 +50,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Origins.MagicTripwireRange[Type] = 32;
 			Origins.MagicTripwireDetonationStyle[Type] = 1;
 			ProjectileID.Sets.Explosive[Type] = true;
+			ProjectileID.Sets.NeedsUUID[Type] = true;
 			Hydrolantern_Force_Global.ProjectileTypes.Add(Type);
 		}
 		public override void SetDefaults() {
@@ -99,8 +101,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.Kill();
 					return;
 				}
-				SoundEngine.PlaySound(SoundID.Zombie82.WithPitch(-3).WithVolume(0.2f) with { MaxInstances = 0 }, Projectile.Center);
-				SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitch(-4f) with { MaxInstances = 0 }, Projectile.Center);
+				SoundEngine.PlaySound(SoundID.Zombie82.WithPitch(-1).WithVolume(0.2f) with { MaxInstances = 0 }, Projectile.Center);
+				SoundEngine.PlaySound(Origins.Sounds.DeepBoom with { MaxInstances = 0 }, Projectile.Center);
 				if (Projectile.owner == Main.myPlayer) {
 					Projectile.NewProjectileDirect(
 						Projectile.GetSource_FromAI(),
@@ -142,14 +144,19 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.tileCollide = false;
 		}
 		public override void AI() {
-			Projectile parent = Main.projectile.FirstOrDefault(x => x.identity == Projectile.ai[0]);
-			Projectile.position = parent.Center;
+			Projectile parent = null;
+			if (Projectile.ai[0] >= 0 && Projectile.owner < OriginSystem.projectilesByOwnerAndID.GetLength(0) && Projectile.ai[0] < OriginSystem.projectilesByOwnerAndID.GetLength(1)) {
+				parent = OriginSystem.projectilesByOwnerAndID[Projectile.owner, (int)Projectile.ai[0]];
+			}
+			if (parent?.ModProjectile is not Sonar_Dynamite_P || !parent.active) Projectile.ai[0] = -1;
+			else Projectile.position = parent.Center;
 			if (Projectile.ai[1] > 1) Projectile.Kill();
 			Projectile.ai[1] += 1 / 30f;
+			if (parent is null) return;
 			float range = 224.5f * Projectile.ai[1];
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (npc.CanBeChasedBy(Projectile) && Projectile.Center.Clamp(npc.Hitbox).WithinRange(Projectile.Center, range)) {
-					parent.timeLeft = 5;
+					if (Projectile.IsLocallyOwned()) parent.timeLeft = 5;
 					npc.GetGlobalNPC<OriginGlobalNPC>().sonarDynamiteTime = 5;
 				}
 			}

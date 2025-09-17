@@ -30,6 +30,9 @@ namespace Origins.Projectiles {
 				}
 			}
 		}
+		public override void GrapplePullSpeed(Projectile projectile, Player player, ref float speed) {
+			if (player.OriginPlayer().automatedReturnsHandler) speed *= 2f;
+		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
 			//bitWriter.WriteBit(isRetracting);
 		}

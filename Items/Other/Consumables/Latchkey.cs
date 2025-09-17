@@ -5,16 +5,10 @@ using Origins.Items.Accessories;
 using Origins.Items.Other.Dyes;
 using Origins.NPCs.Defiled.Boss;
 using Origins.Tiles;
-using PegasusLib;
 using PegasusLib.Graphics;
-using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.Graphics.Light;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -49,6 +43,11 @@ namespace Origins.Items.Other.Consumables {
 			return base.UseItem(player);
 		}
 	}
+	public class Latchkey_Jump_Refresh : ExtraJump {
+		public override Position GetDefaultPosition() => BeforeBottleJumps;
+		public override bool CanStart(Player player) => false;
+		public override float GetDurationMultiplier(Player player) => 0;
+	}
 	public class Latchkey_P : ModProjectile {
 		public const int max_updates = 4;
 		public override string Texture => typeof(Refactoring_Pieces).GetDefaultTMLName();
@@ -69,7 +68,14 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void AI() {
 			Player owner = Main.player[Projectile.owner];
-			
+
+			owner.velocity = Vector2.UnitY * -0.01f;
+			ref ExtraJumpState jumpState = ref owner.GetJumpState<Latchkey_Jump_Refresh>();
+			if (jumpState.Available) {
+				owner.RefreshMovementAbilities();
+				jumpState.Available = false;
+			}
+
 			if (Projectile.ai[0] > 0) {
 				Projectile.timeLeft = 2;
 				if (--Projectile.ai[0] <= 0) Projectile.Kill();
@@ -94,7 +100,6 @@ namespace Origins.Items.Other.Consumables {
 						break;
 						case 2:
 						Projectile.Kill();
-						owner.velocity = Vector2.Zero;
 						return;
 					}
 					if (shouldBreak) {
@@ -104,12 +109,11 @@ namespace Origins.Items.Other.Consumables {
 				}
 				if (!didBreak) {
 					Projectile.Kill();
-					owner.velocity = Vector2.Zero;
 				}
 			}
 
 			owner.Center = Projectile.Center;
-			owner.velocity = Projectile.velocity;
+			owner.velocity += Projectile.velocity;
 			if (++Projectile.frameCounter >= 14) {
 				Projectile.frameCounter = 0;
 				Projectile.frame++;

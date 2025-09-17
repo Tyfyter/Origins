@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Projectiles.Weapons;
 using System;
@@ -13,6 +14,9 @@ namespace Origins.Items.Weapons.Melee {
 		public string[] Categories => [
 			"Sword"
 		];
+		public override void SetStaticDefaults() {
+			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.damage = 27;
 			Item.DamageType = DamageClass.Melee;
@@ -148,5 +152,9 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			return false;
 		}
+	}
+	public class Soulslasher_Crit_Type : CritType<Soulslasher> {
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ModProjectile is Soulslasher_Swing;
+		public override float CritMultiplier(Player player, Item item) => 1.4f;
 	}
 }

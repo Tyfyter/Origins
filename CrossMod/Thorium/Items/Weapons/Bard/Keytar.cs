@@ -1,5 +1,7 @@
 ﻿using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Materials;
+using Origins.Tiles.Other;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -37,6 +39,14 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			item.value = Item.sellPrice(gold: 2);
 			item.rare = ItemRarityID.Pink;
 			cost = 20;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient<Busted_Servo>(17)
+			.AddIngredient<Rotor>(8)
+			.AddIngredient<Watered_Down_Keytar>()
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 		public static TooltipLine ModeTooltip => new(
 			Origins.instance,
@@ -80,8 +90,18 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 				);
 			}
 		}
+		public static void AddTooltips(List<TooltipLine> tooltips, int tagIndex = 1) {
+			tooltips.Insert(tagIndex, ModeTooltip);
+			int index = tooltips.FindIndex(l => l.Name == "Tooltip0");
+			for (int i = 0; i < 3; i++) {
+				string text = Language.GetTextValue("Mods.Origins.Items.Keytar.Modes." + i);
+				if (i == OriginPlayer.LocalOriginPlayer?.keytarMode) text = "-" + text;
+				tooltips.Insert(index++, new(Origins.instance, "ModeIndicator", text));
+			}
+			//
+		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			tooltips.Insert(1, ModeTooltip);
+			AddTooltips(tooltips);
 		}
 		public override bool? UseItem(Player player) {
 			if (player.altFunctionUse == 2) CycleMode(player);
@@ -98,7 +118,7 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			}
 			SoundEngine.PlaySound(Item.UseSound.Value.WithPitchOffset(
 				Math.Min(((Main.MouseWorld - player.Center) / new Vector2(Main.screenWidth * 0.4f, Main.screenHeight * 0.4f)).Length(), 1) * 2 - 1
-			));
+			), player.Center);
 			return null;
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-6, 0);
@@ -230,6 +250,14 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			Item.shoot = ModContent.ProjectileType<Keytar_Synth_Thorium>();
 			InspirationCost = cost / 10;
 		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient<Busted_Servo>(17)
+			.AddIngredient<Rotor>(8)
+			.AddIngredient<Watered_Down_Keytar_Thorium>()
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
+		}
 		public override void BardUseAnimation(Player player) {
 			if (player.altFunctionUse == 2) {
 				ItemID.Sets.SkipsInitialUseSound[Type] = false;
@@ -250,7 +278,7 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			}
 		}
 		public override void BardModifyTooltips(List<TooltipLine> tooltips) {
-			tooltips.Insert(2, Keytar.ModeTooltip);
+			Keytar.AddTooltips(tooltips, 2);
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-6, 0);
 		public override bool AltFunctionUse(Player player) => true;

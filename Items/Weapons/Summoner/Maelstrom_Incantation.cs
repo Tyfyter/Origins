@@ -1,9 +1,6 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Fargowiltas.Items.Explosives;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Items.Materials;
 using PegasusLib;
 using ReLogic.Content;
@@ -14,9 +11,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
-using ThoriumMod.NPCs;
-using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Maelstrom_Incantation : ModItem, ICustomDrawItem {
@@ -24,6 +18,8 @@ namespace Origins.Items.Weapons.Summoner {
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.useStyle = ItemUseStyleID.Shoot;

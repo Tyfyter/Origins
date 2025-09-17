@@ -1,3 +1,4 @@
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs;
@@ -6,7 +7,9 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
-	public class Alkahest_Arrow : ModItem, ICustomWikiStat {
+	public class Alkahest_Arrow : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.5f;
+		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			"Torn",
 			"TornSource",
@@ -28,6 +31,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Recipe.Create(Type, 150)
 			.AddIngredient(ItemID.WoodenArrow, 150)
 			.AddIngredient(ModContent.ItemType<Alkahest>())
+			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
 	}
@@ -43,7 +47,7 @@ namespace Origins.Items.Weapons.Ammo {
 			SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 300, 180, 0.5f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 300, 180, Alkahest_Arrow.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 	}
 }

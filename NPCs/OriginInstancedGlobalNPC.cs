@@ -1,17 +1,14 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Weapons;
-using SteelSeries.GameSense.DeviceZone;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,6 +29,7 @@ namespace Origins.NPCs {
 		internal bool mildewWhipDebuff = false;
 		internal bool ocotilloFingerDebuff = false;
 		internal bool acridSpoutDebuff = false;
+		internal bool accretionRibbonDebuff = false;
 		internal bool brineIncantationDebuff = false;
 		internal bool injectIncantationDebuff = false;
 		internal bool mildewIncantationDebuff = false;
@@ -66,6 +64,13 @@ namespace Origins.NPCs {
 		public bool airBird = false;
 		public bool deadBird = false;
 		public int sonarDynamiteTime = 0;
+		public bool lazyCloakShimmer = false;
+		public int shinedownDamage = 0;
+		public float shinedownSpeed = 1;
+		public int sentinelDamage = 0;
+		public float sentinelSpeed = 1;
+		public bool amnesticRose = false;
+		public int amnesticRoseGooProj = 0;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
@@ -81,6 +86,7 @@ namespace Origins.NPCs {
 			mildewWhipDebuff = false;
 			ocotilloFingerDebuff = false;
 			acridSpoutDebuff = false;
+			accretionRibbonDebuff = false;
 			amebolizeDebuff = false;
 			beeAfraidDebuff = false;
 			hibernalIncantationDebuff = false;
@@ -127,6 +133,8 @@ namespace Origins.NPCs {
 					npc.StrikeInstantKill();
 				}
 			}
+			lazyCloakShimmer = false;
+			amnesticRose = false;
 		}
 		public override void DrawEffects(NPC npc, ref Color drawColor) {
 			if (priorityMailTime > 0) {
@@ -255,6 +263,18 @@ namespace Origins.NPCs {
 					damage += 2;
 				}
 			}
+			if (shinedownDamage > 0) {
+				int displayedDamage = Main.rand.RandomRound(shinedownDamage / (shinedownSpeed * 1.5f));
+				if (damage < displayedDamage) damage = displayedDamage;
+				npc.lifeRegenCount -= shinedownDamage * 4;
+				shinedownDamage = 0;
+			}
+			if (sentinelDamage > 0) {
+				int displayedDamage = Main.rand.RandomRound(sentinelDamage / (sentinelSpeed * 1.5f));
+				if (damage < displayedDamage) damage = displayedDamage;
+				npc.lifeRegenCount -= sentinelDamage * 4;
+				sentinelDamage = 0;
+			}
 		}
 		public static void AddInfusionSpike(NPC npc, int projectileID) {
 			OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
@@ -313,7 +333,7 @@ namespace Origins.NPCs {
 			shaders.Clear();
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				ArmorShaderData shaderData = GameShaders.Armor.GetSecondaryShader(Acrid_Dye.ShaderID, null);
-				shaderData.UseTargetPosition((npc.Center - Main.screenPosition) / Main.ScreenSize.ToVector2());
+				shaderData.UseTargetPosition(((npc.Center - Main.screenPosition) / Main.ScreenSize.ToVector2()).Apply(Main.GameViewMatrix.Effects, Vector2.One));
 				shaders.Add(shaderData);
 			}
 			if (rasterizedTime > 0) shaders.Add(GameShaders.Armor.GetSecondaryShader(Rasterized_Dye.ShaderID, null));

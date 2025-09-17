@@ -80,7 +80,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.Center = (player.HandPosition ?? player.MountedCenter) + (Projectile.velocity.SafeNormalize(default) * 26) - Projectile.velocity;
 			} else {
 				Projectile.ai[0] = 1;
-				Projectile.velocity.Y += 0.2f;
+				this.DoGravity(0.2f);
 				Projectile.rotation += Projectile.velocity.X * 0.05f;
 			}
 		}

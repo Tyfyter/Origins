@@ -68,6 +68,22 @@ namespace Origins.Items.Weapons.Ranged {
 				Projectile.alpha -= 15;
 			if (Projectile.alpha < 0)
 				Projectile.alpha = 0;
+			if (Projectile.shimmerWet) {
+				int num = (int)(Projectile.Center.X / 16f);
+				int num2 = (int)(Projectile.position.Y / 16f);
+				if (WorldGen.InWorld(num, num2) && Main.tile[num, num2] != null && Main.tile[num, num2].LiquidAmount == byte.MaxValue && Main.tile[num, num2].LiquidType == LiquidID.Shimmer && WorldGen.InWorld(num, num2 - 1) && Main.tile[num, num2 - 1] != null && Main.tile[num, num2 - 1].LiquidAmount > 0 && Main.tile[num, num2 - 1].LiquidType == LiquidID.Shimmer) {
+					Projectile.Kill();
+				} else if (Projectile.velocity.Y > 0f) {
+					Projectile.velocity.Y *= -1f;
+					Projectile.netUpdate = true;
+					if (Projectile.timeLeft > 600)
+						Projectile.timeLeft = 600;
+
+					Projectile.timeLeft -= 60;
+					Projectile.shimmerWet = false;
+					Projectile.wet = false;
+				}
+			}
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			if (Projectile.alpha < 200) {

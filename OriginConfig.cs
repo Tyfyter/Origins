@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Fish;
@@ -51,12 +52,17 @@ namespace Origins {
 		[LabelKey($"$ItemName.{nameof(ItemID.ThunderSpear)}"), DefaultValue(true)]
 		[TooltipKey(add_debuff_tooltip), TooltipArgs($"$ItemName.{nameof(ItemID.ThunderSpear)}", "$Buffs.Static_Shock_Debuff.DisplayName")]
 		public bool ThunderSpear = true;
+		[DefaultValue(true)]
+		public bool VanillaWhipScale = true;
 
 		[DefaultValue(true), ReloadRequired]
 		public bool RoyalGel = true;
 
 		[DefaultValue(true), ReloadRequired]
 		public bool VolatileGelatin = true;
+
+		[DefaultValue(true), ReloadRequired]
+		public bool FrostHydra = true;
 
 		[Header("Other")]
 
@@ -143,6 +149,12 @@ namespace Origins {
 		[DefaultValue(false)]
 		public bool TwentyFourHourTime = false;
 
+		[DefaultValue(false)]
+		public bool ShowRarityInHotbar = false;
+
+		[DefaultValue(true)]
+		public bool ImproveChlorophyteBulletsPerformance = true;
+
 		[DefaultValue(ArtifactMinionHealthbarStyles.Auto)]
 		public ArtifactMinionHealthbarStyles ArtifactMinionHealthbarStyle = ArtifactMinionHealthbarStyles.Auto;
 
@@ -156,9 +168,14 @@ namespace Origins {
 		public bool ShowLockedEntries = true;
 		[DefaultValue(true)]
 		public bool EntryCategoryHeaders = true;
+		[DefaultValue(Scroll_Wheel_Direction.Normal)]
+		public Scroll_Wheel_Direction ScrollWheelDirection = Scroll_Wheel_Direction.Normal;
 
 		[DefaultValue(Journal_Default_UI_Mode.Quest_List)]
 		public Journal_Default_UI_Mode DefaultJournalMode = Journal_Default_UI_Mode.Quest_List;
+
+		[Header("Compatibility"), ReloadRequired]
+		public List<NPCDefinition> npcsNotToForceDialectOn = [];
 		internal void Save() {
 			Directory.CreateDirectory(ConfigManager.ModConfigPath);
 			string filename = Mod.Name + "_" + Name + ".json";
@@ -177,6 +194,11 @@ namespace Origins {
 				LanguageManager.Instance.SetLanguage(culture);
 			}
 		}
+	}
+	public enum Scroll_Wheel_Direction {
+		Normal,
+		Inverted,
+		Disabled
 	}
 	public class LaserTagConfig : ModConfig {
 		public static LaserTagConfig Instance => OriginClientConfig.Instance.laserTagConfig;
@@ -741,10 +763,11 @@ namespace Origins {
 				WriteFile(Origins.instance.GetContent<ModNPC>().Select(item => item.Name), File.CreateText(path + "_NPCs.txt"));
 
 				static void WriteFile(IEnumerable<string> lines, StreamWriter writer) {
-					foreach (string line in lines.Order()) writer.WriteLine(line);
+					foreach (string line in lines.Order()) writer.Write(line + "\n");
 					writer.Flush();
 					writer.Close();
 				}
+				ModContent.GetInstance<ISHIntegration>()?.SetupVersionTags();
 			}
 		}
 		public HashSet<string> IgnoredCompatibilitySuggestions { get; set; } = [];

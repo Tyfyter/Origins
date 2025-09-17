@@ -135,6 +135,7 @@ namespace Origins.Graphics {
 			), tangelaSeed, extraOffset);
 		}
 		public static void DrawTangela(DrawData data, int tangelaSeed, Vector2 extraOffset = default) {
+			if (OriginsModIntegrations.DrawingAOMap) return;
 			data.shader = ShaderID;
 			data.color = Color.White;
 			drawDatas.Add(new(data, tangelaSeed, extraOffset));
@@ -160,6 +161,7 @@ namespace Origins.Graphics {
 	public class Tangela_Resaturate_Overlay() : Overlay(EffectPriority.High, RenderLayers.All), IUnloadable {
 		static uint lastGameFrameCount;
 		public override void Draw(SpriteBatch spriteBatch) {
+			if (spriteBatch is null) return;
 			if (lastGameFrameCount == Origins.gameFrameCount) return;
 			lastGameFrameCount = Origins.gameFrameCount;
 			if (!Lighting.NotRetro) {

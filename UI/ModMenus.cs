@@ -3,6 +3,7 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Origins.Backgrounds;
 using Origins.Graphics;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
@@ -10,6 +11,7 @@ using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static Origins.World.BiomeData.Brine_Pool;
 
 namespace Origins.UI {
 	public class Riven_Hive_Mod_Menu : ModMenu {
@@ -80,6 +82,17 @@ namespace Origins.UI {
 				SpriteEffects.None,
 				0
 			);
+			//Can't add Origins subtitle because it's as big as the actual logo
+			//spriteBatch.Draw(Subtitle.Value, logoDrawCenter + logoRotation.ToRotationVector2() * 32 + (logoRotation + MathHelper.PiOver2).ToRotationVector2() * 100, null, drawColor, logoRotation, new(243 * 0.5f, 50), logoScale * 2, SpriteEffects.None, 0);
+		}
+	}
+	public class Aether_Mod_Menu : ModMenu {
+		public override Asset<Texture2D> Logo => ModContent.Request<Texture2D>("Origins/UI/Logos/Shimmer_Terraria");
+		public override int Music => Origins.Music.TheDive;
+		public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<Placeholder_Surface_Background>();
+		public override string DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey("ModMenu.Aether")).Value;
+		public override bool IsAvailable => false; // Waiting on https://github.com/tModLoader/tModLoader/pull/4716
+		public override void PostDrawLogo(SpriteBatch spriteBatch, Vector2 logoDrawCenter, float logoRotation, float logoScale, Color drawColor) {
 			//Can't add Origins subtitle because it's as big as the actual logo
 			//spriteBatch.Draw(Subtitle.Value, logoDrawCenter + logoRotation.ToRotationVector2() * 32 + (logoRotation + MathHelper.PiOver2).ToRotationVector2() * 100, null, drawColor, logoRotation, new(243 * 0.5f, 50), logoScale * 2, SpriteEffects.None, 0);
 		}

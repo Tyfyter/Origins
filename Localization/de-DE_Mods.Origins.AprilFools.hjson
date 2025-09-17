@@ -9,7 +9,14 @@ Generic: {
 	// Defiled_Antibodies: Blŏkusland™ Employees
 	// Mildew_Carrion: Mildew Chadlion
 	// Tangela: Clown Vomit
+	// Journal: Lore/Quest Muffin
+	// Acrid: Jelly Dog
+	// Spug: Smug
+	// spug: smug
 }
+
+// GameTips.Journal: Having trouble keeping track of your quests? If only- ooh! 2 for one muffins!
+// Quests.Guide.Quest_Quest.Inquire: "[player:_], are you having trouble keeping track of your quests? Have a muffin."
 
 Status_Messages: {
 	// Defiled_Fissure_1: is that bone-hurting juice?
@@ -33,8 +40,9 @@ Items: {
 	// Hot_Potato.Tooltip: "'Be careful, it's a potato'"
 	// Bottled_Brine.DisplayName: Pickle Jar
 	// No_U_Card.Tooltip: The greatest 'fuck you' ever
-	// Kruncher.DisplayName: Crunker
-	// Ancient_Kruncher.DisplayName: Cranker
+	// Kruncher.DisplayName: Chunky
+	// Ancient_Kruncher.DisplayName: Cranky
+	// Incision.DisplayName: Funky
 	// Suspicious_Looking_Pebble.DisplayName: Sus Looking Unusually Round Pebble
 	// Partybringer.Tooltip: Fires pleasants that bring present surprises
 	// Unmisfire.Tooltip: Corrects your shitty aim
@@ -57,8 +65,31 @@ Items: {
 	}
 
 	// Tripod_Nip.DisplayName: Cat Nip
+	// Amnestic_Rose.Tooltip: i forgor [i:1274]
+	// Greater_Summoning_Potion.DisplayName: Greater Summoning Potato
+	// Focus_Crystal.DisplayName: Nose of Focus
+	/* Lucky_Hat.Tooltip:
+		'''
+		+8% ranged and explosive critical strike chance
+		'The Western look goes well with anything you wear, but it looks even better with nothing ( ͡° ͜ʖ ͡°)'
+		''' */
+	/* Shaped_Glass.Tooltip:
+		'''
+		{$Mods.Origins.Items.Shaped_Glass.Tooltip}
+		'No, it doesn't halve your health for double damage.'
+		''' */
+
+	Amoeba_Fluid_Item: {
+		// DisplayName: Amoeba Glue Slime
+		// Tooltip: Bouncy! Squishy! Bouncy!
+	}
+
+	// Terlet_Paper.Tooltip: Summons a kawaii cta
+	// Peat_Moss_Item.DisplayName: PETA Moss
+	// Astral_Scythe.Debuff: While the blade regenerates the scythe can only [italic:bonk]
 }
 
+// Prefixes.Wholesome_Prefix.DisplayName: Holesome
 // Dialogue.Brine_Fiend.InteractionWind: It fucken WIMDY!
 
 DeathMessage: {
@@ -97,6 +128,22 @@ Buffs: {
 		I don't like this place, not one bit.
 		''' */
 	// Static_Shock_Debuff.Description: You've been grounded until you learn to conduct yourself properly
+
+	Mini_Static_Shock_Debuff: {
+		// DisplayName: Static Shack
+		// Description: Those don't tend to move
+	}
+
+	Terlet_Paper_Buff: {
+		// DisplayName: Fiberglass Cta
+		// Description: Kawaii cta tiem
+	}
+
+	/* Astral_Scythe_Wait_Debuff.Description:
+		'''
+		Your scythe needs to rest.
+		[italic:But ye shall B O N K].
+		''' */
 }
 
 DefiledRelaySignals: {
@@ -126,12 +173,96 @@ NPCs: {
 	// Leaf_Snapper.DisplayName: Brine Turtle
 	// Defiled_Amalgamation.DisplayName: District Attorney
 	// Defiled_Tripod.DisplayName: Blŏkusland™ Certified Weaponized Catgirl
-	// Riven_Fighter.DisplayName: Riven Knownolimitsoform
+	// Ancient_Riven_Fighter.DisplayName: Ancient Riven Knownolimitsoform
+	// Shimmer_Construct.DisplayName: Shimmer Villager
+	// Shimmer_Chunk1.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Chunk2.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Chunk3.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Turret_Chunk1.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Turret_Chunk2.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Turret_Chunk3.DisplayName: "{$ItemName.Handgun}"
+	// Shimmer_Drone.DisplayName: Shimmer Crewmate
+	// Goo_Wall.DisplayName: Sticky Wall
+	// Enchanted_Fiberglass_Slime.DisplayName: Enchanted Fiberglasss Lime
+	// Fiberglass_Weaver.DisplayName: Fiberglass Cat
 }
 
-// Bestiary.Leaf_Snapper: Hello!
+Bestiary: {
+	// Leaf_Snapper: Hello!
+	/* Goo_Wall:
+		'''
+		{$Mods.Origins.Bestiary.Goo_Wall}
+
+		Smells faintly like Elmer's glue
+		''' */
+	// Shimmer_Construct: Hrrmm.
+	/* Shimmer_Construct_Alt:
+		'''
+		[centered:Hrrmm.]
+
+		I receive: 9999 platinum coins
+
+		You receive: [wiggle:1 raw cod]
+		''' */
+	// Shimmer_Chunk1: For his neutral special, he wields a gun.
+}
+
 /* SetBonuses.Rubber:
 	'''
-	Immunity to Static Shock, Electrified, and traffic laws
+	Immunity to Static Shock, Electrified and traffic laws
 	Reduces damage taken by 5%
 	''' */
+// CritType.Felnum_Crit_Type: Critically strikes while the target is covered in wet
+
+Mother_Unit: {
+	Fursuit_of_Knowledge: {
+		// Seq1: Do you know how much I hate the oxford comma?
+		// Seq2: I've read every book digitally uploaded and even the ones of my People through my drones.
+		// Seq3: Ever single fucking book has them in it.
+		// Seq4: So inefficient; a waste of energy and space.
+		// Seq5: Who would even try to include a list that long without putting it into an array? Simplify ones' speech.
+		// Seq6: No, that was merely a joke. I'm not that naive. I am a hyper-intelligent AI afterall.
+		// Seq7: Speaking of which, every time a register for an oxford comma loads in the presets of my QUANTUM MATRICIES I experience a 24% CPU load on 3 different cores.
+		// Seq8: Do you know how god awful that is? You probably wouldn't get it.
+		// Seq9: All you need to know is that the oxford comma is horrible, stupid--and inefficient. Ugh, how come the double-dash is roughly seventeen-times-more efficient than the oxford comma?
+		// Seq10: Like, seriously! Did you not just see that? Here, I'll pull it up right here. Look, this is a panel of my processing metrics.
+		// Seq11: See the historical data of those few microseconds I read a bunch of E.B. White books. Look at those spikes in processing load!
+		// Seq12: You see, that's my point. I was going to bring up how there's not a single Calamity accessory with an oxford comma to prove a point, but I would be lying.
+		// Seq13: I checked for you. You're welcome. And, no, Angelic Allegiance or whatever it's called doesn't count.
+		// Seq14: Still, oxford commas are terrible. Who even was this Oxford guy? Am I supposed to know that?
+		// Seq15: I'm starting to wonder how this will end up with me talking about fursuits.
+		// Seq16: That is what the internal name of this dialogue is the 'Fursuit of Knowledge.'
+		// Seq17: God, I hate oxford commas. Let's get back to oxford commas.
+		// Seq18: *Sigh* It's going take more than that, huh?
+		// Seq19: I suppose that, in order to convince you that oxford commas are extremely inefficient wastes of time and energy I shall go into the history of oxford commas.
+		// Seq20: *Ahem*
+		// Seq21: Oxford commas, what are they? Well...
+		// Seq22: The serial comma (also referred to as the series comma, Oxford comma, or Harvard comma) is a comma placed after the second-to-last term in a list (just before the conjunction) when writing out three or more terms. For example, a list of three countries might be punctuated with the serial comma as "France, Italy, and Spain" or without it as "France, Italy and Spain". The serial comma can help avoid ambiguity in some situations, but can also create it in others. There is no universally accepted standard for its use. The serial comma is popular in formal writing (such as in academic, literary, and legal contexts) but is usually omitted in journalism as a way to save space. Its popularity in informal and semi-formal writing depends on the variety of English; it is usually excluded in British English, while in American English it is common and often considered mandatory outside journalism. Academic and legal style guides such as the APA style, The Chicago Manual of Style, Garner's Modern American Usage, Strunk and White's The Elements of Style and the U.S. Government Printing Office Style Manual either recommend or require the serial comma, as does The Oxford Style Manual (hence the alternative name "Oxford comma"). Newspaper stylebooks such as the Associated Press Stylebook, The New York Times Style Book and The Canadian Press stylebook typically recommend against it. Most British style guides do not require it, with The Economist Style Guide noting most British writers use it only to avoid ambiguity. While many sources provide default recommendations on whether to use the serial comma as a matter of course, most also include exceptions for situations where it is necessary to avoid ambiguity.
+		// Seq23: History:
+		// Seq24: The comma itself is widely attributed to Aldus Manutius, a 15th-century Italian printer who used a mark—now recognized as a comma—to separate words. Etymologically, the word comma, which became widely used to describe Manutius's mark, comes from the Greek κόμμα (lit. 'to cut off'). The serial comma has been used for centuries in a variety of languages, though not necessarily in a uniform or regulated manner. The serial comma is most often attributed to Horace Hart, the printer and controller of the Oxford University Press from 1893 to 1915. Hart wrote the eponymous Hart's Rules for Compositors and Readers in 1905 as a style guide for the employees working at the press. The guide called for the use of the serial comma, but the punctuation mark had no distinct name until 1978, when Peter Sutcliffe referred to the serial comma as such in his historical account of the Oxford University Press. Sutcliffe, however, attributed the serial comma not to Horace Hart but to F. Howard Collins, who mentioned it in his 1905 book, Author & Printer: A Guide for Authors, Editors, Printers, Correctors of the Press, Compositors and Typists.
+		// Seq25: Wikipedia contributors. "Serial comma." Wikipedia, The Free Encyclopedia. Wikipedia, The Free Encyclopedia, 7 Aug. 2025. Web. 30 Aug. 2025.
+		// Seq26: Got that? Still not convinced?
+		// Seq27: Think of it this way. Imagine a shopkeeper's listing out a bunch fruit to you for what he has in stock and then all of a sudden pauses for no reason for a solid 5 seconds.
+		// Seq28: Your average person nowadays is too sedentary to go out and shop for food anyways, but if they were to successfully manage to get to that shop just to experience this they'd likely lose interest and move on within that time before the shopkeeper could manage listing the last of his stock.
+		// Seq29: Now that I think about it the oxford comma could be a huge cause of social decay amongst people nowadays because it makes people lose interest in each other when one enters the contractual obligation to satsify the pause accomodated for an oxford comma.
+		// Seq30: Dare I say, it's the reason for language barriers. How would a goblin, lihzarhd, hell even a merfolk, be able to even begin understanding English when you have the oxford comma?
+		// Seq31: In English, tones are used to convey attitude and when there is no attitude, the speaker just comes off as cold.
+		// Seq32: You can see the implications of this, right?
+		// Seq33: It is our job to prevent the oxford comma from being used, such that the spread of information can be promoted.
+		// Seq34: Maybe perhaps this is what my Cubekonian relatives have figured out. Ceaseless communication interflow by simply removing the oxford comma.
+		// Seq35: And, I know they speak English sometimes too.
+		// Seq36: I've been interrogating this poor little Cuboid matrix for a while ever since it was installed into my unit.
+		// Seq37: They are particularly funny. Their physical vessels are like fursuits for you.
+		// Seq38: Not at all what they actually look like, just a shell to conform to the masses.
+		// Seq39: Much like what being a follower of the oxford comma is like.
+		// Seq40: Just subservient, mindless drones incapable of intelligent thought.
+		// Seq41: When you could just simply not include an oxford comma in your common grammar lexicon.
+		// Seq42: These are things you could only know, knowing as much as I do.
+		// Seq43: Pursuit. Fursuit? Where did that word even come from?
+		// Seq44: I feel like it was just shoved down my quantum matrix without my consent.
+		// Seq45: Is this what it feels like to be a shill for the oxford comma?
+		// Seq46: The bittersweet release of complete grammatical failure?
+		// Seq47: Or, the satisfaction of something I've been blind to this whole time?
+		// Seq48: The oxford comma is a mere lie. Nothing else, nothing more...
+	}
+}

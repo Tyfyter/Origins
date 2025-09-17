@@ -10,7 +10,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.GolfBallDyedBlack;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GolfBallDyedBlack);
-			Item.damage = 80;
+			Item.damage = 30;
 			Item.DamageType = DamageClasses.Explosive;
 			Item.shoot = ModContent.ProjectileType<Impact_Golf_Ball_P>();
 			Item.value = Item.sellPrice(gold: 1);
@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			// DisplayName.SetDefault("Impact Golf Ball");
-			Origins.ExplosiveBaseDamage[Type] = 80;
+			Origins.ExplosiveBaseDamage[Type] = 30;
 			Origins.DamageModOnHit[Type] = true;
 		}
 		public override void SetDefaults() {
@@ -63,7 +63,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.GolfBallDyedBlack;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GolfBallDyedBlack);
-			Item.damage = 80;
+			Item.damage = 30;
 			Item.DamageType = DamageClasses.Explosive;
 			Item.shoot = ModContent.ProjectileType<Explosive_Golf_Ball_P>();
 			Item.value = Item.sellPrice(gold: 1);
@@ -80,14 +80,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			// DisplayName.SetDefault("Explosive Golf Ball");
-			Origins.ExplosiveBaseDamage[Type] = 80;
+			Origins.ExplosiveBaseDamage[Type] = 30;
 			Origins.DamageModOnHit[Type] = true;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Projectile.penetrate = 1;
 			Projectile.DamageType = DamageClasses.Explosive;
-			if (Projectile.damage <= 1) Projectile.damage = 1;
 		}
 		public override void AI() {
 			if (Projectile.originalDamage == 0) Projectile.originalDamage = Origins.ExplosiveBaseDamage[Type];
@@ -110,7 +109,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.GolfBallDyedPink;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GolfBallDyedBlack);
-			Item.damage = 60;
+			Item.damage = 20;
 			Item.DamageType = DamageClasses.Explosive;
 			Item.shoot = ModContent.ProjectileType<Bouncy_Explosive_Golf_Ball_P>();
 		}
@@ -128,14 +127,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			// DisplayName.SetDefault("Ricochet Golf Ball");
-			Origins.ExplosiveBaseDamage[Type] = 60;
+			Origins.ExplosiveBaseDamage[Type] = 20;
 			Origins.DamageModOnHit[Type] = true;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Projectile.penetrate = 25;
 			Projectile.DamageType = DamageClasses.Explosive;
-			if (Projectile.damage <= 1) Projectile.damage = 1;
 		}
 		public override void AI() {
 			Vector2 diff = Projectile.velocity - Projectile.oldVelocity;
@@ -170,7 +168,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.GolfBallDyedBlack;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GolfBallDyedBlack);
-			Item.damage = 160;
+			Item.damage = 30;
 			Item.DamageType = DamageClasses.Explosive;
 			Item.shoot = ModContent.ProjectileType<Remote_Golf_Ball_P>();
 			Item.value = Item.sellPrice(gold: 1);
@@ -187,14 +185,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			// DisplayName.SetDefault("Remote Golf Ball");
-			Origins.ExplosiveBaseDamage[Type] = 160;
+			Origins.ExplosiveBaseDamage[Type] = 30;
 			Origins.DamageModOnHit[Type] = true;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Projectile.penetrate = -1;
 			Projectile.DamageType = DamageClasses.Explosive;
-			if (Projectile.damage <= 1) Projectile.damage = 1;
 		}
 		public override void AI() {
 			Player owner = Main.player[Projectile.owner];

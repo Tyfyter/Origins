@@ -41,7 +41,7 @@ namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
 		public static IItemDropRule FirstFissureDropRule;
 		public static IItemDropRule FissureDropRule;
-		public override int Music => Origins.Music.Defiled;
+		public override int Music => Main.swapMusic ? Origins.Music.OtherworldlyDefiled : Origins.Music.Defiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilDefiled";
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
@@ -51,6 +51,7 @@ namespace Origins.World.BiomeData {
 		public override int BiomeTorchItemType => ModContent.ItemType<Defiled_Torch>();
 		public override int BiomeCampfireItemType => ModContent.ItemType<Defiled_Campfire_Item>();
 		public static bool forcedBiomeActive;
+		public static bool monolithActive;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			int defiledTiles = OriginSystem.defiledTiles;
@@ -70,8 +71,7 @@ namespace Origins.World.BiomeData {
 				ShaderTileCount
 			) / ShaderTileCount) * 0.9f;
 
-			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.DefiledMonolith ? 1 : originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
-			originPlayer.DefiledMonolith = false;
+			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, monolithActive ? 1 : originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
 
 			return defiledTiles > NeededTiles;
 		}
@@ -113,7 +113,6 @@ namespace Origins.World.BiomeData {
 		public const short DefaultTileDust = DustID.Titanium;
 		//public static SpawnConditionBestiaryInfoElement BestiaryIcon = new SpawnConditionBestiaryInfoElement("Bestiary_Biomes.Ocean", 28, "Images/MapBG11");
 		public class SpawnRates : SpawnPool {
-			public const float ChunkSlime = 0.8f;
 			public const float Cyclops = 1;
 			public const float Mite = 1;
 			public const float Mummy = 1;
@@ -182,6 +181,7 @@ namespace Origins.World.BiomeData {
 				List<Vector2> fissureCheckSpots = new List<Vector2>();
 				List<Vector2> nodes = [];
 				Vector2 airCheckVec;
+				List<Vector2> ends = [];
 				while (veins.Count > 0) {
 					current = veins.Dequeue();
 					int endChance = genRand.Next(1, 5) + genRand.Next(0, 4) + genRand.Next(0, 4);
@@ -215,6 +215,8 @@ namespace Origins.World.BiomeData {
 							}
 							if (endChance > current.generation) {
 								veins.Enqueue(next);
+							} else {
+								ends.Add(next.data.position);
 							}
 							nodes.Add(next.data.position);
 							break;
@@ -293,6 +295,30 @@ namespace Origins.World.BiomeData {
 							nodes.Add(next.data.position);
 							break;
 						}
+					}
+				}
+				for (int k = 0; k < ends.Count; k++) {
+					bool canOpen = false;
+					int checkX = (int)ends[k].X;
+					int checkY = (int)ends[k].Y;
+					int l = 0;
+					for (; l < 20; l++) {
+						if (Framing.GetTileSafely(checkX, --checkY).HasFullSolidTile()) break;
+					}
+					if (l >= 20) continue;
+					l = 0;
+					for (; l < 40 && !canOpen; l++) canOpen = Framing.GetTileSafely(checkX, --checkY).HasFullSolidTile();
+					if (canOpen) {
+						DefiledVeinRunner(
+							checkX,
+							checkY,
+							strength * genRand.NextFloat(0.9f, 1.1f),
+							-Vector2.UnitY.RotatedBy(genRand.NextFloat(0.1f, 0.2f) * genRand.NextBool().ToDirectionInt()),
+							Math.Max(l, genRand.NextFloat(distance * 0.8f, distance * 1.2f)),
+							stoneID,
+							wallThickness,
+							wallType: stoneWallID
+						);
 					}
 				}
 				ushort fissureID = (ushort)ModContent.TileType<Defiled_Relay>();
@@ -741,7 +767,9 @@ namespace Origins.World.BiomeData {
 	public class Underground_Defiled_Wastelands_Biome : ModBiome {
 		public override int Music => Origins.Music.UndergroundDefiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
 		public override string BestiaryIcon => "Origins/UI/IconStonerDefiled";
+		public override string MapBackground => BackgroundPath;
 		public override float GetWeight(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress * 0.99f;
 		}
@@ -858,14 +886,13 @@ namespace Origins.World.BiomeData {
 			BloodGoldfish = ModContent.NPCType<Shattered_Goldfish>();
 
 			AddWallConversions<Defiled_Stone_Wall>(
-				WallID.Stone,
+				WallID.Cave7Unsafe,
 				WallID.CaveUnsafe,
 				WallID.Cave2Unsafe,
 				WallID.Cave3Unsafe,
 				WallID.Cave4Unsafe,
 				WallID.Cave5Unsafe,
 				WallID.Cave6Unsafe,
-				WallID.Cave7Unsafe,
 				WallID.Cave8Unsafe,
 				WallID.EbonstoneUnsafe,
 				WallID.CorruptionUnsafe1,
@@ -876,7 +903,8 @@ namespace Origins.World.BiomeData {
 				WallID.CrimsonUnsafe1,
 				WallID.CrimsonUnsafe2,
 				WallID.CrimsonUnsafe3,
-				WallID.CrimsonUnsafe4
+				WallID.CrimsonUnsafe4,
+				WallID.Stone
 			);
 			AddWallConversions<Defiled_Sandstone_Wall>(
 				WallID.Sandstone,
@@ -897,9 +925,6 @@ namespace Origins.World.BiomeData {
 			this.AddChambersiteConversions(ModContent.TileType<Chambersite_Ore_Defiled_Stone>(), ModContent.WallType<Chambersite_Defiled_Stone_Wall>());
 
 			EvilBiomeGenerationPass = new Defiled_Wastelands_Generation_Pass();
-		}
-		public override int GetAltBlock(int BaseBlock, int posX, int posY, bool GERunner = false) {
-			return base.GetAltBlock(BaseBlock, posX, posY, GERunner);
 		}
 
 		public IEnumerable<int> ProvideItemObtainability() {
@@ -943,41 +968,6 @@ namespace Origins.World.BiomeData {
 				evilBiomePositionEastBound += offset;
 			}
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
-				/*int offset;
-				for (offset = 0; offset < 300; offset = offset > 0 ? (-offset) : ((-offset) + 2)) {
-					if (evilBiomePositionWestBound + offset < 0 || evilBiomePositionEastBound + offset > Main.maxTilesX) continue;
-					for (int j = (int)OriginSystem.WorldSurfaceLow; j < Main.maxTilesY; j++) {
-						Tile tile = Framing.GetTileSafely(evilBiomePosition + offset, j);
-						if (!tile.HasTile || !Main.tileSolid[tile.TileType]) continue;
-						bool fail = false;
-						for (int k = 0; k < 10; k++) {
-							tile = Framing.GetTileSafely(evilBiomePosition + offset, j + k);
-							if (tile.HasTile && (tile.TileType == TileID.JungleGrass || tile.TileType == TileID.Mud)) {
-								fail = true;
-								break;
-							}
-						}
-						if (fail) break;
-						evilBiomePosition += offset;
-						evilBiomePositionWestBound += offset;
-						evilBiomePositionEastBound += offset;
-						Origins.instance.Logger.Info($"Picked offset {offset} for Defiled Wastelands normally");
-						goto positioned;
-					}
-				}
-				if (Math.Abs(evilBiomePosition - GenVars.jungleMaxX) < Math.Abs(evilBiomePosition - GenVars.jungleMinX)) {
-					offset = evilBiomePosition - GenVars.jungleMaxX;
-					if (WorldBiomeGeneration.EvilBiomeGenRanges.Any(r => r.X < evilBiomePosition && r.X + r.Width > evilBiomePosition)) offset = evilBiomePosition - GenVars.jungleMinX;
-				} else {
-					offset = evilBiomePosition - GenVars.jungleMinX;
-					if (WorldBiomeGeneration.EvilBiomeGenRanges.Any(r => r.X < evilBiomePosition && r.X + r.Width > evilBiomePosition)) offset = evilBiomePosition - GenVars.jungleMaxX;
-				}
-				evilBiomePosition += offset;
-				evilBiomePositionWestBound += offset;
-				evilBiomePositionEastBound += offset;
-				Origins.instance.Logger.Info($"Picked offset {offset} for Defiled Wastelands after failure to find a position without jungle grass");
-
-				positioned:*/
 				defiledWastelandsWestEdge ??= [];
 				defiledWastelandsEastEdge ??= [];
 				defiledWastelandsWestEdge.Add(evilBiomePositionWestBound);
@@ -997,7 +987,7 @@ namespace Origins.World.BiomeData {
 				for (int i = range.Left; i < range.Right; i++) {
 					int slopeFactor = Math.Min(Math.Min(i - range.Left, range.Right - i), 99);
 					for (int j = range.Top - 10; j < range.Bottom; j++) {
-						if (genRand.NextBool(5) &&  genRand.Next(slopeFactor, 100) < 20) break;
+						if (genRand.NextBool(5) && genRand.Next(slopeFactor, 100) < 20) continue;
 						if (range.Bottom - j < 5 && genRand.NextBool(5)) break;
 						Tile tile = Framing.GetTileSafely(i, j);
 						if (tile.HasTile) {

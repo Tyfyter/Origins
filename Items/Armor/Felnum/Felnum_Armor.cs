@@ -22,12 +22,12 @@ namespace Origins.Items.Armor.Felnum {
 			GlowMask = Origins.AddGlowMask(Texture + "_Head_Glow");
 		}
 		public override void SetDefaults() {
-			Item.defense = 5;
+			Item.defense = 7;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetDamage(DamageClass.Generic) += 0.04f;
+			player.GetDamage(DamageClass.Generic) += 0.05f;
 		}
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
 			glowMask = GlowMask;
@@ -79,12 +79,12 @@ namespace Origins.Items.Armor.Felnum {
 			GlowMask = Origins.AddGlowMask(Texture + "_Body_Glow");
 		}
 		public override void SetDefaults() {
-			Item.defense = 6;
+			Item.defense = 7;
 			Item.value = Item.sellPrice(silver: 80);
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetDamage(DamageClass.Generic) += 0.02f;
+			player.GetDamage(DamageClass.Generic) += 0.05f;
 			player.moveSpeed += 0.05f;
 		}
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
@@ -113,12 +113,12 @@ namespace Origins.Items.Armor.Felnum {
 			GlowMask = Origins.AddGlowMask(Texture + "_Legs_Glow");
 		}
 		public override void SetDefaults() {
-			Item.defense = 5;
+			Item.defense = 7;
 			Item.value = Item.sellPrice(silver: 60);
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void UpdateEquip(Player player) {
-			player.moveSpeed += 0.05f;
+			player.moveSpeed += 0.1f;
 		}
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
 			glowMask = GlowMask;

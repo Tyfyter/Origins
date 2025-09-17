@@ -15,6 +15,8 @@ using Terraria.Graphics.Shaders;
 using Terraria.Utilities;
 using Origins.Graphics;
 using Terraria.GameContent;
+using Terraria.ModLoader;
+using PegasusLib;
 
 namespace Origins.UI {
 	public class Journal_Portrait_Handler : ITagHandler {
@@ -45,7 +47,10 @@ namespace Origins.UI {
 					IsPortrait = true,
 					IsHovered = false
 				};
-				//entry.Icon.Update(_collectionInfo, dimensions, settings);
+				if (NPCID.Sets.NPCBestiaryDrawOffset.TryGetValue(id, out NPCID.Sets.NPCBestiaryDrawModifiers value) && value.CustomTexturePath != null) {
+					ModContent.Request<Texture2D>(value.CustomTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad);
+				}
+				entry.Icon.Update(_collectionInfo, dimensions, settings);
 				bool wasSpritebatchRunning = Main.spriteBatch.IsRunning();
 				SpriteBatchState state = Main.spriteBatch.GetState();
 				if (wasSpritebatchRunning) {
@@ -98,7 +103,7 @@ namespace Origins.UI {
 				if (wasSpritebatchRunning) {
 					Main.spriteBatch.Begin(state);
 				}
-				Main.spriteBatch.UseOldRenderTargets(oldRenderTargets);
+				Main.spriteBatch.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
 			}
 			public override void Update() {
 				if (renderTarget is null) SetupRenderTarget();
@@ -108,7 +113,7 @@ namespace Origins.UI {
 					size = default;
 					return false;
 				}
-				size = new(options.Width, options.Height);
+				size = new(options.Width, options.LineHeight ?? options.Height);
 				if (renderTarget is null || justCheckingString) return true;
 				//spriteBatch?.Draw(TextureAssets.MagicPixel.Value, position, new(0, 0, (int)options.Width, (int)options.Height), Color.Red);
 				spriteBatch?.Draw(renderTarget, position, new(0, 0, (int)options.Width, (int)options.Height), Color.White);
@@ -118,51 +123,16 @@ namespace Origins.UI {
 				Main.QueueMainThreadAction(() => renderTarget?.Dispose());
 			}
 		}
-		public record struct Options(JournalImageShader Shader = JournalImageShader.None, float Sharpness = 1, Color Color = default, float Width = 230f, float Height = 112f) {
+		public record struct Options(JournalImageShader Shader = JournalImageShader.None, float Sharpness = 1, Color Color = default, float Width = 230f, float Height = 112f, float? LineHeight = null) {
 			public readonly bool Sketch => Shader == JournalImageShader.Sketch;
-		}
-		record struct SnippetOption(string Name, [StringSyntax(StringSyntaxAttribute.Regex)] string Data, Action<string> Action) {
-			public readonly string Pattern => Name + Data;
-			public static SnippetOption CreateColorOption(string name, Action<Color> setter) {
-				return new(name, "[\\da-fA-F]{3,8}", match => {
-					int Parse(int index, int size) {
-						int startIndex = (index * size);
-						return Convert.ToInt32(match[startIndex..(startIndex + size)], 16);
-					}
-					switch (match.Length) {
-						case 8:
-						setter(new Color(Parse(0, 2), Parse(1, 2), Parse(2, 2), Parse(3, 2)));
-						break;
-						case 6:
-						setter(new Color(Parse(0, 2), Parse(1, 2), Parse(2, 2)));
-						break;
-						case 4:
-						setter(new Color(Parse(0, 1) * 16 - 1, Parse(1, 1) * 16 - 1, Parse(2, 1) * 16 - 1, Parse(3, 1) * 16 - 1));
-						break;
-						case 3:
-						setter(new Color(Parse(0, 1) * 16 - 1, Parse(1, 1) * 16 - 1, Parse(2, 1) * 16 - 1));
-						break;
-						default:
-						throw new FormatException($"Malformed color code {match}");
-					}
-				});
-			}
-		}
-		static void ParseOptions(string optionsText, params SnippetOption[] options) {
-			Regex regex = new($"(?:{string.Join("|", options.Select(so => $"({so.Pattern})"))})+");
-			GroupCollection groups = regex.Match(optionsText).Groups;
-			for (int i = 0; i < groups.Count - 1; i++) {
-				string match = groups[i + 1].Value;
-				if (match.Length <= 0) continue;
-				options[i].Action(match[options[i].Name.Length..]);
-			}
 		}
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
 			Options settings = new(Color: baseColor);
-			ParseOptions(options,
-				new SnippetOption("w", "[\\d\\.]+", match => settings.Width = float.Parse(match)),
-				new SnippetOption("h", "[\\d\\.]+", match => settings.Height = float.Parse(match)),
-				new SnippetOption("s", "[\\d\\.]+", match => settings.Sharpness = float.Parse(match)),
+			SnippetHelper.ParseOptions(options,
+				SnippetOption.CreateFloatOption("lh", match => settings.LineHeight = match),
+				SnippetOption.CreateFloatOption("w", match => settings.Width = match),
+				SnippetOption.CreateFloatOption("h", match => settings.Height = match),
+				SnippetOption.CreateFloatOption("s", match => settings.Sharpness = match),
 				new SnippetOption("d", "", match => settings.Shader = JournalImageShader.Sketch),
 				new SnippetOption("t", "", match => settings.Shader = JournalImageShader.Transparent),
 				SnippetOption.CreateColorOption("c", value => settings.Color = value)

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Tools;
@@ -17,7 +18,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Brine {
-	public class Airsnatcher : Brine_Pool_NPC {
+	public class Airsnatcher : Brine_Pool_NPC, ICustomWikiStat {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 6;
@@ -29,6 +30,7 @@ namespace Origins.NPCs.Brine {
 				Frame = 1
 			};
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 300;

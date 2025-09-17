@@ -31,7 +31,10 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using static Tyfyter.Utils.UITools;
-using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
+using static Origins.OriginsSets.Items;
+using Terraria.Graphics;
+using Origins.NPCs.MiscB.Shimmer_Construct;
+using Terraria.DataStructures;
 
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
@@ -300,6 +303,14 @@ namespace Origins {
 				}
 			}
 			lastHour = hour;
+			if (NetmodeActive.MultiplayerClient) {
+				int shelf = ModContent.TileEntityType<Shelf_Coral_TE>();
+				TileEntity.UpdateStart();
+				foreach (TileEntity value in TileEntity.ByID.Values) {
+					if (value.type == shelf) value.Update();
+				}
+				TileEntity.UpdateEnd();
+			}
 		}
 		public override void PostUpdateEverything() {
 			Debugging.LogFirstRun(PostUpdateEverything);
@@ -310,6 +321,7 @@ namespace Origins {
 			Debugging.firstUpdate = false;
 		}
 		public static int GemStaffRecipeGroupID { get; private set; }
+		public static int GemPhasebladeRecipeGroupID { get; private set; }
 		public static int DeathweedRecipeGroupID { get; private set; }
 		public static int RottenChunkRecipeGroupID { get; private set; }
 		public static int ShadowScaleRecipeGroupID { get; private set; }
@@ -326,6 +338,15 @@ namespace Origins {
 				ItemID.RubyStaff,
 				ItemID.SapphireStaff,
 				ItemID.TopazStaff
+			]));
+			GemPhasebladeRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Gem Phaseblades", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.GemPhaseblades").Value, [
+				ItemID.OrangePhaseblade,
+				ItemID.PurplePhaseblade,
+				ItemID.WhitePhaseblade,
+				ItemID.GreenPhaseblade,
+				ItemID.RedPhaseblade,
+				ItemID.BluePhaseblade,
+				ItemID.YellowPhaseblade
 			]));
 			EvilBoomerangRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Evil Boomerangs", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.EvilBoomerangs").Value, [
 				ModContent.ItemType<Dark_Spiral>(),
@@ -421,6 +442,12 @@ namespace Origins {
 				//recipe.requiredItem = recipe.requiredItem.Select((it) => it.type == ItemID.Deathweed ? new Item(roseID) : it.CloneByID()).ToList();
 				//Mod.Logger.Info("adding procedural recipe: " + recipe.Stringify());
 				//recipe.Create();
+
+				foreach (AbstractNPCShop shop in NPCShopDatabase.AllShops) {
+					if (shop is NPCShop npcShop) {
+					foreach (NPCShop.Entry item in npcShop.Entries) PaintingsNotFromVendor[item.Item.type] = false;
+					}
+				}
 			}
 		}
 		public override void ModifyLightingBrightness(ref float scale) {
@@ -558,11 +585,15 @@ namespace Origins {
 			}
 			Time_Radices.Refresh();
 		}
+		public static Projectile[,] projectilesByOwnerAndID = new Projectile[Main.maxPlayers + 1, Main.maxProjectiles];
 		public override void PreUpdateProjectiles() {
 			Debugging.LogFirstRun(PreUpdateProjectiles);
 			OriginsGlobalBiome.isConversionFromProjectile = true;
+			Array.Clear(projectilesByOwnerAndID);
 			for (int i = 0; i < Main.maxProjectiles; i++) {
-				if (Main.projectile[i].TryGetGlobalProjectile(out OriginGlobalProj global) && global.isFromMitosis) {
+				Projectile projectile = Main.projectile[i];
+				projectilesByOwnerAndID[projectile.owner, projectile.identity] = projectile;
+				if (projectile.TryGetGlobalProjectile(out OriginGlobalProj global) && global.isFromMitosis) {
 					Main.player[Main.projectile[i].owner].ownedProjectileCounts[Main.projectile[i].type]--;
 				}
 			}
@@ -630,6 +661,19 @@ namespace Origins {
 				//Mod.Logger.Info($"Running {nameof(PreUpdatePlayers)} in netmode {Main.netMode}");
 			}
 		}
+		static Stack<Point> QueuedTileFrames { get; } = new();
+		static bool isFramingQueuedTiles = false;
+		public static void QueueTileFrames(int i, int j) {
+			if (!isFramingQueuedTiles) QueuedTileFrames.Push(new(i, j));
+		}
+		public override void PostUpdatePlayers() {
+			try {
+				isFramingQueuedTiles = true;
+				while (QueuedTileFrames.TryPop(out Point pos)) WorldGen.TileFrame(pos.X, pos.Y);
+			} finally {
+				isFramingQueuedTiles = false;
+			}
+		}
 		public override void PreUpdateNPCs() {
 			Debugging.LogFirstRun(PreUpdateNPCs);
 		}
@@ -653,6 +697,12 @@ namespace Origins {
 		}
 		public override void PostUpdateInvasions() {
 			Debugging.LogFirstRun(PostUpdateInvasions);
+		}
+		public override void ModifyTransformMatrix(ref SpriteViewMatrix Transform) {
+			SC_Phase_Three_Underlay.minLightAreas.Clear();
+			foreach (Projectile proj in Main.ActiveProjectiles) {
+				if (proj.ModProjectile is IPreDrawSceneProjectile preDrawer) preDrawer.PreDrawScene();
+			}
 		}
 	}
 	public class TempleBiome : ModBiome {

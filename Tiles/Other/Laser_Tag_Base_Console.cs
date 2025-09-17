@@ -1,27 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
-using Origins.Projectiles;
-using Origins.UI;
-using Origins.World.BiomeData;
-using System;
+﻿using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.IO;
 using Terraria;
-using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
-using Terraria.ModLoader.UI;
 using Terraria.ObjectData;
-using Terraria.UI;
-using static System.Net.Mime.MediaTypeNames;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Tiles.Other {
 	public class Laser_Tag_Base_Console : ModTile, IGlowingModTile {
@@ -36,6 +21,7 @@ namespace Origins.Tiles.Other {
 			AddMapEntry(new Color(81, 81, 81), CreateMapEntryName());
 			DustType = DustID.Lead;
 		}
+		public bool? Hardmode => true;
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => CheckInteract(true, i, j);
 		public override bool RightClick(int i, int j) => CheckInteract(false, i, j);
 		public static bool CheckInteract(bool justCheck, int i, int j) {

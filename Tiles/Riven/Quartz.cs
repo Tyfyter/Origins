@@ -17,17 +17,12 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			TileID.Sets.Conversion.HardenedSand[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			/*Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.HardenedSand];
-            Main.tileMerge[TileID.HardenedSand][Type] = true;
-            Main.tileMerge[Type] = Main.tileMerge[TileID.HardenedSand];
-            Main.tileMerge[Type][TileID.HardenedSand] = true;*/
 			AddMapEntry(new Color(200, 200, 200));
 			mergeID = TileID.HardenedSand;
-			AddDefiledTile();
 			DustType = DustID.Ghost;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			TileExtenstions.DoFraming(i, j, resetFrame, map: [(Type, 1), (TileType<Silica>(), 2)], TileExtenstions.ExtraTileBlending);
+			TileExtenstions.DoFraming(i, j, resetFrame, map: [(Type, 1), (TileType<Brittle_Quartz>(), 2), (TileType<Silica>(), 2)], TileExtenstions.ExtraTileBlending);
 			return false;
 		}
 	}

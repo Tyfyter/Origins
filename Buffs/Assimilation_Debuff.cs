@@ -130,9 +130,7 @@ namespace Origins.Buffs {
 			AssimilationInfo info = player.OriginPlayer().GetAssimilation(AssimilationType);
 			float percent = info.EffectivePercent;
 			if (percent >= OriginPlayer.assimilation_max && player.whoAmI == Main.myPlayer) {
-				player.KillMe(new KeyedPlayerDeathReason() {
-					Key = DeathMessage.Key
-				}, 40, 0);
+				player.KillMe(PlayerDeathReason.ByCustomReason(NetworkText.FromKey(DeathMessage.Key, player.name)), 40, 0);
 			}
 			isUpdatingAssimilation = true;
 			try {

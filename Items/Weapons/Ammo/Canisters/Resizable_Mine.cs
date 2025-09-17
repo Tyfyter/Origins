@@ -45,7 +45,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 4;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 8)
+			Recipe.Create(Type, 10)
 			.AddIngredient(ItemID.ExplosivePowder)
 			.AddRecipeGroup(RecipeGroupID.IronBar, 2)
 			.AddTile(TileID.Anvils)
@@ -69,7 +69,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 4;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 8)
+			Recipe.Create(Type, 12)
 			.AddIngredient(ItemID.ExplosivePowder)
 			.AddRecipeGroup(RecipeGroups.EvilBars, 2)
 			.AddTile(TileID.Anvils)
@@ -90,7 +90,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 8)
+			Recipe.Create(Type, 16)
 			.AddIngredient(ItemID.ExplosivePowder)
 			.AddIngredient(ItemID.HellstoneBar, 2)
 			.AddTile(TileID.Anvils)
@@ -112,7 +112,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 8)
+			Recipe.Create(Type, 22)
 			.AddIngredient(ItemID.ExplosivePowder)
 			.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 2)
 			.AddTile(TileID.MythrilAnvil)
@@ -134,7 +134,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 2;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 8)
+			Recipe.Create(Type, 28)
 			.AddIngredient(ItemID.ChlorophyteOre, 2)
 			.AddIngredient(ItemID.ExplosivePowder)
 			.AddTile(TileID.MythrilAnvil)
@@ -155,7 +155,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.rare = ItemRarityID.Cyan;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 16)
+			Recipe.Create(Type, 36)
 			.AddIngredient(ItemID.ExplosivePowder)
 			.AddIngredient(ItemID.LunarOre, 2)
 			.AddTile(TileID.LunarCraftingStation)

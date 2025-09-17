@@ -50,7 +50,7 @@ namespace Origins.Items.Weapons.Magic {
 			}
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			position += velocity * 5.3f + new Vector2(velocity.Y, -velocity.X) * player.direction;
+			position += velocity * 5.3f + new Vector2(velocity.Y, -velocity.X) * player.direction * player.gravDir;
 			velocity = velocity.RotatedByRandom(0.5f);
 			float offset = Main.rand.NextFloat(0.2f, 1f);
 			float hue = Main.rand.NextFloat(0, 1);
@@ -125,7 +125,7 @@ namespace Origins.Items.Weapons.Magic {
 						owner.direction = Math.Sign(diff.X);
 						owner.itemRotation = (diff * owner.direction).ToRotation();
 						diff = diff.SafeNormalize(default);
-						pos = owner.MountedCenter + diff * 48 + new Vector2(diff.Y, -diff.X) * 9 * owner.direction;
+						pos = owner.MountedCenter + diff * 48 + new Vector2(diff.Y, -diff.X) * 9 * owner.direction * owner.gravDir;
 						Projectile.NewProjectile(
 							owner.GetSource_ItemUse(owner.HeldItem),
 							pos,

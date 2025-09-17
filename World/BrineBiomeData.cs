@@ -1,4 +1,5 @@
-﻿using Origins.Backgrounds;
+﻿using AltLibrary.Common.Systems;
+using Origins.Backgrounds;
 using Origins.Tiles.Brine;
 using Origins.Walls;
 using Origins.Water;
@@ -75,12 +76,14 @@ namespace Origins.World.BiomeData {
 			public override bool IsActive(NPCSpawnInfo spawnInfo) => IsInBrinePool(spawnInfo);
 		}
 		public static class Gen {
-			static int minGenX, maxGenX, minGenY, maxGenY;
+			internal delegate IEnumerable<(int min, int max, int padding)> InvalidRangeHandler(object pass, int minPriority);
+			internal static InvalidRangeHandler JungleAvoider => _JungleAvoider;
+			static IEnumerable<(int min, int max, int padding)> _JungleAvoider(object pass, int minPriority) {
+				int brineX = ModContent.GetInstance<OriginSystem>().brineCenter.X;
+				yield return (brineX - 100, brineX + 100, 50);
+			}
 			public static void BrineStart(int i, int j) {
-				minGenX = int.MaxValue;
-				maxGenX = int.MinValue;
-				minGenY = int.MaxValue;
-				maxGenY = int.MinValue;
+				WorldBiomeGeneration.ChangeRange.ResetRange();
 				float angle0 = genRand.NextFloat(MathHelper.TwoPi);
 				float scale = 1f;
 				List<Vector2> cells = [];
@@ -312,10 +315,11 @@ namespace Origins.World.BiomeData {
 					);
 				}
 				ushort rivenAltar = (ushort)ModContent.TileType<Hydrothermal_Vent>();
+				Rectangle range = WorldBiomeGeneration.ChangeRange.GetRange();
 				for (int k = genRand.Next(40, 60); k > 0;) {
-					int posX = genRand.Next(minGenX, maxGenX);
-					int posY = genRand.Next(minGenY, maxGenY);
-					if (TileExtenstions.CanActuallyPlace(posX, posY, rivenAltar, 0, 0, out TileObject objectData, false, checkStay: true)) {
+					int posX = genRand.Next(range.Left, range.Right);
+					int posY = genRand.Next(range.Top, range.Bottom);
+					if (Framing.GetTileSafely(posX, posY).WallType == stoneWallID && TileExtenstions.CanActuallyPlace(posX, posY, rivenAltar, 0, 0, out TileObject objectData, false, checkStay: true)) {
 						TileObject.Place(objectData);
 						k--;
 					}
@@ -325,8 +329,8 @@ namespace Origins.World.BiomeData {
 				int vineTile = ModContent.TileType<Underwater_Vine>();
 				int vineCount = 0;
 				for (int k = genRand.Next(400, 600); k > 0;) {
-					int posX = genRand.Next(minGenX, maxGenX);
-					int posY = genRand.Next(minGenY, maxGenY);
+					int posX = genRand.Next(range.Left, range.Right);
+					int posY = genRand.Next(range.Top, range.Bottom);
 					int length = 0;
 					bool isVine = false;
 					Tile currentTile;
@@ -347,15 +351,16 @@ namespace Origins.World.BiomeData {
 					if (length > 0) vineCount++;
 				}
 				ushort replacementWallID = (ushort)ModContent.WallType<Replacement_Wall>();
-				for (int x = minGenX; x < maxGenX; x++) {
-					for (int y = minGenY; y < maxGenY; y++) {
+				for (int x = range.Left; x < range.Right; x++) {
+					for (int y = range.Top; y < range.Bottom; y++) {
 						Tile tile = Main.tile[x, y];
 						if (tile.WallType == replacementWallID) {
 							tile.WallType = (ushort)tile.Get<TemporaryWallData>().value;
 						}
 					}
 				}
-				GenVars.structures?.AddProtectedStructure(new Rectangle(minGenX, minGenY, maxGenX - minGenX, maxGenY - minGenY), 6);
+				OriginSystem.Instance.brinePoolRange = range;
+				GenVars.structures?.AddProtectedStructure(range, 6);
 			}
 			public static void SmallCave(float i, float j, float sizeMult = 1f, Vector2 stretch = default) {
 				ushort stoneID = (ushort)ModContent.TileType<Baryte>();
@@ -412,18 +417,7 @@ namespace Origins.World.BiomeData {
 						}*/
 						tile.LiquidType = LiquidID.Water;
 						tile.LiquidAmount = 255;
-						if (x > maxGenX) {
-							maxGenX = x;
-						}
-						if (x < minGenX) {
-							minGenX = x;
-						}
-						if (y > maxGenY) {
-							maxGenY = y;
-						}
-						if (y < minGenY) {
-							minGenY = y;
-						}
+						WorldBiomeGeneration.ChangeRange.AddChangeToRange(x, y);
 					}
 				}
 			}

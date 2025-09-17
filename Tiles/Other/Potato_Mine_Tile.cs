@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoMod.Cil;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
+using Origins.Reflection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -10,6 +13,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
+using ThoriumMod.Projectiles;
 
 namespace Origins.Tiles.Other {
     public class Potato_Mine_Tile : ModTile {
@@ -30,7 +34,32 @@ namespace Origins.Tiles.Other {
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.addTile(Type);
 			ID = Type;
+			try {
+				int tileLoc = -1;
+				ILLabel label = default;
+				IL_Collision.SwitchTiles += [DebuggerHidden] (il) => new ILCursor(il)
+				.GotoNext(MoveType.After,
+					i => i.MatchLdloc(out tileLoc),
+					i => i.MatchLdcI4(TileID.PressurePlates),
+					i => i.MatchBeq(out label)
+				)
+				.EmitLdloc(tileLoc)
+				.EmitLdcI4(Type)
+				.EmitBeq(label);
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError($"{nameof(Potato_Mine_Tile)}_BePressurePlate", e, (typeof(KeyNotFoundException), "Avalon", new(1, 3, 5)))) throw;
+			}
+			On_Wiring.HitSwitch += On_Wiring_HitSwitch;
 		}
+
+		private void On_Wiring_HitSwitch(On_Wiring.orig_HitSwitch orig, int i, int j) {
+			orig(i, j);
+			if (WorldGen.InWorld(i, j) && Main.tile[i, j].TileType == Type) {
+				WiringMethods.HitWireSingle(i, j);
+				Wiring.TripWire(i, j, 1, 1);
+			}
+		}
+
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			tile.TileFrameX = 0;
@@ -48,102 +77,41 @@ namespace Origins.Tiles.Other {
 				player.cursorItemIconReversed = true;
 			}
 		}
-		public override void PlaceInWorld(int i, int j, Item item) {
-			ModContent.GetInstance<Potato_Mine_TE_System>().AddTileEntity(new(i, j));
+		public override void HitWire(int i, int j) {
+			Projectile.NewProjectile(
+				Entity.GetSource_None(),
+				new Vector2(i + 0.5f, j + 0.5f) * 16,
+				default,
+				Potato_Mine_Projectile.ID,
+				50,
+				6,
+				Owner: Main.myPlayer
+			);
+			Tile tile = Main.tile[i, j];
+			tile.HasTile = false;
 		}
 	}
-	public class Potato_Mine_TE_System : TESystem {
-		public HashSet<Point16> projLocations;
-		public override void PreUpdateEntities() {
-			if (Main.netMode == NetmodeID.MultiplayerClient) return;
-			projLocations ??= [];
-			for (int i = 0; i < tileEntityLocations.Count; i++) {
-				Point16 pos = tileEntityLocations[i];
-				if (Main.tile[pos.X, pos.Y].TileIsType(Potato_Mine_Tile.ID)) {
-					if (!projLocations.Contains(pos)) {
-						Projectile.NewProjectile(
-							Entity.GetSource_None(),
-							new Vector2(pos.X + 0.5f, pos.Y + 0.5f) * 16,
-							default,
-							Potato_Mine_Projectile.ID,
-							50,
-							6,
-							Owner: Main.myPlayer
-						);
-					}
-				} else {
-					tileEntityLocations.RemoveAt(i);
-					i--;
-					continue;
-				}
-			}
-			projLocations.Clear();
-		}
-		internal static bool RegisterProjPosition(Point16 pos) {
-			Potato_Mine_TE_System instance = ModContent.GetInstance<Potato_Mine_TE_System>();
-			instance.projLocations ??= new();
-			return instance.projLocations.Add(pos);
-		}
-	}
-	public class Potato_Mine_Projectile : ModProjectile {
-		public override string Texture => typeof(Traffic_Cone_Item).GetDefaultTMLName();
+	public class Potato_Mine_Projectile : ExplosionProjectile {
 		public static int ID { get; private set; }
+		public override DamageClass DamageType => DamageClasses.Explosive;
+		public override int Size => 96;
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}
 		public override void SetDefaults() {
-			Projectile.width = 16;
-			Projectile.height = 16;
+			base.SetDefaults();
+			Projectile.timeLeft = 5;
+			Projectile.width = 96;
+			Projectile.height = 96;
 			Projectile.trap = true;
 			Projectile.friendly = true;
 			Projectile.hostile = true;
-			Projectile.penetrate = -1;
-			Projectile.tileCollide = false;
-			Projectile.netImportant = true;
-			Projectile.hide = true;
-			Projectile.ArmorPenetration += 6;
-		}
-		public override void AI() {
-			Projectile.timeLeft = 5;
-			if (Main.netMode == NetmodeID.MultiplayerClient) return;
-			Point16 tilePos = Projectile.position.ToTileCoordinates16();
-			if (Main.tile[tilePos.X, tilePos.Y].TileIsType(Potato_Mine_Tile.ID)) {
-				if (!Potato_Mine_TE_System.RegisterProjPosition(tilePos)) {
-					Projectile.Kill();
-				}
-			} else {
-				Projectile.Kill();
-			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Explode();
-		}
-		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			Explode();
-		}
-		void Explode() {
-			Point16 tilePos = Projectile.position.ToTileCoordinates16();
-			Tile tile = Main.tile[tilePos.X, tilePos.Y];
-			if (!tile.TileIsType(Potato_Mine_Tile.ID)) {
-				Projectile.Kill();
-				return;
-			}
-			tile.HasTile = false;
-			Projectile.position.X += Projectile.width / 2;
-			Projectile.position.Y += Projectile.height / 2;
-			Projectile.width = 96;
-			Projectile.height = 96;
-			Projectile.position.X -= Projectile.width / 2;
-			Projectile.position.Y -= Projectile.height / 2;
-			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
-			Projectile.Damage();
-			Projectile.Kill();
 		}
 	}
 }

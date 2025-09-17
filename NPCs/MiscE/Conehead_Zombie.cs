@@ -17,6 +17,22 @@ namespace Origins.NPCs.MiscE {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Tim;
 			Main.npcFrameCount[NPC.type] = 3;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+			OriginsSets.NPCs.CustomExpertScaling[Type] = npc => {
+				if (Main.hardMode) {
+					int strength = npc.damage + 6 + npc.lifeMax / 4;
+					if (strength == 0) strength = 1;
+					int targetStrength = 80;
+					if (NPC.downedPlantBoss) targetStrength += 20;
+					if (strength < targetStrength) {
+						float num3 = targetStrength / strength;
+						npc.damage = (int)(npc.damage * num3 * 0.9);
+						npc.defense = (int)(npc.defense * (num3 + 4) / 5);
+						npc.lifeMax = (int)(npc.lifeMax * num3 * 1.1);
+						npc.value = (int)(npc.value * num3 * 0.8);
+					}
+				}
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);

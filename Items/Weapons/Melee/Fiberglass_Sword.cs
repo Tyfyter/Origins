@@ -29,6 +29,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = SoundID.Item1;
 			Item.shoot = ModContent.ProjectileType<Fiberglass_Sword_P>();
 			Item.shootSpeed = 11;
+			Item.value = Item.buyPrice(silver: 30);
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override void UseItemFrame(Player player) {

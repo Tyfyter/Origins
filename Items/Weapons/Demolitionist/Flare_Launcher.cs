@@ -156,7 +156,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
-				Projectile.velocity.Y += 0.06f;
+				this.DoGravity(0.06f);
 				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 			} else {
 				if (Projectile.ai[0] == 1) Projectile.timeLeft--;

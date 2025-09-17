@@ -18,6 +18,9 @@ namespace Origins.NPCs {
 		public static Boss_Tracker Instance => ModContent.GetInstance<Boss_Tracker>();
 		public bool downedFiberglassWeaver;
 		public bool downedLostDiver;
+		public bool downedShimmerConstruct;
+
+		public bool downedChambersiteSentinel;
 
 		public bool downedDefiledMimic;
 		public bool downedRivenMimic;
@@ -101,6 +104,20 @@ namespace Origins.NPCs {
 				netSend = _netSend.CreateDelegate<Action<BinaryWriter, Boss_Tracker>>();
 				netReceive = _netReceive.CreateDelegate<Action<BinaryReader, Boss_Tracker>>();
 			}
+			{
+				DynamicMethod _clearWorld = new("clearWorld", typeof(void), [typeof(Boss_Tracker)], true);
+				ILGenerator _clearWorldGen = _clearWorld.GetILGenerator();
+				foreach (FieldInfo field in GetType().GetFields()) {
+					if (field.IsStatic) continue;
+					if (field.FieldType == typeof(bool)) {
+						_clearWorldGen.Emit(OpCodes.Ldarg_0);
+						_clearWorldGen.Emit(OpCodes.Ldc_I4_0);
+						_clearWorldGen.Emit(OpCodes.Stfld, field);
+					}
+				}
+				_clearWorldGen.Emit(OpCodes.Ret);
+				clearWorld = _clearWorld.CreateDelegate<Action<Boss_Tracker>>();
+			}
 			foreach (FieldInfo field in GetType().GetFields()) {
 				if (field.FieldType == typeof(bool) && !field.IsStatic) {
 					DynamicMethod get = new("get_" + field.Name, typeof(bool), []);
@@ -121,21 +138,12 @@ namespace Origins.NPCs {
 		static Action<TagCompound, Boss_Tracker> loadData;
 		static Action<BinaryWriter, Boss_Tracker> netSend;
 		static Action<BinaryReader, Boss_Tracker> netReceive;
+		static Action<Boss_Tracker> clearWorld;
 		static bool dummy;
 		public override void SaveWorldData(TagCompound tag) => saveData?.Invoke(tag, this);
 		public override void LoadWorldData(TagCompound tag) => loadData?.Invoke(tag, this);
-		//*
 		public override void NetSend(BinaryWriter writer) => netSend(writer, this);
 		public override void NetReceive(BinaryReader reader) => netReceive(reader, this);
-		/*/
-		public override void NetSend(BinaryWriter writer) {
-			netSend(writer, this);
-			Mod.Logger.Info(string.Join(", ", GetType().GetFields().Where(f => !f.IsStatic && f.FieldType == typeof(bool)).Select(f => $"{f.Name}: {f.GetValue(this)}")));
-		}
-		public override void NetReceive(BinaryReader reader) {
-			Mod.Logger.Info(string.Join(", ", GetType().GetFields().Where(f => !f.IsStatic && f.FieldType == typeof(bool)).Select(f => $"{f.Name}: {f.GetValue(this)}")));
-			netReceive(reader, this);
-			Mod.Logger.Info(string.Join(", ", GetType().GetFields().Where(f => !f.IsStatic && f.FieldType == typeof(bool)).Select(f => $"{f.Name}: {f.GetValue(this)}")));
-		}//*/
+		public override void ClearWorld() => clearWorld(this);
 	}
 }

@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Other.Dyes;
+using Origins.Items.Weapons.Ranged;
 using Origins.Journal;
 using Origins.Projectiles.Weapons;
 using Origins.UI;
@@ -15,6 +17,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.NPCs.BossViscount;
 
 namespace Origins.Items.Weapons.Magic {
 	[LegacyName("Defiled_Dungeon_Chest_Placeholder_Item")]
@@ -38,6 +41,7 @@ namespace Origins.Items.Weapons.Magic {
 			NPCTypeAliases[NPCID.MoonLordHand] = NPCID.MoonLordCore;
 			NPCTypeAliases[NPCID.MoonLordHead] = NPCID.MoonLordCore;
 			NPCTypeAliases[NPCID.MoonLordLeechBlob] = NPCID.MoonLordCore;
+			NPCTypeAliases[NPCID.PirateShipCannon] = NPCID.PirateShip;
 		}
 		public override void Unload() {
 			NPCTypeAliases = null;
@@ -65,20 +69,22 @@ namespace Origins.Items.Weapons.Magic {
 		public static bool drawingMissingFileUI = false;
 		public static Color currentNPCColor;
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
-			static bool IsInvalidNPC(NPC npc) {
+			static bool IsInvalidNPC(NPC npc, out int type) {
+				type = -1;
 				switch (npc.netID) {
 					case NPCID.CultistBoss or NPCID.CultistBossClone or NPCID.CultistDevote or NPCID.CultistArcherBlue or NPCID.CultistArcherWhite:
 					return !npc.active || npc.DistanceSQ(Main.LocalPlayer.MountedCenter) > (Main.screenWidth * Main.screenWidth) + (Main.screenHeight * Main.screenHeight);
 				}
-				return !npc.CanBeChasedBy(typeof(Missing_File_UI)) || BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(Missing_File.NPCTypeAliases.TryGetValue(npc.netID, out int type) ? type : npc.netID)?.Icon is null;
+				if (!npc.CanBeChasedBy(typeof(Missing_File_UI))) return true;
+				if (BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(Missing_File.NPCTypeAliases.TryGetValue(npc.netID, out type) ? type : type = npc.netID)?.Icon is not null) return false;
+				return BestiaryDatabaseNPCsPopulator.FindEntryByNPCID(Missing_File.NPCTypeAliases.TryGetValue(npc.type, out type) ? type : type = npc.type)?.Icon is null;
 			}
 			if (targets.Count == 0) {
 				HashSet<int> realNPCs = [];
 				const int margin = 64;
 				Rectangle screenArea = new(margin, margin, Main.screenWidth - margin * 2, Main.screenHeight - margin * 2);
 				foreach (NPC npc in Main.ActiveNPCs) {
-					if (IsInvalidNPC(npc)) continue;
-					if (!Missing_File.NPCTypeAliases.TryGetValue(npc.netID, out int npcType)) npcType = npc.netID;
+					if (IsInvalidNPC(npc, out int npcType)) continue;
 					if (realNPCs.Add(npcType)) {
 						targets.Add(new(
 							npcType,
@@ -96,7 +102,7 @@ namespace Origins.Items.Weapons.Magic {
 					do {
 						fakeTarget = Main.rand.Next(npcTypes);
 						if (++tries > 100) break;
-					} while (IsInvalidNPC(fakeTarget) || realNPCs.Contains(fakeTarget.netID));
+					} while (IsInvalidNPC(fakeTarget, out _) || realNPCs.Contains(fakeTarget.netID));
 					targets.Add(new(
 						fakeTarget.type,
 						Main.rand.NextVector2FromRectangle(screenArea),
@@ -108,7 +114,8 @@ namespace Origins.Items.Weapons.Magic {
 				try {
 					HashSet<int> realNPCs = [];
 					foreach (NPC npc in Main.ActiveNPCs) {
-						realNPCs.Add(npc.netID);
+						if (IsInvalidNPC(npc, out int npcType)) continue;
+						realNPCs.Add(npcType);
 					}
 					drawingMissingFileUI = true;
 					GraphicsUtils.drawingEffect = true;
@@ -117,6 +124,7 @@ namespace Origins.Items.Weapons.Magic {
 					Color hoverColor = Color.White;
 					ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(Rasterized_Dye.ShaderID, null);
 					SpriteBatchState state = spriteBatch.GetState();
+					spriteBatch.Restart(state.FixedCulling());
 					DrawData data = new(
 						texture,
 						Main.ScreenSize.ToVector2() * 0.5f,
@@ -193,8 +201,10 @@ namespace Origins.Items.Weapons.Magic {
 								Item item = Main.LocalPlayer.HeldItem;
 								IEntitySource source = Main.LocalPlayer.GetSource_ItemUse(item);
 								int damage = Main.LocalPlayer.GetWeaponDamage(item);
+								int count = 0;
 								foreach (NPC targetNPC in Main.ActiveNPCs) {
-									if ((Missing_File.NPCTypeAliases.TryGetValue(targetNPC.netID, out int type) ? type : targetNPC.netID) == npcType) {
+									if (!IsInvalidNPC(targetNPC, out int asTarget) && asTarget == npcType) {
+										count++;
 										SoundEngine.PlaySound(SoundID.Meowmere, targetNPC.Center);
 										Projectile.NewProjectile(
 											source,
@@ -208,6 +218,7 @@ namespace Origins.Items.Weapons.Magic {
 										);
 									}
 								}
+								Missing_File_Crit_Type.SetCount(Main.LocalPlayer, count);
 							}
 							targets.Clear();
 							break;
@@ -233,6 +244,18 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			public bool Fake => fake;
 			public bool Real => !fake;
+		}
+	}
+	public class Missing_File_Crit_Type : CritType<Missing_File> {
+		static int CritThreshold => 3;
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => player.GetModPlayer<Missing_File_Player>().hitCount >= CritThreshold;
+		public override float CritMultiplier(Player player, Item item) => 1.35f;
+		public static void SetCount(Player player, int count) {
+			if (!player.TryGetModPlayer(out Missing_File_Player global)) return;
+			global.hitCount = count;
+		}
+		class Missing_File_Player : CritModPlayer {
+			public int hitCount;
 		}
 	}
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
@@ -13,13 +12,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Riven_Mimic : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
+	public class Riven_Mimic : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 4, 60, 50);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
-		public override void Load() => this.AddBanner();
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override void Load() => this.AddBanner(25);
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 14;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
@@ -27,6 +26,7 @@ namespace Origins.NPCs.Riven {
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire3] = true;
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.width = 28;
 			NPC.height = 44;
@@ -41,7 +41,6 @@ namespace Origins.NPCs.Riven {
 			NPC.rarity = 5;
 			AnimationType = NPCID.BigMimicCrimson;
 			SpawnModBiomes = [
-				ModContent.GetInstance<Riven_Hive>().Type,
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
 			];
 		}

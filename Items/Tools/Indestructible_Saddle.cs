@@ -1,5 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Projectiles;
@@ -11,8 +11,9 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
+
 namespace Origins.Items.Tools {
 	public class Indestructible_Saddle : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -109,8 +110,6 @@ namespace Origins.Items.Tools {
 			Vector2 move = new Vector2(16 * player.direction, 0).RotatedBy(player.fullRotation);
 			Item item = player.miscEquips[3].type == Indestructible_Saddle.ID ? player.miscEquips[3] : ContentSamples.ItemsByType[Indestructible_Saddle.ID];
 			void Explode() {
-				player.mount._abilityCooldown = 0;
-				player.mount.Dismount(player);
 				Projectile.NewProjectile(
 					player.GetSource_ItemUse(item),
 					position + move * 2 + new Vector2(8),
@@ -118,8 +117,11 @@ namespace Origins.Items.Tools {
 					ModContent.ProjectileType<Indestructible_Saddle_Explosion>(),
 					player.GetWeaponDamage(item),
 					player.GetWeaponKnockback(item),
-					player.whoAmI
+					player.whoAmI,
+					ai2: player.mount._abilityCooldown
 				);
+				player.mount._abilityCooldown = 0;
+				player.mount.Dismount(player);
 			}
 			Dust.NewDustPerfect(position - move * 2.5f - move.RotatedBy(MathHelper.PiOver2 * player.direction) * Main.rand.NextFloat(-0.1f, 0.5f), 6, player.velocity * 0.85f).noGravity = true;
 			if (player.mount._abilityCooldown <= 0) {
@@ -150,23 +152,35 @@ namespace Origins.Items.Tools {
 				}
 			}
 			player.GoingDownWithGrapple = true;
+			bool doDismount = false;
+			Vector2 dismountVelocity = player.velocity;
+			int dismountDamage = player.GetWeaponDamage(item);
 			if (Collision.SolidCollision(player.position + player.velocity, player.width, player.height)) {
 				player.mount._abilityCooldown /= 3;
+				player.Hurt(PlayerDeathReason.ByOther(0), (int)(player.velocity.Length() * 3), -player.direction, true, cooldownCounter: ImmunityCooldownID.WrongBugNet, dodgeable: false);
+				doDismount = true;
+			}
+			if (player.mount._abilityCooldown < MountData.abilityCooldown - 30 && player.controlJump && player.releaseJump) {
+				player.jump = Player.jumpHeight;
+				player.velocity.Y = Player.jumpSpeed * -1.5f;
+				player.position.Y -= 24;
+				dismountDamage /= 2;
+				doDismount = true;
+			}
+			if (doDismount) {
 				Projectile.NewProjectile(
 					player.GetSource_ItemUse(item),
 					position,
-					player.velocity,
+					dismountVelocity,
 					ModContent.ProjectileType<Indestructible_Saddle_Projectile>(),
-					player.GetWeaponDamage(item),
+					dismountDamage,
 					player.GetWeaponKnockback(item),
 					player.whoAmI,
 					player.mount._frameExtraCounter,
 					player.direction,
 					player.mount._abilityCooldown
 				);
-				player.Hurt(PlayerDeathReason.ByOther(0), (int)(player.velocity.Length() * 3), -player.direction, true, cooldownCounter: ImmunityCooldownID.WrongBugNet, dodgeable: false);
 				player.mount.Dismount(player);
-				return;
 			}
 			//Dust.NewDustPerfect(player.position + player.fullRotationOrigin - new Vector2(0, 10), 27, Vector2.Zero).noGravity = true;
 		}
@@ -197,11 +211,17 @@ namespace Origins.Items.Tools {
 			Main.projFrames[Type] = 4;
 		}
 		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.Explosive;
 			Projectile.width = Projectile.height = 0;
+			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.friendly = true;
 		}
 		Vector2 HitboxMovement => new Vector2(16 * Projectile.ai[1], 0).RotatedBy(Projectile.ai[1] * Projectile.ai[0]);
 		public override void AI() {
+			if (Projectile.ai[2].Cooldown()) {
+				Projectile.Kill();
+				return;
+			}
 			Projectile.velocity *= 0.935f;
 			Projectile.velocity += GeometryUtils.Vec2FromPolar(2, Projectile.ai[1] * (MathHelper.PiOver2 + Projectile.ai[0]) - MathHelper.PiOver2);
 			Player owner = Main.player[Projectile.owner];
@@ -243,7 +263,8 @@ namespace Origins.Items.Tools {
 				ModContent.ProjectileType<Indestructible_Saddle_Explosion>(),
 				Projectile.damage,
 				Projectile.knockBack,
-				Projectile.owner
+				Projectile.owner,
+				ai2: Projectile.ai[2]
 			);
 		}
 		public override bool PreDraw(ref Color lightColor) {
@@ -282,5 +303,11 @@ namespace Origins.Items.Tools {
 		public override DamageClass DamageType => DamageClasses.Explosive;
 		public override int Size => 144;
 		public override bool DealsSelfDamage => true;
+	}
+	public class Indestructible_Saddle_Crit_Type : CritType<Indestructible_Saddle> {
+		static int CritThreshold => 120;
+		public override LocalizedText Description => base.Description.WithFormatArgs(CritThreshold / 60f);
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile.ai[2] <= CritThreshold;
+		public override float CritMultiplier(Player player, Item item) => 3f;
 	}
 }

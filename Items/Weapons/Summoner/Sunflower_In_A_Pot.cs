@@ -214,7 +214,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.direction = Math.Sign(diff.X);
 				if (bestTargetIsVisible) {
 					if (++Projectile.ai[1] >= 25) {
-						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1.5f).WithVolume(0.25f), Projectile.Center);
+						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1f).WithVolume(0.25f), Projectile.Center);
 						if (Main.myPlayer == player.whoAmI) Projectile.NewProjectile(
 							Projectile.GetSource_FromAI(),
 							Projectile.position + headCenterOffset,
@@ -374,7 +374,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public void OnHurt(int damage, bool fromDoT) {
 			if (fromDoT) return;
-			if (Life > 0) SoundEngine.PlaySound(SoundID.FemaleHit.WithPitch(2f).WithVolume(0.25f), Projectile.Center);
+			if (Life > 0) SoundEngine.PlaySound(SoundID.FemaleHit.WithPitch(1f).WithVolume(0.25f), Projectile.Center);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D baseTexture = TextureAssets.Projectile[Type].Value;

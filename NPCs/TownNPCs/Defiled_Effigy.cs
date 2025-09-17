@@ -1,8 +1,9 @@
 ﻿using AltLibrary.Core;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Magic;
+using Origins.Tiles.MusicBoxes;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
@@ -42,6 +43,8 @@ namespace Origins.NPCs.TownNPCs {
 			//TODO: remove when added
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiaryUnimplemented;
 			TownNPCStayingHomeless = true;
+			BetterDialogue.BetterDialogue.SupportedNPCs.Add(Type);
+			BetterDialogue.BetterDialogue.RegisterShoppableNPC(Type);
 		}
 		public override void SetDefaults() {
 			NPC.width = 18;
@@ -101,6 +104,14 @@ namespace Origins.NPCs.TownNPCs {
 			if (firstButton) {
 				shopName = "Shop";
 			}
+		}
+
+		public override void AddShops() {
+			return; // temp, these show up in shop browsers
+			new NPCShop(Type)
+			.Add<Nerve_Flan_Food>()
+			.Add(Music_Box.ItemType<Otherworldly_Music_Box_DW>())
+			.Register();
 		}
 
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback) {

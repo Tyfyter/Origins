@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Dev;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs;
 using Origins.Projectiles;
 using System;
@@ -10,6 +12,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
@@ -48,20 +51,20 @@ namespace Origins.Items.Weapons.Melee {
 				if (frame == 5) frame = 0;
 				switch (frame) {
 					case 0:
-					player.itemLocation = player.MountedCenter + new Vector2(-4 * player.direction, 4);
+					player.itemLocation = player.MountedCenter + new Vector2(-4 * player.direction, 4 * player.gravDir);
 					break;
 					case 4:
 					if (oldFrame != frame) SoundEngine.PlaySound(player.HeldItem.UseSound, player.MountedCenter);
-					player.itemLocation = player.MountedCenter + new Vector2(4 * player.direction, 8);
+					player.itemLocation = player.MountedCenter + new Vector2(4 * player.direction, 8 * player.gravDir);
 					break;
 					case 3:
-					player.itemLocation = player.MountedCenter + new Vector2(6 * player.direction, 8);
+					player.itemLocation = player.MountedCenter + new Vector2(6 * player.direction, 8 * player.gravDir);
 					break;
 					case 2:
-					player.itemLocation = player.MountedCenter + new Vector2(6 * player.direction, -8);
+					player.itemLocation = player.MountedCenter + new Vector2(6 * player.direction, -8 * player.gravDir);
 					break;
 				}
-				player.itemRotation = (progress * 3 - 0.5f) * player.direction;
+				player.itemRotation = (progress * 3 - 0.5f) * player.direction * player.gravDir;
 			}
 			player.bodyFrame.Y = player.bodyFrame.Height * frame;
 		}
@@ -106,6 +109,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 	}
 	public class The_Bird_Swing : ModProjectile, IDrawOverArmProjectile, ILoadExtraTextures {
+		public static int PerfectFrames => 15;
 		static AutoLoadingAsset<Texture2D> frontTexture = typeof(The_Bird_Swing).GetDefaultTMLName() + "_Front";
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
@@ -119,6 +123,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void SetDefaults() {
 			Projectile.friendly = false;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.width = 48;
 			Projectile.height = 48;
 			Projectile.timeLeft = 18;
@@ -136,13 +141,13 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.Center = player.MountedCenter;
 			if (player.channel) {
 				if (Projectile.owner == Main.myPlayer) {
-					Projectile.velocity = (new Vector2(Player.tileTargetX, Player.tileTargetY).ToWorldCoordinates() - Projectile.Center).SafeNormalize(default);
+					Projectile.velocity = (Main.MouseWorld - Projectile.Center).SafeNormalize(default);
 				}
 				Projectile.timeLeft = player.itemAnimationMax;
 				Projectile.hide = true;
-				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, Projectile.direction * (MathHelper.PiOver2 + Projectile.velocity.Y * 0.5f - 0.2f));
-				player.itemLocation = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
-				player.itemRotation = player.compositeFrontArm.rotation + MathHelper.PiOver4 * Projectile.direction * 3;
+				player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Quarter, Projectile.direction * (MathHelper.PiOver2 + Projectile.velocity.Y * player.gravDir * 0.5f - 0.2f));
+				player.itemLocation = player.GetCompositeArmPosition(false);
+				player.itemRotation = player.compositeFrontArm.rotation + MathHelper.PiOver4 * Projectile.direction * player.gravDir * 3;
 				if (++Projectile.localAI[0] == player.itemAnimationMax) {
 					SoundEngine.PlaySound(SoundID.Item29.WithVolume(0.5f).WithPitchRange(1f, 1.2f), Projectile.Center);
 					ParticleOrchestrator.RequestParticleSpawn(false,
@@ -186,15 +191,14 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.spriteDirection = 1;
 			}
 		}
-		bool forcedCrit = false;
+		public bool forcedCrit = false;
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			const int charge_frames = 15;
 			The_Bird.PreHitNPC(target, ref modifiers);
 			Player player = Main.player[Projectile.owner];
 			forcedCrit = false;
-			if (Projectile.localAI[0] >= player.itemAnimationMax && Projectile.localAI[0] < player.itemAnimationMax + charge_frames) {
+			if (Projectile.localAI[0] >= player.itemAnimationMax && Projectile.localAI[0] < player.itemAnimationMax + PerfectFrames) {
 				modifiers.SetCrit();
-				modifiers.CritDamage *= 1 + (Projectile.CritChance / 100f);
+				if (!CritType.ModEnabled) modifiers.CritDamage *= 1 + (Projectile.CritChance / 100f);
 				modifiers.HideCombatText();
 				forcedCrit = true;
 			}
@@ -230,5 +234,10 @@ namespace Origins.Items.Weapons.Melee {
 		public void LoadTextures() {
 			frontTexture.LoadAsset();
 		}
+	}
+	public class The_Bird_Crit_Type : CritType<The_Bird> {
+		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.CritType.PerfectTiming");
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => (projectile?.ModProjectile as The_Bird_Swing)?.forcedCrit ?? false;
+		public override float CritMultiplier(Player player, Item item) => 2f;
 	}
 }

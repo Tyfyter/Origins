@@ -29,6 +29,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = Origins.Sounds.EnergyRipple.WithPitchRange(1.7f, 2f);
 		}
+		public bool? Hardmode => true;
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 20)
@@ -45,6 +46,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override string Texture => typeof(Chemical_Laser).GetDefaultTMLName();
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ShadowBeamFriendly);
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Projectile.timeLeft = 250;
 			Projectile.friendly = true;
 			Projectile.aiStyle = 0;
@@ -69,7 +71,7 @@ namespace Origins.Items.Weapons.Magic {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), 80);
+			target.AddBuff(Toxic_Shock_Debuff.ID, 80);
 		}
 		public override void OnKill(int timeLeft) {
 			if (Projectile.owner != Main.myPlayer) {

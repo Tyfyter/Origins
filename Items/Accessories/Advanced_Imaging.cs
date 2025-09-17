@@ -22,11 +22,11 @@ namespace Origins.Items.Accessories {
 			Item.glowMask = glowmask;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().advancedImaging = true;
+			player.OriginPlayer().advancedImaging = true;
 			player.buffImmune[BuffID.Confused] = true;
 
 			player.GetCritChance(DamageClass.Generic) += 10;
-			player.GetModPlayer<OriginPlayer>().explosiveBlastRadius += 0.2f;
+			player.OriginPlayer().explosiveBlastRadius += 0.2f;
 		}
 	}
 }

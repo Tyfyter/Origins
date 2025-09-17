@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Items.Materials;
@@ -22,10 +21,13 @@ namespace Origins.NPCs.Riven {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/Rivenator_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
-				Position = new Vector2(4f, 8f)
+				Position = new Vector2(50f, 32f),
+				PortraitPositionXOverride = 4,
+				PortraitPositionYOverride = 8
 			};
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
 			NPC.width = 22;

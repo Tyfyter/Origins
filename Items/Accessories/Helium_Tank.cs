@@ -4,8 +4,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
-	public class Helium_Tank : ModItem, ICustomWikiStat {
-		public string[] Categories => [
+	public class Helium_Tank : Air_Tank, ICustomWikiStat {
+		public new string[] Categories => [
 			"Misc"
 		];
 		public override void SetDefaults() {
@@ -14,8 +14,7 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 1);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
-			player.buffImmune[BuffID.Suffocation] = true;
-			player.AddMaxBreath(257);
+			base.UpdateAccessory(player, hideVisual);
 			player.OriginPlayer().heliumTank = true;
 			if (!hideVisual) UpdateSqueakiness(player, false);
 		}

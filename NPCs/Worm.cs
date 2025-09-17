@@ -127,11 +127,23 @@ namespace Origins.NPCs {
 		protected internal virtual void BodyTailAI() { }
 
 		public abstract void Init();
-		public override void SendExtraAI(BinaryWriter writer) {
+		public sealed override void SendExtraAI(BinaryWriter writer) {
 			writer.Write(NPC.realLife);
+			writer.Write(isHighestIndex);
+			if (this is WormHead head) head.SendHeadAI(writer);
+			SendWormAI(writer);
 		}
-		public override void ReceiveExtraAI(BinaryReader reader) {
+		public sealed override void ReceiveExtraAI(BinaryReader reader) {
 			NPC.realLife = reader.ReadInt32();
+			isHighestIndex = reader.ReadBoolean();
+			if (this is WormHead head) head.ReceiveHeadAI(reader);
+			ReceiveWormAI(reader);
+		}
+		public virtual void SendWormAI(BinaryWriter writer) { }
+		public virtual void ReceiveWormAI(BinaryReader reader) { }
+		protected bool isHighestIndex;
+		protected static void SetHighestSegment(int highestSegment) {
+			if (Main.npc[highestSegment].ModNPC is Worm highestWorm) highestWorm.isHighestIndex = true;
 		}
 	}
 
@@ -314,7 +326,8 @@ namespace Origins.NPCs {
 					}
 
 					// Spawn the tail segment
-					SpawnSegment(source, TailType, latestNPC);
+					latestNPC = SpawnSegment(source, TailType, latestNPC);
+					int highestSegment = int.Min(NPC.whoAmI, latestNPC);
 
 					NPC.netUpdate = true;
 
@@ -340,6 +353,7 @@ namespace Origins.NPCs {
 					} else {
 						SegmentCount = randomWormLength;
 						OnFinishSpawning();
+						SetHighestSegment(highestSegment);
 					}
 
 					// Set the player target for good measure
@@ -603,10 +617,10 @@ namespace Origins.NPCs {
 			}
 			return false;
 		}
-		public override void SendExtraAI(BinaryWriter writer) {
+		internal void SendHeadAI(BinaryWriter writer) {
 			writer.Write((int)SegmentCount);
 		}
-		public override void ReceiveExtraAI(BinaryReader reader) {
+		internal void ReceiveHeadAI(BinaryReader reader) {
 			SegmentCount = reader.ReadInt32();
 		}
 		public override void SetDefaults() {

@@ -1,24 +1,17 @@
-﻿///TODO:this
-using CalamityMod.NPCs.TownNPCs;
-using CalamityMod;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using static Terraria.Utilities.NPCUtils;
-using Terraria.GameContent.Bestiary;
 
 namespace Origins.NPCs.MiscE {
 	public class Abandoned_Bomb : Glowing_Mod_NPC {

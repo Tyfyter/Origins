@@ -14,8 +14,17 @@ namespace Origins.Items.Accessories {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.FeralClaws] = ModContent.ItemType<Gun_Glove>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Gun_Glove>()] = ItemID.FeralClaws;
             glowmask = Origins.AddGlowMask(this);
-        }
-        static short glowmask;
+			On_Player.ItemCheck_UseArtisanLoaf += On_Player_ItemCheck_UseArtisanLoaf;
+
+		}
+		private void On_Player_ItemCheck_UseArtisanLoaf(On_Player.orig_ItemCheck_UseArtisanLoaf orig, Player self, Item sItem) {
+			orig(self, sItem);
+			try {
+				if (self.ItemAnimationActive && OriginsSets.Items.SwungNoMeleeMelees[sItem.type]) self.OriginPlayer().DoGunGlove();
+			} catch { }
+		}
+
+		static short glowmask;
         public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 18);
 			Item.value = Item.sellPrice(gold: 2);

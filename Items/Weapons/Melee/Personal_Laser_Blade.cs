@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Other;
@@ -13,7 +12,6 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Melee {
 	[AutoloadEquip(EquipType.HandsOn)]
@@ -26,6 +24,7 @@ namespace Origins.Items.Weapons.Melee {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
+			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.damage = 185;
@@ -43,6 +42,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.knockBack = 1;
 			Item.autoReuse = false;
 			Item.useTurn = false;
+			Item.value = Item.sellPrice(gold: 3);
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item45;
 			Item.glowMask = glowmask;
@@ -66,6 +66,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void UseItemFrame(Player player) {
 			player.handon = Item.handOnSlot;
 		}
+		public override bool MeleePrefix() => true;
 	}
 	public class Personal_Laser_Blade_P : ModProjectile, IElementalProjectile {
 		public const int trail_length = 20;
@@ -149,12 +150,12 @@ namespace Origins.Items.Weapons.Melee {
 				MaxAngle,
 				MinAngle,
 				MathHelper.Clamp(SwingFactor, 0, 1)
-			) * Projectile.ai[1];
+			) * Projectile.ai[1] * player.gravDir;
 
-			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
+			float realRotation = Projectile.rotation * player.gravDir + Projectile.velocity.ToRotation() * player.gravDir;
 			player.heldProj = Projectile.whoAmI;
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
-			Projectile.Center = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
+			Projectile.Center = player.GetCompositeArmPosition(false);
 			player.itemLocation = Projectile.Center + GeometryUtils.Vec2FromPolar(26, realRotation + 0.3f * player.direction);
 			player.itemRotation = player.compositeFrontArm.rotation;
 			player.direction = Math.Sign(Projectile.velocity.X);
@@ -175,6 +176,27 @@ namespace Origins.Items.Weapons.Melee {
 					rotMult = 0.05f;
 				}
 			}
+			Color dustColor = Color.Magenta;
+			switch (GetBladeColor()) {
+				case BladeColor.DEFAULT:
+				dustColor = new(0, 225, 255, 64);
+				break;
+				case BladeColor.STUN:
+				dustColor = new(255, 255, 0, 64);
+				break;
+				case BladeColor.PULSE:
+				dustColor = new(80, 255, 219, 64);
+				break;
+				case BladeColor.CORAL:
+				dustColor = new(255, 32, 20, 64);
+				break;
+				case BladeColor.CHRYSALIS:
+				dustColor = new(12, 168, 10, 32);
+				break;
+				case BladeColor.FAILURE:
+				dustColor = new(156, 191, 255, 64);
+				break;
+			}
 			for (int j = 0; j <= HitboxSteps; j++) {
 				Projectile.EmitEnchantmentVisualsAt(Projectile.position + vel * j, Projectile.width, Projectile.height);
 				if (j > 1 && Main.rand.NextFloat(2 * Projectile.MaxUpdates) < 1 + Projectile.ai[0]) {
@@ -182,7 +204,7 @@ namespace Origins.Items.Weapons.Melee {
 						Projectile.position + vel * j,
 						Projectile.width, Projectile.height,
 						DustID.PortalBoltTrail,
-						newColor: new(0, 225, 255, 64)
+						newColor: dustColor
 					);
 					dust.velocity = dust.velocity * 0.25f + Projectile.velocity.RotatedBy(Projectile.rotation * rotMult) * velocityMult;
 					dust.position += dust.velocity * 2;
@@ -211,28 +233,69 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			LaserBladeDrawer trailDrawer = default;
-			trailDrawer.TrailColor = new(0, 35, 35, 0);
-			trailDrawer.BladeColor = new(0, 255, 255, 128);
-			trailDrawer.BladeSecondaryColor = new(0, 180, 255, 64);
-			/* stun baton
-			trailDrawer.TrailColor = new(35, 35, 0, 0);
-			trailDrawer.BladeColor = new(255, 255, 0, 128);
-			trailDrawer.BladeSecondaryColor = new(255, 255, 130, 64);
-			//*/
-			/* pulse blade
-			trailDrawer.TrailColor = new(15, 35, 30, 0);
-			trailDrawer.BladeColor = new(80, 255, 219, 128);
-			trailDrawer.BladeSecondaryColor = new(130, 255, 255, 64);
-			//*/
+			switch (GetBladeColor()) {
+				case BladeColor.DEFAULT:
+				trailDrawer.TrailColor = new(0, 35, 35, 0);
+				trailDrawer.BladeColor = new(0, 255, 255, 128);
+				trailDrawer.BladeSecondaryColor = new(0, 180, 255, 64);
+				break;
+				case BladeColor.STUN:
+				trailDrawer.TrailColor = new(35, 35, 0, 0);
+				trailDrawer.BladeColor = new(255, 255, 0, 128);
+				trailDrawer.BladeSecondaryColor = new(255, 255, 130, 64);
+				break;
+				case BladeColor.PULSE:
+				trailDrawer.TrailColor = new(15, 35, 30, 0);
+				trailDrawer.BladeColor = new(80, 255, 219, 128);
+				trailDrawer.BladeSecondaryColor = new(130, 255, 255, 64);
+				break;
+				case BladeColor.CORAL:
+				trailDrawer.TrailColor = new(35, 17, 11, 0);
+				trailDrawer.BladeColor = new(240, 128, 128, 128);
+				trailDrawer.BladeSecondaryColor = new(255, 127, 80, 64);
+				break;
+				case BladeColor.CHRYSALIS:
+				trailDrawer.TrailColor = new(11, 84, 91, 255);
+				trailDrawer.BladeColor = new(88, 196, 84, 64);
+				trailDrawer.BladeSecondaryColor = new(11, 84, 91, 64);
+				break;
+				case BladeColor.FAILURE:
+				trailDrawer.TrailColor = new(156, 191, 255, 255);
+				trailDrawer.BladeColor = new(255, 255, 255, 64);
+				trailDrawer.BladeSecondaryColor = new(156, 191, 255, 64);
+				break;
+			}
 			trailDrawer.Length = Projectile.velocity.Length() * Projectile.width * 0.9f * HitboxSteps;
 			trailDrawer.Draw(Projectile);
 			return false;
+		}
+		public BladeColor GetBladeColor() {
+			switch ((Main.player.GetIfInRange(Projectile.owner)?.name ?? "").ToLower()) {
+				default:
+				return BladeColor.DEFAULT;
+				case "ceroba":
+				return BladeColor.STUN;
+				case "reivax" or "dio":
+				return BladeColor.CORAL;
+				case "jennifer" or "jennifer_alt" or "faust":
+				return BladeColor.CHRYSALIS;
+				case "chee" or "xiqi" or "chrersis":
+				return BladeColor.FAILURE;
+			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.5f;
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.5f;
+		}
+		public enum BladeColor {
+			DEFAULT,
+			STUN,
+			PULSE,
+			CORAL,
+			CHRYSALIS,
+			FAILURE
 		}
 		public struct LaserBladeDrawer {
 

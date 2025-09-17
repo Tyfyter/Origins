@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.CrossMod;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -9,6 +10,8 @@ namespace Origins.Items.Weapons {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.GolfBallDyedBrown;
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GolfBall);

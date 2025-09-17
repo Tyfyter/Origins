@@ -1,5 +1,4 @@
 ﻿using Microsoft.CSharp.RuntimeBinder;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
@@ -7,13 +6,10 @@ using MonoMod.Cil;
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.NPCs;
-using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
-using Origins.Questing;
 using Origins.Reflection;
-using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Origins.Walls;
@@ -31,7 +27,6 @@ using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Personalities;
-using Terraria.GameInput;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -39,7 +34,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.UI.Chat;
-using Terraria.UI.Gamepad;
 using Terraria.Utilities;
 using static Origins.OriginExtensions;
 using static Mono.Cecil.Cil.OpCodes;
@@ -52,16 +46,12 @@ using Terraria.ModLoader.Core;
 using Origins.Items.Other.Dyes;
 using Terraria.GameContent.UI.ResourceSets;
 using Origins.Water;
-using Origins.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Light;
 using Origins.Items;
 using System.Runtime.ExceptionServices;
 using System.IO;
-using Microsoft.Xna.Framework.Input;
-using System.Buffers.Text;
 using Origins.Items.Weapons.Ammo;
-using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Magic;
 using Terraria.GameContent.Events;
 using Origins.Items.Weapons.Summoner.Minions;
@@ -71,24 +61,15 @@ using PegasusLib.Graphics;
 using PegasusLib;
 using Terraria.GameContent.UI;
 using Origins.UI.Event;
-using Origins.UI;
-using ThoriumMod;
 using Origins.Items.Other.Consumables.Broths;
-using static Terraria.ID.ContentSamples.CreativeHelper;
-using Terraria.UI;
-using Origins.Journal;
-using Terraria.ModLoader.IO;
 using Origins.Items.Weapons.Demolitionist;
 using PegasusLib.Reflection;
 using Terraria.GameContent.Generation;
 using Origins.Items.Mounts;
-using BetterDialogue.UI;
 using Terraria.ModLoader.Config;
-using Microsoft.Xna.Framework.Audio;
-using System.Reflection.Metadata;
-using System.Runtime.InteropServices;
 using Origins.NPCs.Brine;
 using Terraria.GameContent.Shaders;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -198,7 +179,6 @@ namespace Origins {
 			};
 			On_TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;
 			IL_WorldGen.PlantAlch += WorldGen_PlantAlchIL;
-			On_WorldGen.PlantAlch += WorldGen_PlantAlch;
 			On_WorldGen.ShakeTree += WorldGen_ShakeTree;
 			MonoModHooks.Add(
 				typeof(MC).GetMethod("ResizeArrays", BindingFlags.NonPublic | BindingFlags.Static),
@@ -244,9 +224,6 @@ namespace Origins {
 			On_Player.RollLuck += Player_RollLuck;
 			On_TileDrawing.Draw += TileDrawing_Draw;
 			On_TileDrawing.DrawTiles_GetLightOverride += TileDrawing_DrawTiles_GetLightOverride;
-			On_PlayerDeathReason.GetDeathText += PlayerDeathReason_GetDeathText;
-			On_PlayerDeathReason.WriteSelfTo += On_PlayerDeathReason_WriteSelfTo;
-			On_PlayerDeathReason.FromReader += On_PlayerDeathReason_FromReader;
 			On_Player.KillMe += Player_KillMe;// should have no effect, but is necessary for custom death text somehow
 			On_WorldGen.PlacePot += WorldGen_PlacePot;
 			On_WorldGen.PlaceSmallPile += WorldGen_PlaceSmallPile;
@@ -267,7 +244,29 @@ namespace Origins {
 				} else {
 					LogError("Could not find GetHurtTile call in Player.Update");
 				}
-
+				c = new(il);
+				int fallThrough = -1;
+				int ignorePlats = -1;
+				if (c.TryGotoNext(MoveType.Before,
+					i => i.MatchLdarg0(),
+					i => i.MatchLdloc(out fallThrough),
+					i => i.MatchLdloc(out ignorePlats),
+					i => i.MatchCall<Player>(nameof(Player.DryCollision))
+				) && c.TryGotoPrev(MoveType.After,
+					i => i.MatchCall(typeof(PlayerLoader), nameof(PlayerLoader.PreUpdateMovement))
+				)) {
+					c.EmitLdarg0();
+					c.EmitLdloca(fallThrough);
+					c.EmitLdloca(ignorePlats);
+					c.EmitDelegate(static (Player player, ref bool fallThrough, ref bool ignorePlats) => {
+						if (player.OriginPlayer().noFallThrough.TrySet(false)) {
+							fallThrough = false;
+							ignorePlats = false;
+						}
+					});
+				} else {
+					LogError("Could not find platform fallthrough management in Player.Update");
+				}
 			};
 			On_ShopHelper.GetShoppingSettings += OriginGlobalNPC.ShopHelper_GetShoppingSettings;
 			On_Player.HurtModifiers.ToHurtInfo += (On_Player.HurtModifiers.orig_ToHurtInfo orig, ref Player.HurtModifiers self, int damage, int defense, float defenseEffectiveness, float knockback, bool knockbackImmune) => {
@@ -491,8 +490,6 @@ namespace Origins {
 			On_FilterManager.BeginCapture += On_FilterManager_BeginCapture;
 			On_TileLightScanner.ApplyHellLight += On_TileLightScanner_ApplyHellLight;
 			On_Main.DrawBlack += On_Main_DrawBlack;
-			On_WorldGen.AddHellHouses += On_WorldGen_AddHellHouses;
-			On_WorldGen.HellFort += On_WorldGen_HellFort;
 			On_Item.CloneDefaults += On_Item_CloneDefaults;
 			On_Lighting.AddLight_int_int_float_float_float += On_Lighting_AddLight_int_int_float_float_float;
 			On_Dust.NewDust += On_Dust_NewDust;
@@ -599,6 +596,7 @@ namespace Origins {
 				c.EmitRet();
 			};
 			On_Player.QuickBuff_ShouldBotherUsingThisBuff += BrothBase.On_Player_QuickBuff_ShouldBotherUsingThisBuff;
+			On_Player.AddBuff_RemoveOldMeleeBuffsOfMatchingType += BrothBase.On_Player_AddBuff_RemoveOldMeleeBuffsOfMatchingType;
 			On_Main.CalculateWaterStyle += (orig, ignoreFountains) => {
 				int chosenStyle = Main.LocalPlayer.CurrentSceneEffect.waterStyle.value;
 				if (chosenStyle == ModContent.GetInstance<Riven_Water_Style>().Slot || chosenStyle == ModContent.GetInstance<Brine_Water_Style>().Slot) return chosenStyle;
@@ -642,6 +640,14 @@ namespace Origins {
 					modifier = modifier.Scale(DamageBonusScale[item.type]);
 					return ref modifier;
 				});
+			};
+			On_Item.TryGetPrefixStatMultipliersForItem += (On_Item.orig_TryGetPrefixStatMultipliersForItem orig, Item self, int rolledPrefix, out float dmg, out float kb, out float spd, out float size, out float shtspd, out float mcst, out int crt) => {
+				if (orig(self, rolledPrefix, out dmg, out kb, out spd, out size, out shtspd, out mcst, out crt)) {
+					if (dmg != 1 && DamageBonusScale[self.type] == 0) return false;
+					dmg = 1 + (dmg - 1) * DamageBonusScale[self.type];
+					return true;
+				}
+				return false;
 			};
 			On_Player.DoesPickTargetTransformOnKill += (orig, self, hitCounter, damage, x, y, pickPower, bufferIndex, tileTarget) => {
 				if (orig(self, hitCounter, damage, x, y, pickPower, bufferIndex, tileTarget)) return true;
@@ -715,6 +721,18 @@ namespace Origins {
 					processingDash = false;
 				}
 			};
+			try {
+				IL_Player.DashMovement += il => {
+					ILCursor c = new(il);
+					c.GotoNext(MoveType.After,
+						i => i.MatchLdcR4(30f)
+					);
+					c.EmitLdarg0();
+					c.EmitDelegate(static (float damage, Player player) => player?.OriginPlayer()?.dashBaseDamage ?? damage);
+				};
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError("SetDashBaseDamage", e)) throw;
+			}
 			IL_WaterShaderData.DrawWaves += Brine_Pool_NPC.DisableRipples;
 			On_Player.SlopingCollision += (On_Player.orig_SlopingCollision orig, Player self, bool fallThrough, bool ignorePlats) => {
 				Debugging.LogFirstRun(self.SlopingCollision);
@@ -728,9 +746,65 @@ namespace Origins {
 			};
 			On_PressurePlateHelper.UpdatePlayerPosition += (orig, self) => {
 				Debugging.LogFirstRun(PressurePlateHelper.UpdatePlayerPosition);
+				if (self.OriginPlayer().weakShimmer) return;
 				orig(self);
 			};
+			try {
+				IL_Collision.TileCollision += IL_Collision_TileCollision_OffsetBookcases;
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError(nameof(IL_Collision_TileCollision_OffsetBookcases), e)) throw;
+			}
+			/*try {
+				IL_ActiveSound.Update += EnablePocketDimensionAmbienceWhenPaused;
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError(nameof(EnablePocketDimensionAmbienceWhenPaused), e)) throw;
+			}*/
+			MonoModHooks.Add(typeof(Player).GetProperty(nameof(Player.ShoppingZone_AnyBiome)).GetMethod, (orig_ShoppingZone_AnyBiome orig, Player self) => {
+				return orig(self) || self.InModBiome<Defiled_Wastelands>() || self.InModBiome<Riven_Hive>();
+			});
 		}
+		delegate bool orig_ShoppingZone_AnyBiome(Player self);
+		delegate bool hook_ShoppingZone_AnyBiome(orig_ShoppingZone_AnyBiome orig, Player self);
+
+		/*static void EnablePocketDimensionAmbienceWhenPaused(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdsfld<Main>(nameof(Main.gameInactive))
+			);
+			c.EmitLdarg0();
+			c.EmitDelegate(static (bool gameInactive, ActiveSound sound) => gameInactive && !sound.Style.SoundPath.StartsWith("Origins/Sounds/Custom/Ambience"));
+		}*/
+
+		internal static void IL_Collision_TileCollision_OffsetBookcases(ILContext il) {
+			ILCursor c = new(il);
+			int tile = -1;
+			int pos = -1;
+			int height = -1;
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdloca(out tile),
+				i => i.MatchCall<Tile>("halfBrick"),
+				i => i.MatchBrfalse(out _),
+				i => i.MatchLdloca(out pos),        //IL_01b8: ldloca.s 12
+				i => i.MatchLdflda<Vector2>("Y"),   //IL_01ba: ldflda float32[FNA]Microsoft.Xna.Framework.Vector2::Y
+				i => i.MatchDup(),                  //IL_01bf: dup
+				i => i.MatchLdindR4(),              //IL_01c0: ldind.r4
+				i => i.MatchLdcR4(8),               //IL_01c1: ldc.r4 8
+				i => i.MatchAdd(),                  //IL_01c6: add
+				i => i.MatchStindR4(),              //IL_01c7: stind.r4
+				i => i.MatchLdloc(out height),      //IL_01c8: ldloc.s 15
+				i => i.MatchLdcI4(8),               //IL_01ca: ldc.i4.8
+				i => i.MatchSub(),                  //IL_01cb: sub
+				i => i.MatchStloc(out _)            //IL_01cc: stloc.s 15
+			);
+			c.MoveAfterLabels();
+			c.EmitLdloc(tile);
+			c.EmitLdloca(pos);
+			c.EmitLdloca(height);
+			c.EmitDelegate((Tile tile, ref Vector2 pos, ref int height) => {
+				OriginsSets.Tiles.MultitileCollisionOffset.GetIfInRange(tile.TileType)?.Invoke(tile, ref pos.Y, ref height);
+			});
+		}
+
 		public static bool processingDash = false;
 		private static void On_Player_AddBuff(On_Player.orig_AddBuff orig, Player self, int type, int timeToAdd, bool quiet, bool foodHack) {
 			if (self.TryGetModPlayer(out Nurse_Assimilation_Dialog assTracker)) assTracker.GotDebuffFromAssimilation[type] = AssimilationDebuff.isUpdatingAssimilation;
@@ -1054,12 +1128,20 @@ namespace Origins {
 			if (TileLoader.GetTile(tileToCreate) is ICustomCanPlaceTile customCanPlaceTile) customCanPlaceTile.CanPlace(self, targetTile, sItem, ref tileToCreate, ref previewPlaceStyle, ref overrideCanPlace, ref forcedRandom);
 		}
 
-		delegate void orig_FCEH(object sender, FirstChanceExceptionEventArgs args);
-		static void FCEH(orig_FCEH orig, object sender, FirstChanceExceptionEventArgs args) {
-			if (args?.Exception is IOException ioException && ((ioException.Message?.Contains("bytes caused by Origins in HandlePacket") ?? false) || (ioException.Message?.Contains("bytes caused by ModDemoUtils in HandlePacket") ?? false))) {
-				args = new(new IOException($"{args.Exception.Message} with packet type {lastPacketType}"));
+		static void FCEH(ILContext il) {
+			ILCursor c = new(il);
+			int msg = -1;
+			if (c.TryGotoNext(i => i.MatchLdloc(out msg), i => i.MatchCallOrCallvirt(typeof(Console), nameof(Console.WriteLine))) 
+				&& c.TryGotoPrev(i => i.MatchStloc(msg))
+				&& c.TryGotoPrev(MoveType.After, i => i.MatchCallOrCallvirt<Exception>("get_" + nameof(Exception.Message)))
+				) {
+				c.EmitDelegate((string text) => {
+					if ((text?.Contains("bytes caused by Origins in HandlePacket") ?? false) || (text?.Contains("bytes caused by ModDemoUtils in HandlePacket") ?? false)) {
+						text += $" with packet type {lastPacketType}";
+					}
+					return text;
+				});
 			}
-			orig(sender, args);
 		}
 		private ReLogic.Utilities.SlotId On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback(On_SoundEngine.orig_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback orig, ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback) {
 			if (Strange_Computer.drawingStrangeLine) return ReLogic.Utilities.SlotId.Invalid;
@@ -1436,39 +1518,6 @@ namespace Origins {
 		}
 
 		#region combat
-		private void On_PlayerDeathReason_WriteSelfTo(On_PlayerDeathReason.orig_WriteSelfTo orig, PlayerDeathReason self, System.IO.BinaryWriter writer) {
-			orig(self, writer);
-			writer.Write(self is KeyedPlayerDeathReason);
-		}
-
-		private PlayerDeathReason On_PlayerDeathReason_FromReader(On_PlayerDeathReason.orig_FromReader orig, System.IO.BinaryReader reader) {
-			PlayerDeathReason value = orig(reader);
-			if (reader.ReadBoolean()) {
-				return new KeyedPlayerDeathReason() {
-					SourceCustomReason = value.SourceCustomReason,
-					SourceProjectileLocalIndex = value.SourceProjectileLocalIndex,
-					SourceNPCIndex = value.SourceNPCIndex,
-					SourcePlayerIndex = value.SourcePlayerIndex,
-					SourceItem = value.SourceItem,
-					SourceOtherIndex = value.SourceOtherIndex,
-					SourceProjectileType = value.SourceProjectileType
-				};
-			}
-			return value;
-		}
-		private NetworkText PlayerDeathReason_GetDeathText(On_PlayerDeathReason.orig_GetDeathText orig, PlayerDeathReason self, string deadPlayerName) {
-			if (self is KeyedPlayerDeathReason keyedReason) {
-				return NetworkText.FromKey(
-					keyedReason.Key,
-					deadPlayerName,
-					keyedReason.SourcePlayerIndex > -1 ? NetworkText.FromLiteral(Main.player[keyedReason.SourcePlayerIndex].name) : NetworkText.Empty,
-					keyedReason.SourceItem?.Name ?? "",
-					keyedReason.SourceNPCIndex > -1 ? Main.npc[keyedReason.SourceNPCIndex].GetGivenOrTypeNetName() : NetworkText.Empty,
-					keyedReason.SourceProjectileType > -1 ? Lang.GetProjectileName(keyedReason.SourceProjectileType).ToNetworkText() : NetworkText.Empty
-				);
-			}
-			return orig(self, deadPlayerName);
-		}
 		private void Projectile_ExplodeTiles(On_Projectile.orig_ExplodeTiles orig, Projectile self, Vector2 compareSpot, int radius, int minI, int maxI, int minJ, int maxJ, bool wallSplode) {
 			if (self.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global) && global.noTileSplode) return;
 			orig(self, compareSpot, radius, minI, maxI, minJ, maxJ, wallSplode);
@@ -1579,52 +1628,6 @@ namespace Origins {
 					case Mono.Cecil.Cil.Code.Pop:
 					c.Emit(instruction.OpCode, instruction.Operand);
 					break;
-				}
-			}
-		}
-		private void WorldGen_PlantAlch(On_WorldGen.orig_PlantAlch orig) {
-			orig();
-			//if (!WorldGen.genRand.NextBool(10)) return;
-			int x = WorldGen.genRand.Next(20, Main.maxTilesX - 20);
-			int y = WorldGen.genRand.Next((int)Main.worldSurface - 250, Main.UnderworldLayer);
-			while (y < Main.maxTilesY - 20 && (Main.tile[x, y].HasTile || Main.tile[x, y].WallType == WallID.None)) {
-				y++;
-			}
-			int wallType = MC.WallType<Riven_Flesh_Wall>();
-			while (y > 20 && !Main.tile[x, y - 1].HasTile && Main.tile[x, y - 1].WallType == wallType) {
-				y--;
-			}
-			Tile tile = Framing.GetTileSafely(x, y);
-			if (tile.WallType == MC.WallType<Riven_Flesh_Wall>()) {
-				Tile left = Framing.GetTileSafely(x - 1, y);
-				Tile right = Framing.GetTileSafely(x + 1, y);
-				Tile up = Framing.GetTileSafely(x, y - 1);
-				static int GetConnections(Tile tile, int dir) {
-					if (tile.HasTile) {
-						if (tile.TileType == MC.TileType<Wrycoral>()) return 2;
-						if (tile.TileType == MC.TileType<Riven_Flesh>()) {
-							switch (tile.BlockType) {
-								case BlockType.Solid:
-								return 1;
-								case BlockType.HalfBlock:
-								return dir == 2 ? 1 : 0;
-								case BlockType.SlopeDownLeft:
-								return dir == 1 ? 0 : 1;
-								case BlockType.SlopeDownRight:
-								return dir == 0 ? 0 : 1;
-								case BlockType.SlopeUpLeft:
-								return dir == 2 ? 1 : 0;
-								case BlockType.SlopeUpRight:
-								return dir == 1 ? 1 : 0;
-							}
-						}
-					}
-					return 0;
-				}
-				int connections = GetConnections(left, 0) + GetConnections(right, 1) + GetConnections(up, 2);
-				if (Main.rand.Next(connections) > (connections / 3)) {
-					tile.ResetToType((ushort)MC.TileType<Wrycoral>());
-					WorldGen.SquareTileFrame(x, y);
 				}
 			}
 		}
@@ -1817,6 +1820,7 @@ namespace Origins {
 			} else {
 				orig(proj, out timeToFlyOut, out segments, out rangeMultiplier);
 			}
+			if (OriginConfig.Instance.VanillaWhipScale && proj.TryGetGlobalProjectile(out VanillaWhipScaleSupport scaleSupport)) rangeMultiplier *= scaleSupport.ScaleModifier;
 		}
 		#region mining
 		private void On_Player_ItemCheck_UseMiningTools_TryHittingWall(On_Player.orig_ItemCheck_UseMiningTools_TryHittingWall orig, Player self, Item sItem, int wX, int wY) {
@@ -1866,13 +1870,6 @@ namespace Origins {
 			}
 			return orig(i, j, X, Y, type);
 		}
-		private void On_WorldGen_AddHellHouses(On_WorldGen.orig_AddHellHouses orig) {
-			Dusk.Gen.GenerateDusk();
-			orig();
-		}
-		private void On_WorldGen_HellFort(On_WorldGen.orig_HellFort orig, int i, int j, ushort tileType, byte wallType) {
-			if (!Dusk.Gen.duskRect.Contains(i, j)) orig(i, j, tileType, wallType);
-		}
 		#endregion worldgen
 		#region graphics
 		private void On_Main_DrawBlack(On_Main.orig_DrawBlack orig, Main self, bool force) {
@@ -1895,7 +1892,8 @@ namespace Origins {
 		internal static ShaderLayerTargetHandler shaderOroboros = new();
 		public static int drawPlayersWithShader = -1;
 		public static int keepPlayerShader = -1;
-		static int forcePlayerShader = -1;
+		internal static int forcePlayerShader = -1;
+		internal static bool resetKeepPlayerShader = false;
 		private static void On_PlayerDrawLayers_DrawPlayer_TransformDrawData(On_PlayerDrawLayers.orig_DrawPlayer_TransformDrawData orig, ref PlayerDrawSet drawinfo) {
 			orig(ref drawinfo);
 			if (forcePlayerShader >= 0) {
@@ -1908,14 +1906,19 @@ namespace Origins {
 			SpriteBatchState spriteBatchState = Main.spriteBatch.GetState();
 			bool shaded = false;
 			forcePlayerShader = -1;
+			resetKeepPlayerShader = keepPlayerShader == -1;
 			try {
 				OriginPlayer originPlayer = drawPlayer.GetModPlayer<OriginPlayer>();
-				if (drawPlayersWithShader < 0 && originPlayer.rasterizedTime > 0) {
-					if (keepPlayerShader == -1) keepPlayerShader = Anti_Gray_Dye.ShaderID;
+				if (drawPlayersWithShader < 0 && originPlayer.VisualRasterizedTime > 0) {
+					if (resetKeepPlayerShader) keepPlayerShader = Anti_Gray_Dye.ShaderID;
 					forcePlayerShader = Rasterized_Dye.ShaderID;
-				}
-				if (drawPlayersWithShader < 0 && (originPlayer.shineSparkCharge > 0 || originPlayer.shineSparkDashTime > 0)) {
+				} else if (drawPlayersWithShader < 0 && (originPlayer.shineSparkCharge > 0 || originPlayer.shineSparkDashTime > 0)) {
 					forcePlayerShader = Shimmer_Dye.ShaderID;
+				} else {
+					List<VisualEffectPlayer.VisualEffect> effects = drawPlayer.GetModPlayer<VisualEffectPlayer>().effects;
+					for (int i = 0; i < effects.Count; i++) {
+						if (effects[i].SetForcedShader()) break;
+					}
 				}
 				if (drawPlayersWithShader >= 0) {
 					forcePlayerShader = drawPlayersWithShader;
@@ -1923,7 +1926,6 @@ namespace Origins {
 						coordinateMaskFilter.Shader.Parameters["uOffset"].SetValue(drawPlayer.position);
 						coordinateMaskFilter.Shader.Parameters["uScale"].SetValue(1f);
 						coordinateMaskFilter.UseColor(new Vector3(originPlayer.tornOffset, originPlayer.tornCurrentSeverity));
-						//coordinateMaskFilter.UseOpacity(1);//supposed to be originPlayer.tornCurrentSeverity, but can't figure out how to fix blending
 					}
 					orig(self, camera, drawPlayer, position, rotation, rotationOrigin, shadow, alpha, scale, headOnly);
 					return;
@@ -1965,6 +1967,7 @@ namespace Origins {
 					Main.spriteBatch.Restart(spriteBatchState);
 				}
 				forcePlayerShader = -1;
+				if (resetKeepPlayerShader) keepPlayerShader = -1;
 			}
 		}
 
@@ -2011,12 +2014,12 @@ namespace Origins {
 				} else {
 					return new Color(0, 0, 0, 0);
 				}
-			} else if (Filters.Scene["Origins:ZoneDusk"].Active) {
-				Color color = orig(self, i, j, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
+			} else if ((SC_Phase_Three_Underlay.alwaysLightAllTiles || SC_Phase_Three_Underlay.ForcedLit(i, j)) && (Filters.Scene["Origins:ShimmerConstructPhase3"].Active || Filters.Scene["Origins:ShimmerConstructPhase3Cheap"].IsVisible())) {
+				Color color = orig(self, j, i, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 				if (color.R == 0 && color.G == 0 && color.B == 0) color.R = 1;
 				return color;
 			} else {
-				return orig(self, i, j, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
+				return orig(self, j, i, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 			}
 		}
 		static bool _IsSolidForSonar(Tile tile) {

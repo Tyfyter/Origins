@@ -20,6 +20,7 @@ namespace Origins.Items.Weapons.Melee {
         ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.Spears[Type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Toxic_Shock_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gungnir);
@@ -143,7 +144,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), 80);
+			target.AddBuff(Toxic_Shock_Debuff.ID, 80);
 		}
 		public override void OnKill(int timeLeft) {
 			if (Projectile.owner != Main.myPlayer && Projectile.hide) {

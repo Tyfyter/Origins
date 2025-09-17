@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Other;
@@ -15,6 +16,7 @@ namespace Origins.Items.Weapons.Magic {
         ];
         public override void SetStaticDefaults() {
 			Item.staff[Type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.OnFire3];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Flamelash);
@@ -56,7 +58,7 @@ namespace Origins.Items.Weapons.Magic {
 			if (Projectile.timeLeft >= 80) Projectile.rotation = Projectile.velocity.ToRotation();
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (Main.rand.NextBool()) target.AddBuff(BuffID.OnFire, 300);
+			if (Main.rand.NextBool()) target.AddBuff(BuffID.OnFire3, 300);
 			if (Projectile.penetrate == 1) {
 				Projectile.penetrate = 2;
 				Projectile.timeLeft = 80;

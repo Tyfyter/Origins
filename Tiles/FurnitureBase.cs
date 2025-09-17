@@ -1,6 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -19,12 +19,12 @@ namespace Origins.Tiles {
 		public abstract int BaseTileID { get; }
 		public abstract Color MapColor { get; }
 		public virtual bool LavaDeath => true;
-		protected internal TileItem item;
+		public TileItem Item { get; protected set; }
 		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public virtual Color GlowmaskColor => Color.White;
 		protected int width, height;
 		public sealed override void Load() {
-			Mod.AddContent(item = new TileItem(this));
+			Mod.AddContent(Item = new TileItem(this));
 			OnLoad();
 		}
 		public virtual void OnLoad() { }
@@ -65,8 +65,12 @@ namespace Origins.Tiles {
 			width = TileObjectData.newTile.Width;
 			height = TileObjectData.newTile.Height;
 			TileObjectData.addTile(Type);
-			
-			if (!Main.dedServ) AddMapEntry(MapColor, Lang._mapLegendCache.FromType(BaseTileID), MapName);
+
+			if (!Main.dedServ) {
+				LocalizedText text = Lang._mapLegendCache.FromType(BaseTileID);
+				if (string.IsNullOrEmpty(text.Value)) AddMapEntry(MapColor);
+				else AddMapEntry(MapColor, text, MapName);
+			}
 			AdjTiles = [
 				BaseTileID
 			];
@@ -83,6 +87,7 @@ namespace Origins.Tiles {
 	}
 	public abstract class ChairBase : FurnitureBase {
 		public override int BaseTileID => TileID.Chairs;
+		private bool IsABench => BaseTileID == TileID.Benches;
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) {
 			return settings.player.IsWithinSnappngRangeToTile(i, j, PlayerSittingHelper.ChairSittingMaxDistance); // Avoid being able to trigger it from long range
 		}
@@ -105,7 +110,7 @@ namespace Origins.Tiles {
 
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = item.Type;
+			player.cursorItemIconID = Item.Type;
 
 			if (Main.tile[i, j].TileFrameX / 18 < 1) {
 				player.cursorItemIconReversed = true;
@@ -117,11 +122,14 @@ namespace Origins.Tiles {
 
 			//info.directionOffset = info.restingEntity is Player ? 6 : 2; // Default to 6 for players, 2 for NPCs
 			//info.visualOffset = Vector2.Zero; // Defaults to (0,0)
+			if (IsABench) {
+				info.TargetDirection = info.RestingEntity.direction;
+			} else {
+				info.TargetDirection = -1;
 
-			info.TargetDirection = -1;
-
-			if (tile.TileFrameX != 0) {
-				info.TargetDirection = 1; // Facing right if sat down on the right alternate (added through addAlternate in SetStaticDefaults earlier)
+				if (tile.TileFrameX != 0) {
+					info.TargetDirection = 1; // Facing right if sat down on the right alternate (added through addAlternate in SetStaticDefaults earlier)
+				}
 			}
 
 			// The anchor represents the bottom-most tile of the chair. This is used to align the entity hitbox
@@ -247,6 +255,7 @@ namespace Origins.Tiles {
 				TileID.LifeCrystalBoulder,
 				TileID.RollingCactus
 			];
+			_ = DefaultContainerName(0, 0);
 		}
 
 		public override string MapName(string name, int i, int j) {
@@ -360,7 +369,7 @@ namespace Origins.Tiles {
 					player.cursorItemIconText = defaultName;
 				}
 				if (player.cursorItemIconText == defaultName) {
-					player.cursorItemIconID = item.Type;
+					player.cursorItemIconID = Item.Type;
 					player.cursorItemIconText = "";
 				}
 			}
@@ -428,12 +437,13 @@ namespace Origins.Tiles {
 			} else {
 				player.noThrow = 2;
 				player.cursorItemIconEnabled = true;
-				player.cursorItemIconID = item.Type;
+				player.cursorItemIconID = Item.Type;
 			}
 		}
 	}
 	public abstract class LightFurnitureBase : FurnitureBase {
-		AutoLoadingAsset<Texture2D> flameTexture;
+		public AutoLoadingAsset<Texture2D> flameTexture;
+		public virtual int flameDust => -1;
 		public bool IsOn(Tile tile) => tile.TileFrameX < width * 18;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -464,8 +474,23 @@ namespace Origins.Tiles {
 				spriteEffects = SpriteEffects.FlipHorizontally;
 			}
 		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			if (!glowTexture.Exists) return;
+
+			int width = 16;
+			int offsetY = 0;
+			int height = 16;
+			short frameX = drawData.tileFrameX;
+			short frameY = drawData.tileFrameY;
+
+			TileLoader.SetDrawPositions(i, j, ref width, ref offsetY, ref height, ref frameX, ref frameY);
+
+			Rectangle glowRect = new(frameX, frameY, width, height + offsetY);
+			drawData.glowTexture = glowTexture;
+			drawData.glowColor = GlowmaskColor;
+			drawData.glowSourceRect = glowRect;
+		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			base.PostDraw(i, j, spriteBatch);
 			if (!flameTexture.Exists) return;
 			Tile tile = Main.tile[i, j];
 
@@ -500,6 +525,27 @@ namespace Origins.Tiles {
 				float shakeY = Utils.RandomInt(ref randSeed, -10, 1) * 0.35f;
 
 				spriteBatch.Draw(flame, new Vector2(i * 16 - (int)Main.screenPosition.X - (width - 16f) / 2f + shakeX, j * 16 - (int)Main.screenPosition.Y + offsetY + shakeY) + zero, new Rectangle(frameX, frameY, width, height), new Color(100, 100, 100, 0), 0f, default, 1f, effects, 0f);
+			}
+		}
+		public override void EmitParticles(int i, int j, Tile tileCache, short tileFrameX, short tileFrameY, Color tileLight, bool visible) {
+			if (Main.rand.NextBool(40) && tileFrameY < 54) {
+				// The following math makes dust only spawn at the tile coordinates of the flames:
+				// ---
+				// O-O
+				// ---
+
+				int tileColumn = tileFrameX / 18 % 3;
+				if (tileFrameY / 18 % 3 == 1 && tileColumn != 1) {
+					if (flameDust != -1) {
+						Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16 + 2), 14, 6, flameDust, 0f, 0f, 100);
+						if (Main.rand.NextBool(3)) {
+							dust.noGravity = true;
+						}
+
+						dust.velocity *= 0.3f;
+						dust.velocity.Y -= 1.5f;
+					}
+				}
 			}
 		}
 	}
@@ -642,6 +688,7 @@ namespace Origins.Tiles {
 	}
 	public abstract class Platform_Tile : FurnitureBase {
 		public sealed override int BaseTileID => TileID.Platforms;
+		public override Color MapColor => new(190, 141, 110);
 		public override void SetStaticDefaults() {
 			// Properties
 			Main.tileLighted[Type] = true;
@@ -668,22 +715,218 @@ namespace Origins.Tiles {
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 
-			AddMapEntry(MapColor, Language.GetText("MapObject.Door"));
+			if (!Main.dedServ) {
+				LocalizedText text = Lang._mapLegendCache.FromType(BaseTileID);
+				if (string.IsNullOrEmpty(text.Value)) AddMapEntry(MapColor);
+				else AddMapEntry(MapColor, text, MapName);
+			}
 
 			glowTexture = Texture + "_Glow";
 		}
 	}
+	public abstract class CageBase<TCritter>(int cage = ItemID.Terrarium) : CageBase(cage) where TCritter : ModItem {
+		public override int IngredientItem => ModContent.ItemType<TCritter>();
+	}
+	public abstract class CageBase(int cage = ItemID.Terrarium) : ModTile {
+
+		protected internal TileItem item;
+		public abstract int IngredientItem {  get; }
+		public virtual bool LavaDeath => true;
+		public virtual Color MapColor => new(122, 217, 232);
+		/// <inheritdoc	cref="TileID.Sets.CritterCageLidStyle"/>
+		public abstract int LidType { get; }
+		public abstract CageKinds CageKind { get; }
+		private static readonly Dictionary<CageKinds, (int baseTileID, TileObjectData baseTileData, int drawYOffset)> CageKindMap = new() {
+			[CageKinds.SmallCage] = (TileID.CageBuggy, TileObjectData.StyleSmallCage, 1),
+			[CageKinds.BigCage] = (TileID.BunnyCage, TileObjectData.Style6x3, 2),
+			[CageKinds.Jar] = (TileID.MonarchButterflyJar, TileObjectData.Style2x2, 1)
+		};
+		public virtual int[] FrameIndexArray => new int[Main.cageFrames];
+		public int[] FrameCounter = new int[Main.cageFrames];
+		protected AutoLoadingAsset<Texture2D> glowTexture;
+		public virtual Color GlowmaskColor => Color.White;
+		private int offsetY;
+		public sealed override void Load() {
+			Mod.AddContent(item = new TileItem(this).WithExtraDefaults(item => {
+				item.width = 32;
+				item.height = 32;
+				item.value = 0;
+			}).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(IngredientItem)
+				.AddIngredient(cage)
+				.Register();
+			}));
+			OnLoad();
+		}
+		public virtual void OnLoad() { }
+		public override void SetStaticDefaults() {
+			Main.tileFrameImportant[Type] = true;
+			Main.tileSolidTop[Type] = true;
+			Main.tileTable[Type] = true;
+			Main.tileLavaDeath[Type] = LavaDeath;
+			TileID.Sets.CritterCageLidStyle[Type] = LidType;
+
+			AdjTiles = [CageKindMap[CageKind].baseTileID];
+			DustType = DustID.Glass;
+
+			// Names
+			if (!Main.dedServ) AddMapEntry(MapColor, item.DisplayName);
+
+			// Placement
+			// In addition to copying from the TileObjectData.Something templates, modders can copy from specific tile types. CopyFrom won't copy subtile data, so style specific properties won't be copied, such as how Obsidian doors are immune to lava.
+			TileObjectData.newTile.CopyFrom(CageKindMap[CageKind].baseTileData);
+			TileObjectData.newTile.LavaDeath = LavaDeath;
+			TileObjectData.newTile.DrawYOffset = CageKindMap[CageKind].drawYOffset;
+			AnimationFrameHeight = TileObjectData.newTile.CoordinateFullHeight;
+			TileObjectData.addTile(Type);
+			glowTexture = Texture + "_Glow";
+		}
+
+		public override void NumDust(int i, int j, bool fail, ref int num) {
+			num = fail ? 6 : 3;
+		}
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			ExtraAnimate();
+		}
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			Main.critterCage = true;
+			Tile tile = Framing.GetTileSafely(i, j);
+			int frameIndex;
+			if (CageKind != CageKinds.BigCage) frameIndex = TileDrawing.GetSmallAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
+			else frameIndex = TileDrawing.GetBigAnimalCageFrame(i, j, tile.TileFrameX, tile.TileFrameY);
+			frameYOffset = offsetY = FrameIndexArray[frameIndex] * AnimationFrameHeight;
+		}
+		public virtual void ExtraAnimate() { }
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			if (!glowTexture.Exists) return;
+			Rectangle glowRect = new(drawData.tileFrameX, drawData.tileFrameY + offsetY, drawData.tileWidth, drawData.tileHeight);
+			drawData.glowTexture = glowTexture;
+			drawData.glowColor = GlowmaskColor;
+			drawData.glowSourceRect = glowRect;
+		}
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
+			offsetY = 2;
+		}
+		public enum CageKinds {
+			SmallCage,
+			BigCage,
+			Jar
+		}
+	}
+	public abstract class ModGemLock : ModTile {
+		protected internal TileItem item;
+		public abstract int GemType { get; }
+		public override void Load() {
+			Mod.AddContent(item = new TileItem(this).WithExtraDefaults(item => {
+				item.width = 20;
+				item.height = 20;
+				item.value = Item.sellPrice(0, 0, 1);
+			}));
+			OnLoad();
+		}
+		public virtual void OnLoad() { }
+		public override void SetStaticDefaults() {
+			Main.tileFrameImportant[Type] = true;
+			TileID.Sets.FramesOnKillWall[Type] = true;
+			TileID.Sets.AvoidedByNPCs[Type] = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			AddMapEntry(new(55, 204, 212), CreateMapEntryName());
+
+			// Placement
+			// In addition to copying from the TileObjectData.Something templates, modders can copy from specific tile types. CopyFrom won't copy subtile data, so style specific properties won't be copied, such as how Obsidian doors are immune to lava.
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
+			TileObjectData.addTile(Type);
+		}
+		public override IEnumerable<Item> GetItemDrops(int i, int j) {
+			int self = TileLoader.GetItemDropFromTypeAndStyle(Type, 0);
+			yield return new Item(self);
+			if (Framing.GetTileSafely(i, j).TileFrameY >= 54) yield return new Item(GemType);
+		}
+		public override void MouseOver(int i, int j) {
+			int type = GemType;
+			Player player = Main.LocalPlayer;
+			if (type != -1 && ((Main.tile[i, j].TileFrameY / 54) == 1 || player.HasItem(type))) {
+				player.noThrow = 2;
+				player.cursorItemIconEnabled = true;
+				player.cursorItemIconID = type;
+			}
+		}
+		public override bool RightClick(int i, int j) {
+			Player player = Main.LocalPlayer;
+			int frameY = Main.tile[i, j].TileFrameY / 54;
+			int type = GemType;
+
+			if (type != -1) {
+				if (frameY == 0 && player.HasItem(type) && player.selectedItem != 58) {
+					player.GamepadEnableGrappleCooldown();
+					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						player.ConsumeItem(type);
+						ToggleGemLock(i, j, on: true);
+					} else {
+						player.ConsumeItem(type);
+						ModPacket packet = Origins.instance.GetPacket();
+						packet.Write(Origins.NetMessageType.set_gem_lock);
+						packet.Write((short)i);
+						packet.Write((short)j);
+						packet.Write(true);
+						packet.Send();
+					}
+				} else if (frameY == 1) {
+					player.GamepadEnableGrappleCooldown();
+					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						ToggleGemLock(i, j, on: false);
+					} else {
+						ModPacket packet = Origins.instance.GetPacket();
+						packet.Write(Origins.NetMessageType.set_gem_lock);
+						packet.Write((short)i);
+						packet.Write((short)j);
+						packet.Write(false);
+						packet.Send();
+					}
+				}
+			}
+			return true;
+		}
+		public void ToggleGemLock(int i, int j, bool on) {
+
+			bool alreadyOn = false;
+			int type = GemType;
+			Tile tile = Framing.GetTileSafely(i, j);
+			if (!tile.HasTile || (tile.TileFrameY < 54 && !on)) return;
+			if (tile.TileFrameY >= 54) alreadyOn = true;
+
+			int xOffset = tile.TileFrameX % 54 / 18;
+			int yOffset = tile.TileFrameY % 54 / 18;
+
+			for (int k = i - xOffset; k < i - xOffset + 3; k++) {
+				for (int l = j - yOffset; l < j - yOffset + 3; l++) {
+					Main.tile[k, l].TileFrameY = (short)((on ? 54 : 0) + (l - j + yOffset) * 18);
+				}
+			}
+
+			if (type != -1 && alreadyOn)
+				Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, type);
+
+			WorldGen.SquareTileFrame(i, j);
+			NetMessage.SendTileSquare(-1, i - xOffset, j - yOffset, 3, 3);
+			SoundEngine.PlaySound(SoundID.Mech, new Vector2(i + 1 - xOffset, j + 1 - yOffset) * 16);
+			Wiring.TripWire(i - xOffset, j - yOffset, 3, 3);
+			NetMessage.SendData(MessageID.HitSwitch, -1, -1, null, i - xOffset, j - yOffset);
+		}
+	}
 	[Autoload(false)]
-	public class TileItem : ModItem {
-		readonly ModTile tile;
+	public class TileItem(ModTile tile) : ModItem() {
+		readonly ModTile tile = tile;
 		public override string Name => tile.Name + "_Item";
 		public override string Texture => tile.Texture + "_Item";
 		public event Action<Item> ExtraDefaults;
 		public event Action<Item> OnAddRecipes;
 		protected override bool CloneNewInstances => true;
-		public TileItem(ModTile tile) : base() {
-			this.tile = tile;
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
 		}
+
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(tile.Type);
 			Item.width = 14;
@@ -699,6 +942,14 @@ namespace Origins.Tiles {
 				OnAddRecipes(Item);
 				OnAddRecipes = null;
 			}
+		}
+		public TileItem WithExtraDefaults(Action<Item> extra) {
+			ExtraDefaults += extra;
+			return this;
+		}
+		public TileItem WithOnAddRecipes(Action<Item> recipes) {
+			OnAddRecipes += recipes;
+			return this;
 		}
 	}
 }

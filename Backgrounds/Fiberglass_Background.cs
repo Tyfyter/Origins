@@ -7,12 +7,14 @@ using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using ReLogic.Content;
 using Origins.Walls;
+using PegasusLib.Graphics;
 
 namespace Origins.Backgrounds {
 	public class Fiberglass_Background() : Overlay(EffectPriority.VeryHigh, RenderLayers.Background) {
 		public override void Activate(Vector2 position, params object[] args) { }
 		public override void Deactivate(params object[] args) { }
 		public override void Draw(SpriteBatch spriteBatch) {
+			if (!Lighting.NotRetro) return;
 			if (Fiberglass_Wall.BackgroundMaskTarget is not null) {
 				Color drawColor = Color.White * Opacity;
 				Texture2D farTexture = TextureAssets.Background[BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Fiberglass_Background3")].Value;
@@ -29,6 +31,7 @@ namespace Origins.Backgrounds {
 					new Rectangle(0, 0, Main.screenWidth, Main.screenHeight),
 					drawColor
 				);
+				Main.spriteBatch.Restart(Main.spriteBatch.GetState(), transformMatrix: Main.GameViewMatrix.ZoomMatrix);
 				DrawLayer(midTexture, Main.screenWidth, Main.screenHeight * 2, new(Main.caveParallax * 0.5f, Main.caveParallax * 0.25f));
 				DrawLayer(nearTexture, nearTexture.Width, nearTexture.Height, Vector2.One);
 				void DrawLayer(Texture2D texture, int width, int height, Vector2 parallax) {
@@ -50,15 +53,21 @@ namespace Origins.Backgrounds {
 					}
 				}
 				Main.graphics.GraphicsDevice.Textures[1] = Fiberglass_Wall.BackgroundMaskTarget;
+				Matrix matrix = Matrix.Identity;
+				if (OriginsModIntegrations.FancyLighting is not null) {
+					matrix = Matrix.Invert(Main.GameViewMatrix.ZoomMatrix);
+				}
+				Fiberglass_Wall.MaskShader.Shader.Parameters["uImageMatrix1"]?.SetValue(matrix);
 				Fiberglass_Wall.MaskShader.Shader.Parameters["uImageSize1"]?.SetValue(new Vector2(Fiberglass_Wall.BackgroundMaskTarget.Width, Fiberglass_Wall.BackgroundMaskTarget.Height));
 				Fiberglass_Wall.MaskShader.Shader.Parameters["uOffset"].SetValue(Main.sceneWallPos - Main.screenPosition);
 				Fiberglass_Wall.MaskShader.Shader.Parameters["uTargetPosition"].SetValue(new Vector2(Main.offScreenRange));
-				Origins.shaderOroboros.Stack(Fiberglass_Wall.MaskShader);
+				Origins.shaderOroboros.Stack(Fiberglass_Wall.MaskShader, Main.GameViewMatrix.EffectMatrix);
 				Origins.shaderOroboros.Release();
 			}
 		}
 		public override bool IsVisible() => Fiberglass_Wall.AnyWallsVisible;
 		public override void Update(GameTime gameTime) {
+			if (!Lighting.NotRetro) return;
 			Opacity = Fiberglass_Wall.AnyWallsVisible.ToInt();
 		}
 	}

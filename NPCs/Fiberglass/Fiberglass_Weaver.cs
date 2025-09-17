@@ -3,13 +3,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Fiberglass;
-using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
+using Origins.Items.Vanity.BossMasks;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
+using Origins.NPCs.MiscE;
 using Origins.Tiles.BossDrops;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -23,6 +25,8 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
@@ -45,14 +49,16 @@ namespace Origins.NPCs.Fiberglass {
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		string ICustomWikiStat.CustomSpritePath => WikiPageExporter.GetWikiImagePath("UI/Fiberglass_Weaver_Preview");
 		public override void SetStaticDefaults() {
-			NPCID.Sets.CantTakeLunchMoney[Type] = false;
+			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
+			OriginsSets.NPCs.CustomGroundedCheck[Type] = _ => true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/Fiberglass_Weaver_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
 				Position = new Vector2(0f, -32f),
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = -32f
 			};
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 		}
 		public override void Unload() {
 			armorDropRule = null;
@@ -62,8 +68,8 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.boss = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
-			NPC.damage = 14;
-			NPC.lifeMax = 1400;
+			NPC.damage = 25;
+			NPC.lifeMax = 2000;
 			NPC.defense = 26;
 			NPC.aiStyle = 0;
 			NPC.width = NPC.height = 68;
@@ -110,15 +116,16 @@ namespace Origins.NPCs.Fiberglass {
 				}
 			}
 			float jumpSpeed = 10 + DifficultyMult * 2;
-			spawnPosition ??= target.Position;
+			spawnPosition ??= NPC.Center;
 			if (target.Type == NPCTargetType.Player && !Main.player[NPC.target].InModBiome<Fiberglass_Undergrowth>()) {
-				if (NPC.ai[3] < 240) NPC.ai[3] += 0.067f;
+				if (NPC.ai[3] < 180) NPC.ai[3] += 0.333f;
 			} else {
 				NPC.ai[3] = 0;
 			}
 			if (target.Invalid) {
 				target.Position = spawnPosition.Value;
 			}
+			NPC.spriteDirection = Math.Sign(NPC.velocity.X);
 			switch ((int)NPC.ai[0]) {
 				case 0: {
 					AngularSmoothing(ref NPC.rotation, NPC.AngleTo(target.Center) + MathHelper.PiOver2, 0.05f);
@@ -143,6 +150,9 @@ namespace Origins.NPCs.Fiberglass {
 					if (++NPC.ai[1] > 240 - NPC.ai[3]) {
 						NPC.ai[1] = 0;
 						NPC.ai[0] = Main.rand.Next(1, 3);
+						if (!NPC.WithinRange(target.Center, 16 * 100)) {
+							NPC.ai[0] = 1; // always lunge when over 100 blocks away
+						}
 					}
 					break;
 				}
@@ -222,6 +232,8 @@ namespace Origins.NPCs.Fiberglass {
 					goto case 0;
 				}
 			}
+			if (NPC.HasValidTarget) NPC.DiscourageDespawn(60 * 5);
+			else NPC.EncourageDespawn(60);
 		}
 		public static Vector2 GetStandPosition(Vector2 target, Vector2 legStart, float legth) {//candidate
 			HashSet<Point> checkedPoints = new HashSet<Point>();
@@ -256,14 +268,15 @@ namespace Origins.NPCs.Fiberglass {
 				hitbox.Offset((int)offset.X, (int)offset.Y);
 				if (hitbox.Intersects(victimHitbox)) {
 					npcRect = hitbox;
-					damageMultiplier = NPC.ai[0] == 3 ? 3 : 1.5f;
+					damageMultiplier = NPC.ai[0] == 3 ? 1 : 1.5f;
 					return;
 				}
 			}
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			armorDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>());
+			armorDropRule = ItemDropRule.FewFromOptionsNotScalingWithLuck(2, 1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>());
 			weaponDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1,
+				ModContent.ItemType<Dream_Catcher>(),
 				ModContent.ItemType<Fiberglass_Bow>(),
 				ModContent.ItemType<Fiberglass_Sword>(),
 				ModContent.ItemType<Fiberglass_Pistol>(),
@@ -283,23 +296,35 @@ namespace Origins.NPCs.Fiberglass {
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Terlet_Paper>(), 4));
 			npcLoot.Add(new LeadingConditionRule(new Conditions.IsMasterMode()).WithOnSuccess(weaponDropRule));
 		}
+		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Fiberglass_Weaver).GetDefaultTMLName();
+		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Fiberglass_Weaver).GetDefaultTMLName() + "_AF";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Main.CurrentDrawnEntityShader = Terraria.Graphics.Shaders.GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveDye);
-			if (legs is null) return false;
-			for (int i = 0; i < 8; i++) {
-				bool flip = (i % 2 != 0) == i < 4;
-				Vector2 baseStart = legs[i].start;
-				legs[i].start = legs[i].start.RotatedBy(NPC.rotation) + NPC.Center;
-				float[] targets = legs[i].GetTargetAngles(legTargets[i], flip);
-				AngularSmoothing(ref legs[i].bone0.Theta, targets[0], 0.3f);
-				AngularSmoothing(ref legs[i].bone1.Theta, targets[1], NPC.ai[0] == 2 && NPC.ai[2] == i ? 1f : 0.3f);
+			float rotation = NPC.rotation;
+			float scale = 1;
+			SpriteEffects effect = SpriteEffects.None;
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				TextureAssets.Npc[Type] = afTexture;
+				rotation = 0;
+				effect = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			} else {
+				TextureAssets.Npc[Type] = normalTexture;
+				Main.CurrentDrawnEntityShader = Terraria.Graphics.Shaders.GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveDye);
+				if (legs is null) return false;
+				for (int i = 0; i < 8; i++) {
+					bool flip = (i % 2 != 0) == i < 4;
+					Vector2 baseStart = legs[i].start;
+					legs[i].start = legs[i].start.RotatedBy(NPC.rotation) + NPC.Center;
+					float[] targets = legs[i].GetTargetAngles(legTargets[i], flip);
+					AngularSmoothing(ref legs[i].bone0.Theta, targets[0], 0.3f);
+					AngularSmoothing(ref legs[i].bone1.Theta, targets[1], NPC.ai[0] == 2 && NPC.ai[2] == i ? 1f : 0.3f);
 
-				Vector2 screenStart = legs[i].start - screenPos;
-				Main.EntitySpriteDraw(UpperLegTexture, screenStart, null, drawColor, legs[i].bone0.Theta, new Vector2(5, flip ? 3 : 9), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
-				Main.EntitySpriteDraw(LowerLegTexture, screenStart + (Vector2)legs[i].bone0, null, drawColor, legs[i].bone0.Theta + legs[i].bone1.Theta, new Vector2(6, flip ? 2 : 6), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
-				legs[i].start = baseStart;
+					Vector2 screenStart = legs[i].start - screenPos;
+					Main.EntitySpriteDraw(UpperLegTexture, screenStart, null, drawColor, legs[i].bone0.Theta, new Vector2(5, flip ? 3 : 9), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
+					Main.EntitySpriteDraw(LowerLegTexture, screenStart + (Vector2)legs[i].bone0, null, drawColor, legs[i].bone0.Theta + legs[i].bone1.Theta, new Vector2(6, flip ? 2 : 6), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
+					legs[i].start = baseStart;
+				}
 			}
-			Main.EntitySpriteDraw(TextureAssets.Npc[Type].Value, NPC.Center - screenPos, null, drawColor, NPC.rotation, new Vector2(34, 70), 1f, SpriteEffects.None, 0);
+			Main.EntitySpriteDraw(TextureAssets.Npc[Type].Value, NPC.Center - screenPos, null, drawColor, rotation, TextureAssets.Npc[Type].Size() / 2, scale, effect, 0);
 			return false;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
@@ -345,7 +370,7 @@ namespace Origins.NPCs.Fiberglass {
 				new(Projectile.ai[0], Projectile.ai[1]),
 				8,
 				8,
-				Main.tileSolid
+				Main.tileSolid.CombineSets(Main.tileSolidTop, (a, b) => a && !b)
 			);
 			if (Projectile.ai[0] != vel.X || Projectile.ai[1] != vel.Y) {
 				Projectile.ai[0] = 0;
@@ -375,12 +400,41 @@ namespace Origins.NPCs.Fiberglass {
 			Projectile.localAI[0] = reader.ReadSingle();
 			Projectile.localAI[1] = reader.ReadSingle();
 		}
+		readonly float frameA = Main.rand.NextFloat();
+		readonly float frameB = Main.rand.NextFloat();
+		private static readonly VertexStrip _vertexStrip = new();
 		public override bool PreDraw(ref Color lightColor) {
-			Vector2 pos = new Vector2(Projectile.Center.X - Main.screenPosition.X, Projectile.Center.Y - Main.screenPosition.Y);
 			Vector2 diff = OtherEndPos + new Vector2(4) - Projectile.Center;
 			Vector2 scale = new Vector2(diff.Length(), 2);
 
-			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, pos, null, Color.White * 0.8f, diff.ToRotation(), new Vector2(0f, 0.5f), scale, SpriteEffects.None, 0);
+			MiscShaderData miscShaderData = GameShaders.Misc["Origins:AnimatedTrail"];
+			int num = 1;//1
+			int num2 = 0;//0
+			int num3 = 0;//0
+			float w = 0f;//0.6f
+			miscShaderData.UseShaderSpecificData(new Vector4(num, num2, num3, w));
+			miscShaderData.UseImage0(TextureAssets.Extra[194]);
+			miscShaderData.UseImage1(TextureAssets.Extra[193]);
+			//miscShaderData.UseImage0(TextureAssets.Extra[189]);
+			float uTime = (float)Main.timeForVisualEffects / 22;
+			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(1.5f, 0, 0, 0));
+			miscShaderData.Shader.Parameters["uAlphaMatrix1"].SetValue(new Vector4(1.05f, 0, 0, 0));
+			miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(frameA, 0, 1, 1));
+			miscShaderData.Shader.Parameters["uSourceRect1"].SetValue(new Vector4(frameB, 0, 1, 1));
+			miscShaderData.Apply();
+			const int verts = 128;
+			float[] rot = new float[verts + 1];
+			Vector2[] pos = new Vector2[verts + 1];
+			Vector2 start = new Vector2(Projectile.Center.X, Projectile.Center.Y);
+			Vector2 end = OtherEndPos;
+			float rotation = (end - start).ToRotation();
+			for (int i = 0; i < verts + 1; i++) {
+				rot[i] = rotation;
+				pos[i] = Vector2.Lerp(start, end, i / (float)verts);
+			}
+			_vertexStrip.PrepareStrip(pos, rot, progress => Lighting.GetColor(Vector2.Lerp(start, end, progress).ToTileCoordinates()), _ => 8, -Main.screenPosition, pos.Length, includeBacksides: true);
+			_vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			return false;
 		}
 	}

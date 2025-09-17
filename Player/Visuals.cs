@@ -1,12 +1,15 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.Graphics.Renderers;
+using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
-using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
+using Origins.Items.Vanity.Dev.PlagueTexan;
+using Origins.Items.Weapons.Ranged;
 using Origins.Layers;
 using Origins.Tiles.Defiled;
 using PegasusLib;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -19,6 +22,7 @@ namespace Origins {
 		public override void HideDrawLayers(PlayerDrawSet drawInfo) {
 			Item item = drawInfo.heldItem;
 			if (item.ModItem is ICustomDrawItem) PlayerDrawLayers.HeldItem.Hide();
+			PlayerDrawLayers.CaptureTheGem.Hide();
 
 			if (mountOnly && !drawInfo.headOnlyRender) {
 				for (int i = 0; i < PlayerDrawLayerLoader.DrawOrder.Count; i++) {
@@ -39,6 +43,24 @@ namespace Origins {
 			}
 		}
 		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
+			if (weakShimmer) {
+				drawInfo.colorHair = drawInfo.drawPlayer.GetImmuneAlpha(drawInfo.drawPlayer.GetHairColor(), drawInfo.shadow);
+				drawInfo.colorEyeWhites = drawInfo.drawPlayer.GetImmuneAlpha(Color.White, drawInfo.shadow);
+				drawInfo.colorEyes = drawInfo.drawPlayer.GetImmuneAlpha(drawInfo.drawPlayer.eyeColor, drawInfo.shadow);
+				drawInfo.colorHead = drawInfo.drawPlayer.GetImmuneAlpha(drawInfo.drawPlayer.skinColor, drawInfo.shadow);
+				drawInfo.colorBodySkin = drawInfo.drawPlayer.GetImmuneAlpha(drawInfo.drawPlayer.skinColor, drawInfo.shadow);
+				drawInfo.colorLegs = drawInfo.drawPlayer.GetImmuneAlpha(drawInfo.drawPlayer.skinColor, drawInfo.shadow);
+				drawInfo.colorShirt = drawInfo.drawPlayer.GetImmuneAlphaPure(drawInfo.drawPlayer.shirtColor, drawInfo.shadow);
+				drawInfo.colorUnderShirt = drawInfo.drawPlayer.GetImmuneAlphaPure(drawInfo.drawPlayer.underShirtColor, drawInfo.shadow);
+				drawInfo.colorPants = drawInfo.drawPlayer.GetImmuneAlphaPure(drawInfo.drawPlayer.pantsColor, drawInfo.shadow);
+				drawInfo.colorShoes = drawInfo.drawPlayer.GetImmuneAlphaPure(drawInfo.drawPlayer.shoeColor, drawInfo.shadow);
+				drawInfo.colorArmorHead = drawInfo.drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+				drawInfo.colorArmorBody = drawInfo.drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+				drawInfo.colorMount = drawInfo.colorArmorBody;
+				drawInfo.colorArmorLegs = drawInfo.drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+				drawInfo.floatingTubeColor = drawInfo.drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
+			}
+
 			if (cursedCrownVisual) {
 				drawInfo.skinDyePacked = GameShaders.Armor.GetShaderIdFromItemId(ItemID.BlueAcidDye);
 				const float alphaMult = 0.9f;
@@ -118,6 +140,9 @@ namespace Origins {
 			oldGravDir = Player.gravDir;
 			if (forceFallthrough) Player.GoingDownWithGrapple = true;
 			forceFallthrough = false;
+			Player.runAcceleration *= moveSpeedMult;
+			Player.maxRunSpeed *= moveSpeedMult;
+			Player.accRunSpeed *= moveSpeedMult;
 			if (cursedCrown && Player.velocity.Y == 0) {
 				Player.maxRunSpeed *= 0.9f;
 				Player.accRunSpeed *= 0.9f;
@@ -134,6 +159,38 @@ namespace Origins {
 					break;
 				}
 			}
+		}
+		public override void ModifyZoom(ref float zoom) {
+			if (Main.mouseRight && Player.HeldItem?.ModItem is Shimmershot) {
+				if (zoom == -1) zoom = 0;
+				zoom += 0.5f;
+			}
+		}
+	}
+	public class VisualEffectPlayer : ModPlayer {
+		public List<VisualEffect> effects = [];
+		public override void ResetEffects() {
+			for (int i = effects.Count - 1; i >= 0; i--) {
+				effects[i].ResetEffects();
+				if (!effects[i].active) effects.RemoveAt(i);
+			}
+		}
+		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
+			for (int i = 0; i < effects.Count; i++) {
+				effects[i].ModifyDrawInfo(ref drawInfo);
+			}
+		}
+		public override void FrameEffects() {
+			for (int i = 0; i < effects.Count; i++) {
+				effects[i].FrameEffects(Player);
+			}
+		}
+		public abstract class VisualEffect {
+			public bool active = true;
+			public virtual void ResetEffects() { }
+			public virtual bool SetForcedShader() => false;
+			public virtual void ModifyDrawInfo(ref PlayerDrawSet drawInfo) { }
+			public virtual void FrameEffects(Player player) { }
 		}
 	}
 }

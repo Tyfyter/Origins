@@ -40,6 +40,9 @@ namespace Origins.Tiles.Defiled {
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Defiled_Dungeon_Chest_Item : ModItem {
+		public override void SetStaticDefaults() {
+			ModCompatSets.AnyChests[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;

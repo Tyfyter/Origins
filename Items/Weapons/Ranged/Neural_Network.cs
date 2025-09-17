@@ -1,11 +1,15 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Dev;
+using Origins.Items.Materials;
 using ReLogic.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Ranged {
 	public class Neural_Network : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -29,6 +33,13 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
 			int buffIndex = player.FindBuffIndex(ModContent.BuffType<Neural_Network_Buff>());
 			if (buffIndex >= 0) damage.Base -= 0.13f * player.buffTime[buffIndex];
+		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient<NE8>(10)
+			.AddIngredient<Sanguinite_Bar>(15)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 	public class Neural_Network_Buff : ModBuff {
@@ -91,5 +102,14 @@ namespace Origins.Items.Weapons.Ranged {
 				packet.Send(-1, Main.myPlayer);
 			}
 		}
+	}
+	public class Neural_Network_Crit_Type : CritType<Neural_Network>{
+		static int CritThreshold => 30;
+		public override LocalizedText Description => base.Description.WithFormatArgs(CritThreshold);
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
+			int buffIndex = player.FindBuffIndex(ModContent.BuffType<Neural_Network_Buff>());
+			return buffIndex >= 0 && player.buffTime[buffIndex] >= CritThreshold;
+		}
+		public override float CritMultiplier(Player player, Item item) => 1.25f;
 	}
 }

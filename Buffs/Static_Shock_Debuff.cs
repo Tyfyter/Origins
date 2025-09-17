@@ -1,6 +1,7 @@
 ﻿using Origins.NPCs;
 using Origins.NPCs.Defiled;
 using PegasusLib;
+using PegasusLib.UI;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -10,11 +11,14 @@ using Terraria.ModLoader;
 
 namespace Origins.Buffs {
 	public class Static_Shock_Debuff : ModBuff {
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			BuffID.Sets.GrantImmunityWith[Type] = [
 				BuffID.Electrified
 			];
+			Buff_Hint_Handler.ModifyTip(Type, this is Mini_Static_Shock_Debuff ? 0 : 4, this.GetLocalization("EffectDescription").Key);
+			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.OriginPlayer().staticShock = true;
@@ -43,10 +47,10 @@ namespace Origins.Buffs {
 		public static void Inflict(Entity victim, int time) {
 			bool isDead = false;
 			if (victim is NPC npc) {
-				npc.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), time);
+				npc.AddBuff(ID, time);
 				isDead = npc.life <= 0;
 			} else if (victim is Player player) {
-				player.AddBuff(ModContent.BuffType<Static_Shock_Debuff>(), time);
+				player.AddBuff(ID, time);
 				isDead = player.dead || player.statLife < 0;
 			}
 			if (isDead) ProcessShocking(victim);
@@ -121,7 +125,7 @@ namespace Origins.Buffs {
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			BuffID.Sets.GrantImmunityWith[Type] = [
-				ModContent.BuffType<Static_Shock_Debuff>()
+				Static_Shock_Debuff.ID
 			];
 		}
 		public override void Update(Player player, ref int buffIndex) {
@@ -136,7 +140,7 @@ namespace Origins.Buffs {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			BuffID.Sets.GrantImmunityWith[Type] = [
-				ModContent.BuffType<Static_Shock_Debuff>()
+				Static_Shock_Debuff.ID
 			];
 		}
 		public override void Update(Player player, ref int buffIndex) {

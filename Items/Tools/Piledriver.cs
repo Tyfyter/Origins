@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Melee;
 using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
@@ -145,7 +147,7 @@ namespace Origins.Items.Tools {
 			//Dust.NewDustPerfect(Projectile.Center, DustID.Torch, Vector2.Zero).noGravity = true;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			if (Projectile.ai[2] == 2) {
+			if (Projectile.ai[2] == 2 && !CritType.ModEnabled) {
 				modifiers.CritDamage *= 1 + Projectile.CritChance / 50f;
 				modifiers.SetCrit();
 			}
@@ -210,5 +212,9 @@ namespace Origins.Items.Tools {
 				for (int i = 0; i < 3; i++) Dust.NewDust(pos, 0, 0, DustID.Torch);
 			}
 		}
+	}
+	public class Piledriver_Crit_Type : CritType<Piledriver> {
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => projectile?.ai[2] == 2;
+		public override float CritMultiplier(Player player, Item item) => 1.8f + (player.GetWeaponCrit(item) / 100f);
 	}
 }

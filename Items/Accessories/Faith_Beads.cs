@@ -55,6 +55,9 @@ namespace Origins.Items.Accessories {
 		public override bool DealsSelfDamage => false;
 		public override SoundStyle? Sound => Origins.Sounds.Bonk.WithVolume(1f);
 		public override int FireDustAmount => 0;
+		public override void SetStaticDefaults() {
+			OriginsSets.Projectiles.NoMultishot[Type] = true;
+		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Projectile.usesLocalNPCImmunity = false;

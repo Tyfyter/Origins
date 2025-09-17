@@ -20,17 +20,26 @@ using Terraria.Audio;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction : ModItem {
-		public override string Texture => typeof(Partybringer_Turret).GetDefaultTMLName() + "_Pods";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<TUDFLOMD_Rocket_Canister>(80, 10, 12f, 46, 28, true);
-			Item.useAnimation *= 3;
+			Item.DefaultToCanisterLauncher<TUDFLOMD_Rocket_Canister>(80, 9, 12f, 46, 28, true);
+			Item.useAnimation *= 4;
+			Item.useLimitPerAnimation = 4;
+			Item.knockBack = 3;
 			Item.reuseDelay = Item.useTime;
-			Item.value = Item.sellPrice(silver: 24);
+			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.Cyan;
-			Item.ArmorPenetration += 15;
+			//Item.ArmorPenetration += 15;
+		}
+		public override Vector2? HoldoutOffset() => new(-5, -8);
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.LunarBar, 18)
+			.AddIngredient<Partybringer>()
+			.AddTile(TileID.LunarCraftingStation)
+			.Register();
 		}
 		public override bool? UseItem(Player player) {
 			SoundEngine.PlaySound(Item.UseSound, player.Center);
@@ -38,6 +47,22 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Main.rand.Next(TUDFLOMD_Rocket.Projectiles);
+			Vector2 unit = velocity.Normalized(out _);
+			Vector2 perp = unit.RotatedBy(player.direction * MathHelper.PiOver2);
+			switch (player.ItemUsesThisAnimation) {
+				case 1:
+				position += unit * 84 + perp * 8;
+				break;
+				case 2:
+				position += unit * 64 + perp * 8;
+				break;
+				case 3:
+				position += unit * 84 + perp * -10;
+				break;
+				case 4:
+				position += unit * 64 + perp * -10;
+				break;
+			}
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			float distanceFromTarget = 16 * 17.5f;
@@ -203,21 +228,21 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public void MakeShape(Color color, float scale, params Vector2[] vertices) => MakeShape(color, scale, Vector2.Zero, vertices);
 		public void MakeShape(Color color, float scale, Vector2 offset, params Vector2[] vertices) {
 			float spread = 0.25f / scale;
+			List<TUDFLOMD_Subdust> dusts = [];
 			for (int i = 0; i < vertices.Length; i++) {
 				Vector2 a = vertices[i];
 				Vector2 b = vertices[(i + 1) % vertices.Length];
 				float speed = spread / a.Distance(b);
 				for (float j = 0; j < 1; j += speed) {
 					Vector2 direction = (Vector2.Lerp(a, b, j) + offset) * scale;
-					Dust.NewDustPerfect(
-						Projectile.Center,
-						ModContent.DustType<Flare_Dust>(),
-					direction,
-						newColor: color,
-						Scale: 0.85f
-					).noGravity = true;
+					dusts.Add(new(Projectile.Center, direction, 0.85f, color));
 				}
 			}
+			Dust.NewDustPerfect(
+				Projectile.Center,
+				ModContent.DustType<TUDFLOMDust>(),
+				Vector2.Zero
+			).customData = dusts.ToArray();
 		}
 	}
 	public class TUDFLOMD_Rocket_Canister : TUDFLOMD_Rocket, ICanisterProjectile {
@@ -325,6 +350,22 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class TUDFLOMD_Rocket_Yellow : TUDFLOMD_Rocket {
 		public override Color Color => Color.Gold;
+		public override void AI() {
+			if (Target != -1) {
+				NPC target = Main.npc[Target];
+				if (target.CanBeChasedBy(Projectile)) {
+					float scaleFactor = 16f * Origins.HomingEffectivenessMultiplier[Projectile.type];
+
+					Vector2 targetVelocity = (target.Center - Projectile.Center).SafeNormalize(-Vector2.UnitY) * scaleFactor * (1 - Projectile.ai[1] / 200);
+					Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity.RotatedBy(Math.Sin(++Projectile.ai[1] * 0.25f) * 1), 0.083333336f);
+				} else {
+					Target = -1;
+				}
+			} else {
+				Projectile.velocity = Projectile.velocity.RotatedBy(Math.Sin(++Projectile.ai[2] * 0.25f - MathHelper.PiOver2) * 0.1f) * (1 - (Projectile.ai[2] / 120) * 0.02f);
+			}
+			base.AI();
+		}
 		public override void OnKill(int timeLeft) {
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14, 0, 15, 0);
 			if (Projectile.owner == Main.myPlayer) {
@@ -621,12 +662,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Vector2[] star = Star(6, 2, 0.75f).Scaled(scale).RotatedBy(rot);
 			MakeShape(color, 8, star);
 			for (int i = (timeLeft - 1) / 15; i-- > 0;) {
-				MakeShape(Color.White, 2, (GeometryUtils.Vec2FromPolar(10, (i + 1.15f) * -(MathHelper.TwoPi / 6)) * scale).RotatedBy(rot), star.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)));
+				MakeShape(new(191, 171, 143), 2, (GeometryUtils.Vec2FromPolar(10, (i + 1.15f) * -(MathHelper.TwoPi / 6)) * scale).RotatedBy(rot), star.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)));
 			}
 		}
 	}
 	public class TUDFLOMD_Rocket_Purple_Explosion : TUDFLOMD_Rocket {
-		public override Color Color => Color.White;
+		public override Color Color => new(191, 171, 143);
 		public override void SetStaticDefaults() { }
 		public override void SetDefaults() {
 			base.SetDefaults();

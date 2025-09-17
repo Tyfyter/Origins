@@ -118,7 +118,7 @@ namespace Origins.Items.Accessories {
 			Projectile.penetrate = 1;
 		}
 		public override void AI() {
-			Projectile.velocity.Y += 0.2f;
+			Projectile.velocity.Y += 0.2f * Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().gravityMultiplier;
 			Projectile.rotation += Projectile.velocity.X * 0.1f;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {

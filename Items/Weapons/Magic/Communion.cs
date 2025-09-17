@@ -1,5 +1,7 @@
 using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Dev;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -7,11 +9,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Communion : ModItem, ICustomWikiStat {
-        public string[] Categories => [
+		public string[] Categories => [
 			"Wand"
 		];
 		public override void SetStaticDefaults() {
 			Item.staff[Type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Rasterized_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Communion_P>(), 26, 10);
@@ -64,8 +67,12 @@ namespace Origins.Items.Weapons.Magic {
 			}
 		}
 		public override bool? CanHitNPC(NPC target) {
-			if (Projectile.localNPCImmunity[target.whoAmI] > 0) return false;
+			if (IsOnCooldown(target.whoAmI)) return false;
 			return null;
+		}
+		public bool IsOnCooldown(int index) {
+			if (CritType.ModEnabled && hitCooldown[index] <= 0) return false;
+			return Projectile.localNPCImmunity[index] > 0;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.velocity -= target.velocity * Math.Min(target.knockBackResist, 1);
@@ -75,7 +82,7 @@ namespace Origins.Items.Weapons.Magic {
 			float maxDist = 256 * 256;
 			Projectile.ai[0] = -1;
 			foreach (NPC currentTarget in Main.ActiveNPCs) {
-				if (currentTarget.whoAmI == target.whoAmI || Projectile.localNPCImmunity[currentTarget.whoAmI] > 0 || !currentTarget.CanBeChasedBy()) continue;
+				if (currentTarget.whoAmI == target.whoAmI || IsOnCooldown(currentTarget.whoAmI) || !currentTarget.CanBeChasedBy()) continue;
 
 				float currentDist = currentTarget.Center.DistanceSQ(Projectile.Center);
 
@@ -85,11 +92,25 @@ namespace Origins.Items.Weapons.Magic {
 				}
 			}
 
-            target.AddBuff(Rasterized_Debuff.ID, 35);
+			target.AddBuff(Rasterized_Debuff.ID, 35);
+
+			if (CritType.ModEnabled) {
+				if (hitCooldown[target.whoAmI] > 0) {
+					Projectile.penetrate -= 9;
+					if (Projectile.penetrate <= 0) Projectile.Kill();
+				}
+				for (int i = 0; i < hitCooldown.Length; i++) {
+					if (hitCooldown[i] > 0) hitCooldown[i]--;
+				}
+				hitCooldown[target.whoAmI] = 5;
+			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;
+			if (CritType.ModEnabled && hitCooldown[target.whoAmI] > 0) modifiers.CritDamage *= 1.2f / 1.5f;
 		}
+		public int[] hitCooldown = new int[Main.maxNPCs];
+		public bool[] prevHits = new bool[Main.maxNPCs];
 		public override void AI() {
 			const float dust_speed_mult = -0.5f;
 			Dust.NewDustDirect(
@@ -114,7 +135,7 @@ namespace Origins.Items.Weapons.Magic {
 			float maxAngle = 0.4f;
 			Vector2 direction = Projectile.velocity.SafeNormalize(default);
 			foreach (NPC currentTarget in Main.ActiveNPCs) {
-				if (Projectile.localNPCImmunity[currentTarget.whoAmI] > 0 || !currentTarget.CanBeChasedBy()) continue;
+				if (IsOnCooldown(currentTarget.whoAmI) || !currentTarget.CanBeChasedBy()) continue;
 
 				float dot = Vector2.Dot(direction, Projectile.Center.DirectionTo(currentTarget.Center));
 				if (dot > maxAngle) {
@@ -124,5 +145,11 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			end:;
 		}
+	}
+	public class Communion_Type : CritType<Communion> {
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
+			return !((projectile?.ModProjectile as Communion_P)?.prevHits[target.whoAmI].TrySet(true) ?? true);
+		}
+		public override float CritMultiplier(Player player, Item item) => 1.5f;
 	}
 }

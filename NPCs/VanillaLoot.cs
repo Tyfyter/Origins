@@ -9,6 +9,7 @@ using Origins.Items.Weapons;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.Tiles.Brine;
@@ -123,6 +124,7 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 13));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Feathery_Crest>(), 30));
 				break;
+				case NPCID.LostGirl:
 				case NPCID.Nymph:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>()));
 				break;
@@ -311,7 +313,7 @@ namespace Origins.NPCs {
 			}
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Dawn_Key>(), 2500, 1, 1, new LootConditions.Dawn_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Defiled_Key>(), 2500, 1, 1, new LootConditions.Defiled_Key_Condition()));
-			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Dusk_Key>(), 2500, 1, 1, new LootConditions.Dusk_Key_Condition()));
+			//globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Dusk_Key>(), 2500, 1, 1, new LootConditions.Dusk_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Hell_Key>(), 2500, 1, 1, new LootConditions.Hell_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Mushroom_Key>(), 2500, 1, 1, new LootConditions.Mushroom_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Ocean_Key>(), 2500, 1, 1, new LootConditions.Ocean_Key_Condition()));
@@ -319,6 +321,7 @@ namespace Origins.NPCs {
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Brine_Key>(), 2500, 1, 1, new LootConditions.Brine_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Lost_Picture_Frame>(), 25, 1, 1, new LootConditions.Lost_Picture_Frame_Condition()));
 			globalLoot.Add(ItemDropRule.Common(ModContent.ItemType<Generic_Weapon>(), 50000));
+			globalLoot.Add(ItemDropRule.ByCondition(OriginsModIntegrations.AprilFools.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied), ModContent.ItemType<Silicon_Sword>(), 5000));
 		}
 
 		static void GenFelnumOre() {

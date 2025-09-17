@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -15,8 +16,9 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Banners {
 	[Autoload(false)]
-	public class Banner(ModNPC npc) : ModTile {
+	public class Banner(ModNPC npc, int killsRequired = 50) : ModTile {
 		public ModNPC NPC => npc;
+		internal int killsRequired = killsRequired;
 		public override string Name => npc.Name + "_Banner";
 		public override void Load() {
 			Mod.AddContent(new Banner_Item(this));
@@ -26,6 +28,7 @@ namespace Origins.Tiles.Banners {
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.MultiTileSway[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(91, 0));
 			TileObjectData.addTile(Type);
 			DustType = -1;
@@ -38,6 +41,8 @@ namespace Origins.Tiles.Banners {
 			}
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
+			offsetY -= 2;
+			return;
 			Tile tile = Main.tile[i, j];
 			TileObjectData data = TileObjectData.GetTileData(tile);
 			int x = i - tile.TileFrameX / 18 % data.Width;
@@ -48,6 +53,15 @@ namespace Origins.Tiles.Banners {
 		}
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {
 			if (i % 2 != 0) spriteEffects = SpriteEffects.FlipHorizontally;
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			Tile tile = Main.tile[i, j];
+			if (TileObjectData.IsTopLeft(tile)) {
+				// Makes this tile sway in the wind and with player interaction when used with TileID.Sets.MultiTileSway
+				Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.MultiTileVine);
+			}
+			// We must return false here to prevent the normal tile drawing code from drawing the default static tile. Without this a duplicate tile will be drawn.
+			return false;
 		}
 	}
 	public class Banner_Item(Banner tile) : ModItem {
@@ -66,12 +80,17 @@ namespace Origins.Tiles.Banners {
 			}
 		}
 		public override void Load() => BannerGlobalNPC.BannerItems.Add(this);
+		public override void SetStaticDefaults() {
+			_ = tile.NPC.Name;
+			ItemID.Sets.KillsToBanner[Type] = tile.killsRequired;
+		}
 		internal void CacheItemType() {
 			if (BannerGlobalNPC.NPCTypesWithBanners.Contains(tile.NPC.GetType())) BannerGlobalNPC.NPCToBannerItem.Add(tile.NPC.Type, Type);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(tile.Type);
 			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(silver: 2);
 		}
 	}
 	public class BannerGlobalNPC : GlobalNPC {

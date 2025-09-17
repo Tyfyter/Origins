@@ -37,6 +37,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.shootSpeed = 1;
 			Item.noMelee = true;
 			Item.noUseGraphic = false;
+			Item.sentry = true;
 			Item.glowMask = glowmask;
 		}
 		public override bool CanUseItem(Player player) => Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY).HasFullSolidTile();

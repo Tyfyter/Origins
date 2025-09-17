@@ -1,15 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
+using Origins.Items.Weapons.Summoner.Minions;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Origins.Items.Weapons.Summoner.Minions;
-using System.Collections.Generic;
 namespace Origins.Items.Weapons.Summoner {
 	public class Desert_Crown : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -21,7 +19,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.damage = 6;
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 4;
-			Item.mana = 12;
+			Item.mana = 10;
 			Item.width = 32;
 			Item.height = 32;
 			Item.useTime = 36;

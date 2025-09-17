@@ -27,9 +27,12 @@ namespace Origins.NPCs.Brine {
 		[CloneByReference]
 		public HashSet<int> TargetNPCTypes { get; private set; } = [];
 		protected override bool CloneNewInstances => true;
+		public override void Load() {
+			if (Mod.FileExists($"Tiles/Banners/{Name}_Banner_Item.rawimg")) this.AddBanner();
+		}
 		public override void SetStaticDefaults() {
 			NPCID.Sets.UsesNewTargetting[Type] = true;
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Toxic_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 			ModContent.GetInstance<Brine_Pool.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public static void DisableRipples(ILContext il) {
@@ -62,7 +65,7 @@ namespace Origins.NPCs.Brine {
 		public new virtual float SpawnChance(NPCSpawnInfo spawnInfo) => 0;
 		public override bool CanHitNPC(NPC target) => TargetNPCTypes.Contains(target.type) || target.ModNPC is not IBrinePoolNPC;
 		public virtual bool CanTargetNPC(NPC other) {
-			if (other.type == NPCID.TargetDummy) return false;
+			if (OriginsSets.NPCs.TargetDummies[other.type]) return false;
 			return other.wet && CanHitNPC(other);
 		}
 		public virtual bool CanTargetPlayer(Player player) {

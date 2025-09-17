@@ -1,9 +1,8 @@
-using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
 	public class Startillery : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -30,6 +29,7 @@ namespace Origins.Items.Weapons.Magic {
 		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Projectile.friendly = true;
 			Projectile.timeLeft = 180;
 			Projectile.aiStyle = 2;

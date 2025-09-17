@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -9,11 +8,14 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Caustica : ModItem, IElementalItem, ICustomWikiStat {
-        public string[] Categories => [
-            "OtherExplosive"
-        ];
-        public ushort Element => Elements.Acid;
+		public string[] Categories => [
+			"OtherExplosive"
+		];
+		public ushort Element => Elements.Acid;
 
+		public override void SetStaticDefaults() {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.CursedInferno, BuffID.Venom, Toxic_Shock_Debuff.ID];
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 270;
@@ -40,8 +42,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Caustica_P : ModProjectile {
-
-		
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bullet);

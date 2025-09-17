@@ -1,19 +1,22 @@
-﻿using Origins.World.BiomeData;
+﻿using Origins.Dev;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Brine.Boss {
-	public class Rock_Bottom : Brine_Pool_NPC {
+	public class Rock_Bottom : Brine_Pool_NPC, ICustomWikiStat {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 15;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			NPCID.Sets.ImmuneToAllBuffs[Type] = true;
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 			ModContent.GetInstance<Brine_Pool.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.lifeMax = 1800;

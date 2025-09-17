@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.SoulBottleNight, 15)
+			.AddIngredient(ItemID.SoulofNight, 15)
 			.AddIngredient(ModContent.ItemType<Respyrite>(), 25)
 			.AddIngredient(ModContent.ItemType<Scrap>(), 50)
 			.AddTile(TileID.MythrilAnvil)
@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return new Vector2(-6f, -6);
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			position += velocity.SafeNormalize(default).RotatedBy(player.direction * MathHelper.PiOver2) * -6;
+			position += velocity.SafeNormalize(default).RotatedBy(player.direction * MathHelper.PiOver2) * -6 * player.gravDir;
 		}
 	}
 	public class Rocket_Rifle_P : ModProjectile, ICanisterProjectile {
@@ -118,7 +118,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 			} else {
 				Projectile.velocity *= 0.997f;
-				Projectile.velocity.Y += 0.04f;
+				this.DoGravity(0.04f);
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			if (Projectile.alpha > 0)

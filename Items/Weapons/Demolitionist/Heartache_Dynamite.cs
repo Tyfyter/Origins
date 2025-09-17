@@ -18,6 +18,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"ExpendableWeapon"
 		];
 		public override void SetStaticDefaults() {
+			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -77,7 +78,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.life <= 0) {
 				int i = 0;
-				while (i < 5 && Main.rand.NextBool(2 + i)) {
+				while (i < 2 && Main.rand.NextBool(2 + i)) {
 					i++;
 				}
 				bool scattered = i > 1;

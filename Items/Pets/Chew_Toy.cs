@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Items.Armor.Vanity.Dev;
-using Origins.Items.Armor.Vanity.Dev.cher;
 using Origins.Items.Pets;
+using Origins.Items.Vanity.Dev;
+using Origins.Items.Vanity.Dev.cher;
 using Origins.Items.Weapons.Melee;
 using Origins.Tiles;
 using ReLogic.Content;

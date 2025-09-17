@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
@@ -9,8 +10,12 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Misc.Physics;
+
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Impetus : ModItem, ICustomDrawItem, ICustomWikiStat {
+	public class Impetus : ModItem, ICustomDrawItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.3f;
+		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			"Launcher"
 		];
@@ -114,15 +119,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.Center = handPosition + offset.RotatedBy(player.itemRotation);
 			} else {
 				Projectile.ai[0] = 2;
-				Projectile.velocity.Y += 0.08f;
+				this.DoGravity(0.08f);
 				Projectile.rotation += Projectile.velocity.X * 0.03f;
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 180, targetSeverity: 0.3f, source: Main.player[Projectile.owner].OriginPlayer());
+			OriginGlobalNPC.InflictTorn(target, 180, targetSeverity: Impetus.TornSeverity, source: Main.player[Projectile.owner].OriginPlayer());
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			OriginPlayer.InflictTorn(target, 180, targetSeverity: 0.3f);
+			OriginPlayer.InflictTorn(target, 180, targetSeverity: Impetus.TornSeverity);
 			Projectile.penetrate--;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => Projectile.ai[0] == 0 ? false : null;
@@ -176,14 +181,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool ShouldUpdatePosition() => true;
 		public override void AI() {
 			if (Main.rand.NextBool(5)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, Riven_Hive.DefaultTileDust);
-			Projectile.velocity.Y += 0.12f;
+			this.DoGravity(0.12f);
 			Projectile.rotation += Projectile.velocity.X * 0.05f;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 180, targetSeverity: 0.2f, source: Main.player[Projectile.owner].OriginPlayer());
+			OriginGlobalNPC.InflictTorn(target, 180, targetSeverity: Impetus.TornSeverity * 2 / 3, source: Main.player[Projectile.owner].OriginPlayer());
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			OriginPlayer.InflictTorn(target, 180, targetSeverity: 0.2f);
+			OriginPlayer.InflictTorn(target, 180, targetSeverity: Impetus.TornSeverity * 2 / 3);
 			Projectile.penetrate--;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => null;
@@ -208,10 +213,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 180, targetSeverity: 0.1f, source: Main.player[Projectile.owner].OriginPlayer());
+			OriginGlobalNPC.InflictTorn(target, 180, targetSeverity: Impetus.TornSeverity / 3, source: Main.player[Projectile.owner].OriginPlayer());
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			OriginPlayer.InflictTorn(target, 180, targetSeverity: 0.1f);
+			OriginPlayer.InflictTorn(target, 180, targetSeverity: Impetus.TornSeverity / 3);
 			Projectile.penetrate--;
 		}
 	}

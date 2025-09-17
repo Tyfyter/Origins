@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -30,6 +31,8 @@ namespace Origins.Tiles.Brine {
 		];
 		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[ItemID.ChlorophyteOre] = Type;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.TitaniumOre;
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {

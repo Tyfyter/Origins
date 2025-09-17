@@ -1,12 +1,7 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using static Origins.OriginExtensions;
-using Terraria.DataStructures;
-using Tyfyter.Utils;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.World.BiomeData;
 
 namespace Origins.Gores.NPCs {
 	public class Amoebeye1_Gore : ModGore {

@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
@@ -17,6 +16,7 @@ namespace Origins.Tiles.Defiled {
 			Origins.PileType.Add(Type, ((ushort)TileType<Defiled_Foliage>(), 0, 6));
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			Main.tileMergeDirt[Type] = true;
 			TileID.Sets.Stone[Type] = true;
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;

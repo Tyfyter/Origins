@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Summoner;
+using PegasusLib.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Origins.NPCs {
 		public void PrepareToDrawNPC(NPC npc) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().FillShaders(npc, shaders);
 			if (shaders.Count != 0) Origins.shaderOroboros.Capture();
+			if (!Lighting.NotRetro) Main.spriteBatch.Restart(Main.spriteBatch.GetState().FixedCulling());
 		}
 		public void FinishDrawingNPC(NPC npc) {
 			if (shaders.Count != 0) {

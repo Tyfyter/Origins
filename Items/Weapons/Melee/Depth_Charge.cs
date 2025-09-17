@@ -1,19 +1,17 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Projectiles;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
 using Origins.Buffs;
 using ReLogic.Content;
-using CalamityMod.NPCs.TownNPCs;
 using PegasusLib;
 using Origins.NPCs.Brine.Boss;
+using PegasusLib.Sets;
+
 namespace Origins.Items.Weapons.Melee {
 	public class Depth_Charge : ModItem, ICustomWikiStat {
 		public string[] Categories => [
@@ -22,6 +20,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
+			ItemSets.InflictsExtraDebuffs[Type] = [Cavitation_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.damage = 55;

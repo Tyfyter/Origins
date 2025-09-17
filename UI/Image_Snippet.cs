@@ -2,6 +2,8 @@
 using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -29,13 +31,13 @@ namespace Origins.UI {
 				size = default;
 				if (image is null) return false;
 				image.Wait();
-				size = (options.Frame?.Size() ?? image.Size()) * Scale;
+				size = (options.Frame?.Size() ?? image.Size()) * Scale * scale;
 				if (justCheckingString) return true;
 				if (options.Shader != JournalImageShader.None) {
 					shaderOroboros.Capture(spriteBatch);
-					spriteBatch.Restart(spriteBatch.GetState(), rasterizerState: RasterizerState.CullNone);
+					spriteBatch.Restart(spriteBatch.GetState().FixedCulling());
 				}
-				spriteBatch?.Draw(image.Value, position, options.Frame, options.Shader != JournalImageShader.None ? Color.White : color, 0, Vector2.Zero, Scale, SpriteEffects.None, 0);
+				spriteBatch?.Draw(image.Value, position, options.Frame, options.Shader != JournalImageShader.None ? Color.White : color, 0, Vector2.Zero, Scale * scale, SpriteEffects.None, 0);
 				switch (options.Shader) {
 					case JournalImageShader.Sketch:
 					Origins.journalDrawingShader.UseSaturation(options.Sharpness);

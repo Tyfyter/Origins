@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Journal;
@@ -14,12 +15,17 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
-	public class Vorpal_Sword : Uncursed_Cursed_Item<Vorpal_Sword_Cursed>, IJournalEntrySource, ICustomWikiStat {
-        public string[] Categories => [
+	public class Vorpal_Sword : Uncursed_Cursed_Item<Vorpal_Sword_Cursed>, IJournalEntrySource, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.4f;
+		float ITornSource.Severity => TornSeverity;
+		public string[] Categories => [
             "Sword"
         ];
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override bool HasOwnTexture => true;
+		public override void SetStaticDefaults() {
+			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.damage = 28;
 			Item.DamageType = DamageClass.Melee;
@@ -189,16 +195,18 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 600;
 			Projectile.noEnchantmentVisuals = true;
+			Projectile.hide = true;
 		}
+		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
-			Projectile.rotation = MathHelper.Lerp(-2.75f, 2f, swingFactor) * Projectile.ai[1];
+			Projectile.rotation = MathHelper.Lerp(-2.75f, 2f, swingFactor) * Projectile.ai[1] * player.gravDir;
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
-			Projectile.Center = player.MountedCenter - Projectile.velocity + (Vector2)new PolarVec2(32, realRotation);
 			Projectile.timeLeft = player.itemTime * Projectile.MaxUpdates;
 			player.heldProj = Projectile.whoAmI;
-			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
+			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation * player.gravDir - MathHelper.PiOver2);
+			Projectile.Center = player.GetCompositeArmPosition(false) + (Vector2)new PolarVec2(16, realRotation);
 
 			Vector2 vel = (Projectile.velocity.RotatedBy(Projectile.rotation) / 12f) * Projectile.width * 0.95f;
 			for (int j = 0; j <= 1; j++) {
@@ -218,7 +226,7 @@ namespace Origins.Items.Weapons.Melee {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 20, targetSeverity: 0.4f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 20, targetSeverity: Vorpal_Sword.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void CutTiles() {
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
@@ -227,15 +235,17 @@ namespace Origins.Items.Weapons.Melee {
 		}
 
 		public override bool PreDraw(ref Color lightColor) {
+			float gravDir = Main.player[Projectile.owner].gravDir;
+			SpriteEffects effects = Projectile.ai[1] * gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
 				Projectile.Center - Main.screenPosition,
 				null,
 				lightColor,
-				Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1]),
-				new Vector2(14, 25 + 11 * Projectile.ai[1]),// origin point in the sprite, 'round which the whole sword rotates
+				Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1] * gravDir),
+				new Vector2(14, 18).Apply(effects ^ SpriteEffects.FlipVertically, TextureAssets.Projectile[Type].Size()),
 				Projectile.scale,
-				Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically,
+				effects,
 				0
 			);
 			return false;

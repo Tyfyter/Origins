@@ -1,6 +1,6 @@
-using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Projectiles;
 using Origins.Tiles.Other;
 using PegasusLib;
 using Terraria;
@@ -24,6 +24,7 @@ namespace Origins.Items.Armor.Sapphire {
 		}
 		public override void UpdateEquip(Player player) {
 			player.statManaMax2 -= 40;
+			player.manaRegenBonus += 100;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Sapphire_Vest>() && legs.type == ModContent.ItemType<Sapphire_Tights>();
@@ -60,12 +61,12 @@ namespace Origins.Items.Armor.Sapphire {
 	public class Sapphire_Vest : ModItem, INoSeperateWikiPage {
 		
 		public override void SetDefaults() {
-			Item.defense = 7;
+			Item.defense = 10;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetAttackSpeed(DamageClass.Magic) += 0.15f;
+			player.GetAttackSpeed(DamageClass.Magic) += 0.2f;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -80,12 +81,13 @@ namespace Origins.Items.Armor.Sapphire {
 	public class Sapphire_Tights : ModItem, INoSeperateWikiPage {
 		
 		public override void SetDefaults() {
-			Item.defense = 7;
+			Item.defense = 8;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {
-			player.moveSpeed += 0.1f;
+			player.moveSpeed += 0.2f;
+			player.manaCost *= 0.85f;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -105,6 +107,8 @@ namespace Origins.Items.Armor.Sapphire {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			Projectile.GetGlobalProjectile<OriginGlobalProj>().weakShimmer = player.OriginPlayer()?.weakShimmer ?? false;
+
 			Projectile.position = player.MountedCenter;
 			if (!player.dead && player.GetModPlayer<OriginPlayer>().sapphireSet) {
 				Projectile.timeLeft = 5;
@@ -115,24 +119,30 @@ namespace Origins.Items.Armor.Sapphire {
 			float manaFactor = 1 - player.statMana / (float)player.statManaMax2;
 			manaFactor = 1 - manaFactor * manaFactor;
 			if (manaFactor <= 0) return;
+			void Push(Entity other, float factor = 1f) {
+				Vector2 diff = other.Center - Projectile.position;
+				float dist = diff.LengthSquared();
+				if (dist <= range * range) {
+					Vector2 normalizedDir = diff.SafeNormalize(-Vector2.UnitY);
+					float otherSpeed = other.velocity.Length();
+					other.velocity += normalizedDir * (10f / System.MathF.Pow(dist, 0.75f) + 2.5f) * factor;
+					//other.velocity -= (0.1f + 0.2f / MathHelper.Max(System.MathF.Pow(other.damage, 0.5f) - 2, 1)) * Vector2.Dot(other.velocity, normalizedDir) * normalizedDir;
+					if (other.velocity != Vector2.Zero) other.velocity *= otherSpeed / other.velocity.Length();
+					Dust.NewDustDirect(other.position, other.width, other.height,
+						DustID.Wet,
+						normalizedDir.X * 4, normalizedDir.Y * 4
+					).noGravity = true;
+				}
+			}
 			for (int i = 0; i < Main.maxProjectiles; i++) {
 				if (i == Projectile.whoAmI) continue;
 				Projectile other = Main.projectile[i];
 				if (other.active && other.hostile && other.damage > 0) {
-					Vector2 diff = other.Center - Projectile.position;
-					float dist = diff.LengthSquared();
-					if (dist <= range * range) {
-						Vector2 normalizedDir = diff.SafeNormalize(-Vector2.UnitY);
-						float otherSpeed = other.velocity.Length();
-						other.velocity += normalizedDir * (10f / System.MathF.Pow(dist, 0.75f) + 2.5f);
-						//other.velocity -= (0.1f + 0.2f / MathHelper.Max(System.MathF.Pow(other.damage, 0.5f) - 2, 1)) * Vector2.Dot(other.velocity, normalizedDir) * normalizedDir;
-						if (other.velocity != Vector2.Zero) other.velocity *= otherSpeed / other.velocity.Length();
-						Dust.NewDustDirect(other.position, other.width, other.height,
-							DustID.Wet,
-							normalizedDir.X * 4, normalizedDir.Y * 4
-						).noGravity = true;
-					}
+					Push(other);
 				}
+			}
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (NPCID.Sets.ProjectileNPC[npc.type] || npc.CanBeChasedBy(Projectile)) Push(npc, 0.5f);
 			}
 			for (int i = 0; i < Main.maxPlayers; i++) {
 				if (i == Projectile.owner) continue;

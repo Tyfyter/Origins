@@ -20,12 +20,17 @@ using SteelSeries.GameSense;
 using Origins.NPCs.Defiled;
 using Origins.NPCs;
 using System.Collections.Generic;
+using Origins.CrossMod;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Tyrfing : ModItem, PegasusLib.ICustomDrawItem {
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			OriginsSets.Items.ItemsThatCanChannelWithRightClick[Type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Electrified_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.damage = 62;
@@ -71,7 +76,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool CanShoot(Player player) => player.altFunctionUse == 2;
 		public override float UseSpeedMultiplier(Player player) => player.altFunctionUse == 2 ? 0.8f : 1;
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Electrified_Debuff>(), 180);
+			target.AddBuff(Electrified_Debuff.ID, 180);
 		}
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
 			if (drawInfo.drawPlayer.altFunctionUse == 2) return;
@@ -161,12 +166,12 @@ namespace Origins.Items.Weapons.Melee {
 				MaxAngle,
 				MinAngle,
 				MathHelper.Clamp(SwingFactor, 0, 1)
-			) * Projectile.ai[1];
+			) * Projectile.ai[1] * player.gravDir;
 
-			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
+			float realRotation = Projectile.rotation * player.gravDir + Projectile.velocity.ToRotation() * player.gravDir;
 			player.heldProj = Projectile.whoAmI;
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
-			Projectile.Center = player.GetFrontHandPosition(player.compositeFrontArm.stretch, player.compositeFrontArm.rotation);
+			Projectile.Center = player.GetCompositeArmPosition(false);
 			player.itemLocation = Projectile.Center + GeometryUtils.Vec2FromPolar(26, realRotation + 0.3f * player.direction);
 			player.itemRotation = player.compositeFrontArm.rotation;
 			player.direction = Math.Sign(Projectile.velocity.X);
@@ -226,7 +231,7 @@ namespace Origins.Items.Weapons.Melee {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			int debuffID = ModContent.BuffType<Electrified_Debuff>();
+			int debuffID = Electrified_Debuff.ID;
 			int hasBuff = target.HasBuff(debuffID).ToInt();
 			float range_per_arc = 8 + hasBuff * 2;
 			const float max_chain_count = 3;

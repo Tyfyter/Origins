@@ -24,6 +24,7 @@ namespace Origins.Layers {
 				shader = originPlayer.dashVaseDye
 			};
 			drawInfo.DrawDataCache.Add(item);
+			if (drawInfo.projectileDrawPosition != -1) drawInfo.projectileDrawPosition = drawInfo.DrawDataCache.Count;
 			originPlayer.dashVaseFrameCount += 1f / 2;
 			if (originPlayer.dashVaseFrameCount >= 6) originPlayer.dashVaseFrameCount = 0;
 		}

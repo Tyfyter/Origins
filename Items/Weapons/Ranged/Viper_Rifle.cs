@@ -1,6 +1,10 @@
-﻿using Origins.Dev;
+﻿using Origins.Buffs;
+using Origins.CrossMod;
+using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,8 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Viper_Rifle : ModItem, ICustomWikiStat {
-		static short glowmask;
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				global.viperEffect = true;
 				global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 2);
@@ -18,7 +21,14 @@ namespace Origins.Items.Weapons.Ranged {
 					proj.timeLeft = 20;
 				}
 			});
-			glowmask = Origins.AddGlowMask(this);
+			Origins.AddGlowMask(this);
+			// Fixing things that Vanilla doesn't mark as debuffs because players can't get them, so that they cause crits.
+			Main.debuff[BuffID.Frostburn2] = true;
+			Main.debuff[BuffID.OnFire3] = true;
+			Main.debuff[BuffID.Oiled] = true;
+			Main.debuff[BuffID.Daybreak] = true;
+			Main.debuff[BuffID.Midas] = true;
+			Main.debuff[BuffID.DryadsWardDebuff] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);
@@ -32,7 +42,6 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = Origins.Sounds.HeavyCannon;
-			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -55,5 +64,22 @@ namespace Origins.Items.Weapons.Ranged {
 			OriginGlobalProj.killLinkNext = Projectile.NewProjectile(barrelSource, position, unit * (dist / 20), type, damage, knockback, player.whoAmI);
 			return true;
 		}
+		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			for (int i = 0; i < tooltips.Count; i++) {
+				if (tooltips[i].Name == "Tooltip1" && ModLoader.HasMod("CritRework")) tooltips.RemoveAt(i);
+			}
+		}
+	}
+	public class Viper_Rifle_Crit_Type : CritType<Viper_Rifle> {
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
+			for (int i = 0; i < target.buffType.Length; i++) {
+				if (Main.debuff[target.buffType[i]] && target.buffType[i] != Toxic_Shock_Debuff.ID && target.buffType[i] != Toxic_Shock_Strengthen_Debuff.ID) {
+					return true;
+				}
+			}
+			return false;
+		}
+		// high crit multiplier because it's losing random crits instead of gaining consistent crits, less than 2x because it's gaining crit damage bonuses
+		public override float CritMultiplier(Player player, Item item) => 1.8f;
 	}
 }

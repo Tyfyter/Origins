@@ -16,3 +16,7 @@ public class Bonus_Hair_1 : QuestUnlockHair<Magic_Hair_Spray_Quest> { }
 public class Bonus_Hair_2 : QuestUnlockHair<Magic_Hair_Spray_Quest> { }
 public class Bonus_Hair_3 : QuestUnlockHair<Magic_Hair_Spray_Quest> { }
 public class Bonus_Hair_4 : QuestUnlockHair<Magic_Hair_Spray_Quest> { }
+public class Dio_Hair : ModHair {
+	public override bool AvailableDuringCharacterCreation => true;
+	public override Gender RandomizedCharacterCreationGender => Gender.Male;
+}

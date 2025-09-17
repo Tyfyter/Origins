@@ -1,24 +1,36 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
+using Origins.NPCs.MiscB.Shimmer_Construct;
+using Origins.World.BiomeData;
+using PegasusLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using static Origins.OriginExtensions;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Origins.Graphics;
 using Terraria.Audio;
-using Microsoft.Xna.Framework.Graphics;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Effects;
-using Origins.World.BiomeData;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
+using static Origins.OriginExtensions;
 
 namespace Origins.Gores.NPCs {
 	public class R_Effect_Blood1 : ModGore {
 		public static List<int> GoreIDs { get; private set; } = [];
+		AutoLoadingAsset<Texture2D> normalTexture;
+		AutoLoadingAsset<Texture2D> afTexture;
 		public override void SetStaticDefaults() {
+			normalTexture = Texture;
+			afTexture = Texture + "_AF";
+			normalTexture.LoadAsset();
+			afTexture.LoadAsset();
 			GoreIDs.Add(Type);
+		}
+		public override void OnSpawn(Gore gore, IEntitySource source) {
+			TextureAssets.Gore[Type] = OriginsModIntegrations.CheckAprilFools() ? afTexture : normalTexture;
 		}
 		public override void Unload() {
 			GoreIDs = null;
@@ -91,14 +103,22 @@ namespace Origins.Gores.NPCs {
 			gore.active = false;
 		}
 	}
-	public class R_Effect_Blood2 : R_Effect_Blood1 {}
-	public class R_Effect_Blood3 : R_Effect_Blood1 {}
+	public class R_Effect_Blood2 : R_Effect_Blood1 { }
+	public class R_Effect_Blood3 : R_Effect_Blood1 { }
 	public class R_Effect_Blood1_Small : ModGore {
 		public override string Texture => "Origins/Gores/NPCs/R_Effect_Blood1";
+		AutoLoadingAsset<Texture2D> normalTexture;
+		AutoLoadingAsset<Texture2D> afTexture;
 		public override void SetStaticDefaults() {
 			GoreID.Sets.DisappearSpeedAlpha[Type] = 5;
+			ChildSafety.SafeGore[Type] = true;
+			normalTexture = Texture;
+			afTexture = Texture + "_AF";
+			normalTexture.LoadAsset();
+			afTexture.LoadAsset();
 		}
 		public override void OnSpawn(Gore gore, IEntitySource source) {
+			TextureAssets.Gore[Type] = OriginsModIntegrations.CheckAprilFools() ? afTexture : normalTexture;
 			gore.scale *= 0.5f;
 		}
 		public override bool Update(Gore gore) {
@@ -199,9 +219,11 @@ namespace Origins.Gores.NPCs {
 		}
 		static void DrawAura(SpriteBatch spriteBatch) {
 			if (Main.dedServ) return;
-			Main.LocalPlayer.ManageSpecialBiomeVisuals("Origins:RivenBloodCoating", anyActive, Main.LocalPlayer.Center);
+			string biomeName = "Origins:RivenBloodCoating";
+			if (OriginsModIntegrations.CheckAprilFools()) biomeName = "Origins:ChineseRivenBloodCoating";
+			Main.LocalPlayer.ManageSpecialBiomeVisuals(biomeName, anyActive, Main.LocalPlayer.Center);
 			if (anyActive) {
-				ScreenShaderData shader = Filters.Scene["Origins:RivenBloodCoating"].GetShader();
+				ScreenShaderData shader = Filters.Scene[biomeName].GetShader();
 				shader.UseImage(SlimeTarget.RenderTarget, 1, SamplerState.PointClamp);
 				shader.UseIntensity(Riven_Hive.NormalGlowValue.GetValue() / 1.5f);
 			}

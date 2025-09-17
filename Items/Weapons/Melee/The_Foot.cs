@@ -16,6 +16,8 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Projectiles;
+using Origins.CrossMod;
+using Terraria.Localization;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Foot : ModItem, ICustomWikiStat {
@@ -53,7 +55,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public static void DoHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), 600);
+			target.AddBuff(Toxic_Shock_Debuff.ID, 600);
 		}
 		public static void DoSlam(Projectile projectile, Vector2 position, Vector2 direction) {
 			Vector2 center = position + projectile.Size * 0.5f;
@@ -83,13 +85,13 @@ namespace Origins.Items.Weapons.Melee {
 		public override void OnHitTiles(Vector2 position, Vector2 direction) {
 			The_Foot.DoSlam(Projectile, position, direction);
 		}
-		static bool forcedCrit = false;
+		internal static bool forcedCrit = false;
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;
 			forcedCrit = false;
 			if (!target.noTileCollide && float.IsNaN(Projectile.ai[2])) {
 				Rectangle hitbox = target.Hitbox;
-				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation + Projectile.ai[1] * 2.5f).SafeNormalize(default);
+				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation * Main.player[Projectile.owner].gravDir + Projectile.ai[1] * 2.5f).SafeNormalize(default);
 				hitbox.Offset((dir * 8).ToPoint());
 				if (hitbox.OverlapsAnyTiles(fallThrough: false)) {
 					Collision.HitTiles(hitbox.TopLeft(), dir, hitbox.Width, hitbox.Height);
@@ -122,6 +124,7 @@ namespace Origins.Items.Weapons.Melee {
 		public AutoLoadingAsset<Texture2D> ChainTexture = typeof(The_Foot).GetDefaultTMLName() + "_Chain";
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+			OriginsSets.Projectiles.NoMultishot[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.netImportant = true;
@@ -240,7 +243,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.idStaticNPCHitCooldown = 20;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), 60);
+			target.AddBuff(Toxic_Shock_Debuff.ID, 60);
 		}
 		public override void AI() {
 			Lighting.AddLight(Projectile.Center, 0, 0.4f, 0);
@@ -266,5 +269,10 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			return false;
 		}
+	}
+	public class The_Foot_Crit_Type : CritType<The_Foot> {
+		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.CritType.SlammyHammer");
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => The_Foot_Smash.forcedCrit;
+		public override float CritMultiplier(Player player, Item item) => 2f;
 	}
 }

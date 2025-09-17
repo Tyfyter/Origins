@@ -165,7 +165,7 @@ namespace Origins.Dev {
 		public static string GetWikiName(ModItem modItem) => SanitizeWikiName(modItem.DisplayName.Value);
 		public static string GetWikiName(ModNPC modNPC) => SanitizeWikiName(modNPC.DisplayName.Value);
 		public static string GetWikiName(ModBuff modBuff) => SanitizeWikiName(Lang.GetBuffName(modBuff.Type));
-		public static string SanitizeWikiName(string name) => WebUtility.UrlEncode(name.Replace(' ', '_')).Replace("%27", "'");
+		public static string SanitizeWikiName(string name) => WebUtility.UrlEncode(name.Replace(' ', '_')).Replace("%27", "'").Replace("\"", "%22");
 		public static string GetWikiPagePath(string name) => Path.Combine(DebugConfig.Instance.WikiPagePath, name + ".html");
 		public static string GetWikiStatPath(string name) => Path.Combine(DebugConfig.Instance.StatJSONPath, name + ".json");
 		public static string GetWikiItemImagePath(ModItem modItem) => Main.itemAnimations[modItem.Type] is not null ? modItem.Name.Replace(' ', '_') : modItem.Texture.Replace(modItem.Mod.Name, "§ModImage§");

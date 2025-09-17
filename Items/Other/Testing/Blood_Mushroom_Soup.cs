@@ -6,9 +6,14 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 using Origins.World.BiomeData;
 using static Origins.Items.Other.Testing.Blood_Mushroom_Soup;
+using Terraria.GameInput;
+using Origins.Tiles.Riven;
+using AltLibrary.Common.Systems;
+using System.Text;
+using Terraria.ObjectData;
+using Terraria.Utilities;
 
 namespace Origins.Items.Other.Testing {
 	public class Blood_Mushroom_Soup : ModItem {
@@ -76,14 +81,15 @@ namespace Origins.Items.Other.Testing {
 				int mousePacked = mousePos.X + (Main.screenWidth / 16) * mousePos.Y;
 				double mousePackedDouble = (Main.MouseScreen.X / 16d + (Main.screenWidth / 16d) * Main.MouseScreen.Y / 16d) / 16d;
 				Tile mouseTile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
+				PlayerInput.SetZoom_MouseInWorld();
 				Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
 				Utils.DrawBorderStringFourWay(spriteBatch, FontAssets.MouseText.Value, modes[mode].GetMouseText(parameters.Count, mousePos, mousePacked, mousePackedDouble, mouseTile, diffFromPlayer), Main.MouseScreen.X, Math.Max(Main.MouseScreen.Y - 24, 18), Colors.RarityNormal, Color.Black, new Vector2(0f));
 				if (Main.LocalPlayer.controlLeft && Main.LocalPlayer.controlRight && Main.LocalPlayer.controlUp && Main.LocalPlayer.controlDown) {
 					int O = 0;
 					int OwO = 0 / O;
 				}
+				PlayerInput.SetZoom_UI();
 			}
-
 		}
 		/*
 		void SetParameter() {
@@ -533,8 +539,144 @@ namespace Origins.Items.Other.Testing {
 		}
 		public void Unload() { }
 	}
-	public class Auto_Slope_Testing_Mode : WorldgenTestingMode {
+	public class List_Worldgen_Testing_Mode : WorldgenTestingMode {
 		public override SortOrder SortPosition => SortOrder.New;
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "List World Generation Sources";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			System.Reflection.FieldInfo field = typeof(SystemLoader).GetField("HookModifyWorldGenTasks", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+			System.Reflection.FieldInfo defaultInstances = field.FieldType.GetField("defaultInstances", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+			ReadOnlySpan<ModSystem> readOnlySpan = (ModSystem[])defaultInstances.GetValue(field.GetValue(null));
+			for (int i = 0; i < readOnlySpan.Length; i++) {
+				Main.NewText(readOnlySpan[i]);
+			}
+		}
+	}
+	public class Area_Analysis_Testing_Mode : WorldgenTestingMode {
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Analyze";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Player.tileTargetX);
+			parameters.Enqueue(Player.tileTargetY);
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			int x = (int)parameters.Dequeue();
+			int y = (int)parameters.Dequeue();
+			Point[] directions = [
+				new(1, 0), new(-1, 0),
+				new(2, 0), new(-2, 0),
+				new(0, 1), new(0, -1)
+			];
+			ushort fleshBlockType = (ushort)ModContent.TileType<Spug_Flesh>();
+
+			if (AreaAnalysis.March(x, y, directions, pos => Math.Abs(pos.Y - y) < 20 && Framing.GetTileSafely(pos).TileIsType(fleshBlockType), a => a.MaxX - a.MinX >= 100).Broke) {
+				Framing.GetTileSafely(x, y).TileType = TileID.AmberGemspark;
+			}
+		}
+	}
+	public class Shelf_Coral_Testing_Mode : WorldgenTestingMode {
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			StringBuilder text = new("Shelf Coral placement: ");
+			Point coralPos = new(Player.tileTargetX, Player.tileTargetY);
+			Shelf_Coral shelfCoral = ModContent.GetInstance<Shelf_Coral>();
+			for (int k = 0; k < shelfCoral.patterns.Length; k++) {
+				if (shelfCoral.patterns[k].pattern.Matches(coralPos) && (shelfCoral.patterns[k].extraChecks?.Invoke(Player.tileTargetX, Player.tileTargetY, true) ?? true)){
+					text.Append(shelfCoral.patterns[k].name);
+					return text.ToString();
+				}
+			}
+			text.Append("None");
+			return text.ToString();
+		}
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Player.tileTargetX);
+			parameters.Enqueue(Player.tileTargetY);
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			Point coralPos = new((int)parameters.Dequeue(), (int)parameters.Dequeue());
+			if (TileExtenstions.CanActuallyPlace(coralPos.X, coralPos.Y, ModContent.TileType<Shelf_Coral>(), 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
+				TileObjectData.CallPostPlacementPlayerHook(coralPos.X, coralPos.Y, ModContent.TileType<Shelf_Coral>(), objectData.style, 0, objectData.alternate, objectData);
+			}
+		}
+	}
+	public class Start_Riven_Testing_Mode : WorldgenTestingMode {
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Start Riven Hive";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Player.tileTargetX);
+			parameters.Enqueue(Player.tileTargetY);
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			WorldBiomeGeneration.ChangeRange.ResetRange();
+			Riven_Hive.Gen.StartHive((int)parameters.Dequeue(), (int)parameters.Dequeue());
+		}
+	}
+	public class Carver_Testing_Mode : WorldgenTestingMode {
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			Carver.DoCarve(
+				GetFilter(out Vector2 posMin, out Vector2 posMax),
+				pos => {
+					Dust.NewDustPerfect(pos * 16 + Vector2.One * 8, 29, Vector2.Zero).noGravity = true;
+					return 1;
+				},
+				posMin,
+				posMax,
+				0
+			);
+			posMin = new(MathF.Floor(posMin.X), MathF.Floor(posMin.Y));
+			posMax = new(MathF.Ceiling(posMax.X), MathF.Ceiling(posMax.Y));
+			Dust.NewDustPerfect(posMin * 16 + Vector2.One * 8, 6, Vector2.Zero).noGravity = true;
+			Dust.NewDustPerfect(posMax * 16 + Vector2.One * 8, 6, Vector2.Zero).noGravity = true;
+			return "";
+		}
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			Apply(parameters);
+		}
+		static int seed = 0;
+		static Carver.Filter GetFilter(out Vector2 posMin, out Vector2 posMax) {
+			posMin = new(float.PositiveInfinity);
+			posMax = new(float.NegativeInfinity);
+			PlayerInput.SetZoom_MouseInWorld();
+			UnifiedRandom genRand = new(seed);
+
+			return Carver.Climb(Main.MouseWorld / 16, pos => {
+				if (!OriginExtensions.IsTileReplacable((int)pos.X, (int)pos.Y)) return false;
+				Tile tile = Framing.GetTileSafely(pos.ToPoint());
+				return tile.HasTile && TileID.Sets.Falling[tile.TileType];
+			}, ref posMin, ref posMax);/*Carver.PointyLemon(// tweak to change the shape and size of the barnacled areas
+				Main.MouseWorld / 16,
+				scale: genRand.Next(5, 15),
+				rotation: genRand.NextFloat(0, MathHelper.TwoPi),
+				aspectRatio: 1.1f,
+				0.5f,
+				ref posMin,
+				ref posMax
+			);*/
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			ushort oreID = (ushort)ModContent.TileType<Amoeba_Fluid>();
+			Carver.DoCarve(
+				GetFilter(out Vector2 posMin, out Vector2 posMax),
+				pos => {
+					Tile tile = Framing.GetTileSafely(pos.ToPoint());
+					tile.HasTile = true;
+					tile.TileType = oreID;
+					return 1;
+				},
+				posMin,
+				posMax,
+				0
+			);
+			posMin = new(MathF.Floor(posMin.X), MathF.Floor(posMin.Y));
+			posMax = new(MathF.Ceiling(posMax.X), MathF.Ceiling(posMax.Y));
+			WorldGen.RangeFrame((int)posMin.X, (int)posMin.Y, (int)posMax.X, (int)posMax.Y);
+			seed++;
+		}
+	}
+	public class Auto_Slope_Testing_Mode : WorldgenTestingMode {
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Auto Slope";
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			parameters.Enqueue(Player.tileTargetX);

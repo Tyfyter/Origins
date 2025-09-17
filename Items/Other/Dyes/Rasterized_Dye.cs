@@ -21,7 +21,7 @@ namespace Origins.Items.Other.Dyes {
 					if (entity is null) return;
 					float rasterizedTime = 0;
 					if (entity is Player player) {
-						rasterizedTime = player.GetModPlayer<OriginPlayer>().rasterizedTime;
+						rasterizedTime = player.GetModPlayer<OriginPlayer>().VisualRasterizedTime;
 					} else if (entity is NPC npc) {
 						rasterizedTime = npc.GetGlobalNPC<OriginGlobalNPC>().rasterizedTime / 2f;
 					}

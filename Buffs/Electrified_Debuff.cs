@@ -1,22 +1,26 @@
-﻿using System;
+﻿using Origins.NPCs;
+using Origins.NPCs.Defiled;
+using PegasusLib.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
-using Origins.NPCs.Defiled;
-using Origins.NPCs;
 
 namespace Origins.Buffs {
 	public class Electrified_Debuff : ModBuff {
 		public override string Texture => "Terraria/Images/Buff_" + BuffID.Electrified;
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 			BuffID.Sets.GrantImmunityWith[Type] = [
 				BuffID.Electrified
 			];
+			Buff_Hint_Handler.ModifyTip(Type, 20, this.GetLocalization("EffectDescription").Key);
+			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().electrified = true;

@@ -13,6 +13,7 @@ namespace Origins.Items.Other.Testing {
 		public bool ShouldHavePage => false;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
+			Item.ResearchUnlockCount = 0;
 		}
 	}
 }

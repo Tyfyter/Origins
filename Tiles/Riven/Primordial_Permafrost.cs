@@ -37,6 +37,7 @@ namespace Origins.Tiles.Riven {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.IceBlock, Type);
+			ModCompatSets.AnySnowBiomeTiles[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Primordial_Permafrost>());

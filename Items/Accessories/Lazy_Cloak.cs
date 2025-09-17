@@ -1,55 +1,71 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Cil;
 using Origins.Buffs;
-using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner;
+using Origins.Journal;
+using Origins.Layers;
+using Origins.NPCs;
+using ReLogic.Content;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.Items.Accessories {
-	public class Lazy_Cloak : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-		];
+	[AutoloadEquip(EquipType.Front, EquipType.Back)]
+	public class Lazy_Cloak : ModItem, IJournalEntrySource {
+		public string EntryName => "Origins/" + typeof(Lazy_Cloak_Entry).Name;
+		public class Lazy_Cloak_Entry : JournalEntry {
+			public override string TextKey => "Lazy_Cloak";
+			public override JournalSortIndex SortIndex => new("Arabel", 4);
+		}
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+			Accessory_Glow_Layer.AddGlowMask<Back_Glow_Layer>(Item.backSlot, Texture + "_Back_Glow");
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 36);
-			Item.damage = 30;
+			Item.damage = 18;
 			Item.DamageType = DamageClass.Summon;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
-			Item.shoot = ModContent.ProjectileType<Lazy_Cloak_P>();
-			Item.value = Item.sellPrice(gold: 6);
-			Item.rare = ItemRarityID.Master;
-			Item.backSlot = 5;
-			Item.frontSlot = 3;
+			Item.shoot = Lazy_Cloak_P.ID;
+			Item.value = Item.sellPrice(gold: 1, silver: 50);
+			Item.rare = ItemRarityID.Orange;
 			Item.hasVanityEffects = true;
-			Item.master = true;
+			Item.buffType = Lazy_Cloak_Buff.ID;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
-			Item.backSlot = -1;
-			Item.frontSlot = -1;
-			if (!hideVisual) {
-				player.GetModPlayer<OriginPlayer>().lazyCloakVisible = true;
-			}
 			if (player.ownedProjectileCounts[Item.shoot] < 1) {
 				player.SpawnMinionOnCursor(player.GetSource_Accessory(Item), player.whoAmI, Item.shoot, Item.damage, Item.knockBack, player.MountedCenter - Main.MouseWorld);
 			}
-			player.AddBuff(Lazy_Cloak_Buff.ID, 5);
+			player.AddBuff(Item.buffType, 5);
+			player.OriginPlayer().lazyCloakHidden = hideVisual;
 		}
-		public override void UpdateVanity(Player player) {
-			Item.backSlot = 5;
-			Item.frontSlot = 3;
+		public override void UpdateVanity(Player player) => player.OriginPlayer().lazyCloakHidden = false;
+		public override void EquipFrameEffects(Player player, EquipType type) {
+			OriginPlayer originPlayer = player.OriginPlayer();
+			if (type == EquipType.Front && !originPlayer.lazyCloakHidden && player.front == Item.frontSlot && originPlayer.lazyCloaksOffPlayer[Item.frontSlot] > 0) {
+				player.front = -1;
+				player.back = -1;
+			}
 		}
-		public override bool MagicPrefix() => false;
+		public override int ChoosePrefix(UnifiedRandom rand) {
+			return OriginExtensions.AccessoryOrSpecialPrefix(Item, rand, PrefixCategory.AnyWeapon, PrefixCategory.Magic);
+		}
 	}
-	public class Lazy_Cloak_P : ModProjectile {
+	public class Lazy_Cloak_P : ModProjectile, IShadedProjectile {
 		public const int frameSpeed = 5;
 		public static int ID { get; private set; }
+		public virtual int BuffID => Lazy_Cloak_Buff.ID;
+		public int Shader => Main.player[Projectile.owner].cFront;
 		public override void SetStaticDefaults() {
-			Eyeball_Staff.projectileID = Projectile.type;
-			// DisplayName.SetDefault("Lazy Cloak");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 2;
 
@@ -59,14 +75,14 @@ namespace Origins.Items.Accessories {
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
-			ID = Type;
+			if (GetType().GetProperty(nameof(ID)).GetSetMethod(true) is MethodInfo setID) setID.Invoke(null, [Type]);
 		}
 
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 40;
 			Projectile.height = 28;
-			Projectile.tileCollide = true;
+			Projectile.tileCollide = false;
 			Projectile.friendly = true;
 			Projectile.minion = true;
 			Projectile.minionSlots = 0f;
@@ -74,6 +90,10 @@ namespace Origins.Items.Accessories {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 12;
 			Projectile.netImportant = true;
+		}
+
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_ItemUse itemUse) Projectile.ai[1] = itemUse.Item.frontSlot;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -93,9 +113,9 @@ namespace Origins.Items.Accessories {
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active) {
-				player.ClearBuff(Lazy_Cloak_Buff.ID);
+				player.ClearBuff(BuffID);
 			}
-			if (player.HasBuff(Lazy_Cloak_Buff.ID)) {
+			if (player.HasBuff(BuffID)) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
@@ -145,26 +165,6 @@ namespace Origins.Items.Accessories {
 				}
 			}
 			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
-			/*if (!foundTarget) {
-				for (int i = 0; i < Main.maxNPCs; i++) {
-					NPC npc = Main.npc[i];
-					if (npc.CanBeChasedBy()) {
-						float between = Vector2.Distance(npc.Center, Projectile.Center);
-						bool closest = Vector2.Distance(Projectile.Center, targetCenter) > between;
-						bool inRange = between < distanceFromTarget;
-						bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
-						// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
-						// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
-						bool closeThroughWall = between < 100f;
-						if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall)) {
-							distanceFromTarget = between;
-							targetCenter = npc.height / (float)npc.width > 1 ? npc.Top + new Vector2(0, 8) : npc.Center;
-							target = npc.whoAmI;
-							foundTarget = true;
-						}
-					}
-				}
-			}*/
 
 			Projectile.friendly = foundTarget;
 			#endregion
@@ -178,17 +178,14 @@ namespace Origins.Items.Accessories {
 			if (foundTarget) {
 				Projectile.hide = false;
 				Projectile.ai[0] = 1;
-				//Projectile.tileCollide = true;
-				// Minion has a target: attack (here, fly towards the enemy)
-				//if (distanceFromTarget > 40f || !projectile.Hitbox.Intersects(Main.npc[target].Hitbox)) {
-				// The immediate range around the target (so it doesn't latch onto it when close)
+
 				Vector2 direction = targetCenter - Projectile.Center;
 				direction.Normalize();
 				direction *= speed;
 				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
-				//}
+
+				player.OriginPlayer().lazyCloaksOffPlayer[(int)Projectile.ai[1]] = 2;
 			} else {
-				Projectile.tileCollide = false;
 				if (distanceToIdlePosition > 600f) {
 					speed = 24f;
 					inertia = 12f;
@@ -209,10 +206,8 @@ namespace Origins.Items.Accessories {
 				if (Projectile.ai[0] == 0) {
 					Projectile.hide = true;
 					Projectile.position = idlePosition;
-					if (player.GetModPlayer<OriginPlayer>().lazyCloakVisible) {
-						player.back = 5;
-						player.front = 3;
-					}
+				} else {
+					player.OriginPlayer().lazyCloaksOffPlayer[(int)Projectile.ai[1]] = 2;
 				}
 			}
 			#endregion
@@ -234,31 +229,97 @@ namespace Origins.Items.Accessories {
 			}
 			#endregion
 		}
+		bool requestedGlow;
+		Asset<Texture2D> glowTexture;
+		public override bool PreDraw(ref Color lightColor) {
+			if (!requestedGlow) {
+				requestedGlow = true;
+				ModContent.RequestIfExists(GlowTexture, out glowTexture, AssetRequestMode.ImmediateLoad);
+			}
+			SpriteEffects dir = Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+			int offsetX = 0;
+			int offsetY = 0;
+			float originX = 0;
+			ProjectileLoader.DrawOffset(Projectile, ref offsetX, ref offsetY, ref originX);
+			int frameHeight = TextureAssets.Projectile[Type].Height() / Main.projFrames[Projectile.type];
+			Vector2 origin = new(originX, Projectile.height / 2 + offsetY);
+			Rectangle sourceRectangle = new(0, frameHeight * Projectile.frame, TextureAssets.Projectile[Projectile.type].Width(), frameHeight - 1);
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				Projectile.position + new Vector2(originX + offsetX, (Projectile.height / 2) + Projectile.gfxOffY) - Main.screenPosition,
+				sourceRectangle,
+				lightColor,
+				Projectile.rotation,
+				origin,
+				Projectile.scale,
+				dir
+			);
+			if (glowTexture is not null) {
+				Main.EntitySpriteDraw(
+					glowTexture.Value,
+					Projectile.position + new Vector2(originX + offsetX, (Projectile.height / 2) + Projectile.gfxOffY) - Main.screenPosition,
+					sourceRectangle,
+					new Color(250, 250, 250, Projectile.alpha),
+					Projectile.rotation,
+					origin,
+					Projectile.scale,
+					dir
+				);
+			}
+			return false;
+		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.Ichor, 60);
-			if (hit.Crit && target.life < damageDone * 3) {
-				target.life = 0;
-				//target.checkDead();
+			if (Main.player[Projectile.owner].IsWithinRectangular(target, new Vector2(16 * 4, 16 * 2))) {
+				target.AddBuff(ModContent.BuffType<Lazy_Cloak_Buff>(), 10);
+				target.DoCustomKnockback(Vector2.UnitY * Main.player[Projectile.owner].GetTotalKnockback(DamageClass.Summon).ApplyTo(4));
 			}
 		}
 	}
 }
 namespace Origins.Buffs {
-	public class Lazy_Cloak_Buff : ModBuff, ICustomWikiStat {
-		public string CustomStatPath => nameof(Lazy_Cloak_Buff);
-		public override string Texture => "Origins/Buffs/Lazy_Cloak_Buff";
+	public class Lazy_Cloak_Buff : MinionBuff {
 		public static int ID { get; private set; }
-		public override void SetStaticDefaults() {
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-			ID = Type;
+		public override void Load() {
+			if (GetType() != typeof(Lazy_Cloak_Buff)) return;
+			try {
+				IL_NPC.UpdateNPC_Inner += DoLazyCloakShimmer;
+			} catch (Exception ex) {
+				if (Origins.LogLoadingILError(nameof(DoLazyCloakShimmer), ex)) throw;
+			}
 		}
+		static void DoLazyCloakShimmer(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchCallOrCallvirt<NPC>("UpdateCollision"));
 
+			c.GotoPrev(MoveType.After, i => i.MatchLdfld<NPC>(nameof(NPC.noTileCollide)));
+			c.EmitLdarg0();
+			c.EmitDelegate((bool noTileCollide, NPC npc) => noTileCollide || (npc.TryGetGlobalNPC(out OriginGlobalNPC global) && global.lazyCloakShimmer));
+
+			c.GotoNext(MoveType.After, i => i.MatchLdfld<Entity>(nameof(Entity.velocity)));
+			c.EmitLdarg0();
+			c.EmitDelegate((Vector2 velocity, NPC npc) => velocity * (npc.TryGetGlobalNPC(out OriginGlobalNPC global) && global.lazyCloakShimmer ? 0.375f : 1));
+		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			if (GetType().GetProperty(nameof(ID)).GetSetMethod(true) is MethodInfo setID) setID.Invoke(null, [Type]);
+		}
 		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Lazy_Cloak_P.ID] <= 0) {
+			bool foundAny = false;
+			foreach (int proj in ProjectileTypes()) {
+				if (player.ownedProjectileCounts[proj] > 0) foundAny = true;
+			}
+			if (!foundAny) {
 				player.DelBuff(buffIndex);
 				buffIndex--;
 			}
 		}
+		public override void Update(NPC npc, ref int buffIndex) {
+			npc.GetGlobalNPC<OriginGlobalNPC>().lazyCloakShimmer = true;
+		}
+
+		public override IEnumerable<int> ProjectileTypes() => [
+			Lazy_Cloak_P.ID
+		];
+		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) { }
 	}
 }

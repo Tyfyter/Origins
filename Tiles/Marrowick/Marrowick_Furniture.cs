@@ -1,18 +1,33 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Graphics;
-using Origins.Tiles.Riven;
-using Origins.World.BiomeData;
+﻿using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Marrowick {
+	public class Marrowick_Furniture : FurnitureSet<Marrowick_Item> {
+		public override Color MapColor => new(245, 225, 143);
+		public override int DustType => DustID.TintablePaint;
+		public override Vector3 LightColor {
+			get {
+				Vector3 color = default;
+				TorchID.TorchColor(TorchID.Torch, out color.X, out color.Y, out color.Z);
+				color.X = 0f;
+				return color;
+			}
+		}
+		public override bool LanternSway => false;
+		public override bool ChandelierSway => false;
+		public override void SetupTile(ModTile tile) {
+			if (tile is FurnitureSet_Bookcase) OriginsSets.Tiles.MultitileCollisionOffset[tile.Type] = OffsetBookcaseCollision;
+		}
+		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
+			if (tile.TileFrameX / 18 != 1) height = -1600;
+		}
+	}/* left as backup just in case we still need it
 	public class Marrowick_Platform : Platform_Tile {
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type, 2)
 				.AddIngredient<Marrowick_Item>(1)
 				.Register();
@@ -52,7 +67,7 @@ namespace Origins.Tiles.Marrowick {
 	public class Marrowick_Chair : ChairBase {
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(4)
 				.AddTile(TileID.WorkBenches)
@@ -65,7 +80,7 @@ namespace Origins.Tiles.Marrowick {
 		public override int BaseTileID => TileID.Toilets;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(6)
 				.AddTile(TileID.Sawmill)
@@ -81,7 +96,7 @@ namespace Origins.Tiles.Marrowick {
 		public override int BaseTileID => TileID.Benches;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(5)
 				.AddIngredient(ItemID.Silk, 2)
@@ -95,7 +110,7 @@ namespace Origins.Tiles.Marrowick {
 		public override int BaseTileID => TileID.Bathtubs;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(14)
 				.AddTile(TileID.Sawmill)
@@ -108,7 +123,7 @@ namespace Origins.Tiles.Marrowick {
 		public override int BaseTileID => TileID.Sinks;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(6)
 				.AddIngredient(ItemID.WaterBucket)
@@ -122,7 +137,7 @@ namespace Origins.Tiles.Marrowick {
 		public override int BaseTileID => TileID.Candles;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(4)
 				.AddIngredient(ItemID.Torch)
@@ -145,7 +160,7 @@ namespace Origins.Tiles.Marrowick {
 		public override int BaseTileID => TileID.Candelabras;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(5)
 				.AddIngredient(ItemID.Torch, 3)
@@ -173,7 +188,7 @@ namespace Origins.Tiles.Marrowick {
 		public override int BaseTileID => TileID.Lamps;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient(ItemID.Torch)
 				.AddIngredient<Marrowick_Item>(3)
@@ -201,7 +216,7 @@ namespace Origins.Tiles.Marrowick {
 		public override int BaseTileID => TileID.Chandeliers;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(4)
 				.AddIngredient(ItemID.Torch, 4)
@@ -230,7 +245,7 @@ namespace Origins.Tiles.Marrowick {
 		public override int BaseTileID => TileID.HangingLanterns;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(6)
 				.AddIngredient(ItemID.Torch)
@@ -258,7 +273,7 @@ namespace Origins.Tiles.Marrowick {
 		public override int BaseTileID => TileID.Bookcases;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(20)
 				.AddIngredient(ItemID.Book, 10)
@@ -267,12 +282,19 @@ namespace Origins.Tiles.Marrowick {
 			};
 			DustType = DustID.TintablePaint;
 		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
+		}
+		static void OffsetBookcaseCollision(short frameX, ref float y, ref int height) {
+			if (frameX / 18 != 1) height = -1600;
+		}
 	}
 	public class Marrowick_Piano : FurnitureBase {
 		public override int BaseTileID => TileID.Pianos;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(20)
 				.AddIngredient(ItemID.Book, 10)
@@ -286,7 +308,7 @@ namespace Origins.Tiles.Marrowick {
 		public override int BaseTileID => TileID.Tables;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(8)
 				.AddTile(TileID.WorkBenches)
@@ -305,7 +327,7 @@ namespace Origins.Tiles.Marrowick {
 		public override int BaseTileID => TileID.WorkBenches;
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(10)
 				.Register();
@@ -322,7 +344,7 @@ namespace Origins.Tiles.Marrowick {
 	public class Marrowick_Dresser : DresserBase {
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(16)
 				.AddTile(TileID.Sawmill)
@@ -334,7 +356,7 @@ namespace Origins.Tiles.Marrowick {
 	public class Marrowick_Bed : BedBase {
 		public override Color MapColor => new(245, 225, 143);
 		public override void OnLoad() {
-			item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Marrowick_Item>(15)
 				.AddIngredient(ItemID.Silk, 5)
@@ -374,5 +396,5 @@ namespace Origins.Tiles.Marrowick {
 			.AddTile(TileID.WorkBenches)
 			.Register();
 		}
-	}
+	}*/
 }

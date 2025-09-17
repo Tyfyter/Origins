@@ -4,6 +4,8 @@ using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
 using Origins.World.BiomeData;
+using PegasusLib;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -16,7 +18,7 @@ namespace Origins.NPCs.Riven {
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.05f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
@@ -95,6 +97,62 @@ namespace Origins.NPCs.Riven {
 							}
 						}
 					}
+				}
+			}
+
+			if (!NetmodeActive.MultiplayerClient && ++NPC.ai[3] > 60 * 1) {
+				NPC.ai[3] = 0;
+				List<(Vector2 a, Vector2 b)> directions = new(8);
+				const int minTileRange = 160;
+				const int maxTileRange = 160 * 2;
+				Vector2 pos = NPC.Center;
+				foreach (NPC other in Main.ActiveNPCs) {
+					if (other.ModNPC is Goo_Wall gooWall && (other.WithinRange(pos, maxTileRange) || gooWall.Anchor1.WithinRange(pos, maxTileRange) || gooWall.Anchor2.WithinRange(pos, maxTileRange))) {
+						return;
+					}
+				}
+				const int rays_to_cast = 7;
+				float betweenRays = MathHelper.ToRadians(60) / rays_to_cast;
+				for (int i = -rays_to_cast; i < rays_to_cast; i++) {
+					Vector2 dir = Vector2.UnitY.RotatedBy(i * betweenRays);
+					float ray1 = CollisionExt.Raymarch(pos, dir, float.BitIncrement(maxTileRange));
+					float ray2 = CollisionExt.Raymarch(pos, -dir, float.BitIncrement(maxTileRange));
+
+					if (ray1 + ray2 >= minTileRange && ray1 + ray2 <= maxTileRange) {
+						Vector2 ray1Pos = (dir * (ray1 + 1)) + pos;
+						Vector2 ray2Pos = (-dir * (ray2 + 1)) + pos;
+						if (Main.tile[ray1Pos.ToTileCoordinates()].HasFullSolidTile() && Main.tile[ray2Pos.ToTileCoordinates()].HasFullSolidTile()) {
+							bool invalid = false;
+							Vector2 anchor = ray1Pos;
+							Vector2 position = ray2Pos;
+							Vector2 perp = (position - anchor).RotatedBy(MathHelper.PiOver2).Normalized(out _) * 26;
+
+							Vector2 vert1 = position + perp;
+							Vector2 vert2 = anchor + perp;
+							Vector2 vert3 = anchor - perp;
+							Vector2 vert4 = position - perp;
+
+							(Vector2 start, Vector2 end)[] lines = [(vert1, vert2), (vert2, vert3), (vert3, vert4), (vert4, vert1)];
+							foreach (Player player in Main.ActivePlayers) {
+								if (invalid) break;
+								invalid = CollisionExtensions.PolygonIntersectsRect(lines, player.Hitbox);
+							}
+							if (invalid) continue;
+							directions.Add((ray1Pos, ray2Pos));
+						}
+					}
+				}
+				if (directions.Count > 0) {
+					(Vector2 start, Vector2 end) = Main.rand.Next(directions);
+					pos = Vector2.Lerp(start, end, 0.5f);
+					NPC.NewNPC(
+						NPC.GetSource_FromAI(),
+						(int)pos.X,
+						(int)(pos.Y + ModContent.GetInstance<Goo_Wall>().NPC.height / 2),
+						ModContent.NPCType<Goo_Wall>(),
+						ai1: end.X,
+						ai2: end.Y
+					);
 				}
 			}
 		}

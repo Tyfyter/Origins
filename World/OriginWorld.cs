@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Weapons.Summoner.Minions;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Questing;
 using Origins.Tiles;
 using Origins.Tiles.Brine;
@@ -8,7 +9,9 @@ using Origins.Tiles.Dusk;
 using Origins.Tiles.Limestone;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
+using Origins.Walls;
 using Origins.World;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,6 +38,8 @@ namespace Origins {
 		public static int brineTiles;
 		public static int fiberglassTiles;
 		public static int limestoneTiles;
+		public static int chambersiteTiles;
+		public static int chambersiteWalls;
 		public int peatSold;
 		public const float biomeShaderSmoothing = 0.025f;
 		internal bool hasDefiled = false;
@@ -43,6 +48,7 @@ namespace Origins {
 		public static bool HasRivenHive => Instance.hasRiven;
 		private static double? _worldSurfaceLow;
 		public static double WorldSurfaceLow => _worldSurfaceLow ?? Main.worldSurface - 165;
+		public Rectangle brinePoolRange;
 		public static bool DefiledResurgenceActive => Main.hardMode && !NPC.downedPlantBoss;//true;
 		public const byte evil_corruption = 0b0001;//1
 		public const byte evil_crimson = 0b0010;//2
@@ -61,7 +67,7 @@ namespace Origins {
 		Point fiberglassMax;
 		HashSet<Point> fiberglassFrameSet;
 		//Task fiberglassFrameTask;
-		Point brineCenter;
+		public Point brineCenter;
 		public bool forceThunderstorm = false;
 		public int forceThunderstormDelay = 0;
 
@@ -110,6 +116,9 @@ namespace Origins {
 				peatSold = tag.GetAsInt("peatSold");
 			}
 			if (tag.ContainsKey("worldSurfaceLow")) _worldSurfaceLow = tag.GetDouble("worldSurfaceLow");
+			if (tag.TryGet("brinePoolRange", out TagCompound range)) {
+				if (range.TryGet("X", out int x) && range.TryGet("Y", out int y) && range.TryGet("Width", out int width) && range.TryGet("Height", out int height)) brinePoolRange = new(x, y, width, height);
+			}
 			if (tag.ContainsKey("defiledHearts")) {
 				LegacySave_DefiledHearts = tag.Get<List<Vector2>>("defiledHearts").Select(Utils.ToPoint16).ToList();
 			}
@@ -161,6 +170,14 @@ namespace Origins {
 			if (_worldSurfaceLow.HasValue) {
 				tag.Add("worldSurfaceLow", _worldSurfaceLow);
 			}
+			tag.Add("brinePoolRange",
+				new TagCompound {
+					["X"] = brinePoolRange.X,
+					["Y"] = brinePoolRange.Y,
+					["Width"] = brinePoolRange.Width,
+					["Height"] = brinePoolRange.Height
+				}
+			);
 			tag.Add("voidLocks", VoidLocks.Select(kvp => new TagCompound() {
 				["pos"] = kvp.Key.ToVector2(),
 				["uuid"] = kvp.Value.ToString()
@@ -184,13 +201,13 @@ namespace Origins {
 			if (shimmerPosition.HasValue) tag.Add(nameof(shimmerPosition), shimmerPosition.Value);
 		}
 		public override void NetSend(BinaryWriter writer) {
-			writer.WriteFlags(forceAF, forceThunderstorm);
+			writer.WriteFlags(forceAF, forceThunderstorm, shimmerPosition.HasValue);
 			if (shimmerPosition.HasValue) writer.WriteVector2(shimmerPosition.Value);
 		}
 		public override void NetReceive(BinaryReader reader) {
-			reader.ReadFlags(out bool forceAF, out forceThunderstorm);
+			reader.ReadFlags(out bool forceAF, out forceThunderstorm, out bool hasShimmerPosition);
 			ForceAF = forceAF;
-			if (reader.ReadBoolean()) shimmerPosition = reader.ReadVector2();
+			if (hasShimmerPosition) shimmerPosition = reader.ReadVector2();
 		}
 		public override void ResetNearbyTileEffects() {
 			voidTiles = 0;
@@ -199,6 +216,12 @@ namespace Origins {
 			brineTiles = 0;
 			fiberglassTiles = 0;
 			limestoneTiles = 0;
+			chambersiteTiles = 0;
+			chambersiteWalls = 0;
+			Array.Clear(Chambersite_Stone_Wall.wallCounts);
+
+			SC_Scene_Effect.monolithTileActive = false;
+			Defiled_Wastelands.monolithActive = false;
 		}
 
 		public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts) {
@@ -212,7 +235,7 @@ namespace Origins {
 				+ tileCounts[ModContent.TileType<Hardened_Defiled_Sand>()]
 				+ tileCounts[ModContent.TileType<Defiled_Ice>()];
 
-			rivenTiles = tileCounts[ModContent.TileType<Riven_Flesh>()]
+			rivenTiles = tileCounts[ModContent.TileType<Spug_Flesh>()]
 				+ tileCounts[ModContent.TileType<Riven_Grass>()]
 				+ tileCounts[ModContent.TileType<Riven_Jungle_Grass>()]
 				+ tileCounts[ModContent.TileType<Silica>()]
@@ -222,12 +245,21 @@ namespace Origins {
 
 			brineTiles = tileCounts[ModContent.TileType<Baryte>()];
 
-			fiberglassTiles = tileCounts[ModContent.TileType<Tiles.Other.Fiberglass_Tile>()];
+			fiberglassTiles = tileCounts[ModContent.TileType<Fiberglass_Tile>()];
 
 			limestoneTiles = tileCounts[ModContent.TileType<Limestone>()]
 				+ tileCounts[ModContent.TileType<Limestone_Stalactite>()]
 				+ tileCounts[ModContent.TileType<Limestone_Stalagmite>()]
 				+ tileCounts[ModContent.TileType<Limestone_Pile_Medium>()];
+
+			chambersiteTiles = 0;
+			for (int i = 0; i < Chambersite_Ore.chambersiteTiles.Count; i++) {
+				chambersiteTiles += tileCounts[Chambersite_Ore.chambersiteTiles[i]];
+			}
+			chambersiteWalls = 0;
+			for (int i = 0; i < Chambersite_Stone_Wall.chambersiteWalls.Count; i++) {
+				chambersiteWalls += Chambersite_Stone_Wall.wallCounts[Chambersite_Stone_Wall.chambersiteWalls[i]];
+			}
 
 			if (!Main.SceneMetrics.HasSunflower && Main.dayTime) {
 				int team = Main.LocalPlayer.team;
@@ -549,8 +581,8 @@ namespace Origins {
 				tRiven = 1;
 			}
 			if (Main.netMode == NetmodeID.Server) {
-				ModPacket packet = Origins.instance.GetPacket(2);
-				packet.Write(MessageID.TileCounts);
+				ModPacket packet = Origins.instance.GetPacket(3);
+				packet.Write(Origins.NetMessageType.tile_counts);
 				packet.Write(tDefiled);
 				packet.Write(tRiven);
 			}

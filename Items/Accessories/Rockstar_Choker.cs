@@ -18,6 +18,7 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(18, 22);
 			Item.value = Item.sellPrice(gold: 12);
 			Item.rare = ItemRarityID.Lime;
+			Item.master = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.OriginPlayer().lightningRing = true;

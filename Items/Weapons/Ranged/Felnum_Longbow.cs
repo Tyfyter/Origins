@@ -1,9 +1,11 @@
 ﻿using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Ranged {
 	public class Felnum_Longbow : ModItem, ICustomWikiStat {
 		public const int baseDamage = 19;
@@ -12,6 +14,8 @@ namespace Origins.Items.Weapons.Ranged {
         ];
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldBow);

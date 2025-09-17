@@ -2,16 +2,24 @@
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
+using Origins.Journal;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Ace_Shrapnel : ModItem, ICustomWikiStat {
+	public class Ace_Shrapnel : ModItem, IJournalEntrySource<Ace_Shrapnel.Ace_Shrapnel_Entry>, ICustomWikiStat {
+		public class Ace_Shrapnel_Entry : JournalEntry {
+			public override string TextKey => "Ace_Shrapnel";
+			public override JournalSortIndex SortIndex => new("The_Ashen", 3);
+		}
 		public string[] Categories => [
 			"Launcher"
 		];
+		public override void SetStaticDefaults() {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Impeding_Shrapnel_Debuff.ID];
+		}
 		public override void SetDefaults() {
 			Item.DefaultToLauncher(12, 20, 54, 26);
 			Item.useTime = 1;

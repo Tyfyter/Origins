@@ -16,7 +16,9 @@ using Terraria.Graphics;
 using System;
 using Origins.NPCs;
 namespace Origins.Items.Weapons.Ammo {
-	public class Alkahest_Dart : ModItem, ICustomWikiStat {
+	public class Alkahest_Dart : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.25f;
+		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			"Dart",
 			"TornSource"
@@ -86,7 +88,7 @@ namespace Origins.Items.Weapons.Ammo {
 			SoundEngine.PlaySound(SoundID.Shatter.WithVolume(0.5f), Projectile.position);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 180, 180, 0.25f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 180, 180, Alkahest_Dart.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 	}
 	public class Alkahest_Dart_Aura : ModProjectile {
@@ -94,6 +96,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailCacheLength[Type] = 30;
 			ProjectileID.Sets.TrailingMode[Type] = -1;
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 16 * 400;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -150,7 +153,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) => behindProjectiles.Add(index);
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 30, 180, 0.25f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 30, 180, Alkahest_Dart.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		private static VertexStrip _vertexStrip = new();
 		public override bool PreDraw(ref Color lightColor) {

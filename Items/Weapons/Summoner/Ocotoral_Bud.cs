@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.NPCs;
 using System;
@@ -11,7 +12,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Summoner {
-	public class Ocotoral_Bud : ModItem, ICustomWikiStat {
+	public class Ocotoral_Bud : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.5f;
+		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			"Torn",
 			"TornSource"
@@ -23,7 +26,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void SetDefaults() {
 			Item.damage = 21;
 			Item.DamageType = DamageClass.Summon;
-			Item.mana = 12;
+			Item.mana = 10;
 			Item.width = 32;
 			Item.height = 32;
 			Item.useTime = 36;
@@ -36,6 +39,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.shootSpeed = 1;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
+			Item.sentry = true;
 			Item.glowMask = glowmask;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
@@ -313,7 +317,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 120, 300, 0.5f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 120, 300, Ocotoral_Bud.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 	}
 }

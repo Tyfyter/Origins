@@ -23,6 +23,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.ammo = ModContent.ItemType<Potato>();
 			Item.notAmmo = true;
 			Item.noMelee = !OriginsModIntegrations.CheckAprilFools();
+			Item.mech = false;
 		}
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.NewProjectile(player.GetSource_OnHit(target), player.itemLocation, default, ModContent.ProjectileType<Potato_Mine_Melee_Explosion>(), 50, 6);

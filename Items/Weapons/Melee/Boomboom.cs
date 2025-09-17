@@ -15,6 +15,9 @@ namespace Origins.Items.Weapons.Melee {
 			public override string TextKey => "Boomboom";
 			public override JournalSortIndex SortIndex => new("Brine_Fiend", 1);
 		}
+		public override void SetStaticDefaults() {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Venom, Toxic_Shock_Debuff.ID];
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);
 			Item.DamageType = DamageClass.MeleeNoSpeed;

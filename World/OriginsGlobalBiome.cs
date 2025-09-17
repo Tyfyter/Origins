@@ -1,12 +1,14 @@
 ﻿using AltLibrary;
 using AltLibrary.Common.AltBiomes;
 using Origins.Questing;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.World {
 	public class OriginsGlobalBiome : GlobalBiome {
-		public static bool isConversionFromProjectile = false;
+		[ThreadStatic]
+		public static bool isConversionFromProjectile;
 		public static bool isConvertingProjectilePlayerOwned = false;
 		public override void PostConvertTile(AltBiome oldBiome, AltBiome newBiome, int i, int j) {
 			if (WorldGen.generatingWorld) return;

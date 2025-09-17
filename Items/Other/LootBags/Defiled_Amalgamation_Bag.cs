@@ -17,7 +17,7 @@ namespace Origins.Items.Other.LootBags {
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			itemLoot.Add(Defiled_Amalgamation.normalDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Refactoring_Pieces>()));
-			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(gold: 3), false));
+			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(silver: 25), false));
 		}
 		public override bool CanRightClick() {
 			return true;

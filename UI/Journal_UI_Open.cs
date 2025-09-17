@@ -21,6 +21,7 @@ using PegasusLib;
 using PegasusLib.Graphics;
 using ReLogic.OS;
 using Microsoft.Xna.Framework.Input;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Origins.UI {
 	public class Journal_UI_Open : UIState {
@@ -41,6 +42,7 @@ namespace Origins.UI {
 		Journal_UI_Mode mode = Journal_UI_Mode.Normal_Page;
 		ArmorShaderData currentEffect = null;
 		Color inkColor;
+		int scrollWheelValue = 0;
 		public override void OnInitialize() {
 			this.RemoveAllChildren();
 			baseElement = new UIElement();
@@ -69,7 +71,6 @@ namespace Origins.UI {
 			Vector2 baseScale = Vector2.One;
 			float x = font.MeasureString(" ").X;
 			float snippetScale;
-			float num3 = 0f;
 			List<TextSnippet> snippets = ChatManager.ParseMessage(text, baseColor);
 
 			List<List<TextSnippet>> snippetPages = [];
@@ -88,7 +89,7 @@ namespace Origins.UI {
 			float telemetryLength = 0;
 			switch (mode) {
 				case Journal_UI_Mode.Normal_Page:
-				//lineSpace *= Main.UIScale;
+				//lineSpace *= MathF.Pow(Main.UIScale, 0.25f);
 				break;
 				case Journal_UI_Mode.Search_Page:
 				lineSpace *= Main.UIScale;
@@ -109,10 +110,11 @@ namespace Origins.UI {
 				if (textSnippet.UniqueDraw(justCheckingString: true, out Vector2 size, Main.spriteBatch, cursor, baseColor, snippetScale)) {
 					cursor.X += size.X * baseScale.X * snippetScale;
 					currentPage.Add(textSnippet);
-					minNewLines = Math.Max(minNewLines, (int)Math.Ceiling(size.Y / (lineSpace * num3 * Main.UIScale)));
-					float minCursorY = cursor.Y + lineSpace * num3 * minNewLines;
+					minNewLines = Math.Max(minNewLines, (int)Math.Round(size.Y / lineSpace));
+					if (minNewLines == 1) minNewLines = 0;
+					float minCursorY = cursor.Y + lineSpace * minNewLines;
 					while (cursor.X > bounds.Width) {
-						cursor.Y += lineSpace * num3;
+						cursor.Y += lineSpace;
 						cursor.X -= bounds.Width;
 						currentPage.Add(new TextSnippet("\n"));
 					}
@@ -124,7 +126,7 @@ namespace Origins.UI {
 				if (textSnippet.GetType() != typeof(TextSnippet)) {
 					cursor.X += font.MeasureString(textSnippet.Text).X * baseScale.X * snippetScale;
 					if (cursor.X > bounds.Width) {
-						cursor.Y += font.LineSpacing * num3 * baseScale.Y;
+						cursor.Y += font.LineSpacing * baseScale.Y;
 						cursor.X = 0f;
 						if (cursor.Y > bounds.Height) {
 							finishPage();
@@ -145,13 +147,13 @@ namespace Origins.UI {
 						//result.Y = Math.Max(result.Y, cursor.Y);
 						if (minNewLines > 0) {
 							for (int k = 0; k < minNewLines; k++) {
-								cursor.Y += lineSpace * num3;
+								cursor.Y += lineSpace;
 								cursor.X = 0f;
 								currentPage.Add(new TextSnippet("\n"));
 							}
 							minNewLines = 0;
 						} else {
-							cursor.Y += lineSpace * num3;
+							cursor.Y += lineSpace;
 							cursor.X = 0f;
 							currentPage.Add(new TextSnippet("\n"));
 						}
@@ -160,7 +162,6 @@ namespace Origins.UI {
 							//snippetPages.Add(currentPage.ToArray());
 							//currentPage.Clear();
 						}
-						num3 = 0f;
 						realLine = false;
 						continue;
 					}
@@ -173,17 +174,13 @@ namespace Origins.UI {
 						float currentWordWidth = font.MeasureString(words[j]).X * baseScale.X * snippetScale;
 						if (cursor.X - 0f + currentWordWidth > bounds.Width) {
 							cursor.X = 0f;
-							cursor.Y += lineSpace * num3;
+							cursor.Y += lineSpace;
 							//result.Y = Math.Max(result.Y, cursor.Y);
-							if (cursor.Y + lineSpace * num3 > bounds.Height) {
+							if (cursor.Y > bounds.Height) {
 								finishPage();
 								//snippetPages.Add(currentPage.ToArray());
 								//currentPage.Clear();
 							}
-							num3 = 0f;
-						}
-						if (num3 < snippetScale) {
-							num3 = snippetScale;
 						}
 						Vector2 value = font.MeasureString(words[j]);
 						cursor.X += value.X * baseScale.X * snippetScale;
@@ -198,23 +195,22 @@ namespace Origins.UI {
 					if (lines.Length > lineNum && realLine) {
 						//result.Y = Math.Max(result.Y, cursor.Y);
 						if (minNewLines > 0) {
-							cursor.Y += lineSpace * num3;
+							cursor.Y += lineSpace;
 							cursor.X = 0f;
 							for (int k = 0; k < minNewLines; k++) {
 								currentPage.Add(new TextSnippet("\n"));
 							}
 							minNewLines = 0;
 						} else {
-							cursor.Y += lineSpace * num3;
-							cursor.X = 0f;
 							currentPage.Add(new TextSnippet("\n"));
+							cursor.Y += lineSpace;
+							cursor.X = 0f;
 						}
 						if (cursor.Y > bounds.Height) {
 							finishPage();
 							//snippetPages.Add(currentPage.ToArray());
 							//currentPage.Clear();
 						}
-						num3 = 0f;
 					}
 					realLine = true;
 				}
@@ -340,9 +336,22 @@ namespace Origins.UI {
 							inkColor = Color.White;
 						}
 					}
+					float lineSpace = FontAssets.MouseText.Value.LineSpacing;
 					for (int i = 0; i < OriginPlayer.LocalOriginPlayer.journalText.Count; i++) {
 						if (i < OriginPlayer.LocalOriginPlayer.journalText.Count) {
-							pages.Add(ChatManager.ParseMessage(OriginPlayer.LocalOriginPlayer.journalText[i], inkColor));
+							List<TextSnippet> page = ChatManager.ParseMessage(OriginPlayer.LocalOriginPlayer.journalText[i], inkColor);
+							for (int j = 0; j < page.Count; j++) {
+								if (j + 1 < page.Count && page[j].UniqueDraw(true, out Vector2 size, null)) {
+									size.Y -= lineSpace;
+									if (!page[j + 1].UniqueDraw(true, out _, null)) {
+										while (size.Y > 0) {
+											size.Y -= lineSpace;
+											page.Insert(++j, new("\n "));
+										}
+									}
+								}
+							}
+							pages.Add(page);
 						}
 					}
 					currentEffect = GameShaders.Armor.GetSecondaryShader(dye, Main.LocalPlayer);
@@ -475,6 +484,7 @@ namespace Origins.UI {
 				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = bounds.Width * 0.5f - XMarginTotal;
 				for (int i = 0; i < 2 && i + pageOffset < (pages?.Count ?? 0); i++) {
 					Vector2 pagePos = new Vector2(bounds.X + (i * bounds.Width * 0.5f) + (i == 0 ? xMarginOuter : xMarginInner), bounds.Y + yMargin);
+					WrappingTextSnippetSetup.SetWrappingData(pagePos, bounds.Width * 0.5f - XMarginTotal);
 					bool canEnterWritingMode = true;
 					if (mode == Journal_UI_Mode.Custom && memoPage_focused && i == memoPage_selectedSide) {
 						DrawPageForEditing(spriteBatch,
@@ -521,6 +531,7 @@ namespace Origins.UI {
 					}
 				}
 			} finally {
+				WrappingTextSnippetSetup.SetWrappingData(Vector2.Zero, float.PositiveInfinity);
 				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = float.PositiveInfinity;
 				if (shade) {
 					Origins.shaderOroboros.Stack(currentEffect);
@@ -529,6 +540,21 @@ namespace Origins.UI {
 			}
 			#region arrows
 			if (canDrawArrows) {
+				scrollWheelValue += PlayerInput.ScrollWheelDeltaForUI;
+				int scrollOffset = 0;
+				if (Math.Abs(scrollWheelValue) >= 120) {
+					switch (OriginClientConfig.Instance.ScrollWheelDirection) {
+						case Scroll_Wheel_Direction.Normal:
+						scrollOffset -= Math.Sign(scrollWheelValue) * 2;
+						break;
+						case Scroll_Wheel_Direction.Inverted:
+						scrollOffset += Math.Sign(scrollWheelValue) * 2;
+						break;
+						case Scroll_Wheel_Direction.Disabled:
+						scrollWheelValue = 0;
+						break;
+					}
+				}
 				Texture2D arrows = ArrowsTexture;
 				Rectangle frame = arrows.Frame(verticalFrames: 3);
 				Rectangle area = new(0, 0, frame.Width, frame.Height);
@@ -540,7 +566,7 @@ namespace Origins.UI {
 					frame.Y = frame.Height * 0;
 					if (area.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
 						if (Main.mouseLeft && Main.mouseLeftRelease) {
-							pageOffset += 2;
+							scrollOffset = 2;
 						}
 						spriteBatch.Draw(
 							arrows,
@@ -573,6 +599,8 @@ namespace Origins.UI {
 						frame,
 						Color.Black
 					);
+				} else if (scrollWheelValue < 0) {
+					scrollWheelValue = 0;
 				}
 				if (pageOffset > 0) {
 					Vector2 position = new(bounds.X + xMarginOuter - frame.Width / 2, bounds.Y + bounds.Height - yMargin * 0.8f);
@@ -581,7 +609,7 @@ namespace Origins.UI {
 					frame.Y = frame.Height * 1;
 					if (area.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
 						if (Main.mouseLeft && Main.mouseLeftRelease) {
-							pageOffset = Math.Max(pageOffset - 2, 0);
+							scrollOffset = -2;
 						}
 						spriteBatch.Draw(
 							arrows,
@@ -614,6 +642,12 @@ namespace Origins.UI {
 						frame,
 						Color.Black
 					);
+				} else if (scrollWheelValue > 0) {
+					scrollWheelValue = 0;
+				}
+				if (scrollOffset != 0) {
+					pageOffset = Math.Clamp(pageOffset + scrollOffset, 0, (pages?.Count ?? 0) - 2);
+					scrollWheelValue = 0;
 				}
 				if (mode is Journal_UI_Mode.Normal_Page or Journal_UI_Mode.Quest_Page) {
 					Vector2 position = new(bounds.X + xMarginOuter * 0.7f, bounds.Y + yMargin * 0.5f);

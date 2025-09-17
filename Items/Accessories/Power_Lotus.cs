@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Other.Dyes;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -14,23 +15,16 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => [
 			"Misc"
 		];
-		public static int ShaderID { get; private set; }
-		public override void SetStaticDefaults() {
-			GameShaders.Armor.BindShader(Type, new ArmorShaderData(
-				Mod.Assets.Request<Effect>("Effects/PowerLotus"),
-				"PowerLotusFairy"
-			))
-			.UseImage(Origins.cellNoiseTexture.asset);
-			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
-		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
 			Item.shoot = ModContent.ProjectileType<Power_Lotus_Seeker_Fairy>();
 			Item.knockBack = 8;
 			Item.rare = ItemRarityID.LightPurple;
+			Item.master = true;
 			Item.hasVanityEffects = true;
 			Item.value = Item.sellPrice(gold: 12);
 			Item.maxStack = 1;
+			Item.dye = 0;
 		}
 		public override void UpdateAccessory(Player player, bool isHidden) {
 			OriginPlayer originPlayer = player.OriginPlayer();
@@ -111,7 +105,7 @@ namespace Origins.Items.Accessories {
 	}
 	public class Power_Lotus_Seeker_Fairy : Golden_Lotus_Fairy, IShadedProjectile {
 		public override string Texture => typeof(Golden_Lotus_Fairy).GetDefaultTMLName();
-		public int Shader => Power_Lotus.ShaderID;
+		public int Shader => Lotusy_Dye.ShaderID;
 		public override void DisplayRange() {
 			if (Projectile.owner != Main.myPlayer) return;
 			for (float angle = 0; angle < MathHelper.TwoPi; angle += 1 / Projectile.localAI[0]) {
@@ -151,7 +145,7 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Power_Lotus_Deflect_Fairy : ModProjectile, IShadedProjectile {
-		public int Shader => Power_Lotus.ShaderID;
+		public int Shader => Lotusy_Dye.ShaderID;
 		public override string Texture => typeof(Golden_Lotus_Fairy).GetDefaultTMLName();
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {

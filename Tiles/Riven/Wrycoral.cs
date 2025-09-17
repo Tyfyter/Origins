@@ -1,17 +1,72 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
+using Origins.World.BiomeData;
+using System;
 using Terraria;
+using Terraria.GameContent.Drawing;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Wrycoral : OriginTile {
-        public string[] Categories => [
-            "Plant"
-        ];
-        public override void SetStaticDefaults() {
+	public class Hanging_Wrycoral : OriginTile, IGlowingModTile {
+		public override string Texture => base.Texture.Replace("Hanging_", "");
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
+		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
+		}
+		public override void SetStaticDefaults() {
+			if (!Main.dedServ) {
+				GlowTexture = Request<Texture2D>(Texture + "_Glow");
+			}
+			Main.tileFrameImportant[Type] = true;
+			Main.tileObsidianKill[Type] = true;
+			Main.tileCut[Type] = true;
+			TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = true;
+			Main.tileNoFail[Type] = true;
+			TileID.Sets.ReplaceTileBreakUp[Type] = true;
+			TileID.Sets.IgnoredInHouseScore[Type] = true;
+			TileID.Sets.IgnoredByGrowingSaplings[Type] = false;
+			TileID.Sets.MultiTileSway[Type] = true;
+			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
+
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.RandomStyleRange = 0;
+			TileObjectData.addTile(Type);
+
+
+			LocalizedText name = CreateMapEntryName();
+			AddMapEntry(new Color(108, 200, 255), name);
+
+			HitSound = SoundID.Grass;
+			DustType = DustID.BlueCrystalShard;
+
+			RegisterItemDrop(ItemType<Wrycoral_Item>());
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (TileObjectData.IsTopLeft(Main.tile[i, j])) {
+				Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.MultiTileVine);
+			}
+			return false;
+		}
+		public override void AdjustMultiTileVineParameters(int i, int j, ref float? overrideWindCycle, ref float windPushPowerX, ref float windPushPowerY, ref bool dontRotateTopTiles, ref float totalWindMultiplier, ref Texture2D glowTexture, ref Color glowColor) {
+			glowTexture = this.GetGlowTexture(Main.tile[i, j].TileColor);
+			glowColor = GlowColor;
+		}
+		public override void Load() => this.SetupGlowKeys();
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+	}
+	[Obsolete("Retained for technical reasons; Use Hanging_Wrycoral instead", true)]
+	public class Wrycoral : OriginTile { // can't get rid of the old stuff, rename it, or replace it for technical reasons
+		public override string Texture => "Terraria/Images/Tiles_" + TileID.Cobweb;
+		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
 			Main.tileCut[Type] = true;
@@ -38,15 +93,16 @@ namespace Origins.Tiles.Riven {
 			return false;
 		}
 	}
-    public class Wrycoral_Item : ModItem {
-        public override void SetStaticDefaults() {
-            Item.ResearchUnlockCount = 25;
-        }
-        public override void SetDefaults() {
+	public class Wrycoral_Item : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 25;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToPlaceableTile(ModContent.TileType<Hanging_Wrycoral>());
 			Item.maxStack = Item.CommonMaxStack;
 			Item.width = 12;
 			Item.height = 14;
 			Item.value = Item.sellPrice(copper: 20);
 		}
-    }
+	}
 }

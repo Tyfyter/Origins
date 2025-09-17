@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
 using Terraria;
+using Terraria.Chat;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins {
@@ -15,6 +17,22 @@ namespace Origins {
 		}
 		internal static void ChatOverhead(object message, int duration = 5) {
 			ChatOverhead(message.ToString(), duration);
+		}
+		internal static void ChatMessage(string message, bool all = false) {
+#if DEBUG
+			if (Main.dedServ) return;
+			if (all) {
+				ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(message), Color.White);
+			} else {
+				Main.NewText(message);
+			}
+#endif
+		}
+		internal static void ChatMessage(object message, bool all = false) {
+			ChatMessage(message.ToString(), all);
+		}
+		internal static void Assert(bool value, Exception exception) {
+			if (!value) throw exception;
 		}
 		static bool firstFirstUpdate = true;
 		internal static bool firstUpdate = false;

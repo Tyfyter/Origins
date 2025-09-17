@@ -17,6 +17,7 @@ using Terraria.Audio;
 using System.Collections.Generic;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Melee;
+using Origins.CrossMod;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Astoxo : ModItem, ICustomWikiStat {
@@ -28,6 +29,8 @@ namespace Origins.Items.Weapons.Ranged {
 				global.astoxoEffect = true;
 			});
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Tsunami);

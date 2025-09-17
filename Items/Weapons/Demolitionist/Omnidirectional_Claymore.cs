@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Omnidirectional_Claymore_Tile>());
 			Item.damage = 165;
-			Item.value = Item.sellPrice(gold: 1, silver: 75);
+			Item.value = Item.sellPrice(silver: 1, copper: 75);
 			Item.rare = ItemRarityID.Pink;
 			Item.noMelee = true;
 		}

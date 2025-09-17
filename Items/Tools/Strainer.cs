@@ -126,9 +126,9 @@ namespace Origins.Items.Tools {
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			bool swapDir = Projectile.velocity.X < 0;
-			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			Player player = Main.player[Projectile.owner];
+			bool swapDir = Projectile.velocity.X * player.gravDir < 0;
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			Vector2 unit = Projectile.velocity.SafeNormalize(default);
 			float baseUnitScale = player.HeldItem.shootSpeed * Projectile.scale;
 			Vector2 baseOffset = baseUnitScale * unit;

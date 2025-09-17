@@ -1,3 +1,4 @@
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Journal;
 using Origins.Projectiles.Weapons;
@@ -5,6 +6,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Magic {
 	public class Low_Signal : ModItem, ICustomWikiStat, IJournalEntrySource {
         public string[] Categories => [
@@ -18,6 +20,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetStaticDefaults() {
 			Item.staff[Type] = true;
 			Origins.AddGlowMask(this);
+			CritType.SetCritType<Flak_Crit_Type>(Type);
 		}
 		public override void SetDefaults() {
 			Item.damage = 48;

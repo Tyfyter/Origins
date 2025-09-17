@@ -16,6 +16,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public string[] Categories => [
 			"Launcher"
 		];
+		public override void SetStaticDefaults() {
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.DefaultToLauncher(20, 50, 78, 30, true);
 			Item.shoot = ProjectileID.Bomb;

@@ -30,7 +30,7 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			int[] validTiles = [
 				ModContent.TileType<Riven_Grass>(),
-				ModContent.TileType<Riven_Flesh>()
+				ModContent.TileType<Spug_Flesh>()
 			];
 
 			TileObjectData.newTile.AnchorValidTiles = [..validTiles,

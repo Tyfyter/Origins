@@ -41,7 +41,12 @@ namespace Origins.Items.Weapons.Demolitionist {
             .AddIngredient(ItemID.CrimsandBlock)
             .Register();
 
-            Recipe.Create(Type, 60)
+			Recipe.Create(Type, 60)
+			.AddIngredient(ItemID.SilverOre)
+			.AddIngredient(ItemID.PearlsandBlock)
+			.Register();
+
+			Recipe.Create(Type, 60)
             .AddIngredient(ItemID.SilverOre)
             .AddIngredient(ModContent.ItemType<Defiled_Sand_Item>())
             .Register();
@@ -75,7 +80,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
-			SoundEngine.PlaySound(SoundID.Item40.WithPitch(2f).WithVolume(1f), Projectile.Center);
+			SoundEngine.PlaySound(SoundID.Item40.WithPitch(1f).WithVolume(1f), Projectile.Center);
 		}
 	}
 }

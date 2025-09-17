@@ -55,6 +55,7 @@ namespace Origins.Items.Weapons.Ammo {
 				Projectile.alpha -= 15;
 			if (Projectile.alpha < 0)
 				Projectile.alpha = 0;
+			Projectile.BulletShimmer();
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			if (Projectile.alpha < 200) {

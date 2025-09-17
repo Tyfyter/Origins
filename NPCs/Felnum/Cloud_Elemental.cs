@@ -3,7 +3,7 @@ using Origins.Buffs;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Armor.Felnum;
-using Origins.Items.Armor.Vanity.Other;
+using Origins.Items.Vanity.Other;
 using Origins.Tiles.Other;
 using PegasusLib;
 using System;
@@ -29,7 +29,7 @@ namespace Origins.NPCs.Felnum {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.DD2DarkMageT1;
 			Main.npcFrameCount[NPC.type] = 4;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
-			NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Static_Shock_Debuff>()] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Static_Shock_Debuff.ID] = true;
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;

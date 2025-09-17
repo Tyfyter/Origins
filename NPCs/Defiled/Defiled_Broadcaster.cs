@@ -27,9 +27,8 @@ namespace Origins.NPCs.Defiled {
 			Main.npcFrameCount[NPC.type] = 5;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Position = new(28, 0),
-				PortraitPositionXOverride = 0,
-				PortraitPositionYOverride = -28,
+				Position = new(-5, -5),
+				PortraitPositionYOverride = -10,
 				Velocity = 1f
 			};
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
@@ -37,8 +36,8 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 48;
-			NPC.defense = 10;
 			NPC.damage = 12;
+			NPC.defense = 0;
 			NPC.width = 40;
 			NPC.height = 48;
 			NPC.hide = true;
@@ -63,6 +62,7 @@ namespace Origins.NPCs.Defiled {
 			Mana -= factor / 240f;
 		}
 		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (!NPC.downedBoss1 && !NPC.downedBoss2 && !NPC.downedBoss3) return 0;
 			if (spawnInfo.Player.ZoneSkyHeight) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo) * Defiled_Wastelands.SpawnRates.Broadcaster;
 		}
@@ -155,7 +155,7 @@ namespace Origins.NPCs.Defiled {
 				} else {
 
 				}
-			} else {
+			} else if (Main.npc.IndexInRange((int)NPC.ai[1] - 300)) { 
 				NPC carriedNPC = Main.npc[(int)NPC.ai[1] - 300];
 				if (!carriedNPC.TryGetGlobalNPC(out DefiledGlobalNPC global)) {
 					NPC.ai[2] = 0;

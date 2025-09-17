@@ -104,6 +104,9 @@ namespace Origins.Items.Weapons.Ranged {
 				SoundEngine.PlaySound(SoundID.Item153, points[^1]);
 			}
 		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			Projectile.damage = (int)(Projectile.damage * 0.8);
+		}
 		public override void CutTiles() {
 			if (Timer < 0) return;
 			List<Vector2> whipPointsForCollision = Projectile.WhipPointsForCollision;

@@ -13,6 +13,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.NPCs.MiscE;
 using Origins.Projectiles.Weapons;
 using Origins.Questing;
@@ -44,7 +45,6 @@ namespace Origins.Projectiles {
 		//bool init = true;
 		public float felnumBonus = 0;
 		public bool viperEffect = false;
-		public bool ownerSafe = false;
 		public int killLink = -1;
 		int updateCountBoost = 0;
 		public int UpdateCountBoost => updateCountBoost;
@@ -65,13 +65,17 @@ namespace Origins.Projectiles {
 		public bool neuralNetworkHit = false;
 		public bool crawdadNetworkEffect = false;
 		public Vector2? weakpointAnalyzerTarget = default;
+		public bool weakpointAnalyzerFake = false;
 		public Vector2 extraGravity = default;
 		public bool shouldUnmiss = false;
+		public bool[] alreadyUnmissed = new bool[Main.maxNPCs];
 		public int unmissTarget = -1;
 		public Vector2 unmissTargetPos = default;
 		public int unmissAnimation = 0;
+		public bool isUnmissing = false;
 		public bool laserBow = false;
 		public bool astoxoEffect = false;
+		public bool weakShimmer = false;
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
 		public Vector2[] oldPositions = [];
 		public OwnerMinionKey ownerMinion = null;
@@ -120,7 +124,18 @@ namespace Origins.Projectiles {
 				projectile.originalDamage = projectile.damage;
 			if (contextArgs.Contains(nameof(OriginPlayer.weakpointAnalyzer))) {
 				weakpointAnalyzerTarget = Main.MouseWorld;
+				weakpointAnalyzerFake = contextArgs.Contains("fake");
+				if (OriginsSets.Projectiles.WeakpointAnalyzerSpawnAction[projectile.type] is Action<Projectile, int> action) {
+					const string clone_prefix = $"{nameof(OriginPlayer.weakpointAnalyzer)}_clone";
+					for (int i = 0; i < contextArgs.Length; i++) {
+						if (contextArgs[i].StartsWith(clone_prefix) && int.TryParse(contextArgs[i][clone_prefix.Length..], out int cloneIndex)) {
+							action(projectile, cloneIndex);
+							break;
+						}
+					}
+				}
 			}
+			if (projectile.friendly && projectile.TryGetOwner(out Player player) && player.OriginPlayer().weakShimmer) weakShimmer = true;
 			if (source is EntitySource_ItemUse itemUseSource) {
 				if (itemSourceEffects.TryGetValue(itemUseSource.Item.type, out Action<OriginGlobalProj, Projectile, string[]> itemSourceEffect)) itemSourceEffect(this, projectile, contextArgs);
 				OriginPlayer originPlayer = itemUseSource.Player.GetModPlayer<OriginPlayer>();
@@ -138,30 +153,32 @@ namespace Origins.Projectiles {
 				if (fromItemType == Neural_Network.ID) {
 					neuralNetworkEffect = true;
 				}
-				if (!contextArgs.Contains(multishot_context) && !contextArgs.Contains(no_multishot_context)) {
-					int bocShadows = 0;
-					if (originPlayer.weakpointAnalyzer && projectile.CountsAsClass(DamageClass.Ranged) && projectile.aiStyle != ProjAIStyleID.HeldProjectile) {
-						bocShadows = 2;
-					} else if (originPlayer.controlLocus && projectile.aiStyle != ProjAIStyleID.HeldProjectile) {
-						if (projectile.CountsAsClass(DamageClasses.Explosive)) bocShadows = 2;
-						if (projectile.CountsAsClass(DamageClass.Ranged)) bocShadows = OriginsSets.Projectiles.RangedControlLocusDuplicateCount[projectile.type];
-					}
-					EntitySource_ItemUse multishotSource = null;
-					int ammoID = ItemID.None;
-					if (bocShadows > 0) {// separate if statement for future multishot sources
-						multishotSource = itemUseSource.WithContext(source.Context, multishot_context, nameof(OriginPlayer.weakpointAnalyzer));
-						if (itemUseSource is EntitySource_ItemUse_WithAmmo sourceWAmmo) {
-							ammoID = sourceWAmmo.AmmoItemIdUsed;
+				if (!contextArgs.Contains(multishot_context) && !contextArgs.Contains(no_multishot_context) && !OriginsSets.Projectiles.NoMultishot[projectile.type]) {
+					EntitySource_ItemUse multishotSource;
+					if (!itemUseSource.Item.accessory || itemUseSource.Item.useStyle != ItemUseStyleID.None) {
+						int bocShadows = 0;
+						float bocShadowDamageChance = 0.08f;
+						if (originPlayer.weakpointAnalyzer && projectile.CountsAsClass(DamageClass.Ranged)) {
+							bocShadows = 2;
 						}
-					}
-					if (bocShadows > 0 && projectile.damage > 0) {
-						for (int i = bocShadows; i-- > 0;) {
-							float rot = MathHelper.TwoPi * ((i + 1f) / (bocShadows + 1f)) + Main.rand.NextFloat(-0.3f, 0.3f);
-							Vector2 _position = projectile.position.RotatedBy(rot, Main.MouseWorld);
-							Vector2 _velocity = projectile.velocity.RotatedBy(rot);
-							bool free = itemUseSource.Player.IsAmmoFreeThisShot(itemUseSource.Item, new(ammoID), projectile.type);
-							int _damage = free ? projectile.damage : 0;
-							Projectile.NewProjectile(multishotSource, _position, _velocity, projectile.type, _damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1], projectile.ai[2]);
+						if (originPlayer.controlLocus) {
+							if (projectile.CountsAsClass(DamageClasses.Explosive)) bocShadows = 2;
+							if (projectile.CountsAsClass(DamageClass.Ranged)) bocShadows = 2;
+							bocShadowDamageChance = Math.Max(bocShadowDamageChance, 0.12f);
+						}
+						if (bocShadows > 0 && projectile.damage > 0) {
+							multishotSource = itemUseSource.WithContext(source.Context, multishot_context, nameof(OriginPlayer.weakpointAnalyzer));
+							for (int i = bocShadows; i-- > 0;) {
+								EntitySource_ItemUse currentSource = multishotSource.WithContext(multishotSource.Context, $"{nameof(OriginPlayer.weakpointAnalyzer)}_clone{i}");
+								float rot = MathHelper.TwoPi * ((i + 1f) / (bocShadows + 1f)) + Main.rand.NextFloat(-0.3f, 0.3f);
+								Vector2 _position = projectile.position.RotatedBy(rot, Main.MouseWorld);
+								Vector2 _velocity = projectile.velocity.RotatedBy(rot);
+								int _damage = projectile.damage;
+								if (Main.rand.NextFloat(1) >= bocShadowDamageChance) {
+									currentSource = currentSource.WithContext(currentSource.Context, "fake");
+								}
+								Projectile.NewProjectile(currentSource, _position, _velocity, projectile.type, _damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1], projectile.ai[2]);
+							}
 						}
 					}
 					if (originPlayer.emergencyBeeCanister && (projectile.type is ProjectileID.Bee or ProjectileID.GiantBee) && Main.rand.NextBool(3)) {
@@ -186,6 +203,7 @@ namespace Origins.Projectiles {
 					neuralNetworkHit = parentGlobalProjectile.neuralNetworkHit;
 					crawdadNetworkEffect = parentGlobalProjectile.crawdadNetworkEffect;
 					fiberglassLifesteal = parentGlobalProjectile.fiberglassLifesteal;
+					weakpointAnalyzerFake = parentGlobalProjectile.weakpointAnalyzerFake;
 					if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = parentGlobalProjectile.felnumBonus;
 
 					ModPrefix projPrefix = PrefixLoader.GetPrefix(Prefix);
@@ -223,64 +241,67 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void PostAI(Projectile projectile) {
+			if (projectile.minion) weakShimmer = Main.player.GetIfInRange(projectile.owner)?.OriginPlayer()?.weakShimmer ?? false;
 			if (projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall)
 				projectile.damage = projectile.originalDamage;
 			if (!OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = Main.player[projectile.owner].OriginPlayer().felnumShock;
 			if (shouldUnmiss) {
-				if (Origins.MagicTripwireRange[projectile.type] >= 0) {
-					int magicTripwireRange = Origins.MagicTripwireRange[projectile.type];
-					if (magicTripwireRange == 0) magicTripwireRange = 48;
-					Rectangle magicTripwireHitbox = new(
-						(int)projectile.Center.X - magicTripwireRange,
-						(int)projectile.Center.Y - magicTripwireRange,
-						magicTripwireRange * 2,
-						magicTripwireRange * 2
-					);
-					int tripper = -1;
-					foreach (NPC npc in Main.ActiveNPCs) {
-						if (npc.CanBeChasedBy() && magicTripwireHitbox.Intersects(npc.Hitbox)) {
-							tripper = npc.whoAmI;
-							break;
-						}
+				int magicTripwireRange = Origins.MagicTripwireRange[projectile.type];
+				if (magicTripwireRange == 0) magicTripwireRange = 48;
+				Rectangle magicTripwireHitbox = new(
+					(int)projectile.Center.X - magicTripwireRange,
+					(int)projectile.Center.Y - magicTripwireRange,
+					magicTripwireRange * 2,
+					magicTripwireRange * 2
+				);
+				int tripper = -1;
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (!alreadyUnmissed[npc.whoAmI] && npc.CanBeChasedBy() && magicTripwireHitbox.Intersects(npc.Hitbox)) {
+						tripper = npc.whoAmI;
+						break;
 					}
-					if (tripper == -1) {
-						Player owner = Main.player[projectile.owner];
-						if (owner.hostile) {
-							foreach (Player player in Main.ActivePlayers) {
-								if (!player.dead && player.hostile && player.team != owner.team && magicTripwireHitbox.Intersects(player.Hitbox)) {
-									tripper = player.whoAmI + Main.maxNPCs + 1;
-									break;
-								}
+				}
+				if (tripper == -1) {
+					Player owner = Main.player[projectile.owner];
+					if (owner.hostile) {
+						foreach (Player player in Main.ActivePlayers) {
+							if (!player.dead && player.hostile && player.team != owner.team && magicTripwireHitbox.Intersects(player.Hitbox)) {
+								tripper = player.whoAmI + Main.maxNPCs + 1;
+								break;
 							}
 						}
 					}
-					if (tripper != -1) {
-						unmissTarget = tripper;
-					} else if (unmissTarget != -1) {
-						Entity target = null;
-						if (unmissTarget > Main.maxNPCs + 1) {
-							int translatedTarget = unmissTarget - (Main.maxNPCs + 1);
-							if (Main.player.IndexInRange(translatedTarget)) {
-								Player playerTarget = Main.player[translatedTarget];
-								if (playerTarget.active && !playerTarget.dead && playerTarget.hostile && playerTarget.team != Main.player[projectile.owner].team) {
-									target = playerTarget;
-								}
-							}
-						} else {
-							if (Main.npc.IndexInRange(unmissTarget) && Main.npc[unmissTarget].CanBeChasedBy(projectile)) {
-								target = Main.npc[unmissTarget];
+				}
+
+				if (tripper != -1 && !isUnmissing) {
+					unmissTarget = tripper;
+				} else if (unmissTarget != -1) {
+					Entity target = null;
+					if (unmissTarget > Main.maxNPCs + 1) {
+						int translatedTarget = unmissTarget - (Main.maxNPCs + 1);
+						if (Main.player.IndexInRange(translatedTarget)) {
+							Player playerTarget = Main.player[translatedTarget];
+							if (playerTarget.active && !playerTarget.dead && playerTarget.hostile && playerTarget.team != Main.player[projectile.owner].team) {
+								target = playerTarget;
 							}
 						}
-						if (target is not null) {
-							unmissTargetPos = target.Center - projectile.velocity * 10;
-							if (++unmissAnimation == 8) {
-								shouldUnmiss = false;
-								(unmissTargetPos, projectile.Center) = (projectile.Center, unmissTargetPos);
-							}
-						} else {
-							unmissTarget = -1;
-							if (unmissAnimation > 0) unmissAnimation--;
+					} else {
+						if (Main.npc.IndexInRange(unmissTarget) && Main.npc[unmissTarget].CanBeChasedBy(projectile)) {
+							target = Main.npc[unmissTarget];
 						}
+					}
+					if (target is not null && !isUnmissing) {
+						unmissTargetPos = target.Center - projectile.velocity * 10;
+						if (++unmissAnimation >= 8) {
+							isUnmissing = true;
+							alreadyUnmissed[target.whoAmI] = true;
+							//shouldUnmiss = false;
+							(unmissTargetPos, projectile.Center) = (projectile.Center, unmissTargetPos);
+						}
+					} else {
+						isUnmissing = false;
+						unmissTarget = -1;
+						if (unmissAnimation > 0) unmissAnimation--;
 					}
 				}
 			} else if (unmissAnimation > 0) {
@@ -310,6 +331,9 @@ namespace Origins.Projectiles {
 					}
 					oldPositions[0] = projectile.Center;
 				}
+			}
+			if (weakpointAnalyzerFake) {
+				projectile.timeLeft -= 2;
 			}
 		}
 		public override void AI(Projectile projectile) {
@@ -351,7 +375,7 @@ namespace Origins.Projectiles {
 					hasUsedMitosis = false;
 				}
 			}
-			if (!projectile.ownerHitCheck && projectile.damage > 0) {
+			if (!projectile.ownerHitCheck && projectile.damage > 0 && OriginsSets.Projectiles.CanBeDeflected[projectile.type]) {
 				for (int i = 0; i < The_Bird_Swing.reflectors.Count; i++) {
 					Projectile reflector = Main.projectile[The_Bird_Swing.reflectors[i]];
 					Rectangle hitbox = reflector.Hitbox;
@@ -485,8 +509,9 @@ namespace Origins.Projectiles {
 				break;
 			}
 		}
-		public override bool CanHitPlayer(Projectile projectile, Player target) {
-			return ownerSafe ? target.whoAmI != projectile.owner : true;
+		public override bool? CanHitNPC(Projectile projectile, NPC target) {
+			if (weakpointAnalyzerFake) return false;
+			return base.CanHitNPC(projectile, target);
 		}
 		public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info) {
 			if (BiomeNPCGlobals.ProjectileAssimilationAmounts.TryGetValue(projectile.type, out Dictionary<int, AssimilationAmount> assimilationValues)) {
@@ -571,6 +596,8 @@ namespace Origins.Projectiles {
 				binaryWriter.Write((byte)ownerMinion.Owner);
 				binaryWriter.Write(ownerMinion.Identity);
 			}
+
+			bitWriter.WriteBit(weakShimmer);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			viperEffect = bitReader.ReadBit();
@@ -587,6 +614,8 @@ namespace Origins.Projectiles {
 			if (bitReader.ReadBit()) extraGravity = binaryReader.ReadVector2();
 
 			if (bitReader.ReadBit()) ownerMinion = new(binaryReader.ReadInt32(), binaryReader.ReadByte(), binaryReader.ReadInt32());
+
+			weakShimmer = bitReader.ReadBit();
 		}
 		public void SetUpdateCountBoost(Projectile projectile, int newUpdateCountBoost) {
 			projectile.extraUpdates += newUpdateCountBoost - updateCountBoost;
@@ -633,6 +662,10 @@ namespace Origins.Projectiles {
 				projectile.ai[0]++;
 			}
 			projectile.rotation += 0.3f * projectile.direction;
+		}
+		public override bool? CanCutTiles(Projectile projectile) {
+			if (projectile.TryGetOwner(out Player owner) && owner.HasBuff<Weak_Shimmer_Debuff>()) return false;
+			return null;
 		}
 		public override bool PreDraw(Projectile projectile, ref Color lightColor) {
 			if (projectile.friendly && projectile.TryGetOwner(out Player owner) && owner.OriginPlayer().mildewSet) {

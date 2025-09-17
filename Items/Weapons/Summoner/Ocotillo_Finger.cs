@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void SetDefaults() {
 			Item.DefaultToWhip(ModContent.ProjectileType<Ocotillo_Finger_P>(), 16, 1.5f, 4, 30);
 			Item.DamageType = DamageClass.SummonMeleeSpeed;
-			Item.value = Item.sellPrice(gold: 2);
+			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override bool MeleePrefix() => true;

@@ -26,7 +26,7 @@ namespace Origins.Items.Other.Consumables {
 			if (player.itemAnimation / (float)player.itemAnimationMax < 0.85f) player.bodyFrame.Y = player.bodyFrame.Height * 2;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
+			Recipe.Create(Type, 5)
 			.AddIngredient(ItemID.Lens, 2)
 			.AddIngredient(ItemID.FallenStar)
 			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 5)
@@ -72,7 +72,7 @@ namespace Origins.Items.Other.Consumables {
 				if (ModContent.GetInstance<OriginSystem>().shimmerPosition is Vector2 shimmerPosition) {
 					SoundEngine.PlaySound(SoundID.Item15.WithPitch(-1).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
 					SoundEngine.PlaySound(SoundID.Item15.WithPitch(0).WithPitchVarience(0) with { MaxInstances = 0 }, Projectile.Center);
-					SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithPitch(-2), Projectile.Center);
+					SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithPitch(-1), Projectile.Center);
 					Projectile.ai[1] = shimmerPosition.X * 16;
 					Projectile.ai[2] = shimmerPosition.Y * 16;
 				} else {

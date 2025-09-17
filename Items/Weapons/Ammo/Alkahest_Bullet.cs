@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs;
@@ -7,7 +8,9 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
-	public class Alkahest_Bullet : ModItem, ICustomWikiStat {
+	public class Alkahest_Bullet : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.25f;
+		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			"Torn",
 			"TornSource",
@@ -44,6 +47,7 @@ namespace Origins.Items.Weapons.Ammo {
 				Projectile.alpha -= 15;
 			if (Projectile.alpha < 0)
 				Projectile.alpha = 0;
+			Projectile.BulletShimmer();
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			if (Projectile.alpha < 200) {
@@ -57,7 +61,7 @@ namespace Origins.Items.Weapons.Ammo {
 			SoundEngine.PlaySound(SoundID.Shatter.WithVolume(0.5f), Projectile.position);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 180, 180, 0.25f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 180, 180, Alkahest_Bullet.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 	}
 }

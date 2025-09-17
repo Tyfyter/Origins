@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Squid : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC {
+	public class Defiled_Squid : Glowing_Mod_NPC, IDefiledEnemy, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, -8, 30, 48);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
@@ -36,6 +36,7 @@ namespace Origins.NPCs.Defiled {
 			});
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.width = 26;
 			NPC.height = 26;

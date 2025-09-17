@@ -23,6 +23,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public static int ID { get; set; }
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Slow_Debuff.ID, BuffID.OnFire3, BuffID.Bleeding, Static_Shock_Debuff.ID];
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -74,7 +75,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Sixth_Spline.Projectiles.Add(new(Type, 0.9f, 0.9f));
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Slow_Debuff>(), 60);
+			target.AddBuff(Slow_Debuff.ID, 60);
 		}
 	}
 	public class Sixth_Spline_Piston : Sixth_Spline_Nut {

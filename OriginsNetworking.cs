@@ -1,6 +1,7 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.Xna.Framework;
+﻿using Origins.Core;
+using Origins.CrossMod.Fargos.Items;
 using Origins.Items.Accessories;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Questing;
@@ -12,10 +13,9 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.DataStructures;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
@@ -40,10 +40,11 @@ namespace Origins {
 					case world_cracker_hit:
 					case sync_guid:
 					case inflict_assimilation:
-					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn:
+					case start_laser_tag or laser_tag_hit or end_laser_tag or laser_tag_respawn or laser_tag_score:
 					case custom_knockback:
 					case entity_interaction:
 					case soul_snatcher_activate:
+					case shinedown_spawn_shadows:
 					altHandle = true;
 					break;
 
@@ -93,14 +94,12 @@ namespace Origins {
 					);
 					break;
 
-					case sync_neural_network: {
-						Neural_Network_Buff.SetTime(Main.player[reader.ReadByte()], reader.ReadByte());
-					}
+					case sync_neural_network: 
+					Neural_Network_Buff.SetTime(Main.player[reader.ReadByte()], reader.ReadByte());
 					break;
 
-					case defiled_relay_message: {
-						Defiled_Relay.DisplayMessage(reader.ReadString());
-					}
+					case defiled_relay_message:
+					Defiled_Relay.DisplayMessage(reader.ReadString());
 					break;
 
 					case chest_sync or chest_sync_projectile: {
@@ -127,6 +126,28 @@ namespace Origins {
 						break;
 					}
 
+					case mass_teleport: {
+						for (int i = reader.ReadUInt16(); i > 0; i--) {
+							Player player = Main.player[reader.ReadUInt16()];
+							Vector2 position = reader.ReadPackedVector2();
+							ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+								PositionInWorld = player.Bottom
+							});
+							player.Teleport(position, 12);
+							ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+								PositionInWorld = player.Bottom
+							});
+							player.velocity = Vector2.Zero;
+						}
+						break;
+					}
+
+					case sync_npc_interactions: {
+						NPC npc = Main.npc[reader.ReadUInt16()];
+						Utils.ReceiveBitArray(Main.maxPlayers + 1, reader).CopyTo(npc.playerInteraction, 0);
+						break;
+					}
+
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on client");
 					break;
@@ -148,6 +169,7 @@ namespace Origins {
 					case custom_knockback:
 					case entity_interaction:
 					case soul_snatcher_activate:
+					case shinedown_spawn_shadows:
 					altHandle = true;
 					break;
 
@@ -189,6 +211,7 @@ namespace Origins {
 
 					case sync_neural_network: {
 						ModPacket packet = GetPacket();
+						packet.Write(sync_neural_network);
 						packet.Write(reader.ReadByte());
 						packet.Write(reader.ReadByte());
 						packet.Send(-1, whoAmI);
@@ -197,6 +220,7 @@ namespace Origins {
 
 					case defiled_relay_message: {
 						ModPacket packet = GetPacket();
+						packet.Write(defiled_relay_message);
 						packet.Write(reader.ReadString());
 						packet.Send(-1, whoAmI);
 					}
@@ -226,6 +250,24 @@ namespace Origins {
 						packet.WriteVector2(reader.ReadVector2());
 						packet.WriteVector2(reader.ReadVector2());
 						packet.Send(ignoreClient: whoAmI);
+						break;
+					}
+
+					case set_gem_lock: {
+						short i = reader.ReadInt16();
+						short j = reader.ReadInt16();
+						bool on = reader.ReadBoolean();
+						if (TileLoader.GetTile(Framing.GetTileSafely(i, j).TileType) is ModGemLock gemLock) gemLock.ToggleGemLock(i, j, on);
+						break;
+					}
+
+					case clone_npc: {
+						Vector2 position = reader.ReadPackedVector2();
+						NPC npc = NPC.NewNPCDirect(Entity.GetSource_None(), position, reader.ReadInt32());
+						npc.velocity = reader.ReadPackedVector2() * MathF.Pow(1.2f, npc.knockBackResist);
+						npc.value = 0;
+						npc.SpawnedFromStatue = true;
+						SoundEngine.PlaySound(SoundID.Item2, position);
 						break;
 					}
 
@@ -279,7 +321,7 @@ namespace Origins {
 							Knockback = reader.ReadSingle(),
 						};
 						int armorPenetration = reader.ReadInt32();
-						NPCs.Riven.World_Cracker.World_Cracker_Head.DamageArmor(npc, hit, armorPenetration, fromNet:true);
+						NPCs.Riven.World_Cracker.World_Cracker_Head.DamageArmor(npc, hit, armorPenetration, fromNet: true);
 
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the other clients
@@ -436,6 +478,33 @@ namespace Origins {
 						}
 						break;
 					}
+
+					case shinedown_spawn_shadows: {
+						byte owner = reader.ReadByte();
+						ushort identity = reader.ReadUInt16();
+						byte length = reader.ReadByte();
+						byte[] indices = reader.ReadBytes(length);
+						Shinedown_Staff_P shinedown = null;
+						foreach (Projectile proj in Main.ActiveProjectiles) {
+							if (proj.owner == owner && proj.identity == identity) {
+								shinedown = proj.ModProjectile as Shinedown_Staff_P;
+								break;
+							}
+						}
+						if (shinedown is null) break;
+						shinedown.RecieveSync(indices);
+						if (Main.netMode == NetmodeID.Server) {
+							// Forward the changes to the other clients
+							ModPacket packet = instance.GetPacket();
+							packet.Write(shinedown_spawn_shadows);
+							packet.Write(owner);
+							packet.Write(identity);
+							packet.Write(length);
+							packet.Write(indices);
+							packet.Send(ignoreClient: owner);
+						}
+						break;
+					}
 				}
 			}
 			//if (reader.BaseStream.Position != reader.BaseStream.Length) Logger.Warn($"Bad read flow (+{reader.BaseStream.Position - reader.BaseStream.Length}) in packet type {type}");
@@ -472,6 +541,11 @@ namespace Origins {
 			internal const byte chest_sync_projectile = 25;
 			internal const byte soul_snatcher_activate = 26;
 			internal const byte tyrfing_zap = 27;
+			internal const byte set_gem_lock = 28;
+			internal const byte mass_teleport = 29;
+			internal const byte shinedown_spawn_shadows = 30;
+			internal const byte sync_npc_interactions = 31;
+			internal const byte clone_npc = 32;
 		}
 	}
 	public interface IChestSyncRecipient {

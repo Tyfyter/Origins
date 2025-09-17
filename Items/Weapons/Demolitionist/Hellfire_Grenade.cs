@@ -14,6 +14,7 @@ namespace Origins.Items.Weapons.Demolitionist {
             "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {
+			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 99;
 		}
@@ -27,10 +28,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.glowMask = glowmask;
         }
 		public override void AddRecipes() {
-			Recipe.Create(Type, 35)
-			.AddIngredient(ItemID.Fireblossom)
-			.AddIngredient(ItemID.Grenade, 35)
-			.AddIngredient(ItemID.Hellstone, 5)
+			Recipe.Create(Type, 7)
+			.AddIngredient(ItemID.Grenade, 7)
+			.AddIngredient(ItemID.Hellstone)
 			.Register();
 		}
 	}

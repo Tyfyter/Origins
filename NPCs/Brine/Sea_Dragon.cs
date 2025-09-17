@@ -19,7 +19,7 @@ using Terraria.ModLoader;
 using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Brine {
-	public class Sea_Dragon : Brine_Pool_NPC, IWikiNPC, IJournalEntrySource {
+	public class Sea_Dragon : Brine_Pool_NPC, IWikiNPC, IJournalEntrySource, ICustomWikiStat {
 		public string EntryName => "Origins/" + typeof(Sea_Dragon_Entry).Name;
 		public class Sea_Dragon_Entry : JournalEntry {
 			public override string TextKey => "Sea_Dragon";
@@ -44,6 +44,7 @@ namespace Origins.NPCs.Brine {
 			TargetNPCTypes.Add(ModContent.NPCType<Brine_Latcher>());
 			PredatorNPCTypes.Add(ModContent.NPCType<Carpalfish>());
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
 			NPC.lifeMax = 210;
@@ -190,7 +191,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			target.AddBuff(BuffID.Venom, Main.rand.Next(120, 180));
-			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), Main.rand.Next(180, 240));
+			target.AddBuff(Toxic_Shock_Debuff.ID, Main.rand.Next(180, 240));
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);

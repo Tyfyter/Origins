@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.World.BiomeData;
+﻿using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -37,6 +36,7 @@ namespace Origins.Tiles.Defiled {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Defiled_Ice>());
+			ModCompatSets.AnySnowBiomeTiles[Type] = true;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.IceTorch, 3)

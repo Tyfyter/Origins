@@ -112,7 +112,7 @@ namespace Origins.Items {
 			if (item.PaintOrCoating) {
 				item.consumable = true;
 			}
-			if (item.damage is 0 or -1 && Origins.ExplosiveBaseDamage.TryGetValue(item.shoot, out int damage)) {
+			if (item.damage is 0 or -1 && (Origins.ExplosiveBaseDamage?.TryGetValue(item.shoot, out int damage) ?? false)) {
 				item.damage = damage;
 				statsModified = true;
 			}
@@ -153,12 +153,18 @@ namespace Origins.Items {
 			if (statsModified && !isOriginsItemCloningDefaults) {
 				item.StatsModifiedBy.Add(Mod);
 			}
-			if (Origins.itemGlowmasks[item.type] != 0) item.glowMask = Origins.itemGlowmasks[item.type];
+			if (Origins.itemGlowmasks?[item.type] is not 0 and not -1 and not null) item.glowMask = Origins.itemGlowmasks[item.type];
 		}
 		public override void ModifyItemScale(Item item, Player player, ref float scale) {
-			if (item.CountsAsClass(DamageClass.Melee)) {
-				scale *= player.OriginPlayer().meleeScaleMultiplier;
+			OriginPlayer originPlayer = player.OriginPlayer();
+			if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed)) {
+				scale *= originPlayer.meleeScaleMultiplier;
+				if (originPlayer.resizingGlove) scale *= originPlayer.resizingGloveScale;
 			}
+		}
+		public override bool CanUseItem(Item item, Player player) {
+			if ((item.mountType != -1 || Main.projHook.GetIfInRange(item.shoot)) && player.OriginPlayer().weakShimmer) return false;
+			return true;
 		}
 		public override bool? CanAutoReuseItem(Item item, Player player) {
 			if (player.nonTorch != -1 && player.inventory[player.nonTorch].type == Boomphracken.ID && player.HeldItem.CountsAsClass<Thrown_Explosive>()) {
@@ -166,6 +172,17 @@ namespace Origins.Items {
 				return false;
 			}
 			return null;
+		}
+		public override bool NeedsAmmo(Item item, Player player) {
+			if (player.OriginPlayer().wishingGlassActive) return false;
+			return true;
+		}
+		public override bool ConsumeItem(Item item, Player player) {
+			if (player.OriginPlayer().wishingGlassActive && item.CountsAsClass(DamageClass.Throwing)) {
+				if (item.CountsAsClass(DamageClasses.Explosive)) return Main.rand.NextFloat() >= item.useAnimation * 0.0175f;
+				return false;
+			}
+			return base.ConsumeItem(item, player);
 		}
 		public override void UpdateEquip(Item item, Player player) {
 			switch (item.type) {
@@ -367,6 +384,28 @@ namespace Origins.Items {
 						foundMain = true;
 					}
 					if (!foundMain) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
+					break;
+				}
+				case ItemID.FrozenCrate: {// shares drop rules with hardmode version by reference, adding to either adds to both
+					bool foundMain = false;
+					OneFromRulesRule rule = dropRules.FindDropRule<OneFromRulesRule>(dropRule => {
+						List<DropRateInfo> drops = [];
+						dropRule.ReportDroprates(drops, default);
+						return drops.Any(i => i.itemId == ItemID.IceBoomerang);
+					});
+					if (rule is not null) {
+						rule.Add(
+							ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Cryostrike>())
+						);
+						foundMain = true;
+					}
+					if (!foundMain) Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
+					break;
+				}
+				case ItemID.OasisCrate: {// shares drop rules with hardmode version by reference, adding to either adds to both
+					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.AncientChisel, ModContent.ItemType<Desert_Crown>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
+					}
 					break;
 				}
 			}

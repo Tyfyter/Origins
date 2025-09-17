@@ -1,14 +1,13 @@
 using AltLibrary.Common.Systems;
-using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Input;
 using Origins.Items.Accessories;
 using Origins.Tiles.Defiled;
-using Origins.Tiles.Dusk;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.World;
 using Origins.World.BiomeData;
-using Steamworks;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +25,7 @@ namespace Origins {
 	public partial class OriginSystem : ModSystem {
 		public static List<Vector2> EvilSpikeAvoidancePoints = [];
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight) {
+			const double max_defiled_spike_size = 6.0;
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge = new();
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsEastEdge = new();
 			EvilSpikeAvoidancePoints.Clear();
@@ -52,13 +52,10 @@ namespace Origins {
 			}
 			}));*/
 			#endregion _
-			int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
+			int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Jungle"));
 			if (genIndex != -1) {
-				tasks.Insert(genIndex + 1, new PassLegacy("Finish Dusk", Dusk.Gen.FinishDusk));
-				tasks.Insert(genIndex + 1, new PassLegacy("Brine Pool", delegate (GenerationProgress progress, GameConfiguration _) {
-					Mod.Logger.Info("Pooling Brine");
-					progress.Message = "Pooling Brine";
-					//for (int i = 0; i < Main.maxTilesX / 5000; i++) {
+				tasks.Insert(++genIndex, new PassLegacy("Find Brine Pool Spot", delegate (GenerationProgress progress, GameConfiguration _) {
+					progress.Message = Mod.GetLocalization("GenPass.PickPrinePoolPos.DisplayName", () => "Finding a nice spot to pool brine").Value;
 					int tries = 0;
 					retry:
 					int X = WorldGen.genRand.Next(GenVars.JungleX - 100, GenVars.JungleX + 100);
@@ -71,23 +68,27 @@ namespace Origins {
 					}
 					if (++tries < 1000 && (!GenVars.structures.CanPlace(new Rectangle(X, Y, 1, 1), 48) || WorldBiomeGeneration.EvilBiomeGenRanges.Any(r => r.Contains(X, Y)))) goto retry;
 					Mod.Logger.Info("BrineGen:" + X + ", " + Y);
-					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
-					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);
-					//WorldGen.digTunnel(X, 500, 5, 5, 10, 10, true);
-					//WorldGen.digTunnel(X, Y, 3, 0, 30, 6, true);
-					//WorldGen.digTunnel(X, Y, 0, 90, 25, 50, true);
-					Brine_Pool.Gen.BrineStart(X, Y);
 					brineCenter = new(X, Y);
-					//}
 				}));
-				tasks.Insert(genIndex + 1, new PassLegacy("Fiberglass Undergrowth", delegate (GenerationProgress progress, GameConfiguration __) {
+			}
+			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
+			if (genIndex != -1) {
+				tasks.Insert(++genIndex, new PassLegacy("Brine Pool", delegate (GenerationProgress progress, GameConfiguration _) {
+					progress.Message = Mod.GetLocalization("GenPass.PrinePool.DisplayName", () => "Pooling Brine").Value;
+					Brine_Pool.Gen.BrineStart(brineCenter.X, brineCenter.Y);
+				}));
+				tasks.Insert(++genIndex, new PassLegacy("Fiberglass Undergrowth", delegate (GenerationProgress progress, GameConfiguration __) {
 					Mod.Logger.Info("Fiberglass Undergrowth");
 					progress.Message = "Undergrowing Fiberglass";
+					_ = OriginSystem.Instance.brinePoolRange;
 					//for (int i = 0; i < Main.maxTilesX / 5000; i++) {
 					bool placed = false;
 					int tries = 0;
-					while (!placed) {
-						int X = WorldGen.genRand.Next(GenVars.JungleX - 100, GenVars.JungleX + 100);
+					RangeRandom rangeRand = new(WorldGen.genRand, GenVars.jungleMinX + 100, GenVars.jungleMaxX - 10);
+					rangeRand.Multiply(Instance.brinePoolRange.Left, Instance.brinePoolRange.Right, 0.1f);
+					while (!placed && rangeRand.AnyWeight) {
+						int X = rangeRand.Get();
+						rangeRand.Multiply(X, X, 0);
 						int Y;
 						for (Y = (int)GenVars.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
 						Y += WorldGen.genRand.Next(350, 450);
@@ -188,6 +189,7 @@ namespace Origins {
 					p = p.OffsetBy((int)(vel.X * -3), (int)(vel.Y * -3));
 					//TestRunners.SpikeRunner(p.X, p.Y, duskStoneID, vel, i.Item2, randomtwist: true);
 					double size = i.size * 0.25;
+					if (size > max_defiled_spike_size) size = max_defiled_spike_size;
 					if (genRand.NextBool(5)) {
 						size += 6;
 						Vector2 tempPos = new(p.X, p.Y);
@@ -321,7 +323,6 @@ namespace Origins {
 					Origins.instance.Logger.Info($"Generated {totalCount} chambersite walls over {tryCount} tries");
 				}));
 			}
-
 		}
 		public static bool HasTriggerWithinRange(int i, int j, int range) {
 			List<Point> currentPoints = [];
@@ -389,7 +390,7 @@ namespace Origins {
 				iceType = (ushort)TileType<Defiled_Ice>();
 				break;
 				case evil_riven:
-				stoneType = (ushort)TileType<Riven_Flesh>();
+				stoneType = (ushort)TileType<Spug_Flesh>();
 				grassType = stoneType;
 				plantType = (ushort)TileType<Riven_Foliage>();
 				sandType = stoneType;

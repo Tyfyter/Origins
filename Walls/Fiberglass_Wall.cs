@@ -51,6 +51,7 @@ namespace Origins.Walls {
 		}
 		static void On_Main_RenderWalls(On_Main.orig_RenderWalls orig, Main self) {
 			orig(self);
+			if (!Lighting.NotRetro) return;
 			if (drawWalls is null) return;
 			if (OriginsModIntegrations.FancyLighting is not null) {
 				RenderTarget2D wallTarget = Main.instance.wallTarget;
@@ -84,13 +85,13 @@ namespace Origins.Walls {
 
 			RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
 			Main.graphics.GraphicsDevice.SetRenderTarget(BackgroundMaskTarget);
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 			Main.graphics.GraphicsDevice.Clear(Color.Transparent);
-			Main.tileBatch.Begin();
+			Main.tileBatch.Begin(Main.GameViewMatrix.ZoomMatrix);
 
 			VertexColors vertices;
 			VertexColors _glowPaintColors = new(Color.White);
-			Rectangle value = new(0, 0, 32, 32);
+			Rectangle frame = new(0, 0, 32, 32);
 			Vector2 offScreenOffset = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange);
 			while (drawWalls.TryPop(out Point pos)) {
 				(int i, int j) = pos;
@@ -99,17 +100,17 @@ namespace Origins.Walls {
 				if (!tile.IsWallFullbright && color.R == 0 && color.G == 0 && color.B == 0 && i < Main.UnderworldLayer) {
 					continue;
 				}
-				value.X = tile.WallFrameX + 1;
-				value.Y = tile.WallFrameY + 1;
+				frame.X = tile.WallFrameX + 1;
+				frame.Y = tile.WallFrameY + 1;
 				if (Lighting.NotRetro && !WorldGen.SolidTile(tile)) {
 					if (tile.IsWallFullbright) {
 						vertices = _glowPaintColors;
 					} else {
 						Lighting.GetCornerColors(i, j, out vertices);
 					}
-					Main.tileBatch.Draw(maskTexture.Value, new Vector2(i * 16 - (int)Main.screenPosition.X - 8, j * 16 - (int)Main.screenPosition.Y - 8) + offScreenOffset, value, vertices, Vector2.Zero, 1f, SpriteEffects.None);
+					Main.tileBatch.Draw(maskTexture.Value, new Vector2(i * 16 - (int)Main.screenPosition.X - 8, j * 16 - (int)Main.screenPosition.Y - 8) + offScreenOffset, frame, vertices, Vector2.Zero, 1f, SpriteEffects.None);
 				} else {
-					Main.spriteBatch.Draw(maskTexture.Value, new Vector2(i * 16 - (int)Main.screenPosition.X - 8, j * 16 - (int)Main.screenPosition.Y - 8) + offScreenOffset, value, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+					Main.spriteBatch.Draw(maskTexture.Value, new Vector2(i * 16 - (int)Main.screenPosition.X - 8, j * 16 - (int)Main.screenPosition.Y - 8) + offScreenOffset, frame, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 				}
 			}
 			Main.tileBatch.End();
@@ -117,6 +118,7 @@ namespace Origins.Walls {
 			Main.graphics.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (!Lighting.NotRetro) return true;
 			if (!drawingFancyLight && (OriginsModIntegrations.FancyLighting is null || drawWalls.Count <= 0)) drawWalls.Push(new(i, j));
 			return true;
 		}

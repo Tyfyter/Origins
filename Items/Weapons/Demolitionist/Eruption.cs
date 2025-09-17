@@ -64,7 +64,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					}
 				}
 			}
-			Projectile.velocity.Y += 0.3f;
+			this.DoGravity(0.3f);
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			if (oldVelocity.X != Projectile.velocity.X) {

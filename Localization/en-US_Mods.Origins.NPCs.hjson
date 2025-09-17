@@ -49,6 +49,7 @@ Flagellant.DisplayName: Flagellant
 Measly_Moeba.DisplayName: Measly 'Moeba
 Pustule_Jelly.DisplayName: Pustule Jellyfish
 Riven_Fighter.DisplayName: "{§Riven} Protoform"
+Ancient_Riven_Fighter.DisplayName: Ancient {§Riven} Protoform
 Riven_Mimic.DisplayName: "{§Riven} Mimic"
 Riven_Mummy.DisplayName: Amoebic Mummy
 Rivenator_Body.DisplayName: Mitoworm
@@ -235,10 +236,15 @@ Cubekon_Tinkerer: {
 	}
 }
 
+Mother-Unit: {
+	LoreEntryHelp: {
+	}
+}
+
 PartyGirl.TownNPCMood_PartyGirl.LoveBiome_Space: I finally got to go to space!!!
 Defiled_Squid.DisplayName: "{§Defiled} Squid"
 Savage_Whip.DisplayName: Savage Whip
-Savage_Whip_Segment.DisplayName: Savage Whip Segment
+Savage_Whip_Segment.DisplayName: Savage Whip
 Traffic_Cone_NPC.DisplayName: Traffic Cone
 Shattered_Ghoul.DisplayName: Shattered Ghoul
 Torn_Ghoul.DisplayName: Torn Ghoul
@@ -264,7 +270,7 @@ Dryad: {
 	DefiledHeartDown: That's it for the {§Defiled}. Finish it up.
 	BeforeDefeatS: Have you tried using purification powder on... wait a minute...
 	BeforeDefeatDA: Have you tried using purification powder on {§Defiled} Stone?
-	BeforeDefeatWC: Have you tried using purification powder on Spug Flesh?
+	BeforeDefeatWC: Have you tried using purification powder on {§Spug} Flesh?
 
 	PurifySuccess: {
 		0: I thank you for not succumbing to evil. Hopefully this'll help keep the fight in you.
@@ -377,3 +383,42 @@ DA_Body_Part: {
 }
 
 Enchanted_Fiberglass_Slime.DisplayName: Enchanted Fiberglass Slime
+
+Shimmer_Construct: {
+	DisplayName: Shimmer Construct
+	BossChecklistIntegration.SpawnCondition: Shimmer an {$NPCName.EyeofCthulhu}
+}
+
+Chambersite_Bunny.DisplayName: Chambersite Bunny
+Chambersite_Squirrel.DisplayName: Chambersite Squirrel
+Shimmer_Drone.DisplayName: Shimmer Drone
+
+Chambersite_Sentinel: {
+	DisplayName: Chambersite Sentinel
+	BossChecklistIntegration.SpawnCondition: Spawns randomly when nearby chambersite
+}
+
+Shimmer_Chunk1.DisplayName: Shimmer Pod
+Shimmer_Chunk2.DisplayName: Shimmer Pod
+Shimmer_Chunk3.DisplayName: Shimmer Pod
+Shimmer_Turret_Chunk1.DisplayName: Shimmer Turret
+Shimmer_Turret_Chunk2.DisplayName: Shimmer Turret
+Shimmer_Turret_Chunk3.DisplayName: Shimmer Turret
+Goo_Wall.DisplayName: Amoebic Goo Wall
+
+Debug_Shoot_NPC: {
+	DisplayName: Debug_ Shoot_ N P C
+
+	TownNPCMood: {
+		Content: I am content.
+		NoHome: I hate not having a home.
+		FarFromHome: I am too far from home.
+		LoveSpace: I love having so much space.
+		DislikeCrowded: I dislike how crowded I am.
+		HateCrowded: I hate how crowded I am.
+		LikeNPC_Princess: I like {NPCName}.
+		Princess_LovesNPC: I like {NPCName}.
+	}
+}
+
+Creme_Filled_Bat.DisplayName: Creme Filled Bat

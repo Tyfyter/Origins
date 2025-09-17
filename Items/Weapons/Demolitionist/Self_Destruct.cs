@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Tools;
 using Origins.Projectiles;
 using Origins.Tiles.Other;
 using Terraria;
@@ -9,6 +11,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
@@ -182,5 +185,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Main.spriteBatch.Restart();
 			return false;
 		}
+	}
+	public class Self_Destruct_Crit_Type : CritType<Self_Destruct> {
+		static float CritThreshold => 0.3f; // hit is dealt after self-damage, so being brought below this by SD will make it crit on that use
+		public override LocalizedText Description => base.Description.WithFormatArgs(CritThreshold);
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => (player.statLife / (float)player.statLifeMax2) <= CritThreshold;
+		public override float CritMultiplier(Player player, Item item) => player.dead ? 3f : 1.5f;
 	}
 }

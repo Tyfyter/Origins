@@ -11,6 +11,7 @@ namespace Origins.Items.Weapons.Demolitionist {
             "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {
+			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -18,7 +19,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.damage = 100;
 			Item.shootSpeed *= 1.5f;
 			Item.shoot = ModContent.ProjectileType<Happy_Bomb_P>();
-			Item.value = Item.sellPrice(silver: 75);
+			Item.value *= 13;
 			Item.rare = ItemRarityID.Pink;
 		}
 	}
@@ -51,7 +52,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
-			SoundEngine.PlaySound(Main.rand.NextFromList(SoundID.Zombie121, SoundID.Zombie122, SoundID.Zombie123).WithPitchRange(1.1f, 1.25f).WithVolume(0.5f));
+			SoundEngine.PlaySound(Main.rand.NextFromList(SoundID.Zombie121, SoundID.Zombie122, SoundID.Zombie123).WithPitchRange(1.1f, 1.25f).WithVolume(0.5f), Projectile.Center);
 		}
 	}
 }

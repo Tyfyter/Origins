@@ -5,6 +5,69 @@ TabName: {
 	Custom: Notes
 }
 
+Arabel: {
+	DisplayName: Arabel
+	SeriesLength: "6"
+	Shimmerstar_Staff.Text:
+		'''
+		[header:Shimmerstar Staff (1/{$SeriesLength})]
+		[jimage/sc2d:Origins/Items/Weapons/Magic/Shimmerstar_Staff]
+		*****
+		Like stars in the night sky, a mother's love never dies out. The glimmer persists and shines, illuminating the dark canvas. Even when the stars do die, they only transform into something new. They truly are such magical constructs of the universe.
+		'''
+
+	Fallen_Star: {
+		Name: "{$ItemName.Fallen_Star}"
+		Text:
+			'''
+			[header:Fallen Star (2/{$SeriesLength})]
+			[jimage/sc2dfr0,104,22,26:Terraria/Images/Item_75]
+
+			*****
+			It is because of the stars that I even have my magic. The stars that fall when night comes crash into the ground and emanate such energy that you can only find in the cosmos. We call this "mana". It is a natural resource that we use for magical abilities. It is because of this mana that Terraria can be alive.
+			'''
+	}
+
+	Constellation.Text:
+		'''
+		[header:Constellation (3/{$SeriesLength})]
+		[jimage/sc2d:Origins/Items/Weapons/Ranged/Constellation]
+		*****
+		There are many forces of evil in this world that are trying to take it for themselves. It is all in steady balance, an equal hold on magic from both the light and dark. It is up to everyone's sole responsibility to uphold the balance so that this starpower can be shared amongst all.
+		'''
+	Lazy_Cloak.Text:
+		'''
+		[header:Lazy Cloak (4/{$SeriesLength})]
+		[jimage/sc2.2d:Origins/Items/Accessories/Lazy_Cloak]
+		*****
+		My son, one day you will get to wear this in my stead. I see great potential for good in you... but it will not be without hardship. You will become strong and better than your mother ever could. It's enough for people to tell tales of you, to be the one Terraria needs.
+		'''
+
+	Shimmer_Construct: {
+		Name: "{$NPCs.Shimmer_Construct.DisplayName}"
+		Text:
+			'''
+			[header:{§Mods.Origins.NPCs.Shimmer_Construct.DisplayName} (5/{$SeriesLength})]
+			[jportrait/s1dw300h225lh80:Origins/Shimmer_Construct]
+
+
+			*****
+			For now, it's time for your bedtime. You need to get some sleep for your big day tomorrow. Oh? Of course, my son. I'll also tuck Rocky in his bed for you too. There. He's all warm and cozy, ready to have crazy dreams of falling just like you. Sleep tight, my little munchkin.
+			'''
+	}
+
+	Aetherite_Ore: {
+		Name: "{$Items.Aetherite_Ore_Item.DisplayName}"
+		Text:
+			'''
+			[header:{$Items.Aetherite_Ore_Item.DisplayName} (6/{$SeriesLength})]
+			[jimage/sc2.2d:Origins/Tiles/Other/Aetherite_Ore_Item]
+			*****
+			I've imprisoned myself in hopes of never being found. A laden guilt I just can't shake off; failure as both a mother and wife. I could not save them; I can't even save myself. Forever stuck in limbo, unable to age and thoughts trilled by voices that aren't mine. Don't come looking for me. Even if you overcome my creations, I will never accept my life as it is now. Let me rest, in my own starfield.
+			'''
+	}
+}
+
 Lost_Crone: {
 	DisplayName: Lost Crone
 	SeriesLength: "4"
@@ -101,7 +164,7 @@ Riven: {
 
 
 			*****
-			The hive has since had many species born from its spug-flesh-ridden insides. Species like the Protoform and Barnaclebacks. Again, no intelligence here, just really adaptable like their host parasite.
+			The hive has since had many species born from its {§spug}-flesh-ridden insides. Species like the Protoform and Barnaclebacks. Again, no intelligence here, just really adaptable like their host parasite.
 			'''
 	}
 
@@ -138,7 +201,7 @@ Riven: {
 		Name: "{$Items.Riven_Flesh_Item.DisplayName}"
 		Text:
 			'''
-			[header:Spug Flesh (12/{$SeriesLength})]
+			[header:{§Spug} Flesh (12/{$SeriesLength})]
 			[jimage/sc3d:Origins/Tiles/Riven/Riven_Flesh_Item]
 
 
@@ -177,7 +240,7 @@ Brine_Fiend: {
 		[header:Sea Dragon (4/{$SeriesLength})]
 		[jportrait/s1.2dw600:Origins/Sea_Dragon]
 		*****
-		The colorful creatures hidden from the rest of the world interested her, but a few encounters and scars she'd earn would quickly shape her to be who she is today. She started brewing concoctions to make her more resistant, however.
+		The colorful creatures hidden from the rest of the world interested her, but a few encounters and scars she'd earn would quickly shape her to be who she is today. She started brewing concoctions to make herself more resistant, however.
 		'''
 	Hearty_Broth.Text:
 		'''
@@ -222,7 +285,7 @@ The_Defiled: {
 
 
 			*****
-			The great maintainers of this world found us in vulnerability, but instead of being nurturing mothers they wanted to be known for, they instead tried to kill us. With no intelligent thought to rely on, we defended precious existence.
+			The great maintainers of this world found us in vulnerability, but instead of being nurturing mothers they wanted to be known for, they tried to kill us. With no intelligent thought to rely on, we defended precious existence.
 			'''
 	}
 
@@ -335,7 +398,7 @@ The_Defiled: {
 
 The_Dungeon: {
 	DisplayName: The Dungeon
-	SeriesLength: "1"
+	SeriesLength: "4"
 	Asylum_Whistle.Text:
 		'''
 		[header:Asylum Whistle (1/{$SeriesLength})]
@@ -343,6 +406,39 @@ The_Dungeon: {
 		*****
 		They always told us to come back into the citadel whenever the rain came. That whistle would always sound to get the children inside. Following that would always be lightning. They told us it was too dangerous to wander in the rain because the clouds would get angry and strike at the ground. I was curious as to why they were so angry at the ground all the time, but I could never get to know why because the whistle would always sound.
 		'''
+	Beginners_Tome.Text:
+		'''
+		[header:Beginner's Tome (2/{$SeriesLength})]
+		[jimage/sc3d:Origins/Items/Weapons/Magic/Beginners_Tome]
+		*****
+		 I would eventually learn of the way this world worked through magic. This bastion was my home and full of many powerful magic users who would educate me on their practices to be their next apprentice. Magic was fun, but it would lose its novelty after so much time.
+		'''
+
+	Aqua_Scepter: {
+		Name: "{$ItemName.Aqua_Scepter}"
+		Text:
+			'''
+			[header:Aqua Scepter (3/{$SeriesLength})]
+			[jimage/sc2d:Terraria/Images/Item_157]
+
+
+			*****
+			We people of the Badst Kingdom were different as only the most capable were allowed to stay. All others were forced to leave and live on their own accords. I never knew why at first, but it's clear now that they were searching for the most elite. I still don't know how it worked out for us as long as it did, but the judgement call still came when Cthulhu reigned havoc on Terraria.
+			'''
+	}
+
+	Celestial_Sigil: {
+		Name: "{$ItemName.Celestial_Sigil}"
+		Text:
+			'''
+			[header:Celestial Sigil (4/{$SeriesLength})]
+			[jimage/sc2d:Terraria/Images/Item_3601]
+
+
+			*****
+			Being this close to the shoreline, of course, we were among the first to respond. Cthulhu was relentless and we lost many. Our home quickly became a burial ground and inhospitable such that after the ancient war, we were forced to move out. We lost our governance following the move and were phased out of existence. The remaining had to fend for themselves, and likely died from natural causes.
+			'''
+	}
 }
 
 Brine_Pool_And_Lost_Diver: {
@@ -443,13 +539,27 @@ Brine_Pool_And_Lost_Diver: {
 
 The_Ashen: {
 	DisplayName: The Ashen
-	SeriesLength: "1"
+	SeriesLength: "3"
 	Stack_of_Shraps.Text:
 		'''
 		[header:Stack of Shraps (1/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Stack_of_Shraps]
 		*****
 		Hints like these for your inquisitive mind to guess of atrocities committed against wasteful spendthrifts. Prodigies possessive of such powerful crafts giving away their gifts only for them to be in the headwinds of pointless wars against once-allies.
+		'''
+	Defective_Mortar_Shell.Text:
+		'''
+		[header:Defective Mortar Shell (2/{$SeriesLength})]
+		[jimage/sc3d:Origins/Items/Weapons/Summoner/Defective_Mortar_Shell]
+		*****
+		I saw no point in it. If they were to seek dominion, then why turn around and give away their advancements to those who obviously wanted to bring them down? My foresight had only made my relations with my Subjects more tense. My only directive was to support them and ensure the survival of the Mechanicus, but they were often the reason of extraneous circumstances.
+		'''
+	Ace_Shrapnel.Text:
+		'''
+		[header:Ace Shrapnel (3/{$SeriesLength})]
+		[jimage/sc3d:Origins/Items/Weapons/Demolitionist/Ace_Shrapnel]
+		*****
+		My Subjects, no, they were quite mentally capable. It was merely their greed; that much had made sense to me, a strong economy relies on effective trade. But, it couldn't have worked with their flawed leader, my Creator MT. Neferly. He would never heed my advice for he felt he knew better. Maybe of his kin, but... I suppose he neverly truly understood his creation.
 		'''
 }
 
@@ -466,7 +576,7 @@ The_Crimson: {
 
 
 			*****
-			Beguilers who seek its destruction, heed this. The Crimson was always meant to be a part of this world. It was deemed necessary for the balance of Terraria.
+			Beguilers who seek its destruction, heed this. The Crimson was always meant to be a part of this world. It was deemed necessary for the balance of Terraria. 
 			'''
 	}
 
@@ -479,7 +589,7 @@ The_Crimson: {
 
 
 			*****
-			Those who wish to cleanse it, must be fully prepared to bear the responsibility of maintaining good order. But, first must understand the Crimson's long history in this world.
+			Those who wish to cleanse it, must be fully prepared to bear the responsibility of maintaining good order, but first must understand the Crimson's long history in this world.
 			'''
 	}
 
@@ -616,14 +726,14 @@ Ashen_Armor: {
 		[header:Ashen Helmet (1/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Armor/Ashen/Ashen_Helmet]
 		*****
-		Visionaries would wear this armor. The helmet in particular was the most important piece as it gave tinkerers who wore it the advantage over the naked eye. Lifelike blueprints could be realized and the best of ideas could be documented. Material references could be brought into question in mere seconds.
+		Visionaries would wear this armor. The helmet in particular was the most important piece as it gave tinkerers who wore advantages over the naked eye. Lifelike blueprints could be realized and the best of ideas could be documented. Material references could be brought into question in mere seconds.
 		'''
 	Ashen_Breastplate.Text:
 		'''
 		[header:Ashen Breastplate (2/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Armor/Ashen/Ashen_Breastplate]
 		*****
-		The breastplate of the tinkerer's armor was built for unparalleled utility and combat. At the time the tinkerer suit was invented, the Soveriegnty was a warring nation and so tinkerers had to be resourceful. It was this very resourcefulness that made them so successful and allowed many of these suits to be crafted. The suit was not the best quality, but it was still powerful for what little it had.
+		The breastplate of the tinkerer's armor was built for unparalleled utility and combat. At the time the tinkerer suit was invented, the Sovereignty was a warring nation and so tinkerers had to be resourceful. It was this very resourcefulness that made them successful and allowed many of these suits to created. The suit was not the best quality, but it was capable for what little it had.
 		'''
 	Ashen_Greaves.Text:
 		'''
@@ -715,7 +825,7 @@ Birth_Of_The_Gods: {
 			[jimage/sc3d:Terraria/Images/Item_1291]
 
 			*****
-			Terraria's Dryads were its true keepers, bringing about life and acting on behalf the world. The Dryads' responsibility was to cultivate the Forbidden Fruit among many of their other plants like Life Fruit or Mojoleaves. The Forbidden Fruit are Terraria's form of entrusted responsibility on the individuals they are provided to, but only the Dryads know of how to cultivate these plants.
+			Terraria's Dryads were its true keepers, bringing about life and acting on behalf of the world. The Dryads' responsibility was to cultivate the Forbidden Fruit among many of their other plants like Life Fruit or Mojoleaves. The Forbidden Fruit are Terraria's form of entrusted responsibility on the individuals they are provided to, but only the Dryads know of how to cultivate these plants.
 			'''
 	}
 
@@ -805,6 +915,40 @@ Ocean_Tribe: {
 	}
 }
 
+Trenchmaker: {
+	Name: Trenchmaker
+	Text:
+		'''
+		[header:Trenchmaker]
+		[jimage/s1d:Origins/NPCs/Ashen/Boss/Trenchmaker]
+		*****
+		It was like any other Wednesday morning. I went outside my post after devising plans to improve the security, but it was the sunrise that made it all worth it. Whenever the sun came up and the dew came to gently lay on the scrap piles, I knew my day would be over and would immediately feel relief and satisfaction. Do not get me wrong, the work was long and arduous, and due to the unfavorable working hours I would seldom see my son and wife. But, they have been known to visit, at least my son has. He always comes to visit his father, and it warms my heart. Ever since Lauren sent him over for donuts, I've been blessed. But, that one Wednesday was different and shaped the nature of my work greatly. See, I wasn't originally a part of the department of robotics, I specialized in security and defense systems. My son came to me and asked me, "Daddy, why can't robot soldiers be built so real people don't have to die?" My heart instantly melted, and I cried hugging him. Ever since that moment I've been inspired by my son's ideas, at first expressing my skepticism but eventually opening up to realize our society can support his ideas. I took action to cross-specialize immediately so I could make my son happy, not realizing that this would be the worst mistake of my life. I changed shops and got demoted to a craftsman, beginning a new line of work that would hopefully make my son happy. I didn't care about the benefits it would provide me, no, I was just fueled by a father's love. I worked through the castes fast thanks to pre-requisite knowledge and became a senior with a specialization in warfare mechanics. My first project was arguably my most-successful, you may know it as the "Trenchmaker". That was its given name, but after what took place they're all referred to by their model numbers. The TM-PS1 was the first design I made to serve as a "war engine" as the MT himself would classify, a term he created just for it and that would be reused for future warfighting machinery. It was prestigious, but the best part was my son's reaction to the TM-PS1. He fell in love with it and wanted to play with it often, of course, I had to watch him to make sure he didn't get into the circuitry and accidentally blow something up but he had a blast riding on it nonetheless. The TM-PS and TM-MT lines would prove successful in our wars against our rivals, but it got ugly really fast after we killed those cultists. I had told my son and wife to run away as fast as they could the moment I saw the fires in the sky, this time it wasn't a factory blowout. Before I could get to the control room to assist the other network engineers, there were already war engines positioned outside and killing everyone. One of them was my very own creation aiming right at me and opening fire. Fortunately, I survived the initial attack from quick reflexes, but this time I wasn't having to quickly shut off a hydraulic valve from overloaded flexitubes. Everytime I recall the old memories it just makes it all more sour. My machines killed everyone and I can't forgive myself for it. I promised myself to never leave until the "Ashen" is powered off for good, so here I am.
+		'''
+}
+
+µTutorial: {
+	DisplayName: Mechanics
+
+	Explosive_Weapons: {
+		Name: Explosive Weapons
+		Text:
+			'''
+			Ah, I see you've got your hands on an "explosive" item. Explosive weapons deal high damage, but receive reduced damage bonuses and are greatly affected by defense. They also tend to be more expensive and rely heavily on your aim because of their often-slow velocities. Fortunately, this reality of Terraria has some possible explosive equipment that could be manifested, but even the equipment is generally the lowest in terms of defense (as to permit flexibility and mobility). All of this and to mention that you could blow yourself up along with the world. Don't get caught in the blast radius of your own explosives!
+
+			It's not all that bad to run with the rockets, however, it just requires a different level of play that running other classes might not have. Fortunately, some explosive weapons are safe to the user, but if they aren't there are plenty of items to provide you with "self-damage" protection. Not to mention, your explosives will only deal self-damage according to your own defense too!
+
+			Being a "demolitionist", as they're called, makes you a literal 'glass cannon'. You have minimal defenses, but your offensive capabilities are off the charts. The blast radius of all explosives allows you to attack multiple enemies at once and even hit them indirectly if you're a bad shot.
+
+			Oh, and one more thing: grenades are good for crowd-control, dynamite is good for single targets and bombs are an in-between. Yes, dynamite and bombs can be used offensively despite blowing up the world. That's just what a Pincushion from the Clothier is for. Also, look for any armor penetration bonuses to make them ignore defense and deal more damage!
+			'''
+	}
+
+	TutorialJournalEntry: {
+		Text: Mods.Origins.Journal.µTutorial.TutorialJournalEntry.Text
+		Name: Tutorial Journal Entry
+	}
+}
+
 µUncategorized: {
 	DisplayName: Uncategorized
 
@@ -850,7 +994,7 @@ Ocean_Tribe: {
 				- Felnum's development on Terraria is due to a high presence of mana throughout the world. It manifests due the high presence of mana particles in conjunction with the appropriate elements in the area. The greatest way to manifest Felnum is to transmute Copper Ore [i:CopperOre] by blessing it at a Crystal Ball [i:CrystalBall].
 							
 			Chemistry:
-				- Felnum is mostly used as a capacitor when it is not being combined with other materials. It can be used best in battery-technology applications where a power source is necessary. Aside from its applications, Felnum can be further blessed into Valkyrum [i:Origins/Valkyrum_Bar] by combining it with Ectoplasm [i:Ectoplasm] released by Dungeon Spirits. Based on early analysis, Felnum could likely be used in applications of providing energy in the form of electrolytes.
+				- Felnum is mostly used as a capacitor when it is not being combined with other materials. It can be used best in battery-technology applications where a power source is necessary. Aside from its applications, Felnum can be further blessed into Valkyrum [i:Origins/Valkyrum_Bar] by combining it with Ectoplasm [i:Ectoplasm] released by Dungeon Spirits and Aetherite [i:Origins/Aetherite_Bar] dropped by a mysterious-yet-powerful guardian of the Aether. Based on early analysis, Felnum could likely be used in applications of providing energy in the form of electrolytes.
 							
 			History: 
 				- Felnum is an artificial metal material conjured by the wizards of the Bastille (dungeon). Its sole purpose was to prevent lightning strikes from rapidly striking the lands of Terraria during thunderstorms to allow for the development of villages. Felnum's presence can greatly harm Terraria if not applied carefully as thunderstorms are just a way for Terraria to naturally combat manifested evils on the surface.

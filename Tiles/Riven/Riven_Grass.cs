@@ -1,12 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Riven {
-	public class Riven_Grass : OriginTile, IRivenTile {
+	public class Riven_Grass : ComplexFrameTile, IRivenTile {
         public string[] Categories => [
             "Grass"
         ];
@@ -34,6 +36,9 @@ namespace Origins.Tiles.Riven {
 			//SetModTree(Defiled_Tree.Instance);
 			DustType = Riven_Hive.DefaultTileDust;
 		}
+		protected override IEnumerable<TileOverlay> GetOverlays() {
+			yield return new TileMergeOverlay(typeof(Amoeba_Fluid).GetDefaultTMLName() + "_Spug_Overlay", ModContent.TileType<Spug_Flesh>());
+		}
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
@@ -51,7 +56,7 @@ namespace Origins.Tiles.Riven {
 			}
 		}
 	}
-	public class Riven_Jungle_Grass : OriginTile, IRivenTile {
+	public class Riven_Jungle_Grass : ComplexFrameTile, IRivenTile {
 		public override void SetStaticDefaults() {
 			if (ModLoader.HasMod("InfectedQualities")) {
 				TileID.Sets.JungleBiome[Type] = 1;
@@ -95,6 +100,9 @@ namespace Origins.Tiles.Riven {
 				WorldGen.TileFrame(i, j - 1);
 			}
 		}
+		protected override IEnumerable<TileOverlay> GetOverlays() {
+			yield return new TileMergeOverlay(typeof(Amoeba_Fluid).GetDefaultTMLName() + "_Spug_Overlay", ModContent.TileType<Spug_Flesh>());
+		}
 	}
 	public class Riven_Grass_Seeds : ModItem {
 		public override void SetStaticDefaults() {
@@ -114,7 +122,10 @@ namespace Origins.Tiles.Riven {
 				case TileID.CrimsonJungleGrass:
 				tileType = (ushort)ModContent.TileType<Riven_Jungle_Grass>();
 				break;
+				default:
+				return false;
 			}
+			WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
 			if (Main.netMode != NetmodeID.SinglePlayer) NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 1, Player.tileTargetX, Player.tileTargetY, tileType, 0);
 			return true;
 		}

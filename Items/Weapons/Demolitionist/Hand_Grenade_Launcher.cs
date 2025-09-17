@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Projectiles.Weapons;
 using Terraria;
@@ -8,14 +7,11 @@ using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 using static Origins.OriginExtensions;
-
 using Origins.Dev;
 using PegasusLib;
 using Origins.Projectiles;
-using System.Reflection.Emit;
-using MonoMod.Utils;
+
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Hand_Grenade_Launcher : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -24,6 +20,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToLauncher(16, 50, 44, 18);

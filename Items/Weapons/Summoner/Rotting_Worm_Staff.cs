@@ -15,11 +15,12 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int projectileID = 0;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Poisoned];
 		}
 		public override void SetDefaults() {
 			Item.damage = 4;
 			Item.DamageType = DamageClass.Summon;
-			Item.mana = 14;
+			Item.mana = 10;
 			Item.width = 32;
 			Item.height = 32;
 			Item.useTime = 36;
@@ -190,7 +191,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			direction.Normalize();
 			Projectile.velocity = Vector2.Normalize(Projectile.velocity + direction * turnSpeed) * currentSpeed;
 			if (Projectile.ai[2] <= 0 && (++Projectile.frameCounter) * currentSpeed > 60) {
-				SoundEngine.PlaySound(SoundID.WormDig.WithPitch(2), Projectile.Center);
+				SoundEngine.PlaySound(SoundID.WormDig.WithPitch(1), Projectile.Center);
 				Projectile.frameCounter = 0;
 			}
 			#endregion

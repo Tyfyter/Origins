@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -7,19 +6,19 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Amoeba_Bugger : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+	public class Amoeba_Bugger : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC, ICustomWikiStat {
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.03f;
-		public Rectangle DrawRect => new(0, 0, 28, 26);
+		public Rectangle DrawRect => new(0, 0, 48, 32);
 		public int AnimationFrames => 1;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
-			Main.npcFrameCount[NPC.type] = 2;
+			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.PositiveNPCTypesExcludedFromDeathTally[Type] = true;
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Bat;
 			NPC.lifeMax = 45;
@@ -48,10 +47,7 @@ namespace Origins.NPCs.Riven {
 			if (NPC.velocity.HasNaNs()) NPC.velocity = default;
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;
-			if (++NPC.frameCounter > 2) {
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 28) % 56, 32, 26);
-				NPC.frameCounter = 0;
-			}
+			NPC.DoFrames(1);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {

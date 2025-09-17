@@ -20,6 +20,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public string[] Categories => [
 			"Launcher"
 		];
+		public override void SetStaticDefaults() {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Blind_Debuff.ID];
+		}
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Partybringer_P>(64, 40, 8f, 46, 28, true);
 			Item.value = Item.buyPrice(gold: 7);
@@ -102,6 +105,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public static AutoLoadingAsset<Texture2D> innerTexture = typeof(Partybringer_P).GetDefaultTMLName() + "_Inner";
 		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
+		public override void AI() {
+			this.DoGravity(0.02f * (MathF.Pow((++Projectile.ai[0]) / 30, 0.5f) + 1));
+			Projectile.rotation += Projectile.direction * 0.15f;
+		}
 	}
 	public class Partybringer_P1 : Partybringer_P_Base {
 		public override void OnKill(int timeLeft) {
@@ -141,7 +148,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Blind_Debuff>(), 100);
+			target.AddBuff(Blind_Debuff.ID, 100);
 		}
 	}
 	public class Partybringer_Fog_Gore : ModGore {

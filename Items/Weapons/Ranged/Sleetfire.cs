@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.Dev;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Sleetfire : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.useTime = 4;
 			Item.width = 36;
 			Item.height = 16;
-			Item.useAmmo = ItemID.Gel;
+			Item.useAmmo = AmmoID.Gel;
 			Item.shoot = ModContent.ProjectileType<Sleetfire_P>();
 			Item.shootSpeed = 7f;
 			Item.reuseDelay = 9;
@@ -50,7 +50,8 @@ namespace Origins.Items.Weapons.Ranged {
         public static float MaxSize => 66f;
         public override void SetStaticDefaults() {
             Main.projFrames[Type] = 7;
-        }
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Frostburn];
+		}
         public override void SetDefaults() {
             Projectile.width = Projectile.height = 6;
             Projectile.penetrate = 2;

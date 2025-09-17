@@ -14,6 +14,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.Brine;
+using Origins.NPCs.Crimson;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Defiled.Boss;
 using Origins.NPCs.MiscE;
@@ -28,9 +29,11 @@ using Origins.Walls;
 using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib;
+using PegasusLib.UI;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -46,6 +49,7 @@ namespace Origins.NPCs {
 			NPCHappiness.Get(NPCID.PartyGirl)
 			.SetNPCAffection(NPCID.SantaClaus, AffectionLevel.Love)
 			.SetBiomeAffection<SpaceBiome>(AffectionLevel.Love);
+			Buff_Hint_Handler.ModifyTip(BuffID.Bleeding, 1);
 		}
 		public static ShoppingSettings ShopHelper_GetShoppingSettings(On_ShopHelper.orig_GetShoppingSettings orig, ShopHelper self, Player player, NPC npc) {
 			ShoppingSettings settings = orig(self, player, npc);
@@ -81,27 +85,9 @@ namespace Origins.NPCs {
 				}
 				case NPCID.Demolitionist: {
 					shop.Add(ItemID.ExplosivePowder, Condition.PreHardmode);
-					shop.Add<Peatball>(PeatSoldCondition(15));
-					shop.Add<Flashbang>(PeatSoldCondition(25));
-					shop.Add<IWTPA_Standard>(PeatSoldCondition(35));
-					shop.Add<Impact_Grenade>(PeatSoldCondition(40));
-					shop.Add<Defiled_Spirit>(PeatSoldCondition(50), WorldEvilBossCondition<Defiled_Wastelands_Alt_Biome>("Mods.Origins.Conditions.DownedDefiledAmalgamation"));
-					shop.Add<Ameballoon>(PeatSoldCondition(60), WorldEvilBossCondition<Riven_Hive_Alt_Biome>("Mods.Origins.Conditions.DownedWorldCracker"));
-					shop.Add<Impact_Bomb>(PeatSoldCondition(70));
-					shop.Add<Brainade>(PeatSoldCondition(81), Condition.DownedBrainOfCthulhu);
-					shop.Add<Link_Grenade>(PeatSoldCondition(85), ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>());
-					shop.Add<Nitro_Crate>(PeatSoldCondition(100));
-					shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125), WorldEvilBossCondition<Ashen_Alt_Biome>("Mods.Origins.Conditions.DownedScrapper"));
-					shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
-					shop.Add<Bomb_Artifact>(PeatSoldCondition(145));
-					shop.Add<Trash_Lid>(PeatSoldCondition(160));
-					shop.Add(ItemID.Beenade, PeatSoldCondition(170), Condition.NotTheBeesWorld);
-					shop.Add<Impact_Dynamite>(PeatSoldCondition(180), Condition.Hardmode);
-					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]); // Lost Diver condition for both
-					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
-					shop.Add<Sonar_Dynamite>(PeatSoldCondition(230), Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
-					shop.Add<Indestructible_Saddle>(PeatSoldCondition(250), Condition.DownedMechBossAny);
-					shop.Add<Caustica>(PeatSoldCondition(999), Condition.DownedGolem);
+					for (int i = 0; i < Peat_Moss_Quest.Rewards.Length; i++) {
+						shop.Add(Peat_Moss_Quest.Rewards[i].ItemID, Peat_Moss_Quest.Rewards[i].Conditions);
+					}
 					break;
 				}
 				case NPCID.Steampunker: {
@@ -141,6 +127,7 @@ namespace Origins.NPCs {
 					shop.Add(ModContent.ItemType<Gun_Magazine>());
 					shop.Add<Shardcannon>(Quest.QuestCondition<Shardcannon_Quest>());
 					shop.Add<Harpoon_Burst_Rifle>(Quest.QuestCondition<Harpoon_Burst_Rifle_Quest>());
+					shop.Add<Harpoon>(HarpoonCondition());
 					break;
 				}
 				case NPCID.Stylist: {
@@ -150,7 +137,7 @@ namespace Origins.NPCs {
 				case NPCID.WitchDoctor: {
 					shop.InsertAfter(ItemID.CorruptWaterFountain, WaterFountain.ItemType<Defiled_Fountain>());
 					shop.InsertAfter(WaterFountain.ItemType<Defiled_Fountain>(), WaterFountain.ItemType<Riven_Fountain>());
-					shop.InsertAfter(WaterFountain.ItemType<Riven_Fountain>(), WaterFountain.ItemType<Brine_Fountain>());
+					shop.InsertAfter(ItemID.JungleWaterFountain, WaterFountain.ItemType<Brine_Fountain>());
 					break;
 				}
 				case NPCID.Mechanic: {
@@ -158,7 +145,12 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.PartyGirl: {
-					shop.Add<Partybringer>(Quest.QuestCondition<Tax_Collector_Hat_Quest>());
+					shop.InsertAfter(ItemID.PartyGirlGrenade, ItemID.PartyGirlGrenade, [Quest.QuestCondition<Happy_Grenade_Quest>(), Condition.PlayerCarriesItem(ItemID.PartyGirlGrenade).Not()]);
+					shop.Add<Partybringer>(Quest.QuestCondition<Tax_Collector_Quests>());
+					break;
+				}
+				case NPCID.Painter: {
+					shop.Add<Spray_N_Pray>(Quest.QuestCondition<Spray_N_Pray_Quest>());
 					break;
 				}
 			}
@@ -359,6 +351,9 @@ namespace Origins.NPCs {
 				if (acridSpoutDebuff) {
 					damageBoost += 6f;
 				}
+				if (accretionRibbonDebuff) {
+					damageBoost += 6f;
+				}
 				if (hibernalIncantationDebuff) {
 					damageBoost += 4f;
 				}
@@ -483,9 +478,6 @@ namespace Origins.NPCs {
 			if (player.ZoneTowerNebula || player.ZoneTowerSolar || player.ZoneTowerStardust || player.ZoneTowerVortex) {
 				return;
 			}
-			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || player.InModBiome<Riven_Hive>()) {
-				if (Main.invasionType <= 0) pool[0] = 0;
-			}
 			if (Main.hardMode && !spawnInfo.PlayerSafe && spawnInfo.SpawnTileY > Main.rockLayer && !spawnInfo.DesertCave) {
 				if (player.InModBiome<Defiled_Wastelands>() && !ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().IsActive(spawnInfo)) {
 					pool.Add(ModContent.NPCType<Defiled_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);
@@ -513,7 +505,7 @@ namespace Origins.NPCs {
 				spawnRateMultiplier *= 0.2f;
 			}
 			if (player.HasBuff<Cannihound_Lure_Debuff>()) {
-				spawnRateMultiplier *= 0.8f; 
+				spawnRateMultiplier *= 0.8f;
 			}
 			spawnRate = (int)(spawnRate * spawnRateMultiplier);
 			maxSpawns = (int)(maxSpawns * maxSpawnsMultiplier);
@@ -532,6 +524,15 @@ namespace Origins.NPCs {
 			return new Condition(
 				Language.GetOrRegister("Mods.Origins.Conditions.PeatSoldCondition").WithFormatArgs(amount),
 				() => ModContent.GetInstance<OriginSystem>().peatSold >= amount
+			);
+		}
+		public static Condition HarpoonCondition() {
+			return new Condition(
+				Language.GetOrRegister("Mods.Origins.Conditions.HarpoonCondition"),
+				() => {
+					foreach (Item itm in Main.LocalPlayer.inventory) if (itm?.ModItem is Harpoon_Gun) return true;
+					return false;
+				}
 			);
 		}
 		public static Condition WorldEvilBossCondition<TEvil>(string key) where TEvil : AltBiome {

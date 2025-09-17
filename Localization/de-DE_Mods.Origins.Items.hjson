@@ -1,8 +1,11 @@
 GenericTooltip: {
 	// MinuteCooldown: "{0} minute cooldown"
 	// SecondCooldown: "{0} second cooldown"
-	// TornSeverity: +{0}% applied torn severity
+	// TornSeverity: +{0}% applied [buffhint:Origins/Torn_Debuff] severity
 	// ArtifactTag: "[c/ffb300:-Artifact Minion-]"
+	// ConceptBy: Concept by {0}
+	// ConceptAndSpriteBy: Concept and art by {0}
+	// Extractinator: For use with the Extractinator
 }
 
 Krunch_Mix: {
@@ -70,8 +73,10 @@ Automated_Returns_Handler: {
 	// DisplayName: Automated Returns Handler
 	/* Tooltip:
 		'''
+		Increases movement speed and acceleration
+		Provides light when worn
 		Allows the ability to climb walls and dash
-		Greatly increased movement speed and return speed for grapple hooks and harpoon guns
+		Greatly increased return speed for grapple hooks and harpoon guns
 		Gives a 10% chance to dodge attacks
 		''' */
 }
@@ -172,7 +177,7 @@ CFHES: {
 	// DisplayName: C.F.H.E.S.
 	/* Tooltip:
 		'''
-		All explosives inflict 'On Fire!' and have a reduced fuse time
+		All explosives inflict [buffhint:OnFire] and have a reduced fuse time
 		60% increased explosive blast radius
 		Explosives will detonate near enemies
 		''' */
@@ -182,8 +187,8 @@ Cirrhosis_Abhorrence: {
 	// DisplayName: Cirrhosis' Abhorrence
 	/* Tooltip:
 		'''
-		All attacks inflict Bleeding and set enemies ablaze
-		Four of the nearest enemies will be afflicted with Bleeding, On Fire, and Rasterized
+		All attacks inflict [buffhint:Bleeding] and [buffhint/dnset enemies ablaze:OnFire3]
+		The four nearest enemies will be afflicted with [buffhint:Bleeding], [buffhint/On Fire:OnFire], and [buffhint:Origins/Rasterized_Debuff]
 		''' */
 }
 
@@ -204,7 +209,7 @@ Coologne: {
 
 Danger_Barrel: {
 	// DisplayName: Danger Barrel
-	// Tooltip: All explosives inflict 'On Fire!' and have a reduced fuse time
+	// Tooltip: All explosives inflict [buffhint:OnFire] and have a reduced fuse time
 }
 
 Dash_Ravel: {
@@ -220,8 +225,8 @@ Venom_Fang: {
 	// DisplayName: Venom Fang
 	/* Tooltip:
 		'''
-		Attacks inflict Toxic Shock
-		Effects are stronger while Acrid Armor is equipped
+		Attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
+		Effects are stronger while {§Acrid} Armor is equipped
 		''' */
 }
 
@@ -264,7 +269,7 @@ Dryads_Inheritance: {
 		'''
 		5% increased damage
 		Increases damage, movement speed, and length of invincibility after taking damage
-		Emit a damaging aura that inflicts poison
+		Emit a [buffhint/dndamaging aura:DryadsWardDebuff]
 		Summons spores over time that will damage enemies
 		''' */
 }
@@ -297,7 +302,7 @@ Explosive_Artery: {
 	// DisplayName: Explosive Artery
 	/* Tooltip:
 		'''
-		Nearby bleeding enemies occasionally explode
+		Nearby [buffhint:Bleeding] enemies occasionally explode
 		'Explosions happen near me 'cause I'm that cool!'
 		''' */
 }
@@ -345,8 +350,8 @@ Fleshy_Figurine: {
 	// DisplayName: Fleshy Figurine
 	/* Tooltip:
 		'''
-		Attacks tenderize targets
-		+20% Torn severity
+		Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+		+20% [buffhint:Origins/Torn_Debuff] severity
 		''' */
 }
 
@@ -383,8 +388,8 @@ Haggard_Artery: {
 	// DisplayName: Haggard Artery
 	/* Tooltip:
 		'''
-		All attacks inflict Bleeding
-		Nearby bleeding enemies occasionally explode
+		All attacks inflict [buffhint:Bleeding]
+		Nearby [buffhint:Bleeding] enemies occasionally explode
 		''' */
 }
 
@@ -437,7 +442,7 @@ IWTPA_Standard: {
 
 Keepsake_Remains: {
 	// DisplayName: Keepsake Remains
-	// Tooltip: Increases armor penetration by 5 and attacks tenderize targets
+	// Tooltip: Increases armor penetration by 5 and attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
 }
 
 Last_Descendant: {
@@ -454,7 +459,8 @@ Lazy_Cloak: {
 	// DisplayName: Lazy Cloak
 	/* Tooltip:
 		'''
-		Chases after marked enemies
+		Chases after tagged enemies
+		Slams enemies when close
 		'It just doesn't want to do all the work'
 		''' */
 }
@@ -470,7 +476,7 @@ Locket_Necklace: {
 
 Lousy_Liver: {
 	// DisplayName: Lousy Liver
-	// Tooltip: Three of the nearest enemies will be afflicted with Rasterized
+	// Tooltip: The nearest three enemies will be afflicted with [buffhint:Origins/Lousy_Liver_Debuff]
 }
 
 Lovers_Leap: {
@@ -478,7 +484,8 @@ Lovers_Leap: {
 	/* Tooltip:
 		'''
 		5% increased damage
-		The wearer can run super fast and even faster after taking damage
+		Allows flight, super fast running
+		Increases damage and movement speed after taking damage
 		Allows the player to dash into the enemy
 		Double tap a direction
 		''' */
@@ -521,12 +528,12 @@ Mana_Drive: {
 
 Messy_Leech: {
 	// DisplayName: Messy Leech
-	// Tooltip: All attacks inflict Bleeding
+	// Tooltip: All attacks inflict [buffhint:Bleeding]
 }
 
 Messy_Magma_Leech: {
 	// DisplayName: Messy Magma Leech
-	// Tooltip: All attacks inflict Bleeding and set enemies ablaze
+	// Tooltip: All attacks inflict [buffhint:Bleeding] and [buffhint/dnset enemies ablaze:OnFire3]
 }
 
 Missile_Armcannon: {
@@ -598,7 +605,7 @@ Olid_Organ: {
 	/* Tooltip:
 		'''
 		5% increased damage and critical strike chance
-		All attacks inflict Toxic Shock
+		All attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
 		Enemies are less likely to target you
 		''' */
 }
@@ -634,7 +641,7 @@ Plasma_Bag: {
 		Slightly increased regeneration
 		Debuff durations reduced by 30%
 		Does not affect Potion Sickness
-		Rapidly lose life when Bleeding
+		Rapidly lose life when [buffhint/self:Bleeding]
 		''' */
 }
 
@@ -673,7 +680,7 @@ Protomind: {
 		'''
 		Has a chance to create illusions and dodge an attack
 		Temporarily increase critical chance after a dodge
-		May confuse nearby enemies after being struck
+		May [buffhint/dnconfuse:Confused] nearby enemies after being struck
 		Magic projectiles slightly home towards targets
 		''' */
 }
@@ -683,7 +690,7 @@ Protozoa_Food: {
 	/* Tooltip:
 		'''
 		+1 minion slot
-		Summons an amoeba pellet to chase after enemies and slow them down for every minion slot you have
+		Summons an amoeba pellet to chase after enemies and [buffhint:Origins/Slow_Debuff] them down for every minion slot you have
 		''' */
 }
 
@@ -741,7 +748,7 @@ Scavenger_Bag: {
 	// DisplayName: Scavenger Bag
 	/* Tooltip:
 		'''
-		Increases armor penetration by 5 and attacks tenderize targets
+		Increases armor penetration by 5 and attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
 		Increases your max number of minions by 1
 		Increases your summon damage by 15% and the knockback of your minions
 		''' */
@@ -861,7 +868,12 @@ Strange_Computer: {
 
 Super_Turbo_Reel: {
 	// DisplayName: Super Turbo Reel
-	// Tooltip: Greatly increased movement speed and return speed for harpoon guns
+	/* Tooltip:
+		'''
+		Increases movement speed and acceleration
+		Provides light when worn
+		Greatly increased return speed for harpoon guns
+		''' */
 }
 
 Superjump_Cape: {
@@ -871,12 +883,12 @@ Superjump_Cape: {
 
 Symbiote_Skull: {
 	// DisplayName: Symbiote Skull
-	// Tooltip: Attacks tenderize targets
+	// Tooltip: Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
 }
 
 Tainted_Flesh: {
 	// DisplayName: Tainted Flesh
-	// Tooltip: +10% Torn severity
+	// Tooltip: +10% [buffhint:Origins/Torn_Debuff] severity
 }
 
 Third_Eye: {
@@ -922,7 +934,7 @@ Unsought_Organ: {
 		'''
 		All damage received is reflected to 3 nearby enemies
 		5% increased damage and critical strike chance
-		All attacks inflict Toxic Shock
+		All attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
 		Enemies are less likely to target you
 		''' */
 }
@@ -943,12 +955,12 @@ Abysswalker_Hood: {
 }
 
 Acrid_Breastplate: {
-	// DisplayName: Acrid Breastplate
+	// DisplayName: "{§Acrid} Breastplate"
 	// Tooltip: Increased life regeneration
 }
 
 Acrid_Dome: {
-	// DisplayName: Acrid Dome
+	// DisplayName: "{§Acrid} Dome"
 	/* Tooltip:
 		'''
 		10% increased explosive critical chance and throwing velocity
@@ -958,12 +970,12 @@ Acrid_Dome: {
 }
 
 Acrid_Greaves: {
-	// DisplayName: Acrid Greaves
+	// DisplayName: "{§Acrid} Greaves"
 	// Tooltip: Grants the ability to swim
 }
 
 Acrid_Headgear: {
-	// DisplayName: Acrid Headgear
+	// DisplayName: "{§Acrid} Headgear"
 	/* Tooltip:
 		'''
 		10% increased magic damage and 25% reduced mana cost
@@ -973,7 +985,7 @@ Acrid_Headgear: {
 }
 
 Acrid_Helm: {
-	// DisplayName: Acrid Helm
+	// DisplayName: "{§Acrid} Helm"
 	/* Tooltip:
 		'''
 		10% increased melee damage and speed
@@ -983,7 +995,7 @@ Acrid_Helm: {
 }
 
 Acrid_Mask: {
-	// DisplayName: Acrid Mask
+	// DisplayName: "{§Acrid} Mask"
 	/* Tooltip:
 		'''
 		10% increased summoning damage
@@ -994,7 +1006,7 @@ Acrid_Mask: {
 }
 
 Acrid_Visor: {
-	// DisplayName: Acrid Visor
+	// DisplayName: "{§Acrid} Visor"
 	/* Tooltip:
 		'''
 		20% increased ranged attack speed
@@ -1112,7 +1124,7 @@ Encrusted_Coat: {
 
 Encrusted_Mask: {
 	// DisplayName: Encrusted Mask
-	// Tooltip: Increases minion damage by 10%
+	// Tooltip: Increases summon damage by 10%
 }
 
 Encrusted_Pants: {
@@ -1154,39 +1166,51 @@ Felnum_Breastplate: {
 	// DisplayName: Felnum Breastplate
 	/* Tooltip:
 		'''
-		2% increased damage
+		5% increased damage
 		5% increased movement speed
 		''' */
 }
 
 Felnum_Greaves: {
 	// DisplayName: Felnum Greaves
-	// Tooltip: 5% increased movement speed
+	// Tooltip: 10% increased movement speed
 }
 
 Felnum_Helmet: {
 	// DisplayName: Felnum Helmet
-	// Tooltip: 4% increased damage
+	// Tooltip: 5% increased damage
 }
 
 Fiberglass_Body: {
 	// DisplayName: Fiberglass Pauldrons
-	// Tooltip: "'These don't seem very protective'"
+	/* Tooltip:
+		'''
+		Weapon damage increased by 2
+		'These don't seem very protective'
+		''' */
 }
 
 Fiberglass_Helmet: {
 	// DisplayName: Fiberglass Helmet
-	// Tooltip: "'This doesn't seem very protective'"
+	/* Tooltip:
+		'''
+		Critical damage increased by 10
+		'This doesn't seem very protective'
+		''' */
 }
 
 Fiberglass_Legs: {
 	// DisplayName: Fiberglass Boots
-	// Tooltip: "'These don't seem very protective'"
+	/* Tooltip:
+		'''
+		10% increased movement speed
+		'These don't seem very protective'
+		''' */
 }
 
 Lost_Breastplate: {
 	// DisplayName: Lost Cloak
-	// Tooltip: 15% increased magic damage
+	// Tooltip: 15% increased magic speed
 }
 
 Lost_Helm: {
@@ -1196,24 +1220,24 @@ Lost_Helm: {
 
 Lost_Pants: {
 	// DisplayName: Lost Pants
-	// Tooltip: Increased movement speed
+	// Tooltip: +5% movement speed
 }
 
 Mythic_Leggings: {
 	// DisplayName: Mythic Leggings
-	// Tooltip: Greatly increased movement speed
+	// Tooltip: +20% movement speed
 }
 
 Mythic_Shell: {
 	// DisplayName: Mythic Shell
-	// Tooltip: Greatly increased jump speed
+	// Tooltip: +45% jump speed
 }
 
 Mythic_Skull: {
 	// DisplayName: Mythic Skull
 	/* Tooltip:
 		'''
-		Increased explosive velocity
+		+15% explosive velocity
 		'Skull ON'
 		''' */
 }
@@ -1251,7 +1275,7 @@ Nova_Greaves: {
 	/* Tooltip:
 		'''
 		4% increased explosive damage and critical strike chance
-		15% increased movement speed
+		25% increased movement speed
 		''' */
 }
 
@@ -1375,22 +1399,30 @@ Riven2_Pants: {
 
 Sapphire_Hood: {
 	// DisplayName: Sapphire Mediator Hood
-	// Tooltip: -40 mana
+	/* Tooltip:
+		'''
+		-40 mana
+		Increased mana regeneration
+		''' */
 }
 
 Sapphire_Tights: {
 	// DisplayName: Sapphire Mediator Tights
-	// Tooltip: +10% movement speed
+	/* Tooltip:
+		'''
+		+20% movement speed
+		15% reduced mana cost
+		''' */
 }
 
 Sapphire_Vest: {
 	// DisplayName: Sapphire Mediator Vest
-	// Tooltip: +15% magic speed
+	// Tooltip: +20% magic attack speed
 }
 
 Soulhide_Coat: {
 	// DisplayName: Soulhide Coat
-	// Tooltip: +12% melee weapon speed
+	// Tooltip: +12% melee attack speed
 }
 
 Soulhide_Guards: {
@@ -1421,12 +1453,14 @@ Tendon_Shirt: {
 // Defiled_Amalgamation_Mask.DisplayName: "{§Defiled} Amalgamation Mask"
 // Fiberglass_Weaver_Head.DisplayName: Fiberglass Weaver Head
 // World_Cracker_Mask.DisplayName: World Cracker Mask
+// TODev: "'Great for impersonating Origins devs!'"
+// DioSet: "'You thought it was a dev set, but it was me, Dio!'"
 
 Plague_Texan_Jacket: {
 	// DisplayName: Plague Texan's Surprisingly Affordable Style
 	/* Tooltip:
 		'''
-		'Great for impersonating Origins devs!'
+		{$TODev}
 
 		''' */
 }
@@ -1435,7 +1469,7 @@ Plague_Texan_Jeans: {
 	// DisplayName: Plague Texan's Jeans
 	/* Tooltip:
 		'''
-		'Great for impersonating Origins devs!'
+		{$TODev}
 
 		''' */
 }
@@ -1444,7 +1478,17 @@ Plague_Texan_Mask: {
 	// DisplayName: Plague Texan's Visage
 	/* Tooltip:
 		'''
-		'Great for impersonating Origins devs!'
+		{$TODev}
+
+		''' */
+}
+
+SceneYMK_Wings: {
+	// DisplayName: Moonlight Glint's Excessively Dyed Wings
+	/* Tooltip:
+		'''
+		{$TODev}
+		{$CommonItemTooltip.FlightAndSlowfall}
 
 		''' */
 }
@@ -1453,7 +1497,7 @@ Plague_Texan_Sight: {
 	// DisplayName: Plague Texan's Gift
 	/* Tooltip:
 		'''
-		'Great for impersonating Origins devs!'
+		{$TODev}
 		Foresight is '20/20'
 		''' */
 }
@@ -1591,8 +1635,8 @@ Qube: {
 }
 
 Respyrite: {
-	// DisplayName: Respyrite
-	// Tooltip: "'Crystal remains of captured breath'"
+	// DisplayName: Phoenum
+	// Tooltip: "'A molten willpower'"
 }
 
 // Riven_Carapace.DisplayName: "{§Riven} Carapace"
@@ -1651,12 +1695,12 @@ Absorption_Potion: {
 
 Antisolve_Potion: {
 	// DisplayName: Antisolve Potion
-	// Tooltip: Grants immunity to 'Toxic Shock' and 'Torn'
+	// Tooltip: Grants immunity to [buffhint/self:Origins/Toxic_Shock_Debuff] and [buffhint/self:Origins/Torn_Debuff]
 }
 
 Bile_Flask: {
 	// DisplayName: Flask of Black Bile
-	// Tooltip: Melee and Whip attacks stun enemies
+	// Tooltip: Melee and Whip attacks [buffhint/dnstun:Origins/Rasterized_Debuff] enemies
 }
 
 Blue_Bovine: {
@@ -1881,7 +1925,7 @@ Riven_Loot_Box: {
 
 Salt_Flask: {
 	// DisplayName: Flask of Alkahest
-	// Tooltip: Melee and Whip attacks tenderize targets
+	// Tooltip: Melee and Whip attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
 }
 
 Sus_Ice_Cream: {
@@ -1979,11 +2023,11 @@ Tearracuda: {
 
 Tire: {
 	// DisplayName: Tire
-	// Tooltip: ""
+	// Tooltip: "{$Mods.Origins.Items.GenericTooltip.Extractinator}"
 }
 
 Journal_Item: {
-	// DisplayName: Journal
+	// DisplayName: "{§Journal}"
 	// Tooltip: ""
 }
 
@@ -2047,17 +2091,17 @@ Suspicious_Looking_Pebble: {
 }
 
 Acrid_Drill: {
-	// DisplayName: Acrid Drill
+	// DisplayName: "{§Acrid} Drill"
 	// Tooltip: Increased mining speed when submerged
 }
 
 Acrid_Hamaxe: {
-	// DisplayName: Acrid Hamaxe
+	// DisplayName: "{§Acrid} Hamaxe"
 	// Tooltip: Increased mining speed when submerged
 }
 
 Acrid_Pickaxe: {
-	// DisplayName: Acrid Pickaxe
+	// DisplayName: "{§Acrid} Pickaxe"
 	// Tooltip: Increased mining speed when submerged
 }
 
@@ -2090,6 +2134,7 @@ Felnum_Hamaxe: {
 	/* Tooltip:
 		'''
 		<right> to throw
+		Receives 50% higher damage bonuses
 		'Its strikes sound like thunder'
 		''' */
 }
@@ -2099,6 +2144,7 @@ Felnum_Pickaxe: {
 	/* Tooltip:
 		'''
 		Able to mine Hellstone
+		Receives 50% higher damage bonuses
 		'Its strikes sound like thunder'
 		''' */
 }
@@ -2130,57 +2176,81 @@ Strainer: {
 
 Alkahest_Arrow: {
 	// DisplayName: Alkahest Arrow
-	// Tooltip: Tenderizes the target
+	// Tooltip: Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]
 }
 
 Alkahest_Bullet: {
 	// DisplayName: Alkahest Bullet
-	// Tooltip: Tenderizes the target
+	// Tooltip: Attacks inflict [buffhint:Origins/Torn_Debuff]
 }
 
 Alkaline_Harpoon: {
 	// DisplayName: Alkaline Harpoon
-	// Tooltip: Used as ammo for harpoon guns
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Inflicts [buffhint:Venom]
+		''' */
 }
 
 Bile_Arrow: {
 	// DisplayName: Bile Arrow
-	// Tooltip: Stuns the target
+	// Tooltip: "[buffhint/dnStuns:Origins/Rasterized_Debuff] the target"
 }
 
 Bile_Bullet: {
 	// DisplayName: Bile Bullet
-	// Tooltip: Stuns the target
+	// Tooltip: "[buffhint/dnStuns:Origins/Rasterized_Debuff] the target"
 }
 
 Bile_Dart: {
 	// DisplayName: Bile Dart
-	// Tooltip: Stuns the target
+	// Tooltip: "[buffhint/dnStuns:Origins/Rasterized_Debuff] the target"
 }
 
 Bouncy_Harpoon: {
 	// DisplayName: Bouncy Harpoon
-	// Tooltip: Used as ammo for harpoon guns
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Bouncy!
+		''' */
 }
 
 Cursed_Harpoon: {
 	// DisplayName: Cursed Harpoon
-	// Tooltip: Used as ammo for harpoon guns
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Inflicts [buffhint:CursedInferno]
+		''' */
 }
 
 Explosive_Harpoon: {
 	// DisplayName: Explosive Harpoon
-	// Tooltip: Used as ammo for harpoon guns
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Might explode
+		''' */
 }
 
 Flammable_Harpoon: {
 	// DisplayName: Flammable Harpoon
-	// Tooltip: Used as ammo for harpoon guns
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Sets enemies [buffhint/dnablaze:OnFire]
+		''' */
 }
 
 Metal_Slug: {
 	// DisplayName: Metal Slug
-	// Tooltip: "'Great ammo for a really BIG gun'"
+	/* Tooltip:
+		'''
+		Used as ammo for handcannons
+		"'Great ammo for a really BIG gun'"
+		''' */
 }
 
 Harpoon: {
@@ -2264,12 +2334,12 @@ Ace_Shrapnel_Old: {
 
 Alkaline_Bomb: {
 	// DisplayName: Alkaline Bomb
-	// Tooltip: Explodes into brine droplets
+	// Tooltip: Explodes into [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff]
 }
 
 Alkaline_Grenade: {
 	// DisplayName: Alkaline Grenade
-	// Tooltip: Explodes into brine droplets
+	// Tooltip: Explodes into [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff]
 }
 
 Ameballoon: {
@@ -2294,7 +2364,11 @@ Bloombomb: {
 
 Bomb_Launcher: {
 	// DisplayName: Bomb Launcher
-	// Tooltip: Uses bombs as ammo
+	/* Tooltip:
+		'''
+		Uses bombs as ammo
+		<right> to detonate some ammo from launcher
+		''' */
 }
 
 Bombardment: {
@@ -2315,6 +2389,7 @@ Boomphracken: {
 	// DisplayName: Boomphracken
 	/* Tooltip:
 		'''
+		Uses slugs as ammo
 		Allows you to quickly throw explosives in your inventory after use
 		'He works his work, I work mine'
 		''' */
@@ -2365,7 +2440,11 @@ Defiled_Spirit: {
 
 Dreikan: {
 	// DisplayName: Dreikan
-	// Tooltip: Pronounced exactly how it looks: auf Deutsch
+	/* Tooltip:
+		'''
+		Converts [itemname:MusketBall]s into [buffhint/dn{$Projectiles.Dreikan_Shot.DisplayName}:Daybreak].
+		Pronounced exactly how it looks: auf Deutsch
+		''' */
 }
 
 Explosive_Golf_Ball: {
@@ -2375,17 +2454,21 @@ Explosive_Golf_Ball: {
 
 Felnum_Shock_Grenade: {
 	// DisplayName: Felnum Shock Grenade
-	// Tooltip: "'Quite shocking'"
+	/* Tooltip:
+		'''
+		Receives 50% higher damage bonuses
+		'Quite shocking'
+		''' */
 }
 
 Flakjack: {
 	// DisplayName: Flakjack
-	// Tooltip: Uses metal slugs as ammo
+	// Tooltip: Uses slugs as ammo
 }
 
 Flashbang: {
 	// DisplayName: Flashbang
-	// Tooltip: Dazes enemies upon detonation
+	// Tooltip: "[buffhint/dnDazes:Origins/Blind_Debuff] enemies upon detonation"
 }
 
 Floaty_Bomb: {
@@ -2400,7 +2483,11 @@ Grenado: {
 
 Hand_Grenade_Launcher: {
 	// DisplayName: Hand Grenade Launcher
-	// Tooltip: "'Doesn't this defeat the purpose of a hand grenade?'"
+	/* Tooltip:
+		'''
+		<right> to detonate some ammo from launcher
+		'Doesn't this defeat the purpose of a hand grenade?'
+		''' */
 }
 
 Happy_Bomb: {
@@ -2410,12 +2497,12 @@ Happy_Bomb: {
 
 Hellfire_Bomb: {
 	// DisplayName: Hellfire Bomb
-	// Tooltip: Explodes into a lingering fire
+	// Tooltip: Explodes into a [buffhint/dnlingering fire:OnFire3]
 }
 
 Hellfire_Grenade: {
 	// DisplayName: Hellfire Grenade
-	// Tooltip: Explodes into a lingering fire
+	// Tooltip: Explodes into a [buffhint/dnlingering fire:OnFire3]
 }
 
 Impact_Bomb: {
@@ -2510,7 +2597,7 @@ Thermite_Launcher: {
 	/* Tooltip:
 		'''
 		Uses canisters as ordnance
-		Burn.
+		[buffhint/dnBurn.:OnFire3]
 		''' */
 }
 
@@ -2551,12 +2638,12 @@ Bled_Out_Staff: {
 
 Chemical_Laser: {
 	// DisplayName: Chemical Laser
-	// Tooltip: Splits into brine droplets on impact
+	// Tooltip: Splits into [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff] on impact
 }
 
 Cryostrike: {
 	// DisplayName: Cryostrike
-	// Tooltip: Shoots a piercing icicle
+	// Tooltip: Shoots a piercing icicle that inflicts [buffhint:Frostburn]
 }
 
 Dismay: {
@@ -2566,7 +2653,7 @@ Dismay: {
 
 Eternabrite: {
 	// DisplayName: Eternabrite
-	// Tooltip: Casts a forceful flame
+	// Tooltip: Casts a forceful [buffhint/dnflame:OnFire]
 }
 
 Haunted_Vase: {
@@ -2581,7 +2668,7 @@ Hivateinn: {
 
 Hot_Potato: {
 	// DisplayName: Hot Potato
-	// Tooltip: "'Be careful, it's hot'"
+	// Tooltip: "'Be careful, it's [buffhint/dnhot:OnFire]'"
 }
 
 Infusion: {
@@ -2591,7 +2678,7 @@ Infusion: {
 
 Innermost_Manifest: {
 	// DisplayName: Innermost Manifest
-	// Tooltip: Attacks tenderize targets
+	// Tooltip: Attacks inflict [buffhint:Origins/Torn_Debuff]
 }
 
 Laser_Tag_Gun: {
@@ -2644,7 +2731,7 @@ Rigged_Cubix: {
 
 Seam_Beam: {
 	// DisplayName: Seam Beam
-	// Tooltip: Attacks tenderize targets
+	// Tooltip: Attacks inflict [buffhint:Origins/Torn_Debuff]
 }
 
 Splitsplash: {
@@ -2654,7 +2741,7 @@ Splitsplash: {
 
 Splashid: {
 	// DisplayName: Splashid
-	// Tooltip: Shoots a flurry of brine droplets
+	// Tooltip: Shoots a flurry of [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff]
 }
 
 Startillery: {
@@ -2714,7 +2801,11 @@ Felnum_Boar_Spear: {
 
 Fiberglass_Sword: {
 	// DisplayName: Fiberglass Sword
-	// Tooltip: "'Be careful, it's sharp'"
+	/* Tooltip:
+		'''
+		<right> to throw
+		'Be careful, it's sharp'
+		''' */
 }
 
 Knee_Slapper: {
@@ -2733,7 +2824,7 @@ Krakram: {
 
 Nematoclaw: {
 	// DisplayName: Nematoclaw
-	// Tooltip: Inflicts toxic shock
+	// Tooltip: Inflicts [buffhint:Origins/Toxic_Shock_Debuff]
 }
 
 Nineball: {
@@ -2791,14 +2882,14 @@ Tyrfing: {
 
 Vorpal_Sword: {
 	// DisplayName: Vorpal Sword
-	// Tooltip: ""
+	// Tooltip: Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]
 }
 
 Vorpal_Sword_Cursed: {
 	// DisplayName: Vorpal Sword
 	/* Tooltip:
 		'''
-		Attacks tenderize targets
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
 		Will attack for you if in your inventory
 		''' */
 }
@@ -2813,7 +2904,7 @@ Potato_Launcher: {
 }
 
 Acrid_Impaler: {
-	// DisplayName: Acrid Impaler
+	// DisplayName: "{§Acrid} Impaler"
 	/* Tooltip:
 		'''
 		Uses harpoons as ammo
@@ -2835,7 +2926,8 @@ Bleeding_Obsidian_Kunai: {
 	// DisplayName: Bleeding Obsidian Kunai
 	/* Tooltip:
 		'''
-		Inflicts bleeding, cursed flames, ichor and torn
+
+		Inflicts [bufftip:CursedInferno], [bufftip:Ichor], [bufftip:Origins/Rasterized_Debuff], and [bufftip:Origins/Torn_Debuff]
 		'Be careful, it's sharp'
 		''' */
 }
@@ -2853,7 +2945,7 @@ Blotopus: {
 	// DisplayName: Blotopus
 	/* Tooltip:
 		'''
-		Fires a stream of needles that bleed enemies
+		Fires a stream of needles that inflict [buffhint:Bleeding]
 		20% chance not consume ammo
 		''' */
 }
@@ -2998,8 +3090,6 @@ Tolruk: {
 		'''
 		Receives 50% higher damage bonuses
 		[tɵlɹɘk]
-		Sprite needs reshaping to be less like dart rifle
-		On it :)
 		''' */
 }
 
@@ -3007,8 +3097,8 @@ Viper_Rifle: {
 	// DisplayName: HNO-3 "Viper"
 	/* Tooltip:
 		'''
-		Has a chance to inflict Toxic Shock
-		Deals critical damage on otherwise afflicted enemies
+		Has a chance to inflict [buffhint:Origins/Toxic_Shock_Debuff]
+		Critically strikes on otherwise afflicted enemies
 		''' */
 }
 
@@ -3245,7 +3335,7 @@ Laser_Tag_Console_Item: {
 
 Traffic_Cone_Item: {
 	// DisplayName: Traffic Cone
-	// Tooltip: Slows enemies when placed
+	// Tooltip: "[buffhint/dnSlows:Origins/Slow_Debuff] enemies when placed"
 }
 
 Acetabularia_Item: {
@@ -3274,7 +3364,7 @@ Riven_Dungeon_Chest_Item: {
 }
 
 Riven_Flesh_Item: {
-	// DisplayName: Spug Flesh
+	// DisplayName: "{§Spug} Flesh"
 	// Tooltip: ""
 }
 
@@ -3324,7 +3414,7 @@ Harmony_Brick_Wall_Item: {
 }
 
 Riven_Flesh_Wall_Item: {
-	// DisplayName: Spug Flesh Wall
+	// DisplayName: "{§Spug} Flesh Wall"
 	// Tooltip: ""
 }
 
@@ -3457,7 +3547,7 @@ Ocotoral_Bud: {
 	/* Tooltip:
 		'''
 		Summons a mobile barnacle turret to fight for you
-		Attacks tenderize targets
+		Attacks [buffhint/dnRavage targets' health:Origins/Torn_Debuff]
 		''' */
 }
 
@@ -3513,15 +3603,15 @@ Neural_Network: {
 
 Eruption: {
 	// DisplayName: Eruption
-	// Tooltip: ""
+	// Tooltip: At the end of the projectile's time creates a geyser of [buffhint/dnflames:OnFire]
 }
 
 Weakpoint_Analyzer: {
 	// DisplayName: Weakpoint Analyzer
 	/* Tooltip:
 		'''
-		Ranged projectiles are duplicated twice
-		Duplicates have a chance to deal damage equal to your ammo conservation chance
+		Creates two illusory copies of your ranged projectiles
+		Illusions have an 8% chance to deal damage
 		8% chance to save ammo
 		''' */
 }
@@ -3703,7 +3793,7 @@ Joint_Pop: {
 	/* Tooltip:
 		'''
 		Striking with the tip will cause it to explode
-		The explosion will briefly slow enemies
+		The explosion will briefly [buffhint:Origins/Slow_Debuff] enemies
 		3 summon tag damage
 		{$CommonItemTooltip.Whips}
 		''' */
@@ -3713,7 +3803,7 @@ Cold_Snap: {
 	// DisplayName: Cold Snap
 	/* Tooltip:
 		'''
-		Inflicts frostburn to struck enemies
+		Inflicts [buffhint:Frostburn] to struck enemies
 		Uses canisters as ordnance
 		''' */
 }
@@ -3722,9 +3812,8 @@ Control_Locus: {
 	// DisplayName: Control Locus
 	/* Tooltip:
 		'''
-		Ranged projectiles are duplicated 5 times
-		Explosive projectiles are duplicated twice
-		All duplicated projectiles actually deal damage based on whether or not ammo was consumed
+		Creates two illusory copies of your ranged and explosive projectiles
+		Illusions have an 12% chance to deal damage
 		12% chance not to consume ammo
 		''' */
 }
@@ -3742,27 +3831,27 @@ Avulsion: {
 	/* Tooltip:
 		'''
 		Fires medium-range pulses
-		Attacks tenderize targets
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
 		''' */
 }
 
 Primordial_Soup: {
 	// DisplayName: Primordial Soup
-	// Tooltip: Increased life regeneration based on the torn severity you're affected by
+	// Tooltip: Increased life regeneration based on the [buffhint/self:Origins/Torn_Debuff] severity you're affected by
 }
 
 Bug_Trapper: {
 	// DisplayName: Bug Trapper
-	// Tooltip: Increased life regeneration and defense based on the torn severity you're affected by
+	// Tooltip: Increased life regeneration and defense based on the [buffhint/self:Origins/Torn_Debuff] severity you're affected by
 }
 
 Playtimes_Over: {
 	// DisplayName: Playtime's Over
 	/* Tooltip:
 		'''
-		Attacks tenderize targets
-		+20% applied torn severity
-		Increased life regeneration, defense and applied torn severity based on the severity you're affected by
+		Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+		+20% applied [buffhint:Origins/Torn_Debuff] severity
+		Increased life regeneration, defense and applied [buffhint/self:Origins/Torn_Debuff] severity based on the severity you're affected by
 		''' */
 }
 
@@ -3832,14 +3921,14 @@ Marrowick_Bow: {
 
 Gelled_Knife: {
 	// DisplayName: Gelled Knife
-	// Tooltip: Applies progressively higher torn severities after every successful strike
+	// Tooltip: Applies progressively higher [buffhint:Origins/Torn_Debuff] severities after every successful strike
 }
 
 Forbidden_Voice: {
 	// DisplayName: Forbidden Voice
 	/* Tooltip:
 		'''
-		You are Silenced, press <key> to silence everyone else too
+		You are [buffhint/self:Silenced], press <key> to [buffhint/dnsilence:Origins/Silenced_Debuff] everyone else too
 		Gain up to 10% damage resistance over time by not speaking
 		''' */
 }
@@ -3960,12 +4049,13 @@ CORE_Generator: {
 		Enables autouse for all explosive weapons
 		Shoots rockets as you swing
 		Additionally causes stars to fall and canisters from your inventory to release after taking damage
+		'Entropy really is a good alternative to coffee'
 		''' */
 }
 
 Napalm_Canister: {
 	// DisplayName: Napalm Canister
-	// Tooltip: Releases napalm after landing
+	// Tooltip: Releases [buffhint/dnnapalm:OnFire] after landing
 }
 
 Futurephones: {
@@ -4024,7 +4114,11 @@ Endowood_Dresser_Item: {
 
 Nova_Cascade: {
 	// DisplayName: Nova Cascade
-	// Tooltip: Causes an explosion after piercing enemies
+	/* Tooltip:
+		'''
+		Uses slugs as ammo
+		Causes an explosion after piercing enemies
+		''' */
 }
 
 Switchblade_Broadsword: {
@@ -4157,8 +4251,12 @@ Defiled_Grass_Wall_Placed_Unsafe_Item: {
 }
 
 Acrid_Handcannon: {
-	// DisplayName: Acrid Handcannon
-	// Tooltip: Releases brine droplets upon slug detonation
+	// DisplayName: "{§Acrid} Handcannon"
+	/* Tooltip:
+		'''
+		Uses slugs as ammo
+		Releases [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff] upon slug detonation
+		''' */
 }
 
 Newsboy_Cap: {
@@ -4241,7 +4339,7 @@ Dart_Crossbow: {
 }
 
 Acrid_Dye: {
-	// DisplayName: Acrid Dye
+	// DisplayName: "{§Acrid} Dye"
 	// Tooltip: ""
 }
 
@@ -4261,17 +4359,17 @@ Shimmer_Dye: {
 
 Coolant_Canister: {
 	// DisplayName: Coolant Canister
-	// Tooltip: Inflicts frostburn to anything nearby upon impact
+	// Tooltip: Inflicts [buffhint:Frostburn] to anything nearby upon impact
 }
 
 Cursed_Canister: {
 	// DisplayName: Cursed Canister
-	// Tooltip: Releases a lingering cursed inferno in its wake
+	// Tooltip: Releases a lingering [buffhint:CursedInferno] in its wake
 }
 
 Bile_Canister: {
 	// DisplayName: Bile Canister
-	// Tooltip: Inflicts raster to anything nearby upon impact
+	// Tooltip: Inflicts [buffhint:Origins/Rasterized_Debuff] to anything nearby upon impact
 }
 
 Flare_Launcher: {
@@ -4281,7 +4379,7 @@ Flare_Launcher: {
 
 Ichor_Canister: {
 	// DisplayName: Ichor Canister
-	// Tooltip: Inflicts ichor to anything nearby upon impact
+	// Tooltip: Inflicts [buffhint:Ichor] to anything nearby upon impact
 }
 
 Alkahest_Canister: {
@@ -4289,13 +4387,13 @@ Alkahest_Canister: {
 	/* Tooltip:
 		'''
 		Releases alkahest drops upon impact
-		Tenderizes the target
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
 		''' */
 }
 
 Alkaline_Canister: {
 	// DisplayName: Alkaline Canister
-	// Tooltip: Releases brine droplets upon impact
+	// Tooltip: Releases [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff] upon impact
 }
 
 Banner_Item: {
@@ -4310,7 +4408,11 @@ Defiled_Banner_NPC_Banner_Item: {
 
 Link_Grenade: {
 	// DisplayName: Link Grenade
-	// Tooltip: Only explodes when another explosive detonates nearby or when its fuse runs out
+	/* Tooltip:
+		'''
+		Only explodes when another explosive detonates nearby or when its fuse runs out
+		Damage adds up when exploding nearby other Link Grenades
+		''' */
 }
 
 Sticky_Link_Grenade: {
@@ -4334,7 +4436,7 @@ Endowood_Platform_Item: {
 
 Dark_Spiral: {
 	// DisplayName: Dark Spiral
-	// Tooltip: Releases shadow scales when thrown
+	// Tooltip: Releases shadow scales on hit
 }
 
 Waning_Crescent: {
@@ -4351,14 +4453,14 @@ Plasma_Cutter: {
 	// DisplayName: Plasma Cutter
 	/* Tooltip:
 		'''
-		Inflicts torn with increasing severities depending on how many of the three pulses hit the target
-		Torn severities are twice as effective for this weapon
+		[buffhint/dnTenderizes:Origins/Torn_Debuff] the target
+		[buffhint:Origins/Torn_Debuff] is twice as effective for this weapon
 		''' */
 }
 
 Ziptie: {
 	// DisplayName: Ziptie
-	// Tooltip: Striking three or more enemies at the same time briefly inflicts rasterized and increases attack speed
+	// Tooltip: Striking three or more enemies at the same time briefly inflicts [buffhint:Origins/Rasterized_Debuff] and increases attack speed
 }
 
 Communion: {
@@ -4372,7 +4474,7 @@ Forbidden_Voice_Uncursed: {
 		'''
 		10% increased melee damage
 		Increases the size of melee weapons
-		Your attacks weaken enemies
+		Your attacks [buffhint/dnweaken:Origins/Soulhide_Weakened_Debuff] enemies
 		''' */
 }
 
@@ -4381,7 +4483,7 @@ Breach: {
 	/* Tooltip:
 		'''
 		Casts a spirit-bound mass of black bile that explodes into miniature wisps
-		Enemies struck by this weapon recieve a brief raster
+		Enemies struck by this weapon recieve a brief [buffhint/dnraster:Origins/Rasterized_Debuff]
 		Self-damage recieved from this weapon replenishes mana
 		''' */
 }
@@ -4444,10 +4546,12 @@ Speed_Booster: {
 	// DisplayName: Speed Booster
 	/* Tooltip:
 		'''
-		The wearer can run super fast and even faster after taking damage
-		Allows the user to climb walls and dash into enemies
-		Greatly increased movement speed and return speed for grapple hooks and harpoon guns
 		5% increased damage
+		Allows flight, super fast running and increased acceleration
+		Increases damage and movement speed after taking damage
+		Provides light when worn
+		Allows the user to climb walls and dash into enemies
+		Greatly increased return speed for grapple hooks and harpoon guns
 		Gives a 10% chance to dodge attacks
 		Running fast for extended periods of time generates a charge for a powerful dash
 		''' */
@@ -4458,7 +4562,7 @@ Alkahest_Dart: {
 	/* Tooltip:
 		'''
 		Leaves a trail of alkahest behind it
-		Tenderizes the target
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
 		''' */
 }
 
@@ -4501,7 +4605,7 @@ Scrap_Compactor: {
 	/* Tooltip:
 		'''
 		Your explosives will explode into frenzied shrapnel
-		Nearby enemies below 40% and bosses below 10% of their max life whilst inflicted with Impeding Shrapnel will rapidly lose life
+		Nearby enemies below 40% and bosses below 10% of their max life whilst inflicted with [buffhint:Origins/Impeding_Shrapnel_Debuff] will rapidly lose life
 		''' */
 }
 
@@ -4610,7 +4714,7 @@ Generic_Weapon: {
 
 Hemoptysis: {
 	// DisplayName: Hemoptysis
-	// Tooltip: Launch bloody phlegm that damages, slows and bleeds enemies
+	// Tooltip: Launch bloody phlegm that damages, [buffhint:Origins/Slow_Debuff] and [buffhint/dnbleeds:Bleeding] enemies
 }
 
 Eaterboros: {
@@ -4640,9 +4744,9 @@ Slag_Bucket: {
 		'''
 		40% damage reduction while above 80% of maximum life
 		All life regeneration has a 4-second buffer period before it is applied after getting hit while above half life
-		Grants immunity to knockback, fire blocks, and impeding shrapnel
+		Grants immunity to knockback, fire blocks, and [buffhint/self:Origins/Impeding_Shrapnel_Debuff]
 		All damage received is reflected to 3 nearby enemies
-		You regenerate life while on fire
+		You regenerate life while [buffhint/dnon fire|self:OnFire]
 		''' */
 }
 
@@ -4651,9 +4755,9 @@ Slag_Bucket_Uncursed: {
 	/* Tooltip:
 		'''
 		15% damage reduction and increased life regeneration
-		Grants immunity to knockback, fire blocks, and impeding shrapnel
+		Grants immunity to knockback, fire blocks, and [buffhint/self:Origins/Impeding_Shrapnel_Debuff]
 		All damage received is reflected to 3 nearby enemies
-		You regenerate life while on fire
+		You regenerate life while [buffhint/dnon fire|self:OnFire]
 		''' */
 }
 
@@ -4684,12 +4788,20 @@ Amebic_Gel_Wall_Placed_Unsafe_Item: {
 
 Broken_Terratotem: {
 	// DisplayName: Broken Terratotem
-	// Tooltip: Summons a lost soul to fight for you
+	/* Tooltip:
+		'''
+		Summons totems to fight for you
+		Higher totems have stronger attacks and bring valuable items to you
+		''' */
 }
 
 Terratotem: {
 	// DisplayName: Terratotem
-	// Tooltip: Summons a reformed soul to fight for you
+	/* Tooltip:
+		'''
+		Summons totems to fight for you
+		Higher totems have stronger attacks and bring valuable items to you
+		''' */
 }
 
 Inanimate_Zombie_Hand: {
@@ -4768,13 +4880,13 @@ Partybringer: {
 }
 
 The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction: {
-	// DisplayName: The Ultimate Death Firework Launcher Of Mega Destruction™ (Patent Pending)
+	// DisplayName: T.U.D.F.L.O.M.D.
 	// Tooltip: ""
 }
 
 Eternanite: {
 	// DisplayName: Eternanite
-	// Tooltip: Casts a forceful cloud of gaseous black bile
+	// Tooltip: Casts a forceful cloud of gaseous [buffhint/dnblack bile:Origins/Rasterized_Debuff]
 }
 
 Cobalt_Harpoon_Gun: {
@@ -4849,7 +4961,7 @@ Mildew_Whip: {
 	// DisplayName: Mildew Whip
 	/* Tooltip:
 		'''
-		Has a chance to inflict Toxic Shock
+		Has a chance to inflict [buffhint:Origins/Toxic_Shock_Debuff]
 		7 summon tag damage
 		{$CommonItemTooltip.Whips}
 		''' */
@@ -4872,7 +4984,7 @@ Brine_Fountain_Item: {
 
 Chipper_Knife: {
 	// DisplayName: Chipper Knife
-	// Tooltip: Briefly rasters enemies
+	// Tooltip: Briefly [buffhint/dnrasterizes:Origins/Rasterized_Debuff] enemies
 }
 
 Ancient_Felnum_Breastplate: {
@@ -4914,7 +5026,7 @@ Bee_Canister: {
 
 Discharge_Canister: {
 	// DisplayName: Discharge Canister
-	// Tooltip: Inflicts Static Shock to enemies in its blast
+	// Tooltip: Inflicts [buffhint:Origins/Static_Shock_Debuff] to enemies in its blast
 }
 
 // MiningHelmet.BuffTooltip: 3% increased explosive critical strike chance
@@ -4942,11 +5054,7 @@ Replacement_Wall_Item: {
 
 Lightning_Ring: {
 	// DisplayName: Lightning Ring
-	/* Tooltip:
-		'''
-		All attacks inflict Static Shock
-		Increases the shock chain range when using items that already inflict it
-		''' */
+	// Tooltip: All attacks inflict [buffhint:Origins/Mini_Static_Shock_Debuff]
 }
 
 /* CombineTooltips:
@@ -4960,8 +5068,9 @@ Felnum_Sword: {
 	// DisplayName: Thunderbolt
 	/* Tooltip:
 		'''
-		Inflicts Static Shock
+		Inflicts [buffhint:Origins/Static_Shock_Debuff]
 		<right> to stab
+		Receives 50% higher damage bonuses
 		''' */
 }
 
@@ -5046,7 +5155,7 @@ Ocotillo_Finger: {
 	// DisplayName: Ocotillo Finger
 	/* Tooltip:
 		'''
-		Has a chance to inflict Bleeding
+		Has a chance to inflict [buffhint:Bleeding]
 		2 summon tag damage
 		{$CommonItemTooltip.Whips}
 		''' */
@@ -5056,7 +5165,7 @@ Brine_Convergence_Incantation: {
 	// DisplayName: Brine Convergence Incantation
 	/* Tooltip:
 		'''
-		Inflicts Toxic Shock
+		Inflicts [buffhint:Origins/Toxic_Shock_Debuff]
 		6 summon tag damage
 		{$CommonItemTooltip.Whips}
 		''' */
@@ -5081,12 +5190,12 @@ Crawdaddys_Revenge: {
 }
 
 Acrid_Laser_Rod: {
-	// DisplayName: Acrid Laser Rod
+	// DisplayName: "{§Acrid} Laser Rod"
 	// Tooltip: The bobber will light up the area around it
 }
 
 Acrid_Beam_Thrusters: {
-	// DisplayName: Acrid Beam Thrusters
+	// DisplayName: "{§Acrid} Beam Thrusters"
 	// Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
 }
 
@@ -5127,14 +5236,14 @@ Necromancer_Crown: {
 
 Lost_Diver_Bag: {
 	// DisplayName: Treasure Bag (Lost Diver)
-	// Tooltip: ""
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Torpedo_Tube: {
 	// DisplayName: Torpedo Tube
 	/* Tooltip:
 		'''
-		Inflicts Cavitation
+		Inflicts [buffhint:Origins/Cavitation_Debuff]
 		Fires a torpedo that seeks enemies while submerged
 		''' */
 }
@@ -5143,9 +5252,9 @@ Faith_Beads: {
 	// DisplayName: Faith Beads
 	/* Tooltip:
 		'''
-		Immunity to Suffocation and reduces damage from loss of breath
+		Immunity to [buffhint/self:Suffocation] and reduces damage from loss of breath
 		Grants the ability to swim and easy movement through liquids
-		All of your attacks inflict Cavitation, Wet and have a chance to cause explosions underwater
+		All of your attacks inflict [buffhint:Origins/Cavitation_Debuff], [buffhint:Wet], and have a chance to cause explosions underwater
 		+40% explosive blast radius
 		'Only through struggle do we find ourselves'
 		''' */
@@ -5160,8 +5269,8 @@ Watered_Down_Keytar: {
 	// DisplayName: Watered-down Keytar
 	/* Tooltip:
 		'''
-		Left-click for a Toxic Shock-inflicting synth
-		Right-click for a cavitating bass
+		Left-click for a [buffhint:Origins/Toxic_Shock_Debuff]-inflicting synth
+		Right-click for a [buffhint/dncavitating:Origins/Cavitation_Debuff] bass
 		''' */
 }
 
@@ -5205,7 +5314,7 @@ Retaliatory_Tendril: {
 }
 
 First_Dream: {
-	// DisplayName: First Dream ({0})
+	// DisplayName: First Dream
 	// Mode_Chrersis: Chrersis
 	// Mode_Diver: Diver
 	/* Tooltip:
@@ -5213,6 +5322,7 @@ First_Dream: {
 		Right-click to change your appearance!
 		Makes you look like one of Origins' spriters!
 		''' */
+	// Mode_ByteLoss: "[glitch:ByteLoss]"
 }
 
 Tender_Flesh_Heart: {
@@ -5222,7 +5332,7 @@ Tender_Flesh_Heart: {
 		Up to 65% of your max life is gradually converted into mildew health
 		Mildew health regenerates faster than regular health
 		Your death is delayed for as long as your max mildew health decays
-		Increased life regeneration, defense and mildew health conversion based on the torn severity you're affected by
+		Increased life regeneration, defense and mildew health conversion based on the [buffhint/self:Origins/Torn_Debuff] severity you're affected by
 		''' */
 }
 
@@ -5273,7 +5383,7 @@ Soldering_Iron: {
 
 Old_Brine_Rock: {
 	// DisplayName: Old Brine Rock
-	// Tooltip: Summons an armed leaf snapper to fight for you
+	// Tooltip: Summons an [buffhint/dnarmed:Origins/Toxic_Shock_Debuff] leaf snapper to fight for you
 }
 
 // Rebreather_Gear.DisplayName: Rebreather Gear
@@ -5281,7 +5391,7 @@ Old_Brine_Rock: {
 
 Laser_Line_Bow: {
 	// DisplayName: Laser Line Bow
-	// Tooltip: Fired arrows release brine rain in their wake
+	// Tooltip: Fired arrows release [buffhint/dnbrine rain:Origins/Toxic_Shock_Debuff] in their wake
 }
 
 Guardian_Rod: {
@@ -5340,7 +5450,7 @@ Explosive_Barrel: {
 }
 
 Acrid_Spout: {
-	// DisplayName: Acrid Spout
+	// DisplayName: "{§Acrid} Spout"
 	/* Tooltip:
 		'''
 		Spews droplets of brine
@@ -5351,7 +5461,11 @@ Acrid_Spout: {
 
 Liars_Tongue: {
 	// DisplayName: Liar's Tongue
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		You are [buffhint/self:Silenced], press <key> to [buffhint/dnsilence:Origins/Silenced_Debuff] everyone else too
+		Gain up to 27% damage resistance over time by not speaking
+		''' */
 }
 
 Caeser_Salad: {
@@ -5373,7 +5487,7 @@ Mithrafin: {
 	// DisplayName: Mithrafin
 	/* Tooltip:
 		'''
-		Extends any Poison, Acid Venom or Toxic Shock inflicted onto enemies
+		Extends any [buffhint/dnPoison:Poisoned], [buffhint:Venom], or [buffhint:Origins/Toxic_Shock_Debuff] inflicted onto enemies
 		Reduces the duration of these effects when applied to you
 		''' */
 }
@@ -5464,8 +5578,8 @@ Sharp_Broth: {
 	// DisplayName: Sharp Broth
 	/* Tooltip:
 		'''
-		Artifact minions inflict Electrified
-		All minions inflict Static Shock
+		Artifact minions inflict [buffhint:Origins/Electrified_Debuff]
+		All minions inflict [buffhint:Origins/Static_Shock_Debuff]
 		''' */
 }
 
@@ -5473,8 +5587,8 @@ Minty_Broth: {
 	// DisplayName: Minty Broth
 	/* Tooltip:
 		'''
-		All artifact minions have the Thorns effect
-		All minions inflict Frostburn for a small area around them
+		Artifact minions deal damage to nearby enemies when hurt
+		All minions inflict [buffhint:Frostburn2] in a small area around them
 		''' */
 }
 
@@ -5501,8 +5615,8 @@ The_Foot: {
 	// DisplayName: The Foot
 	/* Tooltip:
 		'''
-		Inflicts Toxic Shock
-		Releases a akaline aura when striking the ground
+		Inflicts [buffhint:Origins/Toxic_Shock_Debuff]
+		Releases an akaline aura when striking the ground
 		Hold and right-click to use it like a flail
 		Right-click and release to use it as an anchor
 		''' */
@@ -5535,15 +5649,15 @@ Fiberbass: {
 
 Regurgitator_Of_Souls: {
 	// DisplayName: Regurgitator of Souls
-	// Tooltip: Inflicts Shadefire
+	// Tooltip: Inflicts [buffhint:Origins/Shadefire_Debuff]
 }
 
 Venom_Shield: {
 	// DisplayName: Venom Shield
 	/* Tooltip:
 		'''
-		Attacks inflict Toxic Shock
-		Effects are stronger while Acrid Armor is equipped
+		Attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
+		Effects are stronger while {§Acrid} Armor is equipped
 		Grants immunity to knockback and fire blocks
 		All damage received is reflected to 3 nearby enemies
 		Allows the player to dash into the enemy
@@ -5688,6 +5802,13 @@ Light_Broth: {
 Keytar: {
 	// DisplayName: Keytar
 	// Tooltip: Right click to alternate between different instruments!
+
+	Modes: {
+		// 0: Synth inflicts [buffhint:Venom] and [buffhint:Origins/Toxic_Shock_Debuff]
+		// 1: Bass inflicts [buffhint:Origins/Cavitation_Debuff]
+		// 2: Lead is 3x likely to deal critical hits
+	}
+
 	// Mode0: Synth Mode
 	// Mode1: Bass Mode
 	// Mode2: Lead Mode
@@ -5715,6 +5836,11 @@ Ashen_Chest: {
 
 Greater_Summoning_Potion: {
 	// DisplayName: Greater Summoning Potion
+	// Tooltip: Increases your max number of minions by 2
+}
+
+Greater_Summoning_Potato: {
+	// DisplayName: Greater Summoning Potato
 	// Tooltip: Increases your max number of minions by 2
 }
 
@@ -5763,7 +5889,7 @@ Ocotillo_Flower: {
 
 Geothermal_Sludge: {
 	// DisplayName: Geothermal Sludge
-	// Tooltip: ""
+	// Tooltip: "{$Mods.Origins.Items.GenericTooltip.Extractinator}"
 }
 
 Inject_Incantation: {
@@ -5784,8 +5910,8 @@ Umami_Broth: {
 	// DisplayName: Umami Broth
 	/* Tooltip:
 		'''
-		All minions inflict Acid Venom
-		Artifact minions also inflict Toxic Shock
+		All minions inflict [buffhint:Venom]
+		Artifact minions also inflict [buffhint:Origins/Toxic_Shock_Debuff]
 		''' */
 }
 
@@ -5813,7 +5939,7 @@ Soul_Snatcher: {
 	/* Tooltip:
 		'''
 		Hold <right> to spin it around
-		Becomes empowered after striking enemies, inflicting Shadefire
+		Becomes empowered after striking enemies, inflicting [buffhint:Origins/Shadefire_Debuff]
 		Pressing <left> while empowered and holding <right> launches it
 		''' */
 }
@@ -5855,8 +5981,8 @@ Greasy_Broth: {
 	// DisplayName: Greasy Broth
 	/* Tooltip:
 		'''
-		All minions inflict Oiled
-		Artifact minions release greasy gas that burns enemies
+		All minions inflict [buffhint:Oiled]
+		Artifact minions release greasy gas that [buffhint/dnburns enemies:OnFire]
 		''' */
 }
 
@@ -5865,7 +5991,7 @@ Savory_Broth: {
 	/* Tooltip:
 		'''
 		Increases debuff duration from minions by 20%
-		Artifact minions tenderize targets
+		Artifact minions [buffhint/dntenderize:Origins/Torn_Debuff] targets
 		''' */
 }
 
@@ -5873,7 +5999,7 @@ Savory_Broth: {
 
 Spicy_Broth: {
 	// DisplayName: Spicy Broth
-	// Tooltip: Minions engulf enemies in flames
+	// Tooltip: Minions [buffhint/dnengulf enemies in flames:OnFire3]
 }
 
 Tangela_Dye: {
@@ -5893,11 +6019,6 @@ Tangela_Bud: {
 		Used to make {§Tangela} Dye
 		'Ooooh, preeeetty'
 		''' */
-}
-
-Skimswim_Potion: {
-	// DisplayName: Skimswim Potion
-	// Tooltip: ""
 }
 
 Venus_Coral_Debug_Item: {
@@ -5927,7 +6048,7 @@ Residual_Crate: {
 
 Brine_Haze: {
 	// DisplayName: Brine Haze
-	// Tooltip: ""
+	// Tooltip: Releases [buffhint/dnclouds of brine:Origins/Toxic_Shock_Debuff] that linger
 }
 
 Enchanted_Fiberglass_Wall_Item: {
@@ -5950,6 +6071,601 @@ Lost_Brick_Wall_Item: {
 	// Tooltip: ""
 }
 
-// Defiled_Storage_Core.DisplayName: Defiled Storage Core
+// Nerve_Flan_Food.Tooltip: "{$Buffs.Nerve_Flan_Food_Buff.Description}"
+
+Aether_Bullet: {
+	// DisplayName: Aether Bullet
+	// Tooltip: Fires behind you as well
+}
+
+Aether_Canister: {
+	// DisplayName: Aether Canister
+	// Tooltip: Floats in air and releases aether stars
+}
+
+Chambersite_Bunny_Cage_Item: {
+	// DisplayName: Chambersite Bunny Cage
+	// Tooltip: ""
+}
+
+Chambersite_Squirrel_Cage_Item: {
+	// DisplayName: Chambersite Squirrel Cage
+	// Tooltip: ""
+}
+
+Chambersite_Bunny_Item: {
+	// DisplayName: Chambersite Bunny
+	// Tooltip: ""
+}
+
+Chambersite_Squirrel_Item: {
+	// DisplayName: Chambersite Squirrel
+	// Tooltip: ""
+}
+
+Silicon_Sword: {
+	// DisplayName: Silicon Sword
+	// Tooltip: "'TO will never exist'"
+}
+
+Chambersite_Minigun: {
+	// DisplayName: Chambersite Minigun
+	// Tooltip: Fires in a spread before ramping up
+}
+
+Aetherite_Bar: {
+	// Tooltip: "'It's smooth, but that's not what it feels like'"
+	// DisplayName: Aetherite Bar
+}
+
+Shimmerstar_Staff: {
+	// DisplayName: Shimmerstar Staff
+	/* Tooltip:
+		'''
+		Releases empowered aether stars to track down enemies
+		<right> while holding for an alternate attack!
+		'Oh hey... this is the area I was in charge of for three seconds'
+		''' */
+}
+
+Aether_Opal: {
+	// DisplayName: Aether Opal
+	// Tooltip: Summons a Shimmer Guardian to fight for you
+}
+
+Aether_Orb: {
+	// DisplayName: Aether Orb
+	// Tooltip: Throw into the Shimmer to summon the {$Mods.Origins.NPCs.Shimmer_Construct.DisplayName}
+}
+
+Chambersite_Hook: {
+	// DisplayName: Chambersite Hook
+	// Tooltip: ""
+}
+
+Chambersite_Robe: {
+	// DisplayName: Chambersite Robe
+	/* Tooltip:
+		'''
+		80% reduced mana cost
+		Reduces maximum mana by 80
+		Maximum mana cannot go below 20 
+		''' */
+}
+
+Resizing_Glove: {
+	// DisplayName: Resizing Glove
+	/* Tooltip:
+		'''
+		Swung melee weapons will be a random size every swing
+		Enables auto swing for melee weapons
+		'Resizing Glove, huh? Why do they only come in small?'
+		''' */
+}
+
+Wishing_Glass: {
+	// DisplayName: Wishing Glass
+	/* Tooltip:
+		'''
+		Press <key> for 8 seconds of infinite ammo and mana, and insanely fast use time
+		10 second cooldown
+		''' */
+}
+
+Shimmer_Shield: {
+	// DisplayName: Shield of Shimmer
+	/* Tooltip:
+		'''
+		+9% damage reduction
+		Allows the player to dash into and reflect enemy projectiles
+		Double tap a direction
+		''' */
+}
+
+Large_Chambersite: {
+	// DisplayName: Large Chambersite
+	// Tooltip: For Capture the Gem. It drops when you die
+}
+
+Chambersite_Gem_Lock_Item: {
+	// DisplayName: Chambersite Gem Lock
+	// Tooltip: <right> to place or remove {$Large_Chambersite.DisplayName}s
+}
+
+Chambersite_Mine_Launcher: {
+	// DisplayName: Chambersite Mine Launcher
+	// Tooltip: Fully benefits from generic boosts
+}
+
+Cool_Sword: {
+	// DisplayName: Cool Sword
+	// Tooltip: Releases aether stars
+}
+
+Chambersite_Minecart_Item: {
+	// DisplayName: Chambersite Minecart
+	// Tooltip: ""
+}
+
+Shimmer_Dynamite: {
+	// DisplayName: Shimmer Dynamite
+	/* Tooltip:
+		'''
+		Non-consumable
+		Shimmers things
+		''' */
+}
+
+Chambersite_Phasesaber: {
+	// DisplayName: Chambersite Phasesaber
+	// Tooltip: <Right> to throw, but it doesn't glow!
+}
+
+Bile_Harpoon: {
+	// DisplayName: Bile Harpoon
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		[buffhint/dnStuns:Origins/Rasterized_Debuff] the target
+		''' */
+}
+
+Aetherite_Robe: {
+	// DisplayName: Aether Robes
+	/* Tooltip:
+		'''
+		+24% generic attack speed
+		Increased jump speed and slower fall
+		''' */
+}
+
+Aetherite_Wreath: {
+	// DisplayName: Aether Wreath
+	/* Tooltip:
+		'''
+		+15% generic velocity
+		+15% melee weapon size
+		''' */
+}
+
+Gaming_Glove: {
+	// DisplayName: Gaming Glove
+	/* Tooltip:
+		'''
+		Increases melee knockback
+		12% increased melee speed
+		Enables auto swing for melee weapons
+		Swung melee weapons will be a random size every swing
+		''' */
+}
+
+Shinedown: {
+	// DisplayName: Shinedown
+	// PerSecond: "{0} per second"
+	// ManaPerSecond: Uses {0:.#} mana per second, plus {1:.#} per target
+	// StatusChance: "{0} status effect chance"
+
+	StatusEffects: {
+		// 1: "{0} status effect"
+		// Default: "{0} status effects"
+	}
+
+	// Tooltip: Hold it out to cast shadows on enemies
+}
+
+Chambersite_Breastplate: {
+	// DisplayName: Chambersite Breastplate
+	/* Tooltip:
+		'''
+		+12% critical strike chance
+		+8% damage reduction
+		+60 max mana
+		10% reduced mana cost
+		''' */
+}
+
+Chambersite_Greaves: {
+	// DisplayName: Chambersite Greaves
+	/* Tooltip:
+		'''
+		+10% faster weapon use time
+		+20% movement speed
+		''' */
+}
+
+Chambersite_Helmet: {
+	// DisplayName: Chambersite Helmet
+	/* Tooltip:
+		'''
+		+12% weapon damage and velocity
+		Increases your max number of minions by 1
+		''' */
+}
+
+Shimmer_Construct_Bag: {
+	// DisplayName: Treasure Bag (Shimmer Construct)
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Shimmer_Construct_Relic_Item: {
+	// DisplayName: Shimmer Construct Relic
+	// Tooltip: ""
+}
+
+Shimmer_Construct_Trophy_Item: {
+	// DisplayName: Shimmer Construct Trophy
+	// Tooltip: ""
+}
+
+// Shimmer_Construct_Mask.DisplayName: Shimmer Construct Mask
+
+Alkahest_Harpoon: {
+	// DisplayName: Alkahest Harpoon
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]
+		''' */
+}
+
+Amnestic_Rose: {
+	// DisplayName: Amnestic Rose
+	/* Tooltip:
+		'''
+		Launches a rose that [buffhint/dnslows targets:Origins/Amnestic_Rose_Buff]
+		Steals mana from enemies struck by the rosebud
+		'A Rose, But for whom?'
+		''' */
+}
+
+Otherworldly_Cloak: {
+	// DisplayName: Otherworldly Cloak
+	/* Tooltip:
+		'''
+		Chases after tagged enemies
+		Slams enemies when close
+		Allows for a super high jump and negates fall damage
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		''' */
+}
+
+Master_Magician_Cloak: {
+	// DisplayName: Master Magician's Cloak
+	/* Tooltip:
+		'''
+		8% reduced mana cost
+		Automatically use mana potions when needed
+		Causes stars to fall after taking damage
+		Stars restore mana when collected
+		Chases after tagged enemies
+		Slams enemies when close
+		Allows for a super high jump and negates fall damage
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		''' */
+}
+
+Constellation: {
+	// DisplayName: Constellation
+	// Tooltip: ""
+}
+
+Voltefuse: {
+	// DisplayName: Voltefuse
+	/* Tooltip:
+		'''
+		Explodes into a cluster of stars, in reverse
+		'Deja vu...'
+		''' */
+}
+
+Ichor_Harpoon: {
+	// DisplayName: Ichor Harpoon
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Inflicts [buffhint:Ichor]
+		''' */
+}
+
+Gelatin_Bloom_Brooch: {
+	// DisplayName: Gelatin Bloom Brooch
+	/* Tooltip:
+		'''
+		Summons a gelatinous aspect to light the way
+		'Many thanks from the folks over in [c/b8e843:Salvature]'
+		''' */
+}
+
+Shadow_Torch: {
+	// DisplayName: Shadow Torch
+	// Tooltip: Darkens the area around it
+}
+
+Amoeba_Buggy_Cage_Item: {
+	// DisplayName: Amoeba Buggy Cage
+	// Tooltip: ""
+}
+
+Bug_Cage_Item: {
+	// DisplayName: Bug Cage
+	// Tooltip: ""
+}
+
+Cicada_3301_Cage_Item: {
+	// DisplayName: Cicada 3301 Cage
+	// Tooltip: ""
+}
+
+Jawbreaker: {
+	// DisplayName: Jawbreaker
+	/* Tooltip:
+		'''
+		Summons a stellar spark
+		'NOT RECOMMENDED FOR CONSUMPTION'
+		''' */
+}
+
+Aetherite_Ore_Item: {
+	// DisplayName: Aetherite Ore
+	// Tooltip: "'It's smooth, but that's not what it feels like'"
+}
+
+Kono_Dio_Da_Set: {
+	// DisplayName: Dio Set
+	// Tooltip: "{$DioSet}"
+}
+
+Kono_Dio_Da_Wings: {
+	// DisplayName: Dio's Scarf
+	/* Tooltip:
+		'''
+		{$DioSet}
+		{$TODev}
+		Inexplicably allows flight and slow fall
+		''' */
+}
+
+Dio_Breastplate: {
+	// DisplayName: Dio's Ornate Shirt
+	/* Tooltip:
+		'''
+		{$DioSet}
+		{$TODev}
+		''' */
+}
+
+Dio_Greaves: {
+	// DisplayName: Dio's Eccentric Breeches
+	/* Tooltip:
+		'''
+		{$DioSet}
+		{$TODev}
+		''' */
+}
+
+Dio_Helmet: {
+	// DisplayName: Dio's Hair
+	/* Tooltip:
+		'''
+		{$DioSet}
+		{$TODev}
+		''' */
+}
+
+Calcified_Riven_Flesh_Item: {
+	// DisplayName: Calcified {§Spug} Flesh
+	// Tooltip: ""
+}
+
+Calcified_Riven_Flesh_Wall_Safe_Item: {
+	// DisplayName: Calcified {§Spug} Flesh Wall
+	// Tooltip: ""
+}
+
+Deceptive_Beauty_Item: {
+	// DisplayName: Deceptive Beauty
+	// Tooltip: "'B. Lobster'"
+}
+
+Barnacle_Wall_Safe_Item: {
+	// DisplayName: Barnacle Wall
+	// Tooltip: ""
+}
+
+Limestone_Platform_Item: {
+	// DisplayName: Limestone Platform
+	// Tooltip: ""
+}
+
+Limestone_Door_Item: {
+	// DisplayName: Limestone Door
+	// Tooltip: ""
+}
+
+Limestone_Grandfather_Clock_Item: {
+	// DisplayName: Limestone Grandfather Clock
+	// Tooltip: ""
+}
+
+Limestone_Chair_Item: {
+	// DisplayName: Limestone Chair
+	// Tooltip: ""
+}
+
+Limestone_Toilet_Item: {
+	// DisplayName: Limestone Toilet
+	// Tooltip: ""
+}
+
+Limestone_Sofa_Item: {
+	// DisplayName: Limestone Sofa
+	// Tooltip: ""
+}
+
+Limestone_Bathtub_Item: {
+	// DisplayName: Limestone Bathtub
+	// Tooltip: ""
+}
+
+Limestone_Sink_Item: {
+	// DisplayName: Limestone Sink
+	// Tooltip: ""
+}
+
+Limestone_Candle_Item: {
+	// DisplayName: Limestone Candle
+	// Tooltip: ""
+}
+
+Limestone_Candelabra_Item: {
+	// DisplayName: Limestone Candelabra
+	// Tooltip: ""
+}
+
+Limestone_Lamp_Item: {
+	// DisplayName: Limestone Lamp
+	// Tooltip: ""
+}
+
+Limestone_Lantern_Item: {
+	// DisplayName: Limestone Lantern
+	// Tooltip: ""
+}
+
+Limestone_Bookcase_Item: {
+	// DisplayName: Limestone Bookcase
+	// Tooltip: ""
+}
+
+Limestone_Piano_Item: {
+	// DisplayName: Limestone Piano
+	// Tooltip: ""
+}
+
+Limestone_Table_Item: {
+	// DisplayName: Limestone Table
+	// Tooltip: ""
+}
+
+Limestone_Work_Bench_Item: {
+	// DisplayName: Limestone Work Bench
+	// Tooltip: ""
+}
+
+Limestone_Dresser_Item: {
+	// DisplayName: Limestone Dresser
+	// Tooltip: ""
+}
+
+Limestone_Bed_Item: {
+	// DisplayName: Limestone Bed
+	// Tooltip: ""
+}
+
+Limestone_Chest_Item: {
+	// DisplayName: Limestone Chest
+	// Tooltip: ""
+}
+
+Limestone_Chandelier_Item: {
+	// DisplayName: Limestone Chandelier
+	// Tooltip: ""
+}
+
+Shimmershot: {
+	// DisplayName: Shimmershot
+	// Tooltip: Hold right click to zoom and charge your shots
+}
+
+Lotusy_Dye: {
+	// DisplayName: Lotusy Dye
+	// Tooltip: ""
+}
+
+Hand_Cannon: {
+	// DisplayName: Hand Cannon
+	// Tooltip: Summons canisters from your hand
+}
+
+Accretion_Ribbon: {
+	// DisplayName: Accretion Ribbon
+	/* Tooltip:
+		'''
+		Waves around a damaging ribbon
+		Hold right click to do fancy aerobic tricks
+		Hold left and right click for speen
+		6 summon tag damage
+		{$CommonItemTooltip.Whips}
+		'I don't know. Wave it around or something!'
+		''' */
+}
+
+Shelf_Coral_Item: {
+	// DisplayName: Shelf Coral
+	// Tooltip: ""
+}
+
+Shimmershotgun: {
+	// DisplayName: Shimmershotgun
+	// Tooltip: "'The best designated marksman shotgun not on the market'"
+}
+
+// Defiled_Storage_Core.DisplayName: "{§Defiled} Storage Core"
 // Encrusted_Storage_Core.DisplayName: Encrusted Storage Core
 // Sanguinite_Storage_Core.DisplayName: Sanguinite Storage Core
+
+Procedural_Sprite_Generator: {
+	// DisplayName: Procedural Sprite Generator
+	// Tooltip: ""
+}
+
+Astral_Scythe: {
+	// DisplayName: Astral Scythe
+	/* Tooltip:
+		'''
+		Upon 3 successful hits the blade of the scythe detatches to form a flail
+		<right> to explode the blade to release star mines around you, damage and range varying based on successful scythe hits
+		{§Mods.Origins.Items.Astral_Scythe.Debuff}
+		''' */
+	// Debuff: While the blade regenerates the scythe is unusable
+}
+
+Pocket_Dimension_Monolith_Item: {
+	// DisplayName: Pocket Dimension Monolith
+	/* Tooltip:
+		'''
+		'Unveil the hiding place of a powerful sorceress'
+		Can be used to open/close a portal to a pocket dimension
+		''' */
+}
+
+Dream_Catcher: {
+	// DisplayName: Dream Catcher
+	/* Tooltip:
+		'''
+		Rapidly fires shards and vines that pull enemies
+		<right> to deploy the dream catcher to the cursor
+		''' */
+}

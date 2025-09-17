@@ -4,13 +4,11 @@ global using Vector3 = Microsoft.Xna.Framework.Vector3;
 global using Vector4 = Microsoft.Xna.Framework.Vector4;
 global using Color = Microsoft.Xna.Framework.Color;
 global using Rectangle = Microsoft.Xna.Framework.Rectangle;
+global using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Origins.Gores.NPCs;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Bleeding;
-using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
@@ -33,31 +31,29 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
-using static Origins.OriginExtensions;
 using MC = Terraria.ModLoader.ModContent;
 using Origins.Walls;
 using Origins.Tiles.Other;
 using AltLibrary.Common.AltBiomes;
-using Origins.NPCs;
 using Origins.Tiles.Banners;
 using Origins.Graphics;
 using MonoMod.Cil;
-using Origins.Items.Tools;
-using Microsoft.Xna.Framework.Audio;
 using Origins.Buffs;
 using PegasusLib;
-using Origins.Items.Other.Consumables;
-using CalamityMod.Items.Placeables.FurnitureAuric;
 using Origins.Items;
 using Origins.Items.Other;
-using CalamityMod.Projectiles.Magic;
-using Origins.Items.Weapons.Melee;
 using Origins.NPCs.TownNPCs;
 using Origins.Items.Other.Testing;
 using Origins.Journal;
 using Origins.Backgrounds;
-using Terraria.ModLoader.Core;
-using Origins.Dusts;
+using Origins.NPCs.MiscB.Shimmer_Construct;
+using static Origins.OriginsSets.Items;
+using Origins.World.BiomeData;
+using Origins.Layers;
+using Origins.Items.Vanity.Dev.PlagueTexan;
+using System.Text.RegularExpressions;
+using System.Text;
+using Origins.Core;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -109,9 +105,6 @@ namespace Origins {
 		public static int RiftHeadArmorID { get; private set; }
 		public static int RiftBodyArmorID { get; private set; }
 		public static int RiftLegsArmorID { get; private set; }
-		public static Dictionary<int, AutoCastingAsset<Texture2D>> HelmetGlowMasks { get; private set; }
-		public static Dictionary<int, AutoCastingAsset<Texture2D>> BreastplateGlowMasks { get; private set; }
-		public static Dictionary<int, AutoCastingAsset<Texture2D>> LeggingGlowMasks { get; private set; }
 		public static Dictionary<int, AutoCastingAsset<Texture2D>> TorsoLegLayers { get; private set; }
 
 		#endregion Armor IDs
@@ -139,6 +132,7 @@ namespace Origins {
 		public static List<ITicker> tickers = [];
 		public static List<object> loggedErrors = [];
 		public static List<LocalizedText> loadingWarnings = [];
+		internal static List<LateLoadable> lateLoadables = [];
 		public override uint ExtraPlayerBuffSlots => 4;
 		public Origins() {
 			instance = this;
@@ -209,6 +203,9 @@ namespace Origins {
 					}
 				}
 			}
+			for (int i = 0; i < OriginTile.LateSetupActions.Count; i++) {
+				OriginTile.LateSetupActions[i]();
+			}
 			if (OriginConfig.Instance.GrassMerge) {
 				List<int> grasses = new List<int>() { };
 				for (int i = 0; i < TileLoader.TileCount; i++) {
@@ -227,9 +224,26 @@ namespace Origins {
 			}
 			MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Ebonstone>(), MC.WallType<Chambersite_Ebonstone_Wall>());
 			MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Crimstone>(), MC.WallType<Chambersite_Crimstone_Wall>());
-			IL_Main.DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
+			UnstableHooking.IL_Main_DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
 			OriginsModIntegrations.LateLoad();
 			_ = OriginExtensions.StrikethroughFont;
+			for (int k = 0; k < ItemLoader.ItemCount; k++) {
+				Item item = ContentSamples.ItemsByType[k];
+				if (item.createTile > -1 && OriginsSets.Tiles.PlacementItem[item.createTile] == -1 && (!Main.tileFrameImportant[item.createTile] || TileID.Sets.Torch[item.createTile])) {
+					OriginsSets.Tiles.PlacementItem[item.createTile] = item.type;
+				}
+			}
+			for (int i = 0; i < OriginsSets.Tiles.PlacementItem.Length; i++) {
+				int placementItem = OriginsSets.Tiles.PlacementItem[i];
+				if (placementItem < 0) continue;
+				if (ItemID.Sets.ShimmerCountsAsItem[placementItem] >= 0) placementItem = ItemID.Sets.ShimmerCountsAsItem[placementItem];
+				if (ItemID.Sets.ShimmerTransformToItem[placementItem] < 0) continue;
+				Item item = ContentSamples.ItemsByType[ItemID.Sets.ShimmerTransformToItem[placementItem]];
+				if (item.createTile > -1) {
+					OriginsSets.Tiles.ShimmerTransformToTile[i] = item.createTile;
+				}
+			}
+			OriginsSets.Misc.SetupDyes();
 		}
 		public override void Load() {
 			AssimilationLoader.Load();
@@ -351,9 +365,6 @@ namespace Origins {
 			PotType = new();
 			PileType = new();
 
-			HelmetGlowMasks = new();
-			BreastplateGlowMasks = new();
-			LeggingGlowMasks = new();
 			TorsoLegLayers = new();
 
 			OriginExtensions.initExt();
@@ -366,7 +377,6 @@ namespace Origins {
 				blackHoleShade = new MiscShaderData(Assets.Request<Effect>("Effects/BlackHole"), "BlackHole");
 
 				Filters.Scene["Origins:TestingShader"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/TestingShader"), "TestingShader"), EffectPriority.VeryHigh);
-				Filters.Scene["Origins:ZoneDusk"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/BiomeShade"), "VoidShade"), EffectPriority.High);
 				if (Filters.Scene["Origins:ZoneDefiled"]?.IsActive() ?? false) {
 					Filters.Scene["Origins:ZoneDefiled"].Deactivate();
 				}
@@ -378,10 +388,22 @@ namespace Origins {
 				Filters.Scene["Origins:ZoneFiberglassUndergrowth"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
 				Overlays.Scene["Origins:ZoneFiberglassUndergrowth"] = new Fiberglass_Background();
 
+				Filters.Scene["Origins:ShimmerConstructPhase3Underlay"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
+				Filters.Scene["Origins:ShimmerConstructPhase3Midlay"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
+				Filters.Scene["Origins:ShimmerConstructPhase3"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
+				Filters.Scene["Origins:ShimmerConstructPhase3Cheap"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/Misc"), "NoScreenShader"));
+				Overlays.Scene["Origins:ShimmerConstructPhase3Underlay"] = ModContent.GetInstance<SC_Phase_Three_Underlay>();
+				Overlays.Scene["Origins:ShimmerConstructPhase3Midlay"] = ModContent.GetInstance<SC_Phase_Three_Midlay>();
+				Overlays.Scene["Origins:ShimmerConstructPhase3"] = ModContent.GetInstance<SC_Phase_Three_Overlay>();
+				Overlays.Scene["Origins:ShimmerConstructPhase3Cheap"] = new Cheap_SC_Phase_Three_Underlay();
+
 				Filters.Scene["Origins:MaskedRasterizeFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedRasterizeFilter"), "MaskedRasterizeFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:VolatileGelatinFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedPurpleJellyFilter"), "MaskedPurpleJellyFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:RivenBloodCoating"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/RivenBloodCoating"), "RivenBloodCoating"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:RivenBloodCoating"].GetShader().UseImage(Assets.Request<Texture2D>("Textures/Riven_Blood_Map"), 0, SamplerState.PointWrap);
+
+				Filters.Scene["Origins:ChineseRivenBloodCoating"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/RivenBloodCoating"), "ChineseRivenBloodCoating"), EffectPriority.VeryHigh);
+
 				Filters.Scene["Origins:MaskedTornFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedTornFilter"), "MaskedTornFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:MaskedTornFilter"].GetShader().UseImage(Assets.Request<Texture2D>("Textures/Torn_Texture"), 0, SamplerState.PointWrap);
 				//Filters.Scene["Origins:ZoneRiven"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade").Value), "RivenShade"), EffectPriority.High);
@@ -433,6 +455,8 @@ namespace Origins {
 				.UseImage2(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"))
 				.UseImage1(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise"));
 				GameShaders.Misc["Origins:SilhouetteShader"] = new MiscShaderData(Assets.Request<Effect>("Effects/SilhouetteShader"), "SilhouetteShader");
+				GameShaders.Misc["Origins:ShimmerConstructSDF"] = new MiscShaderData(Assets.Request<Effect>("Effects/ShimmerConstructSDF"), "ShimmerConstructSDF");
+				GameShaders.Misc["Origins:SC_DustEffect"] = new MiscShaderData(Assets.Request<Effect>("Effects/SC_DustEffect"), "SC_DustEffect");
 
 				GameShaders.Misc["Origins:Beam"] = new MiscShaderData(Assets.Request<Effect>("Effects/Beam"), "Beam")
 				.UseSamplerState(SamplerState.PointClamp);
@@ -442,6 +466,9 @@ namespace Origins {
 
 				journalTransparentShader = new ArmorShaderData(Assets.Request<Effect>("Effects/Journal"), "LightnessToTransparency");
 				GameShaders.Armor.BindShader(MC.ItemType<Framing_Tester>(), journalTransparentShader);
+
+				GameShaders.Misc["Origins:Constellation"] = new MiscShaderData(Assets.Request<Effect>("Effects/ConstellationMod"), "ConstellationMod")
+				.UseImage1(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"));
 
 				TangelaVisual.LoadShader();
 
@@ -464,11 +491,18 @@ namespace Origins {
 						}
 					}
 				};
-				IEnumerable<string> files = GetFileNames();
-				IEnumerable<string> goreFiles = files.Where(f => f.EndsWith(".rawimg") && f.Contains("Gores") && !files.Contains(f.Replace(".rawimg", ".cs")));
-				foreach (string gore in goreFiles) {
-					AutoLoadGores.AddGore("Origins/" + gore.Replace(".rawimg", null), this);
-				}
+				/*List<string> files = GetFileNames();
+				for (int i = 0; i < files.Count; i++) {
+					string file = files[i];
+					string name = file.Split('/')[^1];
+					string[] nameParts = name.Split('.');
+					string pureName = string.Join('.', nameParts[0..^1]);
+					string extension = nameParts[^1];
+					if (extension == "rawimg" && file.Contains("Gores") && !files.Contains(file.Replace(".rawimg", ".cs"))) {
+						AutoLoadGores.AddGore("Origins/" + file.Replace(".rawimg", null), this);
+					}
+				}*/
+
 				/*Task.Run(async () => {
 					await Task.Yield();
 					lock (CloudBottoms) {
@@ -496,6 +530,9 @@ namespace Origins {
 			]);
 			ChatManager.Register<Journal_Series_Header_Handler>([
 				"jsh"
+			]);
+			ChatManager.Register<Journal_Entry_Handler>([
+				"jentry"
 			]);
 			ChatManager.Register<Quest_Link_Handler>([
 				"quest",
@@ -535,6 +572,29 @@ namespace Origins {
 			]);
 			ChatManager.Register<Item_Hint_Handler>([
 				"itemhint"
+			]);
+			ChatManager.Register<Wiggle_Handler>([
+				"wiggle"
+			]);
+			ChatManager.Register<Word_Snippet_Handler>([
+				"word"
+			]);
+			ChatManager.Register<Centered_Snippet_Handler>([
+				"centered"
+			]);
+			ChatManager.Register<Glitch_Handler>([
+				"glitch"
+			]);
+			ChatManager.Register<Quest_Reward_Item_List_Handler>([
+				"qian"
+			]);
+			ChatManager.Register<Italics_Snippet_Handler>([
+				"italic",
+				"italics",
+				"italicize"
+			]);
+			ChatManager.Register<AF_Alt_Handler>([
+				"fool"
 			]);
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
@@ -629,22 +689,55 @@ namespace Origins {
 				SoundLimitBehavior = SoundLimitBehavior.IgnoreNew,
 				PitchVariance = 0.4f
 			};
+			Sounds.ShinedownLoop = new SoundStyle("Origins/Sounds/Custom/BeckoningRoar", SoundType.Sound) {
+				MaxInstances = 0,
+				IsLooped = true,
+				//Volume = 0.75f,
+				PitchRange = (0.2f, 0.3f)
+			};
+			Sounds.WCHit = new SoundStyle("Origins/Sounds/Custom/WCHit", SoundType.Sound) {
+				PitchVariance = 0.3f
+			};
+			Sounds.WCIdle = new SoundStyle("Origins/Sounds/Custom/WCIdle", SoundType.Sound) {
+				PitchVariance = 0.3f
+			};
+			Sounds.WCScream = new SoundStyle("Origins/Sounds/Custom/WCScream", SoundType.Sound) {
+				PitchVariance = 0.3f
+			};
 			//OriginExtensions.initClone();
 
 			Main.OnPostDraw += IncrementFrameCount;
 			PegasusLib.PegasusLib.Require(this, LibFeature.IDrawNPCEffect, LibFeature.IComplexMineDamageTile_Hammer, LibFeature.WrappingTextSnippet);
 			ApplyPatches();
 
+			for (int i = 1372; i < 1376; i++) PaintingsNotFromVendor[i] = true;
+			for (int i = 1433; i < 1444; i++) PaintingsNotFromVendor[i] = true;
+			for (int i = 1474; i < 1481; i++) PaintingsNotFromVendor[i] = true;
+			for (int i = 1495; i < 1503; i++) PaintingsNotFromVendor[i] = true;
+			for (int i = 1538; i < 1543; i++) PaintingsNotFromVendor[i] = true;
+			for (int i = 1573; i < 1578; i++) PaintingsNotFromVendor[i] = true;
+			for (int i = 1846; i < 1851; i++) PaintingsNotFromVendor[i] = true;
+			PaintingsNotFromVendor[ItemID.PillaginMePixels] = true;
+			PaintingsNotFromVendor[ItemID.SparkyPainting] = true;
+			for (int i = 4626; i < 4640; i++) PaintingsNotFromVendor[i] = true;
+			for (int i = 5218; i < 5275; i++) {
+				if (i != 5222 && i != 5225 && i != 5228 && i != 5229 && (i !>= 5231 && i !<= 5233) && (i !>= 5241 && i !<= 5245) && i != 5251 && i != 5253 && i != 5257 && i != 5266) PaintingsNotFromVendor[i] = true;
+			}
+			PaintingsNotFromVendor[ItemID.SunOrnament] = true;
+
 			if (ModLoader.TryGetMod("Fargowiltas", out Mod FargosMutant)) {
 				FargosMutant.Call("AddCaughtNPC", "Brine_Fiend_Item", MC.NPCType<Brine_Fiend>(), Name);
 				FargosMutant.Call("AddCaughtNPC", "Defiled_Effigy_Item", MC.NPCType<Defiled_Effigy>(), Name);
 				// FargosMutant.Call("AddCaughtNPC", "Cubekon_Tinkerer_Item", MC.NPCType<Cubekon_Tinkerer>(), Name); // for future
 			}
-
+			AltLibrary.AltLibrary.Instance.Call("AddInvalidRangeHandler", "Origins:BrinePool", Brine_Pool.Gen.JungleAvoider, 6);
 #if DEBUG
 			for (int i = 0; i < ItemID.Count; i++) OriginGlobalItem.AddVanillaTooltips(i, [], true);
-			MonoModHooks.Add(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
+			MonoModHooks.Modify(typeof(Logging).GetMethod("FirstChanceExceptionHandler", BindingFlags.NonPublic | BindingFlags.Static), FCEH);
 #endif
+			for (int i = 0; i < lateLoadables.Count; i++) {
+				lateLoadables[i].Load();
+			}
 		}
 		public override void Unload() {
 			AssimilationLoader.Unload();
@@ -673,9 +766,6 @@ namespace Origins {
 			Journal_UI_Open.TabsTexture = null;
 			OriginExtensions.drawPlayerItemPos = null;
 			Tolruk.glowmasks = null;
-			HelmetGlowMasks = null;
-			BreastplateGlowMasks = null;
-			LeggingGlowMasks = null;
 			TorsoLegLayers = null;
 			instance = null;
 			OriginExtensions.unInitExt();
@@ -698,6 +788,17 @@ namespace Origins {
 			Array.Resize(ref TextureAssets.GlowMask, GlowMaskID.Count);
 			loggedErrors.Clear();
 			List<LocalizedText> loadingWarnings = [];
+			FastFieldInfo<OverlayManager, LinkedList<Overlay>[]> _activeOverlays = "_activeOverlays";
+			LinkedList<Overlay>[] activeOverlays = _activeOverlays.GetValue(Overlays.Scene);
+			for (int i = 0; i < activeOverlays.Length; i++) {
+				LinkedList<Overlay> overlayer = activeOverlays[i];
+				LinkedListNode<Overlay> node = overlayer.First;
+				while (node is not null) {
+					LinkedListNode<Overlay> next = node.Next;
+					if (node.Value.GetType().Assembly.FullName.Contains(nameof(Origins))) overlayer.Remove(node);
+					node = next;
+				}
+			}
 		}
 		public static uint gameFrameCount = 0;
 		static void IncrementFrameCount(GameTime gameTime) {
@@ -707,13 +808,16 @@ namespace Origins {
 			currentScreenTarget = null;
 		}
 		public override void PostSetupContent() {
+			Regex safeGoreRegex = new("^(DF|FG|Felnum|Shimmer)", RegexOptions.Compiled);
+			foreach (SimpleModGore gore in GetContent<SimpleModGore>()) {
+				if (safeGoreRegex.IsMatch(gore.Name)) ChildSafety.SafeGore[gore.Type] = true;
+			}
 			Journal_Registry.SetupContent();
 			OriginsModIntegrations.PostSetupContent(this);
-			int blindDebuff = ModContent.BuffType<Blind_Debuff>();
 			for (int i = 0; i < NPCID.Sets.SpecificDebuffImmunity.Length; i++) {
 				bool?[] immunityData = NPCID.Sets.SpecificDebuffImmunity[i];
 				if (immunityData is not null) {
-					if (NPCID.Sets.ShouldBeCountedAsBoss[i] || ContentSamples.NpcsByNetId[i].boss) immunityData[blindDebuff] = true;
+					if (NPCID.Sets.ShouldBeCountedAsBoss[i] || ContentSamples.NpcsByNetId[i].boss) immunityData[Blind_Debuff.ID] = true;
 					if ((immunityData[BuffID.Confused] ?? false) && !RasterizeAdjustment.ContainsKey(i)) {
 						switch (i) {
 							case NPCID.KingSlime:
@@ -747,45 +851,16 @@ namespace Origins {
 					}
 				}
 			}
-			SetBalanceSetValues();
 			foreach (ModItem item in MC.GetContent<ModItem>()) {
 				if (item is not IJournalEntrySource source) continue;
-				OriginsSets.Items.JournalEntries[item.Type] = source.EntryName;
+				JournalEntry.AddJournalEntry(ref OriginsSets.Items.JournalEntries[item.Type], source.EntryName);
 			}
 			foreach (ModNPC npc in MC.GetContent<ModNPC>()) {
-				if (npc is not IJournalEntrySource source) continue;
-				OriginsSets.NPCs.JournalEntries[npc.Type] = source.EntryName;
+				if (npc is IJournalEntrySource source) JournalEntry.AddJournalEntry(ref OriginsSets.NPCs.JournalEntries[npc.Type], source.EntryName);
+				if (npc is IMinions minions) NPCID.Sets.BossBestiaryPriority.InsertRange(NPCID.Sets.BossBestiaryPriority.IndexOf(npc.Type) + 1, minions.BossMinions);
 			}
-		}
-		/// <summary>
-		/// Set here rather than in the initializer so that they can be changed freely
-		/// </summary>
-		static void SetBalanceSetValues() {
-			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(OriginsSets.Projectiles.MagicTripwireRange, OriginsSets.Projectiles.MagicTripwireDetonationStyle);
-
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ScarabBomb] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.StyngerShrapnel] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ClusterFragmentsI] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ClusterFragmentsII] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.BloodCloudMoving] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.BloodCloudRaining] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.RainCloudMoving] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.RainCloudRaining] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.PrincessWeapon] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.ClingerStaff] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.VilethornBase] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.VilethornTip] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.CrystalVileShardShaft] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.CrystalVileShardHead] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.NettleBurstLeft] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.NettleBurstRight] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.NettleBurstEnd] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.MedusaHead] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.PrincessWeapon] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.MagnetSphereBolt] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.InfernoFriendlyBlast] = 0f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.LastPrism] = 2f;
-			OriginsSets.Projectiles.HomingEffectivenessMultiplier[ProjectileID.LastPrismLaser] = 2f;
+			MC.GetInstance<Explosive_Weapons_Entry>().AddEntryToItems();
+			ForcedDialectCompatibility.PostSetupContent();
 		}
 		private static void FixedDrawBreath(On_Main.orig_DrawInterface_Resources_Breath orig) {
 			Player localPlayer = Main.LocalPlayer;
@@ -872,25 +947,26 @@ namespace Origins {
 		internal static void AddBreastplateGlowmask(ModItem modItem, string suffix = "_Glow") => AddBreastplateGlowmask(modItem.Item.bodySlot, $"{modItem.Texture}_{EquipType.Body}{suffix}");
 		internal static void AddLeggingGlowMask(ModItem modItem, string suffix = "_Glow") => AddLeggingGlowMask(modItem.Item.legSlot, $"{modItem.Texture}_{EquipType.Legs}{suffix}");
 		internal static void AddHelmetGlowmask(int armorID, string texture) {
-			if (Main.netMode != NetmodeID.Server && MC.RequestIfExists(texture, out Asset<Texture2D> asset)) {
-				HelmetGlowMasks.Add(armorID, asset);
+			if (Main.netMode != NetmodeID.Server && MC.HasAsset(texture)) {
+				Accessory_Glow_Layer.AddGlowMask(EquipType.Head, armorID, texture);
 			}
 		}
 		internal static void AddBreastplateGlowmask(int armorID, string texture) {
 			if (Main.netMode != NetmodeID.Server && MC.RequestIfExists(texture, out Asset<Texture2D> asset)) {
-				BreastplateGlowMasks.Add(armorID, asset);
+				Accessory_Glow_Layer.AddGlowMask(EquipType.Body, armorID, texture);
 			}
 		}
 		internal static void AddLeggingGlowMask(int armorID, string texture) {
 			if (Main.netMode != NetmodeID.Server && MC.RequestIfExists(texture, out Asset<Texture2D> asset)) {
-				LeggingGlowMasks.Add(armorID, asset);
+				Accessory_Glow_Layer.AddGlowMask(EquipType.Legs, armorID, texture);
 			}
 		}
 		internal static void ResizeArrays() {
 			Array.Resize(ref DamageModOnHit, ProjectileLoader.ProjectileCount);
 			Array.Resize(ref wallHammerRequirement, WallLoader.WallCount);
 			flatDamageMultiplier = ItemID.Sets.Factory.CreateFloatSet(1f,
-				ItemID.Minishark, 3f / 8f
+				ItemID.Minishark, 3f / 8f,
+				ItemID.BeeGun, 3f / 8f
 			);
 			Array.Resize(ref artifactMinion, ProjectileLoader.ProjectileCount);
 			brothBuffs = BuffID.Sets.Factory.CreateBoolSet();
@@ -938,9 +1014,13 @@ namespace Origins {
 			public static int CrownJewel = MusicID.OtherworldlySpace;
 			public static int AncientBrinePool;
 
+			public static int ShimmerConstruct = MusicID.OtherworldlyBoss2;
+			public static int ShimmerConstructPhase3 = 0;
+
 			public static int Dusk;
 
 			public static int Defiled = MusicID.OtherworldlyMushrooms;
+			public static int OtherworldlyDefiled = MusicID.OtherworldlyCorruption;
 			public static int UndergroundDefiled = MusicID.OtherworldlyUGHallow;
 			public static int DefiledBoss = MusicID.OtherworldlyBoss1;
 			public static int AncientDefiled;
@@ -950,6 +1030,8 @@ namespace Origins {
 			public static int RivenBoss = MusicID.Boss5;
 			public static int RivenOcean = MusicID.OtherworldlyRain;
 			public static int AncientRiven;
+
+			public static int TheDive;
 		}
 		public static class Sounds {
 			public static SoundStyle MultiWhip = SoundID.Item153;
@@ -969,6 +1051,10 @@ namespace Origins {
 			public static SoundStyle RivenBass = SoundID.Item4;
 			public static SoundStyle ShrapnelFest = SoundID.Item144;
 			public static SoundStyle IMustScream = SoundID.Roar;
+			public static SoundStyle ShinedownLoop = SoundID.ForceRoar;
+			public static SoundStyle WCHit = SoundID.ForceRoar;
+			public static SoundStyle WCIdle = SoundID.ForceRoar;
+			public static SoundStyle WCScream = SoundID.ForceRoar;
 
 			public static SoundStyle Lightning = SoundID.Roar;
 			public static SoundStyle LightningCharging = SoundID.Roar;
@@ -976,7 +1062,26 @@ namespace Origins {
 			public static SoundStyle[] LightningSounds = [];
 			public static SoundStyle LittleZap = SoundID.Roar;
 
+			public static SoundStyle ShimmershotCharging = new("Origins/Sounds/Custom/SoftCharge", SoundType.Sound) {
+				IsLooped = true
+			};
+			public static SoundStyle ShimmerConstructAmbienceIntro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_Start", SoundType.Ambient);
+			public static SoundStyle ShimmerConstructAmbienceLoop = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_Mid", SoundType.Ambient);
+			public static SoundStyle ShimmerConstructAmbienceOutro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_End", SoundType.Ambient);
+
 			public static SoundStyle Bonk = SoundID.Roar;
+			public static SoundStyle BikeHorn = new("Origins/Sounds/Custom/BikeHorn", SoundType.Sound) {
+				PitchVariance = 0.5f,
+				MaxInstances = 0
+			};
+			public static SoundStyle BoneBreakBySoundEffectsFactory = new("Origins/Sounds/Custom/Bone_Break_By_SoundEffectsFactory", SoundType.Sound) {
+				PitchVariance = 0.5f,
+				MaxInstances = 0
+			};
+			public static SoundStyle BonkByMrSoundEffect = new("Origins/Sounds/Custom/Bonk", SoundType.Sound) {
+				PitchVariance = 0.5f,
+				MaxInstances = 0
+			};
 			public static SoundStyle Journal = SoundID.Roar;
 			public static void Unload() {
 				LightningSounds = null;
@@ -987,11 +1092,24 @@ namespace Origins {
 				public static SoundStyle Score = SoundID.DrumTamaSnare;
 			}
 		}
+		public enum CallType {
+			GetExplosiveClassesDict,
+			AddBasicColorDyeShaderPass,
+		}
 		public override object Call(params object[] args) {
-			return args[0] switch {
-				"get_explosive_classes_dict" or "GetExplosiveClassesDict" => DamageClasses.ExplosiveVersion,
-				_ => base.Call(args),
-			};
+			if (!Enum.TryParse(args[0].ToString().Replace("_", ""), true, out CallType callType)) return null;
+			switch (callType) {
+				case CallType.GetExplosiveClassesDict:
+				return DamageClasses.ExplosiveVersion;
+
+				case CallType.AddBasicColorDyeShaderPass:
+				try {
+					return OriginsSets.Misc.BasicColorDyeShaderPasses.Add(((Effect)args[1], (string)args[2]));
+				} catch (NullReferenceException) {
+					throw new Exception("Cannot add Basic Color Dye Shader Pass after AddRecipes");
+				}
+			}
+			return null;
 		}
 		public static void LogError(object message) {
 			instance.Logger.Error(message);
@@ -1002,25 +1120,50 @@ namespace Origins {
 			loggedErrors.Add((message, exception));
 		}
 		public static void LogLoadingWarning(LocalizedText message) {
-			instance.Logger.Warn(message.Value);
-			loadingWarnings.Add(message);
+			PegasusLib.PegasusLib.LogLoadingWarning(message);
 		}
-		public static bool LogLoadingILError(string methodName, Exception exception) {
+		public static bool LogLoadingILError(string methodName, Exception exception) => LogLoadingILError(methodName, exception, []);
+		public static bool LogLoadingILError(string methodName, Exception exception, params (Type exceptionType, string modName, Version modVersion)[] expect) {
 #if DEBUG
+			for (int i = 0; i < expect.Length; i++) {
+				if (exception.GetType() == expect[i].exceptionType && ModLoader.TryGetMod(expect[i].modName, out Mod mod) && mod.Version == expect[i].modVersion) goto expected;
+			}
 			return true;
-#else
-			Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.ILEditException").WithFormatArgs(methodName, exception));
-			return false;
 #endif
+			expected:
+			Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.ILEditException").WithFormatArgs(methodName));
+			return false;
 		}
 		// for DevHelper
 		static string DevHelpBrokenReason {
 			get {
+				string reason = null;
+				void AddReason(string text) {
+					if (reason is not null) reason += "\n";
+					reason += text;
+				}
+				foreach (ModItem item in instance.GetContent<ModItem>()) {
+					if (item.DisplayName.Value.Contains("<PH>")) AddReason($"{item.Name} has placeholder name");
+				}
+				foreach (IBrokenContent item in instance.GetContent<IBrokenContent>()) {
+					AddReason($"{item.GetType().Name}: {item.BrokenReason}");
+				}
+				const string completion_list = "completionList.txt";
+				if ((instance?.FileExists(completion_list) ?? false)) {
+					Regex clIssueRegex = new("^\\([^)]*(@|#|\\$|%|\u2421)[^)]*\\).*!!!.*$", RegexOptions.Multiline | RegexOptions.Compiled);
+					string text = Encoding.UTF8.GetString(instance.GetFileBytes(completion_list));
+					foreach (Match item in (IEnumerable<Match>)clIssueRegex.Matches(text)) {
+						AddReason(item.Value);
+					}
+				}
 #if DEBUG
-				return "Mod was last built in DEBUG configuration";
+				AddReason("Mod was last built in DEBUG configuration");
 #endif
-				return null;
+				return reason;
 			}
 		}
+	}
+	internal interface IBrokenContent : ILoadable {
+		public string BrokenReason { get; }
 	}
 }

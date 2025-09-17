@@ -4,6 +4,7 @@ using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Misc;
 using Origins.NPCs;
 using Origins.Projectiles;
 using Origins.Tiles.Brine;
@@ -15,6 +16,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Liquid;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -88,6 +90,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public ICanisterAmmo Ammo { get; internal set; } = ammo;
 	}
 	public class CanisterGlobalProjectile : GlobalProjectile {
+		public float gravityMultiplier = 1f;
 		public override bool InstancePerEntity => true;
 		ICanisterProjectile canister;
 		int canisterID;
@@ -143,6 +146,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 	}
 	public class CanisterChildGlobalProjectile : GlobalProjectile {
+		public float gravityMultiplier = 1f;
 		public override bool InstancePerEntity => true;
 		int canisterID;
 		public CanisterData CanisterData { get; private set; }
@@ -216,6 +220,45 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	public interface ICanisterChildProjectile {
 		bool IsVisual => false;
 	}
+	public static class CanisterExtensions {
+		public static void DoGravity<T>(this T self, float value) where T : ModProjectile, ICanisterProjectile {
+			self.Projectile.velocity.Y += value * self.Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().gravityMultiplier;
+		}
+		public static bool InheritImmunityFrames(this Projectile parent, int childType, out int[] iFrames) {
+			Projectile childTemplate = ContentSamples.ProjectilesByType[childType];
+			int[] _iFrames = [];
+			iFrames = _iFrames;
+			Action<int> applyIFrames;
+			if (childTemplate.usesLocalNPCImmunity) {
+				iFrames = new int[childTemplate.localNPCImmunity.Length];
+				applyIFrames = index => _iFrames[index] = childTemplate.localNPCHitCooldown;
+			} else if (childTemplate.usesIDStaticNPCImmunity) {
+				applyIFrames = index => Projectile.perIDStaticNPCImmunity[childType][index] = Main.GameUpdateCount + (uint)childTemplate.idStaticNPCHitCooldown;
+			} else {
+				applyIFrames = index => Main.npc[index].immune[parent.owner] = Math.Max(Main.npc[index].immune[parent.owner], 10);
+			}
+			if (parent.usesLocalNPCImmunity) {
+				for (int i = 0; i < parent.localNPCImmunity.Length; i++) {
+					if (parent.localNPCImmunity[i] != 0) {
+						applyIFrames(i);
+					}
+				}
+			} else if (parent.usesIDStaticNPCImmunity) {
+				for (int i = 0; i < Projectile.perIDStaticNPCImmunity[parent.type].Length; i++) {
+					if (Projectile.IsNPCIndexImmuneToProjectileType(parent.type, i)) {
+						applyIFrames(i);
+					}
+				}
+			} else {
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.immune[parent.owner] > 0) {
+						applyIFrames(npc.whoAmI);
+					}
+				}
+			}
+			return iFrames.Length != 0;
+		}
+	}
 	#endregion global stuff
 	public class Coolant_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
 		static short glowmask;
@@ -269,7 +312,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 5;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient(ItemID.Fireblossom)
 			.AddRecipeGroup(RecipeGroupID.IronBar, 10)
 			.AddTile(TileID.Anvils)
@@ -291,8 +334,18 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			} else {
 				ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62);
 			}
+			int napalm = ModContent.ProjectileType<Napalm_P>();
+			projectile.InheritImmunityFrames(napalm, out _);
 			for (int i = 0; i < 5; i++) {
-				Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, (projectile.velocity / 2) + GeometryUtils.Vec2FromPolar((i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi, Main.rand.NextFloat(2, 4)), ModContent.ProjectileType<Napalm_P>(), (int)(projectile.damage * 0.65f), 0, projectile.owner);
+				Projectile.NewProjectile(
+					projectile.GetSource_FromThis(),
+					projectile.Center,
+					(projectile.velocity / 2) + GeometryUtils.Vec2FromPolar((i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi, Main.rand.NextFloat(2, 4)),
+					napalm,
+					(int)(projectile.damage * 0.65f),
+					0,
+					projectile.owner
+				);
 			}
 		}
 	}
@@ -375,6 +428,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			ExplosiveGlobalProjectile.DealSelfDamage(projectile);
 			projectile.damage = damage;
 			ExplosiveGlobalProjectile.ExplosionVisual(projectile, true, sound: SoundID.Item62, fireDustAmount: 0);
+			projectile.InheritImmunityFrames(Lingering_Cursed_Flames_P.ID, out _);
 			Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, default, Lingering_Cursed_Flames_P.ID, (int)(projectile.damage * 0.65f), 0, projectile.owner);
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
@@ -439,7 +493,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient(ItemID.Ichor)
 			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
@@ -470,7 +524,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient<Black_Bile>()
 			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
@@ -481,6 +535,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 		public void OnKill(Projectile projectile, bool child) {
 			if (child) return;
+			projectile.InheritImmunityFrames(Bile_Canister_Explosion.ID, out _);
 			Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.oldPosition + ContentSamples.ProjectilesByType[projectile.type].Size / 2 + projectile.velocity, default, Bile_Canister_Explosion.ID, (int)(projectile.damage * 0.75f), 0, projectile.owner);
 		}
 	}
@@ -535,7 +590,8 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
 	}
-	public class Alkahest_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
+	public class Alkahest_Canister : ModItem, ICanisterAmmo, ICustomWikiStat, ITornSource {
+		public float Severity => 0.35f;
 		static short glowmask;
 		public CanisterData GetCanisterData => new(new(61, 164, 196), new(255, 254, 156));
 		public bool? Hardmode => true;
@@ -551,25 +607,27 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient<Alkahest>()
 			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
-			OriginGlobalNPC.InflictTorn(target, 240, 180, 0.35f, source: Main.player[projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 240, 180, Severity, source: Main.player[projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public void OnKill(Projectile projectile, bool child) {
 			if (child) return;
 			if (projectile.ModProjectile is ICanisterProjectile canister) {
 				canister.DefaultExplosion(projectile);
 			}
+			projectile.InheritImmunityFrames(Alkahest_Canister_Droplet.ID, out _);
 			for (int i = 0; i < 6; i++) {
 				Projectile.NewProjectile(
 					projectile.GetSource_FromThis(),
 					projectile.Center,
-					Main.rand.NextVector2CircularEdge(8, 8) * Main.rand.NextFloat(0.9f, 0.1f) + projectile.velocity * 0.25f, Alkahest_Canister_Droplet.ID,
+					Main.rand.NextVector2CircularEdge(8, 8) * Main.rand.NextFloat(0.9f, 0.1f) + projectile.velocity * 0.25f,
+					Alkahest_Canister_Droplet.ID,
 					(int)(projectile.damage * 0.35f),
 					0,
 					projectile.owner
@@ -614,6 +672,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 199;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Toxic_Shock_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.DefaultToCanister(30);
@@ -623,7 +682,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient<Brineglow_Item>()
 			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.CobaltBars, 10)
 			.AddTile(TileID.MythrilAnvil)
@@ -638,6 +697,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 				canister.DefaultExplosion(projectile);
 			}
 			int projType = ModContent.ProjectileType<Projectiles.Weapons.Brine_Droplet>();
+			projectile.InheritImmunityFrames(projType, out _);
 			for (int i = 0; i < 6; i++) {
 				Projectile.NewProjectile(
 					projectile.GetSource_FromThis(),
@@ -665,7 +725,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 3;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient(ItemID.ExplosivePowder)
 			.AddIngredient<Felnum_Bar>(3)
 			.AddTile(TileID.Anvils)
@@ -678,6 +738,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			}
 			SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), projectile.Center);
 			int t = ModContent.ProjectileType<Felnum_Shock_Grenade_Shock>();
+			projectile.InheritImmunityFrames(t, out _);
 			for (int i = Main.rand.Next(2); i < 3; i++) {
 				Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, t, (int)(projectile.damage * 0.5f), 6, projectile.owner);
 			}
@@ -697,7 +758,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Item.ArmorPenetration += 15;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			Recipe.Create(Type, 50)
 			.AddIngredient(ItemID.BeeWax)
 			.AddRecipeGroup(AltLibrary.Common.Systems.RecipeGroups.SilverBars, 10)
 			.AddTile(TileID.Anvils)
@@ -709,7 +770,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 				canister.DefaultExplosion(projectile);
 			}
 			for (int i = 0; i < 4; i++) {
-				Projectile.NewProjectile(
+				Projectile bee = Projectile.NewProjectileDirect(
 					projectile.GetSource_FromThis(),
 					projectile.Center,
 					Main.rand.NextVector2CircularEdge(8, 8) * Main.rand.NextFloat(0.9f, 0.1f) + projectile.velocity * 0.25f,
@@ -718,7 +779,113 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 					0,
 					projectile.owner
 				);
+				projectile.InheritImmunityFrames(bee.type, out _); // bee type is procedurally unknowable, so we have to just do this for every bee type that gets spawned
+				bee.usesIDStaticNPCImmunity = true;
+				bee.idStaticNPCHitCooldown = 8;
 			}
+		}
+	}
+	public class Aether_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
+		public CanisterData GetCanisterData => new(new(182, 194, 211), new(100, 222, 242));
+		public bool? Hardmode => false;
+		internal static readonly FrameCachedValue<Color> color = new(() => new(LiquidRenderer.GetShimmerBaseColor(0, 0)));
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+			Item.ResearchUnlockCount = 199;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToCanister(26);
+			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.rare = ItemRarityID.Orange;
+			Item.ArmorPenetration += 3;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type, 50)
+			.AddIngredient(ItemID.ExplosivePowder, 50)
+			.AddIngredient(ModContent.ItemType<Aetherite_Bar>(), 3)
+			.Register();
+		}
+		public void OnKill(Projectile projectile, bool child) {
+			if (child) return;
+			if (projectile.ModProjectile is ICanisterProjectile canister) {
+				canister.DefaultExplosion(projectile, DustID.ShimmerTorch);
+			}
+			if (Main.myPlayer != projectile.owner) return;
+			int starType = ModContent.ProjectileType<Aether_Canister_P>();
+			projectile.InheritImmunityFrames(starType, out _);
+			for (int i = 0; i < 5; i++) {
+				Projectile.NewProjectile(
+					projectile.GetSource_Death(),
+					projectile.Center,
+					(projectile.velocity / 2) + GeometryUtils.Vec2FromPolar(Main.rand.NextFloat(3, 6), (i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi),
+					starType,
+					(int)(projectile.damage * 0.65f),
+				0);
+			}
+		}
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
+			if (NPCID.Sets.ShimmerTransformToNPC[target.type] != -1 || NPCID.Sets.ShimmerTransformToItem[target.type] != -1 || NPCID.Sets.ShimmerTownTransform[target.type]) {
+				target.AddBuff(BuffID.Shimmer, 91);
+			}
+		}
+		public void AI(Projectile projectile, bool child) {
+			projectile.velocity *= 0.99f;
+			if (child) {
+				CanisterChildGlobalProjectile childGlobal = projectile.GetGlobalProjectile<CanisterChildGlobalProjectile>();
+				childGlobal.gravityMultiplier = 0;
+				return;
+			}
+			CanisterGlobalProjectile global = projectile.GetGlobalProjectile<CanisterGlobalProjectile>();
+			global.CanisterData.InnerColor = color.Value;
+			global.gravityMultiplier = 0;
+			if (Main.myPlayer == projectile.owner) {
+				if (Main.rand.NextBool(2)) projectile.timeLeft--;
+				if (projectile.timeLeft % (10 * projectile.MaxUpdates) == 0) {
+					Projectile.NewProjectile(
+						projectile.GetSource_FromAI(),
+						projectile.Center,
+						Main.rand.NextVector2Circular(1, 1),
+						ModContent.ProjectileType<Aether_Canister_P>(),
+						(int)(projectile.damage * 0.65f),
+					0);
+				}
+			}
+		}
+	}
+	public class Aether_Canister_P : ModProjectile, ICanisterChildProjectile {
+		public override string Texture => "Origins/Projectiles/Ammo/Aether_Star";
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Projectile.friendly = true;
+			Projectile.width = 6;
+			Projectile.height = 6;
+			Projectile.aiStyle = -1;
+			Projectile.penetrate = 25;
+			Projectile.alpha = Main.rand.Next(180, 256);
+			Projectile.timeLeft = Main.rand.Next(300, 451);
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 15;
+			(Projectile.localAI[0], Projectile.localAI[1], Projectile.localAI[2]) = CanisterGlobalItem.CanisterDatas[CanisterGlobalItem.GetCanisterType(typeof(Aether_Canister))].InnerColor.ToVector3();
+		}
+		public override void AI() {
+			float v = 0.75f + (float)(0.125f * (Math.Sin(Projectile.timeLeft / 5f) + 2 * Math.Sin(Projectile.timeLeft / 60f)));
+			Lighting.AddLight(Projectile.Center, Projectile.localAI[0] * v, Projectile.localAI[1] * v, Projectile.localAI[2] * v);
+			Projectile.velocity.Y -= 0.1f;
+			Projectile.velocity *= 0.997f;
+			Projectile.ai[0]++;
+		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			width = height = 2;
+			fallThrough = true;
+			return true;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			//target.AddBuff(BuffID.Shimmer, 91);
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) => Projectile.ai[0] > 10;
+		public override Color? GetAlpha(Color lightColor) {
+			float v = 0.75f + (float)(0.125f * (Math.Sin(Projectile.timeLeft / 5f) + 2 * Math.Sin(Projectile.timeLeft / 60f)));
+			return new(Projectile.localAI[0] * v, Projectile.localAI[1] * v, Projectile.localAI[2] * v, Projectile.alpha * v / 255f);
 		}
 	}
 }

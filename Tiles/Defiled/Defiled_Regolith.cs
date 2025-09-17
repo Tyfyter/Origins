@@ -25,6 +25,7 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+			TileID.Sets.GeneralPlacementTiles[Type] = false;
 
 			AddMapEntry(new Color(165, 165, 165));
 			AddDefiledTile();

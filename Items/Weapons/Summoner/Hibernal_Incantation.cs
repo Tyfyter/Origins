@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using ReLogic.Content;
@@ -8,19 +7,17 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
-using Origins.Dev;
 using System.IO;
-using Origins.Items.Materials;
-using PegasusLib;
-using Terraria.Graphics.Shaders;
 using Terraria.Audio;
 using System.Collections.Generic;
-using Origins.Items.Weapons.Demolitionist;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Hibernal_Incantation : ModItem, ICustomDrawItem {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
+		public override void SetStaticDefaults() {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Frostburn];
+		}
 		public override void SetDefaults() {
 			Item.damage = 10;
 			Item.DamageType = DamageClasses.Incantation;

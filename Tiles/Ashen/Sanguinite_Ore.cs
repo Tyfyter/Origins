@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
@@ -41,17 +39,12 @@ namespace Origins.Tiles.Ashen {
 		   "Ore"
 		];
 		public override void SetStaticDefaults() {
-			ItemID.Sets.ShimmerTransformToItem[ItemID.DemoniteOre] = ItemID.CrimtaneOre;
-			ItemID.Sets.ShimmerTransformToItem[ItemID.CrimtaneOre] = ItemType<Lost_Ore_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ItemType<Lost_Ore_Item>()] = ItemType<Encrusted_Ore_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ItemType<Encrusted_Ore_Item>()] = Type;
-			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.DemoniteOre;
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Sanguinite_Ore>());
 			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(silver: 16);
+			Item.value = Item.sellPrice(silver: 15);
 		}
 		public void ModifyWikiStats(JObject data) {
 			string base_key = $"WikiGenerator.Stats.{Mod?.Name}.{Name}.";

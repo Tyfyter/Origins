@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs;
@@ -14,6 +15,9 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Bee_Afraid_Incantation : ModItem, ICustomDrawItem {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
+		public override void SetStaticDefaults() {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Poisoned];
+		}
 		public override void SetDefaults() {
 			Item.damage = 12;
 			Item.DamageType = DamageClasses.Incantation;

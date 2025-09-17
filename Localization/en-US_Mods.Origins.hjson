@@ -8,7 +8,7 @@ Conditions: {
 	Comma: "{0}, {1}"
 	CommaAnd: "{0}, and {1}"
 	QuestCompleted: After completing "{0}"
-	PeatSoldCondition: After selling {0} peat moss to the Demolitionist
+	PeatSoldCondition: After giving the Demolitionist {0} peat moss
 	Brine: Mods.Origins.Conditions.Brine
 	RivenWater: Amebic Gel
 	ShimmerDecrafting: Shimmer decrafting only
@@ -24,24 +24,32 @@ Conditions: {
 	DownedFiberglassWeaver: After defeating the Fiberglass Weaver
 	DownedLostDiver: After defeating the Lost Diver
 	// could go with other glitchy-looking approaches, like "lockey.#####" or "missingno"
-	DownedScrapper: After defeating the MISSING_OBJECT_ERROR
+	DownedScrapper: After defeating the [glitch:MISSING_OBJECT_ERROR]
 	// DownedScrapper: After defeating the Scrapper
 	DownedDefiledMimic: After defeating a {§Defiled} Mimic, In hardmode
 	DownedRivenMimic: After defeating a {§Riven} Mimic, In hardmode
 	DownedAshenMimic: After defeating an Ashen Mimic, In hardmode
+	DownedShimmerConstruct: After defeating the Shimmer Construct
+	DownedChambersiteSentinel: After defeating a Chambersite Sentinel
+	HarpoonCondition: When the player has a Harpoon Gun in their inventory
 }
 
 ModMenu: {
+	Aether: Arabel's Cage
 	Defiled_Wastelands: "{§Defiled_Wastelands}"
 	Riven_Hive: "{§Riven_Hive}"
 }
 
 RecipeGroups: {
 	GemStaves: Any Gem Staff
+	GemPhaseblades: Any Gem Phaseblade
 	EvilBoomerangs: Any Evil Boomerang
 	EvilGunMagazines: Any Evil Gun Magazine
 	AnyBanner: Any {0} Banner
 	GolfBalls: Any Golf Ball
+	EvilMushrooms: Any Evil Mushroom
+	EvilFish: Any Evil Fish
+	EvilFishWeapons: Any Evil Fish Weapon
 }
 
 Status_Messages: {
@@ -58,6 +66,7 @@ Laser_Tag: {
 	CTGNeedOwnGem: Don't allow Teams with their gem stolen to score
 	Building: Allow Building
 	StartButton: Start
+	CancelButton: Cancel Laser Tag
 	RespawnTime: Revive Time
 	ShortTime: $60!:{0:0.##} Seconds$
 	LongTime: $60!:{0:#0}:$$60:{0:00}$
@@ -392,11 +401,12 @@ TownNPCMood: {
 }
 
 Interface: {
-	Journal: Journal
+	Journal: "{§Journal}"
 	Quests: Quests
 	AcceptQuest: Accept
 	CompleteQuestGeneric: Complete quest
 	DryadPurify: Purify ({0})
+	AFSnippet: "[fool:{0}]"
 }
 
 DeathMessage: {
@@ -408,11 +418,17 @@ DeathMessage: {
 	Self_Damage_3: "{0} got carried away."
 	Self_Damage_4: "{0} really let themselves go."
 	Self_Damage_5: "{0} committed insurance fraud."
-	Torn_0: "{0} watched their body dissolve."
-	Torn_1: "{0} likes to play in amebic gel."
-	Torn_2: "{0} became primordial food for the Primordial Amoeba."
-	Torn_3: "{0} got digested."
-	Torn_4: "{0} got dissolved."
+	Confection_Assimilation: "{0} had too many sweets."
+	Contagion_Assimilation: "{0} couldn't stop picking their boogers."
+
+	Torn: {
+		0: "{0} watched their body dissolve."
+		1: "{0} likes to play in amebic gel."
+		2: "{0} became primordial food for the Primordial Amoeba."
+		3: "{0} got digested."
+		4: "{0} got dissolved."
+	}
+
 	Tripod_0: "{0} forgot the tripod nip."
 	Tripod_1: "{0} got rekt by a {§Mods.Origins.NPCs.Defiled_Tripod.DisplayName}."
 }
@@ -435,6 +451,10 @@ Generic: {
 	UnboundKey: '''"{0}" (not bound)'''
 	Mildew_Carrion: Mildew Carrion
 	Tangela: Tangela
+	Journal: Journal
+	Acrid: Acrid
+	Spug: Spug
+	spug: spug
 }
 
 AltBiomes: {
@@ -483,6 +503,39 @@ GuideAdvice: {
 Words: {
 	2ndrefcasualmale: boy
 	2ndrefcasualfemale: girl
+
+	SelectByTag: {
+		Fallback: gleeblesnort
+
+		Person!: {
+			"": person
+			Person;Male!;Casual?: boy
+			Person;Female!;Casual?: girl
+		}
+
+		Pronoun!: {
+			Female!: {
+				Subject!: she
+				Object!: her
+				Possessive!;Dependent?: her
+				Possessive!;Independent: hers
+				Reflexive: herself
+			}
+
+			Male!: {
+				Subject!: he
+				Object!: him
+				Possessive!: his
+				Reflexive!: himself
+			}
+
+			Neuter!: {
+				"": it
+				Possessive!: its
+				Reflexive!: itself
+			}
+		}
+	}
 }
 
 Doubles: {
@@ -642,6 +695,7 @@ Buffs: {
 	Rasterized_Debuff: {
 		DisplayName: Rasterized
 		Description: There goes all your bandwidth...
+		EffectDescription: Reduces movement speed and acceleration
 	}
 
 	Riven_Assimilation: {
@@ -673,11 +727,19 @@ Buffs: {
 	Torn_Debuff: {
 		DisplayName: Torn
 		Description: Your max life has been reduced!
+		EffectDescription: Reduces effective health
+		EffectDescriptionSpecific: Reduces effective health by up to {0:P0}
 	}
 
 	Toxic_Shock_Debuff: {
 		DisplayName: Toxic Shock
 		Description: The agony is getting to you
+		EffectDescription:
+			'''
+			1.3x critical damage taken
+			-20% defense
+			'''
+		StunDescription: Has a chance to stun the enemy
 	}
 
 	Voidsight_Buff: {
@@ -723,6 +785,7 @@ Buffs: {
 	Lousy_Liver_Debuff: {
 		DisplayName: Liver Failure
 		Description: It smells of copper wire...
+		EffectDescription: "{$Rasterized_Debuff.EffectDescription}"
 	}
 
 	Ninja_Ravel_Mount_Buff: {
@@ -960,8 +1023,8 @@ Buffs: {
 	}
 
 	Terratotem_Buff: {
-		DisplayName: Terratotem Buff
-		Description: The reformed soul will protect you
+		DisplayName: Terratotem
+		Description: The tribe will serve you
 	}
 
 	Friendly_Zombie_Buff: {
@@ -1009,6 +1072,7 @@ Buffs: {
 	Cavitation_Debuff: {
 		DisplayName: Cavitation
 		Description: You've got the wind knocked out of you
+		EffectDescription: Can only be applied to wet targets
 	}
 
 	Mildew_Whip_Buff: {
@@ -1019,6 +1083,11 @@ Buffs: {
 	Static_Shock_Debuff: {
 		DisplayName: Static Shock
 		Description: It hurts to be near conductors!
+		EffectDescription:
+			'''
+			Arcs to nearby targets
+			Deals extra damage to wet and {§Defiled} targets
+			'''
 	}
 
 	Static_Shock_Damage_Debuff: {
@@ -1032,13 +1101,24 @@ Buffs: {
 	}
 
 	Mini_Static_Shock_Debuff: {
-		DisplayName: Static Shack
-		Description: Those don't tend to move
+		DisplayName: Static Buildup
+		Description: Yowch
+		EffectDescription:
+			'''
+			Stacks with [buffhint:Origins/Static_Shock_Debuff] to increase its range, otherwise:
+			Deals 4 damage per second
+			{$Static_Shock_Debuff.EffectDescription}
+			'''
 	}
 
 	Silenced_Debuff: {
 		DisplayName: Silenced Debuff
 		Description: Mods.Origins.Buffs.Silenced_Debuff.Description
+		EffectDescription:
+			'''
+			Prevents all projectile attacks
+			Massively reduced duration against bosses
+			'''
 	}
 
 	Ocotillo_Finger_Buff: {
@@ -1062,8 +1142,9 @@ Buffs: {
 	}
 
 	Electrified_Debuff: {
-		DisplayName: Electrified Debuff
+		DisplayName: Electrified
 		Description: Mods.Origins.Buffs.Electrified_Debuff.Description
+		EffectDescription: Deals extra damage to wet and {§Defiled} enemies
 	}
 
 	Old_Turtle_Buff: {
@@ -1077,7 +1158,7 @@ Buffs: {
 	}
 
 	Acrid_Spout_Buff: {
-		DisplayName: Acrid Spout Buff
+		DisplayName: "{§Acrid} Spout Buff"
 		Description: Mods.Origins.Buffs.Acrid_Spout_Buff.Description
 	}
 
@@ -1090,8 +1171,8 @@ Buffs: {
 		DisplayName: Sharp Broth
 		Description:
 			'''
-			Artifact minions inflict Electrified
-			All minions inflict Static Shock
+			Artifact minions inflict [buffhint:Origins/Electrified_Debuff]
+			All minions inflict [buffhint:Origins/Static_Shock_Debuff]
 			'''
 	}
 
@@ -1100,7 +1181,7 @@ Buffs: {
 		Description:
 			'''
 			Artifact minions have the Thorns effect
-			All minions inflict Frostburn for a small area around them
+			All minions inflict [buffhint:Frostbite2] in a small area around them
 			'''
 	}
 
@@ -1142,8 +1223,8 @@ Buffs: {
 		DisplayName: Umami Broth
 		Description:
 			'''
-			All minions inflict Acid Venom
-			Artifact minions also inflict Toxic Shock
+			All minions inflict [buffhint:Venom]
+			Artifact minions also inflict [buffhint:Origins/Toxic_Shock_Debuff]
 			'''
 	}
 
@@ -1161,7 +1242,7 @@ Buffs: {
 		DisplayName: Greasy Broth
 		Description:
 			'''
-			All minions inflict Oiled
+			All minions inflict [buffhint:Oiled]
 			Artifact minions release greasy gas that burns enemies
 			'''
 	}
@@ -1179,6 +1260,93 @@ Buffs: {
 	Cannihound_Lure_Debuff: {
 		DisplayName: Ill Omen of Hound
 		Description: You smell like fresh meat
+	}
+
+	Nerve_Flan_Food_Buff: {
+		DisplayName: Nerve Flan
+		Description:
+			'''
+			Extreme improvements to all stats…
+			except bandwidth
+			'''
+	}
+
+	Weak_Shimmer_Debuff: {
+		DisplayName: Shimmering?
+		Description: Any proof you might have of what's happening to you has gone insubstantial!
+	}
+
+	Shimmer_Guardian_Buff: {
+		DisplayName: Shimmer Guardian
+		Description: The shimmer guardian will fight for you
+	}
+
+	Wishing_Glass_Buff: {
+		DisplayName: Wish Granted!
+		Description: You got your wish! How imaginative!
+	}
+
+	Amnestic_Rose_Buff: {
+		DisplayName: Rose Regrowth
+		Description: The Rosebud is regrowing
+		EffectDescription:
+			'''
+			{$BuffDescription.Slow}
+			Attacking afflicted enemies will restore mana
+			'''
+		DebuffName: Fugue State
+	}
+
+	Otherworldly_Cloak_Buff: {
+		DisplayName: Otherworldly Cloak
+		Description: Your cloak will fight for you
+	}
+
+	Master_Magician_Cloak_Buff: {
+		DisplayName: Master Magician Cloak
+		Description: Your cloak will fight for you
+	}
+
+	Amnestic_Rose_Alt_Buff: {
+		DisplayName: "{$Amnestic_Rose_Buff.DisplayName}"
+		Description: "{$Amnestic_Rose_Buff.Description}"
+		EffectDescription: "{$Amnestic_Rose_Buff.EffectDescription}"
+		DebuffName: "{$Amnestic_Rose_Buff.DebuffName}"
+	}
+
+	Gelatin_Aspect_Buff: {
+		DisplayName: Gelatin Aspect
+		Description: An aspect of gelatin lights your way
+	}
+
+	Chambersite_Commander_Sentinel_Buff: {
+		DisplayName: Chambersite Sentinel
+		Description: The Chambersite Sentinel will fight for you
+	}
+
+	Stellar_Spark_Buff: {
+		DisplayName: Stellar Spark
+		Description: Arabel's got her eye on you
+	}
+
+	Accretion_Ribbon_Buff: {
+		DisplayName: Accretion Ribbon Buff
+		Description: Mods.Origins.Buffs.Accretion_Ribbon_Buff.Description
+	}
+
+	Goo_Wall_Debuff: {
+		DisplayName: Goo Wall Debuff
+		Description: Mods.Origins.Buffs.Goo_Wall_Debuff.Description
+	}
+
+	No_Fallthrough_Buff: {
+		DisplayName: Firmly Grounded
+		Description: You're tired of falling
+	}
+
+	Astral_Scythe_Wait_Debuff: {
+		DisplayName: Astral Scythe Cooldown
+		Description: Your scythe needs to rest.
 	}
 }
 
@@ -1201,7 +1369,15 @@ DamageClassName: {
 }
 
 DamageClasses: {
-	Explosive.DisplayName: explosive damage
+	Explosive: {
+		DisplayName: explosive damage
+
+		ThoriumMod_TerrariumArmorAddClassFocus: {
+			Name: Explosive Focus
+			Description: Explosives pierce {0} defense
+		}
+	}
+
 	Ranged_Magic.DisplayName: ranged/magic damage
 	Incantation.DisplayName: summon damage
 	Thrown_Explosive.DisplayName: explosive damage (thrown)
@@ -1210,6 +1386,7 @@ DamageClasses: {
 	Melee_Magic.DisplayName: melee/magic damage
 	No_Summon_Inherit.DisplayName: No Summon Inherit
 	Ranged_Explosive_Inherit.DisplayName: Ranged Explosive Inherit
+	SentryExplosive.DisplayName: Sentry Explosive
 }
 
 Projectiles: {
@@ -1237,7 +1414,7 @@ Projectiles: {
 	Defiled_Blight_P.DisplayName: "{§Defiled} Blight"
 	Meberoid.DisplayName: Meberoid
 	Platformer_Mech.DisplayName: Platformer Mech
-	Acrid_Drill_P.DisplayName: Acrid Drill
+	Acrid_Drill_P.DisplayName: "{§Acrid} Drill"
 	Amoeba_Hook_P.DisplayName: Amoeba Hook
 	Lightning_Rod_Bobber.DisplayName: Lightning Rod Bobber
 	Parasitic_Bobber.DisplayName: Parasitic Bobber
@@ -1464,7 +1641,7 @@ Projectiles: {
 	Switchblade_Shortsword_P.DisplayName: Switchblade
 	Amber_Shard.DisplayName: Amber Shard
 	Metal_Slug_Explosion.DisplayName: Metal Slug Explosion
-	Acrid_Slug_P.DisplayName: Acrid Slug
+	Acrid_Slug_P.DisplayName: "{§Acrid} Slug"
 	Sapphire_Aura.DisplayName: Sapphire Aura
 	Abrasion_Blaster_Charge_P.DisplayName: Abrasion Blaster
 	Abrasion_Blaster_P.DisplayName: Abrasion Blaster
@@ -1607,7 +1784,7 @@ Projectiles: {
 	TUDFLOMD_Rocket_Green.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
 	Eternanite_P.DisplayName: Eternanite
 	Felnum_Ore_Slime_Zap.DisplayName: Felnum Slime
-	Harpoon_Burst_Rifle_P.DisplayName: Harpoon Burst Rifle P
+	Harpoon_Burst_Rifle_P.DisplayName: Harpoon Burst Rifle
 	Mildew_Whip_P.DisplayName: Mildew Whip
 	Eyenade_P.DisplayName: Eyenade
 	Chipper_Knife_P.DisplayName: Chipper Knife
@@ -1629,7 +1806,7 @@ Projectiles: {
 	Friendly_Relay_Signal.DisplayName: Friendly Relay Signal
 	Sixth_Spline_Battery.DisplayName: Sixth Spline Battery
 	Crawdaddys_Revenge_P.DisplayName: Crawdaddy's Claw
-	Acrid_Laser_Rod_Bobber.DisplayName: Acrid Laser Rod Bobber
+	Acrid_Laser_Rod_Bobber.DisplayName: "{§Acrid} Laser Rod Bobber"
 	Hydrolantern_Use.DisplayName: Hydrolantern
 	Airsnatcher_Bubble.DisplayName: Airsnatcher Bubble
 	Unsatisfied_Soul.DisplayName: Unsatisfied Soul
@@ -1654,18 +1831,18 @@ Projectiles: {
 	Lost_Diver_Harpoon.DisplayName: Lost Diver Harpoon
 	Lost_Diver_Mildew_Whip.DisplayName: Lost Diver Mildew Whip
 	Explosive_Barrel_P.DisplayName: Explosive Barrel
-	Acrid_Spout_P.DisplayName: Acrid Spout
-	Acrid_Spout_Droplet.DisplayName: Acrid Spout Droplet
-	Boomboom_P.DisplayName: Boomboom P
+	Acrid_Spout_P.DisplayName: "{§Acrid} Spout"
+	Acrid_Spout_Droplet.DisplayName: "{§Acrid} Spout Droplet"
+	Boomboom_P.DisplayName: Boomboom
 	Brine_Fiend_Boomboom.DisplayName: Brine Fiend Boomboom
-	Fumethrower_P.DisplayName: Fumethrower P
+	Fumethrower_P.DisplayName: Fumethrower
 	Bomb_Trap_Bomb.DisplayName: Bomb Trap Bomb
 	Bomb_Trap_Grenade.DisplayName: Bomb Trap Grenade
 	Bomb_Trap_Dynamite.DisplayName: Bomb Trap Dynamite
 	Soulslasher_Slash.DisplayName: Soulslasher Slash
 	Soulslasher_Swing.DisplayName: Soulslasher Swing
-	Soulslasher_P.DisplayName: Soulslasher P
-	Latchkey_P.DisplayName: Latchkey P
+	Soulslasher_P.DisplayName: Soulslasher
+	Latchkey_P.DisplayName: Latchkey
 	Minty_Retaliation_Visual.DisplayName: Minty Retaliation Visual
 	The_Foot_Smash.DisplayName: The Foot Smash
 	The_Foot_Flail.DisplayName: The Foot Flail
@@ -1674,8 +1851,8 @@ Projectiles: {
 	Regurgitator_Of_Souls_P.DisplayName: Regurgitator Of Souls
 	Venom_Shield_P.DisplayName: Venom Shield
 	Sunny_Sunflower.DisplayName: Sunny Sunflower
-	Sunny_Sunflower_Seed_P.DisplayName: Sunny Sunflower Seed P
-	Sunny_Sunflower_P.DisplayName: Sunny Sunflower P
+	Sunny_Sunflower_Seed_P.DisplayName: Sunny Sunflower Seed
+	Sunny_Sunflower_P.DisplayName: Sunny Sunflower
 	Golden_Lotus_Fairy.DisplayName: Golden Lotus Fairy
 	DefiledNukeProj.DisplayName: "{§Defiled} Nuke"
 	DefiledNukeSupremeProj.DisplayName: "{§Defiled} Nuke Supreme"
@@ -1689,32 +1866,32 @@ Projectiles: {
 	Keytar_Lead.DisplayName: Keytar Lead
 	Keytar_Synth.DisplayName: Keytar Synth
 	Astoxo_Lightning.DisplayName: Astoxo Lightning
-	Nerve_Flan_P.DisplayName: Nerve Flan P
+	Nerve_Flan_P.DisplayName: Nerve Flan
 	Defiled_Cyclops_Bone_Latcher.DisplayName: "{§Defiled} Cyclops Bone Latcher"
 	Defiled_Krusher_P1.DisplayName: "{§Defiled} Krusher"
 	Defiled_Krusher_P2.DisplayName: "{§Defiled} Krusher"
 	Defiled_Krusher_P3.DisplayName: "{§Defiled} Krusher"
-	Impetus_P.DisplayName: Impetus P
-	Impetus_Splut_P.DisplayName: Impetus Splut P
+	Impetus_P.DisplayName: Impetus
+	Impetus_Splut_P.DisplayName: Impetus Splut
 	Impetus_Shrapnel.DisplayName: Impetus Shrapnel
-	Rocket_Rifle_P.DisplayName: Rocket Rifle P
-	Inject_Incantation_P.DisplayName: Inject Incantation P
+	Rocket_Rifle_P.DisplayName: Rocket Rifle
+	Inject_Incantation_P.DisplayName: Inject Incantation
 	Huff_Puffer.DisplayName: Huff Puffer
 	Mildew_Carrion_Spore.DisplayName: "{§Mildew_Carrion} Spore"
 	Mildew_Carrion_Spore2.DisplayName: "{§Mildew_Carrion} Spore"
 	Mildew_Carrion_Spore3.DisplayName: "{§Mildew_Carrion} Spore"
 	Mildew_Incantation_P.DisplayName: Mildew Incantation
 	Mildew_Incantation_Creeper.DisplayName: Mildew Incantation Creeper
-	Eye_Of_Aether_P.DisplayName: Eye Of Aether P
+	Eye_Of_Aether_P.DisplayName: Eye of Aether
 	Soul_Snatcher_P.DisplayName: Soul Snatcher
 	Soul_Snatcher_Spin.DisplayName: Soul Snatcher Spin
-	Tangela_Tether_P.DisplayName: "{§Tangela} Tether P"
+	Tangela_Tether_P.DisplayName: "{§Tangela} Tether"
 	Catacomb_Clearer_Bomb.DisplayName: Catacomb Clearer Bomb
 	Catacomb_Clearer_Dynamite.DisplayName: Catacomb Clearer Dynamite
 	Greasy_Gas.DisplayName: Greasy Gas
-	Cannihound_Gore1.DisplayName: Cannihound Gore1
-	Cannihound_Gore2.DisplayName: Cannihound Gore2
-	Cannihound_Gore3.DisplayName: Cannihound Gore3
+	Cannihound_Gore1.DisplayName: Cannihound Gore
+	Cannihound_Gore2.DisplayName: Cannihound Gore
+	Cannihound_Gore3.DisplayName: Cannihound Gore
 	Brine_Haze_P.DisplayName: Brine Haze Cloud
 	Necromantic_Prefix_Orb.DisplayName: Necromantic Orb
 	Defiled_Broadcaster_Flan.DisplayName: "{§Defiled} Broadcaster"
@@ -1729,6 +1906,89 @@ Projectiles: {
 	DA_Laser.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Laser Spin"
 	Defiled_Prefix_Orb.DisplayName: "{§Defiled} Orb"
 	Tyrfing_P.DisplayName: Tyrfing
+	Aether_Bullet_Duplicate_P.DisplayName: ${Aether_Bullet_P.DisplayName}
+	Aether_Bullet_P.DisplayName: Aether Bullet
+	Aether_Canister_P.DisplayName: Aether Drop
+	Shimmer_Construct_Cloud_Ball.DisplayName: Shimmer Cloud Ball
+	Shimmer_Construct_Cloud_P.DisplayName: Shimmer Cloud
+	Shimmer_Construct_Cloud_Rain.DisplayName: Shimmer Rain
+	Shimmer_Construct_Missiles.DisplayName: Shimmer Construct Missiles
+	Chambersite_Minigun_P.DisplayName: Chambersite Minigun
+	Shimmerstar_Staff_P.DisplayName: Shimmerstar
+	Shimmerstar_Staff_P2.DisplayName: Shimmerstar
+	Shimmer_Guardian.DisplayName: Shimmer Guardian
+	Shimmer_Guardian_Counter.DisplayName: Shimmer Guardian Counter
+	Shimmer_Guardian_Shard.DisplayName: Shimmer Guardian Shard
+	Chambersite_Hook_P.DisplayName: Chambersite Hook
+	Chambersite_Mine.DisplayName: Chambersite Mine
+	Cool_Sword_Slash.DisplayName: Cool Sword
+	Cool_Sword_P.DisplayName: Cool Star
+	Shimmer_Construct_Bullet.DisplayName: Shimmer Construct Bullet
+	Chambersite_Phasesaber_P.DisplayName: Chambersite Phasesaber
+	Bile_Harpoon_Droplet.DisplayName: Bile Harpoon Droplet
+	Bile_Harpoon_P.DisplayName: Bile Harpoon
+	Shinedown_P.DisplayName: Shinedown
+	Shinedown_Staff_P.DisplayName: Shinedown Staff
+	Alkahest_Harpoon_P.DisplayName: Alkahest Harpoon
+	Amnestic_Rose_Flower_P.DisplayName: Amnestic Rose Flower
+	Amnestic_Rose_Thorn.DisplayName: Amnestic Rose Thorn
+	Amnestic_Rose_Goo_Ball.DisplayName: Amnestic Rose Goo Ball
+	Amnestic_Rose_Goo_Floor.DisplayName: Amnestic Rose Goo Floor
+	Otherworldly_Cloak_P.DisplayName: Otherworldly Cloak
+	Master_Magician_Cloak_P.DisplayName: Master Magician Cloak
+	Constellation_P.DisplayName: Constellation
+	Constellation_Star.DisplayName: Constellation Star
+	Actual_Constellation.DisplayName: Actual Constellation
+	Voltefuse_Star.DisplayName: Voltefuse Star
+	Shimmer_Landmines.DisplayName: Shimmer Star
+	Shotgun_Indicator.DisplayName: Shotgun Indicator
+	Amnestic_Rose_Alt_Flower_P.DisplayName: Amnestic Rose Flower
+	Amnestic_Rose_Alt_Goo_Ball.DisplayName: Amnestic Rose Goo Ball
+	Amnestic_Rose_Alt_Goo_Floor.DisplayName: Amnestic Rose Goo Floor
+	Amnestic_Rose_Alt_Thorn.DisplayName: Amnestic Rose Thorn
+	Ichor_Harpoon_Droplet.DisplayName: Ichor Harpoon Droplet
+	Ichor_Harpoon_P.DisplayName: Ichor Harpoon
+	Gelatin_Buddy.DisplayName: Gelatin Buddy
+	Aetherite_Aura_P.DisplayName: Aetherite Aura
+	Chambersite_Commander_Sentinel.DisplayName: Chambersite Commander Sentinel
+	Aetherium_Construct.DisplayName: Aetherium Construct
+	Stellar_Spark.DisplayName: Stellar Spark
+	Riven_Protoform_Hook.DisplayName: Riven Protoform Hook
+	Miter_Saw_P.DisplayName: Miter Saw
+	Shimmershot_P.DisplayName: Shimmershot
+	Shimmershot_Aura.DisplayName: Shimmershot Aura
+	Shimmershot_Bullet.DisplayName: Shimmershot Bullet
+	Hand_Cannon_P.DisplayName: Hand Cannon
+	Hand_Cannon_Portal.DisplayName: Hand Cannon Portal
+	Accretion_Ribbon_P.DisplayName: Accretion Ribbon
+	Friendly_Shimmer_Landmine.DisplayName: Shimmer Star
+	Splitting_Image_Chunk.DisplayName: Splitting Image
+	Splitting_Image_Slash.DisplayName: Splitting Image
+	Splitting_Image_Chunk_Spawn.DisplayName: Splitting Image
+	Frost_Hydra_Sustained_Blast.DisplayName: Frost Hydra
+	Flagellant_Whip.DisplayName: Flagellant Whip
+	SC_Shimmershot_Aura.DisplayName: Shimmershot Aura
+	SC_Shimmershot_Bullet.DisplayName: Shimmershot
+	SC_Firework.DisplayName: Shimmerwork
+	SC_Firework_Spark.DisplayName: Shimmerwork Spark
+	ConstellationNode.DisplayName: Constellation Node
+	Greater_Summoning_Potato_P.DisplayName: Greater Summoning Potato
+	Astral_Scythe_Chunk.DisplayName: Astral Scythe Chunk
+	Astral_Scythe_Chunk_Spawn.DisplayName: Astral Scythe Chunk Spawn
+	Astral_Scythe_Slash.DisplayName: Astral Scythe Slash
+	Dream_Catcher_Shard.DisplayName: Dream Catcher Shard
+	Dream_Catcher_Vine.DisplayName: Dream Catcher Vine
+	Dream_Catcher_P.DisplayName: Dream Catcher P
+	Terratotem_Tab.DisplayName: Terratotem Tab
+	Terratotem_Mask_Small.DisplayName: Terratotem Mask Small
+	Terratotem_Mask_Big.DisplayName: Terratotem Mask Big
+	Terratotem_Mask_Medium.DisplayName: Terratotem Mask Medium
+	Astral_Scythe_Blade.DisplayName: Astral Scythe Blade
+	Broken_Terratotem_Mask_Big.DisplayName: Broken Terratotem Mask Big
+	Broken_Terratotem_Mask_Medium.DisplayName: Broken Terratotem Mask Medium
+	Broken_Terratotem_Mask_Small.DisplayName: Broken Terratotem Mask Small
+	Broken_Terratotem_Tab.DisplayName: Broken Terratotem Tab
+	Astral_Scythe_Star.DisplayName: Astral Scythe Star
 }
 
 Prefixes: {
@@ -1759,7 +2019,7 @@ Prefixes: {
 		DisplayName: Firestarter's
 		Description:
 			'''
-			Minions set foes ablaze
+			Minions [buffhint/dnset foes ablaze:OnFire3]
 			Minions explode upon death
 			'''
 		BadDescription: Minions lose health over time
@@ -1931,21 +2191,21 @@ Tiles: {
 	}
 
 	Brine_Leaf_Clover_Tile.MapEntry: Brine Leaf Clover
-	Eitrite_Ore.MapEntry: Eitrite Ore
+	Eitrite_Ore.MapEntry: Eitrite
 	Eden_Tree_Sapling.MapEntry: Eden Sapling
 	Defiled_Altar.MapEntry: "{§Defiled} Altar"
 	Defiled_Dungeon_Chest_Locked.MapEntry: Locked {§Defiled} Chest
 	Defiled_Fissure.MapEntry: "{§Defiled} Fissure"
 	Defiled_Heart.MapEntry: "{§Defiled} Heart"
-	Defiled_Ore.MapEntry: Lost Ore
-	Sanguinite_Ore.MapEntry: Sanguinite Ore
+	Defiled_Ore.MapEntry: Lost
+	Sanguinite_Ore.MapEntry: Sanguinite
 	Defiled_Tree_Sapling.MapEntry: "{§Defiled} Sapling"
 	Soulspore.MapEntry: Soulspore
 	Wilted_Rose.MapEntry: Wilted Rose
-	Felnum_Ore.MapEntry: Felnum Ore
+	Felnum_Ore.MapEntry: Felnum
 	Fiberglass_Tile.MapEntry: Mods.Origins.MapObject.Fiberglass_Tile
 	Acetabularia.MapEntry: Acetabularia
-	Encrusted_Ore.MapEntry: Encrusted Ore
+	Encrusted_Ore.MapEntry: Encrusted
 	Riven_Altar.MapEntry: "{§Riven} Altar"
 	Riven_Dungeon_Chest_Locked.MapEntry: Locked {§Riven} Chest
 	Riven_Lesion.MapEntry: "{§Riven} Lesion"
@@ -1982,9 +2242,9 @@ Tiles: {
 	Ancient_Music_Box_DW: Ancient Music Box ({§Defiled_Wastelands})
 	Ancient_Music_Box_RH: Ancient Music Box ({§Riven_Hive})
 	Laser_Tag_Base_Console.MapEntry: Laser Tag Base Console
-	Lost_Ore.MapEntry: Lost Ore
+	Lost_Ore.MapEntry: Lost
 	Carburite.MapEntry: Carburite
-	Silicon_Ore.MapEntry: Silicon Ore
+	Silicon_Ore.MapEntry: Silicon
 	Underwater_Vine.MapEntry: Underwater Vine
 	Defiled_Relay.MapEntry: "{§Defiled} Relay"
 	Hydrothermal_Vent.MapEntry: Hydrothermal Vent
@@ -2004,6 +2264,15 @@ Tiles: {
 	Hydrothermal_Vent_Goopy.MapEntry: Goopy Hydrothermal Vent
 	Lucky_Hat_Tile.MapEntry: Lucky Hat
 	Residual_Crate_Tile.MapEntry: Residual Crate
+	Chambersite_Gem_Lock.MapEntry: Chambersite Gem Lock
+	Aetherite_Ore.MapEntry: Aetherite
+	Limestone_Chest.MapEntry: Limestone Chest
+	Music_Box_TD: Music Box ([wiggle:The Dive])
+	Limestone_Dresser.MapEntry: Limestone Dresser
+	Hanging_Wrycoral.MapEntry: Hanging Wrycoral
+	Fuzzvine.MapEntry: Fuzzvine
+	Fuzzvine_Lorg.MapEntry: "{$Fuzzvine}"
+	Otherworldly_Music_Box_DW: Otherworldly Music Box ({§Defiled_Wastelands})
 }
 
 MapObject: {
@@ -2026,7 +2295,8 @@ Keybinds: {
 	"Debug Screen Shader.DisplayName": Debug  Screen  Shader
 	GoldenLotus.DisplayName: Golden Lotus
 	UseMojoFlask.DisplayName: Use Mojo Flask
-	JournalBack.DisplayName: Journal: Back
+	JournalBack.DisplayName: "{§Journal}: Back"
+	WishingGlass.DisplayName: Wishing Glass
 }
 
 Configs: {
@@ -2038,16 +2308,14 @@ Configs: {
 			Tooltip: Requires a specified key binding to be used twice in a short time-frame for set bonus abilities to trigger
 		}
 
-		Headers.Journal: Journal options
-
-		TabbyJournal: {
-			Label: Alternate journal layout
-			Tooltip: Currently the "normal" layout is still unimplemented
+		Headers: {
+			Journal: "{§Journal} options"
+			Compatibility: Compatibility
 		}
 
-		OpenJournalOnUnlock: {
-			Label: Auto-open on unlock
-			Tooltip: Opens the Journal when inspecting an item for the first time
+		TabbyJournal: {
+			Label: Alternate {§Journal} layout
+			Tooltip: Currently the "normal" layout is still unimplemented
 		}
 
 		AnimatedRavel: {
@@ -2072,7 +2340,7 @@ Configs: {
 		}
 
 		DefaultJournalMode: {
-			Label: Open Journal to
+			Label: Open {§Journal} to
 			Tooltip: ""
 		}
 
@@ -2135,6 +2403,26 @@ Configs: {
 			Label: Entry Category Headers
 			Tooltip: ""
 		}
+
+		ShowRarityInHotbar: {
+			Label: Show Rarity In Hotbar
+			Tooltip: ""
+		}
+
+		ScrollWheelDirection: {
+			Label: Scroll Wheel Direction
+			Tooltip: ""
+		}
+
+		npcsNotToForceDialectOn: {
+			Label: NPCs Not To Force Dialect On
+			Tooltip: By default, Terraria Origins enables Dialect compatibility for all NPCs, if this somehow causes issues with an NPC, you can use this to prevent it.
+		}
+
+		ImproveChlorophyteBulletsPerformance: {
+			Label: Improve Chlorophyte Bullets' Performance
+			Tooltip: Replaces chlorophyte bullets' notoriously laggy visual effect with a more performant and arguably better-looking one.
+		}
 	}
 
 	OriginConfig: {
@@ -2181,7 +2469,7 @@ Configs: {
 
 		VolatileGelatin: {
 			Label: Volatile Gelatin boosts
-			Tooltip: Allows Volatile Gelatin's minion damage to count as explosive and benefit from bonuses
+			Tooltip: Volatile Gelatin's attacks count as explosive damage and coat enemies in highly explosive gel
 		}
 
 		Assimilation: {
@@ -2196,6 +2484,16 @@ Configs: {
 
 		AddDebuff: Makes {0} inflict the {1} debuff
 		ThunderSpear.Tooltip: Makes {0} inflict the {1} debuff
+
+		FrostHydra: {
+			Label: "{$ItemName.StaffoftheFrostHydra}"
+			Tooltip: Frost Hydra now shoots bursts of frost at nearby targets, and its long-range shots now explode, gaining extra benefit from summon tag damage
+		}
+
+		VanillaWhipScale: {
+			Label: Vanilla Whip Scale Support
+			Tooltip: Makes whips from vanilla Terraria and other mods support scale modifiers
+		}
 	}
 
 	DebugConfig: {
@@ -2436,20 +2734,27 @@ Configs: {
 		Map.Label: Map
 		Housing.Label: Housing Menu
 	}
+
+	Scroll_Wheel_Direction: {
+		Tooltip: ""
+		Normal.Label: Normal
+		Inverted.Label: Inverted
+		Disabled.Label: Disabled
+	}
 }
 
 SetBonuses: {
 	Acrid:
 		'''
-		All attacks inflict Toxic Shock
-		Immunity to acid venom, poisoned and toxic shock
+		All attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
+		Immunity to [buffhint/self:Venom], [buffhint/self:Poisoned] and [buffhint/self:Origins/Toxic_Shock_Debuff]
 		Extends underwater breathing
 		'''
 	Amber:
 		'''
 		-38% explosive blast radius
 		All explosives are preserved in amber and release amber shards upon detonation
-		Amber shards slow enemies, heal the player of any self-damage received, and decrease the defense of struck enemies by half
+		Amber shards [buffhint/dnSlows:Origins/Slow_Debuff] enemies, heal the player of any self-damage received, and decrease the defense of struck enemies by half
 		'''
 	Ashen:
 		'''
@@ -2464,12 +2769,12 @@ SetBonuses: {
 		'''
 	Cryosten:
 		'''
-		All attacks inflict frostburn
+		All attacks inflict [buffhint:Frostburn]
 		+10% explosive velocity
-		Immunity to Frozen and Chilled
+		Immunity to [buffhint/self:Frozen] and [buffhint/self:Chilled]
 		'''
 	Defiled: Greatly increased maximum life
-	Encrusted: Increases minion damage by up to 30% when over half health
+	Encrusted: Increases summon damage by up to 30% when over half health
 	Felnum: Moving quickly will build up a static charge to boost your next attack's damage
 	Fiberglass: Weapon damage increased by 4
 	Lost: 15% of damage taken is redirected to mana
@@ -2504,15 +2809,15 @@ SetBonuses: {
 		'''
 		Generate a massive aura that pushes away enemies and projectiles
 		harder the closer they are to you
-		Allies receive a minor boost in stats when in the aura
+		Allies receive a [buffhint/self/dnminor boost:Origins/Sapphire_Aura_Buff] in stats when in the aura
 		The aura fades as you run out of mana
 		'''
 	Scavenger:
 		'''
-		All explosives inflict Impeding Shrapnel
+		All explosives inflict [buffhint:Origins/Impeding_Shrapnel_Debuff]
 		Additional scrap drops from Ashen enemies
 		'''
-	Souldhide: Nearby enemies are weakened and afflicted with Shadefire
+	Souldhide: Nearby enemies are [buffhint:Origins/Soulhide_Weakened_Debuff] and afflicted with [buffhint:ShadowFlame]
 	Tendon: Mobility is based on remaining health
 	Miner:
 		'''
@@ -2527,12 +2832,12 @@ SetBonuses: {
 	Blast:
 		'''
 		-25% self-damage
-		Allows you to go berserk after recieving any kind of damage
+		Allows you to go berserk after receiving any kind of damage
 		All explosive combat stats are increased by 50% while berserked
 		'''
 	Rubber:
 		'''
-		Immunity to Static Shock and Electrified
+		Immunity to [buffhint:Origins/Static_Shock_Debuff] and [buffhint:Electrified]
 		+5% damage reduction
 		'''
 	Extremophile:
@@ -2549,9 +2854,26 @@ SetBonuses: {
 		'''
 	Mildew:
 		'''
-		Grants immunity to Toxic Shock
-		All minions don mildew growths that inflict Acid Venom
-		All projectiles release mildew vines in their wake that also inflict Acid Venom
+		Grants immunity to [buffhint:Origins/Toxic_Shock_Debuff]
+		All minions don mildew growths that inflict [buffhint:Venom]
+		All projectiles release mildew vines in their wake that also inflict [buffhint:Venom]
+		'''
+	ChambersiteMagicHat: Chambersite Robe instead decreases maximum mana by 20
+	ChambersiteWizardHat: +20% magic critical strike chance
+	ChambersiteCommander:
+		'''
+		Grants [buffhint/self:Origins/Voidsight_Buff]
+		Increases your max number of minions by 1
+		+15% knockback
+		Allows you to temporarily summon a Chambersite Sentinel to fight. 
+		5 second cooldown
+		'''
+	Aetherite:
+		'''
+		Able to temporarily open a shimmering rift
+		Random damaging starmines will appear in this dimension
+		Teleports the player and all entities back where they last were afterwards
+		15 second cooldown
 		'''
 }
 
@@ -2560,6 +2882,7 @@ ItemSourceFilter: {
 	CursedRarity.DisplayName: Cursed
 	ButterscotchRarity.DisplayName: Butterscotch
 	AltCyanRarity.DisplayName: A Very Nice Shade Of Blue
+	Eccentric_Rarity.DisplayName: Eccentric
 }
 
 Music: {
@@ -2594,7 +2917,7 @@ Music: {
 	}
 
 	Pereunt_Unum_Scindendum: {
-		Name: Pereunt Unum Scindendum
+		Name: Scinditur Pereunt
 		Subtitle: ""
 	}
 
@@ -2650,4 +2973,34 @@ DefiledRelaySignals: {
 	BeingDestroyed3: Alert core system.
 	BeingDestroyed4: Distress.
 	BeingDestroyed5: You will regret.
+}
+
+ExtraDyeSlots: {
+	SceneYMK_Dye_Slot_0.DisplayText: "{$LegacyInterface.57} (Green Primaries)"
+	SceneYMK_Dye_Slot_1.DisplayText: "{$LegacyInterface.57} (Pink Primaries)"
+	SceneYMK_Dye_Slot_2.DisplayText: "{$LegacyInterface.57} (Blue Primaries)"
+	Futurephones_Glow_Dye_Slot.DisplayText: "{$LegacyInterface.57} (Lights)"
+}
+
+CritType: {
+	SlammyHammer: Critically strikes when crushing the target against blocks
+	PerfectTiming: Critically strikes on perfectly timed attacks
+	Impactaxe_Crit_Type: Critically strikes on direct hits
+	Indestructible_Saddle_Crit_Type: Critically strikes during the last {0:0.##} seconds of the time limit
+	Dreikan_Crit_Type: Critically strikes when hitting the same target with all 3 shots
+	Self_Destruct_Crit_Type: Critically strikes when the user is below {0:P0} health
+	Laser_Tag_Gun_Crit_Type: Critically strikes 50% of the time
+	Soul_Snatcher_Crit_Type: Critically strikes while empowered
+	Soulslasher_Crit_Type: Critically strikes on direct hits
+	Switchblade_Crit_Type: Critically strikes for {0:0.##} seconds after switching modes
+	Neural_Network_Crit_Type: Critically strikes while above {0} adaptation charges
+	// VVVV Leave this one as is VVVV
+	Missing_File_Crit_Type: "[glitch/!@#$%^&*:Mods.Origins.CritType.Missing_File_Crit_Type]"
+	Flak_Crit_Type: Critically strikes when hitting airborne targets
+	Miter_Saw_Crit_Type: Critically strikes after several consecutive hits
+	Piledriver_Crit_Type: Critically strikes on alternate attacks
+	Meteor_Crit_Type: Critically strikes when falling onto airborne targets
+	Communion_Type: Critically strikes when hitting the same target multiple times
+	Viper_Rifle_Crit_Type: Critically strikes on otherwise afflicted enemies
+	Felnum_Crit_Type: "{$Mods.CritRework.CritTypes.FoeIsWet.Description}"
 }

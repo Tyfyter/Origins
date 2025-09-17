@@ -34,6 +34,7 @@ namespace Origins.Tiles {
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
 			DustType = Defiled_Wastelands.DefaultTileDust;
+			_ = DefaultContainerName(0, 0);
 		}
 
 		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX < 36 ? 0 : 1);
@@ -126,7 +127,13 @@ namespace Origins.Tiles {
 				} else {
 					int chest = Chest.FindChest(left, top);
 					if (chest >= 0) {
-						player.OpenChest(i, j, chest);
+						if (chest == player.chest) {
+							player.chest = -1;
+							SoundEngine.PlaySound(SoundID.MenuClose);
+						} else {
+							player.OpenChest(i, j, chest);
+							SoundEngine.PlaySound(SoundID.MenuOpen);
+						}
 						/*Main.stackSplit = 600;
 						if (chest == player.chest) {
 							player.chest = -1;

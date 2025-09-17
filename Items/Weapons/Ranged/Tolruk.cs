@@ -13,6 +13,7 @@ using ReLogic.Utilities;
 using Origins.Items.Weapons.Magic;
 using Origins.Buffs;
 using Origins.Items.Tools;
+using Origins.CrossMod;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Tolruk : ModItem, ICustomWikiStat {
@@ -35,6 +36,9 @@ namespace Origins.Items.Weapons.Ranged {
 				Origins.AddGlowMask(Texture + "_Glow_10")
 			];
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Electrified_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.damage = 37;
@@ -122,7 +126,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.DamageType = DamageClass.Ranged;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Electrified_Debuff>(), Main.rand.Next(180, 301));
+			target.AddBuff(Electrified_Debuff.ID, Main.rand.Next(180, 301));
 		}
 	}
 }

@@ -1,17 +1,21 @@
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Dreikan : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "OtherExplosive"
-        ];
-        public override void SetStaticDefaults() {
+		public string[] Categories => [
+			"OtherExplosive"
+		];
+		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 2);
 			});
@@ -52,7 +56,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Dreikan_Shot : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_286";
-		
+
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
@@ -100,6 +104,49 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.position.X -= Projectile.width / 2;
 				Projectile.position.Y -= Projectile.height / 2;
 				Projectile.Damage();
+			}
+		}
+	}
+	public class Dreikan_Crit_Type : CritType<Dreikan> {
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
+			return target.TryGetGlobalNPC(out Dreikan_Crit_NPC npc) && projectile.TryGetGlobalProjectile(out Dreikan_Crit_Projectile proj) && npc.IncrementHit(proj.shotNumber);
+		}
+		public override float CritMultiplier(Player player, Item item) => 3f;
+		class Dreikan_Crit_Projectile : CritGlobalProjectile {
+			public int shotNumber = 0;
+			public override bool IsLoadingEnabled(Mod mod) => ModEnabled;
+			public override void OnSpawn(Projectile projectile, IEntitySource source) {
+				if (source is EntitySource_ItemUse itemUse && itemUse.Item.ModItem is Dreikan) {
+					shotNumber = itemUse.Player.ItemUsesThisAnimation;
+				}
+			}
+		}
+		class Dreikan_Crit_NPC : CritGlobalNPC {
+			int hitTimer = 0;
+			int hitNumber = 0;
+			public override bool InstancePerEntity => true;
+			public override bool IsLoadingEnabled(Mod mod) => ModEnabled;
+			public override void ResetEffects(NPC npc) {
+				if (hitTimer.Cooldown()) {
+					hitNumber = 0;
+				}
+			}
+			public bool IncrementHit(int number) {
+				if (number == hitNumber + 1) {
+					hitNumber++;
+					hitTimer = 30;
+					if (hitNumber == 3) {
+						hitNumber = 0;
+						return true;
+					}
+				} else if (number == 1) {
+					hitNumber = 1;
+					hitTimer = 30;
+				} else if (number != hitNumber || hitTimer <= 20) {
+					hitNumber = 0;
+					hitTimer = 0;
+				}
+				return false;
 			}
 		}
 	}

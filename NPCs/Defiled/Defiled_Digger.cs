@@ -14,7 +14,8 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/Defiled_Digger_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
-				Position = new Vector2(4f, 8f),
+				Position = new Vector2(25f, 32f),
+				PortraitPositionXOverride = 4,
 				PortraitPositionYOverride = 16f
 			};
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
@@ -192,7 +193,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
-				NPC current = Main.npc[NPC.realLife];
+				NPC current = Main.npc.GetIfInRange(NPC.realLife, NPC);
 				while (current.ai[0] != 0) {
 					deathEffect(current);
 					current = Main.npc[(int)current.ai[0]];

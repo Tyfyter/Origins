@@ -39,12 +39,21 @@ namespace Origins.Tiles.Other {
 			AddMapEntry(new Color(81, 81, 81), CreateMapEntryName());
 			DustType = DustID.Lead;
 		}
+		public bool? Hardmode => true;
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => CheckInteract(true);
 		public override bool RightClick(int i, int j) => CheckInteract(false);
 		public static bool CheckInteract(bool justCheck) {
 			//if (Main.netMode == NetmodeID.SinglePlayer) return false;
 			if (!OriginPlayer.LocalOriginPlayer.laserTagVest) return false;
 			if (!LaserTagGameActive) {
+				if (!justCheck) {
+					Main.LocalPlayer.SetTalkNPC(-1);
+					Main.npcChatCornerItem = 0;
+					SoundEngine.PlaySound(SoundID.MenuOpen);
+					IngameFancyUI.OpenUIState(new Laser_Tag_Rules_UI());
+				}
+				return true;
+			} else if (!Main.LocalPlayer.OriginPlayer().laserTagVest) {
 				if (!justCheck) {
 					Main.LocalPlayer.SetTalkNPC(-1);
 					Main.npcChatCornerItem = 0;

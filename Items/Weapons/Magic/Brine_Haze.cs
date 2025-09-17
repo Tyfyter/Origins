@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Walls;
 using System;
@@ -126,7 +127,7 @@ namespace Origins.Items.Weapons.Magic {
 				float width = hitbox.Width * 1.5f;
 				float height = hitbox.Height * 1.5f;
 				Vector2 start = hitbox.TopLeft() - new Vector2(hitbox.Width, hitbox.Height) / 4;
-				Dust.NewDustDirect(
+				EfficientDust.NewDustDirect(
 					start,
 					(int)width,
 					(int)height,
@@ -165,7 +166,7 @@ namespace Origins.Items.Weapons.Magic {
 			hitbox = hitbox.Recentered(center);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffType<Toxic_Shock_Debuff>(), 5 * 60);
+			target.AddBuff(Toxic_Shock_Debuff.ID, 5 * 60);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;

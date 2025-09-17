@@ -1,21 +1,13 @@
-﻿using Origins.Gores.NPCs;
+﻿using Origins.Dev;
+using Origins.Gores.NPCs;
 using Origins.World.BiomeData;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.DataStructures;
-using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria;
-using PegasusLib;
+using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
+using Terraria.ID;
 using Terraria.Localization;
-using Origins.Dev;
-using CalamityMod.NPCs.TownNPCs;
-using Newtonsoft.Json.Linq;
-using static Origins.Misc.Physics;
-using ThoriumMod.Empowerments;
+using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven.World_Cracker {
 	public class World_Cracker_Summon_Bubble : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
@@ -30,11 +22,14 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			NPCID.Sets.DontDoHardmodeScaling[NPC.type] = true;
 			ID = Type;
+			World_Cracker_Head.Minions.Add(Type);
 		}
 		public static void MakeWorldCrackerMinion(ModNPC modNPC) {
 			ValidSpawns.Add(modNPC.Type);
 			NPCID.Sets.NPCBestiaryDrawOffset[modNPC.Type] = NPCExtensions.HideInBestiary;
+			ContentSamples.NpcBestiaryRarityStars[modNPC.Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[modNPC.Type] = true;
+			World_Cracker_Head.Minions.Add(modNPC.Type);
 		}
 		public override void Unload() => ValidSpawns = null;
 		public override void SetDefaults() {
@@ -121,7 +116,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				NetMessage.SendData(MessageID.SyncNPC, number: index);
 			}
 		}
-		public override Color? GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
+		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 	}
 	public class Riven_Fighter_WC : Riven_Fighter, ICustomWikiStat {
 		string ICustomWikiStat.CustomStatPath => nameof(Riven_Fighter_WC);
@@ -173,13 +168,18 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		string ICustomWikiStat.CustomStatPath => nameof(World_Cracker_Exoskeleton_WC);
 		public override LocalizedText DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.World_Cracker_Exoskeleton.DisplayName"));
 		public override void Load() { }
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
+		public override void SafeSetStaticDefaults() {
 			World_Cracker_Summon_Bubble.MakeWorldCrackerMinion(this);
+			NPCID.Sets.NPCBestiaryDrawOffset.Remove(Type);
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.lifeMax /= 2;
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				ModContent.GetInstance<World_Cracker_Exoskeleton>().GetBestiaryFlavorText()
+			);
 		}
 	}
 }

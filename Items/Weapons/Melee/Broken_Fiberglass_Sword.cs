@@ -6,12 +6,14 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 using System;
+using Origins.CrossMod;
+using Terraria.Localization;
 namespace Origins.Items.Weapons.Melee {
 	public class Broken_Fiberglass_Sword : ModItem, IElementalItem, ICustomWikiStat {
-        public string[] Categories => [
-            "Sword"
-        ];
-        public ushort Element => Elements.Fiberglass;
+		public string[] Categories => [
+			"Sword"
+		];
+		public ushort Element => Elements.Fiberglass;
 		public override void SetDefaults() {
 			Item.damage = 18;
 			Item.DamageType = DamageClass.Melee;
@@ -34,7 +36,7 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Broken_Fiberglass_Sword_Stab : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Broken_Fiberglass_Sword";
-		
+
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
 			Projectile.timeLeft = 3600;
@@ -78,6 +80,17 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool PreDraw(ref Color lightColor) {
 			Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Broken_Fiberglass_Sword").Value, (Projectile.Center - Projectile.velocity * 2) - Main.screenPosition, null, lightColor, Projectile.rotation, new Vector2(15, 16), 1f, SpriteEffects.None, 0);
 			return false;
+		}
+	}
+	public class Broken_Fiberglass_Sword_Crit_Type : CritType<Broken_Fiberglass_Sword> {
+		const int duration = 90;
+		public override LocalizedText Description => CritMod.GetLocalization($"CritTypes.JustHitByEnemy.Description");
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => player.GetModPlayer<Broken_Fiberglass_Sword_Player>().timeSinceHit < duration;
+		public override float CritMultiplier(Player player, Item item) => 2.35f;
+		class Broken_Fiberglass_Sword_Player : CritModPlayer {
+			public int timeSinceHit = duration;
+			public override void ResetEffects() => timeSinceHit.Warmup(duration);
+			public override void OnHurt(Player.HurtInfo info) => timeSinceHit = 0;
 		}
 	}
 }

@@ -20,6 +20,9 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Mildew_Incantation : ModItem, ICustomDrawItem {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
+		public override void SetStaticDefaults() {
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Toxic_Shock_Debuff.ID, Slow_Debuff.ID];
+		}
 		public override void SetDefaults() {
 			Item.damage = 50;
 			Item.DamageType = DamageClasses.Incantation;
@@ -172,7 +175,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override bool? CanHitNPC(NPC target) {
 			if (Projectile.ai[0] != -1) return Projectile.ai[0] == target.whoAmI;
-			if (target.type == NPCID.TargetDummy) return false;
+			if (OriginsSets.NPCs.TargetDummies[target.type]) return false;
 			return base.CanHitNPC(target);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {

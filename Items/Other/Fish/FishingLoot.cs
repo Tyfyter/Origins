@@ -23,8 +23,10 @@ namespace Origins.Items.Other.Fish {
 		#region brine
 				new LeadingConditionFishLoot(new OrderedFishingLoot(new LeadingConditionFishLoot(
 						new OrderedFishingLoot(
-						new ItemFishingLoot(ItemType<Huff_Puffer_Bait>(), (_, _) => true)
-					), (_, attempt) => attempt.rare),
+							new ItemFishingLoot(ItemType<Basic_Crate>(), (_, attempt) => attempt.crate && Main.hardMode),
+								new ItemFishingLoot(ItemType<Residual_Crate>(), (_, attempt) => attempt.crate),
+								new ItemFishingLoot(ItemType<Huff_Puffer_Bait>(), (_, _) => true)
+					), (_, attempt) => attempt.rare && !(attempt.veryrare || attempt.legendary)),
 					new LeadingConditionFishLoot(
 						new OrderedFishingLoot(
 						new ItemFishingLoot(ItemType<Bobbit_Worm>(), (_, attempt) => attempt.questFish == ItemType<Bobbit_Worm>()),
@@ -85,17 +87,8 @@ namespace Origins.Items.Other.Fish {
 						new ItemFishingLoot(ItemType<Bonehead_Jellyfish>(), (_, attempt) => attempt.questFish == ItemType<Bonehead_Jellyfish>()),
 						new ItemFishingLoot(ItemType<Tearracuda>(), (_, _) => true)
 					), (_, attempt) => attempt.uncommon)
-				)),
-		#endregion riven
-		#region dusk
-				((player, _) => player.InModBiome<Dusk>() ? 1 : 0, new OrderedFishingLoot(
-					new LeadingConditionFishLoot(
-						new OrderedFishingLoot(
-						new ItemFishingLoot(ItemType<Duskarp>(), (_, attempt) => attempt.questFish == ItemType<Duskarp>()),
-						new ItemFishingLoot(ItemType<Duskarp>(), (_, _) => true)
-					), (_, attempt) => attempt.uncommon)
 				))
-		#endregion dusk
+		#endregion riven
 			),
 
 		#region jungle

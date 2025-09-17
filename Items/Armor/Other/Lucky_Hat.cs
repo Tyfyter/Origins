@@ -71,6 +71,7 @@ namespace Origins.Items.Armor.Other {
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 100;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+			TileID.Sets.GeneralPlacementTiles[Type] = false;
 			TileID.Sets.HasOutlines[Type] = false;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 
@@ -116,6 +117,12 @@ namespace Origins.Items.Armor.Other {
 			}
 			if (anchorTile.TileType == TileID.Containers && TileObjectData.GetTileStyle(anchorTile) != ChestID.Barrel) return -1;
 			return 1;
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			if (WorldGen.destroyObject && !Framing.GetTileSafely(i, j + 1).HasTile) {
+				OriginSystem.QueueTileFrames(i, j);
+			}
+			return base.TileFrame(i, j, ref resetFrame, ref noBreak);
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			if (TileObjectData.GetTileData(Type, 0).AnchorAlternateTiles.Contains(Framing.GetTileSafely(i, j + 1).TileType)) {

@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Armor.Amber;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles.Weapons;
 using Origins.Reflection;
 using PegasusLib;
@@ -139,8 +140,8 @@ namespace Origins.Projectiles {
 			if (originPlayer.novaSet && Origins.HomingEffectivenessMultiplier[projectile.type] != 0) {
 				isHoming = true;
 			}
-			if (originPlayer.explosiveFuseTime != StatModifier.Default) {
-				projectile.timeLeft = (int)(originPlayer.explosiveFuseTime.ApplyTo(projectile.timeLeft));
+			if (OriginsSets.Projectiles.ApplyLifetimeModifiers[projectile.type] && originPlayer.explosiveFuseTime != StatModifier.Default) {
+				projectile.timeLeft = (int)originPlayer.explosiveFuseTime.ApplyTo(projectile.timeLeft);
 			}
 			if (originPlayer.magicTripwire) {
 				magicTripwire = true;
@@ -297,6 +298,9 @@ namespace Origins.Projectiles {
 			scrapCompactor = bitReader.ReadBit();
 		}
 		public static bool IsExploding(Projectile projectile, bool isHitting = false) {
+			if (projectile.type == Shimmer_Guardian_Shard.ID) {
+				return projectile.ai[0] == 0 && projectile.velocity != Vector2.Zero && projectile.ai[1] <= 50;
+			}
 			if (!projectile.CountsAsClass(DamageClasses.Explosive)) return false;
 			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {
 				return explodingProjectile.IsExploding();
@@ -638,187 +642,6 @@ namespace Origins.Projectiles {
 				default:
 				return 0;
 			}
-		}
-		internal static void SetupMagicTripwireRanges(int[] magicTripwireRange, int[] magicTripwireDetonationStyle) {
-			magicTripwireRange[ProjectileID.Grenade] = 32;
-			magicTripwireRange[ProjectileID.BouncyGrenade] = 32;
-			magicTripwireRange[ProjectileID.StickyGrenade] = 32;
-			magicTripwireRange[ProjectileID.PartyGirlGrenade] = 32;
-			magicTripwireRange[ProjectileID.Beenade] = 32;
-			magicTripwireRange[ProjectileID.Bomb] = 64;
-			magicTripwireRange[ProjectileID.BouncyBomb] = 64;
-			magicTripwireRange[ProjectileID.StickyBomb] = 64;
-			magicTripwireRange[ProjectileID.Dynamite] = 64;
-			magicTripwireRange[ProjectileID.BouncyDynamite] = 64;
-			magicTripwireRange[ProjectileID.StickyDynamite] = 64;
-			magicTripwireRange[ProjectileID.BombFish] = 64;
-			magicTripwireRange[ProjectileID.DryBomb] = 12;
-			magicTripwireRange[ProjectileID.WetBomb] = 12;
-			magicTripwireRange[ProjectileID.LavaBomb] = 12;
-			magicTripwireRange[ProjectileID.HoneyBomb] = 12;
-			magicTripwireRange[ProjectileID.ScarabBomb] = 0;
-			magicTripwireRange[ProjectileID.MolotovCocktail] = 64;
-
-			magicTripwireRange[ProjectileID.RocketI] = 32;
-			magicTripwireRange[ProjectileID.RocketII] = 32;
-			magicTripwireRange[ProjectileID.RocketIII] = 64;
-			magicTripwireRange[ProjectileID.RocketIV] = 64;
-			magicTripwireRange[ProjectileID.MiniNukeRocketI] = 64;
-			magicTripwireRange[ProjectileID.MiniNukeRocketII] = 64;
-			magicTripwireRange[ProjectileID.ClusterRocketI] = 32;
-			magicTripwireRange[ProjectileID.ClusterRocketII] = 32;
-			magicTripwireRange[ProjectileID.DryRocket] = 32;
-			magicTripwireRange[ProjectileID.WetRocket] = 32;
-			magicTripwireRange[ProjectileID.LavaRocket] = 32;
-			magicTripwireRange[ProjectileID.HoneyRocket] = 32;
-
-			magicTripwireRange[ProjectileID.ProximityMineI] = 32;
-			magicTripwireRange[ProjectileID.ProximityMineII] = 32;
-			magicTripwireRange[ProjectileID.ProximityMineIII] = 64;
-			magicTripwireRange[ProjectileID.ProximityMineIV] = 64;
-			magicTripwireRange[ProjectileID.MiniNukeMineI] = 64;
-			magicTripwireRange[ProjectileID.MiniNukeMineII] = 64;
-			magicTripwireRange[ProjectileID.ClusterMineI] = 32;
-			magicTripwireRange[ProjectileID.ClusterMineII] = 32;
-			magicTripwireRange[ProjectileID.DryMine] = 32;
-			magicTripwireRange[ProjectileID.WetMine] = 32;
-			magicTripwireRange[ProjectileID.LavaMine] = 32;
-			magicTripwireRange[ProjectileID.HoneyMine] = 32;
-
-			magicTripwireRange[ProjectileID.GrenadeI] = 32;
-			magicTripwireRange[ProjectileID.GrenadeII] = 32;
-			magicTripwireRange[ProjectileID.GrenadeIII] = 64;
-			magicTripwireRange[ProjectileID.GrenadeIV] = 64;
-			magicTripwireRange[ProjectileID.MiniNukeGrenadeI] = 64;
-			magicTripwireRange[ProjectileID.MiniNukeGrenadeII] = 64;
-			magicTripwireRange[ProjectileID.ClusterGrenadeI] = 32;
-			magicTripwireRange[ProjectileID.ClusterGrenadeII] = 32;
-			magicTripwireRange[ProjectileID.DryGrenade] = 32;
-			magicTripwireRange[ProjectileID.WetGrenade] = 32;
-			magicTripwireRange[ProjectileID.LavaGrenade] = 32;
-			magicTripwireRange[ProjectileID.HoneyGrenade] = 32;
-
-			magicTripwireRange[ProjectileID.RocketSnowmanI] = 32;
-			magicTripwireRange[ProjectileID.RocketSnowmanII] = 32;
-			magicTripwireRange[ProjectileID.RocketSnowmanIII] = 64;
-			magicTripwireRange[ProjectileID.RocketSnowmanIV] = 64;
-			magicTripwireRange[ProjectileID.MiniNukeSnowmanRocketI] = 64;
-			magicTripwireRange[ProjectileID.MiniNukeSnowmanRocketII] = 64;
-			magicTripwireRange[ProjectileID.ClusterSnowmanRocketI] = 32;
-			magicTripwireRange[ProjectileID.ClusterSnowmanRocketII] = 32;
-			magicTripwireRange[ProjectileID.DrySnowmanRocket] = 32;
-			magicTripwireRange[ProjectileID.WetSnowmanRocket] = 32;
-			magicTripwireRange[ProjectileID.LavaSnowmanRocket] = 32;
-			magicTripwireRange[ProjectileID.HoneySnowmanRocket] = 32;
-
-			magicTripwireRange[ProjectileID.RocketFireworkBlue] = 64;
-			magicTripwireRange[ProjectileID.RocketFireworkGreen] = 64;
-			magicTripwireRange[ProjectileID.RocketFireworkRed] = 64;
-			magicTripwireRange[ProjectileID.RocketFireworkYellow] = 64;
-
-			magicTripwireRange[ProjectileID.Celeb2Rocket] = 64;
-			magicTripwireRange[ProjectileID.Celeb2RocketExplosive] = 64;
-			magicTripwireRange[ProjectileID.Celeb2RocketLarge] = 64;
-			magicTripwireRange[ProjectileID.Celeb2RocketExplosiveLarge] = 64;
-
-			magicTripwireRange[ProjectileID.ElectrosphereMissile] = 32;
-
-			magicTripwireRange[ProjectileID.HellfireArrow] = 8;
-			magicTripwireRange[ProjectileID.Stynger] = 12;
-			magicTripwireRange[ProjectileID.JackOLantern] = 32;
-
-			
-			magicTripwireDetonationStyle[ProjectileID.RocketSnowmanI] = 0;
-			magicTripwireDetonationStyle[ProjectileID.RocketSnowmanII] = 0;
-			magicTripwireDetonationStyle[ProjectileID.RocketSnowmanIII] = 0;
-			magicTripwireDetonationStyle[ProjectileID.RocketSnowmanIV] = 0;
-			magicTripwireDetonationStyle[ProjectileID.MiniNukeSnowmanRocketI] = 0;
-			magicTripwireDetonationStyle[ProjectileID.MiniNukeSnowmanRocketII] = 0;
-			magicTripwireDetonationStyle[ProjectileID.ClusterSnowmanRocketI] = 0;
-			magicTripwireDetonationStyle[ProjectileID.ClusterSnowmanRocketII] = 0;
-			magicTripwireDetonationStyle[ProjectileID.DrySnowmanRocket] = 0;
-			magicTripwireDetonationStyle[ProjectileID.WetSnowmanRocket] = 0;
-			magicTripwireDetonationStyle[ProjectileID.LavaSnowmanRocket] = 0;
-			magicTripwireDetonationStyle[ProjectileID.HoneySnowmanRocket] = 0;
-
-			magicTripwireDetonationStyle[ProjectileID.RocketFireworkBlue] = 0;
-			magicTripwireDetonationStyle[ProjectileID.RocketFireworkGreen] = 0;
-			magicTripwireDetonationStyle[ProjectileID.RocketFireworkRed] = 0;
-			magicTripwireDetonationStyle[ProjectileID.RocketFireworkYellow] = 0;
-
-			magicTripwireDetonationStyle[ProjectileID.Celeb2Rocket] = 0;
-			magicTripwireDetonationStyle[ProjectileID.Celeb2RocketExplosive] = 0;
-			magicTripwireDetonationStyle[ProjectileID.Celeb2RocketLarge] = 0;
-			magicTripwireDetonationStyle[ProjectileID.Celeb2RocketExplosiveLarge] = 0;
-
-			magicTripwireDetonationStyle[ProjectileID.ElectrosphereMissile] = 0;
-
-			magicTripwireDetonationStyle[ProjectileID.ClusterFragmentsI] = 0;
-			magicTripwireDetonationStyle[ProjectileID.ClusterFragmentsII] = 0;
-			magicTripwireDetonationStyle[ProjectileID.ClusterSnowmanFragmentsI] = 0;
-			magicTripwireDetonationStyle[ProjectileID.ClusterSnowmanFragmentsII] = 0;
-			magicTripwireDetonationStyle[ProjectileID.HellfireArrow] = 0;
-			magicTripwireDetonationStyle[ProjectileID.Stynger] = 0;
-			magicTripwireDetonationStyle[ProjectileID.StyngerShrapnel] = 0;
-			magicTripwireDetonationStyle[ProjectileID.JackOLantern] = 0;
-
-			magicTripwireDetonationStyle[ProjectileID.Grenade] = 1;
-			magicTripwireDetonationStyle[ProjectileID.BouncyGrenade] = 1;
-			magicTripwireDetonationStyle[ProjectileID.StickyGrenade] = 1;
-			magicTripwireDetonationStyle[ProjectileID.PartyGirlGrenade] = 1;
-			magicTripwireDetonationStyle[ProjectileID.Beenade] = 1;
-			magicTripwireDetonationStyle[ProjectileID.Bomb] = 1;
-			magicTripwireDetonationStyle[ProjectileID.BouncyBomb] = 1;
-			magicTripwireDetonationStyle[ProjectileID.StickyBomb] = 1;
-			magicTripwireDetonationStyle[ProjectileID.Dynamite] = 1;
-			magicTripwireDetonationStyle[ProjectileID.BouncyDynamite] = 1;
-			magicTripwireDetonationStyle[ProjectileID.StickyDynamite] = 1;
-			magicTripwireDetonationStyle[ProjectileID.BombFish] = 1;
-			magicTripwireDetonationStyle[ProjectileID.DryBomb] = 1;
-			magicTripwireDetonationStyle[ProjectileID.WetBomb] = 1;
-			magicTripwireDetonationStyle[ProjectileID.LavaBomb] = 1;
-			magicTripwireDetonationStyle[ProjectileID.HoneyBomb] = 1;
-			magicTripwireDetonationStyle[ProjectileID.ScarabBomb] = 1;
-			magicTripwireDetonationStyle[ProjectileID.MolotovCocktail] = 1;
-			
-			magicTripwireDetonationStyle[ProjectileID.RocketI] = 2;
-			magicTripwireDetonationStyle[ProjectileID.RocketII] = 2;
-			magicTripwireDetonationStyle[ProjectileID.RocketIII] = 2;
-			magicTripwireDetonationStyle[ProjectileID.RocketIV] = 2;
-			magicTripwireDetonationStyle[ProjectileID.MiniNukeRocketI] = 2;
-			magicTripwireDetonationStyle[ProjectileID.MiniNukeRocketII] = 2;
-			magicTripwireDetonationStyle[ProjectileID.ClusterRocketI] = 2;
-			magicTripwireDetonationStyle[ProjectileID.ClusterRocketII] = 2;
-			magicTripwireDetonationStyle[ProjectileID.DryRocket] = 2;
-			magicTripwireDetonationStyle[ProjectileID.WetRocket] = 2;
-			magicTripwireDetonationStyle[ProjectileID.LavaRocket] = 2;
-			magicTripwireDetonationStyle[ProjectileID.HoneyRocket] = 2;
-
-			magicTripwireDetonationStyle[ProjectileID.ProximityMineI] = 2;
-			magicTripwireDetonationStyle[ProjectileID.ProximityMineII] = 2;
-			magicTripwireDetonationStyle[ProjectileID.ProximityMineIII] = 2;
-			magicTripwireDetonationStyle[ProjectileID.ProximityMineIV] = 2;
-			magicTripwireDetonationStyle[ProjectileID.MiniNukeMineI] = 2;
-			magicTripwireDetonationStyle[ProjectileID.MiniNukeMineII] = 2;
-			magicTripwireDetonationStyle[ProjectileID.ClusterMineI] = 2;
-			magicTripwireDetonationStyle[ProjectileID.ClusterMineII] = 2;
-			magicTripwireDetonationStyle[ProjectileID.DryMine] = 2;
-			magicTripwireDetonationStyle[ProjectileID.WetMine] = 2;
-			magicTripwireDetonationStyle[ProjectileID.LavaMine] = 2;
-			magicTripwireDetonationStyle[ProjectileID.HoneyMine] = 2;
-
-			magicTripwireDetonationStyle[ProjectileID.GrenadeI] = 2;
-			magicTripwireDetonationStyle[ProjectileID.GrenadeII] = 2;
-			magicTripwireDetonationStyle[ProjectileID.GrenadeIII] = 2;
-			magicTripwireDetonationStyle[ProjectileID.GrenadeIV] = 2;
-			magicTripwireDetonationStyle[ProjectileID.MiniNukeGrenadeI] = 2;
-			magicTripwireDetonationStyle[ProjectileID.MiniNukeGrenadeII] = 2;
-			magicTripwireDetonationStyle[ProjectileID.ClusterGrenadeI] = 2;
-			magicTripwireDetonationStyle[ProjectileID.ClusterGrenadeII] = 2;
-			magicTripwireDetonationStyle[ProjectileID.DryGrenade] = 2;
-			magicTripwireDetonationStyle[ProjectileID.WetGrenade] = 2;
-			magicTripwireDetonationStyle[ProjectileID.LavaGrenade] = 2;
-			magicTripwireDetonationStyle[ProjectileID.HoneyGrenade] = 2;
 		}
 		public static void DoExplosion(Projectile projectile, int size, bool dealSelfDamage = true, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, int fireDustType = DustID.Torch, bool hostile = false, bool alsoFriendly = false) {
 			projectile.friendly = !hostile || alsoFriendly;

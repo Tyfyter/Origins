@@ -1,8 +1,7 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Cyah_Nara : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -24,7 +23,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.value = Item.sellPrice(silver: 2);
 			Item.rare = ItemRarityID.Blue;
 			Item.autoReuse = true;
-			Item.UseSound = SoundID.Item71.WithPitch(1.3f);
+			Item.UseSound = SoundID.Item71.WithPitch(1f);
 		}
 	}
 }

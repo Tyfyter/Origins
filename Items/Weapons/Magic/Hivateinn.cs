@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Buffs;
+using Origins.CrossMod;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Hivateinn : ModItem, ICustomWikiStat {
@@ -17,6 +18,9 @@ namespace Origins.Items.Weapons.Magic {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Electrified_Debuff.ID];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
@@ -86,9 +90,17 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.velocity = direction;
 			}
 		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			float size = Projectile.width * Projectile.scale;
+			float _ = 0;
+			for (int i = 1; i < Projectile.oldPos.Length; i++) {
+				if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.oldPos[i - 1], Projectile.oldPos[i], size, ref _)) return true;
+			}
+			return false;
+		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<LightningImmuneFixBuff>(), 4);
-			target.AddBuff(ModContent.BuffType<Electrified_Debuff>(), 240);
+			target.AddBuff(ModContent.BuffType<LightningImmuneFixBuff>(), 6);
+			target.AddBuff(Electrified_Debuff.ID, 240);
 		}
 		public override bool? CanHitNPC(NPC target) {
 			return target.HasBuff(ModContent.BuffType<LightningImmuneFixBuff>()) ? false : base.CanHitNPC(target);

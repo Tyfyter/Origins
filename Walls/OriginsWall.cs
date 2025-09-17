@@ -101,6 +101,7 @@ namespace Origins.Walls {
 					ItemID.Sets.ShimmerTransformToItem[Type - 1] = Type;
 				}
 			}
+			Item.ResearchUnlockCount = 400;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableWall(Wall.Type);

@@ -1,5 +1,7 @@
 using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.Audio;
@@ -14,6 +16,10 @@ namespace Origins.Items.Weapons.Demolitionist {
             "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {
+			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
+			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -25,11 +31,17 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(copper: 70);
 			Item.rare = ItemRarityID.Green;
             Item.ArmorPenetration += 4;
-        }
+		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 6)
 			.AddIngredient(ItemID.Grenade, 6)
 			.AddIngredient(ModContent.ItemType<Felnum_Ore_Item>())
+			.AddTile(TileID.Anvils)
+			.Register();
+
+			Recipe.Create(Type, 18)
+			.AddIngredient(ItemID.Grenade, 18)
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>())
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

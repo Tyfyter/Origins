@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner;
@@ -26,11 +27,13 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 			Origins.DamageBonusScale[Type] = 1.5f;
+			CritType.SetCritType<Felnum_Crit_Type>(Type);
+			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 30;
+			Item.damage = 27;
 			Item.DamageType = DamageClass.Summon;
-			Item.mana = 18;
+			Item.mana = 10;
 			Item.shootSpeed = 9f;
 			Item.knockBack = 1f;
 			Item.width = 24;
@@ -78,6 +81,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Main.projPet[Type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
+			OriginsSets.Projectiles.UsesTypeSpecificMinionPos[Type] = true;
 			ID = Type;
 		}
 

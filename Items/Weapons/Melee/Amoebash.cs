@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Gores.NPCs;
 using Origins.Items.Accessories;
@@ -19,12 +21,15 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using ThoriumMod.Items.BardItems;
 using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Melee {
-	public class Amoebash : ModItem, ICustomWikiStat {
-        public string[] Categories => [
+	public class Amoebash : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.4f;
+		float ITornSource.Severity => TornSeverity;
+		public string[] Categories => [
             "Sword"
         ];
 		public override void SetStaticDefaults() {
@@ -85,13 +90,13 @@ namespace Origins.Items.Weapons.Melee {
 				);
 			}
 		}
-		static bool forcedCrit = false;
+		internal static bool forcedCrit = false;
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;
 			forcedCrit = false;
 			if (!target.noTileCollide && float.IsNaN(Projectile.ai[2])) {
 				Rectangle hitbox = target.Hitbox;
-				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation + Projectile.ai[1] * 2.5f).SafeNormalize(default);
+				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation * Main.player[Projectile.owner].gravDir + Projectile.ai[1] * 2.5f).SafeNormalize(default);
 				hitbox.Offset((dir * 8).ToPoint());
 				if (hitbox.OverlapsAnyTiles(fallThrough: false)) {
 					Collision.HitTiles(hitbox.TopLeft(), dir, hitbox.Width, hitbox.Height);
@@ -101,10 +106,10 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 120, targetSeverity: 0.4f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 120, targetSeverity: Amoebash.TornSeverity, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 			target.velocity -= target.velocity * target.knockBackResist;
 			if (!float.IsNaN(hit.Knockback)) {
-				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation);
+				Vector2 dir = Projectile.velocity.RotatedBy(Projectile.rotation * Main.player[Projectile.owner].gravDir);
 				if (!forcedCrit) dir += dir.RotatedBy(Projectile.ai[1] * MathHelper.PiOver2);
 				target.velocity += dir.SafeNormalize(default) * hit.Knockback;
 			}
@@ -149,5 +154,10 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override Color? GetAlpha(Color lightColor) => Riven_Hive.GetGlowAlpha(lightColor);
+	}
+	public class Amoebash_Crit_Type : CritType<Amoebash> {
+		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.CritType.SlammyHammer");
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => Amoebash_Smash.forcedCrit;
+		public override float CritMultiplier(Player player, Item item) => 2f;
 	}
 }

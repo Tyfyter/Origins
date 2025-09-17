@@ -30,6 +30,7 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Joint_Pop_P : ModProjectile, IWhipProjectile {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.IsAWhip[Type] = true;
+			OriginsSets.Projectiles.NoMultishot[Type] = true;
 		}
 
 		public override void SetDefaults() {
@@ -162,6 +163,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.height = 96;
 			Projectile.friendly = true;
 			Projectile.tileCollide = false;
+			Projectile.hide = true;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 5;
 		}

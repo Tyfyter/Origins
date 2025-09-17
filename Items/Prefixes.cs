@@ -551,6 +551,7 @@ namespace Origins.Items {
 		}
 		public override void OnKill(Projectile projectile) {
 			if (projectile.owner == Main.myPlayer) {
+				if ((projectile.ModProjectile is not IArtifactMinion artifact || artifact.Life > 0) && projectile.GetEffectTimer<Wholesome_Sacrifice_Timer>() < 150) return;
 				int item = Item.NewItem(
 					projectile.GetSource_Death(),
 					projectile.Center,
@@ -580,6 +581,10 @@ namespace Origins.Items {
 				}
 			}
 		}
+		public class Wholesome_Sacrifice_Timer : PrefixProjectileEffectTimer<Wholesome_Prefix> {
+			public override bool StartAtZero => true;
+			public override bool AppliesToEntity(Projectile projectile) => projectile.friendly && base.AppliesToEntity(projectile);
+		}
 	}
 	public class Vampiric_Prefix : ArtifactMinionPrefix, IOnHitNPCPrefix {
 		public override StatModifier MaxLifeModifier => new(0.75f, 1);
@@ -594,7 +599,7 @@ namespace Origins.Items {
 			valueMult *= 1.25f;
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
-			if (target.type == NPCID.TargetDummy) return;
+			if (OriginsSets.NPCs.TargetDummies[target.type]) return;
 			Projectile ownerMinion = MinionGlobalProjectile.GetOwnerMinion(projectile);
 			if (ownerMinion?.ModProjectile is IArtifactMinion artifactMinion && artifactMinion.Life < artifactMinion.MaxLife) {
 				float oldHealth = artifactMinion.Life;
@@ -695,7 +700,7 @@ namespace Origins.Items {
 				List<TimerInstance> relevantTimers = [];
 				for (int i = 0; i < timers.Count; i++) {
 					if (timers[i].AppliesToEntity(projectile)) {
-						relevantTimers.Add(new(timers[i].Index));
+						relevantTimers.Add(new(timers[i]));
 					}
 				}
 				timerInstances = relevantTimers.ToArray();
@@ -707,15 +712,19 @@ namespace Origins.Items {
 			return true;
 		}
 		public ref int Get<TTimer>() where TTimer : ProjectileEffectTimer {
-			int timerIndex = ModContent.GetInstance<TTimer>().Index;
+			TTimer timer = ModContent.GetInstance<TTimer>();
+			int timerIndex = timer.Index;
 			for (int i = 0; i < timerInstances.Length; i++) {
 				if (timerInstances[i].Type == timerIndex) return ref timerInstances[i].time;
 			}
 			Array.Resize(ref timerInstances, timerInstances.Length + 1);
-			timerInstances[^1] = new(timerIndex);
+			timerInstances[^1] = new(timer);
 			return ref timerInstances[^1].time;
 		}
 		struct TimerInstance(int type) {
+			public TimerInstance(ProjectileEffectTimer effectTimer) : this(effectTimer.Index) {
+				if (effectTimer.StartAtZero) time = 0;
+			}
 			internal readonly int Type = type;
 			internal int time = int.MaxValue;
 		}
@@ -727,6 +736,7 @@ namespace Origins.Items {
 	}
 	public abstract class ProjectileEffectTimer : ILoadable {
 		public int Index { get; private set; }
+		public virtual bool StartAtZero => false;
 		public abstract bool AppliesToEntity(Projectile projectile);
 		public void Load(Mod mod) {
 			Index = Prefix_Timer_Global.timers.Count;

@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using BetterDialogue.UI.VanillaChatButtons;
+using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Cil;
 using Origins.Dev;
 using Origins.Journal;
 using ReLogic.Content;
@@ -19,6 +21,30 @@ namespace Origins.Items.Accessories {
 		public class Mildew_Heart_Entry : JournalEntry {
 			public override string TextKey => "Mildew_Heart";
 			public override JournalSortIndex SortIndex => new("Brine_Pool_And_Lost_Diver", 8);
+		}
+		public override void Load() {
+			try {
+				IL_NetMessage.SendData += DontDieWrongRemotely;
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError(nameof(DontDieWrongRemotely), e)) throw;
+			}
+		}
+		static void DontDieWrongRemotely(ILContext il) {
+			ILCursor c = new(il);
+			ILLabel[] cases = default;
+			c.GotoNext(
+				i => i.MatchLdarg0(),
+				i => i.MatchLdcI4(1),
+				i => i.MatchSub(),
+				i => i.MatchSwitch(out cases)
+			);
+			c.GotoLabel(cases[MessageID.PlayerLifeMana - 1]);
+			c.GotoNext(MoveType.After, i => i.MatchLdfld<Player>(nameof(Player.statLife)));
+			c.EmitLdarg(4); // number
+			c.EmitDelegate((int statLife, int number) => {
+				if (statLife <= 0 && !Main.player[number].dead && Main.player[number].OriginPlayer().mildewHeart) statLife = 1;
+				return statLife;
+			});
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);

@@ -1,9 +1,9 @@
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Projectiles.Weapons;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Alkaline_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => [
@@ -13,6 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"ToxicSource"
         ];
         public override void SetStaticDefaults() {
+			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {

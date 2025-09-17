@@ -5,6 +5,7 @@ using Origins.Items;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.World;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -48,6 +49,7 @@ namespace Origins.Projectiles {
 					if (proj.TryGetOwner(out Player player)) {
 						if (proj.TryGetGlobalProjectile(out ArtifactMinionGlobalProjectile artifact)) {
 							artifact.maxHealthModifier = StatModifier.Default;
+							if (proj.ModProjectile is IArtifactMinion) ArtifactMinionSystem.nextArtifactMinions.Add(proj.whoAmI);
 						}
 						BrothBase currentBroth = player.OriginPlayer()?.broth;
 						if (global.activeBroth != currentBroth) {
@@ -83,6 +85,17 @@ namespace Origins.Projectiles {
 			c.EmitDelegate((StatModifier damage, Projectile proj) => {
 				if (Origins.ArtifactMinion[proj.type]) damage = damage.CombineWith(Main.player[proj.owner].OriginPlayer().artifactDamage);
 				return damage;
+			});
+			c.GotoNext(MoveType.Before,
+				il => il.MatchLdarg0(),
+				il => il.MatchCall<Projectile>(nameof(Projectile.AI))
+			);
+			c.EmitLdarg0();
+			c.EmitDelegate((Projectile projectile) => {
+				if (projectile.numUpdates == -1 && OriginsSets.Projectiles.UsesTypeSpecificMinionPos[projectile.type]) {
+					Player owner = Main.player[projectile.owner];
+					projectile.minionPos = owner.OriginPlayer().GetNewMinionIndexByType(projectile.type);
+				}
 			});
 		}
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
@@ -128,7 +141,16 @@ namespace Origins.Projectiles {
 				if (relayRodTime > 0) relayRodTime--;
 				if (relayRodTime <= 0) relayRodStrength = 0;
 			}
+			if (!init.TrySet(true) && projectile.minion && projectile.tileCollide) {
+				float highest = 0;
+				foreach (Point pos in Collision.GetTilesIn(projectile.position, projectile.BottomRight)) {
+					Tile tile = Framing.GetTileSafely(pos);
+					if (tile.HasTile) highest = Math.Max(OriginsSets.Tiles.MinionSlowdown[tile.TileType], highest);
+				}
+				Vector2.Lerp(ref projectile.position, ref projectile.oldPosition, highest, out projectile.position);
+			}
 		}
+		bool init = false;
 		static AutoLoadingAsset<Texture2D> mildewGrowthTexture = "Origins/Items/Armor/Mildew/Mildew_Spore";
 		float? mildewGrowthAngle = null;
 		float mildewGrowthFrame = 0;

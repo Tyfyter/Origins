@@ -25,6 +25,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.rare = ItemRarityID.LightRed;
 			Item.bait = 193;
 			Item.consumable = false;
+			Item.sentry = true;
 		}
 		public override bool? CanConsumeBait(Player player) => false;
 		public override bool AltFunctionUse(Player player) => true;

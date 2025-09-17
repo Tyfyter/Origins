@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Projectiles;
 using PegasusLib;
@@ -40,7 +41,7 @@ namespace Origins.Items.Weapons.Melee {
 				label = c.DefineLabel();
 				c.EmitLdarg0();
 				c.EmitDelegate((Player player) => {
-					return player.HeldItem.ModItem is Soul_Snatcher or Tyrfing;
+					return OriginsSets.Items.ItemsThatCanChannelWithRightClick[player.HeldItem.type];
 				});
 				c.EmitBrtrue(label);
 				c.Index += predicates.Length;
@@ -74,6 +75,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.Spears[Type] = true;
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			OriginsSets.Items.ItemsThatCanChannelWithRightClick[Type] = true;
 			Main.RegisterItemAnimation(Item.type, new ItemDrawAnimation(5, 7));
 		}
 		public override void SetDefaults() {
@@ -94,6 +96,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.channel = true;
+			Item.autoReuse = true;
 		}
 		public override void HoldItem(Player player) {
 			if (player.OriginPlayer().soulSnatcherActive) {
@@ -176,6 +179,7 @@ namespace Origins.Items.Weapons.Melee {
 		public static AutoLoadingAsset<Texture2D> empoweredTexture = typeof(Soul_Snatcher).GetDefaultTMLName() + "_Empowered";
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+			ProjectileID.Sets.NoMeleeSpeedVelocityScaling[Type] = true;
 			empoweredTexture.LoadAsset();
 		}
 		public override void SetDefaults() {
@@ -196,7 +200,7 @@ namespace Origins.Items.Weapons.Melee {
 			set => Projectile.ai[0] = value;
 		}
 		#region empowered state
-		bool empowered = false;
+		public bool empowered = false;
 		public override void OnSpawn(IEntitySource source) {
 			empowered = Main.player[Projectile.owner].OriginPlayer().soulSnatcherActive;
 			Projectile.netUpdate = true;
@@ -218,11 +222,12 @@ namespace Origins.Items.Weapons.Melee {
 			float oldFactor = MovementFactor;
 			if (!player.frozen) {
 				if (player.itemAnimation < player.itemAnimationMax / 2) {
-					MovementFactor -= 2.1f;
+					MovementFactor -= 1.8f;
 				} else if (player.itemAnimation > player.itemAnimationMax / 2 + 1) {
-					MovementFactor += 2.2f;
+					MovementFactor += 2.4f;
 				}
-				if (MovementFactor > 20) MovementFactor = 20;
+				float speed = Projectile.velocity.Length();
+				if (MovementFactor * speed > 24 * 3.75f) MovementFactor = 24 * 3.75f / speed;
 			}
 			Projectile.position += Projectile.velocity * MovementFactor * Projectile.scale;
 			oldFactor -= MovementFactor;
@@ -305,7 +310,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.scale = 1f;
 		}
 		#region empowered state
-		bool empowered = false;
+		public bool empowered = false;
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write(empowered);
 		}
@@ -405,10 +410,10 @@ namespace Origins.Items.Weapons.Melee {
 			player.heldProj = Projectile.whoAmI;
 			float baseSpeed = 0.095f;
 			if (empowered) baseSpeed += 0.015f;
-			Projectile.rotation += player.direction * baseSpeed * (28f / player.itemAnimationMax);
+			Projectile.rotation += player.direction * baseSpeed * (28f / player.itemAnimationMax) * player.gravDir;
 			if (Projectile.soundDelay <= 0) {
 				Projectile.soundDelay = Main.rand.RandomRound(MathHelper.TwoPi / (baseSpeed * (28f / player.itemAnimationMax)));
-				SoundEngine.PlaySound(SoundID.Item71.WithPitch(1.3f), Projectile.Center);
+				SoundEngine.PlaySound(SoundID.Item71.WithPitch(1f), Projectile.Center);
 			}
 			Projectile.direction = player.direction;
 			Projectile.spriteDirection = player.direction;
@@ -546,5 +551,13 @@ namespace Origins.Items.Weapons.Melee {
 				}
 			}
 		}
+	}
+	public class Soul_Snatcher_Crit_Type : CritType<Soul_Snatcher> {
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
+			if (projectile?.ModProjectile is Soul_Snatcher_P stab) return stab.empowered;
+			if (projectile?.ModProjectile is Soul_Snatcher_Spin spin) return spin.empowered;
+			return false;
+		}
+		public override float CritMultiplier(Player player, Item item) => 1.2f;
 	}
 }

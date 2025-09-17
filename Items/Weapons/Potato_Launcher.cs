@@ -1,17 +1,18 @@
-using Microsoft.Xna.Framework;
+using Origins.Core;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Projectiles;
-using Origins.Tiles.Other;
 using PegasusLib;
+using PegasusLib.Networking;
+using System;
+using System.IO;
 using Terraria;
-using Terraria.DataStructures;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons {
-    public class Potato_Launcher : ModItem {
-        public override void SetDefaults() {
+	public class Potato_Launcher : ModItem {
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FlintlockPistol);
 			Item.damage = 17;
 			Item.DamageType = DamageClass.Generic;
@@ -37,8 +38,8 @@ namespace Origins.Items.Weapons {
 			}
 			position += velocity.SafeNormalize(default).RotatedBy(player.direction * -MathHelper.PiOver2) * 6;
 		}
-        public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
-    }
+		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
+	}
 	public class Potato_P : ModProjectile {
 		public override string Texture => "Origins/Items/Other/Consumables/Food/Potato";
 		public override void SetStaticDefaults() {
@@ -115,6 +116,45 @@ namespace Origins.Items.Weapons {
 			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
 			Projectile.Damage();
 			Projectile.Kill();
+		}
+	}
+	public class Greater_Summoning_Potato_P : Potato_P {
+		public static int ID { get; private set; }
+		public override string Texture => "Origins/Items/Other/Consumables/Greater_Summoning_Potion_AF";
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ID = Type;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			if (target is NPC npc && !OriginsSets.NPCs.TargetDummies[npc.type]) new Greater_Summoning_Potato_Action(npc.netID, target.Center, target.velocity).Perform();
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			int type = NPCID.SmallBaldZombie;
+			if (!target.Male) type = NPCID.BigFemaleZombie;
+			new Greater_Summoning_Potato_Action(type, target.Center, target.velocity).Perform();
+		}
+	}
+
+	public record class Greater_Summoning_Potato_Action(int type, Vector2 position, Vector2 velocity) : SyncedAction {
+		public Greater_Summoning_Potato_Action() : this(default, default, default) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			type = reader.ReadInt32(),
+			position = reader.ReadPackedVector2(),
+			velocity = reader.ReadPackedVector2()
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write(type);
+			writer.WritePackedVector2(position);
+			writer.WritePackedVector2(velocity);
+		}
+		protected override void Perform() {
+			if (!NetmodeActive.MultiplayerClient) {
+				NPC npc = NPC.NewNPCDirect(NPC.GetSource_None(), position, type);
+				npc.velocity = velocity * MathF.Pow(1.2f, npc.knockBackResist);
+				npc.value = 0;
+				npc.SpawnedFromStatue = true;
+			}
+			SoundEngine.PlaySound(SoundID.Item2, position);
 		}
 	}
 }

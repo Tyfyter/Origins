@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
@@ -23,6 +22,7 @@ namespace Origins.Items.Armor.Amber {
 			"ExplosiveBoostGear",
 			"SelfDamageProtek"
 		];
+		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
 		}
@@ -82,7 +82,7 @@ namespace Origins.Items.Armor.Amber {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
-			player.moveSpeed += 0.1f;
+			player.moveSpeed += 0.15f;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

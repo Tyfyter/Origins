@@ -17,6 +17,7 @@ float uScale;
 float2 uTargetPosition;
 float4 uLegacyArmorSourceRect;
 float2 uLegacyArmorSheetSize;
+matrix<float, 4, 4> uImageMatrix1;
 
 bool IsInBounds(float2 value) {
 	if (value.x < 0)
@@ -38,10 +39,15 @@ bool IfInBounds(float2 value) {
 float2 Rotate(float2 value, float angle) {
 	return float2(value.x * cos(angle) - value.y * sin(angle), value.x * sin(angle) + value.y * cos(angle));
 }
-
+float2 Transform(float2 position, matrix<float, 4, 4> _matrix) {
+	return float2(
+		(position.x * _matrix._11) + (position.y * _matrix._21) + _matrix._41,
+		(position.x * _matrix._12) + (position.y * _matrix._22) + _matrix._42
+	);
+}
 float4 MultiplyRGBA(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	float2 realOffset = Rotate(uOffset, uRotation) / uImageSize1;
-	float2 maskCoords = (coords - uTargetPosition / uImageSize0) / (uImageSize1 / uImageSize0) - realOffset;
+	float2 maskCoords = (Transform(coords * uImageSize0 - uTargetPosition, uImageMatrix1) / uImageSize0) / (uImageSize1 / uImageSize0) - realOffset;
 	return tex2D(uImage0, coords) * tex2D(uImage1, maskCoords);
 }
 
@@ -53,6 +59,19 @@ float4 NoArmorShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : C
 	return tex2D(uImage0, coords) * sampleColor;
 }
 
+float4 Erase(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	float4 value = tex2D(uImage0, coords) - tex2D(uImage1, coords).a * sampleColor;
+	if (value.r < 0)
+		value.r = 0;
+	if (value.g < 0)
+		value.g = 0;
+	if (value.b < 0)
+		value.b = 0;
+	if (value.a < 0)
+		value.a = 0;
+	return value;
+}
+
 technique Technique1 {
 	pass MultiplyRGBA {
 		PixelShader = compile ps_2_0 MultiplyRGBA();
@@ -62,5 +81,8 @@ technique Technique1 {
 	}
 	pass NoArmorShader {
 		PixelShader = compile ps_2_0 NoArmorShader();
+	}
+	pass Erase {
+		PixelShader = compile ps_2_0 Erase();
 	}
 }

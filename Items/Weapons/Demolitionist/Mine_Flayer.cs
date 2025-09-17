@@ -79,7 +79,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return null;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			velocity = OriginExtensions.Vec2FromPolar(player.direction == 1 ? player.itemRotation : player.itemRotation + MathHelper.Pi, velocity.Length());
+			velocity = (Vector2.UnitY * -player.gravDir)
+				.RotatedBy(player.direction * (1 - player.itemAnimation / (float)player.itemAnimationMax - 0.15f) * 3.5f)
+				* velocity.Length();
 			type = Item.shoot;
 		}
 	}
@@ -101,6 +103,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 5;
+		}
+		public override void AI() {
+			Projectile.velocity.Y -= 0.2f;
+			this.DoGravity(0.2f);
 		}
 	}
 }

@@ -1,21 +1,26 @@
 ﻿using MonoMod.Cil;
 using Origins.NPCs;
 using PegasusLib.Reflection;
-using System;
+using PegasusLib.UI;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
 
 namespace Origins.Buffs {
 	public class Toxic_Shock_Debuff : ModBuff {
 		public const int stun_duration = 30;
 		public const int default_duration = 60;
+		public LocalizedText StunDescription;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			ID = Type;
 			Main.debuff[Type] = true;
+			StunDescription = this.GetLocalization(nameof(StunDescription));
+			Buff_Hint_Handler.ModifyTip(Type, 7.5f, this.GetLocalization("EffectDescription").Key);
+			Buff_Hint_Handler.CombineBuffHintModifiers(Type, modifyBuffTip: (lines, _, player) => {
+				if (!player) lines.Add(StunDescription.Value);
+			});
+			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.GetModPlayer<OriginPlayer>().toxicShock = true;
@@ -50,7 +55,7 @@ namespace Origins.Buffs {
 			ID = Type;
 			Main.buffNoTimeDisplay[Type] = true;
 			BuffID.Sets.GrantImmunityWith[Type] = new() {
-				ModContent.BuffType<Toxic_Shock_Debuff>()
+				Toxic_Shock_Debuff.ID
 			};
 		}
 		public override void Update(Player player, ref int buffIndex) {

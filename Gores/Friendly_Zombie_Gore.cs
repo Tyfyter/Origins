@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
 using MonoMod.Cil;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Reflection;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,7 @@ namespace Origins.Gores {
 		protected abstract Rectangle Frame { get; }
 		public override void SetStaticDefaults() {
 			DustsBehindTiles.Add(Type);
+			ChildSafety.SafeDust[Type] = false;
 		}
 		public override void OnSpawn(Dust dust) {
 			dust.frame = Frame;

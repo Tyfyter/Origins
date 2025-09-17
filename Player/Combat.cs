@@ -1,4 +1,5 @@
 ﻿using Origins.Buffs;
+using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Necromancer;
@@ -7,10 +8,10 @@ using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
-using Origins.Journal;
 using Origins.NPCs;
 using Origins.NPCs.Brine;
-using Origins.NPCs.MiscE;
+using Origins.NPCs.Crimson;
+using Origins.NPCs.Defiled;
 using Origins.Projectiles;
 using Origins.Questing;
 using PegasusLib.ID;
@@ -21,8 +22,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
-using ThoriumMod.Empowerments;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -71,21 +70,18 @@ namespace Origins {
 		public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
 			if (Origins.ArtifactMinion[item.shoot]) {
 				mult *= artifactManaCost;
-			}
+			}	
+			if (wishingGlassActive) mult *= 0;
 			necromanaUsedThisUse = false;
 		}
 		public override bool CanConsumeAmmo(Item weapon, Item ammo) {
+			if (wishingGlassActive) return false;
 			if (ammo.CountsAsClass(DamageClasses.Explosive)) {
 				if (endlessExplosives && Main.rand.NextBool(15, 100)) return false;
 				if (controlLocus && Main.rand.NextBool(12, 100)) return false;
-			}
-			if (ammo.CountsAsClass(DamageClass.Ranged)) {
+			} else if (ammo.CountsAsClass(DamageClass.Ranged)) {
 				if (weakpointAnalyzer && Main.rand.NextBool(8, 100)) return false;
-				if (controlLocus) {
-					int dupeCount = OriginsSets.Projectiles.RangedControlLocusDuplicateCount[ammo.shoot];
-					if (dupeCount == 0) return false;
-					return Main.rand.NextFloat(1) < 0.6f / dupeCount;
-				}
+				if (controlLocus && Main.rand.NextBool(12, 100)) return false;
 			}
 			return true;
 		}
@@ -179,6 +175,16 @@ namespace Origins {
 			} else if (flaskSalt) {
 				Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.GoldFlame, newColor: Color.Lime);
 			}
+			DoGunGlove();
+		}
+		public override void EmitEnchantmentVisualsAt(Projectile projectile, Vector2 boxPosition, int boxWidth, int boxHeight) {
+			if (flaskBile) {
+				Dust.NewDust(boxPosition, boxWidth, boxHeight, DustID.BloodWater, newColor: Color.Black);
+			} else if (flaskSalt) {
+				Dust.NewDust(boxPosition, boxWidth, boxHeight, DustID.GoldFlame, newColor: Color.Lime);
+			}
+		}
+		public void DoGunGlove() {
 			if (gunGlove && gunGloveCooldown <= 0) {
 				if (Player.PickAmmo(gunGloveItem, out int projToShoot, out float speed, out int damage, out float knockback, out int usedAmmoItemId)) {
 					int manaCost = Player.GetManaCost(gunGloveItem);
@@ -187,7 +193,12 @@ namespace Origins {
 							Player.manaRegenDelay = (int)Player.maxRegenDelay;
 						}
 						Vector2 position = Player.itemLocation;
-						Vector2 velocity = Vec2FromPolar(Player.direction == 1 ? Player.itemRotation : Player.itemRotation + MathHelper.Pi, speed);
+						float rotation = Player.direction == 1 ? Player.itemRotation : Player.itemRotation + MathHelper.Pi;
+						if (compositeFrontArmWasEnabled) {
+							rotation = Player.compositeFrontArm.rotation + MathHelper.PiOver2;
+							position = Player.GetCompositeArmPosition(false);
+						}
+						Vector2 velocity = Vec2FromPolar(rotation, speed);
 
 						if (gunGloveItem.UseSound is not null) SoundEngine.PlaySound(gunGloveItem.UseSound, position);
 
@@ -215,6 +226,9 @@ namespace Origins {
 					(int type, Range duration) = dashHitDebuffs[i];
 					target.AddBuff(type, Main.rand.Next(duration.Start.Value, duration.End.Value + 1));
 				}
+			}
+			if (fiberglassHelmet == true) {
+				modifiers.CritDamage.Base += 10;
 			}
 		}
 		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */ {
@@ -252,7 +266,7 @@ namespace Origins {
 					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
 				}
 				if (flaskSalt) {
-					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.2f, this);
+					OriginGlobalNPC.InflictTorn(target, 300, 180, Salt_Flask.TornSeverity, this);
 				}
 			}
 			if (futurephones) {
@@ -293,7 +307,7 @@ namespace Origins {
 					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
 				}
 				if (flaskSalt) {
-					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.2f, this);
+					OriginGlobalNPC.InflictTorn(target, 300, 180, Salt_Flask.TornSeverity, this);
 				}
 			}
 			if (futurephones && !proj.IsMinionOrSentryRelated) {
@@ -322,7 +336,7 @@ namespace Origins {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (hit.Crit && target.type != NPCID.TargetDummy) {
+			if (hit.Crit && !OriginsSets.NPCs.TargetDummies[target.type]) {
 				if (dimStarlight && dimStarlightCooldown < 1) {
 					int item = Item.NewItem(Player.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
 					dimStarlightCooldown = 300;
@@ -332,7 +346,7 @@ namespace Origins {
 				}
 			}
 			if (symbioteSkull) {
-				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 110), 60, 0.1f, this);
+				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 110), 60, Symbiote_Skull.TornSeverity, this);
 			}
 			if (acridSet) {
 				target.AddBuff(Toxic_Shock_Debuff.ID, 300);
@@ -354,7 +368,7 @@ namespace Origins {
 			}
 			if (magmaLeech) {
 				target.AddBuff(BuffID.Bleeding, 480);
-				target.AddBuff(BuffID.OnFire, Main.rand.Next(120, 361));
+				target.AddBuff(BuffID.OnFire3, Main.rand.Next(120, 361));
 			}
 			if (hit.DamageType.CountsAsClass<Explosive>()) {
 				if (dangerBarrel) {
@@ -386,7 +400,7 @@ namespace Origins {
 					int type = ModContent.ProjectileType<Unsatisfied_Soul>();
 					int damage = (int)Player.GetTotalDamage(DamageClass.Summon).ApplyTo(target.lifeMax / 4) + 40;
 					int knockback = (int)Player.GetTotalKnockback(DamageClass.Summon).ApplyTo(4);
-					for (int i = Player.maxMinions / 2; i > 0; i--) {
+					for (int i = Main.rand.RandomRound(Player.maxMinions * 0.5f); i > 0; i--) {
 						Projectile.NewProjectile(
 							target.GetSource_Death(),
 							target.Center,
@@ -445,6 +459,39 @@ namespace Origins {
 					retaliatoryTendrilStrength = 0;
 				}
 			}
+			OriginGlobalNPC originGlobalNPC = target.GetGlobalNPC<OriginGlobalNPC>();
+			if (originGlobalNPC.amnesticRose && !OriginsSets.NPCs.TargetDummies[target.type]) {
+				float mana = 1 + MathF.Pow(damageDone * 0.1f, 0.5f);
+				if (target.ModNPC is IDefiledEnemy defiledEnemy) {
+					mana = Math.Min(mana, defiledEnemy.Mana);
+				}
+				if (mana > 0) {
+					Projectile.NewProjectile(
+						Player.GetSource_OnHit(target),
+						target.Center,
+						Vector2.Zero,
+						ModContent.ProjectileType<Defiled_Prefix_Orb>(),
+						0,
+						0,
+						ai0: mana
+					);
+				}
+				if (hit.Crit || target.life <= 0) {
+					for (int i = int.Min(Main.rand.Next(3), Main.rand.Next(3)); i >= 0; i--) {
+						Projectile.NewProjectile(
+							Player.GetSource_OnHit(target),
+							Main.rand.NextVector2FromRectangle(target.Hitbox),
+							target.velocity + Main.rand.NextVector2Circular(2, 2),
+							originGlobalNPC.amnesticRoseGooProj,
+							0,
+							0,
+							ai0: mana
+						);
+					}
+				}
+			}
+
+			if (dangerTime < maxDangerTime) dangerTime = maxDangerTime;
 		}
 		#endregion
 		#region receiving
@@ -470,6 +517,30 @@ namespace Origins {
 				int damageMult = 1 + Player.wet.ToInt() + ((staticShock || miniStaticShock) && staticShockDamage).ToInt();
 				Player.lifeRegen -= 9 * damageMult;
 			}
+
+			if (Player.lifeRegen < 0 && dangerTime < maxDangerTime) dangerTime = maxDangerTime;
+		}
+		public override bool CanBeHitByProjectile(Projectile proj) {
+			if (shimmerShieldDashTime != 0 && OriginsSets.Projectiles.CanBeDeflected[proj.type]) {
+				Vector2 direction = Vector2.UnitX * Math.Sign(shimmerShieldDashTime);
+				if (proj.TryGetGlobalProjectile(out HostileGlobalProjectile hostileProjectile) && hostileProjectile.TryGetOwnerPosition(out Vector2? ownerPosition) == HostileGlobalProjectile.OwnerState.Alive) {
+					direction = proj.DirectionTo(ownerPosition ?? direction);
+				} else if (proj.friendly && proj.TryGetOwner(out Player attacker)) {
+					direction = proj.DirectionTo(attacker.MountedCenter);
+				}
+				proj.reflected = true;
+				float damageMult = Shimmer_Shield.ReflectionDamageMultiplier;
+				if (proj.hostile) damageMult *= Shimmer_Shield.ReflectionHostileDamageMultiplier;
+				proj.damage = Main.rand.RandomRound(proj.damage * damageMult);
+				proj.hostile = false;
+				proj.friendly = true;
+				float speed = Math.Max(12f / proj.MaxUpdates, proj.velocity.Length());
+				proj.velocity = direction * speed;
+				proj.owner = Player.whoAmI;
+				proj.netUpdate = true;
+				return false;
+			}
+			return true;
 		}
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers) {
 			if (trapCharm && proj.trap) {
@@ -477,6 +548,7 @@ namespace Origins {
 				Player.buffImmune[BuffID.Poisoned] = true;
 			}
 			if (rubberBody) modifiers.SourceDamage *= 0.9f;
+			if (proj.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerFake) modifiers.Cancel();
 			hitIsSelfDamage = false;
 			if (proj.owner == Player.whoAmI && !proj.hostile && proj.CountsAsClass(DamageClasses.Explosive)) {
 				hitIsSelfDamage = true;
@@ -499,16 +571,6 @@ namespace Origins {
 					//damage-=damage/5;
 				}
 				if (proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(global.selfDamageModifier);
-				if (Player.mount.Active && Player.mount.Type == ModContent.MountType<Trash_Lid_Mount>()) {
-					Vector2 diff = proj.Center - Player.MountedCenter;
-					if (diff.Y > 24 && diff.Y > Math.Abs(diff.X)) {
-						modifiers.SourceDamage *= 0;
-						modifiers.SourceDamage.Flat = 1;
-						//modifiers.Knockback *= 0;
-						modifiers.HitDirectionOverride = 0;
-						modifiers.DisableSound();
-					}
-				}
 				const float min_self_destruct_mult = 0.1f;
 				if (proj.type == ModContent.ProjectileType<Self_Destruct_Explosion>()) {
 					modifiers.ScalingArmorPenetration += 1;
@@ -516,6 +578,18 @@ namespace Origins {
 				}
 				if (currentExplosiveSelfDamage.ApplyTo(proj.damage) <= 0) modifiers.Cancel();
 				modifiers.FinalDamage = modifiers.FinalDamage.CombineWith(currentExplosiveSelfDamage);
+				if (Player.mount.Active && Player.mount.Type == ModContent.MountType<Trash_Lid_Mount>()) {
+					Vector2 diff = proj.Center - Player.MountedCenter;
+					if (diff.Y > 24 && diff.Y > Math.Abs(diff.X)) {
+						modifiers.SourceDamage *= 0;
+						modifiers.SourceDamage.Flat = 0;
+						modifiers.FinalDamage *= 0;
+						modifiers.FinalDamage.Flat = 1;
+						//modifiers.Knockback *= 0;
+						modifiers.HitDirectionOverride = 0;
+						modifiers.DisableSound();
+					}
+				}
 			}
 			if (shineSparkDashTime > 0) {
 				modifiers.FinalDamage *= 0;
@@ -554,10 +628,17 @@ namespace Origins {
 			if (shineSparkDashTime > 0) {
 				modifiers.FinalDamage *= 0;
 				modifiers.FinalDamage.Flat = int.MinValue;
-				npc.SimpleStrikeNPC(Player.GetWeaponDamage(loversLeapItem) * 15, Player.direction, true, 12);
+				npc.SimpleStrikeNPC(Player.GetWeaponDamage(loversLeapItem) * 15, Player.direction, true, 12, DamageClass.Generic);
 			}
 		}
 		public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot) {
+			if (shimmerShieldDashTime != 0 && NPCID.Sets.ProjectileNPC[npc.type]) {
+				if (npc.immune[Player.whoAmI] == 0) {
+					npc.SimpleStrikeNPC(1, Player.direction);
+					npc.immune[Player.whoAmI] = 6;
+				}
+				return false;
+			}
 			if (emergencyBeeCanister && (npc.type == NPCID.Bee || npc.type == NPCID.BeeSmall)) return npc.playerInteraction[Player.whoAmI];
 			return true;
 		}
@@ -665,10 +746,10 @@ namespace Origins {
 		int manaDamageToTake = 0;
 		public override void ModifyHurt(ref Player.HurtModifiers modifiers) {
 			if (fullSend && modifiers.DamageSource.SourceOtherIndex == OtherDeathReasonID.Fall) {
-				modifiers.FinalDamage *= 0.14f;
+				modifiers.FinalDamage *= 0.14f - fullSendHorseshoeBonus.Mul(0.07f);
 			}
-			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(Player.HasBuff(Toxic_Shock_Strengthen_Debuff.ID) ? 6 : 9) < 3) {
-				modifiers.SourceDamage *= 2;
+			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(Player.HasBuff(Toxic_Shock_Strengthen_Debuff.ID) ? 6 : 12) < 3) {
+				modifiers.FinalDamage *= 1.5f;
 			}
 			allManaDamage = false;
 			manaDamageToTake = 0;
@@ -830,7 +911,7 @@ namespace Origins {
 			}
 			if (fullSend && info.DamageSource.SourceOtherIndex == OtherDeathReasonID.Fall) {
 				const float maxDist = 240 * 240;
-				double totalDamage = info.SourceDamage * 0.86;
+				double totalDamage = info.SourceDamage * (0.86 + fullSendHorseshoeBonus.Mul(0.07f));
 				Vector2 center = Player.MountedCenter;
 				List<(int id, float weight)> targets = new();
 				NPC npc;
@@ -1014,6 +1095,8 @@ namespace Origins {
 					if (npc.ModNPC is IPostHitPlayer postHitPlayer) postHitPlayer.PostHitPlayer(Player, info);
 				}
 			}
+
+			if (dangerTime < maxDangerTime) dangerTime = maxDangerTime;
 		}
 		#endregion
 		/// <param name="target">the potential target</param>

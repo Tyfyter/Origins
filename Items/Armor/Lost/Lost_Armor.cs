@@ -10,13 +10,13 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Lost {
-    [AutoloadEquip(EquipType.Head)]
+	[AutoloadEquip(EquipType.Head)]
 	public class Lost_Helm : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => [
-            "ArmorSet",
-            "ManaShielding",
+		public string[] Categories => [
+			"ArmorSet",
+			"ManaShielding",
 			"MagicBoostGear"
-        ];
+		];
 		public override void SetStaticDefaults() {
 			Accessory_Tangela_Layer.AddTangelaMask<Head_Tangela_Layer>(Item.headSlot, Texture + "_Head_Tangela");
 		}
@@ -26,7 +26,7 @@ namespace Origins.Items.Armor.Lost {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.manaRegen += 2;
+			player.manaRegenBonus += 12;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Lost_Breastplate>() && legs.type == ModContent.ItemType<Lost_Pants>();
@@ -77,7 +77,7 @@ namespace Origins.Items.Armor.Lost {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Lost_Pants : ModItem, INoSeperateWikiPage {
-		
+
 		public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);
@@ -97,7 +97,7 @@ namespace Origins.Items.Armor.Lost {
 }
 namespace Origins.Buffs {
 	public class Mana_Buffer_Debuff : ModBuff {
-		
+
 		public override void Update(Player player, ref int buffIndex) {
 			player.manaRegenBuff = false;
 			player.manaRegen = 0;

@@ -2,17 +2,17 @@
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riptide;
+using Origins.Items.Other;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
 using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
-using Origins.Journal;
-using Origins.NPCs;
+using Origins.NPCs.MiscB.Shimmer_Construct;
+using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Reflection;
-using Origins.Tiles.Brine;
 using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -41,6 +41,10 @@ namespace Origins {
 			if (riptideLegs && Player.wet) {
 				Player.velocity *= 1.006f;
 				Player.ignoreWater = true;
+			}
+			if (walledDebuff) {
+				Player.velocity *= 0.4f;
+				Player.velocity.Y *= 0.9f;
 			}
 			if (Player.ownedProjectileCounts[ModContent.ProjectileType<Latchkey_P>()] > 0) {
 				Player.tongued = true;
@@ -80,7 +84,7 @@ namespace Origins {
 						if (collidingY && oldYSign > 0) Player.position.Y -= 1;
 					}
 				}
-			} else if(riptideSet && !Player.mount.Active) {
+			} else if ((riptideSet && !Player.mount.Active) || riptideDashTime != 0) {
 				otherDash = true;
 				Player.dashType = 0;
 				Player.dashTime = 0;
@@ -155,18 +159,45 @@ namespace Origins {
 					if (Player.velocity.Y * gravDir > Player.gravity * gravDir) {
 						Player.velocity.Y = Player.gravity;
 					}
-					Projectile.NewProjectile(
+					Player.SpawnProjectile(
 						Player.GetSource_Misc("refactor"),
 						Player.Center + new Vector2(Player.width * dashDirection, 0),
 						new Vector2(dashDirection * keyDashSpeed, 0),
 						ModContent.ProjectileType<Latchkey_P>(),
 						0,
-						0,
-						Player.whoAmI
+						0
 					);
 					SoundEngine.PlaySound(Origins.Sounds.PowerUp.WithVolumeScale(0.75f), Player.position);
 					dashDelay = 10 + 6;
 					refactoringPiecesDashCooldown = 120;
+				}
+			} else if (shimmerShield && !Player.mount.Active) {
+				otherDash = true;
+				Player.dashType = 0;
+				Player.dashTime = 0;
+				const int shimmerDashDuration = 30;
+				float shimmerDashSpeed = 9f;
+				if (dashVase) shimmerDashSpeed *= 1.2f;
+				if (dashDirection != 0 && (Player.velocity.X * dashDirection < shimmerDashSpeed)) {
+					Player.dashDelay = -1;
+					Player.dash = 2;
+					shimmerShieldDashTime = shimmerDashDuration * dashDirection;
+					Player.timeSinceLastDashStarted = 0;
+					int gravDir = Math.Sign(Player.gravity);
+					if (Player.velocity.Y * gravDir > Player.gravity * gravDir) {
+						Player.velocity.Y = Player.gravity;
+					}
+				}
+				if (shimmerShieldDashTime != 0) {
+					if (Math.Abs(shimmerShieldDashTime) > 15) {
+						Player.dashDelay = -1;
+						Player.velocity.X = shimmerDashSpeed * Math.Sign(shimmerShieldDashTime);
+					} else {
+						Player.dashDelay = 25;
+					}
+					Player.cShield = Shimmer_Dye.ShaderID;
+					shimmerShieldDashTime -= Math.Sign(shimmerShieldDashTime);
+					dashDelay = 25;
 				}
 			} else if (loversLeap) {
 				const int loversLeapDuration = 6;
@@ -381,6 +412,7 @@ namespace Origins {
 					windSpeed = (short)Math.Clamp(windSpeed + Player.velocity.X, -128, 128);
 				}
 			}*/
+			if (weakShimmer) Player.ignoreWater = true;
 			onSlope = false;
 		}
 		public override void PreUpdate() {
@@ -436,6 +468,18 @@ namespace Origins {
 					}
 				}
 			}
+			if (weakShimmer) {
+				Player.maxFallSpeed = 10f;
+				Player.gravity = Player.defaultGravity;
+				Player.jumpHeight = 15;
+				Player.jumpSpeed = 5.01f;
+			}
+			fullSendHorseshoeBonus = false;
+			if (fullSend && Player.noFallDmg) {
+				Player.noFallDmg = false;
+				fullSendHorseshoeBonus = true;
+				if (Player.fallStart * 16 > Player.position.Y) Player.fallStart = (int)(Player.position.Y / 16f);
+			}
 		}
 		public override void PostUpdate() {
 			Debugging.LogFirstRun(PostUpdate);
@@ -446,7 +490,7 @@ namespace Origins {
 			}
 			Player.oldVelocity = Player.velocity;
 			rivenWet = false;
-			if ((Player.wet || WaterCollision(Player.position, Player.width, Player.height)) && !(Player.lavaWet || Player.honeyWet)) {
+			if (!weakShimmer && (Player.wet || WaterCollision(Player.position, Player.width, Player.height)) && !(Player.lavaWet || Player.honeyWet || Player.shimmerWet)) {
 				if (Player.InModBiome<Riven_Hive>()) {
 					rivenWet = true;
 					/*if (GameModeData.ExpertMode) {
@@ -489,8 +533,21 @@ namespace Origins {
 						shineSparkCharge -= dir;
 					}
 				}
+			} else {
+				shineSparkDashTime = 0;
+				shineSparkCharge = 0;
+			}
+			if (Player.controlJump) {
+				if (Player.controlRight) {
+					min = float.MaxValue;
+					max = float.MinValue;
+				}
+				if (min > Player.velocity.Y) min = Player.velocity.Y;
+				if (max < Player.velocity.Y) max = Player.velocity.Y;
 			}
 		}
+		float min = float.MaxValue;
+		float max = float.MinValue;
 		public override void OnRespawn() {
 			oldGravDir = Player.gravDir;
 			if (hasProtOS) {
@@ -498,6 +555,7 @@ namespace Origins {
 			}
 		}
 		public override void UpdateDead() {
+			weakShimmer = false;
 			timeSinceLastDeath = -1;
 			tornCurrentSeverity = 0;
 			tornTarget = 0f;
@@ -509,16 +567,18 @@ namespace Origins {
 
 			selfDamageRally = 0;
 			blastSetCharge = 0;
+			ownedLargeGems.Clear();
 		}
 		public override void ModifyMaxStats(out StatModifier health, out StatModifier mana) {
 			base.ModifyMaxStats(out health, out mana);
 			mana.Base += quantumInjectors * Quantum_Injector.mana_per_use;
 			if (tornCurrentSeverity > 0) {
 				health *= 1 - tornCurrentSeverity;
-				if (tornCurrentSeverity >= 1 && Player.whoAmI == Main.myPlayer) {
-					Player.KillMe(new KeyedPlayerDeathReason() {
-						Key = "Mods.Origins.DeathMessage.Torn_" + Main.rand.Next(5)
-					}, 1, 0);
+				if (tornCurrentSeverity >= 1 && Player.whoAmI == Main.myPlayer && !Player.dead) {
+					mildewHealth = 0;
+					Player.KillMe(PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Torn").SelectFrom(Player.name).ToNetworkText()),
+						9999, 0
+					);
 				}
 			}
 			if (cryostenBody) {
@@ -531,6 +591,11 @@ namespace Origins {
 			}
 		}
 		public override void PostUpdateBuffs() {
+			foreach (Projectile projectile in Main.ActiveProjectiles) {
+				if (projectile.owner == Player.whoAmI && projectile.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerTarget.HasValue) {
+					Player.ownedProjectileCounts[projectile.type]--;
+				}
+			}
 			if (Player.whoAmI == Main.myPlayer) {
 				foreach (Quest quest in Quest_Registry.Quests) {
 					if (quest.PreUpdateInventoryEvent is not null) {
@@ -540,6 +605,10 @@ namespace Origins {
 			}
 			if (MojoInjectionActive) Mojo_Injection.UpdateEffect(this);
 			if (CrownJewelActive) Crown_Jewel.UpdateEffect(this);
+			if (sendBuffs && Player.whoAmI == Main.myPlayer && !NetmodeActive.SinglePlayer) {
+				NetMessage.SendData(MessageID.PlayerBuffs, number: Main.myPlayer);
+			}
+			sendBuffs = false;
 		}
 		public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
 			if (hasPotatOS) {
@@ -552,6 +621,25 @@ namespace Origins {
 				Projectile pet = Main.projectile[talkingPet];
 				if (pet.type == Chew_Toy.projectileID) {
 					Chee_Toy_Messages.Instance.PlayRandomMessage(Chee_Toy_Message_Types.Death, pet.Top);
+				}
+			}
+			if (Player.difficulty == 0 || Player.difficulty == 3) {
+				for (int i = 0; i < 59; i++) {
+					if (Player.inventory[i].stack > 0 && ModLargeGem.GemTextures[Player.inventory[i].type] is not null) {
+						int num = Item.NewItem(Player.GetSource_Death(), (int)Player.position.X, (int)Player.position.Y, Player.width, Player.height, Player.inventory[i].type);
+						Main.item[num].netDefaults(Player.inventory[i].netID);
+						Main.item[num].Prefix(Player.inventory[i].prefix);
+						Main.item[num].stack = Player.inventory[i].stack;
+						Main.item[num].velocity.Y = Main.rand.Next(-20, 1) * 0.2f;
+						Main.item[num].velocity.X = Main.rand.Next(-20, 21) * 0.2f;
+						Main.item[num].noGrabDelay = 100;
+						Main.item[num].favorited = false;
+						Main.item[num].newAndShiny = false;
+						if (Main.netMode == NetmodeID.MultiplayerClient)
+							NetMessage.SendData(MessageID.SyncItem, -1, -1, null, num);
+
+						Player.inventory[i].SetDefaults();
+					}
 				}
 			}
 		}
@@ -602,48 +690,6 @@ namespace Origins {
 		public override bool CanSellItem(NPC vendor, Item[] shopInventory, Item item) {
 			if (item.prefix == ModContent.PrefixType<Imperfect_Prefix>()) return false;
 			return true;
-		}
-		public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
-			if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss_Item>()) {
-				OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
-				if (originWorld.peatSold < 999) {
-					Item[] reAddSoldItems = new Item[shopInventory.Length];
-					if (item.stack >= 999 - originWorld.peatSold) {
-						item.stack -= 999 - originWorld.peatSold;
-						originWorld.peatSold = 999;
-					} else {
-						originWorld.peatSold += item.stack;
-						item.TurnToAir();
-					}
-					int nextSlot = 0;
-					int soldSlot = 0;
-					for (; ++nextSlot < shopInventory.Length && !shopInventory[nextSlot].IsAir;) {
-						if (shopInventory[nextSlot].buyOnce) {
-							reAddSoldItems[soldSlot] = new();
-							Utils.Swap(ref reAddSoldItems[soldSlot], ref shopInventory[nextSlot]);
-							soldSlot++;
-						}
-					}
-					Main.instance.shop[Main.npcShop].SetupShop(4);
-					for (int i = 0; i < reAddSoldItems.Length && reAddSoldItems[i] is not null; i++) {
-						for (int j = 0; j < shopInventory.Length; j++) {
-							if (shopInventory[j].IsAir) {
-								Utils.Swap(ref reAddSoldItems[i], ref shopInventory[j]);
-								break;
-							}
-						}
-					}
-					for (int i = 0; i < shopInventory.Length; i++) {
-						shopInventory[i] ??= new();
-					}
-					if (Main.netMode != NetmodeID.SinglePlayer) {
-						ModPacket packet = Mod.GetPacket();
-						packet.Write(Origins.NetMessageType.sync_peat);
-						packet.Write((short)OriginSystem.Instance.peatSold);
-						packet.Send(-1, Player.whoAmI);
-					}
-				}
-			}
 		}
 
 		public override void SaveData(TagCompound tag) {
@@ -759,9 +805,7 @@ namespace Origins {
 			}
 		}
 		public override bool CanUseItem(Item item) {
-			if (ravel) {
-				return false;
-			}
+			if (ravel) return false;
 			return true;
 		}
 		public override void SetControls() {
@@ -776,6 +820,11 @@ namespace Origins {
 		}
 		public override bool PreItemCheck() {
 			Debugging.LogFirstRun(PreItemCheck);
+			compositeFrontArmWasEnabled = Player.compositeFrontArm.enabled;
+			if (weakShimmer) {
+				Player.shimmering = false;
+				Weak_Shimmer_Debuff.isUpdatingShimmeryThing = true;
+			}
 			collidingX = oldXSign != 0 && Player.velocity.X == 0;
 			collidingY = oldYSign != 0 && Player.velocity.Y == 0;
 			if (disableUseItem) {
@@ -830,6 +879,10 @@ namespace Origins {
 			Debugging.LogFirstRun(PostItemCheck);
 			ItemChecking = false;
 			releaseAltUse = !Player.controlUseTile;
+			Weak_Shimmer_Debuff.isUpdatingShimmeryThing = false;
+		}
+		public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath) {
+			if (Gelatin_Bloom_Brooch.GetNameIndex(Player.name) != -1) yield return new(ModContent.ItemType<Gelatin_Bloom_Brooch>());
 		}
 		public void InflictAssimilation<TAssimilation>(float assimilationAmount) where TAssimilation : AssimilationDebuff => InflictAssimilation((ushort)ModContent.GetInstance<TAssimilation>().AssimilationType, assimilationAmount);
 		public void InflictAssimilation(ushort assimilationType, float assimilationAmount) {

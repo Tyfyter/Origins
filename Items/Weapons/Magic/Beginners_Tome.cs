@@ -1,15 +1,17 @@
-using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
-	public class Beginners_Tome : ModItem, ICustomWikiStat {
+	public class Beginners_Tome : ModItem, IJournalEntrySource, ICustomWikiStat {
         public string[] Categories => [
             "UsesBookcase",
-            "SpellBook"
+            "SpellBook",
+			"LoreItem"
         ];
-        public override void SetDefaults() {
+		public string EntryName => "Origins/" + typeof(Beginners_Tome_Entry).Name;
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 16;
 			Item.DamageType = DamageClass.Magic;
@@ -30,6 +32,10 @@ namespace Origins.Items.Weapons.Magic {
 			.AddIngredient(ItemID.WandofSparking)
 			.AddTile(TileID.Bookcases)
 			.Register();
+		}
+		public class Beginners_Tome_Entry : JournalEntry {
+			public override string TextKey => "Beginners_Tome";
+			public override JournalSortIndex SortIndex => new("The_Dungeon", 2);
 		}
 	}
 	public class Beginner_Spell : ModProjectile {

@@ -1,28 +1,13 @@
-﻿using CalamityMod.Items.Weapons.Magic;
-using CalamityMod.NPCs.ExoMechs;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Accessories;
-using Origins.Items.Armor.Defiled;
-using Origins.Items.Materials;
-using Origins.Items.Other.Consumables.Food;
-using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner;
 using Origins.Misc;
-using Origins.NPCs.Brine.Boss;
-using Origins.NPCs.Defiled;
-using Origins.NPCs.Felnum;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using PegasusLib;
-using System;
 using System.Collections.Generic;
-using System.IO;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -31,7 +16,7 @@ using Terraria.ModLoader;
 using static Origins.Misc.Physics;
 
 namespace Origins.NPCs.Brine {
-	public class Mildew_Creeper : Brine_Pool_NPC, IMeleeCollisionDataNPC, IWikiNPC {
+	public class Mildew_Creeper : Brine_Pool_NPC, IMeleeCollisionDataNPC, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, -8, 50, 112);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
@@ -45,6 +30,7 @@ namespace Origins.NPCs.Brine {
 			};
 			FriendlyNPCTypes.Add(Type);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.aiStyle = -1;
@@ -142,6 +128,15 @@ namespace Origins.NPCs.Brine {
 				} else {
 					return false;
 				}
+			} else if (NPC.IsABestiaryIconDummy) {
+				Vector2 anchor = NPC.Center;
+				anchor.Y += 80;
+				const int count = 5;
+				for (int i = 0; i < count; i++) {
+					chain.links[i].position = anchor - Vector2.UnitY * 16 * i;
+				}
+				chain.links[^1].position = anchor - Vector2.UnitY * 16 * count;
+				NPC.Center = chain.links[^1].position;
 			}
 			Color GetColor(Vector2 position) {
 				if (NPC.IsABestiaryIconDummy) return Color.White;

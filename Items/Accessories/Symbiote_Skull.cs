@@ -1,10 +1,13 @@
-﻿using Origins.Dev;
+﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Symbiote_Skull : ModItem, ICustomWikiStat, IJournalEntrySource {
+	public class Symbiote_Skull : ModItem, ICustomWikiStat, IJournalEntrySource, ITornSource {
+		public static float TornSeverity => 0.1f;
+		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			"Combat",
 			"Torn",

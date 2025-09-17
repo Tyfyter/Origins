@@ -15,13 +15,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Amoebeye : ModNPC, IRivenEnemy, IWikiNPC, IJournalEntrySource {
+	public class Amoebeye : ModNPC, IRivenEnemy, IWikiNPC, IJournalEntrySource, ICustomWikiStat {
 		public string EntryName => "Origins/" + typeof(Amoebeye_Entry).Name;
 		public class Amoebeye_Entry : JournalEntry {
 			public override string TextKey => "Amoebeye";
 			public override JournalSortIndex SortIndex => new("Riven", 7);
 		}
-		public Rectangle DrawRect => new(0, 0, 72, 68);
+		public Rectangle DrawRect => new(0, 0, 70, 98);
 		public int AnimationFrames => 32;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
@@ -35,6 +35,7 @@ namespace Origins.NPCs.Riven {
 			ID = Type;
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
+		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.IchorSticker);
 			NPC.aiStyle = NPCAIStyleID.Hovering;
@@ -66,6 +67,10 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Alkahest>(), 1, 2, 5));
 		}
 		public override bool PreAI() {
+			if (Main.rand.NextBool(1000)) {
+				SoundEngine.PlaySound(SoundID.Zombie47.WithPitch(-1f).WithVolume(0.35f), NPC.Center);
+				SoundEngine.PlaySound(Origins.Sounds.WCIdle.WithPitchRange(1.35f, 1.55f).WithVolume(0.15f), NPC.Center);
+			}
 			NPC.aiStyle = NPCAIStyleID.Hovering;
 			if (NPC.ai[3] != 0) {
 				NPC.defense = 0;
@@ -73,6 +78,8 @@ namespace Origins.NPCs.Riven {
 				if (!isAggro) {
 					NPC bubble = Main.npc[(int)NPC.ai[3] - 1];
 					if (!bubble.active || bubble.type != Amoebeye_P.ID) {
+						SoundEngine.PlaySound(SoundID.Zombie61.WithPitch(1f), NPC.Center);
+						SoundEngine.PlaySound(Origins.Sounds.WCHit.WithPitchRange(1.35f, 1.55f), NPC.Center);
 						NPC.ai[3] = -1;
 						isAggro = true;
 					} else if (bubble.ai[0] != 0) {
@@ -126,10 +133,11 @@ namespace Origins.NPCs.Riven {
 				if (nextVel.X != NPC.velocity.X) NPC.velocity.X *= -0.9f;
 				if (nextVel.Y != NPC.velocity.Y) NPC.velocity.Y *= -0.9f;
 			}
+			if (NPC.aiStyle == NPCAIStyleID.Hovering) NPC.spriteDirection = NPC.direction;
 		}
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter > 7) {
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 68) % 272, 72, 66);
+				NPC.frame = new Rectangle(0, (NPC.frame.Y + 98) % 392, 70, 96);
 				NPC.frameCounter = 0;
 			}
 		}

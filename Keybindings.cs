@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Input;
+using PegasusLib;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.ModLoader;
 
 namespace Origins {
@@ -21,6 +18,7 @@ namespace Origins {
 		public static ModKeybind OpenJournal { get; private set; }*/
 		[Keybind(Keys.Up)]
 		public static ModKeybind JournalBack { get; private set; }
+		public static ModKeybind WishingGlass => ModContent.GetInstance<SyncedKeybinds>().WishingGlass.keybind;
 #if DEBUG
 		[Keybind("Debug Screen Shader", Keys.OemQuotes)]
 		public static ModKeybind DebugScreenShader { get; private set; }
@@ -59,5 +57,9 @@ namespace Origins {
 			public string Name { get; } = name;
 			public string DefaultBinding { get; } = defaultBinding;
 		}
+	}
+	public class SyncedKeybinds : KeybindHandlerPlayer {
+		[Keybind(Keys.V)]
+		public AutoKeybind WishingGlass;
 	}
 }

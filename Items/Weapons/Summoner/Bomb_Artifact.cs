@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
@@ -9,7 +8,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Projectiles;
-using Origins.Items.Weapons.Summoner.Minions;
 using System.Collections.Generic;
 using Origins.Buffs;
 using Origins.NPCs.MiscE;
@@ -98,6 +96,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
 			Origins.ForceFelnumShockOnShoot[Type] = true;
+			OriginsSets.Projectiles.NoMultishot[Type] = true;
 		}
 
 		public override void SetDefaults() {

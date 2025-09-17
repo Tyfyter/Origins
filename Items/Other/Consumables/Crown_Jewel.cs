@@ -31,8 +31,8 @@ namespace Origins.Items.Other.Consumables {
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this, "");
 			GameShaders.Armor.BindShader(Type, new ArmorShaderData(
-				Mod.Assets.Request<Effect>("Effects/Crown_Jewel_Caustics"),
-				"Crown_Jewel_Caustics"
+				Mod.Assets.Request<Effect>("Effects/Item_Caustics"),
+				"Crown_Jewel"
 			))
 			.UseImage(TextureAssets.Extra[193]);
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
@@ -46,7 +46,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.height = 26;
 			Item.accessory = false;
 			Item.useStyle = ItemUseStyleID.HoldUp;
-			Item.UseSound = SoundID.Item29.WithPitch(-3f).WithVolume(0.2f);
+			Item.UseSound = SoundID.Item29.WithPitch(-1f).WithVolume(0.2f);
 			Item.consumable = true;
 		}
 		public override void GrabRange(Player player, ref int grabRange) {

@@ -11,6 +11,7 @@ namespace Origins.Items.Weapons.Ranged {
 		];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Venom];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ElfMelter);
@@ -19,7 +20,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.useTime = 5;
 			Item.width = 36;
 			Item.height = 16;
-			Item.useAmmo = ItemID.Gel;
+			Item.useAmmo = AmmoID.Gel;
 			Item.shoot = ModContent.ProjectileType<Fumethrower_P>();
 			Item.shootSpeed = 12f;
 			Item.reuseDelay = 6;

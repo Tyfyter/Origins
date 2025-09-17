@@ -13,6 +13,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.OnFire3];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);

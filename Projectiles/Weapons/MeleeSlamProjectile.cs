@@ -47,7 +47,7 @@ namespace Origins.Projectiles.Weapons {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
-			if (player.dead) {
+			if (player.dead || player.CCed) {
 				Projectile.active = false;
 				return;
 			}
@@ -58,12 +58,12 @@ namespace Origins.Projectiles.Weapons {
 				Projectile.rotation = GetRotation(swingFactor);
 			}
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
-			Projectile.Center = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2) + (Vector2)new PolarVec2(0, realRotation);
 			Projectile.timeLeft = player.itemTime * Projectile.MaxUpdates;
 			player.heldProj = Projectile.whoAmI;
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
+			Projectile.Center = player.GetCompositeArmPosition(false) + (Vector2)new PolarVec2(0, realRotation);
 
-			Vector2 vel = (Projectile.velocity.RotatedBy(Projectile.rotation) / 12f) * Projectile.width * 0.85f * Projectile.scale;
+			Vector2 vel = (Projectile.velocity.RotatedBy(Projectile.rotation * player.gravDir) / 12f) * Projectile.width * 0.85f * Projectile.scale;
 			Vector2 size = Projectile.Size * Projectile.scale;
 			Vector2 boxPos = Projectile.Center + vel * 2 - size * 0.5f;
 			Projectile.EmitEnchantmentVisualsAt(boxPos, (int)size.X, (int)size.Y);
@@ -77,7 +77,7 @@ namespace Origins.Projectiles.Weapons {
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			Vector2 vel = (Projectile.velocity.RotatedBy(Projectile.rotation) / 12f) * Projectile.width * 0.85f * Projectile.scale;
+			Vector2 vel = (Projectile.velocity.RotatedBy(Projectile.rotation * Main.player[Projectile.owner].gravDir) / 12f) * Projectile.width * 0.85f * Projectile.scale;
 			projHitbox.Inflate((int)((projHitbox.Width * Projectile.scale - projHitbox.Width) * 0.5f), (int)((projHitbox.Height * Projectile.scale - projHitbox.Height) * 0.5f));
 			for (int j = 1; j <= 2; j++) {
 				Rectangle hitbox = projHitbox;
@@ -100,12 +100,12 @@ namespace Origins.Projectiles.Weapons {
 		}
 		public DrawData GetDrawData(Color lightColor, Vector2 origin) {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
-			SpriteEffects effects = Projectile.ai[1] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+			SpriteEffects effects = (Projectile.ai[1] * Main.player[Projectile.owner].gravDir) > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 			return new(texture,
 				Projectile.Center - Main.screenPosition,
 				null,
 				lightColor,
-				Projectile.rotation + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1]),
+				Projectile.rotation * Main.player[Projectile.owner].gravDir + Projectile.velocity.ToRotation() + (MathHelper.PiOver4 * Projectile.ai[1] * Main.player[Projectile.owner].gravDir),
 				origin.Apply(effects, texture.Size()),// origin point in the sprite, 'round which the whole sword rotates
 				Projectile.scale,
 				effects
