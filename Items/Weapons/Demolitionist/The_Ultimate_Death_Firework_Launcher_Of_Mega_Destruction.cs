@@ -20,7 +20,6 @@ using Terraria.Audio;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction : ModItem {
-		public override string Texture => typeof(Partybringer_Turret).GetDefaultTMLName() + "_Pods";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
@@ -34,6 +33,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Cyan;
 			//Item.ArmorPenetration += 15;
 		}
+		public override Vector2? HoldoutOffset() => new(-5, -8);
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.LunarBar, 18)
@@ -47,6 +47,22 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Main.rand.Next(TUDFLOMD_Rocket.Projectiles);
+			Vector2 unit = velocity.Normalized(out _);
+			Vector2 perp = unit.RotatedBy(player.direction * MathHelper.PiOver2);
+			switch (player.ItemUsesThisAnimation) {
+				case 1:
+				position += unit * 84 + perp * 8;
+				break;
+				case 2:
+				position += unit * 64 + perp * 8;
+				break;
+				case 3:
+				position += unit * 84 + perp * -10;
+				break;
+				case 4:
+				position += unit * 64 + perp * -10;
+				break;
+			}
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			float distanceFromTarget = 16 * 17.5f;
