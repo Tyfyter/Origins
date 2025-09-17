@@ -1,13 +1,33 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Core;
-using PegasusLib;
-using System.Reflection;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
+using Terraria.IO;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dusk {
+	public class Undusk : ILoadable {
+		public void Load(Mod mod) {
+			WorldFile.OnWorldLoad += WorldFile_OnWorldLoad;
+		}
+		static void WorldFile_OnWorldLoad() {
+			int stone = TileType<Dusk_Stone>();
+			int liquid = TileType<Dusk_Stone_Liquid>();
+			for (int i = 0; i < Main.maxTilesX; i++) {
+				for (int j = 0; j < Main.maxTilesY; j++) {
+					Tile tile = Main.tile[i, j];
+					if (!tile.HasTile) continue;
+					if (tile.TileType == stone) {
+						tile.TileType = TileID.Ash;
+					} else if (tile.TileType == liquid) {
+						tile.HasTile = false;
+						tile.LiquidType = LiquidID.Lava;
+						tile.LiquidAmount = 255;
+					}
+				}
+			}
+		}
+		public void Unload() {}
+	}
 	public class Dusk_Stone : OriginTile {
 		public string[] Categories => [
 			"Stone"
