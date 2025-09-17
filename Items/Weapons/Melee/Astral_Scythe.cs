@@ -23,6 +23,7 @@ namespace Origins.Items.Weapons.Melee {
 	[LegacyName("Splitting_Image")]
 	public class Astral_Scythe : ModItem {
 		public override void SetStaticDefaults() {
+			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
 		}
@@ -62,9 +63,8 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		// alt fire sound here because it runs on all sides
 		public override bool? UseItem(Player player) {
-			if (player.altFunctionUse == 2) {
-				SoundEngine.PlaySound(SoundID.Shatter, player.MountedCenter);
-			}
+			if (player.altFunctionUse == 2) SoundEngine.PlaySound(SoundID.Shatter, player.MountedCenter);
+			else SoundEngine.PlaySound(SoundID.Item71.WithPitch(-1f), player.MountedCenter);
 			return base.UseItem(player);
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
@@ -310,7 +310,7 @@ namespace Origins.Items.Weapons.Melee {
 			targetHitbox.Inflate(4, 4); // it's easier to inflate a box than an unknown polygon
 			if (oldControlPoints.Count == 0) {
 				for (int i = 0; i < Projectile.WhipPointsForCollision.Count - 1; i++) {
-					if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.WhipPointsForCollision[i], Projectile.WhipPointsForCollision[i  + 1])) return true;
+					if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.WhipPointsForCollision[i], Projectile.WhipPointsForCollision[i + 1])) return true;
 				}
 				return false;
 			}
