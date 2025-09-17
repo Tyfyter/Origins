@@ -1,5 +1,6 @@
 ﻿using Origins.Dev;
 using Origins.Items.Materials;
+using PegasusLib;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,7 +23,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateAccessory(Player player, bool hideVisual) => UpdateInventory(player);
 		public override void UpdateInventory(Player player) {
 			player.buffImmune[BuffID.Suffocation] = true;
-			player.AddMaxBreath(257);
+			if (player.OriginPlayer().airTank.TrySet(true)) player.AddMaxBreath(257);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

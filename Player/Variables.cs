@@ -324,6 +324,7 @@ namespace Origins {
 		public bool shimmerShield = false;
 		public int shimmerShieldDashTime = 0;
 		public int? dashBaseDamage = 0;
+		public bool airTank = false;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -804,6 +805,7 @@ namespace Origins {
 			wishingGlassDye = 0;
 			shimmerShield = false;
 			dashBaseDamage = null;
+			airTank = false;
 			lotteryTicketItem = null;
 
 			

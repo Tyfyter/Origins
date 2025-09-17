@@ -8,7 +8,7 @@ Additions:
 + Added 3 Shimmer Construct-related boss trophy items
 + Added edible Nerve Flan
 + Added Lazy Cloak, Resizing Glove, Shield of Shimmer and Wishing Glass
-+ Added Aether Opal, Cool Sword, Dream Catcher, Silicon Sword, Shinedown, Voltefuse, and Astral Scythe weapons
++ Added Aether Opal, Astral Scythe, Cool Sword, Dream Catcher, Silicon Sword, Shinedown, and Voltefuse weapons
 + Added Aether Canister
 + Added Pocket Dimension Monolith, for the Shimmer Constructs effects
 + Added Amnestic Rose with another shimmerable re-skin, contest winner of the Origins Concept Competition
@@ -21,9 +21,9 @@ Additions:
 + Added more Journal entries
 + All artifact summon weapons now have a tag under the item name to clarify that they are artifacts
 + Added the 'Painter Apprentice' quest for the Painter
-+ Fiberglass Undergrowth now has a cool biome background effect
++ Fiberglass Undergrowth now has a cool biome background effect (disabled in Retro and Trippy lighting modes for better performance)
 + Added several helpful loading screen tips
-+ Added The Ultimate Death Firework Launcher of Mega Destruction, a post-Moon Lord Rocket Launcher
++ Added The Ultimate Death Firework Launcher of Mega Destruction™ (Patent Pending), a post-Moon Lord Rocket Launcher
 + Added the Dreamcatcher, a Fiberglass Magic weapon
 + Added mod integration for more mods, including Critical Strikes Overhaul and AlchemistNPC Lite
 + Holding Shift while hovering over an item now describes the effects of the debuffs it applies
@@ -37,31 +37,30 @@ Changes:
 ** Fiberglass Weaver buffed for a later point in pre-Hardmode
 * Journal now gives mechanic guides
 * Brine enemies now have banners
-* Disabled Fiberglass Undergrowth background in Retro and Trippy lighting modes for improved performance
 * Broken Terratotem and Terratotem have been completely reworked
-* Control Locus, Entangled Energy and Weakpoint Analyzer have all been completely reworked
+* Weakpoint Analyzer and Control Locus have been reworked
 * Recomposed the Riven Hive and Defiled Caverns music themes
-* Amoebeyes and Riven Protoforms have new behavior and make new sounds
+* Completely reworked Riven Protoforms
+* Amoebeyes have a new sprite and make new sounds
 * The Demolitionist now sells Beenades on Not The Bees! worlds
 * The Arms Dealer now sells you Harpoons if you have a harpoon gun in your inventory
 * Alkahest and Bile Bullets now use Musket Balls in their recipes instead of Empty Bullets
 * Item tooltips that were previously vague about their effects now provide specific values
-* Abyssal Anchor makes the player fall faster now
-* The Dusk no longer generates in the world (pre-existing Dusks will convert into Ash Blocks and leave behind their Bleeding Obsidian veins)
+* Abyssal Anchor now makes the player fall faster
 * Bleeding Obsidian is now converted from normal Obsidian by the world evil biome spread and/or artificially
 * Tweaked Sapphire Mediator Armor stats
 * n-in-1 Shotties now fire much slower for balance reasons
 * 3-in-1 Shotty is now a Hardmode upgrade
 * Made Crimbrains more susceptible to knockback and accelerate slower
-* Enchanted Fiberglass Bows stop teleporting as sporadically
+* Enchanted Fiberglass Bows no longer teleport as sporadically
 * Reduced Spider Ravel cost for Spider Fangs
 * Nerfed the defense and damage of Defiled enemies after suffering ourselves
 * Defiled Broadcasters no longer spawn until a boss has been defeated
-* Tendon Tear tendon whip now deals less damage
+* Tendon Tear tendon whip now deals less damage after hitting an enemy
 * Air Tank now works while in your inventory
 * Evil Biome tiles now merge better
 * Improved performance while using Clorophite Bullets
-* You can dismount the Indestructible Saddle
+* You can now jump off the Indestructible Saddle
 * Futurephones can now have two different dyes equipped at the same time
 * Giving peat to the Demolitionist is now a quest named "Re-Peat Customer"
 * Desert Crown can now be found in Oasis Crates
@@ -74,18 +73,19 @@ Changes:
 * Blotopus now converts all bullet types instead of just Musket Balls
 * Hævateinn now hits enemies a consistent amount of times
 * Eitrite now between Titanium and Chlorophyte in shimmer downgrading
+- The Dusk no longer generates in the world (pre-existing Dusks will convert into Ash Blocks and leave behind their Bleeding Obsidian veins)
 
 Balance:
-- Defiled prefix no longer works on target dummies
-- Wholesome prefix only works when the minion dies of natural causes
-- Automated Returns Handler now increases hook pull speed
-- Amoeba Toy now sells for 20% of it's prior sell price
-- Omnidirectional Claymore now sells for 1% of it's prior sell price
-- Buffed the Felnum and Fiberglass armor sets'
-- Buffed the Staff of the Hydra
-- Buffed the Bled Out Staff
-- Amber of Embers now applies a stronger debuff
-- Nerfed Explosive Golf Ball and it's variants
+* Defiled prefix no longer works on target dummies
+* Wholesome prefix only spawns a heart when the minion dies of natural causes
+* Automated Returns Handler now increases hook pull speed
+* Amoeba Toy now sells for 20% of it's prior sell price
+* Omnidirectional Claymore now sells for 1% of it's prior sell price
+* Buffed the Felnum and Fiberglass armor sets'
+* Buffed the Staff of the Hydra
+* Buffed the Bled Out Staff (penetration: 1 -> 2)
+* Amber of Embers now applies a stronger debuff
+* Nerfed Explosive Golf Ball and it's variants
 
 Fixes:
 * Friendly Felnum Guardians no longer politely leave room for Servants of You or Little Protozoa to get in line with them, as the aforementioned minions don't believe in order
@@ -109,7 +109,7 @@ Fixes:
 * Bee Gun no longer gets outrageous damage numbers from Fiberglass Dagger
 * Latchkey and Refactoring Pieces dashes now only refresh jumps once per jump
 * Fixed Shimmer Rod cloud positioning while upside-down
-* Riven Mimics no longer profusely populate the Underground Riven Hive
+* Riven Mimics and Savage Whips no longer profusely populate the Underground Riven Hive
 * Bang Snaps are now craftable with ALL sand types, no exceptions!
 * Assimilation death messages now properly display
 * Made the Ocotillo Finger less expensive
@@ -138,10 +138,10 @@ Fixes:
 * Potato Mines properly explode against invincible targets
 * Expert and Master mode exclusive items now properly tagged
 * Weapons now render properly in flipped Gravity
-* Sonar Dynamite pings no longer attach themselves to other players projectiles
+* Sonar Dynamite pings no longer attach themselves to other players' projectiles
 * Broths no longer appear to stack when using unlimited buff mods
 * Defiled Hearts can now be broken with the Pwnhammer
-* Lucky Hat no longer can float when barrel is destroyed
+* Lucky Hat can no longer float when barrel is destroyed
 * Nova Swarm now held correctly when facing either direction
 * Evil torches now properly give torch luck
 * Mildew Heart kills the player properly
@@ -150,9 +150,9 @@ Fixes:
 * Sonic Radar now properly glows
 * Liar's Tongue now has proper tooltip
 * Neural Network now obtainable
-* Felnum items now have damage boost in tooltip
+* Felnum items now mention damage boost in tooltip
 * Speed Booster glow now disappears when unequipping the item
-* Riptide dash finishes without set bonus
+* Riptide dash finishes even if the set is unequipped
 * Fixed Demolitionist Hallowed/Chlorophyte Helmets having the wrong visual in Multiplayer
 * Synchronized many effects properly in Multiplayer
 * Dryad's Inheritance now receives the effects of the Star Cloak
@@ -160,9 +160,9 @@ Fixes:
 * Origins crates can now be shimmered the same way as vanilla crates
 * Riven Altar glows brighter
 * Canisters now handle local immunity frames properly
-* Gun Glove functions more often
+* Gun Glove functions with more weapons
 * Defiled Chrysalis spawn effects no longer censored by disabling Blood & Gore
 * Chests added by Origins function correctly
 * Foul Broth no longer stops minions in their tracks
 * Priority Mail can be equipped by right clicking on it
-* World Cracker boss bar no longer on screen with no bosses active
+* World Cracker boss bar can no longer remain on screen with no bosses active
