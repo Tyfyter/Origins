@@ -167,7 +167,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					}
 				}
 			}
-			if (!IsInPhase3 && NPC.GetLifePercent() <= 0.5f) isInPhase2 = true;
+			if (!IsInPhase3 && NPC.GetLifePercent() <= 0.5f) {
+				if (isInPhase2.TrySet(true)) /*sound here*/;
+			}
 			for (int i = 0; i < chunks.Length; i++) chunks[i].Update(this);
 			if (NetmodeActive.Server) {
 				for (int i = 0; i < NPC.playerInteraction.Length; i++) {
