@@ -10,9 +10,11 @@ Additions:
 + Added Lazy Cloak, Resizing Glove, Shield of Shimmer and Wishing Glass
 + Added Aether Opal, Cool Sword, Dream Catcher, Silicon Sword, Shinedown and Voltefuse weapons
 + Added Aether Canister
++ Added Pocket Dimension Monolith, for the Shimmer Constructs effects
 + Added Amnestic Rose with another shimmerable re-skin, contest winner of the Origins Concept Competition
 + Added more harpoon variants
 + Added Amoeba Buggy and Cicada 3301 Cages, how cool!
++ Added Shelf Coral, a Riven Tile that allows for more maneuverability
 + Added several new developer items and a new skin for the First Dream
 + Added a new painting
 + Added the Limestone furniture set, reminds me of home!
@@ -21,11 +23,19 @@ Additions:
 + Added the 'Painter Apprentice' quest for the Painter
 + Fiberglass Undergrowth now has a cool biome background effect
 + Added several helpful loading screen tips
-
++ Added The Ultimate Death Firework Launcher of Mega Destruction, a post-Moon Lord Rocket Launcher
++ Added the Dreamcatcher, a Fiberglass Magic weapon
++ Added mod integration for more mods, including Critical Strikes Overhaul and AlchemistNPC Lite
++ Added a Shimmer menu theme 
++ Holding Shift while hovering over an item now describes the effects of the debuffs it applies
++ Added varying textures for Bark, similar to gel
++ Added more quests to complete
++ Added a multitude of April Fools effects
 
 Changes:
 ** Revamped the Riven Hive's generation and sprites
 ** World Cracker became a little more alive
+** Fiberglass Weaver buffed for a later point in pre-Hardmode
 * Journal now gives mechanic guides
 * Brine enemies now have banners
 * Disabled Fiberglass Undergrowth background in Retro and Trippy lighting modes for improved performance
@@ -47,13 +57,37 @@ Changes:
 * Enchanted Fiberglass Bows stop teleporting as sporadically
 * Reduced Spider Ravel cost for Spider Fangs
 * Nerfed the defense and damage of Defiled enemies after suffering ourselves
+* Defiled Broadcasters no longer spawn until a boss has been defeated
 * Tendon Tear tendon whip now deals less damage
-
+* Air Tank now works while in your inventory
+* Evil Biome tiles now merge better
+* Improved performance while using Clorophite Bullets
+* You can dismount the Indestructible Saddle
+* Futurephones can now have two different dyes equipped at the same time
+* Giving peat to the Demolitionist is now a quest named "Re-Peat Customer"
+* Desert Crown can now be found in Oasis Crates
+* Cryostrike can now be found in Frozen Crates
+* Flashbangs now provide more Flashbangs per Fallen Star used
+* Decreased size of Defiled Spikes
+* Shimmer Rod obtain method to being crafted with Nimbus Rod and Aetherite Bars
+* Amnestic Rose now cheaper to craft
+* Bleeding Obsidian Kunai now reforgable
+* Limestone has been added to the Granite and Marble Shimmer cycle
+* Blotopus now converts all bullet types instead of just Musket Balls
+* Hævateinn now hits enemies a consistent amount of times
+* Eitrite now between Titanium and Chlorophite in shimmer downgrading
 
 Balance:
 - Defiled prefix no longer works on target dummies
 - Wholesome prefix only works when the minion dies of natural causes
-
+- Automated Returns Handler now increases hook pull speed
+- Amoeba Toy now sells for 20% of it's prior sell price
+- Omnidirectional Claymore now sells for 1% of it's prior sell price
+- Buffed the Felnum and Fiberglass armor sets'
+- Buffed the Staff of the Hydra
+- Buffed the Bled Out Staff
+- Amber of Embers now applies a stronger debuff
+- Nerfed Explosive Golf Ball and it's variants
 
 Fixes:
 * Friendly Felnum Guardians no longer politely leave room for Servants of You or Little Protozoa to get in line with them, as the aforementioned minions don't believe in order
@@ -97,3 +131,40 @@ Fixes:
 * Hydrothermal Vents no longer spawn outside of the Brine Pool
 * Fixed a variety of ways you could crash
 * The Bloated prefix for summon weapons no longer causes health bar flickering
+* Bombs added by Origins now allow the Demolitionist to move in
+* Super Turbo Reel and it's upgrades now have the glow from the Magiluminescence
+* Harpoons now work better with Weakpoint Analyzer
+* Weapons now use correct damage types
+* Proper loot is dropped when killing Fae Nymph in one hit
+* Removed Debug code from the Royal Gel
+* Potato Mines properly explode against invincible targets
+* Expert and Master mode exclusive items now properly tagged
+* Weapons now render properly in flipped Gravity
+* Sonar Dynamite pings no longer attach themselves to other players projectiles
+* Broths no longer appear to stack when using unlimited buff mods
+* Defiled Hearts can now be broken with the Pwnhammer
+* Lucky Hat no longer can float when barrel is destroyed
+* Nova Swarm now held right when facing either direction
+* Evil torches now properly give torch luck
+* Mildew Heart kills the player properly
+* World Cracker has proper segment count in multiplayer
+* Shaped Glass can no longer be used outside of the Fiberglass Undergrowth
+* Sonic Radar now properly glows
+* Liar's Tongue now has proper tooltip
+* Neural Network now obtainable
+* Felnum items now have damage boost in tooltip
+* Speed Booster glow now disappears when unequipping the item
+* Riptide dash finishes without set bonus
+* Fixed Demolitionist Hallowed/Chlorphite Helmets having the wrong visual in Multiplayer
+* Synchronized many effects properly in Multiplayer
+* Dryad's Inheritance now receives the effects of the Star Cloak
+* Cleansing Station now has a sound effect
+* Origins crates can now be shimmered the same way as vanilla crates
+* Riven Altar glows brighter
+* Canisters now handle local immunity frames properly
+* Gun Glove functions more often
+* Defiled spawn effects no longer censored by disabling Blood & Gore
+* Chests added by Origins function correctly
+* Foul Broth no longer stops minions in their tracks
+* Priority Mail can be equipped by right clicking on it
+* World Cracker boss bar no longer on screen with no bosses active
