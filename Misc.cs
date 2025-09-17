@@ -4,6 +4,7 @@ using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Banners;
+using Origins.Tiles.Dusk;
 using Origins.Tiles.Other;
 using Origins.UI;
 using Origins.Walls;
@@ -2995,6 +2996,7 @@ namespace Origins {
 				WallID.RubyUnsafe,
 				WallID.DiamondUnsafe
 			);
+			biome.AddTileConversion(ModContent.TileType<Bleeding_Obsidian>(), TileID.Obsidian, false, false, false);
 		}
 		public static float SpecificTilesEnemyRate(this NPCSpawnInfo spawnInfo, HashSet<int> tiles, bool hardmode = false) {
 			if (hardmode && !Main.hardMode) return 0f;
