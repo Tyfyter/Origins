@@ -27,7 +27,7 @@ namespace Origins.Core {
 				switch (parts.Length) {
 					case 1:
 					tag["mod"] = "Terraria";
-					tag["id"] = ItemID.Search.GetId(conversion);
+					tag["id"] = int.TryParse(conversion, out int id) ? id : ItemID.Search.GetId(conversion);
 					break;
 					case 2:
 					tag["mod"] = parts[0];
