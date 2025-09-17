@@ -286,7 +286,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public void SetupControlPoints() {
 			Projectile owner = Projectile.GetRelatedProjectile(2);
-			if (owner?.active != true) {
+			if ((owner?.active != true) || owner.ModProjectile is not Astral_Scythe_Slash) {
 				Projectile.Kill();
 				return;
 			}
