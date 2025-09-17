@@ -19,7 +19,8 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 1);
 		}
-		public override void UpdateEquip(Player player) {
+		public override void UpdateAccessory(Player player, bool hideVisual) => UpdateInventory(player);
+		public override void UpdateInventory(Player player) {
 			player.buffImmune[BuffID.Suffocation] = true;
 			player.AddMaxBreath(257);
 		}
