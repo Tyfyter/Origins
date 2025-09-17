@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Projectiles {
-	public class ChlorophiteBulletOptimization : GlobalProjectile {
+	public class ChlorophyteBulletOptimization : GlobalProjectile {
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) => entity.type == ProjectileID.ChlorophyteBullet;
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailingMode[ProjectileID.ChlorophyteBullet] = 2;
@@ -31,7 +31,7 @@ namespace Origins.Projectiles {
 					)
 					.EmitCall(((Func<bool>)ShouldSkip).Method)
 					.EmitBrtrue(label);
-					static bool ShouldSkip() => OriginClientConfig.Instance.ImproveChlorophiteBulletsPerformance;
+					static bool ShouldSkip() => OriginClientConfig.Instance.ImproveChlorophyteBulletsPerformance;
 				};
 			} catch (Exception e) {
 				if (Origins.LogLoadingILError(nameof(NoBackfacesToCull), e)) throw;
@@ -39,7 +39,7 @@ namespace Origins.Projectiles {
 		}
 		private static VertexStrip _vertexStrip = new();
 		public override bool PreDraw(Projectile projectile, ref Color lightColor) {
-			if (!OriginClientConfig.Instance.ImproveChlorophiteBulletsPerformance) return base.PreDraw(projectile, ref lightColor);
+			if (!OriginClientConfig.Instance.ImproveChlorophyteBulletsPerformance) return base.PreDraw(projectile, ref lightColor);
 			MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
 			Vector2[] oldPos = [..projectile.oldPos];
 			float[] oldRot = [..projectile.oldRot];
