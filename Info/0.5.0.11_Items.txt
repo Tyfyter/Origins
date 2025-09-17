@@ -244,6 +244,7 @@ Danger_Barrel
 Dark_Spiral
 Dart_Crossbow
 Dash_Ravel
+Dawn_Key
 Decimator
 Defective_Mortar_Shell
 Defiled_Altar_Item
