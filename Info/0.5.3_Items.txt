@@ -29,6 +29,7 @@ Advanced_Imaging
 Aether_Bullet
 Aether_Canister
 Aether_Opal
+Aether_Orb
 Aetherite_Bar
 Aetherite_Ore_Item
 Aetherite_Robe
@@ -78,7 +79,6 @@ Ancient_Kruncher
 Ancient_Music_Box_BP_Item
 Ancient_Music_Box_DW_Item
 Ancient_Music_Box_RH_Item
-Angelic_Cloud_Item
 Anti_Gray_Dye
 Antisolve_Potion
 Area_Denial
@@ -171,6 +171,7 @@ Brick_Breaker
 Brine_Cheese
 Brine_Convergence_Incantation
 Brine_Dungeon_Chest_Item
+Brine_Fiend_Item
 Brine_Fountain_Item
 Brine_Haze
 Brine_Key
@@ -282,6 +283,7 @@ Danger_Barrel
 Dark_Spiral
 Dart_Crossbow
 Dash_Ravel
+Dawn_Key
 Deceptive_Beauty_Item
 Decimator
 Defective_Mortar_Shell
@@ -294,7 +296,9 @@ Defiled_Banner_NPC_Banner_Item
 Defiled_Bar
 Defiled_Breastplate
 Defiled_Campfire_Item
+Defiled_Chest
 Defiled_Dungeon_Chest_Item
+Defiled_Effigy_Item
 Defiled_Fissure_Item
 Defiled_Fountain_Item
 Defiled_Grass_Seeds
@@ -317,10 +321,15 @@ Defiled_Sandstone_Wall_Item
 Defiled_Spirit
 Defiled_Stone_Item
 Defiled_Stone_Wall_Item
+Defiled_Storage_Core
+Defiled_Storage_Unit_Item
+Defiled_Storage_Upgrade
 Defiled_Torch
 Defiled2_Breastplate
 Defiled2_Greaves
 Defiled2_Helmet
+DefiledRenewal
+DefiledSupremeRenewal
 Demonite_Gun_Magazine
 Depth_Charge
 Depth_Ravel
@@ -342,11 +351,9 @@ Dream_Catcher
 Dreikan
 Dryads_Inheritance
 Dusk_Light_Item
-Dusk_Stone_Item
 Dysfunctional_Endless_Explosives_Bag
 Eaterboros
 Eccentric_Stone
-Eden_Wood_Item
 Eden_Wood_Wall_Item
 Eitrite_Bar
 Eitrite_Gun_Magazine
@@ -366,6 +373,9 @@ Encrusted_Gun_Magazine
 Encrusted_Mask
 Encrusted_Ore_Item
 Encrusted_Pants
+Encrusted_Storage_Core
+Encrusted_Storage_Unit_Item
+Encrusted_Storage_Upgrade
 Endowood_Bathtub_Item
 Endowood_Bed_Item
 Endowood_Bookcase_Item
@@ -416,6 +426,8 @@ Eyndum_Scar
 Fabricator_Item
 Fairy_Lotus
 Faith_Beads
+Fake_Defiled_Altar_Item
+Fake_Riven_Altar_Item
 Fallacious_Vase
 Feather_Cape
 Feathery_Crest
@@ -484,7 +496,6 @@ Gel_Blister_Item
 Gelatin_Bloom_Brooch
 Gelled_Knife
 Generic_Weapon
-Genesis_Grass_Seeds
 Geothermal_Sludge
 Glass_Cannon
 Golden_Lotus
@@ -507,7 +518,6 @@ Handy_Helper
 Happy_Bomb
 Hardened_Defiled_Sand_Item
 Hardened_Defiled_Sand_Wall_Item
-Harmony_Brick_Item
 Harmony_Brick_Wall_Item
 Harpoon
 Harpoon_Burst_Rifle
@@ -823,6 +833,7 @@ Riven_Altar_Item
 Riven_Cactus_Item
 Riven_Campfire_Item
 Riven_Carapace
+Riven_Chest
 Riven_Coat
 Riven_Dungeon_Chest_Item
 Riven_Fighter_Banner_Item
@@ -847,6 +858,8 @@ Riven2_Mask
 Riven2_Pants
 Rivenator
 Rivenator_Head_Banner_Item
+RivenRenewal
+RivenSupremeRenewal
 Riverang
 Rocket_Rifle
 Rockstar_Choker
@@ -864,6 +877,9 @@ Salty_Seed
 Sanguinite_Bar
 Sanguinite_Gun_Magazine
 Sanguinite_Ore_Item
+Sanguinite_Storage_Core
+Sanguinite_Storage_Unit_Item
+Sanguinite_Storage_Upgrade
 Sapphire_Hood
 Sapphire_Tights
 Sapphire_Vest
