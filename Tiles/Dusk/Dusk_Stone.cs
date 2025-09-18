@@ -12,6 +12,8 @@ namespace Origins.Tiles.Dusk {
 		static void WorldFile_OnWorldLoad() {
 			int stone = TileType<Dusk_Stone>();
 			int liquid = TileType<Dusk_Stone_Liquid>();
+			if (stone == 0) stone = int.MinValue;
+			if (liquid == 0) liquid = int.MinValue;
 			for (int i = 0; i < Main.maxTilesX; i++) {
 				for (int j = 0; j < Main.maxTilesY; j++) {
 					Tile tile = Main.tile[i, j];
