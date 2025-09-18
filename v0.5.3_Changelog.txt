@@ -73,6 +73,10 @@ Changes:
 * Blotopus now converts all bullet types instead of just Musket Balls
 * Hævateinn now hits enemies a consistent amount of times
 * Eitrite now between Titanium and Chlorophyte in shimmer downgrading
+* Dye effect of Power Locus turned into Lotusy Dye item
+* Laser Tag Gun now counts as a Space Gun
+* Riven Hive button on world creation menu is now blue
+* Soulslasher now has autofire on the primary attack
 - The Dusk no longer generates in the world (pre-existing Dusks will convert into Ash Blocks and leave behind their Bleeding Obsidian veins)
 
 Balance:
@@ -105,6 +109,7 @@ Fixes:
 * Defiled Amalgamation gets back its projectile spray attack that was missing for some reason
 * Abyssal Anchor and Binding Book now inherit the 10% increased damage reduction from Refactoring Pieces
 * Abyssal Anchor now properly slows down mounts
+* Abyssal Anchor now can be dyed
 * Fixed Stone Mask not properly slowing the player down
 * Bee Gun no longer gets outrageous damage numbers from Fiberglass Dagger
 * Latchkey and Refactoring Pieces dashes now only refresh jumps once per jump
@@ -166,3 +171,19 @@ Fixes:
 * Foul Broth no longer stops minions in their tracks
 * Priority Mail can be equipped by right clicking on it
 * World Cracker boss bar can no longer remain on screen with no bosses active
+* Lost Monocle now properly gives a boost to Mana Regeneration
+* Bestiary icons properly in frame
+* Brine-Leafed Clover now removed from player's inventory when used up
+* Corrupt Assimilation now causes the correct death message to display
+* Impenetrable Trashcan Lid now properly propels the player
+* Tires use Fishing Junk extraction pool
+* Flashbangs can no longer fail to flash properly
+* Missing File can now hit any enemy
+* Plasma Bag properly boosts HP regeneration
+* Venom Shield now does listed damage instead of Shield of Cthulhu damage
+* Fiberglass background no longer broken in flipped gravity
+* Bleeding Obsidian Kunai now works with Weakpoint Analyzer
+* Guns dropped from crates no longer come with ammo
+* Weapons that use Metal Slugs now mention that they use Metal Slugs
+* Toxic Shock and Rasterized no longer make enemies invisible in flipped gravity
+* Bile and Alkahest flasks now have proper particle effects
