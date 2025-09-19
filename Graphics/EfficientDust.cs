@@ -9,16 +9,20 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Graphics {
-	[ReinitializeDuringResizeArrays]
 	public class EfficientDust : ILoadable {
 		public static Action<Dust>[] UpdateDustCallback = DustID.Sets.Factory.CreateCustomSet<Action<Dust>>(null);
 		public static Asset<Texture2D>[] DustTexture = DustID.Sets.Factory.CreateCustomSet<Asset<Texture2D>>(null);
-		static readonly Dust[] dust = new Dust[Main.maxDust].Select(_ => new Dust()).ToArray();
+		static Dust[] dust = new Dust[Main.maxDust].Select(_ => new Dust()).ToArray();
 		public void Load(Mod mod) {
+			if (NetmodeActive.Server) {
+				dust = null;
+				return;
+			}
 			IL_Main.DrawDust += (il) => new ILCursor(il).EmitCall(((Action)DrawDust).Method);
 			IL_Dust.UpdateDust += (il) => new ILCursor(il).EmitCall(((Action)UpdateDust).Method);
 		}
 		static void DrawDust() {
+			if (NetmodeActive.Server) return;
 			Rectangle rectangle = new((int)Main.screenPosition.X - 500 - 4, (int)Main.screenPosition.Y - 50 - 4, Main.screenWidth + 1000, Main.screenHeight + 100);
 			Color defaultColor = default;
 			Color black = Color.Black;
@@ -39,6 +43,7 @@ namespace Origins.Graphics {
 			Main.spriteBatch.End();
 		}
 		static void UpdateDust() {
+			if (NetmodeActive.Server) return;
 			FastParallel.For(0, dust.Length, (fromInclusive, toExclusive, _) => {
 				for (int i = fromInclusive; i < toExclusive; i++) {
 					Dust dust = EfficientDust.dust[i];

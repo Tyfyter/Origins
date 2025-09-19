@@ -10,7 +10,10 @@ using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Reflection;
+using System.Text;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -23,10 +26,31 @@ using static Origins.Origins.NetMessageType;
 
 namespace Origins {
 	public partial class Origins : Mod {
+		/*int[] packetTypesReceived = new int[NetMessageType.clone_npc + 1];
+		uint lastLoggedGameFrameNumber = 0;*/
 		public override void HandlePacket(BinaryReader reader, int whoAmI) {
 			byte type = reader.ReadByte();
 			bool altHandle = false;
 			lastPacketType = type;
+			/*packetTypesReceived[type]++;
+			if (Origins.gameFrameCount - lastLoggedGameFrameNumber > 10 * 60) {
+				lastLoggedGameFrameNumber = Origins.gameFrameCount;
+				if (NetMessageType.names is null) {
+					NetMessageType.names = new string[NetMessageType.clone_npc + 1];
+					foreach (FieldInfo item in typeof(NetMessageType).GetFields(BindingFlags.NonPublic | BindingFlags.Static)) {
+						if (item.FieldType == typeof(byte)) {
+							NetMessageType.names[(byte)item.GetValue(null)] = item.Name;
+						}
+					}
+				}
+				StringBuilder builder = new();
+				for (int i = 0; i < packetTypesReceived.Length; i++) {
+					if (packetTypesReceived[i] > 0) {
+						builder.Append($"{NetMessageType.names[i]}:{packetTypesReceived[i]}");
+					}
+				}
+				if (builder.Length > 0) Logger.Info(builder.ToString());
+			}*/
 			if (Main.netMode == NetmodeID.MultiplayerClient) {
 				switch (type) {
 					case tile_counts:
@@ -99,7 +123,7 @@ namespace Origins {
 					break;
 
 					case defiled_relay_message:
-					Defiled_Relay.DisplayMessage(reader.ReadString());
+					Defiled_Relay.DisplayMessage(reader.ReadString(), true);
 					break;
 
 					case chest_sync or chest_sync_projectile: {
@@ -546,6 +570,8 @@ namespace Origins {
 			internal const byte shinedown_spawn_shadows = 30;
 			internal const byte sync_npc_interactions = 31;
 			internal const byte clone_npc = 32;
+
+			//public static string[] names;
 		}
 	}
 	public interface IChestSyncRecipient {

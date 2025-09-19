@@ -1,4 +1,5 @@
-﻿using Origins.Buffs;
+﻿using CalamityMod.Enums;
+using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
@@ -1104,7 +1105,7 @@ namespace Origins {
 					} else if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15) {
 						dashDirectionY = 1;
 					}
-					new Dash_Action(Player, dashDirection, dashDirectionY).Send();
+					if (dashDirection != 0 || dashDirectionY != 0) new Dash_Action(Player, dashDirection, dashDirectionY).Send();
 				}
 			} else {
 				dashDelay--;
