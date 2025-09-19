@@ -21,14 +21,13 @@ namespace Origins.Items.Weapons.Melee
 			Item.damage = int.MaxValue - 1; // The damage your item deals.
 			Item.knockBack = 1; // The force of knockback of the weapon. Maximum is 20
 			Item.crit = 6; // The critical strike chance the weapon has. The player, by default, has a 4% critical strike chance.
-
+			Item.rare = RoyalBlueRarity.ID
 			Item.value = Item.buyPrice(gold: 1); // The value of the weapon in copper coins.
 			Item.UseSound = SoundID.Item1; // The sound when the weapon is being used.
 		}
 
 		public override void MeleeEffects(Player player, Rectangle hitbox) {
 			if (Main.rand.NextBool(3)) {
-				item.rare = RoyalBlueRarity.ID;
 				Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, ModContent.DustType<Dusts.Sparkle>());
 			}
 		}
