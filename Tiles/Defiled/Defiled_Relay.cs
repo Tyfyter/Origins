@@ -116,7 +116,7 @@ namespace Origins.Tiles.Defiled {
 			return random;
 		}
 		public static void DisplayMessage(string key, bool fromNet = false) {
-			if (!fromNet && Main.netMode != NetmodeID.SinglePlayer && Origins.instance.NetID >= 0) {
+			if (!fromNet && !NetmodeActive.SinglePlayer && Origins.instance.NetID >= 0 && key != "Idle") {
 				ModPacket packet = Origins.instance.GetPacket();
 				packet.Write(Origins.NetMessageType.defiled_relay_message);
 				packet.Write(key);

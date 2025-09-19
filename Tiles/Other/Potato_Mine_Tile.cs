@@ -6,10 +6,12 @@ using Origins.Reflection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
@@ -34,20 +36,24 @@ namespace Origins.Tiles.Other {
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.addTile(Type);
 			ID = Type;
-			try {
-				int tileLoc = -1;
-				ILLabel label = default;
-				IL_Collision.SwitchTiles += [DebuggerHidden] (il) => new ILCursor(il)
-				.GotoNext(MoveType.After,
-					i => i.MatchLdloc(out tileLoc),
-					i => i.MatchLdcI4(TileID.PressurePlates),
-					i => i.MatchBeq(out label)
-				)
-				.EmitLdloc(tileLoc)
-				.EmitLdcI4(Type)
-				.EmitBeq(label);
-			} catch (Exception e) {
-				if (Origins.LogLoadingILError($"{nameof(Potato_Mine_Tile)}_BePressurePlate", e, (typeof(KeyNotFoundException), "Avalon", new(1, 3, 5)))) throw;
+			if (ModLoader.HasMod("Avalon")) {
+				Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.AvalonPotatoMine"));
+			} else {
+				try {
+					int tileLoc = -1;
+					ILLabel label = default;
+					IL_Collision.SwitchTiles += [DebuggerHidden] (il) => new ILCursor(il)
+					.GotoNext(MoveType.After,
+						i => i.MatchLdloc(out tileLoc),
+						i => i.MatchLdcI4(TileID.PressurePlates),
+						i => i.MatchBeq(out label)
+					)
+					.EmitLdloc(tileLoc)
+					.EmitLdcI4(Type)
+					.EmitBeq(label);
+				} catch (Exception e) {
+					if (Origins.LogLoadingILError($"{nameof(Potato_Mine_Tile)}_BePressurePlate", e, (typeof(KeyNotFoundException), "Avalon", new(1, 3, 5)))) throw;
+				}
 			}
 			On_Wiring.HitSwitch += On_Wiring_HitSwitch;
 		}

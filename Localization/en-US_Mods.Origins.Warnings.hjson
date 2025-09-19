@@ -3,6 +3,7 @@ MissingDropRule: "{0} drop rule not present in {1}"
 FancyLightingWallShineDelegateMissing: Could not find the method responsible for Fancy Lighting's wall lighting
 ToxicShockILEditFail: Could not make Toxic Shock prevent breath regeneration
 ILEditException: Error while applying IL edit {0}, some functionality may not work as intended, see client.log for more details
+AvalonPotatoMine: Due to tModLoader not supporting custom pressure plates, Potato Mines are disabled with Exxo Avalon Origins enabled, as they cannot coexist with the pressure plate it adds, I have submitted a solution to this issue to tModLoader.
 
 DropRuleType: {
 	Main: Main

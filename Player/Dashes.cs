@@ -22,6 +22,7 @@ using Terraria.ModLoader;
 namespace Origins {
 	public record class Dash_Action(Player Player, int DashDirection, int DashDirectionY) : SyncedAction {
 		public Dash_Action() : this(default, default, default) { }
+		protected override bool ShouldPerform => DashDirection != 0 || DashDirectionY != 0;
 		public override SyncedAction NetReceive(BinaryReader reader) => this with {
 			Player = Main.player[reader.ReadByte()],
 			DashDirection = reader.ReadSByte(),
