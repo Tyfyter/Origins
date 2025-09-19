@@ -32,7 +32,7 @@ namespace Origins.Dev {
 			Item item = modItem.Item;
 			Dictionary<string, object> context = new() {
 				["Name"] = WikiPageExporter.GetWikiName(modItem),
-				["DisplayName"] = Lang.GetItemNameValue(item.type)
+				["DisplayName"] = WikiPageExporter.ProcessTags(Lang.GetItemNameValue(item.type))
 			};
 			(List<Recipe> recipes, List<Recipe> usedIn) = WikiExtensions.GetRecipes(item);
 			if (recipes.Count > 0 || usedIn.Count > 0) {
@@ -326,7 +326,7 @@ namespace Origins.Dev {
 			JObject data = [];
 			ICustomWikiStat customStat = item.ModItem as ICustomWikiStat;
 			data["Image"] = customStat?.CustomSpritePath ?? WikiPageExporter.GetWikiItemImagePath(modItem);
-			data["Name"] = item.Name;
+			data["Name"] = WikiPageExporter.ProcessTags(item.Name);
 			JArray types = new("Item");
 			if (modItem is IJournalEntrySource) types.Add("Lore");
 			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
@@ -488,7 +488,7 @@ namespace Origins.Dev {
 			if (item.ToolTip.Lines > 1) {
 				JArray itemTooltip = [];
 				for (int i = 0; i < item.ToolTip.Lines; i++) {
-					string line = item.ToolTip.GetLine(i);
+					string line = WikiPageExporter.ProcessTags(item.ToolTip.GetLine(i));
 					if (!string.IsNullOrWhiteSpace(line)) itemTooltip.Add(line);
 				}
 				data.AppendJStat("Tooltip", itemTooltip, []);
