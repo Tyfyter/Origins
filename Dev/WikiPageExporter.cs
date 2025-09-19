@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Origins.Reflection;
+using Origins.UI;
+using PegasusLib.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,6 +22,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.Map;
 using Terraria.ModLoader;
+using Terraria.UI.Chat;
 using static Origins.Dev.WikiPageExporter;
 
 namespace Origins.Dev {
@@ -36,6 +39,17 @@ namespace Origins.Dev {
 		public static HashSet<Type> InterfaceReplacesGenericClassProvider => interfaceReplacesGenericClassProvider ??= [];
 		public static Dictionary<int, LocalizedText> requiredTileWikiTextOverride = [];
 		public static Dictionary<Condition, LocalizedText> recipeConditionWikiTextOverride = [];
+		static Dictionary<Type, Func<TextSnippet, string>> chatTagSanitizers;
+		public static Dictionary<Type, Func<TextSnippet, string>> ChatTagSanitizers => chatTagSanitizers ??= new() {
+			[typeof(Wiggle_Handler.Wiggle_Snippet)] = snippet => $"<a-wiggle>{snippet.Text}</a-wiggle>",
+			[typeof(Italics_Snippet_Handler.Italics_Snippet)] = snippet => $"<i>{snippet.Text}</i>",
+			[typeof(Buff_Hint_Snippet)] = _snippet => {
+				if (_snippet is not Buff_Hint_Snippet snippet) return _snippet.Text;
+				if (snippet.buff is null) return $"<a href=\"https://terraria.wiki.gg/wiki/{Lang.GetBuffName(snippet.buffType).Replace(' ', '_')}\">{Lang.GetBuffName(snippet.buffType)}</a>";
+				if (snippet.buff.Mod is Origins) return $"<a href=\"{GetWikiName(snippet.buff)}\">{ProcessTags(Lang.GetBuffName(snippet.buffType))}</a>";
+				return Lang.GetBuffName(snippet.buffType);
+			}
+		};
 		public void Load(Mod mod) {
 			ShopTypes.Add(typeof(TravellingMerchantShop), shop => ((TravellingMerchantShop)shop).ActiveEntries);
 			ShopTypes.Add(typeof(NPCShop), shop => ((NPCShop)shop).Entries);
@@ -165,7 +179,7 @@ namespace Origins.Dev {
 		public static string GetWikiName(ModItem modItem) => SanitizeWikiName(modItem.DisplayName.Value);
 		public static string GetWikiName(ModNPC modNPC) => SanitizeWikiName(modNPC.DisplayName.Value);
 		public static string GetWikiName(ModBuff modBuff) => SanitizeWikiName(Lang.GetBuffName(modBuff.Type));
-		public static string SanitizeWikiName(string name) => WebUtility.UrlEncode(name.Replace(' ', '_')).Replace("%27", "'").Replace("\"", "%22");
+		public static string SanitizeWikiName(string name) => WebUtility.UrlEncode(string.Concat(ChatManager.ParseMessage(name, default).Select(s => s.Text)).Replace(' ', '_')).Replace("%27", "'").Replace("\"", "%22");
 		public static string GetWikiPagePath(string name) => Path.Combine(DebugConfig.Instance.WikiPagePath, name + ".html");
 		public static string GetWikiStatPath(string name) => Path.Combine(DebugConfig.Instance.StatJSONPath, name + ".json");
 		public static string GetWikiItemImagePath(ModItem modItem) => Main.itemAnimations[modItem.Type] is not null ? modItem.Name.Replace(' ', '_') : modItem.Texture.Replace(modItem.Mod.Name, "§ModImage§");
@@ -238,6 +252,18 @@ namespace Origins.Dev {
 				return stat.GetWikiProviders();
 			}
 			return GetDefaultProviders(obj);
+		}
+		public static string ProcessTags(string text) {
+			List<TextSnippet> snippets = ChatManager.ParseMessage(text, Color.White);
+			StringBuilder builder = new();
+			for (int i = 0; i < snippets.Count; i++) {
+				if (ChatTagSanitizers.TryGetValue(snippets[i].GetType(), out Func<TextSnippet, string> sanitizer)) {
+					builder.Append(sanitizer(snippets[i]));
+				} else {
+					builder.Append(snippets[i].Text);
+				}
+			}
+			return builder.ToString();
 		}
 		public static void AddTorchLightStats(JObject data, Vector3 light) {
 			float intensity = MathF.Max(MathF.Max(light.X, light.Y), light.Z);
