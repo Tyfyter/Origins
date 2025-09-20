@@ -152,7 +152,7 @@ Riven: {
 		[header:{§Riven} Carapace (6/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Materials/Riven_Carapace]
 		*****
-		Unfortunate creatures are then forced to evolve to the {§Riven}'s conditions. A parasite that plays god even though it's entirely incapable of any intelligent thought being the single-celled organism it is.
+		It's also worth noting the amoeba itself is incapable of any intelligent thought. It is simply a creature tying to survive, but it's changing its environment instead of adapting to it. I suppose you can do that when you can digest anything.
 		'''
 
 	Riven_Protoform: {
@@ -164,7 +164,7 @@ Riven: {
 
 
 			*****
-			The hive has since had many species born from its {§spug}-flesh-ridden insides. Species like the Protoform and Barnaclebacks. Again, no intelligence here, just really adaptable like their host parasite.
+			The hive has since had many species born from its {§spug}-flesh-ridden insides. Species like the Protoform and Barnaclebacks. These creatures also seem to exhibit some instabilities in their genetic makeup that allows them to adapt so spontaneously and effectively.
 			'''
 	}
 
@@ -173,28 +173,28 @@ Riven: {
 		[header:Amoebeye (8/{$SeriesLength})]
 		[jportrait/s1.2dw600:Origins/Amoebeye]
 		*****
-		And, interestingly-enough, these organisms often evolve in rapid and unpredictable ways. Those amoebeyes we saw patrolling the Hive were actually once protoforms. This place and the Amoeba itself are purely natural beings surviving in this world.
+		And, interestingly-enough, these organisms often evolve in rapid and unpredictable ways. Those amoebeyes we saw patrolling the Hive were actually once protoforms. It is most interesting...
 		'''
 	Savage_Whip.Text:
 		'''
 		[header:Savage Whip (9/{$SeriesLength})]
 		[jportrait/s1.2d:Origins/Savage_Whip]
 		*****
-		Even with that, the {§Riven} is deemed as an evil by the world in order to maintain that oh-so-sacred "balance". How could that be with a species entirely incapable of feeding from evil-doing like the Corruption or Crimson?
+		Even with that, the {§Riven} is deemed as an evil by the world in order to maintain that oh-so-sacred "balance". But, how is it possible? An amoeba entirely incapable of any intelligent thought and no malicious intent other than to survive... it is puzzling.
 		'''
 	Teardown.Text:
 		'''
 		[header:Teardown (10/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Summoner/Teardown]
 		*****
-		It's pretty simple. The amoeba's origins are stained with blood; the blood of Cthulhu himself actually. Cthulhu's blood had spilled into the world, a random crevice the parasite had remained dormant in for eons. The parasite was affected, turning into a parasitic version of itself. It is not evil by nature, it is evil by design.
+		But, we already know. The amoeba's origins are stained by the blood of Cthulhu. Cthulhu's blood had spilled into the world, a random cavern the parasite had remained dormant in for eons. The parasite was affected, transforming into something wicked. It is not evil by nature, it is evil by design.
 		'''
 	Seam_Beam.Text:
 		'''
 		[header:Seam Beam (11/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Magic/Seam_Beam]
 		*****
-		So, in other words magic did this and now the {§Riven} is empowered by the world as a rightful evil? I thought the {§Defiled} being deemed a surrogate was weird enough. This world truly doesn't know what's best for it deeming a parasite that's trying to entirely dissolve it as an evil.
+		I thought the {§Defiled} being deemed a surrogate was weird enough. This world truly doesn't know what's best for it deeming a parasite that's trying to consume it whole it as an evil.
 		'''
 
 	Spug_Flesh: {
@@ -206,7 +206,7 @@ Riven: {
 
 
 			*****
-			It's not a matter of that, the {§Riven} is now a part of the world. The world simply thinks it would be best to dissolve parts of the imbalance in an attempt to clean out the impurities.
+			The {§Riven} is a part of the world now. The world simply thinks it would be best to churn away at parts of the imbalance in an attempt to clean out the impurities.
 			'''
 	}
 }
@@ -552,14 +552,14 @@ The_Ashen: {
 		[header:Defective Mortar Shell (2/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Summoner/Defective_Mortar_Shell]
 		*****
-		I saw no point in it. If they were to seek dominion, then why turn around and give away their advancements to those who obviously wanted to bring them down? My foresight had only made my relations with my Subjects more tense. My only directive was to support them and ensure the survival of the Mechanicus, but they were often the reason of extraneous circumstances.
+		I saw no point in it. If they were to seek dominion, then why turn around and pawn off their advancements to those of clear malicious intent? My foresight had only made my relations with my Subjects more tense. My only directive was to support them and ensure the survival of the Mechanicus, but they were often the reason of extraneous circumstances.
 		'''
 	Ace_Shrapnel.Text:
 		'''
 		[header:Ace Shrapnel (3/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Demolitionist/Ace_Shrapnel]
 		*****
-		My Subjects, no, they were quite mentally capable. It was merely their greed; that much had made sense to me, a strong economy relies on effective trade. But, it couldn't have worked with their flawed leader, my Creator MT. Neferly. He would never heed my advice for he felt he knew better. Maybe of his kin, but... I suppose he neverly truly understood his creation.
+		My Subjects, no, they were mentally competent. It was merely their greed; that much had made sense to me. A strong economy relies on effective trade, but it couldn't have worked with my Creator MT. Neferly, their leader. He would never heed my advice for he felt he knew better. Maybe of his kin, but... I suppose he underestimated me.
 		'''
 }
 
@@ -602,7 +602,7 @@ The_Crimson: {
 
 
 			*****
-			It became a tradition written in blood. The king must drink from the blood of the giant beast their first had slain. Sacred ichor, instead the deemer of righteous king. The fork would be there for the pouring, and the fork of his first.
+			It became a tradition written in blood. The king must drink from the blood of the giant beast their first had slain. Sacred ichor, instead the deemer of righteous king. The forks of these kings would be there for the pouring. The forks were used to prod at the king's breast, have blood poured onto it and the chalice to mix in with the ichor. Imbued blood from multiple sources, the past king, inheritor and ancient beast.
 			'''
 	}
 
@@ -615,7 +615,7 @@ The_Crimson: {
 
 
 			*****
-			Like the rest, this one’s heart was locked away, protected by his most devout after removing it from his body. To outsiders, a mortal sin punishable by death. To them, a festive tradition to honor their new king.
+			The heart would also be removed and locked away, protected by the most devout. It was merely a festive tradition to honor the inheritor, a tradition to mark the initiation of a Crimson King.
 			'''
 	}
 
@@ -628,7 +628,7 @@ The_Crimson: {
 
 
 			*****
-			The kingdom's people weren't always this consumed by witchcraft. It had been the blood that was spilled onto the lands of Terraria by a giant, otherworldly beast.
+			It was an undertaking established the first Crimson King; a man known for his brutish leadership. All of his people were equally as barbaric and unhinged and, overtime, would become further strained from reality through indulgence.
 			'''
 	}
 
@@ -641,7 +641,7 @@ The_Crimson: {
 
 
 			*****
-			Even in present time, its blood rains and continues to satiate the blood-thirsty, devolved denizens of this horrible place.
+			Even in present time, the beast's blood rains and continues to satiate the blood-thirsty, deranged denizens of this horrible place. They hardly resemble any kind of civilization anymore.
 			'''
 	}
 
@@ -726,7 +726,7 @@ Ashen_Armor: {
 		[header:Ashen Helmet (1/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Armor/Ashen/Ashen_Helmet]
 		*****
-		Visionaries would wear this armor. The helmet in particular was the most important piece as it gave tinkerers who wore advantages over the naked eye. Lifelike blueprints could be realized and the best of ideas could be documented. Material references could be brought into question in mere seconds.
+		Visionaries would wear this armor. The helmet in particular was the most important piece as it gave tinkerers who wore it advantages over the naked eye. Lifelike blueprints could be realized and the best of ideas could be documented. Material references could be brought into question in mere seconds.
 		'''
 	Ashen_Breastplate.Text:
 		'''
@@ -866,7 +866,7 @@ Ocean_Tribe: {
 			[jimage/sc3d:Terraria/Images/Item_497]
 
 			*****
-			Neptune was a benevolent leader of the merkin of Aqi. He was no ordinary habitant of Terraria as he was one of its gods. Neptune had eaten from the Fruit of Flow, granting him command over Terraria's vast seas. His avatar wasn't warped by any external desire as he choose not to alienate himself from his people. Using his power for good, he established Aqi and with it the nation of Bathylmus in the ocean. With his people to worship him and grant him more power, he protected the merkin from outside dangers. Bathylmus was quite isolated from the rest of the world, and encountered different evils that no other ancient society would face. The merkin were the first to vie Cthulhu's wrath and Neptune was as ready as he could've been, but, it was still a slaughter.
+			Neptune was a benevolent leader of the merkin of Aqi. He was no ordinary habitant of Terraria as he was one of its gods. Neptune had eaten from the Fruit of Flow, granting him command over Terraria's vast seas. His avatar wasn't warped by any external desire as he chose not to alienate himself from his people. Using his power for good, he established Aqi and with it the nation of Bathylmus in the ocean. With his people to worship him and grant him more power, he protected the merkin from outside dangers. Bathylmus was quite isolated from the rest of the world, and encountered different evils that no other ancient society would face. The merkin were the first to vie Cthulhu's wrath and Neptune was as ready as he could've been, but, it was still a slaughter.
 			'''
 	}
 
@@ -886,7 +886,7 @@ Ocean_Tribe: {
 			[jimage/sc3d:Terraria/Images/Item_4090]
 
 			*****
-			Although heavy casualties were sustained, merfolk sorcerers successfully managed to trap and contain him in R'yleh.
+			Although heavy casualties were sustained, merfolk sorcerers successfully managed to trap and contain him in R'yleh. Cthulhu would await his release from R'yleh in the darkness of the abyss.
 			'''
 	}
 
@@ -910,7 +910,7 @@ Ocean_Tribe: {
 			[jimage/sc3d:Terraria/Images/Item_268]
 
 			*****
-			I instead found joy infatuated by a naive, benevolent diver who entertained himself by diving and taking on whatever sea monster he came across. I would always watch him in his battles and would wonder how he did it. You Terrarians are quite durable and persistent. I remember him, his face, his eyes. But, his name? Something has made me forget, even though we had shared love for a long time. 
+			I instead found joy infatuated by a naive diver who entertained himself by taking on whatever sea monster he came across. I would always watch him in his battles and would wonder how he did it. You Terrarians are quite durable and persistent. I remember him, his face, his eyes. But, his name? Something has made me forget, even though we had shared love for a long time. 
 			'''
 	}
 }

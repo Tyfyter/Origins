@@ -6669,3 +6669,8 @@ Dream_Catcher: {
 		<right> to deploy the dream catcher to the cursor
 		''' */
 }
+
+Willy_Aftershave: {
+	// DisplayName: Willy Aftershave
+	// Tooltip: ""
+}

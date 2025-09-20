@@ -786,6 +786,7 @@ MELEE WEAPONS:
 (X) Origins Biome Keybrands
 (X) Soulfire Saw
 (^) The Foot
+(X) The Muffler
 (X) Unicorn Lance
 
 (X) Chiton Kursarigama

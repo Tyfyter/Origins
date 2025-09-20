@@ -2883,6 +2883,7 @@ ItemSourceFilter: {
 	// ButterscotchRarity.DisplayName: Butterscotch
 	// AltCyanRarity.DisplayName: A Very Nice Shade Of Blue
 	// Eccentric_Rarity.DisplayName: Eccentric
+	// RoyalBlueRarity.DisplayName: Royal Blue
 }
 
 Music: {
