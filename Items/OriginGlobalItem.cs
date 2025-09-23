@@ -1,12 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Accessories;
-using Origins.Items.Other;
+﻿using Origins.Items.Accessories;
 using Origins.Items.Weapons;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
-using Origins.Journal;
 using Origins.LootConditions;
 using Origins.NPCs;
 using Origins.Questing;
@@ -14,11 +11,9 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -117,35 +112,35 @@ namespace Origins.Items {
 				statsModified = true;
 			}
 			if (OriginConfig.Instance.WoodBuffs) switch (item.type) {
-					case ItemID.ShadewoodHelmet:
-					case ItemID.EbonwoodHelmet:
-					item.defense = 2;
-					statsModified = true;
-					break;
+				case ItemID.ShadewoodHelmet:
+				case ItemID.EbonwoodHelmet:
+				item.defense = 2;
+				statsModified = true;
+				break;
 
-					case ItemID.ShadewoodBreastplate:
-					case ItemID.EbonwoodBreastplate:
-					item.defense = 3;
-					statsModified = true;
-					break;
+				case ItemID.ShadewoodBreastplate:
+				case ItemID.EbonwoodBreastplate:
+				item.defense = 3;
+				statsModified = true;
+				break;
 
-					case ItemID.ShadewoodGreaves:
-					case ItemID.EbonwoodGreaves:
-					item.defense = 3;
-					statsModified = true;
-					break;
+				case ItemID.ShadewoodGreaves:
+				case ItemID.EbonwoodGreaves:
+				item.defense = 3;
+				statsModified = true;
+				break;
 
-					case ItemID.PearlwoodHelmet:
-					case ItemID.PearlwoodGreaves:
-					item.defense = 6;
-					statsModified = true;
-					break;
+				case ItemID.PearlwoodHelmet:
+				case ItemID.PearlwoodGreaves:
+				item.defense = 6;
+				statsModified = true;
+				break;
 
-					case ItemID.PearlwoodBreastplate:
-					item.defense = 7;
-					statsModified = true;
-					break;
-				}
+				case ItemID.PearlwoodBreastplate:
+				item.defense = 7;
+				statsModified = true;
+				break;
+			}
 			if (item.width == 0 && item.height == 0) {
 				item.width = 4;
 				item.height = 4;
