@@ -1148,8 +1148,9 @@ namespace Origins {
 					if (reason is not null) reason += "\n";
 					reason += text;
 				}
-				foreach (ModItem item in instance.GetContent<ModItem>()) {
-					if (item.DisplayName.Value.Contains("<PH>")) AddReason($"{item.Name} has placeholder name");
+				
+				foreach (LanguageTree branch in TextUtils.LanguageTree.Find("Mods.Origins").GetDescendants()) {
+					if (branch.TextValue.Contains("<PH>")) AddReason($"{branch.value.Key.Replace("Mods.Origins.", "")}: {branch.TextValue}");
 				}
 				foreach (IBrokenContent item in instance.GetContent<IBrokenContent>()) {
 					AddReason($"{item.GetType().Name}: {item.BrokenReason}");
