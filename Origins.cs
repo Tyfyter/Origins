@@ -596,6 +596,12 @@ namespace Origins {
 			ChatManager.Register<AF_Alt_Handler>([
 				"fool"
 			]);
+			ChatManager.Register<Oxford_Comma_Handler>([
+				"ox"
+			]);
+			ChatManager.Register<Not_Oxford_Comma_Handler>([
+				"nox"
+			]);
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
 				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,

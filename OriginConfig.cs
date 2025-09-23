@@ -163,6 +163,9 @@ namespace Origins {
 
 		public LaserTagConfig laserTagConfig = new();
 
+		[DefaultValue(true)]
+		public bool OxfordComma = true;
+
 		[Header("Journal")]
 		[DefaultValue(true)]
 		public bool ShowLockedEntries = true;

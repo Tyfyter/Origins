@@ -266,3 +266,5 @@ Mother_Unit: {
 		Seq48: The oxford comma is a mere lie. Nothing else, nothing more...
 	}
 }
+
+Configs.OriginClientConfig.OxfordComma.Comma: "[nox:,]"
