@@ -654,7 +654,7 @@ The_Crimson: {
 
 
 			*****
-			For the first few hours there was panic, but after the First King had struck down the beast with a single blow it began to calm. The panic still found itself in their fragile hearts later.
+			The drake instilled fear upon the first King's people, but he was naive and unwise enough to face off against the beast. It was a calculated strike at its throat where blood would violently rain down upon the people.
 			'''
 	}
 
@@ -667,7 +667,7 @@ The_Crimson: {
 
 
 			*****
-			Their king was well-received, garnering liking by his people, especially winning over the children's children. He drank from the blood with no care to celebrate his trophy. So, did the wild animals that surrounded the sacred lake.
+			Their king was loved by his people. He drank from the blood with no care to celebrate his trophy, but only found it to empower him. So, he made sure his inheritors would also drink from the same chalice.
 			'''
 	}
 
@@ -680,7 +680,7 @@ The_Crimson: {
 
 
 			*****
-			But, it was too late before the last sane of the populous began to realize his evil plots... even from hundreds of years after his death. These cultists wanted to restore their old king by first restoring the organ that made him.
+			But, it was too late before the last sane of the populous began to realize his evil plots... even from hundreds of years after his death. These cultists wanted to restore their old king from the heart.
 			'''
 	}
 
@@ -689,14 +689,14 @@ The_Crimson: {
 		[header:Tendon Tear (10/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Ranged/Tendon_Tear]
 		*****
-		The breakout group had successfully controlled the populous at the same time they lost control of themselves. Their creation growing too powerful, rising from its chamber. The fallen kingdom began to rot as its citizens began to rip and tear.
+		They were initially unsuccessful, but eventually made it work through ritual. An incomplete version, but their king nonetheless.
 		'''
 	Weakpoint_Analyzer.Text:
 		'''
 		[header:Weakpoint Analyzer (11/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Weakpoint_Analyzer]
 		*****
-		Tear apart their closest, all for sustenance. The new king had risen, all to influence them with his hymn. The recited hymn of endless bloodlust.
+		The Crimson King would be divided by his entrails, each part of the kingdom possessing a part of him. This made it easier to manage.
 		'''
 	Ichor.Text:
 		'''
