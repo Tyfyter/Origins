@@ -26,9 +26,9 @@ namespace Origins.Buffs {
 	}
 	public class Crimson_Assimilation : AssimilationDebuff {
 		public override void Update(Player player, float percent) {
-			if (Main.rand.NextFloat(0.5f, 2f) < percent) {
+			if (Main.rand.NextFloat(0.15f, 20f) < percent) {
 				if (Main.rand.NextBool(2)) {
-					player.AddBuff(BuffID.Confused, Main.rand.Next(24, 48) * (1 + (int)percent));
+					player.AddBuff(BuffID.Confused, Main.rand.Next(32, 64) * (1 + (int)percent));
 				} else {
 					player.AddBuff(BuffID.Bleeding, Main.rand.Next(48, 138) * (1 + (int)percent));
 				}
