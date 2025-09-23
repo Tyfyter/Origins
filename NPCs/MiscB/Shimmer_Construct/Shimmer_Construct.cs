@@ -42,6 +42,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	[AutoloadBossHead]
 	public class Shimmer_Construct : ModNPC, IJournalEntrySource, IMinions {
 		internal static ArmorShaderData MatrixCombine { get; set; }
+		internal static ArmorShaderData SmoothShimmer { get; set; }
 		public string EntryName => "Origins/" + typeof(Shimmer_Construct_Entry).Name;
 		public class Shimmer_Construct_Entry : JournalEntry {
 			public override string TextKey => "Shimmer_Construct";
@@ -82,6 +83,14 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			};
 			MatrixCombine = new(Mod.Assets.Request<Effect>("Effects/MatrixCombine"), "MatrixCombine");
+			SmoothShimmer = new DelegatedArmorShaderData(
+				Mod.Assets.Request<Effect>("Effects/Shimmer"),
+				"SmoothShimmer",
+				(self, entity, data) => {
+					Vector2 pos = entity is null ? Main.screenPosition : ((data?.position ?? entity.position) + Main.screenPosition) * 0.25f;
+					self.Shader.Parameters["uOffset"].SetValue(pos);
+				}
+			);
 		}
 		public override void Unload() {
 			normalDropRule = null;
@@ -252,7 +261,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
 				if (deathAnimationTime <= 0) {
-					SoundEngine.PlaySound(SoundID.DD2_DefeatScene, NPC.Center);
+					SoundEngine.PlaySound(SoundID.DD2_DefeatScene with {
+						PauseBehavior = PauseBehavior.PauseWithGame
+					}, NPC.Center);
 					deathAnimationTime = 1;
 				} else {
 					if (Main.netMode != NetmodeID.Server) {
@@ -518,7 +529,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				MatrixCombine.UseImage(Origins.cellNoiseTexture.asset);
 				Origins.shaderOroboros.Stack(MatrixCombine);
 			}
-				Origins.shaderOroboros.Stack(GameShaders.Armor.GetSecondaryShader(Shimmer_Dye.ShaderID, null));
+			Origins.shaderOroboros.Stack(SmoothShimmer);
 			Origins.shaderOroboros.Release();
 			spriteBatch.Restart(state);
 		}

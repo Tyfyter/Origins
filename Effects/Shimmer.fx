@@ -82,8 +82,26 @@ float4 Shimmer(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 
 	return lerp(color, color.a, 0) * GetShimmerBaseColor(worldPosition) * 2 + GetShimmerGlitterColor(worldPosition) * clamp(pow(1.0 - round(rainbowFactor * 3.0) / 3.0, 15) * 15, 0, 1) * 0.5;
 }
 
+float4 SmoothShimmer(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	float4 color = tex2D(uImage0, coords);
+	if (color.a == 0.0)
+		return color;
+	float3 baseColor = color.rgb;
+	color.rgb = average(color.rgb);
+	float rainbowFactor = (min(min(baseColor.r, baseColor.g), baseColor.b) + color.r) / 2.0;
+	float2 pixelCoords = coords * uImageSize0 - uSourceRect.xy;
+	if (uDirection < 0) {
+		pixelCoords.x = uSourceRect.z - pixelCoords.x;
+	}
+	float2 worldPosition = (pixelCoords + uOffset) / 16;
+	return lerp(color, color.a, 0) * GetShimmerBaseColor(worldPosition) * 2 + GetShimmerGlitterColor(worldPosition) * clamp(pow(1.0 - rainbowFactor, 5) * 5, 0, 1) * (1 - pow(1 - color.a, 4));
+}
+
 technique Technique1{
 	pass Shimmer {
 		PixelShader = compile ps_3_0 Shimmer();
+	}
+	pass SmoothShimmer {
+		PixelShader = compile ps_3_0 SmoothShimmer();
 	}
 }

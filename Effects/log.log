@@ -138,6 +138,9 @@ Loading description file: Shimmer.fx... Done!
 Compiling font... Warning: Warning compiling Shimmer.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
 File: Shimmer.fx
+Warning: Warning compiling Shimmer.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: Shimmer.fx
 Done!
 Compiling font content file: Shimmer.xnb... Done!
 
