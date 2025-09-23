@@ -166,7 +166,7 @@ GoblinTinkerer: {
 			- [qs{9}:Collect <itemname:GoldWatch> or <itemname:PlatinumWatch>]
 			Unlocks: [i:Origins/Turbo_Reel]
 			''' */
-		// Inquire: Hey, Terrarian! I was wondering if you could possibly fetch me five [itemhint/IronBar:iron] or [itemhint/LeadBar:lead] bars, two [itemhint/Chain:chains,] some [itemhint/Origins/Adhesive_Wrap:adhesive] and a [itemhint/GoldWatch:watch]? I have a project I'm working on that you might want to join in on!
+		// Inquire: Hey, Terrarian! I was wondering if you could possibly fetch me five [itemhint/IronBar:iron] or [itemhint/LeadBar:lead] bars, two [itemhint/Chain:chains,] some [itemhint/Origins/Adhesive_Wrap:adhesive][ox:,] and a [itemhint/GoldWatch:watch]? I have a project I'm working on that you might want to join in on!
 		// Start: Excellent! Now go reel in those goods and you won't be disappointed by the result!
 		// ReadyToComplete: How was your adventure, Terrarian? Do you have the supplies?
 		// Complete: Sweet! With your hard work I have invented the turbo reel! You can use it to make things return to you faster!
@@ -186,9 +186,9 @@ GoblinTinkerer: {
 			- [qs{4}:Collect <itemname:ZombieArm>]
 			Unlocks: [i:Origins/Gun_Glove]
 			''' */
-		// Inquire: So, same deal as last time but different materials. Could you get me two leather, a flintlock pistol from [npcname:ArmsDealer] and a zombie arm. What? I just need it, it's important!
+		// Inquire: So, same deal as last time but different materials. Could you get me two leather, a flintlock pistol from [npcname:ArmsDealer][ox:,] and a zombie arm. What? I just need it, it's important!
 		// Start: Thank you! I'll be here whenever you have the supplies.
-		// ReadyToComplete: All of the supplies, and the zombie arm?
+		// ReadyToComplete: All of the supplies, even the zombie arm?
 		// Complete: Oh, good. I needed it to test out my new gun glove creation! You can use it to shoot bullets as you move your arm around! Pretty cool right?
 	}
 
@@ -207,7 +207,7 @@ GoblinTinkerer: {
 			- [qs{9}:Collect {8} Adamantite Bars ({7}/{8})]
 			Unlocks: [i:Origins/Rocket_Boosted_Minecart]
 			''' */
-		// Inquire: I just thought of another idea! This'll surely impress [npcname:Mechanic]... can you get me a minecart, fifty rockets, eighty adhesives and fifteen Adamantite or Titanium Bars? Don't worry, my laboratory is explosive-proof!
+		// Inquire: I just thought of another idea! This'll surely impress [npcname:Mechanic]... can you get me a minecart, fifty rockets, eighty adhesives[ox:,] and fifteen Adamantite or Titanium Bars? Don't worry, my laboratory is explosive-proof!
 		// Start: Thank you in advance! The thought of finishing this project is surely exhilarating!
 		// ReadyToComplete: All good to go?
 		// Complete: Yes! Introducing the world's fastest ticket to space, the rocket-boosted minecart! With this thing you will be anywhere you need before you even need to think about it!
@@ -518,7 +518,7 @@ Brine_Fiend: {
 			- [qs{1}:Give items to <npcname:Origins/Brine_Fiend>]
 			Unlocks: [i:Origins/Akaliegis]
 			''' */
-		// Inquire: "[player:_], I'm in the mood for something 'experimental', but I don't know how to get my hands on the ingredients I need, so something artificial will do. It's simple. I need a [itemname:TeleportationPotion], [itemname:Origins/Greater_Summoning_Potion] and [itemname:TitanPotion]. Can you get those for me so I can make some new brews with chemicals I haven't tried yet?"
+		// Inquire: "[player:_], I'm in the mood for something 'experimental', but I don't know how to get my hands on the ingredients I need, so something artificial will do. It's simple. I need a [itemname:TeleportationPotion], [itemname:Origins/Greater_Summoning_Potion][ox:,] and [itemname:TitanPotion]. Can you get those for me so I can make some new brews with chemicals I haven't tried yet?"
 		// Start: Sick. Now go away, I'm busy.
 		// ReadyToComplete: Well, that wasn't long.
 		// Complete: Sorry for shoo-ing you, I wasn't in the mood at that time. As the old man likes the say, "I embody appreciation." Anyhoo, I have some weird shield-thingy I found in the Brine Pool the other day. I'd give it to you for free, but let's be honest, you're the only person keeping Terraria's economy running these days.
@@ -539,7 +539,7 @@ Brine_Fiend: {
 			- [qs{1}:Give items to <npcname:Origins/Brine_Fiend>]
 			Unlocks: [i:Origins/Ancient_Music_Box_BP_Item]
 			''' */
-		// Inquire: Oh, [player:_]. Man/woman of the hour, I need you to go play fetch for me again. This time around I need a [itemname:Origins/Fervor_Potion], [itemname:LovePotion] and [itemname:MagicPowerPotion]. Get those and I think I can conjure up something fun for [npcname:PartyGirl]'s birthday coming up. It'll be a surprise!
+		// Inquire: Oh, [player:_]. Man/woman of the hour, I need you to go play fetch for me again. This time around I need a [itemname:Origins/Fervor_Potion], [itemname:LovePotion][ox:,] and [itemname:MagicPowerPotion]. Get those and I think I can conjure up something fun for [npcname:PartyGirl]'s birthday coming up. It'll be a surprise!
 		// Start: Great! She likes surprises, right?
 		// ReadyToComplete: You have the ingredients I need, Terrarian?
 		// Complete: Thank you. I wanted to do something special since she always does so for us. I found an interesting plastic thing in the Brine the other day. Had to tussle with a pack of sea dragons for it, so you better enjoy it.

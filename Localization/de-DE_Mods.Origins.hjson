@@ -2426,7 +2426,7 @@ Configs: {
 
 		OxfordComma: {
 			// Label: Oxford Comma
-			// Tooltip: Whether there should be a comma for final terms in narrative, description[fool:Mods.Origins.Configs.OriginClientConfig.OxfordComma.Comma] and dialogue lists.
+			// Tooltip: Whether there should be a comma for final terms in narrative, description[fool:Configs.OriginClientConfig.OxfordComma.Comma] and dialogue lists.
 			// Comma: "[ox:,]"
 		}
 	}
@@ -2753,14 +2753,14 @@ SetBonuses: {
 	/* Acrid:
 		'''
 		All attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
-		Immunity to [buffhint/self:Venom], [buffhint/self:Poisoned] and [buffhint/self:Origins/Toxic_Shock_Debuff]
+		Immunity to [buffhint/self:Venom], [buffhint/self:Poisoned][ox:,] and [buffhint/self:Origins/Toxic_Shock_Debuff]
 		Extends underwater breathing
 		''' */
 	/* Amber:
 		'''
 		-38% explosive blast radius
 		All explosives are preserved in amber and release amber shards upon detonation
-		Amber shards [buffhint/dnSlows:Origins/Slow_Debuff] enemies, heal the player of any self-damage received, and decrease the defense of struck enemies by half
+		Amber shards [buffhint/dnSlows:Origins/Slow_Debuff] enemies, heal the player of any self-damage received[ox:,] and decrease the defense of struck enemies by half
 		''' */
 	/* Ashen:
 		'''
