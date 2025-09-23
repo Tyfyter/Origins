@@ -443,12 +443,14 @@ namespace Origins {
 				//Mod.Logger.Info("adding procedural recipe: " + recipe.Stringify());
 				//recipe.Create();
 
-				foreach (AbstractNPCShop shop in NPCShopDatabase.AllShops) {
-					if (shop is NPCShop npcShop) {
+			}
+			foreach (AbstractNPCShop shop in NPCShopDatabase.AllShops) {
+				if (shop is NPCShop npcShop) {
 					foreach (NPCShop.Entry item in npcShop.Entries) PaintingsNotFromVendor[item.Item.type] = false;
-					}
 				}
 			}
+
+			OriginsModIntegrations.PostAddRecipes();
 		}
 		public override void ModifyLightingBrightness(ref float scale) {
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();

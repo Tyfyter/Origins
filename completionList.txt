@@ -1733,6 +1733,7 @@ CROSS-MOD CONTENT:
 (々) Ashen Renewal Supreme
 (々) Ashen "Fake" Altar
 (X) Bomber's Soul
+(@, ^3) Chambersite Ring
 (^) Defiled Chest
 (^) Defiled Renewal
 (^) Defiled Renewal Supreme

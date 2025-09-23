@@ -60,6 +60,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using ThoriumMod;
 using ThoriumMod.Items;
+using ThoriumMod.Items.BasicAccessories;
 using ThoriumMod.Items.Darksteel;
 using ThoriumMod.Items.Donate;
 using ThoriumMod.Items.MeleeItems;
@@ -703,6 +704,9 @@ namespace Origins {
 			if (instance.thorium is not null) AddThoriumRecipeGroups();
 			if (instance.fargosMutant is not null) AddFargosGroups();
 		}
+		public static void PostAddRecipes() {
+			if (instance.thorium is not null) PostAddThoriumRecipes();
+		}
 		public void Unload() {
 			instance = null;
 			conditionalCompatRecommendations = null;
@@ -892,22 +896,24 @@ namespace Origins {
 			.Register();
 
 			Recipe.Create(ItemType<Brine_Dungeon_Chest_Item>(), 10)
-				.AddIngredient<Brine_Key>()
-				.AddIngredient(ItemID.Chest, 10)
-				.AddTile(TileID.Anvils)
-				.Register();
+			.AddIngredient<Brine_Key>()
+			.AddIngredient(ItemID.Chest, 10)
+			.AddTile(TileID.Anvils)
+			.Register();
 
 			Recipe.Create(ItemType<Defiled_Dungeon_Chest_Item>(), 10)
-				.AddIngredient<Defiled_Key>()
-				.AddIngredient(ItemID.Chest, 10)
-				.AddTile(TileID.Anvils)
-				.Register();
+			.AddIngredient<Defiled_Key>()
+			.AddIngredient(ItemID.Chest, 10)
+			.AddTile(TileID.Anvils)
+			.Register();
 
 			Recipe.Create(ItemType<Riven_Dungeon_Chest_Item>(), 10)
-				.AddIngredient<Riven_Key>()
-				.AddIngredient(ItemID.Chest, 10)
-				.AddTile(TileID.Anvils)
-				.Register();
+			.AddIngredient<Riven_Key>()
+			.AddIngredient(ItemID.Chest, 10)
+			.AddTile(TileID.Anvils)
+			.Register();
+
+
 
 			foreach (ModItem itm in instance.thorium.GetContent<ModItem>()) {
 				if (itm is not BlankPainting && itm.GetType().Namespace == "ThoriumMod.Items.Painting")
@@ -919,6 +925,15 @@ namespace Origins {
 		static void AddThoriumRecipeGroups() {
 			RecipeGroup.recipeGroups[GemPhasebladeRecipeGroupID].ValidItems.Add(ItemType<CyanPhaseblade>());
 			RecipeGroup.recipeGroups[GemPhasebladeRecipeGroupID].ValidItems.Add(ItemType<PinkPhaseblade>());
+		}
+		[JITWhenModsEnabled("ThoriumMod")]
+		static void PostAddThoriumRecipes() {
+			int l = Main.recipe.Length;
+			Recipe r;
+			for (int i = 0; i < l; i++) {
+				r = Main.recipe[i];
+				if (r.createItem.type == ItemType<TheRing>()) r.AddIngredient<Chambersite_Ring>();
+			}
 		}
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void SetFargosStaticDefaults() {
