@@ -10,7 +10,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Dyes {
-    public class Shimmer_Dye : Dye_Item, ICustomWikiStat {
+	public class Shimmer_Dye : Dye_Item, ICustomWikiStat {
 		public static int ID { get; private set; }
 		public static int ShaderID { get; private set; }
 		public string[] Categories => [
@@ -22,7 +22,7 @@ namespace Origins.Items.Other.Dyes {
 				Mod.Assets.Request<Effect>("Effects/Shimmer"),
 				"Shimmer",
 				(self, entity, data) => {
-					Vector2 pos = entity is null ? Main.screenPosition : ((data?.position??entity.position) + Main.screenPosition) * 0.25f;
+					Vector2 pos = entity is null ? Main.screenPosition : ((data?.position ?? entity.position) + Main.screenPosition) * 0.25f;
 					self.Shader.Parameters["uOffset"].SetValue(pos);
 				}
 			));

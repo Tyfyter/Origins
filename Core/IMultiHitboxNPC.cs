@@ -57,13 +57,32 @@ namespace Origins.Core {
 						Min(ref minY, box.Y);
 						Max(ref maxY, box.Bottom);
 					}
+
+					if (ProjectileID.Sets.IsAWhip[self.type]) {
+						self.WhipPointsForCollision.Clear();
+						Projectile.FillWhipControlPoints(self, self.WhipPointsForCollision);
+					}
 					if (!self.Colliding(projHitbox, new(minX, minY, maxX - minX, maxY - minY))) return true;
 					FastParallel.For(0, multiHitboxNPC.Hitboxes.Length, (min, max, _) => {
+						Rectangle myRect = projHitbox;
 						for (int i = min; i < max && !isColliding; i++) {
-							if (self.Colliding(projHitbox, multiHitboxNPC.Hitboxes[i])) {
-								isColliding = true;
-								return;
-							}
+							try {
+								if (ProjectileID.Sets.IsAWhip[self.type]) {
+									for (int m = 0; m < self.WhipPointsForCollision.Count; m++) {
+										Point point = self.WhipPointsForCollision[m].ToPoint();
+										myRect.Location = new Point(point.X - myRect.Width / 2, point.Y - myRect.Height / 2);
+										if (myRect.Intersects(multiHitboxNPC.Hitboxes[i])) {
+											isColliding = true;
+											return;
+										}
+									}
+									continue;
+								}
+								if (self.Colliding(projHitbox, multiHitboxNPC.Hitboxes[i])) {
+									isColliding = true;
+									return;
+								}
+							} catch (Exception) { }
 						}
 					});
 					colliding = isColliding;
