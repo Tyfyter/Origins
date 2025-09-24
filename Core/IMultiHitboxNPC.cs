@@ -104,9 +104,11 @@ namespace Origins.Core {
 			);
 			static bool DoCollisionCheck(bool intersected, Rectangle itemRectangle, int i) {
 				if (Main.npc[i].ModNPC is IMultiHitboxNPC multiHitboxNPC) {
-					for (int j = 0; j < multiHitboxNPC.Hitboxes.Length; j++) {
-						if (itemRectangle.Intersects(multiHitboxNPC.Hitboxes[j])) return true;
-					}
+					try {
+						for (int j = 0; j < multiHitboxNPC.Hitboxes.Length; j++) {
+							if (itemRectangle.Intersects(multiHitboxNPC.Hitboxes[j])) return true;
+						}
+					} catch (Exception) { }
 					return false;
 				}
 				return intersected;

@@ -314,7 +314,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.ai[1] = -1;
 		}
 		readonly int[] othersTargetingCounts = new int[Main.maxNPCs];
-		readonly int[] othersTargetingItemsCounts = new int[Main.maxNPCs];
+		readonly int[] othersTargetingItemsCounts = new int[Main.maxItems];
 		public override void AI() {
 			Projectile slot = Projectile.GetRelatedProjectile(0);
 			if (slot?.active != true) {
