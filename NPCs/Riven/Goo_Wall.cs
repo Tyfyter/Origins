@@ -24,7 +24,7 @@ namespace Origins.NPCs.Riven {
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
-			NPC.lifeMax = 560;
+			NPC.lifeMax = 280;
 			NPC.damage = 1;
 			NPC.width = 26;
 			NPC.height = 26;

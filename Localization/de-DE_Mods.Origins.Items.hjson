@@ -6674,3 +6674,8 @@ Willy_Aftershave: {
 	// DisplayName: Willy Aftershave
 	// Tooltip: ""
 }
+
+Chambersite_Ring: {
+	// DisplayName: Chambersite Ring
+	// Tooltip: ""
+}
