@@ -238,6 +238,7 @@ ENEMY NPCS:
 (#, ^2) Power Suit Zombie
 (^) Pustule Jellyfish*
 (X) QM-76 'Quakemaker'
+(X) Reject
 (X) Repairboy
 (^) Riven Penguin*
 (^) Riven Protoform*
@@ -271,6 +272,7 @@ ENEMY NPCS:
 (#, ^2) Defiled Weaver
 (X) Depth Crawler
 (X) False Geometry
+(X) Fibulum Squid
 (X) Hive Mind
 (^) Leaf Snapper
 (X) Madman
@@ -903,6 +905,7 @@ MAGIC WEAPONS:
 (^) Splitsplash*
 (^) Tones of Agony*
 
+(X) Blast Furnace
 (^) Bled Out Staff*
 (^) Brine Haze
 (^) Chemical Laser*
@@ -1245,6 +1248,7 @@ TILES:
 (^) Marrowick Furniture*
 (X) Nova Furniture°
 (X) Peppered Moth Lamp
+(X) Phoenum Torch
 (X) Residue Furniture°
 (^) Riven Torch*
 (^) Riven Water Fountain*
