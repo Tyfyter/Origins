@@ -192,7 +192,7 @@ namespace Origins.Projectiles {
 			bool tryKillHovered = Main.mouseRight && Main.mouseRightRelease;
 			for (int i = 0; i < artifactMinions.Count; i++) {
 				Projectile projectile = Main.projectile[artifactMinions[i]];
-				if (projectile.type != projectileType) continue;
+				if (projectile.type != projectileType || projectile.owner != Main.myPlayer) continue;
 				if (checkOnScreen) {
 					Vector2 pos = projectile.position.ToScreenPosition();
 					if (pos.X <= Main.screenWidth && pos.Y <= Main.screenHeight && pos.X >= -projectile.width && pos.Y >= -projectile.height) {
