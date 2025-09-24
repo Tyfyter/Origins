@@ -39,6 +39,7 @@ namespace Origins.NPCs.Critters {
 			NPC.spriteDirection = Math.Sign(NPC.velocity.X);
 			if (NPC.frameCounter >= 7) {
 				NPC.frameCounter = 0;
+				NPC.frame.Height = 48 / Main.npcFrameCount[NPC.type];
 				if ((NPC.frame.Y += NPC.frame.Height) / NPC.frame.Height >= Main.npcFrameCount[Type]) {
 					NPC.frame.Y = 0;
 				}
@@ -63,6 +64,7 @@ namespace Origins.NPCs.Critters {
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter >= 7) {
 				NPC.frameCounter = 0;
+				NPC.frame.Height = 24 / Main.npcFrameCount[NPC.type];
 				if ((NPC.frame.Y += NPC.frame.Height) / NPC.frame.Height >= Main.npcFrameCount[Type]) {
 					NPC.frame.Y = 0;
 				}
@@ -127,6 +129,7 @@ namespace Origins.NPCs.Critters {
 			NPC.spriteDirection = Math.Sign(NPC.velocity.X);
 			if (++NPC.frameCounter >= 7) {
 				NPC.frameCounter = 0;
+				NPC.frame.Height = 26 / Main.npcFrameCount[NPC.type];
 				if ((NPC.frame.Y += NPC.frame.Height) / NPC.frame.Height >= Main.npcFrameCount[Type]) {
 					NPC.frame.Y = 0;
 				}

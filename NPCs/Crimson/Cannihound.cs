@@ -70,7 +70,7 @@ namespace Origins.NPCs.Crimson {
 			);
 		}
 		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
-			if (NPC.frame.Y / NPC.frame.Height != 12 && NPC.aiAction == 0) npcHitbox = default; // makes the NPC's attack hitbox 0, 0, 0, 0, preventing it from hitting anything, even things that aren't NPCs or Players
+			if (NPC.frame.Y / 50 != 12 && NPC.aiAction == 0) npcHitbox = default; // makes the NPC's attack hitbox 0, 0, 0, 0, preventing it from hitting anything, even things that aren't NPCs or Players
 			if (NPC.ai[3] > 0 && npcHitbox.Intersects(victimHitbox)) damageMultiplier *= 1.1f;
 			return true;
 		}
@@ -227,6 +227,7 @@ namespace Origins.NPCs.Crimson {
 			else if (speed > 2) speed = 1;
 			if (NPC.aiAction == 0) {
 				if (NPC.ai[1] > 0) {
+					NPC.frame.Height = 900 / Main.npcFrameCount[NPC.type];
 					NPC.DoFrames(6, (NPC.frame.Y / NPC.frame.Height)..15);
 					turnTime = 180;
 				} else if (++turnTime < 6 * 2) {

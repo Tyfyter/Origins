@@ -246,6 +246,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public static Vector2 ArmStartOffset(NPC npc) {
 			Vector2 offset = Vector2.Zero;
+			npc.frame.Height = 406 / Main.npcFrameCount[npc.type];
 			switch (npc.frame.Y / npc.frame.Height) {
 				case 0:
 				offset = new(14, -5);

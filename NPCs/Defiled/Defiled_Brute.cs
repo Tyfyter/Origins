@@ -26,7 +26,8 @@ namespace Origins.NPCs.Defiled {
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public AssimilationAmount? Assimilation => 0.04f;
-		public float SpeedMult => NPC.aiAction == 0 ? 0.85f : (NPC.frame.Y / NPC.frame.Height == 10 ? 2f : 0.15f);
+		public int FrameHeight => 88;
+		public float SpeedMult => NPC.aiAction == 0 ? 0.85f : ((NPC.frame.Y / FrameHeight == 10) ? 2f : 0.15f);
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;
 		public string EntryName => "Origins/" + typeof(Defiled_Krusher_Entry).Name;
@@ -146,9 +147,9 @@ namespace Origins.NPCs.Defiled {
 			if (NPC.aiAction == 0) {
 				NPC.DoFrames(7, ..6);
 			} else {
-				if (NPC.frame.Y / NPC.frame.Height < 6) NPC.frame.Y = NPC.frame.Height * 6;
+				if (NPC.frame.Y / FrameHeight < 6) NPC.frame.Y = NPC.frame.Height * 6;
 				NPC.DoFrames(7, 6..(Main.npcFrameCount[Type] + 1));
-				if (NPC.frame.Y / NPC.frame.Height == Main.npcFrameCount[Type]) {
+				if (NPC.frame.Y / FrameHeight == Main.npcFrameCount[Type]) {
 					NPC.aiAction = 0;
 					NPC.frame.Y = 0;
 				}
@@ -195,6 +196,7 @@ namespace Origins.NPCs.Defiled {
 			if (texture is null) return;
 			Vector2? pos = null;
 			float rot = 0;
+			NPC.frame.Height = 1232 / Main.npcFrameCount[NPC.type];
 			switch (NPC.frame.Y / NPC.frame.Height) {
 				case 6:
 				pos = new(17, 24);

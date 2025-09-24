@@ -67,7 +67,10 @@ namespace Origins.NPCs.Brine {
 		public override bool CanTargetNPC(NPC other) => !OriginsSets.NPCs.TargetDummies[other.type] && CanHitNPC(other);
 		public override bool CanTargetPlayer(Player player) => !player.invis;
 		public int Frame {
-			get => NPC.frame.Y / NPC.frame.Height;
+			get {
+				NPC.frame.Height = 358 / Main.npcFrameCount[NPC.type];
+				return NPC.frame.Y / NPC.frame.Height;
+			}
 			set => NPC.frame.Y = NPC.frame.Height * value;
 		}
 		public override bool? CanFallThroughPlatforms() => targetIsBelow;
