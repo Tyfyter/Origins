@@ -338,12 +338,13 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					}
 				}
 			}
-			float distanceFromTarget = 2000f;
+			const float max_distance = 2000f;
+			float distanceFromTarget = max_distance;
 			bool hasPriorityTarget = false;
 			int sharingCount = int.MaxValue;
 			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
 				bool isCurrentTarget = targetData.TargetType == TargetType.NPC && npc.whoAmI == targetData.Index;
-				if ((isCurrentTarget || isPriorityTarget || !hasPriorityTarget) && npc.CanBeChasedBy()) {
+				if ((isCurrentTarget || isPriorityTarget || !hasPriorityTarget) && npc.CanBeChasedBy() && Projectile.Center.WithinRange(npc.Center, max_distance)) {
 					Vector2 pos = Projectile.position;
 					float between = Vector2.Distance(npc.Center, pos);
 					between *= isCurrentTarget ? 0 : 1;
