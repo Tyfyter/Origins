@@ -1,11 +1,11 @@
-﻿using Terraria;
+﻿using System.IO;
+using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
 	public class Blue_Bovine_Quest : Quest {
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 		int progress = 0;
@@ -62,6 +62,14 @@ namespace Origins.Questing {
 		public override void SetStaticDefaults() {
 			NameKey = "Mods.Origins.Quests.Merchant.Blue_Bovine.Name";
 		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+			writer.Write(progress);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
+			progress = reader.ReadInt32();
+		}
 		public override void SaveData(TagCompound tag) {
 			//save stage and kills
 			tag.Add("Stage", Stage);
@@ -75,7 +83,6 @@ namespace Origins.Questing {
 		}
 	}
 	public class Lottery_Ticket_Quest : Quest {
-		public override bool SaveToWorld => true;
 		int stage = 0;
 		int progress = 0;
 		const int target = 10;
@@ -127,6 +134,14 @@ namespace Origins.Questing {
 		}
 		public override void SetStaticDefaults() {
 			NameKey = "Mods.Origins.Quests.Merchant.Lottery_Ticket.Name";
+		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+			writer.Write(progress);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
+			progress = reader.ReadInt32();
 		}
 		public override void SaveData(TagCompound tag) {
 			tag.Add("Stage", Stage);

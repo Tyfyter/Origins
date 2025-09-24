@@ -36,7 +36,6 @@ namespace Origins.Questing {
 	public class Happy_Grenade_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.PartyGirl.Happy_Grenade.";
 		public QuestChatButton Button { get; protected set; }
-		public override bool SaveToWorld => true;
 		public override void Load() {
 			Mod.AddContent(Button = new Happy_Grenade_Quest_Chat_Button(this));
 		}
@@ -130,7 +129,6 @@ namespace Origins.Questing {
 	}
 	public class Tax_Collector_Quests : Quest {
 		public const string loc_key = "Mods.Origins.Quests.PartyGirl.Tax_Collector_Hat.";
-		public override bool SaveToWorld => true;
 		public override void Load() {
 			On_NPC.UsesPartyHat += (orig, self) => {
 				if (self.type == NPCID.TaxCollector) {

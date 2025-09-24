@@ -11,7 +11,6 @@ using Terraria.ModLoader.IO;
 namespace Origins.Questing {
 	public class Magic_Hair_Spray_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.Stylist.Magic_Hair_Spray.";
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -90,7 +89,6 @@ namespace Origins.Questing {
 	}
 	public class Comb_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.Stylist.Comb.";
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -166,7 +164,6 @@ namespace Origins.Questing {
 	}
 	public class Holiday_Hair_Dye_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.Stylist.Holiday_Hair_Dye.";
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 

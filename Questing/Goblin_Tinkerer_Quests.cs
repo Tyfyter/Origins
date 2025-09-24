@@ -8,7 +8,6 @@ using Terraria.ModLoader.IO;
 namespace Origins.Questing {
 	public class Turbo_Reel_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.GoblinTinkerer.Turbo_Reel.";
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -126,7 +125,6 @@ namespace Origins.Questing {
 	}
 	public class Gun_Glove_Quest : Quest {
 		public string loc_key = "Mods.Origins.Quests.GoblinTinkerer.Gun_Glove.";
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -234,7 +232,6 @@ namespace Origins.Questing {
 		}
 	}
 	public class Rocket_Boosted_Minecart_Quest : Quest {
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 

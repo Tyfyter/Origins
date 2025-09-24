@@ -14,7 +14,6 @@ namespace Origins.Questing {
 		int progress = 0;
 		const int target = 50;
 		//Stage property so changing quest stage also updates its event handlers
-		public override bool SaveToWorld => true;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
 		public override bool CanStart(NPC npc) {
@@ -84,7 +83,6 @@ namespace Origins.Questing {
 		int progress = 0;
 		const int target = 200;
 		//Stage property so changing quest stage also updates its event handlers
-		public override bool SaveToWorld => true;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
 		public override bool CanStart(NPC npc) {

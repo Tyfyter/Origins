@@ -9,7 +9,6 @@ using Terraria.ModLoader.IO;
 namespace Origins.Questing {
 	public class Alkaliegis_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.Brine_Fiend.Alkaliegis.";
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -105,7 +104,6 @@ namespace Origins.Questing {
 	}
 	public class Old_Brine_Music_Box_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.Brine_Fiend.Ancient_Brine_Music_Box.";
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 

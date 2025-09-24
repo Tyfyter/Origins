@@ -28,7 +28,6 @@ namespace Origins.Questing {
 			get => stage;
 			set => stage = value;
 		}
-		public override bool SaveToWorld => true;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
 		public override void Load() {
@@ -171,7 +170,6 @@ namespace Origins.Questing {
 			get => stage;
 			set => stage = value;
 		}
-		public override bool SaveToWorld => true;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
 		public override void Load() {

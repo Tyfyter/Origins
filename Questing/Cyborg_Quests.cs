@@ -12,7 +12,6 @@ using Terraria.ModLoader.IO;
 namespace Origins.Questing {
 	public class Advanced_Imaging_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.Cyborg.Advanced_Imaging.";
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 		static bool SawThing => Main.BestiaryDB.FindEntryByNPCID(NPCID.MartianProbe).UIInfoProvider.GetEntryUICollectionInfo().UnlockState != BestiaryEntryUnlockState.NotKnownAtAll_0;

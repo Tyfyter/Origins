@@ -79,7 +79,6 @@ namespace Origins.Questing {
 			yield return new ShopItem<Absorption_Potion>(350);
 			yield return new ShopItem<Caustica>(999, Condition.DownedGolem);
 		}
-		public override bool SaveToWorld => true;
 		public override bool Started => LocalPlayerStarted || ModContent.GetInstance<OriginSystem>().peatSold > 0;
 		public override bool Completed => ModContent.GetInstance<OriginSystem>().peatSold >= Rewards[^1].PeatAmount;
 		public static ShopItem[] Rewards { get; private set; }

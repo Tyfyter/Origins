@@ -6,7 +6,6 @@ using static Origins.OriginsSets.Items;
 
 namespace Origins.Questing {
 	public class Spray_N_Pray_Quest : Quest {
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 
