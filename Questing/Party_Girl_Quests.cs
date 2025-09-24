@@ -1,6 +1,7 @@
 ﻿using Origins.Tiles;
 using PegasusLib;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Terraria;
@@ -111,6 +112,12 @@ namespace Origins.Questing {
 				else unloadedConfettiNPCs.Add(value);
 			}
 		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
+		}
 	}
 	[Autoload(false)]
 	file class Tax_Collector_Hat_Chat_Button(Quest quest) : QuestChatButton(quest) {
@@ -204,6 +211,12 @@ namespace Origins.Questing {
 			//load stage and kills, note that it uses the Stage property so that it sets the event handlers
 			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
 			Stage = tag.SafeGet<int>("Stage");
+		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
 		}
 	}
 }

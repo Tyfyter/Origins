@@ -1,5 +1,6 @@
 ﻿using Origins.Items.Other.Consumables;
 using Origins.NPCs.TownNPCs;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -101,6 +102,12 @@ namespace Origins.Questing {
 			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
 			Stage = tag.SafeGet<int>("Stage");
 		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
+		}
 	}
 	public class Old_Brine_Music_Box_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.Brine_Fiend.Ancient_Brine_Music_Box.";
@@ -195,6 +202,12 @@ namespace Origins.Questing {
 			//load stage and kills, note that it uses the Stage property so that it sets the event handlers
 			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
 			Stage = tag.SafeGet<int>("Stage");
+		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
 		}
 	}
 }

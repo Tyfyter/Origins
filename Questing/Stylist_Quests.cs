@@ -2,6 +2,7 @@
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Melee;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -86,6 +87,12 @@ namespace Origins.Questing {
 			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
 			Stage = tag.SafeGet<int>("Stage");
 		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
+		}
 	}
 	public class Comb_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.Stylist.Comb.";
@@ -161,6 +168,12 @@ namespace Origins.Questing {
 			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
 			Stage = tag.SafeGet<int>("Stage");
 		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
+		}
 	}
 	public class Holiday_Hair_Dye_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.Stylist.Holiday_Hair_Dye.";
@@ -235,6 +248,12 @@ namespace Origins.Questing {
 			//load stage and kills, note that it uses the Stage property so that it sets the event handlers
 			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
 			Stage = tag.SafeGet<int>("Stage");
+		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
 		}
 	}
 }
