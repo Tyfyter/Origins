@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.Items.Other.Testing;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System.Collections.Generic;
@@ -46,14 +47,8 @@ namespace Origins.Tiles.Defiled {
 		}
 		public override bool CanExplode(int i, int j) => false;
 	}
-	public class Defiled_Altar_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
-		public IEnumerable<int> ProvideItemObtainability() => [Type];
-		public bool ShouldHavePage => false;
+	public class Defiled_Altar_Item : TestingItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Altar";
-		public override void SetStaticDefaults() {
-			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
-		}
-
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;

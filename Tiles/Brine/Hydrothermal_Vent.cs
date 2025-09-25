@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Other.Testing;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -227,12 +228,8 @@ namespace Origins.Tiles.Brine {
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-	public class Hydrothermal_Vent_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
-		public IEnumerable<int> ProvideItemObtainability() => [Type];
+	public class Hydrothermal_Vent_Item : TestingItem {
 		public override string Texture => "Origins/Tiles/Brine/Hydrothermal_Vent";
-		public override void SetStaticDefaults() {
-			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
-		}
 
 		public override void SetDefaults() {
 			Item.width = 26;
@@ -247,7 +244,5 @@ namespace Origins.Tiles.Brine {
 			Item.value = 500;
 			Item.createTile = ModContent.TileType<Hydrothermal_Vent>();
 		}
-
-		public bool ShouldHavePage => false;
 	}
 }

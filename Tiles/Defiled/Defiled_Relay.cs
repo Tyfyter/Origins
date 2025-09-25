@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Other.Testing;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using System.Text;
@@ -178,12 +179,8 @@ namespace Origins.Tiles.Defiled {
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-	public class Defiled_Relay_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
-		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
+	public class Defiled_Relay_Item : TestingItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Relay";
-		public override void SetStaticDefaults() {
-			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
-		}
 
 		public override void SetDefaults() {
 			Item.width = 26;
@@ -198,6 +195,5 @@ namespace Origins.Tiles.Defiled {
 			Item.value = 500;
 			Item.createTile = ModContent.TileType<Defiled_Relay>();
 		}
-		public bool ShouldHavePage => false;
 	}
 }

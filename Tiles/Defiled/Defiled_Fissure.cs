@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.Items.Other.Testing;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
@@ -72,13 +73,8 @@ namespace Origins.Tiles.Defiled {
 			r = g = b = 0.3f;
 		}
 	}
-	public class Defiled_Fissure_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
-		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
+	public class Defiled_Fissure_Item : TestingItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Fissure";
-		public override void SetStaticDefaults() {
-			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
-		}
-
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;
@@ -92,6 +88,5 @@ namespace Origins.Tiles.Defiled {
 			Item.value = 500;
 			Item.createTile = ModContent.TileType<Defiled_Fissure>();
 		}
-		public bool ShouldHavePage => false;
 	}
 }

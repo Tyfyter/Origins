@@ -572,8 +572,9 @@ Demolitionist: {
 			''' */
 		// Inquire: Hey, you wanna know my favorite pastime? Just goin' to some Jungle pond, rippin' up peat moss and throwin' it around. I loved the stuff since I was a wee-lad, and now I'm feelin' a little nostalgic.
 		// Start: So, why don't you get some for me and I'll offer you some fine explosive stuffs I've been collecting durin' my excavations. Sound like a deal?
-		// GiveMoss: Give {§Items.Peat_Moss_Item.DisplayName}
-		// GaveMoss: <PH> Very needed!!!
+		// GiveMoss: Give {§Mods.Origins.Items.Peat_Moss_Item.DisplayName}
+		// GaveMoss: Oh hoho, it was! How kind of yah! Thank yah.
+		// GaveMossUnlocked: "{$GaveMoss} Don't forget to check out my shop for some new items, now would yah?"
 		// ReadyToComplete: unneeded
 		// Complete: unneeded
 	}

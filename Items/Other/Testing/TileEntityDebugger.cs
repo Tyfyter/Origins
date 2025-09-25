@@ -1,18 +1,13 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Tiles;
 using Terraria;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.UI.Chat;
-using Tyfyter.Utils;
-using static Tyfyter.Utils.KinematicUtils;
 
 namespace Origins.Items.Other.Testing {
-	public class TileEntityDebugger : ModItem, ICustomDrawItem {
+	public class TileEntityDebugger : TestingItem, ICustomDrawItem {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.SpectreGoggles;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 0;

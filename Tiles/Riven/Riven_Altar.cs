@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Other.Testing;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -67,13 +68,8 @@ namespace Origins.Tiles.Riven {
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-	public class Riven_Altar_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
-		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
+	public class Riven_Altar_Item : TestingItem {
 		public override string Texture => "Origins/Tiles/Riven/Riven_Altar";
-		public override void SetStaticDefaults() {
-			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
-		}
-
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;
@@ -87,7 +83,5 @@ namespace Origins.Tiles.Riven {
 			Item.value = 500;
 			Item.createTile = ModContent.TileType<Riven_Altar>();
 		}
-
-		public bool ShouldHavePage => false;
 	}
 }

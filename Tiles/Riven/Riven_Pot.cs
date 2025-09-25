@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Other.Testing;
 using Origins.Reflection;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
@@ -76,12 +77,8 @@ namespace Origins.Tiles.Riven {
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-	public class Riven_Pot_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
-		public IEnumerable<int> ProvideItemObtainability() => [Type];
+	public class Riven_Pot_Item : TestingItem {
 		public override string Texture => "Origins/Tiles/Riven/Riven_Pot";
-		public override void SetStaticDefaults() {
-			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
-		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Riven_Pot>());
 		}
@@ -92,6 +89,5 @@ namespace Origins.Tiles.Riven {
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			tooltips.Add(new(Mod, "createTile", Item.createTile + ""));
 		}
-		public bool ShouldHavePage => false;
 	}
 }

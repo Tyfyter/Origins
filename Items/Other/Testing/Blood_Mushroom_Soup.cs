@@ -16,7 +16,7 @@ using Terraria.ObjectData;
 using Terraria.Utilities;
 
 namespace Origins.Items.Other.Testing {
-	public class Blood_Mushroom_Soup : ModItem {
+	public class Blood_Mushroom_Soup : TestingItem {
 		public static int mode;
 		static int ModeCount => modes.Count;
 		LinkedQueue<object> parameters = new LinkedQueue<object>();
