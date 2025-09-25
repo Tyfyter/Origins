@@ -1150,7 +1150,7 @@ TILES:
 (^) Defiled Cactus*
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
-(@, ^3) Defiled Regolith
+(^) Defiled Regolith
 (^) Defiled Sand*
 (^) Defiled Sandstone*
 (^) Defiled Stone*
