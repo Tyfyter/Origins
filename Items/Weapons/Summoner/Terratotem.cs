@@ -288,8 +288,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public virtual int FrameCount => 1;
 		public virtual bool CanPickupItems => true;
 		public Terratotem_Mask_Base() {
-			sideTexture = GetType().GetDefaultTMLName() + "_Side";
-			sideGlowTexture = GetType().GetDefaultTMLName() + "_Side_Glow";
+			sideTexture = Texture + "_Side";
+			sideGlowTexture = Texture + "_Side_Glow";
 		}
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.MinionShot[Type] = true;

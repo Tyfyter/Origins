@@ -3,6 +3,9 @@ Common: {
 		// 0: Whatch want?
 		// 1: Need something?
 		// 2: Looking for something?
+		// 3: What is it?
+		// 4: Are you hurt? Do you need help?
+		// 5: Hello?
 	}
 
 	GivenConfetti: {
