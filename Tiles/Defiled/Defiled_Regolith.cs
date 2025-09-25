@@ -34,6 +34,7 @@ namespace Origins.Tiles.Defiled {
 			MinPick = 200;
 			MineResist = 4;
 		}
+		public override bool CanExplode(int i, int j) => false;
 	}
 	public class Defiled_Regolith_Item : ModItem {
 		public override string Texture => typeof(Defiled_Stone_Item).GetDefaultTMLName();

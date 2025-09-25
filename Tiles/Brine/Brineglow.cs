@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Items.Other.Testing;
 using Origins.Journal;
 using System.Collections.Generic;
 using Terraria;
@@ -351,32 +352,27 @@ namespace Origins.Tiles.Brine {
 		public override void Load() => this.SetupGlowKeys();
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-    public class Brineglow_Item : ModItem {
-        public override void SetStaticDefaults() {
-            Item.ResearchUnlockCount = 5;
-        }
-        public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(copper: 30);
-        }
-    }
-    public class Brineglow_Debug_Item : ModItem, IItemObtainabilityProvider, IJournalEntrySource {
-		public IEnumerable<int> ProvideItemObtainability() => [Type];
-		public override string Texture => "Origins/Tiles/Brine/Brineglow_Item";
-		public string EntryName => "Origins/" + typeof(Brineglow_Entry).Name;
+    public class Brineglow_Item : ModItem, IJournalEntrySource<Brineglow_Item.Brineglow_Entry> {
 		public class Brineglow_Entry : JournalEntry {
 			public override string TextKey => "Brineglow";
 			public override JournalSortIndex SortIndex => new("Brine_Fiend", 2);
 		}
 		public override void SetStaticDefaults() {
-			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
+            Item.ResearchUnlockCount = 5;
+        }
+        public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
+			Item.value = Item.sellPrice(copper: 30);
+			Item.rare = ItemRarityID.Orange;
 		}
+    }
+    public class Brineglow_Debug_Item : TestingItem {
+		public override string Texture => "Origins/Tiles/Brine/Brineglow_Item";
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TitaniumOre);
 			Item.createTile = TileType<Brineglow>();
 
 			Item.maxStack = 9999;
-			Item.rare = ItemRarityID.Orange;
 		}
 	}
 }

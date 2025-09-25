@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Items.Other.Testing;
 using Origins.Reflection;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
@@ -50,13 +51,8 @@ namespace Origins.Tiles.Defiled {
 			}
 		}
 	}
-	public class Defiled_Pot_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
-		public IEnumerable<int> ProvideItemObtainability() => [Type];
+	public class Defiled_Pot_Item : TestingItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Pot";
-		public override void SetStaticDefaults() {
-			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
-		}
-
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Defiled_Pot>());
 		}
@@ -67,6 +63,5 @@ namespace Origins.Tiles.Defiled {
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			tooltips.Add(new(Mod, "createTile", Item.createTile+""));
 		}
-		public bool ShouldHavePage => false;
 	}
 }

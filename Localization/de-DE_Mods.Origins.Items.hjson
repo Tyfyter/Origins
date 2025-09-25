@@ -159,7 +159,7 @@ Celestial_Stone_Mask: {
 	/* Tooltip:
 		'''
 		Increase to damage, melee speed, critical strike chance,
-		life regeneration, defense, mining speed, and minion knockback,
+		life regeneration, defense, mining speed[ox:,] and minion knockback,
 		but your movement is hindered
 		''' */
 }
@@ -188,7 +188,7 @@ Cirrhosis_Abhorrence: {
 	/* Tooltip:
 		'''
 		All attacks inflict [buffhint:Bleeding] and [buffhint/dnset enemies ablaze:OnFire3]
-		The four nearest enemies will be afflicted with [buffhint:Bleeding], [buffhint/On Fire:OnFire], and [buffhint:Origins/Rasterized_Debuff]
+		The four nearest enemies will be afflicted with [buffhint:Bleeding], [buffhint/On Fire:OnFire][ox:,] and [buffhint:Origins/Rasterized_Debuff]
 		''' */
 }
 
@@ -268,7 +268,7 @@ Dryads_Inheritance: {
 	/* Tooltip:
 		'''
 		5% increased damage
-		Increases damage, movement speed, and length of invincibility after taking damage
+		Increases damage, movement speed[ox:,] and length of invincibility after taking damage
 		Emit a [buffhint/dndamaging aura:DryadsWardDebuff]
 		Summons spores over time that will damage enemies
 		''' */
@@ -736,7 +736,7 @@ Return_To_Sender: {
 
 Rope_Of_Sharing: {
 	// DisplayName: Rope of Sharing
-	// Tooltip: All stats, afflictions and other effects are shared with another connected player
+	// Tooltip: All stats, afflictions[ox:,] and other effects are shared with another connected player
 }
 
 Ruby_Reticle: {
@@ -788,7 +788,7 @@ Sonic_Radar: {
 	// DisplayName: Sonic Radar
 	/* Tooltip:
 		'''
-		Allows the detection of traps, enemies, and valuables
+		Allows the detection of traps, enemies, and[ox:,] valuables
 		Emits a small aura of light
 		''' */
 }
@@ -862,7 +862,7 @@ Strange_Computer: {
 
 		The danger is unleashed only if you substantially disturb this item physically. This item is best shunned and left unequipped.
 
-		Side effects include universal instability, eternalism, sticky fingers, hallucination, and premature ejaculation
+		Side effects include universal instability, eternalism, sticky fingers, hallucination[ox:,] and premature ejaculation
 		''' */
 }
 
@@ -2927,7 +2927,7 @@ Bleeding_Obsidian_Kunai: {
 	/* Tooltip:
 		'''
 
-		Inflicts [bufftip:CursedInferno], [bufftip:Ichor], [bufftip:Origins/Rasterized_Debuff], and [bufftip:Origins/Torn_Debuff]
+		Inflicts [bufftip:CursedInferno], [bufftip:Ichor], [bufftip:Origins/Rasterized_Debuff][ox:,] and [bufftip:Origins/Torn_Debuff]
 		'Be careful, it's sharp'
 		''' */
 }
@@ -3851,7 +3851,7 @@ Playtimes_Over: {
 		'''
 		Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
 		+20% applied [buffhint:Origins/Torn_Debuff] severity
-		Increased life regeneration, defense and applied [buffhint/self:Origins/Torn_Debuff] severity based on the severity you're affected by
+		Increased life regeneration, defense[ox:,] and applied [buffhint/self:Origins/Torn_Debuff] severity based on the severity you're affected by
 		''' */
 }
 
@@ -4044,7 +4044,7 @@ CORE_Generator: {
 		25% increased explosive throwing velocity
 		20% increased explosive knockback
 		15% increased explosive blast radius
-		Increases damage, movement speed, and length of invincibility after taking damage
+		Increases damage, movement speed[ox:,] and length of invincibility after taking damage
 		Increases explosive attack speed
 		Enables autouse for all explosive weapons
 		Shoots rockets as you swing
@@ -4547,7 +4547,7 @@ Speed_Booster: {
 	/* Tooltip:
 		'''
 		5% increased damage
-		Allows flight, super fast running and increased acceleration
+		Allows flight, super fast running[ox:,] and increased acceleration
 		Increases damage and movement speed after taking damage
 		Provides light when worn
 		Allows the user to climb walls and dash into enemies
@@ -4714,7 +4714,7 @@ Generic_Weapon: {
 
 Hemoptysis: {
 	// DisplayName: Hemoptysis
-	// Tooltip: Launch bloody phlegm that damages, [buffhint:Origins/Slow_Debuff] and [buffhint/dnbleeds:Bleeding] enemies
+	// Tooltip: Launch bloody phlegm that damages, [buffhint:Origins/Slow_Debuff][ox:,] and [buffhint/dnbleeds:Bleeding] enemies
 }
 
 Eaterboros: {
@@ -4744,7 +4744,7 @@ Slag_Bucket: {
 		'''
 		40% damage reduction while above 80% of maximum life
 		All life regeneration has a 4-second buffer period before it is applied after getting hit while above half life
-		Grants immunity to knockback, fire blocks, and [buffhint/self:Origins/Impeding_Shrapnel_Debuff]
+		Grants immunity to knockback, fire blocks[ox:,] and [buffhint/self:Origins/Impeding_Shrapnel_Debuff]
 		All damage received is reflected to 3 nearby enemies
 		You regenerate life while [buffhint/dnon fire|self:OnFire]
 		''' */
@@ -4755,7 +4755,7 @@ Slag_Bucket_Uncursed: {
 	/* Tooltip:
 		'''
 		15% damage reduction and increased life regeneration
-		Grants immunity to knockback, fire blocks, and [buffhint/self:Origins/Impeding_Shrapnel_Debuff]
+		Grants immunity to knockback, fire blocks[ox:,] and [buffhint/self:Origins/Impeding_Shrapnel_Debuff]
 		All damage received is reflected to 3 nearby enemies
 		You regenerate life while [buffhint/dnon fire|self:OnFire]
 		''' */
@@ -5254,7 +5254,7 @@ Faith_Beads: {
 		'''
 		Immunity to [buffhint/self:Suffocation] and reduces damage from loss of breath
 		Grants the ability to swim and easy movement through liquids
-		All of your attacks inflict [buffhint:Origins/Cavitation_Debuff], [buffhint:Wet], and have a chance to cause explosions underwater
+		All of your attacks inflict [buffhint:Origins/Cavitation_Debuff], [buffhint:Wet][ox:,] and have a chance to cause explosions underwater
 		+40% explosive blast radius
 		'Only through struggle do we find ourselves'
 		''' */
@@ -5291,7 +5291,7 @@ Lost_Diver_Helmet: {
 
 Crown_Jewel: {
 	// DisplayName: Crown Jewel
-	// EffectTooltip: Increases your damage, crit chance, and self-damage resistance by 1% for every Hardmode boss you've defeated
+	// EffectTooltip: Increases your damage, crit chance[ox:,] and self-damage resistance by 1% for every Hardmode boss you've defeated
 	/* Tooltip:
 		'''
 		{$Mods.Origins.Items.Crown_Jewel.EffectTooltip}

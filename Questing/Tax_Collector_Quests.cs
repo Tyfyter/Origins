@@ -10,7 +10,6 @@ using Terraria.ModLoader.IO;
 namespace Origins.Questing {
 	public class Tax_Collector_Ghosts_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.TaxCollector.Tax_Collector_Ghosts_Quest.";
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 		//Stage property so changing quest stage also updates its event handlers

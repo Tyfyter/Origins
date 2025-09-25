@@ -110,6 +110,9 @@ namespace Origins {
 		public override void OnWorldUnload() {
 			forceThunderstorm = false;
 		}
+		public override void ClearWorld() {
+			peatSold = 0;
+		}
 		public override void LoadWorldData(TagCompound tag) {
 			Mod.Logger.Info("LoadWorldData called on netmode " + Main.netMode);
 			if (tag.ContainsKey("peatSold")) {

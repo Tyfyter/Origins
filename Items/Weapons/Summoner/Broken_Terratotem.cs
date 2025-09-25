@@ -53,6 +53,54 @@ namespace Origins.Items.Weapons.Summoner {
 			base.SetDefaults();
 			Projectile.minionSlots = 1f;
 		}
+		public override int GetMask() {
+			GetBottom(out int count);
+			switch (count) {
+				case 1:
+				case 2:
+				case 5:
+				return ModContent.ProjectileType<Broken_Terratotem_Mask_Small>();
+
+				case 3:
+				case 6:
+				case 7:
+				return ModContent.ProjectileType<Broken_Terratotem_Mask_Medium>();
+
+				case 4:
+				default:
+				return ModContent.ProjectileType<Broken_Terratotem_Mask_Big>();
+			}
+		}
+	}
+	public class Broken_Terratotem_Mask_Small : Terratotem_Mask_Small {
+		public override string Texture => typeof(Terratotem_Mask_Small).GetDefaultTMLName();
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.usesLocalNPCImmunity = false;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 20;
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			base.ModifyHitNPC(target, ref modifiers);
+		}
+	}
+	public class Broken_Terratotem_Mask_Medium : Terratotem_Mask_Medium {
+		public override string Texture => typeof(Terratotem_Mask_Medium).GetDefaultTMLName();
+		public override void SetDefaults() {
+			base.SetDefaults();
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			base.ModifyHitNPC(target, ref modifiers);
+		}
+	}
+	public class Broken_Terratotem_Mask_Big : Terratotem_Mask_Big {
+		public override string Texture => typeof(Terratotem_Mask_Big).GetDefaultTMLName();
+		public override void SetDefaults() {
+			base.SetDefaults();
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			base.ModifyHitNPC(target, ref modifiers);
+		}
 	}
 }
 namespace Origins.Buffs {

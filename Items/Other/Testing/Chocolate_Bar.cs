@@ -1,15 +1,13 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using PegasusLib;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 using static Tyfyter.Utils.KinematicUtils;
 
 namespace Origins.Items.Other.Testing {
-	public class Chocolate_Bar : ModItem {
+	public class Chocolate_Bar : TestingItem {
 		const float upperLegAngle = 0.1171116f;
 		const float lowerLegAngle = -0.1504474f;
 		const float upperLegLength = 34.2f;

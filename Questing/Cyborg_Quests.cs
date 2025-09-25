@@ -2,6 +2,7 @@
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Melee;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -12,7 +13,6 @@ using Terraria.ModLoader.IO;
 namespace Origins.Questing {
 	public class Advanced_Imaging_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.Cyborg.Advanced_Imaging.";
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 		static bool SawThing => Main.BestiaryDB.FindEntryByNPCID(NPCID.MartianProbe).UIInfoProvider.GetEntryUICollectionInfo().UnlockState != BestiaryEntryUnlockState.NotKnownAtAll_0;
@@ -79,6 +79,12 @@ namespace Origins.Questing {
 			//load stage, note that it uses the Stage property so that it sets the event handlers
 			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
 			Stage = tag.SafeGet<int>("Stage");
+		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
 		}
 	}
 }

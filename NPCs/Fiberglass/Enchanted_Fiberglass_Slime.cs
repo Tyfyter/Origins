@@ -88,6 +88,7 @@ namespace Origins.NPCs.Fiberglass {
 				oldColor[i] = oldColor[i - 1] * 0.9f;
 				oldGlass[i] = oldGlass[i - 1];
 			}
+			NPC.frame.Height = 72 / Main.npcFrameCount[NPC.type];
 			oldFrame[0] = NPC.frame.Y / NPC.frame.Height;
 			oldGlass[0] = NPC.hide;
 		}

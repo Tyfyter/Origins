@@ -1,17 +1,14 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Weapons.Magic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Origins.Items.Other.Testing {
-	public class Framing_Tester : ModItem {
+	public class Framing_Tester : TestingItem {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.ItemFrame;
 		public static int mode;
 		public static int ModeMax => missingConfigurations.Count + 2;

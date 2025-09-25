@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System.IO;
+using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -6,7 +7,6 @@ using static Origins.OriginsSets.Items;
 
 namespace Origins.Questing {
 	public class Spray_N_Pray_Quest : Quest {
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -87,6 +87,12 @@ namespace Origins.Questing {
 			//load stage and kills, note that it uses the Stage property so that it sets the event handlers
 			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
 			Stage = tag.SafeGet<int>("Stage");
+		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
 		}
 	}
 }

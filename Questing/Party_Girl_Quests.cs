@@ -1,6 +1,7 @@
 ﻿using Origins.Tiles;
 using PegasusLib;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Terraria;
@@ -36,7 +37,6 @@ namespace Origins.Questing {
 	public class Happy_Grenade_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.PartyGirl.Happy_Grenade.";
 		public QuestChatButton Button { get; protected set; }
-		public override bool SaveToWorld => true;
 		public override void Load() {
 			Mod.AddContent(Button = new Happy_Grenade_Quest_Chat_Button(this));
 		}
@@ -112,6 +112,12 @@ namespace Origins.Questing {
 				else unloadedConfettiNPCs.Add(value);
 			}
 		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
+		}
 	}
 	[Autoload(false)]
 	file class Tax_Collector_Hat_Chat_Button(Quest quest) : QuestChatButton(quest) {
@@ -130,7 +136,6 @@ namespace Origins.Questing {
 	}
 	public class Tax_Collector_Quests : Quest {
 		public const string loc_key = "Mods.Origins.Quests.PartyGirl.Tax_Collector_Hat.";
-		public override bool SaveToWorld => true;
 		public override void Load() {
 			On_NPC.UsesPartyHat += (orig, self) => {
 				if (self.type == NPCID.TaxCollector) {
@@ -206,6 +211,12 @@ namespace Origins.Questing {
 			//load stage and kills, note that it uses the Stage property so that it sets the event handlers
 			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
 			Stage = tag.SafeGet<int>("Stage");
+		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
 		}
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Other.Testing;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
@@ -75,11 +76,8 @@ namespace Origins.Tiles.Riven {
 		public override void Load() => this.SetupGlowKeys();
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-	public class Gel_Blister_Item : ModItem, ICustomWikiStat {
+	public class Gel_Blister_Item : TestingItem {
 		public override string Texture => typeof(Gel_Blister).GetDefaultTMLName();
-		public override void SetStaticDefaults() {
-			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
-		}
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;
@@ -93,6 +91,5 @@ namespace Origins.Tiles.Riven {
 			Item.value = 500;
 			Item.createTile = ModContent.TileType<Gel_Blister>();
 		}
-		public bool ShouldHavePage => false;
 	}
 }

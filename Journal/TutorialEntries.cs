@@ -2,7 +2,7 @@
 using Terraria.ModLoader;
 
 namespace Origins.Journal; 
-public class TutorialJournalEntry : JournalEntry {
+public abstract class TutorialJournalEntry : JournalEntry {
 	public override JournalSortIndex SortIndex => new("µTutorial", 0);
 }
 public class Explosive_Weapons_Entry : TutorialJournalEntry {

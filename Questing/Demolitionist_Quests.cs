@@ -26,6 +26,7 @@ namespace Origins.Questing {
 		public override string Name => $"{base.Name}_{Quest.Name}";
 		public override double Priority => 101;
 		public override void OnClick(NPC npc, Player player) {
+			int rewardsCount = Peat_Moss_Quest.GetItems().Count(i => i.AllConditionsMet);
 			int mossGiven = Quest.ConsumeItems(player.inventory, ((i) => i.ModItem is Peat_Moss_Item, Peat_Moss_Quest.Rewards[^1].PeatAmount - ModContent.GetInstance<OriginSystem>().peatSold))[0];
 			ModContent.GetInstance<OriginSystem>().peatSold += mossGiven;
 			if (mossGiven > 0) {
@@ -36,7 +37,7 @@ namespace Origins.Questing {
 					packet.Send(-1, player.whoAmI);
 				}
 				SoundEngine.PlaySound(SoundID.Grab, npc.Center);
-				Main.npcChatText = Language.GetOrRegister(Peat_Moss_Quest.lockey + "GaveMoss").Value;
+				Main.npcChatText = Language.GetOrRegister(Peat_Moss_Quest.lockey + (Peat_Moss_Quest.GetItems().Count(i => i.AllConditionsMet) > rewardsCount ? "GaveMossUnlocked" : "GaveMoss")).Value;
 				int value = 35 * mossGiven;
 				void SpawnCoins(int type, int count) {
 					if (count > 0) Main.LocalPlayer.QuickSpawnItem(npc.GetSource_GiftOrReward(Quest.FullName), type, count);
@@ -79,7 +80,6 @@ namespace Origins.Questing {
 			yield return new ShopItem<Absorption_Potion>(350);
 			yield return new ShopItem<Caustica>(999, Condition.DownedGolem);
 		}
-		public override bool SaveToWorld => true;
 		public override bool Started => LocalPlayerStarted || ModContent.GetInstance<OriginSystem>().peatSold > 0;
 		public override bool Completed => ModContent.GetInstance<OriginSystem>().peatSold >= Rewards[^1].PeatAmount;
 		public static ShopItem[] Rewards { get; private set; }
@@ -132,7 +132,16 @@ namespace Origins.Questing {
 		public static void SetupItems() {
 			Rewards = GetItems().ToArray();
 		}
-		public record class ShopItem(int ItemID, int PeatAmount, params Condition[] Conditions);
+		public record class ShopItem(int ItemID, int PeatAmount, params Condition[] Conditions) {
+			public bool AllConditionsMet {
+				get {
+					for (int i = 0; i < Conditions.Length; i++) {
+						if (!Conditions[i].IsMet()) return false;
+					}
+					return true;
+				}
+			}
+		}
 		public record class ShopItem<TItem>(int PeatAmount, params Condition[] Conditions) : ShopItem(ModContent.ItemType<TItem>(), PeatAmount, [OriginGlobalNPC.PeatSoldCondition(PeatAmount), .. (Conditions ?? [])]) where TItem : ModItem;
 	}
 }

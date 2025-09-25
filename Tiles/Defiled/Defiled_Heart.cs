@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
+using Origins.Items.Other.Testing;
 using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -118,12 +119,8 @@ namespace Origins.Tiles.Defiled {
 			tileEntityLocations = tileEntityLocations.Distinct().ToList();
 		}
 	}
-	public class Defiled_Heart_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
-		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
+	public class Defiled_Heart_Item : TestingItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Heart";
-		public override void SetStaticDefaults() {
-			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
-		}
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;
@@ -137,6 +134,5 @@ namespace Origins.Tiles.Defiled {
 			Item.value = 500;
 			Item.createTile = ModContent.TileType<Defiled_Heart>();
 		}
-		public bool ShouldHavePage => false;
 	}
 }

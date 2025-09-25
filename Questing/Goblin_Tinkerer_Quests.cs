@@ -1,4 +1,5 @@
 ﻿using Origins.Items.Materials;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -8,7 +9,6 @@ using Terraria.ModLoader.IO;
 namespace Origins.Questing {
 	public class Turbo_Reel_Quest : Quest {
 		public const string loc_key = "Mods.Origins.Quests.GoblinTinkerer.Turbo_Reel.";
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -123,10 +123,15 @@ namespace Origins.Questing {
 			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
 			Stage = tag.SafeGet<int>("Stage");
 		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
+		}
 	}
 	public class Gun_Glove_Quest : Quest {
 		public string loc_key = "Mods.Origins.Quests.GoblinTinkerer.Gun_Glove.";
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -232,9 +237,14 @@ namespace Origins.Questing {
 			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
 			Stage = tag.SafeGet<int>("Stage");
 		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
+		}
 	}
 	public class Rocket_Boosted_Minecart_Quest : Quest {
-		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -351,6 +361,12 @@ namespace Origins.Questing {
 			//load stage and kills, note that it uses the Stage property so that it sets the event handlers
 			//SafeGet returns the default value (0 for ints) if the tag doesn't have the data
 			Stage = tag.SafeGet<int>("Stage");
+		}
+		public override void SendSync(BinaryWriter writer) {
+			writer.Write(Stage);
+		}
+		public override void ReceiveSync(BinaryReader reader) {
+			Stage = reader.ReadInt32();
 		}
 	}
 }

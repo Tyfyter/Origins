@@ -1,26 +1,49 @@
 global using Microsoft.Xna.Framework;
+global using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
+global using Color = Microsoft.Xna.Framework.Color;
+global using Rectangle = Microsoft.Xna.Framework.Rectangle;
 global using Vector2 = Microsoft.Xna.Framework.Vector2;
 global using Vector3 = Microsoft.Xna.Framework.Vector3;
 global using Vector4 = Microsoft.Xna.Framework.Vector4;
-global using Color = Microsoft.Xna.Framework.Color;
-global using Rectangle = Microsoft.Xna.Framework.Rectangle;
-global using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
+using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Cil;
+using Origins.Backgrounds;
+using Origins.Buffs;
+using Origins.Core;
+using Origins.Graphics;
+using Origins.Items;
 using Origins.Items.Accessories;
-using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Bleeding;
+using Origins.Items.Armor.Felnum;
+using Origins.Items.Other;
 using Origins.Items.Other.Dyes;
+using Origins.Items.Other.Testing;
+using Origins.Items.Vanity.Dev.PlagueTexan;
 using Origins.Items.Weapons.Ranged;
+using Origins.Journal;
+using Origins.Layers;
+using Origins.NPCs.MiscB.Shimmer_Construct;
+using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.Tiles;
+using Origins.Tiles.Banners;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
 using Origins.UI;
+using Origins.Walls;
+using Origins.World.BiomeData;
+using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
+using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -31,29 +54,9 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
-using MC = Terraria.ModLoader.ModContent;
-using Origins.Walls;
-using Origins.Tiles.Other;
-using AltLibrary.Common.AltBiomes;
-using Origins.Tiles.Banners;
-using Origins.Graphics;
-using MonoMod.Cil;
-using Origins.Buffs;
-using PegasusLib;
-using Origins.Items;
-using Origins.Items.Other;
-using Origins.NPCs.TownNPCs;
-using Origins.Items.Other.Testing;
-using Origins.Journal;
-using Origins.Backgrounds;
-using Origins.NPCs.MiscB.Shimmer_Construct;
 using static Origins.OriginsSets.Items;
-using Origins.World.BiomeData;
-using Origins.Layers;
-using Origins.Items.Vanity.Dev.PlagueTexan;
-using System.Text.RegularExpressions;
-using System.Text;
-using Origins.Core;
+using static System.Net.Mime.MediaTypeNames;
+using MC = Terraria.ModLoader.ModContent;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -596,6 +599,12 @@ namespace Origins {
 			ChatManager.Register<AF_Alt_Handler>([
 				"fool"
 			]);
+			ChatManager.Register<Oxford_Comma_Handler>([
+				"ox"
+			]);
+			ChatManager.Register<Not_Oxford_Comma_Handler>([
+				"nox"
+			]);
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
 				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,
@@ -1137,25 +1146,77 @@ namespace Origins {
 		// for DevHelper
 		static string DevHelpBrokenReason {
 			get {
+				Stopwatch stopwatch = new();
 				string reason = null;
 				void AddReason(string text) {
 					if (reason is not null) reason += "\n";
 					reason += text;
 				}
-				foreach (ModItem item in instance.GetContent<ModItem>()) {
-					if (item.DisplayName.Value.Contains("<PH>")) AddReason($"{item.Name} has placeholder name");
+				int timeCounter = 1;
+				void RestartStopwatch() {
+					timeCounter = 0;
+					stopwatch.Restart();
 				}
-				foreach (IBrokenContent item in instance.GetContent<IBrokenContent>()) {
-					AddReason($"{item.GetType().Name}: {item.BrokenReason}");
-				}
-				const string completion_list = "completionList.txt";
-				if ((instance?.FileExists(completion_list) ?? false)) {
-					Regex clIssueRegex = new("^\\([^)]*(@|#|\\$|%|\u2421)[^)]*\\).*!!!.*$", RegexOptions.Multiline | RegexOptions.Compiled);
-					string text = Encoding.UTF8.GetString(instance.GetFileBytes(completion_list));
-					foreach (Match item in (IEnumerable<Match>)clIssueRegex.Matches(text)) {
-						AddReason(item.Value);
+				void WarnHang(string name, IEnumerable<string> data = null) {
+					TimeSpan time = stopwatch.Elapsed;
+					if (time > TimeSpan.FromSeconds(timeCounter * 10)) {
+						timeCounter++;
+						data ??= [reason];
+						instance.Logger.Warn($"Potential hang during \"{name}\", reached {time}, data: {string.Join(", ", data)}");
 					}
 				}
+
+				RestartStopwatch();
+				foreach (LanguageTree branch in TextUtils.LanguageTree.Find("Mods.Origins").GetDescendants()) {
+					if (branch.TextValue.Contains("<PH>")) AddReason($"{branch.value.Key.Replace("Mods.Origins.", "")}: {branch.TextValue}");
+					WarnHang("placeholder text");
+				}
+				stopwatch.Stop();
+				instance.Logger.Info($"Finished querying placeholder text in {stopwatch.Elapsed}");
+
+				RestartStopwatch();
+				foreach (IBrokenContent item in instance.GetContent<IBrokenContent>()) {
+					AddReason($"{item.GetType().Name}: {item.BrokenReason}");
+					WarnHang("broken content");
+				}
+				stopwatch.Stop();
+				instance.Logger.Info($"Finished querying broken content in {stopwatch.Elapsed}");
+
+				RestartStopwatch();
+				HashSet<string> unobtainableJournalEntries = Journal_Registry.Entries.Keys.ToHashSet();
+				for (int i = 0; i < OriginsSets.Items.JournalEntries.Length; i++) {
+					foreach (string entryName in (OriginsSets.Items.JournalEntries[i] ?? "").Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)) {
+						unobtainableJournalEntries.Remove(entryName);
+						WarnHang("unobtainable journal entries", unobtainableJournalEntries);
+					}
+				}
+				for (int i = 0; i < OriginsSets.NPCs.JournalEntries.Length; i++) {
+					foreach (string entryName in (OriginsSets.NPCs.JournalEntries[i] ?? "").Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)) {
+						unobtainableJournalEntries.Remove(entryName);
+						WarnHang("unobtainable journal entries", unobtainableJournalEntries);
+					}
+				}
+				if (unobtainableJournalEntries.Count > 0) {
+					AddReason($"Unobtainable journal entries: {string.Join(", ", unobtainableJournalEntries)}");
+				}
+				stopwatch.Stop();
+				instance.Logger.Info($"Finished querying unobtainable journal entries in {stopwatch.Elapsed}");
+
+				RestartStopwatch();
+				const string completion_list = "completionList.txt";
+				try {
+					if ((instance?.FileExists(completion_list) ?? false)) {
+						Regex clIssueRegex = new("^\\([^)]*(@|#|\\$|%|\u2421)[^)]*\\).*!!!.*$", RegexOptions.Multiline | RegexOptions.Compiled);
+						string text = Encoding.UTF8.GetString(instance.GetFileBytes(completion_list));
+						foreach (Match item in (IEnumerable<Match>)clIssueRegex.Matches(text)) {
+							AddReason(item.Value);
+						}
+					}
+				} catch (IOException ex) {
+					AddReason("Could not query completion list, encountered exception " + ex);
+				}
+				stopwatch.Stop();
+				instance.Logger.Info($"Finished querying completion list in {stopwatch.Elapsed}");
 #if DEBUG
 				AddReason("Mod was last built in DEBUG configuration");
 #endif

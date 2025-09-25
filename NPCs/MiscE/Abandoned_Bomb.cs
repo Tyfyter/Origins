@@ -30,7 +30,10 @@ namespace Origins.NPCs.MiscE {
 			NPC.friendly = false;
 		}
 		public int Frame {
-			get => NPC.frame.Y / NPC.frame.Height;
+			get {
+				NPC.frame.Height = 624 / Main.npcFrameCount[NPC.type];
+				return NPC.frame.Y / NPC.frame.Height;
+			}
 			set => NPC.frame.Y = NPC.frame.Height * value;
 		}
 		Guid owner = Guid.Empty;

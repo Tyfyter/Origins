@@ -25,7 +25,7 @@ Optiphage: This Eater is in its first stage of the Eater life cycle. It goes str
 Amebic_Slime: With its viscosity unchanged, it behaves like most slimes... the only difference is that it tends to easily digest whatever it absorbs.
 Amoeba_Bugger: These nasty bugs thrive in conditions like the {§Riven_Hive} feeding on flesh decayed from the barnacles. They also love it fresh whenever available.
 Barnacle_Bunny: Bunnies are pure beings that cannot normally adapt to the {§Riven_Hive}'s ecosystem, but will be easily capable of under the effects of a Blood Moon.
-Barnacle_Mound: Barnacle mounds act as a self-contained ecosystem of microbes, buggers and the {§Riven} of course.
+Barnacle_Mound: Barnacle mounds act as a self-contained ecosystem of microbes, buggers[ox:,] and the {§Riven} of course.
 Barnacleback: Barnaclebacks are a keystone species to the {§Riven_Hive}, working hard to maintain it. Their presence is a sure sign that any progress cleansing the Hive is futile.
 Bottomfeeder: Goldfish naturally evolve into dangerous, insolveable carnivores in the {§Riven_Hive} which is only further catalyzed by the Blood Moon.
 Cleaver_Head: A vicious defender of the {§Riven_Hive}, the Cleaver hides in burrows of {§spug} flesh awaiting any trespassers of its territory.
@@ -84,8 +84,8 @@ Leaf_Snapper_Alt: A peaceful turtle sub-species that has adapted to the Brine Po
 Brine_Serpent_Head: The secondary predator alongside the Carpalfish, second only to King Crabs. It viciously attacks and ensares its prey in quick succession.
 Catacomb_Clearer: Dangerous foes that love to play around with explosives. Unlike their cousins, Undead Miners, Catacomb Clearers WILL throw explosives at you.
 Cannihound: Cannibalistic fiends that are desperate for any kind of meat. They may hunt in packs, but they are more than willing to turn around and make a quick meal out of their own kind. Such is the sad life of a Cannihound.
-Aqueoua: Evolved from the {§Riven_Hive} directly, Aqueoua seek out prey, absorb them and then quickly digest them into usable energy. They waste so much of it wobbling around, poor fellas.
-Shelly_Aqueoua: Evolved from the {§Riven_Hive} directly, Aqueoua seek out prey, absorb them and then quickly digest them into usable energy. They waste so much of it wobbling around, poor fellas.
+Aqueoua: Evolved from the {§Riven_Hive} directly, Aqueoua seek out prey, absorb them[ox:,] and then quickly digest them into usable energy. They waste so much of it wobbling around, poor fellas.
+Shelly_Aqueoua: Evolved from the {§Riven_Hive} directly, Aqueoua seek out prey, absorb them[ox:,] and then quickly digest them into usable energy. They waste so much of it wobbling around, poor fellas.
 Lost_Diver: Puppeteered and perserved corpse of a Terrarian hero much like you. Who ever it was is long gone, but their body is bent to the will of the mildew now.
 Mildew_Carrion: A mildewy-blob of hate. It is grows faster than it is decays.
 Spirit_Of_Christmas_Future_Tax_Collector: The Ghost of Christmas Yet to warn the Tax Collector of what's to come.

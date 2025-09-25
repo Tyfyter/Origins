@@ -32,7 +32,7 @@ namespace Origins.NPCs.MiscE {
 			return true;
 		}
 		public override void AI() {
-			if (NPC.frame.Y / NPC.frame.Height >= 6) {
+			if (NPC.frame.Y / 62 >= 6) {
 				DrawOffsetY = 14;
 				NPC.aiStyle = NPCAIStyleID.Granite_Elemental;
 				float diff = NPC.GetTargetData().Center.X - NPC.Center.X;
@@ -41,7 +41,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.velocity *= SpeedMult;
 		}
 		public override void FindFrame(int frameHeight) {
-			bool expanded = NPC.frame.Y / NPC.frame.Height >= 6;
+			bool expanded = NPC.frame.Y / 62 >= 6;
 			NPC.DoFrames(expanded ? 6 : 9, (expanded ? 6 : 0)..Main.npcFrameCount[Type]);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

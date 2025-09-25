@@ -3,15 +3,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Origins.Tiles.Riven;
-using ThoriumMod.Items.Donate;
 using Origins.World.BiomeData;
 using PegasusLib;
 using Terraria.Utilities;
+
 namespace Origins.Items.Other.Testing {
 	/// <summary>
 	/// can be used to add NPCs to an NPC drop table
 	/// </summary>
-	public class NPC_Spawner : ModItem {
+	public class NPC_Spawner : TestingItem {
 		public override string Texture => "Terraria/Images/Extra_74";
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 0;
