@@ -1181,7 +1181,7 @@ TILES:
 (^) Riven Jungle Grass*
 (X) Rusty Piping !!!
 (X) Sanguinite Brick
-(@4) Sanguinite Ore* !!!
+(@4) Sanguinite Ore*
 (X) Scrap Heap !!!
 (^) Silica*
 (^) Silicon Ore*

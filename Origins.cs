@@ -39,6 +39,7 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -1203,12 +1204,16 @@ namespace Origins {
 
 				RestartStopwatch();
 				const string completion_list = "completionList.txt";
-				if ((instance?.FileExists(completion_list) ?? false)) {
-					Regex clIssueRegex = new("^\\([^)]*(@|#|\\$|%|\u2421)[^)]*\\).*!!!.*$", RegexOptions.Multiline | RegexOptions.Compiled);
-					string text = Encoding.UTF8.GetString(instance.GetFileBytes(completion_list));
-					foreach (Match item in (IEnumerable<Match>)clIssueRegex.Matches(text)) {
-						AddReason(item.Value);
+				try {
+					if ((instance?.FileExists(completion_list) ?? false)) {
+						Regex clIssueRegex = new("^\\([^)]*(@|#|\\$|%|\u2421)[^)]*\\).*!!!.*$", RegexOptions.Multiline | RegexOptions.Compiled);
+						string text = Encoding.UTF8.GetString(instance.GetFileBytes(completion_list));
+						foreach (Match item in (IEnumerable<Match>)clIssueRegex.Matches(text)) {
+							AddReason(item.Value);
+						}
 					}
+				} catch (IOException ex) {
+					AddReason("Could not query completion list, encountered exception " + ex);
 				}
 				stopwatch.Stop();
 				instance.Logger.Info($"Finished querying completion list in {stopwatch.Elapsed}");
