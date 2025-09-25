@@ -79,7 +79,6 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.usesLocalNPCImmunity = false;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 20;
-			Projectile.extraUpdates = 0;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			base.ModifyHitNPC(target, ref modifiers);
@@ -89,7 +88,6 @@ namespace Origins.Items.Weapons.Summoner {
 		public override string Texture => typeof(Terratotem_Mask_Medium).GetDefaultTMLName();
 		public override void SetDefaults() {
 			base.SetDefaults();
-			Projectile.extraUpdates = 0;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			base.ModifyHitNPC(target, ref modifiers);
@@ -99,7 +97,6 @@ namespace Origins.Items.Weapons.Summoner {
 		public override string Texture => typeof(Terratotem_Mask_Big).GetDefaultTMLName();
 		public override void SetDefaults() {
 			base.SetDefaults();
-			Projectile.extraUpdates = 0;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			base.ModifyHitNPC(target, ref modifiers);
