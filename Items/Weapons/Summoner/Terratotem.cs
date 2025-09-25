@@ -327,30 +327,41 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			foreach (Projectile other in Main.ActiveProjectiles) {
 				if (other.whoAmI == Projectile.whoAmI) continue;
 				if (other.owner == Projectile.owner && other.ModProjectile is Terratotem_Mask_Base otherMask) {
+					int increase = 1;
+					if (other.type == Type) increase++;
 					switch (otherMask.targetData.TargetType) {
 						case TargetType.NPC:
-						othersTargetingCounts[otherMask.targetData.Index]++;
+						othersTargetingCounts[otherMask.targetData.Index] += increase;
 						break;
 
 						case TargetType.Item:
-						othersTargetingItemsCounts[otherMask.targetData.Index]++;
+						othersTargetingItemsCounts[otherMask.targetData.Index] += increase;
 						break;
 					}
 				}
 			}
+			Player player = Main.player[Projectile.owner];
 			const float max_distance = 2000f;
 			float distanceFromTarget = max_distance;
 			bool hasPriorityTarget = false;
 			int sharingCount = int.MaxValue;
 			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
 				bool isCurrentTarget = targetData.TargetType == TargetType.NPC && npc.whoAmI == targetData.Index;
-				if ((isCurrentTarget || isPriorityTarget || !hasPriorityTarget) && npc.CanBeChasedBy() && Projectile.Center.WithinRange(npc.Center, max_distance)) {
+				if ((isCurrentTarget || isPriorityTarget || !hasPriorityTarget) && npc.CanBeChasedBy() && player.Center.WithinRange(npc.Center, max_distance)) {
 					Vector2 pos = Projectile.position;
 					float between = Vector2.Distance(npc.Center, pos);
 					between *= isCurrentTarget ? 0 : 1;
 					bool closer = distanceFromTarget > between;
 					bool lineOfSight = Collision.CanHitLine(pos, 8, 8, npc.position, npc.width, npc.height);
-					if ((closer || sharingCount > othersTargetingCounts[npc.whoAmI] || !foundTarget) && lineOfSight) {
+					switch (sharingCount.CompareTo(othersTargetingCounts[npc.whoAmI])) {
+						case -1:
+						closer = false;
+						break;
+						case 1:
+						closer = true;
+						break;
+					}
+					if ((closer || !foundTarget) && lineOfSight) {
 						sharingCount = othersTargetingCounts[npc.whoAmI];
 						distanceFromTarget = between;
 						targetData.Index = npc.whoAmI;
@@ -360,7 +371,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					}
 				}
 			}
-			Player player = Main.player[Projectile.owner];
 			TargetData oldTargetData = targetData;
 			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
 			if (targetData.TargetType == TargetType.Slot && CanPickupItems) {
@@ -521,6 +531,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool CanPickupItems => false;
 	}
 	public partial class Terratotem_Mask_Medium : Terratotem_Mask_Base {
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.localNPCHitCooldown = -1;
+		}
 		public override bool? CanDamage() => Projectile.ai[2] > 0;
 		public override void DoMaskBehavior() {
 			if (Projectile.ai[2] > 0) {
@@ -534,6 +548,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						item.Center = player.Center;
 					}
 				}
+				if (Projectile.ai[2] <= 0) Projectile.ResetLocalNPCHitImmunity();
 				return;
 			}
 			Rectangle targetRect = targetData.GetPosition(Projectile);
@@ -565,10 +580,17 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	public partial class Terratotem_Mask_Big : Terratotem_Mask_Base {
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.localNPCHitCooldown = -1;
+		}
 		public override bool? CanDamage() => Projectile.ai[2] >= 10 && Projectile.ai[2] <= 20;
 		public override void AI() {
 			base.AI();
-			if (Projectile.numUpdates == -1 && Projectile.ai[2] > 0 && Projectile.ai[2].Warmup(30)) Projectile.ai[2] = 0;
+			if (Projectile.numUpdates == -1 && Projectile.ai[2] > 0 && Projectile.ai[2].Warmup(30)) {
+				Projectile.ai[2] = 0;
+				Projectile.ResetLocalNPCHitImmunity();
+			}
 		}
 		public override void DoMaskBehavior() {
 			if (Projectile.ai[2] > 0) {
