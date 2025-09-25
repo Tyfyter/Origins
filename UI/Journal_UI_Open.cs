@@ -646,7 +646,7 @@ namespace Origins.UI {
 					scrollWheelValue = 0;
 				}
 				if (scrollOffset != 0) {
-					pageOffset = Math.Clamp(pageOffset + scrollOffset, 0, (pages?.Count ?? 0) - 2);
+					pageOffset = Math.Clamp(pageOffset + scrollOffset, 0, Math.Max((pages?.Count ?? 0) - 2, 0));
 					scrollWheelValue = 0;
 				}
 				if (mode is Journal_UI_Mode.Normal_Page or Journal_UI_Mode.Quest_Page) {
