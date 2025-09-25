@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 14;
+			Item.damage = 8;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 38;
 			Item.shootSpeed = 9f;
@@ -30,11 +30,12 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noUseGraphic = false;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item44;
 			Item.buffType = Terratotem_Buff.ID;
 			Item.shoot = Broken_Terratotem_Tab.ID;
 			Item.noMelee = true;
+			Item.ArmorPenetration += 2;
 		}
 		public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Terratotem_Tab.ID] + player.ownedProjectileCounts[Broken_Terratotem_Tab.ID] < Terratotem.MaxCount;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {

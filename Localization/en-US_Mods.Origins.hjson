@@ -1023,7 +1023,7 @@ Buffs: {
 	}
 
 	Terratotem_Buff: {
-		DisplayName: Terratotem
+		DisplayName: Totem Pole
 		Description: The tribe will serve you
 	}
 

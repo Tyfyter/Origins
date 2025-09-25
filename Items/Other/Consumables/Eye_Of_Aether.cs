@@ -27,8 +27,8 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 5)
-			.AddIngredient(ItemID.Lens, 2)
 			.AddIngredient(ItemID.FallenStar)
+			.AddIngredient(ItemID.Lens, 2)
 			.AddIngredient(ModContent.ItemType<Carburite_Item>(), 5)
 			.Register();
 		}

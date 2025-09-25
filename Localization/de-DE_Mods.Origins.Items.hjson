@@ -4860,8 +4860,8 @@ Foul_Broth: {
 	// DisplayName: Foul Broth
 	/* Tooltip:
 		'''
-		Increases minion damage by 50%
-		Reduces minion speed by 25%
+		Increases minion damage by 100%
+		Reduces minion speed by 50%
 		''' */
 }
 

@@ -3,6 +3,9 @@ Common: {
 		// 0: Whatch want?
 		// 1: Need something?
 		// 2: Looking for something?
+		// 3: What is it?
+		// 4: Are you hurt? Do you need help?
+		// 5: Hello?
 	}
 
 	GivenConfetti: {
@@ -569,8 +572,8 @@ Demolitionist: {
 			''' */
 		// Inquire: Hey, you wanna know my favorite pastime? Just goin' to some Jungle pond, rippin' up peat moss and throwin' it around. I loved the stuff since I was a wee-lad, and now I'm feelin' a little nostalgic.
 		// Start: So, why don't you get some for me and I'll offer you some fine explosive stuffs I've been collecting durin' my excavations. Sound like a deal?
-		// ReadyToComplete: unneeded
-		// Complete: unneeded
+		// ReadyToComplete: Well, I'll be darned if that's some Petey Pete peat moss you got on yah.
+		// Complete: Oh hoho, it was! How kind of yah! Thank yah. Don't forget to check out my shop for some new items, now would yah?
 	}
 }
 

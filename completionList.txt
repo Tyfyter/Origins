@@ -1134,11 +1134,11 @@ TILES:
 (^) Bleeding Obsidian*
 (^) Bomb Trap
 (^) Brittle Quartz*
-(X) Brown Ice
+(X) Brown Ice !!!
 (^) Calcified Spug Flesh
 (X) Cancer Block°
 (@4, ^3) Carburite
-(X) Catwalk
+(X) Catwalk !!!
 (^) Chambersite
 (^) Chambersite Gemspark°
 (^) Chambersite Gemstone°
@@ -1150,7 +1150,7 @@ TILES:
 (^) Defiled Cactus*
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
-(X) Defiled Regolith
+(@, ^3) Defiled Regolith
 (^) Defiled Sand*
 (^) Defiled Sandstone*
 (^) Defiled Stone*
@@ -1162,14 +1162,14 @@ TILES:
 (^) Fiberglass Block*
 (^) Gray Ice Block*
 (^) Hardened Defiled Sand*
-(X) Hardened Sootsand
+(X) Hardened Sootsand !!!
 (X) Lihzarhd Bomb Trap
 (^) Limestone*
 (@4) Lost Brick
 (^) Lost Ore*
 (^) Marrowick*
 (^) Mildew Block°
-(X) Murky Sludge
+(X) Murky Sludge !!!
 (X) Nova Brick°
 (X) Nova Fragment Block°
 (^) Peat Moss Block*
@@ -1179,22 +1179,22 @@ TILES:
 (^) Riven Cactus*
 (^) Riven Grass*
 (^) Riven Jungle Grass*
-(X) Rusty Piping
+(X) Rusty Piping !!!
 (X) Sanguinite Brick
-(@4) Sanguinite Ore*
-(X) Scrap Heap
+(@4) Sanguinite Ore* !!!
+(X) Scrap Heap !!!
 (^) Silica*
 (^) Silicon Ore*
-(X) Soot Sandstone
-(X) Sootgrass°
+(X) Soot Sandstone !!!
+(X) Sootgrass° !!!
 (X) Space Goo
 (^) Spug Flesh*
-(X) Tainted Stone
-(X) Truss Block
-(X) Type-I Fortified Steel Block
-(X) Type-II Fortified Steel Block
-(X) Type-III Fortified Steel Block
-(X) Witherwood
+(X) Tainted Stone !!!
+(X) Truss Block !!!
+(X) Type-I Fortified Steel Block !!!
+(X) Type-II Fortified Steel Block !!!
+(X) Type-III Fortified Steel Block !!!
+(X) Witherwood !!
 
 (^) Amebic Gel Wall
 (^) Barnacle Wall
@@ -1216,17 +1216,17 @@ TILES:
 (^) Endowood Wall
 (^) Fiberglass Wall
 (^) Hardened Defiled Sand Wall
-(X) Hardened Sootsand Wall
+(X) Hardened Sootsand Wall !!!
 (@, ^3) Lost Brick Wall
 (^) Marrowick Wall
-(X) Molten Steel Wall
+(X) Molten Steel Wall !!!
 (X) Nova Brick Wall
 (^) Quartz Wall
 (^) Riven Grass Wall
-(X) Soot Sandstone Wall
-(X) Sootsand Wall
+(X) Soot Sandstone Wall !!!
+(X) Sootsand Wall !!!
 (^) Spug Flesh Wall
-(X) Type-III Fortified Steel Wall
+(X) Type-III Fortified Steel Wall !!!
 
 (^) Alkahest Torch*
 (^) Amoeba Buggy Cage*
@@ -1241,37 +1241,37 @@ TILES:
 (^) Defiled Water Fountain*
 (X) Edenwood Furniture°
 (^) Endowood Furniture*
-(X) Hyrax Cage
+(X) Hyrax Cage !!!
 (^) Limestone Furniture
 (^) Living Alkahest Block*
 (^) Living Bile Block*
 (^) Marrowick Furniture*
 (X) Nova Furniture°
-(X) Peppered Moth Lamp
-(X) Phoenum Torch
+(X) Peppered Moth Lamp !!!
+(X) Phoenum Torch !!!
 (X) Residue Furniture°
 (^) Riven Torch*
 (^) Riven Water Fountain*
 (^) Shadow Torch°
 (^) Traffic Cone*
 
-(X) Ashen Dungeon Chest
+(X) Ashen Dungeon Chest !!!
 (X) Batholith Grindstone°
 (X) Bilious Incense
 (^) Brine Dungeon Chest
-(X) Cargo Elevator Door
-(X) Cargo Elevator Door (Jammed)
+(X) Cargo Elevator Door !!!
+(X) Cargo Elevator Door (Jammed) !!!
 (^) Chambersite Gem Lock°
 (^) Cleansing Station*
 (^) Defiled Campfire*
 (^) Defiled Dungeon Chest*
 (^) Defiled Monolith*
 (X) Defiled Pylon°
-(X) Industrial Door
-(X) Large Storage Container
+(X) Industrial Door !!!
+(X) Large Storage Container !!!
 (^) Laser Tag Console*
-(X) Medium Storage Container
-(X) Modular Bunk
+(X) Medium Storage Container !!!
+(X) Modular Bunk !!!
 (X) Mushroom Dungeon Chest°
 (X) Nova Monolith°
 (X) Ocean Dungeon Chest°
@@ -1283,9 +1283,9 @@ TILES:
 (X) Ravel Locker
 (^) Riven Campfire*
 (^) Riven Dungeon Chest*
-(X) Rusty Locker
-(X) Small Storage Container
-(X) Surveysprout Planter Box
+(X) Rusty Locker !!!
+(X) Small Storage Container !!!
+(X) Surveysprout Planter Box !!!
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box
 (X) Wrycoral Planter Box
@@ -1294,15 +1294,15 @@ TILES:
 (^) Fabricator*
 (X) Flesh Shredder°
 (X) Interstellar Sampler°
-(X) Medicine Fabricator
+(X) Medicine Fabricator !!!
 (X) Metal Presser
 (X) The Demaker
 
 (^) Acetabularia*
-(X) Ashen Scrap Foliage
-(X) Ashen Soot Foliage
-(X) Background Door
-(X) Beacon Light
+(X) Ashen Scrap Foliage !!!
+(X) Ashen Soot Foliage !!!
+(X) Background Door !!!
+(X) Beacon Light !!!
 (^) Brineglow Vine*
 (^) Defiled Foliage
 (々) Defiled Heart
@@ -1310,47 +1310,50 @@ TILES:
 (^) Defiled Pot
 (X) Exoskeletal Baobab Tree*
 (^) Exoskeletal Tree*
-(X) Floodlight
+(X) Floodlight !!!
 (ᗢ) Fungarust*
 (^) Fuzzvine
 (^) Gel Blister*
-(X) Generation Station
-(X) Heat Vent
+(X) Generation Station !!!
+(X) Heat Vent !!!
 (^) Hydrothermal Vent
 (^) Limestone Rubble
 (^) Marrowick Coral
 (^) Marrowick Flange
-(X) Modular Light Fixture
+(X) Modular Light Fixture !!!
 (^) Ocotillo
 (X) Petrified Baobab Tree*
 (^) Petrified Tree*
 (^) Riven Foliage
 (^) Riven Pot
-(X) Sheet Metal
+(X) Sheet Metal !!!
 (^) Shelf Coral
 (^) Soulspore*
-(X) Steel Support Beam
-(X) Suit Locker
+(X) Steel Support Beam !!!
+(X) Suit Locker !!!
 (ᗢ) Surveysprout*
 (^) Tangela Bramble
 (^) Underwater Vine
 (^) Venus Coral
 (^) Wilting Rose*
-(X) Witherleaf Tree
-(X) Workstation Extras
+(X) Witherleaf Tree !!!
+(X) Workstation Extras !!!
 (^) Wrycoral*
 
 (^) A Perfect World
 (^) Deceptive Beauty
 (X) Four Corners
 (^) The Jungle's Window
-(X) There's Five of Them Now
+(X) There's Five of Them Now !!!
 (X) What's Out There
 
 (^) Ancient Music Box (Brine Pool)
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
+(X) Music Box (Ashen Factory) !!!
+(X) Music Box (Ashen Scrapyard) !!!
+(X) Music Box (Ashen Underground) !!!
 (^) Music Box (Brine Pool)
 (^) Music Box (Defiled Caverns)
 (X) Music Box (Defiled Egregocide Route)
@@ -1362,6 +1365,7 @@ TILES:
 (X) Music Box (Repentance)
 (X) Music Box (Rivenran)
 (^) Music Box (Riven Hive)
+(X) Music Box (Smog Storm) !!!
 (^) Music Box (The Dive)
 (^) Otherworldly Music Box (Defiled Wastelands)
 
@@ -1390,8 +1394,8 @@ TILES:
 (^) Shimmer Construct Trophy*
 (X) SR-48 Relic
 (X) SR-48 Trophy
-(X) Trenchmaker Relic
-(X) Trenchmaker Trophy
+(X) Trenchmaker Relic !!!
+(X) Trenchmaker Trophy !!!
 (^) World Cracker Relic*
 (^) World Cracker Trophy*
 ---
@@ -1458,6 +1462,7 @@ MATERIALS:
 (X) Weapon Blueprint°
 ---
 
+
 MISCELLANEOUS ITEMS:
 |---
 (X) Armor+ Power-Up
@@ -1478,8 +1483,8 @@ CRITTERS AND FISH:
 (^) Chambersite Bunny
 (^) Chambersite Squirrel
 (^) Cicada 3301*
-(X) Hyrax
-(X) Peppered Moth
+(X) Hyrax !!!
+(X) Peppered Moth !!!
 
 (^) Bilemouth*
 (^) Bobbit Worm
@@ -1487,7 +1492,7 @@ CRITTERS AND FISH:
 (^) Fiberbass
 (^) Polyeel*
 (^) Prikish*
-(X) Scrapfish
+(X) Scrapfish !!!
 (^) Tearracuda*
 (^) Toadfish
 ---
@@ -1510,13 +1515,12 @@ CONSUMABLES:
 (^) Flask of Black Bile*
 (^) Focus Potion°
 (^) Greater Summoning Potion
-(^) Latchkey
+(X) Mega Mojo Flask
 (^) Mojo Flask*
 (#, ^2) Potion of Projection
 (^) Protean Potion*
 (^) Purification Potion*
 (^) Super Mojo Flask*
-(X) Mega Mojo Flask
 (^) Voidsight Potion°
 
 (#, ^2) Astringent Broth
@@ -1596,6 +1600,7 @@ CONSUMABLES:
 
 (^) Gooey Water*
 (^) Holiday Hair Dye*
+(^) Latchkey
 (^) Lottery Ticket*
 (^) Magic Brine Dropper*
 (^) Spyglass

@@ -39,7 +39,7 @@ namespace Origins.World {
 			(ENQUEUE, ModContent.ItemType<Nitro_Crate>(), 1f),
 			(ENQUEUE, ModContent.ItemType<Bomb_Charm>(), 1f),
 			(ENQUEUE, ModContent.ItemType<Beginners_Tome>(), 1f),
-			(ENQUEUE, ModContent.ItemType<Broken_Terratotem>(), 1f),
+			(ENQUEUE, ModContent.ItemType<Broken_Terratotem>(), 0.75f),
 
 			(CHANGE_QUEUE, ChestID.DeadMan, 0b0000),
 			(ENQUEUE, ModContent.ItemType<Magic_Tripwire>(), 1f),
