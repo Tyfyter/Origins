@@ -1655,7 +1655,7 @@ Sanguinite_Bar: {
 }
 
 Sentient_Powder: {
-	DisplayName: Sentient Powder
+	DisplayName: Parasitic Powder
 	Tooltip: Spreads the {§Riven_Hive}
 }
 

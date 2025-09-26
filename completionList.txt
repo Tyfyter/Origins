@@ -26,7 +26,6 @@ $2: Needs sound (SFX/music is composed but not implemented)
 
 X: No progress
 *: Wiki entry available
-°: Wiki entry in dev branch
 !!!: Priority
 
 ☻: Pending review
@@ -57,13 +56,13 @@ BOSSES AND MINI-BOSSES:
 (X, ^2) Ichor Storm
 (X) Zombie Paladin
 
-(^) Defiled Amalgamation*
-($, ^2/3) Fiberglass Weaver*
+(^) Defiled Amalgamation
+($, ^2/3) Fiberglass Weaver
 (^) Shimmer Construct
 (#, ^2) Trenchmaker
-(^) World Cracker*
+(^) World Cracker
 
-(^) Lost Diver/Mildew Carrion°
+(^) Lost Diver/Mildew Carrion
 (X) Snowdrop
 
 (X) Arabel
@@ -95,25 +94,25 @@ TOWN NPCs:
 
 TOWN NPC Quests:
 |---
-(^) TOWN NPC QUEST MECHANICS°
+(^) TOWN NPC QUEST MECHANICS
 
 (X) Arabel - My Love, My Life
-(^) Arms Dealer - Live Fire*
-(^) Arms Dealer - Three Times the Charm*
+(^) Arms Dealer - Live Fire
+(^) Arms Dealer - Three Times the Charm
 (^) Brine Fiend - Basic Brewery
 (^) Brine Fiend - Get Freaky
-(^) Cyborg - Sensor Upgrade*
+(^) Cyborg - Sensor Upgrade
 (X) Defiled Effigy - Outdated Proxy
 (^) Demolitionist - Re-peat Customer
-(^) Dryad - I’ll Give You a Deal*
-(^) Dryad - Clearing the Way*
-(^) Goblin Tinkerer - Reel In the Goods*
-(^) Goblin Tinkerer - Lend a Hand?*
+(^) Dryad - I’ll Give You a Deal
+(^) Dryad - Clearing the Way
+(^) Goblin Tinkerer - Reel In the Goods
+(^) Goblin Tinkerer - Lend a Hand?
 (X) Goblin Tinkerer - Full Speed Ahead
 (^) Guide - Get Questing!
 (^) Guide - Troubling Trouble
-(^) Merchant - To the Skies!*
-(^) Merchant - The Greatest Sin of All, Gambling*
+(^) Merchant - To the Skies!
+(^) Merchant - The Greatest Sin of All, Gambling
 (^) Painter - Painter Apprentice
 (^) Party Girl - Confetti Fun
 (^) Party Girl - Livin' Up the Party
@@ -129,18 +128,18 @@ TOWN NPC Quests:
 
 VANILLA MODIFICATIONS:
 |---
-(ᗢ) Recipes General*
+(ᗢ) Recipes General
 
-(^) Advanced weapon functionality in PVP*
-(^) Boss Resistances (make every boss immune to anything with Stun)*
-(^) Demolitionist sells Explosive Powder at all times*
-(^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
-(^) Explosive Defense Punishment (increased affliction from defense)*
-(^) Harpoon (new weapon to introduce sub-class)*
-(^) Proximity Mine Launcher to use Canisters*
-(^) Rain armor buffs*
-(^) Snow Armor is now craftable°
-(^) Wooden armor buffs*
+(^) Advanced weapon functionality in PVP
+(^) Boss Resistances (make every boss immune to anything with Stun)
+(^) Demolitionist sells Explosive Powder at all times
+(^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)
+(^) Explosive Defense Punishment (increased affliction from defense)
+(^) Harpoon (new weapon to introduce sub-class)
+(^) Proximity Mine Launcher to use Canisters
+(^) Rain armor buffs
+(^) Snow Armor is now craftable
+(^) Wooden armor buffs
 ---
 
 
@@ -170,105 +169,105 @@ WORLD GENERATION:
 
 OTHER:
 |---
-(X) Cubekon Tinkerer's Modifiers*
+(X) Cubekon Tinkerer's Modifiers
 (^) Defiled "Chrysalis" Spawning
-(^) Explosive Modifiers*
-(^) Journal*
-(^) Quest System General*
-(^) Summoner Plus Modifiers*
+(^) Explosive Modifiers
+(^) Journal
+(^) Quest System General
+(^) Summoner Plus Modifiers
 ---
 
 
 ENEMY NPCS:
 |---
 (X) Amoebayena
-(^) Amoebic Slime*
-(^) Ancient Defiled Cyclops*
-(^) Ancient Defiled Phantom*
+(^) Amoebic Slime
+(^) Ancient Defiled Cyclops
+(^) Ancient Defiled Phantom
 (^) Aqueoua
-(^) Barnacleback*
-(^) Barnacle Bunny*
-(^) Bile Thrower*
+(^) Barnacleback
+(^) Barnacle Bunny
+(^) Bile Thrower
 (X) Blotopus
-(^) Bottomfeeder*
+(^) Bottomfeeder
 (^) Boulder Mimic
-(^) Buckethead Zombie°
+(^) Buckethead Zombie
 (^) Cannihound
 (X) Cartwheeler
 (^) Catacomb Clearer
-(^) Cellarkeep*
-(^) Cleaver*
-(^) Cloud Elemental°
-(^) Conehead Zombie°
+(^) Cellarkeep
+(^) Cleaver
+(^) Cloud Elemental
+(^) Conehead Zombie
 (X) Corrupt Reaper
-(^) Cranivore*
+(^) Cranivore
 (🤡) Creme-filled Bat
-(^) Crimbrain*
+(^) Crimbrain
 (X) Crying Creeper
 (X) Defensive Turret
 (^) Defiled Broadcaster
-(^) Defiled Cyclops*
-(^) Defiled Digger*
+(^) Defiled Cyclops
+(^) Defiled Digger
 (X) Defiled Glitchbeest
-(^) Defiled Krusher*
-(^) Defiled Mite*
+(^) Defiled Krusher
+(^) Defiled Mite
 (X) Defiled Ostrich
-(^) Defiled Phantom*
-(^) Defiled Swarmer*
-(^) Defiled Wisp*
-(^) Enchanted Fiberglass Bow*
-(^) Enchanted Fiberglass Cannon*
-(^) Enchanted Fiberglass Pistol*
+(^) Defiled Phantom
+(^) Defiled Swarmer
+(^) Defiled Wisp
+(^) Enchanted Fiberglass Bow
+(^) Enchanted Fiberglass Cannon
+(^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Slime
-(^) Enchanted Fiberglass Sword*
-(^) Fae Nymph (Whimsical Girl)°
-(^) Felnum Einheri*
-(^) Felnum Guardian*
-(^) Felnum Slime*
-(^) Flagellant*
-(^) Flying Exoskeleton*
+(^) Enchanted Fiberglass Sword
+(^) Fae Nymph (Whimsical Girl)
+(^) Felnum Einheri
+(^) Felnum Guardian
+(^) Felnum Slime
+(^) Flagellant
+(^) Flying Exoskeleton
 (X) Gas Mask Zombie
 (^) Goo Wall
-(^) Graveshield Zombie*
+(^) Graveshield Zombie
 (X) Hammerhand
 (X) Limestone Creeper
-(^) Optiphage*
+(^) Optiphage
 (X) Packhunter
 (#, ^2) Pinwheel
 (#, ^2) Power Suit Zombie
-(^) Pustule Jellyfish*
+(^) Pustule Jellyfish
 (X) QM-76 'Quakemaker'
 (X) Reject
 (X) Repairboy
-(^) Riven Penguin*
-(^) Riven Protoform*
+(^) Riven Penguin
+(^) Riven Protoform
 (X) Rivenpotamus
-(^) Shattered Goldfish*
+(^) Shattered Goldfish
 (^) Shimmer Drone
 (X) Shooter Creeper
-(^) Single-Cellular Nautilus*
-(^) Slime Worm (Slorm)*
-(^) Spider Amoeba*
+(^) Single-Cellular Nautilus
+(^) Slime Worm (Slorm)
+(^) Spider Amoeba
 (X) Spiteful Flesh
 (X) Tubefish
 (X) Wind Pail
 
 (^) Airsnatcher
-(^) Amoebeye*
-(^) Amoebic Mummy*
-(^) Amoeba Bugger*
-(^) Barnacle Mound*
+(^) Amoebeye
+(^) Amoebic Mummy
+(^) Amoeba Bugger
+(^) Barnacle Mound
 (X) Beckonbug
 (^) Brine Latcher
 (^) Brine Serpent
-(^) Carpalfish°
-(^) Defiled Asphyxiator*
-(^) Defiled Mimic*
-(^) Defiled Pigron*
-(^) Defiled Squid*
+(^) Carpalfish
+(^) Defiled Asphyxiator
+(^) Defiled Mimic
+(^) Defiled Pigron
+(^) Defiled Squid
 (X) Defiled Surveyor
-(^) Defiled Tripod*
-(^) Defiled Watcher*
+(^) Defiled Tripod
+(^) Defiled Watcher
 (#, ^2) Defiled Weaver
 (X) Depth Crawler
 (X) False Geometry
@@ -280,31 +279,31 @@ ENEMY NPCS:
 (X) Oil Ghoul
 (^) King Crab
 (^) Mildew Creeper
-(^) Mitoworm*
+(^) Mitoworm
 (^) Nasty Crawdad
-(^) Profaned Bident*
+(^) Profaned Bident
 (X) Riven Gull
-(^) Riven Mimic*
-(^) Riven Pigron*
+(^) Riven Mimic
+(^) Riven Pigron
 (X) Riven Protoform (Crawler Form)
 (X) Riven Protoform (Tank Form)
 (^) Rock Bottom
 (X) Rotting Husk
-(^) Savage Whip*
+(^) Savage Whip
 (X) Scrapyard Stryder
-(^) Sea Dragon°
-(^) Shattered Ghoul*
-(^) Shattered Mummy*
+(^) Sea Dragon
+(^) Shattered Ghoul
+(^) Shattered Mummy
 (^) Shotgunfish
 (X) Tendon Terror
 (X) Terrogator
-(^) Torn Ghoul*
-(^) Trijaw Shark*
+(^) Torn Ghoul
+(^) Trijaw Shark
 (X) VV-13
 
 (X) Clockwork
 (@2/3, #) Electromancer
-(^, 赏) Etherealizer*
+(^, 赏) Etherealizer
 (@2, #) Illusionary
 (X) Lamp Oil Tender
 (X) Meteor Crawler
@@ -340,22 +339,22 @@ EVENTS:
 STATUS EFFECTS:
 |---
 (^) Cavitation
-(^) Corrupt Assimilation*
-(^) Crimson Assimilation*
-(^) Defiled Assimilation*
+(^) Corrupt Assimilation
+(^) Crimson Assimilation
+(^) Defiled Assimilation
 (#, ^2) Hallow Assimilation
-(^) Impeding Shrapnel*
-(^) Mana Buffer*
+(^) Impeding Shrapnel
+(^) Mana Buffer
 (X) Miasma
 (X) Quantum Vitiation
-(^) Rasterized*
-(^) Riven Assimilation*
-(^) Shadefire*
+(^) Rasterized
+(^) Riven Assimilation
+(^) Shadefire
 (^) Shimmering?
-(^) Static Shock*
-(^) Torn*
-(^) Totally Safe*
-(^) Toxic Shock*
+(^) Static Shock
+(^) Torn
+(^) Totally Safe
+(^) Toxic Shock
 ---
 
 
@@ -376,57 +375,57 @@ NPC DIALOGUE:
 ARMOR:
 |---
 (^) Aether Armor
-(^) Ancient Defiled Armor*
-(^) Ancient Felnum Armor*
-(^) Ancient Riven Armor*
-(⛥) Ashen Armor*
-(^) Cryosten Armor*
-(^) Defiled Armor*
-(^) Encrusted Armor*
-(^) Endowood Armor*
-(^) Felnum Armor*
-(^) Fiberglass Armor*
+(^) Ancient Defiled Armor
+(^) Ancient Felnum Armor
+(^) Ancient Riven Armor
+(⛥) Ashen Armor
+(^) Cryosten Armor
+(^) Defiled Armor
+(^) Encrusted Armor
+(^) Endowood Armor
+(^) Felnum Armor
+(^) Fiberglass Armor
 (X) Laborer Set
-(^) Lost Armor*
-(^) Marrowick Armor*
-(^) Mythic Armor*
-(^) Pink Cryosten Armor*
-(^) Riptide Armor*
-(^) Riven Armor*
-(^) Rubber Armor*
-(ᗢ) Scavenger Armor*
-(^) Soulhide Armor*
-(^) Tendon Armor*
+(^) Lost Armor
+(^) Marrowick Armor
+(^) Mythic Armor
+(^) Pink Cryosten Armor
+(^) Riptide Armor
+(^) Riven Armor
+(^) Rubber Armor
+(ᗢ) Scavenger Armor
+(^) Soulhide Armor
+(^) Tendon Armor
 
-(^) Acrid Armor*
-(^) Amber Exploder Armor*
-(^) Bleeding Obsidian Armor*
+(^) Acrid Armor
+(^) Amber Exploder Armor
+(^) Bleeding Obsidian Armor
 (^) Extremophile Armor
 (X) Faefinder's Armor
 (^) Mildew Armor
-(X) Ruby Ranger Armor°
+(X) Ruby Ranger Armor
 
-(^) Blast Armor*
-(^) Chambersite Commander Armor°
+(^) Blast Armor
+(^) Chambersite Commander Armor
 (X) Mimic Armor
-(^) Necromancer Armor*
-(^) Sapphire Mediator Armor*
+(^) Necromancer Armor
+(^) Sapphire Mediator Armor
 (X) Warlord Armor
 
 (X) Ancient Chromtain Armor
 (X) Ancient Eyndum Armor
-(X) Ascendant Armor°
-(%2, ^) Chromtain Armor°
-(@4, #2) Eyndum Armor°
-(X) Nano Armor°
-(^) Nova Armor*
-(X) Quantum Armor°
+(X) Ascendant Armor
+(%2, ^) Chromtain Armor
+(@4, #2) Eyndum Armor
+(X) Nano Armor
+(^) Nova Armor
+(X) Quantum Armor
 
-(^) Ancient Hallowed Visage*
+(^) Ancient Hallowed Visage
 (^) Chambersite Robe
-(^) Chlorophyte Crown*
-(^) Chlorophyte Visage*
-(^) Hallowed Visage*
+(^) Chlorophyte Crown
+(^) Chlorophyte Visage
+(^) Hallowed Visage
 (^) Lucky Hat
 ---
 
@@ -434,197 +433,197 @@ ARMOR:
 ACCESSORIES:
 |---
 (X) 5G Broadband Wi-Fi Router
-(^) Abyssal Anchor*
-(^) ACME Crate*
-(^) Advanced Imaging*
-(^) Air Tank*
+(^) Abyssal Anchor
+(^) ACME Crate
+(^) Advanced Imaging
+(^) Air Tank
 (^) Akaliegis
-(^) Asylum Whistle*
-(^) A.S.H. Attack Relay*
-(^) Automated Returns Handler*
+(^) Asylum Whistle
+(^) A.S.H. Attack Relay
+(^) Automated Returns Handler
 (X) Bark Shield
-(^) Binding Book*
-(^) Blast-Resistant Plate*
-(^) Bomb Charm*
-(^) Bomb Charm of Regeneration*
-(^) Bomb Handling Device*
-(^) Boomerang Magnet*
+(^) Binding Book
+(^) Blast-Resistant Plate
+(^) Bomb Charm
+(^) Bomb Charm of Regeneration
+(^) Bomb Handling Device
+(^) Boomerang Magnet
 (X) Breathing Unit
-(^) Brine-Leafed Clover*
-(^) Bug Trapper*
+(^) Brine-Leafed Clover
+(^) Bug Trapper
 (X) Builder's Touch
-(^) C.F.H.E.S.*
+(^) C.F.H.E.S.
 (X) Cablegore
-(^) Celestial Starlight*
-(^) Celestial Stone Mask*
+(^) Celestial Starlight
+(^) Celestial Stone Mask
 (^) Charm of Naivety
-(^) Cirrhosis' Abhorrence*
-(^) Comb*
-(^) Control Locus*
-(^) Coologne*
-(^) CORE Generator*
-(^) Counter-offensive Scarf*
+(^) Cirrhosis' Abhorrence
+(^) Comb
+(^) Control Locus
+(^) Coologne
+(^) CORE Generator
+(^) Counter-offensive Scarf
 (X) CSTAA Jacket
-(^) Danger Barrel*
+(^) Danger Barrel
 (X) Decorative Ashes
-(^) Destructive Claws*
-(^) Dim Starlight*
-(^) Donor Wristband*
-(^) Dryad's Inheritance*
-(^) Dysfunctional Endless Explosives Bag*
-(^) Eccentric Stone*
-(^) Eitrite Gun Magazine*
-(^) Evil Bar Gun Magazines*
+(^) Destructive Claws
+(^) Dim Starlight
+(^) Donor Wristband
+(^) Dryad's Inheritance
+(^) Dysfunctional Endless Explosives Bag
+(^) Eccentric Stone
+(^) Eitrite Gun Magazine
+(^) Evil Bar Gun Magazines
 (X) Exo-Arms
 (X) Exo-Legs
 (X) Exo-Suit
 (X) Exo-Weapon Mount
-(^) Exploder Emblem*
-(^) Explosive Artery*
-(^) Fairy Lotus*
+(^) Exploder Emblem
+(^) Explosive Artery
+(^) Fairy Lotus
 (^) Fallacious Vase
 (^) Feather Cape
 (^) Feathery Crest
 (X) Filter Breather
 (X) Flak Jacket
-(^) Fleshy Figurine*
-(^) Focus Crystal*
+(^) Fleshy Figurine
+(^) Focus Crystal
 (^) Full Send
-(^) Futurephones*
+(^) Futurephones
 (^) Gaming Glove
 (X) Gas Mask
 (^) Golden Lotus
-(⛥) Grave Danger*
-(^) Gun Glove*
-(^) Gun Magazine*
-(^) Haggard Artery*
-(^) Handy Helper*
+(⛥) Grave Danger
+(^) Gun Glove
+(^) Gun Magazine
+(^) Haggard Artery
+(^) Handy Helper
 (^) Harpy Horseshoe Balloon
-(^) Hazard Charm*
-(^) Headphones*
-(^) Helium Tank*
-(^) I-WTPA Standard*
-(^) Keepsake Remains*
+(^) Hazard Charm
+(^) Headphones
+(^) Helium Tank
+(^) I-WTPA Standard
+(^) Keepsake Remains
 (X) Laden Crown
 (X) Land Surveyor
-(^) Laser Tag Vest*
-(^) Last Descendent*
-(^) Lazy Cloak°
+(^) Laser Tag Vest
+(^) Last Descendent
+(^) Lazy Cloak
 (^) Liar's Tongue
-(^) Lightning Ring*
-(^) Locket Necklace*
-(^) Lousy Liver*
-(^) Lover's Leap*
-(^) Magic Glove*
-(^) Magic Pain Glove*
-(^) Magic Tripwire*
-(^) Makeover Choker*
+(^) Lightning Ring
+(^) Locket Necklace
+(^) Lousy Liver
+(^) Lover's Leap
+(^) Magic Glove
+(^) Magic Pain Glove
+(^) Magic Tripwire
+(^) Makeover Choker
 (^) Master Magician's Cloak
-(^) Messy Leech*
-(^) Messy Magma Leech*
+(^) Messy Leech
+(^) Messy Magma Leech
 (^) Mildew Heart
 (X) Mindweights
-(^) Missile Armcannon*
+(^) Missile Armcannon
 (^) Mithrafin
-(^) Molten Gun Magazine*
+(^) Molten Gun Magazine
 (X) Netlace
 (X) Nightsky Cloak
-(^) Nitro Crate*
-(^) No U Card*
+(^) Nitro Crate
+(^) No U Card
 (^) Noxious Mithrafin
-(^) Olid Organ*
+(^) Olid Organ
 (^) Ornamental Keepsake
 (^) Otherworldly Cloak
 (X) Parasite Arm
 (^) Party Ring Balloon
-(^) Plasma Bag*
-(^) Playtime's Over*
-(^) Pneumatic Bomb Thrower*
-(^) Potato Battery*
+(^) Plasma Bag
+(^) Playtime's Over
+(^) Pneumatic Bomb Thrower
+(^) Potato Battery
 (^) Power Lotus
-(^) Powerflower*
-(^) Primordial Soup*
-(^) Priority Mail*
-(^) Protomind*
-(^) Razorwire*
-(^) Rebreather*
-(^) Resin Shield*
+(^) Powerflower
+(^) Primordial Soup
+(^) Priority Mail
+(^) Protomind
+(^) Razorwire
+(^) Rebreather
+(^) Resin Shield
 (^) Resizing Glove
-(^) Return To Sender*
+(^) Return To Sender
 (^) Rockstar Choker
-(^) Ruby Reticle*
-(^) Seal of Cinders*
-(^) Scavenger Bag*
-(^) Scrap Barrier (Cursed)*
-(^) Scrap Barrier (Uncursed)*
-(^) Shield of Retribution*
-(^) Shock Collar*
+(^) Ruby Reticle
+(^) Seal of Cinders
+(^) Scavenger Bag
+(^) Scrap Barrier (Cursed)
+(^) Scrap Barrier (Uncursed)
+(^) Shield of Retribution
+(^) Shock Collar
 (^) Shotgun Glove
-(^) Slag Bucket (Cursed)°
-(^) Slag Bucket (Uncursed)°
+(^) Slag Bucket (Cursed)
+(^) Slag Bucket (Uncursed)
 (X) Smog Pod-4
-(^) Sniper's Mark*
-(^) Solar Panel*
-(^) Sonar Visor*
-(^) Sonic Radar*
-(^) Sparking Flame Barrel*
-(#3) Speed Booster*
-(^) Spirit Shard*
-(^) Stone Mask*
-(ᥢ) Strange Computer°
+(^) Sniper's Mark
+(^) Solar Panel
+(^) Sonar Visor
+(^) Sonic Radar
+(^) Sparking Flame Barrel
+(#3) Speed Booster
+(^) Spirit Shard
+(^) Stone Mask
+(ᥢ) Strange Computer
 (X) Stress Ball
 (^) Sunder Gut
-(^) Super Turbo Reel*
-(^) Superjump Cape*
-(^) Symbiote Skull*
-(^) Tainted Flesh*
+(^) Super Turbo Reel
+(^) Superjump Cape
+(^) Symbiote Skull
+(^) Tainted Flesh
 (^) Tender Flesh Heart
 (^) Tiki Buckler
-(X) Timbre of Hell°
-(^) Trap Charm*
-(^) Tripod Nip*
-(^) Turbo Reel*
-(^) Unsought Organ*
-(^) Venom Fang*
+(X) Timbre of Hell
+(^) Trap Charm
+(^) Tripod Nip
+(^) Turbo Reel
+(^) Unsought Organ
+(^) Venom Fang
 (^) Venom Shield
 
 (@4, #) Bomb Rack
-(^) Entangled Energy*
-(^) Mana Drive°
-(^) Protozoa Food*
-(^) Refactoring Pieces*
-(^) Retaliatory Tendril°
+(^) Entangled Energy
+(^) Mana Drive
+(^) Protozoa Food
+(^) Refactoring Pieces
+(^) Retaliatory Tendril
 (^) Shield of Shimmer
 
-(^) Amebic Vial*
-(^) Blizzardwalker's Jacket*
+(^) Amebic Vial
+(^) Blizzardwalker's Jacket
 (X) Crystal Heart
-(^) Cursed Crown*
-(^) Emergency Bee Canister*
+(^) Cursed Crown
+(^) Emergency Bee Canister
 (^) Faith Beads
-(^) Fiberglass Dagger*
-(^) Forbidden Voice (Cursed)*
-(^) Forbidden Voice (Uncursed)*
+(^) Fiberglass Dagger
+(^) Forbidden Voice (Cursed)
+(^) Forbidden Voice (Uncursed)
 (X) Glitter Glue
 (X) Lunatic's Rune
-(^) Mysterious Spray*
+(^) Mysterious Spray
 (X) Retool Arm
 (X) Robo-tail
-(^) Scribe of the Meat God*
+(^) Scribe of the Meat God
 (X) Space Pirate's Eye
-(ᗢ) Stack of Shraps*
-(^) Strange Tooth*
-(^) Terrarian Voodoo Doll*
-(^) Third Eye*
-(^) Weakpoint Analyzer*
+(ᗢ) Stack of Shraps
+(^) Strange Tooth
+(^) Terrarian Voodoo Doll
+(^) Third Eye
+(^) Weakpoint Analyzer
 (^) Wishing Glass
 
-(^) Agility Core°
-(^) Combat Core°
-(^) Construction Core°
-(^) Fishing Core°
-(^) Lifeforce Core°
-(^) Magic Core°
+(^) Agility Core
+(^) Combat Core
+(^) Construction Core
+(^) Fishing Core
+(^) Lifeforce Core
+(^) Magic Core
 ---
 
 
@@ -632,8 +631,8 @@ VANITY:
 |---
 (X) Blue Lobster Hat
 (X) Crimson King Mask
-(^) Defiled Amalgamation Mask*
-(^) Fiberglass Weaver Head*
+(^) Defiled Amalgamation Mask
+(^) Fiberglass Weaver Head
 (X) I.C.A.R.U.S. Mask
 (^) Lost Diver set
 (X) Mechamalgamation Mask
@@ -643,21 +642,21 @@ VANITY:
 (^) Shimmer Construct Mask
 (X) Snowdrop Mask
 (#, ^2) Trenchmaker Mask
-(^) World Cracker Mask*
+(^) World Cracker Mask
 
 (X) Amebic Protector Set
 (X) Chunk Protector Set
-(^) Cranivore Beanie*
+(^) Cranivore Beanie
 (X) Decay Protector Set
-(^) Felnum Shock Glasses*
+(^) Felnum Shock Glasses
 (X) Gore Protector Set
-(^) Newsboy Cap*
+(^) Newsboy Cap
 (#, ^2) Pernicious Enterprise Employee Set
-(^) Sunflower Sandals*
+(^) Sunflower Sandals
 
 (^) DIO's Set
 (^) First Dream
-(^) Tyfyter's Set*
+(^) Tyfyter's Set
 
 (^) Acrid Dye
 (^) Amber Dye
@@ -674,14 +673,14 @@ VANITY:
 
 UTILITIES:
 |---
-(^) Amoeba Hook*
+(^) Amoeba Hook
 (^) Chambersite Hook
 (^) Tangela Tether
 
 (X) Strange Backpack
 
 (^) Hydrolantern
-(^) Salty Seed (Mitosis Node)*
+(^) Salty Seed (Mitosis Node)
 (^5) Saltier Seed (Mitosis Node)
 ---
 
@@ -706,32 +705,32 @@ WINGS:
 
 TOOLS:
 |---
-(^) Brick Breaker*
-(^) C6 Jackhammer*
-(^) Dismantler*
-(^) Dissector*
-(^) Endowood Hammer*
-(^) Felnum Hamaxe*
-(^) Felnum Pickaxe*
-(^) Lightning Rod*
-(^) Marrowick Hammer*
-(ᗢ) Miter Saw*
-(^) Parasitic Manipulator*
-(^) Piledriver*
-(^) Rivenator*
-(^) Snatcher*
-(^) Stabsmash*
-(^) Strainer*
+(^) Brick Breaker
+(^) C6 Jackhammer
+(^) Dismantler
+(^) Dissector
+(^) Endowood Hammer
+(^) Felnum Hamaxe
+(^) Felnum Pickaxe
+(^) Lightning Rod
+(^) Marrowick Hammer
+(ᗢ) Miter Saw
+(^) Parasitic Manipulator
+(^) Piledriver
+(^) Rivenator
+(^) Snatcher
+(^) Stabsmash
+(^) Strainer
 
-(^) Acrid Drill*
-(^) Acrid Hamaxe*
-(^) Acrid Laser Rod*
-(^) Acrid Pickaxe*
+(^) Acrid Drill
+(^) Acrid Hamaxe
+(^) Acrid Laser Rod
+(^) Acrid Pickaxe
 (X) Bleeding Obsidian Hamaxe
 (X) Bleeding Obsidian Pickaxe
 (X) Screwdriver
 
-(^) Impactaxe*
+(^) Impactaxe
 
 (X) Nova Bomb
 (X) Perihelion Chainsaw
@@ -739,7 +738,7 @@ TOOLS:
 (X) Perihelion Jackhammer
 (X) Perihelion Pickaxe
 
-(^) Pincushion*
+(^) Pincushion
 ---
 
 
@@ -747,44 +746,44 @@ MELEE WEAPONS:
 |---
 (^) Astral Scythe
 (X) Autoscopy
-(^) Baseball Bat*
-(^) Bone Latcher*
-(^) Broken Fiberglass Sword*
+(^) Baseball Bat
+(^) Bone Latcher
+(^) Broken Fiberglass Sword
 (^) Cool Sword
-(^) Cyah Nara*
-(^) Dark Spiral*
-(^) Decimator*
-(^) Endowood Sword*
-(^) Felnum Boar Spear*
-(^) Fiberglass Sword*
-(^) Hemorang*
-(^) Krakram*
-(^) Marrowick Sword*
-(^) Nineball*
-(^) Orbital Saw*
-(^) Ripper Lance*
-(^) Riverang*
+(^) Cyah Nara
+(^) Dark Spiral
+(^) Decimator
+(^) Endowood Sword
+(^) Felnum Boar Spear
+(^) Fiberglass Sword
+(^) Hemorang
+(^) Krakram
+(^) Marrowick Sword
+(^) Nineball
+(^) Orbital Saw
+(^) Ripper Lance
+(^) Riverang
 (^) Silicon Sword
-(^) Snapthrow*
-(^) Soldering Iron*
-(^) Soul Snatcher*
-(^) Soulslasher*
-(^) Spiker Sword*
-(^) Switchblade*
+(^) Snapthrow
+(^) Soldering Iron
+(^) Soul Snatcher
+(^) Soulslasher
+(^) Spiker Sword
+(^) Switchblade
 (^) Thunderbolt
-(^) Triple Threat*
-(^) Vorpal Sword (Cursed)*
-(^) Vorpal Sword (Uncursed)*
-(^) Waning Crescent*
+(^) Triple Threat
+(^) Vorpal Sword (Cursed)
+(^) Vorpal Sword (Uncursed)
+(^) Waning Crescent
 
-(^) Amenonuhoko*
-(^) Amoebash*
-(^) Boomboom*
+(^) Amenonuhoko
+(^) Amoebash
+(^) Boomboom
 (^) Chambersite Phasesaber
-(^) Crystal Cutters*
-(^) Depth Charge*
-(^) Knee Slapper*
-(^) Nematoclaw*
+(^) Crystal Cutters
+(^) Depth Charge
+(^) Knee Slapper
+(^) Nematoclaw
 (X) Origins Biome Keybrands
 (X) Soulfire Saw
 (^) The Foot
@@ -794,148 +793,148 @@ MELEE WEAPONS:
 (X) Chiton Kursarigama
 (X) Executioner
 (X) Laser Tag Sabre
-(^) Personal Laser Blade*
+(^) Personal Laser Blade
 (X) Pile Bunker
 (X) Rocket Lance
-(^) Telephone Pole*
-(^) Terrarang*
-(^) True Light Disc*
-(^) True Waning Crescent*
+(^) Telephone Pole
+(^) Terrarang
+(^) True Light Disc
+(^) True Waning Crescent
 (^) Tyrfing
 (X) Xeyah Laeta
 
 (X) Chromakama
 (X) Chromtain Smasher
 (X) Eyndum Scar
-(^) The Bird*
+(^) The Bird
 ---
 
 
 RANGED WEAPONS:
 |---
-(^) Ancient Kruncher*
-(^) Bloodletter*
-(^) Blotopus*
-(^) Bolt Gun*
-(^) Chipper Knife*
+(^) Ancient Kruncher
+(^) Bloodletter
+(^) Blotopus
+(^) Bolt Gun
+(^) Chipper Knife
 (^) Constellation
-(^) Endowood Bow*
+(^) Endowood Bow
 (^) Felnum Longbow
-(^) Fiberglass Bow*
-(^) Fiberglass Pistol*
-(^) Fiberglass Shard*
-(^) Gelled Knife*
-(^) Harpoon Gun*
-(^) Longbone*
-(^) Magma Grappler*
-(^) Marrowick Bow*
-(^) Neural Network*
-(^) Riven Splitter*
-(^) Shardcannon*
+(^) Fiberglass Bow
+(^) Fiberglass Pistol
+(^) Fiberglass Shard
+(^) Gelled Knife
+(^) Harpoon Gun
+(^) Longbone
+(^) Magma Grappler
+(^) Marrowick Bow
+(^) Neural Network
+(^) Riven Splitter
+(^) Shardcannon
 (^) Shimmershot
-(^) Sleetfire*
-(^) Sunflower Seed Shooter*
-(^) Tendon Tear*
-(^) The Kruncher*
-(^) Threemoepeater*
-(^) Unmisfire*
-(^) Unstrung Fiberglass Bow*
+(^) Sleetfire
+(^) Sunflower Seed Shooter
+(^) Tendon Tear
+(^) The Kruncher
+(^) Threemoepeater
+(^) Unmisfire
+(^) Unstrung Fiberglass Bow
 (#, ^2) Welding Torch
-(^) 2-in-1 Shotty*
+(^) 2-in-1 Shotty
 
-(^) Acrid Impaler*
-(^) Adamantite Harpoon Gun*
-(^) Bleeding Obsidian Kunai*
+(^) Acrid Impaler
+(^) Adamantite Harpoon Gun
+(^) Bleeding Obsidian Kunai
 (X) Blenderbuss
 (^) Boat Rocker
-(^) Boiler*
-(^) Cobalt Harpoon Gun*
+(^) Boiler
+(^) Cobalt Harpoon Gun
 (^) Crawdaddy's Revenge
-(^) Dart Crossbow*
-(^) Dragon's Breath*
-(^) Fifth Spline*
-(^) Firespit*
+(^) Dart Crossbow
+(^) Dragon's Breath
+(^) Fifth Spline
+(^) Firespit
 (^) Fumethrower
-(^) Hallowed Cleaver*
-(^) Harpoon Burst Rifle*
-(^) HNO-3 "Viper"*
-(^) Incision*
+(^) Hallowed Cleaver
+(^) Harpoon Burst Rifle
+(^) HNO-3 "Viper"
+(^) Incision
 (X) Lag Spike
 (^) Laser Line Bow
-(^) Mythril Harpoon Gun*
+(^) Mythril Harpoon Gun
 (X) Organ Donor
-(^) Orichalcum Harpoon Gun*
-(^) Palladium Harpoon Gun*
+(^) Orichalcum Harpoon Gun
+(^) Palladium Harpoon Gun
 (X) Ritualmaker
 (^) Spray 'N Pray
-(^) Tiny Sniper*
-(^) Titanium Harpoon Gun*
-(^) 3-in-1 Shotty*
+(^) Tiny Sniper
+(^) Titanium Harpoon Gun
+(^) 3-in-1 Shotty
 
-(^) Astoxo*
+(^) Astoxo
 (^) Chambersite Minigun
-(X) Disciple Maker°
+(X) Disciple Maker
 (^) Dreikan
-(X) EAC Thunder°
+(X) EAC Thunder
 (X) Fungi Pipe
 (X) Shroomshot
-(^) Tolruk*
+(^) Tolruk
 
-(X) L.W.M.U.G.°
+(X) L.W.M.U.G.
 (X) Synergy
 ---
 
 
 MAGIC WEAPONS:
 |---
-(^) Area Denial*
-(^) Avulsion*
-(^) Beginner's Tome*
-(^) Cryostike*
+(^) Area Denial
+(^) Avulsion
+(^) Beginner's Tome
+(^) Cryostike
 (^) Dream Catcher
-(^) Eaterboros*
+(^) Eaterboros
 (^) Eternabrite
 (^) Hot Potato
-(^) Infusion*
-(^) Low Signal*
-(^) Magnus*
-(^) Manasynk*
+(^) Infusion
+(^) Low Signal
+(^) Magnus
+(^) Manasynk
 (^) Nerve Flan
 (^) Shimmerstar Staff
-(^) Splitsplash*
-(^) Tones of Agony*
+(^) Splitsplash
+(^) Tones of Agony
 
 (X) Blast Furnace
-(^) Bled Out Staff*
+(^) Bled Out Staff
 (^) Brine Haze
-(^) Chemical Laser*
-(^) Communion*
-(^) Dew Justice*
-(^) Dismay*
+(^) Chemical Laser
+(^) Communion
+(^) Dew Justice
+(^) Dismay
 (^) Eternanite
-(⛥) Innermost Manifest*
-(^) Seam Beam*
-(^) Shimmer Rod*
+(⛥) Innermost Manifest
+(^) Seam Beam
+(^) Shimmer Rod
 (^) Shinedown
 (X) Siphon Staff
-(^) Splashid*
+(^) Splashid
 (^) Startillery
 (X) Symbiotic Staff
 (X) True Nerve Flan
 
-(^) Amber of Embers*
-(^) Breach*
-(^) Hævateinn*
+(^) Amber of Embers
+(^) Breach
+(^) Hævateinn
 (^) Haunted Vase
-(^) Missing File*
-(^) Laser Tag Gun*
+(^) Missing File
+(^) Laser Tag Gun
 (X) Laser Tag Shotgun
 (^) Pike of Deepneus
-(^) Plasma Cutter*
+(^) Plasma Cutter
 (X) Sapphire Shunter
 (X) Shocktrain
 (X) Spectra
-(^) The Calibrator*
+(^) The Calibrator
 (X) True Seam Beam
 
 (X) Last Nerve
@@ -947,32 +946,32 @@ SUMMONER WEAPONS:
 |---
 (^) Accretion Ribbon
 (^) Aether Opal
-(^) Amebolize Incantation*
-(^) Bee Afraid Incantation*
+(^) Amebolize Incantation
+(^) Bee Afraid Incantation
 (^) Bomb Artifact
-(^) Brainy Staff*
+(^) Brainy Staff
 (^) Broken Terratotem
 (^) Defective Mortar Shell
-(^) Desert Crown*
+(^) Desert Crown
 (^) Eyeball Staff
-(^) Flagellash*
+(^) Flagellash
 (^) Fresh Meat Artifact
 (^) Guardian Rod
 (^) Hibernal Incantation
 (^) Inanimate Zombie Hand
 (^) Inject Incantation
-(^) Joint Pop*
+(^) Joint Pop
 (^) Maelstrom Incantation
 (X) Ocean Amulet
 (^) Ocotillo Finger
-(^) Ocotoral Bud*
+(^) Ocotoral Bud
 (X) Pinwheel Pole
 (^) Relay Rod
 (^) Rotted Worm Staff
 (X) Shadow Cast
 (ᗢ) Sunflower in a Pot (Sunflower variants)
-(^) Teardown*
-(^) Thread Rod*
+(^) Teardown
+(^) Thread Rod
 (^) Woodsprite Staff
 
 (^) Acrid Spout
@@ -983,19 +982,19 @@ SUMMONER WEAPONS:
 (X) Entropy Incantation
 (X) Fizzler Staff
 (#, ^2) Forsaken Desire
-(^) Huff Puffer Bait*
+(^) Huff Puffer Bait
 (^) Mildew Incantation
 (^) Mildew Whip
 (X) Obsidian Bone
 (^) Old Brine Rock
 (X) Riven Rain Rod
-(^) Scabcoral Lyre*
+(^) Scabcoral Lyre
 (X) Snowman Trophy
 (X) Squiddo
 (X) Trirod
 (X) TV Remote
 (X) Wyvern Horn
-(^) Ziptie*
+(^) Ziptie
 
 (X) Binding Incantation
 (X) Candlelight
@@ -1018,92 +1017,92 @@ NO POST-ML CONTENT YET.
 
 EXPLOSIVE WEAPONS:
 |---
-(^) Abrasion Blaster*
-(^) Ace Shrapnel*
-(^) Ameballoon*
-(^) Bang Snap*
-(^) Bloombomb*
-(^) Bombardment*
+(^) Abrasion Blaster
+(^) Ace Shrapnel
+(^) Ameballoon
+(^) Bang Snap
+(^) Bloombomb
+(^) Bombardment
 (^) Bomb Launcher
-(^) Brainade*
-(^) Cold Snap*
-(^) Defiled Spirit*
-(^) Eruption*
+(^) Brainade
+(^) Cold Snap
+(^) Defiled Spirit
+(^) Eruption
 (^) Explosive Barrel
 (^) Eyenade
-(^) Felnum Shock Grenade*
+(^) Felnum Shock Grenade
 (^) Flare Launcher
-(^) Flashbang*
-(^) Floaty Bomb*
+(^) Flashbang
+(^) Floaty Bomb
 (#, ^2) Fuel Rod Ball
-(^) Glass Cannon*
+(^) Glass Cannon
 (^) Hand Cannon
 (^) Hand Grenade Launcher
 (^) Heartache Dynamite
-(^) Hellfire Bomb*
-(^) Hellfire Grenade*
+(^) Hellfire Bomb
+(^) Hellfire Grenade
 (^) Hemoptysis
-(^) Impact Bomb*
-(^) Impact Dynamite*
-(^) Impact Grenade*
+(^) Impact Bomb
+(^) Impact Dynamite
+(^) Impact Grenade
 (^) Impetus
-(^) Internal Combustionfish*
-(^) Link Grenade*
-(^) Matrix*
-(^) Meteor*
-(^) Peatball*
-(^) Potato Mine*
+(^) Internal Combustionfish
+(^) Link Grenade
+(^) Matrix
+(^) Meteor
+(^) Peatball
+(^) Potato Mine
 (^) Regurgitator of Souls
 (^) Rubber Dynamite
-(^) Shrapnel Bomb*
-(^) Sticky Link Grenade*
+(^) Shrapnel Bomb
+(^) Sticky Link Grenade
 (#, ^2) Tank Rifle
 (#, ^2) Ticking Bomb
 (#, ^2) Ticking Dynamite
 (^) Voltefuse
 
-(^) Acrid Handcannon*
-(^) Alkaline Bomb*
-(^) Alkaline Grenade*
+(^) Acrid Handcannon
+(^) Alkaline Bomb
+(^) Alkaline Grenade
 (#, ^2) Bloodshot
 (^) Boomphracken
 (^) Chambersite Mine Launcher
-(^) Crystal Bomb*
-(^) Crystal Grenade*
+(^) Crystal Bomb
+(^) Crystal Grenade
 (^) Grenade Lawnchair
-(^) Happy Bomb*
+(^) Happy Bomb
 (#, ^2) Rattlesnake
 (^) Rocket Rifle
 (^) Sonar Dynamite
 (ᗢ) Sonorous Shredder
-(^) Thermite Launcher*
+(^) Thermite Launcher
 (^) Torpedo Tube
 
 (#, ^2) Autohandcannon
 (^) Bomboomstick
-(^) Chlorodynamite*
+(^) Chlorodynamite
 (X) Chlorophyte Handcannon
 (#, ^2) Firework Cannon
 (X) Flarefury
 (X) Holy Hand Grenade
-(^) Mine Flayer*
-(^) Nova Cascade*
+(^) Mine Flayer
+(^) Nova Cascade
 (^) Nova Swarm
-(^) Nuclear Arm*
+(^) Nuclear Arm
 (X) Oil Drum
-(^) Omni-directional Claymore*
+(^) Omni-directional Claymore
 (^) Partybringer
 (#, ^2) Pete's Peat Slugger
 (X) Puffle
 (^) Rocodile
-(^) Self-Destruct*
+(^) Self-Destruct
 (X) Supernova
 (X) The Heatseeker
 (X) The Rocketman
 (X) Thundercracker
 (X) Thundershot
 
-(@4, ^3) Black Hole Bomb°
+(@4, ^3) Black Hole Bomb
 (@4, ^3) Caustica
 (^) Flakjack
 (X) Helix
@@ -1115,8 +1114,8 @@ EXPLOSIVE WEAPONS:
 
 GENERIC WEAPONS:
 |---
-(^) Generic Weapon*
-(^) Potato Launcher*
+(^) Generic Weapon
+(^) Potato Launcher
 
 (X) Pressurized Supersoaker
 (X) Super Generic Weapon
@@ -1128,67 +1127,67 @@ GENERIC WEAPONS:
 TILES:
 |---
 (^) Aetherite Ore
-(^) Amoeba Fluid*
-(^) Baryte*
-(^) Batholith°
-(^) Bleeding Obsidian*
+(^) Amoeba Fluid
+(^) Baryte
+(^) Batholith
+(^) Bleeding Obsidian
 (^) Bomb Trap
-(^) Brittle Quartz*
+(^) Brittle Quartz
 (X) Brown Ice !!!
 (^) Calcified Spug Flesh
-(X) Cancer Block°
+(X) Cancer Block
 (@4, ^3) Carburite
 (X) Catwalk !!!
 (^) Chambersite
-(^) Chambersite Gemspark°
-(^) Chambersite Gemstone°
-(^) Chambersite Gemstone (Corruption)°
-(^) Chambersite Gemstone (Crimson)°
-(^) Chambersite Gemstone (Defiled)°
-(^) Chambersite Gemstone (Riven)°
+(^) Chambersite Gemspark
+(^) Chambersite Gemstone
+(^) Chambersite Gemstone (Corruption)
+(^) Chambersite Gemstone (Crimson)
+(^) Chambersite Gemstone (Defiled)
+(^) Chambersite Gemstone (Riven)
 (X) Chromtain Ore
-(^) Defiled Cactus*
-(^) Defiled Grass*
-(^) Defiled Jungle Grass*
+(^) Defiled Cactus
+(^) Defiled Grass
+(^) Defiled Jungle Grass
 (@, ^3) Defiled Regolith
-(^) Defiled Sand*
-(^) Defiled Sandstone*
-(^) Defiled Stone*
-(^) Eitrite Ore*
+(^) Defiled Sand
+(^) Defiled Sandstone
+(^) Defiled Stone
+(^) Eitrite Ore
 (@4) Encrusted Brick
-(^) Encrusted Ore*
-(^) Endowood*
-(^) Felnum Ore*
-(^) Fiberglass Block*
-(^) Gray Ice Block*
-(^) Hardened Defiled Sand*
+(^) Encrusted Ore
+(^) Endowood
+(^) Felnum Ore
+(^) Fiberglass Block
+(^) Gray Ice Block
+(^) Hardened Defiled Sand
 (X) Hardened Sootsand !!!
 (X) Lihzarhd Bomb Trap
-(^) Limestone*
+(^) Limestone
 (@4) Lost Brick
-(^) Lost Ore*
-(^) Marrowick*
-(^) Mildew Block°
+(^) Lost Ore
+(^) Marrowick
+(^) Mildew Block
 (X) Murky Sludge !!!
-(X) Nova Brick°
-(X) Nova Fragment Block°
-(^) Peat Moss Block*
-(^) Primordial Permafrost*
-(^) Quartz Block*
-(X) Residue Block°
-(^) Riven Cactus*
-(^) Riven Grass*
-(^) Riven Jungle Grass*
+(X) Nova Brick
+(X) Nova Fragment Block
+(^) Peat Moss Block
+(^) Primordial Permafrost
+(^) Quartz Block
+(X) Residue Block
+(^) Riven Cactus
+(^) Riven Grass
+(^) Riven Jungle Grass
 (X) Rusty Piping !!!
 (X) Sanguinite Brick
-(@4) Sanguinite Ore* !!!
+(@4) Sanguinite Ore !!!
 (X) Scrap Heap !!!
-(^) Silica*
-(^) Silicon Ore*
+(^) Silica
+(^) Silicon Ore
 (X) Soot Sandstone !!!
-(X) Sootgrass° !!!
+(X) Sootgrass !!!
 (X) Space Goo
-(^) Spug Flesh*
+(^) Spug Flesh
 (X) Tainted Stone !!!
 (X) Truss Block !!!
 (X) Type-I Fortified Steel Block !!!
@@ -1228,61 +1227,61 @@ TILES:
 (^) Spug Flesh Wall
 (X) Type-III Fortified Steel Wall !!!
 
-(^) Alkahest Torch*
-(^) Amoeba Buggy Cage*
-(^) Bile Torch*
-(^) Brine Water Fountain*
-(@, ^3) Bug Cage° (using temp sprites)
-(X) Cancer Furniture°
-(^) Chambersite Bunny Cage°
-(^) Chambersite Squirrel Cage°
-(^) Cicada 3301 Cage°
-(^) Defiled Torch*
-(^) Defiled Water Fountain*
-(X) Edenwood Furniture°
-(^) Endowood Furniture*
+(^) Alkahest Torch
+(^) Amoeba Buggy Cage
+(^) Bile Torch
+(^) Brine Water Fountain
+(@, ^3) Bug Cage (using temp sprites)
+(X) Cancer Furniture
+(^) Chambersite Bunny Cage
+(^) Chambersite Squirrel Cage
+(^) Cicada 3301 Cage
+(^) Defiled Torch
+(^) Defiled Water Fountain
+(X) Edenwood Furniture
+(^) Endowood Furniture
 (X) Hyrax Cage !!!
 (^) Limestone Furniture
-(^) Living Alkahest Block*
-(^) Living Bile Block*
-(^) Marrowick Furniture*
-(X) Nova Furniture°
+(^) Living Alkahest Block
+(^) Living Bile Block
+(^) Marrowick Furniture
+(X) Nova Furniture
 (X) Peppered Moth Lamp !!!
 (X) Phoenum Torch !!!
-(X) Residue Furniture°
-(^) Riven Torch*
-(^) Riven Water Fountain*
-(^) Shadow Torch°
-(^) Traffic Cone*
+(X) Residue Furniture
+(^) Riven Torch
+(^) Riven Water Fountain
+(^) Shadow Torch
+(^) Traffic Cone
 
 (X) Ashen Dungeon Chest !!!
-(X) Batholith Grindstone°
+(X) Batholith Grindstone
 (X) Bilious Incense
 (^) Brine Dungeon Chest
 (X) Cargo Elevator Door !!!
 (X) Cargo Elevator Door (Jammed) !!!
-(^) Chambersite Gem Lock°
-(^) Cleansing Station*
-(^) Defiled Campfire*
-(^) Defiled Dungeon Chest*
-(^) Defiled Monolith*
-(X) Defiled Pylon°
+(^) Chambersite Gem Lock
+(^) Cleansing Station
+(^) Defiled Campfire
+(^) Defiled Dungeon Chest
+(^) Defiled Monolith
+(X) Defiled Pylon
 (X) Industrial Door !!!
 (X) Large Storage Container !!!
-(^) Laser Tag Console*
+(^) Laser Tag Console
 (X) Medium Storage Container !!!
 (X) Modular Bunk !!!
-(X) Mushroom Dungeon Chest°
-(X) Nova Monolith°
-(X) Ocean Dungeon Chest°
+(X) Mushroom Dungeon Chest
+(X) Nova Monolith
+(X) Ocean Dungeon Chest
 (^) Pocket Dimension Monolith
-(X) Qube Generator°
+(X) Qube Generator
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Snake
 (X) Ravel Lock: Stacker
 (X) Ravel Locker
-(^) Riven Campfire*
-(^) Riven Dungeon Chest*
+(^) Riven Campfire
+(^) Riven Dungeon Chest
 (X) Rusty Locker !!!
 (X) Small Storage Container !!!
 (X) Surveysprout Planter Box !!!
@@ -1290,30 +1289,30 @@ TILES:
 (#, ^5) Wilting Rose Planter Box
 (X) Wrycoral Planter Box
 
-(X) Elderforge°
-(^) Fabricator*
-(X) Flesh Shredder°
-(X) Interstellar Sampler°
+(X) Elderforge
+(^) Fabricator
+(X) Flesh Shredder
+(X) Interstellar Sampler
 (X) Medicine Fabricator !!!
 (X) Metal Presser
 (X) The Demaker
 
-(^) Acetabularia*
+(^) Acetabularia
 (X) Ashen Scrap Foliage !!!
 (X) Ashen Soot Foliage !!!
 (X) Background Door !!!
 (X) Beacon Light !!!
-(^) Brineglow Vine*
+(^) Brineglow Vine
 (^) Defiled Foliage
 (々) Defiled Heart
 (^) Defiled Relay
 (^) Defiled Pot
-(X) Exoskeletal Baobab Tree*
-(^) Exoskeletal Tree*
+(X) Exoskeletal Baobab Tree
+(^) Exoskeletal Tree
 (X) Floodlight !!!
-(ᗢ) Fungarust*
+(ᗢ) Fungarust
 (^) Fuzzvine
-(^) Gel Blister*
+(^) Gel Blister
 (X) Generation Station !!!
 (X) Heat Vent !!!
 (^) Hydrothermal Vent
@@ -1322,23 +1321,23 @@ TILES:
 (^) Marrowick Flange
 (X) Modular Light Fixture !!!
 (^) Ocotillo
-(X) Petrified Baobab Tree*
-(^) Petrified Tree*
+(X) Petrified Baobab Tree
+(^) Petrified Tree
 (^) Riven Foliage
 (^) Riven Pot
 (X) Sheet Metal !!!
 (^) Shelf Coral
-(^) Soulspore*
+(^) Soulspore
 (X) Steel Support Beam !!!
 (X) Suit Locker !!!
-(ᗢ) Surveysprout*
+(ᗢ) Surveysprout
 (^) Tangela Bramble
 (^) Underwater Vine
 (^) Venus Coral
-(^) Wilting Rose*
+(^) Wilting Rose
 (X) Witherleaf Tree !!!
 (X) Workstation Extras !!!
-(^) Wrycoral*
+(^) Wrycoral
 
 (^) A Perfect World
 (^) Deceptive Beauty
@@ -1375,91 +1374,91 @@ TILES:
 (X) Blue Lobster Trophy
 (X) Crimson King Relic
 (X) Crimson King Trophy
-(^) Defiled Amalgamation Relic*
-(^) Defiled Amalgamation Trophy*
-(ᗢ) Enemy Banners*
-(^) Fiberglass Weaver Relic*
-(^) Fiberglass Weaver Trophy*
-(^) Lost Diver Relic*
-(^) Lost Diver Trophy*
+(^) Defiled Amalgamation Relic
+(^) Defiled Amalgamation Trophy
+(ᗢ) Enemy Banners
+(^) Fiberglass Weaver Relic
+(^) Fiberglass Weaver Trophy
+(^) Lost Diver Relic
+(^) Lost Diver Trophy
 (X) Mechamalgamation Relic
 (X) Mechamalgamation Trophy
-(々) Miscreant Relic*
-(々) Miscreant Trophy*
-(X) Quantux Relic*
-(X) Quantux Trophy*
+(々) Miscreant Relic
+(々) Miscreant Trophy
+(X) Quantux Relic
+(X) Quantux Trophy
 (X) Seer Relic
 (X) Seer Trophy
-(^) Shimmer Construct Relic*
-(^) Shimmer Construct Trophy*
+(^) Shimmer Construct Relic
+(^) Shimmer Construct Trophy
 (X) SR-48 Relic
 (X) SR-48 Trophy
 (X) Trenchmaker Relic !!!
 (X) Trenchmaker Trophy !!!
-(^) World Cracker Relic*
-(^) World Cracker Trophy*
+(^) World Cracker Relic
+(^) World Cracker Trophy
 ---
 
 
 MATERIALS:
 |---
-(^) Acetabularia*
-(^) Adhesive Wrap*
+(^) Acetabularia
+(^) Adhesive Wrap
 (^) Aetherite Bar
-(^) Bark*
-(^) Bat Hide*
-(^) Biocomponent 10*
-(^) Bud Barnacle*
-(^) Carburite*
-(^) Defiled Bar*
-(^) Defiled Seeds*
-(^) Dreadful Powder*
-(^) Encrusted Bar*
-(^) Felnum Bar*
-(^) Magic Hair Spray*
-(^) NE-8*
+(^) Bark
+(^) Bat Hide
+(^) Biocomponent 10
+(^) Bud Barnacle
+(^) Carburite
+(^) Defiled Bar
+(^) Defiled Seeds
+(^) Dreadful Powder
+(^) Encrusted Bar
+(^) Felnum Bar
+(^) Magic Hair Spray
+(^) NE-8
 (^) Ocotillo Flower
-(^) Riven Carapace*
-(^) Riven Seeds*
-(^) Rubber*
-(^) Sanguinite Bar*
-(^) Sentient Powder*
-(^) Silicon Bar*
-(^) Strange String*
+(^) Parasitic Powder
+(^) Riven Carapace
+(^) Riven Seeds
+(^) Rubber
+(^) Sanguinite Bar
+(^) Silicon Bar
+(^) Strange String
 (^) Tangela Bud
-(^) Tire*
-(^) Tree Sap*
-(^) Undead Chunk*
-(^) Urn of Ashes*
+(^) Tire
+(^) Tree Sap
+(^) Undead Chunk
+(^) Urn of Ashes
 
-(^) Alkahest*
+(^) Alkahest
 (^) Alkaliphiliac Tissue
-(^) Black Bile*
-(^) Bleeding Obsidian Shard*
-(^) Brineglow*
-(^) Eitrite Bar*
-(^) Phoenum*
+(^) Black Bile
+(^) Bleeding Obsidian Shard
+(^) Brineglow
+(^) Eitrite Bar
+(^) Phoenum
 
-(^) Busted Servo*
-(^) Geothermal Sludge*
+(^) Busted Servo
+(^) Geothermal Sludge
 (X) Memory Fragment
-(^) Nova Fragment*
+(^) Nova Fragment
 (^) Power Core
-(^) Rotor*
+(^) Rotor
 (X) Soul of Spite
 
-(X) Alien Conduit°
-(X) Armor Piece Blueprint°
-(^) Chromtain Bar°
-(X) Core Blueprint°
-(X) Cosmic Plating°
-(X) Endyean Ceramic°
-(X) Ethereal Ash°
-(^) Formium Bar°
-(^) Formium Scrap°
+(X) Alien Conduit
+(X) Armor Piece Blueprint
+(^) Chromtain Bar
+(X) Core Blueprint
+(X) Cosmic Plating
+(X) Endyean Ceramic
+(X) Ethereal Ash
+(^) Formium Bar
+(^) Formium Scrap
 (X) Nanite Lump
-(^) Qube°
-(X) Weapon Blueprint°
+(^) Qube
+(X) Weapon Blueprint
 ---
 
 
@@ -1478,22 +1477,22 @@ MISCELLANEOUS ITEMS:
 
 CRITTERS AND FISH:
 |---
-(^) Amoeba Buggy*
+(^) Amoeba Buggy
 (^) Bug
 (^) Chambersite Bunny
 (^) Chambersite Squirrel
-(^) Cicada 3301*
+(^) Cicada 3301
 (X) Hyrax !!!
 (X) Peppered Moth !!!
 
-(^) Bilemouth*
+(^) Bilemouth
 (^) Bobbit Worm
-(^) Bonehead Jellyfish*
+(^) Bonehead Jellyfish
 (^) Fiberbass
-(^) Polyeel*
-(^) Prikish*
+(^) Polyeel
+(^) Prikish
 (X) Scrapfish !!!
-(^) Tearracuda*
+(^) Tearracuda
 (^) Toadfish
 ---
 
@@ -1502,42 +1501,42 @@ CONSUMABLES:
 |---
 (^) Crown Jewel
 (X) Evil DNA
-(^) Mojo Injection*
+(^) Mojo Injection
 (X) Mother's Ward
-(^) Quantum Injector°
-(%2) The Defiled Will°
+(^) Quantum Injector
+(%2) The Defiled Will
 
-(^) Absorption Potion*
+(^) Absorption Potion
 (^) Ambition Potion
-(^) Antisolve Potion*
-(^) Fervor Potion*
-(^) Flask of Alkahest*
-(^) Flask of Black Bile*
-(^) Focus Potion°
+(^) Antisolve Potion
+(^) Fervor Potion
+(^) Flask of Alkahest
+(^) Flask of Black Bile
+(^) Focus Potion
 (^) Greater Summoning Potion
 (X) Mega Mojo Flask
-(^) Mojo Flask*
+(^) Mojo Flask
 (#, ^2) Potion of Projection
-(^) Protean Potion*
-(^) Purification Potion*
-(^) Super Mojo Flask*
-(^) Voidsight Potion°
+(^) Protean Potion
+(^) Purification Potion
+(^) Super Mojo Flask
+(^) Voidsight Potion
 
 (#, ^2) Astringent Broth
 (#, ^2) Bitter Broth
-(^) Foul Broth*
+(^) Foul Broth
 (^) Greasy Broth
-(^) Hearty Broth*
-(^) Light Broth°
+(^) Hearty Broth
+(^) Light Broth
 (#, ^2) Metallic Broth
 (#, ^2) Minishark Broth
-(^) Minty Broth°
-(^) Plain Broth°
-(^) Savory Broth°
+(^) Minty Broth
+(^) Plain Broth
+(^) Savory Broth
 (^) Sharp Broth
-(^) Sour Broth*
-(^) Spicy Broth°
-(^) Sweet Broth°
+(^) Sour Broth
+(^) Spicy Broth
+(^) Sweet Broth
 (^) Umami Broth
 
 (#, ^2) Adrenaline
@@ -1553,109 +1552,108 @@ CONSUMABLES:
 (#, ^2) Unmarked Antidote
 
 (#, ^2) Bad Juju Stone
-(^) Bileberry*
-(^) Blue Bovine*
-(^) Bread*
-(^) Brine Cheese*
+(^) Bileberry
+(^) Blue Bovine
+(^) Bread
+(^) Brine Cheese
 (#, ^2) Budget Fairy Dust
 (^) Caeser Salad
 (#, ^2) Contaminated Infusion
 (#, ^2) Edible Hair Gel
-(^) Honey Wheat Bread*
-(^) Irish Cheddar*
-(^) Jam Sandwich*
-(^) Jelly Schnapps*
-(^) Krunch Mix*
+(^) Honey Wheat Bread
+(^) Irish Cheddar
+(^) Jam Sandwich
+(^) Jelly Schnapps
+(^) Krunch Mix
 (^) Nerve Flan
-(^) Pawpaw*
+(^) Pawpaw
 (#, ^2) Pen Ink
-(^) Periven*
-(^) Petrified Prickly Pear*
-(^) Potato*
-(^) Prickly Pear*
-(^) Shattered Stout*
-(^) Soul Spaghetti*
+(^) Periven
+(^) Petrified Prickly Pear
+(^) Potato
+(^) Prickly Pear
+(^) Shattered Stout
+(^) Soul Spaghetti
 (^) Sour Apple
 (#, ^2) Spearmint Tea
 (#, ^2) Sweet Tooth Shake
 (#, ^2) Tasty Booger
-(^) Vanilla Shake*
+(^) Vanilla Shake
 
-(^) Broken Record*
 (X) Catalyst Cell
-(#, ^2) Distress Beacon
-(^) Nerve Impulse Manipulator*
+(#, ^2) Distress Beacon !!!
+(^) Nerve Impulse Manipulator
 (^) Lost Picture Frame
-(X) Quantum Cell°
-(^) Shaped Glass*
-(^) Suspicious Looking Ice Cream*
-(X) The Button°
+(X) Quantum Cell
+(^) Shaped Glass
+(^) Suspicious Looking Ice Cream
+(X) The Button
 
-(^) Basic Crate*
-(^) Bilious Crate*
-(^) Crusty Crate*
-(^) Festering Crate*
-(^) Pointy Crate*
-(^) Residual Crate*
+(^) Basic Crate
+(^) Bilious Crate
+(^) Crusty Crate
+(^) Festering Crate
+(^) Pointy Crate
+(^) Residual Crate
 
-(^) Gooey Water*
-(^) Holiday Hair Dye*
+(^) Gooey Water
+(^) Holiday Hair Dye
 (^) Latchkey
-(^) Lottery Ticket*
-(^) Magic Brine Dropper*
+(^) Lottery Ticket
+(^) Magic Brine Dropper
 (^) Spyglass
-(^) Void Lock*
-(^) White Water*
+(^) Void Lock
+(^) White Water
 
 (X) Ashen Key
 (^) Brine Key
-(^) Defiled Key*
-(^) Hell Key°
+(^) Defiled Key
+(^) Hell Key
 (X) Mechanical Keys
-(^) Mushroom Key°
-(^) Ocean Key°
-(^) Riven Key*
+(^) Mushroom Key
+(^) Ocean Key
+(^) Riven Key
 
-(^) Defiled Amalgamation Bag*
-(^) Fiberglass Weaver Bag*
+(^) Defiled Amalgamation Bag
+(^) Fiberglass Weaver Bag
 (^) Lost Diver Bag
 (^) Shimmer Construct Bag
-(^) World Cracker Bag*
+(^) World Cracker Bag
 ---
 
 
 MOUNTS & PETS:
 |---
-(^) Blockus Tube (Juvenile Amalgamation)*
-(^) Fleshy Globe (Self-Contained Universe)*
+(^) Blockus Tube (Juvenile Amalgamation)
+(^) Fleshy Globe (Self-Contained Universe)
 (^) Jawbreaker (Stellar Spark)
 (X) Robot Toy Controller (Toy Trenchmaker)
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
 
-(^) Amoeba Toy (Meberoid)*
+(^) Amoeba Toy (Meberoid)
 (X) Dysfunctional Table Saw (Sprockey)
-(^) Smith's Hammer (Walking Furnace)*
-(^) Suspicious Looking Pebble (Defiled Blight)*
+(^) Smith's Hammer (Walking Furnace)
+(^) Suspicious Looking Pebble (Defiled Blight)
 
-(^) Chromatic Scale (Rainbow Pangolin)*
-(^) Chew Toy (Chee Toy)*
+(^) Chromatic Scale (Rainbow Pangolin)
+(^) Chew Toy (Chee Toy)
 (^) Gelatin Bloom Brooch
-(^) Strange Power-Up (Platformer Mech)*
+(^) Strange Power-Up (Platformer Mech)
 
 (^) Chambersite Minecart
-(^) Dash Ravel*
-(^) Depth Ravel*
-(X) Drill Ravel°
-(X) Grapple Ravel°
-(^) Impenetrable Trashcan Lid*
-(^) Indestructible Saddle*
-(^) Ninja Ravel*
-(^) Ravel*
-(^) Spider Ravel*
-(^) Stealth Ravel*
-(X) Thrust Ravel°
-(X) True Ravel°
+(^) Dash Ravel
+(^) Depth Ravel
+(X) Drill Ravel
+(X) Grapple Ravel
+(^) Impenetrable Trashcan Lid
+(^) Indestructible Saddle
+(^) Ninja Ravel
+(^) Ravel
+(^) Spider Ravel
+(^) Stealth Ravel
+(X) Thrust Ravel
+(X) True Ravel
 ---
 
 
@@ -1665,51 +1663,51 @@ AMMO:
 (^) Aether Canister
 (X) Armor-Piercing Bullet
 (^) Bee Canister
-(^) Bouncy Harpoon*
-(^) Defiled Spirit*
+(^) Bouncy Harpoon
+(^) Defiled Spirit
 (^) Discharge Canister
-(^) Explosive Harpoon*
-(^) Flammable Harpoon*
+(^) Explosive Harpoon
+(^) Flammable Harpoon
 (X) Foolean Canister
-(^) Harpoon*
-(^) Peatball*
-(^) Resizable Mine I*
-(^) Resizable Mine II*
+(^) Harpoon
+(^) Peatball
+(^) Resizable Mine I
+(^) Resizable Mine II
 (^) Resizable Mine III
 (^) Resizable Mine IV
-(^) Scrap*
-(^) Thermite Canister*
+(^) Scrap
+(^) Thermite Canister
 
-(^) Alkahest Arrow*
-(^) Alkahest Bullet*
-(^) Alkahest Canister*
+(^) Alkahest Arrow
+(^) Alkahest Bullet
+(^) Alkahest Canister
 (^) Alkahest Dart
 (^) Alkahest Harpoon
-(^) Alkaline Canister*
-(^) Alkaline Harpoon*
-(^) Bile Arrow*
-(^) Bile Bullet*
-(^) Bile Canister*
-(^) Bile Dart*
+(^) Alkaline Canister
+(^) Alkaline Harpoon
+(^) Bile Arrow
+(^) Bile Bullet
+(^) Bile Canister
+(^) Bile Dart
 (^) Bile Harpoon
-(^) Coolant Canister*
-(^) Cursed Canister*
-(^) Cursed Harpoon*
-(^) Ichor Canister*
+(^) Coolant Canister
+(^) Cursed Canister
+(^) Cursed Harpoon
+(^) Ichor Canister
 (^) Ichor Harpoon
-(^) Metal Slug*
-(^) Resizable Mine V*
+(^) Metal Slug
+(^) Resizable Mine V
 
-(^) Resizable Mine VI*
+(^) Resizable Mine VI
 
 (#, ^2) Homing Rocket I
 (#, ^2) Homing Rocket II
-(^) Resizable Mine VII*
+(^) Resizable Mine VII
 (X) Resizable Mine VIII
 
-(^) Gray Solution*
+(^) Gray Solution
 (X) Orange Solution
-(^) Teal Solution*
+(^) Teal Solution
 ---
 
 
