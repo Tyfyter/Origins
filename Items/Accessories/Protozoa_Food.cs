@@ -22,7 +22,7 @@ namespace Origins.Items.Accessories {
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 			Item.rare = ItemRarityID.Blue;
 			Item.expert = true;
-			Item.value = Item.sellPrice(gold: 6);
+			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.maxMinions += 1;
