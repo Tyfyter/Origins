@@ -9,8 +9,9 @@ namespace Origins.Items.Accessories {
 	public class Chambersite_Ring : GemRingBase/*, ICustomWikiStat*/ {
 		public override string Texture => typeof(Large_Chambersite).GetDefaultTMLName();
 		public override int PrimaryIngredientType => ModContent.ItemType<Chambersite_Item>();
+		public override int StatIncrease => 6;
         public override void UpdateAccessory(Player player, bool hideVisual) {
-			player.GetDamage(DamageClasses.Explosive).Flat += 1;
+			player.GetDamage(DamageClasses.Explosive).Flat += StatIncrease;
 		}
 	}
 }

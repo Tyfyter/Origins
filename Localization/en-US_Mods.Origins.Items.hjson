@@ -6677,5 +6677,5 @@ Willy_Aftershave: {
 
 Chambersite_Ring: {
 	DisplayName: Chambersite Ring
-	Tooltip: ""
+	Tooltip: Increases explosive damage by {0}
 }

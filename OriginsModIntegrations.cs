@@ -705,7 +705,6 @@ namespace Origins {
 			if (instance.fargosMutant is not null) AddFargosGroups();
 		}
 		public static void PostAddRecipes() {
-			if (instance.thorium is not null) PostAddThoriumRecipes();
 		}
 		public void Unload() {
 			instance = null;
@@ -925,15 +924,6 @@ namespace Origins {
 		static void AddThoriumRecipeGroups() {
 			RecipeGroup.recipeGroups[GemPhasebladeRecipeGroupID].ValidItems.Add(ItemType<CyanPhaseblade>());
 			RecipeGroup.recipeGroups[GemPhasebladeRecipeGroupID].ValidItems.Add(ItemType<PinkPhaseblade>());
-		}
-		[JITWhenModsEnabled("ThoriumMod")]
-		static void PostAddThoriumRecipes() {
-			int l = Main.recipe.Length;
-			Recipe r;
-			for (int i = 0; i < l; i++) {
-				r = Main.recipe[i];
-				if (r.createItem.type == ItemType<TheRing>()) r.AddIngredient<Chambersite_Ring>();
-			}
 		}
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void SetFargosStaticDefaults() {
