@@ -465,10 +465,8 @@ namespace Origins {
 				.UseSamplerState(SamplerState.PointClamp);
 
 				journalDrawingShader = new ArmorShaderData(Assets.Request<Effect>("Effects/Journal"), "Drawing");
-				GameShaders.Armor.BindShader(MC.ItemType<Journal_Item>(), journalDrawingShader);
 
 				journalTransparentShader = new ArmorShaderData(Assets.Request<Effect>("Effects/Journal"), "LightnessToTransparency");
-				GameShaders.Armor.BindShader(MC.ItemType<Framing_Tester>(), journalTransparentShader);
 
 				GameShaders.Misc["Origins:Constellation"] = new MiscShaderData(Assets.Request<Effect>("Effects/ConstellationMod"), "ConstellationMod")
 				.UseImage1(ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin"));
