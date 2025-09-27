@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Humanizer;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Graphics.Primitives;
@@ -18,6 +19,7 @@ using Origins.Tiles.MusicBoxes;
 using Origins.Tiles.Other;
 using PegasusLib;
 using PegasusLib.Graphics;
+using PegasusLib.Networking;
 using ReLogic.Content;
 using System;
 using System.Collections;
@@ -135,6 +137,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		bool[] oldPlayerInteraction = new bool[Main.maxPlayers + 1];
 		public override void AI() {
+			SC_Wraparound_Teleport_Action.teleportCooldown.Cooldown();
 			NPC.netOffset *= 0;
 			if (NPC.shimmerTransparency > 0) {
 				NPC.shimmerTransparency -= 0.005f;
@@ -225,23 +228,10 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				if (Main.netMode != NetmodeID.MultiplayerClient && max.Y >= Main.bottomWorld - 640f - 64f) {
 					Vector2 top = (min.Y - (640f + 16f)) * Vector2.UnitY;
-					ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
-						PositionInWorld = NPC.Bottom
-					});
-					NPC.Teleport(NPC.position - top, 12);
-					ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
-						PositionInWorld = NPC.Bottom
-					});
-					DoTeleports(players.Select(player => (player, player.position - top)).ToList());
-					for (int i = 0; i < turrets.Count; i++) {
-						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
-							PositionInWorld = turrets[i].Bottom
-						});
-						turrets[i].Teleport(turrets[i].position - top, 12);
-						ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
-							PositionInWorld = turrets[i].Bottom
-						});
-					}
+					new SC_Wraparound_Teleport_Action(
+						players.Select(player => (player, player.position - top)).ToArray(),
+						[(NPC, NPC.position - top)]
+					).Perform();
 				}
 			}
 		}
@@ -946,6 +936,56 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			shader.Apply();
 			rect.Draw(position, Color.White, size, rotation, position);
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+		}
+	}
+	public record class SC_Wraparound_Teleport_Action((Player player, Vector2 pos)[] Players, (NPC, Vector2 pos)[] NPCs, bool DeathTeleport = false) : SyncedAction {
+		internal static int teleportCooldown = 0;
+		protected override bool ShouldPerform => teleportCooldown <= 0 || DeathTeleport;
+		public SC_Wraparound_Teleport_Action() : this(default, default, default) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			Players = ReadArray(reader, Main.player),
+			NPCs = ReadArray(reader, Main.npc)
+		};
+		public override void NetSend(BinaryWriter writer) {
+			WriteArray(writer, Players);
+			WriteArray(writer, NPCs);
+		}
+		static void WriteArray<T>(BinaryWriter writer, (T entity, Vector2 pos)[] entities) where T : Entity {
+			writer.Write((byte)entities.Length);
+			for (int i = 0; i < entities.Length; i++) {
+				writer.Write((byte)entities[i].entity.whoAmI);
+				writer.WriteVector2(entities[i].pos);
+			}
+		}
+		static (T entity, Vector2 pos)[] ReadArray<T>(BinaryReader reader, T[] sourceArray) where T : Entity {
+			(T entity, Vector2 pos)[] entities = new (T entity, Vector2 pos)[reader.ReadByte()];
+			for (int i = 0; i < entities.Length; i++) {
+				entities[i] = (sourceArray[reader.ReadByte()], reader.ReadVector2());
+			}
+			return entities;
+		}
+		protected override void Perform() {
+			teleportCooldown = 15;
+			for (int i = 0; i < NPCs.Length; i++) {
+				(NPC npc, Vector2 pos) = NPCs[i];
+				ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+					PositionInWorld = npc.Bottom
+				});
+				npc.Teleport(pos, 12);
+				ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+					PositionInWorld = npc.Bottom
+				});
+			}
+			for (int i = 0; i < Players.Length; i++) {
+				(Player player, Vector2 pos) = Players[i];
+				ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+					PositionInWorld = player.Bottom
+				});
+				player.Teleport(pos, 12);
+				ParticleOrchestrator.BroadcastOrRequestParticleSpawn(ParticleOrchestraType.ShimmerTownNPC, new ParticleOrchestraSettings {
+					PositionInWorld = player.Bottom
+				});
+			}
 		}
 	}
 }

@@ -11,9 +11,9 @@ namespace Origins.Items.Other.Testing {
 	public abstract class TestingItem : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
 		public IEnumerable<int> ProvideItemObtainability() => [Type];
 		public bool ShouldHavePage => false;
-#if !DEBUG
+/*#if !DEBUG
 		public override bool IsLoadingEnabled(Mod mod) => false;
-#endif
+#endif*/
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 			Item.ResearchUnlockCount = 0;

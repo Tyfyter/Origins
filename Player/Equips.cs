@@ -356,6 +356,7 @@ namespace Origins {
 						for (int i = 0; i < Main.chest.Length; i++) {
 							Chest chest = Main.chest[i];
 							if (chest is null) continue;
+							if (Chest.IsLocked(chest.x, chest.y)) continue;
 							if (Player.tileTargetX >= chest.x && Player.tileTargetX <= chest.x + 1 && Player.tileTargetY >= chest.y && Player.tileTargetY <= chest.y + 1) {
 								goldenLotusFairy.ai[0] = -2;
 								goldenLotusFairy.ai[1] = i;

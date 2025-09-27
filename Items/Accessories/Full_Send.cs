@@ -79,6 +79,7 @@ namespace Origins.Items.Accessories {
 		public override void OnStarted(Player player, ref bool playSound) {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.fullSendStartPos = originPlayer.fullSendPos = player.position;
+			if (NetmodeActive.Server) return;
 			int feet = player.height;
 			if (player.gravDir == -1f)
 				feet = 0;
