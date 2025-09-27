@@ -1,5 +1,5 @@
 author = Origins Dev Team
-version = 0.5.3.5
+version = 0.5.3.6
 displayName = Terraria Origins
 
 buildIgnore = .git\*, *.csproj, *.xcf, *.user, obj\*, bin\*, .vs\*, Items\Weapons\Felnum\Tier2\Tolruk_Glow_Old\*, Music\Legacy\*, Old_Sprites\*, Items\Armor\Vanity\Terlet\PlagueCowboy(Old)\*
