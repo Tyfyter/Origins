@@ -1697,6 +1697,7 @@ AMMO:
 (^) Ichor Harpoon
 (^) Metal Slug
 (^) Resizable Mine V
+(X) Scrap Dart
 
 (^) Resizable Mine VI
 
@@ -1740,7 +1741,7 @@ CROSS-MOD CONTENT:
 (々) Ashen Renewal Supreme
 (々) Ashen "Fake" Altar
 (X) Bomber's Soul
-(@, ^3) Chambersite Ring
+(^) Chambersite Ring
 (^) Defiled Chest
 (^) Defiled Renewal
 (^) Defiled Renewal Supreme
