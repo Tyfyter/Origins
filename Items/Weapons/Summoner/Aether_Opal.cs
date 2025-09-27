@@ -226,7 +226,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
 					// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
 					bool closeThroughWall = between < 100f;
-					if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall)) {
+					if (closest && inRange && (lineOfSight || closeThroughWall)) {
 						distanceFromTarget = between;
 						targetCenter = npc.Center;
 						target = npc.whoAmI;
