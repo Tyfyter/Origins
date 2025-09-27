@@ -54,7 +54,7 @@ namespace Origins.Items.Accessories {
 		}
 		private static void IL_Chest_UpdateChestFrames(ILContext il) {
 			ILCursor c = new(il);
-			var a = typeof(ILPatternMatchingExt);
+			Type a = typeof(ILPatternMatchingExt);
 			FieldReference _chestInUse = default;
 			c.GotoNext(MoveType.After,
 				i => i.MatchLdsfld(out _chestInUse) && _chestInUse.DeclaringType.Is(typeof(Chest)) && _chestInUse.Name == nameof(_chestInUse),
