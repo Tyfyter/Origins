@@ -142,7 +142,7 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			if (NPC.life <= 0 && !NetmodeActive.Server) {
+			if (NPC.life <= 0) {
 				SpawnGore<Amoebeye1_Gore>(NPC.Center + new Vector2(12, -12));
 				SpawnGore<Amoebeye2_Gore>(NPC.Center + new Vector2(-12, 2));
 				SpawnGore<Amoebeye3_Gore>(NPC.Center + new Vector2(21, 5));
@@ -248,6 +248,7 @@ namespace Origins.NPCs.Riven {
 			return target.whoAmI + 1 != NPC.ai[0];
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
+			if (NetmodeActive.Server) return;
 			for (int i = (int)((NPC.life <= 0 ? 12 : 4) * Main.gfxQuality) ; i-->0;) {
 				Gore.NewGore(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, Main.rand.Next(R_Effect_Blood1.GoreIDs));
 			}
