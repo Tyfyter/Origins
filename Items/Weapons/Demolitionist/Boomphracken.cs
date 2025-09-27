@@ -14,6 +14,7 @@ namespace Origins.Items.Weapons.Demolitionist {
         ];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			ID = Type;
 		}
 		public override void SetDefaults() {

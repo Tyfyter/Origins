@@ -19,6 +19,7 @@ namespace Origins.Items.Weapons.Melee {
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
 			ItemSets.InflictsExtraDebuffs[Type] = [Cavitation_Debuff.ID];
 		}
