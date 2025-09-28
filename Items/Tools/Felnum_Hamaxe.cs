@@ -15,6 +15,7 @@ namespace Origins.Items.Tools {
 			"ToolWeapon"
 		];
 		public override void SetStaticDefaults() {
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			Origins.DamageBonusScale[Type] = 1.5f;
 			CritType.SetCritType<Felnum_Crit_Type>(Type);
 			OriginsSets.Items.FelnumItem[Type] = true;

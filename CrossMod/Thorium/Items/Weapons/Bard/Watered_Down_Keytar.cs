@@ -17,6 +17,7 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 		public static SoundStyle SynthSound = new("Origins/Sounds/Custom/KeytarSynth", SoundType.Sound);
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			ID = Type;
 		}
 		public static void SetSharedDefaults(Item item, out int cost) {
@@ -68,6 +69,7 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 		public override void SetStaticDefaults() {
 			Empowerments.AddInfo<EmpowermentProlongation>(2);
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 			Watered_Down_Keytar.ID = Type;
 		}
 		public override void SetBardDefaults() {
