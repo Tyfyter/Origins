@@ -823,7 +823,7 @@ Spirit_Shard: {
 		'''
 		Artifact minions turn into ghosts of their former selves upon death
 		10% increased summon damage
-		+2 minion slots
+		+1 minion slots
 		'''
 }
 
@@ -5989,6 +5989,7 @@ Greasy_Broth: {
 	Tooltip:
 		'''
 		All minions inflict [buffhint:Oiled]
+		Artifact minions release greasy gas that [buffhint/dnburns enemies:OnFire]
 		Artifact minions release greasy gas that [buffhint/dnburns enemies:OnFire]
 		'''
 }
