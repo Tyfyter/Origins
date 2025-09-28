@@ -309,7 +309,7 @@ namespace Origins.Projectiles {
 			}
 			{
 				bool mildewArmor = false;
-				if (projectile.friendly && projectile.TryGetOwner(out Player owner)) {
+				if (projectile.friendly && !OriginsSets.Projectiles.NoMildewSetTrail[projectile.type] && projectile.TryGetOwner(out Player owner)) {
 					mildewArmor = owner.OriginPlayer().mildewSet;
 				}
 				int neededTrailLength = 0;
