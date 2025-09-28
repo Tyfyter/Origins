@@ -14,6 +14,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 16);
 			Item.rare = ItemRarityID.Green;
+			Item.value = Item.sellPrice(silver: 250);
 		}
 		public override void UpdateEquip(Player player) {
 			player.maxMinions += 1;
