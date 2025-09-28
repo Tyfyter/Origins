@@ -1655,7 +1655,7 @@ Sanguinite_Bar: {
 }
 
 Sentient_Powder: {
-	// DisplayName: Sentient Powder
+	// DisplayName: Parasitic Powder
 	// Tooltip: Spreads the {§Riven_Hive}
 }
 
@@ -6677,5 +6677,5 @@ Willy_Aftershave: {
 
 Chambersite_Ring: {
 	// DisplayName: Chambersite Ring
-	// Tooltip: ""
+	// Tooltip: Increases explosive damage by {0}
 }
