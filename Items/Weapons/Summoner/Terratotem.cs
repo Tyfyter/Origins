@@ -396,14 +396,15 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 			}
 			TargetData oldTargetData = targetData;
+			targetData = default;
 			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
 			if (targetData.TargetType == TargetType.Slot && CanPickupItems) {
 				float bestPickupPriority = 0;
 				for (int i = 0; i < Main.maxItems; i++) {
 					Item item = Main.item[i];
 					if (item.active) {
-						bool isCurrentTarget = targetData.TargetType == TargetType.Item && i == targetData.Index;
-						if (isCurrentTarget || targetData.TargetType != TargetType.Item) {
+						bool isCurrentTarget = oldTargetData.TargetType == TargetType.Item && i == oldTargetData.Index;
+						if (isCurrentTarget || oldTargetData.TargetType != TargetType.Item) {
 							Vector2 pos = Projectile.position;
 							float between = Vector2.Distance(item.Center, pos);
 							between *= isCurrentTarget ? 0 : 1;
