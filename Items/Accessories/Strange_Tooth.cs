@@ -42,6 +42,8 @@ namespace Origins.Items.Accessories {
 			Main.projFrames[Type] = 4;
 			Main.projPet[Type] = true;
 			ProjectileID.Sets.CultistIsResistantTo[Type] = true;
+
+			OriginsSets.Projectiles.MinionBuffReceiverPriority[Type] = 0.25f;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;

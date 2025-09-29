@@ -262,6 +262,9 @@ namespace Origins {
 			.RegisterCustomSet<AssetSource<Texture2D>[]>([]);*/
 			public static bool[] NoMildewSetTrail { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(NoMildewSetTrail))
 			.RegisterBoolSet();
+			public static float[] MinionBuffReceiverPriority { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(MinionBuffReceiverPriority))
+			.Description("Used by effects which buff minions one at a time to determine which minion to buff")
+			.RegisterFloatSet(1);
 			static Projectiles() {
 				foreach (KeyValuePair<int, Projectile> proj in ContentSamples.ProjectilesByType) {
 					if (!NoMultishot.IndexInRange(proj.Key)) continue;
