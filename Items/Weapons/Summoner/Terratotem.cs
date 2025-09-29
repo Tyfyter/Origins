@@ -203,6 +203,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			if (Projectile.GetRelatedProjectile(1)?.ModProjectile is Terratotem_Tab seat) {
 				seat.Life = seat.MaxLife;
+				seat.Projectile.netUpdate = true;
 			}
 			Projectile.netUpdate = true;
 		}
@@ -249,8 +250,15 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 				Projectile.velocity = new Vector2(Projectile.localAI[1], Projectile.localAI[2]);
 				Vector2 vectorToIdlePosition = (idlePosition - Projectile.Bottom).Normalized(out float dist);
-				float speed = dist > 16 * 50 ? 64 : 32;
-				(Projectile.localAI[1], Projectile.localAI[2]) = (Projectile.velocity + vectorToIdlePosition * Math.Min(dist, speed)) / 4;
+				if (dist > 2000) {
+					Projectile.Bottom = idlePosition;
+					Projectile.velocity = Vector2.Zero;
+					(Projectile.localAI[1], Projectile.localAI[2]) = Vector2.Zero;
+					Projectile.netUpdate = true;
+				} else {
+					float speed = dist > 16 * 50 ? 64 : 32;
+					(Projectile.localAI[1], Projectile.localAI[2]) = (Projectile.velocity + vectorToIdlePosition * Math.Min(dist, speed)) / 4;
+				}
 			}
 			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active) {
 				if (mask.ai[1] == -1) {
