@@ -22,7 +22,7 @@ namespace Origins.Projectiles {
 	public class ArtifactMinionGlobalProjectile : GlobalProjectile {
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
-		bool isRespawned = false;
+		public bool isRespawned = false;
 		public StatModifier maxHealthModifier = StatModifier.Default;
 		public int defense = 0;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {

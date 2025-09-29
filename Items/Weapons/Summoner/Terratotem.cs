@@ -101,7 +101,19 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
-		public bool CanDie => Projectile.localAI[0] <= 0;
+		public bool CanDie {
+			get {
+				if (Projectile.localAI[0] > 0) return false;
+				ArtifactMinionGlobalProjectile globalProjectile = Projectile.GetGlobalProjectile<ArtifactMinionGlobalProjectile>();
+				ref bool isRespawned = ref globalProjectile.isRespawned;
+				if (globalProjectile.CanRespawn(Projectile)) {
+					isRespawned = true;
+					Life = MaxLife;
+					return false;
+				}
+				return true;
+			}
+		}
 		public float SacrificeAvoidance {
 			get {
 				if (Projectile.localAI[0] <= 0) {
