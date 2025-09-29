@@ -5990,7 +5990,6 @@ Greasy_Broth: {
 		'''
 		All minions inflict [buffhint:Oiled]
 		Artifact minions release greasy gas that [buffhint/dnburns enemies:OnFire]
-		Artifact minions release greasy gas that [buffhint/dnburns enemies:OnFire]
 		''' */
 }
 

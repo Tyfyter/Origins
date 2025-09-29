@@ -4,6 +4,7 @@ using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
+using ReLogic.Graphics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -97,7 +98,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	#endregion balance
-	public class Terratotem_Tab : ModProjectile, IArtifactMinion {
+	public class Terratotem_Tab : SpeedModifierMinion, IArtifactMinion {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
@@ -166,6 +167,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			return last;
 		}
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			// Sets the amount of frames this minion has on its spritesheet
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[Type] = true;
@@ -268,7 +270,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					(Projectile.localAI[1], Projectile.localAI[2]) = Vector2.Zero;
 					Projectile.netUpdate = true;
 				} else {
-					float speed = dist > 16 * 50 ? 64 : 32;
+					float speed = (dist > 16 * 50 ? 64 : 32) * SpeedModifier;
 					(Projectile.localAI[1], Projectile.localAI[2]) = (Projectile.velocity + vectorToIdlePosition * Math.Min(dist, speed)) / 4;
 				}
 			}
@@ -303,7 +305,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 		}
 	}
-	public abstract class Terratotem_Mask_Base : ModProjectile {
+	public abstract class Terratotem_Mask_Base : SpeedModifierMinion {
 		public AutoLoadingAsset<Texture2D> sideTexture;
 		public AutoLoadingAsset<Texture2D> sideGlowTexture;
 		public virtual int FrameCount => 1;
@@ -314,6 +316,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.MinionShot[Type] = true;
+			base.SetStaticDefaults();
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
@@ -439,7 +442,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public virtual void DoMaskBehavior() {
 			Rectangle targetRect = targetData.GetPosition(Projectile);
 			Vector2 targetPos = targetRect.Center();
-			float speed = 8f;
+			float speed = 8f * SpeedModifier;
 			float inertia = 12f;
 			Vector2 directionToTarget = (targetPos - Projectile.Center).Normalized(out _);
 			if (Projectile.Hitbox.Intersects(targetRect)) {
@@ -582,7 +585,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				targetPos = GetPosition(left);
 				targetPos.Y -= 24;
 				if (Projectile.Center.WithinRange(targetPos, 16)) {
-					Projectile.velocity = (targetRect.Center() - Projectile.Center).Normalized(out _) * 12;
+					Projectile.velocity = (targetRect.Center() - Projectile.Center).Normalized(out _) * 12 * SpeedModifier;
 					Projectile.ai[2] = (GetPosition(!left).X - Projectile.Center.X) / Projectile.velocity.X;
 					ParticleOrchestrator.RequestParticleSpawn(clientOnly: false, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings {
 						PositionInWorld = targetRect.Center(),
@@ -608,7 +611,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool? CanDamage() => Projectile.ai[2] >= 10 && Projectile.ai[2] <= 20;
 		public override void AI() {
 			base.AI();
-			if (Projectile.numUpdates == -1 && Projectile.ai[2] > 0 && Projectile.ai[2].Warmup(30)) {
+			if (Projectile.numUpdates == -1 && Projectile.ai[2] > 0 && Projectile.ai[2].Warmup(30, SpeedModifier)) {
 				Projectile.ai[2] = 0;
 				Projectile.ResetLocalNPCHitImmunity();
 			}
@@ -630,7 +633,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			Rectangle targetRect = targetData.GetPosition(Projectile);
 			Vector2 targetPos = targetRect.Center();
-			float speed = 8f;
+			float speed = 8f * SpeedModifier;
 			float inertia = 12f;
 			Vector2 directionToTarget = (targetPos - Projectile.Center).Normalized(out _);
 			switch (targetData.TargetType) {
