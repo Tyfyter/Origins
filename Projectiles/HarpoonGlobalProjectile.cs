@@ -231,6 +231,7 @@ namespace Origins.Projectiles {
 			} else {
 				bitWriter.WriteBit(false);
 			}
+			bitWriter.WriteBit(extraGravity != default);
 			if (extraGravity != default) binaryWriter.WriteVector2(extraGravity);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
