@@ -24,7 +24,7 @@ namespace Origins.Layers {
 				if (data.texture == expectedTexture) {
 					GlowData glowData = glowMasks[slotValue];
 					data.texture = glowData.Texture.Value;
-					data.color = glowData.ColorFunc(drawInfo.drawPlayer);
+					data.color = drawInfo.drawPlayer.GetImmuneAlphaPure(glowData.ColorFunc(drawInfo.drawPlayer), drawInfo.shadow);
 					if (glowData.ShaderFunc is not null) data.shader = glowData.ShaderFunc(drawInfo.drawPlayer, data.shader);
 					drawInfo.DrawDataCache.Insert(i + 1, data);
 				}

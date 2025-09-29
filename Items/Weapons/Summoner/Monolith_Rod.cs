@@ -183,6 +183,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if ((player.team ^ Main.player[newTarget.owner].team) != 0) return;
 
 			float newPriority = newTarget.owner == Projectile.owner ? 2 : 1;
+			newPriority *= OriginsSets.Projectiles.MinionBuffReceiverPriority[newTarget.type];
+			if (newPriority == 0) return;
+
 			int currentStrength = newTarget.TryGetGlobalProjectile(out MinionGlobalProjectile minionGlobal) ? minionGlobal.relayRodStrength : int.MaxValue;
 			if (currentStrength > Projectile.damage) return;
 			if (currentStrength == Projectile.damage) newPriority *= 0.5f;

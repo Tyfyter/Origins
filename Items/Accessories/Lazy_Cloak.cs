@@ -6,6 +6,7 @@ using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
 using Origins.Layers;
 using Origins.NPCs;
+using Origins.Projectiles;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -60,12 +61,13 @@ namespace Origins.Items.Accessories {
 			return OriginExtensions.AccessoryOrSpecialPrefix(Item, rand, PrefixCategory.AnyWeapon, PrefixCategory.Magic);
 		}
 	}
-	public class Lazy_Cloak_P : ModProjectile, IShadedProjectile {
+	public class Lazy_Cloak_P : SpeedModifierMinion, IShadedProjectile {
 		public const int frameSpeed = 5;
 		public static int ID { get; private set; }
 		public virtual int BuffID => Lazy_Cloak_Buff.ID;
 		public int Shader => Main.player[Projectile.owner].cFront;
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 2;
 
@@ -198,7 +200,7 @@ namespace Origins.Items.Accessories {
 
 					// This is a simple movement formula using the two parameters and its desired direction to create a "homing" movement
 					vectorToIdlePosition.Normalize();
-					vectorToIdlePosition *= speed;
+					vectorToIdlePosition *= speed * SpeedModifier;
 					Projectile.velocity = (Projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
 				} else {
 					Projectile.ai[0] = 0;
@@ -207,7 +209,13 @@ namespace Origins.Items.Accessories {
 					Projectile.hide = true;
 					Projectile.position = idlePosition;
 				} else {
-					player.OriginPlayer().lazyCloaksOffPlayer[(int)Projectile.ai[1]] = 2;
+					player.OriginPlayer().lazyCloaksOffPlayer[(int)Projectile.ai[1]] = 3;
+				}
+			}
+
+			for (int i = Main.rand.RandomRound(SpeedModifier - 1); i > 0; i--) {
+				for (int j = 0; j < Projectile.localNPCImmunity.Length; j++) {
+					Projectile.localNPCImmunity[j].Cooldown();
 				}
 			}
 			#endregion

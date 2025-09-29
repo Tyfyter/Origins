@@ -22,7 +22,7 @@ namespace Origins.Projectiles {
 	public class ArtifactMinionGlobalProjectile : GlobalProjectile {
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
-		bool isRespawned = false;
+		public bool isRespawned = false;
 		public StatModifier maxHealthModifier = StatModifier.Default;
 		public int defense = 0;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
@@ -67,6 +67,7 @@ namespace Origins.Projectiles {
 			}
 		}
 		public bool CanRespawn(Projectile projectile) {
+			if (ArtifactMinionSystem.IsSacrificingMinions) return false;
 			return !isRespawned && Main.player[projectile.owner].GetModPlayer<OriginPlayer>().spiritShard;
 		}
 		public override void OnKill(Projectile projectile, int timeLeft) {
@@ -77,17 +78,18 @@ namespace Origins.Projectiles {
 					//basically just stops the old one from counting for one frame
 					//done this way since maxMinions is the only thing that's always read for minion slot code
 					Main.player[projectile.owner].maxMinions += (int)projectile.minionSlots + 1;
-					Projectile proj = Projectile.NewProjectileDirect(
+					Projectile proj = projectile.SpawnProjectile(
 						projectile.GetSource_Death(),
 						projectile.Center,
 						projectile.velocity,
 						projectile.type,
 						projectile.originalDamage,
-						projectile.knockBack,
-						projectile.owner
+						projectile.knockBack
 					);
-					proj.originalDamage = projectile.originalDamage;
-					proj.GetGlobalProjectile<ArtifactMinionGlobalProjectile>().isRespawned = true;
+					if (proj is not null) {
+						proj.originalDamage = projectile.originalDamage;
+						proj.GetGlobalProjectile<ArtifactMinionGlobalProjectile>().isRespawned = true;
+					}
 				}
 			}
 			if (projectile.TryGetGlobalProjectile(out OriginGlobalProj self) && self.prefix is ArtifactMinionPrefix artifactPrefix) {

@@ -4,6 +4,7 @@ using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
+using ReLogic.Graphics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -98,11 +99,23 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	#endregion balance
-	public class Terratotem_Tab : ModProjectile, IArtifactMinion {
+	public class Terratotem_Tab : SpeedModifierMinion, IArtifactMinion {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
-		public bool CanDie => Projectile.localAI[0] <= 0;
+		public bool CanDie {
+			get {
+				if (Projectile.localAI[0] > 0) return false;
+				ArtifactMinionGlobalProjectile globalProjectile = Projectile.GetGlobalProjectile<ArtifactMinionGlobalProjectile>();
+				ref bool isRespawned = ref globalProjectile.isRespawned;
+				if (globalProjectile.CanRespawn(Projectile)) {
+					isRespawned = true;
+					Life = MaxLife;
+					return false;
+				}
+				return true;
+			}
+		}
 		public float SacrificeAvoidance {
 			get {
 				if (Projectile.localAI[0] <= 0) {
@@ -140,21 +153,28 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			return true;
 		}
+		Projectile bottomPart;
+		int belowCount = -1;
 		public Projectile GetBottom(out int count) {
-			Projectile current = Projectile;
-			HashSet<Projectile> walked = [current];
-			Projectile last = current;
-			while (current is not null) {
-				last = current;
-				current = current.GetRelatedProjectile(1);
-				if (current is null) break;
-				if (current.owner != Projectile.owner || current.ModProjectile is not Terratotem_Tab) break;
-				if (!walked.Add(current)) break;
+			if (bottomPart is null || bottomPart.ModProjectile is not Terratotem_Tab) {
+				Projectile current = Projectile;
+				HashSet<Projectile> walked = [current];
+				Projectile last = current;
+				while (current is not null) {
+					last = current;
+					current = current.GetRelatedProjectile(1);
+					if (current is null) break;
+					if (current.owner != Projectile.owner || current.ModProjectile is not Terratotem_Tab) break;
+					if (!walked.Add(current)) break;
+				}
+				belowCount = walked.Count;
+				bottomPart = last;
 			}
-			count = walked.Count;
-			return last;
+			count = belowCount;
+			return bottomPart;
 		}
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			// Sets the amount of frames this minion has on its spritesheet
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[Type] = true;
@@ -164,6 +184,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Main.projPet[Type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
+			OriginsSets.Projectiles.NoMildewSetTrail[Type] = true;
 			if (GetType().GetProperty(nameof(ID)).GetSetMethod(true) is MethodInfo setID) setID.Invoke(null, [Type]);
 		}
 		public override void SetDefaults() {
@@ -173,7 +194,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
 			Projectile.minion = true;
-			Projectile.minionSlots = 0.5f;
+			Projectile.minionSlots = 1;
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20;
@@ -203,6 +224,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			if (Projectile.GetRelatedProjectile(1)?.ModProjectile is Terratotem_Tab seat) {
 				seat.Life = seat.MaxLife;
+				seat.Projectile.netUpdate = true;
 			}
 			Projectile.netUpdate = true;
 		}
@@ -249,8 +271,15 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 				Projectile.velocity = new Vector2(Projectile.localAI[1], Projectile.localAI[2]);
 				Vector2 vectorToIdlePosition = (idlePosition - Projectile.Bottom).Normalized(out float dist);
-				float speed = dist > 16 * 50 ? 64 : 32;
-				(Projectile.localAI[1], Projectile.localAI[2]) = (Projectile.velocity + vectorToIdlePosition * Math.Min(dist, speed)) / 4;
+				if (dist > 2000) {
+					Projectile.Bottom = idlePosition;
+					Projectile.velocity = Vector2.Zero;
+					(Projectile.localAI[1], Projectile.localAI[2]) = Vector2.Zero;
+					Projectile.netUpdate = true;
+				} else {
+					float speed = (dist > 16 * 50 ? 64 : 32) * SpeedModifier;
+					(Projectile.localAI[1], Projectile.localAI[2]) = (Projectile.velocity + vectorToIdlePosition * Math.Min(dist, speed)) / 4;
+				}
 			}
 			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active) {
 				if (mask.ai[1] == -1) {
@@ -283,7 +312,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 		}
 	}
-	public abstract class Terratotem_Mask_Base : ModProjectile {
+	public abstract class Terratotem_Mask_Base : SpeedModifierMinion {
 		public AutoLoadingAsset<Texture2D> sideTexture;
 		public AutoLoadingAsset<Texture2D> sideGlowTexture;
 		public virtual int FrameCount => 1;
@@ -294,6 +323,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.MinionShot[Type] = true;
+			base.SetStaticDefaults();
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
@@ -373,14 +403,15 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 			}
 			TargetData oldTargetData = targetData;
+			targetData = default;
 			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
 			if (targetData.TargetType == TargetType.Slot && CanPickupItems) {
 				float bestPickupPriority = 0;
 				for (int i = 0; i < Main.maxItems; i++) {
 					Item item = Main.item[i];
 					if (item.active) {
-						bool isCurrentTarget = targetData.TargetType == TargetType.Item && i == targetData.Index;
-						if (isCurrentTarget || targetData.TargetType != TargetType.Item) {
+						bool isCurrentTarget = oldTargetData.TargetType == TargetType.Item && i == oldTargetData.Index;
+						if (isCurrentTarget || oldTargetData.TargetType != TargetType.Item) {
 							Vector2 pos = Projectile.position;
 							float between = Vector2.Distance(item.Center, pos);
 							between *= isCurrentTarget ? 0 : 1;
@@ -419,7 +450,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public virtual void DoMaskBehavior() {
 			Rectangle targetRect = targetData.GetPosition(Projectile);
 			Vector2 targetPos = targetRect.Center();
-			float speed = 8f;
+			float speed = 8f * SpeedModifier;
 			float inertia = 12f;
 			Vector2 directionToTarget = (targetPos - Projectile.Center).Normalized(out _);
 			if (Projectile.Hitbox.Intersects(targetRect)) {
@@ -562,7 +593,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				targetPos = GetPosition(left);
 				targetPos.Y -= 24;
 				if (Projectile.Center.WithinRange(targetPos, 16)) {
-					Projectile.velocity = (targetRect.Center() - Projectile.Center).Normalized(out _) * 12;
+					Projectile.velocity = (targetRect.Center() - Projectile.Center).Normalized(out _) * 12 * SpeedModifier;
 					Projectile.ai[2] = (GetPosition(!left).X - Projectile.Center.X) / Projectile.velocity.X;
 					ParticleOrchestrator.RequestParticleSpawn(clientOnly: false, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings {
 						PositionInWorld = targetRect.Center(),
@@ -588,7 +619,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool? CanDamage() => Projectile.ai[2] >= 10 && Projectile.ai[2] <= 20;
 		public override void AI() {
 			base.AI();
-			if (Projectile.numUpdates == -1 && Projectile.ai[2] > 0 && Projectile.ai[2].Warmup(30)) {
+			if (Projectile.numUpdates == -1 && Projectile.ai[2] > 0 && Projectile.ai[2].Warmup(30, SpeedModifier)) {
 				Projectile.ai[2] = 0;
 				Projectile.ResetLocalNPCHitImmunity();
 			}
@@ -610,7 +641,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			Rectangle targetRect = targetData.GetPosition(Projectile);
 			Vector2 targetPos = targetRect.Center();
-			float speed = 8f;
+			float speed = 8f * SpeedModifier;
 			float inertia = 12f;
 			Vector2 directionToTarget = (targetPos - Projectile.Center).Normalized(out _);
 			switch (targetData.TargetType) {

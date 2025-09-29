@@ -142,6 +142,7 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
+			if (NetmodeActive.Server) return;
 			if (NPC.life <= 0) {
 				SpawnGore<Amoebeye1_Gore>(NPC.Center + new Vector2(12, -12));
 				SpawnGore<Amoebeye2_Gore>(NPC.Center + new Vector2(-12, 2));

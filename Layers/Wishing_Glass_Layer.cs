@@ -79,7 +79,7 @@ namespace Origins.Layers {
 				texture,
 				(position - Main.screenPosition).Floor(),
 				null,
-				Color.White,
+				drawInfo.drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow),
 				0,
 				texture.Value.Size() * 0.5f,
 				1f,

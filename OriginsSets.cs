@@ -260,6 +260,14 @@ namespace Origins {
 			/*public static AssetSource<Texture2D>[][] ExtraTextures { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(ExtraTextures))
 			.Description("Additional textures used by the projectile, ")
 			.RegisterCustomSet<AssetSource<Texture2D>[]>([]);*/
+			public static bool[] NoMildewSetTrail { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(NoMildewSetTrail))
+			.RegisterBoolSet();
+			public static float[] MinionBuffReceiverPriority { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(MinionBuffReceiverPriority))
+			.Description("Used by effects which buff minions one at a time to determine which minion to buff")
+			.RegisterFloatSet(1);
+			public static Action<Projectile, float>[] SupportsRealSpeedBuffs { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(SupportsRealSpeedBuffs))
+			.Description("If a value is present in this set for a projectile type, it will be called with the Projectile and speed modifier instead of modifying the update count")
+			.RegisterCustomSet<Action<Projectile, float>>(null);
 			static Projectiles() {
 				foreach (KeyValuePair<int, Projectile> proj in ContentSamples.ProjectilesByType) {
 					if (!NoMultishot.IndexInRange(proj.Key)) continue;

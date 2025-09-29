@@ -51,6 +51,8 @@ namespace Origins.Items.Accessories {
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = false;
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 			OriginsSets.Projectiles.NoMultishot[Type] = true;
+
+			OriginsSets.Projectiles.MinionBuffReceiverPriority[Type] = 0.25f;
 		}
 
 		public override void SetDefaults() {

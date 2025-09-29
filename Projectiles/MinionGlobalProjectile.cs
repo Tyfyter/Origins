@@ -60,7 +60,9 @@ namespace Origins.Projectiles {
 						currentBroth?.PreUpdateMinion(proj);
 					}
 					if (global.relayRodStrength != 0) global.tempBonusUpdates += global.relayRodStrength * 0.01f * 0.1f;
-					if (global.TotalBonusUpdates != 0) {
+					if (OriginsSets.Projectiles.SupportsRealSpeedBuffs[proj.type] is Action<Projectile, float> setter) {
+						setter(proj, global.TotalBonusUpdates);
+					} else if (global.TotalBonusUpdates != 0) {
 						global.bonusUpdateCounter += global.TotalBonusUpdates * (updates + 1);
 						if (global.TotalBonusUpdates > 0) {
 							while (global.bonusUpdateCounter > 1) {
@@ -73,8 +75,8 @@ namespace Origins.Projectiles {
 								updates--;
 							}
 						}
-						global.tempBonusUpdates = 0;
 					}
+					global.tempBonusUpdates = 0;
 				}
 				return updates;
 			});
@@ -216,6 +218,14 @@ namespace Origins.Projectiles {
 				}
 			}
 			return null;
+		}
+	}
+	public abstract class SpeedModifierMinion : ModProjectile {
+		public float SpeedModifier { get; protected set; } = 1;
+		public override void SetStaticDefaults() {
+			OriginsSets.Projectiles.SupportsRealSpeedBuffs[Type] = static (projectile, bonus) => {
+				if (projectile.ModProjectile is SpeedModifierMinion tab) tab.SpeedModifier = bonus + 1;
+			};
 		}
 	}
 }
