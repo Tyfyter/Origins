@@ -187,7 +187,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.tileCollide = false;
 			Projectile.friendly = true;
 			Projectile.minion = true;
-			Projectile.minionSlots = 0.5f;
+			Projectile.minionSlots = 1;
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 20;
