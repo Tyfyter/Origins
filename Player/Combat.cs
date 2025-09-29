@@ -178,10 +178,12 @@ namespace Origins {
 			DoGunGlove();
 		}
 		public override void EmitEnchantmentVisualsAt(Projectile projectile, Vector2 boxPosition, int boxWidth, int boxHeight) {
-			if (flaskBile) {
-				Dust.NewDust(boxPosition, boxWidth, boxHeight, DustID.BloodWater, newColor: Color.Black);
-			} else if (flaskSalt) {
-				Dust.NewDust(boxPosition, boxWidth, boxHeight, DustID.GoldFlame, newColor: Color.Lime);
+			if (projectile.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[projectile.type]) {//flasks
+				if (flaskBile) {
+					Dust.NewDust(boxPosition, boxWidth, boxHeight, DustID.BloodWater, newColor: Color.Black);
+				} else if (flaskSalt) {
+					Dust.NewDust(boxPosition, boxWidth, boxHeight, DustID.GoldFlame, newColor: Color.Lime);
+				}
 			}
 		}
 		public void DoGunGlove() {
