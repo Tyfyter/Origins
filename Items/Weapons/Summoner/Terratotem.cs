@@ -152,19 +152,25 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			return true;
 		}
+		Projectile bottomPart;
+		int belowCount = -1;
 		public Projectile GetBottom(out int count) {
-			Projectile current = Projectile;
-			HashSet<Projectile> walked = [current];
-			Projectile last = current;
-			while (current is not null) {
-				last = current;
-				current = current.GetRelatedProjectile(1);
-				if (current is null) break;
-				if (current.owner != Projectile.owner || current.ModProjectile is not Terratotem_Tab) break;
-				if (!walked.Add(current)) break;
+			if (bottomPart is null || bottomPart.ModProjectile is not Terratotem_Tab) {
+				Projectile current = Projectile;
+				HashSet<Projectile> walked = [current];
+				Projectile last = current;
+				while (current is not null) {
+					last = current;
+					current = current.GetRelatedProjectile(1);
+					if (current is null) break;
+					if (current.owner != Projectile.owner || current.ModProjectile is not Terratotem_Tab) break;
+					if (!walked.Add(current)) break;
+				}
+				belowCount = walked.Count;
+				bottomPart = last;
 			}
-			count = walked.Count;
-			return last;
+			count = belowCount;
+			return bottomPart;
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
