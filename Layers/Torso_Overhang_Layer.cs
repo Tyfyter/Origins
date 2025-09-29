@@ -21,8 +21,9 @@ namespace Origins.Layers {
 			Position.Y += Frame.Height - 2;
 			Frame.Y += Frame.Height - 2;
 			Frame.Height = 2;
-			DrawData item = new DrawData(texture, Position, Frame, Color.White, drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
-			item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
+			DrawData item = new(texture, Position, Frame, drawInfo.colorArmorBody, drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0) {
+				shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type)
+			};
 			drawInfo.DrawDataCache.Add(item);
 		}
 	}
