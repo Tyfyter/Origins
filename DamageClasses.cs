@@ -208,6 +208,7 @@ namespace Origins {
 		public override void SetDefaultStats(Player player) {
 			player.GetCritChance(this) -= 4;
 		}
+		public override bool UseStandardCritCalcs => other.UseStandardCritCalcs;
 	}
 	public class Ranged_Magic : DamageClass {
 		
