@@ -98,7 +98,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	#endregion balance
-	public class Terratotem_Tab : SpeedModifierMinion, IArtifactMinion {
+	public class Terratotem_Tab : SpeedModifierMinion, IArtifactMinion, ISpecialOverCapacityMinion {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
@@ -307,6 +307,17 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void OnKill(int timeLeft) {
 			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active) {
 				mask.Kill();
+			}
+		}
+		public void KillOverCapacity() {
+			foreach (Projectile other in Main.ActiveProjectiles) {
+				if (other.whoAmI == Projectile.whoAmI) continue;
+				if (other.owner == Projectile.owner && other.ModProjectile is Terratotem_Tab) {
+					if (other.localAI[0] <= 0) {
+						other.Kill();
+						break;
+					}
+				}
 			}
 		}
 	}
