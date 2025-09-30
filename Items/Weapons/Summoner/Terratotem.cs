@@ -69,6 +69,7 @@ namespace Origins.Items.Weapons.Summoner {
 			.AddIngredient(ItemID.SanguineStaff)
 			.AddIngredient(ItemID.Smolstar)
 			.AddIngredient(ItemID.OpticStaff)
+			.AddIngredient(ItemID.PygmyStaff)
 			.AddIngredient(ItemID.TempestStaff)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
