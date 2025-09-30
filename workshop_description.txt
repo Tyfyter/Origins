@@ -1,20 +1,34 @@
-If you enjoy Origins please leave a rating and share with your friends!
+Terraria Origins is a content mod that adds new ways of playing Terraria with content designed and balanced around the vanilla game. It is full of many alternative playstyles to complement the base game for you to enjoy. More content is planned in the future. You can see our completion list for what we have planned next: https://github.com/Tyfyter/Origins/blob/master/completionList.txt .
 
-Terraria Origins is a content mod that adds new ways of playing Terraria with content designed and balanced around the vanilla game. It is full of many alternative playstyles to complement the base game for you to enjoy. More content is planned in the future. You can see our completion list for what we have planned next: https://github.com/Tyfyter/Origins/blob/master/completionList.txt
-
-Origins is currently in its Open Beta version, still including 788 items, 77 NPCs, 178 tiles and 6 biomes. 
+Origins is currently in its Open Beta version, still including 1055 items, 148 NPCs, 269 tiles, 6 biomes and 5 bosses. 
 Additionally, there is a new explosive-themed Demolitionist class that has content throughout the entire game and is balanced with the other classes.
 
 Origins' content adds alternatives for nearly all areas of gameplay reinforced by its two new world evils: the Defiled Wastelands and Riven Hive. The Corruption and Crimson also have content added to make them melee and ranger-focused respectively while the Defiled is magic-focused and Riven being summoner-focused. It will be hard to not find something new and fun in Origins, even in its current Beta state.
 
-This mod includes the music tracks composed for each of the biomes and bosses, and unique sound effects for some of the items.
-You can find streamable versions of the music on chrersis’ SoundCloud: https://on.soundcloud.com/DbwEvCydVjhwcijF8
+This mod does not include the music tracks composed for each of the biomes and bosses, but it still has the unique sound effects for some of the content. The music can be found from the Music Mod here: https://s.team/sf/3476640589
+There is a configuration option to toggle between Volumes of the soundtrack.
+Both Volumes 1 and 2 can be found on their respective SoundCloud playlists below.
+Volume I: https://on.soundcloud.com/DbwEvCydVjhwcijF8
+Volume II: https://on.soundcloud.com/2bAEyAFQwV7XM8Me8
 
 Origins' wiki is currently in development so Origins' players have a sense of direction. It is not finished, but we are hard at work on it. The link can be found here: https://tyfyter.github.io/OriginsWiki
 
 In the meantime, you can join Origins' official Discord server to talk with other players about your discoveries and any bugs you may find! Use this link to join now: https://discord.gg/NK7jERXsTN
 
-This mod and its wiki are all made in collaboration between Tyfyter2002 and chrersis. Origins' content is open source for all to view and use so long as our BSD 3-Clause license is not breached. We thank you for expressing interest in this mod and hope it brings you joy!
+This mod and its wiki are all made in collaboration amongst the Origins Development Team. Origins' content is open source for all to view and use so long as our BSD 3-Clause license is not breached. We thank you for expressing interest in this mod and hope it brings you joy!
 
-If you have any questions, comments or a bug you have found from anything Origins-related, please reach out to us through our Discord server! If you would rather not join the server, instead e-mail us at developmentorigins@gmail.com[quote=tModLoader Origins]
-Developed By Tyfyter2002 and chrersis[/quote]
+If you have any questions, comments or a bug you have found from anything Origins-related, please reach out to us through our Discord server! If you would rather not join the server, instead e-mail us at developmentorigins@gmail.com .
+
+[quote=tModLoader Origins]
+Developed By Origins Dev Team[/quote]
+
+-0-
+
+Companion mod to the (main) Origins Mod (found here: https://s.team/sf/3375903288). Using it alone adds no content, and the music boxes are obtainable without this mod being enabled (they just play a vanilla placeholder).
+
+There is a configuration option to toggle between Volumes of the soundtrack.
+Both Volumes 1 and 2 can be found on their respective SoundCloud playlists below.
+Volume I: https://on.soundcloud.com/DbwEvCydVjhwcijF8
+Volume II: https://on.soundcloud.com/2bAEyAFQwV7XM8Me8
+
+Mod repository: https://github.com/Tyfyter/OriginsMusic
