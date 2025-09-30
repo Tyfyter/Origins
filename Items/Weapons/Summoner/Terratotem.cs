@@ -4,6 +4,7 @@ using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
+using PegasusLib;
 using ReLogic.Graphics;
 using System;
 using System.Collections;
@@ -361,7 +362,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		readonly int[] othersTargetingItemsCounts = new int[Main.maxItems];
 		public override void AI() {
 			Projectile slot = Projectile.GetRelatedProjectile(0);
-			if ((slot?.active != true || slot.ModProjectile is not Terratotem_Tab) && Projectile.IsLocallyOwned()) {
+			if ((!(slot?.active ?? false) || slot.ModProjectile is not Terratotem_Tab) && Projectile.IsLocallyOwned()) {
 				Projectile.Kill();
 				return;
 			}
@@ -397,7 +398,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					float between = Vector2.Distance(npc.Center, pos);
 					between *= isCurrentTarget ? 0 : 1;
 					bool closer = distanceFromTarget > between;
-					bool lineOfSight = Collision.CanHitLine(pos, 8, 8, npc.position, npc.width, npc.height);
 					switch (sharingCount.CompareTo(othersTargetingCounts[npc.whoAmI])) {
 						case -1:
 						closer = false;
@@ -406,7 +406,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						closer = true;
 						break;
 					}
-					if ((closer || !foundTarget) && (lineOfSight || isCurrentTarget)) {
+					if ((closer || !foundTarget) && (isCurrentTarget || Collision.CanHitLine(pos, 8, 8, npc.position, npc.width, npc.height))) {
 						sharingCount = othersTargetingCounts[npc.whoAmI];
 						distanceFromTarget = between;
 						targetData.Index = npc.whoAmI;
@@ -431,10 +431,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 							float between = Vector2.Distance(item.Center, pos);
 							between *= isCurrentTarget ? 0 : 1;
 							bool closer = distanceFromTarget > between;
-							bool lineOfSight = Collision.CanHitLine(pos, 8, 8, item.position, item.width, item.height);
 							float pickupPriority = GetItemPickupPriority(player, item);
 							if (pickupPriority <= bestPickupPriority) closer = false;
-							if (lineOfSight && (closer || pickupPriority > bestPickupPriority) && othersTargetingItemsCounts[i] <= 0 && !Terrarian_Voodoo_Doll.PreventItemPickup(item, player)) {
+							if ((closer || pickupPriority > bestPickupPriority) && othersTargetingItemsCounts[i] <= 0 && !Terrarian_Voodoo_Doll.PreventItemPickup(item, player) && Collision.CanHitLine(pos, 8, 8, item.position, item.width, item.height)) {
 								distanceFromTarget = between;
 								targetData.Index = i;
 								targetData.TargetType = TargetType.Item;
@@ -475,7 +474,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (Projectile.Hitbox.Intersects(targetRect)) {
 				switch (targetData.TargetType) {
 					case TargetType.Slot:
-					if (Projectile.Center.WithinRange(targetPos, 16)) Projectile.ai[1] = -1;
+					Projectile.ai[1] = -1;
 					break;
 
 					case TargetType.NPC:
@@ -645,11 +644,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					}, Projectile.owner);
 				}
 			}
-			float speed = 8f;
+			float speed = 8f * SpeedModifier;
 			float inertia = 12f;
 			Vector2 directionToTarget = (targetPos - Projectile.Center).Normalized(out _);
 			if (Projectile.Hitbox.Intersects(targetRect) && targetData.TargetType == TargetType.Slot) {
-				if (Projectile.Center.WithinRange(targetPos, 16)) Projectile.ai[1] = -1;
+				Projectile.ai[1] = -1;
 			}
 			Projectile.velocity = (Projectile.velocity * (inertia - 1) + directionToTarget * speed) / inertia;
 		}
@@ -662,7 +661,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool? CanDamage() => Projectile.ai[2] >= 10 && Projectile.ai[2] <= 20;
 		public override void AI() {
 			base.AI();
-			if (Projectile.numUpdates == -1 && Projectile.ai[2] > 0 && Projectile.ai[2].Warmup(30, SpeedModifier)) {
+			if (Projectile.numUpdates == -1 && Projectile.ai[2] > 0 && (Projectile.ai[2] += SpeedModifier) >= 30) {
 				Projectile.ai[2] = 0;
 				Projectile.ResetLocalNPCHitImmunity();
 				targetData = default;
@@ -706,7 +705,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				default:
 				case TargetType.Slot:
 				if (Projectile.Hitbox.Intersects(targetRect)) {
-					if (Projectile.Center.WithinRange(targetPos, 16)) Projectile.ai[1] = -1;
+					Projectile.ai[1] = -1;
 				}
 				break;
 			}
