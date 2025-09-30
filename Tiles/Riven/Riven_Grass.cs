@@ -43,9 +43,9 @@ namespace Origins.Tiles.Riven {
 			Tile above = Framing.GetTileSafely(i, j - 1);
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
 				if (Main.rand.NextBool(250)) {
-					above.ResetToType((ushort)ModContent.TileType<Acetabularia>());
+					above.SetToType((ushort)ModContent.TileType<Acetabularia>(), Main.tile[i, j].TileColor);
 				} else {
-					above.ResetToType((ushort)ModContent.TileType<Riven_Foliage>());
+					above.SetToType((ushort)ModContent.TileType<Riven_Foliage>(), Main.tile[i, j].TileColor);
 				}
 				WorldGen.TileFrame(i, j - 1);
 			}
@@ -93,9 +93,9 @@ namespace Origins.Tiles.Riven {
 			Tile above = Framing.GetTileSafely(i, j - 1);
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
 				if (Main.rand.NextBool(250)) {
-					above.ResetToType((ushort)ModContent.TileType<Acetabularia>());
+					above.SetToType((ushort)ModContent.TileType<Acetabularia>(), Main.tile[i, j].TileColor);
 				} else {
-					above.ResetToType((ushort)ModContent.TileType<Riven_Foliage>());
+					above.SetToType((ushort)ModContent.TileType<Riven_Foliage>(), Main.tile[i, j].TileColor);
 				}
 				WorldGen.TileFrame(i, j - 1);
 			}

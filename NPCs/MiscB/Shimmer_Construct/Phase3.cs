@@ -832,6 +832,17 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			layersRenderedThisFrame[index] = true;
 			SpriteBatchState state = spriteBatch.GetState().FixedCulling();
 
+			if (OriginClientConfig.Instance.DisableCoolVisualEffects) {
+				for (int i = 0; i < drawDatas.Count; i++) {
+					DrawData data = drawDatas[i];
+					data.color = new(0.1f, 0, 0.15f, data.color.A);
+					data.Draw(spriteBatch);
+				}
+				drawDatas.Clear();
+				drawnMaskSources.Clear();
+				return;
+			}
+
 			RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
 			try {
 				spriteBatch.End();
@@ -848,7 +859,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			drawDatas.Clear();
 			drawnMaskSources.Clear();
-
 			Origins.shaderOroboros.Capture(spriteBatch);
 			Main.spriteBatch.Restart(Main.spriteBatch.GetState(), transformMatrix: Main.GameViewMatrix.EffectMatrix);
 			spriteBatch.Draw(
@@ -924,47 +934,49 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			if (spriteBatch is null) return;
 			SC_Phase_Three_BG_Layer[] layers = SC_Phase_Three_BG_Layer.GetActiveLayers().ToArray();
 			if (layers.Length <= 0) return;
-			SpriteBatchState state = spriteBatch.GetState();
-			Texture2D maskTexture;
-			if (layers.Length <= 1) {
-				maskTexture = layers[0].renderTarget;
-			} else {
-				Origins.shaderOroboros.Capture(spriteBatch);
-				spriteBatch.Restart(state, blendState: realAlphaSourceBlend, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap, transformMatrix: Matrix.Identity);
-				for (int i = 0; i < layers.Length; i++) {
-					if (layers[i].renderTarget is null) continue;
-					spriteBatch.Draw(layers[i].renderTarget, Vector2.Zero, Color.White);
+			if (!OriginClientConfig.Instance.DisableCoolVisualEffects) {
+				SpriteBatchState state = spriteBatch.GetState();
+				Texture2D maskTexture;
+				if (layers.Length <= 1) {
+					maskTexture = layers[0].renderTarget;
+				} else {
+					Origins.shaderOroboros.Capture(spriteBatch);
+					spriteBatch.Restart(state, blendState: realAlphaSourceBlend, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.PointWrap, transformMatrix: Matrix.Identity);
+					for (int i = 0; i < layers.Length; i++) {
+						if (layers[i].renderTarget is null) continue;
+						spriteBatch.Draw(layers[i].renderTarget, Vector2.Zero, Color.White);
+					}
+					Origins.shaderOroboros.DrawContents(renderTarget);
+					Origins.shaderOroboros.Reset(default);
+					maskTexture = renderTarget;
 				}
-				Origins.shaderOroboros.DrawContents(renderTarget);
-				Origins.shaderOroboros.Reset(default);
-				maskTexture = renderTarget;
-			}
-			Origins.shaderOroboros.Capture(spriteBatch);
-			spriteBatch.Restart(state, blendState: realAlphaSourceBlend, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.AnisotropicWrap);
-			Vector2 size = new(texture.Width() * (int)MathF.Ceiling(Main.screenWidth / (float)texture.Width()), texture.Height() * (int)MathF.Ceiling(Main.screenHeight / (float)texture.Height()));
-			const int scale = 4;
-			Rectangle frame = new(0, 0, (int)size.X, (int)size.Y);
-			spriteBatch.Draw(
-				texture.Value,
-				-new Vector2(Main.screenPosition.X % (size.X * scale * 0.5f), Main.screenPosition.Y % (size.Y * scale * 0.5f)),
-				frame,
-				Color.White,
-				0,
-				Vector2.Zero,
-				scale,
-				SpriteEffects.None,
-			0);
-			ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(Shimmer_Dye.ShaderID, null);
-			invertAnimateShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(opacity));
-			Origins.shaderOroboros.Stack(invertAnimateShader);
-			Origins.shaderOroboros.Stack(shader);
-			const float brightness = 0.1f;
-			const float alpha = 0.1f;
-			maskShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(brightness, brightness, brightness, alpha));
-			Main.graphics.GraphicsDevice.Textures[1] = maskTexture;
-			Origins.shaderOroboros.Stack(maskShader);
-			Origins.shaderOroboros.Release();
+				Origins.shaderOroboros.Capture(spriteBatch);
+				spriteBatch.Restart(state, blendState: realAlphaSourceBlend, sortMode: SpriteSortMode.Immediate, samplerState: SamplerState.AnisotropicWrap);
+				Vector2 size = new(texture.Width() * (int)MathF.Ceiling(Main.screenWidth / (float)texture.Width()), texture.Height() * (int)MathF.Ceiling(Main.screenHeight / (float)texture.Height()));
+				const int scale = 4;
+				Rectangle frame = new(0, 0, (int)size.X, (int)size.Y);
+				spriteBatch.Draw(
+					texture.Value,
+					-new Vector2(Main.screenPosition.X % (size.X * scale * 0.5f), Main.screenPosition.Y % (size.Y * scale * 0.5f)),
+					frame,
+					Color.White,
+					0,
+					Vector2.Zero,
+					scale,
+					SpriteEffects.None,
+				0);
+				ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(Shimmer_Dye.ShaderID, null);
+				invertAnimateShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(opacity));
+				Origins.shaderOroboros.Stack(invertAnimateShader);
+				Origins.shaderOroboros.Stack(shader);
+				const float brightness = 0.1f;
+				const float alpha = 0.1f;
+				maskShader.Shader.Parameters["uFullColor"].SetValue(new Vector4(brightness, brightness, brightness, alpha));
+				Main.graphics.GraphicsDevice.Textures[1] = maskTexture;
+				Origins.shaderOroboros.Stack(maskShader);
+				Origins.shaderOroboros.Release();
 
+			}
 			SC_Phase_Three_BG_Layer.ClearRenderedLayerTracker();
 
 			for (int i = 0; i < renderTargetsToDispose.Count; i++) {

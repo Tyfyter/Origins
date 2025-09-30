@@ -179,6 +179,9 @@ namespace Origins {
 
 		[Header("Compatibility"), ReloadRequired]
 		public List<NPCDefinition> npcsNotToForceDialectOn = [];
+
+		[DefaultValue(false)]
+		public bool DisableCoolVisualEffects = false;
 		internal void Save() {
 			Directory.CreateDirectory(ConfigManager.ModConfigPath);
 			string filename = Mod.Name + "_" + Name + ".json";

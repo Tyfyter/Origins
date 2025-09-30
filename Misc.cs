@@ -4823,6 +4823,11 @@ namespace Origins {
 			Left,
 			Right
 		}
+		public static void SetToType(this Tile tile, ushort type, byte? paint = null) {
+			tile.HasTile = true;
+			tile.TileType = type;
+			tile.TileColor = paint ?? PaintID.None;
+		}
 	}
 	public static class ProjectileExtensions {
 		public static void DoBoomerangAI(this Projectile projectile, Entity owner, float returnSpeed = 9f, float returnAcceleration = 0.4f, bool doSound = true) {
