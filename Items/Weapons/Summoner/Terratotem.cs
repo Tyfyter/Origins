@@ -12,11 +12,13 @@ using System.IO;
 using System.Reflection;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI.Chat;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Terratotem : ModItem, ICustomWikiStat {
@@ -248,7 +250,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			if (player.HasBuff(Terratotem_Buff.ID)) {
 				Projectile.timeLeft = 2;
-			} else {
+			} else if (Projectile.IsLocallyOwned()) {
 				Projectile.Kill();
 			}
 
@@ -306,11 +308,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if ((maskProj?.active ?? false) && Projectile.whoAmI > maskProj.whoAmI && maskProj.ModProjectile is Terratotem_Mask_Base mask) mask.Draw(lightColor);
 		}
 		public override void OnKill(int timeLeft) {
-			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active) {
+			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active && Projectile.IsLocallyOwned()) {
 				mask.Kill();
 			}
 		}
 		public void KillOverCapacity() {
+			if (!Projectile.IsLocallyOwned()) return;
 			foreach (Projectile other in Main.ActiveProjectiles) {
 				if (other.whoAmI == Projectile.whoAmI) continue;
 				if (other.owner == Projectile.owner && other.ModProjectile is Terratotem_Tab) {
@@ -358,7 +361,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		readonly int[] othersTargetingItemsCounts = new int[Main.maxItems];
 		public override void AI() {
 			Projectile slot = Projectile.GetRelatedProjectile(0);
-			if (slot?.active != true || slot.ModProjectile is not Terratotem_Tab) {
+			if ((slot?.active != true || slot.ModProjectile is not Terratotem_Tab) && Projectile.IsLocallyOwned()) {
 				Projectile.Kill();
 				return;
 			}
@@ -440,6 +443,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					}
 				}
 			}
+			if (!Projectile.WithinRange(slot.Center, 2000)) {
+				targetData = default;
+				Projectile.ai[1] = -1;
+			}
 			if (targetData != oldTargetData) {
 				Projectile.netUpdate = true;
 			}
@@ -518,6 +525,23 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					effects
 				);
 			}
+			/*Rectangle tagetBox = targetData.GetPosition(Projectile);
+			tagetBox.X -= (int)Main.screenPosition.X;
+			tagetBox.Y -= (int)Main.screenPosition.Y;
+			Main.spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				tagetBox,
+				Color.Red * 0.5f
+			);
+			ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch,
+				FontAssets.MouseText.Value,
+				Projectile.ai[2].ToString(),
+				tagetBox.Right(),
+				Color.White,
+				0,
+				default,
+				Vector2.One
+			);*/
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			if (Projectile.whoAmI > Projectile.GetRelatedProjectile(0).whoAmI) Draw(lightColor);
@@ -559,7 +583,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 					default:
 					case TargetType.Slot:
-					return projectile.GetRelatedProjectile(0)?.Hitbox ?? projectile.Hitbox;
+					if (projectile.GetRelatedProjectile(0) is not Projectile slot || slot.ModProjectile is not Terratotem_Tab) {
+						projectile.Kill();
+						return default;
+					}
+					return slot.Hitbox;
 				}
 			}
 		}
@@ -666,9 +694,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Rectangle hitbox = Projectile.Hitbox;
 				ModifyDamageHitbox(ref hitbox);
 				if (Projectile.Hitbox.Intersects(targetRect)) {
-					SoundEngine.PlaySound(SoundID.Item130.WithPitch(-0.2f), Projectile.Center);
-					SoundEngine.PlaySound(SoundID.Item90.WithPitch(1f), Projectile.Center);
-					SoundEngine.PlaySound(SoundID.Item84.WithPitch(1f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item130.WithPitch(-0.2f).WithVolumeScale(0.75f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item90.WithPitch(1f).WithVolumeScale(0.75f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item84.WithPitch(1f).WithVolumeScale(0.75f), Projectile.Center);
 					speed = 0;
 					Projectile.ai[2] = 1;
 					Projectile.velocity *= 0.5f;
