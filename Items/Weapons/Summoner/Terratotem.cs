@@ -592,7 +592,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						item.Center = player.Center;
 					}
 				}
-				if (Projectile.ai[2] <= 0) Projectile.ResetLocalNPCHitImmunity();
+				if (Projectile.ai[2] <= 0) {
+					Projectile.ResetLocalNPCHitImmunity();
+					targetData = default;
+				}
 				return;
 			}
 			Rectangle targetRect = targetData.GetPosition(Projectile);
@@ -634,6 +637,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (Projectile.numUpdates == -1 && Projectile.ai[2] > 0 && Projectile.ai[2].Warmup(30, SpeedModifier)) {
 				Projectile.ai[2] = 0;
 				Projectile.ResetLocalNPCHitImmunity();
+				targetData = default;
 			}
 		}
 		public override void DoMaskBehavior() {
