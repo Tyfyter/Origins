@@ -244,8 +244,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 			if (player.dead || !player.active) {
 				player.ClearBuff(Terratotem_Buff.ID);
-			} else if (player.HasBuff(Terratotem_Buff.ID)) {
+			}
+			if (player.HasBuff(Terratotem_Buff.ID)) {
 				Projectile.timeLeft = 2;
+			} else {
+				Projectile.Kill();
 			}
 
 			Projectile.localAI[0].Cooldown();
@@ -343,7 +346,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		readonly int[] othersTargetingItemsCounts = new int[Main.maxItems];
 		public override void AI() {
 			Projectile slot = Projectile.GetRelatedProjectile(0);
-			if (slot?.active != true) {
+			if (slot?.active != true || slot.ModProjectile is not Terratotem_Tab) {
 				Projectile.Kill();
 				return;
 			}
