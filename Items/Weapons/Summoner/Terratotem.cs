@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 27;
+			Item.damage = 16;
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 1f;
 			Item.mana = 48;
