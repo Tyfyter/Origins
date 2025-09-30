@@ -152,25 +152,19 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			return true;
 		}
-		Projectile bottomPart;
-		int belowCount = -1;
 		public Projectile GetBottom(out int count) {
-			if (bottomPart is null || bottomPart.ModProjectile is not Terratotem_Tab) {
-				Projectile current = Projectile;
-				HashSet<Projectile> walked = [current];
-				Projectile last = current;
-				while (current is not null) {
-					last = current;
-					current = current.GetRelatedProjectile(1);
-					if (current is null) break;
-					if (current.owner != Projectile.owner || current.ModProjectile is not Terratotem_Tab) break;
-					if (!walked.Add(current)) break;
-				}
-				belowCount = walked.Count;
-				bottomPart = last;
+			Projectile current = Projectile;
+			HashSet<Projectile> walked = [current];
+			Projectile last = current;
+			while (current is not null) {
+				last = current;
+				current = current.GetRelatedProjectile(1);
+				if (current is null) break;
+				if (current.owner != Projectile.owner || current.ModProjectile is not Terratotem_Tab) break;
+				if (!walked.Add(current)) break;
 			}
-			count = belowCount;
-			return bottomPart;
+			count = walked.Count;
+			return last;
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -376,8 +370,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			bool hasPriorityTarget = false;
 			int sharingCount = int.MaxValue;
 			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
+				if (player.Center.WithinRange(npc.Center, max_distance) && Projectile.Center.WithinRange(npc.Center, max_distance)) return;
 				bool isCurrentTarget = targetData.TargetType == TargetType.NPC && npc.whoAmI == targetData.Index;
-				if ((isCurrentTarget || isPriorityTarget || !hasPriorityTarget) && npc.CanBeChasedBy() && player.Center.WithinRange(npc.Center, max_distance)) {
+				if ((isCurrentTarget || isPriorityTarget || !hasPriorityTarget) && npc.CanBeChasedBy()) {
 					Vector2 pos = Projectile.position;
 					float between = Vector2.Distance(npc.Center, pos);
 					between *= isCurrentTarget ? 0 : 1;
@@ -409,6 +404,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				for (int i = 0; i < Main.maxItems; i++) {
 					Item item = Main.item[i];
 					if (item.active) {
+						if (player.Center.WithinRange(item.Center, max_distance) && Projectile.Center.WithinRange(item.Center, max_distance)) return;
 						bool isCurrentTarget = oldTargetData.TargetType == TargetType.Item && i == oldTargetData.Index;
 						if (isCurrentTarget || oldTargetData.TargetType != TargetType.Item) {
 							Vector2 pos = Projectile.position;
