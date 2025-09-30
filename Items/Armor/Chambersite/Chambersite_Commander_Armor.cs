@@ -11,6 +11,7 @@ using PegasusLib;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Security.Principal;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -125,6 +126,7 @@ namespace Origins.Items.Armor.Chambersite {
 
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Generic;
+			Projectile.timeLeft = 15;
 			Projectile.width = 46;
 			Projectile.height = 54;
 			Projectile.friendly = false;
@@ -146,7 +148,7 @@ namespace Origins.Items.Armor.Chambersite {
 
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
-			if (player.dead || !player.active) {
+			if (player.dead || !player.active || !player.OriginPlayer().chambersiteCommandoSet) {
 				player.ClearBuff(Chambersite_Commander_Sentinel_Buff.ID);
 			}
 			if (player.HasBuff(Chambersite_Commander_Sentinel_Buff.ID)) {
@@ -171,7 +173,7 @@ namespace Origins.Items.Armor.Chambersite {
 			#region Attack targets
 			float highestProgress = 0;
 			ActiveSound sound;
-			Rectangle screen = new(0, 0, Main.screenWidth, Main.screenHeight);
+			Rectangle screen = new(0, 0, NPC.sWidth, NPC.sHeight);
 			screen = screen.Recentered(player.Center);
 			if (Projectile.ai[2] == 1) {
 				Projectile.ai[2] = 2;
@@ -263,6 +265,10 @@ namespace Origins.Items.Armor.Chambersite {
 				}
 			}
 			player.addDPS(Main.rand.RandomRound(totalDamage / 30f));
+			/*Mod.Logger.Info($"CCAS Damage: {totalDamage} [{string.Join(", ", aims.TrySelect((Aim a, out string text) => {
+				text = a.ToString();
+				return a.Type != default;
+			}))}]");*/
 			#endregion
 		}
 		SlotId soundSlot;
@@ -321,6 +327,10 @@ namespace Origins.Items.Armor.Chambersite {
 				byte index = indices[i];
 				aims[indices[i]].Set(Main.npc[index]);
 			}
+			/*Mod.Logger.Info($"Sentinel sync: {Main.player[Projectile.owner].name} {Projectile.identity} [{string.Join(", ", indices)}] [{string.Join(", ", aims.TrySelect((Aim a, out string text) => {
+				text = a.ToString();
+				return a.Type != default;
+			}))}]");*/
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.ai[0] = 2;
@@ -372,6 +382,7 @@ namespace Origins.Items.Armor.Chambersite {
 			Vector2 motion;
 			float progress;
 			public bool active;
+			public readonly int Type => type;
 			public readonly float Progress => progress;
 			public readonly Vector2 Motion => motion;
 			public void Set(NPC target) {
@@ -407,6 +418,7 @@ namespace Origins.Items.Armor.Chambersite {
 					active = length > 4;
 				}
 			}
+			public override readonly string ToString() => $"({Lang.GetNPCNameValue(type)} {active} {progress})";
 		}
 	}
 }

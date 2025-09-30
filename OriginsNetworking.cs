@@ -1,6 +1,7 @@
 ﻿using Origins.Core;
 using Origins.CrossMod.Fargos.Items;
 using Origins.Items.Accessories;
+using Origins.Items.Armor.Chambersite;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
@@ -506,24 +507,25 @@ namespace Origins {
 					case shinedown_spawn_shadows: {
 						byte owner = reader.ReadByte();
 						ushort identity = reader.ReadUInt16();
-						byte length = reader.ReadByte();
-						byte[] indices = reader.ReadBytes(length);
+						byte[] indices = reader.ReadBytes(reader.ReadByte());
 						Shinedown_Staff_P shinedown = null;
+						Chambersite_Commander_Sentinel sentinel = null;
 						foreach (Projectile proj in Main.ActiveProjectiles) {
 							if (proj.owner == owner && proj.identity == identity) {
 								shinedown = proj.ModProjectile as Shinedown_Staff_P;
+								sentinel = proj.ModProjectile as Chambersite_Commander_Sentinel;
 								break;
 							}
 						}
-						if (shinedown is null) break;
-						shinedown.RecieveSync(indices);
+						shinedown?.RecieveSync(indices);
+						sentinel?.RecieveSync(indices);
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the other clients
 							ModPacket packet = instance.GetPacket();
 							packet.Write(shinedown_spawn_shadows);
 							packet.Write(owner);
 							packet.Write(identity);
-							packet.Write(length);
+							packet.Write((byte)indices.Length);
 							packet.Write(indices);
 							packet.Send(ignoreClient: owner);
 						}
