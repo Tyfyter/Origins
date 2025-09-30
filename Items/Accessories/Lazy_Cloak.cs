@@ -186,7 +186,7 @@ namespace Origins.Items.Accessories {
 				direction *= speed;
 				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
 
-				player.OriginPlayer().lazyCloaksOffPlayer[(int)Projectile.ai[1]] = 2;
+				if (!NetmodeActive.Server) player.OriginPlayer().lazyCloaksOffPlayer[(int)Projectile.ai[1]] = 2;
 			} else {
 				if (distanceToIdlePosition > 600f) {
 					speed = 24f;
@@ -209,7 +209,7 @@ namespace Origins.Items.Accessories {
 					Projectile.hide = true;
 					Projectile.position = idlePosition;
 				} else {
-					player.OriginPlayer().lazyCloaksOffPlayer[(int)Projectile.ai[1]] = 3;
+					if (!NetmodeActive.Server) player.OriginPlayer().lazyCloaksOffPlayer[(int)Projectile.ai[1]] = 3;
 				}
 			}
 

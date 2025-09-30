@@ -572,6 +572,7 @@ namespace Origins.NPCs.Brine.Boss {
 			if (NPC.localAI[1] < 1) Owner.localAI[1] += DestructionCooldown;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
+			if (NetmodeActive.Server) return;
 			if (NPC.life <= 0 && NPC.localAI[1] < 0.5f) {
 				Vector2 diff = Owner.Center - NPC.Center;
 				float dist = diff.Length();

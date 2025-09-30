@@ -99,6 +99,32 @@ namespace Origins.Projectiles {
 					projectile.minionPos = owner.OriginPlayer().GetNewMinionIndexByType(projectile.type);
 				}
 			});
+
+			c = new(il);
+			c.GotoNext(MoveType.After,
+				il => il.MatchLdfld<Player>(nameof(Player.maxMinions))
+			);
+			c.GotoNext(MoveType.AfterLabel,
+				il => il.MatchLdarg0(),
+				il => il.MatchCall<Projectile>(nameof(Projectile.Kill))
+			);
+			ILLabel dontKillMe = c.DefineLabel();
+
+			c.EmitLdarg0();
+			c.EmitDelegate<Func<Projectile, bool>>(proj => {
+				if (proj.ModProjectile is ISpecialOverCapacityMinion special) {
+					special.KillOverCapacity();
+					return true;
+				}
+				return false;
+			});
+			c.EmitBrtrue(dontKillMe);
+
+			c.GotoNext(MoveType.After,
+				il => il.MatchLdarg0(),
+				il => il.MatchCall<Projectile>(nameof(Projectile.Kill))
+			);
+			c.MarkLabel(dontKillMe);
 		}
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
 			return entity.IsMinionOrSentryRelated;
@@ -227,5 +253,8 @@ namespace Origins.Projectiles {
 				if (projectile.ModProjectile is SpeedModifierMinion tab) tab.SpeedModifier = bonus + 1;
 			};
 		}
+	}
+	public interface ISpecialOverCapacityMinion {
+		public void KillOverCapacity();
 	}
 }
