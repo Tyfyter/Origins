@@ -21,14 +21,3 @@ If you have any questions, comments or a bug you have found from anything Origin
 
 [quote=tModLoader Origins]
 Developed By Origins Dev Team[/quote]
-
--0-
-
-Companion mod to the (main) Origins Mod (found here: https://s.team/sf/3375903288). Using it alone adds no content, and the music boxes are obtainable without this mod being enabled (they just play a vanilla placeholder).
-
-There is a configuration option to toggle between Volumes of the soundtrack.
-Both Volumes 1 and 2 can be found on their respective SoundCloud playlists below.
-Volume I: https://on.soundcloud.com/DbwEvCydVjhwcijF8
-Volume II: https://on.soundcloud.com/2bAEyAFQwV7XM8Me8
-
-Mod repository: https://github.com/Tyfyter/OriginsMusic
