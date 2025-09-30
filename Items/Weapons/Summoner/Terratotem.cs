@@ -370,7 +370,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			bool hasPriorityTarget = false;
 			int sharingCount = int.MaxValue;
 			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
-				if (player.Center.WithinRange(npc.Center, max_distance) && Projectile.Center.WithinRange(npc.Center, max_distance)) return;
+				if (!player.Center.WithinRange(npc.Center, max_distance) || !Projectile.Center.WithinRange(npc.Center, max_distance)) return;
 				bool isCurrentTarget = targetData.TargetType == TargetType.NPC && npc.whoAmI == targetData.Index;
 				if ((isCurrentTarget || isPriorityTarget || !hasPriorityTarget) && npc.CanBeChasedBy()) {
 					Vector2 pos = Projectile.position;
@@ -404,7 +404,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				for (int i = 0; i < Main.maxItems; i++) {
 					Item item = Main.item[i];
 					if (item.active) {
-						if (player.Center.WithinRange(item.Center, max_distance) && Projectile.Center.WithinRange(item.Center, max_distance)) return;
+						if (!player.Center.WithinRange(item.Center, max_distance) || !Projectile.Center.WithinRange(item.Center, max_distance)) return;
 						bool isCurrentTarget = oldTargetData.TargetType == TargetType.Item && i == oldTargetData.Index;
 						if (isCurrentTarget || oldTargetData.TargetType != TargetType.Item) {
 							Vector2 pos = Projectile.position;
