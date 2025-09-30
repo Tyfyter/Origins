@@ -388,7 +388,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						closer = true;
 						break;
 					}
-					if ((closer || !foundTarget) && lineOfSight) {
+					if ((closer || !foundTarget) && (lineOfSight || isCurrentTarget)) {
 						sharingCount = othersTargetingCounts[npc.whoAmI];
 						distanceFromTarget = between;
 						targetData.Index = npc.whoAmI;
