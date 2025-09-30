@@ -40,7 +40,7 @@ namespace Origins.Tiles.Defiled {
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid && Main.rand.NextBool(250)) {
-				above.ResetToType((ushort)ModContent.TileType<Soulspore>());
+				above.SetToType((ushort)ModContent.TileType<Soulspore>(), Main.tile[i, j].TileColor);
 				WorldGen.TileFrame(i, j - 1);
 			}
 		}
