@@ -250,6 +250,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 			Projectile.localAI[0].Cooldown();
 			Projectile below = Projectile.GetRelatedProjectile(1);
+			bool teleported = false;
 			if (below?.active ?? false) {
 				Projectile bottom = GetBottom(out int count);
 				Projectile.position = bottom.position - Vector2.UnitY * Projectile.height * (count - 1);
@@ -269,13 +270,14 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Projectile.velocity = Vector2.Zero;
 					(Projectile.localAI[1], Projectile.localAI[2]) = Vector2.Zero;
 					Projectile.netUpdate = true;
+					teleported = true;
 				} else {
 					float speed = (dist > 16 * 50 ? 64 : 32) * SpeedModifier;
 					(Projectile.localAI[1], Projectile.localAI[2]) = (Projectile.velocity + vectorToIdlePosition * Math.Min(dist, speed)) / 4;
 				}
 			}
 			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active) {
-				if (mask.ai[1] == -1) {
+				if (teleported || mask.ai[1] == -1) {
 					mask.Center = Projectile.Center;
 				}
 			} else if (Projectile.IsLocallyOwned()) {
