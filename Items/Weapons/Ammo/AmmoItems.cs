@@ -97,8 +97,8 @@ namespace Origins.Items.Weapons.Ammo {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.PurpleSolution] = ItemID.RedSolution;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.RedSolution] = Type;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Teal_Solution>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Teal_Solution>()] = ItemID.PurpleSolution;//ModContent.ItemType<Orange_Solution>();
-			//ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Orange_Solution>()] = ItemID.PurpleSolution;
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Teal_Solution>()] = ModContent.ItemType<Orange_Solution>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Orange_Solution>()] = ItemID.PurpleSolution;
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -141,6 +141,30 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void AI() {
 			OriginGlobalProj.ClentaminatorAI<Riven_Hive_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), new Color(0, 180, 255));
+		}
+	}
+	public class Orange_Solution : ModItem {
+		public override string Texture => typeof(Gray_Solution).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 99;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.GreenSolution);
+			Item.shoot = ModContent.ProjectileType<Orange_Solution_P>();
+			Item.value = Item.sellPrice(silver: 3);
+		}
+		public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback) {
+			type -= ProjectileID.PureSpray;
+		}
+	}
+	public class Orange_Solution_P : ModProjectile {
+		public override string Texture => "Origins/Projectiles/Pixel";
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.PureSpray);
+			Projectile.aiStyle = 0;
+		}
+		public override void AI() {
+			OriginGlobalProj.ClentaminatorAI<Ashen_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), new Color(255, 156, 160));
 		}
 	}
 }

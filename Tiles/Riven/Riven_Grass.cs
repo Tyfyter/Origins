@@ -1,9 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Tiles.Defiled;
-using Origins.World.BiomeData;
+﻿using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -8,7 +8,6 @@ using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Critters {
 	public class Amoeba_Buggy : Glowing_Mod_NPC, IWikiNPC {
@@ -205,5 +204,41 @@ namespace Origins.NPCs.Critters {
 			}
 			return 0.045f;
 		}*/
+	}
+	public class Peppered_Moth : ModNPC, IWikiNPC {
+		public override string Texture => typeof(Amoeba_Buggy).GetDefaultTMLName();
+		public Rectangle DrawRect => new(0, 0, 18, 12);
+		public int AnimationFrames => 4;
+		public int FrameDuration => 8;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
+		public override void SetStaticDefaults() {
+			Main.npcCatchable[Type] = true;
+			Main.npcFrameCount[Type] = 4;
+			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.Shimmerfly;
+			NPCID.Sets.CountsAsCritter[Type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+				Position = new(0, 22),
+				PortraitPositionYOverride = 42
+			};
+		}
+		public override void SetDefaults() {
+			NPC.CloneDefaults(NPCID.BlueDragonfly);
+			NPC.catchItem = ModContent.ItemType<Peppered_Moth_Item>();
+			SpawnModBiomes = [
+				ModContent.GetInstance<Ashen_Biome>().Type
+			];
+		}
+		public override void FindFrame(int frameHeight) {
+			NPC.frameCounter += 0.75f;
+			NPC.frameCounter += NPC.velocity.LengthSquared() / 16;
+			NPC.spriteDirection = Math.Sign(NPC.velocity.X);
+			if (NPC.frameCounter >= 7) {
+				NPC.frameCounter = 0;
+				NPC.frame.Height = 48 / Main.npcFrameCount[NPC.type];
+				if ((NPC.frame.Y += NPC.frame.Height) / NPC.frame.Height >= Main.npcFrameCount[Type]) {
+					NPC.frame.Y = 0;
+				}
+			}
+		}
 	}
 }

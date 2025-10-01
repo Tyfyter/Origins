@@ -47,6 +47,27 @@ namespace Origins.Items.Other.Fish {
 			), (_, attempt) => attempt.rolledItemDrop >= ItemID.OldShoe && attempt.rolledItemDrop <= ItemID.TinCan),
 
 			new ComboFishingLoot(
+		#region ashen
+				((player, _) => player.InModBiome<Ashen_Biome>() ? 1 : 0, new OrderedFishingLoot(
+					/*new LeadingConditionFishLoot(
+							new LeadingConditionFishLoot(
+								new OrderedFishingLoot(
+									new ItemFishingLoot(ItemType<Bilious_Crate>(), (_, _) => Main.hardMode),
+									new ItemFishingLoot(ItemType<Chunky_Crate>(), (_, _) => true)
+								),
+							(_, attempt) => attempt.rare && !(attempt.veryrare || attempt.legendary)),
+					(_, attempt) => attempt.crate),
+
+					new ItemFishingLoot(ItemType<Knee_Slapper>(), (_, attempt) => attempt.legendary && Main.hardMode && Main.rand.NextBool(2)),
+					new ItemFishingLoot(ItemType<Manasynk>(), (_, attempt) => attempt.rare),*/
+
+					new LeadingConditionFishLoot(
+						new OrderedFishingLoot(
+						new ItemFishingLoot(ItemType<Scrapfish>(), (_, attempt) => attempt.questFish == ItemType<Scrapfish>()),
+						new ItemFishingLoot(ItemType<Polyeel>(), (_, _) => true)
+					), (_, attempt) => attempt.uncommon)
+				)),
+		#endregion ashen
 		#region defiled
 				((player, _) => player.InModBiome<Defiled_Wastelands>() ? 1 : 0, new OrderedFishingLoot(
 					new LeadingConditionFishLoot(

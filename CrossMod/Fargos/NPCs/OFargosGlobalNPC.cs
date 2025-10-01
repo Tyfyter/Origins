@@ -2,6 +2,7 @@
 using Fargowiltas.NPCs;
 using Origins.CrossMod.Fargos.Items;
 using Origins.NPCs;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using System;
@@ -19,12 +20,11 @@ namespace Origins.CrossMod.Fargos.NPCs {
 
 				shop.InsertAfter(shadewood, new(ModContent.ItemType<Endowood_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) });
 				shop.InsertAfter(shadewood, new(ModContent.ItemType<Marrowick_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) });
-				//shop.InsertAfter(entry, new(ModContent.ItemType<Witherwood_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) }, Condition.DrunkWorld);
-				//shop.InsertAfter(entry, new(ModContent.ItemType<Eden_Wood_Item>()) { shopCustomPrice = Item.buyPrice(copper: 20) }, Condition.Hardmode);
+				shop.InsertAfter(shadewood, new(ModContent.ItemType<Witherwood_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) });
 			}
 			if (shop.NpcType == ModContent.NPCType<Deviantt>() && shop.TryGetEntry(ModContent.ItemType<CorruptChest>(), out NPCShop.Entry corruptChest) && shop.TryGetEntry(ModContent.ItemType<HallowChest>(), out NPCShop.Entry hallowChest)) {
 				Func<bool> predicate = corruptChest.Conditions.FirstOrDefault()?.Predicate ?? (() => true);
-				bool evilMimicCon() => predicate() || Boss_Tracker.Instance.downedDefiledMimic || Boss_Tracker.Instance.downedRivenMimic || Boss_Tracker.Instance.downedAshenMimic;
+				bool evilMimicCon() => predicate() || Boss_Tracker.Instance.downedDefiledMimic || Boss_Tracker.Instance.downedRivenMimic || Boss_Tracker.Instance.downedTrashCompactorMimic;
 				corruptChest.Disable();
 				shop.GetEntry(ModContent.ItemType<CrimsonChest>()).Disable();
 
@@ -32,8 +32,8 @@ namespace Origins.CrossMod.Fargos.NPCs {
 				shop.InsertAfter(hallowChest, new(ModContent.ItemType<CrimsonChest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Fargowiltas.Conditions.MimicCrimsonDown", evilMimicCon));
 
 				shop.InsertAfter(hallowChest, new(ModContent.ItemType<Defiled_Chest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedDefiledMimic", evilMimicCon));
-				shop.InsertAfter(hallowChest, new(ModContent.ItemType<Riven_Chest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedRivenMimic", evilMimicCon));/*
-				shop.InsertAfter(entry, new(ModContent.ItemType<Ashen_Chest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedAshenMimic", evilMimicCon));*/
+				shop.InsertAfter(hallowChest, new(ModContent.ItemType<Riven_Chest>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedRivenMimic", evilMimicCon));
+				shop.InsertAfter(hallowChest, new(ModContent.ItemType<Suspicious_Trash_Compactor>()) { shopCustomPrice = Item.buyPrice(gold: 30) }, new Condition("Mods.Origins.Conditions.DownedTrashCompactorMimic", evilMimicCon));
 			}
 		}
 	}

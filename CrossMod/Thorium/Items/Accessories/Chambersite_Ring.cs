@@ -1,10 +1,9 @@
-using Origins.Items.Other;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ModLoader;
 using ThoriumMod.Items.BasicAccessories;
 
-namespace Origins.Items.Accessories {
+namespace Origins.CrossMod.Thorium.Items.Accessories {
 	[ExtendsFromMod("ThoriumMod")]
 	public class Chambersite_Ring : GemRingBase/*, ICustomWikiStat*/ {
 		public override int PrimaryIngredientType => ModContent.ItemType<Chambersite_Item>();

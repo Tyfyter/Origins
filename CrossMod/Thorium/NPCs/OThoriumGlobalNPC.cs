@@ -26,7 +26,7 @@ namespace Origins.CrossMod.Thorium.NPCs {
 				shop.InsertAfter(ItemID.BloodySpine, new Item(ModContent.ItemType<Sus_Ice_Cream>()) {
 					shopCustomPrice = Item.buyPrice(0, 10)
 				}, Condition.Hardmode);
-				shop.InsertAfter(ItemID.BloodySpine, new Item(ModContent.ItemType<Broken_Record>()) {
+				shop.InsertAfter(ItemID.BloodySpine, new Item(ModContent.ItemType<Distress_Beacon>()) {
 					shopCustomPrice = Item.buyPrice(0, 10)
 				}, Condition.Hardmode, Condition.DrunkWorld);
 			}

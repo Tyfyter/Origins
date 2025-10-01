@@ -1,7 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Tiles.Defiled;
-using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;

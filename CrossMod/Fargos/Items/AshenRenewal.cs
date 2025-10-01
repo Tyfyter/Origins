@@ -1,6 +1,5 @@
-﻿/*//TODO: finish when ashen has a solution type
-using Origins.Items.Weapons.Ammo;
-using Origins.World;
+﻿using Origins.Items.Weapons.Ammo;
+using Origins.World.BiomeData;
 
 namespace Origins.CrossMod.Fargos.Items {
 	public class AshenRenewal : TORenewals<Orange_Solution, AshenNukeProj> {
@@ -18,4 +17,3 @@ namespace Origins.CrossMod.Fargos.Items {
 		public AshenNukeSupremeProj() : base(true) { }
 	}
 }
-*/

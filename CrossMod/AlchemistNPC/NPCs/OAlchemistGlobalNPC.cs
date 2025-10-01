@@ -14,6 +14,7 @@ using Origins.Tiles.Marrowick;
 using Origins.Tiles.MusicBoxes;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
+using Origins.Tiles.Witherwood;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -47,7 +48,7 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 					if (shop.Name == "BaseShop") {
 						shop.InsertAfter(ItemID.Ichor, new Item(ItemType<Black_Bile>()) { shopCustomPrice = 7500 }, Condition.Hardmode);
 						shop.InsertAfter(ItemType<Black_Bile>(), new Item(ItemType<Alkahest>()) { shopCustomPrice = 7500 }, Condition.Hardmode);
-						shop.InsertAfter(ItemType<Alkahest>(), new Item(ItemType<Respyrite>()) { shopCustomPrice = 7500 }, Condition.Hardmode);
+						shop.InsertAfter(ItemType<Alkahest>(), new Item(ItemType<Phoenum>()) { shopCustomPrice = 7500 }, Condition.Hardmode);
 					}
 					if (shop.Name == "PlantShop") {
 						shop.InsertAfter(ItemID.Deathweed, new Item(ItemType<Wilting_Rose_Item>()) { shopCustomPrice = 2500 });
@@ -100,90 +101,89 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 					if (shop.Name == "Filler") {
 						shop.InsertAfter(ItemID.Shadewood, new Item(ItemType<Endowood_Item>()) { shopCustomPrice = 10 });
 						shop.InsertAfter(ItemType<Endowood_Item>(), new Item(ItemType<Marrowick_Item>()) { shopCustomPrice = 10 });
-						//shop.InsertAfter(ItemType<Marrowick_Item>(), new Item(ItemType<>) { shopCustomPrice = 10}); // the wood of the ashen
+						shop.InsertAfter(ItemType<Marrowick_Item>(), new Item(ItemType<Witherwood_Item>()) { shopCustomPrice = 10 }); // the wood of the ashen
 						shop.InsertAfter(ItemID.CrimstoneBlock, new Item(ItemType<Defiled_Stone_Item>()) { shopCustomPrice = 5 });
 						shop.InsertAfter(ItemType<Defiled_Stone_Item>(), new Item(ItemType<Riven_Flesh_Item>()) { shopCustomPrice = 5 });
-						//shop.InsertAfter(ItemType<Riven_Flesh_Item>(), new Item(ItemType<>) { shopCustomPrice = 5}); // the stone of the ashen
+						shop.InsertAfter(ItemType<Riven_Flesh_Item>(), new Item(ItemType<Tainted_Stone_Item>()) { shopCustomPrice = 5 }); // the stone of the ashen
 						shop.InsertAfter(ItemID.CrimsandBlock, new Item(ItemType<Defiled_Sand_Item>()) { shopCustomPrice = 5 });
 						shop.InsertAfter(ItemType<Defiled_Sand_Item>(), new Item(ItemType<Silica_Item>()) { shopCustomPrice = 5 });
-						//shop.InsertAfter(ItemType<Silica_Item>(), new Item(ItemType<>()) { shopCustomPrice = 5 }); // the sand of the ashen
+						shop.InsertAfter(ItemType<Silica_Item>(), new Item(ItemType<Sootsand_Item>()) { shopCustomPrice = 5 }); // the sand of the ashen
 						shop.InsertAfter(ItemID.Granite, new Item(ItemType<Limestone_Item>()) { shopCustomPrice = 50 });
 					}
-					if (shop.Name == "Building") {
-						/* shop.InsertAfter(ItemID.CrimstoneBrick, new Item(ItemType<>()) { shopCustomPrice = 10}); // Defiled Brick
-						shop.InsertAfter(ItemType<>(), new Item(ItemType<>()) { shopCustomPrice = 10 }); // Riven Brick
-						//shop.InsertAfter(ItemType<>(), new Item(ItemType<>()) { shopCustomPrice = 10 }); // Ashen Brick
-						*/
+					if (shop.Name == "Building") {/*
+						shop.InsertAfter(ItemID.CrimstoneBrick, new Item(ItemType<Defiled_Brick>()) { shopCustomPrice = 10 }); // Defiled Brick
+						shop.InsertAfter(ItemType<Defiled_Brick>(), new Item(ItemType<Spug_Brick>()) { shopCustomPrice = 10 }); // Riven Brick
+						shop.InsertAfter(ItemType<Spug_Brick>(), new Item(ItemType<Tainted_Brick>()) { shopCustomPrice = 10 }); // Ashen Brick*/
+
 					}
 					if (shop.Name == "Torch") {
 						shop.InsertAfter(ItemID.YellowTorch, new Item(ItemType<Shadow_Torch>()) { shopCustomPrice = 300 }, Condition.Hardmode);
 						shop.InsertAfter(ItemID.IchorTorch, new Item(ItemType<Bile_Torch>()) { shopCustomPrice = 300 });
 						shop.InsertAfter(ItemType<Bile_Torch>(), new Item(ItemType<Alkahest_Torch>()) { shopCustomPrice = 300 });
-						//shop.InsertAfter(ItemType<Alkahest_Torch>(), new Item(ItemType<Respyrite_Torch>()) { shopCustomPrice = 300 }); // the ashen substance torch
+						shop.InsertAfter(ItemType<Alkahest_Torch>(), new Item(ItemType<Phoenum_Torch>()) { shopCustomPrice = 300 }); // the ashen substance torch
 						shop.InsertAfter(ItemID.CrimsonTorch, new Item(ItemType<Defiled_Torch>()) { shopCustomPrice = 300 });
 						shop.InsertAfter(ItemType<Defiled_Torch>(), new Item(ItemType<Riven_Torch>()) { shopCustomPrice = 300 });
-						//shop.InsertAfter(ItemType<Riven_Torch>(), new Item(ItemType<Ashen_Torch>()) { shopCustomPrice = 300 }); // the ashen torch
+						shop.InsertAfter(ItemType<Riven_Torch>(), new Item(ItemType<Ashen_Torch>()) { shopCustomPrice = 300 }); // the ashen torch
 					}
 					if (shop.Name == "Candle") {
-						//List<int> items = Mod.GetContent<FurnitureSet>().TrySelect(GetItems<FurnitureSet_Candle>()).ToList();
 						List<int> items = [
 							FurnitureSet.Get<Endowood_Furniture, FurnitureSet_Candle>().Item.Type,
-						FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Candle>().Item.Type,
-						//FurnitureSet.Get<_Furniture, FurnitureSet_Candle>().Item.Type,
-						FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Candle>().Item.Type];
+							FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Candle>().Item.Type,
+							FurnitureSet.Get<Witherwood_Furniture, FurnitureSet_Candle>().Item.Type,
+							FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Candle>().Item.Type];
 
 						shop.InsertAfter(ItemID.ShadewoodCandle, new Item(items[0]) { shopCustomPrice = 500 });
 						shop.InsertAfter(items[0], new Item(items[1]) { shopCustomPrice = 500 });
-						//shop.InsertAfter(items[1], new Item(items[2]) { shopCustomPrice = 500 }); // the ashen wood candle
-						shop.InsertAfter(ItemID.GraniteCandle, new Item(items[2]) { shopCustomPrice = 500 });
+						shop.InsertAfter(items[1], new Item(items[2]) { shopCustomPrice = 500 });
+						shop.InsertAfter(ItemID.GraniteCandle, new Item(items[3]) { shopCustomPrice = 500 });
 					}
 					if (shop.Name == "Lamp") {
 						List<int> items = [
 							FurnitureSet.Get<Endowood_Furniture, FurnitureSet_Lamp>().Item.Type,
-						FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Lamp>().Item.Type,
-						//FurnitureSet.Get<_Furniture, FurnitureSet_Lamp>().Item.Type,
-						FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Lamp>().Item.Type];
+							FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Lamp>().Item.Type,
+							FurnitureSet.Get<Witherwood_Furniture, FurnitureSet_Lamp>().Item.Type,
+							FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Lamp>().Item.Type];
 
 						shop.InsertAfter(ItemID.ShadewoodLamp, new Item(items[0]) { shopCustomPrice = 500 });
 						shop.InsertAfter(items[0], new Item(items[1]) { shopCustomPrice = 500 });
-						//shop.InsertAfter(items[1], new Item(items[2]) { shopCustomPrice = 500 }); // the ashen wood candle
-						shop.InsertAfter(ItemID.GraniteLamp, new Item(items[2]) { shopCustomPrice = 500 });
+						shop.InsertAfter(items[1], new Item(items[2]) { shopCustomPrice = 500 });
+						shop.InsertAfter(ItemID.GraniteLamp, new Item(items[3]) { shopCustomPrice = 500 });
 					}
 					if (shop.Name == "Lantern") {
 						List<int> items = [
 							FurnitureSet.Get<Endowood_Furniture, FurnitureSet_Lantern>().Item.Type,
-						FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Lantern>().Item.Type,
-						//FurnitureSet.Get<_Furniture, FurnitureSet_Lantern>().Item.Type,
-						FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Lantern>().Item.Type];
+							FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Lantern>().Item.Type,
+							FurnitureSet.Get<Witherwood_Furniture, FurnitureSet_Lantern>().Item.Type,
+							FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Lantern>().Item.Type];
 
 						shop.InsertAfter(ItemID.ShadewoodLantern, new Item(items[0]) { shopCustomPrice = 500 });
 						shop.InsertAfter(items[0], new Item(items[1]) { shopCustomPrice = 500 });
-						//shop.InsertAfter(items[1], new Item(items[2]) { shopCustomPrice = 500 }); // the ashen wood candle
-						shop.InsertAfter(ItemID.GraniteLantern, new Item(items[2]) { shopCustomPrice = 500 });
+						shop.InsertAfter(items[1], new Item(items[2]) { shopCustomPrice = 500 });
+						shop.InsertAfter(ItemID.GraniteLantern, new Item(items[3]) { shopCustomPrice = 500 });
 					}
 					if (shop.Name == "Chandelier") {
 						List<int> items = [
 							FurnitureSet.Get<Endowood_Furniture, FurnitureSet_Chandelier>().Item.Type,
-						FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Chandelier>().Item.Type,
-						//FurnitureSet.Get<_Furniture, FurnitureSet_Chandelier>().Item.Type,
-						FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Chandelier>().Item.Type];
+							FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Chandelier>().Item.Type,
+							FurnitureSet.Get<Witherwood_Furniture, FurnitureSet_Chandelier>().Item.Type,
+							FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Chandelier>().Item.Type];
 
 						shop.InsertAfter(ItemID.ShadewoodChandelier, new Item(items[0]) { shopCustomPrice = 1200 });
 						shop.InsertAfter(items[0], new Item(items[1]) { shopCustomPrice = 1200 });
-						//shop.InsertAfter(items[1], new Item(items[2]) { shopCustomPrice = 1200 }); // the ashen wood candle
-						shop.InsertAfter(ItemID.GraniteChandelier, new Item(items[2]) { shopCustomPrice = 1200 });
+						shop.InsertAfter(items[1], new Item(items[2]) { shopCustomPrice = 1200 });
+						shop.InsertAfter(ItemID.GraniteChandelier, new Item(items[3]) { shopCustomPrice = 1200 });
 					}
 					if (shop.Name == "Candelabra") {
 						List<int> items = [
 							FurnitureSet.Get<Endowood_Furniture, FurnitureSet_Candelabra>().Item.Type,
-						FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Candelabra>().Item.Type,
-						//FurnitureSet.Get<_Furniture, FurnitureSet_Candelabra>().Item.Type,
-						FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Candelabra>().Item.Type];
+							FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Candelabra>().Item.Type,
+							FurnitureSet.Get<Witherwood_Furniture, FurnitureSet_Candelabra>().Item.Type,
+							FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Candelabra>().Item.Type];
 
 						shop.InsertAfter(ItemID.ShadewoodCandelabra, new Item(items[0]) { shopCustomPrice = 500 });
 						shop.InsertAfter(items[0], new Item(items[1]) { shopCustomPrice = 500 });
-						//shop.InsertAfter(items[1], new Item(items[2]) { shopCustomPrice = 500 }); // the ashen wood candle
-						shop.InsertAfter(ItemID.GraniteCandelabra, new Item(items[2]) { shopCustomPrice = 500 });
+						shop.InsertAfter(items[1], new Item(items[2]) { shopCustomPrice = 500 });
+						shop.InsertAfter(ItemID.GraniteCandelabra, new Item(items[3]) { shopCustomPrice = 500 });
 					}
 					break;
 				}

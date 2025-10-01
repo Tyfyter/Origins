@@ -1,11 +1,11 @@
 ﻿using Origins.Items.Materials;
-using Origins.World;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Broken_Record : ModItem {
+    public class Distress_Beacon : ModItem {
         public string[] Categories => [
             "BossSummon"
         ];
@@ -23,7 +23,7 @@ namespace Origins.Items.Other.Consumables {
 			.Register();
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
-			itemLoot.Add(AshenBiomeData.OrbDropRule);
+			itemLoot.Add(Ashen_Biome.OrbDropRule);
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {
 			itemGroup = ContentSamples.CreativeHelper.ItemGroup.GoodieBags;

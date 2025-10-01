@@ -311,6 +311,7 @@ namespace Origins.NPCs {
 			foreach (ItemDropWithConditionRule rule in globalLoot.Get().FindDropRules<ItemDropWithConditionRule>(rule => rule.condition is Conditions.SoulOfNight)) {
 				rule.condition = new LootConditions.SoulOfNight();
 			}
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Ashen_Key>(), 2500, 1, 1, new LootConditions.Ashen_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Dawn_Key>(), 2500, 1, 1, new LootConditions.Dawn_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Defiled_Key>(), 2500, 1, 1, new LootConditions.Defiled_Key_Condition()));
 			//globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Dusk_Key>(), 2500, 1, 1, new LootConditions.Dusk_Key_Condition()));

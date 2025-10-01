@@ -1,10 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Other {
@@ -39,5 +38,10 @@ namespace Origins.Tiles.Other {
 	public class Chambersite_Ore_Riven_Flesh : Chambersite_Ore {
 		public override int StoneType => TileType<Spug_Flesh>();
 		public override Color MapColor => new Color(0, 125, 200);
+	}
+	public class Chambersite_Ore_Tainted_Stone : Chambersite_Ore {
+		public override string Texture => typeof(Chambersite_Ore_Defiled_Stone).GetDefaultTMLName();
+		public override int StoneType => TileType<Tainted_Stone>();
+		public override Color MapColor => new Color(255, 200, 200);
 	}
 }

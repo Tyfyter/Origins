@@ -1,8 +1,5 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Conditions;
-using CalamityMod.Items.Potions.Alcohol;
-using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
@@ -12,12 +9,8 @@ using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
-using Origins.Items.Weapons.Summoner;
-using Origins.NPCs.Brine;
 using Origins.NPCs.Crimson;
 using Origins.NPCs.Defiled;
-using Origins.NPCs.Defiled.Boss;
-using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
 using Origins.Projectiles.Misc;
 using Origins.Questing;
@@ -26,16 +19,12 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
-using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib;
 using PegasusLib.UI;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
@@ -91,8 +80,9 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Steampunker: {
-					shop.InsertAfter<Gray_Solution>(ItemID.PurpleSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
+					shop.InsertAfter<Gray_Solution>(ItemID.RedSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
 					shop.InsertAfter<Teal_Solution>(ItemID.RedSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>()));
+					shop.InsertAfter<Orange_Solution>(ItemID.RedSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>()));
 					break;
 				}
 				case NPCID.Dryad: {

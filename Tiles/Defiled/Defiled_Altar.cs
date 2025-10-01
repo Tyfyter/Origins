@@ -1,13 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
-using Origins.Items.Other.Testing;
+﻿using Origins.Items.Other.Testing;
 using Origins.World.BiomeData;
 using PegasusLib;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 namespace Origins.Tiles.Defiled {

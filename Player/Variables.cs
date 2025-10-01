@@ -361,6 +361,9 @@ namespace Origins {
 		public float ZoneRivenProgress = 0;
 		public float ZoneRivenProgressSmoothed = 0;
 
+		public float ZoneAshenProgress = 0;
+		public float ZoneAshenProgressSmoothed = 0;
+
 		public float ZoneBrineProgress = 0;
 		public float ZoneBrineProgressSmoothed = 0;
 

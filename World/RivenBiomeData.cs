@@ -10,7 +10,6 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
-using Origins.Misc;
 using Origins.NPCs.Riven;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.Reflection;

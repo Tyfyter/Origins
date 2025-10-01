@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.NPCs.Critters;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
@@ -64,6 +65,10 @@ namespace Origins.Tiles.Defiled {
 						default:
 						if (anchorType == ModContent.TileType<Riven_Grass>()) {
 							Main.tile[i, j].TileType = (ushort)ModContent.TileType<Riven_Foliage>();
+							return true;
+						}
+						if (anchorType == ModContent.TileType<Ashen_Grass>()) {
+							Main.tile[i, j].TileType = (ushort)ModContent.TileType<Ashen_Foliage>();
 							return true;
 						}
 						break;

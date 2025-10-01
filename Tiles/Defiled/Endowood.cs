@@ -1,9 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Weapons.Melee;
-using Origins.Items.Weapons.Ranged;
-using Origins.Walls;
-using Terraria;
-using Terraria.GameContent;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;

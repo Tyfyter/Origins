@@ -145,7 +145,7 @@ VANILLA MODIFICATIONS:
 
 WORLD GENERATION:
 |---
-(X) Ashen Factory
+(#2) Ashen Factory
 (X) Ashen Outpost
 (X) Ashen Scrapyard
 (^) Brine Pool
@@ -256,6 +256,7 @@ ENEMY NPCS:
 (^) Amoebeye
 (^) Amoebic Mummy
 (^) Amoeba Bugger
+(@, #2) Trash Compactor Mimic
 (^) Barnacle Mound
 (X) Beckonbug
 (^) Brine Latcher
@@ -1160,7 +1161,7 @@ TILES:
 (^) Bleeding Obsidian
 (^) Bomb Trap
 (^) Brittle Quartz
-(X) Brown Ice !!!
+(@, ^3) Brown Ice !!!
 (^) Calcified Spug Flesh
 (X) Cancer Block
 (@4, ^3) Carburite
@@ -1168,6 +1169,7 @@ TILES:
 (^) Chambersite
 (^) Chambersite Gemspark
 (^) Chambersite Gemstone
+(@, ^3) Chambersite Gemstone (Ashen)
 (^) Chambersite Gemstone (Corruption)
 (^) Chambersite Gemstone (Crimson)
 (^) Chambersite Gemstone (Defiled)
@@ -1180,6 +1182,7 @@ TILES:
 (^) Defiled Sand
 (^) Defiled Sandstone
 (^) Defiled Stone
+(@, ^3) Defiled Stone Brick
 (^) Eitrite Ore
 (@4) Encrusted Brick
 (^) Encrusted Ore
@@ -1188,7 +1191,7 @@ TILES:
 (^) Fiberglass Block
 (^) Gray Ice Block
 (^) Hardened Defiled Sand
-(X) Hardened Sootsand !!!
+(@, ^3) Hardened Sootsand !!!
 (X) Lihzarhd Bomb Trap
 (^) Limestone
 (@4) Lost Brick
@@ -1211,16 +1214,17 @@ TILES:
 (X) Scrap Heap !!!
 (^) Silica
 (^) Silicon Ore
-(X) Soot Sandstone !!!
-(X) Sootgrass !!!
+(@, ^3) Soot Sandstone !!!
+(@, ^3) Sootgrass !!!
 (X) Space Goo
 (^) Spug Flesh
-(X) Tainted Stone !!!
+(@, ^3) Spug Brick
+(@, ^3) Tainted Stone !!!
 (X) Truss Block !!!
 (X) Type-I Fortified Steel Block !!!
 (X) Type-II Fortified Steel Block !!!
 (X) Type-III Fortified Steel Block !!!
-(X) Witherwood !!
+(@, ^3) Witherwood !!!
 
 (^) Amebic Gel Wall
 (^) Barnacle Wall
@@ -1237,24 +1241,27 @@ TILES:
 (^) Defiled Grass Wall
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
+(@, ^3) Defiled Stone Brick Wall
 (^) Edenwood Wall
 (@, ^3) Encrusted Brick Wall
 (^) Endowood Wall
 (^) Fiberglass Wall
 (^) Hardened Defiled Sand Wall
-(X) Hardened Sootsand Wall !!!
+(#4) Hardened Sootsand Wall !!!
 (@, ^3) Lost Brick Wall
 (^) Marrowick Wall
 (X) Molten Steel Wall !!!
 (X) Nova Brick Wall
 (^) Quartz Wall
 (^) Riven Grass Wall
-(X) Soot Sandstone Wall !!!
-(X) Sootsand Wall !!!
+(@, ^3) Soot Sandstone Wall !!!
+(X) Sootsand Wall !!! (vanilla sand types don't have regular sand walls so why?)
 (^) Spug Flesh Wall
+(@, ^3) Spug Brick Wall
 (X) Type-III Fortified Steel Wall !!!
 
 (^) Alkahest Torch
+(@, ^3) Ashen Torch !!!
 (^) Amoeba Buggy Cage
 (^) Bile Torch
 (^) Brine Water Fountain
@@ -1274,14 +1281,16 @@ TILES:
 (^) Marrowick Furniture
 (X) Nova Furniture
 (X) Peppered Moth Lamp !!!
-(X) Phoenum Torch !!!
+(@, ^3) Phoenum Torch !!!
 (X) Residue Furniture
 (^) Riven Torch
 (^) Riven Water Fountain
 (^) Shadow Torch
 (^) Traffic Cone
+(@, ^3) Witherwood Furniture
 
-(X) Ashen Dungeon Chest !!!
+(@, ^3) Ashen Campfire !!!
+(@, ^3, 々 (dungeon loot)) Ashen Dungeon Chest !!!
 (X) Batholith Grindstone
 (X) Bilious Incense
 (^) Brine Dungeon Chest
@@ -1325,8 +1334,8 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
-(X) Ashen Scrap Foliage !!!
-(X) Ashen Soot Foliage !!!
+(@, ^3) Ashen Scrap Foliage !!!
+(@, ^3) Ashen Soot Foliage !!!
 (X) Background Door !!!
 (X) Beacon Light !!!
 (^) Brineglow Vine
@@ -1362,7 +1371,7 @@ TILES:
 (^) Underwater Vine
 (^) Venus Coral
 (^) Wilting Rose
-(X) Witherleaf Tree !!!
+(@, ^3) Witherleaf Tree !!!
 (X) Workstation Extras !!!
 (^) Wrycoral
 
@@ -1510,7 +1519,7 @@ CRITTERS AND FISH:
 (^) Chambersite Squirrel
 (^) Cicada 3301
 (X) Hyrax !!!
-(X) Peppered Moth !!!
+(@, ^3) Peppered Moth !!!
 
 (^) Bilemouth
 (^) Bobbit Worm
@@ -1518,7 +1527,7 @@ CRITTERS AND FISH:
 (^) Fiberbass
 (^) Polyeel
 (^) Prikish
-(X) Scrapfish !!!
+(@, ^3) Scrapfish !!!
 (^) Tearracuda
 (^) Toadfish
 ---
@@ -1608,7 +1617,7 @@ CONSUMABLES:
 (^) Vanilla Shake
 
 (X) Catalyst Cell
-(#, ^2) Distress Beacon !!!
+(#2, ^2) Distress Beacon !!!
 (^) Nerve Impulse Manipulator
 (^) Lost Picture Frame
 (X) Quantum Cell
@@ -1632,7 +1641,7 @@ CONSUMABLES:
 (^) Void Lock
 (^) White Water
 
-(X) Ashen Key
+(@, ^3) Ashen Key !!!
 (^) Brine Key
 (^) Defiled Key
 (^) Hell Key
@@ -1645,6 +1654,7 @@ CONSUMABLES:
 (^) Fiberglass Weaver Bag
 (^) Lost Diver Bag
 (^) Shimmer Construct Bag
+(X) Trenchmaker Bag !!!
 (^) World Cracker Bag
 ---
 
@@ -1734,7 +1744,7 @@ AMMO:
 (X) Resizable Mine VIII
 
 (^) Gray Solution
-(X) Orange Solution
+(@, ^3) Orange Solution
 (^) Teal Solution
 ---
 
@@ -1763,10 +1773,10 @@ CROSS-MOD CONTENT:
 (@2, #) Sugarcoat
 
 (^) Aether Orb
-(々) Ashen Chest
-(々) Ashen Renewal
-(々) Ashen Renewal Supreme
-(々) Ashen "Fake" Altar
+(@, ^3) Suspicious Trash Compactor
+(^) Ashen Renewal
+(^) Ashen Renewal Supreme
+(@, ^3) Ashen "Fake" Altar
 (X) Bomber's Soul
 (^) Chambersite Ring
 (^) Defiled Chest

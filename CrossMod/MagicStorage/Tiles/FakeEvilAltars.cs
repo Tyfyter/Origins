@@ -1,6 +1,5 @@
 ﻿using MagicStorage.Stations;
 using Origins.Items.Materials;
-using Origins.Tiles;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -81,7 +80,7 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 				.Register();
 			};
 		}
-	}/*
+	}
 	public class Fake_Ashen_Altar : Evil_Altar_Tile {
 		public Fake_Ashen_Altar() : base("Defiled/Defiled_Altar") { }
 		public override void OnLoad() {
@@ -93,5 +92,5 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 				.Register();
 			};
 		}
-	}*/
+	}
 }

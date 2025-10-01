@@ -1,8 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Weapons.Summoner.Minions;
+﻿using Origins.Items.Weapons.Summoner.Minions;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Questing;
-using Origins.Tiles;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
@@ -16,7 +15,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -35,6 +33,7 @@ namespace Origins {
 		public static int voidTiles;
 		public static int defiledTiles;
 		public static int rivenTiles;
+		public static int ashenTiles;
 		public static int brineTiles;
 		public static int fiberglassTiles;
 		public static int limestoneTiles;
@@ -46,6 +45,8 @@ namespace Origins {
 		public static bool HasDefiledWastelands => Instance.hasDefiled;
 		internal bool hasRiven = false;
 		public static bool HasRivenHive => Instance.hasRiven;
+		internal bool hasAshen = false;
+		public static bool HasAshen => Instance.hasAshen;
 		private static double? _worldSurfaceLow;
 		public static double WorldSurfaceLow => _worldSurfaceLow ?? Main.worldSurface - 165;
 		public Rectangle brinePoolRange;
@@ -55,6 +56,7 @@ namespace Origins {
 												//difference of 4 (2^2)
 		public const byte evil_wastelands = 0b0101;//5
 		public const byte evil_riven = 0b0110;//6
+		public const byte evil_ashen = 0b0111;//7
 
 		public static int totalDefiled;
 		public static int totalDefiled2;
@@ -62,6 +64,9 @@ namespace Origins {
 		public static int totalRiven;
 		public static int totalRiven2;
 		public static byte tRiven;
+		public static int totalAshen;
+		public static int totalAshen2;
+		public static byte tAshen;
 		bool fiberglassNeedsFraming;
 		Point fiberglassMin;
 		Point fiberglassMax;
@@ -127,6 +132,7 @@ namespace Origins {
 			}
 			tag.TryGet("hasDefiled", out hasDefiled);
 			tag.TryGet("hasRiven", out hasRiven);
+			tag.TryGet("hasAshven", out hasAshen);
 			tag.TryGet("forceThunderstorm", out forceThunderstorm);
 			tag.TryGet("unlockedBrineNPC", out unlockedBrineNPC);
 			if (tag.TryGet("voidLocks", out List<TagCompound> voidLocks)) {
@@ -168,6 +174,7 @@ namespace Origins {
 			tag.Add("peatSold", peatSold);
 			tag.Add("hasDefiled", hasDefiled);
 			tag.Add("hasRiven", hasRiven);
+			tag.Add("hasAshen", hasAshen);
 			tag.Add("forceThunderstorm", forceThunderstorm);
 			tag.Add("unlockedBrineNPC", unlockedBrineNPC);
 			if (_worldSurfaceLow.HasValue) {
@@ -216,6 +223,7 @@ namespace Origins {
 			voidTiles = 0;
 			defiledTiles = 0;
 			rivenTiles = 0;
+			ashenTiles = 0;
 			brineTiles = 0;
 			fiberglassTiles = 0;
 			limestoneTiles = 0;
@@ -245,6 +253,14 @@ namespace Origins {
 				+ tileCounts[ModContent.TileType<Brittle_Quartz>()]
 				+ tileCounts[ModContent.TileType<Quartz>()]
 				+ tileCounts[ModContent.TileType<Primordial_Permafrost>()];
+
+			ashenTiles = tileCounts[ModContent.TileType<Tainted_Stone>()]
+				+ tileCounts[ModContent.TileType<Ashen_Grass>()]
+				+ tileCounts[ModContent.TileType<Ashen_Jungle_Grass>()]
+				+ tileCounts[ModContent.TileType<Sootsand>()]
+				+ tileCounts[ModContent.TileType<Soot_Sandstone>()]
+				+ tileCounts[ModContent.TileType<Hardened_Sootsand>()]
+				+ tileCounts[ModContent.TileType<Brown_Ice>()];
 
 			brineTiles = tileCounts[ModContent.TileType<Baryte>()];
 
@@ -577,17 +593,23 @@ namespace Origins {
 			tDefiled = (byte)Math.Round((totalDefiled / (float)WorldGen.totalSolid2) * 100f);
 			totalRiven = totalRiven2;
 			tRiven = (byte)Math.Round((totalRiven / (float)WorldGen.totalSolid2) * 100f);
+			totalAshen = totalAshen2;
+			tAshen = (byte)Math.Round((totalAshen / (float)WorldGen.totalSolid2) * 100f);
 			if (tDefiled == 0 && totalDefiled > 0) {
 				tDefiled = 1;
 			}
 			if (tRiven == 0 && totalRiven > 0) {
 				tRiven = 1;
 			}
+			if (tAshen == 0 && totalAshen > 0) {
+				tAshen = 1;
+			}
 			if (Main.netMode == NetmodeID.Server) {
 				ModPacket packet = Origins.instance.GetPacket(3);
 				packet.Write(Origins.NetMessageType.tile_counts);
 				packet.Write(tDefiled);
 				packet.Write(tRiven);
+				packet.Write(tAshen);
 			}
 			totalDefiled2 = 0;
 		}

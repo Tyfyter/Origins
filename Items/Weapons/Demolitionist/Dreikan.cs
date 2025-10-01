@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.SoulofNight, 30)
 			.AddIngredient(ModContent.ItemType<Hallowed_Cleaver>())
-			.AddIngredient(ModContent.ItemType<Respyrite>(), 15)
+			.AddIngredient(ModContent.ItemType<Phoenum>(), 15)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

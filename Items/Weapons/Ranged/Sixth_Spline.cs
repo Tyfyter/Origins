@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddRecipeGroup("AdamantiteBars", 10)
-			.AddIngredient(ModContent.ItemType<Respyrite>(), 18)
+			.AddIngredient(ModContent.ItemType<Phoenum>(), 18)
 			.AddIngredient(ModContent.ItemType<Scrap>(), 12)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();

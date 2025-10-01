@@ -1,15 +1,10 @@
-﻿using Origins.Walls;
-using Origins.World.BiomeData;
-using System;
-using System.Collections;
+﻿using Origins.World.BiomeData;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 
 namespace Origins.LootConditions {
 	public class VaryingRateLeadingRule(int chanceDenominator, int chanceNumerator, params (IItemDropRuleCondition condition, int chanceDenominator, int chanceNumerator)[] alternates) : IItemDropRule {
@@ -89,6 +84,15 @@ namespace Origins.LootConditions {
 		}
 		public virtual bool CanDropForPlayer(Player player) => true;
 	}
+	public class Ashen_Key_Condition : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Ashen_Biome>();
+		}
+		public bool CanShowItemDropInUI() => Main.hardMode;
+		public string GetConditionDescription() {
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Ashen"));
+		}
+	}
 	public class Dawn_Key_Condition : IItemDropRuleCondition {
 #if false
 		public bool CanDrop(DropAttemptInfo info) {
@@ -102,8 +106,8 @@ namespace Origins.LootConditions {
 		public string GetConditionDescription() {
 			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Mods.Origins.Generic.Defiled_Wastelands"));
 		}
-	}
-	public class Defiled_Key_Condition : IItemDropRuleCondition {
+    }
+    public class Defiled_Key_Condition : IItemDropRuleCondition {
 		public bool CanDrop(DropAttemptInfo info) {
 			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>();
 		}
@@ -208,7 +212,7 @@ namespace Origins.LootConditions {
 	public class SoulOfNight : IItemDropRuleCondition, IProvideItemConditionDescription {
 		public bool CanDrop(DropAttemptInfo info) {
 			if (Conditions.SoulOfWhateverConditionCanDrop(info)) {
-				return info.player.ZoneCorrupt || info.player.ZoneCrimson || info.player.InModBiome<Defiled_Wastelands>() || info.player.InModBiome<Riven_Hive>();
+				return info.player.ZoneCorrupt || info.player.ZoneCrimson || info.player.InModBiome<Defiled_Wastelands>() || info.player.InModBiome<Riven_Hive>() || info.player.InModBiome<Ashen_Biome>();
 			}
 			return false;
 		}

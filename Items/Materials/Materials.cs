@@ -462,7 +462,7 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Respyrite : MaterialItem {
+	public class Phoenum : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 9);
 		public override int Rare => ItemRarityID.Orange;
 		public override bool Hardmode => true;
@@ -617,6 +617,13 @@ namespace Origins.Items.Materials {
 	}
 
 	#region biome keys
+	public class Ashen_Key : Dawn_Key {
+		public override string Texture => typeof(Defiled_Key).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Ashen_Dungeon_Chest_Item>();
+		}
+	}
 	public class Dawn_Key : MaterialItem {
 		public override int ResearchUnlockCount => 1;
 		public override int Value => 0;
