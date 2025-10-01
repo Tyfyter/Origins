@@ -52,7 +52,7 @@ namespace Origins.Tiles.Defiled {
 			Tile above = Framing.GetTileSafely(i, j - 1);
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
 				if (WorldGen.genRand.NextBool(250)) {
-					above.ResetToType((ushort)ModContent.TileType<Soulspore>());
+					above.SetToType((ushort)ModContent.TileType<Soulspore>(), Main.tile[i, j].TileColor);
 				} else {
 					if (WorldGen.genRand.NextBool(200)) {
 						ushort bramble = (ushort)ModContent.TileType<Tangela_Bramble>();
@@ -71,7 +71,7 @@ namespace Origins.Tiles.Defiled {
 							fail:;
 						}
 					}
-					above.ResetToType((ushort)ModContent.TileType<Defiled_Foliage>());
+					above.SetToType((ushort)ModContent.TileType<Defiled_Foliage>(), Main.tile[i, j].TileColor);
 				}
 				WorldGen.TileFrame(i, j - 1);
 			}
@@ -121,7 +121,7 @@ namespace Origins.Tiles.Defiled {
 			Tile above = Framing.GetTileSafely(i, j - 1);
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
 				if (WorldGen.genRand.NextBool(250)) {
-					above.ResetToType((ushort)ModContent.TileType<Soulspore>());
+					above.SetToType((ushort)ModContent.TileType<Soulspore>(), Main.tile[i, j].TileColor);
 				} else {
 					if (WorldGen.genRand.NextBool(200)) {
 						ushort bramble = (ushort)ModContent.TileType<Tangela_Bramble>();
@@ -140,7 +140,7 @@ namespace Origins.Tiles.Defiled {
 							fail:;
 						}
 					}
-					above.ResetToType((ushort)ModContent.TileType<Defiled_Foliage>());
+					above.SetToType((ushort)ModContent.TileType<Defiled_Foliage>(), Main.tile[i, j].TileColor);
 				}
 				WorldGen.TileFrame(i, j - 1);
 			}

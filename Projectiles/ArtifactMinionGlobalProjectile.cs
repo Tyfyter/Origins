@@ -67,7 +67,7 @@ namespace Origins.Projectiles {
 			}
 		}
 		public bool CanRespawn(Projectile projectile) {
-			if (ArtifactMinionSystem.IsSacrificingMinions) return false;
+			if (ArtifactMinionSystem.IsSacrificingMinions || ArtifactMinionSystem.IsDismissingMinion) return false;
 			return !isRespawned && Main.player[projectile.owner].GetModPlayer<OriginPlayer>().spiritShard;
 		}
 		public override void OnKill(Projectile projectile, int timeLeft) {
@@ -213,6 +213,7 @@ namespace Origins.Projectiles {
 						Main.mouseText = true;
 						hoveredMinion = artifactMinions[i];
 						if (tryKillHovered) {
+							IsDismissingMinion = true;
 							projectile.Kill();
 							tryKillHovered = false;
 						}
@@ -220,7 +221,9 @@ namespace Origins.Projectiles {
 					drawParams.TextPosition.Y += 10;
 				}
 			}
+			IsDismissingMinion = false;
 		}
+		public static bool IsDismissingMinion { get; private set; }
 		public static bool IsSacrificingMinions { get; private set; }
 		private static void On_Player_FreeUpPetsAndMinions(On_Player.orig_FreeUpPetsAndMinions orig, Player self, Item sItem) {
 			IsSacrificingMinions = true;

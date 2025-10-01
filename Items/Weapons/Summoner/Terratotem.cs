@@ -4,6 +4,7 @@ using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
+using PegasusLib;
 using ReLogic.Graphics;
 using System;
 using System.Collections;
@@ -12,11 +13,13 @@ using System.IO;
 using System.Reflection;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI.Chat;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Terratotem : ModItem, ICustomWikiStat {
@@ -30,7 +33,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 27;
+			Item.damage = 16;
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 1f;
 			Item.mana = 48;
@@ -70,6 +73,8 @@ namespace Origins.Items.Weapons.Summoner {
 			.AddIngredient(ItemID.PygmyStaff)
 			.AddIngredient(ItemID.SanguineStaff)
 			.AddIngredient(ItemID.Smolstar)
+			.AddIngredient(ItemID.OpticStaff)
+			.AddIngredient(ItemID.PygmyStaff)
 			.AddIngredient(ItemID.TempestStaff)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
@@ -99,7 +104,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	#endregion balance
-	public class Terratotem_Tab : SpeedModifierMinion, IArtifactMinion {
+	public class Terratotem_Tab : SpeedModifierMinion, IArtifactMinion, ISpecialOverCapacityMinion {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
@@ -153,25 +158,19 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			return true;
 		}
-		Projectile bottomPart;
-		int belowCount = -1;
 		public Projectile GetBottom(out int count) {
-			if (bottomPart is null || bottomPart.ModProjectile is not Terratotem_Tab) {
-				Projectile current = Projectile;
-				HashSet<Projectile> walked = [current];
-				Projectile last = current;
-				while (current is not null) {
-					last = current;
-					current = current.GetRelatedProjectile(1);
-					if (current is null) break;
-					if (current.owner != Projectile.owner || current.ModProjectile is not Terratotem_Tab) break;
-					if (!walked.Add(current)) break;
-				}
-				belowCount = walked.Count;
-				bottomPart = last;
+			Projectile current = Projectile;
+			HashSet<Projectile> walked = [current];
+			Projectile last = current;
+			while (current is not null) {
+				last = current;
+				current = current.GetRelatedProjectile(1);
+				if (current is null) break;
+				if (current.owner != Projectile.owner || current.ModProjectile is not Terratotem_Tab) break;
+				if (!walked.Add(current)) break;
 			}
-			count = belowCount;
-			return bottomPart;
+			count = walked.Count;
+			return last;
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -251,12 +250,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 			if (player.dead || !player.active) {
 				player.ClearBuff(Terratotem_Buff.ID);
-			} else if (player.HasBuff(Terratotem_Buff.ID)) {
+			}
+			if (player.HasBuff(Terratotem_Buff.ID)) {
 				Projectile.timeLeft = 2;
+			} else if (Projectile.IsLocallyOwned()) {
+				Projectile.Kill();
 			}
 
 			Projectile.localAI[0].Cooldown();
 			Projectile below = Projectile.GetRelatedProjectile(1);
+			bool teleported = false;
 			if (below?.active ?? false) {
 				Projectile bottom = GetBottom(out int count);
 				Projectile.position = bottom.position - Vector2.UnitY * Projectile.height * (count - 1);
@@ -276,13 +279,14 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Projectile.velocity = Vector2.Zero;
 					(Projectile.localAI[1], Projectile.localAI[2]) = Vector2.Zero;
 					Projectile.netUpdate = true;
+					teleported = true;
 				} else {
 					float speed = (dist > 16 * 50 ? 64 : 32) * SpeedModifier;
 					(Projectile.localAI[1], Projectile.localAI[2]) = (Projectile.velocity + vectorToIdlePosition * Math.Min(dist, speed)) / 4;
 				}
 			}
 			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active) {
-				if (mask.ai[1] == -1) {
+				if (teleported || mask.ai[1] == -1) {
 					mask.Center = Projectile.Center;
 				}
 			} else if (Projectile.IsLocallyOwned()) {
@@ -307,8 +311,20 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if ((maskProj?.active ?? false) && Projectile.whoAmI > maskProj.whoAmI && maskProj.ModProjectile is Terratotem_Mask_Base mask) mask.Draw(lightColor);
 		}
 		public override void OnKill(int timeLeft) {
-			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active) {
+			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active && Projectile.IsLocallyOwned()) {
 				mask.Kill();
+			}
+		}
+		public void KillOverCapacity() {
+			if (!Projectile.IsLocallyOwned()) return;
+			foreach (Projectile other in Main.ActiveProjectiles) {
+				if (other.whoAmI == Projectile.whoAmI) continue;
+				if (other.owner == Projectile.owner && other.ModProjectile is Terratotem_Tab) {
+					if (other.localAI[0] <= 0) {
+						other.Kill();
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -348,7 +364,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		readonly int[] othersTargetingItemsCounts = new int[Main.maxItems];
 		public override void AI() {
 			Projectile slot = Projectile.GetRelatedProjectile(0);
-			if (slot?.active != true) {
+			if ((!(slot?.active ?? false) || slot.ModProjectile is not Terratotem_Tab) && Projectile.IsLocallyOwned()) {
 				Projectile.Kill();
 				return;
 			}
@@ -377,13 +393,13 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			bool hasPriorityTarget = false;
 			int sharingCount = int.MaxValue;
 			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
+				if (!player.Center.WithinRange(npc.Center, max_distance) || !Projectile.Center.WithinRange(npc.Center, max_distance)) return;
 				bool isCurrentTarget = targetData.TargetType == TargetType.NPC && npc.whoAmI == targetData.Index;
-				if ((isCurrentTarget || isPriorityTarget || !hasPriorityTarget) && npc.CanBeChasedBy() && player.Center.WithinRange(npc.Center, max_distance)) {
+				if ((isCurrentTarget || isPriorityTarget || !hasPriorityTarget) && npc.CanBeChasedBy()) {
 					Vector2 pos = Projectile.position;
 					float between = Vector2.Distance(npc.Center, pos);
 					between *= isCurrentTarget ? 0 : 1;
 					bool closer = distanceFromTarget > between;
-					bool lineOfSight = Collision.CanHitLine(pos, 8, 8, npc.position, npc.width, npc.height);
 					switch (sharingCount.CompareTo(othersTargetingCounts[npc.whoAmI])) {
 						case -1:
 						closer = false;
@@ -392,7 +408,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						closer = true;
 						break;
 					}
-					if ((closer || !foundTarget) && lineOfSight) {
+					if ((closer || !foundTarget) && (isCurrentTarget || Collision.CanHitLine(pos, 8, 8, npc.position, npc.width, npc.height))) {
 						sharingCount = othersTargetingCounts[npc.whoAmI];
 						distanceFromTarget = between;
 						targetData.Index = npc.whoAmI;
@@ -410,16 +426,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				for (int i = 0; i < Main.maxItems; i++) {
 					Item item = Main.item[i];
 					if (item.active) {
+						if (!player.Center.WithinRange(item.Center, max_distance) || !Projectile.Center.WithinRange(item.Center, max_distance)) continue;
 						bool isCurrentTarget = oldTargetData.TargetType == TargetType.Item && i == oldTargetData.Index;
 						if (isCurrentTarget || oldTargetData.TargetType != TargetType.Item) {
 							Vector2 pos = Projectile.position;
 							float between = Vector2.Distance(item.Center, pos);
 							between *= isCurrentTarget ? 0 : 1;
 							bool closer = distanceFromTarget > between;
-							bool lineOfSight = Collision.CanHitLine(pos, 8, 8, item.position, item.width, item.height);
 							float pickupPriority = GetItemPickupPriority(player, item);
 							if (pickupPriority <= bestPickupPriority) closer = false;
-							if (lineOfSight && (closer || pickupPriority > bestPickupPriority) && othersTargetingItemsCounts[i] <= 0 && !Terrarian_Voodoo_Doll.PreventItemPickup(item, player)) {
+							if ((closer || pickupPriority > bestPickupPriority) && othersTargetingItemsCounts[i] <= 0 && !Terrarian_Voodoo_Doll.PreventItemPickup(item, player) && Collision.CanHitLine(pos, 8, 8, item.position, item.width, item.height)) {
 								distanceFromTarget = between;
 								targetData.Index = i;
 								targetData.TargetType = TargetType.Item;
@@ -427,6 +443,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						}
 					}
 				}
+			}
+			if (!Projectile.WithinRange(slot.Center, 2000)) {
+				targetData = default;
+				Projectile.ai[1] = -1;
 			}
 			if (targetData != oldTargetData) {
 				Projectile.netUpdate = true;
@@ -456,7 +476,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (Projectile.Hitbox.Intersects(targetRect)) {
 				switch (targetData.TargetType) {
 					case TargetType.Slot:
-					if (Projectile.Center.WithinRange(targetPos, 16)) Projectile.ai[1] = -1;
+					Projectile.ai[1] = -1;
 					break;
 
 					case TargetType.NPC:
@@ -506,6 +526,23 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					effects
 				);
 			}
+			/*Rectangle tagetBox = targetData.GetPosition(Projectile);
+			tagetBox.X -= (int)Main.screenPosition.X;
+			tagetBox.Y -= (int)Main.screenPosition.Y;
+			Main.spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				tagetBox,
+				Color.Red * 0.5f
+			);
+			ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch,
+				FontAssets.MouseText.Value,
+				Projectile.ai[2].ToString(),
+				tagetBox.Right(),
+				Color.White,
+				0,
+				default,
+				Vector2.One
+			);*/
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			if (Projectile.whoAmI > Projectile.GetRelatedProjectile(0).whoAmI) Draw(lightColor);
@@ -547,7 +584,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 					default:
 					case TargetType.Slot:
-					return projectile.GetRelatedProjectile(0)?.Hitbox ?? projectile.Hitbox;
+					if (projectile.GetRelatedProjectile(0) is not Projectile slot || slot.ModProjectile is not Terratotem_Tab) {
+						projectile.Kill();
+						return default;
+					}
+					return slot.Hitbox;
 				}
 			}
 		}
@@ -580,7 +621,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						item.Center = player.Center;
 					}
 				}
-				if (Projectile.ai[2] <= 0) Projectile.ResetLocalNPCHitImmunity();
+				if (Projectile.ai[2] <= 0) {
+					Projectile.ResetLocalNPCHitImmunity();
+					targetData = default;
+				}
 				return;
 			}
 			Rectangle targetRect = targetData.GetPosition(Projectile);
@@ -602,11 +646,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					}, Projectile.owner);
 				}
 			}
-			float speed = 8f;
+			float speed = 8f * SpeedModifier;
 			float inertia = 12f;
 			Vector2 directionToTarget = (targetPos - Projectile.Center).Normalized(out _);
 			if (Projectile.Hitbox.Intersects(targetRect) && targetData.TargetType == TargetType.Slot) {
-				if (Projectile.Center.WithinRange(targetPos, 16)) Projectile.ai[1] = -1;
+				Projectile.ai[1] = -1;
 			}
 			Projectile.velocity = (Projectile.velocity * (inertia - 1) + directionToTarget * speed) / inertia;
 		}
@@ -619,9 +663,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool? CanDamage() => Projectile.ai[2] >= 10 && Projectile.ai[2] <= 20;
 		public override void AI() {
 			base.AI();
-			if (Projectile.numUpdates == -1 && Projectile.ai[2] > 0 && Projectile.ai[2].Warmup(30, SpeedModifier)) {
+			if (Projectile.numUpdates == -1 && Projectile.ai[2] > 0 && (Projectile.ai[2] += SpeedModifier) >= 30) {
 				Projectile.ai[2] = 0;
 				Projectile.ResetLocalNPCHitImmunity();
+				targetData = default;
 			}
 		}
 		public override void DoMaskBehavior() {
@@ -650,9 +695,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Rectangle hitbox = Projectile.Hitbox;
 				ModifyDamageHitbox(ref hitbox);
 				if (Projectile.Hitbox.Intersects(targetRect)) {
-					SoundEngine.PlaySound(SoundID.Item130.WithPitch(-0.2f), Projectile.Center);
-					SoundEngine.PlaySound(SoundID.Item90.WithPitch(1f), Projectile.Center);
-					SoundEngine.PlaySound(SoundID.Item84.WithPitch(1f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item130.WithPitch(-0.2f).WithVolumeScale(0.75f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item90.WithPitch(1f).WithVolumeScale(0.75f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item84.WithPitch(1f).WithVolumeScale(0.75f), Projectile.Center);
 					speed = 0;
 					Projectile.ai[2] = 1;
 					Projectile.velocity *= 0.5f;
@@ -662,7 +707,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				default:
 				case TargetType.Slot:
 				if (Projectile.Hitbox.Intersects(targetRect)) {
-					if (Projectile.Center.WithinRange(targetPos, 16)) Projectile.ai[1] = -1;
+					Projectile.ai[1] = -1;
 				}
 				break;
 			}

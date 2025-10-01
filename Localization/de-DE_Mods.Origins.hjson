@@ -2429,6 +2429,15 @@ Configs: {
 			// Tooltip: Whether there should be a comma for final terms in narrative, description[fool:Configs.OriginClientConfig.OxfordComma.Comma] and dialogue lists.
 			// Comma: "[ox:,]"
 		}
+
+		DisableCoolVisualEffects: {
+			// Label: Disable Performance-Intensive Visual Effects
+			/* Tooltip:
+				'''
+				Certain visual effects associated with the Shimmer Construct, its loot[ox:,] and the Fiberglass Undergrowth biome may cause severe lag on low-end hardware
+				Enable this to disable and/or replace them
+				''' */
+		}
 	}
 
 	OriginConfig: {

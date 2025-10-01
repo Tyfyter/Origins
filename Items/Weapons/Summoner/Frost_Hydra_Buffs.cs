@@ -257,7 +257,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.friendly = true;
 			Projectile.alpha = 255;
 			Projectile.extraUpdates = 1;
-			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
 		}

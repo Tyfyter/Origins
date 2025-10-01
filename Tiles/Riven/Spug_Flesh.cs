@@ -127,11 +127,11 @@ namespace Origins.Tiles.Riven {
 			Tile above = Framing.GetTileSafely(i, j - 1);
 			if (!above.HasTile && tile.BlockType == BlockType.Solid) {
 				if (WorldGen.genRand.NextBool(250)) {
-					above.ResetToType((ushort)ModContent.TileType<Acetabularia>());
+					above.SetToType((ushort)ModContent.TileType<Acetabularia>(), Main.tile[i, j].TileColor);
 				} else if (WorldGen.genRand.NextBool(10) && TileExtenstions.CanActuallyPlace(i, j - 1, WorldGen.genRand.NextBool(3) ? TileType<Marrowick_Coral>() : TileType<Riven_Large_Foliage>(), 0, 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
 					TileObject.Place(objectData);
 				} else {
-					above.ResetToType((ushort)ModContent.TileType<Riven_Foliage>());
+					above.SetToType((ushort)ModContent.TileType<Riven_Foliage>(), Main.tile[i, j].TileColor);
 				}
 				WorldGen.TileFrame(i, j - 1);
 			}

@@ -14,7 +14,7 @@ namespace Origins.Backgrounds {
 		public override void Activate(Vector2 position, params object[] args) { }
 		public override void Deactivate(params object[] args) { }
 		public override void Draw(SpriteBatch spriteBatch) {
-			if (!Lighting.NotRetro) return;
+			if (OriginClientConfig.Instance.DisableCoolVisualEffects) return;
 			if (Fiberglass_Wall.BackgroundMaskTarget is not null) {
 				Color drawColor = Color.White * Opacity;
 				Texture2D farTexture = TextureAssets.Background[BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Fiberglass_Background3")].Value;

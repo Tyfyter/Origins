@@ -277,9 +277,6 @@ namespace Origins.World {
 				if (maxY > Main.maxTilesY - 1) {
 					maxY = Main.maxTilesY - 1;
 				}
-#if DEBUG
-				//Main.tile[(int)pos.X, (int)pos.Y].wall = WallID.AmberGemspark;
-#endif
 				for (int l = minX; l < maxX; l++) {
 					for (int k = minY; k < maxY; k++) {
 						if ((Math.Pow(Math.Abs(l - pos.X), 2) + Math.Pow(Math.Abs(k - pos.Y), 2)) > strength) {//if (!((Math.Abs(l - pos.X) + Math.Abs(k - pos.Y)) < strength)) {
@@ -309,9 +306,6 @@ namespace Origins.World {
 					speed = speed.RotatedBy(WorldGen.genRand.NextFloat(-twist, twist));
 				}
 			}
-#if DEBUG
-			//Main.tile[(int)pos.X, (int)pos.Y].wall = WallID.EmeraldGemspark;
-#endif
 			WorldGen.RangeFrame(X0, Y0, X1, Y1);
 			NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
 			return (pos, speed);
@@ -348,9 +342,6 @@ namespace Origins.World {
 				if (maxY > Main.maxTilesY - 1) {
 					maxY = Main.maxTilesY - 1;
 				}
-#if DEBUG
-				//Main.tile[(int)pos.X, (int)pos.Y].wall = WallID.AmberGemspark;
-#endif
 				for (int l = minX; l < maxX; l++) {
 					for (int k = minY; k < maxY; k++) {
 						double dist = (Math.Pow(Math.Abs(l - pos.X), 2) + Math.Pow(Math.Abs(k - pos.Y), 2));
@@ -391,9 +382,6 @@ namespace Origins.World {
 					speed = randomtwist ? speed.RotatedBy(WorldGen.genRand.NextFloat(-twist, twist)) : speed.RotatedBy(twist);
 				}
 			}
-#if DEBUG
-			//Main.tile[(int)pos.X, (int)pos.Y].wall = WallID.EmeraldGemspark;
-#endif
 			if (X0 < 1) {
 				X0 = 1;
 			}
