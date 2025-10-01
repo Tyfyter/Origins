@@ -372,6 +372,32 @@ NPC DIALOGUE:
 ---
 
 
+ACHIEVEMENTS:
+|---
+(X) A Different Game
+(X) A True Hero
+(X) An Eye for an Eye
+(X) Auto-Immune Disease
+(X) Cheat Code
+(X) Cloning Factory
+(X) Cracked
+(X) Enough Yap
+(X) Going Places
+(X) It Was Watching
+(X) Kaiju
+(X) Killimanjaro
+(X) Martyrdom
+(X) Now You're the One Lying Broken
+(X) Peat Obsession
+(X) RIVEN WORMS
+(X) Slow Loading Bar
+(X) The Signal, it's Calling
+(X) 'Till Death Mildew Us Part
+(X) Whismical!
+(X) Whole Blend Evil
+---
+
+
 ARMOR:
 |---
 (^) Aether Armor
@@ -410,6 +436,7 @@ ARMOR:
 (X) Mimic Armor
 (^) Necromancer Armor
 (^) Sapphire Mediator Armor
+(X) Scrapburner Armor
 (X) Warlord Armor
 
 (X) Ancient Chromtain Armor
