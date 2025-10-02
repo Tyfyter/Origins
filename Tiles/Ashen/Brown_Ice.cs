@@ -1,5 +1,4 @@
-﻿using Origins.Tiles.Defiled;
-using Origins.World.BiomeData;
+﻿using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -8,7 +7,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Brown_Ice : OriginTile {
-		public override string Texture => typeof(Defiled_Ice).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.Ices[Type] = true;
@@ -21,7 +19,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMerge[Type] = Main.tileMerge[TileID.IceBlock];
 			Main.tileMerge[Type][TileID.IceBlock] = true;
 			Main.tileBlockLight[Type] = true;
-			AddMapEntry(new Color(255, 225, 225));
+			AddMapEntry(new Color(146, 101, 70));
 			mergeID = TileID.IceBlock;
 			DustType = Ashen_Biome.DefaultTileDust;
 			HitSound = SoundID.Item50;
@@ -31,7 +29,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Brown_Ice_Item : ModItem {
-		public override string Texture => typeof(Defiled_Ice_Item).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.IceBlock, Type);
