@@ -1161,12 +1161,12 @@ TILES:
 (^) Bleeding Obsidian
 (^) Bomb Trap
 (^) Brittle Quartz
-(☻ (on sprites and map color)) Brown Ice !!!
+(@, ^3) Brown Ice !!!
 (X) Busted Block
 (^) Calcified Spug Flesh
 (X) Cancer Block
 (@4, ^3) Carburite
-(X) Catwalk !!!
+(#, ^2) Catwalk !!!
 (^) Chambersite
 (^) Chambersite Gemspark
 (^) Chambersite Gemstone
