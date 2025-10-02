@@ -4,6 +4,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Tiles.Ashen {
 	public class Catwalk : Platform_Tile, ISpecialFrameTile {
@@ -44,42 +45,30 @@ namespace Origins.Tiles.Ashen {
 			Tile tile9 = Main.tile[i + 1, j - 1];
 			int left = -1;
 			int right = -1;
-			if (leftTile != null && leftTile.HasTile) {
+			if (leftTile != null && leftTile.HasTile) 
 				left = (Main.tileStone[leftTile.TileType] ? 1 : ((!TileID.Sets.Platforms[leftTile.TileType]) ? leftTile.TileType : Type));
-			}
-			if (rightTile != null && rightTile.HasTile) {
+			if (rightTile != null && rightTile.HasTile) 
 				right = (Main.tileStone[rightTile.TileType] ? 1 : ((!TileID.Sets.Platforms[rightTile.TileType]) ? rightTile.TileType : Type));
-			}
-			if (right >= 0 && !Main.tileSolid[right]) {
+			if (right >= 0 && !Main.tileSolid[right]) 
 				right = -1;
-			}
-			if (left >= 0 && !Main.tileSolid[left]) {
+			if (left >= 0 && !Main.tileSolid[left]) 
 				left = -1;
-			}
-			if (left == Type && leftTile.IsHalfBlock != tile.IsHalfBlock) {
+			if (left == Type && leftTile.IsHalfBlock != tile.IsHalfBlock) 
 				left = -1;
-			}
-			if (right == Type && rightTile.IsHalfBlock != tile.IsHalfBlock) {
+			if (right == Type && rightTile.IsHalfBlock != tile.IsHalfBlock) 
 				right = -1;
-			}
-			if (left != -1 && left != Type && tile.IsHalfBlock) {
+			if (left != -1 && left != Type && tile.IsHalfBlock) 
 				left = -1;
-			}
-			if (right != -1 && right != Type && tile.IsHalfBlock) {
+			if (right != -1 && right != Type && tile.IsHalfBlock) 
 				right = -1;
-			}
-			if (left == -1 && tile8.HasTile && tile8.TileType == Type && tile8.Slope == SlopeType.SlopeDownLeft) {
+			if (left == -1 && tile8.HasTile && tile8.TileType == Type && tile8.Slope == SlopeType.SlopeDownLeft) 
 				left = Type;
-			}
-			if (right == -1 && tile9.HasTile && tile9.TileType == Type && tile9.Slope == SlopeType.SlopeDownRight) {
+			if (right == -1 && tile9.HasTile && tile9.TileType == Type && tile9.Slope == SlopeType.SlopeDownRight) 
 				right = Type;
-			}
-			if (left == Type && leftTile.Slope == SlopeType.SlopeDownRight && right != Type) {
+			if (left == Type && leftTile.Slope == SlopeType.SlopeDownRight && right != Type) 
 				right = -1;
-			}
-			if (right == Type && rightTile.Slope == SlopeType.SlopeDownLeft && left != Type) {
+			if (right == Type && rightTile.Slope == SlopeType.SlopeDownLeft && left != Type) 
 				left = -1;
-			}
 			if (tile.Slope == SlopeType.SlopeDownLeft) {
 				if (TileID.Sets.Platforms[rightTile.TileType] && rightTile.Slope == 0 && !rightTile.IsHalfBlock) {
 					platformFrame = 468;
@@ -256,11 +245,11 @@ namespace Origins.Tiles.Ashen {
 			int railingFrame = tile.Get<ExtraFrameData>().value;
 			switch (railingFrame) {
 				case 3:
-				if (!Main.tile[i - 1, j - 2].HasFullSolidTile()) railingFrame = 1;
+				if (!Main.tile[i - 1, j - 2].HasFullSolidTile()) railingFrame = 2;
 				break;
 
 				case 4:
-				if (!Main.tile[i + 1, j - 2].HasFullSolidTile()) railingFrame = 2;
+				if (!Main.tile[i + 1, j - 2].HasFullSolidTile()) railingFrame = 1;
 				break;
 			}
 			Rectangle topFrame = new(railingFrame * 18, 4 * 18, 16, 16);
@@ -288,6 +277,10 @@ namespace Origins.Tiles.Ashen {
 			);
 			return base.PreDraw(i, j, spriteBatch);
 		}
+	}
+	[Autoload(false)]
+	public class Broken_Catwalk_Item(ModTile tile) : TileItem(tile) {
+		public override string Name => GetType().Name;
 	}
 	public struct ExtraFrameData : ITileData {
 		public byte value;

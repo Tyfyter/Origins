@@ -6921,3 +6921,8 @@ Catwalk_Item: {
 	DisplayName: Catwalk
 	Tooltip: ""
 }
+
+Broken_Catwalk_Item: {
+	DisplayName: Broken Catwalk Item
+	Tooltip: ""
+}
