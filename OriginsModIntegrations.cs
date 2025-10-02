@@ -39,6 +39,7 @@ using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.Tiles;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
@@ -53,14 +54,11 @@ using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.UI;
 using ThoriumMod;
 using ThoriumMod.Items;
-using ThoriumMod.Items.BasicAccessories;
 using ThoriumMod.Items.Darksteel;
 using ThoriumMod.Items.Donate;
 using ThoriumMod.Items.MeleeItems;
@@ -538,6 +536,7 @@ namespace Origins {
 				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Crimstone>());
 				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Defiled_Stone>());
 				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Riven_Flesh>());
+				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Tainted_Stone>());
 
 				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Conehead_Zombie>());
 				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Graveshield_Zombie>());
@@ -592,6 +591,7 @@ namespace Origins {
 			if (ModLoader.TryGetMod("EpikV2", out instance.epikV2)) {
 				EpikV2.Call("AddModEvilBiome", GetInstance<Defiled_Wastelands>());
 				EpikV2.Call("AddModEvilBiome", GetInstance<Riven_Hive>());
+				EpikV2.Call("AddModEvilBiome", GetInstance<Ashen_Biome>());
 				/*EpikV2.Call("AddBiomeKey",
 					ItemType<Defiled_Biome_Keybrand>(),
 					ItemType<Defiled_Key>(),
@@ -894,6 +894,12 @@ namespace Origins {
 			.AddTile(TileID.Anvils)
 			.Register();
 
+			Recipe.Create(ItemType<Ashen_Dungeon_Chest_Item>(), 10)
+			.AddIngredient<Ashen_Key>()
+			.AddIngredient(ItemID.Chest, 10)
+			.AddTile(TileID.Anvils)
+			.Register();
+
 			Recipe.Create(ItemType<Brine_Dungeon_Chest_Item>(), 10)
 			.AddIngredient<Brine_Key>()
 			.AddIngredient(ItemID.Chest, 10)
@@ -935,6 +941,12 @@ namespace Origins {
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosRecipes() {
 			#region Keys
+			/*Recipe.Create(ItemType<Ashen_Key>())
+				.AddRecipeGroup("Origins:AnyAshenBanner", 10)
+				.AddCondition(Condition.Hardmode)
+				.AddTile(TileID.Solidifier)
+				.DisableDecraft()
+				.Register();*/
 			Recipe.Create(ItemType<Brine_Key>())
 			   .AddRecipeGroup("Origins:AnyBrineBanner", 10)
 			   .AddCondition(Condition.Hardmode)
@@ -954,6 +966,12 @@ namespace Origins {
 				.DisableDecraft()
 				.Register();
 
+			Recipe.Create(ItemType<Ashen_Torch>()) // temp result until the actual ashen dungeon weapon is made
+				.AddIngredient(ItemType<Ashen_Key>())
+				.AddCondition(Condition.DownedPlantera)
+				.AddTile(TileID.MythrilAnvil)
+				.DisableDecraft()
+				.Register();
 			Recipe.Create(ItemType<The_Foot>())
 				.AddIngredient(ItemType<Brine_Key>())
 				.AddCondition(Condition.DownedPlantera)
@@ -1066,6 +1084,15 @@ namespace Origins {
 		static void AddFargosGroups() {
 			static int GetBanner(int npc) => Item.NPCtoBanner(npc);
 			List<int> brine = [];
+			List<int> ashen = [];
+			int[] ashenBiomes = {
+				GetInstance<Ashen_Biome>().Type,
+				GetInstance<Underground_Ashen_Biome>().Type,
+				GetInstance<Ashen_Desert>().Type,
+				GetInstance<Ashen_Underground_Desert>().Type,
+				GetInstance<Ashen_Ice_Biome>().Type,
+				GetInstance<Ashen_Ocean>().Type
+			};
 			List<int> defiled = [];
 			int[] defiledBiomes = {
 				GetInstance<Defiled_Wastelands>().Type,
@@ -1093,6 +1120,8 @@ namespace Origins {
 				if (npc?.ModNPC is not null) {
 					if (npc.ModNPC.SpawnModBiomes.Contains(GetInstance<Brine_Pool>().Type) && GetBanner(i) > 0 && !brine.Contains(Item.BannerToItem(GetBanner(i))))
 						brine.Add(Item.BannerToItem(GetBanner(i)));
+					if (npc.ModNPC.SpawnModBiomes.Contains(ashenBiomes) && GetBanner(i) > 0 && !bannedBanners.Contains(GetBanner(i)) && !ashen.Contains(Item.BannerToItem(GetBanner(i))))
+						ashen.Add(Item.BannerToItem(GetBanner(i)));
 					if (npc.ModNPC.SpawnModBiomes.Contains(defiledBiomes) && GetBanner(i) > 0 && !bannedBanners.Contains(GetBanner(i)) && !defiled.Contains(Item.BannerToItem(GetBanner(i))))
 						defiled.Add(Item.BannerToItem(GetBanner(i)));
 					if (npc.ModNPC.SpawnModBiomes.Contains(rivenBiomes) && GetBanner(i) > 0 && !bannedBanners.Contains(GetBanner(i)) && !riven.Contains(Item.BannerToItem(GetBanner(i))))
@@ -1101,6 +1130,7 @@ namespace Origins {
 			}
 
 			RecipeGroup.RegisterGroup("Origins:AnyBrineBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Brine_Pool.DisplayName")), [.. brine]));
+			RecipeGroup.RegisterGroup("Origins:AnyAshenBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Ashen_Biome.DisplayName")), [.. ashen]));
 			RecipeGroup.RegisterGroup("Origins:AnyDefiledBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Defiled_Wastelands.DisplayName")), [.. defiled]));
 			RecipeGroup.RegisterGroup("Origins:AnyRivenBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Riven_Hive.DisplayName")), [.. riven]));
 		}

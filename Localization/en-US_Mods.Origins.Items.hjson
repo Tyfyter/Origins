@@ -6911,3 +6911,8 @@ Suspicious_Trash_Compactor: {
 	Tooltip: ""
 	DisplayName: Suspicious Trash Compactor
 }
+
+Distress_Beacon: {
+	DisplayName: Distress Beacon
+	Tooltip: ""
+}
