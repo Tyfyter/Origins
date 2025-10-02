@@ -1161,7 +1161,7 @@ TILES:
 (^) Bleeding Obsidian
 (^) Bomb Trap
 (^) Brittle Quartz
-(@, ^3) Brown Ice !!!
+(☻ (on sprites and map color)) Brown Ice !!!
 (X) Busted Block
 (^) Calcified Spug Flesh
 (X) Cancer Block
