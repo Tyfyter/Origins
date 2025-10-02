@@ -7,7 +7,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Ashen {
+	[ReinitializeDuringResizeArrays]
 	public class Catwalk : Platform_Tile, ISpecialFrameTile {
+		public static bool[] Catwalks = TileID.Sets.Factory.CreateBoolSet();
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				/*Recipe.Create(item.type, 2)
@@ -20,11 +22,16 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			Catwalks[Type] = true;
 			DustType = DustID.Lihzahrd;
 		}
 		// For some reason this runs after tile framing for platforms
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			Main.tileSolid[Broken_Catwalk.ID] = true;
+			Main.tileSolidTop[Broken_Catwalk.ID] = true;
 			UpdatePlatformFrame(i, j);
+			Main.tileSolid[Broken_Catwalk.ID] = false;
+			Main.tileSolidTop[Broken_Catwalk.ID] = false;
 			if (Main.tile[i, j].TileFrameX == 0) UpdateRailingFrame(i, j);
 			OriginSystem.QueueSpecialTileFrames(i, j);
 			return false;
@@ -137,7 +144,8 @@ namespace Origins.Tiles.Ashen {
 				WorldGen.TileFrame(i, j + 1);
 			}
 		}
-		public void UpdateRailingFrame(int i, int j) {
+		public static void UpdateRailingFrame(int i, int j) {
+			static bool IsCatwalk(Tile tile) => tile.HasTile && Catwalks[tile.TileType];
 			Tile tile = Main.tile[i, j];
 			ref byte railingFrame = ref tile.Get<ExtraFrameData>().value;
 			byte oldRailingFrame = railingFrame;
@@ -178,7 +186,7 @@ namespace Origins.Tiles.Ashen {
 					int k;
 					for (k = 1; k <= max_connection_dist; k++) {
 						Tile left = Main.tile[i - k, j];
-						if (!left.TileIsType(Type)) {
+						if (!IsCatwalk(left)) {
 							if (k == 1) {
 								left = Main.tile[i - k, j - 1];
 								if (left.TileFrameX == 10 * 18) {
@@ -192,7 +200,7 @@ namespace Origins.Tiles.Ashen {
 						}
 						if (left.Get<ExtraFrameData>().value == 0) break;
 						Tile right = Main.tile[i + k, j];
-						if (!right.TileIsType(Type)) {
+						if (!IsCatwalk(right)) {
 							if (k == 1) {
 								left = Main.tile[i + k, j - 1];
 								if (left.TileFrameX == 8 * 18) {
@@ -217,20 +225,16 @@ namespace Origins.Tiles.Ashen {
 				for (k = 1; k < max_connection_dist; k++) {
 					Tile left = Main.tile[i - k, j];
 					byte l = left.Get<ExtraFrameData>().value;
-					if (!left.TileIsType(Type) || l != 6) break;
+					if (!IsCatwalk(left) || l != 6) break;
 				}
-				if (k >= max_connection_dist && Main.tile[i - k, j].TileColor == PaintID.None) {
-					Tile right = Main.tile[i - k, j];
-					//right.TileColor = PaintID.TealPaint;
+				if (k >= max_connection_dist) {
 					OriginSystem.QueueSpecialTileFrames(i - k, j);
 				}
 				for (k = 1; k < max_connection_dist; k++) {
 					Tile right = Main.tile[i + k, j];
-					if (!right.TileIsType(Type) || right.Get<ExtraFrameData>().value != 6) break;
+					if (!IsCatwalk(right) || right.Get<ExtraFrameData>().value != 6) break;
 				}
-				if (k >= max_connection_dist && Main.tile[i + k, j].TileColor == PaintID.None) {
-					Tile right = Main.tile[i + k, j];
-					//right.TileColor = PaintID.TealPaint;
+				if (k >= max_connection_dist) {
 					OriginSystem.QueueSpecialTileFrames(i + k, j);
 				}
 			}
@@ -280,13 +284,20 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Broken_Catwalk : Catwalk {
 		public override string Texture => typeof(Catwalk).GetDefaultTMLName();
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			Main.tileSolidTop[Type] = false;
 			Main.tileSolid[Type] = false;
+			Main.tileSolidTop[Type] = false;
+			ID = Type;
+			Main.OnPreDraw += Main_OnPreDraw;
+		}
+		static void Main_OnPreDraw(GameTime obj) {
+			Main.tileSolid[ID] = true;
+			Main.tileSolidTop[ID] = true;
 		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
-			drawData.tileFrameY += 18;
+			drawData.tileCache.TileFrameY = 18;
 		}
 	}
 	public struct ExtraFrameData : ITileData {

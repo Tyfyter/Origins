@@ -648,6 +648,8 @@ namespace Origins {
 					originPlayer.oldNearbyActiveNPCs = player.nearbyActiveNPCs;
 				}
 			}
+			Main.tileSolid[Broken_Catwalk.ID] = false;
+			Main.tileSolidTop[Broken_Catwalk.ID] = false;
 		}
 		bool hasLoggedPUP = false;
 		public int laserTagActiveTeams = 0;
