@@ -1162,6 +1162,7 @@ TILES:
 (^) Bomb Trap
 (^) Brittle Quartz
 (@, ^3) Brown Ice !!!
+(X) Busted Block
 (^) Calcified Spug Flesh
 (X) Cancer Block
 (@4, ^3) Carburite
@@ -1232,6 +1233,7 @@ TILES:
 (^) Baryte Wall
 (^) Batholith Wall
 (^) Brittle Quartz Wall
+(X) Busted Block Wall
 (^) Calcified Spug Flesh Wall
 (^) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
@@ -1266,6 +1268,7 @@ TILES:
 (^) Bile Torch
 (^) Brine Water Fountain
 (@, ^3) Bug Cage (using temp sprites)
+(X) Busted Furniture
 (X) Cancer Furniture
 (^) Chambersite Bunny Cage
 (^) Chambersite Squirrel Cage
