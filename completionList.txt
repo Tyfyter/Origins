@@ -1223,7 +1223,7 @@ TILES:
 (X) Tainted Stone !!!
 (@, ^3) Tainted Stone Brick
 (X) Truss Block !!!
-(X) Type-I Fortified Steel Block !!!
+(#, ^2) Type-I Fortified Steel Block !!!
 (X) Type-II Fortified Steel Block !!!
 (X) Type-III Fortified Steel Block !!!
 (@, ^3) Witherwood !!!
@@ -1267,7 +1267,7 @@ TILES:
 (@, ^3) Ashen Torch !!!
 (^) Bile Torch
 (^) Brine Water Fountain
-(@, ^3) Bug Cage (using temp sprites)
+(@, ^3) Bug Cage
 (X) Busted Furniture
 (X) Cancer Furniture
 (^) Chambersite Bunny Cage
@@ -1275,7 +1275,6 @@ TILES:
 (^) Cicada 3301 Cage
 (^) Defiled Torch
 (^) Defiled Water Fountain
-(X) Edenwood Furniture
 (^) Endowood Furniture
 (X) Hyrax Cage !!!
 (^) Limestone Furniture
@@ -1349,7 +1348,7 @@ TILES:
 (X) Exoskeletal Baobab Tree
 (^) Exoskeletal Tree
 (X) Floodlight !!!
-(ᗢ) Fungarust
+(#2, ^2) Fungarust !!!
 (^) Fuzzvine
 (^) Gel Blister
 (X) Generation Station !!!
@@ -1369,7 +1368,7 @@ TILES:
 (^) Soulspore
 (X) Steel Support Beam !!!
 (X) Suit Locker !!!
-(ᗢ) Surveysprout
+(#2, ^2) Surveysprout !!!
 (^) Tangela Bramble
 (^) Underwater Vine
 (^) Venus Coral
