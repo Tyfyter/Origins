@@ -278,9 +278,16 @@ namespace Origins.Tiles.Ashen {
 			return base.PreDraw(i, j, spriteBatch);
 		}
 	}
-	[Autoload(false)]
-	public class Broken_Catwalk_Item(ModTile tile) : TileItem(tile) {
-		public override string Name => GetType().Name;
+	public class Broken_Catwalk : Catwalk {
+		public override string Texture => typeof(Catwalk).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			Main.tileSolidTop[Type] = false;
+			Main.tileSolid[Type] = false;
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			drawData.tileFrameY += 18;
+		}
 	}
 	public struct ExtraFrameData : ITileData {
 		public byte value;
