@@ -462,6 +462,7 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
+	[LegacyName("Respyrite")]
 	public class Phoenum : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 9);
 		public override int Rare => ItemRarityID.Orange;

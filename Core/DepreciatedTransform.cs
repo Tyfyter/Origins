@@ -10,10 +10,7 @@ using Terraria.ModLoader.IO;
 namespace Origins.Core {
 	internal class DepreciatedTransform : ILoadable {
 		public static Dictionary<string, string> conversions = new() {
-			["Origins/Dusk_Stone_Item"] = nameof(ItemID.AshBlock),
-			// changed internal name bc it'd bug me having some stuff use the old internal name for the item and others use the new name
-			["Origins/Respyrite"] = nameof(Phoenum),
-			["Origins/Broken_Record"] = nameof(Distress_Beacon)
+			["Origins/Dusk_Stone_Item"] = nameof(ItemID.AshBlock)
 		};
 		public static int[] Set { get; } = ItemID.Sets.Factory.CreateIntSet(-1);
 		public void Load(Mod mod) {
