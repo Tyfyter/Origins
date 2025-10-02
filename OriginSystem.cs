@@ -670,9 +670,14 @@ namespace Origins {
 			}
 		}
 		static Stack<Point> QueuedTileFrames { get; } = new();
+		static Stack<Point> queuedSpecialTileFrames = new();
+		static Stack<Point> workingQueuedSpecialTileFrames = new();
 		static bool isFramingQueuedTiles = false;
 		public static void QueueTileFrames(int i, int j) {
 			if (!isFramingQueuedTiles) QueuedTileFrames.Push(new(i, j));
+		}
+		public static void QueueSpecialTileFrames(int i, int j) {
+			workingQueuedSpecialTileFrames.Push(new(i, j));
 		}
 		public override void PostUpdatePlayers() {
 			try {
@@ -680,6 +685,12 @@ namespace Origins {
 				while (QueuedTileFrames.TryPop(out Point pos)) WorldGen.TileFrame(pos.X, pos.Y);
 			} finally {
 				isFramingQueuedTiles = false;
+			}
+			Utils.Swap(ref queuedSpecialTileFrames, ref workingQueuedSpecialTileFrames);
+			if (queuedSpecialTileFrames.Count > 10000) queuedSpecialTileFrames.Clear();
+			while (queuedSpecialTileFrames.TryPop(out Point pos)) {
+				if (TileLoader.GetTile(Main.tile[pos].TileType) is not ISpecialFrameTile specialTile) continue;
+				specialTile.SpecialFrame(pos.X, pos.Y);
 			}
 		}
 		public override void PreUpdateNPCs() {

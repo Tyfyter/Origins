@@ -814,6 +814,9 @@ namespace Origins {
 	public interface IMinions {
 		public List<int> BossMinions { get; }
 	}
+	public interface ISpecialFrameTile {
+		public void SpecialFrame(int i, int j);
+	}
 	public static class Elements {
 		public const ushort Fire = 1;
 		public const ushort Earth = 2;

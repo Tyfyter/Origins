@@ -229,6 +229,6 @@ namespace Origins.Walls {
 		}
 	}
 	public struct TemporaryWallData : ITileData {
-		public int value;
+		public ushort value;
 	}
 }

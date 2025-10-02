@@ -6916,3 +6916,8 @@ Distress_Beacon: {
 	// DisplayName: Distress Beacon
 	// Tooltip: ""
 }
+
+Catwalk_Item: {
+	// DisplayName: Catwalk
+	// Tooltip: ""
+}
