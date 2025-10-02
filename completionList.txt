@@ -256,7 +256,6 @@ ENEMY NPCS:
 (^) Amoebeye
 (^) Amoebic Mummy
 (^) Amoeba Bugger
-(@, #2) Trash Compactor Mimic
 (^) Barnacle Mound
 (X) Beckonbug
 (^) Brine Latcher
@@ -299,6 +298,7 @@ ENEMY NPCS:
 (X) Tendon Terror
 (X) Terrogator
 (^) Torn Ghoul
+(X) Trash Compactor Mimic
 (^) Trijaw Shark
 (X) VV-13
 
@@ -1218,8 +1218,9 @@ TILES:
 (@, ^3) Sootgrass !!!
 (X) Space Goo
 (^) Spug Flesh
-(@, ^3) Spug Brick
-(@, ^3) Tainted Stone !!!
+(@, ^3) Spug Flesh Brick
+(X) Tainted Stone !!!
+(@, ^3) Tainted Stone Brick
 (X) Truss Block !!!
 (X) Type-I Fortified Steel Block !!!
 (X) Type-II Fortified Steel Block !!!
@@ -1255,14 +1256,13 @@ TILES:
 (^) Quartz Wall
 (^) Riven Grass Wall
 (@, ^3) Soot Sandstone Wall !!!
-(X) Sootsand Wall !!! (vanilla sand types don't have regular sand walls so why?)
 (^) Spug Flesh Wall
 (@, ^3) Spug Brick Wall
 (X) Type-III Fortified Steel Wall !!!
 
 (^) Alkahest Torch
-(@, ^3) Ashen Torch !!!
 (^) Amoeba Buggy Cage
+(@, ^3) Ashen Torch !!!
 (^) Bile Torch
 (^) Brine Water Fountain
 (@, ^3) Bug Cage (using temp sprites)
