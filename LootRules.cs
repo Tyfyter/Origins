@@ -93,20 +93,6 @@ namespace Origins.LootConditions {
 			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Ashen"));
 		}
 	}
-	public class Dawn_Key_Condition : IItemDropRuleCondition {
-#if false
-		public bool CanDrop(DropAttemptInfo info) {
-			return false && info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>(); //Dawn
-		}
-		public bool CanShowItemDropInUI() => Main.hardMode;
-#else
-		public bool CanDrop(DropAttemptInfo info) => false;
-		public bool CanShowItemDropInUI() => false;
-#endif
-		public string GetConditionDescription() {
-			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Mods.Origins.Generic.Defiled_Wastelands"));
-		}
-    }
     public class Defiled_Key_Condition : IItemDropRuleCondition {
 		public bool CanDrop(DropAttemptInfo info) {
 			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>();
@@ -115,20 +101,6 @@ namespace Origins.LootConditions {
 		public string GetConditionDescription() {
 			if (OriginsModIntegrations.CheckAprilFools()) return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKeyNoThe").Format(Language.GetOrRegister("Defiled_Wastelands"));
 			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Defiled_Wastelands"));
-		}
-	}
-	public class Dusk_Key_Condition : IItemDropRuleCondition {
-#if false
-		public bool CanDrop(DropAttemptInfo info) {
-			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Dusk>();
-		}
-		public bool CanShowItemDropInUI() => Main.hardMode;
-#else
-		public bool CanDrop(DropAttemptInfo info) => false;
-		public bool CanShowItemDropInUI() => false;
-#endif
-		public string GetConditionDescription() {
-			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Mods.Origins.Generic.Dusk"));
 		}
 	}
 	public class Hell_Key_Condition : IItemDropRuleCondition {

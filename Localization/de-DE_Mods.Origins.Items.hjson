@@ -1635,7 +1635,7 @@ Qube: {
 	// Tooltip: "'Physical information, like everything else in the world'"
 }
 
-Respyrite: {
+Phoenum: {
 	// DisplayName: Phoenum
 	// Tooltip: "'A molten willpower'"
 }
@@ -1719,7 +1719,7 @@ Clubs_Ace: {
 }
 
 Broken_Record: {
-	// DisplayName: Broken Record
+	// DisplayName: Distress Signal
 	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
@@ -5724,12 +5724,12 @@ RivenSupremeRenewal: {
 
 AshenRenewal: {
 	// DisplayName: Ashen Renewal
-	// Tooltip: Ashs a large radius
+	// Tooltip: Pollutes a large radius
 }
 
 AshenSupremeRenewal: {
 	// DisplayName: Ashen Renewal Supreme
-	// Tooltip: Ashs the entire world
+	// Tooltip: Pollutes the entire world
 }
 
 Power_Lotus: {
@@ -6685,4 +6685,234 @@ Willy_Aftershave: {
 Chambersite_Ring: {
 	// DisplayName: Chambersite Ring
 	// Tooltip: Increases explosive damage by {0}
+}
+
+Tainted_Stone_Wall_Item: {
+	// Tooltip: ""
+	// DisplayName: Tainted Stone Wall
+}
+
+Soot_Sandstone_Wall_Item: {
+	// Tooltip: ""
+	// DisplayName: Soot Sandstone Wall
+}
+
+Hardened_Sootsand_Wall_Item: {
+	// Tooltip: ""
+	// DisplayName: Hardened Sootsand Wall
+}
+
+Ashen_Grass_Wall_Placed_Unsafe_Item: {
+	// Tooltip: ""
+	// DisplayName: Infested Ashen Grass Wall
+}
+
+Ashen_Grass_Wall_Safe_Item: {
+	// Tooltip: ""
+	// DisplayName: Ashen Grass Wall
+}
+
+Witherwood_Chest_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Chest
+}
+
+Witherwood_Bed_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Bed
+}
+
+Witherwood_Dresser_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Dresser
+}
+
+Witherwood_Work_Bench_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Work Bench
+}
+
+Witherwood_Table_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Table
+}
+
+Witherwood_Piano_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Piano
+}
+
+Witherwood_Bookcase_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Bookcase
+}
+
+Witherwood_Lantern_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Lantern
+}
+
+Witherwood_Lamp_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Lamp
+}
+
+Witherwood_Chandelier_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Chandelier
+}
+
+Witherwood_Candelabra_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Candelabra
+}
+
+Witherwood_Candle_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Candle
+}
+
+Witherwood_Sink_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Sink
+}
+
+Witherwood_Bathtub_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Bathtub
+}
+
+Witherwood_Sofa_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Sofa
+}
+
+Witherwood_Toilet_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Toilet
+}
+
+Witherwood_Chair_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Chair
+}
+
+Witherwood_Grandfather_Clock_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Grandfather Clock
+}
+
+Witherwood_Door_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Door
+}
+
+Witherwood_Platform_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood Platform
+}
+
+Sanguinite_Brick_Item: {
+	// Tooltip: ""
+	// DisplayName: Sanguinite Brick
+}
+
+Witherwood_Item: {
+	// Tooltip: ""
+	// DisplayName: Witherwood
+}
+
+Tainted_Stone_Item: {
+	// Tooltip: ""
+	// DisplayName: Tainted Stone
+}
+
+Sootsand_Item: {
+	// Tooltip: ""
+	// DisplayName: Sootsand
+}
+
+Soot_Sandstone_Item: {
+	// Tooltip: ""
+	// DisplayName: Soot Sandstone
+}
+
+Phoenum_Torch: {
+	// Tooltip: ""
+	// DisplayName: Phoenum Torch
+}
+
+Locked_Ashen_Dungeon_Chest_Item: {
+	// Tooltip: ""
+	// DisplayName: Ashen Dungeon Chest (Locked)
+}
+
+Hardened_Sootsand_Item: {
+	// Tooltip: ""
+	// DisplayName: Hardened Sootsand
+}
+
+Brown_Ice_Item: {
+	// Tooltip: ""
+	// DisplayName: Brown Ice
+}
+
+Ashen_Torch: {
+	// Tooltip: ""
+	// DisplayName: Ashen Torch
+}
+
+Ashen_Pot_Item: {
+	// Tooltip: ""
+	// DisplayName: Ashen Pot (Debugging Item)
+}
+
+Ashen_Grass_Seeds: {
+	// Tooltip: ""
+	// DisplayName: Ashen Grass Seeds
+}
+
+Ashen_Dungeon_Chest_Item: {
+	// Tooltip: ""
+	// DisplayName: Ashen Dungeon Chest
+}
+
+Ashen_Campfire_Item: {
+	// Tooltip: ""
+	// DisplayName: Ashen Campfire
+}
+
+Ashen_Altar_Item: {
+	// Tooltip: ""
+	// DisplayName: Ashen Altar (Debugging Item)
+}
+
+Orange_Solution: {
+	// DisplayName: Orange Solution
+	// Tooltip: Spreads the Ashen
+}
+
+Scrapfish: {
+	// Tooltip: ""
+	// DisplayName: Scrapfish
+}
+
+Peppered_Moth_Item: {
+	// Tooltip: ""
+	// DisplayName: Peppered Moth
+}
+
+Ashen_Key: {
+	// DisplayName: Ashen Key
+	// Tooltip: Unlocks a Ashen Chest in the Dungeon
+}
+
+Suspicious_Trash_Compactor: {
+	// Tooltip: ""
+	// DisplayName: Suspicious Trash Compactor
+}
+
+Distress_Beacon: {
+	// DisplayName: Distress Beacon
+	// Tooltip: ""
 }

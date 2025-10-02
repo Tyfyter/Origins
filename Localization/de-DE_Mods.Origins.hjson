@@ -28,11 +28,10 @@ Conditions: {
 	// DownedScrapper: After defeating the Scrapper
 	// DownedDefiledMimic: After defeating a {§Defiled} Mimic, In hardmode
 	// DownedRivenMimic: After defeating a {§Riven} Mimic, In hardmode
-	// DownedAshenMimic: After defeating an Ashen Mimic, In hardmode
+	// DownedTrashCompactorMimic: After defeating an Trash Compactor Mimic, In hardmode
 	// DownedShimmerConstruct: After defeating the Shimmer Construct
 	// DownedChambersiteSentinel: After defeating a Chambersite Sentinel
 	// HarpoonCondition: When the player has a Harpoon Gun in their inventory
-	// DownedTrashCompactorMimic: Mods.Origins.Conditions.DownedTrashCompactorMimic
 }
 
 ModMenu: {
@@ -474,9 +473,9 @@ AltBiomes: {
 	}
 
 	Ashen_Alt_Biome: {
-		// DisplayName: Ashen Factory
-		// Description: Ashen Alt Biome
-		// GenPassName: Ashen Alt Biome
+		// DisplayName: Ashen
+		// Description: The Mechanicus Supremety Ashen is guaranteed to be present in your world.
+		// GenPassName: Polluting
 		// DryadTextDescriptor: ashen
 	}
 }
@@ -1979,7 +1978,7 @@ Projectiles: {
 	// Astral_Scythe_Slash.DisplayName: Astral Scythe Slash
 	// Dream_Catcher_Shard.DisplayName: Dream Catcher Shard
 	// Dream_Catcher_Vine.DisplayName: Dream Catcher Vine
-	// Dream_Catcher_P.DisplayName: Dream Catcher P
+	// Dream_Catcher_P.DisplayName: Dream Catcher
 	// Terratotem_Tab.DisplayName: Terratotem Tab
 	// Terratotem_Mask_Small.DisplayName: Terratotem Mask Small
 	// Terratotem_Mask_Big.DisplayName: Terratotem Mask Big
@@ -1990,9 +1989,9 @@ Projectiles: {
 	// Broken_Terratotem_Mask_Small.DisplayName: Broken Terratotem Mask Small
 	// Broken_Terratotem_Tab.DisplayName: Broken Terratotem Tab
 	// Astral_Scythe_Star.DisplayName: Astral Scythe Star
-	// Sootsand_Ball_Gun.DisplayName: Sootsand Ball Gun
-	// Sootsand_Ball_Falling.DisplayName: Sootsand Ball Falling
-	// Orange_Solution_P.DisplayName: Orange Solution P
+	// Sootsand_Ball_Gun.DisplayName: Sootsand Ball
+	// Sootsand_Ball_Falling.DisplayName: Sootsand Ball
+	// Orange_Solution_P.DisplayName: Orange Solution
 }
 
 Prefixes: {
@@ -2127,9 +2126,9 @@ Biomes: {
 		}
 	}
 
-	AshenBiomeData: {
-		// DisplayName: Ashen Biome
-		// TownNPCDialogueName: the Ashen Biome
+	Ashen_Biome: {
+		// DisplayName: Ashen
+		// TownNPCDialogueName: the Ashen
 	}
 
 	Defiled_Wastelands_Desert: {
@@ -2178,33 +2177,28 @@ Biomes: {
 	}
 
 	Underground_Ashen_Biome: {
-		// TownNPCDialogueName: the Underground_ Ashen_ Biome
+		// TownNPCDialogueName: the Underground Ashen Biome
 		// DisplayName: Underground Ashen Biome
 	}
 
 	Ashen_Underground_Desert: {
-		// TownNPCDialogueName: the Ashen_ Underground_ Desert
+		// TownNPCDialogueName: the Ashen Underground Desert
 		// DisplayName: Ashen Underground Desert
 	}
 
 	Ashen_Ocean: {
-		// TownNPCDialogueName: the Ashen_ Ocean
+		// TownNPCDialogueName: the Ashen Ocean
 		// DisplayName: Ashen Ocean
 	}
 
 	Ashen_Ice_Biome: {
-		// TownNPCDialogueName: the Ashen_ Ice_ Biome
+		// TownNPCDialogueName: the Ashen Ice Biome
 		// DisplayName: Ashen Ice Biome
 	}
 
 	Ashen_Desert: {
-		// TownNPCDialogueName: the Ashen_ Desert
+		// TownNPCDialogueName: the Ashen Desert
 		// DisplayName: Ashen Desert
-	}
-
-	Ashen_Biome: {
-		// TownNPCDialogueName: the Ashen_ Biome
-		// DisplayName: Ashen Biome
 	}
 }
 
