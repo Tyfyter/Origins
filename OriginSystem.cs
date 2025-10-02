@@ -35,6 +35,7 @@ using static Origins.OriginsSets.Items;
 using Terraria.Graphics;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Terraria.DataStructures;
+using Origins.Tiles.Ashen;
 
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
@@ -371,12 +372,17 @@ namespace Origins {
 				}
 			}
 			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Sand],
+				ModContent.ItemType<Hardened_Defiled_Sand_Item>(),
 				ModContent.ItemType<Defiled_Sand_Item>(),
-				ModContent.ItemType<Silica_Item>()
+				ModContent.ItemType<Brittle_Quartz_Item>(),
+				ModContent.ItemType<Silica_Item>(),
+				ModContent.ItemType<Hardened_Sootsand_Item>(),
+				ModContent.ItemType<Sootsand_Item>()
 			);
 			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Wood],
 				ModContent.ItemType<Endowood_Item>(),
-				ModContent.ItemType<Marrowick_Item>()
+				ModContent.ItemType<Marrowick_Item>(),
+				ModContent.ItemType<Witherwood_Item>()
 			);
 			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Fruit],
 				ModContent.ItemType<Bileberry>(),
