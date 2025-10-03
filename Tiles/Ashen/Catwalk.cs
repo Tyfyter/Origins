@@ -41,6 +41,12 @@ namespace Origins.Tiles.Ashen {
 			UpdateRailingFrame(i, j);
 		}
 		public void UpdatePlatformFrame(int i, int j) {
+			static bool CanConnect(Tile left, Tile right) {
+				if (left.IsHalfBlock == right.IsHalfBlock) return true;
+				if (left.IsHalfBlock && right.Slope == SlopeType.SlopeDownRight) return true;
+				if (right.IsHalfBlock && left.Slope == SlopeType.SlopeDownLeft) return true;
+				return false;
+			}
 			Tile tile = Main.tile[i, j];
 			ref short platformFrame = ref tile.TileFrameX;
 			platformFrame = 0;
@@ -52,29 +58,29 @@ namespace Origins.Tiles.Ashen {
 			Tile tile9 = Main.tile[i + 1, j - 1];
 			int left = -1;
 			int right = -1;
-			if (leftTile != null && leftTile.HasTile) 
+			if (leftTile != null && leftTile.HasTile)
 				left = (Main.tileStone[leftTile.TileType] ? 1 : ((!TileID.Sets.Platforms[leftTile.TileType]) ? leftTile.TileType : Type));
-			if (rightTile != null && rightTile.HasTile) 
+			if (rightTile != null && rightTile.HasTile)
 				right = (Main.tileStone[rightTile.TileType] ? 1 : ((!TileID.Sets.Platforms[rightTile.TileType]) ? rightTile.TileType : Type));
-			if (right >= 0 && !Main.tileSolid[right]) 
+			if (right >= 0 && !Main.tileSolid[right])
 				right = -1;
-			if (left >= 0 && !Main.tileSolid[left]) 
+			if (left >= 0 && !Main.tileSolid[left])
 				left = -1;
-			if (left == Type && leftTile.IsHalfBlock != tile.IsHalfBlock) 
+			if (left == Type && !CanConnect(leftTile, tile))
 				left = -1;
-			if (right == Type && rightTile.IsHalfBlock != tile.IsHalfBlock) 
+			if (right == Type && !CanConnect(tile, rightTile))
 				right = -1;
-			if (left != -1 && left != Type && tile.IsHalfBlock) 
+			if (left != -1 && left != Type && tile.IsHalfBlock)
 				left = -1;
-			if (right != -1 && right != Type && tile.IsHalfBlock) 
+			if (right != -1 && right != Type && tile.IsHalfBlock)
 				right = -1;
-			if (left == -1 && tile8.HasTile && tile8.TileType == Type && tile8.Slope == SlopeType.SlopeDownLeft) 
+			if (left == -1 && tile8.HasTile && tile8.TileType == Type && tile8.Slope == SlopeType.SlopeDownLeft)
 				left = Type;
-			if (right == -1 && tile9.HasTile && tile9.TileType == Type && tile9.Slope == SlopeType.SlopeDownRight) 
+			if (right == -1 && tile9.HasTile && tile9.TileType == Type && tile9.Slope == SlopeType.SlopeDownRight)
 				right = Type;
-			if (left == Type && leftTile.Slope == SlopeType.SlopeDownRight && right != Type) 
+			if (left == Type && leftTile.Slope == SlopeType.SlopeDownRight && right != Type)
 				right = -1;
-			if (right == Type && rightTile.Slope == SlopeType.SlopeDownLeft && left != Type) 
+			if (right == Type && rightTile.Slope == SlopeType.SlopeDownLeft && left != Type)
 				left = -1;
 			if (tile.Slope == SlopeType.SlopeDownLeft) {
 				if (TileID.Sets.Platforms[rightTile.TileType] && rightTile.Slope == 0 && !rightTile.IsHalfBlock) {
@@ -82,6 +88,8 @@ namespace Origins.Tiles.Ashen {
 				} else if (!tile7.HasTile && (!TileID.Sets.Platforms[tile7.TileType] || tile7.Slope == SlopeType.SlopeDownRight)) {
 					if (!leftTile.HasTile && (!TileID.Sets.Platforms[tile8.TileType] || tile8.Slope != SlopeType.SlopeDownLeft)) {
 						platformFrame = 432;
+					} else if (rightTile.HasTile && Catwalks[right] && rightTile.BlockType is BlockType.HalfBlock or BlockType.SlopeDownRight) {
+						platformFrame = 504;
 					} else {
 						platformFrame = 360;
 					}
@@ -96,6 +104,8 @@ namespace Origins.Tiles.Ashen {
 				} else if (!tile6.HasTile && (!TileID.Sets.Platforms[tile6.TileType] || tile6.Slope == SlopeType.SlopeDownLeft)) {
 					if (!rightTile.HasTile && (!TileID.Sets.Platforms[tile9.TileType] || tile9.Slope != SlopeType.SlopeDownRight)) {
 						platformFrame = 414;
+					} else if (leftTile.HasTile && Catwalks[left] && leftTile.BlockType is BlockType.HalfBlock or BlockType.SlopeDownLeft) {
+						platformFrame = 486;
 					} else {
 						platformFrame = 342;
 					}
@@ -173,12 +183,14 @@ namespace Origins.Tiles.Ashen {
 				case 21:
 				case 23:
 				case 25:
+				case 27:
 				railingFrame = 8;
 				break;
 				case 20:
 				case 22:
 				case 24:
 				case 26:
+				case 28:
 				railingFrame = 10;
 				break;
 
@@ -246,6 +258,7 @@ namespace Origins.Tiles.Ashen {
 				pos.X += Main.offScreenRange;
 				pos.Y += Main.offScreenRange;
 			}
+			if (tile.IsHalfBlock) pos.Y += 16;
 			int railingFrame = tile.Get<ExtraFrameData>().value;
 			switch (railingFrame) {
 				case 3:
@@ -261,7 +274,7 @@ namespace Origins.Tiles.Ashen {
 				case 8:
 				case 10:
 				pos.Y += 6;
-				if (tile.TileFrameX > 24 * 18) break;
+				if (tile.TileFrameX > 24 * 18 && tile.TileFrameX < 27 * 18) break;
 				topFrame.Y -= 18;
 				break;
 			}
