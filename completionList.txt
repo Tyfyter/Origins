@@ -1250,7 +1250,7 @@ TILES:
 (^) Endowood Wall
 (^) Fiberglass Wall
 (^) Hardened Defiled Sand Wall
-(#4) Hardened Sootsand Wall !!!
+(#4?) Hardened Sootsand Wall !!!
 (@, ^3) Lost Brick Wall
 (^) Marrowick Wall
 (X) Molten Steel Wall !!!
@@ -1348,7 +1348,7 @@ TILES:
 (X) Exoskeletal Baobab Tree
 (^) Exoskeletal Tree
 (X) Floodlight !!!
-(#2, ^2) Fungarust !!!
+(☻) Fungarust !!!
 (^) Fuzzvine
 (^) Gel Blister
 (X) Generation Station !!!
@@ -1368,7 +1368,7 @@ TILES:
 (^) Soulspore
 (X) Steel Support Beam !!!
 (X) Suit Locker !!!
-(#2, ^2) Surveysprout !!!
+(#2?, ^2) Surveysprout !!!
 (^) Tangela Bramble
 (^) Underwater Vine
 (^) Venus Coral

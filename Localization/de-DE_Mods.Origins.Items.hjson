@@ -6933,3 +6933,18 @@ Surveysprout_Planter_Box_Item: {
 	// DisplayName: Surveysprout Planter Box Item
 	// Tooltip: ""
 }
+
+Fortified_Steel_Block1_Item: {
+	// DisplayName: Type-I Fortified Steel Block
+	// Tooltip: ""
+}
+
+Fortified_Steel_Block2_Item: {
+	// DisplayName: Type-II Fortified Steel Block
+	// Tooltip: ""
+}
+
+Fortified_Steel_Block3_Item: {
+	// DisplayName: Type-III Fortified Steel Block
+	// Tooltip: ""
+}

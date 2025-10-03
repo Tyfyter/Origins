@@ -305,6 +305,9 @@ namespace Origins.Tiles.Ashen {
 			ID = Type;
 			Main.OnPreDraw += Main_OnPreDraw;
 		}
+		public override void Unload() {
+			Main.OnPreDraw -= Main_OnPreDraw;
+		}
 		static void Main_OnPreDraw(GameTime obj) {
 			Main.tileSolid[ID] = true;
 			Main.tileSolidTop[ID] = true;

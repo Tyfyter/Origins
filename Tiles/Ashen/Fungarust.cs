@@ -18,6 +18,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileObsidianKill[Type] = true;
 			Main.tileCut[Type] = true;
 			Main.tileNoFail[Type] = true;
+			Main.tileLighted[Type] = true;
 			TileID.Sets.ReplaceTileBreakUp[Type] = true;
 			TileID.Sets.IgnoredInHouseScore[Type] = true;
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
@@ -52,6 +53,11 @@ namespace Origins.Tiles.Ashen {
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Main.tile[i, j].TileFrameX = (short)(18 * (i % 3));
 			return true;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			r = 0.2f;
+			g = 0.1f;
+			b = 0f;
 		}
 	}
 	public class Fungarust_Item : MaterialItem {

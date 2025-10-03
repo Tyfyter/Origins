@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Fortified_Steel_Block : OriginTile, IAshenTile {
+	public class Fortified_Steel_Block1 : OriginTile, IAshenTile {
 		public string[] Categories => [
             "Stone"
         ];
@@ -17,33 +17,27 @@ namespace Origins.Tiles.Ashen {
 			Origins.PileType.Add(Type, ((ushort)TileType<Ashen_Foliage>(), 0, 6));
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			Main.tileMergeDirt[Type] = true;
-			TileID.Sets.Stone[Type] = true;
-			TileID.Sets.Conversion.Stone[Type] = true;
+			Main.tileMergeDirt[Type] = false;
+			TileID.Sets.Stone[Type] = false;
+			TileID.Sets.Conversion.Stone[Type] = false;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;/*
-			Main.tileMergeDirt[Type] = true;
-			Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
-			Main.tileMerge[Type][TileID.Stone] = true;
-			for (int i = 0; i < TileLoader.TileCount; i++) {
-				Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
-			}*/
+			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			AddMapEntry(new Color(255, 200, 200));
-			//mergeID = TileID.Stone;
+
 			MinPick = 65;
 			MineResist = 2;
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
 	}
-	public class Fortified_Steel_Block2 : Fortified_Steel_Block {
+	public class Fortified_Steel_Block2 : Fortified_Steel_Block1 {
 		public override string Texture => base.Texture.Replace("2", "1");
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			MinPick = 100;
 		}
 	}
-	public class Fortified_Steel_Block3 : Fortified_Steel_Block {
+	public class Fortified_Steel_Block3 : Fortified_Steel_Block1 {
 		public override string Texture => base.Texture.Replace("3", "1");
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -57,7 +51,7 @@ namespace Origins.Tiles.Ashen {
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
 		}
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block>());
+			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block1>());
 		}
 		public LocalizedText PageTextMain => WikiPageExporter.GetDefaultMainPageText(this)
 			.WithFormatArgs(MinePower,
