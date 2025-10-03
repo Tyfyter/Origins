@@ -1130,7 +1130,7 @@ namespace Origins {
 			}
 
 			RecipeGroup.RegisterGroup("Origins:AnyBrineBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Brine_Pool.DisplayName")), [.. brine]));
-			RecipeGroup.RegisterGroup("Origins:AnyAshenBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Ashen_Biome.DisplayName")), [.. ashen]));
+			//RecipeGroup.RegisterGroup("Origins:AnyAshenBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Ashen_Biome.DisplayName")), [.. ashen]));
 			RecipeGroup.RegisterGroup("Origins:AnyDefiledBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Defiled_Wastelands.DisplayName")), [.. defiled]));
 			RecipeGroup.RegisterGroup("Origins:AnyRivenBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Riven_Hive.DisplayName")), [.. riven]));
 		}

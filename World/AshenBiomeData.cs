@@ -84,7 +84,7 @@ namespace Origins.World.BiomeData {
 		}
 		public const int NeededTiles = 200;
 		public const int ShaderTileCount = 25;
-		public const short DefaultTileDust = DustID.BlueMoss;
+		public const short DefaultTileDust = DustID.Lihzahrd;
 		public class SpawnRates : SpawnPool {/*
 			public const float AmebSlime = 0.65f;
 			public const float Fighter = 1;

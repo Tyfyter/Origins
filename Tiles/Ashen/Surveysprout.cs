@@ -1,21 +1,28 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
 using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
-using Origins.Tiles.Riven;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Surveysprout : OriginTile, IAshenTile {
+	public class Surveysprout : OriginTile, IGlowingModTile {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
-        public string[] Categories => [
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public Color GlowColor => Color.OrangeRed;
+		public string[] Categories => [
             "Plant"
         ];
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() {
+			if (!Main.dedServ) {
+				GlowTexture = Request<Texture2D>(Texture + "_Glow");
+			}
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
 			Main.tileCut[Type] = true;
@@ -30,10 +37,11 @@ namespace Origins.Tiles.Ashen {
 			AddMapEntry(new Color(128, 128, 128), name);
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
-			/*TileObjectData.newTile.AnchorValidTiles = new int[] {
-				TileType<Sootgrass>(),
-				TileType<Compact_Scrap>()
-			};*/
+			TileObjectData.newTile.AnchorValidTiles = [
+				TileType<Ashen_Grass>(),
+				TileType<Ashen_Jungle_Grass>(),
+				TileType<Tainted_Stone>()
+			];
 			TileObjectData.newTile.AnchorAlternateTiles = [
 				TileID.ClayPot,
 				TileID.PlanterBox
@@ -44,7 +52,7 @@ namespace Origins.Tiles.Ashen {
 			DustType = DustID.Ash;
 		}
 
-		/*public override bool CanPlace(int i, int j) {
+		public override bool CanPlace(int i, int j) {
 			Tile tile = Framing.GetTileSafely(i, j); // Safe way of getting a tile instance
 
 			if (tile.HasTile) {
@@ -95,10 +103,10 @@ namespace Origins.Tiles.Ashen {
 			Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
 			Player nearestPlayer = Main.player[Player.FindClosest(worldPosition, 16, 16)];
 
-			int herbItemType = ItemType<Wilting_Rose_Item>();
+			int herbItemType = ItemType<Surveysprout_Item>();
 			int herbItemStack = 1;
 
-			int seedItemType = 27;//ModContent.ItemType<ExampleHerbSeeds>();
+			int seedItemType = ItemType<Surveysprout_Seeds>();
 			int seedItemStack = 1;
 
 			if (nearestPlayer.active && nearestPlayer.HeldItem.type == ItemID.StaffofRegrowth) {
@@ -128,13 +136,12 @@ namespace Origins.Tiles.Ashen {
 		}
 
 		public override void RandomUpdate(int i, int j) {
-			Tile tile = Framing.GetTileSafely(i, j);
 			int stage = GetStage(i, j);
 
 			// Only grow to the next stage if there is a next stage. We don't want our tile turning pink!
 			if (stage < 2) {
 				// Increase the x frame to change the stage
-				tile.TileFrameX += FrameWidth;
+				Framing.GetTileSafely(i, j).TileFrameX += FrameWidth;
 
 				// If in multiplayer, sync the frame change
 				if (Main.netMode != NetmodeID.SinglePlayer) {
@@ -148,10 +155,18 @@ namespace Origins.Tiles.Ashen {
 			Tile tile = Framing.GetTileSafely(i, j);
 			return tile.TileFrameX / FrameWidth;
 		}
-	}*/
 	}
 	public class Surveysprout_Item : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 20);
 		public override bool Hardmode => false;
+	}
+	public class Surveysprout_Seeds : MaterialItem {
+		public override string Texture => typeof(Wilting_Rose_Seeds).GetDefaultTMLName();
+		public override int Value => Item.sellPrice(copper: 16);
+		public override bool Hardmode => false;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Item.DefaultToPlaceableTile(TileType<Surveysprout>());
+		}
 	}
 }

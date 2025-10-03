@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Ashen {
-	public class Ashen_Grass : OriginTile {
+	public class Ashen_Grass : OriginTile, IAshenTile {
 		public override string Texture => typeof(Defiled_Grass).GetDefaultTMLName();
         public string[] Categories => [
             "Grass"

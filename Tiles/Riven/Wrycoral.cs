@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
 using Origins.World.BiomeData;
 using System;
@@ -98,7 +97,7 @@ namespace Origins.Tiles.Riven {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(ModContent.TileType<Hanging_Wrycoral>());
+			Item.DefaultToPlaceableTile(TileType<Hanging_Wrycoral>());
 			Item.maxStack = Item.CommonMaxStack;
 			Item.width = 12;
 			Item.height = 14;

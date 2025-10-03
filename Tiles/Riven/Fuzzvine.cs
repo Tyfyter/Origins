@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Riven {
-	public class Fuzzvine : OriginTile {
+	public class Fuzzvine : OriginTile, IRivenTile {
 		int[] AnchorTiles;
 		public override void SetStaticDefaults() {
 			AnchorTiles = [
@@ -99,7 +99,7 @@ namespace Origins.Tiles.Riven {
 			return false;
 		}
 	}
-	public class Fuzzvine_Lorg : OriginTile {
+	public class Fuzzvine_Lorg : OriginTile, IRivenTile {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;

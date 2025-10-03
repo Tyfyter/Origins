@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.NPCs.Critters;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Riven;
@@ -12,7 +11,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Defiled {
-	public class Defiled_Foliage : ModTile {
+	public class Defiled_Foliage : ModTile, IDefiledTile {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = true;

@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Tainted_Stone : OriginTile {
+	public class Tainted_Stone : OriginTile, IAshenTile {
 		public override string Texture => typeof(Defiled_Stone).GetDefaultTMLName();
 		public string[] Categories => [
             "Stone"

@@ -26,6 +26,8 @@ namespace Origins.Items.Materials {
 		public virtual int ResearchUnlockCount => 25;
 		public virtual int Rare => ItemRarityID.White;
 		public virtual int Value => 0;
+		public virtual int Width => 14;
+		public virtual int Height => 14;
 		bool? ICustomWikiStat.Hardmode => Hardmode;
 		public abstract bool Hardmode { get; }
 		protected short glowmask = -1;
@@ -39,8 +41,8 @@ namespace Origins.Items.Materials {
 			Item.rare = Rare;
 			Item.value = Value;
 			Item.maxStack = Item.CommonMaxStack;
-			Item.width = 14;
-			Item.height = 14;
+			Item.width = Width;
+			Item.height = Height;
 			Item.glowMask = glowmask;
 		}
 	}
@@ -219,9 +221,6 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.UnholyArrow, 5)
 			.AddIngredient(ItemID.WoodenArrow, 5)
@@ -247,7 +246,7 @@ namespace Origins.Items.Materials {
 		public override bool HasGlowmask => true;
 		public override int ResearchUnlockCount => 48;
 		public override int Rare => ItemRarityID.LightRed;
-		public override bool Hardmode => false;
+		public override bool Hardmode => true;
 		public override void AddRecipes() {
 			Recipe.Create(ModContent.ItemType<Bleeding_Obsidian_Item>())
 			.AddIngredient(this, 8)

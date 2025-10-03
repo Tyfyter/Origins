@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
-	public class Ashen_Foliage : ModTile {
+	public class Ashen_Foliage : ModTile, IAshenTile {
 		public override string Texture => typeof(Defiled_Foliage).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;

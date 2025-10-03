@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Soot_Sandstone : OriginTile, IDefiledTile {
+	public class Soot_Sandstone : OriginTile, IAshenTile {
 		public override string Texture => typeof(Defiled_Sandstone).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
