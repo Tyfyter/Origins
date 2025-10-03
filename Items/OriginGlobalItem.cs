@@ -7,6 +7,7 @@ using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.NPCs;
 using Origins.Questing;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
@@ -399,6 +400,24 @@ namespace Origins.Items {
 				}
 				case ItemID.OasisCrate: {// shares drop rules with hardmode version by reference, adding to either adds to both
 					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.AncientChisel, ModContent.ItemType<Desert_Crown>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
+					}
+					break;
+				}
+				case ItemID.HerbBag: {
+					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.Deathweed, ModContent.ItemType<Surveysprout_Item>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
+					}
+					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.Deathweed, ModContent.ItemType<Wilting_Rose_Item>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
+					}
+					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.Deathweed, ModContent.ItemType<Wrycoral_Item>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
+					}
+					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.DeathweedSeeds, ModContent.ItemType<Surveysprout_Seeds>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
+					}
+					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.DeathweedSeeds, ModContent.ItemType<Wilting_Rose_Seeds>())) {
 						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
 					}
 					break;
