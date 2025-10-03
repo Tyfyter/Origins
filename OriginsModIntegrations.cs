@@ -1060,6 +1060,19 @@ namespace Origins {
 			CrateRecipe(ItemType<Primordial_Soup>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
 			#endregion
 
+			Recipe.Create(ItemType<Surveysprout_Item>(), 5)
+			.AddIngredient(ItemID.HerbBag)
+			.AddTile(TileID.WorkBenches)
+			.Register();
+			Recipe.Create(ItemType<Wilting_Rose_Item>(), 5)
+			.AddIngredient(ItemID.HerbBag)
+			.AddTile(TileID.WorkBenches)
+			.Register();
+			Recipe.Create(ItemType<Wrycoral_Item>(), 5)
+			.AddIngredient(ItemID.HerbBag)
+			.AddTile(TileID.WorkBenches)
+			.Register();
+
 			SetFargosStaticDefaults();
 		}
 		[JITWhenModsEnabled("MagicStorage")]
