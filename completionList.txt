@@ -1322,7 +1322,7 @@ TILES:
 (^) Riven Dungeon Chest
 (X) Rusty Locker !!!
 (X) Small Storage Container !!!
-(X) Surveysprout Planter Box !!!
+(@, ^3) Surveysprout Planter Box !!!
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box
 (X) Wrycoral Planter Box
@@ -1368,7 +1368,7 @@ TILES:
 (^) Soulspore
 (X) Steel Support Beam !!!
 (X) Suit Locker !!!
-(#2?, ^2) Surveysprout !!!
+(☻) Surveysprout !!!
 (^) Tangela Bramble
 (^) Underwater Vine
 (^) Venus Coral
