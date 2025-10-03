@@ -1708,8 +1708,8 @@ Clubs_Ace: {
 		''' */
 }
 
-Distress_Signal: {
-	// DisplayName: Distress Signal
+Distress_Beacon: {
+	// DisplayName: Distress Beacon
 	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 

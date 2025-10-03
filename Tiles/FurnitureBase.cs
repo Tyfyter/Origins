@@ -19,6 +19,7 @@ namespace Origins.Tiles {
 		public abstract int BaseTileID { get; }
 		public abstract Color MapColor { get; }
 		public virtual bool LavaDeath => true;
+		public virtual string ItemTexture => string.Empty;
 		public TileItem Item { get; protected set; }
 		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public virtual Color GlowmaskColor => Color.White;
@@ -919,7 +920,7 @@ namespace Origins.Tiles {
 	public class TileItem(ModTile tile) : ModItem() {
 		readonly ModTile tile = tile;
 		public override string Name => tile.Name + "_Item";
-		public override string Texture => tile.Texture + "_Item";
+		public override string Texture => (tile is FurnitureBase furniture && !string.IsNullOrEmpty(furniture.ItemTexture)) ? furniture.ItemTexture : tile.Texture + "_Item";
 		public event Action<Item> ExtraDefaults;
 		public event Action<Item> OnAddRecipes;
 		protected override bool CloneNewInstances => true;

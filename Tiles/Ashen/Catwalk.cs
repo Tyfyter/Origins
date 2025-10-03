@@ -298,6 +298,7 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Broken_Catwalk : Catwalk {
 		public override string Texture => typeof(Catwalk).GetDefaultTMLName();
+		public override string ItemTexture => typeof(Broken_Catwalk).GetDefaultTMLName() + "_Item";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
