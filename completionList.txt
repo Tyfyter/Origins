@@ -1226,7 +1226,7 @@ TILES:
 (X) Truss Block !!!
 (^) Type-I Fortified Steel Block
 (X) Type-II Fortified Steel Block !!!
-(X) Type-III Fortified Steel Block !!!
+(@, ^3) Type-III Fortified Steel Block !!!
 (@, ^3) Witherwood !!!
 
 (^) Amebic Gel Wall
