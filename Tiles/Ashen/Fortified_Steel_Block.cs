@@ -1,5 +1,4 @@
 ﻿using Origins.Dev;
-using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
@@ -9,8 +8,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Tainted_Stone : OriginTile, IAshenTile {
-		public override string Texture => typeof(Defiled_Stone).GetDefaultTMLName();
+	public class Fortified_Steel_Block : OriginTile, IAshenTile {
 		public string[] Categories => [
             "Stone"
         ];
@@ -23,43 +21,62 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.Stone[Type] = true;
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;/*
 			Main.tileMergeDirt[Type] = true;
 			Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
 			Main.tileMerge[Type][TileID.Stone] = true;
 			for (int i = 0; i < TileLoader.TileCount; i++) {
 				Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
-			}
-			//ItemDrop = ItemType<Defiled_Stone_Item>();
+			}*/
 			AddMapEntry(new Color(255, 200, 200));
-			//SetModTree(Defiled_Tree.Instance);
-			mergeID = TileID.Stone;
+			//mergeID = TileID.Stone;
 			MinPick = 65;
 			MineResist = 2;
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
-		public override void RandomUpdate(int i, int j) {
-			Tile above = Framing.GetTileSafely(i, j - 1);
-			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid && Main.rand.NextBool(250)) {
-				above.SetToType((ushort)TileType<Fungarust>(), Main.tile[i, j].TileColor);
-				WorldGen.TileFrame(i, j - 1);
-			}
+	}
+	public class Fortified_Steel_Block2 : Fortified_Steel_Block {
+		public override string Texture => base.Texture.Replace("2", "1");
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			MinPick = 100;
 		}
 	}
-	public class Tainted_Stone_Item : ModItem, ICustomWikiStat {
-		public override string Texture => typeof(Defiled_Stone_Item).GetDefaultTMLName();
+	public class Fortified_Steel_Block3 : Fortified_Steel_Block {
+		public override string Texture => base.Texture.Replace("3", "1");
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			MinPick = 210;
+		}
+	}
+	public class Fortified_Steel_Block1_Item : ModItem, ICustomWikiStat {
+		public virtual int MinePower => 65;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
 		}
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(TileType<Tainted_Stone>());
+			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block>());
 		}
 		public LocalizedText PageTextMain => WikiPageExporter.GetDefaultMainPageText(this)
-			.WithFormatArgs(65,
+			.WithFormatArgs(MinePower,
 			Language.GetText("Mods.Origins.Generic.Ashen_Factory"),
 			"Stone"
 		);
+	}
+	public class Fortified_Steel_Block2_Item : Fortified_Steel_Block1_Item {
+		public override string Texture => base.Texture.Replace("2", "1");
+		public override int MinePower => 100;
+		public override void SetDefaults() {
+			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block2>());
+		}
+	}
+	public class Fortified_Steel_Block3_Item : Fortified_Steel_Block1_Item {
+		public override string Texture => base.Texture.Replace("3", "1");
+		public override int MinePower => 210;
+		public override void SetDefaults() {
+			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block2>());
+		}
 	}
 }
