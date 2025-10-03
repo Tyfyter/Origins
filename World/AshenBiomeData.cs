@@ -5,6 +5,7 @@ using AltLibrary.Core.Generation;
 using Origins.Backgrounds;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Other.Fish;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;
@@ -32,6 +33,7 @@ using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
 using static Terraria.WorldGen;
+using static Terraria.ModLoader.ModContent;
 
 namespace Origins.World.BiomeData {
 	public class Ashen_Biome : ModBiome {
@@ -787,6 +789,19 @@ namespace Origins.World.BiomeData {
 			}
 
 			public override void PostGenerateEvil() { }
+		}
+		public class Ashen_Fishing_Pool : FishingLootPool<Ashen_Alt_Biome> {
+			public override void SetStaticDefaults() {
+				//AddCrates(ItemType<Crate>(), ItemType<Really_Crate>());
+				Legendary.Add(new SequentialCatches(
+					FishingCatch.Item(ItemID.ScalyTruffle, (player, attempt) => Main.hardMode && player.ZoneSnow && attempt.heightLevel == 3 && !Main.rand.NextBool(3))
+				));
+				Rare.Add(FishingCatch.Item(ItemType<Internal_Combustionfish>()));
+				Uncommon.Add(new SequentialCatches(
+					FishingCatch.QuestFish(ItemType<Scrapfish>()),
+					FishingCatch.Item(ItemType<Polyeel>())
+				));
+			}
 		}
 	}
 }
