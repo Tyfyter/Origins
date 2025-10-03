@@ -12,6 +12,7 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -405,19 +406,12 @@ namespace Origins.Items {
 					break;
 				}
 				case ItemID.HerbBag: {
-					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.Deathweed, ModContent.ItemType<Surveysprout_Item>())) {
-						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
-					}
-					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.Deathweed, ModContent.ItemType<Wilting_Rose_Item>())) {
-						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
-					}
-					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.Deathweed, ModContent.ItemType<Wrycoral_Item>())) {
-						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
-					}
-					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.DeathweedSeeds, ModContent.ItemType<Surveysprout_Seeds>())) {
-						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
-					}
-					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.DeathweedSeeds, ModContent.ItemType<Wilting_Rose_Seeds>())) {
+					if (dropRules.FindDropRule<HerbBagDropsItemDropRule>(_ => true) is HerbBagDropsItemDropRule rule) {
+						rule.dropIds = rule.dropIds.Concat([
+							ModContent.ItemType<Surveysprout_Item>(), ModContent.ItemType<Wilting_Rose_Item>(), ModContent.ItemType<Wrycoral_Item>(),
+							ModContent.ItemType<Surveysprout_Seeds>(), ModContent.ItemType<Wilting_Rose_Seeds>()
+						]).ToArray();
+					} else {
 						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
 					}
 					break;
