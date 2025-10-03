@@ -669,7 +669,7 @@ VANITY:
 (X) Seer Mask
 (^) Shimmer Construct Mask
 (X) Snowdrop Mask
-(#, ^2) Trenchmaker Mask
+(☻) Trenchmaker Mask
 (^) World Cracker Mask
 
 (X) Amebic Protector Set
@@ -1432,8 +1432,8 @@ TILES:
 (^) Shimmer Construct Trophy
 (X) SR-48 Relic
 (X) SR-48 Trophy
-(X) Trenchmaker Relic !!!
-(X) Trenchmaker Trophy !!!
+(@, ^3) Trenchmaker Relic !!!
+(@, ^3) Trenchmaker Trophy !!!
 (^) World Cracker Relic
 (^) World Cracker Trophy
 ---
@@ -1657,7 +1657,7 @@ CONSUMABLES:
 (^) Fiberglass Weaver Bag
 (^) Lost Diver Bag
 (^) Shimmer Construct Bag
-(X) Trenchmaker Bag !!!
+(@, #2) Trenchmaker Bag !!!
 (^) World Cracker Bag
 ---
 
