@@ -11,6 +11,7 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -399,6 +400,17 @@ namespace Origins.Items {
 				}
 				case ItemID.OasisCrate: {// shares drop rules with hardmode version by reference, adding to either adds to both
 					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.AncientChisel, ModContent.ItemType<Desert_Crown>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
+					}
+					break;
+				}
+				case ItemID.HerbBag: {
+					if (dropRules.FindDropRule<HerbBagDropsItemDropRule>(_ => true) is HerbBagDropsItemDropRule rule) {
+						rule.dropIds = rule.dropIds.Concat([
+							ModContent.ItemType<Wilting_Rose_Item>(), ModContent.ItemType<Wrycoral_Item>(),
+							ModContent.ItemType<Wilting_Rose_Seeds>()
+						]).ToArray();
+					} else {
 						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
 					}
 					break;
