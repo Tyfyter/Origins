@@ -4,19 +4,24 @@ using Terraria.ModLoader;
 using Terraria.ID;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Origins.UI {
 	public static class ForcedDialectCompatibility {
 		internal static bool[] forcedCompatibleNPCs;
 		public static void PostSetupContent() {
 			forcedCompatibleNPCs = NPCID.Sets.Factory.CreateBoolSet();
-			HashSet<int> forcedIncompatible = (OriginClientConfig.Instance.npcsNotToForceDialectOn ?? []).Where(def => def.IsUnloaded).Select(def => def.Type).ToHashSet();
+			HashSet<int> forcedIncompatible = (OriginClientConfig.Instance.npcsNotToForceDialectOn ?? []).Where(def => !def.IsUnloaded).Select(def => def.Type).ToHashSet();
 			for (int i = NPCID.Count; i < NPCLoader.NPCCount; i++) {
 				if (forcedIncompatible.Contains(i)) continue;
 				NPC npc = ContentSamples.NpcsByNetId[i];
-				if ((NPCLoader.CanChat(npc) ?? false) && !NPCID.Sets.IsTownPet[i] && !BetterDialogue.BetterDialogue.SupportedNPCs.Contains(i)) {
-					BetterDialogue.BetterDialogue.SupportedNPCs.Add(i);
-					forcedCompatibleNPCs[i] = true;
+				try {
+					if ((NPCLoader.CanChat(npc) ?? false) && !NPCID.Sets.IsTownPet[i] && !BetterDialogue.BetterDialogue.SupportedNPCs.Contains(i)) {
+						BetterDialogue.BetterDialogue.SupportedNPCs.Add(i);
+						forcedCompatibleNPCs[i] = true;
+					}
+				} catch (Exception e) {
+					Origins.instance.Logger.Error(e);
 				}
 			}
 		}
