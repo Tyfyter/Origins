@@ -6928,3 +6928,8 @@ Broken_Catwalk_Item: {
 }
 
 // Surveysprout_Seeds.DisplayName: Surveysprout Seeds
+
+Surveysprout_Planter_Box_Item: {
+	// DisplayName: Surveysprout Planter Box Item
+	// Tooltip: ""
+}
