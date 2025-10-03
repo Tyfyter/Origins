@@ -7,10 +7,7 @@ namespace Origins.Tiles.Defiled {
         public string[] Categories => [
             "PlanterBox"
         ];
+		public override int BaseTileID => TileID.PlanterBox;
 		public override Color MapColor => new(44, 39, 58);
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			AdjTiles = [TileID.PlanterBox];
-		}
 	}
 }

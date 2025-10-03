@@ -688,7 +688,7 @@ namespace Origins.Tiles {
 		}
 	}
 	public abstract class Platform_Tile : FurnitureBase {
-		public sealed override int BaseTileID => TileID.Platforms;
+		public override int BaseTileID => TileID.Platforms;
 		public override Color MapColor => new(190, 141, 110);
 		public override void SetStaticDefaults() {
 			// Properties
@@ -701,7 +701,8 @@ namespace Origins.Tiles {
 			Main.tileLavaDeath[Type] = true;
 			TileID.Sets.Platforms[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
-			AdjTiles = [TileID.Platforms];
+			TileID.Sets.CanBeSloped[Type] = BaseTileID == TileID.Platforms;
+			AdjTiles = [BaseTileID];
 
 			// Placement
 			TileObjectData.newTile.CoordinateHeights = [16];
