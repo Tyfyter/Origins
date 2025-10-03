@@ -701,6 +701,7 @@ VANITY:
 
 UTILITIES:
 |---
+(X) Adjust-o-Hook
 (^) Amoeba Hook
 (^) Chambersite Hook
 (^) Tangela Tether
@@ -1166,7 +1167,7 @@ TILES:
 (^) Calcified Spug Flesh
 (X) Cancer Block
 (@4, ^3) Carburite
-(#, ^2) Catwalk !!!
+(^) Catwalk
 (^) Chambersite
 (^) Chambersite Gemspark
 (^) Chambersite Gemstone
@@ -1223,7 +1224,7 @@ TILES:
 (X) Tainted Stone !!!
 (@, ^3) Tainted Stone Brick
 (X) Truss Block !!!
-(#, ^2) Type-I Fortified Steel Block !!!
+(^) Type-I Fortified Steel Block
 (X) Type-II Fortified Steel Block !!!
 (X) Type-III Fortified Steel Block !!!
 (@, ^3) Witherwood !!!
@@ -1690,6 +1691,7 @@ MOUNTS & PETS:
 (^) Ninja Ravel
 (^) Ravel
 (^) Spider Ravel
+(X) SS-22 'Star Soldier'
 (^) Stealth Ravel
 (X) Thrust Ravel
 (X) True Ravel
