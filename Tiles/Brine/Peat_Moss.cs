@@ -58,12 +58,38 @@ namespace Origins.Tiles.Brine {
 		public override int Rare => ItemRarityID.Green;
 		public override bool Hardmode => false;
 		public override bool HasTooltip => true;
+		public override void SetDefaults() {
+			Item.DefaultToFood(0, 0, ModContent.BuffType<Eat_Moss_Buff>(), 180);
+			base.SetDefaults();
+		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.ExplosivePowder)
 			.AddIngredient(this, 2)
 			.AddTile(TileID.GlassKiln)
 			.DisableDecraft()
 			.Register();
+		}
+		public override bool CanUseItem(Player player) => OriginsModIntegrations.CheckAprilFools();
+		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			for (int i = tooltips.Count - 1; i >= 0; i--) {
+				if (tooltips[i].Name.StartsWith("Buff")) tooltips.RemoveAt(i);
+				if (!OriginsModIntegrations.CheckAprilFools() && tooltips[i].Name.StartsWith("Consumable")) tooltips.RemoveAt(i);
+			}
+		}
+	}
+	public class Eat_Moss_Buff : ModBuff {
+		public override string Texture => typeof(Peat_Moss_Item).GetDefaultTMLName();
+		public override void Update(Player player, ref int buffIndex) {
+			if (player.buffTime[buffIndex] == 1) {
+				Projectile.NewProjectile(
+					player.GetSource_Buff(buffIndex),
+					player.MountedCenter,
+					Vector2.Zero,
+					ProjectileType<Peat_Moss_Tile_Explosion>(),
+					120 + (int)(60 * ContentExtensions.DifficultyDamageMultiplier),
+					4
+				);
+			}
 		}
 	}
 	public class Peat_Moss_Tile_Explosion : ExplosionProjectile {

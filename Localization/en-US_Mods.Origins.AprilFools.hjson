@@ -86,7 +86,12 @@ Items: {
 	}
 
 	Terlet_Paper.Tooltip: Summons a kawaii cta
-	Peat_Moss_Item.DisplayName: PETA Moss
+
+	Peat_Moss_Item: {
+		DisplayName: PETA Moss
+		Tooltip: Left click to eat moss
+	}
+
 	Astral_Scythe.Debuff: While the blade regenerates the scythe can only [italic:bonk]
 	AshenRenewal.Tooltip: Evicts local authorities from a large area
 	AshenSupremeRenewal.Tooltip: Evicts local authorities from the entire world

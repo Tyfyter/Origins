@@ -1349,6 +1349,11 @@ Buffs: {
 		DisplayName: Astral Scythe Cooldown
 		Description: Your scythe needs to rest.
 	}
+
+	Eat_Moss_Buff: {
+		DisplayName: Ate Moss
+		Description: That was a bad idea…
+	}
 }
 
 DamageClassName: {
