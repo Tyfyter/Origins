@@ -1,10 +1,13 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AltLibrary.Common.AltBiomes;
+using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.Reflection;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +16,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using static PegasusLib.FishingLootPool;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Items.Other.Fish {
@@ -46,58 +50,17 @@ namespace Origins.Items.Other.Fish {
 				((_, _) => 1, new ItemFishingLoot(ItemType<Tire>(), (_, _) => Main.rand.NextBool(4)))
 			), (_, attempt) => attempt.rolledItemDrop >= ItemID.OldShoe && attempt.rolledItemDrop <= ItemID.TinCan),
 
-			new ComboFishingLoot(
-		#region defiled
-				((player, _) => player.InModBiome<Defiled_Wastelands>() ? 1 : 0, new OrderedFishingLoot(
-					new LeadingConditionFishLoot(
-							new LeadingConditionFishLoot(
-								new OrderedFishingLoot(
-									new ItemFishingLoot(ItemType<Bilious_Crate>(), (_, _) => Main.hardMode),
-									new ItemFishingLoot(ItemType<Chunky_Crate>(), (_, _) => true)
-								),
-							(_, attempt) => attempt.rare && !(attempt.veryrare || attempt.legendary)),
-					(_, attempt) => attempt.crate),
-
-					new ItemFishingLoot(ItemType<Knee_Slapper>(), (_, attempt) => attempt.legendary && Main.hardMode && Main.rand.NextBool(2)),
-					new ItemFishingLoot(ItemType<Manasynk>(), (_, attempt) => attempt.rare),
-
-					new LeadingConditionFishLoot(
-						new OrderedFishingLoot(
-						new ItemFishingLoot(ItemType<Prikish>(), (_, attempt) => attempt.questFish == ItemType<Prikish>()),
-						new ItemFishingLoot(ItemType<Bilemouth>(), (_, _) => true)
-					), (_, attempt) => attempt.uncommon)
-				)),
-		#endregion defiled
-		#region riven
-				((player, _) => player.InModBiome<Riven_Hive>() ? 1 : 0, new OrderedFishingLoot(
-					new LeadingConditionFishLoot(
-							new LeadingConditionFishLoot(
-								new OrderedFishingLoot(
-									new ItemFishingLoot(ItemType<Festering_Crate>(), (_, _) => Main.hardMode),
-									new ItemFishingLoot(ItemType<Crusty_Crate>(), (_, _) => true)
-								),
-							(_, attempt) => attempt.rare && !(attempt.veryrare || attempt.legendary)),
-					(_, attempt) => attempt.crate),
-
-					new ItemFishingLoot(ItemType<Scabcoral_Lyre>(), (_, attempt) => attempt.legendary && Main.hardMode && Main.rand.NextBool(2)),
-					new ItemFishingLoot(ItemType<Ocotoral_Bud>(), (_, attempt) => attempt.rare),
-
-					new LeadingConditionFishLoot(
-						new OrderedFishingLoot(
-						new ItemFishingLoot(ItemType<Bonehead_Jellyfish>(), (_, attempt) => attempt.questFish == ItemType<Bonehead_Jellyfish>()),
-						new ItemFishingLoot(ItemType<Tearracuda>(), (_, _) => true)
-					), (_, attempt) => attempt.uncommon)
-				))
-		#endregion riven
-			),
-
 		#region jungle
 			new LeadingConditionFishLoot(
 				new ItemFishingLoot(ItemType<Messy_Leech>(), (player, attempt) => (attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary)) && Main.rand.NextBool(10)),
 			(player, _) => player.ZoneJungle)
 		#endregion jungle
 		);
-		public IEnumerable<int> ProvideItemObtainability() => Pool.ReportDrops();
+		public IEnumerable<int> ProvideItemObtainability() => Pool.ReportDrops()
+			.Concat(GetContent<FishingLootPool>().SelectMany(p => p.Crate.Concat(p.Legendary.Concat(p.VeryRare.Concat(p.Rare.Concat(p.Uncommon.Concat(p.Common))))).SelectMany(f => f.ReportDrops())));
+		public static void AddToVanillaPools() {
+			GetInstance<CrimsonAltBiome.CrimsonFishingPool>().Rare.Add(FishingCatch.Item(ItemType<Blotopus>()));
+		}
 		public void Load(Mod mod) { }
 		public void Unload() {
 			_pool = null;

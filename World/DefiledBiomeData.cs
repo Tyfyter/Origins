@@ -1,41 +1,44 @@
-﻿using System.Collections.Generic;
+﻿using AltLibrary;
+using AltLibrary.Common.AltBiomes;
+using AltLibrary.Common.Systems;
+using AltLibrary.Core;
+using AltLibrary.Core.Generation;
+using Origins.Backgrounds;
+using Origins.Items.Accessories;
+using Origins.Items.Materials;
+using Origins.Items.Other.Fish;
+using Origins.Items.Pets;
+using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
+using Origins.NPCs.Defiled;
+using Origins.NPCs.Defiled.Boss;
+using Origins.Projectiles.Misc;
+using Origins.Tiles;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
 using Origins.Walls;
+using PegasusLib;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ModLoader;
-using Terraria.WorldBuilding;
-using static Terraria.WorldGen;
-using System;
-using Terraria.ID;
-using Terraria.GameContent.Achievements;
-using Origins.Projectiles.Misc;
-using Origins.Items.Accessories;
-using Origins.Backgrounds;
-using Terraria.Graphics.Effects;
-using static Origins.OriginExtensions;
-using Terraria.GameContent.ItemDropRules;
-using Origins.Items.Pets;
-using AltLibrary.Common.AltBiomes;
-using Origins.NPCs.Defiled;
-using AltLibrary.Core.Generation;
-using Origins.Items.Materials;
-using Origins.Items.Weapons.Melee;
-using Origins.Items.Weapons.Magic;
-using Origins.Items.Weapons.Ranged;
-using Terraria.GameContent.Personalities;
-using Origins.Tiles;
-using AltLibrary.Common.Systems;
-using Origins.Tiles.Other;
-using AltLibrary;
-using Terraria.Localization;
-using AltLibrary.Core;
-using PegasusLib;
-using System.Linq;
 using Terraria.DataStructures;
-using System.Collections.ObjectModel;
-using Origins.NPCs.Defiled.Boss;
-using Origins.Items.Weapons.Summoner;
+using Terraria.GameContent.Achievements;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Personalities;
+using Terraria.Graphics.Effects;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.ModLoader.UI;
+using Terraria.WorldBuilding;
+using static Origins.OriginExtensions;
+using static Terraria.WorldGen;
+using static Terraria.ModLoader.ModContent;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -1013,6 +1016,20 @@ namespace Origins.World.BiomeData {
 					TileExtenstions.ForcePlace(heart.X, heart.Y, (ushort)ModContent.TileType<Defiled_Heart>(), 0, 1);
 					ModContent.GetInstance<Defiled_Heart_TE_System>().AddTileEntity(new(heart.X, heart.Y));
 				}
+			}
+		}
+		public class Defiled_Wastelands_Fishing_Pool : FishingLootPool<Defiled_Wastelands_Alt_Biome> {
+			public override void SetStaticDefaults() {
+				AddCrates(ItemType<Chunky_Crate>(), ItemType<Bilious_Crate>());
+				Legendary.Add(new SequentialCatches(
+					FishingCatch.Item(ItemID.ScalyTruffle, (player, attempt) => Main.hardMode && player.ZoneSnow && attempt.heightLevel == 3 && !Main.rand.NextBool(3)),
+					FishingCatch.Item(ItemType<Knee_Slapper>(), (player, attempt) => Main.hardMode && Main.rand.NextBool(2))
+				));
+				Rare.Add(FishingCatch.Item(ItemType<Manasynk>()));
+				Uncommon.Add(new SequentialCatches(
+					FishingCatch.QuestFish(ItemType<Prikish>()),
+					FishingCatch.Item(ItemType<Bilemouth>())
+				));
 			}
 		}
 	}

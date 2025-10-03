@@ -18,6 +18,7 @@ using Origins.Items.Armor.Bleeding;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Other;
 using Origins.Items.Other.Dyes;
+using Origins.Items.Other.Fish;
 using Origins.Items.Other.Testing;
 using Origins.Items.Vanity.Dev.PlagueTexan;
 using Origins.Items.Weapons.Ranged;
@@ -815,6 +816,7 @@ namespace Origins {
 			currentScreenTarget = null;
 		}
 		public override void PostSetupContent() {
+			FishingLoot.AddToVanillaPools();
 			Regex safeGoreRegex = new("^(DF|FG|Felnum|Shimmer)", RegexOptions.Compiled);
 			foreach (SimpleModGore gore in GetContent<SimpleModGore>()) {
 				if (safeGoreRegex.IsMatch(gore.Name)) ChildSafety.SafeGore[gore.Type] = true;
