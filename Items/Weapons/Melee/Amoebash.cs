@@ -13,8 +13,10 @@ using Origins.Projectiles;
 using Origins.Projectiles.Weapons;
 using Origins.World.BiomeData;
 using PegasusLib;
+using PegasusLib.Networking;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -63,11 +65,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool CanHitTiles() => Projectile.rotation * Projectile.ai[1] > -0.85f;
 		public override void OnHitTiles(Vector2 position, Vector2 direction) {
 			Vector2 slamDir = direction.RotatedBy(Projectile.ai[1] * MathHelper.PiOver2);
-			Collision.HitTiles(position, slamDir, Projectile.width, Projectile.height);
-			SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, position + Projectile.Size * 0.5f);
-			Main.instance.CameraModifiers.Add(new CameraShakeModifier(
-				Projectile.Center, 5f, 3f, 12, 500f, -1f, nameof(Amoebash)
-			));
+			new Amoebash_Slam_Action(new Rectangle((int)position.X, (int)position.Y, Projectile.width, Projectile.height), slamDir).Perform();
 
 			IEntitySource source = Projectile.GetSource_FromAI();
 			int projType = ModContent.ProjectileType<Amoebash_Shrapnel>();
@@ -159,5 +157,26 @@ namespace Origins.Items.Weapons.Melee {
 		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.CritType.SlammyHammer");
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => Amoebash_Smash.forcedCrit;
 		public override float CritMultiplier(Player player, Item item) => 2f;
+	}
+	public record class Amoebash_Slam_Action(Rectangle Hitbox, Vector2 Direction) : SyncedAction {
+		public Amoebash_Slam_Action() : this(default, default) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			Hitbox = new(reader.ReadInt32(), reader.ReadInt32(), reader.ReadByte(), reader.ReadByte()),
+			Direction = reader.ReadVector2()
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write((int)Hitbox.X);
+			writer.Write((int)Hitbox.Y);
+			writer.Write((byte)Hitbox.Width);
+			writer.Write((byte)Hitbox.Height);
+			writer.WriteVector2(Direction);
+		}
+		protected override void Perform() {
+			Collision.HitTiles(Hitbox.TopLeft(), Direction, Hitbox.Width, Hitbox.Height);
+			SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, Hitbox.Center());
+			Main.instance.CameraModifiers.Add(new CameraShakeModifier(
+				Hitbox.Center(), 5f, 3f, 12, 500f, -1f, nameof(Amoebash)
+			));
+		}
 	}
 }

@@ -18,6 +18,8 @@ using Terraria.ModLoader;
 using Origins.Projectiles;
 using Origins.CrossMod;
 using Terraria.Localization;
+using PegasusLib.Networking;
+using System.IO;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Foot : ModItem, ICustomWikiStat {
@@ -58,18 +60,11 @@ namespace Origins.Items.Weapons.Melee {
 			target.AddBuff(Toxic_Shock_Debuff.ID, 600);
 		}
 		public static void DoSlam(Projectile projectile, Vector2 position, Vector2 direction) {
-			Vector2 center = position + projectile.Size * 0.5f;
-			Collision.HitTiles(position, direction, projectile.width, projectile.height);
-			SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, center);
-			SoundEngine.PlaySound(SoundID.Item14, center);
-
-			Main.instance.CameraModifiers.Add(new CameraShakeModifier(
-				center, 5f, 3f, 12, 500f, -1f, nameof(Amoebash)
-			));
+			new The_Foot_Slam_Action(new Rectangle((int)position.X, (int)position.Y, projectile.width, projectile.height), direction).Perform();
 			if (Main.myPlayer == projectile.owner) {
 				Projectile.NewProjectile(
 					projectile.GetSource_FromAI(),
-					center,
+					position + projectile.Size * 0.5f,
 					Vector2.Zero,
 					ModContent.ProjectileType<The_Foot_Aura>(),
 					projectile.damage / 4,
@@ -83,7 +78,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override string Texture => typeof(The_Foot).GetDefaultTMLName();
 		public override bool CanHitTiles() => Projectile.rotation * Projectile.ai[1] > -0.85f;
 		public override void OnHitTiles(Vector2 position, Vector2 direction) {
-			The_Foot.DoSlam(Projectile, position, direction);
+			The_Foot.DoSlam(Projectile, position, direction.RotatedBy(Projectile.ai[1] * MathHelper.PiOver2));
 		}
 		internal static bool forcedCrit = false;
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
@@ -274,5 +269,29 @@ namespace Origins.Items.Weapons.Melee {
 		public override LocalizedText Description => Language.GetOrRegister($"Mods.Origins.CritType.SlammyHammer");
 		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) => The_Foot_Smash.forcedCrit;
 		public override float CritMultiplier(Player player, Item item) => 2f;
+	}
+	public record class The_Foot_Slam_Action(Rectangle Hitbox, Vector2 Direction) : SyncedAction {
+		public The_Foot_Slam_Action() : this(default, default) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			Hitbox = new(reader.ReadInt32(), reader.ReadInt32(), reader.ReadByte(), reader.ReadByte()),
+			Direction = reader.ReadVector2()
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write((int)Hitbox.X);
+			writer.Write((int)Hitbox.Y);
+			writer.Write((byte)Hitbox.Width);
+			writer.Write((byte)Hitbox.Height);
+			writer.WriteVector2(Direction);
+		}
+		protected override void Perform() {
+			Vector2 center = Hitbox.Center();
+			Collision.HitTiles(Hitbox.TopLeft(), Direction, Hitbox.Width, Hitbox.Height);
+			SoundEngine.PlaySound(SoundID.DD2_MonkStaffGroundImpact, center);
+			SoundEngine.PlaySound(SoundID.Item14, center);
+
+			Main.instance.CameraModifiers.Add(new CameraShakeModifier(
+				center, 5f, 3f, 12, 500f, -1f, nameof(The_Foot)
+			));
+		}
 	}
 }
