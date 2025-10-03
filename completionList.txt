@@ -1322,9 +1322,9 @@ TILES:
 (^) Riven Dungeon Chest
 (X) Rusty Locker !!!
 (X) Small Storage Container !!!
-(@, ^3) Surveysprout Planter Box !!!
+(#, ^5) Surveysprout Planter Box (tML #4061)
 (^) Unsuspicious Bush
-(#, ^5) Wilting Rose Planter Box
+(#, ^5) Wilting Rose Planter Box (tML #4061)
 (X) Wrycoral Planter Box
 
 (X) Elderforge
