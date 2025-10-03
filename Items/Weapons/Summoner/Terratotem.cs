@@ -308,7 +308,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public override void PostDraw(Color lightColor) {
 			Projectile maskProj = Projectile.GetRelatedProjectile(0);
-			if ((maskProj?.active ?? false) && Projectile.whoAmI > maskProj.whoAmI && maskProj.ModProjectile is Terratotem_Mask_Base mask) mask.Draw(lightColor);
+			if ((maskProj?.active ?? false) && Projectile.whoAmI > maskProj.whoAmI && maskProj.ModProjectile is Terratotem_Mask_Base mask) {
+				if (maskProj.ai[1] == -1) {
+					maskProj.Center = Projectile.Center;
+				}
+				mask.Draw(lightColor);
+			}
 		}
 		public override void OnKill(int timeLeft) {
 			if (Projectile.GetRelatedProjectile(0) is Projectile mask && mask.active && Projectile.IsLocallyOwned()) {
