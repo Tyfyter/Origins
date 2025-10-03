@@ -455,6 +455,7 @@ Generic: {
 	Acrid: Acrid
 	Spug: Spug
 	spug: spug
+	Ashen: Ashen
 }
 
 AltBiomes: {
@@ -473,10 +474,10 @@ AltBiomes: {
 	}
 
 	Ashen_Alt_Biome: {
-		DisplayName: Ashen
-		Description: The Mechanicus Supremety Ashen is guaranteed to be present in your world.
+		DisplayName: "{§Ashen}"
+		Description: The Mechanicus Supremety {§Ashen} is guaranteed to be present in your world.
 		GenPassName: Polluting
-		DryadTextDescriptor: ashen
+		DryadTextDescriptor: "{§Ashen}"
 	}
 }
 
@@ -1795,8 +1796,8 @@ Projectiles: {
 	Felnum_Sword_Slash.DisplayName: "{$Mods.Origins.Items.Felnum_Sword.DisplayName}"
 	Cloud_Elemental_P.DisplayName: Cloud Elemental
 	Shotgunfish_P.DisplayName: Shotgunfish
-	Ashen_Mortar.DisplayName: Ashen Mortar
-	Ashen_Mortar_P.DisplayName: Ashen Mortar
+	Ashen_Mortar.DisplayName: "{§Ashen} Mortar"
+	Ashen_Mortar_P.DisplayName: "{§Ashen} Mortar"
 	Fiberglass_Sword_P.DisplayName: Fiberglass Sword
 	Peat_Moss_Tile_Explosion.DisplayName: Peat Moss
 	Ocotillo_Finger_P.DisplayName: Ocotillo Finger
@@ -1858,8 +1859,8 @@ Projectiles: {
 	DefiledNukeSupremeProj.DisplayName: "{§Defiled} Nuke Supreme"
 	RivenNukeProj.DisplayName: "{§Riven} Nuke"
 	RivenNukeSupremeProj.DisplayName: "{§Riven} Nuke Supreme"
-	AshenNukeProj.DisplayName: Ashen Nuke
-	AshenNukeSupremeProj.DisplayName: Ashen Nuke Supreme
+	AshenNukeProj.DisplayName: "{§Ashen} Nuke"
+	AshenNukeSupremeProj.DisplayName: "{§Ashen} Nuke Supreme"
 	Power_Lotus_Deflect_Fairy.DisplayName: Power Lotus Deflect Fairy
 	Power_Lotus_Seeker_Fairy.DisplayName: Power Lotus Seeker Fairy
 	Keytar_Bass.DisplayName: Keytar Bass
@@ -2127,8 +2128,8 @@ Biomes: {
 	}
 
 	Ashen_Biome: {
-		DisplayName: Ashen
-		TownNPCDialogueName: the Ashen
+		DisplayName: "{§Ashen}"
+		TownNPCDialogueName: the {§Ashen}
 	}
 
 	Defiled_Wastelands_Desert: {
@@ -2177,28 +2178,28 @@ Biomes: {
 	}
 
 	Underground_Ashen_Biome: {
-		TownNPCDialogueName: the Underground Ashen Biome
-		DisplayName: Underground Ashen Biome
+		TownNPCDialogueName: the Underground {§Ashen} Biome
+		DisplayName: Underground {§Ashen} Biome
 	}
 
 	Ashen_Underground_Desert: {
-		TownNPCDialogueName: the Ashen Underground Desert
-		DisplayName: Ashen Underground Desert
+		TownNPCDialogueName: the {§Ashen} Underground Desert
+		DisplayName: "{§Ashen} Underground Desert"
 	}
 
 	Ashen_Ocean: {
-		TownNPCDialogueName: the Ashen Ocean
-		DisplayName: Ashen Ocean
+		TownNPCDialogueName: the {§Ashen} Ocean
+		DisplayName: "{§Ashen} Ocean"
 	}
 
 	Ashen_Ice_Biome: {
-		TownNPCDialogueName: the Ashen Ice Biome
-		DisplayName: Ashen Ice Biome
+		TownNPCDialogueName: the {§Ashen} Ice Biome
+		DisplayName: "{§Ashen} Ice Biome"
 	}
 
 	Ashen_Desert: {
-		TownNPCDialogueName: the Ashen Desert
-		DisplayName: Ashen Desert
+		TownNPCDialogueName: the {§Ashen} Desert
+		DisplayName: "{§Ashen} Desert"
 	}
 }
 
@@ -2286,7 +2287,7 @@ Tiles: {
 	Encrusted_Storage_Unit.MapEntry: Encrusted Storage Unit
 	Sanguinite_Storage_Unit.MapEntry: Sanguinite Storage Unit
 	Music_Box_FU: Music Box (Fiberglass Undergrowth)
-	Fake_Ashen_Altar.MapEntry: Ashen Altar
+	Fake_Ashen_Altar.MapEntry: "{§Ashen} Altar"
 	Fake_Defiled_Altar.MapEntry: "{§Defiled} Altar"
 	Fake_Riven_Altar.MapEntry: "{§Riven} Altar"
 	Hydrothermal_Vent_Goopy.MapEntry: Goopy Hydrothermal Vent
@@ -2304,8 +2305,8 @@ Tiles: {
 	Witherwood_Chest.MapEntry: Witherwood Chest
 	Witherwood_Dresser.MapEntry: Witherwood Dresser
 	Ashen_Dungeon_Chest_Locked.MapEntry: Mods.Origins.Tiles.Ashen_Dungeon_Chest_Locked.MapEntry
-	Ashen_Dungeon_Chest.MapEntry: Ashen Dungeon Chest
-	Ashen_Altar.MapEntry: Ashen Altar
+	Ashen_Dungeon_Chest.MapEntry: "{§Ashen} Dungeon Chest"
+	Ashen_Altar.MapEntry: "{§Ashen} Altar"
 }
 
 MapObject: {
@@ -2863,7 +2864,7 @@ SetBonuses: {
 	Scavenger:
 		'''
 		All explosives inflict [buffhint:Origins/Impeding_Shrapnel_Debuff]
-		Additional scrap drops from Ashen enemies
+		Additional scrap drops from {§Ashen} enemies
 		'''
 	Souldhide: Nearby enemies are [buffhint:Origins/Soulhide_Weakened_Debuff] and afflicted with [buffhint:ShadowFlame]
 	Tendon: Mobility is based on remaining health
