@@ -141,23 +141,6 @@ namespace Origins.Tiles {
 				}
 			}
 		}
-		public override bool? IsTileBiomeSightable(int i, int j, int type, ref Color sightColor) {
-			if (TileLoader.GetTile(type) is ModTile modTile) {
-				if (modTile is IDefiledTile) {
-					sightColor = Color.White;
-					return true;
-				}
-				if (modTile is IRivenTile) {
-					sightColor = Color.Cyan;
-					return true;
-				}
-				if (modTile is IAshenTile) {
-					sightColor = Color.OrangeRed;
-					return true;
-				}
-			}
-			return null;
-		}
 		public override void FloorVisuals(int type, Player player) {
 		}
 	}

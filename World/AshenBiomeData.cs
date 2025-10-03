@@ -655,6 +655,7 @@ namespace Origins.World.BiomeData {
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilAshen";
 		public override Color OuterColor => new(255, 170, 170);
 		public override Color NameColor => new(255, 100, 100);
+		public override Color? BiomeSightColor => Color.OrangeRed;
 		public override IShoppingBiome Biome => ModContent.GetInstance<Ashen_Biome>();
 		public override void SetStaticDefaults() {
 			BiomeType = BiomeType.Evil;

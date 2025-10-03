@@ -837,6 +837,7 @@ namespace Origins.World.BiomeData {
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Defiled";
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilDefiled";
 		public override Color OuterColor => new(170, 170, 170);
+		public override Color? BiomeSightColor => Color.White;
 		public override IShoppingBiome Biome => ModContent.GetInstance<Defiled_Wastelands>();
 		public override void SetStaticDefaults() {
 			BiomeType = BiomeType.Evil;

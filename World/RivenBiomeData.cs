@@ -1091,6 +1091,7 @@ namespace Origins.World.BiomeData {
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilRiven";
 		public override Color OuterColor => new(30, 176, 255);
 		public override Color NameColor => new(25, 151, 230);
+		public override Color? BiomeSightColor => Color.Cyan;
 		public override IShoppingBiome Biome => ModContent.GetInstance<Riven_Hive>();
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
