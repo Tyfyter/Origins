@@ -201,7 +201,7 @@ namespace Origins.Tiles.Ashen {
 						if (!IsCatwalk(left)) {
 							if (k == 1) {
 								left = Main.tile[i - k, j - 1];
-								if (left.TileFrameX == 10 * 18) {
+								if (left.Slope == SlopeType.SlopeDownLeft) {
 									railingFrame = 0;
 								} else {
 									railingFrame = 4;
@@ -214,8 +214,8 @@ namespace Origins.Tiles.Ashen {
 						Tile right = Main.tile[i + k, j];
 						if (!IsCatwalk(right)) {
 							if (k == 1) {
-								left = Main.tile[i + k, j - 1];
-								if (left.TileFrameX == 8 * 18) {
+								right = Main.tile[i + k, j - 1];
+								if (right.Slope == SlopeType.SlopeDownRight) {
 									railingFrame = 0;
 								} else {
 									railingFrame = 3;

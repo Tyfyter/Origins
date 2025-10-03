@@ -1074,17 +1074,17 @@ Cryosten_Greaves: {
 }
 
 Ashen_Breastplate: {
-	// DisplayName: Ashen Breastplate
+	// DisplayName: "{§Ashen} Breastplate"
 	// Tooltip: +8% weapon speed
 }
 
 Ashen_Greaves: {
-	// DisplayName: Ashen Greaves
+	// DisplayName: "{§Ashen} Greaves"
 	// Tooltip: +8% increased critical strike chance
 }
 
 Ashen_Helmet: {
-	// DisplayName: Ashen Helmet
+	// DisplayName: "{§Ashen} Helmet"
 	// Tooltip: 8% increased damage
 }
 
@@ -5723,12 +5723,12 @@ RivenSupremeRenewal: {
 }
 
 AshenRenewal: {
-	// DisplayName: Ashen Renewal
+	// DisplayName: "{§Ashen} Renewal"
 	// Tooltip: Pollutes a large radius
 }
 
 AshenSupremeRenewal: {
-	// DisplayName: Ashen Renewal Supreme
+	// DisplayName: "{§Ashen} Renewal Supreme"
 	// Tooltip: Pollutes the entire world
 }
 
@@ -5836,9 +5836,9 @@ Riven_Chest: {
 	// Tooltip: Summons {§Riven} Mimic
 }
 
-Ashen_Chest: {
-	// DisplayName: Ashen Chest
-	// Tooltip: Summons Ashen Mimic
+Suspicious_Trash_Compactor: {
+	// DisplayName: Suspicious Trash Compactor
+	// Tooltip: Summons Trash Compactor Mimic
 }
 
 Greater_Summoning_Potion: {
@@ -5862,8 +5862,8 @@ Fake_Riven_Altar_Item: {
 }
 
 Fake_Ashen_Altar_Item: {
-	// DisplayName: Ashen Altar
-	// Tooltip: A placeable Ashen Altar. Cannot be mined to get hardmode ores
+	// DisplayName: "{§Ashen} Altar"
+	// Tooltip: A placeable {§Ashen} Altar. Cannot be mined to get hardmode ores
 }
 
 Impetus: {
@@ -6704,12 +6704,12 @@ Hardened_Sootsand_Wall_Item: {
 
 Ashen_Grass_Wall_Placed_Unsafe_Item: {
 	// Tooltip: ""
-	// DisplayName: Infested Ashen Grass Wall
+	// DisplayName: Infested {§Ashen} Grass Wall
 }
 
 Ashen_Grass_Wall_Safe_Item: {
 	// Tooltip: ""
-	// DisplayName: Ashen Grass Wall
+	// DisplayName: "{§Ashen} Grass Wall"
 }
 
 Witherwood_Chest_Item: {
@@ -6844,7 +6844,7 @@ Phoenum_Torch: {
 
 Locked_Ashen_Dungeon_Chest_Item: {
 	// Tooltip: ""
-	// DisplayName: Ashen Dungeon Chest (Locked)
+	// DisplayName: "{§Ashen} Dungeon Chest (Locked)"
 }
 
 Hardened_Sootsand_Item: {
@@ -6859,37 +6859,37 @@ Brown_Ice_Item: {
 
 Ashen_Torch: {
 	// Tooltip: ""
-	// DisplayName: Ashen Torch
+	// DisplayName: "{§Ashen} Torch"
 }
 
 Ashen_Pot_Item: {
 	// Tooltip: ""
-	// DisplayName: Ashen Pot (Debugging Item)
+	// DisplayName: "{§Ashen} Pot (Debugging Item)"
 }
 
 Ashen_Grass_Seeds: {
 	// Tooltip: ""
-	// DisplayName: Ashen Grass Seeds
+	// DisplayName: "{§Ashen} Grass Seeds"
 }
 
 Ashen_Dungeon_Chest_Item: {
 	// Tooltip: ""
-	// DisplayName: Ashen Dungeon Chest
+	// DisplayName: "{§Ashen} Dungeon Chest"
 }
 
 Ashen_Campfire_Item: {
 	// Tooltip: ""
-	// DisplayName: Ashen Campfire
+	// DisplayName: "{§Ashen} Campfire"
 }
 
 Ashen_Altar_Item: {
 	// Tooltip: ""
-	// DisplayName: Ashen Altar (Debugging Item)
+	// DisplayName: "{§Ashen} Altar (Debugging Item)"
 }
 
 Orange_Solution: {
 	// DisplayName: Orange Solution
-	// Tooltip: Spreads the Ashen
+	// Tooltip: Spreads the {§Ashen}
 }
 
 Scrapfish: {
@@ -6903,13 +6903,8 @@ Peppered_Moth_Item: {
 }
 
 Ashen_Key: {
-	// DisplayName: Ashen Key
-	// Tooltip: Unlocks a Ashen Chest in the Dungeon
-}
-
-Suspicious_Trash_Compactor: {
-	// Tooltip: ""
-	// DisplayName: Suspicious Trash Compactor
+	// DisplayName: "{§Ashen} Key"
+	// Tooltip: Unlocks a {§Ashen} Chest in the Dungeon
 }
 
 Distress_Beacon: {

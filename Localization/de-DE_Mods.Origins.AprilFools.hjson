@@ -13,6 +13,7 @@ Generic: {
 	// Acrid: Jelly Dog
 	// Spug: Smug
 	// spug: smug
+	// Ashen: Anarchy
 }
 
 // GameTips.Journal: Having trouble keeping track of your quests? If only- ooh! 2 for one muffins!
@@ -87,6 +88,8 @@ Items: {
 	// Terlet_Paper.Tooltip: Summons a kawaii cta
 	// Peat_Moss_Item.DisplayName: PETA Moss
 	// Astral_Scythe.Debuff: While the blade regenerates the scythe can only [italic:bonk]
+	// AshenRenewal.Tooltip: Evicts local authorities from a large area
+	// AshenSupremeRenewal.Tooltip: Evicts local authorities from the entire world
 }
 
 // Prefixes.Wholesome_Prefix.DisplayName: Holesome
@@ -104,6 +107,7 @@ DeathMessage: {
 AltBiomes: {
 	// Defiled_Wastelands_Alt_Biome.GenPassName: Bribing local authorities to ignore {§Defiled_Wastelands}'s many health code violations
 	// Riven_Hive_Alt_Biome.GenPassName: Establishing {§Riven}
+	// Ashen_Alt_Biome.GenPassName: Filling the factory with neurotoxin
 }
 
 Biomes: {
