@@ -44,10 +44,10 @@ namespace Origins.World.BiomeData {
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
 		public override string MapBackground => BackgroundPath;
-		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
+		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<Defiled_Surface_Background>();
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => BiomeUGBackground<Riven_Underground_Background>();
-		public override int BiomeTorchItemType => ModContent.ItemType<Ashen_Torch>();
-		public override int BiomeCampfireItemType => ModContent.ItemType<Ashen_Campfire_Item>();
+		public override int BiomeTorchItemType => ItemType<Ashen_Torch>();
+		public override int BiomeCampfireItemType => ItemType<Ashen_Campfire_Item>();
 		public static bool forcedBiomeActive;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
@@ -66,18 +66,18 @@ namespace Origins.World.BiomeData {
 			return player.GetModPlayer<OriginPlayer>().ZoneAshenProgress * 0.98f;
 		}
 		public override void Load() {
-			FirstOrbDropRule = ItemDropRule.Common(ModContent.ItemType<Neural_Network>());
+			FirstOrbDropRule = ItemDropRule.Common(ItemType<Neural_Network>());
 			FirstOrbDropRule.OnSuccess(ItemDropRule.Common(ItemID.MusketBall, 1, 100, 100));
 
-			IItemDropRule AceShrapnelRule = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Ace_Shrapnel>());
-			AceShrapnelRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Scrap>(), 1, 200, 200));
+			IItemDropRule AceShrapnelRule = ItemDropRule.NotScalingWithLuck(ItemType<Ace_Shrapnel>());
+			AceShrapnelRule.OnSuccess(ItemDropRule.Common(ItemType<Scrap>(), 1, 200, 200));
 
 			OrbDropRule = new OneFromRulesRule(1,
 				FirstOrbDropRule,
 				AceShrapnelRule,
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Area_Denial>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Smiths_Hammer>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Seal_Of_Cinders>())
+				ItemDropRule.NotScalingWithLuck(ItemType<Area_Denial>()),
+				ItemDropRule.NotScalingWithLuck(ItemType<Smiths_Hammer>()),
+				ItemDropRule.NotScalingWithLuck(ItemType<Seal_Of_Cinders>())
 			);
 		}
 		public override void Unload() {
@@ -119,7 +119,7 @@ namespace Origins.World.BiomeData {
 					if (Main.hardMode && !spawnInfo.PlayerSafe && spawnInfo.SpawnTileY > Main.rockLayer && !spawnInfo.DesertCave) return rate;
 					return 0;
 				};
-				AddSpawn(ModContent.NPCType<Trash_Compactor_Mimic>(), MimicRate(Mimic));
+				AddSpawn(NPCType<Trash_Compactor_Mimic>(), MimicRate(Mimic));
 				//AddSpawn(ModContent.NPCType<Savage_Whip>(), MimicRate(Whip));
 			}
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
@@ -130,7 +130,7 @@ namespace Origins.World.BiomeData {
 				return LandEnemyRate(spawnInfo, hardmode);
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) {
-				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IAshenTile || (spawnInfo.Player.InModBiome<Ashen_Biome>() && spawnInfo.SpawnTileType == ModContent.TileType<Sanguinite_Ore>()) || forcedBiomeActive;
+				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IAshenTile || (spawnInfo.Player.InModBiome<Ashen_Biome>() && spawnInfo.SpawnTileType == TileType<Sanguinite_Ore>()) || forcedBiomeActive;
 			}
 		}
 		public static class Gen {
@@ -141,9 +141,9 @@ namespace Origins.World.BiomeData {
 			}
 			public static void StartHive(int i, int j) {
 				Vector2 pos = new Vector2(i, j);
-				ushort fleshBlockType = (ushort)ModContent.TileType<Tainted_Stone>();
-				ushort fleshWallType = (ushort)ModContent.WallType<Tainted_Stone_Wall>();
-				int oreID = ModContent.TileType<Sanguinite_Ore>();
+				ushort fleshBlockType = (ushort)TileType<Tainted_Stone>();
+				ushort fleshWallType = (ushort)WallType<Tainted_Stone_Wall>();
+				int oreID = TileType<Sanguinite_Ore>();
 				HashSet<ushort> cleaveReplacables = [fleshBlockType];
 				Tile tile;
 				int X0 = int.MaxValue;
@@ -330,7 +330,7 @@ namespace Origins.World.BiomeData {
 					int y = genRange.Y;
 					while (!Framing.GetTileSafely(x, y).HasSolidTile()) y++;
 				}*/
-				ushort rivenAltar = (ushort)ModContent.TileType<Ashen_Altar>();
+				ushort rivenAltar = (ushort)TileType<Ashen_Altar>();
 				for (int i0 = genRand.Next(10, 15); i0-- > 0;) {
 					int tries = 0;
 					bool placed = false;
@@ -362,7 +362,7 @@ namespace Origins.World.BiomeData {
 						placed = Framing.GetTileSafely(x, y).TileIsType(rivenAltar);
 					}
 				}
-				ushort rivenLargePile = (ushort)ModContent.TileType<Ashen_Large_Foliage>();
+				ushort rivenLargePile = (ushort)TileType<Ashen_Large_Foliage>();
 				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
 					int tries = 18;
 					int x = genRange.X + genRand.Next(0, genRange.Width);
@@ -373,7 +373,7 @@ namespace Origins.World.BiomeData {
 						if (tries-- > 0) break;
 					}
 				}
-				ushort rivenMediumPile = (ushort)ModContent.TileType<Ashen_Medium_Foliage>();
+				ushort rivenMediumPile = (ushort)TileType<Ashen_Medium_Foliage>();
 				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
 					int tries = 18;
 					int x = genRange.X + genRand.Next(0, genRange.Width);
@@ -396,9 +396,9 @@ namespace Origins.World.BiomeData {
 			public static void StartHive_Old(int i, int j) {
 				const float strength = 2.4f;
 				const float wallThickness = 4f;
-				ushort fleshID = (ushort)ModContent.TileType<Tainted_Stone>();
+				ushort fleshID = (ushort)TileType<Tainted_Stone>();
 				ushort weakFleshID = TileID.CrackedBlueDungeonBrick;
-				ushort fleshWallID = (ushort)ModContent.WallType<Tainted_Stone_Wall>();
+				ushort fleshWallID = (ushort)WallType<Tainted_Stone_Wall>();
 				int j2 = j;
 				if (j2 > Main.worldSurface) {
 					j2 = (int)Main.worldSurface;
@@ -475,9 +475,9 @@ namespace Origins.World.BiomeData {
 				HiveCave_Old((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
 			}
 			public static Point HiveCave_Old(int i, int j, float sizeMult = 1f) {
-				ushort fleshID = (ushort)ModContent.TileType<Tainted_Stone>();
-				ushort fleshWallID = (ushort)ModContent.WallType<Tainted_Stone_Wall>();
-				ushort blisterID = (ushort)ModContent.TileType<Gel_Blister>();
+				ushort fleshID = (ushort)TileType<Tainted_Stone>();
+				ushort fleshWallID = (ushort)WallType<Tainted_Stone_Wall>();
+				ushort blisterID = (ushort)TileType<Gel_Blister>();
 				int i2 = i + (int)(genRand.Next(-26, 26) * sizeMult);
 				int j2 = j + (int)(genRand.Next(-2, 22) * sizeMult);
 				Queue<Point> lesionPlacementSpots = new Queue<Point>();
@@ -549,7 +549,7 @@ namespace Origins.World.BiomeData {
 			}
 			public static void SpreadRivenGrass(int i, int j) {
 				const int maxDepth = 150;
-				ushort grassType = (ushort)ModContent.TileType<Ashen_Grass>();
+				ushort grassType = (ushort)TileType<Ashen_Grass>();
 				Stack<(int x, int y, int depth)> stack = new();
 				stack.Push((i, j, 0));
 				while (stack.Count > 0) {
@@ -656,37 +656,37 @@ namespace Origins.World.BiomeData {
 		public override Color OuterColor => new(255, 170, 170);
 		public override Color NameColor => new(255, 100, 100);
 		public override Color? BiomeSightColor => Color.OrangeRed;
-		public override IShoppingBiome Biome => ModContent.GetInstance<Ashen_Biome>();
+		public override IShoppingBiome Biome => GetInstance<Ashen_Biome>();
 		public override void SetStaticDefaults() {
 			BiomeType = BiomeType.Evil;
 
-			AddTileConversion(ModContent.TileType<Ashen_Grass>(), TileID.Grass);
-			AddTileConversion(ModContent.TileType<Ashen_Jungle_Grass>(), TileID.JungleGrass);
-			AddTileConversion(ModContent.TileType<Tainted_Stone>(), TileID.Stone);
-			AddTileConversion(ModContent.TileType<Sootsand>(), TileID.Sand);
-			AddTileConversion(ModContent.TileType<Soot_Sandstone>(), TileID.Sandstone);
-			AddTileConversion(ModContent.TileType<Hardened_Sootsand>(), TileID.HardenedSand);
-			AddTileConversion(ModContent.TileType<Brown_Ice>(), TileID.IceBlock);
+			AddTileConversion(TileType<Ashen_Grass>(), TileID.Grass);
+			AddTileConversion(TileType<Ashen_Jungle_Grass>(), TileID.JungleGrass);
+			AddTileConversion(TileType<Tainted_Stone>(), TileID.Stone);
+			AddTileConversion(TileType<Sootsand>(), TileID.Sand);
+			AddTileConversion(TileType<Soot_Sandstone>(), TileID.Sandstone);
+			AddTileConversion(TileType<Hardened_Sootsand>(), TileID.HardenedSand);
+			AddTileConversion(TileType<Brown_Ice>(), TileID.IceBlock);
 
 			BiomeFlesh = TileID.AncientGoldBrick;
 			BiomeFleshWall = WallID.AncientGoldBrickWall;
 
-			SeedType = ModContent.ItemType<Ashen_Grass_Seeds>();
-			BiomeOre = ModContent.TileType<Sanguinite_Ore>();
-			BiomeOreItem = ModContent.ItemType<Sanguinite_Ore_Item>();
-			BiomeOreBrick = ModContent.TileType<Sanguinite_Brick>();
-			AltarTile = ModContent.TileType<Ashen_Altar>();
+			SeedType = ItemType<Ashen_Grass_Seeds>();
+			BiomeOre = TileType<Sanguinite_Ore>();
+			BiomeOreItem = ItemType<Sanguinite_Ore_Item>();
+			BiomeOreBrick = TileType<Sanguinite_Brick>();
+			AltarTile = TileType<Ashen_Altar>();
 
-			BiomeChestItem = ModContent.ItemType<Ashen_Torch>();
-			BiomeChestTile = ModContent.TileType<Ashen_Dungeon_Chest>();
+			BiomeChestItem = ItemType<Ashen_Torch>();
+			BiomeChestTile = TileType<Ashen_Dungeon_Chest>();
 			BiomeChestTileStyle = 1;
-			BiomeKeyItem = ModContent.ItemType<Ashen_Key>();
+			BiomeKeyItem = ItemType<Ashen_Key>();
 
-			MimicType = ModContent.NPCType<Trash_Compactor_Mimic>();
+			MimicType = NPCType<Trash_Compactor_Mimic>();
 
-			BloodBunny = ModContent.NPCType<Defiled_Mite>();
-			BloodPenguin = ModContent.NPCType<Bile_Thrower>();
-			BloodGoldfish = ModContent.NPCType<Shattered_Goldfish>();
+			BloodBunny = NPCType<Defiled_Mite>();
+			BloodPenguin = NPCType<Bile_Thrower>();
+			BloodGoldfish = NPCType<Shattered_Goldfish>();
 
 			AddWallConversions<Tainted_Stone_Wall>(
 				WallID.Cave7Unsafe,
@@ -725,20 +725,20 @@ namespace Origins.World.BiomeData {
 				WallID.GrassUnsafe,
 				WallID.Grass
 			);
-			this.AddChambersiteConversions(ModContent.TileType<Chambersite_Ore_Tainted_Stone>(), ModContent.WallType<Chambersite_Tainted_Stone_Wall>());
+			this.AddChambersiteConversions(TileType<Chambersite_Ore_Tainted_Stone>(), WallType<Chambersite_Tainted_Stone_Wall>());
 
 			EvilBiomeGenerationPass = new Ashen_Generation_Pass();
 		}
 		public override AltMaterialContext MaterialContext {
 			get {
 				AltMaterialContext context = new AltMaterialContext();
-				context.SetEvilSword(ModContent.ItemType<Switchblade_Broadsword>());
-				context.SetEvilOre(ModContent.ItemType<Sanguinite_Ore_Item>());
-				context.SetEvilBar(ModContent.ItemType<Sanguinite_Bar>());
-				context.SetEvilHerb(ModContent.ItemType<Surveysprout_Item>());
-				context.SetVileComponent(ModContent.ItemType<Phoenum>());
-				context.SetVileInnard(ModContent.ItemType<Biocomponent10>());
-				context.SetEvilBossDrop(ModContent.ItemType<NE8>());
+				context.SetEvilSword(ItemType<Switchblade_Broadsword>());
+				context.SetEvilOre(ItemType<Sanguinite_Ore_Item>());
+				context.SetEvilBar(ItemType<Sanguinite_Bar>());
+				context.SetEvilHerb(ItemType<Surveysprout_Item>());
+				context.SetVileComponent(ItemType<Phoenum>());
+				context.SetVileInnard(ItemType<Biocomponent10>());
+				context.SetEvilBossDrop(ItemType<NE8>());
 				return context;
 			}
 		}
@@ -769,8 +769,8 @@ namespace Origins.World.BiomeData {
 				range = WorldBiomeGeneration.ChangeRange.GetRange();
 
 				WorldBiomeGeneration.EvilBiomeGenRanges.Add(range);
-				AltBiome biome = ModContent.GetInstance<Ashen_Alt_Biome>();
-				ushort grass = (ushort)ModContent.TileType<Ashen_Grass>();
+				AltBiome biome = GetInstance<Ashen_Alt_Biome>();
+				ushort grass = (ushort)TileType<Ashen_Grass>();
 				for (int i = range.Left; i < range.Right; i++) {
 					int slopeFactor = Math.Min(Math.Min(i - range.Left, range.Right - i), 99);
 					for (int j = range.Top - 10; j < range.Bottom; j++) {
