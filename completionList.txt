@@ -873,6 +873,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler
 (^) Adamantite Harpoon Gun
+(X) AMRSL 'Skewer'
 (^) Bleeding Obsidian Kunai
 (X) Blenderbuss
 (^) Boat Rocker
@@ -942,6 +943,7 @@ MAGIC WEAPONS:
 (^) Dismay
 (^) Eternanite
 (⛥) Innermost Manifest
+(X) Laser Target Locator
 (^) Seam Beam
 (^) Shimmer Rod
 (^) Shinedown
@@ -1157,12 +1159,13 @@ TILES:
 |---
 (^) Aetherite Ore
 (^) Amoeba Fluid
+(#, ^2) Ashen Cactus !!!
 (^) Baryte
 (^) Batholith
 (^) Bleeding Obsidian
 (^) Bomb Trap
 (^) Brittle Quartz
-(@, ^3) Brown Ice !!!
+(^) Brown Ice
 (X) Busted Block
 (^) Calcified Spug Flesh
 (X) Cancer Block
@@ -1193,7 +1196,7 @@ TILES:
 (^) Fiberglass Block
 (^) Gray Ice Block
 (^) Hardened Defiled Sand
-(@, ^3) Hardened Sootsand !!!
+(^) Hardened Sootsand
 (X) Lihzarhd Bomb Trap
 (^) Limestone
 (@4) Lost Brick
@@ -1210,13 +1213,13 @@ TILES:
 (^) Riven Cactus
 (^) Riven Grass
 (^) Riven Jungle Grass
-(X) Rusty Piping !!!
+(#, ^2) Rusty Piping !!!
 (X) Sanguinite Brick
 (@4) Sanguinite Ore !!!
 (X) Scrap Heap !!!
 (^) Silica
 (^) Silicon Ore
-(@, ^3) Soot Sandstone !!!
+(^) Soot Sandstone
 (@, ^3) Sootgrass !!!
 (X) Space Goo
 (^) Spug Flesh
@@ -1284,7 +1287,7 @@ TILES:
 (^) Marrowick Furniture
 (X) Nova Furniture
 (X) Peppered Moth Lamp !!!
-(@, ^3) Phoenum Torch !!!
+(^) Phoenum Torch
 (X) Residue Furniture
 (^) Riven Torch
 (^) Riven Water Fountain
@@ -1293,7 +1296,7 @@ TILES:
 (@, ^3) Witherwood Furniture
 
 (@, ^3) Ashen Campfire !!!
-(@, ^3, 々 (dungeon loot)) Ashen Dungeon Chest !!!
+(@, ^3, 赏) Ashen Dungeon Chest !!!
 (X) Batholith Grindstone
 (X) Bilious Incense
 (^) Brine Dungeon Chest
@@ -1708,6 +1711,7 @@ AMMO:
 (^) Defiled Spirit
 (^) Discharge Canister
 (^) Explosive Harpoon
+(#, ^2) Felnum Bullet
 (^) Flammable Harpoon
 (X) Foolean Canister
 (^) Harpoon
@@ -1746,6 +1750,7 @@ AMMO:
 (#, ^2) Homing Rocket II
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
+(#, ^2) Valkyrum Bullet
 
 (^) Gray Solution
 (@, ^3) Orange Solution

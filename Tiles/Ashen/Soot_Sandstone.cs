@@ -8,7 +8,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Soot_Sandstone : OriginTile, IAshenTile {
-		public override string Texture => typeof(Defiled_Sandstone).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.SandBiome[Type] = 1;
@@ -35,7 +34,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Soot_Sandstone_Item : ModItem {
-		public override string Texture => typeof(Defiled_Sandstone_Item).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
             ItemID.Sets.ShimmerTransformToItem[ItemType<Soot_Sandstone_Item>()] = ItemType<Sootsand_Item>();
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.Sandstone, Type);

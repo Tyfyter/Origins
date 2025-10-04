@@ -16,7 +16,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Phoenum_Torch_Tile : OriginTile {
-		public override string Texture => typeof(Bile_Torch_Tile).GetDefaultTMLName();
 		private Asset<Texture2D> flameTexture;
 
 		public override void SetStaticDefaults() {
@@ -125,7 +124,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Phoenum_Torch : ModItem, ICustomWikiStat {
-		public override string Texture => typeof(Bile_Torch).GetDefaultTMLName();
 		public static Vector3 Light => new(1.05f, 1.05f, 1.05f);
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
