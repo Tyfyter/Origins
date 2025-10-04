@@ -70,9 +70,8 @@ namespace Origins.Tiles.Brine {
 			.DisableDecraft()
 			.Register();
 		}
-		public override bool? UseItem(Player player) {
+		public override void OnConsumeItem(Player player) {
 			player.AddBuff(BuffType<Eat_Moss_Buff>(), Item.buffTime);
-			return true;
 		}
 		public override bool CanUseItem(Player player) => OriginsModIntegrations.CheckAprilFools();
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
