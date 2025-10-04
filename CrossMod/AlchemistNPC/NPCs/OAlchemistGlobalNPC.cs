@@ -79,7 +79,7 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						case "ModBags2":
 						shop.Add(new Item(ItemType<Defiled_Amalgamation_Bag>()) { shopCustomPrice = 500000 }, Condition.DownedEowOrBoc.And(Condition.InExpertMode));
 						shop.Add(new Item(ItemType<World_Cracker_Bag>()) { shopCustomPrice = 500000 }, Condition.DownedEowOrBoc.And(Condition.InExpertMode));
-						//shop.Add(new Item(ItemType<Trenchmaker_Bag>()) { shopCustomPrice = 500000 }, Condition.DownedEowOrBoc.And(Condition.InExpertMode)); // for ashen update
+						shop.Add(new Item(ItemType<Trenchmaker_Bag>()) { shopCustomPrice = 500000 }, Condition.DownedEowOrBoc.And(Condition.InExpertMode)); // for ashen update
 						shop.Add(new Item(ItemType<Fiberglass_Weaver_Bag>()) { shopCustomPrice = 1000000 }, Conditions[nameof(Boss_Tracker.downedFiberglassWeaver)]);
 						shop.Add(new Item(ItemType<Shimmer_Construct_Bag>()) { shopCustomPrice = 1650000 }, Conditions[nameof(Boss_Tracker.downedShimmerConstruct)]);
 						shop.Add(new Item(ItemType<Lost_Diver_Bag>()) { shopCustomPrice = 1500000 }, Conditions[nameof(Boss_Tracker.downedLostDiver)]);
@@ -88,16 +88,6 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 					break;
 				}
 				case "Architect": {
-					static OriginExtensions.TryGetter<FurnitureSet, int> GetItems<TTile>() where TTile : ModTile {
-						return (FurnitureSet set, out int result) => {
-							if (set.TilesByType.TryGetValue(typeof(TTile), out ModTile tile)) {
-								result = tile.Type;
-								return true;
-							}
-							result = 0;
-							return false;
-						};
-					}
 					if (shop.Name == "Filler") {
 						shop.InsertAfter(ItemID.Shadewood, new Item(ItemType<Endowood_Item>()) { shopCustomPrice = 10 });
 						shop.InsertAfter(ItemType<Endowood_Item>(), new Item(ItemType<Marrowick_Item>()) { shopCustomPrice = 10 });
@@ -114,6 +104,9 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.InsertAfter(ItemID.CrimstoneBrick, new Item(ItemType<Defiled_Brick>()) { shopCustomPrice = 10 }); // Defiled Brick
 						shop.InsertAfter(ItemType<Defiled_Brick>(), new Item(ItemType<Spug_Brick>()) { shopCustomPrice = 10 }); // Riven Brick
 						shop.InsertAfter(ItemType<Spug_Brick>(), new Item(ItemType<Tainted_Brick>()) { shopCustomPrice = 10 }); // Ashen Brick*/
+						shop.Add(new Item(ItemType<Fortified_Steel_Block1_Item>()) { shopCustomPrice = Item.buyPrice(0, 0, 0, 10) }, Condition.DownedEowOrBoc);
+						shop.Add(new Item(ItemType<Fortified_Steel_Block2_Item>()) { shopCustomPrice = Item.buyPrice(0, 0, 1) }, Condition.Hardmode);
+						shop.Add(new Item(ItemType<Fortified_Steel_Block3_Item>()) { shopCustomPrice = Item.buyPrice(0, 0, 10) }, Condition.DownedGolem);
 
 					}
 					if (shop.Name == "Torch") {
