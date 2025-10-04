@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Ammo;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -12,12 +13,12 @@ namespace Origins.Tiles.Ashen {
 		public static bool[] Catwalks = TileID.Sets.Factory.CreateBoolSet();
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
-				/*Recipe.Create(item.type, 2)
-				.AddIngredient(, 1)
+				Recipe.Create(item.type, 2)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 1)
 				.Register();
-				Recipe.Create()
+				Recipe.Create(ModContent.ItemType<Scrap>())
 				.AddIngredient(item.type, 2)
-				.Register();*/
+				.Register();
 			};
 		}
 		public override void SetStaticDefaults() {
@@ -300,6 +301,18 @@ namespace Origins.Tiles.Ashen {
 		public override string Texture => typeof(Catwalk).GetDefaultTMLName();
 		public override string ItemTexture => typeof(Broken_Catwalk).GetDefaultTMLName() + "_Item";
 		public static int ID { get; private set; }
+		public override void OnLoad() {
+			Item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type, 2)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 1)
+				.AddCondition(Condition.InGraveyard)
+				.DisableDecraft()
+				.Register();
+				Recipe.Create(ModContent.ItemType<Scrap>())
+				.AddIngredient(item.type, 2)
+				.Register();
+			};
+		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.tileSolid[Type] = false;

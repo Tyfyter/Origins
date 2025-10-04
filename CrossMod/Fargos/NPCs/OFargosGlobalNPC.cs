@@ -17,7 +17,6 @@ namespace Origins.CrossMod.Fargos.NPCs {
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.ModNPC?.Mod is Fargowiltas.Fargowiltas;
 		public override void ModifyShop(NPCShop shop) {
 			if (shop.NpcType == ModContent.NPCType<LumberJack>() && shop.TryGetEntry(ItemID.Shadewood, out NPCShop.Entry shadewood)) {
-
 				shop.InsertAfter(shadewood, new(ModContent.ItemType<Endowood_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) });
 				shop.InsertAfter(shadewood, new(ModContent.ItemType<Marrowick_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) });
 				shop.InsertAfter(shadewood, new(ModContent.ItemType<Witherwood_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) });
