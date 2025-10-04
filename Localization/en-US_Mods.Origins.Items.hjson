@@ -3462,7 +3462,7 @@ C6_Jackhammer: {
 }
 
 Brineglow_Debug_Item: {
-	DisplayName: Brineglow Debug Item
+	DisplayName: Brineglow (Debugging Item)
 	Tooltip: ""
 }
 
@@ -3517,7 +3517,7 @@ World_Cracker_Relic_Item.DisplayName: World Cracker Relic
 World_Cracker_Trophy_Item.DisplayName: World Cracker Trophy
 
 Riven_Cactus_Item: {
-	DisplayName: Cactus Debug Item
+	DisplayName: Cactus (Debugging Item)
 	Tooltip: ""
 }
 
@@ -3542,7 +3542,7 @@ Defiled_Fountain_Item: {
 }
 
 Gel_Blister_Item: {
-	DisplayName: Gel Blister Debug Item
+	DisplayName: Gel Blister (Debugging Item)
 	Tooltip: ""
 }
 
@@ -5142,7 +5142,7 @@ Monolith_Rod: {
 }
 
 Peat_Moss_Debug_Item: {
-	DisplayName: Peat Moss Debug Item
+	DisplayName: "[fool:Items.Peat_Moss.DisplayName] (Debugging Item)"
 	Tooltip: ""
 }
 
@@ -5971,7 +5971,7 @@ Tangela_Bud: {
 }
 
 Venus_Coral_Debug_Item: {
-	DisplayName: Venus Coral Debug Item
+	DisplayName: Venus Coral (Debugging Item)
 	Tooltip: ""
 }
 
