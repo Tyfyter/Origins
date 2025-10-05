@@ -43,6 +43,7 @@ X: No progress
 々: Missing prerequisite development (unicode hex code 3005)
 赏: Missing loot (unicode hex code 8D4F)
 ␡: Needs removal (unicode hex code 2421)
+▼: Needs map color adjustment
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once
  + Additionally, specific requests can be mentioned in "()" after the entry]
@@ -57,7 +58,7 @@ BOSSES AND MINI-BOSSES:
 (X) Zombie Paladin
 
 (^) Defiled Amalgamation
-($, ^2/3) Fiberglass Weaver
+($, #2 ^2) Fiberglass Weaver !!!
 (^) Shimmer Construct
 (#, ^2) Trenchmaker
 (^) World Cracker
@@ -575,6 +576,7 @@ ACCESSORIES:
 (^) Protomind
 (^) Razorwire
 (^) Rebreather
+(X) Pacemaker !!!
 (^) Resin Shield
 (^) Resizing Glove
 (^) Return To Sender
@@ -1159,7 +1161,7 @@ TILES:
 |---
 (^) Aetherite Ore
 (^) Amoeba Fluid
-(#, ^2) Ashen Cactus !!!
+(#, ^2, ▼) Ashen Cactus !!!
 (^) Baryte
 (^) Batholith
 (^) Bleeding Obsidian
@@ -1174,7 +1176,7 @@ TILES:
 (^) Chambersite
 (^) Chambersite Gemspark
 (^) Chambersite Gemstone
-(@, ^3) Chambersite Gemstone (Ashen)
+(@, ^3, ▼) Chambersite Gemstone (Ashen)
 (^) Chambersite Gemstone (Corruption)
 (^) Chambersite Gemstone (Crimson)
 (^) Chambersite Gemstone (Defiled)
@@ -1187,7 +1189,7 @@ TILES:
 (^) Defiled Sand
 (^) Defiled Sandstone
 (^) Defiled Stone
-(@, ^3) Defiled Stone Brick
+(X) Defiled Stone Brick
 (^) Eitrite Ore
 (@4) Encrusted Brick
 (^) Encrusted Ore
@@ -1196,7 +1198,7 @@ TILES:
 (^) Fiberglass Block
 (^) Gray Ice Block
 (^) Hardened Defiled Sand
-(^) Hardened Sootsand
+(^, ▼) Hardened Sootsand
 (X) Lihzarhd Bomb Trap
 (^) Limestone
 (@4) Lost Brick
@@ -1219,18 +1221,18 @@ TILES:
 (X) Scrap Heap !!!
 (^) Silica
 (^) Silicon Ore
-(^) Soot Sandstone
-(@, ^3) Sootgrass !!!
+(^, ▼) Soot Sandstone
+(@, ^3, ▼) Sootgrass !!!
 (X) Space Goo
 (^) Spug Flesh
-(@, ^3) Spug Flesh Brick
-(X) Tainted Stone !!!
-(@, ^3) Tainted Stone Brick
+(X) Spug Flesh Brick
+(@, #2, ▼) Tainted Stone !!!
+(X) Tainted Stone Brick
 (X) Truss Block !!!
-(^) Type-I Fortified Steel Block
-(X) Type-II Fortified Steel Block !!!
-(@, ^3) Type-III Fortified Steel Block !!!
-(@, ^3) Witherwood !!!
+(^, ▼) Type-I Fortified Steel Block
+(@, #2, ▼) Type-II Fortified Steel Block !!!
+(#3, ^2, ▼) Type-III Fortified Steel Block !!!
+(@, ^3, ▼) Witherwood !!!
 
 (^) Amebic Gel Wall
 (^) Barnacle Wall
@@ -1240,7 +1242,7 @@ TILES:
 (X) Busted Block Wall
 (^) Calcified Spug Flesh Wall
 (^) Chambersite Gemspark Wall
-(^) Chambersite Gemstone Wall
+(@, ^3, ▼) Chambersite Gemstone Wall (Ashen)
 (^) Chambersite Gemstone Wall (Corruption)
 (^) Chambersite Gemstone Wall (Crimson)
 (^) Chambersite Gemstone Wall (Defiled)
@@ -1248,27 +1250,26 @@ TILES:
 (^) Defiled Grass Wall
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
-(@, ^3) Defiled Stone Brick Wall
-(^) Edenwood Wall
+(X) Defiled Stone Brick Wall
 (@, ^3) Encrusted Brick Wall
 (^) Endowood Wall
 (^) Fiberglass Wall
 (^) Hardened Defiled Sand Wall
-(#4?) Hardened Sootsand Wall !!!
+(@, ^3, ▼) Hardened Sootsand Wall !!!
 (@, ^3) Lost Brick Wall
 (^) Marrowick Wall
 (X) Molten Steel Wall !!!
 (X) Nova Brick Wall
 (^) Quartz Wall
 (^) Riven Grass Wall
-(@, ^3) Soot Sandstone Wall !!!
+(@, ^3, ▼) Soot Sandstone Wall !!!
 (^) Spug Flesh Wall
-(@, ^3) Spug Brick Wall
-(X) Type-III Fortified Steel Wall !!!
+(X) Spug Flesh Brick Wall
+(X, ?) Type-III Fortified Steel Wall !!! (why only type 3?)
 
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
-(@, ^3) Ashen Torch !!!
+(@, ^3, ▼) Ashen Torch !!!
 (^) Bile Torch
 (^) Brine Water Fountain
 (@, ^3) Bug Cage
@@ -1287,16 +1288,16 @@ TILES:
 (^) Marrowick Furniture
 (X) Nova Furniture
 (X) Peppered Moth Lamp !!!
-(^) Phoenum Torch
+(^, ▼) Phoenum Torch
 (X) Residue Furniture
 (^) Riven Torch
 (^) Riven Water Fountain
 (^) Shadow Torch
 (^) Traffic Cone
-(@, ^3) Witherwood Furniture
+(@, ^3, ▼) Witherwood Furniture
 
-(@, ^3) Ashen Campfire !!!
-(@, ^3, 赏) Ashen Dungeon Chest !!!
+(@, ^3, ▼) Ashen Campfire !!!
+(@, ^3, ▼) Ashen Dungeon Chest !!!
 (X) Batholith Grindstone
 (X) Bilious Incense
 (^) Brine Dungeon Chest
@@ -1340,8 +1341,8 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
-(@, ^3) Ashen Scrap Foliage !!!
-(@, ^3) Ashen Soot Foliage !!!
+(@, ^3, ▼) Ashen Scrap Foliage !!!
+(@, ^3, ▼) Ashen Soot Foliage !!!
 (X) Background Door !!!
 (X) Beacon Light !!!
 (^) Brineglow Vine
@@ -1352,7 +1353,7 @@ TILES:
 (X) Exoskeletal Baobab Tree
 (^) Exoskeletal Tree
 (X) Floodlight !!!
-(☻) Fungarust !!!
+(☻, ▼) Fungarust !!!
 (^) Fuzzvine
 (^) Gel Blister
 (X) Generation Station !!!
@@ -1372,12 +1373,12 @@ TILES:
 (^) Soulspore
 (X) Steel Support Beam !!!
 (X) Suit Locker !!!
-(☻) Surveysprout !!!
+(☻, ▼) Surveysprout !!!
 (^) Tangela Bramble
 (^) Underwater Vine
 (^) Venus Coral
 (^) Wilting Rose
-(@, ^3) Witherleaf Tree !!!
+(@, ^3, ▼) Witherleaf Tree !!!
 (X) Workstation Extras !!!
 (^) Wrycoral
 
@@ -1694,7 +1695,7 @@ MOUNTS & PETS:
 (^) Ninja Ravel
 (^) Ravel
 (^) Spider Ravel
-(X) SS-22 'Star Soldier'
+(X) SS-22 'Star Soldier' !!!
 (^) Stealth Ravel
 (X) Thrust Ravel
 (X) True Ravel
@@ -1761,8 +1762,10 @@ AMMO:
 CROSS-MOD CONTENT:
 |---
 (^) AlchemistNPC Lite sell TO stuff
+(X) Fargo's Altar Exterminator effect evils
 (ᗢ) Fargo's caught npcs
 (^) Fargo's Fountain biome change
+(X) Fargo's Purity Totem effects evils
 (ᗢ) Fargo's sell boss/rare npc summons
 (ᗢ) Fargo's sell evil woods
 (ᗢ) Luiafk Skeleton Merchant update
