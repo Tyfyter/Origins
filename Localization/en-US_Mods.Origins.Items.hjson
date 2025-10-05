@@ -6848,7 +6848,7 @@ Catwalk_Item: {
 
 Broken_Catwalk_Item: {
 	DisplayName: Broken Catwalk
-	Tooltip: "'Watch your set!'"
+	Tooltip: "'Watch your step!'"
 }
 
 Surveysprout_Seeds.DisplayName: Surveysprout Seeds
