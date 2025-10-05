@@ -15,6 +15,7 @@ using Origins.NPCs.Riven;
 using Origins.Projectiles.Misc;
 using Origins.Questing;
 using Origins.Tiles;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
@@ -90,14 +91,17 @@ namespace Origins.NPCs {
 					shop.Add<Cleansing_Station_Item>(Quest.QuestCondition<Cleansing_Station_Quest>());
 					shop.Add<Mojo_Flask>(Quest.QuestCondition<Cleansing_Station_Quest>());
 
-					shop.InsertAfter<Dreadful_Powder>(ItemID.CorruptGrassEcho, Condition.NotRemixWorld.CommaAnd(Condition.BloodMoon).And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
+					shop.InsertAfter<Dreadful_Powder>(ItemID.CrimsonGrassEcho, Condition.NotRemixWorld.CommaAnd(Condition.BloodMoon).And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
 					shop.InsertAfter<Sentient_Powder>(ItemID.CrimsonGrassEcho, Condition.NotRemixWorld.CommaAnd(Condition.BloodMoon).And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>()));
+					shop.InsertAfter<Ash_Urn>(ItemID.CrimsonGrassEcho, Condition.NotRemixWorld.CommaAnd(Condition.BloodMoon).And(ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>()));
 
 					shop.InsertAfter<Dreadful_Powder, Defiled_Grass_Seeds>(Condition.BloodMoon.And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
 					shop.InsertAfter<Sentient_Powder, Riven_Grass_Seeds>(Condition.BloodMoon.And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>()));
+					shop.InsertAfter<Ash_Urn, Ashen_Grass_Seeds>(Condition.BloodMoon.And(ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>()));
 
-					shop.InsertAfter<Defiled_Grass_Seeds>(ItemID.CorruptSeeds, Condition.InGraveyard.CommaAnd(Condition.Hardmode).And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>().Not()));
+					shop.InsertAfter<Defiled_Grass_Seeds>(ItemID.CrimsonSeeds, Condition.InGraveyard.CommaAnd(Condition.Hardmode).And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>().Not()));
 					shop.InsertAfter<Riven_Grass_Seeds>(ItemID.CrimsonSeeds, Condition.InGraveyard.CommaAnd(Condition.Hardmode).And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>().Not()));
+					shop.InsertAfter<Ashen_Grass_Seeds>(ItemID.CrimsonSeeds, Condition.InGraveyard.CommaAnd(Condition.Hardmode).And(ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>().Not()));
 					break;
 				}
 				case NPCID.Cyborg: {
