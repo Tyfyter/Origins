@@ -563,6 +563,7 @@ ACCESSORIES:
 (^) Olid Organ
 (^) Ornamental Keepsake
 (^) Otherworldly Cloak
+(X) Pacemaker
 (X) Parasite Arm
 (^) Party Ring Balloon
 (^) Plasma Bag
@@ -817,6 +818,7 @@ MELEE WEAPONS:
 (^) Nematoclaw
 (X) Origins Biome Keybrands
 (X) Soulfire Saw
+(X) The Claw
 (^) The Foot
 (X) The Muffler
 (X) Unicorn Lance
@@ -1129,6 +1131,7 @@ EXPLOSIVE WEAPONS:
 (X) Puffle
 (^) Rocodile
 (^) Self-Destruct
+(#, ^2) Sharknade-o
 (X) Supernova
 (X) The Heatseeker
 (X) The Rocketman
