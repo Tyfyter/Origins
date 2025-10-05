@@ -589,9 +589,9 @@ namespace Origins {
 				globalLootViewer.Call("IgnoreConditionWhenHighLighting", DropConditions.PlayerInteraction);
 			}
 			if (ModLoader.TryGetMod("EpikV2", out instance.epikV2)) {
+				EpikV2.Call("AddModEvilBiome", GetInstance<Ashen_Biome>());
 				EpikV2.Call("AddModEvilBiome", GetInstance<Defiled_Wastelands>());
 				EpikV2.Call("AddModEvilBiome", GetInstance<Riven_Hive>());
-				EpikV2.Call("AddModEvilBiome", GetInstance<Ashen_Biome>());
 				/*EpikV2.Call("AddBiomeKey",
 					ItemType<Defiled_Biome_Keybrand>(),
 					ItemType<Defiled_Key>(),
@@ -693,7 +693,9 @@ namespace Origins {
 				OriginsSets.NPCs.TargetDummies[luiafk.Find<ModNPC>("Deeps").Type] = true;
 			}
 
-			conditionalCompatRecommendations.Add((() => ModLoader.HasMod("AlchemistNPCLite") && !(ModLoader.HasMod("ShopExtender") || ModLoader.HasMod("ShopExpander")), Language.GetText("Mods.Origins.ModCompatNotes.AlchemistShops")));
+			conditionalCompatRecommendations.Add((
+				() => !(ModLoader.HasMod("ShopExtender") || ModLoader.HasMod("ShopExpander")),
+				Language.GetText("Mods.Origins.ModCompatNotes.ToManyItems" + (ModLoader.HasMod("AlchemistNPC") ? "Alch" : string.Empty) )));
 		}
 		public static void AddRecipes() {
 			if (instance.thorium is not null) AddThoriumRecipes();
