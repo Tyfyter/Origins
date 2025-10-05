@@ -577,7 +577,6 @@ ACCESSORIES:
 (^) Protomind
 (^) Razorwire
 (^) Rebreather
-(X) Pacemaker !!!
 (^) Resin Shield
 (^) Resizing Glove
 (^) Return To Sender
