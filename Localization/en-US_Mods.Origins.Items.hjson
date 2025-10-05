@@ -6843,12 +6843,12 @@ Ashen_Key: {
 
 Catwalk_Item: {
 	DisplayName: Catwalk
-	Tooltip: ""
+	Tooltip: "'Now with safety rails!'"
 }
 
 Broken_Catwalk_Item: {
 	DisplayName: Broken Catwalk
-	Tooltip: ""
+	Tooltip: "'Watch your set!'"
 }
 
 Surveysprout_Seeds.DisplayName: Surveysprout Seeds
