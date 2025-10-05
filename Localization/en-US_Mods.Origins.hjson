@@ -1998,6 +1998,7 @@ Projectiles: {
 	Sootsand_Ball_Gun.DisplayName: Sootsand Ball
 	Sootsand_Ball_Falling.DisplayName: Sootsand Ball
 	Orange_Solution_P.DisplayName: Orange Solution
+	Blotopus_P_Hostile.DisplayName: Blotopus
 }
 
 Prefixes: {

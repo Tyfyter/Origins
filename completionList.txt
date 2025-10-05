@@ -188,7 +188,7 @@ ENEMY NPCS:
 (^) Barnacleback
 (^) Barnacle Bunny
 (^) Bile Thrower
-(X) Blotopus
+(○, ☻) Blotopus (probably shouldn't have the weapon be 100%, balance testers plz figure out the best drop rate)
 (^) Bottomfeeder
 (^) Boulder Mimic
 (^) Buckethead Zombie

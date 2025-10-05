@@ -4,7 +4,6 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,7 +14,6 @@ namespace Origins.CrossMod.Fargos.Items {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 10;
 		}
-
 		public override void SetDefaults() {
 			Item.width = 20;
 			Item.height = 26;
@@ -32,12 +30,10 @@ namespace Origins.CrossMod.Fargos.Items {
 			Item.shoot = 1;
 			Item.shootSpeed = 5f;
 		}
-
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			Projectile.NewProjectile(player.GetSource_ItemUse(source.Item), position, velocity, ModContent.ProjectileType<TSolution>(), 0, 0f, Main.myPlayer, 0f, 0f, 0f);
 			return false;
 		}
-
 		public override void AddRecipes() {
 			int amt;
 			Recipe recipe = Recipe.Create(Type);
@@ -66,12 +62,10 @@ namespace Origins.CrossMod.Fargos.Items {
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 170;
 		}
-
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.Kill();
 			return true;
 		}
-
 		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(in SoundID.Shatter, Projectile.Center);
 			int num = 150;
