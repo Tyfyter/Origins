@@ -30,6 +30,10 @@ namespace Origins.Tiles {
 				}
 			}
 		}
+		public static Color FromHexRGB(uint hex) => FromHexRGBA((hex << 8) | 0x000000ffu);
+		public static Color FromHexRGBA(uint hex) => new() {
+			PackedValue = ((hex & 0xff000000u) >> 24) | ((hex & 0x00ff0000u) >> 8) | ((hex & 0x0000ff00u) << 8) | ((hex & 0x000000ffu) << 24),
+		};
 		[Obsolete]
 		protected void AddDefiledTile() { }
 	}

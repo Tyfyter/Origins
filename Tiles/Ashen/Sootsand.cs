@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Sootsand : ModTile, IAshenTile {
+	public class Sootsand : OriginTile, IAshenTile {
 		public override string Texture => typeof(Defiled_Sand).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
@@ -32,7 +32,7 @@ namespace Origins.Tiles.Ashen {
 
 			MineResist = 0.5f; // Sand tile typically require half as many hits to mine.
 			DustType = Ashen_Biome.DefaultTileDust;
-			AddMapEntry(new Color(255, 175, 175));
+			AddMapEntry(FromHexRGB(0x817691));
 		}
 
 		public override bool HasWalkDust() {

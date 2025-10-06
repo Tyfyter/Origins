@@ -1200,7 +1200,7 @@ TILES:
 (^) Fiberglass Block
 (^) Gray Ice Block
 (^) Hardened Defiled Sand
-(^, ▼) Hardened Sootsand
+(☻) Hardened Sootsand
 (X) Lihzarhd Bomb Trap
 (^) Limestone
 (@4) Lost Brick
@@ -1223,7 +1223,7 @@ TILES:
 (X) Scrap Heap !!!
 (^) Silica
 (^) Silicon Ore
-(^, ▼) Soot Sandstone
+(☻) Soot Sandstone
 (@, ^3, ▼) Sootgrass !!!
 (X) Space Goo
 (^) Spug Flesh
@@ -1231,9 +1231,9 @@ TILES:
 (@, #2, ▼) Tainted Stone !!!
 (X) Tainted Stone Brick
 (X) Truss Block !!!
-(^, ▼) Type-I Fortified Steel Block
+(☻) Type-I Fortified Steel Block
 (@, #2, ▼) Type-II Fortified Steel Block !!!
-(#3, ^2, ▼) Type-III Fortified Steel Block !!!
+(☻) Type-III Fortified Steel Block !!!
 (@, ^3, ▼) Witherwood !!!
 
 (^) Amebic Gel Wall

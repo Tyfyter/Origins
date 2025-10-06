@@ -11,9 +11,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Fortified_Steel_Block1 : OriginTile, IAshenTile {
-		public string[] Categories => [
-			"Stone"
-		];
+		public virtual Color MapColor => FromHexRGB(0x7a391a);
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)TileType<Ashen_Foliage>(), 0, 6));
@@ -24,7 +22,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.Conversion.Stone[Type] = false;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
-			AddMapEntry(new Color(255, 200, 200));
+			AddMapEntry(MapColor);
 
 			MinPick = 65;
 			MineResist = 2;
@@ -41,6 +39,7 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Fortified_Steel_Block3 : Fortified_Steel_Block1 {
 		AutoLoadingAsset<Texture2D> bgTexture = typeof(Fortified_Steel_Block3).GetDefaultTMLName() + "_BG";
+		public override Color MapColor => FromHexRGB(0x30131c);
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			MinPick = 210;
