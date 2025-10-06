@@ -118,12 +118,15 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.InsertAfter(ItemType<Defiled_Torch>(), new Item(ItemType<Riven_Torch>()) { shopCustomPrice = 300 });
 						shop.InsertAfter(ItemType<Riven_Torch>(), new Item(ItemType<Ashen_Torch>()) { shopCustomPrice = 300 }); // the ashen torch
 					}
+
+					static List<int> GetItems<TKind>() where TKind : FurnitureBase => [
+						FurnitureSet.Get<Endowood_Furniture, TKind>().Item.Type,
+						FurnitureSet.Get<Marrowick_Furniture, TKind>().Item.Type,
+						FurnitureSet.Get<Witherwood_Furniture, TKind>().Item.Type,
+						FurnitureSet.Get<Limestone_Furniture, TKind>().Item.Type
+					];
 					if (shop.Name == "Candle") {
-						List<int> items = [
-							FurnitureSet.Get<Endowood_Furniture, FurnitureSet_Candle>().Item.Type,
-							FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Candle>().Item.Type,
-							FurnitureSet.Get<Witherwood_Furniture, FurnitureSet_Candle>().Item.Type,
-							FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Candle>().Item.Type];
+						List<int> items = GetItems<FurnitureSet_Candle>();
 
 						shop.InsertAfter(ItemID.ShadewoodCandle, new Item(items[0]) { shopCustomPrice = 500 });
 						shop.InsertAfter(items[0], new Item(items[1]) { shopCustomPrice = 500 });
@@ -131,11 +134,7 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.InsertAfter(ItemID.GraniteCandle, new Item(items[3]) { shopCustomPrice = 500 });
 					}
 					if (shop.Name == "Lamp") {
-						List<int> items = [
-							FurnitureSet.Get<Endowood_Furniture, FurnitureSet_Lamp>().Item.Type,
-							FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Lamp>().Item.Type,
-							FurnitureSet.Get<Witherwood_Furniture, FurnitureSet_Lamp>().Item.Type,
-							FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Lamp>().Item.Type];
+						List<int> items = GetItems<FurnitureSet_Lamp>();
 
 						shop.InsertAfter(ItemID.ShadewoodLamp, new Item(items[0]) { shopCustomPrice = 500 });
 						shop.InsertAfter(items[0], new Item(items[1]) { shopCustomPrice = 500 });
@@ -143,11 +142,7 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.InsertAfter(ItemID.GraniteLamp, new Item(items[3]) { shopCustomPrice = 500 });
 					}
 					if (shop.Name == "Lantern") {
-						List<int> items = [
-							FurnitureSet.Get<Endowood_Furniture, FurnitureSet_Lantern>().Item.Type,
-							FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Lantern>().Item.Type,
-							FurnitureSet.Get<Witherwood_Furniture, FurnitureSet_Lantern>().Item.Type,
-							FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Lantern>().Item.Type];
+						List<int> items = GetItems<FurnitureSet_Lantern>();
 
 						shop.InsertAfter(ItemID.ShadewoodLantern, new Item(items[0]) { shopCustomPrice = 500 });
 						shop.InsertAfter(items[0], new Item(items[1]) { shopCustomPrice = 500 });
@@ -155,11 +150,7 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.InsertAfter(ItemID.GraniteLantern, new Item(items[3]) { shopCustomPrice = 500 });
 					}
 					if (shop.Name == "Chandelier") {
-						List<int> items = [
-							FurnitureSet.Get<Endowood_Furniture, FurnitureSet_Chandelier>().Item.Type,
-							FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Chandelier>().Item.Type,
-							FurnitureSet.Get<Witherwood_Furniture, FurnitureSet_Chandelier>().Item.Type,
-							FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Chandelier>().Item.Type];
+						List<int> items = GetItems<FurnitureSet_Chandelier>();
 
 						shop.InsertAfter(ItemID.ShadewoodChandelier, new Item(items[0]) { shopCustomPrice = 1200 });
 						shop.InsertAfter(items[0], new Item(items[1]) { shopCustomPrice = 1200 });
@@ -167,11 +158,7 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.InsertAfter(ItemID.GraniteChandelier, new Item(items[3]) { shopCustomPrice = 1200 });
 					}
 					if (shop.Name == "Candelabra") {
-						List<int> items = [
-							FurnitureSet.Get<Endowood_Furniture, FurnitureSet_Candelabra>().Item.Type,
-							FurnitureSet.Get<Marrowick_Furniture, FurnitureSet_Candelabra>().Item.Type,
-							FurnitureSet.Get<Witherwood_Furniture, FurnitureSet_Candelabra>().Item.Type,
-							FurnitureSet.Get<Limestone_Furniture, FurnitureSet_Candelabra>().Item.Type];
+						List<int> items = GetItems<FurnitureSet_Candelabra>();
 
 						shop.InsertAfter(ItemID.ShadewoodCandelabra, new Item(items[0]) { shopCustomPrice = 500 });
 						shop.InsertAfter(items[0], new Item(items[1]) { shopCustomPrice = 500 });
