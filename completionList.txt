@@ -1764,12 +1764,14 @@ AMMO:
 CROSS-MOD CONTENT:
 |---
 (^) AlchemistNPC Lite sell TO stuff
-(X) Fargo's Altar Exterminator effect evils
+(^) Fargo's Altar Exterminator effect evils
 (ᗢ) Fargo's caught npcs
 (^) Fargo's Fountain biome change
 (X) Fargo's Purity Totem effects evils
 (ᗢ) Fargo's sell boss/rare npc summons
 (ᗢ) Fargo's sell evil woods
+(^) Fargo's stat sheet has explosive stats
+(^) Fargo's stat sheet has perm upgrades
 (ᗢ) Luiafk Skeleton Merchant update
 (ᗢ) Luiafk Mobile Merchant sells Merchant stuff
 (^) Thorium Bird feeder support

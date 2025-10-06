@@ -431,6 +431,21 @@ namespace Origins {
 				);
 			}
 			if (ModLoader.TryGetMod("Fargowiltas", out instance.fargosMutant)) {
+				FargosMutant.Call("AddIndestructibleTileType", TileType<Fortified_Steel_Block1>());
+				FargosMutant.Call("AddIndestructibleTileType", TileType<Fortified_Steel_Block2>());
+				FargosMutant.Call("AddIndestructibleTileType", TileType<Fortified_Steel_Block3>());
+
+				FargosMutant.Call("AddEvilAltar", Ashen_Altar.ID);
+				FargosMutant.Call("AddEvilAltar", Defiled_Altar.ID);
+				FargosMutant.Call("AddEvilAltar", Riven_Altar.ID);
+
+				FargosMutant.Call("AddStat", (int)ItemID.Bomb, () => Language.GetTextValueWith("Mods.Origins.CrossMod.ExplosiveDamage", Math.Round(Main.LocalPlayer.GetTotalDamage(DamageClasses.Explosive).Additive * Main.LocalPlayer.GetTotalDamage(DamageClasses.Explosive).Multiplicative * 100f - 100f)));
+				FargosMutant.Call("AddStat", (int)ItemID.Bomb, () => Language.GetTextValueWith("Mods.Origins.CrossMod.ExplosiveCritical", (int)Main.LocalPlayer.GetTotalCritChance(DamageClasses.Explosive)));
+
+				FargosMutant.Call("AddPermUpgrade", ItemType<Mojo_Injection>(), () => Main.LocalPlayer.OriginPlayer().mojoInjection);
+				FargosMutant.Call("AddPermUpgrade", ItemType<Crown_Jewel>(), () => Main.LocalPlayer.OriginPlayer().crownJewel);
+
+				FargosMutant.Call("AddSummon", 3, ItemType<Distress_Beacon>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
 				FargosMutant.Call("AddSummon", 3, ItemType<Nerve_Impulse_Manipulator>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
 				FargosMutant.Call("AddSummon", 3, ItemType<Sus_Ice_Cream>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
 				FargosMutant.Call("AddSummon", 4.7, ItemType<Shaped_Glass>(), () => Boss_Tracker.Instance.downedFiberglassWeaver, Item.buyPrice(gold: 15));
