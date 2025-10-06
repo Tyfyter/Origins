@@ -206,7 +206,7 @@ namespace Origins.Tiles.Ashen {
 								if (left.Slope == SlopeType.SlopeDownLeft) {
 									railingFrame = 0;
 								} else {
-									railingFrame = 4;
+									railingFrame = 3;
 								}
 								k = int.MaxValue;
 							}
@@ -220,7 +220,7 @@ namespace Origins.Tiles.Ashen {
 								if (right.Slope == SlopeType.SlopeDownRight) {
 									railingFrame = 0;
 								} else {
-									railingFrame = 3;
+									railingFrame = 4;
 								}
 								k = int.MaxValue;
 							}
@@ -271,7 +271,7 @@ namespace Origins.Tiles.Ashen {
 				if (!Main.tile[i + 1, j - 2].HasFullSolidTile()) railingFrame = 1;
 				break;
 			}
-			Rectangle topFrame = new(railingFrame * 18, 4 * 18, 16, 16);
+			Rectangle topFrame = new(railingFrame * 18, 3 * 18, 16, 16);
 			switch (railingFrame) {
 				case 8:
 				case 10:
@@ -284,7 +284,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileBatch.Draw(
 				TextureAssets.Tile[Type].Value,
 				new Vector4(pos.X, pos.Y + 16, 16, 16),
-				new Rectangle(railingFrame * 18, 5 * 18, 16, 16),
+				new Rectangle(railingFrame * 18, 4 * 18, 16, 16),
 				vertices
 			);
 			Lighting.GetCornerColors(i, j - 2, out vertices);
@@ -298,8 +298,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Broken_Catwalk : Catwalk {
-		public override string Texture => typeof(Catwalk).GetDefaultTMLName();
-		public override string ItemTexture => typeof(Broken_Catwalk).GetDefaultTMLName() + "_Item";
 		public static int ID { get; private set; }
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
@@ -326,9 +324,6 @@ namespace Origins.Tiles.Ashen {
 		static void Main_OnPreDraw(GameTime obj) {
 			Main.tileSolid[ID] = true;
 			Main.tileSolidTop[ID] = true;
-		}
-		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
-			drawData.tileCache.TileFrameY = 18;
 		}
 	}
 	public struct ExtraFrameData : ITileData {
