@@ -1,14 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.World.BiomeData;
-using PegasusLib;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using ThoriumMod.Core.EntitySources;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
@@ -42,7 +40,7 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Fortified_Steel_Block3 : Fortified_Steel_Block1 {
-		AutoLoadingAsset<Texture2D> bgTexture = "Origins/Tiles/Ashen/Fortified_Steel_Blocks_BG";
+		AutoLoadingAsset<Texture2D> bgTexture = typeof(Fortified_Steel_Block3).GetDefaultTMLName() + "_BG";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			MinPick = 210;
