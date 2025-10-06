@@ -53,60 +53,95 @@ namespace Origins.Tiles.Ashen {
 			}
 			Lighting.GetCornerColors(i, j, out VertexColors vertices);
 			Vector4 destination = new(pos, 16, 16);
-			Rectangle source = new((i * 16) % (bgTexture.Value.Width - 16), (j * 16) % (bgTexture.Value.Height - 16), 16, 16);
+			Rectangle source = new((i * 16) % bgTexture.Value.Width, (j * 16) % bgTexture.Value.Height, 16, 16);
 			Tile tile = Main.tile[i, j];
-			switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {
-				case (0, 3):
-				case (0, 4):
-				case (2, 3):
-				case (2, 4):
-				case (4, 3):
-				case (4, 4):
-				Cull(left: 4);
-				break;
-				case (1, 3):
-				case (1, 4):
-				case (3, 3):
-				case (3, 4):
-				case (5, 3):
-				case (5, 4):
-				Cull(right: 4);
-				break;
+			switch (tile.BlockType) {
+				default: {
+					int cullLeft = 0;
+					int cullRight = 0;
+					int cullTop = 0;
+					int cullBottom = 0;
+					if (tile.IsHalfBlock) SetCull(top: 12);
+					switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {
+						case (0, 3):
+						case (0, 4):
+						case (2, 3):
+						case (2, 4):
+						case (4, 3):
+						case (4, 4):
+						SetCull(left: 4);
+						break;
+						case (1, 3):
+						case (1, 4):
+						case (3, 3):
+						case (3, 4):
+						case (5, 3):
+						case (5, 4):
+						SetCull(right: 4);
+						break;
 
-				case (6, 0):
-				case (7, 0):
-				case (8, 0):
-				Cull(top: 4);
-				break;
-				case (6, 3):
-				case (7, 3):
-				case (8, 3):
-				Cull(bottom: 4);
-				break;
+						case (1, 0):
+						case (2, 0):
+						case (3, 0):
+						SetCull(top: 4);
+						break;
 
-				case (9, 0):
-				case (9, 1):
-				case (9, 2):
-				Cull(left: 4);
-				break;
-				case (12, 0):
-				case (12, 1):
-				case (12, 2):
-				Cull(right: 4);
-				break;
+						case (6, 0):
+						case (7, 0):
+						case (8, 0):
+						SetCull(top: 4);
+						break;
+						case (6, 3):
+						case (7, 3):
+						case (8, 3):
+						SetCull(bottom: 4);
+						break;
 
-				case (9, 3):
-				case (10, 3):
-				case (11, 3):
-				Cull(left: 4, right: 4);
+						case (9, 0):
+						case (9, 1):
+						case (9, 2):
+						SetCull(left: 4);
+						break;
+						case (12, 0):
+						case (12, 1):
+						case (12, 2):
+						SetCull(right: 4);
+						break;
+
+						case (9, 3):
+						case (10, 3):
+						case (11, 3):
+						SetCull(left: 4, right: 4);
+						break;
+					}
+					Cull(cullLeft, cullRight, cullTop, cullBottom);
+					Main.tileBatch.Draw(
+						bgTexture,
+						destination,
+						source,
+						vertices
+					);
+					void SetCull(int left = 0, int right = 0, int top = 0, int bottom = 0) {
+						cullLeft = int.Max(left, cullLeft);
+						cullRight = int.Max(right, cullRight);
+						cullTop = int.Max(top, cullTop);
+						cullBottom = int.Max(bottom, cullBottom);
+					}
+					break;
+				}
+				case BlockType.SlopeDownLeft:
+				DrawSlope(false, true);
+				break;
+				case BlockType.SlopeDownRight:
+				DrawSlope(true, true);
+				break;
+				case BlockType.SlopeUpLeft:
+				DrawSlope(false, false);
+				break;
+				case BlockType.SlopeUpRight:
+				DrawSlope(true, false);
 				break;
 			}
-			Main.tileBatch.Draw(
-				bgTexture,
-				destination,
-				source,
-				vertices
-			);
 			return base.PreDraw(i, j, spriteBatch);
 			void Cull(int left = 0, int right = 0, int top = 0, int bottom = 0) {
 				destination.X += left;
@@ -138,6 +173,28 @@ namespace Origins.Tiles.Ashen {
 					Color.Lerp(vertices.TopRightColor, vertices.BottomRightColor, top / 16f),
 					Color.Lerp(vertices.BottomRightColor, vertices.TopRightColor, bottom / 16f)
 				);
+			}
+			void DrawSlope(bool right, bool bottom) {
+				VertexColors _vertices = vertices;
+				Vector4 _destination = destination;
+				Rectangle _source = source;
+				for (int i = 2; i < 12; i += 2) {
+					vertices = _vertices;
+					destination = _destination;
+					source = _source;
+					Cull(
+						left: (right ? 16 - i : i) - 2,
+						right: right ? i : 16 - i,
+						top: bottom ? i : 0,
+						bottom: bottom ? 0 : i
+					);
+					Main.tileBatch.Draw(
+						bgTexture,
+						destination,
+						source,
+						vertices
+					);
+				}
 			}
 		}
 	}
