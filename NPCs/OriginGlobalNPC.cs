@@ -16,6 +16,7 @@ using Origins.Projectiles.Misc;
 using Origins.Questing;
 using Origins.Tiles;
 using Origins.Tiles.Ashen;
+using Origins.Tiles.Decoration;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
@@ -151,6 +152,7 @@ namespace Origins.NPCs {
 				}
 				case NPCID.Painter: {
 					shop.Add<Spray_N_Pray>(Quest.QuestCondition<Spray_N_Pray_Quest>());
+					shop.Add<Five_Evils_Item>(Condition.DrunkWorld.And(ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>()));
 					break;
 				}
 			}
@@ -277,7 +279,8 @@ namespace Origins.NPCs {
 				case NPCID.DesertLamiaDark:
 				bestiaryEntry.AddTags(
 					ModContent.GetInstance<Defiled_Wastelands_Underground_Desert>().ModBiomeBestiaryInfoElement,
-					ModContent.GetInstance<Riven_Hive_Underground_Desert>().ModBiomeBestiaryInfoElement
+					ModContent.GetInstance<Riven_Hive_Underground_Desert>().ModBiomeBestiaryInfoElement,
+					ModContent.GetInstance<Ashen_Underground_Desert>().ModBiomeBestiaryInfoElement
 				);
 				break;
 			}

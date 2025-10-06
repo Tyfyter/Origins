@@ -1390,7 +1390,7 @@ TILES:
 (^) A Perfect World
 (^) Deceptive Beauty
 (^) The Jungle's Window
-(#, ^2) There's Five of Them Now !!!
+(☻) There's Five of Them Now !!! (price adjustment)
 
 (^) Ancient Music Box (Brine Pool)
 (ᗢ) Ancient Music Box (Defiled Wastelands)

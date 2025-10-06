@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Decoration {
-    public class The_Jungles_Window : ModTile {
+    public class Five_Evils : ModTile {
 		public string[] Categories => [
 			"Painting"
 		];
@@ -16,19 +16,18 @@ namespace Origins.Tiles.Decoration {
 			TileID.Sets.FramesOnKillWall[Type] = true;
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
-			TileObjectData.newTile.Origin = new Point16(1, 0);
-			TileObjectData.newTile.Height = 2;
+			TileObjectData.newTile.CoordinateHeights = [ 16, 16, 16, 16, 16 ];
+			TileObjectData.newTile.Height = 5;
+			TileObjectData.newTile.Width = 8;
+			TileObjectData.newTile.Origin = new Point16(3, 2);
 			TileObjectData.addTile(Type);
 
 			AddMapEntry(new Color(99, 50, 30), Language.GetText("MapObject.Painting"));
 		}
 	}
-	public class The_Jungles_Window_Item : ModItem {
-		public override void SetStaticDefaults() {
-			OriginsSets.Items.PaintingsNotFromVendor[Type] = true;
-		}
+	public class Five_Evils_Item : ModItem {
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(ModContent.TileType<The_Jungles_Window>());
+			Item.DefaultToPlaceableTile(ModContent.TileType<Five_Evils>());
 			Item.value = Item.sellPrice(gold: 2);
 		}
 	}

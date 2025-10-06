@@ -6881,3 +6881,8 @@ Trenchmaker_Bag: {
 // Trenchmaker_Mask.DisplayName: Trenchmaker Mask
 // Trenchmaker_Relic_Item.DisplayName: Trenchmaker Relic
 // Trenchmaker_Trophy_Item.DisplayName: Trenchmaker Trophy
+
+Five_Evils_Item: {
+	// DisplayName: There's Five of Them Now
+	// Tooltip: "'Welcoming of fifth evil'"
+}
