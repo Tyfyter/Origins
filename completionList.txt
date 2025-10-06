@@ -1343,11 +1343,13 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
+(X) Ashen Altar !!!
 (@, ^3, ▼) Ashen Scrap Foliage !!!
 (@, ^3, ▼) Ashen Soot Foliage !!!
-(X) Background Door !!!
-(X) Beacon Light !!!
+(#, ^2) Background Door !!!
+(#, ^2) Beacon Light !!!
 (^) Brineglow Vine
+(^) Defiled Altar
 (^) Defiled Foliage
 (々) Defiled Heart
 (^) Defiled Relay
@@ -1364,17 +1366,18 @@ TILES:
 (^) Limestone Rubble
 (^) Marrowick Coral
 (^) Marrowick Flange
-(X) Modular Light Fixture !!!
+(#, ^2) Modular Light Fixture !!!
 (^) Ocotillo
 (X) Petrified Baobab Tree
 (^) Petrified Tree
+(^) Riven Altar
 (^) Riven Foliage
 (^) Riven Pot
 (X) Sheet Metal !!!
 (^) Shelf Coral
 (^) Soulspore
-(X) Steel Support Beam !!!
-(X) Suit Locker !!!
+(#, ^2) Steel Support Beam !!!
+(#, ^2) Suit Locker !!!
 (☻, ▼) Surveysprout !!!
 (^) Tangela Bramble
 (^) Underwater Vine
@@ -1386,10 +1389,8 @@ TILES:
 
 (^) A Perfect World
 (^) Deceptive Beauty
-(X) Four Corners
 (^) The Jungle's Window
-(X) There's Five of Them Now !!!
-(X) What's Out There
+(#, ^2) There's Five of Them Now !!!
 
 (^) Ancient Music Box (Brine Pool)
 (ᗢ) Ancient Music Box (Defiled Wastelands)
@@ -1438,8 +1439,8 @@ TILES:
 (^) Shimmer Construct Trophy
 (X) SR-48 Relic
 (X) SR-48 Trophy
-(@, ^3) Trenchmaker Relic !!!
-(@, ^3) Trenchmaker Trophy !!!
+(^) Trenchmaker Relic
+(^) Trenchmaker Trophy
 (^) World Cracker Relic
 (^) World Cracker Trophy
 ---

@@ -460,22 +460,22 @@ Generic: {
 
 AltBiomes: {
 	Defiled_Wastelands_Alt_Biome: {
-		DisplayName: "{§Defiled_Wastelands}"
+		DisplayName: "{§Defiled}"
 		Description: The surrogate evil {§Defiled} is guaranteed to be present in your world.
 		GenPassName: "{§Defiled}ifying"
 		DryadTextDescriptor: "{§Defiled}"
 	}
 
 	Riven_Hive_Alt_Biome: {
-		DisplayName: "{§Riven_Hive}"
-		Description: Life-harboring, beautiful {§Riven} is guaranteed to be present in your world.
+		DisplayName: "{§Riven}"
+		Description: The deceptive {§Riven} is guaranteed to be present in your world.
 		GenPassName: Blue Lobsterating
 		DryadTextDescriptor: "{§Riven}"
 	}
 
 	Ashen_Alt_Biome: {
 		DisplayName: "{§Ashen}"
-		Description: The Mechanicus Supremety {§Ashen} is guaranteed to be present in your world.
+		Description: The mechanical {§Ashen} is guaranteed to be present in your world.
 		GenPassName: Polluting
 		DryadTextDescriptor: "{§Ashen}"
 	}

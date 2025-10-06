@@ -5,6 +5,5 @@
 	public class Lost_Diver_Trophy : TrophyTileBase { }
 	public class Shimmer_Construct_Trophy : TrophyTileBase { }
 	public class Trenchmaker_Trophy : TrophyTileBase {
-		public override string Texture => base.Texture.Replace("Trenchmaker", "Boss") + "_Empty";
 	}
 }
