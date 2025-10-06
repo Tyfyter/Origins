@@ -155,8 +155,8 @@ namespace Origins.Tiles.Ashen {
 				WorldGen.TileFrame(i, j + 1);
 			}
 		}
+		static bool IsCatwalk(Tile tile) => tile.HasTile && Catwalks[tile.TileType];
 		public static void UpdateRailingFrame(int i, int j) {
-			static bool IsCatwalk(Tile tile) => tile.HasTile && Catwalks[tile.TileType];
 			Tile tile = Main.tile[i, j];
 			ref byte railingFrame = ref tile.Get<ExtraFrameData>().value;
 			byte oldRailingFrame = railingFrame;
@@ -165,14 +165,21 @@ namespace Origins.Tiles.Ashen {
 			const int max_connection_dist = 8;
 			switch (tileFrame) {
 				case 1:
+				case 15:
+				railingFrame = tileFrame;
+				if (!IsCatwalk(Main.tile[i - 1, j])) railingFrame = 5;
+				break;
 				case 2:
+				case 16:
+				railingFrame = tileFrame;
+				if (!IsCatwalk(Main.tile[i + 1, j])) railingFrame = 5;
+				break;
+
 				case 3:
 				case 4:
 				case 5:
 				case 8:
 				case 10:
-				case 15:
-				case 16:
 				railingFrame = tileFrame;
 				break;
 
@@ -197,7 +204,15 @@ namespace Origins.Tiles.Ashen {
 				break;
 
 				case 12:
+				railingFrame = 5;
+				if (IsCatwalk(Main.tile[i - 1, j])) goto case 0;
+				break;
+
 				case 13:
+				railingFrame = 5;
+				if (IsCatwalk(Main.tile[i + 1, j])) goto case 0;
+				break;
+
 				case 0: {
 					int k;
 					for (k = 1; k <= max_connection_dist; k++) {
@@ -276,9 +291,14 @@ namespace Origins.Tiles.Ashen {
 			Rectangle topFrame = new(railingFrame * 18, 3 * 18, 16, 16);
 			switch (railingFrame) {
 				case 8:
+				pos.Y += 6;
+				if (tile.TileFrameX > 24 * 18 && tile.TileFrameX < 27 * 18 && IsCatwalk(Main.tile[i - 1, j])) break;
+				topFrame.Y -= 18;
+				break;
+
 				case 10:
 				pos.Y += 6;
-				if (tile.TileFrameX > 24 * 18 && tile.TileFrameX < 27 * 18) break;
+				if (tile.TileFrameX > 24 * 18 && tile.TileFrameX < 27 * 18 && IsCatwalk(Main.tile[i + 1, j])) break;
 				topFrame.Y -= 18;
 				break;
 			}
