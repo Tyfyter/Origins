@@ -196,6 +196,8 @@ namespace Origins.Tiles.Ashen {
 				railingFrame = 10;
 				break;
 
+				case 12:
+				case 13:
 				case 0: {
 					int k;
 					for (k = 1; k <= max_connection_dist; k++) {
