@@ -1232,7 +1232,7 @@ TILES:
 (X) Tainted Stone Brick
 (X) Truss Block !!!
 (^) Type-I Fortified Steel Block
-(#2, ^2, ▼) Type-II Fortified Steel Block !!!
+(☻) Type-II Fortified Steel Block !!!
 (^) Type-III Fortified Steel Block
 (@, ^3, ▼) Witherwood !!!
 

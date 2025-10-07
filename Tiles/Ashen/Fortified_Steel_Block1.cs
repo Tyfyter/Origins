@@ -29,22 +29,7 @@ namespace Origins.Tiles.Ashen {
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
-	}
-	public class Fortified_Steel_Block2 : Fortified_Steel_Block1 {
-		public override string Texture => base.Texture.Replace("2", "1");
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			MinPick = 100;
-		}
-	}
-	public class Fortified_Steel_Block3 : Fortified_Steel_Block1 {
-		AutoLoadingAsset<Texture2D> bgTexture = typeof(Fortified_Steel_Block3).GetDefaultTMLName() + "_BG";
-		public override Color MapColor => FromHexRGB(0x30131c);
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			MinPick = 210;
-		}
-		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+		public static void DrawTilePattern(int i, int j, Texture2D patternTexture) {
 			Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
 			if (!Main.drawToScreen) {
 				pos.X += Main.offScreenRange;
@@ -52,7 +37,7 @@ namespace Origins.Tiles.Ashen {
 			}
 			Lighting.GetCornerColors(i, j, out VertexColors vertices);
 			Vector4 destination = new(pos, 16, 16);
-			Rectangle source = new((i * 16) % bgTexture.Value.Width, (j * 16) % bgTexture.Value.Height, 16, 16);
+			Rectangle source = new((i * 16) % patternTexture.Width, (j * 16) % patternTexture.Height, 16, 16);
 			Tile tile = Main.tile[i, j];
 			switch (tile.BlockType) {
 				default: {
@@ -115,7 +100,7 @@ namespace Origins.Tiles.Ashen {
 					}
 					Cull(cullLeft, cullRight, cullTop, cullBottom);
 					Main.tileBatch.Draw(
-						bgTexture,
+						patternTexture,
 						destination,
 						source,
 						vertices
@@ -141,7 +126,6 @@ namespace Origins.Tiles.Ashen {
 				DrawSlope(true, false);
 				break;
 			}
-			return base.PreDraw(i, j, spriteBatch);
 			void Cull(int left = 0, int right = 0, int top = 0, int bottom = 0) {
 				destination.X += left;
 				destination.Z -= left;
@@ -188,13 +172,37 @@ namespace Origins.Tiles.Ashen {
 						bottom: bottom ? 0 : i
 					);
 					Main.tileBatch.Draw(
-						bgTexture,
+						patternTexture,
 						destination,
 						source,
 						vertices
 					);
 				}
 			}
+		}
+	}
+	public class Fortified_Steel_Block2 : Fortified_Steel_Block1 {
+		AutoLoadingAsset<Texture2D> patternTexture = typeof(Fortified_Steel_Block2).GetDefaultTMLName() + "_BG";
+		public override Color MapColor => FromHexRGB(0x281a15);
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			MinPick = 100;
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			DrawTilePattern(i, j, patternTexture);
+			return base.PreDraw(i, j, spriteBatch);
+		}
+	}
+	public class Fortified_Steel_Block3 : Fortified_Steel_Block1 {
+		AutoLoadingAsset<Texture2D> patternTexture = typeof(Fortified_Steel_Block3).GetDefaultTMLName() + "_BG";
+		public override Color MapColor => FromHexRGB(0x30131c);
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			MinPick = 210;
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			DrawTilePattern(i, j, patternTexture);
+			return base.PreDraw(i, j, spriteBatch);
 		}
 	}
 	public class Fortified_Steel_Block1_Item : ModItem, ICustomWikiStat {
