@@ -22,6 +22,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -544,6 +545,16 @@ namespace Origins {
 			}
 			return true;
 		}
+		public StatModifier GetSelfDamageModifier() {
+			StatModifier currentExplosiveSelfDamage = explosiveSelfDamage;
+			if (minerSet) {
+				currentExplosiveSelfDamage -= 0.2f;
+				currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(
+					Player.GetDamage(DamageClasses.Explosive).GetInverse()
+				);
+			}
+			return currentExplosiveSelfDamage;
+		}
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers) {
 			if (trapCharm && proj.trap) {
 				modifiers.SourceDamage /= 2;
@@ -562,16 +573,8 @@ namespace Origins {
 					}
 				}
 				modifiers.SourceDamage /= damageMult;
+				StatModifier currentExplosiveSelfDamage = GetSelfDamageModifier();
 
-				StatModifier currentExplosiveSelfDamage = explosiveSelfDamage;
-				if (minerSet) {
-					currentExplosiveSelfDamage -= 0.2f;
-					currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(
-						Player.GetDamage(DamageClasses.Explosive).GetInverse()
-					);
-					//damage = (int)(damage/explosiveDamage);
-					//damage-=damage/5;
-				}
 				if (proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(global.selfDamageModifier);
 				const float min_self_destruct_mult = 0.1f;
 				if (proj.type == ModContent.ProjectileType<Self_Destruct_Explosion>()) {
@@ -579,6 +582,7 @@ namespace Origins {
 					if (currentExplosiveSelfDamage.ApplyTo(proj.damage) < proj.damage * min_self_destruct_mult) currentExplosiveSelfDamage = new StatModifier(1, min_self_destruct_mult);
 				}
 				if (currentExplosiveSelfDamage.ApplyTo(proj.damage) <= 0) modifiers.Cancel();
+
 				modifiers.FinalDamage = modifiers.FinalDamage.CombineWith(currentExplosiveSelfDamage);
 				if (Player.mount.Active && Player.mount.Type == ModContent.MountType<Trash_Lid_Mount>()) {
 					Vector2 diff = proj.Center - Player.MountedCenter;
@@ -716,7 +720,7 @@ namespace Origins {
 			return false;
 		}
 		public override bool ConsumableDodge(Player.HurtInfo info) {
-			if (info.DamageSource.SourcePlayerIndex == Player.whoAmI) {
+			if (info.DamageSource.SourcePlayerIndex == Player.whoAmI && info.DamageSource.SourceProjectileLocalIndex != -1) {
 				Projectile sourceProjectile = Main.projectile[info.DamageSource.SourceProjectileLocalIndex];
 				if (sourceProjectile.owner == Player.whoAmI && sourceProjectile.CountsAsClass(DamageClasses.Explosive)) {
 					if (resinShield) {

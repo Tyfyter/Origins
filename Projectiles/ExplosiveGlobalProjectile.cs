@@ -65,10 +65,19 @@ namespace Origins.Projectiles {
 				});
 
 				if (foundTarget) {
-					float scaleFactor = 16f * Origins.HomingEffectivenessMultiplier[projectile.type];
+					float scaleFactor = 16f;
+					float lerpValue = 0.083333336f;
+					switch (OriginsSets.Projectiles.HomingEffectivenessMultiplier[projectile.type]) {
+						default:
+						lerpValue *= Origins.HomingEffectivenessMultiplier[projectile.type];
+						break;
+						case 1:
+						scaleFactor *= Origins.HomingEffectivenessMultiplier[projectile.type];
+						break;
+					}
 
 					Vector2 targetVelocity = (targetPos - projectile.Center).SafeNormalize(-Vector2.UnitY) * scaleFactor;
-					projectile.velocity = Vector2.Lerp(projectile.velocity, targetVelocity, 0.083333336f);
+					projectile.velocity = Vector2.Lerp(projectile.velocity, targetVelocity, lerpValue);
 				}
 			}
 			if (novaSwarm) {

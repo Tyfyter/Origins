@@ -69,6 +69,9 @@ namespace Origins {
 				ProjectileID.LastPrism, 2f,
 				ProjectileID.LastPrismLaser, 2f
 			);
+			public static int[] HomingEffectivenessMode { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(HomingEffectivenessMode))
+			.Description("Controls the effectiveness of compatible homing effects")
+			.RegisterIntSet();
 			public static int[] MagicTripwireRange { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(MagicTripwireRange))
 			.Description("Controls the range of Magic Tripwire and similar effects")
 			.RegisterIntSet(0,
@@ -271,6 +274,9 @@ namespace Origins {
 			static Projectiles() {
 				foreach (KeyValuePair<int, Projectile> proj in ContentSamples.ProjectilesByType) {
 					if (!NoMultishot.IndexInRange(proj.Key)) continue;
+					if (proj.Value.DamageType is Thrown_Explosive) {
+						HomingEffectivenessMode[proj.Key] = 1;
+					}
 					switch (proj.Value.aiStyle) {
 						case ProjAIStyleID.Flail:
 						case ProjAIStyleID.HeldProjectile:

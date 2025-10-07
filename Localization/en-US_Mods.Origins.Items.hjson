@@ -6905,3 +6905,8 @@ Suit_Locker_Item: {
 	DisplayName: Suit Locker
 	Tooltip: ""
 }
+
+Tank_Rifle: {
+	DisplayName: Tank Rifle
+	Tooltip: ""
+}
