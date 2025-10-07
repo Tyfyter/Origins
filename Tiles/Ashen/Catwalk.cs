@@ -281,11 +281,11 @@ namespace Origins.Tiles.Ashen {
 			int railingFrame = tile.Get<ExtraFrameData>().value;
 			switch (railingFrame) {
 				case 3:
-				if (!Main.tile[i - 1, j - 2].HasFullSolidTile()) railingFrame = 2;
+				if (!Main.tile[i - 1, j - 2].HasFullSolidTile() || Main.tileNoAttach[Main.tile[i - 1, j - 2].TileType]) railingFrame = 2;
 				break;
 
 				case 4:
-				if (!Main.tile[i + 1, j - 2].HasFullSolidTile()) railingFrame = 1;
+				if (!Main.tile[i + 1, j - 2].HasFullSolidTile() || Main.tileNoAttach[Main.tile[i + 1, j - 2].TileType]) railingFrame = 1;
 				break;
 			}
 			Rectangle topFrame = new(railingFrame * 18, 3 * 18, 16, 16);
