@@ -161,16 +161,17 @@ namespace Origins.Tiles.Ashen {
 				VertexColors _vertices = vertices;
 				Vector4 _destination = destination;
 				Rectangle _source = source;
-				for (int i = 2; i < 12; i += 2) {
+				for (int i = 2; i <= 12; i += 2) {
 					vertices = _vertices;
 					destination = _destination;
 					source = _source;
-					Cull(
-						left: (right ? 16 - i : i) - 2,
-						right: right ? i : 16 - i,
-						top: bottom ? i : 0,
-						bottom: bottom ? 0 : i
-					);
+					int _left = (right ? 16 - i : i) - 2;
+					int _right = right ? i - 2 : 16 - i;
+					int _top = bottom ? i : 0;
+					int _bottom = bottom ? 0 : i;
+					if (bottom) _top = int.Max(_top, 4);
+					else _bottom = int.Max(_bottom, 4);
+					Cull(_left, _right, _top, _bottom);
 					Main.tileBatch.Draw(
 						patternTexture,
 						destination,
