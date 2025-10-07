@@ -6900,3 +6900,8 @@ Beacon_Light_Item: {
 	// DisplayName: Beacon Light
 	// Tooltip: ""
 }
+
+Suit_Locker_Item: {
+	// DisplayName: Suit Locker
+	// Tooltip: ""
+}

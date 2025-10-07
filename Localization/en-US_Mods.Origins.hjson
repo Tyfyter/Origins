@@ -2314,6 +2314,7 @@ Tiles: {
 	Ashen_Dungeon_Chest.MapEntry: "{§Ashen} Dungeon Chest"
 	Ashen_Altar.MapEntry: "{§Ashen} Altar"
 	Beacon_Light.MapEntry: "{§Mods.Origins.Items.Beacon_Light_Item.DisplayName}"
+	Suit_Locker.MapEntry: Suit Locker
 }
 
 MapObject: {
