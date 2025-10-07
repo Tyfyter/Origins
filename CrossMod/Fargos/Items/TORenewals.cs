@@ -41,11 +41,6 @@ namespace Origins.CrossMod.Fargos.Items {
 			if (Proj?.Projectile is not null) Item.shoot = Proj.Type;
 			Item.shootSpeed = 5f;
 		}
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {/*
-			Projectile.NewProjectile(player.GetSource_ItemUse(source.Item), position, velocity, Proj.Type, 0, 0f, Main.myPlayer, 0f, 0f, 0f);
-			return false;*/
-			return true;
-		}
 		public override void AddRecipes() {
 			int amt;
 			Recipe recipe = Recipe.Create(Type);
@@ -89,7 +84,9 @@ namespace Origins.CrossMod.Fargos.Items {
 
 			if (NetmodeActive.SinglePlayer) {
 				for (int i = 0; i < vel.Length; i++) {
-					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, vel[i], item.Material.Item.shoot, 0, 0f, Projectile.owner);
+					int proj = item.Material.Item.shoot;
+					if (item.Material is TORenewals renewal) proj = renewal.Material.Item.shoot;
+					Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, vel[i], proj, 0, 0f, Projectile.owner);
 				}
 			}
 
