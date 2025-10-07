@@ -114,35 +114,35 @@ namespace Origins.Items {
 				statsModified = true;
 			}
 			if (OriginConfig.Instance.WoodBuffs) switch (item.type) {
-				case ItemID.ShadewoodHelmet:
-				case ItemID.EbonwoodHelmet:
-				item.defense = 2;
-				statsModified = true;
-				break;
+					case ItemID.ShadewoodHelmet:
+					case ItemID.EbonwoodHelmet:
+					item.defense = 2;
+					statsModified = true;
+					break;
 
-				case ItemID.ShadewoodBreastplate:
-				case ItemID.EbonwoodBreastplate:
-				item.defense = 3;
-				statsModified = true;
-				break;
+					case ItemID.ShadewoodBreastplate:
+					case ItemID.EbonwoodBreastplate:
+					item.defense = 3;
+					statsModified = true;
+					break;
 
-				case ItemID.ShadewoodGreaves:
-				case ItemID.EbonwoodGreaves:
-				item.defense = 3;
-				statsModified = true;
-				break;
+					case ItemID.ShadewoodGreaves:
+					case ItemID.EbonwoodGreaves:
+					item.defense = 3;
+					statsModified = true;
+					break;
 
-				case ItemID.PearlwoodHelmet:
-				case ItemID.PearlwoodGreaves:
-				item.defense = 6;
-				statsModified = true;
-				break;
+					case ItemID.PearlwoodHelmet:
+					case ItemID.PearlwoodGreaves:
+					item.defense = 6;
+					statsModified = true;
+					break;
 
-				case ItemID.PearlwoodBreastplate:
-				item.defense = 7;
-				statsModified = true;
-				break;
-			}
+					case ItemID.PearlwoodBreastplate:
+					item.defense = 7;
+					statsModified = true;
+					break;
+				}
 			if (item.width == 0 && item.height == 0) {
 				item.width = 4;
 				item.height = 4;
@@ -443,11 +443,9 @@ namespace Origins.Items {
 		public override void OnSpawn(Item item, IEntitySource source) {
 			if (ItemID.Sets.Torches[item.type] && source is EntitySource_TileBreak tileSource && Main.tileCut[Framing.GetTileSafely(tileSource.TileCoords).TileType]) {
 				int stack = item.stack;
-				if (Main.LocalPlayer.InModBiome<Defiled_Wastelands>()) {
-					item.SetDefaults(ModContent.ItemType<Defiled_Torch>());
-				} else if (Main.LocalPlayer.InModBiome<Riven_Hive>()) {
-					item.SetDefaults(ModContent.ItemType<Riven_Torch>());
-				}
+				if (Main.LocalPlayer.InModBiome<Defiled_Wastelands>()) item.SetDefaults(ModContent.ItemType<Defiled_Torch>());
+				else if (Main.LocalPlayer.InModBiome<Riven_Hive>()) item.SetDefaults(ModContent.ItemType<Riven_Torch>());
+				else if (Main.LocalPlayer.InModBiome<Ashen_Biome>()) item.SetDefaults(ModContent.ItemType<Ashen_Torch>());
 				item.stack = stack;
 			}
 		}
