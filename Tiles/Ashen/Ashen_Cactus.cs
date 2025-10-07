@@ -13,7 +13,12 @@ namespace Origins.Tiles.Ashen {
             "Plant"
         ];
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (tile.TileType == TileID.DyePlants) color = new Vector3(0.394f, 0.879f, 0.912f);
+			switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {
+				case (0, 1):
+				case (5, 1):
+				color = new Vector3(0.912f, 0.879f, 0.394f);
+				break;
+			}
 		}
 		public override void SetStaticDefaults() {
 			GrowsOnTileId = [ModContent.TileType<Sootsand>()];
