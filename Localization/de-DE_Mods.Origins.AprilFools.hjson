@@ -95,6 +95,12 @@ Items: {
 	// Astral_Scythe.Debuff: While the blade regenerates the scythe can only [italic:bonk]
 	// AshenRenewal.Tooltip: Evicts local authorities from a large area
 	// AshenSupremeRenewal.Tooltip: Evicts local authorities from the entire world
+
+	Beacon_Light_Item: {
+		// I swear this has to be the most obscure joke I've put in
+		// DisplayName: Ardent Light
+		// Tooltip: Can help you find a place when it's hazy
+	}
 }
 
 // Prefixes.Wholesome_Prefix.DisplayName: Holesome
