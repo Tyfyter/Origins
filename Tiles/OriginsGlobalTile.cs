@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Consumables;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
@@ -21,6 +22,7 @@ namespace Origins.Tiles {
 		static Dictionary<int, AutoLoadingAsset<Texture2D>> stalactiteTextures;
 		public override void SetStaticDefaults() {
 			stalactiteTextures = new() {
+				[ModContent.TileType<Brown_Ice>()] = "Origins/Tiles/Ashen/Brown_Icicle",
 				[ModContent.TileType<Defiled_Ice>()] = "Origins/Tiles/Defiled/Defiled_Icicle",
 				[ModContent.TileType<Primordial_Permafrost>()] = "Origins/Tiles/Riven/Primordial_Permafrost_Icicle"
 			};
@@ -77,7 +79,7 @@ namespace Origins.Tiles {
 				ConvertPlantsByAnchor(ref Main.tile[i, j].TileType, Main.tile[i, j + 1].TileType);
 				return true;
 			}
-			if (type == ModContent.TileType<Defiled_Foliage>() || type == ModContent.TileType<Riven_Foliage>()) {
+			if (type == ModContent.TileType<Defiled_Foliage>() || type == ModContent.TileType<Riven_Foliage>() || type == ModContent.TileType<Ashen_Foliage>()) {
 				ConvertPlantsByAnchor(ref Main.tile[i, j].TileType, Main.tile[i, j + 1].TileType);
 			}
 			return true;
@@ -97,11 +99,9 @@ namespace Origins.Tiles {
 				plant = TileID.HallowedPlants;
 				return;
 			}
-			if (anchor == ModContent.TileType<Defiled_Grass>()) {
-				plant = (ushort)ModContent.TileType<Defiled_Foliage>();
-			} else if (anchor == ModContent.TileType<Riven_Grass>()) {
-				plant = (ushort)ModContent.TileType<Riven_Foliage>();
-			}
+			if (anchor == ModContent.TileType<Defiled_Grass>()) plant = (ushort)ModContent.TileType<Defiled_Foliage>();
+			else if (anchor == ModContent.TileType<Riven_Grass>()) plant = (ushort)ModContent.TileType<Riven_Foliage>();
+			else if (anchor == ModContent.TileType<Ashen_Grass>()) plant = (ushort)ModContent.TileType<Ashen_Foliage>();
 		}
 		public static bool GetStalactiteTexture(int i, int j, int frameY, out AutoLoadingAsset<Texture2D> texture) {
 			int direction = -1;
