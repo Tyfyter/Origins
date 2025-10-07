@@ -6884,7 +6884,11 @@ Trenchmaker_Bag: {
 
 Five_Evils_Item: {
 	// DisplayName: There's Five of Them Now
-	// Tooltip: "'Welcoming of fifth evil'"
+	/* Tooltip:
+		'''
+		'X. Chee'
+		'The welcoming of the fifth evil'
+		''' */
 }
 
 Modular_Light_Fixture_Item: {

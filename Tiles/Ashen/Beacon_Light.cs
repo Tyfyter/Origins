@@ -34,7 +34,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.DisableSmartCursor[Type] = true;
 
 			// Names
-			AddMapEntry(new Color(125, 125, 125), CreateMapEntryName());
+			AddMapEntry(new Color(220, 220, 220), CreateMapEntryName());
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -108,7 +108,7 @@ namespace Origins.Tiles.Ashen {
 				Flare_Launcher_Glow_P.DrawGlow(
 					pos,
 					currentColor,
-					scale: 2 * scaleFactor
+					scale: 5 * scaleFactor
 				);
 			}
 			Main.spriteBatch.End();
