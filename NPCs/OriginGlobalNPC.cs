@@ -151,8 +151,12 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Painter: {
-					shop.Add<Spray_N_Pray>(Quest.QuestCondition<Spray_N_Pray_Quest>());
-					shop.Add<Five_Evils_Item>(Condition.DrunkWorld.And(ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>()));
+					if (shop.Name == "Shop") {
+						shop.Add<Spray_N_Pray>(Quest.QuestCondition<Spray_N_Pray_Quest>());
+					}
+					if (shop.Name == "Decor") {
+						shop.Add<Five_Evils_Item>(Condition.DrunkWorld.And(ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>()));
+					}
 					break;
 				}
 			}
