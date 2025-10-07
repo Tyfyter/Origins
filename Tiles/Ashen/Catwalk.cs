@@ -162,7 +162,7 @@ namespace Origins.Tiles.Ashen {
 			byte oldRailingFrame = railingFrame;
 			railingFrame = 0;
 			byte tileFrame = (byte)(tile.TileFrameX / 18);
-			const int max_connection_dist = 8;
+			const int max_connection_dist = 4;
 			switch (tileFrame) {
 				case 1:
 				case 15:
