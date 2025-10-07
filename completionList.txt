@@ -1347,7 +1347,7 @@ TILES:
 (@, ^3, ▼) Ashen Scrap Foliage !!!
 (@, ^3, ▼) Ashen Soot Foliage !!!
 (#, ^2) Background Door !!!
-(#, ^2) Beacon Light !!!
+(☻) Beacon Light !!!
 (^) Brineglow Vine
 (^) Defiled Altar
 (^) Defiled Foliage
@@ -1366,7 +1366,7 @@ TILES:
 (^) Limestone Rubble
 (^) Marrowick Coral
 (^) Marrowick Flange
-(#, ^2) Modular Light Fixture !!!
+(☻) Modular Light Fixture !!!
 (^) Ocotillo
 (X) Petrified Baobab Tree
 (^) Petrified Tree

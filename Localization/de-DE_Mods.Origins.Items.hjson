@@ -6891,3 +6891,8 @@ Modular_Light_Fixture_Item: {
 	// DisplayName: Modular Light Fixture
 	// Tooltip: ""
 }
+
+Beacon_Light_Item: {
+	// DisplayName: Beacon Light
+	// Tooltip: ""
+}

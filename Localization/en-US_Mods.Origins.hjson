@@ -2313,6 +2313,7 @@ Tiles: {
 	Ashen_Dungeon_Chest_Locked.MapEntry: Mods.Origins.Tiles.Ashen_Dungeon_Chest_Locked.MapEntry
 	Ashen_Dungeon_Chest.MapEntry: "{§Ashen} Dungeon Chest"
 	Ashen_Altar.MapEntry: "{§Ashen} Altar"
+	Beacon_Light.MapEntry: Beacon Light
 }
 
 MapObject: {
