@@ -95,7 +95,7 @@ namespace Origins.Tiles.Ashen {
 			hitboxes.Clear();
 		}
 		public override void PostDrawTiles() {
-			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+			Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.LinearClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 			Color color = new(255, 123, 72);
 			const float range = 16 * 2640; // a mile
 			for (int i = 0; i < tileEntityLocations.Count; i++) {

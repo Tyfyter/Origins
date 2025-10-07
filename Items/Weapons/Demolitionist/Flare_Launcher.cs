@@ -5,6 +5,7 @@ using Origins.Dusts;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Misc;
 using PegasusLib;
+using PegasusLib.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -278,7 +279,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 					boomFactor *= 1 + boomFactor;
 				}
 			}
+			SpriteBatchState state = Main.spriteBatch.GetState();
+			Main.spriteBatch.Restart(state, samplerState: SamplerState.LinearClamp);
 			DrawGlow(center, glowColor, boomFactor, projectile.rotation, projectile.scale);
+			Main.spriteBatch.Restart(state);
 		}
 		public static void DrawGlow(Vector2 center, Color glowColor, float boomFactor = 1, float rotation = 0, float scale = 1) {
 			Rectangle screen = new((int)Main.Camera.ScaledPosition.X, (int)Main.Camera.ScaledPosition.Y, (int)Main.Camera.ScaledSize.X, (int)Main.Camera.ScaledSize.Y);
