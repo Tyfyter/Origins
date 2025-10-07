@@ -187,12 +187,13 @@ namespace Origins {
 					if (!unloading) ResizeArrays();
 				}
 			);
-			On_WorldGen.KillWall_CheckFailure += (On_WorldGen.orig_KillWall_CheckFailure orig, bool fail, Tile tileCache) => {
-				fail = orig(fail, tileCache);
-				if (Main.LocalPlayer.HeldItem.hammer < WallHammerRequirement[tileCache.WallType]) {
-					fail = true;
+			On_Player.ItemCheck_UseMiningTools_TryHittingWall += (orig, self, sItem, wX, wY) => {
+				if (sItem.hammer < WallHammerRequirement[Main.tile[wX, wY].WallType]) {
+					WorldGen.KillWall(wX, wY, fail: true);
+					self.itemTime = sItem.useTime / 2;
+					return;
 				}
-				return fail;
+				orig(self, sItem, wX, wY);
 			};
 			//Terraria.On_Main.DrawNPCChatButtons += Main_DrawNPCChatButtons;
 			On_Player.SetTalkNPC += Player_SetTalkNPC;
@@ -763,6 +764,7 @@ namespace Origins {
 				return orig(self) || self.InModBiome<Defiled_Wastelands>() || self.InModBiome<Riven_Hive>();
 			});
 		}
+
 		delegate bool orig_ShoppingZone_AnyBiome(Player self);
 		delegate bool hook_ShoppingZone_AnyBiome(orig_ShoppingZone_AnyBiome orig, Player self);
 
