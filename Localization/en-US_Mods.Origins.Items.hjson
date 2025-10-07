@@ -6886,3 +6886,8 @@ Five_Evils_Item: {
 	DisplayName: There's Five of Them Now
 	Tooltip: "'Welcoming of fifth evil'"
 }
+
+Modular_Light_Fixture_Item: {
+	DisplayName: Modular Light Fixture
+	Tooltip: ""
+}

@@ -922,6 +922,7 @@ namespace Origins.Tiles {
 		readonly ModTile tile = tile;
 		public override string Name => tile.Name + "_Item";
 		public override string Texture => (tile is FurnitureBase furniture && !string.IsNullOrEmpty(furniture.ItemTexture)) ? furniture.ItemTexture : tile.Texture + "_Item";
+		public override LocalizedText DisplayName => this.GetLocalization(nameof(DisplayName), tile.PrettyPrintName);
 		public event Action<Item> ExtraDefaults;
 		public event Action<Item> OnAddRecipes;
 		protected override bool CloneNewInstances => true;
