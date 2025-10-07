@@ -1200,7 +1200,7 @@ TILES:
 (^) Fiberglass Block
 (^) Gray Ice Block
 (^) Hardened Defiled Sand
-(☻) Hardened Sootsand
+(^) Hardened Sootsand
 (X) Lihzarhd Bomb Trap
 (^) Limestone
 (@4) Lost Brick
@@ -1223,7 +1223,7 @@ TILES:
 (X) Scrap Heap !!!
 (^) Silica
 (^) Silicon Ore
-(☻) Soot Sandstone
+(^) Soot Sandstone
 (@, ^3, ▼) Sootgrass !!!
 (X) Space Goo
 (^) Spug Flesh
@@ -1231,9 +1231,9 @@ TILES:
 (@, #2, ▼) Tainted Stone !!!
 (X) Tainted Stone Brick
 (X) Truss Block !!!
-(☻) Type-I Fortified Steel Block
-(@, #2, ▼) Type-II Fortified Steel Block !!!
-(☻) Type-III Fortified Steel Block !!!
+(^) Type-I Fortified Steel Block
+(#2, ^2, ▼) Type-II Fortified Steel Block !!!
+(^) Type-III Fortified Steel Block
 (@, ^3, ▼) Witherwood !!!
 
 (^) Amebic Gel Wall
@@ -1267,7 +1267,7 @@ TILES:
 (@, ^3, ▼) Soot Sandstone Wall !!!
 (^) Spug Flesh Wall
 (X) Spug Flesh Brick Wall
-(X, ?) Type-III Fortified Steel Wall !!! (why only type 3?)
+(X) Type-III Fortified Steel Wall !!!
 
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
@@ -1347,7 +1347,7 @@ TILES:
 (@, ^3, ▼) Ashen Scrap Foliage !!!
 (@, ^3, ▼) Ashen Soot Foliage !!!
 (#, ^2) Background Door !!!
-(☻) Beacon Light !!!
+(#2, ^2) Beacon Light !!!
 (^) Brineglow Vine
 (^) Defiled Altar
 (^) Defiled Foliage
@@ -1360,8 +1360,8 @@ TILES:
 (☻, ▼) Fungarust !!!
 (^) Fuzzvine
 (^) Gel Blister
-(X) Generation Station !!!
-(X) Heat Vent !!!
+(#, ^2) Generation Station !!!
+(#, ^2) Heat Vent !!!
 (^) Hydrothermal Vent
 (^) Limestone Rubble
 (^) Marrowick Coral
@@ -1390,7 +1390,7 @@ TILES:
 (^) A Perfect World
 (^) Deceptive Beauty
 (^) The Jungle's Window
-(☻) There's Five of Them Now !!! (price adjustment)
+(^) There's Five of Them Now
 
 (^) Ancient Music Box (Brine Pool)
 (ᗢ) Ancient Music Box (Defiled Wastelands)
