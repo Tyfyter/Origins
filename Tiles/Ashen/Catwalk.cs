@@ -214,6 +214,7 @@ namespace Origins.Tiles.Ashen {
 				break;
 
 				case 0: {
+					railingFrame = 14;
 					int k;
 					for (k = 1; k <= max_connection_dist; k++) {
 						Tile left = Main.tile[i - k, j];
@@ -221,7 +222,7 @@ namespace Origins.Tiles.Ashen {
 							if (k == 1) {
 								left = Main.tile[i - k, j - 1];
 								if (left.Slope == SlopeType.SlopeDownLeft) {
-									railingFrame = 0;
+									railingFrame = 14;
 								} else {
 									railingFrame = 3;
 								}
@@ -229,13 +230,13 @@ namespace Origins.Tiles.Ashen {
 							}
 							break;
 						}
-						if (left.Get<ExtraFrameData>().value == 0) break;
+						if (left.Get<ExtraFrameData>().value == 14) break;
 						Tile right = Main.tile[i + k, j];
 						if (!IsCatwalk(right)) {
 							if (k == 1) {
 								right = Main.tile[i + k, j - 1];
 								if (right.Slope == SlopeType.SlopeDownRight) {
-									railingFrame = 0;
+									railingFrame = 14;
 								} else {
 									railingFrame = 4;
 								}
@@ -243,7 +244,7 @@ namespace Origins.Tiles.Ashen {
 							}
 							break;
 						}
-						if (right.Get<ExtraFrameData>().value == 0) break;
+						if (right.Get<ExtraFrameData>().value == 14) break;
 					}
 					if (k < max_connection_dist) {
 						railingFrame = 6;
