@@ -1272,6 +1272,7 @@ TILES:
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
 (^) Ashen Torch
+(@, ^3) Ashen Water Fountain
 (^) Bile Torch
 (^) Brine Water Fountain
 (@, ^3) Bug Cage
