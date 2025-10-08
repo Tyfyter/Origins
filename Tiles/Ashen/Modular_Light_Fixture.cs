@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -36,6 +37,8 @@ namespace Origins.Tiles.Ashen {
 				Tile tile = Framing.GetTileSafely(i + x, j + y);
 				return tile.HasTile && Main.tileSolid[tile.TileType];
 			}
+			short litMod = 0;
+			if (tile.TileFrameY >= 18 * 3) litMod = 18 * 3;
 			if (CheckTile(0, 1)) {
 				if (CheckTile(0, -1)) {
 					tile.TileFrameX = 4 * 18;
@@ -50,6 +53,7 @@ namespace Origins.Tiles.Ashen {
 					tile.TileFrameX = 4 * 18;
 					tile.TileFrameY = 0;
 				}
+				tile.TileFrameY += litMod;
 				return false;
 			}
 			if (CheckTile(0, -1)) {
@@ -61,6 +65,7 @@ namespace Origins.Tiles.Ashen {
 					tile.TileFrameX = 4 * 18;
 					tile.TileFrameY = 2 * 18;
 				}
+				tile.TileFrameY += litMod;
 				return false;
 			}
 			if (CheckTile(-1, 0) && !(CheckTile(-1, -1) || CheckTile(-1, 1))) {
@@ -70,6 +75,7 @@ namespace Origins.Tiles.Ashen {
 				} else {
 					tile.TileFrameX = 7 * 18;
 				}
+				tile.TileFrameY += litMod;
 				return false;
 			}
 			if (CheckTile(1, 0) && !(CheckTile(1, -1) || CheckTile(1, 1))) {
@@ -79,6 +85,7 @@ namespace Origins.Tiles.Ashen {
 				} else {
 					tile.TileFrameX = 5 * 18;
 				}
+				tile.TileFrameY += litMod;
 				return false;
 			}
 			bool above = CheckTileSolid(0, -1);
@@ -100,6 +107,7 @@ namespace Origins.Tiles.Ashen {
 			} else {
 				WorldGen.KillTile(i, j);
 			}
+			tile.TileFrameY += litMod;
 			return false;
 		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
@@ -120,10 +128,69 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 		}
+		public override void HitWire(int i, int j) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			short litMod = 18 * 3;
+			if (tile.TileFrameY >= 18 * 3) litMod = 0;
+			foreach (Point pos in CrawlEntireLight(i, j)) {
+				Wiring.SkipWire(pos.X, pos.Y);
+				tile = Framing.GetTileSafely(pos.X, pos.Y);
+				tile.TileFrameY %= 18 * 3;
+				tile.TileFrameY += litMod;
+			}
+		}
+		static IEnumerable<Point> GetConnected(int i, int j) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			switch ((tile.TileFrameX / 18, (tile.TileFrameY / 18) % 3)) {
+				case (3, 0):
+				yield return new(i, j + 1);
+				break;
+				case (3, 1):
+				yield return new(i, j - 1);
+				break;
+
+				case (4, 0):
+				yield return new(i, j + 1);
+				break;
+				case (4, 1):
+				yield return new(i, j + 1);
+				yield return new(i, j - 1);
+				break;
+				case (4, 2):
+				yield return new(i, j - 1);
+				break;
+
+				case (5, 2):
+				yield return new(i + 1, j);
+				break;
+				case (6, 2):
+				yield return new(i + 1, j);
+				yield return new(i - 1, j);
+				break;
+				case (7, 2):
+				yield return new(i - 1, j);
+				break;
+			}
+			yield break;
+		}
+		public HashSet<Point> CrawlEntireLight(int i, int j) {
+			HashSet<Point> walked = [];
+			Stack<Point> queue = new();
+			queue.Push(new(i, j));
+			while (queue.TryPop(out Point connected)) {
+				if (Framing.GetTileSafely(connected).TileIsType(Type) && walked.Add(connected)) {
+					foreach (Point item in GetConnected(connected.X, connected.Y)) {
+						queue.Push(item);
+					}
+				}
+			}
+			return walked;
+		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (Main.tile[i, j].TileFrameY >= 18 * 3) return;
 			r = 1.05f;
 			g = 0.75f;
 			b = 0f;

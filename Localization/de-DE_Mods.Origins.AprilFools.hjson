@@ -101,6 +101,8 @@ Items: {
 		// DisplayName: Ardent Light
 		// Tooltip: Can help you find a place when it's hazy
 	}
+
+	// Modular_Light_Fixture_Item.DisplayName: Modular Incandescent Light Fixture
 }
 
 // Prefixes.Wholesome_Prefix.DisplayName: Holesome
