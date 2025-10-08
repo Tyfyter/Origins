@@ -424,7 +424,7 @@ namespace Origins.Dev {
 
 				default:
 				if (item.ammo == ModContent.ItemType<Harpoon>()) types.Add("Harpoon");
-				else if (item.ammo == ModContent.ItemType<Metal_Slug>()) types.Add("Handcannon");
+				else if (item.ammo == ModContent.ItemType<Metal_Slug>()) types.Add("Slug");
 				break;
 			}
 			if (customStat?.Hardmode ?? (!item.consumable && item.rare > ItemRarityID.Orange)) types.Add("Hardmode");
