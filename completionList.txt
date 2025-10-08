@@ -1597,15 +1597,15 @@ CONSUMABLES:
 (#, ^2) Sanguis Pack
 (#, ^2) Unmarked Antidote
 
-(#, ^2) Bad Juju Stone
+(☻) Bad Juju Stone
 (^) Bileberry
 (^) Blue Bovine
 (^) Bread
 (^) Brine Cheese
 (#, ^2) Budget Fairy Dust
 (^) Caeser Salad
-(#, ^2) Contaminated Infusion
-(#, ^2) Edible Hair Gel
+(☻) Contaminated Infusion
+(☻) Edible Hair Gel
 (^) Honey Wheat Bread
 (^) Irish Cheddar
 (^) Jam Sandwich
@@ -1613,7 +1613,7 @@ CONSUMABLES:
 (^) Krunch Mix
 (^) Nerve Flan
 (^) Pawpaw
-(#, ^2) Pen Ink
+(☻) Pen Ink
 (^) Periven
 (^) Petrified Prickly Pear
 (^) Potato

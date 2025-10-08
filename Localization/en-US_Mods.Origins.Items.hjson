@@ -6926,22 +6926,8 @@ Valkyrum_Bullet: {
 	Tooltip: ""
 }
 
-Bad_Juju_Stone: {
-	DisplayName: Bad Juju Stone
-	Tooltip: ""
-}
-
-Contaminated_Infusion: {
-	DisplayName: Contaminated Infusion
-	Tooltip: ""
-}
-
-Edible_Hair_Gel: {
-	DisplayName: Edible Hair Gel
-	Tooltip: ""
-}
-
-Pen_Ink: {
-	DisplayName: Pen Ink
-	Tooltip: ""
-}
+Assimilation_Potion.Tooltip: Inflicts {0}% [buffhint/self:{1}]
+Bad_Juju_Stone.DisplayName: Bad Juju Stone
+Contaminated_Infusion.DisplayName: Contaminated Infusion
+Edible_Hair_Gel.DisplayName: Edible Hair Gel
+Pen_Ink.DisplayName: Pen Ink

@@ -2000,6 +2000,8 @@ Projectiles: {
 	Orange_Solution_P.DisplayName: Orange Solution
 	Blotopus_P_Hostile.DisplayName: Blotopus
 	Tank_Rifle_P.DisplayName: Tank Rifle
+	Felnum_Bullet_P.DisplayName: Felnum Bullet
+	Valkyrum_Bullet_P.DisplayName: Valkyrum Bullet
 }
 
 Prefixes: {
