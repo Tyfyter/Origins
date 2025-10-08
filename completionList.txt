@@ -1221,6 +1221,7 @@ TILES:
 (X) Sanguinite Brick
 (@4) Sanguinite Ore !!!
 (X) Scrap Heap !!!
+(X) Scrap Railing !!!
 (^) Silica
 (^) Silicon Ore
 (^) Soot Sandstone
@@ -1340,11 +1341,11 @@ TILES:
 (X) Flesh Shredder
 (X) Interstellar Sampler
 (X) Medicine Fabricator !!!
-(X) Metal Presser
+(X) Metal Presser !!!
 (X) The Demaker
 
 (^) Acetabularia
-(X) Ashen Altar !!!
+(@, ^3, ▼) Ashen Altar !!!
 (@, ^3, ▼) Ashen Scrap Foliage !!!
 (@, ^3, ▼) Ashen Soot Foliage !!!
 (#, ^2) Background Door !!!
