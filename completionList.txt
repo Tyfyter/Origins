@@ -1163,7 +1163,7 @@ TILES:
 |---
 (^) Aetherite Ore
 (^) Amoeba Fluid
-(#2, ^2, ▼) Ashen Cactus !!!
+(^) Ashen Cactus
 (^) Baryte
 (^) Batholith
 (^) Bleeding Obsidian
@@ -1290,7 +1290,7 @@ TILES:
 (^) Marrowick Furniture
 (X) Nova Furniture
 (#, ^2) Peppered Moth Lamp !!!
-(^, ▼) Phoenum Torch
+(^) Phoenum Torch
 (X) Residue Furniture
 (^) Riven Torch
 (^) Riven Water Fountain
