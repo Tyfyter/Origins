@@ -21,6 +21,8 @@ namespace Origins.NPCs.Crimson {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Shark);
+			NPC.lifeMax = 100;
+			NPC.damage = 15;
 			NPC.aiStyle = 0;
 			NPC.width = 64;
 			NPC.height = 22;
@@ -38,7 +40,7 @@ namespace Origins.NPCs.Crimson {
 			return spawnInfo.Water ? 0.05f : 0f;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			//target.AddBuff(BuffID.Bleeding, 20);
+			target.AddBuff(BuffID.Bleeding, Main.rand.Next(120, 241));
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
@@ -215,6 +217,9 @@ namespace Origins.NPCs.Crimson {
 			Projectile.friendly = false;
 			Projectile.hostile = true;
 			Projectile.ignoreWater = true;
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			target.AddBuff(BuffID.Bleeding, Main.rand.Next(120, 241));
 		}
 	}
 }

@@ -53,6 +53,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		}
 	}
 	public class Rocket_Dummy_Canister(CanisterData canisterData, int explosionSize, int tileDestructionRadius = 0) : ICanisterAmmo {
+		public readonly CanisterData canisterData = canisterData;
+		public readonly int explosionSize = explosionSize;
+		public readonly int tileDestructionRadius = tileDestructionRadius;
 		public void Register(int itemType) {
 			GetCanisterData.Ammo = this;
 			CanisterGlobalItem.RegisterCanister(itemType, GetCanisterData);
@@ -62,7 +65,14 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public virtual void OnKill(Projectile projectile, bool child) {
 			ExplosiveGlobalProjectile.DoExplosion(projectile, explosionSize);
 			SoundEngine.PlaySound(SoundID.Item14, projectile.Center);
+			int tileDestructionRadius = this.tileDestructionRadius;
 			if (tileDestructionRadius > 0) {
+				tileDestructionRadius *= 16;
+				tileDestructionRadius = (int)projectile.GetGlobalProjectile<ExplosiveGlobalProjectile>().modifierBlastRadius
+					.CombineWith(Main.player[projectile.owner].GetModPlayer<OriginPlayer>().explosiveBlastRadius)
+					.Scale(0.5f)
+					.ApplyTo(tileDestructionRadius);
+				tileDestructionRadius /= 16;
 				Vector2 center = projectile.Center;
 				int i = (int)(center.X / 16);
 				int j = (int)(center.Y / 16);
@@ -121,7 +131,10 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 						pos = offsetCenter.ToTileCoordinates();
 					}
 				}
-				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pos, liquidSize, tileAction);
+				float liquidRadius = projectile.GetGlobalProjectile<ExplosiveGlobalProjectile>().modifierBlastRadius
+					.CombineWith(Main.player[projectile.owner].GetModPlayer<OriginPlayer>().explosiveBlastRadius)
+					.ApplyTo(liquidSize);
+				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pos, liquidRadius, tileAction);
 			}
 		}
 	}
