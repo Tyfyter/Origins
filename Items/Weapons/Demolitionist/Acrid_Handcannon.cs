@@ -8,7 +8,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Acrid_Handcannon : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "Handcannon",
 			"ToxicSource"
         ];
 		public static int ID { get; private set; }
