@@ -45,7 +45,6 @@ namespace Origins.Items.Other.Fish {
 		}
 	}
 	public class Scrapfish : ModItem {
-		public override string Texture => typeof(Prikish).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 2;
 		}

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
-using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
@@ -15,7 +14,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Ashen_Torch_Tile : OriginTile {
-		public override string Texture => typeof(Defiled_Torch_Tile).GetDefaultTMLName();
 		private Asset<Texture2D> flameTexture;
 
 		public override void SetStaticDefaults() {
@@ -51,7 +49,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.addTile(Type);
 
 			// Etc
-			AddMapEntry(new Color(255, 200, 200), Language.GetText("ItemName.Torch"));
+			AddMapEntry(new Color(230, 81, 0), Language.GetText("ItemName.Torch"));
 
 			// Assets
 			if (!Main.dedServ) RequestIfExists("Origins/Tiles/Defiled/Defiled_Torch_Tile_Flame", out flameTexture);
@@ -123,7 +121,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Ashen_Torch : ModItem, ICustomWikiStat {
-		public override string Texture => typeof(Defiled_Torch).GetDefaultTMLName();
 		public static Vector3 Light => new(1, 0.7f, 0.7f);
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;

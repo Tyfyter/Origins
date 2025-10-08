@@ -3,9 +3,9 @@ using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
-using PegasusLib;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
@@ -21,11 +21,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 5));
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Tank_Rifle_P>(200, 90, 8, 156, 38);
-			Item.UseSound = Origins.Sounds.HeavyCannon;
+			Item.DefaultToCanisterLauncher<Tank_Rifle_P>(65, 90, 8, 156, 38);
+			Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(-0.5f);
 			Item.knockBack = 18f;
-			Item.value = Item.sellPrice(gold: 5);
-			Item.rare = ItemRarityID.Lime;
+			Item.value = Item.sellPrice(gold: 1, silver: 80);
+			Item.rare = ItemRarityID.Blue;
 		}
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
 			Player drawPlayer = drawInfo.drawPlayer;
@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 
 			Vector2 pos = new((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y));
 
-			int frame = (int)(float.Pow(1 - drawPlayer.itemAnimation / (float)drawPlayer.itemAnimationMax, 1.1f) * 5 * 3 + 1);
+			int frame = (int)(float.Pow(1 - drawPlayer.itemAnimation / (float)drawPlayer.itemAnimationMax, 0.8f) * 5 * 3 + 1);
 			if (frame >= 5) frame = 0;
 
 			Texture2D texture = TextureAssets.Item[Type].Value;
@@ -62,6 +62,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			);
 			player.velocity -= velocity * 2;
 			return true;
+		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(SoundID.Item38.WithPitch(-1.5f), player.itemLocation);
+			SoundEngine.PlaySound(SoundID.Item88.WithPitch(-1f), player.itemLocation);
+			return null;
 		}
 	}
 	public class Tank_Rifle_P : ModProjectile, ICanisterProjectile {

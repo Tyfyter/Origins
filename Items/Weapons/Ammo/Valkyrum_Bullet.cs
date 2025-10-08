@@ -1,8 +1,5 @@
-using Microsoft.Xna.Framework;
 using Origins.Buffs;
-using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.NPCs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -19,7 +16,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.shootSpeed = 5f;
 			Item.knockBack = 4f;
 			Item.value = Item.sellPrice(copper: 7);
-			Item.rare = ItemRarityID.Orange;
+			Item.rare = ItemRarityID.Lime;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 70)

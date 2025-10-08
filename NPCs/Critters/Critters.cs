@@ -206,7 +206,6 @@ namespace Origins.NPCs.Critters {
 		}*/
 	}
 	public class Peppered_Moth : ModNPC, IWikiNPC {
-		public override string Texture => typeof(Amoeba_Buggy).GetDefaultTMLName();
 		public Rectangle DrawRect => new(0, 0, 18, 12);
 		public int AnimationFrames => 4;
 		public int FrameDuration => 8;

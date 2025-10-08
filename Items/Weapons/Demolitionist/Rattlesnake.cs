@@ -1,5 +1,3 @@
-using Origins.Dev;
-using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using System;
 using Terraria;
@@ -11,7 +9,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.damage = 72;
+			Item.damage = 80;
 			Item.width = 56;
 			Item.height = 26;
 			Item.useTime = 57;

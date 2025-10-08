@@ -671,7 +671,7 @@ VANITY:
 (X) Seer Mask
 (^) Shimmer Construct Mask
 (X) Snowdrop Mask
-(☻) Trenchmaker Mask
+(^) Trenchmaker Mask
 (^) World Cracker Mask
 
 (X) Amebic Protector Set
@@ -1090,7 +1090,7 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb
 (^) Sticky Link Grenade
-(☻) Tank Rifle
+(#3, ^2) Tank Rifle
 (#, ^2) Ticking Bomb
 (#, ^2) Ticking Dynamite
 (^) Voltefuse
@@ -1105,7 +1105,7 @@ EXPLOSIVE WEAPONS:
 (^) Crystal Grenade
 (^) Grenade Lawnchair
 (^) Happy Bomb
-(#, ^2) Rattlesnake
+(^) Rattlesnake
 (^) Rocket Rifle
 (^) Sonar Dynamite
 (ᗢ) Sonorous Shredder
@@ -1163,7 +1163,7 @@ TILES:
 |---
 (^) Aetherite Ore
 (^) Amoeba Fluid
-(#, ^2, ▼) Ashen Cactus !!!
+(#2, ^2, ▼) Ashen Cactus !!!
 (^) Baryte
 (^) Batholith
 (^) Bleeding Obsidian
@@ -1217,7 +1217,7 @@ TILES:
 (^) Riven Cactus
 (^) Riven Grass
 (^) Riven Jungle Grass
-(☻) Rusty Piping !!!
+(^) Rusty Piping
 (X) Sanguinite Brick
 (@4) Sanguinite Ore !!!
 (X) Scrap Heap !!!
@@ -1271,7 +1271,7 @@ TILES:
 
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
-(@, ^3, ▼) Ashen Torch !!!
+(^) Ashen Torch
 (^) Bile Torch
 (^) Brine Water Fountain
 (@, ^3) Bug Cage
@@ -1289,7 +1289,7 @@ TILES:
 (^) Living Bile Block
 (^) Marrowick Furniture
 (X) Nova Furniture
-(X) Peppered Moth Lamp !!!
+(#, ^2) Peppered Moth Lamp !!!
 (^, ▼) Phoenum Torch
 (X) Residue Furniture
 (^) Riven Torch
@@ -1347,7 +1347,7 @@ TILES:
 (@, ^3, ▼) Ashen Scrap Foliage !!!
 (@, ^3, ▼) Ashen Soot Foliage !!!
 (#, ^2) Background Door !!!
-(#2, ^2) Beacon Light !!!
+(々) Beacon Light !!! (needs Repairboys to be implemented first)
 (^) Brineglow Vine
 (^) Defiled Altar
 (^) Defiled Foliage
@@ -1366,7 +1366,7 @@ TILES:
 (^) Limestone Rubble
 (^) Marrowick Coral
 (^) Marrowick Flange
-(☻) Modular Light Fixture !!!
+(#2, ^2) Modular Light Fixture !!! (still needs large light variant and pass-through)
 (^) Ocotillo
 (X) Petrified Baobab Tree
 (^) Petrified Tree
@@ -1377,7 +1377,7 @@ TILES:
 (^) Shelf Coral
 (^) Soulspore
 (#, ^2) Steel Support Beam !!!
-(#, ^2) Suit Locker !!!
+(#, ^2) Suit Locker !!! (slight glow?)
 (☻, ▼) Surveysprout !!!
 (^) Tangela Bramble
 (^) Underwater Vine
@@ -1529,7 +1529,7 @@ CRITTERS AND FISH:
 (^) Chambersite Squirrel
 (^) Cicada 3301
 (X) Hyrax !!!
-(@, ^3) Peppered Moth !!!
+(^) Peppered Moth
 
 (^) Bilemouth
 (^) Bobbit Worm
@@ -1537,7 +1537,7 @@ CRITTERS AND FISH:
 (^) Fiberbass
 (^) Polyeel
 (^) Prikish
-(@, ^3) Scrapfish !!!
+(^) Scrapfish
 (^) Tearracuda
 (^) Toadfish
 ---
@@ -1597,15 +1597,15 @@ CONSUMABLES:
 (#, ^2) Sanguis Pack
 (#, ^2) Unmarked Antidote
 
-(☻) Bad Juju Stone
+(^) Bad Juju Stone
 (^) Bileberry
 (^) Blue Bovine
 (^) Bread
 (^) Brine Cheese
 (#, ^2) Budget Fairy Dust
 (^) Caeser Salad
-(☻) Contaminated Infusion
-(☻) Edible Hair Gel
+(^) Contaminated Infusion
+(^) Edible Hair Gel
 (^) Honey Wheat Bread
 (^) Irish Cheddar
 (^) Jam Sandwich
@@ -1613,7 +1613,7 @@ CONSUMABLES:
 (^) Krunch Mix
 (^) Nerve Flan
 (^) Pawpaw
-(☻) Pen Ink
+(^) Pen Ink
 (^) Periven
 (^) Petrified Prickly Pear
 (^) Potato
@@ -1715,7 +1715,7 @@ AMMO:
 (^) Defiled Spirit
 (^) Discharge Canister
 (^) Explosive Harpoon
-(☻) Felnum Bullet
+(^) Felnum Bullet
 (^) Flammable Harpoon
 (X) Foolean Canister
 (^) Harpoon
@@ -1754,7 +1754,7 @@ AMMO:
 (#, ^2) Homing Rocket II
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
-(☻) Valkyrum Bullet
+(^) Valkyrum Bullet
 
 (^) Gray Solution
 (@, ^3) Orange Solution

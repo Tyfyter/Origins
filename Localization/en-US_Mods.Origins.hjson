@@ -136,6 +136,17 @@ FishQuest: {
 			'''
 		Location: Caught in Fiberglass Undergrowth
 	}
+
+	Scrapfish: {
+		Description:
+			'''
+			There's a fish that's somehow surviving in the oil-filled waters of the Ashen!
+			It has disguised its scales for scrap to avoid predators, if it even still has any.
+			Oh right! I am its only predator, and I want you to go to the Ashen Scrapyard to fish it out for me!
+			Don't forget your gas mask!
+			'''
+		Location: Caught in {§Defiled_Wastelands}
+	}
 }
 
 Dialogue: {
