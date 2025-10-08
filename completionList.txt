@@ -1090,7 +1090,7 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb
 (^) Sticky Link Grenade
-(#, ^2) Tank Rifle
+(☻) Tank Rifle
 (#, ^2) Ticking Bomb
 (#, ^2) Ticking Dynamite
 (^) Voltefuse
@@ -1217,7 +1217,7 @@ TILES:
 (^) Riven Cactus
 (^) Riven Grass
 (^) Riven Jungle Grass
-(#, ^2) Rusty Piping !!!
+(☻) Rusty Piping !!!
 (X) Sanguinite Brick
 (@4) Sanguinite Ore !!!
 (X) Scrap Heap !!!

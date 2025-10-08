@@ -6931,3 +6931,8 @@ Valkyrum_Bullet: {
 // Contaminated_Infusion.DisplayName: Contaminated Infusion
 // Edible_Hair_Gel.DisplayName: Edible Hair Gel
 // Pen_Ink.DisplayName: Pen Ink
+
+Rusty_Piping_Item: {
+	// DisplayName: Rusty Piping
+	// Tooltip: ""
+}
