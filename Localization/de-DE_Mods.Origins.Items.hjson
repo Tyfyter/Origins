@@ -6915,3 +6915,33 @@ Rattlesnake: {
 	// DisplayName: Rattlesnake
 	// Tooltip: ""
 }
+
+Felnum_Bullet: {
+	// DisplayName: Felnum Bullet
+	// Tooltip: ""
+}
+
+Valkyrum_Bullet: {
+	// DisplayName: Valkyrum Bullet
+	// Tooltip: ""
+}
+
+Bad_Juju_Stone: {
+	// DisplayName: Bad Juju Stone
+	// Tooltip: ""
+}
+
+Contaminated_Infusion: {
+	// DisplayName: Contaminated Infusion
+	// Tooltip: ""
+}
+
+Edible_Hair_Gel: {
+	// DisplayName: Edible Hair Gel
+	// Tooltip: ""
+}
+
+Pen_Ink: {
+	// DisplayName: Pen Ink
+	// Tooltip: ""
+}

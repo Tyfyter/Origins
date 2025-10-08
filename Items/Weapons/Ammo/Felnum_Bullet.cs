@@ -1,14 +1,16 @@
-using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.NPCs;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
-	public class Aether_Bullet : ModItem, ICustomWikiStat {
+	public class Felnum_Bullet : ModItem, ICustomWikiStat, ITornSource {
+		public static float TornSeverity => 0.25f;
+		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			"Bullet"
 		];
@@ -17,22 +19,22 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedBullet);
-			Item.damage = 11;
-			Item.shoot = ModContent.ProjectileType<Aether_Bullet_P>();
+			Item.damage = 12;
+			Item.shoot = ModContent.ProjectileType<Felnum_Bullet_P>();
 			Item.shootSpeed = 5f;
 			Item.knockBack = 4f;
-			Item.value = Item.sellPrice(copper: 14);
-			Item.rare = ItemRarityID.Green;
+			Item.value = Item.sellPrice(copper: 7);
+			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 90)
-			.AddIngredient(ItemID.MusketBall, 90)
-			.AddIngredient(ModContent.ItemType<Aetherite_Bar>())
+			Recipe.Create(Type, 70)
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>())
+			.AddTile(TileID.Anvils)
 			.Register();
 		}
 	}
-	public class Aether_Bullet_P : ModProjectile {
-		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VenomBullet;
+	public class Felnum_Bullet_P : ModProjectile {
+		public override string Texture => "Origins/Projectiles/Ammo/Generic_Bullet";
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.width = 4;
@@ -46,19 +48,8 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.extraUpdates = 2;
 			Projectile.aiStyle = 0;
 		}
-		public override void OnSpawn(IEntitySource source) {
-			Projectile.NewProjectile(
-				source,
-				Projectile.Center,
-				-Projectile.velocity,
-				ModContent.ProjectileType<Aether_Bullet_Duplicate_P>(),
-				Projectile.damage,
-				Projectile.knockBack,
-				Projectile.owner
-			);
-		}
 		public override void AI() {
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			Projectile.rotation = Projectile.velocity.ToRotation();
 			if (Projectile.alpha > 0)
 				Projectile.alpha -= 15;
 			if (Projectile.alpha < 0)
@@ -67,7 +58,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			if (Projectile.alpha < 200) {
-				return new Color(255 - Projectile.alpha, 255 - Projectile.alpha, 255 - Projectile.alpha, 0);
+				return new Color(0.3f, 0.85f, 1f) * Projectile.Opacity;
 			}
 			return Color.Transparent;
 		}
@@ -75,8 +66,8 @@ namespace Origins.Items.Weapons.Ammo {
 			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 		}
-	}
-	public class Aether_Bullet_Duplicate_P : Aether_Bullet_P {
-		public override void OnSpawn(IEntitySource source) { }
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			Static_Shock_Debuff.Inflict(target, Main.rand.Next(120, 210));
+		}
 	}
 }

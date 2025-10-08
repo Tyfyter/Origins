@@ -1715,7 +1715,7 @@ AMMO:
 (^) Defiled Spirit
 (^) Discharge Canister
 (^) Explosive Harpoon
-(#, ^2) Felnum Bullet
+(☻) Felnum Bullet
 (^) Flammable Harpoon
 (X) Foolean Canister
 (^) Harpoon
@@ -1754,7 +1754,7 @@ AMMO:
 (#, ^2) Homing Rocket II
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
-(#, ^2) Valkyrum Bullet
+(☻) Valkyrum Bullet
 
 (^) Gray Solution
 (@, ^3) Orange Solution
