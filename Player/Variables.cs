@@ -4,6 +4,7 @@ using Origins.Dusts;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner.Minions;
@@ -101,6 +102,9 @@ namespace Origins {
 		public bool luckyHatSet = false;
 		public int luckyHatSetTime = 0;
 		public bool LuckyHatSetActive => luckyHatSet && (luckyHatSetTime == -1 || luckyHatSetTime >= 90);
+		public bool luckyHatGun = false;
+		public int luckyHatGunTime = 0;
+		public bool LuckyHatGunActive => luckyHatGun && (luckyHatGunTime == -1 || luckyHatGunTime >= 90);
 		public bool mildewHead = false;
 		public bool mildewSet = false;
 		public bool chambersiteCommandoSet = false;
@@ -653,6 +657,23 @@ namespace Origins {
 				luckyHatSet = false;
 			} else {
 				luckyHatSetTime = 0;
+			}
+			if (Player.HeldItem?.ModItem is Rattlesnake) {
+				luckyHatGun = true;
+				if (Player.ItemAnimationActive) {
+					luckyHatGunTime = LuckyHatGunActive && Player.itemAnimation > 1 ? -1 : 0;
+				} else {
+					if (luckyHatGunTime < 90) {
+						luckyHatGunTime++;
+						if (LuckyHatGunActive) {
+							SoundEngine.PlaySound(SoundID.Camera.WithPitchRange(0.6f, 1f), Player.Center);
+							SoundEngine.PlaySound(SoundID.Coins.WithPitchRange(0.6f, 1f), Player.Center);
+						}
+					}
+				}
+			} else {
+				luckyHatGun = false;
+				luckyHatGunTime = 0;
 			}
 			mildewHead = false;
 			mildewSet = false;

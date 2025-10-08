@@ -25,7 +25,10 @@ namespace Origins.Items.Armor.Other {
 
 		static void On_PlayerEyeHelper_UpdateEyeFrameToShow(On_PlayerEyeHelper.orig_UpdateEyeFrameToShow orig, ref PlayerEyeHelper self, Player player) {
 			orig(ref self, player);
-			if (self.CurrentEyeFrame == PlayerEyeHelper.EyeFrame.EyeOpen && player.OriginPlayer().LuckyHatSetActive) self.CurrentEyeFrame = PlayerEyeHelper.EyeFrame.EyeHalfClosed;
+			if (self.CurrentEyeFrame == PlayerEyeHelper.EyeFrame.EyeOpen) {
+				OriginPlayer originPlayer = player.OriginPlayer();
+				if (originPlayer.LuckyHatSetActive || originPlayer.LuckyHatGunActive) self.CurrentEyeFrame = PlayerEyeHelper.EyeFrame.EyeHalfClosed;
+			}
 		}
 		public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;

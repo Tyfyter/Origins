@@ -6910,3 +6910,8 @@ Tank_Rifle: {
 	DisplayName: Tank Rifle
 	Tooltip: ""
 }
+
+Rattlesnake: {
+	DisplayName: Rattlesnake
+	Tooltip: ""
+}
