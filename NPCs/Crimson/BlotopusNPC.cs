@@ -21,6 +21,8 @@ namespace Origins.NPCs.Crimson {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Shark);
+			NPC.lifeMax = 100;
+			NPC.damage = 15;
 			NPC.aiStyle = 0;
 			NPC.width = 64;
 			NPC.height = 22;
