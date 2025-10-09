@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.World;
+using Steamworks;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,17 +10,16 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Ashen {
 	public class Modular_Light_Fixture : OriginTile, IGlowingModTile {
-		public Color GlowColor { get; }
+		public static Vector3 LightColor => new(1.05f, 0.75f, 0f);
 		public override void SetStaticDefaults() {
 			// Properties
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = false;
-			Main.tileSolid[Type] = true;
+			Main.tileSolid[Type] = false;
 			Main.tileNoAttach[Type] = true;
-			TileID.Sets.DisableSmartCursor[Type] = true;
-			TileID.Sets.DisableSmartInteract[Type] = true;
-			TileID.Sets.AllowLightInWater[Type] = true;
-			TileID.Sets.DontDrawTileSliced[Type] = true;
+			Main.tileBlockLight[Type] = false;
+			TileID.Sets.CanPlaceNextToNonSolidTile[Type] = true;
+			//TileID.Sets.DontDrawTileSliced[Type] = true;
 
 			DustType = DustID.Smoke;
 			AdjTiles = [TileID.Torches];
@@ -35,7 +36,7 @@ namespace Origins.Tiles.Ashen {
 			bool CheckTile(int x, int y) => Framing.GetTileSafely(i + x, j + y).TileIsType(Type);
 			bool CheckTileSolid(int x, int y) {
 				Tile tile = Framing.GetTileSafely(i + x, j + y);
-				return tile.HasTile && Main.tileSolid[tile.TileType];
+				return tile.HasTile && (Main.tileSolid[tile.TileType] || tile.TileType == Type);
 			}
 			short litMod = 0;
 			if (tile.TileFrameY >= 18 * 3) litMod = 18 * 3;
@@ -115,7 +116,7 @@ namespace Origins.Tiles.Ashen {
 			if (tile.TileFrameX == 0) {
 				bool CheckTileSolid(int x, int y) {
 					Tile tile = Framing.GetTileSafely(i + x, j + y);
-					return tile.HasTile && Main.tileSolid[tile.TileType];
+					return tile.HasTile && (Main.tileSolid[tile.TileType] || tile.TileType == Type);
 				}
 				if (tile.TileFrameY == 0) {
 					if (CheckTileSolid(0, 1)) {
@@ -187,13 +188,12 @@ namespace Origins.Tiles.Ashen {
 			return walked;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			this.DrawTileGlow(i, j, spriteBatch);
+			if (OriginsModIntegrations.FancyLighting is null) this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			if (Main.tile[i, j].TileFrameY >= 18 * 3) return;
-			r = 1.05f;
-			g = 0.75f;
-			b = 0f;
+			if (Main.tile[i, j].TileFrameY < 18 * 3) {
+				(r, g, b) = LightColor;
+			}
 		}
 		public override void Load() {
 			this.SetupGlowKeys();
@@ -201,5 +201,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) => color = Vector3.Max(color, LightColor);
 	}
 }
