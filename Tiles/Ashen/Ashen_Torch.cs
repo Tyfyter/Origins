@@ -52,7 +52,7 @@ namespace Origins.Tiles.Ashen {
 			AddMapEntry(new Color(230, 81, 0), Language.GetText("ItemName.Torch"));
 
 			// Assets
-			if (!Main.dedServ) RequestIfExists("Origins/Tiles/Defiled/Defiled_Torch_Tile_Flame", out flameTexture);
+			if (!Main.dedServ) RequestIfExists("Origins/Tiles/Defiled/Ashen_Torch_Tile_Flame", out flameTexture);
 		}
 
 		public override void MouseOver(int i, int j) {
