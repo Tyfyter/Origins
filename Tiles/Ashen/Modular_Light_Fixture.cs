@@ -40,6 +40,37 @@ namespace Origins.Tiles.Ashen {
 			}
 			short litMod = 0;
 			if (tile.TileFrameY >= 18 * 3) litMod = 18 * 3;
+
+			AreaAnalysis bigAnalysis = AreaAnalysis.March(i, j, [new(0, 1), new(0, -1), new(1, 0), new(-1, 0)], pos => Framing.GetTileSafely(pos).TileIsType(Type), a => a.MaxY > a.MinY + 1);
+			if (!bigAnalysis.Broke && bigAnalysis.MaxX - bigAnalysis.MinX > 3 && bigAnalysis.Counted.Count == (bigAnalysis.MaxX + 1 - bigAnalysis.MinX) * (bigAnalysis.MaxY + 1 - bigAnalysis.MinY)) {
+				for (int x = bigAnalysis.MinX; x <= bigAnalysis.MaxX; x++) {
+					for (int y = bigAnalysis.MinY; y <= bigAnalysis.MaxY; y++) {
+						tile = Framing.GetTileSafely(x, y);
+						if (x == bigAnalysis.MinX) {
+							tile.TileFrameX = 5 * 18;
+						} else if (x == bigAnalysis.MinX + 1) {
+							tile.TileFrameX = 6 * 18;
+						} else if (x == bigAnalysis.MaxX - 1) {
+							tile.TileFrameX = 8 * 18;
+						} else if (x == bigAnalysis.MaxX) {
+							tile.TileFrameX = 9 * 18;
+						} else {
+							tile.TileFrameX = 7 * 18;
+						}
+						tile.TileFrameY = litMod;
+						if (y != bigAnalysis.MinY) tile.TileFrameY += 18;
+					}
+				}
+				return false;
+			} else if (tile.TileFrameX >= 5 * 18 && tile.TileFrameY - litMod < 18 * 2) {
+				for (int k = 0; k < bigAnalysis.Counted.Count; k++) {
+					Point pos = bigAnalysis.Counted[k];
+					if (pos.X == i && pos.Y == j) continue;
+					if (tile.TileFrameX >= 5 * 18 && tile.TileFrameY - litMod < 18 * 2) {
+						OriginSystem.QueueTileFrames(pos.X, pos.Y);
+					}
+				}
+			}
 			if (CheckTile(0, 1)) {
 				if (CheckTile(0, -1)) {
 					tile.TileFrameX = 4 * 18;

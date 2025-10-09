@@ -1368,7 +1368,7 @@ TILES:
 (^) Limestone Rubble
 (^) Marrowick Coral
 (^) Marrowick Flange
-(#2, ^2) Modular Light Fixture !!! (still needs large light variant and pass-through)
+(☻) Modular Light Fixture !!!
 (^) Ocotillo
 (X) Petrified Baobab Tree
 (^) Petrified Tree
