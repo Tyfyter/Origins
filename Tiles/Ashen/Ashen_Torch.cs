@@ -74,7 +74,7 @@ namespace Origins.Tiles.Ashen {
 
 			// If the torch is on
 			if (tile.TileFrameX < 66) {
-				Vector3 light = Ashen_Torch.Light;
+				Vector3 light = Ashen_Torch_Item.Light;
 				r = light.X;
 				g = light.Y;
 				b = light.Z;
@@ -120,7 +120,7 @@ namespace Origins.Tiles.Ashen {
 			}
 		}
 	}
-	public class Ashen_Torch : ModItem, ICustomWikiStat {
+	public class Ashen_Torch_Item : ModItem, ICustomWikiStat {
 		public static Vector3 Light => new(1, 0.7f, 0.7f);
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;

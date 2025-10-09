@@ -116,7 +116,7 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.InsertAfter(ItemType<Alkahest_Torch>(), new Item(ItemType<Phoenum_Torch>()) { shopCustomPrice = 300 }); // the ashen substance torch
 						shop.InsertAfter(ItemID.CrimsonTorch, new Item(ItemType<Defiled_Torch>()) { shopCustomPrice = 300 });
 						shop.InsertAfter(ItemType<Defiled_Torch>(), new Item(ItemType<Riven_Torch>()) { shopCustomPrice = 300 });
-						shop.InsertAfter(ItemType<Riven_Torch>(), new Item(ItemType<Ashen_Torch>()) { shopCustomPrice = 300 }); // the ashen torch
+						shop.InsertAfter(ItemType<Riven_Torch>(), new Item(ItemType<Ashen_Torch_Item>()) { shopCustomPrice = 300 }); // the ashen torch
 					}
 
 					static List<int> GetItems<TKind>() where TKind : FurnitureBase => [

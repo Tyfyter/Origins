@@ -445,7 +445,7 @@ namespace Origins.Items {
 				int stack = item.stack;
 				if (Main.LocalPlayer.InModBiome<Defiled_Wastelands>()) item.SetDefaults(ModContent.ItemType<Defiled_Torch>());
 				else if (Main.LocalPlayer.InModBiome<Riven_Hive>()) item.SetDefaults(ModContent.ItemType<Riven_Torch>());
-				else if (Main.LocalPlayer.InModBiome<Ashen_Biome>()) item.SetDefaults(ModContent.ItemType<Ashen_Torch>());
+				else if (Main.LocalPlayer.InModBiome<Ashen_Biome>()) item.SetDefaults(ModContent.ItemType<Ashen_Torch_Item>());
 				item.stack = stack;
 			}
 		}
