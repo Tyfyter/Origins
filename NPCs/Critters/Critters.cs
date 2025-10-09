@@ -282,11 +282,9 @@ namespace Origins.NPCs.Critters {
 		}
 		public override void OnSpawn(IEntitySource source) {
 		}
-		Rectangle tmp = new();
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
 			hitbox.Height = Projectile.Hitbox.Bottom + 100;
 			hitbox.Y = -100;
-			tmp = hitbox;
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			overPlayers.Add(index);
@@ -303,7 +301,6 @@ namespace Origins.NPCs.Critters {
 				Projectile.scale,
 				SpriteEffects.None
 			);
-			tmp.DrawDebugOutlineSprite(Color.White);
 			return false;
 		}
 	}
