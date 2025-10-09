@@ -6791,7 +6791,7 @@ Brown_Ice_Item: {
 	Tooltip: ""
 }
 
-Ashen_Torch: {
+Ashen_Torch_Item: {
 	DisplayName: "{§Ashen} Torch"
 	Tooltip: ""
 }
@@ -6938,5 +6938,20 @@ Pen_Ink.DisplayName: Pen Ink
 
 Rusty_Piping_Item: {
 	DisplayName: Rusty Piping
+	Tooltip: ""
+}
+
+Hyrax_Cage_Item: {
+	DisplayName: Hyrax Cage
+	Tooltip: ""
+}
+
+Hyrax_Item: {
+	DisplayName: Hyrax
+	Tooltip: ""
+}
+
+Ashen_Fountain_Item: {
+	DisplayName: Ashen Fountain
 	Tooltip: ""
 }

@@ -1,11 +1,13 @@
 ﻿using Origins.Dev;
 using Origins.Items.Other.Critters;
 using Origins.Tiles.Other;
+using Origins.World;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -204,6 +206,63 @@ namespace Origins.NPCs.Critters {
 			}
 			return 0.045f;
 		}*/
+	}
+	public class Hyrax : ModNPC, IWikiNPC {
+		public override string Texture => typeof(Cicada_3301).GetDefaultTMLName();
+		public Rectangle DrawRect => new(0, 0, 20, 13);
+		public int AnimationFrames => 2;
+		public int FrameDuration => 8;
+		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
+		public override void SetStaticDefaults() {
+			Main.npcCatchable[Type] = true;
+			Main.npcFrameCount[Type] = 2;
+			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.Shimmerfly;
+			NPCID.Sets.CountsAsCritter[Type] = true;
+		}
+		public override void SetDefaults() {
+			NPC.CloneDefaults(NPCID.Snail);
+			NPC.catchItem = ModContent.ItemType<Hyrax_Item>();
+			SpawnModBiomes = [
+				ModContent.GetInstance<Limestone_Cave>().Type
+			];
+		} // TODO: add spawn rate
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ItemID.Leather));
+		}
+		public override void OnKill() {
+			if (!NetmodeActive.MultiplayerClient && NPC.AnyInteractions()) {
+				Player player = Main.player[NPC.lastInteraction];
+				Projectile.NewProjectile(NPC.GetSource_Death(), player.Bottom, Vector2.Zero, ModContent.ProjectileType<Hyrax_Laser>(), 500, 0);
+			}
+		}
+		public override void FindFrame(int frameHeight) {
+			if (Main.rand.NextBool(350)) {
+				SoundEngine.PlaySound(Origins.Sounds.Amalgamation.WithPitch(1).WithVolumeScale(0.5f), NPC.Center); // replace with a "AWAWA" sound
+			}
+			NPC.spriteDirection = Math.Sign(NPC.velocity.X);
+			if (++NPC.frameCounter >= 7) {
+				NPC.frameCounter = 0;
+				NPC.frame.Height = 26 / Main.npcFrameCount[NPC.type];
+				if ((NPC.frame.Y += NPC.frame.Height) / NPC.frame.Height >= Main.npcFrameCount[Type]) {
+					NPC.frame.Y = 0;
+				}
+			}
+		}
+	}
+	public class Hyrax_Laser : ModProjectile {
+		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.PhantasmalDeathray}";
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.PhantasmalDeathray);
+			Projectile.aiStyle = 0;
+		}
+		public override void AI() {
+			base.AI();
+		}
 	}
 	public class Peppered_Moth : ModNPC, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 18, 12);

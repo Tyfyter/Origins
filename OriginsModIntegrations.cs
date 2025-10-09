@@ -983,7 +983,7 @@ namespace Origins {
 				.DisableDecraft()
 				.Register();
 
-			Recipe.Create(ItemType<Ashen_Torch>()) // temp result until the actual ashen dungeon weapon is made
+			Recipe.Create(ItemType<Ashen_Torch_Item>()) // temp result until the actual ashen dungeon weapon is made
 				.AddIngredient(ItemType<Ashen_Key>())
 				.AddCondition(Condition.DownedPlantera)
 				.AddTile(TileID.MythrilAnvil)

@@ -1285,7 +1285,7 @@ TILES:
 (^) Defiled Torch
 (^) Defiled Water Fountain
 (^) Endowood Furniture
-(X) Hyrax Cage !!!
+(@, #2) Hyrax Cage !!!
 (^) Limestone Furniture
 (^) Living Alkahest Block
 (^) Living Bile Block
@@ -1530,7 +1530,7 @@ CRITTERS AND FISH:
 (^) Chambersite Bunny
 (^) Chambersite Squirrel
 (^) Cicada 3301
-(X) Hyrax !!!
+(@, #2) Hyrax !!!
 (^) Peppered Moth
 
 (^) Bilemouth

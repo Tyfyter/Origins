@@ -2013,6 +2013,7 @@ Projectiles: {
 	Tank_Rifle_P.DisplayName: Tank Rifle
 	Felnum_Bullet_P.DisplayName: Felnum Bullet
 	Valkyrum_Bullet_P.DisplayName: Valkyrum Bullet
+	Hyrax_Laser.DisplayName: Orbital Strike Laser
 }
 
 Prefixes: {
