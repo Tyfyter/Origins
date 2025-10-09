@@ -1,11 +1,16 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Other.Critters;
 using Origins.Tiles.Other;
 using Origins.World;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -225,7 +230,11 @@ namespace Origins.NPCs.Critters {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Limestone_Cave>().Type
 			];
-		} // TODO: add spawn rate
+		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (!spawnInfo.Player.InModBiome<Limestone_Cave>()) return 0f;
+			return spawnInfo.SpawnTileY > Main.worldSurface ? 1 : 0;
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
@@ -235,9 +244,10 @@ namespace Origins.NPCs.Critters {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Leather));
 		}
 		public override void OnKill() {
-			if (!NetmodeActive.MultiplayerClient && NPC.AnyInteractions()) {
+			if (!NetmodeActive.MultiplayerClient && NPC.AnyInteractions() && OriginsModIntegrations.CheckAprilFools()) {
 				Player player = Main.player[NPC.lastInteraction];
-				Projectile.NewProjectile(NPC.GetSource_Death(), player.Bottom, Vector2.Zero, ModContent.ProjectileType<Hyrax_Laser>(), 500, 0);
+				Projectile.NewProjectile(NPC.GetSource_Death(), player.Bottom, Vector2.Zero, ModContent.ProjectileType<Hyrax_Laser>(), 500, 0, ai0: player.whoAmI);
+				SoundEngine.PlaySound(SoundID.Zombie104, player.Bottom);
 			}
 		}
 		public override void FindFrame(int frameHeight) {
@@ -259,9 +269,42 @@ namespace Origins.NPCs.Critters {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PhantasmalDeathray);
 			Projectile.aiStyle = 0;
+			Projectile.damage = 500;
 		}
 		public override void AI() {
-			base.AI();
+			if ((int)Projectile.ai[0] < 0) Projectile.Kill();
+			Player player = Main.player[(int)Projectile.ai[0]];
+			if (!player.active) Projectile.Kill();
+			if (!Framing.GetTileSafely((Projectile.Bottom + Vector2.UnitY).ToTileCoordinates()).HasSolidTile()) {
+				Projectile.position.Y += CollisionExt.Raymarch(Projectile.Bottom, Vector2.UnitY);
+				Projectile.netUpdate = true;
+			}
+		}
+		public override void OnSpawn(IEntitySource source) {
+		}
+		Rectangle tmp = new();
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			hitbox.Height = Projectile.Hitbox.Bottom + 100;
+			hitbox.Y = -100;
+			tmp = hitbox;
+		}
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+			overPlayers.Add(index);
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.Center - Main.screenPosition,
+				null,
+				Color.White,
+				Projectile.rotation,
+				texture.Size() * 0.5f,
+				Projectile.scale,
+				SpriteEffects.None
+			);
+			tmp.DrawDebugOutlineSprite(Color.White);
+			return false;
 		}
 	}
 	public class Peppered_Moth : ModNPC, IWikiNPC {
