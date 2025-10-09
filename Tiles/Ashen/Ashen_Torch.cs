@@ -134,6 +134,7 @@ namespace Origins.Tiles.Ashen {
 			// DefaultToTorch sets various properties common to torch placing items. Hover over DefaultToTorch in Visual Studio to see the specific properties set.
 			// Of particular note to torches are Item.holdStyle, Item.flame, and Item.noWet. 
 			Item.DefaultToTorch(TileType<Ashen_Torch_Tile>(), 0, false);
+			Item.flame = false;
 			Item.value = 50;
 		}
 
