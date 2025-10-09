@@ -58,6 +58,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void PlaceInWorld(int i, int j, Item item) {
 			ModContent.GetInstance<Beacon_Light_TE_System>().AddTileEntity(new(i, j));
+
 		}
 	}
 	public class Beacon_Light_TE_System : TESystem {

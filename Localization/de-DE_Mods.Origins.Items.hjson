@@ -7178,3 +7178,12 @@ Ticking_Bomb: {
 	// DisplayName: Ticking Bomb
 	// Tooltip: "{0:0.##} second fuse time ({1:0.0}x damage)"
 }
+Ashen_Wires: {
+	// DisplayName: Ashen Wires
+	// Tooltip: ""
+}
+
+Ashen_Wrench: {
+	// DisplayName: Ashen Wrench
+	// Tooltip: ""
+}
