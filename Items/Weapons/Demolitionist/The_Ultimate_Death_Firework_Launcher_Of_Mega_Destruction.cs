@@ -176,6 +176,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Scale: 0.85f
 			).noGravity = true;
 			Lighting.AddLight(Projectile.Center, color.ToVector3());
+			if (Projectile.soundDelay == 0) {
+				Projectile.soundDelay = -1;
+				Dust.NewDustPerfect(
+					Projectile.Center + Projectile.velocity.Normalized(out _) * 64,
+					ModContent.DustType<Rocket_Launch>(),
+					Projectile.velocity
+				);
+			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			DrawRocket(Color, lightColor);

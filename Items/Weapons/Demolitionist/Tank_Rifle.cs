@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -21,7 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 5));
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Tank_Rifle_P>(65, 90, 8, 156, 38);
+			Item.DefaultToCanisterLauncher<Tank_Rifle_P>(120, 80, 8, 156, 38);
 			Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(-0.5f);
 			Item.knockBack = 18f;
 			Item.value = Item.sellPrice(gold: 1, silver: 80);
@@ -49,6 +50,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 				drawInfo.itemEffect,
 			0));
 		}
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			position += 12 * velocity.Normalized(out _).MatrixMult(Vector2.UnitY * player.direction + Vector2.UnitX * 4, Vector2.UnitX * -player.direction + Vector2.UnitY * 4);
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			int selfDamage = (int)player.OriginPlayer().GetSelfDamageModifier().ApplyTo(Main.DamageVar(30));
 			if (selfDamage > 0) player.Hurt(
@@ -60,7 +64,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				knockback: 0,
 				scalingArmorPenetration: 0.5f
 			);
-			player.velocity -= velocity * 2;
+			player.velocity = (player.velocity - velocity * 2).WithMaxLength(Math.Max(player.velocity.Length(), Item.shootSpeed * 3));
 			return true;
 		}
 		public override bool? UseItem(Player player) {
@@ -114,6 +118,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			if (Projectile.soundDelay == 0) {
+				Projectile.soundDelay = -1;
+				Dust.NewDustPerfect(
+					Projectile.Center + Projectile.velocity.Normalized(out _) * 120,
+					ModContent.DustType<Rocket_Launch>(),
+					Projectile.velocity,
+					newColor: Color.DimGray
+				);
+			}
 		}
 		public override void OnKill(int timeLeft) {
 			if (NetmodeActive.Server) return;
@@ -147,6 +160,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 				ModContent.DustType<Vertex_Trail_Dust>(),
 				Vector2.Zero
 			).customData = new Vertex_Trail_Dust.TrailData(oldPos, oldRot, StripColors(Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().CanisterData.InnerColor), StripWidth, 14);
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.ScalingArmorPenetration += 0.75f;
 		}
 		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
 			Vector2 origin = OuterTexture.Value.Size() * 0.5f;
