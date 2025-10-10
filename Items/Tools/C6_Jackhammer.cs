@@ -27,7 +27,7 @@ namespace Origins.Items.Tools {
 			Item.damage = 24;
 			Item.width = 28;
 			Item.height = 26;
-			Item.hammer = 54;
+			Item.hammer = 55;
 			//Item.useTime = Item.useAnimation = 60;
 			Item.knockBack = 6f;
 			Item.shootSpeed = 4f;

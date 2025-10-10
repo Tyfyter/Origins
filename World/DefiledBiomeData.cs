@@ -728,33 +728,6 @@ namespace Origins.World.BiomeData {
 				Origins.ResolveRuleWithHandler(shadowOrbSmashed ? FissureDropRule : FirstFissureDropRule, dropInfo, (DropAttemptInfo info, int item, int stack, bool _) => {
 					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, item, stack, pfix: -1);
 				});
-				/*int selection = Main.rand.Next(5);
-				if (!shadowOrbSmashed) {
-					selection = 0;
-				}
-				switch (selection) {
-					case 0: 
-					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Defiled_Burst>(), 1, noBroadcast: false, -1);
-					int stack2 = WorldGen.genRand.Next(100, 101);
-					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ItemID.MusketBall, stack2);
-					break;
-				
-					case 1:
-					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Infusion>(), 1, noBroadcast: false, -1);
-					break;
-
-					case 2:
-					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Defiled_Chakram>(), 1, noBroadcast: false, -1);
-					break;
-
-					case 3:
-					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ItemID.ShadowOrb, 1, noBroadcast: false, -1);
-					break;
-
-					case 4:
-					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Dim_Starlight>(), 1, noBroadcast: false, -1);
-					break;
-				}*/
 				shadowOrbSmashed = true;
 
 				//this projectile handles the rest

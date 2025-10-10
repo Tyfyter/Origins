@@ -918,10 +918,10 @@ namespace Origins.Tiles {
 		}
 	}
 	[Autoload(false)]
-	public class TileItem(ModTile tile) : ModItem() {
+	public class TileItem(ModTile tile, bool debug = false) : ModItem() {
 		readonly ModTile tile = tile;
 		public override string Name => tile.Name + "_Item";
-		public override string Texture => (tile is FurnitureBase furniture && !string.IsNullOrEmpty(furniture.ItemTexture)) ? furniture.ItemTexture : tile.Texture + "_Item";
+		public override string Texture => debug ? tile.Texture : (tile is FurnitureBase furniture && !string.IsNullOrEmpty(furniture.ItemTexture)) ? furniture.ItemTexture : tile.Texture + "_Item";
 		public override LocalizedText DisplayName => this.GetLocalization(nameof(DisplayName), tile.PrettyPrintName);
 		public event Action<Item> ExtraDefaults;
 		public event Action<Item> OnAddRecipes;

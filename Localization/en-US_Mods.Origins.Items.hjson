@@ -6955,3 +6955,8 @@ Ashen_Fountain_Item: {
 	DisplayName: Ashen Fountain
 	Tooltip: ""
 }
+
+Heat_Vent_Item: {
+	DisplayName: Heat Vent
+	Tooltip: ""
+}
