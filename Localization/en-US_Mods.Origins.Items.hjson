@@ -6963,5 +6963,9 @@ Heat_Vent_Item: {
 
 Steel_Support_Beam_Item: {
 	DisplayName: Steel Support Beam
+}
+
+Witherwood_Wall_Item: {
+	DisplayName: Witherwood Wall
 	Tooltip: ""
 }

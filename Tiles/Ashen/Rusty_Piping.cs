@@ -1,11 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
-using Origins.World.BiomeData;
+﻿using Origins.World.BiomeData;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.Graphics;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -24,7 +19,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.Conversion.Stone[Type] = false;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
-			AddMapEntry(FromHexRGB(0x6c452c));
+			AddMapEntry(OriginExtensions.FromHexRGB(0x6c452c));
 
 			MinPick = 65;
 			MineResist = 2;

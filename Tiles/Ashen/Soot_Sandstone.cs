@@ -1,5 +1,4 @@
-﻿using Origins.Tiles.Defiled;
-using Origins.World.BiomeData;
+﻿using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -24,7 +23,7 @@ namespace Origins.Tiles.Ashen {
 			/*for(int i = 0; i < TileLoader.TileCount; i++) {
                 Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Sandstone];
             }*/
-			AddMapEntry(FromHexRGB(0x8772a6));
+			AddMapEntry(OriginExtensions.FromHexRGB(0x8772a6));
 			mergeID = TileID.Sandstone;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}

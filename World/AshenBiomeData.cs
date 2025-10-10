@@ -87,27 +87,10 @@ namespace Origins.World.BiomeData {
 		public const int NeededTiles = 200;
 		public const int ShaderTileCount = 25;
 		public const short DefaultTileDust = DustID.Lihzahrd;
-		public class SpawnRates : SpawnPool {/*
-			public const float AmebSlime = 0.65f;
-			public const float Fighter = 1;
-			public const float AncientFighter = 0.03f;
-			public const float Flajelly = 0.37f;
-			public const float BarnBack = 0.3f;
-			public const float Amoebeye = 0.25f;
-			public const float BlisterBoi = 0.75f;
-			public const float Seashell = 0.6f;
-			public const float Aqueoua = 0.5f;
-			public const float Spighter = 1;
-			public const float Wall = 1.5f;
-			public const float Mummy = 1;
-			public const float Ghoul = 2;
-			public const float Cleaver = 0.5f;
-			public const float Barnacle = 0.5f;
-			public const float Shark1 = 0.4f;
-			public const float Worm = 0.4f;
-			public const float Crawler = 0.8f;*/
+		public class SpawnRates : SpawnPool {
+			public const float PowerZombie = 0.8f;
 			public const float Mimic = 0.01f;
-			//public const float Whip = 0.01f;
+			public const float CursedWeapon = 0.01f;
 			public override string Name => $"{nameof(Ashen_Biome)}_{base.Name}";
 			public override void SetStaticDefaults() {
 				Priority = SpawnPoolPriority.BiomeHigh;
@@ -120,7 +103,7 @@ namespace Origins.World.BiomeData {
 					return 0;
 				};
 				AddSpawn(NPCType<Trash_Compactor_Mimic>(), MimicRate(Mimic));
-				//AddSpawn(ModContent.NPCType<Savage_Whip>(), MimicRate(Whip));
+				AddSpawn(NPCType<Enchanted_Trident>(), MimicRate(CursedWeapon));
 			}
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;

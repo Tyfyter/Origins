@@ -32,7 +32,7 @@ namespace Origins.Tiles.Ashen {
 
 			MineResist = 0.5f; // Sand tile typically require half as many hits to mine.
 			DustType = Ashen_Biome.DefaultTileDust;
-			AddMapEntry(FromHexRGB(0x817691));
+			AddMapEntry(OriginExtensions.FromHexRGB(0x817691));
 		}
 
 		public override bool HasWalkDust() {

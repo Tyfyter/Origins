@@ -1,5 +1,4 @@
-﻿using Origins.Tiles.Defiled;
-using Origins.World.BiomeData;
+﻿using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -21,7 +20,7 @@ namespace Origins.Tiles.Ashen {
             Main.tileMerge[TileID.HardenedSand][Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.HardenedSand];
             Main.tileMerge[Type][TileID.HardenedSand] = true;*/
-			AddMapEntry(FromHexRGB(0x75678a));
+			AddMapEntry(OriginExtensions.FromHexRGB(0x75678a));
 			mergeID = TileID.HardenedSand;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}

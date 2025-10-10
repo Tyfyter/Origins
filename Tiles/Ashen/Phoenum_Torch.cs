@@ -2,7 +2,6 @@
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
@@ -49,7 +48,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.addTile(Type);
 
 			// Etc
-			AddMapEntry(FromHexRGB(0xFF5100), Language.GetText("ItemName.Torch"));
+			AddMapEntry(OriginExtensions.FromHexRGB(0xFF5100), Language.GetText("ItemName.Torch"));
 
 			// Assets
 			if (!Main.dedServ) RequestIfExists(base.Texture + "_Flame", out flameTexture);
