@@ -6970,3 +6970,8 @@ Witherwood_Wall_Item: {
 	DisplayName: Witherwood Wall
 	Tooltip: ""
 }
+
+Welding_Torch: {
+	DisplayName: Welding Torch
+	Tooltip: ""
+}

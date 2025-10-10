@@ -96,12 +96,6 @@ namespace Origins.Items.Weapons.Ranged {
 			target.AddBuff(BuffID.OnFire3, hit.Crit ? 600 : 360);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			/*Projectile.DrawFlamethrower(
-				new Color(255, 80, 20, 200),
-				new Color(255, 80, 20, 200),
-				new Color(255, 20, 20, 93),
-				new Color(30, 30, 30, 100)
-			);*/
 			Color color1 = new(255, 80, 20, 200);
 			Color color2 = new(255, 80, 20, 200);
 			Color color3 = new(255, 20, 20, 93);

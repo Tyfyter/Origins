@@ -2017,6 +2017,7 @@ Projectiles: {
 	// Felnum_Bullet_P.DisplayName: Felnum Bullet
 	// Valkyrum_Bullet_P.DisplayName: Valkyrum Bullet
 	// Hyrax_Laser.DisplayName: Orbital Strike Laser
+	// Welding_Torch_P.DisplayName: Welding Torch P
 }
 
 Prefixes: {
