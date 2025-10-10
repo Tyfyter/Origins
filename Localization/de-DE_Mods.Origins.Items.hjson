@@ -6960,3 +6960,8 @@ Heat_Vent_Item: {
 	// DisplayName: Heat Vent
 	// Tooltip: ""
 }
+
+Steel_Support_Beam_Item: {
+	// DisplayName: Steel Support Beam
+	// Tooltip: ""
+}

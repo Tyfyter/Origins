@@ -56,9 +56,9 @@ Status_Messages: {
 	// Defiled_Fissure_1: Your body suddenly aches everywhere...
 	// Defiled_Fissure_2: Rattling emanates from the walls...
 	// Defiled_Fissure_3: The skies echo a threatening call...
-	// Heat_Vent_1: VENT [{0}] HEAVILY DAMAGED - DEPLOY REPAIRBOY SWARM. REPAIR.
-	// Heat_Vent_2: VENT [{0}] HEAVILY DAMAGED - ALLOCATE MORE UNITS. REPAIR, SURVEIL.
-	// Heat_Vent_3: VENT [{0}] HEAVILY DAMAGED - HEAT CRITICAL. REDUCING GENERATOR OUTPUT. DEPLOY TM-[{1}]. DESTROY.
+	// Heat_Vent_1: VENT [{0:00}] HEAVILY DAMAGED - DEPLOY REPAIRBOY SWARM. REPAIR.
+	// Heat_Vent_2: VENT [{0:00}] HEAVILY DAMAGED - ALLOCATE MORE UNITS. REPAIR, SURVEIL.
+	// Heat_Vent_3: VENT [{0:00}] HEAVILY DAMAGED - HEAT CRITICAL. REDUCING GENERATOR OUTPUT. DEPLOY TM-[{1:00}]. DESTROY.
 	// Cleansing_Station_Invalid_Location: You cannot use this with an evil presence nearby.
 	// Felnum_Spawn: The clouds have been blessed with Felnum!
 }
