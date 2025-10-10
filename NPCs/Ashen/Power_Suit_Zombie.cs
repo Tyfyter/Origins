@@ -6,7 +6,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.NPCs.MiscE {
+namespace Origins.NPCs.Ashen {
     public class Power_Suit_Zombie : ModNPC, IWikiNPC {
 		public Rectangle DrawRect => new(0, 6, 34, 46);
 		public int AnimationFrames => 24;
