@@ -1379,7 +1379,7 @@ TILES:
 (^) Shelf Coral
 (^) Soulspore
 (#, ^2) Steel Support Beam !!!
-(#, ^2) Suit Locker !!! (slight glow?)
+(☻) Suit Locker !!! (slight glow)
 (☻, ▼) Surveysprout !!!
 (^) Tangela Bramble
 (^) Underwater Vine

@@ -43,7 +43,15 @@ namespace Origins.Tiles.Ashen {
 			RegisterItemDrop(item.Type);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			if (Main.tile[i, j].TileFrameX < 3 * 18 * 2) r = g = b = 0.01f;
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameX < 3 * 18 * 2 && tile.TileFrameY < 2 * 18) {
+				r = 0.0912f;
+				g = 0.0579f;
+				b = 0f;
+			}
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
