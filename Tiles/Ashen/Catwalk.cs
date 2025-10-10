@@ -327,10 +327,10 @@ namespace Origins.Tiles.Ashen {
 				Recipe.Create(item.type, 2)
 				.AddIngredient(ModContent.ItemType<Scrap>(), 1)
 				.AddCondition(Condition.InGraveyard)
-				.DisableDecraft()
 				.Register();
 				Recipe.Create(ModContent.ItemType<Scrap>())
 				.AddIngredient(item.type, 2)
+				.DisableDecraft()
 				.Register();
 			};
 		}
