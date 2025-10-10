@@ -19,7 +19,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.Conversion.Stone[Type] = false;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
-			AddMapEntry(OriginExtensions.FromHexRGB(0x6c452c));
+			AddMapEntry(FromHexRGB(0x6c452c));
 
 			MinPick = 65;
 			MineResist = 2;

@@ -23,7 +23,7 @@ namespace Origins.Tiles.Ashen {
 			/*for(int i = 0; i < TileLoader.TileCount; i++) {
                 Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Sandstone];
             }*/
-			AddMapEntry(OriginExtensions.FromHexRGB(0x8772a6));
+			AddMapEntry(FromHexRGB(0x8772a6));
 			mergeID = TileID.Sandstone;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}

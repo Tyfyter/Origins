@@ -48,7 +48,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.addTile(Type);
 
 			// Etc
-			AddMapEntry(OriginExtensions.FromHexRGB(0xFF5100), Language.GetText("ItemName.Torch"));
+			AddMapEntry(FromHexRGB(0xFF5100), Language.GetText("ItemName.Torch"));
 
 			// Assets
 			if (!Main.dedServ) RequestIfExists(base.Texture + "_Flame", out flameTexture);

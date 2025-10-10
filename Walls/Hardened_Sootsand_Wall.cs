@@ -12,7 +12,7 @@ namespace Origins.Walls {
 			WallID.Sets.Conversion.HardenedSand[Type] = true;
 			Main.wallBlend[Type] = WallID.HardenedSand;//what wall type this wall is considered to be when blending
 			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
-			AddMapEntry(OriginExtensions.FromHexRGB(0x5F5470));
+			AddMapEntry(FromHexRGB(0x5F5470));
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 	}

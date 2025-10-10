@@ -1,11 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
-using Origins.World.BiomeData;
+﻿using Origins.World.BiomeData;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.Graphics;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
