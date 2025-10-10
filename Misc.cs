@@ -1886,6 +1886,10 @@ namespace Origins {
 			float median = (Math.Min(Math.Min(R, G), B) + Math.Max(Math.Max(R, G), B)) / 2f;
 			return new Color(MathHelper.Lerp(median, R, multiplier), MathHelper.Lerp(median, G, multiplier), MathHelper.Lerp(median, B, multiplier));
 		}
+		public static Color FromHexRGB(uint hex) => FromHexRGBA((hex << 8) | 0x000000ffu);
+		public static Color FromHexRGBA(uint hex) => new() {
+			PackedValue = ((hex & 0xff000000u) >> 24) | ((hex & 0x00ff0000u) >> 8) | ((hex & 0x0000ff00u) << 8) | ((hex & 0x000000ffu) << 24),
+		};
 		public static T[] BuildArray<T>(int length, params int[] nonNullIndeces) where T : new() {
 			T[] o = new T[length];
 			for (int i = 0; i < nonNullIndeces.Length; i++) {

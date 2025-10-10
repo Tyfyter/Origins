@@ -3,7 +3,6 @@ using Origins.Dev;
 using Origins.Graphics;
 using ReLogic.Content;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Ashen {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.ID;

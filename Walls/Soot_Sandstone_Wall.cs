@@ -13,7 +13,7 @@ namespace Origins.Walls {
 			WallID.Sets.Conversion.Sandstone[Type] = true;
 			Main.wallBlend[Type] = WallID.Sandstone;//what wall type this wall is considered to be when blending
 			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
-			AddMapEntry(new Color(255, 115, 115));
+			AddMapEntry(OriginExtensions.FromHexRGB(0x72608C));
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
 	}

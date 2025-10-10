@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
 using Origins.World;
-using Steamworks;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
