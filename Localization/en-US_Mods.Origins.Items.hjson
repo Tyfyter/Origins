@@ -6960,3 +6960,8 @@ Heat_Vent_Item: {
 	DisplayName: Heat Vent
 	Tooltip: ""
 }
+
+Witherwood_Wall_Item: {
+	DisplayName: Witherwood Wall
+	Tooltip: ""
+}

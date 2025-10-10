@@ -7,7 +7,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
 	public class Hardened_Sootsand_Wall : ModWall {
-		public override string Texture => typeof(Hardened_Defiled_Sand_Wall).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			WallID.Sets.AllowsUndergroundDesertEnemiesToSpawn[Type] = true;
 			WallID.Sets.Conversion.HardenedSand[Type] = true;
@@ -18,14 +17,13 @@ namespace Origins.Walls {
 		}
 	}
 	public class Hardened_Sootsand_Wall_Safe : Hardened_Sootsand_Wall {
-		public override string Texture => "Origins/Walls/Hardened_Defiled_Sand_Wall";
+		public override string Texture => "Origins/Walls/Hardened_Sootsand_Wall";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.wallHouse[Type] = true;
 		}
 	}
 	public class Hardened_Sootsand_Wall_Item : ModItem {
-		public override string Texture => typeof(Hardened_Defiled_Sand_Wall_Item).GetDefaultTMLName();
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneWall);
 			Item.createWall = WallType<Hardened_Sootsand_Wall_Safe>();

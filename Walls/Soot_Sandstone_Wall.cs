@@ -7,7 +7,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
     public class Soot_Sandstone_Wall : ModWall {
-		public override string Texture => typeof(Defiled_Sandstone_Wall).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			WallID.Sets.AllowsUndergroundDesertEnemiesToSpawn[Type] = true;
 			WallID.Sets.Conversion.Sandstone[Type] = true;
@@ -18,14 +17,13 @@ namespace Origins.Walls {
 		}
 	}
 	public class Soot_Sandstone_Wall_Safe : Soot_Sandstone_Wall {
-		public override string Texture => "Origins/Walls/Defiled_Sandstone_Wall";
+		public override string Texture => "Origins/Walls/Soot_Sandstone_Wall";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.wallHouse[Type] = true;
 		}
 	}
 	public class Soot_Sandstone_Wall_Item : ModItem {
-		public override string Texture => typeof(Defiled_Sandstone_Wall_Item).GetDefaultTMLName();
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneWall);
 			Item.createWall = WallType<Soot_Sandstone_Wall_Safe>();
