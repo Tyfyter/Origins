@@ -1,5 +1,6 @@
 ﻿using Origins.Dev;
 using Origins.World.BiomeData;
+using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -8,20 +9,20 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Ashen {
     public class Power_Suit_Zombie : ModNPC, IWikiNPC {
-		public Rectangle DrawRect => new(0, 6, 34, 46);
+		public Rectangle DrawRect => new(0, 6, 34, 44);
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public override void Load() {
+		public override void Load() {/*
 			On_NPC.ScaleStats_ApplyExpertTweaks += (orig, self) => {
 				orig(self);
 				OriginsSets.NPCs.CustomExpertScaling.GetIfInRange(self.type)?.Invoke(self);
-			};
+			};*/
 		}
 		public override void SetStaticDefaults() {
-			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.UndeadMiner;//maybe undead viking instead?
+			//NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.UndeadMiner; // maybe undead viking instead?
 			Main.npcFrameCount[NPC.type] = 7;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;/*
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			OriginsSets.NPCs.CustomExpertScaling[Type] = npc => {
 				if (Main.hardMode) {
@@ -37,20 +38,24 @@ namespace Origins.NPCs.Ashen {
 						npc.value = (int)(npc.value * num3 * 0.8);
 					}
 				}
-			};
+			};*/
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);
+			NPC.CloneDefaults(NPCID.Zombie);/*
 			NPC.lifeMax = 45;
 			NPC.defense = 28;
-			NPC.damage = 14;
+			NPC.damage = 14;*/
 			NPC.width = 28;
 			NPC.height = 44;
-			NPC.value = 90;
+			//NPC.value = 90;
 			NPC.friendly = false;
+			NPC.aiStyle = NPCAIStyleID.Fighter;
 			AIType = NPCID.Zombie;
 			AnimationType = NPCID.Zombie;
 			Banner = Item.NPCtoBanner(NPCID.Zombie);
+			SpawnModBiomes = [
+				ModContent.GetInstance<Ashen_Biome>().Type,
+			];
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerInTown) return 0;
@@ -66,9 +71,13 @@ namespace Origins.NPCs.Ashen {
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime
 			);
 		}
+		public override void FindFrame(int frameHeight) {
+			if (Math.Abs(NPC.velocity.X) > 0) NPC.DoFrames(60);
+			if (!NPC.collideY) NPC.DoFrames(1, 3..3);
+		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ItemID.EmptyBucket, 15));
-			npcLoot.Add(ItemDropRule.Common(ItemID.Diamond, 20));
+			npcLoot.Add(ItemDropRule.Common(ItemID.EmptyBucket, 2));
+			npcLoot.Add(ItemDropRule.Common(ItemID.Amber, 20));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0 || OriginsModIntegrations.CheckAprilFools()) {

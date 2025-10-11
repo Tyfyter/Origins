@@ -50,6 +50,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.height = 44;
 			NPC.value = 90;
 			NPC.friendly = false;
+			NPC.aiStyle = NPCAIStyleID.Fighter;
 			AIType = NPCID.Zombie;
 			AnimationType = NPCID.Zombie;
 			Banner = Item.NPCtoBanner(NPCID.Zombie);
