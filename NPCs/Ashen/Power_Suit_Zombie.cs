@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Items.Armor.Ashen;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -8,7 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Ashen {
-    public class Power_Suit_Zombie : ModNPC, IWikiNPC {
+	public class Power_Suit_Zombie : ModNPC, IWikiNPC {
 		public Rectangle DrawRect => new(0, 6, 34, 44);
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
@@ -41,13 +42,13 @@ namespace Origins.NPCs.Ashen {
 			};*/
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);/*
+			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.lifeMax = 45;
-			NPC.defense = 28;
-			NPC.damage = 14;*/
+			NPC.defense = 14;
+			NPC.damage = 18;
 			NPC.width = 28;
 			NPC.height = 44;
-			//NPC.value = 90;
+			NPC.value = Item.buyPrice(0, 0, 2);
 			NPC.friendly = false;
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			AIType = NPCID.Zombie;
@@ -76,8 +77,11 @@ namespace Origins.NPCs.Ashen {
 			if (!NPC.collideY) NPC.DoFrames(1, 3..3);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ItemID.EmptyBucket, 2));
+			//npcLoot.Add(ItemDropRule.Common(ItemID.EmptyBucket, 2)); // warn paper
 			npcLoot.Add(ItemDropRule.Common(ItemID.Amber, 20));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Helmet>(), 14));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Breastplate>(), 14));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Greaves>(), 14));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0 || OriginsModIntegrations.CheckAprilFools()) {
