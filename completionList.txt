@@ -1207,7 +1207,7 @@ TILES:
 (^) Lost Ore
 (^) Marrowick
 (^) Mildew Block
-(X) Murky Sludge !!!
+(#, ^2) Murky Sludge !!!
 (X) Nova Brick
 (X) Nova Fragment Block
 (^) Peat Moss Block
@@ -1224,13 +1224,13 @@ TILES:
 (^) Silica
 (^) Silicon Ore
 (^) Soot Sandstone
-(@, ^3, ▼) Sootgrass !!!
+(#2, ^2) Sootgrass !!!
 (X) Space Goo
 (^) Spug Flesh
 (X) Spug Flesh Brick
-(@, #2, ▼) Tainted Stone !!!
+(#2, ^2) Tainted Stone !!!
 (X) Tainted Stone Brick
-(X) Truss Block !!!
+(#, ^2) Truss Block !!!
 (^) Type-I Fortified Steel Block
 (^) Type-II Fortified Steel Block
 (^) Type-III Fortified Steel Block
@@ -1244,7 +1244,7 @@ TILES:
 (X) Busted Block Wall
 (^) Calcified Spug Flesh Wall
 (^) Chambersite Gemspark Wall
-(@, ^3, ▼) Chambersite Gemstone Wall (Ashen)
+(@, ^3, ▼) Chambersite Gemstone Wall (Ashen) !!!
 (^) Chambersite Gemstone Wall (Corruption)
 (^) Chambersite Gemstone Wall (Crimson)
 (^) Chambersite Gemstone Wall (Defiled)
@@ -1295,7 +1295,7 @@ TILES:
 (X) Residue Furniture
 (^) Riven Torch
 (^) Riven Water Fountain
-(@2, #) Scrap Railing !!!
+(#, ^2) Scrap Railing !!!
 (^) Shadow Torch
 (^) Traffic Cone
 (@, ^3, ▼) Witherwood Furniture
@@ -1347,7 +1347,7 @@ TILES:
 (^) Acetabularia
 (@, ^3, ▼) Ashen Altar !!!
 (@, ^3, ▼) Ashen Scrap Foliage !!!
-(@, ^3, ▼) Ashen Soot Foliage !!!
+(#2, ^2) Ashen Sootgrass Foliage !!!
 (#, ^2) Background Door !!!
 (々) Beacon Light !!! (needs Repairboys to be implemented first)
 (^) Brineglow Vine
