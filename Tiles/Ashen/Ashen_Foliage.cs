@@ -23,17 +23,17 @@ namespace Origins.Tiles.Ashen {
 			int[] validTiles = [
 				ModContent.TileType<Ashen_Grass>(),
 				ModContent.TileType<Ashen_Jungle_Grass>(),
-				ModContent.TileType<Tainted_Stone>()
+				//ModContent.TileType<Ashen_Murky_Sludge_Grass>()
 			];
 
 			TileObjectData.newTile.AnchorValidTiles = [..validTiles,
-				TileID.Stone,
 				TileID.Grass
 			];
 
 			TileObjectData.addTile(Type);
 
 			PileConversionGlobal.AddConversion(TileID.SmallPiles, [0, 1, 2, 3, 4, 5], Type, [.. validTiles]);
+			HitSound = SoundID.Grass;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
 
