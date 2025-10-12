@@ -1221,7 +1221,6 @@ TILES:
 (X) Sanguinite Brick
 (@4) Sanguinite Ore !!!
 (X) Scrap Heap !!!
-(X) Scrap Railing !!!
 (^) Silica
 (^) Silicon Ore
 (^) Soot Sandstone
@@ -1296,6 +1295,7 @@ TILES:
 (X) Residue Furniture
 (^) Riven Torch
 (^) Riven Water Fountain
+(@2, #) Scrap Railing !!!
 (^) Shadow Torch
 (^) Traffic Cone
 (@, ^3, ▼) Witherwood Furniture
@@ -1359,16 +1359,16 @@ TILES:
 (X) Exoskeletal Baobab Tree
 (^) Exoskeletal Tree
 (X) Floodlight !!!
-(☻, ▼) Fungarust !!!
+(^) Fungarust
 (^) Fuzzvine
 (^) Gel Blister
 (#, ^2) Generation Station !!!
-(☻) Heat Vent !!!
+(#2, ^2) Heat Vent !!! (missing glow and remove debug code)
 (^) Hydrothermal Vent
 (^) Limestone Rubble
 (^) Marrowick Coral
 (^) Marrowick Flange
-(☻) Modular Light Fixture !!!
+(^) Modular Light Fixture
 (^) Ocotillo
 (X) Petrified Baobab Tree
 (^) Petrified Tree
@@ -1378,9 +1378,9 @@ TILES:
 (X) Sheet Metal !!!
 (^) Shelf Coral
 (^) Soulspore
-(@2, ^3) Steel Support Beam !!! (some frames exceed 16x16, but no evidence this was deliberate)
-(☻) Suit Locker !!! (slight glow)
-(☻, ▼) Surveysprout !!!
+(#2, ^2) Steel Support Beam !!!
+(^) Suit Locker
+(^) Surveysprout
 (^) Tangela Bramble
 (^) Underwater Vine
 (^) Venus Coral
@@ -1600,13 +1600,17 @@ CONSUMABLES:
 (#, ^2) Unmarked Antidote
 
 (^) Bad Juju Stone
+(X) BBQ Skewer
 (^) Bileberry
+(X) Blastberry
 (^) Blue Bovine
 (^) Bread
 (^) Brine Cheese
 (#, ^2) Budget Fairy Dust
 (^) Caeser Salad
+(X) Cognac
 (^) Contaminated Infusion
+(X) Crockin Sprocks
 (^) Edible Hair Gel
 (^) Honey Wheat Bread
 (^) Irish Cheddar
@@ -1625,6 +1629,7 @@ CONSUMABLES:
 (^) Sour Apple
 (#, ^2) Spearmint Tea
 (#, ^2) Sweet Tooth Shake
+(X) Tangerine
 (#, ^2) Tasty Booger
 (^) Vanilla Shake
 

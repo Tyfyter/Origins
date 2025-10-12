@@ -6975,3 +6975,18 @@ Welding_Torch: {
 	// DisplayName: Welding Torch
 	// Tooltip: ""
 }
+
+Ashen2_Breastplate: {
+	// DisplayName: Ashen2 Breastplate
+	// Tooltip: ""
+}
+
+Ashen2_Greaves: {
+	// DisplayName: Ashen2 Greaves
+	// Tooltip: ""
+}
+
+Ashen2_Helmet: {
+	// DisplayName: Ashen2 Helmet
+	// Tooltip: ""
+}

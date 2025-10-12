@@ -34,7 +34,7 @@ namespace Origins.Tiles.Ashen {
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
 			LocalizedText name = CreateMapEntryName();
-			AddMapEntry(new Color(128, 128, 128), name);
+			AddMapEntry(new Color(25, 70, 62), name);
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			TileObjectData.newTile.AnchorValidTiles = [
