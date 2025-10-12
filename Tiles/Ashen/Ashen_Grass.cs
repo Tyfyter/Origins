@@ -1,12 +1,9 @@
-﻿using Origins.Tiles.Defiled;
-using Origins.World.BiomeData;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Ashen {
 	public class Ashen_Grass : OriginTile, IAshenTile {
-		public override string Texture => typeof(Defiled_Grass).GetDefaultTMLName();
         public string[] Categories => [
             "Grass"
         ];
@@ -22,16 +19,16 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMerge[Type][TileID.Mud] = true;
 			Main.tileMerge[TileID.Mud][Type] = true;
 			Origins.TileTransformsOnKill[Type] = true;
-			for (int i = 0; i < TileLoader.TileCount; i++)
+			for (int i = 0; i < TileLoader.TileCount; i++) {
 				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
 					Main.tileMerge[Type][i] = true;
 					Main.tileMerge[i][Type] = true;
 				}
+			}
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			AddMapEntry(new Color(255, 200, 200));
-			//SetModTree(Defiled_Tree.Instance);
-			DustType = Ashen_Biome.DefaultTileDust;
+			AddMapEntry(FromHexRGB(0x5a4e6d));
+			DustType = DustID.Demonite;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
@@ -48,8 +45,7 @@ namespace Origins.Tiles.Ashen {
 			}
 		}
 	}
-	public class Ashen_Jungle_Grass : OriginTile {
-		public override string Texture => typeof(Defiled_Jungle_Grass).GetDefaultTMLName();
+	public class Ashen_Jungle_Grass : OriginTile, IAshenTile {
 		public override void SetStaticDefaults() {
 			if (ModLoader.HasMod("InfectedQualities")) {
 				TileID.Sets.JungleBiome[Type] = 1;
@@ -73,8 +69,8 @@ namespace Origins.Tiles.Ashen {
 				}
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			AddMapEntry(new Color(255, 180, 180));
-			//SetModTree(Defiled_Tree.Instance);
+			AddMapEntry(FromHexRGB(0x5a4e6d));
+			DustType = DustID.Demonite;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) Framing.GetTileSafely(i, j).TileType = TileID.Mud;
@@ -90,7 +86,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Ashen_Grass_Seeds : ModItem {
-		public override string Texture => typeof(Defiled_Grass_Seeds).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			ItemID.Sets.GrassSeeds[Type] = true;
 			Item.ResearchUnlockCount = 25;

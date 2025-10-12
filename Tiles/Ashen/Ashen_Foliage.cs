@@ -12,13 +12,12 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Ashen_Foliage : ModTile, IAshenTile {
-		public override string Texture => typeof(Defiled_Foliage).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = true;
 			Main.tileNoFail[Type] = true;
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
-			AddMapEntry(new Color(255, 175, 175));
+			AddMapEntry(FromHexRGB(0x5a4e6d));
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			int[] validTiles = [
@@ -77,7 +76,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override bool CanDrop(int i, int j) => true;
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {
-			int critterType = ModContent.NPCType<Bug>();
+			int critterType = ModContent.NPCType<Peppered_Moth>();
 			int chance = 150, _ = 0;
 			TileLoader.DropCritterChance(i, j, Type, ref _, ref chance, ref _);
 			if (chance > 0 && NPC.CountNPCS(critterType) < 5 && WorldGen.genRand.NextBool(chance)) {
