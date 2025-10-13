@@ -25,6 +25,7 @@ namespace Origins.Projectiles {
 		public bool isRespawned = false;
 		public StatModifier maxHealthModifier = StatModifier.Default;
 		public int defense = 0;
+		public int stayStillSoICanHealYouTime = 0;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
 			if (entity.ModProjectile is IArtifactMinion) Origins.ArtifactMinion[entity.type] = true;
 			return Origins.ArtifactMinion[entity.type];
@@ -32,6 +33,7 @@ namespace Origins.Projectiles {
 		public override void SetDefaults(Projectile projectile) {
 			isRespawned = false;
 		}
+		public override bool ShouldUpdatePosition(Projectile projectile) => stayStillSoICanHealYouTime <= 0;
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
 			ModPrefix prefix = null;
 			if (source is EntitySource_ItemUse itemUseSource) {
@@ -65,6 +67,7 @@ namespace Origins.Projectiles {
 					}
 				}
 			}
+			if (projectile.numUpdates == -1) stayStillSoICanHealYouTime.Cooldown();
 		}
 		public bool CanRespawn(Projectile projectile) {
 			if (ArtifactMinionSystem.IsSacrificingMinions || ArtifactMinionSystem.IsDismissingMinion) return false;

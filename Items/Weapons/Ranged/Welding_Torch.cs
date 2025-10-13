@@ -2,6 +2,7 @@
 using Origins.Projectiles;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -10,13 +11,19 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Welding_Torch : ModItem {
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.ElfMelter);
-			Item.damage = 25;
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.autoReuse = true;
+			Item.knockBack = 0.425f;
+			Item.noMelee = true;
+
+			Item.DamageType = DamageClasses.RangedSummon;
+			Item.damage = 15;
 			Item.useAnimation = 20;
 			Item.useTime = 5;
-			Item.mana = 5;
+			Item.mana = 8;
 			Item.width = 36;
 			Item.height = 16;
 			Item.useAmmo = AmmoID.None;
@@ -27,11 +34,17 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.ArmorPenetration = 25;
 			Item.UseSound = SoundID.Item34;
 		}
-		public override Vector2? HoldoutOffset() {
-			return new Vector2(-8, 0);
+		public override Vector2? HoldoutOffset() => new Vector2(2, 0);
+		public override void UseStyle(Player player, Rectangle heldItemFrame) {
+			if (player.ItemAnimationEndingOrEnded) player.altFunctionUse = 0;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			position += velocity.SafeNormalize(default) * 12;
+			Vector2 unit = velocity.Normalized(out _);
+			position += unit * 16 + 12 * new Vector2(unit.Y, -unit.X) * player.direction;
+		}
+		public override bool AltFunctionUse(Player player) {
+			if (player.controlUseTile) player.controlUseItem = true;
+			return true;
 		}
 	}
 	public class Welding_Torch_P : ModProjectile {
@@ -54,6 +67,9 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
 		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_Parent { Entity: Player player }) Projectile.ai[1] = player.altFunctionUse;
+		}
 		public override void AI() {
 			if (Projectile.localAI[2] == 0) {
 				Projectile.localAI[2] = 1 + Projectile.wet.ToInt();
@@ -71,10 +87,11 @@ namespace Origins.Items.Weapons.Ranged {
 			if (Projectile.ai[0] > Lifetime) {
 				Projectile.Kill();
 			}
-			Rectangle hitbox = Projectile.Hitbox;
 			for (int i = 0; i < healCooldown.Length; i++) {
 				if (healCooldown[i] > 0) healCooldown[i]--;
 			}
+			Rectangle hitbox = Projectile.Hitbox;
+			ProjectileLoader.ModifyDamageHitbox(Projectile, ref hitbox);
 			foreach (Projectile other in Main.ActiveProjectiles) {
 				if (healCooldown[other.whoAmI] > 0) continue;
 				if (Projectile.Colliding(hitbox, other.Hitbox) && other.ModProjectile is IArtifactMinion artifactMinion && artifactMinion.Life < artifactMinion.MaxLife) {
@@ -83,6 +100,7 @@ namespace Origins.Items.Weapons.Ranged {
 					if (artifactMinion.Life > artifactMinion.MaxLife) artifactMinion.Life = artifactMinion.MaxLife;
 					CombatText.NewText(other.Hitbox, CombatText.HealLife, (int)Math.Round(artifactMinion.Life - oldHealth), true, dot: true);
 					healCooldown[other.whoAmI] = 20;
+					if (Projectile.ai[1] == 2 && other.owner == Projectile.owner) other.GetGlobalProjectile<ArtifactMinionGlobalProjectile>().stayStillSoICanHealYouTime = 6;
 				}
 			}
 		}
