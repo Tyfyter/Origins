@@ -7000,5 +7000,5 @@ Ashen2_Helmet: {
 
 Adrenaline: {
 	// DisplayName: Adrenaline
-	// Tooltip: ""
+	// Tooltip: Grants immunity to [buffhint:Weak], [buffhint:BrokenArmor], [buffhint:WitheredArmor][ox:,] and [buffhint:WitheredWeapon]
 }

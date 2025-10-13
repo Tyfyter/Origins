@@ -340,23 +340,33 @@ EVENTS:
 
 STATUS EFFECTS:
 |---
+(#, ^2) Adrenaline Rush !!!
+(#, ^2) Antitoxin !!!
+(#, ^2) Blood Transfusion !!!
+(#, ^2) Fast !!!
+(#, ^2) First Aid !!!
+(#, ^2) Solvent Tolerance !!!
+(^) Totally Safe
+(#, ^2) Vigil !!!
+(#, ^2) Wrapped Up !!!
+
 (^) Cavitation
-(^) Corrupt Assimilation
-(^) Crimson Assimilation
-(^) Defiled Assimilation
-(#, ^2) Hallow Assimilation
 (^) Impeding Shrapnel
 (^) Mana Buffer
 (X) Miasma
 (X) Quantum Vitiation
 (^) Rasterized
-(^) Riven Assimilation
 (^) Shadefire
 (^) Shimmering?
 (^) Static Shock
 (^) Torn
-(^) Totally Safe
 (^) Toxic Shock
+
+(^) Corrupt Assimilation
+(^) Crimson Assimilation
+(^) Defiled Assimilation
+(#, ^2) Hallow Assimilation
+(^) Riven Assimilation
 ---
 
 
@@ -1346,9 +1356,9 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
-(@, ^3, ▼) Ashen Altar !!!
+(#2, ^2) Ashen Altar !!! (needs animation)
 (@, ^3, ▼) Ashen Scrap Foliage !!!
-(#2, ^2) Ashen Sootgrass Foliage !!!
+(^) Ashen Sootgrass Foliage
 (#, ^2) Background Door !!!
 (々) Beacon Light !!! (needs Repairboys to be implemented first)
 (^) Brineglow Vine
@@ -1400,8 +1410,8 @@ TILES:
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
 (X) Music Box (Ashen Factory) !!!
-(X) Music Box (Ashen Scrapyard) !!!
-(X) Music Box (Ashen Underground) !!!
+(X) Music Box (Ashen Mines) !!!
+(#, ^2) Music Box (Ashen Scrapyard) !!!
 (^) Music Box (Brine Pool)
 (^) Music Box (Defiled Caverns)
 (X) Music Box (Defiled Egregocide Route)
@@ -1413,7 +1423,7 @@ TILES:
 (X) Music Box (Repentance)
 (X) Music Box (Rivenran)
 (^) Music Box (Riven Hive)
-(X) Music Box (Smog Storm) !!!
+(#, ^2) Music Box (Smog Storm) !!! (same shape as AS music box, hence why sprites complete)
 (^) Music Box (The Dive)
 (^) Otherworldly Music Box (Defiled Wastelands)
 
@@ -1516,11 +1526,11 @@ MISCELLANEOUS ITEMS:
 (X) Armor+ Power-Up
 (^) Defiled Mana
 (^) Large Chambersite
-(X) Worn Paper: Loose Wheel
-(X) Worn Paper: Self-Preservation
-(X) Worn Paper: Smog Test
-(X) Worn Paper: The Packing Slip
-(X) Worn Paper: They Found Us
+(#, ^2) Worn Paper: Loose Wheel
+(#, ^2) Worn Paper: Self-Preservation
+(#, ^2) Worn Paper: Smog Test
+(#, ^2) Worn Paper: The Packing Slip
+(#, ^2) Worn Paper: They Found Us
 ---
 
 
@@ -1659,7 +1669,7 @@ CONSUMABLES:
 (^) Void Lock
 (^) White Water
 
-(@, ^3) Ashen Key !!!
+(#2, ^2) Ashen Key !!!
 (^) Brine Key
 (^) Defiled Key
 (^) Hell Key
@@ -1672,7 +1682,7 @@ CONSUMABLES:
 (^) Fiberglass Weaver Bag
 (^) Lost Diver Bag
 (^) Shimmer Construct Bag
-(@, #2) Trenchmaker Bag !!!
+(#2, ^2) Trenchmaker Bag !!!
 (^) World Cracker Bag
 ---
 
@@ -1798,10 +1808,10 @@ CROSS-MOD CONTENT:
 (@2, #) Sugarcoat
 
 (^) Aether Orb
-(@, ^3) Suspicious Trash Compactor
+(@, ^3) Suspicious Trash Compactor !!!
 (^) Ashen Renewal
 (^) Ashen Renewal Supreme
-(@, ^3) Ashen "Fake" Altar
+(@, ^3) Ashen "Fake" Altar !!!
 (X) Bomber's Soul
 (^) Chambersite Ring
 (^) Defiled Chest
@@ -1814,9 +1824,9 @@ CROSS-MOD CONTENT:
 (^) Encrusted Storage Unit
 (^) Encrusted Storage Upgrade
 (X) Fargo's Unlimited ammo items
-(X) High-powered Green Laser
+(X) High-powered Green Laser !!!
 (X) Laden Pressure Incantation
-(X) Mech Figurine
+(X) Mech Figurine !!!
 (^) Keytar
 (^) Riven Chest
 (^) Riven Renewal
@@ -1867,7 +1877,8 @@ UI:
 VOLUME I MUSIC:
 |---
 
-(X) Ashen Factory
+(#, ^4) Ashen Factory !!!
+(#, ^4) Ashen Scrapyard !!!
 (^) Brine Pool
 (X) Cosmos
 (X) Cubekon Temple
@@ -1896,7 +1907,7 @@ VOLUME I MUSIC:
 (X) Seer
 (^) Shimmer Construct
 (X) Snowdrop
-(X) Trenchmaker
+(#, ^4) Trenchmaker !!!
 (^) World Cracker
 
 (X) Ashen Invasion
@@ -1906,6 +1917,6 @@ VOLUME I MUSIC:
 (X) Defiled Invasion
 (X) Laser Tag Event
 (X) Riven Invasion
-(X) Smog Storm
+(#, ^4) Smog Storm !!!
 (X) Test of Ancients
 ---
