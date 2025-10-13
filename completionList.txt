@@ -1220,11 +1220,12 @@ TILES:
 (^) Rusty Piping
 (X) Sanguinite Brick
 (@4) Sanguinite Ore !!!
-(X) Scrap Heap !!!
+(#, ^2) Scrap Heap !!!
 (^) Silica
 (^) Silicon Ore
 (^) Soot Sandstone
 (#2, ^2) Sootgrass !!!
+(#2, ^2) Sootsand !!! (needs to use proper falling sand ball sprite)
 (X) Space Goo
 (^) Spug Flesh
 (X) Spug Flesh Brick
@@ -1298,14 +1299,14 @@ TILES:
 (#, ^2) Scrap Railing !!!
 (^) Shadow Torch
 (^) Traffic Cone
-(@, ^3, ▼) Witherwood Furniture
+(@, ^3, ▼) Witherwood Furniture !!!
 
 (@, ^3, ▼) Ashen Campfire !!!
 (@, ^3, ▼) Ashen Dungeon Chest !!!
 (X) Batholith Grindstone
 (X) Bilious Incense
 (^) Brine Dungeon Chest
-(X) Cargo Elevator Door !!!
+(#, ^2) Cargo Elevator Door !!!
 (X) Cargo Elevator Door (Jammed) !!!
 (^) Chambersite Gem Lock
 (^) Cleansing Station

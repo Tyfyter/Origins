@@ -8,7 +8,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Sootsand : OriginTile, IAshenTile {
-		public override string Texture => typeof(Defiled_Sand).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBrick[Type] = true;
@@ -44,7 +43,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Sootsand_Item : ModItem {
-		public override string Texture => typeof(Defiled_Sand_Item).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemID.Sets.SandgunAmmoProjectileData[Type] = new(ProjectileType<Sootsand_Ball_Gun>(), 10);
