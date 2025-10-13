@@ -6,6 +6,7 @@ using Origins.Graphics;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
+using Origins.Items.Materials;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
@@ -79,6 +80,7 @@ namespace Origins.Projectiles {
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
 		public Vector2[] oldPositions = [];
 		public OwnerMinionKey ownerMinion = null;
+		public bool magicHairSprayEffect = false;
 		public override void Load() {
 			itemSourceEffects = [];
 		}
@@ -148,6 +150,9 @@ namespace Origins.Projectiles {
 				if (projPrefix is IOnSpawnProjectilePrefix spawnPrefix) {
 					spawnPrefix.OnProjectileSpawn(projectile, source);
 				}
+				if (itemUseSource is EntitySource_ItemUse_WithAmmo withAmmo) {
+					if (withAmmo.AmmoItemIdUsed == ModContent.ItemType<Magic_Hair_Spray>()) magicHairSprayEffect = true;
+				}
 
 				fromItemType = itemUseSource.Item.type;
 				if (fromItemType == Neural_Network.ID) {
@@ -204,6 +209,7 @@ namespace Origins.Projectiles {
 					crawdadNetworkEffect = parentGlobalProjectile.crawdadNetworkEffect;
 					fiberglassLifesteal = parentGlobalProjectile.fiberglassLifesteal;
 					weakpointAnalyzerFake = parentGlobalProjectile.weakpointAnalyzerFake;
+					magicHairSprayEffect = parentGlobalProjectile.magicHairSprayEffect;
 					if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = parentGlobalProjectile.felnumBonus;
 
 					ModPrefix projPrefix = PrefixLoader.GetPrefix(Prefix);
@@ -507,6 +513,9 @@ namespace Origins.Projectiles {
 				case ProjectileID.ThunderSpearShot:
 				if (OriginConfig.Instance.ThunderSpear && Main.rand.NextBool(3)) Static_Shock_Debuff.Inflict(target, Main.rand.Next(90, 180));
 				break;
+			}
+			if (magicHairSprayEffect) {
+				new Extend_Deuffs_Action(target, 30).Perform();
 			}
 		}
 		public override bool? CanHitNPC(Projectile projectile, NPC target) {

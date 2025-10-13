@@ -402,20 +402,6 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Purple;
 		public override bool Hardmode => true;
 	}
-	public class Magic_Hair_Spray : MaterialItem {
-		public override int ResearchUnlockCount => 1;
-		public override int Value => Item.sellPrice(copper: 40);
-		public override int Rare => ItemRarityID.Quest;
-		public override bool Hardmode => false;
-		public override void AddRecipes() {
-			Recipe.Create(Type, 5)
-			.AddIngredient(ItemID.BottledWater, 5)
-			.AddIngredient(ItemID.FallenStar)
-			.AddIngredient(ModContent.ItemType<Silicon_Bar>())
-			.AddTile(TileID.Bottles)
-			.Register();
-		}
-	}
 	public class NE8 : MaterialItem, IJournalEntrySource {
 		public string EntryName => "Origins/" + typeof(NE_8_Entry).Name;
 		public class NE_8_Entry : JournalEntry {
