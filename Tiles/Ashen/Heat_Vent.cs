@@ -1,21 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
 using Origins.Graphics;
-using Origins.Items.Other.Testing;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.NPCs.Riven.World_Cracker;
-using Origins.Projectiles.Misc;
-using Origins.Tiles.Other;
-using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using PegasusLib;
-using PegasusLib.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -23,22 +12,26 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.Achievements;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
-	public class Heat_Vent : OriginTile, IComplexMineDamageTile {
+	public class Heat_Vent : OriginTile, IComplexMineDamageTile, IGlowingModTile {
 		public static int ID { get; private set; }
 		TileItem item;
 		public override void Load() {
 			Mod.AddContent(item = new(this, true));
+			this.SetupGlowKeys();
+		}
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0.912f, 0.579f, 0f));
 		}
 		public override void SetStaticDefaults() {
 			// Properties
 			TileID.Sets.CanBeSloped[Type] = false;
+			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileHammer[Type] = true;
 			Main.tileNoAttach[Type] = true;
@@ -66,6 +59,19 @@ namespace Origins.Tiles.Ashen {
 
 		public void MinePower(int i, int j, int minePower, ref int damage) {
 			if (minePower < 55 && Main.tile[i, j].TileFrameY >= 18 * 6 * 2) damage = 0;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (ShouldGlow(Main.tile[i, j])) {
+				r = 0.0912f;
+				g = 0.0579f;
+				b = 0f;
+			}
+		}
+		public static bool ShouldGlow(Tile tile) {
+			int frameY = (tile.TileFrameY / 18) % 6;
+			if (tile.TileFrameX <= 2 * 18 && frameY == 0) return false;
+			if (frameY >= 4) return false;
+			return tile.TileFrameY < (18 * 6 * 2);
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (!fail) {
@@ -144,6 +150,12 @@ namespace Origins.Tiles.Ashen {
 		public override void PlaceInWorld(int i, int j, Item item) {
 			ModContent.GetInstance<Heat_Vent_TE_System>().AddTileEntity(new(i, j));
 		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			this.DrawTileGlow(i, j, spriteBatch);
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
 	}
 	public class Heat_Vent_TE_System : TESystem {
 		HashSet<Point16> processedLocations;
@@ -174,9 +186,6 @@ namespace Origins.Tiles.Ashen {
 						npc.AddBuff(BuffID.OnFire3, 90);
 					}
 				}
-			}
-			foreach (Microsoft.Xna.Framework.Rectangle item in hitboxes) {
-				item.DrawDebugOutline();
 			}
 			hitboxes.Clear();
 		}
