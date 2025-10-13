@@ -34,7 +34,7 @@ namespace Origins.Tiles.Riven {
 			DustType = Riven_Hive.DefaultTileDust;
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
-			yield return new TileMergeOverlay(typeof(Amoeba_Fluid).GetDefaultTMLName() + "_Spug_Overlay", ModContent.TileType<Spug_Flesh>());
+			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Spug_Overlay", ModContent.TileType<Spug_Flesh>());
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
@@ -98,7 +98,7 @@ namespace Origins.Tiles.Riven {
 			}
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
-			yield return new TileMergeOverlay(typeof(Amoeba_Fluid).GetDefaultTMLName() + "_Spug_Overlay", ModContent.TileType<Spug_Flesh>());
+			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Spug_Overlay", ModContent.TileType<Spug_Flesh>());
 		}
 	}
 	public class Riven_Grass_Seeds : ModItem {

@@ -1228,7 +1228,7 @@ TILES:
 (X) Space Goo
 (^) Spug Flesh
 (X) Spug Flesh Brick
-(#2, ^2) Tainted Stone !!!
+(@4, #2) Tainted Stone !!! (temp sprite)
 (X) Tainted Stone Brick
 (#, ^2) Truss Block !!!
 (^) Type-I Fortified Steel Block
