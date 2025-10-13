@@ -22,17 +22,17 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.noMelee = true;
 
 			Item.DamageType = DamageClasses.RangedSummon;
-			Item.damage = 15;
-			Item.useAnimation = 21;
-			Item.useTime = 7;
+			Item.damage = 11;
+			Item.useAnimation = 20;
+			Item.useTime = 5;
 			Item.width = 36;
 			Item.height = 16;
 			Item.shoot = ModContent.ProjectileType<Welding_Torch_P>();
 			Item.shootSpeed = 4f;
-			Item.value = Item.sellPrice(gold: 3);
-			Item.rare = ItemRarityID.LightRed;
+			Item.value = Item.sellPrice(gold: 1, silver: 50);
+			Item.rare = ItemRarityID.Blue;
 			Item.ArmorPenetration = 25;
-			Item.UseSound = SoundID.Item34;
+			Item.UseSound = SoundID.Item34.WithPitch(0.5f).WithVolume(0.75f);
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(2, 0);
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {

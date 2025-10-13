@@ -1373,19 +1373,19 @@ Buffs: {
 DamageClassName: {
 	// ExplosivePlusTerraria/DefaultDamageClass: explosive damage
 	// ExplosivePlusTerraria/GenericDamageClass: explosive damage
-	// ExplosivePlusTerraria/MeleeDamageClass: explosive melee damage
-	// ExplosivePlusTerraria/MeleeNoSpeedDamageClass: explosive melee damage
-	// ExplosivePlusTerraria/RangedDamageClass: explosive ranged damage
-	// ExplosivePlusTerraria/MagicDamageClass: explosive magic damage
-	// ExplosivePlusTerraria/SummonDamageClass: explosive summon damage
-	// ExplosivePlusTerraria/SummonMeleeSpeedDamageClass: explosive summon damage
+	// ExplosivePlusTerraria/MeleeDamageClass: explosive/melee damage
+	// ExplosivePlusTerraria/MeleeNoSpeedDamageClass: explosive/melee damage
+	// ExplosivePlusTerraria/RangedDamageClass: explosive/ranged damage
+	// ExplosivePlusTerraria/MagicDamageClass: explosive/magic damage
+	// ExplosivePlusTerraria/SummonDamageClass: explosive/summon damage
+	// ExplosivePlusTerraria/SummonMeleeSpeedDamageClass: explosive/summon damage
 	// ExplosivePlusTerraria/MagicSummonHybridDamageClass: explosive magic or summon damage
 	// ExplosivePlusTerraria/ThrowingDamageClass: explosive damage (thrown)
-	// ExplosivePlusThoriumMod/BardDamage: explosive symphonic damage
-	// ExplosivePlusThoriumMod/HealerDamage: explosive radiant damage
-	// ExplosivePlusThoriumMod/HealerTool: explosive radiant damage
-	// ExplosivePlusThoriumMod/HealerToolDamageHybrid: explosive radiant damage
-	// ExplosivePlusThoriumMod/TrueDamage: explosive true damage
+	// ExplosivePlusThoriumMod/BardDamage: explosive/symphonic damage
+	// ExplosivePlusThoriumMod/HealerDamage: explosive/radiant damage
+	// ExplosivePlusThoriumMod/HealerTool: explosive/radiant damage
+	// ExplosivePlusThoriumMod/HealerToolDamageHybrid: explosive/radiant damage
+	// ExplosivePlusThoriumMod/TrueDamage: explosive/true damage
 }
 
 DamageClasses: {

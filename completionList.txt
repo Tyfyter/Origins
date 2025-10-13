@@ -871,7 +871,7 @@ RANGED WEAPONS:
 (^) Threemoepeater
 (^) Unmisfire
 (^) Unstrung Fiberglass Bow
-(☻) Welding Torch
+(^) Welding Torch
 (^) 2-in-1 Shotty
 
 (^) Acrid Impaler
@@ -1364,7 +1364,7 @@ TILES:
 (^) Fuzzvine
 (^) Gel Blister
 (#, ^2) Generation Station !!!
-(☻) Heat Vent !!!
+(^) Heat Vent
 (^) Hydrothermal Vent
 (^) Limestone Rubble
 (^) Marrowick Coral

@@ -6973,7 +6973,13 @@ Witherwood_Wall_Item: {
 
 Welding_Torch: {
 	DisplayName: Welding Torch
-	Tooltip: ""
+	Tooltip:
+		'''
+		Uses gel for ammo
+		Ignores 25 points of enemy Defense
+		Inflicts hellfire
+		Fire at allied artifact minions to heal them
+		'''
 }
 
 Ashen2_Breastplate: {
