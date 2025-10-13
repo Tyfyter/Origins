@@ -29,6 +29,7 @@ namespace Origins.Tiles.Ashen {
 			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0.912f, 0.579f, 0f));
 		}
 		public override void SetStaticDefaults() {
+			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
 			// Properties
 			TileID.Sets.CanBeSloped[Type] = false;
 			Main.tileLighted[Type] = true;
