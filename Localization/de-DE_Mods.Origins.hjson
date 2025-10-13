@@ -1406,7 +1406,8 @@ DamageClasses: {
 	// Melee_Magic.DisplayName: melee/magic damage
 	// No_Summon_Inherit.DisplayName: No Summon Inherit
 	// Ranged_Explosive_Inherit.DisplayName: Ranged Explosive Inherit
-	// SentryExplosive.DisplayName: Sentry Explosive
+	// SentryExplosive.DisplayName: explosive sentry damage
+	// Ranged_Summon.DisplayName: ranged/summon damage
 }
 
 Projectiles: {

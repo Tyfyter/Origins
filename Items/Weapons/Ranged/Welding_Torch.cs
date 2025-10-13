@@ -14,6 +14,8 @@ namespace Origins.Items.Weapons.Ranged {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 		}
 		public override void SetDefaults() {
+			Item.consumeAmmoOnFirstShotOnly = true;
+			Item.useAmmo = AmmoID.Gel;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.autoReuse = true;
 			Item.knockBack = 0.425f;
@@ -21,12 +23,10 @@ namespace Origins.Items.Weapons.Ranged {
 
 			Item.DamageType = DamageClasses.RangedSummon;
 			Item.damage = 15;
-			Item.useAnimation = 20;
-			Item.useTime = 5;
-			Item.mana = 8;
+			Item.useAnimation = 21;
+			Item.useTime = 7;
 			Item.width = 36;
 			Item.height = 16;
-			Item.useAmmo = AmmoID.None;
 			Item.shoot = ModContent.ProjectileType<Welding_Torch_P>();
 			Item.shootSpeed = 4f;
 			Item.value = Item.sellPrice(gold: 3);
@@ -58,12 +58,12 @@ namespace Origins.Items.Weapons.Ranged {
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 21;
 		}
 		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.RangedSummon;
 			Projectile.width = Projectile.height = 6;
 			Projectile.penetrate = 4;
 			Projectile.friendly = true;
 			Projectile.alpha = 255;
 			Projectile.extraUpdates = 3;
-			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
 		}
@@ -110,7 +110,7 @@ namespace Origins.Items.Weapons.Ranged {
 			hitbox.Inflate(scale, scale);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.OnFire3, hit.Crit ? 600 : 360);
+			target.AddBuff(BuffID.OnFire3, hit.Crit ? 360 : 180);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Color color1 = new(255, 160, 80, 200);

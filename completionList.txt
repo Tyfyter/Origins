@@ -871,7 +871,7 @@ RANGED WEAPONS:
 (^) Threemoepeater
 (^) Unmisfire
 (^) Unstrung Fiberglass Bow
-(#, ^2) Welding Torch
+(☻) Welding Torch
 (^) 2-in-1 Shotty
 
 (^) Acrid Impaler
