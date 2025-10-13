@@ -7,6 +7,7 @@ GenericTooltip: {
 	// ConceptAndSpriteBy: Concept and art by {0}
 	// Extractinator: For use with the Extractinator
 	// AltAttack: <right> while holding for an alternate attack
+	// HealStamina: Restores {0} stamina
 }
 
 Krunch_Mix: {
@@ -6994,5 +6995,10 @@ Ashen2_Greaves: {
 
 Ashen2_Helmet: {
 	// DisplayName: Ashen2 Helmet
+	// Tooltip: ""
+}
+
+Adrenaline: {
+	// DisplayName: Adrenaline
 	// Tooltip: ""
 }

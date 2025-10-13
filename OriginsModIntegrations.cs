@@ -86,6 +86,8 @@ namespace Origins {
 		public static Mod FancyLighting { get => instance.fancyLighting; set => instance.fancyLighting = value; }
 		Mod fargosMutant;
 		public static Mod FargosMutant { get => instance.fargosMutant; set => instance.fargosMutant = value; }
+		Mod avalon;
+		public static Mod Avalon { get => instance.avalon; set => instance.avalon = value; }
 		Func<bool> checkAprilFools;
 		public static Func<bool> CheckAprilFools {
 			get => OriginClientConfig.Instance.DebugMenuButton.ForceAprilFools ?
@@ -132,6 +134,7 @@ namespace Origins {
 				checkAprilFools = DefaultCheckAprilFools;
 				holidayForceChanged = _ => -1;
 			}
+			ModLoader.TryGetMod("Avalon", out instance.avalon);
 		}
 		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
 		static bool DefaultCheckAprilFools() => (DateTime.Today.Month == 4 && DateTime.Today.Day == 1) || Instance.ForceAF;
