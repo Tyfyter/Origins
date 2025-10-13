@@ -241,9 +241,6 @@ namespace Origins {
 				usedFelnumShock = true;
 				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), target.Center);
 			}
-			if (target.HasBuff(BuffID.Bleeding)) {
-				target.lifeRegen -= 1;
-			}
 		}
 		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) {
 			if (proj.IsMinionOrSentryRelated) {
