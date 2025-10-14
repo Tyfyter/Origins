@@ -1153,7 +1153,7 @@ EXPLOSIVE WEAPONS:
 (X) Helix
 (^) Shimmer Dynamite
 (@4, #) Starburst
-(#2, ^2) The Ultimate Firework Launcher Of Mega Destruction
+(☻) The Ultimate Death Firework Launcher Of Mega Destruction
 ---
 
 
