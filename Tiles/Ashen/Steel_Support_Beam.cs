@@ -75,8 +75,8 @@ namespace Origins.Tiles.Ashen {
 				pos.X += Main.offScreenRange;
 				pos.Y += Main.offScreenRange;
 			}
-			Vector4 destination = new(pos, 16, 16);
-			Rectangle source = new(tile.TileFrameX, tile.TileFrameY + 16, 16, 16);
+			Vector4 destination = new(pos, 16, 2);
+			Rectangle source = new(tile.TileFrameX, tile.TileFrameY + 16, 16, 2);
 			Main.tileBatch.Draw(
 				TextureAssets.Tile[Type].Value,
 				destination,
