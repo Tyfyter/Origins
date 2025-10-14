@@ -164,11 +164,6 @@ namespace Origins.Tiles {
 						if (Main.drawToScreen) {
 							offset = Vector2.Zero;
 						}
-						int posYFactor = -2;
-						int flatY = 0;
-						int kScaleY = 2;
-						int flatX = 14;
-						int kScaleX = -2;
 						Vector2 position = new Vector2(i * 16f, j * 16f) + offset - Main.screenPosition;
 						Color color = GetColor(Lighting.GetColor(i, j));
 						Texture2D texture = CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(GlowPaintKey, blendTile.TileColor, Texture);

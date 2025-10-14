@@ -21,7 +21,7 @@ namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
 		public override void HideDrawLayers(PlayerDrawSet drawInfo) {
 			Item item = drawInfo.heldItem;
-			if (item.ModItem is ICustomDrawItem) PlayerDrawLayers.HeldItem.Hide();
+			if (item.ModItem is ICustomDrawItem custom && custom.HideNormalDraw) PlayerDrawLayers.HeldItem.Hide();
 			PlayerDrawLayers.CaptureTheGem.Hide();
 
 			if (mountOnly && !drawInfo.headOnlyRender) {
