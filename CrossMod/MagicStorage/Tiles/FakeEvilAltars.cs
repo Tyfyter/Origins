@@ -1,6 +1,7 @@
 ﻿using MagicStorage.Stations;
 using Origins.Items.Materials;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -37,7 +38,7 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 	[ExtendsFromMod(nameof(MagicStorage)), Autoload(false)]
 	public class Fake_Altar_Item(ModTile tile) : ModItem {
 		public override string Name => tile.Name + "_Item";
-		public override string Texture => tile.GetType().ToString().Replace(".", "/") + "_Item";
+		public override string Texture => tile.Texture + "_Item";
 		public event Action<Item> ExtraDefaults;
 		public event Action<Item> OnAddRecipes;
 		protected override bool CloneNewInstances => true;
@@ -82,7 +83,24 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 		}
 	}
 	public class Fake_Ashen_Altar : Evil_Altar_Tile {
-		public Fake_Ashen_Altar() : base("Defiled/Defiled_Altar") { }
+		public Fake_Ashen_Altar() : base("Ashen/Ashen_Altar") { }
+		public override void SetStaticDefaults() {
+			Main.tileSolid[Type] = false;
+			Main.tileLavaDeath[Type] = false;
+			Main.tileFrameImportant[Type] = true;
+
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.StyleWrapLimit = 36;
+			TileObjectData.newTile.Origin = new Point16(1, 1);
+			TileObjectData.newTile.CoordinateHeights = [16, 18];
+			AnimationFrameHeight = TileObjectData.newTile.CoordinateHeights.Sum() + 2 * TileObjectData.newTile.Height;
+			TileObjectData.addTile(Type);
+
+			AdjTiles = [Type, TileID.DemonAltar];
+
+			AddMapEntry(Color.MediumPurple, CreateMapEntryName());
+		}
 		public override void OnLoad() {
 			item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -91,6 +109,12 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 				.AddTile(TileID.DemonAltar)
 				.Register();
 			};
+		}
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			if (++frameCounter >= 5) {
+				frameCounter = 0;
+				frame = ++frame % 3;
+			}
 		}
 	}
 }
