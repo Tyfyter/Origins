@@ -1389,7 +1389,7 @@ TILES:
 (X) Sheet Metal !!!
 (^) Shelf Coral
 (^) Soulspore
-(#2, ^2) Steel Support Beam !!!
+(☻) Steel Support Beam !!!
 (^) Suit Locker
 (^) Surveysprout
 (^) Tangela Bramble

@@ -1,5 +1,9 @@
-﻿using Origins.World.BiomeData;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
+using Origins.World.BiomeData;
 using Terraria;
+using Terraria.GameContent;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -12,7 +16,7 @@ namespace Origins.Tiles.Ashen {
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)TileType<Ashen_Foliage>(), 0, 6));
-			Main.tileSolid[Type] = true;
+			Main.tileSolid[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = false;
 			TileID.Sets.IsBeam[Type] = true;
@@ -47,7 +51,7 @@ namespace Origins.Tiles.Ashen {
 
 				case (true, false):
 				tile.TileFrameX = (short)(tile.TileFrameNumber * 18);
-				tile.TileFrameY = 18 * 2;
+				tile.TileFrameY = 18 * 4;
 				break;
 
 				case (false, true):
@@ -57,10 +61,28 @@ namespace Origins.Tiles.Ashen {
 
 				case (true, true):
 				tile.TileFrameX = (short)(tile.TileFrameNumber * 18);
-				tile.TileFrameY = 18;
+				tile.TileFrameY = (short)(18 * Main.rand.Next(1, 4));
 				break;
 			}
 			return false;
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			if (tile.TileFrameY < 4 * 18 && tile.TileFrameX < 3 * 18) return;
+			Lighting.GetCornerColors(i, j + 1, out VertexColors vertices);
+			Vector2 pos = new Vector2(i * 16, (j + 1) * 16) - Main.screenPosition;
+			if (!Main.drawToScreen) {
+				pos.X += Main.offScreenRange;
+				pos.Y += Main.offScreenRange;
+			}
+			Vector4 destination = new(pos, 16, 16);
+			Rectangle source = new(tile.TileFrameX, tile.TileFrameY + 16, 16, 16);
+			Main.tileBatch.Draw(
+				TextureAssets.Tile[Type].Value,
+				destination,
+				source,
+				vertices
+			);
 		}
 	}
 }
