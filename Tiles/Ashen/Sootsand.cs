@@ -1,5 +1,7 @@
 ﻿using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -7,11 +9,10 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Sootsand : OriginTile, IAshenTile {
+	public class Sootsand : ComplexFrameTile, IAshenTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBrick[Type] = true;
-			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 
 			// Sand specific properties
@@ -33,7 +34,10 @@ namespace Origins.Tiles.Ashen {
 			DustType = Ashen_Biome.DefaultTileDust;
 			AddMapEntry(FromHexRGB(0x817691));
 		}
-
+		protected override IEnumerable<TileOverlay> GetOverlays() {
+			yield return new TileMergeOverlay(merge + "Dirt_Overlay", TileID.Dirt);
+			//yield return new TileMergeOverlay(merge + "Murk_Overlay", ModContent.TileType<Murky_Sludge>());
+		}
 		public override bool HasWalkDust() {
 			return Main.rand.NextBool(3);
 		}

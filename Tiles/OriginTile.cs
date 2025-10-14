@@ -48,6 +48,7 @@ namespace Origins.Tiles {
 
 	}
 	public abstract class ComplexFrameTile : BufferBaseTile {
+		public const string merge = "Origins/Tiles/MergerOverlays/";
 		TileOverlay[] overlays;
 		protected sealed override void SetDefaults() {
 			overlays = [..GetOverlays()];
@@ -171,44 +172,7 @@ namespace Origins.Tiles {
 						Vector2 position = new Vector2(i * 16f, j * 16f) + offset - Main.screenPosition;
 						Color color = GetColor(Lighting.GetColor(i, j));
 						Texture2D texture = CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(GlowPaintKey, blendTile.TileColor, Texture);
-						switch (blendTile.BlockType) {
-							case BlockType.HalfBlock:
-							case BlockType.Solid:
-							spriteBatch.Draw(texture, position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
-							break;
-							case BlockType.SlopeDownLeft://1
-							posYFactor = 0;
-							kScaleY = 0;
-							flatX = 0;
-							kScaleX = 2;
-							goto case BlockType.SlopeUpRight;
-							case BlockType.SlopeDownRight://2
-							posYFactor = 0;
-							kScaleY = 0;
-							flatX = 14;
-							kScaleX = -2;
-							goto case BlockType.SlopeUpRight;
-							case BlockType.SlopeUpLeft://3
-							flatX = 0;
-							kScaleX = 2;
-							goto case BlockType.SlopeUpRight;
-
-							case BlockType.SlopeUpRight://4
-							for (int l = 0; l < 8; l++) {
-								Main.spriteBatch.Draw(
-									texture,
-									position + new Vector2(flatX + kScaleX * k, k * 2 + posYFactor * k),
-									new Rectangle(frame.X + flatX + kScaleX * k, frame.Y + flatY + kScaleY * k, 2, frame.Height - 2 * k),
-									color,
-									0f,
-									Vector2.Zero,
-									1f,
-									0,
-									0f
-								);
-							}
-							break;
-						}
+						spriteBatch.Draw(texture, position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
 					}
 				}
 				if (directionsByDirection.TryGetValue(directionsByFrame[(tile.TileFrameY % parentFrameHeight) / 18][tile.TileFrameX / 18], out Direction[] directions)) {
