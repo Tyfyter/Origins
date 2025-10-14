@@ -1235,7 +1235,7 @@ TILES:
 (^) Silicon Ore
 (^) Soot Sandstone
 (#2, ^2) Sootgrass !!!
-(☻) Sootsand !!!
+(^) Sootsand
 (X) Space Goo
 (^) Spug Flesh
 (X) Spug Flesh Brick
@@ -1324,7 +1324,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(X) Industrial Door !!!
+(#, ^2) Industrial Door !!!
 (X) Large Storage Container !!!
 (^) Laser Tag Console
 (X) Medium Storage Container !!!
@@ -1368,7 +1368,7 @@ TILES:
 (^) Defiled Pot
 (X) Exoskeletal Baobab Tree
 (^) Exoskeletal Tree
-(X) Floodlight !!!
+(#, ^2) Floodlight !!!
 (^) Fungarust
 (^) Fuzzvine
 (^) Gel Blister
