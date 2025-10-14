@@ -7,6 +7,7 @@ using Origins.Items.Armor.Aetherite;
 using Origins.Items.Armor.Chambersite;
 using Origins.Items.Mounts;
 using Origins.Items.Other;
+using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Layers;
@@ -44,6 +45,7 @@ namespace Origins {
 			Player.buffImmune[Rasterized_Debuff.ID] = Player.buffImmune[BuffID.Cursed];
 			if (tornDebuff) {
 				LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornTarget > tornCurrentSeverity ? tornSeverityRate : tornSeverityDecayRate);
+				if (medicinalAcid) Min(ref tornCurrentSeverity, Medicinal_Acid.MaxTornSeverity);
 			}
 			if (soulhideSet) {
 				const float maxDistTiles = 10f * 16;

@@ -11,7 +11,7 @@ namespace Origins.Items.Other.Consumables.Medicine {
 	public abstract class MedicineBase : ModItem {
 		protected sealed override bool CloneNewInstances => true;
 		public abstract int HealAmount { get; }
-		public bool[] ImmunitySet { get; private set; }
+		public bool[] ImmunitySet { get; protected set; }
 		public abstract int ImmunityDuration { get; }
 		/// <summary>
 		/// Used to set up <see cref="ImmunitySet"/>
@@ -23,6 +23,8 @@ namespace Origins.Items.Other.Consumables.Medicine {
 		public virtual int CooldownIncrease => 60 * 15;
 		public MedicineBuff ImmunityBuff { get; protected set; }
 		public virtual bool HasSpecialBuff => false;
+		public virtual LocalizedText BuffTooltip => Tooltip;
+		public virtual string BuffTexture => null;
 		public LocalizedText ImmunityListOverride { get; protected set; }
 		public sealed override void Load() {
 			if (!HasSpecialBuff) Mod.AddContent(ImmunityBuff = new(this));
@@ -48,7 +50,7 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				if (ImmunitySet[player.buffType[i]]) player.DelBuff(i--);
 			}
-			player.AddBuff(ImmunityBuff.Type, Item.buffTime);
+			if (ImmunityBuff is not null) player.AddBuff(ImmunityBuff.Type, Item.buffTime);
 			OnUseItem(player);
 			return base.UseItem(player);
 		}
@@ -63,7 +65,7 @@ namespace Origins.Items.Other.Consumables.Medicine {
 					}
 				}
 			}
-
+			PostModifyTooltips(tooltips);
 		}
 		public IEnumerable<string> ImmunityList(List<int> debuffs) {
 			if (ImmunityListOverride is null) {
@@ -74,19 +76,22 @@ namespace Origins.Items.Other.Consumables.Medicine {
 		}
 		public virtual void PostModifyTooltips(List<TooltipLine> tooltips) { }
 		public virtual void UpdateBuff(Player player, ref int buffIndex) { }
+		protected virtual void SetupImmunitySet() {
+			ImmunitySet = BuffID.Sets.Factory.CreateNamedSet($"{ImmunityName}_Immunity")
+			.Description($"Controls which buffs {ImmunityName} provides immunity to")
+			.RegisterBoolSet(GetDefaultImmunity().Where(b => b >= 0).ToArray());
+			ImmunitySet[BuffID.PotionSickness] = false;
+			ImmunitySet[BuffID.MonsterBanner] = false;
+		}
 		static MedicineBase() {
-			foreach (MedicineBase medicine in ModContent.GetContent<MedicineBase>()) {
-				medicine.ImmunitySet = BuffID.Sets.Factory.CreateNamedSet($"{medicine.ImmunityName}_Immunity")
-				.Description($"Controls which buffs {medicine.ImmunityName} provides immunity to")
-				.RegisterBoolSet(medicine.GetDefaultImmunity().Where(b => b >= 0).ToArray());
-				medicine.ImmunitySet[BuffID.PotionSickness] = false;
-				medicine.ImmunitySet[BuffID.MonsterBanner] = false;
-			}
+			foreach (MedicineBase medicine in ModContent.GetContent<MedicineBase>()) medicine.SetupImmunitySet();
 		}
 	}
 	[Autoload(false)]
 	public class MedicineBuff(MedicineBase medicine) : ModBuff {
 		public override string Name => medicine.Name + "_Buff";
+		public override LocalizedText Description => medicine.BuffTooltip;
+		public override string Texture => medicine.BuffTexture ?? base.Texture;
 		public override void Update(Player player, ref int buffIndex) {
 			for (int i = 0; i < player.buffImmune.Length; i++) {
 				player.buffImmune[i] |= medicine.ImmunitySet[i];

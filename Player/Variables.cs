@@ -404,6 +404,9 @@ namespace Origins {
 		public bool weakShimmer = false;
 		public bool compositeFrontArmWasEnabled = false;
 		public bool walledDebuff = false;
+		public bool medicinalAcid = false;
+		public int preMedicinalAcidLife = 0;
+		public int medicinalAcidLife = 0;
 
 		public bool sendBuffs = false;
 		#endregion
@@ -1158,6 +1161,7 @@ namespace Origins {
 					break;
 				}
 			}
+			medicinalAcid = false;
 			if (dangerTime <= 0) dangerTime = 0;
 			else dangerTime--;
 			InDanger = dangerTime > 0;

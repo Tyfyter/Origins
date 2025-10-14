@@ -4,6 +4,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Armor.Riptide;
 using Origins.Items.Other;
 using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
 using Origins.Items.Pets;

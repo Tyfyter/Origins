@@ -5069,5 +5069,11 @@ namespace Origins {
 		public static Color FromHexRGBA(uint hex) => new() {
 			PackedValue = ((hex & 0xff000000u) >> 24) | ((hex & 0x00ff0000u) >> 8) | ((hex & 0x0000ff00u) << 8) | ((hex & 0x000000ffu) << 24),
 		};
+		public static void Min<T>(ref T current, T @new) where T : IComparisonOperators<T, T, bool> {
+			if (current > @new) current = @new;
+		}
+		public static void Max<T>(ref T current, T @new) where T : IComparisonOperators<T, T, bool> {
+			if (current < @new) current = @new;
+		}
 	}
 }

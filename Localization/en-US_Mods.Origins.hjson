@@ -1369,20 +1369,16 @@ Buffs: {
 		Description: That was a bad idea…
 	}
 
-	Adrenaline_Buff: {
-		DisplayName: Adrenaline Rush
-		Description: ""
-	}
-
-	Brightsee_Buff: {
-		DisplayName: Vigil
-		Description: "{$ItemTooltip.NightOwlPotion}"
-	}
-
-	Multimed_Buff: {
-		DisplayName: First Aid
-		Description: ""
-	}
+	Adrenaline_Buff.DisplayName: Adrenaline Rush
+	Brightsee_Buff.DisplayName: Vigil
+	Multimed_Buff.DisplayName: First Aid
+	Blood_Pack_Buff.DisplayName: Blood Transfusion
+	Fire_Band_Buff.DisplayName: Wrapped Up
+	Medicinal_Acid_Buff.DisplayName: Solvent Tolerance
+	Morphine_Buff.DisplayName: Morphine
+	Rasterwrap_Buff.DisplayName: Unhindered
+	Sanguis_Pack_Buff.DisplayName: Toasty
+	Unmarked_Antidote_Buff.DisplayName: Antitoxin
 }
 
 DamageClassName: {

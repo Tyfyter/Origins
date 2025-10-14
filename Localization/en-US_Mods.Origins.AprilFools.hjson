@@ -161,6 +161,7 @@ Buffs: {
 		Your scythe needs to rest.
 		[italic:But ye shall B O N K].
 		'''
+	Rasterwrap_Buff.DisplayName: Unbothered. Moisturized. Happy. In My Lane. Focused. Flourishing.
 }
 
 DefiledRelaySignals: {

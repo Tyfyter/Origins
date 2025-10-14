@@ -15,10 +15,9 @@ namespace Origins.Tiles.Ashen {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = false;
-			TileID.Sets.Stone[Type] = false;
-			TileID.Sets.Conversion.Stone[Type] = false;
-			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+			TileID.Sets.IsBeam[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 			AddMapEntry(FromHexRGB(0x6b5e56));
 
 			MinPick = 65;

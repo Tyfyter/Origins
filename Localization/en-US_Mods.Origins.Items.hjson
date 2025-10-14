@@ -7026,3 +7026,38 @@ Multimed: {
 	DisplayName: Multimed
 	Tooltip: ""
 }
+
+Blood_Pack: {
+	DisplayName: Blood Pack
+	Tooltip: ""
+}
+
+Fire_Band: {
+	DisplayName: Fire Band
+	Tooltip: ""
+}
+
+Medicinal_Acid: {
+	DisplayName: Medicinal Acid
+	Tooltip: Limits maximum [buffhint/self:Origins/Torn_Debuff] severity to {0:P0}
+}
+
+Morphine: {
+	DisplayName: Morphine
+	Tooltip: ""
+}
+
+Rasterwrap: {
+	DisplayName: Rasterwrap
+	Tooltip: ""
+}
+
+Sanguis_Pack: {
+	DisplayName: Sanguis Pack
+	Tooltip: "{$ItemTooltip.WarmthPotion}"
+}
+
+Unmarked_Antidote: {
+	DisplayName: Unmarked Antidote
+	Tooltip: ""
+}
