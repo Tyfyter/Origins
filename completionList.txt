@@ -1598,17 +1598,17 @@ CONSUMABLES:
 (^) Sweet Broth
 (^) Umami Broth
 
-(#, ^2) Adrenaline
-(#, ^2) Blood Pack
-(#, ^2) Bottomless Multi-Med
-(#, ^2) Brightsee
-(#, ^2) Fire Band
-(#, ^2) Medicinal Acid
-(#, ^2) Morphine
-(#, ^2) Multi-Med
-(#, ^2) Rasterwrap
-(#, ^2) Sanguis Pack
-(#, ^2) Unmarked Antidote
+(☻, ^5) Adrenaline
+(☻, ^5) Blood Pack
+(☻, ^5) Bottomless Multi-Med
+(☻, ^5) Brightsee
+(☻, ^5) Fire Band
+(☻, ^5) Medicinal Acid
+(☻, ^5) Morphine
+(☻, ^5) Multi-Med
+(☻, ^5) Rasterwrap
+(☻, ^5) Sanguis Pack
+(☻, ^5) Unmarked Antidote
 
 (^) Bad Juju Stone
 (X) BBQ Skewer
