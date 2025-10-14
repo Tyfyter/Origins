@@ -1356,7 +1356,7 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
-(#2, ^2) Ashen Altar !!! (needs animation)
+(☻) Ashen Altar !!!
 (^) Ashen Sootgrass Foliage
 (#, ^2) Background Door !!!
 (々) Beacon Light !!! (needs Repairboys to be implemented first)

@@ -1,6 +1,7 @@
 ﻿using Origins.Items.Other.Testing;
 using Origins.World.BiomeData;
 using PegasusLib;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -18,6 +19,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.CoordinateHeights = [16, 18];
+			AnimationFrameHeight = TileObjectData.newTile.CoordinateHeights.Sum() + 2 * TileObjectData.newTile.Height;
 			TileObjectData.addTile(Type);
 			AddMapEntry(new Color(194, 69, 12), CreateMapEntryName());
 			RegisterItemDrop(-1);
@@ -45,6 +47,12 @@ namespace Origins.Tiles.Ashen {
 			b = 0.05f;
 		}
 		public override bool CanExplode(int i, int j) => false;
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			if (++frameCounter >= 5) {
+				frameCounter = 0;
+				frame = ++frame % 3;
+			}
+		}
 	}
 	public class Ashen_Altar_Item : TestingItem {
 		public override void SetDefaults() {
