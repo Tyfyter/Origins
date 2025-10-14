@@ -32,7 +32,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Player drawPlayer = drawInfo.drawPlayer;
 			float itemRotation = drawPlayer.itemRotation;
 
-			Vector2 pos = new((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y));
+			Vector2 pos = new((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y + drawInfo.mountOffSet));
 
 			int frame = (int)(float.Pow(1 - drawPlayer.itemAnimation / (float)drawPlayer.itemAnimationMax, 0.8f) * 5 * 3 + 1);
 			if (frame >= 5) frame = 0;
