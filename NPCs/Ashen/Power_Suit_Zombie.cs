@@ -1,5 +1,6 @@
 ﻿using Origins.Dev;
 using Origins.Items.Armor.Ashen;
+using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -77,8 +78,8 @@ namespace Origins.NPCs.Ashen {
 			if (!NPC.collideY) NPC.DoFrames(1, 3..3);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			//npcLoot.Add(ItemDropRule.Common(ItemID.EmptyBucket, 2)); // warn paper
 			npcLoot.Add(ItemDropRule.Common(ItemID.Amber, 20));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_They_Found_Us>(), 14));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Helmet>(), 14));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Breastplate>(), 14));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Greaves>(), 14));
