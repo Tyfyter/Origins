@@ -57,8 +57,7 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public abstract class Sootsand_Ball : ModProjectile {
-		public override string Texture => typeof(Defiled_Sand_Ball).GetDefaultTMLName();
-
+		public override string Texture => typeof(Sootsand_Ball).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.FallingBlockDoesNotFallThroughPlatforms[Type] = true;
 			ProjectileID.Sets.ForcePlateDetection[Type] = true;

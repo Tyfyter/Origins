@@ -1225,7 +1225,7 @@ TILES:
 (^) Silicon Ore
 (^) Soot Sandstone
 (#2, ^2) Sootgrass !!!
-(#2, ^2) Sootsand !!! (needs to use proper falling sand ball sprite)
+(☻) Sootsand !!!
 (X) Space Goo
 (^) Spug Flesh
 (X) Spug Flesh Brick
