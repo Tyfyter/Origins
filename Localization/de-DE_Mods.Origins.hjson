@@ -1371,7 +1371,17 @@ Buffs: {
 
 	Adrenaline_Buff: {
 		// DisplayName: Adrenaline Rush
-		// Description: You are immune to [buffhint:Weak], [buffhint:BrokenArmor], [buffhint:WitheredArmor][ox:,] and [buffhint:WitheredWeapon]
+		// Description: ""
+	}
+
+	Brightsee_Buff: {
+		// DisplayName: Vigil
+		// Description: "{$ItemTooltip.NightOwlPotion}"
+	}
+
+	Multimed_Buff: {
+		// DisplayName: Multimed Buff
+		// Description: Mods.Origins.Buffs.Multimed_Buff.Description
 	}
 }
 

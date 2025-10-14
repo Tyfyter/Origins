@@ -8,6 +8,13 @@ GenericTooltip: {
 	// Extractinator: For use with the Extractinator
 	// AltAttack: <right> while holding for an alternate attack
 	// HealStamina: Restores {0} stamina
+
+	HealDebuffs: {
+		// Base: "Cleanses and grants immunity to "
+		// 1: "{$Base}{n}"
+		// 2: "{$Base}{n} and {n}"
+		// Any: "{$Base}[{n}, ]{n}[ox:,] and {n}"
+	}
 }
 
 Krunch_Mix: {
@@ -7000,5 +7007,22 @@ Ashen2_Helmet: {
 
 Adrenaline: {
 	// DisplayName: Adrenaline
-	// Tooltip: Grants immunity to [buffhint:Weak], [buffhint:BrokenArmor], [buffhint:WitheredArmor][ox:,] and [buffhint:WitheredWeapon]
+	// Tooltip: ""
+}
+
+Brightsee: {
+	// DisplayName: Brightsee
+	// Tooltip: "{$ItemTooltip.NightOwlPotion}"
+}
+
+Bottomless_Multimed: {
+	// ImmunityListOverride: Mods.Origins.Items.Bottomless_Multimed.ImmunityListOverride
+	// DisplayName: Bottomless Multimed
+	// Tooltip: ""
+}
+
+Multimed: {
+	// ImmunityListOverride: Mods.Origins.Items.Multimed.ImmunityListOverride
+	// DisplayName: Multimed
+	// Tooltip: ""
 }
