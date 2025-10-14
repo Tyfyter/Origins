@@ -242,28 +242,10 @@ namespace Origins.Items.Other.Consumables.Medicine {
 		public override void UpdateBuff(Player player, ref int buffIndex) {
 			player.lifeRegen += 3 * 2; // 3 HP/sec
 		}
-		public override void AddRecipes() {
-			MedicineBase[] medicines = ModContent.GetContent<MedicineBase>().Where(m => m is not Multimed).ToArray();
-			HashSet<HashSet<int>> recipes = new(new Comparer());
-			for (int i = 0; i < medicines.Length; i++) {
-				for (int j = 0; j < medicines.Length; j++) {
-					if (j == i) continue;
-					for (int k = 0; k < medicines.Length; k++) {
-						if (k == i) continue;
-						if (k == j) continue;
-						recipes.Add([i, j, k]);
-					}
-				}
-			}
-			foreach (HashSet<int> items in recipes) {
-				Recipe recipe = Recipe.Create(Type);
-				foreach (int item in items) {
-					recipe.AddIngredient(medicines[item]);
-				}
-				recipe.AddTile(TileID.Bottles)
-				.Register();
-			}
-		}
+		public override void AddRecipes() => Recipe.Create(Type)
+			.AddRecipeGroup(AnyDifferentMedicine.RecipeGroup, 3)
+			.AddTile(TileID.Bottles)
+			.Register();
 		class Comparer : IEqualityComparer<HashSet<int>> {
 			public bool Equals(HashSet<int> x, HashSet<int> y) => x.SetEquals(y);
 			public int GetHashCode([DisallowNull] HashSet<int> obj) => obj.Aggregate((value, hash) => hash + value.GetHashCode());

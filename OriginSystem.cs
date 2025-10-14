@@ -36,6 +36,7 @@ using Terraria.Graphics;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Terraria.DataStructures;
 using Origins.Tiles.Ashen;
+using Origins.Items.Other.Consumables.Medicine;
 
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
@@ -362,6 +363,7 @@ namespace Origins {
 			for (int i = ItemID.GolfBallDyedBlack; i <= ItemID.GolfBallDyedYellow; i++) RecipeGroup.recipeGroups[GolfBallsRecipeGroupID].ValidItems.Add(i);
 			EvilGunMagazineRecipeGroup.ValidItems.Remove(ItemID.MagicQuiver);
 			RecipeGroup.RegisterGroup("Origins:Evil Gun Magazines", EvilGunMagazineRecipeGroup);
+			RecipeGroup.RegisterGroup("Origins:Any Different Advanced Medicines", AnyDifferentMedicine.RecipeGroup);
 			DeathweedRecipeGroupID = ALRecipeGroups.Deathweed.RegisteredId;
 			RottenChunkRecipeGroupID = ALRecipeGroups.RottenChunks.RegisteredId;
 			ShadowScaleRecipeGroupID = ALRecipeGroups.ShadowScales.RegisteredId;

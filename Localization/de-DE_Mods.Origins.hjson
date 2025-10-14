@@ -50,6 +50,7 @@ RecipeGroups: {
 	// EvilMushrooms: Any Evil Mushroom
 	// EvilFish: Any Evil Fish
 	// EvilFishWeapons: Any Evil Fish Weapon
+	// AnyDifferentMedicine: Any Different Medicine
 }
 
 Status_Messages: {

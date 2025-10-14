@@ -672,18 +672,29 @@ namespace Origins {
 			List<Item> items = new();
 			Dictionary<int, Item> substituteItems = new();
 			int switchblade = ModContent.ItemType<Switchblade_Shortsword>();
-			Item currentItem;
+			Queue<Item> medicines = [];
+			HashSet<int> medicineTypes = [];
 			for (int i = 0; i < Player.inventory.Length; i++) {
-				currentItem = Player.inventory[i];
+				Item currentItem = Player.inventory[i];
+				if (currentItem.IsAir) continue;
 				if (currentItem.type == switchblade) {
 					substituteItems.Add(items.Count, currentItem);
 					items.Add(new Item(ModContent.ItemType<Switchblade_Broadsword>(), currentItem.stack, currentItem.prefix));
 				}
+				if (currentItem.ModItem is MedicineBase and not Multimed && medicineTypes.Add(currentItem.type)) {
+					medicines.Enqueue(currentItem);
+					substituteItems.Add(items.Count, new Item(ModContent.ItemType<AnyDifferentMedicine>(), 1));
+					items.Add(new Item(ModContent.ItemType<AnyDifferentMedicine>(), 1));
+				}
 			}
 			itemConsumedCallback = (item, index) => {
 				if (substituteItems.TryGetValue(index, out Item consumed)) {
-					consumed.stack = item.stack;
-					if (consumed.stack <= 0) consumed.TurnToAir();
+					if (consumed.ModItem is AnyDifferentMedicine) {
+						if (--medicines.Dequeue().stack <= 0) consumed.TurnToAir();
+					} else {
+						consumed.stack = item.stack;
+						if (consumed.stack <= 0) consumed.TurnToAir();
+					}
 				}
 			};
 			return items;

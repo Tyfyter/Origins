@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -101,6 +102,33 @@ namespace Origins.Items.Other.Consumables.Medicine {
 		public override void ModifyBuffText(ref string buffName, ref string tip, ref int rare) {
 			List<int> debuffs = medicine.ImmunitySet.GetTrueIndexes();
 			if (debuffs.Count > 0) tip = TextUtils.Format("Mods.Origins.Items.GenericTooltip.HealDebuffs", medicine.ImmunityList(debuffs)) + '\n' + tip;
+		}
+	}
+	public class AnyDifferentMedicine : ModItem, IItemObtainabilityProvider {
+		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.RecipeGroups.AnyDifferentMedicine");
+		public override LocalizedText Tooltip => LocalizedText.Empty;
+		public override string Texture => typeof(Morphine).GetDefaultTMLName();
+		public IEnumerable<int> ProvideItemObtainability() => [Type];
+		public override void SetStaticDefaults() {
+			RecipeGroup.IconicItemId = Type;
+			RecipeGroup.ValidItems.Add(Type);
+			foreach (MedicineBase medicine in ModContent.GetContent<MedicineBase>()) {
+				if (medicine is not Multimed) RecipeGroup.ValidItems.Add(medicine.Type);
+			}
+			RecipeGroup.ValidItems.Remove(ItemID.HealingPotion);
+		}
+		public override void AddRecipes() => new FakeRecipeGroupRemover().Register();
+		public static RecipeGroup RecipeGroup { get; private set; } = new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.AnyDifferentMedicine").Value, ItemID.HealingPotion);
+	}
+	public class FakeRecipeGroupRemover() : AbstractNPCShop(NPCID.BlueSlime, "FakeRecipeGroupRemoverShop") {
+		public override IEnumerable<Entry> ActiveEntries => [];
+		public override void FillShop(ICollection<Item> items, NPC npc) { }
+		public override void FillShop(Item[] items, NPC npc, out bool overflow) => overflow = false;
+		public override void FinishSetup() {
+			AnyDifferentMedicine.RecipeGroup.ValidItems.Remove(ModContent.ItemType<AnyDifferentMedicine>());
+			/*for (int i = 0; i < Main.recipe.Length; i++) {
+				Main.recipe[i].acceptedGroups.Remove(AnyDifferentMedicine.RecipeGroup.RegisteredId);
+			}*/
 		}
 	}
 }

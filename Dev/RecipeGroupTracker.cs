@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria.ModLoader;
 using Terraria;
+using Origins.Items.Other.Consumables.Medicine;
 
 namespace Origins.Dev {
 	internal class RecipeGroupTracker : ModSystem {
