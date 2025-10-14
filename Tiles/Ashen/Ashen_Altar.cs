@@ -1,5 +1,4 @@
 ﻿using Origins.Items.Other.Testing;
-using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using PegasusLib;
 using Terraria;
@@ -10,7 +9,6 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Ashen_Altar : ModTile, IComplexMineDamageTile {
-		public override string Texture => typeof(Defiled_Altar).GetDefaultTMLName();
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -21,7 +19,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.CoordinateHeights = [16, 18];
 			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(255, 200, 200), CreateMapEntryName());
+			AddMapEntry(new Color(194, 69, 12), CreateMapEntryName());
 			RegisterItemDrop(-1);
 			AdjTiles = [TileID.DemonAltar];
 			ID = Type;
@@ -42,12 +40,13 @@ namespace Origins.Tiles.Ashen {
 			WorldGen.SmashAltar(i, j);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			r = g = b = 0.5f;
+			r = 0.75f;
+			g = 0.38f;
+			b = 0.05f;
 		}
 		public override bool CanExplode(int i, int j) => false;
 	}
 	public class Ashen_Altar_Item : TestingItem {
-		public override string Texture => "Origins/Tiles/Defiled/Defiled_Altar";
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;
