@@ -22,7 +22,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 		}
 		public override int Duration => 4;
 		public override void PostDrawMinion(Projectile minion, Color lightColor) {
-			Texture2D texture = TextureAssets.Extra[174].Value;
+			Texture2D texture = TextureAssets.Extra[ExtrasID.KeybrandRing].Value;
 			int oldShader = Main.CurrentDrawnEntityShader;
 			try {
 				Main.CurrentDrawnEntityShader = 0;

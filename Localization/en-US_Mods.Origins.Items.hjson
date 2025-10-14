@@ -7016,14 +7016,14 @@ Brightsee: {
 }
 
 Bottomless_Multimed: {
-	ImmunityListOverride: all debuffs
 	DisplayName: Bottomless Multimed
+	ImmunityListOverride: all debuffs
 	Tooltip: ""
 }
 
 Multimed: {
-	ImmunityListOverride: all debuffs
 	DisplayName: Multimed
+	ImmunityListOverride: all debuffs
 	Tooltip: ""
 }
 
@@ -7034,6 +7034,8 @@ Blood_Pack: {
 
 Fire_Band: {
 	DisplayName: Fire Band
+	// unused until there's a shared set for that
+	ImmunityListOverride: fire debuffs
 	Tooltip: ""
 }
 
@@ -7150,4 +7152,9 @@ Worn_Paper_They_Found_Us: {
 		I can’t leave, but I can’t just starve myself.
 		I’m just living off of whatever I can find
 		'''
+}
+
+Minishark_Broth: {
+	DisplayName: Minishark Broth
+	Tooltip: ""
 }

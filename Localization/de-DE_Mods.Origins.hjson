@@ -2031,6 +2031,7 @@ Projectiles: {
 	// Valkyrum_Bullet_P.DisplayName: Valkyrum Bullet
 	// Hyrax_Laser.DisplayName: Orbital Strike Laser
 	// Welding_Torch_P.DisplayName: Welding Torch P
+	// Minishark_Broth_Bullet.DisplayName: Minishark Broth Bullet
 }
 
 Prefixes: {
