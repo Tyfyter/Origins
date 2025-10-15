@@ -37,7 +37,7 @@ namespace Origins.Tiles.Defiled {
 	[LegacyName("Defiled_Ore_Item")]
 	public class Lost_Ore_Item : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Ore"
+			WikiCategories.Ore
 		];
         public override void SetStaticDefaults() {
             Item.ResearchUnlockCount = 100;

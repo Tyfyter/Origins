@@ -1,4 +1,5 @@
-﻿using Origins.Tiles.Defiled;
+﻿using Origins.Dev;
+using Origins.Tiles.Defiled;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -8,7 +9,7 @@ namespace Origins.Tiles.Ashen {
 	public class Witherwood : OriginTile {
 		public override string Texture => typeof(Defiled.Endowood).GetDefaultTMLName();
 		public string[] Categories => [
-            "Plant"
+			WikiCategories.Plant
         ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;

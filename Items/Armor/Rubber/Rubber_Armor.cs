@@ -9,7 +9,7 @@ namespace Origins.Items.Armor.Rubber {
 	[AutoloadEquip(EquipType.Head)]
 	public class Rubber_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public string[] Categories => [
-            "ArmorSet"
+            WikiCategories.ArmorSet
         ];
 		public override void SetDefaults() {
 			Item.defense = 2;

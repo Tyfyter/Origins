@@ -12,9 +12,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Acrid {
 	public abstract class Acrid_Helmet_Base : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"ArmorSet",
-			"ExplosiveBoostGear",
-			"ToxicSource"
+			WikiCategories.ArmorSet,
+			WikiCategories.ExplosiveBoostGear,
+			WikiCategories.ToxicSource
 		];
 		public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);

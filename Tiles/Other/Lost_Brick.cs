@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Other {
 	public class Lost_Brick : OriginTile, ICustomWikiStat {
         public string[] Categories => [
-            "Brick"
+            WikiCategories.Brick
         ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;

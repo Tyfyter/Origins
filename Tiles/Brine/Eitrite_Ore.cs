@@ -27,7 +27,7 @@ namespace Origins.Tiles.Brine {
 	}
 	public class Eitrite_Ore_Item : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Ore"
+			WikiCategories.Ore
 		];
 		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {

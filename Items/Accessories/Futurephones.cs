@@ -13,7 +13,7 @@ namespace Origins.Items.Accessories {
 	public class Futurephones : ModItem, ICustomWikiStat {
 		public static int FaceID { get; private set; }
 		public string[] Categories => [
-			"Combat"
+			WikiCategories.Combat
 		];
         public override void SetStaticDefaults() {
             Origins.AddGlowMask(this);

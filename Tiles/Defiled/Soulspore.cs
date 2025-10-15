@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using Origins.Dev;
 using Terraria;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
@@ -10,8 +11,8 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Defiled {
     public class Soulspore : OriginTile, IDefiledTile {
         public string[] Categories => [
-            "Plant"
-        ];
+			WikiCategories.Plant
+		];
         public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;

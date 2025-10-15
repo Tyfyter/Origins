@@ -10,9 +10,9 @@ namespace Origins.Items.Armor.Scavenger {
 	[AutoloadEquip(EquipType.Head)]
 	public class Scavenger_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "ArmorSet",
-            "ExplosiveBoostGear",
-			"SelfDamageProtek"
+            WikiCategories.ArmorSet,
+            WikiCategories.ExplosiveBoostGear,
+			WikiCategories.SelfDamageProtek
 		];
         public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;

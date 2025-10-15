@@ -34,7 +34,7 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Sanguinite_Ore_Item : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-		   "Ore"
+		   WikiCategories.Ore
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;

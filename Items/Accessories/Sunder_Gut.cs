@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Sunder_Gut : ModItem, ICustomWikiStat, IJournalEntrySource<Sunder_Gut_Entry> {
 		public string[] Categories => [
-			"Combat"
+			WikiCategories.Combat
 		];
 		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
 				Language.GetOrRegister($"Mods.Origins.Items.{nameof(Mildew_Heart)}.Tooltip"),

@@ -12,7 +12,7 @@ namespace Origins.Tiles.Ashen {
 	public class Tainted_Stone : OriginTile, IAshenTile {
 		public override string Texture => typeof(Defiled_Stone).GetDefaultTMLName();
 		public string[] Categories => [
-            "Stone"
+            WikiCategories.Stone
         ];
         public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));

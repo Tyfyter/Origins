@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Balloon)]
 	public class Plasma_Bag : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Vitality"
+			WikiCategories.Vitality
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 24);

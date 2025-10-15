@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Hallowed_Cleaver : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "Gun"
+            WikiCategories.Gun
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);

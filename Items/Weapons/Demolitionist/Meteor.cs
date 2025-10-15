@@ -18,8 +18,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Meteor : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Launcher",
-			"CanistahUser"
+			WikiCategories.Launcher,
+			WikiCategories.CanistahUser
 		];
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Meteor_P>(18, 32, 12.3f, 44, 24);

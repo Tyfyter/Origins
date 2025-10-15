@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
 using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
@@ -17,8 +19,8 @@ namespace Origins.Tiles.Ashen {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public Color GlowColor => Color.OrangeRed;
 		public string[] Categories => [
-            "Plant"
-        ];
+			WikiCategories.Plant
+		];
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
 				GlowTexture = Request<Texture2D>(Texture + "_Glow");

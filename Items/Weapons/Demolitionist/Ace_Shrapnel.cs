@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			public override JournalSortIndex SortIndex => new("The_Ashen", 3);
 		}
 		public string[] Categories => [
-			"Launcher"
+			WikiCategories.Launcher
 		];
 		public override void SetStaticDefaults() {
 			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Impeding_Shrapnel_Debuff.ID];

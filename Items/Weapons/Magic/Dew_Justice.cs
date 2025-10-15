@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Magic {
 		public static float TornSeverity => 0.3f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-			"SpellBook"
+			WikiCategories.SpellBook
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;

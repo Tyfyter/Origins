@@ -10,7 +10,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Felnum_Longbow : ModItem, ICustomWikiStat {
 		public const int baseDamage = 19;
         public string[] Categories => [
-            "Bow"
+            WikiCategories.Bow
         ];
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;

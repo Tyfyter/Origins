@@ -6,8 +6,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Wishing_Glass : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"GenericBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.GenericBoostAcc
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 26);

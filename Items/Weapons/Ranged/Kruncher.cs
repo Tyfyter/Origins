@@ -8,7 +8,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Kruncher : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => [
-            "Gun"
+            WikiCategories.Gun
         ];
         public override void SetStaticDefaults() {
 			Origins.FlatDamageMultiplier[Type] = 3f / 8f;

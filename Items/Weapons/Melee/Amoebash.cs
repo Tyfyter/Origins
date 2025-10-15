@@ -32,8 +32,8 @@ namespace Origins.Items.Weapons.Melee {
 		public static float TornSeverity => 0.4f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-            "Sword"
-        ];
+			WikiCategories.Sword
+		];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 		}

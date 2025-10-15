@@ -18,7 +18,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Partybringer : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Launcher"
+			WikiCategories.Launcher
 		];
 		public override void SetStaticDefaults() {
 			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Blind_Debuff.ID];

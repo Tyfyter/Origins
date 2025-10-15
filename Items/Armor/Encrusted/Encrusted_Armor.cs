@@ -11,8 +11,8 @@ namespace Origins.Items.Armor.Encrusted {
 	[AutoloadEquip(EquipType.Head)]
 	public class Encrusted_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "ArmorSet",
-            "SummmonBoostGear"
+            WikiCategories.ArmorSet,
+            WikiCategories.SummmonBoostGear
         ];
         public const float lightMagnitude = 0.3f;
 		public static short GlowMask = -1;

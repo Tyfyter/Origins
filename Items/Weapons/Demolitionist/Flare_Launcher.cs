@@ -16,8 +16,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Flare_Launcher : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Launcher",
-			"CanistahUser"
+			WikiCategories.Launcher,
+			WikiCategories.CanistahUser
 		];
 		public override void SetStaticDefaults() {
 			Flare_Dummy_Canister onFireFlare = new(BuffID.OnFire);

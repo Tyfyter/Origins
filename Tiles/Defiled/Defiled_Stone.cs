@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Stone : OriginTile, IDefiledTile {
         public string[] Categories => [
-            "Stone"
+            WikiCategories.Stone
         ];
         public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Defiled_Pot>(), 0, 0));

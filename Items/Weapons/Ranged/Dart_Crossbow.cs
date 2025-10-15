@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Dart_Crossbow : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "DartLauncher"
+            WikiCategories.DartLauncher
         ];
         public override void SetDefaults() {
 			Item.damage = 62;

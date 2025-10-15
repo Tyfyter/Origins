@@ -1,4 +1,5 @@
 ﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Other.Fish;
 using Origins.Tiles.Brine;
 using Terraria;
@@ -10,7 +11,7 @@ namespace Origins.Items.Other.Consumables {
 		public const float bonus_multiplicative = 0.15f;
 		public const float bonus_additive = 5f;
 		public string[] Categories => [
-			"Potion"
+			WikiCategories.Potion
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;

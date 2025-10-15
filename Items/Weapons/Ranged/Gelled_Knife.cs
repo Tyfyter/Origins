@@ -9,8 +9,8 @@ namespace Origins.Items.Weapons.Ranged {
 		public static float TornSeverity => 0.45f;
 		float ITornSource.Severity => TornSeverity;
         public string[] Categories => [
-            "Torn",
-            "TornSource"
+            WikiCategories.Torn,
+            WikiCategories.TornSource
         ];
         public override void SetStaticDefaults() {
             Origins.AddGlowMask(this);

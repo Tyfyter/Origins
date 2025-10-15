@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Waist)]
 	public class Amebic_Vial : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat"
+			WikiCategories.Combat
 		];
 		public static bool[] CanBeDeflected => OriginsSets.Projectiles.CanBeDeflected;
 		static short glowmask;

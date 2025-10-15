@@ -16,8 +16,8 @@ namespace Origins.Items.Weapons.Summoner {
 		public static float TornSeverity => 0.5f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-			"Torn",
-			"TornSource"
+			WikiCategories.Torn,
+			WikiCategories.TornSource
 		];
 		static short glowmask;
 		public override void SetStaticDefaults() {

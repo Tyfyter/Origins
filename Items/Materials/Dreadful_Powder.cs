@@ -1,5 +1,6 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs.Defiled;
@@ -13,7 +14,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Materials {
 	public class Dreadful_Powder : ModItem {
 		public string[] Categories => [
-			"ExpendableTool"
+			WikiCategories.ExpendableTool
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.PurificationPowder;

@@ -16,7 +16,7 @@ using static Fargowiltas.FargoSets;
 namespace Origins.Items.Accessories {
 	public class Royal_Gel_Global : GlobalItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat"
+			WikiCategories.Combat
 		];
 		public override bool IsLoadingEnabled(Mod mod) => OriginConfig.Instance.RoyalGel;
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.type == ItemID.RoyalGel;

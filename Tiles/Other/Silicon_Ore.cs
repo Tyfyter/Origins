@@ -25,7 +25,7 @@ namespace Origins.Tiles.Other {
 	}
 	public class Silicon_Ore_Item : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Ore"
+			WikiCategories.Ore
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;

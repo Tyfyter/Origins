@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Nineball : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			"Yoyo"
+			WikiCategories.Yoyo
 		];
 		public string EntryName => "Origins/" + typeof(Nineball_Entry).Name;
 		public class Nineball_Entry : JournalEntry {

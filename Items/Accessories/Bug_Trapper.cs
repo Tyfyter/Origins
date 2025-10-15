@@ -8,7 +8,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOff)]
     public class Bug_Trapper : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "Vitality"
+            WikiCategories.Vitality
         ];
         static short glowmask;
         public override void SetStaticDefaults() {

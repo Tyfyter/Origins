@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Communion : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Wand"
+			WikiCategories.Wand
 		];
 		public override void SetStaticDefaults() {
 			Item.staff[Type] = true;

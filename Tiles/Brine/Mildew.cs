@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Other.Testing;
 using Origins.Projectiles;
@@ -13,7 +14,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Brine {
 	public class Mildew : OriginTile {
 		public string[] Categories => [
-			"Grass"
+			WikiCategories.Grass
 		];
 		public override void SetStaticDefaults() {
 			//Main.tileMergeDirt[Type] = true;

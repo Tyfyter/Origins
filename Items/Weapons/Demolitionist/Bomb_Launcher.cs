@@ -14,7 +14,7 @@ using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bomb_Launcher : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Launcher"
+			WikiCategories.Launcher
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;

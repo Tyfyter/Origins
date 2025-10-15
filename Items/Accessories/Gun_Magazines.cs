@@ -10,8 +10,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Gun_Magazine : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"RangedBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.RangedBoostAcc
 		];
 		public virtual float SpeedBonus => 0.05f;
 		public override LocalizedText Tooltip => Language.GetOrRegister("Mods.Origins.Items.Gun_Magazine.Tooltip").WithFormatArgs(SpeedBonus);

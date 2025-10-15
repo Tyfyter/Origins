@@ -12,7 +12,7 @@ using Origins.Projectiles;
 namespace Origins.Items.Weapons.Ranged {
 	public class Harpoon_Gun : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "HarpoonGun"
+            WikiCategories.HarpoonGun
         ];
 		protected override bool CloneNewInstances => true;
 		public AutoLoadingAsset<Texture2D> ChainTexture { get; private set; }

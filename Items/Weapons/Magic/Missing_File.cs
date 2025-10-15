@@ -23,7 +23,7 @@ namespace Origins.Items.Weapons.Magic {
 	[LegacyName("Defiled_Dungeon_Chest_Placeholder_Item")]
 	public class Missing_File : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			"OtherMagic"
+			WikiCategories.OtherMagic
 		];
 		public static int ID { get; private set; }
 		public static Dictionary<int, int> NPCTypeAliases { get; private set; } = [];

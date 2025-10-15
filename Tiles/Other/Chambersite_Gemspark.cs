@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using System.Linq;
 using Terraria;
 using Terraria.ID;
@@ -8,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Other {
     public class Chambersite_Gemspark : OriginTile {
         public string[] Categories => [
-            "Brick"
+            WikiCategories.Brick
         ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;

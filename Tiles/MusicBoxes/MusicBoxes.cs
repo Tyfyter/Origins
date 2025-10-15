@@ -91,7 +91,7 @@ namespace Origins.Tiles.MusicBoxes {
 	[Autoload(false)]
 	public class Music_Box_Item(Music_Box tile) : ModItem(), ICustomWikiStat {
 		public string[] Categories => [
-			"MusicBox",
+			WikiCategories.MusicBox,
 			..tile.Categories
 		];
 		[CloneByReference]
@@ -278,7 +278,7 @@ namespace Origins.Tiles.MusicBoxes {
 	}
 	public class Ancient_Music_Box_DW : Music_Box {
 		public override string[] Categories => [
-			"Hardmode"
+			WikiCategories.Hardmode
 		];
 		public override Color MapColor => new(255, 255, 255);
 		public override int MusicSlot => Origins.Music.AncientDefiled;
@@ -299,7 +299,7 @@ namespace Origins.Tiles.MusicBoxes {
 	}
 	public class Ancient_Music_Box_RH : Music_Box, IGlowingModTile {
 		public override string[] Categories => [
-			"Hardmode"
+			WikiCategories.Hardmode
 		];
 		public override Color MapColor => new(255, 255, 255);
 		public override int MusicSlot => Origins.Music.AncientRiven;
@@ -515,7 +515,7 @@ namespace Origins.Tiles.MusicBoxes {
 	}
 	public class Otherworldly_Music_Box_DW : Music_Box {
 		public override string[] Categories => [
-			"Hardmode"
+			WikiCategories.Hardmode
 		];
 		public override Color MapColor => new(255, 255, 255);
 		public override int MusicSlot => Origins.Music.OtherworldlyDefiled;

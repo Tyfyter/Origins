@@ -7,7 +7,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Fiberglass_Pistol : ModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => [
-            "Gun"
+            WikiCategories.Gun
         ];
         public ushort Element => Elements.Fiberglass;
 		public override void SetDefaults() {

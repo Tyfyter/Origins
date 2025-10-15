@@ -1,4 +1,5 @@
-﻿using Origins.Tiles.Other;
+﻿using Origins.Dev;
+using Origins.Tiles.Other;
 using PegasusLib;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,9 @@ namespace Origins.Items.Armor.Other {
 	[AutoloadEquip(EquipType.Head)]
 	public class Lucky_Hat : ModItem {
 		public string[] Categories => [
-			"ArmorSet",
-			"ExplosiveBoostGear",
-			"RangedBoostGear"
+			WikiCategories.ArmorSet,
+			WikiCategories.ExplosiveBoostGear,
+			WikiCategories.RangedBoostGear
 		];
 		public override void Load() {
 			On_PlayerEyeHelper.UpdateEyeFrameToShow += On_PlayerEyeHelper_UpdateEyeFrameToShow;

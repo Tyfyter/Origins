@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public abstract class Brine_Leafed_Clover : ModItem, IItemObtainabilityProvider, ICustomWikiStat {
 		public string[] Categories => [
-			"Misc"
+			WikiCategories.Misc
 		];
 		protected static sbyte faceSlot = -1;
 		public abstract int Level { get; }

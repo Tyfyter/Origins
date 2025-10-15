@@ -10,9 +10,9 @@ namespace Origins.Items.Armor.Soulhide {
     [AutoloadEquip(EquipType.Head)]
 	public class Soulhide_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "ArmorSet",
-            "MeleeBoostGear",
-			"GenericBoostGear"
+            WikiCategories.ArmorSet,
+            WikiCategories.MeleeBoostGear,
+			WikiCategories.GenericBoostGear
         ];
         public override void SetDefaults() {
 			Item.defense = 3;

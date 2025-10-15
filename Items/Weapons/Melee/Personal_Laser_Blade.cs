@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Personal_Laser_Blade : ModItem, IElementalItem, ICustomWikiStat {
 		public const int max_charge = 75;
 		public string[] Categories => [
-			"Sword"
+			WikiCategories.Sword
 		];
 		public ushort Element => Elements.Fire;
 		static short glowmask;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Other.Consumables;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Riven {
 	public class Amoeba_Fluid : ComplexFrameTile, IRivenTile, IGlowingModTile {
 		public string[] Categories => [
-			"OtherBlock"
+			WikiCategories.OtherBlock
 		];
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);

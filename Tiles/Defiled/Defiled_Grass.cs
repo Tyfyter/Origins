@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
@@ -9,7 +10,7 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Grass : OriginTile, IDefiledTile {
         public string[] Categories => [
-            "Grass"
+            WikiCategories.Grass
         ];
         public override void SetStaticDefaults() {
 			TileID.Sets.Grass[Type] = true;

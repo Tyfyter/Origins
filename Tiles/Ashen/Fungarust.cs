@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.GameContent.Metadata;
@@ -10,10 +12,10 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Ashen {
 	public class Fungarust : OriginTile, IAshenTile {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
-		public string[] Categories => [
-			"Plant"
-		];
-		public override void SetStaticDefaults() {
+        public string[] Categories => [
+            WikiCategories.Plant
+        ];
+        public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
 			Main.tileCut[Type] = true;

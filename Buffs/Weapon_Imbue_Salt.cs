@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Buffs {
 	public class Weapon_Imbue_Salt : ModBuff, ICustomWikiStat {
 		public string[] Categories => [
-			"Torn",
-			"TornSource"
+			WikiCategories.Torn,
+			WikiCategories.TornSource
 		];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {

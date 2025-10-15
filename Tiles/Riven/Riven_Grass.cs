@@ -1,4 +1,7 @@
-﻿using Origins.World.BiomeData;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Origins.Tiles.Defiled;
+using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -7,7 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Tiles.Riven {
 	public class Riven_Grass : ComplexFrameTile, IRivenTile {
         public string[] Categories => [
-            "Grass"
+            WikiCategories.Grass
         ];
         public override void SetStaticDefaults() {
 			TileID.Sets.Grass[Type] = true;

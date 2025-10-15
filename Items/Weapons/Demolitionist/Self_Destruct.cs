@@ -17,7 +17,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Self_Destruct : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"OtherExplosive"
+			WikiCategories.OtherExplosive
 		];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

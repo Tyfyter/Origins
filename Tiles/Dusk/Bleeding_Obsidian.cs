@@ -37,7 +37,7 @@ namespace Origins.Tiles.Dusk {
 	}
 	public class Bleeding_Obsidian_Item : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Ore"
+			WikiCategories.Ore
 		];
 		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {

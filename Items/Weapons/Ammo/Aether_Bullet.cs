@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Aether_Bullet : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Bullet"
+			WikiCategories.Bullet
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

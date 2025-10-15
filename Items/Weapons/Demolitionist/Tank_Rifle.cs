@@ -16,7 +16,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Tank_Rifle : ModItem, ICustomDrawItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Launcher"
+			WikiCategories.Launcher
 		];
 		public override void SetStaticDefaults() {
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 5));

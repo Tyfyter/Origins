@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Exploder_Emblem : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"ExplosiveBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.ExplosiveBoostAcc
 		];
 		public override void SetStaticDefaults() {
 			OriginExtensions.InsertIntoShimmerCycle(Type, ItemID.SummonerEmblem);

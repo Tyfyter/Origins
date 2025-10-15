@@ -7,7 +7,7 @@ namespace Origins.Tiles.Ashen {
 	public class Surveysprout_Planter_Box : Platform_Tile, ICustomWikiStat {
 		public override string Texture => typeof(Wilting_Rose_Planter_Box).GetDefaultTMLName();
         public string[] Categories => [
-            "PlanterBox"
+            WikiCategories.PlanterBox
         ];
 		public override int BaseTileID => TileID.PlanterBox;
 		public override Color MapColor => new(44, 39, 58);

@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Celestial_Starlight : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Vitality",
-			"MagicBoostAcc"
+			WikiCategories.Vitality,
+			WikiCategories.MagicBoostAcc
 		];
 		static short glowmask;
 		public override void SetStaticDefaults() {

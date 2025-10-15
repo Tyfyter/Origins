@@ -7,8 +7,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Dim_Starlight : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			"Vitality",
-			"MagicBoostAcc"
+			WikiCategories.Vitality,
+			WikiCategories.MagicBoostAcc
 		];
 		static short glowmask;
 		public string EntryName => "Origins/" + typeof(Dim_Starlight_Entry).Name;

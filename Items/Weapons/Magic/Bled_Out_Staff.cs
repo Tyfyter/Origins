@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Bled_Out_Staff : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "Wand"
+            WikiCategories.Wand
         ];
         public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;

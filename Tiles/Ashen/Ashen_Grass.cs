@@ -1,11 +1,12 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Ashen {
 	public class Ashen_Grass : OriginTile, IAshenTile {
         public string[] Categories => [
-            "Grass"
+            WikiCategories.Grass
         ];
         public override void SetStaticDefaults() {
 			TileID.Sets.Grass[Type] = true;
@@ -87,7 +88,7 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Ashen_Murky_Sludge_Grass : OriginTile, IAshenTile {
 		public string[] Categories => [
-			"Grass"
+			WikiCategories.Grass
 		];
 		public override void SetStaticDefaults() {
 			TileID.Sets.Grass[Type] = true;

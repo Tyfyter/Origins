@@ -10,7 +10,7 @@ namespace Origins.Tiles.Other {
 	public class Sanguinite_Brick : OriginTile, ICustomWikiStat {
 		public override string Texture => typeof(Lost_Brick).GetDefaultTMLName();
 		public string[] Categories => [
-            "Brick"
+            WikiCategories.Brick
         ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;

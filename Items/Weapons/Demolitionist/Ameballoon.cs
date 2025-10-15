@@ -12,8 +12,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Ameballoon : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => [
-            "ThrownExplosive",
-            "ExpendableWeapon"
+            WikiCategories.ThrownExplosive,
+            WikiCategories.ExpendableWeapon
         ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;

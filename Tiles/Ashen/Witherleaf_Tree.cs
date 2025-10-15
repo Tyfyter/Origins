@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins;
+using Origins.Dev;
 using Origins.Dusts;
 using Origins.Tiles.Defiled;
 using ReLogic.Content;
@@ -11,7 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.Tiles.Ashen {
 	public class Witherleaf_Tree : ModTree {
 		public string[] Categories => [
-			"Plant"
+			WikiCategories.Plant
 		];
 		private static Mod Mod => Origins.instance;
 		public override TreePaintingSettings TreeShaderSettings => new();

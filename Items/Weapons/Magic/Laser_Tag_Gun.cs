@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Magic {
 		public static int CritDamage => 123;
 		static short glowmask;
 		public string[] Categories => [
-			"MagicGun"
+			WikiCategories.MagicGun
 		];
 		public ushort Element => Elements.Earth;
 		static DrawAnimationManual animation;

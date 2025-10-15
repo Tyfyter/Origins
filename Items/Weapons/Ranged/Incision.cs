@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Incision : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "DartLauncher"
+            WikiCategories.DartLauncher
         ];
         public override void SetDefaults() {
 			Item.damage = 34;

@@ -6,7 +6,7 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Flammable_Harpoon : ModItem, ICustomWikiStat {
 		public static int ID { get; private set; }
         public string[] Categories => [
-            "Harpoon"
+            WikiCategories.Harpoon
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

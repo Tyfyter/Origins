@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Helium_Tank : Air_Tank, ICustomWikiStat {
 		public new string[] Categories => [
-			"Misc"
+			WikiCategories.Misc
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);

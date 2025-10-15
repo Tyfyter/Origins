@@ -6,8 +6,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Tainted_Flesh : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"Torn"
+			WikiCategories.Combat,
+			WikiCategories.Torn
 		];
 		static short glowmask;
 		public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(5);

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Cactus : ModCactus, ICustomWikiStat, INoSeperateWikiPage {
         public string[] Categories => [
-            "Plant"
+            WikiCategories.Plant
         ];
         public override void SetStaticDefaults() {
 			GrowsOnTileId = [ModContent.TileType<Defiled_Sand>()];

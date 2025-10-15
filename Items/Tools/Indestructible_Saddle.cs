@@ -17,8 +17,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Indestructible_Saddle : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Movement",
-			"Mount"
+			WikiCategories.Movement,
+			WikiCategories.Mount
 		];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {

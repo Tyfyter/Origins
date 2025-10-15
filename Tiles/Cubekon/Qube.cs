@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Tiles.Cubekon {
     public class Qube : OriginTile {
         public string[] Categories => [
-            "OtherBlock"
+            WikiCategories.OtherBlock
         ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;

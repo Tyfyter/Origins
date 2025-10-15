@@ -25,8 +25,8 @@ namespace Origins.Items.Armor.Chambersite {
 	public class Chambersite_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public static int HeadSlot { get; private set; }
 		public string[] Categories => [
-			"ArmorSet",
-			"GenericBoostGear"
+			WikiCategories.ArmorSet,
+			WikiCategories.GenericBoostGear
 		];
 		public override void SetStaticDefaults() {
 			HeadSlot = Item.headSlot;

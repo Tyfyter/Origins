@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Journal;
 using Origins.World.BiomeData;
 using System;
@@ -14,7 +15,7 @@ namespace Origins.Tiles.Riven {
 	[LegacyName("Riven_Flesh")]
 	public class Spug_Flesh : ComplexFrameTile, IRivenTile, IGlowingModTile {
 		public string[] Categories => [
-			"Stone"
+			WikiCategories.Stone
 		];
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);

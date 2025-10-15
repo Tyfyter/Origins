@@ -16,7 +16,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Sword : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Sword"
+			WikiCategories.Sword
 		];
 		public override void SetStaticDefaults() {
 			Origins.DamageBonusScale[Type] = 1.5f;

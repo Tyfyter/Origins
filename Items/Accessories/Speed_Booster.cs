@@ -10,10 +10,10 @@ namespace Origins.Items.Accessories {
 	public class Speed_Booster : ModItem, ICustomWikiStat {
 		public delegate void ConveyorBeltModifier(ref Vector2 movement, Player player);
 		public string[] Categories => [
-			"Combat",
-			"Movement",
-			"RangedBoostAcc",
-			"GenericBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.Movement,
+			WikiCategories.RangedBoostAcc,
+			WikiCategories.GenericBoostAcc
 		];
 		public override void SetStaticDefaults() {
 			try {

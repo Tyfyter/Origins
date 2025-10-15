@@ -31,7 +31,7 @@ namespace Origins.Tiles.Other {
 			public override JournalSortIndex SortIndex => new("Arabel", 6);
 		}
 		public string[] Categories => [
-			"Ore"
+			WikiCategories.Ore
 		];
         public override void SetStaticDefaults() {
             Item.ResearchUnlockCount = 100;

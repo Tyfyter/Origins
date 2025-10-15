@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -8,7 +9,7 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Decoration {
     public class A_Perfect_World : ModTile {
 		public string[] Categories => [
-			"Painting"
+			WikiCategories.Painting
 		];
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;

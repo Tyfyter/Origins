@@ -9,9 +9,9 @@ namespace Origins.Items.Accessories {
 		public static float TornSeverity => 0.1f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-			"Combat",
-			"Torn",
-			"TornSource"
+			WikiCategories.Combat,
+			WikiCategories.Torn,
+			WikiCategories.TornSource
 		];
         static short glowmask;
 		public string EntryName => "Origins/" + typeof(Symbiote_Skull_Entry).Name;

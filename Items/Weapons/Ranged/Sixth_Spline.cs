@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Ranged {
 		static short glowmask;
 		public static WeightedRandom<Sixth_Spline_Projectile> Projectiles { get; private set; }  = new();
         public string[] Categories => [
-            "Gun"
+            WikiCategories.Gun
         ];
 		public string EntryName => "Origins/" + typeof(Fifth_Spline_Entry).Name;
 		public class Fifth_Spline_Entry : JournalEntry {
