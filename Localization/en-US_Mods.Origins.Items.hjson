@@ -4938,7 +4938,7 @@ Mildew_Whip: {
 }
 
 Defiled_Relay_Item: {
-	DisplayName: "{§Defiled} Relay Item"
+	DisplayName: "{§Defiled} Relay (Debugging Item)"
 	Tooltip: ""
 }
 
@@ -7162,4 +7162,9 @@ Minishark_Broth: {
 Spearmint_Tea: {
 	DisplayName: Spearmint Tea
 	Tooltip: "'The quintessential hug in a cup.'"
+}
+
+Murky_Sludge_Item: {
+	DisplayName: Murky Sludge
+	Tooltip: ""
 }
