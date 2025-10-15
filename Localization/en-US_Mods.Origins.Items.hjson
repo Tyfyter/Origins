@@ -7158,3 +7158,8 @@ Minishark_Broth: {
 	DisplayName: Minishark Broth
 	Tooltip: ""
 }
+
+Spearmint_Tea: {
+	DisplayName: Spearmint Tea
+	Tooltip: "'The quintessential hug in a cup.'"
+}

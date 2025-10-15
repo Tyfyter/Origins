@@ -25,6 +25,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 		}
 		public override int Duration => 4;
 		public override void PostDrawMinion(Projectile minion, Color lightColor) {
+			if (!minion.minion && !minion.sentry) return;
 			Texture2D texture = TextureAssets.Item[ItemID.Minishark].Value;
 			float rotation = minion.GetGlobalProjectile<MinionGlobalProjectile>().brothEffectAngle;
 			Main.EntitySpriteDraw(
@@ -39,7 +40,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			);
 		}
 		public override void UpdateMinion(Projectile minion, int time) {
-			if (!minion.IsLocallyOwned()) return;
+			if (!minion.IsLocallyOwned() || (!minion.minion && !minion.sentry)) return;
 			ref int timer = ref minion.GetEffectTimer<Minishark_Broth_Timer>();
 			float distanceFromTarget = 2000f * 2000f;
 			Vector2 targetCenter = minion.position;
@@ -78,7 +79,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 	}
 	public class Minishark_Broth_Timer : ProjectileEffectTimer {
 		public override bool StartAtZero => true;
-		public override bool AppliesToEntity(Projectile projectile) => (projectile.minion || projectile.sentry);
+		public override bool AppliesToEntity(Projectile projectile) => projectile.minion || projectile.sentry;
 	}
 	public class Minishark_Broth_Bullet : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Bullet;
