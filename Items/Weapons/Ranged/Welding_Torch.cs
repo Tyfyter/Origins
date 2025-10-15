@@ -76,7 +76,7 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 			Projectile.localAI[0] += 1f;
 			if (Projectile.localAI[2] == 1) {
-				Lighting.AddLight(Projectile.Center, 0f, 0.85f, 0.4f);
+				Lighting.AddLight(Projectile.Center, 0.85f, 0.4f, 0f);
 			}
 			//Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.FrostStaff);
 			Projectile.ai[0]++;

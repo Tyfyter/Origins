@@ -29,6 +29,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -341,6 +342,21 @@ namespace Origins.Projectiles {
 			if (weakpointAnalyzerFake) {
 				projectile.timeLeft -= 2;
 			}
+			if (magicHairSprayEffect) {
+				float size = 48 * projectile.scale;
+				if (projectile.ModProjectile?.Mod is not Origins) {
+					size = 48 * Utils.Remap(Utils.Remap(projectile.localAI[0], 0f, 72, 0f, 1f), 0.2f, 0.5f, 0.25f, 1f);
+				}
+				if (Main.rand.NextFloat(250) < size) {
+					ParticleOrchestrator.RequestParticleSpawn(
+						true,
+						ParticleOrchestraType.PrincessWeapon,
+						new() {
+							PositionInWorld = projectile.Center + Main.rand.NextVector2Circular(size, size)
+						}
+					);
+				}
+			}
 		}
 		public override void AI(Projectile projectile) {
 			if (prefix is IProjectileAIPrefix projectileAIPrefix) {
@@ -516,6 +532,13 @@ namespace Origins.Projectiles {
 			}
 			if (magicHairSprayEffect) {
 				new Extend_Deuffs_Action(target, 30).Perform();
+				ParticleOrchestrator.RequestParticleSpawn(
+					false,
+					ParticleOrchestraType.PaladinsHammer,
+					new() {
+						PositionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox)
+					}
+				);
 			}
 		}
 		public override bool? CanHitNPC(Projectile projectile, NPC target) {
