@@ -1768,8 +1768,8 @@ AMMO:
 
 (^) Resizable Mine VI
 
-(#, ^2) Homing Rocket I
-(#, ^2) Homing Rocket II
+(#, @2) Homing Rocket I (needs projectile sprites for all vanilla rocket launchers)
+(#, @2) Homing Rocket II (needs projectile sprites for all vanilla rocket launchers)
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
 (^) Valkyrum Bullet
