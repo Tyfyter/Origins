@@ -904,6 +904,7 @@ namespace Origins {
 			ModLargeGem.AddCrossModLargeGem(GetInstance<LargeOpal>(), "ThoriumMod/Items/Misc/LargeOpal_Glow");
 			ModLargeGem.AddCrossModLargeGem(GetInstance<LargeAquamarine>(), "ThoriumMod/Items/Misc/LargeAquamarine_Glow");
 			ModLargeGem.AddCrossModLargeGem(GetInstance<LargePrismite>(), "ThoriumMod/Items/Misc/LargePrismite_Glow");
+
 			Recipe.Create(ItemType<Asylum_Whistle>())
 			.AddIngredient<aDarksteelAlloy>(15)
 			.AddTile(TileID.Anvils)
@@ -937,8 +938,6 @@ namespace Origins {
 			.AddIngredient(ItemID.Chest, 10)
 			.AddTile(TileID.Anvils)
 			.Register();
-
-
 
 			foreach (ModItem itm in instance.thorium.GetContent<ModItem>()) {
 				if (itm is not BlankPainting && itm.GetType().Namespace == "ThoriumMod.Items.Painting")
@@ -1146,7 +1145,8 @@ namespace Origins {
 			};
 			int[] bannedBanners = {
 				GetBanner(NPCID.PigronHallow),
-				GetBanner(NPCID.DesertGhoul)
+				GetBanner(NPCID.DesertGhoul),
+				GetBanner(NPCID.Zombie)
 			};
 			for (int i = 0; i < NPCID.Sets.AllNPCs.Length; i++) {
 				NPC npc = ContentSamples.NpcsByNetId[i];

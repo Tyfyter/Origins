@@ -44,7 +44,6 @@ namespace Origins.Tiles.Defiled {
 		public override bool CanExplode(int i, int j) => false;
 	}
 	public class Defiled_Altar_Item : TestingItem {
-		public override string Texture => "Origins/Tiles/Defiled/Defiled_Altar";
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;
