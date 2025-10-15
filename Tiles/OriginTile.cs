@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -55,7 +56,7 @@ namespace Origins.Tiles {
 			for (int i = 0; i < overlays.Length; i++) {
 				TileOverlay tileOverlay = overlays[i];
 				tileOverlay.SetupTexture();
-				LateSetupActions.Add(() => tileOverlay.SetupOther(this));
+				LateSetupActions.Add(() => tileOverlay.SetupOther(Type));
 			}
 			SetStaticDefaults();
 		}
@@ -66,12 +67,11 @@ namespace Origins.Tiles {
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			if (!TileDrawing.IsVisible(tile)) return;
-			_ = this;
 			for (int k = 0; k < overlays.Length; k++) {
 				overlays[k].Draw(i, j, tile, spriteBatch);
 			}
 		}
-		protected abstract class TileOverlay {
+		public abstract class TileOverlay {
 			protected abstract string TexturePath { get; }
 			protected Asset<Texture2D> Texture { get; private set; }
 			protected TreePaintingSettings settings;
@@ -80,10 +80,10 @@ namespace Origins.Tiles {
 				Texture = ModContent.Request<Texture2D>(TexturePath);
 				GlowPaintKey = CustomTilePaintLoader.CreateKey();
 			}
-			public virtual void SetupOther(ModTile tile) { }
+			public virtual void SetupOther(int type) { }
 			public abstract void Draw(int i, int j, Tile tile, SpriteBatch spriteBatch);
 		}
-		protected class TileMergeOverlay(string texturePath, bool[] tileTypes, int parentFrameHeight = 270) : TileOverlay {
+		public class TileMergeOverlay(string texturePath, bool[] tileTypes, int parentFrameHeight = 270) : TileOverlay {
 			public TileMergeOverlay(string texturePath, int tileType, int parentFrameHeight = 270) : this(texturePath, [tileType], parentFrameHeight) { }
 			public TileMergeOverlay(string texturePath, int[] tileTypes, int parentFrameHeight = 270) : this(texturePath, TileID.Sets.Factory.CreateBoolSet(tileTypes), parentFrameHeight) { }
 			protected override string TexturePath => texturePath;
@@ -126,11 +126,11 @@ namespace Origins.Tiles {
 				"                ",
 				"                "
 			];
-			public override void SetupOther(ModTile tile) {
+			public override void SetupOther(int type) {
 				for (int i = 0; i < tileTypes.Length; i++) {
 					if (!tileTypes[i]) continue;
-					Main.tileMerge[tile.Type][i] = true;
-					Main.tileMerge[i][tile.Type] = true;
+					Main.tileMerge[type][i] = true;
+					Main.tileMerge[i][type] = true;
 				}
 			}
 			public override void Draw(int i, int j, Tile tile, SpriteBatch spriteBatch) {
@@ -180,6 +180,27 @@ namespace Origins.Tiles {
 				Up,
 				Left,
 				Right
+			}
+		}
+	}
+	[ReinitializeDuringResizeArrays]
+	internal class VanillaTileOverlays : GlobalTile {
+		static ComplexFrameTile.TileOverlay[][] forcedTileOverlays = TileID.Sets.Factory.CreateCustomSet<ComplexFrameTile.TileOverlay[]>(null);
+		internal static void AddOverlay(int type, ComplexFrameTile.TileOverlay overlay) {
+			ComplexFrameTile.TileOverlay[] overlays = forcedTileOverlays[type];
+			overlays ??= [];
+			Array.Resize(ref overlays, overlays.Length + 1);
+			overlays[^1] = overlay;
+			overlay.SetupTexture();
+			OriginTile.LateSetupActions.Add(() => overlay.SetupOther(type));
+			forcedTileOverlays[type] = overlays;
+		}
+		public override void PostDraw(int i, int j, int type, SpriteBatch spriteBatch) {
+			if (forcedTileOverlays[type] is not ComplexFrameTile.TileOverlay[] overlays) return;
+			Tile tile = Framing.GetTileSafely(i, j);
+			if (!TileDrawing.IsVisible(tile)) return;
+			for (int k = 0; k < overlays.Length; k++) {
+				overlays[k].Draw(i, j, tile, spriteBatch);
 			}
 		}
 	}

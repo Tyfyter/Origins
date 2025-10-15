@@ -14,12 +14,28 @@ namespace Origins.Tiles.Ashen {
 			AddMapEntry(FromHexRGB(0x2c212a));
 			DustType = Ashen_Biome.DefaultTileDust;
 			HitSound = SoundID.Item167.WithPitchOffset(-2f);
+			LateSetupActions.Add(() => {
+				TileMergeOverlay mergeOverlay = new(merge + "Murk_Overlay", Type);
+				for (int i = 0; i < TileLoader.TileCount; i++) {
+					switch (i) {
+						case TileID.Dirt:
+						case TileID.Mud:
+						case TileID.Ash:
+						break;
+
+						default:
+						if (!TileID.Sets.Grass[i]) continue;
+						break;
+					}
+					VanillaTileOverlays.AddOverlay(i, mergeOverlay);
+				}
+			});
 		}
-		protected override IEnumerable<TileOverlay> GetOverlays() { // make these tiles instead have murky overlay (i think it'd look best
+		/*protected override IEnumerable<TileOverlay> GetOverlays() { // make these tiles instead have murky overlay (i think it'd look best
 			yield return new TileMergeOverlay(merge + "Dirt_Overlay", TileID.Dirt);
 			yield return new TileMergeOverlay(merge + "Mud_Overlay", TileID.Mud);
 			yield return new TileMergeOverlay(merge + "Ash_Overlay", TileID.Ash);
-		}
+		}*/
 		public override void FloorVisuals(Player player) {
 			player.AddBuff(BuffType<Murky_Sludge_Debuff>(), 2);
 		}
