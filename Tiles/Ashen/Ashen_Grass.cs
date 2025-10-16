@@ -1,13 +1,16 @@
-﻿using Terraria;
+﻿using System;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Ashen {
 	public class Ashen_Grass : OriginTile, IAshenTile {
-        public string[] Categories => [
-            "Grass"
-        ];
-        public override void SetStaticDefaults() {
+		public string[] Categories => [
+			"Grass"
+		];
+		public override void SetStaticDefaults() {
 			TileID.Sets.Grass[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
@@ -40,7 +43,7 @@ namespace Origins.Tiles.Ashen {
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
 				if (WorldGen.genRand.NextBool(250)) above.SetToType((ushort)ModContent.TileType<Fungarust>(), Main.tile[i, j].TileColor);
 				else above.SetToType((ushort)ModContent.TileType<Ashen_Foliage>(), Main.tile[i, j].TileColor);
-				
+
 				WorldGen.TileFrame(i, j - 1);
 			}
 		}
@@ -80,7 +83,7 @@ namespace Origins.Tiles.Ashen {
 			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
 				if (WorldGen.genRand.NextBool(250)) above.SetToType((ushort)ModContent.TileType<Fungarust>(), Main.tile[i, j].TileColor);
 				else above.SetToType((ushort)ModContent.TileType<Ashen_Foliage>(), Main.tile[i, j].TileColor);
-				
+
 				WorldGen.TileFrame(i, j - 1);
 			}
 		}
@@ -93,7 +96,6 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.Grass[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
-			TileID.Sets.Conversion.Grass[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileMerge[Type] = Main.tileMerge[TileID.Grass];
 			Main.tileMerge[Type][TileID.Dirt] = true;
@@ -137,6 +139,70 @@ namespace Origins.Tiles.Ashen {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CorruptSeeds);
 		}
+		public override void Load() {
+			On_SmartCursorHelper.Step_GrassSeeds += On_SmartCursorHelper_Step_GrassSeeds;
+		}
+		public override void Unload() {
+			On_SmartCursorHelper.Step_GrassSeeds -= On_SmartCursorHelper_Step_GrassSeeds;
+		}
+
+		private void On_SmartCursorHelper_Step_GrassSeeds(On_SmartCursorHelper.orig_Step_GrassSeeds orig, object providedInfo, ref int focusedX, ref int focusedY) {
+			Player player = Main.LocalPlayer;
+			if (player.HeldItem.type == ModContent.ItemType<Ashen_Grass_Seeds>()) {
+				List<Tuple<int, int>> _targets = [];
+				int tileTargetX = Player.tileTargetX;
+				int tileTargetY = Player.tileTargetY;
+				int tileRangeX = Player.tileRangeX;
+				int tileRangeY = Player.tileRangeY;
+				int tileBoost = player.HeldItem.tileBoost;
+				int reachableStartX = (int)(player.position.X / 16f) - tileRangeX - tileBoost + 1;
+				int reachableEndX = (int)((player.position.X + (float)player.width) / 16f) + tileRangeX + tileBoost - 1;
+				int reachableStartY = (int)(player.position.Y / 16f) - tileRangeY - tileBoost + 1;
+				int reachableEndY = (int)((player.position.Y + (float)player.height) / 16f) + tileRangeY + tileBoost - 2;
+				reachableStartX = Utils.Clamp(reachableStartX, 10, Main.maxTilesX - 10);
+				reachableEndX = Utils.Clamp(reachableEndX, 10, Main.maxTilesX - 10);
+				reachableStartY = Utils.Clamp(reachableStartY, 10, Main.maxTilesY - 10);
+				reachableEndY = Utils.Clamp(reachableEndY, 10, Main.maxTilesY - 10);
+
+				_targets.Clear();
+				for (int i = reachableStartX; i <= reachableEndX; i++) {
+					for (int j = reachableStartY; j <= reachableEndY; j++) {
+						Tile tile = Main.tile[i, j];
+						bool flag = !Main.tile[i - 1, j].HasTile || !Main.tile[i, j + 1].HasTile || !Main.tile[i + 1, j].HasTile || !Main.tile[i, j - 1].HasTile;
+						bool flag2 = !Main.tile[i - 1, j - 1].HasTile || !Main.tile[i - 1, j + 1].HasTile || !Main.tile[i + 1, j + 1].HasTile || !Main.tile[i + 1, j - 1].HasTile;
+						if (tile.HasTile && !tile.IsActuated && (flag || flag2)) {
+							if (tile.TileIsType(ModContent.TileType<Murky_Sludge>()) || tile.TileIsType(TileID.Dirt) || tile.TileIsType(TileID.Mud))
+								_targets.Add(new Tuple<int, int>(i, j));
+						}
+					}
+				}
+
+				if (_targets.Count > 0) {
+					float num = -1f;
+					Tuple<int, int> tuple = _targets[0];
+					for (int k = 0; k < _targets.Count; k++) {
+						float num2 = Vector2.Distance(new Vector2(_targets[k].Item1, _targets[k].Item2) * 16f + Vector2.One * 8f, Main.MouseWorld);
+						if (num == -1f || num2 < num) {
+							num = num2;
+							tuple = _targets[k];
+						}
+					}
+
+					if (Collision.InTileBounds(tuple.Item1, tuple.Item2, reachableStartX, reachableStartY, reachableEndX, reachableEndY)) {
+						focusedX = tuple.Item1;
+						focusedY = tuple.Item2;
+					}
+				}
+
+				_targets.Clear();
+			}
+			orig(providedInfo, ref focusedX, ref focusedY);
+		}
+
+		public override bool? UseItem(Player player) {
+			if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileType == ModContent.TileType<Murky_Sludge>()) return true;
+			return null;
+		}
 		public override bool ConsumeItem(Player player) {
 			ref ushort tileType = ref Main.tile[Player.tileTargetX, Player.tileTargetY].TileType;
 			switch (tileType) {
@@ -147,6 +213,7 @@ namespace Origins.Tiles.Ashen {
 				tileType = (ushort)ModContent.TileType<Ashen_Jungle_Grass>();
 				break;
 			}
+			if (tileType == ModContent.TileType<Murky_Sludge>()) tileType = (ushort)ModContent.TileType<Ashen_Murky_Sludge_Grass>();
 			if (Main.netMode != NetmodeID.SinglePlayer) NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 1, Player.tileTargetX, Player.tileTargetY, tileType, 0);
 			return true;
 		}
