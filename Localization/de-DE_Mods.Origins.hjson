@@ -2354,6 +2354,7 @@ Tiles: {
 	// Beacon_Light.MapEntry: "{§Mods.Origins.Items.Beacon_Light_Item.DisplayName}"
 	// Suit_Locker.MapEntry: Suit Locker
 	// Heat_Vent.MapEntry: Heat Vent
+	// Floodlight.MapEntry: Floodlight
 }
 
 MapObject: {

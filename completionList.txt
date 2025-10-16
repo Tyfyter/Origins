@@ -1368,7 +1368,7 @@ TILES:
 (^) Defiled Pot
 (X) Exoskeletal Baobab Tree
 (^) Exoskeletal Tree
-(#, ^2) Floodlight !!!
+(☻) Floodlight !!!
 (^) Fungarust
 (^) Fuzzvine
 (^) Gel Blister

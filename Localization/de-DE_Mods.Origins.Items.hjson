@@ -7168,3 +7168,8 @@ Murky_Sludge_Item: {
 	// DisplayName: Murky Sludge
 	// Tooltip: ""
 }
+
+Floodlight_Item: {
+	// DisplayName: Floodlight
+	// Tooltip: ""
+}
