@@ -76,9 +76,6 @@ namespace Origins.Tiles.Ashen {
 			int frameY = (tile.TileFrameY / 18) % 11;
 			return frameY >= 1 && frameY <= 4;
 		}
-		public override void PlaceInWorld(int i, int j, Item item) {
-			ModContent.GetInstance<Heat_Vent_TE_System>().AddTileEntity(new(i, j));
-		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
 		}
