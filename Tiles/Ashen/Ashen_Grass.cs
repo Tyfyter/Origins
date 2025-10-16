@@ -18,6 +18,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.Conversion.Grass[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.CanBeDugByShovel[Type] = true;
 			Main.tileMerge[Type] = Main.tileMerge[TileID.Grass];
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;
@@ -67,6 +68,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.Conversion.JungleGrass[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.CanBeDugByShovel[Type] = true;
 			Main.tileMerge[Type] = Main.tileMerge[TileID.JungleGrass];
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;
@@ -111,6 +113,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.CanBeDugByShovel[Type] = true;
 			Main.tileMerge[Type] = Main.tileMerge[TileID.Grass];
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;

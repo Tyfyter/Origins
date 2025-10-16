@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.World.BiomeData;
-using System.Collections.Generic;
+﻿using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,6 +15,7 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.Conversion.Grass[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.CanBeDugByShovel[Type] = true;
 			Main.tileMerge[Type] = Main.tileMerge[TileID.Grass];
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;
@@ -90,6 +89,7 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.Conversion.JungleGrass[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.CanBeDugByShovel[Type] = true;
 			Main.tileMerge[Type] = Main.tileMerge[TileID.JungleGrass];
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;
