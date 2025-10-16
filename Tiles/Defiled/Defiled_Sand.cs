@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.World.BiomeData;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -10,7 +11,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-	public class Defiled_Sand : ModTile, IDefiledTile {
+	public class Defiled_Sand : ComplexFrameTile, IDefiledTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBrick[Type] = true;
@@ -41,6 +42,9 @@ namespace Origins.Tiles.Defiled {
 			MineResist = 0.5f; // Sand tile typically require half as many hits to mine.
 			DustType = Defiled_Wastelands.DefaultTileDust;
 			AddMapEntry(new Color(175, 175, 175));
+		}
+		protected override IEnumerable<TileOverlay> GetOverlays() {
+			yield return new TileMergeOverlay(merge + "Dirt_Overlay", TileID.Dirt);
 		}
 
 		public override bool HasWalkDust() {
