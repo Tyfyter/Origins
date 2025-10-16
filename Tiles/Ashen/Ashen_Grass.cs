@@ -23,6 +23,10 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMerge[TileID.Dirt][Type] = true;
 			Main.tileMerge[Type][TileID.Mud] = true;
 			Main.tileMerge[TileID.Mud][Type] = true;
+			Main.tileMerge[Type][TileID.LihzahrdBrick] = true;
+			Main.tileMerge[TileID.LihzahrdBrick][Type] = true;
+			Main.tileMerge[Type][ModContent.TileType<Murky_Sludge>()] = true;
+			Main.tileMerge[ModContent.TileType<Murky_Sludge>()][Type] = true;
 			Origins.TileTransformsOnKill[Type] = true;
 			for (int i = 0; i < TileLoader.TileCount; i++) {
 				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
@@ -68,6 +72,10 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMerge[TileID.Dirt][Type] = true;
 			Main.tileMerge[Type][TileID.Mud] = true;
 			Main.tileMerge[TileID.Mud][Type] = true;
+			Main.tileMerge[Type][TileID.LihzahrdBrick] = true;
+			Main.tileMerge[TileID.LihzahrdBrick][Type] = true;
+			Main.tileMerge[Type][ModContent.TileType<Murky_Sludge>()] = true;
+			Main.tileMerge[ModContent.TileType<Murky_Sludge>()][Type] = true;
 			Origins.TileTransformsOnKill[Type] = true;
 			for (int i = 0; i < TileLoader.TileCount; i++)
 				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
@@ -108,6 +116,8 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMerge[TileID.Dirt][Type] = true;
 			Main.tileMerge[Type][TileID.Mud] = true;
 			Main.tileMerge[TileID.Mud][Type] = true;
+			Main.tileMerge[Type][TileID.LihzahrdBrick] = true;
+			Main.tileMerge[TileID.LihzahrdBrick][Type] = true;
 			Main.tileMerge[Type][ModContent.TileType<Murky_Sludge>()] = true;
 			Main.tileMerge[ModContent.TileType<Murky_Sludge>()][Type] = true;
 			Origins.TileTransformsOnKill[Type] = true;
