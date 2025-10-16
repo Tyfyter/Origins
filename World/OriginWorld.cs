@@ -257,6 +257,7 @@ namespace Origins {
 			ashenTiles = tileCounts[ModContent.TileType<Tainted_Stone>()]
 				+ tileCounts[ModContent.TileType<Ashen_Grass>()]
 				+ tileCounts[ModContent.TileType<Ashen_Jungle_Grass>()]
+				+ tileCounts[ModContent.TileType<Ashen_Murky_Sludge_Grass>()]
 				+ tileCounts[ModContent.TileType<Sootsand>()]
 				+ tileCounts[ModContent.TileType<Soot_Sandstone>()]
 				+ tileCounts[ModContent.TileType<Hardened_Sootsand>()]
@@ -410,7 +411,7 @@ namespace Origins {
 						lootType = chest.item[0].type;
 						cache.AddLoot(lootType, i);
 						noLoot = false;
-					}else if (tileType == TileID.Containers2) {
+					} else if (tileType == TileID.Containers2) {
 						cache = chestLoots[Main.tile[chest.x, chest.y].TileFrameX / 36 + 56];
 						if (cache is null) continue;
 						lootType = chest.item[0].type;
