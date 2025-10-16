@@ -1100,7 +1100,7 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb
 (^) Sticky Link Grenade
-(#3, ^2) Tank Rifle
+(☻) Tank Rifle
 (#, ^2) Ticking Bomb
 (#, ^2) Ticking Dynamite
 (^) Voltefuse
