@@ -119,6 +119,9 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void AI() {
 			OriginGlobalProj.ClentaminatorAI<Defiled_Wastelands_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), new Color(156, 156, 160));
 		}
+		public override bool? CanCutTiles() {
+			return false;
+		}
 	}
 	public class Teal_Solution : ModItem {
 		public override void SetStaticDefaults() {
@@ -141,6 +144,9 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void AI() {
 			OriginGlobalProj.ClentaminatorAI<Riven_Hive_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), new Color(0, 180, 255));
+		}
+		public override bool? CanCutTiles() {
+			return false;
 		}
 	}
 	public class Orange_Solution : ModItem {
@@ -165,6 +171,9 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void AI() {
 			OriginGlobalProj.ClentaminatorAI<Ashen_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), new Color(255, 156, 160));
+		}
+		public override bool? CanCutTiles() {
+			return false;
 		}
 	}
 }
