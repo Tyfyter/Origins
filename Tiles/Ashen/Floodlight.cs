@@ -55,10 +55,6 @@ namespace Origins.Tiles.Ashen {
 			DustType = Ashen_Biome.DefaultTileDust;
 			RegisterItemDrop(item.Type);
 		}
-
-		public void MinePower(int i, int j, int minePower, ref int damage) {
-			if (minePower < 55 && Main.tile[i, j].TileFrameY >= 18 * 6 * 2) damage = 0;
-		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (ShouldGlow(Main.tile[i, j])) {
 				r = 9.12f;
