@@ -14,23 +14,12 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.Conversion.Grass[Type] = true;
+			TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeDugByShovel[Type] = true;
-			Main.tileMerge[Type] = Main.tileMerge[TileID.Grass];
-			Main.tileMerge[Type][TileID.Dirt] = true;
-			Main.tileMerge[TileID.Dirt][Type] = true;
-			Main.tileMerge[Type][TileID.Mud] = true;
-			Main.tileMerge[TileID.Mud][Type] = true;
-			Main.tileMerge[Type][TileID.LihzahrdBrick] = true;
-			Main.tileMerge[TileID.LihzahrdBrick][Type] = true;
 			Origins.TileTransformsOnKill[Type] = true;
 			HitSound = Origins.Sounds.DefiledIdle;
-			for (int i = 0; i < TileLoader.TileCount; i++) {
-				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
-					Main.tileMerge[Type][i] = true;
-					Main.tileMerge[i][Type] = true;
-				}
-			}
+			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(200, 200, 200));
