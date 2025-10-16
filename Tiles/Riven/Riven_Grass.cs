@@ -30,11 +30,10 @@ namespace Origins.Tiles.Riven {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(0, 100, 160));
-			//SetModTree(Defiled_Tree.Instance);
 			DustType = Riven_Hive.DefaultTileDust;
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
-			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Spug_Overlay", ModContent.TileType<Spug_Flesh>());
+			yield return new TileMergeOverlay(merge + "Spug_Overlay", ModContent.TileType<Spug_Flesh>());
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
@@ -79,7 +78,6 @@ namespace Origins.Tiles.Riven {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(0, 100, 160));
-			//SetModTree(Defiled_Tree.Instance);
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
@@ -98,7 +96,7 @@ namespace Origins.Tiles.Riven {
 			}
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
-			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Spug_Overlay", ModContent.TileType<Spug_Flesh>());
+			yield return new TileMergeOverlay(merge + "Spug_Overlay", ModContent.TileType<Spug_Flesh>());
 		}
 	}
 	public class Riven_Grass_Seeds : ModItem {

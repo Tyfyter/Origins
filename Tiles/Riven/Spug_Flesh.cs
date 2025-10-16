@@ -46,8 +46,8 @@ namespace Origins.Tiles.Riven {
 			DustType = Riven_Hive.DefaultTileDust;
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
-			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Spug_Calcified_Overlay", TileType<Calcified_Riven_Flesh>());
-			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Mud_Overlay", TileID.Sets.Mud);
+			yield return new TileMergeOverlay(merge + "Spug_Calcified_Overlay", TileType<Calcified_Riven_Flesh>());
+			yield return new TileMergeOverlay(merge + "Mud_Overlay", TileID.Sets.Mud);
 		}
 		public override void PostTileFrame(int i, int j, int up, int down, int left, int right, int upLeft, int upRight, int downLeft, int downRight) {
 			if (WorldGen.genRand.NextBool(12) && !CheckOtherTilesGlow(i, j)) {
