@@ -55,7 +55,6 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.addTile(Type);
 			ID = Type;
 			DustType = Ashen_Biome.DefaultTileDust;
-			RegisterItemDrop(item.Type);
 		}
 
 		public void MinePower(int i, int j, int minePower, ref int damage) {

@@ -926,6 +926,9 @@ namespace Origins.Tiles {
 		public event Action<Item> ExtraDefaults;
 		public event Action<Item> OnAddRecipes;
 		protected override bool CloneNewInstances => true;
+#if !DEBUG
+		public override bool IsLoadingEnabled(Mod mod) => !debug;
+#endif
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 		}

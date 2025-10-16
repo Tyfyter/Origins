@@ -1217,7 +1217,7 @@ TILES:
 (^) Lost Ore
 (^) Marrowick
 (^) Mildew Block
-(#, ^2) Murky Sludge !!!
+(☻) Murky Sludge !!!
 (X) Nova Brick
 (X) Nova Fragment Block
 (^) Peat Moss Block
@@ -1234,7 +1234,7 @@ TILES:
 (^) Silica
 (^) Silicon Ore
 (^) Soot Sandstone
-(#2, ^2) Sootgrass !!!
+(☻) Sootgrass !!!
 (^) Sootsand
 (X) Space Goo
 (^) Spug Flesh
@@ -1368,7 +1368,7 @@ TILES:
 (^) Defiled Pot
 (X) Exoskeletal Baobab Tree
 (^) Exoskeletal Tree
-(#, ^2) Floodlight !!!
+(☻) Floodlight !!!
 (^) Fungarust
 (^) Fuzzvine
 (^) Gel Blister

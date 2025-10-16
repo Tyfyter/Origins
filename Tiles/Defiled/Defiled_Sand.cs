@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.World.BiomeData;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -10,11 +11,10 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-	public class Defiled_Sand : ModTile, IDefiledTile {
+	public class Defiled_Sand : ComplexFrameTile, IDefiledTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBrick[Type] = true;
-			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 
 			// Sand specific properties
@@ -31,10 +31,19 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			TileID.Sets.GeneralPlacementTiles[Type] = false;
 			TileID.Sets.ChecksForMerge[Type] = true;
+			for (int i = 0; i < TileLoader.TileCount; i++) {
+				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
+					Main.tileMerge[Type][i] = true;
+					Main.tileMerge[i][Type] = true;
+				}
+			}
 
 			MineResist = 0.5f; // Sand tile typically require half as many hits to mine.
 			DustType = Defiled_Wastelands.DefaultTileDust;
 			AddMapEntry(new Color(175, 175, 175));
+		}
+		protected override IEnumerable<TileOverlay> GetOverlays() {
+			yield return new TileMergeOverlay(merge + "Dirt_Overlay", TileID.Dirt);
 		}
 
 		public override bool HasWalkDust() {

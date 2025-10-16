@@ -29,6 +29,12 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
 			TileID.Sets.GeneralPlacementTiles[Type] = false;
 			TileID.Sets.ChecksForMerge[Type] = true;
+			for (int i = 0; i < TileLoader.TileCount; i++) {
+				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
+					Main.tileMerge[Type][i] = true;
+					Main.tileMerge[i][Type] = true;
+				}
+			}
 
 			MineResist = 0.5f; // Sand tile typically require half as many hits to mine.
 			DustType = Ashen_Biome.DefaultTileDust;

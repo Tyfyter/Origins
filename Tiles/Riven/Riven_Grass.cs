@@ -17,12 +17,9 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.Conversion.Grass[Type] = true;
+			TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			Main.tileMerge[Type] = Main.tileMerge[TileID.Grass];
-			Main.tileMerge[Type][TileID.Dirt] = true;
-			Main.tileMerge[TileID.Dirt][Type] = true;
-			Main.tileMerge[Type][TileID.Mud] = true;
-			Main.tileMerge[TileID.Mud][Type] = true;
+			TileID.Sets.CanBeDugByShovel[Type] = true;
 			Origins.TileTransformsOnKill[Type] = true;
 			for (int i = 0; i < TileLoader.TileCount; i++) {
 				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
@@ -30,14 +27,14 @@ namespace Origins.Tiles.Riven {
 					Main.tileMerge[i][Type] = true;
 				}
 			}
+			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(0, 100, 160));
-			//SetModTree(Defiled_Tree.Instance);
 			DustType = Riven_Hive.DefaultTileDust;
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
-			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Spug_Overlay", ModContent.TileType<Spug_Flesh>());
+			yield return new TileMergeOverlay(merge + "Spug_Overlay", ModContent.TileType<Spug_Flesh>());
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
@@ -67,11 +64,14 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.Conversion.JungleGrass[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.CanBeDugByShovel[Type] = true;
 			Main.tileMerge[Type] = Main.tileMerge[TileID.JungleGrass];
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;
 			Main.tileMerge[Type][TileID.Mud] = true;
 			Main.tileMerge[TileID.Mud][Type] = true;
+			Main.tileMerge[Type][TileID.LihzahrdBrick] = true;
+			Main.tileMerge[TileID.LihzahrdBrick][Type] = true;
 			Origins.TileTransformsOnKill[Type] = true;
 			for (int i = 0; i < TileLoader.TileCount; i++) {
 				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
@@ -82,7 +82,6 @@ namespace Origins.Tiles.Riven {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(0, 100, 160));
-			//SetModTree(Defiled_Tree.Instance);
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
@@ -101,7 +100,7 @@ namespace Origins.Tiles.Riven {
 			}
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
-			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Spug_Overlay", ModContent.TileType<Spug_Flesh>());
+			yield return new TileMergeOverlay(merge + "Spug_Overlay", ModContent.TileType<Spug_Flesh>());
 		}
 	}
 	public class Riven_Grass_Seeds : ModItem {

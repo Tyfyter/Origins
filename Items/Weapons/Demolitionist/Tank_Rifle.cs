@@ -13,12 +13,14 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Tank_Rifle : ModItem, ICustomDrawItem, ICustomWikiStat {
 		public string[] Categories => [
 			WikiCategories.Launcher
 		];
 		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 5));
 		}
 		public override void SetDefaults() {
@@ -28,27 +30,58 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 1, silver: 80);
 			Item.rare = ItemRarityID.Blue;
 		}
+		static int GetFrame(Player player) {
+			if (player.itemAnimationMax == player.itemAnimation) return 0;
+			int frame = (int)(float.Pow(1 - player.itemAnimation / (float)player.itemAnimationMax, 0.8f) * 5 * 3 + 1);
+			if (frame >= 5) frame = 0;
+			return frame;
+		}
+		public override void UseStyle(Player player, Rectangle heldItemFrame) {
+			if (GetFrame(player) == 1) {
+				Lighting.AddLight(
+					player.itemLocation + player.itemRotation.ToRotationVector2() * player.direction * 120 + Vector2.UnitY * player.HeightOffsetVisual,
+					Color.Orange.ToVector3()
+				);
+			}
+		}
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
 			Player drawPlayer = drawInfo.drawPlayer;
 			float itemRotation = drawPlayer.itemRotation;
 
 			Vector2 pos = new((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y + drawInfo.mountOffSet));
 
-			int frame = (int)(float.Pow(1 - drawPlayer.itemAnimation / (float)drawPlayer.itemAnimationMax, 0.8f) * 5 * 3 + 1);
-			if (frame >= 5) frame = 0;
+			int frame = GetFrame(drawPlayer);
 
-			Texture2D texture = TextureAssets.Item[Type].Value;
-			Rectangle sourceRect = texture.Frame(verticalFrames: 5, frameY: frame);
-			drawInfo.DrawDataCache.Add(new DrawData(
-				texture,
+			Rectangle sourceRect = itemTexture.Frame(verticalFrames: 5, frameY: frame);
+			DrawData data = new(
+				itemTexture,
 				pos,
 				sourceRect,
 				Item.GetAlpha(lightColor),
 				itemRotation,
 				new Vector2(31).Apply(drawInfo.itemEffect, sourceRect.Size()),
 				drawPlayer.GetAdjustedItemScale(Item),
-				drawInfo.itemEffect,
-			0));
+				drawInfo.itemEffect
+			);
+			drawInfo.DrawDataCache.Add(data);
+			data.texture = TextureAssets.GlowMask[Item.glowMask].Value;
+			data.color = Color.White;
+			drawInfo.DrawDataCache.Add(data);
+			frame = (drawPlayer.itemAnimationMax - drawPlayer.itemAnimation) - 1;
+			if (frame < 4) {
+				Texture2D texture = TextureAssets.Projectile[ProjectileID.DD2ExplosiveTrapT1Explosion].Value;
+				sourceRect = texture.Frame(verticalFrames: 4, frameY: frame / 2 + 1);
+				drawInfo.DrawDataCache.Add(new(
+					texture,
+					pos + new Vector2(86, -13).Apply(drawInfo.itemEffect, Vector2.Zero).RotatedBy(itemRotation),
+					sourceRect,
+					Color.White,
+					itemRotation + MathHelper.PiOver2 * drawPlayer.direction,
+					new Vector2(42, 72).Apply(drawInfo.itemEffect, sourceRect.Size()),
+					drawPlayer.GetAdjustedItemScale(Item),
+					drawInfo.itemEffect
+				));
+			}
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			position += 12 * velocity.Normalized(out _).MatrixMult(Vector2.UnitY * player.direction + Vector2.UnitX * 4, Vector2.UnitX * -player.direction + Vector2.UnitY * 4);
