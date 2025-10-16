@@ -8,13 +8,13 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Defiled {
 	[AutoloadEquip(EquipType.Head)]
 	public class Defiled_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public string[] Categories => [
-			"ArmorSet",
-			"GenericBoostGear"
-		];
-		public override void SetStaticDefaults() {
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled2_Helmet>()] = ModContent.ItemType<Defiled_Helmet>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled_Helmet>()] = ModContent.ItemType<Defiled2_Helmet>();
+        public string[] Categories => [
+            WikiCategories.ArmorSet,
+            WikiCategories.GenericBoostGear
+        ];
+        public override void SetStaticDefaults() {
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled2_Helmet>()] = ModContent.ItemType<Defiled_Helmet>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled_Helmet>()] = ModContent.ItemType<Defiled2_Helmet>();
 			Origins.AddHelmetGlowmask(this);
 		}
 		public override void SetDefaults() {

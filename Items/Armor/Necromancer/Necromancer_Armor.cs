@@ -14,8 +14,8 @@ namespace Origins.Items.Armor.Necromancer {
     [AutoloadEquip(EquipType.Head)]
 	public class Necromancer_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "ArmorSet",
-            "SummonBoostGear"
+            WikiCategories.ArmorSet,
+            WikiCategories.SummonBoostGear
         ];
         public override void SetDefaults() {
 			Item.defense = 7;
@@ -129,8 +129,8 @@ namespace Origins.Items.Armor.Necromancer {
 	[AutoloadEquip(EquipType.Head)]
 	public class Necromancer_Crown : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public string[] Categories => [
-			"ArmorSet",
-			"SummonBoostGear"
+			WikiCategories.ArmorSet,
+			WikiCategories.SummonBoostGear
 		];
 		public override void SetDefaults() {
 			Item.defense = 7;

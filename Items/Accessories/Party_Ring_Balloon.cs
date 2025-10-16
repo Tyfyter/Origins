@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Balloon)]
 	public class Party_Ring_Balloon : Donor_Wristband, ICustomWikiStat {
 		public new string[] Categories => [
-			"Vitality"
+			WikiCategories.Vitality
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);

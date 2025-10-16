@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Dyes;
@@ -16,7 +17,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Latchkey : ModItem {
 		public string[] Categories => [
-			"ExpendableTool"
+			WikiCategories.ExpendableTool
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

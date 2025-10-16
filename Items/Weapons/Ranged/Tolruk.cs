@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Tolruk : ModItem, ICustomWikiStat {
 		public static short[] glowmasks;
         public string[] Categories => [
-            "Gun"
+            WikiCategories.Gun
         ];
         public override void SetStaticDefaults() { //still needs reshaping chee
 			glowmasks = [

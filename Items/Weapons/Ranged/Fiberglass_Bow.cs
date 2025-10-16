@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Fiberglass_Bow : ModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => [
-            "Bow"
+            WikiCategories.Bow
         ];
         public ushort Element => Elements.Fiberglass;
 		public override void SetDefaults() {

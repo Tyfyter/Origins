@@ -1,4 +1,5 @@
-﻿using Origins.Items.Materials;
+﻿using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Items.Other.Testing;
 using Origins.Projectiles;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Brine {
 	public class Peat_Moss : OriginTile {
 		public string[] Categories => [
-			"Grass"
+			WikiCategories.Grass
 		];
 		public override void SetStaticDefaults() {
 			//Main.tileMergeDirt[Type] = true;

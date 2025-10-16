@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -7,7 +8,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Other {
 	public class Batholith : OriginTile {
         public string[] Categories => [
-            "Stone"
+            WikiCategories.Stone
         ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;

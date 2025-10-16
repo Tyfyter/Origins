@@ -1,4 +1,5 @@
-﻿using Origins.Dusts;
+﻿using Origins.Dev;
+using Origins.Dusts;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using Terraria;
@@ -9,7 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Gooey_Water : ModItem {
         public string[] Categories => [
-            "ExpendableTool"
+            WikiCategories.ExpendableTool
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

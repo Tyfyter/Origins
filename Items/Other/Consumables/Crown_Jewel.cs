@@ -18,7 +18,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Crown_Jewel : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			"PermaBoost"
+			WikiCategories.PermaBoost
 		];
 		public string EntryName => "Origins/" + typeof(Crown_Jewel_Entry).Name;
 		public class Crown_Jewel_Entry : JournalEntry {

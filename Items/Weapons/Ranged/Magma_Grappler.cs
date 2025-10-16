@@ -8,7 +8,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
     public class Magma_Grappler : Harpoon_Gun, ICustomWikiStat {
         public new string[] Categories => [
-            "HarpoonGun"
+            WikiCategories.HarpoonGun
         ];
         public override void SetDefaults() {
 			Item.damage = 40;

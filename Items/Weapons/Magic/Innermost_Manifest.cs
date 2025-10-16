@@ -13,10 +13,10 @@ namespace Origins.Items.Weapons.Magic {
 		public static float TornSeverity => 0.25f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-			"Torn",
-			"TornSource",
-			"UsesBookcase",
-			"SpellBook"
+			WikiCategories.Torn,
+			WikiCategories.TornSource,
+			WikiCategories.UsesBookcase,
+			WikiCategories.SpellBook
 		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);

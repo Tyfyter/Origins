@@ -8,7 +8,7 @@ using Origins.Tiles.Defiled;
 namespace Origins.Items.Weapons.Ranged {
     public class Endowood_Bow : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "Bow"
+            WikiCategories.Bow
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodBow);

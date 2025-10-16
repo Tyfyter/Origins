@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Low_Signal : ModItem, ICustomWikiStat, IJournalEntrySource {
         public string[] Categories => [
-            "Wand"
+            WikiCategories.Wand
         ];
 		public string EntryName => "Origins/" + typeof(Low_Signal_Entry).Name;
 		public class Low_Signal_Entry : JournalEntry {

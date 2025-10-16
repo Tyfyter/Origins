@@ -6,8 +6,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Destructive_Claws : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"ExplosiveBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.ExplosiveBoostAcc
 		];
         static short glowmask;
         public override void SetStaticDefaults() {

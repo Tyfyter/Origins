@@ -18,7 +18,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Shimmer_Rod : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"OtherMagic"
+			WikiCategories.OtherMagic
 		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.NimbusRod);

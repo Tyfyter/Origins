@@ -13,9 +13,9 @@ namespace Origins.Items.Armor.Lost {
 	[AutoloadEquip(EquipType.Head)]
 	public class Lost_Helm : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public string[] Categories => [
-			"ArmorSet",
-			"ManaShielding",
-			"MagicBoostGear"
+			WikiCategories.ArmorSet,
+			WikiCategories.ManaShielding,
+			WikiCategories.MagicBoostGear
 		];
 		public override void SetStaticDefaults() {
 			Accessory_Tangela_Layer.AddTangelaMask<Head_Tangela_Layer>(Item.headSlot, Texture + "_Head_Tangela");

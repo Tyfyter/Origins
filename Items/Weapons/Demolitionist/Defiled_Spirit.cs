@@ -9,8 +9,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Defiled_Spirit : ModItem, ICustomWikiStat, IJournalEntrySource {
 		static short glowmask;
         public string[] Categories => [
-            "ThrownExplosive",
-            "ExpendableWeapon"
+            WikiCategories.ThrownExplosive,
+            WikiCategories.ExpendableWeapon
         ];
 		public string EntryName => "Origins/" + typeof(Defiled_Spirit_Entry).Name;
 		public class Defiled_Spirit_Entry : JournalEntry {

@@ -12,7 +12,7 @@ namespace Origins.Items.Other.Consumables {
 	public class Mojo_Injection : ModItem, ICustomWikiStat {
 		public const float healing = 0.0000444f;
 		public string[] Categories => [
-			"PermaBoost"
+			WikiCategories.PermaBoost
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.NaturesGift] = Type;

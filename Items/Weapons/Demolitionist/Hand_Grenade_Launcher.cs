@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Hand_Grenade_Launcher : ModItem, ICustomWikiStat {
 		static short glowmask;
 		public string[] Categories => [
-			"Launcher"
+			WikiCategories.Launcher
 		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

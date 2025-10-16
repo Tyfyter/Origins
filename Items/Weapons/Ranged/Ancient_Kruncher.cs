@@ -8,7 +8,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Ancient_Kruncher : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "Gun"
+            WikiCategories.Gun
         ];
         public override void SetDefaults() {
 			Item.damage = 13;

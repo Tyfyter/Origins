@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Crawdaddys_Revenge : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Gun"
+			WikiCategories.Gun
 		];
 		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {

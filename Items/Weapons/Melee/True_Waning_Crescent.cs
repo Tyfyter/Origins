@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class True_Waning_Crescent : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Boomerang"
+			WikiCategories.Boomerang
 		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);

@@ -7,8 +7,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Powerflower : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Vitality",
-			"MagicBoostAcc"
+			WikiCategories.Vitality,
+			WikiCategories.MagicBoostAcc
 		];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);

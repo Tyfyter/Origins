@@ -15,7 +15,7 @@ using PegasusLib.Sets;
 namespace Origins.Items.Weapons.Melee {
 	public class Depth_Charge : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Flail"
+			WikiCategories.Flail
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;

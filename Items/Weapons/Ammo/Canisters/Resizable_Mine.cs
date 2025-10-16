@@ -31,7 +31,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	public class Resizable_Mine_Iron : ModItem, ICustomWikiStat, ICanisterAmmo {
 		public CanisterData GetCanisterData => new(new(188, 171, 167), new(246, 69, 84), false);
 		public string[] Categories => [
-			"Canistah"
+			WikiCategories.Canistah
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
@@ -55,7 +55,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	public class Resizable_Mine_Evil : ModItem, ICustomWikiStat, ICanisterAmmo {
 		public CanisterData GetCanisterData => new(new(212, 33, 88), new(255, 108, 163), false);
 		public string[] Categories => [
-			"Canistah"
+			WikiCategories.Canistah
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Fumethrower : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Gun"
+			WikiCategories.Gun
 		];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);

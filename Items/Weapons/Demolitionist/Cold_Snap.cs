@@ -8,8 +8,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Cold_Snap : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Launcher",
-			"CanistahUser"
+			WikiCategories.Launcher,
+			WikiCategories.CanistahUser
 		];
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Cold_Snap_P>(15, 32, 12f, 50, 24);

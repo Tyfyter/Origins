@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Happy_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "ThrownExplosive",
-			"IsBomb",
-            "ExpendableWeapon"
+            WikiCategories.ThrownExplosive,
+			WikiCategories.IsBomb,
+            WikiCategories.ExpendableWeapon
         ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;

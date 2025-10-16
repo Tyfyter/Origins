@@ -10,7 +10,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Decimator : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => [
-            "Spear"
+            WikiCategories.Spear
         ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

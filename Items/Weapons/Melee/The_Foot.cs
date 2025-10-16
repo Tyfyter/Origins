@@ -24,7 +24,7 @@ using System.IO;
 namespace Origins.Items.Weapons.Melee {
 	public class The_Foot : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Sword"
+			WikiCategories.Sword
 		];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);

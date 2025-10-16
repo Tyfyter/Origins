@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -6,7 +7,7 @@ namespace Origins.Items.Other.Consumables {
 	public class The_Defiled_Will : ModItem {
 		public const int max_uses = 1;
         public string[] Categories => [
-            "PermaBoost"
+            WikiCategories.PermaBoost
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ManaCrystal);

@@ -14,8 +14,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Thermite_Launcher : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Launcher",
-			"CanistahUser"
+			WikiCategories.Launcher,
+			WikiCategories.CanistahUser
 		];
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Thermite_Canister_P>(38, 34, 16f, 44, 18);

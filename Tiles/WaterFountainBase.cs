@@ -14,7 +14,7 @@ namespace Origins.Tiles {
 	[Autoload(false)]
 	public sealed class WaterFountainItem(WaterFountain fountainTile) : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"WaterFountain"
+			WikiCategories.WaterFountain
 		];
 		public WaterFountain FountainTile { get; } = fountainTile;
 		public override string Name => FountainTile.Name + "_Item";

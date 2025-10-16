@@ -1,4 +1,5 @@
-﻿using Origins.Items.Materials;
+﻿using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -8,7 +9,7 @@ namespace Origins.Items.Other.Consumables {
 	[LegacyName("Broken_Record")]
 	public class Distress_Beacon : ModItem {
 		public string[] Categories => [
-			"BossSummon"
+			WikiCategories.BossSummon
 		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);

@@ -6,8 +6,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Comb : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"GenericBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.GenericBoostAcc
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.Shackle] = ModContent.ItemType<Comb>();

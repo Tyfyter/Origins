@@ -1,4 +1,5 @@
 ﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Other.Fish;
 using Origins.Tiles.Riven;
 using Terraria;
@@ -8,7 +9,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
     public class Protean_Potion : ModItem {
         public string[] Categories => [
-            "Potion"
+            WikiCategories.Potion
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;

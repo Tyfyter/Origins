@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Summoner;
@@ -19,7 +20,7 @@ namespace Origins.Items.Pets {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public string[] Categories => [
-			"Pet"
+			WikiCategories.Pet
 		];
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);

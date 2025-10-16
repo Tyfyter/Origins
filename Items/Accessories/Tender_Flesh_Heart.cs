@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
     public class Tender_Flesh_Heart : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "Vitality"
+            WikiCategories.Vitality
         ];
         public override void SetStaticDefaults() {
             Origins.AddGlowMask(this);

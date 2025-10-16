@@ -6,8 +6,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Locket_Necklace : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"GenericBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.GenericBoostAcc
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 32);

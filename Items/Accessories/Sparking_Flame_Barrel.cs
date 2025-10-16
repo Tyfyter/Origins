@@ -8,8 +8,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Sparking_Flame_Barrel : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"ExplosiveBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.ExplosiveBoostAcc
 		];
 		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
 				Language.GetOrRegister("Mods.Origins.Items.Danger_Barrel.Tooltip"),

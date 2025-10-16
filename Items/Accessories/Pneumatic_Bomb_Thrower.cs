@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Pneumatic_Bomb_Thrower : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"ExplosiveBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.ExplosiveBoostAcc
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 20);

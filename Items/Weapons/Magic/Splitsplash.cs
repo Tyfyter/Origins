@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Magic {
 			glowmask = Origins.AddGlowMask(this);
 		}
         public string[] Categories => [
-            "SpellBook"
+            WikiCategories.SpellBook
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalStorm);

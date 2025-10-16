@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Neural_Network : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Gun"
+			WikiCategories.Gun
 		];
 		public static int ID { get; set; }
 		public override void SetStaticDefaults() {

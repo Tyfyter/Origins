@@ -16,8 +16,8 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Bomb_Artifact : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
         public string[] Categories => [
-            "Artifact",
-			"Minion"
+            WikiCategories.Artifact,
+			WikiCategories.Minion
         ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller

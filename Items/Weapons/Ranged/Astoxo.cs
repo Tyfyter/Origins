@@ -22,7 +22,7 @@ using Origins.CrossMod;
 namespace Origins.Items.Weapons.Ranged {
 	public class Astoxo : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Bow"
+			WikiCategories.Bow
 		];
 		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {

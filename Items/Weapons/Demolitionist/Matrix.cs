@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Matrix : ModItem, ICustomWikiStat {
 		static short glowmask;
 		public string[] Categories => [
-			"Launcher"
+			WikiCategories.Launcher
 		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

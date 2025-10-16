@@ -1,4 +1,5 @@
 ﻿using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -9,8 +10,8 @@ namespace Origins.Items.Other.Consumables {
 		public static float TornSeverity => 0.2f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-            "Potion"
-        ];
+			WikiCategories.Potion
+		];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 		}

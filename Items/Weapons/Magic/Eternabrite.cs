@@ -8,8 +8,8 @@ using Origins.Reflection;
 namespace Origins.Items.Weapons.Magic {
     public class Eternabrite : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "UsesBookcase",
-            "SpellBook"
+            WikiCategories.UsesBookcase,
+            WikiCategories.SpellBook
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Flamethrower);

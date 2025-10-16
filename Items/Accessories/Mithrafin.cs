@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mithrafin : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Misc"
+			WikiCategories.Misc
 		];
 		public static bool[] buffTypes = BuffID.Sets.Factory.CreateBoolSet(false);
 		public override void AddRecipes() {

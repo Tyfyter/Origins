@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Binding_Book : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"ManaShielding",
-			"MagicBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.ManaShielding,
+			WikiCategories.MagicBoostAcc
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);

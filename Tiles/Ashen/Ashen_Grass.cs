@@ -1,4 +1,5 @@
-﻿using System;
+using Origins.Dev;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
@@ -8,11 +9,9 @@ using Terraria.ModLoader;
 namespace Origins.Tiles.Ashen {
 	public class Ashen_Grass : OriginTile, IAshenTile {
 		public string[] Categories => [
-			"Grass"
+			WikiCategories.Grass
 		];
 		public override void SetStaticDefaults() {
-			Origins.PotType.Add(Type, ((ushort)ModContent.TileType<Ashen_Pot>(), 0, 0));
-			Origins.PileType.Add(Type, ((ushort)ModContent.TileType<Ashen_Foliage>(), 0, 6));
 			TileID.Sets.Grass[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
@@ -80,7 +79,7 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Ashen_Murky_Sludge_Grass : OriginTile, IAshenTile {
 		public string[] Categories => [
-			"Grass"
+			WikiCategories.Grass
 		];
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)ModContent.TileType<Ashen_Pot>(), 0, 0));

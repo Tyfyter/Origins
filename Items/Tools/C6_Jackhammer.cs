@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class C6_Jackhammer : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			"ToolWeapon"
+			WikiCategories.ToolWeapon
 		];
 		public string EntryName => "Origins/" + typeof(C6_Jackhammer_Entry).Name;
 		public class C6_Jackhammer_Entry : JournalEntry {

@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Rebreather : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Misc"
+			WikiCategories.Misc
 		];
 		public static int FaceSlot { get; private set; }
 		public override void SetStaticDefaults() {

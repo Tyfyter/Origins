@@ -13,9 +13,9 @@ namespace Origins.Items.Weapons.Magic {
 		float ITornSource.Severity => TornSeverity;
 		static short glowmask;
         public string[] Categories => [
-            "Torn",
-            "TornSource",
-            "Wand"
+            WikiCategories.Torn,
+            WikiCategories.TornSource,
+            WikiCategories.Wand
         ];
         public override void SetStaticDefaults() {
             Item.staff[Item.type] = true;

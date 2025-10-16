@@ -11,7 +11,7 @@ using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
 	public class Hot_Potato : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"OtherMagic"
+			WikiCategories.OtherMagic
 		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);

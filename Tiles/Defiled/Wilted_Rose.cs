@@ -13,7 +13,7 @@ namespace Origins.Tiles.Defiled {
 	public class Wilted_Rose : OriginTile, ICustomWikiStat {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
         public string[] Categories => [
-            "Plant"
+            WikiCategories.Plant
         ];
         public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;

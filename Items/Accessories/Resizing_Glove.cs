@@ -11,8 +11,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Resizing_Glove : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"MeleeBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.MeleeBoostAcc
 		];
 		public override void Load() {
 			On_Player.ItemCheck_StartActualUse += On_Player_ItemCheck_StartActualUse;

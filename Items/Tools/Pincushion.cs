@@ -7,8 +7,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Pincushion : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
 		public string[] Categories => [
-			"Tool",
-			"Explosive"
+			WikiCategories.Tool,
+			WikiCategories.Explosive
 		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.EncumberingStone);

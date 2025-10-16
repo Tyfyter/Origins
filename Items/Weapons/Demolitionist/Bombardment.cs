@@ -9,8 +9,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bombardment : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Launcher",
-			"CanistahUser"
+			WikiCategories.Launcher,
+			WikiCategories.CanistahUser
 		];
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Bombardment_P>(2, 40, 9f, 48, 32);

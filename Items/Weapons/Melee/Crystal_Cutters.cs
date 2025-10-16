@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Crystal_Cutters : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "Sword"
+            WikiCategories.Sword
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);

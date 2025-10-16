@@ -74,7 +74,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		void AI(Projectile projectile, bool child) { }
 		void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) { }
 		string[] ICustomWikiStat.Categories => [
-			"Canistah"
+			WikiCategories.Canistah
 		];
 		public void OnKill(Projectile projectile, bool child) {
 			if (!child && projectile.ModProjectile is ICanisterProjectile canister) {
@@ -297,7 +297,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		static short glowmask;
 		public CanisterData GetCanisterData => new(new(211, 194, 182), new(255, 163, 68));
 		public string[] Categories => [
-			"Canistah"
+			WikiCategories.Canistah
 		];
 		public bool? Hardmode => false;
 		public override void SetStaticDefaults() {

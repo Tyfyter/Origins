@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public static float TornSeverity => 0.3f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-			"Launcher"
+			WikiCategories.Launcher
 		];
 		AutoLoadingAsset<Texture2D> UseTexture = typeof(Impetus).GetDefaultTMLName() + "_Use";
 		AutoLoadingAsset<Texture2D> UseGlowTexture = typeof(Impetus).GetDefaultTMLName() + "_Use_Glow";

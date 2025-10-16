@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Longbone : ModItem, ICustomWikiStat {
 		internal static int t = ProjectileID.WoodenArrowFriendly;
         public string[] Categories => [
-            "Bow"
+            WikiCategories.Bow
         ];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {

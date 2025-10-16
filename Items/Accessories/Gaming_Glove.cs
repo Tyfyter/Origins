@@ -7,8 +7,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Gaming_Glove : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"MeleeBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.MeleeBoostAcc
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 26);

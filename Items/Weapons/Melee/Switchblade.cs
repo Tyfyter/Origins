@@ -17,7 +17,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Switchblade_Broadsword : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
         public string[] Categories => [
-            "Sword"
+            WikiCategories.Sword
         ];
 		public override void SetStaticDefaults() {
 			PrefixLegacy.ItemSets.SwordsHammersAxesPicks[Type] = true;
@@ -61,7 +61,7 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Switchblade_Shortsword : ModItem, ICustomWikiStat, INoSeperateWikiPage {
 		public string[] Categories => [
-			"Sword"
+			WikiCategories.Sword
 		];
 
 		void ICustomWikiStat.ModifyWikiStats(JObject data) {

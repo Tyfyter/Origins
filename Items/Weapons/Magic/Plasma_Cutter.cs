@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Magic {
 		float ITornSource.Severity => TornSeverity;
 		public const int baseDamage = 64;
 		public string[] Categories => [
-			"MagicGun"
+			 WikiCategories.MagicGun
 		];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);

@@ -15,7 +15,7 @@ using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Magic {
 	public class Eaterboros : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Sword"
+			WikiCategories.Sword
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;

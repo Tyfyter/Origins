@@ -17,7 +17,7 @@ namespace Origins.Items.Pets {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public string[] Categories => [
-			"Pet"
+			WikiCategories.Pet
 		];
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);

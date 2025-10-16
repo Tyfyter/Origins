@@ -9,8 +9,8 @@ namespace Origins.Items.Armor.Chromtain {
     [AutoloadEquip(EquipType.Head)]
 	public class Chromtain_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage, ICustomWikiStat {
         public string[] Categories => [
-            "PostMLArmorSet"/*,
-            "MeleeBoostGear" should probably give it melee boosts, when the time comes */
+            WikiCategories.PostMLArmorSet/*,
+            WikiCategories.MeleeBoostGear should probably give it melee boosts, when the time comes */
         ];
         public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);

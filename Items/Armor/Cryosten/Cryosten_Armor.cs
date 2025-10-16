@@ -8,7 +8,7 @@ namespace Origins.Items.Armor.Cryosten {
 	[AutoloadEquip(EquipType.Head)]
 	public class Cryosten_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "ArmorSet"
+            WikiCategories.ArmorSet
         ];
         public override void SetDefaults() {
 			Item.defense = 4;

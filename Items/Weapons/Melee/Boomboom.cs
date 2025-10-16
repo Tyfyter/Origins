@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Boomboom : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			"Boomerang"
+			WikiCategories.Boomerang
 		];
 		public string EntryName => "Origins/" + typeof(Boomboom_Entry).Name;
 		public class Boomboom_Entry : JournalEntry {

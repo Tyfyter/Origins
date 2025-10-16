@@ -9,7 +9,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Shardcannon : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "Gun"
+            WikiCategories.Gun
         ];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {

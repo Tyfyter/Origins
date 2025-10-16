@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Rockstar_Choker : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat"
+			WikiCategories.Combat
 		];
 		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
 				Language.GetOrRegister("ItemTooltip.SharkToothNecklace"),

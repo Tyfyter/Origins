@@ -9,7 +9,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Caustica : ModItem, IElementalItem, ICustomWikiStat {
 		public string[] Categories => [
-			"OtherExplosive"
+			WikiCategories.OtherExplosive
 		];
 		public ushort Element => Elements.Acid;
 

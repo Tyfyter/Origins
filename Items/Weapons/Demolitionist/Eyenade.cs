@@ -7,10 +7,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Eyenade : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"ThrownExplosive",
-			"IsBomb",
-			"ExpendableWeapon",
-			"ToxicSource"
+			WikiCategories.ThrownExplosive,
+			WikiCategories.IsBomb,
+			WikiCategories.ExpendableWeapon,
+			WikiCategories.ToxicSource
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;

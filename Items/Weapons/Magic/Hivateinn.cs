@@ -12,7 +12,7 @@ using Origins.CrossMod;
 namespace Origins.Items.Weapons.Magic {
 	public class Hivateinn : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Wand"
+			WikiCategories.Wand
 		];
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;

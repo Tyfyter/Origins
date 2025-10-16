@@ -7,8 +7,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Stack_of_Shraps : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			"Combat",
-			"ExplosiveBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.ExplosiveBoostAcc
 		];
 		public string EntryName => "Origins/" + typeof(Stack_of_Shraps_Entry).Name;
 		public override void SetDefaults() {

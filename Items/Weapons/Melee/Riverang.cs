@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Riverang : ModItem, ICustomWikiStat {
 		internal static short glowmask;
 		public string[] Categories => [
-			"Boomerang"
+			WikiCategories.Boomerang
 		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

@@ -19,8 +19,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Impactaxe : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Tool",
-			"ToolWeapon"
+			WikiCategories.Tool,
+			WikiCategories.ToolWeapon
 		];
 		public override void SetDefaults() {
 			Item.damage = 54;

@@ -8,8 +8,8 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Omnidirectional_Claymore : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "OtherExplosive",
-            "ExpendableWeapon"
+            WikiCategories.OtherExplosive,
+            WikiCategories.ExpendableWeapon
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;

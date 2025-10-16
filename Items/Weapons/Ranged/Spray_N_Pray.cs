@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public static byte lastPaint;
 		public static byte lastCoating;
 		public string[] Categories => [
-			"Gun"
+			WikiCategories.Gun
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;

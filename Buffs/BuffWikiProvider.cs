@@ -47,7 +47,7 @@ namespace Origins.Buffs {
 			ICustomWikiStat customStat = buff as ICustomWikiStat;
 			data["Image"] = buff.Texture.Replace(buff.Mod.Name, "§ModImage§");
 			data["Name"] = Lang.GetBuffName(buff.Type);
-			JArray types = new(Main.debuff[buff.Type] ? "Debuff" : "Buff");
+			JArray types = new(Main.debuff[buff.Type] ? WikiCategories.Debuff : WikiCategories.Buff);
 			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
 			data.Add("Types", types);
 			data.AppendJStat("Tooltip", [..Lang.GetBuffDescription(buff.Type).Split('\n')], new JArray());

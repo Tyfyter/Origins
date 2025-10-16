@@ -12,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Ashen {
 	public class Tainted_Stone : ComplexFrameTile, IAshenTile {
 		public string[] Categories => [
-            "Stone"
+            WikiCategories.Stone
         ];
         public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));

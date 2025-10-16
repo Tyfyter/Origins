@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Abrasion_Blaster : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Launcher"
+			WikiCategories.Launcher
 		];
 		public override void SetDefaults() {
 			Item.DefaultToLauncher(18, 45, 48, 22, false);

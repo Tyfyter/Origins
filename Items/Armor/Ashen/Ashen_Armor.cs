@@ -10,10 +10,10 @@ namespace Origins.Items.Armor.Ashen {
 	[AutoloadEquip(EquipType.Head)]
 	public class Ashen_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage, IJournalEntrySource {
 		public string[] Categories => [
-			"ArmorSet",
-			"ExplosiveBoostGear",
-			"GenericBoostGear",
-			"SelfDamageProtek"
+			WikiCategories.ArmorSet,
+			WikiCategories.ExplosiveBoostGear,
+			WikiCategories.GenericBoostGear,
+			WikiCategories.SelfDamageProtek
 		];
 		public string EntryName => "Origins/" + typeof(Ashen_Helmet_Entry).Name;
 		public class Ashen_Helmet_Entry : JournalEntry {

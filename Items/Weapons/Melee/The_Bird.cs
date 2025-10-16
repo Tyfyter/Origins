@@ -18,8 +18,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class The_Bird : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Sword",
-			"DeveloperItem"
+			WikiCategories.Sword,
+			WikiCategories.DeveloperItem
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;

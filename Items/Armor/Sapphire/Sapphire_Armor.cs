@@ -14,8 +14,8 @@ namespace Origins.Items.Armor.Sapphire {
     [AutoloadEquip(EquipType.Head)]
 	public class Sapphire_Hood : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "ArmorSet",
-            "MagicBoostGear"
+            WikiCategories.ArmorSet,
+            WikiCategories.MagicBoostGear
         ];
         public override void SetDefaults() {
 			Item.defense = 7;

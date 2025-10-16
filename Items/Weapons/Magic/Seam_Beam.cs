@@ -18,9 +18,9 @@ namespace Origins.Items.Weapons.Magic {
 		public static float TornSeverity => 0.3f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-			"Torn",
-			"TornSource",
-			"MagicGun"
+			WikiCategories.Torn,
+			WikiCategories.TornSource,
+			WikiCategories.MagicGun
 		];
 		static short glowmask;
 		public string EntryName => "Origins/" + typeof(Seam_Beam_Entry).Name;

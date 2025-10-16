@@ -25,8 +25,8 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Terratotem : ModItem, ICustomWikiStat {
 		public static int MaxCount => 20;
 		public string[] Categories => [
-			"Artifact",
-			"Minion"
+			WikiCategories.Artifact,
+			WikiCategories.Minion
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller

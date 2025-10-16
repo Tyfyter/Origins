@@ -10,9 +10,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Voltefuse : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"ThrownExplosive",
-			"IsDynamite",
-			"ExpendableWeapon"
+			WikiCategories.ThrownExplosive,
+			WikiCategories.IsDynamite,
+			WikiCategories.ExpendableWeapon
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
