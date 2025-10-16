@@ -603,45 +603,32 @@ namespace Origins.Items.Materials {
 	}
 
 	#region biome keys
+	public abstract class Key_Base<TChest> : Key_Base where TChest : ModItem {
+		public override int Chest => ModContent.ItemType<TChest>();
+	}
 	public abstract class Key_Base : MaterialItem {
 		public override int ResearchUnlockCount => 1;
 		public override int Value => 0;
 		public override int Rare => ItemRarityID.Yellow;
 		public override bool Hardmode => true;
 		public override bool HasTooltip => true;
+		public virtual int Chest => -1;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			ItemID.Sets.UsesCursedByPlanteraTooltip[Type] = true;
+			if (Chest != -1) ItemID.Sets.ShimmerTransformToItem[Type] = Chest;
 		}
 	}
-	public class Ashen_Key : Key_Base {
-		public override string Texture => typeof(Defiled_Key).GetDefaultTMLName();
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Ashen_Dungeon_Chest_Item>();
-		}
+	public class Ashen_Key : Key_Base<Ashen_Dungeon_Chest_Item> {
+		public override bool HasGlowmask => true;
 	}
-	public class Defiled_Key : Key_Base {
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Defiled_Dungeon_Chest_Item>();
-		}
-	}
+	public class Defiled_Key : Key_Base<Defiled_Dungeon_Chest_Item> { }
 	public class Hell_Key : Key_Base { }
 	public class Mushroom_Key : Key_Base { }
 	public class Ocean_Key : Key_Base { }
-	public class Riven_Key : Key_Base {
+	public class Riven_Key : Key_Base<Riven_Dungeon_Chest_Item> {
 		public override bool HasGlowmask => true;
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
-		}
 	}
-	public class Brine_Key : Key_Base {
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Brine_Dungeon_Chest_Item>();
-		}
-	}
+	public class Brine_Key : Key_Base<Brine_Dungeon_Chest_Item> { }
 	#endregion
 }

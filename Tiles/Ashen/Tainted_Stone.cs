@@ -1,6 +1,7 @@
 ﻿using Origins.Dev;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -9,8 +10,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Tainted_Stone : OriginTile, IAshenTile {
-		public override string Texture => typeof(Defiled_Stone).GetDefaultTMLName();
+	public class Tainted_Stone : ComplexFrameTile, IAshenTile {
 		public string[] Categories => [
             "Stone"
         ];
@@ -19,25 +19,34 @@ namespace Origins.Tiles.Ashen {
 			Origins.PileType.Add(Type, ((ushort)TileType<Ashen_Foliage>(), 0, 6));
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			Main.tileMergeDirt[Type] = true;
 			TileID.Sets.Stone[Type] = true;
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
-			Main.tileMergeDirt[Type] = true;
 			Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
 			Main.tileMerge[Type][TileID.Stone] = true;
 			for (int i = 0; i < TileLoader.TileCount; i++) {
 				Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
 			}
-			//ItemDrop = ItemType<Defiled_Stone_Item>();
+			for (int i = 0; i < TileLoader.TileCount; i++) {
+				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
+					Main.tileMerge[Type][i] = true;
+					Main.tileMerge[i][Type] = true;
+				}
+			}
 			AddMapEntry(new Color(255, 200, 200));
-			//SetModTree(Defiled_Tree.Instance);
 			mergeID = TileID.Stone;
 			MinPick = 65;
 			MineResist = 2;
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
+		}
+		protected override IEnumerable<TileOverlay> GetOverlays() {
+			yield return new TileMergeOverlay(merge + "Dirt_Overlay", TileID.Dirt);
+			yield return new TileMergeOverlay(merge + "Mud_Overlay", TileID.Mud);
+			yield return new TileMergeOverlay(merge + "Ash_Overlay", TileID.Ash);
+			yield return new TileMergeOverlay(merge + "Murk_Overlay", TileType<Murky_Sludge>());
+			yield return new TileMergeOverlay(merge + "Murk_Overlay", TileType<Ashen_Murky_Sludge_Grass>());
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);
@@ -48,7 +57,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Tainted_Stone_Item : ModItem, ICustomWikiStat {
-		public override string Texture => typeof(Defiled_Stone_Item).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
