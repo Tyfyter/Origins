@@ -15,7 +15,6 @@ namespace Origins.Tiles.Defiled {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBrick[Type] = true;
-			Main.tileMergeDirt[Type] = true;
 			Main.tileBlockLight[Type] = true;
 
 			// Sand specific properties
