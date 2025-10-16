@@ -17,24 +17,13 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.Conversion.Grass[Type] = true;
+			TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeDugByShovel[Type] = true;
-			Main.tileMerge[Type] = Main.tileMerge[TileID.Grass];
-			Main.tileMerge[Type][TileID.Dirt] = true;
-			Main.tileMerge[TileID.Dirt][Type] = true;
-			Main.tileMerge[Type][TileID.Mud] = true;
-			Main.tileMerge[TileID.Mud][Type] = true;
-			Main.tileMerge[Type][TileID.LihzahrdBrick] = true;
-			Main.tileMerge[TileID.LihzahrdBrick][Type] = true;
 			Main.tileMerge[Type][ModContent.TileType<Murky_Sludge>()] = true;
 			Main.tileMerge[ModContent.TileType<Murky_Sludge>()][Type] = true;
 			Origins.TileTransformsOnKill[Type] = true;
-			for (int i = 0; i < TileLoader.TileCount; i++) {
-				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
-					Main.tileMerge[Type][i] = true;
-					Main.tileMerge[i][Type] = true;
-				}
-			}
+			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(FromHexRGB(0x5a4e6d));
@@ -69,21 +58,8 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.Conversion.JungleGrass[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeDugByShovel[Type] = true;
-			Main.tileMerge[Type] = Main.tileMerge[TileID.JungleGrass];
-			Main.tileMerge[Type][TileID.Dirt] = true;
-			Main.tileMerge[TileID.Dirt][Type] = true;
-			Main.tileMerge[Type][TileID.Mud] = true;
-			Main.tileMerge[TileID.Mud][Type] = true;
-			Main.tileMerge[Type][TileID.LihzahrdBrick] = true;
-			Main.tileMerge[TileID.LihzahrdBrick][Type] = true;
-			Main.tileMerge[Type][ModContent.TileType<Murky_Sludge>()] = true;
-			Main.tileMerge[ModContent.TileType<Murky_Sludge>()][Type] = true;
 			Origins.TileTransformsOnKill[Type] = true;
-			for (int i = 0; i < TileLoader.TileCount; i++)
-				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
-					Main.tileMerge[Type][i] = true;
-					Main.tileMerge[i][Type] = true;
-				}
+			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(FromHexRGB(0x5a4e6d));
@@ -114,22 +90,8 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeDugByShovel[Type] = true;
-			Main.tileMerge[Type] = Main.tileMerge[TileID.Grass];
-			Main.tileMerge[Type][TileID.Dirt] = true;
-			Main.tileMerge[TileID.Dirt][Type] = true;
-			Main.tileMerge[Type][TileID.Mud] = true;
-			Main.tileMerge[TileID.Mud][Type] = true;
-			Main.tileMerge[Type][TileID.LihzahrdBrick] = true;
-			Main.tileMerge[TileID.LihzahrdBrick][Type] = true;
-			Main.tileMerge[Type][ModContent.TileType<Murky_Sludge>()] = true;
-			Main.tileMerge[ModContent.TileType<Murky_Sludge>()][Type] = true;
 			Origins.TileTransformsOnKill[Type] = true;
-			for (int i = 0; i < TileLoader.TileCount; i++) {
-				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
-					Main.tileMerge[Type][i] = true;
-					Main.tileMerge[i][Type] = true;
-				}
-			}
+			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(FromHexRGB(0x5a4e6d));
@@ -175,7 +137,6 @@ namespace Origins.Tiles.Ashen {
 		public override void Unload() {
 			On_SmartCursorHelper.Step_GrassSeeds -= On_SmartCursorHelper_Step_GrassSeeds;
 		}
-
 		private void On_SmartCursorHelper_Step_GrassSeeds(On_SmartCursorHelper.orig_Step_GrassSeeds orig, object providedInfo, ref int focusedX, ref int focusedY) {
 			Player player = Main.LocalPlayer;
 			if (player.HeldItem.type == ModContent.ItemType<Ashen_Grass_Seeds>()) {
