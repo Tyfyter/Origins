@@ -13,11 +13,10 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.IcesSlush[Type] = true;
 			TileID.Sets.IcesSnow[Type] = true;
 			TileID.Sets.IceSkateSlippery[Type] = true;
+			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.Conversion.Ice[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			Main.tileMergeDirt[Type] = true;
-			Main.tileMerge[Type] = Main.tileMerge[TileID.IceBlock];
-			Main.tileMerge[Type][TileID.IceBlock] = true;
+			Main.tileBrick[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(100, 200, 200));
 			mergeID = TileID.IceBlock;
