@@ -23,7 +23,7 @@ namespace Origins.Tiles.Ashen {
 			int[] validTiles = [
 				ModContent.TileType<Ashen_Grass>(),
 				ModContent.TileType<Ashen_Jungle_Grass>(),
-				//ModContent.TileType<Ashen_Murky_Sludge_Grass>()
+				ModContent.TileType<Ashen_Murky_Sludge_Grass>()
 			];
 
 			TileObjectData.newTile.AnchorValidTiles = [..validTiles,

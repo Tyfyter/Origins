@@ -12,7 +12,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(FromHexRGB(0x2c212a));
-			DustType = Ashen_Biome.DefaultTileDust;
+			DustType = DustID.Mud;
 			HitSound = SoundID.Item167.WithPitchOffset(-2f);
 			LateSetupActions.Add(() => {
 				TileMergeOverlay mergeOverlay = new(merge + "Murk_Overlay", Type);
@@ -31,11 +31,6 @@ namespace Origins.Tiles.Ashen {
 				}
 			});
 		}
-		/*protected override IEnumerable<TileOverlay> GetOverlays() { // make these tiles instead have murky overlay (i think it'd look best
-			yield return new TileMergeOverlay(merge + "Dirt_Overlay", TileID.Dirt);
-			yield return new TileMergeOverlay(merge + "Mud_Overlay", TileID.Mud);
-			yield return new TileMergeOverlay(merge + "Ash_Overlay", TileID.Ash);
-		}*/
 		public override void FloorVisuals(Player player) {
 			player.AddBuff(BuffType<Murky_Sludge_Debuff>(), 2);
 		}
@@ -43,7 +38,7 @@ namespace Origins.Tiles.Ashen {
 			return Main.rand.NextBool(3, 25);
 		}
 		public override void WalkDust(ref int dustType, ref bool makeDust, ref Color color) {
-			dustType = DustID.Sand;
+			dustType = DustID.Snow;
 			color = FromHexRGB(0x2c212a);
 		}
 	}

@@ -11,6 +11,8 @@ namespace Origins.Tiles.Ashen {
 			"Grass"
 		];
 		public override void SetStaticDefaults() {
+			Origins.PotType.Add(Type, ((ushort)ModContent.TileType<Ashen_Pot>(), 0, 0));
+			Origins.PileType.Add(Type, ((ushort)ModContent.TileType<Ashen_Foliage>(), 0, 6));
 			TileID.Sets.Grass[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
@@ -54,6 +56,8 @@ namespace Origins.Tiles.Ashen {
 				TileID.Sets.JungleBiome[Type] = 1;
 				TileID.Sets.RemixJungleBiome[Type] = 1;
 			}
+			Origins.PotType.Add(Type, ((ushort)ModContent.TileType<Ashen_Pot>(), 0, 0));
+			Origins.PileType.Add(Type, ((ushort)ModContent.TileType<Ashen_Foliage>(), 0, 6));
 			TileID.Sets.GrassSpecial[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
@@ -93,6 +97,8 @@ namespace Origins.Tiles.Ashen {
 			"Grass"
 		];
 		public override void SetStaticDefaults() {
+			Origins.PotType.Add(Type, ((ushort)ModContent.TileType<Ashen_Pot>(), 0, 0));
+			Origins.PileType.Add(Type, ((ushort)ModContent.TileType<Ashen_Foliage>(), 0, 6));
 			TileID.Sets.Grass[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
@@ -115,6 +121,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(FromHexRGB(0x5a4e6d));
 			DustType = DustID.Demonite;
+			HitSound = SoundID.Item167.WithPitchOffset(-2f);
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
@@ -129,6 +136,16 @@ namespace Origins.Tiles.Ashen {
 
 				WorldGen.TileFrame(i, j - 1);
 			}
+		}
+		public override void FloorVisuals(Player player) {
+			player.AddBuff(ModContent.BuffType<Murky_Sludge_Debuff>(), 2);
+		}
+		public override bool HasWalkDust() {
+			return Main.rand.NextBool(3, 25);
+		}
+		public override void WalkDust(ref int dustType, ref bool makeDust, ref Color color) {
+			dustType = DustID.Snow;
+			color = Main.rand.NextBool() ? FromHexRGB(0x5a4e6d) : FromHexRGB(0x2c212a);
 		}
 	}
 	public class Ashen_Grass_Seeds : ModItem {
