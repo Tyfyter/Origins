@@ -2270,6 +2270,15 @@ namespace Origins {
 			if (!array.IndexInRange(index)) return fallback;
 			return array[index];
 		}
+		public static T GetIfInRange<T>(this List<T> array, int index, T fallback = default) {
+			if (!array.IndexInRange(index)) return fallback;
+			return array[index];
+		}
+		public static IEnumerable<int> GetTrueIndexes(this BitArray array) {
+			for (int i = 0; i < array.Length; i++) {
+				if (array[i]) yield return i;
+			}
+		}
 		public static void Roll<T>(this T[] array, params T[] pushIn) {
 			if (pushIn.Length == 0) return;
 			for (int i = array.Length - 1; i >= 0; i--) {

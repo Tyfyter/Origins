@@ -2,7 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Newtonsoft.Json.Linq;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Reflection;
+using Origins.UI;
 using Origins.World;
 using ReLogic.Content;
 using System;
@@ -14,43 +16,51 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI.Chat;
 
-namespace Origins.Tiles.Ashen {
-	public class Ashen_Wrench : ModItem {
-		public static MultiToolMode ToolMode = MultiToolMode.Brown;
-		[Flags]
-		public enum MultiToolMode {
-			Brown = 1,
-			Black = 2,
-			Cutter = 4
+namespace Origins.Items.Tools.Wiring {
+	public class Brown_Wire_Mode : WireMode {
+		AutoLoadingAsset<Texture2D> back = "Origins/Items/Tools/Wiring/Ashen_Wires_BG";
+		public override void SetupSets() {
+			Sets.AshenWires[Type] = true;
 		}
-		public override string Texture => "Origins/Tiles/Ashen/Ashen_Wires";
-		public override void Load() {
-			Ashen_Wire_Data.Load();
-		}
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-		}
-		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Actuator);
-		}
-		public static bool PlaceWire(int i, int j, int wireType) {
-			if (!Main.tile[i, j].Get<Ashen_Wire_Data>().GetWire(wireType)) {
-				SoundEngine.PlaySound(SoundID.Dig, new(i * 16, j * 16));
-				Ashen_Wire_Data.SetWire(i, j, wireType, true);
+		public override bool SetWire(int x, int y, bool value) {
+			if (Main.tile[x, y].Get<Ashen_Wire_Data>().HasBrownWire != value) {
+				Ashen_Wire_Data.SetWire(x, y, 0, value);
 				return true;
 			}
 			return false;
 		}
-		public override bool? UseItem(Player player) {
-			if (player.altFunctionUse == 2) {
-				ToolMode = ToolMode.NextEnum();
-				return false;
-			}
-			return PlaceWire(Player.tileTargetX, Player.tileTargetY, 0);
+		public override void Draw(Vector2 position, bool hovered, WirePetalData data) {
+			GetTints(hovered, data.HasFlag(WirePetalData.Enabled), out Color backTint, out Color iconTint);
+			DrawIcon(TextureAssets.WireUi[hovered.ToInt() + data.HasFlag(WirePetalData.Cutter).ToInt() * 8].Value, position, backTint);
+			if (!data.HasFlag(WirePetalData.Cutter)) DrawIcon(back, position, backTint);
+			DrawIcon(Texture2D.Value, position, iconTint);
 		}
+		public override void Click() => Wire_Mode_Kite.EnabledWires[Type] ^= true;
+	}
+	public class Black_Wire_Mode : WireMode {
+		AutoLoadingAsset<Texture2D> back = "Origins/Items/Tools/Wiring/Ashen_Wires_BG";
+		public override void SetupSets() {
+			Sets.AshenWires[Type] = true;
+		}
+		public override bool SetWire(int x, int y, bool value) {
+			if (Main.tile[x, y].Get<Ashen_Wire_Data>().HasBlackWire != value) {
+				Ashen_Wire_Data.SetWire(x, y, 1, value);
+				return true;
+			}
+			return false;
+		}
+		public override void Draw(Vector2 position, bool hovered, WirePetalData data) {
+			GetTints(hovered, data.HasFlag(WirePetalData.Enabled), out Color backTint, out Color iconTint);
+			DrawIcon(TextureAssets.WireUi[hovered.ToInt() + data.HasFlag(WirePetalData.Cutter).ToInt() * 8].Value, position, backTint);
+			if (!data.HasFlag(WirePetalData.Cutter)) DrawIcon(back, position, backTint);
+			DrawIcon(Texture2D.Value, position, iconTint);
+		}
+		public override void Click() => Wire_Mode_Kite.EnabledWires[Type] ^= true;
 	}
 	public struct Ashen_Wire_Data : ITileData {
 		internal byte data;
@@ -82,32 +92,24 @@ namespace Origins.Tiles.Ashen {
 			=> (bits & 1 << offset) != 0;
 		static void SetBit(bool value, ref byte bits, int offset) {
 			byte didDone = (byte)(1 << offset);
-			if (value) {
-				bits |= didDone;
-			} else {
-				bits &= (byte)~didDone;
-			}
+			if (value) bits |= didDone;
+			else bits &= (byte)~didDone;
 		}
 		public static void SetWire(int i, int j, int wireType, bool value) {
 			ref Ashen_Wire_Data data = ref Main.tile[i, j].Get<Ashen_Wire_Data>();
 			if (value != data.GetWire(wireType)) {
 				SetBit(value, ref data.data, wireType << 1);
-				if (value) {
-					if (GetPower(i + 1, j, wireType) || GetPower(i - 1, j, wireType) || GetPower(i, j + 1, wireType) || GetPower(i, j - 1, wireType)) {
+				if (value) if (GetPower(i + 1, j, wireType) || GetPower(i - 1, j, wireType) || GetPower(i, j + 1, wireType) || GetPower(i, j - 1, wireType)) {
 						SetPowered(i, j, wireType, true);
-						if (!GetPower(i + 1, j, wireType) || !GetPower(i - 1, j, wireType) || !GetPower(i, j + 1, wireType) || !GetPower(i, j - 1, wireType)) {
-							PropegatePowerState(i, j, wireType, true);
-						}
-					} else if (data.IsTilePowered) {
-						PropegatePowerState(i, j, wireType, true);
+						if (!GetPower(i + 1, j, wireType) || !GetPower(i - 1, j, wireType) || !GetPower(i, j + 1, wireType) || !GetPower(i, j - 1, wireType)) PropegatePowerState(i, j, wireType, true);
+					} else if (data.IsTilePowered) PropegatePowerState(i, j, wireType, true);
+					else {
+						SetPowered(i, j, wireType, false);
+						TryPropegateDepowered(i + 1, j, wireType);
+						TryPropegateDepowered(i - 1, j, wireType);
+						TryPropegateDepowered(i, j + 1, wireType);
+						TryPropegateDepowered(i, j - 1, wireType);
 					}
-				} else {
-					SetPowered(i, j, wireType, false);
-					TryPropegateDepowered(i + 1, j, wireType);
-					TryPropegateDepowered(i - 1, j, wireType);
-					TryPropegateDepowered(i, j + 1, wireType);
-					TryPropegateDepowered(i, j - 1, wireType);
-				}
 			}
 		}
 		static void SetPowered(int i, int j, int wireType, bool value) {
@@ -135,9 +137,7 @@ namespace Origins.Tiles.Ashen {
 			bool Breaker(AreaAnalysis analysis) {
 				return Framing.GetTileSafely(analysis.Counted[^1]).Get<Ashen_Wire_Data>().IsTilePowered;
 			}
-			if (!AreaAnalysis.March(i, j, AreaAnalysis.Orthogonals, Counter, Breaker).Broke) {
-				PropegatePowerState(i, j, wireType, false);
-			}
+			if (!AreaAnalysis.March(i, j, AreaAnalysis.Orthogonals, Counter, Breaker).Broke) PropegatePowerState(i, j, wireType, false);
 		}
 		static void PropegatePowerState(int i, int j, int wireType, bool value) {
 			bool Counter(Point position) {
@@ -145,9 +145,7 @@ namespace Origins.Tiles.Ashen {
 			}
 			bool Breaker(AreaAnalysis analysis) => false;
 			IReadOnlyList<Point> tiles = AreaAnalysis.March(i, j, AreaAnalysis.Orthogonals, Counter, Breaker).Counted;
-			for (int k = 0; k < tiles.Count; k++) {
-				SetPowered(tiles[k].X, tiles[k].Y, wireType, value);
-			}
+			for (int k = 0; k < tiles.Count; k++) SetPowered(tiles[k].X, tiles[k].Y, wireType, value);
 		}
 		public readonly void DrawWires(int i, int j) {
 			DrawWire(i, j, 0);
@@ -157,18 +155,10 @@ namespace Origins.Tiles.Ashen {
 			if (GetWire(wireType)) {
 				Color color = Lighting.GetColor(i, j);
 				int num15 = 0;
-				if (Main.tile[i, j - 1].Get<Ashen_Wire_Data>().HasBrownWire) {
-					num15 += 18;
-				}
-				if (Main.tile[i + 1, j].Get<Ashen_Wire_Data>().HasBrownWire) {
-					num15 += 36;
-				}
-				if (Main.tile[i, j + 1].Get<Ashen_Wire_Data>().HasBrownWire) {
-					num15 += 72;
-				}
-				if (Main.tile[i - 1, j].Get<Ashen_Wire_Data>().HasBrownWire) {
-					num15 += 144;
-				}
+				if (Main.tile[i, j - 1].Get<Ashen_Wire_Data>().HasBrownWire) num15 += 18;
+				if (Main.tile[i + 1, j].Get<Ashen_Wire_Data>().HasBrownWire) num15 += 36;
+				if (Main.tile[i, j + 1].Get<Ashen_Wire_Data>().HasBrownWire) num15 += 72;
+				if (Main.tile[i - 1, j].Get<Ashen_Wire_Data>().HasBrownWire) num15 += 144;
 				switch (Main.LocalPlayer.InfoAccMechShowWires ? Main.LocalPlayer.builderAccStatus[9] : 1) {
 					case 0:
 					color = Color.White;
@@ -191,8 +181,7 @@ namespace Origins.Tiles.Ashen {
 					SpriteEffects.None,
 					0f
 				);
-				if (GetPower(wireType)) {
-					Main.spriteBatch.Draw(
+				if (GetPower(wireType)) Main.spriteBatch.Draw(
 						glowTexture.Value,
 						new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y),
 						new Rectangle(num15, 0, 16, 16),
@@ -203,7 +192,6 @@ namespace Origins.Tiles.Ashen {
 						SpriteEffects.None,
 						0f
 					);
-				}
 			}
 		}
 		internal static Asset<Texture2D> underlayTexture;
@@ -229,7 +217,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public static void Load() {
 			IL_Main.DrawWires += IL_Main_DrawWires;
-			const string texture = "Origins/Tiles/Ashen/Ashen_Wires";
+			const string texture = "Origins/Items/Tools/Wiring/Ashen_Wires";
 			underlayTexture = ModContent.Request<Texture2D>(texture);
 			glowTexture = ModContent.Request<Texture2D>(texture + "_Active");
 		}
