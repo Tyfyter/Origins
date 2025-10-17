@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using PegasusLib;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.ModLoader;
@@ -45,12 +46,14 @@ namespace Origins.UI {
 		public abstract void AddToList();
 		public abstract bool IsActive();
 		private bool isActive = false;
-		public override void OnActivate() {
-			isActive = true;
+		public sealed override void OnActivate() {
+			if (isActive.TrySet(true)) OnEnter();
 		}
-		public override void OnDeactivate() {
-			isActive = false;
+		public sealed override void OnDeactivate() {
+			if (isActive.TrySet(false)) OnExit();
 		}
+		public virtual void OnEnter() { }
+		public virtual void OnExit() { }
 		public override bool ContainsPoint(Vector2 point) => isActive && base.ContainsPoint(point);
 		public override void Update(GameTime gameTime) {
 			if (isActive) base.Update(gameTime);
