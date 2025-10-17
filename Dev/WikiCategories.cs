@@ -22,10 +22,10 @@ public static class WikiCategories {
 	public const string Repeater = nameof(WeaponTypes.Repeater);
 	public const string MagicGun = nameof(WeaponTypes.MagicGun);
 	public const string SpellBook = nameof(WeaponTypes.SpellBook);
-	/*public const string ExpendableWeapon = "ExpendableWeapon";
+	public const string ExpendableWeapon = "ExpendableWeapon";
 	public const string IsBomb = "IsBomb";
 	public const string IsGrenade = "IsGrenade";
-	public const string IsDynamite = "IsDynamite";*/
+	public const string IsDynamite = "IsDynamite";
 
 	// Tools
 	public const string ExpendableTool = "ExpendableTool";
