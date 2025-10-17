@@ -469,9 +469,6 @@ namespace Origins.Dev {
 				if (TileID.Sets.Grass[item.createTile]) types.Add(WikiCategories.Grass);
 				if (TileLoader.GetTile(item.createTile) is ModTile modTile) {
 					if (modTile is Bar_Tile) types.Add(WikiCategories.Bar);
-					if (!Main.tileHammer[modTile.Type] && !Main.tileAxe[modTile.Type]) {
-						data.AppendStat("PickReq", modTile.MinPick, 0);
-					}
 				}
 			}
 			if (modItem is ITornSource) {
