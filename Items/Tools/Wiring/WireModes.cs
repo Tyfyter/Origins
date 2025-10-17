@@ -46,6 +46,10 @@ namespace Origins.Items.Tools.Wiring {
 	}
 	public abstract class WireMode : ModTexturedType, IFlowerMenuItem<WirePetalData> {
 		public int Type { get; internal set; }
+		public virtual int ItemType { get; } = ItemID.Wire;
+		public virtual bool IsExtra => false;
+		public virtual int BreakDust => -1;
+		public virtual Color? WireKiteColor => null;
 		public Asset<Texture2D> Texture2D { get; private set; }
 		protected sealed override void Register() {
 			WireModeLoader.Register(this);
@@ -88,7 +92,6 @@ namespace Origins.Items.Tools.Wiring {
 		public virtual IEnumerable<WireMode> SortAfter() => [];
 		public virtual IEnumerable<WireMode> SortBefore() => [];
 		public bool IsHovered(Vector2 position) => Main.MouseScreen.WithinRange(position, 20);
-		public abstract void Click();
 
 		[ReinitializeDuringResizeArrays]
 		public static class Sets {
@@ -97,9 +100,6 @@ namespace Origins.Items.Tools.Wiring {
 			public static BitArray AshenWires = new(Factory.CreateBoolSet());
 			static Sets() {
 				WireModeLoader.Sort();
-				/*Factory = new(WireModeLoader.WireModeCount, nameof(WireModeID), WireModeID.Search);
-				NormalWires = new(Factory.CreateBoolSet());
-				AshenWires = new(Factory.CreateBoolSet());*/
 				foreach (WireMode mode in ModContent.GetContent<WireMode>()) mode.SetupSets();
 			}
 		}
@@ -110,6 +110,8 @@ namespace Origins.Items.Tools.Wiring {
 	}
 	public class Actuator_Wire_Mode : WireMode {
 		public override string Texture => "Terraria/Images/UI/Wires_10";
+		public override int ItemType => ItemID.Actuator;
+		public override bool IsExtra => true;
 		public override void SetupSets() {
 			Sets.NormalWires[Type] = true;
 		}
@@ -117,14 +119,16 @@ namespace Origins.Items.Tools.Wiring {
 			Tile tile = Main.tile[x, y];
 			if (tile.HasActuator != value) {
 				tile.HasActuator = value;
+				NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 8 + (!value).ToInt(), x, y);
 				return true;
 			}
 			return false;
 		}
-		public override void Click() => Wire_Mode_Kite.EnabledWires[Type] ^= true;
 	}
 	public class Red_Wire_Mode : WireMode {
 		public override string Texture => "Terraria/Images/UI/Wires_2";
+		public override int BreakDust => DustID.Adamantite;
+		public override Color? WireKiteColor => Color.Red;
 		public override void SetupSets() {
 			Sets.NormalWires[Type] = true;
 		}
@@ -132,30 +136,15 @@ namespace Origins.Items.Tools.Wiring {
 			Tile tile = Main.tile[x, y];
 			if (tile.RedWire != value) {
 				tile.RedWire = value;
+				NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 5 + (!value).ToInt(), x, y);
 				return true;
 			}
 			return false;
 		}
-		public override void Click() => Wire_Mode_Kite.EnabledWires[Type] ^= true;
-	}
-	public class Green_Wire_Mode : WireMode {
-		public override string Texture => "Terraria/Images/UI/Wires_3";
-		public override void SetupSets() {
-			Sets.NormalWires[Type] = true;
-		}
-		public override bool SetWire(int x, int y, bool value) {
-			Tile tile = Main.tile[x, y];
-			if (tile.GreenWire != value) {
-				tile.GreenWire = value;
-				return true;
-			}
-			return false;
-		}
-		public override void Click() => Wire_Mode_Kite.EnabledWires[Type] ^= true;
-		public override IEnumerable<WireMode> SortAfter() => [ModContent.GetInstance<Red_Wire_Mode>()];
 	}
 	public class Blue_Wire_Mode : WireMode {
 		public override string Texture => "Terraria/Images/UI/Wires_4";
+		public override Color? WireKiteColor => Color.Blue;
 		public override void SetupSets() {
 			Sets.NormalWires[Type] = true;
 		}
@@ -163,15 +152,33 @@ namespace Origins.Items.Tools.Wiring {
 			Tile tile = Main.tile[x, y];
 			if (tile.BlueWire != value) {
 				tile.BlueWire = value;
+				NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 10 + (!value).ToInt(), x, y);
 				return true;
 			}
 			return false;
 		}
-		public override void Click() => Wire_Mode_Kite.EnabledWires[Type] ^= true;
-		public override IEnumerable<WireMode> SortAfter() => [ModContent.GetInstance<Green_Wire_Mode>()];
+		public override IEnumerable<WireMode> SortAfter() => [ModContent.GetInstance<Red_Wire_Mode>()];
+	}
+	public class Green_Wire_Mode : WireMode {
+		public override string Texture => "Terraria/Images/UI/Wires_3";
+		public override Color? WireKiteColor => Color.Lime;
+		public override void SetupSets() {
+			Sets.NormalWires[Type] = true;
+		}
+		public override bool SetWire(int x, int y, bool value) {
+			Tile tile = Main.tile[x, y];
+			if (tile.GreenWire != value) {
+				tile.GreenWire = value;
+				NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 12 + (!value).ToInt(), x, y);
+				return true;
+			}
+			return false;
+		}
+		public override IEnumerable<WireMode> SortAfter() => [ModContent.GetInstance<Blue_Wire_Mode>()];
 	}
 	public class Yellow_Wire_Mode : WireMode {
 		public override string Texture => "Terraria/Images/UI/Wires_5";
+		public override Color? WireKiteColor => Color.Yellow;
 		public override void SetupSets() {
 			Sets.NormalWires[Type] = true;
 		}
@@ -179,12 +186,12 @@ namespace Origins.Items.Tools.Wiring {
 			Tile tile = Main.tile[x, y];
 			if (tile.YellowWire != value) {
 				tile.YellowWire = value;
+				NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 16 + (!value).ToInt(), x, y);
 				return true;
 			}
 			return false;
 		}
-		public override void Click() => Wire_Mode_Kite.EnabledWires[Type] ^= true;
-		public override IEnumerable<WireMode> SortAfter() => [ModContent.GetInstance<Blue_Wire_Mode>()];
+		public override IEnumerable<WireMode> SortAfter() => [ModContent.GetInstance<Green_Wire_Mode>()];
 	}
 	public interface IWireTool {
 		public IEnumerable<WireMode> Modes { get; }
@@ -212,6 +219,9 @@ namespace Origins.Items.Tools.Wiring {
 			if (EnabledWires[mode.Type]) data |= WirePetalData.Enabled;
 			if (Cutter) data |= WirePetalData.Cutter;
 			return data;
+		}
+		public override void Click(WireMode mode) {
+			EnabledWires[mode.Type] ^= true;
 		}
 		public override IEnumerable<WireMode> GetModes() => WireTool.Modes;
 	}

@@ -24,6 +24,7 @@ using Terraria.UI.Chat;
 namespace Origins.Items.Tools.Wiring {
 	public class Brown_Wire_Mode : WireMode {
 		AutoLoadingAsset<Texture2D> back = "Origins/Items/Tools/Wiring/Ashen_Wires_BG";
+		public override Color? WireKiteColor => Color.Chocolate;
 		public override void SetupSets() {
 			Sets.AshenWires[Type] = true;
 		}
@@ -40,10 +41,10 @@ namespace Origins.Items.Tools.Wiring {
 			if (!data.HasFlag(WirePetalData.Cutter)) DrawIcon(back, position, backTint);
 			DrawIcon(Texture2D.Value, position, iconTint);
 		}
-		public override void Click() => Wire_Mode_Kite.EnabledWires[Type] ^= true;
 	}
 	public class Black_Wire_Mode : WireMode {
 		AutoLoadingAsset<Texture2D> back = "Origins/Items/Tools/Wiring/Ashen_Wires_BG";
+		public override Color? WireKiteColor => Color.Black;
 		public override void SetupSets() {
 			Sets.AshenWires[Type] = true;
 		}
@@ -60,7 +61,6 @@ namespace Origins.Items.Tools.Wiring {
 			if (!data.HasFlag(WirePetalData.Cutter)) DrawIcon(back, position, backTint);
 			DrawIcon(Texture2D.Value, position, iconTint);
 		}
-		public override void Click() => Wire_Mode_Kite.EnabledWires[Type] ^= true;
 	}
 	public struct Ashen_Wire_Data : ITileData {
 		internal byte data;
@@ -155,10 +155,10 @@ namespace Origins.Items.Tools.Wiring {
 			if (GetWire(wireType)) {
 				Color color = Lighting.GetColor(i, j);
 				int num15 = 0;
-				if (Main.tile[i, j - 1].Get<Ashen_Wire_Data>().HasBrownWire) num15 += 18;
-				if (Main.tile[i + 1, j].Get<Ashen_Wire_Data>().HasBrownWire) num15 += 36;
-				if (Main.tile[i, j + 1].Get<Ashen_Wire_Data>().HasBrownWire) num15 += 72;
-				if (Main.tile[i - 1, j].Get<Ashen_Wire_Data>().HasBrownWire) num15 += 144;
+				if (Main.tile[i, j - 1].Get<Ashen_Wire_Data>().GetWire(wireType)) num15 += 18;
+				if (Main.tile[i + 1, j].Get<Ashen_Wire_Data>().GetWire(wireType)) num15 += 36;
+				if (Main.tile[i, j + 1].Get<Ashen_Wire_Data>().GetWire(wireType)) num15 += 72;
+				if (Main.tile[i - 1, j].Get<Ashen_Wire_Data>().GetWire(wireType)) num15 += 144;
 				switch (Main.LocalPlayer.InfoAccMechShowWires ? Main.LocalPlayer.builderAccStatus[9] : 1) {
 					case 0:
 					color = Color.White;
