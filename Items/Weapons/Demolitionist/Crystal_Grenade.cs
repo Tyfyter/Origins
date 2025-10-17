@@ -8,12 +8,7 @@ using Terraria.ModLoader;
 using static Microsoft.Xna.Framework.MathHelper;
 using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Crystal_Grenade : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            WikiCategories.ThrownExplosive,
-			WikiCategories.IsGrenade,
-            WikiCategories.ExpendableWeapon
-        ];
+	public class Crystal_Grenade : ModItem {
         public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;

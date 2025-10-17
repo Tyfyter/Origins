@@ -10,9 +10,6 @@ namespace Origins.Items.Other.Consumables {
 	public class Focus_Potion : ModItem {
 		public const float bonus_multiplicative = 0.15f;
 		public const float bonus_additive = 5f;
-		public string[] Categories => [
-			WikiCategories.Potion
-		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 		}

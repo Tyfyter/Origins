@@ -7,11 +7,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Bombardment : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.Launcher,
-			WikiCategories.CanistahUser
-		];
+	public class Bombardment : ModItem {
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Bombardment_P>(2, 40, 9f, 48, 32);
 			Item.useTime = 8;

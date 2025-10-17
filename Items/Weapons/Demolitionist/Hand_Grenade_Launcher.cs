@@ -13,11 +13,8 @@ using PegasusLib;
 using Origins.Projectiles;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Hand_Grenade_Launcher : ModItem, ICustomWikiStat {
+	public class Hand_Grenade_Launcher : ModItem {
 		static short glowmask;
-		public string[] Categories => [
-			WikiCategories.Launcher
-		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;

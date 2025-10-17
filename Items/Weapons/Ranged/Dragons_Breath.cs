@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Dragons_Breath : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Gun
+			nameof(WeaponTypes.Flamethrower)
 		];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);

@@ -9,11 +9,8 @@ using Origins.Dev;
 using Origins.Tiles.Other;
 namespace Origins.Items.Weapons.Demolitionist {
 	[AutoloadEquip(EquipType.HandsOn)]
-    public class Nuclear_Arm : ModItem, ICustomWikiStat {
+    public class Nuclear_Arm : ModItem {
 		static short glowmask;
-        public string[] Categories => [
-            WikiCategories.Launcher
-        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}

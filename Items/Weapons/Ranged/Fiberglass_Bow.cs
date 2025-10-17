@@ -3,10 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Fiberglass_Bow : ModItem, IElementalItem, ICustomWikiStat {
-        public string[] Categories => [
-            WikiCategories.Bow
-        ];
+	public class Fiberglass_Bow : ModItem, IElementalItem {
         public ushort Element => Elements.Fiberglass;
 		public override void SetDefaults() {
 			Item.damage = 17;

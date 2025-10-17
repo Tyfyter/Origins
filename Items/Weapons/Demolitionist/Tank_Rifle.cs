@@ -15,10 +15,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Tank_Rifle : ModItem, ICustomDrawItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.Launcher
-		];
+	public class Tank_Rifle : ModItem, ICustomDrawItem {
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 5));

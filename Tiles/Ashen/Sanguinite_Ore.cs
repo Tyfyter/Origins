@@ -33,9 +33,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Sanguinite_Ore_Item : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-		   WikiCategories.Ore
-		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}
@@ -49,7 +46,6 @@ namespace Origins.Tiles.Ashen {
 			string key = base_key + "Crafting";
 			data.AppendStat("Crafting", Language.GetTextValue(key), key);
 			data.Add("Tier", 5);
-			data["PickReq"] = 55;
 		}
 	}
 }

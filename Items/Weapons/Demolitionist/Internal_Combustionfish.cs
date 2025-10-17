@@ -9,11 +9,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	//very 7y, following the theme of the whole ashen countdown theme
-	public class Internal_Combustionfish : ModItem, ICustomWikiStat, IJournalEntrySource {
-        public string[] Categories => [
-            WikiCategories.ThrownExplosive,
-            WikiCategories.ExpendableWeapon
-        ];
+	public class Internal_Combustionfish : ModItem, IJournalEntrySource {
 		public string EntryName => "Origins/" + typeof(Internal_Combustionfish_Entry).Name;
 		public class Internal_Combustionfish_Entry : JournalEntry {
 			public override string TextKey => "Internal_Combustionfish";

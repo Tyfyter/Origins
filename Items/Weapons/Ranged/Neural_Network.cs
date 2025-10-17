@@ -11,10 +11,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
-	public class Neural_Network : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.Gun
-		];
+	public class Neural_Network : ModItem {
 		public static int ID { get; set; }
 		public override void SetStaticDefaults() {
 			ID = Type;

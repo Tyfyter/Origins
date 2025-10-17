@@ -3,10 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
-	public class Hemorang : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.Boomerang
-		];
+	public class Hemorang : ModItem {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);
 			Item.DamageType = DamageClass.MeleeNoSpeed;

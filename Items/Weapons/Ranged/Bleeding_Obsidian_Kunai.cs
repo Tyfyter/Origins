@@ -10,8 +10,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Bleeding_Obsidian_Kunai : ModItem, ICustomWikiStat, ITornSource {
 		public string[] Categories => [
-			WikiCategories.Torn,
-			WikiCategories.TornSource,
             WikiCategories.ExpendableWeapon
         ];
 		public static float TornSeverity => 0.1f;

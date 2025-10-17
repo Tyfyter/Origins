@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using System;
 using Terraria;
@@ -8,15 +7,11 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 using Origins.Tiles.Other;
+
 namespace Origins.Items.Weapons.Magic {
-    public class Pike_of_Deepneus : ModItem, ICustomWikiStat {
+    public class Pike_of_Deepneus : ModItem {
 		public const int baseDamage = 64;
-        public string[] Categories => [
-            WikiCategories.OtherMagic
-        ];
         public override void SetDefaults() {
 			Item.damage = 160;
 			Item.DamageType = DamageClass.Magic;

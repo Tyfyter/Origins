@@ -10,8 +10,6 @@ namespace Origins.Items.Accessories {
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
 			WikiCategories.Combat,
-			WikiCategories.Torn,
-			WikiCategories.TornSource,
 			WikiCategories.GenericBoostAcc
 		];
 		public override void SetDefaults() {

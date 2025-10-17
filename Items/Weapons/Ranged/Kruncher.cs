@@ -5,11 +5,8 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Kruncher : ModItem, ICustomWikiStat {
+	public class Kruncher : ModItem {
 		static short glowmask;
-        public string[] Categories => [
-            WikiCategories.Gun
-        ];
         public override void SetStaticDefaults() {
 			Origins.FlatDamageMultiplier[Type] = 3f / 8f;
 			glowmask = Origins.AddGlowMask(this);

@@ -16,7 +16,6 @@ namespace Origins.Items.Pets {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public string[] Categories => [
-			WikiCategories.Pet,
 			WikiCategories.DeveloperItem
 		];
 		public override void SetDefaults() {

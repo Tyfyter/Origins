@@ -10,10 +10,7 @@ using Origins.Buffs;
 using Origins.CrossMod;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Hivateinn : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.Wand
-		];
+	public class Hivateinn : ModItem {
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;

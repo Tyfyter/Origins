@@ -8,9 +8,6 @@ using Origins.Dev;
 
 namespace Origins.Items.Other.Consumables {
     public class Ambition_Potion : ModItem {
-        public string[] Categories => [
-            WikiCategories.Potion
-        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 		}

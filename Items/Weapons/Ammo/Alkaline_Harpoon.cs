@@ -4,11 +4,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
-	public class Alkaline_Harpoon : ModItem, ICustomWikiStat {
+	public class Alkaline_Harpoon : ModItem {
 		public static int ID { get; private set; }
-        public string[] Categories => [
-            WikiCategories.Harpoon
-        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 			ID = Type;

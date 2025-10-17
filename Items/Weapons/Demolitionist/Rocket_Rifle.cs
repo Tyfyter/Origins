@@ -12,10 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Rocket_Rifle : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            WikiCategories.Launcher
-        ];
+	public class Rocket_Rifle : ModItem {
         public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 		}

@@ -7,12 +7,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Shrapnel_Bomb : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            WikiCategories.ThrownExplosive,
-			WikiCategories.IsBomb,
-            WikiCategories.ExpendableWeapon
-        ];
+	public class Shrapnel_Bomb : ModItem {
         public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;

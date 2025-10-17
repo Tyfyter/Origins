@@ -5,13 +5,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-    public class Gelled_Knife : ModItem, ICustomWikiStat, ITornSource {
+    public class Gelled_Knife : ModItem, ITornSource {
 		public static float TornSeverity => 0.45f;
 		float ITornSource.Severity => TornSeverity;
-        public string[] Categories => [
-            WikiCategories.Torn,
-            WikiCategories.TornSource
-        ];
         public override void SetStaticDefaults() {
             Origins.AddGlowMask(this);
         }

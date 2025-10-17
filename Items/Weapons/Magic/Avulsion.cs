@@ -8,15 +8,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Avulsion : ModItem, ICustomWikiStat, ITornSource {
+	public class Avulsion : ModItem, ITornSource {
 		public static float TornSeverity => 0.3f;
 		float ITornSource.Severity => TornSeverity;
 		static short glowmask;
-        public string[] Categories => [
-            WikiCategories.Torn,
-            WikiCategories.TornSource,
-            WikiCategories.Wand
-        ];
         public override void SetStaticDefaults() {
             Item.staff[Item.type] = true;
             glowmask = Origins.AddGlowMask(this);

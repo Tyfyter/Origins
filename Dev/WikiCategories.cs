@@ -17,37 +17,15 @@ public static class WikiCategories {
 
 	// Weapons
 	public const string Weapon = "Weapon";
-	public const string Bow = "Bow";
-	public const string Sword = "Sword";
-	public const string Spear = "Spear";
-	public const string Boomerang = "Boomerang";
-	public const string Flail = "Flail";
-	public const string Yoyo = "Yoyo";
-	public const string OtherMelee = "OtherMelee";
-	public const string Gun = "Gun";
-	public const string Repeater = "Repeater";
-	public const string DartLauncher = "DartLauncher";
-	public const string HarpoonGun = "HarpoonGun";
-	public const string OtherRanged = "OtherRanged";
-	public const string Wand = "Wand";
-	public const string MagicGun = "MagicGun";
-	public const string SpellBook = "SpellBook";
-	public const string OtherMagic = "OtherMagic";
-	public const string Minion = "Minion";
-	public const string Sentry = "Sentry";
-	public const string Whip = "Whip";
-	public const string Artifact = "Artifact";
-	public const string Incantation = "Incantation";
-	public const string OtherSummoner = "OtherSummoner";
-	public const string Launcher = "Launcher";
-	public const string Handcannon = "Handcannon";
-	public const string Slug = "Slug";
-	public const string ThrownExplosive = "ThrownExplosive";
-	public const string OtherExplosive = "OtherExplosive";
-	public const string ExpendableWeapon = "ExpendableWeapon";
+	public const string Sword = nameof(WeaponTypes.Sword);
+	public const string Flail = nameof(WeaponTypes.Flail);
+	public const string Repeater = nameof(WeaponTypes.Repeater);
+	public const string MagicGun = nameof(WeaponTypes.MagicGun);
+	public const string SpellBook = nameof(WeaponTypes.SpellBook);
+	/*public const string ExpendableWeapon = "ExpendableWeapon";
 	public const string IsBomb = "IsBomb";
 	public const string IsGrenade = "IsGrenade";
-	public const string IsDynamite = "IsDynamite";
+	public const string IsDynamite = "IsDynamite";*/
 
 	// Tools
 	public const string ExpendableTool = "ExpendableTool";
@@ -106,8 +84,8 @@ public static class WikiCategories {
 	public const string Dart = "Dart";
 	public const string Canistah = "Canistah";
 	public const string Rocket = "Rocket";
+	public const string Slug = "Slug";
 	public const string Harpoon = "Harpoon";
-	public const string CanistahUser = "CanistahUser"; 
 
 	// Mounts
 	public const string Mount = "Mount";

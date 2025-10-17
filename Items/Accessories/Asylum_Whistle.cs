@@ -9,8 +9,7 @@ namespace Origins.Items.Accessories {
 	public class Asylum_Whistle : ModItem, IJournalEntrySource, ICustomWikiStat {
 		public string[] Categories => [
 			WikiCategories.Combat,
-			WikiCategories.SummonBoostAcc,
-			WikiCategories.LoreItem
+			WikiCategories.SummonBoostAcc
 		];
 		public string EntryName => "Origins/" + typeof(Asylum_Whistle_Entry).Name;
 		public override void SetStaticDefaults() {

@@ -8,7 +8,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Peatball : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            WikiCategories.ThrownExplosive,
             WikiCategories.ExpendableWeapon
         ];
         public override void SetStaticDefaults() {

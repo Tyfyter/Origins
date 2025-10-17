@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
+using Origins.Buffs;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Journal;
+using Origins.Tiles.Other;
 using Origins.World;
 using System;
 using System.Collections.Generic;
@@ -352,6 +354,9 @@ namespace Origins.Dev {
 							weaponType = WeaponTypes.OtherExplosive;
 						}
 					}
+					if (ItemID.Sets.Spears[item.type]) {
+						weaponType = WeaponTypes.Spear;
+					}
 					if (weaponType == WeaponTypes.None && item.shoot > ProjectileID.None) {
 						switch (ContentSamples.ProjectilesByType[item.shoot].aiStyle) {
 							case ProjAIStyleID.Boomerang:
@@ -362,11 +367,8 @@ namespace Origins.Dev {
 							weaponType = WeaponTypes.Yoyo;
 							break;
 						}
-						if (ItemID.Sets.Spears[item.type]) {
-							weaponType = WeaponTypes.Spear;
-						}
 
-						if (item.CountsAsClass(DamageClass.Summon) && !types.Any(t => t.ToString() == WikiCategories.Incantation)) {
+						if (item.CountsAsClass(DamageClass.Summon) && !types.Any(t => t.ToString() == nameof(WeaponTypes.Incantation))) {
 							if (Origins.ArtifactMinion[item.shoot]) weaponType = WeaponTypes.Artifact;
 							if (ProjectileID.Sets.IsAWhip[item.shoot]) {
 								weaponType = WeaponTypes.Whip;
@@ -393,6 +395,12 @@ namespace Origins.Dev {
 							case ItemID.MusketBall:
 							weaponType = WeaponTypes.Gun;
 							break;
+							case ItemID.Gel:
+							weaponType = WeaponTypes.Flamethrower;
+							break;
+							case ItemID.Seed:
+							weaponType = WeaponTypes.DartLauncher;
+							break;
 
 							default:
 							if (item.useAmmo == ModContent.ItemType<Metal_Slug>()) {
@@ -413,6 +421,7 @@ namespace Origins.Dev {
 					if (weaponType == WeaponTypes.None && !item.noMelee && item.useStyle == ItemUseStyleID.Swing) weaponType = WeaponTypes.Sword;
 				}
 				if (weaponType != WeaponTypes.None && !types.Any(t => t.ToString() == weaponType.ToString())) types.Add(weaponType.ToString());
+				if (weaponType != WeaponTypes.None && item.consumable) types.Add(WikiCategories.ExpendableWeapon);
 			}
 			switch (item.ammo) {
 				case ItemID.WoodenArrow:
@@ -421,8 +430,22 @@ namespace Origins.Dev {
 				case ItemID.MusketBall:
 				types.Add(WikiCategories.Bullet);
 				break;
+				case ItemID.Seed:
+				types.Add(WikiCategories.Dart);
+				break;
+				case ItemID.Grenade:
+				types.Add(WikiCategories.IsGrenade);
+				break;
+				case ItemID.Bomb:
+				types.Add(WikiCategories.IsBomb);
+				break;
+				case ItemID.Dynamite:
+				types.Add(WikiCategories.IsDynamite);
+				break;
 
 				default:
+				if (AmmoID.Sets.IsArrow[item.ammo]) goto case ItemID.WoodenArrow;
+				if (AmmoID.Sets.IsBullet[item.ammo]) goto case ItemID.MusketBall;
 				if (item.ammo == ModContent.ItemType<Harpoon>()) types.Add(WikiCategories.Harpoon);
 				else if (item.ammo == ModContent.ItemType<Metal_Slug>()) types.Add(WikiCategories.Slug);
 				break;
@@ -430,13 +453,32 @@ namespace Origins.Dev {
 			if (customStat?.Hardmode ?? (!item.consumable && item.rare > ItemRarityID.Orange)) types.Add(WikiCategories.Hardmode);
 
 			if (ItemID.Sets.IsFood[item.type]) types.Add(WikiCategories.Food);
+			else if (item.buffType != 0) {
+				if (Main.vanityPet[item.buffType]) types.Add(WikiCategories.Pet);
+				else if (Main.lightPet[item.buffType]) types.Add(WikiCategories.LightPet);
+				else types.Add(WikiCategories.Potion);
+			}
+
 			if (item.ammo != 0 && item.ammo != ItemID.CopperOre) types.Add(WikiCategories.Ammo);
 			if (item.headSlot != -1 || item.bodySlot != -1 || item.legSlot != -1) types.Add(WikiCategories.Armor);
 			if (item.createTile != -1) {
 				types.Add(WikiCategories.Tile);
 				if (TileID.Sets.Torch[item.createTile]) types.Add(WikiCategories.Torch);
 				if (TileID.Sets.Ore[item.createTile]) types.Add(WikiCategories.Ore);
+				if (TileID.Sets.Stone[item.createTile]) types.Add(WikiCategories.Stone);
+				if (TileID.Sets.Grass[item.createTile]) types.Add(WikiCategories.Grass);
+				if (TileLoader.GetTile(item.createTile) is ModTile modTile) {
+					if (modTile is Bar_Tile) types.Add(WikiCategories.Bar);
+					if (!Main.tileHammer[modTile.Type] && !Main.tileAxe[modTile.Type]) {
+						data.AppendStat("PickReq", modTile.MinPick, 0);
+					}
+				}
 			}
+			if (modItem is ITornSource) {
+				types.Add(WikiCategories.Torn);
+				types.Add(WikiCategories.TornSource);
+			}
+			if (!string.IsNullOrWhiteSpace(OriginsSets.Items.JournalEntries[item.type])) types.Add(WikiCategories.LoreItem);
 			if (item.expert) types.Add(WikiCategories.Expert);
 			if (item.master) types.Add(WikiCategories.Master);
 			data.Add("Types", types);
@@ -541,11 +583,15 @@ namespace Origins.Dev {
 		None,
 		Sword,
 		Spear,
+		Flail,
 		Boomerang,
 		Yoyo,
 		Bow,
+		Repeater,
 		Gun,
+		Flamethrower,
 		HarpoonGun,
+		DartLauncher,
 		Wand,
 		MagicGun,
 		SpellBook,

@@ -6,10 +6,7 @@ using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Tiles.Defiled;
 namespace Origins.Items.Weapons.Ranged {
-    public class Endowood_Bow : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            WikiCategories.Bow
-        ];
+    public class Endowood_Bow : ModItem {
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodBow);
 			Item.damage = 8;

@@ -14,7 +14,6 @@ namespace Origins.Items.Accessories {
 		internal static List<int> projectiles = [];
 		public string[] Categories => [
 			WikiCategories.Info,
-			WikiCategories.LoreItem,
 			WikiCategories.Hidden
 		];
 		public override void SetStaticDefaults() {

@@ -3,11 +3,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Rocodile : ModItem, ICustomWikiStat {
+	public class Rocodile : ModItem {
 		static short glowmask;
-        public string[] Categories => [
-            WikiCategories.Launcher
-        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[Type] = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher];

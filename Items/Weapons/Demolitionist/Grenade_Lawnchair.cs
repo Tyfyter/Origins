@@ -5,10 +5,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Grenade_Lawnchair : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.Launcher
-		];
+	public class Grenade_Lawnchair : ModItem {
 		public static AutoCastingAsset<Texture2D> UseTexture { get; private set; }
 		public override void Unload() {
 			UseTexture = null;

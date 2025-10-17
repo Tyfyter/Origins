@@ -4,12 +4,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Brainade : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            WikiCategories.ThrownExplosive,
-			WikiCategories.IsGrenade,
-            WikiCategories.ExpendableWeapon
-        ];
+	public class Brainade : ModItem {
         public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;

@@ -9,12 +9,9 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.Items.Weapons.Ranged {
-	public class Sixth_Spline : ModItem, ICustomWikiStat, IJournalEntrySource {
+	public class Sixth_Spline : ModItem, IJournalEntrySource {
 		static short glowmask;
 		public static WeightedRandom<Sixth_Spline_Projectile> Projectiles { get; private set; }  = new();
-        public string[] Categories => [
-            WikiCategories.Gun
-        ];
 		public string EntryName => "Origins/" + typeof(Fifth_Spline_Entry).Name;
 		public class Fifth_Spline_Entry : JournalEntry {
 			public override string TextKey => "Fifth_Spline";

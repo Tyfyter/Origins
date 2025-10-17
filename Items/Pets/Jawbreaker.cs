@@ -16,12 +16,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Jawbreaker : ModItem /*, ICustomWikiStat, ICustomPetFrames */ {
+	public class Jawbreaker : ModItem {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		public string[] Categories => [
-			WikiCategories.Pet
-		];
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.value = Item.sellPrice(gold: 5);

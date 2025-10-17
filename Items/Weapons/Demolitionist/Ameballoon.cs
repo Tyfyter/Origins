@@ -9,12 +9,8 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Ameballoon : ModItem, ICustomWikiStat {
+	public class Ameballoon : ModItem {
 		static short glowmask;
-        public string[] Categories => [
-            WikiCategories.ThrownExplosive,
-            WikiCategories.ExpendableWeapon
-        ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			glowmask = Origins.AddGlowMask(this, "");

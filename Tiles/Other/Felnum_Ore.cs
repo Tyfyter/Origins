@@ -35,9 +35,6 @@ namespace Origins.Tiles.Other {
 		}
 	}
 	public class Felnum_Ore_Item : ModItem, ICustomWikiStat, IJournalEntrySource {
-		public string[] Categories => [
-			WikiCategories.Ore
-		];
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;

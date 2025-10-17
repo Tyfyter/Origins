@@ -13,8 +13,6 @@ namespace Origins.Items.Weapons.Magic {
 		public static float TornSeverity => 0.25f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-			WikiCategories.Torn,
-			WikiCategories.TornSource,
 			WikiCategories.UsesBookcase,
 			WikiCategories.SpellBook
 		];

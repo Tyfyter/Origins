@@ -11,8 +11,6 @@ namespace Origins.Items.Weapons.Ammo {
 		public static float TornSeverity => 0.5f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-			WikiCategories.Torn,
-			WikiCategories.TornSource,
 			WikiCategories.Arrow
 		];
 		public override void SetStaticDefaults() {

@@ -8,10 +8,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
-	public class Communion : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.Wand
-		];
+	public class Communion : ModItem {
 		public override void SetStaticDefaults() {
 			Item.staff[Type] = true;
 			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Rasterized_Debuff.ID];

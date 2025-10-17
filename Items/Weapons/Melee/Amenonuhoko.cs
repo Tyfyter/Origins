@@ -15,7 +15,6 @@ using Terraria.Graphics.Shaders;
 namespace Origins.Items.Weapons.Melee {
     public class Amenonuhoko : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            WikiCategories.Spear,
 			WikiCategories.ToxicSource
         ];
         public override void SetStaticDefaults() {

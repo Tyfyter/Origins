@@ -5,10 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Marrowick_Bow : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            WikiCategories.Bow
-        ];
+	public class Marrowick_Bow : ModItem {
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodBow);
 			Item.damage = 9;

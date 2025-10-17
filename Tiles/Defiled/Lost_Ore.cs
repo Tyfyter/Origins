@@ -36,9 +36,6 @@ namespace Origins.Tiles.Defiled {
 	}
 	[LegacyName("Defiled_Ore_Item")]
 	public class Lost_Ore_Item : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.Ore
-		];
         public override void SetStaticDefaults() {
             Item.ResearchUnlockCount = 100;
         }
@@ -52,7 +49,6 @@ namespace Origins.Tiles.Defiled {
 			string key = base_key + "Crafting";
 			data.AppendStat("Crafting", Language.GetTextValue(key), key);
 			data.Add("Tier", 5);
-			data["PickReq"] = 55;
 		}
 	}
 }

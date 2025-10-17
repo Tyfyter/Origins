@@ -5,10 +5,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Shotty_x2 : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.Gun
-		];
+	public class Shotty_x2 : ModItem {
 		public override string Texture => "Origins/Items/Weapons/Ranged/2_In_1_Shotty";
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Boomstick);
@@ -33,7 +30,6 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class Shotty_x3 : ModItem {
 		public override string Texture => "Origins/Items/Weapons/Ranged/3_In_1_Shotty";
-
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Shotgun);
 			Item.useTime = 50;

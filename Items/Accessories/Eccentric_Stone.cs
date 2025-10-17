@@ -10,7 +10,6 @@ namespace Origins.Items.Accessories {
 	public class Eccentric_Stone : ModItem, IJournalEntrySource, ICustomWikiStat, IItemObtainabilityProvider {
 		public string[] Categories => [
 			WikiCategories.Misc,
-			WikiCategories.LoreItem,
 			WikiCategories.SummonBoostAcc
 		];
 		public string EntryName => "Origins/" + typeof(Eccentric_Stone_Entry).Name;

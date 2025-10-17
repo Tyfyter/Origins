@@ -13,8 +13,7 @@ namespace Origins.Items.Tools {
 	public class Miter_Saw : ModItem, ICustomDrawItem, ICustomWikiStat {
 		public static float MaxHitsPerAnimation => 8;
 		public string[] Categories => [
-			WikiCategories.ToolWeapon,
-			WikiCategories.OtherMelee
+			WikiCategories.ToolWeapon
 		];
 		static AutoCastingAsset<Texture2D> useTexture;
 		static AutoLoadingAsset<Texture2D> smearTexture = typeof(Miter_Saw).GetDefaultTMLName() + "_Smear";

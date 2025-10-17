@@ -37,9 +37,6 @@ namespace Origins.Tiles.Riven {
 	}
 	[LegacyName("Infested_Ore_Item")]
 	public class Encrusted_Ore_Item : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.Ore
-		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}
@@ -53,7 +50,6 @@ namespace Origins.Tiles.Riven {
 			string key = base_key + "Crafting";
 			data.AppendStat("Crafting", Language.GetTextValue(key), key);
 			data.Add("Tier", 5);
-			data["PickReq"] = 55;
 		}
 	}
 }

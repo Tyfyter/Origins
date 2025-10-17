@@ -5,9 +5,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-	public class Absorption_Potion : ModItem {
+	public class Absorption_Potion : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            WikiCategories.Potion,
 			WikiCategories.SelfDamageProtek
 		];
         public override void SetStaticDefaults() {

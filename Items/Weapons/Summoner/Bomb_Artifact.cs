@@ -13,12 +13,8 @@ using Origins.Buffs;
 using Origins.NPCs.MiscE;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class Bomb_Artifact : ModItem, ICustomWikiStat {
+	public class Bomb_Artifact : ModItem {
 		internal static int projectileID = 0;
-        public string[] Categories => [
-            WikiCategories.Artifact,
-			WikiCategories.Minion
-        ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

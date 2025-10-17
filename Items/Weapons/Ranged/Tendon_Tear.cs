@@ -10,10 +10,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Tendon_Tear : ModItem, ICustomWikiStat, IJournalEntrySource {
-        public string[] Categories => [
-            WikiCategories.Gun
-        ];
+	public class Tendon_Tear : ModItem, IJournalEntrySource {
 		public string EntryName => "Origins/" + typeof(Tendon_Tear_Entry).Name;
 		public class Tendon_Tear_Entry : JournalEntry {
 			public override string TextKey => "Tendon_Tear";

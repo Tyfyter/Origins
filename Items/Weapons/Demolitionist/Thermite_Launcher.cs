@@ -12,11 +12,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Thermite_Launcher : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.Launcher,
-			WikiCategories.CanistahUser
-		];
+	public class Thermite_Launcher : ModItem {
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Thermite_Canister_P>(38, 34, 16f, 44, 18);
 			Item.knockBack = 2f;

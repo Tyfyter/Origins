@@ -24,8 +24,6 @@ namespace Origins.Items.Weapons.Melee {
 		float ITornSource.Severity => TornSeverity;
 		static short glowmask;
         public string[] Categories => [
-			WikiCategories.Torn,
-			WikiCategories.TornSource,
 			WikiCategories.Sword,
 			WikiCategories.Cursed
 		];

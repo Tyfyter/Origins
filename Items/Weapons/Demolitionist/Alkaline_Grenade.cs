@@ -7,9 +7,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Alkaline_Grenade : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.ThrownExplosive,
-			WikiCategories.IsBomb,
-			WikiCategories.ExpendableWeapon,
 			WikiCategories.ToxicSource
 		];
 		public override void SetStaticDefaults() {

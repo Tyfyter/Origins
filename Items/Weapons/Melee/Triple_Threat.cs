@@ -8,9 +8,6 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
     public class Triple_Threat : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            WikiCategories.Yoyo
-        ];
         public override void SetStaticDefaults() {
 			// These are all related to gamepad controls and don't seem to affect anything else
 			ItemID.Sets.Yoyo[Item.type] = true; // Used to increase the gamepad range when using Strings.

@@ -11,10 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Abrasion_Blaster : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.Launcher
-		];
+	public class Abrasion_Blaster : ModItem {
 		public override void SetDefaults() {
 			Item.DefaultToLauncher(18, 45, 48, 22, false);
 			Item.crit = 4;

@@ -15,10 +15,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Self_Destruct : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.OtherExplosive
-		];
+	public class Self_Destruct : ModItem {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Origins.AddGlowMask(this);

@@ -1,17 +1,12 @@
-using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Ammo {
-	public class Aether_Bullet : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.Bullet
-		];
+	public class Aether_Bullet : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}

@@ -9,9 +9,6 @@ namespace Origins.Items.Other.Consumables {
 	public class Salt_Flask : ModItem, ITornSource {
 		public static float TornSeverity => 0.2f;
 		float ITornSource.Severity => TornSeverity;
-		public string[] Categories => [
-			WikiCategories.Potion
-		];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 		}

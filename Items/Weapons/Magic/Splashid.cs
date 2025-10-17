@@ -12,7 +12,6 @@ namespace Origins.Items.Weapons.Magic {
 	public class Splashid : ModItem, IElementalItem, IJournalEntrySource {
 		static short glowmask;
 		public string[] Categories => [
-			WikiCategories.Wand,
 			WikiCategories.ToxicSource
 		];
 		public string EntryName => "Origins/" + typeof(Splashid_Entry).Name;

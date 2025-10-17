@@ -13,12 +13,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Blockus_Tube : ModItem, ICustomWikiStat, ICustomPetFrames, IJournalEntrySource<Blockus_Tube_Entry> {
+	public class Blockus_Tube : ModItem, ICustomPetFrames, IJournalEntrySource<Blockus_Tube_Entry> {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		public string[] Categories => [
-			WikiCategories.Pet
-		];
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.value = Item.sellPrice(gold: 5);
