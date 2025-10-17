@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,7 +23,7 @@ namespace Origins.Items.Other.Consumables.Food {
 				true
 			);
 			Item.value = Item.sellPrice(silver: 20);
-			Item.rare = ItemRarityID.Orange;
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override bool ConsumeItem(Player player) {
 			player.AddBuff(BuffID.Calm, Item.buffTime);

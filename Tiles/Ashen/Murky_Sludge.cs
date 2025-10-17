@@ -1,6 +1,4 @@
-﻿using Origins.World.BiomeData;
-using System.Collections.Generic;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -13,7 +11,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(FromHexRGB(0x2c212a));
 			DustType = DustID.Mud;
-			HitSound = SoundID.Item167.WithPitchOffset(-2f);
+			HitSound = SoundID.NPCHit18;
 			LateSetupActions.Add(() => {
 				TileMergeOverlay mergeOverlay = new(merge + "Murk_Overlay", Type);
 				for (int i = 0; i < TileLoader.TileCount; i++) {
@@ -68,8 +66,8 @@ namespace Origins.Tiles.Ashen {
 		public override void Update(Player player, ref int buffIndex) {
 			OriginPlayer oP = player.OriginPlayer();
 			oP.moveSpeedMult *= 0.75f;
-			player.jumpSpeedBoost -= 3.5f;
-			if (!oP.collidingY) player.buffTime[buffIndex] = 1;
+			player.jump -= 8;
+			//if (!oP.collidingY) player.buffTime[buffIndex] = 1;
 		}
 	}
 }

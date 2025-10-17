@@ -6971,7 +6971,7 @@ Heat_Vent_Item: {
 
 Steel_Support_Beam_Item: {
 	// DisplayName: Steel Support Beam
-	// Tooltip: ""
+	// Tooltip: Not quite as 'stainless'
 }
 
 Witherwood_Wall_Item: {

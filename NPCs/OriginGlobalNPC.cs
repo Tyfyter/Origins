@@ -4,6 +4,7 @@ using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;
@@ -72,6 +73,7 @@ namespace Origins.NPCs {
 				case NPCID.Merchant: {
 					shop.Add<Blue_Bovine>(Quest.QuestCondition<Blue_Bovine_Quest>());
 					shop.Add<Lottery_Ticket>(Quest.QuestCondition<Lottery_Ticket_Quest>());
+					shop.Add<Spearmint_Tea>(Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
 					break;
 				}
 				case NPCID.Demolitionist: {
