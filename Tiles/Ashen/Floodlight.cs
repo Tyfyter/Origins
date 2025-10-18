@@ -2,18 +2,11 @@
 using Origins.Graphics;
 using Origins.World.BiomeData;
 using PegasusLib;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.GameContent.Achievements;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -26,7 +19,7 @@ namespace Origins.Tiles.Ashen {
 			this.SetupGlowKeys();
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0.912f, 0.579f, 0f) * 3);
+			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(05f, 0.31f, 0f) * 3);
 		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
@@ -40,7 +33,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.DisableSmartCursor[Type] = true;
 
 			// Names
-			AddMapEntry(new Color(220, 220, 220), CreateMapEntryName());
+			AddMapEntry(new Color(255, 90, 30), CreateMapEntryName());
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -57,15 +50,9 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (ShouldGlow(Main.tile[i, j])) {
-				r = 9.12f;
-				g = 5.79f;
+				r = 5f;
+				g = 3.1f;
 				b = 0.5f;
-				for (int k = 1; k < 4; k++) {
-					for (int l = 1; l < 4; l++) {
-						float brightness = 5 / (float)(k + l);
-						Lighting.AddLight(i + k, j + l, brightness, brightness, brightness * 0.85f);
-					}
-				}
 			}
 		}
 		public static bool ShouldGlow(Tile tile) {
