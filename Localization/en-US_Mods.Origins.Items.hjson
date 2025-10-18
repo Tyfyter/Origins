@@ -7064,95 +7064,11 @@ Unmarked_Antidote: {
 	Tooltip: ""
 }
 
-Worn_Paper_Loose_Wheel: {
-	DisplayName: Worn Paper: Loose Wheel
-	Tooltip:
-		'''
-		'I got my certificate of admission into the Smokesite Scrapper Apprenticeship 3 months ago.
-		Just a few years in the mines, a few learning lessons here ‘n there and then I’m free.
-		Still laborious work, but it is fun.
-		I get to go to many abandoned facilities and take back home the important stuff, and sometimes meet with strange anomalies.
-		They say magic isn’t real, but we get to see it.
-		Don’t know a soul that would engineer these kinds of things;
-		not even the MT’s can figure it out.
-		As long as I stick with my new work group, I’ll be fine. They’re really old because our job has no prospects for advancement, they can carry me forward until I get the hang of things.
-		Maybe one day I’ll also get to be unfazed by a random mannequin doing a handstand charge straight at me, but certainly not now.'
-		'''
-}
-
-Worn_Paper_Self_Preservation: {
-	DisplayName: Worn Paper: Self-Preservation
-	Tooltip:
-		'''
-		I was quite lucky.
-		By the time the war engines turned on us I was out on a scrap run at AT-BSQ2, the facility was an old comms tower connecting the 9th and 2nd quadrants.
-		We managed to get the comms array working again, which was powerful enough to relay messages that were being sent directly from the Mother Unit.
-		The facility having no power was the reason why the other smokesites in the surrounding area were inactive, but after we powered it back on and intercepted the Mother Unit’s orders, we had chills run down our spines.
-		If it weren’t for my cowardice, I’d be dead because Cath, Ron and Heggins agreed to heed my warnings.
-		We’ve been camped out here and brought in the buggy in-case we need a fast escape.
-		Seeing the birds in the sky and the daddy long legs out isn’t an assuring sight, though.
-		'''
-}
-
-Worn_Paper_Smog_Test: {
-	DisplayName: Worn Paper: Smog Test
-	Tooltip:
-		'''
-		Pat: Hey Bill, when's the last time you got a smog test?
-
-		Bill: Is this another one of your dumb jokes again?
-
-		Pat: Nah, I'm serious. I've seen you come here on your motorized bicycle. Everyone with a motor's gotta do it by the year.
-
-		Bill: Got mine last fall, why?
-
-		Pat: Well, you just let a big one out in this damn shaft in my face, and it smells absolutely vile. What are you puttin' in there dude?
-
-		Bill: Oh, didn't know you were a smog tester. Got a good look at the undercarriage there? Nothing too rusty?
-
-		Pat: Well. You're surely smelly, but good at the comebacks. Good one.
-
-		Matt: Can you two shut the hell up?"
-
-		Pat: What? Can't have a lil fun to pass the time?
-
-		Matt: I can't let my Apprenticeship to becoming a scrapper be ruined by you pigs. Try not to make a war engine think we're slacking off, would yah?
-
-		Bill: Fair's fair, but I'll screw up more if you make this about you and your stupid Apprenticeship BS.
-		'''
-}
-
-Worn_Paper_The_Packing_Slip: {
-	DisplayName: Worn Paper: The Packing Slip
-	Tooltip:
-		'''
-		Manager: I checked it multiple times. The amount is not just wrong, the shipment itself is not what we ordered.
-
-		Worker: I have no idea about this, LGT. I explicitly remember putting it into the message to V-SFQ3 that we needed a shipment of fresh food stocks. The invoice number lines up too.
-
-		Manager: Instead, we got 18 tons of military technology. Could the message have gotten intercepted and changed in transit?
-
-		Worker: It’s entirely possible. Not the first comms station we’ve had become a smokesite. Guess that’s why we use the radio towers now, huh?
-
-		Manager: I will reach out to LGST about this, no worries. Just let LGST Avens know to update the supplies list.
-
-		Worker: Yes, LGT.
-		'''
-}
-
-Worn_Paper_They_Found_Us: {
-	DisplayName: Worn Paper: They Found Us
-	Tooltip:
-		'''
-		We were compromised when a pack of packhunters came in and searched the place.
-		We almost escaped but they were alerted by the buggy’s engine.
-		We drove about 8km before an HA-24 stopped us.
-		I ran to this replenishment facility and found a power suit still in here.
-		It’s a really good hiding place when you lock up in fear all the time.
-		I can’t leave, but I can’t just starve myself.
-		I’m just living off of whatever I can find
-		'''
-}
+Worn_Paper_Loose_Wheel.DisplayName: Worn Paper: Loose Wheel
+Worn_Paper_Self_Preservation.DisplayName: Worn Paper: Self-Preservation
+Worn_Paper_Smog_Test.DisplayName: Worn Paper: Smog Test
+Worn_Paper_The_Packing_Slip.DisplayName: Worn Paper: The Packing Slip
+Worn_Paper_They_Found_Us.DisplayName: Worn Paper: They Found Us
 
 Minishark_Broth: {
 	DisplayName: Minishark Broth

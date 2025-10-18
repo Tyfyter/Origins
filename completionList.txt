@@ -1526,11 +1526,11 @@ MISCELLANEOUS ITEMS:
 (X) Armor+ Power-Up
 (^) Defiled Mana
 (^) Large Chambersite
-(#2, ^2) Worn Paper: Loose Wheel (if you could make these journal entries, that would be good)
-(#2, ^2) Worn Paper: Self-Preservation
-(#2, ^2) Worn Paper: Smog Test
-(#2, ^2) Worn Paper: The Packing Slip
-(#2, ^2) Worn Paper: They Found Us
+(☻) Worn Paper: Loose Wheel (these: journal entries)
+(☻) Worn Paper: Self-Preservation
+(☻) Worn Paper: Smog Test
+(☻) Worn Paper: The Packing Slip
+(☻) Worn Paper: They Found Us
 ---
 
 
