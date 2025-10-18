@@ -2,6 +2,7 @@
 using Origins.CrossMod.Fargos.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Chambersite;
+using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
@@ -70,6 +71,7 @@ namespace Origins {
 					case entity_interaction:
 					case soul_snatcher_activate:
 					case shinedown_spawn_shadows:
+					case sync_ashen_wires:
 					altHandle = true;
 					break;
 
@@ -195,6 +197,7 @@ namespace Origins {
 					case entity_interaction:
 					case soul_snatcher_activate:
 					case shinedown_spawn_shadows:
+					case sync_ashen_wires:
 					altHandle = true;
 					break;
 
@@ -531,6 +534,17 @@ namespace Origins {
 						}
 						break;
 					}
+
+					case sync_ashen_wires: {
+						ushort i = reader.ReadUInt16();
+						ushort j = reader.ReadUInt16();
+						Main.tile[i, j].Get<Ashen_Wire_Data>().data = reader.ReadByte();
+
+						if (Main.netMode == NetmodeID.Server) {
+							Ashen_Wire_System.SendWireData(i, j, whoAmI);
+						}
+						break;
+					}
 				}
 			}
 			//if (reader.BaseStream.Position != reader.BaseStream.Length) Logger.Warn($"Bad read flow (+{reader.BaseStream.Position - reader.BaseStream.Length}) in packet type {type}");
@@ -572,6 +586,7 @@ namespace Origins {
 			internal const byte shinedown_spawn_shadows = 30;
 			internal const byte sync_npc_interactions = 31;
 			internal const byte clone_npc = 32;
+			internal const byte sync_ashen_wires = 33;
 
 			//public static string[] names;
 		}

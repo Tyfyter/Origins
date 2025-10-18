@@ -3104,3 +3104,8 @@ CritType: {
 	Viper_Rifle_Crit_Type: Critically strikes on otherwise afflicted enemies
 	Felnum_Crit_Type: "{$Mods.CritRework.CritTypes.FoeIsWet.Description}"
 }
+
+BuilderToggle: {
+	Black_Wire_Toggle: Black Wires
+	Brown_Wire_Toggle: Brown Wires
+}

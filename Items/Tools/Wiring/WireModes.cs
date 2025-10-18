@@ -27,6 +27,7 @@ namespace Origins.Items.Tools.Wiring {
 				if (set[sortedWireModes[i].Type]) yield return sortedWireModes[i];
 			}
 		}
+		public static IEnumerable<WireMode> GetSorted() => sortedWireModes;
 		internal static void Register(WireMode mode) {
 			mode.Type = WireModeCount;
 			wireModes.Add(mode);
@@ -38,6 +39,11 @@ namespace Origins.Items.Tools.Wiring {
 				mode => mode.SortBefore()
 			).Sort());
 		}
+		public static Call_Wire_Mode AddCallWireMode(Mod mod, Func<int, int, bool> get, Action<int, int, bool> set, string iconTexture, Color miniWireMenuColor, Color? wireKiteColor, IEnumerable<string> sortAfter, IEnumerable<string> sortBefore, (ModItem, int) itemType, bool isExtra, string customBack) {
+			Call_Wire_Mode instance = new(get, set, iconTexture, miniWireMenuColor, wireKiteColor, itemType, isExtra, customBack, sortAfter, sortBefore);
+			mod.AddContent(instance);
+			return instance;
+		}
 	}
 	[Flags]
 	public enum WirePetalData {
@@ -48,11 +54,12 @@ namespace Origins.Items.Tools.Wiring {
 		public int Type { get; internal set; }
 		public virtual int ItemType { get; } = ItemID.Wire;
 		public virtual bool IsExtra => false;
-		public virtual int BreakDust => -1;
 		public virtual Color? WireKiteColor => null;
+		public virtual Color MiniWireMenuColor => WireKiteColor ?? Color.White;
 		public Asset<Texture2D> Texture2D { get; private set; }
 		protected sealed override void Register() {
 			WireModeLoader.Register(this);
+			ModTypeLookup<WireMode>.Register(this);
 		}
 		public sealed override void SetupContent() {
 			if (!Main.dedServ) Texture2D = ModContent.Request<Texture2D>(Texture);
@@ -127,7 +134,6 @@ namespace Origins.Items.Tools.Wiring {
 	}
 	public class Red_Wire_Mode : WireMode {
 		public override string Texture => "Terraria/Images/UI/Wires_2";
-		public override int BreakDust => DustID.Adamantite;
 		public override Color? WireKiteColor => Color.Red;
 		public override void SetupSets() {
 			Sets.NormalWires[Type] = true;
@@ -202,6 +208,8 @@ namespace Origins.Items.Tools.Wiring {
 		public static bool[] EnabledWires { get; } = WireMode.Sets.Factory.CreateBoolSet();
 		public static IWireTool WireTool => Main.LocalPlayer.HeldItem.ModItem as IWireTool;
 		public override bool IsActive() => WireTool is not null;
+		AutoLoadingAsset<Texture2D> wireMiniIcons = "Origins/Items/Tools/Wiring/Mini_Wire_Icons";
+		AutoLoadingAsset<Texture2D> extraMiniIcons = "Origins/Items/Tools/Wiring/Mini_Wire_Extra_Icons";
 		public override float DrawCenter() {
 			bool hovered = Main.MouseScreen.WithinRange(activationPosition, 20);
 			int cutter = Cutter.ToInt();
@@ -220,9 +228,42 @@ namespace Origins.Items.Tools.Wiring {
 			if (Cutter) data |= WirePetalData.Cutter;
 			return data;
 		}
+		public override bool GetCursorAreaTexture(WireMode mode, out Texture2D texture, out Rectangle? frame, out Color color) {
+			texture = mode.IsExtra ? extraMiniIcons : wireMiniIcons;
+			frame = new Rectangle(12 * (1 + Cutter.ToInt()), 0, 10, 10);
+			color = Color.Lerp(mode.MiniWireMenuColor, mode.MiniWireMenuColor == Color.Black ? new(50, 50, 50) : Color.Black, (!EnabledWires[mode.Type]).ToInt() * 0.65f);
+			return true;
+		}
 		public override void Click(WireMode mode) {
 			EnabledWires[mode.Type] ^= true;
 		}
 		public override IEnumerable<WireMode> GetModes() => WireTool.Modes;
+	}
+	[Autoload(false)]
+	public class Call_Wire_Mode(Func<int, int, bool> get, Action<int, int, bool> set, string iconTexture, Color miniWireMenuColor, Color? wireKiteColor, (ModItem, int) itemType, bool isExtra, string customBack, IEnumerable<string> sortAfter, IEnumerable<string> sortBefore) : WireMode {
+		public override string Texture => iconTexture;
+		public override Color? WireKiteColor => wireKiteColor;
+		public override Color MiniWireMenuColor => miniWireMenuColor;
+		public override int ItemType => itemType.Item1?.Type ?? itemType.Item2;
+		public override bool IsExtra => isExtra;
+		AutoLoadingAsset<Texture2D> customBack = customBack;
+		public override void SetupSets() {
+			Sets.NormalWires[Type] = true;
+		}
+		public override bool SetWire(int x, int y, bool value) {
+			if (get(x, y) != value) {
+				set(x, y, value);
+				return true;
+			}
+			return false;
+		}
+		public override IEnumerable<WireMode> SortAfter() => sortAfter.TrySelect<string, WireMode>(ModContent.TryFind);
+		public override IEnumerable<WireMode> SortBefore() => sortBefore.TrySelect<string, WireMode>(ModContent.TryFind);
+		public override void Draw(Vector2 position, bool hovered, WirePetalData data) {
+			GetTints(hovered, data.HasFlag(WirePetalData.Enabled), out Color backTint, out Color iconTint);
+			DrawIcon(TextureAssets.WireUi[hovered.ToInt() + data.HasFlag(WirePetalData.Cutter).ToInt() * 8].Value, position, backTint);
+			if (customBack.Exists && !data.HasFlag(WirePetalData.Cutter)) DrawIcon(customBack, position, backTint);
+			DrawIcon(Texture2D.Value, position, iconTint);
+		}
 	}
 }

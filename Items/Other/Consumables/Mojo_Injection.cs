@@ -50,6 +50,7 @@ namespace Origins.Items.Other.Consumables {
 	}
 	public class Mojo_Injection_Toggle : BuilderToggle {
 		public override string HoverTexture => Texture;
+		public override Position OrderPosition => new Before(HideAllWires);
 		public override bool Active() => OriginPlayer.LocalOriginPlayer?.mojoInjection ?? false;
 		public override string DisplayValue() => Language.GetOrRegister($"Mods.Origins.Items.{nameof(Mojo_Injection)}.Toggle_" + (CurrentState == 0 ? "On" : "Off")).Value;
 		public override bool Draw(SpriteBatch spriteBatch, ref BuilderToggleDrawParams drawParams) {

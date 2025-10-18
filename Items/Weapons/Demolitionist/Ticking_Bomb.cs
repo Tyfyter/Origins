@@ -218,6 +218,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Vector2.One
 			);
 		}
+		public override void DrawNearCursor(SpriteBatch spriteBatch) { }
 	}
 	public class Ticking_Bomb_P : ModProjectile {
 		public override string Texture => typeof(Ticking_Bomb).GetDefaultTMLName();

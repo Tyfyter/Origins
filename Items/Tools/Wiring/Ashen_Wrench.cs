@@ -20,31 +20,41 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Tools.Wiring {
 	public class Ashen_Wrench : ModItem, IWireTool {
-		public override string Texture => "Origins/Items/Tools/Wiring/Ashen_Wires";
-		public IEnumerable<WireMode> Modes => WireModeLoader.GetSorted(WireMode.Sets.NormalWires).Concat(WireModeLoader.GetSorted(WireMode.Sets.AshenWires));
-		public override void Load() {
-			Ashen_Wire_Data.Load();
-		}
+		public override string Texture => "Terraria/Images/Item_" + ItemID.YellowWrench;
+		public IEnumerable<WireMode> Modes => WireModeLoader.GetSorted(WireMode.Sets.AshenWires);
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WireKite);
+			Item.color = Color.Chocolate;
 			Item.shoot = ModContent.ProjectileType<Mod_Wire_Channel>();
 			Item.channel = true;
 		}
-		public static bool PlaceWire(int i, int j, int wireType) {
-			if (!Main.tile[i, j].Get<Ashen_Wire_Data>().GetWire(wireType)) {
-				SoundEngine.PlaySound(SoundID.Dig, new(i * 16, j * 16));
-				Ashen_Wire_Data.SetWire(i, j, wireType, true);
-				return true;
-			}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (player.ownedProjectileCounts[type] > 0) return false;
+			Projectile.NewProjectile(
+				source,
+				player.Center,
+				default,
+				type,
+				0,
+				0,
+				-1,
+				Player.tileTargetX,
+				Player.tileTargetY
+			);
 			return false;
 		}
-		public override bool? UseItem(Player player) {
-			if (player.altFunctionUse == 2) {
-				return false;
-			}
-			return true;// PlaceWire(Player.tileTargetX, Player.tileTargetY, 0);
+	}
+	public class Ashen_Grand_Design : ModItem, IWireTool {
+		public override string Texture => "Terraria/Images/Item_" + ItemID.WireKite;
+		public IEnumerable<WireMode> Modes => WireModeLoader.GetSorted(WireMode.Sets.NormalWires).Concat(WireModeLoader.GetSorted(WireMode.Sets.AshenWires));
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.WireKite);
+			Item.color = Color.Chocolate;
+			Item.shoot = ModContent.ProjectileType<Mod_Wire_Channel>();
+			Item.channel = true;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (player.ownedProjectileCounts[type] > 0) return false;
 			Projectile.NewProjectile(
 				source,
 				player.Center,

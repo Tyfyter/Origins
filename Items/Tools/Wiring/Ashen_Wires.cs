@@ -1,25 +1,23 @@
-﻿using CalamityMod.Buffs.Potions;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
-using Newtonsoft.Json.Linq;
-using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Other.Consumables;
 using Origins.Reflection;
-using Origins.UI;
 using Origins.World;
+using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
-using Terraria.GameInput;
-using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
+using Terraria.ModLoader.IO;
+using Terraria.ObjectData;
 
 namespace Origins.Items.Tools.Wiring {
 	public class Brown_Wire_Mode : WireMode {
@@ -62,6 +60,71 @@ namespace Origins.Items.Tools.Wiring {
 			DrawIcon(Texture2D.Value, position, iconTint);
 		}
 	}
+	public class Brown_Wire_Toggle : WireBuilderToggle {
+		public override string Texture => $"{GetType().Namespace.Replace('.','/')}/Ashen_Wire_Builder_Icons";
+		public override Position OrderPosition => new After(ModContent.GetInstance<YellowWireVisibilityBuilderToggle>());
+		public override bool Draw(SpriteBatch spriteBatch, ref BuilderToggleDrawParams drawParams) {
+			drawParams.Frame.X = 0;
+			drawParams.Frame.Width = 14;
+			return base.Draw(spriteBatch, ref drawParams);
+		}
+	}
+	public class Black_Wire_Toggle : WireBuilderToggle {
+		public override string Texture => $"{GetType().Namespace.Replace('.','/')}/Ashen_Wire_Builder_Icons";
+		public override Position OrderPosition => new After(ModContent.GetInstance<Brown_Wire_Toggle>());
+		public override bool Draw(SpriteBatch spriteBatch, ref BuilderToggleDrawParams drawParams) {
+			drawParams.Frame.X = 16;
+			drawParams.Frame.Width = 14;
+			return base.Draw(spriteBatch, ref drawParams);
+		}
+	}
+	public abstract class WireBuilderToggle : BuilderToggle {
+		public override int NumberOfStates => 3;
+		public override bool Active() => Main.LocalPlayer.InfoAccMechShowWires;
+		LocalizedText name;
+		public override void SetStaticDefaults() {
+			name = Language.GetOrRegister($"Mods.{Mod.Name}.BuilderToggle.{Name}");
+		}
+		public override string DisplayValue() {
+			string modeText = "";
+			switch (CurrentState) {
+				case 0:
+				modeText = Language.GetTextValue("GameUI.Bright");
+				break;
+				case 1:
+				modeText = Language.GetTextValue("GameUI.Normal");
+				break;
+				case 2:
+				modeText = Language.GetTextValue("GameUI.Faded");
+				break;
+				case 3: //Should never reach here but vanilla has it
+				Language.GetTextValue("GameUI.Hidden");
+				break;
+			}
+
+			return $"{name.Value}: {modeText}";
+		}
+
+		public override bool Draw(SpriteBatch spriteBatch, ref BuilderToggleDrawParams drawParams) {
+			base.Draw(spriteBatch, ref drawParams);
+			drawParams.Color = default;
+			switch (CurrentState) {
+				case 0:
+				drawParams.Color = Color.White;
+				break;
+				case 1:
+				drawParams.Color = new Color(127, 127, 127);
+				break;
+				case 2:
+				drawParams.Color = new Color(127, 127, 127).MultiplyRGBA(new Color(0.66f, 0.66f, 0.66f, 0.66f));
+				break;
+				case 3: //Should never reach here but vanilla has it
+				drawParams.Color = new Color(127, 127, 127).MultiplyRGBA(new Color(0.33f, 0.33f, 0.33f, 0.33f));
+				break;
+			}
+			return true;
+		}
+	}
 	public struct Ashen_Wire_Data : ITileData {
 		internal byte data;
 		public bool HasBrownWire {
@@ -99,7 +162,8 @@ namespace Origins.Items.Tools.Wiring {
 			ref Ashen_Wire_Data data = ref Main.tile[i, j].Get<Ashen_Wire_Data>();
 			if (value != data.GetWire(wireType)) {
 				SetBit(value, ref data.data, wireType << 1);
-				if (value) if (GetPower(i + 1, j, wireType) || GetPower(i - 1, j, wireType) || GetPower(i, j + 1, wireType) || GetPower(i, j - 1, wireType)) {
+				if (value) {
+					if (GetPower(i + 1, j, wireType) || GetPower(i - 1, j, wireType) || GetPower(i, j + 1, wireType) || GetPower(i, j - 1, wireType)) {
 						SetPowered(i, j, wireType, true);
 						if (!GetPower(i + 1, j, wireType) || !GetPower(i - 1, j, wireType) || !GetPower(i, j + 1, wireType) || !GetPower(i, j - 1, wireType)) PropegatePowerState(i, j, wireType, true);
 					} else if (data.IsTilePowered) PropegatePowerState(i, j, wireType, true);
@@ -110,6 +174,8 @@ namespace Origins.Items.Tools.Wiring {
 						TryPropegateDepowered(i, j + 1, wireType);
 						TryPropegateDepowered(i, j - 1, wireType);
 					}
+				}
+				Ashen_Wire_System.SendWireData(i, j, Main.myPlayer);
 			}
 		}
 		static void SetPowered(int i, int j, int wireType, bool value) {
@@ -117,6 +183,16 @@ namespace Origins.Items.Tools.Wiring {
 			bool wasPowered = data.AnyPower;
 			if (value != data.GetPower(wireType)) SetBit(value, ref data.data, (wireType << 1) + 1);
 			if (data.AnyPower != wasPowered) WiringMethods.HitWireSingle(i, j);
+			Ashen_Wire_System.SendWireData(i, j, Main.myPlayer);
+		}
+		public static void SetMultiTilePowered(int i, int j, bool value) {
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			for (int x = 0; x < data.Width; x++) {
+				for (int y = 0; y < data.Height; y++) {
+					SetTilePowered(left + x, top + y, value);
+				}
+			}
 		}
 		public static void SetTilePowered(int i, int j, bool value) {
 			ref Ashen_Wire_Data data = ref Main.tile[i, j].Get<Ashen_Wire_Data>();
@@ -148,10 +224,23 @@ namespace Origins.Items.Tools.Wiring {
 			for (int k = 0; k < tiles.Count; k++) SetPowered(tiles[k].X, tiles[k].Y, wireType, value);
 		}
 		public readonly void DrawWires(int i, int j) {
-			DrawWire(i, j, 0);
-			DrawWire(i, j, 1);
+			if (Main.tile[i, j].Get<Ashen_Wire_Data>().IsTilePowered) {
+				Main.spriteBatch.Draw(
+					powerSourceTexture.Value,
+					new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y),
+					new Rectangle(0, 0, 16, 16),
+					Color.White * (WiresUI.Settings.HideWires ? 0.5f : 1f),
+					0f,
+					Vector2.Zero,
+					1f,
+					SpriteEffects.None,
+					0f
+				);
+			}
+			DrawWire<Brown_Wire_Toggle>(i, j, 0);
+			DrawWire<Black_Wire_Toggle>(i, j, 1);
 		}
-		readonly void DrawWire(int i, int j, int wireType) {
+		readonly void DrawWire<TBuilderToggle>(int i, int j, int wireType) where TBuilderToggle : WireBuilderToggle {
 			if (GetWire(wireType)) {
 				Color color = Lighting.GetColor(i, j);
 				int num15 = 0;
@@ -159,7 +248,7 @@ namespace Origins.Items.Tools.Wiring {
 				if (Main.tile[i + 1, j].Get<Ashen_Wire_Data>().GetWire(wireType)) num15 += 36;
 				if (Main.tile[i, j + 1].Get<Ashen_Wire_Data>().GetWire(wireType)) num15 += 72;
 				if (Main.tile[i - 1, j].Get<Ashen_Wire_Data>().GetWire(wireType)) num15 += 144;
-				switch (Main.LocalPlayer.InfoAccMechShowWires ? Main.LocalPlayer.builderAccStatus[9] : 1) {
+				switch (Main.LocalPlayer.InfoAccMechShowWires ? Main.LocalPlayer.BuilderToggleState<TBuilderToggle>() : 1) {
 					case 0:
 					color = Color.White;
 					break;
@@ -173,7 +262,7 @@ namespace Origins.Items.Tools.Wiring {
 				Main.spriteBatch.Draw(
 					underlayTexture.Value,
 					new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y),
-					new Rectangle(num15, 0, 16, 16),
+					new Rectangle(num15, wireType * 18, 16, 16),
 					color * (WiresUI.Settings.HideWires ? 0.5f : 1f),
 					0f,
 					Vector2.Zero,
@@ -196,6 +285,7 @@ namespace Origins.Items.Tools.Wiring {
 		}
 		internal static Asset<Texture2D> underlayTexture;
 		internal static Asset<Texture2D> glowTexture;
+		internal static Asset<Texture2D> powerSourceTexture;
 		static void IL_Main_DrawWires(ILContext il) {
 			ILCursor c = new(il);
 			int x = -1;
@@ -220,6 +310,69 @@ namespace Origins.Items.Tools.Wiring {
 			const string texture = "Origins/Items/Tools/Wiring/Ashen_Wires";
 			underlayTexture = ModContent.Request<Texture2D>(texture);
 			glowTexture = ModContent.Request<Texture2D>(texture + "_Active");
+			powerSourceTexture = ModContent.Request<Texture2D>(texture + "_Power_Source");
+		}
+	}
+	public class Ashen_Wire_Global_Tile : GlobalTile {
+		public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem) {
+			if (!fail) Ashen_Wire_Data.SetTilePowered(i, j, false);
+		}
+	}
+	public class Ashen_Wire_System : ModSystem {
+		public override void Load() {
+			Ashen_Wire_Data.Load();
+		}
+		public static void SendWireData(int i, int j, int ignoreClient = -1) {
+			if (NetmodeActive.SinglePlayer) return;
+			ModPacket packet = Origins.instance.GetPacket();
+			packet.Write(Origins.NetMessageType.sync_ashen_wires);
+			packet.Write((ushort)i);
+			packet.Write((ushort)j);
+			packet.Write(Main.tile[i, j].Get<Ashen_Wire_Data>().data);
+			packet.Send(ignoreClient: ignoreClient);
+		}
+		public override void SaveWorldData(TagCompound tag) {
+			using MemoryStream data = new(Main.maxTilesX);
+			using (BinaryWriter writer = new(data, Encoding.UTF8)) {
+				writer.Write((byte)0); // version just in case 
+									   // if MyTileData is updated, update this 'version' number 
+									   // and add handling logic in LoadWorldData for backwards compat
+				writer.Write(checked((ushort)Main.maxTilesX));
+				writer.Write(checked((ushort)Main.maxTilesY));
+				ReadOnlySpan<byte> worldData = MemoryMarshal.Cast<Ashen_Wire_Data, byte>(Main.tile.GetData<Ashen_Wire_Data>());
+				writer.Write(worldData);
+				int count = 0;
+				for (int i = 0; i < worldData.Length; i++) {
+					if (worldData[i] != 0) count++;
+				}
+			}
+			tag["AshenWires"] = data.ToArray();
+		}
+		public override void LoadWorldData(TagCompound tag) {
+			if (tag.TryGet("AshenWires", out byte[] data)) {
+				using BinaryReader reader = new(new MemoryStream(data), Encoding.UTF8);
+				byte version = reader.ReadByte();
+				if (version == 0) {
+					int width = reader.ReadUInt16();
+					int height = reader.ReadUInt16();
+					if (width != Main.maxTilesX || height != Main.maxTilesY) {
+						// the world was somehow resized
+						// up to you what to do here 
+						throw new NotImplementedException("World size was changed");
+					} else {
+						Span<byte> worldData = MemoryMarshal.Cast<Ashen_Wire_Data, byte>(Main.tile.GetData<Ashen_Wire_Data>().AsSpan());
+						int length = reader.Read(worldData);
+						int count = 0;
+						for (int i = 0; i < worldData.Length; i++) {
+							if (worldData[i] != 0) count++;
+						}
+					}
+				}
+				// add more else-ifs for newer versions of the data
+				else {
+					throw new Exception("Unknown world data saved version");
+				}
+			}
 		}
 	}
 }

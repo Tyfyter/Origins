@@ -127,6 +127,7 @@ namespace Origins.Items.Other.Consumables {
 	}
 	public class Crown_Jewel_Toggle : BuilderToggle {
 		public override string HoverTexture => Texture;
+		public override Position OrderPosition => new Before(HideAllWires);
 		public override bool Active() => OriginPlayer.LocalOriginPlayer?.crownJewel ?? false;
 		public override string DisplayValue() {
 			string baseValue = Language.GetOrRegister($"Mods.Origins.Items.{nameof(Crown_Jewel)}.Toggle_" + (CurrentState == 0 ? "On" : "Off")).Value;

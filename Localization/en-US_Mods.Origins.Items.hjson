@@ -7188,3 +7188,8 @@ Ashen_Wrench: {
 	DisplayName: Ashen Wrench
 	Tooltip: ""
 }
+
+Ashen_Grand_Design: {
+	DisplayName: Ashen Grand Design
+	Tooltip: ""
+}

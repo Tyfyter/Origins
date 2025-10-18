@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using PegasusLib.Graphics;
