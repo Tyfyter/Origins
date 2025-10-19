@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using static Origins.Journal.JournalEntry;
 
 namespace Origins.Items.Materials {
 	public abstract class Worn_Paper : ModItem, IJournalEntrySource {
@@ -11,14 +10,26 @@ namespace Origins.Items.Materials {
 		public string PaperName => Name.Replace("Worn_Paper_", "");
 		public override LocalizedText Tooltip => Language.GetText($"Mods.{Mod.Name}.Journal.{nameof(Worn_Paper)}.{PaperName}.Text");
 		public string EntryName => $"{Mod.Name}/{PaperName}";
+		public JournalEntry Entry { get; private set; }
 		public override void Load() {
-			Mod.AddContent(new Worn_Paper_Entry(this));
+			Mod.AddContent(Entry = new Worn_Paper_Entry(this));
 		}
 		public override void SetDefaults() {
 			Item.rare = ItemRarityID.Gray;
 			Item.width = 16;
 			Item.height = 16;
 			Item.maxStack = Item.CommonMaxStack;
+		}
+		public override bool CanPickup(Player player) {
+			return true;
+		}
+		public override bool OnPickup(Player player) {
+			OriginPlayer oP = player.OriginPlayer();
+			if (!oP.unlockedJournalEntries.Contains(EntryName)) {
+				oP.UnlockJournalEntry(EntryName);
+				return false;
+			}
+			return true;
 		}
 	}
 	[Autoload(false)]

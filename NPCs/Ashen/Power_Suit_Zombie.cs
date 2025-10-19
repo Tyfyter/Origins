@@ -1,6 +1,7 @@
 ﻿using Origins.Dev;
 using Origins.Items.Armor.Ashen;
 using Origins.Items.Materials;
+using Origins.Journal;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -8,6 +9,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.Ashen {
 	public class Power_Suit_Zombie : ModNPC, IWikiNPC {
@@ -56,7 +58,7 @@ namespace Origins.NPCs.Ashen {
 			AnimationType = NPCID.Zombie;
 			Banner = Item.NPCtoBanner(NPCID.Zombie);
 			SpawnModBiomes = [
-				ModContent.GetInstance<Ashen_Biome>().Type,
+				GetInstance<Ashen_Biome>().Type,
 			];
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
@@ -79,10 +81,10 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Amber, 20));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_They_Found_Us>(), 14));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Helmet>(), 14));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Breastplate>(), 14));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Greaves>(), 14));
+			npcLoot.Add(ItemDropRule.ByCondition(new Journal_Entry_Condition(Journal_Registry.GetJournalEntryByTextKey(GetInstance<Worn_Paper_They_Found_Us>().PaperName)), ItemType<Worn_Paper_They_Found_Us>(), 14));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 14));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 14));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Greaves>(), 14));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0 || OriginsModIntegrations.CheckAprilFools()) {

@@ -6991,18 +6991,18 @@ Welding_Torch: {
 }
 
 Ashen2_Breastplate: {
-	DisplayName: Ashen2 Breastplate
-	Tooltip: ""
+	DisplayName: Ancient Ashen Breastplate
+	Tooltip: "{$Ashen_Breastplate.Tooltip}"
 }
 
 Ashen2_Greaves: {
-	DisplayName: Ashen2 Greaves
-	Tooltip: ""
+	DisplayName: Ancient Ashen Greaves
+	Tooltip: "{$Ashen_Greaves.Tooltip}"
 }
 
 Ashen2_Helmet: {
-	DisplayName: Ashen2 Helmet
-	Tooltip: ""
+	DisplayName: Ancient Ashen Helmet
+	Tooltip: "{$Ashen_Helmet.Tooltip}"
 }
 
 Adrenaline: {
