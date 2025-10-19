@@ -97,7 +97,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(FromHexRGB(0x5a4e6d));
 			DustType = DustID.Demonite;
-			HitSound = SoundID.Item167.WithPitchOffset(-2f);
+			HitSound = SoundID.NPCHit18;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
