@@ -1101,7 +1101,7 @@ EXPLOSIVE WEAPONS:
 (^) Shrapnel Bomb
 (^) Sticky Link Grenade
 (^) Tank Rifle
-(#, ^2) Ticking Bomb
+(#2, ^2) Ticking Bomb (needs crafting recipes with material-dependent yield)
 (#, ^2) Ticking Dynamite
 (^) Voltefuse
 
@@ -1317,7 +1317,7 @@ TILES:
 (X) Bilious Incense
 (^) Brine Dungeon Chest
 (#, ^2) Cargo Elevator Door !!!
-(X) Cargo Elevator Door (Jammed) !!!
+(#, ^2) Cargo Elevator Door (Jammed) !!!
 (^) Chambersite Gem Lock
 (^) Cleansing Station
 (^) Defiled Campfire
@@ -1327,8 +1327,8 @@ TILES:
 (#, ^2) Industrial Door !!!
 (X) Large Storage Container !!!
 (^) Laser Tag Console
-(X) Medium Storage Container !!!
-(X) Modular Bunk !!!
+(#, ^2) Medium Storage Container !!!
+(#, ^2) Modular Bunk !!!
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
 (X) Ocean Dungeon Chest
@@ -1341,7 +1341,7 @@ TILES:
 (^) Riven Campfire
 (^) Riven Dungeon Chest
 (X) Rusty Locker !!!
-(X) Small Storage Container !!!
+(#, ^2) Small Storage Container !!!
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)

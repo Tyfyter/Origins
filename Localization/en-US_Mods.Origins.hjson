@@ -1382,8 +1382,8 @@ Buffs: {
 	Unmarked_Antidote_Buff.DisplayName: Antitoxin
 
 	Murky_Sludge_Debuff: {
-		DisplayName: Murky Sludge Debuff
-		Description: Mods.Origins.Buffs.Murky_Sludge_Debuff.Description
+		DisplayName: Muckin' About
+		Description: Your movement speed is reduced!
 	}
 }
 

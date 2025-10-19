@@ -57,7 +57,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Murky_Sludge_Debuff : ModBuff {
-		public override string Texture => base.Texture.Replace("Debuff", "Item");
 		public override void SetStaticDefaults() {
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.debuff[Type] = true;

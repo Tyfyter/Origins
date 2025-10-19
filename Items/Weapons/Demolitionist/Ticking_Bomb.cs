@@ -1,9 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Origins.Items.Materials;
-using Origins.Projectiles.Weapons;
 using Origins.UI;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -29,7 +25,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = 1000;
 			Item.shoot = ModContent.ProjectileType<Ticking_Bomb_P>();
 			Item.ammo = ItemID.Bomb;
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Orange;
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			for (int i = 0; i < tooltips.Count; i++) {
