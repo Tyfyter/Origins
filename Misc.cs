@@ -16,6 +16,7 @@ using ReLogic.Reflection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
@@ -3348,6 +3349,24 @@ namespace Origins {
 				return ModContent.GetInstance<T>();
 			}
 			return null;
+		}
+		public static string ToRomanNumerals(int number) {
+			if (number < 0) return ToRomanNumerals(-number) + "0";
+			if (number < 1) return string.Empty;
+			if (number >= 1000) return "M" + ToRomanNumerals(number - 1000);
+			if (number >= 900) return "CM" + ToRomanNumerals(number - 900);
+			if (number >= 500) return "D" + ToRomanNumerals(number - 500);
+			if (number >= 400) return "CD" + ToRomanNumerals(number - 400);
+			if (number >= 100) return "C" + ToRomanNumerals(number - 100);
+			if (number >= 90) return "XC" + ToRomanNumerals(number - 90);
+			if (number >= 50) return "L" + ToRomanNumerals(number - 50);
+			if (number >= 40) return "XL" + ToRomanNumerals(number - 40);
+			if (number >= 10) return "X" + ToRomanNumerals(number - 10);
+			if (number >= 9) return "IX" + ToRomanNumerals(number - 9);
+			if (number >= 5) return "V" + ToRomanNumerals(number - 5);
+			if (number >= 4) return "IV" + ToRomanNumerals(number - 4);
+			if (number >= 1) return "I" + ToRomanNumerals(number - 1);
+			throw new UnreachableException("Impossible state reached");
 		}
 	}
 	public static class ShopExtensions {

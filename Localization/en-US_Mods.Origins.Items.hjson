@@ -7095,6 +7095,16 @@ Ticking_Bomb: {
 	Tooltip: "{0:0.##} second fuse time ({1:0.0}x damage)"
 }
 
+Ticking_Dynamite: {
+	DisplayName: Ticking Dynamite
+	Tooltip: "{0:0.##} second fuse time ({1:0.0}x damage)"
+}
+
+Ticking_Grenade: {
+	DisplayName: Ticking Grenade
+	Tooltip: "{0:0.##} second fuse time ({1:0.0}x damage)"
+}
+
 Background_Door_Item: {
 	DisplayName: Background Door
 	Tooltip: ""

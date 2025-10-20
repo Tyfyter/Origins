@@ -2039,6 +2039,8 @@ Projectiles: {
 	// Welding_Torch_P.DisplayName: Welding Torch
 	// Minishark_Broth_Bullet.DisplayName: Minishark Broth Bullet
 	// Ticking_Bomb_P.DisplayName: Ticking Bomb
+	// Ticking_Dynamite_P.DisplayName: Ticking Dynamite P
+	// Ticking_Grenade_P.DisplayName: Ticking Grenade P
 }
 
 Prefixes: {
