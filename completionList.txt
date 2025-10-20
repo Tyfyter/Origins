@@ -1101,8 +1101,9 @@ EXPLOSIVE WEAPONS:
 (^) Shrapnel Bomb
 (^) Sticky Link Grenade
 (^) Tank Rifle
-(#2, ^2) Ticking Bomb (needs crafting recipes with material-dependent yield)
-(#, ^2) Ticking Dynamite
+(☻) Ticking Grenade
+(☻) Ticking Bomb
+(☻) Ticking Dynamite
 (^) Voltefuse
 
 (^) Acrid Handcannon
