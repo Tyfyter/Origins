@@ -1358,7 +1358,7 @@ TILES:
 (^) Acetabularia
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
-(#, ^2) Background Door !!!
+(☻, ▼) Background Door !!!
 (々) Beacon Light !!! (needs Repairboys to be implemented first)
 (^) Brineglow Vine
 (^) Defiled Altar

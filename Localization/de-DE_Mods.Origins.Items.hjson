@@ -7094,3 +7094,8 @@ Ticking_Bomb: {
 	// DisplayName: Ticking Bomb
 	// Tooltip: "{0:0.##} second fuse time ({1:0.0}x damage)"
 }
+
+Background_Door_Item: {
+	// DisplayName: Background Door
+	// Tooltip: ""
+}

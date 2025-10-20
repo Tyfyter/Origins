@@ -2357,6 +2357,7 @@ Tiles: {
 	// Suit_Locker.MapEntry: Suit Locker
 	// Heat_Vent.MapEntry: Heat Vent
 	// Floodlight.MapEntry: Floodlight
+	// Background_Door.MapEntry: Background Door
 }
 
 MapObject: {
