@@ -7099,3 +7099,8 @@ Background_Door_Item: {
 	// DisplayName: Background Door
 	// Tooltip: ""
 }
+
+Small_Storage_Container_Item: {
+	// DisplayName: Small Storage Container
+	// Tooltip: ""
+}

@@ -2358,6 +2358,7 @@ Tiles: {
 	Heat_Vent.MapEntry: Heat Vent
 	Floodlight.MapEntry: Floodlight
 	Background_Door.MapEntry: Background Door
+	Small_Storage_Container.MapEntry: Small Storage Container
 }
 
 MapObject: {

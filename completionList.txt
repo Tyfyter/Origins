@@ -1341,7 +1341,7 @@ TILES:
 (^) Riven Campfire
 (^) Riven Dungeon Chest
 (X) Rusty Locker !!!
-(#, ^2) Small Storage Container !!!
+(☻, ▼) Small Storage Container !!!
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)
