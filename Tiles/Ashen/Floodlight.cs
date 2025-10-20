@@ -19,7 +19,7 @@ namespace Origins.Tiles.Ashen {
 			this.SetupGlowKeys();
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(05f, 0.31f, 0f) * 3);
+			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f) * 3);
 		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
