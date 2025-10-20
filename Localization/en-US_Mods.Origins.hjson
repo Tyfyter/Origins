@@ -32,7 +32,7 @@ Conditions: {
 	DownedShimmerConstruct: After defeating the Shimmer Construct
 	DownedChambersiteSentinel: After defeating a Chambersite Sentinel
 	HarpoonCondition: When the player has a Harpoon Gun in their inventory
-	JournalEntry: While you don't have the '{0}' journal entry
+	JournalEntry: While you do have the journal and don't have the '{0}' journal entry
 }
 
 ModMenu: {
