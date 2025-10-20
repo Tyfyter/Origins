@@ -39,7 +39,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
 			TileObjectData.newTile.Width = 6;
 			TileObjectData.newTile.Height = 11;
-			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
+			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height - 1).Concat([18]).ToArray();
 			TileObjectData.newTile.Origin = new Point16(TileObjectData.newTile.Width / 2, TileObjectData.newTile.Height - 1);
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.newTile.FlattenAnchors = true;
@@ -56,7 +56,8 @@ namespace Origins.Tiles.Ashen {
 			}
 		}
 		public static bool ShouldGlow(Tile tile) {
-			int frameY = (tile.TileFrameY / 18) % 11;
+			if (tile.TileFrameX >= 6 * 18) return false;
+			int frameY = tile.TileFrameY / 18;
 			return frameY >= 1 && frameY <= 4;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
