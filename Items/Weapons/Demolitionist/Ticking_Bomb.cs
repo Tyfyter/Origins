@@ -43,8 +43,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		AutoLoadingAsset<Texture2D> texture = typeof(Ticking_Explosives_UI).GetDefaultTMLName();
 		public override bool IsActive() => Main.LocalPlayer.HeldItem.ModItem is Ticking_Bomb;
 		public float rotation = float.Epsilon;
-		public bool dragging = true;
-		public int seconds = 0;
+		public bool dragging = false;
+		public int seconds = 1;
 		public float TotalSeconds {
 			get {
 				float value = seconds + rotation / MathHelper.TwoPi;
@@ -153,7 +153,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					seconds += Math.Sign(fullRotFactor);
 					if (seconds < 0) {
 						seconds = 0;
-						rotation = 0;
+						rotation = float.Epsilon;
 					} else if (seconds > 11) {
 						seconds = 11;
 						rotation = 0;
