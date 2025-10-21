@@ -82,9 +82,9 @@ namespace Origins.NPCs.Ashen {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Amber, 20));
 			npcLoot.Add(ItemDropRule.ByCondition(new Journal_Entry_Condition(Journal_Registry.GetJournalEntryByTextKey(GetInstance<Worn_Paper_They_Found_Us>().PaperName)), ItemType<Worn_Paper_They_Found_Us>(), 14));
-			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 14));
-			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 14));
-			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Greaves>(), 14));
+			npcLoot.Add(new CommonDrop(ItemType<Ashen2_Helmet>(), 300, 1, 1, 11));
+			npcLoot.Add(new CommonDrop(ItemType<Ashen2_Breastplate>(), 300, 1, 1, 11));
+			npcLoot.Add(new CommonDrop(ItemType<Ashen2_Greaves>(), 300, 1, 1, 11));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0 || OriginsModIntegrations.CheckAprilFools()) {
