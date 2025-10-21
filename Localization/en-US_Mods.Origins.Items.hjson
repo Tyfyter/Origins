@@ -7144,3 +7144,8 @@ Peppered_Moth_Lamp_Item: {
 	DisplayName: Peppered Moth Lamp
 	Tooltip: ""
 }
+
+Scrap_Heap_Item: {
+	DisplayName: Scrap Heap
+	Tooltip: ""
+}

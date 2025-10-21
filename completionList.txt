@@ -1232,7 +1232,7 @@ TILES:
 (^) Rusty Piping
 (X) Sanguinite Brick
 (@4) Sanguinite Ore !!!
-(#, ^2) Scrap Heap !!!
+(☻) Scrap Heap !!!
 (^) Silica
 (^) Silicon Ore
 (^) Soot Sandstone
