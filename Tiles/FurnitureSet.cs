@@ -297,7 +297,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Candles;
 		public override Color MapColor => furnitureSet.MapColor;
-		public override int flameDust => furnitureSet.FlameDust;
+		public override int FlameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -332,7 +332,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Candelabras;
 		public override Color MapColor => furnitureSet.MapColor;
-		public override int flameDust => furnitureSet.FlameDust;
+		public override int FlameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -367,7 +367,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Lamps;
 		public override Color MapColor => furnitureSet.MapColor;
-		public override int flameDust => furnitureSet.FlameDust;
+		public override int FlameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -402,7 +402,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Chandeliers;
 		public override Color MapColor => furnitureSet.MapColor;
-		public override int flameDust => furnitureSet.FlameDust;
+		public override int FlameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -468,7 +468,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.HangingLanterns;
 		public override Color MapColor => furnitureSet.MapColor;
-		public override int flameDust => furnitureSet.FlameDust;
+		public override int FlameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)

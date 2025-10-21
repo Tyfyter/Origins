@@ -445,7 +445,7 @@ namespace Origins.Tiles {
 	}
 	public abstract class LightFurnitureBase : FurnitureBase {
 		public AutoLoadingAsset<Texture2D> flameTexture;
-		public virtual int flameDust => -1;
+		public virtual int FlameDust => -1;
 		public bool IsOn(Tile tile) => tile.TileFrameX < width * 18;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -538,8 +538,8 @@ namespace Origins.Tiles {
 
 				int tileColumn = tileFrameX / 18 % 3;
 				if (tileFrameY / 18 % 3 == 1 && tileColumn != 1) {
-					if (flameDust != -1) {
-						Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16 + 2), 14, 6, flameDust, 0f, 0f, 100);
+					if (FlameDust != -1) {
+						Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16 + 2), 14, 6, FlameDust, 0f, 0f, 100);
 						if (Main.rand.NextBool(3)) {
 							dust.noGravity = true;
 						}
