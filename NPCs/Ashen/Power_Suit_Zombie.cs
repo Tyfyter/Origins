@@ -65,7 +65,7 @@ namespace Origins.NPCs.Ashen {
 			if (spawnInfo.PlayerInTown) return 0;
 			if (spawnInfo.Player.ZoneGraveyard || !Main.dayTime) {
 				if (spawnInfo.Player.InModBiome<Ashen_Biome>()) return Ashen_Biome.SpawnRates.PowerZombie;
-				if (spawnInfo.Player.ZoneForest) return Ashen_Biome.SpawnRates.PowerZombie * 0.08f;
+				else return Ashen_Biome.SpawnRates.PowerZombie * 0.08f;
 			}
 			return 0;
 		}
