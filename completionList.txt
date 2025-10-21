@@ -512,6 +512,7 @@ ACCESSORIES:
 (^) Dysfunctional Endless Explosives Bag
 (^) Eccentric Stone
 (^) Eitrite Gun Magazine
+(X) Eitrite Watch !!!
 (^) Evil Bar Gun Magazines
 (X) Exo-Arms
 (X) Exo-Legs

@@ -6960,12 +6960,12 @@ Hyrax_Item: {
 }
 
 Ashen_Fountain_Item: {
-	DisplayName: Ashen Fountain
+	DisplayName: "{§Ashen} Fountain"
 	Tooltip: ""
 }
 
 Heat_Vent_Item: {
-	DisplayName: Heat Vent
+	DisplayName: Heat Vent (Debugging Item)
 	Tooltip: ""
 }
 
@@ -7106,7 +7106,7 @@ Ticking_Grenade: {
 }
 
 Background_Door_Item: {
-	DisplayName: Background Door
+	DisplayName: Background Door (Debugging Item)
 	Tooltip: ""
 }
 
@@ -7131,7 +7131,7 @@ Ashen_Grand_Design: {
 }
 
 Generation_Station_Item: {
-	DisplayName: Generation Station
+	DisplayName: Generation Station (Debugging Item)
 	Tooltip: ""
 }
 
