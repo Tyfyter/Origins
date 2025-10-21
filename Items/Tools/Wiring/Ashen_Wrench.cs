@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Melee;
+using Origins.Reflection;
 using Origins.UI;
 using PegasusLib;
 using PegasusLib.Networking;
@@ -245,6 +246,7 @@ namespace Origins.Items.Tools.Wiring {
 					}
 				}
 			}
+			WiringMethods._wireSkip.Value.Clear();
 			IEntitySource source = Player.GetSource_Misc("GrandDesignOrMultiColorWrench");
 			foreach (KeyValuePair<int, int> cost in costs) {
 				if (Cut) {

@@ -182,7 +182,7 @@ namespace Origins.Items.Tools.Wiring {
 			ref Ashen_Wire_Data data = ref Main.tile[i, j].Get<Ashen_Wire_Data>();
 			bool wasPowered = data.AnyPower;
 			if (value != data.GetPower(wireType)) SetBit(value, ref data.data, (wireType << 1) + 1);
-			if (data.AnyPower != wasPowered) WiringMethods.HitWireSingle(i, j);
+			if (data.AnyPower != wasPowered && !WiringMethods._wireSkip.Value.ContainsKey(new(i, j))) WiringMethods.HitWireSingle(i, j);
 			Ashen_Wire_System.SendWireData(i, j, Main.myPlayer);
 		}
 		public static void SetMultiTilePowered(int i, int j, bool value) {
@@ -190,11 +190,12 @@ namespace Origins.Items.Tools.Wiring {
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			for (int x = 0; x < data.Width; x++) {
 				for (int y = 0; y < data.Height; y++) {
-					SetTilePowered(left + x, top + y, value);
+					SetTilePowered(left + x, top + y, value, false);
 				}
 			}
+			WiringMethods._wireSkip.Value.Clear();
 		}
-		public static void SetTilePowered(int i, int j, bool value) {
+		public static void SetTilePowered(int i, int j, bool value, bool clearWireSkip = true) {
 			ref Ashen_Wire_Data data = ref Main.tile[i, j].Get<Ashen_Wire_Data>();
 			if (value == data.IsTilePowered) return;
 			data.IsTilePowered = value;
@@ -205,6 +206,7 @@ namespace Origins.Items.Tools.Wiring {
 				TryPropegateDepowered(i, j, 0);
 				TryPropegateDepowered(i, j, 1);
 			}
+			if (clearWireSkip) WiringMethods._wireSkip.Value.Clear();
 		}
 		static void TryPropegateDepowered(int i, int j, int wireType) {
 			bool Counter(Point position) {
