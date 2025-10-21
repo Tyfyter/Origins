@@ -52,6 +52,7 @@ RecipeGroups: {
 	EvilFish: Any Evil Fish
 	EvilFishWeapons: Any Evil Fish Weapon
 	AnyDifferentMedicine: Any Different Medicines
+	Lamps: Any Lamp
 }
 
 Status_Messages: {

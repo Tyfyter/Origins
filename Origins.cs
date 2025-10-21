@@ -236,8 +236,13 @@ namespace Origins {
 			_ = OriginExtensions.StrikethroughFont;
 			for (int k = 0; k < ItemLoader.ItemCount; k++) {
 				Item item = ContentSamples.ItemsByType[k];
-				if (item.createTile > -1 && OriginsSets.Tiles.PlacementItem[item.createTile] == -1 && (!Main.tileFrameImportant[item.createTile] || TileID.Sets.Torch[item.createTile])) {
-					OriginsSets.Tiles.PlacementItem[item.createTile] = item.type;
+				if (item.createTile > -1) {
+					if (OriginsSets.Tiles.PlacementItem[item.createTile] == -1 && (!Main.tileFrameImportant[item.createTile] || TileID.Sets.Torch[item.createTile])) {
+						OriginsSets.Tiles.PlacementItem[item.createTile] = item.type;
+					}
+					if (item.createTile == TileID.Lamps || (TileLoader.GetTile(item.createTile)?.AdjTiles?.Contains(TileID.Lamps) ?? false)) {
+						OriginSystem.LampRecipeGroup.ValidItems.Add(k);
+					}
 				}
 			}
 			for (int i = 0; i < OriginsSets.Tiles.PlacementItem.Length; i++) {

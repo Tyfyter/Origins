@@ -932,6 +932,13 @@ namespace Origins.Tiles {
 #endif
 		public override void SetStaticDefaults() {
 			if (TileID.Sets.BasicChest[tile.Type]) ModCompatSets.AnyChests[Type] = true;
+			if (tile is FurnitureBase furniture) {
+				switch (furniture.BaseTileID) {
+					case TileID.Lamps:
+					OriginSystem.LampRecipeGroup.ValidItems.Add(Type);
+					break;
+				}
+			}
 			Origins.AddGlowMask(this);
 		}
 

@@ -1,14 +1,26 @@
-﻿using Origins.World.BiomeData;
+﻿using Origins.Items.Other.Critters;
+using Origins.Items.Weapons.Ammo;
+using Origins.NPCs.Critters;
+using Origins.World.BiomeData;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Peppered_Moth_Lamp : FurnitureBase {
 		public override int BaseTileID => TileID.Lamps;
 		public override Color MapColor { get; }
+		public override void OnLoad() {
+			Item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Peppered_Moth_Item>()
+				.AddRecipeGroup(OriginSystem.LampRecipeGroup)
+				.Register();
+			};
+		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.tileLighted[Type] = true;
