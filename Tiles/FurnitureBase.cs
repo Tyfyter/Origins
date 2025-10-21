@@ -924,6 +924,7 @@ namespace Origins.Tiles {
 		public override string Name => tile.Name + "_Item";
 		public override string Texture => debug ? tile.Texture : (tile is FurnitureBase furniture && !string.IsNullOrEmpty(furniture.ItemTexture)) ? furniture.ItemTexture : tile.Texture + "_Item";
 		public override LocalizedText DisplayName => this.GetLocalization(nameof(DisplayName), tile.PrettyPrintName);
+		public event Action<Item> ExtraStaticDefaults;
 		public event Action<Item> ExtraDefaults;
 		public event Action<Item> OnAddRecipes;
 		protected override bool CloneNewInstances => true;
@@ -940,6 +941,10 @@ namespace Origins.Tiles {
 				}
 			}
 			Origins.AddGlowMask(this);
+			if (ExtraStaticDefaults is not null) {
+				ExtraStaticDefaults(Item);
+				ExtraStaticDefaults = null;
+			}
 		}
 
 		public override void SetDefaults() {
@@ -957,6 +962,10 @@ namespace Origins.Tiles {
 				OnAddRecipes(Item);
 				OnAddRecipes = null;
 			}
+		}
+		public TileItem WithExtraStaticDefaults(Action<Item> extra) {
+			ExtraStaticDefaults += extra;
+			return this;
 		}
 		public TileItem WithExtraDefaults(Action<Item> extra) {
 			ExtraDefaults += extra;
