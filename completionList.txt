@@ -1303,7 +1303,7 @@ TILES:
 (^) Living Bile Block
 (^) Marrowick Furniture
 (X) Nova Furniture
-(#, ^2) Peppered Moth Lamp !!!
+(☻) Peppered Moth Lamp !!!
 (^) Phoenum Torch
 (X) Residue Furniture
 (^) Riven Torch

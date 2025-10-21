@@ -7139,3 +7139,8 @@ Sharknade_O: {
 	DisplayName: Sharknade-o
 	Tooltip: ""
 }
+
+Peppered_Moth_Lamp_Item: {
+	DisplayName: Peppered Moth Lamp
+	Tooltip: ""
+}
