@@ -931,6 +931,7 @@ namespace Origins.Tiles {
 		public override bool IsLoadingEnabled(Mod mod) => !debug;
 #endif
 		public override void SetStaticDefaults() {
+			if (TileID.Sets.BasicChest[tile.Type]) ModCompatSets.AnyChests[Type] = true;
 			Origins.AddGlowMask(this);
 		}
 
