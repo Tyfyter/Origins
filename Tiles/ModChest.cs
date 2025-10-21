@@ -16,6 +16,7 @@ namespace Origins.Tiles {
 		public override void SetStaticDefaults() {
 			Main.tileSpelunker[Type] = true;
 			Main.tileContainer[Type] = true;
+			TileID.Sets.IsAContainer[Type] = true;
 			TileID.Sets.BasicChest[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 1200;
@@ -32,11 +33,12 @@ namespace Origins.Tiles {
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+			ModifyTileData();
 			TileObjectData.addTile(Type);
 			DustType = Defiled_Wastelands.DefaultTileDust;
 			_ = DefaultContainerName(0, 0);
 		}
-
+		public virtual void ModifyTileData() { }
 		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX < 36 ? 0 : 1);
 
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;

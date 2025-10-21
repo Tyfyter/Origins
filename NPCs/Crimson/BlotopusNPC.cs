@@ -50,7 +50,7 @@ namespace Origins.NPCs.Crimson {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Blotopus>()));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Blotopus>(), 15));
 		}
 		void Shoot() {
 			Vector2 vel = new Vector2(12, 0).RotatedBy(Main.rand.NextFloat(NPC.rotation - 0.1f, NPC.rotation + 0.1f));

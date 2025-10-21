@@ -1,11 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.Tiles.Other;
+using Origins.World.BiomeData;
 using rail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -88,6 +90,18 @@ namespace Origins.Journal {
 		public override LocalizedText DisplayName => Lang.GetNPCName(NPCType);
 		public override void SetStaticDefaults() {
 			JournalEntry.AddJournalEntry(ref OriginsSets.NPCs.JournalEntries[NPCType], FullName);
+		}
+	}
+	public class Journal_Entry_Condition(JournalEntry entry) : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			OriginPlayer oP = info.player.OriginPlayer();
+			return oP.journalUnlocked && !oP.unlockedJournalEntries.Contains(entry.FullName);
+		}
+		public bool CanShowItemDropInUI() {
+			return true;
+		}
+		public string GetConditionDescription() {
+			return Language.GetOrRegister("Mods.Origins.Conditions.JournalEntry").Format(entry.DisplayName);
 		}
 	}
 }

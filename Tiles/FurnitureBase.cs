@@ -32,6 +32,7 @@ namespace Origins.Tiles {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = LavaDeath;
+			TileID.Sets.IsAContainer[Type] = TileID.Sets.IsAContainer[BaseTileID];
 			Main.tileContainer[Type] = Main.tileContainer[BaseTileID];
 
 			Main.tileTable[Type] = Main.tileTable[BaseTileID];

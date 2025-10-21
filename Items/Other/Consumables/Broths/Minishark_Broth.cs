@@ -1,13 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Projectiles;
-using Origins.Projectiles.Weapons;
 using PegasusLib;
-using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
 
 namespace Origins.Items.Other.Consumables.Broths {
 	public class Minishark_Broth : BrothBase {

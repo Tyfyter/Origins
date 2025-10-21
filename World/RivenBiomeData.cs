@@ -691,7 +691,7 @@ namespace Origins.World.BiomeData {
 						maxCoral++;
 					}
 				}
-				NetMessage.SendTileSquare(-1, X0, Y0, X1, Y1);
+				WorldGen.RangeFrame(X0, Y0, X1, Y1);
 			}
 			public static void StartHive_Old(int i, int j) {
 				const float strength = 2.4f;
@@ -857,7 +857,6 @@ namespace Origins.World.BiomeData {
 			public static void DoScar(Vector2 start, float angle, ushort scarBlockID, float scale, float aspectRatio, float roundness = 1) {
 				Vector2 posMin = new(float.PositiveInfinity);
 				Vector2 posMax = new(float.NegativeInfinity);
-				PlayerInput.SetZoom_MouseInWorld();
 				start *= 16;
 				Vector2 direction = angle.ToRotationVector2();
 				float dist = CollisionExt.Raymarch(start, direction, 16 * 50);

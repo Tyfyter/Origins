@@ -6,35 +6,35 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Ticking_Bomb : ModItem { 
-		public static float DamageMult => 1 + ModContent.GetInstance<Ticking_Bomb_UI>().TotalSeconds * 0.175f;
+	public class Ticking_Dynamite : ModItem { 
+		public static float DamageMult => 1 + ModContent.GetInstance<Ticking_Dynamite_UI>().TotalSeconds * 0.125f;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 70;
+			Item.CloneDefaults(ItemID.Dynamite);
+			Item.damage = 120;
 			Item.shootSpeed *= 1.5f;
 			Item.value = 1000;
-			Item.shoot = ModContent.ProjectileType<Ticking_Bomb_P>();
-			Item.ammo = ItemID.Bomb;
+			Item.shoot = ModContent.ProjectileType<Ticking_Dynamite_P>();
+			Item.ammo = ItemID.Dynamite;
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {
-			AddRecipe(10, ALRecipeGroups.CopperWatches);
-			AddRecipe(25, ALRecipeGroups.SilverWatches);
-			AddRecipe(50, ALRecipeGroups.GoldWatches);
+			AddRecipe(6, ALRecipeGroups.CopperWatches);
+			AddRecipe(15, ALRecipeGroups.SilverWatches);
+			AddRecipe(30, ALRecipeGroups.GoldWatches);
 		}
 		void AddRecipe(int yield, RecipeGroup group) =>
 			CreateRecipe(yield)
-			.AddIngredient(ItemID.Bomb, yield)
+			.AddIngredient(ItemID.Dynamite, yield)
 			.AddRecipeGroup(group)
 			.Register();
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			for (int i = 0; i < tooltips.Count; i++) {
 				if (tooltips[i].Name == "Tooltip0") {
-					tooltips[i].Text = string.Format(tooltips[i].Text, ModContent.GetInstance<Ticking_Bomb_UI>().TotalSeconds, DamageMult);
+					tooltips[i].Text = string.Format(tooltips[i].Text, ModContent.GetInstance<Ticking_Dynamite_UI>().TotalSeconds, DamageMult);
 					break;
 				}
 			}
@@ -43,16 +43,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 			damage *= DamageMult;
 		}
 	}
-	public class Ticking_Bomb_UI() : Ticking_Explosives_UI(6, 2) {
-		public override bool IsActive() => Main.LocalPlayer.HeldItem.ModItem is Ticking_Bomb;
+	public class Ticking_Dynamite_UI() : Ticking_Explosives_UI(12, 3) {
+		public override bool IsActive() => Main.LocalPlayer.HeldItem.ModItem is Ticking_Dynamite;
 	}
-	public class Ticking_Bomb_P : ModProjectile {
-		public override string Texture => typeof(Ticking_Bomb).GetDefaultTMLName();
+	public class Ticking_Dynamite_P : ModProjectile {
+		public override string Texture => typeof(Ticking_Dynamite).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 0;
 		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.Bomb);
+			Projectile.CloneDefaults(ProjectileID.Dynamite);
 			Projectile.friendly = false;
 			Projectile.timeLeft = 60 * 20;
 			Projectile.appliesImmunityTimeOnSingleHits = true;
@@ -60,14 +60,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.localNPCHitCooldown = -1;
 		}
 		public override void OnSpawn(IEntitySource source) {
-			Projectile.ai[2] = (int)(60 * ModContent.GetInstance<Ticking_Bomb_UI>().TotalSeconds);
+			Projectile.ai[2] = (int)(60 * ModContent.GetInstance<Ticking_Dynamite_UI>().TotalSeconds);
 		}
 		public override void AI() {
 			if (Projectile.ai[2] > 0) Projectile.timeLeft = 60;
 			if (Projectile.timeLeft > 3 && --Projectile.ai[2] <= 0) Projectile.timeLeft = 3;
 		}
 		public override bool PreKill(int timeLeft) {
-			Projectile.type = ProjectileID.Bomb;
+			Projectile.type = ProjectileID.Dynamite;
 			return true;
 		}
 		public override void OnKill(int timeLeft) {

@@ -189,7 +189,7 @@ ENEMY NPCS:
 (^) Barnacleback
 (^) Barnacle Bunny
 (^) Bile Thrower
-(○, ☻) Blotopus (probably shouldn't have the weapon be 100%, balance testers plz figure out the best drop rate)
+(^) Blotopus
 (^) Bottomfeeder
 (^) Boulder Mimic
 (^) Buckethead Zombie
@@ -235,7 +235,7 @@ ENEMY NPCS:
 (^) Optiphage
 (X) Packhunter
 (#, ^2) Pinwheel
-(#2, ^2) Power Suit Zombie
+(☻) Power Suit Zombie
 (^) Pustule Jellyfish
 (X) QM-76 'Quakemaker'
 (X) Reject
@@ -340,15 +340,15 @@ EVENTS:
 
 STATUS EFFECTS:
 |---
-(☻) Adrenaline Rush !!!
-(☻) Antitoxin !!!
-(☻) Blood Transfusion !!!
-(☻) Fast !!!
-(☻) First Aid !!!
-(☻) Solvent Tolerance !!!
+(^) Adrenaline Rush
+(^) Antitoxin
+(^) Blood Transfusion
+(^) Fast
+(^) First Aid
+(^) Solvent Tolerance
 (^) Totally Safe
-(☻) Vigil !!!
-(☻) Wrapped Up !!!
+(^) Vigil
+(^) Wrapped Up
 
 (^) Cavitation
 (^) Impeding Shrapnel
@@ -1100,9 +1100,10 @@ EXPLOSIVE WEAPONS:
 (^) Rubber Dynamite
 (^) Shrapnel Bomb
 (^) Sticky Link Grenade
-(☻) Tank Rifle
-(#, ^2) Ticking Bomb
-(#, ^2) Ticking Dynamite
+(^) Tank Rifle
+(☻) Ticking Grenade
+(☻) Ticking Bomb
+(☻) Ticking Dynamite
 (^) Voltefuse
 
 (^) Acrid Handcannon
@@ -1153,7 +1154,7 @@ EXPLOSIVE WEAPONS:
 (X) Helix
 (^) Shimmer Dynamite
 (@4, #) Starburst
-(☻) The Ultimate Death Firework Launcher Of Mega Destruction
+(^) The Ultimate Death Firework Launcher Of Mega Destruction
 ---
 
 
@@ -1217,7 +1218,7 @@ TILES:
 (^) Lost Ore
 (^) Marrowick
 (^) Mildew Block
-(☻) Murky Sludge !!!
+(@2, ^3) Murky Sludge !!!
 (X) Nova Brick
 (X) Nova Fragment Block
 (^) Peat Moss Block
@@ -1234,7 +1235,7 @@ TILES:
 (^) Silica
 (^) Silicon Ore
 (^) Soot Sandstone
-(☻) Sootgrass !!!
+(#2, ^2) Sootgrass !!! (significantly reduce growing speed)
 (^) Sootsand
 (X) Space Goo
 (^) Spug Flesh
@@ -1317,7 +1318,7 @@ TILES:
 (X) Bilious Incense
 (^) Brine Dungeon Chest
 (#, ^2) Cargo Elevator Door !!!
-(X) Cargo Elevator Door (Jammed) !!!
+(#, ^2) Cargo Elevator Door (Jammed) !!!
 (^) Chambersite Gem Lock
 (^) Cleansing Station
 (^) Defiled Campfire
@@ -1327,8 +1328,8 @@ TILES:
 (#, ^2) Industrial Door !!!
 (X) Large Storage Container !!!
 (^) Laser Tag Console
-(X) Medium Storage Container !!!
-(X) Modular Bunk !!!
+(#, ^2) Medium Storage Container !!!
+(#, ^2) Modular Bunk !!!
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
 (X) Ocean Dungeon Chest
@@ -1341,7 +1342,7 @@ TILES:
 (^) Riven Campfire
 (^) Riven Dungeon Chest
 (X) Rusty Locker !!!
-(X) Small Storage Container !!!
+(☻, ▼) Small Storage Container !!!
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)
@@ -1356,9 +1357,9 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
-(☻) Ashen Altar !!!
+(^) Ashen Altar
 (^) Ashen Sootgrass Foliage
-(#, ^2) Background Door !!!
+(☻, ▼) Background Door !!!
 (々) Beacon Light !!! (needs Repairboys to be implemented first)
 (^) Brineglow Vine
 (^) Defiled Altar
@@ -1389,7 +1390,7 @@ TILES:
 (X) Sheet Metal !!!
 (^) Shelf Coral
 (^) Soulspore
-(☻) Steel Support Beam !!!
+(^) Steel Support Beam
 (^) Suit Locker
 (^) Surveysprout
 (^) Tangela Bramble
@@ -1526,7 +1527,7 @@ MISCELLANEOUS ITEMS:
 (X) Armor+ Power-Up
 (^) Defiled Mana
 (^) Large Chambersite
-(☻) Worn Paper: Loose Wheel
+(☻) Worn Paper: Loose Wheel (these: journal entries)
 (☻) Worn Paper: Self-Preservation
 (☻) Worn Paper: Smog Test
 (☻) Worn Paper: The Packing Slip
@@ -1588,7 +1589,7 @@ CONSUMABLES:
 (^) Hearty Broth
 (^) Light Broth
 (#, ^2) Metallic Broth
-(☻) Minishark Broth
+(^) Minishark Broth
 (^) Minty Broth
 (^) Plain Broth
 (^) Savory Broth
@@ -1598,17 +1599,17 @@ CONSUMABLES:
 (^) Sweet Broth
 (^) Umami Broth
 
-(☻, ^5) Adrenaline
-(☻, ^5) Blood Pack
-(☻, ^5) Bottomless Multi-Med
-(☻, ^5) Brightsee
-(☻, ^5) Fire Band
-(☻, ^5) Medicinal Acid
-(☻, ^5) Morphine
-(☻, ^5) Multi-Med
-(☻, ^5) Rasterwrap
-(☻, ^5) Sanguis Pack
-(☻, ^5) Unmarked Antidote
+(^5) Adrenaline
+(^5) Blood Pack
+(^5) Bottomless Multi-Med
+(^5) Brightsee
+(^5) Fire Band
+(^5) Medicinal Acid
+(^5) Morphine
+(^5) Multi-Med
+(^5) Rasterwrap
+(^5) Sanguis Pack
+(^5) Unmarked Antidote
 
 (^) Bad Juju Stone
 (X) BBQ Skewer
@@ -1638,7 +1639,7 @@ CONSUMABLES:
 (^) Shattered Stout
 (^) Soul Spaghetti
 (^) Sour Apple
-(☻) Spearmint Tea
+(^) Spearmint Tea
 (#, ^2) Sweet Tooth Shake
 (X) Tangerine
 (#, ^2) Tasty Booger
