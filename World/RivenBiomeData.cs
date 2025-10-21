@@ -691,7 +691,7 @@ namespace Origins.World.BiomeData {
 						maxCoral++;
 					}
 				}
-				NetMessage.SendTileSquare(-1, X0, Y0, X1, Y1);
+				WorldGen.RangeFrame(X0, Y0, X1, Y1);
 			}
 			public static void StartHive_Old(int i, int j) {
 				const float strength = 2.4f;
