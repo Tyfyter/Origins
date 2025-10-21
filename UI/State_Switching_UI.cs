@@ -45,7 +45,7 @@ namespace Origins.UI {
 		public void Unload() { }
 		public abstract void AddToList();
 		public abstract bool IsActive();
-		private bool isActive = false;
+		protected bool isActive = false;
 		public sealed override void OnActivate() {
 			if (isActive.TrySet(true)) OnEnter();
 		}

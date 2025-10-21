@@ -7114,3 +7114,18 @@ Small_Storage_Container_Item: {
 	DisplayName: Small Storage Container
 	Tooltip: ""
 }
+
+Ashen_Wires: {
+	DisplayName: Ashen Wires
+	Tooltip: ""
+}
+
+Ashen_Wrench: {
+	DisplayName: Ashen Wrench
+	Tooltip: ""
+}
+
+Ashen_Grand_Design: {
+	DisplayName: Ashen Grand Design
+	Tooltip: ""
+}

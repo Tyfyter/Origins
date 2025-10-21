@@ -32,7 +32,7 @@ Conditions: {
 	// DownedShimmerConstruct: After defeating the Shimmer Construct
 	// DownedChambersiteSentinel: After defeating a Chambersite Sentinel
 	// HarpoonCondition: When the player has a Harpoon Gun in their inventory
-	// JournalEntry: While you don't have the '{0}' journal entry
+	// JournalEntry: While you do have the journal and don't have the '{0}' journal entry
 }
 
 ModMenu: {
@@ -2039,6 +2039,7 @@ Projectiles: {
 	// Welding_Torch_P.DisplayName: Welding Torch
 	// Minishark_Broth_Bullet.DisplayName: Minishark Broth Bullet
 	// Ticking_Bomb_P.DisplayName: Ticking Bomb
+	// Mod_Wire_Channel.DisplayName: Mod Wire Channel
 	// Ticking_Dynamite_P.DisplayName: Ticking Dynamite P
 	// Ticking_Grenade_P.DisplayName: Ticking Grenade P
 }
@@ -3107,4 +3108,9 @@ CritType: {
 	// Communion_Type: Critically strikes when hitting the same target multiple times
 	// Viper_Rifle_Crit_Type: Critically strikes on otherwise afflicted enemies
 	// Felnum_Crit_Type: "{$Mods.CritRework.CritTypes.FoeIsWet.Description}"
+}
+
+BuilderToggle: {
+	// Black_Wire_Toggle: Black Wires
+	// Brown_Wire_Toggle: Brown Wires
 }

@@ -59,6 +59,8 @@ using Terraria.UI.Chat;
 using static Origins.OriginsSets.Items;
 using static System.Net.Mime.MediaTypeNames;
 using MC = Terraria.ModLoader.ModContent;
+using Origins.Items.Tools.Wiring;
+using MonoMod.Utils;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -1110,6 +1112,7 @@ namespace Origins {
 		public enum CallType {
 			GetExplosiveClassesDict,
 			AddBasicColorDyeShaderPass,
+			AddWireMode
 		}
 		public override object Call(params object[] args) {
 			if (!Enum.TryParse(args[0].ToString().Replace("_", ""), true, out CallType callType)) return null;
@@ -1123,6 +1126,20 @@ namespace Origins {
 				} catch (NullReferenceException) {
 					throw new Exception("Cannot add Basic Color Dye Shader Pass after AddRecipes");
 				}
+				case CallType.AddWireMode:
+				return WireModeLoader.AddCallWireMode(
+					(Mod)args[1],
+					((Delegate)args[2]).CastDelegate<Func<int, int, bool>>(),
+					((Delegate)args[3]).CastDelegate<Action<int, int, bool>>(),
+					(string)args[4],
+					(Color)args[5],
+					(Color?)args[6],
+					(IEnumerable<string>)args.GetIfInRange(7) ?? [],
+					(IEnumerable<string>)args.GetIfInRange(8) ?? [],
+					(args.GetIfInRange(9, null) as ModItem, args.GetIfInRange(9, null) is int type ? type : ItemID.Wire),
+					(bool)args.GetIfInRange(10, false),
+					(string)args.GetIfInRange(11)
+				);
 			}
 			return null;
 		}

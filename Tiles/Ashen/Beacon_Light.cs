@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using PegasusLib.Graphics;
@@ -58,6 +59,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void PlaceInWorld(int i, int j, Item item) {
 			ModContent.GetInstance<Beacon_Light_TE_System>().AddTileEntity(new(i, j));
+
 		}
 	}
 	public class Beacon_Light_TE_System : TESystem {

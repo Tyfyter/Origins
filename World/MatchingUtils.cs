@@ -54,8 +54,29 @@ namespace Origins.World {
 		public readonly bool Broke => broke;
 		public readonly IReadOnlySet<Point> Walked => walked;
 		public readonly IReadOnlyList<Point> Counted => counted;
+		public readonly bool[,] GetCountedMap() {
+			bool[,] output = new bool[maxX + 1 - minX, maxY + 1 - minY];
+			for (int i = 0; i < counted.Count; i++) {
+				Point pos = counted[i];
+				output[pos.X - minX, pos.Y - minY] = true;
+			}
+			return output;
+		}
+		public readonly void AndCountedMap(bool[,] output, int mapMinX, int mapMinY) {
+			for (int i = 0; i < counted.Count; i++) {
+				Point pos = counted[i];
+				output[pos.X - mapMinX, pos.Y - mapMinY] &= true;
+			}
+		}
+		public readonly void OrCountedMap(bool[,] output, int mapMinX, int mapMinY) {
+			for (int i = 0; i < counted.Count; i++) {
+				Point pos = counted[i];
+				output[pos.X - mapMinX, pos.Y - mapMinY] |= true;
+			}
+		}
 		public delegate bool Breaker(AreaAnalysis analysis);
 		public delegate bool Counter(Point position);
+		public static Point[] Orthogonals => [new(0, 1), new(0, -1), new(1, 0), new(-1, 0)];
 		public static AreaAnalysis March(int i, int j, Point[] directions, Counter shouldCount, Breaker shouldBreak) {
 			AreaAnalysis analysis = new() {
 				minX = i,
@@ -65,7 +86,7 @@ namespace Origins.World {
 				walked = [],
 				counted = []
 			};
-			analysis.DoMarch(new(i, j), directions.Reverse().ToArray(), shouldCount, shouldBreak);
+			analysis.DoMarch(new(i, j), directions, shouldCount, shouldBreak);
 			return analysis;
 		}
 		void DoMarch(Point start, Span<Point> directions, Counter shouldCount, Breaker shouldBreak) {
@@ -87,10 +108,10 @@ namespace Origins.World {
 							queue.Push(next);
 						}
 					}
-				}
-				if (shouldBreak(this)) {
-					broke = true;
-					break;
+					if (shouldBreak(this)) {
+						broke = true;
+						break;
+					}
 				}
 			}
 		}
