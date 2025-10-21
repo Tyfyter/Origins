@@ -2,8 +2,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins;
 using Origins.Items.Weapons.Demolitionist;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.ID;
@@ -146,5 +148,6 @@ namespace Origins.UI {
 				Vector2.One
 			);
 		}
+		public override void DrawNearCursor(SpriteBatch spriteBatch) { }
 	}
 }

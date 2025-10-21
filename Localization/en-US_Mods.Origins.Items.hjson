@@ -7094,6 +7094,7 @@ Ticking_Bomb: {
 	DisplayName: Ticking Bomb
 	Tooltip: "{0:0.##} second fuse time ({1:0.0}x damage)"
 }
+
 Ticking_Dynamite: {
 	DisplayName: Ticking Dynamite
 	Tooltip: "{0:0.##} second fuse time ({1:0.0}x damage)"
@@ -7126,4 +7127,5 @@ Ashen_Wrench: {
 
 Ashen_Grand_Design: {
 	DisplayName: Ashen Grand Design
+	Tooltip: ""
 }
