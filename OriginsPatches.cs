@@ -1527,7 +1527,7 @@ namespace Origins {
 		internal static bool rollingLotteryTicket;
 		private int Player_RollLuck(On_Player.orig_RollLuck orig, Player self, int range) {
 			const int lottery_ticket_min_denominator = 50;
-			OriginPlayer originPlayer = self.GetModPlayer<OriginPlayer>();
+			if (!self.TryGetModPlayer(out OriginPlayer originPlayer)) return orig(self, range);
 			if (!rollingLotteryTicket && range >= lottery_ticket_min_denominator * currentChanceNumerator && originPlayer.lotteryTicketItem is not null) {
 				rollingLotteryTicket = true;
 				if (self.RollLuck((int)MathF.Ceiling(MathF.Pow(range, 0.75f) + range * 0.05f)) < currentChanceNumerator) {
