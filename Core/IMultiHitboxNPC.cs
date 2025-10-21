@@ -45,6 +45,10 @@ namespace Origins.Core {
 			c.EmitLdloc(projHitbox);
 			c.EmitDelegate((Projectile self, int i, ref bool colliding, Rectangle projHitbox) => {
 				if (Main.npc[i].ModNPC is IMultiHitboxNPC multiHitboxNPC) {
+					if (multiHitboxNPC.Hitboxes is null) {
+						colliding = false;
+						return true;
+					}
 					bool isColliding = colliding;
 					int minX = int.MaxValue;
 					int maxX = int.MinValue;
