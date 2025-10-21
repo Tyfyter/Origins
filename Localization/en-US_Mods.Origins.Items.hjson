@@ -7149,3 +7149,8 @@ Scrap_Heap_Item: {
 	DisplayName: Scrap Heap
 	Tooltip: ""
 }
+
+Truss_Block_Item: {
+	DisplayName: Truss Block
+	Tooltip: ""
+}
