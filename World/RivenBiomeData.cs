@@ -858,7 +858,6 @@ namespace Origins.World.BiomeData {
 			public static void DoScar(Vector2 start, float angle, ushort scarBlockID, float scale, float aspectRatio, float roundness = 1) {
 				Vector2 posMin = new(float.PositiveInfinity);
 				Vector2 posMax = new(float.NegativeInfinity);
-				PlayerInput.SetZoom_MouseInWorld();
 				start *= 16;
 				Vector2 direction = angle.ToRotationVector2();
 				float dist = CollisionExt.Raymarch(start, direction, 16 * 50);
