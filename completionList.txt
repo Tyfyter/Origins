@@ -1141,7 +1141,7 @@ EXPLOSIVE WEAPONS:
 (X) Puffle
 (^) Rocodile
 (^) Self-Destruct
-(#, ^2) Sharknade-o
+(☻) Sharknade-o
 (X) Supernova
 (X) The Heatseeker
 (X) The Rocketman
