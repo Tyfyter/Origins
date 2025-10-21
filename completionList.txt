@@ -1373,7 +1373,7 @@ TILES:
 (^) Fungarust
 (^) Fuzzvine
 (^) Gel Blister
-(#, ^2) Generation Station !!!
+(☻, 々 (power core)) Generation Station !!!
 (#, ^2) Hanging Scrap !!!
 (^) Heat Vent
 (^) Hydrothermal Vent

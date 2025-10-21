@@ -7129,3 +7129,8 @@ Ashen_Grand_Design: {
 	DisplayName: Ashen Grand Design
 	Tooltip: ""
 }
+
+Generation_Station_Item: {
+	DisplayName: Generation Station
+	Tooltip: ""
+}

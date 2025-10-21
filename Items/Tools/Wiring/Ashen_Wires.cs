@@ -126,6 +126,7 @@ namespace Origins.Items.Tools.Wiring {
 		}
 	}
 	public struct Ashen_Wire_Data : ITileData {
+		public static readonly FrameCachedValue<float> pulse = new(() => MathF.Sin((float)Main.timeForVisualEffects / 20) * 0.5f + 0.5f);
 		internal byte data;
 		public bool HasBrownWire {
 			readonly get => GetBit(data, 0);
@@ -167,13 +168,12 @@ namespace Origins.Items.Tools.Wiring {
 						SetPowered(i, j, wireType, true);
 						if (!GetPower(i + 1, j, wireType) || !GetPower(i - 1, j, wireType) || !GetPower(i, j + 1, wireType) || !GetPower(i, j - 1, wireType)) PropegatePowerState(i, j, wireType, true);
 					} else if (data.IsTilePowered) PropegatePowerState(i, j, wireType, true);
-					else {
-						SetPowered(i, j, wireType, false);
-						TryPropegateDepowered(i + 1, j, wireType);
-						TryPropegateDepowered(i - 1, j, wireType);
-						TryPropegateDepowered(i, j + 1, wireType);
-						TryPropegateDepowered(i, j - 1, wireType);
-					}
+				} else {
+					SetPowered(i, j, wireType, false);
+					TryPropegateDepowered(i + 1, j, wireType);
+					TryPropegateDepowered(i - 1, j, wireType);
+					TryPropegateDepowered(i, j + 1, wireType);
+					TryPropegateDepowered(i, j - 1, wireType);
 				}
 				Ashen_Wire_System.SendWireData(i, j, Main.myPlayer);
 			}
@@ -224,19 +224,19 @@ namespace Origins.Items.Tools.Wiring {
 			for (int k = 0; k < tiles.Count; k++) SetPowered(tiles[k].X, tiles[k].Y, wireType, value);
 		}
 		public readonly void DrawWires(int i, int j) {
-			if (Main.tile[i, j].Get<Ashen_Wire_Data>().IsTilePowered) {
+			/*if (Main.tile[i, j].Get<Ashen_Wire_Data>().IsTilePowered) {
 				Main.spriteBatch.Draw(
-					powerSourceTexture.Value,
+					TextureAssets.MagicPixel.Value,
 					new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y),
 					new Rectangle(0, 0, 16, 16),
-					Color.White * (WiresUI.Settings.HideWires ? 0.5f : 1f),
+					new Color(183, 81, 0).MultiplyRGBA(Main.MouseTextColorReal.MultiplyRGBA(Main.MouseTextColorReal)) * 0.25f,
 					0f,
 					Vector2.Zero,
 					1f,
 					SpriteEffects.None,
 					0f
 				);
-			}
+			}*/
 			DrawWire<Brown_Wire_Toggle>(i, j, 0);
 			DrawWire<Black_Wire_Toggle>(i, j, 1);
 		}
@@ -248,15 +248,18 @@ namespace Origins.Items.Tools.Wiring {
 				if (Main.tile[i + 1, j].Get<Ashen_Wire_Data>().GetWire(wireType)) num15 += 36;
 				if (Main.tile[i, j + 1].Get<Ashen_Wire_Data>().GetWire(wireType)) num15 += 72;
 				if (Main.tile[i - 1, j].Get<Ashen_Wire_Data>().GetWire(wireType)) num15 += 144;
+				float colorMult = 1;
 				switch (Main.LocalPlayer.InfoAccMechShowWires ? Main.LocalPlayer.BuilderToggleState<TBuilderToggle>() : 1) {
 					case 0:
 					color = Color.White;
 					break;
 					case 2:
 					color *= 0.5f;
+					colorMult = 0.5f;
 					break;
 					case 3:
 					color = Color.Transparent;
+					colorMult = 0;
 					break;
 				}
 				Main.spriteBatch.Draw(
@@ -274,7 +277,7 @@ namespace Origins.Items.Tools.Wiring {
 						glowTexture.Value,
 						new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y),
 						new Rectangle(num15, 0, 16, 16),
-						new Color(255, 255, 255, 0),
+						new Color(255, 255, 255, 0) * (colorMult * pulse.Value),
 						0f,
 						Vector2.Zero,
 						1f,
@@ -285,7 +288,6 @@ namespace Origins.Items.Tools.Wiring {
 		}
 		internal static Asset<Texture2D> underlayTexture;
 		internal static Asset<Texture2D> glowTexture;
-		internal static Asset<Texture2D> powerSourceTexture;
 		static void IL_Main_DrawWires(ILContext il) {
 			ILCursor c = new(il);
 			int x = -1;
@@ -310,7 +312,6 @@ namespace Origins.Items.Tools.Wiring {
 			const string texture = "Origins/Items/Tools/Wiring/Ashen_Wires";
 			underlayTexture = ModContent.Request<Texture2D>(texture);
 			glowTexture = ModContent.Request<Texture2D>(texture + "_Active");
-			powerSourceTexture = ModContent.Request<Texture2D>(texture + "_Power_Source");
 		}
 	}
 	public class Ashen_Wire_Global_Tile : GlobalTile {

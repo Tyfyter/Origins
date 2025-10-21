@@ -1,11 +1,15 @@
 ﻿using CalamityMod.Items.Potions.Alcohol;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Melee;
 using Origins.UI;
 using PegasusLib;
+using PegasusLib.Networking;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
@@ -53,6 +57,11 @@ namespace Origins.Items.Tools.Wiring {
 			Item.shoot = ModContent.ProjectileType<Mod_Wire_Channel>();
 			Item.channel = true;
 		}
+		public override void UpdateInventory(Player player) {
+			player.InfoAccMechShowWires = true;
+			player.rulerLine = true;
+			player.rulerGrid = true;
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.ownedProjectileCounts[type] > 0) return false;
 			Projectile.NewProjectile(
@@ -91,13 +100,13 @@ namespace Origins.Items.Tools.Wiring {
 			if (player.channel) {
 				Projectile.timeLeft = 5;
 			} else {
-				DoWireAction(
+				new Mass_Wire_Action(
 					player, 
 					new((int)Projectile.ai[0], (int)Projectile.ai[1]),
 					new(Player.tileTargetX, Player.tileTargetY),
 					Wire_Mode_Kite.Cutter,
 					wireTool.Modes.Where(i => Wire_Mode_Kite.EnabledWires[i.Type]).ToArray()
-				);
+				).Perform();
 				Projectile.Kill();
 			}
 		}
@@ -168,54 +177,6 @@ namespace Origins.Items.Tools.Wiring {
 			}
 			return false;
 		}
-		static bool HasResearched(int type, Player player) => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId.TryGetValue(type, out int needed) && player.creativeTracker.ItemSacrifices.GetSacrificeCount(type) >= needed;
-		public static void DoWireAction(Player player, Point start, Point end, bool cut, WireMode[] modes) {
-			Dictionary<int, int> costs = [];
-			for (int i = 0; i < modes.Length; i++) {
-				if (HasResearched(modes[i].ItemType, player)) continue;
-				costs[modes[i].ItemType] = 0;
-			}
-			foreach (Point pos in GetWirePositions(player, start, end)) {
-				bool didAny = false;
-				Vector2 worldPos = pos.ToWorldCoordinates(0, 0);
-				for (int i = 0; i < modes.Length; i++) {
-					if (!cut) {
-						if (costs.ContainsKey(modes[i].ItemType) && !player.ConsumeItem(modes[i].ItemType)) continue;
-					}
-					if (modes[i].SetWire(pos.X, pos.Y, !cut)) {
-						didAny |= true;
-						SoundEngine.PlaySound(SoundID.Dig, worldPos);
-						if (costs.TryGetValue(modes[i].ItemType, out int cost)) costs[modes[i].ItemType] = cost + 1;
-					}
-				}
-				if (didAny && cut) {
-					for (int k = 0; k < 5; k++) {
-						Dust.NewDust(worldPos, 16, 16, DustID.Adamantite);
-					}
-				}
-			}
-			IEntitySource source = player.GetSource_Misc("GrandDesignOrMultiColorWrench");
-			foreach (KeyValuePair<int, int> cost in costs) {
-				if (cut) {
-					if (cost.Value > 0) {
-						Item item = new(cost.Key);
-						int num = cost.Value;
-						while (num > 0) {
-							int num2 = item.maxStack;
-							if (num < num2) {
-								num2 = num;
-							}
-							Item.NewItem(source, player.Center, cost.Key, num2);
-							num -= num2;
-						}
-					}
-				} else {
-					if (NetmodeActive.Server) {
-						NetMessage.SendData(MessageID.MassWireOperationPay, player.whoAmI, -1, null, cost.Key, cost.Value, player.whoAmI);
-					}
-				}
-			}
-		}
 		public static Point[] GetWirePositions(Player player, Point start, Point end) {
 			Point pos = start;
 			Point diff = new(end.X - start.X, end.Y - start.Y);
@@ -236,6 +197,75 @@ namespace Origins.Items.Tools.Wiring {
 				if (pos != positions[index - 1]) positions[index++] = pos;
 			}
 			return positions;
+		}
+	}
+	public record class Mass_Wire_Action(Player Player, Point Start, Point End, bool Cut, WireMode[] Modes) : SyncedAction {
+		public override bool ServerOnly => true;
+		public Mass_Wire_Action() : this(default, default, default, default, default) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			Player = Main.player[reader.ReadByte()],
+			Start = new(reader.ReadInt32(), reader.ReadInt32()),
+			End = new(reader.ReadInt32(), reader.ReadInt32()),
+			Cut = reader.ReadBoolean(),
+			Modes = Enumerable.Repeat(0, reader.ReadInt32()).Select(_ => WireModeLoader.Get(reader.ReadInt32())).ToArray()
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write((byte)Player.whoAmI);
+			writer.Write(Start.X);
+			writer.Write(Start.Y);
+			writer.Write(End.X);
+			writer.Write(End.Y);
+			writer.Write(Cut);
+			writer.Write(Modes.Length);
+			for (int i = 0; i < Modes.Length; i++) writer.Write(Modes[i].Type);
+		}
+		static bool HasResearched(int type, Player player) => CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId.TryGetValue(type, out int needed) && player.creativeTracker.ItemSacrifices.GetSacrificeCount(type) >= needed;
+		protected override void Perform() {
+			Dictionary<int, int> costs = [];
+			for (int i = 0; i < Modes.Length; i++) {
+				if (HasResearched(Modes[i].ItemType, Player)) continue;
+				costs[Modes[i].ItemType] = 0;
+			}
+			foreach (Point pos in Mod_Wire_Channel.GetWirePositions(Player, Start, End)) {
+				bool didAny = false;
+				Vector2 worldPos = pos.ToWorldCoordinates(0, 0);
+				for (int i = 0; i < Modes.Length; i++) {
+					if (!Cut) {
+						if (costs.ContainsKey(Modes[i].ItemType) && !Player.ConsumeItem(Modes[i].ItemType)) continue;
+					}
+					if (Modes[i].SetWire(pos.X, pos.Y, !Cut)) {
+						didAny |= true;
+						SoundEngine.PlaySound(SoundID.Dig, worldPos);
+						if (costs.TryGetValue(Modes[i].ItemType, out int cost)) costs[Modes[i].ItemType] = cost + 1;
+					}
+				}
+				if (didAny && Cut) {
+					for (int k = 0; k < 5; k++) {
+						Dust.NewDust(worldPos, 16, 16, DustID.Adamantite);
+					}
+				}
+			}
+			IEntitySource source = Player.GetSource_Misc("GrandDesignOrMultiColorWrench");
+			foreach (KeyValuePair<int, int> cost in costs) {
+				if (Cut) {
+					if (cost.Value > 0) {
+						Item item = new(cost.Key);
+						int num = cost.Value;
+						while (num > 0) {
+							int num2 = item.maxStack;
+							if (num < num2) {
+								num2 = num;
+							}
+							Item.NewItem(source, Player.Center, cost.Key, num2);
+							num -= num2;
+						}
+					}
+				} else {
+					if (NetmodeActive.Server) {
+						NetMessage.SendData(MessageID.MassWireOperationPay, Player.whoAmI, -1, null, cost.Key, cost.Value, Player.whoAmI);
+					}
+				}
+			}
 		}
 	}
 }

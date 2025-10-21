@@ -1,75 +1,76 @@
-﻿using Microsoft.CSharp.RuntimeBinder;
+﻿using AltLibrary.Common.Hooks;
+using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using Origins.Backgrounds;
 using Origins.Buffs;
+using Origins.Items;
 using Origins.Items.Accessories;
+using Origins.Items.Mounts;
+using Origins.Items.Other.Consumables.Broths;
+using Origins.Items.Other.Dyes;
+using Origins.Items.Tools;
+using Origins.Items.Tools.Wiring;
+using Origins.Items.Weapons.Ammo;
+using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Summoner.Minions;
 using Origins.NPCs;
+using Origins.NPCs.Brine;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
 using Origins.Reflection;
+using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
+using Origins.UI.Event;
 using Origins.Walls;
+using Origins.Water;
 using Origins.World.BiomeData;
+using PegasusLib;
+using PegasusLib.Graphics;
+using PegasusLib.Reflection;
 using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Runtime.ExceptionServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
+using Terraria.GameContent.Events;
+using Terraria.GameContent.Generation;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Personalities;
+using Terraria.GameContent.Shaders;
+using Terraria.GameContent.UI;
+using Terraria.GameContent.UI.ResourceSets;
 using Terraria.Graphics;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Light;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
+using Terraria.ModLoader.Core;
+using Terraria.ModLoader.UI;
 using Terraria.ObjectData;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
-using static Origins.OriginExtensions;
 using static Mono.Cecil.Cil.OpCodes;
+using static Origins.OriginExtensions;
 using MC = Terraria.ModLoader.ModContent;
-using Origins.Backgrounds;
-using Origins.Items.Tools;
-using Origins.Tiles;
-using System.Runtime.CompilerServices;
-using Terraria.ModLoader.Core;
-using Origins.Items.Other.Dyes;
-using Terraria.GameContent.UI.ResourceSets;
-using Origins.Water;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Light;
-using Origins.Items;
-using System.Runtime.ExceptionServices;
-using System.IO;
-using Origins.Items.Weapons.Ammo;
-using Origins.Items.Weapons.Magic;
-using Terraria.GameContent.Events;
-using Origins.Items.Weapons.Summoner.Minions;
-using AltLibrary.Common.Hooks;
-using Terraria.ModLoader.UI;
-using PegasusLib.Graphics;
-using PegasusLib;
-using Terraria.GameContent.UI;
-using Origins.UI.Event;
-using Origins.Items.Other.Consumables.Broths;
-using Origins.Items.Weapons.Demolitionist;
-using PegasusLib.Reflection;
-using Terraria.GameContent.Generation;
-using Origins.Items.Mounts;
-using Terraria.ModLoader.Config;
-using Origins.NPCs.Brine;
-using Terraria.GameContent.Shaders;
-using Origins.NPCs.MiscB.Shimmer_Construct;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -2007,7 +2008,7 @@ namespace Origins {
 						return new Color(200, 170, 100);
 					}
 					if (_IsSolidForSonar(Framing.GetTileSafely(i - 1, j))
-						&& _IsSolidForSonar(Framing.GetTileSafely(i, j-1))
+						&& _IsSolidForSonar(Framing.GetTileSafely(i, j - 1))
 						&& _IsSolidForSonar(Framing.GetTileSafely(i + 1, j))
 						&& _IsSolidForSonar(Framing.GetTileSafely(i, j + 1))) {
 						return new Color(0, 0, 0, 0);
@@ -2016,6 +2017,12 @@ namespace Origins {
 				} else {
 					return new Color(0, 0, 0, 0);
 				}
+			} else if (WiresUI.Settings.DrawWires && Main.tile[i, j].Get<Ashen_Wire_Data>().IsTilePowered) {
+				return Color.Lerp(
+					orig(self, j, i, tileCache, typeCache, tileFrameX, tileFrameY, tileLight),
+					new Color(255, 113, 0),
+					Ashen_Wire_Data.pulse.Value * 0.8f
+				);
 			} else if ((SC_Phase_Three_Underlay.alwaysLightAllTiles || SC_Phase_Three_Underlay.ForcedLit(i, j)) && (Filters.Scene["Origins:ShimmerConstructPhase3"].Active || Filters.Scene["Origins:ShimmerConstructPhase3Cheap"].IsVisible())) {
 				Color color = orig(self, j, i, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 				if (color.R == 0 && color.G == 0 && color.B == 0) color.R = 1;

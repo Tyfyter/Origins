@@ -2362,6 +2362,7 @@ Tiles: {
 	// Floodlight.MapEntry: Floodlight
 	// Background_Door.MapEntry: Background Door
 	// Small_Storage_Container.MapEntry: Small Storage Container
+	// Generation_Station.MapEntry: Generation Station
 }
 
 MapObject: {
