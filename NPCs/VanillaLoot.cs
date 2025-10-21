@@ -89,6 +89,15 @@ namespace Origins.NPCs {
 					}
 					break;
 				}
+				case NPCID.DukeFishron: {
+					if (!AddToOneFromOptionsRule(dropRules, ItemID.BubbleGun, ModContent.ItemType<Sharknade_O>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetNPCName(npc.netID)));
+					}
+					if (!AddToOneFromOptionsRule(dropRules, ItemID.AquaScepter, ModContent.ItemType<Sharknade_O>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetNPCName(npc.netID)));
+					}
+					break;
+				}
 
 				case NPCID.CaveBat:
 				case NPCID.GiantBat:
@@ -262,12 +271,23 @@ namespace Origins.NPCs {
 			}
 		}
 		public static bool AddToOneFromOptionsRule(List<IItemDropRule> dropRules, int targetContains, params int[] items) {
-			if (dropRules.FindDropRule<OneFromOptionsNotScaledWithLuckDropRule>(dropRule => dropRule.dropIds?.Contains(targetContains) ?? false) is OneFromOptionsNotScaledWithLuckDropRule rule) {
-				Array.Resize(ref rule.dropIds, rule.dropIds.Length + items.Length);
-				for (int i = 0; i < items.Length; i++) {
-					rule.dropIds[^(i+ 1)] = items[i];
+			{
+				if (dropRules.FindDropRule<OneFromOptionsDropRule>(dropRule => dropRule.dropIds?.Contains(targetContains) ?? false) is OneFromOptionsDropRule rule) {
+					Array.Resize(ref rule.dropIds, rule.dropIds.Length + items.Length);
+					for (int i = 0; i < items.Length; i++) {
+						rule.dropIds[^(i + 1)] = items[i];
+					}
+					return true;
 				}
-				return true;
+			}
+			{
+				if (dropRules.FindDropRule<OneFromOptionsNotScaledWithLuckDropRule>(dropRule => dropRule.dropIds?.Contains(targetContains) ?? false) is OneFromOptionsNotScaledWithLuckDropRule rule) {
+					Array.Resize(ref rule.dropIds, rule.dropIds.Length + items.Length);
+					for (int i = 0; i < items.Length; i++) {
+						rule.dropIds[^(i + 1)] = items[i];
+					}
+					return true;
+				}
 			}
 			if (ModLoader.HasMod("CalamityMod") && AddToOneFromOptionsRuleCalamity(dropRules, targetContains, items)) return true;
 			return false;

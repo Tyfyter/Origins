@@ -2040,8 +2040,11 @@ Projectiles: {
 	Minishark_Broth_Bullet.DisplayName: Minishark Broth Bullet
 	Ticking_Bomb_P.DisplayName: Ticking Bomb
 	Mod_Wire_Channel.DisplayName: Mod Wire Channel
-	Ticking_Dynamite_P.DisplayName: Ticking Dynamite P
-	Ticking_Grenade_P.DisplayName: Ticking Grenade P
+	Ticking_Dynamite_P.DisplayName: Ticking Dynamite
+	Ticking_Grenade_P.DisplayName: Ticking Grenade
+	Explosive_Sharknado.DisplayName: Explosive Sharknado
+	Explosive_Sharkron.DisplayName: Explosive Sharkron
+	Sharknade_O_P.DisplayName: Sharknade-o
 }
 
 Prefixes: {

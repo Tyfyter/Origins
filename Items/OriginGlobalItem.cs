@@ -351,6 +351,15 @@ namespace Origins.Items {
 					}
 					break;
 				}
+				case ItemID.FishronBossBag: {
+					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.BubbleGun, ModContent.ItemType<Sharknade_O>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetItemName(item.type)));
+					}
+					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.AquaScepter, ModContent.ItemType<Sharknade_O>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetItemName(item.type)));
+					}
+					break;
+				}
 				case ItemID.LockBox: {
 					bool foundMain = false;
 					OneFromRulesRule rule = dropRules.FindDropRule<OneFromRulesRule>(dropRule => {
