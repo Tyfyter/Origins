@@ -729,6 +729,9 @@ namespace Origins {
 				if (proj.ModProjectile is IPreDrawSceneProjectile preDrawer) preDrawer.PreDrawScene();
 			}
 		}
+		public override void PostDrawTiles() {
+			SpecialTilePreviewOverlay.ForceActive();
+		}
 	}
 	public class TempleBiome : ModBiome {
 		public override string Name => "Bestiary_Biomes.TheTemple";

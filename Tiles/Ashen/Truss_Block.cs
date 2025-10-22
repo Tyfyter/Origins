@@ -26,7 +26,7 @@ namespace Origins.Tiles.Ashen {
 			DustType = DustID.Iron;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
 		}
-		void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
+		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
 			switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {
 				case (1, 0):
 				case (2, 0):

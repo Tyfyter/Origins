@@ -446,6 +446,11 @@ DeathMessage: {
 		// 4: "{0} got dissolved."
 	}
 
+	Crushed: {
+		// 0: "{0} inspired a sign"
+		// 1: '''{0} reset the "days since last accident" counter'''
+	}
+
 	// Tripod_0: "{0} forgot the tripod nip."
 	// Tripod_1: "{0} got rekt by a {§Mods.Origins.NPCs.Defiled_Tripod.DisplayName}."
 }
@@ -2367,6 +2372,8 @@ Tiles: {
 	// Background_Door.MapEntry: Background Door
 	// Small_Storage_Container.MapEntry: Small Storage Container
 	// Generation_Station.MapEntry: Generation Station
+	// Industrial_Door.MapEntry: Industrial Door
+	// Industrial_Door_Open.MapEntry: Industrial Door
 }
 
 MapObject: {

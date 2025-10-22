@@ -7154,3 +7154,13 @@ Truss_Block_Item: {
 	DisplayName: Truss Block
 	Tooltip: ""
 }
+
+Industrial_Door_Item: {
+	DisplayName: Industrial Door
+	Tooltip: ""
+}
+
+Transistor_Item: {
+	DisplayName: Transistor Item
+	Tooltip: ""
+}

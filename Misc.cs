@@ -23,6 +23,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
+using System.Security.Policy;
 using System.Text;
 using Terraria;
 using Terraria.Audio;
@@ -34,6 +35,7 @@ using Terraria.GameContent.Creative;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameInput;
+using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
@@ -818,6 +820,28 @@ namespace Origins {
 	}
 	public interface ISpecialFrameTile {
 		public void SpecialFrame(int i, int j);
+	}
+	public interface ISpecialTilePreviewItem {
+		public void DrawPreview();
+	}
+	internal class SpecialTilePreviewOverlay() : Overlay(EffectPriority.High, RenderLayers.TilesAndNPCs), ILoadable {
+		public override void Draw(SpriteBatch spriteBatch) => (Main.LocalPlayer?.HeldItem?.ModItem as ISpecialTilePreviewItem)?.DrawPreview();
+		public override void Update(GameTime gameTime) { }
+		public override void Activate(Vector2 position, params object[] args) {
+			this.Opacity = 1;
+			this.Mode = OverlayMode.Active;
+		}
+		public override void Deactivate(params object[] args) { }
+		public override bool IsVisible() => true;
+		public static void ForceActive() {
+			if (Overlays.Scene[typeof(SpecialTilePreviewOverlay).FullName].Mode != OverlayMode.Active) {
+				Overlays.Scene.Activate(typeof(SpecialTilePreviewOverlay).FullName, default);
+			}
+		}
+		public void Load(Mod mod) {
+			Overlays.Scene[GetType().FullName] = this;
+		}
+		public void Unload() { }
 	}
 	public static class Elements {
 		public const ushort Fire = 1;

@@ -126,6 +126,7 @@ namespace Origins.Items.Tools.Wiring {
 		}
 	}
 	public struct Ashen_Wire_Data : ITileData {
+		public static bool HittingAshenWires { get; private set; }
 		public static readonly FrameCachedValue<float> pulse = new(() => MathF.Sin((float)Main.timeForVisualEffects / 20) * 0.5f + 0.5f);
 		internal byte data;
 		public bool HasBrownWire {
@@ -182,7 +183,14 @@ namespace Origins.Items.Tools.Wiring {
 			ref Ashen_Wire_Data data = ref Main.tile[i, j].Get<Ashen_Wire_Data>();
 			bool wasPowered = data.AnyPower;
 			if (value != data.GetPower(wireType)) SetBit(value, ref data.data, (wireType << 1) + 1);
-			if (data.AnyPower != wasPowered && !WiringMethods._wireSkip.Value.ContainsKey(new(i, j))) WiringMethods.HitWireSingle(i, j);
+			if (data.AnyPower != wasPowered && !WiringMethods._wireSkip.Value.ContainsKey(new(i, j))) {
+				try {
+					HittingAshenWires = true;
+					WiringMethods.HitWireSingle(i, j);
+				} finally {
+					HittingAshenWires = false;
+				}
+			}
 			Ashen_Wire_System.SendWireData(i, j, Main.myPlayer);
 		}
 		public static void SetMultiTilePowered(int i, int j, bool value) {
