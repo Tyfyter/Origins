@@ -7164,3 +7164,8 @@ Transistor_Item: {
 	DisplayName: Transistor Item
 	Tooltip: ""
 }
+
+Cargo_Elevator_Door_Item: {
+	DisplayName: Cargo Elevator Door
+	Tooltip: ""
+}
