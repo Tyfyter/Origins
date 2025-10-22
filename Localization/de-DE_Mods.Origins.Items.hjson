@@ -7169,3 +7169,8 @@ Cargo_Elevator_Door_Item: {
 	// DisplayName: Cargo Elevator Door
 	// Tooltip: ""
 }
+
+Modular_Bunk_Item: {
+	// DisplayName: Modular Bunk
+	// Tooltip: ""
+}

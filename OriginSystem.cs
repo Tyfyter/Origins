@@ -731,6 +731,7 @@ namespace Origins {
 		}
 		public override void PostDrawTiles() {
 			SpecialTilePreviewOverlay.ForceActive();
+			Players_Behind_Tiles_Overlay.ForceActive();
 		}
 	}
 	public class TempleBiome : ModBiome {
