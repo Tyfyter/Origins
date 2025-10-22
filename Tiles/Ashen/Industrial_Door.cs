@@ -97,7 +97,9 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override bool RightClick(int i, int j) => Toggle(i, j);
 		public override void PlaceInWorld(int i, int j, Item item) {
-			ModContent.GetInstance<Industrial_Door_TE_System>().AddTileEntity(new(i - 1, j - 2));
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			ModContent.GetInstance<Industrial_Door_TE_System>().AddTileEntity(new(left, top));
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
