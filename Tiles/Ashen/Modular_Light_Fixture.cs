@@ -41,7 +41,7 @@ namespace Origins.Tiles.Ashen {
 			if (tile.TileFrameY >= 18 * 3) litMod = 18 * 3;
 
 			AreaAnalysis bigAnalysis = AreaAnalysis.March(i, j, [new(0, 1), new(0, -1), new(1, 0), new(-1, 0)], pos => Framing.GetTileSafely(pos).TileIsType(Type), a => a.MaxY > a.MinY + 1);
-			if (!bigAnalysis.Broke && bigAnalysis.MaxX - bigAnalysis.MinX > 3 && bigAnalysis.Counted.Count == (bigAnalysis.MaxX + 1 - bigAnalysis.MinX) * (bigAnalysis.MaxY + 1 - bigAnalysis.MinY)) {
+			if (!bigAnalysis.Broke && bigAnalysis.MaxX - bigAnalysis.MinX > 3 && bigAnalysis.MaxY != bigAnalysis.MinY && bigAnalysis.Counted.Count == (bigAnalysis.MaxX + 1 - bigAnalysis.MinX) * (bigAnalysis.MaxY + 1 - bigAnalysis.MinY)) {
 				for (int x = bigAnalysis.MinX; x <= bigAnalysis.MaxX; x++) {
 					for (int y = bigAnalysis.MinY; y <= bigAnalysis.MaxY; y++) {
 						tile = Framing.GetTileSafely(x, y);
