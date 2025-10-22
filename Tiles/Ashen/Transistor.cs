@@ -1,14 +1,12 @@
-﻿using Humanizer;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -28,18 +26,58 @@ namespace Origins.Tiles.Ashen {
 			MineResist = 2;
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
+			RegisterItemDrop(ItemType<Transistor_Item>());
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			Tile tile = Main.tile[i, j];
+			Point pos = new(i, j);
+			Point direction = GetDirection(tile);
+			bool IsInvalidConnecton(int offset) {
+				Point position = pos;
+				position.X += direction.X * offset;
+				position.Y += direction.Y * offset;
+				Tile other = Framing.GetTileSafely(position);
+				if (!other.HasTile) return true;
+				if (other.TileType != Type) return true;
+				if (other.TileFrameX != tile.TileFrameX) return true;
+				if ((other.TileFrameY % (3 * 18)) != (tile.TileFrameY % (3 * 18) + 18 * offset)) return true;
+				return false;
+			}
+			switch ((tile.TileFrameY / 18) % 3) {
+				case 0: {
+					if (IsInvalidConnecton(1) || IsInvalidConnecton(2)) {
+						WorldGen.KillTile(pos.X, pos.Y, noItem: true);
+					}
+					return false;
+				}
+				case 1: {
+					if (IsInvalidConnecton(-1) || IsInvalidConnecton(1)) {
+						WorldGen.KillTile(pos.X, pos.Y, noItem: true);
+					}
+					return false;
+				}
+				case 2: {
+					if (IsInvalidConnecton(-2) || IsInvalidConnecton(-1)) {
+						WorldGen.KillTile(pos.X, pos.Y, noItem: true);
+					}
+					return false;
+				}
+			}
+			return base.TileFrame(i, j, ref resetFrame, ref noBreak);
 		}
 		public override void HitWire(int i, int j) {
 			Tile tile = Main.tile[i, j];
 			switch ((tile.TileFrameY / 18) % 3) {
 				case 0: {
 					if (tile.TileFrameY.TrySet((short)(tile.Get<Ashen_Wire_Data>().AnyPower ? 18 * 3 : 0))) {
+						Wiring.SkipWire(i, j);
 						UpdateTransistor(new(i, j));
 					}
 					break;
 				}
 				case 1: {
 					tile.TileFrameY = (short)((tile.TileFrameY + 3 * 18) % (6 * 18));
+					Wiring.SkipWire(i, j);
 					UpdateTransistor(new Point(i, j) - GetDirection(tile));
 					break;
 				}
@@ -48,13 +86,25 @@ namespace Origins.Tiles.Ashen {
 		public static void UpdateTransistor(Point pos) {
 			Tile input = Main.tile[pos];
 			bool inputPower = input.Get<Ashen_Wire_Data>().AnyPower;
-			input.TileFrameY = (short)((input.TileFrameY + 3 * 18) % (3 * 18) + inputPower.ToInt() * 3 * 18);
+			SetTilePowerFrame(pos.X, pos.Y, inputPower);
+
 			Point dir = GetDirection(input);
-			Tile @switch = Main.tile[pos += dir];
-			Tile output = Main.tile[pos += dir];
+			pos += dir;
+			Tile @switch = Main.tile[pos];
+			pos += dir;
+			Tile output = Main.tile[pos];
+
 			bool power = @switch.TileFrameY >= 3 * 18 && inputPower;
 			Ashen_Wire_Data.SetTilePowered(pos.X, pos.Y, power);
-			output.TileFrameY = (short)((output.TileFrameY + 3 * 18) % (3 * 18) + power.ToInt() * 3 * 18);
+			SetTilePowerFrame(pos.X, pos.Y, power);
+		}
+		static void SetTilePowerFrame(int i, int j, bool on) {
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameY.TrySet((short)((tile.TileFrameY + 3 * 18) % (3 * 18) + on.ToInt() * 3 * 18)))
+				NetSyncTile(i, j);
+		}
+		static void NetSyncTile(int i, int j) {
+			NetMessage.SendData(MessageID.TileSquare, Main.myPlayer, -1, null, i, j, 1, 1);
 		}
 		public static Point GetDirection(Tile tile) {
 			switch (tile.TileFrameX / 18) {
@@ -76,12 +126,15 @@ namespace Origins.Tiles.Ashen {
 		}
 		public bool TryPlace(Point position, Point direction) => TryPlace(GetPlacement(position, direction));
 		public bool TryPlace(IEnumerable<(Point pos, Point frame)> placement) {
+			placement = placement.ToArray();
+			if (placement.Count() != 3) throw new ArgumentException($"Invalid placement [{string.Join(", ", placement)}], must have 3 positions");
 			foreach ((Point pos, _) in placement) {
 				Tile tile = Framing.GetTileSafely(pos);
 				if (tile.HasTile && !(Main.tileCut[tile.TileType] || TileID.Sets.BreakableWhenPlacing[tile.TileType])) {
 					return false;
 				}
 			}
+			Point? first = null;
 			foreach ((Point pos, Point frame) in placement) {
 				Tile tile = Framing.GetTileSafely(pos);
 				if (tile.HasTile) WorldGen.KillTile(pos.X, pos.Y);
@@ -89,16 +142,15 @@ namespace Origins.Tiles.Ashen {
 				tile.TileType = Type;
 				tile.TileFrameX = (short)frame.X;
 				tile.TileFrameY = (short)frame.Y;
-				NetMessage.SendTileSquare(-1, pos.X, pos.Y, 1);
+				NetSyncTile(pos.X, pos.Y);
+				first ??= pos;
 			}
+			UpdateTransistor(first.Value);
 			return true;
 		}
 		public static bool TryGetPlacement(Point pos, out IEnumerable<(Point pos, Point frame)> placement) {
 			Vector2 diff = Main.MouseWorld - pos.ToWorldCoordinates();
-			if (diff == default || diff.HasNaNs()) {
-				placement = default;
-				return false;
-			}
+			if (diff == default || diff.HasNaNs()) diff = -Vector2.UnitY;
 			Point direction;
 			if (Math.Abs(diff.X) >= Math.Abs(diff.Y)) {
 				direction = new(Math.Sign(diff.X), 0);
