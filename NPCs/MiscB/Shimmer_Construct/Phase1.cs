@@ -56,8 +56,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.TargetClosest();
 			npc.velocity *= 0.97f;
 			if (++npc.ai[0] > IdleTime && Main.netMode != NetmodeID.MultiplayerClient) {
-				if (aiStates.Select(state => state.Index).All(boss.previousStates.Contains)) Array.Fill(boss.previousStates, Index);
-				SelectAIState(boss, aiStates);
+				if (aiStates.Select(state => state.Index).All(boss.PreviousStates.Contains)) Array.Fill(boss.PreviousStates, Index);
+				boss.SelectAIState(aiStates);
 			}
 			if (npc.HasValidTarget) npc.DiscourageDespawn(60 * 5);
 			else npc.EncourageDespawn(60);
