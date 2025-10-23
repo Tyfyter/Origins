@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
 using Origins.Items.Weapons.Ranged;
 using PegasusLib;
 using System;
@@ -15,7 +14,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Crimson {
 	public class BlotopusNPC : ModNPC {
 		public override string Texture => typeof(Blotopus).GetDefaultTMLName();
-		//public override void Load() => this.AddBanner();
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			CrimsonGlobalNPC.NPCTypes.Add(Type);
 		}
