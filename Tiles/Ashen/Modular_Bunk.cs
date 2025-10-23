@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Renderers;
@@ -19,7 +21,6 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Modular_Bunk : BedBase {
-		AutoLoadingAsset<Texture2D> innerTexture = typeof(Modular_Bunk).GetDefaultTMLName() + "_inner";
 		public override Color MapColor { get; }
 		public override void ModifyTileData() {
 			TileObjectData.newTile.Height = 5;
@@ -35,17 +36,31 @@ namespace Origins.Tiles.Ashen {
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
 		}
 		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
-			if(tile.TileFrameY / 18 is not 0 and not 3)
+			switch (tile.TileFrameY / 18) {
+				case 0:
+				break;
+				case 3:
+				y -= 4;
+				break;
+				default:
 				height = -1600;
+				break;
+			}
 		}
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 		public override void ModifySmartInteractCoords(ref int width, ref int height, ref int frameWidth, ref int frameHeight, ref int extraY) {
-			// Because beds have special smart interaction, this splits up the left and right side into the necessary 2x2 sections
 			width = 2; // Default to the Width defined for TileObjectData.newTile
-			height = 3; // Default to the Height defined for TileObjectData.newTile
+			height = 2; // Default to the Height defined for TileObjectData.newTile
 						//extraY = 0; // Depends on how you set up frameHeight and CoordinateHeights and CoordinatePaddingFix.Y
 		}
 		public override void ModifySleepingTargetInfo(int i, int j, ref TileRestingInfo info) {
 			info.VisualOffset.Y += 0;
+			info.AnchorTilePosition.Y += 1;
+			if (Main.tile[i, j].TileFrameY < 3 * 18) {
+				info.TargetDirection *= -1;
+				info.DirectionOffset = 16;
+				info.FinalOffset.Y -= 4;
+			}
 		}
 		public override bool RightClick(int i, int j) {
 			Player player = Main.LocalPlayer;
@@ -61,7 +76,7 @@ namespace Origins.Tiles.Ashen {
 				spawnY -= 2;
 				break;
 			}
-			if (!Player.IsHoveringOverABottomSideOfABed(i, j)) { // This assumes your bed is 4x2 with 2x2 sections. You have to write your own code here otherwise
+			if (Player.IsHoveringOverABottomSideOfABed(i, j) != tile.TileFrameY >= 3 * 18) { // This assumes your bed is 4x2 with 2x2 sections. You have to write your own code here otherwise
 				if (player.IsWithinSnappngRangeToTile(i, j, PlayerSleepingHelper.BedSleepingMaxDistance)) {
 					player.GamepadEnableGrappleCooldown();
 					player.sleeping.StartSleeping(player, i, spawnY - 2);
@@ -80,7 +95,8 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void MouseOver(int i, int j) {
 			Player player = Main.LocalPlayer;
-			if (!Player.IsHoveringOverABottomSideOfABed(i, j)) {
+			Tile tile = Main.tile[i, j];
+			if (Player.IsHoveringOverABottomSideOfABed(i, j) != tile.TileFrameY >= 3 * 18) {
 				if (player.IsWithinSnappngRangeToTile(i, j, PlayerSleepingHelper.BedSleepingMaxDistance)) { // Match condition in RightClick. Interaction should only show if clicking it does something
 					player.noThrow = 2;
 					player.cursorItemIconEnabled = true;
@@ -92,27 +108,14 @@ namespace Origins.Tiles.Ashen {
 				player.cursorItemIconID = Item.Type;
 			}
 		}
-		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
-			Tile tile = Main.tile[i, j];
-			Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
-			if (!Main.drawToScreen) {
-				pos.X += Main.offScreenRange;
-				pos.Y += Main.offScreenRange;
-			}
-			Lighting.GetCornerColors(i, j, out VertexColors vertices);
-			Vector4 destination = new(pos, 16, 16);
-			Rectangle source = new(tile.TileFrameX, tile.TileFrameY, 16, 16);
-			Main.tileBatch.Draw(
-				innerTexture,
-				destination,
-				source,
-				vertices
-			);
-			return base.PreDraw(i, j, spriteBatch);
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			Players_Behind_Tiles_Overlay.backgrounds.Add((i, j));
 		}
 	}
 	public class Players_Behind_Tiles_Overlay() : Overlay(EffectPriority.High, RenderLayers.Walls), ILoadable {
 		readonly List<Player> playersBehindTiles = [];
+		public static List<(int i, int j)> backgrounds = [];
+		AutoLoadingAsset<Texture2D> innerTexture = typeof(Modular_Bunk).GetDefaultTMLName() + "_Inner";
 		public override void Draw(SpriteBatch spriteBatch) {
 			playersBehindTiles.Clear();
 			List<Player> playersBehindNPCs = MainReflection.PlayersThatDrawBehindNPCs;
@@ -123,6 +126,19 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 			playersBehindNPCs.RemoveAll(playersBehindTiles.Contains);
+			for (int k = 0; k < backgrounds.Count; k++) {
+				(int i, int j) = backgrounds[k];
+				Tile tile = Main.tile[i, j];
+				Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
+				Rectangle destination = new((int)pos.X, (int)pos.Y, 16, 16);
+				Rectangle source = new(tile.TileFrameX, tile.TileFrameY, 16, 16);
+				spriteBatch.Draw(
+					innerTexture,
+					destination,
+					source,
+					Lighting.GetColor(i, j)
+				);
+			}
 			SpriteBatchState state = spriteBatch.GetState();
 			try {
 				spriteBatch.End();
@@ -131,6 +147,9 @@ namespace Origins.Tiles.Ashen {
 			} finally {
 				spriteBatch.Begin(state);
 			}
+			/*if (Main.renderCount == ((Lighting.LegacyEngine.Mode == 0) ? 2 : 3)) {
+				backgrounds.Clear();
+			}*/
 		}
 		public override void Update(GameTime gameTime) { }
 		public override void Activate(Vector2 position, params object[] args) {
@@ -146,7 +165,16 @@ namespace Origins.Tiles.Ashen {
 		}
 		public void Load(Mod mod) {
 			Overlays.Scene[GetType().FullName] = this;
+			On_TileDrawing.PreDrawTiles += On_TileDrawing_PreDrawTiles;
 		}
+
+		static void On_TileDrawing_PreDrawTiles(On_TileDrawing.orig_PreDrawTiles orig, TileDrawing self, bool solidLayer, bool forRenderTargets, bool intoRenderTargets) {
+			orig(self, solidLayer, forRenderTargets, intoRenderTargets);
+			if (solidLayer && (intoRenderTargets || Lighting.UpdateEveryFrame)) {
+				backgrounds.Clear();
+			}
+		}
+
 		public void Unload() { }
 	}
 }
