@@ -296,10 +296,10 @@ namespace Origins {
 		string assetPath;
 		Ref<Asset<T>> asset;
 		AutoLoadingAsset(Asset<T> asset) {
-			triedLoading = false;
+			triedLoading = true;
 			assetPath = "";
 			this.asset = new(asset);
-			exists = false;
+			exists = true;
 			this.RegisterForUnload();
 		}
 		AutoLoadingAsset(string asset) {
@@ -317,6 +317,7 @@ namespace Origins {
 			if (!triedLoading) {
 				triedLoading = true;
 				if (assetPath is null) {
+					asset ??= new Ref<Asset<T>>();
 					asset.Value = Asset<T>.Empty;
 				} else {
 					if (!Main.dedServ) {

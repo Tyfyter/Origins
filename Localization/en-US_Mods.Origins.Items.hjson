@@ -7174,3 +7174,8 @@ Modular_Bunk_Item: {
 	DisplayName: Modular Bunk
 	Tooltip: ""
 }
+
+Shimmer_Construct_Controller: {
+	DisplayName: Shimmer Construct Controller
+	Tooltip: ""
+}

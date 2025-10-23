@@ -93,6 +93,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					self.Shader.Parameters["uOffset"].SetValue(pos);
 				}
 			);
+			this.AddBossControllerItem();
 		}
 		public override void Unload() {
 			normalDropRule = null;

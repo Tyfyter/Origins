@@ -1,7 +1,16 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Origins.Items.Other.Testing;
+using Origins.Items.Tools.Wiring;
+using Origins.UI;
+using System;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ModLoader;
+using Terraria.ModLoader.UI;
+using Terraria.UI;
 using Terraria.Utilities;
 
 namespace Origins.NPCs {
@@ -26,16 +35,39 @@ namespace Origins.NPCs {
 		}
 		public static void SelectAIState<TBoss>(this TBoss boss, params IEnumerable<AIState<TBoss>>[] from) where TBoss : ModNPC, IStateBoss<TBoss> {
 			WeightedRandom<int> states = new(Main.rand);
+			bool canBeDisabled = Boss_Controller_Item<TBoss>.disabled is not null;
+			if (canBeDisabled) Boss_Controller_Item<TBoss>.activeInLastRoll.Clear();
 			for (int i = 0; i < from.Length; i++) {
 				foreach (AIState<TBoss> state in from[i]) {
+					if (canBeDisabled) {
+						Boss_Controller_Item<TBoss>.activeInLastRoll.Add(state);
+						if (Boss_Controller_Item<TBoss>.disabled.Contains(state)) continue;
+					}
 					states.Add(state.Index, state.GetWeight(boss, boss.PreviousStates));
 				}
 			}
 			SetAIState(boss, states);
 		}
+		public static void AddBossControllerItem<TBoss>(this TBoss boss, int vanillaItemTexture) where TBoss : ModNPC, IStateBoss<TBoss> {
+			boss.AddBossControllerItem(() => $"Terraria/Images/Item_{vanillaItemTexture}");
+		}
+		public static void AddBossControllerItem<TBoss>(this TBoss boss, Type type) where TBoss : ModNPC, IStateBoss<TBoss> {
+			Func<ModItem> itemGetter = typeof(ModContent).GetMethod("GetInstance").MakeGenericMethod(type).CreateDelegate<Func<ModItem>>();
+			boss.AddBossControllerItem(() => itemGetter().Texture);
+		}
+		public static void AddBossControllerItem<TBoss>(this TBoss boss, string texture = null) where TBoss : ModNPC, IStateBoss<TBoss> {
+			boss.AddBossControllerItem(() => texture ?? boss.BossHeadTexture);
+		}
+		public static void AddBossControllerItem<TBoss>(this TBoss boss, Func<string> texture) where TBoss : ModNPC, IStateBoss<TBoss> {
+			boss.Mod.AddContent((ModItem)typeof(Boss_Controller_Item<>).MakeGenericType(typeof(TBoss)).GetConstructors()[0].Invoke([boss.Name, texture]));
+		}
 	}
 	public class AIList<TBoss> : List<AIState<TBoss>> where TBoss : ModNPC, IStateBoss<TBoss> { }
-	public abstract class AIState<TBoss> : ILoadable where TBoss : ModNPC, IStateBoss<TBoss> {
+	public abstract class AIState<TBoss> : ILoadable, IFlowerMenuItem<BossControllerPetalData> where TBoss : ModNPC, IStateBoss<TBoss> {
+		/// <summary>
+		/// Used by boss controller debugging items
+		/// </summary>
+		public AutoLoadingAsset<Texture2D> iconTexture;
 		public int Index { get; private set; }
 		public void Load(Mod mod) {
 			Index = TBoss.AIStates.Count;
@@ -57,6 +89,39 @@ namespace Origins.NPCs {
 		public virtual bool Ranged => false;
 		protected static float DifficultyMult => ContentExtensions.DifficultyDamageMultiplier;
 		public static int StateIndex<TState>() where TState : AIState<TBoss> => ModContent.GetInstance<TState>().Index;
+
+		static readonly AutoLoadingAsset<Texture2D>[] textures = [
+			"Origins/NPCs/Boss_Controller_Active_0",
+			"Origins/NPCs/Boss_Controller_Active_1",
+			"Origins/NPCs/Boss_Controller_Inactive_0",
+			"Origins/NPCs/Boss_Controller_Inactive_1"
+		];
+		void IFlowerMenuItem<BossControllerPetalData>.Draw(Vector2 position, bool hovered, BossControllerPetalData data) {
+			Texture2D texture = TextureAssets.WireUi[hovered.ToInt() + data.HasFlag(BossControllerPetalData.Disabled).ToInt() * 8].Value;
+			if (data.HasFlag(BossControllerPetalData.Active)) {
+				texture = textures[hovered.ToInt()];
+			} else if (data.HasFlag(BossControllerPetalData.Inactive)) {
+				texture = textures[hovered.ToInt() + 2];
+			}
+			DrawIcon(texture, position, Color.White);
+			if (iconTexture.Exists) DrawIcon(iconTexture, position, Color.White);
+			if (hovered) {
+				UICommon.TooltipMouseText(GetType().Name);
+			}
+			static void DrawIcon(Texture2D texture, Vector2 position, Color tint) {
+				Main.spriteBatch.Draw(
+					texture,
+					position,
+					null,
+					tint,
+					0f,
+					texture.Size() * 0.5f,
+					1,
+					SpriteEffects.None,
+				0f);
+			}
+		}
+		bool IFlowerMenuItem<BossControllerPetalData>.IsHovered(Vector2 position) => Main.MouseScreen.WithinRange(position, 20);
 	}
 	public abstract class AutomaticIdleState<TBoss> : AIState<TBoss> where TBoss : ModNPC, IStateBoss<TBoss> {
 		public delegate int StatePriority(TBoss boss);
@@ -81,5 +146,81 @@ namespace Origins.NPCs {
 			StartAIState(boss);
 		}
 		public override void TrackState(int[] previousStates) { }
+	}
+	public class Boss_Controller_Item<TBoss>(string name, Func<string> texture) : TestingItem where TBoss : ModNPC, IStateBoss<TBoss> {
+		public static HashSet<AIState<TBoss>> disabled;
+		public static HashSet<AIState<TBoss>> activeInLastRoll;
+		public override string Name => $"{name}_Controller";
+		public override string Texture => texture();
+		protected override bool CloneNewInstances => true;
+		public override void Load() {
+			Mod.AddContent(new Boss_Controller_Kite(this));
+			disabled = [];
+			activeInLastRoll = [];
+		}
+
+		public class Boss_Controller_Kite(Boss_Controller_Item<TBoss> controller) : ItemModeFlowerMenu<AIState<TBoss>, BossControllerPetalData> {
+			public override bool IsActive() => Main.LocalPlayer.HeldItem.type == controller.Type;
+			AutoLoadingAsset<Texture2D> wireMiniIcons = "Origins/Items/Tools/Wiring/Mini_Wire_Icons";
+			public override float DrawCenter() {
+				NPC boss = null;
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.ModNPC is TBoss) {
+						boss = npc;
+						break;
+					}
+				}
+				if (boss is not null) {
+					int headSlot = boss.GetBossHeadTextureIndex();
+					if (headSlot != -1) {
+						Main.BossNPCHeadRenderer.DrawWithOutlines(boss, headSlot, activationPosition, Color.White, 0, 1, SpriteEffects.None);
+					}
+				}
+				return 40;
+			}
+			public override BossControllerPetalData GetData(AIState<TBoss> mode) {
+				BossControllerPetalData data = 0;
+				if (disabled.Contains(mode)) data |= BossControllerPetalData.Disabled;
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.ModNPC is TBoss) {
+						if (npc.aiAction == mode.Index) data |= BossControllerPetalData.Active;
+						break;
+					}
+				}
+				if (!activeInLastRoll.Contains(mode)) data |= BossControllerPetalData.Inactive;
+				return data;
+			}
+			public override bool GetCursorAreaTexture(AIState<TBoss> mode, out Texture2D texture, out Rectangle? frame, out Color color) {
+				texture = wireMiniIcons;
+				frame = new Rectangle(12 * (1 + disabled.Contains(mode).ToInt()), 0, 10, 10);
+				if (disabled.Contains(mode)) {
+					color = Color.Firebrick;
+				} else if(!activeInLastRoll.Contains(mode)) {
+					color = Color.Gray;
+				} else {
+					color = Color.White;
+				}
+				return true;
+			}
+			public override void Click(AIState<TBoss> mode) {
+				if (ItemSlot.ShiftInUse) {
+					if (!disabled.Add(mode)) disabled.Remove(mode);
+					return;
+				}
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.ModNPC is TBoss boss) {
+						boss.SetAIState(mode.Index);
+						break;
+					}
+				}
+			}
+			public override IEnumerable<AIState<TBoss>> GetModes() => TBoss.AIStates;
+		}
+	}
+	[Flags]
+	public enum BossControllerPetalData {
+		Disabled = 1 << 0,
+		Active = 1 << 1,
+		Inactive = 1 << 2,
 	}
 }
