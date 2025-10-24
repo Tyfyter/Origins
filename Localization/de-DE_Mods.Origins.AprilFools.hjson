@@ -104,6 +104,9 @@ Items: {
 
 	// Modular_Light_Fixture_Item.DisplayName: Modular Incandescent Light Fixture
 	// Spearmint_Tea.Tooltip: "'The quinteassential hug in a cup.'"
+	// PEE_Breastplate.DisplayName: Pernicious Interstellar Scavenger Suit Jacket
+	// PEE_Greaves.DisplayName: Pernicious Interstellar Scavenger Suit Trousers
+	// PEE_Helmet.DisplayName: Pernicious Interstellar Scavenger Suit Mask
 }
 
 // Prefixes.Wholesome_Prefix.DisplayName: Holesome
