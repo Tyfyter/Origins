@@ -2051,6 +2051,12 @@ Projectiles: {
 	// Explosive_Sharknado.DisplayName: Explosive Sharknado
 	// Explosive_Sharkron.DisplayName: Explosive Sharkron
 	// Sharknade_O_P.DisplayName: Sharknade-o
+	// Lingering_Cursedflame1.DisplayName: Lingering Cursed Flame
+	// Lingering_Cursedflame2.DisplayName: Lingering Cursed Flame
+	// Lingering_Cursedflame3.DisplayName: Lingering Cursed Flame
+	// Lingering_Shadowflame1.DisplayName: Lingering Shadow Flame
+	// Lingering_Shadowflame2.DisplayName: Lingering Shadow Flame
+	// Lingering_Shadowflame3.DisplayName: Lingering Shadow Flame
 }
 
 Prefixes: {
