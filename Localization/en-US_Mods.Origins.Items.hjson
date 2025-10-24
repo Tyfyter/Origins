@@ -6924,7 +6924,7 @@ Rattlesnake: {
 	Tooltip:
 		'''
 		Gain a damage boost after not firing for 3 seconds
-		+15% more damage while in a mount
+		+15% more damage while mounted
 		'''
 }
 
