@@ -18,7 +18,7 @@ namespace Origins.NPCs {
 	public interface IStateBoss<TSelf> where TSelf : ModNPC, IStateBoss<TSelf> {
 		public static abstract AIList<TSelf> AIStates { get; }
 		public abstract int[] PreviousStates { get; }
-		public static int StateIndex<TState>() where TState : AIState<TSelf> => ModContent.GetInstance<TState>().Index;
+		public static virtual AutomaticIdleState<TSelf> AutomaticIdleState { get; set; }
 	}
 	public static class StateBossExtensions {
 		public static void SetupStates<TBoss>(this TBoss self) where TBoss : ModNPC, IStateBoss<TBoss> => TBoss.AIStates.SetupStates();
@@ -48,6 +48,7 @@ namespace Origins.NPCs {
 			}
 			SetAIState(boss, states);
 		}
+		public static AIState<TBoss> GetState<TBoss>(this TBoss boss) where TBoss : ModNPC, IStateBoss<TBoss> => TBoss.AIStates[boss.NPC.aiAction];
 		public static void AddBossControllerItem<TBoss>(this TBoss boss, int vanillaItemTexture) where TBoss : ModNPC, IStateBoss<TBoss> {
 			boss.AddBossControllerItem(() => $"Terraria/Images/Item_{vanillaItemTexture}");
 		}
@@ -61,6 +62,9 @@ namespace Origins.NPCs {
 		public static void AddBossControllerItem<TBoss>(this TBoss boss, Func<string> texture) where TBoss : ModNPC, IStateBoss<TBoss> {
 			boss.Mod.AddContent((ModItem)typeof(Boss_Controller_Item<>).MakeGenericType(typeof(TBoss)).GetConstructors()[0].Invoke([boss.Name, texture]));
 		}
+	}
+	public static class StateBossMethods<TBoss> where TBoss : ModNPC, IStateBoss<TBoss> {
+		public static int StateIndex<TState>() where TState : AIState<TBoss> => ModContent.GetInstance<TState>().Index;
 	}
 	public class AIList<TBoss> : List<AIState<TBoss>> where TBoss : ModNPC, IStateBoss<TBoss> { }
 	public abstract class AIState<TBoss> : ILoadable, IFlowerMenuItem<BossControllerPetalData> where TBoss : ModNPC, IStateBoss<TBoss> {
@@ -94,12 +98,16 @@ namespace Origins.NPCs {
 			"Origins/NPCs/Boss_Controller_Active_0",
 			"Origins/NPCs/Boss_Controller_Active_1",
 			"Origins/NPCs/Boss_Controller_Inactive_0",
-			"Origins/NPCs/Boss_Controller_Inactive_1"
+			"Origins/NPCs/Boss_Controller_Inactive_1",
+			"Origins/NPCs/Boss_Controller_Idle_0",
+			"Origins/NPCs/Boss_Controller_Idle_1"
 		];
 		void IFlowerMenuItem<BossControllerPetalData>.Draw(Vector2 position, bool hovered, BossControllerPetalData data) {
 			Texture2D texture = TextureAssets.WireUi[hovered.ToInt() + data.HasFlag(BossControllerPetalData.Disabled).ToInt() * 8].Value;
 			if (data.HasFlag(BossControllerPetalData.Active)) {
 				texture = textures[hovered.ToInt()];
+			} else if (data.HasFlag(BossControllerPetalData.CurrentIdle)) {
+				texture = textures[hovered.ToInt() + 4];
 			} else if (data.HasFlag(BossControllerPetalData.Inactive)) {
 				texture = textures[hovered.ToInt() + 2];
 			}
@@ -126,6 +134,9 @@ namespace Origins.NPCs {
 	public abstract class AutomaticIdleState<TBoss> : AIState<TBoss> where TBoss : ModNPC, IStateBoss<TBoss> {
 		public delegate int StatePriority(TBoss boss);
 		public static List<(AIState<TBoss> state, StatePriority condition)> aiStates = [];
+		public override void Load() {
+			TBoss.AutomaticIdleState = this;
+		}
 		public override void StartAIState(TBoss boss) {
 			NPC npc = boss.NPC;
 			npc.ai[0] = 0;
@@ -146,6 +157,20 @@ namespace Origins.NPCs {
 			StartAIState(boss);
 		}
 		public override void TrackState(int[] previousStates) { }
+		public static bool IsIdleStateActive(TBoss boss, AIState<TBoss> idleState) {
+			NPC npc = boss.NPC;
+			int bestPriority = int.MinValue;
+			int bestState = int.MinValue;
+			for (int i = 0; i < aiStates.Count; i++) {
+				(AIState<TBoss> state, StatePriority condition) = aiStates[i];
+				int priority = condition(boss);
+				if (priority > bestPriority) {
+					bestState = state.Index;
+					bestPriority = priority;
+				}
+			}
+			return bestState == idleState.Index;
+		}
 	}
 	public class Boss_Controller_Item<TBoss>(string name, Func<string> texture) : TestingItem where TBoss : ModNPC, IStateBoss<TBoss> {
 		public static HashSet<AIState<TBoss>> disabled;
@@ -182,8 +207,9 @@ namespace Origins.NPCs {
 				BossControllerPetalData data = 0;
 				if (disabled.Contains(mode)) data |= BossControllerPetalData.Disabled;
 				foreach (NPC npc in Main.ActiveNPCs) {
-					if (npc.ModNPC is TBoss) {
+					if (npc.ModNPC is TBoss boss) {
 						if (npc.aiAction == mode.Index) data |= BossControllerPetalData.Active;
+						if (AutomaticIdleState<TBoss>.IsIdleStateActive(boss, mode)) data |= BossControllerPetalData.CurrentIdle;
 						break;
 					}
 				}
@@ -222,5 +248,6 @@ namespace Origins.NPCs {
 		Disabled = 1 << 0,
 		Active = 1 << 1,
 		Inactive = 1 << 2,
+		CurrentIdle = 1 << 3,
 	}
 }
