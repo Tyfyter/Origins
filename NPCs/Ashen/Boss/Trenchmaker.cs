@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Origins.NPCs.MiscB.Shimmer_Construct;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,8 +18,8 @@ namespace Origins.NPCs.Ashen.Boss {
 			this.SetupStates();
 		}
 		public override void SetDefaults() {
-			NPC.width = 100;
-			NPC.height = 110;
+			NPC.width = 120;
+			NPC.height = 98;
 			NPC.lifeMax = 6600;
 			NPC.damage = 27;
 			NPC.defense = 6;
@@ -26,12 +27,14 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			NPC.npcSlots = 200;
-			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
+			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-2f);
 			NPC.knockBackResist = 0;
 			Array.Fill(PreviousStates, NPC.aiAction);
 		}
 		public override void AI() {
-			//this.GetState().DoAIState(this);
+			this.GetState().DoAIState(this);
 		}
+		public class AutomaticIdleState : AutomaticIdleState<Trenchmaker> { }
+		public abstract class AIState : AIState<Trenchmaker> { }
 	}
 }
