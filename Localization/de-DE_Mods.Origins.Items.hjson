@@ -7179,3 +7179,18 @@ Shimmer_Construct_Controller: {
 	// DisplayName: Shimmer Construct Controller
 	// Tooltip: ""
 }
+
+PEE_Breastplate: {
+	// DisplayName: Pernicious Enterprise Employee Jacket
+	// Tooltip: ""
+}
+
+PEE_Greaves: {
+	// DisplayName: Pernicious Enterprise Employee Trousers
+	// Tooltip: ""
+}
+
+PEE_Helmet: {
+	// DisplayName: Pernicious Enterprise Employee Mask
+	// Tooltip: ""
+}

@@ -107,8 +107,12 @@ namespace Origins.Items.Weapons.Magic {
 				Vector2 pos = Projectile.oldPos[^i];
 				if (pos == default) {
 					break;
-				} else if (projHitbox.Recentered(pos).Intersects(targetHitbox)) {
-					return true;
+				} else {
+					projHitbox.X = (int)pos.X - projHitbox.Width / 2;
+					projHitbox.Y = (int)pos.Y - projHitbox.Height / 2;
+					if (projHitbox.Intersects(targetHitbox)) {
+						return true;
+					}
 				}
 			}
 			return null;

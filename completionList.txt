@@ -692,7 +692,7 @@ VANITY:
 (^) Felnum Shock Glasses
 (X) Gore Protector Set
 (^) Newsboy Cap
-(#, ^2) Pernicious Enterprise Employee Set
+(☻) Pernicious Enterprise Employee Set
 (^) Sunflower Sandals
 
 (^) DIO's Set
