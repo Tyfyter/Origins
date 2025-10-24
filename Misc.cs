@@ -4584,6 +4584,11 @@ namespace Origins {
 			spriteBatch.Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, 0);
 			spriteBatch.Draw(glowTexture, position, sourceRectangle, glowColor, rotation, origin, scale, effects, 0);
 		}
+		public static Color GetTintColor(this NPC npc, Color baseColor) {
+			if (npc.IsABestiaryIconDummy) return baseColor;
+			NPCLoader.DrawEffects(npc, ref baseColor);
+			return npc.GetNPCColorTintedByBuffs(baseColor);
+		}
 	}
 	public static class TileExtenstions {
 		public record class MergeMatcher(int Up, int Down, int Left, int Right, int? UpLeft = null, int? UpRight = null, int? DownLeft = null, int? DownRight = null) {

@@ -28,5 +28,25 @@ namespace Origins.Graphics.Primitives {
 			short[] dices = [0, 1, 2, 3, 1, 2];
 			GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, vertices.Length, dices, 0, 2);
 		}
+		public void DrawLit(Vector2 screenPos, Vector2 pos0, Vector2 pos1, Vector2 pos2, Vector2 pos3) {
+			vertices[0].Position = new Vector3(pos0 - screenPos, 0);
+			vertices[1].Position = new Vector3(pos1 - screenPos, 0);
+			vertices[2].Position = new Vector3(pos2 - screenPos, 0);
+			vertices[3].Position = new Vector3(pos3 - screenPos, 0);
+
+			vertices[0].Color = Lighting.GetColor(pos0.ToTileCoordinates());
+			vertices[1].Color = Lighting.GetColor(pos1.ToTileCoordinates());
+			vertices[2].Color = Lighting.GetColor(pos2.ToTileCoordinates());
+			vertices[3].Color = Lighting.GetColor(pos3.ToTileCoordinates());
+
+			vertices[0].TextureCoordinate = Vector2.Zero;
+			vertices[1].TextureCoordinate = new Vector2(1, 0);
+			vertices[2].TextureCoordinate = new Vector2(0, 1);
+			vertices[3].TextureCoordinate = Vector2.One;
+
+
+			short[] dices = [0, 1, 2, 3, 1, 2];
+			GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, vertices.Length, dices, 0, 2);
+		}
 	}
 }

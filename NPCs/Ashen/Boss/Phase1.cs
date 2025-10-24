@@ -21,7 +21,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override void DoAIState(Trenchmaker boss) {
 			NPC npc = boss.NPC;
 			npc.TargetClosest();
-			npc.velocity *= 0.97f;
+			//npc.velocity *= 0.97f;
 			if (++npc.ai[0] > IdleTime && Main.netMode != NetmodeID.MultiplayerClient) {
 				if (aiStates.Select(state => state.Index).All(boss.PreviousStates.Contains)) Array.Fill(boss.PreviousStates, Index);
 				boss.SelectAIState(aiStates);
