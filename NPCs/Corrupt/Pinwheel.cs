@@ -79,7 +79,7 @@ namespace Origins.NPCs.Corrupt {
 				if (NPC.ai[1] < bladeOffsetMax) MathUtils.LinearSmoothing(ref NPC.ai[1], 0, acceleration);
 			}
 			NPC.velocity.X += acceleration * NPC.direction;
-			NPC.rotation += 0.01f * NPC.velocity.X;
+			NPC.rotation += (1f / NPC.width) * NPC.velocity.X; // I love radians
 			#endregion Movement
 			#region Dig up Dust
 			if (Math.Abs(NPC.velocity.X) > 0f && NPC.collideY) {
