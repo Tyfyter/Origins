@@ -50,11 +50,9 @@ namespace Origins.Items.Tools.Wiring {
 		}
 	}
 	public class Ashen_Grand_Design : ModItem, IWireTool {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.WireKite;
 		public IEnumerable<WireMode> Modes => WireModeLoader.GetSorted(WireMode.Sets.NormalWires).Concat(WireModeLoader.GetSorted(WireMode.Sets.AshenWires));
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WireKite);
-			Item.color = Color.Chocolate;
 			Item.shoot = ModContent.ProjectileType<Mod_Wire_Channel>();
 			Item.channel = true;
 		}
@@ -78,6 +76,11 @@ namespace Origins.Items.Tools.Wiring {
 			);
 			return false;
 		}
+		public override void AddRecipes() => CreateRecipe()
+			.AddIngredient(ItemID.WireKite)
+			.AddIngredient<Ashen_Wrench>()
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
 	}
 	public class Mod_Wire_Channel : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.WireKite;

@@ -1,5 +1,5 @@
-﻿using Origins.NPCs.MiscB.Shimmer_Construct;
-using System;
+﻿using System;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.NPCs.StateBossMethods<Origins.NPCs.Ashen.Boss.Trenchmaker>;
@@ -13,6 +13,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			this.AddBossControllerItem();
 		}
 		public override void SetStaticDefaults() {
+			Main.npcFrameCount[Type] = 8;
 			this.SetupStates();
 		}
 		public override void SetDefaults() {
