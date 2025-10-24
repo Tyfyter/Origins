@@ -7194,3 +7194,8 @@ PEE_Helmet: {
 	// DisplayName: Pernicious Enterprise Employee Mask
 	// Tooltip: ""
 }
+
+Trenchmaker_Controller: {
+	// DisplayName: Trenchmaker Controller
+	// Tooltip: ""
+}

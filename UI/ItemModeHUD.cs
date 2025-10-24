@@ -10,7 +10,7 @@ namespace Origins.UI {
 		public float cursorAreaOpacity = 0;
 		bool mouseRightRelease = false;
 		protected bool RightClicked => Main.mouseRight && mouseRightRelease;
-		public virtual bool ShouldToggle() => RightClicked;
+		public virtual bool ShouldToggle() => RightClicked && !Main.LocalPlayer.mouseInterface;
 		public override void OnEnter() {
 			cursorAreaOpacity = 0;
 			mouseRightRelease = true;
@@ -18,11 +18,6 @@ namespace Origins.UI {
 		public override void OnExit() => isShowing = false;
 		public override bool ContainsPoint(Vector2 point) => isShowing && base.ContainsPoint(point);
 		public sealed override void Update(GameTime gameTime) {
-			if (ShouldToggle()) {
-				activationPosition = Main.MouseScreen;
-				isShowing = !isShowing;
-			}
-			mouseRightRelease = !Main.mouseRight;
 			if (isShowing) {
 				cursorAreaOpacity = 0;
 				Update();
@@ -30,6 +25,11 @@ namespace Origins.UI {
 			} else {
 				MathUtils.LinearSmoothing(ref cursorAreaOpacity, 1, 0.05f);
 			}
+			if (ShouldToggle()) {
+				activationPosition = Main.MouseScreen;
+				isShowing = !isShowing;
+			}
+			mouseRightRelease = !Main.mouseRight;
 		}
 		public virtual void Update() { }
 		public override void Draw(SpriteBatch spriteBatch) {

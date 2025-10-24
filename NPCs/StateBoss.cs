@@ -108,7 +108,7 @@ namespace Origins.NPCs {
 				texture = textures[hovered.ToInt()];
 			} else if (data.HasFlag(BossControllerPetalData.CurrentIdle)) {
 				texture = textures[hovered.ToInt() + 4];
-			} else if (data.HasFlag(BossControllerPetalData.Inactive)) {
+			} else if (data.HasFlag(BossControllerPetalData.Inactive) && !data.HasFlag(BossControllerPetalData.Disabled)) {
 				texture = textures[hovered.ToInt() + 2];
 			}
 			DrawIcon(texture, position, Color.White);
@@ -229,7 +229,7 @@ namespace Origins.NPCs {
 				return true;
 			}
 			public override void Click(AIState<TBoss> mode) {
-				if (ItemSlot.ShiftInUse) {
+				if (RightClicked) {
 					if (!disabled.Add(mode)) disabled.Remove(mode);
 					return;
 				}

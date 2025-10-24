@@ -40,7 +40,7 @@ namespace Origins.UI {
 				);
 				if (hovered) {
 					Main.LocalPlayer.mouseInterface = true;
-					if (Main.mouseLeft && Main.mouseLeftRelease) {
+					if ((Main.mouseLeft && Main.mouseLeftRelease) || RightClicked) {
 						Click(showingModes[i]);
 					}
 				}

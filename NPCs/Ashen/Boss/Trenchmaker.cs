@@ -9,6 +9,9 @@ namespace Origins.NPCs.Ashen.Boss {
 	public class Trenchmaker : ModNPC, IStateBoss<Trenchmaker> {
 		public static AIList<Trenchmaker> AIStates { get; } = [];
 		public int[] PreviousStates { get; } = new int[6];
+		public override void Load() {
+			this.AddBossControllerItem();
+		}
 		public override void SetStaticDefaults() {
 			this.SetupStates();
 		}
