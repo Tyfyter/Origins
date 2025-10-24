@@ -1,6 +1,8 @@
-﻿using Origins.NPCs.MiscB.Shimmer_Construct;
+﻿using Origins.Items.Other.LootBags;
+using Origins.LootConditions;
 using System;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.NPCs.StateBossMethods<Origins.NPCs.Ashen.Boss.Trenchmaker>;
@@ -10,6 +12,7 @@ namespace Origins.NPCs.Ashen.Boss {
 	public class Trenchmaker : ModNPC, IStateBoss<Trenchmaker> {
 		public static AIList<Trenchmaker> AIStates { get; } = [];
 		public int[] PreviousStates { get; } = new int[6];
+		internal static IItemDropRule normalDropRule;
 		public override void Load() {
 			this.AddBossControllerItem();
 		}
@@ -33,6 +36,14 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void AI() {
 			this.GetState().DoAIState(this);
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			normalDropRule = new LeadingSuccessRule();
+
+			npcLoot.Add(new DropBasedOnExpertMode(
+				normalDropRule,
+				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Trenchmaker_Bag>(), 1, 1, 1, null)
+			));
 		}
 		public class AutomaticIdleState : AutomaticIdleState<Trenchmaker> { }
 		public abstract class AIState : AIState<Trenchmaker> { }

@@ -1326,11 +1326,11 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(#, ^2) Industrial Door !!!
+(☻, ▼) Industrial Door !!!
 (X) Large Storage Container !!!
 (^) Laser Tag Console
 (#, ^2) Medium Storage Container !!!
-(#, ^2) Modular Bunk !!!
+(☻, ▼) Modular Bunk !!!
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
 (X) Ocean Dungeon Chest
@@ -1684,7 +1684,7 @@ CONSUMABLES:
 (^) Fiberglass Weaver Bag
 (^) Lost Diver Bag
 (^) Shimmer Construct Bag
-(#2, ^2) Trenchmaker Bag !!!
+(^) Trenchmaker Bag !!!
 (^) World Cracker Bag
 ---
 
