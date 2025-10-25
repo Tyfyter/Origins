@@ -18,7 +18,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileSolidTop[Type] = true;
 			Main.tileNoAttach[Type] = false;
 			for (int i = TileObjectData.GetTileData(Type, 0).RandomStyleRange; i > 0; i--) {
-				AddMapEntry(FromHexRGB(0x000000), CreateMapEntryName(), MapChestName);
+				AddMapEntry(new(36, 33, 31), CreateMapEntryName(), MapChestName);
 			}
 			AdjTiles = [TileID.Containers];
 			DustType = Ashen_Biome.DefaultTileDust;

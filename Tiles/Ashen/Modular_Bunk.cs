@@ -21,7 +21,7 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Modular_Bunk : BedBase {
-		public override Color MapColor { get; }
+		public override Color MapColor => new(117, 63, 26);
 		public override void ModifyTileData() {
 			TileObjectData.newTile.Height = 5;
 			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
