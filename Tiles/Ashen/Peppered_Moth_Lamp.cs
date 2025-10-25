@@ -20,6 +20,9 @@ namespace Origins.Tiles.Ashen {
 				.AddRecipeGroup(OriginSystem.LampRecipeGroup)
 				.Register();
 			};
+			Item.ExtraStaticDefaults += item => {
+				OriginSystem.LampRecipeGroup.ValidItems.Remove(item.type);
+			};
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
