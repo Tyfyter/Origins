@@ -17,9 +17,11 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.Achievements;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using static Origins.Tiles.Ashen.Industrial_Door_TE_System;
 
@@ -60,6 +62,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.Suffocate[Type] = true;
 		}
 		public override bool Slope(int i, int j) => false;
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX < 18 * 4;
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = 0.001f;
 			g = 0.001f;
@@ -122,8 +125,12 @@ namespace Origins.Tiles.Ashen {
 		public override void SetStaticDefaults() {
 			Item = ModContent.GetInstance<Industrial_Door>().Item;
 			base.SetStaticDefaults();
-			Main.tileSolid[Type] = false;
+			Main.tileSolidTop[Type] = true;
 			TileID.Sets.Suffocate[Type] = false;
+			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
+		}
+		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
+			height = -1600;
 		}
 	}
 	public class Industrial_Door_TE_System : TESystem {
@@ -141,6 +148,28 @@ namespace Origins.Tiles.Ashen {
 			}
 			foreach (Point16 item in openDoors.Keys.Except(tileEntityLocations).ToArray()) {
 				openDoors.Remove(item);
+			}
+		}
+		public override void LoadWorldData(TagCompound tag) {
+			base.LoadWorldData(tag);
+			int closed = ModContent.TileType<Industrial_Door>();
+			int open = ModContent.TileType<Industrial_Door_Open>();
+			openDoors ??= [];
+			foreach (Point16 pos in tileEntityLocations) {
+				Tile tile = Main.tile[pos];
+				TileObjectData data = TileObjectData.GetTileData(tile);
+				TileUtils.GetMultiTileTopLeft(pos.X, pos.Y, data, out int left, out int top);
+				if (pos.X == left && pos.Y == top) {
+					if (tile.TileType == open) {
+						Door_Animation animation = GetAnimation(pos);
+						animation.TargetOpen = true;
+						animation.frame = 5;// Door_Animation.max_frame;
+					} else if (tile.TileType == closed) {
+						Door_Animation animation = GetAnimation(pos);
+						animation.TargetOpen = false;
+						animation.frame = 0;
+					}
+				}
 			}
 		}
 		public static Door_Animation GetAnimation(Point16 position) {
