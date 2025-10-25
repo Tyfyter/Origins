@@ -21,7 +21,7 @@ namespace Origins.Tiles.Ashen {
 				.Register();
 			};
 			Item.ExtraStaticDefaults += item => {
-				OriginSystem.LampRecipeGroup.ValidItems.Remove(item.type);
+				if (!OriginsModIntegrations.CheckAprilFools()) OriginSystem.LampRecipeGroup.ValidItems.Remove(item.type);
 			};
 		}
 		public override void SetStaticDefaults() {
