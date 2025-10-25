@@ -44,6 +44,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Exceptions;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
+using Terraria.UI.Chat;
 using Terraria.Utilities;
 
 namespace Origins {
@@ -3104,11 +3105,11 @@ namespace Origins {
 				Dust.NewDustPerfect(pos + new Vector2(area.Width, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugOutlineSprite(this Rectangle area, Color color, Vector2 offset = default) {
-			DrawDebugLineSprite(area.TopLeft(), area.TopRight(), color, offset, true);
-			DrawDebugLineSprite(area.TopLeft(), area.BottomLeft(), color, offset, true);
-			DrawDebugLineSprite(area.TopRight(), area.BottomRight(), color, offset, true);
-			DrawDebugLineSprite(area.BottomLeft(), area.BottomRight(), color, offset, true);
+		public static void DrawDebugOutlineSprite(this Rectangle area, Color color, Vector2 offset = default, bool useScreenPos = true) {
+			DrawDebugLineSprite(area.TopLeft(), area.TopRight(), color, offset, useScreenPos);
+			DrawDebugLineSprite(area.TopLeft(), area.BottomLeft(), color, offset, useScreenPos);
+			DrawDebugLineSprite(area.TopRight(), area.BottomRight(), color, offset, useScreenPos);
+			DrawDebugLineSprite(area.BottomLeft(), area.BottomRight(), color, offset, useScreenPos);
 		}
 		public static void DrawDebugOutline(this Triangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
@@ -3121,20 +3122,20 @@ namespace Origins {
 				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugOutlineSprite(this Triangle area, Color color, Vector2 offset = default) {
-			DrawDebugLineSprite(area.a, area.b, color, offset, true);
-			DrawDebugLineSprite(area.b, area.c, color, offset, true);
-			DrawDebugLineSprite(area.c, area.a, color, offset, true);
+		public static void DrawDebugOutlineSprite(this Triangle area, Color color, Vector2 offset = default, bool useScreenPos = true) {
+			DrawDebugLineSprite(area.a, area.b, color, offset, useScreenPos);
+			DrawDebugLineSprite(area.b, area.c, color, offset, useScreenPos);
+			DrawDebugLineSprite(area.c, area.a, color, offset, useScreenPos);
 		}
 		public static void DrawDebugLine(Vector2 a, Vector2 b, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
 				Dust.NewDustPerfect(offset + Vector2.Lerp(a, b, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugLineSprite(Vector2 a, Vector2 b, Color color, Vector2 offset = default, bool countScreenPos = false) {
+		public static void DrawDebugLineSprite(Vector2 a, Vector2 b, Color color, Vector2 offset = default, bool useScreenPos = false) {
 			Vector2 diff = b - a;
 			Vector2 position = a + offset;
-			if (countScreenPos) position -= Main.screenPosition;
+			if (useScreenPos) position -= Main.screenPosition;
 
 			Main.spriteBatch.Draw(
 				TextureAssets.MagicPixel.Value,
@@ -3146,6 +3147,10 @@ namespace Origins {
 				new Vector2(diff.Length() * 0.5f, 1 * 0.5f),
 				0,
 			0);
+		}
+		public static Vector2 DrawDebugTextAbove(SpriteBatch spritebatch, string text, Vector2 position, Vector2? origin = null, Color? color = null) {
+			DynamicSpriteFont font = FontAssets.ItemStack.Value;
+			return ChatManager.DrawColorCodedStringWithShadow(spritebatch, font, text, position - (font.MeasureString(text) / 2), color ?? Color.White, 0, origin ?? Vector2.Zero, Vector2.One);
 		}
 		public static void DrawConstellationLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width = 20, float distort = 20, float waveSpeed = 0.03f) {
 			MiscShaderData shader = GameShaders.Misc["Origins:Constellation"];

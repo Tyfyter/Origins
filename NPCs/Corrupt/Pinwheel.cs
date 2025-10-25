@@ -2,6 +2,7 @@
 using Origins.Buffs;
 using Origins.Dev;
 using PegasusLib;
+using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -11,6 +12,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI.Chat;
 
 namespace Origins.NPCs.Corrupt {
 	public class Pinwheel : ModNPC, IWikiNPC {
@@ -25,7 +27,7 @@ namespace Origins.NPCs.Corrupt {
 			AssimilationLoader.AddNPCAssimilation<Corrupt_Assimilation>(Type, 0.03f);
 		}
 		public override void SetDefaults() {
-			NPC.aiStyle = NPCAIStyleID.None;
+			NPC.aiStyle = NPCAIStyleID.Fighter;
 			NPC.lifeMax = 380;
 			NPC.defense = 15;
 			NPC.damage = 16;
@@ -52,34 +54,41 @@ namespace Origins.NPCs.Corrupt {
 		public override void OnSpawn(IEntitySource source) {
 			NPC.direction = 1;
 			NPC.ai[0] = DigTime;
-			NPC.ai[2] = 60;
+			//NPC.ai[2] = 60;
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.RottenChunk, 3));
 			npcLoot.Add(ItemDropRule.Common(ItemID.DemoniteOre, 14));
 		}
 		public bool wasCollideY = false;
+		public override bool PreAI() {
+			AIType = NPCID.DesertGhoul;
+			float bladeOffsetMax = NPC.frame.Size().Y / 2 / 16;
+			NPC.ai[2] = 0.3f;
+			if (NPC.collideY) {
+				NPC.ai[2] = 0.3f;
+				if (!wasCollideY && NPC.ai[1] < bladeOffsetMax) if (MathUtils.LinearSmoothing(ref NPC.ai[1], bladeOffsetMax, NPC.ai[2])) wasCollideY = true;
+				else return false;
+				NPC.velocity.X += NPC.ai[2] * NPC.direction;
+			} else {
+				wasCollideY = false;
+				NPC.ai[2] = 0.15f;
+				if (NPC.ai[1] < bladeOffsetMax) MathUtils.LinearSmoothing(ref NPC.ai[1], 0, NPC.ai[2]);
+			}
+			NPC.rotation += (1f / NPC.width) * NPC.velocity.X; // I love radians
+			return true;
+		}
 		public override void AI() {
 			float bladeOffsetMax = NPC.frame.Size().Y / 2 / 16;
-			float acceleration = 0.3f;
 			NPCAimedTarget target = NPC.GetTargetData();
 			#region Movement
-			if (NPC.collideX) {
-				if (NPC.ai[2] < 0) {
+			/*if (NPC.collideX) {
+				if (NPC.ai[2]-- < 0) {
 					NPC.ai[2] = 60;
 					NPC.direction |= 1;
 				}
 			}
-			if (!target.Invalid) NPC.direction = Math.Sign(Math.Abs(NPC.position.DirectionTo(target.Position).X));
-			if (NPC.collideY) {
-				acceleration = 0.3f;
-				if (NPC.ai[1] < bladeOffsetMax) MathUtils.LinearSmoothing(ref NPC.ai[1], bladeOffsetMax, acceleration);
-			} else {
-				acceleration = 0.15f;
-				if (NPC.ai[1] < bladeOffsetMax) MathUtils.LinearSmoothing(ref NPC.ai[1], 0, acceleration);
-			}
-			NPC.velocity.X += acceleration * NPC.direction;
-			NPC.rotation += (1f / NPC.width) * NPC.velocity.X; // I love radians
+			if (!target.Invalid) NPC.direction = Math.Sign(Math.Abs(NPC.position.DirectionTo(target.Position).X));*/
 			#endregion Movement
 			#region Dig up Dust
 			if (Math.Abs(NPC.velocity.X) > 0f && NPC.collideY) {
@@ -104,10 +113,10 @@ namespace Origins.NPCs.Corrupt {
 			}
 			if (NPC.ai[0] <= 0f) NPC.ai[0] = DigTime;
 			#endregion Dig up Dust
-			wasCollideY = NPC.collideY;
+			//wasCollideY = NPC.collideY;
 		}
 		public override void FindFrame(int frameHeight) {
-			NPC.DoFrames(3);
+			NPC.DoFrames(Main.rand.Next(3,6));
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Texture2D texture = TextureAssets.Npc[Type].Value;
@@ -122,6 +131,12 @@ namespace Origins.NPCs.Corrupt {
 				NPC.scale,
 				SpriteEffects.None
 			);
+			string debugText = $"Color: {drawColor}";
+			if (!NPC.IsABestiaryIconDummy) debugText += $"\nVel: {NPC.velocity}\nWasCollideY: {wasCollideY}\nTarget: {NPC.GetTargetData().Invalid}, {NPC.GetTargetData().Type}\nAi: {NPC.ai[0]}, {NPC.ai[1]}, {NPC.ai[2]}, {NPC.ai[3]}";
+			Vector2 origin = new(0, NPC.frame.Size().Y);
+			if (NPC.IsABestiaryIconDummy) origin.Y /= 2;
+			OriginExtensions.DrawDebugTextAbove(spriteBatch, debugText, NPC.Top + offset - screenPos, origin);
+			NPC.Hitbox.DrawDebugOutlineSprite(Color.White, -screenPos, false);
 			return false;
 		}
 	}
