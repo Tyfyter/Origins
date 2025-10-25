@@ -55,7 +55,6 @@ namespace Origins.NPCs.Ashen {
 			NPC.friendly = false;
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			AIType = NPCID.Zombie;
-			AnimationType = NPCID.Zombie;
 			Banner = Item.NPCtoBanner(NPCID.Zombie);
 			SpawnModBiomes = [
 				GetInstance<Ashen_Biome>().Type,
@@ -76,7 +75,7 @@ namespace Origins.NPCs.Ashen {
 			);
 		}
 		public override void FindFrame(int frameHeight) {
-			if (Math.Abs(NPC.velocity.X) > 0) NPC.DoFrames(60);
+			if (Math.Abs(NPC.velocity.X) > 0) NPC.DoFrames(2);
 			if (!NPC.collideY) NPC.DoFrames(1, 3..3);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
