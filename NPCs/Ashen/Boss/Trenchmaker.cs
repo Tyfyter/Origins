@@ -2,6 +2,7 @@
 using Origins.Graphics.Primitives;
 using Origins.Items.Other.LootBags;
 using Origins.LootConditions;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -96,9 +97,9 @@ namespace Origins.NPCs.Ashen.Boss {
 			SpriteEffects effects = SpriteEffects;
 			GetLegPositions(leg, out Vector2 thighPos, out Vector2 calfPos, out Vector2 footPos);
 			Vector2 thighPistonPos = thighPos + new Vector2(1, 25).Apply(effects, default).RotatedBy(leg.ThighRot);
-			Vector2 calfPistonPos = calfPos + new Vector2(26, 6).Apply(effects, default).RotatedBy(leg.CalfRot);
+			Vector2 calfPistonPos = calfPos + new Vector2(26, 6).Apply(effects, default).RotatedBy(leg.CalfRot * NPC.direction);
 			Vector2 thighUnit = Vector2.UnitX.RotatedBy(leg.ThighRot) * 4;
-			Vector2 calfUnit = Vector2.UnitX.RotatedBy(leg.CalfRot) * 4;
+			Vector2 calfUnit = Vector2.UnitX.RotatedBy(leg.CalfRot * NPC.direction) * 4;
 			MiscShaderData shader = GameShaders.Misc["Origins:Identity"];
 			shader.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
 			shader.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 0, 1, 1));
@@ -213,6 +214,18 @@ namespace Origins.NPCs.Ashen.Boss {
 			}
 			public virtual void Load() { }
 			public void Unload() { }
+			public static void PistonTo(Trenchmaker npc, ref Leg leg, float targetLength) {
+				if (targetLength < 2) targetLength = 2;
+				if (targetLength > 44) targetLength = 44;
+				GeometryUtils.AngleDif(leg.CalfRot + MathHelper.PiOver2, leg.ThighRot, out int dir);
+				npc.GetLegPositions(leg, out Vector2 thighPos, out Vector2 calfPos, out _);
+				SpriteEffects effects = npc.SpriteEffects;
+				Vector2 thighConnectionPos = thighPos + new Vector2(1, 25).Apply(effects, default).RotatedBy(leg.ThighRot * npc.NPC.direction);
+				Vector2 calfConnectionPos = calfPos + new Vector2(26, 6).Apply(effects, default).RotatedBy(leg.CalfRot * npc.NPC.direction);
+				float currentLength = thighConnectionPos.Distance(calfConnectionPos);
+				leg.CalfRot -= dir * (currentLength - targetLength) * 0.01f;
+				Debugging.ChatOverhead(targetLength);
+			}
 		}
 	}
 }

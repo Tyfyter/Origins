@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using static Origins.NPCs.Ashen.Boss.Trenchmaker;
 
 namespace Origins.NPCs.Ashen.Boss {
@@ -15,7 +16,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			return this;
 		}
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
-			
+			PistonTo(npc, ref leg, 48 * (Main.MouseScreen.Y / Main.screenHeight));
 		}
 	}
 }
