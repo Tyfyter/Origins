@@ -18,6 +18,10 @@ namespace Origins.Tiles.Ashen {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = false;
+			Main.tileMerge[Type][TileType<Cargo_Elevator_Door>()] = true;
+			Main.tileMerge[Type][TileType<Cargo_Elevator_Door_Open>()] = true;
+			Main.tileMerge[Type][TileType<Industrial_Door>()] = true;
+			Main.tileMerge[Type][TileType<Industrial_Door_Open>()] = true;
 			TileID.Sets.Stone[Type] = false;
 			TileID.Sets.Conversion.Stone[Type] = false;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
