@@ -2381,6 +2381,7 @@ Tiles: {
 	// Industrial_Door.MapEntry: Industrial Door
 	// Industrial_Door_Open.MapEntry: Industrial Door
 	// Cargo_Elevator_Door.MapEntry: Cargo Elevator Door
+	// Cargo_Elevator_Door_Open.MapEntry: Cargo Elevator Door Open
 }
 
 MapObject: {

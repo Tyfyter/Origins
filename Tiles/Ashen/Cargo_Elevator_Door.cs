@@ -1,7 +1,5 @@
-﻿using Humanizer;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
-using Origins.Graphics;
+﻿using MonoMod.Cil;
+using Origins.Core;
 using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -11,20 +9,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.GameContent.Achievements;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Origins.Tiles.Ashen.Cargo_Elevator_Door_TE_System;
 
 namespace Origins.Tiles.Ashen {
-	public class Cargo_Elevator_Door : OriginTile, IComplexMineDamageTile {
+	public class Cargo_Elevator_Door : OriginTile, IComplexMineDamageTile, IMultiTypeMultiTile {
 		public TileItem Item { get; protected set; }
 		public override void Load() {
 			Mod.AddContent(Item = new(this));
@@ -35,13 +28,12 @@ namespace Origins.Tiles.Ashen {
 			Main.tileSolid[Type] = true;
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
-			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.HasOutlines[Type] = false;
 
 			// Names
-			AddMapEntry(new Color(220, 220, 220), CreateMapEntryName());
+			if (this is not Cargo_Elevator_Door_Open) AddMapEntry(new Color(220, 220, 220), CreateMapEntryName());
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -54,9 +46,9 @@ namespace Origins.Tiles.Ashen {
 			RegisterItemDrop(Item.Type);
 		}
 		// TODO: implement
-		static bool IsSolid(int i, int j) {
+		public static bool IsSolid(int i, int j) {
 			Tile tile = Main.tile[i, j];
-			int distFromCenter = Math.Abs(tile.TileFrameX / 18 - 6);
+			int distFromCenter = Math.Abs(tile.TileFrameX / 18 - 5);
 			switch (tile.TileFrameY / (18 * 3)) {
 				case 12:
 				case 13:
@@ -126,6 +118,21 @@ namespace Origins.Tiles.Ashen {
 			if (actuallyDo) new Cargo_Elevator_Door_Action(new(left, top), !animation.TargetOpen).Perform();
 			return true;
 		}
+
+		public bool IsValidTile(Tile tile) => tile.TileType == ModContent.TileType<Cargo_Elevator_Door>() || tile.TileType == ModContent.TileType<Cargo_Elevator_Door_Open>();
+	}
+	public class Cargo_Elevator_Door_Open : Cargo_Elevator_Door {
+		public override string Texture => typeof(Cargo_Elevator_Door).GetDefaultTMLName();
+		public override void Load() {}
+		public override void SetStaticDefaults() {
+			Item = ModContent.GetInstance<Cargo_Elevator_Door>().Item;
+			base.SetStaticDefaults();
+			Main.tileSolidTop[Type] = true;
+			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
+		}
+		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
+			if ((tile.TileFrameY / 18) % 3 != 0) height = -1600;
+		}
 	}
 	public class Cargo_Elevator_Door_TE_System : TESystem {
 		Dictionary<Point16, Door_Animation> openDoors;
@@ -163,10 +170,13 @@ namespace Origins.Tiles.Ashen {
 					frame += TargetOpen.ToDirectionInt();
 					TileObjectData data = TileObjectData.GetTileData(Main.tile[position]);
 					TileUtils.GetMultiTileTopLeft(position.X, position.Y, data, out int left, out int top);
+					ushort closed = (ushort)ModContent.TileType<Cargo_Elevator_Door>();
+					ushort open = (ushort)ModContent.TileType<Cargo_Elevator_Door_Open>();
 					for (int x = 0; x < data.Width; x++) {
 						for (int y = 0; y < data.Height; y++) {
 							Tile tile = Main.tile[left + x, top + y];
 							tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
+							tile.TileType = Cargo_Elevator_Door.IsSolid(left + x, top + y) ? closed : open;
 						}
 					}
 					/*if (!TargetOpen && frame < 4 && !NetmodeActive.MultiplayerClient) {
