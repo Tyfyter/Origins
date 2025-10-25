@@ -235,7 +235,7 @@ ENEMY NPCS:
 (^) Optiphage
 (X) Packhunter
 (#, ^2) Pinwheel
-(☻) Power Suit Zombie
+(#2, ^2) Power Suit Zombie
 (^) Pustule Jellyfish
 (X) QM-76 'Quakemaker'
 (X) Reject
@@ -692,7 +692,7 @@ VANITY:
 (^) Felnum Shock Glasses
 (X) Gore Protector Set
 (^) Newsboy Cap
-(☻) Pernicious Enterprise Employee Set
+(^) Pernicious Enterprise Employee Set
 (^) Sunflower Sandals
 
 (^) DIO's Set
@@ -1102,9 +1102,9 @@ EXPLOSIVE WEAPONS:
 (^) Shrapnel Bomb
 (^) Sticky Link Grenade
 (^) Tank Rifle
-(☻) Ticking Grenade
-(☻) Ticking Bomb
-(☻) Ticking Dynamite
+(^) Ticking Bomb
+(^) Ticking Dynamite
+(^) Ticking Grenade
 (^) Voltefuse
 
 (^) Acrid Handcannon
@@ -1142,7 +1142,7 @@ EXPLOSIVE WEAPONS:
 (X) Puffle
 (^) Rocodile
 (^) Self-Destruct
-(☻) Sharknade-o
+(#2, ^2) Sharknade-o (water dusts on detonation)
 (X) Supernova
 (X) The Heatseeker
 (X) The Rocketman
@@ -1232,7 +1232,7 @@ TILES:
 (^) Rusty Piping
 (X) Sanguinite Brick
 (@4) Sanguinite Ore !!!
-(☻) Scrap Heap !!!
+(^) Scrap Heap
 (^) Silica
 (^) Silicon Ore
 (^) Soot Sandstone
@@ -1243,7 +1243,7 @@ TILES:
 (X) Spug Flesh Brick
 (@4, #2) Tainted Stone !!! (temp sprite)
 (X) Tainted Stone Brick
-(☻) Truss Block !!!
+(@4, #2) Truss Block !!!
 (^) Type-I Fortified Steel Block
 (^) Type-II Fortified Steel Block
 (^) Type-III Fortified Steel Block
@@ -1303,7 +1303,7 @@ TILES:
 (^) Living Bile Block
 (^) Marrowick Furniture
 (X) Nova Furniture
-(☻) Peppered Moth Lamp !!!
+(^) Peppered Moth Lamp
 (^) Phoenum Torch
 (X) Residue Furniture
 (^) Riven Torch
@@ -1326,11 +1326,11 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(☻, ▼) Industrial Door !!!
+(@2, #2) Industrial Door !!!
 (X) Large Storage Container !!!
 (^) Laser Tag Console
 (#, ^2) Medium Storage Container !!!
-(☻, ▼) Modular Bunk !!!
+(#2, ^2) Modular Bunk !!! (just give it map colors specified)
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
 (X) Ocean Dungeon Chest
@@ -1343,7 +1343,7 @@ TILES:
 (^) Riven Campfire
 (^) Riven Dungeon Chest
 (X) Rusty Locker !!!
-(☻, ▼) Small Storage Container !!!
+(#2/3, ^2) Small Storage Container !!!
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)
@@ -1360,7 +1360,7 @@ TILES:
 (^) Acetabularia
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
-(☻, ▼) Background Door !!!
+(^) Background Door
 (々) Beacon Light !!! (needs Repairboys to be implemented first)
 (^) Brineglow Vine
 (^) Defiled Altar
@@ -1370,11 +1370,11 @@ TILES:
 (^) Defiled Pot
 (X) Exoskeletal Baobab Tree
 (^) Exoskeletal Tree
-(☻) Floodlight !!!
+(^) Floodlight
 (^) Fungarust
 (^) Fuzzvine
 (^) Gel Blister
-(☻, 々 (power core)) Generation Station !!!
+(々 (power core)) Generation Station !!!
 (#, ^2) Hanging Scrap !!!
 (^) Heat Vent
 (^) Hydrothermal Vent
@@ -1528,11 +1528,11 @@ MISCELLANEOUS ITEMS:
 (X) Armor+ Power-Up
 (^) Defiled Mana
 (^) Large Chambersite
-(☻) Worn Paper: Loose Wheel (these: journal entries)
-(☻) Worn Paper: Self-Preservation
-(☻) Worn Paper: Smog Test
-(☻) Worn Paper: The Packing Slip
-(☻) Worn Paper: They Found Us
+(^) Worn Paper: Loose Wheel
+(^) Worn Paper: Self-Preservation
+(^) Worn Paper: Smog Test
+(^) Worn Paper: The Packing Slip
+(^) Worn Paper: They Found Us
 ---
 
 

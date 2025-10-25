@@ -447,9 +447,9 @@ DeathMessage: {
 	}
 
 	Crushed: {
-		// 0: "{0} inspired a sign"
-		// 1: '''{0} reset the "days since last accident" counter'''
-		// 2: "{0} didn't make it to the other side"
+		// 0: "{0} inspired a sign."
+		// 1: '''{0} reset the "days since last accident" counter.'''
+		// 2: "{0} didn't make it to the other side."
 	}
 
 	// Tripod_0: "{0} forgot the tripod nip."

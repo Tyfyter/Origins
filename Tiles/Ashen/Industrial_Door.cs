@@ -46,7 +46,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.HasOutlines[Type] = true;
 
 			// Names
-			AddMapEntry(new Color(220, 220, 220), CreateMapEntryName());
+			AddMapEntry(new Color(58, 55, 70), CreateMapEntryName());
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);

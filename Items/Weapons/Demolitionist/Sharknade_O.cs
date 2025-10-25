@@ -23,7 +23,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed *= 1.5f;
 			Item.shoot = ModContent.ProjectileType<Sharknade_O_P>();
 			Item.ammo = ItemID.Grenade;
-			Item.rare = ItemRarityID.Red;
+			Item.rare = ItemRarityID.Yellow;
 			Item.consumable = false;
 		}
 	}

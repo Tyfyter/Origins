@@ -11,7 +11,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(FromHexRGB(0x2c212a));
 			DustType = DustID.Copper;
-			HitSound = SoundID.NPCHit18;
+			HitSound = SoundID.NPCHit42.WithPitch(1.5f).WithVolume(0.5f);
 		}
 	}
 	public class Scrap_Heap_Item : ModItem {
