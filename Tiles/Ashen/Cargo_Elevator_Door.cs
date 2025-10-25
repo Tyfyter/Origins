@@ -185,6 +185,9 @@ namespace Origins.Tiles.Ashen {
 			public int frameCounter = 0;
 			public bool IsAnimating => frame != TargetOpen.Mul(max_frame);
 			public const int max_frame = 18;
+
+			HashSet<Point> leftClosing = [];
+			HashSet<Point> rightClosing = [];
 			public void Update(Point16 position) {
 				if (TargetOpen && Main.tile[position].TileFrameX >= 4 * 18) TargetOpen = false;
 				if (!IsAnimating) return;
@@ -195,36 +198,58 @@ namespace Origins.Tiles.Ashen {
 					TileUtils.GetMultiTileTopLeft(position.X, position.Y, data, out int left, out int top);
 					ushort closed = (ushort)ModContent.TileType<Cargo_Elevator_Door>();
 					ushort open = (ushort)ModContent.TileType<Cargo_Elevator_Door_Open>();
+					leftClosing.Clear();
+					rightClosing.Clear();
 					for (int x = 0; x < data.Width; x++) {
 						for (int y = 0; y < data.Height; y++) {
 							Tile tile = Main.tile[left + x, top + y];
 							tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
-							tile.TileType = Cargo_Elevator_Door.IsSolid(left + x, top + y) ? closed : open;
+							if (tile.TileType.TrySet(Cargo_Elevator_Door.IsSolid(left + x, top + y) ? closed : open) && !TargetOpen) {
+								if (x < (data.Width + 1) / 2) leftClosing.Add(new(left + x, top + y));
+								else if (x > (data.Width + 1) / 2) rightClosing.Add(new(left + x, top + y));
+							}
 						}
 					}
-					/*if (!TargetOpen && frame < 4 && !NetmodeActive.MultiplayerClient) {
-						Rectangle hitbox = new(left * 16, top * 16, 16 * 2, 16 * 3);
-						foreach (Player player in Main.ActivePlayers) {
-							if (player.shimmering) continue;
-							if (player.Hitbox.Intersects(hitbox)) {
-								player.Hurt(
-									PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Crushed").SelectFrom(player.name).ToNetworkText()),
-									player.statLife / (frame + 1),
-									0,
-									cooldownCounter: -2,
-									dodgeable: false,
-									knockback: 18,
-									scalingArmorPenetration: 1
-								);
+				}
+				if (!TargetOpen && frame > 5 && !NetmodeActive.MultiplayerClient) {
+					Vector2? GetPushDirection(Rectangle hitbox) {
+						if (!CollisionExt.OverlapsAnyTiles(hitbox, out List<Point> positions)) return null;
+						return Vector2.UnitX * int.Sign(positions.Any(leftClosing.Contains).ToInt() - positions.Any(rightClosing.Contains).ToInt());
+					}
+					foreach (Player player in Main.ActivePlayers) {
+						if (player.shimmering) continue;
+						if (GetPushDirection(player.Hitbox) is Vector2 push) {
+							if (push == default) {
+								if (frameCounter == 0) {
+									player.Hurt(
+										PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Crushed").SelectFrom(player.name).ToNetworkText()),
+										player.statLife / int.Max(frame - 10, 1),
+										0,
+										cooldownCounter: -2,
+										dodgeable: false,
+										knockback: 18,
+										scalingArmorPenetration: 1
+									);
+								}
+							}
+							player.position += push * 4;
+						}
+					}
+					foreach (NPC npc in Main.ActiveNPCs) {
+						if (npc.noTileCollide || npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) continue;
+						if (GetPushDirection(npc.Hitbox) is Vector2 push) {
+							if (push == default) {
+								if (frameCounter == 0) {
+									npc.SimpleStrikeNPC(npc.life / int.Max(frame - 7, 1), 0, true, 18, noPlayerInteraction: true);
+								}
+							} else {
+								npc.position += push * 4;
 							}
 						}
-						foreach (NPC npc in Main.ActiveNPCs) {
-							if (npc.noTileCollide || npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) continue;
-							if (npc.Hitbox.Intersects(hitbox)) {
-								npc.SimpleStrikeNPC(npc.life / (frame + 1), 0, true, 18, noPlayerInteraction: true);
-							}
-						}
-					}*/
+						/*if (npc.Hitbox.Intersects(hitbox)) {
+							npc.SimpleStrikeNPC(npc.life / (frame + 1), 0, true, 18, noPlayerInteraction: true);
+						}*/
+					}
 				}
 			}
 		}
