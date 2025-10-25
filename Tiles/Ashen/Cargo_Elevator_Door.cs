@@ -13,6 +13,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using static Origins.Tiles.Ashen.Cargo_Elevator_Door_TE_System;
 
@@ -151,6 +152,28 @@ namespace Origins.Tiles.Ashen {
 				openDoors.Remove(item);
 			}
 		}
+		public override void LoadWorldData(TagCompound tag) {
+			base.LoadWorldData(tag);
+			int closed = ModContent.TileType<Cargo_Elevator_Door>();
+			int open = ModContent.TileType<Cargo_Elevator_Door_Open>();
+			openDoors ??= [];
+			foreach (Point16 pos in tileEntityLocations) {
+				Tile tile = Main.tile[pos];
+				TileObjectData data = TileObjectData.GetTileData(tile);
+				TileUtils.GetMultiTileTopLeft(pos.X, pos.Y, data, out int left, out int top);
+				if (pos.X == left && pos.Y == top) {
+					if (tile.TileType == open) {
+						Door_Animation animation = GetAnimation(pos);
+						animation.TargetOpen = true;
+						animation.frame = Door_Animation.max_frame;
+					} else if (tile.TileType == closed) {
+						Door_Animation animation = GetAnimation(pos);
+						animation.TargetOpen = false;
+						animation.frame = 0;
+					}
+				}
+			}
+		}
 		public static Door_Animation GetAnimation(Point16 position) {
 			Dictionary<Point16, Door_Animation> openDoors = ModContent.GetInstance<Cargo_Elevator_Door_TE_System>().openDoors;
 			openDoors.TryAdd(position, new());
@@ -161,7 +184,7 @@ namespace Origins.Tiles.Ashen {
 			public int frame = 0;
 			public int frameCounter = 0;
 			public bool IsAnimating => frame != TargetOpen.Mul(max_frame);
-			const int max_frame = 18;
+			public const int max_frame = 18;
 			public void Update(Point16 position) {
 				if (TargetOpen && Main.tile[position].TileFrameX >= 4 * 18) TargetOpen = false;
 				if (!IsAnimating) return;

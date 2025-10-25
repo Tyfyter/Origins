@@ -163,7 +163,7 @@ namespace Origins.Tiles.Ashen {
 					if (tile.TileType == open) {
 						Door_Animation animation = GetAnimation(pos);
 						animation.TargetOpen = true;
-						animation.frame = 5;// Door_Animation.max_frame;
+						animation.frame = Door_Animation.max_frame;
 					} else if (tile.TileType == closed) {
 						Door_Animation animation = GetAnimation(pos);
 						animation.TargetOpen = false;
@@ -182,7 +182,7 @@ namespace Origins.Tiles.Ashen {
 			public int frame = 0;
 			public int frameCounter = 0;
 			public bool IsAnimating => frame != TargetOpen.Mul(max_frame);
-			const int max_frame = 5;
+			public const int max_frame = 5;
 			public void Update(Point16 position) {
 				if (TargetOpen && Main.tile[position].TileFrameX >= 4 * 18) TargetOpen = false;
 				if (!IsAnimating) return;
