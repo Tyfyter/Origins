@@ -14,6 +14,13 @@ namespace Origins.Tiles.Limestone {
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			//TileID.Sets.Conversion.Sandstone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+			TileID.Sets.ChecksForMerge[Type] = true;
+			for (int i = 0; i < TileLoader.TileCount; i++) {
+				if (Main.tileMerge[i][TileID.Sand] || Main.tileMerge[i][TileID.HardenedSand] || Main.tileMerge[i][TileID.Sandstone]) {
+					Main.tileMerge[Type][i] = true;
+					Main.tileMerge[i][Type] = true;
+				}
+			}
 			AddMapEntry(new Color(180, 172, 134));
 			DustType = DustID.Sand;
 			HitSound = SoundID.Tink;
