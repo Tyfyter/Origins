@@ -120,7 +120,11 @@ namespace Origins.NPCs.Corrupt {
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Texture2D texture = TextureAssets.Npc[Type].Value;
-			Vector2 offset = NPC.IsABestiaryIconDummy ? default : new(0, NPC.ai[1]);
+			Vector2 offset = new(0, NPC.ai[1]);
+			if (NPC.IsABestiaryIconDummy) {
+				offset = Vector2.Zero;
+				drawColor = Color.White;
+			}
 			Main.EntitySpriteDraw(
 				texture,
 				NPC.Center + offset - screenPos,
@@ -154,8 +158,6 @@ namespace Origins.NPCs.Corrupt {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(BaseProj);
-			Projectile.friendly = false;
-			Projectile.hostile = true;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Flame, FlameTime);
@@ -164,8 +166,6 @@ namespace Origins.NPCs.Corrupt {
 			target.AddBuff(Flame, FlameTime);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Projectile.friendly = false;
-			Projectile.hostile = true;
 			lightColor = lightColor.MultiplyRGB(Hardmode ? Color.LimeGreen : Color.MediumPurple);
 			return true;
 		}
