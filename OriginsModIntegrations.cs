@@ -25,6 +25,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
+using Origins.NPCs.Ashen.Boss;
 using Origins.NPCs.Brine;
 using Origins.NPCs.Brine.Boss;
 using Origins.NPCs.Corrupt;
@@ -183,6 +184,34 @@ namespace Origins {
 					AltBiome biome = GetInstance<T>();
 					return () => Main.drunkWorld || WorldBiomeManager.GetWorldEvil(true) == biome || ModLoader.HasMod("BothEvils");
 				}
+				/*Asset<Texture2D> glowTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Glow");
+				Asset<Texture2D> armTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Arm");
+				Asset<Texture2D> pistonTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Leg_Piston");
+				Asset<Texture2D> hipTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Hip");
+				Asset<Texture2D> hipGlowTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Hip_Glow");
+				Asset<Texture2D> thighTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Thigh");
+				Asset<Texture2D> calfTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Calf");
+				Asset<Texture2D> footTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Foot");*/
+				bossChecklist.Call("LogBoss",
+					mod,
+					"Trenchmaker",
+					3f,
+					() => NPC.downedBoss2,
+					new List<int> { NPCType<Trenchmaker>(), NPCType<Fearmaker>() },
+					new Dictionary<string, object> {
+						["availability"] = IfEvil<Ashen_Alt_Biome>(),
+						["spawnItems"] = ItemType<Distress_Beacon>(),
+						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Trenchmaker.BossChecklistIntegration.SpawnCondition"),
+						["collectibles"] = new List<int> {
+							RelicTileBase.ItemType<Trenchmaker_Relic>(),
+							TrophyTileBase.ItemType<Trenchmaker_Trophy>(),
+							ItemType<Trenchmaker_Mask>(),
+							//ItemType<Fleshy_Globe>(),
+						}/*,
+						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
+						}*/
+					}
+				);
 				bossChecklist.Call("LogBoss",
 					mod,
 					nameof(Defiled_Amalgamation).Replace("_", ""),
@@ -713,7 +742,7 @@ namespace Origins {
 
 			conditionalCompatRecommendations.Add((
 				() => !(ModLoader.HasMod("ShopExtender") || ModLoader.HasMod("ShopExpander")),
-				Language.GetText("Mods.Origins.ModCompatNotes.ToManyItems" + (ModLoader.HasMod("AlchemistNPC") ? "Alch" : string.Empty) )));
+				Language.GetText("Mods.Origins.ModCompatNotes.ToManyItems" + (ModLoader.HasMod("AlchemistNPC") ? "Alch" : string.Empty))));
 		}
 		public static void AddRecipes() {
 			if (instance.thorium is not null) AddThoriumRecipes();
