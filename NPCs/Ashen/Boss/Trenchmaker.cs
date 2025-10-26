@@ -1,7 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics.Primitives;
+using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
+using Origins.Items.Vanity.BossMasks;
 using Origins.LootConditions;
+using Origins.Tiles.Ashen;
+using Origins.Tiles.BossDrops;
+using Origins.World.BiomeData;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -9,6 +14,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -36,6 +42,11 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 8;
+			NPCID.Sets.BossBestiaryPriority.Add(Type);
+			NPCID.Sets.CantTakeLunchMoney[Type] = true;
+			NPCID.Sets.MPAllowedEnemies[Type] = true;
+			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Ashen_Biome>());
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			this.SetupStates();
 		}
 		public override void SetDefaults() {
@@ -52,6 +63,16 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-2f);
 			NPC.knockBackResist = 0;
 			Array.Fill(PreviousStates, NPC.aiAction);
+			SpawnModBiomes = [
+				ModContent.GetInstance<Ashen_Biome>().Type
+			];
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			NPC.KillsCountTowardsNPC<Fearmaker>(bestiaryEntry);
+
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText(false, true)
+			);
 		}
 		public Leg[] legs = [new(), new()];
 		public override void AI() {
@@ -61,6 +82,10 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.velocity.Y += 0.4f;
 			DoCollision(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, true);
 			for (int i = 0; i < legs.Length; i++) UpdateLeg(i);
+		}
+		public override void OnKill() {
+			if (!NPC.downedBoss2 || Main.rand.NextBool(2)) WorldGen.spawnMeteor = true;
+			NPC.SetEventFlagCleared(ref NPC.downedBoss2, GameEventClearedID.DefeatedEaterOfWorldsOrBrainOfChtulu);
 		}
 		public void UpdateLeg(int index) {
 			GetLegPositions(legs[index], out _, out _, out Vector2 oldFootPos);
@@ -186,10 +211,20 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			normalDropRule = new LeadingSuccessRule();
 
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Sanguinite_Ore_Item>(), 1, 140, 330));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<NE8>(), 1, 40, 100));
+			//normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>()));
+
+			normalDropRule.OnSuccess(ItemDropRule.Common(TrophyTileBase.ItemType<Trenchmaker_Trophy>(), 10));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Trenchmaker_Mask>(), 10));
+
 			npcLoot.Add(new DropBasedOnExpertMode(
 				normalDropRule,
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Trenchmaker_Bag>(), 1, 1, 1, null)
 			));
+			//npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Mysterious_Spray>(), 4));
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Trenchmaker_Relic>()));
+			//npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Blockus_Tube>(), 4));
 		}
 		public class AutomaticIdleState : AutomaticIdleState<Trenchmaker> { }
 		public abstract class AIState : AIState<Trenchmaker> { }

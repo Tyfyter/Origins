@@ -110,3 +110,5 @@ Chambersite_Squirrel: "{$Bestiary_FlavorText.npc_GemSquirrelAmethyst}"
 // Hyrax: Feisty little creatures.
 // Power_Suit_Zombie: He was hanging out in the suit locker the whole time, waiting for unsuspecting scavengers to come and eat their brains. But, no one came, so he left home in search of friends. But, no one wanted to be his friend.
 // Pinwheel: A saw blade made of Demonite, forged by an unknown force. They scour the corrupt wastelands to protect it.
+// Trenchmaker: bestiary text here
+Trenchmaker_Alt: "{$Trenchmaker}"

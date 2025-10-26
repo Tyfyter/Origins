@@ -1,21 +1,33 @@
-﻿using Origins.Dev;
-using Origins.Items.Materials;
+﻿using Origins.Items.Materials;
+using Origins.NPCs.Ashen.Boss;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	[LegacyName("Broken_Record")]
 	public class Distress_Beacon : ModItem {
-		public string[] Categories => [
-			WikiCategories.BossSummon
-		];
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 3;
+			ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;
+		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.CultistBossBag);
-			Item.maxStack = Item.CommonMaxStack;
+			Item.CloneDefaults(ItemID.WormFood);
+			Item.useAnimation = 45;
+			Item.useTime = 45;
 			Item.rare = ItemRarityID.Blue;
-			Item.expert = false;
+		}
+		public override bool CanUseItem(Player player) {
+			return player.InModBiome<Ashen_Biome>() && !NPC.AnyNPCs(ModContent.NPCType<Trenchmaker>()) && !NPC.AnyNPCs(ModContent.NPCType<Fearmaker>());
+		}
+		public override bool? UseItem(Player player) {
+			if (player.whoAmI == Main.myPlayer) {
+				SoundEngine.PlaySound(SoundID.Roar, player.Center);
+				player.SpawnBossOn(OriginsModIntegrations.CheckAprilFools() ? ModContent.NPCType<Fearmaker>() : ModContent.NPCType<Trenchmaker>());
+			}
+			return true;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -24,12 +36,5 @@ namespace Origins.Items.Other.Consumables {
 			.AddTile(TileID.DemonAltar)
 			.Register();
 		}
-		public override void ModifyItemLoot(ItemLoot itemLoot) {
-			itemLoot.Add(Ashen_Biome.OrbDropRule);
-		}
-		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {
-			itemGroup = ContentSamples.CreativeHelper.ItemGroup.GoodieBags;
-		}
-		public override bool CanRightClick() => true;
 	}
 }

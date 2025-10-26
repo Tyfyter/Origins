@@ -23,7 +23,6 @@ using System.Numerics;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
-using System.Security.Policy;
 using System.Text;
 using Terraria;
 using Terraria.Audio;
@@ -2929,6 +2928,11 @@ namespace Origins {
 				// get modded bestiary text, idk how
 			}
 			return new(flavorText);
+		}
+		public static void KillsCountTowardsNPC<TOther>(this NPC npc, BestiaryEntry bestiaryEntry) where TOther : ModNPC => npc.KillsCountTowardsNPC(ModContent.NPCType<TOther>(), bestiaryEntry);
+		public static void KillsCountTowardsNPC(this NPC npc, int other, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[other], true);
+			ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[npc.type] = ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[other];
 		}
 		public static string MakeContext(params string[] args) {
 			return new StringBuilder().AppendJoin(';', args.Where(a => !string.IsNullOrWhiteSpace(a))).ToString();

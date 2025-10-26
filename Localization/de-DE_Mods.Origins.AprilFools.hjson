@@ -208,6 +208,7 @@ NPCs: {
 	// Enchanted_Fiberglass_Slime.DisplayName: Enchanted Fiberglasss Lime
 	// Fiberglass_Weaver.DisplayName: Fiberglass Cat
 	// Power_Suit_Zombie.DisplayName: Zero Suit Zombie
+	// Trenchmaker.DisplayName: Fearmaker
 }
 
 Bestiary: {
@@ -228,6 +229,9 @@ Bestiary: {
 		You receive: [wiggle:1 raw cod]
 		''' */
 	// Shimmer_Chunk1: For his neutral special, he wields a gun.
+	// Powered_Suit_Zombie: "'Am I late for my role in thriller?'"
+	// Trenchmaker: "'Putting the fear in everyone since 1XXX'"
+	// Trenchmaker_Alt: "'Men fear me, Robots love me'"
 }
 
 /* SetBonuses.Rubber:
