@@ -49,16 +49,19 @@ namespace Origins.NPCs.Ashen {
 			NPC.lifeMax = 45;
 			NPC.defense = 14;
 			NPC.damage = 18;
-			NPC.width = 28;
-			NPC.height = 44;
+			NPC.width = 24;
+			NPC.height = 38;
 			NPC.value = Item.buyPrice(0, 0, 2);
-			NPC.friendly = false;
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			AIType = NPCID.Zombie;
 			Banner = Item.NPCtoBanner(NPCID.Zombie);
 			SpawnModBiomes = [
 				GetInstance<Ashen_Biome>().Type,
 			];
+		}
+		public override bool PreAI() {
+			NPC.spriteDirection = OriginsModIntegrations.CheckAprilFools() ? -NPC.direction : NPC.direction;
+			return true;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerInTown) return 0;
@@ -75,8 +78,8 @@ namespace Origins.NPCs.Ashen {
 			);
 		}
 		public override void FindFrame(int frameHeight) {
-			if (Math.Abs(NPC.velocity.X) > 0) NPC.DoFrames(2);
-			if (!NPC.collideY) NPC.DoFrames(1, 3..3);
+			if (Math.Abs(NPC.velocity.X) > 0) NPC.DoFrames(3);
+			if (!NPC.collideY && !NPC.IsABestiaryIconDummy) NPC.DoFrames(1, 3..3);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Amber, 20));
