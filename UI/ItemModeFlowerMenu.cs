@@ -13,13 +13,14 @@ namespace Origins.UI {
 		public abstract IEnumerable<TMode> GetModes();
 		public abstract TExtraModeData GetData(TMode mode);
 		public virtual void Click(TMode mode) { }
-		public override bool ShouldToggle() {
+		public sealed override bool ShouldToggle() {
 			if (showingModes is null || !GetModes().SequenceEqual(showingModes)) {
 				showingModes = GetModes().ToArray();
 				return isShowing;
 			}
-			return base.ShouldToggle();
+			return Toggle;
 		}
+		public virtual bool Toggle => base.ShouldToggle();
 		public abstract float DrawCenter();
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			if (showingModes is null) return;

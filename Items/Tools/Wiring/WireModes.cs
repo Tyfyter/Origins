@@ -5,6 +5,7 @@ using ReLogic.Reflection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -207,6 +208,7 @@ namespace Origins.Items.Tools.Wiring {
 		public static bool Cutter { get; set; }
 		public static bool[] EnabledWires { get; } = WireMode.Sets.Factory.CreateBoolSet();
 		public static IWireTool WireTool => Main.LocalPlayer.HeldItem.ModItem as IWireTool;
+		public override bool Toggle => RightClicked;
 		public override bool IsActive() => WireTool is not null;
 		AutoLoadingAsset<Texture2D> wireMiniIcons = "Origins/Items/Tools/Wiring/Mini_Wire_Icons";
 		AutoLoadingAsset<Texture2D> extraMiniIcons = "Origins/Items/Tools/Wiring/Mini_Wire_Extra_Icons";
@@ -235,6 +237,7 @@ namespace Origins.Items.Tools.Wiring {
 			return true;
 		}
 		public override void Click(WireMode mode) {
+			if (RightClicked) return;
 			EnabledWires[mode.Type] ^= true;
 		}
 		public override IEnumerable<WireMode> GetModes() => WireTool.Modes;
