@@ -1330,7 +1330,7 @@ TILES:
 (X) Large Storage Container !!!
 (^) Laser Tag Console
 (#, ^2) Medium Storage Container !!!
-(#2, ^2) Modular Bunk !!! (just give it map colors specified)
+(☻) Modular Bunk !!!
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
 (X) Ocean Dungeon Chest

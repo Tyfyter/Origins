@@ -13,6 +13,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Tiles.Ashen {
 	public class Modular_Bunk : BedBase {
@@ -22,10 +23,15 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
 			TileObjectData.newTile.Origin = new Point16(TileObjectData.newTile.Width / 2, TileObjectData.newTile.Height - 1);
 			foreach (TileObjectData data in TileMethods.GetAlternates(TileObjectData.newTile)) {
+				data.Style = 3;
+				data.RandomStyleRange = 3;
+				data.StyleWrapLimit = 0;
 				data.Height = TileObjectData.newTile.Height;
 				data.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
 				data.Origin = new Point16(TileObjectData.newTile.Width / 2, TileObjectData.newTile.Height - 1);
 			}
+			TileObjectData.newTile.RandomStyleRange = 3;
+			TileObjectData.newTile.StyleWrapLimit = 0;
 			Main.tileSolid[Type] = true;
 			Main.tileSolidTop[Type] = true;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;

@@ -79,6 +79,8 @@ namespace Origins.Tiles {
 			if (TileID.Sets.RoomNeeds.CountsAsTable.Contains(BaseTileID)) AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			if (TileID.Sets.RoomNeeds.CountsAsChair.Contains(BaseTileID)) AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 			glowTexture = Texture + "_Glow";
+
+			RegisterItemDrop(Item.Type);
 		}
 		public virtual void ModifyTileData() { }
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
