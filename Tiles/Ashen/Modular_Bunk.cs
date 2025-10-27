@@ -55,9 +55,22 @@ namespace Origins.Tiles.Ashen {
 						//extraY = 0; // Depends on how you set up frameHeight and CoordinateHeights and CoordinatePaddingFix.Y
 		}
 		public override void ModifySleepingTargetInfo(int i, int j, ref TileRestingInfo info) {
+			Tile tile = Main.tile[i, j];
+			int style = tile.TileFrameX / 72;
+			if (style > 1) {
+				switch (style % 2) {
+					case 0:
+					info.TargetDirection = -1;
+					info.AnchorTilePosition.X += 1;
+					break;
+					case 1:
+					info.AnchorTilePosition.X += 2;
+					break;
+				}
+			}
 			info.VisualOffset.Y += 0;
 			info.AnchorTilePosition.Y += 1;
-			if (Main.tile[i, j].TileFrameY < 3 * 18) {
+			if (tile.TileFrameY < 3 * 18) {
 				info.TargetDirection *= -1;
 				info.DirectionOffset = 16;
 				info.FinalOffset.Y -= 4;
@@ -77,7 +90,7 @@ namespace Origins.Tiles.Ashen {
 				spawnY -= 2;
 				break;
 			}
-			if (Player.IsHoveringOverABottomSideOfABed(i, j) != tile.TileFrameY >= 3 * 18) { // This assumes your bed is 4x2 with 2x2 sections. You have to write your own code here otherwise
+			if (IsHoveringOverABottomSideOfABed(i, j) != tile.TileFrameY >= 3 * 18) { // This assumes your bed is 4x2 with 2x2 sections. You have to write your own code here otherwise
 				if (player.IsWithinSnappngRangeToTile(i, j, PlayerSleepingHelper.BedSleepingMaxDistance)) {
 					player.GamepadEnableGrappleCooldown();
 					player.sleeping.StartSleeping(player, i, spawnY - 2);
@@ -97,7 +110,7 @@ namespace Origins.Tiles.Ashen {
 		public override void MouseOver(int i, int j) {
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
-			if (Player.IsHoveringOverABottomSideOfABed(i, j) != tile.TileFrameY >= 3 * 18) {
+			if (IsHoveringOverABottomSideOfABed(i, j) != tile.TileFrameY >= 3 * 18) {
 				if (player.IsWithinSnappngRangeToTile(i, j, PlayerSleepingHelper.BedSleepingMaxDistance)) { // Match condition in RightClick. Interaction should only show if clicking it does something
 					player.noThrow = 2;
 					player.cursorItemIconEnabled = true;
@@ -108,6 +121,16 @@ namespace Origins.Tiles.Ashen {
 				player.cursorItemIconEnabled = true;
 				player.cursorItemIconID = Item.Type;
 			}
+		}
+		public static bool IsHoveringOverABottomSideOfABed(int myX, int myY) {
+			short frameX = Main.tile[myX, myY].TileFrameX;
+			frameX %= 144;
+			bool flag = frameX / 72 == 1;
+			bool flag2 = frameX % 72 < 36;
+			if (flag)
+				flag2 = !flag2;
+
+			return flag2;
 		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			Players_Behind_Tiles_Overlay.backgrounds.Add((i, j));
