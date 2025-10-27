@@ -78,10 +78,13 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override void AI() {
 			this.GetState().DoAIState(this);
 		}
+		Vector2 hoikOffset = default;
 		public override void PostAI() {
 			NPC.velocity.Y += 0.4f;
 			DoCollision(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, true);
 			for (int i = 0; i < legs.Length; i++) UpdateLeg(i);
+			NPC.position += hoikOffset;
+			hoikOffset = default;
 		}
 		public override void OnKill() {
 			if (!NPC.downedBoss2 || Main.rand.NextBool(2)) WorldGen.spawnMeteor = true;
@@ -105,7 +108,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			DoCollision(ref newFootPos, ref footVelocity, 54, 22);
 			bool standing = Math.Abs(footVelocity.Y - oldFootVelocity.Y) > 0.25f;
 			if (standing) footVelocity.X *= 1f / float.Pi;
-			//NPC.position += (newFootPos - NPC.position) - footOffset;
+			if ((newFootPos - NPC.position) - footOffset != default) hoikOffset = (newFootPos - NPC.position) - footOffset;
 			NPC.velocity += footVelocity - oldFootVelocity;
 
 			if (legs[index].WasStanding == standing) legs[index].TimeStanding++;

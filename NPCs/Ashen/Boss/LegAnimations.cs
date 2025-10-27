@@ -31,7 +31,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				hitbox.Height = 4;
 				if (hitbox.OverlapsAnyTiles(false)) return ModContent.GetInstance<Jump_Spring_Animation>();
 			}
-			if (leg.TimeInAnimation > 60) ModContent.GetInstance<Standing_Animation>();
+			if (leg.TimeInAnimation > 60) return ModContent.GetInstance<Standing_Animation>();
 			return this;
 		}
 
