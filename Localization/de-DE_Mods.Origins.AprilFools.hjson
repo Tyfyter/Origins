@@ -229,9 +229,9 @@ Bestiary: {
 		You receive: [wiggle:1 raw cod]
 		''' */
 	// Shimmer_Chunk1: For his neutral special, he wields a gun.
-	// Powered_Suit_Zombie: "'Am I late for my role in thriller?'"
+	// Power_Suit_Zombie: "'Am I late for my role in thriller?'"
 	// Trenchmaker: "'Putting the fear in everyone since 1XXX'"
-	// Trenchmaker_Alt: "'Men fear me, Robots love me'"
+	// Trenchmaker_Alt: "'Fish fear me, robots love me'"
 }
 
 /* SetBonuses.Rubber:

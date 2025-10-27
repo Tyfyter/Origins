@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.NPCs.Ashen.Boss.Trenchmaker;
+using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Ashen.Boss {
 	public class PhaseOneIdleState : AIState {
@@ -20,7 +21,13 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void DoAIState(Trenchmaker boss) {
 			NPC npc = boss.NPC;
-			npc.TargetClosest();
+			TargetSearchResults searchResults = SearchForTarget(npc, TargetSearchFlag.Players);
+			if (searchResults.FoundTarget) {
+				npc.target = searchResults.NearestTargetIndex;
+				npc.targetRect = searchResults.NearestTargetHitbox;
+				if (npc.ShouldFaceTarget(ref searchResults)) npc.FaceTarget();
+			}
+
 			//npc.velocity *= 0.97f;
 			if (++npc.ai[0] > IdleTime && Main.netMode != NetmodeID.MultiplayerClient) {
 				if (aiStates.Select(state => state.Index).All(boss.PreviousStates.Contains)) Array.Fill(boss.PreviousStates, Index);

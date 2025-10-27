@@ -91,6 +91,10 @@ namespace Origins.NPCs.Ashen.Boss {
 			GetLegPositions(legs[index], out _, out _, out Vector2 oldFootPos);
 			oldFootPos -= new Vector2(27, 7).Apply(SpriteEffects, new Vector2(54, 30));
 			legs[index].CurrentAnimation.Update(this, ref legs[index], legs[index ^ 1]);
+			float diff = GeometryUtils.AngleDif(legs[index].ThighRot - MathHelper.PiOver4, legs[index].CalfRot + MathHelper.PiOver4, out int dir);
+			if (diff > 2) {
+				legs[index].CalfRot -= (diff - 2) * dir;
+			}
 			GetLegPositions(legs[index], out _, out _, out Vector2 footPos);
 
 			footPos -= new Vector2(27, 7).Apply(SpriteEffects, new Vector2(54, 30));
@@ -99,14 +103,22 @@ namespace Origins.NPCs.Ashen.Boss {
 			Vector2 footVelocity = (footPos - oldFootPos) + NPC.velocity;
 			Vector2 oldFootVelocity = footVelocity;
 			DoCollision(ref newFootPos, ref footVelocity, 54, 22);
-			bool standing = footVelocity.Y != oldFootVelocity.Y;
+			bool standing = Math.Abs(footVelocity.Y - oldFootVelocity.Y) > 0.25f;
 			if (standing) footVelocity.X *= 1f / float.Pi;
-			NPC.position += (newFootPos - NPC.position) - footOffset;
+			//NPC.position += (newFootPos - NPC.position) - footOffset;
 			NPC.velocity += footVelocity - oldFootVelocity;
+
+			if (legs[index].WasStanding == standing) legs[index].TimeStanding++;
+			else legs[index].TimeStanding = 0;
 			legs[index].WasStanding = standing;
+
+			LegAnimation oldAnimation = legs[index].CurrentAnimation;
+			legs[index].CurrentAnimation = legs[index].CurrentAnimation.Continue(this, legs[index], footVelocity - oldFootVelocity);
+			if (legs[index].CurrentAnimation != oldAnimation) legs[index].TimeInAnimation = 0;
+			else legs[index].TimeInAnimation++;
 		}
 		public static void DoCollision(ref Vector2 position, ref Vector2 velocity, int width, int height, bool fallThrough = false) {
-			Vector4 slopeCollision = Collision.SlopeCollision(position, velocity, width, height);
+			Vector4 slopeCollision = Collision.SlopeCollision(position, velocity, width, height, fall: fallThrough);
 			position = slopeCollision.XY();
 			velocity = slopeCollision.ZW();
 			velocity = Collision.TileCollision(position, velocity, width, height, fallThrough, fallThrough);
@@ -121,9 +133,9 @@ namespace Origins.NPCs.Ashen.Boss {
 		public void DrawLeg(SpriteBatch spriteBatch, Vector2 screenPos, Color tintColor, Leg leg) {
 			SpriteEffects effects = SpriteEffects;
 			GetLegPositions(leg, out Vector2 thighPos, out Vector2 calfPos, out Vector2 footPos);
-			Vector2 thighPistonPos = thighPos + new Vector2(1, 25).Apply(effects, default).RotatedBy(leg.ThighRot);
+			Vector2 thighPistonPos = thighPos + new Vector2(1, 25).Apply(effects, default).RotatedBy(leg.ThighRot * NPC.direction);
 			Vector2 calfPistonPos = calfPos + new Vector2(26, 6).Apply(effects, default).RotatedBy(leg.CalfRot * NPC.direction);
-			Vector2 thighUnit = Vector2.UnitX.RotatedBy(leg.ThighRot) * 4;
+			Vector2 thighUnit = Vector2.UnitX.RotatedBy(leg.ThighRot * NPC.direction) * 4;
 			Vector2 calfUnit = Vector2.UnitX.RotatedBy(leg.CalfRot * NPC.direction) * 4;
 			MiscShaderData shader = GameShaders.Misc["Origins:Identity"];
 			shader.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
@@ -226,21 +238,49 @@ namespace Origins.NPCs.Ashen.Boss {
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Trenchmaker_Relic>()));
 			//npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Blockus_Tube>(), 4));
 		}
+		public Rectangle GetFootHitbox(Leg leg) {
+			GetLegPositions(leg, out _, out _, out Vector2 footPos);
+			footPos -= new Vector2(27, 7).Apply(SpriteEffects, new Vector2(54, 30));
+			return new((int)footPos.X, (int)footPos.Y, 54, 30);
+		}
+		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
+			for (int i = 0; i < legs.Length; i++) {
+				if (!legs[i].CurrentAnimation.HasHitbox(this, legs[i])) continue;
+				Rectangle footHitbox = GetFootHitbox(legs[i]);
+				if (footHitbox.Intersects(victimHitbox)) {
+					npcHitbox = footHitbox;
+					return false;
+				}
+			}
+			return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
+		}
 		public class AutomaticIdleState : AutomaticIdleState<Trenchmaker> { }
 		public abstract class AIState : AIState<Trenchmaker> { }
-		public record struct Leg(float ThighRot, float CalfRot, LegAnimation CurrentAnimation, bool WasStanding = false) {
+		public record struct Leg(float ThighRot, float CalfRot, LegAnimation CurrentAnimation, bool WasStanding = false, int TimeStanding = 0, int TimeInAnimation = 0) {
 			LegAnimation currentAnimation = CurrentAnimation;
 			public LegAnimation CurrentAnimation {
 				get => currentAnimation ??= defaultLegAnimation;
 				set => currentAnimation = value;
 			}
-
+			public bool RotateThigh(float target, float rate) {
+				float thighRot = ThighRot;
+				bool ret = GeometryUtils.AngularSmoothing(ref thighRot, target, rate);
+				ThighRot = thighRot;
+				return ret;
+			}
+			public bool RotateCalf(float target, float rate) {
+				float calfRot = CalfRot;
+				bool ret = GeometryUtils.AngularSmoothing(ref calfRot, target, rate);
+				CalfRot = calfRot;
+				return ret;
+			}
 		}
 		public abstract class LegAnimation : ILoadable {
 			private static readonly List<LegAnimation> animations = [];
 			public int Type { get; private set; }
 			public abstract void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg);
 			public abstract LegAnimation Continue(Trenchmaker npc, Leg leg, Vector2 movement);
+			public virtual bool HasHitbox(Trenchmaker npc, Leg leg) => false;
 			public static LegAnimation Get(int type) => animations[type];
 			public void Load(Mod mod) {
 				Type = animations.Count;
@@ -249,17 +289,18 @@ namespace Origins.NPCs.Ashen.Boss {
 			}
 			public virtual void Load() { }
 			public void Unload() { }
-			public static void PistonTo(Trenchmaker npc, ref Leg leg, float targetLength) {
-				if (targetLength < 2) targetLength = 2;
-				if (targetLength > 44) targetLength = 44;
-				GeometryUtils.AngleDif(leg.CalfRot + MathHelper.PiOver2, leg.ThighRot, out int dir);
+			public static float PistonLength(Trenchmaker npc, Leg leg) {
 				npc.GetLegPositions(leg, out Vector2 thighPos, out Vector2 calfPos, out _);
 				SpriteEffects effects = npc.SpriteEffects;
 				Vector2 thighConnectionPos = thighPos + new Vector2(1, 25).Apply(effects, default).RotatedBy(leg.ThighRot * npc.NPC.direction);
 				Vector2 calfConnectionPos = calfPos + new Vector2(26, 6).Apply(effects, default).RotatedBy(leg.CalfRot * npc.NPC.direction);
-				float currentLength = thighConnectionPos.Distance(calfConnectionPos);
-				leg.CalfRot -= dir * (currentLength - targetLength) * 0.01f;
-				Debugging.ChatOverhead(targetLength);
+				return thighConnectionPos.Distance(calfConnectionPos);
+			}
+			public static void PistonTo(Trenchmaker npc, ref Leg leg, float targetLength, float speedMult = 1) {
+				if (targetLength < 2) targetLength = 2;
+				if (targetLength > 44) targetLength = 44;
+				GeometryUtils.AngleDif(leg.CalfRot + MathHelper.PiOver2, leg.ThighRot, out int dir);
+				leg.CalfRot -= dir * (PistonLength(npc, leg) - targetLength) * 0.01f * speedMult;
 			}
 		}
 	}
