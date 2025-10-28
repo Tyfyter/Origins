@@ -39,4 +39,13 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override void TrackState(int[] previousStates) { }
 		public static List<AIState> aiStates = [];
 	}
+	public class Teabag_State : AIState {
+		public override void Load() {
+			AutomaticIdleState.aiStates.Add((this, boss => (!boss.NPC.HasValidTarget).Mul(10000)));
+		}
+		public override void DoAIState(Trenchmaker boss) {
+
+		}
+		public override void TrackState(int[] previousStates) { }
+	}
 }

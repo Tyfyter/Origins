@@ -86,6 +86,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			if (Math.Abs(hoikOffset.Y) < Math.Abs(value.Y)) hoikOffset.Y = value.Y;
 		}
 		public override void PostAI() {
+			if (!NPC.noGravity) return;
 			NPC.velocity.Y += 0.4f;
 			DoCollision(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, true);
 			for (int i = 0; i < legs.Length; i++) UpdateLeg(i);
@@ -279,7 +280,9 @@ namespace Origins.NPCs.Ashen.Boss {
 			return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
 		}
 		public class AutomaticIdleState : AutomaticIdleState<Trenchmaker> { }
-		public abstract class AIState : AIState<Trenchmaker> { }
+		public abstract class AIState : AIState<Trenchmaker> {
+			public virtual float WalkDist => 10 * 16;
+		}
 		public record struct Leg(float ThighRot, float CalfRot, LegAnimation CurrentAnimation, bool WasStanding = false, int TimeStanding = 0, int TimeInAnimation = 0) {
 			LegAnimation currentAnimation = CurrentAnimation;
 			public LegAnimation CurrentAnimation {
