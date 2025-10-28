@@ -36,6 +36,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		protected static AutoLoadingAsset<Texture2D> thighTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Thigh";
 		protected static AutoLoadingAsset<Texture2D> calfTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Calf";
 		protected static AutoLoadingAsset<Texture2D> footTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Foot";
+		protected static AutoLoadingAsset<Texture2D> exhaustTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Exhaust";
 		protected SpriteEffects SpriteEffects => NPC.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 		public Vector2 GunPos => NPC.Center + new Vector2(19, -4).Apply(SpriteEffects, default);
 		public static LegAnimation defaultLegAnimation;
@@ -220,6 +221,16 @@ namespace Origins.NPCs.Ashen.Boss {
 				1,
 				effects
 			);
+			spriteBatch.Draw(
+				exhaustTexture,
+				NPC.Center - screenPos,
+				null,
+				NPC.GetTintColor(drawColor),
+				0,
+				new Vector2(10 + 46 * NPC.direction, 40 - 5).Apply(effects, NPC.frame.Size()),
+				1,
+				effects,
+			0);
 			spriteBatch.DrawGlowingNPCPart(
 				TextureAssets.Npc[Type].Value,
 				glowTexture,
