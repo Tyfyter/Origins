@@ -27,11 +27,11 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Vector2 movement) {
 			if (PistonLength(npc, leg) < 3) {
 				Rectangle hitbox = npc.GetFootHitbox(leg);
-				hitbox.Y += hitbox.Height - 1;
-				hitbox.Height = 4;
-				if (hitbox.OverlapsAnyTiles(false)) return ModContent.GetInstance<Jump_Spring_Animation>();
+				hitbox.Y += hitbox.Height - 4;
+				hitbox.Height = 12;
+				if (hitbox.OverlapsAnyTiles(false, true)) return ModContent.GetInstance<Jump_Spring_Animation>();
 			}
-			if (leg.TimeInAnimation > 60) return ModContent.GetInstance<Standing_Animation>();
+			if (leg.TimeInAnimation > 60) return ModContent.GetInstance<Jump_Spring_Animation>();
 			return this;
 		}
 
@@ -43,6 +43,7 @@ namespace Origins.NPCs.Ashen.Boss {
 	public class Jump_Spring_Animation : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Vector2 movement) {
 			if (npc.NPC.velocity.Y >= 0 && (leg.WasStanding || leg.TimeStanding < 10)) return ModContent.GetInstance<Standing_Animation>();
+			if (leg.TimeInAnimation > 60) return ModContent.GetInstance<Standing_Animation>();
 			return this;
 		}
 

@@ -3095,17 +3095,17 @@ namespace Origins {
 		}
 		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			Vector2 pos = area.TopLeft() + offset;
-			int amt = 20; // as to try to not spawn to many dusts
-			for (int c = 0; c < area.Width; c += area.Width / amt) {
+			float amt = 20; // as to try to not spawn to many dusts
+			for (float c = 0; c < area.Width; c += area.Width / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(c, 0), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
-			for (int c = 0; c < area.Height; c += area.Height / amt) {
+			for (float c = 0; c < area.Height; c += area.Height / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(0, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
-			for (int c = 0; c < area.Width; c += area.Width / amt) {
+			for (float c = 0; c < area.Width; c += area.Width / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(c, area.Height), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
-			for (int c = 0; c < area.Height; c += area.Height / amt) {
+			for (float c = 0; c < area.Height; c += area.Height / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(area.Width, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
@@ -3527,7 +3527,7 @@ namespace Origins {
 						checkArea.X = i * -16 + cornerX;
 						checkArea.Y = j * -16 + cornerY;
 						//checkArea.DrawDebugOutline(new Vector2((i + minX) * 16, (j + minY) * 16), DustID.WaterCandle);
-						if (tile != null && tile.HasSolidTile()) {
+						if (tile.HasTile && !tile.IsActuated && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType])) {
 							if (tile.Slope != SlopeType.Solid) {
 								Triangle draw = tileTriangles[(int)tile.Slope - 1];
 								if (draw.Intersects(checkArea)) {
@@ -3550,7 +3550,7 @@ namespace Origins {
 					for (int j = 0; j <= maxY; j++) {
 						Tile tile = Main.tile[i + minX, j + minY];
 						if (fallThrough && Main.tileSolidTop[tile.TileType]) continue;
-						if (tile != null && tile.HasSolidTile()) {
+						if (tile.HasTile && !tile.IsActuated && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType])) {
 							checkArea.X = i * -16 + cornerX;
 							checkArea.Y = j * -16 + cornerY;
 							if (tile.Slope != SlopeType.Solid) {
