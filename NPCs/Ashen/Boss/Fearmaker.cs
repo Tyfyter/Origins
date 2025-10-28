@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Journal;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			}
 		}
 		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
+			Main.npcFrameCount[Type] = 8;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {
