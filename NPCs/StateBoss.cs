@@ -30,7 +30,7 @@ namespace Origins.NPCs {
 		}
 		public static void SetAIState<TBoss>(this TBoss boss, int state) where TBoss : ModNPC, IStateBoss<TBoss> {
 			NPC npc = boss.NPC;
-			TBoss.AIStates[npc.aiAction].TrackState(boss.PreviousStates);
+			if (npc.aiAction >= 0) TBoss.AIStates[npc.aiAction].TrackState(boss.PreviousStates);
 			npc.aiAction = state;
 			npc.ai[0] = 0;
 			TBoss.AIStates[npc.aiAction].StartAIState(boss);

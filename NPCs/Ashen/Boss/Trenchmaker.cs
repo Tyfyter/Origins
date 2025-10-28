@@ -68,6 +68,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Ashen_Biome>().Type
 			];
+			this.SetAIState(StateIndex<PhaseOneIdleState>());
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			NPC.KillsCountTowardsNPC<Fearmaker>(bestiaryEntry);

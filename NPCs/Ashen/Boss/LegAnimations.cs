@@ -15,9 +15,15 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override void Load() {
 			defaultLegAnimation = this;
 		}
+		public static NPCAimedTarget GetTargetData(NPC npc, bool ignorePlayerTankPets = true) {
+			if (npc.SupportsNPCTargets && npc.HasNPCTarget)
+				return new NPCAimedTarget(Main.npc[npc.TranslatedTargetIndex]);
+
+			return new NPCAimedTarget(Main.player[npc.target], ignorePlayerTankPets);
+		}
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 			float dist;
-			NPCAimedTarget target = npc.NPC.GetTargetData();
+			NPCAimedTarget target = GetTargetData(npc.NPC);
 			if (target.Center.X > npc.NPC.Center.X) {
 				dist = target.Position.X - (npc.NPC.position.X + npc.NPC.width);
 			} else {
@@ -73,7 +79,7 @@ namespace Origins.NPCs.Ashen.Boss {
 	}
 	public class Teabag_Animation_2 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
-			if (npc.NPC.HasValidTarget) return ModContent.GetInstance<Teabag_Animation_Finish>();
+			if (npc.NPC.HasValidTarget || Main.player[npc.NPC.target].respawnTimer < 60 * 2) return ModContent.GetInstance<Teabag_Animation_Finish>();
 			if (PistonLength(npc, leg) > 30 && PistonLength(npc, otherLeg) > 30) return ModContent.GetInstance<Teabag_Animation_1>();
 			return this;
 		}
