@@ -26,14 +26,14 @@ namespace Origins.NPCs.Ashen {
 		public override void SetStaticDefaults() {
 			//NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.UndeadMiner; // maybe undead viking instead?
 			Main.npcFrameCount[NPC.type] = 7;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;/*
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			OriginsSets.NPCs.CustomExpertScaling[Type] = npc => {
 				if (Main.hardMode) {
 					int strength = npc.damage + 6 + npc.lifeMax / 4;
 					if (strength == 0) strength = 1;
 					int targetStrength = 80;
-					if (NPC.downedPlantBoss) targetStrength += 20;
+					if (NPC.downedPlantBoss) targetStrength += 40;
 					if (strength < targetStrength) {
 						float num3 = targetStrength / strength;
 						npc.damage = (int)(npc.damage * num3 * 0.9);
@@ -42,7 +42,7 @@ namespace Origins.NPCs.Ashen {
 						npc.value = (int)(npc.value * num3 * 0.8);
 					}
 				}
-			};*/
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
