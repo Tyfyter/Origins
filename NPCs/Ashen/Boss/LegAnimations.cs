@@ -15,19 +15,12 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override void Load() {
 			defaultLegAnimation = this;
 		}
-		public static NPCAimedTarget GetTargetData(NPC npc, bool ignorePlayerTankPets = true) {
-			if (npc.SupportsNPCTargets && npc.HasNPCTarget)
-				return new NPCAimedTarget(Main.npc[npc.TranslatedTargetIndex]);
-
-			return new NPCAimedTarget(Main.player[npc.target], ignorePlayerTankPets);
-		}
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 			float dist;
-			NPCAimedTarget target = GetTargetData(npc.NPC);
-			if (target.Center.X > npc.NPC.Center.X) {
-				dist = target.Position.X - (npc.NPC.position.X + npc.NPC.width);
+			if (npc.NPC.targetRect.Center().X > npc.NPC.Center.X) {
+				dist = npc.NPC.targetRect.Left - (npc.NPC.position.X + npc.NPC.width);
 			} else {
-				dist = npc.NPC.position.X - (target.Position.X + target.Width);
+				dist = npc.NPC.position.X - npc.NPC.targetRect.Right;
 			}
 			AIState aiState = npc.GetState() as AIState;
 			if (dist > (aiState?.WalkDist ?? 10 * 16)) {
