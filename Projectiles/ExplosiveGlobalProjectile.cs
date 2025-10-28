@@ -663,7 +663,7 @@ namespace Origins.Projectiles {
 			projectile.position.X -= projectile.width / 2;
 			projectile.position.Y -= projectile.height / 2;
 			projectile.Damage();
-			if (dealSelfDamage) DealSelfDamage(projectile);
+			if (dealSelfDamage && !hostile) DealSelfDamage(projectile);
 			if (fireDustType == -1) fireDustAmount = 0;
 			ExplosionVisual(projectile, true, sound: sound, fireDustAmount: fireDustAmount, smokeDustAmount: smokeDustAmount, smokeGoreAmount: smokeGoreAmount, fireDustType: fireDustType);
 		}

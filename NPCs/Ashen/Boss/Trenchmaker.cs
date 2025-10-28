@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using Terraria;
 using Terraria.GameContent;
@@ -148,6 +149,8 @@ namespace Origins.NPCs.Ashen.Boss {
 			if (legs[index].CurrentAnimation != oldAnimation) {
 				legs[index].CurrentAnimation.Reset();
 				legs[index].TimeInAnimation = 0;
+				legs[index].NetUpdate = true;
+				NPC.netUpdate = true;
 			} else {
 				legs[index].TimeInAnimation++;
 			}
@@ -158,7 +161,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			velocity = slopeCollision.ZW();
 			velocity = Collision.TileCollision(position, velocity, width, height, fallThrough, fallThrough);
 		}
-		private static VertexRectangle VertexRectangle = new VertexRectangle();
+		private static readonly VertexRectangle VertexRectangle = new();
 		public void GetLegPositions(Leg leg, out Vector2 thighPos, out Vector2 calfPos, out Vector2 footPos) {
 			SpriteEffects effects = SpriteEffects;
 			thighPos = NPC.Center + (new Vector2(-1, 29) + new Vector2(6, 19)).Apply(effects, default);
@@ -318,11 +321,27 @@ namespace Origins.NPCs.Ashen.Boss {
 			}
 			return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
 		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write((byte)NPC.aiAction);
+			for (int i = 0; i < legs.Length; i++) {
+				writer.Write(legs[i].NetUpdate);
+				if (legs[i].NetUpdate) {
+					legs[i].Write(writer);
+					legs[i].NetUpdate = false;
+				}
+			}
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			NPC.aiAction = reader.ReadByte();
+			for (int i = 0; i < legs.Length; i++) {
+				if (reader.ReadBoolean()) legs[i].Read(reader);
+			}
+		}
 		public class AutomaticIdleState : AutomaticIdleState<Trenchmaker> { }
 		public abstract class AIState : AIState<Trenchmaker> {
 			public virtual float WalkDist => 10 * 16;
 		}
-		public record struct Leg(float ThighRot, float CalfRot, LegAnimation CurrentAnimation, bool WasStanding = false, int TimeStanding = 0, int TimeInAnimation = 0) {
+		public record struct Leg(float ThighRot, float CalfRot, LegAnimation CurrentAnimation, bool WasStanding = false, int TimeStanding = 0, int TimeInAnimation = 0, bool NetUpdate = true) {
 			LegAnimation currentAnimation = CurrentAnimation;
 			public LegAnimation CurrentAnimation {
 				get => currentAnimation ??= defaultLegAnimation;
@@ -339,6 +358,16 @@ namespace Origins.NPCs.Ashen.Boss {
 				bool ret = GeometryUtils.AngularSmoothing(ref calfRot, target, rate);
 				CalfRot = calfRot;
 				return ret;
+			}
+			public void Write(BinaryWriter writer) {
+				writer.Write(ThighRot);
+				writer.Write(CalfRot);
+				writer.Write((ushort)CurrentAnimation.Type);
+			}
+			public void Read(BinaryReader reader) {
+				ThighRot = reader.ReadSingle();
+				CalfRot = reader.ReadSingle();
+				CurrentAnimation = LegAnimation.Get(reader.ReadUInt16());
 			}
 		}
 		public abstract class LegAnimation : ILoadable {

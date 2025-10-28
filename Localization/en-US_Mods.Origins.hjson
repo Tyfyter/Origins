@@ -2046,18 +2046,21 @@ Projectiles: {
 	Welding_Torch_P.DisplayName: Welding Torch
 	Minishark_Broth_Bullet.DisplayName: Minishark Broth Bullet
 	Ticking_Bomb_P.DisplayName: Ticking Bomb
-	Mod_Wire_Channel.DisplayName: Mod Wire Channel
+	Mod_Wire_Channel.DisplayName: Mod Wire Kite
 	Ticking_Dynamite_P.DisplayName: Ticking Dynamite
 	Ticking_Grenade_P.DisplayName: Ticking Grenade
 	Explosive_Sharknado.DisplayName: Explosive Sharknado
 	Explosive_Sharkron.DisplayName: Explosive Sharkron
 	Sharknade_O_P.DisplayName: Sharknade-o
-	Lingering_Cursedflame1.DisplayName: Lingering Cursed Flame
-	Lingering_Cursedflame2.DisplayName: Lingering Cursed Flame
-	Lingering_Cursedflame3.DisplayName: Lingering Cursed Flame
-	Lingering_Shadowflame1.DisplayName: Lingering Shadow Flame
-	Lingering_Shadowflame2.DisplayName: Lingering Shadow Flame
-	Lingering_Shadowflame3.DisplayName: Lingering Shadow Flame
+	Lingering_Cursedflame1.DisplayName: Lingering Cursedflame
+	Lingering_Cursedflame2.DisplayName: Lingering Cursedflame
+	Lingering_Cursedflame3.DisplayName: Lingering Cursedflame
+	Lingering_Shadowflame1.DisplayName: Lingering Shadowflame
+	Lingering_Shadowflame2.DisplayName: Lingering Shadowflame
+	Lingering_Shadowflame3.DisplayName: Lingering Shadowflame
+	Trenchmaker_Firecracker.DisplayName: Firecracker
+	Trenchmaker_Firecracker_Explosion_1.DisplayName: Firecracker
+	Trenchmaker_Firecracker_Explosion_2.DisplayName: Firecracker
 }
 
 Prefixes: {
