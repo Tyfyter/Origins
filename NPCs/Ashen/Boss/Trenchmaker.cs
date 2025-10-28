@@ -37,6 +37,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		protected static AutoLoadingAsset<Texture2D> calfTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Calf";
 		protected static AutoLoadingAsset<Texture2D> footTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Foot";
 		protected SpriteEffects SpriteEffects => NPC.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+		public Vector2 GunPos => NPC.Center + new Vector2(19, -4).Apply(SpriteEffects, default);
 		public static LegAnimation defaultLegAnimation;
 		public override void Load() {
 			this.AddBossControllerItem();
@@ -79,6 +80,9 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public Leg[] legs = [new(), new()];
 		public override void AI() {
+			Vector2 diff = NPC.GetTargetData().Center - GunPos;
+			Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
+			GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.05f);
 			this.GetState().DoAIState(this);
 		}
 		Vector2 hoikOffset = default;
@@ -234,10 +238,10 @@ namespace Origins.NPCs.Ashen.Boss {
 			}
 			spriteBatch.Draw(
 				armTexture,
-				NPC.Center + new Vector2(19, -4).Apply(effects, default) - screenPos,
+				GunPos - screenPos,
 				armTexture.Frame(verticalFrames: 2),
 				NPC.GetTintColor(drawColor),
-				0,
+				NPC.rotation + (effects.HasFlag(SpriteEffects.FlipHorizontally) ? 0 : MathHelper.Pi),
 				new Vector2(47, 15).Apply(effects, armTexture.Value.Size()),
 				1,
 				effects,

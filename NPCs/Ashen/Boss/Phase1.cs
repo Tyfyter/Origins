@@ -44,7 +44,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		#region stats
 		public static float ShotRate => 10 - DifficultyMult;
 		public static int ShotDamage => (int)(18 * DifficultyMult);
-		public static float ShotVelocity => 6;
+		public static float ShotVelocity => 12;
 		public static float MoveSpeed => 6.5f + ContentExtensions.DifficultyDamageMultiplier * 0.5f;
 		public static int Duration => 45;
 		#endregion stats
@@ -54,15 +54,14 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void DoAIState(Trenchmaker boss) {
 			NPC npc = boss.NPC;
-			Vector2 diff = npc.GetTargetData().Center - npc.Center;
-			Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
-			npc.rotation = direction.ToRotation() - MathHelper.PiOver2;
+			Vector2 direction = npc.rotation.ToRotationVector2();
 			int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
 			if (shotsToHaveFired > npc.ai[1]) {
-				SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
+				//SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
 				npc.ai[1]++;
+				Vector2 perp = direction.RotatedBy(MathHelper.PiOver2);
 				npc.SpawnProjectile(null,
-					npc.Center,
+					boss.GunPos + direction * 8 + perp * (6 * ((npc.ai[1] % 2) == 0).ToDirectionInt() + 2),
 					direction * ShotVelocity,
 					ProjectileID.BulletDeadeye,
 					ShotDamage,
