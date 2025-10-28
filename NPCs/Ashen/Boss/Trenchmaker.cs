@@ -132,8 +132,12 @@ namespace Origins.NPCs.Ashen.Boss {
 
 			LegAnimation oldAnimation = legs[index].CurrentAnimation;
 			legs[index].CurrentAnimation = legs[index].CurrentAnimation.Continue(this, legs[index], legs[(index + 1) % legs.Length], footVelocity - oldFootVelocity);
-			if (legs[index].CurrentAnimation != oldAnimation) legs[index].TimeInAnimation = 0;
-			else legs[index].TimeInAnimation++;
+			if (legs[index].CurrentAnimation != oldAnimation) {
+				legs[index].CurrentAnimation.Reset();
+				legs[index].TimeInAnimation = 0;
+			} else {
+				legs[index].TimeInAnimation++;
+			}
 		}
 		public static void DoCollision(ref Vector2 position, ref Vector2 velocity, int width, int height, bool fallThrough = false) {
 			Vector4 slopeCollision = Collision.SlopeCollision(position, velocity, width, height, fall: fallThrough);
@@ -329,6 +333,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			public int Type { get; private set; }
 			public abstract void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg);
 			public abstract LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement);
+			public virtual void Reset() { }
 			public virtual bool HasHitbox(Trenchmaker npc, Leg leg) => false;
 			public static LegAnimation Get(int type) => animations[type];
 			public void Load(Mod mod) {
