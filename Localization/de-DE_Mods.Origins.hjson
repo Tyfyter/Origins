@@ -2061,6 +2061,7 @@ Projectiles: {
 	// Trenchmaker_Firecracker.DisplayName: Firecracker
 	// Trenchmaker_Firecracker_Explosion_1.DisplayName: Firecracker
 	// Trenchmaker_Firecracker_Explosion_2.DisplayName: Firecracker
+	// Trenchmaker_Stomp_P.DisplayName: Trenchmaker Stomp P
 }
 
 Prefixes: {

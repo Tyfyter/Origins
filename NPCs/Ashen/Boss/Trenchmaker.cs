@@ -119,6 +119,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.SetEventFlagCleared(ref NPC.downedBoss2, GameEventClearedID.DefeatedEaterOfWorldsOrBrainOfChtulu);
 		}
 		public void UpdateLeg(int index) {
+			bool tileCollide = legs[index].CurrentAnimation.TileCollide(this, legs[index]);
 			GetLegPositions(legs[index], out _, out _, out Vector2 oldFootPos);
 			oldFootPos -= new Vector2(27, 7).Apply(SpriteEffects, new Vector2(54, 30));
 			legs[index].CurrentAnimation.Update(this, ref legs[index], legs[(index + 1) % legs.Length]);
@@ -129,16 +130,19 @@ namespace Origins.NPCs.Ashen.Boss {
 			GetLegPositions(legs[index], out _, out _, out Vector2 footPos);
 
 			footPos -= new Vector2(27, 7).Apply(SpriteEffects, new Vector2(54, 30));
-			Vector2 newFootPos = oldFootPos;
-			Vector2 footOffset = newFootPos - NPC.position;
+			bool standing = false;
 			Vector2 footVelocity = (footPos - oldFootPos) + NPC.velocity;
 			Vector2 oldFootVelocity = footVelocity;
-			DoCollision(ref newFootPos, ref footVelocity, 54, 22);
-			bool standing = Math.Abs(footVelocity.Y - oldFootVelocity.Y) > 0.25f;
-			if (standing) footVelocity.X = 0;//*= 1f / float.Pi;
-			SetHoikOffset((newFootPos - NPC.position) - footOffset);
-			NPC.velocity += footVelocity - oldFootVelocity;
-			DoCollision(ref newFootPos, ref NPC.velocity, 54, 22);
+			if (tileCollide) {
+				Vector2 newFootPos = oldFootPos;
+				Vector2 footOffset = newFootPos - NPC.position;
+				DoCollision(ref newFootPos, ref footVelocity, 54, 22);
+				standing = Math.Abs(footVelocity.Y - oldFootVelocity.Y) > 0.25f;
+				if (standing) footVelocity.X = 0;//*= 1f / float.Pi;
+				SetHoikOffset((newFootPos - NPC.position) - footOffset);
+				NPC.velocity += footVelocity - oldFootVelocity;
+				DoCollision(ref newFootPos, ref NPC.velocity, 54, 22);
+			}
 
 			if (legs[index].WasStanding == standing) legs[index].TimeStanding++;
 			else legs[index].TimeStanding = 0;
@@ -377,6 +381,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			public abstract LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement);
 			public virtual void Reset() { }
 			public virtual bool HasHitbox(Trenchmaker npc, Leg leg) => false;
+			public virtual bool TileCollide(Trenchmaker npc, Leg leg) => true;
 			public static LegAnimation Get(int type) => animations[type];
 			public void Load(Mod mod) {
 				Type = animations.Count;

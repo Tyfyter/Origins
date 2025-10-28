@@ -1,4 +1,6 @@
-﻿using PegasusLib;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.NPCs.Ashen.Boss.Trenchmaker;
 
@@ -32,12 +35,14 @@ namespace Origins.NPCs.Ashen.Boss {
 				}
 			} else if (aiState is Teabag_State && otherLeg.CurrentAnimation is Standing_Animation or Teabag_Animation_1) {
 				return ModContent.GetInstance<Teabag_Animation_1>();
+			} else if (dist <= 0 && npc.NPC.targetRect.Y > npc.NPC.BottomLeft.Y && otherLeg.CurrentAnimation is not Stomp_Animation_1 and not Stomp_Animation_2 and not Stomp_Animation_3) {
+				return ModContent.GetInstance<Stomp_Animation_1>();
 			}
 			return this;
 		}
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
 			leg.RotateThigh(-leg.CalfRot, 0.02f);
-			PistonTo(npc, ref leg, 24, 0.2f);
+			PistonTo(npc, ref leg, otherLeg.CurrentAnimation is Stomp_Animation_1 or Stomp_Animation_2 or Stomp_Animation_3 ? 48 : 24, 0.2f);
 		}
 	}
 	#region walking
@@ -72,6 +77,22 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
 			leg.RotateThigh(1.1f, 0.04f);
 			PistonTo(npc, ref leg, 32, 0.2f);
+		}
+	}
+	public class Step_Down_Crouch_Animation : LegAnimation {
+		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if (otherLeg.WasStanding) return ModContent.GetInstance<Standing_Animation>();
+			return this;
+		}
+
+		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
+			if (leg.ThighRot == 2) {
+				PistonTo(npc, ref leg, 32, 0.2f);
+			} else if (PistonLength(npc, leg) < 3) {
+				leg.RotateThigh(2, 0.02f);
+			} else {
+				PistonTo(npc, ref leg, 0, 0.4f);
+			}
 		}
 	}
 	#endregion
@@ -124,6 +145,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 	}
 	#endregion
+	#region sproinging
 	public class Pogo_Animation_1 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 			if ((leg.WasStanding || otherLeg.WasStanding) && leg.ThighRot == 0.5f && PistonLength(npc, leg) < 3) return ModContent.GetInstance<Pogo_Animation_2>();
@@ -147,22 +169,136 @@ namespace Origins.NPCs.Ashen.Boss {
 			leg.RotateThigh(1.3f, 0.3f);
 		}
 	}
-	public class Step_Down_Crouch_Animation : LegAnimation {
+	#endregion
+	#region stomp
+	public class Stomp_Animation_1 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
-			if (otherLeg.WasStanding) return ModContent.GetInstance<Standing_Animation>();
+			if (PistonLength(npc, leg) < 3) return ModContent.GetInstance<Stomp_Animation_2>();
 			return this;
 		}
-
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
-			if (leg.ThighRot == 2) {
-				PistonTo(npc, ref leg, 32, 0.2f);
-			} else if (PistonLength(npc, leg) < 3) {
-				leg.RotateThigh(2, 0.02f);
-			} else {
-				PistonTo(npc, ref leg, 0, 0.4f);
-			}
+			leg.RotateThigh(-leg.CalfRot, 0.02f);
+			PistonTo(npc, ref leg, 0, 0.2f);
 		}
 	}
+	public class Stomp_Animation_2 : LegAnimation {
+		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if (PistonLength(npc, leg) >= 40) {
+				npc.GetLegPositions(leg, out _, out _, out Vector2 footPos);
+				npc.SpawnProjectile(null,
+					footPos,
+					Vector2.Zero,
+					ModContent.ProjectileType<Trenchmaker_Stomp_P>(),
+					20,
+					0
+				);
+				return ModContent.GetInstance<Stomp_Animation_3>();
+			}
+			return this;
+		}
+		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
+			leg.RotateThigh(MathHelper.PiOver4, 0.2f);
+			leg.RotateCalf(-MathHelper.PiOver4, 0.2f);
+		}
+		public override bool TileCollide(Trenchmaker npc, Leg leg) => false;
+		public override bool HasHitbox(Trenchmaker npc, Leg leg) => true;
+	}
+	public class Stomp_Animation_3 : LegAnimation {
+		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if (PistonLength(npc, leg) <= 22 && !npc.GetFootHitbox(leg).OverlapsAnyTiles()) return ModContent.GetInstance<Standing_Animation>();
+			return this;
+		}
+		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
+			leg.RotateThigh(-leg.CalfRot, 0.02f);
+			PistonTo(npc, ref leg, 0, 0.2f);
+			if (PistonLength(npc, leg) < 3 && (npc.GetFootHitbox(leg).OverlapsAnyTiles() || npc.GetFootHitbox(otherLeg).OverlapsAnyTiles())) {
+				npc.NPC.velocity.Y -= 1;
+			}
+		}
+		public override bool TileCollide(Trenchmaker npc, Leg leg) => !npc.GetFootHitbox(leg).OverlapsAnyTiles();
+	}
+	public class Trenchmaker_Stomp_P : ModProjectile {
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.DD2OgreSmash;
+		public override void SetDefaults() {
+			Projectile.width = 30;
+			Projectile.height = 30;
+			Projectile.alpha = 255;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			Projectile.timeLeft = 120;
+			Projectile.hostile = true;
+			Projectile.penetrate = -1;
+		}
+		public override void AI() {
+			float num = 15f;
+
+			Projectile.ai[0] += 1f;
+			if (Projectile.ai[0] > 9f) {
+				Projectile.Kill();
+				return;
+			}
+
+			Projectile.velocity = Vector2.Zero;
+			Projectile.position = Projectile.Center;
+			Projectile.Size = new Vector2(16f, 16f) * MathHelper.Lerp(5f, num, Utils.GetLerpValue(0f, 9f, Projectile.ai[0]));
+			Projectile.Center = Projectile.position;
+			Point point = Projectile.TopLeft.ToTileCoordinates();
+			Point point2 = Projectile.BottomRight.ToTileCoordinates();
+			int num2 = point.X / 2 + point2.X / 2;
+			int num3 = Projectile.width / 2;
+			if ((int)Projectile.ai[0] % 3 != 0)
+				return;
+
+			int num4 = (int)Projectile.ai[0] / 3;
+			for (int i = point.X; i <= point2.X; i++) {
+				for (int j = point.Y; j <= point2.Y; j++) {
+					if (Vector2.Distance(Projectile.Center, new Vector2(i * 16, j * 16)) > (float)num3)
+						continue;
+
+					Tile tileSafely = Framing.GetTileSafely(i, j);
+					if (!tileSafely.HasTile || !Main.tileSolid[tileSafely.TileType] || Main.tileSolidTop[tileSafely.TileType] || Main.tileFrameImportant[tileSafely.TileType])
+						continue;
+
+					Tile tileSafely2 = Framing.GetTileSafely(i, j - 1);
+					if (tileSafely2.HasTile && Main.tileSolid[tileSafely2.TileType] && !Main.tileSolidTop[tileSafely2.TileType])
+						continue;
+
+					int num5 = WorldGen.KillTile_GetTileDustAmount(fail: true, tileSafely, i, j);
+					for (int k = 0; k < num5; k++) {
+						Dust obj = Main.dust[WorldGen.KillTile_MakeTileDust(i, j, tileSafely)];
+						obj.velocity.Y -= 3f + (float)num4 * 1.5f;
+						obj.velocity.Y *= Main.rand.NextFloat();
+						obj.velocity.Y *= 0.75f;
+						obj.scale += (float)num4 * 0.03f;
+					}
+
+					if (num4 >= 2) {
+						for (int m = 0; m < num5 - 1; m++) {
+							Dust obj2 = Main.dust[WorldGen.KillTile_MakeTileDust(i, j, tileSafely)];
+							obj2.velocity.Y -= 1f + (float)num4;
+							obj2.velocity.Y *= Main.rand.NextFloat();
+							obj2.velocity.Y *= 0.75f;
+						}
+					}
+
+					if (num5 <= 0 || Main.rand.Next(3) == 0)
+						continue;
+
+					float num7 = (float)Math.Abs(num2 - i) / (num / 2f);
+					Gore gore = Gore.NewGoreDirect(Projectile.GetSource_FromThis(), Projectile.position, Vector2.Zero, 61 + Main.rand.Next(3), 1f - (float)num4 * 0.15f + num7 * 0.5f);
+					gore.velocity.Y -= 0.1f + (float)num4 * 0.5f + num7 * (float)num4 * 1f;
+					gore.velocity.Y *= Main.rand.NextFloat();
+					gore.position = new Vector2(i * 16 + 20, j * 16 + 20);
+				}
+			}
+		}
+		public override bool CanHitPlayer(Player target) => target.OriginPlayer().collidingY;
+		public override bool? CanHitNPC(NPC target) {
+			if (!target.collideY) return false;
+			return base.CanHitNPC(target);
+		}
+	}
+	#endregion
 	#region teabag
 	public class Teabag_Animation_1 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {

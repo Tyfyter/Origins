@@ -40,6 +40,7 @@ namespace Origins.NPCs {
 			WeightedRandom<int> states = new(Main.rand);
 			bool canBeDisabled = Boss_Controller_Item<TBoss>.disabled is not null;
 			if (canBeDisabled) Boss_Controller_Item<TBoss>.activeInLastRoll.Clear();
+			states.Add(TBoss.AutomaticIdleState.Index, 0);
 			for (int i = 0; i < from.Length; i++) {
 				foreach (AIState<TBoss> state in from[i]) {
 					if (canBeDisabled) {
