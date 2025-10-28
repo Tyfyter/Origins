@@ -56,17 +56,26 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void ModifySleepingTargetInfo(int i, int j, ref TileRestingInfo info) {
 			Tile tile = Main.tile[i, j];
-			int style = tile.TileFrameX / 72;
-			if (style > 1) {
-				switch (style % 2) {
+			int style = tile.TileFrameX / (72 * 3);
+			switch (style) {
+				case 0:
+				switch (tile.TileFrameX / 72) {
 					case 0:
-					info.TargetDirection = -1;
-					info.AnchorTilePosition.X += 1;
+					info.AnchorTilePosition.X -= 1;
 					break;
 					case 1:
-					info.AnchorTilePosition.X += 2;
+					info.AnchorTilePosition.X -= 2;
+					break;
+					case 2:
+					info.AnchorTilePosition.X -= 0;
 					break;
 				}
+				info.TargetDirection = -1;
+				info.AnchorTilePosition.X += 1;
+				break;
+				case 1:
+				info.AnchorTilePosition.X += 2;
+				break;
 			}
 			info.VisualOffset.Y += 0;
 			info.AnchorTilePosition.Y += 1;
@@ -124,8 +133,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public static bool IsHoveringOverABottomSideOfABed(int myX, int myY) {
 			short frameX = Main.tile[myX, myY].TileFrameX;
-			frameX %= 144;
-			bool flag = frameX / 72 == 1;
+			bool flag = frameX / (72 * 3) >= 1;
 			bool flag2 = frameX % 72 < 36;
 			if (flag)
 				flag2 = !flag2;
