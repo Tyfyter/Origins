@@ -14,42 +14,37 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override void Load() {
 			defaultLegAnimation = this;
 		}
-		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Vector2 movement) {
-			if (Math.Abs(npc.NPC.GetTargetData().Center.X - npc.NPC.Center.X) > 16 * 10) return ModContent.GetInstance<Jump_Squat_Animation>();
-			return this;
-		}
-		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
-			PistonTo(npc, ref leg, 24, 0.2f);
-			leg.RotateThigh(-leg.CalfRot, 0.7f);
-		}
-	}
-	public class Jump_Squat_Animation : LegAnimation {
-		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Vector2 movement) {
-			if (PistonLength(npc, leg) < 3) {
-				Rectangle hitbox = npc.GetFootHitbox(leg);
-				hitbox.Y += hitbox.Height - 4;
-				hitbox.Height = 12;
-				if (hitbox.OverlapsAnyTiles(false, true)) return ModContent.GetInstance<Jump_Spring_Animation>();
+		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if (Math.Abs(npc.NPC.GetTargetData().Center.X - npc.NPC.Center.X) > 16 * 10 && otherLeg.WasStanding && otherLeg.CurrentAnimation is Standing_Animation or Walk_Animation_2) {
+				return ModContent.GetInstance<Walk_Animation_1>();
 			}
-			if (leg.TimeInAnimation > 60) return ModContent.GetInstance<Jump_Spring_Animation>();
 			return this;
 		}
-
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
-			PistonTo(npc, ref leg, 0, 0.2f);
-			leg.RotateThigh(-leg.CalfRot, 0.7f);
+			leg.RotateThigh(-leg.CalfRot, 0.02f);
+			PistonTo(npc, ref leg, 24, 0.2f);
 		}
 	}
-	public class Jump_Spring_Animation : LegAnimation {
-		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Vector2 movement) {
-			if (npc.NPC.velocity.Y >= 0 && (leg.WasStanding || leg.TimeStanding < 10)) return ModContent.GetInstance<Standing_Animation>();
-			if (leg.TimeInAnimation > 60) return ModContent.GetInstance<Standing_Animation>();
+	public class Walk_Animation_1 : LegAnimation {
+		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if (leg.ThighRot == -0.5f && PistonLength(npc, leg) < 3) return ModContent.GetInstance<Walk_Animation_2>();
 			return this;
 		}
 
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
-			PistonTo(npc, ref leg, 48, 0.4f);
-			leg.RotateThigh((leg.CalfRot - 0.3f) * -1f, 0.7f);
+			leg.RotateThigh(-0.5f, 0.04f);
+			PistonTo(npc, ref leg, 0, 0.2f);
+		}
+	}
+	public class Walk_Animation_2 : LegAnimation {
+		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if (leg.ThighRot == 1.1f && PistonLength(npc, leg) >= 30) return ModContent.GetInstance<Standing_Animation>();
+			return this;
+		}
+
+		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
+			leg.RotateThigh(1.1f, 0.04f);
+			PistonTo(npc, ref leg, 32, 0.2f);
 		}
 	}
 }

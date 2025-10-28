@@ -38,7 +38,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) { }
 		public class Fearmaker_Adaptation_Animation : LegAnimation {
-			public override LegAnimation Continue(Trenchmaker npc, Leg leg, Vector2 movement) => this;
+			public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) => this;
 			public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
 				WeightedRandom<FearmakerAdaptation> adaptations = new();
 				foreach (FearmakerAdaptation adaptation in ModContent.GetContent<FearmakerAdaptation>()) {
@@ -70,7 +70,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				}
 			}
 			class Spin_Animation : LegAnimation {
-				public override LegAnimation Continue(Trenchmaker npc, Leg leg, Vector2 movement) => this;
+				public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) => this;
 				public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
 					leg.ThighRot += (leg.WasStanding || otherLeg.WasStanding) ? 0.4f : 0.3f;
 					leg.CalfRot = MathHelper.PiOver4 * -0.5f;
@@ -88,14 +88,14 @@ namespace Origins.NPCs.Ashen.Boss {
 				public override void Load() {
 					defaultLegAnimation = this;
 				}
-				public override LegAnimation Continue(Trenchmaker npc, Leg leg, Vector2 movement) => ModContent.GetInstance<Fear_Jump_Squat_Animation>();
+				public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) => ModContent.GetInstance<Fear_Jump_Squat_Animation>();
 				public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
 					PistonTo(npc, ref leg, 24, 0.2f);
 					leg.RotateThigh(-leg.CalfRot, 0.7f);
 				}
 			}
 			public class Fear_Jump_Squat_Animation : LegAnimation {
-				public override LegAnimation Continue(Trenchmaker npc, Leg leg, Vector2 movement) {
+				public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 					if (PistonLength(npc, leg) < 3) {
 						Rectangle hitbox = npc.GetFootHitbox(leg);
 						hitbox.Y += hitbox.Height - 4;
@@ -112,7 +112,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				}
 			}
 			public class Fear_Jump_Spring_Animation : LegAnimation {
-				public override LegAnimation Continue(Trenchmaker npc, Leg leg, Vector2 movement) {
+				public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 					if (npc.NPC.velocity.Y >= 0 && (leg.WasStanding || leg.TimeStanding < 10)) return ModContent.GetInstance<Fear_Standing_Animation>();
 					if (leg.TimeInAnimation > 60) return ModContent.GetInstance<Fear_Standing_Animation>();
 					return this;

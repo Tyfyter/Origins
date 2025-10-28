@@ -8,6 +8,7 @@ using Origins.Tiles.Ashen;
 using Origins.Tiles.BossDrops;
 using Origins.World.BiomeData;
 using PegasusLib;
+using PegasusLib.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -59,6 +60,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.boss = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
+			NPC.waterMovementSpeed = 1;
 			NPC.npcSlots = 200;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-2f);
 			NPC.knockBackResist = 0;
@@ -79,6 +81,10 @@ namespace Origins.NPCs.Ashen.Boss {
 			this.GetState().DoAIState(this);
 		}
 		Vector2 hoikOffset = default;
+		void SetHoikOffset(Vector2 value) {
+			if (Math.Abs(hoikOffset.X) < Math.Abs(value.X)) hoikOffset.X = value.X;
+			if (Math.Abs(hoikOffset.Y) < Math.Abs(value.Y)) hoikOffset.Y = value.Y;
+		}
 		public override void PostAI() {
 			NPC.velocity.Y += 0.4f;
 			DoCollision(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, true);
@@ -93,7 +99,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public void UpdateLeg(int index) {
 			GetLegPositions(legs[index], out _, out _, out Vector2 oldFootPos);
 			oldFootPos -= new Vector2(27, 7).Apply(SpriteEffects, new Vector2(54, 30));
-			legs[index].CurrentAnimation.Update(this, ref legs[index], legs[index ^ 1]);
+			legs[index].CurrentAnimation.Update(this, ref legs[index], legs[(index + 1) % legs.Length]);
 			float diff = GeometryUtils.AngleDif(legs[index].ThighRot - MathHelper.PiOver4, legs[index].CalfRot + MathHelper.PiOver4, out int dir);
 			if (diff > 2) {
 				legs[index].CalfRot -= (diff - 2) * dir;
@@ -108,15 +114,16 @@ namespace Origins.NPCs.Ashen.Boss {
 			DoCollision(ref newFootPos, ref footVelocity, 54, 22);
 			bool standing = Math.Abs(footVelocity.Y - oldFootVelocity.Y) > 0.25f;
 			if (standing) footVelocity.X *= 1f / float.Pi;
-			if ((newFootPos - NPC.position) - footOffset != default) hoikOffset = (newFootPos - NPC.position) - footOffset;
+			SetHoikOffset((newFootPos - NPC.position) - footOffset);
 			NPC.velocity += footVelocity - oldFootVelocity;
+			DoCollision(ref newFootPos, ref NPC.velocity, 54, 22);
 
 			if (legs[index].WasStanding == standing) legs[index].TimeStanding++;
 			else legs[index].TimeStanding = 0;
 			legs[index].WasStanding = standing;
 
 			LegAnimation oldAnimation = legs[index].CurrentAnimation;
-			legs[index].CurrentAnimation = legs[index].CurrentAnimation.Continue(this, legs[index], footVelocity - oldFootVelocity);
+			legs[index].CurrentAnimation = legs[index].CurrentAnimation.Continue(this, legs[index], legs[(index + 1) % legs.Length], footVelocity - oldFootVelocity);
 			if (legs[index].CurrentAnimation != oldAnimation) legs[index].TimeInAnimation = 0;
 			else legs[index].TimeInAnimation++;
 		}
@@ -134,53 +141,67 @@ namespace Origins.NPCs.Ashen.Boss {
 			footPos = calfPos + new Vector2(27, 31).Apply(effects, default).RotatedBy(leg.CalfRot * NPC.direction);
 		}
 		public void DrawLeg(SpriteBatch spriteBatch, Vector2 screenPos, Color tintColor, Leg leg) {
-			SpriteEffects effects = SpriteEffects;
-			GetLegPositions(leg, out Vector2 thighPos, out Vector2 calfPos, out Vector2 footPos);
-			Vector2 thighPistonPos = thighPos + new Vector2(1, 25).Apply(effects, default).RotatedBy(leg.ThighRot * NPC.direction);
-			Vector2 calfPistonPos = calfPos + new Vector2(26, 6).Apply(effects, default).RotatedBy(leg.CalfRot * NPC.direction);
-			Vector2 thighUnit = Vector2.UnitX.RotatedBy(leg.ThighRot * NPC.direction) * 4;
-			Vector2 calfUnit = Vector2.UnitX.RotatedBy(leg.CalfRot * NPC.direction) * 4;
-			MiscShaderData shader = GameShaders.Misc["Origins:Identity"];
-			shader.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
-			shader.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 0, 1, 1));
-			shader.UseImage0(pistonTexture);
-			//shader.UseImage2(ModContent.Request<Texture2D>("Origins/Textures/SC_Mask"));
-			shader.Apply();
-			VertexRectangle.DrawLit(screenPos, thighPistonPos - thighUnit, thighPistonPos + thighUnit, calfPistonPos - calfUnit, calfPistonPos + calfUnit);
-			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-			spriteBatch.Draw(
-				thighTexture,
-				thighPos - screenPos,
-				null,
-				NPC.GetTintColor(Lighting.GetColor(thighPos.ToTileCoordinates(), tintColor)),
-				leg.ThighRot * NPC.direction,
-				new Vector2(49, 15).Apply(effects, thighTexture.Value.Size()),
-				1,
-				effects,
-			0);
-			spriteBatch.Draw(
-				calfTexture,
-				calfPos - screenPos,
-				null,
-				NPC.GetTintColor(Lighting.GetColor(calfPos.ToTileCoordinates(), tintColor)),
-				leg.CalfRot * NPC.direction,
-				new Vector2(14, 14).Apply(effects, calfTexture.Value.Size()),
-				1,
-				effects,
-			0);
-			spriteBatch.Draw(
-				footTexture,
-				footPos - screenPos,
-				footTexture.Frame(verticalFrames: 2),
-				NPC.GetTintColor(Lighting.GetColor(footPos.ToTileCoordinates(), tintColor)),
-				0,
-				new Vector2(27, 7).Apply(effects, footTexture.Value.Size()),
-				1,
-				effects,
-			0);
+			SpriteBatchState state = spriteBatch.GetState();
+			try {
+				spriteBatch.Restart(state, SpriteSortMode.Immediate);
+				SpriteEffects effects = SpriteEffects;
+				GetLegPositions(leg, out Vector2 thighPos, out Vector2 calfPos, out Vector2 footPos);
+				Vector2 thighPistonPos = thighPos + new Vector2(1, 25).Apply(effects, default).RotatedBy(leg.ThighRot * NPC.direction);
+				Vector2 calfPistonPos = calfPos + new Vector2(26, 6).Apply(effects, default).RotatedBy(leg.CalfRot * NPC.direction);
+				Vector2 thighUnit = Vector2.UnitX.RotatedBy(leg.ThighRot * NPC.direction) * 4;
+				Vector2 calfUnit = Vector2.UnitX.RotatedBy(leg.CalfRot * NPC.direction) * 4;
+				MiscShaderData shader = GameShaders.Misc["Origins:Identity"];
+				shader.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
+				shader.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 0, 1, 1));
+				shader.UseImage0(pistonTexture);
+				//shader.UseImage2(ModContent.Request<Texture2D>("Origins/Textures/SC_Mask"));
+				shader.Apply();
+				VertexRectangle.DrawLit(screenPos, thighPistonPos - thighUnit, thighPistonPos + thighUnit, calfPistonPos - calfUnit, calfPistonPos + calfUnit);
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+				spriteBatch.Draw(
+					thighTexture,
+					thighPos - screenPos,
+					null,
+					NPC.GetTintColor(Lighting.GetColor(thighPos.ToTileCoordinates(), tintColor)),
+					leg.ThighRot * NPC.direction,
+					new Vector2(49, 15).Apply(effects, thighTexture.Value.Size()),
+					1,
+					effects,
+				0);
+				spriteBatch.Draw(
+					calfTexture,
+					calfPos - screenPos,
+					null,
+					NPC.GetTintColor(Lighting.GetColor(calfPos.ToTileCoordinates(), tintColor)),
+					leg.CalfRot * NPC.direction,
+					new Vector2(14, 14).Apply(effects, calfTexture.Value.Size()),
+					1,
+					effects,
+				0);
+				spriteBatch.Draw(
+					footTexture,
+					footPos - screenPos,
+					footTexture.Frame(verticalFrames: 2),
+					NPC.GetTintColor(Lighting.GetColor(footPos.ToTileCoordinates(), tintColor)),
+					0,
+					new Vector2(27, 7).Apply(effects, footTexture.Value.Size()),
+					1,
+					effects,
+				0);
+			} catch {
+				spriteBatch.Restart(state);
+				throw;
+			}
+			spriteBatch.Restart(state);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			SpriteEffects effects = SpriteEffects;
+			int i = legs.Length - 1;
+			int halfLegs = legs.Length / 2;
+			for (; i >= halfLegs; i--) {
+				int brightness = (int)(255 * float.Pow(0.75f, i));
+				DrawLeg(spriteBatch, screenPos, new Color(brightness, brightness, brightness), legs[i]);
+			}
 			spriteBatch.DrawGlowingNPCPart(
 				hipTexture,
 				hipGlowTexture,
@@ -205,7 +226,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				1,
 				effects
 			);
-			for (int i = legs.Length - 1; i >= 0; i--) {
+			for (; i >= 0; i--) {
 				int brightness = (int)(255 * float.Pow(0.75f, i));
 				DrawLeg(spriteBatch, screenPos, new Color(brightness, brightness, brightness), legs[i]);
 			}
@@ -282,7 +303,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			private static readonly List<LegAnimation> animations = [];
 			public int Type { get; private set; }
 			public abstract void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg);
-			public abstract LegAnimation Continue(Trenchmaker npc, Leg leg, Vector2 movement);
+			public abstract LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement);
 			public virtual bool HasHitbox(Trenchmaker npc, Leg leg) => false;
 			public static LegAnimation Get(int type) => animations[type];
 			public void Load(Mod mod) {
@@ -303,7 +324,9 @@ namespace Origins.NPCs.Ashen.Boss {
 				if (targetLength < 2) targetLength = 2;
 				if (targetLength > 44) targetLength = 44;
 				GeometryUtils.AngleDif(leg.CalfRot + MathHelper.PiOver2, leg.ThighRot, out int dir);
-				leg.CalfRot -= dir * (PistonLength(npc, leg) - targetLength) * 0.01f * speedMult;
+				float dif = PistonLength(npc, leg) - targetLength;
+				//Min(ref dif, 1);
+				leg.CalfRot -= dir * dif * 0.01f * speedMult;
 			}
 		}
 	}
