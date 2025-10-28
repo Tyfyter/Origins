@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
+using System.Text;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -40,6 +41,18 @@ namespace Origins.NPCs.Ashen.Boss {
 		protected static AutoLoadingAsset<Texture2D> exhaustTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Exhaust";
 		protected SpriteEffects SpriteEffects => NPC.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 		public Vector2 GunPos => NPC.Center + new Vector2(19, -4).Apply(SpriteEffects, default);
+		public float DistToTarget {
+			get {
+				float dist;
+				if (NPC.targetRect.Center().X > NPC.Center.X) {
+					dist = NPC.targetRect.Left - (NPC.position.X + NPC.width);
+				} else {
+					dist = NPC.position.X - NPC.targetRect.Right;
+				}
+				Max(ref dist, 0);
+				return dist;
+			}
+		}
 		public static LegAnimation defaultLegAnimation;
 		public override void Load() {
 			this.AddBossControllerItem();
@@ -97,6 +110,9 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.velocity.Y += 0.4f;
 			DoCollision(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, true);
 			for (int i = 0; i < legs.Length; i++) UpdateLeg(i);
+			StringBuilder builder = new();
+			for (int i = 0; i < legs.Length; i++) builder.AppendLine(legs[i].CurrentAnimation.ToString());
+			Debugging.ChatOverhead(builder);
 			NPC.position += hoikOffset;
 			hoikOffset = default;
 		}
@@ -353,10 +369,9 @@ namespace Origins.NPCs.Ashen.Boss {
 			public static void PistonTo(Trenchmaker npc, ref Leg leg, float targetLength, float speedMult = 1) {
 				if (targetLength < 2) targetLength = 2;
 				if (targetLength > 44) targetLength = 44;
-				GeometryUtils.AngleDif(leg.CalfRot + MathHelper.PiOver2, leg.ThighRot, out int dir);
 				float dif = PistonLength(npc, leg) - targetLength;
 				//Min(ref dif, 1);
-				leg.CalfRot -= dir * dif * 0.01f * speedMult;
+				leg.CalfRot += dif * 0.01f * speedMult;
 			}
 		}
 	}

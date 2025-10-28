@@ -16,14 +16,15 @@ namespace Origins.NPCs.Ashen.Boss {
 			defaultLegAnimation = this;
 		}
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
-			float dist;
-			if (npc.NPC.targetRect.Center().X > npc.NPC.Center.X) {
-				dist = npc.NPC.targetRect.Left - (npc.NPC.position.X + npc.NPC.width);
-			} else {
-				dist = npc.NPC.position.X - npc.NPC.targetRect.Right;
-			}
+			float dist = npc.DistToTarget;
 			AIState aiState = npc.GetState() as AIState;
 			if (dist > (aiState?.WalkDist ?? 10 * 16)) {
+				/*if (dist > (aiState?.WalkDist ?? 10 * 16) * 2) {
+					if (otherLeg.WasStanding && otherLeg.CurrentAnimation is Walk_Animation_2 or Walk_Animation_3 or Run_Animation_2 or Run_Animation_3) {
+						return ModContent.GetInstance<Run_Animation_1>();
+					}
+				}*/
+				if (dist > (aiState?.WalkDist ?? 10 * 16) * 2) return ModContent.GetInstance<Pogo_Animation_1>();
 				if (otherLeg.WasStanding && otherLeg.CurrentAnimation is Standing_Animation or Walk_Animation_2 or Walk_Animation_3 or Step_Down_Crouch_Animation) {
 					return ModContent.GetInstance<Walk_Animation_1>();
 				} else if (!otherLeg.WasStanding && otherLeg.TimeStanding >= 62 && otherLeg.CurrentAnimation is Walk_Animation_1 or Walk_Animation_2 or Walk_Animation_3) {
@@ -39,6 +40,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			PistonTo(npc, ref leg, 24, 0.2f);
 		}
 	}
+	#region walking
 	public class Walk_Animation_1 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 			if (leg.ThighRot == -0.5f && PistonLength(npc, leg) < 3) return ModContent.GetInstance<Walk_Animation_2>();
@@ -72,6 +74,79 @@ namespace Origins.NPCs.Ashen.Boss {
 			PistonTo(npc, ref leg, 32, 0.2f);
 		}
 	}
+	#endregion
+	#region running
+	public class Run_Animation_1 : LegAnimation {
+		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if (leg.ThighRot == -0.75f && PistonLength(npc, leg) < 3) return ModContent.GetInstance<Run_Animation_2>();
+			return this;
+		}
+
+		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
+			leg.RotateThigh(-0.75f, 0.2f);
+			PistonTo(npc, ref leg, 0, 0.2f);
+		}
+	}
+	public class Run_Animation_2 : LegAnimation {
+		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if (leg.WasStanding || (leg.ThighRot == -0.75f && PistonLength(npc, leg) >= 22)) return ModContent.GetInstance<Run_Animation_3>();
+			return this;
+		}
+
+		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
+			leg.RotateThigh(-0.75f, 0.045f);
+			PistonTo(npc, ref leg, 24, 0.2f);
+		}
+	}
+	public class Run_Animation_3 : LegAnimation {
+		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if (PistonLength(npc, leg) < 16) {
+				if (npc.DistToTarget > 10 * 16 * 2) ModContent.GetInstance<Run_Animation_1>();
+				return ModContent.GetInstance<Standing_Animation>();
+			}
+			return this;
+		}
+
+		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
+			switch ((leg.RotateThigh(1.5f, 0.06f), leg.ThighRot > 0.7f)) {
+				default:
+				PistonTo(npc, ref leg, 32, 0.2f);
+				break;
+
+				case (false, true):
+				PistonTo(npc, ref leg, 44);
+				break;
+
+				case (true, true):
+				PistonTo(npc, ref leg, 0, 0.3f);
+				break;
+			}
+		}
+	}
+	#endregion
+	public class Pogo_Animation_1 : LegAnimation {
+		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if ((leg.WasStanding || otherLeg.WasStanding) && leg.ThighRot == 0.5f && PistonLength(npc, leg) < 3) return ModContent.GetInstance<Pogo_Animation_2>();
+			return this;
+		}
+
+		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
+			leg.RotateThigh(0.5f, 0.04f);
+			PistonTo(npc, ref leg, 0, 0.4f);
+		}
+	}
+	public class Pogo_Animation_2 : LegAnimation {
+		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if (leg.ThighRot == 1.3f && PistonLength(npc, leg) >= 32) return ModContent.GetInstance<Standing_Animation>();
+			return this;
+		}
+
+		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
+			if (leg.ThighRot > 1f) 
+				PistonTo(npc, ref leg, 48, 2);
+			leg.RotateThigh(1.3f, 0.3f);
+		}
+	}
 	public class Step_Down_Crouch_Animation : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 			if (otherLeg.WasStanding) return ModContent.GetInstance<Standing_Animation>();
@@ -83,6 +158,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			PistonTo(npc, ref leg, 16, 0.2f);
 		}
 	}
+	#region teabag
 	public class Teabag_Animation_1 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 			if (PistonLength(npc, leg) < 3 && PistonLength(npc, otherLeg) < 3) return ModContent.GetInstance<Teabag_Animation_2>();
@@ -117,4 +193,5 @@ namespace Origins.NPCs.Ashen.Boss {
 			if (PistonLength(npc, leg) >= 43) npc.NPC.noGravity = false;
 		}
 	}
+	#endregion
 }
