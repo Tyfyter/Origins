@@ -9,6 +9,7 @@ using Origins.Tiles.BossDrops;
 using Origins.World.BiomeData;
 using PegasusLib;
 using PegasusLib.Graphics;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -157,13 +158,18 @@ namespace Origins.NPCs.Ashen.Boss {
 				Vector2 calfPistonPos = calfPos + new Vector2(26, 6).Apply(effects, default).RotatedBy(leg.CalfRot * NPC.direction);
 				Vector2 thighUnit = Vector2.UnitX.RotatedBy(leg.ThighRot * NPC.direction) * 4;
 				Vector2 calfUnit = Vector2.UnitX.RotatedBy(leg.CalfRot * NPC.direction) * 4;
-				MiscShaderData shader = GameShaders.Misc["Origins:Identity"];
-				shader.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
-				shader.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 0, 1, 1));
-				shader.UseImage0(pistonTexture);
+				Asset<Texture2D> texture = pistonTexture;
+				MiscShaderData miscShaderData = GameShaders.Misc["Origins:Beam"];
 				//shader.UseImage2(ModContent.Request<Texture2D>("Origins/Textures/SC_Mask"));
-				shader.Apply();
-				VertexRectangle.DrawLit(screenPos, thighPistonPos - thighUnit, thighPistonPos + thighUnit, calfPistonPos - calfUnit, calfPistonPos + calfUnit);
+				miscShaderData.UseImage0(texture);
+				miscShaderData.UseShaderSpecificData(texture.UVFrame());
+				float endLength = 0;// / 
+				miscShaderData.Shader.Parameters["uLoopData"].SetValue(new Vector2(
+					thighPistonPos.Distance(calfPistonPos) / 12,
+					endLength
+				));
+				miscShaderData.Apply();
+				VertexRectangle.DrawLit(screenPos, thighPistonPos - thighUnit, calfPistonPos - calfUnit, thighPistonPos + thighUnit, calfPistonPos + calfUnit);
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				spriteBatch.Draw(
 					thighTexture,
