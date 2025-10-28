@@ -110,9 +110,6 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.velocity.Y += 0.4f;
 			DoCollision(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, true);
 			for (int i = 0; i < legs.Length; i++) UpdateLeg(i);
-			StringBuilder builder = new();
-			for (int i = 0; i < legs.Length; i++) builder.AppendLine(legs[i].CurrentAnimation.ToString());
-			Debugging.ChatOverhead(builder);
 			NPC.position += hoikOffset;
 			hoikOffset = default;
 		}
@@ -137,7 +134,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			Vector2 oldFootVelocity = footVelocity;
 			DoCollision(ref newFootPos, ref footVelocity, 54, 22);
 			bool standing = Math.Abs(footVelocity.Y - oldFootVelocity.Y) > 0.25f;
-			if (standing) footVelocity.X *= 1f / float.Pi;
+			if (standing) footVelocity.X = 0;//*= 1f / float.Pi;
 			SetHoikOffset((newFootPos - NPC.position) - footOffset);
 			NPC.velocity += footVelocity - oldFootVelocity;
 			DoCollision(ref newFootPos, ref NPC.velocity, 54, 22);

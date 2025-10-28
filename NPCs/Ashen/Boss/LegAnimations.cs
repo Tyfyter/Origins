@@ -24,7 +24,7 @@ namespace Origins.NPCs.Ashen.Boss {
 						return ModContent.GetInstance<Run_Animation_1>();
 					}
 				}*/
-				if (dist > (aiState?.WalkDist ?? 10 * 16) * 2) return ModContent.GetInstance<Pogo_Animation_1>();
+				//if (dist > (aiState?.WalkDist ?? 10 * 16) * 2) return ModContent.GetInstance<Pogo_Animation_1>();
 				if (otherLeg.WasStanding && otherLeg.CurrentAnimation is Standing_Animation or Walk_Animation_2 or Walk_Animation_3 or Step_Down_Crouch_Animation) {
 					return ModContent.GetInstance<Walk_Animation_1>();
 				} else if (!otherLeg.WasStanding && otherLeg.TimeStanding >= 62 && otherLeg.CurrentAnimation is Walk_Animation_1 or Walk_Animation_2 or Walk_Animation_3) {
@@ -154,8 +154,13 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
-			leg.RotateThigh(2, 0.02f);
-			PistonTo(npc, ref leg, 16, 0.2f);
+			if (leg.ThighRot == 2) {
+				PistonTo(npc, ref leg, 32, 0.2f);
+			} else if (PistonLength(npc, leg) < 3) {
+				leg.RotateThigh(2, 0.02f);
+			} else {
+				PistonTo(npc, ref leg, 0, 0.4f);
+			}
 		}
 	}
 	#region teabag
