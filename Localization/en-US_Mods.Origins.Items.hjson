@@ -7208,3 +7208,8 @@ Fearmaker_Controller: {
 	DisplayName: Fearmaker Controller
 	Tooltip: ""
 }
+
+Fuel_Rod_Ball: {
+	DisplayName: Fuel Rod Ball
+	Tooltip: ""
+}
