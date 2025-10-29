@@ -5,6 +5,7 @@ using Origins.Items.Tools.Wiring;
 using Origins.UI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection.Emit;
 using Terraria;
 using Terraria.GameContent;
@@ -244,7 +245,7 @@ namespace Origins.NPCs {
 					}
 				}
 			}
-			public override IEnumerable<AIState<TBoss>> GetModes() => TBoss.AIStates;
+			public override IEnumerable<AIState<TBoss>> GetModes() => Main.SmartCursorWanted ? TBoss.AIStates : TBoss.AIStates.Except(AutomaticIdleState<TBoss>.aiStates.Select(v => v.state));
 		}
 	}
 	[Flags]
