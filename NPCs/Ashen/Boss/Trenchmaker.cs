@@ -96,7 +96,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public Leg[] legs = [new(), new()];
 		public override void AI() {
-			Vector2 diff = NPC.GetTargetData().Center - GunPos;
+			Vector2 diff = NPC.targetRect.Center() - GunPos;
 			Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
 			GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.05f);
 			this.GetState().DoAIState(this);
@@ -188,10 +188,9 @@ namespace Origins.NPCs.Ashen.Boss {
 				//shader.UseImage2(ModContent.Request<Texture2D>("Origins/Textures/SC_Mask"));
 				miscShaderData.UseImage0(texture);
 				miscShaderData.UseShaderSpecificData(texture.UVFrame());
-				float endLength = 0;// / 
 				miscShaderData.Shader.Parameters["uLoopData"].SetValue(new Vector2(
 					thighPistonPos.Distance(calfPistonPos) / 12,
-					endLength
+					0
 				));
 				miscShaderData.Apply();
 				VertexRectangle.DrawLit(screenPos, thighPistonPos - thighUnit, calfPistonPos - calfUnit, thighPistonPos + thighUnit, calfPistonPos + calfUnit);
@@ -219,7 +218,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				spriteBatch.Draw(
 					footTexture,
 					footPos - screenPos,
-					footTexture.Frame(verticalFrames: 2),
+					footTexture.Frame(verticalFrames: 2, frameY: (!GetFootHitbox(leg).Add(Vector2.UnitY).OverlapsAnyTiles()).ToInt()),
 					NPC.GetTintColor(Lighting.GetColor(footPos.ToTileCoordinates(), tintColor)),
 					0,
 					new Vector2(27, 7).Apply(effects, footTexture.Value.Size()),
@@ -254,7 +253,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			);
 			spriteBatch.Draw(
 				exhaustTexture,
-				NPC.Center - screenPos,
+				NPC.Center + Main.rand.NextVector2Circular(1, 1) - screenPos,
 				null,
 				NPC.GetTintColor(drawColor),
 				0,
