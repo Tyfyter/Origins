@@ -53,10 +53,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 					}
 					if (!player.channel) Projectile.active = false;
 					Projectile.ai[2]++;
-					if (ChargeLevel >= 3) Projectile.Kill();
+					if (ChargeLevel > 3) Projectile.Kill();
 					return false;
 				}
 				case 1:
+				if (ChargeLevel > 0) Projectile.Kill();
 				Projectile.velocity.X += Math.Sign(player.Center.X - Projectile.Center.X);
 				if (Projectile.Hitbox.Intersects(player.Hitbox)) Projectile.active = false;
 				return base.PreAI();
@@ -88,12 +89,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Color color = Color.White;
 			switch (ChargeLevel) {
 				case 0:
-				color = Color.Orange;
+				color = Color.Chocolate.MultiplyRGBA(lightColor);
 				break;
 				case 1:
-				color = Color.Yellow;
+				color = Color.Orange;
 				break;
 				case 2:
+				color = Color.Yellow;
+				break;
+				case 3:
 				color = Color.White;
 				break;
 			}
