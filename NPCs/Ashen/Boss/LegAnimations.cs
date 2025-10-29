@@ -1,5 +1,6 @@
 ﻿using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Origins.Tiles;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,10 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 			float dist = npc.DistToTarget;
 			AIState aiState = npc.GetState() as AIState;
-			if (dist > (aiState?.WalkDist ?? 10 * 16)) {
+			if (npc.stuckCount >= 19 && otherLeg.CurrentAnimation is not Stomp_Animation_1 and not Stomp_Animation_2 and not Stomp_Animation_3) {
+				npc.stuckCount = 0;
+				return ModContent.GetInstance<Stomp_Animation_1>();
+			} else if (dist > (aiState?.WalkDist ?? 10 * 16)) {
 				/*if (dist > (aiState?.WalkDist ?? 10 * 16) * 2) {
 					if (otherLeg.WasStanding && otherLeg.CurrentAnimation is Walk_Animation_2 or Walk_Animation_3 or Run_Animation_2 or Run_Animation_3) {
 						return ModContent.GetInstance<Run_Animation_1>();
@@ -192,7 +196,8 @@ namespace Origins.NPCs.Ashen.Boss {
 					Vector2.Zero,
 					ModContent.ProjectileType<Trenchmaker_Stomp_P>(),
 					20,
-					0
+					0,
+					ai1: npc.NPC.direction
 				);
 				return ModContent.GetInstance<Stomp_Animation_3>();
 			}
@@ -244,6 +249,19 @@ namespace Origins.NPCs.Ashen.Boss {
 			Projectile.position = Projectile.Center;
 			Projectile.Size = new Vector2(16f, 16f) * MathHelper.Lerp(5f, num, Utils.GetLerpValue(0f, 9f, Projectile.ai[0]));
 			Projectile.Center = Projectile.position;
+			if (!NPC.downedBoss2) {
+				Rectangle smashHitbox = Projectile.Hitbox;
+				smashHitbox.Width /= 2;
+				if (Projectile.ai[1] == 1) smashHitbox.X += smashHitbox.Width;
+
+				smashHitbox.Height /= 3;
+				smashHitbox.Y += 16;
+				if (smashHitbox.OverlapsAnyTiles(out List<Point> tiles)) {
+					foreach (Point tile in tiles) {
+						if (TileLoader.GetTile(Main.tile[tile].TileType) is not IAshenTile) WorldGen.KillTile(tile.X, tile.Y);
+					}
+				}
+			}
 			Point point = Projectile.TopLeft.ToTileCoordinates();
 			Point point2 = Projectile.BottomRight.ToTileCoordinates();
 			int num2 = point.X / 2 + point2.X / 2;

@@ -24,6 +24,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.NPCs.StateBossMethods<Origins.NPCs.Ashen.Boss.Trenchmaker>;
+using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Ashen.Boss {
 	[AutoloadBossHead]
@@ -96,10 +97,23 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public Leg[] legs = [new(), new()];
 		public override void AI() {
+			UpdateTarget();
 			Vector2 diff = NPC.targetRect.Center() - GunPos;
 			Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
 			GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.05f);
 			this.GetState().DoAIState(this);
+		}
+		public void DoTargeting() {
+			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.Players);
+			if (searchResults.FoundTarget) {
+				NPC.target = searchResults.NearestTargetIndex;
+				NPC.targetRect = searchResults.NearestTargetHitbox;
+				if (NPC.ShouldFaceTarget(ref searchResults)) NPC.FaceTarget();
+			}
+		}
+		public void UpdateTarget() {
+			if (!NPC.HasValidTarget) return;
+			NPC.targetRect = NPC.GetTargetData().Hitbox;
 		}
 		Vector2 hoikOffset = default;
 		void SetHoikOffset(Vector2 value) {
@@ -118,11 +132,13 @@ namespace Origins.NPCs.Ashen.Boss {
 			if (!NPC.downedBoss2 || Main.rand.NextBool(2)) WorldGen.spawnMeteor = true;
 			NPC.SetEventFlagCleared(ref NPC.downedBoss2, GameEventClearedID.DefeatedEaterOfWorldsOrBrainOfChtulu);
 		}
+		public Vector2 stuckPos = default;
+		public int stuckCount = default;
 		public void UpdateLeg(int index) {
 			bool tileCollide = legs[index].CurrentAnimation.TileCollide(this, legs[index]);
 			GetLegPositions(legs[index], out _, out _, out Vector2 oldFootPos);
 			oldFootPos -= new Vector2(27, 7).Apply(SpriteEffects, new Vector2(54, 30));
-			legs[index].CurrentAnimation.Update(this, ref legs[index], legs[(index + 1) % legs.Length]);
+			legs[index].CurrentAnimation.Update(this, ref legs[index], legs[(index ^ 1) % legs.Length]);
 			float diff = GeometryUtils.AngleDif(legs[index].ThighRot - MathHelper.PiOver4, legs[index].CalfRot + MathHelper.PiOver4, out int dir);
 			if (diff > 2) {
 				legs[index].CalfRot -= (diff - 2) * dir;
@@ -149,12 +165,18 @@ namespace Origins.NPCs.Ashen.Boss {
 			legs[index].WasStanding = standing;
 
 			LegAnimation oldAnimation = legs[index].CurrentAnimation;
-			legs[index].CurrentAnimation = legs[index].CurrentAnimation.Continue(this, legs[index], legs[(index + 1) % legs.Length], footVelocity - oldFootVelocity);
+			legs[index].CurrentAnimation = legs[index].CurrentAnimation.Continue(this, legs[index], legs[(index ^ 1) % legs.Length], footVelocity - oldFootVelocity);
 			if (legs[index].CurrentAnimation != oldAnimation) {
 				legs[index].CurrentAnimation.Reset();
 				legs[index].TimeInAnimation = 0;
 				legs[index].NetUpdate = true;
 				NPC.netUpdate = true;
+				if (NPC.position.WithinRange(stuckPos, 16 * 4)) {
+					stuckCount++;
+				} else {
+					stuckPos = NPC.position;
+					stuckCount = 0;
+				}
 			} else {
 				legs[index].TimeInAnimation++;
 			}

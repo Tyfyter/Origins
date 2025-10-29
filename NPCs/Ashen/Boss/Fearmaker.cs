@@ -23,6 +23,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 8;
+			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Ashen_Biome>());
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 		}
 		public override void SetDefaults() {
@@ -41,6 +42,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public class Fearmaker_Adaptation_Animation : LegAnimation {
 			public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) => this;
 			public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
+				if (!npc.NPC.HasValidTarget) return;
 				WeightedRandom<FearmakerAdaptation> adaptations = new();
 				foreach (FearmakerAdaptation adaptation in ModContent.GetContent<FearmakerAdaptation>()) {
 					adaptations.Add(adaptation, 1 * adaptation.WeightMultiplier);
