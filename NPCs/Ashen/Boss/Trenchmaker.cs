@@ -109,7 +109,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override void PostAI() {
 			if (!NPC.noGravity) return;
 			NPC.velocity.Y += 0.4f;
-			DoCollision(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, true);
+			//DoCollision(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, true);
 			for (int i = 0; i < legs.Length; i++) UpdateLeg(i);
 			NPC.position += hoikOffset;
 			hoikOffset = default;
@@ -173,6 +173,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			footPos = calfPos + new Vector2(27, 31).Apply(effects, default).RotatedBy(leg.CalfRot * NPC.direction);
 		}
 		public void DrawLeg(SpriteBatch spriteBatch, Vector2 screenPos, Color tintColor, Leg leg) {
+			//if (leg.CurrentAnimation is Walk_Animation_1) tintColor = tintColor.MultiplyRGB(Color.Red);
 			SpriteBatchState state = spriteBatch.GetState();
 			try {
 				spriteBatch.Restart(state, SpriteSortMode.Immediate);

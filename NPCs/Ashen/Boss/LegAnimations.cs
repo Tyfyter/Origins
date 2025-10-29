@@ -48,7 +48,9 @@ namespace Origins.NPCs.Ashen.Boss {
 	#region walking
 	public class Walk_Animation_1 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
-			if (leg.ThighRot == -0.5f && PistonLength(npc, leg) < 3) return ModContent.GetInstance<Walk_Animation_2>();
+			if (leg.ThighRot == -0.5f && PistonLength(npc, leg) < 3) {
+				return ModContent.GetInstance<Walk_Animation_2>();
+			}
 			return this;
 		}
 
@@ -59,24 +61,24 @@ namespace Origins.NPCs.Ashen.Boss {
 	}
 	public class Walk_Animation_2 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
-			if (leg.WasStanding || (leg.ThighRot == 0f && PistonLength(npc, leg) >= 30)) return ModContent.GetInstance<Walk_Animation_3>();
+			if (leg.WasStanding || (leg.ThighRot == 0f && PistonLength(npc, leg) >= 36)) return ModContent.GetInstance<Walk_Animation_3>();
 			return this;
 		}
 
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
 			leg.RotateThigh(0f, 0.03f);
-			PistonTo(npc, ref leg, 32, 0.2f);
+			PistonTo(npc, ref leg, 38, 0.2f);
 		}
 	}
 	public class Walk_Animation_3 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
-			if (leg.ThighRot == 1.1f && PistonLength(npc, leg) >= 30) return ModContent.GetInstance<Standing_Animation>();
+			if (leg.ThighRot == 1.1f && PistonLength(npc, leg) >= 36) return ModContent.GetInstance<Standing_Animation>();
 			return this;
 		}
 
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
 			leg.RotateThigh(1.1f, 0.04f);
-			PistonTo(npc, ref leg, 32, 0.2f);
+			PistonTo(npc, ref leg, 38, 0.2f);
 		}
 	}
 	public class Step_Down_Crouch_Animation : LegAnimation {
