@@ -51,6 +51,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 						Projectile.ai[1] = 0;
 						return false;
 					}
+					if (Projectile.ai[1] % 14 >= 7) player.heldProj = Projectile.whoAmI;
 					if (!player.channel) Projectile.active = false;
 					Projectile.ai[2]++;
 					if (ChargeLevel > 3) Projectile.Kill();
