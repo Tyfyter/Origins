@@ -1319,7 +1319,7 @@ TILES:
 (X) Bilious Incense
 (^) Brine Dungeon Chest
 (#, ^2) Cargo Elevator Door !!!
-(#, ^2) Cargo Elevator Door (Jammed) !!!
+(☻) Cargo Elevator Door (Jammed) (Place Hanging Scrap on a Cargo Elevator Door) !!!
 (^) Chambersite Gem Lock
 (^) Cleansing Station
 (^) Defiled Campfire
@@ -1375,7 +1375,7 @@ TILES:
 (^) Fuzzvine
 (^) Gel Blister
 (々 (power core)) Generation Station !!!
-(#, ^2) Hanging Scrap !!!
+(☻) Hanging Scrap !!!
 (^) Heat Vent
 (^) Hydrothermal Vent
 (^) Limestone Rubble

@@ -1,6 +1,7 @@
 ﻿using MonoMod.Cil;
 using Origins.Core;
 using Origins.Items.Tools.Wiring;
+using Origins.Tiles.Ashen.Hanging_Scrap;
 using Origins.World.BiomeData;
 using PegasusLib;
 using PegasusLib.Networking;
@@ -44,6 +45,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
 			DustType = Ashen_Biome.DefaultTileDust;
+			MineResist = 4;
 			RegisterItemDrop(Item.Type);
 		}
 		// TODO: implement
@@ -193,9 +195,20 @@ namespace Origins.Tiles.Ashen {
 				if (!IsAnimating) return;
 				if (++frameCounter > 4) {
 					frameCounter = 0;
-					frame += TargetOpen.ToDirectionInt();
 					TileObjectData data = TileObjectData.GetTileData(Main.tile[position]);
 					TileUtils.GetMultiTileTopLeft(position.X, position.Y, data, out int left, out int top);
+					if (TargetOpen && frame == 11) {
+						for (int x = 0; x < data.Width; x++) {
+							for (int y = 0; y < data.Height; y++) {
+								if (Main.tile[left + x, top + y].Get<Hanging_Scrap_Data>().HasScrap) {
+
+									TargetOpen = false;
+									break;
+								}
+							}
+						}
+					}
+					frame += TargetOpen.ToDirectionInt();
 					ushort closed = (ushort)ModContent.TileType<Cargo_Elevator_Door>();
 					ushort open = (ushort)ModContent.TileType<Cargo_Elevator_Door_Open>();
 					leftClosing.Clear();
@@ -251,6 +264,8 @@ namespace Origins.Tiles.Ashen {
 						}*/
 					}
 				}
+				leftClosing.Clear();
+				rightClosing.Clear();
 			}
 		}
 		public record class Cargo_Elevator_Door_Action(Point16 Position, bool Open) : SyncedAction {

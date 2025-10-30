@@ -4,13 +4,17 @@ using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
+using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
 using Origins.NPCs.Brine;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.NPCs.MiscE.Quests;
 using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Reflection;
+using Origins.Tiles.Ashen;
+using Origins.Tiles.Ashen.Hanging_Scrap;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
@@ -26,17 +30,14 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.Chat;
+using Terraria.DataStructures;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static Tyfyter.Utils.UITools;
 using static Origins.OriginsSets.Items;
-using Terraria.Graphics;
-using Origins.NPCs.MiscB.Shimmer_Construct;
-using Terraria.DataStructures;
-using Origins.Tiles.Ashen;
-using Origins.Items.Other.Consumables.Medicine;
+using static Tyfyter.Utils.UITools;
 
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
@@ -732,6 +733,7 @@ namespace Origins {
 		public override void PostDrawTiles() {
 			SpecialTilePreviewOverlay.ForceActive();
 			Players_Behind_Tiles_Overlay.ForceActive();
+			Hanging_Scrap_Overlay.ForceActive();
 		}
 	}
 	public class TempleBiome : ModBiome {

@@ -7213,3 +7213,48 @@ Fuel_Rod_Ball: {
 	DisplayName: Fuel Rod Ball
 	Tooltip: ""
 }
+
+Large_Scrap1_Item: {
+	DisplayName: Large Scrap1 Item
+	Tooltip: ""
+}
+
+Large_Scrap2_Item: {
+	DisplayName: Large Scrap2 Item
+	Tooltip: ""
+}
+
+Large_Scrap3_Item: {
+	DisplayName: Large Scrap3 Item
+	Tooltip: ""
+}
+
+Large_Scrap4_Item: {
+	DisplayName: Large Scrap4 Item
+	Tooltip: ""
+}
+
+Large_Scrap5_Item: {
+	DisplayName: Large Scrap5 Item
+	Tooltip: ""
+}
+
+Large_Scrap6_Item: {
+	DisplayName: Large Scrap6 Item
+	Tooltip: ""
+}
+
+Small_Scrap1_Item: {
+	DisplayName: Small Scrap1 Item
+	Tooltip: ""
+}
+
+Small_Scrap2_Item: {
+	DisplayName: Small Scrap2 Item
+	Tooltip: ""
+}
+
+Small_Scrap3_Item: {
+	DisplayName: Small Scrap3 Item
+	Tooltip: ""
+}
