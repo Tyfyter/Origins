@@ -234,7 +234,7 @@ ENEMY NPCS:
 (X) Limestone Creeper
 (^) Optiphage
 (X) Packhunter
-(#, ^2) Pinwheel
+(#3, †) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (☻) Power Suit Zombie
 (^) Pustule Jellyfish
 (X) QM-76 'Quakemaker'

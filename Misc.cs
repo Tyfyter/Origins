@@ -3154,7 +3154,10 @@ namespace Origins {
 		}
 		public static Vector2 DrawDebugTextAbove(SpriteBatch spritebatch, string text, Vector2 position, Vector2? origin = null, Color? color = null) {
 			DynamicSpriteFont font = FontAssets.ItemStack.Value;
-			return ChatManager.DrawColorCodedStringWithShadow(spritebatch, font, text, position - (font.MeasureString(text) / 2), color ?? Color.White, 0, origin ?? Vector2.Zero, Vector2.One);
+			Vector2 spacing = font.MeasureString(text) / 2;
+			Vector2 orig = origin ?? Vector2.Zero;
+			orig.Y += spacing.Y;
+			return ChatManager.DrawColorCodedStringWithShadow(spritebatch, font, text, position - spacing, color ?? Color.White, 0, orig, Vector2.One);
 		}
 		public static void DrawConstellationLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width = 20, float distort = 20, float waveSpeed = 0.03f) {
 			MiscShaderData shader = GameShaders.Misc["Origins:Constellation"];
