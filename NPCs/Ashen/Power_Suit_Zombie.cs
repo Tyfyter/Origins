@@ -58,7 +58,7 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override bool PreAI() {
 			float acc = 0.5f; // left as a variable for balance testing
-			if (NPC.collideY) NPC.velocity.X += acc * Math.Sign(NPC.velocity.X);
+			if (NPC.collideY) NPC.velocity.X += acc * NPC.direction;
 			NPC.spriteDirection = OriginsModIntegrations.CheckAprilFools() ? -NPC.direction : NPC.direction;
 			return true;
 		}
