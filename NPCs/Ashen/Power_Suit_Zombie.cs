@@ -15,6 +15,7 @@ namespace Origins.NPCs.Ashen {
 	public class Power_Suit_Zombie : ModNPC, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 34, 46);
 		public int AnimationFrames => 7;
+		public int FrameDuration => 5;
 		public override void Load() {
 			/*On_NPC.ScaleStats_ApplyExpertTweaks += (orig, self) => {
 				orig(self);
