@@ -235,7 +235,7 @@ ENEMY NPCS:
 (^) Optiphage
 (X) Packhunter
 (#, ^2) Pinwheel
-(#2, ^2) Power Suit Zombie
+(☻) Power Suit Zombie
 (^) Pustule Jellyfish
 (X) QM-76 'Quakemaker'
 (X) Reject

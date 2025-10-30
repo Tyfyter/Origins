@@ -13,18 +13,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.Ashen {
 	public class Power_Suit_Zombie : ModNPC, IWikiNPC {
-		public Rectangle DrawRect => new(0, 6, 34, 44);
-		public int AnimationFrames => 24;
-		public int FrameDuration => 1;
-		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public override void Load() {/*
-			On_NPC.ScaleStats_ApplyExpertTweaks += (orig, self) => {
+		public Rectangle DrawRect => new(0, 0, 34, 46);
+		public int AnimationFrames => 7;
+		public override void Load() {
+			/*On_NPC.ScaleStats_ApplyExpertTweaks += (orig, self) => {
 				orig(self);
 				OriginsSets.NPCs.CustomExpertScaling.GetIfInRange(self.type)?.Invoke(self);
 			};*/
 		}
 		public override void SetStaticDefaults() {
-			//NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.UndeadMiner; // maybe undead viking instead?
 			Main.npcFrameCount[NPC.type] = 7;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
@@ -60,6 +57,8 @@ namespace Origins.NPCs.Ashen {
 			];
 		}
 		public override bool PreAI() {
+			float acc = 0.5f; // left as a variable for balance testing
+			if (NPC.collideY) NPC.velocity.X += acc * Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = OriginsModIntegrations.CheckAprilFools() ? -NPC.direction : NPC.direction;
 			return true;
 		}
