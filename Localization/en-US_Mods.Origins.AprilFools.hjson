@@ -229,8 +229,6 @@ Bestiary: {
 		'''
 	Shimmer_Chunk1: For his neutral special, he wields a gun.
 	Power_Suit_Zombie: "'Am I late for my role in thriller?'"
-	Trenchmaker: "'Putting the fear in everyone since 1XXX'"
-	Trenchmaker_Alt: "'Fish fear me, robots love me'"
 }
 
 SetBonuses.Rubber:

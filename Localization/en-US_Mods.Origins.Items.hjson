@@ -1718,7 +1718,7 @@ Clubs_Ace: {
 
 Distress_Beacon: {
 	DisplayName: Distress Beacon
-	Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+	Tooltip: Summons the Trenchmaker
 }
 
 Fervor_Potion: {

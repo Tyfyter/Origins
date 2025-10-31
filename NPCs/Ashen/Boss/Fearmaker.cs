@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using Origins.Journal;
+using Origins.LootConditions;
+using Origins.Tiles.Ashen;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -8,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -15,6 +19,7 @@ using Terraria.Utilities;
 namespace Origins.NPCs.Ashen.Boss {
 	public class Fearmaker : Trenchmaker {
 		public override string Texture => typeof(Trenchmaker).GetDefaultTMLName();
+		public override string BossHeadTexture => null;
 		public override void Load() {
 			const int spin_count = 10;
 			for (int i = 0; i <= spin_count; i++) {
@@ -24,12 +29,14 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 8;
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Ashen_Biome>());
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			ContentSamples.NpcBestiaryRarityStars[Type] = 4;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.lifeMax = 600;
 			NPC.boss = false;
+			NPC.npcSlots = 10;
+			NPC.lifeMax = (int)(NPC.lifeMax / 1.5f);
 			//todo: make leg split values adapt to best kill the player they spawned on
 			legs = [
 				new(0, 0, ModContent.GetInstance<Fearmaker_Adaptation_Animation>()),
@@ -38,7 +45,24 @@ namespace Origins.NPCs.Ashen.Boss {
 				new(0, 0, ModContent.GetInstance<Fearmaker_Adaptation_Animation>())
 			];
 		}
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) { }
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerInTown) return 0;
+			if (OriginsModIntegrations.CheckAprilFools() && spawnInfo.Player.InModBiome<Ashen_Biome>() && spawnInfo.Player.position.Y / 16 < Main.rockLayer) return 0.07f;
+			return 0;
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText(false, true)
+			);
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			IItemDropRule normalDropRule = new LeadingSuccessRule();
+
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Sanguinite_Ore_Item>(), 1, 70, 165));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<NE8>(), 1, 20, 50));
+
+			npcLoot.Add(normalDropRule);
+		}
 		public class Fearmaker_Adaptation_Animation : LegAnimation {
 			public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) => this;
 			public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {

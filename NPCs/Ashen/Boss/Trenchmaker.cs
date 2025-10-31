@@ -4,6 +4,7 @@ using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Vanity.BossMasks;
 using Origins.LootConditions;
+using Origins.Music;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.BossDrops;
 using Origins.World.BiomeData;
@@ -89,10 +90,8 @@ namespace Origins.NPCs.Ashen.Boss {
 			this.SetAIState(StateIndex<PhaseOneIdleState>());
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			NPC.KillsCountTowardsNPC<Fearmaker>(bestiaryEntry);
-
 			bestiaryEntry.AddTags(
-				this.GetBestiaryFlavorText(false, true)
+				this.GetBestiaryFlavorText()
 			);
 		}
 		public Leg[] legs = [new(), new()];
@@ -427,5 +426,8 @@ namespace Origins.NPCs.Ashen.Boss {
 				leg.CalfRot += dif * 0.01f * speedMult;
 			}
 		}
+	}
+	public class TM_Music_Scene_Effect : BossMusicSceneEffect<Trenchmaker> {
+		public override int Music => Origins.Music.AshenBoss;
 	}
 }

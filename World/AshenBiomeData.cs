@@ -39,7 +39,7 @@ namespace Origins.World.BiomeData {
 	public class Ashen_Biome : ModBiome {
 		public static IItemDropRule FirstOrbDropRule;
 		public static IItemDropRule OrbDropRule;
-		public override int Music => Origins.Music.Ashen;
+		public override int Music => Origins.Music.AshenScrapyard;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
@@ -567,7 +567,7 @@ namespace Origins.World.BiomeData {
 	}
 	#region variations
 	public class Underground_Ashen_Biome : ModBiome {
-		public override int Music => Origins.Music.UndergroundAshen;
+		public override int Music => Origins.Music.AshenMines;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
 		public override string MapBackground => BackgroundPath;
@@ -580,7 +580,7 @@ namespace Origins.World.BiomeData {
 		}
 	}
 	public class Ashen_Desert : ModBiome {
-		public override int Music => Origins.Music.Ashen;
+		public override int Music => Origins.Music.AshenScrapyard;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
@@ -593,7 +593,7 @@ namespace Origins.World.BiomeData {
 		}
 	}
 	public class Ashen_Underground_Desert : ModBiome {
-		public override int Music => Origins.Music.UndergroundAshen;
+		public override int Music => Origins.Music.AshenMines;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
@@ -606,7 +606,7 @@ namespace Origins.World.BiomeData {
 		}
 	}
 	public class Ashen_Ice_Biome : ModBiome {
-		public override int Music => Origins.Music.UndergroundAshen;
+		public override int Music => Origins.Music.AshenMines;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
@@ -619,7 +619,7 @@ namespace Origins.World.BiomeData {
 		}
 	}
 	public class Ashen_Ocean : ModBiome {
-		public override int Music => Origins.Music.Ashen;
+		public override int Music => Origins.Music.AshenScrapyard;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";

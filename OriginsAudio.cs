@@ -30,11 +30,9 @@ namespace Origins {
 			public static int RivenOcean = MusicID.OtherworldlyRain;
 			public static int AncientRiven;
 
-			public static int Ashen = MusicID.OtherworldlyNight;
 			public static int AshenFactory = MusicID.OtherworldlyNight;
 			public static int AshenMines = MusicID.OtherworldlyNight;
 			public static int AshenScrapyard = MusicID.OtherworldlyNight;
-			public static int UndergroundAshen = MusicID.OtherworldlyEerie;
 			public static int SmogStorm = MusicID.Sandstorm;
 			public static int AshenBoss = MusicID.Boss5;
 			public static int AncientAshen;

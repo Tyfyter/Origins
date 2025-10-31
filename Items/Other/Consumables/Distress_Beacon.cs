@@ -20,12 +20,12 @@ namespace Origins.Items.Other.Consumables {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override bool CanUseItem(Player player) {
-			return player.InModBiome<Ashen_Biome>() && !NPC.AnyNPCs(ModContent.NPCType<Trenchmaker>()) && !NPC.AnyNPCs(ModContent.NPCType<Fearmaker>());
+			return player.InModBiome<Ashen_Biome>() && !NPC.AnyNPCs(ModContent.NPCType<Trenchmaker>());
 		}
 		public override bool? UseItem(Player player) {
 			if (player.whoAmI == Main.myPlayer) {
 				SoundEngine.PlaySound(SoundID.Roar, player.Center);
-				player.SpawnBossOn(OriginsModIntegrations.CheckAprilFools() ? ModContent.NPCType<Fearmaker>() : ModContent.NPCType<Trenchmaker>());
+				player.SpawnBossOn(ModContent.NPCType<Trenchmaker>());
 			}
 			return true;
 		}
