@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using PegasusLib;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -31,6 +32,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void FloorVisuals(Player player) {
 			player.AddBuff(BuffType<Murky_Sludge_Debuff>(), 2);
+			MathUtils.LinearSmoothing(ref player.gfxOffY, 4, 2);
 		}
 		public override bool HasWalkDust() {
 			return Main.rand.NextBool(3, 25);

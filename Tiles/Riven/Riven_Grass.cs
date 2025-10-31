@@ -1,6 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Origins.Core;
 using Origins.Dev;
-using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
@@ -9,9 +8,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Riven {
 	public class Riven_Grass : ComplexFrameTile, IRivenTile {
-        public string[] Categories => [
-            WikiCategories.Grass
-        ];
         public override void SetStaticDefaults() {
 			TileID.Sets.Grass[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
@@ -32,6 +28,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(0, 100, 160));
 			DustType = Riven_Hive.DefaultTileDust;
+			Riven_Grass_Seeds.TileAssociations[TileID.Dirt] = Type;
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			yield return new TileMergeOverlay(merge + "Spug_Overlay", ModContent.TileType<Spug_Flesh>());
@@ -82,6 +79,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(0, 100, 160));
+			Riven_Grass_Seeds.TileAssociations[TileID.Mud] = Type;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
@@ -103,7 +101,9 @@ namespace Origins.Tiles.Riven {
 			yield return new TileMergeOverlay(merge + "Spug_Overlay", ModContent.TileType<Spug_Flesh>());
 		}
 	}
-	public class Riven_Grass_Seeds : ModItem {
+	[ReinitializeDuringResizeArrays]
+	public class Riven_Grass_Seeds : ModItem, ICustomPlaceTileItem {
+		public static int[] TileAssociations = TileID.Sets.Factory.CreateIntSet(-1);
 		public override void SetStaticDefaults() {
 			ItemID.Sets.GrassSeeds[Type] = true;
 			Item.ResearchUnlockCount = 25;
@@ -112,21 +112,8 @@ namespace Origins.Tiles.Riven {
 			Item.CloneDefaults(ItemID.CrimsonSeeds);
 			Item.placeStyle = ModContent.TileType<Riven_Grass>();
 		}
-		public override bool ConsumeItem(Player player) {
-			ref ushort tileType = ref Main.tile[Player.tileTargetX, Player.tileTargetY].TileType;
-			switch (tileType) {
-				case TileID.CrimsonGrass:
-				tileType = (ushort)ModContent.TileType<Riven_Grass>();
-				break;
-				case TileID.CrimsonJungleGrass:
-				tileType = (ushort)ModContent.TileType<Riven_Jungle_Grass>();
-				break;
-				default:
-				return false;
-			}
-			WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY);
-			if (Main.netMode != NetmodeID.SinglePlayer) NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 1, Player.tileTargetX, Player.tileTargetY, tileType, 0);
-			return true;
+		public void PlaceTile(On_Player.orig_PlaceThing_Tiles orig, bool inRange) {
+			if (inRange) CustomPlaceTileItem.PlantSeedsAtCursor(TileAssociations);
 		}
 	}
 }

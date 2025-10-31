@@ -1,4 +1,6 @@
+using Origins.Core;
 using Origins.Dev;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -8,9 +10,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Ashen {
 	public class Ashen_Grass : OriginTile, IAshenTile {
-		public string[] Categories => [
-			WikiCategories.Grass
-		];
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)ModContent.TileType<Ashen_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)ModContent.TileType<Ashen_Foliage>(), 0, 6));
@@ -29,6 +28,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(FromHexRGB(0x5a4e6d));
 			DustType = DustID.Demonite;
+			Ashen_Grass_Seeds.TileAssociations[TileID.Dirt] = Type;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
@@ -65,6 +65,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(FromHexRGB(0x5a4e6d));
 			DustType = DustID.Demonite;
+			Ashen_Grass_Seeds.TileAssociations[TileID.Mud] = Type;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) Framing.GetTileSafely(i, j).TileType = TileID.Mud;
@@ -80,9 +81,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Ashen_Murky_Sludge_Grass : OriginTile, IAshenTile {
-		public string[] Categories => [
-			WikiCategories.Grass
-		];
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)ModContent.TileType<Ashen_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)ModContent.TileType<Ashen_Foliage>(), 0, 6));
@@ -98,6 +96,7 @@ namespace Origins.Tiles.Ashen {
 			AddMapEntry(FromHexRGB(0x5a4e6d));
 			DustType = DustID.Demonite;
 			HitSound = SoundID.NPCHit18;
+			Ashen_Grass_Seeds.TileAssociations[ModContent.TileType<Murky_Sludge>()] = Type;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
@@ -115,6 +114,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void FloorVisuals(Player player) {
 			player.AddBuff(ModContent.BuffType<Murky_Sludge_Debuff>(), 2);
+			MathUtils.LinearSmoothing(ref player.gfxOffY, 4, 2);
 		}
 		public override bool HasWalkDust() {
 			return Main.rand.NextBool(3, 25);
@@ -124,7 +124,9 @@ namespace Origins.Tiles.Ashen {
 			color = Main.rand.NextBool() ? FromHexRGB(0x5a4e6d) : FromHexRGB(0x2c212a);
 		}
 	}
-	public class Ashen_Grass_Seeds : ModItem {
+	[ReinitializeDuringResizeArrays]
+	public class Ashen_Grass_Seeds : ModItem, ICustomPlaceTileItem {
+		public static int[] TileAssociations = TileID.Sets.Factory.CreateIntSet(-1);
 		public override void SetStaticDefaults() {
 			ItemID.Sets.GrassSeeds[Type] = true;
 			Item.ResearchUnlockCount = 25;
@@ -142,8 +144,6 @@ namespace Origins.Tiles.Ashen {
 			Player player = Main.LocalPlayer;
 			if (player.HeldItem.type == ModContent.ItemType<Ashen_Grass_Seeds>()) {
 				List<Tuple<int, int>> _targets = [];
-				int tileTargetX = Player.tileTargetX;
-				int tileTargetY = Player.tileTargetY;
 				int tileRangeX = Player.tileRangeX;
 				int tileRangeY = Player.tileRangeY;
 				int tileBoost = player.HeldItem.tileBoost;
@@ -190,24 +190,8 @@ namespace Origins.Tiles.Ashen {
 			}
 			orig(providedInfo, ref focusedX, ref focusedY);
 		}
-
-		public override bool? UseItem(Player player) {
-			if (Main.tile[Player.tileTargetX, Player.tileTargetY].TileType == ModContent.TileType<Murky_Sludge>()) return true;
-			return null;
-		}
-		public override bool ConsumeItem(Player player) {
-			ref ushort tileType = ref Main.tile[Player.tileTargetX, Player.tileTargetY].TileType;
-			switch (tileType) {
-				case TileID.CorruptGrass:
-				tileType = (ushort)ModContent.TileType<Ashen_Grass>();
-				break;
-				case TileID.CorruptJungleGrass:
-				tileType = (ushort)ModContent.TileType<Ashen_Jungle_Grass>();
-				break;
-			}
-			if (tileType == ModContent.TileType<Murky_Sludge>()) tileType = (ushort)ModContent.TileType<Ashen_Murky_Sludge_Grass>();
-			if (Main.netMode != NetmodeID.SinglePlayer) NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 1, Player.tileTargetX, Player.tileTargetY, tileType, 0);
-			return true;
+		public void PlaceTile(On_Player.orig_PlaceThing_Tiles orig, bool inRange) {
+			if (inRange) CustomPlaceTileItem.PlantSeedsAtCursor(TileAssociations);
 		}
 	}
 }

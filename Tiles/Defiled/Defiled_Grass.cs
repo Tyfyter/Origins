@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Core;
 using Origins.Dev;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
@@ -9,9 +10,6 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Grass : OriginTile, IDefiledTile {
-		public string[] Categories => [
-			WikiCategories.Grass
-		];
 		public override void SetStaticDefaults() {
 			TileID.Sets.Grass[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
@@ -27,7 +25,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(200, 200, 200));
 			//SetModTree(Defiled_Tree.Instance);
-			AddDefiledTile();
+			Defiled_Grass_Seeds.TileAssociations[TileID.Dirt] = Type;
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
@@ -101,7 +99,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(180, 180, 180));
 			//SetModTree(Defiled_Tree.Instance);
-			AddDefiledTile();
+			Defiled_Grass_Seeds.TileAssociations[TileID.Mud] = Type;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
@@ -142,26 +140,19 @@ namespace Origins.Tiles.Defiled {
 			}
 		}
 	}
-	public class Defiled_Grass_Seeds : ModItem {
+	[ReinitializeDuringResizeArrays]
+	public class Defiled_Grass_Seeds : ModItem, ICustomPlaceTileItem {
+		public static int[] TileAssociations = TileID.Sets.Factory.CreateIntSet(-1);
 		public override void SetStaticDefaults() {
 			ItemID.Sets.GrassSeeds[Type] = true;
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CorruptSeeds);
+			Item.createTile = ModContent.TileType<Defiled_Grass>();
 		}
-		public override bool ConsumeItem(Player player) {
-			ref ushort tileType = ref Main.tile[Player.tileTargetX, Player.tileTargetY].TileType;
-			switch (tileType) {
-				case TileID.CorruptGrass:
-				tileType = (ushort)ModContent.TileType<Defiled_Grass>();
-				break;
-				case TileID.CorruptJungleGrass:
-				tileType = (ushort)ModContent.TileType<Defiled_Jungle_Grass>();
-				break;
-			}
-			if (Main.netMode != NetmodeID.SinglePlayer) NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 1, Player.tileTargetX, Player.tileTargetY, tileType, 0);
-			return true;
+		public void PlaceTile(On_Player.orig_PlaceThing_Tiles orig, bool inRange) {
+			if (inRange) CustomPlaceTileItem.PlantSeedsAtCursor(TileAssociations);
 		}
 	}
 }

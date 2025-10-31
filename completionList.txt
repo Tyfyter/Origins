@@ -1219,7 +1219,7 @@ TILES:
 (^) Lost Ore
 (^) Marrowick
 (^) Mildew Block
-(@2, ^3) Murky Sludge !!!
+(☻) Murky Sludge !!!
 (X) Nova Brick
 (X) Nova Fragment Block
 (^) Peat Moss Block
