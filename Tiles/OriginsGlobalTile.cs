@@ -1,13 +1,11 @@
-﻿using Humanizer;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Consumables;
 using Origins.Tiles.Ashen;
-using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -142,6 +140,19 @@ namespace Origins.Tiles {
 			}
 		}
 		public override void FloorVisuals(int type, Player player) {
+		}
+		public override void ReplaceTile(int i, int j, int type, int targetType, int targetStyle) {
+			if (targetType == ModContent.TileType<Small_Storage_Container>()) {
+				int randomStyle = Main.rand.Next(3);
+				TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+				TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+				for (int x = 0; x < data.Width; x++) {
+					for (int y = 0; y < data.Height; y++) {
+						Tile tile = Main.tile[left + x, top + y];
+						tile.TileFrameX = (short)((x + randomStyle * 2) * 18);
+					}
+				}
+			}
 		}
 	}
 }

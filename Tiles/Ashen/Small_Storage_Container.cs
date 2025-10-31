@@ -9,8 +9,14 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Small_Storage_Container : ModChest {
+		TileItem item;
 		public override void Load() {
-			Mod.AddContent(new TileItem(this));
+			Mod.AddContent(item = new(this));
+			On_WorldGen.WouldTileReplacementWork += On_WorldGen_WouldTileReplacementWork;
+		}
+		bool On_WorldGen_WouldTileReplacementWork(On_WorldGen.orig_WouldTileReplacementWork orig, ushort attemptingToReplaceWith, int x, int y) {
+			if (attemptingToReplaceWith == Type && Main.tile[x, y].TileType == attemptingToReplaceWith) return false;
+			return orig(attemptingToReplaceWith, x, y);
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -22,6 +28,7 @@ namespace Origins.Tiles.Ashen {
 			}
 			AdjTiles = [TileID.Containers];
 			DustType = Ashen_Biome.DefaultTileDust;
+			RegisterItemDrop(item.Type);
 		}
 		public override void ModifyTileData() => TileObjectData.newTile.RandomStyleRange = 3;
 		public override bool IsLockedChest(int i, int j) => false;
