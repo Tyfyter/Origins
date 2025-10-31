@@ -102,12 +102,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 				case 1:
 				if (ChargeLevel > 0) Projectile.Kill();
-				Projectile.velocity.X += Math.Sign(player.Center.X - Projectile.Center.X);
+				Projectile.velocity += (player.Center - Projectile.Center).Normalized(out _);
+				Projectile.velocity *= 0.97f;
 				if (Projectile.Hitbox.Intersects(player.Hitbox)) Projectile.active = false;
+				if (++Projectile.localAI[2] >= 60 * 2) Projectile.Kill();
 				return base.PreAI();
 
 				default:
-				if (Projectile.velocity.WithinRange(default, 1) && (Projectile.Hitbox.Add(Vector2.UnitY * (1 + Projectile.height)) with { Height = 2 }).OverlapsAnyTiles(false)) {
+				if ((Projectile.IsLocallyOwned() && PlayerInput.Triggers.JustPressed.MouseRight) || (Projectile.velocity.WithinRange(default, 1) && (Projectile.Hitbox.Add(Vector2.UnitY * (1 + Projectile.height)) with { Height = 2 }).OverlapsAnyTiles(false))) {
 					Projectile.ai[0] = 1;
 					Projectile.netUpdate = true;
 				}
