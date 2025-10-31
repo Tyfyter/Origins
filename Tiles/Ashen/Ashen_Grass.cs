@@ -102,6 +102,7 @@ namespace Origins.Tiles.Ashen {
 			//TileLoader.RegisterConversion(Type, BiomeConversionID.Chlorophyte, ModContent.TileType<Murky_Sludge>());
 			Ashen_Grass_Seeds.TileAssociations[ModContent.TileType<Murky_Sludge>()] = Type;
 		}
+		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != ModContent.TileType<Murky_Sludge>();
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
 				Framing.GetTileSafely(i, j).TileType = (ushort)ModContent.TileType<Murky_Sludge>();
