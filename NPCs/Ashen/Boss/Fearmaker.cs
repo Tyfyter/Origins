@@ -36,7 +36,6 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.lifeMax = 600;
 			NPC.boss = false;
 			NPC.npcSlots = 10;
-			NPC.lifeMax = (int)(NPC.lifeMax / 1.5f);
 			//todo: make leg split values adapt to best kill the player they spawned on
 			legs = [
 				new(0, 0, ModContent.GetInstance<Fearmaker_Adaptation_Animation>()),
