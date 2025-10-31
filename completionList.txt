@@ -1142,7 +1142,7 @@ EXPLOSIVE WEAPONS:
 (X) Puffle
 (^) Rocodile
 (^) Self-Destruct
-(#2, ^2) Sharknade-o (water dusts on detonation)
+(☻) Sharknade-o (water dusts on detonation)
 (X) Supernova
 (X) The Heatseeker
 (X) The Rocketman
