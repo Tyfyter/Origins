@@ -48,13 +48,29 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return true;
 		}
 		public override void OnKill(int timeLeft) {
-			Projectile.position.X += Projectile.width / 2;
-			Projectile.position.Y += Projectile.height / 2;
-			Projectile.width = 96;
-			Projectile.height = 96;
-			Projectile.position.X -= Projectile.width / 2;
-			Projectile.position.Y -= Projectile.height / 2;
-			Projectile.Damage();
+			ExplosiveGlobalProjectile.DoExplosion(
+				Projectile,
+				96,
+				sound: SoundID.Item14,
+				fireDustAmount: 0,
+				smokeDustAmount: 0,
+				smokeGoreAmount: 0
+			);
+			for (int i = 0; i < 20; i++) {
+				Dust dust = Dust.NewDustDirect(
+					Projectile.position,
+					Projectile.width,
+					Projectile.height,
+					DustID.Water,
+					0f,
+					0f,
+					100,
+					default,
+					1.5f
+				);
+				dust.velocity *= 1.4f;
+				dust.velocity += (dust.position - Projectile.Center).Normalized(out _) * 4;
+			}
 
 			Projectile.SpawnProjectile(
 				Projectile.GetSource_Death(),
