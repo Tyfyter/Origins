@@ -534,4 +534,56 @@ namespace Origins.Tiles.MusicBoxes {
 			if (Main.tile[i, j].TileFrameX < 36) frameYOffset = 0;
 		}
 	}
+	public class Music_Box_AS : Music_Box, IGlowingModTile {
+		public override Color MapColor => FromHexRGB(0x460013);
+		public override int MusicSlot => Origins.Music.AshenScrapyard;
+		public override int DustType => Defiled_Wastelands.DefaultTileDust;
+		public override void Load() {
+			base.Load();
+			this.SetupGlowKeys();
+		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			if (!Main.dedServ) GlowTexture = Request<Texture2D>(Texture + "_Glow");
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (Main.tile[i, j].TileFrameX > 2 * 18) {
+				r = 1f;
+				g = 0.1f;
+				b = 0.05f;
+			}
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (tile.TileFrameX > 2 * 18) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f));
+		}
+	}
+	public class Music_Box_SS : Music_Box, IGlowingModTile {
+		public override Color MapColor => FromHexRGB(0x0A0606);
+		public override int MusicSlot => Origins.Music.SmogStorm;
+		public override int DustType => DustID.Asphalt;
+		public override void Load() {
+			base.Load();
+			this.SetupGlowKeys();
+		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			if (!Main.dedServ) GlowTexture = Request<Texture2D>(typeof(Music_Box_AS).GetDefaultTMLName() + "_Glow");
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (Main.tile[i, j].TileFrameX > 2 * 18) {
+				r = 0.05f;
+				g = 0.03f;
+				b = 0.00f;
+			}
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (tile.TileFrameX > 2 * 18) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f) * 0.5f);
+		}
+	}
 }
