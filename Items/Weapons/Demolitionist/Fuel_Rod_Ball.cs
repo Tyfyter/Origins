@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Projectiles;
+using Origins.Reflection;
 using System;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Golf;
@@ -157,12 +159,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 			);
 			if (!Projectile.IsLocallyOwned() || Projectile.ai[0] != 2) return;
 			Vector2 position = Projectile.position;
+
+			Color[] colors;
+			if (GolfHelper.PredictionLine is null) colors = new Color[2];
+			else colors = FancyGolfPredictionLineMethods._colors.GetValue(GolfHelper.PredictionLine);
+			Color[] oldColors = colors.ToArray();
 			try {
+				colors[0] = Color.Orange;
+				colors[1] = Color.OrangeRed;
 				GetShotVelocity(Main.LocalPlayer, out Projectile.position, out Vector2 impactVelocity, out float progress);
 				Projectile.position -= Projectile.Size * 0.5f;
 				GolfHelper.DrawPredictionLine(Projectile, impactVelocity, progress, 1);
 			} finally {
 				Projectile.position = position;
+				oldColors.CopyTo(colors, 0);
 			}
 		}
 	}
