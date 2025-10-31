@@ -6846,7 +6846,7 @@ Peppered_Moth_Item: {
 
 Ashen_Key: {
 	// DisplayName: "{§Ashen} Key"
-	// Tooltip: Unlocks a {§Ashen} Chest in the Dungeon
+	// Tooltip: Unlocks an {§Ashen} Chest in the Dungeon
 }
 
 Catwalk_Item: {

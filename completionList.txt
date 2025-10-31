@@ -1671,7 +1671,7 @@ CONSUMABLES:
 (^) Void Lock
 (^) White Water
 
-(#2, ^2) Ashen Key !!!
+(^) Ashen Key !!!
 (^) Brine Key
 (^) Defiled Key
 (^) Hell Key
