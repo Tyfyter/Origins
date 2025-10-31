@@ -8,7 +8,7 @@ namespace Origins.Items.Materials {
 	public abstract class Worn_Paper : ModItem, IJournalEntrySource {
 		public override string Texture => typeof(Worn_Paper).GetDefaultTMLName();
 		public string PaperName => Name.Replace("Worn_Paper_", "");
-		public override LocalizedText Tooltip => Language.GetText($"Mods.{Mod.Name}.Journal.{nameof(Worn_Paper)}.{PaperName}.Text");
+		public override LocalizedText Tooltip => LocalizedText.Empty;
 		public string EntryName => $"{Mod.Name}/{PaperName}";
 		public JournalEntry Entry { get; private set; }
 		public override void Load() {
