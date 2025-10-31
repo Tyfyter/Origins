@@ -1413,7 +1413,7 @@ TILES:
 (@, #, $2) Music Box (Abstract)
 (X) Music Box (Ashen Factory) !!!
 (X) Music Box (Ashen Mines) !!!
-(#, ^2) Music Box (Ashen Scrapyard) !!!
+(@) Music Box (Ashen Scrapyard) !!!
 (^) Music Box (Brine Pool)
 (^) Music Box (Defiled Caverns)
 (X) Music Box (Defiled Egregocide Route)
@@ -1425,7 +1425,7 @@ TILES:
 (X) Music Box (Repentance)
 (X) Music Box (Rivenran)
 (^) Music Box (Riven Hive)
-(#, ^2) Music Box (Smog Storm) !!! (same shape as AS music box, hence why sprites complete)
+(@) Music Box (Smog Storm) !!! (same shape as AS music box, hence why sprites complete)
 (^) Music Box (The Dive)
 (^) Otherworldly Music Box (Defiled Wastelands)
 
