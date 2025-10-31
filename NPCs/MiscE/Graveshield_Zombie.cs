@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
-using Origins.Dev;
-using Origins.Tiles.Other;
+﻿using Origins.Dev;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;

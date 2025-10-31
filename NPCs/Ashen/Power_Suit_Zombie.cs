@@ -16,12 +16,6 @@ namespace Origins.NPCs.Ashen {
 		public Rectangle DrawRect => new(0, 0, 34, 46);
 		public int AnimationFrames => 7;
 		public int FrameDuration => 3;
-		public override void Load() {
-			/*On_NPC.ScaleStats_ApplyExpertTweaks += (orig, self) => {
-				orig(self);
-				OriginsSets.NPCs.CustomExpertScaling.GetIfInRange(self.type)?.Invoke(self);
-			};*/
-		}
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 7;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;

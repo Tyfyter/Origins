@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.GameContent.Bestiary;
