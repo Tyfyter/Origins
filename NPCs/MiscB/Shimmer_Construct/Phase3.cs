@@ -657,6 +657,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
+			player.controlMount = false;
+			player.releaseMount = false;
 			if (player.mount?.Active == true) {
 				Mount mount = player.mount;
 				player.ClearBuff(mount._data.buff);

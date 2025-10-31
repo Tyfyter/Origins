@@ -140,7 +140,7 @@ namespace Origins.Projectiles {
 			}
 			if (projectile.friendly && projectile.TryGetOwner(out Player player) && player.OriginPlayer().weakShimmer) {
 				weakShimmer = true;
-				if (ProjectileID.Sets.FallingBlockTileItem[projectile.type].ItemType != ItemID.None) weakShimmer = false;
+				if ((ProjectileID.Sets.FallingBlockTileItem[projectile.type]?.ItemType ?? 0) != ItemID.None) weakShimmer = false;
 			}
 			if (source is EntitySource_ItemUse itemUseSource) {
 				if (itemSourceEffects.TryGetValue(itemUseSource.Item.type, out Action<OriginGlobalProj, Projectile, string[]> itemSourceEffect)) itemSourceEffect(this, projectile, contextArgs);
