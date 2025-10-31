@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System.Collections.Generic;
+using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,6 +7,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Limestone {
 	public class Limestone : OriginTile {
+		public List<(int, int)> blendMap = [];
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.SandBiome[Type] = 1;
@@ -15,10 +17,12 @@ namespace Origins.Tiles.Limestone {
 			//TileID.Sets.Conversion.Sandstone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			TileID.Sets.ChecksForMerge[Type] = true;
+			blendMap.AddRange([(Type, 1), (TileID.Sand, 2)]);
 			for (int i = 0; i < TileLoader.TileCount; i++) {
-				if (Main.tileMerge[i][TileID.Sand] || Main.tileMerge[i][TileID.HardenedSand] || Main.tileMerge[i][TileID.Sandstone]) {
+				if (Type != i && TileID.Sets.isDesertBiomeSand[i]) {
 					Main.tileMerge[Type][i] = true;
 					Main.tileMerge[i][Type] = true;
+					if (i != TileID.Sand) blendMap.Add((i, 1));
 				}
 			}
 			AddMapEntry(new Color(180, 172, 134));
@@ -26,7 +30,7 @@ namespace Origins.Tiles.Limestone {
 			HitSound = SoundID.Tink;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			TileExtenstions.DoFraming(i, j, resetFrame, map: [(Type, 1), (TileID.Sand, 2)], TileExtenstions.ExtraTileBlending);
+			TileExtenstions.DoFraming(i, j, resetFrame, map: blendMap.ToArray(), TileExtenstions.ExtraTileBlending);
 			return false;
 		}
 	}
