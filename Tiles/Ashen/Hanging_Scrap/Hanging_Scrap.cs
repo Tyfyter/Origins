@@ -1,15 +1,6 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
-using MonoMod.Cil;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
-using Origins.Items.Other.Consumables;
-using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
-using Origins.Items.Weapons.Ranged;
-using Origins.Reflection;
-using Origins.World;
-using PegasusLib;
-using PegasusLib.Graphics;
 using PegasusLib.Networking;
 using ReLogic.Content;
 using System;
@@ -18,16 +9,13 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
-using Terraria.GameContent.UI;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen.Hanging_Scrap {
 	public class No_Hanging_Scrap : HangingScrap {
@@ -36,39 +24,39 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 		public override Vector2 Origin => default;
 	}
 	public class Large_Scrap1 : HangingScrap {
-		public override int ScrapValue => 10;
+		public override int ScrapValue => Main.rand.Next(3, 10);
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap2 : HangingScrap {
-		public override int ScrapValue => 10;
+		public override int ScrapValue => Main.rand.Next(3, 10);
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap3 : HangingScrap {
-		public override int ScrapValue => 10;
+		public override int ScrapValue => Main.rand.Next(3, 10);
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap4 : HangingScrap {
-		public override int ScrapValue => 10;
+		public override int ScrapValue => Main.rand.Next(3, 10);
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap5 : HangingScrap {
-		public override int ScrapValue => 10;
+		public override int ScrapValue => Main.rand.Next(3, 10);
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap6 : HangingScrap {
-		public override int ScrapValue => 10;
+		public override int ScrapValue => Main.rand.Next(3, 10);
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Small_Scrap1 : HangingScrap {
-		public override int ScrapValue => 10;
+		public override int ScrapValue => Main.rand.Next(1, 5);
 		public override Vector2 Origin => new(16, 16);
 	}
 	public class Small_Scrap2 : HangingScrap {
-		public override int ScrapValue => 10;
+		public override int ScrapValue => Main.rand.Next(1, 5);
 		public override Vector2 Origin => new(16, 16);
 	}
 	public class Small_Scrap3 : HangingScrap {
-		public override int ScrapValue => 10;
+		public override int ScrapValue => Main.rand.Next(1, 5);
 		public override Vector2 Origin => new(16, 16);
 	}
 	[Autoload(false)]
@@ -100,6 +88,8 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 		public override void SetStaticDefaults() {
 			TileID.Sets.DoesntPlaceWithTileReplacement[Type] = true;
 			Main.tileNoFail[Type] = true;
+			MineResist = 2;
+			HitSound = SoundID.NPCHit42.WithPitch(1.5f).WithVolume(0.5f);
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) => false;
 	}

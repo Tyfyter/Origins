@@ -32,6 +32,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 1);
 			Item.UseSound = SoundID.Item1;
 			Item.channel = true;
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Item.shoot] <= 0;
