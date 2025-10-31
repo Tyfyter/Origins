@@ -645,7 +645,6 @@ namespace Origins.World.BiomeData {
 
 			AddTileConversion(TileType<Ashen_Grass>(), TileID.Grass);
 			AddTileConversion(TileType<Ashen_Jungle_Grass>(), TileID.JungleGrass);
-			AddTileConversion(TileType<Ashen_Murky_Sludge_Grass>(), TileType<Murky_Sludge>());
 			AddTileConversion(TileType<Tainted_Stone>(), TileID.Stone);
 			AddTileConversion(TileType<Sootsand>(), TileID.Sand);
 			AddTileConversion(TileType<Soot_Sandstone>(), TileID.Sandstone);

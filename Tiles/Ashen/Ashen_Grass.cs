@@ -96,6 +96,10 @@ namespace Origins.Tiles.Ashen {
 			AddMapEntry(FromHexRGB(0x5a4e6d));
 			DustType = DustID.Demonite;
 			HitSound = SoundID.NPCHit18;
+			// todo: uncomment in 2 days
+			//TileLoader.RegisterConversion(Type, BiomeConversionID.Purity, ModContent.TileType<Murky_Sludge>());
+			//TileLoader.RegisterConversion(Type, BiomeConversionID.PurificationPowder, ModContent.TileType<Murky_Sludge>());
+			//TileLoader.RegisterConversion(Type, BiomeConversionID.Chlorophyte, ModContent.TileType<Murky_Sludge>());
 			Ashen_Grass_Seeds.TileAssociations[ModContent.TileType<Murky_Sludge>()] = Type;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
