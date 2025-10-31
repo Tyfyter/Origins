@@ -24,39 +24,39 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 		public override Vector2 Origin => default;
 	}
 	public class Large_Scrap1 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(3, 10);
+		public override int ScrapValue => Main.rand.Next(1, 22);
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap2 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(3, 10);
+		public override int ScrapValue => 9;
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap3 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(3, 10);
+		public override int ScrapValue => Main.rand.Next(8, 10);
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap4 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(3, 10);
+		public override int ScrapValue => Main.rand.Next(5, 17);
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap5 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(3, 10);
+		public override int ScrapValue => Main.rand.Next(7, 11);
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Large_Scrap6 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(3, 10);
+		public override int ScrapValue => Main.rand.Next(5, 14);
 		public override Vector2 Origin => new(35, 57);
 	}
 	public class Small_Scrap1 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(1, 5);
+		public override int ScrapValue => Main.rand.Next(3, 7);
 		public override Vector2 Origin => new(16, 16);
 	}
 	public class Small_Scrap2 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(1, 5);
+		public override int ScrapValue => Main.rand.Next(1, 9);
 		public override Vector2 Origin => new(16, 16);
 	}
 	public class Small_Scrap3 : HangingScrap {
-		public override int ScrapValue => Main.rand.Next(1, 5);
+		public override int ScrapValue => 5;
 		public override Vector2 Origin => new(16, 16);
 	}
 	[Autoload(false)]

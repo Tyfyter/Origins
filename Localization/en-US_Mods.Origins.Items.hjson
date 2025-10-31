@@ -7211,7 +7211,13 @@ Fearmaker_Controller: {
 
 Fuel_Rod_Ball: {
 	DisplayName: Fuel Rod Ball
-	Tooltip: ""
+	Tooltip:
+		'''
+		<left> to throw
+		Hold <right> to excite the fuel for a more powerful detonation
+		Press <right> while active for it to return
+		Excited fuel rod balls will explode instead
+		'''
 }
 
 Large_Scrap1_Item: {
