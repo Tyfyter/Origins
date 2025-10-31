@@ -2388,8 +2388,8 @@ Tiles: {
 	// Industrial_Door_Open.MapEntry: Industrial Door
 	// Cargo_Elevator_Door.MapEntry: Cargo Elevator Door
 	// Cargo_Elevator_Door_Open.MapEntry: Cargo Elevator Door Open
-	// Music_Box_AS: Music Box A S
-	// Music_Box_SS: Music Box S S
+	// Music_Box_AS: Music Box ({§Ashen} Scrapyard)
+	// Music_Box_SS: Music Box (Smog Storm)
 }
 
 MapObject: {
