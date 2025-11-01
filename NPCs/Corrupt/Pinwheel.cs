@@ -28,7 +28,7 @@ namespace Origins.NPCs.Corrupt {
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			AIType = NPCID.GoblinScout;
-			NPC.lifeMax = 380;
+			NPC.lifeMax = 85;
 			NPC.defense = 15;
 			NPC.damage = 16;
 			NPC.width = 38;
