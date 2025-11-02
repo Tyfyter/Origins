@@ -188,7 +188,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Transistor_Item : ModItem, ISpecialTilePreviewItem {
-		public override string Texture => typeof(Transistor).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}

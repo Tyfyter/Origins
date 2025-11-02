@@ -55,6 +55,7 @@ namespace Origins.Items.Tools.Wiring {
 			Item.CloneDefaults(ItemID.WireKite);
 			Item.shoot = ModContent.ProjectileType<Mod_Wire_Channel>();
 			Item.channel = true;
+			Item.rare = ItemRarityID.Orange;
 		}
 		public override void UpdateInventory(Player player) {
 			player.InfoAccMechShowWires = true;

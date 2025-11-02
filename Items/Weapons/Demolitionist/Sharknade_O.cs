@@ -56,7 +56,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				smokeDustAmount: 0,
 				smokeGoreAmount: 0
 			);
-			for (int i = 0; i < 20; i++) {
+			for (int i = 0; i < 40; i++) {
 				Dust dust = Dust.NewDustDirect(
 					Projectile.position,
 					Projectile.width,

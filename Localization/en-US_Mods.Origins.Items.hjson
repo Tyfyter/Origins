@@ -7121,13 +7121,18 @@ Ashen_Wires: {
 }
 
 Ashen_Wrench: {
-	DisplayName: Brown Wrench
+	DisplayName: Screwdriver
 	Tooltip: ""
 }
 
 Ashen_Grand_Design: {
-	DisplayName: Ashen Grand Design
-	Tooltip: ""
+	DisplayName: The Enchiridion
+	Tooltip:
+		'''
+		Allows ultimate control over wires!
+		<right> while holding to edit wire settings
+		Can place Ashen Wire
+		'''
 }
 
 Generation_Station_Item: {
@@ -7165,7 +7170,7 @@ Industrial_Door_Item: {
 }
 
 Transistor_Item: {
-	DisplayName: Transistor Item
+	DisplayName: Transistor
 	Tooltip: ""
 }
 
@@ -7221,47 +7226,47 @@ Fuel_Rod_Ball: {
 }
 
 Large_Scrap1_Item: {
-	DisplayName: Large Scrap1 Item
+	DisplayName: Large Hanging Scrap
 	Tooltip: ""
 }
 
 Large_Scrap2_Item: {
-	DisplayName: Large Scrap2 Item
+	DisplayName: Large Hanging Scrap
 	Tooltip: ""
 }
 
 Large_Scrap3_Item: {
-	DisplayName: Large Scrap3 Item
+	DisplayName: Large Hanging Scrap
 	Tooltip: ""
 }
 
 Large_Scrap4_Item: {
-	DisplayName: Large Scrap4 Item
+	DisplayName: Large Hanging Scrap
 	Tooltip: ""
 }
 
 Large_Scrap5_Item: {
-	DisplayName: Large Scrap5 Item
+	DisplayName: Large Hanging Scrap
 	Tooltip: ""
 }
 
 Large_Scrap6_Item: {
-	DisplayName: Large Scrap6 Item
+	DisplayName: Large Hanging Scrap
 	Tooltip: ""
 }
 
 Small_Scrap1_Item: {
-	DisplayName: Small Scrap1 Item
+	DisplayName: Small Hanging Scrap
 	Tooltip: ""
 }
 
 Small_Scrap2_Item: {
-	DisplayName: Small Scrap2 Item
+	DisplayName: Small Hanging Scrap
 	Tooltip: ""
 }
 
 Small_Scrap3_Item: {
-	DisplayName: Small Scrap3 Item
+	DisplayName: Small Hanging Scrap
 	Tooltip: ""
 }
 

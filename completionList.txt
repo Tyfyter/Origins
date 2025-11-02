@@ -760,9 +760,11 @@ TOOLS:
 (^) Parasitic Manipulator
 (^) Piledriver
 (^) Rivenator
+(#, ^2) Screwdriver
 (^) Snatcher
 (^) Stabsmash
 (^) Strainer
+(#2, ^2) The Enchiridion (needs cool power source anim)
 
 (^) Acrid Drill
 (^) Acrid Hamaxe
@@ -770,7 +772,6 @@ TOOLS:
 (^) Acrid Pickaxe
 (X) Bleeding Obsidian Hamaxe
 (X) Bleeding Obsidian Pickaxe
-(X) Screwdriver
 
 (^) Impactaxe
 
@@ -1142,7 +1143,7 @@ EXPLOSIVE WEAPONS:
 (X) Puffle
 (^) Rocodile
 (^) Self-Destruct
-(☻) Sharknade-o (water dusts on detonation)
+(^) Sharknade-o
 (X) Supernova
 (X) The Heatseeker
 (X) The Rocketman
@@ -1243,7 +1244,7 @@ TILES:
 (X) Spug Flesh Brick
 (@4, #2) Tainted Stone !!! (temp sprite)
 (X) Tainted Stone Brick
-(@4, #2) Truss Block !!!
+(#2, ^2) Truss Block !!!
 (^) Type-I Fortified Steel Block
 (^) Type-II Fortified Steel Block
 (^) Type-III Fortified Steel Block
@@ -1315,10 +1316,11 @@ TILES:
 
 (@, ^3, ▼) Ashen Campfire !!!
 (@, ^3, ▼) Ashen Dungeon Chest !!!
+(^) Ashen Wire
 (X) Batholith Grindstone
 (X) Bilious Incense
 (^) Brine Dungeon Chest
-(#, ^2) Cargo Elevator Door !!!
+(#2, ^2) Cargo Elevator Door !!! (backend)
 (^) Cargo Elevator Door (Jammed)
 (^) Chambersite Gem Lock
 (^) Cleansing Station
@@ -1326,7 +1328,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(@2, #2) Industrial Door !!!
+(^) Industrial Door
 (X) Large Storage Container !!!
 (^) Laser Tag Console
 (#, ^2) Medium Storage Container !!!
@@ -1345,6 +1347,7 @@ TILES:
 (X) Rusty Locker !!!
 (#2, ^2) Small Storage Container !!!
 (#, ^5) Surveysprout Planter Box (tML #4061)
+(#2, ^2) Transistor !!! (needs obtain method)
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)
 (X) Wrycoral Planter Box

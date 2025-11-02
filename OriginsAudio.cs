@@ -34,7 +34,7 @@ namespace Origins {
 			public static int AshenMines = MusicID.OtherworldlyNight;
 			public static int AshenScrapyard = MusicID.OtherworldlyNight;
 			public static int SmogStorm = MusicID.Sandstorm;
-			public static int AshenBoss = MusicID.Boss5;
+			public static int AshenBoss = MusicID.Boss2;
 			public static int AncientAshen;
 
 			public static int TheDive;
