@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Cil;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -12,6 +13,9 @@ using Terraria.UI.Chat;
 
 namespace Origins {
 	public static class OriginsSets {
+		public static void Initialize() {
+			Tiles.Initialize();
+		}
 		[ReinitializeDuringResizeArrays]
 		public static class Items {
 			// not named because it controls a change to vanilla mechanics only present in TO, likely to be moved to PegasusLib
@@ -327,6 +331,27 @@ namespace Origins {
 			);
 			public static MultitileCollisionOffsetter[] MultitileCollisionOffset { get; } = TileID.Sets.Factory.CreateCustomSet<MultitileCollisionOffsetter>(null);
 			public static SlowdownPercent[] MinionSlowdown { get; } = TileID.Sets.Factory.CreateCustomSet<SlowdownPercent>(0);
+			public static bool[] DisableHoiking { get; } = TileID.Sets.Factory.CreateBoolSet(false);
+			internal static void Initialize() {
+				try {
+					IL_Collision.SlopeCollision += IL_Collision_SlopeCollision;
+				} catch (Exception e) {
+					if (Origins.LogLoadingILError(nameof(IL_Collision_SlopeCollision), e)) throw;
+				}
+			}
+			static void IL_Collision_SlopeCollision(ILContext il) {
+				ILCursor c = new(il);
+				int tile = -1;
+				ILLabel cont = default;
+				c.GotoNext(MoveType.After,
+					i => i.MatchLdloca(out tile),//IL_00f8: ldloca.s 20
+					i => i.MatchCall<Tile>("active"),//IL_00fa: call instance bool Terraria.Tile::active()
+					i => i.MatchBrfalse(out cont)//IL_00ff: brfalse IL_069c
+				);
+				c.EmitLdloca(tile);
+				c.EmitDelegate((in Tile tile) => DisableHoiking[tile.TileType] && tile.BottomSlope);
+				c.EmitBrtrue(cont);
+			}
 		}
 		public delegate void MultitileCollisionOffsetter(Tile tile, ref float y, ref int height);
 		[ReinitializeDuringResizeArrays]

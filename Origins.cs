@@ -259,6 +259,7 @@ namespace Origins {
 		}
 		public override void Load() {
 			AssimilationLoader.Load();
+			OriginsSets.Initialize();
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Riven", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Riven"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Dusk", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Dusk"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Defiled", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled"));
