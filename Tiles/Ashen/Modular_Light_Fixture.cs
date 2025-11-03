@@ -18,6 +18,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileNoAttach[Type] = true;
 			Main.tileBlockLight[Type] = false;
 			TileID.Sets.CanPlaceNextToNonSolidTile[Type] = true;
+			TileID.Sets.FramesOnKillWall[Type] = true;
 			//TileID.Sets.DontDrawTileSliced[Type] = true;
 
 			DustType = DustID.Smoke;
@@ -35,7 +36,12 @@ namespace Origins.Tiles.Ashen {
 			bool CheckTile(int x, int y) => Framing.GetTileSafely(i + x, j + y).TileIsType(Type);
 			bool CheckTileSolid(int x, int y) {
 				Tile tile = Framing.GetTileSafely(i + x, j + y);
-				return tile.HasTile && (Main.tileSolid[tile.TileType] || tile.TileType == Type);
+				return tile.HasTile && (Main.tileSolid[tile.TileType] || TileID.Sets.IsBeam[tile.TileType] || tile.TileType == Type);
+			}
+			bool CheckTileSolidDown() {
+				if (CheckTileSolid(0, 1)) return true;
+				Tile tile = Framing.GetTileSafely(i, j + 1);
+				return tile.HasTile && Main.tileSolidTop[tile.TileType];
 			}
 			short litMod = 0;
 			if (tile.TileFrameY >= 18 * 3) litMod = 18 * 3;
@@ -120,7 +126,7 @@ namespace Origins.Tiles.Ashen {
 				return false;
 			}
 			bool above = CheckTileSolid(0, -1);
-			bool below = CheckTileSolid(0, 1);
+			bool below = CheckTileSolidDown();
 			bool left = CheckTileSolid(-1, 0);
 			bool right = CheckTileSolid(1, 0);
 			if (above && below) {
@@ -135,6 +141,9 @@ namespace Origins.Tiles.Ashen {
 			} else if (left || right) {
 				tile.TileFrameX = 0;
 				tile.TileFrameY = 18;
+			} else if (tile.WallType != WallID.None) {
+				tile.TileFrameX = 0;
+				tile.TileFrameY = 0;
 			} else {
 				WorldGen.KillTile(i, j);
 			}
@@ -146,10 +155,15 @@ namespace Origins.Tiles.Ashen {
 			if (tile.TileFrameX == 0) {
 				bool CheckTileSolid(int x, int y) {
 					Tile tile = Framing.GetTileSafely(i + x, j + y);
-					return tile.HasTile && (Main.tileSolid[tile.TileType] || tile.TileType == Type);
+					return tile.HasTile && (Main.tileSolid[tile.TileType] || TileID.Sets.IsBeam[tile.TileType] || tile.TileType == Type);
+				}
+				bool CheckTileSolidDown() {
+					if (CheckTileSolid(0, 1)) return true;
+					Tile tile = Framing.GetTileSafely(i, j + 1);
+					return tile.HasTile && Main.tileSolidTop[tile.TileType];
 				}
 				if (tile.TileFrameY == 0) {
-					if (CheckTileSolid(0, 1)) {
+					if (CheckTileSolidDown()) {
 						drawData.tileSpriteEffect ^= SpriteEffects.FlipVertically;
 					}
 				} else {
