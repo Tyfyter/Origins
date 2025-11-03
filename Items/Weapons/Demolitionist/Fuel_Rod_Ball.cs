@@ -5,11 +5,13 @@ using System;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Golf;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Physics;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Fuel_Rod_Ball : ModItem {
@@ -26,6 +28,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 			Item.damage = 45;
+			Item.knockBack = 4;
 			Item.useStyle = ItemUseStyleID.HiddenAnimation;
 			Item.DamageType = DamageClasses.ThrownExplosive;
 			Item.shoot = ModContent.ProjectileType<Fuel_Rod_Ball_P>();
@@ -36,12 +39,36 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool CanUseItem(Player player) => player.ownedProjectileCounts[Item.shoot] <= 0;
+		public override void UseStyle(Player player, Rectangle heldItemFrame) {
+			if (player.channel && player.altFunctionUse != 0) return;
+			Player.CompositeArmStretchAmount front = Player.CompositeArmStretchAmount.None;
+			Player.CompositeArmStretchAmount back = Player.CompositeArmStretchAmount.None;
+			float animTime = player.itemAnimation / (float)player.itemAnimationMax;
+			if (animTime < 0.7f) {
+				front = Player.CompositeArmStretchAmount.Full;
+				back = Player.CompositeArmStretchAmount.ThreeQuarters;
+			} else if (animTime < 0.8f) {
+				front = Player.CompositeArmStretchAmount.ThreeQuarters;
+				back = Player.CompositeArmStretchAmount.Quarter;
+			} else if (animTime < 0.9f) {
+				front = Player.CompositeArmStretchAmount.Quarter;
+				back = Player.CompositeArmStretchAmount.None;
+			}
+			player.SetCompositeArmFront(true, front, player.itemRotation - MathHelper.PiOver2);
+			player.SetCompositeArmBack(true, back, player.itemRotation - MathHelper.PiOver2);
+		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			player.itemRotation = velocity.ToRotation();
+			NetMessage.SendData(MessageID.ShotAnimationAndSound, -1, -1, null, player.whoAmI);
+			return base.Shoot(player, source, position, velocity, type, damage, knockback);
+		}
 	}
 	public class Fuel_Rod_Ball_P : Golf_Ball_Projectile {
 		public override string Texture => typeof(Fuel_Rod_Ball).GetDefaultTMLName() + "_Outer";
 		AutoLoadingAsset<Texture2D> glowTexture = typeof(Fuel_Rod_Ball).GetDefaultTMLName() + "_Inner";
 		public int ChargeLevel => (int)(Projectile.ai[2] / (useTimeMax * 2));
 		int useTimeMax = 14;
+		float shotSpeedMult = 1;
 		Color GlowColor {
 			get {
 				switch (ChargeLevel) {
@@ -55,12 +82,22 @@ namespace Origins.Items.Weapons.Demolitionist {
 				return Color.Transparent;
 			}
 		}
-		static void GetShotVelocity(Player player, out Vector2 position, out Vector2 velocity, out float progress) {
+		void GetShotVelocity(Player player, out Vector2 position, out Vector2 velocity, out float progress) {
 			position = player.MountedCenter + Vector2.UnitX * player.direction * player.width * 0.5f;
 			velocity = (Main.MouseWorld - position).Normalized(out float dist);
 			progress = Utils.GetLerpValue(32, 320, dist, true);
-			velocity *= (4 + progress * 20f);
+			velocity *= (4 + progress * 20f) * shotSpeedMult;
 		}
+		public override void Load() {
+			On_GolfHelper.ContactListener.OnCollision += ContactListener_OnCollision;
+		}
+		static void ContactListener_OnCollision(On_GolfHelper.ContactListener.orig_OnCollision orig, GolfHelper.ContactListener self, PhysicsProperties properties, ref Vector2 position, ref Vector2 velocity, ref BallCollisionEvent collision) {
+			orig(self, properties, ref position, ref velocity, ref collision);
+			if (collision.Entity is Projectile proj && proj.ModProjectile is Fuel_Rod_Ball_P && !velocity.WithinRange(collision.Entity.oldVelocity, 2)) {
+				SoundEngine.PlaySound(SoundID.Item10.WithPitchVarience(1f), position);
+			}
+		}
+
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Projectile.width = 12;
@@ -76,6 +113,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.ai[0] = player.altFunctionUse;
 				useTimeMax = player.itemTimeMax;
 			}
+			shotSpeedMult = Projectile.velocity.Length() / 12f;
 		}
 		public override bool PreAI() {
 			Projectile.TryGetOwner(out Player player);
@@ -88,7 +126,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 						Projectile.ai[0] = 0;
 						Projectile.ai[1] = 0;
 						Projectile.netUpdate = true;
+						player.channel = false;
+						player.itemRotation = Projectile.velocity.ToRotation();
 						player.SetDummyItemTime(useTimeMax);
+						NetMessage.SendData(MessageID.ShotAnimationAndSound, -1, -1, null, player.whoAmI);
 						return false;
 					}
 					if ((Projectile.ai[1] + useTimeMax / 2) % (useTimeMax * 2) >= useTimeMax) {
@@ -97,8 +138,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 					} else {
 						player.SetCompositeArmBack(true, Player.CompositeArmStretchAmount.ThreeQuarters, player.direction * -1.2f);
 					}
-					if (!player.channel) Projectile.active = false;
-					player.SetDummyItemTime(useTimeMax);
+					if (player.channel) {
+						player.SetDummyItemTime(useTimeMax);
+					} else {
+						player.SetDummyItemTime(0);
+						Projectile.active = false;
+					}
 					Projectile.ai[2]++;
 					if (ChargeLevel > 3) Projectile.Kill();
 					return false;
