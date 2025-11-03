@@ -1244,7 +1244,7 @@ TILES:
 (X) Spug Flesh Brick
 (@4, #2) Tainted Stone !!! (temp sprite)
 (X) Tainted Stone Brick
-(#2, ^2) Truss Block !!!
+(☻) Truss Block !!!
 (^) Type-I Fortified Steel Block
 (^) Type-II Fortified Steel Block
 (^) Type-III Fortified Steel Block

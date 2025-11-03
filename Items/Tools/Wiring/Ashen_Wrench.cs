@@ -28,7 +28,6 @@ namespace Origins.Items.Tools.Wiring {
 		public IEnumerable<WireMode> Modes => WireModeLoader.GetSorted(WireMode.Sets.AshenWires);
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WireKite);
-			Item.color = Color.Chocolate;
 			Item.shoot = ModContent.ProjectileType<Mod_Wire_Channel>();
 			Item.channel = true;
 		}
