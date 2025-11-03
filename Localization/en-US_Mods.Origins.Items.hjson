@@ -7115,14 +7115,13 @@ Small_Storage_Container_Item: {
 	Tooltip: ""
 }
 
-Ashen_Wires: {
-	DisplayName: Ashen Wires
-	Tooltip: ""
-}
-
-Ashen_Wrench: {
+Screwdriver: {
 	DisplayName: Screwdriver
-	Tooltip: ""
+	Tooltip:
+		'''
+		<right> while holding to edit wire settings
+		Can place brown and black wires
+		'''
 }
 
 Ashen_Grand_Design: {
@@ -7131,7 +7130,7 @@ Ashen_Grand_Design: {
 		'''
 		Allows ultimate control over wires!
 		<right> while holding to edit wire settings
-		Can place Ashen Wire
+		Can place brown and black wires
 		'''
 }
 
