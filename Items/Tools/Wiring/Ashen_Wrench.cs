@@ -24,8 +24,7 @@ using Terraria.IO;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools.Wiring {
-	public class Ashen_Wrench : ModItem, IWireTool {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.YellowWrench;
+	public class Screwdriver : ModItem, IWireTool {
 		public IEnumerable<WireMode> Modes => WireModeLoader.GetSorted(WireMode.Sets.AshenWires);
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WireKite);
@@ -79,7 +78,7 @@ namespace Origins.Items.Tools.Wiring {
 		}
 		public override void AddRecipes() => CreateRecipe()
 			.AddIngredient(ItemID.WireKite)
-			.AddIngredient<Ashen_Wrench>()
+			.AddIngredient<Screwdriver>()
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 	}
