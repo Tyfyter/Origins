@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Dusts;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -67,6 +68,7 @@ namespace Origins.NPCs.Corrupt {
 			#region Movement
 			if (NPC.collideY) {
 				if (!wasCollideY || NPC.localAI[1] < bladeOffsetMax) {
+					NPC.netUpdate = true;
 					if (MathUtils.LinearSmoothing(ref NPC.localAI[1], bladeOffsetMax, acc / 4)) { // the value after "acc / " is the speed multiplier for burrowing the blade
 						wasCollideY = true;
 					} 
@@ -81,10 +83,8 @@ namespace Origins.NPCs.Corrupt {
 							Tile tile = Framing.GetTileSafely(pos.ToTileCoordinates());
 							if (tile.HasSolidTile() && Main.rand.NextBool(30)) Collision.HitTiles(tile.GetTilePosition().ToWorldCoordinates(), new(0, -2.5f), 0, 0);
 						}
-						NPC.netUpdate = true;
 						return false;
 					}
-					NPC.netUpdate = true;
 				}
 				if (!NPC.collideX) NPC.velocity.X += acc * NPC.direction;
 			} else {
@@ -103,6 +103,7 @@ namespace Origins.NPCs.Corrupt {
 				Tile tile = Framing.GetTileSafely((pos + Vector2.UnitY).ToTileCoordinates());
 
 				if (tile.HasSolidTile()) {
+					NPC.netUpdate = true;
 					int extra = 0;
 					Vector2 vel = new(0.6f * -NPC.velocity.X, -2.5f);
 					if (NPC.localAI[0]-- <= 0) {
@@ -116,7 +117,6 @@ namespace Origins.NPCs.Corrupt {
 						Projectile.NewProjectile(NPC.GetSource_FromAI(), pos, vel, type, dmg, 0);
 						NPC.localAI[0] = DigTime;
 					}
-					NPC.netUpdate = true;
 					if (Main.rand.NextBool(10) || extra > 0) {
 						vel.Y *= 5;
 						for (int i = 0; i < 1 + extra; i++) {
@@ -187,6 +187,11 @@ namespace Origins.NPCs.Corrupt {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(BaseProj);
 			Projectile.timeLeft = 60 * 3;
+		}
+		public override void AI() {
+			Color color = Hardmode ? Color.LimeGreen : Color.MediumPurple;
+			Lighting.AddLight(Projectile.Center, color.ToVector3() * 1.2f);
+			Dust.NewDustDirect(Projectile.TopLeft, Projectile.width, Projectile.height, ModContent.DustType<Flare_Dust>(), 0, -3, 0, color);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Flame, FlameTime);
