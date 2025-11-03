@@ -61,14 +61,16 @@ namespace Origins.NPCs.Corrupt {
 		}
 		public bool wasCollideY = false;
 		public override bool PreAI() {
-			float bladeOffsetMax = NPC.frame.Size().Y / 16;
+			float bladeOffsetMax = NPC.frame.Size().Y / 16; // how much of the blade goes into the ground
+			float bladeAllowedOut = bladeOffsetMax * 0.3f; // how deep the blade doesn't need to be in the ground before requiring to stop the burrow
 			float acc = 1.2f;
 			#region Movement
 			if (NPC.collideY) {
-				if (!wasCollideY && NPC.localAI[1] < bladeOffsetMax) {
+				if (!wasCollideY || NPC.localAI[1] < bladeOffsetMax) {
 					if (MathUtils.LinearSmoothing(ref NPC.localAI[1], bladeOffsetMax, acc / 4)) { // the value after "acc / " is the speed multiplier for burrowing the blade
 						wasCollideY = true;
-					} else {
+					} 
+					if (NPC.localAI[1] <= -bladeAllowedOut) {
 						NPC.rotation += ((acc * 3) / NPC.width) * NPC.direction;
 						if (!NPC.collideX) NPC.velocity.X *= 0.1f * NPC.direction;
 						int width = ((int)NPC.frame.Size().X) - 40;
@@ -86,8 +88,8 @@ namespace Origins.NPCs.Corrupt {
 				}
 				if (!NPC.collideX) NPC.velocity.X += acc * NPC.direction;
 			} else {
-				wasCollideY = false;
 				if (NPC.localAI[1] > -bladeOffsetMax) MathUtils.LinearSmoothing(ref NPC.localAI[1], -bladeOffsetMax, acc / 6); // the value after "acc / " is the speed multiplier for unburrowing the blade
+				wasCollideY = NPC.localAI[1] > -bladeAllowedOut;
 				NPC.netUpdate = true;
 			}
 			NPC.rotation += (1f / NPC.width) * NPC.velocity.X; // I love radians
