@@ -128,6 +128,18 @@ namespace Origins.Tiles.Ashen {
 					break;
 				}
 			}
+			if (tile.TileFrameY == 2 * 18) {
+				switch (tile.TileFrameX / 18) {
+					case 0:
+					case 3:
+					case 4: {
+						if (Framing.GetTileSafely(i, j - 1).TileIsType(Type)) {
+							tile.TileFrameY -= 18;
+						}
+						break;
+					}
+				}
+			}
 			return false;
 		}
 	}
