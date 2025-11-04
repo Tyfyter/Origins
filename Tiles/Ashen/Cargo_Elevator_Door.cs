@@ -164,14 +164,10 @@ namespace Origins.Tiles.Ashen {
 				TileObjectData data = TileObjectData.GetTileData(tile);
 				TileUtils.GetMultiTileTopLeft(pos.X, pos.Y, data, out int left, out int top);
 				if (pos.X == left && pos.Y == top) {
-					if (tile.TileType == open) {
-						Door_Animation animation = GetAnimation(pos);
+					Door_Animation animation = GetAnimation(pos);
+					if (tile.TileFrameY == Door_Animation.max_frame * data.Height * 18) {
 						animation.TargetOpen = true;
 						animation.frame = Door_Animation.max_frame;
-					} else if (tile.TileType == closed) {
-						Door_Animation animation = GetAnimation(pos);
-						animation.TargetOpen = false;
-						animation.frame = 0;
 					}
 				}
 			}
@@ -219,24 +215,54 @@ namespace Origins.Tiles.Ashen {
 							tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
 							if (tile.TileType.TrySet(Cargo_Elevator_Door.IsSolid(left + x, top + y) ? closed : open) && !TargetOpen) {
 								if (x < (data.Width + 1) / 2) leftClosing.Add(new(left + x, top + y));
-								else if (x > (data.Width + 1) / 2) rightClosing.Add(new(left + x, top + y));
+								if (x > (data.Width - 2) / 2) rightClosing.Add(new(left + x, top + y));
+								//if (leftClosing.Contains(new(left + x, top + y))) tile.TileColor = rightClosing.Contains(new(left + x, top + y)) ? PaintID.DeepPurplePaint : PaintID.DeepCyanPaint;
+								//else if (rightClosing.Contains(new(left + x, top + y))) tile.TileColor = PaintID.DeepRedPaint;
 							}
 						}
 					}
 				}
 				if (!TargetOpen && frame > 5 && !NetmodeActive.MultiplayerClient) {
+					ushort closed = (ushort)ModContent.TileType<Cargo_Elevator_Door>();
+					ushort open = (ushort)ModContent.TileType<Cargo_Elevator_Door_Open>();
 					Vector2? GetPushDirection(Rectangle hitbox) {
 						if (!CollisionExt.OverlapsAnyTiles(hitbox, out List<Point> positions)) return null;
-						return Vector2.UnitX * int.Sign(positions.Any(leftClosing.Contains).ToInt() - positions.Any(rightClosing.Contains).ToInt());
+						int left = int.Sign(positions.Any(leftClosing.Contains).ToInt());
+						int right = int.Sign(positions.Any(rightClosing.Contains).ToInt());
+						for (int i = 0; i < positions.Count; i++) {
+							Point pos = positions[i];
+							switch ((leftClosing.Contains(pos), rightClosing.Contains(pos))) {
+								case (true, true):
+								float diff = hitbox.Center().X - (pos.X * 16 + 8);
+								if (Math.Abs(diff) < 4) {
+									left = 1;
+									right = 1;
+								} else if (diff > 0) {
+									right = 1;
+								} else {
+									left = 1;
+								}
+								break;
+								case (true, false):
+								left = 1;
+								break;
+								case (false, true):
+								right = 1;
+								break;
+							}
+						}
+						if (left == 0 && right == 0) return null;
+						return Vector2.UnitX * (left - right);
 					}
 					foreach (Player player in Main.ActivePlayers) {
 						if (player.shimmering) continue;
-						if (GetPushDirection(player.Hitbox) is Vector2 push) {
+						int tryCount = 0;
+						while (++tryCount < 4 && GetPushDirection(player.Hitbox) is Vector2 push) {
 							if (push == default) {
 								if (frameCounter == 0) {
 									player.Hurt(
 										PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Crushed").SelectFrom(player.name).ToNetworkText()),
-										player.statLife / int.Max(frame - 10, 1),
+										player.statLife,
 										0,
 										cooldownCounter: -2,
 										dodgeable: false,
@@ -244,17 +270,20 @@ namespace Origins.Tiles.Ashen {
 										scalingArmorPenetration: 1
 									);
 								}
+								break;
 							}
 							player.position += push * 4;
 						}
 					}
 					foreach (NPC npc in Main.ActiveNPCs) {
 						if (npc.noTileCollide || npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) continue;
-						if (GetPushDirection(npc.Hitbox) is Vector2 push) {
+						int tryCount = 0;
+						while (++tryCount < 4 && GetPushDirection(npc.Hitbox) is Vector2 push) {
 							if (push == default) {
 								if (frameCounter == 0) {
-									npc.SimpleStrikeNPC(npc.life / int.Max(frame - 7, 1), 0, true, 18, noPlayerInteraction: true);
+									npc.SimpleStrikeNPC(npc.life, 0, true, 18, noPlayerInteraction: true);
 								}
+								break;
 							} else {
 								npc.position += push * 4;
 							}
