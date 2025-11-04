@@ -47,7 +47,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.addTile(Type);
 			DustType = Ashen_Biome.DefaultTileDust;
 			MineResist = 4;
-			RegisterItemDrop(Item.Type);
+			if (this is not Cargo_Elevator_Door_Open) RegisterItemDrop(Item.Type);
 		}
 		// TODO: implement
 		public static bool IsSolid(int i, int j) {
