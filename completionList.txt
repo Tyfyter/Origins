@@ -1237,7 +1237,7 @@ TILES:
 (^) Silica
 (^) Silicon Ore
 (^) Soot Sandstone
-(#2, ^2) Sootgrass !!! (significantly reduce growing speed)
+(☻) Sootgrass !!!
 (^) Sootsand
 (X) Space Goo
 (^) Spug Flesh
@@ -1320,7 +1320,7 @@ TILES:
 (X) Batholith Grindstone
 (X) Bilious Incense
 (^) Brine Dungeon Chest
-(#2, ^2) Cargo Elevator Door !!! (backend)
+(☻) Cargo Elevator Door !!!
 (^) Cargo Elevator Door (Jammed)
 (^) Chambersite Gem Lock
 (^) Cleansing Station

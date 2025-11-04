@@ -651,6 +651,12 @@ namespace Origins.World.BiomeData {
 			AddTileConversion(TileType<Hardened_Sootsand>(), TileID.HardenedSand);
 			AddTileConversion(TileType<Brown_Ice>(), TileID.IceBlock);
 
+			CreateGrassType(new(true, true),
+				(TileID.Dirt, TileType<Ashen_Grass>()),
+				(TileID.Mud, TileType<Ashen_Jungle_Grass>()),
+				(TileType<Murky_Sludge>(), TileType<Ashen_Murky_Sludge_Grass>())
+			);
+
 			BiomeFlesh = TileID.AncientGoldBrick;
 			BiomeFleshWall = WallID.AncientGoldBrickWall;
 
