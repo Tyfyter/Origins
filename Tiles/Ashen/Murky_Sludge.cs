@@ -1,4 +1,5 @@
 ﻿using PegasusLib;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,7 +33,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void FloorVisuals(Player player) {
 			player.AddBuff(BuffType<Murky_Sludge_Debuff>(), 2);
-			MathUtils.LinearSmoothing(ref player.gfxOffY, 4, 2);
+			if (player.gfxOffY < 4) MathUtils.LinearSmoothing(ref player.gfxOffY, 4, 4);
 		}
 		public override bool HasWalkDust() {
 			return Main.rand.NextBool(3, 25);
@@ -67,6 +68,7 @@ namespace Origins.Tiles.Ashen {
 		public override void Update(Player player, ref int buffIndex) {
 			OriginPlayer oP = player.OriginPlayer();
 			oP.moveSpeedMult *= 0.75f;
+			oP.murkySludge = true;
 			player.jump -= 8;
 			//if (!oP.collidingY) player.buffTime[buffIndex] = 1;
 		}

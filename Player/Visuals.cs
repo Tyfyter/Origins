@@ -140,6 +140,7 @@ namespace Origins {
 			oldGravDir = Player.gravDir;
 			if (forceFallthrough) Player.GoingDownWithGrapple = true;
 			forceFallthrough = false;
+			if (murkySludge) Player.accRunSpeed = Player.maxRunSpeed;
 			Player.runAcceleration *= moveSpeedMult;
 			Player.maxRunSpeed *= moveSpeedMult;
 			Player.accRunSpeed *= moveSpeedMult;
