@@ -764,7 +764,7 @@ TOOLS:
 (^) Snatcher
 (^) Stabsmash
 (^) Strainer
-(#2, ^2) The Enchiridion (needs cool power source anim)
+(#2, ^2) The Enchiridion (needs cool power source anim)?
 
 (^) Acrid Drill
 (^) Acrid Hamaxe
