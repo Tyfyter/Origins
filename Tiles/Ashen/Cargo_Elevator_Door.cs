@@ -114,6 +114,11 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			ModContent.GetInstance<Cargo_Elevator_Door_TE_System>().AddTileEntity(new(left, top));
+			for (int x = 0; x < data.Width; x++) {
+				for (int y = 0; y < data.Height; y++) {
+					WorldGen.SquareTileFrame(left + x, top + y);
+				}
+			}
 		}
 		public static bool Toggle(int i, int j, bool actuallyDo = true) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
