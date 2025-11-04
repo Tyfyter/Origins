@@ -330,13 +330,7 @@ namespace Origins.NPCs.Critters {
 			NPC.frameCounter += 0.75f;
 			NPC.frameCounter += NPC.velocity.LengthSquared() / 16;
 			NPC.spriteDirection = Math.Sign(NPC.velocity.X);
-			if (NPC.frameCounter >= 7) {
-				NPC.frameCounter = 0;
-				NPC.frame.Height = 48 / Main.npcFrameCount[NPC.type];
-				if ((NPC.frame.Y += NPC.frame.Height) / NPC.frame.Height >= Main.npcFrameCount[Type]) {
-					NPC.frame.Y = 0;
-				}
-			}
+			NPC.DoFrames(7);
 		}
 	}
 }

@@ -1547,7 +1547,7 @@ CRITTERS AND FISH:
 (^) Chambersite Squirrel
 (^) Cicada 3301
 (@, #2) Hyrax !!!
-(#2, ^2) Peppered Moth
+(☻) Peppered Moth
 
 (^) Bilemouth
 (^) Bobbit Worm
