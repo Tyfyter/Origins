@@ -30,6 +30,7 @@ namespace Origins.Tiles.Riven {
 			DustType = Riven_Hive.DefaultTileDust;
 			Riven_Grass_Seeds.TileAssociations[TileID.Dirt] = Type;
 		}
+		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != TileID.Dirt;
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			yield return new TileMergeOverlay(merge + "Spug_Overlay", ModContent.TileType<Spug_Flesh>());
 		}
@@ -81,6 +82,7 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(0, 100, 160));
 			Riven_Grass_Seeds.TileAssociations[TileID.Mud] = Type;
 		}
+		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != TileID.Mud;
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
 				Framing.GetTileSafely(i, j).TileType = TileID.Mud;
@@ -106,6 +108,7 @@ namespace Origins.Tiles.Riven {
 		public static int[] TileAssociations = TileID.Sets.Factory.CreateIntSet(-1);
 		public override void SetStaticDefaults() {
 			ItemID.Sets.GrassSeeds[Type] = true;
+			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {

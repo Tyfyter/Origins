@@ -28,6 +28,7 @@ namespace Origins.Tiles.Defiled {
 			Defiled_Grass_Seeds.TileAssociations[TileID.Dirt] = Type;
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
+		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != TileID.Dirt;
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && (!effectOnly || WorldGen.genRand.NextBool(3))) {
 				Framing.GetTileSafely(i, j).TileType = TileID.Dirt;
@@ -101,6 +102,7 @@ namespace Origins.Tiles.Defiled {
 			//SetModTree(Defiled_Tree.Instance);
 			Defiled_Grass_Seeds.TileAssociations[TileID.Mud] = Type;
 		}
+		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != TileID.Mud;
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
 				Framing.GetTileSafely(i, j).TileType = TileID.Mud;
@@ -145,6 +147,7 @@ namespace Origins.Tiles.Defiled {
 		public static int[] TileAssociations = TileID.Sets.Factory.CreateIntSet(-1);
 		public override void SetStaticDefaults() {
 			ItemID.Sets.GrassSeeds[Type] = true;
+			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
