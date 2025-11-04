@@ -75,7 +75,7 @@ namespace Origins.NPCs.Corrupt {
 					if (NPC.localAI[1] <= -bladeAllowedOut) {
 						NPC.rotation += ((acc * 3) / NPC.width) * NPC.direction;
 						if (!NPC.collideX) NPC.velocity.X *= 0.1f * NPC.direction;
-						int width = ((int)NPC.frame.Size().X) - 40;
+						int width = 60 - 40;
 						for (int i = -width; i <= width; i += width / 16) {
 							if (i % 4 != 0) continue;
 							Vector2 pos = NPC.Bottom;
