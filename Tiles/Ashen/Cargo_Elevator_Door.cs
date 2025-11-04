@@ -12,6 +12,7 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -77,6 +78,7 @@ namespace Origins.Tiles.Ashen {
 			g = 0.001f;
 			b = 0.001f;
 		}
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => !IsPowered(i, j);
 		public static bool IsPowered(int i, int j) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);

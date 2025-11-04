@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Graphics;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
@@ -33,6 +34,10 @@ namespace Origins.Tiles.Ashen {
 			MineResist = 2;
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
+		}
+		public override void ModifyFrameMerge(int i, int j, ref int up, ref int down, ref int left, ref int right, ref int upLeft, ref int upRight, ref int downLeft, ref int downRight) {
+			if (up == TileType<Cargo_Elevator_Door>() && Main.tile[i, j - 1].TileFrameX / 18 is > 2 and < 9) up = -1;
+			if (down == TileType<Cargo_Elevator_Door>() && Main.tile[i, j + 1].TileFrameX / 18 is > 2 and < 9) down = -1;
 		}
 		public static void DrawTilePattern(int i, int j, Texture2D patternTexture) {
 			Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
@@ -192,25 +197,29 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Fortified_Steel_Block2 : Fortified_Steel_Block1 {
 		AutoLoadingAsset<Texture2D> patternTexture = typeof(Fortified_Steel_Block2).GetDefaultTMLName() + "_BG";
+		CustomTilePaintLoader.CustomTileVariationKey paintKey;
 		public override Color MapColor => FromHexRGB(0x281a15);
+		public override void Load() => paintKey = CustomTilePaintLoader.CreateKey();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			MinPick = 100;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
-			DrawTilePattern(i, j, patternTexture);
+			DrawTilePattern(i, j, CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(paintKey, Main.tile[i, j].TileColor, patternTexture));
 			return base.PreDraw(i, j, spriteBatch);
 		}
 	}
 	public class Fortified_Steel_Block3 : Fortified_Steel_Block1 {
 		AutoLoadingAsset<Texture2D> patternTexture = typeof(Fortified_Steel_Block3).GetDefaultTMLName() + "_BG";
+		CustomTilePaintLoader.CustomTileVariationKey paintKey;
 		public override Color MapColor => FromHexRGB(0x30131c);
+		public override void Load() => paintKey = CustomTilePaintLoader.CreateKey();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			MinPick = 210;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
-			DrawTilePattern(i, j, patternTexture);
+			DrawTilePattern(i, j, CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(paintKey, Main.tile[i, j].TileColor, patternTexture));
 			return base.PreDraw(i, j, spriteBatch);
 		}
 	}

@@ -135,11 +135,12 @@ namespace Origins.Tiles {
 			protected abstract string TexturePath { get; }
 			protected Asset<Texture2D> Texture { get; private set; }
 			protected TreePaintingSettings settings;
-			protected CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; private set; }
+			protected CustomTilePaintLoader.CustomTileVariationKey PaintKey { get; private set; }
 			public void SetupTexture() {
 				Texture = ModContent.Request<Texture2D>(TexturePath);
-				GlowPaintKey = CustomTilePaintLoader.CreateKey();
+				PaintKey = CustomTilePaintLoader.CreateKey();
 			}
+			public Texture2D GetPaintedTexture(int paintColor) => CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(PaintKey, paintColor, Texture);
 			public virtual void SetupOther(int type) { }
 			public abstract void Draw(int i, int j, Tile tile, SpriteBatch spriteBatch);
 		}
@@ -192,7 +193,7 @@ namespace Origins.Tiles {
 						}
 						Vector2 position = new Vector2(i * 16f, j * 16f) + offset - Main.screenPosition;
 						Color color = GetColor(Lighting.GetColor(i, j));
-						Texture2D texture = CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(GlowPaintKey, blendTile.TileColor, Texture);
+						Texture2D texture = GetPaintedTexture(blendTile.TileColor);
 						spriteBatch.Draw(texture, position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
 					}
 				}
@@ -235,26 +236,27 @@ namespace Origins.Tiles {
 				}
 				Lighting.GetCornerColors(i, j, out VertexColors vertices);
 				Vector4 destination = new(pos, 16, 16);
+				Texture2D texture = GetPaintedTexture(tile.TileColor);
 				if (upLeft) Main.tileBatch.Draw(
-					Texture.Value,
+					texture,
 					destination,
 					new Rectangle(0, 0, 16, 16),
 					vertices
 				);
 				if (upRight) Main.tileBatch.Draw(
-					Texture.Value,
+					texture,
 					destination,
 					new Rectangle(18, 0, 16, 16),
 					vertices
 				);
 				if (downLeft) Main.tileBatch.Draw(
-					Texture.Value,
+					texture,
 					destination,
 					new Rectangle(0, 18, 16, 16),
 					vertices
 				);
 				if (downRight) Main.tileBatch.Draw(
-					Texture.Value,
+					texture,
 					destination,
 					new Rectangle(18, 18, 16, 16),
 					vertices
