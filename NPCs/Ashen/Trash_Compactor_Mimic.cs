@@ -11,14 +11,16 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.OriginsModIntegrations;
 
 namespace Origins.NPCs.Ashen {
-	public class Trash_Compactor_Mimic : ModNPC, IWikiNPC, ICustomWikiStat {
+	public class Trash_Compactor_Mimic : ModNPC, IAshenEnemy, IWikiNPC, ICustomWikiStat {
 		public override string Texture => typeof(Defiled_Mimic).GetDefaultTMLName();
 		public Rectangle DrawRect => new(0, 0, 60, 50);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		public override void Load() => this.AddBanner(25);
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 14;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;

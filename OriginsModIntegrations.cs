@@ -989,12 +989,12 @@ namespace Origins {
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosRecipes() {
 			#region Keys
-			/*Recipe.Create(ItemType<Ashen_Key>())
+			Recipe.Create(ItemType<Ashen_Key>())
 				.AddRecipeGroup("Origins:AnyAshenBanner", 10)
 				.AddCondition(Condition.Hardmode)
 				.AddTile(TileID.Solidifier)
 				.DisableDecraft()
-				.Register();*/
+				.Register();
 			Recipe.Create(ItemType<Brine_Key>())
 			   .AddRecipeGroup("Origins:AnyBrineBanner", 10)
 			   .AddCondition(Condition.Hardmode)
@@ -1039,6 +1039,26 @@ namespace Origins {
 				.DisableDecraft()
 				.Register();
 			#endregion
+			#region Misc
+			Recipe.Create(ItemID.MeatGrinder)
+				.AddRecipeGroup("Origins:AnyAshenBanner", 5)
+				.AddCondition(Condition.Hardmode)
+				.AddTile(TileID.Solidifier)
+				.DisableDecraft()
+				.Register();
+			Recipe.Create(ItemID.MeatGrinder)
+				.AddRecipeGroup("Origins:AnyDefiledBanner", 5)
+				.AddCondition(Condition.Hardmode)
+				.AddTile(TileID.Solidifier)
+				.DisableDecraft()
+				.Register();
+			Recipe.Create(ItemID.MeatGrinder)
+				.AddRecipeGroup("Origins:AnyRivenBanner", 5)
+				.AddCondition(Condition.Hardmode)
+				.AddTile(TileID.Solidifier)
+				.DisableDecraft()
+				.Register();
+			#endregion Misc
 			#region Crate Recipes
 			static void CrateRecipe(int result, int resultAmount = 1, int crate = 0, int crateHard = 0, int crateAmount = 1, int extraItem = 0, params Condition[] conditions) {
 				if (crate > 0) {
@@ -1123,15 +1143,14 @@ namespace Origins {
 
 			SetFargosStaticDefaults();
 		}
+		public static void AddItemsToGroup(RecipeGroup group, params bool[] items) {
+			for (int i = 0; i < items.Length; i++) {
+				if (items[i]) group.ValidItems.Add(i);
+			}
+		}
+		public static RecipeGroup GetGroup(string key) => RecipeGroup.recipeGroups[RecipeGroup.recipeGroupIDs[key]];
 		[JITWhenModsEnabled("MagicStorage")]
 		static void AddMagicStorageGroups() {
-			static void AddItemsToGroup(RecipeGroup group, params bool[] items) {
-				for (int i = 0; i < items.Length; i++) {
-					if (items[i]) group.ValidItems.Add(i);
-				}
-			}
-			static RecipeGroup GetGroup(string key) => RecipeGroup.recipeGroups[RecipeGroup.recipeGroupIDs[key]];
-
 			AddItemsToGroup(GetGroup("MagicStorage:AnySnowBiomeBlock"), ModCompatSets.AnySnowBiomeTiles);
 			AddItemsToGroup(GetGroup("MagicStorage:AnyDemonAltar"), ModCompatSets.AnyFakeDemonAltars);
 			AddItemsToGroup(GetGroup("MagicStorage:AnyChest"), ModCompatSets.AnyChests);
@@ -1141,10 +1160,20 @@ namespace Origins {
 			AddItemsToGroup(GetGroup("MagicStorage:AnyBookcase"), ModCompatSets.AnyBookcases);
 			AddItemsToGroup(GetGroup("MagicStorage:AnyCampfire"), ModCompatSets.AnyCampfires);
 		}
+		public interface IAshenEnemy { } // move into an ashen global npc file when made
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosGroups() {
-			static int GetBanner(int npc) => Item.NPCtoBanner(npc);
-			List<int> brine = [];
+			static int GetBanner(int npc, bool item = false) {
+				int banner = Item.NPCtoBanner(npc);
+				if (item) return Item.BannerToItem(banner);
+				else return banner;
+			}
+			int[] bannedBanners = {
+				GetBanner(NPCID.PigronHallow),
+				GetBanner(NPCID.DesertGhoul),
+				GetBanner(NPCID.Zombie)
+			};
+			/*List<int> brine = [];
 			List<int> ashen = [];
 			int[] ashenBiomes = {
 				GetInstance<Ashen_Biome>().Type,
@@ -1172,29 +1201,99 @@ namespace Origins {
 				GetInstance<Riven_Hive_Ice_Biome>().Type,
 				GetInstance<Riven_Hive_Ocean>().Type
 			};
-			int[] bannedBanners = {
-				GetBanner(NPCID.PigronHallow),
-				GetBanner(NPCID.DesertGhoul),
-				GetBanner(NPCID.Zombie)
-			};
+			bool FromBiomes(int type, int[] biomes, List<int> biomeList) {
+				for (int i = 0; i < biomes.Length; i++) {
+					if (FromBiome(type, biomes[i], biomeList)) return true;
+				}
+				return false;
+			}
+			bool FromBiome(int type, int biome, List<int> biomeList) {
+				if (GetBanner(type) !> 0) return false;
+				if (bannedBanners.Contains(GetBanner(type))) return false;
+
+				NPC npc = ContentSamples.NpcsByNetId[type];
+				if (npc?.ModNPC is null) return false;
+				return npc.ModNPC.SpawnModBiomes.Contains(biome) && !biomeList.Contains(GetBanner(type, true));
+			}
+			bool FromTBiome<TBiome>(int type, List<int> biomeList) where TBiome : ModBiome => FromBiome(type, GetInstance<TBiome>().Type, biomeList);*/
+
+			RecipeGroup brineGroup = new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Brine_Pool.DisplayName")), [ItemID.IronPickaxe]);
+			RecipeGroup ashenGroup = new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Ashen_Biome.DisplayName")), [ItemID.IronPickaxe]);
+			RecipeGroup defiledGroup = new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Defiled_Wastelands.DisplayName")), [ItemID.IronPickaxe]);
+			RecipeGroup rivenGroup = new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Riven_Hive.DisplayName")), [ItemID.IronPickaxe]);
+
+			bool AllowedBanner(int type, RecipeGroup group) {
+				int banner = GetBanner(type);
+				bool ban = banner > 0;
+				if (!(GetBanner(type) > 0)) return false;
+				if (bannedBanners.Contains(GetBanner(type))) return false;
+				return !group.ValidItems.Contains(GetBanner(type, true));
+			}
 			for (int i = 0; i < NPCID.Sets.AllNPCs.Length; i++) {
 				NPC npc = ContentSamples.NpcsByNetId[i];
-				if (npc?.ModNPC is not null) {
-					if (npc.ModNPC.SpawnModBiomes.Contains(GetInstance<Brine_Pool>().Type) && GetBanner(i) > 0 && !brine.Contains(Item.BannerToItem(GetBanner(i))))
-						brine.Add(Item.BannerToItem(GetBanner(i)));
-					if (npc.ModNPC.SpawnModBiomes.Contains(ashenBiomes) && GetBanner(i) > 0 && !bannedBanners.Contains(GetBanner(i)) && !ashen.Contains(Item.BannerToItem(GetBanner(i))))
-						ashen.Add(Item.BannerToItem(GetBanner(i)));
-					if (npc.ModNPC.SpawnModBiomes.Contains(defiledBiomes) && GetBanner(i) > 0 && !bannedBanners.Contains(GetBanner(i)) && !defiled.Contains(Item.BannerToItem(GetBanner(i))))
-						defiled.Add(Item.BannerToItem(GetBanner(i)));
-					if (npc.ModNPC.SpawnModBiomes.Contains(rivenBiomes) && GetBanner(i) > 0 && !bannedBanners.Contains(GetBanner(i)) && !riven.Contains(Item.BannerToItem(GetBanner(i))))
-						riven.Add(Item.BannerToItem(GetBanner(i)));
+
+				switch (npc?.ModNPC) {
+					case IBrinePoolNPC: {
+						if (AllowedBanner(i, brineGroup))
+							brineGroup.ValidItems.Add(GetBanner(i, true));
+						break;
+					}
+					case IAshenEnemy: {
+						if (AllowedBanner(i, ashenGroup))
+							ashenGroup.ValidItems.Add(GetBanner(i, true));
+						break;
+					}
+					case IDefiledEnemy: {
+						if (AllowedBanner(i, defiledGroup))
+							defiledGroup.ValidItems.Add(GetBanner(i, true));
+						break;
+					}
+					case IRivenEnemy: {
+						if (AllowedBanner(i, rivenGroup))
+							rivenGroup.ValidItems.Add(GetBanner(i, true));
+						break;
+					}
+				}
+				/*if (FromTBiome<Brine_Pool>(i, brine))
+					brine.Add(GetBanner(i, true));
+				if (FromBiomes(i, ashenBiomes, ashen))
+					ashen.Add(GetBanner(i, true));
+				if (FromBiomes(i, defiledBiomes, defiled))
+					defiled.Add(GetBanner(i, true));
+				if (FromBiomes(i, rivenBiomes, riven))
+					riven.Add(GetBanner(i, true));*/
+			}
+			brineGroup.ValidItems.Remove(ItemID.IronPickaxe);
+			ashenGroup.ValidItems.Remove(ItemID.IronPickaxe);
+			defiledGroup.ValidItems.Remove(ItemID.IronPickaxe);
+			rivenGroup.ValidItems.Remove(ItemID.IronPickaxe);
+			RecipeGroup.RegisterGroup("Origins:AnyBrineBanner", brineGroup);
+			RecipeGroup.RegisterGroup("Origins:AnyAshenBanner", ashenGroup);
+			RecipeGroup.RegisterGroup("Origins:AnyDefiledBanner", defiledGroup);
+			RecipeGroup.RegisterGroup("Origins:AnyRivenBanner", rivenGroup);
+
+			bool BannerCheck(int type, RecipeGroup group) {
+				if (!(GetBanner(type) > 0)) return false;
+				if (bannedBanners.Contains(GetBanner(type))) return false;
+
+				NPC npc = ContentSamples.NpcsByNetId[type];
+				if (npc?.ModNPC is null) return false;
+				return npc.ModNPC.Mod is Origins && !group.ValidItems.Contains(GetBanner(type, true));
+			}
+			RecipeGroup corrupt = GetGroup("Fargowiltas:AnyCorrupts");
+			RecipeGroup crimson = GetGroup("Fargowiltas:AnyCrimsons");
+			foreach (int npc in CorruptGlobalNPC.NPCTypes) {
+				if (BannerCheck(npc, corrupt)) {
+					int item = GetBanner(npc, true);
+					corrupt.ValidItems.Add(item);
 				}
 			}
-
-			RecipeGroup.RegisterGroup("Origins:AnyBrineBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Brine_Pool.DisplayName")), [.. brine]));
-			//RecipeGroup.RegisterGroup("Origins:AnyAshenBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Ashen_Biome.DisplayName")), [.. ashen]));
-			RecipeGroup.RegisterGroup("Origins:AnyDefiledBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Defiled_Wastelands.DisplayName")), [.. defiled]));
-			RecipeGroup.RegisterGroup("Origins:AnyRivenBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Riven_Hive.DisplayName")), [.. riven]));
+			foreach (int npc in CrimsonGlobalNPC.NPCTypes) {
+				if (BannerCheck(npc, crimson)) {
+					int item = GetBanner(npc, true);
+					crimson.ValidItems.Add(item);
+				}
+			}
 		}
 	}
 	public interface ICustomWikiDestination {

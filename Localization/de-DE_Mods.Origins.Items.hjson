@@ -6815,7 +6815,7 @@ Ashen_Grass_Seeds: {
 }
 
 Ashen_Dungeon_Chest_Item: {
-	// DisplayName: "{§Ashen} Dungeon Chest"
+	// DisplayName: "{§Ashen} Chest"
 	// Tooltip: ""
 }
 
