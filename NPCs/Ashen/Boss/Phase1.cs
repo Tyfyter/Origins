@@ -83,14 +83,19 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static int ShotDamage => (int)(18 * DifficultyMult);
 		public static float ShotVelocityMin => 8;
 		public static float ShotVelocityStep => 2;
-		public static int Duration => 90;
+		public static int StateDuration => 90;
+		/// <param name="kind">0: red, 1: tan</param>
+		public static float FuseTime(int kind, float index) => 90 + index * 4;
+		public static int RedExplosionDuration => 30;
+		public static int TanExplosionRange => 128;
+		public static float TanExplosionSpread => 0.5f;
 		#endregion stats
 		public override bool Ranged => true;
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 		}
 		public override void DoAIState(Trenchmaker boss) {
-			if (++boss.NPC.ai[0] > Duration) boss.StartIdle();
+			if (++boss.NPC.ai[0] > StateDuration) boss.StartIdle();
 		}
 		public override void StartAIState(Trenchmaker boss) {
 			NPC npc = boss.NPC;
@@ -129,7 +134,7 @@ namespace Origins.NPCs.Ashen.Boss {
 					float.Pow(0.97f, 1f / (Projectile.ai[1] + 1))
 					* float.Pow(0.999f, Projectile.ai[2] * 0.25f);
 				Projectile.velocity.Y += 0.2f;
-				if (++Projectile.ai[2] > 90 + Projectile.ai[1] * 4) {
+				if (++Projectile.ai[2] > FuseTime((int)Projectile.ai[0], Projectile.ai[1])) {
 					Projectile.Kill();
 				}
 			}
@@ -140,7 +145,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			public override void OnKill(int timeLeft) {
 				Projectile.SpawnProjectile(null,
 					Projectile.Center,
-					Vector2.UnitY * -128,
+					Vector2.UnitY * -TanExplosionRange,
 					Projectile.ai[0] == 0 ? ModContent.ProjectileType<Trenchmaker_Firecracker_Explosion_1>() : ModContent.ProjectileType<Trenchmaker_Firecracker_Explosion_2>(),
 					Projectile.damage,
 					Projectile.knockBack
@@ -155,7 +160,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				Projectile.tileCollide = false;
 				Projectile.hostile = true;
 				Projectile.penetrate = -1;
-				Projectile.timeLeft = 30;
+				Projectile.timeLeft = RedExplosionDuration;
 				Projectile.hide = true;
 			}
 			public override bool ShouldUpdatePosition() => false;
@@ -238,7 +243,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				Vector2 spread = GetSpread(Projectile.velocity);
 				return new Triangle(laserStartPoint, laserStartPoint + Projectile.velocity - spread, laserStartPoint + Projectile.velocity + spread).Intersects(targetHitbox);
 			}
-			static Vector2 GetSpread(Vector2 velocity) => velocity.RotatedBy(MathHelper.PiOver2) * 0.5f;
+			static Vector2 GetSpread(Vector2 velocity) => velocity.RotatedBy(MathHelper.PiOver2) * TanExplosionSpread;
 			public bool IsExploding() => true;
 		}
 	}
