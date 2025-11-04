@@ -110,7 +110,7 @@ namespace Origins.NPCs.Corrupt {
 						extra = 2;
 						int type = Lingering_Shadowflame.ShadeIDs[Main.rand.Next(Lingering_Shadowflame.ShadeIDs.Count)];
 						int dmg = 10;
-						if (Main.hardMode) {
+						if (Main.hardMode && Main.expertMode) {// enemies only scale with progress in expert mode and higher
 							type = Lingering_Shadowflame.CursedIDs[Main.rand.Next(Lingering_Shadowflame.CursedIDs.Count)];
 							dmg = 20;
 						}
