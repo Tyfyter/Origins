@@ -76,6 +76,41 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC npc = boss.NPC;
 			npc.ai[3] = ShotRate;
 		}
+		public override double GetWeight(Trenchmaker boss, int[] previousStates) => boss.GunType == 0 ? base.GetWeight(boss, previousStates) : 0;
+	}
+	public class Fire_Cannons_State : AIState {
+		#region stats
+		public static float ShotRate => 20 - DifficultyMult * 2;
+		public static int ShotDamage => (int)(25 * DifficultyMult);
+		public static float ShotVelocity => 12;
+		public static int Duration => 40;
+		#endregion stats
+		public override bool Ranged => true;
+		public override void Load() {
+			PhaseOneIdleState.aiStates.Add(this);
+		}
+		public override void DoAIState(Trenchmaker boss) {
+			NPC npc = boss.NPC;
+			Vector2 direction = npc.rotation.ToRotationVector2();
+			int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
+			if (shotsToHaveFired > npc.ai[1]) {
+				//SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
+				npc.ai[1]++;
+				npc.SpawnProjectile(null,
+					boss.GunPos + direction * 8,
+					direction * ShotVelocity,
+					ProjectileID.CannonballHostile,
+					ShotDamage,
+					1
+				);
+			}
+			if (npc.ai[0] > Duration) boss.StartIdle();
+		}
+		public override void StartAIState(Trenchmaker boss) {
+			NPC npc = boss.NPC;
+			npc.ai[3] = ShotRate;
+		}
+		public override double GetWeight(Trenchmaker boss, int[] previousStates) => boss.GunType == 1 ? base.GetWeight(boss, previousStates) : 0;
 	}
 	public class Firecracker_State : AIState {
 		#region stats
@@ -187,7 +222,6 @@ namespace Origins.NPCs.Ashen.Boss {
 				Projectile.penetrate = -1;
 				Projectile.timeLeft = 5;
 				Projectile.hide = true;
-				Projectile.timeLeft = 2;
 			}
 			public override bool ShouldUpdatePosition() => false;
 			public override void AI() {
@@ -216,32 +250,36 @@ namespace Origins.NPCs.Ashen.Boss {
 						Projectile.width,
 						Projectile.height,
 						DustID.Torch,
-						dustVelocity.X,
-						dustVelocity.Y,
+						0,
+						0,
 						100,
 						default,
 						3.5f
 					);
 					dust.noGravity = true;
 					dust.velocity *= 7f;
-					Dust.NewDustDirect(
+					dust.velocity += dustVelocity;
+					dust = Dust.NewDustDirect(
 						Projectile.position,
 						Projectile.width,
 						Projectile.height,
 						DustID.Torch,
-						dustVelocity.X,
-						dustVelocity.Y,
+						0,
+						0,
 						100,
 						default,
 						1.5f
-					).velocity *= 3f;
+					);
+					dust.velocity *= 3f;
+					dust.velocity += dustVelocity;
 				}
 				SoundEngine.PlaySound(in SoundID.Item62, Projectile.position);
 			}
 			public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 				Vector2 laserStartPoint = Projectile.position;
-				Vector2 spread = GetSpread(Projectile.velocity);
-				return new Triangle(laserStartPoint, laserStartPoint + Projectile.velocity - spread, laserStartPoint + Projectile.velocity + spread).Intersects(targetHitbox);
+				float factor = 1 - Math.Min(Projectile.timeLeft / 5f, 0.9f);
+				Vector2 spread = GetSpread(Projectile.velocity * factor);
+				return new Triangle(laserStartPoint, laserStartPoint + Projectile.velocity * factor - spread, laserStartPoint + Projectile.velocity * factor + spread).Intersects(targetHitbox);
 			}
 			static Vector2 GetSpread(Vector2 velocity) => velocity.RotatedBy(MathHelper.PiOver2) * TanExplosionSpread;
 			public bool IsExploding() => true;

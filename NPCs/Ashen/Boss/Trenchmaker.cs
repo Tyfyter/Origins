@@ -69,6 +69,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			this.SetupStates();
 		}
+		public int GunType { get; private set; }
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.width = 104;
@@ -88,6 +89,10 @@ namespace Origins.NPCs.Ashen.Boss {
 				ModContent.GetInstance<Ashen_Biome>().Type
 			];
 			this.SetAIState(StateIndex<PhaseOneIdleState>());
+			GunType = Main.rand.Next(2);
+		}
+		public override void ModifyTypeName(ref string typeName) {
+			typeName = string.Format(typeName, GunType);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
@@ -301,7 +306,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			spriteBatch.Draw(
 				armTexture,
 				GunPos - screenPos,
-				armTexture.Frame(verticalFrames: 2),
+				armTexture.Frame(verticalFrames: 2, frameY: GunType),
 				NPC.GetTintColor(drawColor),
 				NPC.rotation + (effects.HasFlag(SpriteEffects.FlipHorizontally) ? 0 : MathHelper.Pi),
 				new Vector2(47, 15).Apply(effects, armTexture.Value.Size()),
@@ -348,6 +353,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write((byte)NPC.aiAction);
+			writer.Write((byte)GunType);
 			for (int i = 0; i < legs.Length; i++) {
 				writer.Write(legs[i].NetUpdate);
 				if (legs[i].NetUpdate) {
@@ -358,6 +364,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			NPC.aiAction = reader.ReadByte();
+			GunType = reader.ReadByte();
 			for (int i = 0; i < legs.Length; i++) {
 				if (reader.ReadBoolean()) legs[i].Read(reader);
 			}

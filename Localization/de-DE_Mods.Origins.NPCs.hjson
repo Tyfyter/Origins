@@ -429,7 +429,7 @@ Debug_Shoot_NPC: {
 // Power_Suit_Zombie.DisplayName: Power Suit Zombie
 
 Trenchmaker: {
-	// DisplayName: Trenchmaker
+	// DisplayName: Trenchmaker-[{0:00}]
 
 	BossChecklistIntegration: {
 		// SpawnCondition: Mods.Origins.NPCs.Trenchmaker.BossChecklistIntegration.SpawnCondition
