@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics;
@@ -10,7 +11,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Fortified_Steel_Block1 : OriginTile, IAshenTile {
+	public class Fortified_Steel_Block1 : ComplexFrameTile, IAshenTile {
 		public virtual Color MapColor => FromHexRGB(0x7a391a);
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
@@ -184,6 +185,9 @@ namespace Origins.Tiles.Ashen {
 					);
 				}
 			}
+		}
+		protected override IEnumerable<TileOverlay> GetOverlays() {
+			yield return new CornerMergeOverlay(this, "Origins/Tiles/Ashen/Fortified_Steel_Block_Inverse_Edges");
 		}
 	}
 	public class Fortified_Steel_Block2 : Fortified_Steel_Block1 {

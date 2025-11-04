@@ -1,13 +1,15 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using Origins.Graphics;
+using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
-using Terraria.Graphics.Effects;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -52,7 +54,7 @@ namespace Origins.Tiles {
 		public const string merge = "Origins/Tiles/MergerOverlays/";
 		TileOverlay[] overlays;
 		protected sealed override void SetDefaults() {
-			overlays = [..GetOverlays()];
+			overlays = [.. GetOverlays()];
 			for (int i = 0; i < overlays.Length; i++) {
 				TileOverlay tileOverlay = overlays[i];
 				tileOverlay.SetupTexture();
@@ -71,6 +73,64 @@ namespace Origins.Tiles {
 				overlays[k].Draw(i, j, tile, spriteBatch);
 			}
 		}
+		//down:╷
+		//up:╵
+		//left:╴
+		//right:╶
+		// ┼ │ ─ ┌┐ └┘ ├ ┤ ┬ ┴
+		static readonly Dictionary<char, Direction> directionsByDirection = new() {
+			['╷'] = Direction.Down,
+			['╵'] = Direction.Up,
+			['╴'] = Direction.Left,
+			['╶'] = Direction.Right,
+			['┼'] = Direction.Down | Direction.Up | Direction.Left | Direction.Right,
+			['│'] = Direction.Down | Direction.Up,
+			['─'] = Direction.Left | Direction.Right,
+			['┌'] = Direction.Down | Direction.Right,
+			['┐'] = Direction.Down | Direction.Left,
+			['└'] = Direction.Up | Direction.Right,
+			['┘'] = Direction.Up | Direction.Left,
+			['├'] = Direction.Down | Direction.Up | Direction.Right,
+			['┤'] = Direction.Down | Direction.Up | Direction.Left,
+			['┬'] = Direction.Down | Direction.Left | Direction.Right,
+			['┴'] = Direction.Up | Direction.Left | Direction.Right
+		};
+		static readonly string[] directionSymbolsByFrame = [
+			"├┬┬┬┤│╷╷╷╶┼┼╴───",
+			"├┼┼┼┤│┼┼┼╶┼┼╴───",
+			"├┴┴┴┤│┼┼┼╶┼┼╴│││",
+			"┌┐┌┐┌┐╵╵╵    │││",
+			"└┘└┘└┘───       ",
+			"┼┼┌┐└┘ ╵┴┴┴╷╶   ",
+			"┼┼└┘└┘ ╵┬┬┬╷╶   ",
+			"┼┼┌┐└┘ ╵┤├│╷╶   ",
+			"┼┼└┘┌┐ ╷┤├│╵╴   ",
+			"┼┼┌┐┌┐ ╷┤├│╵╴   ",
+			"┼┼└┘┌┐ ╷───╵╴   ",
+			"┌┌┌┐┐┐          ",
+			"└└└┘┘┘          ",
+			"                ",
+			"                "
+		];
+		static Direction[,] directionsByFrame;
+		public static Direction GetDirectionsByFrame(int frameX, int frameY) {
+			if (directionsByFrame is null) {
+				directionsByFrame = new Direction[directionSymbolsByFrame[0].Length, directionSymbolsByFrame.Length];
+				for (int j = 0; j < directionSymbolsByFrame.Length; j++) {
+					for (int i = 0; i < directionSymbolsByFrame[j].Length; i++) {
+						directionsByDirection.TryGetValue(directionSymbolsByFrame[j][i], out directionsByFrame[i, j]);
+					}
+				}
+			}
+			return directionsByFrame[frameX, frameY];
+		}
+		[Flags]
+		public enum Direction {
+			Down = 1 << 0,
+			Up = 1 << 1,
+			Left = 1 << 2,
+			Right = 1 << 3
+		}
 		public abstract class TileOverlay {
 			protected abstract string TexturePath { get; }
 			protected Asset<Texture2D> Texture { get; private set; }
@@ -87,45 +147,6 @@ namespace Origins.Tiles {
 			public TileMergeOverlay(string texturePath, int tileType, int parentFrameHeight = 270) : this(texturePath, [tileType], parentFrameHeight) { }
 			public TileMergeOverlay(string texturePath, int[] tileTypes, int parentFrameHeight = 270) : this(texturePath, TileID.Sets.Factory.CreateBoolSet(tileTypes), parentFrameHeight) { }
 			protected override string TexturePath => texturePath;
-			//down:╷
-			//up:╵
-			//left:╴
-			//right:╶
-			// ┼ │ ─ ┌┐ └┘ ├ ┤ ┬ ┴
-			static readonly Dictionary<char, Direction[]> directionsByDirection = new() {
-				['╷'] = [Direction.Down],
-				['╵'] = [Direction.Up],
-				['╴'] = [Direction.Left],
-				['╶'] = [Direction.Right],
-				['┼'] = [Direction.Down, Direction.Up, Direction.Left, Direction.Right],
-				['│'] = [Direction.Down, Direction.Up],
-				['─'] = [Direction.Left, Direction.Right],
-				['┌'] = [Direction.Down, Direction.Right],
-				['┐'] = [Direction.Down, Direction.Left],
-				['└'] = [Direction.Up, Direction.Right],
-				['┘'] = [Direction.Up, Direction.Left],
-				['├'] = [Direction.Down, Direction.Up, Direction.Right],
-				['┤'] = [Direction.Down, Direction.Up, Direction.Left],
-				['┬'] = [Direction.Down, Direction.Left, Direction.Right],
-				['┴'] = [Direction.Up, Direction.Left, Direction.Right]
-			};
-			static readonly string[] directionsByFrame = [
-				"├┬┬┬┤│╷╷╷╶┼┼╴───",
-				"├┼┼┼┤│┼┼┼╶┼┼╴───",
-				"├┴┴┴┤│┼┼┼╶┼┼╴│││",
-				"┌┐┌┐┌┐╵╵╵    │││",
-				"└┘└┘└┘───       ",
-				"┼┼┌┐└┘ ╵┴┴┴╷╶   ",
-				"┼┼└┘└┘ ╵┬┬┬╷╶   ",
-				"┼┼┌┐└┘ ╵┤├│╷╶   ",
-				"┼┼└┘┌┐ ╷┤├│╵╴   ",
-				"┼┼┌┐┌┐ ╷┤├│╵╴   ",
-				"┼┼└┘┌┐ ╷───╵╴   ",
-				"┌┌┌┐┐┐          ",
-				"└└└┘┘┘          ",
-				"                ",
-				"                "
-			];
 			public override void SetupOther(int type) {
 				for (int i = 0; i < tileTypes.Length; i++) {
 					if (!tileTypes[i]) continue;
@@ -134,9 +155,8 @@ namespace Origins.Tiles {
 				}
 			}
 			public override void Draw(int i, int j, Tile tile, SpriteBatch spriteBatch) {
-				void Do(params Direction[] directions) {
-					for (int k = 0; k < directions.Length; k++) {
-						Direction direction = directions[k];
+				void Do(IEnumerable<Direction> directions) {
+					foreach (Direction direction in directions) {
 						Tile blendTile;
 						switch (direction) {
 							case Direction.Down:
@@ -159,7 +179,13 @@ namespace Origins.Tiles {
 							continue;
 						}
 						if (!blendTile.HasTile || !tileTypes[blendTile.TileType]) continue;
-						Rectangle frame = new((int)(direction) * 18, blendTile.TileFrameNumber * 18, 16, 16);
+						int dirIndex = 0;
+						int dir = (int)direction;
+						while (dir > 1) {
+							dirIndex++;
+							dir >>= 1;
+						}
+						Rectangle frame = new(dirIndex * 18, blendTile.TileFrameNumber * 18, 16, 16);
 						Vector2 offset = new(Main.offScreenRange, Main.offScreenRange);
 						if (Main.drawToScreen) {
 							offset = Vector2.Zero;
@@ -170,16 +196,69 @@ namespace Origins.Tiles {
 						spriteBatch.Draw(texture, position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
 					}
 				}
-				if (directionsByDirection.TryGetValue(directionsByFrame[(tile.TileFrameY % parentFrameHeight) / 18][tile.TileFrameX / 18], out Direction[] directions)) {
-					Do(directions);
-				}
+				Do(GetDirectionsByFrame(tile.TileFrameX / 18, (tile.TileFrameY % parentFrameHeight) / 18).GetFlags());
 			}
 			public virtual Color GetColor(Color color) => color;
-			enum Direction {
-				Down,
-				Up,
-				Left,
-				Right
+		}
+		public class CornerMergeOverlay(ModTile tile, string textureOverride = null, int parentFrameHeight = 270) : TileOverlay {
+			protected override string TexturePath => textureOverride ?? (tile.Texture + "_Inverse_Edges");
+			public override void Draw(int i, int j, Tile tile, SpriteBatch spriteBatch) {
+				Direction directions = GetDirectionsByFrame(tile.TileFrameX / 18, (tile.TileFrameY % parentFrameHeight) / 18);
+				bool ShouldMerge(int i, int j) {
+					Tile corner = Main.tile[i, j];
+					if (!corner.HasTile) return false;
+					return (tile.TileType == corner.TileType) || Main.tileMerge[tile.TileType][corner.TileType];
+				}
+				bool upLeft = directions.HasFlag(Direction.Up) && directions.HasFlag(Direction.Left) && !ShouldMerge(i - 1, j - 1);
+				bool upRight = directions.HasFlag(Direction.Up) && directions.HasFlag(Direction.Right) && !ShouldMerge(i + 1, j - 1);
+				bool downLeft = directions.HasFlag(Direction.Down) && directions.HasFlag(Direction.Left) && !ShouldMerge(i - 1, j + 1);
+				bool downRight = directions.HasFlag(Direction.Down) && directions.HasFlag(Direction.Right) && !ShouldMerge(i + 1, j + 1);
+				switch ((upLeft, upRight, downRight, downLeft)) {
+					case (true, true, false, false):
+					upLeft = upRight = false;
+					break;
+					case (false, true, true, false):
+					upRight = downRight = false;
+					break;
+					case (false, false, true, true):
+					downRight = downLeft = false;
+					break;
+					case (true, false, false, true):
+					downLeft = upLeft = false;
+					break;
+				}
+				if (!(upLeft || upRight || downRight || downLeft)) return;
+				Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
+				if (!Main.drawToScreen) {
+					pos.X += Main.offScreenRange;
+					pos.Y += Main.offScreenRange;
+				}
+				Lighting.GetCornerColors(i, j, out VertexColors vertices);
+				Vector4 destination = new(pos, 16, 16);
+				if (upLeft) Main.tileBatch.Draw(
+					Texture.Value,
+					destination,
+					new Rectangle(0, 0, 16, 16),
+					vertices
+				);
+				if (upRight) Main.tileBatch.Draw(
+					Texture.Value,
+					destination,
+					new Rectangle(18, 0, 16, 16),
+					vertices
+				);
+				if (downLeft) Main.tileBatch.Draw(
+					Texture.Value,
+					destination,
+					new Rectangle(0, 18, 16, 16),
+					vertices
+				);
+				if (downRight) Main.tileBatch.Draw(
+					Texture.Value,
+					destination,
+					new Rectangle(18, 18, 16, 16),
+					vertices
+				);
 			}
 		}
 	}
