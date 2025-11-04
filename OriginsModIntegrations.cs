@@ -1168,11 +1168,11 @@ namespace Origins {
 				if (item) return Item.BannerToItem(banner);
 				else return banner;
 			}
-			int[] bannedBanners = {
+			int[] bannedBanners = [
 				GetBanner(NPCID.PigronHallow),
 				GetBanner(NPCID.DesertGhoul),
 				GetBanner(NPCID.Zombie)
-			};
+			];
 			/*List<int> brine = [];
 			List<int> ashen = [];
 			int[] ashenBiomes = {
@@ -1221,7 +1221,10 @@ namespace Origins {
 			RecipeGroup ashenGroup = new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Ashen_Biome.DisplayName")), [ItemID.IronPickaxe]);
 			RecipeGroup defiledGroup = new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Defiled_Wastelands.DisplayName")), [ItemID.IronPickaxe]);
 			RecipeGroup rivenGroup = new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Riven_Hive.DisplayName")), [ItemID.IronPickaxe]);
-
+			brineGroup.ValidItems.Remove(ItemID.IronPickaxe);
+			ashenGroup.ValidItems.Remove(ItemID.IronPickaxe);
+			defiledGroup.ValidItems.Remove(ItemID.IronPickaxe);
+			rivenGroup.ValidItems.Remove(ItemID.IronPickaxe);
 			bool AllowedBanner(int type, RecipeGroup group) {
 				int banner = GetBanner(type);
 				bool ban = banner > 0;
@@ -1263,10 +1266,10 @@ namespace Origins {
 				if (FromBiomes(i, rivenBiomes, riven))
 					riven.Add(GetBanner(i, true));*/
 			}
-			brineGroup.ValidItems.Remove(ItemID.IronPickaxe);
-			ashenGroup.ValidItems.Remove(ItemID.IronPickaxe);
-			defiledGroup.ValidItems.Remove(ItemID.IronPickaxe);
-			rivenGroup.ValidItems.Remove(ItemID.IronPickaxe);
+			brineGroup.IconicItemId = brineGroup.ValidItems.First();
+			ashenGroup.IconicItemId = ashenGroup.ValidItems.First();
+			defiledGroup.IconicItemId = defiledGroup.ValidItems.First();
+			rivenGroup.IconicItemId = rivenGroup.ValidItems.First();
 			RecipeGroup.RegisterGroup("Origins:AnyBrineBanner", brineGroup);
 			RecipeGroup.RegisterGroup("Origins:AnyAshenBanner", ashenGroup);
 			RecipeGroup.RegisterGroup("Origins:AnyDefiledBanner", defiledGroup);
