@@ -1,6 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Tiles.Riven;
-using Origins.World.BiomeData;
+﻿using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -8,13 +7,12 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-	public class Hardened_Defiled_Sand : OriginTile, IDefiledTile {
+	public class Hardened_Defiled_Sand : ComplexFrameTile, IDefiledTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.SandBiome[Type] = 1;
 			TileID.Sets.isDesertBiomeSand[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			Main.tileMerge[TileType<Defiled_Sand>()][Type] = true;
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			TileID.Sets.Conversion.HardenedSand[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
@@ -24,12 +22,10 @@ namespace Origins.Tiles.Defiled {
             Main.tileMerge[Type][TileID.HardenedSand] = true;*/
 			AddMapEntry(new Color(200, 200, 200));
 			mergeID = TileID.HardenedSand;
-			AddDefiledTile();
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
-		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			TileExtenstions.DoFraming(i, j, resetFrame, map: [(Type, 1), (TileType<Defiled_Sand>(), 2)], TileExtenstions.ExtraTileBlending);
-			return false;
+		protected override IEnumerable<TileOverlay> GetOverlays() {
+			yield return new TileMergeOverlay(merge + "Defiled_Sand_Overlay", TileType<Defiled_Sand>());
 		}
 	}
 	public class Hardened_Defiled_Sand_Item : ModItem {

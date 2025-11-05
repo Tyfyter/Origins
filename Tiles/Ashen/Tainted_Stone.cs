@@ -1,5 +1,4 @@
 ﻿using Origins.Dev;
-using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
@@ -27,14 +26,12 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMerge[Type][TileID.Stone] = true;
 			for (int i = 0; i < TileLoader.TileCount; i++) {
 				Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
-			}
-			for (int i = 0; i < TileLoader.TileCount; i++) {
 				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
 					Main.tileMerge[Type][i] = true;
 					Main.tileMerge[i][Type] = true;
 				}
 			}
-			AddMapEntry(new Color(255, 200, 200));
+			AddMapEntry(FromHexRGB(0x9A7057));
 			mergeID = TileID.Stone;
 			MinPick = 65;
 			MineResist = 2;

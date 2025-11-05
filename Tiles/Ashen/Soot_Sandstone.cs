@@ -1,4 +1,5 @@
 ﻿using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -6,14 +7,13 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Soot_Sandstone : OriginTile, IAshenTile {
+	public class Soot_Sandstone : ComplexFrameTile, IAshenTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.SandBiome[Type] = 1;
 			TileID.Sets.isDesertBiomeSand[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.Sandstone];
-			Main.tileMerge[TileType<Sootsand>()][Type] = true;
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			TileID.Sets.Conversion.Sandstone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
@@ -27,9 +27,8 @@ namespace Origins.Tiles.Ashen {
 			mergeID = TileID.Sandstone;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
-		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			TileExtenstions.DoFraming(i, j, resetFrame, map: [(Type, 1), (TileType<Sootsand>(), 2)], TileExtenstions.ExtraTileBlending);
-			return false;
+		protected override IEnumerable<TileOverlay> GetOverlays() {
+			yield return new TileMergeOverlay(merge + "Sootsand_Overlay", TileType<Sootsand>());
 		}
 	}
 	public class Soot_Sandstone_Item : ModItem {
