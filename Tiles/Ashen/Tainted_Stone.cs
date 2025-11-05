@@ -26,7 +26,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMerge[Type][TileID.Stone] = true;
 			for (int i = 0; i < TileLoader.TileCount; i++) {
 				Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
-				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
+				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i] || Main.tileSand[i]) {
 					Main.tileMerge[Type][i] = true;
 					Main.tileMerge[i][Type] = true;
 				}

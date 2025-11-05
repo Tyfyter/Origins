@@ -4,7 +4,6 @@ using Origins.Journal;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -39,6 +38,15 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+			Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
+			Main.tileMerge[Type][TileID.Stone] = true;
+			for (int i = 0; i < TileLoader.TileCount; i++) {
+				Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
+				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i] || Main.tileSand[i]) {
+					Main.tileMerge[Type][i] = true;
+					Main.tileMerge[i][Type] = true;
+				}
+			}
 
 			AddMapEntry(new Color(0, 125, 200));
 			//soundType = SoundID.NPCDeath1;
@@ -151,7 +159,7 @@ namespace Origins.Tiles.Riven {
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
 		}
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(ModContent.TileType<Spug_Flesh>());
+			Item.DefaultToPlaceableTile(TileType<Spug_Flesh>());
 		}
 	}
 }

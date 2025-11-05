@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Journal;
+﻿using Origins.Journal;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
@@ -18,26 +17,20 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
+			Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
+			Main.tileMerge[Type][TileID.Stone] = true;
+			for (int i = 0; i < TileLoader.TileCount; i++) {
+				Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
+				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i] || Main.tileSand[i]) {
+					Main.tileMerge[Type][i] = true;
+					Main.tileMerge[i][Type] = true;
+				}
+			}
 			AddMapEntry(new Color(141, 148, 178));
 			MinPick = 65;
 			MineResist = 1.5f;
 			DustType = Riven_Hive.DefaultTileDust;
 		}
-		/*public override void RandomUpdate(int i, int j) {
-			if (WorldGen.genRand.NextBool((int)(100 * MathHelper.Lerp(151, 151 * 2.8f, MathHelper.Clamp(Main.maxTilesX / 4200f - 1f, 0f, 1f)))) && !TileObject.CanPlace(i, j + 1, TileType<Wrycoral>(), 2, 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
-				TileObject.Place(objectData);
-				//Main.LocalPlayer.Teleport(new Vector2(i, j).ToWorldCoordinates(), 1);
-			}
-			Tile above = Framing.GetTileSafely(i, j - 1);
-			if (!above.HasTile && Main.tile[i, j].BlockType == BlockType.Solid) {
-				if (WorldGen.genRand.NextBool(250)) {
-					above.ResetToType((ushort)ModContent.TileType<Acetabularia>());
-				} else {
-					above.ResetToType((ushort)ModContent.TileType<Riven_Foliage>());
-				}
-				WorldGen.TileFrame(i, j - 1);
-			}
-		}*/
 	}
 	public class Calcified_Riven_Flesh_Item : ModItem, IJournalEntrySource {
 		public string EntryName => "Origins/" + typeof(Riven_Flesh_Item.Spug_Flesh_Entry).Name;
@@ -46,7 +39,7 @@ namespace Origins.Tiles.Riven {
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
 		}
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(ModContent.TileType<Calcified_Riven_Flesh>());
+			Item.DefaultToPlaceableTile(TileType<Calcified_Riven_Flesh>());
 		}
 	}
 }

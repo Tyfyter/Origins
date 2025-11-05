@@ -1,5 +1,4 @@
 ﻿using Origins.Dev;
-using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
@@ -27,9 +26,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileMerge[Type][TileID.Stone] = true;
 			for (int i = 0; i < TileLoader.TileCount; i++) {
 				Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
-			}
-			for (int i = 0; i < TileLoader.TileCount; i++) {
-				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
+				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i] || Main.tileSand[i]) {
 					Main.tileMerge[Type][i] = true;
 					Main.tileMerge[i][Type] = true;
 				}
