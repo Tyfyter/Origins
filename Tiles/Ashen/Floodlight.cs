@@ -12,17 +12,15 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Floodlight : OriginTile, IComplexMineDamageTile, IGlowingModTile {
+		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public static int ID { get; private set; }
-		TileItem item;
+		TileItem Item;
+		protected int width, height;
 		public override void Load() {
-			Mod.AddContent(item = new(this));
+			Mod.AddContent(Item = new(this));
 			this.SetupGlowKeys();
 		}
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f) * 3);
-		}
 		public override void SetStaticDefaults() {
-			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
 			// Properties
 			TileID.Sets.CanBeSloped[Type] = false;
 			Main.tileLighted[Type] = true;
@@ -43,10 +41,32 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.Origin = new Point16(TileObjectData.newTile.Width / 2, TileObjectData.newTile.Height - 1);
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.newTile.FlattenAnchors = true;
+			width = TileObjectData.newTile.Width;
+			height = TileObjectData.newTile.Height;
 			TileObjectData.addTile(Type);
 			ID = Type;
 			DustType = Ashen_Biome.DefaultTileDust;
-			RegisterItemDrop(item.Type);
+			glowTexture = Texture + "_Glow";
+			RegisterItemDrop(Item.Type);
+		}
+		public override void HitWire(int i, int j) {
+			Tile tile = Main.tile[i, j];
+			int leftX = i - ((tile.TileFrameX / 18) % width);
+			int topY = j - ((tile.TileFrameY / 18) % height);
+			int offset = IsOn(tile) ? 18 : -18;
+			short frameAdjustment = (short)(offset * width);
+
+			for (int x = 0; x < width; x++) {
+				for (int y = 0; y < height; y++) {
+					Main.tile[leftX + x, topY + y].TileFrameX += frameAdjustment;
+					Wiring.SkipWire(leftX + x, topY + y);
+				}
+			}
+
+			// Avoid trying to send packets in singleplayer.
+			if (Main.netMode != NetmodeID.SinglePlayer) {
+				NetMessage.SendTileSquare(-1, leftX, topY, width, height, TileChangeType.None);
+			}
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (ShouldGlow(Main.tile[i, j])) {
@@ -55,8 +75,9 @@ namespace Origins.Tiles.Ashen {
 				b = 0.5f;
 			}
 		}
-		public static bool ShouldGlow(Tile tile) {
-			if (tile.TileFrameX >= 6 * 18) return false;
+		public bool IsOn(Tile tile) => tile.TileFrameX < width * 18;
+		public bool ShouldGlow(Tile tile) {
+			if (!IsOn(tile)) return false;
 			int frameY = tile.TileFrameY / 18;
 			return frameY >= 1 && frameY <= 4;
 		}
@@ -64,7 +85,10 @@ namespace Origins.Tiles.Ashen {
 			this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
-		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public Color GlowColor => Color.White;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f) * 3);
+		}
 	}
 }
