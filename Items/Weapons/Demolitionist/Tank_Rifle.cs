@@ -119,7 +119,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			OriginsSets.Projectiles.HomingEffectivenessMultiplier[Type] = 0.0125f;
-			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.aiStyle = 0;
 			Projectile.extraUpdates = 99;
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];

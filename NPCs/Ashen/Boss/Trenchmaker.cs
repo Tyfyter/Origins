@@ -372,6 +372,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public class AutomaticIdleState : AutomaticIdleState<Trenchmaker> { }
 		public abstract class AIState : AIState<Trenchmaker> {
 			public virtual float WalkDist => 10 * 16;
+			public virtual LegAnimation ForceAnimation(Trenchmaker npc, Leg leg, Leg otherLeg) => null;
 		}
 		public record struct Leg(float ThighRot, float CalfRot, LegAnimation CurrentAnimation, bool WasStanding = false, int TimeStanding = 0, int TimeInAnimation = 0, bool NetUpdate = true) {
 			LegAnimation currentAnimation = CurrentAnimation;

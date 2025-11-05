@@ -1,16 +1,26 @@
-﻿using Origins.NPCs.MiscB.Shimmer_Construct;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Dusts;
+using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Items.Weapons.Demolitionist;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Buffs;
 using static Origins.NPCs.Ashen.Boss.Trenchmaker;
 using static Origins.OriginExtensions;
 using static Terraria.Utilities.NPCUtils;
@@ -94,12 +104,12 @@ namespace Origins.NPCs.Ashen.Boss {
 			Vector2 direction = npc.rotation.ToRotationVector2();
 			int shotsToHaveFired = (int)((++npc.ai[0]) / npc.ai[3]);
 			if (shotsToHaveFired > npc.ai[1]) {
-				//SoundEngine.PlaySound(SoundID.Item12.WithVolume(0.5f).WithPitchRange(0.25f, 0.4f), npc.Center);
+				SoundEngine.PlaySound(Origins.Sounds.HeavyCannon.WithPitch(-0.5f), boss.GunPos);
 				npc.ai[1]++;
 				npc.SpawnProjectile(null,
-					boss.GunPos + direction * 8,
+					boss.GunPos + direction * 6,
 					direction * ShotVelocity,
-					ProjectileID.CannonballHostile,
+					ModContent.ProjectileType<Trenchmaker_Cannon_P>(),
 					ShotDamage,
 					1
 				);
@@ -110,7 +120,158 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC npc = boss.NPC;
 			npc.ai[3] = ShotRate;
 		}
-		public override double GetWeight(Trenchmaker boss, int[] previousStates) => boss.GunType == 1 ? base.GetWeight(boss, previousStates) : 0;
+		public override double GetWeight(Trenchmaker boss, int[] previousStates) {
+			if (boss.GunType != 1) return 0;
+			if (boss.NPC.targetRect.Center().WithinRange(boss.NPC.Bottom + Vector2.UnitY * 16 * 4, 16 * 10)) return 0;
+			return base.GetWeight(boss, previousStates);
+		}
+		public class Trenchmaker_Cannon_P : ModProjectile {
+			public override string Texture => "Terraria/Images/Item_1";
+			public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Canister_Outer";
+			public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Canister_Inner";
+			public static int ID { get; private set; }
+			public override void SetStaticDefaults() {
+				ProjectileID.Sets.TrailingMode[Type] = 2;
+				ProjectileID.Sets.TrailCacheLength[Type] = 45;
+				ProjectileID.Sets.DrawScreenCheckFluff[Type] = ProjectileID.Sets.TrailCacheLength[Type] * 10 + 64;
+				ID = Type;
+			}
+			public override void SetDefaults() {
+				OriginsSets.Projectiles.HomingEffectivenessMultiplier[Type] = 0.0125f;
+				Projectile.aiStyle = 0;
+				Projectile.extraUpdates = 2;
+				Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+				Projectile.width = 28;
+				Projectile.height = 28;
+				Projectile.hostile = true;
+				Projectile.penetrate = 1;
+				Projectile.timeLeft = 900;
+				Projectile.scale = 0.85f;
+				Projectile.appliesImmunityTimeOnSingleHits = true;
+				Projectile.usesLocalNPCImmunity = true;
+				Projectile.localNPCHitCooldown = 6;
+			}
+			public override void OnSpawn(IEntitySource source) {
+				if (Projectile.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) global.modifierBlastRadius *= 2;
+			}
+			public override bool OnTileCollide(Vector2 oldVelocity) {
+				if (Projectile.velocity.X == 0f) {
+					Projectile.velocity.X = -oldVelocity.X;
+				}
+				if (Projectile.velocity.Y == 0f) {
+					Projectile.velocity.Y = -oldVelocity.Y;
+				}
+				Projectile.timeLeft = 1;
+				return true;
+			}
+			public override void AI() {
+				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+				if (Projectile.soundDelay == 0) {
+					Projectile.soundDelay = -1;
+					Dust.NewDustPerfect(
+						Projectile.Center + Projectile.velocity.Normalized(out _) * 120,
+						ModContent.DustType<Rocket_Launch>(),
+						Projectile.velocity,
+						newColor: Color.DimGray
+					);
+				}
+			}
+			public override void OnKill(int timeLeft) {
+				if (NetmodeActive.Server) return;
+				if (Projectile.owner != Main.myPlayer) {
+					if (!Projectile.hide) {
+						Projectile.hide = true;
+						try {
+							Projectile.active = true;
+							Projectile.timeLeft = timeLeft;
+							Projectile.Update(Projectile.whoAmI);
+						} finally {
+							Projectile.active = false;
+							Projectile.timeLeft = 0;
+						}
+					}
+					return;
+				}
+				ExplosiveGlobalProjectile.DoExplosion(Projectile, 80, sound: SoundID.Item62, hostile: true);
+				Vector2[] oldPos = [.. Projectile.oldPos];
+				float[] oldRot = [.. Projectile.oldRot];
+				for (int i = 0; i < oldPos.Length; i++) {
+					if (oldPos[i] == default) {
+						Array.Resize(ref oldPos, i);
+						Array.Resize(ref oldRot, i);
+						break;
+					}
+					oldPos[i] += Projectile.Size * 0.5f;
+					oldRot[i] += MathHelper.PiOver2;
+				}
+				Dust.NewDustPerfect(
+					Main.LocalPlayer.Center,
+					ModContent.DustType<Vertex_Trail_Dust>(),
+					Vector2.Zero
+				).customData = new Vertex_Trail_Dust.TrailData(oldPos, oldRot, StripColors(Color.Goldenrod), StripWidth, 2);
+			}
+			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+				modifiers.ScalingArmorPenetration += 0.75f;
+				modifiers.Knockback *= 3;
+			}
+			public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+				Min(ref Projectile.timeLeft, 1);
+			}
+			public override bool PreDraw(ref Color lightColor) {
+				Vector2 origin = outerTexture.Value.Size() * 0.5f;
+				SpriteEffects spriteEffects = SpriteEffects.None;
+				if (Projectile.spriteDirection == -1) spriteEffects |= SpriteEffects.FlipHorizontally;
+				Main.EntitySpriteDraw(
+					innerTexture,
+					Projectile.Center - Main.screenPosition,
+					null,
+					Color.Goldenrod,
+					Projectile.rotation,
+					origin,
+					Projectile.scale,
+					spriteEffects
+				);
+				Main.EntitySpriteDraw(
+					outerTexture,
+					Projectile.Center - Main.screenPosition,
+					null,
+					Color.DarkGray.MultiplyRGBA(lightColor),
+					Projectile.rotation,
+					origin,
+					Projectile.scale,
+					spriteEffects
+				);
+
+				MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
+				Vector2[] oldPos = [.. Projectile.oldPos];
+				float[] oldRot = [.. Projectile.oldRot];
+				for (int i = 0; i < oldPos.Length; i++) {
+					if (oldPos[i] == default) {
+						Array.Resize(ref oldPos, i);
+						Array.Resize(ref oldRot, i);
+						break;
+					}
+					oldRot[i] += MathHelper.PiOver2;
+				}
+				miscShaderData.UseSaturation(-2.8f);
+				miscShaderData.UseOpacity(4f);
+				miscShaderData.Apply();
+				_vertexStrip.PrepareStripWithProceduralPadding(oldPos, oldRot, StripColors(Color.Goldenrod), StripWidth, -Main.screenPosition + Projectile.Size / 2f);
+				_vertexStrip.DrawTrail();
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+				return false;
+			}
+			static VertexStrip.StripColorFunction StripColors(Color color) => progressOnStrip => {
+				if (float.IsNaN(progressOnStrip)) return Color.Transparent;
+				float lerpValue = 1f - Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true);
+				return color * (1f - lerpValue * lerpValue);
+			};
+			static float StripWidth(float progressOnStrip) {
+				float lerpValue = 1f - Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true);
+				return MathHelper.Lerp(0, 8, 1f - lerpValue * lerpValue);
+			}
+			private static readonly VertexStrip _vertexStrip = new();
+		}
 	}
 	public class Firecracker_State : AIState {
 		#region stats
@@ -284,6 +445,15 @@ namespace Origins.NPCs.Ashen.Boss {
 			static Vector2 GetSpread(Vector2 velocity) => velocity.RotatedBy(MathHelper.PiOver2) * TanExplosionSpread;
 			public bool IsExploding() => true;
 		}
+	}
+	public class Carpet_Bomb_State : AIState {
+		public override void Load() {
+			PhaseOneIdleState.aiStates.Add(this);
+		}
+		public override void DoAIState(Trenchmaker boss) {
+
+		}
+		public override LegAnimation ForceAnimation(Trenchmaker npc, Leg leg, Leg otherLeg) => ModContent.GetInstance<Jump_Preparation_Animation>();
 	}
 	public class Teabag_State : AIState {
 		public override float WalkDist => 16 * 4;
