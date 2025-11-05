@@ -1,19 +1,20 @@
+using AltLibrary.Common.Systems;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
+using Origins.Tiles.Riven;
+using Origins.World;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.World;
+using System.Text;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.World.BiomeData;
-using static Origins.Items.Other.Testing.Blood_Mushroom_Soup;
-using Terraria.GameInput;
-using Origins.Tiles.Riven;
-using AltLibrary.Common.Systems;
-using System.Text;
 using Terraria.ObjectData;
 using Terraria.Utilities;
+using static Origins.Items.Other.Testing.Blood_Mushroom_Soup;
 
 namespace Origins.Items.Other.Testing {
 	public class Blood_Mushroom_Soup : TestingItem {
@@ -539,8 +540,19 @@ namespace Origins.Items.Other.Testing {
 		}
 		public void Unload() { }
 	}
-	public class List_Worldgen_Testing_Mode : WorldgenTestingMode {
+	public class Structure_Testing_Mode : WorldgenTestingMode {
 		public override SortOrder SortPosition => SortOrder.New;
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Place Structure";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Player.tileTargetX);
+			parameters.Enqueue(Player.tileTargetY);
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			ModContent.GetInstance<TestStructure>().Generate((int)parameters.Dequeue(), (int)parameters.Dequeue());
+		}
+	}
+	public class List_Worldgen_Testing_Mode : WorldgenTestingMode {
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "List World Generation Sources";
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			Apply(parameters);
