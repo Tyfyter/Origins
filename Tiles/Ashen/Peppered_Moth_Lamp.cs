@@ -36,7 +36,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (Framing.GetTileSafely(i, j).TileFrameY > 0) return;
-			(r, g, b) = FromHexRGB(0xf99e6f).ToVector3() * 0.7f;
+			if (IsOn(Main.tile[i, j])) (r, g, b) = FromHexRGB(0xf99e6f).ToVector3() * 0.7f;
 		}
 		public override void EmitParticles(int i, int j, Tile tile, short tileFrameX, short tileFrameY, Color tileLight, bool visible) {
 			if (tileFrameY == 0 && IsOn(tile) && Main.rand.NextBool(100)) {
