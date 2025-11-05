@@ -2275,6 +2275,7 @@ Biomes: {
 }
 
 CaptureBiomeChoice: {
+	Ashen: "{§Ashen} Factory"
 	Defiled: "{§The_Defiled_Wastelands}"
 	Riven: The {§Riven_Hive}
 }
