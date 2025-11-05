@@ -1173,49 +1173,6 @@ namespace Origins {
 				GetBanner(NPCID.DesertGhoul),
 				GetBanner(NPCID.Zombie)
 			];
-			/*List<int> brine = [];
-			List<int> ashen = [];
-			int[] ashenBiomes = {
-				GetInstance<Ashen_Biome>().Type,
-				GetInstance<Underground_Ashen_Biome>().Type,
-				GetInstance<Ashen_Desert>().Type,
-				GetInstance<Ashen_Underground_Desert>().Type,
-				GetInstance<Ashen_Ice_Biome>().Type,
-				GetInstance<Ashen_Ocean>().Type
-			};
-			List<int> defiled = [];
-			int[] defiledBiomes = {
-				GetInstance<Defiled_Wastelands>().Type,
-				GetInstance<Underground_Defiled_Wastelands_Biome>().Type,
-				GetInstance<Defiled_Wastelands_Desert>().Type,
-				GetInstance<Defiled_Wastelands_Underground_Desert>().Type,
-				GetInstance<Defiled_Wastelands_Ice_Biome>().Type,
-				GetInstance<Defiled_Wastelands_Ocean>().Type
-			};
-			List<int> riven = [];
-			int[] rivenBiomes = {
-				GetInstance<Riven_Hive>().Type,
-				GetInstance<Underground_Riven_Hive_Biome>().Type,
-				GetInstance<Riven_Hive_Desert>().Type,
-				GetInstance<Riven_Hive_Underground_Desert>().Type,
-				GetInstance<Riven_Hive_Ice_Biome>().Type,
-				GetInstance<Riven_Hive_Ocean>().Type
-			};
-			bool FromBiomes(int type, int[] biomes, List<int> biomeList) {
-				for (int i = 0; i < biomes.Length; i++) {
-					if (FromBiome(type, biomes[i], biomeList)) return true;
-				}
-				return false;
-			}
-			bool FromBiome(int type, int biome, List<int> biomeList) {
-				if (GetBanner(type) !> 0) return false;
-				if (bannedBanners.Contains(GetBanner(type))) return false;
-
-				NPC npc = ContentSamples.NpcsByNetId[type];
-				if (npc?.ModNPC is null) return false;
-				return npc.ModNPC.SpawnModBiomes.Contains(biome) && !biomeList.Contains(GetBanner(type, true));
-			}
-			bool FromTBiome<TBiome>(int type, List<int> biomeList) where TBiome : ModBiome => FromBiome(type, GetInstance<TBiome>().Type, biomeList);*/
 
 			RecipeGroup brineGroup = new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Brine_Pool.DisplayName")), [ItemID.IronPickaxe]);
 			RecipeGroup ashenGroup = new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Ashen_Biome.DisplayName")), [ItemID.IronPickaxe]);
@@ -1257,14 +1214,6 @@ namespace Origins {
 						break;
 					}
 				}
-				/*if (FromTBiome<Brine_Pool>(i, brine))
-					brine.Add(GetBanner(i, true));
-				if (FromBiomes(i, ashenBiomes, ashen))
-					ashen.Add(GetBanner(i, true));
-				if (FromBiomes(i, defiledBiomes, defiled))
-					defiled.Add(GetBanner(i, true));
-				if (FromBiomes(i, rivenBiomes, riven))
-					riven.Add(GetBanner(i, true));*/
 			}
 			brineGroup.IconicItemId = brineGroup.ValidItems.First();
 			ashenGroup.IconicItemId = ashenGroup.ValidItems.First();
