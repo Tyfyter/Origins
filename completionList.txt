@@ -512,7 +512,7 @@ ACCESSORIES:
 (^) Dysfunctional Endless Explosives Bag
 (^) Eccentric Stone
 (^) Eitrite Gun Magazine
-(X) Eitrite Watch !!!
+(#, ^2) Eitrite Watch !!!
 (^) Evil Bar Gun Magazines
 (X) Exo-Arms
 (X) Exo-Legs
@@ -1237,14 +1237,14 @@ TILES:
 (^) Silica
 (^) Silicon Ore
 (^) Soot Sandstone
-(☻) Sootgrass !!!
+(^) Sootgrass
 (^) Sootsand
 (X) Space Goo
 (^) Spug Flesh
 (X) Spug Flesh Brick
 (@4, #2) Tainted Stone !!! (temp sprite)
 (X) Tainted Stone Brick
-(☻) Truss Block !!!
+(^) Truss Block
 (^) Type-I Fortified Steel Block
 (^) Type-II Fortified Steel Block
 (^) Type-III Fortified Steel Block
@@ -1271,14 +1271,14 @@ TILES:
 (^) Endowood Wall
 (^) Fiberglass Wall
 (^) Hardened Defiled Sand Wall
-(@, ^3, ▼) Hardened Sootsand Wall !!!
+(^) Hardened Sootsand Wall
 (@, ^3) Lost Brick Wall
 (^) Marrowick Wall
 (X) Molten Steel Wall !!!
 (X) Nova Brick Wall
 (^) Quartz Wall
 (^) Riven Grass Wall
-(@, ^3, ▼) Soot Sandstone Wall !!!
+(^) Soot Sandstone Wall
 (^) Spug Flesh Wall
 (X) Spug Flesh Brick Wall
 (X) Type-III Fortified Steel Wall !!!
@@ -1315,12 +1315,12 @@ TILES:
 (@, ^3, ▼) Witherwood Furniture !!!
 
 (@, ^3, ▼) Ashen Campfire !!!
-(@, ^3, ▼) Ashen Dungeon Chest !!!
+(^) Ashen Dungeon Chest
 (^) Ashen Wire
 (X) Batholith Grindstone
 (X) Bilious Incense
 (^) Brine Dungeon Chest
-(☻, ▼) Cargo Elevator Door !!!
+(^) Cargo Elevator Door
 (^) Cargo Elevator Door (Jammed)
 (^) Chambersite Gem Lock
 (^) Cleansing Station
@@ -1329,7 +1329,7 @@ TILES:
 (^) Defiled Monolith
 (X) Defiled Pylon
 (^) Industrial Door
-(X) Large Storage Container !!!
+(#, ^2) Large Storage Container !!!
 (^) Laser Tag Console
 (#, ^2) Medium Storage Container !!!
 (^) Modular Bunk
@@ -1344,7 +1344,7 @@ TILES:
 (X) Ravel Locker
 (^) Riven Campfire
 (^) Riven Dungeon Chest
-(X) Rusty Locker !!!
+(#, ^2) Rusty Locker !!!
 (#2, ^2) Small Storage Container !!!
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (#2, ^2) Transistor !!! (needs obtain method)
@@ -1428,7 +1428,7 @@ TILES:
 (X) Music Box (Repentance)
 (X) Music Box (Rivenran)
 (^) Music Box (Riven Hive)
-(#2, ^2) Music Box (Smog Storm) !!! (same shape as AS music box, hence why sprites complete)
+(#2, ^2) Music Box (Smog Storm) !!!
 (^) Music Box (The Dive)
 (^) Otherworldly Music Box (Defiled Wastelands)
 
@@ -1547,7 +1547,7 @@ CRITTERS AND FISH:
 (^) Chambersite Squirrel
 (^) Cicada 3301
 (@, #2) Hyrax !!!
-(☻) Peppered Moth
+(#2, ^2) Peppered Moth (animation broken)
 
 (^) Bilemouth
 (^) Bobbit Worm
@@ -1773,14 +1773,14 @@ AMMO:
 
 (^) Resizable Mine VI
 
-(#, @2) Homing Rocket I (needs projectile sprites for all vanilla rocket launchers)
-(#, @2) Homing Rocket II (needs projectile sprites for all vanilla rocket launchers)
+(#, @2) Homing Rocket I (has projectile sprites for all vanilla rocket launchers)
+(#, @2) Homing Rocket II (has projectile sprites for all vanilla rocket launchers)
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
 (^) Valkyrum Bullet
 
 (^) Gray Solution
-(@, ^3) Orange Solution
+(^) Orange Solution
 (^) Teal Solution
 ---
 
@@ -1816,7 +1816,7 @@ CROSS-MOD CONTENT:
 (@, ^3) Suspicious Trash Compactor !!!
 (^) Ashen Renewal
 (^) Ashen Renewal Supreme
-(@, ^3) Ashen "Fake" Altar !!!
+(^) Ashen "Fake" Altar
 (X) Bomber's Soul
 (^) Chambersite Ring
 (^) Defiled Chest
@@ -1829,9 +1829,9 @@ CROSS-MOD CONTENT:
 (^) Encrusted Storage Unit
 (^) Encrusted Storage Upgrade
 (X) Fargo's Unlimited ammo items
-(X) High-powered Green Laser !!!
+(#, ^2) High-powered Green Laser !!!
 (X) Laden Pressure Incantation
-(X) Mech Figurine !!!
+(#, ^2) Mech Figurine !!!
 (^) Keytar
 (^) Riven Chest
 (^) Riven Renewal

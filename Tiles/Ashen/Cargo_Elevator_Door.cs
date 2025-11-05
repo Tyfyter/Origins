@@ -36,7 +36,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.HasOutlines[Type] = false;
 
 			// Names
-			if (this is not Cargo_Elevator_Door_Open) AddMapEntry(new Color(220, 220, 220), CreateMapEntryName());
+			if (this is not Cargo_Elevator_Door_Open) AddMapEntry(new Color(43, 22, 23), CreateMapEntryName());
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);

@@ -150,7 +150,6 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 	}
 	public class Orange_Solution : ModItem {
-		public override string Texture => typeof(Gray_Solution).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}

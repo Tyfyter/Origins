@@ -9,7 +9,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Ashen {
 	public class Ashen_Dungeon_Chest : ModChest, IGlowingModTile {
-		public override string Texture => typeof(Defiled_Dungeon_Chest).GetDefaultTMLName();
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
@@ -21,10 +20,10 @@ namespace Origins.Tiles.Ashen {
 			Main.tileLighted[Type] = true;
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("{$Defiled} Chest");
-			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
+			AddMapEntry(new Color(176, 63, 10), name, MapChestName);
 			name = Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.{Name}_Locked.MapEntry"));
 			// name.SetDefault("Locked {$Defiled} Chest");
-			AddMapEntry(new Color(255, 140, 140), name, MapChestName);
+			AddMapEntry(new Color(176, 63, 10), name, MapChestName);
 			//disableSmartCursor = true;
 			AdjTiles = [TileID.Containers];
 			keyItem = ModContent.ItemType<Ashen_Key>();
@@ -58,7 +57,7 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Locked_Ashen_Dungeon_Chest_Item : Ashen_Dungeon_Chest_Item {
-		public override string Texture => "Origins/Tiles/Defiled/Defiled_Dungeon_Chest_Item";
+		public override string Texture => "Origins/Tiles/Ashen/Ashen_Dungeon_Chest_Item";
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.placeStyle = 1;
