@@ -1,12 +1,9 @@
 ﻿using Origins.Items.Other.Critters;
-using Origins.Items.Weapons.Ammo;
-using Origins.NPCs.Critters;
 using Origins.World.BiomeData;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
