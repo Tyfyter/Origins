@@ -1,26 +1,17 @@
-﻿using CalamityMod.Items.Potions.Alcohol;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Weapons.Melee;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Reflection;
-using Origins.UI;
 using PegasusLib;
 using PegasusLib.Networking;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Security.AccessControl;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Creative;
-using Terraria.GameInput;
 using Terraria.ID;
-using Terraria.IO;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools.Wiring {

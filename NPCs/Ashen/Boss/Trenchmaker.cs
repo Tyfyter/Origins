@@ -2,6 +2,7 @@
 using Origins.Graphics.Primitives;
 using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
+using Origins.Items.Tools.Wiring;
 using Origins.Items.Vanity.BossMasks;
 using Origins.LootConditions;
 using Origins.Music;
@@ -16,6 +17,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
+using System.Linq;
 using System.Text;
 using Terraria;
 using Terraria.GameContent;
@@ -23,6 +25,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Origins.NPCs.StateBossMethods<Origins.NPCs.Ashen.Boss.Trenchmaker>;
 using static Terraria.Utilities.NPCUtils;
@@ -326,6 +329,7 @@ namespace Origins.NPCs.Ashen.Boss {
 
 			normalDropRule.OnSuccess(ItemDropRule.Common(TrophyTileBase.ItemType<Trenchmaker_Trophy>(), 10));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Trenchmaker_Mask>(), 10));
+			normalDropRule.OnSuccess(new ScrewdriverRule(ModContent.ItemType<Screwdriver>(), 4));
 
 			npcLoot.Add(new DropBasedOnExpertMode(
 				normalDropRule,
@@ -437,5 +441,44 @@ namespace Origins.NPCs.Ashen.Boss {
 	}
 	public class TM_Music_Scene_Effect : BossMusicSceneEffect<Trenchmaker> {
 		public override int Music => Origins.Music.AshenBoss;
+	}
+	public class ScrewdriverRule(int itemId, int chanceDenominator, int chanceNumerator = 1) : CommonDrop(itemId, chanceDenominator, chanceNumerator: chanceNumerator) {
+		static bool IsScrewdriver(Item item) => item.ModItem is Screwdriver or Ashen_Grand_Design;
+		public override void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
+			float num = chanceNumerator / (float)chanceDenominator;
+			float dropRate = num * ratesInfo.parentDroprateChance;
+			List<IItemDropRuleCondition> conditions = (ratesInfo.conditions ?? []).ToList();
+			conditions.Add(new Condition());
+			drops.Add(new DropRateInfo(itemId, 1, 1, dropRate, conditions));
+			Chains.ReportDroprates(ChainedRules, num, drops, ratesInfo);
+		}
+		public override ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
+			ItemDropAttemptResult result;
+			if (info.rng.Next(chanceDenominator) >= chanceNumerator) {
+				result = default;
+				result.State = ItemDropAttemptResultState.FailedRandomRoll;
+				return result;
+			}
+			if (NetmodeActive.Server && info.npc is not null) {
+				int item = Item.NewItem(info.npc.GetSource_Loot(), info.npc.position, info.npc.Size, itemId, 1, noBroadcast: true, -1);
+				Main.timeItemSlotCannotBeReusedFor[item] = 54000;
+				for (int i = 0; i < 255; i++) {
+					if (Main.player[i].active && info.npc.playerInteraction[i] && !Main.player[i].HasItemInAnyInventory(IsScrewdriver)) {
+						NetMessage.SendData(MessageID.InstancedItem, i, -1, null, item);
+					}
+				}
+				Main.item[item].active = false;
+			} else if (!info.player.HasItemInAnyInventory(IsScrewdriver)) {
+				CommonCode.DropItem(info, itemId, 1);
+			}
+			result = default;
+			result.State = ItemDropAttemptResultState.Success;
+			return result;
+		}
+		public class Condition : IItemDropRuleCondition {
+			public bool CanDrop(DropAttemptInfo info) => !info.player.HasItemInAnyInventory(IsScrewdriver);
+			public bool CanShowItemDropInUI() => true;
+			public string GetConditionDescription() => Language.GetTextValue("Mods.Origins.Conditions.NoDuplicates");
+		}
 	}
 }

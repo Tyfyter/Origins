@@ -1606,6 +1606,25 @@ namespace Origins {
 				}
 			}
 		}
+		public static bool HasItem(this Item[] collection, Predicate<Item> item) {
+			for (int i = 0; i < collection.Length; i++) {
+				if ((collection[i]?.stack ?? 0) > 0 && item(collection[i])) return true;
+			}
+			return false;
+		}
+
+		public static bool HasItemInAnyInventory(this Player player, Predicate<Item> item) {
+			if (player.inventory.HasItem(item)) return true;
+			if (player.armor.HasItem(item)) return true;
+			if (player.dye.HasItem(item)) return true;
+			if (player.miscEquips.HasItem(item)) return true;
+			if (player.miscDyes.HasItem(item)) return true;
+			if (player.bank.item.HasItem(item)) return true;
+			if (player.bank2.item.HasItem(item)) return true;
+			if (player.bank3.item.HasItem(item)) return true;
+			if (player.bank4.item.HasItem(item)) return true;
+			return false;
+		}
 		#region spritebatch
 		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.End();

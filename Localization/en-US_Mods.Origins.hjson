@@ -33,6 +33,7 @@ Conditions: {
 	DownedChambersiteSentinel: After defeating a Chambersite Sentinel
 	HarpoonCondition: When the player has a Harpoon Gun in their inventory
 	JournalEntry: While you do have the journal and don't have the '{0}' journal entry
+	NoDuplicates: When the player doesn't already have the item
 }
 
 ModMenu: {

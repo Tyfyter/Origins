@@ -760,7 +760,7 @@ TOOLS:
 (^) Parasitic Manipulator
 (^) Piledriver
 (^) Rivenator
-(#, ^2) Screwdriver
+(☻) Screwdriver
 (^) Snatcher
 (^) Stabsmash
 (^) Strainer
