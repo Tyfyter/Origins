@@ -468,6 +468,7 @@ namespace Origins {
 		public int dreamcatcherHoldTime = 0;
 		public Vector2? dreamcatcherWorldPosition = null;
 		public bool pocketDimensionMonolithActive = false;
+		public bool InfoAccMechShowAshenWires = false;
 		#endregion
 
 		#region visuals
@@ -975,6 +976,7 @@ namespace Origins {
 			Dream_Catcher.UpdateVisual(Player, ref dreamcatcherAngle, ref dreamcatcherRotSpeed);
 			if (dreamcatcherHoldTime.Cooldown()) dreamcatcherWorldPosition = null;
 			pocketDimensionMonolithActive = false;
+			InfoAccMechShowAshenWires = false;
 
 			manaShielding = 0f;
 

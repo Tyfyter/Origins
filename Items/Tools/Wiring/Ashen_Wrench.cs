@@ -22,6 +22,9 @@ namespace Origins.Items.Tools.Wiring {
 			Item.shoot = ModContent.ProjectileType<Mod_Wire_Channel>();
 			Item.channel = true;
 		}
+		public override void UpdateInventory(Player player) {
+			player.OriginPlayer().InfoAccMechShowAshenWires = true;
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.ownedProjectileCounts[type] > 0) return false;
 			Projectile.NewProjectile(
@@ -50,6 +53,7 @@ namespace Origins.Items.Tools.Wiring {
 			player.InfoAccMechShowWires = true;
 			player.rulerLine = true;
 			player.rulerGrid = true;
+			player.OriginPlayer().InfoAccMechShowAshenWires = true;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.ownedProjectileCounts[type] > 0) return false;

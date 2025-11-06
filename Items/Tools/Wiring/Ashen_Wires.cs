@@ -59,6 +59,28 @@ namespace Origins.Items.Tools.Wiring {
 			if (!data.HasFlag(WirePetalData.Cutter)) DrawIcon(back, position, backTint);
 			DrawIcon(Texture2D.Value, position, iconTint);
 		}
+		public override IEnumerable<WireMode> SortAfter() => [ModContent.GetInstance<Brown_Wire_Mode>()];
+	}
+	public class White_Wire_Mode : WireMode {
+		AutoLoadingAsset<Texture2D> back = "Origins/Items/Tools/Wiring/Ashen_Wires_BG";
+		public override Color? WireKiteColor => Color.White;
+		public override void SetupSets() {
+			Sets.AshenWires[Type] = true;
+		}
+		public override bool SetWire(int x, int y, bool value) {
+			if (Main.tile[x, y].Get<Ashen_Wire_Data>().HasWhiteWire != value) {
+				Ashen_Wire_Data.SetWire(x, y, 2, value);
+				return true;
+			}
+			return false;
+		}
+		public override void Draw(Vector2 position, bool hovered, WirePetalData data) {
+			GetTints(hovered, data.HasFlag(WirePetalData.Enabled), out Color backTint, out Color iconTint);
+			DrawIcon(TextureAssets.WireUi[hovered.ToInt() + data.HasFlag(WirePetalData.Cutter).ToInt() * 8].Value, position, backTint);
+			if (!data.HasFlag(WirePetalData.Cutter)) DrawIcon(back, position, backTint);
+			DrawIcon(Texture2D.Value, position, iconTint);
+		}
+		public override IEnumerable<WireMode> SortAfter() => [ModContent.GetInstance<Black_Wire_Mode>()];
 	}
 	public class Brown_Wire_Toggle : WireBuilderToggle {
 		public override string Texture => $"{GetType().Namespace.Replace('.','/')}/Ashen_Wire_Builder_Icons";
@@ -78,9 +100,18 @@ namespace Origins.Items.Tools.Wiring {
 			return base.Draw(spriteBatch, ref drawParams);
 		}
 	}
+	public class White_Wire_Toggle : WireBuilderToggle {
+		public override string Texture => $"{GetType().Namespace.Replace('.','/')}/Ashen_Wire_Builder_Icons";
+		public override Position OrderPosition => new After(ModContent.GetInstance<Black_Wire_Toggle>());
+		public override bool Draw(SpriteBatch spriteBatch, ref BuilderToggleDrawParams drawParams) {
+			drawParams.Frame.X = 32;
+			drawParams.Frame.Width = 14;
+			return base.Draw(spriteBatch, ref drawParams);
+		}
+	}
 	public abstract class WireBuilderToggle : BuilderToggle {
 		public override int NumberOfStates => 3;
-		public override bool Active() => Main.LocalPlayer.InfoAccMechShowWires;
+		public override bool Active() => Main.LocalPlayer.OriginPlayer().InfoAccMechShowAshenWires;
 		LocalizedText name;
 		public override void SetStaticDefaults() {
 			name = Language.GetOrRegister($"Mods.{Mod.Name}.BuilderToggle.{Name}");
@@ -145,7 +176,15 @@ namespace Origins.Items.Tools.Wiring {
 			readonly get => GetBit(data, 3);
 			private set => SetBit(value, ref data, 3);
 		}
-		public readonly bool AnyPower => BrownWirePowered || BlackWirePowered;
+		public bool HasWhiteWire {
+			readonly get => GetBit(data, 4);
+			private set => SetBit(value, ref data, 4);
+		}
+		public bool WhiteWirePowered {
+			readonly get => GetBit(data, 5);
+			private set => SetBit(value, ref data, 5);
+		}
+		public readonly bool AnyPower => BrownWirePowered || BlackWirePowered || WhiteWirePowered;
 		public bool IsTilePowered {
 			readonly get => GetBit(data, 7);
 			private set => SetBit(value, ref data, 7);
@@ -184,11 +223,22 @@ namespace Origins.Items.Tools.Wiring {
 			bool wasPowered = data.AnyPower;
 			if (value != data.GetPower(wireType)) SetBit(value, ref data.data, (wireType << 1) + 1);
 			if (data.AnyPower != wasPowered && !WiringMethods._wireSkip.Value.ContainsKey(new(i, j))) {
-				try {
-					HittingAshenWires = true;
-					WiringMethods.HitWireSingle(i, j);
-				} finally {
-					HittingAshenWires = false;
+				bool powerMultiTile = true;
+				if (TileObjectData.GetTileData(Main.tile[i, j]) is TileObjectData tileData) {
+					TileUtils.GetMultiTileTopLeft(i, j, tileData, out int left, out int top);
+					for (int x = 0; x < tileData.Width && powerMultiTile; x++) {
+						for (int y = 0; y < tileData.Height && powerMultiTile; y++) {
+							if (Main.tile[left + x, top + y].Get<Ashen_Wire_Data>().AnyPower == wasPowered) powerMultiTile = false;
+						}
+					}
+				}
+				if (powerMultiTile) {
+					try {
+						HittingAshenWires = true;
+						WiringMethods.HitWireSingle(i, j);
+					} finally {
+						HittingAshenWires = false;
+					}
 				}
 			}
 			Ashen_Wire_System.SendWireData(i, j, Main.myPlayer);
@@ -210,9 +260,11 @@ namespace Origins.Items.Tools.Wiring {
 			if (value) {
 				PropegatePowerState(i, j, 0, value);
 				PropegatePowerState(i, j, 1, value);
+				PropegatePowerState(i, j, 2, value);
 			} else {
 				TryPropegateDepowered(i, j, 0);
 				TryPropegateDepowered(i, j, 1);
+				TryPropegateDepowered(i, j, 2);
 			}
 			if (clearWireSkip) WiringMethods._wireSkip.Value.Clear();
 		}
@@ -234,21 +286,9 @@ namespace Origins.Items.Tools.Wiring {
 			for (int k = 0; k < tiles.Count; k++) SetPowered(tiles[k].X, tiles[k].Y, wireType, value);
 		}
 		public readonly void DrawWires(int i, int j) {
-			/*if (Main.tile[i, j].Get<Ashen_Wire_Data>().IsTilePowered) {
-				Main.spriteBatch.Draw(
-					TextureAssets.MagicPixel.Value,
-					new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y),
-					new Rectangle(0, 0, 16, 16),
-					new Color(183, 81, 0).MultiplyRGBA(Main.MouseTextColorReal.MultiplyRGBA(Main.MouseTextColorReal)) * 0.25f,
-					0f,
-					Vector2.Zero,
-					1f,
-					SpriteEffects.None,
-					0f
-				);
-			}*/
 			DrawWire<Brown_Wire_Toggle>(i, j, 0);
 			DrawWire<Black_Wire_Toggle>(i, j, 1);
+			DrawWire<White_Wire_Toggle>(i, j, 2);
 		}
 		readonly void DrawWire<TBuilderToggle>(int i, int j, int wireType) where TBuilderToggle : WireBuilderToggle {
 			if (GetWire(wireType)) {
@@ -259,7 +299,7 @@ namespace Origins.Items.Tools.Wiring {
 				if (Main.tile[i, j + 1].Get<Ashen_Wire_Data>().GetWire(wireType)) num15 += 72;
 				if (Main.tile[i - 1, j].Get<Ashen_Wire_Data>().GetWire(wireType)) num15 += 144;
 				float colorMult = 1;
-				switch (Main.LocalPlayer.InfoAccMechShowWires ? Main.LocalPlayer.BuilderToggleState<TBuilderToggle>() : 1) {
+				switch (Main.LocalPlayer.OriginPlayer().InfoAccMechShowAshenWires ? Main.LocalPlayer.BuilderToggleState<TBuilderToggle>() : 1) {
 					case 0:
 					color = Color.White;
 					break;

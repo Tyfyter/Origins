@@ -194,6 +194,7 @@ namespace Origins.Tiles.Ashen {
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Transistor>());
 			Item.createTile = -1;
+			Item.mech = true;
 		}
 		public override bool? UseItem(Player player) {
 			if (player.whoAmI != Main.myPlayer || !player.ItemAnimationJustStarted) return false;

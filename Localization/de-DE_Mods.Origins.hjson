@@ -2499,11 +2499,6 @@ Configs: {
 			// Tooltip: Changes how much your screen shakes.
 		}
 
-		OldSoundtrack: {
-			// Label: Volume 1 to Volume 2 Music toggle
-			// Tooltip: Toggles between the different soundtracks of Terraria Origins. 'On' is Vol. 1, 'Off' is Vol. 2.
-		}
-
 		ArtifactMinionHealthbarStyle: {
 			// Label: Artifact minion healthbar style
 			// Tooltip: Choose between having an artifact minions' health displayed below it, below its buff icon, both[ox:,] or selected automatically.
@@ -3226,6 +3221,7 @@ CritType: {
 }
 
 BuilderToggle: {
-	// Black_Wire_Toggle: Black Wires
 	// Brown_Wire_Toggle: Brown Wires
+	// Black_Wire_Toggle: Black Wires
+	// White_Wire_Toggle: White Wires
 }

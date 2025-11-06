@@ -17,6 +17,8 @@ GenericTooltip: {
 	}
 }
 
+// Ashen_Wires: brown, black[ox:,] and white wires
+
 Krunch_Mix: {
 	DisplayName: Knirschessen
 	/* Tooltip:
@@ -7120,7 +7122,7 @@ Screwdriver: {
 	/* Tooltip:
 		'''
 		<right> while holding to edit wire settings
-		Can place brown and black wires
+		Can place {$Ashen_Wires}
 		''' */
 }
 
@@ -7130,7 +7132,7 @@ Ashen_Grand_Design: {
 		'''
 		Allows ultimate control over wires!
 		<right> while holding to edit wire settings
-		Can place brown and black wires
+		Can place {$Ashen_Wires}
 		''' */
 }
 
