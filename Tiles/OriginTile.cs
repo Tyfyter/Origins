@@ -156,6 +156,13 @@ namespace Origins.Tiles {
 				}
 			}
 			public override void Draw(int i, int j, Tile tile, SpriteBatch spriteBatch) {
+				Vector2 offset = new(Main.offScreenRange, Main.offScreenRange);
+				if (Main.drawToScreen) {
+					offset = Vector2.Zero;
+				}
+				Vector2 position = new Vector2(i * 16f, j * 16f) + offset - Main.screenPosition;
+				Color color = GetColor(Lighting.GetColor(i, j));
+				Rectangle frame = new(0, 0, 16, 16);
 				void Do(IEnumerable<Direction> directions) {
 					foreach (Direction direction in directions) {
 						Tile blendTile;
@@ -170,11 +177,11 @@ namespace Origins.Tiles {
 							break;
 							case Direction.Left:
 							blendTile = Framing.GetTileSafely(i - 1, j);
-							if (blendTile.LeftSlope || blendTile.IsHalfBlock) continue;
+							if (blendTile.RightSlope || blendTile.IsHalfBlock) continue;
 							break;
 							case Direction.Right:
 							blendTile = Framing.GetTileSafely(i + 1, j);
-							if (blendTile.RightSlope || blendTile.IsHalfBlock) continue;
+							if (blendTile.LeftSlope || blendTile.IsHalfBlock) continue;
 							break;
 							default:
 							continue;
@@ -186,18 +193,56 @@ namespace Origins.Tiles {
 							dirIndex++;
 							dir >>= 1;
 						}
-						Rectangle frame = new(dirIndex * 18, blendTile.TileFrameNumber * 18, 16, 16);
-						Vector2 offset = new(Main.offScreenRange, Main.offScreenRange);
-						if (Main.drawToScreen) {
-							offset = Vector2.Zero;
-						}
-						Vector2 position = new Vector2(i * 16f, j * 16f) + offset - Main.screenPosition;
-						Color color = GetColor(Lighting.GetColor(i, j));
+						frame.X = dirIndex * 18;
+						frame.Y = blendTile.TileFrameNumber * 18;
 						Texture2D texture = GetPaintedTexture(blendTile.TileColor);
 						spriteBatch.Draw(texture, position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
 					}
 				}
-				Do(GetDirectionsByFrame(tile.TileFrameX / 18, (tile.TileFrameY % parentFrameHeight) / 18).GetFlags());
+				Direction directions = GetDirectionsByFrame(tile.TileFrameX / 18, (tile.TileFrameY % parentFrameHeight) / 18);
+				Do(directions.GetFlags());
+				if (Texture.Width() > 72) {
+					bool down = directions.HasFlag(Direction.Down);
+					bool up = directions.HasFlag(Direction.Up);
+					bool left = directions.HasFlag(Direction.Left);
+					bool right = directions.HasFlag(Direction.Right);
+					if (down && right) {
+						Tile blendTile = Framing.GetTileSafely(i + 1, j + 1);
+						if (blendTile.HasTile && tileTypes[blendTile.TileType] && blendTile.BlockType is BlockType.Solid or BlockType.SlopeUpLeft) {
+							frame.X = 4 * 18;
+							frame.Y = blendTile.TileFrameNumber * 18;
+							Texture2D texture = GetPaintedTexture(blendTile.TileColor);
+							spriteBatch.Draw(texture, position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
+						}
+					}
+					if (down && left) {
+						Tile blendTile = Framing.GetTileSafely(i - 1, j + 1);
+						if (blendTile.HasTile && tileTypes[blendTile.TileType] && blendTile.BlockType is BlockType.Solid or BlockType.SlopeUpLeft) {
+							frame.X = 5 * 18;
+							frame.Y = blendTile.TileFrameNumber * 18;
+							Texture2D texture = GetPaintedTexture(blendTile.TileColor);
+							spriteBatch.Draw(texture, position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
+						}
+					}
+					if (up && right) {
+						Tile blendTile = Framing.GetTileSafely(i + 1, j - 1);
+						if (blendTile.HasTile && tileTypes[blendTile.TileType] && blendTile.Slope is SlopeType.Solid or SlopeType.SlopeDownLeft) {
+							frame.X = 6 * 18;
+							frame.Y = blendTile.TileFrameNumber * 18;
+							Texture2D texture = GetPaintedTexture(blendTile.TileColor);
+							spriteBatch.Draw(texture, position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
+						}
+					}
+					if (up && left) {
+						Tile blendTile = Framing.GetTileSafely(i - 1, j - 1);
+						if (blendTile.HasTile && tileTypes[blendTile.TileType] && blendTile.Slope is SlopeType.Solid or SlopeType.SlopeDownRight) {
+							frame.X = 7 * 18;
+							frame.Y = blendTile.TileFrameNumber * 18;
+							Texture2D texture = GetPaintedTexture(blendTile.TileColor);
+							spriteBatch.Draw(texture, position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
+						}
+					}
+				}
 			}
 			public virtual Color GetColor(Color color) => color;
 		}
