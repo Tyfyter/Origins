@@ -1309,7 +1309,7 @@ TILES:
 (X) Residue Furniture
 (^) Riven Torch
 (^) Riven Water Fountain
-(#2, ^2) Scrap Railing !!!
+(☻) Scrap Railing !!!
 (^) Shadow Torch
 (^) Traffic Cone
 (@, ^3, ▼) Witherwood Furniture !!!

@@ -28,6 +28,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileSolidTop[Type] = false;
 			Main.tileSolid[Type] = false;
 			DustType = DustID.Lihzahrd;
+			RegisterItemDrop(Item.Type);
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			offsetY = 2;
@@ -67,7 +68,10 @@ namespace Origins.Tiles.Ashen {
 					left = Framing.GetTileSafely(i - 1, j);
 					right = Framing.GetTileSafely(i + 1, j);
 					polish = true;
-					if (!Framing.GetTileSafely(i, j).TileIsType(Type)) return false;
+					if (!Framing.GetTileSafely(i, j).TileIsType(Type)) {
+						tile.TileFrameY = 0;
+						return false;
+					}
 				}
 			}
 			below = Framing.GetTileSafely(i, j + 2);
@@ -131,8 +135,12 @@ namespace Origins.Tiles.Ashen {
 			if (tile.TileFrameY == 2 * 18) {
 				switch (tile.TileFrameX / 18) {
 					case 0:
+					case 1:
+					case 2:
 					case 3:
-					case 4: {
+					case 4:
+					case 5:
+					case 6: {
 						if (Framing.GetTileSafely(i, j - 1).TileIsType(Type)) {
 							tile.TileFrameY -= 18;
 						}
