@@ -7275,3 +7275,8 @@ Scrap_Railing_Item: {
 	DisplayName: Scrap Railing
 	Tooltip: ""
 }
+
+Rusty_Locker_Item: {
+	DisplayName: Rusty Locker
+	Tooltip: ""
+}

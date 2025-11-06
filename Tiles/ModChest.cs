@@ -48,21 +48,12 @@ namespace Origins.Tiles {
 		public virtual bool CanUnlockChest(int i, int j) => true;
 
 		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual) {
-			//frameXAdjustment = 36;
 			dustType = this.DustType;
 			return true;
 		}
 
-		public static string MapChestName(string name, int i, int j) {
-			int left = i;
-			int top = j;
-			Tile tile = Main.tile[i, j];
-			if (tile.TileFrameX % 36 != 0) {
-				left--;
-			}
-			if (tile.TileFrameY != 0) {
-				top--;
-			}
+		public string MapChestName(string name, int i, int j) {
+			GetTopLeft(i, j, Main.tile[i, j], out int left, out int top);
 			int chest = Chest.FindChest(left, top);
 			if (chest < 0) {
 				return Language.GetTextValue("LegacyChestType.0");
@@ -78,22 +69,12 @@ namespace Origins.Tiles {
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			//Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */);
 			Chest.DestroyChest(i, j);
 		}
-
 		public override bool RightClick(int i, int j) {
 			Player player = Main.LocalPlayer;
-			Tile tile = Main.tile[i, j];
 			Main.mouseRightRelease = false;
-			int left = i;
-			int top = j;
-			if (tile.TileFrameX % 36 != 0) {
-				left--;
-			}
-			if (tile.TileFrameY != 0) {
-				top--;
-			}
+			GetTopLeft(i, j, Main.tile[i, j], out int left, out int top);
 			if (player.sign >= 0) {
 				SoundEngine.PlaySound(SoundID.MenuClose);
 				player.sign = -1;
@@ -136,18 +117,6 @@ namespace Origins.Tiles {
 							player.OpenChest(i, j, chest);
 							SoundEngine.PlaySound(SoundID.MenuOpen);
 						}
-						/*Main.stackSplit = 600;
-						if (chest == player.chest) {
-							player.chest = -1;
-							SoundEngine.PlaySound(SoundID.MenuClose);
-						} else {
-							player.chest = chest;
-							Main.playerInventory = true;
-							Main.recBigList = false;
-							player.chestX = left;
-							player.chestY = top;
-							SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
-						}*/
 						Recipe.FindRecipes();
 					}
 				}
@@ -157,15 +126,7 @@ namespace Origins.Tiles {
 
 		public override void MouseOver(int i, int j) {
 			Player player = Main.LocalPlayer;
-			Tile tile = Main.tile[i, j];
-			int left = i;
-			int top = j;
-			if (tile.TileFrameX % 36 != 0) {
-				left--;
-			}
-			if (tile.TileFrameY != 0) {
-				top--;
-			}
+			GetTopLeft(i, j, Main.tile[i, j], out int left, out int top);
 			int chestIndex = Chest.FindChest(left, top);
 			player.cursorItemIconID = -1;
 			if (chestIndex < 0) {
@@ -188,8 +149,14 @@ namespace Origins.Tiles {
 			Player player = Main.LocalPlayer;
 			if (player.cursorItemIconText == "") {
 				player.cursorItemIconEnabled = false;
-				player.cursorItemIconID = 0;
+				player.cursorItemIconID = ItemID.None;
 			}
+		}
+		public virtual void GetTopLeft(int i, int j, in Tile tile, out int left, out int top) {
+			left = i;
+			top = j;
+			if (tile.TileFrameX % 36 != 0) left--;
+			if (tile.TileFrameY != 0) top--;
 		}
 	}
 }

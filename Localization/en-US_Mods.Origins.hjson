@@ -2393,6 +2393,7 @@ Tiles: {
 	Cargo_Elevator_Door_Open.MapEntry: Cargo Elevator Door Open
 	Music_Box_AS: Music Box ({§Ashen} Scrapyard)
 	Music_Box_SS: Music Box (Smog Storm)
+	Rusty_Locker.MapEntry: Rusty Locker
 }
 
 MapObject: {

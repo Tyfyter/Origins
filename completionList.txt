@@ -1344,7 +1344,7 @@ TILES:
 (X) Ravel Locker
 (^) Riven Campfire
 (^) Riven Dungeon Chest
-(#, ^2) Rusty Locker !!!
+(☻) Rusty Locker !!!
 (#2, ^2) Small Storage Container !!!
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (#2, ^2) Transistor !!! (needs obtain method)
@@ -1547,7 +1547,7 @@ CRITTERS AND FISH:
 (^) Chambersite Squirrel
 (^) Cicada 3301
 (@, #2) Hyrax !!!
-(#2, ^2) Peppered Moth (animation broken)
+(☻) Peppered Moth (animation fixed)
 
 (^) Bilemouth
 (^) Bobbit Worm
