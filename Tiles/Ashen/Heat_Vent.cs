@@ -39,6 +39,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.HasOutlines[Type] = false;
 			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 
 			// Names
 			AddMapEntry(new Color(220, 220, 220), CreateMapEntryName());
