@@ -1,12 +1,15 @@
 using AltLibrary.Common.Systems;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Core;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Origins.Core.Structures;
 using Origins.Tiles.Riven;
 using Origins.World;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameInput;
@@ -542,14 +545,29 @@ namespace Origins.Items.Other.Testing {
 	}
 	public class Structure_Testing_Mode : WorldgenTestingMode {
 		public override SortOrder SortPosition => SortOrder.New;
-		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Place Structure";
+		DeserializedStructure structure;
+		Task<DeserializedStructure> task;
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			if (structure is null) {
+				if (task is null) {
+					task = DeserializedStructure.AsyncLoad("Origins/World/Structures/TestStructure");
+				} else if (task.IsCompleted) {
+					structure = task.Result;
+					task = null;
+				}
+				return "Loading Structure" + new string('.', (int)(Main.timeForVisualEffects / 45 % 3) + 1);
+			}
+			return "Place Structure";
+		}
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			if (structure is null) return;
 			parameters.Enqueue(Player.tileTargetX);
 			parameters.Enqueue(Player.tileTargetY);
 			Apply(parameters);
 		}
 		public override void Apply(LinkedQueue<object> parameters) {
-			ModContent.GetInstance<TestStructure>().Generate((int)parameters.Dequeue(), (int)parameters.Dequeue());
+			if (structure is null) return;
+			structure.Generate((int)parameters.Dequeue(), (int)parameters.Dequeue());
 		}
 	}
 	public class List_Worldgen_Testing_Mode : WorldgenTestingMode {

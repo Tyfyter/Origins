@@ -1,4 +1,5 @@
-﻿using PegasusLib.Reflection;
+﻿using Origins.NPCs;
+using PegasusLib.Reflection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,42 +9,45 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
-using static Origins.Tiles.ComplexFrameTile;
 
-namespace Origins.Core {
-	public abstract class Structure : ILoadable {
+namespace Origins.Core.Structures {
+	public abstract class Structure {
+		public Mod Mod { get; private set; }
 		readonly List<IRoom> rooms = [];
+		public Structure(Mod mod) {
+			Mod = mod;
+			Load();
+		}
 		public virtual bool IsValidLayout(StructureInstance instance) => true;
 		public virtual bool Break(StructureInstance instance) => instance.rooms.Length > 25;
 		public void Generate(int i, int j) {
 			Dictionary<string, List<(IRoom room, char entrance)>[]> lookup = rooms.GenerateConnectionLookup();
 			WeightedRandom<IRoom> start = new(WorldGen.genRand);
-			for (int k = 0; k < rooms.Count; k++) {
-				if (rooms[k].ValidStart) start.Add(rooms[k]);
-			}
+			for (int k = 0; k < rooms.Count; k++) if (rooms[k].ValidStart) start.Add(rooms[k]);
 			StructureInstance instance;
 			while (start.TryPop(out IRoom startRoom)) {
+				bool canGenerate = false;
 				int tries = 100000;
 				do {
 					instance = new(this);
-					instance.TryAdd(new(startRoom, new Point(i, j) - startRoom.GetOrigin('C')), out instance);
+					if (!instance.TryAdd(new(startRoom, new Point(i, j) - startRoom.GetOrigin('C')), out instance)) break;
 					instance = instance.Sprawl(lookup);
-				} while (!instance.CanGenerate() && --tries > 0);
-				instance.Generate();
+				} while (!(canGenerate = instance.CanGenerate()) && --tries > 0);
+				if (canGenerate) {
+					instance.Generate();
+					break;
+				}
 			}
 		}
 		public void AddRoom(IRoom room) {
 			room.Validate();
 			rooms.Add(room);
 		}
-		public abstract void Load();
-		void ILoadable.Load(Mod mod) {
-			Load();
-			for (int i = 0; i < rooms.Count; i++) rooms[i].Validate();
-		}
-		void ILoadable.Unload() { }
+		public virtual void Load() { }
+		public virtual void SetUp() { }
 	}
 	public interface IRoom {
+		public string Identifier { get; }
 		public string Map { get; }
 		public Dictionary<char, TileDescriptor> Key { get; }
 		public Dictionary<char, RoomSocket> SocketKey { get; }
@@ -60,9 +64,7 @@ namespace Origins.Core {
 				if (layers[i].Length != layers[0].Length) throw new Exception($"Invalid layout map {map}, all layers must have the same length");
 			}
 			char[] impossibleSockets = room.SocketKey.Keys.Where(k => !map.Contains(k)).ToArray();
-			for (int i = 0; i < impossibleSockets.Length; i++) {
-				room.SocketKey.Remove(impossibleSockets[i]);
-			}
+			for (int i = 0; i < impossibleSockets.Length; i++) room.SocketKey.Remove(impossibleSockets[i]);
 			HashSet<char> usedConnections = [];
 			for (int i = 0; i < map.Length; i++) {
 				if (room.SocketKey.ContainsKey(map[i]) && !usedConnections.Add(map[i])) throw new Exception($"Invalid layout map {map}, duplicate connection '{map[i]}'");
@@ -72,9 +74,7 @@ namespace Origins.Core {
 			string[] map = room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 			for (int y = 0; y < map.Length; y++) {
 				for (int x = 0; x < map[y].Length; x++) {
-					if (map[y][x] == entrance) {
-						return new(x, y);
-					}
+					if (map[y][x] == entrance) return new(x, y);
 				}
 			}
 			throw new Exception($"Could not find origin '{entrance}' in map {room.Map}");
@@ -113,18 +113,9 @@ namespace Origins.Core {
 				break;
 			}
 		}
-		public static bool CanGenerate(this List<RoomInstance> rooms) {
-			int[] tileCount = new int[Main.maxTilesX * Main.maxTilesY];
-			for (int i = 0; i < rooms.Count; i++) {
-				if (!rooms[i].CheckPosition(tileCount)) return false;
-			}
-			return true;
-		}
 		public static bool CanGenerate(this RoomInstance[] rooms) {
 			int[] tileCount = new int[Main.maxTilesX * Main.maxTilesY];
-			for (int i = 0; i < rooms.Length; i++) {
-				if (!rooms[i].CheckPosition(tileCount)) return false;
-			}
+			for (int i = 0; i < rooms.Length; i++) if (!rooms[i].CheckPosition(tileCount)) return false;
 			return true;
 		}
 		public static Dictionary<string, List<(IRoom room, char entrance)>[]> GenerateConnectionLookup(this List<IRoom> rooms) {
@@ -165,33 +156,12 @@ namespace Origins.Core {
 		Up,
 		Down
 	}
-	public record class TileDescriptor(Action<RoomInstance, int, int> Action, bool Ignore = false) {
-		public void DoAction(RoomInstance instance, int i, int j) {
-			if (!Ignore) Action(instance, i, j);
+	public record class TileDescriptor(Action<RoomInstance, HashSet<char>, int, int> Action, bool Ignore = false) {
+		public void DoAction(RoomInstance instance, HashSet<char> connectedSockets, int i, int j) {
+			if (!Ignore && Action is not null) Action(instance, connectedSockets, i, j);
 		}
-		public static TileDescriptor Void => new((_, _, _) => { }, true);
-		public static TileDescriptor Empty => new((_, i, j) => {
-			Tile tile = Main.tile[i, j];
-			tile.HasTile = false;
-		});
-		public static TileDescriptor PlaceTile(ushort type) => new((_, i, j) => {
-			if (type == TileID.MagicalIceBlock) {
-				WorldGen.PlaceTile(i, j, TileID.MagicalIceBlock, mute: false, forced: false);
-				Projectile.NewProjectile(
-					Entity.GetSource_None(),
-					new(i * 16 + 8, j * 16 + 8),
-					Vector2.Zero,
-					ProjectileID.IceBlock,
-					0,
-					0,
-					ai0: -1
-				);
-				return;
-			}
-			Tile tile = Main.tile[i, j];
-			tile.HasTile = true;
-			tile.TileType = type;
-		});
+		public static TileDescriptor Deserialize(Mod mod, string data) => SerializableTileDescriptor.Create(mod, data);
+		public static TileDescriptor operator +(TileDescriptor a, TileDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Action + b.Action, a.Ignore && b.Ignore);
 	}
 	public record class RoomSocket(string Key, Direction Direction, bool Optional = false);
 	public class StructureInstance {
@@ -204,7 +174,7 @@ namespace Origins.Core {
 			this.structure = structure;
 			this.rooms = rooms;
 			this.overlapTracker = overlapTracker ?? new(Main.maxTilesX * Main.maxTilesY);
-			this.socketTracker = requiredConnectionTracker ?? new();
+			socketTracker = requiredConnectionTracker ?? new();
 		}
 		public bool CanAdd(RoomInstance room) {
 			BitArray newOverlap = new(overlapTracker);
@@ -276,13 +246,11 @@ namespace Origins.Core {
 			return true;
 		}
 		public void Generate() {
-			for (int k = 0; k < rooms.Length; k++) {
-				rooms[k].Generate();
-			}
+			for (int k = 0; k < rooms.Length; k++) rooms[k].Generate(socketTracker);
 		}
 	}
 	public record class RoomInstance(IRoom Room, Point Position, RepetitionData Repetitions = default) {
-		public void Generate() {
+		public void Generate(SocketTracker socketTracker) {
 			string[] map = Room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 			Position.Deconstruct(out int i, out int j);
 			RepetitionData reps = Repetitions;
@@ -290,10 +258,18 @@ namespace Origins.Core {
 			int minY = j;
 			int maxX = i;
 			int maxY = j;
+			List<(char, RoomSocket, Point)> expectedSockets = [];
+			foreach (KeyValuePair<char, RoomSocket> soc in Room.SocketKey) expectedSockets.Add((soc.Key, soc.Value, Room.GetOrigin(soc.Key)));
+			HashSet<char> connectedSockets = [];
 			do {
+				connectedSockets.Clear();
+				for (int k = 0; k < expectedSockets.Count; k++) {
+					(char key, RoomSocket socket, Point origin) = expectedSockets[k];
+					if (!socketTracker.sockets.Contains((socket, i + origin.X, j + origin.Y))) connectedSockets.Add(key);
+				}
 				for (int y = 0; y < map.Length; y++) {
 					for (int x = 0; x < map[y].Length; x++) {
-						Room.Key[map[y][x]].DoAction(this, i + x, j + y);
+						Room.Key[map[y][x]].DoAction(this, connectedSockets, i + x, j + y);
 					}
 				}
 				Min(ref minX, i);
@@ -302,6 +278,7 @@ namespace Origins.Core {
 				Max(ref maxY, j + map.Length);
 			} while (reps.Repeat(ref i, ref j, map[0].Length, map.Length));
 			Room.PostGenerate(this, new(minX, minY, maxX - minX, maxY - minY));
+			if (!WorldGen.generatingWorld) WorldGen.RangeFrame(minX, minY, maxX, maxY);
 		}
 		public bool CheckPosition(int[] tileCounts) {
 			string[] map = Room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
@@ -311,11 +288,10 @@ namespace Origins.Core {
 			do {
 				for (int y = 0; y < map.Length; y++) {
 					for (int x = 0; x < map[y].Length; x++) {
-						int posIndex = i + x + ((j + y) * Main.maxTilesX);
+						int posIndex = i + x + (j + y) * Main.maxTilesX;
 						Tile existing = Main.tile[i + x, j + y];
-						if (existing.HasTile && !TileID.Sets.CanBeClearedDuringGeneration[existing.TileType]) {
-							tileCounts[posIndex]++;
-						} else if (GenVars.structures is not null) {
+						if (existing.HasTile && !TileID.Sets.CanBeClearedDuringGeneration[existing.TileType]) tileCounts[posIndex]++;
+						else if (GenVars.structures is not null) {
 							tileRect.X = i + x;
 							tileRect.Y = j + y;
 							if (!GenVars.structures.CanPlace(tileRect)) tileCounts[posIndex]++;
@@ -334,16 +310,13 @@ namespace Origins.Core {
 			do {
 				for (int y = 0; y < map.Length; y++) {
 					for (int x = 0; x < map[y].Length; x++) {
-						int posIndex = i + x + ((j + y) * Main.maxTilesX);
+						int posIndex = i + x + (j + y) * Main.maxTilesX;
 						char currentTile = map[y][x];
 						if (Room.Key[currentTile].Ignore) continue;
-						if (Room.SocketKey.TryGetValue(currentTile, out RoomSocket socket)) {
-							socketTracker.Add(socket, i + x, j + y, socket.Optional);
-						} else if (socketTracker.IsImportant(i + x, j + y)) return false;
+						if (Room.SocketKey.TryGetValue(currentTile, out RoomSocket socket)) socketTracker.Add(socket, i + x, j + y, socket.Optional);
+						else if (socketTracker.IsImportant(i + x, j + y)) return false;
 						Tile existing = Main.tile[i + x, j + y];
-						if (existing.HasTile && !TileID.Sets.CanBeClearedDuringGeneration[existing.TileType]) {
-							return false;
-						}
+						if (existing.HasTile && !TileID.Sets.CanBeClearedDuringGeneration[existing.TileType]) return false;
 						if (GenVars.structures is not null) {
 							tileRect.X = i + x;
 							tileRect.Y = j + y;
@@ -411,8 +384,32 @@ namespace Origins.Core {
 		}
 		public SocketTracker Clone() => new() { sockets = sockets.ToList() };
 	}
-	public class TestStructure : Structure {
+	/*public class TestStructure() : Structure(ModContent.GetInstance<Origins>()) {
 		public override void Load() {
+			TileDescriptor empty = TileDescriptor.Empty;
+			AddRoom(new DeserializedRoom(@"
+XXXOTOXXX
+XOOOOOOOX
+XOOOOOOOX
+OOOOOOOOO
+OOOOOOOOO
+LOOOCOOOR
+OOOXXXOOO
+OOOOOOOOO
+OOOOOOOOO
+XOOOOOOOX
+XOOOOOOOX
+XXXOBOXXX",
+new() {
+	['X'] = TileDescriptor.PlaceTile(TileID.MagicalIceBlock),
+	['O'] = TileDescriptor.Empty,
+	['C'] = TileDescriptor.Empty,
+	['T'] = TileDescriptor.Empty,
+	['L'] = TileDescriptor.Empty,
+	['R'] = TileDescriptor.Empty,
+	['B'] = TileDescriptor.Empty
+}
+));
 			AddRoom(new TestRoom(@"
 XXXOTOXXX
 XOOOOOOOX
@@ -581,5 +578,5 @@ XXXOBOXXX";
 				}
 			}
 		}
-	}
+	}*/
 }

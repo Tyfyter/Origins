@@ -1,0 +1,19 @@
+{
+	"TileDescriptors": {
+		"C": "Empty",
+		"O": "Empty",
+		"X": "PlaceTile(Grass)+PaintTile(Red)"
+	},
+	"Rooms": {
+		"TestRoom": {
+			"Map": [
+				"XXXXX",
+				"XOOOX",
+				"XOCOX",
+				"XOOOX",
+				"XXXXX"
+			],
+			"ValidStart": true
+		}
+	}
+}
