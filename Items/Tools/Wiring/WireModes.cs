@@ -66,6 +66,7 @@ namespace Origins.Items.Tools.Wiring {
 			if (!Main.dedServ) Texture2D = ModContent.Request<Texture2D>(Texture);
 			SetStaticDefaults();
 		}
+		public virtual void SetupPreSort() { }
 		public virtual void SetupSets() { }
 		public abstract bool SetWire(int x, int y, bool value);
 		public static void DrawIcon(Texture2D texture, Vector2 position, Color tint) {
@@ -107,6 +108,7 @@ namespace Origins.Items.Tools.Wiring {
 			public static BitArray NormalWires = new(Factory.CreateBoolSet());
 			public static BitArray AshenWires = new(Factory.CreateBoolSet());
 			static Sets() {
+				foreach (WireMode mode in ModContent.GetContent<WireMode>()) mode.SetupPreSort();
 				WireModeLoader.Sort();
 				foreach (WireMode mode in ModContent.GetContent<WireMode>()) mode.SetupSets();
 			}
@@ -250,6 +252,12 @@ namespace Origins.Items.Tools.Wiring {
 		public override int ItemType => itemType.Item1?.Type ?? itemType.Item2;
 		public override bool IsExtra => isExtra;
 		AutoLoadingAsset<Texture2D> customBack = customBack;
+		WireMode[] _sortAfter;
+		WireMode[] _sortBefore;
+		public override void SetupPreSort() {
+			_sortAfter = sortAfter.TrySelect<string, WireMode>(ModContent.TryFind).ToArray();
+			_sortBefore = sortBefore.TrySelect<string, WireMode>(ModContent.TryFind).ToArray();
+		}
 		public override void SetupSets() {
 			Sets.NormalWires[Type] = true;
 		}
@@ -260,8 +268,8 @@ namespace Origins.Items.Tools.Wiring {
 			}
 			return false;
 		}
-		public override IEnumerable<WireMode> SortAfter() => sortAfter.TrySelect<string, WireMode>(ModContent.TryFind);
-		public override IEnumerable<WireMode> SortBefore() => sortBefore.TrySelect<string, WireMode>(ModContent.TryFind);
+		public override IEnumerable<WireMode> SortAfter() => _sortAfter;
+		public override IEnumerable<WireMode> SortBefore() => _sortBefore;
 		public override void Draw(Vector2 position, bool hovered, WirePetalData data) {
 			GetTints(hovered, data.HasFlag(WirePetalData.Enabled), out Color backTint, out Color iconTint);
 			DrawIcon(TextureAssets.WireUi[hovered.ToInt() + data.HasFlag(WirePetalData.Cutter).ToInt() * 8].Value, position, backTint);

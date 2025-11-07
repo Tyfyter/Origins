@@ -3226,3 +3226,8 @@ BuilderToggle: {
 	// Black_Wire_Toggle: Black Wires
 	// White_Wire_Toggle: White Wires
 }
+
+NoveltyWatchTime: {
+	// PartyTime: Party Time! ({0})
+	// ImpendingDoom: "{0} seconds"
+}

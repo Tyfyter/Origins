@@ -1,3 +1,4 @@
+using Origins.Items.Accessories;
 using Origins.UI;
 using System.Collections.Generic;
 using Terraria;
@@ -25,6 +26,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			AddRecipe(20, ALRecipeGroups.CopperWatches);
 			AddRecipe(50, ALRecipeGroups.SilverWatches);
 			AddRecipe(100, ALRecipeGroups.GoldWatches);
+			CreateRecipe(200)
+			.AddIngredient(ItemID.Grenade, 200)
+			.AddIngredient<Eitrite_Watch>()
+			.Register();
 		}
 		void AddRecipe(int yield, RecipeGroup group) =>
 			CreateRecipe(yield)

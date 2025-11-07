@@ -20,6 +20,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			Main.tileShine[Type] = 12000;
 			Main.tileSolid[Type] = true;
 			Main.tileSolidTop[Type] = true;
 			Main.tileNoAttach[Type] = false;

@@ -7280,3 +7280,8 @@ Rusty_Locker_Item: {
 	// DisplayName: Rusty Locker
 	// Tooltip: ""
 }
+
+Eitrite_Watch: {
+	// DisplayName: Eitrite Watch
+	// Tooltip: Tells the time
+}

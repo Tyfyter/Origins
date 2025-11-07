@@ -512,7 +512,7 @@ ACCESSORIES:
 (^) Dysfunctional Endless Explosives Bag
 (^) Eccentric Stone
 (^) Eitrite Gun Magazine
-(#, ^2) Eitrite Watch !!!
+(☻, @2) Eitrite Watch !!!
 (^) Evil Bar Gun Magazines
 (X) Exo-Arms
 (X) Exo-Legs
@@ -1080,7 +1080,7 @@ EXPLOSIVE WEAPONS:
 (^) Flare Launcher
 (^) Flashbang
 (^) Floaty Bomb
-(#2, ^2) Fuel Rod Ball
+(☻) Fuel Rod Ball
 (^) Glass Cannon
 (^) Hand Cannon
 (^) Hand Grenade Launcher

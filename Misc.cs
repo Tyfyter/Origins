@@ -5147,6 +5147,53 @@ namespace Origins {
 		public static bool IsWithinRectangular(this Entity a, Entity b, Vector2 range) => a.Center.Clamp(b.Hitbox).IsWithinRectangular(b.Center.Clamp(a.Hitbox), range);
 		public static bool IsWithinRectangular(this Vector2 a, Vector2 b, Vector2 range) => Abs(a - b).Between(Vector2.Zero, Abs(range));
 		static Vector2 Abs(Vector2 v) => new(Math.Abs(v.X), Math.Abs(v.Y));
+		public static void GetDisplayedDayTime(out string hours, out string minutes, out string seconds, out string half) {
+			// Get current weird time
+			double time = Main.time;
+			if (!Main.dayTime) {
+				// if it's night add this number
+				time += 54000.0;
+			}
+
+			// Divide by seconds in a day * 24
+			time = (time / 86400.0) * 24.0;
+			// Dunno why we're taking 19.5. Something about hour formatting
+			time = time - 7.5 - 12.0;
+			// Format in readable time
+			if (time < 0.0) {
+				time += 24.0;
+			}
+
+			int intTime = (int)time;
+			// Get the decimal points of time.
+			double deltaTime = time - intTime;
+			seconds = ((int)(deltaTime * 60.0 * 60.0) % 60).ToString("0#");
+			// multiply them by 60. Minutes, probably
+			deltaTime = (int)(deltaTime * 60.0);
+			minutes = deltaTime.ToString();
+			if (deltaTime < 10.0) {
+				// if deltaTime is eg "1" (which would cause time to display as HH:M instead of HH:MM)
+				minutes = "0" + minutes;
+			}
+			if (OriginClientConfig.Instance.TwentyFourHourTime) {
+				half = "";
+				hours = intTime.ToString("0#");
+			} else {
+				if (intTime >= 12) {
+					half = " " + Language.GetTextValue("GameUI.TimePastMorning");
+					// This is for AM/PM time rather than 24hour time
+					if (intTime > 0) intTime -= 12;
+				} else {
+					half = " " + Language.GetTextValue("GameUI.TimeAtMorning");
+				}
+
+				if (intTime == 0) {
+					// 0AM = 12AM
+					intTime = 12;
+				}
+				hours = intTime.ToString();
+			}
+		}
 	}
 	public static class NetmodeActive {
 		public static bool SinglePlayer => Main.netMode == NetmodeID.SinglePlayer;
