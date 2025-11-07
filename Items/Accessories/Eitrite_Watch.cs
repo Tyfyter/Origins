@@ -1,7 +1,5 @@
 ﻿using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.Items.Tools.Wiring;
-using Origins.UI;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -10,7 +8,6 @@ using Terraria.GameContent.Events;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Origins.Items.Accessories {
 	//[AutoloadEquip(EquipType.Waist)]

@@ -1,7 +1,6 @@
-﻿using Microsoft.Xna.Framework.Input;
-using PegasusLib;
-using PegasusLib.Reflection;
+﻿using PegasusLib.Reflection;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -9,12 +8,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
-using static Origins.Tiles.ComplexFrameTile;
 
 namespace Origins.Core {
 	public abstract class Structure : ILoadable {
-		protected List<IRoom> rooms = [];
-		public virtual bool IsValidLayout() => true;
+		readonly List<IRoom> rooms = [];
+		public virtual bool IsValidLayout(StructureInstance instance) => true;
 		public void Generate(int i, int j) {
 			Dictionary<string, List<(IRoom room, char entrance)>[]> lookup = rooms.GenerateConnectionLookup();
 			WeightedRandom<IRoom> start = new(WorldGen.genRand);
@@ -22,58 +20,17 @@ namespace Origins.Core {
 				if (rooms[k].ValidStart) start.Add(rooms[k]);
 			}
 			IRoom startRoom = start.Get();
-			List<RoomInstance> roomInstances = [
-				new(startRoom, new Point(i, j) - startRoom.GetOrigin('C'), ['C'])
-			];
-			WeightedRandom<RoomInstance> roomsToExtend = new();
-			roomsToExtend.Add(roomInstances[0]);
-			WeightedRandom<(IRoom room, char entrance)> newRoom = new(WorldGen.genRand);
-
-			int[] tileCount = new int[Main.maxTilesX * Main.maxTilesY];
-			int[] tileCountSwap = new int[Main.maxTilesX * Main.maxTilesY];
-			while (roomInstances.Count < 25 && roomsToExtend.TryPop(out RoomInstance nextRoom)) {
-				foreach (KeyValuePair<char, RoomSocket> socket in nextRoom.Room.SocketKey) {
-					if (socket.Value.Direction == Direction.None) continue;
-					if (nextRoom.ConsumedConnections.Contains(socket.Key)) continue;
-					if (!nextRoom.Room.Map.Contains(socket.Key)) continue;
-
-					Direction direction = socket.Value.Direction;
-					if (direction is Direction.Horizontal or Direction.Vertical) direction = nextRoom.Repetitions.Direction;
-					Point pos = nextRoom.Position + nextRoom.Room.GetOrigin(socket.Key);
-					switch (direction) {
-						case Direction.Right:
-						pos.X++;
-						break;
-						case Direction.Left:
-						pos.X--;
-						break;
-						case Direction.Up:
-						pos.Y--;
-						break;
-						case Direction.Down:
-						pos.Y++;
-						break;
-					}
-
-					newRoom.Clear();
-					foreach ((IRoom room, char entrance) item in lookup[socket.Value.Key][(int)direction]) {
-						newRoom.Add(item);
-					}
-					while (newRoom.TryPop(out (IRoom room, char entrance) room)) {
-						RoomInstance newInstance = new(room.room, pos - room.room.GetOrigin(room.entrance), [room.entrance]);
-						tileCount.CopyTo(tileCountSwap, 0);
-						if (newInstance.CheckPosition(tileCountSwap)) {
-							Utils.Swap(ref tileCount, ref tileCountSwap);
-							roomInstances.Add(newInstance);
-							roomsToExtend.Add(newInstance);
-						}
-					}
-				}
-			}
-			if (!roomInstances.CanGenerate()) return;
-			for (int k = 0; k < roomInstances.Count; k++) {
-				roomInstances[k].Generate();
-			}
+			StructureInstance instance;
+			do {
+				instance = new(this);
+				instance.TryAdd(new(startRoom, new Point(i, j) - startRoom.GetOrigin('C'), []), out instance);
+				instance = instance.Sprawl(lookup);
+			} while (!instance.CanGenerate());
+			instance.Generate();
+		}
+		public void AddRoom(IRoom room) {
+			room.Validate();
+			rooms.Add(room);
 		}
 		public abstract void Load();
 		void ILoadable.Load(Mod mod) {
@@ -106,6 +63,10 @@ namespace Origins.Core {
 			for (int i = 1; i < layers.Length - 1; i++) {
 				if (layers[i].Length != layers[0].Length) throw new Exception($"Invalid layout map {map}, all layers must have the same length");
 			}
+			char[] impossibleSockets = room.SocketKey.Keys.Where(k => !map.Contains(k)).ToArray();
+			for (int i = 0; i < impossibleSockets.Length; i++) {
+				room.SocketKey.Remove(impossibleSockets[i]);
+			}
 			HashSet<char> usedConnections = [];
 			for (int i = 0; i < map.Length; i++) {
 				if (room.SocketKey.ContainsKey(map[i]) && !usedConnections.Add(map[i])) throw new Exception($"Invalid layout map {map}, duplicate connection '{map[i]}'");
@@ -125,30 +86,47 @@ namespace Origins.Core {
 		public static bool IsInverse(this Direction direction, Direction other) {
 			switch (direction) {
 				case Direction.Right:
-				return other is Direction.Left or Direction.Horizontal;
+				return other == Direction.Left;
 
 				case Direction.Left:
-				return other is Direction.Right or Direction.Horizontal;
-
-				case Direction.Horizontal:
-				return other is Direction.Left or Direction.Right or Direction.Horizontal;
+				return other == Direction.Right;
 
 				case Direction.Up:
-				return other is Direction.Down or Direction.Vertical;
+				return other == Direction.Down;
 
 				case Direction.Down:
-				return other is Direction.Up or Direction.Vertical;
-
-				case Direction.Vertical:
-				return other is Direction.Down or Direction.Up or Direction.Vertical;
+				return other == Direction.Up;
 
 				default:
 				return false;
 			}
 		}
+		public static void Nudge(this Direction direction, ref int x, ref int y) {
+			switch (direction) {
+				case Direction.Right:
+				x++;
+				break;
+				case Direction.Left:
+				x--;
+				break;
+				case Direction.Up:
+				y--;
+				break;
+				case Direction.Down:
+				y++;
+				break;
+			}
+		}
 		public static bool CanGenerate(this List<RoomInstance> rooms) {
 			int[] tileCount = new int[Main.maxTilesX * Main.maxTilesY];
 			for (int i = 0; i < rooms.Count; i++) {
+				if (!rooms[i].CheckPosition(tileCount)) return false;
+			}
+			return true;
+		}
+		public static bool CanGenerate(this RoomInstance[] rooms) {
+			int[] tileCount = new int[Main.maxTilesX * Main.maxTilesY];
+			for (int i = 0; i < rooms.Length; i++) {
 				if (!rooms[i].CheckPosition(tileCount)) return false;
 			}
 			return true;
@@ -160,55 +138,41 @@ namespace Origins.Core {
 				foreach ((char key, RoomSocket socket) in room.SocketKey) {
 					if (!room.Map.Contains(key)) continue;
 					if (!lookup.TryGetValue(socket.Key, out List<(IRoom room, char entrance)>[] connections)) {
-						lookup[socket.Key] = connections = new List<(IRoom room, char entrance)>[(int)Direction.Vertical + 1];
+						lookup[socket.Key] = connections = new List<(IRoom room, char entrance)>[(int)Direction.Down + 1];
 						for (int j = 0; j < connections.Length; j++) connections[j] = [];
 					}
 					switch (socket.Direction) {
 						case Direction.Right:
 						connections[(int)Direction.Left].Add((room, key));
-						connections[(int)Direction.Horizontal].Add((room, key));
 						break;
 
 						case Direction.Left:
 						connections[(int)Direction.Right].Add((room, key));
-						connections[(int)Direction.Horizontal].Add((room, key));
-						break;
-
-						case Direction.Horizontal:
-						connections[(int)Direction.Left].Add((room, key));
-						connections[(int)Direction.Right].Add((room, key));
-						connections[(int)Direction.Horizontal].Add((room, key));
 						break;
 
 						case Direction.Up:
 						connections[(int)Direction.Down].Add((room, key));
-						connections[(int)Direction.Vertical].Add((room, key));
 						break;
 
 						case Direction.Down:
 						connections[(int)Direction.Up].Add((room, key));
-						connections[(int)Direction.Vertical].Add((room, key));
-						break;
-
-						case Direction.Vertical:
-						connections[(int)Direction.Down].Add((room, key));
-						connections[(int)Direction.Up].Add((room, key));
-						connections[(int)Direction.Vertical].Add((room, key));
 						break;
 					}
 				}
 			}
 			return lookup;
 		}
+		public static void ConsumeConnection(this RoomInstance[] rooms, int index, char exit, RoomInstance consumedBy) {
+			Dictionary<char, RoomInstance> consumedConnections = rooms[index].ConsumedConnections.ToDictionary();
+			consumedConnections.Add(exit, consumedBy);
+			rooms[index] = rooms[index] with { ConsumedConnections = consumedConnections };
+		}
 	}
 	public enum Direction {
-		None,
 		Right,
 		Left,
-		Horizontal,
 		Up,
-		Down,
-		Vertical
+		Down
 	}
 	public record class TileDescriptor(Action<int, int> Action, bool Ignore = false) {
 		public void DoAction(int i, int j) {
@@ -238,10 +202,95 @@ namespace Origins.Core {
 			tile.TileType = type;
 		});
 	}
-	public record class RoomSocket(string Key, Direction Direction, bool Optional = false) {
-		public static RoomSocket StartPoint => new("Start", Direction.None, true);
+	public record class RoomSocket(string Key, Direction Direction, bool Optional = false);
+	public class StructureInstance {
+		public readonly RoomInstance[] rooms;
+		readonly BitArray overlapTracker;
+		readonly SocketTracker requiredConnectionTracker;
+		readonly Structure structure;
+		public StructureInstance(Structure structure) : this(structure, []) { }
+		StructureInstance(Structure structure, RoomInstance[] rooms, BitArray overlapTracker = null, SocketTracker requiredConnectionTracker = null) {
+			this.structure = structure;
+			this.rooms = rooms;
+			this.overlapTracker = overlapTracker ?? new(Main.maxTilesX * Main.maxTilesY);
+			this.requiredConnectionTracker = requiredConnectionTracker ?? new();
+		}
+		public bool CanAdd(RoomInstance room) {
+			BitArray newOverlap = new(overlapTracker);
+			SocketTracker newSockets = requiredConnectionTracker.Clone();
+			return room.CheckPosition(newOverlap, newSockets);
+		}
+		public bool TryAdd(RoomInstance room, out StructureInstance result) {
+			BitArray newOverlap = new(overlapTracker);
+			SocketTracker newSockets = requiredConnectionTracker.Clone();
+			if (!room.CheckPosition(newOverlap, newSockets)) {
+				result = this;
+				return false;
+			}
+			RoomInstance[] newRooms = new RoomInstance[rooms.Length + 1];
+			rooms.CopyTo(newRooms, 0);
+			newRooms[^1] = room;
+			StructureInstance structureInstance = new(structure, newRooms, newOverlap, newSockets);
+			result = structureInstance;
+			return true;
+		}
+		public StructureInstance Sprawl(Dictionary<string, List<(IRoom room, char entrance)>[]> lookup) {
+			if (rooms.Length > 25) return this;
+			WeightedRandom<(RoomInstance room, int index, char exit)> newRoomOptions = new(WorldGen.genRand);
+			newRoomOptions.Clear();
+			AddRoomsToExtend(newRoomOptions, lookup);
+			if (newRoomOptions.elements.Count <= 0) return this;
+			reselect:
+			if (newRoomOptions.TryPop(out (RoomInstance room, int index, char exit) newRoom)) {
+				if (!TryAdd(newRoom.room, out StructureInstance newInstance)) goto reselect;
+				newInstance.rooms.ConsumeConnection(newRoom.index, newRoom.exit, newRoom.room);
+				return newInstance.Sprawl(lookup);
+			}
+			return this;
+		}
+		public void AddRoomsToExtend(WeightedRandom<(RoomInstance room, int index, char exit)> newRoomOptions, Dictionary<string, List<(IRoom room, char entrance)>[]> lookup) {
+			for (int i = 0; i < rooms.Length; i++) {
+				RoomInstance currentRoom = rooms[i];
+				double weight = 1.0 / currentRoom.Room.SocketKey.Values.Count;
+				foreach (KeyValuePair<char, RoomSocket> socket in currentRoom.Room.SocketKey) {
+					if (currentRoom.ConsumedConnections.ContainsKey(socket.Key)) continue;
+
+					Direction direction = socket.Value.Direction;
+					Point pos = currentRoom.Position + currentRoom.Room.GetOrigin(socket.Key);
+					switch (direction) {
+						case Direction.Right:
+						pos.X++;
+						break;
+						case Direction.Left:
+						pos.X--;
+						break;
+						case Direction.Up:
+						pos.Y--;
+						break;
+						case Direction.Down:
+						pos.Y++;
+						break;
+					}
+					foreach ((IRoom room, char entrance) in lookup[socket.Value.Key][(int)direction]) {
+						RoomInstance newInstance = new(room, pos - room.GetOrigin(entrance), new() { [entrance] = currentRoom });
+						if (CanAdd(newInstance)) newRoomOptions.Add((newInstance, i, socket.Key), weight);
+					}
+				}
+			}
+		}
+		public bool CanGenerate() {
+			if (requiredConnectionTracker.Count > 0) return false;
+			if (!structure.IsValidLayout(this)) return false;
+			if (!rooms.CanGenerate()) return false;
+			return true;
+		}
+		public void Generate() {
+			for (int k = 0; k < rooms.Length; k++) {
+				rooms[k].Generate();
+			}
+		}
 	}
-	public record class RoomInstance(IRoom Room, Point Position, HashSet<char> ConsumedConnections, RepetitionData Repetitions = default) {
+	public record class RoomInstance(IRoom Room, Point Position, Dictionary<char, RoomInstance> ConsumedConnections, RepetitionData Repetitions = default) {
 		public void Generate() {
 			string[] map = Room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 			Position.Deconstruct(out int i, out int j);
@@ -286,6 +335,36 @@ namespace Origins.Core {
 			} while (reps.Repeat(ref i, ref j, map[0].Length, map.Length));
 			return true;
 		}
+		public bool CheckPosition(BitArray overlapTracker, SocketTracker requiredConnectionTracker) {
+			string[] map = Room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+			Position.Deconstruct(out int i, out int j);
+			RepetitionData reps = Repetitions;
+			Rectangle tileRect = new(0, 0, 1, 1);
+			do {
+				for (int y = 0; y < map.Length; y++) {
+					for (int x = 0; x < map[y].Length; x++) {
+						int posIndex = i + x + ((j + y) * Main.maxTilesX);
+						char currentTile = map[y][x];
+						if (Room.Key[currentTile].Ignore) continue;
+						if (Room.SocketKey.TryGetValue(currentTile, out RoomSocket socket)) {
+							requiredConnectionTracker.Add(socket, i + x, j + y);
+						} else if (requiredConnectionTracker.IsImportant(i + x, j + y)) return false;
+						Tile existing = Main.tile[i + x, j + y];
+						if (existing.HasTile && !TileID.Sets.CanBeClearedDuringGeneration[existing.TileType]) {
+							return false;
+						}
+						if (GenVars.structures is not null) {
+							tileRect.X = i + x;
+							tileRect.Y = j + y;
+							if (!GenVars.structures.CanPlace(tileRect)) return false;
+						}
+						if (overlapTracker[posIndex]) return false;
+						overlapTracker[posIndex] = true;
+					}
+				}
+			} while (reps.Repeat(ref i, ref j, map[0].Length, map.Length));
+			return true;
+		}
 	}
 	public record struct RepetitionData(Direction Direction, int Count) {
 		public bool Repeat(ref int i, ref int j, int width, int height) {
@@ -310,9 +389,35 @@ namespace Origins.Core {
 			return true;
 		}
 	}
+	public class SocketTracker {
+		List<(RoomSocket socket, int i, int j)> sockets = [];
+		public int Count => sockets.Count;
+		public void Add(RoomSocket socket, int i, int j) {
+			int x = i;
+			int y = j;
+			socket.Direction.Nudge(ref x, ref y);
+			for (int k = 0; k < sockets.Count; k++) {
+				(RoomSocket socket2, int i2, int j2) = sockets[k];
+				if (i2 == x && j2 == y) {
+					if (socket.Direction.IsInverse(socket2.Direction)) sockets.RemoveAt(k);
+					return;
+				}
+			}
+			sockets.Add((socket, i, j));
+		}
+		public bool IsImportant(int i, int j) {
+			for (int k = 0; k < sockets.Count; k++) {
+				(RoomSocket socket, int i2, int j2) = sockets[k];
+				socket.Direction.Nudge(ref i2, ref j2);
+				if (i2 == i && j2 == j) return true;
+			}
+			return false;
+		}
+		public SocketTracker Clone() => new() { sockets = sockets.ToList() };
+	}
 	public class TestStructure : Structure {
 		public override void Load() {
-			rooms.Add(new TestRoom(@"
+			AddRoom(new TestRoom(@"
 XXXOTOXXX
 XOOOOOOOX
 XOOOOOOOX
@@ -325,7 +430,7 @@ OOOOOOOOO
 XOOOOOOOX
 XOOOOOOOX
 XXXOBOXXX"));
-			rooms.Add(new TestRoom(@"
+			AddRoom(new TestRoom(@"
 XXXXXXXXX
 XOOOOOOOX
 XOOOOOOOX
@@ -338,7 +443,7 @@ XOOOOOOOX
 XOOOOOOOX
 XOOOOOOOX
 XXXOBOXXX"));
-			rooms.Add(new TestRoom(@"
+			AddRoom(new TestRoom(@"
 XXXOTOXXX
 XOOOOOOOX
 XOOOOOOOX
@@ -351,7 +456,7 @@ XOOOOOOOX
 XOOOOOOOX
 XOOOOOOOX
 XXXXXXXXX"));
-			rooms.Add(new TestRoom(@"
+			AddRoom(new TestRoom(@"
 XXXXXXXXX
 XOOOOOOOX
 XOOOOOOOX
@@ -364,7 +469,7 @@ XOOOOOOOO
 XOOOOOOOX
 XOOOOOOOX
 XXXXXXXXX"));
-			rooms.Add(new TestRoom(@"
+			AddRoom(new TestRoom(@"
 XXXXXXXXX
 XOOOOOOOX
 XOOOOOOOX
@@ -377,7 +482,9 @@ OOOOOOOOX
 XOOOOOOOX
 XOOOOOOOX
 XXXXXXXXX"));
+			AddRoom(new TestRequiredRoom());
 		}
+		public override bool IsValidLayout(StructureInstance instance) => instance.rooms.Any(r => r.Room is TestRequiredRoom);
 		public class TestRoom : IRoom {
 			public string Map { get; }
 			public TestRoom(string map) {
@@ -393,15 +500,13 @@ XXXXXXXXX"));
 				['B'] = TileDescriptor.Empty
 			};
 			public Dictionary<char, RoomSocket> SocketKey { get; } = new() {
-				['C'] = RoomSocket.StartPoint,
-				['T'] = new("3Wide", Direction.Up, true),
-				['B'] = new("3Wide", Direction.Down, true),
-				['L'] = new("6Tall", Direction.Left, true),
-				['R'] = new("6Tall", Direction.Right, true),
+				['T'] = new("3Wide", Direction.Up),
+				['B'] = new("3Wide", Direction.Down),
+				['L'] = new("6Tall", Direction.Left),
+				['R'] = new("6Tall", Direction.Right),
 			};
 			public Range RepetitionRange { get; } = 1..1;
 			public bool ValidStart => Map.Contains('C');
-
 			public void PostGenerate(Rectangle area) {
 				for (int x = 0; x < area.Width; x++) {
 					byte color = (byte)(x % (PaintID.NegativePaint + 1));
@@ -412,41 +517,38 @@ XXXXXXXXX"));
 				}
 			}
 		}
-		public class TestRoom2 : IRoom {
-			public string Map { get; } =
-			@"
+		public class TestRequiredRoom : IRoom {
+			public string Map { get; } = @"
 XXXXXXXXX
 XOOOOOOOX
 XOOOOOOOX
-OOOOOOOOO
-OOOOOOOOO
-LOOOCOOOR
-OOOOOOOOO
-OOOOOOOOO
-OOOOOOOOO
+XOOOOOOOO
+XOOOOOOOO
+XOOOOOOOR
+XOOOOOOOO
+XOOOOOOOO
+XOOOOOOOO
 XOOOOOOOX
 XOOOOOOOX
-XXXXXXXXX";
+XXXOBOXXX";
 			public Dictionary<char, TileDescriptor> Key { get; } = new() {
 				['X'] = TileDescriptor.PlaceTile(TileID.MagicalIceBlock),
 				['O'] = TileDescriptor.Empty,
-				['C'] = TileDescriptor.Empty,
-				['L'] = TileDescriptor.Empty,
-				['R'] = TileDescriptor.Empty
+				['R'] = TileDescriptor.Empty,
+				['B'] = TileDescriptor.Empty
 			};
 			public Dictionary<char, RoomSocket> SocketKey { get; } = new() {
 				['C'] = RoomSocket.StartPoint,
-				['L'] = new("6Tall", Direction.Left, true),
-				['R'] = new("6Tall", Direction.Right, true),
+				['B'] = new("3Wide", Direction.Down),
+				['R'] = new("6Tall", Direction.Right),
 			};
 			public Range RepetitionRange { get; } = 1..1;
-			public bool ValidStart => true;
+			public bool ValidStart => false;
 			public void PostGenerate(Rectangle area) {
 				for (int x = 0; x < area.Width; x++) {
 					for (int y = 0; y < area.Height; y++) {
-						byte color = (byte)(y % (PaintID.NegativePaint + 1));
 						Tile tile = Main.tile[area.X + x, area.Y + y];
-						tile.TileColor = color;
+						tile.TileColor = PaintID.NegativePaint;
 					}
 				}
 			}
