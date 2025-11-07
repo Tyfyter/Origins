@@ -264,6 +264,13 @@ namespace Origins {
 			.AddIngredient(ModContent.ItemType<Nova_Fragment>())
 			.Register();
 
+			Recipe.Create(ItemID.Megaphone)
+			.AddIngredient(ItemID.WhiteString)
+			.AddIngredient(ItemID.Squirrel)
+			.AddIngredient(ItemID.Megaphone)
+			.AddCondition(OriginsModIntegrations.AprilFools)
+			.Register();
+
 			//this hook is supposed to be used for adding recipes,
 			//but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
 			Origins.instance.LateLoad();
