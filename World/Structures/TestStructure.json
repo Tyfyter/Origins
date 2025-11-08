@@ -2,18 +2,89 @@
 	"TileDescriptors": {
 		"C": "Empty",
 		"O": "Empty",
-		"X": "PlaceTile(Grass)+PaintTile(Red)"
+		"L": "Empty",
+		"R": "Empty",
+		"X": "PlaceTile(Grass)+PaintTile(Red)",
+		"Y": "PlaceTile(Grass)+PaintTile(Blue)"
 	},
+	"BreakCondition": "MaxRoomCount(15)",
+	"ValidLayoutCheck": "RequireRoom(Required_Hallway)",
 	"Rooms": {
-		"TestRoom": {
+		"Hallway": {
 			"Map": [
 				"XXXXX",
-				"XOOOX",
-				"XOCOX",
-				"XOOOX",
+				"OOOOO",
+				"OOOOO",
+				"OOOOO",
+				"LOCOR",
 				"XXXXX"
 			],
-			"ValidStart": true
+			"SocketKey": {
+				"L": {
+					"Key": "Hallway",
+					"Direction": "Left"
+				},
+				"R": {
+					"Key": "Hallway",
+					"Direction": "Right"
+				}
+			},
+			"RepetitionRange": "0..1",
+			"StartPos": "C"
+		},
+		"Required_Hallway": {
+			"Map": [
+				"YYYYY",
+				"OOOOO",
+				"OOOOO",
+				"OOOOO",
+				"LOOOR",
+				"YYYYY"
+			],
+			"SocketKey": {
+				"L": {
+					"Key": "Hallway",
+					"Direction": "Left"
+				},
+				"R": {
+					"Key": "Hallway",
+					"Direction": "Right"
+				}
+			}
+		},
+		"Hallway_End_Left": {
+			"Map": [
+				"XXXXX",
+				"XOOOO",
+				"XOOOO",
+				"XOOOO",
+				"XOCOR",
+				"XXXXX"
+			],
+			"SocketKey": {
+				"R": {
+					"Key": "Hallway",
+					"Direction": "Right"
+				}
+			},
+			"StartPos": "C"
+		},
+		"Hallway_End_Right": {
+			"Map": [
+				"XXXXX",
+				"OOOOX",
+				"OOOOX",
+				"OOOOX",
+				"LOCOX",
+				"XXXXX"
+			],
+			"SocketKey": {
+				"L": {
+					"Key": "Hallway",
+					"Direction": "Left"
+				}
+			},
+			"StartPos": "C"
 		}
 	}
 }

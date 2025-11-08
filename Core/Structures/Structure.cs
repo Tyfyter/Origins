@@ -1,4 +1,6 @@
-﻿using Origins.NPCs;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Origins.NPCs;
 using PegasusLib.Reflection;
 using System;
 using System.Collections;
@@ -14,23 +16,38 @@ namespace Origins.Core.Structures {
 	public abstract class Structure {
 		public Mod Mod { get; private set; }
 		readonly List<IRoom> rooms = [];
-		public Structure(Mod mod) {
+		public Structure(Mod mod, string fileName) {
 			Mod = mod;
 			Load();
+			KeyValuePair<string, List<(IRoom room, char entrance)>[]>[] lookup = rooms.GenerateConnectionLookup().ToArray();
+			List<string> irresolvableSockets = [];
+			for (int i = 0; i < lookup.Length; i++) {
+				(string name, List<(IRoom room, char entrance)>[] forKey) = lookup[i];
+				bool right = forKey[(int)Direction.Right].Count > 0;
+				bool left = forKey[(int)Direction.Left].Count > 0;
+				if (right != left) irresolvableSockets.Add($"{name}_{(left ? Direction.Right : Direction.Left)}");
+
+				bool up = forKey[(int)Direction.Up].Count > 0;
+				bool down = forKey[(int)Direction.Down].Count > 0;
+				if (up != down) irresolvableSockets.Add($"{name}_{(down ? Direction.Up : Direction.Down)}");
+			}
+			if (irresolvableSockets.Count > 0) throw new FormatException($"{fileName} has irresolvable sockets: [{string.Join(", ", irresolvableSockets)}]");
 		}
 		public virtual bool IsValidLayout(StructureInstance instance) => true;
 		public virtual bool Break(StructureInstance instance) => instance.rooms.Length > 25;
 		public void Generate(int i, int j) {
 			Dictionary<string, List<(IRoom room, char entrance)>[]> lookup = rooms.GenerateConnectionLookup();
 			WeightedRandom<IRoom> start = new(WorldGen.genRand);
-			for (int k = 0; k < rooms.Count; k++) if (rooms[k].ValidStart) start.Add(rooms[k]);
+			for (int k = 0; k < rooms.Count; k++) {
+				if (rooms[k].StartPos != char.MinValue) start.Add(rooms[k]);
+			}
 			StructureInstance instance;
 			while (start.TryPop(out IRoom startRoom)) {
 				bool canGenerate = false;
 				int tries = 100000;
 				do {
 					instance = new(this);
-					if (!instance.TryAdd(new(startRoom, new Point(i, j) - startRoom.GetOrigin('C')), out instance)) break;
+					if (!instance.TryAdd(new(startRoom, new Point(i, j) - startRoom.GetOrigin(startRoom.StartPos)), out instance)) break;
 					instance = instance.Sprawl(lookup);
 				} while (!(canGenerate = instance.CanGenerate()) && --tries > 0);
 				if (canGenerate) {
@@ -53,8 +70,9 @@ namespace Origins.Core.Structures {
 		public Dictionary<char, RoomSocket> SocketKey { get; }
 		public Range RepetitionRange { get; }
 		public IEnumerable<Direction> GetRepetitionDirections(Direction connectionDirection) => [connectionDirection];
-		public bool ValidStart { get; }
-		public void PostGenerate(RoomInstance instance, Rectangle area) { }
+		public char StartPos { get; }
+		public void PostGenerate(PostGenerateParameters parameters) { }
+		public record struct PostGenerateParameters(RoomInstance Instance, Rectangle Area);
 	}
 	public static class RoomExtensions {
 		public static void Validate(this IRoom room) {
@@ -149,6 +167,10 @@ namespace Origins.Core.Structures {
 			}
 			return lookup;
 		}
+		public static TOut Accumulate<TIn, TOut>(this Accumulator<TIn, TOut> accumulator, TIn input, TOut startValue = default) {
+			accumulator(input, ref startValue);
+			return startValue;
+		}
 	}
 	public enum Direction {
 		Right,
@@ -163,7 +185,66 @@ namespace Origins.Core.Structures {
 		public static TileDescriptor Deserialize(Mod mod, string data) => SerializableTileDescriptor.Create(mod, data);
 		public static TileDescriptor operator +(TileDescriptor a, TileDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Action + b.Action, a.Ignore && b.Ignore);
 	}
-	public record class RoomSocket(string Key, Direction Direction, bool Optional = false);
+	public record class RoomSocket(string Key, Direction Direction, bool Optional = false) {
+		public class RoomSocketConverter : JsonConverter {
+			public override bool CanConvert(Type objectType) {
+				ArgumentNullException.ThrowIfNull(objectType, nameof(objectType));
+				return objectType == typeof(RoomSocket);
+			}
+			public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer) {
+				if (reader.TokenType != JsonToken.StartObject) throw new FormatException();
+				string[] parts = reader.Value.ToString().Split("..", StringSplitOptions.TrimEntries); // keep empty values
+				if (parts.Length != 2) throw new FormatException();
+				_ = int.TryParse(parts[0], out int start);
+				_ = int.TryParse(parts[1], out int end);
+				string Key = null;
+				Direction? Direction = null;
+				bool Optional = false;
+				while (reader.Read()) {
+					switch (reader.TokenType) {
+						case JsonToken.Comment: break;
+						case JsonToken.PropertyName:
+						switch (reader.Value.ToString()) {
+							case nameof(Key):
+							Key = reader.ReadAsString();
+							break;
+
+							case nameof(Direction):
+							Direction = Enum.Parse<Direction>(reader.ReadAsString());
+							break;
+
+							case nameof(Optional):
+							Optional = reader.ReadAsBoolean().Value;
+							break;
+							
+							default:
+							throw new FormatException($"{reader.Value} is not a valid property name of {nameof(RoomSocket)}");
+						}
+						break;
+						case JsonToken.EndObject:
+						if (Key is null) throw new FormatException($"{nameof(Key)} must be specified");
+						if (Direction is null) throw new FormatException($"{nameof(Direction)} must be specified");
+						return new RoomSocket(Key, Direction.Value, Optional);
+						default:
+						throw new FormatException();
+					}
+				}
+				throw new FormatException();
+			}
+
+			public override void WriteJson(JsonWriter writer, object _value, JsonSerializer serializer) {
+				if (_value is not RoomSocket value) throw new NotSupportedException($"{nameof(RoomSocketConverter)} cannot write {_value.GetType()}");
+				writer.WriteStartObject();
+				writer.WritePropertyName(nameof(Key));
+				writer.WriteValue(value.Key);
+				writer.WritePropertyName(nameof(Direction));
+				writer.WriteValue(value.Direction.ToString());
+				writer.WritePropertyName(nameof(Optional));
+				writer.WriteValue(value.Optional);
+				writer.WriteEndObject();
+			}
+		}
+	}
 	public class StructureInstance {
 		public readonly RoomInstance[] rooms;
 		readonly BitArray overlapTracker;
@@ -277,7 +358,7 @@ namespace Origins.Core.Structures {
 				Max(ref maxX, i + map[0].Length);
 				Max(ref maxY, j + map.Length);
 			} while (reps.Repeat(ref i, ref j, map[0].Length, map.Length));
-			Room.PostGenerate(this, new(minX, minY, maxX - minX, maxY - minY));
+			Room.PostGenerate(new(this, new(minX, minY, maxX - minX, maxY - minY)));
 			if (!WorldGen.generatingWorld) WorldGen.RangeFrame(minX, minY, maxX, maxY);
 		}
 		public bool CheckPosition(int[] tileCounts) {

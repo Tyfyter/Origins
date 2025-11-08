@@ -8,6 +8,10 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<ItemGroup>
+		<UpToDateCheckInput Include="World/Structures/*.json" />
+		<UpToDateCheckInput Include="effects/*.fx" />
+	</ItemGroup>
+	<ItemGroup>
 		<Reference Include="AlchemistNPCLite">
 			<HintPath>..\ModAssemblies\AlchemistNPCLite_v1.9.8.dll</HintPath>
 		</Reference>

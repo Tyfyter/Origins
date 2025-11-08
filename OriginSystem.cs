@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Core.Structures;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
@@ -28,6 +29,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.Chat;
 using Terraria.DataStructures;
@@ -69,6 +71,14 @@ namespace Origins {
 			}
 			queuedUIStates = null;
 			DamageClasses.Patch();
+#if DEBUG
+			Task.Run(() => {
+				foreach (string structure in Mod.GetFileNames()) {
+					if (!structure.StartsWith("World/Structures/")) continue;
+					DeserializedStructure.Load($"{nameof(Origins)}/{structure}");
+				}
+			});
+#endif
 		}
 		public override void Unload() {
 			queuedUIStates = null;
