@@ -1242,7 +1242,7 @@ TILES:
 (X) Space Goo
 (^) Spug Flesh
 (X) Spug Flesh Brick
-(@4, #2) Tainted Stone !!! (temp sprite)
+(^) Tainted Stone
 (X) Tainted Stone Brick
 (^) Truss Block
 (^) Type-I Fortified Steel Block
@@ -1414,8 +1414,8 @@ TILES:
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
-(X) Music Box (Ashen Factory) !!!
-(X) Music Box (Ashen Mines) !!!
+(@, $2, ^3) Music Box (Ashen Factory) !!!
+(@, $2, ^3) Music Box (Ashen Mines) !!!
 (#2, ^2) Music Box (Ashen Scrapyard) !!!
 (^) Music Box (Brine Pool)
 (^) Music Box (Defiled Caverns)

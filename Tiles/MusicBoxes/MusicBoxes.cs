@@ -124,6 +124,7 @@ namespace Origins.Tiles.MusicBoxes {
 		public bool CanExportStats => ModLoader.HasMod("OriginsMusic");
 	}
 	#endregion
+	#region Normal
 	public class Music_Box_DW : Music_Box {
 		public override Color MapColor => new Color(255, 255, 255);
 		public override int MusicSlot => Origins.Music.Defiled;
@@ -276,6 +277,176 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
+	public class Music_Box_FU : Music_Box {
+		public override Color MapColor => new Color(146, 253, 250);
+		public override int MusicSlot => Origins.Music.Fiberglass;
+		public override int DustType => DustID.Glass;
+	}
+	public class Music_Box_TD : Music_Box {
+		public override Color MapColor => new(87, 35, 178);
+		public override int MusicSlot => Origins.Music.TheDive;
+		public override int DustType => DustID.GemAmethyst;
+		public override Music_Box_Item CreateItem() => new Music_Box_TD_Item(this);
+		public class Music_Box_TD_Item(Music_Box tile) : Music_Box_Item(tile) {
+			AutoLoadingAsset<Texture2D> glowTexture = "Terraria/Images/Misc/Perlin";
+			public static ArmorShaderData Shader { get; private set; }
+			bool ArabelCage = false;
+			public override void SetStaticDefaults() {
+				Shader = new ArmorShaderData(
+					Mod.Assets.Request<Effect>("Effects/Item_Caustics"),
+					"The_Dive"
+				);
+			}
+			public override void OnSpawn(IEntitySource source) => ArabelCage = source.Context == "ArabelCage";
+			public override void Update(ref float gravity, ref float maxFallSpeed) {
+				if (ArabelCage) {
+					if (!NPC.AnyNPCs(NPCType<Shimmer_Construct>())) {
+						Item.TurnToAir();
+					} else if (!Item.shimmered) {
+						Item.shimmered = true;
+						Item.shimmerTime = 1;
+					}
+				}
+			}
+			public override bool OnPickup(Player player) {
+				ArabelCage = false;
+				return base.OnPickup(player);
+			}
+			public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
+				if (ArabelCage) {
+					SpriteBatchState state = spriteBatch.GetState();
+					try {
+						spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate);
+						Texture2D texture = glowTexture;
+						DrawData data = new() {
+							texture = texture,
+							position = Item.Center - Main.screenPosition,
+							color = Color.Plum,
+							rotation = 0f,
+							scale = new Vector2(scale),
+							origin = texture.Size() * 0.5f
+						};
+						Shader.Apply(Item, data);
+						data.Draw(spriteBatch);
+					} finally {
+						spriteBatch.Restart(state);
+					}
+				}
+			}
+			public override void NetSend(BinaryWriter writer) {
+				writer.Write(ArabelCage);
+			}
+			public override void NetReceive(BinaryReader reader) {
+				ArabelCage = reader.ReadBoolean();
+			}
+		}
+	}
+	public class Music_Box_AS : Music_Box, IGlowingModTile {
+		public override Color MapColor => FromHexRGB(0x460013);
+		public override int MusicSlot => Origins.Music.AshenScrapyard;
+		public override int DustType => Ashen_Biome.DefaultTileDust;
+		public override void Load() {
+			base.Load();
+			this.SetupGlowKeys();
+		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			if (!Main.dedServ) GlowTexture = Request<Texture2D>(Texture + "_Glow");
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (Main.tile[i, j].TileFrameX > 2 * 18) {
+				r = 1f;
+				g = 0.1f;
+				b = 0.05f;
+			}
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (tile.TileFrameX > 2 * 18) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f));
+		}
+	}
+	public class Music_Box_SS : Music_Box, IGlowingModTile {
+		public override Color MapColor => FromHexRGB(0x0A0606);
+		public override int MusicSlot => Origins.Music.SmogStorm;
+		public override int DustType => DustID.Asphalt;
+		public override void Load() {
+			base.Load();
+			this.SetupGlowKeys();
+		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			if (!Main.dedServ) GlowTexture = Request<Texture2D>(typeof(Music_Box_AS).GetDefaultTMLName() + "_Glow");
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (Main.tile[i, j].TileFrameX > 2 * 18) {
+				r = 0.05f;
+				g = 0.03f;
+				b = 0.00f;
+			}
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (tile.TileFrameX > 2 * 18) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f) * 0.5f);
+		}
+	}
+	public class Music_Box_AF : Music_Box, IGlowingModTile {
+		public override Color MapColor => FromHexRGB(0x460013);
+		public override int MusicSlot => Origins.Music.AshenFactory;
+		public override int DustType => Ashen_Biome.DefaultTileDust;
+		public override void Load() {
+			base.Load();
+			this.SetupGlowKeys();
+		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			if (!Main.dedServ) GlowTexture = Request<Texture2D>(Texture + "_Glow");
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (Main.tile[i, j].TileFrameX > 2 * 18) {
+				r = 1f;
+				g = 0.1f;
+				b = 0.05f;
+			}
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (tile.TileFrameX > 2 * 18) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f));
+		}
+	}
+	public class Music_Box_AM : Music_Box, IGlowingModTile {
+		public override Color MapColor => FromHexRGB(0x460013);
+		public override int MusicSlot => Origins.Music.AshenMines;
+		public override int DustType => Ashen_Biome.DefaultTileDust;
+		public override void Load() {
+			base.Load();
+			this.SetupGlowKeys();
+		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			if (!Main.dedServ) GlowTexture = Request<Texture2D>(typeof(Music_Box_AS).GetDefaultTMLName() + "_Glow");
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (Main.tile[i, j].TileFrameX > 2 * 18) {
+				r = 0.05f;
+				g = 0.03f;
+				b = 0.00f;
+			}
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (tile.TileFrameX > 2 * 18) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f) * 0.5f);
+		}
+	}
+	#endregion Normal
+	#region Ancient
 	public class Ancient_Music_Box_DW : Music_Box {
 		public override string[] Categories => [
 			WikiCategories.Hardmode
@@ -449,70 +620,8 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-	public class Music_Box_FU : Music_Box {
-		public override Color MapColor => new Color(146, 253, 250);
-		public override int MusicSlot => Origins.Music.Fiberglass;
-		public override int DustType => DustID.Glass;
-	}
-	public class Music_Box_TD : Music_Box {
-		public override Color MapColor => new(87, 35, 178);
-		public override int MusicSlot => Origins.Music.TheDive;
-		public override int DustType => DustID.GemAmethyst;
-		public override Music_Box_Item CreateItem() => new Music_Box_TD_Item(this);
-		public class Music_Box_TD_Item(Music_Box tile) : Music_Box_Item(tile) {
-			AutoLoadingAsset<Texture2D> glowTexture = "Terraria/Images/Misc/Perlin";
-			public static ArmorShaderData Shader { get; private set; }
-			bool ArabelCage = false;
-			public override void SetStaticDefaults() {
-				Shader = new ArmorShaderData(
-					Mod.Assets.Request<Effect>("Effects/Item_Caustics"),
-					"The_Dive"
-				);
-			}
-			public override void OnSpawn(IEntitySource source) => ArabelCage = source.Context == "ArabelCage";
-			public override void Update(ref float gravity, ref float maxFallSpeed) {
-				if (ArabelCage) {
-					if (!NPC.AnyNPCs(NPCType<Shimmer_Construct>())) {
-						Item.TurnToAir();
-					} else if (!Item.shimmered) {
-						Item.shimmered = true;
-						Item.shimmerTime = 1;
-					}
-				}
-			}
-			public override bool OnPickup(Player player) {
-				ArabelCage = false;
-				return base.OnPickup(player);
-			}
-			public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
-				if (ArabelCage) {
-					SpriteBatchState state = spriteBatch.GetState();
-					try {
-						spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate);
-						Texture2D texture = glowTexture;
-						DrawData data = new() {
-							texture = texture,
-							position = Item.Center - Main.screenPosition,
-							color = Color.Plum,
-							rotation = 0f,
-							scale = new Vector2(scale),
-							origin = texture.Size() * 0.5f
-						};
-						Shader.Apply(Item, data);
-						data.Draw(spriteBatch);
-					} finally {
-						spriteBatch.Restart(state);
-					}
-				}
-			}
-			public override void NetSend(BinaryWriter writer) {
-				writer.Write(ArabelCage);
-			}
-			public override void NetReceive(BinaryReader reader) {
-				ArabelCage = reader.ReadBoolean();
-			}
-		}
-	}
+	#endregion Ancient
+	#region Otherworldly
 	public class Otherworldly_Music_Box_DW : Music_Box {
 		public override string[] Categories => [
 			WikiCategories.Hardmode
@@ -534,56 +643,5 @@ namespace Origins.Tiles.MusicBoxes {
 			if (Main.tile[i, j].TileFrameX < 36) frameYOffset = 0;
 		}
 	}
-	public class Music_Box_AS : Music_Box, IGlowingModTile {
-		public override Color MapColor => FromHexRGB(0x460013);
-		public override int MusicSlot => Origins.Music.AshenScrapyard;
-		public override int DustType => Defiled_Wastelands.DefaultTileDust;
-		public override void Load() {
-			base.Load();
-			this.SetupGlowKeys();
-		}
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			if (!Main.dedServ) GlowTexture = Request<Texture2D>(Texture + "_Glow");
-		}
-		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			if (Main.tile[i, j].TileFrameX > 2 * 18) {
-				r = 1f;
-				g = 0.1f;
-				b = 0.05f;
-			}
-		}
-		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
-		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
-		public Color GlowColor => Color.White;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (tile.TileFrameX > 2 * 18) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f));
-		}
-	}
-	public class Music_Box_SS : Music_Box, IGlowingModTile {
-		public override Color MapColor => FromHexRGB(0x0A0606);
-		public override int MusicSlot => Origins.Music.SmogStorm;
-		public override int DustType => DustID.Asphalt;
-		public override void Load() {
-			base.Load();
-			this.SetupGlowKeys();
-		}
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			if (!Main.dedServ) GlowTexture = Request<Texture2D>(typeof(Music_Box_AS).GetDefaultTMLName() + "_Glow");
-		}
-		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			if (Main.tile[i, j].TileFrameX > 2 * 18) {
-				r = 0.05f;
-				g = 0.03f;
-				b = 0.00f;
-			}
-		}
-		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
-		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
-		public Color GlowColor => Color.White;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (tile.TileFrameX > 2 * 18) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f) * 0.5f);
-		}
-	}
+	#endregion Otherworldly
 }
