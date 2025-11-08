@@ -332,6 +332,7 @@ namespace Origins {
 			public static MultitileCollisionOffsetter[] MultitileCollisionOffset { get; } = TileID.Sets.Factory.CreateCustomSet<MultitileCollisionOffsetter>(null);
 			public static SlowdownPercent[] MinionSlowdown { get; } = TileID.Sets.Factory.CreateCustomSet<SlowdownPercent>(0);
 			public static bool[] DisableHoiking { get; } = TileID.Sets.Factory.CreateBoolSet(false);
+			public static Point?[] StructureSerializer_PlaceAtFrame { get; } = TileID.Sets.Factory.CreateCustomSet<Point?>(null);
 			internal static void Initialize() {
 				try {
 					IL_Collision.SlopeCollision += IL_Collision_SlopeCollision;

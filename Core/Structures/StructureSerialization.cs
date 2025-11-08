@@ -15,6 +15,18 @@ using static Origins.Core.Structures.IRoom;
 
 namespace Origins.Core.Structures {
 	public abstract class SerializableTileDescriptor : SerializableDescriptor<SerializableTileDescriptor, TileDescriptor> {
+		static Accumulator<Tile, string> Serializer = null;
+		protected static void AddSerializer(Func<Tile, string> serializer) {
+			Serializer += (Tile tile, ref string data) => {
+				string newDesc = serializer(tile);
+				if (string.IsNullOrWhiteSpace(newDesc)) return;
+				if (data is null) {
+					data = newDesc;
+				} else {
+					data += "+" + newDesc;
+				}
+			};
+		}
 		protected sealed override void Register() {
 			ModTypeLookup<SerializableTileDescriptor>.Register(this);
 		}
@@ -24,6 +36,7 @@ namespace Origins.Core.Structures {
 			for (int i = 0; i < descriptors.Length; i++) descriptor += CreateSingle(mod, descriptors[i]);
 			return descriptor;
 		}
+		public static string Serialize(Tile tile) => Serializer.Accumulate(tile);
 	}
 	public abstract class PostGenerateDescriptor : ModType {
 		protected sealed override void Register() {

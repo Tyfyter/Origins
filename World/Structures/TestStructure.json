@@ -5,7 +5,9 @@
 		"L": "Empty",
 		"R": "Empty",
 		"X": "PlaceTile(Grass)+PaintTile(Red)",
-		"Y": "PlaceTile(Grass)+PaintTile(Blue)"
+		"Y": "PlaceTile(Grass)+PaintTile(Blue)",
+		"_": "PlaceTile(Grass)+PaintTile(Blue)+SlopeTile(HalfBlock)",
+		"V": "PlaceSpecialTile(Origins/Heat_Vent)"
 	},
 	"BreakCondition": "MaxRoomCount(15)",
 	"ValidLayoutCheck": "RequireRoom(Required_Hallway)",
@@ -13,6 +15,9 @@
 		"Hallway": {
 			"Map": [
 				"XXXXX",
+				"OOOOO",
+				"OOOOO",
+				"OOOOO",
 				"OOOOO",
 				"OOOOO",
 				"OOOOO",
@@ -34,11 +39,14 @@
 		},
 		"Required_Hallway": {
 			"Map": [
-				"YYYYY",
+				"_____",
 				"OOOOO",
 				"OOOOO",
 				"OOOOO",
-				"LOOOR",
+				"OOOOO",
+				"OOOOO",
+				"OOOOO",
+				"LOVOR",
 				"YYYYY"
 			],
 			"Weight": "999*WithoutRoom(Required_Hallway)",
@@ -59,6 +67,9 @@
 				"XOOOO",
 				"XOOOO",
 				"XOOOO",
+				"XOOOO",
+				"XOOOO",
+				"XOOOO",
 				"XOCOR",
 				"XXXXX"
 			],
@@ -73,6 +84,9 @@
 		"Hallway_End_Right": {
 			"Map": [
 				"XXXXX",
+				"OOOOX",
+				"OOOOX",
+				"OOOOX",
 				"OOOOX",
 				"OOOOX",
 				"OOOOX",

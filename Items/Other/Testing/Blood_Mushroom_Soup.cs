@@ -6,6 +6,7 @@ using Origins.Core.Structures;
 using Origins.Tiles.Riven;
 using Origins.World;
 using Origins.World.BiomeData;
+using ReLogic.OS;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -568,6 +569,19 @@ namespace Origins.Items.Other.Testing {
 		public override void Apply(LinkedQueue<object> parameters) {
 			if (structure is null) return;
 			structure.Generate((int)parameters.Dequeue(), (int)parameters.Dequeue());
+		}
+	}
+	public class Structure_Serialization_Testing_Mode : WorldgenTestingMode {
+		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Pick Tile";
+		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
+			parameters.Enqueue(Player.tileTargetX);
+			parameters.Enqueue(Player.tileTargetY);
+			Apply(parameters);
+		}
+		public override void Apply(LinkedQueue<object> parameters) {
+			string data = SerializableTileDescriptor.Serialize(Main.tile[(int)parameters.Dequeue(), (int)parameters.Dequeue()]);
+			Platform.Get<IClipboard>().Value = data;
+			Main.NewText("Copied tile to clipboard: " + data);
 		}
 	}
 	public class List_Worldgen_Testing_Mode : WorldgenTestingMode {

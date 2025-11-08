@@ -287,7 +287,11 @@ namespace Origins.Core.Structures {
 			reselect:
 			if (newRoomOptions.TryPop(out (RoomInstance room, int index) newRoom)) {
 				if (!TryAdd(newRoom.room, out StructureInstance newInstance)) goto reselect;
-				return newInstance.Sprawl(lookup);
+				StructureInstance finalInstance = newInstance.Sprawl(lookup);
+				if (finalInstance == newInstance && !finalInstance.CanGenerate()) {
+					goto reselect;
+				}
+				return finalInstance;
 			}
 			return this;
 		}
