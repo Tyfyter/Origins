@@ -70,9 +70,11 @@ namespace Origins.Core.Structures {
 		public Dictionary<char, RoomSocket> SocketKey { get; }
 		public Range RepetitionRange { get; }
 		public IEnumerable<Direction> GetRepetitionDirections(Direction connectionDirection) => [connectionDirection];
+		public float GetWeight(WeightParameters parameters);
 		public char StartPos { get; }
 		public void PostGenerate(PostGenerateParameters parameters) { }
 		public record struct PostGenerateParameters(RoomInstance Instance, Rectangle Area);
+		public record struct WeightParameters(StructureInstance Structure, Point Position);
 	}
 	public static class RoomExtensions {
 		public static void Validate(this IRoom room) {
@@ -168,7 +170,7 @@ namespace Origins.Core.Structures {
 			return lookup;
 		}
 		public static TOut Accumulate<TIn, TOut>(this Accumulator<TIn, TOut> accumulator, TIn input, TOut startValue = default) {
-			accumulator(input, ref startValue);
+			accumulator?.Invoke(input, ref startValue);
 			return startValue;
 		}
 	}
@@ -310,11 +312,13 @@ namespace Origins.Core.Structures {
 					break;
 				}
 				foreach ((IRoom room, char entrance) in lookup[socket.Key][(int)direction]) {
+					float weight = room.GetWeight(new(this, pos));
+					if (weight <= 0) continue;
 					RoomInstance template = new(room, pos - room.GetOrigin(entrance));
 					foreach (Direction repeatDirection in room.GetRepetitionDirections(direction)) {
 						for (int j = room.RepetitionRange.Start.Value; j <= room.RepetitionRange.End.Value; j++) {
 							RoomInstance newInstance = template with { Repetitions = new(direction, j) };
-							if (CanAdd(newInstance)) newRoomOptions.Add((newInstance, i));
+							if (CanAdd(newInstance)) newRoomOptions.Add((newInstance, i), weight);
 						}
 					}
 				}

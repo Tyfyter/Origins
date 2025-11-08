@@ -5,6 +5,7 @@ using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -246,5 +247,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return MathHelper.Lerp(0, 8, 1f - lerpValue * lerpValue);
 		}
 		private static readonly VertexStrip _vertexStrip = new();
+	}
+	public class Debug_Tank_Rifle_Prefix : Explosive_Prefix, IBlastRadiusPrefix, ISelfDamagePrefix {
+		public override bool CanRoll(Item item) => item?.ModItem is Tank_Rifle;
+#if DEBUG
+		public override float RollChance(Item item) => 1;
+#else
+		public override float RollChance(Item item) => 0;
+#endif
+		public StatModifier BlastRadius() => new(1, 1.5f);
+		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
+			useTimeMult *= 0.1f;
+			shootSpeedMult /= 8f;
+		}
+		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
+		public StatModifier SelfDamage() => default;
 	}
 }

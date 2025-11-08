@@ -41,6 +41,7 @@
 				"LOOOR",
 				"YYYYY"
 			],
+			"Weight": "999*WithoutRoom(Required_Hallway)",
 			"SocketKey": {
 				"L": {
 					"Key": "Hallway",

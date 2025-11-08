@@ -14,7 +14,7 @@ using static Origins.Core.Structures.DeserializedStructure;
 using static Origins.Core.Structures.IRoom;
 
 namespace Origins.Core.Structures {
-	public abstract class SerializableTileDescriptor :  SerializableDescriptor<SerializableTileDescriptor, TileDescriptor> {
+	public abstract class SerializableTileDescriptor : SerializableDescriptor<SerializableTileDescriptor, TileDescriptor> {
 		protected sealed override void Register() {
 			ModTypeLookup<SerializableTileDescriptor>.Register(this);
 		}
@@ -50,6 +50,7 @@ namespace Origins.Core.Structures {
 			ModTypeLookup<SerializableBreakDescriptor>.Register(this);
 		}
 		public static Accumulator<StructureInstance, bool> Create(Mod mod, string data) {
+			if (string.IsNullOrWhiteSpace(data)) return null;
 			string[] descriptors = data.Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 			Accumulator<StructureInstance, bool> descriptor = null;
 			for (int i = 0; i < descriptors.Length; i++) descriptor += CreateSingle(mod, descriptors[i]);
@@ -61,9 +62,28 @@ namespace Origins.Core.Structures {
 			ModTypeLookup<SerializableCheckDescriptor>.Register(this);
 		}
 		public static Accumulator<StructureInstance, bool> Create(Mod mod, string data) {
+			if (string.IsNullOrWhiteSpace(data)) return null;
 			string[] descriptors = data.Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 			Accumulator<StructureInstance, bool> descriptor = null;
 			for (int i = 0; i < descriptors.Length; i++) descriptor += CreateSingle(mod, descriptors[i]);
+			return descriptor;
+		}
+	}
+	public abstract class WeightDescriptor : SerializableDescriptor<WeightDescriptor, Accumulator<WeightParameters, float>> {
+		protected sealed override void Register() {
+			ModTypeLookup<WeightDescriptor>.Register(this);
+		}
+		public static Accumulator<WeightParameters, float> Create(Mod mod, string data) {
+			if (string.IsNullOrWhiteSpace(data)) return null;
+			string[] descriptors = data.Split('*', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+			Accumulator<WeightParameters, float> descriptor = null;
+			for (int i = 0; i < descriptors.Length; i++) {
+				if (float.TryParse(descriptors[i], out float constant)) {
+					descriptor += (WeightParameters _, ref float output) => output *= constant;
+				} else {
+					descriptor += CreateSingle(mod, descriptors[i]);
+				}
+			}
 			return descriptor;
 		}
 	}
@@ -90,6 +110,8 @@ namespace Origins.Core.Structures {
 		public char StartPos { get; } = descriptor.StartPos;
 		readonly Action<PostGenerateParameters> postGenerate = PostGenerateDescriptor.Parse(mod, descriptor.PostGenerate);
 		public void PostGenerate(PostGenerateParameters parameters) => postGenerate?.Invoke(parameters);
+		readonly Accumulator<WeightParameters, float> weight = WeightDescriptor.Create(mod, descriptor.Weight);
+		public float GetWeight(WeightParameters parameters) => weight.Accumulate(parameters, 1);
 	}
 	[Autoload(false)]
 	public class DeserializedStructure(Mod mod, string fileName, string data) : Structure(mod, fileName) {
@@ -144,6 +166,7 @@ namespace Origins.Core.Structures {
 			public Range RepetitionRange = default;
 			public char StartPos = char.MinValue;
 			public string PostGenerate;
+			public string Weight;
 			public class RangeConverter : JsonConverter {
 				public override bool CanConvert(Type objectType) {
 					ArgumentNullException.ThrowIfNull(objectType, nameof(objectType));

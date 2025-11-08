@@ -2137,6 +2137,8 @@ Prefixes: {
 		// DisplayName: "{§Defiled}"
 		// Description: Projectiles steal mana and occasionally explode into {§Defiled} spikes
 	}
+
+	// Debug_Tank_Rifle_Prefix.DisplayName: Debug Tank Rifle Prefix
 }
 
 BiomeName: {
