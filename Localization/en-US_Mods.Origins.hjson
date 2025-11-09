@@ -2768,6 +2768,11 @@ Configs: {
 			Label: Export Version Lists
 			Tooltip: ""
 		}
+
+		ForceEnableDebugItems: {
+			Label: Force Enable Debug Items
+			Tooltip: "Enables debugging items even in release builds"
+		}
 	}
 
 	Journal_Default_UI_Mode: {

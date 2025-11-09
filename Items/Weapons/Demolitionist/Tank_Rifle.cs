@@ -253,7 +253,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 #if DEBUG
 		public override float RollChance(Item item) => 1;
 #else
-		public override float RollChance(Item item) => 0;
+		public override float RollChance(Item item) => DebugConfig.Instance.ForceEnableDebugItems.ToInt();
 #endif
 		public StatModifier BlastRadius() => new(1, 1.5f);
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {

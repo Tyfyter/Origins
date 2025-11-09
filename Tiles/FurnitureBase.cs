@@ -886,7 +886,7 @@ namespace Origins.Tiles {
 		public event Action<Item> OnAddRecipes;
 		protected override bool CloneNewInstances => true;
 #if !DEBUG
-		public override bool IsLoadingEnabled(Mod mod) => !debug;
+		public override bool IsLoadingEnabled(Mod mod) => !debug || DebugConfig.Instance.ForceEnableDebugItems;
 #endif
 		public override void SetStaticDefaults() {
 			if (TileID.Sets.BasicChest[tile.Type]) ModCompatSets.AnyChests[Type] = true;

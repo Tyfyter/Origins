@@ -72,7 +72,10 @@ namespace Origins.Items.Accessories {
 			public virtual void SetStaticDefaults() { }
 			public abstract bool IsActive { get; }
 			public virtual string GetText(string normalText, string hours, string minutes, string seconds, string half) => Text.Format(normalText, hours, minutes, seconds, half);
-			public virtual IEnumerable<NoveltyWatchTime> SortAfter() => this is ImpendingDoom ? [] : [ModContent.GetInstance<ImpendingDoom>()];
+			public virtual IEnumerable<NoveltyWatchTime> SortAfter() {
+				if (this is ImpendingDoom) return Enumerable.Empty<NoveltyWatchTime>();
+				return [ModContent.GetInstance<ImpendingDoom>()];
+			}
 			public virtual IEnumerable<NoveltyWatchTime> SortBefore() => [];
 		}
 		public class PartyTime : NoveltyWatchTime {
