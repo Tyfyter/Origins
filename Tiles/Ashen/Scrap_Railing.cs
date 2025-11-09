@@ -1,10 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Core;
-using Origins.Items.Weapons.Ammo;
+﻿using Origins.Items.Weapons.Ammo;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,11 +7,11 @@ namespace Origins.Tiles.Ashen {
 	public class Scrap_Railing : Platform_Tile {
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
-				Recipe.Create(item.type, 2)
+				Recipe.Create(item.type, 4)
 				.AddIngredient(ModContent.ItemType<Scrap>(), 1)
 				.Register();
 				Recipe.Create(ModContent.ItemType<Scrap>())
-				.AddIngredient(item.type, 2)
+				.AddIngredient(item.type, 4)
 				.Register();
 			};
 		}
@@ -29,6 +24,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileSolid[Type] = false;
 			DustType = DustID.Lihzahrd;
 			RegisterItemDrop(Item.Type);
+			HitSound = SoundID.Tink;
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			offsetY = 2;

@@ -18,6 +18,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.HasOutlines[Type] = false;
 			TileID.Sets.DisableSmartCursor[Type] = true;
+			HitSound = SoundID.Tink;
 
 			// Names
 			AddMapEntry(new Color(21, 28, 25));

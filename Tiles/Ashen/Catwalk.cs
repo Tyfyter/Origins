@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Core;
 using Origins.Items.Weapons.Ammo;
 using Terraria;
 using Terraria.GameContent;
@@ -25,6 +24,7 @@ namespace Origins.Tiles.Ashen {
 			base.SetStaticDefaults();
 			Catwalks[Type] = true;
 			DustType = DustID.Lihzahrd;
+			HitSound = SoundID.Tink;
 		}
 		// For some reason this runs after tile framing for platforms
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
@@ -340,6 +340,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileSolidTop[Type] = false;
 			ID = Type;
 			Main.OnPreDraw += Main_OnPreDraw;
+			HitSound = SoundID.Tink;
 		}
 		public override void Unload() {
 			Main.OnPreDraw -= Main_OnPreDraw;

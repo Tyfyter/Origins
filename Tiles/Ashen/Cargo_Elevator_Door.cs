@@ -34,6 +34,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.HasOutlines[Type] = false;
+			HitSound = SoundID.Tink;
 
 			// Names
 			if (this is not Cargo_Elevator_Door_Open) AddMapEntry(new Color(43, 22, 23), CreateMapEntryName());
@@ -46,7 +47,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
 			DustType = Ashen_Biome.DefaultTileDust;
-			MineResist = 4;
+			MineResist = 8;
 			if (this is not Cargo_Elevator_Door_Open) RegisterItemDrop(Item.Type);
 		}
 		// TODO: implement

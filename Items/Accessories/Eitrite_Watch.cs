@@ -10,7 +10,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	//[AutoloadEquip(EquipType.Waist)]
+	[AutoloadEquip(EquipType.Waist)]
 	public class Eitrite_Watch : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			WikiCategories.Info

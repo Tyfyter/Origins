@@ -512,7 +512,7 @@ ACCESSORIES:
 (^) Dysfunctional Endless Explosives Bag
 (^) Eccentric Stone
 (^) Eitrite Gun Magazine
-(☻, @2) Eitrite Watch !!!
+(#2, ^2) Eitrite Watch !!!
 (^) Evil Bar Gun Magazines
 (X) Exo-Arms
 (X) Exo-Legs
@@ -760,7 +760,7 @@ TOOLS:
 (^) Parasitic Manipulator
 (^) Piledriver
 (^) Rivenator
-(☻) Screwdriver
+(#3, ^2) Screwdriver
 (^) Snatcher
 (^) Stabsmash
 (^) Strainer
@@ -1080,7 +1080,7 @@ EXPLOSIVE WEAPONS:
 (^) Flare Launcher
 (^) Flashbang
 (^) Floaty Bomb
-(☻) Fuel Rod Ball
+(#3, ^2) Fuel Rod Ball
 (^) Glass Cannon
 (^) Hand Cannon
 (^) Hand Grenade Launcher
@@ -1283,6 +1283,7 @@ TILES:
 (X) Spug Flesh Brick Wall
 (X) Type-III Fortified Steel Wall !!!
 
+(#, ^2) Air Vent !!!
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
 (^) Ashen Torch
@@ -1298,7 +1299,7 @@ TILES:
 (^) Defiled Torch
 (^) Defiled Water Fountain
 (^) Endowood Furniture
-(@, #2) Hyrax Cage !!!
+(#2, ^2) Hyrax Cage !!! (extra frame code)
 (^) Limestone Furniture
 (^) Living Alkahest Block
 (^) Living Bile Block
@@ -1309,7 +1310,7 @@ TILES:
 (X) Residue Furniture
 (^) Riven Torch
 (^) Riven Water Fountain
-(☻) Scrap Railing !!!
+(^) Scrap Railing
 (^) Shadow Torch
 (^) Traffic Cone
 (@, ^3, ▼) Witherwood Furniture !!!
@@ -1328,6 +1329,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
+(#, ^2) Fire Extinguisher Holder !!!
 (^) Industrial Door
 (#, ^2) Large Storage Container !!!
 (^) Laser Tag Console
@@ -1344,7 +1346,7 @@ TILES:
 (X) Ravel Locker
 (^) Riven Campfire
 (^) Riven Dungeon Chest
-(☻) Rusty Locker !!!
+(^) Rusty Locker
 (#2, ^2) Small Storage Container !!!
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (#2, ^2) Transistor !!! (needs obtain method)
@@ -1357,7 +1359,7 @@ TILES:
 (X) Flesh Shredder
 (X) Interstellar Sampler
 (X) Medicine Fabricator !!!
-(X) Metal Presser !!!
+(#, ^2) Metal Presser !!!
 (X) The Demaker
 
 (^) Acetabularia
@@ -1546,8 +1548,8 @@ CRITTERS AND FISH:
 (^) Chambersite Bunny
 (^) Chambersite Squirrel
 (^) Cicada 3301
-(@, #2) Hyrax !!!
-(☻) Peppered Moth (animation fixed)
+(#2, ^2) Hyrax !!!
+(^) Peppered Moth
 
 (^) Bilemouth
 (^) Bobbit Worm
@@ -1665,6 +1667,7 @@ CONSUMABLES:
 (^) Pointy Crate
 (^) Residual Crate
 
+(#, ^2) Fire Extinguisher !!!
 (^) Gooey Water
 (^) Holiday Hair Dye
 (^) Latchkey

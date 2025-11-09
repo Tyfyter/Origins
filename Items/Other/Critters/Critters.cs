@@ -62,6 +62,7 @@ namespace Origins.Items.Other.Critters {
 	}
 	public class Peppered_Moth_Item : Critter_Item<Peppered_Moth> {
 		public override void SafeSetDefaults() {
+			Item.rare = ItemRarityID.Blue;
 			Item.bait = 40;
 			Item.value = Item.sellPrice(silver: 5);
 		}

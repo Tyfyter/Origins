@@ -2396,6 +2396,8 @@ Tiles: {
 	Music_Box_AS: Music Box ({§Ashen} Scrapyard)
 	Music_Box_SS: Music Box (Smog Storm)
 	Rusty_Locker.MapEntry: Rusty Locker
+	Music_Box_AF: Music Box A F
+	Music_Box_AM: Music Box A M
 }
 
 MapObject: {
