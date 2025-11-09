@@ -41,12 +41,9 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			Item.buffTime = ImmunityDuration;
 			Item.value = Value;
 		}
-		// TODO: https://github.com/tModLoader/tModLoader/pull/4786 arrives in stable in November
-#if !TML_2025_08
 		public override void ModifyPotionDelay(Player player, ref int baseDelay) {
 			baseDelay += CooldownIncrease;
 		}
-#endif
 		public sealed override bool? UseItem(Player player) {
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				if (ImmunitySet[player.buffType[i]]) player.DelBuff(i--);
