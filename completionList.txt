@@ -1176,6 +1176,7 @@ TILES:
 |---
 (^) Aetherite Ore
 (^) Amoeba Fluid
+(@, ^3, ▼) Artifiber !!!
 (^) Ashen Cactus
 (^) Baryte
 (^) Batholith
@@ -1191,7 +1192,7 @@ TILES:
 (^) Chambersite
 (^) Chambersite Gemspark
 (^) Chambersite Gemstone
-(@, ^3, ▼) Chambersite Gemstone (Ashen)
+(^) Chambersite Gemstone (Ashen)
 (^) Chambersite Gemstone (Corruption)
 (^) Chambersite Gemstone (Crimson)
 (^) Chambersite Gemstone (Defiled)
@@ -1232,7 +1233,7 @@ TILES:
 (^) Riven Jungle Grass
 (^) Rusty Piping
 (X) Sanguinite Brick
-(@4) Sanguinite Ore !!!
+(^) Sanguinite Ore
 (^) Scrap Heap
 (^) Silica
 (^) Silicon Ore
@@ -1248,7 +1249,6 @@ TILES:
 (^) Type-I Fortified Steel Block
 (^) Type-II Fortified Steel Block
 (^) Type-III Fortified Steel Block
-(@, ^3, ▼) Witherwood !!!
 
 (^) Amebic Gel Wall
 (^) Barnacle Wall
@@ -1281,11 +1281,13 @@ TILES:
 (^) Soot Sandstone Wall
 (^) Spug Flesh Wall
 (X) Spug Flesh Brick Wall
+(X) Tainted Stone Wall !!!
 (X) Type-III Fortified Steel Wall !!!
 
 (#, ^2) Air Vent !!!
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
+(@, ^3, ▼) Artifiber Furniture !!!
 (^) Ashen Torch
 (@, ^3) Ashen Water Fountain
 (^) Bile Torch
@@ -1313,7 +1315,6 @@ TILES:
 (^) Scrap Railing
 (^) Shadow Torch
 (^) Traffic Cone
-(@, ^3, ▼) Witherwood Furniture !!!
 
 (@, ^3, ▼) Ashen Campfire !!!
 (^) Ashen Dungeon Chest
@@ -1363,6 +1364,7 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
+(@, ^3, ▼) Artifiber Tree !!!
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
 (^) Background Door
@@ -1403,7 +1405,6 @@ TILES:
 (^) Underwater Vine
 (^) Venus Coral
 (^) Wilting Rose
-(@, ^3, ▼) Witherleaf Tree !!!
 (X) Workstation Extras !!!
 (^) Wrycoral
 

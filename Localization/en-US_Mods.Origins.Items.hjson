@@ -6657,102 +6657,102 @@ Ashen_Grass_Wall_Safe_Item: {
 }
 
 Witherwood_Chest_Item: {
-	DisplayName: Witherwood Chest
+	DisplayName: Artifiber Chest
 	Tooltip: ""
 }
 
 Witherwood_Bed_Item: {
-	DisplayName: Witherwood Bed
+	DisplayName: Artifiber Bed
 	Tooltip: ""
 }
 
 Witherwood_Dresser_Item: {
-	DisplayName: Witherwood Dresser
+	DisplayName: Artifiber Dresser
 	Tooltip: ""
 }
 
 Witherwood_Work_Bench_Item: {
-	DisplayName: Witherwood Work Bench
+	DisplayName: Artifiber Work Bench
 	Tooltip: ""
 }
 
 Witherwood_Table_Item: {
-	DisplayName: Witherwood Table
+	DisplayName: Artifiber Table
 	Tooltip: ""
 }
 
 Witherwood_Piano_Item: {
-	DisplayName: Witherwood Piano
+	DisplayName: Artifiber Piano
 	Tooltip: ""
 }
 
 Witherwood_Bookcase_Item: {
-	DisplayName: Witherwood Bookcase
+	DisplayName: Artifiber Bookcase
 	Tooltip: ""
 }
 
 Witherwood_Lantern_Item: {
-	DisplayName: Witherwood Lantern
+	DisplayName: Artifiber Lantern
 	Tooltip: ""
 }
 
 Witherwood_Lamp_Item: {
-	DisplayName: Witherwood Lamp
+	DisplayName: Artifiber Lamp
 	Tooltip: ""
 }
 
 Witherwood_Chandelier_Item: {
-	DisplayName: Witherwood Chandelier
+	DisplayName: Artifiber Chandelier
 	Tooltip: ""
 }
 
 Witherwood_Candelabra_Item: {
-	DisplayName: Witherwood Candelabra
+	DisplayName: Artifiber Candelabra
 	Tooltip: ""
 }
 
 Witherwood_Candle_Item: {
-	DisplayName: Witherwood Candle
+	DisplayName: Artifiber Candle
 	Tooltip: ""
 }
 
 Witherwood_Sink_Item: {
-	DisplayName: Witherwood Sink
+	DisplayName: Artifiber Sink
 	Tooltip: ""
 }
 
 Witherwood_Bathtub_Item: {
-	DisplayName: Witherwood Bathtub
+	DisplayName: Artifiber Bathtub
 	Tooltip: ""
 }
 
 Witherwood_Sofa_Item: {
-	DisplayName: Witherwood Sofa
+	DisplayName: Artifiber Sofa
 	Tooltip: ""
 }
 
 Witherwood_Toilet_Item: {
-	DisplayName: Witherwood Toilet
+	DisplayName: Artifiber Toilet
 	Tooltip: ""
 }
 
 Witherwood_Chair_Item: {
-	DisplayName: Witherwood Chair
+	DisplayName: Artifiber Chair
 	Tooltip: ""
 }
 
 Witherwood_Grandfather_Clock_Item: {
-	DisplayName: Witherwood Grandfather Clock
+	DisplayName: Artifiber Grandfather Clock
 	Tooltip: ""
 }
 
 Witherwood_Door_Item: {
-	DisplayName: Witherwood Door
+	DisplayName: Artifiber Door
 	Tooltip: ""
 }
 
 Witherwood_Platform_Item: {
-	DisplayName: Witherwood Platform
+	DisplayName: Artifiber Platform
 	Tooltip: ""
 }
 
@@ -6762,8 +6762,8 @@ Sanguinite_Brick_Item: {
 }
 
 Witherwood_Item: {
-	DisplayName: Witherwood
-	Tooltip: ""
+	DisplayName: Artifiber
+	Tooltip: "'The trees speak Vietnamese.'"
 }
 
 Tainted_Stone_Item: {
