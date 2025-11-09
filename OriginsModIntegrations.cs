@@ -625,6 +625,9 @@ namespace Origins {
 				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Defiled_Asphyxiator_Debuff_2>());
 				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Defiled_Asphyxiator_Debuff_3>());
 			}
+			if (ModLoader.TryGetMod("InfoSlot", out Mod infoSlot)) {
+				infoSlot.Call("AddInfoItem", ItemType<Eitrite_Watch>());
+			}
 		}
 		public static void LateLoad() {
 			if (ModLoader.TryGetMod("ControllerConfigurator", out Mod controllerConfigurator) && controllerConfigurator.Call("GETGOTOKEYBINDKEYBIND") is ModKeybind keybind) {

@@ -45,6 +45,8 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
+using ThoriumMod.Tiles;
+using ThoriumMod.Walls;
 
 namespace Origins {
 	#region classes
@@ -3059,6 +3061,19 @@ namespace Origins {
 				WallID.RubyUnsafe,
 				WallID.DiamondUnsafe
 			);
+
+			[JITWhenModsEnabled("ThoriumMod")]
+			void AddThoriumConversions() {
+				biome.AddTileConversion(ModContent.TileType<Chambersite>(), ModContent.TileType<PlacedGem>(), false, false, false);
+				biome.AddTileConversion(tile, ModContent.TileType<Aquamarine>(), oneWay: true, extraFunctions: false);
+				biome.AddTileConversion(tile, ModContent.TileType<Opal>(), oneWay: true, extraFunctions: false);
+				biome.AddWallConversions(wall,
+					ModContent.WallType<AquamarineStoneWall>(),
+					ModContent.WallType<OpalStoneWall>()
+				);
+			}
+			AddThoriumConversions();
+
 			biome.AddTileConversion(ModContent.TileType<Bleeding_Obsidian>(), TileID.Obsidian, false, false, false);
 		}
 		public static float SpecificTilesEnemyRate(this NPCSpawnInfo spawnInfo, HashSet<int> tiles, bool hardmode = false) {
