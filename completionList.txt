@@ -416,6 +416,7 @@ ARMOR:
 (^) Ancient Defiled Armor
 (^) Ancient Felnum Armor
 (^) Ancient Riven Armor
+(X) Artifiber Armor
 (⛥) Ashen Armor
 (^) Cryosten Armor
 (^) Defiled Armor
@@ -1258,7 +1259,7 @@ TILES:
 (X) Busted Block Wall
 (^) Calcified Spug Flesh Wall
 (^) Chambersite Gemspark Wall
-(@, ^3, ▼) Chambersite Gemstone Wall (Ashen) !!!
+(^) Chambersite Gemstone Wall (Ashen)
 (^) Chambersite Gemstone Wall (Corruption)
 (^) Chambersite Gemstone Wall (Crimson)
 (^) Chambersite Gemstone Wall (Defiled)
@@ -1281,8 +1282,8 @@ TILES:
 (^) Soot Sandstone Wall
 (^) Spug Flesh Wall
 (X) Spug Flesh Brick Wall
-(X) Tainted Stone Wall !!!
-(X) Type-III Fortified Steel Wall !!!
+(^) Tainted Stone Wall
+(#, ^2) Type-III Fortified Steel Wall !!!
 
 (#, ^2) Air Vent !!!
 (^) Alkahest Torch

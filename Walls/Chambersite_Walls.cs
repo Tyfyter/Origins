@@ -101,10 +101,9 @@ namespace Origins.Walls {
 		}
 	}
 	public class Chambersite_Tainted_Stone_Wall : ModWall {
-		public override string Texture => typeof(Chambersite_Defiled_Stone_Wall).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallType<Tainted_Stone_Wall>();//what wall type this wall is considered to be when blending
-			AddMapEntry(new Color(255, 150, 150));
+			AddMapEntry(new Color(73, 42, 22));
 			RegisterItemDrop(ItemType<Chambersite_Item>());
 			Chambersite_Stone_Wall.AddChambersite.Add((ushort)WallType<Tainted_Stone_Wall>(), Type);
 			DustType = DustID.GemEmerald;
