@@ -1176,7 +1176,7 @@ TILES:
 |---
 (^) Aetherite Ore
 (^) Amoeba Fluid
-(@, ^3, ▼) Artifiber !!!
+(#2, ^2) Artifiber !!! (needs proper texture and merger overlay usage)
 (^) Ashen Cactus
 (^) Baryte
 (^) Batholith
@@ -1316,7 +1316,7 @@ TILES:
 (^) Shadow Torch
 (^) Traffic Cone
 
-(@, ^3, ▼) Ashen Campfire !!!
+(^) Ashen Campfire
 (^) Ashen Dungeon Chest
 (^) Ashen Wire
 (X) Batholith Grindstone
@@ -1364,7 +1364,7 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
-(@, ^3, ▼) Artifiber Tree !!!
+(#2, ^2) Artifiber Tree !!! (needs glow code)
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
 (^) Background Door
@@ -1417,9 +1417,9 @@ TILES:
 (ᗢ) Ancient Music Box (Defiled Wastelands)
 (ᗢ) Ancient Music Box (Riven Hive)
 (@, #, $2) Music Box (Abstract)
-(@, $2, ^3) Music Box (Ashen Factory) !!!
-(@, $2, ^3) Music Box (Ashen Mines) !!!
-(#2, ^2) Music Box (Ashen Scrapyard) !!!
+($2, ^2/3) Music Box (Ashen Factory) !!!
+($, ^2/3) Music Box (Ashen Mines) !!!
+($2, ^2) Music Box (Ashen Scrapyard) !!!
 (^) Music Box (Brine Pool)
 (^) Music Box (Defiled Caverns)
 (X) Music Box (Defiled Egregocide Route)
@@ -1431,7 +1431,7 @@ TILES:
 (X) Music Box (Repentance)
 (X) Music Box (Rivenran)
 (^) Music Box (Riven Hive)
-(#2, ^2) Music Box (Smog Storm) !!!
+($2, ^2) Music Box (Smog Storm) !!!
 (^) Music Box (The Dive)
 (^) Otherworldly Music Box (Defiled Wastelands)
 
@@ -1472,7 +1472,7 @@ MATERIALS:
 (^) Acetabularia
 (^) Adhesive Wrap
 (^) Aetherite Bar
-(^) Bark
+(#2, ^2) Bark !!! (Artifiber Bark)
 (^) Bat Hide
 (^) Biocomponent 10
 (^) Bud Barnacle

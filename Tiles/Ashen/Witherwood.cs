@@ -14,7 +14,7 @@ namespace Origins.Tiles.Ashen {
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			AddMapEntry(new Color(255, 10, 40));
+			AddMapEntry(new Color(143, 114, 94));
 			mergeID = TileID.WoodBlock;
 			DustType = DustID.t_Granite;
 		}

@@ -35,13 +35,13 @@ namespace Origins.Tiles.Ashen {
 		}
 
 		public override Asset<Texture2D> GetTexture() {
-			return Mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree");
+			return Mod.Assets.Request<Texture2D>("Tiles/Ashen/Artifiber_Tree");
 		}
 		public override Asset<Texture2D> GetTopTextures() {
-			return Mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree_Tops");
+			return Mod.Assets.Request<Texture2D>("Tiles/Ashen/Artifiber_Tree_Tops");
 		}
 		public override Asset<Texture2D> GetBranchTextures() {
-			return Mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree_Branches");
+			return Mod.Assets.Request<Texture2D>("Tiles/Ashen/Artifiber_Tree_Branches");
 		}
 
 		public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
@@ -50,7 +50,7 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Witherleaf_Tree_Sapling : SaplingBase {
 		public override string Texture => typeof(Petrified_Tree_Sapling).GetDefaultTMLName();
-		public override Color MapColor => new(200, 200, 200);
+		public override Color MapColor => new(130, 103, 85);
 		public override int[] ValidAnchorTypes => Witherleaf_Tree.AnchorTypes;
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			tileFrameX += 54;
