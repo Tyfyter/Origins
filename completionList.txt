@@ -52,6 +52,7 @@ X: No progress
 BOSSES AND MINI-BOSSES:
 |---
 (^) Chambersite Sentinel
+(X) CM-17 'Watcher'
 (X) D2L2 'Warsaw'
 (X) HA-24 'Hawken'
 (X, ^2) Ichor Storm
@@ -1252,6 +1253,7 @@ TILES:
 (^) Type-III Fortified Steel Block
 
 (^) Amebic Gel Wall
+(#, ^2) Artifiber Wall !!!
 (^) Barnacle Wall
 (^) Baryte Wall
 (^) Batholith Wall
@@ -1275,7 +1277,7 @@ TILES:
 (^) Hardened Sootsand Wall
 (@, ^3) Lost Brick Wall
 (^) Marrowick Wall
-(X) Molten Steel Wall !!!
+(#, ^2) Molten Steel Wall !!!
 (X) Nova Brick Wall
 (^) Quartz Wall
 (^) Riven Grass Wall
@@ -1283,6 +1285,7 @@ TILES:
 (^) Spug Flesh Wall
 (X) Spug Flesh Brick Wall
 (^) Tainted Stone Wall
+(#, ^2) Type-I Fortified Steel Wall !!!
 (#, ^2) Type-III Fortified Steel Wall !!!
 
 (#, ^2) Air Vent !!!
@@ -1290,7 +1293,7 @@ TILES:
 (^) Amoeba Buggy Cage
 (@, ^3, ▼) Artifiber Furniture !!!
 (^) Ashen Torch
-(@, ^3) Ashen Water Fountain
+(^) Ashen Water Fountain
 (^) Bile Torch
 (^) Brine Water Fountain
 (@, ^3) Bug Cage
@@ -1360,7 +1363,7 @@ TILES:
 (^) Fabricator
 (X) Flesh Shredder
 (X) Interstellar Sampler
-(X) Medicine Fabricator !!!
+(#, ^2) Medicine Fabricator !!!
 (#, ^2) Metal Presser !!!
 (X) The Demaker
 
@@ -1382,7 +1385,7 @@ TILES:
 (^) Fungarust
 (^) Fuzzvine
 (^) Gel Blister
-(々 (power core)) Generation Station !!!
+(々 (power core)) Generation Station
 (^) Hanging Scrap
 (^) Heat Vent
 (^) Hydrothermal Vent
@@ -1396,7 +1399,7 @@ TILES:
 (^) Riven Altar
 (^) Riven Foliage
 (^) Riven Pot
-(X) Sheet Metal !!!
+(#, ^2) Sheet Metal !!!
 (^) Shelf Coral
 (^) Soulspore
 (^) Steel Support Beam
