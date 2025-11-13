@@ -404,7 +404,7 @@ namespace Origins {
 			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Wood],
 				ModContent.ItemType<Endowood_Item>(),
 				ModContent.ItemType<Marrowick_Item>(),
-				ModContent.ItemType<Witherwood_Item>()
+				ModContent.ItemType<Artifiber_Item>()
 			);
 			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Fruit],
 				ModContent.ItemType<Bileberry>(),

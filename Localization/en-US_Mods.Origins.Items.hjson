@@ -6656,102 +6656,102 @@ Ashen_Grass_Wall_Safe_Item: {
 	Tooltip: ""
 }
 
-Witherwood_Chest_Item: {
+Artifiber_Chest_Item: {
 	DisplayName: Artifiber Chest
 	Tooltip: ""
 }
 
-Witherwood_Bed_Item: {
+Artifiber_Bed_Item: {
 	DisplayName: Artifiber Bed
 	Tooltip: ""
 }
 
-Witherwood_Dresser_Item: {
+Artifiber_Dresser_Item: {
 	DisplayName: Artifiber Dresser
 	Tooltip: ""
 }
 
-Witherwood_Work_Bench_Item: {
+Artifiber_Work_Bench_Item: {
 	DisplayName: Artifiber Work Bench
 	Tooltip: ""
 }
 
-Witherwood_Table_Item: {
+Artifiber_Table_Item: {
 	DisplayName: Artifiber Table
 	Tooltip: ""
 }
 
-Witherwood_Piano_Item: {
+Artifiber_Piano_Item: {
 	DisplayName: Artifiber Piano
 	Tooltip: ""
 }
 
-Witherwood_Bookcase_Item: {
+Artifiber_Bookcase_Item: {
 	DisplayName: Artifiber Bookcase
 	Tooltip: ""
 }
 
-Witherwood_Lantern_Item: {
+Artifiber_Lantern_Item: {
 	DisplayName: Artifiber Lantern
 	Tooltip: ""
 }
 
-Witherwood_Lamp_Item: {
+Artifiber_Lamp_Item: {
 	DisplayName: Artifiber Lamp
 	Tooltip: ""
 }
 
-Witherwood_Chandelier_Item: {
+Artifiber_Chandelier_Item: {
 	DisplayName: Artifiber Chandelier
 	Tooltip: ""
 }
 
-Witherwood_Candelabra_Item: {
+Artifiber_Candelabra_Item: {
 	DisplayName: Artifiber Candelabra
 	Tooltip: ""
 }
 
-Witherwood_Candle_Item: {
+Artifiber_Candle_Item: {
 	DisplayName: Artifiber Candle
 	Tooltip: ""
 }
 
-Witherwood_Sink_Item: {
+Artifiber_Sink_Item: {
 	DisplayName: Artifiber Sink
 	Tooltip: ""
 }
 
-Witherwood_Bathtub_Item: {
+Artifiber_Bathtub_Item: {
 	DisplayName: Artifiber Bathtub
 	Tooltip: ""
 }
 
-Witherwood_Sofa_Item: {
+Artifiber_Sofa_Item: {
 	DisplayName: Artifiber Sofa
 	Tooltip: ""
 }
 
-Witherwood_Toilet_Item: {
+Artifiber_Toilet_Item: {
 	DisplayName: Artifiber Toilet
 	Tooltip: ""
 }
 
-Witherwood_Chair_Item: {
+Artifiber_Chair_Item: {
 	DisplayName: Artifiber Chair
 	Tooltip: ""
 }
 
-Witherwood_Grandfather_Clock_Item: {
+Artifiber_Grandfather_Clock_Item: {
 	DisplayName: Artifiber Grandfather Clock
 	Tooltip: ""
 }
 
-Witherwood_Door_Item: {
+Artifiber_Door_Item: {
 	DisplayName: Artifiber Door
 	Tooltip: ""
 }
 
-Witherwood_Platform_Item: {
+Artifiber_Platform_Item: {
 	DisplayName: Artifiber Platform
 	Tooltip: ""
 }
@@ -6761,7 +6761,7 @@ Sanguinite_Brick_Item: {
 	Tooltip: ""
 }
 
-Witherwood_Item: {
+Artifiber_Item: {
 	DisplayName: Artifiber
 	Tooltip: "'The trees speak Vietnamese.'"
 }
@@ -6801,7 +6801,7 @@ Brown_Ice_Item: {
 	Tooltip: ""
 }
 
-Ashen_Torch_Item: {
+Ashen_Torch: {
 	DisplayName: "{§Ashen} Torch"
 	Tooltip: ""
 }
@@ -6976,8 +6976,8 @@ Steel_Support_Beam_Item: {
 	Tooltip: Not quite as 'stainless'
 }
 
-Witherwood_Wall_Item: {
-	DisplayName: Witherwood Wall
+Artifiber_Wall_Item: {
+	DisplayName: Artifiber Wall
 	Tooltip: ""
 }
 
@@ -7284,4 +7284,9 @@ Rusty_Locker_Item: {
 Eitrite_Watch: {
 	DisplayName: Eitrite Watch
 	Tooltip: Tells the time
+}
+
+Chambersite_Ore_Item: {
+	DisplayName: Chambersite Stone Block
+	Tooltip: ""
 }

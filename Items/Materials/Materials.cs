@@ -112,7 +112,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 25;
-			animation = new DrawAnimationManual(5);
+			animation = new DrawAnimationManual(6);
 			Main.RegisterItemAnimation(Item.type, animation);
 		}
 		public override void SetDefaults() {
@@ -140,6 +140,9 @@ namespace Origins.Items.Materials {
 						}
 						if (type is Exoskeletal_Tree) {
 							variant = 3;
+						}
+						if (type is Artifiber_Tree) {
+							variant = 5;
 						}
 						switch (WorldGen.GetTreeType(tileType)) {
 							case TreeTypes.Corrupt: {

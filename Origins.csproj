@@ -37,6 +37,9 @@
 			<HintPath>..\ModAssemblies\MagicStorage_v0.7.0.8.dll</HintPath>
 		</Reference>
 	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Walls\Overlays\" />
+	</ItemGroup>
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
 		<Exec Command="cd $(ProjectDir)\effects&#xD;&#xA;CheckFXCompile.exe" />
 	</Target>

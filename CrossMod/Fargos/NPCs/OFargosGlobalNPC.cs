@@ -19,7 +19,7 @@ namespace Origins.CrossMod.Fargos.NPCs {
 			if (shop.NpcType == ModContent.NPCType<LumberJack>() && shop.TryGetEntry(ItemID.Shadewood, out NPCShop.Entry shadewood)) {
 				shop.InsertAfter(shadewood, new(ModContent.ItemType<Endowood_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) });
 				shop.InsertAfter(shadewood, new(ModContent.ItemType<Marrowick_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) });
-				shop.InsertAfter(shadewood, new(ModContent.ItemType<Witherwood_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) });
+				shop.InsertAfter(shadewood, new(ModContent.ItemType<Artifiber_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) });
 			}
 			if (shop.NpcType == ModContent.NPCType<Deviantt>() && shop.TryGetEntry(ModContent.ItemType<CorruptChest>(), out NPCShop.Entry corruptChest) && shop.TryGetEntry(ModContent.ItemType<HallowChest>(), out NPCShop.Entry hallowChest)) {
 				Func<bool> predicate = corruptChest.Conditions.FirstOrDefault()?.Predicate ?? (() => true);

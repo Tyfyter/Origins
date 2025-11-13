@@ -6,6 +6,7 @@ using Origins.Items.Other.LootBags;
 using Origins.NPCs;
 using Origins.Questing;
 using Origins.Tiles;
+using Origins.Tiles.Artifiber;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Endowood;
@@ -14,7 +15,6 @@ using Origins.Tiles.Marrowick;
 using Origins.Tiles.MusicBoxes;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
-using Origins.Tiles.Witherwood;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -91,7 +91,7 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 					if (shop.Name == "Filler") {
 						shop.InsertAfter(ItemID.Shadewood, new Item(ItemType<Endowood_Item>()) { shopCustomPrice = 10 });
 						shop.InsertAfter(ItemType<Endowood_Item>(), new Item(ItemType<Marrowick_Item>()) { shopCustomPrice = 10 });
-						shop.InsertAfter(ItemType<Marrowick_Item>(), new Item(ItemType<Witherwood_Item>()) { shopCustomPrice = 10 }); // the wood of the ashen
+						shop.InsertAfter(ItemType<Marrowick_Item>(), new Item(ItemType<Artifiber_Item>()) { shopCustomPrice = 10 }); // the wood of the ashen
 						shop.InsertAfter(ItemID.CrimstoneBlock, new Item(ItemType<Defiled_Stone_Item>()) { shopCustomPrice = 5 });
 						shop.InsertAfter(ItemType<Defiled_Stone_Item>(), new Item(ItemType<Riven_Flesh_Item>()) { shopCustomPrice = 5 });
 						shop.InsertAfter(ItemType<Riven_Flesh_Item>(), new Item(ItemType<Tainted_Stone_Item>()) { shopCustomPrice = 5 }); // the stone of the ashen
@@ -116,13 +116,13 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.InsertAfter(ItemType<Alkahest_Torch>(), new Item(ItemType<Phoenum_Torch>()) { shopCustomPrice = 300 }); // the ashen substance torch
 						shop.InsertAfter(ItemID.CrimsonTorch, new Item(ItemType<Defiled_Torch>()) { shopCustomPrice = 300 });
 						shop.InsertAfter(ItemType<Defiled_Torch>(), new Item(ItemType<Riven_Torch>()) { shopCustomPrice = 300 });
-						shop.InsertAfter(ItemType<Riven_Torch>(), new Item(ItemType<Ashen_Torch_Item>()) { shopCustomPrice = 300 }); // the ashen torch
+						shop.InsertAfter(ItemType<Riven_Torch>(), new Item(ItemType<Ashen_Torch>()) { shopCustomPrice = 300 }); // the ashen torch
 					}
 
 					static List<int> GetItems<TKind>() where TKind : FurnitureBase => [
 						FurnitureSet.Get<Endowood_Furniture, TKind>().Item.Type,
 						FurnitureSet.Get<Marrowick_Furniture, TKind>().Item.Type,
-						FurnitureSet.Get<Witherwood_Furniture, TKind>().Item.Type,
+						FurnitureSet.Get<Artifiber_Furniture, TKind>().Item.Type,
 						FurnitureSet.Get<Limestone_Furniture, TKind>().Item.Type
 					];
 					if (shop.Name == "Candle") {

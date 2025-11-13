@@ -2377,8 +2377,8 @@ Tiles: {
 	// Fuzzvine.MapEntry: Fuzzvine
 	// Fuzzvine_Lorg.MapEntry: "{$Fuzzvine}"
 	// Otherworldly_Music_Box_DW: Otherworldly Music Box ({§Defiled_Wastelands})
-	// Witherwood_Chest.MapEntry: Witherwood Chest
-	// Witherwood_Dresser.MapEntry: Witherwood Dresser
+	// Artifiber_Chest.MapEntry: Artifiber Chest
+	// Artifiber_Dresser.MapEntry: Artifiber Dresser
 	// Ashen_Dungeon_Chest_Locked.MapEntry: Mods.Origins.Tiles.Ashen_Dungeon_Chest_Locked.MapEntry
 	// Ashen_Dungeon_Chest.MapEntry: "{§Ashen} Dungeon Chest"
 	// Ashen_Altar.MapEntry: "{§Ashen} Altar"
@@ -2771,7 +2771,7 @@ Configs: {
 
 		ForceEnableDebugItems: {
 			// Label: Force Enable Debug Items
-			// Tooltip: "Enables debugging items even in release builds"
+			// Tooltip: Enables debugging items even in release builds
 		}
 	}
 

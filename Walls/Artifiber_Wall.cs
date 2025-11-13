@@ -5,8 +5,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
-    public class Witherwood_Wall : ModWall {
-		public override string Texture => typeof(Endowood_Wall).GetDefaultTMLName();
+    public class Artifiber_Wall : ModWall {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallID.Wood;
 			AddMapEntry(new Color(30, 10, 30));
@@ -14,18 +13,17 @@ namespace Origins.Walls {
 			DustType = DustID.t_Granite;
 		}
 	}
-	public class Witherwood_Wall_Item : ModItem {
-		public override string Texture => typeof(Endowood_Wall_Item).GetDefaultTMLName();
+	public class Artifiber_Wall_Item : ModItem {
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableWall(WallType<Witherwood_Wall>());
+			Item.DefaultToPlaceableWall(WallType<Artifiber_Wall>());
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 4)
-			.AddIngredient(ItemType<Witherwood_Item>())
+			.AddIngredient(ItemType<Artifiber_Item>())
 			.AddTile(TileID.WorkBenches)
 			.Register();
 
-			Recipe.Create(ItemType<Witherwood_Item>(), 1)
+			Recipe.Create(ItemType<Artifiber_Item>(), 1)
 			.AddIngredient(Type, 4)
 			.AddTile(TileID.WorkBenches)
 			.Register();
