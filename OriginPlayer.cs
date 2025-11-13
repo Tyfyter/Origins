@@ -1,4 +1,5 @@
 ﻿using Origins.Buffs;
+using Origins.Core.Structures;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riptide;
@@ -15,6 +16,7 @@ using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles.Other;
+using Origins.UI;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -27,6 +29,7 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.UI;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -660,6 +663,7 @@ namespace Origins {
 					}
 				}
 			}
+			if (Keybindings.OpenStructureHelper.JustPressed) IngameFancyUI.OpenUIState(new StructureHelperUI());
 			if (Player.controlDown && Player.releaseDown) {
 				doubleTapDown = doubleTapDownTimer < 15;
 				doubleTapDownTimer = 0;

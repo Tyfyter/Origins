@@ -17,18 +17,18 @@ namespace Origins.Core.Structures {
 		public override void Load() {
 			AddSerializer(tile => tile.TileColor == PaintID.None ? null : $"PaintTile({PaintID.Search.GetName(tile.TileColor)})");
 		}
-		protected override TileDescriptor Create(string[] parameters) {
+		protected override TileDescriptor Create(string[] parameters, string originalText) {
 			if (!parameters[0].EndsWith("Paint")) parameters[0] += "Paint";
 			byte paintType = (byte)PaintID.Search.GetId(parameters[0]);
 			return descriptors[paintType] ??= new((_, _, i, j) => {
 				Tile tile = Main.tile[i, j];
 				tile.TileColor = paintType;
-			});
+			}, Parts: [originalText]);
 		}
 	}
 	public class ConditionalTile : PlaceTile {
 		public override void Load() { }
-		protected override TileDescriptor Create(string[] parameters) {
+		protected override TileDescriptor Create(string[] parameters, string originalText) {
 			Accumulator<HashSet<char>, bool> condition = null;
 			bool isInverted = false;
 			for (int i = 0; i < parameters[0].Length; i++) {
@@ -52,7 +52,7 @@ namespace Origins.Core.Structures {
 					tile.HasTile = true;
 					tile.TileType = type;
 				}
-			});
+			}, Parts: [originalText]);
 		}
 	}
 	public class PlaceTile : SerializableTileDescriptor {
@@ -67,15 +67,18 @@ namespace Origins.Core.Structures {
 				return null;
 			});
 		}
-		protected override TileDescriptor Create(string[] parameters) {
+		protected override TileDescriptor Create(string[] parameters, string originalText) {
 			return descriptors.GetOrAdd(parameters[0], parameter => {
 				CachedTileType type = new(parameter);
 				return new((_, _, i, j) => {
 					Tile tile = Main.tile[i, j];
 					tile.HasTile = true;
 					tile.TileType = type;
-				});
+				}, Parts: [originalText]);
 			});
+		}
+		public override IEnumerable<(string name, Color color)> GetDisplayLayers(string[] parameters) {
+			yield return ("", Color.White);
 		}
 		public class CachedTileType(string name) {
 			readonly string name = name;
@@ -94,7 +97,7 @@ namespace Origins.Core.Structures {
 				return null;
 			});
 		}
-		protected override TileDescriptor Create(string[] parameters) {
+		protected override TileDescriptor Create(string[] parameters, string originalText) {
 			CachedTileType type = new(parameters[0]);
 			short frameX = short.Parse(parameters[1]);
 			short frameY = short.Parse(parameters[2]);
@@ -104,7 +107,7 @@ namespace Origins.Core.Structures {
 				tile.TileType = type;
 				tile.TileFrameX = frameX;
 				tile.TileFrameY = frameY;
-			});
+			}, Parts: [originalText]);
 		}
 	}
 	public class PlaceSpecialTile : PlaceTile {
@@ -118,7 +121,7 @@ namespace Origins.Core.Structures {
 				return null;
 			});
 		}
-		protected override TileDescriptor Create(string[] parameters) {
+		protected override TileDescriptor Create(string[] parameters, string originalText) {
 			CachedTileType type = new(parameters[0]);
 			int style = parameters.Length > 1 ? int.Parse(parameters[1]) : 0;
 			int dir = parameters.Length > 2 ? int.Parse(parameters[2]) : 0;
@@ -126,7 +129,7 @@ namespace Origins.Core.Structures {
 				TileObject.CanPlace(i, j, type, style, dir, out TileObject objectData);
 				TileObject.Place(objectData);
 				TileLoader.GetTile(type)?.PlaceInWorld(i, j, null);
-			});
+			}, Parts: [originalText]);
 		}
 	}
 	public class PlaceWall : SerializableTileDescriptor {
@@ -134,13 +137,13 @@ namespace Origins.Core.Structures {
 		public override void Load() {
 			AddSerializer(tile => tile.WallType == WallID.None ? null : $"PlaceWall({WallID.Search.GetName(tile.WallType)})");
 		}
-		protected override TileDescriptor Create(string[] parameters) {
+		protected override TileDescriptor Create(string[] parameters, string originalText) {
 			return descriptors.GetOrAdd(parameters[0], parameter => {
 				CachedWallType type = new(parameter);
 				return new((_, _, i, j) => {
 					Tile tile = Main.tile[i, j];
 					tile.WallType = type;
-				});
+				}, Parts: [originalText]);
 			});
 		}
 		public class CachedWallType(string name) {
@@ -160,23 +163,23 @@ namespace Origins.Core.Structures {
 				return null;
 			});
 		}
-		protected override TileDescriptor Create(string[] parameters) {
+		protected override TileDescriptor Create(string[] parameters, string originalText) {
 			BlockType blockType = Enum.Parse<BlockType>(parameters[0]);
 			return descriptors[(int)blockType] ??= new((_, _, i, j) => {
 				Tile tile = Main.tile[i, j];
 				tile.BlockType = blockType;
-			});
+			}, Parts: [originalText]);
 		}
 	}
 	public class Void : SerializableTileDescriptor {
 		readonly TileDescriptor descriptor = new(null, true);
-		protected override TileDescriptor Create(string[] parameters) => descriptor;
+		protected override TileDescriptor Create(string[] parameters, string originalText) => descriptor;
 	}
 	public class Empty : SerializableTileDescriptor {
 		readonly TileDescriptor descriptor = new(null);
 		public override void Load() {
 			AddSerializer(tile => tile.HasTile ? null : "Empty");
 		}
-		protected override TileDescriptor Create(string[] parameters) => descriptor;
+		protected override TileDescriptor Create(string[] parameters, string originalText) => descriptor;
 	}
 }

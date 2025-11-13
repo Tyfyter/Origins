@@ -6801,13 +6801,8 @@ Brown_Ice_Item: {
 	// Tooltip: ""
 }
 
-Ashen_Torch_Item: {
-	// DisplayName: "{§Ashen} Torch"
-	// Tooltip: ""
-}
-
 Ashen_Torch: {
-	// DisplayName: Ashen Torch
+	// DisplayName: "{§Ashen} Torch"
 	// Tooltip: ""
 }
 
@@ -7292,11 +7287,11 @@ Eitrite_Watch: {
 }
 
 Chambersite_Ore_Item: {
-	// DisplayName: Chambersite Ore
+	// DisplayName: Chambersite Stone Block
 	// Tooltip: ""
 }
 
-Witherwood_Wall_Item: {
-	// DisplayName: Witherwood Wall Item
+Structure_Helper_Item: {
+	// DisplayName: Structure Helper Item
 	// Tooltip: ""
 }

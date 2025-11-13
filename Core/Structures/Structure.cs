@@ -16,6 +16,7 @@ namespace Origins.Core.Structures {
 	public abstract class Structure {
 		public Mod Mod { get; private set; }
 		readonly List<IRoom> rooms = [];
+		public IReadOnlyList<IRoom> Rooms => rooms;
 		public Structure(Mod mod, string fileName) {
 			Mod = mod;
 			Load();
@@ -180,12 +181,20 @@ namespace Origins.Core.Structures {
 		Up,
 		Down
 	}
-	public record class TileDescriptor(Action<RoomInstance, HashSet<char>, int, int> Action, bool Ignore = false) {
+	public record class TileDescriptor(Action<RoomInstance, HashSet<char>, int, int> Action, bool Ignore = false, string[] Parts = null) {
 		public void DoAction(RoomInstance instance, HashSet<char> connectedSockets, int i, int j) {
 			if (!Ignore && Action is not null) Action(instance, connectedSockets, i, j);
 		}
 		public static TileDescriptor Deserialize(Mod mod, string data) => SerializableTileDescriptor.Create(mod, data);
-		public static TileDescriptor operator +(TileDescriptor a, TileDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Action + b.Action, a.Ignore && b.Ignore);
+		static string[] CombineParts(TileDescriptor a, TileDescriptor b) {
+			if (b.Ignore || b.Parts is null || b.Parts.Length == 0) return a.Parts;
+			if (a.Ignore || a.Parts is null || a.Parts.Length == 0) return b.Parts;
+			string[] parts = new string[a.Parts.Length + b.Parts.Length];
+			a.Parts.CopyTo(parts, 0);
+			b.Parts.CopyTo(parts, a.Parts.Length);
+			return parts;
+		}
+		public static TileDescriptor operator +(TileDescriptor a, TileDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Action + b.Action, a.Ignore && b.Ignore, CombineParts(a, b));
 	}
 	public record class RoomSocket(string Key, Direction Direction, bool Optional = false) {
 		public class RoomSocketConverter : JsonConverter {

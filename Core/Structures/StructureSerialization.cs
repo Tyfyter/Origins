@@ -12,6 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.Core.Structures.DeserializedStructure;
 using static Origins.Core.Structures.IRoom;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Core.Structures {
 	public abstract class SerializableTileDescriptor : SerializableDescriptor<SerializableTileDescriptor, TileDescriptor> {
@@ -101,17 +102,38 @@ namespace Origins.Core.Structures {
 		}
 	}
 	public abstract class SerializableDescriptor<TSelf, T> : ModType where TSelf : SerializableDescriptor<TSelf, T> {
-		protected abstract T Create(string[] parameters);
-		static Regex parse = new("(?:(\\w+)/)?(\\w+)(?:\\((.*)\\))?", RegexOptions.Compiled);
-		protected static T CreateSingle(Mod mod, string data) {
+		protected abstract T Create(string[] parameters, string originalText);
+		static readonly Regex parse = new("(?:(\\w+)/)?(\\w+)(?:\\((.*)\\))?", RegexOptions.Compiled);
+		public static bool TryParse(Mod mod, string data, out string modName, out string name, out string[] parameters) {
 			Match match = parse.Match(data);
-			if (!match.Success) throw new ArgumentException($"{data} is not a properly formatted tile descriptor, if you can't read the regex, see https://regex101.com/r/17DyBY/1", nameof(data));
-			string modName = match.Groups[1].Value;
+			if (!match.Success) {
+				modName = default;
+				name = default;
+				parameters = default;
+				return false;
+			}
+			modName = match.Groups[1].Value;
 			if (string.IsNullOrWhiteSpace(modName)) modName = mod.Name;
-			string name = match.Groups[2].Value;
-			string[] parameters = match.Groups[3].Value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+			name = match.Groups[2].Value;
+			parameters = match.Groups[3].Value.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+			return true;
+		}
+		public static TSelf Get(string modName, string name) {
 			if (!ModContent.TryFind($"{modName}/{name}", out TSelf source)) source = ModContent.Find<TSelf>($"Origins/{name}");
-			return source.Create(parameters);
+			return source;
+		}
+		public static bool TryGet(Mod mod, string data, out TSelf source, out string[] parameters) {
+			if (!TryParse(mod, data, out string modName, out string name, out parameters)) {
+				source = default;
+				return false;
+			}
+			source = Get(modName, name);
+			return true;
+		}
+		public virtual IEnumerable<(string name, Color color)> GetDisplayLayers(string[] parameters) => [];
+		protected static T CreateSingle(Mod mod, string data) {
+			if (!TryGet(mod, data, out TSelf source, out string[] parameters)) throw new ArgumentException($"{data} is not a properly formatted tile descriptor, if you can't read the regex, see https://regex101.com/r/17DyBY/1", nameof(data));
+			return source.Create(parameters, data);
 		}
 	}
 	public class DeserializedRoom(Mod mod, RoomDescriptor descriptor) : IRoom {

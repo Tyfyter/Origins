@@ -23,6 +23,8 @@ namespace Origins {
 		[Keybind("Debug Screen Shader", Keys.OemQuotes)]
 		public static ModKeybind DebugScreenShader { get; private set; }
 #endif
+		[Keybind("Open Structure Helper", Keys.End)]
+		public static ModKeybind OpenStructureHelper { get; private set; }
 		public void Load(Mod mod) {
 			Type type = typeof(ModKeybind);
 			foreach (FieldInfo field in GetType().GetFields(BindingFlags.Public | BindingFlags.Static)) {

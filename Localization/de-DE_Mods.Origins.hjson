@@ -2422,6 +2422,7 @@ Keybinds: {
 	// UseMojoFlask.DisplayName: Use Mojo Flask
 	// JournalBack.DisplayName: "{§Journal}: Back"
 	// WishingGlass.DisplayName: Wishing Glass
+	// "Open Structure Helper.DisplayName": Open  Structure  Helper
 }
 
 Configs: {

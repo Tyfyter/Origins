@@ -515,9 +515,6 @@ namespace Origins {
 						setBonusInventoryUI.SetState(null);
 					}
 				}
-				if (journalUI?.CurrentState is not null) {
-
-				}
 			}
 			setBonusHUDInterface.Update(gameTime);
 			itemUseHUDInterface.Update(gameTime);
