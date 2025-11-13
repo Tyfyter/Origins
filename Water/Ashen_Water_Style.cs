@@ -7,9 +7,9 @@ namespace Origins.Water {
 		public override int GetDropletGore() => GoreID.PearlsandDrip;
 		public override int GetSplashDust() => DustID.Mud;
 		public override void LightColorMultiplier(ref float r, ref float g, ref float b) {
-			(r, g, b) = Color.DarkGray.ToVector3();
+			(r, g, b) = Color.Black.ToVector3();
 		}
-		public override Color BiomeHairColor() => Color.Black;
+		public override Color BiomeHairColor() => Color.OrangeRed;
 	}
 	public class Ashen_Waterfall_Style : ModWaterfallStyle {
 		public static int ID { get; private set; }
@@ -17,7 +17,7 @@ namespace Origins.Water {
 			ID = Slot;
 		}
 		public override void ColorMultiplier(ref float r, ref float g, ref float b, float a) {
-			Vector3 mult = Color.DarkGray.ToVector3() / 10;
+			Vector3 mult = Color.Black.ToVector3() / 10;
 			r *= mult.X;
 			g *= mult.Y;
 			b *= mult.Z;

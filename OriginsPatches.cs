@@ -25,6 +25,7 @@ using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.Tiles;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Origins.UI.Event;
@@ -601,7 +602,7 @@ namespace Origins {
 			On_Player.AddBuff_RemoveOldMeleeBuffsOfMatchingType += BrothBase.On_Player_AddBuff_RemoveOldMeleeBuffsOfMatchingType;
 			On_Main.CalculateWaterStyle += (orig, ignoreFountains) => {
 				int chosenStyle = Main.LocalPlayer.CurrentSceneEffect.waterStyle.value;
-				if (chosenStyle == ModContent.GetInstance<Riven_Water_Style>().Slot || chosenStyle == ModContent.GetInstance<Brine_Water_Style>().Slot) return chosenStyle;
+				if (chosenStyle == MC.GetInstance<Riven_Water_Style>().Slot || chosenStyle == MC.GetInstance<Brine_Water_Style>().Slot) return chosenStyle;
 				return orig(ignoreFountains);
 			};
 			On_Mount.Dismount += Ravel_Mount.On_Mount_Dismount;
@@ -629,7 +630,7 @@ namespace Origins {
 				c.GotoNext(MoveType.Before, i => i.MatchNewobj<Condition>());
 				c.EmitLdarg0();
 				c.EmitDelegate<Func<Func<bool>, int, Func<bool>>>((orig, type) => {
-					if (type == ItemID.FlareGun) return () => orig() || Main.LocalPlayer.HasItem(ModContent.ItemType<Flare_Launcher>());
+					if (type == ItemID.FlareGun) return () => orig() || Main.LocalPlayer.HasItem(MC.ItemType<Flare_Launcher>());
 					return orig;
 				});
 			};
@@ -762,7 +763,7 @@ namespace Origins {
 				if (Origins.LogLoadingILError(nameof(EnablePocketDimensionAmbienceWhenPaused), e)) throw;
 			}*/
 			MonoModHooks.Add(typeof(Player).GetProperty(nameof(Player.ShoppingZone_AnyBiome)).GetMethod, (orig_ShoppingZone_AnyBiome orig, Player self) => {
-				return orig(self) || self.InModBiome<Defiled_Wastelands>() || self.InModBiome<Riven_Hive>();
+				return orig(self) || self.InModBiome<Defiled_Wastelands>() || self.InModBiome<Riven_Hive>() || self.InModBiome<Ashen_Biome>();
 			});
 		}
 
@@ -882,10 +883,13 @@ namespace Origins {
 				c.EmitDelegate((Player player, ref int count, int minBonus, int maxBonus, ref int type) => {
 					if (player.InModBiome<Defiled_Wastelands>()) {
 						count += Main.rand.Next(minBonus, maxBonus);
-						type = ModContent.ItemType<Defiled_Torch>();
+						type = MC.ItemType<Defiled_Torch>();
 					} else if (player.InModBiome<Riven_Hive>()) {
 						count += Main.rand.Next(minBonus, maxBonus);
-						type = ModContent.ItemType<Riven_Torch>();
+						type = MC.ItemType<Riven_Torch>();
+					} else if (player.InModBiome<Ashen_Biome>()) {
+						count += Main.rand.Next(minBonus, maxBonus);
+						type = MC.ItemType<Ashen_Torch>();
 					}
 				});
 			} else {
@@ -1058,7 +1062,7 @@ namespace Origins {
 			);
 			c.Index--;
 			c.EmitBeq(succeed);
-			c.EmitDelegate(() => Main.LocalPlayer.InModBiome<Defiled_Wastelands_Desert>() || Main.LocalPlayer.InModBiome<Riven_Hive_Desert>());
+			c.EmitDelegate(() => Main.LocalPlayer.InModBiome<Defiled_Wastelands_Desert>() || Main.LocalPlayer.InModBiome<Riven_Hive_Desert>() || Main.LocalPlayer.InModBiome<Ashen_Desert>());
 			c.EmitBrfalse((ILLabel)c.Next.Operand);
 			c.Remove();
 		}
@@ -1087,6 +1091,7 @@ namespace Origins {
 			c.EmitDelegate<Action<WeightedRandom<Color>>>(weightedRandom => {
 				weightedRandom.Add(new Color(113, 113, 113, 180), Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Defiled_Sand>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Defiled_Sandstone>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Hardened_Defiled_Sand>()));
 				weightedRandom.Add(new Color(189, 195, 195, 180), Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Silica>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Brittle_Quartz>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Quartz>()));
+				weightedRandom.Add(FromHexRGBA(0x655878b4), Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Sootsand>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Soot_Sandstone>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Hardened_Sootsand>()));
 			});
 		}
 
@@ -1195,6 +1200,10 @@ namespace Origins {
 		static bool FixWrongWaterfallAlpha(int type, float baseAlpha, ref float alpha) {
 			if (type == Riven_Waterfall_Style.ID) {
 				alpha = baseAlpha * Riven_Water_Style.GlowValue;
+				return true;
+			}
+			if (type == Ashen_Waterfall_Style.ID) {
+				alpha = 0.8f;
 				return true;
 			}
 			return false;
@@ -1850,11 +1859,11 @@ namespace Origins {
 			if (clearCounts) {
 				OriginSystem.totalDefiled2 = 0;
 				OriginSystem.totalRiven2 = 0;
+				OriginSystem.totalAshen2 = 0;
 			}
 			OriginSystem.totalDefiled2 += MC.GetInstance<Defiled_Wastelands_Alt_Biome>().SpreadingTiles.Sum(v => tileCounts[v]);
 			OriginSystem.totalRiven2 += MC.GetInstance<Riven_Hive_Alt_Biome>().SpreadingTiles.Sum(v => tileCounts[v]);
-			//OriginSystem.totalDefiled2 += tileCounts[MC.TileType<Defiled_Stone>()] + tileCounts[MC.TileType<Defiled_Grass>()] + tileCounts[MC.TileType<Defiled_Sand>()] + tileCounts[MC.TileType<Defiled_Ice>()];
-			//OriginSystem.totalRiven2 += tileCounts[MC.TileType<Tiles.Riven.Riven_Flesh>()];
+			OriginSystem.totalAshen2 += MC.GetInstance<Ashen_Alt_Biome>().SpreadingTiles.Sum(v => tileCounts[v]);
 			orig(clearCounts);
 		}
 		#endregion

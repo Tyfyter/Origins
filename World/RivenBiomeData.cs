@@ -30,7 +30,6 @@ using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Personalities;
-using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -46,16 +45,16 @@ namespace Origins.World.BiomeData {
 		public static IItemDropRule FirstLesionDropRule;
 		public static IItemDropRule LesionDropRule;
 		public override int Music => Origins.Music.Riven;
-		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Riven_Water_Style>();
-		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Riven_Surface_Background>();
+		public override ModWaterStyle WaterStyle => GetInstance<Riven_Water_Style>();
+		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<Riven_Surface_Background>();
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => BiomeUGBackground<Riven_Underground_Background>();
-		public override int BiomeTorchItemType => ModContent.ItemType<Riven_Torch>();
-		public override int BiomeCampfireItemType => ModContent.ItemType<Riven_Campfire_Item>();
+		public override int BiomeTorchItemType => ItemType<Riven_Torch>();
+		public override int BiomeCampfireItemType => ItemType<Riven_Campfire_Item>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilRiven";
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Surface";
 		public override string MapBackground => BackgroundPath;
-		public static ModBiomeBestiaryInfoElement BestiaryInfoElement => ModContent.GetInstance<Riven_Hive>().ModBiomeBestiaryInfoElement;
+		public static ModBiomeBestiaryInfoElement BestiaryInfoElement => GetInstance<Riven_Hive>().ModBiomeBestiaryInfoElement;
 		public static FrameCachedValue<float> NormalGlowValue { get; private set; } = new(() => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f);
 		public static bool forcedBiomeActive;
 		public static Vector3 ColoredGlow(float intensity) => new Vector3(0.394f, 0.879f, 0.912f) * intensity * NormalGlowValue.GetValue();
@@ -76,16 +75,16 @@ namespace Origins.World.BiomeData {
 			return player.GetModPlayer<OriginPlayer>().ZoneRivenProgress * 0.98f;
 		}
 		public override void Load() {
-			FirstLesionDropRule = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Riven_Splitter>())
-				.WithOnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Harpoon>(), 1, 99, 99));
+			FirstLesionDropRule = ItemDropRule.NotScalingWithLuck(ItemType<Riven_Splitter>())
+				.WithOnSuccess(ItemDropRule.NotScalingWithLuck(ItemType<Harpoon>(), 1, 99, 99));
 
 			LesionDropRule = new OneFromRulesRule(1,
 				FirstLesionDropRule,
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Amebolize_Incantation>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Splitsplash>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Riverang>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Amoeba_Toy>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Primordial_Soup>())
+				ItemDropRule.NotScalingWithLuck(ItemType<Amebolize_Incantation>()),
+				ItemDropRule.NotScalingWithLuck(ItemType<Splitsplash>()),
+				ItemDropRule.NotScalingWithLuck(ItemType<Riverang>()),
+				ItemDropRule.NotScalingWithLuck(ItemType<Amoeba_Toy>()),
+				ItemDropRule.NotScalingWithLuck(ItemType<Primordial_Soup>())
 			);
 		}
 		public override void Unload() {
@@ -132,8 +131,8 @@ namespace Origins.World.BiomeData {
 					if (Main.hardMode && !spawnInfo.PlayerSafe && spawnInfo.SpawnTileY > Main.rockLayer && !spawnInfo.DesertCave) return rate;
 					return 0;
 				};
-				AddSpawn(ModContent.NPCType<Riven_Mimic>(), MimicRate(Mimic));
-				AddSpawn(ModContent.NPCType<Savage_Whip>(), MimicRate(Whip));
+				AddSpawn(NPCType<Riven_Mimic>(), MimicRate(Mimic));
+				AddSpawn(NPCType<Savage_Whip>(), MimicRate(Whip));
 			}
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
@@ -143,7 +142,7 @@ namespace Origins.World.BiomeData {
 				return LandEnemyRate(spawnInfo, hardmode);
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) {
-				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>()) || forcedBiomeActive;
+				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == TileType<Encrusted_Ore>()) || forcedBiomeActive;
 			}
 		}
 		public static class Gen {
@@ -155,10 +154,10 @@ namespace Origins.World.BiomeData {
 			}
 			public static void StartHive(int i, int j) {
 				Vector2 pos = new Vector2(i, j);
-				ushort fleshBlockType = (ushort)ModContent.TileType<Spug_Flesh>();
-				ushort fleshWallType = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
-				ushort gooBlockType = (ushort)ModContent.TileType<Amoeba_Fluid>();
-				int oreID = ModContent.TileType<Encrusted_Ore>();
+				ushort fleshBlockType = (ushort)TileType<Spug_Flesh>();
+				ushort fleshWallType = (ushort)WallType<Riven_Flesh_Wall>();
+				ushort gooBlockType = (ushort)TileType<Amoeba_Fluid>();
+				int oreID = TileType<Encrusted_Ore>();
 				HashSet<ushort> cleaveReplacables = [fleshBlockType];
 				Tile tile;
 				int X0 = int.MaxValue;
@@ -465,7 +464,7 @@ namespace Origins.World.BiomeData {
 					// tweak this to make more calcified areas
 					count = (int)(Main.maxTilesX * 6E-03 * genRand.NextFloat(0.9f, 1f));
 
-					ushort calcifiedTile = (ushort)ModContent.TileType<Calcified_Riven_Flesh>();
+					ushort calcifiedTile = (ushort)TileType<Calcified_Riven_Flesh>();
 					ushort calcifiedWall = (ushort)OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural);
 					while (count-- > 0 && positions.elements.Count > 0) {
 						Vector2 specklePos = positions.Pop();
@@ -595,8 +594,8 @@ namespace Origins.World.BiomeData {
 					int y = genRange.Y;
 					while (!Framing.GetTileSafely(x, y).HasSolidTile()) y++;
 				}*/
-				ushort flange = (ushort)ModContent.TileType<Marrowick_Flange>();
-				ushort largeFlange = (ushort)ModContent.TileType<Large_Marrowick_Flange>();
+				ushort flange = (ushort)TileType<Marrowick_Flange>();
+				ushort largeFlange = (ushort)TileType<Large_Marrowick_Flange>();
 				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
 					int tries = 18;
 					int x = genRange.X + genRand.Next(0, genRange.Width);
@@ -608,7 +607,7 @@ namespace Origins.World.BiomeData {
 						if (tries-- > 0) break;
 					}
 				}
-				ushort rivenAltar = (ushort)ModContent.TileType<Riven_Altar>();
+				ushort rivenAltar = (ushort)TileType<Riven_Altar>();
 				for (int i0 = genRand.Next(10, 15); i0-- > 0;) {
 					int tries = 0;
 					bool placed = false;
@@ -640,8 +639,8 @@ namespace Origins.World.BiomeData {
 						placed = Framing.GetTileSafely(x, y).TileIsType(rivenAltar);
 					}
 				}
-				ushort rivenLargePile = (ushort)ModContent.TileType<Riven_Large_Foliage>();
-				ushort coralPile = (ushort)ModContent.TileType<Marrowick_Coral>();
+				ushort rivenLargePile = (ushort)TileType<Riven_Large_Foliage>();
+				ushort coralPile = (ushort)TileType<Marrowick_Coral>();
 				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
 					int tries = 18;
 					int x = genRange.X + genRand.Next(0, genRange.Width);
@@ -652,7 +651,7 @@ namespace Origins.World.BiomeData {
 						if (tries-- > 0) break;
 					}
 				}
-				ushort rivenMediumPile = (ushort)ModContent.TileType<Riven_Medium_Foliage>();
+				ushort rivenMediumPile = (ushort)TileType<Riven_Medium_Foliage>();
 				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
 					int tries = 18;
 					int x = genRange.X + genRand.Next(0, genRange.Width);
@@ -671,7 +670,7 @@ namespace Origins.World.BiomeData {
 					}
 				}
 				WeightedRandom<Point> coralSpots = new(genRand);
-				Shelf_Coral shelfCoral = ModContent.GetInstance<Shelf_Coral>();
+				Shelf_Coral shelfCoral = GetInstance<Shelf_Coral>();
 				for (int i0 = 0; i0 < genRange.Width; i0++) {
 					int i1 = i0 + genRange.X;
 					for (int j0 = 0; j0 < genRange.Height; j0++) {
@@ -696,9 +695,9 @@ namespace Origins.World.BiomeData {
 			public static void StartHive_Old(int i, int j) {
 				const float strength = 2.4f;
 				const float wallThickness = 4f;
-				ushort fleshID = (ushort)ModContent.TileType<Spug_Flesh>();
+				ushort fleshID = (ushort)TileType<Spug_Flesh>();
 				ushort weakFleshID = TileID.CrackedBlueDungeonBrick;
-				ushort fleshWallID = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
+				ushort fleshWallID = (ushort)WallType<Riven_Flesh_Wall>();
 				int j2 = j;
 				if (j2 > Main.worldSurface) {
 					j2 = (int)Main.worldSurface;
@@ -775,9 +774,9 @@ namespace Origins.World.BiomeData {
 				HiveCave_Old((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
 			}
 			public static Point HiveCave_Old(int i, int j, float sizeMult = 1f) {
-				ushort fleshID = (ushort)ModContent.TileType<Spug_Flesh>();
-				ushort fleshWallID = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
-				ushort blisterID = (ushort)ModContent.TileType<Gel_Blister>();
+				ushort fleshID = (ushort)TileType<Spug_Flesh>();
+				ushort fleshWallID = (ushort)WallType<Riven_Flesh_Wall>();
+				ushort blisterID = (ushort)TileType<Gel_Blister>();
 				int i2 = i + (int)(genRand.Next(-26, 26) * sizeMult);
 				int j2 = j + (int)(genRand.Next(-2, 22) * sizeMult);
 				Queue<Point> lesionPlacementSpots = new Queue<Point>();
@@ -848,7 +847,7 @@ namespace Origins.World.BiomeData {
 				DoScar(
 					new(i2, j2),
 					genRand.NextFloat(0, MathHelper.TwoPi),
-					(ushort)ModContent.TileType<Amoeba_Fluid>(),
+					(ushort)TileType<Amoeba_Fluid>(),
 					genRand.NextFloat(6, 10),
 					genRand.NextFloat(3, 6)
 				);
@@ -860,7 +859,7 @@ namespace Origins.World.BiomeData {
 				start *= 16;
 				Vector2 direction = angle.ToRotationVector2();
 				float dist = CollisionExt.Raymarch(start, direction, 16 * 50);
-				Carver.Filter filter = Carver.ActiveTileInSet(TileID.Sets.Factory.CreateBoolSet(ModContent.TileType<Spug_Flesh>()))
+				Carver.Filter filter = Carver.ActiveTileInSet(TileID.Sets.Factory.CreateBoolSet(TileType<Spug_Flesh>()))
 				+ Carver.PointyLemon((start + direction * dist) / 16, scale, direction.ToRotation() + MathHelper.PiOver2, aspectRatio, roundness, ref posMin, ref posMax);
 
 				Carver.DoCarve(
@@ -879,7 +878,7 @@ namespace Origins.World.BiomeData {
 			}
 			public static void SpreadRivenGrass(int i, int j) {
 				const int maxDepth = 150;
-				ushort grassType = (ushort)ModContent.TileType<Riven_Grass>();
+				ushort grassType = (ushort)TileType<Riven_Grass>();
 				Stack<(int x, int y, int depth)> stack = new();
 				stack.Push((i, j, 0));
 				while (stack.Count > 0) {
@@ -988,7 +987,7 @@ namespace Origins.World.BiomeData {
 				});
 				shadowOrbSmashed = true;
 				shadowOrbCount++;
-				int bossHeadType = ModContent.NPCType<World_Cracker_Head>();
+				int bossHeadType = NPCType<World_Cracker_Head>();
 				if (shadowOrbCount >= 3) {
 					if (!NPC.AnyNPCs(bossHeadType)) {
 						shadowOrbCount = 0;
@@ -1012,7 +1011,7 @@ namespace Origins.World.BiomeData {
 		}
 	}
 	public class Riven_Hive_Water_Control : ModSceneEffect {
-		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Riven_Water_Style>();
+		public override ModWaterStyle WaterStyle => GetInstance<Riven_Water_Style>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
 		public override bool IsSceneEffectActive(Player player) => OriginSystem.rivenTiles > Riven_Hive.NeededTiles;
 		public override float GetWeight(Player player) => 1f;
@@ -1091,45 +1090,42 @@ namespace Origins.World.BiomeData {
 		public override Color OuterColor => new(30, 176, 255);
 		public override Color NameColor => new(25, 151, 230);
 		public override Color? BiomeSightColor => Color.Cyan;
-		public override IShoppingBiome Biome => ModContent.GetInstance<Riven_Hive>();
+		public override IShoppingBiome Biome => GetInstance<Riven_Hive>();
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
-			//DisplayName.SetDefault(Language.GetTextValue("Mods.Origins.Generic.Riven_Hive"));
-			//Description.SetDefault(Language.GetTextValue("A flourishing and beautiful ecosystem soon to replace the status quo dominated by a now sentient amoeba."));
-			//GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
 
-			AddTileConversion(ModContent.TileType<Riven_Grass>(), TileID.Grass);
-			AddTileConversion(ModContent.TileType<Riven_Jungle_Grass>(), TileID.JungleGrass);
-			AddTileConversion(ModContent.TileType<Spug_Flesh>(), TileID.Stone);
-			AddTileConversion(ModContent.TileType<Calcified_Riven_Flesh>(), ModContent.TileType<Calcified_Riven_Flesh>());
-			AddTileConversion(ModContent.TileType<Silica>(), TileID.Sand);
-			AddTileConversion(ModContent.TileType<Quartz>(), TileID.Sandstone);
-			AddTileConversion(ModContent.TileType<Brittle_Quartz>(), TileID.HardenedSand);
-			AddTileConversion(ModContent.TileType<Primordial_Permafrost>(), TileID.IceBlock);
+			AddTileConversion(TileType<Riven_Grass>(), TileID.Grass);
+			AddTileConversion(TileType<Riven_Jungle_Grass>(), TileID.JungleGrass);
+			AddTileConversion(TileType<Spug_Flesh>(), TileID.Stone);
+			AddTileConversion(TileType<Calcified_Riven_Flesh>(), TileType<Calcified_Riven_Flesh>());
+			AddTileConversion(TileType<Silica>(), TileID.Sand);
+			AddTileConversion(TileType<Quartz>(), TileID.Sandstone);
+			AddTileConversion(TileType<Brittle_Quartz>(), TileID.HardenedSand);
+			AddTileConversion(TileType<Primordial_Permafrost>(), TileID.IceBlock);
 
-			AddTileConversion(ModContent.TileType<Amoeba_Fluid>(), TileID.ClayBlock);
+			AddTileConversion(TileType<Amoeba_Fluid>(), TileID.ClayBlock);
 
-			GERunnerConversion.Add(TileID.Silt, ModContent.TileType<Silica>());
+			GERunnerConversion.Add(TileID.Silt, TileType<Silica>());
 
-			BiomeFlesh = ModContent.TileType<Amoeba_Fluid>(); // temp?
-			BiomeFleshWall = ModContent.WallType<Amebic_Gel_Wall>();
+			BiomeFlesh = TileType<Amoeba_Fluid>(); // temp?
+			BiomeFleshWall = WallType<Amebic_Gel_Wall>();
 
-			SeedType = ModContent.ItemType<Riven_Grass_Seeds>();
-			BiomeOre = ModContent.TileType<Encrusted_Ore>();
-			BiomeOreItem = ModContent.ItemType<Encrusted_Ore_Item>();
-			BiomeOreBrick = ModContent.TileType<Encrusted_Brick>();
-			AltarTile = ModContent.TileType<Riven_Altar>();
+			SeedType = ItemType<Riven_Grass_Seeds>();
+			BiomeOre = TileType<Encrusted_Ore>();
+			BiomeOreItem = ItemType<Encrusted_Ore_Item>();
+			BiomeOreBrick = TileType<Encrusted_Brick>();
+			AltarTile = TileType<Riven_Altar>();
 
-			BiomeChestItem = ModContent.ItemType<Plasma_Cutter>();
-			BiomeChestTile = ModContent.TileType<Riven_Dungeon_Chest>();
+			BiomeChestItem = ItemType<Plasma_Cutter>();
+			BiomeChestTile = TileType<Riven_Dungeon_Chest>();
 			BiomeChestTileStyle = 1;
-			BiomeKeyItem = ModContent.ItemType<Riven_Key>();
+			BiomeKeyItem = ItemType<Riven_Key>();
 
-			MimicType = ModContent.NPCType<Riven_Mimic>();
+			MimicType = NPCType<Riven_Mimic>();
 
-			BloodBunny = ModContent.NPCType<Barnacle_Bunny>();
-			BloodPenguin = ModContent.NPCType<Riven_Penguin>();
-			BloodGoldfish = ModContent.NPCType<Bottomfeeder>();
+			BloodBunny = NPCType<Barnacle_Bunny>();
+			BloodPenguin = NPCType<Riven_Penguin>();
+			BloodGoldfish = NPCType<Bottomfeeder>();
 
 			AddWallConversions(OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural), OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural));
 			
@@ -1169,7 +1165,6 @@ namespace Origins.World.BiomeData {
 				WallID.GrassUnsafe,
 				WallID.Grass
 			);
-			this.AddChambersiteConversions(ModContent.TileType<Chambersite_Ore_Riven_Flesh>(), ModContent.WallType<Chambersite_Riven_Flesh_Wall>());
 			EvilBiomeGenerationPass = new Riven_Hive_Generation_Pass();
 		}
 		public IEnumerable<int> ProvideItemObtainability() {
@@ -1178,13 +1173,13 @@ namespace Origins.World.BiomeData {
 		public override AltMaterialContext MaterialContext {
 			get {
 				AltMaterialContext context = new AltMaterialContext();
-				context.SetEvilHerb(ModContent.ItemType<Wrycoral_Item>());
-				context.SetEvilBar(ModContent.ItemType<Encrusted_Bar>());
-				context.SetEvilOre(ModContent.ItemType<Encrusted_Ore_Item>());
-				context.SetVileInnard(ModContent.ItemType<Bud_Barnacle>());
-				context.SetVileComponent(ModContent.ItemType<Alkahest>());
-				context.SetEvilBossDrop(ModContent.ItemType<Riven_Carapace>());
-				context.SetEvilSword(ModContent.ItemType<Vorpal_Sword>());
+				context.SetEvilHerb(ItemType<Wrycoral_Item>());
+				context.SetEvilBar(ItemType<Encrusted_Bar>());
+				context.SetEvilOre(ItemType<Encrusted_Ore_Item>());
+				context.SetVileInnard(ItemType<Bud_Barnacle>());
+				context.SetVileComponent(ItemType<Alkahest>());
+				context.SetEvilBossDrop(ItemType<Riven_Carapace>());
+				context.SetEvilSword(ItemType<Vorpal_Sword>());
 				return context;
 			}
 		}
@@ -1215,8 +1210,8 @@ namespace Origins.World.BiomeData {
 				range = WorldBiomeGeneration.ChangeRange.GetRange();
 
 				WorldBiomeGeneration.EvilBiomeGenRanges.Add(range);
-				AltBiome biome = ModContent.GetInstance<Riven_Hive_Alt_Biome>();
-				ushort grass = (ushort)ModContent.TileType<Riven_Grass>();
+				AltBiome biome = GetInstance<Riven_Hive_Alt_Biome>();
+				ushort grass = (ushort)TileType<Riven_Grass>();
 				for (int i = range.Left; i < range.Right; i++) {
 					int slopeFactor = Math.Min(Math.Min(i - range.Left, range.Right - i), 99);
 					for (int j = range.Top - 10; j < range.Bottom; j++) {

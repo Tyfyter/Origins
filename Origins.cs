@@ -1,14 +1,16 @@
 global using Microsoft.Xna.Framework;
+global using static Origins.GlobalUtils;
 global using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 global using Color = Microsoft.Xna.Framework.Color;
 global using Rectangle = Microsoft.Xna.Framework.Rectangle;
 global using Vector2 = Microsoft.Xna.Framework.Vector2;
 global using Vector3 = Microsoft.Xna.Framework.Vector3;
 global using Vector4 = Microsoft.Xna.Framework.Vector4;
-global using static Origins.GlobalUtils;
+using AltLibrary;
 using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
+using MonoMod.Utils;
 using Origins.Backgrounds;
 using Origins.Buffs;
 using Origins.Core;
@@ -21,6 +23,7 @@ using Origins.Items.Other;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
 using Origins.Items.Other.Testing;
+using Origins.Items.Tools.Wiring;
 using Origins.Items.Vanity.Dev.PlagueTexan;
 using Origins.Items.Weapons.Ranged;
 using Origins.Journal;
@@ -59,8 +62,6 @@ using Terraria.UI.Chat;
 using static Origins.OriginsSets.Items;
 using static System.Net.Mime.MediaTypeNames;
 using MC = Terraria.ModLoader.ModContent;
-using Origins.Items.Tools.Wiring;
-using MonoMod.Utils;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -229,8 +230,13 @@ namespace Origins {
 					Main.tileMerge[pair.Item2][pair.Item1] = true;
 				}
 			}
-			MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Ebonstone>(), MC.WallType<Chambersite_Ebonstone_Wall>());
-			MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Crimstone>(), MC.WallType<Chambersite_Crimstone_Wall>());
+			foreach (AltBiome biome in AltLibrary.AltLibrary.AllBiomes) {
+				if (biome.BiomeType == BiomeType.Evil) {
+					biome.AddEvilConversions();
+				}
+			}
+			//MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Ebonstone>(), MC.WallType<Chambersite_Ebonstone_Wall>());
+			//MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Crimstone>(), MC.WallType<Chambersite_Crimstone_Wall>());
 			UnstableHooking.IL_Main_DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
 			OriginsModIntegrations.LateLoad();
 			_ = OriginExtensions.StrikethroughFont;
@@ -265,7 +271,8 @@ namespace Origins {
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Defiled", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled_Wastelands"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("The_Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.The_Defiled_Wastelands")); 
-			LocalizationMethods.BindArgs(Language.GetOrRegister("the_Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.the_Defiled_Wastelands")); 
+			LocalizationMethods.BindArgs(Language.GetOrRegister("the_Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.the_Defiled_Wastelands"));
+			LocalizationMethods.BindArgs(Language.GetOrRegister("Ashen", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Ashen"));
 
 			RasterizeAdjustment = [];
 			ExplosiveBaseDamage = [];

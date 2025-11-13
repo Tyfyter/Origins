@@ -17,7 +17,7 @@ namespace Origins.Tiles.Ashen {
 		public override void AddRecipes() {
 			CreateRecipe()
 			.AddRecipeGroup(RecipeGroupID.Wood, 10)
-			.AddIngredient<Ashen_Torch_Item>(5)
+			.AddIngredient<Ashen_Torch>(5)
 			.Register();
 		}
 	}

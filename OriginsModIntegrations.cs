@@ -578,12 +578,7 @@ namespace Origins {
 				instance.thorium.Call("AddFlailProjectileID", ProjectileType<Depth_Charge_P_Alt>());
 				instance.thorium.Call("AddFlailProjectileID", ProjectileType<Depth_Charge_Explosion>());
 
-				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore>());
-				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Ebonstone>());
-				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Crimstone>());
-				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Defiled_Stone>());
-				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Riven_Flesh>());
-				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Tainted_Stone>());
+				for (int i = 0; i < Chambersite_Ore.chambersiteTiles.Count; i++) instance.thorium.Call("AddGemStoneTileID", Chambersite_Ore.chambersiteTiles[i]);
 
 				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Conehead_Zombie>());
 				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Graveshield_Zombie>());
@@ -1017,7 +1012,7 @@ namespace Origins {
 				.DisableDecraft()
 				.Register();
 
-			Recipe.Create(ItemType<Ashen_Torch_Item>()) // temp result until the actual ashen dungeon weapon is made
+			Recipe.Create(ItemType<Ashen_Torch>()) // temp result until the actual ashen dungeon weapon is made
 				.AddIngredient(ItemType<Ashen_Key>())
 				.AddCondition(Condition.DownedPlantera)
 				.AddTile(TileID.MythrilAnvil)

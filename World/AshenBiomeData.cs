@@ -46,7 +46,7 @@ namespace Origins.World.BiomeData {
 		public override string MapBackground => BackgroundPath;
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<Defiled_Surface_Background>();
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => BiomeUGBackground<Riven_Underground_Background>();
-		public override int BiomeTorchItemType => ItemType<Ashen_Torch_Item>();
+		public override int BiomeTorchItemType => ItemType<Ashen_Torch>();
 		public override int BiomeCampfireItemType => ItemType<Ashen_Campfire_Item>();
 		public static bool forcedBiomeActive;
 		public override bool IsBiomeActive(Player player) {
@@ -666,7 +666,7 @@ namespace Origins.World.BiomeData {
 			BiomeOreBrick = TileType<Sanguinite_Brick>();
 			AltarTile = TileType<Ashen_Altar>();
 
-			BiomeChestItem = ItemType<Ashen_Torch_Item>();
+			BiomeChestItem = ItemType<Ashen_Torch>();
 			BiomeChestTile = TileType<Ashen_Dungeon_Chest>();
 			BiomeChestTileStyle = 1;
 			BiomeKeyItem = ItemType<Ashen_Key>();
@@ -714,7 +714,7 @@ namespace Origins.World.BiomeData {
 				WallID.GrassUnsafe,
 				WallID.Grass
 			);
-			this.AddChambersiteConversions(TileType<Chambersite_Ore_Tainted_Stone>(), WallType<Chambersite_Tainted_Stone_Wall>());
+			//this.AddChambersiteConversions(TileType<Chambersite_Ore_Tainted_Stone>(), WallType<Chambersite_Tainted_Stone_Wall>());
 
 			EvilBiomeGenerationPass = new Ashen_Generation_Pass();
 		}
