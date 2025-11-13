@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.Graphics;
 using ReLogic.Content;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ModLoader;
@@ -48,11 +49,24 @@ namespace Origins.Tiles.Ashen {
 		public CustomTilePaintLoader.CustomTileVariationKey TopGlowPaintKey { get; set; }*/
 	}
 	[LegacyName("Witherleaf_Tree_Sapling")]
-	public class Artifiber_Tree_Sapling : SaplingBase {
+	public class Artifiber_Tree_Sapling : SaplingBase, IGlowingModTile {
+		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Artifiber_Tree_Sapling).GetDefaultTMLName() + "_Glow";
+		public Color GlowColor => Color.White;
+		AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
 		public override Color MapColor => new(130, 103, 85);
 		public override int[] ValidAnchorTypes => Artifiber_Tree.AnchorTypes;
-		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
-			tileFrameX += 54;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (tile.TileFrameX / 18 != 2) color = Vector3.Max(color, Color.OrangeRed.ToVector3());
 		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			drawData.glowTexture = GlowTexture;
+			drawData.glowSourceRect = new Rectangle(drawData.tileFrameX, drawData.tileFrameY, 16, 16);
+			drawData.glowColor = GlowColor;
+		}
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
+			//tileFrameX += 54;
+		}
+		public override void Load() => this.SetupGlowKeys();
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 }
