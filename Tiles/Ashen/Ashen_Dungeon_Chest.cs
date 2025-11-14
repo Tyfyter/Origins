@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
-using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -19,12 +18,9 @@ namespace Origins.Tiles.Ashen {
 			base.SetStaticDefaults();
 			Main.tileLighted[Type] = true;
 			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("{$Defiled} Chest");
 			AddMapEntry(new Color(176, 63, 10), name, MapChestName);
 			name = Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.{Name}_Locked.MapEntry"));
-			// name.SetDefault("Locked {$Defiled} Chest");
 			AddMapEntry(new Color(176, 63, 10), name, MapChestName);
-			//disableSmartCursor = true;
 			AdjTiles = [TileID.Containers];
 			keyItem = ModContent.ItemType<Ashen_Key>();
 			DustType = Ashen_Biome.DefaultTileDust;
@@ -38,14 +34,13 @@ namespace Origins.Tiles.Ashen {
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Ashen_Dungeon_Chest_Item : ModItem {
-		public override string Texture => typeof(Defiled_Dungeon_Chest_Item).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			ModCompatSets.AnyChests[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.useTurn = true;
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
