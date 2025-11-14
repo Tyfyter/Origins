@@ -54,7 +54,6 @@ namespace Origins.Items.Other.Critters {
 		}
 	}
 	public class Hyrax_Item : Critter_Item<Hyrax> {
-		public override string Texture => typeof(Peppered_Moth_Item).GetDefaultTMLName();
 		public override void SafeSetDefaults() {
 			Item.bait = 40;
 			Item.value = Item.sellPrice(silver: 5);
