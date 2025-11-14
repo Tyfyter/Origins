@@ -55,7 +55,6 @@ namespace Origins.Items.Other.Critters {
 	}
 	public class Hyrax_Item : Critter_Item<Hyrax> {
 		public override void SafeSetDefaults() {
-			Item.bait = 40;
 			Item.value = Item.sellPrice(silver: 5);
 		}
 	}
