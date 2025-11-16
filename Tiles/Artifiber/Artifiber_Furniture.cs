@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Artifiber {
 	public class Artifiber_Furniture : FurnitureSet<Artifiber_Item> {
-		public override Color MapColor => new(44, 39, 58);
+		public override Color MapColor => new(143, 114, 94);
 		public override int DustType => DustID.WoodFurniture;
 		public override Vector3 LightColor {
 			get {
