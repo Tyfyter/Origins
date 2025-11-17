@@ -8,7 +8,7 @@ namespace Origins.Walls {
     public class Artifiber_Wall : ModWall {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallID.Wood;
-			AddMapEntry(new Color(30, 10, 30));
+			AddMapEntry(FromHexRGB(0x7F6554));
 			Main.wallHouse[Type] = true;
 			DustType = DustID.t_Granite;
 		}

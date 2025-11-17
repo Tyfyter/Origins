@@ -487,15 +487,15 @@ namespace Origins.Tiles {
 			}
 		}
 		public override void EmitParticles(int i, int j, Tile tileCache, short tileFrameX, short tileFrameY, Color tileLight, bool visible) {
-			if (Main.rand.NextBool(40) && tileFrameY < 54) {
-				// The following math makes dust only spawn at the tile coordinates of the flames:
-				// ---
-				// O-O
-				// ---
+			if (FlameDust != -1) {
+				if (Main.rand.NextBool(40) && tileFrameY < 54) {
+					// The following math makes dust only spawn at the tile coordinates of the flames:
+					// ---
+					// O-O
+					// ---
 
-				int tileColumn = tileFrameX / 18 % 3;
-				if (tileFrameY / 18 % 3 == 1 && tileColumn != 1) {
-					if (FlameDust != -1) {
+					int tileColumn = tileFrameX / 18 % 3;
+					if (tileFrameY / 18 % 3 == 1 && tileColumn != 1) {
 						Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16 + 2), 14, 6, FlameDust, 0f, 0f, 100);
 						if (Main.rand.NextBool(3)) {
 							dust.noGravity = true;
@@ -690,7 +690,7 @@ namespace Origins.Tiles {
 	public abstract class CageBase(int cage = ItemID.Terrarium) : ModTile {
 
 		protected internal TileItem item;
-		public abstract int IngredientItem {  get; }
+		public abstract int IngredientItem { get; }
 		public virtual bool LavaDeath => true;
 		public virtual Color MapColor => new(122, 217, 232);
 		/// <inheritdoc	cref="TileID.Sets.CritterCageLidStyle"/>

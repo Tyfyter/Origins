@@ -2356,8 +2356,8 @@ Tiles: {
 	// Basic_Crate_Tile.MapEntry: Basic Crate
 	// Ancient_Music_Box_BP: Ancient Music Box (Brine Pool)
 	// Music_Box_BP: Music Box (Brine Pool)
-	// Brine_Dungeon_Chest.MapEntry: Brine Dungeon Chest
-	// Brine_Dungeon_Chest_Locked.MapEntry: Mods.Origins.Tiles.Brine_Dungeon_Chest_Locked.MapEntry
+	// Brine_Dungeon_Chest.MapEntry: Brine Chest
+	// Brine_Dungeon_Chest_Locked.MapEntry: Locked Brine Chest
 	// Defiled_Storage_Unit.MapEntry: "{§Defiled} Storage Unit"
 	// Encrusted_Storage_Unit.MapEntry: Encrusted Storage Unit
 	// Sanguinite_Storage_Unit.MapEntry: Sanguinite Storage Unit
@@ -2379,8 +2379,8 @@ Tiles: {
 	// Otherworldly_Music_Box_DW: Otherworldly Music Box ({§Defiled_Wastelands})
 	// Artifiber_Chest.MapEntry: Artifiber Chest
 	// Artifiber_Dresser.MapEntry: Artifiber Dresser
-	// Ashen_Dungeon_Chest_Locked.MapEntry: Mods.Origins.Tiles.Ashen_Dungeon_Chest_Locked.MapEntry
-	// Ashen_Dungeon_Chest.MapEntry: "{§Ashen} Dungeon Chest"
+	// Ashen_Dungeon_Chest.MapEntry: "{§Ashen} Chest"
+	// Ashen_Dungeon_Chest_Locked.MapEntry: Locked {§Ashen} Chest
 	// Ashen_Altar.MapEntry: "{§Ashen} Altar"
 	// Beacon_Light.MapEntry: "{§Mods.Origins.Items.Beacon_Light_Item.DisplayName}"
 	// Suit_Locker.MapEntry: Suit Locker
@@ -2422,7 +2422,7 @@ Keybinds: {
 	// UseMojoFlask.DisplayName: Use Mojo Flask
 	// JournalBack.DisplayName: "{§Journal}: Back"
 	// WishingGlass.DisplayName: Wishing Glass
-	// "Open Structure Helper.DisplayName": Open  Structure  Helper
+	// "Open Structure Helper.DisplayName": Open Structure Helper
 }
 
 Configs: {
