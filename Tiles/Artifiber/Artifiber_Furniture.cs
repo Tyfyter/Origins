@@ -28,7 +28,6 @@ namespace Origins.Tiles.Artifiber {
 		}
 		public override void LanternSwayParams(LightFurnitureBase tile, int i, int j, ref float? overrideWindCycle, ref float windPushPowerX, ref float windPushPowerY, ref bool dontRotateTopTiles, ref float totalWindMultiplier, ref Texture2D glowTexture, ref Color glowColor) {
 			ChandelierSwayParams(tile, i, j, ref overrideWindCycle, ref windPushPowerX, ref windPushPowerY, ref dontRotateTopTiles, ref totalWindMultiplier, ref glowTexture, ref glowColor);
-			dontRotateTopTiles = false;
 		}
 	}
 }
