@@ -1260,7 +1260,7 @@ TILES:
 (^) Type-III Fortified Steel Block
 
 (^) Amebic Gel Wall
-(#, ^2) Artifiber Wall !!!
+(☻) Artifiber Wall !!! (verify map color)
 (^) Barnacle Wall
 (^) Baryte Wall
 (^) Batholith Wall
@@ -1298,7 +1298,7 @@ TILES:
 (#, ^2) Air Vent !!!
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
-(#2, ^2, ▼) Artifiber Furniture !!! (no shake and custom light code)
+(☻) Artifiber Furniture !!! (no shake and custom light code?)
 (^) Ashen Torch
 (^) Ashen Water Fountain
 (^) Bile Torch
@@ -1483,7 +1483,7 @@ MATERIALS:
 (^) Acetabularia
 (^) Adhesive Wrap
 (^) Aetherite Bar
-(#2, ^2) Bark !!! (Artifiber Bark)
+(^) Bark
 (^) Bat Hide
 (^) Biocomponent 10
 (^) Bud Barnacle
