@@ -45,22 +45,13 @@ namespace Origins {
 	public partial class OriginSystem : ModSystem {
 		public static OriginSystem Instance => ModContent.GetInstance<OriginSystem>();
 		public UserInterface setBonusInventoryUI;
-		UserInterface setBonusHUDInterface;
-		UserInterface itemUseHUDInterface;
-		UserInterface eventHUDInterface;
-		public State_Switching_UI SetBonusHUD { get; private set; } = new();
-		public State_Switching_UI ItemUseHUD { get; private set; } = new();
-		public State_Switching_UI EventHUD { get; private set; } = new();
+		public StateSwitchingInterface SetBonusHUD { get; } = new("Origins: Set Bonus HUD");
+		public StateSwitchingInterface ItemUseHUD { get; } = new("Origins: Held Item HUD");
+		public StateSwitchingInterface EventHUD { get; } = new("Origins: Event HUD");
 		public UserInterfaceWithDefaultState journalUI;
 		internal static List<SwitchableUIState> queuedUIStates = [];
 		public override void Load() {
 			setBonusInventoryUI = new UserInterface();
-			setBonusHUDInterface = new UserInterface();
-			setBonusHUDInterface.SetState(SetBonusHUD);
-			itemUseHUDInterface = new UserInterface();
-			itemUseHUDInterface.SetState(ItemUseHUD);
-			eventHUDInterface = new UserInterface();
-			eventHUDInterface.SetState(EventHUD);
 			journalUI = new UserInterfaceWithDefaultState() {
 				DefaultUIState = new Journal_UI_Button()
 			};
@@ -516,9 +507,9 @@ namespace Origins {
 					}
 				}
 			}
-			setBonusHUDInterface.Update(gameTime);
-			itemUseHUDInterface.Update(gameTime);
-			eventHUDInterface.Update(gameTime);
+			SetBonusHUD.Update(gameTime);
+			ItemUseHUD.Update(gameTime);
+			EventHUD.Update(gameTime);
 		}
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
 			int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
@@ -531,30 +522,9 @@ namespace Origins {
 					},
 					InterfaceScaleType.UI) { Active = Main.playerInventory }
 				);
-				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
-					 "Origins: Held Item HUD",
-					 delegate {
-						 itemUseHUDInterface?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
-						 return true;
-					 },
-					 InterfaceScaleType.UI)
-				);
-				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
-					 "Origins: Set Bonus HUD",
-					 delegate {
-						 setBonusHUDInterface?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
-						 return true;
-					 },
-					 InterfaceScaleType.UI)
-				);
-				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
-					 "Origins: Event HUD",
-					 delegate {
-						 eventHUDInterface?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
-						 return true;
-					 },
-					 InterfaceScaleType.UI)
-				);
+				ItemUseHUD.Insert(layers);
+				SetBonusHUD.Insert(layers);
+				EventHUD.Insert(layers);
 				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().journalUnlocked) {
 					layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
 						"Origins: Journal UI",

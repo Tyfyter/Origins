@@ -37,7 +37,7 @@ namespace Origins.Core.Structures {
 			for (int i = 0; i < descriptors.Length; i++) descriptor += CreateSingle(mod, descriptors[i]);
 			return descriptor;
 		}
-		public static string Serialize(Tile tile) => Serializer.Accumulate(tile);
+		public static string Serialize(Tile tile) => Serializer.Accumulate(tile) ?? "Void";
 	}
 	public abstract class PostGenerateDescriptor : ModType {
 		protected sealed override void Register() {
@@ -182,7 +182,12 @@ namespace Origins.Core.Structures {
 		public static Task<DeserializedStructure> AsyncLoad(string fileName) => Task.Run(() => Load(fileName));
 		public static DeserializedStructure Load(string fileName) {
 			if (!fileName.EndsWith(".json")) fileName += ".json";
-			return new DeserializedStructure(ModLoader.GetMod(fileName.Split('/')[0]), Path.GetFileNameWithoutExtension(fileName), Encoding.UTF8.GetString(ModContent.GetFileBytes(fileName)));
+			string sourcePath = Path.Combine([Program.SavePathShared, "ModSources", fileName]);
+			return new DeserializedStructure(
+				ModLoader.GetMod(fileName.Split('/')[0]),
+				Path.GetFileNameWithoutExtension(fileName),
+				File.Exists(sourcePath) ? File.ReadAllText(sourcePath) : Encoding.UTF8.GetString(ModContent.GetFileBytes(fileName))
+			);
 		}
 		public override bool Break(StructureInstance instance) => breakCondition.Accumulate(instance);
 		public override bool IsValidLayout(StructureInstance instance) => isValidLayout.Accumulate(instance, true);

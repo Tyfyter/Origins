@@ -1,15 +1,12 @@
-﻿using System;
+﻿using PegasusLib;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
+using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using ThoriumMod.Items.Donate;
 
 namespace Origins.Core.Structures {
 	public class PaintTile : SerializableTileDescriptor {
@@ -61,7 +58,7 @@ namespace Origins.Core.Structures {
 			AddSerializer(tile => {
 				if (tile.HasTile) {
 					if (Main.tileFrameImportant[tile.TileType]) return null;
-					if (OriginsSets.Tiles.StructureSerializer_PlaceAtFrame[tile.TileType].HasValue) return null;
+					if (TileObjectData.GetTileData(tile) is TileObjectData) return null;
 					return $"PlaceTile({TileID.Search.GetName(tile.TileType)})";
 				}
 				return null;
@@ -91,7 +88,7 @@ namespace Origins.Core.Structures {
 		public override void Load() {
 			AddSerializer(tile => {
 				if (tile.HasTile && Main.tileFrameImportant[tile.TileType]) {
-					if (OriginsSets.Tiles.StructureSerializer_PlaceAtFrame[tile.TileType].HasValue) return null;
+					if (TileObjectData.GetTileData(tile) is not null) return null;
 					return $"PlaceFramedTile({TileID.Search.GetName(tile.TileType)},{tile.TileFrameX},{tile.TileFrameY})";
 				}
 				return null;
@@ -113,10 +110,28 @@ namespace Origins.Core.Structures {
 	public class PlaceSpecialTile : PlaceTile {
 		public override void Load() {
 			AddSerializer(tile => {
-				if (tile.HasTile && OriginsSets.Tiles.StructureSerializer_PlaceAtFrame[tile.TileType] is Point frame && frame.X == tile.TileFrameX && frame.Y == tile.TileFrameY) {
-					int style = TileObjectData.GetTileStyle(tile);
-					style -= style % TileObjectData.GetTileData(tile).RandomStyleRange;
-					return $"PlaceSpecialTile({TileID.Search.GetName(tile.TileType)},{style})";
+				if (tile.HasTile && TileObjectData.GetTileData(tile) is TileObjectData data) {
+					(int i, int j) = tile.GetTilePosition();
+					TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+					left += data.Origin.X;
+					top += data.Origin.Y;
+					if (i != left || j != top) {
+						return "Empty";
+					}
+					int style = 0;
+					int alternate = 0;
+					TileObjectData.GetTileInfo(tile, ref style, ref alternate);
+					string direction = "";
+					switch (data.Direction) {
+						case TileObjectDirection.PlaceLeft:
+						direction = ",-1";
+						break;
+						case TileObjectDirection.PlaceRight:
+						direction = ",1";
+						break;
+					}
+					string styleText = (style == 0 && string.IsNullOrEmpty(direction)) ? "" : $",{style}";
+					return $"PlaceSpecialTile({TileID.Search.GetName(tile.TileType)}{styleText}{direction})";
 				}
 				return null;
 			});
@@ -128,7 +143,19 @@ namespace Origins.Core.Structures {
 			return new((_, _, i, j) => {
 				TileObject.CanPlace(i, j, type, style, dir, out TileObject objectData);
 				TileObject.Place(objectData);
+				TileObjectData.CallPostPlacementPlayerHook(i, j, type, style, dir, objectData.alternate, objectData);
 				TileLoader.GetTile(type)?.PlaceInWorld(i, j, null);
+
+				TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+				TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+				Point pos = default;
+				for (int y = 0; y < data.Height; y++) {
+					pos.Y = top + y;
+					for (int x = 0; x < data.Width; x++) {
+						pos.X = left + x;
+						Structure.ignoreEmpty.Add(pos);
+					}
+				}
 			}, Parts: [originalText]);
 		}
 	}
@@ -176,7 +203,11 @@ namespace Origins.Core.Structures {
 		protected override TileDescriptor Create(string[] parameters, string originalText) => descriptor;
 	}
 	public class Empty : SerializableTileDescriptor {
-		readonly TileDescriptor descriptor = new(null);
+		readonly TileDescriptor descriptor = new((_, _, i, j) => {
+			if (Structure.ignoreEmpty.Contains(new(i, j))) return;
+			Tile tile = Main.tile[i, j];
+			tile.HasTile = false;
+		});
 		public override void Load() {
 			AddSerializer(tile => tile.HasTile ? null : "Empty");
 		}

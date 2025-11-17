@@ -39,17 +39,26 @@
 		},
 		"Required_Hallway": {
 			"Map": [
-				"_____",
-				"OOOOO",
-				"OOOOO",
-				"OOOOO",
-				"OOOOO",
-				"OOOOO",
-				"OOOOO",
-				"LOVOR",
-				"YYYYY"
+				"ooooo",
+				"wwwww",
+				"wwwww",
+				"wwwww",
+				"wwwww",
+				"wwwww",
+				"wwwww",
+				"LcwwR",
+				"ooooo"
 			],
-			"Weight": "999*WithoutRoom(Required_Hallway)",
+			"Key": {
+				" ": "Empty",
+				"o": "PlaceTile(ObsidianBrick)",
+				"w": "Empty+PlaceWall(ObsidianBrick)",
+				"b": "PlaceWall(ObsidianBrick)",
+				"c": "PlaceSpecialTile(Containers,3)+PlaceWall(ObsidianBrick)",
+				"L": "Empty+PlaceWall(ObsidianBrick)",
+				"R": "Empty+PlaceWall(ObsidianBrick)"
+			},
+			"Weight": "0.1*WithoutRoom(Required_Hallway)",
 			"SocketKey": {
 				"L": {
 					"Key": "Hallway",

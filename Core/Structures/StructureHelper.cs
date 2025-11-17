@@ -1,8 +1,7 @@
-﻿using CalamityMod.Items.SummonItems;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Origins.Items.Other.Testing;
+using Origins.UI;
 using PegasusLib;
 using ReLogic.OS;
 using System;
@@ -13,11 +12,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.GameContent.UI.Chat;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config.UI;
 using Terraria.UI;
 using static Origins.Core.Structures.DeserializedStructure;
 
@@ -63,6 +60,7 @@ namespace Origins.Core.Structures {
 			return room is null && base.ContainsPoint(point);
 		}
 		public override void Draw(SpriteBatch spriteBatch) {
+			if (Main.LocalPlayer.controlDown && Main.LocalPlayer.releaseDown) structure = null;
 			structure ??= DeserializedStructure.Load("Origins/World/Structures/TestStructure");
 			if (reset) scroll = 0;
 			if (room is null) {
@@ -122,8 +120,13 @@ namespace Origins.Core.Structures {
 #if !DEBUG
 		public override bool IsLoadingEnabled(Mod mod) => DebugConfig.Instance.ForceEnableDebugItems;
 #endif
-		static Point leftClick;
-		static Point rightClick;
+		internal static Point? leftClick;
+		internal static Point? rightClick;
+		static bool shouldCancel = false;
+		internal static bool ShouldCancel {
+			get => shouldCancel || Main.gameMenu;
+			set => shouldCancel |= value;
+		}
 		public static Dictionary<string, char> Associations { get; private set; } = [];
 		public static string CurrentTileData { get; private set; }
 		public override void SetDefaults() {
@@ -136,26 +139,25 @@ namespace Origins.Core.Structures {
 			Item.useAnimation = 10;
 			Item.useTime = 10;
 		}
-		public override bool AltFunctionUse(Player player) {
-			return true;
-		}
+		public override bool AltFunctionUse(Player player) => true;
 		public override bool? UseItem(Player player) {
 			if (Main.myPlayer == player.whoAmI) {
 				if (player.altFunctionUse == 2) {
-					rightClick.X = Player.tileTargetX;
-					rightClick.Y = Player.tileTargetY;
+					rightClick = new(Player.tileTargetX, Player.tileTargetY);
 				} else {
-					leftClick.X = Player.tileTargetX;
-					leftClick.Y = Player.tileTargetY;
+					leftClick = new(Player.tileTargetX, Player.tileTargetY);
 				}
 				return true;
 			}
 			return false;
 		}
 		public override void RightClick(Player player) {
+			shouldCancel = false;
 			Task.Run(() => {
+				if (Structure_Helper_Item.leftClick is not Point leftClick || Structure_Helper_Item.rightClick is not Point rightClick) return;
 				Associations.Clear();
 				Associations.Add("Empty", ' ');
+				Associations.Add("Void", '.');
 				Point min = leftClick;
 				Point max = rightClick;
 				Min(ref min.X, rightClick.X);
@@ -169,7 +171,11 @@ namespace Origins.Core.Structures {
 						CurrentTileData = SerializableTileDescriptor.Serialize(Main.tile[i, j]);
 						if (!Associations.ContainsKey(CurrentTileData)) {
 							Main.QueueMainThreadAction(() => Main.NewText($"New tile pattern {CurrentTileData}, use /ass to set its key"));
-							SpinWait.SpinUntil(() => Associations.ContainsKey(CurrentTileData));
+							SpinWait.SpinUntil(() => ShouldCancel || Associations.ContainsKey(CurrentTileData));
+						}
+						if (ShouldCancel) {
+							Associations.Clear();
+							return;
 						}
 						builder.Append(Associations[CurrentTileData]);
 					}
@@ -188,17 +194,118 @@ namespace Origins.Core.Structures {
 					NullValueHandling = NullValueHandling.Ignore
 				});
 				Main.NewText("Copied room to clipboard");
+				Structure_Helper_Item.leftClick = null;
+				Structure_Helper_Item.rightClick = null;
 			});
 		}
 		public override bool CanRightClick() => true;
 		public override bool ConsumeItem(Player player) => false;
 	}
+	public class Missing_File_UI : SwitchableUIState {
+		public override void AddToList() => OriginSystem.Instance.ItemUseHUD.AddState(this);
+		public override bool IsActive() => Main.LocalPlayer.HeldItem.ModItem is Structure_Helper_Item;
+		public override InterfaceScaleType ScaleType => InterfaceScaleType.Game;
+		protected override void DrawSelf(SpriteBatch spriteBatch) {
+			DrawRegion(spriteBatch);
+			Vector2 vector = Main.screenPosition + new Vector2(30f);
+			Vector2 max = vector + new Vector2(Main.screenWidth, Main.screenHeight) - new Vector2(60f);
+			if (Main.mapFullscreen) {
+				vector -= Main.screenPosition;
+				max -= Main.screenPosition;
+			}
+			bool hasLeft = Structure_Helper_Item.leftClick.HasValue;
+			bool hasRight = Structure_Helper_Item.rightClick.HasValue;
+			Point leftClick = Structure_Helper_Item.leftClick.GetValueOrDefault();
+			Point rightClick = Structure_Helper_Item.rightClick.GetValueOrDefault();
+			int flip = Math.Sign(Main.LocalPlayer.gravDir);
+			if (hasLeft) {
+				int specialMode = 0;
+				float rotation;
+				Vector2 drawPosition;
+				Vector2 leftPos = leftClick.ToVector2() * 16f;
+				if (!hasRight) {
+					specialMode = 1;
+					leftPos += Vector2.One * 8f;
+					rotation = (-leftPos + Main.ReverseGravitySupport(new Vector2(Main.mouseX, Main.mouseY)) + Main.screenPosition).ToRotation() * flip;
+
+					drawPosition = Vector2.Clamp(leftPos, vector, max);
+					if (drawPosition != leftPos)
+						rotation = (leftPos - drawPosition).ToRotation();
+				} else {
+					Vector2 vector4 = new((leftClick.X > rightClick.X).ToInt() * 16, (leftClick.Y > rightClick.Y).ToInt() * 16);
+					leftPos += vector4;
+					drawPosition = Vector2.Clamp(leftPos, vector, max);
+					rotation = (rightClick.ToVector2() * 16f + new Vector2(16f) - vector4 - drawPosition).ToRotation();
+					if (drawPosition != leftPos) {
+						rotation = (leftPos - drawPosition).ToRotation();
+						specialMode = 1;
+					}
+					rotation *= flip;
+				}
+				Utils.DrawCursorSingle(spriteBatch, Color.White, rotation - (float)Math.PI / 2f, 1f, Main.ReverseGravitySupport(drawPosition - Main.screenPosition), 4, specialMode);
+			}
+			if (hasRight) {
+				int specialMode = 0;
+				float rotation;
+				Vector2 drawPosition;
+				Vector2 rightPos = rightClick.ToVector2() * 16f;
+				if (!hasLeft) {
+					specialMode = 1;
+					rightPos += Vector2.One * 8f;
+					rotation = (-rightPos + Main.ReverseGravitySupport(new Vector2(Main.mouseX, Main.mouseY)) + Main.screenPosition).ToRotation() * flip;
+
+					drawPosition = Vector2.Clamp(rightPos, vector, max);
+					if (drawPosition != rightPos)
+						rotation = (rightPos - drawPosition).ToRotation();
+				} else {
+					Vector2 vector4 = new((leftClick.X <= rightClick.X).ToInt() * 16, (leftClick.Y <= rightClick.Y).ToInt() * 16);
+					rightPos += vector4;
+					drawPosition = Vector2.Clamp(rightPos, vector, max);
+					rotation = (rightClick.ToVector2() * 16f + new Vector2(16f) - vector4 - drawPosition).ToRotation();
+					if (drawPosition != rightPos) {
+						rotation = (rightPos - drawPosition).ToRotation();
+						specialMode = 1;
+					}
+					rotation *= flip;
+				}
+				Utils.DrawCursorSingle(spriteBatch, Color.White, rotation - (float)Math.PI / 2f, 1f, Main.ReverseGravitySupport(drawPosition - Main.screenPosition), 5, specialMode);
+			}
+		}
+		static void DrawRegion(SpriteBatch spriteBatch) {
+			if (Structure_Helper_Item.leftClick is not Point leftClick || Structure_Helper_Item.rightClick is not Point rightClick) return;
+			Point min = leftClick;
+			Point max = rightClick;
+			Min(ref min.X, rightClick.X);
+			Min(ref min.Y, rightClick.Y);
+			Max(ref max.X, leftClick.X);
+			Max(ref max.Y, leftClick.Y);
+			if (!Main.mapFullscreen) {
+				Rectangle value = Main.ReverseGravitySupport(new Rectangle(min.X * 16, min.Y * 16, (max.X + 1 - min.X) * 16, (max.Y + 1 - min.Y) * 16));
+				Rectangle value2 = Main.ReverseGravitySupport(new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth + 1, Main.screenHeight + 1));
+				Rectangle.Intersect(ref value2, ref value, out Rectangle result);
+				if (result.Width != 0 && result.Height != 0) {
+					result.Offset(-value2.X, -value2.Y);
+					spriteBatch.Draw(TextureAssets.MagicPixel.Value, result, new Color(0.8f, 0.8f, 0.8f, 0f) * 0.3f);
+					for (int i = 0; i < 2; i++) {
+						spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(result.X, result.Y + ((i == 1) ? result.Height : -2), result.Width, 2), Color.White);
+						spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(result.X + ((i == 1) ? result.Width : -2), result.Y, 2, result.Height), Color.White);
+					}
+				}
+
+				return;
+			}
+		}
+	}
 	public class StructureCommand : ModCommand {
 		public override CommandType Type => CommandType.Chat;
 		public override string Command => "ass";
-		public override string Usage => "/ass <char>";
+		public override string Usage => "/ass <char> or /ass cancel";
 		public override string Description => "";
 		public override void Action(CommandCaller caller, string input, string[] args) {
+			if (args[0] == "cancel") {
+				Structure_Helper_Item.ShouldCancel = true;
+				return;
+			}
 			if (args[0].Length != 1) {
 				caller.Reply(args[0] + "is not a single character in UTF-16");
 				return;

@@ -63,6 +63,7 @@ namespace Origins.Core.Structures {
 		}
 		public virtual void Load() { }
 		public virtual void SetUp() { }
+		public static HashSet<Point> ignoreEmpty = [];
 	}
 	public interface IRoom {
 		public string Identifier { get; }
@@ -359,6 +360,7 @@ namespace Origins.Core.Structures {
 			List<(char, RoomSocket, Point)> expectedSockets = [];
 			foreach (KeyValuePair<char, RoomSocket> soc in Room.SocketKey) expectedSockets.Add((soc.Key, soc.Value, Room.GetOrigin(soc.Key)));
 			HashSet<char> connectedSockets = [];
+			Structure.ignoreEmpty.Clear();
 			do {
 				connectedSockets.Clear();
 				for (int k = 0; k < expectedSockets.Count; k++) {
@@ -374,6 +376,7 @@ namespace Origins.Core.Structures {
 				Min(ref minY, j);
 				Max(ref maxX, i + map[0].Length);
 				Max(ref maxY, j + map.Length);
+				Structure.ignoreEmpty.Clear();
 			} while (reps.Repeat(ref i, ref j, map[0].Length, map.Length));
 			Room.PostGenerate(new(this, new(minX, minY, maxX - minX, maxY - minY)));
 			if (!WorldGen.generatingWorld) WorldGen.RangeFrame(minX, minY, maxX, maxY);
