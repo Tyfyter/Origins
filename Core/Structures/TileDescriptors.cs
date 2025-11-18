@@ -1,6 +1,7 @@
 ﻿using Humanizer;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Tools.Wiring;
+using Origins.Tiles.Dev;
 using PegasusLib;
 using System;
 using System.Collections.Concurrent;
@@ -155,6 +156,7 @@ namespace Origins.Core.Structures {
 		public override void Load() {
 			AddSerializer(tile => {
 				if (tile.HasTile && Main.tileFrameImportant[tile.TileType]) {
+					if (tile.TileType == ModContent.TileType<Room_Socket_Marker>()) return "Empty";
 					if (TileObjectData.GetTileData(tile) is not null) return null;
 					return $"PlaceFramedTile({TileID.Search.GetName(tile.TileType)},{tile.TileFrameX},{tile.TileFrameY})";
 				}

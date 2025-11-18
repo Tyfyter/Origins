@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Origins.Items.Other.Testing;
+using Origins.Tiles.Dev;
 using Origins.UI;
 using PegasusLib;
 using ReLogic.OS;
@@ -13,7 +14,6 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
-using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI;
@@ -152,8 +152,11 @@ namespace Origins.Core.Structures {
 		public override void RightClick(Player player) {
 			IngameFancyUI.OpenUIState(new StructureHelperUI());
 		}
+		static Task task;
 		public static void CopyStructure() {
 			shouldCancel = false;
+			if (task is not null && !task.IsCompleted) return;
+			task =
 			Task.Run(() => {
 				if (Structure_Helper_Item.leftClick is not Point leftClick || Structure_Helper_Item.rightClick is not Point rightClick) return;
 				Associations.Clear();
@@ -166,25 +169,55 @@ namespace Origins.Core.Structures {
 				Max(ref max.X, leftClick.X);
 				Max(ref max.Y, leftClick.Y);
 				string[] lines = new string[max.Y + 1 - min.Y];
+				Dictionary<char, string> key = [];
 				for (int j = min.Y; j <= max.Y; j++) {
 					StringBuilder builder = new();
+					Structure_Helper_HUD.HighlightTile.Y = j;
 					for (int i = min.X; i <= max.X; i++) {
-						CurrentTileData = SerializableTileDescriptor.Serialize(Main.tile[i, j]);
-						if (!Associations.ContainsKey(CurrentTileData)) {
-							Main.QueueMainThreadAction(() => Main.NewText($"New tile pattern {CurrentTileData}, use /ass to set its key"));
-							SpinWait.SpinUntil(() => ShouldCancel || Associations.ContainsKey(CurrentTileData));
+						Structure_Helper_HUD.HighlightTile.X = i;
+						Tile tile = Main.tile[i, j];
+						CurrentTileData = SerializableTileDescriptor.Serialize(tile);
+						SpinWait.SpinUntil(() => StructureCommand.ReadyForNewAss);
+						if (tile.TileType == ModContent.TileType<Room_Socket_Marker>()) {
+							string pattern = CurrentTileData;
+							char? ch = null;
+							StructureCommand.OnAss += c => {
+								if (Associations.ContainsValue(c)) return false;
+								ch = c;
+								return true;
+							};
+							Main.QueueMainThreadAction(() => Main.NewText($"New socket, use /ass to set its key"));
+							SpinWait.SpinUntil(() => ShouldCancel || ch.HasValue);
+							if (ShouldCancel) {
+								Associations.Clear();
+								Structure_Helper_HUD.HighlightTile = default;
+								return;
+							}
+							builder.Append(ch.Value);
+							key.Add(ch.Value, pattern);
+						} else {
+							if (!Associations.ContainsKey(CurrentTileData)) {
+								StructureCommand.OnAss += c => !Associations.ContainsValue(c) && Associations.TryAdd(CurrentTileData, c);
+								Main.QueueMainThreadAction(() => Main.NewText($"New tile pattern {CurrentTileData}, use /ass to set its key"));
+								SpinWait.SpinUntil(() => ShouldCancel || Associations.ContainsKey(CurrentTileData));
+							}
+							if (ShouldCancel) {
+								Associations.Clear();
+								Structure_Helper_HUD.HighlightTile = default;
+								return;
+							}
+							builder.Append(Associations[CurrentTileData]);
 						}
-						if (ShouldCancel) {
-							Associations.Clear();
-							return;
-						}
-						builder.Append(Associations[CurrentTileData]);
 					}
 					lines[j - min.Y] = builder.ToString();
 				}
+				Structure_Helper_HUD.HighlightTile = default;
+				foreach ((string pattern, char c) in Associations) {
+					key.Add(c, pattern);
+				}
 				RoomDescriptor descriptor = new() {
 					Map = lines,
-					Key = Associations.Select(x => new KeyValuePair<char, string>(x.Value, x.Key)).ToDictionary(),
+					Key = key,
 				};
 				Associations.Clear();
 
@@ -206,6 +239,7 @@ namespace Origins.Core.Structures {
 		public override void AddToList() => OriginSystem.Instance.ItemUseHUD.AddState(this);
 		public override bool IsActive() => Main.LocalPlayer.HeldItem.ModItem is Structure_Helper_Item;
 		public override InterfaceScaleType ScaleType => InterfaceScaleType.Game;
+		public static Point HighlightTile;
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			DrawRegion(spriteBatch);
 			Vector2 vector = Main.screenPosition + new Vector2(30f);
@@ -273,6 +307,13 @@ namespace Origins.Core.Structures {
 			}
 		}
 		static void DrawRegion(SpriteBatch spriteBatch) {
+			if (HighlightTile != default) {
+				spriteBatch.Draw(
+					TextureAssets.MagicPixel.Value,
+					new Rectangle(HighlightTile.X * 16 - (int)Main.screenPosition.X, HighlightTile.Y * 16 - (int)Main.screenPosition.Y, 16, 16),
+					Main.DiscoColor.MultiplyRGBA(new Color(0.5f, 0.5f, 0.5f, 0.4f))
+				);
+			}
 			if (Structure_Helper_Item.leftClick is not Point leftClick || Structure_Helper_Item.rightClick is not Point rightClick) return;
 			Point min = leftClick;
 			Point max = rightClick;
@@ -286,7 +327,7 @@ namespace Origins.Core.Structures {
 				Rectangle.Intersect(ref value2, ref value, out Rectangle result);
 				if (result.Width != 0 && result.Height != 0) {
 					result.Offset(-value2.X, -value2.Y);
-					spriteBatch.Draw(TextureAssets.MagicPixel.Value, result, new Color(0.8f, 0.8f, 0.8f, 0f) * 0.3f);
+					spriteBatch.Draw(TextureAssets.MagicPixel.Value, result, new Color(0.8f, 0.8f, 0.8f, 0f) * 0.15f);
 					for (int i = 0; i < 2; i++) {
 						spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(result.X, result.Y + ((i == 1) ? result.Height : -2), result.Width, 2), Color.White);
 						spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(result.X + ((i == 1) ? result.Width : -2), result.Y, 2, result.Height), Color.White);
@@ -306,6 +347,8 @@ namespace Origins.Core.Structures {
 		public override string Command => "ass";
 		public override string Usage => "/ass <char> or /ass cancel";
 		public override string Description => "";
+		public static event Func<char, bool> OnAss = null;
+		public static bool ReadyForNewAss => OnAss is null;
 		public override void Action(CommandCaller caller, string input, string[] args) {
 			if (args[0] == "cancel") {
 				Structure_Helper_Item.ShouldCancel = true;
@@ -315,8 +358,9 @@ namespace Origins.Core.Structures {
 				caller.Reply(args[0] + "is not a single character in UTF-16");
 				return;
 			}
-			if (!Structure_Helper_Item.Associations.ContainsValue(args[0][0]) && Structure_Helper_Item.Associations.TryAdd(Structure_Helper_Item.CurrentTileData, args[0][0])) {
+			if (OnAss?.Invoke(args[0][0]) ?? false) {
 				caller.Reply($"Successfully added {args[0][0]}<--->{Structure_Helper_Item.CurrentTileData}");
+				OnAss = null;
 			} else {
 				caller.Reply($"Could not add {args[0][0]}<--->{Structure_Helper_Item.CurrentTileData}");
 			}
