@@ -156,25 +156,30 @@
 		},
 		"Test": {
 			"Map": [
-				"           ",
-				"           ",
-				" d         ",
-				"sw       ss",
-				"swtttttttss",
-				"swb      ss",
-				"sssssssssss",
-				"sssssssssss"
+				"ggggggggggggggg",
+				"               ",
+				"               ",
+				"               ",
+				"l             r",
+				"ggggggggggggggg"
 			],
 			"Key": {
+				"l": "Empty",
+				"r": "Empty",
 				" ": "Empty",
 				".": "Void",
-				"d": "PlaceSpecialTile(Origins/Cargo_Elevator_Door,18)+PlaceWire(Red_Wire_Mode)",
-				"s": "PlaceTile(Origins/Fortified_Steel_Block3)",
-				"w": "PlaceTile(Origins/Fortified_Steel_Block3)+PlaceWire(Red_Wire_Mode)",
-				"t": "PlaceTile(Origins/Truss_Block)",
-				"b": "PlaceSpecialTile(Switches)+PlaceWire(Red_Wire_Mode)"
+				"g": "PaintTile(RedPaint)+PlaceTile(Grass)"
 			},
-			"StartPos": "\u0000"
+			"SocketKey": {
+				"l": {
+					"Key": "hallway",
+					"Direction": "Left"
+				},
+				"r": {
+					"Key": "hallway",
+					"Direction": "Right"
+				}
+			}
 		}
 	}
 }
