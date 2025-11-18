@@ -114,6 +114,13 @@ namespace Origins.Core.Structures {
 				if (deselectRoomButton.IsMouseHovering) Main.instance.MouseText(Lang.menu[5].Value);
 			};
 			Append(deselectRoomButton);
+
+			text = new("") {
+				Left = new(0, 0),
+				Top = new(8, 0.1f),
+				HAlign = 0.5f
+			};
+			Append(text);
 		}
 
 		public override void Update(GameTime gameTime) {
@@ -127,14 +134,19 @@ namespace Origins.Core.Structures {
 			yield return selectFileButton;
 			if (room is null) {
 				if (structure is not null) {
+					text.SetText(structurePath);
+					yield return text;
 					yield return refreshButton;
 					yield return roomList;
 				}
 			} else {
+				text.SetText(room.Identifier);
+				yield return text;
 				yield return deselectRoomButton;
 			}
 		}
 		UIList roomList;
+		UIText text;
 		UIImageButton refreshButton;
 		UIImageButton selectFileButton;
 		UIImageButton deselectRoomButton;
@@ -190,23 +202,9 @@ namespace Origins.Core.Structures {
 			roomList.Height.Set(height, 0);
 			roomList.Width.Set(0, 0.4f);
 			roomList.HAlign = 0.5f;
-			roomList.Top.Set(0, 0.125f);
+			roomList.Top.Set(32, 0.1f);
 			Append(roomList);
-			if (roomList.Top.Pixels.TrySet(-scroll)) {
-				roomList.Recalculate();
-			}
 		}
-
-		/*void string OpenFileDialog() {
-			ExtensionFilter extensionFilter = default(ExtensionFilter);
-			extensionFilter.Name = "Images";
-			extensionFilter.Extensions = new string[3] { "png", "jpg", "jpeg" };
-			ExtensionFilter extensions = extensionFilter;
-			string extensionStr = string.Join(',', extensions.Extensions);
-			string outPath;
-			nativefiledialog.nfdresult_t result = nativefiledialog.NFD_OpenDialog(extensionStr, null, out outPath);
-			return (result == nativefiledialog.nfdresult_t.NFD_OKAY) ? outPath : null;
-		}*/
 	}
 	public class Structure_Helper_Item : TestingItem {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.WireKite;
