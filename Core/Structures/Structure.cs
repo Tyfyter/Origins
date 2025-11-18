@@ -1,10 +1,12 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Linq;
 using Origins.NPCs;
 using PegasusLib.Reflection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Terraria;
 using Terraria.ID;
@@ -24,12 +26,12 @@ namespace Origins.Core.Structures {
 			List<string> irresolvableSockets = [];
 			for (int i = 0; i < lookup.Length; i++) {
 				(string name, List<(IRoom room, char entrance)>[] forKey) = lookup[i];
-				bool right = forKey[(int)Direction.Right].Count > 0;
-				bool left = forKey[(int)Direction.Left].Count > 0;
+				bool right = forKey[Direction.Right.Index()].Count > 0;
+				bool left = forKey[Direction.Left.Index()].Count > 0;
 				if (right != left) irresolvableSockets.Add($"{name}_{(left ? Direction.Right : Direction.Left)}");
 
-				bool up = forKey[(int)Direction.Up].Count > 0;
-				bool down = forKey[(int)Direction.Down].Count > 0;
+				bool up = forKey[Direction.Up.Index()].Count > 0;
+				bool down = forKey[Direction.Down.Index()].Count > 0;
 				if (up != down) irresolvableSockets.Add($"{name}_{(down ? Direction.Up : Direction.Down)}");
 			}
 			if (irresolvableSockets.Count > 0) throw new FormatException($"{fileName} has irresolvable sockets: [{string.Join(", ", irresolvableSockets)}]");
@@ -140,31 +142,32 @@ namespace Origins.Core.Structures {
 			for (int i = 0; i < rooms.Length; i++) if (!rooms[i].CheckPosition(tileCount)) return false;
 			return true;
 		}
-		public static Dictionary<string, List<(IRoom room, char entrance)>[]> GenerateConnectionLookup(this List<IRoom> rooms) {
+		public static int Index(this Direction direction) => (int)direction - 1;
+		public static Dictionary<string, List<(IRoom room, char entrance)>[]> GenerateConnectionLookup(this IReadOnlyList<IRoom> rooms) {
 			Dictionary<string, List<(IRoom room, char entrance)>[]> lookup = [];
 			for (int i = 0; i < rooms.Count; i++) {
 				IRoom room = rooms[i];
 				foreach ((char key, RoomSocket socket) in room.SocketKey) {
 					if (!room.Map.Contains(key)) continue;
 					if (!lookup.TryGetValue(socket.Key, out List<(IRoom room, char entrance)>[] connections)) {
-						lookup[socket.Key] = connections = new List<(IRoom room, char entrance)>[(int)Direction.Down + 1];
+						lookup[socket.Key] = connections = new List<(IRoom room, char entrance)>[(int)Direction.Down];
 						for (int j = 0; j < connections.Length; j++) connections[j] = [];
 					}
 					switch (socket.Direction) {
 						case Direction.Right:
-						connections[(int)Direction.Left].Add((room, key));
+						connections[Direction.Left.Index()].Add((room, key));
 						break;
 
 						case Direction.Left:
-						connections[(int)Direction.Right].Add((room, key));
+						connections[Direction.Right.Index()].Add((room, key));
 						break;
 
 						case Direction.Up:
-						connections[(int)Direction.Down].Add((room, key));
+						connections[Direction.Down.Index()].Add((room, key));
 						break;
 
 						case Direction.Down:
-						connections[(int)Direction.Up].Add((room, key));
+						connections[Direction.Up.Index()].Add((room, key));
 						break;
 					}
 				}
@@ -176,11 +179,12 @@ namespace Origins.Core.Structures {
 			return startValue;
 		}
 	}
+	[JsonConverter(typeof(StringEnumConverter))]
 	public enum Direction {
-		Right,
-		Left,
-		Up,
-		Down
+		Right = 1,
+		Left = 2,
+		Up = 3,
+		Down = 4
 	}
 	public record class TileDescriptor(Action<RoomInstance, HashSet<char>, int, int> Action, bool Ignore = false, string[] Parts = null) {
 		public void DoAction(RoomInstance instance, HashSet<char> connectedSockets, int i, int j) {
@@ -325,7 +329,7 @@ namespace Origins.Core.Structures {
 					pos.Y++;
 					break;
 				}
-				foreach ((IRoom room, char entrance) in lookup[socket.Key][(int)direction]) {
+				foreach ((IRoom room, char entrance) in lookup[socket.Key][direction.Index()]) {
 					float weight = room.GetWeight(new(this, pos));
 					if (weight <= 0) continue;
 					RoomInstance template = new(room, pos - room.GetOrigin(entrance));

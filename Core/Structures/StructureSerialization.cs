@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -212,6 +213,7 @@ namespace Origins.Core.Structures {
 			public Dictionary<char, RoomSocket> SocketKey;
 			[JsonConverter(typeof(RangeConverter))]
 			public Range RepetitionRange = default;
+			[DefaultValue(char.MinValue)]
 			public char StartPos = char.MinValue;
 			public string PostGenerate;
 			public string Weight;

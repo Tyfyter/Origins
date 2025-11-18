@@ -1,10 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Origins.Items.Other.Testing;
 using Origins.Tiles.Dev;
 using Origins.UI;
-using PegasusLib;
+using ReLogic.Content;
 using ReLogic.OS;
 using System;
 using System.Collections.Generic;
@@ -28,54 +27,24 @@ namespace Origins.Core.Structures {
 	public class StructureHelperUI : UIState {
 		string structurePath;
 		public Structure structure;
-		public IRoom room;
-		public (string name, Color color, bool[,] map, SerializableTileDescriptor source)[] layers;
-		public string selectedLayer = null;
-		float scroll = 0;
-		bool reset = false;
-		public void SetRoom(IRoom room) {
-			this.room = room;
-			Dictionary<string, (HashSet<char> set, Color color, SerializableTileDescriptor source)> layers = [];
-			foreach ((char key, TileDescriptor value) in room.Key) {
-				if (value.Parts is null) continue;
-				for (int i = 0; i < value.Parts.Length; i++) {
-					if (!SerializableTileDescriptor.TryGet(structure.Mod, value.Parts[i], out SerializableTileDescriptor source, out string[] parameters)) continue;
-					foreach ((string _layer, Color color) in source.GetDisplayLayers(parameters)) {
-						string layer = $"{source.Name}_{_layer}";
-						if (!layers.TryGetValue(layer, out (HashSet<char> set, Color color, SerializableTileDescriptor source) data)) layers[layer] = data = ([], color, source);
-						data.set.Add(key);
-					}
-				}
-			}
-			{
-				(string name, Color color, bool[,] map, SerializableTileDescriptor source)[] _layers = new (string name, Color color, bool[,] map, SerializableTileDescriptor source)[layers.Count];
-				int index = 0;
-				string[] map = room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-				foreach ((string name, (HashSet<char> set, Color color, SerializableTileDescriptor source) data) in layers.OrderBy(k => k.Key)) {
-					bool[,] layer = new bool[map[0].Length, map.Length];
-					for (int y = 0; y < map.Length; y++) {
-						for (int x = 0; x < map[y].Length; x++) {
-							layer[x, y] = data.set.Contains(map[y][x]);
-						}
-					}
-					_layers[index++] = (name, data.color, layer, data.source);
-				}
-				this.layers = _layers;
-			}
-		}
+		Stack<ViewState> viewStack = new();
+		ViewState CurrentView => viewStack.TryPeek(out ViewState result) ? result : null;
+
+		Dictionary<string, List<(IRoom room, char entrance)>[]> connectionLookup;
 		public override bool ContainsPoint(Vector2 point) {
-			return room is null && base.ContainsPoint(point);
+			return CurrentView?.room is null && base.ContainsPoint(point);
 		}
+		static StructureHelperUI instance;
 		public override void OnInitialize() {
+			instance = this;
 			refreshButton = new(TextureAssets.Flame) {
 				Left = new(-16, 0),
 				Top = new(8, 0.1f),
 				HAlign = 0.75f + 0.25f * 0.5f
 			};
 			refreshButton.OnLeftClick += (_, _) => {
-				room = null;
-				structure = Load(structurePath);
-				RefreshRoomList();
+				while (viewStack.Count > 0) viewStack.Pop();
+				RefreshStructure();
 			};
 			refreshButton.OnUpdate += _ => {
 				if (refreshButton.IsMouseHovering) Main.instance.MouseText("Reload Structure");
@@ -92,10 +61,9 @@ namespace Origins.Core.Structures {
 				string sourcePath = Path.Combine(Program.SavePathShared, "ModSources");
 				string relativePath = Path.GetRelativePath(sourcePath, select);
 				if (relativePath.StartsWith('.')) return;
-				room = null;
+				while (viewStack.Count > 0) viewStack.Pop();
 				structurePath = relativePath.Replace(Path.DirectorySeparatorChar, '/');
-				structure = Load(structurePath);
-				RefreshRoomList();
+				RefreshStructure();
 			};
 			selectFileButton.OnUpdate += _ => {
 				if (selectFileButton.IsMouseHovering) Main.instance.MouseText("Select Structure");
@@ -108,7 +76,7 @@ namespace Origins.Core.Structures {
 				HAlign = 0.25f * 0.5f
 			};
 			deselectRoomButton.OnLeftClick += (_, _) => {
-				room = null;
+				viewStack.Pop();
 			};
 			deselectRoomButton.OnUpdate += _ => {
 				if (deselectRoomButton.IsMouseHovering) Main.instance.MouseText(Lang.menu[5].Value);
@@ -122,7 +90,11 @@ namespace Origins.Core.Structures {
 			};
 			Append(text);
 		}
-
+		void RefreshStructure() {
+			structure = Load(structurePath);
+			RefreshRoomList();
+			connectionLookup = structure.Rooms.GenerateConnectionLookup();
+		}
 		public override void Update(GameTime gameTime) {
 			for (int i = 0; i < Elements.Count; i++) Elements[i].IgnoresMouseInteraction = true;
 			foreach (UIElement element in ActiveElements()) {
@@ -132,17 +104,21 @@ namespace Origins.Core.Structures {
 		}
 		IEnumerable<UIElement> ActiveElements() {
 			yield return selectFileButton;
-			if (room is null) {
+			if (viewStack.Count > 0) {
+				if (CurrentView.room is null) {
+					yield return CurrentView.roomList;
+				} else {
+					text.SetText(CurrentView.room.Identifier);
+					yield return text;
+				}
+				yield return deselectRoomButton;
+			} else {
 				if (structure is not null) {
 					text.SetText(structurePath);
 					yield return text;
 					yield return refreshButton;
 					yield return roomList;
 				}
-			} else {
-				text.SetText(room.Identifier);
-				yield return text;
-				yield return deselectRoomButton;
 			}
 		}
 		UIList roomList;
@@ -151,48 +127,54 @@ namespace Origins.Core.Structures {
 		UIImageButton selectFileButton;
 		UIImageButton deselectRoomButton;
 		public override void Draw(SpriteBatch spriteBatch) {
-			//structure ??= DeserializedStructure.Load("Origins/World/Structures/TestStructure");
-			if (reset) scroll = 0;
+			Vector2 bgStart = Main.ScreenSize.ToVector2() * new Vector2(0.25f * 0.5f, 0.1f);
+			Vector2 bgSize = new(Main.screenWidth * 0.75f, Main.screenHeight * 0.8f);
 			ConfigElement.DrawPanel2(
 				spriteBatch,
-				Main.ScreenSize.ToVector2() * new Vector2(0.25f * 0.5f, 0.1f),
+				bgStart,
 				TextureAssets.SettingsPanel.Value,
-				Main.screenWidth * 0.75f,
-				Main.screenHeight * 0.8f,
-				Color.DodgerBlue
+				bgSize.X,
+				bgSize.Y,
+				Color.DeepSkyBlue * 0.8f
 			);
+			if (Main.MouseScreen.IsWithinRectangular(bgStart + bgSize * 0.5f, bgSize * 0.5f)) Main.LocalPlayer.mouseInterface = true;
 			foreach (UIElement element in ActiveElements()) element.Draw(spriteBatch);
-			if (room is not null) {
+			ViewState currentView = CurrentView;
+			if (currentView?.room is not null) {
 				Point basePos = Main.ScreenSize;
 				basePos.X /= 2;
 				basePos.Y /= 2;
 				Rectangle dest = new(0, 0, 16, 16);
-				for (int index = 0; index < layers.Length; index++) {
-					if (selectedLayer != null && selectedLayer != layers[index].name) continue;
-					bool[,] map = layers[index].map;
-					Color color = layers[index].color;
+				for (int index = 0; index < currentView.layers.Length; index++) {
+					if (currentView.selectedLayer != null && currentView.selectedLayer != currentView.layers[index].name) continue;
+					bool[,] map = currentView.layers[index].map;
+					Color color = currentView.layers[index].color;
 					for (int y = 0; y < map.GetLength(1); y++) {
 						for (int x = 0; x < map.GetLength(0); x++) {
 							if (!map[x, y]) continue;
 							dest.X = (int)(basePos.X + (x - map.GetLength(0) * 0.5f) * 16);
 							dest.Y = (int)(basePos.Y + (y - map.GetLength(1) * 0.5f) * 16);
-							layers[index].source.Draw(spriteBatch, dest, color, map, x, y, layers[index].name);
+							currentView.layers[index].source.Draw(spriteBatch, dest, color, map, x, y, currentView.layers[index].name);
 						}
 					}
 				}
+				for (int i = 0; i < currentView.overlays.Count; i++) currentView.overlays[i].Draw(spriteBatch, basePos);
 			}
-			reset = false;
 		}
+
 		public void RefreshRoomList() {
 			if (roomList is not null) RemoveChild(roomList);
 			roomList = [];
+			FillRoomList(roomList);
+			Append(roomList);
+		}
+		public void FillRoomList(UIList roomList, IEnumerable<IRoom> rooms = null) {
+			rooms ??= structure.Rooms;
 			float height = 0;
-			for (int i = 0; i < structure.Rooms.Count; i++) {
-				IRoom room = structure.Rooms[i];
+			foreach (IRoom room in rooms) {
 				UITextPanel<string> element = new(room.Identifier);
 				element.OnLeftClick += (_, _) => {
-					SetRoom(room);
-					reset = true;
+					viewStack.Push(new(room));
 				};
 				element.Width.Set(0, 1);
 				roomList.Add(element);
@@ -203,7 +185,99 @@ namespace Origins.Core.Structures {
 			roomList.Width.Set(0, 0.4f);
 			roomList.HAlign = 0.5f;
 			roomList.Top.Set(32, 0.1f);
-			Append(roomList);
+		}
+		public class ViewState {
+			public IRoom room;
+			public (string name, Color color, bool[,] map, SerializableTileDescriptor source)[] layers;
+			public List<StructureOverlay> overlays;
+			public UIList roomList;
+			public string selectedLayer;
+			public float scroll;
+			public ViewState(IRoom room) {
+				this.room = room;
+				Dictionary<string, (HashSet<char> set, Color color, SerializableTileDescriptor source)> layers = [];
+				foreach ((char key, TileDescriptor value) in room.Key) {
+					if (value.Parts is null) continue;
+					for (int i = 0; i < value.Parts.Length; i++) {
+						if (!SerializableTileDescriptor.TryGet(instance.structure.Mod, value.Parts[i], out SerializableTileDescriptor source, out string[] parameters)) continue;
+						foreach ((string _layer, Color color) in source.GetDisplayLayers(parameters)) {
+							string layer = $"{source.Name}_{_layer}";
+							if (!layers.TryGetValue(layer, out (HashSet<char> set, Color color, SerializableTileDescriptor source) data)) layers[layer] = data = ([], color, source);
+							data.set.Add(key);
+						}
+					}
+				}
+				string[] map = room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+				{
+					(string name, Color color, bool[,] map, SerializableTileDescriptor source)[] _layers = new (string name, Color color, bool[,] map, SerializableTileDescriptor source)[layers.Count];
+					int index = 0;
+					foreach ((string name, (HashSet<char> set, Color color, SerializableTileDescriptor source) data) in layers.OrderBy(k => k.Key)) {
+						bool[,] layer = new bool[map[0].Length, map.Length];
+						for (int y = 0; y < map.Length; y++) {
+							for (int x = 0; x < map[y].Length; x++) {
+								layer[x, y] = data.set.Contains(map[y][x]);
+							}
+						}
+						_layers[index++] = (name, data.color, layer, data.source);
+					}
+					this.layers = _layers;
+				}
+				{
+					overlays = [];
+					for (int y = 0; y < map.Length; y++) {
+						for (int x = 0; x < map[y].Length; x++) {
+							if (room.SocketKey.TryGetValue(map[y][x], out RoomSocket socket) && socket.Direction != 0) {
+								overlays.Add(new SocketOverlay(
+									new(
+										(x - map[y].Length * 0.5f) * 16,
+										(y - map.Length * 0.5f) * 16
+									),
+									socket
+								));
+							}
+						}
+					}
+				}
+			}
+			public ViewState(IEnumerable<IRoom> roomList) {
+				this.roomList = [];
+				instance.FillRoomList(this.roomList, roomList);
+				instance.Append(this.roomList);
+			}
+			~ViewState() {
+				roomList?.Clear();
+				roomList?.Remove();
+			}
+		}
+		public abstract class StructureOverlay {
+			public abstract void Draw(SpriteBatch spriteBatch, Point basePos);
+		}
+		public class SocketOverlay(Vector2 pos, RoomSocket socket) : StructureOverlay {
+			readonly Vector2 pos = pos;
+			readonly RoomSocket socket = socket;
+			static readonly Asset<Texture2D>[] arrows = [
+				TextureAssets.ScrollRightButton,
+				TextureAssets.ScrollLeftButton,
+				TextureAssets.CraftUpButton,
+				TextureAssets.CraftDownButton
+			];
+			public override void Draw(SpriteBatch spriteBatch, Point basePos) {
+				if (socket.Direction == 0) return;
+				Texture2D texture = arrows[socket.Direction.Index()].Value;
+				Vector2 pos = this.pos + basePos.ToVector2();
+				bool hovered = Main.MouseScreen.IsWithinRectangular(pos + texture.Size() * 0.5f, texture.Size() * 0.5f);
+				if (hovered) {
+					UICommon.TooltipMouseText(socket.Key);
+					if (Main.mouseLeft && Main.mouseLeftRelease && instance.connectionLookup.TryGetValue(socket.Key, out List<(IRoom room, char entrance)>[] _connections)) {
+						instance.viewStack.Push(new(_connections[socket.Direction.Index()].Select(v => v.room)));
+					}
+				}
+				spriteBatch.Draw(
+					texture,
+					pos,
+					Color.White * (hovered ? 1 : 0.5f)
+				);
+			}
 		}
 	}
 	public class Structure_Helper_Item : TestingItem {
@@ -263,6 +337,7 @@ namespace Origins.Core.Structures {
 				Max(ref max.Y, leftClick.Y);
 				string[] lines = new string[max.Y + 1 - min.Y];
 				Dictionary<char, string> key = [];
+				Dictionary<char, RoomSocket> socketKey = [];
 				for (int j = min.Y; j <= max.Y; j++) {
 					StringBuilder builder = new();
 					Structure_Helper_HUD.HighlightTile.Y = j;
@@ -274,20 +349,38 @@ namespace Origins.Core.Structures {
 						if (tile.TileType == ModContent.TileType<Room_Socket_Marker>()) {
 							string pattern = CurrentTileData;
 							char? ch = null;
-							CurrentTileData = (tile.TileFrameX / 18) switch {
-								1 => "right",
-								2 => "left",
-								3 => "down",
-								4 => "up",
-								_ => "none"
-							};
-							StructureCommand.OnAss += c => {
+							RoomSocket socket = new(null, default);
+							switch (tile.TileFrameX / 18) {
+								case 1:
+								CurrentTileData = "Right";
+								socket = socket with { Direction = Direction.Right };
+								break;
+								case 2:
+								CurrentTileData = "Left";
+								socket = socket with { Direction = Direction.Left };
+								break;
+								case 3:
+								CurrentTileData = "Down";
+								socket = socket with { Direction = Direction.Down };
+								break;
+								case 4:
+								CurrentTileData = "Up";
+								socket = socket with { Direction = Direction.Up };
+								break;
+								default:
+								CurrentTileData = "None";
+								socket = null;
+								break;
+							}
+							StructureCommand.OnAss += (c, socketKey) => {
 								if (Associations.ContainsValue(c)) return false;
+								if (string.IsNullOrWhiteSpace(socketKey)) return false;
+								socket = socket with { Key = socketKey };
 								ch = c;
 								return true;
 							};
 							Main.QueueMainThreadAction(() => {
-								Main.NewText($"New socket, use /ass to set its key");
+								Main.NewText($"New socket, use /ass to set its map and socket keys");
 								Main.OpenPlayerChat();
 								Main.chatText = "/ass ";
 							});
@@ -299,9 +392,10 @@ namespace Origins.Core.Structures {
 							}
 							builder.Append(ch.Value);
 							key.Add(ch.Value, pattern);
+							if (socket is not null) socketKey.Add(ch.Value, socket);
 						} else {
 							if (!Associations.ContainsKey(CurrentTileData)) {
-								StructureCommand.OnAss += c => !Associations.ContainsValue(c) && Associations.TryAdd(CurrentTileData, c);
+								StructureCommand.OnAss += (c, _) => !Associations.ContainsValue(c) && Associations.TryAdd(CurrentTileData, c);
 								Main.QueueMainThreadAction(() => {
 									Main.NewText($"New tile pattern {CurrentTileData}, use /ass to set its key");
 									Main.OpenPlayerChat();
@@ -326,6 +420,7 @@ namespace Origins.Core.Structures {
 				RoomDescriptor descriptor = new() {
 					Map = lines,
 					Key = key,
+					SocketKey = socketKey
 				};
 				Associations.Clear();
 
@@ -455,7 +550,7 @@ namespace Origins.Core.Structures {
 		public override string Command => "ass";
 		public override string Usage => "/ass <char> or /ass cancel";
 		public override string Description => "";
-		public static event Func<char, bool> OnAss = null;
+		public static event Func<char, string, bool> OnAss = null;
 		public static bool ReadyForNewAss => OnAss is null;
 		public override void Action(CommandCaller caller, string input, string[] args) {
 			if (args[0] == "cancel") {
@@ -466,7 +561,7 @@ namespace Origins.Core.Structures {
 				caller.Reply(args[0] + "is not a single character in UTF-16");
 				return;
 			}
-			if (OnAss?.Invoke(args[0][0]) ?? false) {
+			if (OnAss?.Invoke(args[0][0], args.GetIfInRange(1)) ?? false) {
 				caller.Reply($"Successfully added {args[0][0]}<--->{Structure_Helper_Item.CurrentTileData}");
 				OnAss = null;
 			} else {
