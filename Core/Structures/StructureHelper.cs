@@ -181,12 +181,23 @@ namespace Origins.Core.Structures {
 						if (tile.TileType == ModContent.TileType<Room_Socket_Marker>()) {
 							string pattern = CurrentTileData;
 							char? ch = null;
+							CurrentTileData = (tile.TileFrameX / 18) switch {
+								1 => "right",
+								2 => "left",
+								3 => "down",
+								4 => "up",
+								_ => "none"
+							};
 							StructureCommand.OnAss += c => {
 								if (Associations.ContainsValue(c)) return false;
 								ch = c;
 								return true;
 							};
-							Main.QueueMainThreadAction(() => Main.NewText($"New socket, use /ass to set its key"));
+							Main.QueueMainThreadAction(() => {
+								Main.NewText($"New socket, use /ass to set its key");
+								Main.OpenPlayerChat();
+								Main.chatText = "/ass ";
+							});
 							SpinWait.SpinUntil(() => ShouldCancel || ch.HasValue);
 							if (ShouldCancel) {
 								Associations.Clear();
@@ -198,7 +209,11 @@ namespace Origins.Core.Structures {
 						} else {
 							if (!Associations.ContainsKey(CurrentTileData)) {
 								StructureCommand.OnAss += c => !Associations.ContainsValue(c) && Associations.TryAdd(CurrentTileData, c);
-								Main.QueueMainThreadAction(() => Main.NewText($"New tile pattern {CurrentTileData}, use /ass to set its key"));
+								Main.QueueMainThreadAction(() => {
+									Main.NewText($"New tile pattern {CurrentTileData}, use /ass to set its key");
+									Main.OpenPlayerChat();
+									Main.chatText = "/ass ";
+								});
 								SpinWait.SpinUntil(() => ShouldCancel || Associations.ContainsKey(CurrentTileData));
 							}
 							if (ShouldCancel) {
