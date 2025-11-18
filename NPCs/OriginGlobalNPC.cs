@@ -1,5 +1,7 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Conditions;
+using Microsoft.Build.Tasks;
+using Newtonsoft.Json.Linq;
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
@@ -41,7 +43,9 @@ namespace Origins.NPCs {
 			NPCHappiness.Get(NPCID.PartyGirl)
 			.SetNPCAffection(NPCID.SantaClaus, AffectionLevel.Love)
 			.SetBiomeAffection<SpaceBiome>(AffectionLevel.Love);
-			Buff_Hint_Handler.ModifyTip(BuffID.Bleeding, 1);
+			Buff_Hint_Handler.CombineBuffHintModifiers(BuffID.Bleeding, modifyBuffTip: (lines, _, isPlayer) => {
+				if (!isPlayer) lines.Add(Language.GetTextValue("Mods.PegasusLib.BuffTooltip.DOT", 1));
+			});
 		}
 		public static ShoppingSettings ShopHelper_GetShoppingSettings(On_ShopHelper.orig_GetShoppingSettings orig, ShopHelper self, Player player, NPC npc) {
 			ShoppingSettings settings = orig(self, player, npc);
