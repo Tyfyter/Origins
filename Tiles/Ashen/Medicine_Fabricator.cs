@@ -8,7 +8,7 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Medicine_Fabricator : ModTile {
-		public int BaseTileID = TileID.AlchemyTable;
+		public const int BaseTileID = TileID.AlchemyTable;
 		public static int ID { get; private set; }
 		public TileItem Item { get; protected set; }
 		public override void Load() {
@@ -38,7 +38,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.addTile(Type);
 
 			AddMapEntry(FromHexRGB(0x0A3623), Item.DisplayName);
-			AdjTiles = [ BaseTileID, Type ];
+			AdjTiles = [ BaseTileID, Type, TileID.Bottles ];
 			DustType = Ashen_Biome.DefaultTileDust;
 
 			RegisterItemDrop(Item.Type);

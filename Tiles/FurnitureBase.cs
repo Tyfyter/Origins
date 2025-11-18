@@ -31,7 +31,7 @@ namespace Origins.Tiles {
 				else AddMapEntry(MapColor, text, MapName);
 			}
 		}
-		public virtual int[] AdjacentTiles => [ BaseTileID ];
+		public virtual int[] AdjacentTiles => [BaseTileID];
 		public virtual int HitDust => DustID.Dirt;
 		public sealed override void Load() {
 			Mod.AddContent(Item = new TileItem(this));
