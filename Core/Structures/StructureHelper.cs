@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Origins.Items.Other.Testing;
 using Origins.Tiles.Dev;
@@ -7,6 +8,7 @@ using PegasusLib;
 using ReLogic.OS;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -19,10 +21,12 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Config.UI;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
+using Terraria.Utilities.FileBrowser;
 using static Origins.Core.Structures.DeserializedStructure;
 
 namespace Origins.Core.Structures {
 	public class StructureHelperUI : UIState {
+		string structurePath;
 		public Structure structure;
 		public IRoom room;
 		public (string name, Color color, bool[,] map, SerializableTileDescriptor source)[] layers;
@@ -62,8 +66,80 @@ namespace Origins.Core.Structures {
 		public override bool ContainsPoint(Vector2 point) {
 			return room is null && base.ContainsPoint(point);
 		}
+		public override void OnInitialize() {
+			refreshButton = new(TextureAssets.Flame) {
+				Left = new(-16, 0),
+				Top = new(8, 0.1f),
+				HAlign = 0.75f + 0.25f * 0.5f
+			};
+			refreshButton.OnLeftClick += (_, _) => {
+				room = null;
+				structure = Load(structurePath);
+				RefreshRoomList();
+			};
+			refreshButton.OnUpdate += _ => {
+				if (refreshButton.IsMouseHovering) Main.instance.MouseText("Reload Structure");
+			};
+			Append(refreshButton);
+
+			selectFileButton = new(TextureAssets.Camera[6]) {
+				Left = new(16, 0),
+				Top = new(8, 0.1f),
+				HAlign = 0.25f * 0.5f
+			};
+			selectFileButton.OnLeftClick += (_, _) => {
+				if (FileBrowser.OpenFilePanel("Select Structure", "json") is not string select) return;
+				string sourcePath = Path.Combine(Program.SavePathShared, "ModSources");
+				string relativePath = Path.GetRelativePath(sourcePath, select);
+				if (relativePath.StartsWith('.')) return;
+				room = null;
+				structurePath = relativePath.Replace(Path.DirectorySeparatorChar, '/');
+				structure = Load(structurePath);
+				RefreshRoomList();
+			};
+			selectFileButton.OnUpdate += _ => {
+				if (selectFileButton.IsMouseHovering) Main.instance.MouseText("Select Structure");
+			};
+			Append(selectFileButton);
+
+			deselectRoomButton = new(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Back")) {
+				Left = new(48, 0),
+				Top = new(8, 0.1f),
+				HAlign = 0.25f * 0.5f
+			};
+			deselectRoomButton.OnLeftClick += (_, _) => {
+				room = null;
+			};
+			deselectRoomButton.OnUpdate += _ => {
+				if (deselectRoomButton.IsMouseHovering) Main.instance.MouseText(Lang.menu[5].Value);
+			};
+			Append(deselectRoomButton);
+		}
+
+		public override void Update(GameTime gameTime) {
+			for (int i = 0; i < Elements.Count; i++) Elements[i].IgnoresMouseInteraction = true;
+			foreach (UIElement element in ActiveElements()) {
+				element.IgnoresMouseInteraction = false;
+				element.Update(gameTime);
+			}
+		}
+		IEnumerable<UIElement> ActiveElements() {
+			yield return selectFileButton;
+			if (room is null) {
+				if (structure is not null) {
+					yield return refreshButton;
+					yield return roomList;
+				}
+			} else {
+				yield return deselectRoomButton;
+			}
+		}
+		UIList roomList;
+		UIImageButton refreshButton;
+		UIImageButton selectFileButton;
+		UIImageButton deselectRoomButton;
 		public override void Draw(SpriteBatch spriteBatch) {
-			structure ??= DeserializedStructure.Load("Origins/World/Structures/TestStructure");
+			//structure ??= DeserializedStructure.Load("Origins/World/Structures/TestStructure");
 			if (reset) scroll = 0;
 			ConfigElement.DrawPanel2(
 				spriteBatch,
@@ -73,44 +149,8 @@ namespace Origins.Core.Structures {
 				Main.screenHeight * 0.8f,
 				Color.DodgerBlue
 			);
-			if (room is null) {
-				if (Elements.Count <= 0) {
-					RemoveAllChildren();
-					UIList list = [];
-					float height = 0;
-					for (int i = 0; i < structure.Rooms.Count; i++) {
-						IRoom room = structure.Rooms[i];
-						UITextPanel<string> element = new(room.Identifier);
-						element.OnLeftClick += (_, _) => {
-							SetRoom(room);
-							reset = true;
-						};
-						element.Width.Set(0, 1);
-						list.Add(element);
-						height += element.Height.Pixels + 4;
-					}
-					list.MinHeight.Set(0, 1);
-					list.Height.Set(height, 0);
-					list.Width.Set(0, 0.4f);
-					list.HAlign = 0.5f;
-					list.Top.Set(0, 0.125f);
-					Append(list);
-					UIImageButton refreshButton = new(TextureAssets.Flame) {
-						Left = new(-16, 0),
-						Top = new(8, 0.1f),
-						HAlign = 0.75f + 0.25f * 0.5f
-					};
-					refreshButton.OnLeftClick += (_, _) => {
-						RemoveAllChildren();
-						structure = null;
-					};
-					Append(refreshButton);
-				}
-				if (Elements[0].Top.Pixels.TrySet(-scroll)) {
-					Elements[0].Recalculate();
-				}
-				base.Draw(spriteBatch);
-			} else {
+			foreach (UIElement element in ActiveElements()) element.Draw(spriteBatch);
+			if (room is not null) {
 				Point basePos = Main.ScreenSize;
 				basePos.X /= 2;
 				basePos.Y /= 2;
@@ -131,6 +171,42 @@ namespace Origins.Core.Structures {
 			}
 			reset = false;
 		}
+		public void RefreshRoomList() {
+			if (roomList is not null) RemoveChild(roomList);
+			roomList = [];
+			float height = 0;
+			for (int i = 0; i < structure.Rooms.Count; i++) {
+				IRoom room = structure.Rooms[i];
+				UITextPanel<string> element = new(room.Identifier);
+				element.OnLeftClick += (_, _) => {
+					SetRoom(room);
+					reset = true;
+				};
+				element.Width.Set(0, 1);
+				roomList.Add(element);
+				height += element.Height.Pixels + 4;
+			}
+			roomList.MinHeight.Set(0, 1);
+			roomList.Height.Set(height, 0);
+			roomList.Width.Set(0, 0.4f);
+			roomList.HAlign = 0.5f;
+			roomList.Top.Set(0, 0.125f);
+			Append(roomList);
+			if (roomList.Top.Pixels.TrySet(-scroll)) {
+				roomList.Recalculate();
+			}
+		}
+
+		/*void string OpenFileDialog() {
+			ExtensionFilter extensionFilter = default(ExtensionFilter);
+			extensionFilter.Name = "Images";
+			extensionFilter.Extensions = new string[3] { "png", "jpg", "jpeg" };
+			ExtensionFilter extensions = extensionFilter;
+			string extensionStr = string.Join(',', extensions.Extensions);
+			string outPath;
+			nativefiledialog.nfdresult_t result = nativefiledialog.NFD_OpenDialog(extensionStr, null, out outPath);
+			return (result == nativefiledialog.nfdresult_t.NFD_OKAY) ? outPath : null;
+		}*/
 	}
 	public class Structure_Helper_Item : TestingItem {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.WireKite;
