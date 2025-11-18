@@ -26,6 +26,7 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetupSets() {
 			Sets.AshenWires[Type] = true;
 		}
+		public override bool GetWire(int x, int y) => Main.tile[x, y].Get<Ashen_Wire_Data>().HasBrownWire;
 		public override bool SetWire(int x, int y, bool value) {
 			if (Main.tile[x, y].Get<Ashen_Wire_Data>().HasBrownWire != value) {
 				Ashen_Wire_Data.SetWire(x, y, 0, value);
@@ -46,6 +47,7 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetupSets() {
 			Sets.AshenWires[Type] = true;
 		}
+		public override bool GetWire(int x, int y) => Main.tile[x, y].Get<Ashen_Wire_Data>().HasBlackWire;
 		public override bool SetWire(int x, int y, bool value) {
 			if (Main.tile[x, y].Get<Ashen_Wire_Data>().HasBlackWire != value) {
 				Ashen_Wire_Data.SetWire(x, y, 1, value);
@@ -67,6 +69,7 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetupSets() {
 			Sets.AshenWires[Type] = true;
 		}
+		public override bool GetWire(int x, int y) => Main.tile[x, y].Get<Ashen_Wire_Data>().HasWhiteWire;
 		public override bool SetWire(int x, int y, bool value) {
 			if (Main.tile[x, y].Get<Ashen_Wire_Data>().HasWhiteWire != value) {
 				Ashen_Wire_Data.SetWire(x, y, 2, value);

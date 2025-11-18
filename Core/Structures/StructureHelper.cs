@@ -13,8 +13,10 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 using static Origins.Core.Structures.DeserializedStructure;
 
@@ -22,36 +24,36 @@ namespace Origins.Core.Structures {
 	public class StructureHelperUI : UIState {
 		public Structure structure;
 		public IRoom room;
-		public (string name, Color color, bool[,] map)[] layers;
+		public (string name, Color color, bool[,] map, SerializableTileDescriptor source)[] layers;
 		public string selectedLayer = null;
 		float scroll = 0;
 		bool reset = false;
 		public void SetRoom(IRoom room) {
 			this.room = room;
-			Dictionary<string, (HashSet<char> set, Color color)> layers = [];
+			Dictionary<string, (HashSet<char> set, Color color, SerializableTileDescriptor source)> layers = [];
 			foreach ((char key, TileDescriptor value) in room.Key) {
 				if (value.Parts is null) continue;
 				for (int i = 0; i < value.Parts.Length; i++) {
 					if (!SerializableTileDescriptor.TryGet(structure.Mod, value.Parts[i], out SerializableTileDescriptor source, out string[] parameters)) continue;
 					foreach ((string _layer, Color color) in source.GetDisplayLayers(parameters)) {
 						string layer = $"{source.Name}_{_layer}";
-						if (!layers.TryGetValue(layer, out (HashSet<char> set, Color color) data)) layers[layer] = data = ([], color);
+						if (!layers.TryGetValue(layer, out (HashSet<char> set, Color color, SerializableTileDescriptor source) data)) layers[layer] = data = ([], color, source);
 						data.set.Add(key);
 					}
 				}
 			}
 			{
-				(string name, Color color, bool[,] map)[] _layers = new (string name, Color color, bool[,] map)[layers.Count];
+				(string name, Color color, bool[,] map, SerializableTileDescriptor source)[] _layers = new (string name, Color color, bool[,] map, SerializableTileDescriptor source)[layers.Count];
 				int index = 0;
 				string[] map = room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-				foreach ((string name, (HashSet<char> set, Color color) data) in layers.OrderBy(k => k.Key)) {
+				foreach ((string name, (HashSet<char> set, Color color, SerializableTileDescriptor source) data) in layers.OrderBy(k => k.Key)) {
 					bool[,] layer = new bool[map[0].Length, map.Length];
 					for (int y = 0; y < map.Length; y++) {
 						for (int x = 0; x < map[y].Length; x++) {
 							layer[x, y] = data.set.Contains(map[y][x]);
 						}
 					}
-					_layers[index++] = (name, data.color, layer);
+					_layers[index++] = (name, data.color, layer, data.source);
 				}
 				this.layers = _layers;
 			}
@@ -103,11 +105,7 @@ namespace Origins.Core.Structures {
 							if (!map[x, y]) continue;
 							dest.X = (int)(basePos.X + (x - map.GetLength(0) * 0.5f) * 16);
 							dest.Y = (int)(basePos.Y + (y - map.GetLength(1) * 0.5f) * 16);
-							spriteBatch.Draw(
-								TextureAssets.MagicPixel.Value,
-								dest,
-								color
-							);
+							layers[index].source.Draw(spriteBatch, dest, color, map, x, y, layers[index].name);
 						}
 					}
 				}
@@ -152,6 +150,9 @@ namespace Origins.Core.Structures {
 			return false;
 		}
 		public override void RightClick(Player player) {
+			IngameFancyUI.OpenUIState(new StructureHelperUI());
+		}
+		public static void CopyStructure() {
 			shouldCancel = false;
 			Task.Run(() => {
 				if (Structure_Helper_Item.leftClick is not Point leftClick || Structure_Helper_Item.rightClick is not Point rightClick) return;
@@ -201,7 +202,7 @@ namespace Origins.Core.Structures {
 		public override bool CanRightClick() => true;
 		public override bool ConsumeItem(Player player) => false;
 	}
-	public class Missing_File_UI : SwitchableUIState {
+	public class Structure_Helper_HUD : SwitchableUIState {
 		public override void AddToList() => OriginSystem.Instance.ItemUseHUD.AddState(this);
 		public override bool IsActive() => Main.LocalPlayer.HeldItem.ModItem is Structure_Helper_Item;
 		public override InterfaceScaleType ScaleType => InterfaceScaleType.Game;
@@ -291,7 +292,11 @@ namespace Origins.Core.Structures {
 						spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(result.X + ((i == 1) ? result.Width : -2), result.Y, 2, result.Height), Color.White);
 					}
 				}
-
+				if (Main.MouseWorld.IsWithinRectangular(min.ToVector2() * 16, ((max - min).ToVector2() + Vector2.One) * 16)) {
+					Main.LocalPlayer.mouseInterface = true;
+					UICommon.TooltipMouseText("Left click to copy");
+					if (Main.mouseLeft && Main.mouseLeftRelease) Structure_Helper_Item.CopyStructure();
+				}
 				return;
 			}
 		}

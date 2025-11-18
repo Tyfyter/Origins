@@ -7293,7 +7293,7 @@ Chambersite_Ore_Item: {
 
 Structure_Helper_Item: {
 	DisplayName: Convenient Cyanotype
-	Tooltip: Use right and left mouse buttons to set opposite corners, then right click the item in your inventory to copy the room
+	Tooltip: Use right and left mouse buttons to set opposite corners, right click the item in your inventory to open the UI
 }
 
 Locked_Riven_Dungeon_Chest_Item: {

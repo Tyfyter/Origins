@@ -77,15 +77,22 @@
 				"XOOOO",
 				"XOOOO",
 				"XOOOO",
-				"XOOOO",
-				"XOOOO",
-				"XOCOR",
+				"OOOOO",
+				"DOOOO",
+				"LOCOR",
 				"XXXXX"
 			],
+			"Key": {
+				"D": "PlaceSpecialTile(ClosedDoor,48)"
+			},
 			"SocketKey": {
 				"R": {
 					"Key": "Hallway",
 					"Direction": "Right"
+				},
+				"L": {
+					"Key": "ClosetLeft",
+					"Direction": "Left"
 				}
 			},
 			"StartPos": "C"
@@ -97,18 +104,77 @@
 				"OOOOX",
 				"OOOOX",
 				"OOOOX",
-				"OOOOX",
-				"OOOOX",
-				"LOCOX",
+				"OOOOO",
+				"OOOOD",
+				"LOCOR",
 				"XXXXX"
 			],
+			"Key": {
+				"D": "PlaceSpecialTile(ClosedDoor,48)"
+			},
 			"SocketKey": {
 				"L": {
 					"Key": "Hallway",
 					"Direction": "Left"
+				},
+				"R": {
+					"Key": "ClosetRight",
+					"Direction": "Right"
 				}
 			},
 			"StartPos": "C"
+		},
+		"Closet_Left": {
+			"Map": [
+				"XXX",
+				"XOO",
+				"XOO",
+				"XOR",
+				"XXX"
+			],
+			"SocketKey": {
+				"R": {
+					"Key": "ClosetLeft",
+					"Direction": "Right"
+				}
+			}
+		},
+		"Closet_Right": {
+			"Map": [
+				"XXX",
+				"OOX",
+				"OOX",
+				"LOX",
+				"XXX"
+			],
+			"SocketKey": {
+				"L": {
+					"Key": "ClosetRight",
+					"Direction": "Left"
+				}
+			}
+		},
+		"Test": {
+			"Map": [
+				"           ",
+				"           ",
+				" d         ",
+				"sw       ss",
+				"swtttttttss",
+				"swb      ss",
+				"sssssssssss",
+				"sssssssssss"
+			],
+			"Key": {
+				" ": "Empty",
+				".": "Void",
+				"d": "PlaceSpecialTile(Origins/Cargo_Elevator_Door,18)+PlaceWire(Red_Wire_Mode)",
+				"s": "PlaceTile(Origins/Fortified_Steel_Block3)",
+				"w": "PlaceTile(Origins/Fortified_Steel_Block3)+PlaceWire(Red_Wire_Mode)",
+				"t": "PlaceTile(Origins/Truss_Block)",
+				"b": "PlaceSpecialTile(Switches)+PlaceWire(Red_Wire_Mode)"
+			},
+			"StartPos": "\u0000"
 		}
 	}
 }

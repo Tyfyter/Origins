@@ -663,7 +663,6 @@ namespace Origins {
 					}
 				}
 			}
-			if (Keybindings.OpenStructureHelper.JustPressed) IngameFancyUI.OpenUIState(new StructureHelperUI());
 			if (Player.controlDown && Player.releaseDown) {
 				doubleTapDown = doubleTapDownTimer < 15;
 				doubleTapDownTimer = 0;

@@ -1,9 +1,15 @@
-﻿using PegasusLib;
+﻿using Humanizer;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Tools.Wiring;
+using PegasusLib;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using Terraria;
 using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -21,6 +27,58 @@ namespace Origins.Core.Structures {
 				Tile tile = Main.tile[i, j];
 				tile.TileColor = paintType;
 			}, Parts: [originalText]);
+		}
+	}
+	public class PlaceWire : SerializableTileDescriptor {
+		public override void Load() {
+			AddSerializer(tile => {
+				StringBuilder builder = new();
+				foreach (WireMode mode in ModContent.GetContent<WireMode>()) {
+					(int i, int j) = tile.GetTilePosition();
+					if (mode.GetWire(i, j)) {
+						if (builder.Length > 0) builder.Append(',');
+						builder.Append(mode.Mod is Origins ? mode.Name : mode.FullName);
+					}
+				}
+				if (builder.Length <= 0) return null;
+				return $"PlaceWire({builder})";
+			});
+		}
+		protected override TileDescriptor Create(string[] parameters, string originalText) {
+			WireMode[] wireModes = parameters.Select(n => ModContent.TryFind(n, out WireMode wireMode) ? wireMode : ModContent.Find<WireMode>("Origins/" + n)).ToArray();
+			return new((_, _, i, j) => {
+				for (int k = 0; k < wireModes.Length; k++) {
+					wireModes[k].SetWire(i, j, true);
+				}
+			}, Parts: [originalText]);
+		}
+		public override IEnumerable<(string name, Color color)> GetDisplayLayers(string[] parameters) {
+			foreach (WireMode mode in ModContent.GetContent<WireMode>()) {
+				if (parameters.Contains(mode.Name) || parameters.Contains(mode.FullName)) {
+					yield return (mode.FullName, mode.MiniWireMenuColor);
+				}
+			}
+		}
+		public override void Draw(SpriteBatch spriteBatch, Rectangle destination, Color color, bool[,] map, int x, int y, string name) {
+			if (ModContent.Find<WireMode>(name["PlaceWire_".Length..]).IsExtra) {
+				spriteBatch.Draw(
+					TextureAssets.WireUi[11].Value,
+					destination,
+					color
+				);
+			} else {
+				Rectangle wireFrame = new(0, 0, 16, 16);
+				if (map.GetIfInRange(x, y - 1)) wireFrame.X += 18;
+				if (map.GetIfInRange(x + 1, y)) wireFrame.X += 36;
+				if (map.GetIfInRange(x, y + 1)) wireFrame.X += 72;
+				if (map.GetIfInRange(x - 1, y)) wireFrame.X += 144;
+				spriteBatch.Draw(
+					TextureAssets.Projectile[ProjectileID.WireKite].Value,
+					destination,
+					wireFrame,
+					color
+				);
+			}
 		}
 	}
 	public class ConditionalTile : PlaceTile {
@@ -58,7 +116,7 @@ namespace Origins.Core.Structures {
 			AddSerializer(tile => {
 				if (tile.HasTile) {
 					if (Main.tileFrameImportant[tile.TileType]) return null;
-					if (TileObjectData.GetTileData(tile) is TileObjectData) return null;
+					if (TileObjectData.GetTileData(tile) is not null) return null;
 					return $"PlaceTile({TileID.Search.GetName(tile.TileType)})";
 				}
 				return null;
@@ -74,14 +132,23 @@ namespace Origins.Core.Structures {
 				}, Parts: [originalText]);
 			});
 		}
-		public override IEnumerable<(string name, Color color)> GetDisplayLayers(string[] parameters) {
-			yield return ("", Color.White);
-		}
 		public class CachedTileType(string name) {
 			readonly string name = name;
 			ushort? id;
 			public ushort Value => id ??= (ushort)TileID.Search.GetId(name);
 			public static implicit operator ushort(CachedTileType type) => type.Value;
+		}
+		public override IEnumerable<(string name, Color color)> GetDisplayLayers(string[] parameters) {
+			yield return (TileID.Search.GetId(parameters[0]).ToString(), Color.White);
+		}
+		public override void Draw(SpriteBatch spriteBatch, Rectangle destination, Color color, bool[,] map, int x, int y, string name) {
+			if (!int.TryParse(name["PlaceTile_".Length..], out int tileID)) return;
+			spriteBatch.Draw(
+				TextureAssets.Tile.GetIfInRange(tileID, TextureAssets.MagicPixel).Value,
+				destination,
+				new(9 * 18, 3 * 18, 16, 16),
+				color
+			);
 		}
 	}
 	public class PlaceFramedTile : PlaceTile {
@@ -105,6 +172,21 @@ namespace Origins.Core.Structures {
 				tile.TileFrameX = frameX;
 				tile.TileFrameY = frameY;
 			}, Parts: [originalText]);
+		}
+		public override IEnumerable<(string name, Color color)> GetDisplayLayers(string[] parameters) {
+			yield return ($"{TileID.Search.GetId(parameters[0])};{parameters[1]};{parameters[2]}", Color.White);
+		}
+		public override void Draw(SpriteBatch spriteBatch, Rectangle destination, Color color, bool[,] map, int x, int y, string name) {
+			string[] parts = name["PlaceFramedTile_".Length..].Split(';');
+			if (!int.TryParse(parts[0], out int tileID)) return;
+			if (!int.TryParse(parts[1], out int frameX)) return;
+			if (!int.TryParse(parts[2], out int frameY)) return;
+			spriteBatch.Draw(
+				TextureAssets.Tile.GetIfInRange(tileID, TextureAssets.MagicPixel).Value,
+				destination,
+				new(frameX, frameY, 16, 16),
+				color
+			);
 		}
 	}
 	public class PlaceSpecialTile : PlaceTile {
@@ -157,6 +239,30 @@ namespace Origins.Core.Structures {
 					}
 				}
 			}, Parts: [originalText]);
+		}
+		public override IEnumerable<(string name, Color color)> GetDisplayLayers(string[] parameters) {
+			yield return ($"{TileID.Search.GetId(parameters[0])};{parameters.GetIfInRange(1)}", Color.White);
+		}
+		public override void Draw(SpriteBatch spriteBatch, Rectangle destination, Color color, bool[,] map, int x, int y, string name) {
+			string[] parts = name["PlaceSpecialTile_".Length..].Split(';');
+			if (!int.TryParse(parts[0], out int tileID)) return;
+			_ = int.TryParse(parts[1], out int style);
+			Texture2D texture = TextureAssets.Tile.GetIfInRange(tileID, TextureAssets.MagicPixel).Value;
+			TileObjectData data = TileObjectData.GetTileData(tileID, style);
+			x = destination.X - data.Origin.X * 16;
+			y = destination.Y - data.Origin.Y * 16;
+			for (int j = 0; j < data.Height; j++) {
+				destination.Y = y + j * 16;
+				for (int i = 0; i < data.Width; i++) {
+					destination.X = x + i * 16;
+					spriteBatch.Draw(
+						texture,
+						destination,
+						new(i * 18, j * 18, 16, 16),
+						color
+					);
+				}
+			}
 		}
 	}
 	public class PlaceWall : SerializableTileDescriptor {

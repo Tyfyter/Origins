@@ -68,6 +68,7 @@ namespace Origins.Items.Tools.Wiring {
 		}
 		public virtual void SetupPreSort() { }
 		public virtual void SetupSets() { }
+		public abstract bool GetWire(int x, int y);
 		public abstract bool SetWire(int x, int y, bool value);
 		public static void DrawIcon(Texture2D texture, Vector2 position, Color tint) {
 			Main.spriteBatch.Draw(
@@ -125,6 +126,7 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetupSets() {
 			Sets.NormalWires[Type] = true;
 		}
+		public override bool GetWire(int x, int y) => Main.tile[x, y].HasActuator;
 		public override bool SetWire(int x, int y, bool value) {
 			Tile tile = Main.tile[x, y];
 			if (tile.HasActuator != value) {
@@ -141,6 +143,7 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetupSets() {
 			Sets.NormalWires[Type] = true;
 		}
+		public override bool GetWire(int x, int y) => Main.tile[x, y].RedWire;
 		public override bool SetWire(int x, int y, bool value) {
 			Tile tile = Main.tile[x, y];
 			if (tile.RedWire != value) {
@@ -157,6 +160,7 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetupSets() {
 			Sets.NormalWires[Type] = true;
 		}
+		public override bool GetWire(int x, int y) => Main.tile[x, y].BlueWire;
 		public override bool SetWire(int x, int y, bool value) {
 			Tile tile = Main.tile[x, y];
 			if (tile.BlueWire != value) {
@@ -174,6 +178,7 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetupSets() {
 			Sets.NormalWires[Type] = true;
 		}
+		public override bool GetWire(int x, int y) => Main.tile[x, y].GreenWire;
 		public override bool SetWire(int x, int y, bool value) {
 			Tile tile = Main.tile[x, y];
 			if (tile.GreenWire != value) {
@@ -191,6 +196,7 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetupSets() {
 			Sets.NormalWires[Type] = true;
 		}
+		public override bool GetWire(int x, int y) => Main.tile[x, y].YellowWire;
 		public override bool SetWire(int x, int y, bool value) {
 			Tile tile = Main.tile[x, y];
 			if (tile.YellowWire != value) {
@@ -261,6 +267,7 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetupSets() {
 			Sets.NormalWires[Type] = true;
 		}
+		public override bool GetWire(int x, int y) => get(x, y);
 		public override bool SetWire(int x, int y, bool value) {
 			if (get(x, y) != value) {
 				set(x, y, value);

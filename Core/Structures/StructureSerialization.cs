@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -8,11 +9,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.Core.Structures.DeserializedStructure;
 using static Origins.Core.Structures.IRoom;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Core.Structures {
 	public abstract class SerializableTileDescriptor : SerializableDescriptor<SerializableTileDescriptor, TileDescriptor> {
@@ -30,6 +31,13 @@ namespace Origins.Core.Structures {
 		}
 		protected sealed override void Register() {
 			ModTypeLookup<SerializableTileDescriptor>.Register(this);
+		}
+		public virtual void Draw(SpriteBatch spriteBatch, Rectangle destination, Color color, bool[,] map, int x, int y, string name) {
+			spriteBatch.Draw(
+				TextureAssets.MagicPixel.Value,
+				destination,
+				color
+			);
 		}
 		public static TileDescriptor Create(Mod mod, string data) {
 			string[] descriptors = data.Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
@@ -182,7 +190,7 @@ namespace Origins.Core.Structures {
 		public static Task<DeserializedStructure> AsyncLoad(string fileName) => Task.Run(() => Load(fileName));
 		public static DeserializedStructure Load(string fileName) {
 			if (!fileName.EndsWith(".json")) fileName += ".json";
-			string sourcePath = Path.Combine([Program.SavePathShared, "ModSources", fileName]);
+			string sourcePath = Path.Combine([Program.SavePathShared, "ModSources", fileName.Replace('/', Path.DirectorySeparatorChar)]);
 			return new DeserializedStructure(
 				ModLoader.GetMod(fileName.Split('/')[0]),
 				Path.GetFileNameWithoutExtension(fileName),
