@@ -7305,3 +7305,12 @@ Room_Socket_Marker_Item: {
 	DisplayName: Room Socket Marker
 	Tooltip: ""
 }
+
+Medicine_Fabricator_Item: {
+	DisplayName: Medicine Fabricator
+	Tooltip:
+		'''
+		Can be used to craft advanced medicine.
+		33% chance to not consume potion or medicine crafting ingredients
+		'''
+}

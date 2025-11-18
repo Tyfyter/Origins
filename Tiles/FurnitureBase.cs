@@ -24,6 +24,15 @@ namespace Origins.Tiles {
 		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public virtual Color GlowmaskColor => Color.White;
 		protected int width, height;
+		public virtual void MapEntry() {
+			if (!Main.dedServ) {
+				LocalizedText text = Lang._mapLegendCache.FromType(BaseTileID);
+				if (string.IsNullOrEmpty(text.Value)) AddMapEntry(MapColor);
+				else AddMapEntry(MapColor, text, MapName);
+			}
+		}
+		public virtual int[] AdjacentTiles => [ BaseTileID ];
+		public virtual int HitDust => DustID.Dirt;
 		public sealed override void Load() {
 			Mod.AddContent(Item = new TileItem(this));
 			OnLoad();
@@ -68,14 +77,9 @@ namespace Origins.Tiles {
 			height = TileObjectData.newTile.Height;
 			TileObjectData.addTile(Type);
 
-			if (!Main.dedServ) {
-				LocalizedText text = Lang._mapLegendCache.FromType(BaseTileID);
-				if (string.IsNullOrEmpty(text.Value)) AddMapEntry(MapColor);
-				else AddMapEntry(MapColor, text, MapName);
-			}
-			AdjTiles = [
-				BaseTileID
-			];
+			MapEntry();
+			AdjTiles = AdjacentTiles;
+			DustType = HitDust;
 			if (TileID.Sets.RoomNeeds.CountsAsTable.Contains(BaseTileID)) AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			if (TileID.Sets.RoomNeeds.CountsAsChair.Contains(BaseTileID)) AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 			glowTexture = Texture + "_Glow";

@@ -1,11 +1,9 @@
-﻿using Newtonsoft.Json.Linq;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.CrossMod.Avalon;
 using Origins.Items.Materials;
 using Origins.Items.Other.Fish;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -13,6 +11,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static Terraria.Recipe;
 
 namespace Origins.Items.Other.Consumables.Medicine {
 	public class Adrenaline : MedicineBase {
@@ -38,11 +37,12 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
+			CreateRecipe()
 			.AddIngredient(ItemID.FallenStar)
 			.AddIngredient(ItemID.RockLobster)
 			.AddRecipeGroup(ALRecipeGroups.RottenChunks)
-			.AddTile(TileID.Bottles)
+			.AddTile<Medicine_Fabricator>()
+			.AddConsumeIngredientCallback(IngredientQuantityRules.Alchemy)
 			.Register();
 		}
 	}
@@ -59,11 +59,12 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			player.nightVision = true;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
+			CreateRecipe()
 			.AddIngredient(ItemID.BottledWater)
 			.AddIngredient<Tree_Sap>()
 			.AddIngredient<Bleeding_Obsidian_Shard>()
-			.AddTile(TileID.Bottles)
+			.AddTile<Medicine_Fabricator>()
+			.AddConsumeIngredientCallback(IngredientQuantityRules.Alchemy)
 			.Register();
 		}
 	}
@@ -78,11 +79,12 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			player.lifeRegen += 2 * 2; // 2 HP/sec
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
+			CreateRecipe()
 			.AddIngredient(ItemID.BottledWater)
 			.AddIngredient(ItemID.Hemopiranha)
 			.AddIngredient(ItemID.Gel)
-			.AddTile(TileID.Bottles)
+			.AddTile<Medicine_Fabricator>()
+			.AddConsumeIngredientCallback(IngredientQuantityRules.Alchemy)
 			.Register();
 		}
 	}
@@ -99,10 +101,11 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			yield return BuffID.Burning;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
+			CreateRecipe()
 			.AddIngredient<Adhesive_Wrap>()
 			.AddIngredient<Brineglow_Item>()
-			.AddTile(TileID.Bottles)
+			.AddTile<Medicine_Fabricator>()
+			.AddConsumeIngredientCallback(IngredientQuantityRules.Alchemy)
 			.Register();
 		}
 	}
@@ -132,11 +135,12 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
+			CreateRecipe()
 			.AddRecipeGroup(ALRecipeGroups.RottenChunks)
 			.AddIngredient(ItemID.BottledWater)
 			.AddIngredient(ItemID.Flounder)
-			.AddTile(TileID.Bottles)
+			.AddTile<Medicine_Fabricator>()
+			.AddConsumeIngredientCallback(IngredientQuantityRules.Alchemy)
 			.Register();
 		}
 	}
@@ -162,10 +166,11 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
+			CreateRecipe()
 			.AddIngredient(ItemID.BottledHoney)
 			.AddRecipeGroup(ALRecipeGroups.Deathweed)
-			.AddTile(TileID.Bottles)
+			.AddTile<Medicine_Fabricator>()
+			.AddConsumeIngredientCallback(IngredientQuantityRules.Alchemy)
 			.Register();
 		}
 	}
@@ -183,11 +188,12 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			player.AddBuff(ModContent.BuffType<Mana_Buffer_Debuff>(), 20 * 60);
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
+			CreateRecipe()
 			.AddIngredient<Adhesive_Wrap>()
 			.AddIngredient<Strange_String>()
 			.AddIngredient<Bilemouth>()
-			.AddTile(TileID.Bottles)
+			.AddTile<Medicine_Fabricator>()
+			.AddConsumeIngredientCallback(IngredientQuantityRules.Alchemy)
 			.Register();
 		}
 	}
@@ -205,11 +211,12 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			player.resistCold = true;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
+			CreateRecipe()
 			.AddIngredient(ItemID.BottledWater)
 			.AddIngredient<Polyeel>()
 			.AddIngredient<Sanguinite_Ore_Item>()
-			.AddTile(TileID.Bottles)
+			.AddTile<Medicine_Fabricator>()
+			.AddConsumeIngredientCallback(IngredientQuantityRules.Alchemy)
 			.Register();
 		}
 	}
@@ -223,11 +230,12 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			yield return BuffID.Ichor;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
+			CreateRecipe()
 			.AddIngredient(ItemID.BottledWater)
 			.AddIngredient(ItemID.Stinger)
 			.AddIngredient<Brineglow_Item>()
-			.AddTile(TileID.Bottles)
+			.AddTile<Medicine_Fabricator>()
+			.AddConsumeIngredientCallback(IngredientQuantityRules.Alchemy)
 			.Register();
 		}
 	}
@@ -242,9 +250,9 @@ namespace Origins.Items.Other.Consumables.Medicine {
 		public override void UpdateBuff(Player player, ref int buffIndex) {
 			player.lifeRegen += 3 * 2; // 3 HP/sec
 		}
-		public override void AddRecipes() => Recipe.Create(Type)
+		public override void AddRecipes() => CreateRecipe()
 			.AddRecipeGroup(AnyDifferentMedicine.RecipeGroup, 3)
-			.AddTile(TileID.Bottles)
+			.AddTile<Medicine_Fabricator>()
 			.Register();
 		class Comparer : IEqualityComparer<HashSet<int>> {
 			public bool Equals(HashSet<int> x, HashSet<int> y) => x.SetEquals(y);
@@ -262,11 +270,11 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			Item.consumable = false;
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type)
+			CreateRecipe()
 			.AddIngredient<Multimed>()
 			.AddIngredient(ItemID.ChlorophyteBar)
 			.AddIngredient(ItemID.Ectoplasm)
-			.AddTile(TileID.Bottles)
+			.AddTile<Medicine_Fabricator>()
 			.Register();
 		}
 	}
