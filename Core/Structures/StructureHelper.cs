@@ -444,7 +444,7 @@ namespace Origins.Core.Structures {
 				if (Main.MouseWorld.X >= min.X * 16 && Main.MouseWorld.Y >= min.Y * 16 && Main.MouseWorld.X <= (max.X + 1) * 16 && Main.MouseWorld.Y <= (max.Y + 1) * 16) {
 					Main.LocalPlayer.mouseInterface = true;
 					UICommon.TooltipMouseText("Left click to copy");
-					if (Main.mouseLeft && Main.mouseLeftRelease) Structure_Helper_Item.CopyStructure();
+					if (!Main.LocalPlayer.ItemAnimationJustStarted && Main.mouseLeft && Main.mouseLeftRelease) Structure_Helper_Item.CopyStructure();
 				}
 				return;
 			}
