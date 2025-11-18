@@ -909,10 +909,7 @@ namespace Origins.Tiles {
 			Item.width = 14;
 			Item.height = 28;
 			Item.value = 150;
-			if (ExtraDefaults is not null) {
-				ExtraDefaults(Item);
-				ExtraDefaults = null;
-			}
+			ExtraDefaults?.Invoke(Item);
 		}
 		public override void AddRecipes() {
 			if (OnAddRecipes is not null) {
