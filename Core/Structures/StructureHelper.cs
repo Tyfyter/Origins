@@ -16,6 +16,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Config.UI;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
 using static Origins.Core.Structures.DeserializedStructure;
@@ -62,9 +63,16 @@ namespace Origins.Core.Structures {
 			return room is null && base.ContainsPoint(point);
 		}
 		public override void Draw(SpriteBatch spriteBatch) {
-			if (Main.LocalPlayer.controlDown && Main.LocalPlayer.releaseDown) structure = null;
 			structure ??= DeserializedStructure.Load("Origins/World/Structures/TestStructure");
 			if (reset) scroll = 0;
+			ConfigElement.DrawPanel2(
+				spriteBatch,
+				Main.ScreenSize.ToVector2() * new Vector2(0.25f * 0.5f, 0.1f),
+				TextureAssets.SettingsPanel.Value,
+				Main.screenWidth * 0.75f,
+				Main.screenHeight * 0.8f,
+				Color.DodgerBlue
+			);
 			if (room is null) {
 				if (Elements.Count <= 0) {
 					RemoveAllChildren();
@@ -83,9 +91,20 @@ namespace Origins.Core.Structures {
 					}
 					list.MinHeight.Set(0, 1);
 					list.Height.Set(height, 0);
-					list.Width.Set(0, 0.5f);
-					list.VAlign = 0.5f;
+					list.Width.Set(0, 0.4f);
+					list.HAlign = 0.5f;
+					list.Top.Set(0, 0.125f);
 					Append(list);
+					UIImageButton refreshButton = new(TextureAssets.Flame) {
+						Left = new(-16, 0),
+						Top = new(8, 0.1f),
+						HAlign = 0.75f + 0.25f * 0.5f
+					};
+					refreshButton.OnLeftClick += (_, _) => {
+						RemoveAllChildren();
+						structure = null;
+					};
+					Append(refreshButton);
 				}
 				if (Elements[0].Top.Pixels.TrySet(-scroll)) {
 					Elements[0].Recalculate();
