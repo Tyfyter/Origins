@@ -1312,7 +1312,7 @@ TILES:
 (^) Defiled Torch
 (^) Defiled Water Fountain
 (^) Endowood Furniture
-(#2, ^2) Hyrax Cage !!! (extra frame code)
+(☻) Hyrax Cage !!!
 (^) Limestone Furniture
 (^) Living Alkahest Block
 (^) Living Bile Block
@@ -1370,7 +1370,7 @@ TILES:
 (^) Fabricator
 (X) Flesh Shredder
 (X) Interstellar Sampler
-(#, ^2) Medicine Fabricator !!!
+(☻) Medicine Fabricator !!!
 (#, ^2) Metal Presser !!!
 (X) The Demaker
 
