@@ -32,7 +32,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 
 			// Names
-			AddMapEntry(new Color(220, 220, 220), CreateMapEntryName());
+			AddMapEntry(FromHexRGB(0xFFB18C), item.DisplayName);
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
@@ -42,21 +42,6 @@ namespace Origins.Tiles.Ashen {
 			ID = Type;
 			DustType = Ashen_Biome.DefaultTileDust;
 			RegisterItemDrop(item.Type);
-		}
-		public override void MouseOver(int i, int j) {
-			return;
-			Player player = Main.LocalPlayer;
-
-			player.noThrow = 2;
-			player.cursorItemIconEnabled = true;
-			player.cursorItemIconID = ModContent.ItemType<Omnidirectional_Claymore>();
-
-			if (Main.tile[i, j].TileFrameX / 18 < 1) {
-				player.cursorItemIconReversed = true;
-			}
-		}
-		public override bool RightClick(int i, int j) {
-			return false;
 		}
 		public override void PlaceInWorld(int i, int j, Item item) {
 			ModContent.GetInstance<Beacon_Light_TE_System>().AddTileEntity(new(i, j));
