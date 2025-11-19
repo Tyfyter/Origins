@@ -3085,7 +3085,7 @@ namespace Origins {
 					ModContent.WallType<OpalStoneWall>()
 				);
 			}
-			AddThoriumConversions();
+			if (ModLoader.HasMod("ThoriumMod")) emAddThoriumConversions();
 		}
 		public static void AddChambersiteConversions(this AltBiome biome, int tile, int wall) {
 			biome.AddChambersiteTileConversions(tile);
@@ -3098,7 +3098,7 @@ namespace Origins {
 			void AddThoriumConversions() {
 				biome.AddTileConversion(ModContent.TileType<Chambersite>(), ModContent.TileType<PlacedGem>(), false, false, false);
 			}
-			AddThoriumConversions();
+			if (ModLoader.HasMod("ThoriumMod")) AddThoriumConversions();
 
 			biome.AddTileConversion(ModContent.TileType<Bleeding_Obsidian>(), TileID.Obsidian, false, false, false);
 		}

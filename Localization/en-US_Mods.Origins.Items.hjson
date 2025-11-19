@@ -3157,7 +3157,7 @@ Woodsprite_Staff: {
 
 Sanguinite_Ore_Item: {
 	DisplayName: Sanguinite Ore
-	Tooltip: A rare mineral that grows more powerful with heat
+	Tooltip: A rare mineral that grows more powerful with heat.
 }
 
 Eitrite_Ore_Item: {
