@@ -89,8 +89,6 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 		public override void EmitParticles(int i, int j, Tile tileCache, short tileFrameX, short tileFrameY, Color tileLight, bool visible) {
 			// This code spawns the music notes when the music box is open.
-			Tile tile = Main.tile[i, j];
-
 			if (!visible || tileFrameX != 36 || tileFrameY % 36 != 0 || (int)Main.timeForVisualEffects % 7 != 0 || !Main.rand.NextBool(3)) {
 				return;
 			}
