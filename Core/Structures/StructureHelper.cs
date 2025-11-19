@@ -78,6 +78,10 @@ namespace Origins.Core.Structures {
 			saveFileButton.OnLeftClick += (_, _) => {
 				if (structure is not DeserializedStructure @struct) return;
 				string path = Path.Combine(Path.Combine(Program.SavePathShared, "ModSources"), structurePath.Replace('/', Path.DirectorySeparatorChar));
+				if (!path.EndsWith(".json")) return;
+				string sourcePath = Path.Combine(Program.SavePathShared, "ModSources");
+				string relativePath = Path.GetRelativePath(sourcePath, path);
+				if (relativePath.StartsWith('.')) return;
 				string newData = @struct.Export();
 				using (StreamWriter writer = File.CreateText(path)) {
 					writer.Write(newData);
