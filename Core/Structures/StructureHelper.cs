@@ -573,8 +573,7 @@ namespace Origins.Core.Structures {
 				return;
 			}
 			if (args[0].Length != 1) {
-				caller.Reply(args[0] + "is not a single character in UTF-16");
-				return;
+				throw new UsageException(args[0] + "is not a single character in UTF-16", Color.Red);
 			}
 			if (OnAss?.Invoke(args[0][0], args.GetIfInRange(1)) ?? false) {
 				OnAss = null;
