@@ -156,27 +156,28 @@
 		},
 		"Test": {
 			"Map": [
-				"ggggggggggggggg",
+				"GGGGGGGGGGGGGGG",
 				"               ",
 				"               ",
 				"               ",
-				"l             r",
-				"ggggggggggggggg"
+				"L      C      R",
+				"GGGGGGGGGGGGGGG"
 			],
 			"Key": {
-				"l": "Empty",
-				"r": "Empty",
+				"L": "Empty",
+				"C": "Empty",
+				"R": "Empty",
 				" ": "Empty",
 				".": "Void",
-				"g": "PaintTile(RedPaint)+PlaceTile(Grass)"
+				"G": "PaintTile(RedPaint)+PlaceTile(Grass)"
 			},
 			"SocketKey": {
-				"l": {
-					"Key": "hallway",
+				"L": {
+					"Key": "Hallway",
 					"Direction": "Left"
 				},
-				"r": {
-					"Key": "hallway",
+				"R": {
+					"Key": "Hallway",
 					"Direction": "Right"
 				}
 			}

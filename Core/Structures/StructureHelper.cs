@@ -562,6 +562,7 @@ namespace Origins.Core.Structures {
 		public override string Command => "ass";
 		public override string Usage => "/ass <char> or /ass cancel";
 		public override string Description => "";
+		public override bool IsCaseSensitive => true;
 		public static event Func<char, string, bool> OnAss = null;
 		public static bool ReadyForNewAss => OnAss is null;
 		public override void Action(CommandCaller caller, string input, string[] args) {
