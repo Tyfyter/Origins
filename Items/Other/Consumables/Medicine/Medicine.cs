@@ -4,13 +4,17 @@ using Origins.Items.Materials;
 using Origins.Items.Other.Fish;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
+using PegasusLib;
+using PegasusLib.Reflection;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Terraria;
+using Terraria.GameContent.Achievements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 using static Terraria.Recipe;
 
 namespace Origins.Items.Other.Consumables.Medicine {
@@ -244,6 +248,53 @@ namespace Origins.Items.Other.Consumables.Medicine {
 		public override int ImmunityDuration => 2 * 60 * 60;
 		public override int CooldownIncrease => 60 * 60;
 		public override IEnumerable<int> GetDefaultImmunity() => Main.debuff.GetTrueIndexes();
+		public override void OnLoad() {
+			On_Item.GetShimmered += On_Item_GetShimmered;
+		}
+
+		void On_Item_GetShimmered(On_Item.orig_GetShimmered orig, Item self) {
+			if (self.type == Type) {
+				WeightedRandom<int> items = new();
+				int[] medicines = AnyDifferentMedicine.RecipeGroup.ValidItems.ToArray();
+				int[] stacks = new int[medicines.Length];
+				RangeRandom range = new(Main.rand, 0, medicines.Length);
+				for (; self.stack > 0; self.stack--) {
+					range.Reset();
+					for (int i = 0; i < 3; i++) {
+						int index = range.Get();
+						range.Multiply(index, index + 1, 0);
+						stacks[index]++;
+					}
+				}
+				for (int i = 0; i < medicines.Length; i++) {
+					if (stacks[i] <= 0) continue;
+					Item newItem = Main.item[Item.NewItem(self.GetSource_Misc("Shimmer"), self.position, self.width, self.height, medicines[i], stacks[i])];
+					newItem.shimmerTime = 1f;
+					newItem.shimmered = true;
+					newItem.shimmerWet = true;
+					newItem.wet = true;
+					newItem.velocity *= 0.1f;
+					newItem.playerIndexTheItemIsReservedFor = Main.myPlayer;
+					newItem.velocity.X = 1f * i;
+					newItem.velocity.X *= 1f + i * 0.05f;
+					if (i % 2 == 0) {
+						newItem.velocity.X *= -1f;
+					}
+					NetMessage.SendData(MessageID.SyncItemsWithShimmer, -1, -1, null, newItem.whoAmI, 1f);
+				}
+				self.TurnToAir();
+				if (Main.netMode == NetmodeID.SinglePlayer) {
+					Item.ShimmerEffect(self.Center);
+				} else {
+					NetMessage.SendData(MessageID.ShimmerActions, -1, -1, null, 0, (int)self.Center.X, (int)self.Center.Y);
+					NetMessage.SendData(MessageID.SyncItemsWithShimmer, -1, -1, null, self.whoAmI, 1f);
+				}
+				AchievementsHelper.NotifyProgressionEvent(27);
+				return;
+			}
+			orig(self);
+		}
+
 		public override void PostSetStaticDefaults() {
 			ImmunityListOverride = this.GetLocalization(nameof(ImmunityListOverride));
 		}

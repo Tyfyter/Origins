@@ -29,7 +29,9 @@ namespace Origins.Items.Other.Consumables.Medicine {
 		public LocalizedText ImmunityListOverride { get; protected set; }
 		public sealed override void Load() {
 			if (!HasSpecialBuff) Mod.AddContent(ImmunityBuff = new(this));
+			OnLoad();
 		}
+		public virtual void OnLoad() { }
 		public sealed override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 30;
 			PostSetStaticDefaults();
