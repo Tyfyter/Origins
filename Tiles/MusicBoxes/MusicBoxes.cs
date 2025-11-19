@@ -27,9 +27,8 @@ namespace Origins.Tiles.MusicBoxes {
 	#region base classes
 	public abstract class Music_Box : ModTile {
 		public virtual string[] Categories => [];
-		public abstract Color MapColor { get; }
 		public abstract int MusicSlot { get; }
-		public virtual new int DustType => 0;
+		public virtual new int DustType => DustID.Dirt;
 		public Music_Box_Item Item { get; private set; }
 		public static int ItemType<TMusicBox>() where TMusicBox : Music_Box => GetInstance<TMusicBox>().Item.Type;
 		static List<Music_Box> musicBoxes = [];
@@ -57,9 +56,9 @@ namespace Origins.Tiles.MusicBoxes {
 				}
 			}
 		}
+		public virtual Music_Box_Item CreateItem() => new(this);
 		public override void Load() {
-			Item = CreateItem();
-			Mod.AddContent(Item);
+			Mod.AddContent(Item = CreateItem());
 			musicBoxes.Add(this);
 		}
 		public override void Unload() {
@@ -68,14 +67,16 @@ namespace Origins.Tiles.MusicBoxes {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.HasOutlines[Type] = true;
+
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.DrawYOffset = 2;
 			TileObjectData.addTile(Type);
-			TileID.Sets.DisableSmartCursor[Type] = true;
-			TileID.Sets.HasOutlines[Type] = true;
-			AddMapEntry(MapColor, Language.GetOrRegister("Mods.Origins.Tiles." + Name, PrettyPrintName));
+
+			AddMapEntry(new Color(191, 142, 111), Language.GetOrRegister("Mods.Origins.Tiles." + Name, PrettyPrintName));
 			RegisterItemDrop(Item.Type);
 			base.DustType = this.DustType;
 		}
@@ -86,7 +87,30 @@ namespace Origins.Tiles.MusicBoxes {
 			player.cursorItemIconEnabled = true;
 			player.cursorItemIconID = Item.Type;
 		}
-		public virtual Music_Box_Item CreateItem() => new(this);
+		public override void EmitParticles(int i, int j, Tile tileCache, short tileFrameX, short tileFrameY, Color tileLight, bool visible) {
+			// This code spawns the music notes when the music box is open.
+			Tile tile = Main.tile[i, j];
+
+			if (!visible || tileFrameX != 36 || tileFrameY % 36 != 0 || (int)Main.timeForVisualEffects % 7 != 0 || !Main.rand.NextBool(3)) {
+				return;
+			}
+
+			int MusicNote = Main.rand.Next(570, 573);
+			Vector2 SpawnPosition = new(i * 16 + 8, j * 16 - 8);
+			Vector2 NoteMovement = new(Main.WindForVisuals * 2f, -0.5f);
+			NoteMovement.X *= Main.rand.NextFloat(0.5f, 1.5f);
+			NoteMovement.Y *= Main.rand.NextFloat(0.5f, 1.5f);
+			switch (MusicNote) {
+				case 572:
+				SpawnPosition.X -= 8f;
+				break;
+				case 571:
+				SpawnPosition.X -= 4f;
+				break;
+			}
+
+			Gore.NewGore(new EntitySource_TileUpdate(i, j), SpawnPosition, NoteMovement, MusicNote, 0.8f);
+		}
 	}
 	[Autoload(false)]
 	public class Music_Box_Item(Music_Box tile) : ModItem(), ICustomWikiStat {
@@ -126,7 +150,6 @@ namespace Origins.Tiles.MusicBoxes {
 	#endregion
 	#region Normal
 	public class Music_Box_DW : Music_Box {
-		public override Color MapColor => new Color(255, 255, 255);
 		public override int MusicSlot => Origins.Music.Defiled;
 		public override int DustType => Defiled_Wastelands.DefaultTileDust;
 		public override void SetStaticDefaults() {
@@ -144,12 +167,10 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 	}
 	public class Music_Box_DC : Music_Box {
-		public override Color MapColor => new Color(255, 255, 255);
 		public override int MusicSlot => Origins.Music.UndergroundDefiled;
 		public override int DustType => Defiled_Wastelands.DefaultTileDust;
 	}
 	public class Music_Box_RH : Music_Box, IGlowingModTile {
-		public override Color MapColor => new Color(42, 59, 112);
 		public override int MusicSlot => Origins.Music.Riven;
 		public override int DustType => Riven_Hive.DefaultTileDust;
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
@@ -227,7 +248,6 @@ namespace Origins.Tiles.MusicBoxes {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Music_Box_BP : Music_Box, IGlowingModTile {
-		public override Color MapColor => new Color(42, 112, 59);
 		public override int MusicSlot => Origins.Music.BrinePool;
 		public override int DustType => DustID.GreenMoss;
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
@@ -278,12 +298,10 @@ namespace Origins.Tiles.MusicBoxes {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Music_Box_FU : Music_Box {
-		public override Color MapColor => new Color(146, 253, 250);
 		public override int MusicSlot => Origins.Music.Fiberglass;
 		public override int DustType => DustID.Glass;
 	}
 	public class Music_Box_TD : Music_Box {
-		public override Color MapColor => new(87, 35, 178);
 		public override int MusicSlot => Origins.Music.TheDive;
 		public override int DustType => DustID.GemAmethyst;
 		public override Music_Box_Item CreateItem() => new Music_Box_TD_Item(this);
@@ -342,7 +360,6 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 	}
 	public class Music_Box_AS : Music_Box, IGlowingModTile {
-		public override Color MapColor => FromHexRGB(0x460013);
 		public override int MusicSlot => Origins.Music.AshenScrapyard;
 		public override int DustType => Ashen_Biome.DefaultTileDust;
 		public override void Load() {
@@ -368,7 +385,6 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 	}
 	public class Music_Box_SS : Music_Box, IGlowingModTile {
-		public override Color MapColor => FromHexRGB(0x0A0606);
 		public override int MusicSlot => Origins.Music.SmogStorm;
 		public override int DustType => DustID.Asphalt;
 		public override void Load() {
@@ -394,7 +410,6 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 	}
 	public class Music_Box_AF : Music_Box, IGlowingModTile {
-		public override Color MapColor => FromHexRGB(0x460013);
 		public override int MusicSlot => Origins.Music.AshenFactory;
 		public override int DustType => Ashen_Biome.DefaultTileDust;
 		public override void Load() {
@@ -420,7 +435,6 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 	}
 	public class Music_Box_AM : Music_Box, IGlowingModTile {
-		public override Color MapColor => FromHexRGB(0x460013);
 		public override int MusicSlot => Origins.Music.AshenMines;
 		public override int DustType => Ashen_Biome.DefaultTileDust;
 		public override void Load() {
@@ -429,13 +443,13 @@ namespace Origins.Tiles.MusicBoxes {
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			if (!Main.dedServ) GlowTexture = Request<Texture2D>(typeof(Music_Box_AS).GetDefaultTMLName() + "_Glow");
+			if (!Main.dedServ) GlowTexture = Request<Texture2D>(Texture + "_Glow");
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (Main.tile[i, j].TileFrameX > 2 * 18) {
-				r = 0.05f;
-				g = 0.03f;
-				b = 0.00f;
+				r = 1f;
+				g = 0.1f;
+				b = 0.05f;
 			}
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
@@ -451,7 +465,6 @@ namespace Origins.Tiles.MusicBoxes {
 		public override string[] Categories => [
 			WikiCategories.Hardmode
 		];
-		public override Color MapColor => new(255, 255, 255);
 		public override int MusicSlot => Origins.Music.AncientDefiled;
 		public override int DustType => Defiled_Wastelands.DefaultTileDust;
 		public override void SetStaticDefaults() {
@@ -472,7 +485,6 @@ namespace Origins.Tiles.MusicBoxes {
 		public override string[] Categories => [
 			WikiCategories.Hardmode
 		];
-		public override Color MapColor => new(255, 255, 255);
 		public override int MusicSlot => Origins.Music.AncientRiven;
 		public override int DustType => DustID.SolarFlare;
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
@@ -544,7 +556,6 @@ namespace Origins.Tiles.MusicBoxes {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Ancient_Music_Box_BP : Music_Box, IGlowingModTile {
-		public override Color MapColor => new Color(42, 112, 59);
 		public override int MusicSlot => Origins.Music.AncientBrinePool;
 		public override int DustType => DustID.GreenMoss;
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
@@ -626,7 +637,6 @@ namespace Origins.Tiles.MusicBoxes {
 		public override string[] Categories => [
 			WikiCategories.Hardmode
 		];
-		public override Color MapColor => new(255, 255, 255);
 		public override int MusicSlot => Origins.Music.OtherworldlyDefiled;
 		public override int DustType => Defiled_Wastelands.DefaultTileDust;
 		public override void SetStaticDefaults() {
