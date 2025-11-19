@@ -3065,7 +3065,7 @@ namespace Origins {
 				biome.AddTileConversion(tile, ModContent.TileType<Aquamarine>(), oneWay: true, extraFunctions: false);
 				biome.AddTileConversion(tile, ModContent.TileType<Opal>(), oneWay: true, extraFunctions: false);
 			}
-			AddThoriumConversions();
+			if (ModLoader.HasMod("ThoriumMod")) AddThoriumConversions();
 		}
 		public static void AddChambersiteWallConversions(this AltBiome biome, int wall) {
 			biome.AddWallConversions(wall, ModContent.WallType<Chambersite_Stone_Wall>());
