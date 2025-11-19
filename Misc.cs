@@ -3085,7 +3085,7 @@ namespace Origins {
 					ModContent.WallType<OpalStoneWall>()
 				);
 			}
-			if (ModLoader.HasMod("ThoriumMod")) emAddThoriumConversions();
+			if (ModLoader.HasMod("ThoriumMod")) AddThoriumConversions();
 		}
 		public static void AddChambersiteConversions(this AltBiome biome, int tile, int wall) {
 			biome.AddChambersiteTileConversions(tile);
