@@ -350,7 +350,7 @@ STATUS EFFECTS:
 (^) Blood Transfusion
 (^) Fast
 (^) First Aid
-(#2, ^2) Morphine !!! (needs proper buff icon)
+(☻) Morphine !!!
 (^) Solvent Tolerance
 (^) Totally Safe
 (^) Vigil

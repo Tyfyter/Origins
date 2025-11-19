@@ -7048,7 +7048,7 @@ Medicinal_Acid: {
 
 Morphine: {
 	DisplayName: Morphine
-	Tooltip: ""
+	Tooltip: Increases life regeneration while you have [buffhint/self:PotionSickness]
 }
 
 Rasterwrap: {

@@ -152,7 +152,6 @@ namespace Origins.Items.Other.Consumables.Medicine {
 		public override int HealAmount => 120;
 		public override int ImmunityDuration => 1;
 		public override IEnumerable<int> GetDefaultImmunity() => [];
-		public override string BuffTexture => Texture;
 		public override void PostSetStaticDefaults() {
 			Main.buffNoTimeDisplay[ImmunityBuff.Type] = true;
 			BuffID.Sets.TimeLeftDoesNotDecrease[ImmunityBuff.Type] = true;
