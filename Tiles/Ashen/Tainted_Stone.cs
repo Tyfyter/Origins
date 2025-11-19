@@ -31,7 +31,7 @@ namespace Origins.Tiles.Ashen {
 					Main.tileMerge[i][Type] = true;
 				}
 			}
-			AddMapEntry(FromHexRGB(0x9A7057));
+			AddMapEntry(FromHexRGB(0x725138));
 			mergeID = TileID.Stone;
 			MinPick = 65;
 			MineResist = 2;
