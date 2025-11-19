@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -13,8 +14,8 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Core.Structures.ARoom;
 using static Origins.Core.Structures.DeserializedStructure;
-using static Origins.Core.Structures.IRoom;
 
 namespace Origins.Core.Structures {
 	public abstract class SerializableTileDescriptor : SerializableDescriptor<SerializableTileDescriptor, TileDescriptor> {
@@ -40,7 +41,7 @@ namespace Origins.Core.Structures {
 				color
 			);
 		}
-		public static TileDescriptor Create(Mod mod, string data) {
+		public static new TileDescriptor Create(Mod mod, string data) {
 			string[] descriptors = data.Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 			TileDescriptor descriptor = null;
 			for (int i = 0; i < descriptors.Length; i++) descriptor += CreateSingle(mod, descriptors[i]);
@@ -48,69 +49,104 @@ namespace Origins.Core.Structures {
 		}
 		public static string Serialize(Tile tile) => Serializer.Accumulate(tile) ?? "Void";
 	}
-	public abstract class PostGenerateDescriptor : ModType {
-		protected sealed override void Register() {
-			ModTypeLookup<PostGenerateDescriptor>.Register(this);
+	public record class PostGenerateDescriptor(Action<PostGenerateParameters> Function, string[] Parts) : ISummable<PostGenerateDescriptor> {
+		public void Invoke(PostGenerateParameters parameters) => Function(parameters);
+		static string[] CombineParts(PostGenerateDescriptor a, PostGenerateDescriptor b) {
+			if (b.Parts is null || b.Parts.Length == 0) return a.Parts;
+			if (a.Parts is null || a.Parts.Length == 0) return b.Parts;
+			string[] parts = new string[a.Parts.Length + b.Parts.Length];
+			a.Parts.CopyTo(parts, 0);
+			b.Parts.CopyTo(parts, a.Parts.Length);
+			return parts;
 		}
-		public static Action<PostGenerateParameters> Parse(Mod mod, string data) {
-			if (string.IsNullOrWhiteSpace(data)) return null;
-			string[] descriptors = data.Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-			Action<PostGenerateParameters> descriptor = null;
-			for (int i = 0; i < descriptors.Length; i++) {
-				string[] parts = descriptors[i].Split('/');
-				string modName = parts[0];
-				if (parts.Length < 2) modName = mod.Name;
-				string name = parts[^1];
-				if (!ModContent.TryFind($"{modName}/{name}", out PostGenerateDescriptor source)) source = ModContent.Find<PostGenerateDescriptor>($"Origins/{name}");
-				descriptor += source.PostGenerate;
+		public override string ToString() => string.Join('+', Parts ?? []);
+		public static PostGenerateDescriptor operator +(PostGenerateDescriptor a, PostGenerateDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Function + b.Function, CombineParts(a, b));
+		public static PostGenerateDescriptor Create(Mod mod, string data) => Kind.Create(mod, data);
+		public abstract class Kind : SerializableDescriptor<Kind, PostGenerateDescriptor> {
+			protected sealed override PostGenerateDescriptor Create(string[] parameters, string originalText) => new(PostGenerate, [originalText]);
+			protected sealed override void Register() {
+				ModTypeLookup<Kind>.Register(this);
 			}
-			return descriptor;
-		}
-		public abstract void PostGenerate(PostGenerateParameters parameters);
-	}
-	public abstract class SerializableBreakDescriptor : SerializableDescriptor<SerializableBreakDescriptor, Accumulator<StructureInstance, bool>> {
-		protected sealed override void Register() {
-			ModTypeLookup<SerializableBreakDescriptor>.Register(this);
-		}
-		public static Accumulator<StructureInstance, bool> Create(Mod mod, string data) {
-			if (string.IsNullOrWhiteSpace(data)) return null;
-			string[] descriptors = data.Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-			Accumulator<StructureInstance, bool> descriptor = null;
-			for (int i = 0; i < descriptors.Length; i++) descriptor += CreateSingle(mod, descriptors[i]);
-			return descriptor;
+			public abstract void PostGenerate(PostGenerateParameters parameters);
 		}
 	}
-	public abstract class SerializableCheckDescriptor : SerializableDescriptor<SerializableCheckDescriptor, Accumulator<StructureInstance, bool>> {
-		protected sealed override void Register() {
-			ModTypeLookup<SerializableCheckDescriptor>.Register(this);
+	public record class BreakDescriptor(Accumulator<StructureInstance, bool> Function, string[] Parts) : ISummable<BreakDescriptor> {
+		public bool Accumulate(StructureInstance input, bool startValue = default) => Function.Accumulate(input, startValue);
+		static string[] CombineParts(BreakDescriptor a, BreakDescriptor b) {
+			if (b.Parts is null || b.Parts.Length == 0) return a.Parts;
+			if (a.Parts is null || a.Parts.Length == 0) return b.Parts;
+			string[] parts = new string[a.Parts.Length + b.Parts.Length];
+			a.Parts.CopyTo(parts, 0);
+			b.Parts.CopyTo(parts, a.Parts.Length);
+			return parts;
 		}
-		public static Accumulator<StructureInstance, bool> Create(Mod mod, string data) {
-			if (string.IsNullOrWhiteSpace(data)) return null;
-			string[] descriptors = data.Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-			Accumulator<StructureInstance, bool> descriptor = null;
-			for (int i = 0; i < descriptors.Length; i++) descriptor += CreateSingle(mod, descriptors[i]);
-			return descriptor;
+		public override string ToString() => string.Join('+', Parts ?? []);
+		public static BreakDescriptor operator +(BreakDescriptor a, BreakDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Function + b.Function, CombineParts(a, b));
+		public static BreakDescriptor Create(Mod mod, string data) => Kind.Create(mod, data);
+		public abstract class Kind : SerializableDescriptor<Kind, BreakDescriptor> {
+			protected sealed override BreakDescriptor Create(string[] parameters, string originalText) => new(Create(parameters), [originalText]);
+			protected abstract Accumulator<StructureInstance, bool> Create(string[] parameters);
+			protected sealed override void Register() {
+				ModTypeLookup<Kind>.Register(this);
+			}
 		}
 	}
-	public abstract class WeightDescriptor : SerializableDescriptor<WeightDescriptor, Accumulator<WeightParameters, float>> {
-		protected sealed override void Register() {
-			ModTypeLookup<WeightDescriptor>.Register(this);
+	public record class CheckDescriptor(Accumulator<StructureInstance, bool> Function, string[] Parts) : ISummable<CheckDescriptor> {
+		public bool Accumulate(StructureInstance input, bool startValue = default) => Function.Accumulate(input, startValue);
+		static string[] CombineParts(CheckDescriptor a, CheckDescriptor b) {
+			if (b.Parts is null || b.Parts.Length == 0) return a.Parts;
+			if (a.Parts is null || a.Parts.Length == 0) return b.Parts;
+			string[] parts = new string[a.Parts.Length + b.Parts.Length];
+			a.Parts.CopyTo(parts, 0);
+			b.Parts.CopyTo(parts, a.Parts.Length);
+			return parts;
 		}
-		public static Accumulator<WeightParameters, float> Create(Mod mod, string data) {
-			if (string.IsNullOrWhiteSpace(data)) return null;
-			string[] descriptors = data.Split('*', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-			Accumulator<WeightParameters, float> descriptor = null;
-			for (int i = 0; i < descriptors.Length; i++) {
-				if (float.TryParse(descriptors[i], out float constant)) {
-					descriptor += (WeightParameters _, ref float output) => output *= constant;
-				} else {
-					descriptor += CreateSingle(mod, descriptors[i]);
+		public override string ToString() => string.Join('+', Parts ?? []);
+		public static CheckDescriptor operator +(CheckDescriptor a, CheckDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Function + b.Function, CombineParts(a, b));
+		public static CheckDescriptor Create(Mod mod, string data) => Kind.Create(mod, data);
+		public abstract class Kind : SerializableDescriptor<Kind, CheckDescriptor> {
+			protected sealed override CheckDescriptor Create(string[] parameters, string originalText) => new(Create(parameters), [originalText]);
+			protected abstract Accumulator<StructureInstance, bool> Create(string[] parameters);
+			protected sealed override void Register() {
+				ModTypeLookup<Kind>.Register(this);
+			}
+		}
+	}
+	public record class WeightDescriptor(Accumulator<WeightParameters, float> Function, string[] Parts) : ISummable<WeightDescriptor> {
+		public float Accumulate(WeightParameters input, float startValue = default) => Function.Accumulate(input, startValue);
+		static string[] CombineParts(WeightDescriptor a, WeightDescriptor b) {
+			if (b.Parts is null || b.Parts.Length == 0) return a.Parts;
+			if (a.Parts is null || a.Parts.Length == 0) return b.Parts;
+			string[] parts = new string[a.Parts.Length + b.Parts.Length];
+			a.Parts.CopyTo(parts, 0);
+			b.Parts.CopyTo(parts, a.Parts.Length);
+			return parts;
+		}
+		public override string ToString() => string.Join('*', Parts ?? []);
+		public static WeightDescriptor operator +(WeightDescriptor a, WeightDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Function + b.Function, CombineParts(a, b));
+		public static WeightDescriptor Create(Mod mod, string data) => Kind.Create(mod, data);
+		public abstract class Kind : SerializableDescriptor<Kind, WeightDescriptor> {
+			protected sealed override void Register() {
+				ModTypeLookup<Kind>.Register(this);
+			}
+			protected sealed override WeightDescriptor Create(string[] parameters, string originalText) => new(Create(parameters), [originalText]);
+			protected abstract Accumulator<WeightParameters, float> Create(string[] parameters);
+			public static new WeightDescriptor Create(Mod mod, string data) {
+				if (string.IsNullOrWhiteSpace(data)) return null;
+				string[] descriptors = data.Split('*', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+				WeightDescriptor descriptor = null;
+				for (int i = 0; i < descriptors.Length; i++) {
+					if (float.TryParse(descriptors[i], out float constant)) {
+						descriptor += new WeightDescriptor((WeightParameters _, ref float output) => output *= constant, [descriptors[i]]);
+					} else {
+						descriptor += CreateSingle(mod, descriptors[i]);
+					}
 				}
+				return descriptor;
 			}
-			return descriptor;
 		}
 	}
-	public abstract class SerializableDescriptor<TSelf, T> : ModType where TSelf : SerializableDescriptor<TSelf, T> {
+	public abstract class SerializableDescriptor<TSelf, T> : ModType where TSelf : SerializableDescriptor<TSelf, T> where T : IAdditionOperators<T, T, T> {
 		protected abstract T Create(string[] parameters, string originalText);
 		static readonly Regex parse = new("(?:(\\w+)/)?(\\w+)(?:\\((.*)\\))?", RegexOptions.Compiled);
 		public static bool TryParse(Mod mod, string data, out string modName, out string name, out string[] parameters) {
@@ -140,37 +176,49 @@ namespace Origins.Core.Structures {
 			return true;
 		}
 		public virtual IEnumerable<(string name, Color color)> GetDisplayLayers(string[] parameters) => [];
+		public static T Create(Mod mod, string data) {
+			if (string.IsNullOrWhiteSpace(data)) return default;
+			string[] descriptors = data.Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+			T descriptor = default;
+			for (int i = 0; i < descriptors.Length; i++) descriptor += CreateSingle(mod, descriptors[i]);
+			return descriptor;
+		}
 		protected static T CreateSingle(Mod mod, string data) {
 			if (!TryGet(mod, data, out TSelf source, out string[] parameters)) throw new ArgumentException($"{data} is not a properly formatted tile descriptor, if you can't read the regex, see https://regex101.com/r/17DyBY/1", nameof(data));
 			return source.Create(parameters, data);
 		}
 	}
-	public class DeserializedRoom(Mod mod, RoomDescriptor descriptor) : IRoom {
-		public string Identifier { get; } = descriptor.Identifier;
-		public string Map { get; } = string.Join('\n', descriptor.Map);
-		public Dictionary<char, TileDescriptor> Key { get; } = descriptor.Key.Select<KeyValuePair<char, string>, KeyValuePair<char, TileDescriptor>>(v => new(v.Key, TileDescriptor.Deserialize(mod, v.Value))).ToDictionary();
-		public Dictionary<char, RoomSocket> SocketKey { get; } = descriptor.SocketKey ?? [];
-		public Range RepetitionRange { get; } = descriptor.RepetitionRange;
-		public char StartPos { get; } = descriptor.StartPos;
-		readonly Action<PostGenerateParameters> postGenerate = PostGenerateDescriptor.Parse(mod, descriptor.PostGenerate);
-		public void PostGenerate(PostGenerateParameters parameters) => postGenerate?.Invoke(parameters);
-		readonly Accumulator<WeightParameters, float> weight = WeightDescriptor.Create(mod, descriptor.Weight);
-		public float GetWeight(WeightParameters parameters) => weight.Accumulate(parameters, 1);
+	public class DeserializedRoom : ARoom {
+		readonly PostGenerateDescriptor postGenerate;
+		readonly WeightDescriptor weight;
+		public DeserializedRoom(Mod mod, RoomDescriptor descriptor) {
+			Identifier = descriptor.Identifier;
+			Map = string.Join('\n', descriptor.Map);
+			Key = descriptor.Key.Select<KeyValuePair<char, string>, KeyValuePair<char, TileDescriptor>>(v => new(v.Key, TileDescriptor.Deserialize(mod, v.Value))).ToDictionary();
+			SocketKey = descriptor.SocketKey ?? [];
+			RepetitionRange = descriptor.RepetitionRange;
+			StartPos = descriptor.StartPos;
+			postGenerate = PostGenerateDescriptor.Create(mod, descriptor.PostGenerate);
+			weight = WeightDescriptor.Create(mod, descriptor.Weight);
+		}
+		public override void PostGenerate(PostGenerateParameters parameters) => postGenerate?.Invoke(parameters);
+		public override float GetWeight(WeightParameters parameters) => weight.Accumulate(parameters, 1);
 	}
 	[Autoload(false)]
 	public class DeserializedStructure(Mod mod, string fileName, string data) : Structure(mod, fileName) {
-		Accumulator<StructureInstance, bool> breakCondition;
-		Accumulator<StructureInstance, bool> isValidLayout;
+		public static JsonSerializerSettings SerializerSettings { get; } = new() {
+			Formatting = Formatting.Indented,
+			DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate,
+			ObjectCreationHandling = ObjectCreationHandling.Replace,
+			NullValueHandling = NullValueHandling.Ignore
+		};
+		BreakDescriptor breakCondition;
+		CheckDescriptor isValidLayout;
 		public override void Load() {
 			StructorDescriptor descriptor = new();
-			JsonConvert.PopulateObject(data, descriptor, new JsonSerializerSettings {
-				Formatting = Formatting.Indented,
-				DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate,
-				ObjectCreationHandling = ObjectCreationHandling.Replace,
-				NullValueHandling = NullValueHandling.Ignore
-			});
-			if (descriptor.BreakCondition is not null) breakCondition = SerializableBreakDescriptor.Create(Mod, descriptor.BreakCondition);
-			if (descriptor.ValidLayoutCheck is not null) isValidLayout = SerializableCheckDescriptor.Create(Mod, descriptor.ValidLayoutCheck);
+			JsonConvert.PopulateObject(data, descriptor, DeserializedStructure.SerializerSettings);
+			if (descriptor.BreakCondition is not null) breakCondition = BreakDescriptor.Create(Mod, descriptor.BreakCondition);
+			if (descriptor.ValidLayoutCheck is not null) isValidLayout = CheckDescriptor.Create(Mod, descriptor.ValidLayoutCheck);
 			descriptor.TileDescriptors ??= [];
 			RoomDescriptor[] rooms = new RoomDescriptor[descriptor.Rooms.Count];
 			int i = 0;
@@ -186,7 +234,24 @@ namespace Origins.Core.Structures {
 			for (i = 0; i < rooms.Length; i++) {
 				AddRoom(new DeserializedRoom(Mod, rooms[i]));
 			}
-			breakCondition ??= MaxRoomCount.Create(1000);
+			breakCondition ??= BreakDescriptor.Create(Mod, $"{nameof(MaxRoomCount)}({1000})");
+			Export();
+		}
+		public string Export() {
+			StructorDescriptor descriptor = new() {
+				Rooms = []
+			};
+			{
+				CompressorMap<char, string> sharedKeys = new();
+				for (int i = 0; i < Rooms.Count; i++) {
+					foreach (KeyValuePair<char, TileDescriptor> item in Rooms[i].Key) {
+						sharedKeys.Add(item.Key, item.Value.ToString());
+					}
+				}
+				descriptor.TileDescriptors = sharedKeys.Export();
+
+			}
+			return "beep boop this isn't actually implemented yet";
 		}
 		public static Task<DeserializedStructure> AsyncLoad(string fileName) => Task.Run(() => Load(fileName));
 		public static DeserializedStructure Load(string fileName) {
@@ -208,6 +273,7 @@ namespace Origins.Core.Structures {
 		}
 		public class RoomDescriptor {
 			public string Identifier;
+			public string Special;
 			public string[] Map;
 			public Dictionary<char, string> Key;
 			public Dictionary<char, RoomSocket> SocketKey;
@@ -217,6 +283,17 @@ namespace Origins.Core.Structures {
 			public char StartPos = char.MinValue;
 			public string PostGenerate;
 			public string Weight;
+			public ARoom CreateRoom(Mod mod) {
+				if (!string.IsNullOrWhiteSpace(Special)) {
+					string[] parts = Special.Split('/');
+					string modName = parts[0];
+					if (parts.Length < 2) modName = mod.Name;
+					string name = parts[^1];
+					if (!ModContent.TryFind($"{modName}/{name}", out ARoom room)) room = ModContent.Find<ARoom>($"Origins/{name}");
+					return room;
+				}
+				return new DeserializedRoom(mod, this);
+			}
 			public class RangeConverter : JsonConverter {
 				public override bool CanConvert(Type objectType) {
 					ArgumentNullException.ThrowIfNull(objectType, nameof(objectType));

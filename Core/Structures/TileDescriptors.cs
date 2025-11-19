@@ -307,7 +307,7 @@ namespace Origins.Core.Structures {
 		}
 	}
 	public class Void : SerializableTileDescriptor {
-		readonly TileDescriptor descriptor = new(null, true);
+		readonly TileDescriptor descriptor = new(null, null, Ignore: true);
 		protected override TileDescriptor Create(string[] parameters, string originalText) => descriptor;
 	}
 	public class Empty : SerializableTileDescriptor {
@@ -315,7 +315,7 @@ namespace Origins.Core.Structures {
 			if (Structure.ignoreEmpty.Contains(new(i, j))) return;
 			Tile tile = Main.tile[i, j];
 			tile.HasTile = false;
-		});
+		}, Parts: ["Empty"]);
 		public override void Load() {
 			AddSerializer(tile => tile.HasTile ? null : "Empty");
 		}

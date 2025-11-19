@@ -30,7 +30,7 @@ namespace Origins.Core.Structures {
 		Stack<ViewState> viewStack = new();
 		ViewState CurrentView => viewStack.TryPeek(out ViewState result) ? result : null;
 
-		Dictionary<string, List<(IRoom room, char entrance)>[]> connectionLookup;
+		Dictionary<string, List<(ARoom room, char entrance)>[]> connectionLookup;
 		public override bool ContainsPoint(Vector2 point) {
 			return CurrentView?.room is null && base.ContainsPoint(point);
 		}
@@ -168,10 +168,10 @@ namespace Origins.Core.Structures {
 			FillRoomList(roomList);
 			Append(roomList);
 		}
-		public void FillRoomList(UIList roomList, IEnumerable<IRoom> rooms = null) {
+		public void FillRoomList(UIList roomList, IEnumerable<ARoom> rooms = null) {
 			rooms ??= structure.Rooms;
 			float height = 0;
-			foreach (IRoom room in rooms) {
+			foreach (ARoom room in rooms) {
 				UITextPanel<string> element = new(room.Identifier);
 				element.OnLeftClick += (_, _) => {
 					viewStack.Push(new(room));
@@ -187,13 +187,13 @@ namespace Origins.Core.Structures {
 			roomList.Top.Set(32, 0.1f);
 		}
 		public class ViewState {
-			public IRoom room;
+			public ARoom room;
 			public (string name, Color color, bool[,] map, SerializableTileDescriptor source)[] layers;
 			public List<StructureOverlay> overlays;
 			public UIList roomList;
 			public string selectedLayer;
 			public float scroll;
-			public ViewState(IRoom room) {
+			public ViewState(ARoom room) {
 				this.room = room;
 				Dictionary<string, (HashSet<char> set, Color color, SerializableTileDescriptor source)> layers = [];
 				foreach ((char key, TileDescriptor value) in room.Key) {
@@ -239,7 +239,7 @@ namespace Origins.Core.Structures {
 					}
 				}
 			}
-			public ViewState(IEnumerable<IRoom> roomList) {
+			public ViewState(IEnumerable<ARoom> roomList) {
 				this.roomList = [];
 				instance.FillRoomList(this.roomList, roomList);
 				instance.Append(this.roomList);
@@ -268,7 +268,7 @@ namespace Origins.Core.Structures {
 				bool hovered = Main.MouseScreen.IsWithinRectangular(pos + texture.Size() * 0.5f, texture.Size() * 0.5f);
 				if (hovered) {
 					UICommon.TooltipMouseText(socket.Key);
-					if (Main.mouseLeft && Main.mouseLeftRelease && instance.connectionLookup.TryGetValue(socket.Key, out List<(IRoom room, char entrance)>[] _connections)) {
+					if (Main.mouseLeft && Main.mouseLeftRelease && instance.connectionLookup.TryGetValue(socket.Key, out List<(ARoom room, char entrance)>[] _connections)) {
 						instance.viewStack.Push(new(_connections[socket.Direction.Index()].Select(v => v.room)));
 					}
 				}
@@ -436,12 +436,7 @@ namespace Origins.Core.Structures {
 				};
 				Associations.Clear();
 
-				Platform.Get<IClipboard>().Value = JsonConvert.SerializeObject(descriptor, new JsonSerializerSettings {
-					Formatting = Formatting.Indented,
-					DefaultValueHandling = DefaultValueHandling.Ignore,
-					ObjectCreationHandling = ObjectCreationHandling.Replace,
-					NullValueHandling = NullValueHandling.Ignore
-				});
+				Platform.Get<IClipboard>().Value = JsonConvert.SerializeObject(descriptor, DeserializedStructure.SerializerSettings);
 				Main.NewText("Copied room to clipboard");
 				Structure_Helper_Item.leftClick = null;
 				Structure_Helper_Item.rightClick = null;

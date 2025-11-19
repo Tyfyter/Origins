@@ -8,24 +8,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Numerics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
+using static Origins.Core.Structures.DeserializedStructure;
 
 namespace Origins.Core.Structures {
 	public abstract class Structure {
 		public Mod Mod { get; private set; }
-		readonly List<IRoom> rooms = [];
-		public IReadOnlyList<IRoom> Rooms => rooms;
+		readonly List<ARoom> rooms = [];
+		public IReadOnlyList<ARoom> Rooms => rooms;
 		public Structure(Mod mod, string fileName) {
 			Mod = mod;
 			Load();
-			KeyValuePair<string, List<(IRoom room, char entrance)>[]>[] lookup = rooms.GenerateConnectionLookup().ToArray();
+			KeyValuePair<string, List<(ARoom room, char entrance)>[]>[] lookup = rooms.GenerateConnectionLookup().ToArray();
 			List<string> irresolvableSockets = [];
 			for (int i = 0; i < lookup.Length; i++) {
-				(string name, List<(IRoom room, char entrance)>[] forKey) = lookup[i];
+				(string name, List<(ARoom room, char entrance)>[] forKey) = lookup[i];
 				bool right = forKey[Direction.Right.Index()].Count > 0;
 				bool left = forKey[Direction.Left.Index()].Count > 0;
 				if (right != left) irresolvableSockets.Add($"{name}_{(left ? Direction.Right : Direction.Left)}");
@@ -39,13 +41,13 @@ namespace Origins.Core.Structures {
 		public virtual bool IsValidLayout(StructureInstance instance) => true;
 		public virtual bool Break(StructureInstance instance) => instance.rooms.Length > 25;
 		public void Generate(int i, int j) {
-			Dictionary<string, List<(IRoom room, char entrance)>[]> lookup = rooms.GenerateConnectionLookup();
-			WeightedRandom<IRoom> start = new(WorldGen.genRand);
+			Dictionary<string, List<(ARoom room, char entrance)>[]> lookup = rooms.GenerateConnectionLookup();
+			WeightedRandom<ARoom> start = new(WorldGen.genRand);
 			for (int k = 0; k < rooms.Count; k++) {
 				if (rooms[k].StartPos != char.MinValue) start.Add(rooms[k]);
 			}
 			StructureInstance instance;
-			while (start.TryPop(out IRoom startRoom)) {
+			while (start.TryPop(out ARoom startRoom)) {
 				bool canGenerate = false;
 				int tries = 100000;
 				do {
@@ -59,7 +61,7 @@ namespace Origins.Core.Structures {
 				}
 			}
 		}
-		public void AddRoom(IRoom room) {
+		public void AddRoom(ARoom room) {
 			room.Validate();
 			rooms.Add(room);
 		}
@@ -67,21 +69,25 @@ namespace Origins.Core.Structures {
 		public virtual void SetUp() { }
 		public static HashSet<Point> ignoreEmpty = [];
 	}
-	public interface IRoom {
-		public string Identifier { get; }
-		public string Map { get; }
-		public Dictionary<char, TileDescriptor> Key { get; }
-		public Dictionary<char, RoomSocket> SocketKey { get; }
-		public Range RepetitionRange { get; }
-		public IEnumerable<Direction> GetRepetitionDirections(Direction connectionDirection) => [connectionDirection];
-		public float GetWeight(WeightParameters parameters);
-		public char StartPos { get; }
-		public void PostGenerate(PostGenerateParameters parameters) { }
+	public abstract class ARoom : ModType {
+		public string Identifier { get; protected set; }
+		public string Map { get; protected set; }
+		public Dictionary<char, TileDescriptor> Key { get; protected set; }
+		public Dictionary<char, RoomSocket> SocketKey { get; protected set; }
+		public Range RepetitionRange { get; protected set; }
+		public char StartPos { get; protected set; }
+		protected sealed override void Register() {
+			ModTypeLookup<ARoom>.Register(this);
+		}
+		public virtual IEnumerable<Direction> GetRepetitionDirections(Direction connectionDirection) => [connectionDirection];
+		public virtual float GetWeight(WeightParameters parameters) => 1;
+		public virtual void PostGenerate(PostGenerateParameters parameters) { }
+		public virtual RoomDescriptor Serialize() => new() { Special = FullName };
 		public record struct PostGenerateParameters(RoomInstance Instance, Rectangle Area);
 		public record struct WeightParameters(StructureInstance Structure, Point Position);
 	}
 	public static class RoomExtensions {
-		public static void Validate(this IRoom room) {
+		public static void Validate(this ARoom room) {
 			string map = room.Map;
 			string[] layers = map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 			for (int i = 1; i < layers.Length - 1; i++) {
@@ -94,7 +100,7 @@ namespace Origins.Core.Structures {
 				if (room.SocketKey.ContainsKey(map[i]) && !usedConnections.Add(map[i])) throw new Exception($"Invalid layout map {map}, duplicate connection '{map[i]}'");
 			}
 		}
-		public static Point GetOrigin(this IRoom room, char entrance) {
+		public static Point GetOrigin(this ARoom room, char entrance) {
 			string[] map = room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 			for (int y = 0; y < map.Length; y++) {
 				for (int x = 0; x < map[y].Length; x++) {
@@ -143,14 +149,14 @@ namespace Origins.Core.Structures {
 			return true;
 		}
 		public static int Index(this Direction direction) => (int)direction - 1;
-		public static Dictionary<string, List<(IRoom room, char entrance)>[]> GenerateConnectionLookup(this IReadOnlyList<IRoom> rooms) {
-			Dictionary<string, List<(IRoom room, char entrance)>[]> lookup = [];
+		public static Dictionary<string, List<(ARoom room, char entrance)>[]> GenerateConnectionLookup(this IReadOnlyList<ARoom> rooms) {
+			Dictionary<string, List<(ARoom room, char entrance)>[]> lookup = [];
 			for (int i = 0; i < rooms.Count; i++) {
-				IRoom room = rooms[i];
+				ARoom room = rooms[i];
 				foreach ((char key, RoomSocket socket) in room.SocketKey) {
 					if (!room.Map.Contains(key)) continue;
-					if (!lookup.TryGetValue(socket.Key, out List<(IRoom room, char entrance)>[] connections)) {
-						lookup[socket.Key] = connections = new List<(IRoom room, char entrance)>[(int)Direction.Down];
+					if (!lookup.TryGetValue(socket.Key, out List<(ARoom room, char entrance)>[] connections)) {
+						lookup[socket.Key] = connections = new List<(ARoom room, char entrance)>[(int)Direction.Down];
 						for (int j = 0; j < connections.Length; j++) connections[j] = [];
 					}
 					switch (socket.Direction) {
@@ -186,7 +192,7 @@ namespace Origins.Core.Structures {
 		Up = 3,
 		Down = 4
 	}
-	public record class TileDescriptor(Action<RoomInstance, HashSet<char>, int, int> Action, bool Ignore = false, string[] Parts = null) {
+	public record class TileDescriptor(Action<RoomInstance, HashSet<char>, int, int> Action, string[] Parts, bool Ignore = false) : ISummable<TileDescriptor> {
 		public void DoAction(RoomInstance instance, HashSet<char> connectedSockets, int i, int j) {
 			if (!Ignore && Action is not null) Action(instance, connectedSockets, i, j);
 		}
@@ -199,7 +205,8 @@ namespace Origins.Core.Structures {
 			b.Parts.CopyTo(parts, a.Parts.Length);
 			return parts;
 		}
-		public static TileDescriptor operator +(TileDescriptor a, TileDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Action + b.Action, a.Ignore && b.Ignore, CombineParts(a, b));
+		public override string ToString() => string.Join('+', Parts ?? [nameof(Void)]);
+		public static TileDescriptor operator +(TileDescriptor a, TileDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Action + b.Action, CombineParts(a, b), a.Ignore && b.Ignore);
 	}
 	public record class RoomSocket(string Key, Direction Direction, bool Optional = false) {
 		public class RoomSocketConverter : JsonConverter {
@@ -292,7 +299,7 @@ namespace Origins.Core.Structures {
 			result = structureInstance;
 			return true;
 		}
-		public StructureInstance Sprawl(Dictionary<string, List<(IRoom room, char entrance)>[]> lookup) {
+		public StructureInstance Sprawl(Dictionary<string, List<(ARoom room, char entrance)>[]> lookup) {
 			if (structure.Break(this)) return this;
 			WeightedRandom<(RoomInstance room, int index)> newRoomOptions = new(WorldGen.genRand);
 			newRoomOptions.Clear();
@@ -309,7 +316,7 @@ namespace Origins.Core.Structures {
 			}
 			return this;
 		}
-		public void AddRoomsToExtend(WeightedRandom<(RoomInstance room, int index)> newRoomOptions, Dictionary<string, List<(IRoom room, char entrance)>[]> lookup) {
+		public void AddRoomsToExtend(WeightedRandom<(RoomInstance room, int index)> newRoomOptions, Dictionary<string, List<(ARoom room, char entrance)>[]> lookup) {
 			for (int i = 0; i < socketTracker.sockets.Count; i++) {
 				(RoomSocket socket, int x, int y) = socketTracker.sockets[i];
 
@@ -329,7 +336,7 @@ namespace Origins.Core.Structures {
 					pos.Y++;
 					break;
 				}
-				foreach ((IRoom room, char entrance) in lookup[socket.Key][direction.Index()]) {
+				foreach ((ARoom room, char entrance) in lookup[socket.Key][direction.Index()]) {
 					float weight = room.GetWeight(new(this, pos));
 					if (weight <= 0) continue;
 					RoomInstance template = new(room, pos - room.GetOrigin(entrance));
@@ -352,7 +359,7 @@ namespace Origins.Core.Structures {
 			for (int k = 0; k < rooms.Length; k++) rooms[k].Generate(socketTracker);
 		}
 	}
-	public record class RoomInstance(IRoom Room, Point Position, RepetitionData Repetitions = default) {
+	public record class RoomInstance(ARoom Room, Point Position, RepetitionData Repetitions = default) {
 		public void Generate(SocketTracker socketTracker) {
 			string[] map = Room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 			Position.Deconstruct(out int i, out int j);
