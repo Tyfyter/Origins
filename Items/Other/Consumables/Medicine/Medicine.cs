@@ -254,7 +254,6 @@ namespace Origins.Items.Other.Consumables.Medicine {
 
 		void On_Item_GetShimmered(On_Item.orig_GetShimmered orig, Item self) {
 			if (self.type == Type) {
-				WeightedRandom<int> items = new();
 				int[] medicines = AnyDifferentMedicine.RecipeGroup.ValidItems.ToArray();
 				int[] stacks = new int[medicines.Length];
 				RangeRandom range = new(Main.rand, 0, medicines.Length);
