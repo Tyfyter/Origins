@@ -388,7 +388,11 @@ namespace Origins.Core.Structures {
 								Main.OpenPlayerChat();
 								Main.chatText = "/ass ";
 							});
-							SpinWait.SpinUntil(() => ShouldCancel || ch.HasValue);
+							SpinWait.SpinUntil(() => {
+								Structure_Helper_Item.leftClick = leftClick;
+								Structure_Helper_Item.rightClick = rightClick;
+								return ShouldCancel || ch.HasValue;
+							});
 							if (ShouldCancel) {
 								Associations.Clear();
 								Structure_Helper_HUD.HighlightTile = default;
@@ -405,7 +409,11 @@ namespace Origins.Core.Structures {
 									Main.OpenPlayerChat();
 									Main.chatText = "/ass ";
 								});
-								SpinWait.SpinUntil(() => ShouldCancel || Associations.ContainsKey(CurrentTileData));
+								SpinWait.SpinUntil(() => {
+									Structure_Helper_Item.leftClick = leftClick;
+									Structure_Helper_Item.rightClick = rightClick;
+									return ShouldCancel || Associations.ContainsKey(CurrentTileData);
+								});
 							}
 							if (ShouldCancel) {
 								Associations.Clear();
@@ -557,8 +565,10 @@ namespace Origins.Core.Structures {
 		public static event Func<char, string, bool> OnAss = null;
 		public static bool ReadyForNewAss => OnAss is null;
 		public override void Action(CommandCaller caller, string input, string[] args) {
+			if (args.Length <= 0) return;
 			if (args[0] == "cancel") {
 				Structure_Helper_Item.ShouldCancel = true;
+				OnAss = null;
 				return;
 			}
 			if (args[0].Length != 1) {
@@ -566,8 +576,8 @@ namespace Origins.Core.Structures {
 				return;
 			}
 			if (OnAss?.Invoke(args[0][0], args.GetIfInRange(1)) ?? false) {
-				caller.Reply($"Successfully added {args[0][0]}<--->{Structure_Helper_Item.CurrentTileData}");
 				OnAss = null;
+				caller.Reply($"Successfully added {args[0][0]}<--->{Structure_Helper_Item.CurrentTileData}");
 			} else {
 				caller.Reply($"Could not add {args[0][0]}<--->{Structure_Helper_Item.CurrentTileData}");
 			}
