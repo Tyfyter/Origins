@@ -273,7 +273,7 @@ namespace Origins.Core.Structures {
 					descriptor.Rooms.Add(room.Identifier, room.Serialize(descriptor));
 				}
 			}
-			return JsonConvert.SerializeObject(descriptor, SerializerSettings);
+			return RoomExtensions.SerializeObject(descriptor);
 		}
 		public static Task<DeserializedStructure> AsyncLoad(string fileName) => Task.Run(() => Load(fileName));
 		public static DeserializedStructure Load(string fileName) {

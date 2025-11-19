@@ -70,9 +70,24 @@ namespace Origins.Core.Structures {
 			};
 			Append(selectFileButton);
 
-			deselectRoomButton = new(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Back")) {
+			saveFileButton = new(ModContent.Request<Texture2D>("Origins/UI/Floppy_Disk")) {
 				Left = new(48, 0),
 				Top = new(8, 0.1f),
+				HAlign = 0.25f * 0.5f
+			};
+			saveFileButton.OnLeftClick += (_, _) => {
+				string path = Path.Combine(Path.Combine(Program.SavePathShared, "ModSources"), structurePath.Replace('/', Path.DirectorySeparatorChar));
+				while (viewStack.Count > 0) viewStack.Pop();
+				RefreshStructure();
+			};
+			saveFileButton.OnUpdate += _ => {
+				if (saveFileButton.IsMouseHovering) Main.instance.MouseText(Lang.inter[47].Value);
+			};
+			Append(saveFileButton);
+
+			deselectRoomButton = new(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Back")) {
+				Left = new(82, 0),
+				Top = new(10, 0.1f),
 				HAlign = 0.25f * 0.5f
 			};
 			deselectRoomButton.OnLeftClick += (_, _) => {
@@ -104,6 +119,7 @@ namespace Origins.Core.Structures {
 		}
 		IEnumerable<UIElement> ActiveElements() {
 			yield return selectFileButton;
+			yield return saveFileButton;
 			if (viewStack.Count > 0) {
 				if (CurrentView.room is null) {
 					yield return CurrentView.roomList;
@@ -125,6 +141,7 @@ namespace Origins.Core.Structures {
 		UIText text;
 		UIImageButton refreshButton;
 		UIImageButton selectFileButton;
+		UIImageButton saveFileButton;
 		UIImageButton deselectRoomButton;
 		public override void Draw(SpriteBatch spriteBatch) {
 			Vector2 bgStart = Main.ScreenSize.ToVector2() * new Vector2(0.25f * 0.5f, 0.1f);
@@ -436,7 +453,7 @@ namespace Origins.Core.Structures {
 				};
 				Associations.Clear();
 
-				Platform.Get<IClipboard>().Value = JsonConvert.SerializeObject(descriptor, DeserializedStructure.SerializerSettings);
+				Platform.Get<IClipboard>().Value = RoomExtensions.SerializeObject(descriptor);
 				Main.NewText("Copied room to clipboard");
 				Structure_Helper_Item.leftClick = null;
 				Structure_Helper_Item.rightClick = null;

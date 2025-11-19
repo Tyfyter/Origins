@@ -7,8 +7,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Text;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -187,6 +190,17 @@ namespace Origins.Core.Structures {
 			return startValue;
 		}
 		public static T IfNotEmpty<T>(this T value, T or = default) where T : ICollection => value.Count > 0 ? value : or;
+		public static void SerializeStructure(this TextWriter writer, object value) {
+			JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(SerializerSettings);
+			using JsonTextWriter jsonTextWriter = new(writer) { Indentation = 1, IndentChar = '\t' };
+			jsonTextWriter.Formatting = jsonSerializer.Formatting;
+			jsonSerializer.Serialize(jsonTextWriter, value, null);
+		}
+		public static string SerializeObject(object value) {
+			StringWriter stringWriter = new(new StringBuilder(256), CultureInfo.InvariantCulture);
+			stringWriter.SerializeStructure(value);
+			return stringWriter.ToString();
+		}
 	}
 	[JsonConverter(typeof(StringEnumConverter))]
 	public enum Direction {
