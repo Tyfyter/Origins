@@ -190,16 +190,8 @@ namespace Origins.Core.Structures {
 			return startValue;
 		}
 		public static T IfNotEmpty<T>(this T value, T or = default) where T : ICollection => value.Count > 0 ? value : or;
-		public static void SerializeStructure(this TextWriter writer, object value) {
-			JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(SerializerSettings);
-			using JsonTextWriter jsonTextWriter = new(writer) { Indentation = 1, IndentChar = '\t' };
-			jsonTextWriter.Formatting = jsonSerializer.Formatting;
-			jsonSerializer.Serialize(jsonTextWriter, value, null);
-		}
 		public static string SerializeObject(object value) {
-			StringWriter stringWriter = new(new StringBuilder(256), CultureInfo.InvariantCulture);
-			stringWriter.SerializeStructure(value);
-			return stringWriter.ToString();
+			return JsonConvert.SerializeObject(value, SerializerSettings);
 		}
 	}
 	[JsonConverter(typeof(StringEnumConverter))]

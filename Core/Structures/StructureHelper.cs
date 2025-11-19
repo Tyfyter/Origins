@@ -70,13 +70,18 @@ namespace Origins.Core.Structures {
 			};
 			Append(selectFileButton);
 
-			saveFileButton = new(ModContent.Request<Texture2D>("Origins/UI/Floppy_Disk")) {
+			saveFileButton = new(ModContent.Request<Texture2D>("Origins/UI/Floppy_Disk", AssetRequestMode.ImmediateLoad)) {
 				Left = new(48, 0),
 				Top = new(8, 0.1f),
 				HAlign = 0.25f * 0.5f
 			};
 			saveFileButton.OnLeftClick += (_, _) => {
+				if (structure is not DeserializedStructure @struct) return;
 				string path = Path.Combine(Path.Combine(Program.SavePathShared, "ModSources"), structurePath.Replace('/', Path.DirectorySeparatorChar));
+				string newData = @struct.Export();
+				using (StreamWriter writer = File.CreateText(path)) {
+					writer.Write(newData);
+				}
 				while (viewStack.Count > 0) viewStack.Pop();
 				RefreshStructure();
 			};
@@ -119,7 +124,7 @@ namespace Origins.Core.Structures {
 		}
 		IEnumerable<UIElement> ActiveElements() {
 			yield return selectFileButton;
-			yield return saveFileButton;
+			if (structurePath is not null && structure is DeserializedStructure) yield return saveFileButton;
 			if (viewStack.Count > 0) {
 				if (CurrentView.room is null) {
 					yield return CurrentView.roomList;
@@ -577,6 +582,16 @@ namespace Origins.Core.Structures {
 		public override bool IsCaseSensitive => true;
 		public static event Func<char, string, bool> OnAss = null;
 		public static bool ReadyForNewAss => OnAss is null;
+		public override void Load() {
+			MonoModHooks.Add(
+				typeof(JsonTextWriter).GetConstructor([typeof(TextWriter)]),
+				(Action<JsonTextWriter, TextWriter> orig, JsonTextWriter self, TextWriter writer) => {
+					orig(self, writer);
+					self.IndentChar = '\t';
+					self.Indentation = 1;
+				}
+			);
+		}
 		public override void Action(CommandCaller caller, string input, string[] args) {
 			if (args.Length <= 0) return;
 			if (args[0] == "cancel") {
