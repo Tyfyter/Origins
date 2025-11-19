@@ -13,7 +13,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Fortified_Steel_Block1 : ComplexFrameTile, IAshenTile {
-		public virtual Color MapColor => FromHexRGB(0x7a391a);
+		public virtual Color MapColor => FromHexRGB(0x3b2b21);
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)TileType<Ashen_Foliage>(), 0, 6));
@@ -198,7 +198,7 @@ namespace Origins.Tiles.Ashen {
 	public class Fortified_Steel_Block2 : Fortified_Steel_Block1 {
 		AutoLoadingAsset<Texture2D> patternTexture = typeof(Fortified_Steel_Block2).GetDefaultTMLName() + "_BG";
 		CustomTilePaintLoader.CustomTileVariationKey paintKey;
-		public override Color MapColor => FromHexRGB(0x281a15);
+		public override Color MapColor => FromHexRGB(0x33261b);
 		public override void Load() => paintKey = CustomTilePaintLoader.CreateKey();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -212,7 +212,7 @@ namespace Origins.Tiles.Ashen {
 	public class Fortified_Steel_Block3 : Fortified_Steel_Block1 {
 		AutoLoadingAsset<Texture2D> patternTexture = typeof(Fortified_Steel_Block3).GetDefaultTMLName() + "_BG";
 		CustomTilePaintLoader.CustomTileVariationKey paintKey;
-		public override Color MapColor => FromHexRGB(0x30131c);
+		public override Color MapColor => FromHexRGB(0x28151a);
 		public override void Load() => paintKey = CustomTilePaintLoader.CreateKey();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

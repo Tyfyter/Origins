@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
 using Origins.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
@@ -17,9 +16,8 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Ashen {
 	public class Generation_Station : OriginTile, IComplexMineDamageTile, IGlowingModTile {
 		public static int ID { get; private set; }
-		TileItem item;
 		public override void Load() {
-			Mod.AddContent(item = new(this, true));
+			Mod.AddContent(new TileItem(this, true));
 			this.SetupGlowKeys();
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
@@ -37,7 +35,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.DisableSmartCursor[Type] = true;
 
 			// Names
-			AddMapEntry(new Color(255, 90, 30), CreateMapEntryName());
+			AddMapEntry(FromHexRGB(0x8B4422), CreateMapEntryName());
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
