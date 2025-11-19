@@ -604,13 +604,13 @@ namespace Origins.Core.Structures {
 				return;
 			}
 			if (args[0].Length != 1) {
-				throw new UsageException(args[0] + "is not a single character in UTF-16", Color.Red);
+				throw new UsageException($"\" {args[0]} \" is not a single character in UTF-16", Color.Red);
 			}
 			if (OnAss?.Invoke(args[0][0], args.GetIfInRange(1)) ?? false) {
 				OnAss = null;
-				caller.Reply($"Successfully added {args[0][0]}<--->{Structure_Helper_Item.CurrentTileData}");
+				caller.Reply($"Successfully added {args[0][0]} <---> {Structure_Helper_Item.CurrentTileData}");
 			} else {
-				caller.Reply($"Could not add {args[0][0]}<--->{Structure_Helper_Item.CurrentTileData}");
+				caller.Reply($"Could not add {args[0][0]} <---> {Structure_Helper_Item.CurrentTileData}");
 			}
 		}
 	}
