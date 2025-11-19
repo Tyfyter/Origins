@@ -188,6 +188,7 @@ namespace Origins.Core.Structures {
 			return source.Create(parameters, data);
 		}
 	}
+	[Autoload(false)]
 	public class DeserializedRoom : ARoom {
 		readonly PostGenerateDescriptor postGenerate;
 		readonly WeightDescriptor weight;
@@ -201,8 +202,23 @@ namespace Origins.Core.Structures {
 			postGenerate = PostGenerateDescriptor.Create(mod, descriptor.PostGenerate);
 			weight = WeightDescriptor.Create(mod, descriptor.Weight);
 		}
+		public override RoomDescriptor Serialize(StructorDescriptor forStructure) => new() {
+			Map = Map.Split('\n', StringSplitOptions.RemoveEmptyEntries),
+			Key = new Dictionary<char, string>(Key.TrySelect((KeyValuePair<char, TileDescriptor> element, out KeyValuePair<char, string> pattern) => {
+				pattern = new(element.Key, element.Value.ToString());
+				if (forStructure?.TileDescriptors is null) return true;
+				return !forStructure.TileDescriptors.TryGetValue(element.Key, out string global) || global != pattern.Value;
+			})).IfNotEmpty(),
+			SocketKey = SocketKey,
+			RepetitionRange = RepetitionRange,
+			StartPos = StartPos,
+			PostGenerate = ExportPostGenerate(),
+			Weight = ExportWeight()
+		};
 		public override void PostGenerate(PostGenerateParameters parameters) => postGenerate?.Invoke(parameters);
 		public override float GetWeight(WeightParameters parameters) => weight.Accumulate(parameters, 1);
+		public override string ExportPostGenerate() => postGenerate?.ToString();
+		public override string ExportWeight() => weight?.ToString();
 	}
 	[Autoload(false)]
 	public class DeserializedStructure(Mod mod, string fileName, string data) : Structure(mod, fileName) {
@@ -235,11 +251,12 @@ namespace Origins.Core.Structures {
 				AddRoom(new DeserializedRoom(Mod, rooms[i]));
 			}
 			breakCondition ??= BreakDescriptor.Create(Mod, $"{nameof(MaxRoomCount)}({1000})");
-			Export();
 		}
 		public string Export() {
 			StructorDescriptor descriptor = new() {
-				Rooms = []
+				Rooms = [],
+				BreakCondition = breakCondition?.ToString(),
+				ValidLayoutCheck = isValidLayout?.ToString(),
 			};
 			{
 				CompressorMap<char, string> sharedKeys = new();
@@ -249,9 +266,14 @@ namespace Origins.Core.Structures {
 					}
 				}
 				descriptor.TileDescriptors = sharedKeys.Export();
-
 			}
-			return "beep boop this isn't actually implemented yet";
+			{
+				for (int i = 0; i < Rooms.Count; i++) {
+					ARoom room = Rooms[i];
+					descriptor.Rooms.Add(room.Identifier, room.Serialize(descriptor));
+				}
+			}
+			return JsonConvert.SerializeObject(descriptor, SerializerSettings);
 		}
 		public static Task<DeserializedStructure> AsyncLoad(string fileName) => Task.Run(() => Load(fileName));
 		public static DeserializedStructure Load(string fileName) {
@@ -310,7 +332,7 @@ namespace Origins.Core.Structures {
 
 				public override void WriteJson(JsonWriter writer, object _value, JsonSerializer serializer) {
 					if (_value is not Range value) throw new NotSupportedException($"{nameof(RangeConverter)} cannot write {_value.GetType()}");
-					writer.WriteValue($"{value.Start.Value}.{value.End.Value}");
+					writer.WriteValue($"{value.Start.Value}..{value.End.Value}");
 				}
 			}
 		}

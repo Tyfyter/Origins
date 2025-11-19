@@ -82,7 +82,9 @@ namespace Origins.Core.Structures {
 		public virtual IEnumerable<Direction> GetRepetitionDirections(Direction connectionDirection) => [connectionDirection];
 		public virtual float GetWeight(WeightParameters parameters) => 1;
 		public virtual void PostGenerate(PostGenerateParameters parameters) { }
-		public virtual RoomDescriptor Serialize() => new() { Special = FullName };
+		public virtual string ExportWeight() => null;
+		public virtual string ExportPostGenerate() => null;
+		public virtual RoomDescriptor Serialize(StructorDescriptor forStructure) => new() { Special = FullName };
 		public record struct PostGenerateParameters(RoomInstance Instance, Rectangle Area);
 		public record struct WeightParameters(StructureInstance Structure, Point Position);
 	}
@@ -184,6 +186,7 @@ namespace Origins.Core.Structures {
 			accumulator?.Invoke(input, ref startValue);
 			return startValue;
 		}
+		public static T IfNotEmpty<T>(this T value, T or = default) where T : ICollection => value.Count > 0 ? value : or;
 	}
 	[JsonConverter(typeof(StringEnumConverter))]
 	public enum Direction {
