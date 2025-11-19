@@ -2379,7 +2379,6 @@ Tiles: {
 	Ashen_Dungeon_Chest.MapEntry: "{§Ashen} Chest"
 	Ashen_Dungeon_Chest_Locked.MapEntry: Locked {§Ashen} Chest
 	Ashen_Altar.MapEntry: "{§Ashen} Altar"
-	Beacon_Light.MapEntry: "{§Mods.Origins.Items.Beacon_Light_Item.DisplayName}"
 	Suit_Locker.MapEntry: Suit Locker
 	Heat_Vent.MapEntry: Heat Vent
 	Floodlight.MapEntry: Floodlight
@@ -2393,8 +2392,8 @@ Tiles: {
 	Music_Box_AS: Music Box ({§Ashen} Scrapyard)
 	Music_Box_SS: Music Box (Smog Storm)
 	Rusty_Locker.MapEntry: Rusty Locker
-	Music_Box_AF: Music Box A F
-	Music_Box_AM: Music Box A M
+	Music_Box_AF: Music Box ({§Ashen} Factory)
+	Music_Box_AM: Music Box ({§Ashen} Mines)
 }
 
 MapObject: {
