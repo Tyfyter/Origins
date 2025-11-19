@@ -374,6 +374,10 @@ namespace Origins.Core.Structures {
 							}
 							StructureCommand.OnAss += (c, socketKey) => {
 								if (Associations.ContainsValue(c)) return false;
+								if (socket is null) {
+									ch = c;
+									return true;
+								}
 								if (string.IsNullOrWhiteSpace(socketKey)) return false;
 								socket = socket with { Key = socketKey };
 								ch = c;
