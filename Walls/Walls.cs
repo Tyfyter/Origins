@@ -30,7 +30,7 @@ namespace Origins.Walls {
 	public class Ashen_Grass_Wall : OriginsWall {
 		public override string Texture => typeof(Defiled_Grass_Wall).GetDefaultTMLName();
 		public override WallVersion WallVersions => WallVersion.Natural | WallVersion.Safe | WallVersion.Placed_Unsafe;
-		public override Color MapColor => new Color(255, 185, 185);
+		public override Color MapColor => FromHexRGB(0x463C54);
 		public override bool CanBeReplacedByWallSpread => false;
 		public override int DustType => Ashen_Biome.DefaultTileDust;
 		public override void SetStaticDefaults() {
