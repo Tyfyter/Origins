@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dusts;
 using Origins.Graphics;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
@@ -48,10 +49,6 @@ namespace Origins.Tiles.Ashen {
 			RegisterItemDrop(Item.Type);
 			ID = Type;
 		}
-		public static bool ShouldGlow(Tile tile) {
-			int frameY = tile.TileFrameY / 18;
-			return frameY == 1 || frameY == 7;
-		}
 		public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
 		}
@@ -62,11 +59,10 @@ namespace Origins.Tiles.Ashen {
 			}
 		}
 		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
-			int frameY = frameYOffset / 18;
 			Tile tile = Framing.GetTileSafely(i, j);
 
-			if (frameY == 3 && tile.TileFrameY / 18 == 1) {
-				Vector2 pos = new Vector2(i, j).ToWorldCoordinates() + new Vector2(0, 5);
+			if (Main.tileFrame[Type] == 1 && tile.TileFrameY / 18 == 1) {
+				Vector2 pos = new Vector2(i, j).ToWorldCoordinates(4, 10);
 				Vector2 vel = -(Vector2.UnitY * 0.7f);
 				if (tile.TileFrameX / 18 == 0) {
 					pos.X += Main.rand.Next(3, 14);
@@ -75,11 +71,17 @@ namespace Origins.Tiles.Ashen {
 					pos.X -= Main.rand.Next(3, 14);
 					vel.X = 0.8f;
 				} else pos.X += Main.rand.Next(-6, 7);
-				Dust.NewDustPerfect(pos, DustID.Torch, vel);
+				Dust dust = Dust.NewDustDirect(pos, 0, 0, ModContent.DustType<Spark_Dust>());
+				dust.velocity *= 0.1f;
+				dust.velocity += vel;
 			}
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
+		}
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			const float brightness = 0.8f;
+			if (Main.tileFrame[Type] == 1) color = Vector3.Max(color, new(brightness, brightness * 0.45f, brightness * 0.2f));
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
