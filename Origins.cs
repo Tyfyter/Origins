@@ -748,7 +748,7 @@ namespace Origins {
 							break;
 
 							case NPCID.QueenBee:
-							RasterizeAdjustment.Add(i, (16, 0.05f, 1f));
+							RasterizeAdjustment.Add(i, (16, 0f, 1f));
 							break;
 
 							case NPCID.EaterofWorldsHead:
