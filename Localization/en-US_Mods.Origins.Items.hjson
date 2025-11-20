@@ -7310,7 +7310,7 @@ Medicine_Fabricator_Item: {
 	DisplayName: Medicine Fabricator
 	Tooltip:
 		'''
-		Can be used to craft advanced medicine.
+		Can be used to craft advanced medicine
 		33% chance to not consume potion or medicine crafting ingredients
 		'''
 }
@@ -7319,7 +7319,7 @@ Metal_Presser_Item: {
 	DisplayName: Metal Presser
 	Tooltip:
 		'''
-		Used to make safe ashen tiles
+		Used to make safe Ashen tiles
 		Also functions as a {$ItemName.HeavyWorkBench}
 		'''
 }

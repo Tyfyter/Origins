@@ -7317,5 +7317,9 @@ Medicine_Fabricator_Item: {
 
 Metal_Presser_Item: {
 	// DisplayName: Metal Presser
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Used to make safe ashen tiles
+		Also functions as a {$ItemName.HeavyWorkBench}
+		''' */
 }

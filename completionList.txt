@@ -359,7 +359,7 @@ STATUS EFFECTS:
 (^) Cavitation
 (^) Impeding Shrapnel
 (^) Mana Buffer
-(X) Miasma !!!
+(#, ^2) Miasma !!!
 (X) Quantum Vitiation
 (^) Rasterized
 (^) Shadefire
@@ -490,14 +490,14 @@ ACCESSORIES:
 (^) Asylum Whistle
 (^) A.S.H. Attack Relay
 (^) Automated Returns Handler
-(X) Bark Shield !!!
+(#, ^2) Bark Shield !!!
 (^) Binding Book
 (^) Blast-Resistant Plate
 (^) Bomb Charm
 (^) Bomb Charm of Regeneration
 (^) Bomb Handling Device
 (^) Boomerang Magnet
-(X) Breathing Unit !!!
+(#, ^2) Breathing Unit !!!
 (^) Brine-Leafed Clover
 (^) Bug Trapper
 (^) C.F.H.E.S.
@@ -511,7 +511,7 @@ ACCESSORIES:
 (^) Coologne
 (^) CORE Generator
 (^) Counter-offensive Scarf
-(X) CSTAA Jacket !!!
+(#, ^2) CSTAA Jacket !!!
 (^) Danger Barrel
 (X) Decorative A.S.H.E.S. !!!
 (^) Destructive Claws
@@ -533,14 +533,14 @@ ACCESSORIES:
 (^) Fallacious Vase
 (^) Feather Cape
 (^) Feathery Crest
-(X) Filter Breather !!!
-(X) Flak Jacket !!!
+(#, ^2) Filter Breather !!!
+(#, ^2) Flak Jacket !!!
 (^) Fleshy Figurine
 (^) Focus Crystal
 (^) Full Send
 (^) Futurephones
 (^) Gaming Glove
-(X) Gas Mask !!!
+(#, ^2) Gas Mask !!!
 (^) Golden Lotus
 (⛥) Grave Danger
 (^) Gun Glove
@@ -621,7 +621,7 @@ ACCESSORIES:
 (^) Spirit Shard
 (^) Stone Mask
 (ᥢ) Strange Computer
-(X) Stress Ball !!!
+(@3, #) Stress Ball !!!
 (^) Sunder Gut
 (^) Super Turbo Reel
 (^) Superjump Cape
@@ -637,7 +637,7 @@ ACCESSORIES:
 (^) Venom Fang
 (^) Venom Shield
 
-(@4, #) Bomb Rack !!!
+(#, ^2) Bomb Rack !!!
 (^) Entangled Energy
 (^) Mana Drive
 (^) Protozoa Food
@@ -654,7 +654,7 @@ ACCESSORIES:
 (^) Fiberglass Dagger
 (^) Forbidden Voice (Cursed)
 (^) Forbidden Voice (Uncursed)
-(X) Glitter Glue !!!
+(#, ^2) Glitter Glue !!!
 (X) Lunatic's Rune !!!
 (^) Mysterious Spray
 (X) Retool Arm !!!
