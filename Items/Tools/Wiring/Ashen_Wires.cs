@@ -262,7 +262,6 @@ namespace Origins.Items.Tools.Wiring {
 			ref Ashen_Wire_Data data = ref Main.tile[i, j].Get<Ashen_Wire_Data>();
 			if (value == data.IsTilePowered) return;
 			data.IsTilePowered = value;
-			if (data.AnyWire) Main.NewText($"power: {value}");
 			if (value) {
 				PropegatePowerState(i, j, 0, value);
 				PropegatePowerState(i, j, 1, value);
