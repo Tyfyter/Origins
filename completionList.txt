@@ -1371,7 +1371,7 @@ TILES:
 (X) Flesh Shredder
 (X) Interstellar Sampler
 (^) Medicine Fabricator
-(#, ^2) Metal Presser !!!
+(^) Metal Presser
 (X) The Demaker
 
 (^) Acetabularia

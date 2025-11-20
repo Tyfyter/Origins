@@ -3212,7 +3212,8 @@ namespace Origins {
 				0,
 			0);
 		}
-		public static Vector2 DrawDebugTextAbove(SpriteBatch spritebatch, string text, Vector2 position, Vector2? origin = null, Color? color = null) {
+		public static Vector2 DrawDebugTextAbove(this SpriteBatch spritebatch, object obj, Vector2 position, Vector2? origin = null, Color? color = null) {
+			string text = obj.ToString();
 			DynamicSpriteFont font = FontAssets.ItemStack.Value;
 			Vector2 spacing = font.MeasureString(text) / 2;
 			Vector2 orig = origin ?? Vector2.Zero;

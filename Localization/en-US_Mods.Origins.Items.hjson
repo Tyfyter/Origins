@@ -7314,3 +7314,12 @@ Medicine_Fabricator_Item: {
 		33% chance to not consume potion or medicine crafting ingredients
 		'''
 }
+
+Metal_Presser_Item: {
+	DisplayName: Metal Presser
+	Tooltip:
+		'''
+		Used to make safe ashen tiles
+		Also functions as a {$ItemName.HeavyWorkBench}
+		'''
+}
