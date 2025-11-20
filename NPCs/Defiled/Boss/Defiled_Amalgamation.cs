@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins;
+using Origins.Achievements;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Graphics;
@@ -20,6 +21,7 @@ using Origins.Walls;
 using Origins.World.BiomeData;
 using PegasusLib;
 using PegasusLib.Graphics;
+using PegasusLib.Networking;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -570,7 +572,7 @@ namespace Origins.NPCs.Defiled.Boss {
 						diffX -= Math.Sign(diffX) * targetX;
 						OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), acceleration);
 						OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), acceleration);
-						
+
 						if (OriginsModIntegrations.CheckAprilFools()) {// April Fools' DAb
 							leftArmTarget = 0.15f;
 							rightArmTarget = -0.15f;
@@ -833,6 +835,21 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override void OnKill() {
 			if (!NPC.downedBoss2 || Main.rand.NextBool(2)) WorldGen.spawnMeteor = true;
 			NPC.SetEventFlagCleared(ref NPC.downedBoss2, GameEventClearedID.DefeatedEaterOfWorldsOrBrainOfChtulu);
+			if (roars == 0) {
+				Enough_Yap_Action action = new();
+				switch (Main.netMode) {
+					case NetmodeID.SinglePlayer:
+					if (NPC.playerInteraction[Main.myPlayer]) action.Perform();
+					break;
+					case NetmodeID.Server:
+					for (int i = 0; i < Main.maxPlayers; i++) {
+						if (NPC.playerInteraction[i]) {
+							action.Send(i);
+						}
+					}
+					break;
+				}
+			}
 		}
 		public void SpawnWisp(NPC npc) {
 			if (AIState is state_split_amalgamation_active or state_split_amalgamation_start) {
@@ -1004,6 +1021,11 @@ namespace Origins.NPCs.Defiled.Boss {
 				AddSpawn<Defiled_Amalgamation>(spawnInfo => spawnInfo.PlayerFloorY < Main.worldSurface && Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY].WallType != ModContent.WallType<Defiled_Stone_Wall>() ? 99999999 : 0);
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) => spawnDA && spawnInfo.Player.InModBiome<Defiled_Wastelands>();
+		}
+		public record class Enough_Yap_Action() : SyncedAction {
+			public override SyncedAction NetReceive(BinaryReader reader) => this;
+			public override void NetSend(BinaryWriter writer) { }
+			protected override void Perform() => ModContent.GetInstance<Enough_Yap>().Condition.Complete();
 		}
 	}
 	public class Boss_Bar_DA : ModBossBar {

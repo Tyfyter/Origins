@@ -3237,3 +3237,40 @@ NoveltyWatchTime: {
 	PartyTime: Party Time! ({0})
 	ImpendingDoom: "{0} seconds"
 }
+
+Achievements: {
+	Kaiju: {
+		FriendlyName: Kaiju
+		Description: Defeat the World Cracker, an eel that burrows in the Riven Hive eating at the world.
+	}
+
+	Kill_Trenchmaker: {
+		FriendlyName: Now You're the One Lying Broken
+		Description: Defeat the Trenchmaker, a war machine manufactured in the Ashen Factory.
+	}
+
+	Killimanjaro: {
+		FriendlyName: Killimanjaro
+		Description: Defeat the Defiled Amalgamation, a rogue entity the Defiled has on a tight leash.
+	}
+
+	An_Eye_For_An_Eye: {
+		FriendlyName: An Eye For An Eye
+		Description: Defeat the Shimmer Construct, of which one must transmute another powerful entity to encounter.
+	}
+
+	Enough_Yap: {
+		FriendlyName: Enough Yap
+		Description: Defeat the {§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} before it can even call for help
+	}
+
+	It_Was_Watching: {
+		FriendlyName: It Was Watching
+		Description: Defeat the Fiberglass Weaver, a giant opportunistic stalker of the Fiberglass Undergrowth.
+	}
+
+	Kill_Lost_Diver: {
+		FriendlyName: There's Something in There!
+		Description: Defeat the Lost Diver, a humanoid puppet lying around somewhere in the Brine Pool.
+	}
+}

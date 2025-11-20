@@ -395,23 +395,23 @@ ACHIEVEMENTS:
 |---
 (X) A Different Game !!!
 (X) A True Hero !!!
-(X) An Eye for an Eye !!!
+(^3) An Eye for an Eye !!!
 (X) Auto-Immune Disease !!!
 (X) Cheat Code !!!
 (X) Cloning Factory !!!
 (X) Cracked !!!
-(X) Enough Yap !!!
+(^3) Enough Yap !!!
 (X) Going Places !!!
-(X) It Was Watching !!!
-(X) Kaiju !!!
-(X) Killimanjaro !!!
+(^3) It Was Watching !!!
+(^3) Kaiju !!!
+(^3) Killimanjaro !!!
 (X) Martyrdom !!!
-(X) Now You're the One Lying Broken !!!
+(^3) Now You're the One Lying Broken !!!
 (X) Peat Obsession !!!
 (X) RIVEN WORMS !!!
 (X) Slow Loading Bar !!!
 (X) The Signal, it's Calling !!!
-(X) There's Something in There! !!!
+(^3) There's Something in There! !!!
 (X) 'Till Death Mildew Us Part !!!
 (X) Whismical! !!!
 (X) Whole Blend Evil !!!
