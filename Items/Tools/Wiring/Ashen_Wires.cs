@@ -2,6 +2,7 @@
 using MonoMod.Cil;
 using Origins.Items.Other.Consumables;
 using Origins.Reflection;
+using Origins.Tiles.Ashen;
 using Origins.World;
 using PegasusLib;
 using ReLogic.Content;
@@ -187,6 +188,7 @@ namespace Origins.Items.Tools.Wiring {
 			readonly get => GetBit(data, 5);
 			private set => SetBit(value, ref data, 5);
 		}
+		public readonly bool AnyWire => HasBrownWire || HasBlackWire || HasWhiteWire;
 		public readonly bool AnyPower => BrownWirePowered || BlackWirePowered || WhiteWirePowered;
 		public bool IsTilePowered {
 			readonly get => GetBit(data, 7);
@@ -227,11 +229,11 @@ namespace Origins.Items.Tools.Wiring {
 			if (value != data.GetPower(wireType)) SetBit(value, ref data.data, (wireType << 1) + 1);
 			if (data.AnyPower != wasPowered && !WiringMethods._wireSkip.Value.ContainsKey(new(i, j))) {
 				bool powerMultiTile = true;
-				if (TileObjectData.GetTileData(Main.tile[i, j]) is TileObjectData tileData) {
+				if (wasPowered && TileObjectData.GetTileData(Main.tile[i, j]) is TileObjectData tileData) {
 					TileUtils.GetMultiTileTopLeft(i, j, tileData, out int left, out int top);
 					for (int x = 0; x < tileData.Width && powerMultiTile; x++) {
 						for (int y = 0; y < tileData.Height && powerMultiTile; y++) {
-							if (Main.tile[left + x, top + y].Get<Ashen_Wire_Data>().AnyPower == wasPowered) powerMultiTile = false;
+							if (Main.tile[left + x, top + y].Get<Ashen_Wire_Data>().AnyPower) powerMultiTile = false;
 						}
 					}
 				}
@@ -260,6 +262,7 @@ namespace Origins.Items.Tools.Wiring {
 			ref Ashen_Wire_Data data = ref Main.tile[i, j].Get<Ashen_Wire_Data>();
 			if (value == data.IsTilePowered) return;
 			data.IsTilePowered = value;
+			if (data.AnyWire) Main.NewText($"power: {value}");
 			if (value) {
 				PropegatePowerState(i, j, 0, value);
 				PropegatePowerState(i, j, 1, value);
