@@ -288,6 +288,34 @@ namespace Origins.Core.Structures {
 			public static implicit operator ushort(CachedWallType type) => type.Value;
 		}
 	}
+	public class PlaceLiquid : SerializableTileDescriptor {
+		readonly TileDescriptor[] fullDescriptors = new TileDescriptor[LiquidID.Count];
+		public override void Load() {
+			AddSerializer(tile => tile.LiquidAmount switch {
+				0 => null,
+				255 => $"PlaceLiquid({LiquidID.Search.GetName(tile.LiquidType)})",
+				_ => $"PlaceLiquid({LiquidID.Search.GetName(tile.LiquidType)},{tile.LiquidAmount})"
+			});
+		}
+		protected override TileDescriptor Create(string[] parameters, string originalText) {
+			byte liquidType = (byte)LiquidID.Search.GetId(parameters[0]);
+			byte liquidAmount = 255;
+			if (parameters.Length > 1) liquidAmount = byte.Parse(parameters[1]);
+			return Create(liquidType, liquidAmount, originalText);
+		}
+		TileDescriptor Create(byte liquidType, byte liquidAmount, string originalText) {
+			TileDescriptor descriptor = fullDescriptors[liquidType];
+			if (liquidAmount != 255 || descriptor is null) {
+				descriptor = new((_, _, i, j) => {
+					Tile tile = Main.tile[i, j];
+					tile.LiquidType = liquidType;
+					tile.LiquidAmount = liquidAmount;
+				}, Parts: [originalText]);
+				if (liquidAmount == 255) fullDescriptors[liquidType] = descriptor;
+			}
+			return descriptor;
+		}
+	}
 	public class SlopeTile : SerializableTileDescriptor {
 		readonly TileDescriptor[] descriptors = new TileDescriptor[(int)BlockType.SlopeUpRight + 1];
 		public override void Load() {

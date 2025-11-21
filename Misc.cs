@@ -827,6 +827,9 @@ namespace Origins {
 	public interface ISpecialTilePreviewItem {
 		public void DrawPreview();
 	}
+	public interface IComplexMineDamageWall {
+		bool CanMine(Player self, Item item, int i, int j);
+	}
 	internal class SpecialTilePreviewOverlay() : Overlay(EffectPriority.High, RenderLayers.TilesAndNPCs), ILoadable {
 		public override void Draw(SpriteBatch spriteBatch) => (Main.LocalPlayer?.HeldItem?.ModItem as ISpecialTilePreviewItem)?.DrawPreview();
 		public override void Update(GameTime gameTime) { }

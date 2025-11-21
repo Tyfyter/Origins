@@ -70,8 +70,7 @@ namespace Origins.Core.Structures {
 			public abstract void PostGenerate(PostGenerateParameters parameters);
 		}
 	}
-	public record class BreakDescriptor(Accumulator<StructureInstance, bool> Function, string[] Parts) : ISummable<BreakDescriptor> {
-		public bool Accumulate(StructureInstance input, bool startValue = default) => Function.Accumulate(input, startValue);
+	public record class BreakDescriptor(Accumulator<StructureInstance, bool> Accumulator, string[] Parts) : ISummable<BreakDescriptor>, IAccumulator<StructureInstance, bool> {
 		static string[] CombineParts(BreakDescriptor a, BreakDescriptor b) {
 			if (b.Parts is null || b.Parts.Length == 0) return a.Parts;
 			if (a.Parts is null || a.Parts.Length == 0) return b.Parts;
@@ -81,7 +80,7 @@ namespace Origins.Core.Structures {
 			return parts;
 		}
 		public override string ToString() => string.Join('+', Parts ?? []);
-		public static BreakDescriptor operator +(BreakDescriptor a, BreakDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Function + b.Function, CombineParts(a, b));
+		public static BreakDescriptor operator +(BreakDescriptor a, BreakDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Accumulator + b.Accumulator, CombineParts(a, b));
 		public static BreakDescriptor Create(Mod mod, string data) => Kind.Create(mod, data);
 		public abstract class Kind : SerializableDescriptor<Kind, BreakDescriptor> {
 			protected sealed override BreakDescriptor Create(string[] parameters, string originalText) => new(Create(parameters), [originalText]);
@@ -91,8 +90,7 @@ namespace Origins.Core.Structures {
 			}
 		}
 	}
-	public record class CheckDescriptor(Accumulator<StructureInstance, bool> Function, string[] Parts) : ISummable<CheckDescriptor> {
-		public bool Accumulate(StructureInstance input, bool startValue = default) => Function.Accumulate(input, startValue);
+	public record class CheckDescriptor(Accumulator<StructureInstance, bool> Accumulator, string[] Parts) : ISummable<CheckDescriptor>, IAccumulator<StructureInstance, bool> {
 		static string[] CombineParts(CheckDescriptor a, CheckDescriptor b) {
 			if (b.Parts is null || b.Parts.Length == 0) return a.Parts;
 			if (a.Parts is null || a.Parts.Length == 0) return b.Parts;
@@ -102,7 +100,7 @@ namespace Origins.Core.Structures {
 			return parts;
 		}
 		public override string ToString() => string.Join('+', Parts ?? []);
-		public static CheckDescriptor operator +(CheckDescriptor a, CheckDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Function + b.Function, CombineParts(a, b));
+		public static CheckDescriptor operator +(CheckDescriptor a, CheckDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Accumulator + b.Accumulator, CombineParts(a, b));
 		public static CheckDescriptor Create(Mod mod, string data) => Kind.Create(mod, data);
 		public abstract class Kind : SerializableDescriptor<Kind, CheckDescriptor> {
 			protected sealed override CheckDescriptor Create(string[] parameters, string originalText) => new(Create(parameters), [originalText]);
@@ -112,8 +110,7 @@ namespace Origins.Core.Structures {
 			}
 		}
 	}
-	public record class WeightDescriptor(Accumulator<WeightParameters, float> Function, string[] Parts) : ISummable<WeightDescriptor> {
-		public float Accumulate(WeightParameters input, float startValue = default) => Function.Accumulate(input, startValue);
+	public record class WeightDescriptor(Accumulator<WeightParameters, float> Accumulator, string[] Parts) : ISummable<WeightDescriptor>, IAccumulator<WeightParameters, float> {
 		static string[] CombineParts(WeightDescriptor a, WeightDescriptor b) {
 			if (b.Parts is null || b.Parts.Length == 0) return a.Parts;
 			if (a.Parts is null || a.Parts.Length == 0) return b.Parts;
@@ -123,7 +120,7 @@ namespace Origins.Core.Structures {
 			return parts;
 		}
 		public override string ToString() => string.Join('*', Parts ?? []);
-		public static WeightDescriptor operator +(WeightDescriptor a, WeightDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Function + b.Function, CombineParts(a, b));
+		public static WeightDescriptor operator +(WeightDescriptor a, WeightDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Accumulator + b.Accumulator, CombineParts(a, b));
 		public static WeightDescriptor Create(Mod mod, string data) => Kind.Create(mod, data);
 		public abstract class Kind : SerializableDescriptor<Kind, WeightDescriptor> {
 			protected sealed override void Register() {
@@ -338,4 +335,7 @@ namespace Origins.Core.Structures {
 		}
 	}
 	public delegate void Accumulator<TIn, TOut>(TIn input, ref TOut output);
+	public interface IAccumulator<TIn, TOut> {
+		Accumulator<TIn, TOut> Accumulator { get; }
+	}
 }

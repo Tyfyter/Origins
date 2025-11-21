@@ -190,7 +190,8 @@ namespace Origins {
 				}
 			);
 			On_Player.ItemCheck_UseMiningTools_TryHittingWall += (orig, self, sItem, wX, wY) => {
-				if (sItem.hammer < WallHammerRequirement[Main.tile[wX, wY].WallType]) {
+				ushort wallType = Main.tile[wX, wY].WallType;
+				if (sItem.hammer < WallHammerRequirement[wallType] || (WallLoader.GetWall(wallType) is IComplexMineDamageWall complexMineDamage && !complexMineDamage.CanMine(self, sItem, wX, wY))) {
 					WorldGen.KillWall(wX, wY, fail: true);
 					self.itemTime = sItem.useTime / 2;
 					return;

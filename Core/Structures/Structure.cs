@@ -189,6 +189,7 @@ namespace Origins.Core.Structures {
 			accumulator?.Invoke(input, ref startValue);
 			return startValue;
 		}
+		public static TOut Accumulate<TIn, TOut>(this IAccumulator<TIn, TOut> accumulator, TIn input, TOut startValue = default) => (accumulator?.Accumulator).Accumulate(input, startValue);
 		public static T IfNotEmpty<T>(this T value, T or = default) where T : ICollection => value.Count > 0 ? value : or;
 		public static string SerializeObject(object value) {
 			return JsonConvert.SerializeObject(value, SerializerSettings);

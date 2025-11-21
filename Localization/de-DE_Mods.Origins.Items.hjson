@@ -7323,3 +7323,33 @@ Metal_Presser_Item: {
 		Also functions as a {$ItemName.HeavyWorkBench}
 		''' */
 }
+
+Fortified_Steel_Wall1_Safe_Item: {
+	// DisplayName: Type-I Fortified Steel Wall
+	// Tooltip: ""
+}
+
+Fortified_Steel_Wall1_Placed_Unsafe_Item: {
+	// DisplayName: Registered Type-I Fortified Steel Wall
+	// Tooltip: "'Neat, it has a built-in AshTag'"
+}
+
+Fortified_Steel_Wall3_Safe_Item: {
+	// DisplayName: Type-III Fortified Steel Wall
+	// Tooltip: ""
+}
+
+Fortified_Steel_Wall3_Placed_Unsafe_Item: {
+	// DisplayName: Registered Type-III Fortified Steel Wall
+	// Tooltip: "'Neat, it has a built-in AshTag'"
+}
+
+Molten_Steel_Wall_Safe_Item: {
+	// DisplayName: Molten Steel Wall
+	// Tooltip: ""
+}
+
+Molten_Steel_Wall_Placed_Unsafe_Item: {
+	// DisplayName: Registered Molten Steel Wall
+	// Tooltip: "'Neat, it has a built-in AshTag'"
+}

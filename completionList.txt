@@ -1284,7 +1284,7 @@ TILES:
 (^) Hardened Sootsand Wall
 (@, ^3) Lost Brick Wall
 (^) Marrowick Wall
-(#, ^2) Molten Steel Wall !!!
+(☻) Molten Steel Wall !!!
 (X) Nova Brick Wall
 (^) Quartz Wall
 (^) Riven Grass Wall
@@ -1292,8 +1292,8 @@ TILES:
 (^) Spug Flesh Wall
 (X) Spug Flesh Brick Wall
 (^) Tainted Stone Wall
-(#, ^2) Type-I Fortified Steel Wall !!!
-(#, ^2) Type-III Fortified Steel Wall !!!
+(☻) Type-I Fortified Steel Wall !!!
+(☻) Type-III Fortified Steel Wall !!!
 
 (#, ^2) Air Vent !!!
 (^) Alkahest Torch

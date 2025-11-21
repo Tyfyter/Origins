@@ -40,10 +40,10 @@
 		"Required_Hallway": {
 			"Map": [
 				"ooooo",
-				"wwwww",
-				"wwwww",
-				"wwwww",
-				"wwwww",
+				"hhhhh",
+				"hhhhh",
+				"hhhhh",
+				"hhhhw",
 				"wwwww",
 				"wwwww",
 				"LcwwR",
@@ -52,8 +52,8 @@
 			"Key": {
 				" ": "Empty",
 				"o": "PlaceTile(ObsidianBrick)",
-				"w": "Empty+PlaceWall(ObsidianBrick)",
-				"b": "PlaceWall(ObsidianBrick)",
+				"w": "Empty+PlaceWall(Origins/Molten_Steel_Wall_Natural)+PlaceLiquid(Lava, 1)",
+				"h": "Empty+PlaceWall(Origins/Molten_Steel_Wall_Natural)",
 				"c": "PlaceSpecialTile(Containers,3)+PlaceWall(ObsidianBrick)",
 				"L": "Empty+PlaceWall(ObsidianBrick)",
 				"R": "Empty+PlaceWall(ObsidianBrick)"

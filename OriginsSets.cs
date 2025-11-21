@@ -15,6 +15,7 @@ namespace Origins {
 	public static class OriginsSets {
 		public static void Initialize() {
 			Tiles.Initialize();
+			Walls.Initialize();
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Items {
@@ -359,6 +360,22 @@ namespace Origins {
 		public static class Walls {
 			public static bool[] RivenWalls { get; } = WallID.Sets.Factory.CreateNamedSet(nameof(RivenWalls))
 			.RegisterBoolSet(false);
+			public static int[] GeneratesLiquid { get; } = WallID.Sets.Factory.CreateIntSet(-1);
+			internal static void Initialize() {
+				try {
+					On_Liquid.Update += (orig, self) => {
+						orig(self);
+						Tile tile = Framing.GetTileSafely(self.x, self.y);
+						int generateType = GeneratesLiquid[tile.WallType];
+						if (generateType != -1) {
+							tile.LiquidType = generateType;
+							tile.LiquidAmount = 255;
+						}
+					};
+				} catch (Exception e) {
+					if (Origins.LogLoadingILError(nameof(GeneratesLiquid), e)) throw;
+				}
+			}
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Prefixes {
