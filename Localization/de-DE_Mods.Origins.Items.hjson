@@ -7358,3 +7358,8 @@ Bark_Shield: {
 	// DisplayName: Bark Shield
 	// Tooltip: "{0}/{1} durability"
 }
+
+Armor_Power_Up: {
+	// DisplayName: Armor+ Power-Up
+	// Tooltip: ""
+}

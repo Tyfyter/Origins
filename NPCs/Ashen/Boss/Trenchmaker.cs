@@ -1,6 +1,9 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Cil;
 using Origins.Graphics.Primitives;
 using Origins.Items.Materials;
+using Origins.Items.Other;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Vanity.BossMasks;
@@ -62,7 +65,40 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static LegAnimation defaultLegAnimation;
 		public override void Load() {
 			this.AddBossControllerItem();
+			try {
+				IL_NPC.DoDeathEvents_DropBossPotionsAndHearts += Trenchmaker_DropSpecialHearts;
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError(nameof(Trenchmaker_DropSpecialHearts), e)) throw;
+			}
 		}
+
+		static void Trenchmaker_DropSpecialHearts(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After,
+				i => i.MatchCall(typeof(NPCLoader), nameof(NPCLoader.BossLoot))
+			);
+			c.GotoNext(MoveType.After,
+				i => i.MatchCall<Item>(nameof(Item.NewItem)),
+				i => i.MatchPop()
+			);
+			c.EmitLdarg0();
+			c.EmitDelegate((NPC npc) => {
+				if (npc?.ModNPC is not Trenchmaker) return false;
+				int itemType = OriginsModIntegrations.CheckAprilFools() ? ItemID.Escargot : ModContent.ItemType<Armor_Power_Up>();
+				for (int i = Main.rand.Next(3) + 3; i > 0; i--) {
+					int _item = Item.NewItem(npc.GetSource_Loot(), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, itemType);
+					Item item = Main.item[_item];
+					item.velocity += (item.Center - npc.Center).Normalized(out float mag) * float.Pow(mag, 0.5f);
+					NetMessage.SendData(MessageID.SyncItem, -1, -1, null, _item, 1f);
+				}
+				return true;
+			});
+			ILLabel label = c.DefineLabel();
+			c.EmitBrfalse(label);
+			c.EmitRet();
+			c.MarkLabel(label);
+		}
+
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 8;
 			NPCID.Sets.BossBestiaryPriority.Add(Type);

@@ -23,6 +23,7 @@ namespace Origins.Items.Vanity.Dev {
 				rule
 			]).ToArray();
 			ItemID.Sets.OpenableBag[Type] = true;
+			Item.ResearchUnlockCount = 0;
 		}
 		public IEnumerable<int> ProvideItemObtainability() => GetDrops().SelectMany(w => {
 			List<DropRateInfo> drops = [];
