@@ -2652,10 +2652,26 @@ Configs: {
 
 	Journal_Default_UI_Mode: {
 		Tooltip: ""
-		Index_Page.Label: Index
-		Quest_List.Label: Quests
-		Search_Page.Label: Search
-		Memos.Label: Memos
+
+		Index_Page: {
+			Label: Index
+			Tooltip: ""
+		}
+
+		Quest_List: {
+			Label: Quests
+			Tooltip: ""
+		}
+
+		Search_Page: {
+			Label: Search
+			Tooltip: ""
+		}
+
+		Memos: {
+			Label: Memos
+			Tooltip: ""
+		}
 	}
 
 	LaserTagConfig: {
@@ -2679,12 +2695,36 @@ Configs: {
 
 	Laser_Tag_Health_Pip_Placement: {
 		Tooltip: ""
-		Bottom.Label: Bottom
-		Left.Label: Left
-		Right.Label: Right
-		Top.Label: Top
-		Back.Label: Back
-		Front.Label: Front
+
+		Bottom: {
+			Label: Bottom
+			Tooltip: ""
+		}
+
+		Left: {
+			Label: Left
+			Tooltip: ""
+		}
+
+		Right: {
+			Label: Right
+			Tooltip: ""
+		}
+
+		Top: {
+			Label: Top
+			Tooltip: ""
+		}
+
+		Back: {
+			Label: Back
+			Tooltip: ""
+		}
+
+		Front: {
+			Label: Front
+			Tooltip: ""
+		}
 	}
 
 	OriginAccessibilityConfig: {
@@ -2736,25 +2776,69 @@ Configs: {
 
 	ArtifactMinionHealthbarStyles: {
 		Tooltip: ""
-		Auto.Label: Auto
-		UnderMinion.Label: Under Minion
-		UnderBuff.Label: Under Buff
-		Both.Label: Both
+
+		Auto: {
+			Label: Auto
+			Tooltip: ""
+		}
+
+		UnderMinion: {
+			Label: Under Minion
+			Tooltip: ""
+		}
+
+		UnderBuff: {
+			Label: Under Buff
+			Tooltip: ""
+		}
+
+		Both: {
+			Label: Both
+			Tooltip: ""
+		}
 	}
 
 	QuestNotificationPositions: {
 		Tooltip: ""
-		None.Label: None
-		World.Label: World
-		Map.Label: Map
-		Housing.Label: Housing Menu
+
+		None: {
+			Label: None
+			Tooltip: ""
+		}
+
+		World: {
+			Label: World
+			Tooltip: ""
+		}
+
+		Map: {
+			Label: Map
+			Tooltip: ""
+		}
+
+		Housing: {
+			Label: Housing Menu
+			Tooltip: ""
+		}
 	}
 
 	Scroll_Wheel_Direction: {
 		Tooltip: ""
-		Normal.Label: Normal
-		Inverted.Label: Inverted
-		Disabled.Label: Disabled
+
+		Normal: {
+			Label: Normal
+			Tooltip: ""
+		}
+
+		Inverted: {
+			Label: Inverted
+			Tooltip: ""
+		}
+
+		Disabled: {
+			Label: Disabled
+			Tooltip: ""
+		}
 	}
 }
 
