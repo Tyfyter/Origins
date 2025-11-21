@@ -169,6 +169,18 @@ namespace Origins {
 				foundShimmer:;
 			}
 		}
+		public override void PostWorldLoad() {
+			for (int i = 0; i < Main.maxTilesX; i++) {
+				for (int j = 0; j < Main.maxTilesY; j++) {
+					Tile tile = Main.tile[i, j];
+					int generateType = OriginsSets.Walls.GeneratesLiquid[tile.WallType];
+					if (generateType != -1) {
+						tile.LiquidType = generateType;
+						tile.LiquidAmount = 255;
+					}
+				}
+			}
+		}
 		internal TagCompound questsTag;
 		public override void SaveWorldData(TagCompound tag) {
 			tag.Add("peatSold", peatSold);
