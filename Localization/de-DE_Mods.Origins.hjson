@@ -3256,21 +3256,21 @@ Achievements: {
 
 	An_Eye_For_An_Eye: {
 		// FriendlyName: An Eye For An Eye
-		// Description: Mods.Origins.Achievements.An_Eye_For_An_Eye.Description
+		// Description: Defeat the Shimmer Construct, of which one must transmute another powerful entity to encounter.
 	}
 
 	Enough_Yap: {
 		// FriendlyName: Enough Yap
-		// Description: Mods.Origins.Achievements.Enough_Yap.Description
+		// Description: Defeat the {§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} before it can even call for help
 	}
 
 	It_Was_Watching: {
 		// FriendlyName: It Was Watching
-		// Description: Mods.Origins.Achievements.It_Was_Watching.Description
+		// Description: Defeat the Fiberglass Weaver, a giant opportunistic stalker of the Fiberglass Undergrowth.
 	}
 
 	Kill_Lost_Diver: {
-		// FriendlyName: Kill Lost Diver
-		// Description: Mods.Origins.Achievements.Kill_Lost_Diver.Description
+		// FriendlyName: There's Something in There!
+		// Description: Defeat the Lost Diver, a humanoid puppet lying around somewhere in the Brine Pool.
 	}
 }
