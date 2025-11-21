@@ -297,55 +297,38 @@ namespace Origins {
 			IL_NPCUtils.TargetClosestNonBees += IL_NPCUtils_TargetClosestNonBees;
 			On_CommonCode.ModifyItemDropFromNPC += On_CommonCode_ModifyItemDropFromNPC;
 			IL_Player.Update += (il) => {
+				int local = -1;
 				ILCursor c = new(il);
 				c.GotoNext(MoveType.After,
 					i => i.MatchCall<Collision>("LavaCollision"),
-					i => i.MatchStloc(out int _)
+					i => i.MatchStloc(out local)
 				);
-				c.Index--;
-				c.EmitDelegate<Func<bool, bool>>((flag) => {
-					if (OriginPlayer.forceLavaCollision) {
-						OriginPlayer.forceLavaCollision = false;
-						return true;
-					}
-					return flag;
+				c.EmitLdloca(local);
+				c.EmitDelegate((ref bool flag) => {
+					flag |= OriginPlayer.forceLavaCollision;
 				});
 
 				c.GotoNext(MoveType.After,
 					i => i.MatchCall<Collision>("WetCollision")
 				);
-				c.EmitDelegate<Func<bool, bool>>((flag) => {
-					if (OriginPlayer.forceWetCollision) {
-						OriginPlayer.forceWetCollision = false;
-						return true;
-					}
-					return flag;
-				});
+				c.EmitDelegate((bool flag) => flag || OriginPlayer.forceWetCollision);
 
 				c.GotoNext(MoveType.After,
 					i => i.MatchLdsfld<Collision>("honey"),
-					i => i.MatchStloc(out int _)
-				); ;
-				c.Index--;
-				c.EmitDelegate<Func<bool, bool>>((flag) => {
-					if (OriginPlayer.forceHoneyCollision) {
-						OriginPlayer.forceHoneyCollision = false;
-						return true;
-					}
-					return flag;
+					i => i.MatchStloc(out local)
+				);
+				c.EmitLdloca(local);
+				c.EmitDelegate((ref bool flag) => {
+					flag |= OriginPlayer.forceHoneyCollision;
 				});
 
 				c.GotoNext(MoveType.After,
 					i => i.MatchLdsfld<Collision>("shimmer"),
-					i => i.MatchStloc(out int _)
-				); ;
-				c.Index--;
-				c.EmitDelegate<Func<bool, bool>>((flag) => {
-					if (OriginPlayer.forceShimmerCollision) {
-						OriginPlayer.forceShimmerCollision = false;
-						return true;
-					}
-					return flag;
+					i => i.MatchStloc(out local)
+				);
+				c.EmitLdloca(local);
+				c.EmitDelegate((ref bool flag) => {
+					flag |= OriginPlayer.forceShimmerCollision;
 				});
 			};
 			IL_ShopHelper.ApplyNpcRelationshipEffect += (il) => {
