@@ -26,7 +26,6 @@ namespace Origins.Items.Accessories {
 			player.treasureMagnet = true;
 			originPlayer.goldenLotus = true;
 			originPlayer.goldenLotusItem = Item;
-			player.GetDamage(DamageClass.Generic) *= 1000;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()

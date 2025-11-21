@@ -13,29 +13,29 @@ using Terraria.GameContent.Achievements;
 using Terraria.ModLoader;
 
 namespace Origins.Achievements {
-	public class Killimanjaro : SlayerAchivement<Defiled_Amalgamation> {
+	public class Killimanjaro : SlayerAchievement<Defiled_Amalgamation> {
 		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public override Position GetDefaultPosition() => new After("MASTERMIND");
 	}
-	public class Kaiju : SlayerAchivement<World_Cracker_Head> {
+	public class Kaiju : SlayerAchievement<World_Cracker_Head> {
 		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public override Position GetDefaultPosition() => new After("MASTERMIND");
 		public override IEnumerable<Position> GetModdedConstraints() => [new After(ModContent.GetInstance<Killimanjaro>())];
 	}
-	public class Kill_Trenchmaker : SlayerAchivement<Trenchmaker> {
+	public class Kill_Trenchmaker : SlayerAchievement<Trenchmaker> {
 		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public override Position GetDefaultPosition() => new After("MASTERMIND");
 		public override IEnumerable<Position> GetModdedConstraints() => [new After(ModContent.GetInstance<Kaiju>())];
 	}
-	public class It_Was_Watching : SlayerAchivement<Fiberglass_Weaver> {
+	public class It_Was_Watching : SlayerAchievement<Fiberglass_Weaver> {
 		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public override Position GetDefaultPosition() => new After("BONED");
 	}
-	public class An_Eye_For_An_Eye : SlayerAchivement<Shimmer_Construct> {
+	public class An_Eye_For_An_Eye : SlayerAchievement<Shimmer_Construct> {
 		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public override Position GetDefaultPosition() => new Before("STILL_HUNGRY");
 	}
-	public class Kill_Lost_Diver : SlayerAchivement<Mildew_Carrion> {
+	public class Kill_Lost_Diver : SlayerAchievement<Mildew_Carrion> {
 		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public override Position GetDefaultPosition() => new After("STILL_HUNGRY");
 	}
