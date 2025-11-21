@@ -104,6 +104,9 @@ namespace Origins {
 				float progress = blizzardwalkerActiveTime / (float)Blizzardwalkers_Jacket.max_active_time;
 				drawInfo.colorEyes = Color.Lerp(drawInfo.colorEyes, Color.Red, progress * progress);
 			}
+			if (gasMask && OriginsModIntegrations.CheckAprilFools()) {
+				drawInfo.drawPlayer.face = ModContent.GetInstance<Gas_Mask>().Item.faceSlot;
+			}
 		}
 		public override void FrameEffects() {
 			Debugging.LogFirstRun(FrameEffects);

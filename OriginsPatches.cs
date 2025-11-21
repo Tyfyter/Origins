@@ -1504,6 +1504,9 @@ namespace Origins {
 				if (originPlayer.mithrafin && Mithrafin.buffTypes[type]) {
 					mult *= OriginPlayer.mithrafinSelfMult;
 				}
+				if (originPlayer.gasMask && Main.debuff[type]) {
+					mult *= OriginPlayer.gasMaskMult;
+				}
 				value = (int)(value * mult);
 			}
 			return value;

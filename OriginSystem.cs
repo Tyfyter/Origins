@@ -718,6 +718,7 @@ namespace Origins {
 			SpecialTilePreviewOverlay.ForceActive();
 			Players_Behind_Tiles_Overlay.ForceActive();
 			Hanging_Scrap_Overlay.ForceActive();
+			Gas_Mask_Overlay.ForceActive();
 		}
 	}
 	public class TempleBiome : ModBiome {

@@ -7363,3 +7363,12 @@ Armor_Power_Up: {
 	DisplayName: Armor+ Power-Up
 	Tooltip: ""
 }
+
+Gas_Mask: {
+	DisplayName: Gas Mask
+	Tooltip:
+		'''
+		Debuff durations are reduced by 30%
+		Slightly reduces vision
+		'''
+}

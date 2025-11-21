@@ -107,6 +107,11 @@ Items: {
 	PEE_Breastplate.DisplayName: Pernicious Interstellar Scavenger Suit Jacket
 	PEE_Greaves.DisplayName: Pernicious Interstellar Scavenger Suit Trousers
 	PEE_Helmet.DisplayName: Pernicious Interstellar Scavenger Suit Mask
+	Gas_Mask.Tooltip:
+		'''
+		{$Mods.Origins.Items.Gas_Mask.Tooltip}
+		'Are you my mummy?'
+		'''
 }
 
 Prefixes.Wholesome_Prefix.DisplayName: Holesome

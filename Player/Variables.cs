@@ -331,6 +331,9 @@ namespace Origins {
 		public int shimmerShieldDashTime = 0;
 		public int? dashBaseDamage = 0;
 		public bool airTank = false;
+		public bool gasMask = false;
+		public int gasMaskDye = 0;
+		public const float gasMaskMult = 0.75f;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -838,6 +841,8 @@ namespace Origins {
 			shimmerShield = false;
 			dashBaseDamage = null;
 			airTank = false;
+			gasMask = false;
+			gasMaskDye = 0;
 			lotteryTicketItem = null;
 
 			
