@@ -490,7 +490,7 @@ ACCESSORIES:
 (^) Asylum Whistle
 (^) A.S.H. Attack Relay
 (^) Automated Returns Handler
-(#, ^2) Bark Shield !!!
+(☻) Bark Shield !!!
 (^) Binding Book
 (^) Blast-Resistant Plate
 (^) Bomb Charm

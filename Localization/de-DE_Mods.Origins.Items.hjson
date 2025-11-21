@@ -7353,3 +7353,8 @@ Molten_Steel_Wall_Placed_Unsafe_Item: {
 	// DisplayName: Registered Molten Steel Wall
 	// Tooltip: "'Neat, it has a built-in AshTag'"
 }
+
+Bark_Shield: {
+	// DisplayName: Bark Shield
+	// Tooltip: "{0}/{1} durability"
+}

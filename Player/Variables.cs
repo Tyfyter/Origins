@@ -145,6 +145,7 @@ namespace Origins {
 		public Item razorwireItem = null;
 		public bool retributionShield = false;
 		public Item retributionShieldItem = null;
+		public Item barkShieldItem = null;
 		public bool unsoughtOrgan = false;
 		public Item unsoughtOrganItem = null;
 		public bool spiritShard = false;
@@ -728,6 +729,7 @@ namespace Origins {
 			retributionShield = false;
 			razorwireItem = null;
 			retributionShieldItem = null;
+			barkShieldItem = null;
 			unsoughtOrgan = false;
 			unsoughtOrganItem = null;
 			spiritShard = false;

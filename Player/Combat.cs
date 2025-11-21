@@ -912,6 +912,14 @@ namespace Origins {
 					);
 				}
 			}
+			if (barkShieldItem?.ModItem is Bark_Shield barkShield) {
+				barkShield.durability -= barkShield.CalculateDamage(info);
+				Min(ref barkShield.durability, barkShield.MaxDurability);
+				if (barkShield.durability <= 0) {
+					barkShield.Break(Player, info);
+					barkShieldItem.TurnToAir(true);
+				}
+			}
 			if (fullSend && info.DamageSource.SourceOtherIndex == OtherDeathReasonID.Fall) {
 				const float maxDist = 240 * 240;
 				double totalDamage = info.SourceDamage * (0.86 + fullSendHorseshoeBonus.Mul(0.07f));

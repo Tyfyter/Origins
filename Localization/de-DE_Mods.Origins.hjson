@@ -2065,6 +2065,7 @@ Projectiles: {
 	// Trenchmaker_Stomp_P.DisplayName: Trenchmaker Stomp
 	// Fuel_Rod_Ball_P.DisplayName: Fuel Rod Ball
 	// Trenchmaker_Cannon_P.DisplayName: Trenchmaker Cannon P
+	// Bark_Shield_Splinters.DisplayName: Bark Shield Splinters
 }
 
 Prefixes: {
