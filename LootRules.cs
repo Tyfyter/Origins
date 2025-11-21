@@ -1,10 +1,13 @@
-﻿using Origins.World.BiomeData;
+﻿using Origins.Items.Weapons.Ammo;
+using Origins.World.BiomeData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Origins.LootConditions {
 	public class VaryingRateLeadingRule(int chanceDenominator, int chanceNumerator, params (IItemDropRuleCondition condition, int chanceDenominator, int chanceNumerator)[] alternates) : IItemDropRule {
@@ -84,6 +87,61 @@ namespace Origins.LootConditions {
 		}
 		public virtual bool CanDropForPlayer(Player player) => true;
 	}
+	public class ScavengerBonus(int itemType, int chanceDenominator = 1, int chanceNumerator = 1, int amountDroppedMinimum = 1, int amountDroppedMaximum = 1) : CommonDrop(itemType, chanceDenominator, amountDroppedMinimum, amountDroppedMaximum, chanceNumerator) {
+		public static ScavengerBonus Scrap(int chanceDenominator = 1, int chanceNumerator = 1, int amountDroppedMinimum = 1, int amountDroppedMaximum = 1) => new(ModContent.ItemType<Scrap>(), chanceDenominator, chanceNumerator, amountDroppedMinimum, amountDroppedMaximum);
+		public override ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
+			return Run(() => base.TryDroppingItem(info), info.player.OriginPlayer().scavengerSet);
+		}
+		public void Run(Action function, bool giveBonus) {
+			Run<object>(() => {
+				function();
+				return null;
+			}, giveBonus);
+		}
+		public T Run<T>(Func<T> function, bool giveBonus) {
+			int chanceDenominator = this.chanceDenominator;
+			int chanceNumerator = this.chanceNumerator;
+			int amountDroppedMinimum = this.amountDroppedMinimum;
+			int amountDroppedMaximum = this.amountDroppedMaximum;
+			if (giveBonus) {
+				this.chanceDenominator = int.Max(this.chanceDenominator - 1, this.chanceNumerator);
+				this.amountDroppedMinimum += this.amountDroppedMinimum / 2;
+				this.amountDroppedMaximum += this.amountDroppedMaximum / 2;
+			}
+			T result;
+			try {
+				result = function();
+			} catch {
+				this.chanceDenominator = chanceDenominator;
+				this.chanceNumerator = chanceNumerator;
+				this.amountDroppedMinimum = amountDroppedMinimum;
+				this.amountDroppedMaximum = amountDroppedMaximum;
+				throw;
+			}
+			this.chanceDenominator = chanceDenominator;
+			this.chanceNumerator = chanceNumerator;
+			this.amountDroppedMinimum = amountDroppedMinimum;
+			this.amountDroppedMaximum = amountDroppedMaximum;
+			return result;
+		}
+		public override void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
+			DropRateInfoChainFeed variant = ratesInfo;
+			variant.conditions = ratesInfo.conditions?.ToList() ?? [];
+			variant.conditions.Add(new Condition(false));
+			Run(() => base.ReportDroprates(drops, variant), false);
+
+			variant.conditions = ratesInfo.conditions?.ToList() ?? [];
+			variant.conditions.Add(new Condition(true));
+			Run(() => base.ReportDroprates(drops, variant), true);
+		}
+		class Condition(bool withBonus) : IItemDropRuleCondition {
+			public bool CanDrop(DropAttemptInfo info) => (info.player?.OriginPlayer().scavengerSet) == withBonus;
+			public bool CanShowItemDropInUI() => true;
+			public string GetConditionDescription() {
+				return Language.GetOrRegister($"Mods.Origins.Conditions.{(withBonus ? "With" : "Without")}ScavengerSet").Value;
+			}
+		}
+	}
 	public class Ashen_Key_Condition : IItemDropRuleCondition {
 		public bool CanDrop(DropAttemptInfo info) {
 			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Ashen_Biome>();
@@ -93,7 +151,7 @@ namespace Origins.LootConditions {
 			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Ashen"));
 		}
 	}
-    public class Defiled_Key_Condition : IItemDropRuleCondition {
+	public class Defiled_Key_Condition : IItemDropRuleCondition {
 		public bool CanDrop(DropAttemptInfo info) {
 			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>();
 		}

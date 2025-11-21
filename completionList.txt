@@ -441,7 +441,7 @@ ARMOR:
 (^) Riptide Armor
 (^) Riven Armor
 (^) Rubber Armor
-(#2, ^2) Scavenger Armor !!! (force more Scrap drops)
+(☻) Scavenger Armor !!! (forces more Scrap drops)
 (^) Soulhide Armor
 (^) Tendon Armor
 

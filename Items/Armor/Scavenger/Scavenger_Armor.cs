@@ -31,7 +31,7 @@ namespace Origins.Items.Armor.Scavenger {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Scavenger");
-			player.GetModPlayer<OriginPlayer>().scavengerSet = true;
+			player.OriginPlayer().scavengerSet = true;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
