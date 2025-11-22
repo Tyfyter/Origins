@@ -69,8 +69,8 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);
 			Item.defense = 2;
-			Item.value = Item.sellPrice(silver: 50);
-			Item.rare = ItemRarityID.Green;
+			Item.value = Item.sellPrice(silver: 20);
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
 			player.OriginPlayer().gasMask = true;
@@ -81,9 +81,9 @@ namespace Origins.Items.Accessories {
 			player.OriginPlayer().gasMaskDye = dye;
 		}
 		public override void AddRecipes() => CreateRecipe()
+			.AddIngredient<Adhesive_Wrap>(3)
 			.AddIngredient<Rubber>(3)
 			.AddIngredient<Silicon_Bar>(8)
-			.AddIngredient<Adhesive_Wrap>(3)
 			.AddTile<Medicine_Fabricator>()
 			.Register();
 	}

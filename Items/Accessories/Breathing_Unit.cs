@@ -17,8 +17,8 @@ namespace Origins.Items.Accessories {
 			if (player.OriginPlayer().airTank.TrySet(true)) player.AddMaxBreath(257);
 		}
 		public override void AddRecipes() => CreateRecipe()
-			.AddIngredient<Filter_Breather>()
 			.AddIngredient<Air_Tank>()
+			.AddIngredient<Filter_Breather>()
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 	}

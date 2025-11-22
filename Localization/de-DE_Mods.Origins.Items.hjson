@@ -7372,8 +7372,8 @@ Gas_Mask: {
 	// DisplayName: Gas Mask
 	/* Tooltip:
 		'''
-		Debuff durations are reduced by 30%
 		Slightly reduces vision
+		Debuff durations are reduced by 30%
 		Grants immunity to [buffhint/self:Stinky] and [buffhint/self:Origins/Miasma]
 		''' */
 }
@@ -7391,14 +7391,18 @@ Breathing_Unit: {
 	// DisplayName: Breathing Unit
 	/* Tooltip:
 		'''
-		Debuff durations are reduced by 30%
 		Slightly reduces vision
 		Extends underwater breathing
+		Debuff durations are reduced by 30%
 		Grants immunity to [buffhint/self:Suffocation], [buffhint/self:Stinky][ox:,] and [buffhint/self:Origins/Miasma]
 		''' */
 }
 
 Flak_Jacket: {
 	// DisplayName: Flak Jacket
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Reduces incoming damage by 5%
+		Explodes into flak upon taking damage
+		''' */
 }

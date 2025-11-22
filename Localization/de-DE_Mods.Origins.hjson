@@ -1404,8 +1404,8 @@ Buffs: {
 	}
 
 	Miasma_Debuff: {
-		// DisplayName: Miasma Debuff
-		// Description: Mods.Origins.Buffs.Miasma_Debuff.Description
+		// DisplayName: Miasma
+		// Description: It's getting hard to breathe...
 	}
 }
 
