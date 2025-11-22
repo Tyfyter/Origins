@@ -2073,6 +2073,10 @@ Projectiles: {
 	// Fuel_Rod_Ball_P.DisplayName: Fuel Rod Ball
 	// Trenchmaker_Cannon_P.DisplayName: Trenchmaker Cannon P
 	// Bark_Shield_Splinters.DisplayName: Bark Shield Splinters
+	// Flak_Jacket_Explosion.DisplayName: Flak Jacket Explosion
+	// Flak_Jacket_Flak_1.DisplayName: Flak Jacket Flak_1
+	// Flak_Jacket_Flak_2.DisplayName: Flak Jacket Flak_2
+	// Flak_Jacket_Flak_3.DisplayName: Flak Jacket Flak_3
 }
 
 Prefixes: {

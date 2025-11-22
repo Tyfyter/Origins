@@ -57,7 +57,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			int count = 14 - Main.rand.Next(3);
 			float rot = TwoPi / count;
 			for (int i = count; i > 0; i--) {
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vec2FromPolar(rot * i, 6) + Main.rand.NextVector2Unit()) + (Projectile.velocity / 12), t, Projectile.damage / 12, 6, Projectile.owner);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vec2FromPolar(6, rot * i) + Main.rand.NextVector2Unit()) + (Projectile.velocity / 12), t, Projectile.damage / 12, 6, Projectile.owner);
 			}
 		}
 	}

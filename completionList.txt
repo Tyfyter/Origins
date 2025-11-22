@@ -534,7 +534,7 @@ ACCESSORIES:
 (^) Feather Cape
 (^) Feathery Crest
 (☻) Filter Breather !!!
-(#, ^2) Flak Jacket !!!
+(☻) Flak Jacket !!!
 (^) Fleshy Figurine
 (^) Focus Crystal
 (^) Full Send

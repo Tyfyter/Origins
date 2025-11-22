@@ -7397,3 +7397,8 @@ Breathing_Unit: {
 		Grants immunity to [buffhint/self:Suffocation], [buffhint/self:Stinky][ox:,] and [buffhint/self:Origins/Miasma]
 		''' */
 }
+
+Flak_Jacket: {
+	// DisplayName: Flak Jacket
+	// Tooltip: ""
+}

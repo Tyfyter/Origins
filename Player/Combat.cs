@@ -14,6 +14,7 @@ using Origins.NPCs.Crimson;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles;
 using Origins.Questing;
+using PegasusLib;
 using PegasusLib.ID;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
+using ThoriumMod.Empowerments;
 using ThoriumMod.Projectiles;
 using static Origins.OriginExtensions;
 
@@ -72,7 +74,7 @@ namespace Origins {
 		public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
 			if (Origins.ArtifactMinion[item.shoot]) {
 				mult *= artifactManaCost;
-			}	
+			}
 			if (wishingGlassActive) mult *= 0;
 			necromanaUsedThisUse = false;
 		}
@@ -935,6 +937,18 @@ namespace Origins {
 					barkShieldItem.TurnToAir(true);
 				}
 			}
+			if (!(flakJacketItem?.IsAir ?? true)) {
+				int damage = Player.GetWeaponDamage(flakJacketItem);
+				float knockback = Player.GetWeaponKnockback(flakJacketItem);
+				Player.SpawnProjectile(
+					Player.GetSource_Accessory_OnHurt(flakJacketItem, info.DamageSource),
+					Player.MountedCenter,
+					Vector2.Zero,
+					flakJacketItem.shoot,
+					damage,
+					knockback
+				);
+			}
 			if (fullSend && info.DamageSource.SourceOtherIndex == OtherDeathReasonID.Fall) {
 				const float maxDist = 240 * 240;
 				double totalDamage = info.SourceDamage * (0.86 + fullSendHorseshoeBonus.Mul(0.07f));
@@ -1037,7 +1051,7 @@ namespace Origins {
 				}
 			}
 			if (bombCharminIt && Player.whoAmI == info.DamageSource.SourcePlayerIndex) {
-				   bombCharminItLifeRegenCount += info.Damage;
+				bombCharminItLifeRegenCount += info.Damage;
 			}
 			if (Player.whoAmI == info.DamageSource.SourcePlayerIndex && OriginsModIntegrations.CheckAprilFools()) {
 				const int damage_required = 400;
