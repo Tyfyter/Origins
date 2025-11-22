@@ -14,6 +14,7 @@ namespace Origins.Walls {
 		public virtual int HammerPower => 55;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			//HitSound = SoundID.Tink;
 			patternTexture = GetType().GetDefaultTMLName() + "_BG";
 			if (WallVersion == WallVersion.Natural) Origins.WallHammerRequirement[Type] = HammerPower;
 		}
@@ -46,6 +47,7 @@ namespace Origins.Walls {
 		public override int HammerPower => 100;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			//HitSound = SoundID.Tink;
 			if (WallVersion == WallVersion.Natural) OriginsSets.Walls.GeneratesLiquid[Type] = LiquidID.Lava;
 		}
 		public override bool CanMine(Player self, Item item, int i, int j) {
@@ -57,6 +59,7 @@ namespace Origins.Walls {
 		public override WallVersion WallVersions => WallVersion.Natural | WallVersion.Safe | WallVersion.Placed_Unsafe;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			//HitSound = SoundID.Tink;
 			if (WallVersion == WallVersion.Natural) Origins.WallHammerRequirement[Type] = 100;
 		}
 		bool IComplexMineDamageWall.CanMine(Player self, Item item, int i, int j) {

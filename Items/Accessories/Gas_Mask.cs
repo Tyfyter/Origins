@@ -93,7 +93,7 @@ namespace Origins.Items.Accessories {
 			MathUtils.LinearSmoothing(ref Opacity, (OriginPlayer.LocalOriginPlayer?.gasMask ?? false).ToInt(), 0.1f);
 			if (Opacity == 0) return;
 			Color baseColor = Color.Black;
-			if (OriginPlayer.LocalOriginPlayer.gasMaskDye != 0) baseColor = Color.Gray;
+			if ((OriginPlayer.LocalOriginPlayer?.gasMaskDye ?? 0) != 0) baseColor = Color.Gray;
 			Origins.shaderOroboros.Capture(spriteBatch);
 			SpriteBatchState state = spriteBatch.GetState();
 			spriteBatch.Restart(state, samplerState: SamplerState.LinearClamp);

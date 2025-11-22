@@ -29,6 +29,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileNoAttach[Type] = false;
 			AddMapEntry(new(36, 33, 31), CreateMapEntryName(), MapChestName);
 			AdjTiles = [TileID.Containers];
+			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 			RegisterItemDrop(item.Type);
 		}

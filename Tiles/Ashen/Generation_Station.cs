@@ -48,6 +48,7 @@ namespace Origins.Tiles.Ashen {
 			AnimationFrameHeight = TileObjectData.newTile.CoordinateHeights.Sum() + TileObjectData.newTile.Height * 2;
 			TileObjectData.addTile(Type);
 			ID = Type;
+			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {

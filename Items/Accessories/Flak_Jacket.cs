@@ -20,7 +20,7 @@ namespace Origins.Items.Accessories {
 			Item.knockBack = 4f;
 			Item.defense = 1;
 			Item.shoot = ModContent.ProjectileType<Flak_Jacket_Explosion>();
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(gold: 1);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
@@ -45,9 +45,9 @@ namespace Origins.Items.Accessories {
 					Projectile.NewProjectile(
 						Projectile.GetSource_FromThis(),
 						Projectile.Center,
-						GeometryUtils.Vec2FromPolar(6, rot * i + Main.rand.NextFloat(0.3f) * Main.rand.NextBool().ToDirectionInt()) + Main.rand.NextVector2Unit(),
+						GeometryUtils.Vec2FromPolar(14, rot * i + Main.rand.NextFloat(0.3f) * Main.rand.NextBool().ToDirectionInt()) + Main.rand.NextVector2Unit(),
 						Main.rand.Next(projectiles).Type,
-						Projectile.damage / 3,
+						Projectile.damage / 2,
 						Projectile.knockBack * 0.25f,
 						Projectile.owner
 					);
@@ -64,7 +64,7 @@ namespace Origins.Items.Accessories {
 			Projectile.height = 4;
 			Projectile.friendly = true;
 			Projectile.penetrate = 1;
-			Projectile.timeLeft = 30;
+			Projectile.timeLeft = 10;
 			Projectile.extraUpdates = 1;
 			Projectile.aiStyle = 0;
 			Projectile.localNPCHitCooldown = 10;

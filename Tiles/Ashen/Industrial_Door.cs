@@ -56,6 +56,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceLeft;
 			TileObjectData.addAlternate(1);
 			TileObjectData.addTile(Type);
+			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 			RegisterItemDrop(Item.Type);
 

@@ -44,6 +44,7 @@ namespace Origins.Tiles.Ashen {
 
 			AddMapEntry(FromHexRGB(0x0A3623), Item.DisplayName);
 			AdjTiles = [BaseTileID, Type];
+			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 
 			RegisterItemDrop(Item.Type);

@@ -457,6 +457,12 @@ DeathMessage: {
 
 	// Tripod_0: "{0} forgot the tripod nip."
 	// Tripod_1: "{0} got rekt by a {§Mods.Origins.NPCs.Defiled_Tripod.DisplayName}."
+
+	Miasma: {
+		// 0: "{0} thought climate change was just a joke."
+		// 1: "{0}'s lungs couldn't handle it."
+		// 2: "{0} couldn't breathe pollution."
+	}
 }
 
 Generic: {

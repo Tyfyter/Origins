@@ -55,6 +55,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
 			ID = Type;
+			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
 
