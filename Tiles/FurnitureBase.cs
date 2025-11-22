@@ -660,7 +660,7 @@ namespace Origins.Tiles {
 			Main.tileSolid[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileTable[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+			Main.tileLavaDeath[Type] = LavaDeath;
 			TileID.Sets.Platforms[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.CanBeSloped[Type] = BaseTileID == TileID.Platforms;
