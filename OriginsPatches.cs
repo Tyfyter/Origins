@@ -813,8 +813,15 @@ namespace Origins {
 		}
 
 		static bool shouldDoHeliumSound = false;
+		static bool shouldDoMuffledSound = false;
 		static float heliumSoundPitch = 0f;
 		private static ReLogic.Utilities.SlotId On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback1(On_SoundEngine.orig_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback orig, ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback) {
+			if (shouldDoMuffledSound) {
+				if (style == SoundID.PlayerHit) ;
+				else if (style == SoundID.FemaleHit) ;
+				else if (style == SoundID.DSTMaleHurt) ;
+				else if (style == SoundID.DSTFemaleHurt) ;
+			}
 			if (shouldDoHeliumSound) {
 				SoundStyle styleCopy = style.WithPitchOffset(heliumSoundPitch);
 				return orig(ref styleCopy, position, updateCallback);
@@ -828,10 +835,12 @@ namespace Origins {
 					OriginPlayer originPlayer = self.OriginPlayer();
 					shouldDoHeliumSound = originPlayer.heliumTankSqueak;
 					heliumSoundPitch = originPlayer.heliumTankStrength;
+					shouldDoMuffledSound = originPlayer.gasMask;
 				}
 				orig(self, info, quiet);
 			} finally {
 				shouldDoHeliumSound = false;
+				shouldDoMuffledSound = false;
 			}
 		}
 

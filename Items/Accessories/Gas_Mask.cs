@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
+using Origins.Items.Materials;
 using PegasusLib;
 using PegasusLib.Graphics;
 using Terraria;
@@ -70,10 +71,17 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateEquip(Player player) {
 			player.OriginPlayer().gasMask = true;
+			player.buffImmune[BuffID.Stinky] = true;
+			//player.buffImmune[ModContent.BuffType<Miasma>()] = true;
 		}
 		public override void UpdateItemDye(Player player, int dye, bool hideVisual) {
 			player.OriginPlayer().gasMaskDye = dye;
 		}
+		public override void AddRecipes() => CreateRecipe()
+			.AddIngredient<Rubber>(3)
+			.AddIngredient<Silicon_Bar>(8)
+			.AddIngredient<Adhesive_Wrap>(3)
+			.Register();
 	}
 	internal class Gas_Mask_Overlay() : Overlay(EffectPriority.High, RenderLayers.All), ILoadable {
 		AutoLoadingAsset<Texture2D> vignette = "Origins/Textures/Vignette";
