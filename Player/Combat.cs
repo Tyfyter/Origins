@@ -23,6 +23,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.WorldBuilding;
+using ThoriumMod.Projectiles;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -508,6 +509,20 @@ namespace Origins {
 			}
 			if (cavitationDebuff) {
 				Player.lifeRegen -= 33;
+			}
+			if (miasma) {
+				if (Player.breath <= 0) {
+					Player.lifeRegenTime = 0f;
+					Player.breath = 0;
+					if (Main.rand.NextBool(10)) Player.statLife -= 1;
+					if (Player.statLife <= 0) {
+						Player.statLife = 0;
+						Player.KillMe(PlayerDeathReason.ByOther(1), 10.0, 0);
+					}
+				} else if (Player.breathCD.Warmup(Player.breathCDMax + Player.breathCDMax / 2)) {
+					Player.breathCD = 0;
+					Player.breath--;
+				}
 			}
 
 			if (staticShock || miniStaticShock || staticShockDamage) {

@@ -42,7 +42,7 @@ namespace Origins.Buffs {
 			c.MoveAfterLabels();
 			if (c.Prev.Operand is ILLabel label) {
 				c.EmitLdarg0();
-				c.EmitDelegate((Player player) => player.OriginPlayer().toxicShock);
+				c.EmitDelegate((Player player) => player.OriginPlayer().DisableBreathRestore);
 				c.EmitBrtrue(label);
 			} else {
 				Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.ToxicShockILEditFail"));

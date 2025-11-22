@@ -414,7 +414,9 @@ namespace Origins {
 		public int preMedicinalAcidLife = 0;
 		public int medicinalAcidLife = 0;
 		public bool murkySludge = false;
+		public bool miasma = false;
 
+		public bool DisableBreathRestore => toxicShock || miasma;
 		public bool sendBuffs = false;
 		#endregion
 
@@ -1176,6 +1178,7 @@ namespace Origins {
 			}
 			medicinalAcid = false;
 			murkySludge = false;
+			miasma = false;
 			if (dangerTime <= 0) dangerTime = 0;
 			else dangerTime--;
 			InDanger = dangerTime > 0;

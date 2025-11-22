@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Ashen;
@@ -74,7 +75,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.OriginPlayer().gasMask = true;
 			player.buffImmune[BuffID.Stinky] = true;
-			//player.buffImmune[ModContent.BuffType<Miasma>()] = true;
+			player.buffImmune[ModContent.BuffType<Miasma_Debuff>()] = true;
 		}
 		public override void UpdateItemDye(Player player, int dye, bool hideVisual) {
 			player.OriginPlayer().gasMaskDye = dye;

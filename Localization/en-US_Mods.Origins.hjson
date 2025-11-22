@@ -1396,6 +1396,11 @@ Buffs: {
 		DisplayName: Muckin' About
 		Description: Your movement speed is reduced!
 	}
+
+	Miasma_Debuff: {
+		DisplayName: Miasma Debuff
+		Description: Mods.Origins.Buffs.Miasma_Debuff.Description
+	}
 }
 
 DamageClassName: {

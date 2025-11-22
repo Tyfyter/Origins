@@ -359,7 +359,7 @@ STATUS EFFECTS:
 (^) Cavitation
 (^) Impeding Shrapnel
 (^) Mana Buffer
-(#, ^2) Miasma !!!
+(☻) Miasma !!!
 (X) Quantum Vitiation
 (^) Rasterized
 (^) Shadefire
