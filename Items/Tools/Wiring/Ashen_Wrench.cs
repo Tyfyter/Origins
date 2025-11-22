@@ -17,6 +17,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools.Wiring {
 	public class Screwdriver : ModItem, IWireTool {
 		public IEnumerable<WireMode> Modes => WireModeLoader.GetSorted(WireMode.Sets.AshenWires);
+		public override void SetStaticDefaults() {
+			Item.staff[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WireKite);
 			Item.shoot = ModContent.ProjectileType<Mod_Wire_Channel>();
