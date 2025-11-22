@@ -497,7 +497,7 @@ ACCESSORIES:
 (^) Bomb Charm of Regeneration
 (^) Bomb Handling Device
 (^) Boomerang Magnet
-(#, ^2) Breathing Unit !!!
+(☻) Breathing Unit !!!
 (^) Brine-Leafed Clover
 (^) Bug Trapper
 (^) C.F.H.E.S.
@@ -521,7 +521,7 @@ ACCESSORIES:
 (^) Dysfunctional Endless Explosives Bag
 (^) Eccentric Stone
 (^) Eitrite Gun Magazine
-(#2, ^2) Eitrite Watch !!!
+(☻) Eitrite Watch !!!
 (^) Evil Bar Gun Magazines
 (X) Exo-Arms !!!
 (X) Exo-Legs !!!
@@ -533,14 +533,14 @@ ACCESSORIES:
 (^) Fallacious Vase
 (^) Feather Cape
 (^) Feathery Crest
-(#, ^2) Filter Breather !!!
+(☻) Filter Breather !!!
 (#, ^2) Flak Jacket !!!
 (^) Fleshy Figurine
 (^) Focus Crystal
 (^) Full Send
 (^) Futurephones
 (^) Gaming Glove
-(#, ^2) Gas Mask !!!
+(☻) Gas Mask !!!
 (^) Golden Lotus
 (⛥) Grave Danger
 (^) Gun Glove

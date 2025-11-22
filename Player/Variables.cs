@@ -332,6 +332,8 @@ namespace Origins {
 		public int? dashBaseDamage = 0;
 		public bool airTank = false;
 		public bool gasMask = false;
+		public bool AnyGasMask => gasMask || filterBreather;
+		public bool filterBreather = false;
 		public int gasMaskDye = 0;
 		public const float gasMaskMult = 0.75f;
 
@@ -843,6 +845,7 @@ namespace Origins {
 			airTank = false;
 			gasMask = false;
 			gasMaskDye = 0;
+			filterBreather = false;
 			lotteryTicketItem = null;
 
 			

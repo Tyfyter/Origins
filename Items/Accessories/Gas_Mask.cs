@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Tiles.Ashen;
 using PegasusLib;
 using PegasusLib.Graphics;
 using Terraria;
@@ -17,9 +18,10 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Gas_Mask : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat
+			WikiCategories.Misc
 		];
 		public override void Load() {
+			if (GetType() != typeof(Gas_Mask)) return;
 			On_ItemSlot.isEquipLocked += On_ItemSlot_isEquipLocked;
 			On_ItemSlot.SwapVanityEquip += On_ItemSlot_SwapVanityEquip;
 			On_ItemSlot.AccCheck += (orig, itemCollection, item, slot) => {
@@ -81,6 +83,7 @@ namespace Origins.Items.Accessories {
 			.AddIngredient<Rubber>(3)
 			.AddIngredient<Silicon_Bar>(8)
 			.AddIngredient<Adhesive_Wrap>(3)
+			.AddTile<Medicine_Fabricator>()
 			.Register();
 	}
 	internal class Gas_Mask_Overlay() : Overlay(EffectPriority.High, RenderLayers.All), ILoadable {

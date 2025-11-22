@@ -44,7 +44,7 @@ Advanced_Imaging: {
 		Increased projectile speed
 		10% increased critical strike chance
 		20% increased explosive blast radius
-		Immunity to Confusion
+		Grants immunity to [buffhint/self:Confused]
 		'''
 }
 
@@ -53,7 +53,7 @@ Air_Tank: {
 	Tooltip:
 		'''
 		Extends underwater breathing
-		Immunity to 'Suffocation'
+		Grants immunity to [buffhint/self:Suffocation]
 		'''
 }
 
@@ -441,7 +441,7 @@ Helium_Tank: {
 	Tooltip:
 		'''
 		Extends underwater breathing
-		Immunity to 'Suffocation'
+		Grants immunity to [buffhint/self:Suffocation]
 		'Don't laugh'
 		'''
 }
@@ -790,7 +790,7 @@ Sonar_Visor: {
 		Increased projectile speed
 		10% increased critical strike chance
 		20% increased explosive blast radius
-		Immunity to Confusion
+		Grants immunity to [buffhint/self:Confused]
 		Highlights the outermost layer of tiles
 		'''
 }
@@ -5225,7 +5225,7 @@ Faith_Beads: {
 	DisplayName: Faith Beads
 	Tooltip:
 		'''
-		Immunity to [buffhint/self:Suffocation] and reduces damage from loss of breath
+		Grants immunity to [buffhint/self:Suffocation] and reduces damage from loss of breath
 		Grants the ability to swim and easy movement through liquids
 		All of your attacks inflict [buffhint:Origins/Cavitation_Debuff], [buffhint:Wet][ox:,] and have a chance to cause explosions underwater
 		+40% explosive blast radius
@@ -7370,5 +7370,26 @@ Gas_Mask: {
 		'''
 		Debuff durations are reduced by 30%
 		Slightly reduces vision
+		Grants immunity to [buffhint/self:Stinky] and [buffhint/self:Origins/Miasma]
+		'''
+}
+
+Filter_Breather: {
+	DisplayName: Filter Breather
+	Tooltip:
+		'''
+		{$Gas_Mask.Tooltip}
+		{$Rebreather.Tooltip}
+		'''
+}
+
+Breathing_Unit: {
+	DisplayName: Breathing Unit
+	Tooltip:
+		'''
+		Debuff durations are reduced by 30%
+		Slightly reduces vision
+		Extends underwater breathing
+		Grants immunity to [buffhint/self:Suffocation], [buffhint/self:Stinky][ox:,] and [buffhint/self:Origins/Miasma]
 		'''
 }
