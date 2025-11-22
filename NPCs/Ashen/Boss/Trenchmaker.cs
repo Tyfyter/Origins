@@ -4,6 +4,7 @@ using MonoMod.Cil;
 using Origins.Graphics.Primitives;
 using Origins.Items.Materials;
 using Origins.Items.Other;
+using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Vanity.BossMasks;
@@ -356,6 +357,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 		}
+		public override void BossLoot(ref int potionType) => potionType = ModContent.ItemType<Morphine>();
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			normalDropRule = new LeadingSuccessRule();
 

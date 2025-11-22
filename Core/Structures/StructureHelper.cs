@@ -357,10 +357,8 @@ namespace Origins.Core.Structures {
 				Associations.Add("Void", '.');
 				Point min = leftClick;
 				Point max = rightClick;
-				Min(ref min.X, rightClick.X);
-				Min(ref min.Y, rightClick.Y);
-				Max(ref max.X, leftClick.X);
-				Max(ref max.Y, leftClick.Y);
+				MinMax(ref min.X, ref max.X);
+				MinMax(ref min.Y, ref max.Y);
 				string[] lines = new string[max.Y + 1 - min.Y];
 				Dictionary<char, string> key = [];
 				Dictionary<char, RoomSocket> socketKey = [];
@@ -553,10 +551,8 @@ namespace Origins.Core.Structures {
 			if (Structure_Helper_Item.leftClick is not Point leftClick || Structure_Helper_Item.rightClick is not Point rightClick) return;
 			Point min = leftClick;
 			Point max = rightClick;
-			Min(ref min.X, rightClick.X);
-			Min(ref min.Y, rightClick.Y);
-			Max(ref max.X, leftClick.X);
-			Max(ref max.Y, leftClick.Y);
+			MinMax(ref min.X, ref max.X);
+			MinMax(ref min.Y, ref max.Y);
 			if (!Main.mapFullscreen) {
 				Rectangle value = Main.ReverseGravitySupport(new Rectangle(min.X * 16, min.Y * 16, (max.X + 1 - min.X) * 16, (max.Y + 1 - min.Y) * 16));
 				Rectangle value2 = Main.ReverseGravitySupport(new Rectangle((int)Main.screenPosition.X, (int)Main.screenPosition.Y, Main.screenWidth + 1, Main.screenHeight + 1));

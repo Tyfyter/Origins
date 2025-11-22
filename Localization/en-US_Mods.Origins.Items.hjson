@@ -8,6 +8,10 @@ GenericTooltip: {
 	Extractinator: For use with the Extractinator
 	AltAttack: <right> while holding for an alternate attack
 	HealStamina: Restores {0} stamina
+	IncreasedPotionSickness: Increased potion cooldown
+	GreatlyIncreasedPotionSickness: Greatly increased potion cooldown
+	DecreasedPotionSickness: Reduced potion cooldown
+	GreatlyDecreasedPotionSickness: Greatly reduced potion cooldown
 
 	HealDebuffs: {
 		Base: "Cleanses and grants immunity to "

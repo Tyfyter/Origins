@@ -5257,5 +5257,8 @@ namespace Origins {
 		public static void Max<T>(ref T current, T @new) where T : IComparisonOperators<T, T, bool> {
 			if (current < @new) current = @new;
 		}
+		public static void MinMax<T>(ref T min, ref T max) where T : IComparisonOperators<T, T, bool> {
+			if (min > max) Utils.Swap(ref min, ref max);
+		}
 	}
 }

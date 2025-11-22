@@ -1,4 +1,5 @@
 ﻿using PegasusLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -61,6 +62,25 @@ namespace Origins.Items.Other.Consumables.Medicine {
 				for (int i = 0; i < tooltips.Count; i++) {
 					if (tooltips[i].Name == "Tooltip0") {
 						tooltips.Insert(i, new(Mod, "HealDebuffs", TextUtils.Format("Mods.Origins.Items.GenericTooltip.HealDebuffs", ImmunityList(debuffs))));
+						break;
+					}
+				}
+			}
+			if (CooldownIncrease != 0) {
+				int amount = Math.Abs(CooldownIncrease / 60);
+				string changeAmount = "";
+				if (amount > 30) {
+					changeAmount = "Greatly";
+				}
+				string direction = CooldownIncrease > 0 ? "Increased" : "Decreased";
+				string description = Language.GetTextValue($"Mods.Origins.Items.GenericTooltip.{changeAmount}{direction}PotionSickness");
+				for (int i = 0; i < tooltips.Count; i++) {
+					if (tooltips[i].Name == "Tooltip0") {
+						if (string.IsNullOrWhiteSpace(tooltips[i].Text)) {
+							tooltips[i].Text = description;
+						} else {
+							tooltips.Insert(++i, new(Mod, "Cooldown", description));
+						}
 						break;
 					}
 				}
