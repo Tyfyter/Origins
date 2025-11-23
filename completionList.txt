@@ -576,7 +576,7 @@ ACCESSORIES:
 (^) Mithrafin
 (^) Molten Gun Magazine
 (X) Netlace
-(X) Nightsky Cloak !!!
+(#, ^2) Nightsky Cloak !!!
 (^) Nitro Crate
 (^) No U Card
 (^) Noxious Mithrafin
@@ -611,7 +611,7 @@ ACCESSORIES:
 (^) Shotgun Glove
 (^) Slag Bucket (Cursed)
 (^) Slag Bucket (Uncursed)
-(X) Smog Pod-4 !!!
+(#, ^2) Smog Pod-4 !!!
 (^) Sniper's Mark
 (^) Solar Panel
 (^) Sonar Visor
@@ -621,7 +621,7 @@ ACCESSORIES:
 (^) Spirit Shard
 (^) Stone Mask
 (ᥢ) Strange Computer
-(@3, #) Stress Ball !!!
+(#, ^2) Stress Ball !!!
 (^) Sunder Gut
 (^) Super Turbo Reel
 (^) Superjump Cape
@@ -647,7 +647,7 @@ ACCESSORIES:
 
 (^) Amebic Vial
 (^) Blizzardwalker's Jacket
-(X) Crystal Heart !!!
+(#, ^2) Crystal Heart !!!
 (^) Cursed Crown
 (^) Emergency Bee Canister
 (^) Faith Beads
@@ -658,9 +658,9 @@ ACCESSORIES:
 (X) Lunatic's Rune !!!
 (^) Mysterious Spray
 (X) Retool Arm !!!
-(X) Robo-tail !!!
+(#, ^2) Robo-tail !!!
 (^) Scribe of the Meat God
-(X) Space Pirate's Eye !!!
+(#, ^2) Space Pirate's Eye !!!
 (^) Stack of Shraps
 (^) Strange Tooth
 (^) Terrarian Voodoo Doll
@@ -1542,7 +1542,7 @@ MATERIALS:
 
 MISCELLANEOUS ITEMS:
 |---
-(^3) Armor+ Power-Up !!!
+(#2, ^2) Armor+ Power-Up !!! (fancy visuals, appearance and soft glow)
 (^) Defiled Mana
 (^) Large Chambersite
 (^) Worn Paper: Loose Wheel
@@ -1630,17 +1630,17 @@ CONSUMABLES:
 (^5) Unmarked Antidote
 
 (^) Bad Juju Stone
-(X) BBQ Skewer !!!
+(#, ^2) BBQ Skewer !!!
 (^) Bileberry
-(X) Blastberry !!!
+(#, ^2) Blastberry !!!
 (^) Blue Bovine
 (^) Bread
 (^) Brine Cheese
 (#, ^2) Budget Fairy Dust
 (^) Caeser Salad
-(X) Cognac !!!
+(#, ^2) Cognac !!!
 (^) Contaminated Infusion
-(X) Crockin Sprocks !!!
+(#, ^2) Crockin' Sprocks !!!
 (^) Edible Hair Gel
 (^) Honey Wheat Bread
 (^) Irish Cheddar
@@ -1659,7 +1659,7 @@ CONSUMABLES:
 (^) Sour Apple
 (^) Spearmint Tea
 (#, ^2) Sweet Tooth Shake
-(X) Tangerine !!!
+(#, ^2) Tangerine !!!
 (#, ^2) Tasty Booger
 (^) Vanilla Shake
 
@@ -1693,7 +1693,7 @@ CONSUMABLES:
 (^) Brine Key
 (^) Defiled Key
 (^) Hell Key
-(X) Mechanical Keys !!!
+(#, ^2) Mechanical Keys !!!
 (^) Mushroom Key
 (^) Ocean Key
 (^) Riven Key
@@ -1747,7 +1747,7 @@ AMMO:
 |---
 (^) Aether Bullet
 (^) Aether Canister
-(X) Armor-Piercing Bullet !!!
+(#, ^2) Armor-Piercing Bullet !!!
 (^) Bee Canister
 (^) Bouncy Harpoon
 (^) Defiled Spirit
@@ -1784,7 +1784,7 @@ AMMO:
 (^) Ichor Harpoon
 (^) Metal Slug
 (^) Resizable Mine V
-(X) Scrap Dart !!!
+(#, ^2) Scrap Dart !!!
 
 (^) Resizable Mine VI
 

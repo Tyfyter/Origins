@@ -16,7 +16,7 @@ namespace Origins.Tiles.Ashen {
 				item.CloneDefaults(ItemID.AlchemyTable);
 				item.createTile = Type;
 				item.rare++;
-				item.value += Terraria.Item.buyPrice(gold: 1, silver: 50);
+				item.value += Terraria.Item.buyPrice(gold: 1);
 			}).WithOnAddRecipes(item => Recipe.Create(Item.Type)
 				.AddIngredient(ItemID.AlchemyTable)
 				.AddIngredient<NE8>(10)
