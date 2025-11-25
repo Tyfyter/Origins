@@ -144,9 +144,28 @@
 				"L      C      R",
 				"GGGGGGGGGGGGGGG"
 			],
+			"SocketKey": {
+				"L": {
+					"Key": "Hallway",
+					"Direction": "Left"
+				},
+				"R": {
+					"Key": "Hallway",
+					"Direction": "Right"
+				}
+			}
+		},
+		"Tables": {
+			"Map": [
+				"GGGGGGGGGGGGGGG",
+				"               ",
+				"               ",
+				"               ",
+				"L T  T C T  T R",
+				"GGGGGGGGGGGGGGG"
+			],
 			"Key": {
-				".": "Void",
-				"G": "PaintTile(Red)+PlaceTile(Grass)"
+				"T": "PlaceSpecialTile(Tables)"
 			},
 			"SocketKey": {
 				"L": {
@@ -170,7 +189,9 @@
 		"_": "PlaceTile(Grass)+PaintTile(Blue)+SlopeTile(HalfBlock)",
 		"V": "PlaceSpecialTile(Origins/Heat_Vent)",
 		" ": "Empty",
-		"D": "PlaceSpecialTile(ClosedDoor,48)"
+		"D": "PlaceSpecialTile(ClosedDoor,48)",
+		".": "Void",
+		"G": "PaintTile(Red)+PlaceTile(Grass)"
 	},
 	"BreakCondition": "MaxRoomCount(15)",
 	"ValidLayoutCheck": "RequireRoom(Required_Hallway)"
