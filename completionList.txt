@@ -513,7 +513,7 @@ ACCESSORIES:
 (^) Counter-offensive Scarf
 (#, ^2) CSTAA Jacket !!!
 (^) Danger Barrel
-(X) Decorative A.S.H.E.S. !!!
+(#, ^2) Decorative A.S.H.E.S. !!!
 (^) Destructive Claws
 (^) Dim Starlight
 (^) Donor Wristband
@@ -523,7 +523,7 @@ ACCESSORIES:
 (^) Eitrite Gun Magazine
 (^) Eitrite Watch
 (^) Evil Bar Gun Magazines
-(X) Exo-Arms !!!
+(#, ^2) Exo-Arms !!!
 (X) Exo-Legs !!!
 (X) Exo-Suit !!!
 (X) Exo-Weapon Mount !!!
@@ -583,7 +583,7 @@ ACCESSORIES:
 (^) Olid Organ
 (^) Ornamental Keepsake
 (^) Otherworldly Cloak
-(X) Pacemaker !!!
+(#, ^2) Pacemaker !!!
 (X) Parasite Arm
 (^) Party Ring Balloon
 (^) Plasma Bag
@@ -959,7 +959,7 @@ MAGIC WEAPONS:
 (^) Splitsplash
 (^) Tones of Agony
 
-(X) Blast Furnace !!!
+(#, ^2) Blast Furnace !!!
 (^) Bled Out Staff
 (^) Brine Haze
 (^) Chemical Laser
@@ -968,7 +968,7 @@ MAGIC WEAPONS:
 (^) Dismay
 (^) Eternanite
 (⛥) Innermost Manifest
-(X) Laser Target Locator !!!
+(#, ^2) Laser Target Locator !!!
 (^) Seam Beam
 (^) Shimmer Rod
 (^) Shinedown
@@ -1141,7 +1141,7 @@ EXPLOSIVE WEAPONS:
 (X) Chlorophyte Handcannon !!!
 (#, ^2) Firework Cannon
 (X) Flarefury
-(X) Holy Hand Grenade !!!
+(#, ^2) Holy Hand Grenade !!!
 (^) Mine Flayer
 (^) Nova Cascade
 (^) Nova Swarm
@@ -1175,7 +1175,7 @@ GENERIC WEAPONS:
 (^) Potato Launcher
 
 (X) Pressurized Supersoaker
-(X) Super Generic Weapon !!!
+(#, ^2) Super Generic Weapon !!!
 
 (X) Mega Generic Weapon
 ---
@@ -1261,6 +1261,7 @@ TILES:
 
 (^) Amebic Gel Wall
 (^) Artifiber Wall
+(#, ^2) Ashen Grass Wall !!!
 (^) Barnacle Wall
 (^) Baryte Wall
 (^) Batholith Wall
