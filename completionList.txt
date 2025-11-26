@@ -897,7 +897,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler
 (^) Adamantite Harpoon Gun
-(X) AMRSL 'Skewer' !!!
+(#, ^2) AMRSL 'Skewer' !!!
 (^) Bleeding Obsidian Kunai
 (X) Blenderbuss
 (^) Boat Rocker
@@ -932,7 +932,7 @@ RANGED WEAPONS:
 (X) EAC Thunder
 (X) Fungi Pipe
 (X) Shroomshot
-(X) The P.L.A.N.T. !!!
+(#, ^2) The P.L.A.N.T. !!!
 (^) Tolruk
 
 (X) L.W.M.U.G.
