@@ -1406,6 +1406,7 @@ Buffs: {
 	Miasma_Debuff: {
 		DisplayName: Miasma
 		Description: It's getting hard to breathe...
+		EffectDescription: Drains breath slowly
 	}
 }
 

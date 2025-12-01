@@ -7374,7 +7374,7 @@ Gas_Mask: {
 		'''
 		Slightly reduces vision
 		Debuff durations are reduced by 30%
-		Grants immunity to [buffhint/self:Stinky] and [buffhint/self:Origins/Miasma]
+		Grants immunity to [buffhint/self:Stinky] and [buffhint/self:Origins/Miasma_Debuff]
 		''' */
 }
 
@@ -7394,7 +7394,7 @@ Breathing_Unit: {
 		Slightly reduces vision
 		Extends underwater breathing
 		Debuff durations are reduced by 30%
-		Grants immunity to [buffhint/self:Suffocation], [buffhint/self:Stinky][ox:,] and [buffhint/self:Origins/Miasma]
+		Grants immunity to [buffhint/self:Suffocation], [buffhint/self:Stinky][ox:,] and [buffhint/self:Origins/Miasma_Debuff]
 		''' */
 }
 

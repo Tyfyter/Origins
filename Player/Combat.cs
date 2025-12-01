@@ -519,7 +519,7 @@ namespace Origins {
 					if (Main.rand.NextBool(10)) Player.statLife -= 1;
 					if (Player.statLife <= 0) {
 						Player.statLife = 0;
-						Player.KillMe(PlayerDeathReason.ByOther(1), 10.0, 0);
+						Player.KillMe(PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Miasma").SelectFrom(Player.name).ToNetworkText()), 10.0, 0);
 					}
 				} else if (Player.breathCD.Warmup(Player.breathCDMax + Player.breathCDMax / 2)) {
 					Player.breathCD = 0;
