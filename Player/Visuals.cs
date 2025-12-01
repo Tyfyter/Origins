@@ -107,6 +107,7 @@ namespace Origins {
 			if (gasMask && OriginsModIntegrations.CheckAprilFools()) {
 				drawInfo.drawPlayer.face = ModContent.GetInstance<Gas_Mask>().Item.faceSlot;
 			}
+			if (drawInfo.drawPlayer.front > 0 && OriginsSets.Armor.Front.DrawsInNeckLayer[drawInfo.drawPlayer.front]) drawInfo.drawFrontAccInNeckAccLayer = true;
 		}
 		public override void FrameEffects() {
 			Debugging.LogFirstRun(FrameEffects);

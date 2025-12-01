@@ -383,6 +383,13 @@ namespace Origins {
 			.Description("Denotes prefixes which have effects other than stat changes")
 			.RegisterBoolSet(false);
 		}
+		public static class Armor {
+			[ReinitializeDuringResizeArrays]
+			public static class Front {
+				public static bool[] DrawsInNeckLayer { get; } = ArmorIDs.Front.Sets.Factory.CreateNamedSet(nameof(DrawsInNeckLayer))
+				.RegisterBoolSet(false);
+			}
+		}
 		public static class Misc {
 			public static HashSet<(Effect effect, string pass)> BasicColorDyeShaderPasses = [];
 			public static bool[] BasicColorDyeShaders;

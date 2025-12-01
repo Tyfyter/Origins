@@ -14,6 +14,9 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => [
 			WikiCategories.Combat
 		];
+		public override void SetStaticDefaults() {
+			OriginsSets.Armor.Front.DrawsInNeckLayer[Item.frontSlot] = true;
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
 			Item.damage = 30;
