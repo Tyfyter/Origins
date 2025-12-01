@@ -119,6 +119,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.TryGetOwner(out Player player);
 			switch ((int)Projectile.ai[0]) {
 				case 2: {
+					if (Projectile.IsLocallyOwned()) {
+						int dir = player.direction;
+						player.ChangeDir(Math.Sign(Main.MouseWorld.X - player.MountedCenter.X));
+						if (dir != player.direction) NetMessage.SendData(MessageID.PlayerControls, -1, -1, null, player.whoAmI);
+					}
 					Projectile.Center = player.MountedCenter + new Vector2(player.direction * 12, Utils.PingPongFrom01To010(++Projectile.ai[1] / useTimeMax) * 16);
 					if (Projectile.IsLocallyOwned() && PlayerInput.Triggers.JustPressed.MouseLeft) {
 						GetShotVelocity(player, out Projectile.position, out Projectile.velocity, out _);
