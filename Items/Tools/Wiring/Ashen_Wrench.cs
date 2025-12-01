@@ -23,6 +23,7 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WireKite);
 			Item.shoot = ModContent.ProjectileType<Mod_Wire_Channel>();
+			Item.ChangePlayerDirectionOnShoot = true;
 			Item.channel = true;
 		}
 		public override void UpdateInventory(Player player) {
@@ -49,6 +50,7 @@ namespace Origins.Items.Tools.Wiring {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WireKite);
 			Item.shoot = ModContent.ProjectileType<Mod_Wire_Channel>();
+			Item.ChangePlayerDirectionOnShoot = true;
 			Item.channel = true;
 			Item.rare = ItemRarityID.Orange;
 		}
