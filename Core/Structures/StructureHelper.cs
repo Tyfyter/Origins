@@ -706,11 +706,6 @@ namespace Origins.Core.Structures {
 						spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(result.X + ((i == 1) ? result.Width : -2), result.Y, 2, result.Height), Color.White);
 					}
 				}
-				if (Main.MouseWorld.X >= min.X * 16 && Main.MouseWorld.Y >= min.Y * 16 && Main.MouseWorld.X <= (max.X + 1) * 16 && Main.MouseWorld.Y <= (max.Y + 1) * 16) {
-					Main.LocalPlayer.mouseInterface = true;
-					UICommon.TooltipMouseText("Left click to copy");
-					if (!Main.LocalPlayer.ItemAnimationJustStarted && Main.mouseLeft && Main.mouseLeftRelease) Structure_Helper_Item.CopyStructure();
-				}
 				return;
 			}
 		}
