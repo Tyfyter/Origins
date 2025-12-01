@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Graphics;
 using Terraria.ID;
 
@@ -12,9 +13,9 @@ namespace Origins.Walls {
 		CustomTilePaintLoader.CustomTileVariationKey paintKey;
 		public override void Load() => paintKey = CustomTilePaintLoader.CreateKey();
 		public virtual int HammerPower => 55;
+		public override SoundStyle? HitSound => SoundID.Tink;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			//HitSound = SoundID.Tink;
 			patternTexture = GetType().GetDefaultTMLName() + "_BG";
 			if (WallVersion == WallVersion.Natural) Origins.WallHammerRequirement[Type] = HammerPower;
 		}
@@ -47,19 +48,23 @@ namespace Origins.Walls {
 		public override int HammerPower => 100;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			//HitSound = SoundID.Tink;
 			if (WallVersion == WallVersion.Natural) OriginsSets.Walls.GeneratesLiquid[Type] = LiquidID.Lava;
 		}
 		public override bool CanMine(Player self, Item item, int i, int j) {
 			return NPC.downedGolemBoss;
 		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			r = 1;
+			g = 0.8f;
+			b = 0.1f;
+		}
 	}
 	public class Fortified_Steel_Wall3 : OriginsWall, IComplexMineDamageWall {
 		public override Color MapColor => FromHexRGB(0x211115);
+		public override SoundStyle? HitSound => SoundID.Tink;
 		public override WallVersion WallVersions => WallVersion.Natural | WallVersion.Safe | WallVersion.Placed_Unsafe;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			//HitSound = SoundID.Tink;
 			if (WallVersion == WallVersion.Natural) Origins.WallHammerRequirement[Type] = 100;
 		}
 		bool IComplexMineDamageWall.CanMine(Player self, Item item, int i, int j) {
