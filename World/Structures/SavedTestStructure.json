@@ -155,17 +155,17 @@
 				}
 			}
 		},
-		"Tables": {
+		"Chairs": {
 			"Map": [
 				"GGGGGGGGGGGGGGG",
 				"               ",
 				"               ",
 				"               ",
-				"L T  T C T  T R",
+				"LccccccCccccccR",
 				"GGGGGGGGGGGGGGG"
 			],
 			"Key": {
-				"T": "PlaceSpecialTile(Tables)"
+				"c": "PlaceSpecialTile(Chairs,0,1)"
 			},
 			"SocketKey": {
 				"L": {

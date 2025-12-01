@@ -3,12 +3,16 @@ using Newtonsoft.Json;
 using Origins.Items.Other.Testing;
 using Origins.Tiles.Dev;
 using Origins.UI;
+using PegasusLib;
+using PegasusLib.Graphics;
 using ReLogic.Content;
+using ReLogic.Graphics;
 using ReLogic.OS;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -46,7 +50,7 @@ namespace Origins.Core.Structures {
 			};
 			refreshButton.OnLeftClick += (_, _) => {
 				while (viewStack.Count > 0) viewStack.Pop();
-				RefreshStructure();
+				ReloadStructure();
 			};
 			refreshButton.OnUpdate += _ => {
 				if (refreshButton.IsMouseHovering) Main.instance.MouseText("Reload Structure");
@@ -65,7 +69,7 @@ namespace Origins.Core.Structures {
 				if (relativePath.StartsWith('.')) return;
 				while (viewStack.Count > 0) viewStack.Pop();
 				structurePath = relativePath.Replace(Path.DirectorySeparatorChar, '/');
-				RefreshStructure();
+				ReloadStructure();
 			};
 			selectFileButton.OnUpdate += _ => {
 				if (selectFileButton.IsMouseHovering) Main.instance.MouseText("Select Structure");
@@ -89,7 +93,7 @@ namespace Origins.Core.Structures {
 					writer.Write(newData);
 				}
 				while (viewStack.Count > 0) viewStack.Pop();
-				RefreshStructure();
+				ReloadStructure();
 			};
 			saveFileButton.OnUpdate += _ => {
 				if (saveFileButton.IsMouseHovering) Main.instance.MouseText(Lang.inter[47].Value);
@@ -124,20 +128,19 @@ namespace Origins.Core.Structures {
 			};
 			Append(inputFeedback);
 
-			textInput = new(LocalizedText.Empty, 1) {
+			textInput = new() {
 				Left = new(0, 0),
 				Top = new(8, 0.1f),
 				Width = new(0, 1),
 				HAlign = 0.5f
 			};
-			string inputValue = null;
-			textInput.OnContentsChanged += v => inputValue = v;
-			textInput.OnEndTakingInput += () => {
-				Associate(new UITextCommandCaller(this), inputValue?.Split(' '));
+			textInput.OnSubmit += inputValue => {
+				if (Associate(new UITextCommandCaller(inputFeedback), inputValue?.Split(' '))) textInput.Clear();
 			};
+			textInput.OnExit += IngameFancyUI.Close;
 			Append(textInput);
 		}
-		void RefreshStructure() {
+		void ReloadStructure() {
 			structure = Load(structurePath);
 			OnRoomsChanged();
 		}
@@ -152,23 +155,24 @@ namespace Origins.Core.Structures {
 				element.Update(gameTime);
 			}
 		}
-		class UITextCommandCaller(StructureHelperUI structureHelperUI) : CommandCaller {
+		public class UITextCommandCaller(UIText uiText) : CommandCaller {
 			public CommandType CommandType => CommandType.Chat;
-			public Player Player => Main.player[Main.myPlayer];
-			public void Reply(string text, Color color = default(Color)) {
-				structureHelperUI.inputFeedback.SetText(text);
-				if (color == default(Color))
+			public Player Player => Main.LocalPlayer;
+			public void Reply(string text, Color color = default) {
+				uiText.SetText(text);
+				if (color == default)
 					color = Color.White;
-				structureHelperUI.inputFeedback.TextColor = color;
+				uiText.TextColor = color;
 			}
 		}
 		IEnumerable<UIElement> ActiveElements() {
 			if (!StructureCommand.ReadyForNewAss) {
-				if (!textInput.IsWritingText) textInput.ToggleTakingText();
+				textInput.IsWritingText = true;
 				yield return inputFeedback;
 				yield return textInput;
 				yield break;
 			}
+			textInput.IsWritingText = false;
 			yield return selectFileButton;
 			if (structurePath is not null && structure is DeserializedStructure) yield return saveFileButton;
 			if (viewStack.Count > 0) {
@@ -191,14 +195,17 @@ namespace Origins.Core.Structures {
 		UIList roomList;
 		UIText text;
 		UIText inputFeedback;
-		UISearchBar textInput;
+		UIInputPanel textInput;
 		UIImageButton refreshButton;
 		UIImageButton selectFileButton;
 		UIImageButton saveFileButton;
 		UIImageButton deselectRoomButton;
 		public override void Draw(SpriteBatch spriteBatch) {
 			if (!StructureCommand.ReadyForNewAss) {
+				SpriteBatchState state = spriteBatch.GetState();
+				spriteBatch.Restart(state, transformMatrix: Main.GameViewMatrix.ZoomMatrix);
 				ModContent.GetInstance<Structure_Helper_HUD>().Draw(spriteBatch);
+				spriteBatch.Restart(state);
 				foreach (UIElement element in ActiveElements()) element.Draw(spriteBatch);
 				return;
 			}
@@ -248,10 +255,19 @@ namespace Origins.Core.Structures {
 			float height = 0;
 			foreach (ARoom room in rooms) {
 				UITextPanel<string> element = new(room.Identifier);
-				element.OnLeftClick += (_, _) => {
-					viewStack.Push(new(room));
+				element.OnLeftClick += (@event, _) => {
+					if (@event.Target == element) viewStack.Push(new(room));
 				};
 				element.Width.Set(0, 1);
+				UIConditionalButton deleteButton = new(TextureAssets.MapDeath, () => ItemSlot.ShiftInUse);
+				deleteButton.OnLeftClick += (_, _) => {
+					structure.RemoveRoom(room);
+					OnRoomsChanged();
+				};
+				deleteButton.HAlign = 1f;
+				deleteButton.VAlign = 0.5f;
+				deleteButton.Top.Set(0, -0.25f);
+				element.Append(deleteButton);
 				roomList.Add(element);
 				height += element.Height.Pixels + 4;
 			}
@@ -270,10 +286,8 @@ namespace Origins.Core.Structures {
 							return true;
 						};
 						Main.QueueMainThreadAction(() => {
-							inputFeedback.SetText($"Creating room, use /ass <name> to set its name");
+							inputFeedback.SetText($"Creating room, input a name");
 							inputFeedback.TextColor = Color.White;
-							Main.OpenPlayerChat();
-							Main.chatText = "/ass ";
 						});
 						SpinWait.SpinUntil(() => {
 							Structure_Helper_Item.leftClick = leftClick;
@@ -284,7 +298,7 @@ namespace Origins.Core.Structures {
 							Structure_Helper_Item.ShouldCancel = false;
 							return;
 						}
-						Structure_Helper_Item.ExportRoom(new UITextCommandCaller(this)).ContinueWith(_descriptor => {
+						Structure_Helper_Item.ExportRoom(new UITextCommandCaller(inputFeedback)).ContinueWith(_descriptor => {
 							RoomDescriptor descriptor = _descriptor.Result;
 							descriptor.Identifier = roomName;
 							structure.AddRoom(new DeserializedRoom(structure.Mod, descriptor));
@@ -301,6 +315,9 @@ namespace Origins.Core.Structures {
 			roomList.Width.Set(0, 0.4f);
 			roomList.HAlign = 0.5f;
 			roomList.Top.Set(32, 0.1f);
+		}
+		public override void OnDeactivate() {
+			StructureCommand.Cancel();
 		}
 		public class ViewState {
 			public ARoom room;
@@ -406,7 +423,7 @@ namespace Origins.Core.Structures {
 		static bool shouldCancel = false;
 		internal static bool ShouldCancel {
 			get => shouldCancel || Main.gameMenu;
-			set => shouldCancel |= value;
+			set => shouldCancel = value;
 		}
 		public static Dictionary<string, char> Associations { get; private set; } = [];
 		public static string CurrentTileData { get; private set; }
@@ -516,13 +533,19 @@ namespace Origins.Core.Structures {
 								return true;
 							};
 							Main.QueueMainThreadAction(() => {
-								if (socket is null) {
-									NewText($"New socket, use /ass <k> to set its map key");
+								string format;
+								if (caller is StructureHelperUI.UITextCommandCaller) {
+									format = "New socket, input {0} to set its {1}";
 								} else {
-									NewText($"New socket, use /ass <k> <socket> to set its map and socket keys");
+									format = "New socket, use /ass {0} to set its {1}";
+									Main.OpenPlayerChat();
+									Main.chatText = "/ass ";
 								}
-								Main.OpenPlayerChat();
-								Main.chatText = "/ass ";
+								if (socket is null) {
+									NewText(string.Format(format, "<k>", "map key"));
+								} else {
+									NewText(string.Format(format, "<k> <socket>", "map and socket keys"));
+								}
 							});
 							SpinWait.SpinUntil(() => {
 								Structure_Helper_Item.leftClick = leftClick;
@@ -544,9 +567,15 @@ namespace Origins.Core.Structures {
 									return !Associations.ContainsValue(c) && Associations.TryAdd(CurrentTileData, c);
 								};
 								Main.QueueMainThreadAction(() => {
-									NewText($"New tile pattern {CurrentTileData}, use /ass <k> to set its key");
-									Main.OpenPlayerChat();
-									Main.chatText = "/ass ";
+									string format;
+									if (caller is StructureHelperUI.UITextCommandCaller) {
+										format = "New tile pattern {0}, input {1} to set its {2}";
+									} else {
+										format = "New tile pattern {0}, use /ass {1} to set its {2}";
+										Main.OpenPlayerChat();
+										Main.chatText = "/ass ";
+									}
+									NewText(string.Format(format, CurrentTileData, "<k>", "map key"));
 								});
 								SpinWait.SpinUntil(() => {
 									Structure_Helper_Item.leftClick = leftClick;
@@ -694,18 +723,23 @@ namespace Origins.Core.Structures {
 		public override bool IsCaseSensitive => true;
 		public static event Func<string, string, bool> OnAss = null;
 		public static bool ReadyForNewAss => OnAss is null;
-		public static void Associate(CommandCaller caller, string[] args) {
-			if (args.Length <= 0) return;
+		public static void Cancel() {
+			Structure_Helper_Item.ShouldCancel = true;
+			OnAss = null;
+		}
+		public static bool Associate(CommandCaller caller, string[] args) {
+			if (args.Length <= 0) return false;
 			if (args[0] == "cancel") {
-				Structure_Helper_Item.ShouldCancel = true;
-				OnAss = null;
-				return;
+				Cancel();
+				return true;
 			}
 			if (OnAss?.Invoke(args[0], args.GetIfInRange(1)) ?? false) {
 				OnAss = null;
 				caller.Reply($"Successfully added {args[0]} <---> {Structure_Helper_Item.CurrentTileData}");
+				return true;
 			} else {
 				caller.Reply($"Could not add {args[0]} <---> {Structure_Helper_Item.CurrentTileData}");
+				return false;
 			}
 		}
 		public override void Load() {
@@ -725,5 +759,63 @@ namespace Origins.Core.Structures {
 			if (arg.Length != 1) throw new UsageException($"\" {arg} \" is not a single character in UTF-16", Color.Red);
 			return arg[0];
 		}
+	}
+	public class UIInputPanel(float textScale = 1, bool large = false) : UITextPanel<StringBuilder>(new(), textScale, large), ITextInputContainer {
+		public int CursorIndex { get; set; }
+		public bool IsWritingText { get; set; }
+		StringBuilder ITextInputContainer.Text => _text;
+		string lastSearch = "";
+		public void Clear() {
+			_text.Clear();
+			CursorIndex = 0;
+		}
+		public event Action<string> OnSubmit;
+		public event Action OnExit;
+		public void Reset() {
+			IsWritingText = false;
+			Clear();
+			_text.Append(lastSearch);
+			OnExit?.Invoke();
+		}
+		void ITextInputContainer.Submit() => OnSubmit?.Invoke(lastSearch = _text.ToString());
+		public void OnSubmitOnce(Func<string, bool> action) {
+			void onSubmit(string inputText) {
+				if (action(inputText)) OnSubmit -= onSubmit;
+			}
+		}
+		public override void Draw(SpriteBatch spriteBatch) {
+			if (IsWritingText) {
+				this.ProcessInput(out bool typed);
+				if (typed) SetText(_text);
+			}
+			DrawSelf(spriteBatch);
+			Vector2 offset = new(8 * (1 - TextHAlign), 2);
+			bool blink = Main.timeForVisualEffects % 40 < 20;
+			if (IsWritingText && blink) {
+				DynamicSpriteFont font = FontAssets.MouseText.Value;
+				CalculatedStyle innerDimensions = GetInnerDimensions();
+				Vector2 pos = innerDimensions.Position();
+				if (_isLarge)
+					pos.Y -= 10f * _textScale * _textScale;
+				else
+					pos.Y -= 2f * _textScale;
+
+				pos.X += (innerDimensions.Width - _textSize.X) * TextHAlign;
+				spriteBatch.DrawString(
+					font,
+					"|",
+					pos + font.MeasureString(Text.ToString()[..CursorIndex]) * Vector2.UnitX * _textScale + offset * new Vector2(0.5f, 1),
+					TextColor,
+					0,
+					new(0, 0),
+					_textScale,
+					0,
+				0);
+			}
+			DrawChildren(spriteBatch);
+		}
+	}
+	public class UIConditionalButton(Asset<Texture2D> texture, Func<bool> condition) : UIImageButton(texture) {
+		public override bool ContainsPoint(Vector2 point) => condition() && base.ContainsPoint(point);
 	}
 }

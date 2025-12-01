@@ -22,7 +22,7 @@ using static Origins.Core.Structures.DeserializedStructure;
 namespace Origins.Core.Structures {
 	public abstract class Structure {
 		public Mod Mod { get; private set; }
-		readonly List<ARoom> rooms = [];
+		protected readonly List<ARoom> rooms = [];
 		public IReadOnlyList<ARoom> Rooms => rooms;
 		public Structure(Mod mod, string fileName) {
 			Mod = mod;
@@ -67,6 +67,9 @@ namespace Origins.Core.Structures {
 		public void AddRoom(ARoom room) {
 			room.Validate();
 			rooms.Add(room);
+		}
+		internal void RemoveRoom(ARoom room) {
+			rooms.Remove(room);
 		}
 		public virtual void Load() { }
 		public virtual void SetUp() { }
