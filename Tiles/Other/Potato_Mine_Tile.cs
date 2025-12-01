@@ -27,6 +27,7 @@ namespace Origins.Tiles.Other {
 			Main.tileLavaDeath[Type] = true;
 			TileID.Sets.HasOutlines[Type] = false;
 			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.PressurePlate[Type] = 0;
 
 			// Names
 			AddMapEntry(new Color(150, 115, 45), CreateMapEntryName());
@@ -36,34 +37,10 @@ namespace Origins.Tiles.Other {
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.addTile(Type);
 			ID = Type;
-			if (ModLoader.HasMod("Avalon")) {
-				Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.AvalonPotatoMine"));
-			} else {
-				try {
-					int tileLoc = -1;
-					ILLabel label = default;
-					IL_Collision.SwitchTiles += [DebuggerHidden] (il) => new ILCursor(il)
-					.GotoNext(MoveType.After,
-						i => i.MatchLdloc(out tileLoc),
-						i => i.MatchLdcI4(TileID.PressurePlates),
-						i => i.MatchBeq(out label)
-					)
-					.EmitLdloc(tileLoc)
-					.EmitLdcI4(Type)
-					.EmitBeq(label);
-				} catch (Exception e) {
-					if (Origins.LogLoadingILError($"{nameof(Potato_Mine_Tile)}_BePressurePlate", e, (typeof(KeyNotFoundException), "Avalon", new(1, 3, 5)))) throw;
-				}
-			}
-			On_Wiring.HitSwitch += On_Wiring_HitSwitch;
 		}
-
-		private void On_Wiring_HitSwitch(On_Wiring.orig_HitSwitch orig, int i, int j) {
-			orig(i, j);
-			if (WorldGen.InWorld(i, j) && Main.tile[i, j].TileType == Type) {
-				WiringMethods.HitWireSingle(i, j);
-				Wiring.TripWire(i, j, 1, 1);
-			}
+		public override void HitSwitch(int i, int j) {
+			WiringMethods.HitWireSingle(i, j);
+			Wiring.TripWire(i, j, 1, 1);
 		}
 
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
