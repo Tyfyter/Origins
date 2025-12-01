@@ -161,11 +161,12 @@
 				"               ",
 				"               ",
 				"               ",
-				"LccccccCccccccR",
+				"LhhhhhhCccccccR",
 				"GGGGGGGGGGGGGGG"
 			],
 			"Key": {
-				"c": "PlaceSpecialTile(Chairs,0,1)"
+				"h": "PlaceSpecialTile(Chairs,0,1)",
+				"c": "PlaceSpecialTile(Chairs,0,-1)"
 			},
 			"SocketKey": {
 				"L": {

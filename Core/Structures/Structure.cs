@@ -71,6 +71,16 @@ namespace Origins.Core.Structures {
 		internal void RemoveRoom(ARoom room) {
 			rooms.Remove(room);
 		}
+		internal void AddOrReplaceRoom(ARoom room) {
+			room.Validate();
+			for (int i = 0; i < rooms.Count; i++) {
+				if (rooms[i].Identifier == room.Identifier) {
+					rooms[i] = room;
+					return;
+				}
+			}
+			rooms.Add(room);
+		}
 		public virtual void Load() { }
 		public virtual void SetUp() { }
 		public static HashSet<Point> ignoreEmpty = [];

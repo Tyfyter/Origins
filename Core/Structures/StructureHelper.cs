@@ -301,7 +301,7 @@ namespace Origins.Core.Structures {
 						Structure_Helper_Item.ExportRoom(new UITextCommandCaller(inputFeedback)).ContinueWith(_descriptor => {
 							RoomDescriptor descriptor = _descriptor.Result;
 							descriptor.Identifier = roomName;
-							structure.AddRoom(new DeserializedRoom(structure.Mod, descriptor));
+							structure.AddOrReplaceRoom(new DeserializedRoom(structure.Mod, descriptor));
 							OnRoomsChanged();
 						});
 					});
