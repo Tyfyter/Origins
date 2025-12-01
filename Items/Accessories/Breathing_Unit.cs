@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Breathing_Unit : Filter_Breather {
+		public override void SetStaticDefaults() { }
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.faceSlot = ModContent.GetInstance<Filter_Breather>()?.Item?.faceSlot ?? -1;

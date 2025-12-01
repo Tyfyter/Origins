@@ -533,7 +533,7 @@ ACCESSORIES:
 (^) Fallacious Vase
 (^) Feather Cape
 (^) Feathery Crest
-(#2, ^2) Filter Breather !!! (needs equip glow)
+(☻) Filter Breather !!!
 (☻) Flak Jacket !!!
 (^) Fleshy Figurine
 (^) Focus Crystal

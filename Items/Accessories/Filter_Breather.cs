@@ -1,10 +1,14 @@
-﻿using Terraria;
+﻿using Origins.Layers;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Filter_Breather : Gas_Mask {
+		public override void SetStaticDefaults() {
+			Accessory_Glow_Layer.AddGlowMask<Face_Glow_Layer>(Item.faceSlot, Texture + "_Face_Glow");
+		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.rare = ItemRarityID.LightRed;
