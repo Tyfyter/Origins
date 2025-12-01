@@ -90,6 +90,7 @@ namespace Origins.Items.Accessories {
 	internal class Gas_Mask_Overlay() : Overlay(EffectPriority.High, RenderLayers.All), ILoadable {
 		AutoLoadingAsset<Texture2D> vignette = "Origins/Textures/Vignette";
 		public override void Draw(SpriteBatch spriteBatch) {
+			if (OriginPlayer.LocalOriginPlayer is null) return;
 			MathUtils.LinearSmoothing(ref Opacity, (OriginPlayer.LocalOriginPlayer?.gasMask ?? false).ToInt(), 0.1f);
 			if (Opacity == 0) return;
 			Color baseColor = Color.Black;
