@@ -259,7 +259,7 @@ namespace Origins.Core.Structures {
 					if (@event.Target == element) viewStack.Push(new(room));
 				};
 				element.Width.Set(0, 1);
-				UIConditionalButton deleteButton = new(TextureAssets.MapDeath, () => ItemSlot.ShiftInUse);
+				UIConditionalButton deleteButton = new(TextureAssets.MapDeath, () => ItemSlot.ShiftInUse ? null : "Must hold shift to delete rooms");
 				deleteButton.OnLeftClick += (_, _) => {
 					structure.RemoveRoom(room);
 					OnRoomsChanged();
@@ -810,7 +810,14 @@ namespace Origins.Core.Structures {
 			DrawChildren(spriteBatch);
 		}
 	}
-	public class UIConditionalButton(Asset<Texture2D> texture, Func<bool> condition) : UIImageButton(texture) {
-		public override bool ContainsPoint(Vector2 point) => condition() && base.ContainsPoint(point);
+	public class UIConditionalButton(Asset<Texture2D> texture, Func<string> condition) : UIImageButton(texture) {
+		public override bool ContainsPoint(Vector2 point) {
+			if (!base.ContainsPoint(point)) return false;
+			if (condition() is string reason) {
+				Main.instance.MouseText(reason);
+				return false;
+			}
+			return true;
+		}
 	}
 }
