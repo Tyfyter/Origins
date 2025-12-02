@@ -10,9 +10,6 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Tainted_Stone : ComplexFrameTile, IAshenTile {
-		public string[] Categories => [
-            WikiCategories.Stone
-        ];
         public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)TileType<Ashen_Foliage>(), 0, 6));
@@ -55,6 +52,9 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Tainted_Stone_Item : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			WikiCategories.Stone
+		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
