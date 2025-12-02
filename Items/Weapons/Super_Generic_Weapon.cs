@@ -35,23 +35,13 @@ namespace Origins.Items.Weapons {
 			.AddIngredient(ItemID.SoulofNight, 6)
 			.Register();
 	}
-	public class Super_Generic_Weapon_P : ModProjectile {
-		public override string Texture => typeof(Generic_Weapon).GetDefaultTMLName();
+	public class Super_Generic_Weapon_P : Generic_Weapon_P {
+		public override string Texture => typeof(Super_Generic_Weapon).GetDefaultTMLName();
 		public override void SetDefaults() {
-			Projectile.DamageType = DamageClass.Generic;
-			Projectile.friendly = true;
-			Projectile.aiStyle = 0;
-			Projectile.ignoreWater = false;
-			Projectile.extraUpdates = 0;
-			Projectile.penetrate = -1;
-			Projectile.width = 20;
-			Projectile.height = 14;
-			Projectile.timeLeft = 5 * 60;
+			base.SetDefaults();
+			Projectile.width = 36;
+			Projectile.height = 24;
 		}
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.HitDirectionOverride = Math.Sign(Projectile.Center.X - target.Center.X);
-		}
-		public override Color? GetAlpha(Color lightColor) => new(255, 255, 255, 211);
 		public override void AI() {
 			foreach (NPC target in Main.ActiveNPCs) {
 				if ((target.CanBeChasedBy() || (target.lifeMax == 1 && !target.dontTakeDamage))) {
