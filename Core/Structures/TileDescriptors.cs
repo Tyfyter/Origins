@@ -1,5 +1,4 @@
-﻿using Humanizer;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.Tiles.Dev;
 using PegasusLib;
@@ -11,6 +10,7 @@ using System.Text;
 using Terraria;
 using Terraria.Enums;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -113,9 +113,15 @@ namespace Origins.Core.Structures {
 	}
 	public class PlaceTile : SerializableTileDescriptor {
 		readonly ConcurrentDictionary<string, TileDescriptor> descriptors = [];
+		protected static Type GetDescriptorType(Tile tile) {
+			if (Main.tileContainer[tile.TileType]) return typeof(PlaceChest);
+			if (TileObjectData.GetTileData(tile) is not null) return typeof(PlaceSpecialTile);
+			if (Main.tileFrameImportant[tile.TileType]) return typeof(PlaceFramedTile);
+			return typeof(PlaceTile);
+		}
 		public override void Load() {
 			AddSerializer(tile => {
-				if (tile.HasTile) {
+				if (tile.HasTile && GetDescriptorType(tile) == typeof(PlaceTile)) {
 					if (Main.tileFrameImportant[tile.TileType]) return null;
 					if (TileObjectData.GetTileData(tile) is not null) return null;
 					return $"PlaceTile({TileID.Search.GetName(tile.TileType)})";
@@ -155,7 +161,7 @@ namespace Origins.Core.Structures {
 	public class PlaceFramedTile : PlaceTile {
 		public override void Load() {
 			AddSerializer(tile => {
-				if (tile.HasTile && Main.tileFrameImportant[tile.TileType]) {
+				if (tile.HasTile && GetDescriptorType(tile) == typeof(PlaceFramedTile)) {
 					if (tile.TileType == ModContent.TileType<Room_Socket_Marker>()) return "Empty";
 					if (TileObjectData.GetTileData(tile) is not null) return null;
 					return $"PlaceFramedTile({TileID.Search.GetName(tile.TileType)},{tile.TileFrameX},{tile.TileFrameY})";
@@ -194,14 +200,11 @@ namespace Origins.Core.Structures {
 	public class PlaceSpecialTile : PlaceTile {
 		public override void Load() {
 			AddSerializer(tile => {
-				if (tile.HasTile && TileObjectData.GetTileData(tile) is TileObjectData data) {
+				if (tile.HasTile && GetDescriptorType(tile) == typeof(PlaceSpecialTile)) {
+					TileObjectData data = TileObjectData.GetTileData(tile);
 					(int i, int j) = tile.GetTilePosition();
 					TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
-					left += data.Origin.X;
-					top += data.Origin.Y;
-					if (i != left || j != top) {
-						return "Empty";
-					}
+					if (i != left + data.Origin.X || j != top + data.Origin.Y) return "Empty";
 					int style = 0;
 					int alternate = 0;
 					TileObjectData.GetTileInfo(tile, ref style, ref alternate);
@@ -215,7 +218,7 @@ namespace Origins.Core.Structures {
 						break;
 					}
 					string styleText = (style == 0 && string.IsNullOrEmpty(direction)) ? "" : $",{style}";
-					return $"PlaceSpecialTile({TileID.Search.GetName(tile.TileType)}{styleText}{direction})";
+					return $"{Name}({TileID.Search.GetName(tile.TileType)}{styleText}{direction})";
 				}
 				return null;
 			});
@@ -223,24 +226,26 @@ namespace Origins.Core.Structures {
 		protected override TileDescriptor Create(string[] parameters, string originalText) {
 			CachedTileType type = new(parameters[0]);
 			int style = parameters.Length > 1 ? int.Parse(parameters[1]) : 0;
-			int dir = parameters.Length > 2 ? int.Parse(parameters[2]) : 0;
-			return new((_, _, i, j) => {
-				TileObject.CanPlace(i, j, type, style, dir, out TileObject objectData);
-				TileObject.Place(objectData);
-				TileObjectData.CallPostPlacementPlayerHook(i, j, type, style, dir, objectData.alternate, objectData);
-				TileLoader.GetTile(type)?.PlaceInWorld(i, j, null);
+			int dir = 0;
+			if (parameters.Length > 2) _ = int.TryParse(parameters[2], out dir);
+			return new((_, _, i, j) => PlaceTile(i, j, type, style, dir, parameters), Parts: [originalText]);
+		}
+		public virtual void PlaceTile(int i, int j, CachedTileType type, int style, int dir, string[] parameters) {
+			TileObject.CanPlace(i, j, type, style, dir, out TileObject objectData);
+			TileObject.Place(objectData);
+			TileObjectData.CallPostPlacementPlayerHook(i, j, type, style, dir, objectData.alternate, objectData);
+			TileLoader.GetTile(type)?.PlaceInWorld(i, j, null);
 
-				TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
-				TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
-				Point pos = default;
-				for (int y = 0; y < data.Height; y++) {
-					pos.Y = top + y;
-					for (int x = 0; x < data.Width; x++) {
-						pos.X = left + x;
-						Structure.ignoreEmpty.Add(pos);
-					}
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			Point pos = default;
+			for (int y = 0; y < data.Height; y++) {
+				pos.Y = top + y;
+				for (int x = 0; x < data.Width; x++) {
+					pos.X = left + x;
+					Structure.ignoreEmpty.Add(pos);
 				}
-			}, Parts: [originalText]);
+			}
 		}
 		public override IEnumerable<(string name, Color color)> GetDisplayLayers(string[] parameters) {
 			yield return ($"{TileID.Search.GetId(parameters[0])};{parameters.GetIfInRange(1)}", Color.White);
@@ -265,6 +270,52 @@ namespace Origins.Core.Structures {
 					);
 				}
 			}
+		}
+	}
+	public class PlaceChest : PlaceSpecialTile {
+		public override void Load() {
+			AddSerializer(tile => {
+				if (tile.HasTile && GetDescriptorType(tile) == typeof(PlaceChest)) {
+					TileObjectData data = TileObjectData.GetTileData(tile);
+					(int i, int j) = tile.GetTilePosition();
+					TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+					if (i != left + data.Origin.X || j != top + data.Origin.Y) return "Empty";
+					int style = 0;
+					int alternate = 0;
+					TileObjectData.GetTileInfo(tile, ref style, ref alternate);
+					string lootPool = "";
+					if (Main.chest.GetIfInRange(Chest.FindChest(left, top)) is Chest { name: string name } && !string.IsNullOrWhiteSpace(name)) lootPool = "," + name;
+					return $"{Name}({TileID.Search.GetName(tile.TileType)},{style}{lootPool})";
+				}
+				return null;
+			});
+		}
+		public override void PlaceTile(int i, int j, CachedTileType type, int style, int dir, string[] parameters) {
+			base.PlaceTile(i, j, type, style, dir, parameters);
+			TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
+			if (parameters.Length <= 2) return;
+			if (Main.chest.GetIfInRange(Chest.FindChest(left, top)) is not Chest chest || !ModContent.TryFind(parameters[2], out LootPool pool)) return;
+			using Origins.ItemDropHandler _ = new((info, item, stack, _) => {
+				for (int i = 0; i < chest.item.Length; i++) {
+					switch (chest.item[i]?.IsAir) {
+						case false:
+						continue;
+						case null:
+						chest.item[i] = new();
+						break;
+					}
+					chest.item[i].SetDefaults(item);
+					chest.item[i].stack = stack;
+					chest.item[i].Prefix(-1);
+					break;
+				}
+			});
+			pool.Resolve(new DropAttemptInfo() {
+				player = new() { luck = (float)Main.starGameMath() - 1 },
+				rng = WorldGen.genRand,
+				IsExpertMode = Main.expertMode,
+				IsMasterMode = Main.masterMode
+			});
 		}
 	}
 	public class PlaceWall : SerializableTileDescriptor {

@@ -1,4 +1,5 @@
-﻿using Origins.Items.Weapons.Ammo;
+﻿using Origins.Core;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -140,6 +141,48 @@ namespace Origins.LootConditions {
 			public string GetConditionDescription() {
 				return Language.GetOrRegister($"Mods.Origins.Conditions.{(withBonus ? "With" : "Without")}ScavengerSet").Value;
 			}
+		}
+	}
+	public class DropLootPoolRule<TPool>(bool selectRandomly = false, int chanceDenominator = 1, int chanceNumerator = 1) : DropLootPoolRule(ModContent.GetInstance<TPool>(), selectRandomly, chanceDenominator, chanceNumerator) where TPool : LootPool { }
+	public class DropLootPoolRule : IItemDropRule {
+		public LootPool pool;
+		public bool selectRandomly;
+		public int chanceDenominator;
+		public int chanceNumerator;
+		public List<IItemDropRuleChainAttempt> ChainedRules { get; private set; }
+		public DropLootPoolRule(LootPool pool, bool selectRandomly = false, int chanceDenominator = 1, int chanceNumerator = 1) {
+			Debugging.Assert(pool is not null, new ArgumentNullException(nameof(pool)));
+			this.pool = pool;
+			this.selectRandomly = selectRandomly;
+			this.chanceDenominator = chanceDenominator;
+			this.chanceNumerator = chanceNumerator;
+			ChainedRules = [];
+		}
+
+		public bool CanDrop(DropAttemptInfo info) => true;
+
+		public virtual ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
+			ItemDropAttemptResult result;
+			if (info.player.RollLuck(chanceDenominator) < chanceNumerator) {
+				pool.Resolve(info, selectRandomly);
+				result = default;
+				result.State = ItemDropAttemptResultState.Success;
+				return result;
+			}
+
+			result = default;
+			result.State = ItemDropAttemptResultState.FailedRandomRoll;
+			return result;
+		}
+
+		public virtual void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
+			float num = (float)chanceNumerator / (float)chanceDenominator;
+			float dropRate = num * ratesInfo.parentDroprateChance;
+			DropRateInfoChainFeed thisRatesInfo = ratesInfo;
+			thisRatesInfo.parentDroprateChance = dropRate;
+
+			pool.ReportDroprates(drops, thisRatesInfo);
+			Chains.ReportDroprates(ChainedRules, num, drops, ratesInfo);
 		}
 	}
 	public class Ashen_Key_Condition : IItemDropRuleCondition {

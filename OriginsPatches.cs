@@ -283,7 +283,7 @@ namespace Origins {
 					_damage = Math.Max(_damage - damageReduction, 0f);
 					if (self.FinalDamage.ApplyTo(_damage) <= 0) info.Cancelled = true;
 				}
-				
+
 				return info;
 			};
 			On_Player.AddBuff_DetermineBuffTimeToAdd += On_Player_AddBuff_DetermineBuffTimeToAdd;
@@ -563,7 +563,7 @@ namespace Origins {
 			On_ScreenShaderData.Apply += (On_ScreenShaderData.orig_Apply orig, ScreenShaderData self) => {
 				try {
 					if (self.Shader is not null) orig(self);
-				} catch(NullReferenceException) { }
+				} catch (NullReferenceException) { }
 			};
 			MonoModHooks.Add(
 				typeof(ModLoader).GetMethod("Reload", BindingFlags.NonPublic | BindingFlags.Static),
@@ -647,7 +647,7 @@ namespace Origins {
 				if ((tile.HasTile && TileBlocksMinecartTracks[tile.TileType]) || WallBlocksMinecartTracks[tile.WallType]) return true;
 				return false;
 			};
-			if (ModLoader.GetMod(nameof(BetterDialogue)).Version == new Version(1, 1, 6, 1)) MonoModHooks.Modify(typeof(BetterDialogue.BetterDialogue).Assembly.GetType("BetterDialogue.UI.DialogueCycleButtonUI").GetMethod("Draw", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static), 
+			if (ModLoader.GetMod(nameof(BetterDialogue)).Version == new Version(1, 1, 6, 1)) MonoModHooks.Modify(typeof(BetterDialogue.BetterDialogue).Assembly.GetType("BetterDialogue.UI.DialogueCycleButtonUI").GetMethod("Draw", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static),
 				il => new ILCursor(il)
 				.EmitLdsfld(typeof(Main).GetField(nameof(Main.editChest)))
 				.EmitBrfalse(MonoFuckery.DefineLabel(il, out ILLabel label))
@@ -967,7 +967,7 @@ namespace Origins {
 				ins => ins.MatchLdcR4(0.0f),
 				ins => ins.MatchCall(typeof(DynamicSpriteFontExtensionMethods), nameof(DynamicSpriteFontExtensionMethods.DrawString))
 			);
-			
+
 			c.EmitLdloc(i);
 			c.EmitLdloc(l6);
 			c.EmitLdloc(l182);
@@ -1132,7 +1132,7 @@ namespace Origins {
 		static void FCEH(ILContext il) {
 			ILCursor c = new(il);
 			int msg = -1;
-			if (c.TryGotoNext(i => i.MatchLdloc(out msg), i => i.MatchCallOrCallvirt(typeof(Console), nameof(Console.WriteLine))) 
+			if (c.TryGotoNext(i => i.MatchLdloc(out msg), i => i.MatchCallOrCallvirt(typeof(Console), nameof(Console.WriteLine)))
 				&& c.TryGotoPrev(i => i.MatchStloc(msg))
 				&& c.TryGotoPrev(MoveType.After, i => i.MatchCallOrCallvirt<Exception>("get_" + nameof(Exception.Message)))
 				) {
@@ -1282,7 +1282,8 @@ namespace Origins {
 				for (int i = 0; i < positionYArg; i++) {
 					if (i == 0) {
 						cloudYInstructions[0] = (c.Next.OpCode, c.Next.Operand);
-					} if (i > 11) {
+					}
+					if (i > 11) {
 						cloudYInstructions[i - 11] = (c.Next.OpCode, c.Next.Operand);
 					} else {
 
@@ -1803,7 +1804,7 @@ namespace Origins {
 				if (tile.LiquidType == LiquidID.Water && LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle) is IGlowingWaterStyle glowingWaterStyle) {
 					glowingWaterStyle.AddLight(ref outputColor, tile.LiquidAmount);
 				}
-			} catch (Exception) {}
+			} catch (Exception) { }
 		}
 
 		static int npcScoringRoom = -1;
@@ -1818,6 +1819,16 @@ namespace Origins {
 				ResolveRule(rule, dropInfo);
 			} finally {
 				itemDropper = null;
+			}
+		}
+		public readonly struct ItemDropHandler : IDisposable {
+			readonly ItemDropper handler;
+			public ItemDropHandler(ItemDropper handler) {
+				this.handler = handler;
+				if (handler is not null) itemDropper += handler;
+			}
+			void IDisposable.Dispose() {
+				if (handler is not null) itemDropper -= handler;
 			}
 		}
 		static event ItemDropper itemDropper;
@@ -1989,8 +2000,8 @@ namespace Origins {
 				sonarDrawing = true;
 				sonarDrawingNonSolid = !solidLayer;
 				tileOutlineShader.Shader.Parameters["uImageSize0"].SetValue(new Vector2(288, 396));//Main.ScreenSize.ToVector2()
-				//tileOutlineShader.Shader.Parameters["uScale"].SetValue(2);
-				//tileOutlineShader.Shader.Parameters["uColor"].SetValue(new Vector3(1f, 1f, 1f));//new Vector4(0.5f, 0.0625f, 0f, 0f)
+																								   //tileOutlineShader.Shader.Parameters["uScale"].SetValue(2);
+																								   //tileOutlineShader.Shader.Parameters["uColor"].SetValue(new Vector3(1f, 1f, 1f));//new Vector4(0.5f, 0.0625f, 0f, 0f)
 				SpriteBatchState state = Main.spriteBatch.GetState();
 				Main.spriteBatch.Restart(state, effect: tileOutlineShader.Shader);
 				orig(self, solidLayer, forRenderTargets, intoRenderTargets, waterStyleOverride);
@@ -2063,7 +2074,7 @@ namespace Origins {
 							return new Color(255, 50, 50);
 						} else if (Main.IsTileSpelunkable(tileX, tileY)) {
 							return new Color(200, 170, 0);
-						} else if (Main.tileSolid[Main.tile[tileX, tileY].TileType]){
+						} else if (Main.tileSolid[Main.tile[tileX, tileY].TileType]) {
 							return new Color(200, 200, 200);
 						} else {
 							return new Color(0, 0, 0, 0);
@@ -2075,7 +2086,7 @@ namespace Origins {
 				}
 			}
 		}
-		
+
 
 		private void _TileDrawing_DrawSingleTile(On_TileDrawing.orig_DrawSingleTile orig, TileDrawing self, TileDrawInfo drawData, bool solidLayer, int waterStyleOverride, Vector2 screenPosition, Vector2 screenOffset, int tileX, int tileY) {
 

@@ -50,11 +50,16 @@ namespace Origins {
 		public StateSwitchingInterface EventHUD { get; } = new("Origins: Event HUD");
 		public UserInterfaceWithDefaultState journalUI;
 		internal static List<SwitchableUIState> queuedUIStates = [];
+		public static bool HasSetupAllContent { get; private set; }
 		public override void Load() {
+			HasSetupAllContent = false;
 			setBonusInventoryUI = new UserInterface();
 			journalUI = new UserInterfaceWithDefaultState() {
 				DefaultUIState = new Journal_UI_Button()
 			};
+		}
+		public override void ModifyGameTipVisibility(IReadOnlyList<GameTipData> gameTips) {
+			HasSetupAllContent = true;
 		}
 		public override void SetStaticDefaults() {
 			for (int i = 0; i < queuedUIStates.Count; i++) {
