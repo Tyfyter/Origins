@@ -2084,6 +2084,8 @@ Projectiles: {
 	// Flak_Jacket_Flak_1.DisplayName: Flak Jacket Flak_1
 	// Flak_Jacket_Flak_2.DisplayName: Flak Jacket Flak_2
 	// Flak_Jacket_Flak_3.DisplayName: Flak Jacket Flak_3
+	// Crystal_Heart_Slime_Flying.DisplayName: Crystal Heart Slime Flying
+	// Crystal_Heart_Slime_Spike.DisplayName: Crystal Heart Slime Spike
 }
 
 Prefixes: {

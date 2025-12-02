@@ -816,6 +816,9 @@ namespace Origins {
 				modifiers.FinalDamage *= 0.5f;
 			}
 		}
+		public override void OnHurt(Player.HurtInfo info) {
+			if (crystalHeart) crystalHeartCounter += info.Damage;
+		}
 		public override void PostHurt(Player.HurtInfo info) {
 			lifeRegenTimeSinceHit = 0;
 			if (extremophileSet) extremophileSetHits++;

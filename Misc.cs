@@ -2829,7 +2829,7 @@ namespace Origins {
 			}
 			return wr;
 		}
-		public static WeightedRandom<int> AccessoryOrSpecialPrefix(Item item, UnifiedRandom rand, params PrefixCategory[] prefixCategories) {
+		public static WeightedRandom<int> AccessoryOrSpecialPrefix(this Item item, UnifiedRandom rand, params PrefixCategory[] prefixCategories) {
 			(PrefixCategory category, bool[] set, double weight)[] categories = new (PrefixCategory category, bool[] set, double weight)[prefixCategories.Length + 1];
 			for (int i = 0; i < prefixCategories.Length; i++) {
 				categories[i] = (prefixCategories[i], Origins.SpecialPrefix, 1);

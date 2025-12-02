@@ -337,6 +337,8 @@ namespace Origins {
 		public bool filterBreather = false;
 		public int gasMaskDye = 0;
 		public const float gasMaskMult = 0.75f;
+		public bool crystalHeart = false;
+		public int crystalHeartCounter = 0;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -850,9 +852,10 @@ namespace Origins {
 			gasMask = false;
 			gasMaskDye = 0;
 			filterBreather = false;
+			if (!crystalHeart.TrySet(false)) crystalHeartCounter = 0;
 			lotteryTicketItem = null;
 
-			
+
 			spiderRavel = false;
 			if (spiderRavelTime > 0) spiderRavelTime--;
 			doubleTapDownTimer++;
@@ -980,7 +983,7 @@ namespace Origins {
 			for (int i = 0; i < Player.inventory.Length; i++) {
 				if (Player.inventory[i]?.ModItem is Mojo_Flask mojoFlask) mojoFlaskCountMax = mojoFlask.FlaskUseCount;
 			}
-			
+
 			boatRockerAltUse = false;
 			boatRockerAltUse2 = false;
 

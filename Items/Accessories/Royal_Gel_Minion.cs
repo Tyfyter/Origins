@@ -1,17 +1,9 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Origins.Dev;
-using Origins.Projectiles.Weapons;
+﻿using Origins.Dev;
 using System;
-using System.Drawing;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using ThoriumMod.Items.Donate;
-using ThoriumMod.Projectiles;
-using static Fargowiltas.FargoSets;
 
 namespace Origins.Items.Accessories {
 	public class Royal_Gel_Global : GlobalItem, ICustomWikiStat {
@@ -49,12 +41,13 @@ namespace Origins.Items.Accessories {
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 10;
 			Projectile.aiStyle = 0;
+			Projectile.ContinuouslyUpdateDamageStats = true;
 			//AIType = ProjectileID.BabySlime;
 		}
 		public override void AI() {
 			DrawOffsetX = -Projectile.width / 2;
 			DrawOriginOffsetY = (int)(Projectile.height * -0.65f);
-			SlimeAI();
+			SlimeAI(Projectile);
 			if (Projectile.frame >= 2) {
 				return;
 			}
@@ -97,78 +90,78 @@ namespace Origins.Items.Accessories {
 			} else Projectile.ai[2]++;
 			if (Projectile.owner == Main.myPlayer && !Main.LocalPlayer.npcTypeNoAggro[1]) Projectile.Kill();
 		}
-		void SlimeAI() {
-			Player owner = Main.player[Projectile.owner];
+		public static void SlimeAI(Projectile projectile) {
+			Player owner = Main.player[projectile.owner];
 			if (!owner.active) {
-				Projectile.active = false;
+				projectile.active = false;
 				return;
 			}
-			Projectile.localAI[2] = -1;
+			projectile.localAI[2] = -1;
 			bool targetLeft = false;
 			bool targetRight = false;
 			bool ownerBelow = false;
 			bool checkTileBlocked = false;
 			const int centerOffset = 10;
-			int restPointOffset = 40 * (Projectile.minionPos + 1) * owner.direction;
-			if (owner.position.X + owner.width / 2 < Projectile.position.X + Projectile.width / 2 - centerOffset + restPointOffset) {
+			int restPointOffset = 40 * (projectile.minionPos + 1) * owner.direction;
+			if (owner.position.X + owner.width / 2 < projectile.position.X + projectile.width / 2 - centerOffset + restPointOffset) {
 				targetLeft = true;
-			} else if (owner.position.X + owner.width / 2 > Projectile.position.X + Projectile.width / 2 + centerOffset + restPointOffset) {
+			} else if (owner.position.X + owner.width / 2 > projectile.position.X + projectile.width / 2 + centerOffset + restPointOffset) {
 				targetRight = true;
 			}
-			if (Projectile.ai[0] == -1f) {
+			if (projectile.ai[0] == -1f) {
 				targetLeft = false;
 				targetRight = true;
 			}
-			if (Projectile.ai[0] == -2f) {
+			if (projectile.ai[0] == -2f) {
 				targetLeft = false;
 				targetRight = false;
 			}
-			Projectile.tileCollide = true;
-			if (Projectile.ai[1] == 0f) {//start flying
-				int distToStartFlying = 500 + 40 * Projectile.minionPos;
-				if (Projectile.localAI[0] > 0f) {
+			projectile.tileCollide = true;
+			if (projectile.ai[1] == 0f) {//start flying
+				int distToStartFlying = 500 + 40 * projectile.minionPos;
+				if (projectile.localAI[0] > 0f) {
 					distToStartFlying += 500;
 				}
-				if (Projectile.localAI[0] > 0f) {
+				if (projectile.localAI[0] > 0f) {
 					distToStartFlying += 100;
 				}
 				if (owner.rocketDelay2 > 0) {
-					Projectile.ai[0] = 1f;
+					projectile.ai[0] = 1f;
 				}
-				Vector2 center = Projectile.Center;
+				Vector2 center = projectile.Center;
 				float xDist = owner.position.X + owner.width / 2 - center.X;
 				float yDist = owner.position.Y + owner.height / 2 - center.Y;
 				float distSQ = xDist * xDist + yDist * yDist;
 				if (distSQ > 2000f * 2000f) {
-					Projectile.position.X = owner.position.X + owner.width / 2 - Projectile.width / 2;
-					Projectile.position.Y = owner.position.Y + owner.height / 2 - Projectile.height / 2;
+					projectile.position.X = owner.position.X + owner.width / 2 - projectile.width / 2;
+					projectile.position.Y = owner.position.Y + owner.height / 2 - projectile.height / 2;
 				} else if (distSQ > distToStartFlying * distToStartFlying) {
-					if (yDist > 0f && Projectile.velocity.Y < 0f) {
-						Projectile.velocity.Y = 0f;
+					if (yDist > 0f && projectile.velocity.Y < 0f) {
+						projectile.velocity.Y = 0f;
 					}
-					if (yDist < 0f && Projectile.velocity.Y > 0f) {
-						Projectile.velocity.Y = 0f;
+					if (yDist < 0f && projectile.velocity.Y > 0f) {
+						projectile.velocity.Y = 0f;
 					}
-					Projectile.ai[0] = 1f;
+					projectile.ai[0] = 1f;
 				}
 			}
-			if (Projectile.ai[0] != 0f) {//flying 
-				if (Projectile.ai[2] < 0) Projectile.ai[2]++;
+			if (projectile.ai[0] != 0f) {//flying 
+				if (projectile.ai[2] < 0) projectile.ai[2]++;
 				const float acceleration = 0.2f;
 				const int distToStopFlying = 200;
-				Projectile.tileCollide = false;
-				Vector2 center = Projectile.Center;
+				projectile.tileCollide = false;
+				Vector2 center = projectile.Center;
 				float maxTargetDist = 700f;//uses taxicab distance
 				bool foundPotentialTarget = false;
 				int newTarget = -1;
 				for (int i = 0; i < 200; i++) {
-					if (!Main.npc[i].CanBeChasedBy(this)) {
+					if (!Main.npc[i].CanBeChasedBy(projectile)) {
 						continue;
 					}
 					float targetCenterX = Main.npc[i].position.X + Main.npc[i].width / 2;
 					float targetCenterY = Main.npc[i].position.Y + Main.npc[i].height / 2;
 					if (Math.Abs(owner.position.X + owner.width / 2 - targetCenterX) + Math.Abs(owner.position.Y + owner.height / 2 - targetCenterY) < maxTargetDist) {
-						if (Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, Main.npc[i].position, Main.npc[i].width, Main.npc[i].height)) {
+						if (Collision.CanHit(projectile.position, projectile.width, projectile.height, Main.npc[i].position, Main.npc[i].width, Main.npc[i].height)) {
 							newTarget = i;
 						}
 						foundPotentialTarget = true;
@@ -178,94 +171,94 @@ namespace Origins.Items.Accessories {
 				float xDist = owner.position.X + owner.width / 2 - center.X;
 				xDist -= 40 * owner.direction;
 				if (!foundPotentialTarget) {
-					xDist -= 40 * Projectile.minionPos * owner.direction;
+					xDist -= 40 * projectile.minionPos * owner.direction;
 				}
 				if (foundPotentialTarget && newTarget >= 0) {
-					Projectile.ai[0] = 0f;
+					projectile.ai[0] = 0f;
 				}
 
 				float yDist = owner.position.Y + owner.height / 2 - center.Y;
 				float dist = (float)Math.Sqrt(xDist * xDist + yDist * yDist);
-				if (dist < distToStopFlying && owner.velocity.Y == 0f && Projectile.position.Y + Projectile.height <= owner.position.Y + owner.height && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height)) {
-					Projectile.ai[0] = 0f;
-					if (Projectile.velocity.Y < -6f) {
-						Projectile.velocity.Y = -6f;
+				if (dist < distToStopFlying && owner.velocity.Y == 0f && projectile.position.Y + projectile.height <= owner.position.Y + owner.height && !Collision.SolidCollision(projectile.position, projectile.width, projectile.height)) {
+					projectile.ai[0] = 0f;
+					if (projectile.velocity.Y < -6f) {
+						projectile.velocity.Y = -6f;
 					}
 				}
 				if (dist < 60f) {
-					xDist = Projectile.velocity.X;
-					yDist = Projectile.velocity.Y;
+					xDist = projectile.velocity.X;
+					yDist = projectile.velocity.Y;
 				} else {
 					dist = 10f / dist;
 					xDist *= dist;
 					yDist *= dist;
 				}
-				if (Projectile.velocity.X < xDist) {
-					Projectile.velocity.X += acceleration;
-					if (Projectile.velocity.X < 0f) {
-						Projectile.velocity.X += acceleration * 1.5f;
+				if (projectile.velocity.X < xDist) {
+					projectile.velocity.X += acceleration;
+					if (projectile.velocity.X < 0f) {
+						projectile.velocity.X += acceleration * 1.5f;
 					}
 				}
-				if (Projectile.velocity.X > xDist) {
-					Projectile.velocity.X -= acceleration;
-					if (Projectile.velocity.X > 0f) {
-						Projectile.velocity.X -= acceleration * 1.5f;
+				if (projectile.velocity.X > xDist) {
+					projectile.velocity.X -= acceleration;
+					if (projectile.velocity.X > 0f) {
+						projectile.velocity.X -= acceleration * 1.5f;
 					}
 				}
-				if (Projectile.velocity.Y < yDist) {
-					Projectile.velocity.Y += acceleration;
-					if (Projectile.velocity.Y < 0f) {
-						Projectile.velocity.Y += acceleration * 1.5f;
+				if (projectile.velocity.Y < yDist) {
+					projectile.velocity.Y += acceleration;
+					if (projectile.velocity.Y < 0f) {
+						projectile.velocity.Y += acceleration * 1.5f;
 					}
 				}
-				if (Projectile.velocity.Y > yDist) {
-					Projectile.velocity.Y -= acceleration;
-					if (Projectile.velocity.Y > 0f) {
-						Projectile.velocity.Y -= acceleration * 1.5f;
+				if (projectile.velocity.Y > yDist) {
+					projectile.velocity.Y -= acceleration;
+					if (projectile.velocity.Y > 0f) {
+						projectile.velocity.Y -= acceleration * 1.5f;
 					}
 				}
 
-				if (Projectile.velocity.X > 0.5) {
-					Projectile.spriteDirection = -1;
-				} else if (Projectile.velocity.X < -0.5) {
-					Projectile.spriteDirection = 1;
+				if (projectile.velocity.X > 0.5) {
+					projectile.spriteDirection = -1;
+				} else if (projectile.velocity.X < -0.5) {
+					projectile.spriteDirection = 1;
 				}
-				Projectile.frameCounter++;
-				if (Projectile.frameCounter > 6) {
-					Projectile.frame++;
-					Projectile.frameCounter = 0;
+				projectile.frameCounter++;
+				if (projectile.frameCounter > 6) {
+					projectile.frame++;
+					projectile.frameCounter = 0;
 				}
-				if (Projectile.frame < 2 || Projectile.frame > 5) {
-					Projectile.frame = 2;
+				if (projectile.frame < 2 || projectile.frame > 5) {
+					projectile.frame = 2;
 				}
-				Projectile.rotation = Projectile.velocity.X * 0.1f;
+				projectile.rotation = projectile.velocity.X * 0.1f;
 			} else {//not flying
-				OriginExtensions.AngularSmoothing(ref Projectile.rotation, 0, 0.075f);
-				float restPosOffset = 40 * Projectile.minionPos;
-				Projectile.localAI[0] -= 1f;
-				if (Projectile.localAI[0] < 0f) {
-					Projectile.localAI[0] = 0f;
+				OriginExtensions.AngularSmoothing(ref projectile.rotation, 0, 0.075f);
+				float restPosOffset = 40 * projectile.minionPos;
+				projectile.localAI[0] -= 1f;
+				if (projectile.localAI[0] < 0f) {
+					projectile.localAI[0] = 0f;
 				}
-				if (Projectile.ai[1] > 0f) {
-					Projectile.ai[1] -= 1f;
+				if (projectile.ai[1] > 0f) {
+					projectile.ai[1] -= 1f;
 				} else {
-					float targetX = Projectile.position.X;
-					float targetY = Projectile.position.Y;
+					float targetX = projectile.position.X;
+					float targetY = projectile.position.Y;
 					float targetDist = 100000f;
 					float throughWallDist = targetDist;
 					int targetIndex = -1;
 					void targetingAlgorithm(NPC target, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
 						float x = target.Center.X;
 						float y = target.Center.Y;
-						if (target.CanBeChasedBy(this)) {
-							float currentDist = Math.Abs(Projectile.position.X + Projectile.width / 2 - x) + Math.Abs(Projectile.position.Y + Projectile.height / 2 - y);
+						if (target.CanBeChasedBy(projectile)) {
+							float currentDist = Math.Abs(projectile.position.X + projectile.width / 2 - x) + Math.Abs(projectile.position.Y + projectile.height / 2 - y);
 							if (currentDist < targetDist) {
 								if (targetIndex == -1 && currentDist <= throughWallDist) {
 									throughWallDist = currentDist;
 									targetX = x;
 									targetY = y;
 								}
-								if (isPriorityTarget || Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height)) {
+								if (isPriorityTarget || Collision.CanHit(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height)) {
 									targetDist = currentDist;
 									targetX = x;
 									targetY = y;
@@ -280,13 +273,13 @@ namespace Origins.Items.Accessories {
 					if (targetIndex == -1 && throughWallDist < targetDist) {
 						targetDist = throughWallDist;
 					}
-					Projectile.localAI[2] = targetIndex;
+					projectile.localAI[2] = targetIndex;
 					float throughWallPrepDistance = 300f;
-					if (Projectile.position.Y > Main.worldSurface * 16.0) {
+					if (projectile.position.Y > Main.worldSurface * 16.0) {
 						throughWallPrepDistance = 150f;
 					}
 					if (targetDist < throughWallPrepDistance + restPosOffset && targetIndex == -1) {
-						float xDistFromTarget = targetX - (Projectile.position.X + Projectile.width / 2);
+						float xDistFromTarget = targetX - (projectile.position.X + projectile.width / 2);
 						if (xDistFromTarget < -5f) {
 							targetLeft = true;
 							targetRight = false;
@@ -296,9 +289,9 @@ namespace Origins.Items.Accessories {
 						}
 					}
 					if (targetIndex >= 0 && targetDist < 800f + restPosOffset) {
-						Projectile.friendly = true;
-						Projectile.localAI[0] = 60;
-						float targetDiffX = targetX - (Projectile.position.X + Projectile.width / 2);
+						projectile.friendly = true;
+						projectile.localAI[0] = 60;
+						float targetDiffX = targetX - (projectile.position.X + projectile.width / 2);
 						if (targetDiffX < -10f) {
 							targetLeft = true;
 							targetRight = false;
@@ -306,26 +299,26 @@ namespace Origins.Items.Accessories {
 							targetRight = true;
 							targetLeft = false;
 						}
-						if (targetY < Projectile.Center.Y - 100f && targetDiffX > -50f && targetDiffX < 50f && Projectile.velocity.Y == 0f) {
-							float targetDistY = Math.Abs(targetY - Projectile.Center.Y);
+						if (targetY < projectile.Center.Y - 100f && targetDiffX > -50f && targetDiffX < 50f && projectile.velocity.Y == 0f) {
+							float targetDistY = Math.Abs(targetY - projectile.Center.Y);
 							if (targetDistY < 120f) {
-								Projectile.velocity.Y = -10f;
+								projectile.velocity.Y = -10f;
 							} else if (targetDistY < 210f) {
-								Projectile.velocity.Y = -13f;
+								projectile.velocity.Y = -13f;
 							} else if (targetDistY < 270f) {
-								Projectile.velocity.Y = -15f;
+								projectile.velocity.Y = -15f;
 							} else if (targetDistY < 310f) {
-								Projectile.velocity.Y = -17f;
+								projectile.velocity.Y = -17f;
 							} else if (targetDistY < 380f) {
-								Projectile.velocity.Y = -18f;
+								projectile.velocity.Y = -18f;
 							}
 						}
 					} else {
-						Projectile.friendly = false;
+						projectile.friendly = false;
 					}
 				}
 
-				if (Projectile.ai[1] != 0f) {
+				if (projectile.ai[1] != 0f) {
 					targetLeft = false;
 					targetRight = false;
 				}
@@ -337,45 +330,45 @@ namespace Origins.Items.Accessories {
 					acceleration = 0.3f;
 				}
 				if (targetLeft) {
-					if (Projectile.velocity.X > -3.5) {
-						Projectile.velocity.X -= acceleration;
+					if (projectile.velocity.X > -3.5) {
+						projectile.velocity.X -= acceleration;
 					} else {
-						Projectile.velocity.X -= acceleration * 0.25f;
+						projectile.velocity.X -= acceleration * 0.25f;
 					}
 				} else if (targetRight) {
-					if (Projectile.velocity.X < 3.5) {
-						Projectile.velocity.X += acceleration;
+					if (projectile.velocity.X < 3.5) {
+						projectile.velocity.X += acceleration;
 					} else {
-						Projectile.velocity.X += acceleration * 0.25f;
+						projectile.velocity.X += acceleration * 0.25f;
 					}
 				} else {
-					Projectile.velocity.X *= 0.9f;
-					if (Projectile.velocity.X >= 0f - acceleration && Projectile.velocity.X <= acceleration) {
-						Projectile.velocity.X = 0f;
+					projectile.velocity.X *= 0.9f;
+					if (projectile.velocity.X >= 0f - acceleration && projectile.velocity.X <= acceleration) {
+						projectile.velocity.X = 0f;
 					}
 				}
 				if (targetLeft || targetRight) {
-					int checkTileX = (int)(Projectile.position.X + Projectile.width / 2) / 16;
-					int checkTileY = (int)(Projectile.position.Y + Projectile.height / 2) / 16;
+					int checkTileX = (int)(projectile.position.X + projectile.width / 2) / 16;
+					int checkTileY = (int)(projectile.position.Y + projectile.height / 2) / 16;
 					if (targetLeft) {
 						checkTileX--;
 					}
 					if (targetRight) {
 						checkTileX++;
 					}
-					checkTileX += (int)Projectile.velocity.X;
+					checkTileX += (int)projectile.velocity.X;
 					if (WorldGen.SolidTile(checkTileX, checkTileY)) {
 						checkTileBlocked = true;
 					}
 				}
-				if (owner.position.Y + owner.height - 8f > Projectile.position.Y + Projectile.height) {
+				if (owner.position.Y + owner.height - 8f > projectile.position.Y + projectile.height) {
 					ownerBelow = true;
 				}
-				Collision.StepUp(ref Projectile.position, ref Projectile.velocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
-				if (Projectile.velocity.Y == 0f) {
-					if (!ownerBelow && (Projectile.velocity.X < 0f || Projectile.velocity.X > 0f)) {
-						int checkTileX = (int)(Projectile.position.X + Projectile.width / 2) / 16;
-						int checkTileY = (int)(Projectile.position.Y + Projectile.height / 2) / 16 + 1;
+				Collision.StepUp(ref projectile.position, ref projectile.velocity, projectile.width, projectile.height, ref projectile.stepSpeed, ref projectile.gfxOffY);
+				if (projectile.velocity.Y == 0f) {
+					if (!ownerBelow && (projectile.velocity.X < 0f || projectile.velocity.X > 0f)) {
+						int checkTileX = (int)(projectile.position.X + projectile.width / 2) / 16;
+						int checkTileY = (int)(projectile.position.Y + projectile.height / 2) / 16 + 1;
 						if (targetLeft) {
 							checkTileX--;
 						}
@@ -385,78 +378,78 @@ namespace Origins.Items.Accessories {
 						WorldGen.SolidTile(checkTileX, checkTileY);
 					}
 					if (checkTileBlocked) {
-						int centerTileX = (int)(Projectile.position.X + Projectile.width / 2) / 16;
-						int centerTileY = (int)(Projectile.position.Y + Projectile.height) / 16;
+						int centerTileX = (int)(projectile.position.X + projectile.width / 2) / 16;
+						int centerTileY = (int)(projectile.position.Y + projectile.height) / 16;
 						if (WorldGen.SolidTileAllowBottomSlope(centerTileX, centerTileY) || Main.tile[centerTileX, centerTileY].BlockType != BlockType.Solid) {
 							try {
-								centerTileX = (int)(Projectile.position.X + Projectile.width / 2) / 16;
-								centerTileY = (int)(Projectile.position.Y + Projectile.height / 2) / 16;
+								centerTileX = (int)(projectile.position.X + projectile.width / 2) / 16;
+								centerTileY = (int)(projectile.position.Y + projectile.height / 2) / 16;
 								if (targetLeft) {
 									centerTileX--;
 								}
 								if (targetRight) {
 									centerTileX++;
 								}
-								centerTileX += (int)Projectile.velocity.X;
+								centerTileX += (int)projectile.velocity.X;
 								if (!WorldGen.SolidTile(centerTileX, centerTileY - 1) && !WorldGen.SolidTile(centerTileX, centerTileY - 2)) {
-									Projectile.velocity.Y = -5.1f;
+									projectile.velocity.Y = -5.1f;
 								} else if (!WorldGen.SolidTile(centerTileX, centerTileY - 2)) {
-									Projectile.velocity.Y = -7.1f;
+									projectile.velocity.Y = -7.1f;
 								} else if (WorldGen.SolidTile(centerTileX, centerTileY - 5)) {
-									Projectile.velocity.Y = -11.1f;
+									projectile.velocity.Y = -11.1f;
 								} else if (WorldGen.SolidTile(centerTileX, centerTileY - 4)) {
-									Projectile.velocity.Y = -10.1f;
+									projectile.velocity.Y = -10.1f;
 								} else {
-									Projectile.velocity.Y = -9.1f;
+									projectile.velocity.Y = -9.1f;
 								}
 							} catch {
-								Projectile.velocity.Y = -9.1f;
+								projectile.velocity.Y = -9.1f;
 							}
 						}
 					} else if (targetLeft || targetRight) {
-						Projectile.velocity.Y -= 6f;
+						projectile.velocity.Y -= 6f;
 					}
 				}
-				Projectile.velocity.X = MathHelper.Clamp(Projectile.velocity.X, -maxXSpeed, maxXSpeed);
-				if (Projectile.velocity.X != 0f) {
-					Projectile.direction = Math.Sign(Projectile.velocity.X);
+				projectile.velocity.X = MathHelper.Clamp(projectile.velocity.X, -maxXSpeed, maxXSpeed);
+				if (projectile.velocity.X != 0f) {
+					projectile.direction = Math.Sign(projectile.velocity.X);
 				}
-				if (Projectile.velocity.X > acceleration && targetRight) {
-					Projectile.direction = 1;
+				if (projectile.velocity.X > acceleration && targetRight) {
+					projectile.direction = 1;
 				}
-				if (Projectile.velocity.X < -acceleration && targetLeft) {
-					Projectile.direction = -1;
+				if (projectile.velocity.X < -acceleration && targetLeft) {
+					projectile.direction = -1;
 				}
-				Projectile.spriteDirection = -Projectile.direction;
-				bool noHorizontalMovement = Projectile.position.X - Projectile.oldPosition.X == 0f;
-				if (Projectile.velocity.Y >= 0f && Projectile.velocity.Y <= 0.8) {
+				projectile.spriteDirection = -projectile.direction;
+				bool noHorizontalMovement = projectile.position.X - projectile.oldPosition.X == 0f;
+				if (projectile.velocity.Y >= 0f && projectile.velocity.Y <= 0.8) {
 					if (noHorizontalMovement) {
-						Projectile.frameCounter++;
+						projectile.frameCounter++;
 					} else {
-						Projectile.frameCounter += 3;
+						projectile.frameCounter += 3;
 					}
 				} else {
-					Projectile.frameCounter += 5;
+					projectile.frameCounter += 5;
 				}
-				if (Projectile.frameCounter >= 20) {
-					Projectile.frameCounter -= 20;
-					Projectile.frame++;
+				if (projectile.frameCounter >= 20) {
+					projectile.frameCounter -= 20;
+					projectile.frame++;
 				}
-				if (Projectile.frame > 1) {
-					Projectile.frame = 0;
+				if (projectile.frame > 1) {
+					projectile.frame = 0;
 				}
-				if (Projectile.wet && owner.position.Y + owner.height < Projectile.position.Y + Projectile.height && Projectile.localAI[0] == 0f) {
-					if (Projectile.velocity.Y > -4f) {
-						Projectile.velocity.Y -= 0.2f;
+				if (projectile.wet && owner.position.Y + owner.height < projectile.position.Y + projectile.height && projectile.localAI[0] == 0f) {
+					if (projectile.velocity.Y > -4f) {
+						projectile.velocity.Y -= 0.2f;
 					}
-					if (Projectile.velocity.Y > 0f) {
-						Projectile.velocity.Y *= 0.95f;
+					if (projectile.velocity.Y > 0f) {
+						projectile.velocity.Y *= 0.95f;
 					}
 				} else {
-					Projectile.velocity.Y += 0.4f;
+					projectile.velocity.Y += 0.4f;
 				}
-				if (Projectile.velocity.Y > 10f) {
-					Projectile.velocity.Y = 10f;
+				if (projectile.velocity.Y > 10f) {
+					projectile.velocity.Y = 10f;
 				}
 			}
 		}
@@ -502,7 +495,7 @@ namespace Origins.Items.Accessories {
 			Projectile.alpha = 255;
 			Projectile.width = 6;
 			Projectile.height = 6;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.penetrate = 3;
 			Projectile.friendly = true;
 			Projectile.usesIDStaticNPCImmunity = true;

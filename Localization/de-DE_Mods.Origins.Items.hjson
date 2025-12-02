@@ -7406,3 +7406,8 @@ Flak_Jacket: {
 		Explodes into flak upon taking damage
 		''' */
 }
+
+Crystal_Heart: {
+	// DisplayName: Crystal Heart
+	// Tooltip: ""
+}
