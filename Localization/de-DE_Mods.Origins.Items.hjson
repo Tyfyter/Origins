@@ -7416,3 +7416,8 @@ Armor_Piercing_Bullet: {
 	// DisplayName: Armor-Piercing Bullet
 	// Tooltip: ""
 }
+
+Pacemaker: {
+	// DisplayName: Pacemaker
+	// Tooltip: ""
+}

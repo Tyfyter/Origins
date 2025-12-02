@@ -593,6 +593,18 @@ namespace Origins {
 			if (tornCurrentSeverity > 0 && tornCurrentSeverity < 1) {
 				regen /= (1 - tornCurrentSeverity) * 0.85f + 0.15f;
 			}
+			if (pacemaker) {
+				if (timeSinceHit < Pacemaker.DisableRegenTime(Player)) {
+					regen = 0;
+					Player.lifeRegen = 0;
+					Player.palladiumRegen = false;
+				} else {
+					regen *= Pacemaker.RegenMult;
+					Player.lifeRegen = Main.rand.RandomRound(Player.lifeRegen * Pacemaker.RegenMult);
+					Max(ref Player.lifeRegen, 0);
+					if (Player.palladiumRegen) Player.lifeRegenCount += Main.rand.RandomRound(4 * Pacemaker.RegenMult);
+				}
+			}
 		}
 		public override void PostUpdateBuffs() {
 			foreach (Projectile projectile in Main.ActiveProjectiles) {

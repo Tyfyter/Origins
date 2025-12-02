@@ -583,7 +583,7 @@ ACCESSORIES:
 (^) Olid Organ
 (^) Ornamental Keepsake
 (^) Otherworldly Cloak
-(#, ^2) Pacemaker !!!
+(☻) Pacemaker !!!
 (X) Parasite Arm
 (^) Party Ring Balloon
 (^) Plasma Bag

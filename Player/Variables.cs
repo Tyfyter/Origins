@@ -339,6 +339,7 @@ namespace Origins {
 		public const float gasMaskMult = 0.75f;
 		public bool crystalHeart = false;
 		public int crystalHeartCounter = 0;
+		public bool pacemaker = false;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -534,6 +535,7 @@ namespace Origins {
 		public int oldBreath = 200;
 		public float oldGravDir = 0;
 		public float lifeRegenTimeSinceHit = 0;
+		public int timeSinceHit = 0;
 		public int itemUseOldDirection = 0;
 		public List<Vector2> oldVelocities = [];
 		public Guid guid = Guid.Empty;
@@ -853,6 +855,7 @@ namespace Origins {
 			gasMaskDye = 0;
 			filterBreather = false;
 			if (!crystalHeart.TrySet(false)) crystalHeartCounter = 0;
+			pacemaker = false;
 			lotteryTicketItem = null;
 
 
@@ -1125,6 +1128,7 @@ namespace Origins {
 					lifeRegenTimeSinceHit += 2f;
 				}
 			}
+			timeSinceHit++;
 			oldVelocities.Insert(0, Player.velocity);
 			while (oldVelocities.Count > 20) oldVelocities.RemoveAt(20);
 			if (tornCurrentSeverity >= 0.99f && Player.whoAmI == Main.myPlayer && !Player.dead && Player.statLifeMax2 <= 0) {

@@ -821,6 +821,7 @@ namespace Origins {
 		}
 		public override void PostHurt(Player.HurtInfo info) {
 			lifeRegenTimeSinceHit = 0;
+			timeSinceHit = 0;
 			if (extremophileSet) extremophileSetHits++;
 			extremophileSetTime = 0;
 			if (manaDamageToTake > 0) {
