@@ -42,6 +42,7 @@ namespace Origins.Tiles.Ashen {
 			yield return new TileMergeOverlay(merge + "Dirt_Overlay", TileID.Dirt);
 			yield return new TileMergeOverlay(merge + "Mud_Overlay", TileID.Mud);
 			yield return new TileMergeOverlay(merge + "Ash_Overlay", TileID.Ash);
+			yield return new TileMergeOverlay(merge + "Sootsand_Overlay", TileType<Sootsand>());
 			yield return new TileMergeOverlay(merge + "Murk_Overlay", TileType<Murky_Sludge>());
 			yield return new TileMergeOverlay(merge + "Murk_Overlay", TileType<Ashen_Murky_Sludge_Grass>());
 		}

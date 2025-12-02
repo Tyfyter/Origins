@@ -31,7 +31,7 @@ public abstract class LootPool : ModType {
 	public void Resolve(DropAttemptInfo info, bool selectRandomly = false) {
 		if (Sequential) {
 			IItemDropRule rule;
-			if (selectRandomly || info.npc is not null|| info.item != ItemID.None) rule = Main.rand.Next(rules);
+			if (selectRandomly || info.npc is not null || info.item != ItemID.None) rule = Main.rand.Next(rules);
 			else rule = rules[sequenceIndex++ % rules.Count];
 			OriginExtensions.ResolveRule(rule, info);
 			return;
