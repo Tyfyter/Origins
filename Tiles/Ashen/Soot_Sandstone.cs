@@ -21,8 +21,8 @@ namespace Origins.Tiles.Ashen {
 			//Main.tileMerge[Type] = Main.tileMerge[TileID.Sandstone];
 			//Main.tileMerge[Type][TileID.Sandstone] = true;
 			/*for(int i = 0; i < TileLoader.TileCount; i++) {
-                Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Sandstone];
-            }*/
+				Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Sandstone];
+			}*/
 			AddMapEntry(FromHexRGB(0x8772a6));
 			mergeID = TileID.Sandstone;
 			DustType = Ashen_Biome.DefaultTileDust;
@@ -33,12 +33,12 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Soot_Sandstone_Item : ModItem {
 		public override void SetStaticDefaults() {
-            ItemID.Sets.ShimmerTransformToItem[ItemType<Soot_Sandstone_Item>()] = ItemType<Sootsand_Item>();
+			ItemID.Sets.ShimmerTransformToItem[ItemType<Soot_Sandstone_Item>()] = ItemType<Sootsand_Item>();
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.Sandstone, Type);
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Soot_Sandstone>());
 		}
-    }
+	}
 }

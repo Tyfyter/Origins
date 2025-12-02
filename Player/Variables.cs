@@ -482,6 +482,7 @@ namespace Origins {
 		public bool pocketDimensionMonolithActive = false;
 		public bool InfoAccMechShowAshenWires = false;
 		public int blastFurnaceCharges = 0;
+		public List<int> unlockedPlantModes = [];
 		#endregion
 
 		#region visuals

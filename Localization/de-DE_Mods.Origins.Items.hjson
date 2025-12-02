@@ -7431,3 +7431,8 @@ Blast_Furnace: {
 	// DisplayName: Blast Furnace
 	// Tooltip: ""
 }
+
+The_Plant: {
+	// DisplayName: The Plant
+	// Tooltip: ""
+}
