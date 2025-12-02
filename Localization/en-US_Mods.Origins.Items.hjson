@@ -7421,3 +7421,8 @@ Pacemaker: {
 	DisplayName: Pacemaker
 	Tooltip: ""
 }
+
+Super_Generic_Weapon: {
+	DisplayName: Super Generic Weapon
+	Tooltip: Sucks
+}
