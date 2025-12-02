@@ -7426,3 +7426,8 @@ Super_Generic_Weapon: {
 	// DisplayName: Super Generic Weapon
 	// Tooltip: Sucks
 }
+
+Blast_Furnace: {
+	// DisplayName: Blast Furnace
+	// Tooltip: ""
+}

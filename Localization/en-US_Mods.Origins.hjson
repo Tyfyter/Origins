@@ -2088,6 +2088,8 @@ Projectiles: {
 	Crystal_Heart_Slime_Spike.DisplayName: Crystal Heart Slime Spike
 	Armor_Piercing_Bullet_P.DisplayName: Armor Piercing Bullet P
 	Super_Generic_Weapon_P.DisplayName: Super Generic Weapon P
+	Blast_Furnace_Charge.DisplayName: Blast Furnace Charge
+	Blast_Furnace_P.DisplayName: Blast Furnace P
 }
 
 Prefixes: {

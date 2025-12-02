@@ -481,6 +481,7 @@ namespace Origins {
 		public Vector2? dreamcatcherWorldPosition = null;
 		public bool pocketDimensionMonolithActive = false;
 		public bool InfoAccMechShowAshenWires = false;
+		public int blastFurnaceCharges = 0;
 		#endregion
 
 		#region visuals
@@ -997,6 +998,7 @@ namespace Origins {
 			if (dreamcatcherHoldTime.Cooldown()) dreamcatcherWorldPosition = null;
 			pocketDimensionMonolithActive = false;
 			InfoAccMechShowAshenWires = false;
+			if (blastFurnaceCharges > 0 && Player.HeldItem.ModItem is not Blast_Furnace) blastFurnaceCharges = 0;
 
 			manaShielding = 0f;
 
