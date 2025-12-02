@@ -1,16 +1,11 @@
-using Microsoft.Xna.Framework;
-using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Materials;
-using Origins.NPCs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Ammo {
-	public class Armor_Piercing_Bullet : ModItem, ICustomWikiStat, ITornSource {
-		public static float TornSeverity => 0.25f;
-		float ITornSource.Severity => TornSeverity;
+	public class Armor_Piercing_Bullet : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			WikiCategories.Bullet
 		];
@@ -26,12 +21,6 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(copper: 15);
 			Item.rare = ItemRarityID.Orange;
 			Item.ArmorPenetration = 15;
-		}
-		public override void AddRecipes() {
-			Recipe.Create(Type, 70)
-			.AddIngredient(ModContent.ItemType<Felnum_Bar>())
-			.AddTile(TileID.Anvils)
-			.Register();
 		}
 	}
 	public class Armor_Piercing_Bullet_P : ModProjectile {

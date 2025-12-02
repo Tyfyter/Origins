@@ -8,9 +8,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
-	public class Felnum_Bullet : ModItem, ICustomWikiStat, ITornSource {
-		public static float TornSeverity => 0.25f;
-		float ITornSource.Severity => TornSeverity;
+	public class Felnum_Bullet : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 			WikiCategories.Bullet
 		];
