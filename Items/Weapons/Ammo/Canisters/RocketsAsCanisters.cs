@@ -76,14 +76,18 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 				Vector2 center = projectile.Center;
 				int i = (int)(center.X / 16);
 				int j = (int)(center.Y / 16);
+				int minI = Math.Max(i - tileDestructionRadius, 0);
+				int maxI = Math.Min(i + tileDestructionRadius, Main.maxTilesX);
+				int minJ = Math.Max(j - tileDestructionRadius, 0);
+				int maxJ = Math.Min(j + tileDestructionRadius, Main.maxTilesY);
 				projectile.ExplodeTiles(
 					center,
 					tileDestructionRadius,
-					i - tileDestructionRadius,
-					i + tileDestructionRadius,
-					j - tileDestructionRadius,
-					j + tileDestructionRadius,
-					projectile.ShouldWallExplode(center, tileDestructionRadius, i - tileDestructionRadius, i + tileDestructionRadius, j - tileDestructionRadius, j + tileDestructionRadius)
+					minI,
+					maxI,
+					minJ,
+					maxJ,
+					projectile.ShouldWallExplode(center, tileDestructionRadius, minI, maxI, minJ, maxJ)
 				);
 			}
 		}
