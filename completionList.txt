@@ -1748,7 +1748,7 @@ AMMO:
 |---
 (^) Aether Bullet
 (^) Aether Canister
-(#, ^2) Armor-Piercing Bullet !!!
+(☻) Armor-Piercing Bullet !!!
 (^) Bee Canister
 (^) Bouncy Harpoon
 (^) Defiled Spirit
