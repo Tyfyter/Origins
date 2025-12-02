@@ -1175,7 +1175,7 @@ GENERIC WEAPONS:
 (^) Potato Launcher
 
 (X) Pressurized Supersoaker
-(#, ^2) Super Generic Weapon !!!
+(☻) Super Generic Weapon !!!
 
 (X) Mega Generic Weapon
 ---
