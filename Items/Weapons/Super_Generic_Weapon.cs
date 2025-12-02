@@ -10,9 +10,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons {
 	public class Super_Generic_Weapon : ModItem, ICustomWikiStat {
-		public override void SetStaticDefaults() {
-			ItemID.Sets.ShimmerTransformToItem[Type] = Type;
-		}
 		public override void SetDefaults() {
 			Item.DamageType = DamageClass.Generic;
 			Item.useStyle = ItemUseStyleID.HoldUp;
@@ -33,6 +30,10 @@ namespace Origins.Items.Weapons {
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			position = Main.MouseWorld;
 		}
+		public override void AddRecipes() => CreateRecipe()
+			.AddIngredient(ItemID.HallowedBar, 2)
+			.AddIngredient(ItemID.SoulofNight, 6)
+			.Register();
 	}
 	public class Super_Generic_Weapon_P : ModProjectile {
 		public override string Texture => typeof(Generic_Weapon).GetDefaultTMLName();
