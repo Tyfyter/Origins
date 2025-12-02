@@ -8,18 +8,18 @@ namespace Origins.Items.Other {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.IgnoresEncumberingStone[Type] = true;
 			ItemID.Sets.IsAPickup[Type] = true;
-			ItemID.Sets.ItemIconPulse[Type] = true;
 			Item.ResearchUnlockCount = 0;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Heart);
+			Item.rare = ItemRarityID.Green;
 		}
 		public override void Update(ref float gravity, ref float maxFallSpeed) {
 			gravity = 0.2f;
 			maxFallSpeed = 2;
 			float num = Main.rand.Next(90, 111) * 0.01f;
-			num *= (Main.essScale + 0.5f) / 2f;
-			Lighting.AddLight(Item.Center, 0, 0.6f * num, num);
+			num *= Main.essScale;
+			Lighting.AddLight(Item.Center, 0, 0.6f * num, 0);
 			Item.velocity *= 1.02f;
 		}
 		public override bool OnPickup(Player player) {

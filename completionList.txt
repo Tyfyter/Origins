@@ -1543,7 +1543,7 @@ MATERIALS:
 
 MISCELLANEOUS ITEMS:
 |---
-(#2, ^2) Armor+ Power-Up !!! (fancy visuals, appearance and soft glow)
+(☻) Armor+ Power-Up !!! (fancy visuals, appearance and soft glow)
 (^) Defiled Mana
 (^) Large Chambersite
 (^) Worn Paper: Loose Wheel
