@@ -46,20 +46,19 @@ public class Crystal_Heart : ModItem {
 		if (originPlayer.crystalHeartCounter >= SlimeHPThreshold) {
 			originPlayer.crystalHeartCounter -= SlimeHPThreshold;
 			originPlayer.crystalHeartCounter /= 2;
+			int damage = player.GetWeaponDamage(Item);
 			player.SpawnProjectile(
 				player.GetSource_Accessory(Item),
 				player.MountedCenter,
 				default,
 				ModContent.ProjectileType<Crystal_Heart_Slime_Flying>(),
-				player.GetWeaponDamage(Item),
+				damage,
 				player.GetWeaponKnockback(Item)
-			).originalDamage = Item.damage;
+			).originalDamage = (int)player.GetTotalDamage(Item.DamageType).GetInverse().ApplyTo(damage);
 		}
 	}
 	public override void UpdateItemDye(Player player, int dye, bool hideVisual) {
 		if (IsActive(player)) player.cWings = dye;
-	}
-	public static void SpawnSlime(Player player, Item item) {
 	}
 	public static bool IsActive(Player player) => player.statLife <= player.statLifeMax2 * 0.5f;
 	public override bool MagicPrefix() => true;
