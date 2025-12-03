@@ -7433,6 +7433,11 @@ Blast_Furnace: {
 }
 
 The_Plant: {
-	// DisplayName: The Plant
-	// Tooltip: ""
+	// DisplayName: P.L.A.N.T.
+	// Tooltip: Learns how to make ammo for itself from your bullets
+
+	Description: {
+		// Venom_Bullet: Inflicts [buffhint:Origins/Tetanus_Debuff]
+		// Nano_Bullet: Inflicts [buffhint:Origins/Choice_Paralysis_Debuff] and bounces towards enemies
+	}
 }

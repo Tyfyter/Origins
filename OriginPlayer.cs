@@ -28,6 +28,7 @@ using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
 using static Origins.OriginExtensions;
@@ -764,6 +765,7 @@ namespace Origins {
 			tag.Add("Assimilations", assimilations);
 			tag.Add("mojoInjection", mojoInjection);
 			tag.Add("crownJewel", crownJewel);
+			tag.Add("thePlantUnlocks", unlockedPlantModes.Select(mode => new ItemDefinition(mode)).Concat(unloadedPlantModes).ToList());
 			tag.Add("GUID", guid.ToByteArray());
 		}
 		public override void LoadData(TagCompound tag) {
@@ -800,6 +802,17 @@ namespace Origins {
 			}
 			mojoInjection = tag.SafeGet<bool>("mojoInjection");
 			crownJewel = tag.SafeGet<bool>("crownJewel");
+			unlockedPlantModes.Clear();
+			unloadedPlantModes.Clear();
+			if (tag.TryGet("thePlantUnlocks", out List<ItemDefinition> plantUnlocks)) {
+				for (int i = 0; i < plantUnlocks.Count; i++) {
+					if (plantUnlocks[i].IsUnloaded) {
+						unloadedPlantModes.Add(plantUnlocks[i]);
+					} else {
+						unlockedPlantModes.Add(plantUnlocks[i].Type);
+					}
+				}
+			}
 			if (tag.TryGet("GUID", out byte[] guidBytes)) {
 				guid = new Guid(guidBytes, false);
 			} else {

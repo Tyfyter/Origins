@@ -21,6 +21,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Config;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
@@ -419,6 +420,7 @@ namespace Origins {
 		public int medicinalAcidLife = 0;
 		public bool murkySludge = false;
 		public bool miasma = false;
+		public bool tetanus = false;
 
 		public bool DisableBreathRestore => toxicShock || miasma;
 		public bool sendBuffs = false;
@@ -483,6 +485,7 @@ namespace Origins {
 		public bool InfoAccMechShowAshenWires = false;
 		public int blastFurnaceCharges = 0;
 		public List<int> unlockedPlantModes = [];
+		List<ItemDefinition> unloadedPlantModes = [];
 		#endregion
 
 		#region visuals
@@ -1191,6 +1194,7 @@ namespace Origins {
 			medicinalAcid = false;
 			murkySludge = false;
 			miasma = false;
+			tetanus = false;
 			if (dangerTime <= 0) dangerTime = 0;
 			else dangerTime--;
 			InDanger = dangerTime > 0;

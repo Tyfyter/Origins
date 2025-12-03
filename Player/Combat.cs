@@ -512,6 +512,9 @@ namespace Origins {
 			if (cavitationDebuff) {
 				Player.lifeRegen -= 33;
 			}
+			if (tetanus) {
+				Player.lifeRegen -= Tetanus_Debuff.DPS;
+			}
 			if (miasma) {
 				if (Player.breath <= 0) {
 					Player.lifeRegenTime = 0f;

@@ -71,6 +71,7 @@ namespace Origins.NPCs {
 		public float sentinelSpeed = 1;
 		public bool amnesticRose = false;
 		public int amnesticRoseGooProj = 0;
+		public bool tetanus = false;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
@@ -135,6 +136,7 @@ namespace Origins.NPCs {
 			}
 			lazyCloakShimmer = false;
 			amnesticRose = false;
+			tetanus = false;
 		}
 		public override void DrawEffects(NPC npc, ref Color drawColor) {
 			if (priorityMailTime > 0) {
@@ -241,6 +243,11 @@ namespace Origins.NPCs {
 					dust.noGravity = false;
 					dust.scale *= 0.5f;
 				}*/
+			}
+			if (tetanus) {
+				Min(ref npc.lifeRegen, 0);
+				npc.lifeRegen -= Tetanus_Debuff.DPS * 2;
+				if (damage < Tetanus_Debuff.DPS) damage = Tetanus_Debuff.DPS;
 			}
 			if (staticShock || miniStaticShock || staticShockDamage) {
 				if (npc.lifeRegen > 0) {

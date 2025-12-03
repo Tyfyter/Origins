@@ -1408,6 +1408,17 @@ Buffs: {
 		// Description: It's getting hard to breathe...
 		// EffectDescription: Drains breath slowly
 	}
+
+	Tetanus_Debuff: {
+		// DisplayName: Tetanus
+		// Description: You should probably stay away from sharp, rusty metal
+	}
+
+	Choice_Paralysis_Debuff: {
+		// EffectDescription: Movement is intermitently reversed
+		// DisplayName: Choice Paralysis
+		// Description: Right or left, right or left...
+	}
 }
 
 DamageClassName: {
@@ -2078,18 +2089,23 @@ Projectiles: {
 	// Trenchmaker_Firecracker_Explosion_2.DisplayName: Firecracker
 	// Trenchmaker_Stomp_P.DisplayName: Trenchmaker Stomp
 	// Fuel_Rod_Ball_P.DisplayName: Fuel Rod Ball
-	// Trenchmaker_Cannon_P.DisplayName: Trenchmaker Cannon P
+	// Trenchmaker_Cannon_P.DisplayName: Trenchmaker Cannon
 	// Bark_Shield_Splinters.DisplayName: Bark Shield Splinters
 	// Flak_Jacket_Explosion.DisplayName: Flak Jacket Explosion
-	// Flak_Jacket_Flak_1.DisplayName: Flak Jacket Flak_1
-	// Flak_Jacket_Flak_2.DisplayName: Flak Jacket Flak_2
-	// Flak_Jacket_Flak_3.DisplayName: Flak Jacket Flak_3
-	// Crystal_Heart_Slime_Flying.DisplayName: Crystal Heart Slime Flying
-	// Crystal_Heart_Slime_Spike.DisplayName: Crystal Heart Slime Spike
-	// Armor_Piercing_Bullet_P.DisplayName: Armor Piercing Bullet P
-	// Super_Generic_Weapon_P.DisplayName: Super Generic Weapon P
+	// Flak_Jacket_Flak_1.DisplayName: Flak Jacket Flak
+	// Flak_Jacket_Flak_2.DisplayName: Flak Jacket Flak
+	// Flak_Jacket_Flak_3.DisplayName: Flak Jacket Flak
+	// Crystal_Heart_Slime_Flying.DisplayName: Crystal Heart Slime
+	// Crystal_Heart_Slime_Spike.DisplayName: Crystal Slime Spike
+	// Armor_Piercing_Bullet_P.DisplayName: Armor Piercing Bullet
+	// Super_Generic_Weapon_P.DisplayName: Super Generic Weapon
 	// Blast_Furnace_Charge.DisplayName: Blast Furnace Charge
-	// Blast_Furnace_P.DisplayName: Blast Furnace P
+	// Blast_Furnace_P.DisplayName: Blast Furnace
+	// The_Plant_Chlorophyte_Bullet.DisplayName: "{$ProjectileName.ChlorophyteBullet}"
+	// The_Plant_Explosive_Bullet.DisplayName: "{$ProjectileName.ExplosiveBullet}"
+	// The_Plant_Venom_Bullet.DisplayName: "{$ProjectileName.VenomBullet}"
+	// The_Plant_Nano_Bullet.DisplayName: "{$ProjectileName.NanoBullet}"
+	// The_Plant_Luminite_Bullet.DisplayName: "{$ProjectileName.MoonlordBullet}"
 }
 
 Prefixes: {
