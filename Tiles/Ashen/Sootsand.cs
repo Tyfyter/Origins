@@ -43,6 +43,7 @@ namespace Origins.Tiles.Ashen {
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			yield return new TileMergeOverlay(merge + "Dirt_Overlay", TileID.Dirt);
 			yield return new TileMergeOverlay(merge + "Murk_Overlay", TileType<Murky_Sludge>());
+			yield return new TileMergeOverlay(merge + "Murk_Overlay", TileType<Ashen_Murky_Sludge_Grass>());
 		}
 		public override bool HasWalkDust() {
 			return Main.rand.NextBool(3);
