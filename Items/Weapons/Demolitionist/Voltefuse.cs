@@ -94,7 +94,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 
-		public bool IsExploding() => Projectile.localAI[0] >= FuseTime;
+		public bool IsExploding => Projectile.localAI[0] >= FuseTime;
 		public void Explode(int delay = 0) {
 			if (Projectile.localAI[2] <= 0) Projectile.localAI[2] = 1 + delay;
 		}

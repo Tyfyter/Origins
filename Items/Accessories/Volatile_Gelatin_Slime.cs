@@ -246,6 +246,6 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 }

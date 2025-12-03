@@ -214,7 +214,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				);
 			}
 		}
-		public bool IsExploding() => Projectile.ai[2] == 1;
+		public bool IsExploding => Projectile.ai[2] == 1;
 		public void DefaultExplosion(Projectile projectile, int fireDustType = DustID.Torch, int size = 96) {
 			projectile.ai[2] = 1;
 			CanisterGlobalProjectile.DefaultExplosion(projectile, false, fireDustType: -1, size: size);

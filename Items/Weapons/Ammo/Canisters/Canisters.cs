@@ -476,7 +476,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			target.AddBuff(BuffID.CursedInferno, Main.rand.Next(120, 181));
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 	public class Ichor_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
 		static short glowmask;
@@ -588,7 +588,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			return false;
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 	public class Alkahest_Canister : ModItem, ICanisterAmmo, ICustomWikiStat, ITornSource {
 		public float Severity => 0.35f;

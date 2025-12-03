@@ -179,7 +179,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override Color? GetAlpha(Color lightColor) {
 			return new Color(255, 180, 50, 0);
 		}
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 	public class Thermite_Lingering_P : ModProjectile, ICanisterChildProjectile, IIsExplodingProjectile {
 		public static int ID { get; private set; }
@@ -295,6 +295,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		private float StripWidth(float progressOnStrip = 0) => 16 * Projectile.scale;
 		private float StripWidth2(float progressOnStrip = 0) => 12 * Projectile.scale;
 		private float StripWidth3(float progressOnStrip = 0) => 8 * Projectile.scale;
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 }

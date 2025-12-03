@@ -112,6 +112,6 @@ namespace Origins.Items.Weapons.Ammo {
 			}
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 }

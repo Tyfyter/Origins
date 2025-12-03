@@ -197,7 +197,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				SpriteEffects.None
 			);
 		}
-		public bool IsExploding() => false;
+		public bool IsExploding => false;
 		public override bool? CanHitNPC(NPC target) {
 			if (Projectile.timeLeft == 0) {
 				//return target.;
@@ -253,7 +253,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 	public class Meteor_Explosion_2 : Meteor_Explosion_1 {
 		public override void AI() {

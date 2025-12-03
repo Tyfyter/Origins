@@ -142,7 +142,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 	public class Flakjack_P : ModProjectile, IIsExplodingProjectile {
 		public override void SetStaticDefaults() {
@@ -188,6 +188,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 				);
 			}
 		}
-		public bool IsExploding() => false;
+		public bool IsExploding => false;
 	}
 }

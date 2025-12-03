@@ -312,7 +312,7 @@ namespace Origins.Projectiles {
 			}
 			if (!projectile.CountsAsClass(DamageClasses.Explosive)) return false;
 			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {
-				return explodingProjectile.IsExploding();
+				return explodingProjectile.IsExploding;
 			}
 			switch (projectile.type) {
 				case ProjectileID.VolatileGelatinBall:
@@ -805,6 +805,6 @@ namespace Origins.Projectiles {
 			if (!Hostile && DealsSelfDamage) ExplosiveGlobalProjectile.DealSelfDamage(Projectile, SelfDamageCooldownCounter);
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 }

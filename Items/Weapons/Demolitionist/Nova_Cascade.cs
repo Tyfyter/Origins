@@ -72,6 +72,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 }

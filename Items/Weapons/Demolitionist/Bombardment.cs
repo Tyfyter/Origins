@@ -57,6 +57,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AI() {
 			Projectile.velocity *= 0.96f;
 		}
-		public bool IsExploding() => Projectile.timeLeft <= 0;
+		public bool IsExploding => Projectile.timeLeft <= 0;
 	}
 }

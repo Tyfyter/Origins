@@ -90,7 +90,7 @@ namespace Origins.Items.Weapons.Ammo {
 			ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 	public class Gray_Solution : ModItem {
 		public override void SetStaticDefaults() {

@@ -792,7 +792,7 @@ namespace Origins {
 				if (modProjectile.Projectile.timeLeft > delay) modProjectile.Projectile.timeLeft = delay;
 			}
 		}
-		bool IsExploding();
+		bool IsExploding { get; }
 	}
 	interface ISelfDamageEffectProjectile {
 		void OnSelfDamage(Player player, Player.HurtInfo info, double damageDealt);

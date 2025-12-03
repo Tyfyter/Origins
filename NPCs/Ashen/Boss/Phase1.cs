@@ -443,7 +443,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				return new Triangle(laserStartPoint, laserStartPoint + Projectile.velocity * factor - spread, laserStartPoint + Projectile.velocity * factor + spread).Intersects(targetHitbox);
 			}
 			static Vector2 GetSpread(Vector2 velocity) => velocity.RotatedBy(MathHelper.PiOver2) * TanExplosionSpread;
-			public bool IsExploding() => true;
+			public bool IsExploding => true;
 		}
 	}
 	public class Carpet_Bomb_State : AIState {
