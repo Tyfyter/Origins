@@ -45,21 +45,21 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
 			Item.noMelee = true;
-			Item.useTime = 17;
-			Item.useAnimation = 17;
+			Item.useTime = 8;
+			Item.useAnimation = 8;
 			Item.width = 50;
 			Item.height = 10;
 			Item.shoot = ProjectileID.Bullet;
 			Item.shootSpeed = 8;
 			Item.UseSound = SoundID.Item11;
-			Item.value = Item.sellPrice(gold: 3);
-			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(gold: 6);
+			Item.rare = ItemRarityID.Lime;
 		}
 		public override void UpdateInventory(Player player) {
 			if (++ammoTimer > Item.useAnimation * 5 * CombinedHooks.TotalUseAnimationMultiplier(player, Item)) {
 				ammoTimer = 0;
 				ammoCount++;
-				Min(ref ammoCount, 100);
+				Min(ref ammoCount, 999);
 				List<int> unlockedPlantModes = player.OriginPlayer().unlockedPlantModes;
 				for (int i = 0; i < player.inventory.Length; i++) {
 					Item ammo = player.inventory[i];

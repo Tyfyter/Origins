@@ -359,7 +359,7 @@ STATUS EFFECTS:
 (^) Cavitation
 (^) Impeding Shrapnel
 (^) Mana Buffer
-(☻) Miasma !!!
+(^) Miasma
 (X) Quantum Vitiation
 (^) Rasterized
 (^) Shadefire
@@ -533,8 +533,8 @@ ACCESSORIES:
 (^) Fallacious Vase
 (^) Feather Cape
 (^) Feathery Crest
-(☻) Filter Breather !!!
-(☻) Flak Jacket !!!
+(^) Filter Breather
+(^) Flak Jacket
 (^) Fleshy Figurine
 (^) Focus Crystal
 (^) Full Send
@@ -583,7 +583,7 @@ ACCESSORIES:
 (^) Olid Organ
 (^) Ornamental Keepsake
 (^) Otherworldly Cloak
-(☻) Pacemaker !!!
+(^) Pacemaker
 (X) Parasite Arm
 (^) Party Ring Balloon
 (^) Plasma Bag
@@ -769,7 +769,7 @@ TOOLS:
 (^) Parasitic Manipulator
 (^) Piledriver
 (^) Rivenator
-(#, ^2) Screwdriver !!!
+(^) Screwdriver
 (^) Snatcher
 (^) Stabsmash
 (^) Strainer
@@ -1090,7 +1090,7 @@ EXPLOSIVE WEAPONS:
 (^) Flare Launcher
 (^) Flashbang
 (^) Floaty Bomb
-(☻) Fuel Rod Ball !!!
+(^) Fuel Rod Ball
 (^) Glass Cannon
 (^) Hand Cannon
 (^) Hand Grenade Launcher
@@ -1175,7 +1175,7 @@ GENERIC WEAPONS:
 (^) Potato Launcher
 
 (X) Pressurized Supersoaker
-(☻) Super Generic Weapon !!!
+(^) Super Generic Weapon
 
 (X) Mega Generic Weapon
 ---
@@ -1285,7 +1285,7 @@ TILES:
 (^) Hardened Sootsand Wall
 (@, ^3) Lost Brick Wall
 (^) Marrowick Wall
-(☻) Molten Steel Wall !!!
+(^) Molten Steel Wall
 (X) Nova Brick Wall
 (^) Quartz Wall
 (^) Riven Grass Wall
@@ -1293,8 +1293,8 @@ TILES:
 (^) Spug Flesh Wall
 (X) Spug Flesh Brick Wall
 (^) Tainted Stone Wall
-(☻) Type-I Fortified Steel Wall !!!
-(☻) Type-III Fortified Steel Wall !!!
+(^) Type-I Fortified Steel Wall
+(@4, ^3) Type-III Fortified Steel Wall !!!
 
 (#, ^2) Air Vent !!!
 (^) Alkahest Torch
@@ -1543,7 +1543,7 @@ MATERIALS:
 
 MISCELLANEOUS ITEMS:
 |---
-(☻) Armor+ Power-Up !!! (fancy visuals, appearance and soft glow)
+(#2, ^2) Armor+ Power-Up !!! (fancy visuals)
 (^) Defiled Mana
 (^) Large Chambersite
 (^) Worn Paper: Loose Wheel
@@ -1748,7 +1748,7 @@ AMMO:
 |---
 (^) Aether Bullet
 (^) Aether Canister
-(☻) Armor-Piercing Bullet !!!
+(^) Armor-Piercing Bullet
 (^) Bee Canister
 (^) Bouncy Harpoon
 (^) Defiled Spirit

@@ -595,7 +595,12 @@ namespace Origins {
 				regen /= (1 - tornCurrentSeverity) * 0.85f + 0.15f;
 			}
 			if (pacemaker) {
+				if (timeSinceHit == Pacemaker.DisableRegenTime(Player)) {
+					SoundEngine.PlaySound(SoundID.Item117.WithPitch(1.5f), Player.position);
+					SoundEngine.PlaySound(SoundID.Item121.WithPitch(2f).WithVolume(0.5f), Player.position);
+				}
 				if (timeSinceHit < Pacemaker.DisableRegenTime(Player)) {
+					SoundEngine.PlaySound(SoundID.Zombie87.WithVolumeScale(0.3f).WithPitch(-0.72f), Player.position);
 					regen = 0;
 					Player.lifeRegen = 0;
 					Player.palladiumRegen = false;

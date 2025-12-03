@@ -12,13 +12,14 @@ namespace Origins.Buffs {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			player.GetDamage(DamageClass.Generic) += 0.025f;
+			OriginPlayer originPlayer = player.OriginPlayer();
+			player.GetArmorPenetration(DamageClass.Generic) += 5;
+			/*player.GetDamage(DamageClass.Generic) += 0.025f;
 			player.GetCritChance(DamageClass.Generic) += 0.025f;
 			player.GetAttackSpeed(DamageClass.Generic) += 0.025f;
-			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.statSharePercent += 0.125f;
 			originPlayer.meleeScaleMultiplier += 0.1f;
-			originPlayer.projectileSpeedBoost += 0.1f;
+			originPlayer.projectileSpeedBoost += 0.1f;*/
 		}
 	}
 }

@@ -27,20 +27,20 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.DamageType = DamageClass.Magic;
-			Item.damage = 20;
+			Item.damage = 30;
 			Item.noMelee = true;
 			Item.width = 44;
 			Item.height = 44;
-			Item.useTime = 37;
-			Item.useAnimation = 37;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
 			Item.shoot = ModContent.ProjectileType<Blast_Furnace_Charge>();
 			Item.shootSpeed = 16f;
-			Item.mana = 13;
+			Item.mana = 7;
 			Item.knockBack = 5f;
-			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(gold: 4);
+			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item34;
-			Item.autoReuse = false;
+			Item.autoReuse = true;
 			Item.channel = true;
 		}
 		public override bool AltFunctionUse(Player player) => player.OriginPlayer().blastFurnaceCharges < max_charges;

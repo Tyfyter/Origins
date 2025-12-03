@@ -3502,12 +3502,7 @@ Chambersite_Gemspark_Item: {
 
 Ambition_Potion: {
 	// DisplayName: Ambition Potion
-	/* Tooltip:
-		'''
-		12.5% stat share
-		+10% generic weapon velocity
-		+10% melee weapon size
-		''' */
+	// Tooltip: Increases armor penetration by 5
 }
 
 // Defiled_Amalgamation_Relic_Item.DisplayName: "{§Defiled} Amalgamation Relic"
@@ -7414,12 +7409,20 @@ Crystal_Heart: {
 
 Armor_Piercing_Bullet: {
 	// DisplayName: Armor-Piercing Bullet
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Increased armor penetration
+		Pierces enemies once
+		''' */
 }
 
 Pacemaker: {
 	// DisplayName: Pacemaker
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Multiplies all regeneration by a factor of 5
+		Delays all regeneration for 5 seconds after getting hit
+		''' */
 }
 
 Super_Generic_Weapon: {
@@ -7429,12 +7432,20 @@ Super_Generic_Weapon: {
 
 Blast_Furnace: {
 	// DisplayName: Blast Furnace
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Fires a powerful flame
+		Hold <right> to charge up for more powerful attacks
+		''' */
 }
 
 The_Plant: {
-	// DisplayName: P.L.A.N.T.
-	// Tooltip: Learns how to make ammo for itself from your bullets
+	// DisplayName: The P.L.A.N.T.
+	/* Tooltip:
+		'''
+		Fabricates ammo that learns from bullet types in your inventory
+		Fabricated ammo behaves differently from copied bullet type
+		''' */
 
 	Description: {
 		// Venom_Bullet: Inflicts [buffhint:Origins/Tetanus_Debuff]
