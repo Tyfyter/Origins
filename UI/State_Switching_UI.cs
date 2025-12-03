@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using PegasusLib;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +32,10 @@ namespace Origins.UI {
 			}
 			if (CurrentState is null) return;
 			CurrentState.Update(gameTime);
+		}
+		public override void Draw(SpriteBatch spriteBatch) {
+			if (CurrentState is null) return;
+			CurrentState.Draw(spriteBatch);
 		}
 	}
 	public abstract class SwitchableUIState : UIState, ILoadable {
