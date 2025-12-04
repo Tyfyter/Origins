@@ -2106,8 +2106,9 @@ Projectiles: {
 	// The_Plant_Venom_Bullet.DisplayName: "{$ProjectileName.VenomBullet}"
 	// The_Plant_Nano_Bullet.DisplayName: "{$ProjectileName.NanoBullet}"
 	// The_Plant_Luminite_Bullet.DisplayName: "{$ProjectileName.MoonlordBullet}"
-	// Corona_P.DisplayName: "{Items.Corona.DisplayName}"
-	// Shadow_Flare_P.DisplayName: "{Items.Shadow_Flare.DisplayName}"
+	// The_Plant_Crystal_Bullet.DisplayName: "{$ProjectileName.CrystalBullet}"
+	// Corona_P.DisplayName: "{$Items.Corona.DisplayName}"
+	// Shadow_Flare_P.DisplayName: "{$Items.Shadow_Flare.DisplayName}"
 }
 
 Prefixes: {

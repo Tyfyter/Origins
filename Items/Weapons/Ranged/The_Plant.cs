@@ -615,4 +615,38 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.damage = (int)(Projectile.damage * 0.98f);
 		}
 	}
+	public class The_Plant_Crystal_Bullet : ModProjectile {
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.CrystalBullet;
+		public override void SetStaticDefaults() {
+			The_Plant.RegisterAmmoType(ItemID.CrystalBullet, Type, 9, 0.8f, 6, new(69, 120, 153));
+		}
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.CrystalBullet);
+			Projectile.aiStyle = 0;
+		}
+		public override void AI() {
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			if (Projectile.alpha > 0)
+				Projectile.alpha -= 15;
+			if (Projectile.alpha < 0)
+				Projectile.alpha = 0;
+			Projectile.BulletShimmer();
+		}
+		public override Color? GetAlpha(Color lightColor) => new Color(255, 200, 100, 100) * Projectile.Opacity;
+		public override void OnKill(int timeLeft) {
+			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+			SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
+			int type = ModContent.ProjectileType<Impeding_Shrapnel_Shard>();
+			for (int i = Math.Min(Main.rand.Next(2, 4), Main.rand.Next(2, 4)); i > 0; i--) {
+				Projectile.NewProjectile(
+					Projectile.GetSource_FromThis(),
+					Projectile.Center,
+					Main.rand.NextVector2CircularEdge(1, 1) * Main.rand.NextFloat(2, 4),
+					type,
+					Projectile.damage / 2,
+					Projectile.knockBack
+				);
+			}
+		}
+	}
 }
