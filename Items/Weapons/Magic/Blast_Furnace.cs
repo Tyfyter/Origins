@@ -7,6 +7,7 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameInput;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -133,13 +134,30 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override bool ShouldUpdatePosition() => false;
 		record struct Wave(double Frequency, double Amplitude, double Phase) {
-			public double Sample(double position) => Math.Sin(position * Frequency + Phase) * Amplitude;
+			public readonly double Sample(double position) => Math.Sin(position * Frequency + Phase) * Amplitude;
 		}
 		Wave[] waves;
+		NPC target;
+		public Vector2 HeadOffset {
+			get => new(Projectile.ai[0], Projectile.ai[1]);
+			set => (Projectile.ai[0], Projectile.ai[1]) = value;
+		}
 		public override void OnSpawn(IEntitySource source) {
 			waves = new Wave[Main.rand.Next(13, 21)];
 			for (int i = 0; i < waves.Length; i++) {
 				waves[i] = new(Main.rand.NextFloat(0.1f, 0.5f), Main.rand.NextFloat(0.02f, 0.1f), Main.rand.NextFloat(MathHelper.TwoPi));
+			}
+			float distanceFromTarget = 16 * 5f;
+			distanceFromTarget *= distanceFromTarget;
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc.CanBeChasedBy()) {
+					Vector2 pos = Main.MouseWorld;
+					float between = pos.Clamp(npc.Hitbox).DistanceSQ(pos);
+					if (distanceFromTarget > between) {
+						distanceFromTarget = between;
+						target = npc;
+					}
+				}
 			}
 		}
 		Vector2 originalVelocity;
@@ -153,15 +171,20 @@ namespace Origins.Items.Weapons.Magic {
 			ProcessTick();
 			double value = 0;
 			for (int i = 0; i < waves.Length; i++) value += waves[i].Sample(Projectile.ai[2]);
+			if (target is not null) {
+				if (Projectile.localNPCImmunity[target.whoAmI] != 0 || !target.CanBeChasedBy(Projectile)) target = null;
+			}
 			Projectile.velocity = Projectile.velocity.RotatedBy(value);
-			Projectile.velocity = Vector2.Lerp(
-				originalVelocity,
+			Vector2 originalDir = originalVelocity.Normalized(out float speed);
+			Vector2? targetDir = target?.DirectionFrom(Projectile.position + HeadOffset);
+			Projectile.velocity = (Vector2.Lerp(
+				(targetDir ?? originalDir) * speed,
 				Projectile.velocity,
-				float.Clamp(Vector2.Dot(originalVelocity.Normalized(out _), new Vector2(Projectile.ai[0], Projectile.ai[1]).Normalized(out _)) * 2, 0, 1)
-			);
+				float.Clamp(Vector2.Dot((targetDir ?? originalDir), HeadOffset.Normalized(out _)) * 2, 0, 1)
+			) + (targetDir ?? Vector2.Zero) * speed * 0.25f).Normalized(out _) * speed;
 			SetHitboxCache();
 			void ProcessTick() {
-				Projectile.oldPos[(int)Projectile.ai[2]] = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+				Projectile.oldPos[(int)Projectile.ai[2]] = HeadOffset;
 				Projectile.oldRot[(int)Projectile.ai[2]] = Projectile.velocity.ToRotation() + MathHelper.Pi;
 			}
 		}
@@ -194,7 +217,7 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			polygonCache[lineIndex++] = (nextPos0, nextPos1);
 		}
-		private static VertexStrip _vertexStrip = new();
+		private static readonly VertexStrip _vertexStrip = new();
 		public override bool PreDraw(ref Color lightColor) {
 			Vector2[] oldPos = new Vector2[int.Min((int)Projectile.ai[2], Projectile.oldPos.Length)];
 			for (int i = 0; i < oldPos.Length; i++) {
