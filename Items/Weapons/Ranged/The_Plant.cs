@@ -241,7 +241,7 @@ namespace Origins.Items.Weapons.Ranged {
 			if (Projectile.ai[0] == 0f) {
 				Main.player[Projectile.owner].DoHoming(target => {
 					if (CanTarget(target)) {
-						float distance = target.Hitbox.Distance(Projectile.Center);
+						float distance = Projectile.Center.Clamp(target.Hitbox).DistanceSQ(Projectile.Center);
 						if (distance < maxDistance && Collision.CanHit(Projectile.Center, 1, 1, target.position, target.width, target.height)) {
 							maxDistance = distance;
 							Target = target;
@@ -253,7 +253,7 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 			if (Target is not null) {
 				if (CanTarget(Target)) {
-					Projectile.velocity = (Projectile.velocity + (Entity.Center - Projectile.Center).Normalized(out _) * HomingSpeed).Normalized(out _) * Projectile.velocity.Length();
+					Projectile.velocity = (Projectile.velocity + (Target.Center - Projectile.Center).Normalized(out _) * (HomingSpeed)).Normalized(out _) * Projectile.velocity.Length();
 				} else {
 					Target = null;
 				}
@@ -429,7 +429,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Entity bounceTarget = null;
 			Main.player[Projectile.owner].DoHoming(target => {
 				if (CanTarget(target)) {
-					float distance = target.Hitbox.Distance(Projectile.Center);
+					float distance = Projectile.Center.Clamp(target.Hitbox).DistanceSQ(Projectile.Center);
 					if (distance < maxDistance && Collision.CanHit(Projectile.Center, 1, 1, target.position, target.width, target.height)) {
 						maxDistance = distance;
 						bounceTarget = target;
