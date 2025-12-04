@@ -1,7 +1,6 @@
-using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.UI;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -9,46 +8,36 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Blast_Furnace : ModItem, ICustomWikiStat {
-		public const int max_charges = 5;
+	public class Corona : ModItem, ICustomWikiStat {
+		public override string Texture => typeof(Blast_Furnace).GetDefaultTMLName();
 		public string[] Categories => [
 			WikiCategories.SpellBook
 		];
 		public override void SetStaticDefaults() {
-			OriginsSets.Items.ItemsThatCanChannelWithRightClick[Type] = true;
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.OnFire3];
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.DamageType = DamageClass.Magic;
 			Item.damage = 30;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
 			Item.width = 44;
 			Item.height = 44;
-			Item.useTime = 20;
-			Item.useAnimation = 20;
-			Item.shoot = ModContent.ProjectileType<Blast_Furnace_Charge>();
+			Item.useTime = 23;
+			Item.useAnimation = 23;
+			Item.shoot = ModContent.ProjectileType<Corona_P>();
 			Item.shootSpeed = 16f;
-			Item.mana = 7;
+			Item.mana = 10;
 			Item.knockBack = 5f;
 			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.LightRed;
-			Item.UseSound = SoundID.Item34;
+			Item.UseSound = SoundID.Item103;
 			Item.autoReuse = true;
-			Item.channel = true;
 		}
-		public override bool AltFunctionUse(Player player) => player.OriginPlayer().blastFurnaceCharges < max_charges;
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (player.altFunctionUse != 2) type = ModContent.ProjectileType<Blast_Furnace_P>();
-		}
-		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) => damage *= Utils.Remap(player.OriginPlayer().blastFurnaceCharges, 0, max_charges, 1, 2);
-		public override void ModifyWeaponKnockback(Player player, ref StatModifier knockback) => knockback *= Utils.Remap(player.OriginPlayer().blastFurnaceCharges, 0, max_charges, 1, 5);
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			if (player.altFunctionUse == 2) return base.Shoot(player, source, position, velocity, type, damage, knockback);
-			ref int blastFurnaceCharges = ref player.OriginPlayer().blastFurnaceCharges;
-			for (int i = 3 + (blastFurnaceCharges + 1) / 3; i > 0; i--) {
+			for (int i = 5; i > 0; i--) {
 				Projectile.NewProjectile(
 					source,
 					position,
@@ -58,68 +47,20 @@ namespace Origins.Items.Weapons.Magic {
 					knockback
 				);
 			}
-			if (blastFurnaceCharges > 0) blastFurnaceCharges--;
 			return false;
 		}
 	}
-	public class Blast_Furnace_UI : SwitchableUIState {
-		public override void AddToList() => OriginSystem.Instance.ItemUseHUD.AddState(this);
-		public override bool IsActive() => Main.LocalPlayer.HeldItem.ModItem is Blast_Furnace;
-		public override InterfaceScaleType ScaleType => InterfaceScaleType.Game;
-		readonly AutoLoadingAsset<Texture2D> texture = typeof(Blast_Furnace_UI).GetDefaultTMLName();
-		public override void Draw(SpriteBatch spriteBatch) {
-			Rectangle frame = texture.Frame(verticalFrames: Blast_Furnace.max_charges + 1, frameY: Main.LocalPlayer.OriginPlayer().blastFurnaceCharges);
-			spriteBatch.Draw(
-				texture,
-				Main.LocalPlayer.Top.Floor() - Vector2.UnitY * (12 - Main.LocalPlayer.gfxOffY) - frame.Size() * new Vector2(0.5f, 1f) - Main.screenPosition,
-				frame,
-				Color.White
-			);
-		}
-	}
-	public class Blast_Furnace_Charge : ModProjectile {
-		public static float ChargeTimeMultiplier => 0.65f;
+	public class Corona_P : ModProjectile {
 		public override string Texture => typeof(Blast_Furnace).GetDefaultTMLName();
-		public override void SetDefaults() {
-			Projectile.width = 0;
-			Projectile.height = 0;
-			Projectile.tileCollide = false;
-			Projectile.hide = true;
-		}
-		public override void OnSpawn(IEntitySource source) {
-			if (source is EntitySource_ItemUse { Player: Player player }) Projectile.ai[0] = player.itemTimeMax * ChargeTimeMultiplier;
-		}
-		public override bool ShouldUpdatePosition() => false;
-		public override void AI() {
-			if (!Projectile.TryGetOwner(out Player player)) {
-				Projectile.Kill();
-				return;
-			}
-			Projectile.position = player.MountedCenter;
-			if (!player.channel) {
-				Projectile.Kill();
-				return;
-			}
-			player.SetDummyItemTime(5);
-			if (--Projectile.ai[0] <= 0) {
-				if (player.HeldItem?.ModItem?.AltFunctionUse(player) != true) {
-					Projectile.Kill();
-					return;
-				}
-				player.OriginPlayer().blastFurnaceCharges++;
-				Projectile.ai[0] += CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem) * ChargeTimeMultiplier;
-			}
-		}
-	}
-	public class Blast_Furnace_P : ModProjectile {
-		public override string Texture => typeof(Blast_Furnace).GetDefaultTMLName();
+		public virtual float FadeFrames => 25f;
 		public override void SetStaticDefaults() {
-			ProjectileID.Sets.TrailCacheLength[Type] = 20;
+			ProjectileID.Sets.TrailCacheLength[Type] = 25;
 		}
 		public override void SetDefaults() {
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.width = 0;
 			Projectile.height = 0;
-			Projectile.timeLeft = 60;
+			Projectile.timeLeft = 65;
 			Projectile.extraUpdates = 2;
 			Projectile.penetrate = -1;
 			Projectile.friendly = true;
@@ -128,11 +69,13 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.localNPCHitCooldown = -1;
 		}
 		public override bool ShouldUpdatePosition() => false;
-		record struct Wave(double Frequency, double Amplitude, double Phase) {
+		public record struct Wave(float Frequency, float Amplitude, float Phase) {
 			public readonly double Sample(double position) => Math.Sin(position * Frequency + Phase) * Amplitude;
+			public override readonly string ToString() => $"sin(x * {Frequency} + {Phase}) * {Amplitude}";
 		}
-		Wave[] waves;
-		NPC target;
+		public Vector2 originalDirection;
+		public NPC target;
+		public Wave[] waves;
 		public Vector2 HeadOffset {
 			get => new(Projectile.ai[0], Projectile.ai[1]);
 			set => (Projectile.ai[0], Projectile.ai[1]) = value;
@@ -142,6 +85,7 @@ namespace Origins.Items.Weapons.Magic {
 			for (int i = 0; i < waves.Length; i++) {
 				waves[i] = new(Main.rand.NextFloat(0.1f, 0.5f), Main.rand.NextFloat(0.02f, 0.1f), Main.rand.NextFloat(MathHelper.TwoPi));
 			}
+			originalDirection = Projectile.DirectionTo(Main.MouseWorld);
 			float distanceFromTarget = 16 * 5f;
 			distanceFromTarget *= distanceFromTarget;
 			foreach (NPC npc in Main.ActiveNPCs) {
@@ -155,27 +99,25 @@ namespace Origins.Items.Weapons.Magic {
 				}
 			}
 		}
-		Vector2 originalVelocity;
 		public override void AI() {
-			Projectile.Opacity = Projectile.timeLeft / 25f;
+			Projectile.Opacity = Projectile.timeLeft / FadeFrames;
 			if (Projectile.TryGetOwner(out Player player)) Projectile.position = player.MountedCenter;
-			if (Projectile.ai[2] == 0) originalVelocity = Projectile.velocity;
 			if (++Projectile.ai[2] >= Projectile.oldPos.Length) return;
 			Projectile.ai[0] += Projectile.velocity.X;
 			Projectile.ai[1] += Projectile.velocity.Y;
 			ProcessTick();
 			double value = 0;
 			for (int i = 0; i < waves.Length; i++) value += waves[i].Sample(Projectile.ai[2]);
+			Projectile.velocity = Projectile.velocity.RotatedBy(value);
 			if (target is not null) {
 				if (Projectile.localNPCImmunity[target.whoAmI] != 0 || !target.CanBeChasedBy(Projectile)) target = null;
 			}
-			Projectile.velocity = Projectile.velocity.RotatedBy(value);
-			Vector2 originalDir = originalVelocity.Normalized(out float speed);
+			float speed = Projectile.velocity.Length();
 			Vector2? targetDir = target?.DirectionFrom(Projectile.position + HeadOffset);
 			Projectile.velocity = (Vector2.Lerp(
-				(targetDir ?? originalDir) * speed,
+				(targetDir ?? originalDirection) * speed,
 				Projectile.velocity,
-				float.Clamp(Vector2.Dot((targetDir ?? originalDir), HeadOffset.Normalized(out _)) * 2, 0, 1)
+				float.Clamp(Vector2.Dot((targetDir ?? originalDirection), HeadOffset.Normalized(out _)) * 2, 0, 1)
 			) + (targetDir ?? Vector2.Zero) * speed * 0.25f).Normalized(out _) * speed;
 			SetHitboxCache();
 			void ProcessTick() {
@@ -188,9 +130,30 @@ namespace Origins.Items.Weapons.Magic {
 			targetHitbox.Offset((-Projectile.position).ToPoint());
 			return CollisionExtensions.PolygonIntersectsRect(polygonCache, targetHitbox);
 		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.OnFire3, Main.rand.Next(60, 181));
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.WriteVector2(originalDirection);
+			writer.Write((short)(target?.whoAmI ?? -1));
+			writer.Write((byte)waves.Length);
+			for (int i = 0; i < waves.Length; i++) {
+				writer.Write(waves[i].Frequency);
+				writer.Write(waves[i].Amplitude);
+				writer.Write(waves[i].Phase);
+			}
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			originalDirection = reader.ReadVector2();
+			target = Main.npc.GetIfInRange(reader.ReadInt16());
+			waves = new Wave[reader.ReadByte()];
+			for (int i = 0; i < waves.Length; i++) {
+				waves[i] = new Wave(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
+			}
+		}
 		(Vector2 start, Vector2 end)[] polygonCache;
 		private void SetHitboxCache() {
-			Vector2 width = new(12, 0);
+			Vector2 width = new(BladeWidth, 0);
 			Vector2 rot = width.RotatedBy(Projectile.rotation);
 			Vector2 lastPos0 = -rot;
 			Vector2 lastPos1 = rot;
@@ -234,13 +197,11 @@ namespace Origins.Items.Weapons.Magic {
 			_vertexStrip.PrepareStripWithProceduralPadding(oldPos, Projectile.oldRot, BladeColors, BladeWidth, -Main.screenPosition, true);
 			_vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			float BladeWidth(float progressOnStrip) => this.BladeWidth;
 			return false;
 		}
-
-		private Color BladeColors(float progressOnStrip) => new Color(255, 69, 0, 32) * Projectile.Opacity;
-		private Color BladeSecondaryColors(float progressOnStrip) => new Color(218, 165, 32, 32) * Projectile.Opacity;
-		private static float BladeWidth(float progressOnStrip) {
-			return 12;
-		}
+		public virtual Color BladeColors(float progressOnStrip) => new Color(255, 69, 0, 32) * Projectile.Opacity;
+		public virtual Color BladeSecondaryColors(float progressOnStrip) => new Color(218, 165, 32, 32) * Projectile.Opacity;
+		public virtual int BladeWidth => 12;
 	}
 }

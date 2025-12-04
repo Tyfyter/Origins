@@ -7452,3 +7452,13 @@ The_Plant: {
 		Nano_Bullet: Inflicts [buffhint:Origins/Choice_Paralysis_Debuff] and bounces towards enemies
 	}
 }
+
+Corona: {
+	DisplayName: Corona
+	Tooltip: ""
+}
+
+Shadow_Flare: {
+	DisplayName: Shadow Flare
+	Tooltip: ""
+}
