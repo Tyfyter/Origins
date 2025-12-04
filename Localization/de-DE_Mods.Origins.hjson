@@ -893,7 +893,7 @@ Buffs: {
 
 	Ambition_Buff: {
 		// DisplayName: Ambition
-		// Description: Increased offensive stats and stat share
+		// Description: Increases armor penetration by 7
 	}
 
 	Neural_Network_Buff: {

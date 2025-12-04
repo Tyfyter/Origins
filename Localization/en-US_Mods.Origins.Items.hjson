@@ -3502,7 +3502,7 @@ Chambersite_Gemspark_Item: {
 
 Ambition_Potion: {
 	DisplayName: Ambition Potion
-	Tooltip: Increases armor penetration by 5
+	Tooltip: Increases armor penetration by 7
 }
 
 Defiled_Amalgamation_Relic_Item.DisplayName: "{§Defiled} Amalgamation Relic"
