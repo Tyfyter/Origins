@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dusts;
+using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.UI;
@@ -24,7 +25,7 @@ using Terraria.UI.Chat;
 
 namespace Origins.Items.Weapons.Ranged {
 	[ReinitializeDuringResizeArrays]
-	public class The_Plant : ModItem {
+	public class The_Plant : ModItem, ICustomDrawItem {
 		public static PlantAmmoType[] ModesByAmmo { get; } = ItemID.Sets.Factory.CreateCustomSet<PlantAmmoType>(null);
 		public static int[] AliasedAmmo { get; } = ItemID.Sets.Factory.CreateNamedSet(nameof(AliasedAmmo))
 		.RegisterIntSet(-1,
@@ -83,9 +84,17 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void ModifyWeaponKnockback(Player player, ref StatModifier knockback) => knockback.Base += SelectedMode?.Knockback ?? 0;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = SelectedMode.ProjectileType;
-			velocity += velocity.Normalized(out _);
+			Vector2 unit = velocity.Normalized(out _);
+			velocity += unit * SelectedMode.ShootSpeed;
 			if (ammoCount > 0 && CombinedHooks.CanConsumeAmmo(player, Item, Item)) ammoCount--;
 			ammoTimer = 0;
+			position += new Vector2(unit.Y, -unit.X) * player.direction * 4 * (Math.Abs(unit.X) - Math.Max(unit.Y, 0));
+			if (OriginsSets.Projectiles.DontPushBulletForward[type]) return;
+			Vector2 barrelPos = position + unit * CollisionExt.Raymarch(position, unit, 32);
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (!npc.friendly && !npc.dontTakeDamage && Collision.CheckAABBvLineCollision(npc.position, npc.Size, position, barrelPos)) return;
+			}
+			position = barrelPos;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			if (Main.gameMenu) return;
@@ -156,6 +165,42 @@ namespace Origins.Items.Weapons.Ranged {
 		public static LocalizedText GetBulletTypeDescription(string name) {
 			return Language.GetOrRegister($"Mods.Origins.Items.{nameof(The_Plant)}.Description.{name.Replace("The_Plant_", "")}");
 		}
+
+		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
+			Player drawPlayer = drawInfo.drawPlayer;
+			Vector2 itemPos = Main.DrawPlayerItemPos(drawPlayer.gravDir, Type);
+			itemPos.X -= 8;
+			itemPos.Y -= 8;
+			DrawAnimation animation = Main.itemAnimations[Type];
+			Rectangle frame = animation.GetFrame(itemTexture);
+			drawOrigin = new Vector2(-itemPos.X, frame.Height / 2f);
+			if (drawPlayer.direction == -1) {
+				drawOrigin = new Vector2(itemTexture.Width + itemPos.X, frame.Height / 2f);
+			}
+			float itemScale = drawPlayer.GetAdjustedItemScale(Item);
+			itemPos = drawInfo.ItemLocation + itemPos * Vector2.UnitY - Main.screenPosition;
+			frame.Y = (frame.Height + 2) * (int)(animation.FrameCount * (drawPlayer.itemAnimation / (drawPlayer.itemAnimationMax + 1f)));
+			drawInfo.DrawDataCache.Add(new DrawData(
+				itemTexture,
+				itemPos,
+				frame,
+				Item.GetAlpha(lightColor),
+				drawPlayer.itemRotation,
+				drawOrigin,
+				itemScale,
+				drawInfo.itemEffect
+			));
+			drawInfo.DrawDataCache.Add(new DrawData(
+				TextureAssets.GlowMask[Item.glowMask].Value,
+				itemPos,
+				frame,
+				Color.White,
+				drawPlayer.itemRotation,
+				drawOrigin,
+				itemScale,
+				drawInfo.itemEffect
+			));
+		}
 	}
 	public class The_Plant_Flower : ItemModeFlowerMenu<PlantAmmoType, bool> {
 		public override bool IsActive() => Main.LocalPlayer.HeldItem?.ModItem is The_Plant;
@@ -204,6 +249,7 @@ namespace Origins.Items.Weapons.Ranged {
 			The_Plant.RegisterAmmoType(ItemID.ChlorophyteBullet, Type, 10, 5, 6, new(147, 195, 69));
 			ProjectileID.Sets.TrailingMode[Type] = 2;
 			ProjectileID.Sets.TrailCacheLength[Type] = 20;
+			OriginsSets.Projectiles.DontPushBulletForward[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ChlorophyteBullet);
@@ -332,13 +378,15 @@ namespace Origins.Items.Weapons.Ranged {
 	public class The_Plant_Explosive_Bullet : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.ExplosiveBullet;
 		public override void SetStaticDefaults() {
-			The_Plant.RegisterAmmoType(ItemID.ExplodingBullet, Type, 11, 5, 7, new(196, 40, 18));
+			The_Plant.RegisterAmmoType(ItemID.ExplodingBullet, Type, 11, 7, 5, new(196, 40, 18));
 			Origins.MagicTripwireRange[Type] = 32; 
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
 			Projectile.penetrate = 2;
 			Projectile.aiStyle = 0;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 		public override void AI() {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
@@ -379,7 +427,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class The_Plant_Venom_Bullet : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VenomBullet;
 		public override void SetStaticDefaults() {
-			The_Plant.RegisterAmmoType(ItemID.VenomBullet, Type, 15, 6, 0f, new(151, 79, 162), Description: The_Plant.GetBulletTypeDescription(Name));
+			The_Plant.RegisterAmmoType(ItemID.VenomBullet, Type, 15, 0, 6f, new(151, 79, 162), Description: The_Plant.GetBulletTypeDescription(Name));
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.VenomBullet);
@@ -408,6 +456,7 @@ namespace Origins.Items.Weapons.Ranged {
 			The_Plant.RegisterAmmoType(ItemID.NanoBullet, Type, 16, 4, 5, new(0, 255, 255), Description: The_Plant.GetBulletTypeDescription(Name));
 			ProjectileID.Sets.TrailingMode[Type] = 2;
 			ProjectileID.Sets.TrailCacheLength[Type] = 20;
+			OriginsSets.Projectiles.DontPushBulletForward[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.NanoBullet);
@@ -557,7 +606,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.BulletShimmer();
 			Projectile.wet = false;
 		}
-		public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 180, 100) * Projectile.Opacity;
+		public override Color? GetAlpha(Color lightColor) => new Color(255, 200, 100, 100) * Projectile.Opacity;
 		public override void OnKill(int timeLeft) {
 			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);

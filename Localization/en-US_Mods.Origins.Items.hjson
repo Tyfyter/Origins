@@ -7444,7 +7444,7 @@ The_Plant: {
 	Tooltip:
 		'''
 		Fabricates ammo that learns from bullet types in your inventory
-		Fabricated ammo behaves differently from copied bullet type
+		Fabricated ammo may behave differently from copied bullet type
 		'''
 
 	Description: {

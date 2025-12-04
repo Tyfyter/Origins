@@ -276,6 +276,8 @@ namespace Origins {
 			public static Action<Projectile, float>[] SupportsRealSpeedBuffs { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(SupportsRealSpeedBuffs))
 			.Description("If a value is present in this set for a projectile type, it will be called with the Projectile and speed modifier instead of modifying the update count")
 			.RegisterCustomSet<Action<Projectile, float>>(null);
+			public static bool[] DontPushBulletForward { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(DontPushBulletForward))
+			.RegisterBoolSet();
 			static Projectiles() {
 				foreach (KeyValuePair<int, Projectile> proj in ContentSamples.ProjectilesByType) {
 					if (!NoMultishot.IndexInRange(proj.Key)) continue;
