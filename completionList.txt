@@ -523,7 +523,7 @@ ACCESSORIES:
 (^) Eitrite Gun Magazine
 (^) Eitrite Watch
 (^) Evil Bar Gun Magazines
-(#, ^2) Exo-Arms !!!
+(☻) Exo-Arms !!!
 (X) Exo-Legs !!!
 (X) Exo-Suit !!!
 (X) Exo-Weapon Mount !!!

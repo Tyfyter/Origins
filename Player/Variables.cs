@@ -493,6 +493,7 @@ namespace Origins {
 		#endregion visuals
 
 		public float statSharePercent = 0f;
+		public StatModifier thrownProjectileSpeed = StatModifier.Default;
 		public StatModifier projectileSpeedBoost = StatModifier.Default;
 
 		public bool journalUnlocked = false;
@@ -1021,6 +1022,7 @@ namespace Origins {
 			artifactManaCost = 1f;
 
 			statSharePercent = 0f;
+			thrownProjectileSpeed = StatModifier.Default;
 			projectileSpeedBoost = StatModifier.Default;
 
 			if (itemComboAnimationTime > 0)

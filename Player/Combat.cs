@@ -104,19 +104,19 @@ namespace Origins {
 			if (advancedImaging) {
 				velocity *= 1.38f;
 			}
-			if (projectileSpeedBoost != StatModifier.Default) {
-				float speed = velocity.Length();
-				if (speed != 0) {
-					velocity *= projectileSpeedBoost.ApplyTo(speed) / speed;
-				}
-			}
+			StatModifier velocityModifier = projectileSpeedBoost;
 			if (item.CountsAsClass(DamageClasses.Explosive)) {
-				StatModifier velocityModifier = explosiveProjectileSpeed;
+				velocityModifier = velocityModifier.CombineWith(explosiveProjectileSpeed);
 				if (item.useAmmo == 0 && item.CountsAsClass(DamageClass.Throwing)) {
 					velocityModifier = velocityModifier.CombineWith(explosiveThrowSpeed);
 				}
-				float baseSpeed = velocity.Length();
-				velocity *= velocityModifier.ApplyTo(baseSpeed) / baseSpeed;
+			}
+			if (item.CountsAsClass(DamageClass.Throwing)) {
+				velocityModifier = velocityModifier.CombineWith(thrownProjectileSpeed);
+			}
+			float speed = velocity.Length();
+			if (speed != 0 && velocityModifier != StatModifier.Default) {
+				velocity *= velocityModifier.ApplyTo(speed) / speed;
 			}
 			if (item.shoot > ProjectileID.None && felnumShock >= Felnum_Helmet.shock_damage_divisor * 2) {
 				Projectile p = new();

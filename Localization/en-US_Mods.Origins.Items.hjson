@@ -7462,3 +7462,13 @@ Shadow_Flare: {
 	DisplayName: Shadow Flare
 	Tooltip: ""
 }
+
+Exo_Arm: {
+	DisplayName: Exo-Arm
+	Tooltip:
+		'''
+		Increases throwing velocity and mining speed by 20%
+		Increases melee and explosive speed by 10%
+		Increases melee knockback by 10%.
+		'''
+}
