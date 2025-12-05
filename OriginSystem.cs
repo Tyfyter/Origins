@@ -46,6 +46,7 @@ namespace Origins {
 		public static OriginSystem Instance => ModContent.GetInstance<OriginSystem>();
 		public UserInterface setBonusInventoryUI;
 		public StateSwitchingInterface SetBonusHUD { get; } = new("Origins: Set Bonus HUD");
+		public StateSwitchingInterface AccessoryHUD { get; } = new("Origins: Accessory HUD", true);
 		public StateSwitchingInterface ItemUseHUD { get; } = new("Origins: Held Item HUD");
 		public StateSwitchingInterface EventHUD { get; } = new("Origins: Event HUD");
 		public UserInterfaceWithDefaultState journalUI;
@@ -512,8 +513,9 @@ namespace Origins {
 					}
 				}
 			}
-			SetBonusHUD.Update(gameTime);
 			ItemUseHUD.Update(gameTime);
+			AccessoryHUD.Update(gameTime);
+			SetBonusHUD.Update(gameTime);
 			EventHUD.Update(gameTime);
 		}
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
@@ -528,6 +530,7 @@ namespace Origins {
 					InterfaceScaleType.UI) { Active = Main.playerInventory }
 				);
 				ItemUseHUD.Insert(layers);
+				AccessoryHUD.Insert(layers);
 				SetBonusHUD.Insert(layers);
 				EventHUD.Insert(layers);
 				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().journalUnlocked) {

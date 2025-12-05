@@ -7472,3 +7472,8 @@ Exo_Arm: {
 		Increases melee knockback by 10%.
 		'''
 }
+
+Stress_Ball: {
+	DisplayName: Stress Ball
+	Tooltip: ""
+}

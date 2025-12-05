@@ -341,6 +341,9 @@ namespace Origins {
 		public bool crystalHeart = false;
 		public int crystalHeartCounter = 0;
 		public bool pacemaker = false;
+		public bool stressBall = false;
+		public int stressBallTimer = 0;
+		public float stressBallStrength = 0;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -862,6 +865,10 @@ namespace Origins {
 			filterBreather = false;
 			if (!crystalHeart.TrySet(false)) crystalHeartCounter = 0;
 			pacemaker = false;
+			if (!stressBall.TrySet(false)) {
+				stressBallTimer = 0;
+				stressBallStrength = 0;
+			}
 			lotteryTicketItem = null;
 
 
