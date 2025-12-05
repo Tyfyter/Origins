@@ -2109,6 +2109,9 @@ Projectiles: {
 	The_Plant_Crystal_Bullet.DisplayName: "{$ProjectileName.CrystalBullet}"
 	Corona_P.DisplayName: "{$Items.Corona.DisplayName}"
 	Shadow_Flare_P.DisplayName: "{$Items.Shadow_Flare.DisplayName}"
+	Fire_Extinguisher_P.DisplayName: Fire Extinguisher P
+	Fire_Extinguisher_P2.DisplayName: Fire Extinguisher P2
+	Fire_Extinguisher_P3.DisplayName: Fire Extinguisher P3
 }
 
 Prefixes: {

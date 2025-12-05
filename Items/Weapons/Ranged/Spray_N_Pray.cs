@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Origins.Dev;
+using PegasusLib;
 using System;
 using System.IO;
 using Terraria;
@@ -141,8 +142,7 @@ namespace Origins.Items.Weapons.Ranged {
 			return false;
 		}
 		void SetSplatter(Vector2 newVelocity, Entity collisionEntity = null) {
-			hit = true;
-			Projectile.velocity = Vector2.Zero;
+			if (!hit.TrySet(true)) return;
 			Projectile.friendly = false;
 			Projectile.hostile = false;
 			Projectile.tileCollide = false;
@@ -171,7 +171,7 @@ namespace Origins.Items.Weapons.Ranged {
 				Dust dust = Dust.NewDustPerfect(
 					dustSpawnPosition,
 					Main.rand.Next(Paint_Coating_Gore.IDs),
-					Projectile.velocity.RotatedByRandom(0.5f) * Main.rand.NextFloat(0f, 1f) * 0.5f,
+					Projectile.velocity.RotatedByRandom(0.5f) * Main.rand.NextFloat(0f, 0.4f),
 					newColor: paintColor
 				);
 				dust.customData = dustCustomData;
@@ -234,7 +234,7 @@ namespace Origins.Items.Weapons.Ranged {
 				dust.velocity.X *= 0.98f;
 				dust.velocity.Y += 0.08f;
 			}
-			if (Main.rand.NextBool(2)) dust.alpha++;
+			if (Main.rand.NextBool(2) && ++dust.alpha >= 255) dust.active = false;
 			return false;
 		}
 		public override void SetStaticDefaults() {
@@ -248,17 +248,18 @@ namespace Origins.Items.Weapons.Ranged {
 			return true;
 		}
 		public override Color? GetAlpha(Dust dust, Color lightColor) {
+			float alphaMult = (dust.color.A / 255f) * (1 - dust.alpha / 255f);
 			if (dust.customData is PaintStickData stickData) {
 				switch (stickData.Coating) {
 					case PaintCoatingID.Glow:
-					return Color.White * 0.9f;
+					return Color.White * 0.9f * alphaMult;
 
 					case PaintCoatingID.Echo:
 					if (!Main.ShouldShowInvisibleWalls()) return Color.Transparent;
 					break;
 				}
 			}
-			return lightColor * 0.9f;
+			return lightColor * 0.9f * alphaMult;
 		}
 	}
 	public class Paint_Coating_Gore2 : Paint_Coating_Gore {

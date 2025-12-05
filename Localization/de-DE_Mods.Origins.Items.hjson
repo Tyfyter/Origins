@@ -7477,3 +7477,13 @@ Stress_Ball: {
 	// DisplayName: Stress Ball
 	// Tooltip: ""
 }
+
+Fire_Extinguisher: {
+	// DisplayName: Fire Extinguisher
+	// Tooltip: "{0}/{1}"
+}
+
+Empty_Fire_Extinguisher: {
+	// DisplayName: Empty Fire Extinguisher
+	// Tooltip: ""
+}

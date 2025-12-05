@@ -1682,7 +1682,7 @@ CONSUMABLES:
 (^) Pointy Crate
 (^) Residual Crate
 
-(#, ^2) Fire Extinguisher !!!
+(☻) Fire Extinguisher !!!
 (^) Gooey Water
 (^) Holiday Hair Dye
 (^) Latchkey

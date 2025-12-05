@@ -3,10 +3,12 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using PegasusLib;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Bark_Shield : ModItem, ICustomWikiStat {
@@ -55,21 +57,26 @@ namespace Origins.Items.Accessories {
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			float portion = durability / (float)MaxDurability;
-			position -= new Vector2(origin.X, (origin.Y - frame.Height) - 2) * scale;
+			const int width = 32;
+			position -= new Vector2(width * 0.5f, (origin.Y - frame.Height) - 2) * scale;
 			spriteBatch.Draw(
 				TextureAssets.MagicPixel.Value,
-				new Rectangle((int)position.X, (int)position.Y, 24, 2),
+				new Rectangle((int)position.X, (int)position.Y, (int)(width * scale), 2),
 				Color.Black
 			);
 			spriteBatch.Draw(
 				TextureAssets.MagicPixel.Value,
-				new Rectangle((int)position.X, (int)position.Y, (int)(24 * portion), 2),
+				new Rectangle((int)position.X, (int)position.Y, (int)(width * portion * scale), 2),
 				Main.hslToRgb(portion * 0.25f, 1, 0.5f)
 			);
 		}
 		public override void AddRecipes() => CreateRecipe()
 			.AddIngredient<Bark>(3)
 			.Register();
+		public override void NetSend(BinaryWriter writer) => writer.Write(durability);
+		public override void NetReceive(BinaryReader reader) => durability = reader.ReadInt32();
+		public override void SaveData(TagCompound tag) => tag[nameof(durability)] = durability;
+		public override void LoadData(TagCompound tag) => durability = tag.TryGet(nameof(durability), out durability) ? durability : MaxDurability;
 	}
 	public class Bark_Shield_Splinters : ModProjectile {
 		public override void SetStaticDefaults() {
