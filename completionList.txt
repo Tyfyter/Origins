@@ -932,7 +932,7 @@ RANGED WEAPONS:
 (X) EAC Thunder
 (X) Fungi Pipe
 (X) Shroomshot
-(#, ^2) The P.L.A.N.T. !!!
+(☻) The P.L.A.N.T. !!!
 (^) Tolruk
 
 (X) L.W.M.U.G.
