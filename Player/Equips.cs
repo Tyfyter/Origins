@@ -525,7 +525,7 @@ namespace Origins {
 			}
 			if (slagBucket && Player.onFire) {
 				Player.onFire = false;
-				Player.lifeRegenCount += 4;
+				Player.lifeRegen += 4;
 				if (Main.rand.NextBool(4)) {
 					Dust dust18 = Dust.NewDustDirect(Player.position - Vector2.One * 2, Player.width + 4, Player.height + 4, DustID.Torch, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default, 3f);
 					dust18.noGravity = true;
@@ -729,10 +729,10 @@ namespace Origins {
 				Player.lifeRegenTime += (int)((factor - rounded) * 50);
 			}
 			if (primordialSoup) {
-				Player.lifeRegenCount += (int)(tornCurrentSeverity * 18);
+				Player.lifeRegen += (int)(tornCurrentSeverity * 18);
 			}
 			if (bugZapper) {
-				Player.lifeRegenCount += (int)(tornCurrentSeverity * 22);
+				Player.lifeRegen += (int)(tornCurrentSeverity * 22);
 			}
 		}
 		public override void GetHealLife(Item item, bool quickHeal, ref int healValue) {

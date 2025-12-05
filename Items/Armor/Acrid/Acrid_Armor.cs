@@ -177,7 +177,7 @@ namespace Origins.Items.Armor.Acrid {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
-			player.lifeRegenCount += 2;
+			player.lifeRegen += 2;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

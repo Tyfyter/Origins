@@ -341,6 +341,8 @@ namespace Origins {
 		public bool crystalHeart = false;
 		public int crystalHeartCounter = 0;
 		public bool pacemaker = false;
+		public int pacemakerTime = 0;
+		public bool pacemakerActive = false;
 		public bool stressBall = false;
 		public int stressBallTimer = 0;
 		public float stressBallStrength = 0;
@@ -864,7 +866,10 @@ namespace Origins {
 			gasMaskDye = 0;
 			filterBreather = false;
 			if (!crystalHeart.TrySet(false)) crystalHeartCounter = 0;
-			pacemaker = false;
+			if (!pacemaker.TrySet(false)) {
+				pacemakerTime = 0;
+				pacemakerActive = false;
+			}
 			if (!stressBall.TrySet(false)) {
 				stressBallTimer = 0;
 				stressBallStrength = 0;
@@ -1144,6 +1149,7 @@ namespace Origins {
 				}
 			}
 			timeSinceHit++;
+			pacemakerTime++;
 			oldVelocities.Insert(0, Player.velocity);
 			while (oldVelocities.Count > 20) oldVelocities.RemoveAt(20);
 			if (tornCurrentSeverity >= 0.99f && Player.whoAmI == Main.myPlayer && !Player.dead && Player.statLifeMax2 <= 0) {

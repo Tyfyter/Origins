@@ -17,7 +17,7 @@ namespace Origins.Items.Armor.Cryosten {
 		}
 		public override void UpdateEquip(Player player) {
 			player.OriginPlayer().explosiveBlastRadius += 0.2f;
-			player.lifeRegenCount += 4;
+			player.lifeRegen += 4;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			if (body.type != ModContent.ItemType<Cryosten_Breastplate>() && body.type != ModContent.ItemType<Pink_Cryosten_Breastplate>()) return false;

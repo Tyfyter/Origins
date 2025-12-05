@@ -15,7 +15,7 @@ namespace Origins.Buffs {
 		public override void Update(Player player, ref int buffIndex) {
 			player.GetAttackSpeed(DamageClass.Generic) += 0.1f;
 			player.GetAttackSpeed(DamageClass.Generic) *= 1.1f;
-			player.lifeRegenCount += 10;
+			player.lifeRegen += 10;
 		}
 	}
 }

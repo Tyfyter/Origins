@@ -595,20 +595,21 @@ namespace Origins {
 				regen /= (1 - tornCurrentSeverity) * 0.85f + 0.15f;
 			}
 			if (pacemaker) {
-				if (timeSinceHit == Pacemaker.DisableRegenTime(Player)) {
+				if (pacemakerActive.TrySet(pacemakerTime > Pacemaker.DisableRegenTime(Player)) && pacemakerActive) {
 					SoundEngine.PlaySound(SoundID.Item117.WithPitch(1.5f), Player.position);
 					SoundEngine.PlaySound(SoundID.Item121.WithPitch(2f).WithVolume(0.5f), Player.position);
 				}
-				if (timeSinceHit < Pacemaker.DisableRegenTime(Player)) {
-					SoundEngine.PlaySound(SoundID.Zombie87.WithVolumeScale(0.3f).WithPitch(-0.72f), Player.position);
-					regen = 0;
-					Player.lifeRegen = 0;
-					Player.palladiumRegen = false;
-				} else {
+				if (pacemakerActive) {
 					regen *= Pacemaker.RegenMult;
-					Player.lifeRegen = Main.rand.RandomRound(Player.lifeRegen * Pacemaker.RegenMult);
 					Max(ref Player.lifeRegen, 0);
-					if (Player.palladiumRegen) Player.lifeRegenCount += Main.rand.RandomRound(4 * Pacemaker.RegenMult);
+					Player.lifeRegen = Main.rand.RandomRound(Player.lifeRegen * Pacemaker.RegenMult);
+					if (Player.palladiumRegen) Player.lifeRegenCount += Main.rand.RandomRound(4 * (Pacemaker.RegenMult - 1));
+				} else {
+					SoundEngine.PlaySound(SoundID.Zombie87.WithVolumeScale(0.3f).WithPitch(-0.72f), Player.position, _ => !pacemakerActive);
+					Min(ref regen, 0);
+					Min(ref Player.lifeRegen, 0);
+					Min(ref Player.lifeRegenCount, 0);
+					Player.palladiumRegen = false;
 				}
 			}
 		}
