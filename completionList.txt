@@ -964,6 +964,7 @@ MAGIC WEAPONS:
 (^) Brine Haze
 (^) Chemical Laser
 (^) Communion
+(@, ^3) Corona
 (^) Dew Justice
 (^) Dismay
 (^) Eternanite
@@ -988,6 +989,7 @@ MAGIC WEAPONS:
 (^) Pike of Deepneus
 (^) Plasma Cutter
 (X) Sapphire Shunter
+(@, ^3) Shadow Flare
 (X) Shocktrain
 (X) Spectra
 (^) The Calibrator
