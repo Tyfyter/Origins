@@ -523,7 +523,7 @@ ACCESSORIES:
 (^) Eitrite Gun Magazine
 (^) Eitrite Watch
 (^) Evil Bar Gun Magazines
-(☻) Exo-Arms !!!
+(^) Exo-Arm
 (X) Exo-Legs !!!
 (X) Exo-Suit !!!
 (X) Exo-Weapon Mount !!!
@@ -576,7 +576,7 @@ ACCESSORIES:
 (^) Mithrafin
 (^) Molten Gun Magazine
 (X) Netlace
-(☻) Nightsky Cloak !!!
+(^) Nightsky Cloak
 (^) Nitro Crate
 (^) No U Card
 (^) Noxious Mithrafin
@@ -621,7 +621,7 @@ ACCESSORIES:
 (^) Spirit Shard
 (^) Stone Mask
 (ᥢ) Strange Computer
-(☻) Stress Ball !!!
+(#2, ^2) Stress Ball !!!
 (^) Sunder Gut
 (^) Super Turbo Reel
 (^) Superjump Cape
@@ -932,7 +932,7 @@ RANGED WEAPONS:
 (X) EAC Thunder
 (X) Fungi Pipe
 (X) Shroomshot
-(☻) The P.L.A.N.T. !!!
+(^) The P.L.A.N.T.
 (^) Tolruk
 
 (X) L.W.M.U.G.
@@ -969,7 +969,7 @@ MAGIC WEAPONS:
 (^) Dismay
 (^) Eternanite
 (⛥) Innermost Manifest
-(☻) Laser Target Locator !!!
+(^) Laser Target Locator
 (^) Seam Beam
 (^) Shimmer Rod
 (^) Shinedown
@@ -1682,7 +1682,7 @@ CONSUMABLES:
 (^) Pointy Crate
 (^) Residual Crate
 
-(☻) Fire Extinguisher !!!
+(#2, ^2) Fire Extinguisher !!!
 (^) Gooey Water
 (^) Holiday Hair Dye
 (^) Latchkey

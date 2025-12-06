@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dusts;
-using Origins.Items.Weapons.Magic;
 using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.UI;
@@ -46,21 +45,21 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
 			Item.noMelee = true;
-			Item.useTime = 8;
-			Item.useAnimation = 8;
+			Item.useTime = 6;
+			Item.useAnimation = 6;
 			Item.width = 50;
 			Item.height = 10;
 			Item.shoot = ProjectileID.Bullet;
 			Item.shootSpeed = 8;
-			Item.UseSound = SoundID.Item11;
+			Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(2f);
 			Item.value = Item.sellPrice(gold: 6);
 			Item.rare = ItemRarityID.Lime;
 		}
 		public override void UpdateInventory(Player player) {
 			if (++ammoTimer > Item.useAnimation * 5 * CombinedHooks.TotalUseAnimationMultiplier(player, Item)) {
 				ammoTimer = 0;
-				ammoCount++;
-				Min(ref ammoCount, 999);
+				ammoCount += 1 + ammoCount/50;
+				Min(ref ammoCount, 9999);
 				List<int> unlockedPlantModes = player.OriginPlayer().unlockedPlantModes;
 				for (int i = 0; i < player.inventory.Length; i++) {
 					Item ammo = player.inventory[i];

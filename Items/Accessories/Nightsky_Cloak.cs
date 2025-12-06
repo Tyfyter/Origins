@@ -17,7 +17,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 30);
 			Item.rare = ItemRarityID.Pink;
-			Item.value = Item.sellPrice(gold: 3, silver: 30);
+			Item.value = Item.sellPrice(gold: 6, silver: 30);
 		}
 		public override void AddRecipes() => CreateRecipe(Type)
 			.AddIngredient(ItemID.ManaCloak)

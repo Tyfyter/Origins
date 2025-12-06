@@ -7475,12 +7475,23 @@ Exo_Arm: {
 
 Stress_Ball: {
 	DisplayName: Stress Ball
-	Tooltip: ""
+	Tooltip:
+		'''
+		A pop-up meter will randomly appear
+		Press <key> when pop-up appears to de-stress
+		Grants up to a 40% damage boost for 7 seconds when fully-charged
+		'''
 }
 
 Fire_Extinguisher: {
 	DisplayName: Fire Extinguisher
-	Tooltip: "{0}/{1}"
+	Tooltip:
+		'''
+		Can be used to put out fires on allies
+		Slightly propels you backwards from where you aim in water
+		Can temporarily disable the flamethrower of some Ashen enemies
+		{0}/{1}
+		'''
 }
 
 Empty_Fire_Extinguisher: {
@@ -7490,10 +7501,22 @@ Empty_Fire_Extinguisher: {
 
 Laser_Target_Locator: {
 	DisplayName: Laser Target Locator
-	Tooltip: ""
+	Tooltip:
+		'''
+		Point at a location long enough to call in a missile bombardment
+		<right> to zoom
+		'''
 }
 
 Nightsky_Cloak: {
 	DisplayName: Nightsky Cloak
-	Tooltip: ""
+	Tooltip:
+		'''
+		8% reduced mana cost
+		Automatically use mana potions when needed
+		Causes stars to fall after taking damage
+		Stars restore mana when collected
+		Increases pickup range for mana stars
+		Chance for mana stars to fall from critical hits
+		'''
 }

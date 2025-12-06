@@ -1,9 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Accessories;
 using Origins.Items.Tools;
+using Origins.Items.Weapons.Melee;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
@@ -66,8 +69,10 @@ namespace Origins.Items.Weapons.Magic {
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			player.heldProj = Projectile.whoAmI;
+			SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(Projectile.ai[2]/10).WithVolume(0.24f), player.position);
 			if (!player.channel) {
 				if (Projectile.IsLocallyOwned() && Projectile.ai[2] < 0) {
+					SoundEngine.SoundPlayer.Play(SoundID.ResearchComplete.WithPitch(-2f).WithVolume(0.5f), TargetPos);
 					Projectile.NewProjectile(
 						Projectile.GetSource_FromAI(),
 						TargetPos,
@@ -187,7 +192,9 @@ namespace Origins.Items.Weapons.Magic {
 				Vector2 position = Projectile.Center;
 				position.X += Main.rand.NextFloat(16 * 5) * Main.rand.NextBool().ToDirectionInt();
 				Vector2 direction = Vector2.UnitY.RotatedByRandom(0.2f);
-				float speed = 8 * Projectile.ai[1];
+				float speed = 32 * Projectile.ai[1];
+				SoundEngine.SoundPlayer.Play(SoundID.Item92.WithPitch(-1.2f).WithPitchVarience(1f).WithVolume(0.6f), position);
+				SoundEngine.SoundPlayer.Play(SoundID.Item103.WithPitch(-1.2f).WithPitchVarience(1f), position);
 				Projectile.NewProjectile(
 					Projectile.GetSource_FromAI(),
 					position - direction * spawn_dist,
@@ -218,6 +225,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		Vector2 HitboxMovement => new Vector2(16 * Projectile.ai[1], 0).RotatedBy(Projectile.ai[1] * Projectile.ai[0]);
 		public override void AI() {
+			Dust.NewDustPerfect(Projectile.Top, DustID.Torch, Projectile.velocity * 0.85f).noGravity = true;
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			if (++Projectile.frameCounter >= 12) {
 				Projectile.frameCounter = 0;
@@ -230,10 +238,13 @@ namespace Origins.Items.Weapons.Magic {
 			if (target.life <= 0) Projectile.penetrate++;
 		}
 		public override void OnKill(int timeLeft) {
+			Main.instance.CameraModifiers.Add(new CameraShakeModifier(
+				Projectile.Center, 10f, 3f, 23, 500f, -1f, nameof(Laser_Target_Locator)
+			));
 			ExplosiveGlobalProjectile.DoExplosion(
 				Projectile,
 				128,
-				sound: SoundID.Item14
+				sound: SoundID.Item62.WithPitch(-0.5f)
 			);
 		}
 		public override bool PreDraw(ref Color lightColor) {
