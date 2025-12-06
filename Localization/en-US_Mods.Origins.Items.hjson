@@ -7492,3 +7492,8 @@ Laser_Target_Locator: {
 	DisplayName: Laser Target Locator
 	Tooltip: ""
 }
+
+Nightsky_Cloak: {
+	DisplayName: Nightsky Cloak
+	Tooltip: ""
+}

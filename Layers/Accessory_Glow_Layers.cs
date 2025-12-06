@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ModLoader;
-using PegasusLib;
 
 namespace Origins.Layers {
 	public record struct GlowData(AutoLoadingAsset<Texture2D> Texture, Func<Player, Color> ColorFunc, Func<Player, int, int> ShaderFunc = null);
@@ -33,8 +33,17 @@ namespace Origins.Layers {
 		public static void AddGlowMask<T>(int slot, string texture, Func<Player, Color> colorFunc = null, Func<Player, int, int> ShaderFunc = null) where T : Accessory_Glow_Layer {
 			ModContent.GetInstance<T>().glowMasks.Add(slot, new(texture, colorFunc ?? (_ => Color.White), ShaderFunc));
 		}
-		public static void AddGlowMask(EquipType equipType, int slot, string texture, Func<Player, Color> colorFunc = null, Func<Player, int, int> ShaderFunc = null) {
-			byEquipType[equipType].glowMasks.Add(slot, new(texture, colorFunc ?? (_ => Color.White), ShaderFunc));
+		public static void AddGlowMask(EquipType equipType, int slot, string texture, Func<Player, Color> colorFunc = null, Func<Player, int, int> shaderFunc = null) {
+			byEquipType[equipType].glowMasks.Add(slot, new(texture, colorFunc ?? (_ => Color.White), shaderFunc));
+		}
+		public static void AddGlowMasks(Item item, params EquipType[] equipTypes) {
+			AddGlowMasks(item, _ => Color.White, null, equipTypes);
+		}
+		public static void AddGlowMasks(Item item, Func<Player, Color> colorFunc, Func<Player, int, int> shaderFunc, params EquipType[] equipTypes) {
+			for (int i = 0; i < equipTypes.Length; i++) {
+				int slot = GetSlotValue(item, equipTypes[i]);
+				byEquipType[equipTypes[i]].glowMasks.Add(slot, new(EquipLoader.GetEquipTexture(equipTypes[i], slot).Texture + "_Glow", colorFunc, shaderFunc));
+			}
 		}
 		public void LoadAllTextures() {
 			foreach (GlowData glowData in glowMasks.Values) {
@@ -46,6 +55,25 @@ namespace Origins.Layers {
 		}
 		static readonly Dictionary<EquipType, Accessory_Glow_Layer> byEquipType = [];
 		public static Accessory_Glow_Layer GetByEquipType(EquipType type) => byEquipType[type];
+		static int GetSlotValue(Item item, EquipType equipType)
+		=> equipType switch {
+			EquipType.Head => item.headSlot,
+			EquipType.Body => item.bodySlot,
+			EquipType.Legs => item.legSlot,
+			EquipType.HandsOn => item.handOnSlot,
+			EquipType.HandsOff => item.handOffSlot,
+			EquipType.Back => item.backSlot,
+			EquipType.Front => item.frontSlot,
+			EquipType.Shoes => item.shoeSlot,
+			EquipType.Waist => item.waistSlot,
+			EquipType.Wings => item.wingSlot,
+			EquipType.Shield => item.shieldSlot,
+			EquipType.Neck => item.neckSlot,
+			EquipType.Face => item.faceSlot,
+			EquipType.Beard => item.beardSlot,
+			EquipType.Balloon => item.balloonSlot,
+			_ => throw new ArgumentException($"{equipType} is not a supported equip type", nameof(equipType)),
+		};
 		static Asset<Texture2D>[] GetTextureArray(EquipType type)
 		=> type switch {
 			EquipType.Head => TextureAssets.ArmorHead,

@@ -576,7 +576,7 @@ ACCESSORIES:
 (^) Mithrafin
 (^) Molten Gun Magazine
 (X) Netlace
-(#, ^2) Nightsky Cloak !!!
+(☻) Nightsky Cloak !!!
 (^) Nitro Crate
 (^) No U Card
 (^) Noxious Mithrafin
