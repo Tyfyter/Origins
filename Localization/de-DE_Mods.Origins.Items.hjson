@@ -7487,3 +7487,8 @@ Empty_Fire_Extinguisher: {
 	// DisplayName: Empty Fire Extinguisher
 	// Tooltip: ""
 }
+
+Laser_Target_Locator: {
+	// DisplayName: Laser Target Locator
+	// Tooltip: ""
+}

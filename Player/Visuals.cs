@@ -4,6 +4,7 @@ using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Vanity.Dev.PlagueTexan;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.Layers;
 using Origins.Tiles.Defiled;
@@ -166,7 +167,7 @@ namespace Origins {
 			}
 		}
 		public override void ModifyZoom(ref float zoom) {
-			if (Main.mouseRight && Player.HeldItem?.ModItem is Shimmershot) {
+			if (Main.mouseRight && Player.HeldItem?.ModItem is Shimmershot or Laser_Target_Locator) {
 				if (zoom == -1) zoom = 0;
 				zoom += 0.5f;
 			}

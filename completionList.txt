@@ -969,7 +969,7 @@ MAGIC WEAPONS:
 (^) Dismay
 (^) Eternanite
 (⛥) Innermost Manifest
-(#, ^2) Laser Target Locator !!!
+(☻) Laser Target Locator !!!
 (^) Seam Beam
 (^) Shimmer Rod
 (^) Shinedown

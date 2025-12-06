@@ -2112,6 +2112,9 @@ Projectiles: {
 	// Fire_Extinguisher_P.DisplayName: Fire Extinguisher P
 	// Fire_Extinguisher_P2.DisplayName: Fire Extinguisher P2
 	// Fire_Extinguisher_P3.DisplayName: Fire Extinguisher P3
+	// Laser_Target_Locator_P.DisplayName: Laser Target Locator P
+	// Laser_Target_Locator_Marker.DisplayName: Laser Target Locator Marker
+	// Laser_Target_Locator_Missile.DisplayName: Laser Target Locator Missile
 }
 
 Prefixes: {
