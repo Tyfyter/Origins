@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Graphics.Primitives;
 using Origins.Items.Materials;
 using Origins.Projectiles;
 using Origins.Tiles.Ashen;
@@ -9,6 +10,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
@@ -41,6 +43,46 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return null;
 		}
 	}
+	//public class Matrix_P : ModProjectile 
+	//{
+
+	//	public override void SetDefaults() {
+	//		Projectile.CloneDefaults(ProjectileID.RocketI);
+	//		//Projectile.tileCollide = true;
+	//		Projectile.width = Projectile.height = 0;
+	//		Projectile.aiStyle = 0;
+	//		Projectile.penetrate = -1;
+	//		Projectile.usesLocalNPCImmunity = true;
+	//		Projectile.localNPCHitCooldown = -1;
+	//		Projectile.extraUpdates = 0;
+	//		Projectile.timeLeft = 300;
+	//		Projectile.tileCollide = false;
+	//	}
+
+	//	public override bool PreDraw(ref Color lightColor) {
+
+	//		default(Matrix3DRaymarch).Draw(Projectile.Center,(float)Projectile.timeLeft / 300);
+
+	//		return false;
+	//	}
+
+	//}
+
+	//public struct Matrix3DRaymarch
+	//{ 
+
+	//	private static VertexRectangle rect = new();
+	//	public void Draw(Vector2 center,float progress)
+	//	{
+	//		MiscShaderData shader = GameShaders.Misc["Origins:Matrix3DRaymarch"];
+	//		shader.UseColor(Color.DarkOrange);
+	//		shader.UseSecondaryColor(Color.SandyBrown);
+	//		shader.Apply();
+	//		rect.Draw(center - Main.screenPosition,size: new Vector2(96));
+	//	}
+
+	//}
+
 	public class Matrix_P : ModProjectile {
 		(Vector2 position, Vector2 velocity)[] nodes;
 		public override void SetStaticDefaults() {
@@ -111,16 +153,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 			for (int i = 0; i < GetNodeCount(); i++) {
 				Vector2 pos = nodes[i].position;
-				Main.EntitySpriteDraw(
-					TextureAssets.Projectile[Type].Value,
-					pos - Main.screenPosition,
-					null,
-					Lighting.GetColor(pos.ToTileCoordinates()),
-					((GetNodePosition(i - 1) + GetNodePosition(i + 1)) * 0.5f - GetNodePosition(i)).ToRotation() - MathHelper.PiOver2,
-					TextureAssets.Projectile[Type].Size() * 0.5f,
-					1,
-					SpriteEffects.None
-				);
+				default(Matrix3DRaymarch).Draw(pos,(float)Projectile.timeLeft / 300);
+
 			}
 			return false;
 		}
@@ -160,5 +194,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 			return nodes;
 		}
+	}
+	
+	public struct Matrix3DRaymarch
+	{ 
+		
+		private static VertexRectangle rect = new();
+		public void Draw(Vector2 center,float progress)
+		{
+			MiscShaderData shader = GameShaders.Misc["Origins:Matrix3DRaymarch"];
+			shader.UseColor(Color.DarkOrange);
+			shader.UseSecondaryColor(Color.SandyBrown);
+			shader.Apply();
+			rect.Draw(center - Main.screenPosition,size: new Vector2(96));
+		}
+
 	}
 }

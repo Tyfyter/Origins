@@ -467,6 +467,7 @@ namespace Origins {
 				GameShaders.Misc["Origins:LaserBlade"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "LaserBlade").UseSamplerState(SamplerState.PointWrap);
 				GameShaders.Misc["Origins:Identity"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "Identity")
 				.UseSamplerState(SamplerState.PointClamp);
+				GameShaders.Misc["Origins:Matrix3DRaymarch"] = new MiscShaderData(Assets.Request<Effect>("Effects/Matrix3DRaymarch"), "EscapeTheMatrix");
 				GameShaders.Misc["Origins:DefiledIndicator"] = new MiscShaderData(Assets.Request<Effect>("Effects/DefiledIndicator"), "DefiledIndicator");
 				GameShaders.Misc["Origins:DefiledSpike"] = new MiscShaderData(Assets.Request<Effect>("Effects/DefiledSpike"), "DefiledSpike");
 				GameShaders.Misc["Origins:DefiledPortal"] = new MiscShaderData(Assets.Request<Effect>("Effects/DefiledPortal"), "DefiledPortal");
