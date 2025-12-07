@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 using Origins.Tiles.Other;
+using Origins.Dusts;
 namespace Origins.Items.Weapons.Magic {
     public class Pike_of_Deepneus : ModItem, ICustomWikiStat {
 		public const int baseDamage = 64;
@@ -22,15 +23,15 @@ namespace Origins.Items.Weapons.Magic {
 			Item.DamageType = DamageClass.Magic;
 			Item.shoot = ModContent.ProjectileType<Pike_of_Deepneus_P>();
 			Item.knockBack = 8;
-			Item.shootSpeed = 24f;
+			Item.shootSpeed = 12;
 			Item.mana = 34;
 			Item.useStyle = -1;
-			Item.useTime = 17;
-			Item.useAnimation = 17;
+			Item.useTime = 25;
+			Item.useAnimation = 25;
 			Item.channel = true;
 			Item.noUseGraphic = true;
 			Item.autoReuse = true;
-			Item.reuseDelay = 29;
+			Item.reuseDelay = 4;
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 3);
 			Item.UseSound = SoundID.Item69;
@@ -92,9 +93,13 @@ namespace Origins.Items.Weapons.Magic {
 			}
 		}
 	}
-	public class Pike_of_Deepneus_P : ModProjectile {
+	public class Pike_of_Deepneus_P : ModProjectile, IOutlineDrawer {
 		public override string Texture => "Origins/Items/Weapons/Magic/Pike_of_Deepneus";
 		AutoLoadingAsset<Texture2D> glowTexture = "Origins/Items/Weapons/Magic/Pike_of_Deepneus_Glow";
+		public float squeeze = 1f;
+		public bool ReachedMaxCharge = false;
+		public float chargeProgress = 0f;
+		public bool playedDing = false;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Daybreak);
 			Projectile.DamageType = DamageClass.Magic;
@@ -108,40 +113,41 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Item167, Projectile.position);
-
+			if(Main.myPlayer == Projectile.owner)
+				Projectile.NewProjectile(null,Projectile.Center,Projectile.oldVelocity * 0.1f,ModContent.ProjectileType<StuckPD>(),0,0);
 			Dust dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30), 1f);
 			dust.noGravity = false;
 			dust.velocity *= 8f;
 
-			dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.Firework_Yellow, 0, 0, 255, default, 4f);
-			dust.noGravity = false;
-			dust.velocity *= 8f;
 		}
 		public override void AI() {
-			Dust dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30), 0.6f);
-			dust.noGravity = false;
-			dust.velocity *= 8f;
-
 			/*Dust dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.Firework_Yellow, 0, 0, 50, default, 0.6f);
 			dust.noGravity = false;
 			dust.velocity *= 4f;*/
 
 			if (Projectile.ai[0] != 0) {
+				squeeze = chargeProgress;
 				Player player = Main.player[Projectile.owner];
 				if (Projectile.owner == Main.myPlayer) {
 					if (player.channel) {
 						Vector2 newVel = (Main.MouseWorld - player.RotatedRelativePoint(player.MountedCenter)).SafeNormalize(Vector2.UnitX * player.direction);
 						if (player.HeldItem.shoot == Type) {
-							newVel *= player.HeldItem.shootSpeed;
+							newVel *= player.HeldItem.shootSpeed * ((chargeProgress / 2f) + 0.5f);
 						}
 						if (newVel != Projectile.velocity) {
 							Projectile.netUpdate = true;
 						}
 						Projectile.velocity = newVel;
-						if (Projectile.ai[1] < 1) {
-							Projectile.ai[1] += 1 / (Projectile.ai[0] * 2);
+						if (Projectile.ai[1] < 1 && !ReachedMaxCharge) {
+							Projectile.ai[1] += 1 / (Projectile.ai[0] * 5);
+							chargeProgress = Projectile.ai[1];
+
 						}
-						player.reuseDelay -= (int)(player.reuseDelay * Projectile.ai[1] * 0.5f);
+						else
+						{
+							ReachedMaxCharge = true;
+							chargeProgress *= 0.995f;
+						}
 					} else {
 						Projectile.ai[0] = 0;
 						Projectile.velocity *= 1 + Projectile.ai[1] * 0.5f;
@@ -161,7 +167,7 @@ namespace Origins.Items.Weapons.Magic {
 			} else {
 				Projectile.hide = false;
 				Projectile.tileCollide = true;
-				Projectile.velocity.Y += 0.04f;
+				Projectile.velocity.Y += 0.01f * (1f/chargeProgress - 1f);
 				Projectile.rotation = Projectile.velocity.ToRotation();
 			}
 		}
@@ -170,8 +176,10 @@ namespace Origins.Items.Weapons.Magic {
 			return null;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.SourceDamage *= 0.34f + Projectile.ai[1] * Projectile.ai[1] * 0.66f;
-			modifiers.Knockback *= 1 + Projectile.ai[1] * 0.65f;
+			modifiers.SourceDamage *= 0.34f + chargeProgress * chargeProgress * .66f;
+			modifiers.Knockback *= 1 + chargeProgress * 0.65f;
+			for(int i = 0; i < 4; i++)
+				Dust.NewDustPerfect(Projectile.Center,ModContent.DustType<Spark_Dust>(),Velocity: -Projectile.velocity.RotatedByRandom(0.35),newColor: Color.Yellow);
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			width = 14;
@@ -183,7 +191,7 @@ namespace Origins.Items.Weapons.Magic {
 			Player player = Main.player[Projectile.owner];
 			Vector2 position = Projectile.Center - Main.screenPosition;
 			float rotation = Projectile.rotation + (MathHelper.Pi * 0.8f * Projectile.direction - MathHelper.PiOver2 * player.gravDir);
-			float scale = Projectile.scale;
+			Vector2 scale = new Vector2(Projectile.scale,Projectile.scale);
 			SpriteEffects spriteEffects = Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			if (player.gravDir < 0) {
 				rotation -= MathHelper.PiOver2 * 1.2f * Projectile.direction;
@@ -200,11 +208,124 @@ namespace Origins.Items.Weapons.Magic {
 				scale,
 				spriteEffects,
 			0);
+			this.DrawOutline();
+			if(Projectile.ai[0] == 0 && chargeProgress >= 0.9f)
+			{
+				Main.EntitySpriteDraw(TextureAssets.Extra[ExtrasID.FallingStar].Value,position,null,Color.Yellow,Projectile.rotation + MathHelper.PiOver2,TextureAssets.Extra[ExtrasID.StarWrath].Size()/2f - new Vector2(0,32f),new Vector2(1f,3f),SpriteEffects.None);
+
+			}
 			Main.EntitySpriteDraw(data);
 			data.texture = glowTexture;
 			data.color = Color.White;
 			Main.EntitySpriteDraw(data);
+			float shineProgress = MathHelper.Lerp(0,1,(chargeProgress - .9f) * 9f);
+			if(chargeProgress >= .9f)
+			{
+				DrawPrettyStarSparkle(SpriteEffects.None,Projectile.Center - Main.screenPosition,Color.Yellow,Color.Turquoise,0,Vector2.One * 5f * shineProgress,Vector2.One * 2);
+				if(!playedDing)
+				{
+					playedDing = true;
+					SoundEngine.PlaySound(SoundID.Item105,Projectile.Center);
+				}
+			}
 			return false;
 		}
+
+		public Color? SetOutlineColor(float progress) {
+			return Color.Lerp(Color.Yellow * chargeProgress,Color.Turquoise,(MathF.Sin(((float)Main.timeForVisualEffects)+1f) / 2f) * 2f);
+		}
+
+		public DrawData[] OutlineDrawDatas { 
+			get
+			{
+				Vector2 position = Projectile.Center;
+				float rotation = Projectile.rotation + (MathHelper.Pi * 0.8f * Projectile.direction - MathHelper.PiOver2);
+				float scale = Projectile.scale;
+				SpriteEffects spriteEffects = Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+				Vector2 origin = new Vector2(55, 9).Apply(spriteEffects, TextureAssets.Projectile[Type].Size());
+				return [new DrawData(
+					TextureAssets.Projectile[Type].Value,
+					position,
+					null,
+					Color.White,
+					rotation,
+					origin,
+					scale,
+					spriteEffects,
+				0)];
+			}
+		}
+		public int OutlineSteps { get => 16; }
+		public float OutlineOffset { get => 2; }
+
+		private static void DrawPrettyStarSparkle(SpriteEffects dir, Vector2 drawPos, Color drawColor, Color shineColor, float rotation, Vector2 scale, Vector2 fatness) {
+			Texture2D sparkleTexture = TextureAssets.Extra[ExtrasID.SharpTears].Value;
+			Color bigColor = shineColor * 0.5f;
+			Vector2 origin = sparkleTexture.Size() / 2f;
+			Color smallColor = drawColor * 0.5f;
+			Vector2 scaleLeftRight = new Vector2(fatness.X * 0.5f, scale.X);
+			Vector2 scaleUpDown = new Vector2(fatness.Y * 0.5f, scale.Y);
+
+			// Bright, large part
+			Main.EntitySpriteDraw(sparkleTexture, drawPos, null, bigColor, MathHelper.PiOver2 + rotation, origin, scaleLeftRight, dir);
+			Main.EntitySpriteDraw(sparkleTexture, drawPos, null, bigColor, 0f + rotation, origin, scaleUpDown, dir);
+			// Dim, small part
+			Main.EntitySpriteDraw(sparkleTexture, drawPos, null, smallColor, MathHelper.PiOver2 + rotation, origin, scaleLeftRight * 0.6f, dir);
+			Main.EntitySpriteDraw(sparkleTexture, drawPos, null, smallColor, 0f + rotation, origin, scaleUpDown * 0.6f, dir);
+		}
+	}
+	
+	public class StuckPD : ModProjectile
+	{
+		public override string Texture => "Origins/Items/Weapons/Magic/Pike_of_Deepneus";
+		AutoLoadingAsset<Texture2D> glowTexture = "Origins/Items/Weapons/Magic/Pike_of_Deepneus_Glow";
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.Daybreak);
+			Projectile.DamageType = DamageClass.Magic;
+			Projectile.width = Projectile.height = 32;
+			Projectile.extraUpdates = 3;
+			Projectile.aiStyle = -1;
+			Projectile.alpha = 0;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.ArmorPenetration = 40;
+			Projectile.timeLeft = 60;
+			Projectile.hide = false;
+		}
+		public override void OnSpawn(IEntitySource source) {
+
+		}
+		public override bool? CanDamage() {
+			return false;
+		}
+		public override void AI() {
+			Projectile.velocity *= 0.95f;
+			Projectile.Opacity = MathHelper.Lerp(0f,1f,(float)Projectile.timeLeft / 60f);
+			Projectile.rotation = Projectile.velocity.ToRotation();
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Vector2 position = Projectile.Center - Main.screenPosition;
+			float rotation = Projectile.rotation + (MathHelper.Pi * 0.8f * Projectile.direction - MathHelper.PiOver2);
+			float scale = Projectile.scale;
+			SpriteEffects spriteEffects = Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			Vector2 origin = new Vector2(55, 9).Apply(spriteEffects, TextureAssets.Projectile[Type].Size());
+			DrawData data = new(
+				TextureAssets.Projectile[Type].Value,
+				position,
+				null,
+				lightColor * Projectile.Opacity,
+				rotation,
+				origin,
+				scale,
+				spriteEffects,
+			0);
+			Main.EntitySpriteDraw(data);
+			data.texture = glowTexture;
+			data.color = Color.White * Projectile.Opacity;
+			Main.EntitySpriteDraw(data);
+			return false;
+
+		}
+
 	}
 }

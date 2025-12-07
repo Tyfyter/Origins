@@ -1989,6 +1989,8 @@ Projectiles: {
 	// Broken_Terratotem_Mask_Small.DisplayName: Broken Terratotem Mask Small
 	// Broken_Terratotem_Tab.DisplayName: Broken Terratotem Tab
 	// Astral_Scythe_Star.DisplayName: Astral Scythe Star
+	// StuckPD.DisplayName: Stuck P D
+	// HandCannonBlast.DisplayName: Hand Cannon Blast
 }
 
 Prefixes: {

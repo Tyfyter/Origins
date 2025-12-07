@@ -1,7 +1,12 @@
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Projectiles;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
@@ -21,6 +26,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.value = Item.sellPrice(silver: 40);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
+			
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -32,9 +38,13 @@ namespace Origins.Items.Weapons.Melee {
 			return player.ownedProjectileCounts[Item.shoot] < 1;
 		}
 	}
-	public class Krakram_P : ModProjectile {
+	public class Krakram_P : ModProjectile, IOutlineDrawer {
 		public override string Texture => "Origins/Items/Weapons/Melee/Krakram";
-		
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.TrailCacheLength[Type] = 10;
+			ProjectileID.Sets.TrailingMode[Type] = 2;
+
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThornChakram);
 			Projectile.penetrate = -1;
@@ -89,7 +99,49 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			width = 27;
 			height = 27;
+			Projectile.velocity.RotatedBy(Main.rand.NextFloatDirection());
 			return true;
 		}
+
+
+		public override bool PreDraw(ref Color lightColor) {
+			this.DrawOutline();
+			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation, TextureAssets.Projectile[Type].Size() / 2f,1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None);
+			return false;
+		}
+		public override bool PreDrawExtras() {
+			default(KrakramTrail).Draw(Projectile);
+			return base.PreDrawExtras();
+		}
+		public readonly struct KrakramTrail {
+		private static readonly VertexStrip _vertexStrip = new();
+		public readonly void Draw(Projectile proj) {
+			MiscShaderData miscShaderData = GameShaders.Misc["LightDisc"];
+			miscShaderData.UseSaturation(-2.8f);
+			miscShaderData.UseOpacity(2f);
+			miscShaderData.Apply();
+			for (int i = 0; i < proj.oldPos.Length; i++) {
+				Vector2 pos = proj.oldPos[i];
+				if (pos != default) Lighting.AddLight(pos, StripColors(i / (float)proj.oldPos.Length).ToVector3() * 0.2f);
+			}
+			_vertexStrip.PrepareStripWithProceduralPadding(proj.oldPos, proj.oldRot, StripColors, StripWidth, -Main.screenPosition + proj.Size / 2f);
+			_vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+		}
+		private readonly Color StripColors(float progressOnStrip) {
+			float num = 1f - progressOnStrip;
+			Color result = Color.Lerp(Color.White, Color.Purple, num) * num;
+			result.A = 0;
+			return result;
+		}
+		private readonly float StripWidth(float progressOnStrip) => 16f;
+	}
+		public Color? SetOutlineColor(float progress) {
+			return Color.Lerp(Color.White,Color.Purple,0.1f);
+		}
+
+		public DrawData[] OutlineDrawDatas => [new DrawData(TextureAssets.Projectile[Type].Value, Projectile.Center, null, Color.White, Projectile.rotation, TextureAssets.Projectile[Type].Size() / 2f,1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None)];
+		public int OutlineSteps => 8;
+		public float OutlineOffset => 2;
 	}
 }

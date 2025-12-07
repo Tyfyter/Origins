@@ -460,6 +460,7 @@ namespace Origins {
 				.UseImage1(ModContent.Request<Texture2D>("Terraria/Images/Misc/noise"));
 				GameShaders.Misc["Origins:SilhouetteShader"] = new MiscShaderData(Assets.Request<Effect>("Effects/SilhouetteShader"), "SilhouetteShader");
 				GameShaders.Misc["Origins:ShimmerConstructSDF"] = new MiscShaderData(Assets.Request<Effect>("Effects/ShimmerConstructSDF"), "ShimmerConstructSDF");
+				GameShaders.Misc["Origins:FireShader"] = new MiscShaderData(Assets.Request<Effect>("Effects/FireShader"), "FireShader");
 				GameShaders.Misc["Origins:SC_DustEffect"] = new MiscShaderData(Assets.Request<Effect>("Effects/SC_DustEffect"), "SC_DustEffect");
 
 				GameShaders.Misc["Origins:Beam"] = new MiscShaderData(Assets.Request<Effect>("Effects/Beam"), "Beam")

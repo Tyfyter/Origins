@@ -52,7 +52,7 @@ namespace Origins {
 					}
 					for (int j = 0; j < needsOutline.OutlineDrawDatas.Length; j++) {
 						DrawData drawData = needsOutline.OutlineDrawDatas[j];
-						drawData.position += new Vector2(MathF.Sin(i), MathF.Cos(i)) * needsOutline.OutlineOffset;
+						drawData.position += new Vector2(MathF.Sin(i), MathF.Cos(i)).RotatedBy(MathHelper.ToRadians((float)Main.timeForVisualEffects) * 5) * needsOutline.OutlineOffset;
 						drawData.position -= Main.screenPosition;
 						Main.EntitySpriteDraw(drawData);
 					}
