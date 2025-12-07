@@ -7488,7 +7488,7 @@ Fire_Extinguisher: {
 	Tooltip:
 		'''
 		Can be used to put out fires on allies
-		Slightly propels you backwards from where you aim in water
+		Slightly propels you backwards from where you aim submerged in water
 		Can temporarily disable the flamethrower of some Ashen enemies
 		{0}/{1}
 		'''
