@@ -77,6 +77,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 1;
 			return true;
 		}
+		public override void OnKill(int timeLeft) {
+			if(Main.myPlayer == Projectile.owner)
+				Projectile.NewProjectileDirect(Projectile.GetSource_Death(),Projectile.Center,Vector2.Zero,ModContent.ProjectileType<HandCannonBlast>(),Projectile.damage,15,Projectile.owner).rotation = Main.rand.NextFloatDirection();
+		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);
 		}
@@ -109,6 +113,27 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.velocity = (Vector2)velocity;
 				}
 			}
+		}
+	}
+	public class HandCannonBlast : ModProjectile 
+	{
+		public override void SetDefaults() {
+			Projectile.width = Projectile.height = 256;
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Projectile.aiStyle = -1;
+			Projectile.tileCollide = false;
+			Projectile.timeLeft = 25;
+		}
+
+		public override void AI() {
+			
+			Projectile.frame++;
+		}
+
+		public override bool PreDraw(ref Color lightColor) {
+			
+			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value,Projectile.Center - Main.screenPosition,new Microsoft.Xna.Framework.Rectangle(256 * Projectile.frame,0,256,256),Color.White,Projectile.rotation,new Microsoft.Xna.Framework.Vector2(128,128),0.5f,SpriteEffects.None);
+			return false;
 		}
 	}
 	public class Hand_Cannon_Portal : ModProjectile, ICanisterProjectile, ITriggerSCBackground {

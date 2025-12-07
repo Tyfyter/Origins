@@ -12,22 +12,22 @@ Compiling font... Done!
 Compiling font content file: Beam.xnb... Done!
 
 Loading description file: BiomeShade.fx... Done!
-Compiling font... Warning: Warning compiling BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Compiling font... Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: BiomeShade.fx
-Warning: Warning compiling BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx
+Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: BiomeShade.fx
-Warning: Warning compiling BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx
+Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: BiomeShade.fx
+File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx
 Done!
 Compiling font content file: BiomeShade.xnb... Done!
 
 Loading description file: BlackHole.fx... Done!
-Compiling font... Warning: Warning compiling BlackHole.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Compiling font... Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BlackHole.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: BlackHole.fx
+File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BlackHole.fx
 Done!
 Compiling font content file: BlackHole.xnb... Done!
 
@@ -55,126 +55,5 @@ Loading description file: DefiledSpike.fx... Done!
 Compiling font... Done!
 Compiling font content file: DefiledSpike.xnb... Done!
 
-Loading description file: HolidayHairDye.fx... Done!
-Compiling font... Warning: Warning compiling HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: HolidayHairDye.fx
-Warning: Warning compiling HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: HolidayHairDye.fx
-Warning: Warning compiling HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: HolidayHairDye.fx
-Warning: Warning compiling HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: HolidayHairDye.fx
-Done!
-Compiling font content file: HolidayHairDye.xnb... Done!
-
-Loading description file: Item_Caustics.fx... Done!
-Compiling font... Done!
-Compiling font content file: Item_Caustics.xnb... Done!
-
-Loading description file: Journal.fx... Done!
-Compiling font... Warning: Warning compiling Journal.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: Journal.fx
-Done!
-Compiling font content file: Journal.xnb... Done!
-
-Loading description file: MaskedPurpleJellyFilter.fx... Done!
-Compiling font... Done!
-Compiling font content file: MaskedPurpleJellyFilter.xnb... Done!
-
-Loading description file: MaskedRasterizeFilter.fx... Done!
-Compiling font... Done!
-Compiling font content file: MaskedRasterizeFilter.xnb... Done!
-
-Loading description file: MaskedTornFilter.fx... Done!
-Compiling font... Warning: Warning compiling MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
-Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: MaskedTornFilter.fx
-Warning: Warning compiling MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
-Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: MaskedTornFilter.fx
-Warning: Warning compiling MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
-Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: MaskedTornFilter.fx
-Done!
-Compiling font content file: MaskedTornFilter.xnb... Done!
-
-Loading description file: MatrixCombine.fx... Done!
-Compiling font... Done!
-Compiling font content file: MatrixCombine.xnb... Done!
-
-Loading description file: Misc.fx... Done!
-Compiling font... Done!
-Compiling font content file: Misc.xnb... Done!
-
-Loading description file: PerlinFade.fx... Done!
-Compiling font... Warning: Warning compiling PerlinFade.fx: warning X3081: potentially unintended use of a comma expression in a variable initializer
-Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: PerlinFade.fx
-Done!
-Compiling font content file: PerlinFade.xnb... Done!
-
-Loading description file: PowerLotus.fx... Done!
-Compiling font... Done!
-Compiling font content file: PowerLotus.xnb... Done!
-
-Loading description file: Rasterize.fx... Done!
-Compiling font... Done!
-Compiling font content file: Rasterize.xnb... Done!
-
-Loading description file: RivenBloodCoating.fx... Done!
-Compiling font... Done!
-Compiling font content file: RivenBloodCoating.xnb... Done!
-
-Loading description file: SC_DustEffect.fx... Done!
-Compiling font... Done!
-Compiling font content file: SC_DustEffect.xnb... Done!
-
-Loading description file: Shimmer.fx... Done!
-Compiling font... Warning: Warning compiling Shimmer.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: Shimmer.fx
-Warning: Warning compiling Shimmer.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: Shimmer.fx
-Done!
-Compiling font content file: Shimmer.xnb... Done!
-
-Loading description file: ShimmerConstruct.fx... Done!
-Compiling font... Done!
-Compiling font content file: ShimmerConstruct.xnb... Done!
-
-Loading description file: ShimmerConstructSDF.fx... Done!
-Compiling font... Done!
-Compiling font content file: ShimmerConstructSDF.xnb... Done!
-
-Loading description file: SilhouetteShader.fx... Done!
-Compiling font... Done!
-Compiling font content file: SilhouetteShader.xnb... Done!
-
-Loading description file: Solvent.fx... Done!
-Compiling font... Done!
-Compiling font content file: Solvent.xnb... Done!
-
-Loading description file: Strip.fx... Done!
-Compiling font... Done!
-Compiling font content file: Strip.xnb... Done!
-
-Loading description file: Tangela.fx... Done!
-Compiling font... Done!
-Compiling font content file: Tangela.xnb... Done!
-
-Loading description file: TestingShader.fx... Done!
-Compiling font... Warning: Warning compiling TestingShader.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
-Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: TestingShader.fx
-Done!
-Compiling font content file: TestingShader.xnb... Done!
-
-Loading description file: TileOutline.fx... Done!
-Compiling font... Done!
-Compiling font content file: TileOutline.xnb... Done!
+Loading description file: FireShader.fx... Done!
+Compiling font... 

@@ -1,8 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Graphics.Primitives;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
@@ -39,9 +43,11 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class Dragons_Breath_P : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_85";
-		public static float Lifetime => 72f;
+		public static float Lifetime => 50f;
 		public static float MinSize => 16f;
 		public static float MaxSize => 66f;
+		private Vector2 startingVel = Vector2.Zero;
+		private float[] rots = new float[21];
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 7;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -56,8 +62,12 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
+			Projectile.timeLeft = (int)Lifetime;
+			for (int i = 0; i < Projectile.oldPos.Length; i++)
+				rots[i] = Main.rand.NextFloatDirection();
 		}
 		public override void AI() {
+			Projectile.velocity *= 1.01f;
 			if (Projectile.wet && !Projectile.lavaWet) {
 				Projectile.localAI[2] += 1.9f;
 				Projectile.localAI[0] -= 0.9f;
@@ -78,24 +88,18 @@ namespace Origins.Items.Weapons.Ranged {
 				Projectile.localAI[2] += abs * 2;
 				Projectile.localAI[0] -= abs;
 			}
-			Rectangle hitbox = Projectile.Hitbox;
-			ModifyDamageHitbox(ref hitbox);
-			Dust.NewDust(hitbox.Location.ToVector2(), hitbox.Width, hitbox.Height, DustID.OrangeTorch);
-			Projectile.scale = Utils.Remap(Projectile.localAI[0], 0f, Lifetime, MinSize / 96f, MaxSize / 96f);
-			Projectile.alpha = (int)(200 * (1 - (Projectile.localAI[0] / Lifetime)));
-			Projectile.rotation += 0.3f * Projectile.direction;
-			if (Projectile.localAI[0] + Projectile.localAI[2] > Lifetime) {
-				Projectile.Kill();
-			}
+			Dust.NewDust(Projectile.Hitbox.Location.ToVector2(), Projectile.Hitbox.Width, Projectile.Hitbox.Height, DustID.OrangeTorch);
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-			int scale = (int)Utils.Remap(Projectile.localAI[0], 0f, Lifetime, MinSize - 6, MaxSize - 6);
+			int scale = (int)MathHelper.Lerp(MinSize, MaxSize, 1 - (Projectile.timeLeft / Lifetime));
 			hitbox.Inflate(scale, scale);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire3, hit.Crit ? 600 : 360);
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			default(DragonBreathFire).Draw(Projectile, Projectile.timeLeft / Lifetime, Color.Lerp(Color.Red, Color.Orange, Projectile.timeLeft / Lifetime), Color.Goldenrod, rots);
+			return false;
 			Color color1 = new(255, 80, 20, 200);
 			Color color2 = new(255, 80, 20, 200);
 			Color color3 = new(255, 20, 20, 93);
@@ -139,6 +143,27 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 			return false;
 		}
+
+		public struct DragonBreathFire {
+
+			private static VertexRectangle rect = new VertexRectangle();
+			private static VertexStrip strip = new VertexStrip();
+			public void Draw(Projectile projectile, float progress, Color color, Color smokeColor, float[] rots) {
+				for (int i = 0; i < projectile.oldPos.Length; i++) {
+					MiscShaderData shaderData = GameShaders.Misc["Origins:FireShader"];
+				shaderData.UseColor(color);
+				shaderData.UseSecondaryColor(smokeColor);
+				shaderData.UseShaderSpecificData(new(progress, rots[i], 0, 0));
+				shaderData.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]);
+				shaderData.Apply();
+
+				rect.Draw(projectile.oldPos[i] - Main.screenPosition, Color.White, new(256), 0, projectile.oldPos[i]);
+				}
+
+			}
+
+		}
+
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.velocity = Vector2.Zero;
 			return false;

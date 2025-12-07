@@ -1,8 +1,11 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using System;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
@@ -13,17 +16,18 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.LightDisc);
 			Item.DamageType = DamageClass.MeleeNoSpeed;
-			Item.damage = 80;
+			Item.damage = 25;
 			Item.width = 34;
 			Item.height = 34;
-			Item.useTime = 10;
-			Item.useAnimation = 10;
+			Item.useTime = 15;
+			Item.useAnimation = 15;
 			Item.shoot = ModContent.ProjectileType<Terrarang_Thrown>();
-			Item.shootSpeed = 16f;
+			Item.shootSpeed = 17f;
 			Item.knockBack = 8f;
 			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = ItemRarityID.Yellow;
 			Item.UseSound = SoundID.Item1;
+			Item.ArmorPenetration = 15;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -37,9 +41,9 @@ namespace Origins.Items.Weapons.Melee {
 			return player.ownedProjectileCounts[Item.shoot] < 6;
 		}
 	}
-	public class Terrarang_Thrown : ModProjectile {
+	public class Terrarang_Thrown : ModProjectile, IOutlineDrawer {
 		public override string Texture => "Origins/Items/Weapons/Melee/Terrarang";
-		
+
 		public override void SetDefaults() {
 			ProjectileID.Sets.TrailingMode[Type] = 5;
 			ProjectileID.Sets.TrailCacheLength[Type] = 15;
@@ -49,36 +53,49 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.width = 34;
 			Projectile.height = 34;
 			Projectile.light = 0f;
-			AIType = ProjectileID.FruitcakeChakram;
-		}
-		public override bool PreAI() {
-			Projectile.aiStyle = 3;
-			if (Projectile.ai[0] != 0) {
-				Projectile.extraUpdates = 1;
-				float speed = Projectile.velocity.Length();
-				if (speed > 0) {
-					Vector2 dir = Projectile.DirectionTo(Main.player[Projectile.owner].MountedCenter);
-					if (Vector2.Dot(dir, Projectile.velocity / speed) > 0) {
-						Projectile.velocity += dir * Math.Max(18f - speed, 0) * 0.16f;
-					}
-				}
-			}
-			return true;
+			Projectile.aiStyle = -1;
+			Projectile.extraUpdates = 0;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 3;
 		}
 		public override void AI() {
-			if (++Projectile.ai[2] > 6) {
-				Projectile.ai[2] = 0;
-				if (Projectile.owner == Main.myPlayer) Projectile.NewProjectileDirect(
-					Projectile.GetSource_FromAI(),
-					Projectile.Center,
-					default,
-					ModContent.ProjectileType<Terrarang_P>(),
-					Projectile.damage / 3,
-					Projectile.knockBack / 3,
-					Projectile.owner
-				).localAI[2] = 20;
+			Player player = Main.player[Projectile.owner];
+			Projectile.rotation += 0.4f;
+			Projectile.localAI[1] -= 0.25f;
+			if (Projectile.ai[0] != 0)
+			{
+				Projectile.velocity = Vector2.Lerp(Projectile.velocity.ToRotation().AngleTowards(Projectile.Center.DirectionTo(Main.MouseWorld).ToRotation(),0.1f).ToRotationVector2() * 16, player.DirectionFrom(Projectile.Center) * 12f, MathHelper.Clamp(MathHelper.Lerp(0, 0.1f, MathF.Pow(2, 10 * (Projectile.ai[0] / 36) - 10)), 0, 1));
 			}
-			DoSpawnBeams(Projectile);
+			else
+				Projectile.velocity = Projectile.velocity.RotatedByRandom(0.2f);
+
+			
+
+			if (player.Distance(Projectile.Center) < 32 && Projectile.ai[0] > 30)
+				Projectile.Kill();
+
+			Projectile.ai[0]++;
+		}
+		private static void DrawPrettyStarSparkle(float opacity, SpriteEffects dir, Vector2 drawPos, Color drawColor, Color shineColor, float flareCounter, float fadeInStart, float fadeInEnd, float fadeOutStart, float fadeOutEnd, float rotation, Vector2 scale, Vector2 fatness) {
+			Texture2D sparkleTexture = TextureAssets.Extra[ExtrasID.SharpTears].Value;
+			Color bigColor = shineColor * opacity * 0.5f;
+			bigColor.A = 0;
+			Vector2 origin = sparkleTexture.Size() / 2f;
+			Color smallColor = drawColor * 0.5f;
+			float lerpValue = Utils.GetLerpValue(fadeInStart, fadeInEnd, flareCounter, clamped: true) * Utils.GetLerpValue(fadeOutEnd, fadeOutStart, flareCounter, clamped: true);
+			Vector2 scaleLeftRight = new Vector2(fatness.X * 0.5f, scale.X) * lerpValue;
+			Vector2 scaleUpDown = new Vector2(fatness.Y * 0.5f, scale.Y) * lerpValue;
+			bigColor *= lerpValue;
+			smallColor *= lerpValue;
+			Main.EntitySpriteDraw(sparkleTexture, drawPos, null, bigColor, MathHelper.PiOver2 + rotation, origin, scaleLeftRight, dir);
+			Main.EntitySpriteDraw(sparkleTexture, drawPos, null, bigColor, 0f + rotation, origin, scaleUpDown, dir);
+			Main.EntitySpriteDraw(sparkleTexture, drawPos, null, smallColor, MathHelper.PiOver2 + rotation, origin, scaleLeftRight * 0.6f, dir);
+			Main.EntitySpriteDraw(sparkleTexture, drawPos, null, smallColor, 0f + rotation, origin, scaleUpDown * 0.6f, dir);
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			projHitbox.Width = 64;
+			projHitbox.Height = 64;
+			return projHitbox.Intersects(targetHitbox);
 		}
 		public static void DoSpawnBeams(Projectile projectile) {
 			if (projectile.owner == Main.myPlayer) {
@@ -114,7 +131,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override bool? CanHitNPC(NPC target) {
-			Projectile.aiStyle = 0;
+
 			return null;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
@@ -123,13 +140,17 @@ namespace Origins.Items.Weapons.Melee {
 			return true;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-			if (Projectile.velocity.X != oldVelocity.X) {
-				Projectile.velocity.X = -oldVelocity.X;
+			if (Projectile.ai[0] < 34) 
+			{
+				if (Projectile.velocity.X != oldVelocity.X) {
+					Projectile.velocity.X = -oldVelocity.X;
+				}
+				if (Projectile.velocity.Y != oldVelocity.Y) {
+					Projectile.velocity.Y = -oldVelocity.Y;
+				}
+				SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
 			}
-			if (Projectile.velocity.Y != oldVelocity.Y) {
-				Projectile.velocity.Y = -oldVelocity.Y;
-			}
-			SoundEngine.PlaySound(SoundID.Dig, Projectile.Center);
+			Projectile.tileCollide = false;
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
@@ -142,9 +163,24 @@ namespace Origins.Items.Weapons.Melee {
 			);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			default(TerrarangDrawer).Draw(Projectile);
+			for (int trail = 0; trail < 3; trail++) {
+				Main.EntitySpriteDraw(TextureAssets.Projectile[ProjectileID.Excalibur].Value, Projectile.Center - Main.screenPosition, TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4), Color.Lerp(Color.SpringGreen * (1f - trail / 4f), Color.Goldenrod * (1f - trail / 4f), trail / 4f), Projectile.localAI[1] * 2 + MathHelper.ToRadians(trail * 55), TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4).Size() / 2f, 0.4f, Microsoft.Xna.Framework.Graphics.SpriteEffects.FlipHorizontally);
+				Main.EntitySpriteDraw(TextureAssets.Projectile[ProjectileID.Excalibur].Value, Projectile.Center - Main.screenPosition, TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4, 0, 2), Color.Lerp(Color.Yellow * (1f - trail / 4f), Color.SpringGreen * (1f - trail / 4f), trail / 4f), Projectile.localAI[1] * 2 + MathHelper.ToRadians(trail * 55), TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4, 4).Size() / 2f, 0.5f, Microsoft.Xna.Framework.Graphics.SpriteEffects.FlipHorizontally);
+				Main.EntitySpriteDraw(TextureAssets.Projectile[ProjectileID.Excalibur].Value, Projectile.Center - Main.screenPosition, TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4, 0, 3), Color.White * (1f - trail / 4f), Projectile.localAI[1] * 2 + MathHelper.ToRadians(trail * 55), TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4, 4).Size() / 2f, 0.5f, Microsoft.Xna.Framework.Graphics.SpriteEffects.FlipHorizontally);
+				DrawPrettyStarSparkle(1f, SpriteEffects.None, Projectile.Center - Main.screenPosition, Color.SpringGreen, Color.Goldenrod, 1f, 0f, 1f, 2f, 3f, 0f, Vector2.One * 2f, Vector2.One);
+
+			}
+			this.DrawOutline();
 			return true;
 		}
+
+		public Color? SetOutlineColor(float progress) {
+			return Color.Lerp(Color.SpringGreen,Color.Goldenrod,0.1f);
+		}
+
+		public DrawData[] OutlineDrawDatas => [new DrawData(TextureAssets.Projectile[Type].Value, Projectile.Center, null, Color.White, Projectile.rotation, TextureAssets.Projectile[Type].Size() / 2f,1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None)];
+		public int OutlineSteps => 8;
+		public float OutlineOffset => 2;
 	}
 	public readonly struct TerrarangDrawer {
 		private static readonly VertexStrip _vertexStrip = new();
@@ -163,11 +199,11 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		private readonly Color StripColors(float progressOnStrip) {
 			float num = 1f - progressOnStrip;
-			Color result = Color.Lerp(new Color(0, 162, 232), new Color(34, 177, 76), num) * num;
+			Color result = Color.Lerp(Color.SpringGreen, Color.Green, num) * num;
 			result.A = 0;
 			return result;
 		}
-		private readonly float StripWidth(float progressOnStrip) => 16f;
+		private readonly float StripWidth(float progressOnStrip) => 64f;
 	}
 	public class Terrarang_P : ModProjectile {
 		public override void SetDefaults() {
@@ -180,13 +216,14 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.ignoreWater = false;
 			Projectile.usesIDStaticNPCImmunity = true;
 			Projectile.idStaticNPCHitCooldown = 10;
+
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public override void AI() {
 			Terrarang_Thrown.DoSpawnBeams(Projectile);
 		}
 		public override Color? GetAlpha(Color lightColor) {
-			lightColor.A = 150;
+			lightColor.A = 255;
 			return lightColor * Math.Min(Projectile.timeLeft / 30f, 1);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
