@@ -15,7 +15,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class The_Calibrator : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "MagicGun"
+            WikiCategories.MagicGun
         ];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.RainbowGun] = Type;

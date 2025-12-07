@@ -12,8 +12,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
     public class Stone_Mask : ModItem, IJournalEntrySource, ICustomWikiStat {
         public string[] Categories => [
-            "Vitality",
-			"LoreItem"
+            WikiCategories.Vitality
         ];
         public string EntryName => "Origins/" + typeof(Stone_Mask_Entry).Name;
 		public override void SetStaticDefaults() {

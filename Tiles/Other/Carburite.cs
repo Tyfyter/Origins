@@ -23,9 +23,6 @@ namespace Origins.Tiles.Other {
 		}
 	}
 	public class Carburite_Item : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Ore"
-		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}

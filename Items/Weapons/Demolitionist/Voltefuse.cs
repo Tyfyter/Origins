@@ -8,12 +8,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Voltefuse : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"ThrownExplosive",
-			"IsDynamite",
-			"ExpendableWeapon"
-		];
+	public class Voltefuse : ModItem {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;
@@ -99,7 +94,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 
-		public bool IsExploding() => Projectile.localAI[0] >= FuseTime;
+		public bool IsExploding => Projectile.localAI[0] >= FuseTime;
 		public void Explode(int delay = 0) {
 			if (Projectile.localAI[2] <= 0) Projectile.localAI[2] = 1 + delay;
 		}

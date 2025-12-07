@@ -34,7 +34,6 @@ using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.UI;
 using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
 using static Terraria.WorldGen;
@@ -49,16 +48,16 @@ namespace Origins.World.BiomeData {
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilDefiled";
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
 		public override string MapBackground => BackgroundPath;
-		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
+		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<Defiled_Surface_Background>();
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => BiomeUGBackground<Defiled_Underground_Background>();
-		public override int BiomeTorchItemType => ModContent.ItemType<Defiled_Torch>();
-		public override int BiomeCampfireItemType => ModContent.ItemType<Defiled_Campfire_Item>();
+		public override int BiomeTorchItemType => ItemType<Defiled_Torch>();
+		public override int BiomeCampfireItemType => ItemType<Defiled_Campfire_Item>();
 		public static bool forcedBiomeActive;
 		public static bool monolithActive;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			int defiledTiles = OriginSystem.defiledTiles;
-			int defiledAmalgamation = ModContent.NPCType<Defiled_Amalgamation>();
+			int defiledAmalgamation = NPCType<Defiled_Amalgamation>();
 			Rectangle screenRect = new Rectangle(0, 0, NPC.sWidth, NPC.sHeight).Recentered(player.Center);
 			Rectangle npcRect = new(0, 0, 5000 * 2, 5000 * 2);
 			foreach (NPC npc in Main.ActiveNPCs) {
@@ -96,15 +95,15 @@ namespace Origins.World.BiomeData {
 			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress * 0.98f;
 		}
 		public override void Load() {
-			FirstFissureDropRule = ItemDropRule.Common(ModContent.ItemType<Kruncher>());
+			FirstFissureDropRule = ItemDropRule.Common(ItemType<Kruncher>());
 			FirstFissureDropRule.OnSuccess(ItemDropRule.Common(ItemID.MusketBall, 1, 100, 100));
 
 			FissureDropRule = new OneFromRulesRule(1,
 				FirstFissureDropRule,
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dim_Starlight>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Monolith_Rod>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Krakram>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Suspicious_Looking_Pebble>())
+				ItemDropRule.NotScalingWithLuck(ItemType<Dim_Starlight>()),
+				ItemDropRule.NotScalingWithLuck(ItemType<Monolith_Rod>()),
+				ItemDropRule.NotScalingWithLuck(ItemType<Krakram>()),
+				ItemDropRule.NotScalingWithLuck(ItemType<Suspicious_Looking_Pebble>())
 			);
 		}
 		public override void Unload() {
@@ -143,8 +142,8 @@ namespace Origins.World.BiomeData {
 					if (Main.hardMode && !spawnInfo.PlayerSafe && spawnInfo.SpawnTileY > Main.rockLayer && !spawnInfo.DesertCave) return rate;
 					return 0;
 				};
-				AddSpawn(ModContent.NPCType<Defiled_Mimic>(), MimicRate(Mimic));
-				AddSpawn(ModContent.NPCType<Enchanted_Trident>(), MimicRate(Bident));
+				AddSpawn(NPCType<Defiled_Mimic>(), MimicRate(Mimic));
+				AddSpawn(NPCType<Enchanted_Trident>(), MimicRate(Bident));
 			}
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
@@ -155,7 +154,7 @@ namespace Origins.World.BiomeData {
 			}
 
 			public override bool IsActive(NPCSpawnInfo spawnInfo) {
-				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile || (spawnInfo.Player.InModBiome<Defiled_Wastelands>() && spawnInfo.SpawnTileType == ModContent.TileType<Lost_Ore>()) || forcedBiomeActive;
+				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile || (spawnInfo.Player.InModBiome<Defiled_Wastelands>() && spawnInfo.SpawnTileType == TileType<Lost_Ore>()) || forcedBiomeActive;
 			}
 		}
 		public static class Gen {
@@ -165,9 +164,9 @@ namespace Origins.World.BiomeData {
 				const float distance = 48; //tunnel length
 				const float caveSize = 30;
 
-				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
-				ushort stoneWallID = (ushort)ModContent.WallType<Defiled_Stone_Wall>();
-				int oreID = ModContent.TileType<Lost_Ore>();
+				ushort stoneID = (ushort)TileType<Defiled_Stone>();
+				ushort stoneWallID = (ushort)WallType<Defiled_Stone_Wall>();
+				int oreID = TileType<Lost_Ore>();
 				Vector2 startVec = new Vector2(i, j);
 				int fisureCount = 0;
 				DefiledCave(i, j);
@@ -324,7 +323,7 @@ namespace Origins.World.BiomeData {
 						);
 					}
 				}
-				ushort fissureID = (ushort)ModContent.TileType<Defiled_Relay>();
+				ushort fissureID = (ushort)TileType<Defiled_Relay>();
 				while (fisureCount < 6 && fissureCheckSpots.Count > 0) {
 					int ch = genRand.Next(fissureCheckSpots.Count);
 					for (int o = 0; o > -5; o = o > 0 ? -o : -o + 1) {
@@ -371,7 +370,7 @@ namespace Origins.World.BiomeData {
 					if (tries > 0) RavelConnection(node, targetNode);
 				}
 				Rectangle genRange = WorldBiomeGeneration.ChangeRange.GetRange();
-				ushort defiledAltar = (ushort)ModContent.TileType<Defiled_Altar>();
+				ushort defiledAltar = (ushort)TileType<Defiled_Altar>();
 				for (int i0 = genRand.Next(10, 15); i0-- > 0;) {
 					int tries = 0;
 					bool placed = false;
@@ -403,7 +402,7 @@ namespace Origins.World.BiomeData {
 						placed = Framing.GetTileSafely(x, y).TileIsType(defiledAltar);
 					}
 				}
-				ushort defiledLargePile = (ushort)ModContent.TileType<Defiled_Large_Foliage>();
+				ushort defiledLargePile = (ushort)TileType<Defiled_Large_Foliage>();
 				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
 					int tries = 18;
 					int x = genRange.X + genRand.Next(0, genRange.Width);
@@ -413,7 +412,7 @@ namespace Origins.World.BiomeData {
 						if (tries-->0) break;
 					}
 				}
-				ushort defiledMediumPile = (ushort)ModContent.TileType<Defiled_Medium_Foliage>();
+				ushort defiledMediumPile = (ushort)TileType<Defiled_Medium_Foliage>();
 				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
 					int tries = 18;
 					int x = genRange.X + genRand.Next(0, genRange.Width);
@@ -423,7 +422,7 @@ namespace Origins.World.BiomeData {
 						if (tries-->0) break;
 					}
 				}
-				/*ushort defiledPot = (ushort)ModContent.TileType<Defiled_Pot>();
+				/*ushort defiledPot = (ushort)TileType<Defiled_Pot>();
 				int placedPots = 0;
 				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
 					int x = (int)i + genRand.Next(-100, 101);
@@ -446,8 +445,8 @@ namespace Origins.World.BiomeData {
 				//Main.NewText($"Generated Defiled Wastelands with {fisureCount} fissures");
 			}
 			public static void DefiledCave(float i, float j, float sizeMult = 1f) {
-				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
-				ushort stoneWallID = (ushort)ModContent.WallType<Defiled_Stone_Wall>();
+				ushort stoneID = (ushort)TileType<Defiled_Stone>();
+				ushort stoneWallID = (ushort)WallType<Defiled_Stone_Wall>();
 				for (int x = (int)Math.Floor(i - (28 * sizeMult + 5)); x < (int)Math.Ceiling(i + (28 * sizeMult + 5)); x++) {
 					for (int y = (int)Math.Ceiling(j + (28 * sizeMult + 4)); y >= (int)Math.Floor(j - (28 * sizeMult + 4)); y--) {
 						if (Main.tile[x, y].HasTile && !WorldGen.CanKillTile(x, y)) continue;
@@ -468,7 +467,7 @@ namespace Origins.World.BiomeData {
 				}
 			}
 			public static void DefiledRibs(float i, float j, float sizeMult = 1f) {
-				ushort stoneID = (ushort)ModContent.TileType<Defiled_Regolith>();
+				ushort stoneID = (ushort)TileType<Defiled_Regolith>();
 				for (int x = (int)Math.Floor(i - (28 * sizeMult + 5)); x < (int)Math.Ceiling(i + (28 * sizeMult + 5)); x++) {
 					for (int y = (int)Math.Ceiling(j + (28 * sizeMult + 4)); y >= (int)Math.Floor(j - (28 * sizeMult + 4)); y--) {
 						float diff = (float)Math.Sqrt((((y - j) * (y - j)) + (x - i) * (x - i)) * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1));
@@ -486,7 +485,7 @@ namespace Origins.World.BiomeData {
 				}
 			}
 			public static void DefiledRib(float i, float j, float size = 16f, float thickness = 1) {
-				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
+				ushort stoneID = (ushort)TileType<Defiled_Stone>();
 				for (int x = (int)Math.Floor(i - size); x < (int)Math.Ceiling(i + size); x++) {
 					for (int y = (int)Math.Ceiling(j + size); y >= (int)Math.Floor(j - size); y--) {
 						if (Main.tile[x, y].HasTile && Main.tileSolid[Main.tile[x, y].TileType]) {
@@ -633,8 +632,8 @@ namespace Origins.World.BiomeData {
 						newSubPos = currentSubPos;
 					}
 				}
-				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
-				ushort stoneWallID = (ushort)ModContent.WallType<Defiled_Stone_Wall>();
+				ushort stoneID = (ushort)TileType<Defiled_Stone>();
+				ushort stoneWallID = (ushort)WallType<Defiled_Stone_Wall>();
 				bool removedAnyTiles;
 				void Stamp() {
 					for (int x = -2; x <= 2; x++) {
@@ -728,37 +727,10 @@ namespace Origins.World.BiomeData {
 				Origins.ResolveRuleWithHandler(shadowOrbSmashed ? FissureDropRule : FirstFissureDropRule, dropInfo, (DropAttemptInfo info, int item, int stack, bool _) => {
 					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, item, stack, pfix: -1);
 				});
-				/*int selection = Main.rand.Next(5);
-				if (!shadowOrbSmashed) {
-					selection = 0;
-				}
-				switch (selection) {
-					case 0: 
-					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Defiled_Burst>(), 1, noBroadcast: false, -1);
-					int stack2 = WorldGen.genRand.Next(100, 101);
-					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ItemID.MusketBall, stack2);
-					break;
-				
-					case 1:
-					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Infusion>(), 1, noBroadcast: false, -1);
-					break;
-
-					case 2:
-					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Defiled_Chakram>(), 1, noBroadcast: false, -1);
-					break;
-
-					case 3:
-					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ItemID.ShadowOrb, 1, noBroadcast: false, -1);
-					break;
-
-					case 4:
-					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Dim_Starlight>(), 1, noBroadcast: false, -1);
-					break;
-				}*/
 				shadowOrbSmashed = true;
 
 				//this projectile handles the rest
-				Projectile.NewProjectile(GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Defiled_Wastelands_Signal>(), 0, 0, Main.myPlayer, ai0: 1, ai1: player);
+				Projectile.NewProjectile(GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ProjectileType<Defiled_Wastelands_Signal>(), 0, 0, Main.myPlayer, ai0: 1, ai1: player);
 
 				AchievementsHelper.NotifyProgressionEvent(7);
 			}
@@ -837,22 +809,23 @@ namespace Origins.World.BiomeData {
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Defiled";
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilDefiled";
 		public override Color OuterColor => new(170, 170, 170);
-		public override IShoppingBiome Biome => ModContent.GetInstance<Defiled_Wastelands>();
+		public override Color? BiomeSightColor => Color.White;
+		public override IShoppingBiome Biome => GetInstance<Defiled_Wastelands>();
 		public override void SetStaticDefaults() {
 			BiomeType = BiomeType.Evil;
 			//DisplayName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
 			//Description.SetDefault(Language.GetTextValue("A desaturated and bleak environment that is actually a living organism growing its body."));
 			//GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
 			//GenPassName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
-			AddTileConversion(ModContent.TileType<Defiled_Grass>(), TileID.Grass);
-			AddTileConversion(ModContent.TileType<Defiled_Jungle_Grass>(), TileID.JungleGrass);
-			AddTileConversion(ModContent.TileType<Defiled_Stone>(), TileID.Stone);
-			AddTileConversion(ModContent.TileType<Defiled_Sand>(), TileID.Sand);
-			AddTileConversion(ModContent.TileType<Defiled_Sandstone>(), TileID.Sandstone);
-			AddTileConversion(ModContent.TileType<Hardened_Defiled_Sand>(), TileID.HardenedSand);
-			AddTileConversion(ModContent.TileType<Defiled_Ice>(), TileID.IceBlock);
+			AddTileConversion(TileType<Defiled_Grass>(), TileID.Grass);
+			AddTileConversion(TileType<Defiled_Jungle_Grass>(), TileID.JungleGrass);
+			AddTileConversion(TileType<Defiled_Stone>(), TileID.Stone);
+			AddTileConversion(TileType<Defiled_Sand>(), TileID.Sand);
+			AddTileConversion(TileType<Defiled_Sandstone>(), TileID.Sandstone);
+			AddTileConversion(TileType<Hardened_Defiled_Sand>(), TileID.HardenedSand);
+			AddTileConversion(TileType<Defiled_Ice>(), TileID.IceBlock);
 
-			GERunnerConversion.Add(TileID.Silt, ModContent.TileType<Defiled_Sand>());
+			GERunnerConversion.Add(TileID.Silt, TileType<Defiled_Sand>());
 
 			BiomeFlesh = TileID.SilverBrick;
 			BiomeFleshWall = WallID.SilverBrick;
@@ -871,22 +844,22 @@ namespace Origins.World.BiomeData {
 			//FountainTile = TileID.WaterFountain;
 			//Fountain = TileID.WaterFountain;
 
-			SeedType = ModContent.ItemType<Defiled_Grass_Seeds>();
-			BiomeOre = ModContent.TileType<Lost_Ore>();
-			BiomeOreItem = ModContent.ItemType<Lost_Ore_Item>();
-			BiomeOreBrick = ModContent.TileType<Lost_Brick>();
-			AltarTile = ModContent.TileType<Defiled_Altar>();
+			SeedType = ItemType<Defiled_Grass_Seeds>();
+			BiomeOre = TileType<Lost_Ore>();
+			BiomeOreItem = ItemType<Lost_Ore_Item>();
+			BiomeOreBrick = TileType<Lost_Brick>();
+			AltarTile = TileType<Defiled_Altar>();
 
-			BiomeChestItem = ModContent.ItemType<Missing_File>();
-			BiomeChestTile = ModContent.TileType<Defiled_Dungeon_Chest>();
+			BiomeChestItem = ItemType<Missing_File>();
+			BiomeChestTile = TileType<Defiled_Dungeon_Chest>();
 			BiomeChestTileStyle = 1;
-			BiomeKeyItem = ModContent.ItemType<Defiled_Key>();
+			BiomeKeyItem = ItemType<Defiled_Key>();
 
-			MimicType = ModContent.NPCType<Defiled_Mimic>();
+			MimicType = NPCType<Defiled_Mimic>();
 
-			BloodBunny = ModContent.NPCType<Defiled_Mite>();
-			BloodPenguin = ModContent.NPCType<Bile_Thrower>();
-			BloodGoldfish = ModContent.NPCType<Shattered_Goldfish>();
+			BloodBunny = NPCType<Defiled_Mite>();
+			BloodPenguin = NPCType<Bile_Thrower>();
+			BloodGoldfish = NPCType<Shattered_Goldfish>();
 
 			AddWallConversions<Defiled_Stone_Wall>(
 				WallID.Cave7Unsafe,
@@ -925,7 +898,6 @@ namespace Origins.World.BiomeData {
 				WallID.GrassUnsafe,
 				WallID.Grass
 			);
-			this.AddChambersiteConversions(ModContent.TileType<Chambersite_Ore_Defiled_Stone>(), ModContent.WallType<Chambersite_Defiled_Stone_Wall>());
 
 			EvilBiomeGenerationPass = new Defiled_Wastelands_Generation_Pass();
 		}
@@ -936,14 +908,14 @@ namespace Origins.World.BiomeData {
 
 		public override AltMaterialContext MaterialContext {
 			get {
-				AltMaterialContext context = new AltMaterialContext();
-				context.SetEvilHerb(ModContent.ItemType<Wilting_Rose_Item>());
-				context.SetEvilBar(ModContent.ItemType<Defiled_Bar>());
-				context.SetEvilOre(ModContent.ItemType<Lost_Ore_Item>());
-				context.SetVileInnard(ModContent.ItemType<Strange_String>());
-				context.SetVileComponent(ModContent.ItemType<Black_Bile>());
-				context.SetEvilBossDrop(ModContent.ItemType<Undead_Chunk>());
-				context.SetEvilSword(ModContent.ItemType<Spiker_Sword>());
+				AltMaterialContext context = new();
+				context.SetEvilHerb(ItemType<Wilting_Rose_Item>());
+				context.SetEvilBar(ItemType<Defiled_Bar>());
+				context.SetEvilOre(ItemType<Lost_Ore_Item>());
+				context.SetVileInnard(ItemType<Strange_String>());
+				context.SetVileComponent(ItemType<Black_Bile>());
+				context.SetEvilBossDrop(ItemType<Undead_Chunk>());
+				context.SetEvilSword(ItemType<Spiker_Sword>());
 				return context;
 			}
 		}
@@ -986,7 +958,7 @@ namespace Origins.World.BiomeData {
 				WorldBiomeGeneration.ChangeRange.AddChangeToRange(evilBiomePositionEastBound, minY);
 				Rectangle range = WorldBiomeGeneration.ChangeRange.GetRange();
 				WorldBiomeGeneration.EvilBiomeGenRanges.Add(range);
-				AltBiome biome = ModContent.GetInstance<Defiled_Wastelands_Alt_Biome>();
+				AltBiome biome = GetInstance<Defiled_Wastelands_Alt_Biome>();
 				for (int i = range.Left; i < range.Right; i++) {
 					int slopeFactor = Math.Min(Math.Min(i - range.Left, range.Right - i), 99);
 					for (int j = range.Top - 10; j < range.Bottom; j++) {
@@ -1013,8 +985,8 @@ namespace Origins.World.BiomeData {
 							Main.tile[i, j].SetActive(false);
 						}
 					}
-					TileExtenstions.ForcePlace(heart.X, heart.Y, (ushort)ModContent.TileType<Defiled_Heart>(), 0, 1);
-					ModContent.GetInstance<Defiled_Heart_TE_System>().AddTileEntity(new(heart.X, heart.Y));
+					TileExtenstions.ForcePlace(heart.X, heart.Y, (ushort)TileType<Defiled_Heart>(), 0, 1);
+					GetInstance<Defiled_Heart_TE_System>().AddTileEntity(new(heart.X, heart.Y));
 				}
 			}
 		}

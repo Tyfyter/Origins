@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
+using Origins.Buffs;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Journal;
+using Origins.Tiles.Other;
 using Origins.World;
 using System;
 using System.Collections.Generic;
@@ -327,14 +329,14 @@ namespace Origins.Dev {
 			ICustomWikiStat customStat = item.ModItem as ICustomWikiStat;
 			data["Image"] = customStat?.CustomSpritePath ?? WikiPageExporter.GetWikiItemImagePath(modItem);
 			data["Name"] = WikiPageExporter.ProcessTags(item.Name);
-			JArray types = new("Item");
-			if (modItem is IJournalEntrySource) types.Add("Lore");
+			JArray types = new(WikiCategories.Item);
+			if (modItem is IJournalEntrySource) types.Add(WikiCategories.Lore);
 			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
-			if (item.pick != 0 || item.axe != 0 || item.hammer != 0 || item.fishingPole != 0 || item.bait != 0) types.Add("Tool");
-			if (item.accessory) types.Add("Accessory");
-			if (ItemID.Sets.SortingPriorityBossSpawns[item.type] != -1) types.Add("BossSummon");
-			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None && (!types.Any(t => t.ToString() == "Tool") || types.Any(t => t.ToString() == "ToolWeapon"))) {
-				types.Add("Weapon");
+			if (item.pick != 0 || item.axe != 0 || item.hammer != 0 || item.fishingPole != 0 || item.bait != 0) types.Add(WikiCategories.Tool);
+			if (item.accessory) types.Add(WikiCategories.Accessory);
+			if (ItemID.Sets.SortingPriorityBossSpawns[item.type] != -1) types.Add(WikiCategories.BossSummon);
+			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None && (!types.Any(t => t.ToString() == WikiCategories.Tool) || types.Any(t => t.ToString() == WikiCategories.ToolWeapon))) {
+				types.Add(WikiCategories.Weapon);
 				WeaponTypes weaponType = WeaponTypes.None;
 				for (int i = 0; i < types.Count; i++) {
 					if (Enum.TryParse(types[i].ToString(), out WeaponTypes type)) {
@@ -352,6 +354,9 @@ namespace Origins.Dev {
 							weaponType = WeaponTypes.OtherExplosive;
 						}
 					}
+					if (ItemID.Sets.Spears[item.type]) {
+						weaponType = WeaponTypes.Spear;
+					}
 					if (weaponType == WeaponTypes.None && item.shoot > ProjectileID.None) {
 						switch (ContentSamples.ProjectilesByType[item.shoot].aiStyle) {
 							case ProjAIStyleID.Boomerang:
@@ -362,11 +367,8 @@ namespace Origins.Dev {
 							weaponType = WeaponTypes.Yoyo;
 							break;
 						}
-						if (ItemID.Sets.Spears[item.type]) {
-							weaponType = WeaponTypes.Spear;
-						}
 
-						if (item.CountsAsClass(DamageClass.Summon) && !types.Any(t => t.ToString() == "Incantation")) {
+						if (item.CountsAsClass(DamageClass.Summon) && !types.Any(t => t.ToString() == nameof(WeaponTypes.Incantation))) {
 							if (Origins.ArtifactMinion[item.shoot]) weaponType = WeaponTypes.Artifact;
 							if (ProjectileID.Sets.IsAWhip[item.shoot]) {
 								weaponType = WeaponTypes.Whip;
@@ -393,6 +395,12 @@ namespace Origins.Dev {
 							case ItemID.MusketBall:
 							weaponType = WeaponTypes.Gun;
 							break;
+							case ItemID.Gel:
+							weaponType = WeaponTypes.Flamethrower;
+							break;
+							case ItemID.Seed:
+							weaponType = WeaponTypes.DartLauncher;
+							break;
 
 							default:
 							if (item.useAmmo == ModContent.ItemType<Metal_Slug>()) {
@@ -413,31 +421,63 @@ namespace Origins.Dev {
 					if (weaponType == WeaponTypes.None && !item.noMelee && item.useStyle == ItemUseStyleID.Swing) weaponType = WeaponTypes.Sword;
 				}
 				if (weaponType != WeaponTypes.None && !types.Any(t => t.ToString() == weaponType.ToString())) types.Add(weaponType.ToString());
+				if (weaponType != WeaponTypes.None && item.consumable) types.Add(WikiCategories.ExpendableWeapon);
 			}
 			switch (item.ammo) {
 				case ItemID.WoodenArrow:
-				types.Add("Arrow");
+				types.Add(WikiCategories.Arrow);
 				break;
 				case ItemID.MusketBall:
-				types.Add("Bullet");
+				types.Add(WikiCategories.Bullet);
+				break;
+				case ItemID.Seed:
+				types.Add(WikiCategories.Dart);
+				break;
+				case ItemID.Grenade:
+				types.Add(WikiCategories.IsGrenade);
+				break;
+				case ItemID.Bomb:
+				types.Add(WikiCategories.IsBomb);
+				break;
+				case ItemID.Dynamite:
+				types.Add(WikiCategories.IsDynamite);
 				break;
 
 				default:
-				if (item.ammo == ModContent.ItemType<Harpoon>()) types.Add("Harpoon");
+				if (AmmoID.Sets.IsArrow[item.ammo]) goto case ItemID.WoodenArrow;
+				if (AmmoID.Sets.IsBullet[item.ammo]) goto case ItemID.MusketBall;
+				if (item.ammo == ModContent.ItemType<Harpoon>()) types.Add(WikiCategories.Harpoon);
+				else if (item.ammo == ModContent.ItemType<Metal_Slug>()) types.Add(WikiCategories.Slug);
 				break;
 			}
-			if (customStat?.Hardmode ?? (!item.consumable && item.rare > ItemRarityID.Orange)) types.Add("Hardmode");
+			if (customStat?.Hardmode ?? (!item.consumable && item.rare > ItemRarityID.Orange)) types.Add(WikiCategories.Hardmode);
 
-			if (ItemID.Sets.IsFood[item.type]) types.Add("Food");
-			if (item.ammo != 0 && item.ammo != ItemID.CopperOre) types.Add("Ammo");
-			if (item.headSlot != -1 || item.bodySlot != -1 || item.legSlot != -1) types.Add("Armor");
-			if (item.createTile != -1) {
-				types.Add("Tile");
-				if (TileID.Sets.Torch[item.createTile]) types.Add("Torch");
-				if (TileID.Sets.Ore[item.createTile]) types.Add("Ore");
+			if (ItemID.Sets.IsFood[item.type]) types.Add(WikiCategories.Food);
+			else if (item.buffType != 0) {
+				if (Main.vanityPet[item.buffType]) types.Add(WikiCategories.Pet);
+				else if (Main.lightPet[item.buffType]) types.Add(WikiCategories.LightPet);
+				else types.Add(WikiCategories.Potion);
 			}
-			if (item.expert) types.Add("Expert");
-			if (item.master) types.Add("Master");
+
+			if (item.ammo != 0 && item.ammo != ItemID.CopperOre) types.Add(WikiCategories.Ammo);
+			if (item.headSlot != -1 || item.bodySlot != -1 || item.legSlot != -1) types.Add(WikiCategories.Armor);
+			if (item.createTile != -1) {
+				types.Add(WikiCategories.Tile);
+				if (TileID.Sets.Torch[item.createTile]) types.Add(WikiCategories.Torch);
+				if (TileID.Sets.Ore[item.createTile]) types.Add(WikiCategories.Ore);
+				if (TileID.Sets.Stone[item.createTile]) types.Add(WikiCategories.Stone);
+				if (TileID.Sets.Grass[item.createTile]) types.Add(WikiCategories.Grass);
+				if (TileLoader.GetTile(item.createTile) is ModTile modTile) {
+					if (modTile is Bar_Tile) types.Add(WikiCategories.Bar);
+				}
+			}
+			if (modItem is ITornSource) {
+				types.Add(WikiCategories.Torn);
+				types.Add(WikiCategories.TornSource);
+			}
+			if (!string.IsNullOrWhiteSpace(OriginsSets.Items.JournalEntries[item.type])) types.Add(WikiCategories.LoreItem);
+			if (item.expert) types.Add(WikiCategories.Expert);
+			if (item.master) types.Add(WikiCategories.Master);
 			data.Add("Types", types);
 
 			data.AppendStat("PickPower", item.pick, 0);
@@ -460,7 +500,7 @@ namespace Origins.Dev {
 				data.Add("PlacementSize", new JArray(width, height));
 			}
 			if (item.createWall != -1) {
-				types.Add("Wall");
+				types.Add(WikiCategories.Wall);
 			}
 			data.AppendStat("Defense", item.defense, 0);
 			if (item.headSlot != -1) {
@@ -540,11 +580,15 @@ namespace Origins.Dev {
 		None,
 		Sword,
 		Spear,
+		Flail,
 		Boomerang,
 		Yoyo,
 		Bow,
+		Repeater,
 		Gun,
+		Flamethrower,
 		HarpoonGun,
+		DartLauncher,
 		Wand,
 		MagicGun,
 		SpellBook,

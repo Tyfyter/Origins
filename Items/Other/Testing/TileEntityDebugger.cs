@@ -24,11 +24,18 @@ namespace Origins.Items.Other.Testing {
 			Item.color = Color.Beige;
 		}
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
+			Rectangle frame = new(0, 0, 16, 16);
 			for (int i = 0; i < TESystem.TESystemCount; i++) {
 				TESystem system = TESystem.Get(i);
 				for (int j = 0; j < system.tileEntityLocations.Count; j++) {
-					Vector2 pos = system.tileEntityLocations[j].ToWorldCoordinates() - Main.screenPosition;
+					Vector2 pos = system.tileEntityLocations[j].ToWorldCoordinates(0, 0) - Main.screenPosition;
 					if (pos.X >= 0 && pos.Y >= 0 && pos.X <= Main.screenWidth && pos.Y <= Main.screenHeight) {
+						Main.spriteBatch.Draw(
+							TextureAssets.MagicPixel.Value,
+							pos,
+							frame,
+							Color.FloralWhite * 0.25f
+						);
 						ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, FontAssets.MouseText.Value, i + "", pos, Color.Beige, 0, Vector2.Zero, Vector2.One);
 					}
 				}

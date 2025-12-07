@@ -1,18 +1,18 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
+using Origins.Dev;
 using Terraria;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
     public class Soulspore : OriginTile, IDefiledTile {
         public string[] Categories => [
-            "Plant"
-        ];
+			WikiCategories.Plant
+		];
         public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
@@ -31,7 +31,7 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.newTile.AnchorValidTiles = [
 				TileType<Defiled_Grass>(),
 				TileType<Defiled_Stone>(),
-				ModContent.TileType<Defiled_Jungle_Grass>()
+				TileType<Defiled_Jungle_Grass>()
 			];
 			TileObjectData.addTile(Type);
 
@@ -50,12 +50,8 @@ namespace Origins.Tiles.Defiled {
 			return true;
 		}
 	}
-	public class Soulspore_Item : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = 999;
-		}
+	public class Soulspore_Item : MaterialItem {
+		public override int Value => Item.sellPrice(copper: 10);
+		public override bool Hardmode => false;
 	}
 }

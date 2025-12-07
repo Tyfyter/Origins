@@ -5,13 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Eyenade : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"ThrownExplosive",
-			"IsBomb",
-			"ExpendableWeapon",
-			"ToxicSource"
-		];
+	public class Eyenade : ModItem {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;

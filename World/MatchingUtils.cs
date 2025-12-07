@@ -46,23 +46,47 @@ namespace Origins.World {
 		int maxY;
 		bool broke;
 		HashSet<Point> walked;
+		List<Point> counted;
 		public readonly int MinX => minX;
 		public readonly int MinY => minY;
 		public readonly int MaxX => maxX;
 		public readonly int MaxY => maxY;
 		public readonly bool Broke => broke;
 		public readonly IReadOnlySet<Point> Walked => walked;
+		public readonly IReadOnlyList<Point> Counted => counted;
+		public readonly bool[,] GetCountedMap() {
+			bool[,] output = new bool[maxX + 1 - minX, maxY + 1 - minY];
+			for (int i = 0; i < counted.Count; i++) {
+				Point pos = counted[i];
+				output[pos.X - minX, pos.Y - minY] = true;
+			}
+			return output;
+		}
+		public readonly void AndCountedMap(bool[,] output, int mapMinX, int mapMinY) {
+			for (int i = 0; i < counted.Count; i++) {
+				Point pos = counted[i];
+				output[pos.X - mapMinX, pos.Y - mapMinY] &= true;
+			}
+		}
+		public readonly void OrCountedMap(bool[,] output, int mapMinX, int mapMinY) {
+			for (int i = 0; i < counted.Count; i++) {
+				Point pos = counted[i];
+				output[pos.X - mapMinX, pos.Y - mapMinY] |= true;
+			}
+		}
 		public delegate bool Breaker(AreaAnalysis analysis);
 		public delegate bool Counter(Point position);
+		public static Point[] Orthogonals => [new(0, 1), new(0, -1), new(1, 0), new(-1, 0)];
 		public static AreaAnalysis March(int i, int j, Point[] directions, Counter shouldCount, Breaker shouldBreak) {
 			AreaAnalysis analysis = new() {
 				minX = i,
 				maxX = i,
 				minY = j,
 				maxY = j,
-				walked = []
+				walked = [],
+				counted = []
 			};
-			analysis.DoMarch(new(i, j), directions.Reverse().ToArray(), shouldCount, shouldBreak);
+			analysis.DoMarch(new(i, j), directions, shouldCount, shouldBreak);
 			return analysis;
 		}
 		void DoMarch(Point start, Span<Point> directions, Counter shouldCount, Breaker shouldBreak) {
@@ -75,6 +99,7 @@ namespace Origins.World {
 					Max(ref maxX, position.X);
 					Min(ref minY, position.Y);
 					Max(ref maxY, position.Y);
+					counted.Add(position);
 					for (int i = 0; i < directions.Length; i++) {
 						Point next = directions[i];
 						next.X += position.X;
@@ -83,10 +108,10 @@ namespace Origins.World {
 							queue.Push(next);
 						}
 					}
-				}
-				if (shouldBreak(this)) {
-					broke = true;
-					break;
+					if (shouldBreak(this)) {
+						broke = true;
+						break;
+					}
 				}
 			}
 		}

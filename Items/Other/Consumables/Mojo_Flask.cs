@@ -12,9 +12,6 @@ using Terraria.UI.Chat;
 
 namespace Origins.Items.Other.Consumables {
 	public class Mojo_Flask : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Potion"
-		];
 		public override LocalizedText Tooltip => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.{nameof(Mojo_Flask)}.{nameof(Tooltip)}"));
 		public override void SetStaticDefaults() {
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationDelegated(GetFrameGetter(Type, FlaskUseCount)));

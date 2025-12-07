@@ -12,8 +12,8 @@ using Terraria.Graphics.Shaders;
 namespace Origins.Items.Weapons.Magic {
 	public class Chemical_Laser : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"MagicGun",
-			"ToxicSource"
+			WikiCategories.MagicGun,
+			WikiCategories.ToxicSource
 		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadowbeamStaff);

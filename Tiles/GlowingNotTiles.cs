@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
 using Origins.Reflection;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;

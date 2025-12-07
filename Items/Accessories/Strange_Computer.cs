@@ -13,9 +13,8 @@ namespace Origins.Items.Accessories {
 		internal static bool drawingStrangeLine = false;
 		internal static List<int> projectiles = [];
 		public string[] Categories => [
-			"Info",
-			"LoreItem",
-			"Hidden"
+			WikiCategories.Info,
+			WikiCategories.Hidden
 		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

@@ -12,12 +12,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Fleshy_Globe : ModItem, ICustomWikiStat, ICustomPetFrames {
+	public class Fleshy_Globe : ModItem, ICustomPetFrames {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		public string[] Categories => [
-			"LightPet"
-		];
 
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);

@@ -7,12 +7,12 @@ namespace Origins.Items.Armor.Eyndum {
     [AutoloadEquip(EquipType.Head)]
 	public class Eyndum_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "PostMLArmorSet",
-            "MeleeBoostGear",
-            "RangedBoostGear",
-            "MagicBoostGear",
-            "SummmonBoostGear",
-            "ExplosiveBoostGear"
+            WikiCategories.PostMLArmorSet,
+            WikiCategories.MeleeBoostGear,
+            WikiCategories.RangedBoostGear,
+            WikiCategories.MagicBoostGear,
+            WikiCategories.SummmonBoostGear,
+            WikiCategories.ExplosiveBoostGear
         ];
         public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);

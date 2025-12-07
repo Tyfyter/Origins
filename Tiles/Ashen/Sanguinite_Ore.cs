@@ -1,7 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
-using Origins.Tiles.Defiled;
-using Origins.Tiles.Riven;
 using PegasusLib;
 using Terraria;
 using Terraria.ID;
@@ -35,9 +33,6 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Sanguinite_Ore_Item : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-		   "Ore"
-		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 		}

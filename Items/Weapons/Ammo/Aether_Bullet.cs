@@ -1,15 +1,12 @@
-using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Ammo {
-	public class Aether_Bullet : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Bullet"
-		];
+	public class Aether_Bullet : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
@@ -32,7 +29,15 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Aether_Bullet_P : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VenomBullet;
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.CursedBullet);
+			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.width = 4;
+			Projectile.height = 4;
+			Projectile.friendly = true;
+			Projectile.penetrate = 1;
+			Projectile.light = 0.5f;
+			Projectile.alpha = 255;
+			Projectile.scale = 1.2f;
+			Projectile.timeLeft = 600;
 			Projectile.extraUpdates = 2;
 			Projectile.aiStyle = 0;
 		}

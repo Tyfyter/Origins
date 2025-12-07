@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Scrap_Compactor : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat"
+			WikiCategories.Combat
 		];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);

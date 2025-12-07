@@ -12,7 +12,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Golden_Lotus : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Misc"
+			WikiCategories.Misc
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);

@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
+using Origins.Core;
+using Origins.Dev;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
@@ -8,35 +10,25 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Grass : OriginTile, IDefiledTile {
-        public string[] Categories => [
-            "Grass"
-        ];
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() {
 			TileID.Sets.Grass[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.Conversion.Grass[Type] = true;
+			TileID.Sets.Conversion.MergesWithDirtInASpecialWay[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			Main.tileMerge[Type] = Main.tileMerge[TileID.Grass];
-			Main.tileMerge[Type][TileID.Dirt] = true;
-			Main.tileMerge[TileID.Dirt][Type] = true;
-			Main.tileMerge[Type][TileID.Mud] = true;
-			Main.tileMerge[TileID.Mud][Type] = true;
+			TileID.Sets.CanBeDugByShovel[Type] = true;
 			Origins.TileTransformsOnKill[Type] = true;
 			HitSound = Origins.Sounds.DefiledIdle;
-			for (int i = 0; i < TileLoader.TileCount; i++) {
-				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
-					Main.tileMerge[Type][i] = true;
-					Main.tileMerge[i][Type] = true;
-				}
-			}
+			Main.tileBrick[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(200, 200, 200));
 			//SetModTree(Defiled_Tree.Instance);
-			AddDefiledTile();
+			Defiled_Grass_Seeds.TileAssociations[TileID.Dirt] = Type;
 			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
+		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != TileID.Dirt;
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && (!effectOnly || WorldGen.genRand.NextBool(3))) {
 				Framing.GetTileSafely(i, j).TileType = TileID.Dirt;
@@ -88,11 +80,14 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.Conversion.JungleGrass[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.CanBeDugByShovel[Type] = true;
 			Main.tileMerge[Type] = Main.tileMerge[TileID.JungleGrass];
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;
 			Main.tileMerge[Type][TileID.Mud] = true;
 			Main.tileMerge[TileID.Mud][Type] = true;
+			Main.tileMerge[Type][TileID.LihzahrdBrick] = true;
+			Main.tileMerge[TileID.LihzahrdBrick][Type] = true;
 			Origins.TileTransformsOnKill[Type] = true;
 			HitSound = Origins.Sounds.DefiledIdle;
 			for (int i = 0; i < TileLoader.TileCount; i++) {
@@ -105,8 +100,9 @@ namespace Origins.Tiles.Defiled {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(180, 180, 180));
 			//SetModTree(Defiled_Tree.Instance);
-			AddDefiledTile();
+			Defiled_Grass_Seeds.TileAssociations[TileID.Mud] = Type;
 		}
+		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != TileID.Mud;
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
 				Framing.GetTileSafely(i, j).TileType = TileID.Mud;
@@ -146,26 +142,20 @@ namespace Origins.Tiles.Defiled {
 			}
 		}
 	}
-	public class Defiled_Grass_Seeds : ModItem {
+	[ReinitializeDuringResizeArrays]
+	public class Defiled_Grass_Seeds : ModItem, ICustomPlaceTileItem {
+		public static int[] TileAssociations = TileID.Sets.Factory.CreateIntSet(-1);
 		public override void SetStaticDefaults() {
 			ItemID.Sets.GrassSeeds[Type] = true;
+			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CorruptSeeds);
+			Item.createTile = ModContent.TileType<Defiled_Grass>();
 		}
-		public override bool ConsumeItem(Player player) {
-			ref ushort tileType = ref Main.tile[Player.tileTargetX, Player.tileTargetY].TileType;
-			switch (tileType) {
-				case TileID.CorruptGrass:
-				tileType = (ushort)ModContent.TileType<Defiled_Grass>();
-				break;
-				case TileID.CorruptJungleGrass:
-				tileType = (ushort)ModContent.TileType<Defiled_Jungle_Grass>();
-				break;
-			}
-			if (Main.netMode != NetmodeID.SinglePlayer) NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 1, Player.tileTargetX, Player.tileTargetY, tileType, 0);
-			return true;
+		public void PlaceTile(On_Player.orig_PlaceThing_Tiles orig, bool inRange) {
+			if (inRange) CustomPlaceTileItem.PlantSeedsAtCursor(TileAssociations);
 		}
 	}
 }

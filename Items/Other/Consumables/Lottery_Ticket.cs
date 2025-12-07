@@ -1,11 +1,12 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
     public class Lottery_Ticket : ModItem {
         public string[] Categories => [
-            "ExpendableTool"
+            WikiCategories.ExpendableTool
         ];
         public override void SetDefaults() {
 			Item.width = 20;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Origins.Dev;
+using System;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -6,7 +7,7 @@ namespace Origins.Items.Accessories {
 	public class Mana_Drive : ModItem {
 		static short glowmask;
         public string[] Categories => [
-            "Vitality"
+            WikiCategories.Vitality
         ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

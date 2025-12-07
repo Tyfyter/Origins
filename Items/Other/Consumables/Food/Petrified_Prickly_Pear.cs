@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables.Food {
     public class Petrified_Prickly_Pear : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "ManaShielding"
+            WikiCategories.ManaShielding
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;

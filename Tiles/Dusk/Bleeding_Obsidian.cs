@@ -36,9 +36,6 @@ namespace Origins.Tiles.Dusk {
 		}
 	}
 	public class Bleeding_Obsidian_Item : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Ore"
-		];
 		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;

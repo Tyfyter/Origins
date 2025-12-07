@@ -8,7 +8,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Boiler : ModItem, ICustomWikiStat {
 		static short glowmask;
 		public string[] Categories => [
-			"Gun"
+			nameof(WeaponTypes.Gun)
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;

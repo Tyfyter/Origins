@@ -44,6 +44,24 @@ namespace Origins.Items.Other.Fish {
 			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Bonehead_Jellyfish.Location");
 		}
 	}
+	public class Scrapfish : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 2;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToQuestFish();
+		}
+		public override bool IsAnglerQuestAvailable() {
+			return WorldBiomeManager.GetWorldEvil(true) == ModContent.GetInstance<Ashen_Alt_Biome>();
+		}
+		public override bool IsQuestFish() => true;
+		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
+			// How the angler describes the fish to the player.
+			description = Language.GetTextValue("Mods.Origins.FishQuest.Scrapfish.Description");
+			// What it says on the bottom of the angler's text box of how to catch the fish.
+			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Scrapfish.Location");
+		}
+	}
 	public class Bobbit_Worm : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 2;

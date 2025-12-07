@@ -9,10 +9,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
-	public class Terrarang : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Boomerang"
-		];
+	public class Terrarang : ModItem {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.LightDisc);
 			Item.DamageType = DamageClass.MeleeNoSpeed;

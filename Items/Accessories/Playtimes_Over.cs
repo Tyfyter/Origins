@@ -10,10 +10,8 @@ namespace Origins.Items.Accessories {
 		public static float TornSeverity => 0.1f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-            "Vitality",
-            "Torn",
-            "TornSource"
-        ];
+			WikiCategories.Vitality
+		];
         static short glowmask;
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);

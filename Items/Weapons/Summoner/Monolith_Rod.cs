@@ -14,11 +14,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class Monolith_Rod : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Torn",
-			"TornSource"
-		];
+	public class Monolith_Rod : ModItem {
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			Item.staff[Type] = true;

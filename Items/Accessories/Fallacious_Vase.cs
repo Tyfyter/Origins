@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Fallacious_Vase : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Movement"
+			WikiCategories.Movement
 		];
 		public override void Load() {
 			On_WorldGen.SpawnThingsFromPot += On_WorldGen_SpawnThingsFromPot;

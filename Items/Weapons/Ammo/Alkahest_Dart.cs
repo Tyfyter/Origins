@@ -20,8 +20,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public static float TornSeverity => 0.25f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-			"Dart",
-			"TornSource"
+			WikiCategories.Dart
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

@@ -9,12 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Chlorodynamite : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "ThrownExplosive",
-			"IsDynamite",
-            "ExpendableWeapon"
-        ];
+	public class Chlorodynamite : ModItem {
         public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;
@@ -104,7 +99,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.aiStyle = 0;
 			Projectile.velocity = Vector2.Zero;
 		}
-		public bool IsExploding() => Projectile.timeLeft <= explosion_delay_time;
+		public bool IsExploding => Projectile.timeLeft <= explosion_delay_time;
 		public override bool PreKill(int timeLeft) {
 			return true;
 		}

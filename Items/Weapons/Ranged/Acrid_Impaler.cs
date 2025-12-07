@@ -9,8 +9,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Acrid_Impaler : Harpoon_Gun, ICustomWikiStat {
 		public new string[] Categories => [
-			"HarpoonGun",
-			"ToxicSource"
+			WikiCategories.ToxicSource
 		];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);

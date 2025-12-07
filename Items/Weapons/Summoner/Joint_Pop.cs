@@ -194,7 +194,7 @@ namespace Origins.Items.Weapons.Summoner {
 			target.AddBuff(Slow_Debuff.ID, 180);
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 	public class Joint_Pop_Buff : ModBuff {
 		public override string Texture => "Terraria/Images/Buff_160";

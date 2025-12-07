@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Boomerang_Magnet : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"MeleeBoostAcc",
-			"RangedBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.MeleeBoostAcc,
+			WikiCategories.RangedBoostAcc
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);

@@ -6,11 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Cold_Snap : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Launcher",
-			"CanistahUser"
-		];
+	public class Cold_Snap : ModItem {
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Cold_Snap_P>(15, 32, 12f, 50, 24);
 			Item.knockBack = 3;

@@ -8,10 +8,10 @@ namespace Origins.Items.Armor.Tendon {
     [AutoloadEquip(EquipType.Head)]
 	public class Tendon_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "ArmorSet",
-            "RangedBoostGear",
-			"ExplosiveBoostGear",
-			"GenericBoostGear"
+            WikiCategories.ArmorSet,
+            WikiCategories.RangedBoostGear,
+			WikiCategories.ExplosiveBoostGear,
+			WikiCategories.GenericBoostGear
         ];
         public override void SetDefaults() {
 			Item.defense = 3;

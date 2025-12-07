@@ -18,9 +18,9 @@ namespace Origins.Items.Armor.Amber {
 	[AutoloadEquip(EquipType.Head)]
 	public class Amber_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public string[] Categories => [
-			"ArmorSet",
-			"ExplosiveBoostGear",
-			"SelfDamageProtek"
+			WikiCategories.ArmorSet,
+			WikiCategories.ExplosiveBoostGear,
+			WikiCategories.SelfDamageProtek
 		];
 		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {

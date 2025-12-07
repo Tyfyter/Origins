@@ -6,8 +6,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Last_Descendant : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"GenericBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.GenericBoostAcc
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 26);

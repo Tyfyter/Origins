@@ -1,6 +1,7 @@
 ﻿using CalamityMod.NPCs.TownNPCs;
 using Newtonsoft.Json.Linq;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Other.Fish;
 using Origins.Items.Weapons;
@@ -12,9 +13,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Greater_Summoning_Potion : ModItem {
 		public static int ID { get; private set; }
-		public string[] Categories => [
-			"Potion"
-		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 			ID = Type;

@@ -7,10 +7,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Fiberglass_Shard : ModItem, IElementalItem, ICustomWikiStat {
-		public string[] Categories => [
-			"ExpendableWeapon"
-		];
+	public class Fiberglass_Shard : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);

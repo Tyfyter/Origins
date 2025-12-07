@@ -1,18 +1,20 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AltLibrary.Common.AltBiomes;
+using Origins.Dev;
 using Origins.Dusts;
+using Origins.NPCs.Defiled;
+using Origins.Tiles.Ashen;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Tiles.Ashen;
 
-namespace Origins.Items.Materials
-{
-    public class Ash_Urn : ModItem {
-        public string[] Categories => [
-            "ExpendableTool"
-        ];
-        public override void SetStaticDefaults() {
+namespace Origins.Items.Materials {
+	public class Ash_Urn : ModItem {
+		public string[] Categories => [
+			WikiCategories.ExpendableTool
+		];
+		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.PurificationPowder;
 			Item.ResearchUnlockCount = CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[ItemID.VilePowder];
 		}
@@ -26,11 +28,11 @@ namespace Origins.Items.Materials
 			.AddTile(TileID.Bottles)
 			.Register();
 
-            Recipe.Create(ItemID.PoisonedKnife, 50)
-            .AddIngredient(ItemID.ThrowingKnife, 50)
-            .AddIngredient(this)
-            .Register();
-        }
+			Recipe.Create(ItemID.PoisonedKnife, 50)
+			.AddIngredient(ItemID.ThrowingKnife, 50)
+			.AddIngredient(this)
+			.Register();
+		}
 	}
 	public class Ash_Urn_P : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VilePowder;
@@ -59,6 +61,29 @@ namespace Origins.Items.Materials
 					);
 				}
 			}
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				Rectangle hitbox = Projectile.Hitbox;
+				foreach (NPC target in Main.ActiveNPCs) {
+					if (target.Hitbox.Intersects(hitbox)) {
+						int targetType = -1;
+						switch (target.type) {
+							case NPCID.Bunny or NPCID.BunnySlimed or NPCID.BunnyXmas or NPCID.PartyBunny:
+							targetType = ModContent.NPCType<Defiled_Mite>();
+							break;
+							case NPCID.Penguin or NPCID.PenguinBlack:
+							targetType = ModContent.NPCType<Bile_Thrower>();
+							break;
+							case NPCID.Goldfish or NPCID.GoldfishWalker:
+							targetType = ModContent.NPCType<Shattered_Goldfish>();
+							break;
+						}
+						if (targetType != -1) {
+							target.Transform(targetType);
+						}
+					}
+				}
+			}
+			if (Main.myPlayer != Projectile.owner) return;
 			int minX = (int)(Projectile.position.X / 16f) - 1;
 			int maxX = (int)((Projectile.position.X + Projectile.width) / 16f) + 2;
 			int minY = (int)(Projectile.position.Y / 16f) - 1;
@@ -76,6 +101,7 @@ namespace Origins.Items.Materials
 				maxY = Main.maxTilesY;
 			}
 			Vector2 comparePos = default;
+			AltBiome biome = ModContent.GetInstance<Ashen_Alt_Biome>();
 			for (int x = minX; x < maxX; x++) {
 				for (int y = minY; y < maxY; y++) {
 					comparePos.X = x * 16;
@@ -84,8 +110,9 @@ namespace Origins.Items.Materials
 						(Projectile.position.X < comparePos.X + 16f) &&
 						(Projectile.position.Y + Projectile.height > comparePos.Y) &&
 						(Projectile.position.Y < comparePos.Y + 16f) &&
-						Main.myPlayer == Projectile.owner || Main.tile[x, y].HasTile) {
-						//AltLibrary.Core.ALConvert.Convert<Ashen_Metalworks_Alt_Biome>(x, y, 1);
+						Main.tile[x, y].HasTile) {
+						AltLibrary.Core.ALConvert.ConvertTile(x, y, biome);
+						AltLibrary.Core.ALConvert.ConvertWall(x, y, biome);
 						//WorldGen.Convert(x, y, OriginSystem.origin_conversion_type, 1);
 					}
 				}

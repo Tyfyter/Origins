@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Return_To_Sender : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat"
+			WikiCategories.Combat
 		];
 		static short glowmask;
 		public override void SetStaticDefaults() {

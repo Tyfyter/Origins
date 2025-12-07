@@ -7,8 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Tripod_Nip : ModItem, IJournalEntrySource, ICustomWikiStat {
 		public string[] Categories => [
-			"Misc",
-			"LoreItem"
+			WikiCategories.Misc
 		];
 		public string EntryName => "Origins/" + typeof(Tripod_Nip_Entry).Name;
 		

@@ -7,10 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Alkaline_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            "ThrownExplosive",
-			"IsBomb",
-			"ExpendableWeapon",
-			"ToxicSource"
+			WikiCategories.ToxicSource
         ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;

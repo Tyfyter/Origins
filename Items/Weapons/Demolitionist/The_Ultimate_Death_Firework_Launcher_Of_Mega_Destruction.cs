@@ -1,34 +1,34 @@
-﻿using Microsoft.Xna.Framework;
+﻿using CalamityMod.Items.Potions.Alcohol;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dusts;
+using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Projectiles;
+using Origins.UI;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Terraria.GameContent;
-using Terraria.ID;
 using Terraria;
-using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Projectiles;
-using Origins.UI;
-using Terraria.GameInput;
 using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameInput;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction : ModItem {
+	public class The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction : ModItem, ICustomDrawItem {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<TUDFLOMD_Rocket_Canister>(80, 9, 12f, 46, 28, true);
-			Item.useAnimation *= 4;
+			Item.useAnimation *= 5;
 			Item.useLimitPerAnimation = 4;
 			Item.knockBack = 3;
-			Item.reuseDelay = Item.useTime;
 			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.Cyan;
 			//Item.ArmorPenetration += 15;
@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.Register();
 		}
 		public override bool? UseItem(Player player) {
-			SoundEngine.PlaySound(Item.UseSound, player.Center);
+			if (player.ItemUsesThisAnimation < Item.useLimitPerAnimation) SoundEngine.PlaySound(Item.UseSound, player.Center);
 			return null;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
@@ -87,6 +87,54 @@ namespace Origins.Items.Weapons.Demolitionist {
 				ai0: target
 			);
 			return false;
+		}
+		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
+			PlayerDrawSet _drawInfo = drawInfo;
+			Player drawPlayer = drawInfo.drawPlayer;
+			int onFrame = drawPlayer.itemAnimationMax - drawPlayer.itemAnimation;
+			Texture2D poofTexture = ModContent.GetInstance<Rocket_Launch>().Texture2D.Value;
+			Vector2 itemPos = Main.DrawPlayerItemPos(drawPlayer.gravDir, Type);
+			drawOrigin = new Vector2(-itemPos.X, itemTexture.Height / 2);
+			if (drawPlayer.direction == -1) {
+				drawOrigin = new Vector2(itemTexture.Width + itemPos.X, itemTexture.Height / 2);
+			}
+			float itemScale = drawPlayer.GetAdjustedItemScale(Item);
+			itemPos = drawInfo.ItemLocation + itemPos * Vector2.UnitY - Main.screenPosition;
+
+			DrawPoof(drawPlayer.itemTimeMax * 0, new Vector2(53, -5));
+			DrawPoof(drawPlayer.itemTimeMax * 2, new Vector2(53, 13));
+			drawInfo.DrawDataCache.Add(new DrawData(
+				itemTexture,
+				itemPos,
+				null,
+				Item.GetAlpha(lightColor),
+				drawPlayer.itemRotation,
+				drawOrigin,
+				itemScale,
+				drawInfo.itemEffect
+			));
+			DrawPoof(drawPlayer.itemTimeMax * 1, new Vector2(31, 13));
+			DrawPoof(drawPlayer.itemTimeMax * 3, new Vector2(31, -5));
+
+			void DrawPoof(int startFrame, Vector2 pos) {
+				int frameNum = onFrame - startFrame;
+				if (frameNum < 0) return;
+				const int full_speed_frames = 3;
+				frameNum = int.Min(frameNum, full_speed_frames - 1) + int.Max(frameNum - full_speed_frames, 0) / 3;
+				if (frameNum >= 8) return;
+				pos = itemPos + (pos * new Vector2(drawPlayer.direction, drawPlayer.gravDir)).RotatedBy(drawPlayer.itemRotation);
+				Rectangle frame = poofTexture.Frame(verticalFrames: 8, frameY: frameNum);
+				_drawInfo.DrawDataCache.Add(new DrawData(
+					poofTexture,
+					pos,
+					frame,
+					lightColor,
+					drawPlayer.itemRotation + (MathHelper.PiOver2 + drawPlayer.direction * MathHelper.PiOver2),
+					frame.Size() * new Vector2(0, 0.5f),
+					itemScale,
+					SpriteEffects.None
+				));
+			}
 		}
 	}
 	public class TUDFLOMD_Lock_On_HUD : SwitchableUIState {

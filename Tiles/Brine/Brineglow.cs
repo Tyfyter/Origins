@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Other.Testing;
 using Origins.Journal;
@@ -19,8 +20,8 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Brine {
     public class Brineglow : OriginTile, IGlowingModTile {
         public string[] Categories => [
-            "Plant"
-        ];
+			WikiCategories.Plant
+		];
 		public AutoCastingAsset<Texture2D> GlowTexture { get; set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {

@@ -6,13 +6,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Hellfire_Grenade : ModItem, ICustomWikiStat {
+	public class Hellfire_Grenade : ModItem {
 		static short glowmask;
-        public string[] Categories => [
-            "ThrownExplosive",
-			"IsGrenade",
-            "ExpendableWeapon"
-        ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			glowmask = Origins.AddGlowMask(this);

@@ -6,8 +6,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Danger_Barrel : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat",
-			"ExplosiveBoostAcc"
+			WikiCategories.Combat,
+			WikiCategories.ExplosiveBoostAcc
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 34);

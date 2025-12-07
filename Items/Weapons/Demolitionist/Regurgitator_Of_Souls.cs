@@ -8,10 +8,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Regurgitator_Of_Souls : ModItem, ICustomDrawItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Launcher"
-		];
+	public class Regurgitator_Of_Souls : ModItem, ICustomDrawItem {
 		public static Asset<Texture2D> UseTexture { get; private set; }
 		public override void Unload() {
 			UseTexture = null;

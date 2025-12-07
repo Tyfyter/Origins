@@ -9,9 +9,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Eccentric_Stone : ModItem, IJournalEntrySource, ICustomWikiStat, IItemObtainabilityProvider {
 		public string[] Categories => [
-			"Combat",
-			"LoreItem",
-			"SummonBoostAcc"
+			WikiCategories.Misc,
+			WikiCategories.SummonBoostAcc
 		];
 		public string EntryName => "Origins/" + typeof(Eccentric_Stone_Entry).Name;
 		public override void SetDefaults() {

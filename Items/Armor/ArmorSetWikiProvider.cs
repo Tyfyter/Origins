@@ -81,7 +81,7 @@ namespace Origins.Items.Armor {
 		public override IEnumerable<(string, JObject)> GetStats(IWikiArmorSet set) {
 			if (set.SharedPageSecondary) yield break;
 			List<JObject> statGroups = [];
-			string[] baseTypes = ["Item", "Armor", "ArmorSet"];
+			string[] baseTypes = [WikiCategories.Item, WikiCategories.Armor, WikiCategories.ArmorSet];
 			foreach (var item in ApplySets(GetSetAndSubSets(set))) {
 				JObject data = [];
 				JArray types = new(baseTypes);

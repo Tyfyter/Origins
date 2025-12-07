@@ -5,12 +5,7 @@ using Terraria.ModLoader;
 using static Microsoft.Xna.Framework.MathHelper;
 using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Crystal_Bomb : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "ThrownExplosive",
-			"IsBomb",
-            "ExpendableWeapon"
-        ];
+	public class Crystal_Bomb : ModItem {
         public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;
@@ -62,7 +57,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			int count = 14 - Main.rand.Next(3);
 			float rot = TwoPi / count;
 			for (int i = count; i > 0; i--) {
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vec2FromPolar(rot * i, 6) + Main.rand.NextVector2Unit()) + (Projectile.velocity / 12), t, Projectile.damage / 12, 6, Projectile.owner);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vec2FromPolar(6, rot * i) + Main.rand.NextVector2Unit()) + (Projectile.velocity / 12), t, Projectile.damage / 12, 6, Projectile.owner);
 			}
 		}
 	}

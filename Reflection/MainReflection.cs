@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FullSerializer.Internal;
+using Microsoft.Xna.Framework;
+using PegasusLib;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
-using PegasusLib;
-using FullSerializer.Internal;
 
 namespace Origins.Reflection {
 	public class MainReflection : ILoadable {
@@ -25,6 +26,8 @@ namespace Origins.Reflection {
 		public static FastFieldInfo<Main, float> screenOff;
 		public static float Instance_screenOff { get => screenOff.GetValue(Main.instance); set => screenOff.SetValue(Main.instance, value); }
 		public static FastStaticFieldInfo<Main, Player> _currentPlayerOverride;
+		public static List<Player> PlayersThatDrawBehindNPCs { get => _playersThatDrawBehindNPCs.GetValue(Main.instance); set => _playersThatDrawBehindNPCs.SetValue(Main.instance, value); }
+		public static FastFieldInfo<Main, List<Player>> _playersThatDrawBehindNPCs;
 		public static Action<Projectile> DrawProj_Flamethrower { get; private set; }
 		public static Action<NPC, int, Color, float> DrawNPC_SlimeItem { get; private set; }
 		public static Action DrawDust { get; private set; }
@@ -38,6 +41,7 @@ namespace Origins.Reflection {
 			scAdj = new("scAdj", BindingFlags.NonPublic);
 			screenOff = new("screenOff", BindingFlags.NonPublic);
 			_currentPlayerOverride = new("_currentPlayerOverride", BindingFlags.NonPublic);
+			_playersThatDrawBehindNPCs = "_playersThatDrawBehindNPCs";
 			DrawProj_Flamethrower = typeof(Main).GetMethod(nameof(DrawProj_Flamethrower), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).CreateDelegate<Action<Projectile>>();
 			DrawDust = typeof(Main).GetMethod(nameof(DrawDust), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).CreateDelegate<Action>(Main.instance);
 			DrawNPC_SlimeItem = typeof(Main).GetMethod(nameof(DrawNPC_SlimeItem), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).CreateDelegate<Action<NPC, int, Color, float>>();

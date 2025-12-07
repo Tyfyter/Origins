@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Ruby_Reticle : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat"
+			WikiCategories.Combat
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 30);

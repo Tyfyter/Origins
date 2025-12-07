@@ -1,0 +1,199 @@
+{
+	"Rooms": {
+		"Hallway": {
+			"Map": [
+				"XXXXX",
+				"OOOOO",
+				"OOOOO",
+				"OOOOO",
+				"OOOOO",
+				"OOOOO",
+				"OOOOO",
+				"LOCOR",
+				"XXXXX"
+			],
+			"SocketKey": {
+				"L": {
+					"Key": "Hallway",
+					"Direction": "Left"
+				},
+				"R": {
+					"Key": "Hallway",
+					"Direction": "Right"
+				}
+			},
+			"RepetitionRange": "0..1",
+			"StartPos": "C"
+		},
+		"Required_Hallway": {
+			"Map": [
+				"ooooo",
+				"wwwww",
+				"wwwww",
+				"wwwww",
+				"wwwww",
+				"wwwww",
+				"wwwww",
+				"LcwwR",
+				"ooooo"
+			],
+			"Key": {
+				"o": "PlaceTile(ObsidianBrick)",
+				"w": "Empty+PlaceWall(ObsidianBrick)",
+				"b": "PlaceWall(ObsidianBrick)",
+				"c": "PlaceSpecialTile(Containers,3)+PlaceWall(ObsidianBrick)",
+				"L": "Empty+PlaceWall(ObsidianBrick)",
+				"R": "Empty+PlaceWall(ObsidianBrick)"
+			},
+			"SocketKey": {
+				"L": {
+					"Key": "Hallway",
+					"Direction": "Left"
+				},
+				"R": {
+					"Key": "Hallway",
+					"Direction": "Right"
+				}
+			},
+			"Weight": "0.1*WithoutRoom(Required_Hallway)"
+		},
+		"Hallway_End_Left": {
+			"Map": [
+				"XXXXX",
+				"XOOOO",
+				"XOOOO",
+				"XOOOO",
+				"XOOOO",
+				"OOOOO",
+				"DOOOO",
+				"LOCOR",
+				"XXXXX"
+			],
+			"SocketKey": {
+				"R": {
+					"Key": "Hallway",
+					"Direction": "Right"
+				},
+				"L": {
+					"Key": "ClosetLeft",
+					"Direction": "Left"
+				}
+			},
+			"StartPos": "C"
+		},
+		"Hallway_End_Right": {
+			"Map": [
+				"XXXXX",
+				"OOOOX",
+				"OOOOX",
+				"OOOOX",
+				"OOOOX",
+				"OOOOO",
+				"OOOOD",
+				"LOCOR",
+				"XXXXX"
+			],
+			"SocketKey": {
+				"L": {
+					"Key": "Hallway",
+					"Direction": "Left"
+				},
+				"R": {
+					"Key": "ClosetRight",
+					"Direction": "Right"
+				}
+			},
+			"StartPos": "C"
+		},
+		"Closet_Left": {
+			"Map": [
+				"XXX",
+				"XOO",
+				"XOO",
+				"XOR",
+				"XXX"
+			],
+			"SocketKey": {
+				"R": {
+					"Key": "ClosetLeft",
+					"Direction": "Right"
+				}
+			}
+		},
+		"Closet_Right": {
+			"Map": [
+				"XXX",
+				"OOX",
+				"OOX",
+				"LOX",
+				"XXX"
+			],
+			"SocketKey": {
+				"L": {
+					"Key": "ClosetRight",
+					"Direction": "Left"
+				}
+			}
+		},
+		"Test": {
+			"Map": [
+				"GGGGGGGGGGGGGGG",
+				"               ",
+				"               ",
+				"               ",
+				"L      C      R",
+				"GGGGGGGGGGGGGGG"
+			],
+			"SocketKey": {
+				"L": {
+					"Key": "Hallway",
+					"Direction": "Left"
+				},
+				"R": {
+					"Key": "Hallway",
+					"Direction": "Right"
+				}
+			}
+		},
+		"Chairs": {
+			"Map": [
+				"GGGGGGGGGGGGGGG",
+				"               ",
+				"               ",
+				"               ",
+				"LhhhhhhCccccccR",
+				"GGGGGGGGGGGGGGG"
+			],
+			"Key": {
+				"h": "PlaceSpecialTile(Chairs,0,1)",
+				"c": "PlaceSpecialTile(Chairs,0,-1)"
+			},
+			"SocketKey": {
+				"L": {
+					"Key": "Hallway",
+					"Direction": "Left"
+				},
+				"R": {
+					"Key": "Hallway",
+					"Direction": "Right"
+				}
+			}
+		}
+	},
+	"TileDescriptors": {
+		"C": "Empty",
+		"O": "Empty",
+		"L": "Empty",
+		"R": "Empty",
+		"X": "PlaceTile(Grass)+PaintTile(Red)",
+		"Y": "PlaceTile(Grass)+PaintTile(Blue)",
+		"_": "PlaceTile(Grass)+PaintTile(Blue)+SlopeTile(HalfBlock)",
+		"V": "PlaceSpecialTile(Origins/Heat_Vent)",
+		" ": "Empty",
+		"D": "PlaceSpecialTile(ClosedDoor,48)",
+		".": "Void",
+		"G": "PaintTile(Red)+PlaceTile(Grass)"
+	},
+	"BreakCondition": "MaxRoomCount(15)",
+	"ValidLayoutCheck": "RequireRoom(Required_Hallway)"
+}

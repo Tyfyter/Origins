@@ -4,6 +4,7 @@ using Origins.Projectiles;
 using Origins.Tiles.Other;
 using PegasusLib;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -14,8 +15,8 @@ namespace Origins.Items.Armor.Sapphire {
     [AutoloadEquip(EquipType.Head)]
 	public class Sapphire_Hood : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "ArmorSet",
-            "MagicBoostGear"
+            WikiCategories.ArmorSet,
+            WikiCategories.MagicBoostGear
         ];
         public override void SetDefaults() {
 			Item.defense = 7;
@@ -178,6 +179,7 @@ namespace Origins.Items.Armor.Sapphire {
 			int num2 = 0;//0
 			int num3 = 0;//0
 			float w = 0f;//0.6f
+			miscShaderData.UseImage0(TextureAssets.Extra[ExtrasID.MagicMissileTrailShape]);
 			miscShaderData.UseShaderSpecificData(new Vector4(num, num2, num3, w));
 			miscShaderData.Apply();
 			float uTime = (float)Main.timeForVisualEffects / 44;

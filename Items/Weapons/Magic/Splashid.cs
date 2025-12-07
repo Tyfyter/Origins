@@ -1,4 +1,5 @@
-﻿using Origins.Items.Materials;
+﻿using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Journal;
 using Origins.Projectiles.Weapons;
 using Origins.Tiles.Brine;
@@ -11,8 +12,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Splashid : ModItem, IElementalItem, IJournalEntrySource {
 		static short glowmask;
 		public string[] Categories => [
-			"Wand",
-			"ToxicSource"
+			WikiCategories.ToxicSource
 		];
 		public string EntryName => "Origins/" + typeof(Splashid_Entry).Name;
 		public class Splashid_Entry : JournalEntry {

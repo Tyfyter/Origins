@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Tiles.Other;
+﻿using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -26,6 +25,18 @@ namespace Origins.Walls {
 			base.SetStaticDefaults();
 			WallID.Sets.Conversion.Grass[Type] = true;
 			Main.wallBlend[Type] = WallID.Grass;
+		}
+	}
+	public class Ashen_Grass_Wall : OriginsWall {
+		public override string Texture => typeof(Defiled_Grass_Wall).GetDefaultTMLName();
+		public override WallVersion WallVersions => WallVersion.Natural | WallVersion.Safe | WallVersion.Placed_Unsafe;
+		public override Color MapColor => FromHexRGB(0x463C54);
+		public override bool CanBeReplacedByWallSpread => false;
+		public override int DustType => Ashen_Biome.DefaultTileDust;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			WallID.Sets.Conversion.Grass[Type] = true;
+			Main.wallBlend[Type] = WallID.Grass;//what wall type this wall is considered to be when blending
 		}
 	}
 	public class Batholith_Wall : OriginsWall {

@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons {
 		static short glowmask;
         //public override bool OnlyShootOnSwing => true;
         public string[] Categories => [
-            "DoesntBelongInOrigins"
+            WikiCategories.DoesntBelongInOrigins
         ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

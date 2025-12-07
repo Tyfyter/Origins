@@ -1,8 +1,7 @@
-﻿using MonoMod.Cil;
-using PegasusLib;
+﻿using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

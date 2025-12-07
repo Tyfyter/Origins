@@ -4,12 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Impact_Grenade : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "ThrownExplosive",
-			"IsGrenade",
-            "ExpendableWeapon"
-        ];
+	public class Impact_Grenade : ModItem {
         public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;

@@ -19,10 +19,20 @@ namespace Origins.Tiles {
 		public abstract int BaseTileID { get; }
 		public abstract Color MapColor { get; }
 		public virtual bool LavaDeath => true;
+		public virtual string ItemTexture => string.Empty;
 		public TileItem Item { get; protected set; }
 		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public virtual Color GlowmaskColor => Color.White;
 		protected int width, height;
+		public virtual void MapEntry() {
+			if (!Main.dedServ) {
+				LocalizedText text = Lang._mapLegendCache.FromType(BaseTileID);
+				if (string.IsNullOrEmpty(text.Value)) AddMapEntry(MapColor);
+				else AddMapEntry(MapColor, text, MapName);
+			}
+		}
+		public virtual int[] AdjacentTiles => [BaseTileID];
+		public virtual int HitDust => DustID.Dirt;
 		public sealed override void Load() {
 			Mod.AddContent(Item = new TileItem(this));
 			OnLoad();
@@ -31,6 +41,7 @@ namespace Origins.Tiles {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = LavaDeath;
+			TileID.Sets.IsAContainer[Type] = TileID.Sets.IsAContainer[BaseTileID];
 			Main.tileContainer[Type] = Main.tileContainer[BaseTileID];
 
 			Main.tileTable[Type] = Main.tileTable[BaseTileID];
@@ -66,17 +77,14 @@ namespace Origins.Tiles {
 			height = TileObjectData.newTile.Height;
 			TileObjectData.addTile(Type);
 
-			if (!Main.dedServ) {
-				LocalizedText text = Lang._mapLegendCache.FromType(BaseTileID);
-				if (string.IsNullOrEmpty(text.Value)) AddMapEntry(MapColor);
-				else AddMapEntry(MapColor, text, MapName);
-			}
-			AdjTiles = [
-				BaseTileID
-			];
+			MapEntry();
+			AdjTiles = AdjacentTiles;
+			DustType = HitDust;
 			if (TileID.Sets.RoomNeeds.CountsAsTable.Contains(BaseTileID)) AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			if (TileID.Sets.RoomNeeds.CountsAsChair.Contains(BaseTileID)) AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 			glowTexture = Texture + "_Glow";
+
+			RegisterItemDrop(Item.Type);
 		}
 		public virtual void ModifyTileData() { }
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
@@ -192,54 +200,9 @@ namespace Origins.Tiles {
 			return true;
 		}
 		public override bool RightClick(int x, int y) {
-			string text = "AM";
-			// Get current weird time
-			double time = Main.time;
-			if (!Main.dayTime) {
-				// if it's night add this number
-				time += 54000.0;
-			}
-
-			// Divide by seconds in a day * 24
-			time = (time / 86400.0) * 24.0;
-			// Dunno why we're taking 19.5. Something about hour formatting
-			time = time - 7.5 - 12.0;
-			// Format in readable time
-			if (time < 0.0) {
-				time += 24.0;
-			}
-
-			if (time >= 12.0) {
-				text = "PM";
-			}
-
-			int intTime = (int)time;
-			// Get the decimal points of time.
-			double deltaTime = time - intTime;
-			// multiply them by 60. Minutes, probably
-			deltaTime = (int)(deltaTime * 60.0);
-			// This could easily be replaced by deltaTime.ToString()
-			string text2 = string.Concat(deltaTime);
-			if (deltaTime < 10.0) {
-				// if deltaTime is eg "1" (which would cause time to display as HH:M instead of HH:MM)
-				text2 = "0" + text2;
-			}
-			if (OriginClientConfig.Instance.TwentyFourHourTime) {
-				text = "";
-			} else {
-				if (intTime > 12) {
-					// This is for AM/PM time rather than 24hour time
-					intTime -= 12;
-				}
-
-				if (intTime == 0) {
-					// 0AM = 12AM
-					intTime = 12;
-				}
-			}
-
 			// Whack it all together to get a HH:MM format
-			Main.NewText($"Time: {intTime}:{text2} {text}", 255, 240, 20);
+			ContentExtensions.GetDisplayedDayTime(out string hours, out string minutes, out _, out string half);
+			Main.NewText($"Time: {hours}:{minutes}{half}", 255, 240, 20);
 			return true;
 		}
 	}
@@ -443,7 +406,7 @@ namespace Origins.Tiles {
 	}
 	public abstract class LightFurnitureBase : FurnitureBase {
 		public AutoLoadingAsset<Texture2D> flameTexture;
-		public virtual int flameDust => -1;
+		public virtual int FlameDust => -1;
 		public bool IsOn(Tile tile) => tile.TileFrameX < width * 18;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -528,16 +491,16 @@ namespace Origins.Tiles {
 			}
 		}
 		public override void EmitParticles(int i, int j, Tile tileCache, short tileFrameX, short tileFrameY, Color tileLight, bool visible) {
-			if (Main.rand.NextBool(40) && tileFrameY < 54) {
-				// The following math makes dust only spawn at the tile coordinates of the flames:
-				// ---
-				// O-O
-				// ---
+			if (FlameDust != -1) {
+				if (Main.rand.NextBool(40) && tileFrameY < 54) {
+					// The following math makes dust only spawn at the tile coordinates of the flames:
+					// ---
+					// O-O
+					// ---
 
-				int tileColumn = tileFrameX / 18 % 3;
-				if (tileFrameY / 18 % 3 == 1 && tileColumn != 1) {
-					if (flameDust != -1) {
-						Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16 + 2), 14, 6, flameDust, 0f, 0f, 100);
+					int tileColumn = tileFrameX / 18 % 3;
+					if (tileFrameY / 18 % 3 == 1 && tileColumn != 1) {
+						Dust dust = Dust.NewDustDirect(new Vector2(i * 16, j * 16 + 2), 14, 6, FlameDust, 0f, 0f, 100);
 						if (Main.rand.NextBool(3)) {
 							dust.noGravity = true;
 						}
@@ -687,7 +650,7 @@ namespace Origins.Tiles {
 		}
 	}
 	public abstract class Platform_Tile : FurnitureBase {
-		public sealed override int BaseTileID => TileID.Platforms;
+		public override int BaseTileID => TileID.Platforms;
 		public override Color MapColor => new(190, 141, 110);
 		public override void SetStaticDefaults() {
 			// Properties
@@ -697,10 +660,11 @@ namespace Origins.Tiles {
 			Main.tileSolid[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileTable[Type] = true;
-			Main.tileLavaDeath[Type] = true;
+			Main.tileLavaDeath[Type] = LavaDeath;
 			TileID.Sets.Platforms[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
-			AdjTiles = [TileID.Platforms];
+			TileID.Sets.CanBeSloped[Type] = BaseTileID == TileID.Platforms;
+			AdjTiles = [BaseTileID];
 
 			// Placement
 			TileObjectData.newTile.CoordinateHeights = [16];
@@ -730,7 +694,7 @@ namespace Origins.Tiles {
 	public abstract class CageBase(int cage = ItemID.Terrarium) : ModTile {
 
 		protected internal TileItem item;
-		public abstract int IngredientItem {  get; }
+		public abstract int IngredientItem { get; }
 		public virtual bool LavaDeath => true;
 		public virtual Color MapColor => new(122, 217, 232);
 		/// <inheritdoc	cref="TileID.Sets.CritterCageLidStyle"/>
@@ -916,15 +880,32 @@ namespace Origins.Tiles {
 		}
 	}
 	[Autoload(false)]
-	public class TileItem(ModTile tile) : ModItem() {
+	public class TileItem(ModTile tile, bool debug = false) : ModItem() {
 		readonly ModTile tile = tile;
 		public override string Name => tile.Name + "_Item";
-		public override string Texture => tile.Texture + "_Item";
+		public override string Texture => debug ? tile.Texture : (tile is FurnitureBase furniture && !string.IsNullOrEmpty(furniture.ItemTexture)) ? furniture.ItemTexture : tile.Texture + "_Item";
+		public override LocalizedText DisplayName => this.GetLocalization(nameof(DisplayName), tile.PrettyPrintName);
+		public event Action<Item> ExtraStaticDefaults;
 		public event Action<Item> ExtraDefaults;
 		public event Action<Item> OnAddRecipes;
 		protected override bool CloneNewInstances => true;
+#if !DEBUG
+		public override bool IsLoadingEnabled(Mod mod) => !debug || DebugConfig.Instance.ForceEnableDebugItems;
+#endif
 		public override void SetStaticDefaults() {
+			if (TileID.Sets.BasicChest[tile.Type]) ModCompatSets.AnyChests[Type] = true;
+			if (tile is FurnitureBase furniture) {
+				switch (furniture.BaseTileID) {
+					case TileID.Lamps:
+					OriginSystem.LampRecipeGroup.ValidItems.Add(Type);
+					break;
+				}
+			}
 			Origins.AddGlowMask(this);
+			if (ExtraStaticDefaults is not null) {
+				ExtraStaticDefaults(Item);
+				ExtraStaticDefaults = null;
+			}
 		}
 
 		public override void SetDefaults() {
@@ -932,16 +913,17 @@ namespace Origins.Tiles {
 			Item.width = 14;
 			Item.height = 28;
 			Item.value = 150;
-			if (ExtraDefaults is not null) {
-				ExtraDefaults(Item);
-				ExtraDefaults = null;
-			}
+			ExtraDefaults?.Invoke(Item);
 		}
 		public override void AddRecipes() {
 			if (OnAddRecipes is not null) {
 				OnAddRecipes(Item);
 				OnAddRecipes = null;
 			}
+		}
+		public TileItem WithExtraStaticDefaults(Action<Item> extra) {
+			ExtraStaticDefaults += extra;
+			return this;
 		}
 		public TileItem WithExtraDefaults(Action<Item> extra) {
 			ExtraDefaults += extra;

@@ -24,11 +24,9 @@ namespace Origins.Items.Weapons.Melee {
 		float ITornSource.Severity => TornSeverity;
 		static short glowmask;
         public string[] Categories => [
-			"Torn",
-			"TornSource",
-            "Sword",
-			"Cursed"
-        ];
+			WikiCategories.Sword,
+			WikiCategories.Cursed
+		];
 		void ICustomWikiStat.ModifyWikiStats(JObject data) {
 			data["Name"] = ModContent.GetInstance<ItemWikiProvider>().PageName(this).Replace("_", " ");
 		}

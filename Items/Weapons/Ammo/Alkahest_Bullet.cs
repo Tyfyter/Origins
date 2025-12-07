@@ -8,14 +8,9 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
-	public class Alkahest_Bullet : ModItem, ICustomWikiStat, ITornSource {
+	public class Alkahest_Bullet : ModItem, ITornSource {
 		public static float TornSeverity => 0.25f;
 		float ITornSource.Severity => TornSeverity;
-		public string[] Categories => [
-			"Torn",
-			"TornSource",
-			"Bullet"
-		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}

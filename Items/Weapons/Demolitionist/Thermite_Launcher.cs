@@ -12,11 +12,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Thermite_Launcher : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"Launcher",
-			"CanistahUser"
-		];
+	public class Thermite_Launcher : ModItem {
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Thermite_Canister_P>(38, 34, 16f, 44, 18);
 			Item.knockBack = 2f;
@@ -183,7 +179,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override Color? GetAlpha(Color lightColor) {
 			return new Color(255, 180, 50, 0);
 		}
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 	public class Thermite_Lingering_P : ModProjectile, ICanisterChildProjectile, IIsExplodingProjectile {
 		public static int ID { get; private set; }
@@ -299,6 +295,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		private float StripWidth(float progressOnStrip = 0) => 16 * Projectile.scale;
 		private float StripWidth2(float progressOnStrip = 0) => 12 * Projectile.scale;
 		private float StripWidth3(float progressOnStrip = 0) => 8 * Projectile.scale;
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 }

@@ -12,10 +12,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Flakjack : ModItem, ICustomDrawItem, ICustomWikiStat {
-        public string[] Categories => [
-            "Handcannon"
-        ];
+    public class Flakjack : ModItem, ICustomDrawItem {
         public static AutoCastingAsset<Texture2D> UseTexture { get; private set; }
 		public static AutoCastingAsset<Texture2D> UseGlowTexture { get; private set; }
 		public override void Unload() {
@@ -145,7 +142,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 	public class Flakjack_P : ModProjectile, IIsExplodingProjectile {
 		public override void SetStaticDefaults() {
@@ -191,6 +188,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 				);
 			}
 		}
-		public bool IsExploding() => false;
+		public bool IsExploding => false;
 	}
 }

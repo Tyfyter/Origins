@@ -13,6 +13,7 @@ Generic: {
 	// Acrid: Jelly Dog
 	// Spug: Smug
 	// spug: smug
+	// Ashen: Anarchy
 }
 
 // GameTips.Journal: Having trouble keeping track of your quests? If only- ooh! 2 for one muffins!
@@ -85,8 +86,32 @@ Items: {
 	}
 
 	// Terlet_Paper.Tooltip: Summons a kawaii cta
-	// Peat_Moss_Item.DisplayName: PETA Moss
+
+	Peat_Moss_Item: {
+		// DisplayName: PETA Moss
+		// Tooltip: Left click to eat moss
+	}
+
 	// Astral_Scythe.Debuff: While the blade regenerates the scythe can only [italic:bonk]
+	// AshenRenewal.Tooltip: Evicts local authorities from a large area
+	// AshenSupremeRenewal.Tooltip: Evicts local authorities from the entire world
+
+	Beacon_Light_Item: {
+		// I swear this has to be the most obscure joke I've put in
+		// DisplayName: Ardent Light
+		// Tooltip: Can help you find a place when it's hazy
+	}
+
+	// Modular_Light_Fixture_Item.DisplayName: Modular Incandescent Light Fixture
+	// Spearmint_Tea.Tooltip: "'The quinteassential hug in a cup.'"
+	// PEE_Breastplate.DisplayName: Pernicious Interstellar Scavenger Suit Jacket
+	// PEE_Greaves.DisplayName: Pernicious Interstellar Scavenger Suit Trousers
+	// PEE_Helmet.DisplayName: Pernicious Interstellar Scavenger Suit Mask
+	/* Gas_Mask.Tooltip:
+		'''
+		{$Mods.Origins.Items.Gas_Mask.Tooltip}
+		'Are you my mummy?'
+		''' */
 }
 
 // Prefixes.Wholesome_Prefix.DisplayName: Holesome
@@ -104,6 +129,7 @@ DeathMessage: {
 AltBiomes: {
 	// Defiled_Wastelands_Alt_Biome.GenPassName: Bribing local authorities to ignore {§Defiled_Wastelands}'s many health code violations
 	// Riven_Hive_Alt_Biome.GenPassName: Establishing {§Riven}
+	// Ashen_Alt_Biome.GenPassName: Filling the factory with neurotoxin
 }
 
 Biomes: {
@@ -144,6 +170,7 @@ Buffs: {
 		Your scythe needs to rest.
 		[italic:But ye shall B O N K].
 		''' */
+	// Rasterwrap_Buff.DisplayName: Unbothered. Moisturized. Happy. In My Lane. Focused. Flourishing.
 }
 
 DefiledRelaySignals: {
@@ -185,6 +212,7 @@ NPCs: {
 	// Goo_Wall.DisplayName: Sticky Wall
 	// Enchanted_Fiberglass_Slime.DisplayName: Enchanted Fiberglasss Lime
 	// Fiberglass_Weaver.DisplayName: Fiberglass Cat
+	// Power_Suit_Zombie.DisplayName: Zero Suit Zombie
 }
 
 Bestiary: {
@@ -205,6 +233,7 @@ Bestiary: {
 		You receive: [wiggle:1 raw cod]
 		''' */
 	// Shimmer_Chunk1: For his neutral special, he wields a gun.
+	// Power_Suit_Zombie: "'Am I late for my role in thriller?'"
 }
 
 /* SetBonuses.Rubber:

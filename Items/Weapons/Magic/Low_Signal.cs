@@ -8,10 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Low_Signal : ModItem, ICustomWikiStat, IJournalEntrySource {
-        public string[] Categories => [
-            "Wand"
-        ];
+	public class Low_Signal : ModItem, IJournalEntrySource {
 		public string EntryName => "Origins/" + typeof(Low_Signal_Entry).Name;
 		public class Low_Signal_Entry : JournalEntry {
 			public override string TextKey => "Low_Signal";

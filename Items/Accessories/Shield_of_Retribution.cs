@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Shield_of_Retribution : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Combat"
+			WikiCategories.Combat
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(36, 38);

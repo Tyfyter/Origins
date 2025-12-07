@@ -89,6 +89,15 @@ namespace Origins.NPCs {
 					}
 					break;
 				}
+				case NPCID.DukeFishron: {
+					if (!AddToOneFromOptionsRule(dropRules, ItemID.BubbleGun, ModContent.ItemType<Sharknade_O>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetNPCName(npc.netID)));
+					}
+					if (!AddToOneFromOptionsRule(dropRules, ItemID.AquaScepter, ModContent.ItemType<Sharknade_O>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Weapon"), Lang.GetNPCName(npc.netID)));
+					}
+					break;
+				}
 
 				case NPCID.CaveBat:
 				case NPCID.GiantBat:
@@ -262,12 +271,23 @@ namespace Origins.NPCs {
 			}
 		}
 		public static bool AddToOneFromOptionsRule(List<IItemDropRule> dropRules, int targetContains, params int[] items) {
-			if (dropRules.FindDropRule<OneFromOptionsNotScaledWithLuckDropRule>(dropRule => dropRule.dropIds?.Contains(targetContains) ?? false) is OneFromOptionsNotScaledWithLuckDropRule rule) {
-				Array.Resize(ref rule.dropIds, rule.dropIds.Length + items.Length);
-				for (int i = 0; i < items.Length; i++) {
-					rule.dropIds[^(i+ 1)] = items[i];
+			{
+				if (dropRules.FindDropRule<OneFromOptionsDropRule>(dropRule => dropRule.dropIds?.Contains(targetContains) ?? false) is OneFromOptionsDropRule rule) {
+					Array.Resize(ref rule.dropIds, rule.dropIds.Length + items.Length);
+					for (int i = 0; i < items.Length; i++) {
+						rule.dropIds[^(i + 1)] = items[i];
+					}
+					return true;
 				}
-				return true;
+			}
+			{
+				if (dropRules.FindDropRule<OneFromOptionsNotScaledWithLuckDropRule>(dropRule => dropRule.dropIds?.Contains(targetContains) ?? false) is OneFromOptionsNotScaledWithLuckDropRule rule) {
+					Array.Resize(ref rule.dropIds, rule.dropIds.Length + items.Length);
+					for (int i = 0; i < items.Length; i++) {
+						rule.dropIds[^(i + 1)] = items[i];
+					}
+					return true;
+				}
 			}
 			if (ModLoader.HasMod("CalamityMod") && AddToOneFromOptionsRuleCalamity(dropRules, targetContains, items)) return true;
 			return false;
@@ -311,12 +331,11 @@ namespace Origins.NPCs {
 			foreach (ItemDropWithConditionRule rule in globalLoot.Get().FindDropRules<ItemDropWithConditionRule>(rule => rule.condition is Conditions.SoulOfNight)) {
 				rule.condition = new LootConditions.SoulOfNight();
 			}
-			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Dawn_Key>(), 2500, 1, 1, new LootConditions.Dawn_Key_Condition()));
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Ashen_Key>(), 2500, 1, 1, new LootConditions.Ashen_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Defiled_Key>(), 2500, 1, 1, new LootConditions.Defiled_Key_Condition()));
-			//globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Dusk_Key>(), 2500, 1, 1, new LootConditions.Dusk_Key_Condition()));
-			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Hell_Key>(), 2500, 1, 1, new LootConditions.Hell_Key_Condition()));
-			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Mushroom_Key>(), 2500, 1, 1, new LootConditions.Mushroom_Key_Condition()));
-			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Ocean_Key>(), 2500, 1, 1, new LootConditions.Ocean_Key_Condition()));
+			//globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Hell_Key>(), 2500, 1, 1, new LootConditions.Hell_Key_Condition()));
+			//globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Mushroom_Key>(), 2500, 1, 1, new LootConditions.Mushroom_Key_Condition()));
+			//globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Ocean_Key>(), 2500, 1, 1, new LootConditions.Ocean_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Riven_Key>(), 2500, 1, 1, new LootConditions.Riven_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Brine_Key>(), 2500, 1, 1, new LootConditions.Brine_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Lost_Picture_Frame>(), 25, 1, 1, new LootConditions.Lost_Picture_Frame_Condition()));

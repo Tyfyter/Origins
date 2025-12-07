@@ -7,10 +7,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Caustica : ModItem, IElementalItem, ICustomWikiStat {
-		public string[] Categories => [
-			"OtherExplosive"
-		];
+	public class Caustica : ModItem, IElementalItem {
 		public ushort Element => Elements.Acid;
 
 		public override void SetStaticDefaults() {

@@ -1,5 +1,7 @@
 ﻿using MonoMod.Cil;
 using Origins.Core;
+using Origins.Dusts;
+using Origins.Items.Weapons.Ammo.Canisters;
 using System;
 using Terraria;
 using Terraria.Graphics;
@@ -37,6 +39,48 @@ namespace Origins.Projectiles {
 				if (Origins.LogLoadingILError(nameof(NoBackfacesToCull), e)) throw;
 			}
 		}
+		public override void OnKill(Projectile projectile, int timeLeft) {
+			if (NetmodeActive.Server) return;
+			if (projectile.owner != Main.myPlayer) {
+				if (!projectile.hide) {
+					projectile.hide = true;
+					try {
+						projectile.active = true;
+						projectile.timeLeft = timeLeft;
+						projectile.Update(projectile.whoAmI);
+					} finally {
+						projectile.active = false;
+						projectile.timeLeft = 0;
+					}
+				}
+				return;
+			}
+			Vector2[] oldPos = [.. projectile.oldPos];
+			float[] oldRot = [.. projectile.oldRot];
+			for (int i = 0; i < oldPos.Length; i++) {
+				if (oldPos[i] == default) {
+					Array.Resize(ref oldPos, i);
+					Array.Resize(ref oldRot, i);
+					break;
+				}
+				oldPos[i] += projectile.Size * 0.5f;
+				oldRot[i] += MathHelper.PiOver2;
+			}
+			Dust.NewDustPerfect(
+				Main.LocalPlayer.Center,
+				ModContent.DustType<Vertex_Trail_Dust>(),
+				Vector2.Zero
+			).customData = new Vertex_Trail_Dust.TrailData(oldPos, oldRot, StripColors, StripWidth, projectile.extraUpdates);
+			Color StripColors(float progressOnStrip) {
+				if (float.IsNaN(progressOnStrip)) return Color.Transparent;
+				float lerpValue = 1f - Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true);
+				return Color.Lerp(new Color(80, 255, 12), new Color(180, 255, 12), lerpValue) * (1f - lerpValue * lerpValue) * projectile.Opacity;
+			}
+			float StripWidth(float progressOnStrip) {
+				float lerpValue = 1f - Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true);
+				return MathHelper.Lerp(0, 8, 1f - lerpValue * lerpValue) * projectile.Opacity;
+			}
+		}
 		private static VertexStrip _vertexStrip = new();
 		public override bool PreDraw(Projectile projectile, ref Color lightColor) {
 			if (!OriginClientConfig.Instance.ImproveChlorophyteBulletsPerformance) return base.PreDraw(projectile, ref lightColor);
@@ -45,8 +89,8 @@ namespace Origins.Projectiles {
 			float[] oldRot = [..projectile.oldRot];
 			for (int i = 0; i < oldPos.Length; i++) {
 				if (oldPos[i] == default) {
-					oldPos = oldPos[..i];
-					oldRot = oldRot[..i];
+					Array.Resize(ref oldPos, i);
+					Array.Resize(ref oldRot, i);
 					break;
 				}
 				oldRot[i] += MathHelper.PiOver2;

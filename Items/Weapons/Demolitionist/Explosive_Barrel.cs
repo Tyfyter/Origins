@@ -13,11 +13,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Explosive_Barrel : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			"ThrownExplosive",
-			"ExpendableWeapon"
-		];
+	public class Explosive_Barrel : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}

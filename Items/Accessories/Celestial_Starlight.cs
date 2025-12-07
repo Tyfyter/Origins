@@ -5,8 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Celestial_Starlight : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Vitality",
-			"MagicBoostAcc"
+			WikiCategories.MagicBoostAcc
 		];
 		static short glowmask;
 		public override void SetStaticDefaults() {
@@ -30,7 +29,6 @@ namespace Origins.Items.Accessories {
 			originPlayer.dimStarlight = true;
 			player.manaMagnet = true;
 
-			float light = 0.23f + (originPlayer.dimStarlightCooldown / 1000f);
 			Lighting.AddLight(player.Center, 0.3f, 0.3f, 1f);
 		}
 	}

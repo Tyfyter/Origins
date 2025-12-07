@@ -6,10 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Beginners_Tome : ModItem, IJournalEntrySource, ICustomWikiStat {
         public string[] Categories => [
-            "UsesBookcase",
-            "SpellBook",
-			"LoreItem"
-        ];
+			WikiCategories.UsesBookcase,
+			WikiCategories.SpellBook
+		];
 		public string EntryName => "Origins/" + typeof(Beginners_Tome_Entry).Name;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);

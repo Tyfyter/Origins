@@ -1,41 +1,35 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Conditions;
-using CalamityMod.Items.Potions.Alcohol;
-using Microsoft.Xna.Framework;
+using Microsoft.Build.Tasks;
 using Newtonsoft.Json.Linq;
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
-using Origins.Items.Weapons.Summoner;
-using Origins.NPCs.Brine;
 using Origins.NPCs.Crimson;
 using Origins.NPCs.Defiled;
-using Origins.NPCs.Defiled.Boss;
-using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
 using Origins.Projectiles.Misc;
 using Origins.Questing;
 using Origins.Tiles;
+using Origins.Tiles.Ashen;
+using Origins.Tiles.Decoration;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
-using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib;
 using PegasusLib.UI;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
@@ -49,7 +43,9 @@ namespace Origins.NPCs {
 			NPCHappiness.Get(NPCID.PartyGirl)
 			.SetNPCAffection(NPCID.SantaClaus, AffectionLevel.Love)
 			.SetBiomeAffection<SpaceBiome>(AffectionLevel.Love);
-			Buff_Hint_Handler.ModifyTip(BuffID.Bleeding, 1);
+			Buff_Hint_Handler.CombineBuffHintModifiers(BuffID.Bleeding, modifyBuffTip: (lines, _, isPlayer) => {
+				if (!isPlayer) lines.Add(Language.GetTextValue("Mods.PegasusLib.BuffTooltip.DOT", 1));
+			});
 		}
 		public static ShoppingSettings ShopHelper_GetShoppingSettings(On_ShopHelper.orig_GetShoppingSettings orig, ShopHelper self, Player player, NPC npc) {
 			ShoppingSettings settings = orig(self, player, npc);
@@ -81,6 +77,7 @@ namespace Origins.NPCs {
 				case NPCID.Merchant: {
 					shop.Add<Blue_Bovine>(Quest.QuestCondition<Blue_Bovine_Quest>());
 					shop.Add<Lottery_Ticket>(Quest.QuestCondition<Lottery_Ticket_Quest>());
+					shop.Add<Spearmint_Tea>(Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
 					break;
 				}
 				case NPCID.Demolitionist: {
@@ -91,8 +88,9 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Steampunker: {
-					shop.InsertAfter<Gray_Solution>(ItemID.PurpleSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
+					shop.InsertAfter<Gray_Solution>(ItemID.RedSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
 					shop.InsertAfter<Teal_Solution>(ItemID.RedSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>()));
+					shop.InsertAfter<Orange_Solution>(ItemID.RedSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>()));
 					break;
 				}
 				case NPCID.Dryad: {
@@ -100,14 +98,23 @@ namespace Origins.NPCs {
 					shop.Add<Cleansing_Station_Item>(Quest.QuestCondition<Cleansing_Station_Quest>());
 					shop.Add<Mojo_Flask>(Quest.QuestCondition<Cleansing_Station_Quest>());
 
-					shop.InsertAfter<Dreadful_Powder>(ItemID.CorruptGrassEcho, Condition.NotRemixWorld.CommaAnd(Condition.BloodMoon).And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
-					shop.InsertAfter<Sentient_Powder>(ItemID.CrimsonGrassEcho, Condition.NotRemixWorld.CommaAnd(Condition.BloodMoon).And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>()));
+					static Condition bloodBiomeCon<TBiome>() where TBiome : AltBiome => Condition.BloodMoon.And(ShopConditions.GetWorldEvilCondition<TBiome>());
 
-					shop.InsertAfter<Dreadful_Powder, Defiled_Grass_Seeds>(Condition.BloodMoon.And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
-					shop.InsertAfter<Sentient_Powder, Riven_Grass_Seeds>(Condition.BloodMoon.And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>()));
+					static Condition powderCon<TBiome>() where TBiome : AltBiome => Condition.NotRemixWorld.CommaAnd(bloodBiomeCon<TBiome>());
 
-					shop.InsertAfter<Defiled_Grass_Seeds>(ItemID.CorruptSeeds, Condition.InGraveyard.CommaAnd(Condition.Hardmode).And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>().Not()));
-					shop.InsertAfter<Riven_Grass_Seeds>(ItemID.CrimsonSeeds, Condition.InGraveyard.CommaAnd(Condition.Hardmode).And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>().Not()));
+					static Condition seedsCon<TBiome>() where TBiome : AltBiome => bloodBiomeCon<TBiome>().Or(Condition.InGraveyard.CommaAnd(Condition.Hardmode).And(ShopConditions.GetWorldEvilCondition<TBiome>().Not()));
+
+					shop.InsertAfter<Ash_Urn>(ItemID.ViciousPowder, powderCon<Ashen_Alt_Biome>());
+					shop.InsertAfter<Dreadful_Powder>(ItemID.ViciousPowder, powderCon<Defiled_Wastelands_Alt_Biome>());
+					shop.InsertAfter<Sentient_Powder>(ItemID.ViciousPowder, powderCon<Riven_Hive_Alt_Biome>());
+
+					shop.InsertAfter<Ashen_Grass_Seeds>(ItemID.CrimsonSeeds, seedsCon<Ashen_Alt_Biome>());
+					shop.InsertAfter<Defiled_Grass_Seeds>(ItemID.CrimsonSeeds, seedsCon<Defiled_Wastelands_Alt_Biome>());
+					shop.InsertAfter<Riven_Grass_Seeds>(ItemID.CrimsonSeeds, seedsCon<Riven_Hive_Alt_Biome>());
+
+					shop.InsertAfter(ItemID.CrimsonGrassEcho, OriginsWall.GetWallItem<Ashen_Grass_Wall>(WallVersion.Safe), bloodBiomeCon<Ashen_Alt_Biome>());
+					shop.InsertAfter(ItemID.CrimsonGrassEcho, OriginsWall.GetWallItem<Defiled_Grass_Wall>(WallVersion.Safe), bloodBiomeCon<Defiled_Wastelands_Alt_Biome>());
+					shop.InsertAfter(ItemID.CrimsonGrassEcho, OriginsWall.GetWallItem<Riven_Grass_Wall>(WallVersion.Safe), bloodBiomeCon<Riven_Hive_Alt_Biome>());
 					break;
 				}
 				case NPCID.Cyborg: {
@@ -150,7 +157,12 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Painter: {
-					shop.Add<Spray_N_Pray>(Quest.QuestCondition<Spray_N_Pray_Quest>());
+					if (shop.Name == "Shop") {
+						shop.Add<Spray_N_Pray>(Quest.QuestCondition<Spray_N_Pray_Quest>());
+					}
+					if (shop.Name == "Decor") {
+						shop.Add<Five_Evils_Item>(Condition.DrunkWorld.And(ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>()));
+					}
 					break;
 				}
 			}
@@ -277,7 +289,8 @@ namespace Origins.NPCs {
 				case NPCID.DesertLamiaDark:
 				bestiaryEntry.AddTags(
 					ModContent.GetInstance<Defiled_Wastelands_Underground_Desert>().ModBiomeBestiaryInfoElement,
-					ModContent.GetInstance<Riven_Hive_Underground_Desert>().ModBiomeBestiaryInfoElement
+					ModContent.GetInstance<Riven_Hive_Underground_Desert>().ModBiomeBestiaryInfoElement,
+					ModContent.GetInstance<Ashen_Underground_Desert>().ModBiomeBestiaryInfoElement
 				);
 				break;
 			}

@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Unsought_Organ : ModItem, ICustomWikiStat, IJournalEntrySource<Unsought_Organ_Entry> {
 		public string[] Categories => [
-			"Combat",
-			"GenericBoostAcc",
-			"ToxicSource"
+			WikiCategories.Combat,
+			WikiCategories.GenericBoostAcc,
+			WikiCategories.ToxicSource
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 26);

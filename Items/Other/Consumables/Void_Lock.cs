@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Void_Lock : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"ExpendableTool"
+			WikiCategories.ExpendableTool
 		];
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(0);

@@ -1,16 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Core.Structures;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
+using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
 using Origins.NPCs.Brine;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.NPCs.MiscE.Quests;
 using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Reflection;
+using Origins.Tiles.Ashen;
+using Origins.Tiles.Ashen.Hanging_Scrap;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
@@ -24,41 +29,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.Chat;
+using Terraria.DataStructures;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static Tyfyter.Utils.UITools;
 using static Origins.OriginsSets.Items;
-using Terraria.Graphics;
-using Origins.NPCs.MiscB.Shimmer_Construct;
-using Terraria.DataStructures;
+using static Tyfyter.Utils.UITools;
 
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
 		public static OriginSystem Instance => ModContent.GetInstance<OriginSystem>();
 		public UserInterface setBonusInventoryUI;
-		UserInterface setBonusHUDInterface;
-		UserInterface itemUseHUDInterface;
-		UserInterface eventHUDInterface;
-		public State_Switching_UI SetBonusHUD { get; private set; } = new();
-		public State_Switching_UI ItemUseHUD { get; private set; } = new();
-		public State_Switching_UI EventHUD { get; private set; } = new();
+		public StateSwitchingInterface SetBonusHUD { get; } = new("Origins: Set Bonus HUD");
+		public StateSwitchingInterface AccessoryHUD { get; } = new("Origins: Accessory HUD", true);
+		public StateSwitchingInterface ItemUseHUD { get; } = new("Origins: Held Item HUD");
+		public StateSwitchingInterface EventHUD { get; } = new("Origins: Event HUD");
 		public UserInterfaceWithDefaultState journalUI;
 		internal static List<SwitchableUIState> queuedUIStates = [];
+		public static bool HasSetupAllContent { get; private set; }
 		public override void Load() {
+			HasSetupAllContent = false;
 			setBonusInventoryUI = new UserInterface();
-			setBonusHUDInterface = new UserInterface();
-			setBonusHUDInterface.SetState(SetBonusHUD);
-			itemUseHUDInterface = new UserInterface();
-			itemUseHUDInterface.SetState(ItemUseHUD);
-			eventHUDInterface = new UserInterface();
-			eventHUDInterface.SetState(EventHUD);
 			journalUI = new UserInterfaceWithDefaultState() {
 				DefaultUIState = new Journal_UI_Button()
 			};
+		}
+		public override void ModifyGameTipVisibility(IReadOnlyList<GameTipData> gameTips) {
+			HasSetupAllContent = true;
 		}
 		public override void SetStaticDefaults() {
 			for (int i = 0; i < queuedUIStates.Count; i++) {
@@ -66,6 +68,14 @@ namespace Origins {
 			}
 			queuedUIStates = null;
 			DamageClasses.Patch();
+#if DEBUG
+			Task.Run(() => {
+				foreach (string structure in Mod.GetFileNames()) {
+					if (!structure.StartsWith("World/Structures/")) continue;
+					DeserializedStructure.Load($"{nameof(Origins)}/{structure}");
+				}
+			});
+#endif
 		}
 		public override void Unload() {
 			queuedUIStates = null;
@@ -261,6 +271,13 @@ namespace Origins {
 			.AddIngredient(ModContent.ItemType<Nova_Fragment>())
 			.Register();
 
+			Recipe.Create(ItemID.Megaphone)
+			.AddIngredient(ItemID.WhiteString)
+			.AddIngredient(ItemID.Squirrel)
+			.AddIngredient(ItemID.Megaphone)
+			.AddCondition(OriginsModIntegrations.AprilFools)
+			.Register();
+
 			//this hook is supposed to be used for adding recipes,
 			//but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
 			Origins.instance.LateLoad();
@@ -329,6 +346,7 @@ namespace Origins {
 		public static int EvilBoomerangRecipeGroupID { get; private set; }
 		public static int GolfBallsRecipeGroupID { get; private set; }
 		public static RecipeGroup EvilGunMagazineRecipeGroup { get; private set; } = new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.EvilGunMagazines").Value, ItemID.MagicQuiver);
+		public static RecipeGroup LampRecipeGroup { get; private set; } = new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.Lamps").Value, ItemID.PalmWoodLamp);
 		public override void AddRecipeGroups() {
 			GemStaffRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Gem Staves", new RecipeGroup(() => Language.GetOrRegister("Mods.Origins.RecipeGroups.GemStaves").Value, [
 				ItemID.AmberStaff,
@@ -361,6 +379,8 @@ namespace Origins {
 			for (int i = ItemID.GolfBallDyedBlack; i <= ItemID.GolfBallDyedYellow; i++) RecipeGroup.recipeGroups[GolfBallsRecipeGroupID].ValidItems.Add(i);
 			EvilGunMagazineRecipeGroup.ValidItems.Remove(ItemID.MagicQuiver);
 			RecipeGroup.RegisterGroup("Origins:Evil Gun Magazines", EvilGunMagazineRecipeGroup);
+			RecipeGroup.RegisterGroup("Origins:Lamps", LampRecipeGroup);
+			RecipeGroup.RegisterGroup("Origins:Any Different Advanced Medicines", AnyDifferentMedicine.RecipeGroup);
 			DeathweedRecipeGroupID = ALRecipeGroups.Deathweed.RegisteredId;
 			RottenChunkRecipeGroupID = ALRecipeGroups.RottenChunks.RegisteredId;
 			ShadowScaleRecipeGroupID = ALRecipeGroups.ShadowScales.RegisteredId;
@@ -371,12 +391,17 @@ namespace Origins {
 				}
 			}
 			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Sand],
+				ModContent.ItemType<Hardened_Defiled_Sand_Item>(),
 				ModContent.ItemType<Defiled_Sand_Item>(),
-				ModContent.ItemType<Silica_Item>()
+				ModContent.ItemType<Brittle_Quartz_Item>(),
+				ModContent.ItemType<Silica_Item>(),
+				ModContent.ItemType<Hardened_Sootsand_Item>(),
+				ModContent.ItemType<Sootsand_Item>()
 			);
 			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Wood],
 				ModContent.ItemType<Endowood_Item>(),
-				ModContent.ItemType<Marrowick_Item>()
+				ModContent.ItemType<Marrowick_Item>(),
+				ModContent.ItemType<Artifiber_Item>()
 			);
 			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Fruit],
 				ModContent.ItemType<Bileberry>(),
@@ -449,6 +474,8 @@ namespace Origins {
 					foreach (NPCShop.Entry item in npcShop.Entries) PaintingsNotFromVendor[item.Item.type] = false;
 				}
 			}
+
+			OriginsModIntegrations.PostAddRecipes();
 		}
 		public override void ModifyLightingBrightness(ref float scale) {
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
@@ -485,13 +512,11 @@ namespace Origins {
 						setBonusInventoryUI.SetState(null);
 					}
 				}
-				if (journalUI?.CurrentState is not null) {
-
-				}
 			}
-			setBonusHUDInterface.Update(gameTime);
-			itemUseHUDInterface.Update(gameTime);
-			eventHUDInterface.Update(gameTime);
+			ItemUseHUD.Update(gameTime);
+			AccessoryHUD.Update(gameTime);
+			SetBonusHUD.Update(gameTime);
+			EventHUD.Update(gameTime);
 		}
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
 			int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
@@ -504,30 +529,10 @@ namespace Origins {
 					},
 					InterfaceScaleType.UI) { Active = Main.playerInventory }
 				);
-				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
-					 "Origins: Held Item HUD",
-					 delegate {
-						 itemUseHUDInterface?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
-						 return true;
-					 },
-					 InterfaceScaleType.UI)
-				);
-				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
-					 "Origins: Set Bonus HUD",
-					 delegate {
-						 setBonusHUDInterface?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
-						 return true;
-					 },
-					 InterfaceScaleType.UI)
-				);
-				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
-					 "Origins: Event HUD",
-					 delegate {
-						 eventHUDInterface?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
-						 return true;
-					 },
-					 InterfaceScaleType.UI)
-				);
+				ItemUseHUD.Insert(layers);
+				AccessoryHUD.Insert(layers);
+				SetBonusHUD.Insert(layers);
+				EventHUD.Insert(layers);
 				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().journalUnlocked) {
 					layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
 						"Origins: Journal UI",
@@ -640,6 +645,8 @@ namespace Origins {
 					originPlayer.oldNearbyActiveNPCs = player.nearbyActiveNPCs;
 				}
 			}
+			Main.tileSolid[Broken_Catwalk.ID] = false;
+			Main.tileSolidTop[Broken_Catwalk.ID] = false;
 		}
 		bool hasLoggedPUP = false;
 		public int laserTagActiveTeams = 0;
@@ -662,9 +669,14 @@ namespace Origins {
 			}
 		}
 		static Stack<Point> QueuedTileFrames { get; } = new();
+		static Stack<Point> queuedSpecialTileFrames = new();
+		static Stack<Point> workingQueuedSpecialTileFrames = new();
 		static bool isFramingQueuedTiles = false;
 		public static void QueueTileFrames(int i, int j) {
 			if (!isFramingQueuedTiles) QueuedTileFrames.Push(new(i, j));
+		}
+		public static void QueueSpecialTileFrames(int i, int j) {
+			workingQueuedSpecialTileFrames.Push(new(i, j));
 		}
 		public override void PostUpdatePlayers() {
 			try {
@@ -672,6 +684,12 @@ namespace Origins {
 				while (QueuedTileFrames.TryPop(out Point pos)) WorldGen.TileFrame(pos.X, pos.Y);
 			} finally {
 				isFramingQueuedTiles = false;
+			}
+			Utils.Swap(ref queuedSpecialTileFrames, ref workingQueuedSpecialTileFrames);
+			if (queuedSpecialTileFrames.Count > 10000) queuedSpecialTileFrames.Clear();
+			while (queuedSpecialTileFrames.TryPop(out Point pos)) {
+				if (TileLoader.GetTile(Main.tile[pos].TileType) is not ISpecialFrameTile specialTile) continue;
+				specialTile.SpecialFrame(pos.X, pos.Y);
 			}
 		}
 		public override void PreUpdateNPCs() {
@@ -703,6 +721,12 @@ namespace Origins {
 			foreach (Projectile proj in Main.ActiveProjectiles) {
 				if (proj.ModProjectile is IPreDrawSceneProjectile preDrawer) preDrawer.PreDrawScene();
 			}
+		}
+		public override void PostDrawTiles() {
+			SpecialTilePreviewOverlay.ForceActive();
+			Players_Behind_Tiles_Overlay.ForceActive();
+			Hanging_Scrap_Overlay.ForceActive();
+			Gas_Mask_Overlay.ForceActive();
 		}
 	}
 	public class TempleBiome : ModBiome {

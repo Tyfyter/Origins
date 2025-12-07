@@ -20,9 +20,12 @@ namespace Origins.Walls {
 		public abstract Color MapColor { get; }
 		public virtual bool CanBeReplacedByWallSpread => true;
 		public virtual int TileItem => -1;
+		public OriginsWallItem Item { get; protected set; }
 		public Dictionary<WallVersion, OriginsWall> Versions { get; private set; }
-		public int GetWallID(WallVersion version) => Versions[version].Type;
+		public OriginsWall GetWall(WallVersion version) => Versions[version];
+		public int GetWallID(WallVersion version) => GetWall(version).Type;
 		public static int GetWallID<T>(WallVersion version) where T : OriginsWall => ContentInstance<T>.Instances[0].GetWallID(version);
+		public static int GetWallItem<T>(WallVersion version) where T : OriginsWall => ContentInstance<T>.Instances[0].GetWall(version).Item.Type;
 		public override void SetStaticDefaults() {
 			AddMapEntry(MapColor);
 			if (!CanBeReplacedByWallSpread) WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
@@ -72,7 +75,7 @@ namespace Origins.Walls {
 					switch (version) {
 						case WallVersion.Safe:
 						case WallVersion.Placed_Unsafe:
-						mod.AddContent(new OriginsWallItem(newWall));
+						mod.AddContent(newWall.Item = new OriginsWallItem(newWall));
 						break;
 					}
 				}

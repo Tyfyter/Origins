@@ -6,6 +6,7 @@ using Origins.Graphics;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
+using Origins.Items.Materials;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
@@ -28,6 +29,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -79,6 +81,7 @@ namespace Origins.Projectiles {
 		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
 		public Vector2[] oldPositions = [];
 		public OwnerMinionKey ownerMinion = null;
+		public bool magicHairSprayEffect = false;
 		public override void Load() {
 			itemSourceEffects = [];
 		}
@@ -135,7 +138,10 @@ namespace Origins.Projectiles {
 					}
 				}
 			}
-			if (projectile.friendly && projectile.TryGetOwner(out Player player) && player.OriginPlayer().weakShimmer) weakShimmer = true;
+			if (projectile.friendly && projectile.TryGetOwner(out Player player) && player.OriginPlayer().weakShimmer) {
+				weakShimmer = true;
+				if ((ProjectileID.Sets.FallingBlockTileItem[projectile.type]?.ItemType ?? 0) != ItemID.None) weakShimmer = false;
+			}
 			if (source is EntitySource_ItemUse itemUseSource) {
 				if (itemSourceEffects.TryGetValue(itemUseSource.Item.type, out Action<OriginGlobalProj, Projectile, string[]> itemSourceEffect)) itemSourceEffect(this, projectile, contextArgs);
 				OriginPlayer originPlayer = itemUseSource.Player.GetModPlayer<OriginPlayer>();
@@ -147,6 +153,9 @@ namespace Origins.Projectiles {
 
 				if (projPrefix is IOnSpawnProjectilePrefix spawnPrefix) {
 					spawnPrefix.OnProjectileSpawn(projectile, source);
+				}
+				if (itemUseSource is EntitySource_ItemUse_WithAmmo withAmmo) {
+					if (withAmmo.AmmoItemIdUsed == ModContent.ItemType<Magic_Hair_Spray>()) magicHairSprayEffect = true;
 				}
 
 				fromItemType = itemUseSource.Item.type;
@@ -204,6 +213,7 @@ namespace Origins.Projectiles {
 					crawdadNetworkEffect = parentGlobalProjectile.crawdadNetworkEffect;
 					fiberglassLifesteal = parentGlobalProjectile.fiberglassLifesteal;
 					weakpointAnalyzerFake = parentGlobalProjectile.weakpointAnalyzerFake;
+					magicHairSprayEffect = parentGlobalProjectile.magicHairSprayEffect;
 					if (OriginPlayer.ShouldApplyFelnumEffectOnShoot(projectile)) felnumBonus = parentGlobalProjectile.felnumBonus;
 
 					ModPrefix projPrefix = PrefixLoader.GetPrefix(Prefix);
@@ -334,6 +344,21 @@ namespace Origins.Projectiles {
 			}
 			if (weakpointAnalyzerFake) {
 				projectile.timeLeft -= 2;
+			}
+			if (magicHairSprayEffect) {
+				float size = 48 * projectile.scale;
+				if (projectile.ModProjectile?.Mod is not Origins) {
+					size = 48 * Utils.Remap(Utils.Remap(projectile.localAI[0], 0f, 72, 0f, 1f), 0.2f, 0.5f, 0.25f, 1f);
+				}
+				if (Main.rand.NextFloat(250) < size) {
+					ParticleOrchestrator.RequestParticleSpawn(
+						true,
+						ParticleOrchestraType.PrincessWeapon,
+						new() {
+							PositionInWorld = projectile.Center + Main.rand.NextVector2Circular(size, size)
+						}
+					);
+				}
 			}
 		}
 		public override void AI(Projectile projectile) {
@@ -507,6 +532,16 @@ namespace Origins.Projectiles {
 				case ProjectileID.ThunderSpearShot:
 				if (OriginConfig.Instance.ThunderSpear && Main.rand.NextBool(3)) Static_Shock_Debuff.Inflict(target, Main.rand.Next(90, 180));
 				break;
+			}
+			if (magicHairSprayEffect) {
+				new Extend_Deuffs_Action(target, 30).Perform();
+				ParticleOrchestrator.RequestParticleSpawn(
+					false,
+					ParticleOrchestraType.PaladinsHammer,
+					new() {
+						PositionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox)
+					}
+				);
 			}
 		}
 		public override bool? CanHitNPC(Projectile projectile, NPC target) {

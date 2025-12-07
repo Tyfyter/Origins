@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Haggard_Artery : ModItem, ICustomWikiStat, IJournalEntrySource<Haggard_Artery_Entry> {
 		public string[] Categories => [
-			"Combat"
+			WikiCategories.Combat
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);

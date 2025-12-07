@@ -13,8 +13,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Bile_Dart : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			"Dart",
-			"RasterSource"
+			WikiCategories.Dart,
+			WikiCategories.RasterSource
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

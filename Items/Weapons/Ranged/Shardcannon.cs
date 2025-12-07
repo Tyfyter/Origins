@@ -7,10 +7,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	public class Shardcannon : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "Gun"
-        ];
+	public class Shardcannon : ModItem {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;

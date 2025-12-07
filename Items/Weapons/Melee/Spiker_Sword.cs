@@ -10,7 +10,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Spiker_Sword : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => [
-            "Sword"
+            WikiCategories.Sword
         ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

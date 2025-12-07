@@ -8,11 +8,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Nova_Cascade : ModItem, ICustomWikiStat {
+    public class Nova_Cascade : ModItem {
 		static short glowmask;
-		public string[] Categories => [
-			"Handcannon"
-		];
 		public static int ID { get; private set; }
 
 		public override void SetStaticDefaults() {
@@ -75,6 +72,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding() => true;
+		public bool IsExploding => true;
 	}
 }

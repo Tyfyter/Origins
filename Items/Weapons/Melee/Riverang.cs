@@ -10,11 +10,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.World.BiomeData;
 using Terraria.Audio;
 namespace Origins.Items.Weapons.Melee {
-	public class Riverang : ModItem, ICustomWikiStat {
+	public class Riverang : ModItem {
 		internal static short glowmask;
-		public string[] Categories => [
-			"Boomerang"
-		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}

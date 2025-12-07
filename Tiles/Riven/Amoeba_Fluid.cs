@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Other.Consumables;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Riven {
 	public class Amoeba_Fluid : ComplexFrameTile, IRivenTile, IGlowingModTile {
 		public string[] Categories => [
-			"OtherBlock"
+			WikiCategories.OtherBlock
 		];
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
@@ -38,9 +39,9 @@ namespace Origins.Tiles.Riven {
 			DustType = DustID.Water_Desert;
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
-			yield return new TileMergeOverlay("Origins/Tiles/Riven/Mud_Overlay", TileID.Sets.Mud);
-			yield return new TileMergeOverlay(Texture + "_Spug_Overlay", TileType<Spug_Flesh>());
-			yield return new TileMergeOverlay(Texture + "_Calcified_Overlay", TileType<Calcified_Riven_Flesh>());
+			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Mud_Overlay", TileID.Sets.Mud);
+			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Spug_Overlay", TileType<Spug_Flesh>());
+			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Calcified_Overlay", TileType<Calcified_Riven_Flesh>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (OriginsModIntegrations.CheckAprilFools()) {

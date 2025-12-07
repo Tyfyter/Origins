@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
 using Origins.World.BiomeData;
@@ -12,7 +11,7 @@ namespace Origins.Tiles.Riven {
 		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Riven_Cactus).GetDefaultTMLName() + "_Glow";
 		public static AutoLoadingAsset<Texture2D> FruitGlowTexture = typeof(Riven_Cactus).GetDefaultTMLName() + "_Fruit_Glow";
         public string[] Categories => [
-            "Plant"
+            WikiCategories.Plant
         ];
         public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (tile.TileType == TileID.DyePlants || HasScar(tile)) color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();

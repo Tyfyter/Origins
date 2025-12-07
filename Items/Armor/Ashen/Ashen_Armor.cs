@@ -1,5 +1,4 @@
 using Origins.Dev;
-using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Journal;
 using Terraria;
@@ -11,10 +10,10 @@ namespace Origins.Items.Armor.Ashen {
 	[AutoloadEquip(EquipType.Head)]
 	public class Ashen_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage, IJournalEntrySource {
 		public string[] Categories => [
-			"ArmorSet",
-			"ExplosiveBoostGear",
-			"GenericBoostGear",
-			"SelfDamageProtek"
+			WikiCategories.ArmorSet,
+			WikiCategories.ExplosiveBoostGear,
+			WikiCategories.GenericBoostGear,
+			WikiCategories.SelfDamageProtek
 		];
 		public string EntryName => "Origins/" + typeof(Ashen_Helmet_Entry).Name;
 		public class Ashen_Helmet_Entry : JournalEntry {
@@ -22,6 +21,8 @@ namespace Origins.Items.Armor.Ashen {
 			public override JournalSortIndex SortIndex => new("Ashen_Armor", 1);
 		}
 		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Ashen2_Helmet>()] = ModContent.ItemType<Ashen_Helmet>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Ashen_Helmet>()] = ModContent.ItemType<Ashen2_Helmet>();
 			Origins.AddHelmetGlowmask(this);
 		}
 		public override void SetDefaults() {
@@ -33,7 +34,7 @@ namespace Origins.Items.Armor.Ashen {
 			player.GetDamage(DamageClass.Generic) += 0.08f;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
-			return body.type == ModContent.ItemType<Ashen_Breastplate>() && legs.type == ModContent.ItemType<Ashen_Greaves>();
+			return (body.type == ModContent.ItemType<Ashen_Breastplate>() || body.type == ModContent.ItemType<Ashen2_Breastplate>()) && (legs.type == ModContent.ItemType<Ashen_Greaves>() || legs.type == ModContent.ItemType<Ashen2_Greaves>());
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Ashen");
@@ -60,6 +61,10 @@ namespace Origins.Items.Armor.Ashen {
 			public override string TextKey => "Ashen_Breastplate";
 			public override JournalSortIndex SortIndex => new("Ashen_Armor", 2);
 		}
+		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Ashen2_Breastplate>()] = ModContent.ItemType<Ashen_Breastplate>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Ashen_Breastplate>()] = ModContent.ItemType<Ashen2_Breastplate>();
+		}
 		public override void SetDefaults() {
 			Item.defense = 7;
 			Item.value = Item.sellPrice(silver: 80);
@@ -83,6 +88,10 @@ namespace Origins.Items.Armor.Ashen {
 			public override string TextKey => "Ashen_Greaves";
 			public override JournalSortIndex SortIndex => new("Ashen_Armor", 3);
 		}
+		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Ashen2_Greaves>()] = ModContent.ItemType<Ashen_Greaves>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Ashen_Greaves>()] = ModContent.ItemType<Ashen2_Greaves>();
+		}
 		public override void SetDefaults() {
 			Item.defense = 6;
 			Item.value = Item.sellPrice(silver: 60);
@@ -98,5 +107,24 @@ namespace Origins.Items.Armor.Ashen {
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
+	}
+	[AutoloadEquip(EquipType.Head)]
+	public class Ashen2_Helmet : Ashen_Helmet, IWikiArmorSet, INoSeperateWikiPage {
+		public override void AddRecipes() { }
+		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
+		public new string ArmorSetName => "Ancient_Ashen_Armor";
+		public new int HeadItemID => Type;
+		public new int BodyItemID => ModContent.ItemType<Ashen2_Breastplate>();
+		public new int LegsItemID => ModContent.ItemType<Ashen2_Greaves>();
+	}
+	[AutoloadEquip(EquipType.Body)]
+	public class Ashen2_Breastplate : Ashen_Breastplate {
+		public override void SetStaticDefaults() { }
+		public override void AddRecipes() { }
+	}
+	[AutoloadEquip(EquipType.Legs)]
+	public class Ashen2_Greaves : Ashen_Greaves {
+		public override void SetStaticDefaults() { }
+		public override void AddRecipes() { }
 	}
 }

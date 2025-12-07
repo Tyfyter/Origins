@@ -7,10 +7,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Sleetfire : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "Gun"
-        ];
+	public class Sleetfire : ModItem {
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ElfMelter);
 			Item.damage = 9;

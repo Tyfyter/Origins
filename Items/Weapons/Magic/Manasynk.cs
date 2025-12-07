@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -7,15 +6,10 @@ using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-
-using Origins.Dev;
 using PegasusLib;
+
 namespace Origins.Items.Weapons.Magic {
-    public class Manasynk : ModItem, ICustomWikiStat {
-        public string[] Categories => [
-            "OtherMagic"
-        ];
+    public class Manasynk : ModItem {
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.maxStack = 1;

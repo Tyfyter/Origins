@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class C6_Jackhammer : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			"ToolWeapon"
+			WikiCategories.ToolWeapon
 		];
 		public string EntryName => "Origins/" + typeof(C6_Jackhammer_Entry).Name;
 		public class C6_Jackhammer_Entry : JournalEntry {
@@ -27,7 +27,7 @@ namespace Origins.Items.Tools {
 			Item.damage = 24;
 			Item.width = 28;
 			Item.height = 26;
-			Item.hammer = 54;
+			Item.hammer = 55;
 			//Item.useTime = Item.useAnimation = 60;
 			Item.knockBack = 6f;
 			Item.shootSpeed = 4f;

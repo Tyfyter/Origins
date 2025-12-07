@@ -11,12 +11,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-	public class Suspicious_Looking_Pebble : ModItem, ICustomWikiStat, ICustomPetFrames {
+	public class Suspicious_Looking_Pebble : ModItem, ICustomPetFrames {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		public string[] Categories => [
-			"LightPet"
-		];
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.value = Item.sellPrice(gold: 7, silver: 50);

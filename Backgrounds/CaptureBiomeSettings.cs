@@ -1,25 +1,17 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.Graphics.Capture;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria;
-using Microsoft.Xna.Framework;
 using static Terraria.Graphics.Capture.CaptureInterface;
 using Origins.Water;
 
-namespace Origins.Backgrounds 
-{
+namespace Origins.Backgrounds {
 #nullable enable
-	public class CaptureBiomeSettings : ModSystem
-	{
-		public override void Load() 
-		{
+	public class CaptureBiomeSettings : ModSystem {
+		public override void Load() {
 			IL_CaptureInterface.ModeChangeSettings.DrawWaterChoices += DrawModdedCaptureIcons;
 			On_CaptureBiome.GetCaptureBiome += makeCaptureBiomeSlot;
 			On_CaptureInterface.ModeChangeSettings.GetRect += increaseCaptureSettingsHeight;
@@ -27,7 +19,7 @@ namespace Origins.Backgrounds
 			IL_CaptureInterface.ModeChangeSettings.Update += moveCaptureDefaultsHitbox;
 		}
 
-		internal static int biomeCaptureCount = 2; //Defiled, Riven
+		internal static int biomeCaptureCount = 3; //Ashen, Defiled, Riven
 
 		internal static int[] biomeCapturesIndexs = new int[biomeCaptureCount];
 
@@ -39,20 +31,19 @@ namespace Origins.Backgrounds
 		/// <param name="mouse"></param>
 		/// <param name="iconTexture"></param>
 		/// <param name="textureXposition"></param>
-		internal void CaptureIconSetInfo(int captureIconID, Rectangle iconHitbox, Point mouse, ref Texture2D iconTexture, ref int textureXposition) 
-		{
-			if (captureIconID == biomeCapturesIndexs[0] || captureIconID == biomeCapturesIndexs[1]) 
-			{
+		internal void CaptureIconSetInfo(int captureIconID, Rectangle iconHitbox, Point mouse, ref Texture2D iconTexture, ref int textureXposition) {
+			if (captureIconID == biomeCapturesIndexs[0] || captureIconID == biomeCapturesIndexs[1]) {
 				iconTexture = (Texture2D)Origins.instance.Assets.Request<Texture2D>("Backgrounds/OriginsCaptureBiomeIcons"); //edit texture to be ours
 				textureXposition = captureIconID == biomeCapturesIndexs[0] ? 0 : 18; //frame X for our texture
 				if (iconHitbox.Contains(mouse)) {
 					if (captureIconID == biomeCapturesIndexs[0]) {
+						Main.instance.MouseText(Language.GetTextValue("Mods.Origins.CaptureBiomeChoice.Ashen"), 0, 0); //text for our icon
+					} else if (captureIconID == biomeCapturesIndexs[1]) {
 						Main.instance.MouseText(Language.GetTextValue("Mods.Origins.CaptureBiomeChoice.Defiled"), 0, 0); //text for our icon
-					}
-					else {
+					} else {
 						Main.instance.MouseText(Language.GetTextValue("Mods.Origins.CaptureBiomeChoice.Riven"), 0, 0); //text for our icon
 					}
-					
+
 				}
 			}
 		}
@@ -63,12 +54,13 @@ namespace Origins.Backgrounds
 		/// <param name="chosenBiome"></param>
 		/// <returns></returns>
 		internal CaptureBiome? CaptureIconBiomeSettings(int chosenBiome) {
-			if (chosenBiome == biomeCapturesIndexs[0]) //biomeChoice is bacially the icon ID
-			{
+			if (chosenBiome == biomeCapturesIndexs[2]) { //biomeChoice is bacially the icon ID
+				return new CaptureBiome(ModContent.GetInstance<Ashen_Surface_Background>().Slot, ModContent.GetInstance<Ashen_Water_Style>().Slot); //create a new capture biome
+			}
+			if (chosenBiome == biomeCapturesIndexs[2]) { //biomeChoice is bacially the icon ID
 				return new CaptureBiome(ModContent.GetInstance<Defiled_Surface_Background>().Slot, ModContent.GetInstance<Defiled_Water_Style>().Slot); //create a new capture biome
 			}
-			if (chosenBiome == biomeCapturesIndexs[1]) //biomeChoice is bacially the icon ID
-			{
+			if (chosenBiome == biomeCapturesIndexs[3]) { //biomeChoice is bacially the icon ID
 				return new CaptureBiome(ModContent.GetInstance<Riven_Surface_Background>().Slot, ModContent.GetInstance<Riven_Water_Style>().Slot); //create a new capture biome
 			}
 			return null;

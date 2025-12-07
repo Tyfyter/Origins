@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
@@ -10,16 +9,16 @@ namespace Origins.Items.Armor.Riven {
 	[AutoloadEquip(EquipType.Head)]
 	public class Riven_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            "ArmorSet",
-            "GenericBoostGear",
-			"Torn"
+			WikiCategories.ArmorSet,
+			WikiCategories.GenericBoostGear,
+			WikiCategories.Torn
         ];
         public const float lightMagnitude = 0.3f;
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven2_Mask>()] = ModContent.ItemType<Riven_Mask>();
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Mask>()] = ModContent.ItemType<Riven2_Mask>();
-            GlowMask = Origins.AddGlowMask(Texture + "_Head_Glow");
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven2_Mask>()] = ModContent.ItemType<Riven_Mask>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Mask>()] = ModContent.ItemType<Riven2_Mask>();
+			GlowMask = Origins.AddGlowMask(Texture + "_Head_Glow");
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
@@ -53,17 +52,17 @@ namespace Origins.Items.Armor.Riven {
 		public int BodyItemID => ModContent.ItemType<Riven_Coat>();
 		public int LegsItemID => ModContent.ItemType<Riven_Pants>();
 		public string[] SetCategories => [
-			"Torn",
-			"TornSource"
+			WikiCategories.Torn,
+			WikiCategories.TornSource
 		];
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Riven_Coat : ModItem, INoSeperateWikiPage {
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven2_Coat>()] = ModContent.ItemType<Riven_Coat>();
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Coat>()] = ModContent.ItemType<Riven2_Coat>();
-            GlowMask = Origins.AddGlowMask(Texture + "_Body_Glow");
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven2_Coat>()] = ModContent.ItemType<Riven_Coat>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Coat>()] = ModContent.ItemType<Riven2_Coat>();
+			GlowMask = Origins.AddGlowMask(Texture + "_Body_Glow");
 			Origins.AddBreastplateGlowmask(this);
 			Item.ResearchUnlockCount = 1;
 		}
@@ -93,12 +92,12 @@ namespace Origins.Items.Armor.Riven {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Riven_Pants : ModItem, INoSeperateWikiPage {
-        public override void SetStaticDefaults() {
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven2_Pants>()] = ModContent.ItemType<Riven_Pants>();
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Pants>()] = ModContent.ItemType<Riven2_Pants>();
-        }
+		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven2_Pants>()] = ModContent.ItemType<Riven_Pants>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Pants>()] = ModContent.ItemType<Riven2_Pants>();
+		}
 
-        public override void SetDefaults() {
+		public override void SetDefaults() {
 			Item.defense = 6;
 			Item.value = Item.sellPrice(silver: 60);
 			Item.rare = ItemRarityID.Blue;
@@ -116,7 +115,7 @@ namespace Origins.Items.Armor.Riven {
 	}
 	[AutoloadEquip(EquipType.Head)]
 	public class Riven2_Mask : Riven_Mask, IWikiArmorSet, INoSeperateWikiPage {
-		public override void AddRecipes() {}
+		public override void AddRecipes() { }
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
 		public new string ArmorSetName => "Ancient_Riven_Armor";
 		public new int HeadItemID => Type;
@@ -125,12 +124,12 @@ namespace Origins.Items.Armor.Riven {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Riven2_Coat : Riven_Coat {
-		public override void AddRecipes() {}
+		public override void AddRecipes() { }
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Riven2_Pants : Riven_Pants {
-		public override void AddRecipes() {}
+		public override void AddRecipes() { }
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
 	}
 }

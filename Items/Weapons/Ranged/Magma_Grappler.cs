@@ -6,10 +6,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-    public class Magma_Grappler : Harpoon_Gun, ICustomWikiStat {
-        public new string[] Categories => [
-            "HarpoonGun"
-        ];
+    public class Magma_Grappler : Harpoon_Gun {
         public override void SetDefaults() {
 			Item.damage = 40;
 			Item.DamageType = DamageClass.Ranged;

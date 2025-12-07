@@ -30,9 +30,6 @@ namespace Origins.Tiles.Other {
 			public override string TextKey => "Aetherite_Ore";
 			public override JournalSortIndex SortIndex => new("Arabel", 6);
 		}
-		public string[] Categories => [
-			"Ore"
-		];
         public override void SetStaticDefaults() {
             Item.ResearchUnlockCount = 100;
         }
