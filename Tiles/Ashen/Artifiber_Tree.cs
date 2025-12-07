@@ -64,7 +64,7 @@ namespace Origins.Tiles.Ashen {
 			drawData.glowColor = GlowColor;
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
-			//tileFrameX += 54;
+			tileFrameX += 54;
 		}
 		public override void Load() => this.SetupGlowKeys();
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
