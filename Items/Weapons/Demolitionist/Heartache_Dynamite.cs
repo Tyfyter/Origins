@@ -11,7 +11,12 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Heartache_Dynamite : ModItem {
+	public class Heartache_Dynamite : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"ThrownExplosive",
+			"IsDynamite",
+			"ExpendableWeapon"
+		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;

@@ -74,7 +74,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		void AI(Projectile projectile, bool child) { }
 		void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) { }
 		string[] ICustomWikiStat.Categories => [
-			WikiCategories.Canistah
+			"Canistah"
 		];
 		public void OnKill(Projectile projectile, bool child) {
 			if (!child && projectile.ModProjectile is ICanisterProjectile canister) {
@@ -297,7 +297,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		static short glowmask;
 		public CanisterData GetCanisterData => new(new(211, 194, 182), new(255, 163, 68));
 		public string[] Categories => [
-			WikiCategories.Canistah
+			"Canistah"
 		];
 		public bool? Hardmode => false;
 		public override void SetStaticDefaults() {
@@ -476,7 +476,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			target.AddBuff(BuffID.CursedInferno, Main.rand.Next(120, 181));
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding => true;
+		public bool IsExploding() => true;
 	}
 	public class Ichor_Canister : ModItem, ICanisterAmmo, ICustomWikiStat {
 		static short glowmask;
@@ -588,7 +588,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			return false;
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding => true;
+		public bool IsExploding() => true;
 	}
 	public class Alkahest_Canister : ModItem, ICanisterAmmo, ICustomWikiStat, ITornSource {
 		public float Severity => 0.35f;

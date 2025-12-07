@@ -9,7 +9,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class ASH_Attack_Relay : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat
+			"Combat"
 		];
 		public override void SetStaticDefaults() {
 			Accessory_Glow_Layer.AddGlowMask<Back_Glow_Layer>(Item.backSlot, Texture + "_Back_Glow");

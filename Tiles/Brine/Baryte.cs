@@ -1,5 +1,4 @@
-﻿using Origins.Dev;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -10,7 +9,7 @@ namespace Origins.Tiles.Brine {
 	[LegacyName("Sulphur_Stone", "Dolomite")]
 	public class Baryte : OriginTile {
         public string[] Categories => [
-            WikiCategories.Stone
+            "Stone"
         ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;

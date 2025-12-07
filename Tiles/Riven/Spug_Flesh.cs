@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
 using Origins.Journal;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -14,7 +14,7 @@ namespace Origins.Tiles.Riven {
 	[LegacyName("Riven_Flesh")]
 	public class Spug_Flesh : ComplexFrameTile, IRivenTile, IGlowingModTile {
 		public string[] Categories => [
-			WikiCategories.Stone
+			"Stone"
 		];
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
@@ -38,15 +38,6 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = true;
-			Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
-			Main.tileMerge[Type][TileID.Stone] = true;
-			for (int i = 0; i < TileLoader.TileCount; i++) {
-				Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
-				if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i] || Main.tileSand[i]) {
-					Main.tileMerge[Type][i] = true;
-					Main.tileMerge[i][Type] = true;
-				}
-			}
 
 			AddMapEntry(new Color(0, 125, 200));
 			//soundType = SoundID.NPCDeath1;
@@ -55,8 +46,8 @@ namespace Origins.Tiles.Riven {
 			DustType = Riven_Hive.DefaultTileDust;
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
-			yield return new TileMergeOverlay(merge + "Spug_Calcified_Overlay", TileType<Calcified_Riven_Flesh>());
-			yield return new TileMergeOverlay(merge + "Mud_Overlay", TileID.Sets.Mud);
+			yield return new TileMergeOverlay(Texture + "_Calcified_Overlay", TileType<Calcified_Riven_Flesh>());
+			yield return new TileMergeOverlay("Origins/Tiles/Riven/Mud_Overlay", TileID.Sets.Mud);
 		}
 		public override void PostTileFrame(int i, int j, int up, int down, int left, int right, int upLeft, int upRight, int downLeft, int downRight) {
 			if (WorldGen.genRand.NextBool(12) && !CheckOtherTilesGlow(i, j)) {
@@ -159,7 +150,7 @@ namespace Origins.Tiles.Riven {
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
 		}
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(TileType<Spug_Flesh>());
+			Item.DefaultToPlaceableTile(ModContent.TileType<Spug_Flesh>());
 		}
 	}
 }

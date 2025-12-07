@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Shimmer_Shield : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Movement
+			"Movement"
 		];
 		public static float ReflectionDamageMultiplier => 2;
 		public static float ReflectionHostileDamageMultiplier => 2;

@@ -1,12 +1,19 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+
+using Origins.Dev;
 using Origins.Buffs;
+using Origins.Items.Tools;
+using Origins.NPCs;
 using ReLogic.Content;
 using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
@@ -14,9 +21,12 @@ using Terraria.Graphics;
 using PegasusLib;
 using Origins.NPCs.Defiled;
 using Origins.CrossMod;
-
 namespace Origins.Items.Weapons.Magic {
-	public class Magnus : ModItem {
+	public class Magnus : ModItem, ICustomWikiStat {
+		public const int baseDamage = 34;
+        public string[] Categories => [
+            "Wand"
+        ];
         public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Origins.DamageBonusScale[Type] = 1.5f;
@@ -26,7 +36,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToMagicWeapon(ModContent.ProjectileType<Magnus_P>(), 40, Magnus_P.tick_motion, true);
-			Item.damage = 34;
+			Item.damage = baseDamage;
 			Item.mana = 14;
 			Item.knockBack = 3;
 			Item.UseSound = SoundID.Item122.WithPitch(1).WithVolume(2);
@@ -107,12 +117,8 @@ namespace Origins.Items.Weapons.Magic {
 				Vector2 pos = Projectile.oldPos[^i];
 				if (pos == default) {
 					break;
-				} else {
-					projHitbox.X = (int)pos.X - projHitbox.Width / 2;
-					projHitbox.Y = (int)pos.Y - projHitbox.Height / 2;
-					if (projHitbox.Intersects(targetHitbox)) {
-						return true;
-					}
+				} else if (projHitbox.Recentered(pos).Intersects(targetHitbox)) {
+					return true;
 				}
 			}
 			return null;

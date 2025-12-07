@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Blast_Resistant_Plate : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Vitality,
-			WikiCategories.ExplosiveBoostAcc,
-			WikiCategories.SelfDamageProtek
+			"Vitality",
+			"ExplosiveBoostAcc",
+			"SelfDamageProtek"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 28);

@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Walls;
@@ -12,7 +11,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Riven {
 	public class Marrowick : OriginTile {
 		public string[] Categories => [
-			WikiCategories.Plant
+			"Plant"
 		];
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;

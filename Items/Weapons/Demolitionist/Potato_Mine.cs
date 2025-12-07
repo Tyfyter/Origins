@@ -8,8 +8,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Potato_Mine : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			nameof(WeaponTypes.OtherExplosive),
-			WikiCategories.ExpendableWeapon
+			"OtherExplosive",
+			"ExpendableWeapon"
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;

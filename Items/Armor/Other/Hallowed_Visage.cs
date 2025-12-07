@@ -9,8 +9,8 @@ namespace Origins.Items.Armor.Other {
     [AutoloadEquip(EquipType.Head)]
 	public class Hallowed_Visage : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            WikiCategories.ArmorSet,
-            WikiCategories.ExplosiveBoostGear
+            "ArmorSet",
+            "ExplosiveBoostGear"
         ];
         public override void SetStaticDefaults() {
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Ancient_Hallowed_Visage>()] = ModContent.ItemType<Hallowed_Visage>();

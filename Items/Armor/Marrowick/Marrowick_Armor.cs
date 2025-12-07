@@ -9,7 +9,7 @@ namespace Origins.Items.Armor.Marrowick {
 	[AutoloadEquip(EquipType.Head)]
 	public class Marrowick_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            WikiCategories.ArmorSet
+            "ArmorSet"
         ];
         public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;

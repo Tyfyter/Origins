@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Venom_Fang : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.ToxicSource
+			"Combat",
+			"ToxicSource"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 22);

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Fiberglass_Dagger : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.GenericBoostAcc
+			"GenericBoostAcc"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);

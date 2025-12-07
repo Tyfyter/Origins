@@ -14,7 +14,6 @@ namespace Origins {
 		private static DamageClass rangedMagic;
 		private static DamageClass incantation;
 		private static DamageClass meleeMagic;
-		private static DamageClass rangedSummon;
 		private static DamageClass noSummonInherit;
 		private static DamageClass rangedExplosiveInherit;
 		public static DamageClass Explosive => explosive ??= ModContent.GetInstance<Explosive>();
@@ -23,7 +22,6 @@ namespace Origins {
 		public static DamageClass RangedMagic => rangedMagic ??= ModContent.GetInstance<Ranged_Magic>();
 		public static DamageClass Incantation => incantation ??= ModContent.GetInstance<Incantation>();
 		public static DamageClass MeleeMagic => meleeMagic ??= ModContent.GetInstance<Melee_Magic>();
-		public static DamageClass RangedSummon => rangedSummon ??= ModContent.GetInstance<Ranged_Summon>();
 		public static DamageClass NoSummonInherit => noSummonInherit ??= ModContent.GetInstance<No_Summon_Inherit>();
 		public static DamageClass RangedExplosiveInherit => rangedExplosiveInherit ??= ModContent.GetInstance<Ranged_Explosive_Inherit>();
 		public static DamageClassList All => new();
@@ -252,21 +250,6 @@ namespace Origins {
 		}
 		public override bool GetEffectInheritance(DamageClass damageClass) {
 			return damageClass == Generic || damageClass == Melee || damageClass == Magic;
-		}
-	}
-	public class Ranged_Summon : DamageClass {
-		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
-			if (damageClass == Generic || damageClass == Ranged || damageClass == Summon) {
-				return StatInheritanceData.Full;
-			}
-			return StatInheritanceData.None;
-		}
-		public override bool GetEffectInheritance(DamageClass damageClass) {
-			return damageClass == Generic || damageClass == Ranged || damageClass == Summon;
-		}
-		public override bool UseStandardCritCalcs => false;
-		public override void SetDefaultStats(Player player) {
-
 		}
 	}
 	public class No_Summon_Inherit : DamageClass { }

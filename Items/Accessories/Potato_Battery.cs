@@ -13,8 +13,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Potato_Battery : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.MagicBoostAcc
+			"Combat",
+			"MagicBoostAcc"
 		];
 		static Message_Type_Count[] messageCountsByType;
 		

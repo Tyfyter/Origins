@@ -3,7 +3,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Hallowed_Cleaver : ModItem {
+	public class Hallowed_Cleaver : ModItem, ICustomWikiStat {
+        public string[] Categories => [
+            "Gun"
+        ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);
 			Item.damage = 39;

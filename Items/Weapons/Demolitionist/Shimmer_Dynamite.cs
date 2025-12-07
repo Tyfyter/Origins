@@ -9,7 +9,12 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Shimmer_Dynamite : ModItem {
+	public class Shimmer_Dynamite : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"ThrownExplosive",
+			"IsDynamite",
+			"ExpendableWeapon"
+		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;

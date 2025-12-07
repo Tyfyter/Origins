@@ -11,8 +11,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Trash_Lid : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Movement,
-			WikiCategories.Mount
+			"Movement",
+			"Mount"
 		];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {

@@ -10,9 +10,9 @@ namespace Origins.Items.Armor.Scavenger {
 	[AutoloadEquip(EquipType.Head)]
 	public class Scavenger_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            WikiCategories.ArmorSet,
-            WikiCategories.ExplosiveBoostGear,
-			WikiCategories.SelfDamageProtek
+            "ArmorSet",
+            "ExplosiveBoostGear",
+			"SelfDamageProtek"
 		];
         public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
@@ -31,7 +31,7 @@ namespace Origins.Items.Armor.Scavenger {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Scavenger");
-			player.OriginPlayer().scavengerSet = true;
+			player.GetModPlayer<OriginPlayer>().scavengerSet = true;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

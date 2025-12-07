@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -10,7 +9,7 @@ namespace Origins.Tiles.Other {
 	public class Fiberglass_Tile : OriginTile {
 		static AutoCastingAsset<Texture2D>? vineTexture;
         public string[] Categories => [
-            WikiCategories.OtherBlock
+            "OtherBlock"
         ];
         public static AutoCastingAsset<Texture2D>? VineTexture => vineTexture ??= Origins.instance.Assets.Request<Texture2D>("Tiles/Other/Fiberglass_Vines");
 		public override void Unload() {

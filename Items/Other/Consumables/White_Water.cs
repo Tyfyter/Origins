@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
 using Origins.Dusts;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
@@ -11,7 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class White_Water : ModItem {
         public string[] Categories => [
-            WikiCategories.ExpendableTool
+            "ExpendableTool"
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

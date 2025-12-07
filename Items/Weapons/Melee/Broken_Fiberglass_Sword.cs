@@ -11,7 +11,7 @@ using Terraria.Localization;
 namespace Origins.Items.Weapons.Melee {
 	public class Broken_Fiberglass_Sword : ModItem, IElementalItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Sword
+			"Sword"
 		];
 		public ushort Element => Elements.Fiberglass;
 		public override void SetDefaults() {

@@ -9,7 +9,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class Broken_Terratotem : ModItem {
+	public class Broken_Terratotem : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Artifact",
+			"Minion"
+		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;

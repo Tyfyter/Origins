@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
 using Origins.Dusts;
 using PegasusLib;
 using ReLogic.Content;
@@ -15,7 +14,7 @@ using ThoriumMod.Projectiles;
 namespace Origins.Tiles.Defiled {
 	public class Petrified_Tree : ModTree {
 		public string[] Categories => [
-			WikiCategories.Plant
+			"Plant"
 		];
 		private static Mod Mod => Origins.instance;
 		public override TreePaintingSettings TreeShaderSettings => new();

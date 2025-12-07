@@ -40,7 +40,7 @@ class ShimmerCycles : ModSystem {
 
 		ALRecipeGroups.RottenChunks.CreateEvilShimmerCycle(ItemID.RottenChunk, ItemID.Vertebrae, ItemType<Strange_String>(), ItemType<Bud_Barnacle>(), ItemType<Biocomponent10>());
 
-		ALRecipeGroups.CursedFlames.CreateEvilShimmerCycle(ItemID.CursedFlame, ItemID.Ichor, ItemType<Black_Bile>(), ItemType<Alkahest>(), ItemType<Phoenum>());
+		ALRecipeGroups.CursedFlames.CreateEvilShimmerCycle(ItemID.CursedFlame, ItemID.Ichor, ItemType<Black_Bile>(), ItemType<Alkahest>(), ItemType<Respyrite>());
 
 		ALRecipeGroups.ShadowScales.CreateEvilShimmerCycle(ItemID.ShadowScale, ItemID.TissueSample, ItemType<Undead_Chunk>(), ItemType<Riven_Carapace>(), ItemType<NE8>());
 

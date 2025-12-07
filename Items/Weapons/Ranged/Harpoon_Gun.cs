@@ -10,7 +10,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Projectiles;
 
 namespace Origins.Items.Weapons.Ranged {
-	public class Harpoon_Gun : ModItem {
+	public class Harpoon_Gun : ModItem, ICustomWikiStat {
+        public string[] Categories => [
+            "HarpoonGun"
+        ];
 		protected override bool CloneNewInstances => true;
 		public AutoLoadingAsset<Texture2D> ChainTexture { get; private set; }
 		public int ChainFrames { get; protected set; } = 1;

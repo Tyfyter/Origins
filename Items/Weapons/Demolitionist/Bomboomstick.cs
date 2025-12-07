@@ -5,7 +5,10 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Bomboomstick : ModItem, ICustomDrawItem {
+	public class Bomboomstick : ModItem, ICustomDrawItem, ICustomWikiStat {
+        public string[] Categories => [
+            "Launcher"
+        ];
         public static AutoCastingAsset<Texture2D> UseTexture { get; private set; }
 		public override void Unload() {
 			UseTexture = null;

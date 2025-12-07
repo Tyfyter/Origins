@@ -1,7 +1,7 @@
-﻿using Origins.Core;
-using Origins.Items.Weapons.Ammo;
+﻿using Origins.Walls;
 using Origins.World.BiomeData;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -9,6 +9,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace Origins.LootConditions {
 	public class VaryingRateLeadingRule(int chanceDenominator, int chanceNumerator, params (IItemDropRuleCondition condition, int chanceDenominator, int chanceNumerator)[] alternates) : IItemDropRule {
@@ -88,110 +89,18 @@ namespace Origins.LootConditions {
 		}
 		public virtual bool CanDropForPlayer(Player player) => true;
 	}
-	public class ScavengerBonus(int itemType, int chanceDenominator = 1, int chanceNumerator = 1, int amountDroppedMinimum = 1, int amountDroppedMaximum = 1) : CommonDrop(itemType, chanceDenominator, amountDroppedMinimum, amountDroppedMaximum, chanceNumerator) {
-		public static ScavengerBonus Scrap(int chanceDenominator = 1, int chanceNumerator = 1, int amountDroppedMinimum = 1, int amountDroppedMaximum = 1) => new(ModContent.ItemType<Scrap>(), chanceDenominator, chanceNumerator, amountDroppedMinimum, amountDroppedMaximum);
-		public override ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
-			return Run(() => base.TryDroppingItem(info), info.player.OriginPlayer().scavengerSet);
-		}
-		public void Run(Action function, bool giveBonus) {
-			Run<object>(() => {
-				function();
-				return null;
-			}, giveBonus);
-		}
-		public T Run<T>(Func<T> function, bool giveBonus) {
-			int chanceDenominator = this.chanceDenominator;
-			int chanceNumerator = this.chanceNumerator;
-			int amountDroppedMinimum = this.amountDroppedMinimum;
-			int amountDroppedMaximum = this.amountDroppedMaximum;
-			if (giveBonus) {
-				this.chanceDenominator = int.Max(this.chanceDenominator - 1, this.chanceNumerator);
-				this.amountDroppedMinimum += this.amountDroppedMinimum / 2;
-				this.amountDroppedMaximum += this.amountDroppedMaximum / 2;
-			}
-			T result;
-			try {
-				result = function();
-			} catch {
-				this.chanceDenominator = chanceDenominator;
-				this.chanceNumerator = chanceNumerator;
-				this.amountDroppedMinimum = amountDroppedMinimum;
-				this.amountDroppedMaximum = amountDroppedMaximum;
-				throw;
-			}
-			this.chanceDenominator = chanceDenominator;
-			this.chanceNumerator = chanceNumerator;
-			this.amountDroppedMinimum = amountDroppedMinimum;
-			this.amountDroppedMaximum = amountDroppedMaximum;
-			return result;
-		}
-		public override void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
-			DropRateInfoChainFeed variant = ratesInfo;
-			variant.conditions = ratesInfo.conditions?.ToList() ?? [];
-			variant.conditions.Add(new Condition(false));
-			Run(() => base.ReportDroprates(drops, variant), false);
-
-			variant.conditions = ratesInfo.conditions?.ToList() ?? [];
-			variant.conditions.Add(new Condition(true));
-			Run(() => base.ReportDroprates(drops, variant), true);
-		}
-		class Condition(bool withBonus) : IItemDropRuleCondition {
-			public bool CanDrop(DropAttemptInfo info) => (info.player?.OriginPlayer().scavengerSet) == withBonus;
-			public bool CanShowItemDropInUI() => true;
-			public string GetConditionDescription() {
-				return Language.GetOrRegister($"Mods.Origins.Conditions.{(withBonus ? "With" : "Without")}ScavengerSet").Value;
-			}
-		}
-	}
-	public class DropLootPoolRule<TPool>(bool selectRandomly = false, int chanceDenominator = 1, int chanceNumerator = 1) : DropLootPoolRule(ModContent.GetInstance<TPool>(), selectRandomly, chanceDenominator, chanceNumerator) where TPool : LootPool { }
-	public class DropLootPoolRule : IItemDropRule {
-		public LootPool pool;
-		public bool selectRandomly;
-		public int chanceDenominator;
-		public int chanceNumerator;
-		public List<IItemDropRuleChainAttempt> ChainedRules { get; private set; }
-		public DropLootPoolRule(LootPool pool, bool selectRandomly = false, int chanceDenominator = 1, int chanceNumerator = 1) {
-			Debugging.Assert(pool is not null, new ArgumentNullException(nameof(pool)));
-			this.pool = pool;
-			this.selectRandomly = selectRandomly;
-			this.chanceDenominator = chanceDenominator;
-			this.chanceNumerator = chanceNumerator;
-			ChainedRules = [];
-		}
-
-		public bool CanDrop(DropAttemptInfo info) => true;
-
-		public virtual ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
-			ItemDropAttemptResult result;
-			if (info.player.RollLuck(chanceDenominator) < chanceNumerator) {
-				pool.Resolve(info, selectRandomly);
-				result = default;
-				result.State = ItemDropAttemptResultState.Success;
-				return result;
-			}
-
-			result = default;
-			result.State = ItemDropAttemptResultState.FailedRandomRoll;
-			return result;
-		}
-
-		public virtual void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
-			float num = (float)chanceNumerator / (float)chanceDenominator;
-			float dropRate = num * ratesInfo.parentDroprateChance;
-			DropRateInfoChainFeed thisRatesInfo = ratesInfo;
-			thisRatesInfo.parentDroprateChance = dropRate;
-
-			pool.ReportDroprates(drops, thisRatesInfo);
-			Chains.ReportDroprates(ChainedRules, num, drops, ratesInfo);
-		}
-	}
-	public class Ashen_Key_Condition : IItemDropRuleCondition {
+	public class Dawn_Key_Condition : IItemDropRuleCondition {
+#if false
 		public bool CanDrop(DropAttemptInfo info) {
-			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Ashen_Biome>();
+			return false && info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>(); //Dawn
 		}
 		public bool CanShowItemDropInUI() => Main.hardMode;
+#else
+		public bool CanDrop(DropAttemptInfo info) => false;
+		public bool CanShowItemDropInUI() => false;
+#endif
 		public string GetConditionDescription() {
-			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Ashen"));
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Mods.Origins.Generic.Defiled_Wastelands"));
 		}
 	}
 	public class Defiled_Key_Condition : IItemDropRuleCondition {
@@ -202,6 +111,20 @@ namespace Origins.LootConditions {
 		public string GetConditionDescription() {
 			if (OriginsModIntegrations.CheckAprilFools()) return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKeyNoThe").Format(Language.GetOrRegister("Defiled_Wastelands"));
 			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Defiled_Wastelands"));
+		}
+	}
+	public class Dusk_Key_Condition : IItemDropRuleCondition {
+#if false
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Dusk>();
+		}
+		public bool CanShowItemDropInUI() => Main.hardMode;
+#else
+		public bool CanDrop(DropAttemptInfo info) => false;
+		public bool CanShowItemDropInUI() => false;
+#endif
+		public string GetConditionDescription() {
+			return Language.GetOrRegister("Mods.Origins.Conditions.BiomeKey").Format(Language.GetOrRegister("Mods.Origins.Generic.Dusk"));
 		}
 	}
 	public class Hell_Key_Condition : IItemDropRuleCondition {
@@ -285,7 +208,7 @@ namespace Origins.LootConditions {
 	public class SoulOfNight : IItemDropRuleCondition, IProvideItemConditionDescription {
 		public bool CanDrop(DropAttemptInfo info) {
 			if (Conditions.SoulOfWhateverConditionCanDrop(info)) {
-				return info.player.ZoneCorrupt || info.player.ZoneCrimson || info.player.InModBiome<Defiled_Wastelands>() || info.player.InModBiome<Riven_Hive>() || info.player.InModBiome<Ashen_Biome>();
+				return info.player.ZoneCorrupt || info.player.ZoneCrimson || info.player.InModBiome<Defiled_Wastelands>() || info.player.InModBiome<Riven_Hive>();
 			}
 			return false;
 		}

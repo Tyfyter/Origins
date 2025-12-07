@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Eyndum_Scar : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            WikiCategories.Sword,
-			WikiCategories.ReworkExpected
+            "Sword",
+			"ReworkExpected"
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Katana);

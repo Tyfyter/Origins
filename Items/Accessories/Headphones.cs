@@ -10,8 +10,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Headphones : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.SummonBoostGear
+			"Combat",
+			"SummonBoostGear"
 		];
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);

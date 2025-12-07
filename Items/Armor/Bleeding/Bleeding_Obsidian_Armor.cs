@@ -12,9 +12,9 @@ namespace Origins.Items.Armor.Bleeding {
     [AutoloadEquip(EquipType.Head)]
 	public class Bleeding_Obsidian_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            WikiCategories.ArmorSet,
-            WikiCategories.ExplosiveBoostGear,
-			WikiCategories.SelfDamageProtek
+            "ArmorSet",
+            "ExplosiveBoostGear",
+			"SelfDamageProtek"
 		];
         public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);

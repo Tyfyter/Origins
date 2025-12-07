@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Breach : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			WikiCategories.SpellBook
+			"OtherMagic"
 		];
 		public string EntryName => "Origins/" + typeof(Breach_Entry).Name;
 		public class Breach_Entry : JournalEntry {

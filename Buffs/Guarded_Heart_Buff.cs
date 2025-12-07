@@ -1,12 +1,11 @@
-﻿using Origins.Dev;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Buffs {
 	public class Guarded_Heart_Buff : ModBuff {
 		public static int ID { get; private set; }
 		public string[] Categories => [
-			WikiCategories.GenericBoostBuff
+			"GenericBoostBuff"
 		];
 		public override void SetStaticDefaults() {
 			ID = Type;

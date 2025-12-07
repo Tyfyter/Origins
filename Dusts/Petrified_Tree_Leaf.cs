@@ -114,7 +114,7 @@ namespace Origins.Dusts {
 						case LiquidID.Water:
 						int dustCount = 0;
 						for (int i = 0; i < 5; i++) {
-							if (Dust.NewDust(dust.position, 6, 6, DustID.Smoke, 0f, -0.2f) != 6000) dustCount++;
+							if (Dust.NewDust(dust.position, 6, 6, DustID.Smoke, 0f, -0.2f) != Main.maxDust) dustCount++;
 						}
 						if (dustCount >= 5) dust.active = false;
 						break;

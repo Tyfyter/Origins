@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Firespit : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => [
-			nameof(WeaponTypes.Gun)
+            "Gun"
         ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;

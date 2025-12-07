@@ -9,8 +9,8 @@ namespace Origins.Items.Armor.Myth {
 	[AutoloadEquip(EquipType.Head)]
 	public class Mythic_Skull : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            WikiCategories.ArmorSet,
-            WikiCategories.ExplosiveBoostGear
+            "ArmorSet",
+            "ExplosiveBoostGear"
         ];
         public override void SetDefaults() {
 			Item.defense = 4;

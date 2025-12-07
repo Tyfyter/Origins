@@ -72,6 +72,6 @@ namespace Origins.NPCs.Brine.Boss {
 			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 90);
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding => true;
+		public bool IsExploding() => true;
 	}
 }

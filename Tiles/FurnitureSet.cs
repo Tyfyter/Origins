@@ -297,7 +297,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Candles;
 		public override Color MapColor => furnitureSet.MapColor;
-		public override int FlameDust => furnitureSet.FlameDust;
+		public override int flameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -332,7 +332,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Candelabras;
 		public override Color MapColor => furnitureSet.MapColor;
-		public override int FlameDust => furnitureSet.FlameDust;
+		public override int flameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -367,7 +367,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Lamps;
 		public override Color MapColor => furnitureSet.MapColor;
-		public override int FlameDust => furnitureSet.FlameDust;
+		public override int flameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -402,7 +402,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.Chandeliers;
 		public override Color MapColor => furnitureSet.MapColor;
-		public override int FlameDust => furnitureSet.FlameDust;
+		public override int flameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -419,6 +419,16 @@ namespace Origins.Tiles {
 			DustType = furnitureSet.DustType;
 			furnitureSet.SetupTile(this);
 		}
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
+			//offsetY -= 2;
+			/*Tile tile = Main.tile[i, j];
+            TileObjectData data = TileObjectData.GetTileData(tile);
+            int x = i - tile.TileFrameX / 18 % data.Width;
+            int topLeftY = j - tile.TileFrameY / 18 % data.Height;
+            if (WorldGen.IsBelowANonHammeredPlatform(x, topLeftY)) {
+                offsetY -= 8;
+            }*/
+		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
 			if (!furnitureSet.ChandelierSway) return true;
 			Tile tile = Main.tile[i, j];
@@ -433,11 +443,7 @@ namespace Origins.Tiles {
 			if (!furnitureSet.ChandelierSway) base.PostDraw(i, j, spriteBatch);
 		}
 		public override void AdjustMultiTileVineParameters(int i, int j, ref float? overrideWindCycle, ref float windPushPowerX, ref float windPushPowerY, ref bool dontRotateTopTiles, ref float totalWindMultiplier, ref Texture2D glowTexture, ref Color glowColor) {
-			if (furnitureSet.ChandelierSway) {
-				glowTexture = GlowTexture;
-				glowColor = GlowColor;
-				furnitureSet.ChandelierSwayParams(this, i, j, ref overrideWindCycle, ref windPushPowerX, ref windPushPowerY, ref dontRotateTopTiles, ref totalWindMultiplier, ref glowTexture, ref glowColor);
-			}
+			if (furnitureSet.ChandelierSway) furnitureSet.ChandelierSwayParams(this, i, j, ref overrideWindCycle, ref windPushPowerX, ref windPushPowerY, ref dontRotateTopTiles, ref totalWindMultiplier, ref glowTexture, ref glowColor);
 		}
 		public override void GetTileFlameData(int i, int j, ref TileDrawing.TileFlameData tileFlameData) {
 			furnitureSet.ChandelierFlameData(this, i, j, ref tileFlameData);
@@ -462,7 +468,7 @@ namespace Origins.Tiles {
 		public override string Texture => furnitureSet.TextureBase + Name;
 		public override int BaseTileID => TileID.HangingLanterns;
 		public override Color MapColor => furnitureSet.MapColor;
-		public override int FlameDust => furnitureSet.FlameDust;
+		public override int flameDust => furnitureSet.FlameDust;
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
@@ -502,11 +508,7 @@ namespace Origins.Tiles {
 			if (!furnitureSet.LanternSway) base.PostDraw(i, j, spriteBatch);
 		}
 		public override void AdjustMultiTileVineParameters(int i, int j, ref float? overrideWindCycle, ref float windPushPowerX, ref float windPushPowerY, ref bool dontRotateTopTiles, ref float totalWindMultiplier, ref Texture2D glowTexture, ref Color glowColor) {
-			if (furnitureSet.LanternSway) {
-				glowTexture = GlowTexture;
-				glowColor = GlowColor;
-				furnitureSet.LanternSwayParams(this, i, j, ref overrideWindCycle, ref windPushPowerX, ref windPushPowerY, ref dontRotateTopTiles, ref totalWindMultiplier, ref glowTexture, ref glowColor);
-			}
+			if (furnitureSet.LanternSway) furnitureSet.LanternSwayParams(this, i, j, ref overrideWindCycle, ref windPushPowerX, ref windPushPowerY, ref dontRotateTopTiles, ref totalWindMultiplier, ref glowTexture, ref glowColor);
 		}
 		public override void GetTileFlameData(int i, int j, ref TileDrawing.TileFlameData tileFlameData) {
 			furnitureSet.LanternFlameData(this, i, j, ref tileFlameData);

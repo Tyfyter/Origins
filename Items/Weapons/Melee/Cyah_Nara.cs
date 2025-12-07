@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Cyah_Nara : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            WikiCategories.Sword
+            "Sword"
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Katana);

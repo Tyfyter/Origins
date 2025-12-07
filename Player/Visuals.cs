@@ -4,7 +4,6 @@ using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Vanity.Dev.PlagueTexan;
-using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.Layers;
 using Origins.Tiles.Defiled;
@@ -22,7 +21,7 @@ namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
 		public override void HideDrawLayers(PlayerDrawSet drawInfo) {
 			Item item = drawInfo.heldItem;
-			if (item.ModItem is ICustomDrawItem custom && custom.HideNormalDraw) PlayerDrawLayers.HeldItem.Hide();
+			if (item.ModItem is ICustomDrawItem) PlayerDrawLayers.HeldItem.Hide();
 			PlayerDrawLayers.CaptureTheGem.Hide();
 
 			if (mountOnly && !drawInfo.headOnlyRender) {
@@ -105,10 +104,6 @@ namespace Origins {
 				float progress = blizzardwalkerActiveTime / (float)Blizzardwalkers_Jacket.max_active_time;
 				drawInfo.colorEyes = Color.Lerp(drawInfo.colorEyes, Color.Red, progress * progress);
 			}
-			if (gasMask && OriginsModIntegrations.CheckAprilFools()) {
-				drawInfo.drawPlayer.face = ModContent.GetInstance<Gas_Mask>().Item.faceSlot;
-			}
-			if (drawInfo.drawPlayer.front > 0 && OriginsSets.Armor.Front.DrawsInNeckLayer[drawInfo.drawPlayer.front]) drawInfo.drawFrontAccInNeckAccLayer = true;
 		}
 		public override void FrameEffects() {
 			Debugging.LogFirstRun(FrameEffects);
@@ -145,7 +140,6 @@ namespace Origins {
 			oldGravDir = Player.gravDir;
 			if (forceFallthrough) Player.GoingDownWithGrapple = true;
 			forceFallthrough = false;
-			if (murkySludge) Player.accRunSpeed = Player.maxRunSpeed;
 			Player.runAcceleration *= moveSpeedMult;
 			Player.maxRunSpeed *= moveSpeedMult;
 			Player.accRunSpeed *= moveSpeedMult;
@@ -167,7 +161,7 @@ namespace Origins {
 			}
 		}
 		public override void ModifyZoom(ref float zoom) {
-			if (Main.mouseRight && Player.HeldItem?.ModItem is Shimmershot or Laser_Target_Locator) {
+			if (Main.mouseRight && Player.HeldItem?.ModItem is Shimmershot) {
 				if (zoom == -1) zoom = 0;
 				zoom += 0.5f;
 			}

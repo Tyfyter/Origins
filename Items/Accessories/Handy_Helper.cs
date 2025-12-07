@@ -11,7 +11,7 @@ using Terraria.ModLoader.IO;
 namespace Origins.Items.Accessories {
 	public class Handy_Helper : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat
+			"Combat"
 		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

@@ -113,10 +113,8 @@ namespace Origins.NPCs.Felnum {
 						NPC.velocity += vectorToTargetPosition.RotatedBy(Main.rand.NextBool() ? -MathHelper.PiOver2 : MathHelper.PiOver2) * 2;
 					}
 				}
-				if (NPC.ai[0] != 120 - charge_time || CollisionExt.CanHitRay(NPC.Center, target.Center)) {
-					NPC.ai[0]++;
-				}
-				if (NPC.ai[0] > 120 - charge_time) {
+
+				if (++NPC.ai[0] > 120 - charge_time) {
 					float chargeFactor = (120 - NPC.ai[0]) / charge_time;
 					GeometryUtils.AngularSmoothing(ref NPC.rotation, vectorToTargetPosition.ToRotation(), (chargeFactor + 0.05f) * 0.1f);
 					speed *= chargeFactor;

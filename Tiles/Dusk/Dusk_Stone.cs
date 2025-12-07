@@ -1,5 +1,4 @@
-﻿using Origins.Dev;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.IO;
 using Terraria.ModLoader;
@@ -33,7 +32,7 @@ namespace Origins.Tiles.Dusk {
 	}
 	public class Dusk_Stone : OriginTile {
 		public string[] Categories => [
-			WikiCategories.Stone
+			"Stone"
 		];
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;

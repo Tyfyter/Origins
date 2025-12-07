@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Startillery : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            WikiCategories.SpellBook
+            "SpellBook"
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldenShower);

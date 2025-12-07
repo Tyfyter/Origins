@@ -12,8 +12,8 @@ using Terraria.Localization;
 namespace Origins.Items.Weapons.Ammo {
 	public class Bile_Bullet : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            WikiCategories.Bullet,
-            WikiCategories.RasterSource
+            "Bullet",
+            "RasterSource"
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

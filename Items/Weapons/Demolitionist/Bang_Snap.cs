@@ -6,7 +6,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Bang_Snap : ModItem {
+	public class Bang_Snap : ModItem, ICustomWikiStat {
+        public string[] Categories => [
+            "ThrownExplosive",
+            "ExpendableWeapon"
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}

@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Noxious_Mithrafin : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Misc
+			"Misc"
 		];
 		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
 				Language.GetOrRegister($"Mods.Origins.Items.{nameof(Mithrafin)}.Tooltip"),

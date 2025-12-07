@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Hazard_Charm : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Misc,
-			WikiCategories.ExplosiveBoostAcc,
-			WikiCategories.SelfDamageProtek
+			"Misc",
+			"ExplosiveBoostAcc",
+			"SelfDamageProtek"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 26);

@@ -1,5 +1,4 @@
-﻿using Origins.Dev;
-using Origins.Tiles.Other;
+﻿using Origins.Tiles.Other;
 using PegasusLib;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +15,9 @@ namespace Origins.Items.Armor.Other {
 	[AutoloadEquip(EquipType.Head)]
 	public class Lucky_Hat : ModItem {
 		public string[] Categories => [
-			WikiCategories.ArmorSet,
-			WikiCategories.ExplosiveBoostGear,
-			WikiCategories.RangedBoostGear
+			"ArmorSet",
+			"ExplosiveBoostGear",
+			"RangedBoostGear"
 		];
 		public override void Load() {
 			On_PlayerEyeHelper.UpdateEyeFrameToShow += On_PlayerEyeHelper_UpdateEyeFrameToShow;
@@ -26,10 +25,7 @@ namespace Origins.Items.Armor.Other {
 
 		static void On_PlayerEyeHelper_UpdateEyeFrameToShow(On_PlayerEyeHelper.orig_UpdateEyeFrameToShow orig, ref PlayerEyeHelper self, Player player) {
 			orig(ref self, player);
-			if (self.CurrentEyeFrame == PlayerEyeHelper.EyeFrame.EyeOpen) {
-				OriginPlayer originPlayer = player.OriginPlayer();
-				if (originPlayer.LuckyHatSetActive || originPlayer.LuckyHatGunActive) self.CurrentEyeFrame = PlayerEyeHelper.EyeFrame.EyeHalfClosed;
-			}
+			if (self.CurrentEyeFrame == PlayerEyeHelper.EyeFrame.EyeOpen && player.OriginPlayer().LuckyHatSetActive) self.CurrentEyeFrame = PlayerEyeHelper.EyeFrame.EyeHalfClosed;
 		}
 		public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;

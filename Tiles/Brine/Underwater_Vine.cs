@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
 using Origins.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -18,8 +17,8 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Brine {
     public class Underwater_Vine : OriginTile {
         public string[] Categories => [
-			WikiCategories.Plant
-		];
+            "Plant"
+        ];
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;

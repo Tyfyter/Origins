@@ -25,7 +25,6 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
-using Origins.NPCs.Ashen.Boss;
 using Origins.NPCs.Brine;
 using Origins.NPCs.Brine.Boss;
 using Origins.NPCs.Corrupt;
@@ -40,7 +39,6 @@ using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.Tiles;
-using Origins.Tiles.Ashen;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
@@ -55,9 +53,11 @@ using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.UI;
 using ThoriumMod;
 using ThoriumMod.Items;
 using ThoriumMod.Items.Darksteel;
@@ -87,8 +87,6 @@ namespace Origins {
 		public static Mod FancyLighting { get => instance.fancyLighting; set => instance.fancyLighting = value; }
 		Mod fargosMutant;
 		public static Mod FargosMutant { get => instance.fargosMutant; set => instance.fargosMutant = value; }
-		Mod avalon;
-		public static Mod Avalon { get => instance.avalon; set => instance.avalon = value; }
 		Func<bool> checkAprilFools;
 		public static Func<bool> CheckAprilFools {
 			get => OriginClientConfig.Instance.DebugMenuButton.ForceAprilFools ?
@@ -135,7 +133,6 @@ namespace Origins {
 				checkAprilFools = DefaultCheckAprilFools;
 				holidayForceChanged = _ => -1;
 			}
-			ModLoader.TryGetMod("Avalon", out instance.avalon);
 		}
 		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
 		static bool DefaultCheckAprilFools() => (DateTime.Today.Month == 4 && DateTime.Today.Day == 1) || Instance.ForceAF;
@@ -184,34 +181,6 @@ namespace Origins {
 					AltBiome biome = GetInstance<T>();
 					return () => Main.drunkWorld || WorldBiomeManager.GetWorldEvil(true) == biome || ModLoader.HasMod("BothEvils");
 				}
-				/*Asset<Texture2D> glowTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Glow");
-				Asset<Texture2D> armTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Arm");
-				Asset<Texture2D> pistonTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Leg_Piston");
-				Asset<Texture2D> hipTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Hip");
-				Asset<Texture2D> hipGlowTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Hip_Glow");
-				Asset<Texture2D> thighTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Thigh");
-				Asset<Texture2D> calfTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Calf");
-				Asset<Texture2D> footTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Foot");*/
-				bossChecklist.Call("LogBoss",
-					mod,
-					"Trenchmaker",
-					3f,
-					() => NPC.downedBoss2,
-					new List<int> { NPCType<Trenchmaker>(), NPCType<Fearmaker>() },
-					new Dictionary<string, object> {
-						["availability"] = IfEvil<Ashen_Alt_Biome>(),
-						["spawnItems"] = ItemType<Distress_Beacon>(),
-						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Trenchmaker.BossChecklistIntegration.SpawnCondition"),
-						["collectibles"] = new List<int> {
-							RelicTileBase.ItemType<Trenchmaker_Relic>(),
-							TrophyTileBase.ItemType<Trenchmaker_Trophy>(),
-							ItemType<Trenchmaker_Mask>(),
-							//ItemType<Fleshy_Globe>(),
-						}/*,
-						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
-						}*/
-					}
-				);
 				bossChecklist.Call("LogBoss",
 					mod,
 					nameof(Defiled_Amalgamation).Replace("_", ""),
@@ -463,21 +432,6 @@ namespace Origins {
 				);
 			}
 			if (ModLoader.TryGetMod("Fargowiltas", out instance.fargosMutant)) {
-				FargosMutant.Call("AddIndestructibleTileType", TileType<Fortified_Steel_Block1>());
-				FargosMutant.Call("AddIndestructibleTileType", TileType<Fortified_Steel_Block2>());
-				FargosMutant.Call("AddIndestructibleTileType", TileType<Fortified_Steel_Block3>());
-
-				FargosMutant.Call("AddEvilAltar", Ashen_Altar.ID);
-				FargosMutant.Call("AddEvilAltar", Defiled_Altar.ID);
-				FargosMutant.Call("AddEvilAltar", Riven_Altar.ID);
-
-				FargosMutant.Call("AddStat", (int)ItemID.Bomb, () => Language.GetTextValueWith("Mods.Origins.CrossMod.ExplosiveDamage", Math.Round(Main.LocalPlayer.GetTotalDamage(DamageClasses.Explosive).Additive * Main.LocalPlayer.GetTotalDamage(DamageClasses.Explosive).Multiplicative * 100f - 100f)));
-				FargosMutant.Call("AddStat", (int)ItemID.Bomb, () => Language.GetTextValueWith("Mods.Origins.CrossMod.ExplosiveCritical", (int)Main.LocalPlayer.GetTotalCritChance(DamageClasses.Explosive)));
-
-				FargosMutant.Call("AddPermUpgrade", ItemType<Mojo_Injection>(), () => Main.LocalPlayer.OriginPlayer().mojoInjection);
-				FargosMutant.Call("AddPermUpgrade", ItemType<Crown_Jewel>(), () => Main.LocalPlayer.OriginPlayer().crownJewel);
-
-				FargosMutant.Call("AddSummon", 3, ItemType<Distress_Beacon>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
 				FargosMutant.Call("AddSummon", 3, ItemType<Nerve_Impulse_Manipulator>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
 				FargosMutant.Call("AddSummon", 3, ItemType<Sus_Ice_Cream>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
 				FargosMutant.Call("AddSummon", 4.7, ItemType<Shaped_Glass>(), () => Boss_Tracker.Instance.downedFiberglassWeaver, Item.buyPrice(gold: 15));
@@ -578,7 +532,11 @@ namespace Origins {
 				instance.thorium.Call("AddFlailProjectileID", ProjectileType<Depth_Charge_P_Alt>());
 				instance.thorium.Call("AddFlailProjectileID", ProjectileType<Depth_Charge_Explosion>());
 
-				for (int i = 0; i < Chambersite_Ore.chambersiteTiles.Count; i++) instance.thorium.Call("AddGemStoneTileID", Chambersite_Ore.chambersiteTiles[i]);
+				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore>());
+				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Ebonstone>());
+				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Crimstone>());
+				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Defiled_Stone>());
+				instance.thorium.Call("AddGemStoneTileID", TileType<Chambersite_Ore_Riven_Flesh>());
 
 				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Conehead_Zombie>());
 				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Graveshield_Zombie>());
@@ -620,9 +578,6 @@ namespace Origins {
 				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Defiled_Asphyxiator_Debuff_2>());
 				instance.thorium.Call("AddPlayerStatusBuffID", BuffType<Defiled_Asphyxiator_Debuff_3>());
 			}
-			if (ModLoader.TryGetMod("InfoSlot", out Mod infoSlot)) {
-				infoSlot.Call("AddInfoItem", ItemType<Eitrite_Watch>());
-			}
 		}
 		public static void LateLoad() {
 			if (ModLoader.TryGetMod("ControllerConfigurator", out Mod controllerConfigurator) && controllerConfigurator.Call("GETGOTOKEYBINDKEYBIND") is ModKeybind keybind) {
@@ -634,7 +589,6 @@ namespace Origins {
 				globalLootViewer.Call("IgnoreConditionWhenHighLighting", DropConditions.PlayerInteraction);
 			}
 			if (ModLoader.TryGetMod("EpikV2", out instance.epikV2)) {
-				EpikV2.Call("AddModEvilBiome", GetInstance<Ashen_Biome>());
 				EpikV2.Call("AddModEvilBiome", GetInstance<Defiled_Wastelands>());
 				EpikV2.Call("AddModEvilBiome", GetInstance<Riven_Hive>());
 				/*EpikV2.Call("AddBiomeKey",
@@ -738,9 +692,7 @@ namespace Origins {
 				OriginsSets.NPCs.TargetDummies[luiafk.Find<ModNPC>("Deeps").Type] = true;
 			}
 
-			conditionalCompatRecommendations.Add((
-				() => !(ModLoader.HasMod("ShopExtender") || ModLoader.HasMod("ShopExpander")),
-				Language.GetText("Mods.Origins.ModCompatNotes.ToManyItems" + (ModLoader.HasMod("AlchemistNPC") ? "Alch" : string.Empty))));
+			conditionalCompatRecommendations.Add((() => ModLoader.HasMod("AlchemistNPCLite") && !(ModLoader.HasMod("ShopExtender") || ModLoader.HasMod("ShopExpander")), Language.GetText("Mods.Origins.ModCompatNotes.AlchemistShops")));
 		}
 		public static void AddRecipes() {
 			if (instance.thorium is not null) AddThoriumRecipes();
@@ -750,8 +702,6 @@ namespace Origins {
 			if (ModLoader.TryGetMod("MagicStorage", out _)) AddMagicStorageGroups();
 			if (instance.thorium is not null) AddThoriumRecipeGroups();
 			if (instance.fargosMutant is not null) AddFargosGroups();
-		}
-		public static void PostAddRecipes() {
 		}
 		public void Unload() {
 			instance = null;
@@ -931,7 +881,6 @@ namespace Origins {
 			ModLargeGem.AddCrossModLargeGem(GetInstance<LargeOpal>(), "ThoriumMod/Items/Misc/LargeOpal_Glow");
 			ModLargeGem.AddCrossModLargeGem(GetInstance<LargeAquamarine>(), "ThoriumMod/Items/Misc/LargeAquamarine_Glow");
 			ModLargeGem.AddCrossModLargeGem(GetInstance<LargePrismite>(), "ThoriumMod/Items/Misc/LargePrismite_Glow");
-
 			Recipe.Create(ItemType<Asylum_Whistle>())
 			.AddIngredient<aDarksteelAlloy>(15)
 			.AddTile(TileID.Anvils)
@@ -942,29 +891,23 @@ namespace Origins {
 			.AddTile(TileID.Anvils)
 			.Register();
 
-			Recipe.Create(ItemType<Ashen_Dungeon_Chest_Item>(), 10)
-			.AddIngredient<Ashen_Key>()
-			.AddIngredient(ItemID.Chest, 10)
-			.AddTile(TileID.Anvils)
-			.Register();
-
 			Recipe.Create(ItemType<Brine_Dungeon_Chest_Item>(), 10)
-			.AddIngredient<Brine_Key>()
-			.AddIngredient(ItemID.Chest, 10)
-			.AddTile(TileID.Anvils)
-			.Register();
+				.AddIngredient<Brine_Key>()
+				.AddIngredient(ItemID.Chest, 10)
+				.AddTile(TileID.Anvils)
+				.Register();
 
 			Recipe.Create(ItemType<Defiled_Dungeon_Chest_Item>(), 10)
-			.AddIngredient<Defiled_Key>()
-			.AddIngredient(ItemID.Chest, 10)
-			.AddTile(TileID.Anvils)
-			.Register();
+				.AddIngredient<Defiled_Key>()
+				.AddIngredient(ItemID.Chest, 10)
+				.AddTile(TileID.Anvils)
+				.Register();
 
 			Recipe.Create(ItemType<Riven_Dungeon_Chest_Item>(), 10)
-			.AddIngredient<Riven_Key>()
-			.AddIngredient(ItemID.Chest, 10)
-			.AddTile(TileID.Anvils)
-			.Register();
+				.AddIngredient<Riven_Key>()
+				.AddIngredient(ItemID.Chest, 10)
+				.AddTile(TileID.Anvils)
+				.Register();
 
 			foreach (ModItem itm in instance.thorium.GetContent<ModItem>()) {
 				if (itm is not BlankPainting && itm.GetType().Namespace == "ThoriumMod.Items.Painting")
@@ -987,12 +930,6 @@ namespace Origins {
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosRecipes() {
 			#region Keys
-			Recipe.Create(ItemType<Ashen_Key>())
-				.AddRecipeGroup("Origins:AnyAshenBanner", 10)
-				.AddCondition(Condition.Hardmode)
-				.AddTile(TileID.Solidifier)
-				.DisableDecraft()
-				.Register();
 			Recipe.Create(ItemType<Brine_Key>())
 			   .AddRecipeGroup("Origins:AnyBrineBanner", 10)
 			   .AddCondition(Condition.Hardmode)
@@ -1012,12 +949,6 @@ namespace Origins {
 				.DisableDecraft()
 				.Register();
 
-			Recipe.Create(ItemType<Ashen_Torch>()) // temp result until the actual ashen dungeon weapon is made
-				.AddIngredient(ItemType<Ashen_Key>())
-				.AddCondition(Condition.DownedPlantera)
-				.AddTile(TileID.MythrilAnvil)
-				.DisableDecraft()
-				.Register();
 			Recipe.Create(ItemType<The_Foot>())
 				.AddIngredient(ItemType<Brine_Key>())
 				.AddCondition(Condition.DownedPlantera)
@@ -1037,26 +968,6 @@ namespace Origins {
 				.DisableDecraft()
 				.Register();
 			#endregion
-			#region Misc
-			Recipe.Create(ItemID.MeatGrinder)
-				.AddRecipeGroup("Origins:AnyAshenBanner", 5)
-				.AddCondition(Condition.Hardmode)
-				.AddTile(TileID.Solidifier)
-				.DisableDecraft()
-				.Register();
-			Recipe.Create(ItemID.MeatGrinder)
-				.AddRecipeGroup("Origins:AnyDefiledBanner", 5)
-				.AddCondition(Condition.Hardmode)
-				.AddTile(TileID.Solidifier)
-				.DisableDecraft()
-				.Register();
-			Recipe.Create(ItemID.MeatGrinder)
-				.AddRecipeGroup("Origins:AnyRivenBanner", 5)
-				.AddCondition(Condition.Hardmode)
-				.AddTile(TileID.Solidifier)
-				.DisableDecraft()
-				.Register();
-			#endregion Misc
 			#region Crate Recipes
 			static void CrateRecipe(int result, int resultAmount = 1, int crate = 0, int crateHard = 0, int crateAmount = 1, int extraItem = 0, params Condition[] conditions) {
 				if (crate > 0) {
@@ -1126,29 +1037,17 @@ namespace Origins {
 			CrateRecipe(ItemType<Primordial_Soup>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
 			#endregion
 
-			Recipe.Create(ItemType<Surveysprout_Item>(), 5)
-			.AddIngredient(ItemID.HerbBag)
-			.AddTile(TileID.WorkBenches)
-			.Register();
-			Recipe.Create(ItemType<Wilting_Rose_Item>(), 5)
-			.AddIngredient(ItemID.HerbBag)
-			.AddTile(TileID.WorkBenches)
-			.Register();
-			Recipe.Create(ItemType<Wrycoral_Item>(), 5)
-			.AddIngredient(ItemID.HerbBag)
-			.AddTile(TileID.WorkBenches)
-			.Register();
-
 			SetFargosStaticDefaults();
 		}
-		public static void AddItemsToGroup(RecipeGroup group, params bool[] items) {
-			for (int i = 0; i < items.Length; i++) {
-				if (items[i]) group.ValidItems.Add(i);
-			}
-		}
-		public static RecipeGroup GetGroup(string key) => RecipeGroup.recipeGroups[RecipeGroup.recipeGroupIDs[key]];
 		[JITWhenModsEnabled("MagicStorage")]
 		static void AddMagicStorageGroups() {
+			static void AddItemsToGroup(RecipeGroup group, params bool[] items) {
+				for (int i = 0; i < items.Length; i++) {
+					if (items[i]) group.ValidItems.Add(i);
+				}
+			}
+			static RecipeGroup GetGroup(string key) => RecipeGroup.recipeGroups[RecipeGroup.recipeGroupIDs[key]];
+
 			AddItemsToGroup(GetGroup("MagicStorage:AnySnowBiomeBlock"), ModCompatSets.AnySnowBiomeTiles);
 			AddItemsToGroup(GetGroup("MagicStorage:AnyDemonAltar"), ModCompatSets.AnyFakeDemonAltars);
 			AddItemsToGroup(GetGroup("MagicStorage:AnyChest"), ModCompatSets.AnyChests);
@@ -1158,92 +1057,47 @@ namespace Origins {
 			AddItemsToGroup(GetGroup("MagicStorage:AnyBookcase"), ModCompatSets.AnyBookcases);
 			AddItemsToGroup(GetGroup("MagicStorage:AnyCampfire"), ModCompatSets.AnyCampfires);
 		}
-		public interface IAshenEnemy { } // move into an ashen global npc file when made
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosGroups() {
-			static int GetBanner(int npc, bool item = false) {
-				int banner = Item.NPCtoBanner(npc);
-				if (item) return Item.BannerToItem(banner);
-				else return banner;
-			}
-			int[] bannedBanners = [
+			static int GetBanner(int npc) => Item.NPCtoBanner(npc);
+			List<int> brine = [];
+			List<int> defiled = [];
+			int[] defiledBiomes = {
+				GetInstance<Defiled_Wastelands>().Type,
+				GetInstance<Underground_Defiled_Wastelands_Biome>().Type,
+				GetInstance<Defiled_Wastelands_Desert>().Type,
+				GetInstance<Defiled_Wastelands_Underground_Desert>().Type,
+				GetInstance<Defiled_Wastelands_Ice_Biome>().Type,
+				GetInstance<Defiled_Wastelands_Ocean>().Type
+			};
+			List<int> riven = [];
+			int[] rivenBiomes = {
+				GetInstance<Riven_Hive>().Type,
+				GetInstance<Underground_Riven_Hive_Biome>().Type,
+				GetInstance<Riven_Hive_Desert>().Type,
+				GetInstance<Riven_Hive_Underground_Desert>().Type,
+				GetInstance<Riven_Hive_Ice_Biome>().Type,
+				GetInstance<Riven_Hive_Ocean>().Type
+			};
+			int[] bannedBanners = {
 				GetBanner(NPCID.PigronHallow),
-				GetBanner(NPCID.DesertGhoul),
-				GetBanner(NPCID.Zombie)
-			];
-
-			RecipeGroup brineGroup = new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Brine_Pool.DisplayName")), [ItemID.IronPickaxe]);
-			RecipeGroup ashenGroup = new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Ashen_Biome.DisplayName")), [ItemID.IronPickaxe]);
-			RecipeGroup defiledGroup = new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Defiled_Wastelands.DisplayName")), [ItemID.IronPickaxe]);
-			RecipeGroup rivenGroup = new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Riven_Hive.DisplayName")), [ItemID.IronPickaxe]);
-			brineGroup.ValidItems.Remove(ItemID.IronPickaxe);
-			ashenGroup.ValidItems.Remove(ItemID.IronPickaxe);
-			defiledGroup.ValidItems.Remove(ItemID.IronPickaxe);
-			rivenGroup.ValidItems.Remove(ItemID.IronPickaxe);
-			bool AllowedBanner(int type, RecipeGroup group) {
-				int banner = GetBanner(type);
-				bool ban = banner > 0;
-				if (!(GetBanner(type) > 0)) return false;
-				if (bannedBanners.Contains(GetBanner(type))) return false;
-				return !group.ValidItems.Contains(GetBanner(type, true));
-			}
+				GetBanner(NPCID.DesertGhoul)
+			};
 			for (int i = 0; i < NPCID.Sets.AllNPCs.Length; i++) {
 				NPC npc = ContentSamples.NpcsByNetId[i];
-
-				switch (npc?.ModNPC) {
-					case IBrinePoolNPC: {
-						if (AllowedBanner(i, brineGroup))
-							brineGroup.ValidItems.Add(GetBanner(i, true));
-						break;
-					}
-					case IAshenEnemy: {
-						if (AllowedBanner(i, ashenGroup))
-							ashenGroup.ValidItems.Add(GetBanner(i, true));
-						break;
-					}
-					case IDefiledEnemy: {
-						if (AllowedBanner(i, defiledGroup))
-							defiledGroup.ValidItems.Add(GetBanner(i, true));
-						break;
-					}
-					case IRivenEnemy: {
-						if (AllowedBanner(i, rivenGroup))
-							rivenGroup.ValidItems.Add(GetBanner(i, true));
-						break;
-					}
+				if (npc?.ModNPC is not null) {
+					if (npc.ModNPC.SpawnModBiomes.Contains(GetInstance<Brine_Pool>().Type) && GetBanner(i) > 0 && !brine.Contains(Item.BannerToItem(GetBanner(i))))
+						brine.Add(Item.BannerToItem(GetBanner(i)));
+					if (npc.ModNPC.SpawnModBiomes.Contains(defiledBiomes) && GetBanner(i) > 0 && !bannedBanners.Contains(GetBanner(i)) && !defiled.Contains(Item.BannerToItem(GetBanner(i))))
+						defiled.Add(Item.BannerToItem(GetBanner(i)));
+					if (npc.ModNPC.SpawnModBiomes.Contains(rivenBiomes) && GetBanner(i) > 0 && !bannedBanners.Contains(GetBanner(i)) && !riven.Contains(Item.BannerToItem(GetBanner(i))))
+						riven.Add(Item.BannerToItem(GetBanner(i)));
 				}
 			}
-			brineGroup.IconicItemId = brineGroup.ValidItems.First();
-			ashenGroup.IconicItemId = ashenGroup.ValidItems.First();
-			defiledGroup.IconicItemId = defiledGroup.ValidItems.First();
-			rivenGroup.IconicItemId = rivenGroup.ValidItems.First();
-			RecipeGroup.RegisterGroup("Origins:AnyBrineBanner", brineGroup);
-			RecipeGroup.RegisterGroup("Origins:AnyAshenBanner", ashenGroup);
-			RecipeGroup.RegisterGroup("Origins:AnyDefiledBanner", defiledGroup);
-			RecipeGroup.RegisterGroup("Origins:AnyRivenBanner", rivenGroup);
 
-			bool BannerCheck(int type, RecipeGroup group) {
-				if (!(GetBanner(type) > 0)) return false;
-				if (bannedBanners.Contains(GetBanner(type))) return false;
-
-				NPC npc = ContentSamples.NpcsByNetId[type];
-				if (npc?.ModNPC is null) return false;
-				return npc.ModNPC.Mod is Origins && !group.ValidItems.Contains(GetBanner(type, true));
-			}
-			RecipeGroup corrupt = GetGroup("Fargowiltas:AnyCorrupts");
-			RecipeGroup crimson = GetGroup("Fargowiltas:AnyCrimsons");
-			foreach (int npc in CorruptGlobalNPC.NPCTypes) {
-				if (BannerCheck(npc, corrupt)) {
-					int item = GetBanner(npc, true);
-					corrupt.ValidItems.Add(item);
-				}
-			}
-			foreach (int npc in CrimsonGlobalNPC.NPCTypes) {
-				if (BannerCheck(npc, crimson)) {
-					int item = GetBanner(npc, true);
-					crimson.ValidItems.Add(item);
-				}
-			}
+			RecipeGroup.RegisterGroup("Origins:AnyBrineBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Brine_Pool.DisplayName")), [.. brine]));
+			RecipeGroup.RegisterGroup("Origins:AnyDefiledBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Defiled_Wastelands.DisplayName")), [.. defiled]));
+			RecipeGroup.RegisterGroup("Origins:AnyRivenBanner", new(() => Language.GetTextValue("Mods.Origins.RecipeGroups.AnyBanner", Language.GetTextValue("Mods.Origins.Biomes.Riven_Hive.DisplayName")), [.. riven]));
 		}
 	}
 	public interface ICustomWikiDestination {

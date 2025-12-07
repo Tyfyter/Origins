@@ -4,6 +4,4 @@
 	public class Fiberglass_Weaver_Relic : RelicTileBase { }
 	public class Lost_Diver_Relic : RelicTileBase { }
 	public class Shimmer_Construct_Relic : RelicTileBase { }
-	public class Trenchmaker_Relic : RelicTileBase {
-	}
 }

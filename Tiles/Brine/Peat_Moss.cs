@@ -1,5 +1,4 @@
-﻿using Origins.Dev;
-using Origins.Items.Materials;
+﻿using Origins.Items.Materials;
 using Origins.Items.Other.Testing;
 using Origins.Projectiles;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Brine {
 	public class Peat_Moss : OriginTile {
 		public string[] Categories => [
-			WikiCategories.Grass
+			"Grass"
 		];
 		public override void SetStaticDefaults() {
 			//Main.tileMergeDirt[Type] = true;
@@ -59,53 +58,12 @@ namespace Origins.Tiles.Brine {
 		public override int Rare => ItemRarityID.Green;
 		public override bool Hardmode => false;
 		public override bool HasTooltip => true;
-		public override void SetDefaults() {
-			Item.DefaultToFood(0, 0, BuffType<Eat_Moss_Buff>(), 180);
-			Item.buffType = 0;
-			base.SetDefaults();
-		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.ExplosivePowder)
 			.AddIngredient(this, 2)
 			.AddTile(TileID.GlassKiln)
 			.DisableDecraft()
 			.Register();
-		}
-		public override void OnConsumeItem(Player player) {
-			player.AddBuff(BuffType<Eat_Moss_Buff>(), Item.buffTime);
-		}
-		public override bool CanUseItem(Player player) => OriginsModIntegrations.CheckAprilFools();
-		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			for (int i = tooltips.Count - 1; i >= 0; i--) {
-				if (tooltips[i].Name.StartsWith("Buff")) tooltips.RemoveAt(i);
-				else if (!OriginsModIntegrations.CheckAprilFools() && tooltips[i].Name.StartsWith("Consumable")) tooltips.RemoveAt(i);
-			}
-		}
-	}
-	public class Eat_Moss_Buff : ModBuff {
-		public override string Texture => typeof(Peat_Moss_Item).GetDefaultTMLName();
-		public override void SetStaticDefaults() {
-			Main.debuff[Type] = true;
-			BuffID.Sets.NurseCannotRemoveDebuff[Type] = true;
-		}
-		public static void Plode(Player player, int buffIndex) {
-			Projectile.NewProjectile(
-				player.GetSource_Buff(buffIndex),
-				player.MountedCenter,
-				Vector2.Zero,
-				ProjectileType<Peat_Moss_Tile_Explosion>(),
-				120 + (int)(60 * ContentExtensions.DifficultyDamageMultiplier),
-				4
-			);
-		}
-		public override bool ReApply(Player player, int time, int buffIndex) {
-			if (player.buffTime[buffIndex] <= time) Plode(player, buffIndex);
-			return false;
-		}
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.buffTime[buffIndex] == 1) {
-				Plode(player, buffIndex);
-			}
 		}
 	}
 	public class Peat_Moss_Tile_Explosion : ExplosionProjectile {
@@ -126,7 +84,7 @@ namespace Origins.Tiles.Brine {
 	public class Peat_Moss_Debug_Item : TestingItem {
 		public override string Texture => typeof(Peat_Moss_Item).GetDefaultTMLName();
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(TileType<Peat_Moss>());
+			Item.DefaultToPlaceableTile(ModContent.TileType<Peat_Moss>());
 		}
 	}
 }

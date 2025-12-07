@@ -1,5 +1,4 @@
-﻿using Origins.Dev;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
@@ -9,7 +8,7 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Decoration {
     public class Deceptive_Beauty : ModTile {
 		public string[] Categories => [
-			WikiCategories.Painting
+			"Painting"
 		];
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -21,7 +20,7 @@ namespace Origins.Tiles.Decoration {
 			TileObjectData.newTile.Height = 2;
 			TileObjectData.addTile(Type);
 
-			AddMapEntry(new Color(99, 50, 30), Language.GetText("MapObject.Painting"));
+			AddMapEntry(new Color(120, 85, 60), Language.GetText("MapObject.Painting"));
 		}
 	}
 	public class Deceptive_Beauty_Item : ModItem {

@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Nitro_Crate : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.ExplosiveBoostAcc
+			"Combat",
+			"ExplosiveBoostAcc"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 26);

@@ -26,7 +26,6 @@ namespace Origins.Walls {
 			}
 			Origins.WallHammerRequirement[Type] = 70;
 			Origins.WallBlocksMinecartTracks[Type] = true;
-			OriginsSets.Walls.GeneratesLiquid[Type] = LiquidID.Water;
 			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
 			AddMapEntry(new Color(6, 26, 19));
 			DustType = DustID.GreenMoss;
@@ -183,7 +182,6 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.wallHouse[Type] = true;
-			OriginsSets.Walls.GeneratesLiquid[Type] = -1;
 		}
 		public override void RandomUpdate(int i, int j) { }
 		public override void AnimateWall(ref byte frame, ref byte frameCounter) { }
@@ -231,6 +229,6 @@ namespace Origins.Walls {
 		}
 	}
 	public struct TemporaryWallData : ITileData {
-		public ushort value;
+		public int value;
 	}
 }

@@ -1,20 +1,14 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Items.Other.Critters;
 using Origins.Tiles.Other;
-using Origins.World;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Critters {
 	public class Amoeba_Buggy : Glowing_Mod_NPC, IWikiNPC {
@@ -211,126 +205,5 @@ namespace Origins.NPCs.Critters {
 			}
 			return 0.045f;
 		}*/
-	}
-	public class Hyrax : ModNPC, IWikiNPC {
-		public override string Texture => typeof(Cicada_3301).GetDefaultTMLName();
-		public Rectangle DrawRect => new(0, 0, 20, 13);
-		public int AnimationFrames => 2;
-		public int FrameDuration => 8;
-		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
-		public override void SetStaticDefaults() {
-			Main.npcCatchable[Type] = true;
-			Main.npcFrameCount[Type] = 2;
-			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.Shimmerfly;
-			NPCID.Sets.CountsAsCritter[Type] = true;
-		}
-		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Snail);
-			NPC.catchItem = ModContent.ItemType<Hyrax_Item>();
-			SpawnModBiomes = [
-				ModContent.GetInstance<Limestone_Cave>().Type
-			];
-		}
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (!spawnInfo.Player.InModBiome<Limestone_Cave>()) return 0f;
-			return spawnInfo.SpawnTileY > Main.worldSurface ? 1 : 0;
-		}
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.AddTags(
-				this.GetBestiaryFlavorText()
-			);
-		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ItemID.Leather));
-		}
-		public override void OnKill() {
-			if (!NetmodeActive.MultiplayerClient && NPC.AnyInteractions() && OriginsModIntegrations.CheckAprilFools()) {
-				Player player = Main.player[NPC.lastInteraction];
-				Projectile.NewProjectile(NPC.GetSource_Death(), player.Bottom, Vector2.Zero, ModContent.ProjectileType<Hyrax_Laser>(), 500, 0, ai0: player.whoAmI);
-				SoundEngine.PlaySound(SoundID.Zombie104, player.Bottom);
-			}
-		}
-		public override void FindFrame(int frameHeight) {
-			if (Main.rand.NextBool(350)) {
-				SoundEngine.PlaySound(Origins.Sounds.Amalgamation.WithPitch(1).WithVolumeScale(0.5f), NPC.Center); // replace with a "AWAWA" sound
-			}
-			NPC.spriteDirection = Math.Sign(NPC.velocity.X);
-			if (++NPC.frameCounter >= 7) {
-				NPC.frameCounter = 0;
-				NPC.frame.Height = 26 / Main.npcFrameCount[NPC.type];
-				if ((NPC.frame.Y += NPC.frame.Height) / NPC.frame.Height >= Main.npcFrameCount[Type]) {
-					NPC.frame.Y = 0;
-				}
-			}
-		}
-	}
-	public class Hyrax_Laser : ModProjectile {
-		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.PhantasmalDeathray}";
-		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.PhantasmalDeathray);
-			Projectile.aiStyle = 0;
-			Projectile.damage = 500;
-		}
-		public override void AI() {
-			if ((int)Projectile.ai[0] < 0) Projectile.Kill();
-			Player player = Main.player[(int)Projectile.ai[0]];
-			if (!player.active) Projectile.Kill();
-			if (!Framing.GetTileSafely((Projectile.Bottom + Vector2.UnitY).ToTileCoordinates()).HasSolidTile()) {
-				Projectile.position.Y += CollisionExt.Raymarch(Projectile.Bottom, Vector2.UnitY);
-				Projectile.netUpdate = true;
-			}
-		}
-		public override void OnSpawn(IEntitySource source) {
-		}
-		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-			hitbox.Height = Projectile.Hitbox.Bottom + 100;
-			hitbox.Y = -100;
-		}
-		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
-			overPlayers.Add(index);
-		}
-		public override bool PreDraw(ref Color lightColor) {
-			Texture2D texture = TextureAssets.Projectile[Type].Value;
-			Main.EntitySpriteDraw(
-				texture,
-				Projectile.Center - Main.screenPosition,
-				null,
-				Color.White,
-				Projectile.rotation,
-				texture.Size() * 0.5f,
-				Projectile.scale,
-				SpriteEffects.None
-			);
-			return false;
-		}
-	}
-	public class Peppered_Moth : ModNPC, IWikiNPC {
-		public Rectangle DrawRect => new(0, 0, 18, 12);
-		public int AnimationFrames => 4;
-		public int FrameDuration => 8;
-		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
-		public override void SetStaticDefaults() {
-			Main.npcCatchable[Type] = true;
-			Main.npcFrameCount[Type] = 4;
-			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.Shimmerfly;
-			NPCID.Sets.CountsAsCritter[Type] = true;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Position = new(0, 22),
-				PortraitPositionYOverride = 42
-			};
-		}
-		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.BlueDragonfly);
-			NPC.catchItem = ModContent.ItemType<Peppered_Moth_Item>();
-			SpawnModBiomes = [
-				ModContent.GetInstance<Ashen_Biome>().Type
-			];
-		}
-		public override void FindFrame(int frameHeight) {
-			NPC.frameCounter += 0.75f;
-			NPC.frameCounter += NPC.velocity.LengthSquared() / 16;
-			NPC.spriteDirection = Math.Sign(NPC.velocity.X);
-			NPC.DoFrames(7);
-		}
 	}
 }

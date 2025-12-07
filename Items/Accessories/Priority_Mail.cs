@@ -1,6 +1,5 @@
 ﻿using BetterDialogue.UI.VanillaChatButtons;
 using MonoMod.Cil;
-using Origins.Dev;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -10,8 +9,8 @@ using Terraria.UI;
 namespace Origins.Items.Accessories {
     public class Priority_Mail : ModItem {
         public string[] Categories => [
-            WikiCategories.Combat,
-			WikiCategories.SummonBoostAcc
+            "Combat",
+			"SummonBoostAcc"
         ];
 		public override void Load() {
 			try {

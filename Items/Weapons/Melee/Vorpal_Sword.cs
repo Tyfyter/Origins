@@ -19,8 +19,8 @@ namespace Origins.Items.Weapons.Melee {
 		public static float TornSeverity => 0.4f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-			WikiCategories.Sword
-		];
+            "Sword"
+        ];
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override bool HasOwnTexture => true;
 		public override void SetStaticDefaults() {

@@ -6,8 +6,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Weakpoint_Analyzer : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.RangedBoostAcc
+			"Combat",
+			"RangedBoostAcc"
 		];
 		public string EntryName => "Origins/" + typeof(Weakpoint_Analyzer_Entry).Name;
 		public class Weakpoint_Analyzer_Entry : JournalEntry {

@@ -13,7 +13,7 @@ using CalamityMod.NPCs.TownNPCs;
 namespace Origins.Items.Mounts {
 	public class Ravel : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Movement
+			"Movement"
 		];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {

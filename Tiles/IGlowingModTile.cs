@@ -9,9 +9,7 @@ namespace Origins.Tiles {
 		AutoCastingAsset<Texture2D> GlowTexture { get; }
 		CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		Color GlowColor { get; }
-		void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			color = Vector3.Max(color, GlowColor.ToVector3());
-		}
+		void FancyLightingGlowColor(Tile tile, ref Vector3 color) => color = GlowColor.ToVector3();
 	}
 	public interface IGlowingModWall {
 		AutoCastingAsset<Texture2D> GlowTexture { get; }

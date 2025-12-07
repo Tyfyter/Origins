@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class IWTPA_Standard : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.ExplosiveBoostAcc
+			"Combat",
+			"ExplosiveBoostAcc"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 34);

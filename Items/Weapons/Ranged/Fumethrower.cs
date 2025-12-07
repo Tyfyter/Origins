@@ -5,7 +5,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Fumethrower : ModItem {
+	public class Fumethrower : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Gun"
+		];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Venom];

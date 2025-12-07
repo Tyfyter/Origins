@@ -9,7 +9,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Balloon)]
 	public class Focus_Crystal : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat
+			"Combat"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 30);

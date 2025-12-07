@@ -1,4 +1,5 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
@@ -8,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Other {
 	public class Encrusted_Brick : OriginTile, ICustomWikiStat {
         public string[] Categories => [
-            WikiCategories.Brick
+            "Brick"
         ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;

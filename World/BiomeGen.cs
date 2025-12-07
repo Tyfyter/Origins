@@ -1,7 +1,6 @@
 using AltLibrary.Common.Systems;
 using Microsoft.Xna.Framework.Input;
 using Origins.Items.Accessories;
-using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;

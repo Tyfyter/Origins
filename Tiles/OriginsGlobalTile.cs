@@ -1,11 +1,12 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Humanizer;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Consumables;
-using Origins.Tiles.Ashen;
+using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,6 @@ namespace Origins.Tiles {
 		static Dictionary<int, AutoLoadingAsset<Texture2D>> stalactiteTextures;
 		public override void SetStaticDefaults() {
 			stalactiteTextures = new() {
-				[ModContent.TileType<Brown_Ice>()] = "Origins/Tiles/Ashen/Brown_Icicle",
 				[ModContent.TileType<Defiled_Ice>()] = "Origins/Tiles/Defiled/Defiled_Icicle",
 				[ModContent.TileType<Primordial_Permafrost>()] = "Origins/Tiles/Riven/Primordial_Permafrost_Icicle"
 			};
@@ -77,7 +77,7 @@ namespace Origins.Tiles {
 				ConvertPlantsByAnchor(ref Main.tile[i, j].TileType, Main.tile[i, j + 1].TileType);
 				return true;
 			}
-			if (type == ModContent.TileType<Defiled_Foliage>() || type == ModContent.TileType<Riven_Foliage>() || type == ModContent.TileType<Ashen_Foliage>()) {
+			if (type == ModContent.TileType<Defiled_Foliage>() || type == ModContent.TileType<Riven_Foliage>()) {
 				ConvertPlantsByAnchor(ref Main.tile[i, j].TileType, Main.tile[i, j + 1].TileType);
 			}
 			return true;
@@ -97,9 +97,11 @@ namespace Origins.Tiles {
 				plant = TileID.HallowedPlants;
 				return;
 			}
-			if (anchor == ModContent.TileType<Defiled_Grass>()) plant = (ushort)ModContent.TileType<Defiled_Foliage>();
-			else if (anchor == ModContent.TileType<Riven_Grass>()) plant = (ushort)ModContent.TileType<Riven_Foliage>();
-			else if (anchor == ModContent.TileType<Ashen_Grass>()) plant = (ushort)ModContent.TileType<Ashen_Foliage>();
+			if (anchor == ModContent.TileType<Defiled_Grass>()) {
+				plant = (ushort)ModContent.TileType<Defiled_Foliage>();
+			} else if (anchor == ModContent.TileType<Riven_Grass>()) {
+				plant = (ushort)ModContent.TileType<Riven_Foliage>();
+			}
 		}
 		public static bool GetStalactiteTexture(int i, int j, int frameY, out AutoLoadingAsset<Texture2D> texture) {
 			int direction = -1;
@@ -139,20 +141,24 @@ namespace Origins.Tiles {
 				}
 			}
 		}
-		public override void FloorVisuals(int type, Player player) {
-		}
-		public override void ReplaceTile(int i, int j, int type, int targetType, int targetStyle) {
-			if (targetType == ModContent.TileType<Small_Storage_Container>()) {
-				int randomStyle = Main.rand.Next(3);
-				TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
-				TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
-				for (int x = 0; x < data.Width; x++) {
-					for (int y = 0; y < data.Height; y++) {
-						Tile tile = Main.tile[left + x, top + y];
-						tile.TileFrameX = (short)((x + randomStyle * 2) * 18);
-					}
+		public override bool? IsTileBiomeSightable(int i, int j, int type, ref Color sightColor) {
+			if (TileLoader.GetTile(type) is ModTile modTile) {
+				if (modTile is IDefiledTile) {
+					sightColor = Color.White;
+					return true;
+				}
+				if (modTile is IRivenTile) {
+					sightColor = Color.Cyan;
+					return true;
+				}
+				if (modTile is IAshenTile) {
+					sightColor = Color.OrangeRed;
+					return true;
 				}
 			}
+			return null;
+		}
+		public override void FloorVisuals(int type, Player player) {
 		}
 	}
 }

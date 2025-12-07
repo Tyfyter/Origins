@@ -8,9 +8,9 @@ namespace Origins.Items.Accessories {
 	public class Charm_Of_Naivety : ModItem, ICustomWikiStat {
 		public bool? Hardmode => true;
 		public string[] Categories => [
-			WikiCategories.Vitality,
-			WikiCategories.ExplosiveBoostAcc,
-			WikiCategories.SelfDamageProtek
+			"Vitality",
+			"ExplosiveBoostAcc",
+			"SelfDamageProtek"
 		];
 		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
 				Language.GetOrRegister($"Mods.Origins.Items.{nameof(Mildew_Heart)}.Tooltip"),

@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Tones_Of_Agony : ModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => [
-            WikiCategories.SpellBook
+            "SpellBook"
         ];
         public ushort Element => Elements.Earth;
 		public override void SetStaticDefaults() {

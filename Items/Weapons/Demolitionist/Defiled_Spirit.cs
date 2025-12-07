@@ -6,8 +6,12 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Defiled_Spirit : ModItem, IJournalEntrySource {
+	public class Defiled_Spirit : ModItem, ICustomWikiStat, IJournalEntrySource {
 		static short glowmask;
+        public string[] Categories => [
+            "ThrownExplosive",
+            "ExpendableWeapon"
+        ];
 		public string EntryName => "Origins/" + typeof(Defiled_Spirit_Entry).Name;
 		public class Defiled_Spirit_Entry : JournalEntry {
 			public override string TextKey => "Defiled_Spirit";

@@ -17,8 +17,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Waist)]
 	public class CORE_Generator : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.ExplosiveBoostAcc
+			"Combat",
+			"ExplosiveBoostAcc"
 		];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {

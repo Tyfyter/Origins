@@ -1,10 +1,14 @@
-﻿using System;
+﻿using MonoMod.Utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Text;
+using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -20,7 +24,7 @@ namespace Origins.NPCs {
 
 		public bool downedDefiledMimic;
 		public bool downedRivenMimic;
-		public bool downedTrashCompactorMimic;
+		public bool downedAshenMimic;
 		
 		public override void Load() {
 			{

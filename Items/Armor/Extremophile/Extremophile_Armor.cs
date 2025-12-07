@@ -8,7 +8,7 @@ namespace Origins.Items.Armor.Extremophile {
 	[AutoloadEquip(EquipType.Head)]
 	public class Extremophile_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            WikiCategories.ArmorSet
+            "ArmorSet"
         ];
 		public override void SetDefaults() {
 			Item.defense = 11;

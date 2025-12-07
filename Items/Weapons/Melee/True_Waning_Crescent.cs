@@ -6,7 +6,10 @@ using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
-	public class True_Waning_Crescent : ModItem {
+	public class True_Waning_Crescent : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Boomerang"
+		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);
 			Item.DamageType = DamageClass.MeleeNoSpeed;

@@ -8,12 +8,15 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
+
 using Origins.Dev;
 using PegasusLib;
-
 namespace Origins.Items.Weapons.Magic {
-	public class Haunted_Vase : ModItem {
+	public class Haunted_Vase : ModItem, ICustomWikiStat {
 		static short glowmask;
+        public string[] Categories => [
+            "OtherMagic"
+        ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

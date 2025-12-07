@@ -6,7 +6,10 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
-	public class Dark_Spiral : ModItem {
+	public class Dark_Spiral : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Boomerang"
+		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);
 			Item.DamageType = DamageClass.MeleeNoSpeed;

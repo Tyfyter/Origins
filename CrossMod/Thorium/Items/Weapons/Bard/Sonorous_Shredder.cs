@@ -128,7 +128,7 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			}
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding => true;
+		public bool IsExploding() => true;
 	}
 	#endregion without thorium
 	#region with thorium
@@ -246,8 +246,8 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 				Projectile.ai[0] = 1;
 			}
 		}
-		public void Explode(int delay = 0) { }
-		public bool IsExploding => true;
+		public void Explode(int delay = 0) {}
+		public bool IsExploding() => true;
 	}
 	#endregion with thorium
 	public class Sonorous_Shredder_Tracker : GlobalNPC {

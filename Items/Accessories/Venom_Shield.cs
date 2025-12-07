@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Venom_Shield : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat
+			"Combat"
 		];
 		public override void SetDefaults() {
 			Item.CloneDefaultsKeepSlots(ItemID.EoCShield);

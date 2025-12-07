@@ -16,8 +16,11 @@ using Origins.Items.Tools;
 using Origins.CrossMod;
 
 namespace Origins.Items.Weapons.Ranged {
-	public class Tolruk : ModItem {
+	public class Tolruk : ModItem, ICustomWikiStat {
 		public static short[] glowmasks;
+        public string[] Categories => [
+            "Gun"
+        ];
         public override void SetStaticDefaults() { //still needs reshaping chee
 			glowmasks = [
 				-1,

@@ -6,7 +6,10 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
-	public class Bled_Out_Staff : ModItem {
+	public class Bled_Out_Staff : ModItem, ICustomWikiStat {
+        public string[] Categories => [
+            "Wand"
+        ];
         public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;

@@ -21,7 +21,10 @@ using ThoriumMod.NPCs.BossViscount;
 
 namespace Origins.Items.Weapons.Magic {
 	[LegacyName("Defiled_Dungeon_Chest_Placeholder_Item")]
-	public class Missing_File : ModItem, IJournalEntrySource {
+	public class Missing_File : ModItem, ICustomWikiStat, IJournalEntrySource {
+		public string[] Categories => [
+			"OtherMagic"
+		];
 		public static int ID { get; private set; }
 		public static Dictionary<int, int> NPCTypeAliases { get; private set; } = [];
 		public string EntryName => "Origins/" + typeof(Missing_File_Entry).Name;
@@ -51,7 +54,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useAnimation = 30;
 			Item.useTime = 30;
 			Item.shootSpeed = 0;
-			Item.useStyle = ItemUseStyleID.EatFood;
+			Item.useStyle = ItemHoldStyleID.HoldUp;
 			Item.knockBack = 0;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Yellow;

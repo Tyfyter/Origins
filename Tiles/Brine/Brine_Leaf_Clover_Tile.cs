@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
 using Terraria;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
@@ -11,8 +10,8 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Brine {
 	public class Brine_Leaf_Clover_Tile : OriginTile {
         public string[] Categories => [
-			WikiCategories.Plant
-		];
+            "Plant"
+        ];
         public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;

@@ -1,11 +1,9 @@
 ﻿using Origins.Buffs;
-using Origins.Core.Structures;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riptide;
 using Origins.Items.Other;
 using Origins.Items.Other.Consumables;
-using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
 using Origins.Items.Pets;
@@ -16,7 +14,6 @@ using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Reflection;
 using Origins.Tiles.Other;
-using Origins.UI;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -28,9 +25,7 @@ using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
-using Terraria.UI;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -594,24 +589,6 @@ namespace Origins {
 			if (tornCurrentSeverity > 0 && tornCurrentSeverity < 1) {
 				regen /= (1 - tornCurrentSeverity) * 0.85f + 0.15f;
 			}
-			if (pacemaker) {
-				if (pacemakerActive.TrySet(pacemakerTime > Pacemaker.DisableRegenTime(Player)) && pacemakerActive) {
-					SoundEngine.PlaySound(SoundID.Item117.WithPitch(1.5f), Player.position);
-					SoundEngine.PlaySound(SoundID.Item121.WithPitch(2f).WithVolume(0.5f), Player.position);
-				}
-				if (pacemakerActive) {
-					regen *= Pacemaker.RegenMult;
-					Max(ref Player.lifeRegen, 0);
-					Player.lifeRegen = Main.rand.RandomRound(Player.lifeRegen * Pacemaker.RegenMult);
-					if (Player.palladiumRegen) Player.lifeRegenCount += Main.rand.RandomRound(4 * (Pacemaker.RegenMult - 1));
-				} else {
-					SoundEngine.PlaySound(SoundID.Zombie87.WithVolumeScale(0.3f).WithPitch(-0.72f), Player.position, _ => !pacemakerActive);
-					Min(ref regen, 0);
-					Min(ref Player.lifeRegen, 0);
-					Min(ref Player.lifeRegenCount, 0);
-					Player.palladiumRegen = false;
-				}
-			}
 		}
 		public override void PostUpdateBuffs() {
 			foreach (Projectile projectile in Main.ActiveProjectiles) {
@@ -694,29 +671,18 @@ namespace Origins {
 			List<Item> items = new();
 			Dictionary<int, Item> substituteItems = new();
 			int switchblade = ModContent.ItemType<Switchblade_Shortsword>();
-			Queue<Item> medicines = [];
-			HashSet<int> medicineTypes = [];
+			Item currentItem;
 			for (int i = 0; i < Player.inventory.Length; i++) {
-				Item currentItem = Player.inventory[i];
-				if (currentItem.IsAir) continue;
+				currentItem = Player.inventory[i];
 				if (currentItem.type == switchblade) {
 					substituteItems.Add(items.Count, currentItem);
 					items.Add(new Item(ModContent.ItemType<Switchblade_Broadsword>(), currentItem.stack, currentItem.prefix));
 				}
-				if (currentItem.ModItem is MedicineBase and not Multimed && medicineTypes.Add(currentItem.type)) {
-					medicines.Enqueue(currentItem);
-					substituteItems.Add(items.Count, new Item(ModContent.ItemType<AnyDifferentMedicine>(), 1));
-					items.Add(new Item(ModContent.ItemType<AnyDifferentMedicine>(), 1));
-				}
 			}
 			itemConsumedCallback = (item, index) => {
 				if (substituteItems.TryGetValue(index, out Item consumed)) {
-					if (consumed.ModItem is AnyDifferentMedicine) {
-						if (--medicines.Dequeue().stack <= 0) consumed.TurnToAir();
-					} else {
-						consumed.stack = item.stack;
-						if (consumed.stack <= 0) consumed.TurnToAir();
-					}
+					consumed.stack = item.stack;
+					if (consumed.stack <= 0) consumed.TurnToAir();
 				}
 			};
 			return items;
@@ -771,7 +737,6 @@ namespace Origins {
 			tag.Add("Assimilations", assimilations);
 			tag.Add("mojoInjection", mojoInjection);
 			tag.Add("crownJewel", crownJewel);
-			tag.Add("thePlantUnlocks", unlockedPlantModes.Select(mode => new ItemDefinition(mode)).Concat(unloadedPlantModes).ToList());
 			tag.Add("GUID", guid.ToByteArray());
 		}
 		public override void LoadData(TagCompound tag) {
@@ -808,17 +773,6 @@ namespace Origins {
 			}
 			mojoInjection = tag.SafeGet<bool>("mojoInjection");
 			crownJewel = tag.SafeGet<bool>("crownJewel");
-			unlockedPlantModes.Clear();
-			unloadedPlantModes.Clear();
-			if (tag.TryGet("thePlantUnlocks", out List<ItemDefinition> plantUnlocks)) {
-				for (int i = 0; i < plantUnlocks.Count; i++) {
-					if (plantUnlocks[i].IsUnloaded) {
-						unloadedPlantModes.Add(plantUnlocks[i]);
-					} else {
-						unlockedPlantModes.Add(plantUnlocks[i].Type);
-					}
-				}
-			}
 			if (tag.TryGet("GUID", out byte[] guidBytes)) {
 				guid = new Guid(guidBytes, false);
 			} else {

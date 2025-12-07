@@ -9,7 +9,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Scrap_Barrier : ModItem, ICustomWikiStat, ICustomLinkFormat {
 		public string[] Categories => [
-			WikiCategories.Combat
+			"Combat"
 		];
 		void ICustomWikiStat.ModifyWikiStats(JObject data) {
 			data["Name"] = ModContent.GetInstance<ItemWikiProvider>().PageName(this).Replace("_", " ");
@@ -38,7 +38,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Scrap_Barrier_Uncursed : Uncursed_Cursed_Item<Scrap_Barrier>, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat
+			"Combat"
 		];
 		public override bool HasOwnTexture => true;
 		public override void SetDefaults() {

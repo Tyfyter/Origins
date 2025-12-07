@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Salty_Seed : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			WikiCategories.Tool
+			"Tool"
 		];
 		public string EntryName => "Origins/" + typeof(Salty_Seed_Entry).Name;
 		public class Salty_Seed_Entry : JournalEntry {

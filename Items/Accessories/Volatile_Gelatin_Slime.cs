@@ -14,7 +14,7 @@ using Terraria.Utilities;
 namespace Origins.Items.Accessories {
 	public class Volatile_Gelatin_Global_Item : GlobalItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat
+			"Combat"
 		];
 		public override bool IsLoadingEnabled(Mod mod) => OriginConfig.Instance.VolatileGelatin;
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.type == ItemID.VolatileGelatin;
@@ -246,6 +246,6 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding => true;
+		public bool IsExploding() => true;
 	}
 }

@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Marrowick_Sword : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            WikiCategories.Sword
+            "Sword"
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodSword);

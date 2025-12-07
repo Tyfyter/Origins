@@ -4,7 +4,6 @@ using Origins.Dusts;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner.Minions;
@@ -21,7 +20,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
@@ -103,9 +101,6 @@ namespace Origins {
 		public bool luckyHatSet = false;
 		public int luckyHatSetTime = 0;
 		public bool LuckyHatSetActive => luckyHatSet && (luckyHatSetTime == -1 || luckyHatSetTime >= 90);
-		public bool luckyHatGun = false;
-		public int luckyHatGunTime = 0;
-		public bool LuckyHatGunActive => luckyHatGun && (luckyHatGunTime == -1 || luckyHatGunTime >= 90);
 		public bool mildewHead = false;
 		public bool mildewSet = false;
 		public bool chambersiteCommandoSet = false;
@@ -146,8 +141,6 @@ namespace Origins {
 		public Item razorwireItem = null;
 		public bool retributionShield = false;
 		public Item retributionShieldItem = null;
-		public Item barkShieldItem = null;
-		public Item flakJacketItem = null;
 		public bool unsoughtOrgan = false;
 		public Item unsoughtOrganItem = null;
 		public bool spiritShard = false;
@@ -333,19 +326,6 @@ namespace Origins {
 		public int shimmerShieldDashTime = 0;
 		public int? dashBaseDamage = 0;
 		public bool airTank = false;
-		public bool gasMask = false;
-		public bool AnyGasMask => gasMask || filterBreather;
-		public bool filterBreather = false;
-		public int gasMaskDye = 0;
-		public const float gasMaskMult = 0.75f;
-		public bool crystalHeart = false;
-		public int crystalHeartCounter = 0;
-		public bool pacemaker = false;
-		public int pacemakerTime = 0;
-		public bool pacemakerActive = false;
-		public bool stressBall = false;
-		public int stressBallTimer = 0;
-		public float stressBallStrength = 0;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -380,9 +360,6 @@ namespace Origins {
 
 		public float ZoneRivenProgress = 0;
 		public float ZoneRivenProgressSmoothed = 0;
-
-		public float ZoneAshenProgress = 0;
-		public float ZoneAshenProgressSmoothed = 0;
 
 		public float ZoneBrineProgress = 0;
 		public float ZoneBrineProgressSmoothed = 0;
@@ -420,14 +397,7 @@ namespace Origins {
 		public bool weakShimmer = false;
 		public bool compositeFrontArmWasEnabled = false;
 		public bool walledDebuff = false;
-		public bool medicinalAcid = false;
-		public int preMedicinalAcidLife = 0;
-		public int medicinalAcidLife = 0;
-		public bool murkySludge = false;
-		public bool miasma = false;
-		public bool tetanus = false;
 
-		public bool DisableBreathRestore => toxicShock || miasma;
 		public bool sendBuffs = false;
 		#endregion
 
@@ -487,10 +457,6 @@ namespace Origins {
 		public int dreamcatcherHoldTime = 0;
 		public Vector2? dreamcatcherWorldPosition = null;
 		public bool pocketDimensionMonolithActive = false;
-		public bool InfoAccMechShowAshenWires = false;
-		public int blastFurnaceCharges = 0;
-		public List<int> unlockedPlantModes = [];
-		List<ItemDefinition> unloadedPlantModes = [];
 		#endregion
 
 		#region visuals
@@ -498,7 +464,6 @@ namespace Origins {
 		#endregion visuals
 
 		public float statSharePercent = 0f;
-		public StatModifier thrownProjectileSpeed = StatModifier.Default;
 		public StatModifier projectileSpeedBoost = StatModifier.Default;
 
 		public bool journalUnlocked = false;
@@ -546,7 +511,6 @@ namespace Origins {
 		public int oldBreath = 200;
 		public float oldGravDir = 0;
 		public float lifeRegenTimeSinceHit = 0;
-		public int timeSinceHit = 0;
 		public int itemUseOldDirection = 0;
 		public List<Vector2> oldVelocities = [];
 		public Guid guid = Guid.Empty;
@@ -687,23 +651,6 @@ namespace Origins {
 			} else {
 				luckyHatSetTime = 0;
 			}
-			if (Player.HeldItem?.ModItem is Rattlesnake) {
-				luckyHatGun = true;
-				if (Player.ItemAnimationActive) {
-					luckyHatGunTime = LuckyHatGunActive && Player.itemAnimation > 1 ? -1 : 0;
-				} else {
-					if (luckyHatGunTime < 90) {
-						luckyHatGunTime++;
-						if (LuckyHatGunActive) {
-							SoundEngine.PlaySound(SoundID.Camera.WithPitchRange(0.6f, 1f), Player.Center);
-							SoundEngine.PlaySound(SoundID.Coins.WithPitchRange(0.6f, 1f), Player.Center);
-						}
-					}
-				}
-			} else {
-				luckyHatGun = false;
-				luckyHatGunTime = 0;
-			}
 			mildewHead = false;
 			mildewSet = false;
 			chambersiteCommandoSet = false;
@@ -752,8 +699,6 @@ namespace Origins {
 			retributionShield = false;
 			razorwireItem = null;
 			retributionShieldItem = null;
-			barkShieldItem = null;
-			flakJacketItem = null;
 			unsoughtOrgan = false;
 			unsoughtOrganItem = null;
 			spiritShard = false;
@@ -862,21 +807,9 @@ namespace Origins {
 			shimmerShield = false;
 			dashBaseDamage = null;
 			airTank = false;
-			gasMask = false;
-			gasMaskDye = 0;
-			filterBreather = false;
-			if (!crystalHeart.TrySet(false)) crystalHeartCounter = 0;
-			if (!pacemaker.TrySet(false)) {
-				pacemakerTime = 0;
-				pacemakerActive = false;
-			}
-			if (!stressBall.TrySet(false)) {
-				stressBallTimer = 0;
-				stressBallStrength = 0;
-			}
 			lotteryTicketItem = null;
 
-
+			
 			spiderRavel = false;
 			if (spiderRavelTime > 0) spiderRavelTime--;
 			doubleTapDownTimer++;
@@ -1004,7 +937,7 @@ namespace Origins {
 			for (int i = 0; i < Player.inventory.Length; i++) {
 				if (Player.inventory[i]?.ModItem is Mojo_Flask mojoFlask) mojoFlaskCountMax = mojoFlask.FlaskUseCount;
 			}
-
+			
 			boatRockerAltUse = false;
 			boatRockerAltUse2 = false;
 
@@ -1014,8 +947,6 @@ namespace Origins {
 			Dream_Catcher.UpdateVisual(Player, ref dreamcatcherAngle, ref dreamcatcherRotSpeed);
 			if (dreamcatcherHoldTime.Cooldown()) dreamcatcherWorldPosition = null;
 			pocketDimensionMonolithActive = false;
-			InfoAccMechShowAshenWires = false;
-			if (blastFurnaceCharges > 0 && Player.HeldItem.ModItem is not Blast_Furnace) blastFurnaceCharges = 0;
 
 			manaShielding = 0f;
 
@@ -1034,7 +965,6 @@ namespace Origins {
 			artifactManaCost = 1f;
 
 			statSharePercent = 0f;
-			thrownProjectileSpeed = StatModifier.Default;
 			projectileSpeedBoost = StatModifier.Default;
 
 			if (itemComboAnimationTime > 0)
@@ -1148,8 +1078,6 @@ namespace Origins {
 					lifeRegenTimeSinceHit += 2f;
 				}
 			}
-			timeSinceHit++;
-			pacemakerTime++;
 			oldVelocities.Insert(0, Player.velocity);
 			while (oldVelocities.Count > 20) oldVelocities.RemoveAt(20);
 			if (tornCurrentSeverity >= 0.99f && Player.whoAmI == Main.myPlayer && !Player.dead && Player.statLifeMax2 <= 0) {
@@ -1206,10 +1134,6 @@ namespace Origins {
 					break;
 				}
 			}
-			medicinalAcid = false;
-			murkySludge = false;
-			miasma = false;
-			tetanus = false;
 			if (dangerTime <= 0) dangerTime = 0;
 			else dangerTime--;
 			InDanger = dangerTime > 0;

@@ -8,7 +8,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	public class Telephone_Pole : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            WikiCategories.Sword
+            "Sword"
         ];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.UsesBetterMeleeItemLocation[Type] = true;

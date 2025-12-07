@@ -1,5 +1,4 @@
 ﻿using Origins.Buffs;
-using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -7,6 +6,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Bile_Flask : ModItem {
+        public string[] Categories => [
+            "Potion"
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 		}

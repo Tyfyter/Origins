@@ -1,12 +1,11 @@
-﻿using Origins.Dev;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Buffs {
 	public class Safe_Buff : ModBuff {
 		public static int ID { get; private set; }
 		public string[] Categories => [
-			WikiCategories.ExplosiveBoostBuff
+			"ExplosiveBoostBuff"
 		];
 		public override void SetStaticDefaults() {
 			ID = Type;

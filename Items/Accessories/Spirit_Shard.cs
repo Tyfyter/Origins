@@ -6,8 +6,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Spirit_Shard : ModItem, IJournalEntrySource, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.SummonBoostAcc
+			"Combat",
+			"SummonBoostAcc"
 		];
 		public string EntryName => "Origins/" + typeof(Eccentric_Stone_Entry).Name;
 		

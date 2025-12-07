@@ -9,9 +9,9 @@ namespace Origins.Items.Armor.Nova {
     [AutoloadEquip(EquipType.Head)]
 	public class Nova_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            WikiCategories.PostMLArmorSet,
-            WikiCategories.ExplosiveBoostGear,
-			WikiCategories.SelfDamageProtek
+            "PostMLArmorSet",
+            "ExplosiveBoostGear",
+			"SelfDamageProtek"
 		];
 		public bool? Hardmode => true;
         public override void SetStaticDefaults() {

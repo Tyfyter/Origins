@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using Terraria;
@@ -62,13 +63,6 @@ namespace Origins.Tiles.Riven {
 			Item.value = 500;
 			Item.createTile = ModContent.TileType<Riven_Dungeon_Chest>();
 			Item.glowMask = glowmask;
-		}
-	}
-	public class Locked_Riven_Dungeon_Chest_Item : Riven_Dungeon_Chest_Item {
-		public override string Texture => "Origins/Tiles/Riven/Riven_Dungeon_Chest_Item";
-		public override void SetDefaults() {
-			base.SetDefaults();
-			Item.placeStyle = 1;
 		}
 	}
 }

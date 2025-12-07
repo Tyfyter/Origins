@@ -9,7 +9,10 @@ using Origins.Dev;
 using Tyfyter.Utils;
 using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
-	public class Hot_Potato : ModItem {
+	public class Hot_Potato : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"OtherMagic"
+		];
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.maxStack = 1;

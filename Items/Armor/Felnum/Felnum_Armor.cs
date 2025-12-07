@@ -12,8 +12,8 @@ namespace Origins.Items.Armor.Felnum {
 	public class Felnum_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public const float shock_damage_divisor = 15f;
 		public string[] Categories => [
-			WikiCategories.ArmorSet,
-			WikiCategories.GenericBoostGear
+			"ArmorSet",
+			"GenericBoostGear"
 		];
 		public short GlowMask = -1;
 		protected virtual int CraftingStation => TileID.Anvils;

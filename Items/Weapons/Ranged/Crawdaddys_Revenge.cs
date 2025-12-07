@@ -5,7 +5,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Crawdaddys_Revenge : ModItem {
+	public class Crawdaddys_Revenge : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Gun"
+		];
 		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				global.crawdadNetworkEffect = true;

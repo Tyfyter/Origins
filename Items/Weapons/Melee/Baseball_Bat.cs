@@ -7,7 +7,7 @@ using Origins.Items.Materials;
 namespace Origins.Items.Weapons.Melee {
 	public class Baseball_Bat : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            WikiCategories.Sword
+            "Sword"
         ];
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenSword);

@@ -8,8 +8,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Asylum_Whistle : ModItem, IJournalEntrySource, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.SummonBoostAcc
+			"Combat",
+			"SummonBoostAcc",
+			"LoreItem"
 		];
 		public string EntryName => "Origins/" + typeof(Asylum_Whistle_Entry).Name;
 		public override void SetStaticDefaults() {

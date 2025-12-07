@@ -1,6 +1,5 @@
 ﻿using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
-using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using System;

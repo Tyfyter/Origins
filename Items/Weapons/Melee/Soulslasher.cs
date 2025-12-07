@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Soulslasher : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Sword
+			"Sword"
 		];
 		public override void SetStaticDefaults() {
 			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;

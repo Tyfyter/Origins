@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Felnum_Hamaxe : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.ToolWeapon
+			"ToolWeapon"
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;

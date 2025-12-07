@@ -10,8 +10,8 @@ using Terraria.Utilities;
 namespace Origins.Items.Accessories {
 	public class Protozoa_Food : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.SummonBoostAcc
+			"Combat",
+			"SummonBoostAcc"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 20);

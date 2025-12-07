@@ -11,7 +11,7 @@ namespace Origins.Items.Armor.Mildew {
 	[AutoloadEquip(EquipType.Head)]
 	public class Mildew_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public string[] Categories => [
-			WikiCategories.ArmorSet
+			"ArmorSet"
 		];
 		int backHeadID;
 		public override void Load() {

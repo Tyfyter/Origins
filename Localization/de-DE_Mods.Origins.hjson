@@ -28,14 +28,10 @@ Conditions: {
 	// DownedScrapper: After defeating the Scrapper
 	// DownedDefiledMimic: After defeating a {§Defiled} Mimic, In hardmode
 	// DownedRivenMimic: After defeating a {§Riven} Mimic, In hardmode
-	// DownedTrashCompactorMimic: After defeating an Trash Compactor Mimic, In hardmode
+	// DownedAshenMimic: After defeating an Ashen Mimic, In hardmode
 	// DownedShimmerConstruct: After defeating the Shimmer Construct
 	// DownedChambersiteSentinel: After defeating a Chambersite Sentinel
 	// HarpoonCondition: When the player has a Harpoon Gun in their inventory
-	// JournalEntry: While you do have the journal and don't have the '{0}' journal entry
-	// NoDuplicates: When the player doesn't already have the item
-	// WithoutScavengerSet: Without a full set of Scavenger Armor
-	// WithScavengerSet: With a full set of Scavenger Armor
 }
 
 ModMenu: {
@@ -54,17 +50,12 @@ RecipeGroups: {
 	// EvilMushrooms: Any Evil Mushroom
 	// EvilFish: Any Evil Fish
 	// EvilFishWeapons: Any Evil Fish Weapon
-	// AnyDifferentMedicine: Any Different Medicines
-	// Lamps: Any Lamp
 }
 
 Status_Messages: {
 	// Defiled_Fissure_1: Your body suddenly aches everywhere...
 	// Defiled_Fissure_2: Rattling emanates from the walls...
 	// Defiled_Fissure_3: The skies echo a threatening call...
-	// Heat_Vent_1: VENT [{0:00}] HEAVILY DAMAGED - DEPLOY REPAIRBOY SWARM. REPAIR.
-	// Heat_Vent_2: VENT [{0:00}] HEAVILY DAMAGED - ALLOCATE MORE UNITS. REPAIR, SURVEIL.
-	// Heat_Vent_3: VENT [{0:00}] HEAVILY DAMAGED - HEAT CRITICAL. REDUCING GENERATOR OUTPUT. DEPLOY TM-[{1:00}]. DESTROY.
 	// Cleansing_Station_Invalid_Location: You cannot use this with an evil presence nearby.
 	// Felnum_Spawn: The clouds have been blessed with Felnum!
 }
@@ -144,17 +135,6 @@ FishQuest: {
 			Despite being related to the common bass, Fiberbass sell for a lot because they're made of fiberglass and make good decorations!
 			''' */
 		// Location: Caught in Fiberglass Undergrowth
-	}
-
-	Scrapfish: {
-		/* Description:
-			'''
-			There's a fish that's somehow surviving in the oil-filled waters of the Ashen!
-			It has disguised its scales for scrap to avoid predators, if it even still has any.
-			Oh right! I am its only predator, and I want you to go to the Ashen Scrapyard to fish it out for me!
-			Don't forget your gas mask!
-			''' */
-		// Location: Caught in {§Defiled_Wastelands}
 	}
 }
 
@@ -449,20 +429,8 @@ DeathMessage: {
 		// 4: "{0} got dissolved."
 	}
 
-	Crushed: {
-		// 0: "{0} inspired a sign."
-		// 1: '''{0} reset the "days since last accident" counter.'''
-		// 2: "{0} didn't make it to the other side."
-	}
-
 	// Tripod_0: "{0} forgot the tripod nip."
 	// Tripod_1: "{0} got rekt by a {§Mods.Origins.NPCs.Defiled_Tripod.DisplayName}."
-
-	Miasma: {
-		// 0: "{0} thought climate change was just a joke."
-		// 1: "{0}'s lungs couldn't handle it."
-		// 2: "{0} couldn't breathe pollution."
-	}
 }
 
 Generic: {
@@ -487,29 +455,28 @@ Generic: {
 	// Acrid: Acrid
 	// Spug: Spug
 	// spug: spug
-	// Ashen: Ashen
 }
 
 AltBiomes: {
 	Defiled_Wastelands_Alt_Biome: {
-		// DisplayName: "{§Defiled}"
+		// DisplayName: "{§Defiled_Wastelands}"
 		// Description: The surrogate evil {§Defiled} is guaranteed to be present in your world.
 		// GenPassName: "{§Defiled}ifying"
 		// DryadTextDescriptor: "{§Defiled}"
 	}
 
 	Riven_Hive_Alt_Biome: {
-		// DisplayName: "{§Riven}"
-		// Description: The deceptive {§Riven} is guaranteed to be present in your world.
+		// DisplayName: "{§Riven_Hive}"
+		// Description: Life-harboring, beautiful {§Riven} is guaranteed to be present in your world.
 		// GenPassName: Blue Lobsterating
 		// DryadTextDescriptor: "{§Riven}"
 	}
 
 	Ashen_Alt_Biome: {
-		// DisplayName: "{§Ashen}"
-		// Description: The mechanical {§Ashen} is guaranteed to be present in your world.
-		// GenPassName: Polluting
-		// DryadTextDescriptor: "{§Ashen}"
+		// DisplayName: Ashen Factory
+		// Description: Ashen Alt Biome
+		// GenPassName: Ashen Alt Biome
+		// DryadTextDescriptor: ashen
 	}
 }
 
@@ -893,7 +860,7 @@ Buffs: {
 
 	Ambition_Buff: {
 		// DisplayName: Ambition
-		// Description: Increases armor penetration by 7
+		// Description: Increased offensive stats and stat share
 	}
 
 	Neural_Network_Buff: {
@@ -1381,62 +1348,24 @@ Buffs: {
 		// DisplayName: Astral Scythe Cooldown
 		// Description: Your scythe needs to rest.
 	}
-
-	Eat_Moss_Buff: {
-		// DisplayName: Ate Moss
-		// Description: That was a bad idea…
-	}
-
-	// Adrenaline_Buff.DisplayName: Adrenaline Rush
-	// Brightsee_Buff.DisplayName: Vigil
-	// Multimed_Buff.DisplayName: First Aid
-	// Blood_Pack_Buff.DisplayName: Blood Transfusion
-	// Fire_Band_Buff.DisplayName: Wrapped Up
-	// Medicinal_Acid_Buff.DisplayName: Solvent Tolerance
-	// Morphine_Buff.DisplayName: Morphine
-	// Rasterwrap_Buff.DisplayName: Unhindered
-	// Sanguis_Pack_Buff.DisplayName: Toasty
-	// Unmarked_Antidote_Buff.DisplayName: Antitoxin
-
-	Murky_Sludge_Debuff: {
-		// DisplayName: Muckin' About
-		// Description: Your movement speed is reduced!
-	}
-
-	Miasma_Debuff: {
-		// DisplayName: Miasma
-		// Description: It's getting hard to breathe...
-		// EffectDescription: Drains breath slowly
-	}
-
-	Tetanus_Debuff: {
-		// DisplayName: Tetanus
-		// Description: You should probably stay away from sharp, rusty metal
-	}
-
-	Choice_Paralysis_Debuff: {
-		// EffectDescription: Movement is intermitently reversed
-		// DisplayName: Choice Paralysis
-		// Description: Right or left, right or left...
-	}
 }
 
 DamageClassName: {
 	// ExplosivePlusTerraria/DefaultDamageClass: explosive damage
 	// ExplosivePlusTerraria/GenericDamageClass: explosive damage
-	// ExplosivePlusTerraria/MeleeDamageClass: explosive/melee damage
-	// ExplosivePlusTerraria/MeleeNoSpeedDamageClass: explosive/melee damage
-	// ExplosivePlusTerraria/RangedDamageClass: explosive/ranged damage
-	// ExplosivePlusTerraria/MagicDamageClass: explosive/magic damage
-	// ExplosivePlusTerraria/SummonDamageClass: explosive/summon damage
-	// ExplosivePlusTerraria/SummonMeleeSpeedDamageClass: explosive/summon damage
+	// ExplosivePlusTerraria/MeleeDamageClass: explosive melee damage
+	// ExplosivePlusTerraria/MeleeNoSpeedDamageClass: explosive melee damage
+	// ExplosivePlusTerraria/RangedDamageClass: explosive ranged damage
+	// ExplosivePlusTerraria/MagicDamageClass: explosive magic damage
+	// ExplosivePlusTerraria/SummonDamageClass: explosive summon damage
+	// ExplosivePlusTerraria/SummonMeleeSpeedDamageClass: explosive summon damage
 	// ExplosivePlusTerraria/MagicSummonHybridDamageClass: explosive magic or summon damage
 	// ExplosivePlusTerraria/ThrowingDamageClass: explosive damage (thrown)
-	// ExplosivePlusThoriumMod/BardDamage: explosive/symphonic damage
-	// ExplosivePlusThoriumMod/HealerDamage: explosive/radiant damage
-	// ExplosivePlusThoriumMod/HealerTool: explosive/radiant damage
-	// ExplosivePlusThoriumMod/HealerToolDamageHybrid: explosive/radiant damage
-	// ExplosivePlusThoriumMod/TrueDamage: explosive/true damage
+	// ExplosivePlusThoriumMod/BardDamage: explosive symphonic damage
+	// ExplosivePlusThoriumMod/HealerDamage: explosive radiant damage
+	// ExplosivePlusThoriumMod/HealerTool: explosive radiant damage
+	// ExplosivePlusThoriumMod/HealerToolDamageHybrid: explosive radiant damage
+	// ExplosivePlusThoriumMod/TrueDamage: explosive true damage
 }
 
 DamageClasses: {
@@ -1457,8 +1386,7 @@ DamageClasses: {
 	// Melee_Magic.DisplayName: melee/magic damage
 	// No_Summon_Inherit.DisplayName: No Summon Inherit
 	// Ranged_Explosive_Inherit.DisplayName: Ranged Explosive Inherit
-	// SentryExplosive.DisplayName: explosive sentry damage
-	// Ranged_Summon.DisplayName: ranged/summon damage
+	// SentryExplosive.DisplayName: Sentry Explosive
 }
 
 Projectiles: {
@@ -1867,8 +1795,8 @@ Projectiles: {
 	// Felnum_Sword_Slash.DisplayName: "{$Mods.Origins.Items.Felnum_Sword.DisplayName}"
 	// Cloud_Elemental_P.DisplayName: Cloud Elemental
 	// Shotgunfish_P.DisplayName: Shotgunfish
-	// Ashen_Mortar.DisplayName: "{§Ashen} Mortar"
-	// Ashen_Mortar_P.DisplayName: "{§Ashen} Mortar"
+	// Ashen_Mortar.DisplayName: Ashen Mortar
+	// Ashen_Mortar_P.DisplayName: Ashen Mortar
 	// Fiberglass_Sword_P.DisplayName: Fiberglass Sword
 	// Peat_Moss_Tile_Explosion.DisplayName: Peat Moss
 	// Ocotillo_Finger_P.DisplayName: Ocotillo Finger
@@ -1930,8 +1858,8 @@ Projectiles: {
 	// DefiledNukeSupremeProj.DisplayName: "{§Defiled} Nuke Supreme"
 	// RivenNukeProj.DisplayName: "{§Riven} Nuke"
 	// RivenNukeSupremeProj.DisplayName: "{§Riven} Nuke Supreme"
-	// AshenNukeProj.DisplayName: "{§Ashen} Nuke"
-	// AshenNukeSupremeProj.DisplayName: "{§Ashen} Nuke Supreme"
+	// AshenNukeProj.DisplayName: Ashen Nuke
+	// AshenNukeSupremeProj.DisplayName: Ashen Nuke Supreme
 	// Power_Lotus_Deflect_Fairy.DisplayName: Power Lotus Deflect Fairy
 	// Power_Lotus_Seeker_Fairy.DisplayName: Power Lotus Seeker Fairy
 	// Keytar_Bass.DisplayName: Keytar Bass
@@ -2050,7 +1978,7 @@ Projectiles: {
 	// Astral_Scythe_Slash.DisplayName: Astral Scythe Slash
 	// Dream_Catcher_Shard.DisplayName: Dream Catcher Shard
 	// Dream_Catcher_Vine.DisplayName: Dream Catcher Vine
-	// Dream_Catcher_P.DisplayName: Dream Catcher
+	// Dream_Catcher_P.DisplayName: Dream Catcher P
 	// Terratotem_Tab.DisplayName: Terratotem Tab
 	// Terratotem_Mask_Small.DisplayName: Terratotem Mask Small
 	// Terratotem_Mask_Big.DisplayName: Terratotem Mask Big
@@ -2061,60 +1989,6 @@ Projectiles: {
 	// Broken_Terratotem_Mask_Small.DisplayName: Broken Terratotem Mask Small
 	// Broken_Terratotem_Tab.DisplayName: Broken Terratotem Tab
 	// Astral_Scythe_Star.DisplayName: Astral Scythe Star
-	// Sootsand_Ball_Gun.DisplayName: Sootsand Ball
-	// Sootsand_Ball_Falling.DisplayName: Sootsand Ball
-	// Orange_Solution_P.DisplayName: Orange Solution
-	// Blotopus_P_Hostile.DisplayName: Blotopus
-	// Tank_Rifle_P.DisplayName: Tank Rifle
-	// Felnum_Bullet_P.DisplayName: Felnum Bullet
-	// Valkyrum_Bullet_P.DisplayName: Valkyrum Bullet
-	// Hyrax_Laser.DisplayName: Orbital Strike Laser
-	// Welding_Torch_P.DisplayName: Welding Torch
-	// Minishark_Broth_Bullet.DisplayName: Minishark Broth Bullet
-	// Ticking_Bomb_P.DisplayName: Ticking Bomb
-	// Mod_Wire_Channel.DisplayName: Mod Wire Kite
-	// Ticking_Dynamite_P.DisplayName: Ticking Dynamite
-	// Ticking_Grenade_P.DisplayName: Ticking Grenade
-	// Explosive_Sharknado.DisplayName: Explosive Sharknado
-	// Explosive_Sharkron.DisplayName: Explosive Sharkron
-	// Sharknade_O_P.DisplayName: Sharknade-o
-	// Lingering_Cursedflame1.DisplayName: Lingering Cursedflame
-	// Lingering_Cursedflame2.DisplayName: Lingering Cursedflame
-	// Lingering_Cursedflame3.DisplayName: Lingering Cursedflame
-	// Lingering_Shadowflame1.DisplayName: Lingering Shadowflame
-	// Lingering_Shadowflame2.DisplayName: Lingering Shadowflame
-	// Lingering_Shadowflame3.DisplayName: Lingering Shadowflame
-	// Trenchmaker_Firecracker.DisplayName: Firecracker
-	// Trenchmaker_Firecracker_Explosion_1.DisplayName: Firecracker
-	// Trenchmaker_Firecracker_Explosion_2.DisplayName: Firecracker
-	// Trenchmaker_Stomp_P.DisplayName: Trenchmaker Stomp
-	// Fuel_Rod_Ball_P.DisplayName: Fuel Rod Ball
-	// Trenchmaker_Cannon_P.DisplayName: Trenchmaker Cannon
-	// Bark_Shield_Splinters.DisplayName: Bark Shield Splinters
-	// Flak_Jacket_Explosion.DisplayName: Flak Jacket Explosion
-	// Flak_Jacket_Flak_1.DisplayName: Flak Jacket Flak
-	// Flak_Jacket_Flak_2.DisplayName: Flak Jacket Flak
-	// Flak_Jacket_Flak_3.DisplayName: Flak Jacket Flak
-	// Crystal_Heart_Slime_Flying.DisplayName: Crystal Heart Slime
-	// Crystal_Heart_Slime_Spike.DisplayName: Crystal Slime Spike
-	// Armor_Piercing_Bullet_P.DisplayName: Armor Piercing Bullet
-	// Super_Generic_Weapon_P.DisplayName: Super Generic Weapon
-	// Blast_Furnace_Charge.DisplayName: Blast Furnace Charge
-	// Blast_Furnace_P.DisplayName: Blast Furnace
-	// The_Plant_Chlorophyte_Bullet.DisplayName: "{$ProjectileName.ChlorophyteBullet}"
-	// The_Plant_Explosive_Bullet.DisplayName: "{$ProjectileName.ExplosiveBullet}"
-	// The_Plant_Venom_Bullet.DisplayName: "{$ProjectileName.VenomBullet}"
-	// The_Plant_Nano_Bullet.DisplayName: "{$ProjectileName.NanoBullet}"
-	// The_Plant_Luminite_Bullet.DisplayName: "{$ProjectileName.MoonlordBullet}"
-	// The_Plant_Crystal_Bullet.DisplayName: "{$ProjectileName.CrystalBullet}"
-	// Corona_P.DisplayName: "{$Items.Corona.DisplayName}"
-	// Shadow_Flare_P.DisplayName: "{$Items.Shadow_Flare.DisplayName}"
-	// Fire_Extinguisher_P.DisplayName: Fire Extinguisher P
-	// Fire_Extinguisher_P2.DisplayName: Fire Extinguisher P2
-	// Fire_Extinguisher_P3.DisplayName: Fire Extinguisher P3
-	// Laser_Target_Locator_P.DisplayName: Laser Target Locator P
-	// Laser_Target_Locator_Marker.DisplayName: Laser Target Locator Marker
-	// Laser_Target_Locator_Missile.DisplayName: Laser Target Locator Missile
 }
 
 Prefixes: {
@@ -2187,8 +2061,6 @@ Prefixes: {
 		// DisplayName: "{§Defiled}"
 		// Description: Projectiles steal mana and occasionally explode into {§Defiled} spikes
 	}
-
-	// Debug_Tank_Rifle_Prefix.DisplayName: Convenient
 }
 
 BiomeName: {
@@ -2251,9 +2123,9 @@ Biomes: {
 		}
 	}
 
-	Ashen_Biome: {
-		// DisplayName: "{§Ashen}"
-		// TownNPCDialogueName: the {§Ashen}
+	AshenBiomeData: {
+		// DisplayName: Ashen Biome
+		// TownNPCDialogueName: the Ashen Biome
 	}
 
 	Defiled_Wastelands_Desert: {
@@ -2300,35 +2172,9 @@ Biomes: {
 		// DisplayName: Limestone Cave
 		// TownNPCDialogueName: the Limestone Cave
 	}
-
-	Underground_Ashen_Biome: {
-		// TownNPCDialogueName: the Underground {§Ashen} Biome
-		// DisplayName: Underground {§Ashen} Biome
-	}
-
-	Ashen_Underground_Desert: {
-		// TownNPCDialogueName: the {§Ashen} Underground Desert
-		// DisplayName: "{§Ashen} Underground Desert"
-	}
-
-	Ashen_Ocean: {
-		// TownNPCDialogueName: the {§Ashen} Ocean
-		// DisplayName: "{§Ashen} Ocean"
-	}
-
-	Ashen_Ice_Biome: {
-		// TownNPCDialogueName: the {§Ashen} Ice Biome
-		// DisplayName: "{§Ashen} Ice Biome"
-	}
-
-	Ashen_Desert: {
-		// TownNPCDialogueName: the {§Ashen} Desert
-		// DisplayName: "{§Ashen} Desert"
-	}
 }
 
 CaptureBiomeChoice: {
-	// Ashen: "{§Ashen} Factory"
 	// Defiled: "{§The_Defiled_Wastelands}"
 	// Riven: The {§Riven_Hive}
 }
@@ -2406,12 +2252,15 @@ Tiles: {
 	// Basic_Crate_Tile.MapEntry: Basic Crate
 	// Ancient_Music_Box_BP: Ancient Music Box (Brine Pool)
 	// Music_Box_BP: Music Box (Brine Pool)
-	// Brine_Dungeon_Chest.MapEntry: Brine Chest
-	// Brine_Dungeon_Chest_Locked.MapEntry: Locked Brine Chest
+	// Brine_Dungeon_Chest.MapEntry: Brine Dungeon Chest
+	// Brine_Dungeon_Chest_Locked.MapEntry: Mods.Origins.Tiles.Brine_Dungeon_Chest_Locked.MapEntry
 	// Defiled_Storage_Unit.MapEntry: "{§Defiled} Storage Unit"
 	// Encrusted_Storage_Unit.MapEntry: Encrusted Storage Unit
 	// Sanguinite_Storage_Unit.MapEntry: Sanguinite Storage Unit
 	// Music_Box_FU: Music Box (Fiberglass Undergrowth)
+	// Fake_Ashen_Altar.MapEntry: Ashen Altar
+	// Fake_Defiled_Altar.MapEntry: "{§Defiled} Altar"
+	// Fake_Riven_Altar.MapEntry: "{§Riven} Altar"
 	// Hydrothermal_Vent_Goopy.MapEntry: Goopy Hydrothermal Vent
 	// Lucky_Hat_Tile.MapEntry: Lucky Hat
 	// Residual_Crate_Tile.MapEntry: Residual Crate
@@ -2424,26 +2273,6 @@ Tiles: {
 	// Fuzzvine.MapEntry: Fuzzvine
 	// Fuzzvine_Lorg.MapEntry: "{$Fuzzvine}"
 	// Otherworldly_Music_Box_DW: Otherworldly Music Box ({§Defiled_Wastelands})
-	// Artifiber_Chest.MapEntry: Artifiber Chest
-	// Artifiber_Dresser.MapEntry: Artifiber Dresser
-	// Ashen_Dungeon_Chest.MapEntry: "{§Ashen} Chest"
-	// Ashen_Dungeon_Chest_Locked.MapEntry: Locked {§Ashen} Chest
-	// Ashen_Altar.MapEntry: "{§Ashen} Altar"
-	// Suit_Locker.MapEntry: Suit Locker
-	// Heat_Vent.MapEntry: Heat Vent
-	// Floodlight.MapEntry: Floodlight
-	// Background_Door.MapEntry: Background Door
-	// Small_Storage_Container.MapEntry: Small Storage Container
-	// Generation_Station.MapEntry: Generation Station
-	// Industrial_Door.MapEntry: Industrial Door
-	// Industrial_Door_Open.MapEntry: Industrial Door
-	// Cargo_Elevator_Door.MapEntry: Cargo Elevator Door
-	// Cargo_Elevator_Door_Open.MapEntry: Cargo Elevator Door Open
-	// Music_Box_AS: Music Box ({§Ashen} Scrapyard)
-	// Music_Box_SS: Music Box (Smog Storm)
-	// Rusty_Locker.MapEntry: Rusty Locker
-	// Music_Box_AF: Music Box ({§Ashen} Factory)
-	// Music_Box_AM: Music Box ({§Ashen} Mines)
 }
 
 MapObject: {
@@ -2468,8 +2297,6 @@ Keybinds: {
 	// UseMojoFlask.DisplayName: Use Mojo Flask
 	// JournalBack.DisplayName: "{§Journal}: Back"
 	// WishingGlass.DisplayName: Wishing Glass
-	// "Open Structure Helper.DisplayName": Open Structure Helper
-	// StressBall.DisplayName: Stress Ball
 }
 
 Configs: {
@@ -2550,6 +2377,11 @@ Configs: {
 		ScreenShakeMultiplier: {
 			// Label: Screen shake multiplier
 			// Tooltip: Changes how much your screen shakes.
+		}
+
+		OldSoundtrack: {
+			// Label: Volume 1 to Volume 2 Music toggle
+			// Tooltip: Toggles between the different soundtracks of Terraria Origins. 'On' is Vol. 1, 'Off' is Vol. 2.
 		}
 
 		ArtifactMinionHealthbarStyle: {
@@ -2815,11 +2647,6 @@ Configs: {
 		ExportVersionedLists: {
 			// Label: Export Version Lists
 			// Tooltip: ""
-		}
-
-		ForceEnableDebugItems: {
-			// Label: Force Enable Debug Items
-			// Tooltip: Enables debugging items even in release builds
 		}
 	}
 
@@ -3087,7 +2914,7 @@ SetBonuses: {
 	/* Scavenger:
 		'''
 		All explosives inflict [buffhint:Origins/Impeding_Shrapnel_Debuff]
-		Additional scrap drops from {§Ashen} enemies
+		Additional scrap drops from Ashen enemies
 		''' */
 	// Souldhide: Nearby enemies are [buffhint:Origins/Soulhide_Weakened_Debuff] and afflicted with [buffhint:ShadowFlame]
 	// Tendon: Mobility is based on remaining health
@@ -3276,52 +3103,4 @@ CritType: {
 	// Communion_Type: Critically strikes when hitting the same target multiple times
 	// Viper_Rifle_Crit_Type: Critically strikes on otherwise afflicted enemies
 	// Felnum_Crit_Type: "{$Mods.CritRework.CritTypes.FoeIsWet.Description}"
-}
-
-BuilderToggle: {
-	// Brown_Wire_Toggle: Brown Wires
-	// Black_Wire_Toggle: Black Wires
-	// White_Wire_Toggle: White Wires
-}
-
-NoveltyWatchTime: {
-	// PartyTime: Party Time! ({0})
-	// ImpendingDoom: "{0} seconds"
-}
-
-Achievements: {
-	Kaiju: {
-		// FriendlyName: Kaiju
-		// Description: Defeat the World Cracker, an eel that burrows in the Riven Hive eating at the world.
-	}
-
-	Kill_Trenchmaker: {
-		// FriendlyName: Now You're the One Lying Broken
-		// Description: Defeat the Trenchmaker, a war machine manufactured in the Ashen Factory.
-	}
-
-	Killimanjaro: {
-		// FriendlyName: Killimanjaro
-		// Description: Defeat the Defiled Amalgamation, a rogue entity the Defiled has on a tight leash.
-	}
-
-	An_Eye_For_An_Eye: {
-		// FriendlyName: An Eye For An Eye
-		// Description: Defeat the Shimmer Construct, of which one must transmute another powerful entity to encounter.
-	}
-
-	Enough_Yap: {
-		// FriendlyName: Enough Yap
-		// Description: Defeat the {§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} before it can even call for help
-	}
-
-	It_Was_Watching: {
-		// FriendlyName: It Was Watching
-		// Description: Defeat the Fiberglass Weaver, a giant opportunistic stalker of the Fiberglass Undergrowth.
-	}
-
-	Kill_Lost_Diver: {
-		// FriendlyName: There's Something in There!
-		// Description: Defeat the Lost Diver, a humanoid puppet lying around somewhere in the Brine Pool.
-	}
 }

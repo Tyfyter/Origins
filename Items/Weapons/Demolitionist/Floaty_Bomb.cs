@@ -3,7 +3,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Floaty_Bomb : ModItem {
+	public class Floaty_Bomb : ModItem, ICustomWikiStat {
+        public string[] Categories => [
+            "ThrownExplosive",
+			"IsBomb",
+            "ExpendableWeapon"
+        ];
         public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;

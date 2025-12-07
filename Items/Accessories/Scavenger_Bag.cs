@@ -9,9 +9,11 @@ namespace Origins.Items.Accessories {
 		public static float TornSeverity => 0.1f;
 		float ITornSource.Severity => TornSeverity;
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.SummonBoostAcc,
-			WikiCategories.GenericBoostAcc
+			"Combat",
+			"Torn",
+			"TornSource",
+			"SummonBoostAcc",
+			"GenericBoostAcc"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 30);

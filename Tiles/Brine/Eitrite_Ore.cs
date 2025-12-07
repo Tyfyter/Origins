@@ -26,6 +26,9 @@ namespace Origins.Tiles.Brine {
 		}
 	}
 	public class Eitrite_Ore_Item : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Ore"
+		];
 		public bool? Hardmode => true;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.ChlorophyteOre] = Type;

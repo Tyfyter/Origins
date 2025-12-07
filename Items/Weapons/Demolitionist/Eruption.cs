@@ -5,7 +5,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Eruption : ModItem {
+	public class Eruption : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Launcher",
+			"CanistahUser"
+		];
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Eruption_P>(58, 32, 14.5f, 50, 26, true);
 			Item.knockBack = 6;

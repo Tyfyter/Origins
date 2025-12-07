@@ -34,7 +34,6 @@ namespace Origins.Projectiles {
 		public int relayRodStrength = 0;
 		bool fromArtifact = false;
 		BrothBase activeBroth;
-		public float brothEffectAngle = 0;
 		public override void Load() {
 			IL_Projectile.Update += IL_Projectile_Update;
 		}

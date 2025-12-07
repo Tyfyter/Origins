@@ -8,8 +8,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Nova_Swarm : ModItem, ICustomDrawItem {
+	public class Nova_Swarm : ModItem, ICustomDrawItem, ICustomWikiStat {
 		public const float rocket_scale = 0.85f;
+        public string[] Categories => [
+            "Launcher"
+        ];
 		public static int ID { get; private set; }
 		public static AutoCastingAsset<Texture2D> UseTexture { get; private set; }
 		public override void Unload() {

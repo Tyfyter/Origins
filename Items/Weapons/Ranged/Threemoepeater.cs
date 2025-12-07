@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Threemoepeater : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => [
-            WikiCategories.Repeater
+            "Repeater"
         ];
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

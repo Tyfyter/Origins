@@ -8,7 +8,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Boomphracken : ModItem {
+	public class Boomphracken : ModItem, ICustomWikiStat {
+        public string[] Categories => [
+            "Handcannon"
+        ];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;

@@ -270,6 +270,6 @@ namespace Origins.Tiles.Other {
 			return new Triangle(laserStartPoint, laserStartPoint + Projectile.velocity - spread, laserStartPoint + Projectile.velocity + spread).Intersects(targetHitbox);
 		}
 		static Vector2 GetSpread(Vector2 velocity) => velocity.RotatedBy(MathHelper.PiOver2) * 0.5f;
-		public bool IsExploding => true;
+		public bool IsExploding() => true;
 	}
 }

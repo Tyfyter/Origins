@@ -11,8 +11,8 @@ namespace Origins.Items.Armor.Blast {
     [AutoloadEquip(EquipType.Head)]
 	public class Blast_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            WikiCategories.ExplosiveBoostGear,
-			WikiCategories.SelfDamageProtek
+            "ExplosiveBoostGear",
+			"SelfDamageProtek"
 		];
         public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);

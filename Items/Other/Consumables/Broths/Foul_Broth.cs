@@ -20,10 +20,10 @@ namespace Origins.Items.Other.Consumables.Broths {
 			];
 		}
 		public override void ModifyMinionHit(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.SourceDamage *= 2f;
+			modifiers.SourceDamage *= 1.5f;
 		}
 		public override void PreUpdateMinion(Projectile minion) {
-			minion.GetGlobalProjectile<MinionGlobalProjectile>().tempBonusUpdates -= 0.5f;
+			minion.GetGlobalProjectile<MinionGlobalProjectile>().tempBonusUpdates -= 0.25f;
 		}
 	}
 }

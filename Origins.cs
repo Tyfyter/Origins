@@ -1,16 +1,13 @@
 global using Microsoft.Xna.Framework;
-global using static Origins.GlobalUtils;
 global using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 global using Color = Microsoft.Xna.Framework.Color;
 global using Rectangle = Microsoft.Xna.Framework.Rectangle;
 global using Vector2 = Microsoft.Xna.Framework.Vector2;
 global using Vector3 = Microsoft.Xna.Framework.Vector3;
 global using Vector4 = Microsoft.Xna.Framework.Vector4;
-using AltLibrary;
 using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
-using MonoMod.Utils;
 using Origins.Backgrounds;
 using Origins.Buffs;
 using Origins.Core;
@@ -23,7 +20,6 @@ using Origins.Items.Other;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
 using Origins.Items.Other.Testing;
-using Origins.Items.Tools.Wiring;
 using Origins.Items.Vanity.Dev.PlagueTexan;
 using Origins.Items.Weapons.Ranged;
 using Origins.Journal;
@@ -230,25 +226,15 @@ namespace Origins {
 					Main.tileMerge[pair.Item2][pair.Item1] = true;
 				}
 			}
-			foreach (AltBiome biome in AltLibrary.AltLibrary.AllBiomes) {
-				if (biome.BiomeType == BiomeType.Evil) {
-					biome.AddEvilConversions();
-				}
-			}
-			//MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Ebonstone>(), MC.WallType<Chambersite_Ebonstone_Wall>());
-			//MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Crimstone>(), MC.WallType<Chambersite_Crimstone_Wall>());
+			MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Ebonstone>(), MC.WallType<Chambersite_Ebonstone_Wall>());
+			MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Crimstone>(), MC.WallType<Chambersite_Crimstone_Wall>());
 			UnstableHooking.IL_Main_DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
 			OriginsModIntegrations.LateLoad();
 			_ = OriginExtensions.StrikethroughFont;
 			for (int k = 0; k < ItemLoader.ItemCount; k++) {
 				Item item = ContentSamples.ItemsByType[k];
-				if (item.createTile > -1) {
-					if (OriginsSets.Tiles.PlacementItem[item.createTile] == -1 && (!Main.tileFrameImportant[item.createTile] || TileID.Sets.Torch[item.createTile])) {
-						OriginsSets.Tiles.PlacementItem[item.createTile] = item.type;
-					}
-					if (item.createTile == TileID.Lamps || (TileLoader.GetTile(item.createTile)?.AdjTiles?.Contains(TileID.Lamps) ?? false)) {
-						OriginSystem.LampRecipeGroup.ValidItems.Add(k);
-					}
+				if (item.createTile > -1 && OriginsSets.Tiles.PlacementItem[item.createTile] == -1 && (!Main.tileFrameImportant[item.createTile] || TileID.Sets.Torch[item.createTile])) {
+					OriginsSets.Tiles.PlacementItem[item.createTile] = item.type;
 				}
 			}
 			for (int i = 0; i < OriginsSets.Tiles.PlacementItem.Length; i++) {
@@ -265,14 +251,12 @@ namespace Origins {
 		}
 		public override void Load() {
 			AssimilationLoader.Load();
-			OriginsSets.Initialize();
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Riven", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Riven"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Dusk", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Dusk"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Defiled", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled_Wastelands"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("The_Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.The_Defiled_Wastelands")); 
-			LocalizationMethods.BindArgs(Language.GetOrRegister("the_Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.the_Defiled_Wastelands"));
-			LocalizationMethods.BindArgs(Language.GetOrRegister("Ashen", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Ashen"));
+			LocalizationMethods.BindArgs(Language.GetOrRegister("the_Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.the_Defiled_Wastelands")); 
 
 			RasterizeAdjustment = [];
 			ExplosiveBaseDamage = [];
@@ -460,7 +444,7 @@ namespace Origins {
 				tileOutlineShader.Shader.Parameters["uColor"].SetValue(new Vector3(1f, 1f, 1f));
 
 				GameShaders.Misc["Origins:SapphireAura"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "SapphireAura")
-				.UseImage0(TextureAssets.Extra[ExtrasID.MagicMissileTrailShape]);
+				.UseImage0(TextureAssets.Extra[194]);
 
 				GameShaders.Misc["Origins:Framed"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "Framed");
 				GameShaders.Misc["Origins:AnimatedTrail"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "AnimatedTrail").UseSamplerState(SamplerState.PointWrap);
@@ -598,8 +582,7 @@ namespace Origins {
 				"word"
 			]);
 			ChatManager.Register<Centered_Snippet_Handler>([
-				"centered",
-				"center"
+				"centered"
 			]);
 			ChatManager.Register<Glitch_Handler>([
 				"glitch"
@@ -621,7 +604,114 @@ namespace Origins {
 			ChatManager.Register<Not_Oxford_Comma_Handler>([
 				"nox"
 			]);
-			AudioLoad();
+			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
+				MaxInstances = 0,
+				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,
+				PitchVariance = 0f
+			};
+			Sounds.Krunch = new SoundStyle("Origins/Sounds/Custom/BurstCannon", SoundType.Sound);
+			Sounds.HeavyCannon = new SoundStyle("Origins/Sounds/Custom/HeavyCannon", SoundType.Sound);
+			Sounds.PowerUp = new SoundStyle("Origins/Sounds/Custom/PowerUp", SoundType.Sound);
+			Sounds.EnergyRipple = new SoundStyle("Origins/Sounds/Custom/EnergyRipple", SoundType.Sound);
+			Sounds.PhaserCrash = new SoundStyle("Origins/Sounds/Custom/PhaserCrash", SoundType.Sound);
+			Sounds.DeepBoom = new SoundStyle("Origins/Sounds/Custom/DeepBoom", SoundType.Sound) {
+				MaxInstances = 0
+			};
+			Sounds.DefiledIdle = new SoundStyle("Origins/Sounds/Custom/Defiled_Idle", new int[] { 2, 3 }, SoundType.Sound) {
+				MaxInstances = 0,
+				Volume = 0.4f,
+				PitchRange = (0.9f, 1.1f)
+			};
+			Sounds.DefiledHurt = new SoundStyle("Origins/Sounds/Custom/Defiled_Hurt", new int[] { 1, 2 }, SoundType.Sound) {
+				MaxInstances = 0,
+				Volume = 0.4f,
+				PitchRange = (0.9f, 1.1f)
+			};
+			Sounds.defiledKill = new SoundStyle("Origins/Sounds/Custom/Defiled_Kill1", SoundType.Sound) {
+				MaxInstances = 0,
+				Volume = 0.4f,
+				PitchRange = (0.9f, 1.1f)
+			};
+			Sounds.defiledKillAF = new SoundStyle("Origins/Sounds/Custom/BlockusLand", SoundType.Sound) {
+				MaxInstances = 0,
+				Volume = 1.0f,
+				PitchRange = (0.9f, 1.1f)
+			};
+			Sounds.Amalgamation = new SoundStyle("Origins/Sounds/Custom/ChorusRoar", SoundType.Sound) {
+				MaxInstances = 0,
+				Volume = 0.5f,
+				PitchRange = (0.04f, 0.15f)
+			};
+			Sounds.BeckoningRoar = new SoundStyle("Origins/Sounds/Custom/BeckoningRoar", SoundType.Sound) {
+				MaxInstances = 0,
+				//Volume = 0.75f,
+				PitchRange = (0.2f, 0.3f)
+			};
+			Sounds.IMustScream = new SoundStyle("Origins/Sounds/Custom/IMustScream", SoundType.Sound) {
+				MaxInstances = 0,
+				PitchRange = (0.2f, 0.3f)
+			};
+			Sounds.RivenBass = new SoundStyle("Origins/Sounds/Custom/RivenBass", SoundType.Sound) {
+				MaxInstances = 0
+			};
+			Sounds.ShrapnelFest = new SoundStyle("Origins/Sounds/Custom/ShrapnelFest", SoundType.Sound) {
+				MaxInstances = 5,
+				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,
+				Volume = 0.75f
+			};
+			Sounds.LaserTag.Hurt = new SoundStyle("Origins/Sounds/Custom/LaserTag/Hurt", SoundType.Sound) {
+				MaxInstances = 0
+			};
+			Sounds.LaserTag.Death = new SoundStyle("Origins/Sounds/Custom/LaserTag/Death", SoundType.Sound) {
+				MaxInstances = 0
+			};
+			Sounds.LaserTag.Score = new SoundStyle("Origins/Sounds/Custom/LaserTag/Score", SoundType.Sound) {
+				MaxInstances = 0
+			};
+			Sounds.Lightning = new SoundStyle("Origins/Sounds/Custom/ThunderShot", SoundType.Sound) {
+				MaxInstances = 0
+			}.WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f);
+			Sounds.LightningSounds = [
+				Sounds.Lightning,
+				new SoundStyle($"Terraria/Sounds/Thunder_0", SoundType.Sound).WithPitchRange(-0.1f, 0.1f).WithVolume(0.75f)
+			];
+			Sounds.LightningCharging = new SoundStyle("Origins/Sounds/Custom/ChargedUp", SoundType.Sound) {
+				MaxInstances = 0,
+				IsLooped = true
+			};
+			Sounds.LightningChargingSoft = new SoundStyle("Origins/Sounds/Custom/ChargedUpSmol", SoundType.Sound) {
+				MaxInstances = 0,
+				IsLooped = true
+			};
+			Sounds.LittleZap = new SoundStyle("Origins/Sounds/Custom/ChainZap", SoundType.Sound) {
+				MaxInstances = 5,
+				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,
+				PitchVariance = 0.4f
+			};
+			Sounds.Bonk = new SoundStyle("Origins/Sounds/Custom/GrandSlam", SoundType.Sound) {
+				MaxInstances = 0,
+				PitchVariance = 0.4f
+			};
+			Sounds.Journal = new SoundStyle("Origins/Sounds/Custom/WritingFire", SoundType.Sound) {
+				MaxInstances = 1,
+				SoundLimitBehavior = SoundLimitBehavior.IgnoreNew,
+				PitchVariance = 0.4f
+			};
+			Sounds.ShinedownLoop = new SoundStyle("Origins/Sounds/Custom/BeckoningRoar", SoundType.Sound) {
+				MaxInstances = 0,
+				IsLooped = true,
+				//Volume = 0.75f,
+				PitchRange = (0.2f, 0.3f)
+			};
+			Sounds.WCHit = new SoundStyle("Origins/Sounds/Custom/WCHit", SoundType.Sound) {
+				PitchVariance = 0.3f
+			};
+			Sounds.WCIdle = new SoundStyle("Origins/Sounds/Custom/WCIdle", SoundType.Sound) {
+				PitchVariance = 0.3f
+			};
+			Sounds.WCScream = new SoundStyle("Origins/Sounds/Custom/WCScream", SoundType.Sound) {
+				PitchVariance = 0.3f
+			};
 			//OriginExtensions.initClone();
 
 			Main.OnPostDraw += IncrementFrameCount;
@@ -924,10 +1014,96 @@ namespace Origins {
 				CloudBottoms[i] = bottom;
 			}
 		}
+		public static class Music {
+			public static int Fiberglass = MusicID.OtherworldlyJungle;
+
+			public static int BrinePool = MusicID.OtherworldlyEerie;
+			public static int LostDiver = MusicID.OtherworldlyInvasion;
+			public static int MildewCarrion = MusicID.OtherworldlyPlantera;
+			public static int CrownJewel = MusicID.OtherworldlySpace;
+			public static int AncientBrinePool;
+
+			public static int ShimmerConstruct = MusicID.OtherworldlyBoss2;
+			public static int ShimmerConstructPhase3 = 0;
+
+			public static int Dusk;
+
+			public static int Defiled = MusicID.OtherworldlyMushrooms;
+			public static int OtherworldlyDefiled = MusicID.OtherworldlyCorruption;
+			public static int UndergroundDefiled = MusicID.OtherworldlyUGHallow;
+			public static int DefiledBoss = MusicID.OtherworldlyBoss1;
+			public static int AncientDefiled;
+
+			public static int Riven = MusicID.OtherworldlyCrimson;
+			public static int UndergroundRiven = MusicID.OtherworldlyIce;
+			public static int RivenBoss = MusicID.Boss5;
+			public static int RivenOcean = MusicID.OtherworldlyRain;
+			public static int AncientRiven;
+
+			public static int TheDive;
+		}
+		public static class Sounds {
+			public static SoundStyle MultiWhip = SoundID.Item153;
+			public static SoundStyle Krunch = SoundID.Item36;
+			public static SoundStyle HeavyCannon = SoundID.Item36;
+			public static SoundStyle EnergyRipple = SoundID.Item8;
+			public static SoundStyle PhaserCrash = SoundID.Item12;
+			public static SoundStyle DeepBoom = SoundID.Item14;
+			public static SoundStyle DefiledIdle = SoundID.Zombie1;
+			public static SoundStyle DefiledHurt = SoundID.DD2_SkeletonHurt;
+			public static SoundStyle DefiledKill => OriginsModIntegrations.CheckAprilFools() ? defiledKillAF : defiledKill;
+			public static SoundStyle defiledKill = SoundID.NPCDeath1;
+			public static SoundStyle defiledKillAF = SoundID.NPCDeath1;
+			public static SoundStyle Amalgamation = SoundID.Zombie1;
+			public static SoundStyle BeckoningRoar = SoundID.ForceRoar;
+			public static SoundStyle PowerUp = SoundID.Item4;
+			public static SoundStyle RivenBass = SoundID.Item4;
+			public static SoundStyle ShrapnelFest = SoundID.Item144;
+			public static SoundStyle IMustScream = SoundID.Roar;
+			public static SoundStyle ShinedownLoop = SoundID.ForceRoar;
+			public static SoundStyle WCHit = SoundID.ForceRoar;
+			public static SoundStyle WCIdle = SoundID.ForceRoar;
+			public static SoundStyle WCScream = SoundID.ForceRoar;
+
+			public static SoundStyle Lightning = SoundID.Roar;
+			public static SoundStyle LightningCharging = SoundID.Roar;
+			public static SoundStyle LightningChargingSoft = SoundID.Roar;
+			public static SoundStyle[] LightningSounds = [];
+			public static SoundStyle LittleZap = SoundID.Roar;
+
+			public static SoundStyle ShimmershotCharging = new("Origins/Sounds/Custom/SoftCharge", SoundType.Sound) {
+				IsLooped = true
+			};
+			public static SoundStyle ShimmerConstructAmbienceIntro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_Start", SoundType.Ambient);
+			public static SoundStyle ShimmerConstructAmbienceLoop = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_Mid", SoundType.Ambient);
+			public static SoundStyle ShimmerConstructAmbienceOutro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_End", SoundType.Ambient);
+
+			public static SoundStyle Bonk = SoundID.Roar;
+			public static SoundStyle BikeHorn = new("Origins/Sounds/Custom/BikeHorn", SoundType.Sound) {
+				PitchVariance = 0.5f,
+				MaxInstances = 0
+			};
+			public static SoundStyle BoneBreakBySoundEffectsFactory = new("Origins/Sounds/Custom/Bone_Break_By_SoundEffectsFactory", SoundType.Sound) {
+				PitchVariance = 0.5f,
+				MaxInstances = 0
+			};
+			public static SoundStyle BonkByMrSoundEffect = new("Origins/Sounds/Custom/Bonk", SoundType.Sound) {
+				PitchVariance = 0.5f,
+				MaxInstances = 0
+			};
+			public static SoundStyle Journal = SoundID.Roar;
+			public static void Unload() {
+				LightningSounds = null;
+			}
+			public static class LaserTag {
+				public static SoundStyle Hurt = SoundID.DSTMaleHurt;
+				public static SoundStyle Death = SoundID.DD2_KoboldDeath;
+				public static SoundStyle Score = SoundID.DrumTamaSnare;
+			}
+		}
 		public enum CallType {
 			GetExplosiveClassesDict,
 			AddBasicColorDyeShaderPass,
-			AddWireMode
 		}
 		public override object Call(params object[] args) {
 			if (!Enum.TryParse(args[0].ToString().Replace("_", ""), true, out CallType callType)) return null;
@@ -941,20 +1117,6 @@ namespace Origins {
 				} catch (NullReferenceException) {
 					throw new Exception("Cannot add Basic Color Dye Shader Pass after AddRecipes");
 				}
-				case CallType.AddWireMode:
-				return WireModeLoader.AddCallWireMode(
-					(Mod)args[1],
-					((Delegate)args[2]).CastDelegate<Func<int, int, bool>>(),
-					((Delegate)args[3]).CastDelegate<Action<int, int, bool>>(),
-					(string)args[4],
-					(Color)args[5],
-					(Color?)args[6],
-					(IEnumerable<string>)args.GetIfInRange(7) ?? [],
-					(IEnumerable<string>)args.GetIfInRange(8) ?? [],
-					(args.GetIfInRange(9, null) as ModItem, args.GetIfInRange(9, null) is int type ? type : ItemID.Wire),
-					(bool)args.GetIfInRange(10, false),
-					(string)args.GetIfInRange(11)
-				);
 			}
 			return null;
 		}

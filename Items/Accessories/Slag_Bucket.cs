@@ -20,7 +20,7 @@ namespace Origins.Items.Accessories {
 	public class Slag_Bucket : ModItem, ICustomWikiStat, ICustomLinkFormat {
 		static short glowmask;
 		public string[] Categories => [
-			WikiCategories.Combat
+			"Combat"
 		];
 		void ICustomWikiStat.ModifyWikiStats(JObject data) {
 			data["Name"] = ModContent.GetInstance<ItemWikiProvider>().PageName(this).Replace("_", " ");
@@ -61,7 +61,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Slag_Bucket_Uncursed : Uncursed_Cursed_Item<Slag_Bucket>, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat
+			"Combat"
 		];
 		public override bool HasOwnTexture => true;
 		public override string Texture => typeof(Slag_Bucket_Uncursed).GetDefaultTMLName();

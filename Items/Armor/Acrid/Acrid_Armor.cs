@@ -12,9 +12,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Acrid {
 	public abstract class Acrid_Helmet_Base : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.ArmorSet,
-			WikiCategories.ExplosiveBoostGear,
-			WikiCategories.ToxicSource
+			"ArmorSet",
+			"ExplosiveBoostGear",
+			"ToxicSource"
 		];
 		public override void SetStaticDefaults() {
 			Origins.AddHelmetGlowmask(this);
@@ -177,7 +177,7 @@ namespace Origins.Items.Armor.Acrid {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
-			player.lifeRegen += 2;
+			player.lifeRegenCount += 2;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

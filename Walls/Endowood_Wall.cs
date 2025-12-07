@@ -1,4 +1,6 @@
-﻿using Origins.Tiles.Defiled;
+﻿using Microsoft.Xna.Framework;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Bomb_Charm_of_Regeneration : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Vitality,
-			WikiCategories.ExplosiveBoostAcc,
-			WikiCategories.SelfDamageProtek
+			"Vitality",
+			"ExplosiveBoostAcc",
+			"SelfDamageProtek"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);

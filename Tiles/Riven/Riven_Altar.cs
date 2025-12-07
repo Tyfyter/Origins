@@ -69,6 +69,7 @@ namespace Origins.Tiles.Riven {
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 	public class Riven_Altar_Item : TestingItem {
+		public override string Texture => "Origins/Tiles/Riven/Riven_Altar";
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;

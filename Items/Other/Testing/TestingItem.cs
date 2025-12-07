@@ -12,7 +12,7 @@ namespace Origins.Items.Other.Testing {
 		public IEnumerable<int> ProvideItemObtainability() => [Type];
 		public bool ShouldHavePage => false;
 /*#if !DEBUG
-		public override bool IsLoadingEnabled(Mod mod) => DebugConfig.Instance.ForceEnableDebugItems;
+		public override bool IsLoadingEnabled(Mod mod) => false;
 #endif*/
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;

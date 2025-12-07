@@ -14,7 +14,6 @@ using Origins.NPCs.Crimson;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles;
 using Origins.Questing;
-using PegasusLib;
 using PegasusLib.ID;
 using System;
 using System.Collections.Generic;
@@ -23,9 +22,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
-using ThoriumMod.Empowerments;
-using ThoriumMod.Projectiles;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -74,7 +70,7 @@ namespace Origins {
 		public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
 			if (Origins.ArtifactMinion[item.shoot]) {
 				mult *= artifactManaCost;
-			}
+			}	
 			if (wishingGlassActive) mult *= 0;
 			necromanaUsedThisUse = false;
 		}
@@ -104,19 +100,19 @@ namespace Origins {
 			if (advancedImaging) {
 				velocity *= 1.38f;
 			}
-			StatModifier velocityModifier = projectileSpeedBoost;
+			if (projectileSpeedBoost != StatModifier.Default) {
+				float speed = velocity.Length();
+				if (speed != 0) {
+					velocity *= projectileSpeedBoost.ApplyTo(speed) / speed;
+				}
+			}
 			if (item.CountsAsClass(DamageClasses.Explosive)) {
-				velocityModifier = velocityModifier.CombineWith(explosiveProjectileSpeed);
+				StatModifier velocityModifier = explosiveProjectileSpeed;
 				if (item.useAmmo == 0 && item.CountsAsClass(DamageClass.Throwing)) {
 					velocityModifier = velocityModifier.CombineWith(explosiveThrowSpeed);
 				}
-			}
-			if (item.CountsAsClass(DamageClass.Throwing)) {
-				velocityModifier = velocityModifier.CombineWith(thrownProjectileSpeed);
-			}
-			float speed = velocity.Length();
-			if (speed != 0 && velocityModifier != StatModifier.Default) {
-				velocity *= velocityModifier.ApplyTo(speed) / speed;
+				float baseSpeed = velocity.Length();
+				velocity *= velocityModifier.ApplyTo(baseSpeed) / baseSpeed;
 			}
 			if (item.shoot > ProjectileID.None && felnumShock >= Felnum_Helmet.shock_damage_divisor * 2) {
 				Projectile p = new();
@@ -243,6 +239,9 @@ namespace Origins {
 				modifiers.SourceDamage.Flat += (int)((felnumShock * Origins.DamageBonusScale[item.type]) / Felnum_Helmet.shock_damage_divisor);
 				usedFelnumShock = true;
 				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), target.Center);
+			}
+			if (target.HasBuff(BuffID.Bleeding)) {
+				target.lifeRegen -= 1;
 			}
 		}
 		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) {
@@ -512,23 +511,6 @@ namespace Origins {
 			if (cavitationDebuff) {
 				Player.lifeRegen -= 33;
 			}
-			if (tetanus) {
-				Player.lifeRegen -= Tetanus_Debuff.DPS;
-			}
-			if (miasma) {
-				if (Player.breath <= 0) {
-					Player.lifeRegenTime = 0f;
-					Player.breath = 0;
-					if (Main.rand.NextBool(10)) Player.statLife -= 1;
-					if (Player.statLife <= 0) {
-						Player.statLife = 0;
-						Player.KillMe(PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Miasma").SelectFrom(Player.name).ToNetworkText()), 10.0, 0);
-					}
-				} else if (Player.breathCD.Warmup(Player.breathCDMax + Player.breathCDMax / 2)) {
-					Player.breathCD = 0;
-					Player.breath--;
-				}
-			}
 
 			if (staticShock || miniStaticShock || staticShockDamage) {
 				if (Player.lifeRegen > 0) {
@@ -562,16 +544,6 @@ namespace Origins {
 			}
 			return true;
 		}
-		public StatModifier GetSelfDamageModifier() {
-			StatModifier currentExplosiveSelfDamage = explosiveSelfDamage;
-			if (minerSet) {
-				currentExplosiveSelfDamage -= 0.2f;
-				currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(
-					Player.GetDamage(DamageClasses.Explosive).GetInverse()
-				);
-			}
-			return currentExplosiveSelfDamage;
-		}
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers) {
 			if (trapCharm && proj.trap) {
 				modifiers.SourceDamage /= 2;
@@ -590,8 +562,16 @@ namespace Origins {
 					}
 				}
 				modifiers.SourceDamage /= damageMult;
-				StatModifier currentExplosiveSelfDamage = GetSelfDamageModifier();
 
+				StatModifier currentExplosiveSelfDamage = explosiveSelfDamage;
+				if (minerSet) {
+					currentExplosiveSelfDamage -= 0.2f;
+					currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(
+						Player.GetDamage(DamageClasses.Explosive).GetInverse()
+					);
+					//damage = (int)(damage/explosiveDamage);
+					//damage-=damage/5;
+				}
 				if (proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(global.selfDamageModifier);
 				const float min_self_destruct_mult = 0.1f;
 				if (proj.type == ModContent.ProjectileType<Self_Destruct_Explosion>()) {
@@ -599,7 +579,6 @@ namespace Origins {
 					if (currentExplosiveSelfDamage.ApplyTo(proj.damage) < proj.damage * min_self_destruct_mult) currentExplosiveSelfDamage = new StatModifier(1, min_self_destruct_mult);
 				}
 				if (currentExplosiveSelfDamage.ApplyTo(proj.damage) <= 0) modifiers.Cancel();
-
 				modifiers.FinalDamage = modifiers.FinalDamage.CombineWith(currentExplosiveSelfDamage);
 				if (Player.mount.Active && Player.mount.Type == ModContent.MountType<Trash_Lid_Mount>()) {
 					Vector2 diff = proj.Center - Player.MountedCenter;
@@ -737,7 +716,7 @@ namespace Origins {
 			return false;
 		}
 		public override bool ConsumableDodge(Player.HurtInfo info) {
-			if (info.DamageSource.SourcePlayerIndex == Player.whoAmI && info.DamageSource.SourceProjectileLocalIndex != -1) {
+			if (info.DamageSource.SourcePlayerIndex == Player.whoAmI) {
 				Projectile sourceProjectile = Main.projectile[info.DamageSource.SourceProjectileLocalIndex];
 				if (sourceProjectile.owner == Player.whoAmI && sourceProjectile.CountsAsClass(DamageClasses.Explosive)) {
 					if (resinShield) {
@@ -819,13 +798,8 @@ namespace Origins {
 				modifiers.FinalDamage *= 0.5f;
 			}
 		}
-		public override void OnHurt(Player.HurtInfo info) {
-			if (crystalHeart) crystalHeartCounter += info.Damage;
-		}
 		public override void PostHurt(Player.HurtInfo info) {
 			lifeRegenTimeSinceHit = 0;
-			timeSinceHit = 0;
-			pacemakerTime = 0;
 			if (extremophileSet) extremophileSetHits++;
 			extremophileSetTime = 0;
 			if (manaDamageToTake > 0) {
@@ -937,26 +911,6 @@ namespace Origins {
 					);
 				}
 			}
-			if (barkShieldItem?.ModItem is Bark_Shield barkShield) {
-				barkShield.durability -= barkShield.CalculateDamage(info);
-				Min(ref barkShield.durability, barkShield.MaxDurability);
-				if (barkShield.durability <= 0) {
-					barkShield.Break(Player, info);
-					barkShieldItem.TurnToAir(true);
-				}
-			}
-			if (!(flakJacketItem?.IsAir ?? true)) {
-				int damage = Player.GetWeaponDamage(flakJacketItem);
-				float knockback = Player.GetWeaponKnockback(flakJacketItem);
-				Player.SpawnProjectile(
-					Player.GetSource_Accessory_OnHurt(flakJacketItem, info.DamageSource),
-					Player.MountedCenter,
-					Vector2.Zero,
-					flakJacketItem.shoot,
-					damage,
-					knockback
-				);
-			}
 			if (fullSend && info.DamageSource.SourceOtherIndex == OtherDeathReasonID.Fall) {
 				const float maxDist = 240 * 240;
 				double totalDamage = info.SourceDamage * (0.86 + fullSendHorseshoeBonus.Mul(0.07f));
@@ -1059,7 +1013,7 @@ namespace Origins {
 				}
 			}
 			if (bombCharminIt && Player.whoAmI == info.DamageSource.SourcePlayerIndex) {
-				bombCharminItLifeRegenCount += info.Damage;
+				   bombCharminItLifeRegenCount += info.Damage;
 			}
 			if (Player.whoAmI == info.DamageSource.SourcePlayerIndex && OriginsModIntegrations.CheckAprilFools()) {
 				const int damage_required = 400;

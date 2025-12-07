@@ -1,77 +1,75 @@
-﻿using AltLibrary.Common.Hooks;
-using Microsoft.CSharp.RuntimeBinder;
+﻿using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
-using Origins.Backgrounds;
 using Origins.Buffs;
-using Origins.Items;
 using Origins.Items.Accessories;
-using Origins.Items.Mounts;
-using Origins.Items.Other.Consumables.Broths;
-using Origins.Items.Other.Dyes;
-using Origins.Items.Tools;
-using Origins.Items.Tools.Wiring;
-using Origins.Items.Weapons.Ammo;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Magic;
-using Origins.Items.Weapons.Summoner.Minions;
 using Origins.NPCs;
-using Origins.NPCs.Brine;
-using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
 using Origins.Reflection;
-using Origins.Tiles;
-using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
-using Origins.UI.Event;
 using Origins.Walls;
-using Origins.Water;
 using Origins.World.BiomeData;
-using PegasusLib;
-using PegasusLib.Graphics;
-using PegasusLib.Reflection;
 using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.ExceptionServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
-using Terraria.GameContent.Events;
-using Terraria.GameContent.Generation;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Personalities;
-using Terraria.GameContent.Shaders;
-using Terraria.GameContent.UI;
-using Terraria.GameContent.UI.ResourceSets;
 using Terraria.Graphics;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Light;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Config;
-using Terraria.ModLoader.Core;
-using Terraria.ModLoader.UI;
 using Terraria.ObjectData;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
-using static Mono.Cecil.Cil.OpCodes;
 using static Origins.OriginExtensions;
+using static Mono.Cecil.Cil.OpCodes;
 using MC = Terraria.ModLoader.ModContent;
+using Origins.Backgrounds;
+using Origins.Items.Tools;
+using Origins.Tiles;
+using System.Runtime.CompilerServices;
+using Terraria.ModLoader.Core;
+using Origins.Items.Other.Dyes;
+using Terraria.GameContent.UI.ResourceSets;
+using Origins.Water;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Light;
+using Origins.Items;
+using System.Runtime.ExceptionServices;
+using System.IO;
+using Origins.Items.Weapons.Ammo;
+using Origins.Items.Weapons.Magic;
+using Terraria.GameContent.Events;
+using Origins.Items.Weapons.Summoner.Minions;
+using AltLibrary.Common.Hooks;
+using Terraria.ModLoader.UI;
+using PegasusLib.Graphics;
+using PegasusLib;
+using Terraria.GameContent.UI;
+using Origins.UI.Event;
+using Origins.Items.Other.Consumables.Broths;
+using Origins.Items.Weapons.Demolitionist;
+using PegasusLib.Reflection;
+using Terraria.GameContent.Generation;
+using Origins.Items.Mounts;
+using Terraria.ModLoader.Config;
+using Origins.NPCs.Brine;
+using Terraria.GameContent.Shaders;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -189,14 +187,12 @@ namespace Origins {
 					if (!unloading) ResizeArrays();
 				}
 			);
-			On_Player.ItemCheck_UseMiningTools_TryHittingWall += (orig, self, sItem, wX, wY) => {
-				ushort wallType = Main.tile[wX, wY].WallType;
-				if (sItem.hammer < WallHammerRequirement[wallType] || (WallLoader.GetWall(wallType) is IComplexMineDamageWall complexMineDamage && !complexMineDamage.CanMine(self, sItem, wX, wY))) {
-					WorldGen.KillWall(wX, wY, fail: true);
-					self.itemTime = sItem.useTime / 2;
-					return;
+			On_WorldGen.KillWall_CheckFailure += (On_WorldGen.orig_KillWall_CheckFailure orig, bool fail, Tile tileCache) => {
+				fail = orig(fail, tileCache);
+				if (Main.LocalPlayer.HeldItem.hammer < WallHammerRequirement[tileCache.WallType]) {
+					fail = true;
 				}
-				orig(self, sItem, wX, wY);
+				return fail;
 			};
 			//Terraria.On_Main.DrawNPCChatButtons += Main_DrawNPCChatButtons;
 			On_Player.SetTalkNPC += Player_SetTalkNPC;
@@ -283,7 +279,7 @@ namespace Origins {
 					_damage = Math.Max(_damage - damageReduction, 0f);
 					if (self.FinalDamage.ApplyTo(_damage) <= 0) info.Cancelled = true;
 				}
-
+				
 				return info;
 			};
 			On_Player.AddBuff_DetermineBuffTimeToAdd += On_Player_AddBuff_DetermineBuffTimeToAdd;
@@ -563,7 +559,7 @@ namespace Origins {
 			On_ScreenShaderData.Apply += (On_ScreenShaderData.orig_Apply orig, ScreenShaderData self) => {
 				try {
 					if (self.Shader is not null) orig(self);
-				} catch (NullReferenceException) { }
+				} catch(NullReferenceException) { }
 			};
 			MonoModHooks.Add(
 				typeof(ModLoader).GetMethod("Reload", BindingFlags.NonPublic | BindingFlags.Static),
@@ -586,7 +582,7 @@ namespace Origins {
 			On_Player.AddBuff_RemoveOldMeleeBuffsOfMatchingType += BrothBase.On_Player_AddBuff_RemoveOldMeleeBuffsOfMatchingType;
 			On_Main.CalculateWaterStyle += (orig, ignoreFountains) => {
 				int chosenStyle = Main.LocalPlayer.CurrentSceneEffect.waterStyle.value;
-				if (chosenStyle == MC.GetInstance<Riven_Water_Style>().Slot || chosenStyle == MC.GetInstance<Brine_Water_Style>().Slot) return chosenStyle;
+				if (chosenStyle == ModContent.GetInstance<Riven_Water_Style>().Slot || chosenStyle == ModContent.GetInstance<Brine_Water_Style>().Slot) return chosenStyle;
 				return orig(ignoreFountains);
 			};
 			On_Mount.Dismount += Ravel_Mount.On_Mount_Dismount;
@@ -614,7 +610,7 @@ namespace Origins {
 				c.GotoNext(MoveType.Before, i => i.MatchNewobj<Condition>());
 				c.EmitLdarg0();
 				c.EmitDelegate<Func<Func<bool>, int, Func<bool>>>((orig, type) => {
-					if (type == ItemID.FlareGun) return () => orig() || Main.LocalPlayer.HasItem(MC.ItemType<Flare_Launcher>());
+					if (type == ItemID.FlareGun) return () => orig() || Main.LocalPlayer.HasItem(ModContent.ItemType<Flare_Launcher>());
 					return orig;
 				});
 			};
@@ -647,7 +643,7 @@ namespace Origins {
 				if ((tile.HasTile && TileBlocksMinecartTracks[tile.TileType]) || WallBlocksMinecartTracks[tile.WallType]) return true;
 				return false;
 			};
-			if (ModLoader.GetMod(nameof(BetterDialogue)).Version == new Version(1, 1, 6, 1)) MonoModHooks.Modify(typeof(BetterDialogue.BetterDialogue).Assembly.GetType("BetterDialogue.UI.DialogueCycleButtonUI").GetMethod("Draw", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static),
+			if (ModLoader.GetMod(nameof(BetterDialogue)).Version == new Version(1, 1, 6, 1)) MonoModHooks.Modify(typeof(BetterDialogue.BetterDialogue).Assembly.GetType("BetterDialogue.UI.DialogueCycleButtonUI").GetMethod("Draw", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static), 
 				il => new ILCursor(il)
 				.EmitLdsfld(typeof(Main).GetField(nameof(Main.editChest)))
 				.EmitBrfalse(MonoFuckery.DefineLabel(il, out ILLabel label))
@@ -747,10 +743,9 @@ namespace Origins {
 				if (Origins.LogLoadingILError(nameof(EnablePocketDimensionAmbienceWhenPaused), e)) throw;
 			}*/
 			MonoModHooks.Add(typeof(Player).GetProperty(nameof(Player.ShoppingZone_AnyBiome)).GetMethod, (orig_ShoppingZone_AnyBiome orig, Player self) => {
-				return orig(self) || self.InModBiome<Defiled_Wastelands>() || self.InModBiome<Riven_Hive>() || self.InModBiome<Ashen_Biome>();
+				return orig(self) || self.InModBiome<Defiled_Wastelands>() || self.InModBiome<Riven_Hive>();
 			});
 		}
-
 		delegate bool orig_ShoppingZone_AnyBiome(Player self);
 		delegate bool hook_ShoppingZone_AnyBiome(orig_ShoppingZone_AnyBiome orig, Player self);
 
@@ -813,15 +808,8 @@ namespace Origins {
 		}
 
 		static bool shouldDoHeliumSound = false;
-		static bool shouldDoMuffledSound = false;
 		static float heliumSoundPitch = 0f;
 		private static ReLogic.Utilities.SlotId On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback1(On_SoundEngine.orig_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback orig, ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback) {
-			if (shouldDoMuffledSound) {
-				if (style == SoundID.PlayerHit) ;
-				else if (style == SoundID.FemaleHit) ;
-				else if (style == SoundID.DSTMaleHurt) ;
-				else if (style == SoundID.DSTFemaleHurt) ;
-			}
 			if (shouldDoHeliumSound) {
 				SoundStyle styleCopy = style.WithPitchOffset(heliumSoundPitch);
 				return orig(ref styleCopy, position, updateCallback);
@@ -835,12 +823,10 @@ namespace Origins {
 					OriginPlayer originPlayer = self.OriginPlayer();
 					shouldDoHeliumSound = originPlayer.heliumTankSqueak;
 					heliumSoundPitch = originPlayer.heliumTankStrength;
-					shouldDoMuffledSound = originPlayer.gasMask;
 				}
 				orig(self, info, quiet);
 			} finally {
 				shouldDoHeliumSound = false;
-				shouldDoMuffledSound = false;
 			}
 		}
 
@@ -876,13 +862,10 @@ namespace Origins {
 				c.EmitDelegate((Player player, ref int count, int minBonus, int maxBonus, ref int type) => {
 					if (player.InModBiome<Defiled_Wastelands>()) {
 						count += Main.rand.Next(minBonus, maxBonus);
-						type = MC.ItemType<Defiled_Torch>();
+						type = ModContent.ItemType<Defiled_Torch>();
 					} else if (player.InModBiome<Riven_Hive>()) {
 						count += Main.rand.Next(minBonus, maxBonus);
-						type = MC.ItemType<Riven_Torch>();
-					} else if (player.InModBiome<Ashen_Biome>()) {
-						count += Main.rand.Next(minBonus, maxBonus);
-						type = MC.ItemType<Ashen_Torch>();
+						type = ModContent.ItemType<Riven_Torch>();
 					}
 				});
 			} else {
@@ -967,7 +950,7 @@ namespace Origins {
 				ins => ins.MatchLdcR4(0.0f),
 				ins => ins.MatchCall(typeof(DynamicSpriteFontExtensionMethods), nameof(DynamicSpriteFontExtensionMethods.DrawString))
 			);
-
+			
 			c.EmitLdloc(i);
 			c.EmitLdloc(l6);
 			c.EmitLdloc(l182);
@@ -1055,7 +1038,7 @@ namespace Origins {
 			);
 			c.Index--;
 			c.EmitBeq(succeed);
-			c.EmitDelegate(() => Main.LocalPlayer.InModBiome<Defiled_Wastelands_Desert>() || Main.LocalPlayer.InModBiome<Riven_Hive_Desert>() || Main.LocalPlayer.InModBiome<Ashen_Desert>());
+			c.EmitDelegate(() => Main.LocalPlayer.InModBiome<Defiled_Wastelands_Desert>() || Main.LocalPlayer.InModBiome<Riven_Hive_Desert>());
 			c.EmitBrfalse((ILLabel)c.Next.Operand);
 			c.Remove();
 		}
@@ -1084,7 +1067,6 @@ namespace Origins {
 			c.EmitDelegate<Action<WeightedRandom<Color>>>(weightedRandom => {
 				weightedRandom.Add(new Color(113, 113, 113, 180), Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Defiled_Sand>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Defiled_Sandstone>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Hardened_Defiled_Sand>()));
 				weightedRandom.Add(new Color(189, 195, 195, 180), Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Silica>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Brittle_Quartz>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Quartz>()));
-				weightedRandom.Add(FromHexRGBA(0x655878b4), Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Sootsand>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Soot_Sandstone>()) + Main.SceneMetrics.GetTileCount((ushort)MC.TileType<Hardened_Sootsand>()));
 			});
 		}
 
@@ -1132,7 +1114,7 @@ namespace Origins {
 		static void FCEH(ILContext il) {
 			ILCursor c = new(il);
 			int msg = -1;
-			if (c.TryGotoNext(i => i.MatchLdloc(out msg), i => i.MatchCallOrCallvirt(typeof(Console), nameof(Console.WriteLine)))
+			if (c.TryGotoNext(i => i.MatchLdloc(out msg), i => i.MatchCallOrCallvirt(typeof(Console), nameof(Console.WriteLine))) 
 				&& c.TryGotoPrev(i => i.MatchStloc(msg))
 				&& c.TryGotoPrev(MoveType.After, i => i.MatchCallOrCallvirt<Exception>("get_" + nameof(Exception.Message)))
 				) {
@@ -1193,10 +1175,6 @@ namespace Origins {
 		static bool FixWrongWaterfallAlpha(int type, float baseAlpha, ref float alpha) {
 			if (type == Riven_Waterfall_Style.ID) {
 				alpha = baseAlpha * Riven_Water_Style.GlowValue;
-				return true;
-			}
-			if (type == Ashen_Waterfall_Style.ID) {
-				alpha = 0.8f;
 				return true;
 			}
 			return false;
@@ -1282,8 +1260,7 @@ namespace Origins {
 				for (int i = 0; i < positionYArg; i++) {
 					if (i == 0) {
 						cloudYInstructions[0] = (c.Next.OpCode, c.Next.Operand);
-					}
-					if (i > 11) {
+					} if (i > 11) {
 						cloudYInstructions[i - 11] = (c.Next.OpCode, c.Next.Operand);
 					} else {
 
@@ -1513,9 +1490,6 @@ namespace Origins {
 				}
 				if (originPlayer.mithrafin && Mithrafin.buffTypes[type]) {
 					mult *= OriginPlayer.mithrafinSelfMult;
-				}
-				if (originPlayer.gasMask && Main.debuff[type]) {
-					mult *= OriginPlayer.gasMaskMult;
 				}
 				value = (int)(value * mult);
 			}
@@ -1804,7 +1778,7 @@ namespace Origins {
 				if (tile.LiquidType == LiquidID.Water && LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle) is IGlowingWaterStyle glowingWaterStyle) {
 					glowingWaterStyle.AddLight(ref outputColor, tile.LiquidAmount);
 				}
-			} catch (Exception) { }
+			} catch (Exception) {}
 		}
 
 		static int npcScoringRoom = -1;
@@ -1819,16 +1793,6 @@ namespace Origins {
 				ResolveRule(rule, dropInfo);
 			} finally {
 				itemDropper = null;
-			}
-		}
-		public readonly struct ItemDropHandler : IDisposable {
-			readonly ItemDropper handler;
-			public ItemDropHandler(ItemDropper handler) {
-				this.handler = handler;
-				if (handler is not null) itemDropper += handler;
-			}
-			void IDisposable.Dispose() {
-				if (handler is not null) itemDropper -= handler;
 			}
 		}
 		static event ItemDropper itemDropper;
@@ -1866,11 +1830,11 @@ namespace Origins {
 			if (clearCounts) {
 				OriginSystem.totalDefiled2 = 0;
 				OriginSystem.totalRiven2 = 0;
-				OriginSystem.totalAshen2 = 0;
 			}
 			OriginSystem.totalDefiled2 += MC.GetInstance<Defiled_Wastelands_Alt_Biome>().SpreadingTiles.Sum(v => tileCounts[v]);
 			OriginSystem.totalRiven2 += MC.GetInstance<Riven_Hive_Alt_Biome>().SpreadingTiles.Sum(v => tileCounts[v]);
-			OriginSystem.totalAshen2 += MC.GetInstance<Ashen_Alt_Biome>().SpreadingTiles.Sum(v => tileCounts[v]);
+			//OriginSystem.totalDefiled2 += tileCounts[MC.TileType<Defiled_Stone>()] + tileCounts[MC.TileType<Defiled_Grass>()] + tileCounts[MC.TileType<Defiled_Sand>()] + tileCounts[MC.TileType<Defiled_Ice>()];
+			//OriginSystem.totalRiven2 += tileCounts[MC.TileType<Tiles.Riven.Riven_Flesh>()];
 			orig(clearCounts);
 		}
 		#endregion
@@ -2000,8 +1964,8 @@ namespace Origins {
 				sonarDrawing = true;
 				sonarDrawingNonSolid = !solidLayer;
 				tileOutlineShader.Shader.Parameters["uImageSize0"].SetValue(new Vector2(288, 396));//Main.ScreenSize.ToVector2()
-																								   //tileOutlineShader.Shader.Parameters["uScale"].SetValue(2);
-																								   //tileOutlineShader.Shader.Parameters["uColor"].SetValue(new Vector3(1f, 1f, 1f));//new Vector4(0.5f, 0.0625f, 0f, 0f)
+				//tileOutlineShader.Shader.Parameters["uScale"].SetValue(2);
+				//tileOutlineShader.Shader.Parameters["uColor"].SetValue(new Vector3(1f, 1f, 1f));//new Vector4(0.5f, 0.0625f, 0f, 0f)
 				SpriteBatchState state = Main.spriteBatch.GetState();
 				Main.spriteBatch.Restart(state, effect: tileOutlineShader.Shader);
 				orig(self, solidLayer, forRenderTargets, intoRenderTargets, waterStyleOverride);
@@ -2024,7 +1988,7 @@ namespace Origins {
 						return new Color(200, 170, 100);
 					}
 					if (_IsSolidForSonar(Framing.GetTileSafely(i - 1, j))
-						&& _IsSolidForSonar(Framing.GetTileSafely(i, j - 1))
+						&& _IsSolidForSonar(Framing.GetTileSafely(i, j-1))
 						&& _IsSolidForSonar(Framing.GetTileSafely(i + 1, j))
 						&& _IsSolidForSonar(Framing.GetTileSafely(i, j + 1))) {
 						return new Color(0, 0, 0, 0);
@@ -2033,12 +1997,6 @@ namespace Origins {
 				} else {
 					return new Color(0, 0, 0, 0);
 				}
-			} else if (WiresUI.Settings.DrawWires && Main.tile[i, j].Get<Ashen_Wire_Data>().IsTilePowered) {
-				return Color.Lerp(
-					orig(self, j, i, tileCache, typeCache, tileFrameX, tileFrameY, tileLight),
-					new Color(255, 113, 0),
-					Ashen_Wire_Data.pulse.Value * 0.8f
-				);
 			} else if ((SC_Phase_Three_Underlay.alwaysLightAllTiles || SC_Phase_Three_Underlay.ForcedLit(i, j)) && (Filters.Scene["Origins:ShimmerConstructPhase3"].Active || Filters.Scene["Origins:ShimmerConstructPhase3Cheap"].IsVisible())) {
 				Color color = orig(self, j, i, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 				if (color.R == 0 && color.G == 0 && color.B == 0) color.R = 1;
@@ -2074,7 +2032,7 @@ namespace Origins {
 							return new Color(255, 50, 50);
 						} else if (Main.IsTileSpelunkable(tileX, tileY)) {
 							return new Color(200, 170, 0);
-						} else if (Main.tileSolid[Main.tile[tileX, tileY].TileType]) {
+						} else if (Main.tileSolid[Main.tile[tileX, tileY].TileType]){
 							return new Color(200, 200, 200);
 						} else {
 							return new Color(0, 0, 0, 0);
@@ -2086,7 +2044,7 @@ namespace Origins {
 				}
 			}
 		}
-
+		
 
 		private void _TileDrawing_DrawSingleTile(On_TileDrawing.orig_DrawSingleTile orig, TileDrawing self, TileDrawInfo drawData, bool solidLayer, int waterStyleOverride, Vector2 screenPosition, Vector2 screenOffset, int tileX, int tileY) {
 

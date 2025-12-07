@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Origins.Dev;
-using PegasusLib;
 using System;
 using System.IO;
 using Terraria;
@@ -13,7 +12,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public static byte lastPaint;
 		public static byte lastCoating;
 		public string[] Categories => [
-			nameof(WeaponTypes.Gun)
+			"Gun"
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
@@ -142,7 +141,8 @@ namespace Origins.Items.Weapons.Ranged {
 			return false;
 		}
 		void SetSplatter(Vector2 newVelocity, Entity collisionEntity = null) {
-			if (!hit.TrySet(true)) return;
+			hit = true;
+			Projectile.velocity = Vector2.Zero;
 			Projectile.friendly = false;
 			Projectile.hostile = false;
 			Projectile.tileCollide = false;
@@ -171,7 +171,7 @@ namespace Origins.Items.Weapons.Ranged {
 				Dust dust = Dust.NewDustPerfect(
 					dustSpawnPosition,
 					Main.rand.Next(Paint_Coating_Gore.IDs),
-					Projectile.velocity.RotatedByRandom(0.5f) * Main.rand.NextFloat(0f, 0.4f),
+					Projectile.velocity.RotatedByRandom(0.5f) * Main.rand.NextFloat(0f, 1f) * 0.5f,
 					newColor: paintColor
 				);
 				dust.customData = dustCustomData;
@@ -234,7 +234,7 @@ namespace Origins.Items.Weapons.Ranged {
 				dust.velocity.X *= 0.98f;
 				dust.velocity.Y += 0.08f;
 			}
-			if (Main.rand.NextBool(2) && ++dust.alpha >= 255) dust.active = false;
+			if (Main.rand.NextBool(2)) dust.alpha++;
 			return false;
 		}
 		public override void SetStaticDefaults() {
@@ -248,18 +248,17 @@ namespace Origins.Items.Weapons.Ranged {
 			return true;
 		}
 		public override Color? GetAlpha(Dust dust, Color lightColor) {
-			float alphaMult = (dust.color.A / 255f) * (1 - dust.alpha / 255f);
 			if (dust.customData is PaintStickData stickData) {
 				switch (stickData.Coating) {
 					case PaintCoatingID.Glow:
-					return Color.White * 0.9f * alphaMult;
+					return Color.White * 0.9f;
 
 					case PaintCoatingID.Echo:
 					if (!Main.ShouldShowInvisibleWalls()) return Color.Transparent;
 					break;
 				}
 			}
-			return lightColor * 0.9f * alphaMult;
+			return lightColor * 0.9f;
 		}
 	}
 	public class Paint_Coating_Gore2 : Paint_Coating_Gore {

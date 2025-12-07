@@ -11,10 +11,13 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
-	public class Alkahest_Harpoon : ModItem, ITornSource {
+	public class Alkahest_Harpoon : ModItem, ICustomWikiStat, ITornSource {
 		public static float TornSeverity => 0.5f;
 		float ITornSource.Severity => TornSeverity;
 		public static int ID { get; private set; }
+        public string[] Categories => [
+            "Harpoon"
+        ];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 			On_Player.IsAmmoFreeThisShot += (orig, self, weapon, ammo, projToShoot) => {

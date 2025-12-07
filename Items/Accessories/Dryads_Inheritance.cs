@@ -11,8 +11,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Dryads_Inheritance : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.GenericBoostAcc
+			"Combat",
+			"GenericBoostAcc"
 		];
         static short glowmask;
         public override void SetStaticDefaults() {

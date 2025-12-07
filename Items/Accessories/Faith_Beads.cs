@@ -10,7 +10,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Faith_Beads : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			WikiCategories.Misc
+			"Misc"
 		];
 		public string EntryName => "Origins/" + typeof(Faith_Beads_Entry).Name;
 		public class Faith_Beads_Entry : JournalEntry {

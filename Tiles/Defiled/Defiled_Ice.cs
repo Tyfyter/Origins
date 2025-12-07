@@ -33,10 +33,10 @@ namespace Origins.Tiles.Defiled {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.IceBlock, Type);
-			ModCompatSets.AnySnowBiomeTiles[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Defiled_Ice>());
+			ModCompatSets.AnySnowBiomeTiles[Type] = true;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.IceTorch, 3)

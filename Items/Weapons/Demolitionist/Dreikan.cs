@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Dreikan : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			nameof(WeaponTypes.OtherExplosive)
+			"OtherExplosive"
 		];
 		public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.SoulofNight, 30)
 			.AddIngredient(ModContent.ItemType<Hallowed_Cleaver>())
-			.AddIngredient(ModContent.ItemType<Phoenum>(), 15)
+			.AddIngredient(ModContent.ItemType<Respyrite>(), 15)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

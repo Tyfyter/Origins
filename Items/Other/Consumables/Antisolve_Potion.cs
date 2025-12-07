@@ -1,5 +1,4 @@
 ﻿using Origins.Buffs;
-using Origins.Dev;
 using Origins.Items.Other.Fish;
 using Origins.Tiles.Brine;
 using Terraria;
@@ -8,6 +7,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Antisolve_Potion : ModItem {
+        public string[] Categories => [
+            "Potion"
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 		}

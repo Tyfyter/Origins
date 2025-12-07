@@ -10,7 +10,10 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
-	public class Amber_Of_Embers : ModItem {
+	public class Amber_Of_Embers : ModItem, ICustomWikiStat {
+        public string[] Categories => [
+            "Wand"
+        ];
         public override void SetStaticDefaults() {
 			Item.staff[Type] = true;
 			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.OnFire3];

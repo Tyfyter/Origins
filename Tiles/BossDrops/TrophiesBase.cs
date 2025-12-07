@@ -17,7 +17,6 @@ namespace Origins.Tiles.BossDrops {
 		public TrophyTileBase Tile { get; } = tile;
 		public override string Name => Tile.Name + "_Item";
 		public override string Texture => Tile.Texture + "_Item";
-		public override LocalizedText Tooltip => LocalizedText.Empty;
 		protected override bool CloneNewInstances => true;
 		public override void SetDefaults() {
 			Item.width = 30;
@@ -60,7 +59,6 @@ namespace Origins.Tiles.BossDrops {
 		public RelicTileBase Tile { get; } = tile;
 		public override string Name => Tile.Name + "_Item";
 		public override string Texture => Tile.RelicTextureName + "_Item";
-		public override LocalizedText Tooltip => LocalizedText.Empty;
 		protected override bool CloneNewInstances => true;
 		public override void SetDefaults() {
 			// Vanilla has many useful methods like these, use them! This substitutes setting Item.createTile and Item.placeStyle as well as setting a few values that are common across all placeable items

@@ -3,8 +3,6 @@ using Origins.NPCs.Defiled;
 using PegasusLib;
 using PegasusLib.UI;
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -117,57 +115,6 @@ namespace Origins.Buffs {
 								other.AddBuff(damageDebuffID, 20);
 							}
 						}
-					}
-				}
-			}
-		}
-		public static IEnumerable<Entity> GetValidChainTargets(Entity entity, float baseRange = 5, bool doArc = true) {
-			Rectangle entityHitbox;
-			bool entityWet;
-			bool ShouldInflict(Rectangle hitbox, bool wet) {
-				Vector2 pointA = hitbox.Center().Clamp(entityHitbox);
-				Vector2 pointB = entityHitbox.Center().Clamp(hitbox);
-				if (pointA.IsWithin(pointB, 16 * baseRange * ((entityWet || wet) ? 2 : 1))) {
-					if (!Main.dedServ && doArc && Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), pointA, pointB)) {
-						Dust.NewDustPerfect(pointA, ModContent.DustType<Static_Shock_Arc_Dust>(), pointB);
-						SoundEngine.PlaySound(Origins.Sounds.LittleZap, (pointA + pointB) * 0.5f);
-					}
-					return true;
-				}
-				return false;
-			}
-			if (entity is Player player) {
-				entityWet = player.wet;
-				entityHitbox = player.Hitbox;
-				for (int i = 0; i < Main.player.Length; i++) {
-					Player other = Main.player[i];
-					if (!other.active) continue;
-					if (other == player) continue;
-					if (ShouldInflict(other.Hitbox, other.wet)) yield return other;
-				}
-				for (int i = 0; i < Main.npc.Length; i++) {
-					NPC other = Main.npc[i];
-					if (other.dontTakeDamage && !other.ShowNameOnHover) continue;
-					if (other.friendly && ShouldInflict(other.Hitbox, other.wet || other.ModNPC is IDefiledEnemy)) yield return other;
-				}
-			} else if (entity is NPC npc) {
-				entityWet = npc.wet || npc.ModNPC is IDefiledEnemy;
-				entityHitbox = npc.Hitbox;
-				if (npc.type == NPCID.TargetDummy || !npc.friendly) {
-					for (int i = 0; i < Main.npc.Length; i++) {
-						NPC other = Main.npc[i];
-						if (other == npc || (other.dontTakeDamage && !other.ShowNameOnHover)) continue;
-						if ((other.type == NPCID.TargetDummy || !other.friendly) && ShouldInflict(other.Hitbox, other.wet || other.ModNPC is IDefiledEnemy)) yield return other;
-					}
-				} else {
-					for (int i = 0; i < Main.player.Length; i++) {
-						Player other = Main.player[i];
-						if (ShouldInflict(other.Hitbox, other.wet)) yield return other;
-					}
-					for (int i = 0; i < Main.npc.Length; i++) {
-						NPC other = Main.npc[i];
-						if (other == npc || (other.dontTakeDamage && !other.ShowNameOnHover)) continue;
-						if (!(other.type == NPCID.TargetDummy || other.friendly) && ShouldInflict(other.Hitbox, other.wet || other.ModNPC is IDefiledEnemy)) yield return other;
 					}
 				}
 			}

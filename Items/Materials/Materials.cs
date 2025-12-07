@@ -26,8 +26,6 @@ namespace Origins.Items.Materials {
 		public virtual int ResearchUnlockCount => 25;
 		public virtual int Rare => ItemRarityID.White;
 		public virtual int Value => 0;
-		public virtual int Width => 14;
-		public virtual int Height => 14;
 		bool? ICustomWikiStat.Hardmode => Hardmode;
 		public abstract bool Hardmode { get; }
 		protected short glowmask = -1;
@@ -41,8 +39,8 @@ namespace Origins.Items.Materials {
 			Item.rare = Rare;
 			Item.value = Value;
 			Item.maxStack = Item.CommonMaxStack;
-			Item.width = Width;
-			Item.height = Height;
+			Item.width = 14;
+			Item.height = 14;
 			Item.glowMask = glowmask;
 		}
 	}
@@ -65,6 +63,9 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Aetherite_Bar : MaterialItem {
+		public string[] Categories => [
+			"Bar"
+		];
 		public override int Rare => ItemRarityID.Orange;
 		public override int ResearchUnlockCount => 25;
 		public override int Value => Item.sellPrice(silver: 50);
@@ -81,6 +82,9 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Alkahest : MaterialItem, IJournalEntrySource {
+		public string[] Categories => [
+			"LoreItem"
+		];
 		public string EntryName => "Origins/" + typeof(Alkahest_Mat_Entry).Name;
 		public override int ResearchUnlockCount => 25;
 		public override int Rare => ItemRarityID.Orange;
@@ -112,7 +116,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 25;
-			animation = new DrawAnimationManual(6);
+			animation = new DrawAnimationManual(5);
 			Main.RegisterItemAnimation(Item.type, animation);
 		}
 		public override void SetDefaults() {
@@ -140,9 +144,6 @@ namespace Origins.Items.Materials {
 						}
 						if (type is Exoskeletal_Tree) {
 							variant = 3;
-						}
-						if (type is Artifiber_Tree) {
-							variant = 5;
 						}
 						switch (WorldGen.GetTreeType(tileType)) {
 							case TreeTypes.Corrupt: {
@@ -218,6 +219,9 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.UnholyArrow, 5)
 			.AddIngredient(ItemID.WoodenArrow, 5)
@@ -227,6 +231,9 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Black_Bile : MaterialItem, IJournalEntrySource {
+		public string[] Categories => [
+			"LoreItem"
+		];
 		public string EntryName => "Origins/" + typeof(Black_Bile_Entry).Name;
 		public override int Rare => ItemRarityID.Orange;
 		public override int Value => Item.sellPrice(silver: 10);
@@ -240,7 +247,7 @@ namespace Origins.Items.Materials {
 		public override bool HasGlowmask => true;
 		public override int ResearchUnlockCount => 48;
 		public override int Rare => ItemRarityID.LightRed;
-		public override bool Hardmode => true;
+		public override bool Hardmode => false;
 		public override void AddRecipes() {
 			Recipe.Create(ModContent.ItemType<Bleeding_Obsidian_Item>())
 			.AddIngredient(this, 8)
@@ -269,7 +276,10 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Pink;
 		public override bool Hardmode => true;
 	}
-	public class Chromtain_Bar : MaterialItem {
+	public class Chromtain_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		public override int Value => Item.sellPrice(gold: 1);
 		public override int Rare => ButterscotchRarity.ID;
 		public override bool Hardmode => true;
@@ -278,7 +288,11 @@ namespace Origins.Items.Materials {
 			tileID = Bar_Tile.AddBarTile(this, new(109, 85, 85));
 		}
 	}
-	public class Defiled_Bar : MaterialItem, IJournalEntrySource {
+	public class Defiled_Bar : MaterialItem, ICustomWikiStat, IJournalEntrySource {
+		public string[] Categories => [
+			"LoreItem",
+			"Bar"
+		];
 		public string EntryName => "Origins/" + typeof(Defiled_Bar_Entry).Name;
 		public class Defiled_Bar_Entry : JournalEntry {
 			public override string TextKey => "Defiled_Bar";
@@ -298,7 +312,10 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Eitrite_Bar : MaterialItem {
+	public class Eitrite_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
@@ -320,7 +337,10 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Encrusted_Bar : MaterialItem {
+	public class Encrusted_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
 		public override bool Hardmode => false;
@@ -335,7 +355,11 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Felnum_Bar : MaterialItem, IJournalEntrySource {
+	public class Felnum_Bar : MaterialItem, IJournalEntrySource, ICustomWikiStat {
+		public string[] Categories => [
+			"LoreItem",
+			"Bar"
+		];
 		public override int Value => Item.sellPrice(silver: 40);
 		public override int Rare => ItemRarityID.Green;
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
@@ -356,7 +380,10 @@ namespace Origins.Items.Materials {
 		public override int Rare => ButterscotchRarity.ID;
 		public override bool Hardmode => true;
 	}
-	public class Formium_Bar : MaterialItem {
+	public class Formium_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		public override int Value => Item.sellPrice(silver: 68);
 		public override int Rare => ButterscotchRarity.ID;
 		public override bool Hardmode => true;
@@ -375,6 +402,20 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(silver: 10);
 		public override int Rare => ItemRarityID.Purple;
 		public override bool Hardmode => true;
+	}
+	public class Magic_Hair_Spray : MaterialItem {
+		public override int ResearchUnlockCount => 1;
+		public override int Value => Item.sellPrice(copper: 40);
+		public override int Rare => ItemRarityID.Quest;
+		public override bool Hardmode => false;
+		public override void AddRecipes() {
+			Recipe.Create(Type, 5)
+			.AddIngredient(ItemID.BottledWater, 5)
+			.AddIngredient(ItemID.FallenStar)
+			.AddIngredient(ModContent.ItemType<Silicon_Bar>())
+			.AddTile(TileID.Bottles)
+			.Register();
+		}
 	}
 	public class NE8 : MaterialItem, IJournalEntrySource {
 		public string EntryName => "Origins/" + typeof(NE_8_Entry).Name;
@@ -421,8 +462,7 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	[LegacyName("Respyrite")]
-	public class Phoenum : MaterialItem {
+	public class Respyrite : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 9);
 		public override int Rare => ItemRarityID.Orange;
 		public override bool Hardmode => true;
@@ -468,7 +508,10 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Sanguinite_Bar : MaterialItem {
+	public class Sanguinite_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
 		public override bool Hardmode => false;
@@ -483,7 +526,10 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Silicon_Bar : MaterialItem {
+	public class Silicon_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		public override int Value => Item.sellPrice(silver: 1, copper: 32);
 		public override bool Hardmode => false;
 		public override void Load() {
@@ -548,7 +594,10 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
 		public override bool Hardmode => false;
 	}
-	public class Valkyrum_Bar : MaterialItem {
+	public class Valkyrum_Bar : MaterialItem, ICustomWikiStat {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		//Alloy of Felnum and a Dawn material. I can imagine a pearl-like color now
 		public override int Value => Item.sellPrice(gold: 1);
 		public override int Rare => ItemRarityID.Yellow;
@@ -568,32 +617,38 @@ namespace Origins.Items.Materials {
 	}
 
 	#region biome keys
-	public abstract class Key_Base<TChest> : Key_Base where TChest : ModItem {
-		public override int Chest => ModContent.ItemType<TChest>();
-	}
-	public abstract class Key_Base : MaterialItem {
+	public class Dawn_Key : MaterialItem {
 		public override int ResearchUnlockCount => 1;
 		public override int Value => 0;
 		public override int Rare => ItemRarityID.Yellow;
 		public override bool Hardmode => true;
 		public override bool HasTooltip => true;
-		public virtual int Chest => -1;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			ItemID.Sets.UsesCursedByPlanteraTooltip[Type] = true;
-			if (Chest != -1) ItemID.Sets.ShimmerTransformToItem[Type] = Chest;
 		}
 	}
-	public class Ashen_Key : Key_Base<Ashen_Dungeon_Chest_Item> {
-		public override bool HasGlowmask => true;
+	public class Defiled_Key : Dawn_Key {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Defiled_Dungeon_Chest_Item>();
+		}
 	}
-	public class Defiled_Key : Key_Base<Defiled_Dungeon_Chest_Item> { }
-	public class Hell_Key : Key_Base { }
-	public class Mushroom_Key : Key_Base { }
-	public class Ocean_Key : Key_Base { }
-	public class Riven_Key : Key_Base<Riven_Dungeon_Chest_Item> {
+	public class Hell_Key : Dawn_Key { }
+	public class Mushroom_Key : Dawn_Key { }
+	public class Ocean_Key : Dawn_Key { }
+	public class Riven_Key : Dawn_Key {
 		public override bool HasGlowmask => true;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
+		}
 	}
-	public class Brine_Key : Key_Base<Brine_Dungeon_Chest_Item> { }
+	public class Brine_Key : Dawn_Key {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Brine_Dungeon_Chest_Item>();
+		}
+	}
 	#endregion
 }

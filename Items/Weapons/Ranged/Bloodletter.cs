@@ -6,7 +6,10 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Bloodletter : Harpoon_Gun {
+	public class Bloodletter : Harpoon_Gun, ICustomWikiStat {
+        public new string[] Categories => [
+            "HarpoonGun"
+        ];
 		public override void SetStaticDefaults() {
 			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Bleeding];
 		}

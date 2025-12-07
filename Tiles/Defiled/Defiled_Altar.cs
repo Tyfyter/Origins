@@ -1,9 +1,13 @@
-﻿using Origins.Items.Other.Testing;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Origins.Items.Other.Testing;
 using Origins.World.BiomeData;
 using PegasusLib;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 namespace Origins.Tiles.Defiled {
@@ -44,6 +48,7 @@ namespace Origins.Tiles.Defiled {
 		public override bool CanExplode(int i, int j) => false;
 	}
 	public class Defiled_Altar_Item : TestingItem {
+		public override string Texture => "Origins/Tiles/Defiled/Defiled_Altar";
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;

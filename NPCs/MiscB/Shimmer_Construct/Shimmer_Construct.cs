@@ -42,7 +42,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	[AutoloadBossHead]
-	public class Shimmer_Construct : ModNPC, IStateBoss<Shimmer_Construct>, IJournalEntrySource, IMinions {
+	public class Shimmer_Construct : ModNPC, IJournalEntrySource, IMinions {
 		internal static ArmorShaderData MatrixCombine { get; set; }
 		internal static ArmorShaderData SmoothShimmer { get; set; }
 		public string EntryName => "Origins/" + typeof(Shimmer_Construct_Entry).Name;
@@ -50,8 +50,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			public override string TextKey => "Shimmer_Construct";
 			public override JournalSortIndex SortIndex => new("Arabel", 5);
 		}
-		public static AIList<Shimmer_Construct> AIStates { get; } = [];
-		public int[] PreviousStates { get; } = new int[6];
+		protected readonly static List<AIState> aiStates = [];
+		public readonly int[] previousStates = new int[6];
 		public bool IsInPhase2 => isInPhase2;// NPC.life * 2 < NPC.lifeMax;
 		public bool IsInPhase3 => isInPhase3;// Main.expertMode && NPC.life * 10 <= NPC.lifeMax;
 		internal static IItemDropRule normalDropRule;
@@ -93,7 +93,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					self.Shader.Parameters["uOffset"].SetValue(pos);
 				}
 			);
-			this.AddBossControllerItem();
 		}
 		public override void Unload() {
 			normalDropRule = null;
@@ -108,7 +107,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Frame = 6
 			};
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
-			this.SetupStates();
+			for (int i = 0; i < aiStates.Count; i++) aiStates[i].SetStaticDefaults();
 		}
 		public override void SetDefaults() {
 			NPC.width = 100;
@@ -124,7 +123,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			NPC.BossBar = GetInstance<Boss_Bar_SC>();
 			NPC.aiAction = StateIndex<PhaseOneIdleState>();
 			NPC.knockBackResist = 0;
-			Array.Fill(PreviousStates, NPC.aiAction);
+			Array.Fill(previousStates, NPC.aiAction);
 		}
 		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment) {
 			// I think this is the "normal" amount:
@@ -146,7 +145,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 			NPC.dontTakeDamage = false;
 			if (deathAnimationTime <= 0 || deathAnimationTime >= DeathAnimationTime) {
-				AIStates[NPC.aiAction].DoAIState(this);
+				aiStates[NPC.aiAction].DoAIState(this);
 				if (!isInPhase2 && (NPC.npcsFoundForCheckActive[NPCType<Shimmer_Chunk1>()] || NPC.npcsFoundForCheckActive[NPCType<Shimmer_Chunk2>()] || NPC.npcsFoundForCheckActive[NPCType<Shimmer_Chunk3>()])) {
 					NPC.dontTakeDamage = true;
 				} else {
@@ -444,7 +443,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				NPC.scale,
 				SpriteEffects.None
 			);
-			if (AIStates[NPC.aiAction] is DoubleCircleState) {
+			if (aiStates[NPC.aiAction] is DoubleCircleState) {
 				Vector2 targetCenter = NPC.GetTargetData().Center;
 				Main.CurrentDrawnEntityShader = Shimmer_Dye.ShaderID;
 				SpriteBatchState state = Main.spriteBatch.GetState();
@@ -461,7 +460,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				);
 				Main.spriteBatch.Restart(state);
 			} else
-			if (AIStates[NPC.aiAction] is ShimmershotState && NPC.ai[1] == 0) {
+			if (aiStates[NPC.aiAction] is ShimmershotState && NPC.ai[1] == 0) {
 				texture = ShimmershotState.chargeVisual;
 				float chargeFrame = NPC.ai[0] * 4 / ShimmershotState.Startup;
 				Main.EntitySpriteDraw(
@@ -716,13 +715,22 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 		public static void SetAIState(Shimmer_Construct boss, int state) {
 			NPC npc = boss.NPC;
-			AIStates[npc.aiAction].TrackState(boss.PreviousStates);
+			aiStates[npc.aiAction].TrackState(boss.previousStates);
 			npc.aiAction = state;
 			npc.ai[0] = 0;
-			AIStates[npc.aiAction].StartAIState(boss);
+			aiStates[npc.aiAction].StartAIState(boss);
 			npc.netUpdate = true;
 		}
-		public static int StateIndex<TState>() where TState : AIState<Shimmer_Construct> => GetInstance<TState>().Index;
+		public static int StateIndex<TState>() where TState : AIState => GetInstance<TState>().Index;
+		public static void SelectAIState(Shimmer_Construct boss, params List<AIState>[] from) {
+			WeightedRandom<int> states = new(Main.rand);
+			for (int j = 0; j < from.Length; j++) {
+				for (int i = 0; i < from[j].Count; i++) {
+					states.Add(from[j][i].Index, from[j][i].GetWeight(boss, boss.previousStates));
+				}
+			}
+			SetAIState(boss, states);
+		}
 		public void Hover(float hoverSpeed = 0.1f) {
 			Vector2 direction = (NPC.Center.Clamp(NPC.GetTargetData().Hitbox) - NPC.GetTargetData().Center.Clamp(NPC.Hitbox)).Normalized(out float dist);
 			if (dist > 16 * 20) {
@@ -734,17 +742,56 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 		public override Color? GetAlpha(Color drawColor) => Color.White * NPC.Opacity;
-		public class AutomaticIdleState : AutomaticIdleState<Shimmer_Construct> { }
-		public abstract class AIState : AIState<Shimmer_Construct> {
-			public override double GetWeight(Shimmer_Construct boss, int[] previousStates) {
-				double weight = base.GetWeight(boss, previousStates);
-				if (Ranged && weight > 0) {
-					for (int i = 0; i < previousStates.Length; i++) {
-						if (AIStates[previousStates[i]].Ranged) weight *= 0.4f + ContentExtensions.DifficultyDamageMultiplier * 0.1f;
+		public class AutomaticIdleState : AIState {
+			public delegate int StatePriority(Shimmer_Construct boss);
+			public static List<(AIState state, StatePriority condition)> aiStates = [];
+			public override void StartAIState(Shimmer_Construct boss) {
+				NPC npc = boss.NPC;
+				npc.ai[0] = 0;
+				npc.ai[1] = 0;
+				npc.ai[2] = 0;
+				npc.ai[3] = 0;
+				int bestPriority = int.MinValue;
+				for (int i = 0; i < aiStates.Count; i++) {
+					(AIState state, StatePriority condition) = aiStates[i];
+					int priority = condition(boss);
+					if (priority > bestPriority) {
+						npc.aiAction = state.Index;
+						bestPriority = priority;
 					}
 				}
-				return weight;
 			}
+			public override void DoAIState(Shimmer_Construct boss) {
+				StartAIState(boss);
+			}
+			public override void TrackState(int[] previousStates) { }
+		}
+		public abstract class AIState : ILoadable {
+			public int Index { get; private set; }
+			public void Load(Mod mod) {
+				Index = aiStates.Count;
+				aiStates.Add(this);
+				Load();
+			}
+			public virtual void Load() { }
+			public virtual void SetStaticDefaults() { }
+			public abstract void DoAIState(Shimmer_Construct boss);
+			public virtual void StartAIState(Shimmer_Construct boss) { }
+			public virtual double GetWeight(Shimmer_Construct boss, int[] previousStates) {
+				int index = Array.IndexOf(previousStates, Index);
+				if (index == -1) index = previousStates.Length;
+				float disincentivization = 1f;
+				if (Ranged) {
+					for (int i = 0; i < previousStates.Length; i++) {
+						if (aiStates[previousStates[i]].Ranged) disincentivization *= 0.4f + ContentExtensions.DifficultyDamageMultiplier * 0.1f;
+					}
+				}
+				return (index / (float)previousStates.Length + (ContentExtensions.DifficultyDamageMultiplier - 0.5f) * 0.1f) * disincentivization;
+			}
+			public virtual void TrackState(int[] previousStates) => previousStates.Roll(Index);
+			public virtual bool Ranged => false;
+			public void Unload() { }
+			protected static float DifficultyMult => ContentExtensions.DifficultyDamageMultiplier;
 		}
 	}
 	public class SC_Scene_Effect : BossMusicSceneEffect<Shimmer_Construct> {

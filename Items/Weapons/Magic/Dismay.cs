@@ -10,8 +10,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Dismay : ModItem, ICustomDrawItem, ICustomWikiStat, IJournalEntrySource {
         public string[] Categories => [
-            WikiCategories.UsesBookcase,
-			WikiCategories.SpellBook
+            "UsesBookcase",
+			"SpellBook"
         ];
 		public string EntryName => "Origins/" + typeof(Dismay_Entry).Name;
 		public class Dismay_Entry : JournalEntry {

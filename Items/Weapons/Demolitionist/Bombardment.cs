@@ -7,7 +7,11 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Bombardment : ModItem {
+	public class Bombardment : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Launcher",
+			"CanistahUser"
+		];
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Bombardment_P>(2, 40, 9f, 48, 32);
 			Item.useTime = 8;
@@ -57,6 +61,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AI() {
 			Projectile.velocity *= 0.96f;
 		}
-		public bool IsExploding => Projectile.timeLeft <= 0;
+		public bool IsExploding() => Projectile.timeLeft <= 0;
 	}
 }

@@ -42,9 +42,9 @@ namespace Origins.Dev {
 			ICustomWikiStat customStat = modNPC as ICustomWikiStat;
 			data["Image"] = customStat?.CustomSpritePath ?? (WikiPageExporter.GetWikiName(modNPC));
 			data["Name"] = npc.TypeName;
-			JArray types = new(WikiCategories.NPC);
-			if (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) types.Add(WikiCategories.Boss);
-			if (modNPC is IJournalEntrySource) types.Add(WikiCategories.Lore);
+			JArray types = new("NPC");
+			if (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) types.Add("Boss");
+			if (modNPC is IJournalEntrySource) types.Add("Lore");
 			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
 			data.Add("Types", types);
 			

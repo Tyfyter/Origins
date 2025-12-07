@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Cirrhosis_Abhorrence : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.RasterSource
+			"Combat",
+			"RasterSource"
 		];
 		static short glowmask;
 		public override void SetStaticDefaults() {

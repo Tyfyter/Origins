@@ -4,7 +4,11 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
-	public class Bolt_Gun : ModItem {
+	public class Bolt_Gun : ModItem, ICustomWikiStat {
+        public string[] Categories => [
+            "Gun"
+        ];
+
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Handgun);
 			Item.damage = 38;

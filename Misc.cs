@@ -16,7 +16,6 @@ using ReLogic.Reflection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Numerics;
@@ -34,7 +33,6 @@ using Terraria.GameContent.Creative;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameInput;
-using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
@@ -43,10 +41,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Exceptions;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
-using Terraria.UI.Chat;
 using Terraria.Utilities;
-using ThoriumMod.Tiles;
-using ThoriumMod.Walls;
 
 namespace Origins {
 	#region classes
@@ -298,10 +293,10 @@ namespace Origins {
 		string assetPath;
 		Ref<Asset<T>> asset;
 		AutoLoadingAsset(Asset<T> asset) {
-			triedLoading = true;
+			triedLoading = false;
 			assetPath = "";
 			this.asset = new(asset);
-			exists = true;
+			exists = false;
 			this.RegisterForUnload();
 		}
 		AutoLoadingAsset(string asset) {
@@ -319,7 +314,6 @@ namespace Origins {
 			if (!triedLoading) {
 				triedLoading = true;
 				if (assetPath is null) {
-					asset ??= new Ref<Asset<T>>();
 					asset.Value = Asset<T>.Empty;
 				} else {
 					if (!Main.dedServ) {
@@ -745,7 +739,6 @@ namespace Origins {
 		void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin);
 		bool DrawOverHand => false;
 		bool BackHand => false;
-		bool HideNormalDraw => true;
 	}
 	public interface IAltTileCollideNPC {
 		int CollisionType { get; }
@@ -792,7 +785,7 @@ namespace Origins {
 				if (modProjectile.Projectile.timeLeft > delay) modProjectile.Projectile.timeLeft = delay;
 			}
 		}
-		bool IsExploding { get; }
+		bool IsExploding();
 	}
 	interface ISelfDamageEffectProjectile {
 		void OnSelfDamage(Player player, Player.HurtInfo info, double damageDealt);
@@ -820,34 +813,6 @@ namespace Origins {
 	}
 	public interface IMinions {
 		public List<int> BossMinions { get; }
-	}
-	public interface ISpecialFrameTile {
-		public void SpecialFrame(int i, int j);
-	}
-	public interface ISpecialTilePreviewItem {
-		public void DrawPreview();
-	}
-	public interface IComplexMineDamageWall {
-		bool CanMine(Player self, Item item, int i, int j);
-	}
-	internal class SpecialTilePreviewOverlay() : Overlay(EffectPriority.High, RenderLayers.TilesAndNPCs), ILoadable {
-		public override void Draw(SpriteBatch spriteBatch) => (Main.LocalPlayer?.HeldItem?.ModItem as ISpecialTilePreviewItem)?.DrawPreview();
-		public override void Update(GameTime gameTime) { }
-		public override void Activate(Vector2 position, params object[] args) {
-			this.Opacity = 1;
-			this.Mode = OverlayMode.Active;
-		}
-		public override void Deactivate(params object[] args) { }
-		public override bool IsVisible() => true;
-		public static void ForceActive() {
-			if (Overlays.Scene[typeof(SpecialTilePreviewOverlay).FullName].Mode != OverlayMode.Active) {
-				Overlays.Scene.Activate(typeof(SpecialTilePreviewOverlay).FullName, default);
-			}
-		}
-		public void Load(Mod mod) {
-			Overlays.Scene[GetType().FullName] = this;
-		}
-		public void Unload() { }
 	}
 	public static class Elements {
 		public const ushort Fire = 1;
@@ -1611,25 +1576,6 @@ namespace Origins {
 				}
 			}
 		}
-		public static bool HasItem(this Item[] collection, Predicate<Item> item) {
-			for (int i = 0; i < collection.Length; i++) {
-				if ((collection[i]?.stack ?? 0) > 0 && item(collection[i])) return true;
-			}
-			return false;
-		}
-
-		public static bool HasItemInAnyInventory(this Player player, Predicate<Item> item) {
-			if (player.inventory.HasItem(item)) return true;
-			if (player.armor.HasItem(item)) return true;
-			if (player.dye.HasItem(item)) return true;
-			if (player.miscEquips.HasItem(item)) return true;
-			if (player.miscDyes.HasItem(item)) return true;
-			if (player.bank.item.HasItem(item)) return true;
-			if (player.bank2.item.HasItem(item)) return true;
-			if (player.bank3.item.HasItem(item)) return true;
-			if (player.bank4.item.HasItem(item)) return true;
-			return false;
-		}
 		#region spritebatch
 		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.End();
@@ -2320,25 +2266,6 @@ namespace Origins {
 			if (!array.IndexInRange(index)) return fallback;
 			return array[index];
 		}
-		public static T GetIfInRange<T>(this T[,] array, int i, int j, T fallback = default) {
-			if (!array.IndexInRange(i, j)) return fallback;
-			return array[i, j];
-		}
-		public static bool IndexInRange<T>(this T[,] array, int i, int j) {
-			return i >= 0 
-				&& j >= 0
-				&& i < array.GetLength(0)
-				&& j < array.GetLength(1);
-		}
-		public static T GetIfInRange<T>(this List<T> array, int index, T fallback = default) {
-			if (!array.IndexInRange(index)) return fallback;
-			return array[index];
-		}
-		public static IEnumerable<int> GetTrueIndexes(this BitArray array) {
-			for (int i = 0; i < array.Length; i++) {
-				if (array[i]) yield return i;
-			}
-		}
 		public static void Roll<T>(this T[] array, params T[] pushIn) {
 			if (pushIn.Length == 0) return;
 			for (int i = array.Length - 1; i >= 0; i--) {
@@ -2829,7 +2756,7 @@ namespace Origins {
 			}
 			return wr;
 		}
-		public static WeightedRandom<int> AccessoryOrSpecialPrefix(this Item item, UnifiedRandom rand, params PrefixCategory[] prefixCategories) {
+		public static WeightedRandom<int> AccessoryOrSpecialPrefix(Item item, UnifiedRandom rand, params PrefixCategory[] prefixCategories) {
 			(PrefixCategory category, bool[] set, double weight)[] categories = new (PrefixCategory category, bool[] set, double weight)[prefixCategories.Length + 1];
 			for (int i = 0; i < prefixCategories.Length; i++) {
 				categories[i] = (prefixCategories[i], Origins.SpecialPrefix, 1);
@@ -2932,7 +2859,6 @@ namespace Origins {
 			Origins.unloadables.Add(unloadable);
 		}
 		public static string GetDefaultTMLName(this Type type) => PegasusExt.GetDefaultTMLName(type);
-		public static string GetDefaultTMLName(this Type type, string suffix) => PegasusExt.GetDefaultTMLName(type) + suffix;
 		public static IEnumerable<T> GetFlags<T>(this T value) where T : struct, Enum {
 			T[] possibleFlags = Enum.GetValues<T>();
 			for (int i = 0; i < possibleFlags.Length; i++) {
@@ -2963,11 +2889,6 @@ namespace Origins {
 				// get modded bestiary text, idk how
 			}
 			return new(flavorText);
-		}
-		public static void KillsCountTowardsNPC<TOther>(this NPC npc, BestiaryEntry bestiaryEntry) where TOther : ModNPC => npc.KillsCountTowardsNPC(ModContent.NPCType<TOther>(), bestiaryEntry);
-		public static void KillsCountTowardsNPC(this NPC npc, int other, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[other], true);
-			ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[npc.type] = ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[other];
 		}
 		public static string MakeContext(params string[] args) {
 			return new StringBuilder().AppendJoin(';', args.Where(a => !string.IsNullOrWhiteSpace(a))).ToString();
@@ -3055,7 +2976,9 @@ namespace Origins {
 				packet.Send();
 			}
 		}
-		public static void AddChambersiteTileConversions(this AltBiome biome, int tile) {
+		public static void AddChambersiteConversions(this AltBiome biome, int tile, int wall) {
+			biome.AddTileConversion(ModContent.TileType<Chambersite>(), TileID.ExposedGems, false, false, false);
+
 			biome.AddTileConversion(tile, ModContent.TileType<Chambersite_Ore>(), extraFunctions: false);
 			biome.AddTileConversion(tile, TileID.Amethyst, oneWay: true, extraFunctions: false);
 			biome.AddTileConversion(tile, TileID.Topaz, oneWay: true, extraFunctions: false);
@@ -3064,14 +2987,6 @@ namespace Origins {
 			biome.AddTileConversion(tile, TileID.Ruby, oneWay: true, extraFunctions: false);
 			biome.AddTileConversion(tile, TileID.Diamond, oneWay: true, extraFunctions: false);
 
-			[JITWhenModsEnabled("ThoriumMod")]
-			void AddThoriumConversions() {
-				biome.AddTileConversion(tile, ModContent.TileType<Aquamarine>(), oneWay: true, extraFunctions: false);
-				biome.AddTileConversion(tile, ModContent.TileType<Opal>(), oneWay: true, extraFunctions: false);
-			}
-			if (ModLoader.HasMod("ThoriumMod")) AddThoriumConversions();
-		}
-		public static void AddChambersiteWallConversions(this AltBiome biome, int wall) {
 			biome.AddWallConversions(wall, ModContent.WallType<Chambersite_Stone_Wall>());
 			biome.AddWallConversions(wall,
 				WallID.AmethystUnsafe,
@@ -3081,29 +2996,6 @@ namespace Origins {
 				WallID.RubyUnsafe,
 				WallID.DiamondUnsafe
 			);
-
-			[JITWhenModsEnabled("ThoriumMod")]
-			void AddThoriumConversions() {
-				biome.AddWallConversions(wall,
-					ModContent.WallType<AquamarineStoneWall>(),
-					ModContent.WallType<OpalStoneWall>()
-				);
-			}
-			if (ModLoader.HasMod("ThoriumMod")) AddThoriumConversions();
-		}
-		public static void AddChambersiteConversions(this AltBiome biome, int tile, int wall) {
-			biome.AddChambersiteTileConversions(tile);
-			biome.AddChambersiteWallConversions(wall);
-		}
-		public static void AddEvilConversions(this AltBiome biome) {
-			biome.AddTileConversion(ModContent.TileType<Chambersite>(), TileID.ExposedGems, false, false, false);
-
-			[JITWhenModsEnabled("ThoriumMod")]
-			void AddThoriumConversions() {
-				biome.AddTileConversion(ModContent.TileType<Chambersite>(), ModContent.TileType<PlacedGem>(), false, false, false);
-			}
-			if (ModLoader.HasMod("ThoriumMod")) AddThoriumConversions();
-
 			biome.AddTileConversion(ModContent.TileType<Bleeding_Obsidian>(), TileID.Obsidian, false, false, false);
 		}
 		public static float SpecificTilesEnemyRate(this NPCSpawnInfo spawnInfo, HashSet<int> tiles, bool hardmode = false) {
@@ -3159,25 +3051,25 @@ namespace Origins {
 		}
 		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			Vector2 pos = area.TopLeft() + offset;
-			float amt = 20; // as to try to not spawn to many dusts
-			for (float c = 0; c < area.Width; c += area.Width / amt) {
+			int amt = 20; // as to try to not spawn to many dusts
+			for (int c = 0; c < area.Width; c += area.Width / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(c, 0), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
-			for (float c = 0; c < area.Height; c += area.Height / amt) {
+			for (int c = 0; c < area.Height; c += area.Height / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(0, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
-			for (float c = 0; c < area.Width; c += area.Width / amt) {
+			for (int c = 0; c < area.Width; c += area.Width / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(c, area.Height), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
-			for (float c = 0; c < area.Height; c += area.Height / amt) {
+			for (int c = 0; c < area.Height; c += area.Height / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(area.Width, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugOutlineSprite(this Rectangle area, Color color, Vector2 offset = default, bool useScreenPos = true) {
-			DrawDebugLineSprite(area.TopLeft(), area.TopRight(), color, offset, useScreenPos);
-			DrawDebugLineSprite(area.TopLeft(), area.BottomLeft(), color, offset, useScreenPos);
-			DrawDebugLineSprite(area.TopRight(), area.BottomRight(), color, offset, useScreenPos);
-			DrawDebugLineSprite(area.BottomLeft(), area.BottomRight(), color, offset, useScreenPos);
+		public static void DrawDebugOutlineSprite(this Rectangle area, Color color, Vector2 offset = default) {
+			DrawDebugLineSprite(area.TopLeft(), area.TopRight(), color, offset, true);
+			DrawDebugLineSprite(area.TopLeft(), area.BottomLeft(), color, offset, true);
+			DrawDebugLineSprite(area.TopRight(), area.BottomRight(), color, offset, true);
+			DrawDebugLineSprite(area.BottomLeft(), area.BottomRight(), color, offset, true);
 		}
 		public static void DrawDebugOutline(this Triangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
@@ -3190,20 +3082,20 @@ namespace Origins {
 				Dust.NewDustPerfect(offset + Vector2.Lerp(area.c, area.a, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugOutlineSprite(this Triangle area, Color color, Vector2 offset = default, bool useScreenPos = true) {
-			DrawDebugLineSprite(area.a, area.b, color, offset, useScreenPos);
-			DrawDebugLineSprite(area.b, area.c, color, offset, useScreenPos);
-			DrawDebugLineSprite(area.c, area.a, color, offset, useScreenPos);
+		public static void DrawDebugOutlineSprite(this Triangle area, Color color, Vector2 offset = default) {
+			DrawDebugLineSprite(area.a, area.b, color, offset, true);
+			DrawDebugLineSprite(area.b, area.c, color, offset, true);
+			DrawDebugLineSprite(area.c, area.a, color, offset, true);
 		}
 		public static void DrawDebugLine(Vector2 a, Vector2 b, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			for (float c = 0; c <= 1; c += 0.125f) {
 				Dust.NewDustPerfect(offset + Vector2.Lerp(a, b, c), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}
 		}
-		public static void DrawDebugLineSprite(Vector2 a, Vector2 b, Color color, Vector2 offset = default, bool useScreenPos = false) {
+		public static void DrawDebugLineSprite(Vector2 a, Vector2 b, Color color, Vector2 offset = default, bool countScreenPos = false) {
 			Vector2 diff = b - a;
 			Vector2 position = a + offset;
-			if (useScreenPos) position -= Main.screenPosition;
+			if (countScreenPos) position -= Main.screenPosition;
 
 			Main.spriteBatch.Draw(
 				TextureAssets.MagicPixel.Value,
@@ -3215,14 +3107,6 @@ namespace Origins {
 				new Vector2(diff.Length() * 0.5f, 1 * 0.5f),
 				0,
 			0);
-		}
-		public static Vector2 DrawDebugTextAbove(this SpriteBatch spritebatch, object obj, Vector2 position, Vector2? origin = null, Color? color = null) {
-			string text = obj.ToString();
-			DynamicSpriteFont font = FontAssets.ItemStack.Value;
-			Vector2 spacing = font.MeasureString(text) / 2;
-			Vector2 orig = origin ?? Vector2.Zero;
-			orig.Y += spacing.Y;
-			return ChatManager.DrawColorCodedStringWithShadow(spritebatch, font, text, position - spacing, color ?? Color.White, 0, orig, Vector2.One);
 		}
 		public static void DrawConstellationLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width = 20, float distort = 20, float waveSpeed = 0.03f) {
 			MiscShaderData shader = GameShaders.Misc["Origins:Constellation"];
@@ -3461,24 +3345,6 @@ namespace Origins {
 			}
 			return null;
 		}
-		public static string ToRomanNumerals(int number) {
-			if (number < 0) return ToRomanNumerals(-number) + "0";
-			if (number < 1) return string.Empty;
-			if (number >= 1000) return "M" + ToRomanNumerals(number - 1000);
-			if (number >= 900) return "CM" + ToRomanNumerals(number - 900);
-			if (number >= 500) return "D" + ToRomanNumerals(number - 500);
-			if (number >= 400) return "CD" + ToRomanNumerals(number - 400);
-			if (number >= 100) return "C" + ToRomanNumerals(number - 100);
-			if (number >= 90) return "XC" + ToRomanNumerals(number - 90);
-			if (number >= 50) return "L" + ToRomanNumerals(number - 50);
-			if (number >= 40) return "XL" + ToRomanNumerals(number - 40);
-			if (number >= 10) return "X" + ToRomanNumerals(number - 10);
-			if (number >= 9) return "IX" + ToRomanNumerals(number - 9);
-			if (number >= 5) return "V" + ToRomanNumerals(number - 5);
-			if (number >= 4) return "IV" + ToRomanNumerals(number - 4);
-			if (number >= 1) return "I" + ToRomanNumerals(number - 1);
-			throw new UnreachableException("Impossible state reached");
-		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
@@ -3595,7 +3461,7 @@ namespace Origins {
 						checkArea.X = i * -16 + cornerX;
 						checkArea.Y = j * -16 + cornerY;
 						//checkArea.DrawDebugOutline(new Vector2((i + minX) * 16, (j + minY) * 16), DustID.WaterCandle);
-						if (tile.HasTile && !tile.IsActuated && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType])) {
+						if (tile != null && tile.HasSolidTile()) {
 							if (tile.Slope != SlopeType.Solid) {
 								Triangle draw = tileTriangles[(int)tile.Slope - 1];
 								if (draw.Intersects(checkArea)) {
@@ -3618,7 +3484,7 @@ namespace Origins {
 					for (int j = 0; j <= maxY; j++) {
 						Tile tile = Main.tile[i + minX, j + minY];
 						if (fallThrough && Main.tileSolidTop[tile.TileType]) continue;
-						if (tile.HasTile && !tile.IsActuated && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType])) {
+						if (tile != null && tile.HasSolidTile()) {
 							checkArea.X = i * -16 + cornerX;
 							checkArea.Y = j * -16 + cornerY;
 							if (tile.Slope != SlopeType.Solid) {
@@ -4661,11 +4527,6 @@ namespace Origins {
 			spriteBatch.Draw(texture, position, sourceRectangle, color, rotation, origin, scale, effects, 0);
 			spriteBatch.Draw(glowTexture, position, sourceRectangle, glowColor, rotation, origin, scale, effects, 0);
 		}
-		public static Color GetTintColor(this NPC npc, Color baseColor) {
-			if (npc.IsABestiaryIconDummy) return baseColor;
-			NPCLoader.DrawEffects(npc, ref baseColor);
-			return npc.GetNPCColorTintedByBuffs(baseColor);
-		}
 	}
 	public static class TileExtenstions {
 		public record class MergeMatcher(int Up, int Down, int Left, int Right, int? UpLeft = null, int? UpRight = null, int? DownLeft = null, int? DownRight = null) {
@@ -5193,73 +5054,10 @@ namespace Origins {
 		public static bool IsWithinRectangular(this Entity a, Entity b, Vector2 range) => a.Center.Clamp(b.Hitbox).IsWithinRectangular(b.Center.Clamp(a.Hitbox), range);
 		public static bool IsWithinRectangular(this Vector2 a, Vector2 b, Vector2 range) => Abs(a - b).Between(Vector2.Zero, Abs(range));
 		static Vector2 Abs(Vector2 v) => new(Math.Abs(v.X), Math.Abs(v.Y));
-		public static void GetDisplayedDayTime(out string hours, out string minutes, out string seconds, out string half) {
-			// Get current weird time
-			double time = Main.time;
-			if (!Main.dayTime) {
-				// if it's night add this number
-				time += 54000.0;
-			}
-
-			// Divide by seconds in a day * 24
-			time = (time / 86400.0) * 24.0;
-			// Dunno why we're taking 19.5. Something about hour formatting
-			time = time - 7.5 - 12.0;
-			// Format in readable time
-			if (time < 0.0) {
-				time += 24.0;
-			}
-
-			int intTime = (int)time;
-			// Get the decimal points of time.
-			double deltaTime = time - intTime;
-			seconds = ((int)(deltaTime * 60.0 * 60.0) % 60).ToString("0#");
-			// multiply them by 60. Minutes, probably
-			deltaTime = (int)(deltaTime * 60.0);
-			minutes = deltaTime.ToString();
-			if (deltaTime < 10.0) {
-				// if deltaTime is eg "1" (which would cause time to display as HH:M instead of HH:MM)
-				minutes = "0" + minutes;
-			}
-			if (OriginClientConfig.Instance.TwentyFourHourTime) {
-				half = "";
-				hours = intTime.ToString("0#");
-			} else {
-				if (intTime >= 12) {
-					half = " " + Language.GetTextValue("GameUI.TimePastMorning");
-					// This is for AM/PM time rather than 24hour time
-					if (intTime > 0) intTime -= 12;
-				} else {
-					half = " " + Language.GetTextValue("GameUI.TimeAtMorning");
-				}
-
-				if (intTime == 0) {
-					// 0AM = 12AM
-					intTime = 12;
-				}
-				hours = intTime.ToString();
-			}
-		}
 	}
 	public static class NetmodeActive {
 		public static bool SinglePlayer => Main.netMode == NetmodeID.SinglePlayer;
 		public static bool MultiplayerClient => Main.netMode == NetmodeID.MultiplayerClient;
 		public static bool Server => Main.netMode == NetmodeID.Server;
-	}
-	// Convenience methods that really only exist to make things quicker and are likely to be used in places without a shared base class from Origins
-	public static class GlobalUtils {
-		public static Color FromHexRGB(uint hex) => FromHexRGBA((hex << 8) | 0x000000ffu);
-		public static Color FromHexRGBA(uint hex) => new() {
-			PackedValue = ((hex & 0xff000000u) >> 24) | ((hex & 0x00ff0000u) >> 8) | ((hex & 0x0000ff00u) << 8) | ((hex & 0x000000ffu) << 24),
-		};
-		public static void Min<T>(ref T current, T @new) where T : IComparisonOperators<T, T, bool> {
-			if (current > @new) current = @new;
-		}
-		public static void Max<T>(ref T current, T @new) where T : IComparisonOperators<T, T, bool> {
-			if (current < @new) current = @new;
-		}
-		public static void MinMax<T>(ref T min, ref T max) where T : IComparisonOperators<T, T, bool> {
-			if (min > max) Utils.Swap(ref min, ref max);
-		}
 	}
 }

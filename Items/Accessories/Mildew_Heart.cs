@@ -15,7 +15,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mildew_Heart : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			WikiCategories.Combat
+			"Combat"
 		];
 		public string EntryName => "Origins/" + typeof(Mildew_Heart_Entry).Name;
 		public class Mildew_Heart_Entry : JournalEntry {

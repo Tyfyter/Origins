@@ -10,6 +10,7 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.NPCs.MiscB.Shimmer_Construct.Shimmer_Construct;
@@ -32,8 +33,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			npc.TargetClosest();
 			npc.velocity *= 0.97f;
 			if (++npc.ai[0] > IdleTime && Main.netMode != NetmodeID.MultiplayerClient) {
-				if (aiStates.Select(state => state.Index).All(boss.PreviousStates.Contains)) Array.Fill(boss.PreviousStates, Index);
-				boss.SelectAIState(aiStates);
+				if (aiStates.Select(state => state.Index).All(boss.previousStates.Contains)) Array.Fill(boss.previousStates, Index);
+				SelectAIState(boss, aiStates);
 			}
 			if (npc.HasValidTarget) npc.DiscourageDespawn(60 * 5);
 			else npc.EncourageDespawn(60);

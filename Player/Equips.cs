@@ -7,7 +7,6 @@ using Origins.Items.Armor.Aetherite;
 using Origins.Items.Armor.Chambersite;
 using Origins.Items.Mounts;
 using Origins.Items.Other;
-using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Layers;
@@ -45,7 +44,6 @@ namespace Origins {
 			Player.buffImmune[Rasterized_Debuff.ID] = Player.buffImmune[BuffID.Cursed];
 			if (tornDebuff) {
 				LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornTarget > tornCurrentSeverity ? tornSeverityRate : tornSeverityDecayRate);
-				if (medicinalAcid) Min(ref tornCurrentSeverity, Medicinal_Acid.MaxTornSeverity);
 			}
 			if (soulhideSet) {
 				const float maxDistTiles = 10f * 16;
@@ -525,7 +523,7 @@ namespace Origins {
 			}
 			if (slagBucket && Player.onFire) {
 				Player.onFire = false;
-				Player.lifeRegen += 4;
+				Player.lifeRegenCount += 4;
 				if (Main.rand.NextBool(4)) {
 					Dust dust18 = Dust.NewDustDirect(Player.position - Vector2.One * 2, Player.width + 4, Player.height + 4, DustID.Torch, Player.velocity.X * 0.4f, Player.velocity.Y * 0.4f, 100, default, 3f);
 					dust18.noGravity = true;
@@ -729,10 +727,10 @@ namespace Origins {
 				Player.lifeRegenTime += (int)((factor - rounded) * 50);
 			}
 			if (primordialSoup) {
-				Player.lifeRegen += (int)(tornCurrentSeverity * 18);
+				Player.lifeRegenCount += (int)(tornCurrentSeverity * 18);
 			}
 			if (bugZapper) {
-				Player.lifeRegen += (int)(tornCurrentSeverity * 22);
+				Player.lifeRegenCount += (int)(tornCurrentSeverity * 22);
 			}
 		}
 		public override void GetHealLife(Item item, bool quickHeal, ref int healValue) {

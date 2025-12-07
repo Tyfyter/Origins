@@ -9,7 +9,7 @@ namespace Origins.Items.Other.Dyes {
 		public static int ID { get; private set; }
 		public static int ShaderID { get; private set; }
 		public string[] Categories => [
-			WikiCategories.SpecialEffectDye
+			"SpecialEffectDye"
 		];
 		public override void SetStaticDefaults() {
 			ID = Type;

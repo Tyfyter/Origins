@@ -8,8 +8,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Magic_Glove : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.MagicBoostAcc
+			"Combat",
+			"MagicBoostAcc"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 24);

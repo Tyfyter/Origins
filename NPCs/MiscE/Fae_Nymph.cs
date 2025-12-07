@@ -1,4 +1,5 @@
-﻿using Origins.Dev;
+﻿using Newtonsoft.Json.Linq;
+using Origins.Dev;
 using Origins.Items.Accessories;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -32,7 +33,8 @@ namespace Origins.NPCs.MiscE {
 			Banner = Item.NPCtoBanner(NPCID.Nymph);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			NPC.KillsCountTowardsNPC<Whimsical_Girl>(bestiaryEntry);
+			bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<Whimsical_Girl>()], quickUnlock: true);
+			ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type] = ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<Whimsical_Girl>()];
 
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText(),

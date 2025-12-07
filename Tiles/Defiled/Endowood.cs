@@ -1,5 +1,9 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
+using Origins.Walls;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -7,8 +11,8 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Defiled {
 	public class Endowood : OriginTile {
         public string[] Categories => [
-			WikiCategories.Plant
-		];
+            "Plant"
+        ];
         public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;

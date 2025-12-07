@@ -17,7 +17,12 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Sonar_Dynamite : ModItem {
+	public class Sonar_Dynamite : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"ThrownExplosive",
+			"IsDynamite",
+			"ExpendableWeapon"
+		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;

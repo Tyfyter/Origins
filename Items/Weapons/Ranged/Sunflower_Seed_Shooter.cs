@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Sunflower_Seed_Shooter : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			nameof(WeaponTypes.Gun)
+			"Gun"
 		];
 		public override void SetStaticDefaults() {
 			Origins.FlatDamageMultiplier[Type] = 2f / 8f;

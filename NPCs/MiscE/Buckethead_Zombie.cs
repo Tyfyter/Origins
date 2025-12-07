@@ -1,9 +1,12 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
+using Origins.Dev;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Empowerments;
 
 namespace Origins.NPCs.MiscE {
     public class Buckethead_Zombie : ModNPC, IWikiNPC {
@@ -11,6 +14,12 @@ namespace Origins.NPCs.MiscE {
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		public override void Load() {
+			On_NPC.ScaleStats_ApplyExpertTweaks += (orig, self) => {
+				orig(self);
+				OriginsSets.NPCs.CustomExpertScaling.GetIfInRange(self.type)?.Invoke(self);
+			};
+		}
 		public override void SetStaticDefaults() {
 			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.UndeadMiner;//maybe undead viking instead?
 			Main.npcFrameCount[NPC.type] = 3;
@@ -41,7 +50,6 @@ namespace Origins.NPCs.MiscE {
 			NPC.height = 44;
 			NPC.value = 90;
 			NPC.friendly = false;
-			NPC.aiStyle = NPCAIStyleID.Fighter;
 			AIType = NPCID.Zombie;
 			AnimationType = NPCID.Zombie;
 			Banner = Item.NPCtoBanner(NPCID.Zombie);

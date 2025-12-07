@@ -4,7 +4,10 @@ using Terraria.ModLoader;
 using Origins.Dev;
 
 namespace Origins.Items.Weapons.Ranged {
-	public class Blotopus : ModItem {
+	public class Blotopus : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Gun"
+		];
 		public override void SetStaticDefaults() {
 			Origins.FlatDamageMultiplier[Type] = 4f / 8f;
 		}

@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables.Broths {
 	public abstract class BrothBase : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Broth
+			"Broth"
 		];
 		protected override bool CloneNewInstances => true;
 		public BrothBuff Buff { get; private set; }

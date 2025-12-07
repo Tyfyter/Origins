@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Primordial_Soup : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Vitality
+			"Vitality"
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.PanicNecklace] = ModContent.ItemType<Primordial_Soup>();

@@ -1,19 +1,21 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Items.Materials;
+using Origins.Tiles.Ashen;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-	public class Wilted_Rose : OriginTile, ICustomWikiStat {
+	public class Wilted_Rose : OriginTile, IDefiledTile, ICustomWikiStat {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
         public string[] Categories => [
-            WikiCategories.Plant
+            "Plant"
         ];
         public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -32,7 +34,6 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			TileObjectData.newTile.AnchorValidTiles = [
 				TileType<Defiled_Grass>(),
-				TileType<Defiled_Jungle_Grass>(),
 				TileType<Defiled_Stone>()
 			];
 			TileObjectData.newTile.AnchorAlternateTiles = [
@@ -149,17 +150,23 @@ namespace Origins.Tiles.Defiled {
 			return tile.TileFrameX / FrameWidth;
 		}
 	}
-    public class Wilting_Rose_Item : MaterialItem {
-		public override int Value => Item.sellPrice(copper: 20);
-		public override bool Hardmode => false;
-		public override int Width => 12;
+    public class Wilting_Rose_Item : ModItem {
+        public override void SetStaticDefaults() {
+            Item.ResearchUnlockCount = 25;
+        }
+        public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
+			Item.width = 12;
+			Item.height = 14;
+			Item.value = Item.sellPrice(copper: 20);
+        }
     }
-    public class Wilting_Rose_Seeds : MaterialItem {
-		public override int Value => Item.sellPrice(copper: 16);
-		public override bool Hardmode => false;
-		public override void SetDefaults() {
-			base.SetDefaults();
+    public class Wilting_Rose_Seeds : ModItem {
+        public override void SetStaticDefaults() {
+            Item.ResearchUnlockCount = 25;
+        }
+        public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Wilted_Rose>());
-		}
+        }
     }
 }

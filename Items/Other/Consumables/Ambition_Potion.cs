@@ -1,12 +1,15 @@
 ﻿using Origins.Buffs;
 using Origins.Items.Other.Fish;
-using Origins.Tiles.Ashen;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Origins.Tiles.Ashen;
 
 namespace Origins.Items.Other.Consumables {
     public class Ambition_Potion : ModItem {
+        public string[] Categories => [
+            "Potion"
+        ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 		}

@@ -6,8 +6,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Refactoring_Pieces : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-            WikiCategories.ManaShielding
-        ];
+			"ManaShielding"
+		];
 		public override void SetStaticDefaults() {
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5, 6));
 			Item.ResearchUnlockCount = 1;

@@ -44,7 +44,7 @@ namespace Origins.Dev {
 			[typeof(Wiggle_Handler.Wiggle_Snippet)] = snippet => $"<a-wiggle>{snippet.Text}</a-wiggle>",
 			[typeof(Italics_Snippet_Handler.Italics_Snippet)] = snippet => $"<i>{snippet.Text}</i>",
 			[typeof(Buff_Hint_Snippet)] = _snippet => {
-				if (_snippet is not Buff_Hint_Snippet snippet || snippet.buffType == -1) return _snippet.Text;
+				if (_snippet is not Buff_Hint_Snippet snippet) return _snippet.Text;
 				if (snippet.buff is null) return $"<a href=\"https://terraria.wiki.gg/wiki/{Lang.GetBuffName(snippet.buffType).Replace(' ', '_')}\">{Lang.GetBuffName(snippet.buffType)}</a>";
 				if (snippet.buff.Mod is Origins) return $"<a href=\"{GetWikiName(snippet.buff)}\">{ProcessTags(Lang.GetBuffName(snippet.buffType))}</a>";
 				return Lang.GetBuffName(snippet.buffType);

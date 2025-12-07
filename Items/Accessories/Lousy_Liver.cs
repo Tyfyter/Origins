@@ -8,8 +8,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Lousy_Liver : ModItem, ICustomWikiStat, IJournalEntrySource {
 		public string[] Categories => [
-			WikiCategories.Combat,
-			WikiCategories.RasterSource
+			"Combat",
+			"RasterSource"
 		];
 		public string EntryName => "Origins/" + typeof(Lousy_Liver_Entry).Name;
 		public class Lousy_Liver_Entry : JournalEntry {

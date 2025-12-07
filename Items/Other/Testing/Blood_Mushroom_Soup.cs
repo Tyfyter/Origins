@@ -1,24 +1,19 @@
-using AltLibrary.Common.Systems;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using Origins.Core.Structures;
-using Origins.Tiles.Riven;
-using Origins.World;
-using Origins.World.BiomeData;
-using ReLogic.OS;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.World;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Origins.World.BiomeData;
+using static Origins.Items.Other.Testing.Blood_Mushroom_Soup;
+using Terraria.GameInput;
+using Origins.Tiles.Riven;
+using AltLibrary.Common.Systems;
+using System.Text;
 using Terraria.ObjectData;
 using Terraria.Utilities;
-using static Origins.Items.Other.Testing.Blood_Mushroom_Soup;
 
 namespace Origins.Items.Other.Testing {
 	public class Blood_Mushroom_Soup : TestingItem {
@@ -544,47 +539,8 @@ namespace Origins.Items.Other.Testing {
 		}
 		public void Unload() { }
 	}
-	public class Structure_Testing_Mode : WorldgenTestingMode {
-		public override SortOrder SortPosition => SortOrder.New;
-		DeserializedStructure structure;
-		Task<DeserializedStructure> task;
-		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
-			if (structure is null) {
-				if (task is null) {
-					task = DeserializedStructure.AsyncLoad("Origins/World/Structures/TestStructure");
-				} else if (task.IsCompleted) {
-					structure = task.Result;
-					task = null;
-				}
-				return "Loading Structure" + new string('.', (int)(Main.timeForVisualEffects / 45 % 3) + 1);
-			}
-			return "Place Structure";
-		}
-		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
-			if (structure is null) return;
-			parameters.Enqueue(Player.tileTargetX);
-			parameters.Enqueue(Player.tileTargetY);
-			Apply(parameters);
-		}
-		public override void Apply(LinkedQueue<object> parameters) {
-			if (structure is null) return;
-			structure.Generate((int)parameters.Dequeue(), (int)parameters.Dequeue());
-		}
-	}
-	public class Structure_Serialization_Testing_Mode : WorldgenTestingMode {
-		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "Pick Tile";
-		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
-			parameters.Enqueue(Player.tileTargetX);
-			parameters.Enqueue(Player.tileTargetY);
-			Apply(parameters);
-		}
-		public override void Apply(LinkedQueue<object> parameters) {
-			string data = SerializableTileDescriptor.Serialize(Main.tile[(int)parameters.Dequeue(), (int)parameters.Dequeue()]);
-			Platform.Get<IClipboard>().Value = data;
-			Main.NewText("Copied tile to clipboard: " + data);
-		}
-	}
 	public class List_Worldgen_Testing_Mode : WorldgenTestingMode {
+		public override SortOrder SortPosition => SortOrder.New;
 		public override string GetMouseText(int parameterCount, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) => "List World Generation Sources";
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {
 			Apply(parameters);

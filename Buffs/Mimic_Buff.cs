@@ -12,7 +12,7 @@ namespace Origins.Buffs {
 			player.GetAttackSpeed(DamageClass.Generic) += 0.1f;
 			player.GetAttackSpeed(DamageClass.Generic) *= 1.15f;
 			player.GetCritChance(DamageClass.Generic) += 15;
-			player.lifeRegen += 20;
+			player.lifeRegenCount += 20;
 		}
 	}
 }

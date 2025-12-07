@@ -14,7 +14,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Regolith : OriginTile, IDefiledTile {
 		public string[] Categories => [
-            WikiCategories.Stone
+            "Stone"
         ];
         public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Defiled_Pot>(), 0, 0));

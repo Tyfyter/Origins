@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Infusion : ModItem, ICustomWikiStat, IJournalEntrySource {
 		static short glowmask;
         public string[] Categories => [
-            WikiCategories.MagicGun
+            "MagicGun"
         ];
 		public string EntryName => "Origins/" + typeof(Infusion_Entry).Name;
 		public class Infusion_Entry : JournalEntry {

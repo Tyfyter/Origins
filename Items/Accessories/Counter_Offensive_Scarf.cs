@@ -8,9 +8,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Counter_Offensive_Scarf : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Vitality,
-			WikiCategories.Combat,
-			WikiCategories.GenericBoostAcc
+			"Vitality",
+			"Combat",
+			"GenericBoostAcc"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(38, 20);

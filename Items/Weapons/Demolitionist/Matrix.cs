@@ -12,8 +12,11 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Matrix : ModItem {
+	public class Matrix : ModItem, ICustomWikiStat {
 		static short glowmask;
+		public string[] Categories => [
+			"Launcher"
+		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}

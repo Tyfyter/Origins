@@ -17,7 +17,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Buffs {
 	public class Corrupt_Assimilation : AssimilationDebuff {
-		public override string BestiaryStatTexture => "Terraria/Images/UI/WorldCreation/IconEvilCorruption";
 		public override void Update(Player player, float percent) {
 			player.GetDamage(DamageClass.Generic) -= percent / 2;
 			player.GetAttackSpeed(DamageClass.Generic) -= percent / 2;
@@ -26,7 +25,6 @@ namespace Origins.Buffs {
 		}
 	}
 	public class Crimson_Assimilation : AssimilationDebuff {
-		public override string BestiaryStatTexture => "Terraria/Images/UI/WorldCreation/IconEvilCrimson";
 		public override void Update(Player player, float percent) {
 			if (Main.rand.NextFloat(0.15f, 20f) < percent) {
 				if (Main.rand.NextBool(2)) {

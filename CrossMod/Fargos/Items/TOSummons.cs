@@ -1,11 +1,15 @@
-﻿using Origins.NPCs.Ashen;
+﻿using Origins.Core;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Riven;
 using PegasusLib.Networking;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
+using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.CrossMod.Fargos.Items {
@@ -28,10 +32,9 @@ namespace Origins.CrossMod.Fargos.Items {
 	}
 	public class Defiled_Chest : TOSummons<Defiled_Mimic> { }
 	public class Riven_Chest : TOSummons<Riven_Mimic> { }
-	public class Suspicious_Trash_Compactor : TOSummons<Trash_Compactor_Mimic> {
-		public override string Texture => typeof(Defiled_Chest).GetDefaultTMLName();
-	}
-
+	/*
+	public class Ashen_Chest : TOSummons<Ashen_Mimic> { }
+	*/
 	public record class TOSummons_Action(int PlayerID, int Type, Vector2 Pos) : SyncedAction {
 		public override bool ServerOnly => true;
 		public TOSummons_Action() : this(default, default, default) { }

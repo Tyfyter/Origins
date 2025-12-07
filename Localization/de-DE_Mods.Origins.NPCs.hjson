@@ -422,20 +422,3 @@ Debug_Shoot_NPC: {
 }
 
 // Creme_Filled_Bat.DisplayName: Creme Filled Bat
-// Peppered_Moth.DisplayName: Peppered Moth
-// Trash_Compactor_Mimic.DisplayName: Trash Compactor Mimic
-// BlotopusNPC.DisplayName: Blotopus
-// Hyrax.DisplayName: Hyrax
-// Power_Suit_Zombie.DisplayName: Power Suit Zombie
-
-Trenchmaker: {
-	// DisplayName: Trenchmaker-[{0:00}]
-
-	BossChecklistIntegration: {
-		// SpawnCondition: Mods.Origins.NPCs.Trenchmaker.BossChecklistIntegration.SpawnCondition
-		// EntryName: Trenchmaker
-	}
-}
-
-// Pinwheel.DisplayName: Pinwheel
-// Fearmaker.DisplayName: Fearmaker

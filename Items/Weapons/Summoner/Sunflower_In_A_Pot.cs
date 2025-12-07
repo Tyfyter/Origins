@@ -272,7 +272,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (Main.dayTime) {
 				foreach (Player healee in Main.ActivePlayers) {
 					if (healee.team == player.team && Projectile.Center.Clamp(healee.Hitbox).WithinRange(Projectile.Center, 16 * 15)) {
-						healee.lifeRegen += 2;
+						healee.lifeRegenCount += 2;
 						Dust dust = Dust.NewDustDirect(
 							healee.position,
 							healee.width,

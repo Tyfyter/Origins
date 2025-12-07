@@ -13,9 +13,12 @@ using Terraria.ModLoader;
 using static Origins.Misc.Physics;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Impetus : ModItem, ICustomDrawItem, ITornSource {
+	public class Impetus : ModItem, ICustomDrawItem, ICustomWikiStat, ITornSource {
 		public static float TornSeverity => 0.3f;
 		float ITornSource.Severity => TornSeverity;
+		public string[] Categories => [
+			"Launcher"
+		];
 		AutoLoadingAsset<Texture2D> UseTexture = typeof(Impetus).GetDefaultTMLName() + "_Use";
 		AutoLoadingAsset<Texture2D> UseGlowTexture = typeof(Impetus).GetDefaultTMLName() + "_Use_Glow";
 		public override void SetDefaults() {

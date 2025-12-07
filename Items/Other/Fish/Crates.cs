@@ -211,8 +211,8 @@ namespace Origins.Items.Other.Fish {
 		string[] ICustomWikiStat.Categories {
 			get {
 				return [
-					WikiCategories.GrabBag,
-					..(Hardmode ? [WikiCategories.Hardmode] : Array.Empty<string>()),
+					"GrabBag",
+					..(Hardmode ? ["Hardmode"] : Array.Empty<string>()),
 					..Categories
 				];
 			}

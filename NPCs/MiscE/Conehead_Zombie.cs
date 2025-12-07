@@ -1,4 +1,5 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -42,7 +43,6 @@ namespace Origins.NPCs.MiscE {
 			NPC.height = 46;
 			NPC.friendly = false;
 			NPC.value = 80;
-			NPC.aiStyle = NPCAIStyleID.Fighter;
 			AIType = NPCID.Zombie;
 			AnimationType = NPCID.Zombie;
 			Banner = Item.NPCtoBanner(NPCID.Zombie);

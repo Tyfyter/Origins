@@ -15,7 +15,10 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Self_Destruct : ModItem {
+	public class Self_Destruct : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"OtherExplosive"
+		];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Origins.AddGlowMask(this);
@@ -148,7 +151,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Self_Destruct_Flash>(), 0, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding => true;
+		public bool IsExploding() => true;
 	}
 	public class Self_Destruct_Flash : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Self_Destruct_Visual";

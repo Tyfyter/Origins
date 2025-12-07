@@ -15,7 +15,7 @@ using PegasusLib.Sets;
 namespace Origins.Items.Weapons.Melee {
 	public class Depth_Charge : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Flail
+			"Flail"
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
@@ -142,7 +142,7 @@ namespace Origins.Items.Weapons.Melee {
 			return chainPositions;
 		}
 
-		public bool IsExploding => false;
+		public bool IsExploding() => false;
 	}
 	public class Depth_Charge_P_Alt : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => typeof(Depth_Charge_P).GetDefaultTMLName();
@@ -273,7 +273,7 @@ namespace Origins.Items.Weapons.Melee {
 			return chainPositions;
 		}
 
-		public bool IsExploding => false;
+		public bool IsExploding() => false;
 	}
 	public class Depth_Charge_Explosion : ModProjectile, IIsExplodingProjectile, ISelfDamageEffectProjectile {
 		public override string Texture => "Origins/CrossMod/Thorium/Items/Weapons/Bard/Sonorous_Shredder_P";
@@ -311,7 +311,7 @@ namespace Origins.Items.Weapons.Melee {
 			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 90);
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding => true;
+		public bool IsExploding() => true;
 		public void OnSelfDamage(Player player, Player.HurtInfo info, double damageDealt) {
 			if (player.wet) player.AddBuff(Cavitation_Debuff.ID, 90);
 			Projectile.ai[1] = 1;

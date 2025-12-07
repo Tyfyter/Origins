@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Fiberglass_Sword : ModItem, IElementalItem, ICustomWikiStat {
 		public ushort Element => Elements.Fiberglass;
 		public string[] Categories => [
-			WikiCategories.Sword
+			"Sword"
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;

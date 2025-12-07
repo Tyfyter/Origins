@@ -9,7 +9,7 @@ namespace Origins.Items.Armor.Endowood {
 	[AutoloadEquip(EquipType.Head)]
 	public class Endowood_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => [
-            WikiCategories.ArmorSet
+            "ArmorSet"
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;

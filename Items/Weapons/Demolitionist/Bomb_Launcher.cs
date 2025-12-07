@@ -12,7 +12,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Bomb_Launcher : ModItem {
+	public class Bomb_Launcher : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Launcher"
+		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 		}

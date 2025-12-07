@@ -1,5 +1,4 @@
-﻿using Origins.Dev;
-using Origins.Tiles.Cubekon;
+﻿using Origins.Tiles.Cubekon;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,7 +8,7 @@ namespace Origins.Items.Other.Consumables {
 		public const int mana_per_use = 40;
 		public const int max_uses = 5;
         public string[] Categories => [
-            WikiCategories.PermaBoost
+            "PermaBoost"
         ];
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 30;

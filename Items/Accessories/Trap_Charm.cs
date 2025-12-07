@@ -13,7 +13,7 @@ using Terraria.Utilities;
 namespace Origins.Items.Accessories {
 	public class Trap_Charm : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Vitality
+			"Vitality"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 24);

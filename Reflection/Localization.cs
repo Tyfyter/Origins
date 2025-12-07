@@ -1,11 +1,10 @@
-﻿using PegasusLib;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
-using System.Reflection.Emit;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.UI;
+using PegasusLib;
+using System;
+using System.Reflection.Emit;
 
 namespace Origins.Reflection {
 	public class LocalizationMethods : ILoadable {
@@ -14,7 +13,6 @@ namespace Origins.Reflection {
 		public static FastFieldInfo<LocalizedText, bool?> _hasPlurals;
 		public static FastFieldInfo<LocalizedText, object[]> BoundArgs;
 		public static Func<string, LocalizedText> createLocalizedText;
-		public static FastFieldInfo<ItemTooltip, LocalizedText> _text;
 		public void Load(Mod mod) {
 			_localizedTexts = new(nameof(_localizedTexts), BindingFlags.NonPublic);
 			_value = new(nameof(_value), BindingFlags.NonPublic);
@@ -29,7 +27,6 @@ namespace Origins.Reflection {
 			gen.Emit(OpCodes.Ret);
 
 			createLocalizedText = getterMethod.CreateDelegate<Func<string, LocalizedText>>();
-			_text = "_text";
 		}
 		public void Unload() {
 			_localizedTexts = null;
@@ -37,7 +34,6 @@ namespace Origins.Reflection {
 			_hasPlurals = null;
 			BoundArgs = null;
 			createLocalizedText = null;
-			_text = null;
 		}
 		public static void BindArgs(LocalizedText text, params object[] args) {
 			BoundArgs.SetValue(text, args);

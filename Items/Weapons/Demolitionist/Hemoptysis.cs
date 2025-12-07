@@ -11,7 +11,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Hemoptysis : ModItem {
+	public class Hemoptysis : ModItem, ICustomWikiStat {
+		public string[] Categories => [
+			"Launcher"
+		];
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Hemoptysis_P>(14, 50, 8f, 46, 28, true);
 			Item.value = Item.sellPrice(silver: 45);

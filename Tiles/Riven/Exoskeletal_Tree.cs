@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
 using Origins.Graphics;
 using Origins.World.BiomeData;
 using ReLogic.Content;
@@ -13,8 +12,8 @@ using Terraria.ModLoader;
 namespace Origins.Tiles.Riven {
     public class Exoskeletal_Tree : ModTree, IGlowingModTree {
         public string[] Categories => [
-			WikiCategories.Plant
-		];
+            "Plant"
+        ];
 		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Exoskeletal_Tree).GetDefaultTMLName() + "_Glow";
 		AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
 		public static AutoLoadingAsset<Texture2D> TopTexture = typeof(Exoskeletal_Tree).GetDefaultTMLName() + "_Tops";

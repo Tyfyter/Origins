@@ -16,7 +16,7 @@ namespace Origins.Layers {
 		public static int StartAnimationDuration => 60;
 		public static int CooldownEndAnimationDuration => 45;
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
-			return !drawInfo.drawPlayer.dead && !drawInfo.drawPlayer.sleeping.isSleeping && drawInfo.drawPlayer.OriginPlayer().wishingGlassVisible;
+			return !drawInfo.drawPlayer.dead && drawInfo.drawPlayer.OriginPlayer().wishingGlassVisible;
 		}
 		public override Position GetDefaultPosition() => new Multiple {
 			{ new(null, PlayerDrawLayers.SolarShield), drawInfo => GetLayerPosition(drawInfo.drawPlayer.OriginPlayer().wishingGlassAnimation) == 0 },

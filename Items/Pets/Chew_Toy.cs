@@ -28,7 +28,8 @@ namespace Origins.Items.Pets {
 	public class Chew_Toy : ModItem, ICustomWikiStat, ICustomPetFrames {
 		public bool? Hardmode => false;
 		public string[] Categories => [
-			WikiCategories.DeveloperItem
+			"Pet",
+			"DeveloperItem"
 		];
 		internal static int projectileID = 0;
 		internal static int buffID = 0;

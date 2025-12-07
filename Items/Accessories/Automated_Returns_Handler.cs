@@ -6,8 +6,8 @@ namespace Origins.Items.Accessories {
     [AutoloadEquip(EquipType.Back)]
 	public class Automated_Returns_Handler : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Movement,
-			WikiCategories.RangedBoostAcc
+			"Movement",
+			"RangedBoostAcc"
 		];
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);

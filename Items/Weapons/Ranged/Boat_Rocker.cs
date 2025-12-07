@@ -8,7 +8,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
-	public class Boat_Rocker : Harpoon_Gun, IJournalEntrySource {
+	public class Boat_Rocker : Harpoon_Gun, ICustomWikiStat, IJournalEntrySource {
+		public new string[] Categories => [
+			"HarpoonGun"
+		];
 		public string EntryName => "Origins/" + typeof(Boat_Rocker_Entry).Name;
 		public class Boat_Rocker_Entry : JournalEntry {
 			public override string TextKey => "Boat_Rocker";

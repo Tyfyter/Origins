@@ -16,8 +16,8 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Items.Weapons.Magic {
 	public class Brine_Haze : ModItem, ICustomWikiStat {
         public string[] Categories => [
-			WikiCategories.UsesBookcase,
-			WikiCategories.SpellBook
+			"UsesBookcase",
+			"SpellBook"
 		];
         public override void SetStaticDefaults() {
 		}

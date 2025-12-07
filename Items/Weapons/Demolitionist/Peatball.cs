@@ -8,7 +8,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Peatball : ModItem, ICustomWikiStat {
         public string[] Categories => [
-            WikiCategories.ExpendableWeapon
+            "ThrownExplosive",
+            "ExpendableWeapon"
         ];
         public override void SetStaticDefaults() {
             Item.ResearchUnlockCount = 99;

@@ -257,9 +257,6 @@ namespace Origins {
 		[DefaultValue(false)]
 		public bool DebugMode = false;
 
-		[DefaultValue(false), ReloadRequired]
-		public bool ForceEnableDebugItems = false;
-
 		[DefaultValue(false)]
 		public bool ForceAprilFools = false;
 		#region exporting

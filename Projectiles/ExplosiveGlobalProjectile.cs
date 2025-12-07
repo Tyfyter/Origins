@@ -65,19 +65,10 @@ namespace Origins.Projectiles {
 				});
 
 				if (foundTarget) {
-					float scaleFactor = 16f;
-					float lerpValue = 0.083333336f;
-					switch (OriginsSets.Projectiles.HomingEffectivenessMultiplier[projectile.type]) {
-						default:
-						lerpValue *= Origins.HomingEffectivenessMultiplier[projectile.type];
-						break;
-						case 1:
-						scaleFactor *= Origins.HomingEffectivenessMultiplier[projectile.type];
-						break;
-					}
+					float scaleFactor = 16f * Origins.HomingEffectivenessMultiplier[projectile.type];
 
 					Vector2 targetVelocity = (targetPos - projectile.Center).SafeNormalize(-Vector2.UnitY) * scaleFactor;
-					projectile.velocity = Vector2.Lerp(projectile.velocity, targetVelocity, lerpValue);
+					projectile.velocity = Vector2.Lerp(projectile.velocity, targetVelocity, 0.083333336f);
 				}
 			}
 			if (novaSwarm) {
@@ -312,7 +303,7 @@ namespace Origins.Projectiles {
 			}
 			if (!projectile.CountsAsClass(DamageClasses.Explosive)) return false;
 			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {
-				return explodingProjectile.IsExploding;
+				return explodingProjectile.IsExploding();
 			}
 			switch (projectile.type) {
 				case ProjectileID.VolatileGelatinBall:
@@ -663,7 +654,7 @@ namespace Origins.Projectiles {
 			projectile.position.X -= projectile.width / 2;
 			projectile.position.Y -= projectile.height / 2;
 			projectile.Damage();
-			if (dealSelfDamage && !hostile) DealSelfDamage(projectile);
+			if (dealSelfDamage) DealSelfDamage(projectile);
 			if (fireDustType == -1) fireDustAmount = 0;
 			ExplosionVisual(projectile, true, sound: sound, fireDustAmount: fireDustAmount, smokeDustAmount: smokeDustAmount, smokeGoreAmount: smokeGoreAmount, fireDustType: fireDustType);
 		}
@@ -805,6 +796,6 @@ namespace Origins.Projectiles {
 			if (!Hostile && DealsSelfDamage) ExplosiveGlobalProjectile.DealSelfDamage(Projectile, SelfDamageCooldownCounter);
 		}
 		public void Explode(int delay = 0) { }
-		public bool IsExploding => true;
+		public bool IsExploding() => true;
 	}
 }

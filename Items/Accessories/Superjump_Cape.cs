@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Superjump_Cape : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Movement
+			"Movement"
 		];
 		public static int BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
