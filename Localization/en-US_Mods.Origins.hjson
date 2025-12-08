@@ -2032,6 +2032,7 @@ Projectiles: {
 	Shimmershot_Bullet.DisplayName: Shimmershot Bullet
 	Hand_Cannon_P.DisplayName: Hand Cannon
 	Hand_Cannon_Portal.DisplayName: Hand Cannon Portal
+	Hand_Cannon_Blast.DisplayName: Hand Cannon Blast
 	Accretion_Ribbon_P.DisplayName: Accretion Ribbon
 	Friendly_Shimmer_Landmine.DisplayName: Shimmer Star
 	Splitting_Image_Chunk.DisplayName: Splitting Image
@@ -2115,7 +2116,6 @@ Projectiles: {
 	Laser_Target_Locator_P.DisplayName: Laser Target Locator P
 	Laser_Target_Locator_Marker.DisplayName: Laser Target Locator Marker
 	Laser_Target_Locator_Missile.DisplayName: Laser Target Locator Missile
-	HandCannonBlast.DisplayName: Hand Cannon Blast
 	Pike_of_Deepneus_Stuck.DisplayName: Pike of Deepneus
 }
 

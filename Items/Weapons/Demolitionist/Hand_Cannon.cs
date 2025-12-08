@@ -78,8 +78,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return true;
 		}
 		public override void OnKill(int timeLeft) {
-			if(Main.myPlayer == Projectile.owner)
-				Projectile.NewProjectileDirect(Projectile.GetSource_Death(),Projectile.Center,Vector2.Zero,ModContent.ProjectileType<HandCannonBlast>(),Projectile.damage,15,Projectile.owner).rotation = Main.rand.NextFloatDirection();
+			if (Main.myPlayer == Projectile.owner)
+				Projectile.NewProjectileDirect(Projectile.GetSource_Death(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Hand_Cannon_Blast>(), Projectile.damage, 15, Projectile.owner).rotation = Main.rand.NextFloatDirection();
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = Math.Sign(target.Center.X - Projectile.Center.X);
@@ -115,8 +115,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 	}
-	public class HandCannonBlast : ModProjectile 
-	{
+	public class Hand_Cannon_Blast : ModProjectile {
 		public override void SetDefaults() {
 			Projectile.width = Projectile.height = 256;
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
@@ -126,13 +125,19 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 
 		public override void AI() {
-			
 			Projectile.frame++;
 		}
 
 		public override bool PreDraw(ref Color lightColor) {
-			
-			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value,Projectile.Center - Main.screenPosition,new Microsoft.Xna.Framework.Rectangle(256 * Projectile.frame,0,256,256),Color.White,Projectile.rotation,new Microsoft.Xna.Framework.Vector2(128,128),0.5f,SpriteEffects.None);
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				Projectile.Center - Main.screenPosition,
+				TextureAssets.Projectile[Type].Frame(24, frameX: Projectile.frame),
+				Color.White, Projectile.rotation,
+				new Vector2(128, 128),
+				0.5f,
+				SpriteEffects.None
+			);
 			return false;
 		}
 	}
