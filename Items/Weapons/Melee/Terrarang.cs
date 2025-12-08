@@ -43,7 +43,6 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Terrarang_Thrown : ModProjectile, IOutlineDrawer {
 		public override string Texture => "Origins/Items/Weapons/Melee/Terrarang";
-
 		public override void SetDefaults() {
 			ProjectileID.Sets.TrailingMode[Type] = 5;
 			ProjectileID.Sets.TrailCacheLength[Type] = 15;
@@ -62,14 +61,11 @@ namespace Origins.Items.Weapons.Melee {
 			Player player = Main.player[Projectile.owner];
 			Projectile.rotation += 0.4f;
 			Projectile.localAI[1] -= 0.25f;
-			if (Projectile.ai[0] != 0)
-			{
-				Projectile.velocity = Vector2.Lerp(Projectile.velocity.ToRotation().AngleTowards(Projectile.Center.DirectionTo(Main.MouseWorld).ToRotation(),0.1f).ToRotationVector2() * 16, player.DirectionFrom(Projectile.Center) * 12f, MathHelper.Clamp(MathHelper.Lerp(0, 0.1f, MathF.Pow(2, 10 * (Projectile.ai[0] / 36) - 10)), 0, 1));
-			}
-			else
+			if (Projectile.ai[0] != 0) {
+				Projectile.velocity = Vector2.Lerp(Projectile.velocity.ToRotation().AngleTowards(Projectile.Center.DirectionTo(Main.MouseWorld).ToRotation(), 0.1f).ToRotationVector2() * 16, player.DirectionFrom(Projectile.Center) * 12f, MathHelper.Clamp(MathHelper.Lerp(0, 0.1f, MathF.Pow(2, 10 * (Projectile.ai[0] / 36) - 10)), 0, 1));
+			} else {
 				Projectile.velocity = Projectile.velocity.RotatedByRandom(0.2f);
-
-			
+			}
 
 			if (player.Distance(Projectile.Center) < 32 && Projectile.ai[0] > 30)
 				Projectile.Kill();
@@ -92,10 +88,8 @@ namespace Origins.Items.Weapons.Melee {
 			Main.EntitySpriteDraw(sparkleTexture, drawPos, null, smallColor, MathHelper.PiOver2 + rotation, origin, scaleLeftRight * 0.6f, dir);
 			Main.EntitySpriteDraw(sparkleTexture, drawPos, null, smallColor, 0f + rotation, origin, scaleUpDown * 0.6f, dir);
 		}
-		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			projHitbox.Width = 64;
-			projHitbox.Height = 64;
-			return projHitbox.Intersects(targetHitbox);
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			hitbox.Inflate((64 - hitbox.Width) / 2, (64 - hitbox.Height) / 2);
 		}
 		public static void DoSpawnBeams(Projectile projectile) {
 			if (projectile.owner == Main.myPlayer) {
@@ -140,8 +134,7 @@ namespace Origins.Items.Weapons.Melee {
 			return true;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-			if (Projectile.ai[0] < 34) 
-			{
+			if (Projectile.ai[0] < 34) {
 				if (Projectile.velocity.X != oldVelocity.X) {
 					Projectile.velocity.X = -oldVelocity.X;
 				}
@@ -175,10 +168,10 @@ namespace Origins.Items.Weapons.Melee {
 		}
 
 		public Color? SetOutlineColor(float progress) {
-			return Color.Lerp(Color.SpringGreen,Color.Goldenrod,0.1f);
+			return Color.Lerp(Color.SpringGreen, Color.Goldenrod, 0.1f);
 		}
 
-		public DrawData[] OutlineDrawDatas => [new DrawData(TextureAssets.Projectile[Type].Value, Projectile.Center, null, Color.White, Projectile.rotation, TextureAssets.Projectile[Type].Size() / 2f,1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None)];
+		public DrawData[] OutlineDrawDatas => [new DrawData(TextureAssets.Projectile[Type].Value, Projectile.Center, null, Color.White, Projectile.rotation, TextureAssets.Projectile[Type].Size() / 2f, 1f, Microsoft.Xna.Framework.Graphics.SpriteEffects.None)];
 		public int OutlineSteps => 8;
 		public float OutlineOffset => 2;
 	}
