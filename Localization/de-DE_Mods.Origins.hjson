@@ -2115,8 +2115,8 @@ Projectiles: {
 	// Laser_Target_Locator_P.DisplayName: Laser Target Locator P
 	// Laser_Target_Locator_Marker.DisplayName: Laser Target Locator Marker
 	// Laser_Target_Locator_Missile.DisplayName: Laser Target Locator Missile
-	// StuckPD.DisplayName: Stuck P D
 	// HandCannonBlast.DisplayName: Hand Cannon Blast
+	// Pike_of_Deepneus_Stuck.DisplayName: Pike of Deepneus
 }
 
 Prefixes: {

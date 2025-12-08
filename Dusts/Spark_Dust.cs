@@ -1,14 +1,4 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Drawing;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ModLoader;
 
 namespace Origins.Dusts {
@@ -53,21 +43,5 @@ namespace Origins.Dusts {
 			return true;
 		}
 		public override Color? GetAlpha(Dust dust, Color lightColor) => Color.Lerp(Color.White, dust.color, dust.color.A / 255f) with { A = 25 };
-	}
-	public class _Spark_Dust : ModDust{
-		public override bool Update(Dust dust) {
-			dust.rotation = dust.velocity.ToRotation() - MathHelper.PiOver2;
-			dust.scale *= 0.80f;
-			dust.position += dust.velocity;
-			dust.velocity *= 0.925f;
-			if(dust.scale <= 0.01f)
-				dust.active = false;
-			return false;
-		}
-		public override bool PreDraw(Dust dust) {
-			Main.spriteBatch.Draw(Texture2D.Value,dust.position - Main.screenPosition,null,dust.color,dust.rotation,Texture2D.Size() / 2,new Vector2(.05f,dust.scale),Microsoft.Xna.Framework.Graphics.SpriteEffects.None,0f);
-			return false;
-		}
-
 	}
 }

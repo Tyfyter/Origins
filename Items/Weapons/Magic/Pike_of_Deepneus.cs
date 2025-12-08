@@ -8,11 +8,12 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Tiles.Other;
+using Origins.Dusts;
 
 namespace Origins.Items.Weapons.Magic {
-    public class Pike_of_Deepneus : ModItem {
+	public class Pike_of_Deepneus : ModItem {
 		public const int baseDamage = 64;
-        public override void SetDefaults() {
+		public override void SetDefaults() {
 			Item.damage = 160;
 			Item.DamageType = DamageClass.Magic;
 			Item.shoot = ModContent.ProjectileType<Pike_of_Deepneus_P>();
@@ -107,12 +108,11 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Item167, Projectile.position);
-			if(Main.myPlayer == Projectile.owner)
-				Projectile.NewProjectile(null,Projectile.Center,Projectile.oldVelocity * 0.1f,ModContent.ProjectileType<StuckPD>(),0,0);
+			if (Main.myPlayer == Projectile.owner)
+				Projectile.NewProjectile(null, Projectile.Center, Projectile.oldVelocity * 0.1f, ModContent.ProjectileType<Pike_of_Deepneus_Stuck>(), 0, 0);
 			Dust dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30), 1f);
 			dust.noGravity = false;
 			dust.velocity *= 8f;
-
 		}
 		public override void AI() {
 			/*Dust dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.Firework_Yellow, 0, 0, 50, default, 0.6f);
@@ -136,9 +136,7 @@ namespace Origins.Items.Weapons.Magic {
 							Projectile.ai[1] += 1 / (Projectile.ai[0] * 5);
 							chargeProgress = Projectile.ai[1];
 
-						}
-						else
-						{
+						} else {
 							ReachedMaxCharge = true;
 							chargeProgress *= 0.995f;
 						}
@@ -161,7 +159,7 @@ namespace Origins.Items.Weapons.Magic {
 			} else {
 				Projectile.hide = false;
 				Projectile.tileCollide = true;
-				Projectile.velocity.Y += 0.01f * (1f/chargeProgress - 1f);
+				Projectile.velocity.Y += 0.01f * (1f / chargeProgress - 1f);
 				Projectile.rotation = Projectile.velocity.ToRotation();
 			}
 		}
@@ -172,8 +170,8 @@ namespace Origins.Items.Weapons.Magic {
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.SourceDamage *= 0.34f + chargeProgress * chargeProgress * .66f;
 			modifiers.Knockback *= 1 + chargeProgress * 0.65f;
-			for(int i = 0; i < 4; i++)
-				Dust.NewDustPerfect(Projectile.Center,ModContent.DustType<Spark_Dust>(),Velocity: -Projectile.velocity.RotatedByRandom(0.35),newColor: Color.Yellow);
+			for (int i = 0; i < 4; i++)
+				Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<Pike_of_Deepneus_Spark_Dust>(), Velocity: -Projectile.velocity.RotatedByRandom(0.35), newColor: Color.Yellow);
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			width = 14;
@@ -185,7 +183,7 @@ namespace Origins.Items.Weapons.Magic {
 			Player player = Main.player[Projectile.owner];
 			Vector2 position = Projectile.Center - Main.screenPosition;
 			float rotation = Projectile.rotation + (MathHelper.Pi * 0.8f * Projectile.direction - MathHelper.PiOver2 * player.gravDir);
-			Vector2 scale = new Vector2(Projectile.scale,Projectile.scale);
+			Vector2 scale = new Vector2(Projectile.scale, Projectile.scale);
 			SpriteEffects spriteEffects = Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			if (player.gravDir < 0) {
 				rotation -= MathHelper.PiOver2 * 1.2f * Projectile.direction;
@@ -203,35 +201,31 @@ namespace Origins.Items.Weapons.Magic {
 				spriteEffects,
 			0);
 			this.DrawOutline();
-			if(Projectile.ai[0] == 0 && chargeProgress >= 0.9f)
-			{
-				Main.EntitySpriteDraw(TextureAssets.Extra[ExtrasID.FallingStar].Value,position,null,Color.Yellow,Projectile.rotation + MathHelper.PiOver2,TextureAssets.Extra[ExtrasID.StarWrath].Size()/2f - new Vector2(0,32f),new Vector2(1f,3f),SpriteEffects.None);
+			if (Projectile.ai[0] == 0 && chargeProgress >= 0.9f) {
+				Main.EntitySpriteDraw(TextureAssets.Extra[ExtrasID.FallingStar].Value, position, null, Color.Yellow, Projectile.rotation + MathHelper.PiOver2, TextureAssets.Extra[ExtrasID.StarWrath].Size() / 2f - new Vector2(0, 32f), new Vector2(1f, 3f), SpriteEffects.None);
 
 			}
 			Main.EntitySpriteDraw(data);
 			data.texture = glowTexture;
 			data.color = Color.White;
 			Main.EntitySpriteDraw(data);
-			float shineProgress = MathHelper.Lerp(0,1,(chargeProgress - .9f) * 9f);
-			if(chargeProgress >= .9f)
-			{
-				DrawPrettyStarSparkle(SpriteEffects.None,Projectile.Center - Main.screenPosition,Color.Yellow,Color.Turquoise,0,Vector2.One * 5f * shineProgress,Vector2.One * 2);
-				if(!playedDing)
-				{
+			float shineProgress = MathHelper.Lerp(0, 1, (chargeProgress - .9f) * 9f);
+			if (chargeProgress >= .9f) {
+				DrawPrettyStarSparkle(SpriteEffects.None, Projectile.Center - Main.screenPosition, Color.Yellow, Color.Turquoise, 0, Vector2.One * 5f * shineProgress, Vector2.One * 2);
+				if (!playedDing) {
 					playedDing = true;
-					SoundEngine.PlaySound(SoundID.Item105,Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item105, Projectile.Center);
 				}
 			}
 			return false;
 		}
 
 		public Color? SetOutlineColor(float progress) {
-			return Color.Lerp(Color.Yellow * chargeProgress,Color.Turquoise,(MathF.Sin(((float)Main.timeForVisualEffects)+1f) / 2f) * 2f);
+			return Color.Lerp(Color.Yellow * chargeProgress, Color.Turquoise, (MathF.Sin(((float)Main.timeForVisualEffects) + 1f) / 2f) * 2f);
 		}
 
-		public DrawData[] OutlineDrawDatas { 
-			get
-			{
+		public DrawData[] OutlineDrawDatas {
+			get {
 				Vector2 position = Projectile.Center;
 				float rotation = Projectile.rotation + (MathHelper.Pi * 0.8f * Projectile.direction - MathHelper.PiOver2);
 				float scale = Projectile.scale;
@@ -268,9 +262,8 @@ namespace Origins.Items.Weapons.Magic {
 			Main.EntitySpriteDraw(sparkleTexture, drawPos, null, smallColor, 0f + rotation, origin, scaleUpDown * 0.6f, dir);
 		}
 	}
-	
-	public class StuckPD : ModProjectile
-	{
+
+	public class Pike_of_Deepneus_Stuck : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Pike_of_Deepneus";
 		AutoLoadingAsset<Texture2D> glowTexture = "Origins/Items/Weapons/Magic/Pike_of_Deepneus_Glow";
 		public override void SetDefaults() {
@@ -286,15 +279,10 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.timeLeft = 60;
 			Projectile.hide = false;
 		}
-		public override void OnSpawn(IEntitySource source) {
-
-		}
-		public override bool? CanDamage() {
-			return false;
-		}
+		public override bool? CanDamage() => false;
 		public override void AI() {
 			Projectile.velocity *= 0.95f;
-			Projectile.Opacity = MathHelper.Lerp(0f,1f,(float)Projectile.timeLeft / 60f);
+			Projectile.Opacity = MathHelper.Lerp(0f, 1f, Projectile.timeLeft / 60f);
 			Projectile.rotation = Projectile.velocity.ToRotation();
 		}
 		public override bool PreDraw(ref Color lightColor) {
