@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
 using Origins.Projectiles;
 using System;
 using Terraria;
@@ -48,10 +49,10 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 	}
 	public class Welding_Torch_P : ModProjectile {
-		public override string Texture => "Terraria/Images/Projectile_85";
 		public static float Lifetime => 60f;
 		public static float MinSize => 30f;
 		public static float MaxSize => 6f;
+		private readonly float[] sizes = new float[21];
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 7;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -66,7 +67,10 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.extraUpdates = 3;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
+			for (int i = 0; i < Projectile.oldPos.Length; i++)
+				Projectile.oldRot[i] = Main.rand.NextFloatDirection();
 		}
+		float Size => Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize, MaxSize);
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_Parent { Entity: Player player }) Projectile.ai[1] = player.altFunctionUse;
 		}
@@ -80,6 +84,10 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 			//Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.FrostStaff);
 			Projectile.ai[0]++;
+			for (int i = sizes.Length - 1; i > 0; i--) {
+				sizes[i] = sizes[i - 1];
+			}
+			sizes[0] = Size;
 			Projectile.scale = Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize / 96f, MaxSize / 96f);
 			Projectile.alpha = (int)(200 * (1 - (Projectile.localAI[0] / Lifetime)));
 			Projectile.rotation += 0.3f * Projectile.direction;
@@ -106,13 +114,16 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		int[] healCooldown = new int[Main.maxProjectiles];
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-			int scale = (int)Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize - 6, MaxSize - 6);
+			int scale = (int)(Size / 2) - hitbox.Width;
 			hitbox.Inflate(scale, scale);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire3, hit.Crit ? 360 : 180);
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			float progress = (Projectile.ai[0] / Lifetime);
+			Flamethrower_Drawer.Draw(Projectile, float.Pow(1 - progress, 2f), TextureAssets.Projectile[Type].Value, Color.Black, sizes, brightnessColorExponent: 1.75f, smokeAmount: 0, sizeProgressOverride: _ => progress * 0.5f);
+			return false;
 			Color color1 = new(255, 160, 80, 200);
 			Color color2 = new(255, 120, 30, 200);
 			Color color3 = new(255, 120, 30, 93);

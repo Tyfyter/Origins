@@ -24,6 +24,10 @@ namespace Origins.Graphics.Primitives {
 			vertices[2].TextureCoordinate = new Vector2(0, 1);
 			vertices[3].TextureCoordinate = Vector2.One;
 
+			vertices[0].Color = color;
+			vertices[1].Color = color;
+			vertices[2].Color = color;
+			vertices[3].Color = color;
 
 			short[] dices = [0, 1, 2, 3, 1, 2];
 			GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, vertices.Length, dices, 0, 2);

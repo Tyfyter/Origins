@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Graphics;
+using PegasusLib;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -40,16 +42,18 @@ namespace Origins.Items.Weapons.Ranged {
         }
     }
 	public class Sleetfire_P : ModProjectile {
-
-        public override string Texture => "Terraria/Images/Projectile_85";
         public static float Lifetime => 30f;
         public static float MinSize => 16f;
         public static float MaxSize => 66f;
-        public override void SetStaticDefaults() {
+		private readonly float[] sizes = new float[21];
+		public override void SetStaticDefaults() {
             Main.projFrames[Type] = 7;
 			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Frostburn];
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 21;
 		}
-        public override void SetDefaults() {
+		float Size => Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize, MaxSize);
+		public override void SetDefaults() {
             Projectile.width = Projectile.height = 6;
             Projectile.penetrate = 2;
             Projectile.friendly = true;
@@ -58,12 +62,17 @@ namespace Origins.Items.Weapons.Ranged {
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
-        }
+			for (int i = 0; i < Projectile.oldPos.Length; i++)
+				Projectile.oldRot[i] = Main.rand.NextFloatDirection();
+		}
         public override void AI() {
             Lighting.AddLight(Projectile.Center, 0f, 0.2f, 0.85f);
-            Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.FrostStaff);
             Projectile.ai[0]++;
-            Projectile.scale = Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize / 96f, MaxSize / 96f);
+			for (int i = sizes.Length - 1; i > 0; i--) {
+				sizes[i] = sizes[i - 1];
+			}
+			sizes[0] = Size;
+			Projectile.scale = Size / 96f;
             Projectile.alpha = (int)(200 * (1 - (Projectile.ai[0] / Lifetime)));
             Projectile.rotation += 0.3f * Projectile.direction;
             if (Projectile.ai[0] > Lifetime) {
@@ -71,14 +80,16 @@ namespace Origins.Items.Weapons.Ranged {
             }
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-            int scale = (int)Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize - 6, MaxSize - 6);
+			int scale = (int)(Size / 2) - hitbox.Width;
             hitbox.Inflate(scale, scale);
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
             target.AddBuff(BuffID.Frostburn, hit.Crit ? 600 : 300);
         }
         public override bool PreDraw(ref Color lightColor) {
-            Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Flamethrower_Drawer.Draw(Projectile, 1 - (Projectile.ai[0] / Lifetime), TextureAssets.Projectile[Type].Value, Color.AliceBlue, sizes, 8, 1);
+			return false;
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
             Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: 3);
             Main.EntitySpriteDraw(
                 texture,

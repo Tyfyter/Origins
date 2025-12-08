@@ -12,22 +12,22 @@ Compiling font... Done!
 Compiling font content file: Beam.xnb... Done!
 
 Loading description file: BiomeShade.fx... Done!
-Compiling font... Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Compiling font... Warning: Warning compiling BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx
-Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+File: BiomeShade.fx
+Warning: Warning compiling BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx
-Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+File: BiomeShade.fx
+Warning: Warning compiling BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx
+File: BiomeShade.fx
 Done!
 Compiling font content file: BiomeShade.xnb... Done!
 
 Loading description file: BlackHole.fx... Done!
-Compiling font... Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BlackHole.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Compiling font... Warning: Warning compiling BlackHole.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BlackHole.fx
+File: BlackHole.fx
 Done!
 Compiling font content file: BlackHole.xnb... Done!
 
@@ -55,19 +55,29 @@ Loading description file: DefiledSpike.fx... Done!
 Compiling font... Done!
 Compiling font content file: DefiledSpike.xnb... Done!
 
+Loading description file: FireShader.fx... Done!
+Compiling font... Warning: Warning compiling FireShader.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: FireShader.fx
+Warning: Warning compiling FireShader.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: FireShader.fx
+Done!
+Compiling font content file: FireShader.xnb... Done!
+
 Loading description file: HolidayHairDye.fx... Done!
-Compiling font... Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Compiling font... Warning: Warning compiling HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx
-Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+File: HolidayHairDye.fx
+Warning: Warning compiling HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx
-Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+File: HolidayHairDye.fx
+Warning: Warning compiling HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx
-Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+File: HolidayHairDye.fx
+Warning: Warning compiling HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx
+File: HolidayHairDye.fx
 Done!
 Compiling font content file: HolidayHairDye.xnb... Done!
 
@@ -76,9 +86,9 @@ Compiling font... Done!
 Compiling font content file: Item_Caustics.xnb... Done!
 
 Loading description file: Journal.fx... Done!
-Compiling font... Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\Journal.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Compiling font... Warning: Warning compiling Journal.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\Journal.fx
+File: Journal.fx
 Done!
 Compiling font content file: Journal.xnb... Done!
 
@@ -91,15 +101,15 @@ Compiling font... Done!
 Compiling font content file: MaskedRasterizeFilter.xnb... Done!
 
 Loading description file: MaskedTornFilter.fx... Done!
-Compiling font... Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
+Compiling font... Warning: Warning compiling MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx
-Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
+File: MaskedTornFilter.fx
+Warning: Warning compiling MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx
-Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
+File: MaskedTornFilter.fx
+Warning: Warning compiling MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx
+File: MaskedTornFilter.fx
 Done!
 Compiling font content file: MaskedTornFilter.xnb... Done!
 
@@ -116,9 +126,9 @@ Compiling font... Done!
 Compiling font content file: Misc.xnb... Done!
 
 Loading description file: PerlinFade.fx... Done!
-Compiling font... Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\PerlinFade.fx: warning X3081: potentially unintended use of a comma expression in a variable initializer
+Compiling font... Warning: Warning compiling PerlinFade.fx: warning X3081: potentially unintended use of a comma expression in a variable initializer
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\PerlinFade.fx
+File: PerlinFade.fx
 Done!
 Compiling font content file: PerlinFade.xnb... Done!
 
@@ -139,9 +149,9 @@ Compiling font... Done!
 Compiling font content file: SC_DustEffect.xnb... Done!
 
 Loading description file: Shimmer.fx... Done!
-Compiling font... Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\Shimmer.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Compiling font... Warning: Warning compiling Shimmer.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\Shimmer.fx
+File: Shimmer.fx
 Done!
 Compiling font content file: Shimmer.xnb... Done!
 
@@ -170,9 +180,9 @@ Compiling font... Done!
 Compiling font content file: Tangela.xnb... Done!
 
 Loading description file: TestingShader.fx... Done!
-Compiling font... Warning: Warning compiling C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\TestingShader.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Compiling font... Warning: Warning compiling TestingShader.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\whydo\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\TestingShader.fx
+File: TestingShader.fx
 Done!
 Compiling font content file: TestingShader.xnb... Done!
 
