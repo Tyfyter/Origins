@@ -54,8 +54,6 @@ namespace Origins.Items.Weapons.Ranged {
 			Main.projFrames[Type] = 7;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 32;
-			for (int i = 0; i < Projectile.oldPos.Length; i++)
-				Projectile.oldRot[i] = Main.rand.NextFloatDirection();
 		}
 		public override void SetDefaults() {
 			Projectile.width = Projectile.height = 6;
@@ -66,6 +64,8 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
+			for (int i = 0; i < Projectile.oldPos.Length; i++)
+				Projectile.oldRot[i] = Main.rand.NextFloatDirection();
 		}
 		float Size => Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize, MaxSize);
 		public override void AI() {
