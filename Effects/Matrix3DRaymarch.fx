@@ -98,8 +98,8 @@ float mutliLerp(float value1, float value2, float value3, float t)
 
 float map(float3 p)
 {
-    p = rotateX(p,uTime);
-    p = rotateZ(p, uTime);
+    p = rotateX(p,uTime + uShaderSpecificData.w);
+    p = rotateZ(p, uTime + uShaderSpecificData.w);
     
     float shape = sdSpike(p, 3);
    

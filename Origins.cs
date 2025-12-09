@@ -463,6 +463,7 @@ namespace Origins {
 				GameShaders.Misc["Origins:ShimmerConstructSDF"] = new MiscShaderData(Assets.Request<Effect>("Effects/ShimmerConstructSDF"), "ShimmerConstructSDF");
 				GameShaders.Misc["Origins:FireShader"] = new MiscShaderData(Assets.Request<Effect>("Effects/FireShader"), "FireShader");
 				GameShaders.Misc["Origins:SC_DustEffect"] = new MiscShaderData(Assets.Request<Effect>("Effects/SC_DustEffect"), "SC_DustEffect");
+				GameShaders.Misc["Origins:LaserLink"] = new MiscShaderData(Assets.Request<Effect>("Effects/LaserLink"), "LaserLink");
 
 				GameShaders.Misc["Origins:Beam"] = new MiscShaderData(Assets.Request<Effect>("Effects/Beam"), "Beam")
 				.UseSamplerState(SamplerState.PointClamp);

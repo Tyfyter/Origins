@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,6 +22,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		];
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
+		}
+		public override void MeleeEffects(Player player, Rectangle hitbox) {
+			base.MeleeEffects(player, hitbox);
+		}
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
+			base.OnHitNPC(player, target, hit, damageDone);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Matrix_P>(32, 50, 6f, 46, 18, true);
@@ -143,20 +150,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			for (int i = 0; i < GetNodeCount(); i++) {
-				const int alpha = 128;
-				Main.spriteBatch.DrawLightningArcBetween(
-					nodes[i].position - Main.screenPosition,
-					GetNodePosition(i + 1) - Main.screenPosition,
-					Main.rand.NextFloat(-3, 3),
-					precision: 0.1f,
-					(0.15f, new Color(154, 56, 11, alpha) * 0.5f),
-					(0.1f, new Color(255, 81, 0, alpha) * 0.5f),
-					(0.05f, new Color(255, 177, 140, alpha) * 0.5f)
-				);
+				default(MatrixLaserLinks).Draw(nodes[i].position - Main.screenPosition,
+					GetNodePosition(i + 1) - Main.screenPosition);
 			}
 			for (int i = 0; i < GetNodeCount(); i++) {
 				Vector2 pos = nodes[i].position;
-				default(Matrix3DRaymarch).Draw(pos,(float)Projectile.timeLeft / 300);
+				default(Matrix3DRaymarch).Draw(pos,(float)Projectile.timeLeft / 300, (float)i / GetNodeCount() * MathHelper.Pi);
 
 			}
 			return false;
@@ -203,13 +202,34 @@ namespace Origins.Items.Weapons.Demolitionist {
 	{ 
 		
 		private static VertexRectangle rect = new();
-		public void Draw(Vector2 center,float progress)
+		public void Draw(Vector2 center,float progress, float randomRotation)
 		{
 			MiscShaderData shader = GameShaders.Misc["Origins:Matrix3DRaymarch"];
 			shader.UseColor(Color.DarkOrange);
 			shader.UseSecondaryColor(Color.SandyBrown);
+			shader.UseShaderSpecificData(new Microsoft.Xna.Framework.Vector4(randomRotation));
 			shader.Apply();
 			rect.Draw(center - Main.screenPosition,size: new Vector2(96));
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+
+		}
+
+	}
+
+	public struct MatrixLaserLinks 
+	{
+		private static VertexRectangle rect = new();
+		public void Draw(Vector2 from, Vector2 to)
+		{
+			MiscShaderData shader = GameShaders.Misc["Origins:LaserLink"];
+			Vector2 position = (Vector2.Lerp(from,to,0.5f));
+			float rotation = (from - to).ToRotation();
+			Vector2 size = new Microsoft.Xna.Framework.Vector2((from - to).Length(),32);
+			shader.UseColor(Color.DarkOrange);
+			shader.UseSecondaryColor(Color.SandyBrown);
+			shader.Apply();
+			rect.Draw(position,Color.White,size,rotation,position);
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 		}
 
 	}
