@@ -612,6 +612,12 @@ namespace Origins {
 					Player.palladiumRegen = false;
 				}
 			}
+			if (mildewHeart && Player.statLife <= 0) {
+				Min(ref regen, 0);
+				Min(ref Player.lifeRegen, 0);
+				Min(ref Player.lifeRegenCount, 0);
+				Player.palladiumRegen = false;
+			}
 		}
 		public override void PostUpdateBuffs() {
 			foreach (Projectile projectile in Main.ActiveProjectiles) {
