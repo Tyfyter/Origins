@@ -7535,3 +7535,8 @@ Sheet_Metal_Item: {
 	// DisplayName: Sheet Metal
 	// Tooltip: ""
 }
+
+Fire_Extinguisher_Holder_Item: {
+	// DisplayName: Fire Extinguisher Holder
+	// Tooltip: ""
+}

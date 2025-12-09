@@ -1344,7 +1344,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(#, ^2) Fire Extinguisher Holder !!!
+(☻) Fire Extinguisher Holder !!!
 (^) Industrial Door
 (#, ^2) Large Storage Container !!!
 (^) Laser Tag Console
@@ -1682,7 +1682,7 @@ CONSUMABLES:
 (^) Pointy Crate
 (^) Residual Crate
 
-(#2, ^2) Fire Extinguisher !!!
+(☻) Fire Extinguisher !!!
 (^) Gooey Water
 (^) Holiday Hair Dye
 (^) Latchkey

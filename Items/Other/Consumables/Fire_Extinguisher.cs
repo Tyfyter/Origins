@@ -4,11 +4,9 @@ using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ranged;
 using PegasusLib;
-using ReLogic.Utilities;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -16,7 +14,9 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Items.Other.Consumables {
-	public class Fire_Extinguisher : ModItem, ICustomWikiStat {
+	public class Fire_Extinguisher : ModItem, ICustomWikiStat, ICustomDrawItem {
+		AutoLoadingAsset<Texture2D> bottleTexture = typeof(Fire_Extinguisher).GetDefaultTMLName("_Bottle");
+		AutoLoadingAsset<Texture2D> cordTexture = typeof(Fire_Extinguisher).GetDefaultTMLName("_Cord");
 		public static bool[] FireExtinguisherExtinguishes { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(FireExtinguisherExtinguishes)}")
 		.RegisterBoolSet(
 			BuffID.OnFire,
@@ -27,6 +27,13 @@ namespace Origins.Items.Other.Consumables {
 		);
 		public virtual int MaxDurability => 60;
 		public int durability;
+		public int Durability {
+			get => durability;
+			set {
+				durability = value;
+				if (value <= 0) Item.SetDefaults(ModContent.ItemType<Empty_Fire_Extinguisher>());
+			}
+		}
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = false;
 		}
@@ -48,7 +55,7 @@ namespace Origins.Items.Other.Consumables {
 		public override Vector2? HoldoutOffset() => Vector2.Zero;
 		public override bool CanUseItem(Player player) => durability > 0;
 		public override bool? UseItem(Player player) {
-			if (player.itemAnimation <= player.itemTimeMax && --durability <= 0) Item.SetDefaults(ModContent.ItemType<Empty_Fire_Extinguisher>());
+			if (player.itemAnimation <= player.itemTimeMax) Durability--;
 			return base.UseItem(player);
 		}
 		public override void AddRecipes() => CreateRecipe()
@@ -94,6 +101,35 @@ namespace Origins.Items.Other.Consumables {
 				Main.hslToRgb(portion * 0.25f, 1, 0.5f)
 			);
 		}
+		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
+			Player drawPlayer = drawInfo.drawPlayer;
+
+			drawInfo.DrawDataCache.Add(new DrawData(
+				bottleTexture,
+				drawPlayer.MountedCenter.Floor() - Main.screenPosition,
+				null,
+				Item.GetAlpha(lightColor),
+				0,
+				new Vector2(2, 4).Apply(drawInfo.itemEffect, bottleTexture.Value.Size()),
+				drawPlayer.GetAdjustedItemScale(Item),
+				drawInfo.itemEffect
+			));
+
+			Vector2 pos = new((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y + drawInfo.mountOffSet));
+			float itemRotation = drawPlayer.itemRotation;
+			if (drawPlayer.direction == -1) itemRotation += MathHelper.Pi;
+
+			drawInfo.DrawDataCache.Add(new DrawData(
+				cordTexture,
+				(pos + itemRotation.ToRotationVector2() * 14).Floor(),
+				null,
+				Item.GetAlpha(lightColor),
+				drawPlayer.itemRotation,
+				new Vector2(11, 5),
+				drawPlayer.GetAdjustedItemScale(Item),
+				drawInfo.itemEffect
+			));
+		}
 		public override void NetSend(BinaryWriter writer) => writer.Write(durability);
 		public override void NetReceive(BinaryReader reader) => durability = reader.ReadInt32();
 		public override void SaveData(TagCompound tag) => tag[nameof(durability)] = durability;
@@ -102,6 +138,9 @@ namespace Origins.Items.Other.Consumables {
 	public class Empty_Fire_Extinguisher : Fire_Extinguisher {
 		public override int MaxDurability => 0;
 		public override string Texture => typeof(Fire_Extinguisher).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 0;
+		}
 		public override void AddRecipes() => Recipe.Create(ModContent.ItemType<Fire_Extinguisher>())
 			.AddIngredient(Type)
 			.AddIngredient(ItemID.Gel, 10)
