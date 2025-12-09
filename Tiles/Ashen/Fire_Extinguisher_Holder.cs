@@ -51,13 +51,14 @@ namespace Origins.Tiles.Ashen {
 			DustType = Ashen_Biome.DefaultTileDust;
 			RegisterItemDrop(item.Type);
 		}
-		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => false;
+		static Fire_Extinguisher HeldExtinguisher => Main.LocalPlayer?.HeldItem?.ModItem as Fire_Extinguisher;
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX != -1 || HeldExtinguisher is not null;
 		public override bool RightClick(int i, int j) {
 			Tile tile = Main.tile[i, j];
 			short targetFrame = -1;
 			short originalFrame = tile.TileFrameX;
 			if (originalFrame == -1) {
-				if (Main.LocalPlayer?.HeldItem?.ModItem is not Fire_Extinguisher extinguisher) return false;
+				if (HeldExtinguisher is not Fire_Extinguisher extinguisher) return false;
 				targetFrame = (short)extinguisher.Durability;
 				Main.LocalPlayer.HeldItem.TurnToAir();
 			}

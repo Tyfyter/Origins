@@ -1344,7 +1344,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(#2, ^2) Fire Extinguisher Holder !!! (needs interactible highlights)
+(☻) Fire Extinguisher Holder !!! (should now have interactible highlights)
 (^) Industrial Door
 (#, ^2) Large Storage Container !!!
 (^) Laser Tag Console
