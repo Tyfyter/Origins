@@ -124,14 +124,15 @@ namespace Origins.Tiles.Other {
 	}
 	internal class Chambersite_Ore_Loadable : LateLoadable {
 		public override void Load() {
-			foreach (AltBiome biome in AltLibrary.AltLibrary.AllBiomes) {
+			// Could never have worked because TileConversions is empty until Mod.AddContent can't be run, but especially won't be able to work in 2 months when TileConversions doesn't exist
+			/*foreach (AltBiome biome in AltLibrary.AltLibrary.AllBiomes) {
 				if (biome.BiomeType == BiomeType.Evil && biome.TileConversions.TryGetValue(TileID.Stone, out int tileID)) {
 					Chambersite_Ore ore;
 					Chambersite_Stone_Wall wall;
 					Mod.AddContent(ore = new Chambersite_Ore_Base(tileID));
 					biome.AddChambersiteTileConversions(ore.Type);
 				}
-			}
+			}*/
 		}
 	}
 /*	public class Chambersite_Ore_Ebonstone : Chambersite_Ore {
