@@ -1,5 +1,4 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Graphics.Primitives;
 using Origins.Items.Materials;
@@ -18,11 +17,8 @@ using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -86,12 +82,14 @@ namespace Origins.NPCs.Ashen.Boss {
 			c.EmitDelegate((NPC npc) => {
 				if (npc?.ModNPC is not Trenchmaker) return false;
 				int itemType = OriginsModIntegrations.CheckAprilFools() ? ItemID.Escargot : ModContent.ItemType<Armor_Power_Up>();
-				for (int i = Main.rand.Next(3) + 3; i > 0; i--) {
-					int _item = Item.NewItem(npc.GetSource_Loot(), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, itemType);
-					Item item = Main.item[_item];
-					item.velocity += (item.Center - npc.Center).Normalized(out float mag) * float.Pow(mag, 0.5f);
-					NetMessage.SendData(MessageID.SyncItem, -1, -1, null, _item, 1f);
+				int num = Item.NewItem(npc.GetSource_Loot(), (int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, itemType, 1, noBroadcast: true, -1);
+				Main.timeItemSlotCannotBeReusedFor[num] = 54000;
+				foreach (Player player in Main.ActivePlayers) {
+					if (npc.playerInteraction[player.whoAmI]) {
+						NetMessage.SendData(MessageID.InstancedItem, player.whoAmI, -1, null, num);
+					}
 				}
+				Main.item[num].active = false;
 				return true;
 			});
 			ILLabel label = c.DefineLabel();
