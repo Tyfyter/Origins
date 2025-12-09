@@ -43,7 +43,6 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.newTile.Height = 2;
 			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
-			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.AnchorBottom = new AnchorData();
 			TileObjectData.newTile.AnchorWall = true;

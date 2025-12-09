@@ -7540,3 +7540,8 @@ Fire_Extinguisher_Holder_Item: {
 	DisplayName: Fire Extinguisher Holder
 	Tooltip: ""
 }
+
+Air_Vent_Item: {
+	DisplayName: Air Vent
+	Tooltip: ""
+}
