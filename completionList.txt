@@ -1298,7 +1298,7 @@ TILES:
 (^) Type-I Fortified Steel Wall
 (@4, ^3) Type-III Fortified Steel Wall !!!
 
-(#, ^2) Air Vent !!!
+(☻) Air Vent !!!
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
 (^) Artifiber Furniture
