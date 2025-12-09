@@ -1409,7 +1409,7 @@ TILES:
 (^) Riven Altar
 (^) Riven Foliage
 (^) Riven Pot
-(#, ^2) Sheet Metal !!!
+(☻) Sheet Metal !!!
 (^) Shelf Coral
 (^) Soulspore
 (^) Steel Support Beam

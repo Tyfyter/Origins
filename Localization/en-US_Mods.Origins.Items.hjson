@@ -7530,3 +7530,8 @@ Homing_Rocket_II: {
 	DisplayName: Homing Rocket II
 	Tooltip: ""
 }
+
+Sheet_Metal_Item: {
+	DisplayName: Sheet Metal
+	Tooltip: ""
+}
