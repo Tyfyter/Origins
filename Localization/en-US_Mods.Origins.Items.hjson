@@ -7523,12 +7523,12 @@ Nightsky_Cloak: {
 
 Homing_Rocket_I: {
 	DisplayName: Homing Rocket I
-	Tooltip: ""
+	Tooltip: "Will not destroy tiles"
 }
 
 Homing_Rocket_II: {
 	DisplayName: Homing Rocket II
-	Tooltip: ""
+	Tooltip: "Will destroy tiles"
 }
 
 Sheet_Metal_Item: {

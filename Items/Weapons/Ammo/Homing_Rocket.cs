@@ -99,6 +99,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.maxStack = Item.CommonMaxStack;
 			Item.ammo = AmmoID.Rocket;
 			Item.value = Item.buyPrice(silver: 1);
+			Item.rare = ItemRarityID.Red;
 		}
 		public void AI(Projectile projectile, bool child) => IRocketItem.DoAI(projectile);
 	}
@@ -128,6 +129,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.maxStack = Item.CommonMaxStack;
 			Item.ammo = AmmoID.Rocket;
 			Item.value = Item.buyPrice(silver: 1);
+			Item.rare = ItemRarityID.Red;
 		}
 		public void AI(Projectile projectile, bool child) => IRocketItem.DoAI(projectile);
 	}

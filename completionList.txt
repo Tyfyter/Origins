@@ -1298,7 +1298,7 @@ TILES:
 (^) Type-I Fortified Steel Wall
 (@4, ^3) Type-III Fortified Steel Wall !!!
 
-(☻) Air Vent !!!
+(#2, ^2) Air Vent !!! (spinning)
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
 (^) Artifiber Furniture
@@ -1344,7 +1344,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(☻) Fire Extinguisher Holder !!!
+(#2, ^2) Fire Extinguisher Holder !!! (needs interactible highlights)
 (^) Industrial Door
 (#, ^2) Large Storage Container !!!
 (^) Laser Tag Console
@@ -1409,7 +1409,7 @@ TILES:
 (^) Riven Altar
 (^) Riven Foliage
 (^) Riven Pot
-(☻) Sheet Metal !!!
+(^) Sheet Metal
 (^) Shelf Coral
 (^) Soulspore
 (^) Steel Support Beam
@@ -1545,7 +1545,7 @@ MATERIALS:
 
 MISCELLANEOUS ITEMS:
 |---
-(☻) Armor+ Power-Up !!! (fancy visuals)
+(^) Armor+ Power-Up
 (^) Defiled Mana
 (^) Large Chambersite
 (^) Worn Paper: Loose Wheel
@@ -1682,7 +1682,7 @@ CONSUMABLES:
 (^) Pointy Crate
 (^) Residual Crate
 
-(☻) Fire Extinguisher !!!
+(#2, ^2) Fire Extinguisher !!! (maybe you can put enemies out too?)
 (^) Gooey Water
 (^) Holiday Hair Dye
 (^) Latchkey
@@ -1791,8 +1791,8 @@ AMMO:
 
 (^) Resizable Mine VI
 
-(☻) Homing Rocket I !!!
-(☻) Homing Rocket II !!!
+(^) Homing Rocket I
+(^) Homing Rocket II
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
 (^) Valkyrum Bullet

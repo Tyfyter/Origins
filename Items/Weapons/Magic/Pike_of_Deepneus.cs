@@ -9,6 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Tiles.Other;
 using Origins.Dusts;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Pike_of_Deepneus : ModItem {
@@ -141,6 +142,7 @@ namespace Origins.Items.Weapons.Magic {
 							chargeProgress *= 0.995f;
 						}
 					} else {
+						if (ReachedMaxCharge) { SoundEngine.PlaySound(SoundID.Item16, Projectile.position); }
 						Projectile.ai[0] = 0;
 						Projectile.velocity *= 1 + Projectile.ai[1] * 0.5f;
 						Projectile.netUpdate = true;

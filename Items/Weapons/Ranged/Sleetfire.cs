@@ -1,9 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
-using Origins.Dev;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
-using PegasusLib;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
