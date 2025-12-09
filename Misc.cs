@@ -1935,7 +1935,7 @@ namespace Origins {
 			float G = value.G / 255f;
 			float B = value.B / 255f;
 			float median = (Math.Min(Math.Min(R, G), B) + Math.Max(Math.Max(R, G), B)) / 2f;
-			return new Color(MathHelper.Lerp(median, R, multiplier), MathHelper.Lerp(median, G, multiplier), MathHelper.Lerp(median, B, multiplier));
+			return new Color(MathHelper.Lerp(median, R, multiplier), MathHelper.Lerp(median, G, multiplier), MathHelper.Lerp(median, B, multiplier), value.A);
 		}
 		public static T[] BuildArray<T>(int length, params int[] nonNullIndeces) where T : new() {
 			T[] o = new T[length];
