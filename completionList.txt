@@ -1791,8 +1791,8 @@ AMMO:
 
 (^) Resizable Mine VI
 
-(#, ^2) Homing Rocket I !!!
-(#, ^2) Homing Rocket II !!!
+(☻) Homing Rocket I !!!
+(☻) Homing Rocket II !!!
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
 (^) Valkyrum Bullet

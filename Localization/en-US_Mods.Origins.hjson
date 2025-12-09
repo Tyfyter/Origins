@@ -2117,6 +2117,14 @@ Projectiles: {
 	Laser_Target_Locator_Marker.DisplayName: Laser Target Locator Marker
 	Laser_Target_Locator_Missile.DisplayName: Laser Target Locator Missile
 	Pike_of_Deepneus_Stuck.DisplayName: Pike of Deepneus
+	Homing_Rocket_I_Grenade.DisplayName: Homing Grenade I
+	Homing_Rocket_I_Mine.DisplayName: Homing Mine I
+	Homing_Rocket_I_Rocket.DisplayName: Homing Rocket I
+	Homing_Rocket_I_Snowman.DisplayName: Homing Snowman I
+	Homing_Rocket_II_Grenade.DisplayName: Homing Grenade II
+	Homing_Rocket_II_Mine.DisplayName: Homing Mine II
+	Homing_Rocket_II_Rocket.DisplayName: Homing Rocket II
+	Homing_Rocket_II_Snowman.DisplayName: Homing Snowman II
 }
 
 Prefixes: {

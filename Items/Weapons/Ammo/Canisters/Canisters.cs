@@ -44,6 +44,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			return null;
 		}
 		public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback) {
+			if (AmmoID.Sets.SpecificLauncherAmmoProjectileMatches.TryGetValue(weapon.type, out Dictionary<int, int> specificTypes) && specificTypes.ContainsKey(ammo.type)) return;
 			if (LauncherToProjectile.TryGetValue(weapon.type, out int proj)) {
 				type = proj;
 			} else {

@@ -77,22 +77,28 @@ namespace Origins.Items {
 			}
 			if (prefix is IBlastRadiusPrefix blastRadiusPrefix) {
 				StatModifier blastRadius = blastRadiusPrefix.BlastRadius();
-				if (blastRadius.Base != 0) yield return GetLine(blastRadius.Base, "BlastRadius", BonusStackType.Base);
-				if (blastRadius.Additive != 1) yield return GetLine(blastRadius.Additive, "BlastRadius", BonusStackType.Additive);
+				if (blastRadius.Multiplicative != 0) {
+					if (blastRadius.Base != 0) yield return GetLine(blastRadius.Base, "BlastRadius", BonusStackType.Base);
+					if (blastRadius.Additive != 1) yield return GetLine(blastRadius.Additive, "BlastRadius", BonusStackType.Additive);
+				}
 				if (blastRadius.Multiplicative != 1) yield return GetLine(blastRadius.Multiplicative, "BlastRadius", BonusStackType.Multiplicative);
 				if (blastRadius.Flat != 0) yield return GetLine(blastRadius.Flat, "BlastRadius", BonusStackType.Flat);
 			}
 			if (prefix is ISelfDamagePrefix selfDamagePrefix) {
 				StatModifier selfDamage = selfDamagePrefix.SelfDamage();
-				if (selfDamage.Base != 0) yield return GetLine(selfDamage.Base, "SelfDamage", BonusStackType.Base, true);
-				if (selfDamage.Additive != 1) yield return GetLine(selfDamage.Additive, "SelfDamage", BonusStackType.Additive, true);
+				if (selfDamage.Multiplicative != 0) {
+					if (selfDamage.Base != 0) yield return GetLine(selfDamage.Base, "SelfDamage", BonusStackType.Base, true);
+					if (selfDamage.Additive != 1) yield return GetLine(selfDamage.Additive, "SelfDamage", BonusStackType.Additive, true);
+				}
 				if (selfDamage.Multiplicative != 1) yield return GetLine(selfDamage.Multiplicative, "SelfDamage", BonusStackType.Multiplicative, true);
 				if (selfDamage.Flat != 0) yield return GetLine(selfDamage.Flat, "SelfDamage", BonusStackType.Flat, true);
 			}
 			if (prefix is ArtifactMinionPrefix artifactPrefix) {
 				StatModifier maxLife = artifactPrefix.MaxLifeModifier;
-				if (maxLife.Base != 0) yield return GetLine(maxLife.Base, "ArtifactMaxLife", BonusStackType.Base, false);
-				if (maxLife.Additive != 1) yield return GetLine(maxLife.Additive, "ArtifactMaxLife", BonusStackType.Additive, false);
+				if (maxLife.Multiplicative != 0) {
+					if (maxLife.Base != 0) yield return GetLine(maxLife.Base, "ArtifactMaxLife", BonusStackType.Base, false);
+					if (maxLife.Additive != 1) yield return GetLine(maxLife.Additive, "ArtifactMaxLife", BonusStackType.Additive, false);
+				}
 				if (maxLife.Multiplicative != 1) yield return GetLine(maxLife.Multiplicative, "ArtifactMaxLife", BonusStackType.Multiplicative, false);
 				if (maxLife.Flat != 0) yield return GetLine(maxLife.Flat, "ArtifactMaxLife", BonusStackType.Flat, false);
 			}

@@ -63,7 +63,11 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public CanisterData GetCanisterData => canisterData;
 		public virtual void AI(Projectile projectile, bool child) { }
 		public virtual void OnKill(Projectile projectile, bool child) {
-			ExplosiveGlobalProjectile.DoExplosion(projectile, explosionSize);
+			if (projectile.ModProjectile is ICanisterProjectile canister) {
+				canister.DefaultExplosion(projectile);
+			} else {
+				ExplosiveGlobalProjectile.DoExplosion(projectile, explosionSize);
+			}
 			SoundEngine.PlaySound(SoundID.Item14, projectile.Center);
 			int tileDestructionRadius = this.tileDestructionRadius;
 			if (tileDestructionRadius > 0) {

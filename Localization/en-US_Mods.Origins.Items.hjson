@@ -7520,3 +7520,13 @@ Nightsky_Cloak: {
 		Chance for mana stars to fall from critical hits
 		'''
 }
+
+Homing_Rocket_I: {
+	DisplayName: Homing Rocket I
+	Tooltip: ""
+}
+
+Homing_Rocket_II: {
+	DisplayName: Homing Rocket II
+	Tooltip: ""
+}
