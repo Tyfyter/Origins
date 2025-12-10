@@ -994,7 +994,7 @@ namespace Origins {
 				}
 				int timeCounter = 1;
 				void RestartStopwatch() {
-					timeCounter = 0;
+					timeCounter = 1;
 					stopwatch.Restart();
 				}
 				void WarnHang(string name, IEnumerable<string> data = null) {
