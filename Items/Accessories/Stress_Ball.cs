@@ -15,8 +15,8 @@ namespace Origins.Items.Accessories {
 	public class Stress_Ball : ModItem {
 		public static int TimePerFrame => 1;
 		public static Range CooldownRange => 450..900;
-		public static float BuffDuration => 60 * 7.5f;
-		public static float DecayDuration => 60 * 1f;
+		public static float BuffDuration => 60 * 7f;
+		public static float DecayDuration => 60 * 0.2f;
 		public static int SqueezeCount => 12;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);
@@ -49,7 +49,7 @@ namespace Origins.Items.Accessories {
 				else MathUtils.LinearSmoothing(ref originPlayer.stressBallStrength, 0, 1f / DecayDuration);
 				if (Keybindings.StressBall.Current) {
 					if (originPlayer.stressBallTimer >= -1) {
-						SoundStyle sound = SoundID.Duck;
+						SoundStyle sound = SoundID.Item147;
 						if (!OriginsModIntegrations.CheckAprilFools()) {
 							switch (Main.rand.Next(3)) {
 								case 0:

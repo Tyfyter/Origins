@@ -621,7 +621,7 @@ ACCESSORIES:
 (^) Spirit Shard
 (^) Stone Mask
 (ᥢ) Strange Computer
-(☻) Stress Ball !!!
+(^) Stress Ball
 (^) Sunder Gut
 (^) Super Turbo Reel
 (^) Superjump Cape
@@ -647,7 +647,7 @@ ACCESSORIES:
 
 (^) Amebic Vial
 (^) Blizzardwalker's Jacket
-(#, ^2) Crystal Heart !!!
+(†) Crystal Heart !!!
 (^) Cursed Crown
 (^) Emergency Bee Canister
 (^) Faith Beads
@@ -1344,7 +1344,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(☻) Fire Extinguisher Holder !!! (should now have interactible highlights)
+(^) Fire Extinguisher Holder
 (^) Industrial Door
 (#, ^2) Large Storage Container !!!
 (^) Laser Tag Console
