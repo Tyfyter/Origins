@@ -70,6 +70,7 @@ using ThoriumMod.Projectiles.Bard;
 using static Origins.OriginsSets.Items;
 using static Origins.OriginSystem;
 using static Terraria.ModLoader.ModContent;
+using SetsTiles = Origins.OriginsSets.Tiles;
 using ThoriumTiles = ThoriumMod.Tiles;
 
 namespace Origins {
@@ -751,11 +752,11 @@ namespace Origins {
 				int GetTile(string name) {
 					return instance.avalon.GetContent<ModTile>().First(tile => tile.Name == name).Type;
 				}
-				OriginsSets.Tiles.ShimmerTransformToTile[GetTile("Zircon")] = TileID.Diamond;
-				OriginsSets.Tiles.ShimmerTransformToTile[TileID.Diamond] = GetTile("Tourmaline");
-				OriginsSets.Tiles.ShimmerTransformToTile[GetTile("Tourmaline")] = TileID.Topaz;
-				OriginsSets.Tiles.ShimmerTransformToTile[TileID.Ruby] = GetTile("Peridot");
-				OriginsSets.Tiles.ShimmerTransformToTile[GetTile("Peridot")] = TileID.Emerald;
+				SetsTiles.ShimmerTransformToTile[GetTile("Zircon")] = TileID.Diamond;
+				SetsTiles.ShimmerTransformToTile[TileID.Diamond] = GetTile("Tourmaline");
+				SetsTiles.ShimmerTransformToTile[GetTile("Tourmaline")] = TileID.Topaz;
+				SetsTiles.ShimmerTransformToTile[TileID.Ruby] = GetTile("Peridot");
+				SetsTiles.ShimmerTransformToTile[GetTile("Peridot")] = TileID.Emerald;
 			}
 		}
 		public static void AddRecipeGroups() {
@@ -939,11 +940,29 @@ namespace Origins {
 			}
 		}
 		[JITWhenModsEnabled("ThoriumMod")]
-		static void AddThoriumRecipes() {
+		static void SetThoriumStaticDefaults() {
 			ModLargeGem.AddCrossModLargeGem(GetInstance<LargeOpal>(), "ThoriumMod/Items/Misc/LargeOpal_Glow");
 			ModLargeGem.AddCrossModLargeGem(GetInstance<LargeAquamarine>(), "ThoriumMod/Items/Misc/LargeAquamarine_Glow");
 			ModLargeGem.AddCrossModLargeGem(GetInstance<LargePrismite>(), "ThoriumMod/Items/Misc/LargePrismite_Glow");
 
+			foreach (ModItem itm in instance.thorium.GetContent<ModItem>()) {
+				if (itm is not BlankPainting && itm.GetType().Namespace == "ThoriumMod.Items.Painting")
+					PaintingsNotFromVendor[itm.Type] = true;
+			}
+			PaintingsNotFromVendor[ItemType<GrayDPaintingItem>()] = true;
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.Aquamarine>()] = TileType<ThoriumTiles.Opal>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.Opal>()] = TileType<ThoriumTiles.Aquamarine>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsAquamarine>()] = TileType<ThoriumTiles.DepthsOpal>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsOpal>()] = TileType<ThoriumTiles.DepthsAquamarine>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsTopaz>()] = TileType<ThoriumTiles.DepthsAmethyst>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsSapphire>()] = TileType<ThoriumTiles.DepthsTopaz>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsEmerald>()] = TileType<ThoriumTiles.DepthsSapphire>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsRuby>()] = TileType<ThoriumTiles.DepthsEmerald>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsDiamond>()] = TileType<ThoriumTiles.DepthsRuby>();
+
+		}
+		[JITWhenModsEnabled("ThoriumMod")]
+		static void AddThoriumRecipes() {
 			Recipe.Create(ItemType<Asylum_Whistle>())
 			.AddIngredient<aDarksteelAlloy>(15)
 			.AddTile(TileID.Anvils)
@@ -978,13 +997,7 @@ namespace Origins {
 			.AddTile(TileID.Anvils)
 			.Register();
 
-			foreach (ModItem itm in instance.thorium.GetContent<ModItem>()) {
-				if (itm is not BlankPainting && itm.GetType().Namespace == "ThoriumMod.Items.Painting")
-					PaintingsNotFromVendor[itm.Type] = true;
-			}
-			PaintingsNotFromVendor[ItemType<GrayDPaintingItem>()] = true;
-			OriginsSets.Tiles.ShimmerTransformToTile[TileType<ThoriumTiles.Aquamarine>()] = TileType<ThoriumTiles.Opal>();
-			OriginsSets.Tiles.ShimmerTransformToTile[TileType<ThoriumTiles.Opal>()] = TileType<ThoriumTiles.Aquamarine>();
+			SetThoriumStaticDefaults();
 		}
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void AddThoriumRecipeGroups() {
