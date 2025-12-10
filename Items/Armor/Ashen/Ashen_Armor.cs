@@ -62,6 +62,7 @@ namespace Origins.Items.Armor.Ashen {
 			public override JournalSortIndex SortIndex => new("Ashen_Armor", 2);
 		}
 		public override void SetStaticDefaults() {
+                        Origins.AddBreastplateGlowmask(this);
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Ashen2_Breastplate>()] = ModContent.ItemType<Ashen_Breastplate>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Ashen_Breastplate>()] = ModContent.ItemType<Ashen2_Breastplate>();
 		}
