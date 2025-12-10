@@ -621,7 +621,7 @@ ACCESSORIES:
 (^) Spirit Shard
 (^) Stone Mask
 (ᥢ) Strange Computer
-(#2, ^2) Stress Ball !!!
+(☻) Stress Ball !!!
 (^) Sunder Gut
 (^) Super Turbo Reel
 (^) Superjump Cape
