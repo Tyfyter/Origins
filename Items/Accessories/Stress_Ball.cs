@@ -49,7 +49,7 @@ namespace Origins.Items.Accessories {
 				else MathUtils.LinearSmoothing(ref originPlayer.stressBallStrength, 0, 1f / DecayDuration);
 				if (Keybindings.StressBall.Current) {
 					if (originPlayer.stressBallTimer >= -1) {
-						SoundStyle sound = SoundID.Item147;
+						SoundStyle sound = SoundID.Duck;
 						if (!OriginsModIntegrations.CheckAprilFools()) {
 							switch (Main.rand.Next(3)) {
 								case 0:

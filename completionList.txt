@@ -426,7 +426,7 @@ ARMOR:
 (^) Ancient Felnum Armor
 (^) Ancient Riven Armor
 (X) Artifiber Armor !!!
-(@, ^3) Ashen Armor !!!
+(#2, ^2) Ashen Armor !!! (breastplate glow code)
 (^) Cryosten Armor
 (^) Defiled Armor
 (^) Encrusted Armor
