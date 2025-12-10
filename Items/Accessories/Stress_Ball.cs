@@ -14,6 +14,7 @@ namespace Origins.Items.Accessories {
 		public static int TimePerFrame => 1;
 		public static Range CooldownRange => 450..900;
 		public static float BuffDuration => 60 * 7.5f;
+		public static float DecayDuration => 60 * 1f;
 		public static int SqueezeCount => 12;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);
@@ -31,10 +32,14 @@ namespace Origins.Items.Accessories {
 				if (chance > 0 && Main.rand.NextBool(chance, CooldownRange.End.Value - CooldownRange.Start.Value)) originPlayer.stressBallTimer = -1;
 			} else {
 				if (originPlayer.stressBallTimer < -1) originPlayer.stressBallTimer++;
+				else MathUtils.LinearSmoothing(ref originPlayer.stressBallStrength, 0, 1f / DecayDuration);
 				if (Keybindings.StressBall.Current) originPlayer.stressBallTimer = -TimePerFrame * 4;
-				if (originPlayer.stressBallTimer == -2 && ++originPlayer.stressBallStrength >= SqueezeCount) {
-					originPlayer.stressBallStrength = 1;
-					originPlayer.stressBallTimer = 0;
+				if (originPlayer.stressBallTimer == -2) {
+					originPlayer.stressBallStrength = float.Ceiling(originPlayer.stressBallStrength + 1);
+					if (originPlayer.stressBallStrength >= SqueezeCount) {
+						originPlayer.stressBallStrength = 1;
+						originPlayer.stressBallTimer = 0;
+					}
 				}
 			}
 		}
@@ -62,10 +67,12 @@ namespace Origins.Items.Accessories {
 				Color.White
 			);
 			data.Draw(spriteBatch);
-			int meterFrame = (int)((originPlayer.stressBallStrength * (chargeTextures.Length + 1)) / Stress_Ball.SqueezeCount) - 1;
+			float strength = float.Ceiling(originPlayer.stressBallStrength);
+			int meterFrame = (int)((strength * (chargeTextures.Length + 1)) / Stress_Ball.SqueezeCount) - 1;
 			if (meterFrame < 0) return;
 			data.texture = chargeTextures[int.Min(meterFrame, chargeTextures.Length - 1)];
 			data.sourceRect = null;
+			data.color *= 0.5f + (originPlayer.stressBallStrength + 1 - strength) * 0.5f;
 			data.Draw(spriteBatch);
 		}
 	}
