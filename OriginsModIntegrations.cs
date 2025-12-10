@@ -69,6 +69,7 @@ using ThoriumMod.Projectiles.Bard;
 using static Origins.OriginsSets.Items;
 using static Origins.OriginSystem;
 using static Terraria.ModLoader.ModContent;
+using ThoriumTiles = ThoriumMod.Tiles;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -745,6 +746,16 @@ namespace Origins {
 		public static void AddRecipes() {
 			if (instance.thorium is not null) AddThoriumRecipes();
 			if (instance.fargosMutant is not null) AddFargosRecipes();
+			if (instance.avalon is not null) {
+				int GetTile(string name) {
+					return instance.avalon.GetContent<ModTile>().First(tile => tile.Name == name).Type;
+				}
+				OriginsSets.Tiles.ShimmerTransformToTile[GetTile("Zircon")] = TileID.Diamond;
+				OriginsSets.Tiles.ShimmerTransformToTile[TileID.Diamond] = GetTile("Tourmaline");
+				OriginsSets.Tiles.ShimmerTransformToTile[GetTile("Tourmaline")] = TileID.Topaz;
+				OriginsSets.Tiles.ShimmerTransformToTile[TileID.Ruby] = GetTile("Peridot");
+				OriginsSets.Tiles.ShimmerTransformToTile[GetTile("Peridot")] = TileID.Emerald;
+			}
 		}
 		public static void AddRecipeGroups() {
 			if (ModLoader.TryGetMod("MagicStorage", out _)) AddMagicStorageGroups();
@@ -971,6 +982,8 @@ namespace Origins {
 					PaintingsNotFromVendor[itm.Type] = true;
 			}
 			PaintingsNotFromVendor[ItemType<GrayDPaintingItem>()] = true;
+			OriginsSets.Tiles.ShimmerTransformToTile[TileType<ThoriumTiles.Aquamarine>()] = TileType<ThoriumTiles.Opal>();
+			OriginsSets.Tiles.ShimmerTransformToTile[TileType<ThoriumTiles.Opal>()] = TileType<ThoriumTiles.Aquamarine>();
 		}
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void AddThoriumRecipeGroups() {
