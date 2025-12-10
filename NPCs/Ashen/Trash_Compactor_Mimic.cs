@@ -1,9 +1,6 @@
 ﻿using Origins.Dev;
-using Origins.Items.Mounts;
-using Origins.Items.Tools;
+using Origins.Items.Accessories;
 using Origins.Items.Weapons.Magic;
-using Origins.Items.Weapons.Ranged;
-using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.Defiled;
 using Origins.World.BiomeData;
 using Terraria;
@@ -55,11 +52,11 @@ namespace Origins.NPCs.Ashen {
 		public float Mana { get; set; }
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.OneFromOptions(1,
-				ModContent.ItemType<Communion>(),
-				ModContent.ItemType<Incision>(),
-				ModContent.ItemType<Ziptie>(),
+				ModContent.ItemType<Pacemaker>(),
+				ModContent.ItemType<Laser_Target_Locator>()
+				/*ModContent.ItemType<Ziptie>(),
 				ModContent.ItemType<Ravel>(),
-				ModContent.ItemType<Tangela_Tether>()
+				ModContent.ItemType<Tangela_Tether>()*/
 			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
