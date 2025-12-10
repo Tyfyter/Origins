@@ -1202,12 +1202,7 @@ TILES:
 (^) Catwalk
 (^) Chambersite
 (^) Chambersite Gemspark
-(^) Chambersite Gemstone
-(^) Chambersite Gemstone (Ashen)
-(^) Chambersite Gemstone (Corruption)
-(^) Chambersite Gemstone (Crimson)
-(^) Chambersite Gemstone (Defiled)
-(^) Chambersite Gemstone (Riven)
+(#3) Chambersite Gemstone (made modular and other mods could use a call to make custom versions, issues are ebonstone and crimstone variants aren't converting, and thorium and avalon support for gem conversions)
 (X) Chromtain Ore
 (^) Defiled Cactus
 (^) Defiled Grass

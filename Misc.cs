@@ -45,8 +45,8 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
-using ThoriumMod.Tiles;
-using ThoriumMod.Walls;
+using SetsTiles = Origins.OriginsSets.Tiles;
+using SetsWalls = Origins.OriginsSets.Walls;
 
 namespace Origins {
 	#region classes
@@ -3057,52 +3057,23 @@ namespace Origins {
 		}
 		public static void AddChambersiteTileConversions(this AltBiome biome, int tile) {
 			biome.AddTileConversion(tile, ModContent.TileType<Chambersite_Ore>(), extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Amethyst, oneWay: true, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Topaz, oneWay: true, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Sapphire, oneWay: true, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Emerald, oneWay: true, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Ruby, oneWay: true, extraFunctions: false);
-			biome.AddTileConversion(tile, TileID.Diamond, oneWay: true, extraFunctions: false);
 
-			[JITWhenModsEnabled("ThoriumMod")]
-			void AddThoriumConversions() {
-				biome.AddTileConversion(tile, ModContent.TileType<Aquamarine>(), oneWay: true, extraFunctions: false);
-				biome.AddTileConversion(tile, ModContent.TileType<Opal>(), oneWay: true, extraFunctions: false);
+			for (int i = 0; i < SetsTiles.GemTilesToChambersite.Length; i++) {
+				if (SetsTiles.GemTilesToChambersite[i]) biome.AddTileConversion(tile, i, oneWay: true, extraFunctions: false);
 			}
-			if (ModLoader.HasMod("ThoriumMod")) AddThoriumConversions();
 		}
 		public static void AddChambersiteWallConversions(this AltBiome biome, int wall) {
 			biome.AddWallConversions(wall, ModContent.WallType<Chambersite_Stone_Wall>());
-			biome.AddWallConversions(wall,
-				WallID.AmethystUnsafe,
-				WallID.TopazUnsafe,
-				WallID.SapphireUnsafe,
-				WallID.EmeraldUnsafe,
-				WallID.RubyUnsafe,
-				WallID.DiamondUnsafe
-			);
-
-			[JITWhenModsEnabled("ThoriumMod")]
-			void AddThoriumConversions() {
-				biome.AddWallConversions(wall,
-					ModContent.WallType<AquamarineStoneWall>(),
-					ModContent.WallType<OpalStoneWall>()
-				);
-			}
-			if (ModLoader.HasMod("ThoriumMod")) AddThoriumConversions();
+			biome.AddWallConversions(wall, SetsWalls.GemWallsToChambersite);
 		}
 		public static void AddChambersiteConversions(this AltBiome biome, int tile, int wall) {
 			biome.AddChambersiteTileConversions(tile);
 			biome.AddChambersiteWallConversions(wall);
 		}
 		public static void AddEvilConversions(this AltBiome biome) {
-			biome.AddTileConversion(ModContent.TileType<Chambersite>(), TileID.ExposedGems, false, false, false);
-
-			[JITWhenModsEnabled("ThoriumMod")]
-			void AddThoriumConversions() {
-				biome.AddTileConversion(ModContent.TileType<Chambersite>(), ModContent.TileType<PlacedGem>(), false, false, false);
+			for (int i = 0; i < SetsTiles.ExposedGemsToChambersite.Length; i++) {
+				if (SetsTiles.ExposedGemsToChambersite[i]) biome.AddTileConversion(ModContent.TileType<Chambersite>(), i, false, false, false);
 			}
-			if (ModLoader.HasMod("ThoriumMod")) AddThoriumConversions();
 
 			biome.AddTileConversion(ModContent.TileType<Bleeding_Obsidian>(), TileID.Obsidian, false, false, false);
 		}

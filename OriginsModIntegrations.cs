@@ -129,7 +129,7 @@ namespace Origins {
 			}
 			if (ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib)) {
 				checkAprilFools = (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
-				HolidayLib.Call("ADDHOLIDAY", "April fools", () => OriginSystem.Instance.ForceAF.ToInt());
+				HolidayLib.Call("ADDHOLIDAY", "April fools", () => Instance.ForceAF.ToInt());
 				holidayForceChanged = (Func<object[], object>)HolidayLib.Call("GETFUNC", "HOLIDAYFORCECHANGED");
 			} else {
 				checkAprilFools = DefaultCheckAprilFools;
@@ -578,7 +578,7 @@ namespace Origins {
 				instance.thorium.Call("AddFlailProjectileID", ProjectileType<Depth_Charge_P_Alt>());
 				instance.thorium.Call("AddFlailProjectileID", ProjectileType<Depth_Charge_Explosion>());
 
-				for (int i = 0; i < Chambersite_Ore.chambersiteTiles.Count; i++) instance.thorium.Call("AddGemStoneTileID", Chambersite_Ore.chambersiteTiles[i]);
+				for (int i = 0; i < Chambersite_Ore.chambersiteTiles.Count; i++) instance.thorium.Call("AddGemStoneTileID", Chambersite_Ore.chambersiteTiles[i].Type);
 
 				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Conehead_Zombie>());
 				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Graveshield_Zombie>());

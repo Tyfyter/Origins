@@ -714,7 +714,7 @@ namespace Origins.World.BiomeData {
 				WallID.GrassUnsafe,
 				WallID.Grass
 			);
-			//this.AddChambersiteConversions(TileType<Chambersite_Ore_Tainted_Stone>(), WallType<Chambersite_Tainted_Stone_Wall>());
+			this.AddChambersiteConversions(Chambersite_Ore.GetOreID(TileType<Tainted_Stone>()), WallType<Chambersite_Tainted_Stone_Wall>());
 
 			EvilBiomeGenerationPass = new Ashen_Generation_Pass();
 		}

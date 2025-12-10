@@ -10,7 +10,6 @@ using AltLibrary;
 using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
-using MonoMod.Utils;
 using Origins.Backgrounds;
 using Origins.Buffs;
 using Origins.Core;
@@ -19,11 +18,8 @@ using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Bleeding;
 using Origins.Items.Armor.Felnum;
-using Origins.Items.Other;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
-using Origins.Items.Other.Testing;
-using Origins.Items.Tools.Wiring;
 using Origins.Items.Vanity.Dev.PlagueTexan;
 using Origins.Items.Weapons.Ranged;
 using Origins.Journal;
@@ -50,7 +46,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -60,7 +55,6 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
 using static Origins.OriginsSets.Items;
-using static System.Net.Mime.MediaTypeNames;
 using MC = Terraria.ModLoader.ModContent;
 
 namespace Origins {
@@ -235,8 +229,8 @@ namespace Origins {
 					biome.AddEvilConversions();
 				}
 			}
-			//MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Ebonstone>(), MC.WallType<Chambersite_Ebonstone_Wall>());
-			//MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Crimstone>(), MC.WallType<Chambersite_Crimstone_Wall>());
+			MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(Chambersite_Ore.GetOreID(TileID.Ebonstone), MC.WallType<Chambersite_Ebonstone_Wall>());
+			MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(Chambersite_Ore.GetOreID(TileID.Crimstone), MC.WallType<Chambersite_Crimstone_Wall>());
 			UnstableHooking.IL_Main_DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
 			OriginsModIntegrations.LateLoad();
 			_ = OriginExtensions.StrikethroughFont;
@@ -925,40 +919,6 @@ namespace Origins {
 				bottom.SetData(bottomData);
 				CloudBottoms[i] = bottom;
 			}
-		}
-		public enum CallType {
-			GetExplosiveClassesDict,
-			AddBasicColorDyeShaderPass,
-			AddWireMode
-		}
-		public override object Call(params object[] args) {
-			if (!Enum.TryParse(args[0].ToString().Replace("_", ""), true, out CallType callType)) return null;
-			switch (callType) {
-				case CallType.GetExplosiveClassesDict:
-				return DamageClasses.ExplosiveVersion;
-
-				case CallType.AddBasicColorDyeShaderPass:
-				try {
-					return OriginsSets.Misc.BasicColorDyeShaderPasses.Add(((Effect)args[1], (string)args[2]));
-				} catch (NullReferenceException) {
-					throw new Exception("Cannot add Basic Color Dye Shader Pass after AddRecipes");
-				}
-				case CallType.AddWireMode:
-				return WireModeLoader.AddCallWireMode(
-					(Mod)args[1],
-					((Delegate)args[2]).CastDelegate<Func<int, int, bool>>(),
-					((Delegate)args[3]).CastDelegate<Action<int, int, bool>>(),
-					(string)args[4],
-					(Color)args[5],
-					(Color?)args[6],
-					(IEnumerable<string>)args.GetIfInRange(7) ?? [],
-					(IEnumerable<string>)args.GetIfInRange(8) ?? [],
-					(args.GetIfInRange(9, null) as ModItem, args.GetIfInRange(9, null) is int type ? type : ItemID.Wire),
-					(bool)args.GetIfInRange(10, false),
-					(string)args.GetIfInRange(11)
-				);
-			}
-			return null;
 		}
 		public static void LogError(object message) {
 			instance.Logger.Error(message);

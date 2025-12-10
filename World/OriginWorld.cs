@@ -288,7 +288,7 @@ namespace Origins {
 
 			chambersiteTiles = 0;
 			for (int i = 0; i < Chambersite_Ore.chambersiteTiles.Count; i++) {
-				chambersiteTiles += tileCounts[Chambersite_Ore.chambersiteTiles[i]];
+				chambersiteTiles += tileCounts[Chambersite_Ore.chambersiteTiles[i].Type];
 			}
 			chambersiteWalls = 0;
 			for (int i = 0; i < Chambersite_Stone_Wall.chambersiteWalls.Count; i++) {

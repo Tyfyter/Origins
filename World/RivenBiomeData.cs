@@ -1165,6 +1165,7 @@ namespace Origins.World.BiomeData {
 				WallID.GrassUnsafe,
 				WallID.Grass
 			);
+			this.AddChambersiteConversions(Chambersite_Ore.GetOreID(TileType<Spug_Flesh>()), WallType<Chambersite_Riven_Flesh_Wall>());
 			EvilBiomeGenerationPass = new Riven_Hive_Generation_Pass();
 		}
 		public IEnumerable<int> ProvideItemObtainability() {

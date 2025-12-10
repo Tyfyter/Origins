@@ -7545,3 +7545,5 @@ Air_Vent_Item: {
 	DisplayName: Air Vent
 	Tooltip: ""
 }
+
+Chambersite_Ore.DisplayName: "{$Chambersite.DisplayName} {0}"

@@ -44,10 +44,12 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
 			AddMapEntry(GetWallMapColor(WallID.Stone));
-			RegisterItemDrop(ItemType<Chambersite_Item>());
 			DustType = DustID.GemEmerald;
 			//AddChambersite.Add(WallID.Stone, Type);
 			chambersiteWalls.Add(Type);
+		}
+		public override bool Drop(int i, int j, ref int type) {
+			return false;
 		}
 		public static void AddChild(int type, AltBiome biome) {
 			biome.AddWallConversions(type, WallType<Chambersite_Stone_Wall>());
@@ -63,7 +65,6 @@ namespace Origins.Walls {
 			Main.wallBlend[Type] = WallID.CrimstoneEcho;//what wall type this wall is considered to be when blending
 			AddMapEntry(GetWallMapColor(WallID.CrimstoneUnsafe));
 			Chambersite_Stone_Wall.AddChild(Type, GetInstance<CrimsonAltBiome>());
-			RegisterItemDrop(ItemType<Chambersite_Item>());
 			Chambersite_Stone_Wall.AddChambersite.Add(WallID.CrimstoneUnsafe, Type);
 			DustType = DustID.GemEmerald;
 			Chambersite_Stone_Wall.chambersiteWalls.Add(Type);
@@ -74,7 +75,6 @@ namespace Origins.Walls {
 			Main.wallBlend[Type] = WallID.EbonstoneEcho;//what wall type this wall is considered to be when blending
 			AddMapEntry(GetWallMapColor(WallID.EbonstoneUnsafe));
 			Chambersite_Stone_Wall.AddChild(Type, GetInstance<CorruptionAltBiome>());
-			RegisterItemDrop(ItemType<Chambersite_Item>());
 			Chambersite_Stone_Wall.AddChambersite.Add(WallID.EbonstoneUnsafe, Type);
 			DustType = DustID.GemEmerald;
 			Chambersite_Stone_Wall.chambersiteWalls.Add(Type);
@@ -84,7 +84,6 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallType<Defiled_Stone_Wall>();//what wall type this wall is considered to be when blending
 			AddMapEntry(new Color(150, 150, 150));
-			RegisterItemDrop(ItemType<Chambersite_Item>());
 			Chambersite_Stone_Wall.AddChambersite.Add((ushort)WallType<Defiled_Stone_Wall>(), Type);
 			DustType = DustID.GemEmerald;
 			Chambersite_Stone_Wall.chambersiteWalls.Add(Type);
@@ -94,7 +93,6 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallType<Riven_Flesh_Wall>();//what wall type this wall is considered to be when blending
 			AddMapEntry(new Color(40, 140, 200));
-			RegisterItemDrop(ItemType<Chambersite_Item>());
 			Chambersite_Stone_Wall.AddChambersite.Add((ushort)WallType<Riven_Flesh_Wall>(), Type);
 			DustType = DustID.GemEmerald;
 			Chambersite_Stone_Wall.chambersiteWalls.Add(Type);
@@ -104,7 +102,6 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallType<Tainted_Stone_Wall>();//what wall type this wall is considered to be when blending
 			AddMapEntry(new Color(73, 42, 22));
-			RegisterItemDrop(ItemType<Chambersite_Item>());
 			Chambersite_Stone_Wall.AddChambersite.Add((ushort)WallType<Tainted_Stone_Wall>(), Type);
 			DustType = DustID.GemEmerald;
 			Chambersite_Stone_Wall.chambersiteWalls.Add(Type);

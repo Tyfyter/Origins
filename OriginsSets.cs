@@ -10,6 +10,11 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
+using ThoriumMod.Items.Placeable;
+using ThoriumTiles = ThoriumMod.Tiles;
+using ThoriumWalls = ThoriumMod.Walls;
+using OMI = Origins.OriginsModIntegrations;
+using System.Linq;
 
 namespace Origins {
 	public static class OriginsSets {
@@ -336,6 +341,8 @@ namespace Origins {
 			public static SlowdownPercent[] MinionSlowdown { get; } = TileID.Sets.Factory.CreateCustomSet<SlowdownPercent>(0);
 			public static bool[] DisableHoiking { get; } = TileID.Sets.Factory.CreateBoolSet(false);
 			public static bool[] StructureSerializer_PlaceAsObject { get; } = TileID.Sets.Factory.CreateBoolSet();
+			public static bool[] GemTilesToChambersite { get; private set; }
+			public static bool[] ExposedGemsToChambersite { get; private set; }
 			internal static void Initialize() {
 				try {
 					IL_Collision.SlopeCollision += IL_Collision_SlopeCollision;
@@ -356,6 +363,42 @@ namespace Origins {
 				c.EmitDelegate((in Tile tile) => DisableHoiking[tile.TileType] && tile.BottomSlope);
 				c.EmitBrtrue(cont);
 			}
+			static Tiles() {
+				GemTilesToChambersite = TileID.Sets.Factory.CreateNamedSet($"{nameof(Tiles)}_{nameof(GemTilesToChambersite)}")
+				.Description("Gem ores in this set can be corrupted into chambersite ores")
+				.RegisterBoolSet(
+					TileID.Amethyst,
+					TileID.Topaz,
+					TileID.Sapphire,
+					TileID.Emerald,
+					TileID.Ruby,
+					TileID.Diamond
+				);
+				ExposedGemsToChambersite = TileID.Sets.Factory.CreateNamedSet($"{nameof(Tiles)}_{nameof(ExposedGemsToChambersite)}")
+				.Description("Placed gems in this set can be corrupted into placed chambersite")
+				.RegisterBoolSet(
+					TileID.ExposedGems
+				);
+
+				//if (OMI.Thorium is not null) AddThorium();
+				//if (OMI.Avalon is not null) AddAvalon();
+			}
+			public static int GetModContent(Mod mod, string name) {
+				return mod.GetContent<ModTile>().First(content => content.Name == name).Type;
+			}
+			[JITWhenModsEnabled("ThoriumMod")]
+			static void AddThorium() {
+				GemTilesToChambersite[ModContent.TileType<ThoriumTiles.Aquamarine>()] = true;
+				GemTilesToChambersite[ModContent.TileType<ThoriumTiles.Opal>()] = true;
+				ExposedGemsToChambersite[ModContent.TileType<ThoriumTiles.PlacedGem>()] = true;
+			}
+			[JITWhenModsEnabled("Avalon")]
+			static void AddAvalon() {
+				GemTilesToChambersite[GetModContent(OMI.Avalon, "Peridot")] = true;
+				GemTilesToChambersite[GetModContent(OMI.Avalon, "Tourmaline")] = true;
+				GemTilesToChambersite[GetModContent(OMI.Avalon, "Zircon")] = true;
+				ExposedGemsToChambersite[GetModContent(OMI.Avalon, "PlacedGems")] = true;
+			}
 		}
 		public delegate void MultitileCollisionOffsetter(Tile tile, ref float y, ref int height);
 		[ReinitializeDuringResizeArrays]
@@ -363,6 +406,7 @@ namespace Origins {
 			public static bool[] RivenWalls { get; } = WallID.Sets.Factory.CreateNamedSet(nameof(RivenWalls))
 			.RegisterBoolSet(false);
 			public static int[] GeneratesLiquid { get; } = WallID.Sets.Factory.CreateIntSet(-1);
+			public static bool[] GemWallsToChambersite { get; private set; }
 			internal static void Initialize() {
 				try {
 					On_Liquid.Update += (orig, self) => {
@@ -377,6 +421,35 @@ namespace Origins {
 				} catch (Exception e) {
 					if (Origins.LogLoadingILError(nameof(GeneratesLiquid), e)) throw;
 				}
+			}
+			static Walls() {
+				GemWallsToChambersite = TileID.Sets.Factory.CreateNamedSet($"{nameof(Walls)}_{nameof(GemWallsToChambersite)}")
+				.Description("Unsafe gem ore walls in this set can be corrupted into unsafe chambersite ore walls")
+				.RegisterBoolSet(
+					WallID.AmethystUnsafe,
+					WallID.TopazUnsafe,
+					WallID.SapphireUnsafe,
+					WallID.EmeraldUnsafe,
+					WallID.RubyUnsafe,
+					WallID.DiamondUnsafe
+				);
+
+				//if (OMI.Thorium is not null) AddThorium();
+				//if (OMI.Avalon is not null) AddAvalon();
+			}
+			public static int GetModContent(Mod mod, string name) {
+				return mod.GetContent<ModWall>().First(content => content.Name == name).Type;
+			}
+			[JITWhenModsEnabled("ThoriumMod")]
+			static void AddThorium() {
+				GemWallsToChambersite[ModContent.WallType<ThoriumWalls.AquamarineWall>()] = true;
+				GemWallsToChambersite[ModContent.WallType<ThoriumWalls.OpalWall>()] = true;
+			}
+			[JITWhenModsEnabled("Avalon")]
+			static void AddAvalon() {
+				GemWallsToChambersite[GetModContent(OMI.Avalon, "PeridotStoneWallUnsafe")] = true;
+				GemWallsToChambersite[GetModContent(OMI.Avalon, "TourmalineStoneWallUnsafe")] = true;
+				GemWallsToChambersite[GetModContent(OMI.Avalon, "ZirconStoneWallUnsafe")] = true;
 			}
 		}
 		[ReinitializeDuringResizeArrays]
