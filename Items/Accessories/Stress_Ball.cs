@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.UI;
 using PegasusLib;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,6 +23,7 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 		}
+		static SlotId LoopSound;
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.stressBall = true;
@@ -31,9 +34,39 @@ namespace Origins.Items.Accessories {
 				int chance = originPlayer.stressBallTimer - CooldownRange.Start.Value;
 				if (chance > 0 && Main.rand.NextBool(chance, CooldownRange.End.Value - CooldownRange.Start.Value)) originPlayer.stressBallTimer = -1;
 			} else {
+				if (!LoopSound.IsValid || !SoundEngine.TryGetActiveSound(LoopSound, out ActiveSound loop)) {
+					LoopSound = SoundEngine.PlaySound(Origins.Sounds.ShimmershotCharging, updateCallback: static sound => {
+						OriginPlayer originPlayer = Main.LocalPlayer.OriginPlayer();
+						if (originPlayer.stressBallTimer < 0) {
+							sound.Pitch = originPlayer.stressBallStrength / SqueezeCount;
+						} else {
+							MathUtils.LinearSmoothing(ref sound.Volume, 0, 1f / 30);
+						}
+						return sound.Volume > 0;
+					});
+				}
 				if (originPlayer.stressBallTimer < -1) originPlayer.stressBallTimer++;
 				else MathUtils.LinearSmoothing(ref originPlayer.stressBallStrength, 0, 1f / DecayDuration);
-				if (Keybindings.StressBall.Current) originPlayer.stressBallTimer = -TimePerFrame * 4;
+				if (Keybindings.StressBall.Current) {
+					if (originPlayer.stressBallTimer >= -1) {
+						SoundStyle sound = SoundID.Duck;
+						if (!OriginsModIntegrations.CheckAprilFools()) {
+							switch (Main.rand.Next(3)) {
+								case 0:
+								sound = SoundID.NPCHit15;
+								break;
+								case 1:
+								sound = SoundID.NPCHit16;
+								break;
+								case 2:
+								sound = SoundID.NPCHit17;
+								break;
+							}
+						}
+						SoundEngine.PlaySound(sound);
+					}
+					originPlayer.stressBallTimer = -TimePerFrame * 4;
+				}
 				if (originPlayer.stressBallTimer == -2) {
 					originPlayer.stressBallStrength = float.Ceiling(originPlayer.stressBallStrength + 1);
 					if (originPlayer.stressBallStrength >= SqueezeCount) {
