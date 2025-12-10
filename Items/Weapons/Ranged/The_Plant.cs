@@ -56,10 +56,10 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.rare = ItemRarityID.Lime;
 		}
 		public override void UpdateInventory(Player player) {
-			if (++ammoTimer > Item.useAnimation * 5 * CombinedHooks.TotalUseAnimationMultiplier(player, Item)) {
+			if (++ammoTimer > Item.useAnimation * 30 * CombinedHooks.TotalUseAnimationMultiplier(player, Item)) {
 				ammoTimer = 0;
-				ammoCount += 1 + ammoCount/50;
-				Min(ref ammoCount, 9999);
+				ammoCount += 3 + ammoCount / 40;
+				Min(ref ammoCount, 999);
 				List<int> unlockedPlantModes = player.OriginPlayer().unlockedPlantModes;
 				for (int i = 0; i < player.inventory.Length; i++) {
 					Item ammo = player.inventory[i];
@@ -378,7 +378,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.ExplosiveBullet;
 		public override void SetStaticDefaults() {
 			The_Plant.RegisterAmmoType(ItemID.ExplodingBullet, Type, 11, 7, 5, new(196, 40, 18));
-			Origins.MagicTripwireRange[Type] = 32; 
+			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
