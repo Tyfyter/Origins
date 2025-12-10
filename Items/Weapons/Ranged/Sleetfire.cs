@@ -63,7 +63,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
         public override void AI() {
             Lighting.AddLight(Projectile.Center, 0f, 0.2f, 0.85f);
-            Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.FrostStaff);
+            if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.FrostStaff, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f);
             Projectile.ai[0]++;
 			for (int i = sizes.Length - 1; i > 0; i--) {
 				sizes[i] = sizes[i - 1];
