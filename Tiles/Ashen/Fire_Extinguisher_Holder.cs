@@ -52,14 +52,14 @@ namespace Origins.Tiles.Ashen {
 			RegisterItemDrop(item.Type);
 		}
 		static Fire_Extinguisher HeldExtinguisher => Main.LocalPlayer?.HeldItem?.ModItem as Fire_Extinguisher;
-		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX != -1 || HeldExtinguisher is not null;
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX != 0 || HeldExtinguisher is not null;
 		public override bool RightClick(int i, int j) {
 			Tile tile = Main.tile[i, j];
-			short targetFrame = -1;
+			short targetFrame = 0;
 			short originalFrame = tile.TileFrameX;
-			if (originalFrame == -1) {
+			if (originalFrame == 0) {
 				if (HeldExtinguisher is not Fire_Extinguisher extinguisher) return false;
-				targetFrame = (short)extinguisher.Durability;
+				targetFrame = (short)(extinguisher.Durability + 1);
 				Main.LocalPlayer.HeldItem.TurnToAir();
 			}
 			TileObjectData data = TileObjectData.GetTileData(tile.TileType, 0);
@@ -76,10 +76,10 @@ namespace Origins.Tiles.Ashen {
 				data.Width,
 				data.Height
 			);
-			if (targetFrame == -1) {
+			if (targetFrame == 0) {
 				int item = Item.NewItem(WorldGen.GetNPCSource_ShakeTree(i, j), new Vector2(i, j) * 16, ModContent.ItemType<Fire_Extinguisher>());
 				if (Main.item[item].ModItem is Fire_Extinguisher extinguisher) {
-					extinguisher.Durability = originalFrame;
+					extinguisher.Durability = originalFrame - 1;
 					if (Main.netMode == NetmodeID.Server) {
 						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);
 					}
@@ -88,7 +88,7 @@ namespace Origins.Tiles.Ashen {
 			return base.RightClick(i, j);
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
-			if (tileFrameX == -1) {
+			if (tileFrameX == 0) {
 				tileFrameX = 16;
 			} else {
 				tileFrameX = 0;
