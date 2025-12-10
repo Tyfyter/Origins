@@ -3,11 +3,13 @@ using Origins.Projectiles;
 using PegasusLib.Networking;
 using System;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using ThoriumMod.Tiles;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Shimmer_Dynamite : ModItem {
 		public override void SetStaticDefaults() {
@@ -125,6 +127,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 									}
 								}
 							}
+							bool defaultShimmer = true;
 							switch (tile.TileType) {
 								case TileID.LunarBrick: {
 									switch (Main.GetMoonPhase()) {
@@ -158,12 +161,63 @@ namespace Origins.Items.Weapons.Demolitionist {
 
 								case TileID.ExposedGems:
 								if (tile.TileFrameX >= 18) {
-									tile.TileFrameX -= 18;
+									if (OriginsModIntegrations.Avalon is not null) {
+										int GetTile(string name) {
+											return OriginsModIntegrations.Avalon.GetContent<ModTile>().First(tile => tile.Name == name).Type;
+										}
+										switch (tile.TileFrameX / 18) {
+											case 5:
+											tile.TileType = (ushort)GetTile("PlacedGems");
+											tile.TileFrameX = 3 * 18;
+											defaultShimmer = false;
+											break;
+
+											case 4:
+											tile.TileType = (ushort)GetTile("PlacedGems");
+											tile.TileFrameX = 4 * 18;
+											defaultShimmer = false;
+											break;
+										}
+									}
+									if (defaultShimmer) tile.TileFrameX -= 18;
 								}
 								break;
 
 								default:
-								TransformToTile(OriginsSets.Tiles.ShimmerTransformToTile[tile.TileType]);
+								if (OriginsModIntegrations.Thorium is not null) {
+									if (tile.TileType == ModContent.TileType<PlacedGem>()) {
+										if (tile.TileFrameX == 0) tile.TileFrameX += 18;
+										else tile.TileFrameX = 0;
+										defaultShimmer = false;
+									}
+								}
+								if (OriginsModIntegrations.Avalon is not null) {
+									int GetTile(string name) {
+										return OriginsModIntegrations.Avalon.GetContent<ModTile>().First(tile => tile.Name == name).Type;
+									}
+									if (tile.TileType == GetTile("PlacedGems") && tile.TileFrameX >= 18) {
+										switch (tile.TileFrameX / 18) {
+											case 5:
+											tile.TileType = TileID.ExposedGems;
+											tile.TileFrameX = 5 * 18;
+											defaultShimmer = false;
+											break;
+
+											case 4:
+											tile.TileType = TileID.ExposedGems;
+											tile.TileFrameX = 3 * 18;
+											defaultShimmer = false;
+											break;
+
+											case 3:
+											tile.TileType = TileID.ExposedGems;
+											tile.TileFrameX = 1 * 18;
+											defaultShimmer = false;
+											break;
+										}
+									}
+								}
+								if (defaultShimmer) TransformToTile(OriginsSets.Tiles.ShimmerTransformToTile[tile.TileType]);
 								break;
 							}
 						}

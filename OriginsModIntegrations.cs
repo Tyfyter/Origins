@@ -16,6 +16,7 @@ using Origins.Items.Other;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Other.Consumables.Food;
+using Origins.Items.Other.Critters;
 using Origins.Items.Other.Fish;
 using Origins.Items.Pets;
 using Origins.Items.Vanity.BossMasks;
@@ -1050,7 +1051,7 @@ namespace Origins {
 				.DisableDecraft()
 				.Register();
 			#endregion
-			#region Misc
+			#region Misc Banner
 			Recipe.Create(ItemID.MeatGrinder)
 				.AddRecipeGroup("Origins:AnyAshenBanner", 5)
 				.AddCondition(Condition.Hardmode)
@@ -1069,7 +1070,7 @@ namespace Origins {
 				.AddTile(TileID.Solidifier)
 				.DisableDecraft()
 				.Register();
-			#endregion Misc
+			#endregion
 			#region Crate Recipes
 			static void CrateRecipe(int result, int resultAmount = 1, int crate = 0, int crateHard = 0, int crateAmount = 1, int extraItem = 0, params Condition[] conditions) {
 				if (crate > 0) {
@@ -1138,7 +1139,7 @@ namespace Origins {
 			CrateRecipe(ItemType<Amoeba_Toy>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
 			CrateRecipe(ItemType<Primordial_Soup>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
 			#endregion
-
+			#region Misc
 			Recipe.Create(ItemType<Surveysprout_Item>(), 5)
 			.AddIngredient(ItemID.HerbBag)
 			.AddTile(TileID.WorkBenches)
@@ -1151,6 +1152,16 @@ namespace Origins {
 			.AddIngredient(ItemID.HerbBag)
 			.AddTile(TileID.WorkBenches)
 			.Register();
+
+			Recipe.Create(ItemType<Chambersite_Item>(), 5)
+			.AddIngredient<Chambersite_Bunny_Item>()
+			.AddTile(TileID.Solidifier)
+			.Register();
+			Recipe.Create(ItemType<Chambersite_Item>(), 5)
+			.AddIngredient<Chambersite_Squirrel_Item>()
+			.AddTile(TileID.Solidifier)
+			.Register();
+			#endregion
 
 			SetFargosStaticDefaults();
 		}
