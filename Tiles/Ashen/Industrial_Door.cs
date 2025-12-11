@@ -130,6 +130,11 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.Suffocate[Type] = false;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
 		}
+		public override void PostSetDefaults() {
+			Main.tileBlockLight[Type] = false;
+			Main.tileNoSunLight[Type] = false;
+			TileID.Sets.DrawsWalls[Type] = true;
+		}
 		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
 			height = -1600;
 		}

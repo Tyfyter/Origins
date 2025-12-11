@@ -141,6 +141,10 @@ namespace Origins.Tiles.Ashen {
 			Main.tileSolidTop[Type] = true;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
 		}
+		public override void PostSetDefaults() {
+			Main.tileBlockLight[Type] = false;
+			Main.tileNoSunLight[Type] = true;
+		}
 		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
 			if ((tile.TileFrameY / 18) % 3 != 0) height = -1600;
 		}
