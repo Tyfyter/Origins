@@ -33,7 +33,7 @@ namespace Origins.Tiles.Riven {
 		}
 	}
 	public class Calcified_Riven_Flesh_Item : ModItem, IJournalEntrySource {
-		public string EntryName => "Origins/" + typeof(Riven_Flesh_Item.Spug_Flesh_Entry).Name;
+		public string EntryName => "Origins/" + typeof(Spug_Flesh.Spug_Flesh_Entry).Name;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);

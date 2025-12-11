@@ -28,7 +28,6 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.GeneralPlacementTiles[Type] = false;
 
 			AddMapEntry(new Color(165, 165, 165));
-			AddDefiledTile();
 			HitSound = Origins.Sounds.DefiledIdle;
 			DustType = Defiled_Wastelands.DefaultTileDust;
 			MinPick = 200;
@@ -37,7 +36,7 @@ namespace Origins.Tiles.Defiled {
 		public override bool CanExplode(int i, int j) => false;
 	}
 	public class Defiled_Regolith_Item : ModItem {
-		public override string Texture => typeof(Defiled_Stone_Item).GetDefaultTMLName();
+		public override string Texture => typeof(Defiled_Stone).GetDefaultTMLName("_Item");
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);

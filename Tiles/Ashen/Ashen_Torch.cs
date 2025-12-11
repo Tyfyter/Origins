@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
+using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
@@ -160,7 +161,7 @@ namespace Origins.Tiles.Ashen {
 
 			CreateRecipe(3)
 			.AddIngredient(ItemID.Torch, 3)
-			.AddIngredient(ItemType<Tainted_Stone_Item>())
+			.AddIngredient(OriginTile.TileItem<Tainted_Stone>())
 			.SortAfterFirstRecipesOf(ItemID.Torch)
 			.Register();
 

@@ -172,7 +172,7 @@ namespace Origins.Tiles.Defiled {
 
             CreateRecipe(3)
 			.AddIngredient(ItemID.Torch, 3)
-			.AddIngredient(ItemType<Defiled_Stone_Item>())
+			.AddIngredient(OriginTile.TileItem<Defiled_Stone>())
 			.SortAfterFirstRecipesOf(ItemID.Torch)
 			.Register();
 

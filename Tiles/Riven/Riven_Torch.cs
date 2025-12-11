@@ -167,7 +167,7 @@ namespace Origins.Tiles.Riven {
 		public override void AddRecipes() {
 			CreateRecipe(3)
 			.AddIngredient(ItemID.Torch, 3)
-			.AddIngredient(ItemType<Riven_Flesh_Item>())
+			.AddIngredient(OriginTile.TileItem<Spug_Flesh>())
 			.SortAfterFirstRecipesOf(ItemID.Torch)
 			.Register();
 

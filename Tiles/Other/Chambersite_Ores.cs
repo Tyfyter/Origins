@@ -6,6 +6,7 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -23,14 +24,16 @@ namespace Origins.Tiles.Other {
 		public static List<Chambersite_Ore> chambersiteTiles = [];
 		public virtual int StoneTile => TileID.Stone;
 		public virtual int StoneItem => ItemID.StoneBlock;
-		public override string Texture => StoneTile < TileID.Count ? $"Terraria/Images/Tiles_{StoneTile}" : GetModTile(StoneTile).Texture;
+		public virtual string ItemTexture => $"Terraria/Images/Item_{StoneItem}";
+		public virtual LocalizedText ItemDisplayName => Lang.GetItemName(StoneItem);
+		public override string Texture => $"Terraria/Images/Tiles_{StoneTile}";
 		public virtual Color MapColor => FromHexRGB(0x116166);
 		public new virtual SoundStyle HitSound => SoundID.Tink;
 		public new virtual int DustType => DustID.Stone;
 		public virtual string OverlayPath => "Origins/Tiles/MergerOverlays/Chambersite_Ore";
 		public virtual string ItemOverlayPath => "Origins/Tiles/MergerOverlays/Chambersite_Ore_Item";
 		protected Asset<Texture2D> Overlay { get; private set; }
-		public TileItem Itm { get; protected set; }
+		public TileItem Item { get; protected set; }
 		public virtual Recipe ItemRecipe(Item item) => Recipe.Create(item.type)
 			.AddIngredient<Chambersite_Item>()
 			.AddIngredient(StoneItem)
@@ -42,9 +45,7 @@ namespace Origins.Tiles.Other {
 		public static int GetOreID(int stone) => GetOre(stone).Type;
 
 		public override void Load() {
-			Mod.AddContent(Itm = new Chambersite_Ore_Item(this).WithOnAddRecipes(item => {
-				ItemRecipe(item);
-			}));
+			Mod.AddContent(Item = new Chambersite_Ore_Item(this).WithOnAddRecipes(item => ItemRecipe(item)));
 			chambersiteTiles.Add(this); 
 			PaintKey = CustomTilePaintLoader.CreateKey();
 		}
@@ -78,23 +79,27 @@ namespace Origins.Tiles.Other {
 			OriginExtensions.DrawTileGlow(texture, Lighting.GetColor(i, j), i, j, spriteBatch);
 		}
 		protected CustomTilePaintLoader.CustomTileVariationKey PaintKey { get; private set; }
+		internal record struct ChambersiteParmeters(ModTile Tile, ModItem Item, string TileOverlay, string ItemOverlay, Func<int> DustType, Func<SoundStyle> HitSound, params string[] LegacyNames) {
+			public Func<SoundStyle> HitSound { get; } = HitSound ?? (() => SoundID.Tink);
+		}
+		public static string overlay_path_base = "Origins/Tiles/Chambersite_Ore_";
+		public static ModTile Create(ModTile baseTile, ModItem baseItem, Func<int> dustType, string tileOverlay = null, string itemOverlay = null, Func<SoundStyle> hitSound = null, params string[] legacyNames) {
+			if (baseItem.Mod != baseTile.Mod) throw new ArgumentException($"{nameof(baseTile)} and {nameof(baseItem)} must be from the same mod, I don't know what you're doing, but I do know that it's a bad idea", nameof(baseItem));
+			Chambersite_Ore_Modular tile = new(new(baseTile, baseItem, tileOverlay, itemOverlay, dustType, hitSound, legacyNames));
+			baseTile.Mod.AddContent(tile);
+			return tile;
+		}
 	}
 	[Autoload(false)]
 	public class Chambersite_Ore_Item(Chambersite_Ore tile) : TileItem(tile) {
-		public string GetTexture() {
-			if (tile.StoneItem < ItemID.Count) return $"Terraria/Images/Item_{tile.StoneItem}";
-			else return GetModItem(tile.StoneItem).Texture;
-		}
-		public LocalizedText GetName() {
-			if (tile.StoneItem < ItemID.Count) return Language.GetText($"ItemName.{ItemID.Search.GetName(tile.StoneItem)}");
-			else return GetModItem(tile.StoneItem).DisplayName;
-		}
-		public override string Texture => GetTexture();
-		public override LocalizedText DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Chambersite_Ore.DisplayName")).WithFormatArgs(GetName());
+		public override string Texture => tile.ItemTexture;
+		public override LocalizedText DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Chambersite_Ore.DisplayName")).WithFormatArgs(tile.ItemDisplayName);
 		public override LocalizedText Tooltip => LocalizedText.Empty;
 		protected Asset<Texture2D> Overlay { get; private set; }
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			Overlay = Request<Texture2D>(tile.ItemOverlayPath);
+		}
+		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.value = Item.sellPrice(silver: 1);
 			Item.height = 14;
@@ -116,55 +121,43 @@ namespace Origins.Tiles.Other {
 		}
 	}
 	[Autoload(false)]
-	public class Chambersite_Ore_Base((int tile, int item, string tileOverlay, string itemOverlay, SoundStyle hitSound, int dustType) stone) : Chambersite_Ore {
-		public string GetName() {
-			if (stone.tile < TileID.Count) return TileID.Search.GetName(stone.tile);
-			else return GetModTile(stone.tile).Name;
-		}
-		public override string Name => "Chambersite_Ore_" + GetName();
-		public override int StoneItem => stone.item;
-		public override int StoneTile => stone.tile;
-		public override string OverlayPath => string.IsNullOrEmpty(stone.tileOverlay) ? base.OverlayPath : stone.tileOverlay;
-		public override string ItemOverlayPath => string.IsNullOrEmpty(stone.itemOverlay) ? base.ItemOverlayPath : stone.itemOverlay;
-		public override SoundStyle HitSound => stone.hitSound;
-		public override int DustType => stone.dustType;
-		public override Recipe ItemRecipe(Item item) => base.ItemRecipe(item).SortAfterFirstRecipesOf(GetOre(TileID.Stone).Itm.Type);
+	internal class Chambersite_Ore_Modular(Chambersite_Ore.ChambersiteParmeters parameters) : Chambersite_Ore {
+		public override string Name => "Chambersite_Ore_" + parameters.Tile.Name;
+		public override int StoneItem => parameters.Item.Type;
+		public override string ItemTexture => parameters.Item.Texture;
+		public override LocalizedText ItemDisplayName => parameters.Item.DisplayName;
+		public override int StoneTile => parameters.Tile.Type;
+		public override string Texture => parameters.Tile.Texture;
+		public override string OverlayPath => parameters.TileOverlay ?? base.OverlayPath;
+		public override string ItemOverlayPath => parameters.ItemOverlay ?? base.ItemOverlayPath;
+		public override SoundStyle HitSound => parameters.HitSound();
+		public override int DustType => parameters.DustType();
+		public override Recipe ItemRecipe(Item item) => base.ItemRecipe(item).SortAfterFirstRecipesOf(GetOre(TileID.Stone).Item.Type);
 	}
 	#endregion
-	internal class Chambersite_Ore_Loadable : LateLoadable {
-		public static string mergePath = "Origins/Tiles/MergerOverlays/Chambersite_Ore";
-		public static List<(int tile, int item, string tileOverlay, string itemOverlay, SoundStyle hitSound, int dustType)> Stones = [
-			(TileID.Ebonstone, ItemID.EbonstoneBlock, null, null, SoundID.Tink, DustID.Corruption),
-			(TileID.Crimstone, ItemID.CrimstoneBlock, null, null, SoundID.Tink, DustID.Crimstone),
-			(TileType<Defiled_Stone>(), ItemType<Defiled_Stone_Item>(), null, null, Origins.Sounds.DefiledIdle, Defiled_Wastelands.DefaultTileDust),
-			(TileType<Spug_Flesh>(), ItemType<Riven_Flesh_Item>(), mergePath + "_Flesh", null, SoundID.Tink, Riven_Hive.DefaultTileDust),
-			(TileType<Tainted_Stone>(), ItemType<Tainted_Stone_Item>(), null, null, SoundID.Tink, Ashen_Biome.DefaultTileDust)
-		];
-		public override void Load() {
-			foreach ((int, int, string, string, SoundStyle, int) stone in Stones) {
-				Mod.AddContent(new Chambersite_Ore_Base(stone));
-			}
-		}
+	public class Chambersite_Ore_Ebonstone : Chambersite_Ore {
+		public override int StoneTile => TileID.Ebonstone;
+		public override int StoneItem => ItemID.EbonstoneBlock;
+		public override int DustType => DustID.Corruption;
+		public override Color MapColor => new(109, 90, 128);
 	}
-	/*	public class Chambersite_Ore_Ebonstone : Chambersite_Ore {
-			public override int StoneType => TileID.Ebonstone;
-			//public override Color MapColor => new(109, 90, 128);
-		}
-		public class Chambersite_Ore_Crimstone : Chambersite_Ore {
-			public override int StoneType => TileID.Crimstone;
-			//public override Color MapColor => new(128, 44, 45);
-		}
-		public class Chambersite_Ore_Defiled_Stone : Chambersite_Ore {
-			public override int StoneType => TileType<Defiled_Stone>();
-			//public override Color MapColor => new(200, 200, 200);
-		}
-		public class Chambersite_Ore_Riven_Flesh : Chambersite_Ore {
-			public override int StoneType => TileType<Spug_Flesh>();
-			//public override Color MapColor => new(0, 125, 200);
-			public override string OverlayPath => base.OverlayPath + "_Flesh";
-		}
-		public class Chambersite_Ore_Tainted_Stone : Chambersite_Ore {
-			public override int StoneType => TileType<Tainted_Stone>();
-			//public override Color MapColor => new Color(133, 89, 62);
-		}*/
+	public class Chambersite_Ore_Crimstone : Chambersite_Ore {
+		public override int StoneTile => TileID.Crimstone;
+		public override int StoneItem => ItemID.CrimstoneBlock;
+		public override int DustType => DustID.Crimstone;
+		public override Color MapColor => new(128, 44, 45);
+	}
+	/*public class Chambersite_Ore_Defiled_Stone : Chambersite_Ore {
+		public override int StoneType => TileType<Defiled_Stone>();
+		//public override Color MapColor => new(200, 200, 200);
+	}
+	public class Chambersite_Ore_Riven_Flesh : Chambersite_Ore {
+		public override int StoneType => TileType<Spug_Flesh>();
+		//public override Color MapColor => new(0, 125, 200);
+		public override string OverlayPath => base.OverlayPath + "_Flesh";
+	}
+	public class Chambersite_Ore_Tainted_Stone : Chambersite_Ore {
+		public override int StoneType => TileType<Tainted_Stone>();
+		//public override Color MapColor => new Color(133, 89, 62);
+	}*/
 }

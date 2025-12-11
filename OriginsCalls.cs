@@ -56,16 +56,14 @@ namespace Origins {
 					try {
 						switch (callTypeExtension) {
 							case CallTypeExtension.Tile: {
-								Chambersite_Ore ore;
-								(int, int, string, string, SoundStyle, int) stone;
-								if (args[4] is int value) {
-									stone = (value, (int)args[5], (string)args[6], (string)args[7], (SoundStyle)args[8], (int)args[9]);
-								} else {
-									stone = ((int, int, string, string, SoundStyle, int))args[4];
-								}
-								((Mod)args[2]).AddContent(ore = new Chambersite_Ore_Base(stone));
-								((AltBiome)args[3]).AddChambersiteTileConversions(ore.Type);
-								return ore.Type;
+								return Chambersite_Ore.Create(
+									(ModTile)args[1],
+									(ModItem)args[2],
+									((Delegate)args[3]).CastDelegate<Func<int>>(),
+									args.GetIfInRange(4) as string,
+									args.GetIfInRange(5) as string,
+									((Delegate)args.GetIfInRange(6))?.CastDelegate<Func<SoundStyle>>()
+								);
 							}
 							case CallTypeExtension.Wall: {
 								return null; // change when modular chambersite walls exists
@@ -80,7 +78,7 @@ namespace Origins {
 					CallExtension(out CallTypeExtension callTypeExtension);
 					switch (callTypeExtension) {
 						case CallTypeExtension.Tile: {
-							if ((string)args[3] == "Item") return Chambersite_Ore.GetOre((int)args[2]).Itm.Type;
+							if ((string)args[3] == "Item") return Chambersite_Ore.GetOre((int)args[2]).Item.Type;
 							return Chambersite_Ore.GetOreID((int)args[2]);
 						}
 						case CallTypeExtension.Wall: return null; // change when modular chambersite walls exists

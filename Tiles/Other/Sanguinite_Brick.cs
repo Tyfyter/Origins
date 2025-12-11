@@ -30,7 +30,7 @@ namespace Origins.Tiles.Other {
 		}
 		public override void AddRecipes() {
 			CreateRecipe(5)
-			.AddIngredient<Tainted_Stone_Item>(5)
+			.AddIngredient(OriginTile.TileItem<Tainted_Stone>(), 5)
 			.AddIngredient<Sanguinite_Ore_Item>()
 			.AddTile(TileID.Furnaces)
 			.Register();

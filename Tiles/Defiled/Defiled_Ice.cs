@@ -21,7 +21,6 @@ namespace Origins.Tiles.Defiled {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(225, 225, 225));
 			mergeID = TileID.IceBlock;
-			AddDefiledTile();
 			DustType = Defiled_Wastelands.DefaultTileDust;
 			HitSound = SoundID.Item50;
 		}

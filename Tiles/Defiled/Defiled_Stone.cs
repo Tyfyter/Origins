@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
@@ -7,12 +8,18 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+
 namespace Origins.Tiles.Defiled {
-	public class Defiled_Stone : ComplexFrameTile, IDefiledTile {
-        public string[] Categories => [
-            WikiCategories.Stone
-        ];
-        public override void SetStaticDefaults() {
+	public class Defiled_Stone : ComplexFrameTile, IDefiledTile, ITileWithItem {
+		public ModItem Item { get; private set; }
+		public override void Load() {
+			Mod.AddContent(Item = new TileItem(this).WithExtraStaticDefaults(static item => {
+				item.ResearchUnlockCount = 100;
+				ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, item.type);
+			}));
+			Chambersite_Ore.Create(this, Item, () => Defiled_Wastelands.DefaultTileDust, hitSound: () => Origins.Sounds.DefiledIdle);
+		}
+		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Defiled_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)TileType<Defiled_Foliage>(), 0, 6));
 			Main.tileSolid[Type] = true;
@@ -48,19 +55,5 @@ namespace Origins.Tiles.Defiled {
 				WorldGen.TileFrame(i, j - 1);
 			}
 		}
-	}
-	public class Defiled_Stone_Item : ModItem, ICustomWikiStat {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 100;
-			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
-		}
-		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(TileType<Defiled_Stone>());
-		}
-		public LocalizedText PageTextMain => WikiPageExporter.GetDefaultMainPageText(this)
-			.WithFormatArgs(65,
-			Language.GetText("Mods.Origins.Generic.Defiled_Wastelands"),
-			"Stone"
-		);
 	}
 }

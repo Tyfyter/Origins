@@ -28,7 +28,7 @@ namespace Origins.Tiles.Other {
 		}
 		public override void AddRecipes() {
 			CreateRecipe(5)
-			.AddIngredient<Defiled_Stone_Item>(5)
+			.AddIngredient(OriginTile.TileItem<Defiled_Stone>(), 5)
 			.AddIngredient<Lost_Ore_Item>()
 			.AddTile(TileID.Furnaces)
 			.Register();

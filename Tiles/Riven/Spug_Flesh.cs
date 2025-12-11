@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using Origins.Dev;
 using Origins.Journal;
+using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -12,13 +14,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
 	[LegacyName("Riven_Flesh")]
-	public class Spug_Flesh : ComplexFrameTile, IRivenTile, IGlowingModTile {
-		public string[] Categories => [
-			WikiCategories.Stone
-		];
+	public class Spug_Flesh : ComplexFrameTile, IRivenTile, IGlowingModTile, ITileWithItem {
+		public ModItem Item { get; private set; }
+		public class Spug_Flesh_Entry : JournalEntry {
+			public override string TextKey => "Spug_Flesh";
+			public override JournalSortIndex SortIndex => new("Riven", 11);
+		}
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
-		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
-		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
+		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
+		public static float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (HasScar(tile)) {
 				//Lighting.AddLight((int)(id % Main.maxTilesX) * 16, (int)(id / Main.maxTilesX) * 16, 1, 0.05f, 0.055f);
@@ -145,21 +149,16 @@ namespace Origins.Tiles.Riven {
 				WorldGen.TileFrame(i, j - 1);
 			}
 		}
-		public override void Load() => this.SetupGlowKeys();
+		public override void Load() {
+			Mod.AddContent(Item = new TileItem(this).WithExtraStaticDefaults(static item => {
+				item.ResearchUnlockCount = 100;
+				ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, item.type);
+				JournalEntry.AddJournalEntry<Spug_Flesh_Entry>(ref OriginsSets.Items.JournalEntries[item.type]);
+			}));
+			this.SetupGlowKeys();
+			Chambersite_Ore.Create(this, Item, () => Riven_Hive.DefaultTileDust, Chambersite_Ore.overlay_path_base + "Flesh", legacyNames: "Chambersite_Ore_Riven_Flesh");
+			ModTypeLookup<ModItem>.RegisterLegacyNames(Item, "Riven_Flesh_Item");
+		}
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
-	}
-	public class Riven_Flesh_Item : ModItem, IJournalEntrySource {
-		public string EntryName => "Origins/" + typeof(Spug_Flesh_Entry).Name;
-		public class Spug_Flesh_Entry : JournalEntry {
-			public override string TextKey => "Spug_Flesh";
-			public override JournalSortIndex SortIndex => new("Riven", 11);
-		}
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 100;
-			ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, Type);
-		}
-		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(TileType<Spug_Flesh>());
-		}
 	}
 }

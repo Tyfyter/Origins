@@ -1,4 +1,5 @@
-﻿using Origins.Tiles.Ashen;
+﻿using Origins.Tiles;
+using Origins.Tiles.Ashen;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -31,11 +32,11 @@ namespace Origins.Walls {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 4)
-			.AddIngredient(ItemType<Tainted_Stone_Item>())
+			.AddIngredient(OriginTile.TileItem<Tainted_Stone>())
 			.AddTile(TileID.WorkBenches)
 			.Register();
 
-			Recipe.Create(ItemType<Tainted_Stone_Item>(), 1)
+			Recipe.Create(OriginTile.TileItem<Tainted_Stone>(), 1)
 			.AddIngredient(Type, 4)
 			.AddTile(TileID.WorkBenches)
 			.Register();

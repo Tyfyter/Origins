@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Tiles;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using System;
@@ -46,11 +47,11 @@ namespace Origins.Walls {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 4)
-			.AddIngredient(ItemType<Riven_Flesh_Item>())
+			.AddIngredient(OriginTile.TileItem<Spug_Flesh>())
 			.AddTile(TileID.WorkBenches)
 			.Register();
 
-			Recipe.Create(ItemType<Riven_Flesh_Item>(), 1)
+			Recipe.Create(OriginTile.TileItem<Spug_Flesh>(), 1)
 			.AddIngredient(Type, 4)
 			.AddTile(TileID.WorkBenches)
 			.Register();

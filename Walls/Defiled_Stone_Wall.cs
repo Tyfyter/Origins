@@ -1,4 +1,6 @@
-﻿using Origins.Tiles.Defiled;
+﻿using Origins.Tiles;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -31,11 +33,11 @@ namespace Origins.Walls {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type, 4)
-			.AddIngredient(ItemType<Defiled_Stone_Item>())
+			.AddIngredient(OriginTile.TileItem<Defiled_Stone>())
 			.AddTile(TileID.WorkBenches)
 			.Register();
 
-			Recipe.Create(ItemType<Defiled_Stone_Item>(), 1)
+			Recipe.Create(OriginTile.TileItem<Defiled_Stone>(), 1)
 			.AddIngredient(Type, 4)
 			.AddTile(TileID.WorkBenches)
 			.Register();

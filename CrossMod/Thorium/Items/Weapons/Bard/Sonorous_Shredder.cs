@@ -1,6 +1,8 @@
 ﻿using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Projectiles;
+using Origins.Tiles;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
@@ -41,7 +43,7 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.SoulofNight, 15)
 			.AddIngredient<Alkahest>(25)
-			.AddIngredient<Riven_Flesh_Item>(30)
+			.AddIngredient(OriginTile.TileItem<Spug_Flesh>(), 30)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -160,7 +162,7 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.SoulofNight, 15)
 			.AddIngredient<Alkahest>(25)
-			.AddIngredient<Riven_Flesh_Item>(30)
+			.AddIngredient(OriginTile.TileItem<Spug_Flesh>(), 30)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

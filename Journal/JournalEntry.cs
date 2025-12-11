@@ -77,6 +77,7 @@ namespace Origins.Journal {
 			if (!string.IsNullOrEmpty(current)) current += ';';
 			current += newEntry;
 		}
+		public static void AddJournalEntry<TEntry>(ref string current) where TEntry : JournalEntry => AddJournalEntry(ref current, ModContent.GetInstance<TEntry>().FullName);
 	}
 	public abstract class VanillaItemJournalEntry : JournalEntry {
 		public abstract int ItemType { get; }

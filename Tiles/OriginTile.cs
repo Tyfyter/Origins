@@ -33,8 +33,7 @@ namespace Origins.Tiles {
 				}
 			}
 		}
-		[Obsolete]
-		protected void AddDefiledTile() { }
+		public static int TileItem<TTile>() where TTile : ModTile, ITileWithItem => ModContent.GetInstance<TTile>().Item.Type;
 	}
 	//temp solution
 	public interface IDefiledTile { }
@@ -329,5 +328,8 @@ namespace Origins.Tiles {
 				overlays[k].Draw(i, j, tile, spriteBatch);
 			}
 		}
+	}
+	public interface ITileWithItem {
+		public ModItem Item { get; }
 	}
 }
