@@ -1677,7 +1677,7 @@ CONSUMABLES:
 (^) Pointy Crate
 (^) Residual Crate
 
-(#2, ^2) Fire Extinguisher !!! (maybe you can put enemies out too?)
+(☻) Fire Extinguisher !!! (now you can put enemies out too)
 (^) Gooey Water
 (^) Holiday Hair Dye
 (^) Latchkey

@@ -2,6 +2,7 @@ using Origins.Dev;
 using Origins.Projectiles;
 using PegasusLib.Networking;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
@@ -94,6 +95,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public record class Shimmer_Dynamite_Action(Vector2 Center) : SyncedAction {
+		public static List<(ushort tileType, short frameX)> Gems { get; } = [
+			(TileID.ExposedGems, 0),
+			(TileID.ExposedGems, 1),
+			(TileID.ExposedGems, 2),
+			(TileID.ExposedGems, 3),
+			(TileID.ExposedGems, 4),
+			(TileID.ExposedGems, 5),
+			(TileID.ExposedGems, 6)
+		];
 		public Shimmer_Dynamite_Action() : this(default(Vector2)) { }
 		public override SyncedAction NetReceive(BinaryReader reader) => this with {
 			Center = reader.ReadPackedVector2()
@@ -127,7 +137,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 									}
 								}
 							}
-							bool defaultShimmer = true;
 							switch (tile.TileType) {
 								case TileID.LunarBrick: {
 									switch (Main.GetMoonPhase()) {
@@ -159,65 +168,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 									break;
 								}
 
-								case TileID.ExposedGems:
-								if (tile.TileFrameX >= 18) {
-									if (OriginsModIntegrations.Avalon is not null) {
-										int GetTile(string name) {
-											return OriginsModIntegrations.Avalon.GetContent<ModTile>().First(tile => tile.Name == name).Type;
-										}
-										switch (tile.TileFrameX / 18) {
-											case 5:
-											tile.TileType = (ushort)GetTile("PlacedGems");
-											tile.TileFrameX = 3 * 18;
-											defaultShimmer = false;
-											break;
-
-											case 4:
-											tile.TileType = (ushort)GetTile("PlacedGems");
-											tile.TileFrameX = 4 * 18;
-											defaultShimmer = false;
-											break;
-										}
-									}
-									if (defaultShimmer) tile.TileFrameX -= 18;
-								}
-								break;
-
 								default:
-								if (OriginsModIntegrations.Thorium is not null) {
-									if (tile.TileType == ModContent.TileType<PlacedGem>()) {
-										if (tile.TileFrameX == 0) tile.TileFrameX += 18;
-										else tile.TileFrameX = 0;
-										defaultShimmer = false;
-									}
+								int gemIndex = Gems.IndexOf((tile.TileType, (short)(tile.TileFrameX / 18)));
+								if (gemIndex > 0) {
+									(tile.TileType, tile.TileFrameX) = Gems[gemIndex - 1];
+								} else {
+									TransformToTile(OriginsSets.Tiles.ShimmerTransformToTile[tile.TileType]);
 								}
-								if (OriginsModIntegrations.Avalon is not null) {
-									int GetTile(string name) {
-										return OriginsModIntegrations.Avalon.GetContent<ModTile>().First(tile => tile.Name == name).Type;
-									}
-									if (tile.TileType == GetTile("PlacedGems") && tile.TileFrameX >= 18) {
-										switch (tile.TileFrameX / 18) {
-											case 5:
-											tile.TileType = TileID.ExposedGems;
-											tile.TileFrameX = 5 * 18;
-											defaultShimmer = false;
-											break;
-
-											case 4:
-											tile.TileType = TileID.ExposedGems;
-											tile.TileFrameX = 3 * 18;
-											defaultShimmer = false;
-											break;
-
-											case 3:
-											tile.TileType = TileID.ExposedGems;
-											tile.TileFrameX = 1 * 18;
-											defaultShimmer = false;
-											break;
-										}
-									}
-								}
-								if (defaultShimmer) TransformToTile(OriginsSets.Tiles.ShimmerTransformToTile[tile.TileType]);
 								break;
 							}
 						}
