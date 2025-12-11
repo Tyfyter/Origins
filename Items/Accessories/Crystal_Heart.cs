@@ -85,7 +85,7 @@ public class Crystal_Heart_Slime_Flying : ModProjectile, IArtifactMinion {
 		Projectile.idStaticNPCHitCooldown = 10;
 		Projectile.aiStyle = 0;
 		Projectile.ContinuouslyUpdateDamageStats = true;
-		MaxLife = 15 * 15;
+		MaxLife = 15 * 60;
 	}
 	public override void AI() {
 		DrawOffsetX = -Projectile.width / 2;
@@ -131,7 +131,7 @@ public class Crystal_Heart_Slime_Flying : ModProjectile, IArtifactMinion {
 				ShootSpikes();
 			}
 		} else Projectile.ai[2]++;
-		Life -= 0.25f;
+		Life -= float.Pow(1.35f, ++Projectile.localAI[1] / (60 * 15));
 	}
 	public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 		if (Projectile.ai[2] >= 0) ShootSpikes();
