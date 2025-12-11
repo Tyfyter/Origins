@@ -230,8 +230,8 @@ namespace Origins {
 					biome.AddEvilConversions();
 				}
 			}
-			MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(Chambersite_Ore.GetOreID(TileID.Ebonstone), MC.WallType<Chambersite_Ebonstone_Wall>());
-			MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(Chambersite_Ore.GetOreID(TileID.Crimstone), MC.WallType<Chambersite_Crimstone_Wall>());
+			MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(-1, MC.WallType<Chambersite_Ebonstone_Wall>());
+			MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(-1, MC.WallType<Chambersite_Crimstone_Wall>());
 			UnstableHooking.IL_Main_DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
 			OriginsModIntegrations.LateLoad();
 			_ = OriginExtensions.StrikethroughFont;

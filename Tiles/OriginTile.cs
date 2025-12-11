@@ -50,7 +50,7 @@ namespace Origins.Tiles {
 
 	}
 	public abstract class ComplexFrameTile : BufferBaseTile {
-		public const string merge = "Origins/Tiles/MergerOverlays/";
+		public const string merge = "Origins/Tiles/Overlays/Merge/";
 		TileOverlay[] overlays;
 		protected sealed override void SetDefaults() {
 			overlays = [.. GetOverlays()];

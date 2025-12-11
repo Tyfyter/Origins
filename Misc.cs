@@ -3067,8 +3067,8 @@ namespace Origins {
 			biome.AddWallConversions(wall, SetsWalls.GemWallsToChambersite);
 		}
 		public static void AddChambersiteConversions(this AltBiome biome, int tile, int wall) {
-			biome.AddChambersiteTileConversions(tile);
-			biome.AddChambersiteWallConversions(wall);
+			if (tile != -1) biome.AddChambersiteTileConversions(tile);
+			if (wall != -1) biome.AddChambersiteWallConversions(wall);
 		}
 		public static void AddEvilConversions(this AltBiome biome) {
 			for (int i = 0; i < SetsTiles.ExposedGemsToChambersite.Length; i++) {

@@ -39,9 +39,9 @@ namespace Origins.Tiles.Riven {
 			DustType = DustID.Water_Desert;
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
-			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Mud_Overlay", TileID.Sets.Mud);
-			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Spug_Overlay", TileType<Spug_Flesh>());
-			yield return new TileMergeOverlay("Origins/Tiles/MergerOverlays/Calcified_Overlay", TileType<Calcified_Riven_Flesh>());
+			yield return new TileMergeOverlay(merge + "Mud_Overlay", TileID.Sets.Mud);
+			yield return new TileMergeOverlay(merge + "Spug_Overlay", TileType<Spug_Flesh>());
+			yield return new TileMergeOverlay(merge + "Calcified_Overlay", TileType<Calcified_Riven_Flesh>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (OriginsModIntegrations.CheckAprilFools()) {

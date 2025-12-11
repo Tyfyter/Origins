@@ -7547,3 +7547,8 @@ Air_Vent_Item: {
 }
 
 // Chambersite_Ore.DisplayName: "{$Chambersite.DisplayName} {0}"
+
+Spug_Flesh_Item: {
+	// DisplayName: Spug Flesh
+	// Tooltip: ""
+}

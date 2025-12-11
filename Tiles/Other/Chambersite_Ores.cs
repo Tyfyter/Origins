@@ -1,9 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using AltLibrary.Common.AltBiomes;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Graphics;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
+using Origins.Walls;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
@@ -30,8 +32,8 @@ namespace Origins.Tiles.Other {
 		public virtual Color MapColor => FromHexRGB(0x116166);
 		public new virtual SoundStyle HitSound => SoundID.Tink;
 		public new virtual int DustType => DustID.Stone;
-		public virtual string OverlayPath => "Origins/Tiles/MergerOverlays/Chambersite_Ore";
-		public virtual string ItemOverlayPath => "Origins/Tiles/MergerOverlays/Chambersite_Ore_Item";
+		public virtual string OverlayPath => "Origins/Tiles/Overlays/Chambersite/Chambersite_Ore";
+		public virtual string ItemOverlayPath => "Origins/Tiles/Overlays/Chambersite/Chambersite_Ore_Item";
 		protected Asset<Texture2D> Overlay { get; private set; }
 		public TileItem Item { get; protected set; }
 		public virtual Recipe ItemRecipe(Item item) => Recipe.Create(item.type)
@@ -82,7 +84,7 @@ namespace Origins.Tiles.Other {
 		internal record struct ChambersiteParmeters(ModTile Tile, ModItem Item, string TileOverlay, string ItemOverlay, Func<int> DustType, Func<SoundStyle> HitSound, params string[] LegacyNames) {
 			public Func<SoundStyle> HitSound { get; } = HitSound ?? (() => SoundID.Tink);
 		}
-		public static string overlay_path_base = "Origins/Tiles/Chambersite_Ore_";
+		public static string overlay_path_base = "Origins/Tiles/Overlays/Chambersite/Chambersite_Ore_";
 		public static ModTile Create(ModTile baseTile, ModItem baseItem, Func<int> dustType, string tileOverlay = null, string itemOverlay = null, Func<SoundStyle> hitSound = null, params string[] legacyNames) {
 			if (baseItem.Mod != baseTile.Mod) throw new ArgumentException($"{nameof(baseTile)} and {nameof(baseItem)} must be from the same mod, I don't know what you're doing, but I do know that it's a bad idea", nameof(baseItem));
 			Chambersite_Ore_Modular tile = new(new(baseTile, baseItem, tileOverlay, itemOverlay, dustType, hitSound, legacyNames));
@@ -140,12 +142,20 @@ namespace Origins.Tiles.Other {
 		public override int StoneItem => ItemID.EbonstoneBlock;
 		public override int DustType => DustID.Corruption;
 		public override Color MapColor => new(109, 90, 128);
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			GetInstance<CorruptionAltBiome>().AddChambersiteConversions(Type, -1);
+		}
 	}
 	public class Chambersite_Ore_Crimstone : Chambersite_Ore {
 		public override int StoneTile => TileID.Crimstone;
 		public override int StoneItem => ItemID.CrimstoneBlock;
 		public override int DustType => DustID.Crimstone;
 		public override Color MapColor => new(128, 44, 45);
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			GetInstance<CrimsonAltBiome>().AddChambersiteConversions(Type, -1);
+		}
 	}
 	/*public class Chambersite_Ore_Defiled_Stone : Chambersite_Ore {
 		public override int StoneType => TileType<Defiled_Stone>();
