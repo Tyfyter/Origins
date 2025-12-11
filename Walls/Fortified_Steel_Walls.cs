@@ -50,25 +50,19 @@ namespace Origins.Walls {
 			base.SetStaticDefaults();
 			if (WallVersion == WallVersion.Natural) OriginsSets.Walls.GeneratesLiquid[Type] = LiquidID.Lava;
 		}
-		public override bool CanMine(Player self, Item item, int i, int j) {
-			return NPC.downedGolemBoss;
-		}
+		public override bool CanMine(Player self, Item item, int i, int j) => NPC.downedGolemBoss;
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = 1;
 			g = 0.8f;
 			b = 0.1f;
 		}
 	}
-	public class Fortified_Steel_Wall3 : OriginsWall, IComplexMineDamageWall {
+	public class Fortified_Steel_Wall3 : Fortified_Steel_Wall1 {
 		public override Color MapColor => FromHexRGB(0x211115);
-		public override SoundStyle? HitSound => SoundID.Tink;
-		public override WallVersion WallVersions => WallVersion.Natural | WallVersion.Safe | WallVersion.Placed_Unsafe;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			if (WallVersion == WallVersion.Natural) Origins.WallHammerRequirement[Type] = 100;
 		}
-		bool IComplexMineDamageWall.CanMine(Player self, Item item, int i, int j) {
-			return WallVersion != WallVersion.Natural || NPC.downedGolemBoss;
-		}
+		public override bool CanMine(Player self, Item item, int i, int j) => NPC.downedGolemBoss;
 	}
 }
