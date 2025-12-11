@@ -15,6 +15,7 @@ using ThoriumTiles = ThoriumMod.Tiles;
 using ThoriumWalls = ThoriumMod.Walls;
 using OMI = Origins.OriginsModIntegrations;
 using System.Linq;
+using static Terraria.ModLoader.ModContent;
 
 namespace Origins {
 	public static class OriginsSets {
@@ -341,8 +342,25 @@ namespace Origins {
 			public static SlowdownPercent[] MinionSlowdown { get; } = TileID.Sets.Factory.CreateCustomSet<SlowdownPercent>(0);
 			public static bool[] DisableHoiking { get; } = TileID.Sets.Factory.CreateBoolSet(false);
 			public static bool[] StructureSerializer_PlaceAsObject { get; } = TileID.Sets.Factory.CreateBoolSet();
-			public static bool[] GemTilesToChambersite { get; private set; }
-			public static bool[] ExposedGemsToChambersite { get; private set; }
+			public static bool[] GemTilesToChambersite { get; } = TileID.Sets.Factory.CreateNamedSet($"{nameof(Tiles)}_{nameof(GemTilesToChambersite)}")
+				.Description("Gem ores in this set can be corrupted into chambersite ores")
+				.RegisterBoolSet(
+					TileID.Amethyst,
+					TileID.Topaz,
+					TileID.Sapphire,
+					TileID.Emerald,
+					TileID.Ruby,
+					TileID.Diamond
+				)
+				.AddModdedContent([SetWithMods("ThoriumMod")] (set) => set.SetValues(true, TileType<ThoriumTiles.Aquamarine>(), TileType<ThoriumTiles.Opal>()))
+				.AddModdedContent([SetWithMods("Avalon")] (set) => set.SetValues(true, GetModContent(OMI.Avalon, "Peridot"), GetModContent(OMI.Avalon, "Tourmaline"), GetModContent(OMI.Avalon, "Zircon")));
+			public static bool[] ExposedGemsToChambersite { get; } = TileID.Sets.Factory.CreateNamedSet($"{nameof(Tiles)}_{nameof(ExposedGemsToChambersite)}")
+				.Description("Placed gems in this set can be corrupted into placed chambersite")
+				.RegisterBoolSet(
+					TileID.ExposedGems
+				)
+				.AddModdedContent([SetWithMods("ThoriumMod")] (set) => set.SetValues(true, TileType<ThoriumTiles.PlacedGem>()))
+				.AddModdedContent([SetWithMods("Avalon")] (set) => set.SetValues(true, GetModContent(OMI.Avalon, "PlacedGems")));
 			internal static void Initialize() {
 				try {
 					IL_Collision.SlopeCollision += IL_Collision_SlopeCollision;
@@ -363,41 +381,8 @@ namespace Origins {
 				c.EmitDelegate((in Tile tile) => DisableHoiking[tile.TileType] && tile.BottomSlope);
 				c.EmitBrtrue(cont);
 			}
-			static Tiles() {
-				GemTilesToChambersite = TileID.Sets.Factory.CreateNamedSet($"{nameof(Tiles)}_{nameof(GemTilesToChambersite)}")
-				.Description("Gem ores in this set can be corrupted into chambersite ores")
-				.RegisterBoolSet(
-					TileID.Amethyst,
-					TileID.Topaz,
-					TileID.Sapphire,
-					TileID.Emerald,
-					TileID.Ruby,
-					TileID.Diamond
-				);
-				ExposedGemsToChambersite = TileID.Sets.Factory.CreateNamedSet($"{nameof(Tiles)}_{nameof(ExposedGemsToChambersite)}")
-				.Description("Placed gems in this set can be corrupted into placed chambersite")
-				.RegisterBoolSet(
-					TileID.ExposedGems
-				);
-
-				//if (OMI.Thorium is not null) AddThorium();
-				//if (OMI.Avalon is not null) AddAvalon();
-			}
 			public static int GetModContent(Mod mod, string name) {
 				return mod.GetContent<ModTile>().First(content => content.Name == name).Type;
-			}
-			[JITWhenModsEnabled("ThoriumMod")]
-			static void AddThorium() {
-				GemTilesToChambersite[ModContent.TileType<ThoriumTiles.Aquamarine>()] = true;
-				GemTilesToChambersite[ModContent.TileType<ThoriumTiles.Opal>()] = true;
-				ExposedGemsToChambersite[ModContent.TileType<ThoriumTiles.PlacedGem>()] = true;
-			}
-			[JITWhenModsEnabled("Avalon")]
-			static void AddAvalon() {
-				GemTilesToChambersite[GetModContent(OMI.Avalon, "Peridot")] = true;
-				GemTilesToChambersite[GetModContent(OMI.Avalon, "Tourmaline")] = true;
-				GemTilesToChambersite[GetModContent(OMI.Avalon, "Zircon")] = true;
-				ExposedGemsToChambersite[GetModContent(OMI.Avalon, "PlacedGems")] = true;
 			}
 		}
 		public delegate void MultitileCollisionOffsetter(Tile tile, ref float y, ref int height);
@@ -502,6 +487,29 @@ namespace Origins {
 			}
 			public static implicit operator SlowdownPercent(float value) => new(value);
 			public static implicit operator float(SlowdownPercent value) => value.value;
+		}
+		private static void SetValues<T>(this T[] set, T value, params int[] indices) {
+			for (int i = 0; i < indices.Length; i++) {
+				if (indices[i] != -1) set[indices[i]] = value;
+			}
+		}
+		/// <summary>
+		/// Performs <paramref name="content"/> on the set, then returns the set
+		/// Automatically skips the provided action if it has a <see cref="SetWithModsAttribute"/> with an unloaded mod
+		/// Should never attempt to access a set except through its <paramref name="set"/> parameter, as all sets may not be initialized, and the one being set will certainly not be initialized
+		/// </summary>
+		private static T[] AddModdedContent<T>(this T[] set, Action<T[]> content) {
+			if (ItemID.Sets.AlsoABuildingItem.Length == ItemID.Count) return set;
+			if (!content.Method.TryGetCustomAttribute(out SetWithModsAttribute attribute) || attribute.ShouldJIT(null)) content(set);
+			return set;
+		}
+		private static bool TryGetCustomAttribute<TAttribute>(this MemberInfo member, out TAttribute attribute) where TAttribute : Attribute {
+			attribute = member.GetCustomAttribute<TAttribute>();
+			return attribute is not null;
+		}
+		private sealed class SetWithModsAttribute(params string[] names) : MemberJitAttribute {
+			public readonly string[] Names = names ?? throw new ArgumentNullException(nameof(names));
+			public override bool ShouldJIT(MemberInfo member) => Names.All(ModLoader.HasMod);
 		}
 	}
 }
