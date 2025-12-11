@@ -175,10 +175,9 @@ namespace Origins.Items.Other.Consumables {
 		public override Color? GetAlpha(Color lightColor) => lightColor.MultiplyRGBA(Color);
 		public override void AI() {
 			if (hit) return;
-			int team = Main.player[Projectile.owner].team;
 			foreach (Player target in Main.ActivePlayers) {
 				if (target.whoAmI == Projectile.owner) continue;
-				if (target.team == team && Projectile.Hitbox.Intersects(target.Hitbox)) {
+				if (Projectile.Hitbox.Intersects(target.Hitbox)) {
 					for (int i = target.buffType.Length - 1; i >= 0; i--) {
 						if (target.buffTime[i] <= 0) continue;
 						if (Fire_Extinguisher.FireExtinguisherExtinguishes[target.buffType[i]]) {
@@ -189,7 +188,7 @@ namespace Origins.Items.Other.Consumables {
 				}
 			}
 			foreach (NPC target in Main.ActiveNPCs) {
-				if (target.friendly && Projectile.Hitbox.Intersects(target.Hitbox)) {
+				if (Projectile.Hitbox.Intersects(target.Hitbox)) {
 					for (int i = target.buffType.Length - 1; i >= 0; i--) {
 						if (target.buffTime[i] <= 0) continue;
 						if (Fire_Extinguisher.FireExtinguisherExtinguishes[target.buffType[i]]) {
