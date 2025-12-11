@@ -21,6 +21,7 @@ using Origins.Items.Armor.Felnum;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
 using Origins.Items.Vanity.Dev.PlagueTexan;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
 using Origins.Journal;
 using Origins.Layers;
@@ -253,6 +254,27 @@ namespace Origins {
 				Item item = ContentSamples.ItemsByType[ItemID.Sets.ShimmerTransformToItem[placementItem]];
 				if (item.createTile > -1) {
 					OriginsSets.Tiles.ShimmerTransformToTile[i] = item.createTile;
+				}
+			}
+			List<int>[] InverseShimmerTransformations = ItemID.Sets.Factory.CreateCustomSet<List<int>>(null);
+			for (int i = 0; i < ItemID.Sets.ShimmerTransformToItem.Length; i++) {
+				int product = ItemID.Sets.ShimmerTransformToItem[i];
+				if (product == -1) continue;
+				(InverseShimmerTransformations[product] ??= []).Add(i);
+			}
+			Shimmer_Dynamite_Action.ExposedGems.Clear();
+			Stack<int> gems = new();
+			for (int i = 0; i < Shimmer_Dynamite_Action.StartingGemItems.Count; i++) {
+				gems.Push(Shimmer_Dynamite_Action.StartingGemItems[i]);
+			}
+			while (gems.TryPop(out int currentGem)) {
+				Item item = ContentSamples.ItemsByType[currentGem];
+				foreach (int fromID in InverseShimmerTransformations[currentGem]) {
+					Item fromItem = ContentSamples.ItemsByType[fromID];
+					if (fromItem.createTile == -1) continue;
+					if (Shimmer_Dynamite_Action.ExposedGems.TryAdd(new(fromItem.createTile, fromItem.placeStyle), new(item.createTile, item.placeStyle))) {
+						gems.Push(fromID);
+					}
 				}
 			}
 			OriginsSets.Misc.SetupDyes();

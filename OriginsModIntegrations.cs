@@ -938,6 +938,10 @@ namespace Origins {
 					Origins.LogError($"Could not find npc \"{name}\" in Thorium");
 				}
 			}
+			///it's fine to use content IDs from mods that are guaranteed to be loaded before the one the code's in from <see cref="ILoadable.Load(Mod)"/> as long as
+			///you can guarantee that whatever you're affecting won't later be reset
+			///and you're not using it as an index in something that has to be resized
+			Shimmer_Dynamite_Action.StartingGemItems.Add(ItemType<Opal>());
 		}
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void SetThoriumStaticDefaults() {

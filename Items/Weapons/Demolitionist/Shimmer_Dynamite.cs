@@ -95,15 +95,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public record class Shimmer_Dynamite_Action(Vector2 Center) : SyncedAction {
-		public static List<(ushort tileType, short frameX)> Gems { get; } = [
-			(TileID.ExposedGems, 0),
-			(TileID.ExposedGems, 1),
-			(TileID.ExposedGems, 2),
-			(TileID.ExposedGems, 3),
-			(TileID.ExposedGems, 4),
-			(TileID.ExposedGems, 5),
-			(TileID.ExposedGems, 6)
-		];
+		public record struct ExposedGem(ushort Type, short Style) {
+			public ExposedGem(int Type, int Style) : this((ushort)Type, (short)Style) { }
+			public override readonly string ToString() => $"{TileID.Search.GetName(Type)} style {Style}";
+		}
+		public static List<int> StartingGemItems { get; } = [ItemID.Amethyst];
+		public static Dictionary<ExposedGem, ExposedGem> ExposedGems { get; } = [];
 		public Shimmer_Dynamite_Action() : this(default(Vector2)) { }
 		public override SyncedAction NetReceive(BinaryReader reader) => this with {
 			Center = reader.ReadPackedVector2()
@@ -169,9 +166,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 								}
 
 								default:
-								int gemIndex = Gems.IndexOf((tile.TileType, (short)(tile.TileFrameX / 18)));
-								if (gemIndex > 0) {
-									(tile.TileType, tile.TileFrameX) = Gems[gemIndex - 1];
+								if (ExposedGems.TryGetValue(new(tile.TileType, (tile.TileFrameX / 18)), out ExposedGem transformToGem)) {
+									(tile.TileType, tile.TileFrameX) = transformToGem;
+									tile.TileFrameX *= 18;
 								} else {
 									TransformToTile(OriginsSets.Tiles.ShimmerTransformToTile[tile.TileType]);
 								}
