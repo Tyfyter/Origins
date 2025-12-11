@@ -27,8 +27,5 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().endlessExplosives = true;
 		}
-		public override void Update(ref float gravity, ref float maxFallSpeed) {
-			
-		}
 	}
 }
