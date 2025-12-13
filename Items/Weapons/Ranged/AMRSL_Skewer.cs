@@ -1,17 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Newtonsoft.Json.Linq;
-using Origins.Buffs;
 using Origins.Items.Weapons.Ammo;
 using Origins.NPCs;
-using Origins.Projectiles;
 using Origins.UI;
 using PegasusLib;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -22,7 +17,6 @@ using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI;
 using Terraria.UI.Chat;
-using ThoriumMod.Items.Donate;
 
 namespace Origins.Items.Weapons.Ranged {
 	[ReinitializeDuringResizeArrays]
@@ -35,7 +29,7 @@ namespace Origins.Items.Weapons.Ranged {
 			ItemID.MusketBall, 1f / 25
 		);
 		public static int[] AmmoProjectile { get; } = ItemID.Sets.Factory.CreateIntSet();
-		public static int ActualUseTime => 19 * 2;
+		public static int ActualUseTime => 30 * 2;
 		public static int DefaultAmmoMax => 20;
 		public int ammoMax = DefaultAmmoMax;
 		public int ammoCount = 0;
@@ -58,7 +52,7 @@ namespace Origins.Items.Weapons.Ranged {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 50;
+			Item.damage = 88;
 			Item.DamageType = DamageClass.Ranged;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
@@ -67,10 +61,13 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.width = 50;
 			Item.height = 10;
 			Item.shoot = ModContent.ProjectileType<AMRSL_Skewer_Sabot>();
-			Item.shootSpeed = 12;
-			Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(1f);
+			Item.shootSpeed = 20;
+			Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(-0.2f);
 			Item.value = Item.sellPrice(gold: 6);
 			Item.rare = ItemRarityID.Lime;
+		}
+		public override Vector2? HoldoutOffset() {
+			return new Vector2(-18, -3);
 		}
 		public override bool AltFunctionUse(Player player) => false;
 		public override bool? UseItem(Player player) {
@@ -79,6 +76,7 @@ namespace Origins.Items.Weapons.Ranged {
 				if (animationFrame == 1 && player.ItemAnimationJustStarted) animationCounter = 1;
 			} else {
 				SoundEngine.PlaySound(Item.UseSound, player.itemLocation);
+				SoundEngine.PlaySound(Origins.Sounds.Krunch.WithPitch(2f), player.itemLocation);
 				animationCounter = 1;
 			}
 			return base.UseItem(player);
@@ -95,7 +93,14 @@ namespace Origins.Items.Weapons.Ranged {
 				if (++animationCounter >= 2) {
 					animationCounter = 0;
 					if (++animationFrame >= 19) animationFrame = 0;
-					if (animationFrame == 8) SoundEngine.PlaySound(SoundID.Item20, player.itemLocation);
+					if (animationFrame >= 8) {
+						if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.DrumClosedHiHat, player.itemLocation);
+						if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.DrumFloorTom, player.itemLocation);
+						if (Main.rand.NextBool(8)) SoundEngine.PlaySound(SoundID.Item149.WithPitch(1.5f).WithVolume(0.5f), player.itemLocation);
+						//SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest.WithPitch(0.4f).WithVolume(0.4f), player.itemLocation);
+						SoundEngine.PlaySound(SoundID.Item74.WithVolume(2f), player.itemLocation);
+						SoundEngine.PlaySound(SoundID.Item116.WithPitch(1.1f), player.itemLocation);
+					}
 				}
 				break;
 			}

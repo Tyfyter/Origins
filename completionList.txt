@@ -426,7 +426,7 @@ ARMOR:
 (^) Ancient Felnum Armor
 (^) Ancient Riven Armor
 (X) Artifiber Armor !!!
-(☻) Ashen Armor !!! (breastplate glow code)
+(^) Ashen Armor
 (^) Cryosten Armor
 (^) Defiled Armor
 (^) Encrusted Armor
@@ -897,7 +897,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler
 (^) Adamantite Harpoon Gun
-(☻) AMRSL 'Skewer' !!!
+(#3, ^2) AMRSL 'Skewer' !!! (yield modifier broken)
 (^) Bleeding Obsidian Kunai
 (X) Blenderbuss
 (^) Boat Rocker
@@ -1291,9 +1291,9 @@ TILES:
 (X) Spug Flesh Brick Wall
 (^) Tainted Stone Wall
 (^) Type-I Fortified Steel Wall
-(☻) Type-III Fortified Steel Wall !!!
+(^) Type-III Fortified Steel Wall
 
-(@4, ^3) Air Vent !!! (I'm 99% sure the reason it looks choppy is because the blades move inconsistent distances between frames, give durations for each frame in multiples of 1/60th of a second or resprite)
+($2, ^2/3) Air Vent !!! (just needs noise)
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
 (^) Artifiber Furniture
@@ -1677,7 +1677,7 @@ CONSUMABLES:
 (^) Pointy Crate
 (^) Residual Crate
 
-(☻) Fire Extinguisher !!! (now you can put enemies out too)
+(^) Fire Extinguisher
 (^) Gooey Water
 (^) Holiday Hair Dye
 (^) Latchkey

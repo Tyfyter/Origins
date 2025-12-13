@@ -25,7 +25,7 @@ namespace Origins.Items.Other.Consumables {
 			BuffID.Frostburn,
 			BuffID.Frostburn2
 		);
-		public virtual int MaxDurability => 60;
+		public virtual int MaxDurability => 120;
 		public int durability;
 		public int Durability {
 			get => durability;
