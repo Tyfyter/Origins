@@ -7558,3 +7558,13 @@ AMRSL_Skewer: {
 	Tooltip: ""
 	PrefixAmmo: "{0:+0;-0} capacity"
 }
+
+Mechanical_Key_Purple: {
+	DisplayName: Mechanical Key Purple
+	Tooltip: ""
+}
+
+Purple_Mechanical_Switch_Item: {
+	DisplayName: Purple Mechanical Switch Item
+	Tooltip: ""
+}

@@ -2456,6 +2456,8 @@ Tiles: {
 	// Rusty_Locker.MapEntry: Rusty Locker
 	// Music_Box_AF: Music Box ({§Ashen} Factory)
 	// Music_Box_AM: Music Box ({§Ashen} Mines)
+	// Purple_Mechanical_Switch.MapEntry: Purple Mechanical Switch
+	// Transistor.MapEntry: Transistor
 }
 
 MapObject: {

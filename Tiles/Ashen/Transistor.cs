@@ -13,6 +13,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Transistor : OriginTile, IAshenTile {
+		public virtual Color MapColor => FromHexRGB(0x7a391a);
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)TileType<Ashen_Foliage>(), 0, 6));
@@ -20,7 +21,8 @@ namespace Origins.Tiles.Ashen {
 			Main.tileSolid[Type] = false;
 			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = false;
-			AddMapEntry(FromHexRGB(0x7a391a));
+			TileID.Sets.DrawTileInSolidLayer[Type] = true;
+			AddMapEntry(MapColor, CreateMapEntryName());
 
 			MinPick = 65;
 			MineResist = 2;
@@ -197,8 +199,8 @@ namespace Origins.Tiles.Ashen {
 			Item.mech = true;
 		}
 		public override bool? UseItem(Player player) {
-			if (player.whoAmI != Main.myPlayer || !player.ItemAnimationJustStarted) return false;
-			return GetInstance<Transistor>().TryPlace(Player.tileTargetX, Player.tileTargetY);
+			if (player.whoAmI != Main.myPlayer || !player.ItemAnimationJustStarted || TileLoader.GetTile(Item.createTile) is not Transistor transistor) return false;
+			return transistor.TryPlace(Player.tileTargetX, Player.tileTargetY);
 		}
 		public void DrawPreview() {
 			if (!Transistor.TryGetPlacement(new(Player.tileTargetX, Player.tileTargetY), out IEnumerable<(Point pos, Point frame)> placement)) return;
@@ -211,7 +213,7 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 			color *= 0.5f;
-			Texture2D texture = TextureAssets.Tile[TileType<Transistor>()].Value;
+			Texture2D texture = TextureAssets.Tile[Item.createTile].Value;
 			foreach ((Point pos, Point frame) in placement) {
 				Main.spriteBatch.Draw(
 					texture,
