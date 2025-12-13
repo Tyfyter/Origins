@@ -35,11 +35,9 @@ namespace Origins.Tiles.Ashen {
 			AnimationFrameHeight = 36;
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
-			if (++frameCounter >= 5) {
+			if (++frameCounter >= 4) {
 				frameCounter = 0;
-				if (++frame >= 4) {
-					frame = 0;
-				}
+				if (++frame >= 4) frame = 0;
 			}
 		}
 	}

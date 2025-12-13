@@ -1291,9 +1291,9 @@ TILES:
 (X) Spug Flesh Brick Wall
 (^) Tainted Stone Wall
 (^) Type-I Fortified Steel Wall
-(@4, ^3) Type-III Fortified Steel Wall !!!
+(☻) Type-III Fortified Steel Wall !!!
 
-(#2, ^2) Air Vent !!! (spinning)
+(@4, ^3) Air Vent !!! (I'm 99% sure the reason it looks choppy is because the blades move inconsistent distances between frames, give durations for each frame in multiples of 1/60th of a second or resprite)
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
 (^) Artifiber Furniture
