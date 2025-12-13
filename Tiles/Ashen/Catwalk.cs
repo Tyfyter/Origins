@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo;
+using Origins.Items.Weapons.Ranged;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics;
@@ -11,13 +12,17 @@ namespace Origins.Tiles.Ashen {
 	public class Catwalk : Platform_Tile, ISpecialFrameTile {
 		public static bool[] Catwalks = TileID.Sets.Factory.CreateBoolSet();
 		public override void OnLoad() {
-			Item.OnAddRecipes += (item) => {
+			Item.OnAddRecipes += item => {
 				Recipe.Create(item.type, 2)
 				.AddIngredient(ModContent.ItemType<Scrap>(), 1)
 				.Register();
 				Recipe.Create(ModContent.ItemType<Scrap>())
 				.AddIngredient(item.type, 2)
 				.Register();
+			};
+			Item.ExtraStaticDefaults += item => {
+				AMRSL_Skewer.AmmoCount[Type] = 1f / 4;
+				AMRSL_Skewer.AmmoProjectile[Type] = ModContent.ProjectileType<AMRSL_Skewer_Sabot_Scrap>();
 			};
 		}
 		public override void SetStaticDefaults() {
@@ -332,6 +337,10 @@ namespace Origins.Tiles.Ashen {
 				.AddIngredient(item.type, 2)
 				.DisableDecraft()
 				.Register();
+			};
+			Item.ExtraStaticDefaults += item => {
+				AMRSL_Skewer.AmmoCount[Type] = 1f / 4;
+				AMRSL_Skewer.AmmoProjectile[Type] = ModContent.ProjectileType<AMRSL_Skewer_Sabot_Scrap>();
 			};
 		}
 		public override void SetStaticDefaults() {

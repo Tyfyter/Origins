@@ -2125,6 +2125,8 @@ Projectiles: {
 	Homing_Rocket_II_Mine.DisplayName: Homing Mine II
 	Homing_Rocket_II_Rocket.DisplayName: Homing Rocket II
 	Homing_Rocket_II_Snowman.DisplayName: Homing Snowman II
+	AMRSL_Skewer_Sabot.DisplayName: A M R S L Skewer Sabot
+	AMRSL_Skewer_Sabot_Scrap.DisplayName: A M R S L Skewer Sabot Scrap
 }
 
 Prefixes: {

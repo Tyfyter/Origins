@@ -1,4 +1,5 @@
-﻿using PegasusLib;
+﻿using Origins.Items.Weapons.Ranged;
+using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -148,6 +149,7 @@ namespace Origins.Items.Other.Consumables.Medicine {
 			/*for (int i = 0; i < Main.recipe.Length; i++) {
 				Main.recipe[i].acceptedGroups.Remove(AnyDifferentMedicine.RecipeGroup.RegisteredId);
 			}*/
+			AMRSL_Skewer.SetupAmmoCounts();
 		}
 	}
 }

@@ -7552,3 +7552,9 @@ Spug_Flesh_Item: {
 	// DisplayName: Spug Flesh
 	// Tooltip: ""
 }
+
+AMRSL_Skewer: {
+	// DisplayName: A.M.R.S.L. 'Skewer'
+	// Tooltip: ""
+	// PrefixAmmo: "{0:+0;-0} capacity"
+}

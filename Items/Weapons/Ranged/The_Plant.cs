@@ -204,7 +204,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class The_Plant_Flower : ItemModeFlowerMenu<PlantAmmoType, bool> {
 		public override bool IsActive() => Main.LocalPlayer.HeldItem?.ModItem is The_Plant;
 		AutoLoadingAsset<Texture2D> wireMiniIcons = "Origins/Items/Tools/Wiring/Mini_Wire_Icons";
-		public override float DrawCenter() => 18.4f;
+		public override float DrawCenter() => ModeCount <= 1 ? 0 : 18.4f;
 		public override bool GetData(PlantAmmoType mode) => Main.LocalPlayer.HeldItem?.ModItem is The_Plant plant && plant.SelectedMode == mode;
 		public override bool GetCursorAreaTexture(PlantAmmoType mode, out Texture2D texture, out Rectangle? frame, out Color color) {
 			texture = wireMiniIcons;

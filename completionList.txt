@@ -897,7 +897,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler
 (^) Adamantite Harpoon Gun
-(#, ^2) AMRSL 'Skewer' !!!
+(☻) AMRSL 'Skewer' !!!
 (^) Bleeding Obsidian Kunai
 (X) Blenderbuss
 (^) Boat Rocker

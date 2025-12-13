@@ -1,15 +1,16 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
+using Origins.Items.Weapons.Ranged;
+
 namespace Origins.Items.Weapons.Ammo {
 	public class Harpoon : ModItem {
 		public static int ID { get; private set; }
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
+			AMRSL_Skewer.AmmoCount[Type] = 1;
 			ID = Type;
 		}
 		public override void SetDefaults() {

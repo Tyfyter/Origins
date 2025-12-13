@@ -10,6 +10,7 @@ using Terraria.GameInput;
 namespace Origins.UI {
 	public abstract class ItemModeFlowerMenu<TMode, TExtraModeData> : ItemModeHUD where TMode : IFlowerMenuItem<TExtraModeData> {
 		TMode[] showingModes;
+		public int ModeCount => showingModes.Length;
 		public abstract IEnumerable<TMode> GetModes();
 		public abstract TExtraModeData GetData(TMode mode);
 		public virtual void Click(TMode mode) { }
