@@ -269,7 +269,7 @@ namespace Origins {
 			}
 			while (gems.TryPop(out int currentGem)) {
 				Item item = ContentSamples.ItemsByType[currentGem];
-				foreach (int fromID in InverseShimmerTransformations[currentGem]) {
+				foreach (int fromID in InverseShimmerTransformations[currentGem] ?? []) {
 					Item fromItem = ContentSamples.ItemsByType[fromID];
 					if (fromItem.createTile == -1) continue;
 					if (Shimmer_Dynamite_Action.ExposedGems.TryAdd(new(fromItem.createTile, fromItem.placeStyle), new(item.createTile, item.placeStyle))) {
