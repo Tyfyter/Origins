@@ -144,7 +144,7 @@ namespace Origins.Tiles.Other {
 		public override Color MapColor => new(109, 90, 128);
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			GetInstance<CorruptionAltBiome>().AddChambersiteConversions(Type, -1);
+			GetInstance<CorruptionAltBiome>().AddChambersiteTileConversions(Type);
 		}
 	}
 	public class Chambersite_Ore_Crimstone : Chambersite_Ore {
@@ -154,7 +154,7 @@ namespace Origins.Tiles.Other {
 		public override Color MapColor => new(128, 44, 45);
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			GetInstance<CrimsonAltBiome>().AddChambersiteConversions(Type, -1);
+			GetInstance<CrimsonAltBiome>().AddChambersiteTileConversions(Type);
 		}
 	}
 	/*public class Chambersite_Ore_Defiled_Stone : Chambersite_Ore {
