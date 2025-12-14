@@ -840,7 +840,7 @@ MELEE WEAPONS:
 (X) Soulfire Saw
 (X) The Claw !!!
 (^) The Foot
-(X) The Muffler !!!
+(#, ^2) The Muffler !!!
 (X) Unicorn Lance
 
 (X) Chiton Kursarigama
@@ -959,7 +959,7 @@ MAGIC WEAPONS:
 (^) Splitsplash
 (^) Tones of Agony
 
-(#, ^2) Blast Furnace !!!
+(#2, ^2) Blast Furnace !!!
 (^) Bled Out Staff
 (^) Brine Haze
 (^) Chemical Laser
@@ -1020,7 +1020,7 @@ SUMMONER WEAPONS:
 (^) Inject Incantation
 (^) Joint Pop
 (^) Maelstrom Incantation
-(X) Ocean Amulet !!!
+(#, ^2) Ocean Amulet !!!
 (^) Ocotillo Finger
 (^) Ocotoral Bud
 (X) Pinwheel Pole
@@ -1063,7 +1063,7 @@ SUMMONER WEAPONS:
 (X) Mojo Mask Staff
 (X) Probe Controller
 (X) Ribatar
-(X) SMART Wrench !!!
+(#, ^2) SMART Wrench !!!
 (X) Technomancer 4000
 (^) Terratotem
 (X) Tonal Resonator
@@ -1140,7 +1140,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Autohandcannon !!!
 (^) Bomboomstick
 (^) Chlorodynamite
-(X) Chlorophyte Handcannon !!!
+(#, ^2) Chlorophyte Handcannon !!!
 (#, ^2) Firework Cannon
 (X) Flarefury
 (#, ^2) Holy Hand Grenade !!!
@@ -1202,7 +1202,7 @@ TILES:
 (^) Catwalk
 (^) Chambersite
 (^) Chambersite Gemspark
-(#3) Chambersite Gemstone (each variant dropping the item used to place it instead of chambersite)
+(#3, ^2) Chambersite Gemstone !!! (each variant dropping the item used to place it instead of chambersite)
 (X) Chromtain Ore
 (^) Defiled Cactus
 (^) Defiled Grass
@@ -1341,9 +1341,9 @@ TILES:
 (X) Defiled Pylon
 (^) Fire Extinguisher Holder
 (^) Industrial Door
-(#, ^2) Large Storage Container !!!
+(#2, ^2) Large Storage Container !!!
 (^) Laser Tag Console
-(#, ^2) Medium Storage Container !!!
+(#2, ^2) Medium Storage Container !!!
 (^) Modular Bunk
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
@@ -1687,7 +1687,7 @@ CONSUMABLES:
 (^) Void Lock
 (^) White Water
 
-(^) Ashen Key !!!
+(^) Ashen Key
 (^) Brine Key
 (^) Defiled Key
 (^) Hell Key
