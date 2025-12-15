@@ -49,7 +49,7 @@ namespace Origins.Projectiles {
 			isHoming = false;
 		}
 		public override void AI(Projectile projectile) {
-			if (isHoming && !projectile.minion) {
+			if (isHoming && !projectile.minion && Origins.HomingEffectivenessMultiplier[projectile.type] != 0) {
 				float targetWeight = 300;
 				Vector2 targetPos = default;
 				bool foundTarget = Main.player[projectile.owner].DoHoming((target) => {
@@ -67,16 +67,18 @@ namespace Origins.Projectiles {
 				if (foundTarget) {
 					float scaleFactor = 16f;
 					float lerpValue = 0.083333336f;
-					switch (OriginsSets.Projectiles.HomingEffectivenessMultiplier[projectile.type]) {
+					Vector2 targetVelocity = (targetPos - projectile.Center).Normalized(out float dist);
+					switch (OriginsSets.Projectiles.HomingEffectivenessMode[projectile.type]) {
 						default:
 						lerpValue *= Origins.HomingEffectivenessMultiplier[projectile.type];
+						if (Math.Abs(lerpValue - 1) < 0.001f) Min(ref scaleFactor, dist);
 						break;
 						case 1:
 						scaleFactor *= Origins.HomingEffectivenessMultiplier[projectile.type];
 						break;
 					}
 
-					Vector2 targetVelocity = (targetPos - projectile.Center).SafeNormalize(-Vector2.UnitY) * scaleFactor;
+					targetVelocity *= scaleFactor;
 					projectile.velocity = Vector2.Lerp(projectile.velocity, targetVelocity, lerpValue);
 				}
 			}

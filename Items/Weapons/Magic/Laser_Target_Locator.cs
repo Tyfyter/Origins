@@ -48,6 +48,7 @@ namespace Origins.Items.Weapons.Magic {
 		public float ChargeTime => Projectile.localAI[0] * 2;
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 1600 + 64;
+			Origins.HomingEffectivenessMultiplier[Type] = 0;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
@@ -178,6 +179,9 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Laser_Target_Locator_Marker : ModProjectile {
+		public override void SetStaticDefaults() {
+			Origins.HomingEffectivenessMultiplier[Type] = 12;
+		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Projectile.width = 36;
@@ -185,7 +189,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.friendly = false;
 			Projectile.tileCollide = false;
 		}
-		public override bool ShouldUpdatePosition() => false;
+		public override bool ShouldUpdatePosition() => Projectile.GetGlobalProjectile<ExplosiveGlobalProjectile>().isHoming;
 		public override void AI() {
 			if ((int)(++Projectile.ai[0] / Projectile.ai[2]) > Projectile.localAI[1] && Projectile.IsLocallyOwned()) {
 				const float spawn_dist = 2400;
@@ -202,10 +206,11 @@ namespace Origins.Items.Weapons.Magic {
 					ModContent.ProjectileType<Laser_Target_Locator_Missile>(),
 					Projectile.damage,
 					Projectile.knockBack,
-					ai0: (spawn_dist - CollisionExt.Raymarch(position, -direction, spawn_dist)) / speed
+					ai0: (spawn_dist - CollisionExt.Raymarch(position, -direction, spawn_dist)) / speed + 48
 				);
 				if (++Projectile.localAI[1] >= 16) Projectile.Kill();
 			}
+			Projectile.velocity *= 0.75f;
 		}
 		public override Color? GetAlpha(Color lightColor) => Color.White * Utils.Remap(float.Sin(Projectile.ai[0] * (MathHelper.Pi / Projectile.ai[2])), -1, 1, 0.25f, 1f);
 	}
@@ -222,6 +227,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.friendly = true;
 			Projectile.penetrate = 1;
 			Projectile.extraUpdates = 1;
+			Projectile.tileCollide = false;
 		}
 		Vector2 HitboxMovement => new Vector2(16 * Projectile.ai[1], 0).RotatedBy(Projectile.ai[1] * Projectile.ai[0]);
 		public override void AI() {
