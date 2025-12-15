@@ -897,7 +897,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler
 (^) Adamantite Harpoon Gun
-(#3, ^2) AMRSL 'Skewer' !!! (yield modifier broken)
+(☻) AMRSL 'Skewer' !!!
 (^) Bleeding Obsidian Kunai
 (X) Blenderbuss
 (^) Boat Rocker
@@ -1293,7 +1293,7 @@ TILES:
 (^) Type-I Fortified Steel Wall
 (^) Type-III Fortified Steel Wall
 
-($2, ^2/3) Air Vent !!! (just needs noise)
+(☻) Air Vent !!!
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
 (^) Artifiber Furniture

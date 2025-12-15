@@ -35,9 +35,18 @@ namespace Origins.Tiles.Ashen {
 			AnimationFrameHeight = 36;
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
-			if (++frameCounter >= 4) {
+			if (++frameCounter >= 0) {
 				frameCounter = 0;
 				if (++frame >= 4) frame = 0;
+			}
+		}
+		public override void NearbyEffects(int i, int j, bool closer) {
+			if (closer) return;
+			Vector2 targetPoint = Main.LocalPlayer.Center;
+			Vector2 fanPoint = new(i * 16, j * 16);
+			OriginSystem instance = OriginSystem.Instance;
+			if (!instance.nearestFanSound.HasValue || targetPoint.DistanceSQ(fanPoint) < targetPoint.DistanceSQ(instance.nearestFanSound.Value)) {
+				instance.nearestFanSound = fanPoint;
 			}
 		}
 	}
