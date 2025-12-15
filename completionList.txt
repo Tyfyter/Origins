@@ -1140,7 +1140,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Autohandcannon !!!
 (^) Bomboomstick
 (^) Chlorodynamite
-(#, ^2) Chlorophyte Handcannon !!!
+(☻) Chlorophyte Handcannon !!!
 (#, ^2) Firework Cannon
 (X) Flarefury
 (#, ^2) Holy Hand Grenade !!!

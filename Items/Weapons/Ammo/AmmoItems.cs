@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.aiStyle = 0;
 			Projectile.width = 10;
-			Projectile.height = 8;
+			Projectile.height = 10;
 			Projectile.friendly = true;
 			Projectile.penetrate = 7;
 			Projectile.timeLeft = 900;
