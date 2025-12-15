@@ -1628,7 +1628,7 @@ CONSUMABLES:
 (^5) Unmarked Antidote
 
 (^) Bad Juju Stone
-(#, ^2) BBQ Skewer !!!
+(☻) BBQ Skewer !!!
 (^) Bileberry
 (#, ^2) Blastberry !!!
 (^) Blue Bovine
@@ -1638,7 +1638,7 @@ CONSUMABLES:
 (^) Caeser Salad
 (#, ^2) Cognac !!!
 (^) Contaminated Infusion
-(#, ^2) Crockin' Sprocks !!!
+(☻) Crockin' Sprocks !!!
 (^) Edible Hair Gel
 (^) Honey Wheat Bread
 (^) Irish Cheddar

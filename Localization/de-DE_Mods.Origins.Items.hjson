@@ -7568,3 +7568,13 @@ Purple_Mechanical_Switch_Item: {
 	// DisplayName: Purple Mechanical Switch Item
 	// Tooltip: ""
 }
+
+BBQ_Skewer: {
+	// DisplayName: B B Q Skewer
+	// Tooltip: ""
+}
+
+Crockin_Sprocks: {
+	// DisplayName: Crockin Sprocks
+	// Tooltip: ""
+}
