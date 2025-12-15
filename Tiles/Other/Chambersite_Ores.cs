@@ -99,6 +99,7 @@ namespace Origins.Tiles.Other {
 		public override LocalizedText Tooltip => LocalizedText.Empty;
 		protected Asset<Texture2D> Overlay { get; private set; }
 		public override void SetStaticDefaults() {
+			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 			Overlay = Request<Texture2D>(tile.ItemOverlayPath);
 		}
 		public override void SetDefaults() {
