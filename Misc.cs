@@ -3538,6 +3538,17 @@ namespace Origins {
 			tileTriangles = null;
 			tileRectangles = null;
 		}
+		public static bool CanRainReach(Vector2 position) {
+			if (Main.remixWorld) {
+				if (!((position.Y / 16f) > Main.rockLayer + 1024) || !(position.Y / 16f < (Main.maxTilesY - 350))) {
+					return false;
+				}
+			} else if (position.Y > Main.worldSurface * 16.0 + 1024) {
+				return false;
+			}
+			Vector2 dir = new Vector2(Main.windSpeedCurrent * 18f, 14f).Normalized(out _);
+			return CollisionExt.CanHitRay(position, position - dir * ((2048 / dir.Y) - 16));
+		}
 		public static bool OverlapsAnyTiles(this Rectangle area, out List<Point> intersectingTiles, bool fallThrough = true) {
 			Rectangle checkArea = area;
 			Point topLeft = area.TopLeft().ToTileCoordinates();
