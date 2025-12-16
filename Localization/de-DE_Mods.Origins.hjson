@@ -2492,6 +2492,7 @@ Keybinds: {
 	// WishingGlass.DisplayName: Wishing Glass
 	// "Open Structure Helper.DisplayName": Open Structure Helper
 	// StressBall.DisplayName: Stress Ball
+	// LunaticsRune.DisplayName: Lunatics Rune
 }
 
 Configs: {

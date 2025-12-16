@@ -7570,7 +7570,7 @@ Purple_Mechanical_Switch_Item: {
 }
 
 BBQ_Skewer: {
-	// DisplayName: B B Q Skewer
+	// DisplayName: BBQ Skewer
 	// Tooltip: ""
 }
 
@@ -7586,5 +7586,10 @@ Chlorophyte_Handcannon: {
 
 Ocean_Amulet: {
 	// DisplayName: Ocean Amulet
+	// Tooltip: ""
+}
+
+Lunatics_Rune: {
+	// DisplayName: Lunatic's Rune
 	// Tooltip: ""
 }

@@ -20,6 +20,8 @@ namespace Origins {
 		public static ModKeybind JournalBack { get; private set; }
 		[Keybind("Mouse2")]
 		public static ModKeybind StressBall { get; private set; }
+		[Keybind("G")]
+		public static ModKeybind LunaticsRune { get; private set; }
 		public static ModKeybind WishingGlass => ModContent.GetInstance<SyncedKeybinds>().WishingGlass.keybind;
 #if DEBUG
 		[Keybind("Debug Screen Shader", Keys.OemQuotes)]

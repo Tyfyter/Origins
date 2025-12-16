@@ -268,6 +268,42 @@ namespace Origins {
 			return frame(texture);
 		}
 	}
+	public class DrawAnimationSwitching(Func<bool> @switch, DrawAnimation onFalse, DrawAnimation onTrue) : DrawAnimation {
+		public override void Update() {
+			if (@switch()) onTrue.Update();
+			else onFalse.Update();
+		}
+		public override Rectangle GetFrame(Texture2D texture, int frameCounterOverride = -1) => @switch() ? onTrue.GetFrame(texture, frameCounterOverride) : onFalse.GetFrame(texture, frameCounterOverride);
+	}
+	public class NoDrawAnimation : DrawAnimation {
+		public readonly static NoDrawAnimation AtAll = new NoDrawAnimation();
+		public NoDrawAnimation() {
+			Frame = 0;
+			FrameCounter = 0;
+			FrameCount = 1;
+			TicksPerFrame = -1;
+		}
+		public override void Update() { }
+		public override Rectangle GetFrame(Texture2D texture, int frameCounterOverride = -1) => texture.Frame();
+	}
+	public class DrawAnimationRandom : DrawAnimation {
+		public DrawAnimationRandom(int frameCount, int ticksperframe) {
+			Frame = Main.rand.Next(frameCount);
+			FrameCounter = 0;
+			FrameCount = frameCount;
+			TicksPerFrame = ticksperframe;
+		}
+		public override void Update() {
+			if (FrameCounter.CycleUp(TicksPerFrame)) {
+				RangeRandom random = new(Main.rand, 0, FrameCount);
+				random.Multiply(Frame, Frame + 1, 0);
+				Frame = random.Get();
+			}
+		}
+		public override Rectangle GetFrame(Texture2D texture, int frameCounterOverride = -1) {
+			return texture.Frame(verticalFrames: FrameCount, frameY: Frame);
+		}
+	}
 	public readonly struct AutoCastingAsset<T> where T : class {
 		public bool IsLoaded => asset?.IsLoaded ?? false;
 		public T Value => asset?.Value;

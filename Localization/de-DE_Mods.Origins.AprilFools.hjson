@@ -112,6 +112,11 @@ Items: {
 		{$Mods.Origins.Items.Gas_Mask.Tooltip}
 		'Are you my mummy?'
 		''' */
+	/* Lunatics_Rune.Tooltip:
+		'''
+		{$Mods.Origins.Items.Lunatics_Rune.Tooltip}
+		'Lunatic is you'
+		''' */
 }
 
 // Prefixes.Wholesome_Prefix.DisplayName: Holesome

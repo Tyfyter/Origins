@@ -109,6 +109,10 @@ namespace Origins {
 				drawInfo.drawPlayer.face = ModContent.GetInstance<Gas_Mask>().Item.faceSlot;
 			}
 			if (drawInfo.drawPlayer.front > 0 && OriginsSets.Armor.Front.DrawsInNeckLayer[drawInfo.drawPlayer.front]) drawInfo.drawFrontAccInNeckAccLayer = true;
+
+			if (lunaticsRuneCharge > 0) {
+				drawInfo.colorEyes = Color.Lerp(drawInfo.colorEyes, Player.eyeColor, lunaticsRuneCharge / (float)Lunatics_Rune.ChargeThreshold);
+			}
 		}
 		public override void FrameEffects() {
 			Debugging.LogFirstRun(FrameEffects);
