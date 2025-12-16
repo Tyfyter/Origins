@@ -71,7 +71,7 @@ namespace Origins.Items.Other.Fish {
 		public abstract bool CatchFish(Player player, FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition);
 	}
 	public class ComboFishingLoot(IEnumerable<(Func<Player, FishingAttempt, double>, FishingLootInfo)> loots) : FishingLootInfo {
-		List<(Func<Player, FishingAttempt, double> weight, FishingLootInfo loot)> loots = loots as List<(Func<Player, FishingAttempt, double>, FishingLootInfo)> ?? loots.ToList();
+		readonly List<(Func<Player, FishingAttempt, double> weight, FishingLootInfo loot)> loots = loots as List<(Func<Player, FishingAttempt, double>, FishingLootInfo)> ?? loots.ToList();
 		public ComboFishingLoot(params (Func<Player, FishingAttempt, double>, FishingLootInfo)[] loots) : this(loots.AsEnumerable()) { }
 
 		public override IEnumerable<int> ReportDrops() {
@@ -88,12 +88,10 @@ namespace Origins.Items.Other.Fish {
 			return false;
 		}
 	}
-	public class OrderedFishingLoot : FishingLootInfo {
-		List<FishingLootInfo> loots;
+	public class OrderedFishingLoot(IEnumerable<FishingLootInfo> loots) : FishingLootInfo {
+		readonly List<FishingLootInfo> loots = loots as List<FishingLootInfo> ?? loots.ToList();
 		public OrderedFishingLoot(params FishingLootInfo[] loots) : this(loots.AsEnumerable()) { }
-		public OrderedFishingLoot(IEnumerable<FishingLootInfo> loots) {
-			this.loots = loots as List<FishingLootInfo> ?? loots.ToList();
-		}
+
 		public override IEnumerable<int> ReportDrops() {
 			return loots.SelectMany(l => l.ReportDrops());
 		}
@@ -108,15 +106,7 @@ namespace Origins.Items.Other.Fish {
 			return false;
 		}
 	}
-	public class LeadingConditionFishLoot : FishingLootInfo {
-		Func<Player, FishingAttempt, bool> condition;
-		FishingLootInfo loot;
-		bool alwaysTrue;
-		public LeadingConditionFishLoot(FishingLootInfo loot, Func<Player, FishingAttempt, bool> condition, bool alwaysTrue = false) {
-			this.loot = loot;
-			this.condition = condition;
-			this.alwaysTrue = alwaysTrue;
-		}
+	public class LeadingConditionFishLoot(FishingLootInfo loot, Func<Player, FishingAttempt, bool> condition, bool alwaysTrue = false) : FishingLootInfo {
 		public override IEnumerable<int> ReportDrops() {
 			return loot.ReportDrops();
 		}
@@ -129,13 +119,10 @@ namespace Origins.Items.Other.Fish {
 			return alwaysTrue;
 		}
 	}
-	public class ItemFishingLoot : FishingLootInfo {
-		public Func<Player, FishingAttempt, bool> condition;
-		public int itemId;
-		public ItemFishingLoot(int itemId, Func<Player, FishingAttempt, bool> condition) {
-			this.itemId = itemId;
-			this.condition = condition;
-		}
+	public class ItemFishingLoot(int itemId, Func<Player, FishingAttempt, bool> condition) : FishingLootInfo {
+		public Func<Player, FishingAttempt, bool> condition = condition;
+		public int itemId = itemId;
+
 		public override IEnumerable<int> ReportDrops() {
 			yield return itemId;
 		}
