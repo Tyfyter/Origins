@@ -87,6 +87,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (Projectile.frameCounter.CycleUp(5)) Projectile.frame.CycleUp(Main.projFrames[Type]);
 			Projectile.Opacity = Projectile.timeLeft / 30f;
 		}
-		public override Color? GetAlpha(Color lightColor) => new(255, 255, 255, 180);
+		public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 180) * Projectile.Opacity;
 	}
 }
