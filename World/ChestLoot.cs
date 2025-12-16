@@ -57,8 +57,8 @@ namespace Origins.World {
 			(CHANGE_QUEUE, ChestID.Gold, 0b0011), 
 			(ENQUEUE, ModContent.ItemType<Desert_Crown>(), 0.3f),
 
-			/*(CHANGE_QUEUE, ChestID.Water, 0b0000),
-			(ENQUEUE, ModContent.ItemType<Ocean_Amulet>(), 1f)*/
+			(CHANGE_QUEUE, ChestID.Water, 0b0000),
+			(ENQUEUE, ModContent.ItemType<Ocean_Amulet>(), 1f)
 		];
 		public IEnumerable<int> ProvideItemObtainability() => Actions.Where(a => a.action == ENQUEUE).Select(a => a.param);
 		public void Load(Mod mod) { }

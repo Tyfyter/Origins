@@ -7583,3 +7583,8 @@ Chlorophyte_Handcannon: {
 	DisplayName: Chlorophyte Handcannon
 	Tooltip: ""
 }
+
+Ocean_Amulet: {
+	DisplayName: Ocean Amulet
+	Tooltip: ""
+}

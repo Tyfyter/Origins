@@ -1020,7 +1020,7 @@ SUMMONER WEAPONS:
 (^) Inject Incantation
 (^) Joint Pop
 (^) Maelstrom Incantation
-(#, ^2) Ocean Amulet !!!
+(☻) Ocean Amulet !!!
 (^) Ocotillo Finger
 (^) Ocotoral Bud
 (X) Pinwheel Pole

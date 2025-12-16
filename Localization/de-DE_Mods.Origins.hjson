@@ -1419,6 +1419,11 @@ Buffs: {
 		// DisplayName: Choice Paralysis
 		// Description: Right or left, right or left...
 	}
+
+	Ocean_Buff: {
+		// DisplayName: Ocean Buff
+		// Description: Mods.Origins.Buffs.Ocean_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -2129,6 +2134,7 @@ Projectiles: {
 	// AMRSL_Skewer_Sabot_Scrap.DisplayName: AMRSL Skewer Scrap Sabot
 	// Chlorophyte_Handcannon_Bubble.DisplayName: Chlorophyte Handcannon Bubble
 	// Chlorophyte_Slug_P.DisplayName: Chlorophyte Slug
+	// School_Fish.DisplayName: School Fish
 }
 
 Prefixes: {
