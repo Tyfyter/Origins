@@ -252,7 +252,7 @@ namespace Origins.Items.Accessories {
 		public static AutoCastingAsset<Texture2D> GloveTexture { get; private set; }
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			if (ModContent.RequestIfExists<Texture2D>("Origins/Items/Accessories/Handy_Helper_P", out var gloveTexture))
+			if (ModContent.RequestIfExists<Texture2D>("Origins/Items/Accessories/Handy_Helper_P", out ReLogic.Content.Asset<Texture2D> gloveTexture))
 				GloveTexture = gloveTexture;
 			ID = Type;
 		}

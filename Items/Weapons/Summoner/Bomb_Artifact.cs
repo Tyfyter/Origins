@@ -230,7 +230,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					}
 					Projectile.velocity.Y = -jumpStrength;
 				}
-				Rectangle hitbox = new Rectangle((int)Projectile.Center.X - 24, (int)Projectile.Center.Y - 24, 48, 48);
+				Rectangle hitbox = new((int)Projectile.Center.X - 24, (int)Projectile.Center.Y - 24, 48, 48);
 				NPC targetNPC = Main.npc[target];
 				int targetMovDir = Math.Sign(targetNPC.velocity.X);
 				Rectangle targetFutureHitbox = targetNPC.Hitbox;

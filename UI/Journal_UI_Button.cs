@@ -28,11 +28,11 @@ namespace Origins.UI {
 				Main.inventoryScale = 0.755f;
 				num += 5;
 			}
-			Rectangle rectangle = new Rectangle(num, num2, width, num4);
+			Rectangle rectangle = new(num, num2, width, num4);
 			bool flag = false;
 			Texture2D texture = Texture.Value;
 			Vector2 position = rectangle.Center.ToVector2();
-			Vector2 origin = new Vector2(15, 15);
+			Vector2 origin = new(15, 15);
 			Color white = Color.White;
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
 			int journalShader = originPlayer?.journalDye?.dye??0;
@@ -64,7 +64,7 @@ namespace Origins.UI {
 				spriteBatch.Draw(texture, position, new Rectangle(0, 64, 30, 30), white, 0f, origin, 1f, SpriteEffects.None, 0);
 			}
 			spriteBatch.Draw(texture, position, new Rectangle(0, 32, 30, 30), white, 0f, origin, 1f, SpriteEffects.None, 0);
-			var oldstate = spriteBatch.GetState();
+			SpriteBatchState oldstate = spriteBatch.GetState();
 			spriteBatch.Restart(oldstate, SpriteSortMode.Immediate);
 			DrawData data = new(texture, position, new Rectangle(0, 0, 30, 30), white, 0f, origin, 1f, SpriteEffects.None, 0) {
 				shader = journalShader

@@ -42,7 +42,7 @@ namespace Origins.World {
 		}
 		public static void DefiledSpikeRunner(int i, int j, double strength, int type, int ignoreWallType, Vector2 speed, double decay = 0, float twist = 0, bool randomtwist = false, bool forcesmooth = true, double cutoffStrength = 0.0) {
 			double strengthLeft = strength;
-			Vector2 pos = new Vector2(i, j);
+			Vector2 pos = new(i, j);
 			Tile tile;
 			if (randomtwist) twist = Math.Abs(twist);
 			int X0 = int.MaxValue;
@@ -111,7 +111,7 @@ namespace Origins.World {
 		}
 		public static void SmoothSpikeRunner(int i, int j, double strength, int type, Vector2 speed, double decay = 0, float twist = 0, bool randomtwist = false, bool forcesmooth = true, double cutoffStrength = 0.0) {
 			double strengthLeft = strength;
-			Vector2 pos = new Vector2(i, j);
+			Vector2 pos = new(i, j);
 			Tile tile;
 			if (randomtwist) twist = Math.Abs(twist);
 			int X0 = int.MaxValue;
@@ -249,7 +249,7 @@ namespace Origins.World {
 		}
 		//take that, Heisenberg
 		public static (Vector2 position, Vector2 velocity) VeinRunner(int i, int j, double strength, Vector2 speed, double length, float twist = 0, bool randomtwist = false) {
-			Vector2 pos = new Vector2(i, j);
+			Vector2 pos = new(i, j);
 			Tile tile;
 			if (randomtwist) twist = Math.Abs(twist);
 			int X0 = int.MaxValue;
@@ -311,7 +311,7 @@ namespace Origins.World {
 			return (pos, speed);
 		}
 		public static (Vector2 position, Vector2 velocity) WalledVeinRunner(int i, int j, double strength, Vector2 speed, double length, ushort wallBlockType, float wallThickness, float twist = 0, bool randomtwist = false, int wallType = -1) {
-			Vector2 pos = new Vector2(i, j);
+			Vector2 pos = new(i, j);
 			Tile tile;
 			if (randomtwist) twist = Math.Abs(twist);
 			int X0 = int.MaxValue;

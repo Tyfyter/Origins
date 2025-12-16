@@ -175,7 +175,7 @@ namespace Origins.Items.Accessories {
 		public override bool PreDraw(ref Color lightColor) {
 			SpriteBatchState state = Main.spriteBatch.GetState();
 			Texture2D projTexture = TextureAssets.Projectile[Projectile.type].Value;
-			Vector2 dirVect = new Vector2(Math.Sign(Projectile.velocity.X), 1);
+			Vector2 dirVect = new(Math.Sign(Projectile.velocity.X), 1);
 			int Jankify(int a, int b, float c) {
 				return (int)((Projectile.timeLeft % a - Projectile.timeLeft % b) / c);
 			}
@@ -185,7 +185,7 @@ namespace Origins.Items.Accessories {
 					hungries[i] = new Vector2(Main.rand.Next(28, 40), ((56 / hungries.Length) * i - 14) + Main.rand.Next(-3, 4) * 2);
 				}
 			}
-			List<(Texture2D texture, Rectangle? frame, Vector2 position, float rotation, Vector2? origin)> textures = new List<(Texture2D, Rectangle?, Vector2, float, Vector2?)> {
+			List<(Texture2D texture, Rectangle? frame, Vector2 position, float rotation, Vector2? origin)> textures = new() {
 				(projTexture, projTexture.Frame(verticalFrames: 2, frameY: Projectile.frame % 2), new Vector2(0, 0), 0, null),
 				(Texture2, null, new Vector2(13, -17 + Jankify(48, 24, 24 / 2) - 2), 0, null),
 				(Texture2, null, new Vector2(11, 17 + Jankify(54, 27, 27 / 2) - 2), 0, null),
@@ -198,7 +198,7 @@ namespace Origins.Items.Accessories {
 			};
 			for (int i = 0; i < hungries.Length; i++) {
 				Vector2 hungryPos = hungries[i] + new Vector2(0, Jankify(18 + i, 9 + i, 4.5f + i));
-				Vector2 basePos = new Vector2(8, hungries[i].Y);
+				Vector2 basePos = new(8, hungries[i].Y);
 				textures.Insert(0, (Texture4,
 					new Rectangle(0, 0, (int)hungryPos.X - 8, 6),
 					basePos,

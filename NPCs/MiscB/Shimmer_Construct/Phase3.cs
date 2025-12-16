@@ -555,7 +555,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public override string Texture => "Terraria/Images/Buff_" + BuffID.Shimmer;
 		public static int ID { get; private set; }
 		public override void Load() {
-			On_Player.ShimmerCollision += (On_Player.orig_ShimmerCollision orig, Player self, bool fallThrough, bool ignorePlats, bool noCollision) => {
+			On_Player.ShimmerCollision += (orig, self, fallThrough, ignorePlats, noCollision) => {
 				if (self.OriginPlayer().weakShimmer) {
 					self.position += self.velocity * new Vector2(0.75f, self.controlDown ? 0.75f : (self.controlUp ? 0.3f : 0.5f));
 				} else {
@@ -614,16 +614,16 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			} catch (Exception ex) {
 				if (Origins.LogLoadingILError(nameof(DrawPlayer_27_HeldItem), ex)) throw;
 			}
-			On_PlayerDrawLayers.DrawHeldProj += (On_PlayerDrawLayers.orig_DrawHeldProj orig, PlayerDrawSet drawinfo, Projectile proj) => {
+			On_PlayerDrawLayers.DrawHeldProj += (orig, drawinfo, proj) => {
 				isDrawingShimmeryThing = drawinfo.drawPlayer?.OriginPlayer()?.weakShimmer ?? false;
 				orig(drawinfo, proj);
 				isDrawingShimmeryThing = false;
 			};
-			On_LegacyLighting.GetColor += (On_LegacyLighting.orig_GetColor orig, LegacyLighting self, int x, int y) => {
+			On_LegacyLighting.GetColor += (orig, self, x, y) => {
 				if (isDrawingShimmeryThing) return Vector3.One;
 				return orig(self, x, y);
 			};
-			On_LightingEngine.GetColor += (On_LightingEngine.orig_GetColor orig, LightingEngine self, int x, int y) => {
+			On_LightingEngine.GetColor += (orig, self, x, y) => {
 				if (isDrawingShimmeryThing) return Vector3.One;
 				return orig(self, x, y);
 			};

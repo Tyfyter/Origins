@@ -484,8 +484,8 @@ namespace Origins.World.BiomeData {
 				int c = 0;
 				float size = 70;
 				int wallSize = 10;
-				Vector2 topLeft = new Vector2(i2, (float)GenVars.worldSurfaceHigh);
-				Vector2 topRight = new Vector2(i2, (float)GenVars.worldSurfaceHigh);
+				Vector2 topLeft = new(i2, (float)GenVars.worldSurfaceHigh);
+				Vector2 topRight = new(i2, (float)GenVars.worldSurfaceHigh);
 				int minX = int.MaxValue;
 				int maxX = int.MinValue;
 				for (int y = j2 - (int)(50 * sizeMult + 8); y > GenVars.worldSurfaceLow; y--) {

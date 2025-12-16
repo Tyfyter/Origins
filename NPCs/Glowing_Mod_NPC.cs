@@ -39,7 +39,7 @@ namespace Origins.NPCs {
 				if (npc.spriteDirection == 1) {
 					spriteEffects = SpriteEffects.FlipHorizontally;
 				}
-				Vector2 halfSize = new Vector2(glowTexture.Width / 2, glowTexture.Height / Main.npcFrameCount[npc.type] / 2);
+				Vector2 halfSize = new(glowTexture.Width / 2, glowTexture.Height / Main.npcFrameCount[npc.type] / 2);
 				spriteBatch.Draw(
 					glowTexture,
 					new Vector2(npc.position.X - screenPos.X + (npc.width / 2) - glowTexture.Width * npc.scale / 2f + halfSize.X * npc.scale, npc.position.Y - screenPos.Y + npc.height - glowTexture.Height * npc.scale / Main.npcFrameCount[npc.type] + 4f + halfSize.Y * npc.scale + Main.NPCAddHeight(npc) + npc.gfxOffY),

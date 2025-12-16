@@ -73,7 +73,7 @@ namespace Origins.Items.Armor {
 				context["PageTextMain"] = Language.GetOrRegister(baseKey + "MainText").Value;
 				pageTexts = WikiPageExporter.GetDefaultPageTexts(baseKey);
 			}
-			foreach (var text in pageTexts) {
+			foreach ((string name, LocalizedText text) text in pageTexts) {
 				context[text.name] = text.text;
 			}
 			return (WikiTemplate, context);
@@ -82,7 +82,7 @@ namespace Origins.Items.Armor {
 			if (set.SharedPageSecondary) yield break;
 			List<JObject> statGroups = [];
 			string[] baseTypes = [WikiCategories.Item, WikiCategories.Armor, WikiCategories.ArmorSet];
-			foreach (var item in ApplySets(GetSetAndSubSets(set))) {
+			foreach ((Player dummyPlayer, IWikiArmorSet set) item in ApplySets(GetSetAndSubSets(set))) {
 				JObject data = [];
 				JArray types = new(baseTypes);
 				foreach (string type in set.SetCategories) types.Add(type);

@@ -177,7 +177,7 @@ namespace Origins.Tiles.MusicBoxes {
 			int frameNumberOffset = tile.TileFrameX >= 36 ? 1 : 0;
 			return GlowValue * ((frameNumberOffset + tile.TileFrameNumber) / 4f);
 		}
-		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
+		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
 		public static bool ShouldGlow(Tile tile) {
 			if (tile.TileFrameY == 0) {
 				if (tile.TileFrameX % 36 < 16) return false;

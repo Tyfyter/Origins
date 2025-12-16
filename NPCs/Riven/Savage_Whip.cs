@@ -292,7 +292,7 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Rectangle frame = new Rectangle(14, 38, 26, 28);
+			Rectangle frame = new(14, 38, 26, 28);
 			switch ((int)NPC.ai[2]) {
 				case 1:
 				frame = new Rectangle(14, 68, 26, 24);

@@ -54,7 +54,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		static readonly AutoLoadingAsset<Texture2D> baseGlowTexture = typeof(Barnacle_Turret).GetDefaultTMLName() + "_Base_Glow";
 		static readonly AutoLoadingAsset<Texture2D> headTexture = typeof(Barnacle_Turret).GetDefaultTMLName() + "_Head";
 		static readonly AutoLoadingAsset<Texture2D> headGlowTexture = typeof(Barnacle_Turret).GetDefaultTMLName() + "_Head_Glow";
-		Vector2 headCenterOffset => new Vector2(Projectile.width * 0.5f, 4);
+		Vector2 headCenterOffset => new(Projectile.width * 0.5f, 4);
 		public override void SetStaticDefaults() {
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 4;

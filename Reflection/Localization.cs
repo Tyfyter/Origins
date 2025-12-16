@@ -20,7 +20,7 @@ namespace Origins.Reflection {
 			_value = new(nameof(_value), BindingFlags.NonPublic);
 			_hasPlurals = new(nameof(_hasPlurals), BindingFlags.NonPublic);
 			BoundArgs = new($"<{nameof(BoundArgs)}>k__BackingField", BindingFlags.NonPublic);
-			DynamicMethod getterMethod = new DynamicMethod($"{nameof(LocalizationMethods)}.{nameof(createLocalizedText)}", typeof(LocalizedText), [typeof(string)], true);
+			DynamicMethod getterMethod = new($"{nameof(LocalizationMethods)}.{nameof(createLocalizedText)}", typeof(LocalizedText), [typeof(string)], true);
 			ILGenerator gen = getterMethod.GetILGenerator();
 
 			gen.Emit(OpCodes.Ldarg_0);

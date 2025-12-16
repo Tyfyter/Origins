@@ -154,7 +154,7 @@ namespace Origins.Items.Weapons.Magic {
 
 		public const int FramesPerImportantTrail = 60;
 
-		private static VertexStrip _vertexStrip = new VertexStrip();
+		private static VertexStrip _vertexStrip = new();
 
 		public float Length;
 		public void Draw(Projectile proj) {

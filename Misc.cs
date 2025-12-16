@@ -45,6 +45,7 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
+using static ReLogic.Graphics.DynamicSpriteFont;
 using SetsTiles = Origins.OriginsSets.Tiles;
 using SetsWalls = Origins.OriginsSets.Walls;
 
@@ -443,7 +444,7 @@ namespace Origins {
 			cMinion = shader;
 			cLeinShampoo = shader;
 		}
-		public void Apply(Player player) {
+		public readonly void Apply(Player player) {
 			player.cHead = cHead;
 			player.cBody = cBody;
 			player.cLegs = cLegs;
@@ -1710,7 +1711,7 @@ namespace Origins {
 			signs = new(Math.Sign(vector.X), Math.Sign(vector.Y));
 			return vector * signs;
 		}
-		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox) {
+		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox) {
 			float xoffset = 10f;
 			float yoffset = 24f;
 			byte stage = 3;
@@ -1750,7 +1751,7 @@ namespace Origins {
 			}
 		}
 		public static void DrawLine(this SpriteBatch spriteBatch, Color color, Vector2 start, Vector2 end, int thickness = 2) {
-			Rectangle drawRect = new Rectangle(
+			Rectangle drawRect = new(
 				(int)Math.Round(start.X - Main.screenPosition.X),
 				(int)Math.Round(start.Y - Main.screenPosition.Y),
 				(int)Math.Round((end - start).Length()),
@@ -1804,7 +1805,6 @@ namespace Origins {
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static bool LerpSmoothing(ref Vector2 smoothed, Vector2 target, float rate, float snap) {
 			if (target != smoothed) {
-				Vector2 diff = (target - smoothed);
 				if ((target - smoothed).Length() < snap) {
 					smoothed = target;
 				} else {
@@ -2000,7 +2000,7 @@ namespace Origins {
 			newPoints.Enqueue(area.Center.ToVector2());
 			int retries = 0;
 			for (int i = 0; i < maxCount; i++) {
-				if (!newPoints.Any()) break;
+				if (newPoints.Count == 0) break;
 				Vector2 next = newPoints.Peek() + Vec2FromPolar(Main.rand.NextFloat(MathHelper.TwoPi), Main.rand.NextFloat(minSpread, maxSpread));
 				if (!area.Contains(next) || points.Any((p) => p.DistanceSQ(next) < minSpread * minSpread)) {
 					if (++retries > 20) {
@@ -2021,7 +2021,7 @@ namespace Origins {
 			newPoints.Enqueue(center);
 			int retries = 0;
 			for (int i = 0; i < maxCount; i++) {
-				if (!newPoints.Any()) break;
+				if (newPoints.Count == 0) break;
 				Vector2 next = newPoints.Peek() + Vec2FromPolar(Main.rand.NextFloat(MathHelper.TwoPi), Main.rand.NextFloat(minSpread, maxSpread));
 				if (!next.IsWithin(center, range) || points.Any((p) => p.DistanceSQ(next) < minSpread * minSpread)) {
 					if (++retries > 20) {
@@ -2105,7 +2105,7 @@ namespace Origins {
 		}
 		public static Recipe AddRecipeGroupWithItem(this Recipe recipe, int recipeGroupId, int showItem, int stack = 1) {
 			if (!RecipeGroup.recipeGroups.ContainsKey(recipeGroupId)) {
-				DefaultInterpolatedStringHandler defaultInterpolatedStringHandler = new DefaultInterpolatedStringHandler(43, 1);
+				DefaultInterpolatedStringHandler defaultInterpolatedStringHandler = new(43, 1);
 				defaultInterpolatedStringHandler.AppendLiteral("A recipe group with the ID ");
 				defaultInterpolatedStringHandler.AppendFormatted(recipeGroupId);
 				defaultInterpolatedStringHandler.AppendLiteral(" does not exist.");
@@ -2124,9 +2124,9 @@ namespace Origins {
 				return;
 			}
 			int count = 0;
-			Stack<Point> positions = new Stack<Point>();
-			Stack<Point> nextPositions = new Stack<Point>();
-			HashSet<Point> oldPositions = new HashSet<Point>();
+			Stack<Point> positions = new();
+			Stack<Point> nextPositions = new();
+			HashSet<Point> oldPositions = new();
 			void AddPosition(Point newPosition) {
 				if (!oldPositions.Contains(newPosition)) {
 					nextPositions.Push(newPosition);
@@ -2231,7 +2231,7 @@ namespace Origins {
 		private static FieldInfo _seedArray;
 		internal static FieldInfo SeedArray => _seedArray ??= typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic | BindingFlags.Instance);
 		#endregion
-		internal static void initExt() {
+		internal static void InitExt() {
 			CollisionExtensions.Load();
 		}
 		private static FastStaticFieldInfo<Color[]> _colorLookup;
@@ -2243,20 +2243,17 @@ namespace Origins {
 			if (Main.netMode == NetmodeID.Server) return Color.Transparent;
 			return MapColorLookup.GetValue()[MapHelper.wallLookup[type]];
 		}
-		internal static void unInitExt() {
+		internal static void UnInitExt() {
 			_inext = null;
 			_inextp = null;
 			_seedArray = null;
-			_defaultCharacterData = null;
-			_spriteCharacters = null;
-			strikethroughFont = null;
 			_idToSlot = null;
 			_colorLookup = null;
 			CollisionExtensions.Unload();
 			OnIncreaseMaxBreath = null;
 		}
 		public static UnifiedRandom Clone(this UnifiedRandom r) {
-			UnifiedRandom o = new UnifiedRandom();
+			UnifiedRandom o = new();
 			Inext.SetValue(o, (int)Inext.GetValue(r));
 			Inextp.SetValue(o, (int)Inextp.GetValue(r));
 			SeedArray.SetValue(o, ((int[])SeedArray.GetValue(r)).ToArray());
@@ -2511,7 +2508,7 @@ namespace Origins {
 				distance = (startPos - center).Length();
 				Color drawColor = lightColor;
 				if (action is not null) action(center);
-				DrawData data = new DrawData(texture,
+				DrawData data = new(texture,
 					center - Main.screenPosition,
 					frames[frame],
 					drawColor,
@@ -2519,8 +2516,9 @@ namespace Origins {
 					frames[frame].Size() * 0.5f,
 					Vector2.One,
 					SpriteEffects.None,
-				0);
-				data.shader = dye;
+				0) {
+					shader = dye
+				};
 				Main.EntitySpriteDraw(data);
 				if (frame >= frames.Length) frame = 0;
 			}
@@ -2539,7 +2537,7 @@ namespace Origins {
 			return output;
 		}
 		public static Vector2 NextVectorIn(this UnifiedRandom random, Rectangle area) {
-			return area.TopLeft() + new Vector2(Main.rand.Next(area.Width), Main.rand.Next(area.Height));
+			return area.TopLeft() + new Vector2(random.Next(area.Width), random.Next(area.Height));
 		}
 		#region tiles
 		public static void SetActive(this Tile tile, bool active) {
@@ -2651,11 +2649,11 @@ namespace Origins {
 				return;
 			}
 			Tile tile = Main.tile[i, j];
-			Vector2 vector = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			Vector2 vector = new(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen) {
 				vector = Vector2.Zero;
 			}
-			Point key = new Point(i, j);
+			Point key = new(i, j);
 			if (tile.TileFrameX % 36 != 0) {
 				key.X--;
 			}
@@ -2663,7 +2661,7 @@ namespace Origins {
 				key.Y--;
 			}
 			int frameOffset = Main.chest[Chest.FindChest(key.X, key.Y)].frame * 38;
-			spriteBatch.Draw(self.GetGlowTexture(tile.TileColor), (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY + frameOffset, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(self.GetGlowTexture(tile.TileColor), (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY + frameOffset, 16, 16), self.GlowColor, 0f, default, 1f, SpriteEffects.None, 0f);
 		}
 		public static Point GetTilePosition(this Tile tile) {
 			uint id = TileMethods.TileId.GetValue(tile);
@@ -2677,7 +2675,7 @@ namespace Origins {
 		public static ITree GetTreeType(int i, int j) {
 			Tile tile = Main.tile[i, j];
 			if (!tile.HasTile || tile.TileType is TileID.VanityTreeSakura or TileID.VanityTreeYellowWillow || !TileID.Sets.IsATreeTrunk[tile.TileType]) return null;
-			WorldGen.GetTreeBottom(i, j, out var x, out var y);
+			WorldGen.GetTreeBottom(i, j, out int x, out int y);
 			return PlantLoader.GetTree(Main.tile[x, y].TileType);
 		}
 		public static Point OffsetBy(this Point self, int x = 0, int y = 0) {
@@ -2739,7 +2737,7 @@ namespace Origins {
 				foreach (int pre in Item.GetVanillaPrefixes(category)) {
 					wr.Add(pre);
 				}
-				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where((ModPrefix x) => x.CanRoll(item))) {
+				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where(x => x.CanRoll(item))) {
 					wr.Add(modPrefix.Type, modPrefix.RollChance(item));
 				}
 			}
@@ -2752,7 +2750,7 @@ namespace Origins {
 				foreach (int pre in Item.GetVanillaPrefixes(category)) {
 					wr.Add(pre, weight);
 				}
-				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where((ModPrefix x) => x.CanRoll(item))) {
+				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where(x => x.CanRoll(item))) {
 					wr.Add(modPrefix.Type, modPrefix.RollChance(item) * weight);
 				}
 			}
@@ -2765,7 +2763,7 @@ namespace Origins {
 				foreach (int pre in Item.GetVanillaPrefixes(category)) {
 					if (set[pre]) wr.Add(pre, weight);
 				}
-				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where((ModPrefix x) => x.CanRoll(item))) {
+				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where(x => x.CanRoll(item))) {
 					if (set[modPrefix.Type]) wr.Add(modPrefix.Type, modPrefix.RollChance(item) * weight);
 				}
 			}
@@ -2785,7 +2783,7 @@ namespace Origins {
 					double weight = weightFunction(pre);
 					if (weight > 0) wr.Add(pre, weight);
 				}
-				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where((ModPrefix x) => x.CanRoll(item))) {
+				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where(x => x.CanRoll(item))) {
 					double weight = weightFunction(modPrefix.Type);
 					if (weight > 0) wr.Add(modPrefix.Type, modPrefix.RollChance(item) * weight);
 				}
@@ -2800,67 +2798,8 @@ namespace Origins {
 			categories[^1] = (PrefixCategory.Accessory, PrefixID.Sets.Factory.CreateBoolSet(true), 1);
 			return GetAllPrefixes(item, rand, categories);
 		}
-		#region font
-		static FieldInfo _spriteCharacters;
-		static FieldInfo _SpriteCharacters => _spriteCharacters ??= typeof(DynamicSpriteFont).GetField("_spriteCharacters", BindingFlags.NonPublic | BindingFlags.Instance);
-		static FieldInfo _defaultCharacterData;
-		static FieldInfo _DefaultCharacterData => _defaultCharacterData ??= typeof(DynamicSpriteFont).GetField("_defaultCharacterData", BindingFlags.NonPublic | BindingFlags.Instance);
-		static DynamicSpriteFont strikethroughFont;
-		public static DynamicSpriteFont StrikethroughFont {
-			get {
-				if (strikethroughFont is null) {
-					if (FontAssets.MouseText?.IsLoaded ?? false) {
-						Texture2D strikeTexture = ModContent.Request<Texture2D>("Origins/Textures/Strikethrough_Font", AssetRequestMode.ImmediateLoad).Value;
-						DynamicSpriteFont baseFont = FontAssets.MouseText.Value;
-						strikethroughFont = new DynamicSpriteFont(baseFont.CharacterSpacing, baseFont.LineSpacing, baseFont.DefaultCharacter);
-						Type dict = _SpriteCharacters.FieldType;
-						_SpriteCharacters.SetValue(
-							strikethroughFont,
-							dict.GetConstructor([typeof(IDictionary<,>).MakeGenericType(dict.GenericTypeArguments)])
-							.Invoke([_SpriteCharacters.GetValue(baseFont)])
-						);
-						object enumerator = dict.GetMethod(nameof(Dictionary<int, int>.GetEnumerator)).Invoke(_SpriteCharacters.GetValue(baseFont), []);
-						Type enumType = enumerator.GetType();
-						MethodInfo moveNext = enumType.GetMethod(nameof(Dictionary<int, int>.Enumerator.MoveNext));
-						PropertyInfo current = enumType.GetProperty(nameof(Dictionary<int, int>.Enumerator.Current));
-						PropertyInfo key = typeof(KeyValuePair<,>).MakeGenericType(dict.GenericTypeArguments).GetProperty(nameof(KeyValuePair<int, int>.Key));
-						PropertyInfo prop = dict.GetProperty("Item");
-						object sfFont = _SpriteCharacters.GetValue(strikethroughFont);
-
-						Type spriteCharacterData = dict.GenericTypeArguments[1];
-						ConstructorInfo ctor = spriteCharacterData.GetConstructors()[0];
-						FieldInfo glyphField = spriteCharacterData.GetField("Glyph");
-						FieldInfo paddingField = spriteCharacterData.GetField("Padding");
-						FieldInfo kerningField = spriteCharacterData.GetField("Kerning");
-						while ((bool)moveNext.Invoke(enumerator, [])) {
-							object[] index = [key.GetValue(current.GetValue(enumerator))];
-							object value = prop.GetValue(sfFont, index);
-							Rectangle glyph = (Rectangle)glyphField.GetValue(value);
-							Rectangle padding = (Rectangle)paddingField.GetValue(value);
-							Vector3 kerning = (Vector3)kerningField.GetValue(value);
-							padding.X = -4;
-							padding.Y = 0;
-							padding.Height = 0;
-							glyph.X = 0;
-							glyph.Y = -8;// 2 - glyph.Height / 2;
-							glyph.Width += (int)(kerning.Y + kerning.Z + 4f);
-							glyph.Height = 16;
-							prop.SetValue(sfFont, ctor.Invoke([
-								strikeTexture,
-								glyph,
-								padding,
-								kerning,
-							]), index);
-						}
-						_DefaultCharacterData.SetValue(strikethroughFont, _DefaultCharacterData.GetValue(baseFont));
-					} else {
-						return FontAssets.MouseText?.Value;
-					}
-				}
-				return strikethroughFont;
-			}
-		}
-		#endregion
+		[Obsolete("Just use PegasusLib.StrikethroughFont.Font")]
+		public static DynamicSpriteFont StrikethroughFont => PegasusLib.StrikethroughFont.Font;
 		/// <summary>
 		/// inserts an item into a shimmer cycle, will not work to add an item after the last item of a cycle that is not complete yet
 		/// </summary>
@@ -2943,7 +2882,7 @@ namespace Origins {
 				return new EntitySource_ItemUse(itemUseSource.Player, itemUseSource.Item, bocContext);
 			}
 		}
-		static GeneratorCache<Type, Func<IEntitySource, string, IEntitySource>> cloneWithContexts = new(GenerateCloneWithContext);
+		static readonly GeneratorCache<Type, Func<IEntitySource, string, IEntitySource>> cloneWithContexts = new(GenerateCloneWithContext);
 		public static IEntitySource CloneWithContext(this IEntitySource source, string context) {
 			return cloneWithContexts[source.GetType()](source, context);
 		}
@@ -3178,7 +3117,7 @@ namespace Origins {
 			orig.Y += spacing.Y;
 			return ChatManager.DrawColorCodedStringWithShadow(spritebatch, font, text, position - spacing, color ?? Color.White, 0, orig, Vector2.One);
 		}
-		public static void DrawConstellationLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width = 20, float distort = 20, float waveSpeed = 0.03f) {
+		public static void DrawConstellationLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width = 20, float distort = 20) {
 			MiscShaderData shader = GameShaders.Misc["Origins:Constellation"];
 			shader.UseSaturation(width);
 			shader.UseOpacity(distort);
@@ -3186,7 +3125,7 @@ namespace Origins {
 			Asset<Texture2D> space = ModContent.Request<Texture2D>("Origins/Items/Weapons/Ranged/Constellation_Fill");
 
 			Vector2 screenPos = Main.screenPosition / new Vector2(Main.screenWidth, Main.screenHeight);
-			Rectangle source = new Rectangle(0, 0, space.Width(), space.Height());
+			Rectangle source = new(0, 0, space.Width(), space.Height());
 
 			shader.UseImage0(space);
 
@@ -3199,7 +3138,7 @@ namespace Origins {
 			int maxY = (int)Math.Max(start.Y, end.Y);
 
 			int offset = (int)20;
-			Rectangle dest = new Rectangle(
+			Rectangle dest = new(
 				minX - offset,
 				minY - offset,
 				maxX - minX + offset * 2,
@@ -3213,7 +3152,7 @@ namespace Origins {
 
 			Vector2 uv1 = dest.MapUV(start.ToPoint());
 			Vector2 uv2 = dest.MapUV(end.ToPoint());
-			Vector4 pack = new Vector4(uv1.X, uv1.Y, uv2.X, uv2.Y);
+			Vector4 pack = new(uv1.X, uv1.Y, uv2.X, uv2.Y);
 			shader.Shader.Parameters["uNodePositions"].SetValue(pack);
 
 			shader.Apply();
@@ -4186,15 +4125,15 @@ namespace Origins {
 			DoCustomKnockback(npc, npc.velocity, fromNet);
 		}
 		public class MultipleUnlockableNPCEntryIcon : IEntryIcon {
-			private int _npcNetId;
+			private readonly int _npcNetId;
 
-			private NPC[] _npcCache;
+			private readonly NPC[] _npcCache;
 
 			private bool _firstUpdateDone;
 
 			private Vector2 _positionOffsetCache;
 
-			private string _overrideNameKey;
+			private readonly string _overrideNameKey;
 
 			public MultipleUnlockableNPCEntryIcon(int npcNetId, string overrideNameKey = null, params float[][] ai) : this(npcNetId, ai) {
 				_overrideNameKey = overrideNameKey;
@@ -4225,7 +4164,6 @@ namespace Origins {
 				int? spriteDirection = null;
 				bool wet = false;
 				float velocityX = 0f;
-				Asset<Texture2D> asset = null;
 				if (NPCID.Sets.NPCBestiaryDrawOffset.TryGetValue(_npcNetId, out NPCID.Sets.NPCBestiaryDrawModifiers value)) {
 					for (int i = 0; i < _npcCache.Length; i++) {
 						NPC npc = _npcCache[i];
@@ -4245,9 +4183,6 @@ namespace Origins {
 						}
 						if (value.PortraitPositionYOverride.HasValue && settings.IsPortrait) {
 							positionOffsetCache.Y = value.PortraitPositionYOverride.Value;
-						}
-						if (value.CustomTexturePath != null) {
-							asset = ModContent.Request<Texture2D>(value.CustomTexturePath);
 						}
 					}
 				}
@@ -5019,7 +4954,7 @@ namespace Origins {
 				num6 = (num5 - 1f) / num2;
 				num5 = MathHelper.Lerp(1f, 0f, num6);
 			}
-			float num7 = (useTimeMax * 2) * num;
+			float num7 = (useTimeForSize.Value * 2) * num;
 			float num8 = proj.velocity.Length() * num7 * num5 * rangeMultiplier / segments;
 			float num9 = 1f;
 			Vector2 vector = playerArmPosition;
@@ -5085,10 +5020,10 @@ namespace Origins {
 			[typeof(SequentialRulesRule)] = r => ((SequentialRulesRule)r).rules,
 		};
 		public static T FindDropRule<T>(this IEnumerable<IItemDropRule> dropRules, Predicate<T> predicate) where T : class, IItemDropRule {
-			foreach (var dropRule in dropRules) {
+			foreach (IItemDropRule dropRule in dropRules) {
 				if (dropRule is T rule && predicate(rule)) return rule;
 				if (dropRule.ChainedRules.Count != 0 && dropRule.ChainedRules.Select(c => c.RuleToChain).FindDropRule(predicate) is T foundRule) return foundRule;
-				if (ruleChildFinders.TryGetValue(dropRule.GetType(), out var ruleChildFinder) && ruleChildFinder(dropRule).FindDropRule(predicate) is T foundRule2) return foundRule2;
+				if (ruleChildFinders.TryGetValue(dropRule.GetType(), out Func<IItemDropRule, IEnumerable<IItemDropRule>> ruleChildFinder) && ruleChildFinder(dropRule).FindDropRule(predicate) is T foundRule2) return foundRule2;
 			}
 			return null;
 		}

@@ -118,7 +118,7 @@ namespace Origins.Misc {
 							if (lastLink.size == 0) {
 								lastChainMovement = lastChainTryMovement;
 							} else {
-								Vector2 halfSize = new Vector2(lastLink.size * 0.5f);
+								Vector2 halfSize = new(lastLink.size * 0.5f);
 								Vector4 slopeCollision = Collision.SlopeCollision(links[i - 1].position - halfSize, lastChainTryMovement, lastLink.size, lastLink.size);
 								links[i - 1].position = slopeCollision.XY() + halfSize;
 								lastChainMovement = slopeCollision.ZW();

@@ -65,7 +65,7 @@ namespace Origins.Items.Weapons.Melee {
 		static int delayTime = 0;
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			string text = "";
-			var color = Main.MouseTextColorReal;
+			Color color = Main.MouseTextColorReal;
 			switch (++textIndex) {
 				case 0:
 				text = "Twas brillig, and the slithy toves";

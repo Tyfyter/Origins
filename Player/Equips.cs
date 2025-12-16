@@ -144,7 +144,7 @@ namespace Origins {
 					}
 					return sunLight;
 				}
-				Vector3 sunLight = new Vector3(1f, 1f, 0.67f);
+				Vector3 sunLight = new(1f, 1f, 0.67f);
 				float sunFactor = 0;
 				int top = (int)Player.TopLeft.Y / 16;
 				Vector3 waterFactor = Vector3.One;
@@ -513,7 +513,7 @@ namespace Origins {
 					cinderSealCount--;
 					cinderSealItem.ModItem.Shoot(
 						Player,
-						Player.GetSource_ItemUse_WithPotentialAmmo(cinderSealItem, ItemID.None) as Terraria.DataStructures.EntitySource_ItemUse_WithAmmo,
+						Player.GetSource_ItemUse_WithPotentialAmmo(cinderSealItem, ItemID.None) as EntitySource_ItemUse_WithAmmo,
 						Player.Center,
 						Vector2.Zero,
 						cinderSealItem.shoot,

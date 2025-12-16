@@ -77,7 +77,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 			}
 			if (Projectile.ai[0] < FreeFuel) {
-				Vector2 dustBasePos = new Vector2(Projectile.position.X + 3f, Projectile.position.Y + 3f);
+				Vector2 dustBasePos = new(Projectile.position.X + 3f, Projectile.position.Y + 3f);
 				for (int i = 0; i < 2; i++) {
 					Vector2 offset = Projectile.velocity * i * 0.5f;
 

@@ -185,7 +185,7 @@ namespace Origins.Items.Weapons.Magic {
 			Player player = Main.player[Projectile.owner];
 			Vector2 position = Projectile.Center - Main.screenPosition;
 			float rotation = Projectile.rotation + (MathHelper.Pi * 0.8f * Projectile.direction - MathHelper.PiOver2 * player.gravDir);
-			Vector2 scale = new Vector2(Projectile.scale, Projectile.scale);
+			Vector2 scale = new(Projectile.scale, Projectile.scale);
 			SpriteEffects spriteEffects = Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			if (player.gravDir < 0) {
 				rotation -= MathHelper.PiOver2 * 1.2f * Projectile.direction;
@@ -253,8 +253,8 @@ namespace Origins.Items.Weapons.Magic {
 			Color bigColor = shineColor * 0.5f;
 			Vector2 origin = sparkleTexture.Size() / 2f;
 			Color smallColor = drawColor * 0.5f;
-			Vector2 scaleLeftRight = new Vector2(fatness.X * 0.5f, scale.X);
-			Vector2 scaleUpDown = new Vector2(fatness.Y * 0.5f, scale.Y);
+			Vector2 scaleLeftRight = new(fatness.X * 0.5f, scale.X);
+			Vector2 scaleUpDown = new(fatness.Y * 0.5f, scale.Y);
 
 			// Bright, large part
 			Main.EntitySpriteDraw(sparkleTexture, drawPos, null, bigColor, MathHelper.PiOver2 + rotation, origin, scaleLeftRight, dir);

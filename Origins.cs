@@ -210,7 +210,7 @@ namespace Origins {
 				OriginTile.LateSetupActions[i]();
 			}
 			if (OriginConfig.Instance.GrassMerge) {
-				List<int> grasses = new List<int>() { };
+				List<int> grasses = new() { };
 				for (int i = 0; i < TileLoader.TileCount; i++) {
 					if (TileID.Sets.Grass[i] || TileID.Sets.GrassSpecial[i]) {
 						grasses.Add(i);
@@ -234,7 +234,7 @@ namespace Origins {
 			MC.GetInstance<CrimsonAltBiome>().AddChambersiteWallConversions(MC.WallType<Chambersite_Crimstone_Wall>());
 			UnstableHooking.IL_Main_DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
 			OriginsModIntegrations.LateLoad();
-			_ = OriginExtensions.StrikethroughFont;
+			_ = StrikethroughFont.Font;
 			for (int k = 0; k < ItemLoader.ItemCount; k++) {
 				Item item = ContentSamples.ItemsByType[k];
 				if (item.createTile > -1) {
@@ -403,7 +403,7 @@ namespace Origins {
 
 			TorsoLegLayers = new();
 
-			OriginExtensions.initExt();
+			OriginExtensions.InitExt();
 			if (!Main.dedServ) {
 				//OriginExtensions.drawPlayerItemPos = (Func<float, int, Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float, int, Vector2>), Main.instance);
 				perlinFade0 = new MiscShaderData(Assets.Request<Effect>("Effects/PerlinFade", AssetRequestMode.ImmediateLoad), "RedFade");
@@ -465,7 +465,7 @@ namespace Origins {
 				GameShaders.Armor.BindShader(MC.ItemType<Tainted_Flesh>(), coordinateMaskFilter);
 				coordinateMaskFilterID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Tainted_Flesh>());
 
-				ArmorShaderData transparencyFilter = new ArmorShaderData(Assets.Request<Effect>("Effects/CoordinateMaskFilter"), "Transparency");
+				ArmorShaderData transparencyFilter = new(Assets.Request<Effect>("Effects/CoordinateMaskFilter"), "Transparency");
 				GameShaders.Armor.BindShader(MC.ItemType<Defiled_Altar_Item>(), transparencyFilter);
 				transparencyFilterID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Defiled_Altar_Item>());
 
@@ -519,7 +519,7 @@ namespace Origins {
 				Journal_UI_Open.BackTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Use_Back");
 				Journal_UI_Open.PageTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Use");
 				Journal_UI_Open.TabsTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Tabs");
-				On_Player.KeyDoubleTap += (On_Player.orig_KeyDoubleTap orig, Player self, int keyDir) => {
+				On_Player.KeyDoubleTap += (orig, self, keyDir) => {
 					orig(self, keyDir);
 					if (OriginClientConfig.Instance.SetBonusDoubleTap) {
 						if (keyDir == (Main.ReversedUpDownArmorSetBonuses ? 1 : 0)) {
@@ -704,7 +704,7 @@ namespace Origins {
 			Tolruk.glowmasks = null;
 			TorsoLegLayers = null;
 			instance = null;
-			OriginExtensions.unInitExt();
+			OriginExtensions.UnInitExt();
 			OriginTile.IDs = null;
 			OriginTile.DefiledTiles = null;
 			OriginSystem worldInstance = ModContent.GetInstance<OriginSystem>();

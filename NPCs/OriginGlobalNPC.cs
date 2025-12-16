@@ -195,7 +195,7 @@ namespace Origins.NPCs {
 				}
 				float accelerationFactor = 1;
 				float velocityFactor = 1;
-				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out var adjustment)) {
+				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out (int maxLevel, float accelerationFactor, float velocityFactor) adjustment)) {
 					accelerationFactor = adjustment.accelerationFactor;
 					velocityFactor = adjustment.velocityFactor;
 				}

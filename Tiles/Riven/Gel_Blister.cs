@@ -13,7 +13,7 @@ namespace Origins.Tiles.Riven {
 	public class Gel_Blister : ModTile, IGlowingModTile {
 		public static AutoCastingAsset<Texture2D> LesionGlowTexture { get; private set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get => LesionGlowTexture; private set => LesionGlowTexture = value; }
-		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
+		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);

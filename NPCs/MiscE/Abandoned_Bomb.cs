@@ -78,7 +78,7 @@ namespace Origins.NPCs.MiscE {
 					}
 					NPC.velocity.Y = -jumpStrength;
 				}
-				Rectangle hitbox = new Rectangle((int)NPC.Center.X - 24, (int)NPC.Center.Y - 24, 48, 48);
+				Rectangle hitbox = new((int)NPC.Center.X - 24, (int)NPC.Center.Y - 24, 48, 48);
 				int targetMovDir = Math.Sign(target.Velocity.X);
 				Rectangle targetFutureHitbox = target.Hitbox;
 				targetFutureHitbox.X += (int)(target.Velocity.X * 10);

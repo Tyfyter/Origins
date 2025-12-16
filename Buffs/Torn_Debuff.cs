@@ -46,7 +46,7 @@ namespace Origins.Buffs {
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			string text = $"{Main.LocalPlayer.GetModPlayer<OriginPlayer>().tornCurrentSeverity * 100:#0}%";
-			var font = FontAssets.CombatText[0].Value;
+			ReLogic.Graphics.DynamicSpriteFont font = FontAssets.CombatText[0].Value;
 			ChatManager.DrawColorCodedStringWithShadow(
 				spriteBatch,
 				font,
@@ -94,7 +94,7 @@ namespace Origins.Buffs {
 				Origins.drawPlayersWithShader = Origins.coordinateMaskFilterID;
 				Origins.coordinateMaskFilter.Shader.Parameters["uCoordinateSize"].SetValue(new Vector2(256, 256));//put the size of the texture in here
 
-				PlayerShaderSet dontCoverArmor = new PlayerShaderSet(0);
+				PlayerShaderSet dontCoverArmor = new(0);
 				Origins.keepPlayerShader = Origins.transparencyFilterID;
 				dontCoverArmor.cHead = Origins.keepPlayerShader;
 				for (int i = 0; i < cachedTornPlayers.Count; i++) {

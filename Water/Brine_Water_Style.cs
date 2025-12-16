@@ -13,7 +13,7 @@ namespace Origins.Water {
 			g = 0.9f;
 			b = 0.83f;
 		}
-		public override Color BiomeHairColor() => new Color(20, 102, 87);
+		public override Color BiomeHairColor() => new(20, 102, 87);
 	}
 	public class Brine_Waterfall_Style : ModWaterfallStyle {
 		public override void ColorMultiplier(ref float r, ref float g, ref float b, float a) {

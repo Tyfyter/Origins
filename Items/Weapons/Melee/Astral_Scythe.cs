@@ -383,7 +383,7 @@ namespace Origins.Items.Weapons.Melee {
 			);
 			return false;
 		}
-		private static VertexStrip _vertexStrip = new();
+		private readonly static VertexStrip _vertexStrip = new();
 		public void DrawPath(float size) {
 			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Identity"];
 			miscShaderData.UseImage0(TextureAssets.MagicPixel);

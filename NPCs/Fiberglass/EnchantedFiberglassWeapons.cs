@@ -108,7 +108,7 @@ namespace Origins.NPCs.Fiberglass {
 		}
 		void teleport() {
 			float rot = NPC.rotation + MathHelper.Pi / 2f;
-			WeightedRandom<Vector2> options = new WeightedRandom<Vector2>();
+			WeightedRandom<Vector2> options = new();
 			for (int i = 0; i < 16; i++) {
 				Vector2 unit = new Vector2(4, 0).RotatedBy(rot + Main.rand.NextFloat(-0.05f, 0.05f));
 				Vector2 pos = GetLoSLength(Main.player[NPC.target].Center, new Point(8, 8), unit, new Point(8, 8), 75, out int length);

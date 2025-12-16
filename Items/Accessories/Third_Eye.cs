@@ -145,7 +145,7 @@ namespace Origins.Items.Accessories {
 			drawPos += velocity * scale * beamStartTexture.Height / 2f;
 			if (lengthLeft > 0f) {
 				float framePos = 0f;
-				Rectangle frame = new Rectangle(0, 16 * (Projectile.timeLeft / 3 % 5), beamMiddleTexture.Width, 16);
+				Rectangle frame = new(0, 16 * (Projectile.timeLeft / 3 % 5), beamMiddleTexture.Width, 16);
 				while (framePos + 1f < lengthLeft) {
 					if (lengthLeft - framePos < frame.Height)
 						frame.Height = (int)(lengthLeft - framePos);

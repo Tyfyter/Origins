@@ -23,7 +23,7 @@ namespace Origins.Dusts {
 	
 	public struct ShimmerConstructDustShader
 	{
-		private static VertexRectangle VertexRectangle = new VertexRectangle();
+		private static VertexRectangle VertexRectangle = new();
 		public void Draw(Dust dust) 
 		{	
 			MiscShaderData shader = GameShaders.Misc["Origins:SC_DustEffect"];

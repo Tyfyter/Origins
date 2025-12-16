@@ -111,7 +111,7 @@ namespace Origins {
 			List<(Point, int)> EvilSpikes = [];
 			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Weeds"));
 			getEvilTileConversionTypes(evil_wastelands, out ushort defiledStoneType, out ushort defiledGrassType, out ushort defiledPlantType, out ushort defiledSandType, out ushort _, out ushort _, out ushort defilediceType);
-			tasks.Insert(genIndex + 1, new PassLegacy("Finding Spots For Spikes", (GenerationProgress progress, GameConfiguration _) => {
+			tasks.Insert(genIndex + 1, new PassLegacy("Finding Spots For Spikes", (progress, _) => {
 				for (int index = 0; index < Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge.Count; index++) {
 					int minX = Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge[index];
 					int maxX = Defiled_Wastelands_Alt_Biome.defiledWastelandsEastEdge[index];
@@ -158,7 +158,7 @@ namespace Origins {
 				}
 			}));
 			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
-			tasks.Insert(genIndex + 1, new PassLegacy("Placing Spikes", (GenerationProgress progress, GameConfiguration _) => {
+			tasks.Insert(genIndex + 1, new PassLegacy("Placing Spikes", (progress, _) => {
 				int skipped = 0;
 				while (EvilSpikes.Count > 0) {
 					const float hole_avoidance = 12.5f;
@@ -247,7 +247,7 @@ namespace Origins {
 					}
 				}
 			}));
-			tasks.Add(new PassLegacy("Stone Mask", (GenerationProgress progress, GameConfiguration _) => {
+			tasks.Add(new PassLegacy("Stone Mask", (progress, _) => {
 				int i = 0;
 				bool leavesSolid = Main.tileSolid[TileID.LeafBlock];
 				try {
@@ -267,7 +267,7 @@ namespace Origins {
 				}
 			}));
 			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
-			tasks.Insert(genIndex + 1, new PassLegacy("Shinies (Singular no longer)", (GenerationProgress progress, GameConfiguration _) => {
+			tasks.Insert(genIndex + 1, new PassLegacy("Shinies (Singular no longer)", (progress, _) => {
 				ushort type = (ushort)TileType<Carburite>();
 				for (int i = 0; i < (int)(Main.maxTilesX * Main.maxTilesY * 3.75E-05); i++) {
 					WorldGen.OreRunner(
@@ -290,7 +290,7 @@ namespace Origins {
 				}
 			}));
 			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Remove Broken Traps"));
-			tasks.Insert(genIndex, new PassLegacy("Boom", (GenerationProgress progress, GameConfiguration _) => {
+			tasks.Insert(genIndex, new PassLegacy("Boom", (progress, _) => {
 				ushort type = (ushort)TileType<Bomb_Trap>();
 				for (int i = 0; i < Main.maxTilesX; i++) {
 					for (int j = (int)GenVars.worldSurfaceHigh; j < Main.maxTilesY; j++) {
@@ -304,7 +304,7 @@ namespace Origins {
 
 			if (remixWorldGen) {
 				genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
-				tasks.Insert(genIndex + 1, new PassLegacy("Gem (Singular)", (GenerationProgress progress, GameConfiguration _) => {
+				tasks.Insert(genIndex + 1, new PassLegacy("Gem (Singular)", (progress, _) => {
 					Dictionary<ushort, ushort> types = Chambersite_Stone_Wall.AddChambersite;
 					int totalCount = 0;
 					float tryCount = 0;

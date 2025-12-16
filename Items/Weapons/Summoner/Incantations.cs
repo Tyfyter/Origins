@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
     public static class Incantations {
-		public static Asset<Texture2D> GetSmallTexture(this ModItem item, string suffix = "") => ModContent.RequestIfExists<Texture2D>(item.Texture + "_Smol" + suffix, out var asset) ? asset : null;
+		public static Asset<Texture2D> GetSmallTexture(this ModItem item, string suffix = "") => ModContent.RequestIfExists<Texture2D>(item.Texture + "_Smol" + suffix, out Asset<Texture2D> asset) ? asset : null;
 		public static void HoldItemFrame(Player player) {
 			if (Main.menuMode is MenuID.FancyUI or MenuID.CharacterSelect) return;
 			player.SetCompositeArmBack(

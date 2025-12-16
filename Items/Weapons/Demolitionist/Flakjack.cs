@@ -74,7 +74,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			float itemRotation = drawPlayer.itemRotation;
 			float scale = drawPlayer.GetAdjustedItemScale(Item);
 
-			Vector2 pos = new Vector2((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y));
+			Vector2 pos = new((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y));
 
 			int frame = 0;
 			int useFrame = drawPlayer.itemTimeMax - drawPlayer.itemTime;

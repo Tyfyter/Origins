@@ -594,7 +594,7 @@ namespace Origins {
 			} else {
 				if (felnumShock > Player.statLifeMax2) {
 					if (Main.rand.NextBool(20)) {
-						Vector2 pos = new Vector2(Main.rand.Next(4, Player.width - 4), Main.rand.Next(4, Player.height - 4));
+						Vector2 pos = new(Main.rand.Next(4, Player.width - 4), Main.rand.Next(4, Player.height - 4));
 						Projectile proj = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.position + pos, Main.rand.NextVector2CircularEdge(3, 3), Felnum_Shock_Leader.ID, (int)(felnumShock * 0.1f), 0, Player.whoAmI, pos.X, pos.Y);
 						if (proj.ModProjectile is Felnum_Shock_Leader shock) {
 							shock.Parent = Player;

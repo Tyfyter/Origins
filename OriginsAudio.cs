@@ -107,7 +107,7 @@ namespace Origins {
 				public static SoundStyle Score = SoundID.DrumTamaSnare;
 			}
 		}
-		public void AudioLoad() {
+		public static void AudioLoad() {
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
 				MaxInstances = 0,
 				SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,

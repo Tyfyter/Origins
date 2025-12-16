@@ -407,7 +407,7 @@ namespace Origins.Dev {
 			public string Resolve(Dictionary<string, object> context) {
 				StringBuilder builder = new();
 				if (context.TryGetValue(name, out object value) && value is IEnumerable enumerable) {
-					foreach (var item in enumerable) {
+					foreach (object item in enumerable) {
 						context["iteratorValue"] = item;
 						builder.Append(CombineSnippets(snippets, context));
 					}
@@ -429,7 +429,7 @@ namespace Origins.Dev {
 					}				
 					builder.AppendLine("<a-recipes>");
 					bool firstStation = true;
-					foreach (var group in recipes.GroupBy((r) => new RecipeRequirements(r))) {
+					foreach (IGrouping<RecipeRequirements, Recipe> group in recipes.GroupBy((r) => new RecipeRequirements(r))) {
 						if (!firstStation) builder.Append(',');
 						firstStation = false;
 						builder.AppendLine("{");
@@ -558,7 +558,7 @@ namespace Origins.Dev {
 	}
 	public record LinkInfo (string Name, string Href = null, string Image = null, string Note = null) {
 		public static string FromStats = "$fromStats";
-		public WikiLinkFormatter Formatter() => (string nameIn, string noteIn, bool imageOnlyIn, bool canSpaceIn) => {
+		public WikiLinkFormatter Formatter() => (nameIn, noteIn, imageOnlyIn, canSpaceIn) => {
 			StringBuilder builder = new();
 			string formattedName = Name.Replace(" ", "_");
 			static string Attribute(string name, string value) => value is not null ? $"{name}={value}" : "";
@@ -603,7 +603,7 @@ namespace Origins.Dev {
 		int AnimationFrames { get; }
 		int FrameDuration => 1;
 		NPCExportType ImageExportType => NPCExportType.Bestiary;
-		Range FrameRange => new Range(0, AnimationFrames);
+		Range FrameRange => new(0, AnimationFrames);
 	}
 	public enum NPCExportType {
 		Bestiary,
@@ -793,7 +793,7 @@ namespace Origins.Dev {
 		public static JArray GetEnvironment(this NPC npc) {
 			BestiaryEntry entry = Main.BestiaryDB.FindEntryByNPCID(npc.type);
 			JArray environments = [];
-			foreach (var info in entry.Info) {
+			foreach (IBestiaryInfoElement info in entry.Info) {
 				if (info is ModBiomeBestiaryInfoElement biomeInfo) {
 					Mod mod = ModBestiaryInfoElementMethods._mod.GetValue(biomeInfo);
 					AddEnvironment(mod, biomeInfo);
@@ -811,7 +811,7 @@ namespace Origins.Dev {
 		}
 		public static string GetBestiaryText(this NPC npc) {
 			BestiaryEntry entry = Main.BestiaryDB.FindEntryByNPCID(npc.type);
-			foreach (var info in entry.Info) {
+			foreach (IBestiaryInfoElement info in entry.Info) {
 				if (info is FlavorTextBestiaryInfoElement quote) {
 					string key = FlavorTextBestiaryInfoElementMethods._key?.GetValue(quote);
 					return key != null && Language.Exists(key) ? Language.GetTextValue(key) : "";

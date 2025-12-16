@@ -71,7 +71,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public static int ID { get; private set; }
 		//public override string Texture => typeof(Sunny_Sunflower).GetDefaultTMLName() + "_Base";
 		//static readonly AutoLoadingAsset<Texture2D> headTexture = typeof(Sunny_Sunflower).GetDefaultTMLName() + "_Head";
-		Vector2 headCenterOffset => new Vector2(Projectile.width * 0.5f, 6);
+		Vector2 headCenterOffset => new(Projectile.width * 0.5f, 6);
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 15;
 			// Sets the amount of frames this minion has on its spritesheet
@@ -174,7 +174,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Vector2 pos = Projectile.position;
 					Vector2 offset = headCenterOffset;
 					int dir = Math.Sign(npc.Center.X - (pos.X + offset.X));
-					Vector2 stepDown = new Vector2(16, 32);
+					Vector2 stepDown = new(16, 32);
 					for (int i = 0; i < 5; i++) {
 						if (i != 0 && !CanWalkOnto(pos, dir)) break;
 						float between = Vector2.Distance(npc.Center, Projectile.Center);

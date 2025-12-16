@@ -14,7 +14,7 @@ namespace Origins.Layers {
 				&& drawInfo.heldItem.ModItem is ICustomDrawItem;
 		}
 		public override Position GetDefaultPosition() {
-			Multiple position = new Multiple {
+			Multiple position = new() {
 				{ new Between(PlayerDrawLayers.BladedGlove, PlayerDrawLayers.ProjectileOverArm), (drawInfo) => (drawInfo.drawPlayer.HeldItem?.ModItem is ICustomDrawItem customDraw && customDraw.DrawOverHand) },
 				{ new Between(PlayerDrawLayers.Skin, PlayerDrawLayers.Leggings), (drawInfo) => (drawInfo.drawPlayer.HeldItem?.ModItem is ICustomDrawItem customDraw && customDraw.BackHand) },
 				{ new Between(null, PlayerDrawLayers.ArmOverItem), (drawInfo) => (drawInfo.drawPlayer.HeldItem?.ModItem is ICustomDrawItem customDraw && !customDraw.DrawOverHand && !customDraw.BackHand) }
@@ -27,14 +27,14 @@ namespace Origins.Layers {
 			Texture2D itemTexture = TextureAssets.Item[item.type].Value;
 			ICustomDrawItem aItem = (ICustomDrawItem)item.ModItem;
 
-			Vector2 itemCenter = new Vector2(itemTexture.Width / 2, itemTexture.Height / 2);
+			Vector2 itemCenter = new(itemTexture.Width / 2, itemTexture.Height / 2);
 			Vector2 drawItemPos = Main.DrawPlayerItemPos(drawPlayer.gravDir, item.type);
 			int drawXPos = (int)drawItemPos.X;
 			itemCenter.Y = drawItemPos.Y;
 			if (drawPlayer.mount?.Active == true) {
 				itemCenter.Y -= drawPlayer.mount.PlayerOffset;
 			}
-			Vector2 drawOrigin = new Vector2(drawXPos, itemTexture.Height / 2);
+			Vector2 drawOrigin = new(drawXPos, itemTexture.Height / 2);
 			if (drawPlayer.direction == -1) {
 				drawOrigin = new Vector2(itemTexture.Width + drawXPos, itemTexture.Height / 2);
 			}

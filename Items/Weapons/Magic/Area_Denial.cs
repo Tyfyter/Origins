@@ -116,7 +116,7 @@ namespace Origins.Items.Weapons.Magic {
 				if (player.active && !player.dead && !player.immune) {
 					Rectangle projHitbox = Projectile.Hitbox;
 					ProjectileLoader.ModifyDamageHitbox(Projectile, ref projHitbox);
-					Rectangle playerHitbox = new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height);
+					Rectangle playerHitbox = new((int)player.position.X, (int)player.position.Y, player.width, player.height);
 					if (projHitbox.Intersects(playerHitbox)) {
 						player.Hurt(
 							PlayerDeathReason.ByProjectile(Main.myPlayer, Projectile.whoAmI),

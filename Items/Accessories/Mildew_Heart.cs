@@ -110,14 +110,14 @@ namespace Origins.Items.Accessories {
 			context.texture = normalHeart;
 			context.Draw();
 		}
-		MoldBarDrawer BarDrawer(int offsetFromText) => (PlayerStatsSnapshot snapshot, IPlayerResourcesDisplaySet displaySet) => {
+		MoldBarDrawer BarDrawer(int offsetFromText) => (snapshot, displaySet) => {
 			void LifeFillingDrawer(int elementIndex, int firstElementIndex, int lastElementIndex, out Asset<Texture2D> sprite, out Vector2 offset, out float drawScale, out Rectangle? sourceRect) {
 				sprite = barTexture;
 				HorizontalBarsPlayerResourcesDisplaySet.FillBarByValues(elementIndex, sprite, snapshot.AmountOfLifeHearts, Main.LocalPlayer.OriginPlayer().mildewHealth / (float)snapshot.LifeMax, out offset, out drawScale, out sourceRect);
 				int drawIndexOffset = lastElementIndex - (elementIndex - firstElementIndex) - elementIndex;
 				offset.X += drawIndexOffset * sprite.Width();
 			}
-			Vector2 vector = new Vector2(Main.screenWidth - 300 - 22 + 16, 18 + offsetFromText);
+			Vector2 vector = new(Main.screenWidth - 300 - 22 + 16, 18 + offsetFromText);
 			vector.X += (20 - snapshot.AmountOfLifeHearts) * barTexture.Width();
 			bool isHovered = false;
 			ResourceDrawSettings resourceDrawSettings = default;

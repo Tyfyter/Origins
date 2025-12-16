@@ -11,10 +11,10 @@ using Terraria.UI.Chat;
 namespace Origins.UI {
 	public class Quest_Link_Handler : ITagHandler {
 		public class Quest_Link_Snippet : TextSnippet {
-			string key;
+			readonly string key;
 			int lastHovered = 0;
-			bool completed;
-			bool inJournal;
+			readonly bool completed;
+			readonly bool inJournal;
 			public Quest_Link_Snippet(string key, Color color = default, bool completed = false, bool inJournal = false) : this(Quest_Registry.GetQuestByKey(key), color, completed, inJournal) { }
 			public Quest_Link_Snippet(Quest quest, Color color = default, bool completed = false, bool inJournal = false) : base() {
 				key = quest.FullName;
@@ -44,11 +44,11 @@ namespace Origins.UI {
 				}
 				Origins.OpenJournalQuest(key);
 			}
-			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1) {
+			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default, Color color = default, float scale = 1) {
 				if (inJournal) {
 					if (completed) {
 						Vector2 dimensions = FontAssets.MouseText.Value.MeasureString(Text);
-						var strikethroughFont = OriginExtensions.StrikethroughFont;
+						ReLogic.Graphics.DynamicSpriteFont strikethroughFont = StrikethroughFont.Font;
 						size = dimensions;
 						if (justCheckingString) return false;
 						color *= 0.666f;
@@ -123,7 +123,7 @@ namespace Origins.UI {
 				}
 			}
 		}
-		public TextSnippet Parse(string text, Color baseColor = default(Color), string optionString = null) {
+		public TextSnippet Parse(string text, Color baseColor = default, string optionString = null) {
 			string[] options = (optionString ?? "").Split(',');
 			bool completed = false;
 			bool inJournal = false;

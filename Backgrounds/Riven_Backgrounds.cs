@@ -69,8 +69,8 @@ namespace Origins.Backgrounds {
 			MainReflection.Instance_bgLoops = Main.screenWidth / MainReflection.bgWidthScaled + 2;
 			if (Main.screenPosition.Y < Main.worldSurface * 16.0 + 16.0) {
 				for (int i = 0; i < MainReflection.Instance_bgLoops; i++) {
-					Vector2 position = new Vector2(MainReflection.Instance_bgStartX + MainReflection.bgWidthScaled * i, MainReflection.Instance_bgTopY);
-					Rectangle frame = new Rectangle(0, 0, Main.backgroundWidth[textureSlot], Main.backgroundHeight[textureSlot]);
+					Vector2 position = new(MainReflection.Instance_bgStartX + MainReflection.bgWidthScaled * i, MainReflection.Instance_bgTopY);
+					Rectangle frame = new(0, 0, Main.backgroundWidth[textureSlot], Main.backgroundHeight[textureSlot]);
 					Main.spriteBatch.Draw(
 						TextureAssets.Background[textureSlot].Value,
 						position,

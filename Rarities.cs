@@ -19,7 +19,7 @@ namespace Origins {
 	public class AltCyanRarity : ModRarity {
 		public static string RarityName => "Not Quite Cyan";
 		public static int ID { get; private set; }
-		public override Color RarityColor => new Color(43, 145, 255);
+		public override Color RarityColor => new(43, 145, 255);
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}
@@ -42,7 +42,7 @@ namespace Origins {
 	public class ButterscotchRarity : ModRarity {
 		public static string RarityName => "Butterscotch";
 		public static int ID { get; private set; }
-		public override Color RarityColor => new Color(226, 182, 65);
+		public override Color RarityColor => new(226, 182, 65);
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}
@@ -62,7 +62,7 @@ namespace Origins {
 	public class CrimsonRarity : ModRarity {
 		public static string RarityName => "Crimson";
 		public static int ID { get; private set; }
-		public override Color RarityColor => new Color(164, 29, 7);
+		public override Color RarityColor => new(164, 29, 7);
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}
@@ -84,7 +84,7 @@ namespace Origins {
 	public class RoyalBlueRarity : ModRarity {
 		public static string RarityName => "Royal Blue";
 		public static int ID { get; private set; }
-		public override Color RarityColor => new Color(12, 42, 165);
+		public override Color RarityColor => new(12, 42, 165);
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}

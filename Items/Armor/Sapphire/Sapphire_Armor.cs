@@ -168,7 +168,7 @@ namespace Origins.Items.Armor.Sapphire {
 
 		public const int FramesPerImportantTrail = 60;
 
-		private static VertexStrip _vertexStrip = new VertexStrip();
+		private static VertexStrip _vertexStrip = new();
 
 		public float Length;
 

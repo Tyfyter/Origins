@@ -653,7 +653,7 @@ namespace Origins {
 					"AddItemCategory",
 					"Explosive",
 					"Weapons",
-					(Predicate<Item>)((Item i) => i.CountsAsClass<Explosive>())
+					(Predicate<Item>)(i => i.CountsAsClass<Explosive>())
 				);
 			}
 			if (ModLoader.TryGetMod("FancyLighting", out instance.fancyLighting)) {
@@ -844,7 +844,7 @@ namespace Origins {
 				bool drawingAO = false;
 				MonoModHooks.Add(
 					ambientOcclusionType.GetMethod("ApplyAmbientOcclusion", BindingFlags.NonPublic | BindingFlags.Instance),
-					(Func<Func<object, RenderTarget2D, bool, bool, RenderTarget2D>, object, RenderTarget2D, bool, bool, RenderTarget2D>)((Func<object, RenderTarget2D, bool, bool, RenderTarget2D> orig, object self, RenderTarget2D wallTarget, bool doDraw, bool updateWallTarget) => {
+					(Func<Func<object, RenderTarget2D, bool, bool, RenderTarget2D>, object, RenderTarget2D, bool, bool, RenderTarget2D>)((orig, self, wallTarget, doDraw, updateWallTarget) => {
 						drawingAO = true;
 						RenderTarget2D value;
 						try {

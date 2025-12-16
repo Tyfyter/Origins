@@ -65,7 +65,7 @@ namespace Origins.Buffs {
 				Projectile.ai[1] = Main.rand.NextFloat(0.75f, 2.5f);
 			}
 			Projectile.localAI[0] += (GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.295f) * Projectile.localAI[2];
-			Vector2 perp = new Vector2(Projectile.velocity.Y, -Projectile.velocity.X);
+			Vector2 perp = new(Projectile.velocity.Y, -Projectile.velocity.X);
 			Vector2 offset = Projectile.localAI[0] * perp;
 			Projectile.localAI[0] = MathHelper.Clamp(Projectile.localAI[0], -2, 2);
 			if (Projectile.ai[2] != 0) {

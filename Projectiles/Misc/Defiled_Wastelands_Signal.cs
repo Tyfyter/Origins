@@ -17,7 +17,7 @@ namespace Origins.Projectiles.Misc {
 	public class Defiled_Wastelands_Signal : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public Point Target {
-			get => new Point((int)Projectile.localAI[0], (int)Projectile.localAI[1]);
+			get => new((int)Projectile.localAI[0], (int)Projectile.localAI[1]);
 			set {
 				Projectile.localAI[0] = value.X;
 				Projectile.localAI[1] = value.Y;

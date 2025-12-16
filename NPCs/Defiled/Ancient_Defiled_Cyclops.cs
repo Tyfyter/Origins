@@ -112,7 +112,7 @@ namespace Origins.NPCs.Defiled {
 					int hitboxWidth = 32;
 					int hitboxHeight = 64;
 
-					Rectangle armHitbox = new Rectangle((int)NPC.Center.X + ((NPC.width / 2) * NPC.direction) - hitboxWidth / 2, (int)NPC.Center.Y - hitboxHeight / 2, hitboxWidth, hitboxHeight);
+					Rectangle armHitbox = new((int)NPC.Center.X + ((NPC.width / 2) * NPC.direction) - hitboxWidth / 2, (int)NPC.Center.Y - hitboxHeight / 2, hitboxWidth, hitboxHeight);
 					if (NPC.frameCounter < 9 && victimHitbox.Intersects(armHitbox)) {
 						damageMultiplier = 2;
 						knockbackMult = 1.5f;

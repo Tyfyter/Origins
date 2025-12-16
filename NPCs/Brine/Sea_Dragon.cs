@@ -29,7 +29,7 @@ namespace Origins.NPCs.Brine {
 		public int AnimationFrames => 64;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public Range FrameRange => new Range(28, 64);
+		public Range FrameRange => new(28, 64);
 		AutoLoadingAsset<Texture2D> strandTexture = typeof(Sea_Dragon).GetDefaultTMLName() + "_Strand";
 		public HashSet<int> PredatorNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {

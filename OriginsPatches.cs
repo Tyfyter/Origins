@@ -120,12 +120,12 @@ namespace Origins {
 				}
 			};*/
 			MonoModHooks.Add(typeof(CommonCode).GetMethod("DropItem", BindingFlags.Public | BindingFlags.Static, [typeof(DropAttemptInfo), typeof(int), typeof(int), typeof(bool)]), (hook_DropItem)CommonCode_DropItem);
-			On_ShopHelper.BiomeNameByKey += (On_ShopHelper.orig_BiomeNameByKey orig, string biomeNameKey) => {
+			On_ShopHelper.BiomeNameByKey += (orig, biomeNameKey) => {
 				lastBiomeNameKey = biomeNameKey;
 				return orig(biomeNameKey);
 			};
 
-			On_Language.GetTextValueWith += (On_Language.orig_GetTextValueWith orig, string key, object obj) => {
+			On_Language.GetTextValueWith += (orig, key, obj) => {
 				if (key.EndsWith("Biome")) {
 					try {
 						string betterKey = key + "_" + lastBiomeNameKey.Split('.')[^1];
@@ -140,7 +140,7 @@ namespace Origins {
 				}
 				return orig(key, obj);
 			};
-			On_ShopHelper.IsPlayerInEvilBiomes += (On_ShopHelper.orig_IsPlayerInEvilBiomes orig, ShopHelper self, Player player) => {
+			On_ShopHelper.IsPlayerInEvilBiomes += (orig, self, player) => {
 				if (ShopMethods._currentNPCBeingTalkedTo?.GetValue(self) is NPC talkNPC) {
 					if (talkNPC.type == MC.NPCType<Brine_Fiend>()) {
 						IShoppingBiome shoppingBiome = new DungeonBiome();
@@ -462,7 +462,7 @@ namespace Origins {
 			}
 			On_ItemDropResolver.ResolveRule += (orig, self, rule, info) => {
 				currentChanceNumerator = 1;
-				if (chanceNumerators.TryGetValue(rule.GetType(), out var chanceNumerator)) {
+				if (chanceNumerators.TryGetValue(rule.GetType(), out FastFieldInfo<IItemDropRule, int> chanceNumerator)) {
 					currentChanceNumerator = chanceNumerator.GetValue(rule);
 				}
 				ItemDropAttemptResult result = orig(self, rule, info);
@@ -558,7 +558,7 @@ namespace Origins {
 				}
 			);
 			//IL_Main.DoDraw += Defiled_Wastelands_Mod_Menu.EnableShaderOnMenu;
-			On_ScreenShaderData.Apply += (On_ScreenShaderData.orig_Apply orig, ScreenShaderData self) => {
+			On_ScreenShaderData.Apply += (orig, self) => {
 				try {
 					if (self.Shader is not null) orig(self);
 				} catch (NullReferenceException) { }
@@ -719,7 +719,7 @@ namespace Origins {
 				if (Origins.LogLoadingILError("SetDashBaseDamage", e)) throw;
 			}
 			IL_WaterShaderData.DrawWaves += Brine_Pool_NPC.DisableRipples;
-			On_Player.SlopingCollision += (On_Player.orig_SlopingCollision orig, Player self, bool fallThrough, bool ignorePlats) => {
+			On_Player.SlopingCollision += (orig, self, fallThrough, ignorePlats) => {
 				Debugging.LogFirstRun(self.SlopingCollision);
 				float startY = self.position.Y;
 				orig(self, fallThrough, ignorePlats);
@@ -984,7 +984,7 @@ namespace Origins {
 						OriginsModIntegrations.conditionalCompatRecommendations.RemoveAll(loc => DebugConfig.Instance.IgnoredCompatibilitySuggestions.Contains(loc.text.Key));
 					}
 					bool anyErrors = OriginsModIntegrations.compatErrors.Count != 0;
-					if (!anyErrors && OriginsModIntegrations.compatRecommendations.Count == 0 && OriginsModIntegrations.conditionalCompatRecommendations.Where(x => x.condition()).Count() == 0) return;
+					if (!anyErrors && OriginsModIntegrations.compatRecommendations.Count == 0 && !OriginsModIntegrations.conditionalCompatRecommendations.Any(x => x.condition())) return;
 					Vector2 anchorPosition = new(l6 + l182 + l20[i] + lineOrigin.X, l5 + l7 * i + l183 + lineOrigin.Y * l22[i] * 0.5f + l19[i]);
 					Rectangle rectangle = new((int)anchorPosition.X, (int)anchorPosition.Y, 30, 30);
 					float scaleValue = MathHelper.Lerp(0.5f, 0.75f, Main.mouseTextColor / 255f);
@@ -1001,7 +1001,7 @@ namespace Origins {
 					);
 					if (rectangle.Contains(Main.mouseX, Main.mouseY)) {
 						string ignoreAll = "";
-						if (OriginsModIntegrations.compatRecommendations.Count != 0 || OriginsModIntegrations.conditionalCompatRecommendations.Where(x => x.condition()).Count() != 0) {
+						if (OriginsModIntegrations.compatRecommendations.Count != 0 || OriginsModIntegrations.conditionalCompatRecommendations.Any(x => x.condition())) {
 							ignoreAll = "\n" + Language.GetTextValue("Mods.Origins.ModCompatNotes.ClearAll");
 						}
 						UICommon.TooltipMouseText(string.Join("\n",
@@ -1719,7 +1719,7 @@ namespace Origins {
 						Item.NewItem(new EntitySource_ShakeTree(x, y), x * 16, y * 16, 16, 16, ItemID.RottenEgg, WorldGen.genRand.Next(1, 3));
 						break;
 						case 8: {
-							TileMethods.KillTile_GetItemDrops(i, j, Main.tile[i, j], out int dropItem, out var _, out var _, out var _);
+							TileMethods.KillTile_GetItemDrops(i, j, Main.tile[i, j], out int dropItem, out int _, out int _, out int _);
 							Item.NewItem(new EntitySource_ShakeTree(x, y), x * 16, y * 16, 16, 16, dropItem, WorldGen.genRand.Next(1, 4));
 							break;
 						}
@@ -1808,27 +1808,27 @@ namespace Origins {
 		static string lastBiomeNameKey;
 		#region drop rules
 		private static void CommonCode_DropItem(ItemDropper orig, DropAttemptInfo info, int item, int stack, bool scattered = false) {
-			(itemDropper ?? orig)(info, item, stack, scattered);
+			(ItemDropper ?? orig)(info, item, stack, scattered);
 		}
 		public static void ResolveRuleWithHandler(IItemDropRule rule, DropAttemptInfo dropInfo, ItemDropper handler) {
 			try {
-				itemDropper += handler;
+				ItemDropper += handler;
 				ResolveRule(rule, dropInfo);
 			} finally {
-				itemDropper = null;
+				ItemDropper = null;
 			}
 		}
 		public readonly struct ItemDropHandler : IDisposable {
 			readonly ItemDropper handler;
 			public ItemDropHandler(ItemDropper handler) {
 				this.handler = handler;
-				if (handler is not null) itemDropper += handler;
+				if (handler is not null) ItemDropper += handler;
 			}
 			void IDisposable.Dispose() {
-				if (handler is not null) itemDropper -= handler;
+				if (handler is not null) ItemDropper -= handler;
 			}
 		}
-		static event ItemDropper itemDropper;
+		static event ItemDropper ItemDropper;
 		#endregion
 		private void Projectile_GetWhipSettings(On_Projectile.orig_GetWhipSettings orig, Projectile proj, out float timeToFlyOut, out int segments, out float rangeMultiplier) {
 			if (proj.ModProjectile is IWhipProjectile whip) {
@@ -1874,14 +1874,14 @@ namespace Origins {
 		#region worldgen
 		private bool WorldGen_PlacePot(On_WorldGen.orig_PlacePot orig, int x, int y, ushort type, int style) {
 			Tile placedOn = Framing.GetTileSafely(x, y + 1);
-			if (PotType.TryGetValue(placedOn.TileType, out var potData)) {
+			if (PotType.TryGetValue(placedOn.TileType, out (ushort potType, int minStyle, int maxStyle) potData)) {
 				return orig(x, y, potData.potType, WorldGen.genRand.Next(potData.minStyle, potData.maxStyle));
 			}
 			return orig(x, y, type, style);
 		}
 		private bool WorldGen_PlaceSmallPile(On_WorldGen.orig_PlaceSmallPile orig, int i, int j, int X, int Y, ushort type) {
 			Tile placedOn = Framing.GetTileSafely(i, j + 1);
-			if (PileType.TryGetValue(placedOn.TileType, out var pileData)) {
+			if (PileType.TryGetValue(placedOn.TileType, out (ushort pileType, int minStyle, int maxStyle) pileData)) {
 				return orig(i, j, WorldGen.genRand.Next(pileData.minStyle, pileData.maxStyle), 0, pileData.pileType);
 			}
 			return orig(i, j, X, Y, type);
@@ -1943,10 +1943,10 @@ namespace Origins {
 					if (Main.IsTileSpelunkable(i, j)) {
 						return new Color(200, 170, 100);
 					}
-					if (_IsSolidForSonar(Framing.GetTileSafely(i - 1, j))
-						&& _IsSolidForSonar(Framing.GetTileSafely(i, j - 1))
-						&& _IsSolidForSonar(Framing.GetTileSafely(i + 1, j))
-						&& _IsSolidForSonar(Framing.GetTileSafely(i, j + 1))) {
+					if (IsSolidForSonar(Framing.GetTileSafely(i - 1, j))
+						&& IsSolidForSonar(Framing.GetTileSafely(i, j - 1))
+						&& IsSolidForSonar(Framing.GetTileSafely(i + 1, j))
+						&& IsSolidForSonar(Framing.GetTileSafely(i, j + 1))) {
 						return new Color(0, 0, 0, 0);
 					}
 					return new Color(255, 255, 255);
@@ -1967,12 +1967,12 @@ namespace Origins {
 				return orig(self, j, i, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 			}
 		}
-		static bool _IsSolidForSonar(Tile tile) {
+		static bool IsSolidForSonar(Tile tile) {
 			return tile.HasTile && Main.tileSolid[tile.TileType] && tile.BlockType == BlockType.Solid;
 		}
 
 		private void TileDrawing_DrawSingleTile(ILContext il) {
-			ILCursor c = new ILCursor(il);
+			ILCursor c = new(il);
 			FieldReference tileLight = null;
 			if (c.TryGotoNext(o => o.MatchStfld<TileDrawInfo>("tileLight") && o.MatchStfld(out tileLight))) {
 				if (c.TryGotoNext(MoveType.After, o => o.MatchRet()) && c.TryGotoNext(MoveType.AfterLabel)) {
@@ -1986,7 +1986,7 @@ namespace Origins {
 					c.Emit(Ldarg_S, il.Method.Parameters[7]);
 					c.Emit(Ldarg_0);
 					c.Emit(Ldfld, tileLight);
-					c.EmitDelegate((Func<int, int, Color, Color>)((int tileX, int tileY, Color _tileLight) => {
+					c.EmitDelegate((Func<int, int, Color, Color>)((tileX, tileY, _tileLight) => {
 						if (!sonarDrawing) {
 							return _tileLight;
 						}
@@ -2008,7 +2008,7 @@ namespace Origins {
 		}
 
 
-		private void _TileDrawing_DrawSingleTile(On_TileDrawing.orig_DrawSingleTile orig, TileDrawing self, TileDrawInfo drawData, bool solidLayer, int waterStyleOverride, Vector2 screenPosition, Vector2 screenOffset, int tileX, int tileY) {
+		private void TileDrawing_DrawSingleTile(On_TileDrawing.orig_DrawSingleTile orig, TileDrawing self, TileDrawInfo drawData, bool solidLayer, int waterStyleOverride, Vector2 screenPosition, Vector2 screenOffset, int tileX, int tileY) {
 
 			if (TileDrawing.IsTileDangerous(tileX, tileY, Main.LocalPlayer)) {
 				drawData.tileLight = new Color(255, 50, 50);

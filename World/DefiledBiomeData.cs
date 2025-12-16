@@ -167,10 +167,10 @@ namespace Origins.World.BiomeData {
 				ushort stoneID = (ushort)TileType<Defiled_Stone>();
 				ushort stoneWallID = (ushort)WallType<Defiled_Stone_Wall>();
 				int oreID = TileType<Lost_Ore>();
-				Vector2 startVec = new Vector2(i, j);
+				Vector2 startVec = new(i, j);
 				int fisureCount = 0;
 				DefiledCave(i, j);
-				Queue<(int generation, (Vector2 position, Vector2 velocity))> veins = new Queue<(int generation, (Vector2 position, Vector2 velocity))>();
+				Queue<(int generation, (Vector2 position, Vector2 velocity))> veins = new();
 				int startCount = genRand.Next(4, 9);
 				float maxSpread = 3f / startCount;
 				Vector2 vel;
@@ -180,7 +180,7 @@ namespace Origins.World.BiomeData {
 				}
 				(int generation, (Vector2 position, Vector2 velocity) data) current;
 				(int generation, (Vector2 position, Vector2 velocity) data) next;
-				List<Vector2> fissureCheckSpots = new List<Vector2>();
+				List<Vector2> fissureCheckSpots = new();
 				List<Vector2> nodes = [];
 				Vector2 airCheckVec;
 				List<Vector2> ends = [];
@@ -501,7 +501,7 @@ namespace Origins.World.BiomeData {
 				}
 			}
 			public static (Vector2 position, Vector2 velocity) DefiledVeinRunner(int i, int j, double strength, Vector2 speed, double length, ushort wallBlockType, float wallThickness, float twist = 0, bool randomtwist = false, int wallType = -1, int oreType = -1, int oreRarity = 500) {
-				Vector2 pos = new Vector2(i, j);
+				Vector2 pos = new(i, j);
 				Tile tile;
 				if (randomtwist) twist = Math.Abs(twist);
 				int X0 = int.MaxValue;
@@ -723,7 +723,7 @@ namespace Origins.World.BiomeData {
 				dropInfo.IsMasterMode = Main.masterMode;
 				dropInfo.IsInSimulation = false;
 				dropInfo.rng = Main.rand;
-				Origins.ResolveRuleWithHandler(shadowOrbSmashed ? FissureDropRule : FirstFissureDropRule, dropInfo, (DropAttemptInfo info, int item, int stack, bool _) => {
+				Origins.ResolveRuleWithHandler(shadowOrbSmashed ? FissureDropRule : FirstFissureDropRule, dropInfo, (info, item, stack, _) => {
 					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, item, stack, pfix: -1);
 				});
 				shadowOrbSmashed = true;

@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Reflection {
 	public class GraphicsMethods : ILoadable {
 		public void Load(Mod mod) {
-			DynamicMethod getterMethod = new DynamicMethod($"{nameof(RenderTarget2D)}.set_{nameof(RenderTarget2D.RenderTargetUsage)}", typeof(void), [typeof(RenderTarget2D), typeof(RenderTargetUsage)], true);
+			DynamicMethod getterMethod = new($"{nameof(RenderTarget2D)}.set_{nameof(RenderTarget2D.RenderTargetUsage)}", typeof(void), [typeof(RenderTarget2D), typeof(RenderTargetUsage)], true);
 			ILGenerator gen = getterMethod.GetILGenerator();
 
 			gen.Emit(OpCodes.Ldarg_0);

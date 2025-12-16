@@ -185,7 +185,7 @@ namespace Origins.Items.Weapons.Ranged {
 				dir ^= SpriteEffects.FlipVertically;
 			}
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
-			Vector2 origin = new Vector2(27, 12);
+			Vector2 origin = new(27, 12);
 			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: Projectile.frame);
 			return new(
 				texture,

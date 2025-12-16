@@ -102,17 +102,17 @@ namespace Origins.Tiles.Defiled {
 				offsetY = 4;
 			}
 
-			Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
 
 			if (Main.drawToScreen) {
 				zero = Vector2.Zero;
 			}
 
 			ulong randSeed = Main.TileFrameSeed ^ (ulong)((long)j << 32 | (long)(uint)i); // Don't remove any casts.
-			Color color = new Color(100, 100, 100, 0);
+			Color color = new(100, 100, 100, 0);
 			int width = 20;
 			int height = 20;
-			var tile = Main.tile[i, j];
+			Tile tile = Main.tile[i, j];
 			int frameX = tile.TileFrameX;
 			int frameY = tile.TileFrameY;
 			int style = TileObjectData.GetTileStyle(Main.tile[i, j]);

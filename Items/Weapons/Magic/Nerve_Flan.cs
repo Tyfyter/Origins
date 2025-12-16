@@ -238,7 +238,7 @@ namespace Origins.Items.Weapons.Magic {
 
 		public const int FramesPerImportantTrail = 60;
 
-		private static VertexStrip _vertexStrip = new VertexStrip();
+		private static VertexStrip _vertexStrip = new();
 		public static void Draw(Projectile proj) {
 			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Framed"];
 			float uTime = (float)Main.timeForVisualEffects / 44;

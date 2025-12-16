@@ -85,7 +85,7 @@ namespace Origins.UI {
 			for (int level = 0; level < currentLevel; level++) {
 				float posY = StartY;
 				for (int i = 0; i < 3; i++) {
-					Rectangle rectangle = new Rectangle((int)posX, (int)posY, boxSize, boxSize);
+					Rectangle rectangle = new((int)posX, (int)posY, boxSize, boxSize);
 					bool glow = originPlayer.GetMimicSetChoice(level) == i + 1;
 					if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
 						Main.LocalPlayer.mouseInterface = true;

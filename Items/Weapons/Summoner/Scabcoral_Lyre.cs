@@ -216,7 +216,7 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 		}
 		public struct Scabcoral_Branch_Drawer {
-			private static VertexStrip _vertexStrip = new VertexStrip();
+			private static VertexStrip _vertexStrip = new();
 			Color[] colors;
 			int length;
 			public void Draw(Arm[] arms) {

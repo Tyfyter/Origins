@@ -109,7 +109,7 @@ namespace Origins.Items.Weapons.Ranged {
 			List<Vector2> whipPointsForCollision = Projectile.WhipPointsForCollision;
 			whipPointsForCollision.Clear();
 			FillWhipControlPoints(whipPointsForCollision);
-			Vector2 value = new Vector2(Projectile.width * Projectile.scale / 2f, 0f);
+			Vector2 value = new(Projectile.width * Projectile.scale / 2f, 0f);
 			for (int i = 0; i < whipPointsForCollision.Count; i++) {
 				DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
 				Utils.PlotTileLine(whipPointsForCollision[i] - value, whipPointsForCollision[i] + value, Projectile.height * Projectile.scale, DelegateMethods.CutTiles);
@@ -138,7 +138,7 @@ namespace Origins.Items.Weapons.Ranged {
 		// This method draws a line between all points of the whip, in case there's empty space between the sprites.
 		private void DrawLine(List<Vector2> list) {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
-			Vector2 origin = new Vector2(texture.Width / 2, 3);
+			Vector2 origin = new(texture.Width / 2, 3);
 			int progress = -2;
 			Vector2 pos = list[0];
 			for (int i = 0; i < list.Count - 1; i++) {
@@ -155,11 +155,11 @@ namespace Origins.Items.Weapons.Ranged {
 				if (i == list.Count - 2) {
 					progress = texture.Height - (int)dist;
 				}
-				Rectangle frame = new Rectangle(0, progress + 2, 8, (int)dist);
+				Rectangle frame = new(0, progress + 2, 8, (int)dist);
 				progress += (int)dist;
 				float rotation = diff.ToRotation();
 				Color color = Lighting.GetColor(element.ToTileCoordinates(), Color.White);
-				Vector2 scale = new Vector2(0.5f, 1f);
+				Vector2 scale = new(0.5f, 1f);
 
 				Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation + MathHelper.PiOver2, origin, scale, SpriteEffects.None, 0);
 
@@ -168,14 +168,14 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 
 		public override bool PreDraw(ref Color lightColor) {
-			List<Vector2> list = new List<Vector2>();
+			List<Vector2> list = new();
 			FillWhipControlPoints(list);
 			DrawLine(list);
 			return false;
 		}
 		//https://youtu.be/PP5fBKo9998
 		public void FillWhipControlPoints(List<Vector2> controlPoints) {
-			GetWhipSettings(out var timeToFlyOut, out var segments, out var rangeMultiplier);
+			GetWhipSettings(out float timeToFlyOut, out int segments, out float rangeMultiplier);
 			float progress = MathHelper.Max(Projectile.ai[0], 7) / timeToFlyOut;
 			float oneHalf = 0.5f;
 			float threeHalves = 1f + oneHalf;

@@ -59,7 +59,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static List<int> Minions = [];
 		List<int> IMinions.BossMinions => Minions;
 		public override void Load() {
-			On_NPC.DoDeathEvents += static (On_NPC.orig_DoDeathEvents orig, NPC self, Player closestPlayer) => {
+			On_NPC.DoDeathEvents += static (orig, self, closestPlayer) => {
 				orig(self, closestPlayer);
 				if (self.ModNPC is Shimmer_Construct construct && !construct.noShimmer) {
 					if (oldItems is not null) {
@@ -682,7 +682,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 							teleports.Add((players[i], pos.ToWorldCoordinates(0, -8)));
 						}
 					}
-					stringBuilder.Append($"teleports: [{string.Join(", ", teleports.Select(static ((Player player, Vector2 position) tele) => $"{tele.player.name}: {tele.position}"))}], ");
+					stringBuilder.Append($"teleports: [{string.Join(", ", teleports.Select(static tele => $"{tele.player.name}: {tele.position}"))}], ");
 					DoTeleports(teleports);
 				}
 			}
@@ -879,7 +879,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		}
 	}
 	public struct ShimmerConstructSDF {
-		private static VertexRectangle rect = new VertexRectangle();
+		private static VertexRectangle rect = new();
 		public void Draw(Vector2 position, float rotation, Vector2 size) {
 			MiscShaderData shader = GameShaders.Misc["Origins:ShimmerConstructSDF"];
 			shader.UseColor(Color.CornflowerBlue);

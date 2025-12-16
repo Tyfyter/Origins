@@ -18,7 +18,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public virtual int CooldownTime => 5 * 60;
 		public virtual int FlaskUseCount => 5;
-		public static Func<Texture2D, Rectangle> GetFrameGetter(int type, int chargeCount) => (Texture2D texture) => {
+		public static Func<Texture2D, Rectangle> GetFrameGetter(int type, int chargeCount) => texture => {
 			int frame = 5;
 			if (!Main.gameMenu) {
 				frame = chargeCount - Main.CurrentPlayer.OriginPlayer().mojoFlaskChargesUsed;

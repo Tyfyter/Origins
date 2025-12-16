@@ -60,7 +60,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox) {
 			if (player.altFunctionUse != 2) {
 				if (player.itemAnimation < player.itemAnimationMax * 0.333) {
-					OriginExtensions.FixedUseItemHitbox(Item, player, ref hitbox, ref noHitbox);
+					OriginExtensions.FixedUseItemHitbox(Item, player, ref hitbox);
 					hitbox.Height += 16;
 				} else if (player.itemAnimation >= player.itemAnimationMax * 0.666) {
 					hitbox.Y += 16;

@@ -33,7 +33,7 @@ namespace Origins.UI {
 					}
 				}
 				if (completed) {
-					ChatManager.DrawColorCodedString(spriteBatch, OriginExtensions.StrikethroughFont, _snippets, position, new Color(color.R, color.G, color.B, 255), 0, Vector2.Zero, new(scale), out _, maxWidth, completed);
+					ChatManager.DrawColorCodedString(spriteBatch, StrikethroughFont.Font, _snippets, position, new Color(color.R, color.G, color.B, 255), 0, Vector2.Zero, new(scale), out _, maxWidth, completed);
 					return true;
 				}
 				return true;

@@ -38,7 +38,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
-		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
+		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out Asset<Texture2D> asset) ? asset : null))?.Value;
 		public override int BodyType => ModContent.NPCType<World_Cracker_Body>();
 		public override int TailType => ModContent.NPCType<World_Cracker_Tail>();
 		public override bool SharesDebuffs => true;
@@ -506,7 +506,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
-		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
+		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out Asset<Texture2D> asset) ? asset : null))?.Value;
 		public override bool SharesImmunityFrames => true;
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = value; }
 		public static AutoCastingAsset<Texture2D> ArmorTexture { get; private set; }
@@ -614,7 +614,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override float SegmentSeparation => 96;
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
-		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
+		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out Asset<Texture2D> asset) ? asset : null))?.Value;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}

@@ -68,8 +68,8 @@ namespace Origins.UI {
 					break;
 				}
 			}
-			static readonly Regex skipNextN = new Regex("skip_next_(\\d+)_if");
-			static readonly Regex mathExpressionSymbolizer = new Regex("(\\d+)|([a-zA-Z]+)|-|\\*|\\/|%|\\^|>=?|<=?|=|\\(|\\)");
+			static readonly Regex skipNextN = new("skip_next_(\\d+)_if");
+			static readonly Regex mathExpressionSymbolizer = new("(\\d+)|([a-zA-Z]+)|-|\\*|\\/|%|\\^|>=?|<=?|=|\\(|\\)");
 			public static List<(OpCode, object)> ParseMathExpression(string[] symbols, ref int cursor) {
 				List<(OpCode, object)> instructions = [];
 				while (cursor < symbols.Length) {

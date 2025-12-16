@@ -18,7 +18,7 @@ namespace Origins.Water {
 			g = 1.05f * glowValue;
 			b = 1f * glowValue;
 		}
-		public override Color BiomeHairColor() => new Color(50, 250, 230);
+		public override Color BiomeHairColor() => new(50, 250, 230);
 		public void AddLight(ref Vector3 color, byte liquidAmount) {
 			float mult = (liquidAmount > 200 ? 1 : liquidAmount / 200) * World.BiomeData.Riven_Hive.NormalGlowValue.GetValue();
 

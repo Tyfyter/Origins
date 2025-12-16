@@ -57,7 +57,7 @@ namespace Origins.Items.Accessories {
 					);
 				}
 			}
-			if (cooldowns[(int)QuoteType.Idle] <= 0) {
+			if (!disableIdle && cooldowns[(int)QuoteType.Idle] <= 0) {
 				PlayRandomMessage(QuoteType.Idle, cooldowns, player.Top);
 			}
 			if (player.companionCube && cooldowns[(int)QuoteType.Companion_Cube] <= 0) {
@@ -184,7 +184,7 @@ namespace Origins.Items.Accessories {
 				GetRandomVariation(type),
 				cooldowns,
 				position,
-				null
+				velocity
 			);
 		}
 		public static void TryPlayMessage(QuoteType type, string quote, int[] cooldowns, Vector2 position, Vector2? velocity = null) {

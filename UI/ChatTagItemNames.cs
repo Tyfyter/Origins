@@ -28,7 +28,7 @@ namespace Origins.UI {
 				}
 				orig(self, text, spriteBatch, startPosition, color, rotation, origin, ref scale, spriteEffects, depth);
 			});
-			On_Main.DrawItemTextPopups += (On_Main.orig_DrawItemTextPopups orig, float scaleTarget) => {
+			On_Main.DrawItemTextPopups += (orig, scaleTarget) => {
 				using Flag<bool> _ = new(() => ref isDrawingPopup, true);
 				orig(scaleTarget);
 			};

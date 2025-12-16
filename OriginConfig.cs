@@ -534,7 +534,7 @@ namespace Origins {
 						return;
 					}
 					Directory.CreateDirectory(WikiPagePath);
-					foreach (var item in WikiSpecialPage.SpecialPages) {
+					foreach (WikiSpecialPage item in WikiSpecialPage.SpecialPages) {
 						if (item.GeneratePage() is string page) WikiPageExporter.WriteFileNoUnneededRewrites(WikiPageExporter.GetWikiPagePath(item.Name), page);
 					}
 				}
@@ -549,7 +549,7 @@ namespace Origins {
 						return;
 					}
 					Directory.CreateDirectory(WikiSpritesPath);
-					foreach (var item in WikiSpecialPage.SpecialPages) {
+					foreach (WikiSpecialPage item in WikiSpecialPage.SpecialPages) {
 						foreach ((string name, Texture2D texture) in item.GetSprites() ?? Array.Empty<(string, Texture2D)>()) {
 							WikiImageExporter.ExportImage(name, texture);
 						}
@@ -667,17 +667,17 @@ namespace Origins {
 					for (int i = 0; i < dropInfoList.Count; i++) {
 						obtainableItems.Add(dropInfoList[i].itemId);
 					}
-					foreach (var item in TileLoaderMethods.tileTypeAndTileStyleToItemType.GetValue()) {
+					foreach (KeyValuePair<(int, int), int> item in TileLoaderMethods.tileTypeAndTileStyleToItemType.GetValue()) {
 						obtainableItems.Add(item.Value);
 					}
-					foreach (var item in TileLoaderMethods.tiles.GetValue().SelectMany(l => l.GetItemDrops(0, 0))) {
+					foreach (Item item in TileLoaderMethods.tiles.GetValue().SelectMany(l => l.GetItemDrops(0, 0))) {
 						obtainableItems.Add(item.type);
 					}
 
-					foreach (var item in TileLoaderMethods.wallTypeToItemType.GetValue()) {
+					foreach (KeyValuePair<int, int> item in TileLoaderMethods.wallTypeToItemType.GetValue()) {
 						obtainableItems.Add(item.Value);
 					}
-					foreach (var wall in TileLoaderMethods.walls.GetValue()) {
+					foreach (ModWall wall in TileLoaderMethods.walls.GetValue()) {
 						int drop = -1;
 						wall.Drop(0, 0, ref drop);
 						if (drop != -1) {

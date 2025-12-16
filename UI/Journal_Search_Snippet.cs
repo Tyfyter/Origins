@@ -54,7 +54,7 @@ namespace Origins.UI {
 				ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, Text, position, color, 0, Vector2.Zero, new Vector2(scale));
 				return true;
 			} else {
-				StringBuilder builder = new StringBuilder();
+				StringBuilder builder = new();
 				for (int i = (int)(dimensions.Width / FontAssets.MouseText.Value.MeasureString("_").X); i-- > 0;) {
 					builder.Append('_');
 				}

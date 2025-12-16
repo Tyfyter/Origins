@@ -96,7 +96,7 @@ namespace Origins.NPCs.Brine.Boss {
 			Projectile.damage = (int)(Projectile.damage * 0.8);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			List<Vector2> list = new List<Vector2>();
+			List<Vector2> list = new();
 			NPC owner = Owner;
 			Vector2 handPosition = owner.Center;
 			if (owner.ModNPC is Lost_Diver lostDiver) {
@@ -114,8 +114,8 @@ namespace Origins.NPCs.Brine.Boss {
 			for (int i = 0; i < list.Count; i++) {
 				// These two values are set to suit this projectile's sprite, but won't necessarily work for your own.
 				// You can change them if they don't!
-				Rectangle frame = new Rectangle(0, 0, 48, 28);
-				Vector2 origin = new Vector2(24, 14);
+				Rectangle frame = new(0, 0, 48, 28);
+				Vector2 origin = new(24, 14);
 				Vector2 scale = new Vector2(0.85f) * Projectile.scale;
 
 				if (i == list.Count - 1) {

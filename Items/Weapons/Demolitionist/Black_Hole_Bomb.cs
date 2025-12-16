@@ -146,7 +146,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (Projectile.timeLeft < collapseDur) {
 				scale = (collapseDur - Projectile.timeLeft) / (collapseDur / 2f);
 			}
-			DrawData data = new DrawData(Mod.Assets.Request<Texture2D>("Projectiles/Pixel").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 1, 1), new Color(0, 0, 0, 255), 0, new Vector2(0.5f, 0.5f), new Vector2(160, 160) * (Projectile.scale - scale), SpriteEffects.None, 0);
+			DrawData data = new(Mod.Assets.Request<Texture2D>("Projectiles/Pixel").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 1, 1), new Color(0, 0, 0, 255), 0, new Vector2(0.5f, 0.5f), new Vector2(160, 160) * (Projectile.scale - scale), SpriteEffects.None, 0);
 			Origins.blackHoleShade.UseOpacity(0.985f);
 			Origins.blackHoleShade.UseSaturation(3f + percent);
 			Origins.blackHoleShade.UseColor(0, 0, 0);

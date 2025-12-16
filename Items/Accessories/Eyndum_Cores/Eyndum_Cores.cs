@@ -28,7 +28,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 		}
 	}
 	public class Agility_Core : Eyndum_Core {
-		public override Color CoreGlowColor => new Color(255, 220, 0, 160);
+		public override Color CoreGlowColor => new(255, 220, 0, 160);
 		public override void UpdateEquip(Player player) {
 			player.wingTimeMax *= 2;
 			player.moveSpeed *= 4f;
@@ -38,7 +38,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 		}
 	}
 	public class Combat_Core : Eyndum_Core {
-		public override Color CoreGlowColor => new Color(160, 0, 255, 160);
+		public override Color CoreGlowColor => new(160, 0, 255, 160);
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClass.Generic) *= 1.24f;
 			player.GetCritChance(DamageClass.Generic) += 0.35f;
@@ -46,7 +46,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 		}
 	}
 	public class Construction_Core : Eyndum_Core {
-		public override Color CoreGlowColor => new Color(255, 160, 0, 160);
+		public override Color CoreGlowColor => new(255, 160, 0, 160);
 		public override void UpdateEquip(Player player) {
 			player.tileSpeed *= 2f;
 			player.wallSpeed *= 2.5f;
@@ -57,7 +57,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 		}
 	}
 	public class Fishing_Core : Eyndum_Core {
-		public override Color CoreGlowColor => new Color(255, 0, 160, 75);
+		public override Color CoreGlowColor => new(255, 0, 160, 75);
 		public override void UpdateEquip(Player player) {
 			player.fishingSkill += 100;
 			player.accFishingLine = true;
@@ -65,14 +65,14 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 		}
 	}
 	public class Lifeforce_Core : Eyndum_Core {
-		public override Color CoreGlowColor => new Color(255, 0, 75, 160);
+		public override Color CoreGlowColor => new(255, 0, 75, 160);
 		public override void UpdateEquip(Player player) {
 			player.statLifeMax2 += player.statLifeMax2 / 2;
 			player.lifeRegenCount += player.statLifeMax2 / 22;
 		}
 	}
 	public class Magic_Core : Eyndum_Core {
-		public override Color CoreGlowColor => new Color(255, 100, 0, 160);
+		public override Color CoreGlowColor => new(255, 100, 0, 160);
 		public override void UpdateEquip(Player player) {
 			player.manaCost *= 0.8f;
 			player.manaFlower = true;

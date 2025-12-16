@@ -110,7 +110,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 
 		public override bool PreDraw(ref Color lightColor) {
-			List<Vector2> list = new List<Vector2>();
+			List<Vector2> list = new();
 			Projectile.FillWhipControlPoints(Projectile, list);
 
 			SpriteEffects flip = Projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
@@ -123,8 +123,8 @@ namespace Origins.Items.Weapons.Summoner {
 			for (int i = 0; i < list.Count; i++) {
 				// These two values are set to suit this projectile's sprite, but won't necessarily work for your own.
 				// You can change them if they don't!
-				Rectangle frame = new Rectangle(0, 0, 48, 28);
-				Vector2 origin = new Vector2(24, 14);
+				Rectangle frame = new(0, 0, 48, 28);
+				Vector2 origin = new(24, 14);
 				Vector2 scale = new Vector2(0.85f) * Projectile.scale;
 
 				if (i == list.Count - 1) {
@@ -177,7 +177,7 @@ namespace Origins.Items.Weapons.Summoner {
 				if (player.active && !player.dead && !player.immune) {
 					Rectangle projHitbox = Projectile.Hitbox;
 					ProjectileLoader.ModifyDamageHitbox(Projectile, ref projHitbox);
-					Rectangle playerHitbox = new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height);
+					Rectangle playerHitbox = new((int)player.position.X, (int)player.position.Y, player.width, player.height);
 					if (projHitbox.Intersects(playerHitbox)) {
 						player.Hurt(
 							PlayerDeathReason.ByProjectile(Main.myPlayer, Projectile.whoAmI),

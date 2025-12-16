@@ -30,7 +30,7 @@ namespace Origins.UI {
 				cancelButton.Width.Set(-10, 1f);
 				cancelButton.Height.Set(32, 0f);
 				cancelButton.Top.Set(-32, 1f);
-				cancelButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => {
+				cancelButton.OnLeftClick += (evt, listeningElement) => {
 					IngameFancyUI.Close();
 					if (Main.netMode == NetmodeID.SinglePlayer) return;
 					ModPacket packet = Origins.instance.GetPacket();
@@ -57,7 +57,7 @@ namespace Origins.UI {
 			startButton.Width.Set(-10, 1f);
 			startButton.Height.Set(32, 0f);
 			startButton.Top.Set(-32, 1f);
-			startButton.OnLeftClick += (UIMouseEvent evt, UIElement listeningElement) => {
+			startButton.OnLeftClick += (evt, listeningElement) => {
 				IngameFancyUI.Close();
 				if (!Laser_Tag_Console.LaserTagRules.GetWinConditions().Any()) {
 					Main.NewText(Language.GetOrRegister("Mods.Origins.Laser_Tag.NeedWinConditions").Value, Color.Firebrick);

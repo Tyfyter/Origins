@@ -59,7 +59,7 @@ namespace Origins.Items.Accessories {
 						gravMod = new(0.5f, 1.2f);
 						break;
 					}
-					var anchor = new Physics.EntityAnchorPoint() {
+					Physics.EntityAnchorPoint anchor = new Physics.EntityAnchorPoint() {
 						entity = player,
 						offset = offset
 					};

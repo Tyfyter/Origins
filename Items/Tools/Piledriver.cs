@@ -166,7 +166,7 @@ namespace Origins.Items.Tools {
 			int pick = Piledriver.Pick;
 			bool stronk = Projectile.ai[2] == 2;
 			float stronkth = stronk ? 0 : 0.4f;
-			Vector2 perp = new Vector2(velocity.Y, -velocity.X);
+			Vector2 perp = new(velocity.Y, -velocity.X);
 			static void MineTile(Player owner, int x, int y, int pick, float extraHits = 0) {
 				int tileType = Framing.GetTileSafely(x, y).TileType;
 				bool altar = false;

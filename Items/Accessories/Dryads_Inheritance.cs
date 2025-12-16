@@ -126,7 +126,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			if (Projectile.ai[2] == 1f) {
-				Color value = new Color(lightColor.R / 2, 0, lightColor.G);
+				Color value = new(lightColor.R / 2, 0, lightColor.G);
 				float amount = (float)Math.Sin(Projectile.ai[0] % 120f * ((float)Math.PI * 2f) / 120f) * 0.5f + 0.5f;
 				lightColor = Color.Lerp(lightColor, value, amount);
 				return Color.Lerp(lightColor, Color.Lerp(Color.White, value, amount), 0.75f);
@@ -142,7 +142,7 @@ namespace Origins.Items.Accessories {
 			float baseRotation = Projectile.rotation;
 			Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
 			int num239 = Projectile.frame;
-			Vector2 offset = new Vector2(0f, radius);
+			Vector2 offset = new(0f, radius);
 			for (int i = 0; i < 10f; i++) {
 				Rectangle frame = texture.Frame(1, 5, 0, (num239 + i) % 5);
 				float rotation = baseRotation + Projectile.ai[1] + MathHelper.Pi / 5f * i;

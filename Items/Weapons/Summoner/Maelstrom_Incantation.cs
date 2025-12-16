@@ -325,7 +325,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 
 			Vector2 scale = (new Vector2(1.85f, 0.25f) / new Vector2(36, 72)) * (hitbox.b - hitbox.a).Length();
-			Rectangle frame = new Rectangle(0, 0, 36, 72);
+			Rectangle frame = new(0, 0, 36, 72);
 			Color color = Color.Lerp(new Color(255, 255, 255, 0), lightColor, 0.75f);
 			Main.EntitySpriteDraw(
 				texture,

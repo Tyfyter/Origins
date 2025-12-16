@@ -17,7 +17,7 @@ namespace Origins.Layers {
 
 			Vector2 Position = new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.legPosition + drawInfo.legVect;
 			Rectangle? Frame = new Rectangle?(drawPlayer.legFrame);
-			DrawData item = new DrawData(texture, Position, Frame, drawInfo.colorArmorLegs, drawPlayer.legRotation, drawInfo.legVect, 1f, drawInfo.playerEffect, 0) {
+			DrawData item = new(texture, Position, Frame, drawInfo.colorArmorLegs, drawPlayer.legRotation, drawInfo.legVect, 1f, drawInfo.playerEffect, 0) {
 				shader = drawInfo.cBody
 			};
 			drawInfo.DrawDataCache.Add(item);

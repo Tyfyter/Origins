@@ -10,7 +10,7 @@ using static Tyfyter.Utils.ChestLootCache.LootQueueMode;
 namespace Tyfyter.Utils {
 	public class ChestLootCache : IEnumerable<KeyValuePair<int, List<int>>> {
 		public static int[] vanillaGenChests => [0, 2, 4, 11, 12, 13, 15, 16, 17, 50, 51];
-		public Dictionary<int, List<int>> ChestLoots = new Dictionary<int, List<int>>();
+		public Dictionary<int, List<int>> ChestLoots = new();
 		public ChestLootCache() {
 			ChestLoots = new Dictionary<int, List<int>>();
 		}
@@ -42,7 +42,7 @@ namespace Tyfyter.Utils {
 		}
 		public WeightedRandom<int> GetWeightedRandom(bool cullUnique = true, UnifiedRandom random = null) {
 			bool cull = false;
-			WeightedRandom<int> rand = new WeightedRandom<int>(random ?? WorldGen.genRand);
+			WeightedRandom<int> rand = new(random ?? WorldGen.genRand);
 			foreach (KeyValuePair<int, List<int>> kvp in ChestLoots) {
 				if (kvp.Value.Count > 1) {
 					cull = cullUnique;
@@ -95,7 +95,7 @@ namespace Tyfyter.Utils {
 			ChestLootCache cache = null;
 			Chest chest;
 			int chestIndex = -1;
-			Queue<int> items = new Queue<int>();
+			Queue<int> items = new();
 			WeightedRandom<int> random;
 			int newLootType;
 			int queueMode = MODE_REPLACE;

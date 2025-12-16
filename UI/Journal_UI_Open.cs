@@ -362,7 +362,7 @@ namespace Origins.UI {
 		//for example, [i:Origins/Blue_Bovine]
 		public static string FormatTags(string text) {
 			string outputText = text;
-			Regex itemTagRegex = new Regex("(?<=\\[i:)\\S+?(?=:|])");
+			Regex itemTagRegex = new("(?<=\\[i:)\\S+?(?=:|])");
 			Match currentMatch = itemTagRegex.Match(outputText);
 			int tries = 1000;
 			while (currentMatch is not null && tries-- > 0) {
@@ -482,7 +482,7 @@ namespace Origins.UI {
 			try {
 				if (shade) Origins.shaderOroboros.Capture();
 				for (int i = 0; i < 2 && i + pageOffset < (pages?.Count ?? 0); i++) {
-					Vector2 pagePos = new Vector2(bounds.X + (i * bounds.Width * 0.5f) + (i == 0 ? xMarginOuter : xMarginInner), bounds.Y + yMargin);
+					Vector2 pagePos = new(bounds.X + (i * bounds.Width * 0.5f) + (i == 0 ? xMarginOuter : xMarginInner), bounds.Y + yMargin);
 					WrappingTextSnippetSetup.SetWrappingData(pagePos, bounds.Width * 0.5f - XMarginTotal);
 					bool canEnterWritingMode = true;
 					if (mode == Journal_UI_Mode.Custom && memoPage_focused && i == memoPage_selectedSide) {
@@ -878,7 +878,7 @@ namespace Origins.UI {
 							spriteBatch.DrawString(font, array2[k], currentPosition, color, rotation, origin, baseScale * textSnippet.Scale * scale, SpriteEffects.None, 0f);
 						} else {
 							spriteBatch.DrawString(font, zwnjSides[0], currentPosition, color, rotation, origin, baseScale * textSnippet.Scale * scale, SpriteEffects.None, 0f);
-							Vector2 cursorOffset = new Vector2(font.MeasureString(zwnjSides[0]).X * baseScale.X * scale, 0);
+							Vector2 cursorOffset = new(font.MeasureString(zwnjSides[0]).X * baseScale.X * scale, 0);
 							Vector2 cursorSize = FontAssets.MouseText.Value.MeasureString("^");
 							spriteBatch.DrawString(
 								FontAssets.MouseText.Value,

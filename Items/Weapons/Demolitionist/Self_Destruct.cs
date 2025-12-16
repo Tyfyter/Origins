@@ -99,7 +99,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Player player = Main.player[Projectile.owner];
-			Rectangle frame = new Rectangle((player.bodyFrame.Y / player.bodyFrame.Height == 5 ? 1 : 0) * 40, (player.Male ? 0 : 2) * 56, 40, 56);
+			Rectangle frame = new((player.bodyFrame.Y / player.bodyFrame.Height == 5 ? 1 : 0) * 40, (player.Male ? 0 : 2) * 56, 40, 56);
 			Vector2 position = new Vector2(
 					(int)(player.position.X - (player.bodyFrame.Width / 2) + (player.width / 2)),
 					(int)(player.position.Y + player.height - player.bodyFrame.Height)
@@ -163,7 +163,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool PreDraw(ref Color lightColor) {
 			const float scale = 3f;
 			Main.spriteBatch.Restart(SpriteSortMode.Immediate);
-			DrawData data = new DrawData(
+			DrawData data = new(
 				Mod.Assets.Request<Texture2D>("Projectiles/Pixel").Value,
 				Projectile.Center - Main.screenPosition,
 				new Rectangle(0, 0, 1, 1),

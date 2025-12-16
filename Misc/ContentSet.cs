@@ -5,7 +5,7 @@ namespace Origins.Misc {
 	public abstract class ContentSet<TContent, TData> : ILoadable where TContent : ILoadable, ContentSetItem<TData>, new() {
 		public abstract IEnumerable<TData> GetContentItems();
 		public void Load(Mod mod) {
-			foreach (var item in GetContentItems()) {
+			foreach (TData item in GetContentItems()) {
 				TContent content = new();
 				content.SetFromData(item);
 				mod.AddContent(content);

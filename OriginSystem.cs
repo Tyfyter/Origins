@@ -583,7 +583,7 @@ namespace Origins {
 					texts[key] = text.Value;
 				}
 			}
-			Regex substitutionRegex = new Regex("{§(.*?)}", RegexOptions.Compiled);
+			Regex substitutionRegex = new("{§(.*?)}", RegexOptions.Compiled);
 			foreach (KeyValuePair<string, LocalizedText> text in texts.ToList()) {
 				Match subMatch = substitutionRegex.Match(text.Value.Value);
 				while (subMatch.Success) {

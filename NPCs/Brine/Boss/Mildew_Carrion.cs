@@ -91,8 +91,8 @@ namespace Origins.NPCs.Brine.Boss {
 			(_, Vector2 barCenter, Texture2D iconTexture, Rectangle iconFrame, Color iconColor, float life, float lifeMax, float shield, float shieldMax, float iconScale, bool showText, Vector2 textOffset) = drawParams;
 			life = npc.lifeMax * MathF.Pow(progress, 0.5f);
 			lifeMax = MathHelper.Lerp(lastLostDiverMaxHealth, npc.lifeMax, progress);
-			Point barSize = new Point(456, 22); //Size of the bar
-			Point topLeftOffset = new Point(32, 24); //Where the top left of the bar starts
+			Point barSize = new(456, 22); //Size of the bar
+			Point topLeftOffset = new(32, 24); //Where the top left of the bar starts
 			int frameCount = 6;
 
 			Rectangle bgFrame = barTextureLD.Frame(verticalFrames: frameCount, frameY: 3);
@@ -120,7 +120,7 @@ namespace Origins.NPCs.Brine.Boss {
 			spriteBatch.Draw(barTextureLD, topLeft, bgFrame, bgColor * inverseProgress, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
 			// Bar itself
-			Vector2 stretchScale = new Vector2(scale / barFrame.Width, 1f);
+			Vector2 stretchScale = new(scale / barFrame.Width, 1f);
 			Color barColor = Color.White * inverseProgress;
 			spriteBatch.Draw(barTextureLD, barTopLeft, barFrame, barColor, 0f, Vector2.Zero, stretchScale, SpriteEffects.None, 0f);
 
@@ -145,8 +145,8 @@ namespace Origins.NPCs.Brine.Boss {
 			spriteBatch.Draw(barTextureMC, topLeft, frameFrame, Color.White * progress, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
 			// Icon
-			Vector2 iconOffset = new Vector2(4f, 20f);
-			Vector2 iconSize = new Vector2(26f, 28f);
+			Vector2 iconOffset = new(4f, 20f);
+			Vector2 iconSize = new(26f, 28f);
 			// The vanilla method with the shieldCurrent parameter, which is used only by the lunar pillars, uses iconSize = iconFrame.Size() instead, which have a size of 26x30,
 			// causing a slight vertical offset that is barely noticeable. Considering that the non-shieldCurrent method is the more general one, let's keep it like this
 			// (changing that using the lunar pillar code will cause many other icons to be offset instead) --direwolf420

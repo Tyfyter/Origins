@@ -27,7 +27,7 @@ namespace Origins.Tiles {
 				WorldGen.GetCactusType(i, j, tile.TileFrameX, tile.TileFrameY, out int sandType);
 				if (sandType == ModContent.TileType<Silica>()) {
 					float glowValue = Riven_Hive.NormalGlowValue.GetValue();
-					Color glowColor = new Color(glowValue, glowValue, glowValue, glowValue);
+					Color glowColor = new(glowValue, glowValue, glowValue, glowValue);
 					OriginExtensions.DrawTileGlow(
 						CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(Riven_Cactus.GlowPaintKey, tile.TileColor, Riven_Cactus.GlowTexture),
 						glowColor,
@@ -67,7 +67,7 @@ namespace Origins.Tiles {
 						int treeFrame = WorldGen.GetTreeFrame(tile);
 						int treeStyle = 0;
 						if (WorldGen.GetCommonTreeFoliageData(i, j, 0, ref treeFrame, ref treeStyle, out _, out int topTextureFrameWidth, out int topTextureFrameHeight)) {
-							Vector2 offset = new Vector2(Main.offScreenRange, Main.offScreenRange);
+							Vector2 offset = new(Main.offScreenRange, Main.offScreenRange);
 							Vector2 unscaledPosition = Main.Camera.UnscaledPosition;
 							Vector2 zero = Vector2.Zero;
 							Vector2 position = new Vector2(i * 16 - (int)unscaledPosition.X + 8, j * 16 - (int)unscaledPosition.Y + 16) + zero + offset;
@@ -77,7 +77,7 @@ namespace Origins.Tiles {
 								position.X += windFactor * 2f;
 								position.Y += System.Math.Abs(windFactor) * 2f;
 							}
-							Rectangle frame = new Rectangle(treeFrame * (topTextureFrameWidth + 2), 0, topTextureFrameWidth, topTextureFrameHeight);
+							Rectangle frame = new(treeFrame * (topTextureFrameWidth + 2), 0, topTextureFrameWidth, topTextureFrameHeight);
 							float rotation = windFactor * 0.08f;
 							spriteBatch.Draw(
 								glowingTree.GetTopTexture(tile.TileColor),
@@ -129,10 +129,10 @@ namespace Origins.Tiles {
 					switch (tile.TileFrameX) {
 						case 22: {
 							position += new Vector2(8, 16);
-							Vector2 offset = new Vector2(Main.offScreenRange, Main.offScreenRange);
+							Vector2 offset = new(Main.offScreenRange, Main.offScreenRange);
 							Vector2 unscaledPosition = Main.Camera.UnscaledPosition;
 							Vector2 zero = Vector2.Zero;
-							Rectangle frame = new Rectangle(treeFrame * (topTextureFrameWidth + 2), 0, topTextureFrameWidth, topTextureFrameHeight);
+							Rectangle frame = new(treeFrame * (topTextureFrameWidth + 2), 0, topTextureFrameWidth, topTextureFrameHeight);
 							float rotation = windFactor * 0.08f;
 							position.X += windFactor * 2f;
 							position.Y += Math.Abs(windFactor) * 2f;

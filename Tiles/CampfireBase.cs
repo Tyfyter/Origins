@@ -110,7 +110,7 @@ namespace Origins.Tiles {
 			}
 		}
 		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
-			var tile = Main.tile[i, j];
+			Tile tile = Main.tile[i, j];
 			if (tile.TileFrameY < 36) {
 				frameYOffset = Main.tileFrame[type] * 36;
 			} else {
@@ -153,13 +153,13 @@ namespace Origins.Tiles {
 		}
 
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			var tile = Main.tile[i, j];
+			Tile tile = Main.tile[i, j];
 			if (!TileDrawing.IsVisible(tile)) return;
 
 			if (tile.TileFrameY < 36) {
-				Color color = new Color(255, 255, 255, 0);
+				Color color = new(255, 255, 255, 0);
 
-				Vector2 zero = new Vector2(Main.offScreenRange, Main.offScreenRange);
+				Vector2 zero = new(Main.offScreenRange, Main.offScreenRange);
 				if (Main.drawToScreen) {
 					zero = Vector2.Zero;
 				}
@@ -175,7 +175,7 @@ namespace Origins.Tiles {
 				TileLoader.SetDrawPositions(i, j, ref width, ref offsetY, ref height, ref frameX, ref frameY); // calculates the draw offsets
 				TileLoader.SetAnimationFrame(Type, i, j, ref addFrX, ref addFrY); // calculates the animation offsets
 
-				Rectangle drawRectangle = new Rectangle(tile.TileFrameX, tile.TileFrameY + addFrY, 16, 16);
+				Rectangle drawRectangle = new(tile.TileFrameX, tile.TileFrameY + addFrY, 16, 16);
 
 				// The flame is manually drawn separate from the tile texture so that it can be drawn at full brightness.
 				Main.spriteBatch.Draw(flameTexture.Value, new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y + offsetY) + zero, drawRectangle, color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);

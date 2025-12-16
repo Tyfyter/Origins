@@ -236,8 +236,8 @@ namespace Origins.NPCs.Fiberglass {
 			else NPC.EncourageDespawn(60);
 		}
 		public static Vector2 GetStandPosition(Vector2 target, Vector2 legStart, float legth) {//candidate
-			HashSet<Point> checkedPoints = new HashSet<Point>();
-			Queue<Point> candidates = new Queue<Point>();
+			HashSet<Point> checkedPoints = new();
+			Queue<Point> candidates = new();
 			candidates.Enqueue(target.ToWorldCoordinates().ToPoint());
 			Tile tile;
 			Point current;
@@ -405,7 +405,7 @@ namespace Origins.NPCs.Fiberglass {
 		private static readonly VertexStrip _vertexStrip = new();
 		public override bool PreDraw(ref Color lightColor) {
 			Vector2 diff = OtherEndPos + new Vector2(4) - Projectile.Center;
-			Vector2 scale = new Vector2(diff.Length(), 2);
+			Vector2 scale = new(diff.Length(), 2);
 
 			MiscShaderData miscShaderData = GameShaders.Misc["Origins:AnimatedTrail"];
 			int num = 1;//1
@@ -425,7 +425,7 @@ namespace Origins.NPCs.Fiberglass {
 			const int verts = 128;
 			float[] rot = new float[verts + 1];
 			Vector2[] pos = new Vector2[verts + 1];
-			Vector2 start = new Vector2(Projectile.Center.X, Projectile.Center.Y);
+			Vector2 start = new(Projectile.Center.X, Projectile.Center.Y);
 			Vector2 end = OtherEndPos;
 			float rotation = (end - start).ToRotation();
 			for (int i = 0; i < verts + 1; i++) {

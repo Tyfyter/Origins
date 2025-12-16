@@ -112,7 +112,7 @@ namespace Origins.Items.Weapons.Melee {
 			if (TangelaVisual.DrawOver) return;
 			Texture2D texture = TextureAssets.FishingLine.Value;
 			Rectangle frame = texture.Frame();
-			Vector2 origin = new Vector2(frame.Width / 2, 2);
+			Vector2 origin = new(frame.Width / 2, 2);
 
 			Vector2 pos = list[0];
 			float progress = 0;
@@ -122,7 +122,7 @@ namespace Origins.Items.Weapons.Melee {
 
 				float rotation = diff.ToRotation() - MathHelper.PiOver2;
 				float length = diff.Length();
-				Vector2 scale = new Vector2(2, length / frame.Height);
+				Vector2 scale = new(2, length / frame.Height);
 
 				TangelaVisual.DrawTangela(this, texture, pos - Main.screenPosition, frame, rotation, origin, scale, SpriteEffects.None, extraOffset: new(0, progress));
 
@@ -133,7 +133,7 @@ namespace Origins.Items.Weapons.Melee {
 		public int? TangelaSeed { get; set; }
 
 		public override bool PreDraw(ref Color lightColor) {
-			List<Vector2> list = new List<Vector2>();
+			List<Vector2> list = new();
 			Projectile.FillWhipControlPoints(Projectile, list);
 			DrawLine(list);
 
@@ -147,8 +147,8 @@ namespace Origins.Items.Weapons.Melee {
 			for (int i = 0; i < list.Count; i++) {
 				// These two values are set to suit this projectile's sprite, but won't necessarily work for your own.
 				// You can change them if they don't!
-				Rectangle frame = new Rectangle(0, 0, 48, 28);
-				Vector2 origin = new Vector2(24, 14);
+				Rectangle frame = new(0, 0, 48, 28);
+				Vector2 origin = new(24, 14);
 				Vector2 scale = new Vector2(0.85f) * Projectile.scale;
 
 				if (i == list.Count - 1) {

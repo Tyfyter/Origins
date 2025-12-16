@@ -139,7 +139,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				transformMatrix: Main.LocalPlayer.gravDir == 1f ? Main.GameViewMatrix.ZoomMatrix : Main.GameViewMatrix.TransformationMatrix
 			);
 			float percent = (duration - Projectile.timeLeft) / (float)duration;
-			DrawData data = new DrawData(Main.Assets.Request<Texture2D>("Images/Misc/Perlin").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 600, 600), new Color(new Vector4(0.35f, 0.35f, 0.35f, 0.6f) * (1f - percent)), 0, new Vector2(300f, 300f), new Vector2(percent, percent / 1.61803399f) * Projectile.scale, SpriteEffects.None, 0);
+			DrawData data = new(Main.Assets.Request<Texture2D>("Images/Misc/Perlin").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 600, 600), new Color(new Vector4(0.35f, 0.35f, 0.35f, 0.6f) * (1f - percent)), 0, new Vector2(300f, 300f), new Vector2(percent, percent / 1.61803399f) * Projectile.scale, SpriteEffects.None, 0);
 			GameShaders.Misc["ForceField"].UseColor(new Vector3(2f));
 			GameShaders.Misc["ForceField"].Apply(data);
 			data.Draw(Main.spriteBatch);

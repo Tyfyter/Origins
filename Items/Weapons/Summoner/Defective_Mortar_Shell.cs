@@ -65,7 +65,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Ashen_Mortar : ModProjectile {
 		public override string Texture => typeof(Ashen_Mortar).GetDefaultTMLName() + "_Base";
 		static readonly AutoLoadingAsset<Texture2D> headTexture = typeof(Ashen_Mortar).GetDefaultTMLName() + "_Barrel";
-		Vector2 headCenterOffset => new Vector2(Projectile.width * 0.5f, 30);
+		Vector2 headCenterOffset => new(Projectile.width * 0.5f, 30);
 		public override void SetStaticDefaults() {
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;

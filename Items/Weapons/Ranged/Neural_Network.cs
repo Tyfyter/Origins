@@ -62,7 +62,7 @@ namespace Origins.Items.Weapons.Ranged {
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
-			Color color = new Color(new Vector4(Main.buffAlpha[buffIndex]));
+			Color color = new(new Vector4(Main.buffAlpha[buffIndex]));
 			spriteBatch.DrawString(
 				FontAssets.ItemStack.Value,
 				Main.LocalPlayer.buffTime[buffIndex].ToString(),

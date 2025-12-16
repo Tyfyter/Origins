@@ -419,8 +419,7 @@ namespace Origins {
 				Potato_Battery.PlayRandomMessage(
 					Potato_Battery.QuoteType.Combat,
 					potatOSQuoteCooldown,
-					Player.Top,
-					new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
+					Player.Top
 				);
 			}
 			if (hasProtOS) {
@@ -428,15 +427,13 @@ namespace Origins {
 					Protomind.PlayRandomMessage(
 						Protomind.QuoteType.Kill_Villager,
 						protOSQuoteCooldown,
-						Player.Top,
-						new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
+						Player.Top
 					);
 				} else if (Main.rand.NextBool(10)) {
 					Protomind.PlayRandomMessage(
 						Protomind.QuoteType.Combat,
 						protOSQuoteCooldown,
-						Player.Top,
-						new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
+						Player.Top
 					);
 				}
 			}

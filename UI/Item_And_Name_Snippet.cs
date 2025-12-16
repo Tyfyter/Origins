@@ -45,7 +45,7 @@ namespace Origins.UI {
 					Main.inventoryScale = inventoryScale;
 					spriteBatch.DrawString(FontAssets.MouseText.Value, item.Name, position + new Vector2(32f, 0) * num, Color.MultiplyRGBA(color));
 					if (!locked) {
-						ChatManager.DrawColorCodedString(spriteBatch, OriginExtensions.StrikethroughFont, "☐" + item.Name, position, new Color(color.R, color.G, color.B, 255), 0, Vector2.Zero, new(scale));
+						ChatManager.DrawColorCodedString(spriteBatch, StrikethroughFont.Font, "☐" + item.Name, position, new Color(color.R, color.G, color.B, 255), 0, Vector2.Zero, new(scale));
 					}
 				}
 				size = new Vector2(32f) * num + FontAssets.MouseText.Value.MeasureString(item.Name) * Vector2.UnitX;

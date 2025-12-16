@@ -64,7 +64,7 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 	public class Fake_Defiled_Altar() : Evil_Altar_Tile<Defiled_Bar, Undead_Chunk>("Defiled/Defiled_Altar") { }
 	public class Fake_Riven_Altar() : Evil_Altar_Tile<Encrusted_Bar, Riven_Carapace>("Riven/Riven_Altar"), IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
-		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
+		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);

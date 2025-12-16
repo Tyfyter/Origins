@@ -7,7 +7,7 @@ namespace Origins.Tiles.Other {
 		public override void SetBiomeActive() => Riven_Hive.forcedBiomeActive = true;
 		readonly AutoLoadingAsset<Texture2D> glowTexture;
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
-		public Color GlowColor => new Color(196, 196, 196, 100);
+		public Color GlowColor => new(196, 196, 196, 100);
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (IsEnabled(tile)) {
 				color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue());

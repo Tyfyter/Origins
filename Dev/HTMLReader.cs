@@ -176,7 +176,7 @@ namespace Origins.Dev {
 			string indent = new('\t', depth);
 			string attr = "";
 			if (attributes.Count != 0) {
-				foreach (var item in attributes) {
+				foreach (KeyValuePair<string, string> item in attributes) {
 					if (string.IsNullOrWhiteSpace(item.Key)) continue;
 					if (item.Value is null) {
 						builder.Append($" {item.Key}");
@@ -213,7 +213,7 @@ namespace Origins.Dev {
 			string attr = "";
 			if (attributes.Count != 0) {
 				StringBuilder builder = new();
-				foreach (var item in attributes) {
+				foreach (KeyValuePair<string, string> item in attributes) {
 					if (string.IsNullOrWhiteSpace(item.Key)) continue;
 					if (item.Value is null) {
 						builder.Append($" {item.Key}");
@@ -226,7 +226,7 @@ namespace Origins.Dev {
 			return $"<{nodeName}{attr}>";
 		}
 		public HTMLNode GetElementByID(string id) {
-			foreach (var child in Children) {
+			foreach (IHTMLNode child in Children) {
 				if (child is HTMLNode childNode) {
 					if (childNode.attributes.TryGetValue("id", out string value) && value == id) return childNode;
 					if (childNode.GetElementByID(id) is HTMLNode descendant) return descendant; 

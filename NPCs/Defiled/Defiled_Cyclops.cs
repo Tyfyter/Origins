@@ -215,9 +215,9 @@ namespace Origins.NPCs.Defiled {
 			for (int i = 1; i < controlPoints.Count; i++) {
 				// These two values are set to suit this projectile's sprite, but won't necessarily work for your own.
 				// You can change them if they don't!
-				Rectangle frame = new Rectangle(0, 0, 48, 28);
-				Vector2 origin = new Vector2(24, 14);
-				Vector2 scale = new Vector2(0.85f);
+				Rectangle frame = new(0, 0, 48, 28);
+				Vector2 origin = new(24, 14);
+				Vector2 scale = new(0.85f);
 
 				if (i == controlPoints.Count - 1) {
 					frame.Y = 112;
@@ -338,7 +338,7 @@ namespace Origins.NPCs.Defiled {
 			if (TangelaVisual.DrawOver) return;
 			Texture2D texture = TextureAssets.FishingLine.Value;
 			Rectangle frame = texture.Frame();
-			Vector2 origin = new Vector2(frame.Width / 2, 0);
+			Vector2 origin = new(frame.Width / 2, 0);
 
 			Vector2 pos = list[0];
 			float progress = 0;
@@ -348,7 +348,7 @@ namespace Origins.NPCs.Defiled {
 
 				float rotation = diff.ToRotation() - MathHelper.PiOver2;
 				float length = diff.Length();
-				Vector2 scale = new Vector2(2, length / frame.Height);
+				Vector2 scale = new(2, length / frame.Height);
 
 				TangelaVisual.DrawTangela(this, texture, pos - Main.screenPosition, frame, rotation, origin, scale, SpriteEffects.None, extraOffset: new(0, progress));
 
@@ -358,7 +358,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public int? TangelaSeed { get => (int)Projectile.ai[2]; set { } }
 		public override bool PreDraw(ref Color lightColor) {
-			List<Vector2> list = new List<Vector2>();
+			List<Vector2> list = new();
 			NPC owner = Owner;
 			Vector2 handPosition = owner.Center + Defiled_Cyclops.ArmStartOffset(owner);
 			FillWhipControlPoints(Projectile, handPosition, list);
@@ -374,8 +374,8 @@ namespace Origins.NPCs.Defiled {
 			for (int i = 1; i < list.Count; i++) {
 				// These two values are set to suit this projectile's sprite, but won't necessarily work for your own.
 				// You can change them if they don't!
-				Rectangle frame = new Rectangle(0, 0, 48, 28);
-				Vector2 origin = new Vector2(24, 14);
+				Rectangle frame = new(0, 0, 48, 28);
+				Vector2 origin = new(24, 14);
 				Vector2 scale = new Vector2(0.85f) * Projectile.scale;
 
 				if (i == list.Count - 1) {

@@ -79,7 +79,7 @@ namespace Origins.Items.Other.Fish {
 		}
 		public override bool CatchFish(Player player, FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
 			FishingLoot.lastProcessedLoot = this;
-			WeightedRandom<FishingLootInfo> pool = new WeightedRandom<FishingLootInfo>(loots.Select(l => new Tuple<FishingLootInfo, double>(l.loot, l.weight(player, attempt))).ToArray());
+			WeightedRandom<FishingLootInfo> pool = new(loots.Select(l => new Tuple<FishingLootInfo, double>(l.loot, l.weight(player, attempt))).ToArray());
 			do {
 				if (pool.Pop()?.CatchFish(player, attempt, ref itemDrop, ref npcSpawn, ref sonar, ref sonarPosition) ?? false) {
 					return true;

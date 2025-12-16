@@ -20,7 +20,7 @@ namespace Origins.Layers {
 			DrawData item;
 			int a = (int)Math.Max(Math.Min((drawPlayer.GetModPlayer<OriginPlayer>().felnumShock * 255) / drawPlayer.statLifeMax2, 255), 1);
 			if (drawPlayer.head == Origins.AncientFelnumHeadArmorID || drawInfo.fullHair || drawInfo.hatHair || drawPlayer.head == ArmorIDs.Head.FamiliarWig) {
-				Vector2 bodyOffset = new Vector2(-drawInfo.drawPlayer.bodyFrame.Width / 2 + drawInfo.drawPlayer.width / 2, drawInfo.drawPlayer.height - drawInfo.drawPlayer.bodyFrame.Height + 4);
+				Vector2 bodyOffset = new(-drawInfo.drawPlayer.bodyFrame.Width / 2 + drawInfo.drawPlayer.width / 2, drawInfo.drawPlayer.height - drawInfo.drawPlayer.bodyFrame.Height + 4);
 				Position = (drawInfo.Position - Main.screenPosition + bodyOffset).Floor() + drawInfo.drawPlayer.headPosition + drawInfo.headVect;
 				Frame = drawPlayer.bodyFrame;
 

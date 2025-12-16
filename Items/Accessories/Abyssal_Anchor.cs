@@ -51,7 +51,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateVanity(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.abyssalAnchorVisual = true;
-			Vector2 halfSize = new Vector2(12);
+			Vector2 halfSize = new(12);
 			ref Physics.Chain chain = ref originPlayer.abyssalAnchorChain;
 			if (chain is null || chain.links[0].position.HasNaNs() || chain.links[0].position.DistanceSQ(player.position) > 512 * 512) {
 				Physics.EntityAnchorPoint anchor = new() {

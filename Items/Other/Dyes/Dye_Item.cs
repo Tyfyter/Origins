@@ -36,7 +36,7 @@ namespace Origins.Items.Other.Dyes {
 			lastState = spriteBatch.GetState();
 			Main.spriteBatch.Restart(lastState, SpriteSortMode.Immediate);
 
-			DrawData data = new DrawData {
+			DrawData data = new() {
 				texture = TextureAssets.Item[Item.type].Value,
 				sourceRect = frame,
 				position = position,
@@ -61,7 +61,7 @@ namespace Origins.Items.Other.Dyes {
 			lastState = spriteBatch.GetState();
 			Main.spriteBatch.Restart(lastState, SpriteSortMode.Immediate, samplerState: SamplerState.AnisotropicWrap);
 
-			DrawData data = new DrawData {
+			DrawData data = new() {
 				texture = TextureAssets.Item[Item.type].Value,
 				position = Item.position - Main.screenPosition,
 				color = lightColor,

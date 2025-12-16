@@ -182,7 +182,7 @@ namespace Origins.Tiles.Brine {
 				Vector2 zero = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange, Main.offScreenRange);
 				Vector2 position = new Vector2(i, j) * 16 - Main.screenPosition + zero;
 				//position.Y += 2;
-				Rectangle frame = new Rectangle(0, 0, 16, 16);//2
+				Rectangle frame = new(0, 0, 16, 16);//2
 				//float lastWindGridPush = 0;
 				for (int k = j; Framing.GetTileSafely(i, k).TileType == Type; k++) {
 					Tile tile = Main.tile[i, k];

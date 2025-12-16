@@ -22,7 +22,7 @@ namespace Tyfyter.Utils {
 			public virtual float SlotX => 0;
 			public virtual float SlotY => 0;
 			public RefItemSlot itemSlot = null;
-			protected internal Queue<Action> itemSlotQueue = new Queue<Action>() { };
+			protected internal Queue<Action> itemSlotQueue = new() { };
 			/// <summary>
 			/// Passes the parameters to an action to be added in Update
 			/// </summary>
@@ -44,7 +44,7 @@ namespace Tyfyter.Utils {
 			/// <param name="context">passed to RefItemSlot constructor</param>
 			/// <param name="slotScale">passed to RefItemSlot constructor</param>
 			public void SetItemSlot(Ref<Item> item, Vector2 position, bool usePercent = false, Func<Item, bool> _ValidItemFunc = null, Color? slotColor = null, int context = ItemSlot.Context.InventoryItem, float slotScale = 1f, bool shiftClickToInventory = false, params (Texture2D texture, Color color)[] extraTextures) {
-				RefItemSlot itemSlot = new RefItemSlot(_item: item, context: context, scale: slotScale) {
+				RefItemSlot itemSlot = new(_item: item, context: context, scale: slotScale) {
 					ValidItemFunc = _ValidItemFunc ?? (i => true),
 					colorMult = slotColor ?? Color.White,
 					extraTextures = extraTextures,
@@ -71,7 +71,7 @@ namespace Tyfyter.Utils {
 			}
 		}
 		public class RefItemSlot : UIElement {
-			public static Color MissingSlotColor => new Color(160, 160, 160, 160);
+			public static Color MissingSlotColor => new(160, 160, 160, 160);
 			public bool slotSourceMissing = false;
 			public bool shiftClickToInventory = false;
 			internal Ref<Item> item;
@@ -117,7 +117,7 @@ namespace Tyfyter.Utils {
 				if (slotSourceMissing) {
 					slotColorMult = MissingSlotColor;
 				}
-				Item _ = new Item();
+				Item _ = new();
 				DrawColoredItemSlot(spriteBatch, ref _, rectangle.TopLeft(), TextureAssets.InventoryBack13.Value, slotColor.MultiplyRGBA(slotColorMult));
 				foreach ((Texture2D texture, Color color) texture in extraTextures) {
 					spriteBatch.Draw(texture.texture, rectangle.TopLeft(), null, texture.color.MultiplyRGBA(slotColorMult), 0, default, Main.inventoryScale, SpriteEffects.None, 0);

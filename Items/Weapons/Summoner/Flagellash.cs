@@ -122,7 +122,7 @@ namespace Origins.Items.Weapons.Summoner {
 		private void DrawLine(List<Vector2> list) {
 			//Texture2D texture = TextureAssets.FishingLine.Value;
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
-			Vector2 origin = new Vector2(texture.Width / 2, 3);
+			Vector2 origin = new(texture.Width / 2, 3);
 			int progress = -2;
 			Vector2 pos = list[0];
 			for (int i = 0; i < list.Count; i++) {
@@ -144,7 +144,7 @@ namespace Origins.Items.Weapons.Summoner {
 				if (i == list.Count - 1) {
 					progress = texture.Width - (int)dist;
 				}
-				Rectangle frame = new Rectangle(0, progress + 2, 6, (int)dist);
+				Rectangle frame = new(0, progress + 2, 6, (int)dist);
 				progress += (int)dist;
 				float rotation = diff.ToRotation() - MathHelper.PiOver2;
 				Color color = Color.Lerp(Lighting.GetColor(element.ToTileCoordinates()), Color.White, 0.85f);

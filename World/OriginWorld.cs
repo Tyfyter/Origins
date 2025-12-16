@@ -400,7 +400,7 @@ namespace Origins {
 			}
 			int q = 100;
 			while (!WorldGen.gen && (queuedKillTiles?.Count ?? 0) > 0) {
-				var (i, j) = queuedKillTiles.Dequeue();
+				(int i, int j) = queuedKillTiles.Dequeue();
 				WorldGen.KillTile(i, j, true);
 				if (q-- < 0) {
 					break;

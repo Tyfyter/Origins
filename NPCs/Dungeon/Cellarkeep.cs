@@ -208,7 +208,7 @@ namespace Origins.NPCs.Dungeon {
 				if (NPC.collideX) {
 					NPC.direction *= -1;
 					NPC.velocity.X = -4 * System.Math.Sign(NPC.velocity.X);
-					NPC.HitInfo hit = new NPC.HitInfo() {
+					NPC.HitInfo hit = new() {
 						Damage = 4,
 						HideCombatText = true
 					};

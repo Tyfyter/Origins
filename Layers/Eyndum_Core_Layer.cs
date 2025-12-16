@@ -16,7 +16,7 @@ namespace Origins.Layers {
 			Color color = ((Eyndum_Core)drawPlayer.GetModPlayer<OriginPlayer>().eyndumCore.Value.ModItem).CoreGlowColor;
 			Vector2 Position = new Vector2(((int)(drawInfo.Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f)), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + drawInfo.bodyVect;
 			Rectangle? Frame = new Rectangle?(drawPlayer.bodyFrame);
-			DrawData item = new DrawData(Origins.eyndumCoreTexture, Position, Frame, color, drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
+			DrawData item = new(Origins.eyndumCoreTexture, Position, Frame, color, drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
 			item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
 			drawInfo.DrawDataCache.Add(item);
 		}

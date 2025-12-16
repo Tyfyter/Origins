@@ -123,7 +123,7 @@ namespace Origins.World.BiomeData {
 				CAVE,
 			}
 			public static void StartHive(int i, int j) {
-				Vector2 pos = new Vector2(i, j);
+				Vector2 pos = new(i, j);
 				ushort fleshBlockType = (ushort)TileType<Tainted_Stone>();
 				ushort fleshWallType = (ushort)WallType<Tainted_Stone_Wall>();
 				int oreID = TileType<Sanguinite_Ore>();
@@ -136,7 +136,7 @@ namespace Origins.World.BiomeData {
 				List<(int x, int y, FeatureType type, bool rightSide)> features = [];
 
 				float targetTwist = genRand.NextFloat(-0.5f, 0.5f);
-				PolarVec2 speed = new PolarVec2(8, genRand.NextFloat(-0.5f, 0.5f) + MathHelper.PiOver2);
+				PolarVec2 speed = new(8, genRand.NextFloat(-0.5f, 0.5f) + MathHelper.PiOver2);
 				double strength = 32;
 				double baseStrength = strength;
 				strength = Math.Pow(strength, 2);
@@ -387,7 +387,7 @@ namespace Origins.World.BiomeData {
 					j2 = (int)Main.worldSurface;
 				}
 				for (; !SolidTile(i, j2); j2++) { }
-				Vector2 position = new Vector2(i, j2);
+				Vector2 position = new(i, j2);
 				for (int x = i - 30; x < i + 30; x++) {
 					for (int y = j2 - 25; y < j2 + 15; y++) {
 						float diff = (((y - j2) * (y - j2) * 1.5f) + (x - i) * (x - i));
@@ -416,7 +416,7 @@ namespace Origins.World.BiomeData {
 				(int x, int y, Vector2 direction, double length) startValues = ((int)last.position.X, (int)last.position.Y, last.velocity.RotatedByRandom(0.5f, genRand), distance * genRand.NextFloat(0.4f, 0.6f));
 				last = GenRunners.WalledVeinRunner(startValues.x, startValues.y, strength * genRand.NextFloat(0.9f, 1.1f), startValues.direction, startValues.length, weakFleshID, wallThickness);
 				//t.ResetToType(TileID.AmethystGemspark);
-				Vector2 manualVel = new Vector2(last.velocity.X, 0.2f);
+				Vector2 manualVel = new(last.velocity.X, 0.2f);
 				//t = Main.tile[(int)last.position.X, (int)last.position.Y];
 				GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(new Vector2(-manualVel.X, 0.2f)), genRand.NextFloat(distance * 0.4f, distance * 0.6f) * (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
 				last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(manualVel), genRand.NextFloat(distance * 0.4f, distance * 0.6f) / (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
@@ -436,7 +436,7 @@ namespace Origins.World.BiomeData {
 					if (index < 8) {
 						GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), last.velocity.RotatedBy(genRand.Next(2) * 2 - 1).RotatedByRandom(0.8f, genRand), genRand.NextFloat(distance * 0.4f, distance * 0.6f), weakFleshID, wallThickness, wallType: fleshWallID);
 					}
-					PolarVec2 vel = new PolarVec2(1, last.velocity.ToRotation());
+					PolarVec2 vel = new(1, last.velocity.ToRotation());
 					OriginExtensions.AngularSmoothing(ref vel.Theta, MathHelper.PiOver2, 0.7f);
 					//t.ResetToType(TileID.AmethystGemspark);
 					last = (last.position, (Vector2)vel);
@@ -463,7 +463,7 @@ namespace Origins.World.BiomeData {
 				ushort blisterID = (ushort)TileType<Gel_Blister>();
 				int i2 = i + (int)(genRand.Next(-26, 26) * sizeMult);
 				int j2 = j + (int)(genRand.Next(-2, 22) * sizeMult);
-				Queue<Point> lesionPlacementSpots = new Queue<Point>();
+				Queue<Point> lesionPlacementSpots = new();
 				for (int x = i2 - (int)(33 * sizeMult + 5); x < i2 + (int)(33 * sizeMult + 5); x++) {
 					for (int y = j2 + (int)(28 * sizeMult + 4); y >= j2 - (int)(28 * sizeMult + 4); y--) {
 						float sq = Math.Max(Math.Abs(y - j2) * 1.5f, Math.Abs(x - i2));
@@ -720,7 +720,7 @@ namespace Origins.World.BiomeData {
 		}
 		public override AltMaterialContext MaterialContext {
 			get {
-				AltMaterialContext context = new AltMaterialContext();
+				AltMaterialContext context = new();
 				context.SetEvilSword(ItemType<Switchblade_Broadsword>());
 				context.SetEvilOre(ItemType<Sanguinite_Ore_Item>());
 				context.SetEvilBar(ItemType<Sanguinite_Bar>());

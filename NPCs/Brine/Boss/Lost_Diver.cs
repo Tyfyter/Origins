@@ -672,12 +672,12 @@ namespace Origins.NPCs.Brine.Boss {
 					itemDrawFrame = Main.itemAnimations[heldItemType].GetFrame(value);
 				}
 				Item heldItem = ContentSamples.ItemsByType[heldItemType];
-				Vector2 vector9 = new Vector2(0f, itemDrawFrame.Height / 2);
+				Vector2 vector9 = new(0f, itemDrawFrame.Height / 2);
 				Vector2 vector10 = new(10, itemDrawFrame.Height * 0.5f);
 				ItemLoader.HoldoutOffset(1, heldItemType, ref vector10);
 				int num12 = (int)vector10.X;
 				vector9.Y = vector10.Y;
-				Vector2 origin7 = new Vector2(-num12, itemDrawFrame.Height / 2);
+				Vector2 origin7 = new(-num12, itemDrawFrame.Height / 2);
 				if (NPC.direction == -1) {
 					origin7 = new Vector2(itemDrawFrame.Width + num12, itemDrawFrame.Height / 2);
 				}

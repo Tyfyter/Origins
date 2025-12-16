@@ -89,11 +89,11 @@ namespace Origins.Items.Other {
 
 			float num5 = (float)Math.PI * 2f / num;
 			float num6 = 0f;
-			Vector2 vector = new Vector2(1.3f, 0.65f);
+			Vector2 vector = new(1.3f, 0.65f);
 			if (!flag)
 				vector = Vector2.One;
 
-			List<DrawData> list = new List<DrawData>();
+			List<DrawData> list = new();
 			for (int j = 0; j < num; j++) {
 				Vector2 vector2 = (num4 + num5 * (j - num6)).ToRotationVector2();
 				float num7 = num2;
@@ -101,7 +101,7 @@ namespace Origins.Items.Other {
 					num7 = MathHelper.Lerp(num2 * 0.7f, 1f, vector2.Y / 2f + 0.5f);
 
 				Texture2D value = ModLargeGem.GemTextures[ownedLargeGems[j]].Value;
-				DrawData item = new DrawData(value, new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X + (float)(drawInfo.drawPlayer.width / 2)), (int)(drawInfo.Position.Y - Main.screenPosition.Y + (float)drawInfo.drawPlayer.height - 80f)) + vector2 * vector * num3, null, new Color(250, 250, 250, (int)Main.mouseTextColor / 2), 0f, value.Size() / 2f, ((float)(int)Main.mouseTextColor / 1000f + 0.8f) * num7, SpriteEffects.None);
+				DrawData item = new(value, new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X + (float)(drawInfo.drawPlayer.width / 2)), (int)(drawInfo.Position.Y - Main.screenPosition.Y + (float)drawInfo.drawPlayer.height - 80f)) + vector2 * vector * num3, null, new Color(250, 250, 250, (int)Main.mouseTextColor / 2), 0f, value.Size() / 2f, ((float)(int)Main.mouseTextColor / 1000f + 0.8f) * num7, SpriteEffects.None);
 				list.Add(item);
 			}
 			if (flag)

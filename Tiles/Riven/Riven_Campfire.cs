@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Tiles.Riven {
 	public class Riven_Campfire : CampfireBase {
 		public override Vector3 Light => new Vector3(0.3f, 2.10f, 1.90f) * Riven_Hive.NormalGlowValue.GetValue();
-		public override Color MapColor => new Color(20, 136, 182);
+		public override Color MapColor => new(20, 136, 182);
 	}
 	public class Riven_Campfire_Item : ModItem {
 		public override void SetStaticDefaults() {

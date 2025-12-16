@@ -18,7 +18,7 @@ namespace Origins.NPCs.Riven {
 	public class Barnacle_Mound : ModNPC, IRivenEnemy, IWikiNPC, ICustomWikiStat {
 		public override void Load() => this.AddBanner();
 		private Asset<Texture2D> _glowTexture;
-		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out var asset) ? asset : null))?.Value;
+		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(Texture + "_Glow", out Asset<Texture2D> asset) ? asset : null))?.Value;
 		public Rectangle DrawRect => new(0, -41, 34, 22);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
@@ -136,7 +136,7 @@ namespace Origins.NPCs.Riven {
 			modifiers.DisableKnockback();
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			Vector2 halfSize = new Vector2(23, 32);
+			Vector2 halfSize = new(23, 32);
 			Vector2 position = NPC.Center + new Vector2(0, 12).RotatedBy(NPC.rotation);
 			spriteBatch.Draw(
 				TextureAssets.Npc[Type].Value,

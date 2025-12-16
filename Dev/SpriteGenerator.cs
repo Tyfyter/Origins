@@ -107,7 +107,7 @@ namespace Origins.Dev {
 						Texture2D texture = TextureAssets.Tile[type].Value;
 						Vector2 p = new(16);
 						int f = 18;
-						Rectangle frame = new Rectangle(0, 0, 16, 16);
+						Rectangle frame = new(0, 0, 16, 16);
 						for (int i = 0; i < 3; i++) {
 							for (int j = 0; j < 3; j++) {
 								switch (i + j * 3) {

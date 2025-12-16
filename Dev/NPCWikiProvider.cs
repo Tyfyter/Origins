@@ -31,7 +31,7 @@ namespace Origins.Dev {
 				context["PageTextMain"] = Language.GetOrRegister(key).Value;
 				pageTexts = WikiPageExporter.GetDefaultPageTexts(modNPC);
 			}
-			foreach (var text in pageTexts) {
+			foreach ((string name, LocalizedText text) text in pageTexts) {
 				context[text.name] = text.text;
 			}
 			return (WikiTemplate, context);
@@ -153,7 +153,7 @@ namespace Origins.Dev {
 				yield return (savePath, SpriteGenerator.GenerateAnimationSprite(modNPC.NPC, wikiNPC.DrawRect, wikiNPC.AnimationFrames, wikiNPC.FrameDuration)[wikiNPC.FrameRange]);
 			} else if (wikiNPC.ImageExportType == NPCExportType.SpriteSheet) {
 				Main.instance.LoadNPC(modNPC.Type);
-				var texture = TextureAssets.Npc[modNPC.Type];
+				ReLogic.Content.Asset<Texture2D> texture = TextureAssets.Npc[modNPC.Type];
 				(Rectangle frame, int frames)[] frames = new (Rectangle frame, int frames)[wikiNPC.AnimationFrames];
 				for (int i = 0; i < frames.Length; i++) {
 					Rectangle newFrame = wikiNPC.DrawRect with { Y = wikiNPC.DrawRect.Y + wikiNPC.DrawRect.Height * i };

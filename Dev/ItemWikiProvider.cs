@@ -87,7 +87,7 @@ namespace Origins.Dev {
 				}
 			}
 			foreach (AbstractNPCShop shop in NPCShopDatabase.AllShops) {
-				if (ShopTypes.TryGetValue(shop.GetType(), out var func)) {
+				if (ShopTypes.TryGetValue(shop.GetType(), out Func<AbstractNPCShop, IEnumerable<AbstractNPCShop.Entry>> func)) {
 					foreach (AbstractNPCShop.Entry entry in func(shop)) {
 						if (entry.Item.ModItem?.Mod is Origins) {
 							StringBuilder sources = GetBuilder(entry.Item.type);
@@ -229,7 +229,7 @@ namespace Origins.Dev {
 				return Language.Exists(key) ? Language.GetTextValue(key) : condition.GetConditionDescription();
 			}
 			(int chestId, float flags) currentKey = default;
-			foreach (var action in ChestLoot.Actions) {
+			foreach ((LootQueueAction action, int param, float weight) action in ChestLoot.Actions) {
 				if (action.action == LootQueueAction.CHANGE_QUEUE) {
 					currentKey = (action.param, action.weight);
 					continue;
@@ -276,7 +276,7 @@ namespace Origins.Dev {
 		static void GenerateRecipesCache() {
 			static JArray CreateRecipeEntry(List<Recipe> recipes) {
 				JArray allRecipesJson = [];
-				foreach (var group in recipes.GroupBy((r) => new RecipeRequirements(r))) {
+				foreach (IGrouping<RecipeRequirements, Recipe> group in recipes.GroupBy((r) => new RecipeRequirements(r))) {
 					JObject recipeJson = [];
 					if (group.Key.requirements.Length > 0) {
 						JArray stationsJson = [];

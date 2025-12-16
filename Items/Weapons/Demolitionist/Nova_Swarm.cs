@@ -52,7 +52,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Player drawPlayer = drawInfo.drawPlayer;
 			float itemRotation = drawPlayer.itemRotation;
 
-			Vector2 pos = new Vector2((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y));
+			Vector2 pos = new((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y));
 
 			int frame;
 			switch (drawPlayer.itemAnimationMax - drawPlayer.itemAnimation) {
@@ -87,7 +87,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				frame = 0;
 				break;
 			}
-			Rectangle frameRect = new Rectangle(0, 32 * frame, 60, 30);
+			Rectangle frameRect = new(0, 32 * frame, 60, 30);
 			drawInfo.DrawDataCache.Add(new DrawData(
 				UseTexture,
 				pos,
