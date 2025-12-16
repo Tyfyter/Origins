@@ -25,6 +25,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Config.UI;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
+using Terraria.UI.Chat;
 using Terraria.Utilities.FileBrowser;
 using static Origins.Core.Structures.DeserializedStructure;
 using static Origins.Core.Structures.StructureCommand;
@@ -33,7 +34,7 @@ namespace Origins.Core.Structures {
 	public class StructureHelperUI : UIState {
 		string structurePath;
 		public Structure structure;
-		Stack<ViewState> viewStack = new();
+		readonly Stack<ViewState> viewStack = new();
 		ViewState CurrentView => viewStack.TryPeek(out ViewState result) ? result : null;
 
 		Dictionary<string, List<(ARoom room, char entrance)>[]> connectionLookup;
@@ -219,29 +220,61 @@ namespace Origins.Core.Structures {
 				bgSize.Y,
 				Color.DeepSkyBlue * 0.8f
 			);
-			if (Main.MouseScreen.IsWithinRectangular(bgStart + bgSize * 0.5f, bgSize * 0.5f)) Main.LocalPlayer.mouseInterface = true;
 			foreach (UIElement element in ActiveElements()) element.Draw(spriteBatch);
 			ViewState currentView = CurrentView;
 			if (currentView?.room is not null) {
+				List<(string text, StructureLayer layer, StructureOverlay[] overlays)> parts = [];
+				DynamicSpriteFont font = FontAssets.MouseText.Value;
+				for (int i = 0; i < currentView.layers.Length; i++) {
+					foreach (bool item in currentView.layers[i].Map) if (item) goto any;
+					continue;
+					any:
+					parts.Add((currentView.layers[i].Name, currentView.layers[i], null));
+				}
+				foreach (IGrouping<string, StructureOverlay> item in currentView.overlays.GroupBy(o => o.Name)) {
+					parts.Add((item.Key, null, item.ToArray()));
+				}
 				Point basePos = Main.ScreenSize;
 				basePos.X /= 2;
 				basePos.Y /= 2;
 				Rectangle dest = new(0, 0, 16, 16);
 				for (int index = 0; index < currentView.layers.Length; index++) {
-					if (currentView.selectedLayer != null && currentView.selectedLayer != currentView.layers[index].name) continue;
-					bool[,] map = currentView.layers[index].map;
-					Color color = currentView.layers[index].color;
-					for (int y = 0; y < map.GetLength(1); y++) {
-						for (int x = 0; x < map.GetLength(0); x++) {
-							if (!map[x, y]) continue;
-							dest.X = (int)(basePos.X + (x - map.GetLength(0) * 0.5f) * 16);
-							dest.Y = (int)(basePos.Y + (y - map.GetLength(1) * 0.5f) * 16);
-							currentView.layers[index].source.Draw(spriteBatch, dest, color, map, x, y, currentView.layers[index].name);
-						}
-					}
+					if (currentView.selectedLayer != null && currentView.selectedLayer != currentView.layers[index].Name) continue;
+					currentView.layers[index].Draw(spriteBatch, basePos);
 				}
 				for (int i = 0; i < currentView.overlays.Count; i++) currentView.overlays[i].Draw(spriteBatch, basePos);
+				Vector2 layerListPos = new(bgStart.X + bgSize.X - 16, bgStart.Y + 48);
+				bool hoverSelected = false;
+				for (int i = 0; i < parts.Count; i++) {
+					Vector2 size = font.MeasureString(parts[i].text);
+					ChatManager.DrawColorCodedStringWithShadow(
+						spriteBatch,
+						font,
+						parts[i].text,
+						layerListPos - size * Vector2.UnitX,
+						Color.White,
+						0,
+						default,
+						Vector2.One
+					);
+					if (!hoverSelected && Main.MouseScreen.Between(layerListPos - size * Vector2.UnitX, layerListPos + size * Vector2.UnitY)) {
+						hoverSelected = true;
+						Vector2 layersSize = new(currentView.layers[0].Map.GetLength(0) * 16, currentView.layers[0].Map.GetLength(1) * 16);
+						spriteBatch.Draw(
+							TextureAssets.MagicPixel.Value,
+							new Rectangle((int)(basePos.X - layersSize.X * 0.5f), (int)(basePos.Y - layersSize.Y * 0.5f), (int)layersSize.X, (int)layersSize.Y),
+							Color.DeepSkyBlue * 0.5f
+						);
+						if (parts[i].layer is not null) {
+							parts[i].layer.Draw(spriteBatch, basePos);
+						} else {
+							for (int j = 0; j < currentView.overlays.Count; j++) currentView.overlays[j].Draw(spriteBatch, basePos);
+						}
+					}
+					layerListPos.Y += size.Y + 4;
+				}
 			}
+			if (Main.MouseScreen.IsWithinRectangular(bgStart + bgSize * 0.5f, bgSize * 0.5f)) Main.LocalPlayer.mouseInterface = true;
 		}
 
 		public void RefreshRoomList() {
@@ -319,9 +352,22 @@ namespace Origins.Core.Structures {
 		public override void OnDeactivate() {
 			StructureCommand.Cancel();
 		}
+		public record StructureLayer(string Name, Color Color, bool[,] Map, SerializableTileDescriptor Source) {
+			public void Draw(SpriteBatch spriteBatch, Point basePos) {
+				Rectangle dest = new(0, 0, 16, 16);
+				for (int y = 0; y < Map.GetLength(1); y++) {
+					for (int x = 0; x < Map.GetLength(0); x++) {
+						if (!Map[x, y]) continue;
+						dest.X = (int)(basePos.X + (x - Map.GetLength(0) * 0.5f) * 16);
+						dest.Y = (int)(basePos.Y + (y - Map.GetLength(1) * 0.5f) * 16);
+						Source.Draw(spriteBatch, dest, Color, Map, x, y, Name);
+					}
+				}
+			}
+		}
 		public class ViewState {
 			public ARoom room;
-			public (string name, Color color, bool[,] map, SerializableTileDescriptor source)[] layers;
+			public StructureLayer[] layers;
 			public List<StructureOverlay> overlays;
 			public UIList roomList;
 			public string selectedLayer;
@@ -342,7 +388,7 @@ namespace Origins.Core.Structures {
 				}
 				string[] map = room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 				{
-					(string name, Color color, bool[,] map, SerializableTileDescriptor source)[] _layers = new (string name, Color color, bool[,] map, SerializableTileDescriptor source)[layers.Count];
+					StructureLayer[] _layers = new StructureLayer[layers.Count];
 					int index = 0;
 					foreach ((string name, (HashSet<char> set, Color color, SerializableTileDescriptor source) data) in layers.OrderBy(k => k.Key)) {
 						bool[,] layer = new bool[map[0].Length, map.Length];
@@ -351,7 +397,7 @@ namespace Origins.Core.Structures {
 								layer[x, y] = data.set.Contains(map[y][x]);
 							}
 						}
-						_layers[index++] = (name, data.color, layer, data.source);
+						_layers[index++] = new(name, data.color, layer, data.source);
 					}
 					this.layers = _layers;
 				}
@@ -383,9 +429,11 @@ namespace Origins.Core.Structures {
 			}
 		}
 		public abstract class StructureOverlay {
+			public virtual string Name => GetType().Name;
 			public abstract void Draw(SpriteBatch spriteBatch, Point basePos);
 		}
 		public class SocketOverlay(Vector2 pos, RoomSocket socket) : StructureOverlay {
+			public override string Name => "Sockets";
 			readonly Vector2 pos = pos;
 			readonly RoomSocket socket = socket;
 			static readonly Asset<Texture2D>[] arrows = [
@@ -398,8 +446,9 @@ namespace Origins.Core.Structures {
 				if (socket.Direction == 0) return;
 				Texture2D texture = arrows[socket.Direction.Index()].Value;
 				Vector2 pos = this.pos + basePos.ToVector2();
-				bool hovered = Main.MouseScreen.IsWithinRectangular(pos + texture.Size() * 0.5f, texture.Size() * 0.5f);
+				bool hovered = !Main.LocalPlayer.mouseInterface && Main.MouseScreen.IsWithinRectangular(pos + texture.Size() * 0.5f, texture.Size() * 0.5f);
 				if (hovered) {
+					Main.LocalPlayer.mouseInterface = true;
 					UICommon.TooltipMouseText(socket.Key);
 					if (Main.mouseLeft && Main.mouseLeftRelease && instance.connectionLookup.TryGetValue(socket.Key, out List<(ARoom room, char entrance)>[] _connections)) {
 						instance.viewStack.Push(new(_connections[socket.Direction.Index()].Select(v => v.room)));

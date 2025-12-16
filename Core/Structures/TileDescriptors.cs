@@ -11,6 +11,7 @@ using Terraria;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -146,10 +147,10 @@ namespace Origins.Core.Structures {
 			public static implicit operator ushort(CachedTileType type) => type.Value;
 		}
 		public override IEnumerable<(string name, Color color)> GetDisplayLayers(string[] parameters) {
-			yield return (TileID.Search.GetId(parameters[0]).ToString(), Color.White);
+			yield return (parameters[0].ToString(), Color.White);
 		}
 		public override void Draw(SpriteBatch spriteBatch, Rectangle destination, Color color, bool[,] map, int x, int y, string name) {
-			if (!int.TryParse(name["PlaceTile_".Length..], out int tileID)) return;
+			if (!int.TryParse(name["PlaceTile_".Length..], out int tileID)) tileID = new CachedTileType(name["PlaceTile_".Length..]);
 			spriteBatch.Draw(
 				TextureAssets.Tile.GetIfInRange(tileID, TextureAssets.MagicPixel).Value,
 				destination,
@@ -182,11 +183,11 @@ namespace Origins.Core.Structures {
 			}, Parts: [originalText]);
 		}
 		public override IEnumerable<(string name, Color color)> GetDisplayLayers(string[] parameters) {
-			yield return ($"{TileID.Search.GetId(parameters[0])};{parameters[1]};{parameters[2]}", Color.White);
+			yield return ($"{parameters[0]};{parameters[1]};{parameters[2]}", Color.White);
 		}
 		public override void Draw(SpriteBatch spriteBatch, Rectangle destination, Color color, bool[,] map, int x, int y, string name) {
 			string[] parts = name["PlaceFramedTile_".Length..].Split(';');
-			if (!int.TryParse(parts[0], out int tileID)) return;
+			if (!int.TryParse(parts[0], out int tileID)) tileID = new CachedTileType(parts[0]);
 			if (!int.TryParse(parts[1], out int frameX)) return;
 			if (!int.TryParse(parts[2], out int frameY)) return;
 			spriteBatch.Draw(
@@ -248,16 +249,17 @@ namespace Origins.Core.Structures {
 			}
 		}
 		public override IEnumerable<(string name, Color color)> GetDisplayLayers(string[] parameters) {
-			yield return ($"{TileID.Search.GetId(parameters[0])};{parameters.GetIfInRange(1)}", Color.White);
+			yield return ($"{parameters[0]};{parameters.GetIfInRange(1)}", Color.White);
 		}
 		public override void Draw(SpriteBatch spriteBatch, Rectangle destination, Color color, bool[,] map, int x, int y, string name) {
 			string[] parts = name["PlaceSpecialTile_".Length..].Split(';');
-			if (!int.TryParse(parts[0], out int tileID)) return;
+			if (!int.TryParse(parts[0], out int tileID)) tileID = new CachedTileType(parts[0]);
 			_ = int.TryParse(parts[1], out int style);
 			Texture2D texture = TextureAssets.Tile.GetIfInRange(tileID, TextureAssets.MagicPixel).Value;
 			TileObjectData data = TileObjectData.GetTileData(tileID, style);
 			x = destination.X - data.Origin.X * 16;
 			y = destination.Y - data.Origin.Y * 16;
+			if (tileID == TileID.ClosedDoor) y -= 16;
 			for (int j = 0; j < data.Height; j++) {
 				destination.Y = y + j * 16;
 				for (int i = 0; i < data.Width; i++) {
