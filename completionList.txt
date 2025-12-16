@@ -1357,7 +1357,7 @@ TILES:
 (^) Riven Campfire
 (^) Riven Dungeon Chest
 (^) Rusty Locker
-(#2, ^2) Small Storage Container !!!
+(#2?, ^2) Small Storage Container !!!
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (#2, ^2) Transistor !!! (needs obtain method)
 (^) Unsuspicious Bush
