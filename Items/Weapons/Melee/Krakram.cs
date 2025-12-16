@@ -50,7 +50,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.localAI[0] = 1;
 		}
 		public override bool PreAI() {
-			Projectile.aiStyle = 3;
+			Projectile.aiStyle = ProjAIStyleID.Boomerang;
 			//Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.localAI[0] * 0.15f);
 			//Projectile.localAI[0] = (float)System.Math.Sin(Projectile.timeLeft);
 			return true;

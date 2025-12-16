@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.UI;
 using Terraria.GameInput;
+using Terraria.ID;
 
 namespace Tyfyter.Utils {
 	public static class UITools {
@@ -28,7 +29,7 @@ namespace Tyfyter.Utils {
 			public void SafeSetItemSlot(Ref<Item> item, Vector2 position, bool usePercent = false, Func<Item, bool> ValidItemFunc = null, Color? slotColor = null, int context = ItemSlot.Context.InventoryItem, float slotScale = 1f, bool shiftClickToInventory = false, params (Texture2D texture, Color color)[] extraTextures) {
 				if (item.Value is null) {
 					item.Value = new Item();
-					item.Value.SetDefaults(0);
+					item.Value.SetDefaults(ItemID.None);
 				}
 				itemSlotQueue.Enqueue(() => SetItemSlot(item, position, usePercent, ValidItemFunc, slotColor, context, slotScale, shiftClickToInventory, extraTextures));
 			}

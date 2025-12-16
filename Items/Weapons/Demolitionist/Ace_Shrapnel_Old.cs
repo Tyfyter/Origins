@@ -90,7 +90,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.localNPCHitCooldown = 10;
 		}
 		public override void AI() {
-			Dust.NewDustPerfect(Projectile.Center, 1, Vector2.Zero).noGravity = true;
+			Dust.NewDustPerfect(Projectile.Center, DustID.Stone, Vector2.Zero).noGravity = true;
 			if (Projectile.ai[0] >= 0) {
 				Projectile center = Main.projectile[(int)Projectile.ai[0]];
 				if (!center.active) {

@@ -344,8 +344,8 @@ namespace Origins.Items.Weapons.Melee {
 						positions[i] = proj.Center + velocity * ((i + 1) / (float)(positions.Length + 1));
 					}
 					float[] rotations = [..Enumerable.Repeat(proj.velocity.ToRotation() + proj.rotation, positions.Length)];
-					miscShaderData.UseImage1(TextureAssets.Extra[193]);
-					miscShaderData.UseImage0(TextureAssets.Extra[189]);
+					miscShaderData.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]);
+					miscShaderData.UseImage0(TextureAssets.Extra[ExtrasID.FlameLashTrailShape]);
 					miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(1, 1, 1, 0));
 					miscShaderData.UseSaturation(-1);
 					miscShaderData.UseOpacity(2);

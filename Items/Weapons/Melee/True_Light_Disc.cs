@@ -48,7 +48,7 @@ namespace Origins.Items.Weapons.Melee {
 			AIType = ProjectileID.FruitcakeChakram;
 		}
 		public override bool PreAI() {
-			Projectile.aiStyle = 3;
+			Projectile.aiStyle = ProjAIStyleID.Boomerang;
 			if (Projectile.ai[0] != 0) {
 				float speed = Projectile.velocity.Length();
 				if (speed > 0) {

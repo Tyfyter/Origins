@@ -60,10 +60,10 @@ namespace Origins.Walls {
 			int quality = (int)(120f * (1f - Main.gfxQuality) + 40f * Main.gfxQuality);
 			if (color.R > (int)(quality * 0.4f) || color.G > (int)(quality * 0.35f) || color.B > (int)(quality * 0.3f)) {
 				int wallBlend = Main.wallBlend[tile.WallType];
-				bool wallLeft = Main.tile[i - 1, j].WallType > 0 && Main.wallBlend[Main.tile[i - 1, j].WallType] != wallBlend;
-				bool wallRight = Main.tile[i + 1, j].WallType > 0 && Main.wallBlend[Main.tile[i + 1, j].WallType] != wallBlend;
-				bool wallUp = Main.tile[i, j - 1].WallType > 0 && Main.wallBlend[Main.tile[i, j - 1].WallType] != wallBlend;
-				bool wallDown = Main.tile[i, j + 1].WallType > 0 && Main.wallBlend[Main.tile[i, j + 1].WallType] != wallBlend;
+				bool wallLeft = Main.tile[i - 1, j].WallType > WallID.None && Main.wallBlend[Main.tile[i - 1, j].WallType] != wallBlend;
+				bool wallRight = Main.tile[i + 1, j].WallType > WallID.None && Main.wallBlend[Main.tile[i + 1, j].WallType] != wallBlend;
+				bool wallUp = Main.tile[i, j - 1].WallType > WallID.None && Main.wallBlend[Main.tile[i, j - 1].WallType] != wallBlend;
+				bool wallDown = Main.tile[i, j + 1].WallType > WallID.None && Main.wallBlend[Main.tile[i, j + 1].WallType] != wallBlend;
 				if (wallLeft) {
 					spriteBatch.Draw(TextureAssets.WallOutline.Value, position, new Rectangle(0, 0, 2, 16), color, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 				}

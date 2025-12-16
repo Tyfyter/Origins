@@ -83,7 +83,7 @@ namespace Origins.Items.Other.Testing {
 						Main.MouseScreen.ToTileCoordinates()
 					);
 					for (int i = 0; i < path.Length; i++) {
-						Dust.NewDustPerfect(path[i].ToWorldCoordinates() + Main.screenPosition - new Vector2(Main.screenPosition.X % 16, Main.screenPosition.Y % 16), 6, Vector2.Zero).noGravity = true;
+						Dust.NewDustPerfect(path[i].ToWorldCoordinates() + Main.screenPosition - new Vector2(Main.screenPosition.X % 16, Main.screenPosition.Y % 16), DustID.Torch, Vector2.Zero).noGravity = true;
 					}
 				}
 				break;

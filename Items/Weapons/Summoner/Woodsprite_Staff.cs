@@ -318,7 +318,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 				unit = (targetProjHitbox.Center() - Projectile.Center).SafeNormalize(Projectile.velocity);
 				Projectile.velocity = Vector2.Lerp(Projectile.velocity, unit * 8, 0.1f);
-				Dust.NewDustPerfect(Projectile.Center, 110, Vector2.Zero);
+				Dust.NewDustPerfect(Projectile.Center, DustID.PureSpray, Vector2.Zero);
 				return;
 			}
 			if (player.Hitbox.Contains(Projectile.Center.ToPoint())) {
@@ -328,7 +328,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			unit = (player.Center - Projectile.Center).SafeNormalize(Projectile.velocity);
 			Projectile.velocity = Vector2.Lerp(Projectile.velocity, unit * 8, 0.1f);
-			Dust.NewDustPerfect(Projectile.Center, 110, Vector2.Zero);
+			Dust.NewDustPerfect(Projectile.Center, DustID.PureSpray, Vector2.Zero);
 		}
 	}
 }

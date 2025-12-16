@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 1 && Projectile.penetrate >= 0) {
-				Projectile.aiStyle = 1;
+				Projectile.aiStyle = ProjAIStyleID.Arrow;
 				Projectile.velocity = Projectile.oldVelocity;
 				Projectile.tileCollide = true;
 				Vector2 diff = Main.player[Projectile.owner].itemLocation - Projectile.Center;

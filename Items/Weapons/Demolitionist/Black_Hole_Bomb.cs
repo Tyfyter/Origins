@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
-			Projectile.aiStyle = 14;
+			Projectile.aiStyle = ProjAIStyleID.GroundProjectile;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = maxDur;
 			Projectile.scale = 0;

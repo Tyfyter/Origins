@@ -29,7 +29,7 @@ namespace Origins.Tiles.Other {
 			frame = Main.tileFrame[TileID.LivingIchor];
 		}
 		public void CanPlace(Player self, Tile targetTile, Item sItem, ref int tileToCreate, ref int previewPlaceStyle, ref bool? overrideCanPlace, ref int? forcedRandom) {
-			static bool IsValidDirection(int x, int y) => Main.tile[Player.tileTargetX + x, Player.tileTargetY + y].HasTile || Main.tile[Player.tileTargetX + x, Player.tileTargetY + y].WallType > 0;
+			static bool IsValidDirection(int x, int y) => Main.tile[Player.tileTargetX + x, Player.tileTargetY + y].HasTile || Main.tile[Player.tileTargetX + x, Player.tileTargetY + y].WallType > WallID.None;
 			if (IsValidDirection(1, 0) || IsValidDirection(-1, 0) || IsValidDirection(0, 1) || IsValidDirection(0, -1)) overrideCanPlace = true;
 		}
 	}

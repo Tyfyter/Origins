@@ -113,14 +113,14 @@ namespace Origins {
 							sunLight = Vector3.Zero;
 						} else if (tile.LiquidAmount > 0) {
 							switch (tile.LiquidType) {
-								case 0:
+								case LiquidID.Water:
 								sunLight *= waterFactor;
 								sunLight -= waterFactor * 0.01f;
 								break;
-								case 1:
+								case LiquidID.Lava:
 								sunLight = Vector3.Zero;
 								break;
-								case 2:
+								case LiquidID.Honey:
 								sunLight *= new Vector3(0.25f, 0.25f, 0f);
 								sunLight -= new Vector3(0.0025f, 0.0025f, 0f);
 								break;

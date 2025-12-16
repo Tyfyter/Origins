@@ -192,7 +192,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void AI() {
 			Lighting.AddLight(Projectile.Center, 0, 0.75f * Projectile.scale, 0.3f * Projectile.scale);
 			if (Projectile.timeLeft % 3 == 0) {
-				Dust dust = Dust.NewDustPerfect(Projectile.Center, 226, Projectile.velocity * -0.25f, 100, new Color(0, 255, 0), Projectile.scale * 0.85f);
+				Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Electric, Projectile.velocity * -0.25f, 100, new Color(0, 255, 0), Projectile.scale * 0.85f);
 				dust.shader = GameShaders.Armor.GetShaderFromItemId(ItemID.AcidDye);
 				dust.noGravity = false;
 				dust.noLight = true;

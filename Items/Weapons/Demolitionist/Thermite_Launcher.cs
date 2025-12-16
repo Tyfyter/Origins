@@ -255,8 +255,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			int num3 = 0;//0
 			float w = 0f;//0.6f
 			miscShaderData.UseShaderSpecificData(new Vector4(num, num2, num3, w));
-			miscShaderData.UseImage0(TextureAssets.Extra[194]);
-			miscShaderData.UseImage1(TextureAssets.Extra[193]);
+			miscShaderData.UseImage0(TextureAssets.Extra[ExtrasID.MagicMissileTrailShape]);
+			miscShaderData.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]);
 			//miscShaderData.UseImage0(TextureAssets.Extra[189]);
 			float uTime = (float)Main.timeForVisualEffects / 22;
 			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(1, 1, 1, 0));

@@ -50,7 +50,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.DamageType = DamageClass.Ranged;
 			Projectile.width = 10;
 			Projectile.height = 10;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.friendly = true;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 90;

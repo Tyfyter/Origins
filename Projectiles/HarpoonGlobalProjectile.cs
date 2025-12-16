@@ -53,9 +53,9 @@ namespace Origins.Projectiles {
 			OriginGlobalProj globalProj = projectile.GetGlobalProjectile<OriginGlobalProj>();
 			if (projectile.aiStyle == ProjAIStyleID.Harpoon && globalProj.weakpointAnalyzerTarget.HasValue) {
 				if (projectile.TryGetOwner(out Player owner) && globalProj.weakpointAnalyzerFake) {
-					projectile.aiStyle = 1;
+					projectile.aiStyle = ProjAIStyleID.Arrow;
 					if (!owner.active) {
-						projectile.aiStyle = 1;
+						projectile.aiStyle = ProjAIStyleID.Arrow;
 						return false;
 					}
 
@@ -63,7 +63,7 @@ namespace Origins.Projectiles {
 					float distance = diff.Length();
 					if (projectile.ai[0] == 0f) {
 						if (distance > 700f)
-							projectile.aiStyle = 1;
+							projectile.aiStyle = ProjAIStyleID.Arrow;
 
 						projectile.rotation = projectile.velocity.ToRotation() + MathHelper.PiOver2;
 						projectile.localAI[1] += 1f;
@@ -77,7 +77,7 @@ namespace Origins.Projectiles {
 				const float range = 128;
 				const float rangeSQ = range * range;
 				if (oldWeakpointAnalyzerDist < distSQ && MathHelper.Min(1f / (((distSQ * distSQ) / (rangeSQ * rangeSQ)) + 1), 1) < 0.01f) {
-					projectile.aiStyle = 1;
+					projectile.aiStyle = ProjAIStyleID.Arrow;
 				}
 				oldWeakpointAnalyzerDist = distSQ;
 			}

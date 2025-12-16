@@ -387,7 +387,7 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 			float frameStart = 1 - count / (float)Projectile.oldPos.Length;
 			miscShaderData.UseImage0(TextureAssets.Projectile[Type]);
-			miscShaderData.UseImage1(TextureAssets.Extra[193]);
+			miscShaderData.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]);
 			//miscShaderData.UseImage0(TextureAssets.Extra[189]);
 			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(1, 1, 1, 0));
 			miscShaderData.Shader.Parameters["uAlphaMatrix1"].SetValue(new Vector4(0.7f, 0, 0, 0));

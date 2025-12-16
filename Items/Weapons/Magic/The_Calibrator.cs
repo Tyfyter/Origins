@@ -98,7 +98,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.ai[0]);
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi / 2;
 			Color color = Main.hslToRgb(Projectile.ai[2], 1, 0.75f);
-			Dust dust = Dust.NewDustPerfect(Projectile.Center, 309, null, newColor: color);
+			Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.ShimmerSpark, null, newColor: color);
 			dust.velocity = dust.velocity * 0.125f + Projectile.velocity * 0.15f;
 			dust.noGravity = true;
 			if (Projectile.ai[1] > 10) {
@@ -118,7 +118,7 @@ namespace Origins.Items.Weapons.Magic {
 						}
 						color = Main.hslToRgb(hue, 1, 0.75f);
 						for (int i = 0; i < 12; i++) {
-							Dust.NewDustPerfect(pos, 309, null, newColor: color);
+							Dust.NewDustPerfect(pos, DustID.ShimmerSpark, null, newColor: color);
 						}
 						Player owner = Main.player[Projectile.owner];
 						Vector2 diff = pos - owner.MountedCenter;
@@ -274,7 +274,7 @@ namespace Origins.Items.Weapons.Magic {
 				if (Main.rand.Next(++dustTimer) > 6) {
 					Dust.NewDustPerfect(
 						pos[i] + (new Vector2(unit.Y, -unit.X) * Main.rand.NextFloat(-4, 4)),
-						309,
+						DustID.ShimmerSpark,
 						unit * 5,
 						newColor: _color,
 						Scale: 0.85f
@@ -284,7 +284,7 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			if (length > 0) Dust.NewDustPerfect(
 				pos[length - 1] + (new Vector2(unit.Y, -unit.X) * Main.rand.NextFloat(-4, 4)),
-				309,
+				DustID.ShimmerSpark,
 				unit * 5,
 				newColor: _color
 			).noGravity = true;

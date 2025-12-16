@@ -123,7 +123,7 @@ namespace Origins.Items.Tools {
 				player.mount._abilityCooldown = 0;
 				player.mount.Dismount(player);
 			}
-			Dust.NewDustPerfect(position - move * 2.5f - move.RotatedBy(MathHelper.PiOver2 * player.direction) * Main.rand.NextFloat(-0.1f, 0.5f), 6, player.velocity * 0.85f).noGravity = true;
+			Dust.NewDustPerfect(position - move * 2.5f - move.RotatedBy(MathHelper.PiOver2 * player.direction) * Main.rand.NextFloat(-0.1f, 0.5f), DustID.Torch, player.velocity * 0.85f).noGravity = true;
 			if (player.mount._abilityCooldown <= 0) {
 				Explode();
 				return;

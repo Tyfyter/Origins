@@ -418,12 +418,12 @@ namespace Origins.Projectiles {
 			}
 			if (felnumBonus > Felnum_Helmet.shock_damage_divisor) {
 				if (!ProjectileID.Sets.IsAWhip[projectile.type]) {
-					Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1) * 0.5f, Scale: 0.5f);
+					Dust.NewDustPerfect(projectile.Center, DustID.Electric, projectile.velocity.RotatedByRandom(0.1) * 0.5f, Scale: 0.5f);
 				}
 			}
 			if (viperEffect && projectile.extraUpdates != 19) {
 				Lighting.AddLight(projectile.Center, 0, 0.75f * projectile.scale, 0.3f * projectile.scale);
-				Dust dust = Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1f) * -0.25f, 100, new Color(0, 255, 0), projectile.scale / 2);
+				Dust dust = Dust.NewDustPerfect(projectile.Center, DustID.Electric, projectile.velocity.RotatedByRandom(0.1f) * -0.25f, 100, new Color(0, 255, 0), projectile.scale / 2);
 				dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
 				dust.noGravity = true;
 				dust.noLight = true;

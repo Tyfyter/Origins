@@ -135,8 +135,8 @@ namespace Origins.Items.Accessories {
 			float scale = Projectile.scale * 0.333f;
 
 			Texture2D beamStartTexture = TextureAssets.Projectile[Projectile.type].Value;
-			Texture2D beamMiddleTexture = TextureAssets.Extra[21].Value;
-			Texture2D beamEndTexture = TextureAssets.Extra[22].Value;
+			Texture2D beamMiddleTexture = TextureAssets.Extra[ExtrasID.PhantasmalDeathrayBody].Value;
+			Texture2D beamEndTexture = TextureAssets.Extra[ExtrasID.PhantasmalDeathrayEnd].Value;
 			float lengthLeft = Projectile.localAI[1];
 			Color color = new Color(255, 255, 255, 0) * 0.9f;
 			Main.EntitySpriteDraw(beamStartTexture, Projectile.Center - Main.screenPosition, null, color, rotation, beamStartTexture.Size() / 2f, scale, SpriteEffects.None, 0);

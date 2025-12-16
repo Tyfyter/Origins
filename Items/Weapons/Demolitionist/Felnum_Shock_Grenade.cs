@@ -76,7 +76,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Vector2 dest = Vector2.Lerp(target.Center, new Vector2(target.position.X + Main.rand.NextFloat(target.width), target.position.Y + Main.rand.NextFloat(target.height)), 0.5f);
 			for (int i = 0; i < 16; i++) {
-				Dust.NewDustPerfect(Vector2.Lerp(Projectile.Center, dest, i / 16f), 226, Main.rand.NextVector2Circular(1, 1), Scale: 0.5f);
+				Dust.NewDustPerfect(Vector2.Lerp(Projectile.Center, dest, i / 16f), DustID.Electric, Main.rand.NextVector2Circular(1, 1), Scale: 0.5f);
 			}
 		}
 	}
@@ -127,7 +127,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				dest - Main.screenPosition,
 				Main.rand.NextFloat(-4, 4));
 			for (int i = 0; i < 8; i++) {
-				Dust.NewDustPerfect(Vector2.Lerp(Projectile.position, dest, i / 8f), 226, Main.rand.NextVector2Circular(1, 1), Scale: 0.5f);
+				Dust.NewDustPerfect(Vector2.Lerp(Projectile.position, dest, i / 8f), DustID.Electric, Main.rand.NextVector2Circular(1, 1), Scale: 0.5f);
 			}
 			return false;
 		}

@@ -40,7 +40,7 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			NPC.width = 26;
 			NPC.height = 26;
-			NPC.aiStyle = 18;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.Jellyfish;
 			NPC.damage = 75;
 			NPC.lifeMax = 165;
 			NPC.defense = 22;

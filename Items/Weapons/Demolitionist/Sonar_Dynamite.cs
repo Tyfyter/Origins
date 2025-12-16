@@ -158,7 +158,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			float scale = 2 * Projectile.ai[1];
-			DrawData data = new(TextureAssets.Extra[27].Value, Projectile.position - Main.screenPosition, null, Color.Cyan * (1 - Projectile.ai[1]), 0, new Vector2(9.5f, 49), scale, SpriteEffects.None);
+			DrawData data = new(TextureAssets.Extra[ExtrasID.MartianProbeScanWave].Value, Projectile.position - Main.screenPosition, null, Color.Cyan * (1 - Projectile.ai[1]), 0, new Vector2(9.5f, 49), scale, SpriteEffects.None);
 			for (int i = 0; i < 4; i++) {
 				Main.EntitySpriteDraw(data);
 				data.rotation += MathHelper.PiOver2;

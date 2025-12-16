@@ -33,7 +33,7 @@ namespace Origins.Projectiles.Weapons {
 			if (Projectile.ai[1] <= 0/*projectile.timeLeft<168*/) {
 				Lighting.AddLight(Projectile.Center, 0, 0.75f * Projectile.scale, 0.3f * Projectile.scale);
 				if (Projectile.timeLeft % 3 == 0) {
-					Dust dust = Dust.NewDustPerfect(Projectile.Center, 226, Projectile.velocity * -0.25f, 100, new Color(0, 255, 0), Projectile.scale);
+					Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Electric, Projectile.velocity * -0.25f, 100, new Color(0, 255, 0), Projectile.scale);
 					dust.shader = GameShaders.Armor.GetShaderFromItemId(ItemID.AcidDye);
 					dust.noGravity = false;
 					dust.noLight = true;

@@ -54,7 +54,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 1 && Projectile.penetrate >= 0) {
-				Projectile.aiStyle = 1;
+				Projectile.aiStyle = ProjAIStyleID.Arrow;
 				Projectile.velocity = Projectile.oldVelocity;
 				Projectile.tileCollide = true;
 				Vector2 diff = Main.player[Projectile.owner].itemLocation - Projectile.Center;
@@ -75,7 +75,7 @@ namespace Origins.Items.Weapons.Ammo {
 			}
 		}
 		public override void OnKill(int timeLeft) {
-			if (Projectile.aiStyle != 1 && Projectile.TryGetOwner(out Player owner)) {
+			if (Projectile.aiStyle != ProjAIStyleID.Arrow && Projectile.TryGetOwner(out Player owner)) {
 				owner.reuseDelay += 10;
 			}
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Shatter, smokeDustAmount: 10, smokeGoreAmount: 0, fireDustType: -1);

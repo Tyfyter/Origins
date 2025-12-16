@@ -396,7 +396,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		static void Draw(Vector2 center, float size) {
 			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Identity"];
-			miscShaderData.UseImage0(TextureAssets.Extra[197]);
+			miscShaderData.UseImage0(TextureAssets.Extra[ExtrasID.RainbowRodTrailShape]);
 			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(1.5f, 0, 0, 0));
 			miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 0, 1, 1));
 			miscShaderData.Apply();

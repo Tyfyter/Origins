@@ -65,7 +65,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.Kill();
 				}
 			}
-			Dust dust = Dust.NewDustPerfect(Projectile.Center, 226, Projectile.velocity.RotatedByRandom(1.4) / 4f, 100, Projectile.timeLeft % 2 == 0 ? Color.LightSeaGreen : Color.Coral, Projectile.scale * (Projectile.ai[0] > 0 ? 0.6f : 1));
+			Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Electric, Projectile.velocity.RotatedByRandom(1.4) / 4f, 100, Projectile.timeLeft % 2 == 0 ? Color.LightSeaGreen : Color.Coral, Projectile.scale * (Projectile.ai[0] > 0 ? 0.6f : 1));
 			dust.shader = GameShaders.Armor.GetSecondaryShader(Projectile.timeLeft % 2 == 0 ? 90 : 1, Main.LocalPlayer);
 			dust.noGravity = false;
 			dust.noLight = true;

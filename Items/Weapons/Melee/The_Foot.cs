@@ -247,7 +247,7 @@ namespace Origins.Items.Weapons.Melee {
 			SpriteBatchState state = Main.spriteBatch.GetState();
 			try {
 				Main.spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate);
-				Texture2D texture = TextureAssets.Extra[193].Value;
+				Texture2D texture = TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion].Value;
 				DrawData data = new() {
 					texture = texture,
 					position = Projectile.Center - Main.screenPosition,

@@ -39,7 +39,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			npc.onFire3 = true;
 			npc.GetGlobalNPC<OriginGlobalNPC>().onSoMuchFire = true;
 			if (Main.rand.NextBool(3, 8)) {
-				Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, 6, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 3.5f);
+				Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.Torch, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default(Color), 3.5f);
 				dust.noGravity = !Main.rand.NextBool(4);
 				dust.velocity *= 1.8f;
 				dust.velocity.Y -= 1f;

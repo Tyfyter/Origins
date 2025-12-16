@@ -725,7 +725,7 @@ namespace Origins.NPCs {
 			Main.npc[NPC.realLife].immune[Main.maxPlayers] = NPC.immune[Main.maxPlayers];
 		}
 		public override void SetDefaults() {
-			NPC.aiStyle = 6;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.Worm;
 			NPC.netAlways = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
@@ -788,7 +788,7 @@ namespace Origins.NPCs {
 			Main.npc[NPC.realLife].immune[Main.maxPlayers] = NPC.immune[Main.maxPlayers];
 		}
 		public override void SetDefaults() {
-			NPC.aiStyle = 6;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.Worm;
 			NPC.netAlways = true;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;

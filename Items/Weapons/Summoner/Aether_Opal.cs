@@ -565,7 +565,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.minion = true;
 			Projectile.minionSlots = 1f;
 			Projectile.timeLeft = 60;
-			Projectile.aiStyle = 164;
+			Projectile.aiStyle = ProjAIStyleID.DesertTigerBall;
 			Projectile.hide = true;
 		}
 		public override bool PreAI() {

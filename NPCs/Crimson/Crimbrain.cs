@@ -30,7 +30,7 @@ namespace Origins.NPCs.Crimson {
 			};
 		}
 		public override void SetDefaults() {
-			NPC.aiStyle = 86;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.AncientVision;
 			NPC.lifeMax = 36;
 			NPC.defense = 10;
 			NPC.damage = 25;

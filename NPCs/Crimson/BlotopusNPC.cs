@@ -22,7 +22,7 @@ namespace Origins.NPCs.Crimson {
 			NPC.CloneDefaults(NPCID.Shark);
 			NPC.lifeMax = 100;
 			NPC.damage = 15;
-			NPC.aiStyle = 0;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;
 			NPC.width = 64;
 			NPC.height = 22;
 		}

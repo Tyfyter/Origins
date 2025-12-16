@@ -15,7 +15,7 @@ namespace Origins.UI {
 			ref Ref<Item> item = ref Main.LocalPlayer.GetModPlayer<OriginPlayer>().eyndumCore;
 			if (item is null) {
 				item = new Ref<Item>(new Item());
-				item.Value.SetDefaults(0);
+				item.Value.SetDefaults(ItemID.None);
 			}
 			SetItemSlot(
 				item,

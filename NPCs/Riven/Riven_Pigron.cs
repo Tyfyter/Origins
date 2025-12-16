@@ -34,7 +34,7 @@ namespace Origins.NPCs.Riven {
 		public override void SetDefaults() {
 			NPC.width = 44;
 			NPC.height = 36;
-			NPC.aiStyle = 2;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.DemonEye;
 			NPC.damage = 70;
 			NPC.defense = 16;
 			NPC.lifeMax = 210;

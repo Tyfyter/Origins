@@ -32,7 +32,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Projectile.friendly = true;
 			Projectile.timeLeft = 180;
-			Projectile.aiStyle = 2;
+			Projectile.aiStyle = ProjAIStyleID.ThrownProjectile;
 			Projectile.hide = false;
 			Projectile.alpha = 0;
 		}

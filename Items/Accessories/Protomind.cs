@@ -75,7 +75,7 @@ namespace Origins.Items.Accessories {
 					NPC npc = Main.npc[i];
 					if (npc.active && player.DistanceSQ(npc.Center) < boundNPCRange * boundNPCRange) {
 						bool isVanillaBoundNPC = npc.type is 105 or 106 or 123 or 354 or 376 or 579 or 453 or 589;
-						if (isVanillaBoundNPC || (npc.aiStyle == 0 && (NPCLoader.CanChat(npc) ?? false))) {
+						if (isVanillaBoundNPC || (npc.aiStyle == Terraria.ID.NPCAIStyleID.FaceClosestPlayer && (NPCLoader.CanChat(npc) ?? false))) {
 							boundNPCType = npc.type;
 						}
 					}

@@ -92,7 +92,7 @@ namespace Origins.Items.Accessories {
 			if (Projectile.ai[0] >= 30f) {
 				if (Main.netMode != NetmodeID.Server) {
 					Player player = Main.player[Main.myPlayer];
-					if (player.active && !player.dead && Projectile.Distance(player.Center) <= radius && player.FindBuffIndex(165) == -1) {
+					if (player.active && !player.dead && Projectile.Distance(player.Center) <= radius && player.FindBuffIndex(BuffID.DryadsWard) == -1) {
 						player.AddBuff(BuffID.DryadsWard, 120);
 					}
 				}

@@ -344,7 +344,7 @@ namespace Origins.Tiles {
 			MouseOverNearAndFarSharedLogic(player, i, j);
 			if (player.cursorItemIconText == "") {
 				player.cursorItemIconEnabled = false;
-				player.cursorItemIconID = 0;
+				player.cursorItemIconID = ItemID.None;
 			}
 		}
 		public override void MouseOver(int i, int j) {

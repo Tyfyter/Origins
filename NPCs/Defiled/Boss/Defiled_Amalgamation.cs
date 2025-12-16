@@ -1241,7 +1241,7 @@ namespace Origins.NPCs.Defiled.Boss {
 
 		public static void DrawDefiledPortal(Vector2 position, float rotation, Vector2 size, float progress) {
 			MiscShaderData shader = GameShaders.Misc["Origins:DefiledPortal"];
-			shader.UseImage1(TextureAssets.Extra[193]);
+			shader.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]);
 			shader.UseSamplerState(SamplerState.PointWrap);
 			shader.UseColor(Color.Cyan);
 			shader.UseSecondaryColor(Color.Purple);
@@ -1356,7 +1356,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		private static readonly VertexStrip vertexStrip = new();
 		public static void Draw(Vector2[] positions, float[] rotations, float width, float alpha, float progress) {
 			MiscShaderData shader = GameShaders.Misc["Origins:DefiledIndicator"];
-			shader.UseImage1(TextureAssets.Extra[193]);
+			shader.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]);
 			shader.UseColor(Color.Black);
 			shader.UseSecondaryColor(Color.Green);
 			shader.UseShaderSpecificData(new Vector4(alpha, progress, 0, 0));

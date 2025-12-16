@@ -34,7 +34,7 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.damage = 10;
 			NPC.life = NPC.lifeMax = 95;
 			NPC.defense = 10;
-			NPC.aiStyle = 0;//104;//10,
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;//104;//10,
 			NPC.width = NPC.height = 27;
 			NPC.alpha = NPC.IsABestiaryIconDummy ? 0 : 200;
 			NPC.HitSound = SoundID.NPCHit4;
@@ -154,7 +154,7 @@ namespace Origins.NPCs.Fiberglass {
 			NPCID.Sets.NoMultiplayerSmoothingByType[NPC.type] = true;
 		}
 		public override void SetDefaults() {
-			NPC.aiStyle = 0;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;
 			NPC.damage = 10;
 			NPC.life = NPC.lifeMax = 57;
 			NPC.defense = 10;
@@ -255,7 +255,7 @@ namespace Origins.NPCs.Fiberglass {
 		public override void SetDefaults() {
 			NPC.damage = 10;
 			NPC.life = NPC.lifeMax = 110;
-			NPC.aiStyle = 22;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.HoveringFighter;
 			NPC.noGravity = true;
 			NPC.width = NPC.height = 42;
 			NPC.HitSound = SoundID.DD2_CrystalCartImpact;
@@ -336,7 +336,7 @@ namespace Origins.NPCs.Fiberglass {
 						NPC.localAI[0] = 90;
 						targetRot -= rotSpeed * NPC.direction;
 						NPC.velocity = NPC.oldVelocity;
-						NPC.aiStyle = 0;
+						NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;
 						if (NPC.collideX) {
 							getStuck();
 						}
@@ -346,7 +346,7 @@ namespace Origins.NPCs.Fiberglass {
 					NPC.localAI[0] = 90;
 					targetRot -= rotSpeed * NPC.direction;
 					NPC.velocity = NPC.oldVelocity;
-					NPC.aiStyle = 0;
+					NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;
 					if (NPC.collideX) {
 						getStuck();
 					}
@@ -355,12 +355,12 @@ namespace Origins.NPCs.Fiberglass {
 				if (NPC.localAI[0] < 30) {
 					NPC.localAI[0] = 0f;
 					targetRot = 0f;
-					NPC.aiStyle = 22;
+					NPC.aiStyle = Terraria.ID.NPCAIStyleID.HoveringFighter;
 				} else {
 					rotSpeed = 0.3f;
 					targetRot -= rotSpeed * NPC.direction;
 					NPC.localAI[0]--;
-					NPC.aiStyle = 0;
+					NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;
 					NPC.velocity = NPC.oldVelocity;
 					NPC.target = -1;
 					if (NPC.collideX) {

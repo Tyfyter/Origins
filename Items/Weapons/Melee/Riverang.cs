@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Melee {
 			AIType = ProjectileID.FruitcakeChakram;
 		}
 		public override bool PreAI() {
-			Projectile.aiStyle = 3;
+			Projectile.aiStyle = ProjAIStyleID.Boomerang;
 			return true;
 		}
 		public override void PostAI() {

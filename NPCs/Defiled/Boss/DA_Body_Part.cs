@@ -525,7 +525,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			MiscShaderData shader = GameShaders.Misc["Origins:DefiledLaser2"];
 			shader.UseColor(Color.Black);
 			shader.UseShaderSpecificData(new Vector4(progress, 0, 0, 0));
-			Main.graphics.GraphicsDevice.Textures[3] = TextureAssets.Extra[193].Value;
+			Main.graphics.GraphicsDevice.Textures[3] = TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion].Value;
 			Main.graphics.GraphicsDevice.SamplerStates[3] = SamplerState.LinearWrap;
 			shader.Apply();
 			Vector2 visualOffset = Projectile.Size * 0.5f + Projectile.velocity.SafeNormalize(Vector2.Zero) * 8;

@@ -196,7 +196,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.damage = 30;
 			NPC.lifeMax = GetMaxLife();
 			NPC.defense = 18;
-			NPC.aiStyle = 0;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;
 			NPC.width = 76;
 			NPC.height = 58;
 			NPC.knockBackResist = 0f;
@@ -483,7 +483,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.damage = 0;
 			NPC.lifeMax = 200;
 			NPC.defense = 18;
-			NPC.aiStyle = 0;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;
 			NPC.width = 16;
 			NPC.height = 16;
 			NPC.knockBackResist = 0f;
@@ -693,7 +693,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPC.damage = 26;
 			NPC.lifeMax = 150;
 			NPC.defense = 18;
-			NPC.aiStyle = 0;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;
 			NPC.width = 16;
 			NPC.height = 16;
 			NPC.knockBackResist = 1f;

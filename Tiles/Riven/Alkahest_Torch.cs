@@ -31,7 +31,7 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.AllowLightInWater[Type] = true;
 			TileID.Sets.Torch[Type] = true;
 
-			DustType = 178;
+			DustType = DustID.BubbleBurst_Green;
 			AdjTiles = [TileID.Torches];
 
 			AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTorch);

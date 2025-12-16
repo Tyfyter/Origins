@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThrowingKnife);
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
 			Projectile.trap = false;

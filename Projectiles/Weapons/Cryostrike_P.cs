@@ -20,7 +20,7 @@ namespace Origins.Projectiles.Weapons {
 			Projectile.coldDamage = true;
 			Projectile.penetrate = -1;//when projectile.penetrate reaches 0 the projectile is destroyed
 			Projectile.extraUpdates = 1;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.usesLocalNPCImmunity = true;
 			drawOffsetY = 0;//-34;

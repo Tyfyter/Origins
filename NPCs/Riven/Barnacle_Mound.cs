@@ -34,7 +34,7 @@ namespace Origins.NPCs.Riven {
 		public bool? Hardmode => true;
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BloodJelly);
-			NPC.aiStyle = 0;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			NPC.lifeMax = 90;

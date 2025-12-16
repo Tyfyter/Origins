@@ -44,8 +44,8 @@ namespace Origins.Items.Weapons.Ammo {
 			ID = Type;
 		}
 		public override void AI() {//still needs its own AI override since it has unique AI functionality
-			if (Projectile.ai[0] == 1 && Projectile.penetrate >= 0 && Projectile.aiStyle != 1) {
-				Projectile.aiStyle = 1;
+			if (Projectile.ai[0] == 1 && Projectile.penetrate >= 0 && Projectile.aiStyle != ProjAIStyleID.Arrow) {
+				Projectile.aiStyle = ProjAIStyleID.Arrow;
 				Projectile.velocity = Projectile.oldVelocity;
 				Projectile.tileCollide = true;
 				Vector2 diff = Main.player[Projectile.owner].itemLocation - Projectile.Center;

@@ -29,7 +29,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Vulture);
-			NPC.aiStyle = 14;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.Bat;
 			NPC.lifeMax = 144;
 			NPC.defense = 10;
 			NPC.damage = 20;

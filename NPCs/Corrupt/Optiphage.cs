@@ -29,7 +29,7 @@ namespace Origins.NPCs.Corrupt {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DemonEye);
-			NPC.aiStyle = 85;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.StarCell;
 			NPC.lifeMax = 14;
 			NPC.defense = 2;
 			NPC.damage = 14;

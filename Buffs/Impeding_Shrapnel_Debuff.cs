@@ -88,7 +88,7 @@ namespace Origins.Buffs {
 				Projectile.Kill();
 			}
 			Projectile.ai[0] += Projectile.ai[1];
-			Dust.NewDustPerfect(Projectile.Center, 6, Vector2.Zero).noGravity = true;
+			Dust.NewDustPerfect(Projectile.Center, DustID.Torch, Vector2.Zero).noGravity = true;
 			Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.localAI[0] * 0.02f);
 			//Dust.NewDustPerfect(Projectile.Center, 29, diff * 32);
 		}

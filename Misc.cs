@@ -2450,7 +2450,7 @@ namespace Origins {
 		}
 		#region drawing
 		public static void DrawLightningArc(this SpriteBatch spriteBatch, Vector2[] positions, Texture2D texture = null, float scale = 1f, Vector2 offset = default, params (float scale, Color color)[] colors) {
-			texture ??= TextureAssets.Extra[33].Value;
+			texture ??= TextureAssets.Extra[ExtrasID.CultistLightingArc].Value;
 			Vector2 size;
 			int colorLength = colors.Length;
 			DelegateMethods.f_1 = 1;
@@ -3555,7 +3555,7 @@ namespace Origins {
 				for (int i = 0; i <= maxX; i++) {
 					for (int j = 0; j <= maxY; j++) {
 						Tile tile = Main.tile[i + minX, j + minY];
-						Dust.NewDustPerfect(new Vector2((i + minX) * 16 + 8, (j + minY) * 16 + 8), 6, Vector2.Zero).noGravity = true;
+						Dust.NewDustPerfect(new Vector2((i + minX) * 16 + 8, (j + minY) * 16 + 8), DustID.Torch, Vector2.Zero).noGravity = true;
 						if (fallThrough && Main.tileSolidTop[tile.TileType]) continue;
 						checkArea.X = i * -16 + cornerX;
 						checkArea.Y = j * -16 + cornerY;

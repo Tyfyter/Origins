@@ -140,7 +140,7 @@ namespace Origins.Items.Weapons.Ranged {
 			OriginExtensions.DrawLightningArc(
 				Main.spriteBatch,
 				positions.ToArray(),
-				TextureAssets.Extra[33].Value,
+				TextureAssets.Extra[ExtrasID.CultistLightingArc].Value,
 				1,
 				-Main.screenPosition,
 				(1f, new Color(80, 204, 219, 0) * 0.5f),

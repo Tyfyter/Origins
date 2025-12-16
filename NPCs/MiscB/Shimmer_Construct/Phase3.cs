@@ -327,7 +327,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			private static VertexStrip vertexStrip = new();
 			public static void DrawPath(Vector2[] positions, float[] rotations, float width, float alpha, float progress, Color color) {
 				MiscShaderData shader = GameShaders.Misc["Origins:DefiledIndicator"];
-				shader.UseImage1(TextureAssets.Extra[193]);
+				shader.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]);
 				shader.UseColor(Color.Black);
 				shader.UseSecondaryColor(Color.Green);
 				shader.UseShaderSpecificData(new Vector4(alpha, progress, 0, 0));

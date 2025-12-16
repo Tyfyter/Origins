@@ -78,7 +78,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Texture2D texture = TextureAssets.Extra[174].Value;
+			Texture2D texture = TextureAssets.Extra[ExtrasID.KeybrandRing].Value;
 			Main.spriteBatch.Draw(
 				texture,
 				Projectile.position - Main.screenPosition,

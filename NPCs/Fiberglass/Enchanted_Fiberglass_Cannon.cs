@@ -38,7 +38,7 @@ namespace Origins.NPCs.Fiberglass {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
 		}
 		public override void SetDefaults() {
-			NPC.aiStyle = 0;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;
 			NPC.damage = 10;
 			NPC.life = NPC.lifeMax = 57;
 			NPC.defense = 10;

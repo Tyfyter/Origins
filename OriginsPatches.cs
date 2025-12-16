@@ -1707,7 +1707,7 @@ namespace Origins {
 							  y * 16,
 							  Main.rand.Next(-100, 101) * 0.002f,
 							  0f,
-							  28,
+							  ProjectileID.Bomb,
 							  0,
 							  0f,
 							  Main.myPlayer,

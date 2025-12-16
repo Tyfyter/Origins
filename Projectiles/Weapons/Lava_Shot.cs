@@ -21,7 +21,7 @@ namespace Origins.Projectiles.Weapons {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Flamelash);
 			Projectile.light = 0;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.extraUpdates++;
 			Projectile.timeLeft = 300;
 			Projectile.DamageType = damageType ?? DamageClass.Magic;

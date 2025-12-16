@@ -662,7 +662,7 @@ namespace Origins.Items.Other.Testing {
 			Carver.DoCarve(
 				GetFilter(out Vector2 posMin, out Vector2 posMax),
 				pos => {
-					Dust.NewDustPerfect(pos * 16 + Vector2.One * 8, 29, Vector2.Zero).noGravity = true;
+					Dust.NewDustPerfect(pos * 16 + Vector2.One * 8, DustID.WaterCandle, Vector2.Zero).noGravity = true;
 					return 1;
 				},
 				posMin,
@@ -671,8 +671,8 @@ namespace Origins.Items.Other.Testing {
 			);
 			posMin = new(MathF.Floor(posMin.X), MathF.Floor(posMin.Y));
 			posMax = new(MathF.Ceiling(posMax.X), MathF.Ceiling(posMax.Y));
-			Dust.NewDustPerfect(posMin * 16 + Vector2.One * 8, 6, Vector2.Zero).noGravity = true;
-			Dust.NewDustPerfect(posMax * 16 + Vector2.One * 8, 6, Vector2.Zero).noGravity = true;
+			Dust.NewDustPerfect(posMin * 16 + Vector2.One * 8, DustID.Torch, Vector2.Zero).noGravity = true;
+			Dust.NewDustPerfect(posMax * 16 + Vector2.One * 8, DustID.Torch, Vector2.Zero).noGravity = true;
 			return "";
 		}
 		public override void SetParameter(LinkedQueue<object> parameters, Point mousePos, int mousePacked, double mousePackedDouble, Tile mouseTile, Vector2 diffFromPlayer) {

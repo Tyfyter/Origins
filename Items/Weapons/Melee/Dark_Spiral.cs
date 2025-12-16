@@ -83,7 +83,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThornChakram);
 			Projectile.DamageType = DamageClass.MeleeNoSpeed;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.penetrate = 1;
 			Projectile.extraUpdates = 0;
 			Projectile.width = 6;

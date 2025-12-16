@@ -168,7 +168,7 @@ namespace Origins.Items.Accessories {
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, sound: SoundID.Item62);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Texture2D trailTexture = TextureAssets.Extra[91].Value;
+			Texture2D trailTexture = TextureAssets.Extra[ExtrasID.FallingStar].Value;
 			Vector2 trailOrigin = new(trailTexture.Width / 2f, 10f);
 			Vector2 gfxOffset = new(0f, Projectile.gfxOffY);
 			float visualTime = (float)Main.timeForVisualEffects / 45f;

@@ -260,7 +260,7 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			if (length == 0) return;
 			//Dust.NewDustPerfect(pos[length - 1] + (new Vector2(unit.Y, -unit.X) * Main.rand.NextFloat(-4, 4)), DustID.BlueTorch, unit * 5).noGravity = true;
-			Asset<Texture2D> texture = TextureAssets.Extra[194];
+			Asset<Texture2D> texture = TextureAssets.Extra[ExtrasID.MagicMissileTrailShape];
 			miscShaderData.UseImage0(texture);
 			//miscShaderData.UseShaderSpecificData(new Vector4(Main.rand.NextFloat(1), 0, 1, 1));
 			miscShaderData.Shader.Parameters["uAlphaMatrix0"]?.SetValue(new Vector4(1, 1, 1, 0));

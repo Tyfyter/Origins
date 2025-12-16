@@ -358,7 +358,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			Projectile.friendly = true;
 			Projectile.width = 6;
 			Projectile.height = 6;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.penetrate = 25;
 			Projectile.timeLeft = Main.rand.Next(300, 451);
 			Projectile.usesIDStaticNPCImmunity = true;
@@ -656,7 +656,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void AI() {
 			Projectile.velocity.Y += 0.08f;
 			Lighting.AddLight(Projectile.Center, 0.78f, 0.75f, 0.2f);
-			Dust.NewDustPerfect(Projectile.Center, 228, Projectile.velocity * 0.95f, 100, new Color(0, 255, 0), Projectile.scale).noGravity = true;
+			Dust.NewDustPerfect(Projectile.Center, DustID.GoldFlame, Projectile.velocity * 0.95f, 100, new Color(0, 255, 0), Projectile.scale).noGravity = true;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			OriginGlobalNPC.InflictTorn(target, 180, 180, 0.25f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());

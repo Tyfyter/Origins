@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Melee {
 			AIType = ProjectileID.FruitcakeChakram;
 		}
 		public override bool PreAI() {
-			Projectile.aiStyle = 3;
+			Projectile.aiStyle = ProjAIStyleID.Boomerang;
 			return true;
 		}
 		public override void AI() {
@@ -74,7 +74,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThornChakram);
 			Projectile.DamageType = DamageClass.MeleeNoSpeed;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.penetrate = 1;
 			Projectile.extraUpdates = 1;
 			Projectile.width = 6;

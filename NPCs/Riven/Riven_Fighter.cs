@@ -414,7 +414,7 @@ namespace Origins.NPCs.Riven {
 		}
 		internal static bool AI_007_GrapplingHooks_CanTileBeLatchedOnTo(int x, int y) {
 			Tile tile = Main.tile[x, y];
-			return (Main.tileSolid[tile.TileType] || (tile.TileType == 314)) && tile.HasUnactuatedTile;
+			return (Main.tileSolid[tile.TileType] || (tile.TileType == TileID.MinecartTrack)) && tile.HasUnactuatedTile;
 		}
 	}
 }

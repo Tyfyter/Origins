@@ -64,7 +64,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.LostGirl);
-			NPC.aiStyle = 0;
+			NPC.aiStyle = Terraria.ID.NPCAIStyleID.FaceClosestPlayer;
 			NPC.lifeMax = 250;
 			NPC.defense = 30;
 			NPC.damage = 10;

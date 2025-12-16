@@ -45,7 +45,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.localNPCHitCooldown = 6;
 		}
 		public override bool PreAI() {
-			if (Projectile.localAI[0] == 0 || Projectile.localAI[0] > 45) Projectile.aiStyle = 3;
+			if (Projectile.localAI[0] == 0 || Projectile.localAI[0] > 45) Projectile.aiStyle = ProjAIStyleID.Boomerang;
 			return true;
 		}
 		public override void PostAI() {

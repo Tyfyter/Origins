@@ -65,7 +65,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void SetDefaults() {
 			Projectile.width = Projectile.height = 8;
 			Projectile.friendly = true;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.extraUpdates = 1;
 			Projectile.penetrate = 2;
 		}

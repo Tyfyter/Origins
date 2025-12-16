@@ -181,7 +181,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThornChakram);
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.penetrate = 1;
 			Projectile.extraUpdates = 1;
 			Projectile.width = 6;

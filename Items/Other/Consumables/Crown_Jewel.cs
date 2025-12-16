@@ -34,7 +34,7 @@ namespace Origins.Items.Other.Consumables {
 				Mod.Assets.Request<Effect>("Effects/Item_Caustics"),
 				"Crown_Jewel"
 			))
-			.UseImage(TextureAssets.Extra[193]);
+			.UseImage(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]);
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
 		}
 		public override void SetDefaults() {
@@ -64,7 +64,7 @@ namespace Origins.Items.Other.Consumables {
 			SpriteBatchState state = spriteBatch.GetState();
 			try {
 				spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate);
-				Texture2D texture = TextureAssets.Extra[193].Value;
+				Texture2D texture = TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion].Value;
 				DrawData data = new() {
 					texture = texture,
 					position = Item.Center - Main.screenPosition,

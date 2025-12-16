@@ -432,7 +432,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 			if (Projectile.frameCounter > 0) {
 				Main.EntitySpriteDraw(
-					TextureAssets.Extra[105].Value,
+					TextureAssets.Extra[ExtrasID.FloatingTube].Value,
 					innerTubePosition - Main.screenPosition,
 					new Rectangle(6, 34, 30, 16),
 					lightColor,
@@ -454,7 +454,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			);
 			if (Projectile.frameCounter > 0) {
 				Main.EntitySpriteDraw(
-					TextureAssets.Extra[105].Value,
+					TextureAssets.Extra[ExtrasID.FloatingTube].Value,
 					innerTubePosition - Main.screenPosition,
 					new Rectangle(6, 90, 30, 16),
 					lightColor,

@@ -884,7 +884,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			MiscShaderData shader = GameShaders.Misc["Origins:ShimmerConstructSDF"];
 			shader.UseColor(Color.CornflowerBlue);
 			shader.UseSecondaryColor(Color.MediumPurple);
-			shader.UseImage1(TextureAssets.Extra[193]);
+			shader.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]);
 			//shader.UseImage2(ModContent.Request<Texture2D>("Origins/Textures/SC_Mask"));
 			shader.Apply();
 			rect.Draw(position, Color.White, size, rotation, position);
