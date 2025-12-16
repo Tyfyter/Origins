@@ -1421,8 +1421,8 @@ Buffs: {
 	}
 
 	Ocean_Buff: {
-		// DisplayName: Ocean Buff
-		// Description: Mods.Origins.Buffs.Ocean_Buff.Description
+		// DisplayName: Feesh
+		// Description: They are here.
 	}
 }
 
@@ -2492,7 +2492,7 @@ Keybinds: {
 	// WishingGlass.DisplayName: Wishing Glass
 	// "Open Structure Helper.DisplayName": Open Structure Helper
 	// StressBall.DisplayName: Stress Ball
-	// LunaticsRune.DisplayName: Lunatics Rune
+	// LunaticsRune.DisplayName: Lunatic's Rune
 }
 
 Configs: {

@@ -22,17 +22,17 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Chlorophyte_Slug_P>();
 			Item.useAmmo = ModContent.ItemType<Metal_Slug>();
 			Item.knockBack = 8f;
-			Item.shootSpeed = 12f;
+			Item.shootSpeed = 9f;
 			Item.value = Item.sellPrice(gold: 10);
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Lime;
 			Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.25f);
 			Item.autoReuse = true;
             Item.ArmorPenetration += 6;
         }
 		public override Vector2? HoldoutOffset() => Vector2.Zero;
 		public override void AddRecipes() => Recipe.Create(Type)
-			.AddIngredient(ItemID.IllegalGunParts, 2)
 			.AddIngredient(ItemID.ChlorophyteBar, 18)
+			.AddIngredient(ItemID.IllegalGunParts, 2)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {

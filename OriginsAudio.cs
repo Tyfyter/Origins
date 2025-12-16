@@ -71,6 +71,9 @@ namespace Origins {
 			public static SoundStyle ShimmershotCharging = new("Origins/Sounds/Custom/SoftCharge", SoundType.Sound) {
 				IsLooped = true
 			};
+			public static SoundStyle HawkenThruster = new("Origins/Sounds/Custom/HawkenThrusterDistant", SoundType.Sound) {
+				IsLooped = true
+			};
 			public static SoundStyle ShimmerConstructAmbienceIntro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_Start", SoundType.Ambient);
 			public static SoundStyle ShimmerConstructAmbienceLoop = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_Mid", SoundType.Ambient);
 			public static SoundStyle ShimmerConstructAmbienceOutro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_End", SoundType.Ambient);
@@ -186,6 +189,9 @@ namespace Origins {
 			Sounds.Bonk = new SoundStyle("Origins/Sounds/Custom/GrandSlam", SoundType.Sound) {
 				MaxInstances = 0,
 				PitchVariance = 0.4f
+			};
+			Sounds.HawkenThruster = new SoundStyle("Origins/Sounds/Custom/HawkenThrusterDistant", SoundType.Sound) {
+				MaxInstances = 0
 			};
 			Sounds.Journal = new SoundStyle("Origins/Sounds/Custom/WritingFire", SoundType.Sound) {
 				MaxInstances = 1,

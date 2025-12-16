@@ -7555,7 +7555,12 @@ Spug_Flesh_Item: {
 
 AMRSL_Skewer: {
 	DisplayName: A.M.R.S.L. 'Skewer'
-	Tooltip: ""
+	Tooltip:
+		'''
+		<right> to select from available ammo types
+		Uses pretty much anything made of iron, lead or scrap as ammo
+		Ammo types generate different yields
+		'''
 	PrefixAmmo: "{0:+0;-0} capacity"
 }
 
@@ -7571,22 +7576,30 @@ Purple_Mechanical_Switch_Item: {
 
 BBQ_Skewer: {
 	DisplayName: BBQ Skewer
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.MajorStats}"
 }
 
 Crockin_Sprocks: {
-	DisplayName: Crockin Sprocks
-	Tooltip: ""
-}
+	DisplayName: Crockin' Sprocks
+	Tooltip:
+		'''
+		{$CommonItemTooltip.MediumStats} and further increased regeneration
+		'Crankin' for Crockin' Sprocks!'
+		'''
+	}
 
 Chlorophyte_Handcannon: {
 	DisplayName: Chlorophyte Handcannon
-	Tooltip: ""
+	Tooltip:
+		'''
+		Uses slugs as ammo
+		Slugs release damaging cells as they fly
+		'''
 }
 
 Ocean_Amulet: {
 	DisplayName: Ocean Amulet
-	Tooltip: ""
+	Tooltip: Summons a school of fish to fight for you
 }
 
 Lunatics_Rune: {

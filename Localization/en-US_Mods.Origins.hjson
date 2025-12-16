@@ -1421,8 +1421,8 @@ Buffs: {
 	}
 
 	Ocean_Buff: {
-		DisplayName: Ocean Buff
-		Description: Mods.Origins.Buffs.Ocean_Buff.Description
+		DisplayName: Feesh
+		Description: They are here.
 	}
 }
 

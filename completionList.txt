@@ -235,7 +235,7 @@ ENEMY NPCS:
 (X) Limestone Creeper
 (^) Optiphage
 (X) Packhunter !!!
-(#3, †) Pinwheel (randomly gets stuck on walls, idk how to fix)
+(#3, ^2) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
 (X) QM-76 'Quakemaker' !!!
@@ -647,7 +647,7 @@ ACCESSORIES:
 
 (^) Amebic Vial
 (^) Blizzardwalker's Jacket
-(†) Crystal Heart !!!
+(#2, ^2) Crystal Heart !!! (gib balance)
 (^) Cursed Crown
 (^) Emergency Bee Canister
 (^) Faith Beads
@@ -897,7 +897,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler
 (^) Adamantite Harpoon Gun
-(☻) AMRSL 'Skewer' !!!
+(^) AMRSL 'Skewer'
 (^) Bleeding Obsidian Kunai
 (X) Blenderbuss
 (^) Boat Rocker
@@ -1020,7 +1020,7 @@ SUMMONER WEAPONS:
 (^) Inject Incantation
 (^) Joint Pop
 (^) Maelstrom Incantation
-(☻) Ocean Amulet !!!
+(^) Ocean Amulet
 (^) Ocotillo Finger
 (^) Ocotoral Bud
 (X) Pinwheel Pole
@@ -1140,7 +1140,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Autohandcannon !!!
 (^) Bomboomstick
 (^) Chlorodynamite
-(☻) Chlorophyte Handcannon !!!
+(†) Chlorophyte Handcannon !!!
 (#, ^2) Firework Cannon
 (X) Flarefury
 (#, ^2) Holy Hand Grenade !!!
@@ -1202,7 +1202,7 @@ TILES:
 (^) Catwalk
 (^) Chambersite
 (^) Chambersite Gemspark
-(☻) Chambersite Gemstone !!!
+(^) Chambersite Gemstone
 (X) Chromtain Ore
 (^) Defiled Cactus
 (^) Defiled Grass
@@ -1293,7 +1293,7 @@ TILES:
 (^) Type-I Fortified Steel Wall
 (^) Type-III Fortified Steel Wall
 
-(☻) Air Vent !!!
+(#3, ^2) Air Vent !!! (halp me with noise ples)
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
 (^) Artifiber Furniture
@@ -1628,7 +1628,7 @@ CONSUMABLES:
 (^5) Unmarked Antidote
 
 (^) Bad Juju Stone
-(☻) BBQ Skewer !!!
+(^) BBQ Skewer
 (^) Bileberry
 (#, ^2) Blastberry !!!
 (^) Blue Bovine
@@ -1638,7 +1638,7 @@ CONSUMABLES:
 (^) Caeser Salad
 (#, ^2) Cognac !!!
 (^) Contaminated Infusion
-(☻) Crockin' Sprocks !!!
+(^) Crockin' Sprocks
 (^) Edible Hair Gel
 (^) Honey Wheat Bread
 (^) Irish Cheddar

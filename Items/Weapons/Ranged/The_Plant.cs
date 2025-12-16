@@ -40,10 +40,10 @@ namespace Origins.Items.Weapons.Ranged {
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(int.MaxValue, 5));
 		}
 		public override void SetDefaults() {
-			Item.damage = 10;
+			Item.damage = 22;
 			Item.DamageType = DamageClass.Ranged;
 			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.knockBack = 5;
+			Item.knockBack = 3;
 			Item.noMelee = true;
 			Item.useTime = 6;
 			Item.useAnimation = 6;
@@ -82,6 +82,12 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) => damage.Base += SelectedMode?.Damage ?? 0;
 		public override void ModifyWeaponKnockback(Player player, ref StatModifier knockback) => knockback.Base += SelectedMode?.Knockback ?? 0;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			if (ammoCount <= 150) {
+				SoundEngine.PlaySound(SoundID.Item108.WithPitch(1.5f));
+			}
+			if (ammoCount <= 1) {
+				SoundEngine.PlaySound(SoundID.Zombie71.WithPitch(0.5f));
+			}
 			type = SelectedMode.ProjectileType;
 			Vector2 unit = velocity.Normalized(out _);
 			velocity += unit * SelectedMode.ShootSpeed;
@@ -215,6 +221,8 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void Click(PlantAmmoType mode) {
 			if (Main.LocalPlayer.HeldItem?.ModItem is The_Plant plant) {
 				plant.mode = mode.ItemType;
+				SoundEngine.PlaySound(SoundID.Item53.WithPitchRange(0.2f, 0.5f));
+				SoundEngine.PlaySound(SoundID.Item149.WithPitchRange(-1.5f, -1.2f));
 			}
 		}
 		public override IEnumerable<PlantAmmoType> GetModes() {

@@ -52,7 +52,8 @@ namespace Origins.Items.Weapons.Ranged {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 88;
+			Item.damage = 178;
+			Item.crit += 10;
 			Item.DamageType = DamageClass.Ranged;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;

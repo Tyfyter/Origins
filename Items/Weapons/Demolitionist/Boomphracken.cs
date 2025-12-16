@@ -1,5 +1,3 @@
-using Microsoft.Xna.Framework;
-using Origins.Dev;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ranged;
 using Origins.Tiles.Dusk;

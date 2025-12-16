@@ -7555,7 +7555,12 @@ Spug_Flesh_Item: {
 
 AMRSL_Skewer: {
 	// DisplayName: A.M.R.S.L. 'Skewer'
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		<right> to select from available ammo types
+		Uses pretty much anything made of iron, lead or scrap as ammo
+		Ammo types generate different yields
+		''' */
 	// PrefixAmmo: "{0:+0;-0} capacity"
 }
 
@@ -7586,7 +7591,7 @@ Chlorophyte_Handcannon: {
 
 Ocean_Amulet: {
 	// DisplayName: Ocean Amulet
-	// Tooltip: ""
+	// Tooltip: Summons a school of fish to fight for you
 }
 
 Lunatics_Rune: {
