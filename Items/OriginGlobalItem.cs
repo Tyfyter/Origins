@@ -258,6 +258,7 @@ namespace Origins.Items {
 			}
 		}
 		public static void AddVanillaTooltips(int itemType, List<TooltipLine> tooltips, bool forceAll = false) {
+#pragma warning disable CS8321 // Local function is declared but never used
 			void Insert(string target, string name, string textKey, bool after = true) {
 				int index = tooltips.FindIndex(line => line.Name == target);
 				TooltipLine line = new(Origins.instance, "name", Language.GetOrRegister(textKey).Value);
@@ -267,6 +268,7 @@ namespace Origins.Items {
 				}
 				tooltips.Insert(index + after.ToInt(), line);
 			}
+#pragma warning restore CS8321 // Local function is declared but never used
 			void Add(string name, string textKey) {
 				int index = tooltips.FindLastIndex(line => line.Name.StartsWith("Tooltip"));
 				TooltipLine line = new(Origins.instance, "name", Language.GetOrRegister(textKey).Value);

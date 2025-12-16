@@ -29,7 +29,7 @@ namespace Origins.Dev {
 			}
 			crc_table_computed = true;
 		}
-		static void FinalizeCRC(uint crc32, Stream stream) {
+		static void FinalizeCRC(uint crc32, MemoryStream stream) {
 			crc32 ^= 0xFFFFFFFFu;
 			stream.Write(ToBytes((uint)crc32));
 #if DEBUG

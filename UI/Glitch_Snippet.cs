@@ -8,7 +8,9 @@ using Terraria.Utilities;
 
 namespace Origins.UI {
 	public class Glitch_Handler : ITagHandler {
+#pragma warning disable CS0649 // Field is never assigned to
 		internal static Vector2 origin;
+#pragma warning restore CS0649 // Field is never assigned to
 		public class Glitch_Snippet(string text, string symbols, Color color = default, float scale = 1) : TextSnippet(text, color, scale) {
 			readonly StringBuilder DisplayedText = new(text);
 			string OriginalText = text;

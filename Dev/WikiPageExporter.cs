@@ -158,10 +158,6 @@ namespace Origins.Dev {
 				}
 			}
 		}
-		static UInt32[] CRCTable;
-		static bool crc_table_computed = false;
-		static string currentCRCText = "";
-		static int currentCRCLength = 0;
 		public static void ExportContentSprites(object content) {
 			int screenWidth = Main.screenWidth;
 			int screenHeight = Main.screenHeight;

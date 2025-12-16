@@ -369,7 +369,7 @@ namespace Origins.NPCs.Brine.Boss {
 			npcHitbox.Inflate((int)(npcHitbox.Width * factor), (int)(npcHitbox.Height * factor));
 			return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
 		}
-		public override void BossLoot(ref string name, ref int potionType) {
+		public override void BossLoot(ref int potionType) {
 			potionType = ItemID.GreaterHealingPotion;
 		}
 		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment) {

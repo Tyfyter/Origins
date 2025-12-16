@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Tiles.Other;
+using PegasusLib;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

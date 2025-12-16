@@ -2,6 +2,7 @@
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
+using PegasusLib;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

@@ -1,4 +1,5 @@
 global using Microsoft.Xna.Framework;
+global using PegasusLib;
 global using static Origins.GlobalUtils;
 global using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 global using Color = Microsoft.Xna.Framework.Color;

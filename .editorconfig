@@ -270,4 +270,4 @@ dotnet_style_predefined_type_for_locals_parameters_members = true:silent
 dotnet_style_readonly_field = true:suggestion
 dotnet_style_namespace_match_folder = true:suggestion
 dotnet_style_prefer_simplified_interpolation = true:suggestion
-dotnet_style_prefer_collection_expression = when_types_loosely_match:suggestion
+dotnet_style_prefer_collection_expression = never:suggestion

@@ -1,20 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using PegasusLib;
 using ReLogic.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
-using static tModPorter.ProgressUpdate;
 
 namespace Origins.UI {
 	public class Quest_Reward_Item_List_Handler : ITagHandler {
-		internal static Vector2 origin;
 		public class Item_And_Name_Snippet : TextSnippet {
 			private Item item;
 			private readonly bool locked;

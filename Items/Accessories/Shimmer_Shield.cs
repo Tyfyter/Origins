@@ -11,7 +11,6 @@ namespace Origins.Items.Accessories {
 		];
 		public static float ReflectionDamageMultiplier => 2;
 		public static float ReflectionHostileDamageMultiplier => 2;
-		internal static int shieldSlot;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 32);
 			Item.value = Item.sellPrice(gold: 2);

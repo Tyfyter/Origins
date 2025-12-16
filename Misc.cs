@@ -310,80 +310,8 @@ namespace Origins {
 			this.asset = asset;
 		}
 		public static implicit operator AutoCastingAsset<T>(Asset<T> asset) => new(asset);
+		public static implicit operator AutoCastingAsset<T>(AutoLoadingAsset<T> asset) => new(asset);
 		public static implicit operator T(AutoCastingAsset<T> asset) => asset.Value;
-	}
-	[Obsolete($"Use PegasusLib.AutoLoadingAsset<T> instead")]
-	public struct AutoLoadingAsset<T> : IUnloadable where T : class {
-		public readonly bool IsLoaded => asset.Value?.IsLoaded ?? false;
-		public T Value {
-			get {
-				LoadAsset();
-				return asset.Value?.Value;
-			}
-		}
-		public bool Exists {
-			get {
-				LoadAsset();
-				return exists;
-			}
-		}
-		bool exists;
-		bool triedLoading;
-		string assetPath;
-		Ref<Asset<T>> asset;
-		AutoLoadingAsset(Asset<T> asset) {
-			triedLoading = true;
-			assetPath = "";
-			this.asset = new(asset);
-			exists = true;
-			this.RegisterForUnload();
-		}
-		AutoLoadingAsset(string asset) {
-			triedLoading = false;
-			assetPath = asset;
-			this.asset = new(null);
-			exists = false;
-			this.RegisterForUnload();
-		}
-		public void Unload() {
-			assetPath = null;
-			asset = null;
-		}
-		public void LoadAsset() {
-			if (!triedLoading) {
-				triedLoading = true;
-				if (assetPath is null) {
-					asset ??= new Ref<Asset<T>>();
-					asset.Value = Asset<T>.Empty;
-				} else {
-					if (!Main.dedServ) {
-						exists = ModContent.RequestIfExists(assetPath, out Asset<T> foundAsset);
-						asset.Value = exists ? foundAsset : Asset<T>.Empty;
-					} else {
-						asset.Value = Asset<T>.Empty;
-					}
-				}
-			}
-		}
-		public void Wait() {
-			LoadAsset();
-			asset.Value.Wait();
-		}
-		public static void Wait(params AutoLoadingAsset<T>[] assets) {
-			for (int i = 0; i < assets.Length; i++) assets[i].LoadAsset();
-			for (int i = 0; i < assets.Length; i++) assets[i].asset.Value.Wait();
-		}
-		public static implicit operator AutoLoadingAsset<T>(Asset<T> asset) => new(asset);
-		public static implicit operator AutoLoadingAsset<T>(string asset) => new(asset);
-		public static implicit operator T(AutoLoadingAsset<T> asset) => asset.Value;
-		public static implicit operator AutoCastingAsset<T>(AutoLoadingAsset<T> asset) {
-			asset.LoadAsset();
-			return asset.asset.Value;
-		}
-		public static implicit operator Asset<T>(AutoLoadingAsset<T> asset) {
-			asset.LoadAsset();
-			return asset.asset.Value;
-		}
 	}
 	public readonly struct UnorderedTuple<T>(T a, T b) : IEquatable<UnorderedTuple<T>> {
 		public readonly T a = a;

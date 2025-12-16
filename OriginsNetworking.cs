@@ -429,7 +429,7 @@ namespace Origins {
 							originTarget.laserTagRespawnDelay = Laser_Tag_Console.LaserTagRules.RespawnTime;
 							if (target.whoAmI == Main.myPlayer) {
 								for (int i = 0; i < target.inventory.Length; i++) {
-									if (target.inventory[i].type is >= ItemID.LargeAmethyst and <= ItemID.LargeDiamond) target.DropItem(target.GetSource_Death(), target.MountedCenter, ref target.inventory[i]);
+									if (target.inventory[i].type is >= ItemID.LargeAmethyst and <= ItemID.LargeDiamond) target.TryDroppingSingleItem(target.GetSource_Death(), target.inventory[i]);
 								}
 							}
 							if (Main.netMode != NetmodeID.Server) {

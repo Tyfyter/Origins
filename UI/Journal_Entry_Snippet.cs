@@ -14,7 +14,6 @@ namespace Origins.UI {
 		public class Journal_Entry_Snippet : WrappingTextSnippet {
 			public readonly string key;
 			internal static float currentMaxWidth;
-			readonly bool completed;
 			readonly TextSnippet[] snippets;
 			public Journal_Entry_Snippet(string key, Color color) {
 				this.key = key;
@@ -49,7 +48,7 @@ namespace Origins.UI {
 				_snippets[0] = new PaddingSnippet(padding);
 				snippets.CopyTo(_snippets, 1);
 				position.X = BasePosition.X;
-				ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, _snippets, position, color, 0, Vector2.Zero, new(scale), out int hoveredSnippet, maxWidth, completed);
+				ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, _snippets, position, color, 0, Vector2.Zero, new(scale), out int hoveredSnippet, maxWidth);
 				if (hoveredSnippet >= 0 && hoveredSnippet < _snippets.Length && _snippets[hoveredSnippet].CheckForHover) {
 					_snippets[hoveredSnippet].OnHover();
 					if (Main.mouseLeft && Main.mouseLeftRelease) {

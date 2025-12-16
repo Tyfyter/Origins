@@ -140,7 +140,7 @@ namespace Origins.Backgrounds {
 
 		private void DrawModdedCaptureIcons(ILContext il) {
 			ILCursor c = new ILCursor(il);
-			ILLabel IL_01ca = c.DefineLabel();
+			ILLabel? IL_01ca = c.DefineLabel();
 			ILLabel IL_0000 = c.DefineLabel();
 
 			//add your mod's icons
