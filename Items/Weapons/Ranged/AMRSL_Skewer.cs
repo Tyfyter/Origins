@@ -278,7 +278,7 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class Skewer_Forge_Menu : ItemModeFlowerMenu<SkewerAmmoOption, bool> {
 		public override bool IsActive() => Main.LocalPlayer.HeldItem?.ModItem is AMRSL_Skewer skewer && skewer.ammoCount < skewer.ammoMax;
-		public override float DrawCenter() => ModeCount <= 1 ? 0 : 20;
+		public override float DrawCenter() => ModeCount <= 1 ? 0 : 30;
 		public override bool GetData(SkewerAmmoOption mode) => default;
 		public override bool GetCursorAreaTexture(SkewerAmmoOption mode, out Texture2D texture, out Rectangle? frame, out Color color) {
 			texture = default;
@@ -358,8 +358,8 @@ namespace Origins.Items.Weapons.Ranged {
 		float GetScale(out Rectangle frame) {
 			Main.GetItemDrawFrame(item.type, out _, out frame);
 			float scale = 1.15f;
-			Min(ref scale, frame.Width / 20f);
-			Min(ref scale, frame.Height / 20f);
+			Min(ref scale, 30f / frame.Width);
+			Min(ref scale, 30f / frame.Height);
 			return scale;
 		}
 		public float AmmoPerItem => AMRSL_Skewer.AmmoCount[item.type];
