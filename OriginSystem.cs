@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Core.Structures;
 using Origins.Items;
 using Origins.Items.Accessories;
@@ -24,6 +26,7 @@ using Origins.UI;
 using Origins.UI.SetBonus;
 using Origins.World;
 using PegasusLib;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -721,6 +724,10 @@ namespace Origins {
 			foreach (Projectile proj in Main.ActiveProjectiles) {
 				if (proj.ModProjectile is IPreDrawSceneProjectile preDrawer) preDrawer.PreDrawScene();
 			}
+		}
+		internal static List<IPreDrawAnything> assetSwitchers = [];
+		public override void ModifyScreenPosition() {
+			for (int i = 0; i < assetSwitchers.Count; i++) assetSwitchers[i].PreDrawAnything();
 		}
 		public override void PostDrawTiles() {
 			SpecialTilePreviewOverlay.ForceActive();

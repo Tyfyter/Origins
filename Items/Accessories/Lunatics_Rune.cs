@@ -1,23 +1,15 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
+using Origins.Core;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Lunatics_Rune : ModItem {
 		public static int ChargeThreshold => 3 * 60;
-		static Asset<Texture2D> normalTexture;
-		static Asset<Texture2D> afTexture;
-		public override void AutoStaticDefaults() {
-			base.AutoStaticDefaults();
-			normalTexture = TextureAssets.Item[Type];
-			afTexture = ModContent.Request<Texture2D>(Texture + "_AF");
-		}
 		public override void SetStaticDefaults() {
 			Main.RegisterItemAnimation(Type, new DrawAnimationSwitching(OriginsModIntegrations.CheckAprilFools, NoDrawAnimation.AtAll, new DrawAnimationRandom(3, 20)));
-
+			AprilFoolsTextures.AddItem(this);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
@@ -68,12 +60,6 @@ namespace Origins.Items.Accessories {
 				}
 				charge = 0;
 			}
-		}
-		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-			TextureAssets.Item[Type] = OriginsModIntegrations.CheckAprilFools() ? afTexture : normalTexture;
-		}
-		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
-			TextureAssets.Item[Type] = OriginsModIntegrations.CheckAprilFools() ? afTexture : normalTexture;
 		}
 	}
 }

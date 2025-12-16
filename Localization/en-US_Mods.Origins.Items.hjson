@@ -7586,7 +7586,7 @@ Crockin_Sprocks: {
 		{$CommonItemTooltip.MediumStats} and further increased regeneration
 		'Crankin' for Crockin' Sprocks!'
 		'''
-	}
+}
 
 Chlorophyte_Handcannon: {
 	DisplayName: Chlorophyte Handcannon

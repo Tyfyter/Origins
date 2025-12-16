@@ -254,7 +254,7 @@ namespace Origins {
 		}
 	}
 	public class DrawAnimationDelegated : DrawAnimation {
-		Func<Texture2D, Rectangle> frame;
+		readonly Func<Texture2D, Rectangle> frame;
 		public DrawAnimationDelegated(Func<Texture2D, Rectangle> frameMethod) {
 			Frame = 0;
 			FrameCounter = 0;
@@ -276,15 +276,13 @@ namespace Origins {
 		public override Rectangle GetFrame(Texture2D texture, int frameCounterOverride = -1) => @switch() ? onTrue.GetFrame(texture, frameCounterOverride) : onFalse.GetFrame(texture, frameCounterOverride);
 	}
 	public class NoDrawAnimation : DrawAnimation {
-		public readonly static NoDrawAnimation AtAll = new NoDrawAnimation();
+		public readonly static NoDrawAnimation AtAll = new();
 		public NoDrawAnimation() {
 			Frame = 0;
 			FrameCounter = 0;
 			FrameCount = 1;
 			TicksPerFrame = -1;
 		}
-		public override void Update() { }
-		public override Rectangle GetFrame(Texture2D texture, int frameCounterOverride = -1) => texture.Frame();
 	}
 	public class DrawAnimationRandom : DrawAnimation {
 		public DrawAnimationRandom(int frameCount, int ticksperframe) {
@@ -1470,6 +1468,7 @@ namespace Origins {
 		public static readonly IdDictionary Search = IdDictionary.Create(typeof(ChestID), typeof(int));
 	}
 	#endregion
+	public delegate ref T RefGet<T>();
 	public delegate void hook_DropItem(ItemDropper orig, DropAttemptInfo info, int item, int stack, bool scattered = false);
 	public delegate void ItemDropper(DropAttemptInfo info, int item, int stack, bool scattered = false);
 	public static class OriginExtensions {

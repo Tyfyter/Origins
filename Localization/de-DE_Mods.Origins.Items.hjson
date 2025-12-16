@@ -7576,17 +7576,25 @@ Purple_Mechanical_Switch_Item: {
 
 BBQ_Skewer: {
 	// DisplayName: BBQ Skewer
-	// Tooltip: ""
+	// Tooltip: "{$CommonItemTooltip.MajorStats}"
 }
 
 Crockin_Sprocks: {
-	// DisplayName: Crockin Sprocks
-	// Tooltip: ""
+	// DisplayName: Crockin' Sprocks
+	/* Tooltip:
+		'''
+		{$CommonItemTooltip.MediumStats} and further increased regeneration
+		'Crankin' for Crockin' Sprocks!'
+		''' */
 }
 
 Chlorophyte_Handcannon: {
 	// DisplayName: Chlorophyte Handcannon
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Uses slugs as ammo
+		Slugs release damaging cells as they fly
+		''' */
 }
 
 Ocean_Amulet: {
