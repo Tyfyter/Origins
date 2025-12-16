@@ -815,8 +815,8 @@ namespace Origins {
 		static float heliumSoundPitch = 0f;
 		private static ReLogic.Utilities.SlotId On_SoundEngine_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback1(On_SoundEngine.orig_PlaySound_refSoundStyle_Nullable1_SoundUpdateCallback orig, ref SoundStyle style, Vector2? position, SoundUpdateCallback updateCallback) {
 			if (shouldDoMuffledSound) {
-				if (style == SoundID.PlayerHit) ;
-				else if (style == SoundID.FemaleHit) ;
+				if (style == SoundID.PlayerHit) style = Sounds.MuffledHitMale;
+				else if (style == SoundID.FemaleHit) style = Sounds.MuffledHitFemale;
 				else if (style == SoundID.DSTMaleHurt) ;
 				else if (style == SoundID.DSTFemaleHurt) ;
 			}

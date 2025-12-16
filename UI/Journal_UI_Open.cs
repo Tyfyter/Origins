@@ -481,7 +481,6 @@ namespace Origins.UI {
 			bool canDrawArrows = true;
 			try {
 				if (shade) Origins.shaderOroboros.Capture();
-				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = bounds.Width * 0.5f - XMarginTotal;
 				for (int i = 0; i < 2 && i + pageOffset < (pages?.Count ?? 0); i++) {
 					Vector2 pagePos = new Vector2(bounds.X + (i * bounds.Width * 0.5f) + (i == 0 ? xMarginOuter : xMarginInner), bounds.Y + yMargin);
 					WrappingTextSnippetSetup.SetWrappingData(pagePos, bounds.Width * 0.5f - XMarginTotal);
@@ -531,8 +530,7 @@ namespace Origins.UI {
 					}
 				}
 			} finally {
-				WrappingTextSnippetSetup.SetWrappingData(Vector2.Zero, float.PositiveInfinity);
-				Quest_Stage_Snippet_Handler.Quest_Stage_Snippet.currentMaxWidth = float.PositiveInfinity;
+				WrappingTextSnippetSetup.SetWrappingData(Vector2.Zero, -1);
 				if (shade) {
 					Origins.shaderOroboros.Stack(currentEffect);
 					Origins.shaderOroboros.Release();

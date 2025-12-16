@@ -7,7 +7,6 @@ using Terraria.UI.Chat;
 namespace Origins.UI {
 	public class Quest_Stage_Snippet_Handler : ITagHandler {
 		public class Quest_Stage_Snippet : WrappingTextSnippet {
-			internal static float currentMaxWidth;
 			readonly bool completed;
 			readonly TextSnippet[] snippets;
 			public Quest_Stage_Snippet(string text, Color color, bool completed) {
@@ -40,7 +39,7 @@ namespace Origins.UI {
 				return true;
 			}
 			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default, Color color = default, float scale = 1) {
-				return UniqueDraw(justCheckingString, out size, spriteBatch, currentMaxWidth, position, color, scale);
+				return UniqueDraw(justCheckingString, out size, spriteBatch, MaxWidth, position, color, scale);
 			}
 		}
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {

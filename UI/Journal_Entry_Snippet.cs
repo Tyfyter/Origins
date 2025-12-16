@@ -13,7 +13,6 @@ namespace Origins.UI {
 	public class Journal_Entry_Handler : ITagHandler {
 		public class Journal_Entry_Snippet : WrappingTextSnippet {
 			public readonly string key;
-			internal static float currentMaxWidth;
 			readonly TextSnippet[] snippets;
 			public Journal_Entry_Snippet(string key, Color color) {
 				this.key = key;

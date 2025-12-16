@@ -9,7 +9,6 @@ using Terraria.UI.Chat;
 namespace Origins.UI {
 	public class Italics_Snippet_Handler : ITagHandler {
 		public class Italics_Snippet : WrappingTextSnippet {
-			internal static float currentMaxWidth;
 			readonly float amount;
 			public Italics_Snippet(string text, Color color, float amount) {
 				Text = text.Replace('<', '[').Replace('>', ']');
@@ -55,7 +54,7 @@ namespace Origins.UI {
 				return true;
 			}
 			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default, Color color = default, float scale = 1) {
-				return UniqueDraw(justCheckingString, out size, spriteBatch, currentMaxWidth, position, color, scale);
+				return UniqueDraw(justCheckingString, out size, spriteBatch, MaxWidth, position, color, scale);
 			}
 		}
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
