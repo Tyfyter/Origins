@@ -112,8 +112,6 @@ namespace Origins {
 				}
 			};
 
-			Terraria.Graphics.Renderers.On_LegacyPlayerRenderer.DrawPlayerInternal += LegacyPlayerRenderer_DrawPlayerInternal;
-			On_PlayerDrawLayers.DrawPlayer_TransformDrawData += On_PlayerDrawLayers_DrawPlayer_TransformDrawData;
 			On_Projectile.GetWhipSettings += Projectile_GetWhipSettings;
 			/*On_Recipe.CollectItemsToCraftWithFrom += (orig, player) => {
 				orig(player);
@@ -1912,83 +1910,6 @@ namespace Origins {
 		public static int drawPlayersWithShader = -1;
 		public static int keepPlayerShader = -1;
 		internal static int forcePlayerShader = -1;
-		internal static bool resetKeepPlayerShader = false;
-		private static void On_PlayerDrawLayers_DrawPlayer_TransformDrawData(On_PlayerDrawLayers.orig_DrawPlayer_TransformDrawData orig, ref PlayerDrawSet drawinfo) {
-			orig(ref drawinfo);
-			if (forcePlayerShader >= 0) {
-				for (int i = 0; i < drawinfo.DrawDataCache.Count; i++) {
-					if (drawinfo.DrawDataCache[i].shader != keepPlayerShader) drawinfo.DrawDataCache[i] = drawinfo.DrawDataCache[i] with { shader = forcePlayerShader };
-				}
-			}
-		}
-		private void LegacyPlayerRenderer_DrawPlayerInternal(Terraria.Graphics.Renderers.On_LegacyPlayerRenderer.orig_DrawPlayerInternal orig, Terraria.Graphics.Renderers.LegacyPlayerRenderer self, Camera camera, Player drawPlayer, Vector2 position, float rotation, Vector2 rotationOrigin, float shadow, float alpha, float scale, bool headOnly) {
-			SpriteBatchState spriteBatchState = Main.spriteBatch.GetState();
-			bool shaded = false;
-			forcePlayerShader = -1;
-			resetKeepPlayerShader = keepPlayerShader == -1;
-			try {
-				OriginPlayer originPlayer = drawPlayer.GetModPlayer<OriginPlayer>();
-				if (drawPlayersWithShader < 0 && originPlayer.VisualRasterizedTime > 0) {
-					if (resetKeepPlayerShader) keepPlayerShader = Anti_Gray_Dye.ShaderID;
-					forcePlayerShader = Rasterized_Dye.ShaderID;
-				} else if (drawPlayersWithShader < 0 && (originPlayer.shineSparkCharge > 0 || originPlayer.shineSparkDashTime > 0)) {
-					forcePlayerShader = Shimmer_Dye.ShaderID;
-				} else {
-					List<VisualEffectPlayer.VisualEffect> effects = drawPlayer.GetModPlayer<VisualEffectPlayer>().effects;
-					for (int i = 0; i < effects.Count; i++) {
-						if (effects[i].SetForcedShader()) break;
-					}
-				}
-				if (drawPlayersWithShader >= 0) {
-					forcePlayerShader = drawPlayersWithShader;
-					if (drawPlayersWithShader == coordinateMaskFilterID) {
-						coordinateMaskFilter.Shader.Parameters["uOffset"].SetValue(drawPlayer.position);
-						coordinateMaskFilter.Shader.Parameters["uScale"].SetValue(1f);
-						coordinateMaskFilter.UseColor(new Vector3(originPlayer.tornOffset, originPlayer.tornCurrentSeverity));
-					}
-					orig(self, camera, drawPlayer, position, rotation, rotationOrigin, shadow, alpha, scale, headOnly);
-					return;
-				}
-				if (originPlayer.amebicVialVisible) {
-
-					const float offset = 2;
-					forcePlayerShader = amebicProtectionShaderID;
-					int itemAnimation = drawPlayer.itemAnimation;
-
-					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(offset, 0));
-					orig(self, camera, drawPlayer, position + new Vector2(offset, 0), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
-
-					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(-offset, 0));
-					orig(self, camera, drawPlayer, position + new Vector2(-offset, 0), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
-
-					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(0, offset));
-					orig(self, camera, drawPlayer, position + new Vector2(0, offset), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
-
-					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(0, -offset));
-					orig(self, camera, drawPlayer, position + new Vector2(0, -offset), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
-
-					forcePlayerShader = -1;
-					drawPlayer.itemAnimation = itemAnimation;
-				}
-				/*int rasterizedTime = originPlayer.rasterizedTime;
-				if (rasterizedTime > 0) {
-					shaded = true;
-					rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
-					rasterizeShader.Shader.Parameters["uOffset"].SetValue(drawPlayer.velocity.WithMaxLength(4) * 0.0625f * rasterizedTime);
-					rasterizeShader.Shader.Parameters["uWorldPosition"].SetValue(drawPlayer.position);
-					rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(40, 1120, 0));
-					Main.graphics.GraphicsDevice.Textures[1] = cellNoiseTexture;
-					Main.spriteBatch.Restart(SpriteSortMode.Immediate, effect: rasterizeShader.Shader);
-				}*/
-				orig(self, camera, drawPlayer, position, rotation, rotationOrigin, shadow, alpha, scale, headOnly);
-			} finally {
-				if (shaded) {
-					Main.spriteBatch.Restart(spriteBatchState);
-				}
-				forcePlayerShader = -1;
-				if (resetKeepPlayerShader) keepPlayerShader = -1;
-			}
-		}
 
 		static bool sonarDrawing = false;
 		static bool sonarDrawingNonSolid = false;

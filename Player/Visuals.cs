@@ -1,8 +1,10 @@
 ﻿using CalamityMod.Graphics.Renderers;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
+using Origins.Items.Other.Dyes;
 using Origins.Items.Vanity.Dev.PlagueTexan;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
@@ -13,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -174,6 +177,60 @@ namespace Origins {
 			if (Main.mouseRight && Player.HeldItem?.ModItem is Shimmershot or Laser_Target_Locator) {
 				if (zoom == -1) zoom = 0;
 				zoom += 0.5f;
+			}
+		}
+		public override void TransformDrawData(ref PlayerDrawSet drawInfo) {
+			int oldForcedShader = Origins.forcePlayerShader;
+			bool resetKeepPlayerShader = Origins.keepPlayerShader == -1;
+			if (Origins.drawPlayersWithShader >= 0) {
+				Origins.forcePlayerShader = Origins.drawPlayersWithShader;
+				if (Origins.drawPlayersWithShader == Origins.coordinateMaskFilterID) {
+					Origins.coordinateMaskFilter.Shader.Parameters["uOffset"].SetValue(Player.position);
+					Origins.coordinateMaskFilter.Shader.Parameters["uScale"].SetValue(1f);
+					Origins.coordinateMaskFilter.UseColor(new Vector3(tornOffset, tornCurrentSeverity));
+				}
+			} else if (oldForcedShader == -1) {
+				if (VisualRasterizedTime > 0) {
+					if (resetKeepPlayerShader) Origins.keepPlayerShader = Anti_Gray_Dye.ShaderID;
+					Origins.forcePlayerShader = Rasterized_Dye.ShaderID;
+				} else if (shineSparkCharge > 0 || shineSparkDashTime > 0) {
+					Origins.forcePlayerShader = Shimmer_Dye.ShaderID;
+				} else {
+					List<VisualEffectPlayer.VisualEffect> effects = Player.GetModPlayer<VisualEffectPlayer>().effects;
+					for (int i = 0; i < effects.Count; i++) {
+						if (effects[i].SetForcedShader()) break;
+					}
+				}
+			}
+			if (Origins.forcePlayerShader >= 0) {
+				for (int i = 0; i < drawInfo.DrawDataCache.Count; i++) {
+					if (drawInfo.DrawDataCache[i].shader != Origins.keepPlayerShader) drawInfo.DrawDataCache[i] = drawInfo.DrawDataCache[i] with { shader = Origins.forcePlayerShader };
+				}
+			}
+			Origins.forcePlayerShader = oldForcedShader;
+			if (resetKeepPlayerShader) Origins.keepPlayerShader = -1;
+		}
+		public override void DrawPlayer(Camera camera) {
+			if (amebicVialVisible) {
+
+				const float offset = 2;
+				Origins.forcePlayerShader = Origins.amebicProtectionShaderID;
+				int itemAnimation = Player.itemAnimation;
+
+				Origins.amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(offset, 0));
+				Main.PlayerRenderer.DrawPlayer(camera, Player, Player.position + new Vector2(offset, 0), 0, default, 0.01f);
+
+				Origins.amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(-offset, 0));
+				Main.PlayerRenderer.DrawPlayer(camera, Player, Player.position + new Vector2(-offset, 0), 0, default, 0.01f);
+
+				Origins.amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(0, offset));
+				Main.PlayerRenderer.DrawPlayer(camera, Player, Player.position + new Vector2(0, offset), 0, default, 0.01f);
+
+				Origins.amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(0, -offset));
+				Main.PlayerRenderer.DrawPlayer(camera, Player, Player.position + new Vector2(0, -offset), 0, default, 0.01f);
+
+				Origins.forcePlayerShader = -1;
+				Player.itemAnimation = itemAnimation;
 			}
 		}
 	}
