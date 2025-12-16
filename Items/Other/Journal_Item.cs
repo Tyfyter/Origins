@@ -17,20 +17,5 @@ namespace Origins.Items.Other {
 			}
 			return false;
 		}
-		public override void AddRecipes() {
-			return;
-			CreateRecipe()
-			.AddIngredient(ItemID.Book)
-			.AddIngredient(ItemID.Feather)
-			.AddIngredient(ItemID.BlackInk)
-			.AddOnCraftCallback((_, i, _, _) => {
-				ref bool isUnlocked = ref Main.LocalPlayer.GetModPlayer<OriginPlayer>().journalUnlocked;
-				if (!isUnlocked) {
-					isUnlocked = true;
-					i.TurnToAir();
-				}
-			})
-			.Register();
-		}
 	}
 }

@@ -32,15 +32,12 @@ namespace Origins.NPCs {
 		internal static int woFEmblemsCount = 4;
 		static OneFromOptionsDropRule _eaterOfWorldsWeaponDrops;
 		public static OneFromOptionsDropRule EaterOfWorldsWeaponDrops => _eaterOfWorldsWeaponDrops ??=  new(1, 1, ModContent.ItemType<Rotting_Worm_Staff>(), ModContent.ItemType<Eaterboros>());
-		static OneFromOptionsDropRule _brainOfCthulhuWeaponDrops;
-		//public static OneFromOptionsDropRule BrainOfCthulhuWeaponDrops => _brainOfCthulhuWeaponDrops ??=  new(1, 1, ModContent.ItemType<Hemoptysis>(), ModContent.ItemType<Fresh_Meat_Artifact>());
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
 			static LocalizedText GetWarningText(string key) => Language.GetText("Mods.Origins.Warnings." + key);
 			List<IItemDropRule> dropRules = npcLoot.Get(false);
 			switch (npc.netID) {
 				case NPCID.BrainofCthulhu:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Weakpoint_Analyzer>(), 4));
-				//npcLoot.Add(new LeadingConditionRule(new Conditions.NotExpert()).WithOnSuccess(BrainOfCthulhuWeaponDrops));
 				break;
 				case NPCID.EaterofWorldsHead or NPCID.EaterofWorldsBody or NPCID.EaterofWorldsTail:
 				npcLoot.Add(new LeadingConditionRule(new Conditions.LegacyHack_IsABoss())).WithOnSuccess(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Forbidden_Voice>(), 4));

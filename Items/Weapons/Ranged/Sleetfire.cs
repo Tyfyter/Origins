@@ -86,7 +86,7 @@ namespace Origins.Items.Weapons.Ranged {
         public override bool PreDraw(ref Color lightColor) {
 			Flamethrower_Drawer.Draw(Projectile, 1 - (Projectile.ai[0] / Lifetime), TextureAssets.Projectile[Type].Value, Color.AliceBlue, sizes, 8, 1);
 			return false;
-			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			/*Texture2D texture = TextureAssets.Projectile[Type].Value;
             Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: 3);
             Main.EntitySpriteDraw(
                 texture,
@@ -98,7 +98,7 @@ namespace Origins.Items.Weapons.Ranged {
                 Projectile.scale,
                 SpriteEffects.None,
             0);
-            return false;
+            return false;*/
         }
     }
 }

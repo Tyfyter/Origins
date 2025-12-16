@@ -18,7 +18,9 @@ namespace Origins {
 #if DEBUG
 				throw;
 #endif
+#pragma warning disable CS0162 // Unreachable code detected
 				mod.Logger.Error("Error while sort of requiring the music mod: ", e);
+#pragma warning restore CS0162 // Unreachable code detected
 			}
 		}
 		public void Unload() { }

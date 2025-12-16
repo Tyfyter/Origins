@@ -123,7 +123,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			bool walkLeft = Projectile.direction == -1;
 			bool walkRight = Projectile.direction == 1;
 			bool hasBarrier = false;
-			bool hasHole = false;
 			if (player.DistanceSQ(Projectile.Center) > 1000 * 1000) {
 				Life--;
 			}

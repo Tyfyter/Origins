@@ -7,6 +7,7 @@ using Terraria.GameContent.Achievements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Accessories {
 	public class Protomind : ModItem, ICustomWikiStat {
 		public string[] Categories => [

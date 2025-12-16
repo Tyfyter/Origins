@@ -11,7 +11,6 @@ namespace Origins.Items.Weapons.Summoner {
 	/// </summary>
 	public class SMART_Wrench : ModItem, ICustomWikiStat {
         public override void SetDefaults() {
-			return;
 			Item.damage = 11;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 18;
@@ -26,7 +25,6 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.noMelee = true;
 		}
 		public override void AddRecipes() {
-			return;
 			Recipe.Create(Type)
 			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 15)
 			.AddIngredient(ModContent.ItemType<Power_Core>())

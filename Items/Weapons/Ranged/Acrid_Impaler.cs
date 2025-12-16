@@ -4,11 +4,11 @@ using Origins.Items.Weapons.Ammo;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
+
 namespace Origins.Items.Weapons.Ranged {
 	public class Acrid_Impaler : Harpoon_Gun, ICustomWikiStat {
-		public new string[] Categories => [
+		public string[] Categories => [
 			WikiCategories.ToxicSource
 		];
 		public override void SetStaticDefaults() {

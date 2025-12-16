@@ -42,14 +42,13 @@ namespace Origins.Tiles.Banners {
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			offsetY -= 2;
-			return;
-			Tile tile = Main.tile[i, j];
+			/*Tile tile = Main.tile[i, j];
 			TileObjectData data = TileObjectData.GetTileData(tile);
 			int x = i - tile.TileFrameX / 18 % data.Width;
 			int topLeftY = j - tile.TileFrameY / 18 % data.Height;
 			if (WorldGen.IsBelowANonHammeredPlatform(x, topLeftY)) {
 				offsetY -= 8;
-			}
+			}*/
 		}
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {
 			if (i % 2 != 0) spriteEffects = SpriteEffects.FlipHorizontally;

@@ -105,15 +105,13 @@ namespace Origins.NPCs.TownNPCs {
 				shopName = "Shop";
 			}
 		}
-
-		public override void AddShops() {
-			return; // temp, these show up in shop browsers
-			new NPCShop(Type)
+		// temp, these show up in shop browsers
+		/*
+		public override void AddShops() => new NPCShop(Type)
 			.Add<Nerve_Flan_Food>()
 			.Add(Music_Box.ItemType<Otherworldly_Music_Box_DW>())
 			.Register();
-		}
-
+		//*/
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback) {
 			damage = 30;
 			knockback = 4f;

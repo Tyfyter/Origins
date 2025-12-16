@@ -24,7 +24,7 @@ namespace Origins.Buffs {
 		}
 		public override (PageTemplate template, Dictionary<string, object> context) GetPage(ModBuff buff) {
 			return default;
-			Dictionary<string, object> context = new() {
+			/*Dictionary<string, object> context = new() {
 				["Name"] = WikiPageExporter.GetWikiName(buff),
 				["DisplayName"] = Lang.GetItemNameValue(buff.Type)
 			};
@@ -40,7 +40,7 @@ namespace Origins.Buffs {
 			foreach ((string name, LocalizedText text) text in pageTexts) {
 				context[text.name] = text.text;
 			}
-			return (WikiPageExporter.WikiTemplate, context);
+			return (WikiPageExporter.WikiTemplate, context);*/
 		}
 		public override IEnumerable<(string, JObject)> GetStats(ModBuff buff) {
 			JObject data = [];

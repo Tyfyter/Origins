@@ -10,7 +10,6 @@ namespace Origins.UI {
 	public class Italics_Snippet_Handler : ITagHandler {
 		public class Italics_Snippet : WrappingTextSnippet {
 			internal static float currentMaxWidth;
-			readonly TextSnippet[] snippets;
 			readonly float amount;
 			public Italics_Snippet(string text, Color color, float amount) {
 				Text = text.Replace('<', '[').Replace('>', ']');

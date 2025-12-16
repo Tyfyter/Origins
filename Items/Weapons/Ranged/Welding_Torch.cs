@@ -124,7 +124,7 @@ namespace Origins.Items.Weapons.Ranged {
 			float progress = (Projectile.ai[0] / Lifetime);
 			Flamethrower_Drawer.Draw(Projectile, float.Pow(1 - progress, 2f), TextureAssets.Projectile[Type].Value, Color.Black, sizes, brightnessColorExponent: 1.75f, smokeAmount: 0, sizeProgressOverride: _ => progress * 0.5f);
 			return false;
-			Color color1 = new(255, 160, 80, 200);
+			/*Color color1 = new(255, 160, 80, 200);
 			Color color2 = new(255, 120, 30, 200);
 			Color color3 = new(255, 120, 30, 93);
 			Color color4 = new(30, 30, 30, 100);
@@ -164,7 +164,7 @@ namespace Origins.Items.Weapons.Ranged {
 					}
 				}
 			}
-			return false;
+			return false;*/
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.velocity = Vector2.Zero;

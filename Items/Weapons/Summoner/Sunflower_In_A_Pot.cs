@@ -352,25 +352,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			modifiers.SourceDamage *= 0.5f;
 		}
 		public override void OnKill(int timeLeft) {
-			const float spread = 4;
 			SoundEngine.PlaySound(Projectile.localAI[2] == -1 ? SoundID.NPCDeath66 : SoundID.NPCDeath1, Projectile.Center);
-			/*Player owner = Main.player[Projectile.owner];
-			ArmorShaderData shaderData = GameShaders.Armor.GetSecondaryShader(owner.cMinion, owner);
-			Dust.NewDustPerfect(
-				Projectile.Center + new Vector2(0, -8),
-				ModContent.DustType<Friendly_Zombie_Gore1>(),
-				Projectile.velocity + Main.rand.NextVector2Circular(spread, spread)
-			).shader = shaderData;
-			Dust.NewDustPerfect(
-				Projectile.Center + new Vector2(0, 0),
-				ModContent.DustType<Friendly_Zombie_Gore2>(),
-				Projectile.velocity + Main.rand.NextVector2Circular(spread, spread)
-			).shader = shaderData;
-			Dust.NewDustPerfect(
-				Projectile.Center + new Vector2(0, 8),
-				ModContent.DustType<Friendly_Zombie_Gore3>(),
-				Projectile.velocity + Main.rand.NextVector2Circular(spread, spread)
-			).shader = shaderData;*/
 		}
 		public void OnHurt(int damage, bool fromDoT) {
 			if (fromDoT) return;

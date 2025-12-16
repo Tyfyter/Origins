@@ -37,7 +37,6 @@ using Origins.Tiles.Other;
 using Origins.UI;
 using Origins.Walls;
 using Origins.World.BiomeData;
-using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;

@@ -315,7 +315,6 @@ namespace Origins.Tiles.Other {
 				builder.Append($"[head:{Main.myPlayer}]{Main.LocalPlayer.OriginPlayer().laserTagPoints}");
 				return builder.ToString();
 			}
-			return string.Empty;
 		}
 		public void Write(BinaryWriter writer) {
 			writer.Write(RespawnTime);

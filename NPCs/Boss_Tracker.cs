@@ -135,7 +135,9 @@ namespace Origins.NPCs {
 		static Action<BinaryWriter, Boss_Tracker> netSend;
 		static Action<BinaryReader, Boss_Tracker> netReceive;
 		static Action<Boss_Tracker> clearWorld;
+#pragma warning disable CS0649 // Field is never assigned to
 		static bool dummy;
+#pragma warning restore CS0649 // Field is never assigned to
 		public override void SaveWorldData(TagCompound tag) => saveData?.Invoke(tag, this);
 		public override void LoadWorldData(TagCompound tag) => loadData?.Invoke(tag, this);
 		public override void NetSend(BinaryWriter writer) => netSend(writer, this);

@@ -144,7 +144,7 @@ namespace Origins.Items.Weapons.Summoner {
 			const float grouping_factor = 0.005f;
 			const float spreading_factor = 0.05f;
 			const float sheeping_factor = 0.05f;
-			const float glass_door_factor = 1f;// for when I get around to block avoidance
+			//const float glass_door_factor = 1f;// for when I get around to block avoidance
 			const float control_weight = 30f;
 			const float anger_weight = 8f;
 			const float helping_weight = 8f;

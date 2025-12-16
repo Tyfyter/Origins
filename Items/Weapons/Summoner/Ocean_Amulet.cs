@@ -142,105 +142,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.frameCounter++;
 			if (Projectile.frameCounter.CycleUp(5)) Projectile.frame.CycleUp(Main.projFrames[Type]);
 			Projectile.spriteDirection = Projectile.direction = Math.Sign(Projectile.velocity.X);
-			return;
-			#region General behavior
-			Vector2 idlePosition = player.Bottom - new Vector2(player.direction * (Projectile.minionPos + 1) * 32, Projectile.height * 0.5f);
-
-			// die if distance is too big
-			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
-			float distanceToIdlePosition = vectorToIdlePosition.Length();
-			if (Main.myPlayer == player.whoAmI) {
-				if (distanceToIdlePosition > 400) {
-					if (distanceToIdlePosition > 2000) {
-						Projectile.position = idlePosition;
-						Projectile.velocity *= 0.1f;
-						Projectile.netUpdate = true;
-					} else if (Projectile.localAI[1] <= 0) {
-						Projectile.ai[2] = 1;
-						Projectile.netUpdate = true;
-					}
-				}
-			}
-			if (Projectile.ai[2] == 1) {
-				Projectile.localAI[1] = 300;
-				float speed = 8f;
-				float inertia = 12f;
-				Vector2 direction = vectorToIdlePosition * (speed / distanceToIdlePosition);
-				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
-				Projectile.tileCollide = false;
-				Projectile.direction = Math.Sign(vectorToIdlePosition.X);
-				if (++Projectile.frameCounter >= 20) Projectile.frameCounter = 0;
-				Projectile.frame = 9;
-				if (distanceToIdlePosition > 64 || Projectile.Hitbox.OverlapsAnyTiles()) return;
-				Rectangle floorbox = Projectile.Hitbox;
-				floorbox.Offset(0, Projectile.height);
-				floorbox.Height = 16 * 4;
-				if (!floorbox.OverlapsAnyTiles(false)) return;
-				Projectile.ai[2] = 0;
-				Projectile.netUpdate = true;
-			}
-			Projectile.localAI[1]--;
-			Projectile.tileCollide = true;
-			foreach (Projectile other in Main.ActiveProjectiles) {
-				if (other.type == Type && other.owner == Projectile.owner && other.Hitbox.Intersects(Projectile.Hitbox)) {
-					Projectile.velocity.X += Math.Sign(Projectile.position.X - other.position.X) * 0.03f;
-				}
-			}
-			#endregion
-
-			#region Find target
-			// Starting search distance
-			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(TargetingAlgorithm);
-			#endregion
-
-			#region Movement
-			if (Projectile.velocity.X != 0) Projectile.direction = Math.Sign(Projectile.velocity.X);
-			if (foundTarget) {
-				Projectile.ai[0] = targetID;
-				Projectile.velocity += (targetCenter - Projectile.Center).Normalized(out _);
-				Projectile.direction = Math.Sign(Projectile.velocity.X);
-				Projectile.velocity *= 0.98f;
-			} else {
-				if (distanceToIdlePosition > 100) {
-					Projectile.velocity += (vectorToIdlePosition - Projectile.Center).Normalized(out _);
-				}
-				Projectile.direction = Math.Sign(Projectile.velocity.X);
-				Projectile.velocity *= 0.96f;
-			}
-			if (Projectile.velocity != default) OriginExtensions.AngularSmoothing(ref Projectile.rotation, Projectile.velocity.ToRotation(), 0.05f);
-			#endregion
-
-			#region Animation and visuals
-			if (Math.Abs(Projectile.velocity.X) <= 0.1f) Projectile.velocity.X = 0;
-			// This is a simple "loop through all frames from top to bottom" animation
-			if (Projectile.velocity.X == 0 || foundTarget) {
-				if (++Projectile.frameCounter >= 5) {
-					Projectile.frameCounter = 0;
-					if (++Projectile.frame >= 8) Projectile.frame = 0;
-				}
-			} else if (++Projectile.frameCounter >= 5) {
-				Projectile.frameCounter = 0;
-				if (++Projectile.frame >= Main.projFrames[Projectile.type]) Projectile.frame = 8;
-			}
-			#endregion
-
-			if (Projectile.localAI[2] <= 0) {
-				if (this.GetHurtByHostiles()) {
-					// add sound
-					Projectile.localAI[2] = 20;
-				}
-			} else {
-				Projectile.localAI[2]--;
-			}
-			if (Projectile.lavaWet) {
-				Projectile.localAI[2] = -1;
-				this.DamageArtifactMinion(200);
-			}
-			if (Projectile.velocity.Y != 0) {
-				Projectile.frameCounter = 0;
-				Projectile.frame = 9;
-			}
-			Projectile.velocity.Y += 0.4f;
 		}
 		Vector2 targetCenter;
 		float distanceFromTarget;
@@ -276,7 +177,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			const float spreading_factor = 0.1f;
 			const float sheeping_factor = 0.01f;
 			const float control_weight = 30f;
-			const float anger_weight = 8f;
 			const float helping_weight = 8f;
 
 			Vector2 swarmCenter = default;

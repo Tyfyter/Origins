@@ -110,7 +110,7 @@ namespace Origins.Items.Weapons.Ranged {
 				tint: i => Color.White * (1 - float.Pow(progress, 1 - i / 32))
 			);
 			return false;
-			Color[] colors = [
+			/*Color[] colors = [
 				new(18, 33, 22),
 				new(26, 45, 31),
 				new(37, 61, 43),
@@ -131,7 +131,7 @@ namespace Origins.Items.Weapons.Ranged {
 				}
 			}
 			Projectile.DrawFlamethrower(colors[0], colors[1], colors[2], colors[3]);
-			return false;
+			return false;*/
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.velocity = Vector2.Zero;

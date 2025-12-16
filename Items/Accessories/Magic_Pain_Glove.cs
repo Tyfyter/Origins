@@ -35,14 +35,14 @@ namespace Origins.Items.Accessories {
 			player.GetKnockback(DamageClass.Melee) += 1f;
 			player.OriginPlayer().meleeScaleMultiplier *= 1.1f;
 		}
-		public override void AddRecipes() {
-			return; //todo: implement item
-			CreateRecipe()
+		//todo: implement item
+		/*
+		public override void AddRecipes() => CreateRecipe()
 			.AddIngredient(ItemID.PowerGlove)
 			.AddIngredient(ModContent.ItemType<Magic_Glove>())
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
-		}
+		//*/
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			switch (Main.rand.Next(8)) {
 				case 0:

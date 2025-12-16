@@ -609,7 +609,6 @@ namespace Origins.World.BiomeData {
 				WorldBiomeGeneration.ChangeRange.AddChangeToRange(X1, Y1);
 				return (pos, speed);
 			}
-			static int index = 0;
 			public static void RavelConnection(Vector2 start, Vector2 end) {
 				Vector2 direction = end - start;
 				float distance = direction.Length();

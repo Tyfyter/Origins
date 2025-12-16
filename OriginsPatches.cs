@@ -1805,7 +1805,6 @@ namespace Origins {
 			} catch (Exception) { }
 		}
 
-		static int npcScoringRoom = -1;
 		static string lastBiomeNameKey;
 		#region drop rules
 		private static void CommonCode_DropItem(ItemDropper orig, DropAttemptInfo info, int item, int stack, bool scattered = false) {
