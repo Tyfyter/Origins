@@ -526,7 +526,7 @@ ACCESSORIES:
 (^) Exo-Arm
 (X) Exo-Legs !!!
 (X) Exo-Suit !!!
-(X) Exo-Weapon Mount !!!
+(#, ^2) Exo-Weapon Mount !!!
 (^) Exploder Emblem
 (^) Explosive Artery
 (^) Fairy Lotus
@@ -838,7 +838,7 @@ MELEE WEAPONS:
 (^) Nematoclaw
 (X) Origins Biome Keybrands
 (X) Soulfire Saw
-(X) The Claw !!!
+(#, ^2) The Claw !!!
 (^) The Foot
 (#, ^2) The Muffler !!!
 (X) Unicorn Lance
@@ -1140,7 +1140,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Autohandcannon !!!
 (^) Bomboomstick
 (^) Chlorodynamite
-(†) Chlorophyte Handcannon !!!
+(^) Chlorophyte Handcannon
 (#, ^2) Firework Cannon
 (X) Flarefury
 (#, ^2) Holy Hand Grenade !!!
@@ -1357,7 +1357,7 @@ TILES:
 (^) Riven Campfire
 (^) Riven Dungeon Chest
 (^) Rusty Locker
-(#2?, ^2) Small Storage Container !!!
+(^) Small Storage Container
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (#2, ^2) Transistor !!! (needs obtain method)
 (^) Unsuspicious Bush

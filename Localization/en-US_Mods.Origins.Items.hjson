@@ -7404,7 +7404,11 @@ Flak_Jacket: {
 
 Crystal_Heart: {
 	DisplayName: Crystal Heart
-	Tooltip: Releases slime guardians to fight for you as you take damage
+	Tooltip:
+		'''
+		Releases slime guardians to fight for you as you take damage
+		Allows flight and slow fall below half health
+		'''
 }
 
 Armor_Piercing_Bullet: {
