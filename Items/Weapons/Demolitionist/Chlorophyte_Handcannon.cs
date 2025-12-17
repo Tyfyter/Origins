@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useAnimation = 57;
 			Item.shoot = ModContent.ProjectileType<Chlorophyte_Slug_P>();
 			Item.useAmmo = ModContent.ItemType<Metal_Slug>();
-			Item.knockBack = 8f;
+			Item.knockBack = 4f;
 			Item.shootSpeed = 9f;
 			Item.value = Item.sellPrice(gold: 10);
 			Item.rare = ItemRarityID.Lime;
