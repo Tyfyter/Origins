@@ -2130,8 +2130,10 @@ Projectiles: {
 	// Homing_Rocket_II_Mine.DisplayName: Homing Mine II
 	// Homing_Rocket_II_Rocket.DisplayName: Homing Rocket II
 	// Homing_Rocket_II_Snowman.DisplayName: Homing Snowman II
-	// AMRSL_Skewer_Sabot.DisplayName: AMRSL Skewer Sabot
-	// AMRSL_Skewer_Sabot_Scrap.DisplayName: AMRSL Skewer Scrap Sabot
+	// AMRSL_Skewer_Sabot.DisplayName: "{$Items.AMRSL_Skewer.DisplayName} Sabot"
+	// AMRSL_Skewer_Sabot_Scrap.DisplayName: "{$Items.AMRSL_Skewer.DisplayName} Scrap Sabot"
+	// AMRSL_Skewer_Sabot_Cursed.DisplayName: "{$Items.AMRSL_Skewer.DisplayName} Cursed Sabot"
+	// AMRSL_Skewer_Sabot_Ichor.DisplayName: "{$Items.AMRSL_Skewer.DisplayName} Ichor Sabot"
 	// Chlorophyte_Handcannon_Bubble.DisplayName: Chlorophyte Handcannon Bubble
 	// Chlorophyte_Slug_P.DisplayName: Chlorophyte Slug
 	// School_Fish.DisplayName: School Fish
