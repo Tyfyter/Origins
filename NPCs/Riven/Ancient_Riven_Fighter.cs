@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.World.BiomeData;
+using ReLogic.Content;
 using System.IO;
 using Terraria;
 using Terraria.GameContent;
@@ -18,14 +20,19 @@ namespace Origins.NPCs.Riven {
 		public Rectangle DrawRect => new(0, 6, 36, 40);
 		public int AnimationFrames => 32;
 		public int FrameDuration => 1;
-		private int FrameHeight = 40;
+		private static int FrameHeight = 40;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override Color GetGlowColor(Color drawColor) => Riven_Hive.GetGlowAlpha(drawColor);
 		public AssimilationAmount? Assimilation => 0.09f;
+		static Asset<Texture2D> glowTexture;
+		public override Texture2D GlowTexture => glowTexture.Value;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 5;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
+			AprilFoolsTextures.AddNPC(this);
+			AprilFoolsTextures.Create(() => ref glowTexture, Texture + "_Glow");
+			AprilFoolsAssetSwitcher<int>.Add(() => ref FrameHeight, 768);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -126,21 +133,6 @@ namespace Origins.NPCs.Riven {
 			}
 			NPC.frame = new Rectangle(0, FrameHeight * 4, 36, FrameHeight);
 			NPC.frameCounter = 0;
-		}
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Ancient_Riven_Fighter).GetDefaultTMLName();
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Ancient_Riven_Fighter).GetDefaultTMLName() + "_AF";
-		public static AutoLoadingAsset<Texture2D> normalGlowTexture = typeof(Ancient_Riven_Fighter).GetDefaultTMLName() + "_Glow";
-		public static AutoLoadingAsset<Texture2D> afGlowTexture = typeof(Ancient_Riven_Fighter).GetDefaultTMLName() + "_AF_Glow";
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Npc[Type] = afTexture;
-				DrawGlow(spriteBatch, screenPos, afGlowTexture, NPC, GetGlowColor(drawColor));
-				FrameHeight = 768;
-			} else {
-				TextureAssets.Npc[Type] = normalTexture;
-				DrawGlow(spriteBatch, screenPos, normalGlowTexture, NPC, GetGlowColor(drawColor));
-				FrameHeight = 40;
-			}
 		}
 	}
 }

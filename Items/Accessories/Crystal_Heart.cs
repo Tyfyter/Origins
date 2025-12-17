@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -12,15 +13,12 @@ namespace Origins.Items.Accessories;
 public class Crystal_Heart : ModItem {
 	public static int SlimeHPThreshold => 32;
 	public static int WingSlot { get; private set; }
-	static AutoLoadingAsset<Texture2D> normalTexture;
-	static AutoLoadingAsset<Texture2D> afTexture;
 	public override void Load() {
 		WingSlot = EquipLoader.AddEquipTexture(Mod, $"{Texture}_{EquipType.Wings}", EquipType.Wings, this);
-		normalTexture = Texture;
-		afTexture = Texture + "_AF";
 	}
 	public override void SetStaticDefaults() {
 		ArmorIDs.Wing.Sets.Stats[WingSlot] = new(165, 7);
+		AprilFoolsTextures.AddItem(this);
 	}
 	public override void SetDefaults() {
 		Item.DefaultToAccessory(38, 20);
@@ -63,14 +61,6 @@ public class Crystal_Heart : ModItem {
 	public static bool IsActive(Player player) => player.statLife <= player.statLifeMax2 * 0.5f;
 	public override bool MagicPrefix() => true;
 	public override int ChoosePrefix(UnifiedRandom rand) => Item.AccessoryOrSpecialPrefix(rand, PrefixCategory.AnyWeapon, PrefixCategory.Magic);
-	public override Color? GetAlpha(Color lightColor) {
-		if (OriginsModIntegrations.CheckAprilFools()) {
-			TextureAssets.Item[Type] = afTexture;
-		} else {
-			TextureAssets.Item[Type] = normalTexture;
-		}
-		return base.GetAlpha(lightColor);
-	}
 }
 public class Crystal_Heart_Slime_Flying : ModProjectile, IArtifactMinion {
 	public int MaxLife { get; set; }

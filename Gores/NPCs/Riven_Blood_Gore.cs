@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Graphics;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.World.BiomeData;
@@ -20,17 +21,9 @@ using static Origins.OriginExtensions;
 namespace Origins.Gores.NPCs {
 	public class R_Effect_Blood1 : ModGore {
 		public static List<int> GoreIDs { get; private set; } = [];
-		AutoLoadingAsset<Texture2D> normalTexture;
-		AutoLoadingAsset<Texture2D> afTexture;
 		public override void SetStaticDefaults() {
-			normalTexture = Texture;
-			afTexture = Texture + "_AF";
-			normalTexture.LoadAsset();
-			afTexture.LoadAsset();
+			AprilFoolsTextures.AddGore(this);
 			GoreIDs.Add(Type);
-		}
-		public override void OnSpawn(Gore gore, IEntitySource source) {
-			TextureAssets.Gore[Type] = OriginsModIntegrations.CheckAprilFools() ? afTexture : normalTexture;
 		}
 		public override void Unload() {
 			GoreIDs = null;

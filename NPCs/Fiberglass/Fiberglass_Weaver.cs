@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Fiberglass;
@@ -59,6 +60,7 @@ namespace Origins.NPCs.Fiberglass {
 				PortraitPositionYOverride = -32f
 			};
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
+			AprilFoolsTextures.AddNPC(this);
 		}
 		public override void Unload() {
 			armorDropRule = null;
@@ -296,18 +298,14 @@ namespace Origins.NPCs.Fiberglass {
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Terlet_Paper>(), 4));
 			npcLoot.Add(new LeadingConditionRule(new Conditions.IsMasterMode()).WithOnSuccess(weaponDropRule));
 		}
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Fiberglass_Weaver).GetDefaultTMLName();
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Fiberglass_Weaver).GetDefaultTMLName() + "_AF";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			float rotation = NPC.rotation;
 			float scale = 1;
 			SpriteEffects effect = SpriteEffects.None;
 			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Npc[Type] = afTexture;
 				rotation = 0;
 				effect = NPC.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			} else {
-				TextureAssets.Npc[Type] = normalTexture;
 				Main.CurrentDrawnEntityShader = Terraria.Graphics.Shaders.GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveDye);
 				if (legs is null) return false;
 				for (int i = 0; i < 8; i++) {

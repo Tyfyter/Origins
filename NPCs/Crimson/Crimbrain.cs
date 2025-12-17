@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
 using System;
@@ -28,6 +29,7 @@ namespace Origins.NPCs.Crimson {
 				Position = new(0, -16),
 				PortraitPositionYOverride = -32
 			};
+			AprilFoolsTextures.AddNPC(this);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = Terraria.ID.NPCAIStyleID.AncientVision;
@@ -71,15 +73,6 @@ namespace Origins.NPCs.Crimson {
 			if (++NPC.frameCounter > 7) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 28) % 112, 34, 26);
 				NPC.frameCounter = 0;
-			}
-		}
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Crimbrain).GetDefaultTMLName();
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Crimbrain).GetDefaultTMLName() + "_AF";
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Npc[Type] = afTexture;
-			} else {
-				TextureAssets.Npc[Type] = normalTexture;
 			}
 		}
 	}

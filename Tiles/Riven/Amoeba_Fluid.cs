@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Other.Consumables;
 using Origins.World.BiomeData;
+using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
@@ -14,7 +16,8 @@ namespace Origins.Tiles.Riven {
 		public string[] Categories => [
 			WikiCategories.OtherBlock
 		];
-		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		Asset<Texture2D> glowTexture;
+		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue() + 0.2f;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
@@ -23,7 +26,8 @@ namespace Origins.Tiles.Riven {
 		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Amoeba_Fluid_Glow");
+				glowTexture = Request<Texture2D>(Texture + "_Glow");
+				AprilFoolsAssetSwitcher<Asset<Texture2D>>.Add(() => ref glowTexture, Request<Texture2D>(Texture + "_Glow_AF"));
 			}
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = false;
@@ -37,6 +41,7 @@ namespace Origins.Tiles.Riven {
 			MineResist = 3f;
 			HitSound = SoundID.NPCHit13;
 			DustType = DustID.Water_Desert;
+			AprilFoolsTextures.AddTile(this);
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			yield return new TileMergeOverlay(merge + "Mud_Overlay", TileID.Sets.Mud);
@@ -60,13 +65,6 @@ namespace Origins.Tiles.Riven {
 		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Amoeba_Fluid).GetDefaultTMLName();
 		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Amoeba_Fluid).GetDefaultTMLName() + "_AF";
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Tile[Type] = afTexture;
-				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Amoeba_Fluid_Glow_AF");
-			} else {
-				TextureAssets.Tile[Type] = normalTexture;
-				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Amoeba_Fluid_Glow");
-			}
 			this.DrawTileGlow(i, j, spriteBatch);
 			base.PostDraw(i, j, spriteBatch);
 		}
@@ -76,6 +74,7 @@ namespace Origins.Tiles.Riven {
 	public class Amoeba_Fluid_Item : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
+			AprilFoolsTextures.AddItem(this);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Amoeba_Fluid>());
@@ -85,16 +84,6 @@ namespace Origins.Tiles.Riven {
 			.AddIngredient(ItemType<Gooey_Water>())
 			.AddTile(TileID.HeavyWorkBench)
 			.Register();
-		}
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Amoeba_Fluid_Item).GetDefaultTMLName();
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Amoeba_Fluid_Item).GetDefaultTMLName() + "_AF";
-		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-			if (OriginsModIntegrations.CheckAprilFools()) TextureAssets.Item[Type] = afTexture;
-			else TextureAssets.Item[Type] = normalTexture;
-		}
-		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
-			if (OriginsModIntegrations.CheckAprilFools()) TextureAssets.Item[Type] = afTexture;
-			else TextureAssets.Item[Type] = normalTexture;
 		}
 	}
 }

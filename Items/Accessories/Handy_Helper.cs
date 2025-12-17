@@ -159,7 +159,7 @@ namespace Origins.Items.Accessories {
 			.AddIngredient(ItemID.PowerGlove, 2)
 			.AddIngredient(ModContent.ItemType<Amebic_Vial>())
 			.AddTile(TileID.TinkerersWorkbench)
-			.AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.AprilFools"), () => OriginsModIntegrations.CheckAprilFools())
+			.AddCondition(OriginsModIntegrations.AprilFools)
 			.AddOnCraftCallback((_, result, consumed, _) => {
 				if (result.ModItem is Handy_Helper helper) {
 					helper.bothGloves = true;

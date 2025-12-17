@@ -1,11 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
 using Origins.Tiles;
 using Origins.World.BiomeData;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,6 +30,8 @@ namespace Origins.NPCs.Defiled {
 		public const float horizontalSpeed = 3.2f;
 		public const float horizontalAirSpeed = 2f;
 		public const float verticalSpeed = 4f;
+		static Asset<Texture2D> glowTexture;
+		public override Texture2D GlowTexture => glowTexture.Value;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 			NPCID.Sets.TrailCacheLength[NPC.type] = 4;
@@ -38,6 +42,8 @@ namespace Origins.NPCs.Defiled {
 				Velocity = 2f,
 			};
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
+			AprilFoolsTextures.AddNPC(this);
+			AprilFoolsTextures.Create(() => ref glowTexture, Texture + "_Glow");
 		}
 		public bool? Hardmode => true;
 		public override void SetDefaults() {
@@ -220,19 +226,6 @@ namespace Origins.NPCs.Defiled {
 					Main.tileSolidTop[alteredTiles[i]] = false;
 					Main.tileSolid[alteredTiles[i]] = true;
 				}
-			}
-		}
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Defiled_Tripod).GetDefaultTMLName();
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Defiled_Tripod).GetDefaultTMLName() + "_AF";
-		public static AutoLoadingAsset<Texture2D> normalGlowTexture = typeof(Defiled_Tripod).GetDefaultTMLName() + "_Glow";
-		public static AutoLoadingAsset<Texture2D> afGlowTexture = typeof(Defiled_Tripod).GetDefaultTMLName() + "_AF_Glow";
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Npc[Type] = afTexture;
-				DrawGlow(spriteBatch, screenPos, afGlowTexture, NPC, GetGlowColor(drawColor));
-			} else {
-				TextureAssets.Npc[Type] = normalTexture;
-				DrawGlow(spriteBatch, screenPos, normalGlowTexture, NPC, GetGlowColor(drawColor));
 			}
 		}
 	}

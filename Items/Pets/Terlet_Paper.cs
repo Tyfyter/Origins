@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Pets;
 using Origins.NPCs.Fiberglass;
@@ -47,6 +48,9 @@ namespace Origins.Items.Pets {
 			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[Projectile.type] = true;
+			if (!Main.dedServ) {
+				AprilFoolsTextures.AddProjectile(Type, ModContent.Request<Texture2D>(typeof(Terlet_Paper_P).GetDefaultTMLName() + "_AF"));
+			}
 		}
 
 		public override void SetDefaults() {
@@ -268,8 +272,6 @@ namespace Origins.Items.Pets {
 		}
 		public bool AdjacentLegsGrounded(int leg) => LegGrounded(leg - 2) && LegGrounded(leg ^ 1) && LegGrounded(leg + 2);
 		public bool LegGrounded(int leg) => (!legs.IndexInRange(leg)) || legsGrounded[leg];
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Fiberglass_Weaver).GetDefaultTMLName() + "_Arachnophobia";
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Terlet_Paper_P).GetDefaultTMLName() + "_AF";
 		public override bool PreDraw(ref Color lightColor) {
 			float rotation = Projectile.rotation;
 			float scale = 1;
@@ -279,12 +281,10 @@ namespace Origins.Items.Pets {
 				Projectile.position -= new Vector2(0, 10);
 			}
 			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Projectile[Type] = afTexture;
 				rotation = 0;
 				effect = Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			} else {
 				CreateLegs();
-				TextureAssets.Projectile[Type] = normalTexture;
 				for (int i = 0; i < 8; i++) {
 					bool flip = (i % 2 != 0) == i < 4;
 					Vector2 baseStart = legs[i].start;

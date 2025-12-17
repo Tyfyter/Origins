@@ -1,6 +1,7 @@
 ﻿using Humanizer;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Dusts;
 using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
@@ -108,6 +109,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				Frame = 6
 			};
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
+			AprilFoolsTextures.AddNPC(this);
 			this.SetupStates();
 		}
 		public override void SetDefaults() {
@@ -413,7 +415,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 
 			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Npc[Type] = afTexture;
 				NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
 					Position = new Vector2(0, 42),
 					PortraitPositionXOverride = 2,
@@ -424,7 +425,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 					Frame = 0
 				};
 			} else {
-				TextureAssets.Npc[Type] = normalTexture;
 				NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
 					Position = new Vector2(25, -30),
 					Rotation = 0.7f,

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.CrossMod.Thorium.Items.Weapons.Bard;
 using Origins.Gores.NPCs;
 using Origins.Items.Accessories;
@@ -41,6 +42,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
+			AprilFoolsTextures.AddNPC(this);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
@@ -66,15 +68,6 @@ namespace Origins.NPCs.Brine.Boss {
 				NPC.Transform(ModContent.NPCType<Mildew_Carrion>());
 			}
 			return false;
-		}
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Lost_Diver_Transformation).GetDefaultTMLName();
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Lost_Diver_Transformation).GetDefaultTMLName() + "_AF";
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Npc[Type] = afTexture;
-			} else {
-				TextureAssets.Npc[Type] = normalTexture;
-			}
 		}
 	}
 	public class Boss_Bar_LD_Transformation : ModBossBar {
@@ -181,6 +174,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			Origins.RasterizeAdjustment[Type] = (8, 0.05f, 0.8f);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
+			AprilFoolsTextures.AddNPC(this);
 		}
 		public override void Unload() {
 			normalDropRule = null;
@@ -441,15 +435,6 @@ namespace Origins.NPCs.Brine.Boss {
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			NPC.aiAction = reader.ReadByte();
 		}
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Mildew_Carrion).GetDefaultTMLName();
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Mildew_Carrion).GetDefaultTMLName() + "_AF";
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Npc[Type] = afTexture;
-			} else {
-				TextureAssets.Npc[Type] = normalTexture;
-			}
-		}
 	}
 	public class Mildew_Carrion_Entry : JournalEntry {
 		public override JournalSortIndex SortIndex => new("Brine_Pool_And_Lost_Diver", 9);
@@ -476,6 +461,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			Mildew_Carrion.Minions.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
+			AprilFoolsTextures.AddNPC(this);
 		}
 		public override void SetDefaults() {
 			NPC.noGravity = true;
@@ -666,15 +652,6 @@ namespace Origins.NPCs.Brine.Boss {
 				Color npcColor = Lighting.GetColor(position.ToTileCoordinates());
 				NPCLoader.DrawEffects(NPC, ref npcColor);
 				return NPC.GetNPCColorTintedByBuffs(npcColor);
-			}
-		}
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Mildew_Carrion_Tentacle).GetDefaultTMLName();
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Mildew_Carrion_Tentacle).GetDefaultTMLName() + "_AF";
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Npc[Type] = afTexture;
-			} else {
-				TextureAssets.Npc[Type] = normalTexture;
 			}
 		}
 	}

@@ -22,6 +22,7 @@ namespace Origins.NPCs.Riven {
 		public Rectangle[] Hitboxes { get; private set; }
 		public override void SetStaticDefaults() {
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
+			AprilFoolsTextures.AddNPC(this);
 		}
 		public override void SetDefaults() {
 			NPC.lifeMax = 280;
@@ -193,8 +194,6 @@ namespace Origins.NPCs.Riven {
 				}
 			}
 		}
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Goo_Wall).GetDefaultTMLName();
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Goo_Wall).GetDefaultTMLName() + "_AF";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 anchor = Anchor2;
 			Vector2 origin = Anchor1;
@@ -208,9 +207,6 @@ namespace Origins.NPCs.Riven {
 			}
 			float rot = origin.DirectionTo(anchor).ToRotation() + MathHelper.PiOver2;
 			float dst = origin.Distance(anchor);
-
-			if (OriginsModIntegrations.CheckAprilFools()) TextureAssets.Npc[Type] = afTexture;
-			else TextureAssets.Npc[Type] = normalTexture;
 
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 

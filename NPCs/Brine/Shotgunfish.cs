@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
@@ -28,6 +29,7 @@ namespace Origins.NPCs.Brine {
 			TargetNPCTypes.Add(ModContent.NPCType<Nasty_Crawdad>());
 			TargetNPCTypes.Add(ModContent.NPCType<Mildew_Creeper>());
 			PreyNPCTypes.Add(ModContent.NPCType<Nasty_Crawdad>());
+			AprilFoolsTextures.AddNPC(this);
 		}
 		public bool? Hardmode => true;
 		public override void SetDefaults() {
@@ -227,7 +229,6 @@ namespace Origins.NPCs.Brine {
 			}
 			if (NPC.IsABestiaryIconDummy) NPC.rotation = NPC.velocity.ToRotation();
 			Texture2D texture = TextureAssets.Npc[Type].Value;
-			if (OriginsModIntegrations.CheckAprilFools()) texture = afTexture;
 			Vector2 halfSize = new(texture.Width * 0.5f, (texture.Height / Main.npcFrameCount[NPC.type]) * 0.5f);
 			Vector2 position = new(NPC.position.X - screenPos.X + (NPC.width / 2) - texture.Width * NPC.scale / 2f + halfSize.X * NPC.scale, NPC.position.Y - screenPos.Y + NPC.height - texture.Height * NPC.scale / Main.npcFrameCount[NPC.type] + 4f + halfSize.Y * NPC.scale + NPC.gfxOffY);
 			Vector2 origin = new(halfSize.X * 1.6f, halfSize.Y);

@@ -16,7 +16,7 @@ namespace Origins.NPCs {
 				return _glowTexture;
 			}
 		}
-		public Texture2D GlowTexture => glowTexture.Value;
+		public virtual Texture2D GlowTexture => glowTexture.Value;
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, GetGlowColor(drawColor));
 		}

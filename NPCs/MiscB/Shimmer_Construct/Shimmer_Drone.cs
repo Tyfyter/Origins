@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -18,6 +19,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			Shimmer_Construct.Minions.Add(Type);
+			AprilFoolsTextures.AddNPC(this);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.ServantofCthulhu);
@@ -111,14 +113,5 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			}
 		}
 		public override Color? GetAlpha(Color drawColor) => Color.White * NPC.Opacity;
-		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Shimmer_Drone).GetDefaultTMLName();
-		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Shimmer_Drone).GetDefaultTMLName() + "_AF";
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				TextureAssets.Npc[Type] = afTexture;
-			} else {
-				TextureAssets.Npc[Type] = normalTexture;
-			}
-		}
 	}
 }
