@@ -40,7 +40,7 @@ namespace Origins.Items.Accessories {
 				originPlayer.amebicVialVisible = false;
 				return;
 			}
-			originPlayer.amebicVialVisible = !isHidden;
+			if (!isHidden) player.EnableShadow<Amebic_Vial_Shadow>();
 			const float maxDist = 71 * 71;
 			Vector2 target = default;
 			float bestWeight = 0;
@@ -90,7 +90,7 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public override void UpdateVanity(Player player) {
-			player.GetModPlayer<OriginPlayer>().amebicVialVisible = true;
+			player.EnableShadow<Amebic_Vial_Shadow>();
 		}
 		public override void AddRecipes() {
 			CreateRecipe()

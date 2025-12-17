@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -42,6 +44,7 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.lunaticsRune = true;
 			ref int charge = ref originPlayer.lunaticsRuneCharge;
+			player.EnableShadow<Lunatic_Shadow>();
 			if (Keybindings.LunaticsRune.Current && (charge >= ChargeThreshold || CheckMana(player))) {
 				originPlayer.lunaticsRuneRotation += 0.02f;
 				charge.Warmup(ChargeThreshold);
@@ -59,6 +62,25 @@ namespace Origins.Items.Accessories {
 					}
 				}
 				charge = 0;
+			}
+		}
+	}
+	public class Lunatic_Shadow : ShadowType {
+		public override IEnumerable<ShadowType> SortAbove() => [PartialEffects];
+		public override IEnumerable<ShadowData> GetShadowData(Player player, ShadowData from) {
+			const float offset = 64;
+			Vector2 position = from.Position;
+			//from.Shadow = 0.5f;
+			from.Position = position + Vector2.UnitX * offset;
+			yield return from;
+			from.Position = position - Vector2.UnitX * offset;
+			yield return from;
+		}
+		public override void TransformDrawData(ref PlayerDrawSet drawInfo) {
+			for (int i = 0; i < drawInfo.DrawDataCache.Count; i++) {
+				DrawData drawData = drawInfo.DrawDataCache[i];
+				drawData.color *= 0.5f;
+				drawInfo.DrawDataCache[i] = drawData;
 			}
 		}
 	}

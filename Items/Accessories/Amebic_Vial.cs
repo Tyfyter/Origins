@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Layers;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -37,7 +38,7 @@ namespace Origins.Items.Accessories {
 				originPlayer.amebicVialVisible = false;
 				return;
 			}
-			originPlayer.amebicVialVisible = !isHidden;
+			if (!isHidden) player.EnableShadow<Amebic_Vial_Shadow>();
 			const float maxDist = 64 * 64;
 			Vector2 target = default;
 			float bestWeight = 0;
@@ -80,7 +81,8 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public override void UpdateVanity(Player player) {
-			player.GetModPlayer<OriginPlayer>().amebicVialVisible = true;
+			player.EnableShadow<Amebic_Vial_Shadow>();
+			//player.GetModPlayer<OriginPlayer>().amebicVialVisible = true;
 		}
 	}
 	public class Amebic_Vial_Tentacle : ModProjectile {
@@ -162,6 +164,27 @@ namespace Origins.Items.Accessories {
 				SpriteEffects.None,
 			0);
 			return false;
+		}
+	}
+	public class Amebic_Vial_Shadow : ShadowType {
+		public override IEnumerable<ShadowType> SortBelow() => [PartialEffects];
+		public override IEnumerable<ShadowData> GetShadowData(Player player, ShadowData from) {
+			const float offset = 2;
+			Vector2 position = from.Position;
+			void ApplyOffset(Vector2 offset) {
+				from.Position = position + offset;
+				from.PreDraw = () => Origins.amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(offset);
+			}
+			from.Shader = Origins.amebicProtectionShaderID;
+			ApplyOffset(Vector2.UnitX * offset);
+			yield return from;
+			ApplyOffset(Vector2.UnitX * -offset);
+			yield return from;
+
+			ApplyOffset(Vector2.UnitY * offset);
+			yield return from;
+			ApplyOffset(Vector2.UnitY * -offset);
+			yield return from;
 		}
 	}
 }

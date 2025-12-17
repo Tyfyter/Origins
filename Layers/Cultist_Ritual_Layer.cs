@@ -5,7 +5,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Items.Donate;
 
 namespace Origins.Layers {
 	public class Cultist_Ritual_Layer : PlayerDrawLayer {
@@ -16,6 +15,7 @@ namespace Origins.Layers {
 			float charge = originPlayer.lunaticsRuneCharge / (float)Lunatics_Rune.ChargeThreshold;
 			float lunaticsRuneRotation = originPlayer.lunaticsRuneRotation;
 			Vector2 position = drawInfo.Position + drawInfo.drawPlayer.Size * 0.5f - Main.screenPosition;
+			Main.instance.LoadProjectile(ProjectileID.CultistRitual);
 			Texture2D ritualTexture = TextureAssets.Projectile[ProjectileID.CultistRitual].Value;
 			Color color = Color.White * charge;
 

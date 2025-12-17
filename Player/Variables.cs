@@ -576,6 +576,7 @@ namespace Origins {
 		public int scytheHitCombo = 0;
 		public const int maxDangerTime = 5 * 60;
 		public int dangerTime = 0;
+		internal bool[] activeShadows = new bool[ShadowType.ShadowTypeCount];
 		public bool InDanger { get; private set; }
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
@@ -1219,6 +1220,7 @@ namespace Origins {
 			InDanger = dangerTime > 0;
 			if (scytheHitCombo > maxScytheCombo) scytheHitCombo = maxScytheCombo;
 			if (!InDanger) scytheHitCombo = 0;
+			Array.Clear(activeShadows);
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;
