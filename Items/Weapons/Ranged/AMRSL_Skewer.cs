@@ -252,20 +252,22 @@ namespace Origins.Items.Weapons.Ranged {
 						Item item = recipe.requiredItem[j];
 						float ammoCount = item.stack * AmmoCount[item.type];
 						count += ammoCount;
-						if (AmmoCount[item.type] == 0) {
+						if (AmmoProjectile[item.type] >= 0) {
+							ammoTypes[AmmoProjectile[item.type]] += ammoCount == 0 ? item.stack * 0.1f : ammoCount;
+						} else if (AmmoCount[item.type] == 0) {
 							junkCount += item.stack;
-						} else {
-							ammoTypes[AmmoProjectile[item.type]] += ammoCount;
 						}
 					}
 					if (junkCount > count) continue;
 					count /= recipe.createItem.stack;
 					if (AmmoCount[recipe.createItem.type] < count) {
 						AmmoCount[recipe.createItem.type] = count;
+						float bestAmmoTypeMatch = 0;
 						foreach ((int ammoType, float ammoCount) in ammoTypes) {
-							if (ammoCount * 2 >= count) {
-								if (ammoType != -1) AmmoProjectile[recipe.createItem.type] = ammoType;
-								break;
+							if (ammoCount < bestAmmoTypeMatch || ammoCount < count * 0.15f) continue;
+							if (ammoType != -1) {
+								bestAmmoTypeMatch = ammoCount;
+								AmmoProjectile[recipe.createItem.type] = ammoType;
 							}
 						}
 						changed = true;
@@ -380,6 +382,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override string Texture => typeof(AMRSL_Skewer_Sabot).GetDefaultTMLName();
 		static AutoLoadingAsset<Texture2D> moltenTexture = typeof(AMRSL_Skewer_Sabot).GetDefaultTMLName("_Molten");
 		public virtual int DustType => DustID.Iron;
+		public virtual Color MoltenTint => Color.White;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
 			Projectile.DamageType = DamageClass.Ranged;
@@ -450,7 +453,7 @@ namespace Origins.Items.Weapons.Ranged {
 			float alpha = 1 - Projectile.ai[2];
 			if (alpha < 0) return false;
 			data.texture = moltenTexture;
-			data.color = Color.White * alpha;
+			data.color = MoltenTint * alpha;
 			data.color.A = 0;
 			Main.EntitySpriteDraw(data);
 			return false;
@@ -470,6 +473,24 @@ namespace Origins.Items.Weapons.Ranged {
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.velocity = oldVelocity;
 			return true;
+		}
+	}
+	public class AMRSL_Skewer_Sabot_Cursed : AMRSL_Skewer_Sabot {
+		public override Color MoltenTint => new(40, 255, 0);
+		public override void SetStaticDefaults() {
+			AMRSL_Skewer.AmmoProjectile[ItemID.CursedFlame] = Type;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.CursedInferno, 480);
+		}
+	}
+	public class AMRSL_Skewer_Sabot_Ichor : AMRSL_Skewer_Sabot {
+		public override Color MoltenTint => new(120, 255, 0);
+		public override void SetStaticDefaults() {
+			AMRSL_Skewer.AmmoProjectile[ItemID.Ichor] = Type;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.Ichor, 480);
 		}
 	}
 	public readonly struct SkewerAmmoList() : IEnumerable<(int type, float count)> {

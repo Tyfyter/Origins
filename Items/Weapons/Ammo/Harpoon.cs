@@ -10,7 +10,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public static int ID { get; private set; }
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
-			AMRSL_Skewer.AmmoCount[Type] = 1;
+			AMRSL_Skewer.AmmoCount[Type] = 0.5f;
 			ID = Type;
 		}
 		public override void SetDefaults() {
