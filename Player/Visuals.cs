@@ -291,7 +291,7 @@ namespace Origins {
 			bool[] activeShadows = player.OriginPlayer().activeShadows;
 			Queue<ShadowData> sourceQueue = [];
 			Queue<ShadowData> drawQueue = [];
-			sourceQueue.Enqueue(new(player.position, ShadowTypes: []));
+			sourceQueue.Enqueue(new(player.position + Vector2.UnitY * player.gfxOffY, Rotation: player.fullRotation, RotationOrigin: player.fullRotationOrigin, ShadowTypes: []));
 			for (int i = 0; i < shadowTypes.Count; i++) {
 				if (activeShadows[i]) {
 					while (sourceQueue.TryDequeue(out ShadowData source)) {
