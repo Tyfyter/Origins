@@ -432,7 +432,7 @@ Trenchmaker: {
 	// DisplayName: Trenchmaker-[{0:00}]
 
 	BossChecklistIntegration: {
-		// SpawnCondition: Mods.Origins.NPCs.Trenchmaker.BossChecklistIntegration.SpawnCondition
+		// SpawnCondition: Use [i:Origins/Distress_Beacon] or break 3 Heat Vents in an {§Ashen} factory.
 		// EntryName: Trenchmaker
 	}
 }

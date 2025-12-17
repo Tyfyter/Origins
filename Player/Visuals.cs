@@ -312,6 +312,7 @@ namespace Origins {
 				source.PreDraw?.Invoke();
 				Main.PlayerRenderer.DrawPlayer(camera, player, source.Position, source.Rotation, source.RotationOrigin, source.Shadow, source.Scale);
 			}
+			currentlyDrawing = null;
 			Origins.forcePlayerShader = oldForcedShader;
 		}
 		internal static void Sort() {
