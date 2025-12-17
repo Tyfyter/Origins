@@ -5,6 +5,7 @@ using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Dyes;
+using Origins.Items.Tools.Wiring;
 using Origins.Items.Vanity.Dev.PlagueTexan;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
@@ -13,6 +14,7 @@ using Origins.Tiles.Defiled;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics;
@@ -114,7 +116,12 @@ namespace Origins {
 			if (drawInfo.drawPlayer.front > 0 && OriginsSets.Armor.Front.DrawsInNeckLayer[drawInfo.drawPlayer.front]) drawInfo.drawFrontAccInNeckAccLayer = true;
 
 			if (lunaticsRuneCharge > 0) {
-				drawInfo.colorEyes = Color.Lerp(drawInfo.colorEyes, Player.eyeColor, lunaticsRuneCharge / (float)Lunatics_Rune.ChargeThreshold);
+				float charge = lunaticsRuneCharge / (float)Lunatics_Rune.ChargeThreshold;
+				drawInfo.colorEyeWhites = Color.Lerp(drawInfo.colorEyeWhites, Color.White, charge);
+				Vector3 hsl = Main.rgbToHsl(drawInfo.colorEyes);
+				hsl.Y = float.Lerp(hsl.Y, float.Pow(hsl.Y, 0.5f), charge);
+				hsl.Z = float.Lerp(hsl.Z, 1 - 0.5f * hsl.Y, charge);
+				drawInfo.colorEyes = Main.hslToRgb(hsl);
 			}
 		}
 		public override void FrameEffects() {
@@ -207,6 +214,9 @@ namespace Origins {
 					if (drawInfo.DrawDataCache[i].shader != Origins.keepPlayerShader) drawInfo.DrawDataCache[i] = drawInfo.DrawDataCache[i] with { shader = Origins.forcePlayerShader };
 				}
 			}
+			for (int i = 0; i < (ShadowType.currentlyDrawing?.Length ?? 0); i++) {
+				ShadowType.currentlyDrawing[i].TransformDrawData(ref drawInfo);
+			}
 			Origins.forcePlayerShader = oldForcedShader;
 			if (resetKeepPlayerShader) Origins.keepPlayerShader = -1;
 		}
@@ -232,6 +242,7 @@ namespace Origins {
 				Origins.forcePlayerShader = -1;
 				Player.itemAnimation = itemAnimation;
 			}
+			ShadowType.Draw(camera, Player);
 		}
 	}
 	public class VisualEffectPlayer : ModPlayer {
@@ -258,6 +269,73 @@ namespace Origins {
 			public virtual bool SetForcedShader() => false;
 			public virtual void ModifyDrawInfo(ref PlayerDrawSet drawInfo) { }
 			public virtual void FrameEffects(Player player) { }
+		}
+	}
+	[ReinitializeDuringResizeArrays]
+	static class ShadowTypeLoader {
+		static ShadowTypeLoader() {
+			ShadowType.Sort();
+		}
+	}
+	public abstract class ShadowType : ModType {
+		internal static ShadowType[] currentlyDrawing;
+		public static int ShadowTypeCount => shadowTypes.Count;
+		public static ShadowType PartialEffects {  get; private set; }
+		static readonly List<ShadowType> shadowTypes = [];
+		public int Type { get; private set; }
+		public virtual IEnumerable<ShadowType> SortAbove() => [];
+		public virtual IEnumerable<ShadowType> SortBelow() => [];
+		public abstract IEnumerable<ShadowData> GetShadowData(Player player, ShadowData from);
+		public virtual void TransformDrawData(ref PlayerDrawSet drawInfo) { }
+		public static void Draw(Camera camera, Player player) {
+			bool[] activeShadows = player.OriginPlayer().activeShadows;
+			Queue<ShadowData> sourceQueue = [];
+			Queue<ShadowData> drawQueue = [];
+			sourceQueue.Enqueue(new(player.position, ShadowTypes: []));
+			for (int i = 0; i < shadowTypes.Count; i++) {
+				if (activeShadows[i]) {
+					while (sourceQueue.TryDequeue(out ShadowData source)) {
+						ShadowType[] shadowStack = [..source.ShadowTypes, shadowTypes[i]];
+						foreach (ShadowData item in shadowTypes[i].GetShadowData(player, source)) {
+							drawQueue.Enqueue(item with { ShadowTypes = shadowStack });
+						}
+						drawQueue.Enqueue(source);
+					}
+					Utils.Swap(ref sourceQueue, ref drawQueue);
+				}
+			}
+			int oldForcedShader = Origins.forcePlayerShader;
+			while (sourceQueue.TryDequeue(out ShadowData source)) {
+				if (source.ShadowTypes is null || source.ShadowTypes.Length == 0) continue;
+				Origins.forcePlayerShader = source.Shader;
+				currentlyDrawing = source.ShadowTypes;
+				source.PreDraw?.Invoke();
+				Main.PlayerRenderer.DrawPlayer(camera, player, source.Position, source.Rotation, source.RotationOrigin, source.Shadow, source.Scale);
+			}
+			Origins.forcePlayerShader = oldForcedShader;
+		}
+		internal static void Sort() {
+			List<ShadowType> loadedTypes = new TopoSort<ShadowType>(shadowTypes,
+				mode => mode.SortBelow(),
+				mode => mode.SortAbove()
+			).Sort();
+			shadowTypes.Clear();
+			shadowTypes.AddRange(loadedTypes);
+			for (int i = 0; i < shadowTypes.Count; i++) {
+				shadowTypes[i].Type = i;
+				if (shadowTypes[i] is Separator) shadowTypes.RemoveAt(i--);
+			}
+		}
+		protected sealed override void Register() {
+			shadowTypes.Add(this);
+			ModTypeLookup<ShadowType>.Register(this);
+		}
+		public record struct ShadowData(Vector2 Position, int Shader = -1, float Rotation = 0, Vector2 RotationOrigin = default, float Shadow = 0f, float Scale = 1f, Action PreDraw = null, ShadowType[] ShadowTypes = default);
+		class Separator : ShadowType {
+			public override IEnumerable<ShadowData> GetShadowData(Player player, ShadowData from) => throw new NotImplementedException();
+		}
+		class EffectSeparator : Separator {
+			public override void Load() => PartialEffects = this;
 		}
 	}
 }

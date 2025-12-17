@@ -1575,6 +1575,9 @@ namespace Origins {
 				}
 			}
 		}
+		public static void EnableShadow<TShadow>(this Player player) where TShadow : ShadowType {
+			player.OriginPlayer().activeShadows[ModContent.GetInstance<TShadow>().Type] = true;
+		}
 		public static bool HasItem(this Item[] collection, Predicate<Item> item) {
 			for (int i = 0; i < collection.Length; i++) {
 				if ((collection[i]?.stack ?? 0) > 0 && item(collection[i])) return true;
