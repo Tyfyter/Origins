@@ -688,10 +688,28 @@ namespace Origins {
 					}
 				}
 			}
+			if (Player.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
+				for (int i = 0; i < 10; i++) {
+					if (triggersSet.KeyStatus["Hotbar" + (i + 1)] && LunaticsRuneAttack.ValidateSelection(ref i)) {
+						lunaticsRuneSelectedAttack = i;
+					}
+					triggersSet.KeyStatus["Hotbar" + (i + 1)] = false;
+				}
+			}
 			if (Player.controlDown && Player.releaseDown) {
 				doubleTapDown = doubleTapDownTimer < 15;
 				doubleTapDownTimer = 0;
 			} else doubleTapDown = false;
+		}
+		public override void SetControls() {
+			Debugging.LogFirstRun(SetControls);
+			if (Player.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
+				if (Math.Abs(PlayerInput.ScrollWheelDelta) >= 60) {
+					lunaticsRuneSelectedAttack += PlayerInput.ScrollWheelDelta / -120;
+					LunaticsRuneAttack.ValidateSelection(ref lunaticsRuneSelectedAttack, true);
+					PlayerInput.ScrollWheelDelta = 0;
+				}
+			}
 		}
 		public override IEnumerable<Item> AddMaterialsForCrafting(out ItemConsumedCallback itemConsumedCallback) {
 			if (Player.InModBiome<Brine_Pool>()) {
@@ -860,9 +878,6 @@ namespace Origins {
 			if (ravel) return false;
 			return true;
 		}
-		public override void SetControls() {
-			Debugging.LogFirstRun(SetControls);
-		}
 		public override void PreUpdateBuffs() {
 			Debugging.LogFirstRun(PreUpdateBuffs);
 		}
@@ -879,6 +894,11 @@ namespace Origins {
 			}
 			collidingX = oldXSign != 0 && Player.velocity.X == 0;
 			collidingY = oldYSign != 0 && Player.velocity.Y == 0;
+			if (Player.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
+				itemUseOldDirection = Player.direction;
+				LunaticsRuneAttack.ItemCheck(Player);
+				return false;
+			}
 			if (disableUseItem) {
 				itemUseOldDirection = Player.direction;
 				return false;

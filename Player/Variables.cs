@@ -346,8 +346,9 @@ namespace Origins {
 		public bool stressBall = false;
 		public int stressBallTimer = 0;
 		public float stressBallStrength = 0;
-		public bool lunaticsRune = false;
+		public Item lunaticsRune = null;
 		public int lunaticsRuneCharge = 0;
+		public int lunaticsRuneSelectedAttack = 0;
 		public float lunaticsRuneRotation = 0;
 
 		public bool laserTagVest = false;
@@ -880,7 +881,8 @@ namespace Origins {
 				stressBallTimer = 0;
 				stressBallStrength = 0;
 			}
-			if (!lunaticsRune.TrySet(false)) lunaticsRuneCharge = 0;
+			if (lunaticsRune is null) lunaticsRuneCharge = 0;
+			else lunaticsRune = null;
 			lotteryTicketItem = null;
 
 

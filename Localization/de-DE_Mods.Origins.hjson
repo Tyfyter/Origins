@@ -1429,6 +1429,11 @@ Buffs: {
 		// DisplayName: Lunatics Rune Duplicates Buff
 		// Description: Mods.Origins.Buffs.Lunatics_Rune_Duplicates_Buff.Description
 	}
+
+	Lunatics_Rune_Attacks_Buff: {
+		// DisplayName: Lunatics Rune Attacks Buff
+		// Description: Mods.Origins.Buffs.Lunatics_Rune_Attacks_Buff.Description
+	}
 }
 
 DamageClassName: {

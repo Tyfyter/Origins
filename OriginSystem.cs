@@ -556,6 +556,16 @@ namespace Origins {
 				},
 				InterfaceScaleType.Game) { Active = Main.LocalPlayer.GetModPlayer<OriginPlayer>().strangeComputer }
 			);
+			inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Hotbar"));
+			if (inventoryIndex != -1 && layers[inventoryIndex].Active && Main.LocalPlayer.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
+				layers[inventoryIndex] = new LegacyGameInterfaceLayer(
+					"Vanilla: Hotbar",
+					LunaticsRuneAttack.DrawSlots,
+					InterfaceScaleType.UI
+				) {
+					Active = !Main.playerInventory
+				};
+			}
 		}
 		public override void OnLocalizationsLoaded() {
 			Dictionary<string, LocalizedText> texts = LocalizationMethods._localizedTexts.GetValue(LanguageManager.Instance);

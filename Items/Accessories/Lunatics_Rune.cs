@@ -1,9 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -17,9 +20,15 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
+			Item.damage = 100;
 			Item.mana = 120;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 1);
+		}
+		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			for (int i = tooltips.Count - 1; i >= 0; i--) {
+				
+			}
 		}
 		public override void ModifyManaCost(Player player, ref float reduce, ref float mult) { }
 		public bool CheckMana(Player player) {
@@ -43,7 +52,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			OriginPlayer originPlayer = player.OriginPlayer();
-			originPlayer.lunaticsRune = true;
+			originPlayer.lunaticsRune = Item;
 			ref int charge = ref originPlayer.lunaticsRuneCharge;
 			if (player.SyncedKeybinds().LunaticsRune.Current && (charge >= ChargeThreshold || CheckMana(player))) {
 				originPlayer.lunaticsRuneRotation += 0.02f;
@@ -66,6 +75,10 @@ namespace Origins.Items.Accessories {
 				charge = 0;
 			}
 		}
+		public class Attacks : BuffOption {
+			public override int BuffType => ModContent.BuffType<Lunatics_Rune_Attacks_Buff>();
+			public override int BuffTime => 10 * 60;
+		}
 		public class Duplicates : BuffOption {
 			public override int BuffType => ModContent.BuffType<Lunatics_Rune_Duplicates_Buff>();
 			public override int BuffTime => 8 * 60;
@@ -87,6 +100,146 @@ namespace Origins.Items.Accessories {
 			public void Unload() {}
 			public virtual double GetWeight(Player player) => 1;
 			public abstract void Trigger(Player player);
+		}
+	}
+
+	public class Lunatics_Rune_Attacks_Buff : ModBuff {
+		public override string Texture => "Terraria/Images/Item_6";
+		public override void Update(Player player, ref int buffIndex) {
+
+		}
+	}
+	public abstract class LunaticsRuneAttack : ModTexturedType {
+		static readonly List<LunaticsRuneAttack> options = [];
+		public static bool ValidateSelection(ref int selectedAttack, bool scroll = false) {
+			if (scroll) {
+				while (selectedAttack < 0) selectedAttack += options.Count;
+				while (selectedAttack >= options.Count) selectedAttack -= options.Count;
+				return true;
+			} else {
+				return options.IndexInRange(selectedAttack);
+			}
+		}
+		protected sealed override void Register() => options.Add(this);
+		public Asset<Texture2D> texture;
+		public virtual Rectangle Frame => texture.Frame();
+		public sealed override void SetupContent() {
+			if (!Main.dedServ) {
+				texture = ModContent.Request<Texture2D>(Texture);
+			}
+			SetStaticDefaults();
+		}
+		public abstract void StartAttack(Player player);
+		public abstract void ProcessAttack(Player player);
+		public static void ItemCheck(Player player) {
+			OriginPlayer originPlayer = player.OriginPlayer();
+			Max(ref player.itemAnimation, 0);
+			Max(ref player.itemTime, 0);
+			player.itemLocation.X = 0;
+			player.itemLocation.Y = 0;
+			originPlayer.lunaticsRuneSelectedAttack %= options.Count;
+			player.compositeBackArm.enabled = false;
+			player.compositeFrontArm.enabled = false;
+			if (player.ItemAnimationActive) {
+				player.itemAnimation--;
+				options[originPlayer.lunaticsRuneSelectedAttack].ProcessAttack(player);
+			} else if (player.controlUseItem && player.releaseUseItem) {
+				options[originPlayer.lunaticsRuneSelectedAttack].StartAttack(player);
+			}
+		}
+		public static bool DrawSlots() {
+			Player player = Main.LocalPlayer;
+			OriginPlayer originPlayer = player.OriginPlayer();
+			Texture2D backTexture;
+			int posX = 20;
+			for (int i = 0; i < 10 && i < options.Count; i++) {
+				if (i == originPlayer.lunaticsRuneSelectedAttack) {
+					MathUtils.LinearSmoothing(ref Main.hotbarScale[i], 1, 0.05f);
+					backTexture = TextureAssets.InventoryBack14.Value;
+				} else {
+					MathUtils.LinearSmoothing(ref Main.hotbarScale[i], 0.75f, 0.05f);
+					backTexture = TextureAssets.InventoryBack.Value;
+				}
+				LunaticsRuneAttack attack = options[i];
+				float hotbarScale = Main.hotbarScale[i];
+				int posY = (int)(20f + 22f * (1f - hotbarScale));
+
+				if (!player.hbLocked && !PlayerInput.IgnoreMouseInterface && Main.mouseX >= posX && Main.mouseX <= posX + backTexture.Width * Main.hotbarScale[i] && Main.mouseY >= posY && Main.mouseY <= posY + backTexture.Height * Main.hotbarScale[i] && !player.channel) {
+					player.mouseInterface = true;
+					if (Main.mouseLeft && !player.hbLocked && !Main.blockMouse) {
+						originPlayer.lunaticsRuneSelectedAttack = i;
+					}
+				}
+				Main.spriteBatch.Draw(
+					backTexture,
+					new Vector2(posX, posY),
+					null,
+					Color.White,
+					0f,
+					Vector2.Zero,
+					hotbarScale,
+					SpriteEffects.None,
+				0f);
+				float offset = 26 * hotbarScale;
+				Rectangle frame = attack.Frame;
+				float scale = 1.15f;
+				Min(ref scale, 52f / frame.Width);
+				Min(ref scale, 52f / frame.Height);
+				Main.spriteBatch.Draw(
+					attack.texture.Value,
+					new Vector2(posX + offset, posY + offset),
+					frame,
+					Color.White,
+					0f,
+					attack.texture.Size() * 0.5f,
+					hotbarScale * scale,
+					SpriteEffects.None,
+				0f);
+				posX += (int)(backTexture.Width * Main.hotbarScale[i]) + 4;
+			}
+			return true;
+		}
+	}
+	public class FireballAttack : LunaticsRuneAttack {
+		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CultistBossFireBall}";
+		public override void ProcessAttack(Player player) {
+			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation - MathHelper.PiOver2);
+			player.direction = Math.Sign(float.Cos(player.itemRotation));
+		}
+		public override void StartAttack(Player player) {
+			Item item = player.OriginPlayer().lunaticsRune;
+			Vector2 dir = (Main.MouseWorld - player.MountedCenter).Normalized(out _) * 8;
+			for (int i = -4; i < 4; i++) {
+				player.SpawnProjectile(player.GetSource_Accessory(item),
+					player.MountedCenter,
+					dir.RotatedBy((i + 0.5f) * 0.2),
+					ProjectileID.Flamelash,
+					player.GetWeaponDamage(item),
+					player.GetWeaponKnockback(item)
+				);
+			}
+			player.itemRotation = dir.ToRotation();
+			player.SetItemAnimation(20);
+		}
+	}
+	public class TestAttack : LunaticsRuneAttack {
+		public override string Texture => $"Terraria/Images/Item_{ItemID.Ale}";
+		public override void ProcessAttack(Player player) {
+			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation - MathHelper.PiOver2);
+			player.direction = Math.Sign(float.Cos(player.itemRotation));
+		}
+		public override void StartAttack(Player player) {
+			Item item = player.OriginPlayer().lunaticsRune;
+			Vector2 dir = (Main.MouseWorld - player.MountedCenter).Normalized(out _);
+			player.SpawnProjectile(player.GetSource_Accessory(item),
+				player.MountedCenter,
+				dir * 8,
+				ProjectileID.Ale,
+				player.GetWeaponDamage(item),
+				player.GetWeaponKnockback(item)
+			);
+			player.itemRotation = dir.ToRotation();
+			player.SetItemAnimation(20);
 		}
 	}
 
