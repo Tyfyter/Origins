@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Lunatics_Rune : ModItem {
 		static readonly List<Option> options = [];
-		public static int ChargeThreshold => 3 * 60;
+		public static int ChargeThreshold => 2 * 60;
 		public override void SetStaticDefaults() {
 			Main.RegisterItemAnimation(Type, new DrawAnimationSwitching(OriginsModIntegrations.CheckAprilFools, NoDrawAnimation.AtAll, new DrawAnimationRandom(3, 20)));
 			AprilFoolsTextures.AddItem(this);

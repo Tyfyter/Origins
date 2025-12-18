@@ -930,14 +930,18 @@ namespace Origins {
 			if (!Player.CCed && !Player.JustDroppedAnItem) {
 				if (lunaticDuplicates) {
 					Vector2 position = Player.position;
+					Vector2 itemLocation = Player.itemLocation;
 					attackFromLunaticDuplicate = true;
 					try {
 						Player.position = position + Vector2.UnitX * Lunatic_Shadow.Offset;
+						Player.itemLocation = itemLocation + Vector2.UnitX * Lunatic_Shadow.Offset;
 						RunExtraItemCheck();
 						Player.position = position - Vector2.UnitX * Lunatic_Shadow.Offset;
+						Player.itemLocation = itemLocation - Vector2.UnitX * Lunatic_Shadow.Offset;
 						RunExtraItemCheck();
 					} finally {
 						Player.position = position;
+						Player.itemLocation = itemLocation;
 						attackFromLunaticDuplicate = false;
 					}
 				}
@@ -947,6 +951,7 @@ namespace Origins {
 			Weak_Shimmer_Debuff.isUpdatingShimmeryThing = false;
 		}
 		void RunExtraItemCheck() {
+			if (Player.ItemAnimationJustStarted) ;
 			Item item = Player.HeldItem;
 			bool canShoot = true;
 			switch (item.type) {
@@ -971,7 +976,7 @@ namespace Origins {
 				canShoot &= Player.ownedProjectileCounts[ProjectileID.JimsDrone] <= 0;
 				break;
 			}
-			if (item.useLimitPerAnimation.HasValue && Player.ItemUsesThisAnimation >= item.useLimitPerAnimation.Value) {
+			if (item.useLimitPerAnimation.HasValue && (Player.ItemUsesThisAnimation - 1) >= item.useLimitPerAnimation.Value) {
 				canShoot = false;
 			}
 			canShoot = Player.itemAnimation > 0 && Player.itemTime == Player.itemTimeMax && canShoot;
@@ -980,9 +985,24 @@ namespace Origins {
 			}
 			int weaponDamage = Player.GetWeaponDamage(item);
 			if (item.shoot > ProjectileID.None && canShoot) {
+				int useCount = Player.ItemUsesThisAnimation;
 				PlayerMethods.ItemCheck_Shoot(Player, item, weaponDamage);
+				PlayerMethods.Set_ItemUsesThisAnimation(Player, useCount);
 			}
 			if (Player.whoAmI != Main.myPlayer) return;
+			if (((item.damage < 0 || item.type <= ItemID.None || item.noMelee) && item.type != ItemID.BubbleWand && !ItemID.Sets.CatchingTool[item.type] && item.type != ItemID.NebulaBlaze && item.type != ItemID.SpiritFlame) || Player.itemAnimation <= 0) {
+				return;
+			}
+			PlayerMethods.ItemCheck_GetMeleeHitbox(Player, item, Item.GetDrawHitbox(item.type, Player), out bool dontAttack, out Rectangle itemRectangle);
+			if (!dontAttack) {
+				itemRectangle = PlayerMethods.ItemCheck_EmitUseVisuals(Player, item, itemRectangle);
+				if (item.damage > 0) {
+					float knockBack = Player.GetWeaponKnockback(item, item.knockBack);
+					PlayerMethods.ItemCheck_MeleeHitNPCs(Player, item, itemRectangle, weaponDamage, knockBack);
+					PlayerMethods.ItemCheck_MeleeHitPVP(Player, item, itemRectangle, weaponDamage, knockBack);
+					PlayerMethods.ItemCheck_EmitHammushProjectiles(Player, item, itemRectangle, weaponDamage);
+				}
+			}
 		}
 		public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath) {
 			if (Gelatin_Bloom_Brooch.GetNameIndex(Player.name) != -1) yield return new(ModContent.ItemType<Gelatin_Bloom_Brooch>());

@@ -34,6 +34,29 @@ namespace Origins.Reflection {
 		[ReflectionParentType(typeof(Player)), ReflectionMemberName("ItemCheck_Shoot")]
 		private static ItemCheck_Shoot_Del _ItemCheck_Shoot;
 
+		private delegate void ItemCheck_GetMeleeHitbox_Del(Item sItem, Rectangle heldItemFrame, out bool dontAttack, out Rectangle itemRectangle);
+		[ReflectionParentType(typeof(Player)), ReflectionMemberName("ItemCheck_GetMeleeHitbox")]
+		private static ItemCheck_GetMeleeHitbox_Del _ItemCheck_GetMeleeHitbox;
+
+		private delegate Rectangle ItemCheck_EmitUseVisuals_Del(Item sItem, Rectangle itemRectangle);
+		[ReflectionParentType(typeof(Player)), ReflectionMemberName("ItemCheck_EmitUseVisuals")]
+		private static ItemCheck_EmitUseVisuals_Del _ItemCheck_EmitUseVisuals;
+
+		private delegate void ItemCheck_MeleeHitNPCs_Del(Item sItem, Rectangle itemRectangle, int originalDamage, float knockBack);
+		[ReflectionParentType(typeof(Player)), ReflectionMemberName("ItemCheck_MeleeHitNPCs")]
+		private static ItemCheck_MeleeHitNPCs_Del _ItemCheck_MeleeHitNPCs;
+
+		private delegate void ItemCheck_MeleeHitPVP_Del(Item sItem, Rectangle itemRectangle, int originalDamage, float knockBack);
+		[ReflectionParentType(typeof(Player)), ReflectionMemberName("ItemCheck_MeleeHitPVP")]
+		private static ItemCheck_MeleeHitPVP_Del _ItemCheck_MeleeHitPVP;
+
+		private delegate void ItemCheck_EmitHammushProjectiles_Del(int i, Item sItem, Rectangle itemRectangle, int damage);
+		[ReflectionParentType(typeof(Player)), ReflectionMemberName("ItemCheck_EmitHammushProjectiles")]
+		private static ItemCheck_EmitHammushProjectiles_Del _ItemCheck_EmitHammushProjectiles;
+
+		[ReflectionParentType(typeof(Player))]
+		private static Action<int> set_ItemUsesThisAnimation;
+
 		private delegate void SetupPlayer_Del(Player player);
 		[ReflectionParentType(typeof(PlayerLoader)), ReflectionMemberName("SetupPlayer")]
 		private static SetupPlayer_Del _SetupPlayer;
@@ -63,6 +86,30 @@ namespace Origins.Reflection {
 		public static void ItemCheck_Shoot(Player player, Item sItem, int weaponDamage) {
 			DelegateMethods._target.SetValue(_ItemCheck_Shoot, player);
 			_ItemCheck_Shoot(player.whoAmI, sItem, weaponDamage);
+		}
+		public static void ItemCheck_GetMeleeHitbox(Player player, Item sItem, Rectangle heldItemFrame, out bool dontAttack, out Rectangle itemRectangle) {
+			DelegateMethods._target.SetValue(_ItemCheck_GetMeleeHitbox, player);
+			_ItemCheck_GetMeleeHitbox(sItem, heldItemFrame, out dontAttack, out itemRectangle);
+		}
+		public static Rectangle ItemCheck_EmitUseVisuals(Player player, Item sItem, Rectangle itemRectangle) {
+			DelegateMethods._target.SetValue(_ItemCheck_EmitUseVisuals, player);
+			return _ItemCheck_EmitUseVisuals(sItem, itemRectangle);
+		}
+		public static void ItemCheck_MeleeHitNPCs(Player player, Item sItem, Rectangle itemRectangle, int damage, float knockBack) {
+			DelegateMethods._target.SetValue(_ItemCheck_MeleeHitNPCs, player);
+			_ItemCheck_MeleeHitNPCs(sItem, itemRectangle, damage, knockBack);
+		}
+		public static void ItemCheck_MeleeHitPVP(Player player, Item sItem, Rectangle itemRectangle, int damage, float knockBack) {
+			DelegateMethods._target.SetValue(_ItemCheck_MeleeHitPVP, player);
+			_ItemCheck_MeleeHitPVP(sItem, itemRectangle, damage, knockBack);
+		}
+		public static void ItemCheck_EmitHammushProjectiles(Player player, Item sItem, Rectangle itemRectangle, int damage) {
+			DelegateMethods._target.SetValue(_ItemCheck_EmitHammushProjectiles, player);
+			_ItemCheck_EmitHammushProjectiles(player.whoAmI, sItem, itemRectangle, damage);
+		}
+		public static void Set_ItemUsesThisAnimation(Player player, int value) {
+			DelegateMethods._target.SetValue(set_ItemUsesThisAnimation, player);
+			set_ItemUsesThisAnimation(value);
 		}
 		/*public static void GrabItems(Player player) {
 			Basic._target.SetValue(_ApplyNPCOnHitEffects, player);
