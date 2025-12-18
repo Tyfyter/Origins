@@ -886,7 +886,6 @@ namespace Origins {
 			if (luckyHatSet && !Player.ItemAnimationActive && Player.HeldItem.ChangePlayerDirectionOnShoot && (Player.HeldItem.CountsAsClass(DamageClass.Ranged) || Player.HeldItem.CountsAsClass(DamageClasses.Explosive)) && luckyHatSetTime < 90) {
 				Player.direction = itemUseOldDirection;
 			}
-			ItemChecking = true;
 			if (Player.HeldItem.ModItem is C6_Jackhammer or Miter_Saw && Player.controlUseTile) {
 				if (Player.ItemAnimationEndingOrEnded) {
 					Player.direction = itemUseOldDirection;
@@ -928,10 +927,62 @@ namespace Origins {
 			return true;
 		}
 		public override void PostItemCheck() {
+			if (!Player.CCed && !Player.JustDroppedAnItem) {
+				if (lunaticDuplicates) {
+					Vector2 position = Player.position;
+					attackFromLunaticDuplicate = true;
+					try {
+						Player.position = position + Vector2.UnitX * Lunatic_Shadow.Offset;
+						RunExtraItemCheck();
+						Player.position = position - Vector2.UnitX * Lunatic_Shadow.Offset;
+						RunExtraItemCheck();
+					} finally {
+						Player.position = position;
+						attackFromLunaticDuplicate = false;
+					}
+				}
+			}
 			Debugging.LogFirstRun(PostItemCheck);
-			ItemChecking = false;
 			releaseAltUse = !Player.controlUseTile;
 			Weak_Shimmer_Debuff.isUpdatingShimmeryThing = false;
+		}
+		void RunExtraItemCheck() {
+			Item item = Player.HeldItem;
+			bool canShoot = true;
+			switch (item.type) {
+				case ItemID.Starfury:
+				case ItemID.Frostbrand:
+				case ItemID.BeamSword:
+				case ItemID.IceBlade:
+				case ItemID.TerraBlade:
+				case ItemID.TrueExcalibur:
+				case ItemID.TrueNightsEdge:
+				case ItemID.EnchantedSword:
+				case ItemID.ChlorophyteClaymore:
+				case ItemID.ChlorophyteSaber:
+				canShoot &= Player.ItemAnimationJustStarted;
+				break;
+
+				case ItemID.BookStaff:
+				canShoot &= Player.altFunctionUse != 2 || Player.ItemAnimationJustStarted;
+				break;
+
+				case ItemID.JimsDrone:
+				canShoot &= Player.ownedProjectileCounts[ProjectileID.JimsDrone] <= 0;
+				break;
+			}
+			if (item.useLimitPerAnimation.HasValue && Player.ItemUsesThisAnimation >= item.useLimitPerAnimation.Value) {
+				canShoot = false;
+			}
+			canShoot = Player.itemAnimation > 0 && Player.itemTime == Player.itemTimeMax && canShoot;
+			if (item.shootsEveryUse) {
+				canShoot = Player.ItemAnimationJustStarted;
+			}
+			int weaponDamage = Player.GetWeaponDamage(item);
+			if (item.shoot > ProjectileID.None && canShoot) {
+				PlayerMethods.ItemCheck_Shoot(Player, item, weaponDamage);
+			}
+			if (Player.whoAmI != Main.myPlayer) return;
 		}
 		public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath) {
 			if (Gelatin_Bloom_Brooch.GetNameIndex(Player.name) != -1) yield return new(ModContent.ItemType<Gelatin_Bloom_Brooch>());

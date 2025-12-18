@@ -1424,6 +1424,11 @@ Buffs: {
 		// DisplayName: Feesh
 		// Description: They are here.
 	}
+
+	Lunatics_Rune_Duplicates_Buff: {
+		// DisplayName: Lunatics Rune Duplicates Buff
+		// Description: Mods.Origins.Buffs.Lunatics_Rune_Duplicates_Buff.Description
+	}
 }
 
 DamageClassName: {

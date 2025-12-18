@@ -30,6 +30,10 @@ namespace Origins.Reflection {
 		[ReflectionParentType(typeof(Player)), ReflectionMemberName("PullItem_ToVoidVault")]
 		private static PullItem_ToVoidVault_Del _PullItem_ToVoidVault;
 
+		private delegate void ItemCheck_Shoot_Del(int i, Item sItem, int weaponDamage);
+		[ReflectionParentType(typeof(Player)), ReflectionMemberName("ItemCheck_Shoot")]
+		private static ItemCheck_Shoot_Del _ItemCheck_Shoot;
+
 		private delegate void SetupPlayer_Del(Player player);
 		[ReflectionParentType(typeof(PlayerLoader)), ReflectionMemberName("SetupPlayer")]
 		private static SetupPlayer_Del _SetupPlayer;
@@ -55,6 +59,10 @@ namespace Origins.Reflection {
 		public static void PullItem_ToVoidVault(Player player, Item itemToPickUp) {
 			DelegateMethods._target.SetValue(_PullItem_ToVoidVault, player);
 			_PullItem_ToVoidVault(itemToPickUp);
+		}
+		public static void ItemCheck_Shoot(Player player, Item sItem, int weaponDamage) {
+			DelegateMethods._target.SetValue(_ItemCheck_Shoot, player);
+			_ItemCheck_Shoot(player.whoAmI, sItem, weaponDamage);
 		}
 		/*public static void GrabItems(Player player) {
 			Basic._target.SetValue(_ApplyNPCOnHitEffects, player);

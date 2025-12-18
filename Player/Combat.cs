@@ -61,6 +61,7 @@ namespace Origins {
 				float mult = (90f / Math.Max(item.useAnimation, 8)) * 1.3f;
 				if (mult > 1) damage *= mult;
 			}
+			if (attackFromLunaticDuplicate) damage *= 0.333f;
 			Debugging.LogFirstRun($"{nameof(ModifyWeaponDamage)} (after)");
 		}
 		public override void ModifyWeaponCrit(Item item, ref float crit) {

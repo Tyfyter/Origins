@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,6 +9,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Lunatics_Rune : ModItem {
+		static readonly List<Option> options = [];
 		public static int ChargeThreshold => 3 * 60;
 		public override void SetStaticDefaults() {
 			Main.RegisterItemAnimation(Type, new DrawAnimationSwitching(OriginsModIntegrations.CheckAprilFools, NoDrawAnimation.AtAll, new DrawAnimationRandom(3, 20)));
@@ -40,12 +42,10 @@ namespace Origins.Items.Accessories {
 			return true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
-			if (player.whoAmI != Main.myPlayer) return;
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.lunaticsRune = true;
 			ref int charge = ref originPlayer.lunaticsRuneCharge;
-			player.EnableShadow<Lunatic_Shadow>();
-			if (Keybindings.LunaticsRune.Current && (charge >= ChargeThreshold || CheckMana(player))) {
+			if (player.SyncedKeybinds().LunaticsRune.Current && (charge >= ChargeThreshold || CheckMana(player))) {
 				originPlayer.lunaticsRuneRotation += 0.02f;
 				charge.Warmup(ChargeThreshold);
 				float moveMult = 1 - float.Pow(charge / (float)ChargeThreshold, 2);
@@ -54,32 +54,69 @@ namespace Origins.Items.Accessories {
 				originPlayer.moveSpeedMult *= moveMult * moveMult;
 				if (player.velocity.Y == 0) player.velocity.Y = float.Epsilon;
 			} else {
-				if (charge >= ChargeThreshold) {
-					switch (Main.rand.Next(4)) {
-						default:
-						player.AddBuff(BuffID.RapidHealing, 8 * 60);
-						break;
+				if (charge >= ChargeThreshold && player.whoAmI == Main.myPlayer) {
+					RangeRandom random = new(Main.rand, 0, options.Count);
+					for (int i = 0; i < options.Count; i++) {
+						random.Multiply(i, i + 1, options[i].GetWeight(player));
+					}
+					if (random.AnyWeight) {
+						options[random.Get()].Trigger(player);
 					}
 				}
 				charge = 0;
 			}
 		}
+		public class Duplicates : BuffOption {
+			public override int BuffType => ModContent.BuffType<Lunatics_Rune_Duplicates_Buff>();
+			public override int BuffTime => 8 * 60;
+		}
+		public class Healing : BuffOption {
+			public override int BuffType => BuffID.RapidHealing;
+			public override int BuffTime => 8 * 60;
+		}
+		public abstract class BuffOption : Option {
+			public abstract int BuffType { get; }
+			public abstract int BuffTime { get; }
+			public override double GetWeight(Player player) => player.HasBuff(BuffType) ? 0 : 1;
+			public override void Trigger(Player player) {
+				player.AddBuff(BuffType, BuffTime);
+			}
+		}
+		public abstract class Option : ILoadable {
+			public void Load(Mod mod) => options.Add(this);
+			public void Unload() {}
+			public virtual double GetWeight(Player player) => 1;
+			public abstract void Trigger(Player player);
+		}
+	}
+
+	public class Lunatics_Rune_Duplicates_Buff : ModBuff {
+		public override string Texture => "Terraria/Images/Item_7";
+		public override void Update(Player player, ref int buffIndex) {
+			player.EnableShadow<Lunatic_Shadow>();
+			OriginPlayer originPlayer = player.OriginPlayer();
+			originPlayer.lunaticDuplicates = true;
+			originPlayer.lunaticDuplicateOpacity++;
+			Min(ref originPlayer.lunaticDuplicateOpacity, player.buffTime[buffIndex]);
+		}
 	}
 	public class Lunatic_Shadow : ShadowType {
+		public static float Offset => 64;
 		public override IEnumerable<ShadowType> SortAbove() => [PartialEffects];
 		public override IEnumerable<ShadowData> GetShadowData(Player player, ShadowData from) {
-			const float offset = 64;
 			Vector2 position = from.Position;
 			//from.Shadow = 0.5f;
-			from.Position = position + Vector2.UnitX * offset;
+			from.Position = position + Vector2.UnitX * Offset;
 			yield return from;
-			from.Position = position - Vector2.UnitX * offset;
+			from.Position = position - Vector2.UnitX * Offset;
 			yield return from;
 		}
 		public override void TransformDrawData(ref PlayerDrawSet drawInfo) {
+			float opacity = Math.Min(drawInfo.drawPlayer.OriginPlayer().lunaticDuplicateOpacity / 30f, 1) * 0.5f;
+
 			for (int i = 0; i < drawInfo.DrawDataCache.Count; i++) {
 				DrawData drawData = drawInfo.DrawDataCache[i];
-				drawData.color *= 0.5f;
+				drawData.color *= opacity;
 				drawInfo.DrawDataCache[i] = drawData;
 			}
 		}

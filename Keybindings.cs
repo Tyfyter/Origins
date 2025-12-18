@@ -20,9 +20,8 @@ namespace Origins {
 		public static ModKeybind JournalBack { get; private set; }
 		[Keybind("Mouse2")]
 		public static ModKeybind StressBall { get; private set; }
-		[Keybind("G")]
-		public static ModKeybind LunaticsRune { get; private set; }
 		public static ModKeybind WishingGlass => ModContent.GetInstance<SyncedKeybinds>().WishingGlass.keybind;
+		public static ModKeybind LunaticsRune => ModContent.GetInstance<SyncedKeybinds>().LunaticsRune.keybind;
 #if DEBUG
 		[Keybind("Debug Screen Shader", Keys.OemQuotes)]
 		public static ModKeybind DebugScreenShader { get; private set; }
@@ -65,5 +64,7 @@ namespace Origins {
 	public class SyncedKeybinds : KeybindHandlerPlayer {
 		[Keybind(Keys.V)]
 		public AutoKeybind WishingGlass;
+		[Keybind(Keys.G)]
+		public AutoKeybind LunaticsRune;
 	}
 }

@@ -3245,6 +3245,7 @@ namespace Origins {
 			left = i - frameI;
 		}
 		public static OriginPlayer OriginPlayer(this Player player) => player.GetModPlayer<OriginPlayer>();
+		public static SyncedKeybinds SyncedKeybinds(this Player player) => player.GetModPlayer<SyncedKeybinds>();
 		public static bool DoHoming(this Player player, Func<Entity, bool> selector, bool canPvP = true) {
 			bool foundTarget = false;
 			foreach (NPC target in Main.ActiveNPCs) {

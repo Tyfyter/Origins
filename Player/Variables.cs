@@ -429,6 +429,9 @@ namespace Origins {
 		public bool murkySludge = false;
 		public bool miasma = false;
 		public bool tetanus = false;
+		public bool lunaticDuplicates = false;
+		public bool attackFromLunaticDuplicate = false;
+		public int lunaticDuplicateOpacity = 0;
 
 		public bool DisableBreathRestore => toxicShock || miasma;
 		public bool sendBuffs = false;
@@ -515,7 +518,6 @@ namespace Origins {
 
 		public Ref<Item> eyndumCore = null;
 
-		internal static bool ItemChecking = false;
 		public int cryostenLifeRegenCount = 0;
 		public int bombCharminItLifeRegenCount = 0;
 		internal byte oldBonuses = 0;
@@ -1215,6 +1217,7 @@ namespace Origins {
 			murkySludge = false;
 			miasma = false;
 			tetanus = false;
+			lunaticDuplicates = false;
 			if (dangerTime <= 0) dangerTime = 0;
 			else dangerTime--;
 			InDanger = dangerTime > 0;
