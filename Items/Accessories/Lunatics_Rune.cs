@@ -69,6 +69,9 @@ namespace Origins.Items.Accessories {
 				if (player.velocity.Y == 0) player.velocity.Y = float.Epsilon;
 			} else {
 				if (charge >= ChargeThreshold && player.whoAmI == Main.myPlayer) {
+					for (int i = 0; i < player.buffType.Length; i++) {
+						Max(ref player.buffTime[i], BuffOption.RitualRefreshTime[player.buffType[i]]);
+					}
 					RangeRandom random = new(Main.rand, 0, options.Count);
 					for (int i = 0; i < options.Count; i++) {
 						random.Multiply(i, i + 1, options[i].GetWeight(player));
@@ -92,17 +95,26 @@ namespace Origins.Items.Accessories {
 			public override int BuffType => BuffID.RapidHealing;
 			public override int BuffTime => 16 * 60;
 		}
+		[ReinitializeDuringResizeArrays]
 		public abstract class BuffOption : Option {
+			public static int[] RitualRefreshTime = BuffID.Sets.Factory.CreateIntSet();
 			public abstract int BuffType { get; }
 			public abstract int BuffTime { get; }
+			public override void SetStaticDefaults() {
+				RitualRefreshTime[BuffType] = BuffTime;
+			}
 			public override double GetWeight(Player player) => player.HasBuff(BuffType) ? 0 : 1;
 			public override void Trigger(Player player) {
 				player.AddBuff(BuffType, BuffTime);
 			}
 		}
-		public abstract class Option : ILoadable {
-			public void Load(Mod mod) => options.Add(this);
-			public void Unload() {}
+		public abstract class Option : ModType {
+			protected sealed override void Register() {
+				options.Add(this);
+			}
+			public sealed override void SetupContent() {
+				SetStaticDefaults();
+			}
 			public virtual double GetWeight(Player player) => 1;
 			public abstract void Trigger(Player player);
 		}
