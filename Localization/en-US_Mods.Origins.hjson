@@ -2147,6 +2147,9 @@ Projectiles: {
 	Chlorophyte_Handcannon_Bubble.DisplayName: Chlorophyte Handcannon Bubble
 	Chlorophyte_Slug_P.DisplayName: Chlorophyte Slug
 	School_Fish.DisplayName: School Fish
+	IceMist.DisplayName: Ice Mist
+	CultistFireball.DisplayName: Cultist Fireball
+	CultistFireballShadow.DisplayName: Cultist Fireball Shadow
 }
 
 Prefixes: {

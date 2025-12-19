@@ -472,6 +472,9 @@ namespace Origins.Items {
 			}
 			return true;
 		}
+		public override void HoldItem(Item item, Player player) {
+			base.HoldItem(item, player);
+		}
 
 		public static ushort GetItemElement(Item item) {
 			if (item.ModItem is null) {

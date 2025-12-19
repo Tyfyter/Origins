@@ -580,6 +580,7 @@ namespace Origins {
 		public const int maxDangerTime = 5 * 60;
 		public int dangerTime = 0;
 		internal bool[] activeShadows = new bool[ShadowType.ShadowTypeCount];
+		public bool lastItemCheckNotSkipped = false;
 		public bool InDanger { get; private set; }
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);

@@ -689,11 +689,11 @@ namespace Origins {
 				}
 			}
 			if (Player.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
-				for (int i = 0; i < 10; i++) {
-					if (triggersSet.KeyStatus["Hotbar" + (i + 1)] && LunaticsRuneAttack.ValidateSelection(ref i)) {
+				for (int i = 1; i <= 10; i++) {
+					if (triggersSet.KeyStatus["Hotbar" + i] && !Player.ItemAnimationActive && LunaticsRuneAttack.ValidateSelection(ref i)) {
 						lunaticsRuneSelectedAttack = i;
 					}
-					triggersSet.KeyStatus["Hotbar" + (i + 1)] = false;
+					triggersSet.KeyStatus["Hotbar" + i] = false;
 				}
 			}
 			if (Player.controlDown && Player.releaseDown) {
@@ -704,11 +704,7 @@ namespace Origins {
 		public override void SetControls() {
 			Debugging.LogFirstRun(SetControls);
 			if (Player.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
-				if (Math.Abs(PlayerInput.ScrollWheelDelta) >= 60) {
-					lunaticsRuneSelectedAttack += PlayerInput.ScrollWheelDelta / -120;
-					LunaticsRuneAttack.ValidateSelection(ref lunaticsRuneSelectedAttack, true);
-					PlayerInput.ScrollWheelDelta = 0;
-				}
+				PlayerInput.ScrollWheelDelta = 0;
 			}
 		}
 		public override IEnumerable<Item> AddMaterialsForCrafting(out ItemConsumedCallback itemConsumedCallback) {
@@ -886,6 +882,7 @@ namespace Origins {
 			return base.PreModifyLuck(ref luck);
 		}
 		public override bool PreItemCheck() {
+			lastItemCheckNotSkipped = false;
 			Debugging.LogFirstRun(PreItemCheck);
 			compositeFrontArmWasEnabled = Player.compositeFrontArm.enabled;
 			if (weakShimmer) {
@@ -947,7 +944,7 @@ namespace Origins {
 			return true;
 		}
 		public override void PostItemCheck() {
-			if (!Player.CCed && !Player.JustDroppedAnItem) {
+			if (!Player.CCed && !Player.JustDroppedAnItem && lastItemCheckNotSkipped) {
 				if (lunaticDuplicates) {
 					Vector2 position = Player.position;
 					Vector2 itemLocation = Player.itemLocation;
@@ -971,7 +968,6 @@ namespace Origins {
 			Weak_Shimmer_Debuff.isUpdatingShimmeryThing = false;
 		}
 		void RunExtraItemCheck() {
-			if (Player.ItemAnimationJustStarted) ;
 			Item item = Player.HeldItem;
 			bool canShoot = true;
 			switch (item.type) {
