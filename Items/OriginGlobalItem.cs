@@ -422,6 +422,12 @@ namespace Origins.Items {
 					}
 					break;
 				}
+				case ItemID.OceanCrate: {// shares drop rules with hardmode version by reference, adding to either adds to both
+					if (!OriginGlobalNPC.AddToOneFromOptionsRule(dropRules, ItemID.BreathingReed, ModContent.ItemType<Stone_Mask>())) {
+						Origins.LogLoadingWarning(GetWarningText("MissingDropRule").WithFormatArgs(GetWarningText("DropRuleType.Main"), Lang.GetItemName(item.type)));
+					}
+					break;
+				}
 				case ItemID.HerbBag: {
 					if (dropRules.FindDropRule<HerbBagDropsItemDropRule>(_ => true) is HerbBagDropsItemDropRule rule) {
 						rule.dropIds = rule.dropIds.Concat([

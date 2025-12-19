@@ -1137,6 +1137,8 @@ namespace Origins {
 
 			CrateRecipe(ItemType<Messy_Leech>(), crate: ItemID.JungleFishingCrate, crateHard: ItemID.JungleFishingCrateHard);
 
+			CrateRecipe(ItemType<Stone_Mask>(), crate: ItemID.OceanCrate, crateHard: ItemID.OceanCrateHard);
+
 			CrateRecipe(ItemType<Huff_Puffer_Bait>(), crate: ItemType<Residual_Crate>(), crateHard: ItemType<Basic_Crate>(), crateAmount: 3);
 
 			CrateRecipe(ItemType<Knee_Slapper>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
