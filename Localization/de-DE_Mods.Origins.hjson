@@ -2150,6 +2150,12 @@ Projectiles: {
 	// IceMist.DisplayName: Ice Mist
 	// CultistFireball.DisplayName: Cultist Fireball
 	// CultistFireballShadow.DisplayName: Cultist Fireball Shadow
+	// Cultist_Fireball.DisplayName: Cultist Fireball
+	// Cultist_Fireball_Shadow.DisplayName: Cultist Fireball Shadow
+	// Cultist_Ice_Mist.DisplayName: Cultist Ice Mist
+	// Cultist_Ice_Shard.DisplayName: Cultist Ice Shard
+	// Cultist_Lightning.DisplayName: Cultist Lightning
+	// Cultist_Lightning_Orb.DisplayName: Cultist Lightning Orb
 }
 
 Prefixes: {

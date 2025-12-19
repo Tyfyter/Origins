@@ -172,10 +172,6 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public struct Magnus_P_Drawer {
-		public const int TotalIllusions = 1;
-
-		public const int FramesPerImportantTrail = 60;
-
 		private static VertexStrip _vertexStrip = new();
 		public static void Draw(Projectile proj) {
 			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Framed"];

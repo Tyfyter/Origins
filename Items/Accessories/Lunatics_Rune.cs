@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Core;
 using Origins.Projectiles;
 using ReLogic.Content;
@@ -9,9 +10,12 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameInput;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
+using Terraria.Utilities;
 
 namespace Origins.Items.Accessories {
 	public class Lunatics_Rune : ModItem {
@@ -36,6 +40,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) => LunaticsRuneAttack.ModifyWeaponDamage(player, ref damage);
 		public static bool CheckMana(Player player, Item item, float multiplier, bool pay = true) {
+			if (item is null) return false;
 			float reduce = player.manaCost;
 			float mult = 1;
 
@@ -78,6 +83,10 @@ namespace Origins.Items.Accessories {
 					}
 					if (random.AnyWeight) {
 						options[random.Get()].Trigger(player);
+					} else {
+						for (int i = 0; i < player.buffType.Length; i++) {
+							Max(ref player.buffTime[i], BuffOption.RitualRefreshTime[player.buffType[i]] * 2);
+						}
 					}
 				}
 				charge = 0;
@@ -280,7 +289,7 @@ namespace Origins.Items.Accessories {
 			return true;
 		}
 	}
-	public class FireballAttack : LunaticsRuneAttack {
+	public class Fireball_Attack : LunaticsRuneAttack {
 		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CultistBossFireBall}";
 		int frameCounter;
 		int frame;
@@ -302,16 +311,16 @@ namespace Origins.Items.Accessories {
 					if (shadowAttacking) {
 						player.SpawnProjectile(player.GetSource_Accessory(item),
 							player.MountedCenter,
-							(Main.MouseWorld - player.MountedCenter).Normalized(out _) * 8,
-							ModContent.ProjectileType<CultistFireballShadow>(),
+							dir,
+							ModContent.ProjectileType<Cultist_Fireball_Shadow>(),
 							player.GetWeaponDamage(item),
 							player.GetWeaponKnockback(item)
 						);
 					} else {
 						player.SpawnProjectile(player.GetSource_Accessory(item),
 							player.MountedCenter,
-							(Main.MouseWorld - player.MountedCenter).Normalized(out _) * 8,
-							ModContent.ProjectileType<CultistFireball>(),
+							dir,
+							ModContent.ProjectileType<Cultist_Fireball>(),
 							player.GetWeaponDamage(item),
 							player.GetWeaponKnockback(item)
 						);
@@ -329,12 +338,14 @@ namespace Origins.Items.Accessories {
 			player.SetItemAnimation(30);
 			player.itemTimeMax = player.itemAnimation / 3;
 		}
-		public class CultistFireball : ModProjectile {
+		public class Cultist_Fireball : ModProjectile {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CultistBossFireBall}";
 			public virtual int FireDustType => DustID.Torch;
 			public virtual Vector3 LightColor => new(1.1f, 0.9f, 0.4f);
-			public override void SetDefaults() {
+			public override void SetStaticDefaults() {
 				Main.projFrames[Type] = 4;
+			}
+			public override void SetDefaults() {
 				Projectile.width = 40;
 				Projectile.height = 40;
 				Projectile.friendly = true;
@@ -448,36 +459,52 @@ namespace Origins.Items.Accessories {
 				ExplosiveGlobalProjectile.DoExplosion(Projectile, 176, false, SoundID.Item14, fireDustType: FireDustType, smokeDustAmount: 0, smokeGoreAmount: 0);
 			}
 		}
-		public class CultistFireballShadow : CultistFireball {
+		public class Cultist_Fireball_Shadow : Cultist_Fireball {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CultistBossFireBallClone}";
 			public override int FireDustType => DustID.Shadowflame;
 			public override Vector3 LightColor => new(0.2f, 0.1f, 0.6f);
 		}
 	}
-	public class IceMistAttack : LunaticsRuneAttack {
+	public class Ice_Mist_Attack : LunaticsRuneAttack {
 		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CultistBossIceMist}";
 		public override void ProcessAttack(Player player) {
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation - MathHelper.PiOver2);
 			player.direction = Math.Sign(float.Cos(player.itemRotation));
 		}
 		public override bool CanStartAttack(Player player, bool justChecking = false) {
-			if (player.ownedProjectileCounts[ModContent.ProjectileType<IceMist>()] > 0) return false;
+			if (player.ownedProjectileCounts[ModContent.ProjectileType<Cultist_Ice_Mist>()] > 0) return false;
 			return Lunatics_Rune.CheckMana(player, player.OriginPlayer().lunaticsRune, 0.30f, !justChecking);
 		}
 		public override void StartAttack(Player player) {
 			Item item = player.OriginPlayer().lunaticsRune;
-			Vector2 dir = (Main.MouseWorld - player.MountedCenter).Normalized(out _);
-			player.SpawnProjectile(player.GetSource_Accessory(item),
-				player.MountedCenter,
-				dir * 4,
-				ModContent.ProjectileType<IceMist>(),
-				player.GetWeaponDamage(item),
-				player.GetWeaponKnockback(item)
-			);
-			player.itemRotation = dir.ToRotation();
+			ForPlayerAndShadows(player, player => {
+				Item item = player.OriginPlayer().lunaticsRune;
+				Vector2 dir = (Main.MouseWorld - player.MountedCenter).Normalized(out _);
+				if (shadowAttacking) {
+					List<Vector2> pos = Main.rand.PoissonDiskSampling(new Rectangle(-10, -10, 20, 20), 5f);
+					for (int i = 0; i < 6 && i < pos.Count; i++) {
+						player.SpawnProjectile(player.GetSource_Accessory(item),
+							player.MountedCenter,
+							dir * 8 + pos[i] * 0.1f,
+							ModContent.ProjectileType<Cultist_Ice_Shard>(),
+							player.GetWeaponDamage(item),
+							player.GetWeaponKnockback(item)
+						);
+					}
+				} else {
+					player.SpawnProjectile(player.GetSource_Accessory(item),
+						player.MountedCenter,
+						dir * 4,
+						ModContent.ProjectileType<Cultist_Ice_Mist>(),
+						player.GetWeaponDamage(item),
+						player.GetWeaponKnockback(item)
+					);
+					player.itemRotation = dir.ToRotation();
+				}
+			});
 			player.SetItemAnimation(20);
 		}
-		public class IceMist : ModProjectile {
+		public class Cultist_Ice_Mist : ModProjectile {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CultistBossIceMist}";
 			public override void SetDefaults() {
 				Projectile.width = 60;
@@ -489,26 +516,20 @@ namespace Origins.Items.Accessories {
 				Projectile.ignoreWater = true;
 			}
 			public override void AI() {
-				if (Projectile.localAI[1] == 0f) {
-					Projectile.localAI[1] = 1f;
+				if (Projectile.localAI[1].TrySet(1)) {
 					SoundEngine.PlaySound(SoundID.Item120, Projectile.position);
 				}
 
 				Projectile.ai[0]++;
+				if (Projectile.ai[0] >= 150f) {
+					Projectile.Kill();
+					return;
+				}
 				if (Projectile.ai[0] >= 130f) Projectile.alpha += 10;
 				else Projectile.alpha -= 10;
 				Max(ref Projectile.alpha, 0);
 				Min(ref Projectile.alpha, 255);
 
-				if (Projectile.ai[0] >= 150f) {
-					Projectile.Kill();
-					return;
-				}
-
-				if (Projectile.ai[0] % 30f == 0f && Projectile.IsLocallyOwned()) {
-					Vector2 vector82 = Projectile.rotation.ToRotationVector2();
-					//Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center.X, Projectile.Center.Y, vector82.X, vector82.Y, Type, Projectile.damage, Projectile.knockBack, Projectile.owner);
-				}
 				const int HalfSpriteWidth = 92 / 2;
 				const int HalfSpriteHeight = 102 / 2;
 
@@ -520,41 +541,335 @@ namespace Origins.Items.Accessories {
 				DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
 				DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
 
-				Projectile.rotation += (float)Math.PI / 30f;
+				Projectile.rotation += MathHelper.Pi / 30f;
 				Lighting.AddLight(Projectile.Center, 0.3f, 0.75f, 0.9f);
 			}
 			public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-				Vector2 vector12 = new Vector2(0f, -720f).RotatedBy(Projectile.velocity.ToRotation());
-				float num25 = Projectile.ai[0] % 45f / 45f;
-				Vector2 spinningpoint = vector12 * num25;
-				for (int num26 = 0; num26 < 6; num26++) {
-					float num27 = num26 * ((float)Math.PI * 2f) / 6f;
-					if (Utils.CenteredRectangle(Projectile.Center + spinningpoint.RotatedBy(num27), new Vector2(30f, 30f)).Intersects(targetHitbox))
+				Vector2 forward = new Vector2(0f, -720f).RotatedBy(Projectile.velocity.ToRotation());
+				float offsetLength = Projectile.ai[0] % 45f / 45f;
+				Vector2 offset = forward * offsetLength;
+				for (int i = 0; i < 6; i++) {
+					float rotation = i * MathHelper.TwoPi / 6f;
+					if (Utils.CenteredRectangle(Projectile.Center + offset.RotatedBy(rotation), new Vector2(30f, 30f)).Intersects(targetHitbox))
 						return true;
 				}
 				return null;
 			}
 			public override bool PreDraw(ref Color lightColor) {
 				lightColor = Color.White * Projectile.Opacity;
-				Texture2D value83 = TextureAssets.Extra[35].Value;
-				Microsoft.Xna.Framework.Rectangle rectangle21 = value83.Frame(1, 3);
-				Vector2 origin21 = rectangle21.Size() / 2f;
-				Vector2 vector80 = new Vector2(0f, -720f).RotatedBy(Projectile.velocity.ToRotation());
-				float num324 = Projectile.ai[0] % 45f / 45f;
-				Vector2 spinningpoint7 = vector80 * num324;
-				for (int num325 = 0; num325 < 6; num325++) {
-					float num326 = num325 * ((float)Math.PI * 2f) / 6f;
-					Vector2 vector81 = Projectile.Center + spinningpoint7.RotatedBy(num326);
-					Main.EntitySpriteDraw(value83, vector81 - Main.screenPosition, rectangle21, lightColor, num326 + Projectile.velocity.ToRotation() + (float)Math.PI, origin21, Projectile.scale, SpriteEffects.None);
-					rectangle21.Y += rectangle21.Height;
-					if (rectangle21.Y >= value83.Height)
-						rectangle21.Y = 0;
+				Texture2D texture = TextureAssets.Extra[ExtrasID.CultistIceshard].Value;
+				Rectangle frame = texture.Frame(1, 3);
+				Vector2 origin = frame.Size() / 2f;
+				Vector2 forward = new Vector2(0f, -720f).RotatedBy(Projectile.velocity.ToRotation());
+				float offsetLength = Projectile.ai[0] % 45f / 45f;
+				Vector2 baseOffset = forward * offsetLength;
+				for (int i = 0; i < 6; i++) {
+					float rotation = i * MathHelper.TwoPi / 6f;
+					Vector2 position = Projectile.Center + baseOffset.RotatedBy(rotation);
+					Main.EntitySpriteDraw(
+						texture,
+						position - Main.screenPosition,
+						frame,
+						lightColor,
+						rotation + Projectile.velocity.ToRotation() + MathHelper.Pi,
+						origin,
+						Projectile.scale,
+						SpriteEffects.None
+					);
+					frame.Y += frame.Height;
+					if (frame.Y >= texture.Height)
+						frame.Y = 0;
 				}
 				return base.PreDraw(ref lightColor);
 			}
 		}
-	}
+		public class Cultist_Ice_Shard : ModProjectile {
+			public override string Texture => $"Terraria/Images/Extra_{ExtrasID.CultistIceshard}";
+			public override void SetStaticDefaults() {
+				Main.projFrames[Type] = 3;
+			}
+			public override void SetDefaults() {
+				Projectile.width = 30;
+				Projectile.height = 30;
+				Projectile.friendly = true;
+				Projectile.tileCollide = false;
+				Projectile.penetrate = 1;
+				Projectile.extraUpdates = 1;
+				Projectile.scale = 0.85f;
+				Projectile.ignoreWater = true;
+				Projectile.frame = Main.rand.Next(Main.projFrames[Type]);
+			}
+			public override void AI() {
+				Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 
+				const int HalfSpriteWidth = 24 / 2;
+				const int HalfSpriteHeight = 74 / 2;
+
+				int HalfProjWidth = Projectile.width / 2;
+				int HalfProjHeight = Projectile.height / 2;
+
+				// Vanilla configuration for "hitbox in middle of sprite"
+				DrawOriginOffsetX = 0;
+				DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
+				DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
+			}
+			public override Color? GetAlpha(Color lightColor) => Color.White * Projectile.Opacity;
+		}
+	}
+	public class Lightning_Orb_Attack : LunaticsRuneAttack {
+		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CultistBossLightningOrb}";
+		int frameCounter;
+		int frame;
+		public override Rectangle Frame {
+			get {
+				if (frameCounter.CycleUp(6)) frame.CycleUp(4);
+				return texture.Frame(verticalFrames: 4, frameY: frame);
+			}
+		}
+		public override void ProcessAttack(Player player) {
+			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation - MathHelper.PiOver2);
+			player.direction = Math.Sign(float.Cos(player.itemRotation));
+		}
+		public override bool CanStartAttack(Player player, bool justChecking = false) {
+			return Lunatics_Rune.CheckMana(player, player.OriginPlayer().lunaticsRune, 0.10f, !justChecking);
+		}
+		public override void StartAttack(Player player) {
+			player.SetItemAnimation(30);
+			ForPlayerAndShadows(player, player => {
+				Item item = player.OriginPlayer().lunaticsRune;
+				Vector2 dir = (Main.MouseWorld - player.MountedCenter).Normalized(out _);
+				if (shadowAttacking) {
+					player.SpawnProjectile(player.GetSource_Accessory(item),
+						player.MountedCenter,
+						dir,
+						ModContent.ProjectileType<Cultist_Lightning>(),
+						player.GetWeaponDamage(item),
+						player.GetWeaponKnockback(item)
+					);
+				} else {
+					player.SpawnProjectile(player.GetSource_Accessory(item),
+						player.Top + new Vector2(float.CopySign(32f, dir.X), -80),
+						Vector2.Zero,
+						ModContent.ProjectileType<Cultist_Lightning_Orb>(),
+						player.GetWeaponDamage(item),
+						player.GetWeaponKnockback(item)
+					);
+					player.itemRotation = float.CopySign(0.1f, dir.X) - MathHelper.PiOver2;
+				}
+			});
+		}
+		public class Cultist_Lightning_Orb : ModProjectile {
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CultistBossLightningOrb}";
+			public override void SetStaticDefaults() {
+				Main.projFrames[Type] = 4;
+			}
+			public override void SetDefaults() {
+				Projectile.width = 80;
+				Projectile.height = 80;
+				Projectile.friendly = true;
+				Projectile.alpha = 255;
+				Projectile.ignoreWater = true;
+				Projectile.tileCollide = false;
+			}
+			public override void AI() {
+				bool dieNow = Projectile.ai[0] == 5;
+				if (dieNow) Projectile.alpha.Warmup(255, 9);
+				else Projectile.alpha.Cooldown(0, 9);
+				if (Projectile.ai[1].CycleDown(30) && Projectile.IsLocallyOwned()) {
+					if (dieNow) {
+						Projectile.Kill();
+						return;
+					}
+					Projectile.ai[0]++;
+					Vector2 dir = (Main.MouseWorld - Projectile.Center).Normalized(out _);
+					Projectile.SpawnProjectile(null,
+						Projectile.Center,
+						dir,
+						ModContent.ProjectileType<Cultist_Lightning>(),
+						Projectile.damage,
+						Projectile.knockBack
+					);
+				}
+				if (Projectile.frameCounter.CycleUp(6)) Projectile.frame.CycleUp(Main.projFrames[Type]);
+
+				const int HalfSpriteWidth = 100 / 2;
+				const int HalfSpriteHeight = 100 / 2;
+
+				int HalfProjWidth = Projectile.width / 2;
+				int HalfProjHeight = Projectile.height / 2;
+
+				// Vanilla configuration for "hitbox in middle of sprite"
+				DrawOriginOffsetX = 0;
+				DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
+				DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
+			}
+		}
+		public class Cultist_Lightning : ModProjectile {
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CultistBossLightningOrbArc}";
+
+			public override void SetDefaults() {
+				Projectile.width = Projectile.height = 0;
+				Projectile.alpha = 255;
+				Projectile.ignoreWater = true;
+				Projectile.tileCollide = false;
+				Projectile.DamageType = DamageClass.Magic;
+				Projectile.friendly = true;
+				Projectile.penetrate = -1;
+				Projectile.usesLocalNPCImmunity = true;
+				Projectile.timeLeft = 45;
+				Projectile.localNPCHitCooldown = 10;
+			}
+			public override bool ShouldUpdatePosition() => false;
+			public override void OnSpawn(IEntitySource source) {
+				(Projectile.ai[1], Projectile.ai[2]) = Projectile.position;
+				(Projectile.localAI[1], Projectile.localAI[2]) = Projectile.velocity;
+			}
+			public override void AI() {
+				const float step_size = 80;
+				if (positionCache.Count <= 0) positionCache.Add(Projectile.position);
+				if (!Projectile.ai[0].CycleDown(2)) return;
+				if (Projectile.velocity != default) {
+					Projectile.localAI[0]++;
+					Vector2 targetPos = Projectile.Center;
+					bool foundTarget = false;
+					Vector2 testPos;
+					for (int i = 0; i < Main.maxNPCs; i++) {
+						NPC target = Main.npc[i];
+						if (target.CanBeChasedBy() && Projectile.localNPCImmunity[target.whoAmI] == 0) {
+							testPos = Projectile.Center.Clamp(target.Hitbox);
+							Vector2 difference = testPos - Projectile.Center;
+							if (difference == default) continue;
+							float distance = difference.Length();
+							bool closest = Vector2.Distance(Projectile.Center, targetPos) > distance;
+							bool inRange = distance < 96 && (difference.SafeNormalize(Vector2.Zero) * Projectile.velocity.SafeNormalize(Vector2.Zero)).Length() > 0.1f;//magRange;
+							if ((!foundTarget || closest) && inRange) {
+								targetPos = testPos;
+								foundTarget = true;
+							}
+						}
+					}
+					if (!foundTarget) {
+						float expectedDist = step_size * Projectile.localAI[0] * 0.85f;
+						targetPos = new(Projectile.ai[1] + Projectile.localAI[1] * expectedDist, Projectile.ai[2] + Projectile.localAI[2] * expectedDist);
+					}
+					Projectile.oldVelocity = Projectile.velocity;
+					Projectile.velocity = (targetPos - Projectile.Center).Normalized(out _) * Projectile.velocity.Length();
+					Projectile.velocity = Projectile.velocity.RotatedByRandom(0.5f);
+
+					float maxDist = CollisionExt.Raymarch(Projectile.position, Projectile.velocity, step_size);
+					Projectile.position += Projectile.velocity * maxDist;
+					_ = GetHitbox();
+					positionCache.Add(Projectile.position);
+					if (maxDist != step_size) Projectile.velocity = default;
+				}
+				randSeed = Main.rand.Next(ushort.MaxValue);
+			}
+			readonly List<Vector2> positionCache = [];
+			readonly List<(Vector2 start, Vector2 end)> polygonCache = [];
+			float lastHitboxUpdate = -1;
+			int randSeed;
+			public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+				return CollisionExtensions.PolygonIntersectsRect(GetHitbox(), targetHitbox);
+			}
+
+			public (Vector2 start, Vector2 end)[] GetHitbox() {
+				(Vector2 start, Vector2 end) GetHead(Vector2 pos) {
+					Vector2 offset = (Projectile.velocity + Projectile.oldVelocity).Normalized(out _).RotatedBy(MathHelper.PiOver2) * 12;
+					return (pos - offset, pos + offset);
+				}
+				void Connect((Vector2 start, Vector2 end) a, (Vector2 start, Vector2 end) b) {
+					if (b == a) return;
+					polygonCache.Add((a.start, b.start));
+					polygonCache.Add((a.end, b.end));
+				}
+				if (polygonCache.Count <= 0) {
+					lastHitboxUpdate = Projectile.localAI[0];
+					(Vector2 start, Vector2 end) a = GetHead(new(Projectile.ai[1], Projectile.ai[2]));
+					(Vector2 start, Vector2 end) head = GetHead(Projectile.position);
+					polygonCache.Add(a);
+					Connect(a, head);
+					polygonCache.Add(head);
+				}
+				if (lastHitboxUpdate.TrySet(Projectile.localAI[0])) {
+					(Vector2 start, Vector2 end) a = polygonCache[^1];
+					polygonCache.RemoveAt(polygonCache.Count - 1);
+					(Vector2 start, Vector2 end) head = GetHead(Projectile.position);
+					Connect(a, head);
+					polygonCache.Add(head);
+				}
+				return polygonCache.ToArray();
+			}
+			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+				target.AddBuff(Electrified_Debuff.ID, 240);
+			}
+			private static readonly VertexStrip _vertexStrip = new();
+			public override bool PreDraw(ref Color lightColor) {
+				MiscShaderData miscShaderData = GameShaders.Misc["Origins:Framed"];
+				float uTime = (float)Main.timeForVisualEffects / 44;
+				Vector2[] pos = positionCache.ToArray();
+				float[] rot = new float[pos.Length];
+				for (int i = 1; i < rot.Length - 1; i++) {
+					float diffPrev = (pos[i] - pos[i - 1]).ToRotation();
+					float diffNext = (pos[i + 1] - pos[i]).ToRotation();
+					rot[i] = Utils.AngleLerp(diffPrev, diffNext, 0.5f);
+					if (i == 1) rot[i - 1] = diffPrev;
+					if (i == rot.Length - 2) rot[i + 1] = diffNext;
+				}
+
+				FastRandom rand = new(randSeed);
+				Asset<Texture2D> texture = TextureAssets.Extra[ExtrasID.MagicMissileTrailShape];
+				miscShaderData.UseImage0(texture);
+				//miscShaderData.UseShaderSpecificData(new Vector4(Main.rand.NextFloat(1), 0, 1, 1));
+				miscShaderData.Shader.Parameters["uAlphaMatrix0"]?.SetValue(new Vector4(1, 1, 1, 0));
+				miscShaderData.Shader.Parameters["uSourceRect0"]?.SetValue(new Vector4(rand.NextFloat(), 0, 1, 1));
+				miscShaderData.Apply();
+				_vertexStrip.PrepareStrip(pos, rot, _ => new Color(0.1f, 0.75f, 1f, 0.5f), _ => 32, -Main.screenPosition, pos.Length, includeBacksides: true);
+				_vertexStrip.DrawTrail();
+				for (int i = 0; i < pos.Length / 2; i++) {
+					pos[i] = pos[i] + GeometryUtils.Vec2FromPolar(rand.NextFloat() * 12 - 6, rot[i] + MathHelper.PiOver2);
+				}
+				_vertexStrip.PrepareStrip(pos, rot, _ => new Color(0.3f, 0.85f, 1f, 0.2f), _ => 24, -Main.screenPosition, pos.Length, includeBacksides: true);
+				_vertexStrip.DrawTrail();
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+				return false;
+			}
+		}
+	}
+	public class Teleport_Attack : LunaticsRuneAttack {
+		public override string Texture => $"Terraria/Images/Extra_{ExtrasID.PotionOfReturnGateIn}";
+		int frameCounter;
+		int frame;
+		public override Rectangle Frame {
+			get {
+				if (frameCounter.CycleUp(6)) frame.CycleUp(8);
+				return texture.Frame(verticalFrames: 8, frameY: frame);
+			}
+		}
+		public override bool CanStartAttack(Player player, bool justChecking = false) {
+			Rectangle hitbox = player.Hitbox;
+			Vector2 mouseWorld = Main.MouseWorld;
+			if (justChecking) {
+				mouseWorld = Vector2.Transform(Main.MouseScreen * Main.UIScale, Matrix.Invert(Main.GameViewMatrix.ZoomMatrix)) + Main.screenPosition;
+			}
+			hitbox.Location = mouseWorld.ToPoint();
+			hitbox.X -= player.width / 2;
+			hitbox.Y -= player.height / 2;
+			if (hitbox.OverlapsAnyTiles()) return false;
+			return Lunatics_Rune.CheckMana(player, player.OriginPlayer().lunaticsRune, 0.20f, !justChecking);
+		}
+		public override void ProcessAttack(Player player) {
+			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation - MathHelper.PiOver2);
+			player.direction = Math.Sign(float.Cos(player.itemRotation));
+		}
+		public override void StartAttack(Player player) {
+			Vector2 diff = Main.MouseWorld - player.MountedCenter;
+			if (Math.Sign(player.velocity.X) != Math.Sign(diff.X)) player.velocity.X = 0;
+			if (Math.Sign(player.velocity.Y) != Math.Sign(diff.Y)) player.velocity.Y = 0;
+			player.itemRotation = diff.ToRotation();
+			player.SetItemAnimation(15);
+			player.Teleport(Main.MouseWorld - player.Size * 0.5f, TeleportationStyleID.QueenSlimeHook);
+		}
+	}
 	public class Lunatics_Rune_Duplicates_Buff : ModBuff {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.NebulaPickup3;
 		public override void Update(Player player, ref int buffIndex) {

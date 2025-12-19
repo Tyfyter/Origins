@@ -3037,7 +3037,7 @@ namespace Origins {
 		public static bool CycleDown(ref this int value, int from, int rate = 1) => value.CycleDown<int>(from, rate);
 		public static bool CycleDown<N>(ref this N value, N from, N rate) where N : struct, INumber<N> {
 			value -= rate;
-			if (value >= N.Zero) {
+			if (value <= N.Zero) {
 				value += from;
 				return true;
 			}
@@ -3774,12 +3774,36 @@ namespace Origins {
 			if (!hitbox.Intersects(OriginExtensions.BoxOf(min, max))) return false;
 			int intersections = 0;
 			Vector2 rectPos = hitbox.TopLeft();
-			Vector2 rectSize = hitbox.Size();
-			bool hasSize = hitbox.Width != 0 || hitbox.Height != 0;
+			(Vector2 start, Vector2 end)[] boxLines = [];
+			switch ((hitbox.Width != 0, hitbox.Height != 0)) {
+				case (true, true):
+				boxLines = [
+					(rectPos, hitbox.TopRight()),
+					(rectPos, hitbox.BottomLeft()),
+					(hitbox.BottomLeft(), hitbox.BottomRight()),
+					(hitbox.BottomRight(), hitbox.TopRight())
+				];
+				break;
+
+				case (true, false):
+				boxLines = [
+					(rectPos, hitbox.TopRight())
+				];
+				break;
+
+				case (false, true):
+				boxLines = [
+					(rectPos, hitbox.BottomLeft())
+				];
+				break;
+			}
 			for (int i = 0; i < lines.Length; i++) {
 				Vector2 a = lines[i].start;
 				Vector2 b = lines[i].end;
-				if (hasSize && Collision.CheckAABBvLineCollision2(rectPos, rectSize, a, b)) return true;
+				for (int j = 0; j < boxLines.Length; j++) {
+					if (Collision.CheckLinevLine(a, b, boxLines[j].start, boxLines[j].end).Length > 0) return true;
+				}
+				//if (hasSize && Collision.CheckAABBvLineCollision2(rectPos, rectSize, a, b)) return true;
 				float t = ((a.X - rectPos.X) * (rectPos.Y) - (a.Y - rectPos.Y) * (rectPos.X))
 						/ ((a.X - b.X) * (rectPos.Y) - (a.Y - b.Y) * (rectPos.X));
 				if (t < 0 || t > 1) continue;

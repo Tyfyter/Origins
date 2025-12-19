@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using Origins.Dev;
 using Origins.Buffs;
 using Origins.CrossMod;
+using System.Collections.Generic;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Hivateinn : ModItem {
