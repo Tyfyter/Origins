@@ -365,19 +365,22 @@ namespace Origins.Items.Accessories {
 
 					case 1:
 					float moveDir = Projectile.velocity.ToRotation();
-					Vector2 targetPos;
+					Entity targetEntity;
 					if (currentTarget >= 300) {
-						targetPos = Main.npc[currentTarget - 300].Center;
+						targetEntity = Main.npc[currentTarget - 300];
 					} else {
-						targetPos = Main.player[currentTarget].Center;
+						targetEntity = Main.player[currentTarget];
 					}
-					Vector2 vector = targetPos - Projectile.Center;
-					if (vector.Length() < 20f) {
+					if (!targetEntity.active) {
+						Projectile.ai[0] = -1;
+						break;
+					}
+					if (Projectile.Center.IsWithin(targetEntity.Center, 20f)) {
 						Projectile.Kill();
 						return;
 					}
 
-					Projectile.velocity = moveDir.AngleLerp(vector.ToRotation(), 0.08f).ToRotationVector2() * Projectile.velocity.Length();
+					Projectile.velocity = moveDir.AngleLerp((targetEntity.Center - Projectile.Center).ToRotation(), 0.08f).ToRotationVector2() * Projectile.velocity.Length();
 					break;
 
 					default:
