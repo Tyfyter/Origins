@@ -479,7 +479,7 @@ namespace Origins.Items {
 			return true;
 		}
 		public override void HoldItem(Item item, Player player) {
-			base.HoldItem(item, player);
+			player.OriginPlayer().lastItemCheckNotSkipped = true;
 		}
 
 		public static ushort GetItemElement(Item item) {
