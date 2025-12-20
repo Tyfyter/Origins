@@ -8,19 +8,21 @@ using Terraria.ModLoader;
 
 namespace Origins.Layers {
 	public class Cultist_Ritual_Layer : PlayerDrawLayer {
-		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => drawInfo.drawPlayer.OriginPlayer().lunaticsRuneCharge > 0;
+		public static int Offset => 204;
+		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => drawInfo.shadow == 0 && drawInfo.drawPlayer.OriginPlayer().lunaticsRuneCharge > 0;
 		public override Position GetDefaultPosition() => PlayerDrawLayers.BeforeFirstVanillaLayer;
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 			OriginPlayer originPlayer = drawInfo.drawPlayer.OriginPlayer();
 			float charge = originPlayer.lunaticsRuneCharge / (float)Lunatics_Rune.ChargeThreshold;
 			float lunaticsRuneRotation = originPlayer.lunaticsRuneRotation;
 			Vector2 position = drawInfo.Position + drawInfo.drawPlayer.Size * 0.5f - Main.screenPosition;
+			position.Y += Offset;
 			Main.instance.LoadProjectile(ProjectileID.CultistRitual);
 			Texture2D ritualTexture = TextureAssets.Projectile[ProjectileID.CultistRitual].Value;
 			Color color = Color.White * charge;
 
 			Texture2D ritualExtra = TextureAssets.Extra[ExtrasID.CultistRitual].Value;
-			DrawData data = new(ritualTexture, position, null, color, lunaticsRuneRotation, ritualTexture.Size() * 0.5f, charge, SpriteEffects.None);
+			DrawData data = new(ritualTexture, position, null, color, lunaticsRuneRotation, ritualTexture.Size() * 0.5f, float.Pow(charge, 0.5f) * 0.85f, SpriteEffects.None);
 			drawInfo.DrawDataCache.Add(data);
 
 			data.texture = ritualExtra;

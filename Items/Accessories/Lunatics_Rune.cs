@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Core;
+using Origins.Layers;
 using Origins.Projectiles;
 using ReLogic.Content;
 using System;
@@ -35,7 +36,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			for (int i = tooltips.Count - 1; i >= 0; i--) {
-				
+
 			}
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) => LunaticsRuneAttack.ModifyWeaponDamage(player, ref damage);
@@ -46,6 +47,8 @@ namespace Origins.Items.Accessories {
 
 			CombinedHooks.ModifyManaCost(player, item, ref reduce, ref mult);
 			int mana = Main.rand.RandomRound(item.mana * reduce * mult * multiplier);
+			int actualCost = mana;
+			Max(ref mana, 1);
 			if (!pay) return player.statMana >= mana;
 
 			if (player.statMana < mana) {
@@ -55,38 +58,66 @@ namespace Origins.Items.Accessories {
 			}
 
 			if (player.statMana < mana) return false;
-			CombinedHooks.OnConsumeMana(player, item, mana);
+			CombinedHooks.OnConsumeMana(player, item, actualCost);
 			player.manaRegenDelay = player.maxRegenDelay;
-			player.statMana -= mana;
+			player.statMana -= actualCost;
 			return true;
+		}
+		public static void DoRitualTeleport(Player player, bool starting, bool duplicates) {
+			Vector2 oldLeft = default;
+			Vector2 oldRight = default;
+			if (duplicates) {
+				oldLeft = Lunatic_Shadow.GetPosition(player.position, -1, !starting);
+				oldRight = Lunatic_Shadow.GetPosition(player.position, 1, !starting);
+			}
+			if (starting) {
+				player.RemoveAllGrapplingHooks();
+				player.Teleport(player.position - Vector2.UnitY * Cultist_Ritual_Layer.Offset, TeleportationStyleID.QueenSlimeHook);
+			}
+			if (duplicates) {
+				Rectangle effectBox = player.Hitbox;
+				effectBox.X = (int)oldLeft.X;
+				effectBox.Y = (int)oldLeft.Y;
+				Main.TeleportEffect(effectBox, TeleportationStyleID.QueenSlimeHook, otherPosition: Lunatic_Shadow.GetPosition(player.position, -1, starting));
+				effectBox.X = (int)oldRight.X;
+				effectBox.Y = (int)oldRight.Y;
+				Main.TeleportEffect(effectBox, TeleportationStyleID.QueenSlimeHook, otherPosition: Lunatic_Shadow.GetPosition(player.position, 1, starting));
+			}
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.lunaticsRune = Item;
 			ref int charge = ref originPlayer.lunaticsRuneCharge;
 			if (player.SyncedKeybinds().LunaticsRune.Current && (charge >= ChargeThreshold || CheckMana(player, Item, 1f / ChargeThreshold))) {
+				if (charge == 0) DoRitualTeleport(player, true, originPlayer.lunaticDuplicates);
 				originPlayer.lunaticsRuneRotation += 0.02f;
 				charge.Warmup(ChargeThreshold);
-				float moveMult = 1 - float.Pow(charge / (float)ChargeThreshold, 2);
+				float moveMult = 0;// 1 - float.Pow(charge / (float)ChargeThreshold, 2);
 				player.velocity *= moveMult * moveMult;
 				player.gravity *= moveMult;
 				originPlayer.moveSpeedMult *= moveMult * moveMult;
 				if (player.velocity.Y == 0) player.velocity.Y = float.Epsilon;
-			} else {
-				if (charge >= ChargeThreshold && player.whoAmI == Main.myPlayer) {
-					for (int i = 0; i < player.buffType.Length; i++) {
-						Max(ref player.buffTime[i], BuffOption.RitualRefreshTime[player.buffType[i]]);
-					}
-					RangeRandom random = new(Main.rand, 0, options.Count);
-					for (int i = 0; i < options.Count; i++) {
-						random.Multiply(i, i + 1, options[i].GetWeight(player));
-					}
-					if (random.AnyWeight) {
-						options[random.Get()].Trigger(player);
-					} else {
+			} else if (charge > 0) {
+				DoRitualTeleport(player, false, originPlayer.lunaticDuplicates);
+				if (player.whoAmI == Main.myPlayer) {
+					if (charge >= ChargeThreshold) {
 						for (int i = 0; i < player.buffType.Length; i++) {
-							Max(ref player.buffTime[i], BuffOption.RitualRefreshTime[player.buffType[i]] * 2);
+							Max(ref player.buffTime[i], BuffOption.RitualRefreshTime[player.buffType[i]]);
 						}
+						RangeRandom random = new(Main.rand, 0, options.Count);
+						for (int i = 0; i < options.Count; i++) {
+							random.Multiply(i, i + 1, options[i].GetWeight(player));
+						}
+						if (random.AnyWeight) {
+							options[random.Get()].Trigger(player);
+						} else {
+							for (int i = 0; i < player.buffType.Length; i++) {
+								Max(ref player.buffTime[i], BuffOption.RitualRefreshTime[player.buffType[i]] * 2);
+							}
+						}
+					} else {
+						player.wingTime = 0;
+						player.AddBuff(ModContent.BuffType<Mana_Buffer_Debuff>(), 5 * 60);
 					}
 				}
 				charge = 0;
@@ -94,15 +125,60 @@ namespace Origins.Items.Accessories {
 		}
 		public class Attacks : BuffOption {
 			public override int BuffType => ModContent.BuffType<Lunatics_Rune_Attacks_Buff>();
-			public override int BuffTime => 20 * 60;
+			public override int BuffTime => 30 * 60;
+		}
+		public class Summon_Dragon : BuffOption {
+			public override int BuffType => ModContent.BuffType<Lunatics_Rune_Dragon_Buff>();
+			public override int BuffTime => 30 * 60;
+			public override void Trigger(Player player) {
+				base.Trigger(player);
+				Item item = player.OriginPlayer().lunaticsRune;
+				int damage = player.GetWeaponDamage(item);
+				float knockback = player.GetWeaponKnockback(item);
+				bool hasDragon = player.ownedProjectileCounts[ModContent.ProjectileType<Phantasm_Dragon_Head>()] > 0;
+				Vector2 position = player.Center + Vector2.UnitY * Cultist_Ritual_Layer.Offset;
+				if (!hasDragon) {
+					player.SpawnProjectile(null,
+						position,
+						default,
+						ModContent.ProjectileType<Phantasm_Dragon_Head>(),
+						damage,
+						knockback
+					).originalDamage = item.damage;
+					for (int i = 0; i < 6; i++) {
+						player.SpawnProjectile(null,
+							position,
+							default,
+							ModContent.ProjectileType<Phantasm_Dragon_Body>(),
+							damage,
+							knockback
+						).originalDamage = item.damage;
+					}
+					player.SpawnProjectile(null,
+						position,
+						default,
+						ModContent.ProjectileType<Phantasm_Dragon_Tail>(),
+						damage,
+						knockback
+					).originalDamage = item.damage;
+				} else {
+					player.SpawnProjectile(null,
+						position,
+						default,
+						ModContent.ProjectileType<Phantasm_Dragon_Body>(),
+						damage,
+						knockback
+					).originalDamage = item.damage;
+				}
+			}
 		}
 		public class Duplicates : BuffOption {
 			public override int BuffType => ModContent.BuffType<Lunatics_Rune_Duplicates_Buff>();
-			public override int BuffTime => 16 * 60;
+			public override int BuffTime => 24 * 60;
 		}
 		public class Healing : BuffOption {
 			public override int BuffType => BuffID.RapidHealing;
-			public override int BuffTime => 16 * 60;
+			public override int BuffTime => 24 * 60;
 		}
 		[ReinitializeDuringResizeArrays]
 		public abstract class BuffOption : Option {
@@ -130,7 +206,7 @@ namespace Origins.Items.Accessories {
 	}
 
 	public class Lunatics_Rune_Attacks_Buff : ModBuff {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.NebulaPickup1;
+		public override string Texture => "Terraria/Images/Item_" + ItemID.FragmentNebula;
 		public override void Update(Player player, ref int buffIndex) { }
 	}
 	public abstract class LunaticsRuneAttack : ModTexturedType {
@@ -873,8 +949,60 @@ namespace Origins.Items.Accessories {
 			player.Teleport(Main.MouseWorld - player.Size * 0.5f, TeleportationStyleID.QueenSlimeHook);
 		}
 	}
+	public class Lunatics_Rune_Dragon_Buff : ModBuff {
+		public override string Texture => "Terraria/Images/Item_" + ItemID.FragmentStardust;
+		public override void SetStaticDefaults() => Main.buffNoSave[Type] = true;
+		public override void Update(Player player, ref int buffIndex) => player.OriginPlayer().lunaticDragon = true;
+	}
+	[ReinitializeDuringResizeArrays]
+	public abstract class Phantasm_Dragon_Base : WormMinion {
+		static readonly bool[] SegmentTypes = ProjectileID.Sets.Factory.CreateBoolSet();
+		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.LunaticCultistPet}";
+		protected abstract int FrameNum { get; }
+		public override float ChildDistance => 14;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			SegmentTypes[Type] = true;
+			Main.projFrames[Type] = 4;
+		}
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClass.Summon;
+			Projectile.minion = true;
+			Projectile.width = 20;
+			Projectile.height = 20;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft *= 5;
+			Projectile.friendly = true;
+			Projectile.ignoreWater = true;
+			Projectile.tileCollide = false;
+			Projectile.netImportant = true;
+			Projectile.frame = FrameNum;
+		}
+		public override BodyPart Part { get; }
+		public override ref bool HasBuff(Player player) => ref player.OriginPlayer().lunaticDragon;
+		public override bool IsValidParent(Projectile segment) => SegmentTypes[segment.type];
+	}
+	public class Phantasm_Dragon_Head : Phantasm_Dragon_Base {
+		public override BodyPart Part => BodyPart.Head;
+		protected override int FrameNum => 0;
+		public override bool CanInsert(Projectile parent, Projectile child) => false;
+	}
+	public class Phantasm_Dragon_Body : Phantasm_Dragon_Base {
+		public override BodyPart Part => BodyPart.Body;
+		protected override int FrameNum => 1;
+		public override bool CanInsert(Projectile parent, Projectile child) => parent.type == ModContent.ProjectileType<Phantasm_Dragon_Head>();
+		public override void AI() {
+			base.AI();
+			Projectile.frame = 1 + ((int)Projectile.localAI[1] % 2);
+		}
+	}
+	public class Phantasm_Dragon_Tail : Phantasm_Dragon_Base {
+		public override BodyPart Part => BodyPart.Tail;
+		protected override int FrameNum => 3;
+		public override bool CanInsert(Projectile parent, Projectile child) => child is null;
+	}
 	public class Lunatics_Rune_Duplicates_Buff : ModBuff {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.NebulaPickup3;
+		public override string Texture => "Terraria/Images/Item_" + ItemID.FragmentVortex;
 		public override void Update(Player player, ref int buffIndex) {
 			player.EnableShadow<Lunatic_Shadow>();
 			OriginPlayer originPlayer = player.OriginPlayer();
@@ -886,22 +1014,33 @@ namespace Origins.Items.Accessories {
 	public class Lunatic_Shadow : ShadowType {
 		public static float Offset => 64;
 		public override IEnumerable<ShadowType> SortAbove() => [PartialEffects];
+		public static Vector2 GetPosition(Vector2 position, int direction, bool ritualActive) {
+			if (ritualActive) {
+				return position.RotatedBy(MathHelper.TwoPi * direction / 3f, position + Vector2.UnitY * Cultist_Ritual_Layer.Offset);
+			} else {
+				return position + Vector2.UnitX * Offset * direction;
+			}
+		}
 		public override IEnumerable<ShadowData> GetShadowData(Player player, ShadowData from) {
 			Vector2 position = from.Position;
-			//from.Shadow = 0.5f;
-			from.Position = position + Vector2.UnitX * Offset;
-			yield return from;
-			from.Position = position - Vector2.UnitX * Offset;
-			yield return from;
-		}
-		public override void TransformDrawData(ref PlayerDrawSet drawInfo) {
-			float opacity = Math.Min(drawInfo.drawPlayer.OriginPlayer().lunaticDuplicateOpacity / 30f, 1) * 0.5f;
-
-			for (int i = 0; i < drawInfo.DrawDataCache.Count; i++) {
-				DrawData drawData = drawInfo.DrawDataCache[i];
-				drawData.color *= opacity;
-				drawInfo.DrawDataCache[i] = drawData;
+			from.Shadow = 0.25f;
+			if (player.OriginPlayer().lunaticsRuneCharge > 0) {
+				from.Direction = -1;
+				from.Position = GetPosition(position, 1, true);
+				yield return from;
+				from.Direction = 1;
+				from.Position = GetPosition(position, -1, true);
+				yield return from;
+			} else {
+				from.Position = GetPosition(position, 1, false);
+				yield return from;
+				from.Position = GetPosition(position, -1, false);
+				yield return from;
 			}
+		}
+		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
+			drawInfo.colorEyeWhites = Color.Transparent;
+			drawInfo.colorEyes = Color.Transparent;
 		}
 	}
 }

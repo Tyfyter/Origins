@@ -123,6 +123,9 @@ namespace Origins {
 				hsl.Z = float.Lerp(hsl.Z, 1 - 0.5f * hsl.Y, charge);
 				drawInfo.colorEyes = Main.hslToRgb(hsl);
 			}
+			for (int i = 0; i < (ShadowType.currentlyDrawing?.Length ?? 0); i++) {
+				ShadowType.currentlyDrawing[i].ModifyDrawInfo(ref drawInfo);
+			}
 		}
 		public override void FrameEffects() {
 			Debugging.LogFirstRun(FrameEffects);
@@ -286,12 +289,13 @@ namespace Origins {
 		public virtual IEnumerable<ShadowType> SortAbove() => [];
 		public virtual IEnumerable<ShadowType> SortBelow() => [];
 		public abstract IEnumerable<ShadowData> GetShadowData(Player player, ShadowData from);
+		public virtual void ModifyDrawInfo(ref PlayerDrawSet drawInfo) { }
 		public virtual void TransformDrawData(ref PlayerDrawSet drawInfo) { }
 		public static void Draw(Camera camera, Player player) {
 			bool[] activeShadows = player.OriginPlayer().activeShadows;
 			Queue<ShadowData> sourceQueue = [];
 			Queue<ShadowData> drawQueue = [];
-			sourceQueue.Enqueue(new(player.position + Vector2.UnitY * player.gfxOffY, Rotation: player.fullRotation, RotationOrigin: player.fullRotationOrigin, ShadowTypes: []));
+			sourceQueue.Enqueue(new(player.position + Vector2.UnitY * player.gfxOffY, player.direction, Rotation: player.fullRotation, RotationOrigin: player.fullRotationOrigin, ShadowTypes: []));
 			for (int i = 0; i < shadowTypes.Count; i++) {
 				if (activeShadows[i]) {
 					while (sourceQueue.TryDequeue(out ShadowData source)) {
@@ -305,13 +309,16 @@ namespace Origins {
 				}
 			}
 			int oldForcedShader = Origins.forcePlayerShader;
+			int direction = player.direction;
 			while (sourceQueue.TryDequeue(out ShadowData source)) {
 				if (source.ShadowTypes is null || source.ShadowTypes.Length == 0) continue;
 				Origins.forcePlayerShader = source.Shader;
 				currentlyDrawing = source.ShadowTypes;
+				player.direction = source.Direction;
 				source.PreDraw?.Invoke();
 				Main.PlayerRenderer.DrawPlayer(camera, player, source.Position, source.Rotation, source.RotationOrigin, source.Shadow, source.Scale);
 			}
+			player.direction = direction;
 			currentlyDrawing = null;
 			Origins.forcePlayerShader = oldForcedShader;
 		}
@@ -331,7 +338,7 @@ namespace Origins {
 			shadowTypes.Add(this);
 			ModTypeLookup<ShadowType>.Register(this);
 		}
-		public record struct ShadowData(Vector2 Position, int Shader = -1, float Rotation = 0, Vector2 RotationOrigin = default, float Shadow = 0f, float Scale = 1f, Action PreDraw = null, ShadowType[] ShadowTypes = default);
+		public record struct ShadowData(Vector2 Position, int Direction, int Shader = -1, float Rotation = 0, Vector2 RotationOrigin = default, float Shadow = 0f, float Scale = 1f, Action PreDraw = null, ShadowType[] ShadowTypes = default);
 		class Separator : ShadowType {
 			public override IEnumerable<ShadowData> GetShadowData(Player player, ShadowData from) => throw new NotImplementedException();
 		}

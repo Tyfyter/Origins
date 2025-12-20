@@ -2193,12 +2193,13 @@ namespace Origins {
 			self.identity = id;
 			self.owner = owner;
 		}
-		public static Projectile GetRelatedProjectile(this Projectile self, int index) {
-			if (self.ai[index] >= 0 && self.owner < OriginSystem.projectilesByOwnerAndID.GetLength(0) && self.ai[index] < OriginSystem.projectilesByOwnerAndID.GetLength(1)) {
-				return OriginSystem.projectilesByOwnerAndID[self.owner, (int)self.ai[index]];
+		public static Projectile GetProjectile(int owner, int identity) {
+			if (identity >= 0 && owner < OriginSystem.projectilesByOwnerAndID.GetLength(0) && identity < OriginSystem.projectilesByOwnerAndID.GetLength(1)) {
+				return OriginSystem.projectilesByOwnerAndID[owner, identity];
 			}
 			return null;
 		}
+		public static Projectile GetRelatedProjectile(this Projectile self, int index) => GetProjectile(self.owner, (int)self.ai[index]);
 		public static Projectile GetRelatedProjectile_Depreciated(this Projectile self, int index) {
 			int projIndex = Projectile.GetByUUID(self.owner, self.ai[index]);
 			return Main.projectile.IndexInRange(projIndex) ? Main.projectile[projIndex] : null;
@@ -5185,6 +5186,20 @@ namespace Origins {
 		}
 		public static void Max<T>(ref T current, T @new) where T : IComparisonOperators<T, T, bool> {
 			if (current < @new) current = @new;
+		}
+		public static bool Minimize<T>(ref T current, T @new) where T : IComparisonOperators<T, T, bool> {
+			if (current > @new) {
+				current = @new;
+				return true;
+			}
+			return false;
+		}
+		public static bool Maximize<T>(ref T current, T @new) where T : IComparisonOperators<T, T, bool> {
+			if (current < @new) {
+				current = @new;
+				return true;
+			}
+			return false;
 		}
 		public static void MinMax<T>(ref T min, ref T max) where T : IComparisonOperators<T, T, bool> {
 			if (min > max) Utils.Swap(ref min, ref max);

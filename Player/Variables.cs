@@ -432,6 +432,7 @@ namespace Origins {
 		public bool tetanus = false;
 		public bool lunaticDuplicates = false;
 		public bool attackFromLunaticDuplicate = false;
+		public bool lunaticDragon = false;
 		public int lunaticDuplicateOpacity = 0;
 
 		public bool DisableBreathRestore => toxicShock || miasma;
@@ -1221,6 +1222,7 @@ namespace Origins {
 			miasma = false;
 			tetanus = false;
 			lunaticDuplicates = false;
+			lunaticDragon = false;
 			if (dangerTime <= 0) dangerTime = 0;
 			else dangerTime--;
 			InDanger = dangerTime > 0;

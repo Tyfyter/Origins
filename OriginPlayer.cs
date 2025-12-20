@@ -706,6 +706,10 @@ namespace Origins {
 			if (Player.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
 				PlayerInput.ScrollWheelDelta = 0;
 			}
+			if (lunaticsRuneCharge > 0) {
+				Player.controlUseItem = false;
+				Player.controlUseTile = false;
+			}
 		}
 		public override IEnumerable<Item> AddMaterialsForCrafting(out ItemConsumedCallback itemConsumedCallback) {
 			if (Player.InModBiome<Brine_Pool>()) {

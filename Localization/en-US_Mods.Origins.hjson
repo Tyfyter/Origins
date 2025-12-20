@@ -1434,6 +1434,11 @@ Buffs: {
 		DisplayName: Lunatics Rune Attacks Buff
 		Description: Mods.Origins.Buffs.Lunatics_Rune_Attacks_Buff.Description
 	}
+
+	Lunatics_Rune_Dragon_Buff: {
+		DisplayName: Lunatics Rune Dragon Buff
+		Description: Mods.Origins.Buffs.Lunatics_Rune_Dragon_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -2156,6 +2161,9 @@ Projectiles: {
 	Cultist_Ice_Shard.DisplayName: Cultist Ice Shard
 	Cultist_Lightning.DisplayName: Cultist Lightning
 	Cultist_Lightning_Orb.DisplayName: Cultist Lightning Orb
+	Phantasm_Dragon_Body.DisplayName: Phantasm Dragon Body
+	Phantasm_Dragon_Head.DisplayName: Phantasm Dragon Head
+	Phantasm_Dragon_Tail.DisplayName: Phantasm Dragon Tail
 }
 
 Prefixes: {
