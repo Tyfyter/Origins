@@ -317,7 +317,7 @@ namespace Origins {
 			}
 
 			if (!Main.dedServ && nearestFanSound.HasValue && (!fanSoundInstance.IsValid || !SoundEngine.TryGetActiveSound(fanSoundInstance, out _))) {
-				fanSoundInstance = SoundEngine.PlaySound(Origins.Sounds.HawkenThruster, nearestFanSound.Value, sound => {
+				fanSoundInstance = SoundEngine.PlaySound(Origins.Sounds.HawkenThruster.WithPitch(0.8f).WithVolume(0.25f), nearestFanSound.Value, sound => {
 					sound.Position = nearestFanSound;
 					sound.Volume = FanSoundVolume.Value;
 					return nearestFanSound.HasValue && sound.Volume > 0.001f;
