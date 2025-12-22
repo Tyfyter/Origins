@@ -1,20 +1,26 @@
-﻿using Microsoft.CodeAnalysis;
-using PegasusLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Terraria;
-using Terraria.Localization;
+﻿using Terraria;
 using Terraria.UI.Chat;
-using static Origins.UI.Word_Snippet_Handler;
 
 namespace Origins.UI {
 	public class Oxford_Comma_Handler : ITagHandler {
-		public TextSnippet Parse(string text, Color baseColor = default, string options = null) => new Oxford_Comma_Snippet(text, baseColor);
+		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
+			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
+				baseColor = Color.White;
+			} else if (baseColor.A == Main.mouseTextColor) {
+				baseColor *= 255f / Main.mouseTextColor;
+			}
+			return new Oxford_Comma_Snippet(text, baseColor);
+		}
 	}
 	public class Not_Oxford_Comma_Handler : ITagHandler {
-		public TextSnippet Parse(string text, Color baseColor = default, string options = null) => new Oxford_Comma_Snippet(text, baseColor, true);
+		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
+			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
+				baseColor = Color.White;
+			} else if (baseColor.A == Main.mouseTextColor) {
+				baseColor *= 255f / Main.mouseTextColor;
+			}
+			return new Oxford_Comma_Snippet(text, baseColor, true);
+		}
 	}
 #pragma warning disable CS9107
 	public class Oxford_Comma_Snippet(string text, Color baseColor, bool inverted = false) : TextSnippet(text, baseColor) {

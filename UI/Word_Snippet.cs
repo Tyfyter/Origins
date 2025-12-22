@@ -123,6 +123,13 @@ namespace Origins.UI {
 				Optional
 			}
 		}
-		public TextSnippet Parse(string text, Color baseColor = default, string options = null) => new Word_Snippet(text, baseColor);
+		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
+			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
+				baseColor = Color.White;
+			} else if (baseColor.A == Main.mouseTextColor) {
+				baseColor *= 255f / Main.mouseTextColor;
+			}
+			return new Word_Snippet(text, baseColor);
+		}
 	}
 }

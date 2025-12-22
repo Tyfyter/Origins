@@ -28,6 +28,11 @@ namespace Origins.UI {
 				}
 			}
 			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default, Color color = default, float scale = 1) {
+				if (color == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
+					color = Color.White;
+				} else if (color.A == Main.mouseTextColor) {
+					color *= 255f / Main.mouseTextColor;
+				}
 				size = default;
 				if (image is null) return false;
 				image.Wait();

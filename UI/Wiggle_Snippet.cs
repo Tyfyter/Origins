@@ -47,6 +47,11 @@ namespace Origins.UI {
 				SnippetOption.CreateFloatOption("x", v => snoptions.WiggleWidth = v),
 				SnippetOption.CreateFloatOption("y", v => snoptions.WiggleScale = v)
 			);
+			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
+				baseColor = Color.White;
+			} else if (baseColor.A == Main.mouseTextColor) {
+				baseColor *= 255f / Main.mouseTextColor;
+			}
 			return new Wiggle_Snippet(text, snoptions, baseColor, 1);
 		}
 	}

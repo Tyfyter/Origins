@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using PegasusLib;
 using PegasusLib.Graphics;
 using System;
 using Terraria;
@@ -12,10 +11,7 @@ namespace Origins.UI {
 			readonly float amount;
 			public Italics_Snippet(string text, Color color, float amount) {
 				Text = text.Replace('<', '[').Replace('>', ']');
-				if (color == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255)) {
-					color = Color.White;
-				}
-				this.Color = color;
+				Color = color;
 				this.amount = amount;
 			}
 			public bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, float maxWidth, Vector2 position = default, Color color = default, float scale = 1) {

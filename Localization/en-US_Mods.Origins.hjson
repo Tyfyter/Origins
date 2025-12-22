@@ -2731,7 +2731,7 @@ Configs: {
 		}
 
 		TicketInBank: {
-			Label: Ticket usage in Banks
+			Label: "[itemname:Origins/Lottery_Ticket] usable in Banks"
 			Tooltip: Should the [itemname:Origins/Lottery_Ticket] work while in player banks
 		}
 	}

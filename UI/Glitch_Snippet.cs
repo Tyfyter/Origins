@@ -34,6 +34,11 @@ namespace Origins.UI {
 		}
 		public record struct Options(float Speed = 1f / 60f, float WiggleWidth = 16, float WiggleScale = 2);
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
+			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
+				baseColor = Color.White;
+			} else if (baseColor.A == Main.mouseTextColor) {
+				baseColor *= 255f / Main.mouseTextColor;
+			}
 			return new Glitch_Snippet(text, options, baseColor, 1);
 		}
 	}

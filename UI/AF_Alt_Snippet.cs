@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using PegasusLib;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Localization;
@@ -13,7 +12,12 @@ namespace Origins.UI {
 				Color = color;
 			}
 			public bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, float maxWidth, Vector2 position = default, Color color = default, float scale = 1) {
-				TextSnippet[]  snippets = ChatManager.ParseMessage(Text, color).ToArray();
+				if (color == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
+					color = Color.White;
+				} else if (color.A == Main.mouseTextColor) {
+					color *= 255f / Main.mouseTextColor;
+				}
+				TextSnippet[] snippets = ChatManager.ParseMessage(Text, color).ToArray();
 				size = ChatManager.GetStringSize(FontAssets.MouseText.Value, snippets, new(scale), MaxWidth);
 				if (justCheckingString || spriteBatch is null) return true;
 
@@ -22,7 +26,7 @@ namespace Origins.UI {
 				_snippets[0] = new PaddingSnippet(padding);
 				snippets.CopyTo(_snippets, 1);
 				position.X = BasePosition.X;
-				ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, _snippets, position, Color.White, 0, Vector2.Zero, new(scale), out int hoveredSnippet, maxWidth);
+				ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, _snippets, position, color, 0, Vector2.Zero, new(scale), out int hoveredSnippet, maxWidth);
 				if (hoveredSnippet >= 0 && hoveredSnippet < _snippets.Length && _snippets[hoveredSnippet].CheckForHover) {
 					_snippets[hoveredSnippet].OnHover();
 					if (Main.mouseLeft && Main.mouseLeftRelease) {
