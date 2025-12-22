@@ -3,16 +3,21 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Accessories {
-	public abstract class Brine_Leafed_Clover : ModItem, IItemObtainabilityProvider, ICustomWikiStat {
+	[LegacyName("Brine_Leafed_Clover_0")]
+	public class Brine_Leafed_Clover : ModItem, IItemObtainabilityProvider, ICustomWikiStat {
 		public string[] Categories => [
 			WikiCategories.Misc
 		];
 		protected static sbyte faceSlot = -1;
-		public abstract int Level { get; }
-		public abstract int NextLowerTier { get; }
-		
+		public virtual int Level { get; } = 0;
+		public virtual int NextLowerTier { get; } = ItemID.None;
+		public override LocalizedText DisplayName => Mod.GetLocalization($"{LocalizationCategory}.Brine_Leafed_Clover.DisplayName{(Level <= 0 ? "Stem" : string.Empty)}");
+		public override LocalizedText Tooltip => Mod.GetLocalization($"{LocalizationCategory}.Brine_Leafed_Clover.Tooltip{(Level <= 0 ? "Stem" : string.Empty)}");
+
 		public override void Load() {
 			if (faceSlot == -1) faceSlot = (sbyte)EquipLoader.AddEquipTexture(Mod, "Origins/Items/Accessories/Brine_Leafed_Clover_Face", EquipType.Face, name: "Brine_Leafed_Clover_Face");
 		}
@@ -26,7 +31,7 @@ namespace Origins.Items.Accessories {
 			Item.faceSlot = faceSlot;
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			tooltips[0].Text += $" ({Level})";
+			if (Level > 0) tooltips[0].Text += $" ({Level})";
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
@@ -37,14 +42,9 @@ namespace Origins.Items.Accessories {
 			yield return NextLowerTier;
 		}
 	}
-	public class Brine_Leafed_Clover_0 : Brine_Leafed_Clover {
-		
-		public override int Level => 0;
-		public override int NextLowerTier => 0;
-	}
 	public class Brine_Leafed_Clover_1 : Brine_Leafed_Clover {
 		public override int Level => 1;
-		public override int NextLowerTier => ItemID.None;// ModContent.ItemType<Brine_Leafed_Clover_0>();
+		public override int NextLowerTier => ModContent.ItemType<Brine_Leafed_Clover>();
 	}
 	public class Brine_Leafed_Clover_2 : Brine_Leafed_Clover {
 		public override int Level => 2;

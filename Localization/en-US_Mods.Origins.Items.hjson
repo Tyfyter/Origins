@@ -124,49 +124,20 @@ Boomerang_Magnet: {
 		'''
 }
 
-Brine_Leafed_Clover_0: {
+Brine_Leafed_Clover: {
 	DisplayName: Brine-Leafed Clover
+	DisplayNameStem: Brine-Covered Stem
 	Tooltip:
+		'''
+		Increases the likelihood of favorable outcomes based on how many leaves it has
+		A leaf will fall out if it causes something exceptionally rare
+		'''
+	TooltipStem:
 		'''
 		Does nothing
 		'Better luck next time!'
 		'''
-}
-
-Brine_Leafed_Clover_1: {
-	DisplayName: Brine-Leafed Clover
-	Tooltip:
-		'''
-		Increases the likelihood of favorable outcomes based on how many leaves it has
-		A leaf will fall out if it causes something exceptionally rare
-		'''
-}
-
-Brine_Leafed_Clover_2: {
-	DisplayName: Brine-Leafed Clover
-	Tooltip:
-		'''
-		Increases the likelihood of favorable outcomes based on how many leaves it has
-		A leaf will fall out if it causes something exceptionally rare
-		'''
-}
-
-Brine_Leafed_Clover_3: {
-	DisplayName: Brine-Leafed Clover
-	Tooltip:
-		'''
-		Increases the likelihood of favorable outcomes based on how many leaves it has
-		A leaf will fall out if it causes something exceptionally rare
-		'''
-}
-
-Brine_Leafed_Clover_4: {
-	DisplayName: Brine-Leafed Clover
-	Tooltip:
-		'''
-		Increases the likelihood of favorable outcomes based on how many leaves it has
-		A leaf will fall out if it causes something exceptionally rare
-		'''
+	Luck: A leaf from {0} ({1}) withers
 }
 
 Celestial_Stone_Mask: {
@@ -1861,6 +1832,7 @@ Lottery_Ticket: {
 		Randomly provides incredible luck while in your inventory
 		Gets consumed when it works
 		'''
+	Luck: "{$DisplayName} was a winner!"
 }
 
 Magic_Brine_Dropper: {
