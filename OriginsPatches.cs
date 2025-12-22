@@ -10,7 +10,6 @@ using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Mounts;
 using Origins.Items.Other.Consumables.Broths;
-using Origins.Items.Other.Dyes;
 using Origins.Items.Tools;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
@@ -29,20 +28,16 @@ using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Origins.UI.Event;
-using Origins.Walls;
 using Origins.Water;
 using Origins.World.BiomeData;
-using PegasusLib;
 using PegasusLib.Graphics;
 using PegasusLib.Reflection;
 using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Runtime.ExceptionServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -56,7 +51,6 @@ using Terraria.GameContent.Personalities;
 using Terraria.GameContent.Shaders;
 using Terraria.GameContent.UI;
 using Terraria.GameContent.UI.ResourceSets;
-using Terraria.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Light;
 using Terraria.Graphics.Shaders;
@@ -1544,6 +1538,7 @@ namespace Origins {
 						packet.Send(self.whoAmI, -1);
 					}
 					if (--originPlayer.lotteryTicketItem.stack <= 0) originPlayer.lotteryTicketItem.TurnToAir();
+					Main.NewText(Language.GetTextValue("Mods.Origins.Items.Lottery_Ticket.Luck"), Color.LimeGreen);
 					rollingLotteryTicket = false;
 					return 0;
 				}
@@ -1569,7 +1564,9 @@ namespace Origins {
 						packet.Send(self.whoAmI, -1);
 					}
 					int prefix = brineCloverItem.prefix;
-					brineCloverItem.SetDefaults((brineCloverItem.ModItem as Brine_Leafed_Clover)?.NextLowerTier ?? ItemID.None);
+					Brine_Leafed_Clover clover = (Brine_Leafed_Clover)brineCloverItem.ModItem;
+					Main.NewText(Language.GetTextValue($"Mods.Origins.Items.Brine_Leafed_Clover.Luck", brineCloverItem.AffixName(), clover.Level), Color.LimeGreen);
+					brineCloverItem.SetDefaults(clover.NextLowerTier);
 					brineCloverItem.Prefix(prefix);
 				}
 			}
