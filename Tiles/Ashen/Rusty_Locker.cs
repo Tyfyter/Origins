@@ -1,9 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Origins.Core;
+using Origins.Items.Weapons.Ammo;
 using Origins.Reflection;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -19,7 +18,18 @@ namespace Origins.Tiles.Ashen {
 		public int Width { get; } = 2;
 		public int Height { get; } = 3;
 		public override void Load() {
-			Mod.AddContent(item = new(this));
+			Mod.AddContent(item = new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.SilverBar)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 10)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.TungstenBar)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 10)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}));
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

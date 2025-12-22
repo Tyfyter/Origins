@@ -1,3 +1,4 @@
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -7,7 +8,18 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Ashen {
 	public class Rusty_Piping : OriginTile, IAshenTile {
 		public override void Load() {
-			Mod.AddContent(new TileItem(this));
+			Mod.AddContent(new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type, 5)
+				.AddIngredient(ItemID.CopperBar)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 5)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.TinBar)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 5)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}));
 		}
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));

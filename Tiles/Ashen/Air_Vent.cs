@@ -1,7 +1,7 @@
-﻿using Origins.World.BiomeData;
+﻿using Origins.Items.Weapons.Ammo;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -9,7 +9,18 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Ashen {
 	public class Air_Vent : OriginTile {
 		public override void Load() {
-			Mod.AddContent(new TileItem(this).WithExtraStaticDefaults(i => RegisterItemDrop(i.type, -1)));
+			Mod.AddContent(new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.CopperBar)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 6)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.TinBar)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 6)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}).WithExtraStaticDefaults(i => RegisterItemDrop(i.type, -1)));
 		}
 		public override void SetStaticDefaults() {
 			// Properties

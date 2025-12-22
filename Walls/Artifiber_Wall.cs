@@ -23,7 +23,7 @@ namespace Origins.Walls {
 			.AddTile(TileID.WorkBenches)
 			.Register();
 
-			Recipe.Create(ItemType<Artifiber_Item>(), 1)
+			Recipe.Create(ItemType<Artifiber_Item>())
 			.AddIngredient(Type, 4)
 			.AddTile(TileID.WorkBenches)
 			.Register();

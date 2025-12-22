@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Walls;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,5 +26,11 @@ namespace Origins.Tiles.Ashen {
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Artifiber>());
 		}
-    }
+		public override void AddRecipes() {
+			CreateRecipe(ModContent.ItemType<Artifiber_Wall_Item>(), 4)
+			.AddRecipeGroup(RecipeGroupID.Wood, 10)
+			.AddIngredient<Ashen_Torch>(5)
+			.Register();
+		}
+	}
 }

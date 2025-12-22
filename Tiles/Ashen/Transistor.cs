@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -197,6 +198,20 @@ namespace Origins.Tiles.Ashen {
 			Item.DefaultToPlaceableTile(TileType<Transistor>());
 			Item.createTile = -1;
 			Item.mech = true;
+		}
+		public override void AddRecipes() {
+			CreateRecipe(2)
+			.AddIngredient(ItemID.Wire, 4)
+			.AddIngredient(ItemID.CopperBar)
+			.AddIngredient<Silicon_Bar>()
+			.AddTile(ModContent.TileType<Metal_Presser>())
+			.Register();
+			CreateRecipe(2)
+			.AddIngredient(ItemID.Wire, 4)
+			.AddIngredient(ItemID.TinBar)
+			.AddIngredient<Silicon_Bar>()
+			.AddTile(ModContent.TileType<Metal_Presser>())
+			.Register();
 		}
 		public override bool? UseItem(Player player) {
 			if (player.whoAmI != Main.myPlayer || !player.ItemAnimationJustStarted || TileLoader.GetTile(Item.createTile) is not Transistor transistor) return false;

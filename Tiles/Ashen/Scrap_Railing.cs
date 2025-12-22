@@ -8,7 +8,7 @@ namespace Origins.Tiles.Ashen {
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type, 4)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 1)
+				.AddIngredient(ModContent.ItemType<Scrap>())
 				.Register();
 				Recipe.Create(ModContent.ItemType<Scrap>())
 				.AddIngredient(item.type, 4)

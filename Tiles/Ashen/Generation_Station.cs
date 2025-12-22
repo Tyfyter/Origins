@@ -2,7 +2,6 @@
 using Origins.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
-using PegasusLib;
 using PegasusLib.Networking;
 using System.IO;
 using System.Linq;

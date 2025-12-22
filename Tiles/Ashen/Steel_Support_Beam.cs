@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
@@ -11,7 +11,19 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Ashen {
 	public class Steel_Support_Beam : OriginTile, IAshenTile {
 		public override void Load() {
-			Mod.AddContent(new TileItem(this));
+			Mod.AddContent(new TileItem(this).WithOnAddRecipes(item => {
+			Recipe.Create(Type, 20)
+			.AddRecipeGroup(RecipeGroupID.IronBar)
+			.AddIngredient(ModContent.ItemType<Scrap>(), 10)
+			.AddTile(ModContent.TileType<Metal_Presser>())
+			.Register();
+			Recipe.Create(Type, 20)
+			.AddIngredient(ItemID.Coal)
+			.AddRecipeGroup(RecipeGroupID.IronBar)
+			.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 2)
+			.AddTile(ModContent.TileType<Metal_Presser>())
+			.Register();
+			}));
 		}
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));

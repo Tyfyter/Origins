@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Enums;
@@ -13,7 +14,20 @@ namespace Origins.Tiles.Ashen {
 		TileItem item;
 		public override void Load() {
 			this.SetupGlowKeys();
-			Mod.AddContent(item = new(this));
+			Mod.AddContent(item = new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.CopperBar)
+				.AddIngredient(ModContent.ItemType<Ashen_Torch>())
+				.AddIngredient(ModContent.ItemType<Scrap>(), 16)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.TinBar)
+				.AddIngredient(ModContent.ItemType<Ashen_Torch>())
+				.AddIngredient(ModContent.ItemType<Scrap>(), 16)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}));
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (tile.TileFrameX < 3 * 18 * 2) color = Vector3.Max(color, new Vector3(0.912f, 0.579f, 0f) * (tile.TileFrameY < 2 * 18 ? 1 : 0.125f));

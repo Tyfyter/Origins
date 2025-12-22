@@ -28,6 +28,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void AddRecipes() => CreateRecipe()
 			.AddIngredient<Scrap>(15)
+			.AddTile(ModContent.TileType<Metal_Presser>())
 			.Register();
 	}
 }

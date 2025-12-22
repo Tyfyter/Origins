@@ -1,9 +1,8 @@
-﻿using MonoMod.Cil;
-using Origins.Core;
+﻿using Origins.Core;
 using Origins.Items.Tools.Wiring;
+using Origins.Items.Weapons.Ammo;
 using Origins.Tiles.Ashen.Hanging_Scrap;
 using Origins.World.BiomeData;
-using PegasusLib;
 using PegasusLib.Networking;
 using System;
 using System.Collections.Generic;
@@ -23,7 +22,18 @@ namespace Origins.Tiles.Ashen {
 	public class Cargo_Elevator_Door : OriginTile, IComplexMineDamageTile, IMultiTypeMultiTile {
 		public TileItem Item { get; protected set; }
 		public override void Load() {
-			Mod.AddContent(Item = new(this));
+			Mod.AddContent(Item = new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.AdamantiteBar, 2)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 30)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.TitaniumBar, 2)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 30)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}));
 		}
 		public override void SetStaticDefaults() {
 			// Properties
@@ -50,7 +60,6 @@ namespace Origins.Tiles.Ashen {
 			MineResist = 8;
 			if (this is not Cargo_Elevator_Door_Open) RegisterItemDrop(Item.Type);
 		}
-		// TODO: implement
 		public static bool IsSolid(int i, int j) {
 			Tile tile = Main.tile[i, j];
 			int distFromCenter = Math.Abs(tile.TileFrameX / 18 - 5);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
@@ -232,6 +233,19 @@ namespace Origins.Tiles.Ashen {
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block1>());
 		}
+		public override void AddRecipes() {
+			Recipe.Create(Type, 10)
+			.AddRecipeGroup(RecipeGroupID.IronBar)
+			.AddIngredient(ModContent.ItemType<Scrap>(), 10)
+			.AddTile(ModContent.TileType<Metal_Presser>())
+			.Register();
+			Recipe.Create(Type, 10)
+			.AddIngredient(ItemID.Coal)
+			.AddRecipeGroup(RecipeGroupID.IronBar)
+			.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 2)
+			.AddTile(ModContent.TileType<Metal_Presser>())
+			.Register();
+		}
 		public LocalizedText PageTextMain => WikiPageExporter.GetDefaultMainPageText(this)
 			.WithFormatArgs(MinePower,
 			Language.GetText("Mods.Origins.Generic.Ashen_Factory"),
@@ -244,12 +258,28 @@ namespace Origins.Tiles.Ashen {
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block2>());
 		}
+		public override void AddRecipes() {
+			Recipe.Create(Type, 10)
+			.AddIngredient(ItemID.HellstoneBar)
+			.AddIngredient(ModContent.ItemType<Fortified_Steel_Block1_Item>(), 10)
+			.AddIngredient(ModContent.ItemType<Scrap>(), 10)
+			.AddTile(ModContent.TileType<Metal_Presser>())
+			.Register();
+		}
 	}
 	public class Fortified_Steel_Block3_Item : Fortified_Steel_Block1_Item {
 		public override string Texture => base.Texture.Replace("3", "1");
 		public override int MinePower => 210;
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block3>());
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type, 10)
+			.AddIngredient(ItemID.ChlorophyteOre)
+			.AddIngredient(ModContent.ItemType<Fortified_Steel_Block2_Item>(), 10)
+			.AddIngredient(ModContent.ItemType<Scrap>(), 10)
+			.AddTile(ModContent.TileType<Metal_Presser>())
+			.Register();
 		}
 	}
 }

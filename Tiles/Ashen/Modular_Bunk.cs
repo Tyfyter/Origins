@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Ammo;
 using Origins.Reflection;
 using PegasusLib.Graphics;
 using System.Collections.Generic;
@@ -13,10 +14,18 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Tiles.Ashen {
 	public class Modular_Bunk : BedBase {
+		public override void OnLoad() {
+			Mod.AddContent(Item = new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.Silk, 10)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 25)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}));
+		}
 		public override Color MapColor => new(117, 63, 26);
 		public override void ModifyTileData() {
 			TileObjectData.newTile.Height = 5;

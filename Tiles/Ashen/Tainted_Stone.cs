@@ -1,11 +1,9 @@
-﻿using Origins.Dev;
-using Origins.Tiles.Other;
+﻿using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 

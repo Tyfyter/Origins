@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System.Linq;
@@ -17,7 +18,20 @@ namespace Origins.Tiles.Ashen {
 		TileItem Item;
 		protected int width, height;
 		public override void Load() {
-			Mod.AddContent(Item = new(this));
+			Mod.AddContent(Item = new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.IronBar, 4)
+				.AddIngredient(ModContent.ItemType<Ashen_Torch>(), 8)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 15)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.LeadBar, 4)
+				.AddIngredient(ModContent.ItemType<Ashen_Torch>(), 8)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 15)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}));
 			this.SetupGlowKeys();
 		}
 		public override void SetStaticDefaults() {

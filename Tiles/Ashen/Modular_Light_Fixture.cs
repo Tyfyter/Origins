@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Items.Materials;
+using Origins.Items.Weapons.Ammo;
 using Origins.World;
 using System.Collections.Generic;
 using Terraria;
@@ -241,7 +243,13 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void Load() {
 			this.SetupGlowKeys();
-			Mod.AddContent(new TileItem(this));
+			Mod.AddContent(new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(ModContent.ItemType<Ashen_Torch>())
+				.AddIngredient(ModContent.ItemType<Scrap>())
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}));
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }

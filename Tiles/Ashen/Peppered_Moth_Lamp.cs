@@ -13,8 +13,8 @@ namespace Origins.Tiles.Ashen {
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
-				.AddIngredient<Peppered_Moth_Item>()
 				.AddRecipeGroup(OriginSystem.LampRecipeGroup)
+				.AddIngredient<Peppered_Moth_Item>()
 				.Register();
 			};
 			Item.ExtraStaticDefaults += item => {

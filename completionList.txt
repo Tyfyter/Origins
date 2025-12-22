@@ -433,7 +433,7 @@ ARMOR:
 (^) Endowood Armor
 (^) Felnum Armor
 (^) Fiberglass Armor
-(X) Laborer Set !!!
+(#, ^2) Laborer Set !!!
 (^) Lost Armor
 (^) Marrowick Armor
 (^) Mythic Armor

@@ -1,17 +1,24 @@
-using CalamityMod.NPCs.TownNPCs;
-using MonoMod.Cil;
-using Origins.World.BiomeData;
-using System;
+using Origins.Items.Weapons.Ammo;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Misc.Physics;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Truss_Block : OriginTile, IAshenTile {
 		public override void Load() {
-			Mod.AddContent(new TileItem(this));
+			Mod.AddContent(new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type, 40)
+				.AddIngredient(ItemID.IronBar, 2)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 40)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+				Recipe.Create(item.type, 40)
+				.AddIngredient(ItemID.LeadBar, 2)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 40)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}));
 			On_Collision.SlopeCollision += On_Collision_SlopeCollision;
 			On_Collision.StepUp += On_Collision_StepUp;
 		}

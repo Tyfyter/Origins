@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
@@ -11,7 +12,13 @@ namespace Origins.Tiles.Ashen {
 	public class Small_Storage_Container : ModChest {
 		TileItem item;
 		public override void Load() {
-			Mod.AddContent(item = new(this));
+			Mod.AddContent(item = new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddRecipeGroup(RecipeGroupID.IronBar, 2)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 8)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}));
 			On_WorldGen.WouldTileReplacementWork += On_WorldGen_WouldTileReplacementWork;
 		}
 		bool On_WorldGen_WouldTileReplacementWork(On_WorldGen.orig_WouldTileReplacementWork orig, ushort attemptingToReplaceWith, int x, int y) {

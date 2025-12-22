@@ -1,16 +1,9 @@
-﻿using CalamityMod.Buffs.Potions;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Core.Structures;
-using Origins.Items.Other.Consumables;
-using Origins.Items.Weapons.Ammo;
-using Origins.Tiles.Ashen.Hanging_Scrap;
-using PegasusLib;
+﻿using Origins.Items.Other.Consumables;
 using PegasusLib.Networking;
 using System;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;

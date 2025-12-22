@@ -1,19 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
-using Origins.Items.Other.Consumables;
-using Origins.Items.Tools.Wiring;
-using Origins.Items.Weapons.Demolitionist;
+﻿using Origins.Items.Other.Consumables;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
-using PegasusLib;
-using PegasusLib.Graphics;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -23,7 +15,13 @@ namespace Origins.Tiles.Ashen {
 		public static int ID { get; private set; }
 		TileItem item;
 		public override void Load() {
-			Mod.AddContent(item = new(this));
+			Mod.AddContent(item = new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.Gel, 4)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 8)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}));
 		}
 		public override void SetStaticDefaults() {
 			// Properties

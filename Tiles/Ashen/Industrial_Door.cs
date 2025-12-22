@@ -1,25 +1,17 @@
-﻿using Humanizer;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
 using Origins.Items.Tools.Wiring;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
-using PegasusLib;
 using PegasusLib.Networking;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
-using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.GameContent.Achievements;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
@@ -29,7 +21,13 @@ namespace Origins.Tiles.Ashen {
 	public class Industrial_Door : OriginTile, IComplexMineDamageTile, IGlowingModTile {
 		public TileItem Item { get; protected set; }
 		public override void Load() {
-			Mod.AddContent(Item = new(this));
+			Mod.AddContent(Item = new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddRecipeGroup(RecipeGroupID.IronBar)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 12)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}));
 			this.SetupGlowKeys();
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) { }
