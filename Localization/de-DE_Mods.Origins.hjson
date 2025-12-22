@@ -2729,6 +2729,11 @@ Configs: {
 			// Label: Vanilla Whip Scale Support
 			// Tooltip: Makes whips from vanilla Terraria and other mods support scale modifiers
 		}
+
+		TicketInBank: {
+			// Label: Ticket In Bank
+			// Tooltip: ""
+		}
 	}
 
 	DebugConfig: {

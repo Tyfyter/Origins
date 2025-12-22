@@ -2729,6 +2729,11 @@ Configs: {
 			Label: Vanilla Whip Scale Support
 			Tooltip: Makes whips from vanilla Terraria and other mods support scale modifiers
 		}
+
+		TicketInBank: {
+			Label: Ticket usage in Banks
+			Tooltip: Should the [itemname:Origins/Lottery_Ticket] work while in player banks
+		}
 	}
 
 	DebugConfig: {

@@ -336,7 +336,7 @@ namespace Origins {
 								break;
 							}
 						}
-					} else if(loversLeapDashTime == 1) {
+					} else if (loversLeapDashTime == 1) {
 						loversLeapDashTime = 0;
 					}
 				} else {
@@ -638,6 +638,18 @@ namespace Origins {
 				NetMessage.SendData(MessageID.PlayerBuffs, number: Main.myPlayer);
 			}
 			sendBuffs = false;
+			ValidTicket(Player.bank.item);
+			ValidTicket(Player.bank2.item);
+			ValidTicket(Player.bank3.item);
+			ValidTicket(Player.bank4.item);
+		}
+		public void ValidTicket(Item[] items) {
+			if (lotteryTicketItem is not null || !OriginConfig.Instance.TicketInBank) return;
+			foreach (Item item in items) {
+				if (lotteryTicketItem is not null || item.IsAir || item?.ModItem is not Lottery_Ticket ticket) continue;
+
+				ticket.UpdateInventory(Player);
+			}
 		}
 		public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
 			if (hasPotatOS) {
