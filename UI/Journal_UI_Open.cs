@@ -22,6 +22,7 @@ using PegasusLib.Graphics;
 using ReLogic.OS;
 using Microsoft.Xna.Framework.Input;
 using static System.Net.Mime.MediaTypeNames;
+using Origins.UI.Snippets;
 
 namespace Origins.UI {
 	public class Journal_UI_Open : UIState {

@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins;
 using PegasusLib.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.UI.Chat;
 
-namespace Origins.UI {
+namespace Origins.UI.Snippets {
 	public class Italics_Snippet_Handler : ITagHandler {
 		public class Italics_Snippet : WrappingTextSnippet {
 			readonly float amount;
@@ -15,11 +16,8 @@ namespace Origins.UI {
 				this.amount = amount;
 			}
 			public bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, float maxWidth, Vector2 position = default, Color color = default, float scale = 1) {
-				if (color == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
-					color = Color.White;
-				} else if (color.A == Main.mouseTextColor) {
-					color *= 255f / Main.mouseTextColor;
-				}
+				if (color == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) color = Color.White;
+				else if (color.A == Main.mouseTextColor) color *= 255f / Main.mouseTextColor;
 				TextSnippet[] snippets = ChatManager.ParseMessage(Text, color).ToArray();
 				size = ChatManager.GetStringSize(FontAssets.MouseText.Value, snippets, new(scale), -1) + new Vector2(7 * Math.Abs(amount) * scale, 0);
 				if (justCheckingString || spriteBatch is null) return true;
@@ -43,9 +41,7 @@ namespace Origins.UI {
 				}
 				if (hoveredSnippet >= 0 && hoveredSnippet < _snippets.Length && _snippets[hoveredSnippet].CheckForHover) {
 					_snippets[hoveredSnippet].OnHover();
-					if (Main.mouseLeft && Main.mouseLeftRelease) {
-						_snippets[hoveredSnippet].OnClick();
-					}
+					if (Main.mouseLeft && Main.mouseLeftRelease) _snippets[hoveredSnippet].OnClick();
 				}
 				return true;
 			}
@@ -55,9 +51,7 @@ namespace Origins.UI {
 		}
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
 			float amount = 0.5f;
-			SnippetHelper.ParseOptions(options,
-				SnippetOption.CreateFloatOption("a", value => amount = value)
-			);
+			options.ParseOptions(SnippetOption.CreateFloatOption("a", value => amount = value));
 			return new Italics_Snippet(text, baseColor, amount);
 		}
 	}

@@ -1,19 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins;
 using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Terraria;
-using Terraria.GameContent.UI.Elements;
-using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
-namespace Origins.UI {
+namespace Origins.UI.Snippets {
 	public class Image_Handler : ITagHandler {
 		internal static ShaderLayerTargetHandler shaderOroboros = new();
 		public class Image_Snippet : TextSnippet {
@@ -21,18 +18,12 @@ namespace Origins.UI {
 			Options options;
 			public Image_Snippet(string text, Options options) : base(text, options.Color ?? Color.White, options.Scale) {
 				this.options = options;
-				if (ModContent.RequestIfExists(text, out image)) {
-					Text = "";
-				} else {
-					Scale = 1;
-				}
+				if (ModContent.RequestIfExists(text, out image)) Text = "";
+				else Scale = 1;
 			}
 			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default, Color color = default, float scale = 1) {
-				if (color == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
-					color = Color.White;
-				} else if (color.A == Main.mouseTextColor) {
-					color *= 255f / Main.mouseTextColor;
-				}
+				if (color == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) color = Color.White;
+				else if (color.A == Main.mouseTextColor) color *= 255f / Main.mouseTextColor;
 				size = default;
 				if (image is null) return false;
 				image.Wait();
@@ -67,7 +58,7 @@ namespace Origins.UI {
 			public static SnippetOption CreateColorOption(string name, Action<Color> setter) {
 				return new(name, "[\\da-fA-F]{3,8}", match => {
 					int Parse(int index, int size) {
-						int startIndex = (index * size);
+						int startIndex = index * size;
 						return Convert.ToInt32(match[startIndex..(startIndex + size)], 16);
 					}
 					switch (match.Length) {

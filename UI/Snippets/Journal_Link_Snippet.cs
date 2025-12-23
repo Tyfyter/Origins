@@ -1,9 +1,5 @@
-﻿using CalamityMod.Projectiles.Rogue;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Journal;
-using Origins.Questing;
-using PegasusLib;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -11,7 +7,7 @@ using Terraria.ID;
 using Terraria.UI;
 using Terraria.UI.Chat;
 
-namespace Origins.UI {
+namespace Origins.UI.Snippets {
 	public class Journal_Link_Handler : ITagHandler {
 		public class Journal_Link_Snippet : TextSnippet {
 			public readonly string key;
@@ -21,10 +17,10 @@ namespace Origins.UI {
 				this.key = key;
 				Text = Journal_Registry.Entries[key].DisplayName.Value;
 				if (flags.HasFlag(Flags.L)) {
-					this.Color = Color.Lerp(color, Color.SlateGray, 0.5f);
+					Color = Color.Lerp(color, Color.SlateGray, 0.5f);
 					CheckForHover = OriginClientConfig.Instance.DebugMenuButton.DebugMode;
 				} else {
-					this.Color = color;
+					Color = color;
 					CheckForHover = true;
 				}
 				this.flags = flags;
@@ -42,17 +38,14 @@ namespace Origins.UI {
 			public override void OnClick() {
 				if (ItemSlot.ControlInUse && OriginClientConfig.Instance.DebugMenuButton.DebugMode) {
 					flags ^= Flags.L;
-					if (flags.HasFlag(Flags.L)) {
-						OriginPlayer.LocalOriginPlayer.unlockedJournalEntries.Remove(key);
-					} else {
-						OriginPlayer.LocalOriginPlayer.UnlockJournalEntry(key);
-					}
+					if (flags.HasFlag(Flags.L)) OriginPlayer.LocalOriginPlayer.unlockedJournalEntries.Remove(key);
+					else OriginPlayer.LocalOriginPlayer.UnlockJournalEntry(key);
 					return;
 				}
 				if (flags.HasFlag(Flags.L)) return;
 				Origins.OpenJournalEntry(key);
 			}
-			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1) {
+			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default, Color color = default, float scale = 1) {
 				const float lightness = 0.95f;
 				if (justCheckingString || spriteBatch is null) {
 					size = default;
@@ -115,11 +108,9 @@ namespace Origins.UI {
 				return true;
 			}
 		}
-		public TextSnippet Parse(string text, Color baseColor = default(Color), string options = null) {
+		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
 			Flags flags = default;
-			for (int i = 0; i < options.Length; i++) {
-				if (Enum.TryParse(options[i].ToString(), true, out Flags flag)) flags |= flag;
-			}
+			for (int i = 0; i < options.Length; i++) if (Enum.TryParse(options[i].ToString(), true, out Flags flag)) flags |= flag;
 			return new Journal_Link_Snippet(text, baseColor, flags);
 		}
 		public enum Flags {
@@ -143,14 +134,11 @@ namespace Origins.UI {
 			public readonly Flags flags;
 			int lastHovered = 0;
 			public Journal_Series_Header_Snippet(string text, Color color = default, Flags flags = Flags.NONE) : base(text) {
-				if (flags.HasFlag(Flags.L)) {
-					this.Color = Color.Lerp(color, Color.SlateGray, 0.5f);
-				} else {
-					this.Color = color;
-				}
+				if (flags.HasFlag(Flags.L)) Color = Color.Lerp(color, Color.SlateGray, 0.5f);
+				else Color = color;
 				this.flags = flags;
 			}
-			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1) {
+			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default, Color color = default, float scale = 1) {
 				const float lightness = 0.95f;
 				if (justCheckingString || spriteBatch is null) {
 					size = default;
@@ -176,9 +164,7 @@ namespace Origins.UI {
 		}
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
 			Flags flags = default;
-			for (int i = 0; i < options.Length; i++) {
-				if (Enum.TryParse(options[i].ToString(), true, out Flags flag)) flags |= flag;
-			}
+			for (int i = 0; i < options.Length; i++) if (Enum.TryParse(options[i].ToString(), true, out Flags flag)) flags |= flag;
 			return new Journal_Series_Header_Snippet(text, baseColor, flags);
 		}
 		public enum Flags {

@@ -1,17 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Journal;
-using System.Security.Policy;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Enums;
-using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ModLoader;
-using Terraria.ModLoader.UI;
 using Terraria.UI.Chat;
 
-namespace Origins.UI {
+namespace Origins.UI.Snippets {
 	public class Player_Head_Handler : ITagHandler {
 		public class Player_Head_Snippet(Player player) : TextSnippet {
 			readonly Player player = player;

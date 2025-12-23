@@ -1,5 +1,5 @@
 ﻿using Microsoft.CodeAnalysis;
-using PegasusLib;
+using Origins;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.UI.Chat;
 
-namespace Origins.UI {
+namespace Origins.UI.Snippets {
 	public class Word_Snippet_Handler : ITagHandler {
 		public static Dictionary<string, Func<string>> variableTags = new() {
 			["LocalPlayerGender"] = () => Main.LocalPlayer.Male ? "Male" : "Female"
@@ -48,11 +48,9 @@ namespace Origins.UI {
 				Match match = tagRegex.Match(text);
 				string tagText;
 				TagImportance importance = TagImportance.Normal;
-				if (match.Groups[2].Success) {
-					tagText = variableTags[match.Groups[2].Value]();
-				} else {
-					tagText = match.Groups[1].Value;
-				}
+				if (match.Groups[2].Success) tagText = variableTags[match.Groups[2].Value]();
+				else tagText = match.Groups[1].Value;
+
 				switch (match.Groups[3].Value) {
 					case "":
 					break;
@@ -71,41 +69,35 @@ namespace Origins.UI {
 				match = 0;
 				mismatch = 0;
 				foreach (WordTag tag in a) {
-					if (b.Contains(tag)) {
-						match += 1;
-					} else {
-						switch (tag.Importance) {
-							case TagImportance.Required:
-							mismatch = float.PositiveInfinity;
-							break;
+					if (b.Contains(tag)) match += 1;
+					else switch (tag.Importance) {
+						case TagImportance.Required:
+						mismatch = float.PositiveInfinity;
+						break;
 
-							case TagImportance.Optional:
-							break;
+						case TagImportance.Optional:
+						break;
 
-							default:
-							case TagImportance.Normal:
-							mismatch += 1;
-							break;
-						}
+						default:
+						case TagImportance.Normal:
+						mismatch += 1;
+						break;
 					}
 				}
 				foreach (WordTag tag in b) {
-					if (a.Contains(tag)) {
-						match += 1;
-					} else {
-						switch (tag.Importance) {
-							case TagImportance.Required:
-							mismatch = float.PositiveInfinity;
-							break;
+					if (a.Contains(tag)) match += 1;
+					else switch (tag.Importance) {
+						case TagImportance.Required:
+						mismatch = float.PositiveInfinity;
+						break;
 
-							case TagImportance.Optional:
-							break;
+						case TagImportance.Optional:
+						break;
 
-							default:
-							case TagImportance.Normal:
-							mismatch += 1;
-							break;
-						}
+						default:
+						case TagImportance.Normal:
+						mismatch += 1;
+						break;
 					}
 				}
 				match /= 2;
@@ -124,11 +116,8 @@ namespace Origins.UI {
 			}
 		}
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
-			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
-				baseColor = Color.White;
-			} else if (baseColor.A == Main.mouseTextColor) {
-				baseColor *= 255f / Main.mouseTextColor;
-			}
+			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) baseColor = Color.White;
+			else if (baseColor.A == Main.mouseTextColor) baseColor *= 255f / Main.mouseTextColor;
 			return new Word_Snippet(text, baseColor);
 		}
 	}

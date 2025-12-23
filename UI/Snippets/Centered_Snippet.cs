@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.UI.Chat;
 
-namespace Origins.UI {
+namespace Origins.UI.Snippets {
 	public class Centered_Snippet_Handler : ITagHandler {
 		internal static Vector2 origin;
 		public class Centered_Snippet : WrappingTextSnippet {
@@ -26,11 +26,8 @@ namespace Origins.UI {
 			}
 		}
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
-			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
-				baseColor = Color.White;
-			} else if (baseColor.A == Main.mouseTextColor) {
-				baseColor *= 255f / Main.mouseTextColor;
-			}
+			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) baseColor = Color.White;
+			else if (baseColor.A == Main.mouseTextColor) baseColor *= 255f / Main.mouseTextColor;
 			return new Centered_Snippet(text, baseColor);
 		}
 	}

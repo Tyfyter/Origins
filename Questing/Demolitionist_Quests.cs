@@ -6,7 +6,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
 using Origins.Tiles.Brine;
-using Origins.UI;
+using Origins.UI.Snippets;
 using Origins.World;
 using Origins.World.BiomeData;
 using System.Collections.Generic;

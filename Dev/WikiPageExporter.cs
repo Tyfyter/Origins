@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Origins.Reflection;
-using Origins.UI;
+using Origins.UI.Snippets;
 using PegasusLib.UI;
 using System;
 using System.Collections;

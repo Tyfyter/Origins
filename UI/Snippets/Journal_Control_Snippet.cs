@@ -1,18 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Journal;
-using Steamworks;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text.RegularExpressions;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.UI.Chat;
 
-namespace Origins.UI {
+namespace Origins.UI.Snippets {
 	public class Journal_Control_Handler : ITagHandler {
 		public class Journal_Control_Snippet : TextSnippet {
 			public readonly string options;
@@ -39,14 +33,10 @@ namespace Origins.UI {
 					string[] symbols = mathExpressionSymbolizer.Matches(text).Select(m => m.Value).ToArray();
 					int openCount = 0;
 					int closeCount = 0;
-					for (int i = 0; i < symbols.Length; i++) {
-						if (symbols[i] == "(") openCount++;
+					for (int i = 0; i < symbols.Length; i++) if (symbols[i] == "(") openCount++;
 						else if (symbols[i] == ")") closeCount++;
-					}
-					if (closeCount != openCount) {
-						throw new Exception($"Error evaluating expression \"{text}\": opening and closing brackets must match");
-					}
-					Func<JournalExpressionParams, bool> condition = PegasusLib.PegasusLib.Compile<Func<JournalExpressionParams, bool>>(text, 
+					if (closeCount != openCount) throw new Exception($"Error evaluating expression \"{text}\": opening and closing brackets must match");
+					Func<JournalExpressionParams, bool> condition = PegasusLib.PegasusLib.Compile<Func<JournalExpressionParams, bool>>(text,
 						ParseMathExpression(symbols, ref cursor)
 						.Concat([(OpCodes.Ret, null)]
 					).ToArray());
@@ -122,9 +112,8 @@ namespace Origins.UI {
 						return instructions;
 
 						default:
-						if (int.TryParse(symbol, out int constant)) {
-							instructions.Add((OpCodes.Ldc_I4, constant));
-						} else {
+						if (int.TryParse(symbol, out int constant)) instructions.Add((OpCodes.Ldc_I4, constant));
+						else {
 							instructions.Add((OpCodes.Ldarga, 0));
 							instructions.Add((OpCodes.Call, typeof(JournalExpressionParams).GetProperty(symbol).GetMethod));
 						}

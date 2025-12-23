@@ -1,12 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using PegasusLib;
 using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.UI.Chat;
 using static ReLogic.Graphics.DynamicSpriteFont;
 
-namespace Origins.UI {
+namespace Origins.UI.Snippets {
 	public class Wiggle_Handler : ITagHandler {
 		internal static Vector2 origin;
 		public class Wiggle_Snippet(string text, Options options, Color color = default, float scale = 1) : TextSnippet(text, color, scale) {
@@ -17,9 +16,7 @@ namespace Origins.UI {
 				}
 				size = FontAssets.MouseText.Value.MeasureString(Text) * scale * Vector2.UnitX;
 				static SpriteCharacterData GetCharacterData(char character) {
-					if (!FontAssets.MouseText.Value.SpriteCharacters.TryGetValue(character, out SpriteCharacterData value)) {
-						return FontAssets.MouseText.Value.DefaultCharacterData;
-					}
+					if (!FontAssets.MouseText.Value.SpriteCharacters.TryGetValue(character, out SpriteCharacterData value)) return FontAssets.MouseText.Value.DefaultCharacterData;
 					return value;
 				}
 				Vector2 zero = default;
@@ -42,16 +39,12 @@ namespace Origins.UI {
 		public record struct Options(float Speed = 1f / 60f, float WiggleWidth = 16, float WiggleScale = 2);
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
 			Options snoptions = new(WiggleWidth: 16);
-			SnippetHelper.ParseOptions(options,
-				SnippetOption.CreateFloatOption("t", v => snoptions.Speed = v),
+			options.ParseOptions(SnippetOption.CreateFloatOption("t", v => snoptions.Speed = v),
 				SnippetOption.CreateFloatOption("x", v => snoptions.WiggleWidth = v),
 				SnippetOption.CreateFloatOption("y", v => snoptions.WiggleScale = v)
 			);
-			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
-				baseColor = Color.White;
-			} else if (baseColor.A == Main.mouseTextColor) {
-				baseColor *= 255f / Main.mouseTextColor;
-			}
+			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) baseColor = Color.White;
+			else if (baseColor.A == Main.mouseTextColor) baseColor *= 255f / Main.mouseTextColor;
 			return new Wiggle_Snippet(text, snoptions, baseColor, 1);
 		}
 	}

@@ -1,14 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Questing;
-using System;
-using System.Text;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.UI;
 using Terraria.UI.Chat;
 
-namespace Origins.UI {
+namespace Origins.UI.Snippets {
 	public class Quest_Link_Handler : ITagHandler {
 		public class Quest_Link_Snippet : TextSnippet {
 			readonly string key;
@@ -35,11 +32,8 @@ namespace Origins.UI {
 			}
 			public override void OnClick() {
 				if (ItemSlot.ControlInUse && OriginClientConfig.Instance.DebugMenuButton.DebugMode) {
-					if (ItemSlot.ShiftInUse) {
-						Quest_Registry.GetQuestByKey(key).OnComplete(Main.npc[0]);
-					} else {
-						Quest_Registry.GetQuestByKey(key).LoadData([]);
-					}
+					if (ItemSlot.ShiftInUse) Quest_Registry.GetQuestByKey(key).OnComplete(Main.npc[0]);
+					else Quest_Registry.GetQuestByKey(key).LoadData([]);
 					return;
 				}
 				Origins.OpenJournalQuest(key);
@@ -84,7 +78,7 @@ namespace Origins.UI {
 					} else {
 						size = FontAssets.MouseText.Value.MeasureString(Text);
 						ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, Text, position, color, 0, Vector2.Zero, new Vector2(scale));
-						if (Quest_Registry.GetQuestByKey(key).HasNotification) {
+						if (Quest_Registry.GetQuestByKey(key).HasNotification)
 							Main.spriteBatch.Draw(
 								TextureAssets.QuicksIcon.Value,
 								position + new Vector2(size.X + 6 * scale, size.Y * scale * 0.3f),
@@ -95,18 +89,6 @@ namespace Origins.UI {
 								scale,
 								SpriteEffects.None,
 							0);
-							/*size = ChatManager.DrawColorCodedStringWithShadow(
-								spriteBatch,
-								FontAssets.MouseText.Value,
-								"!",
-								position + new Vector2(size.X + 4 * scale, 0),
-								Color.Yellow,
-								Color.DarkGoldenrod,
-								0,
-								Vector2.Zero,
-								new Vector2(scale * scaleValue)
-							);*/
-						}
 						return true;
 					}
 				} else {
@@ -127,8 +109,7 @@ namespace Origins.UI {
 			string[] options = (optionString ?? "").Split(',');
 			bool completed = false;
 			bool inJournal = false;
-			for (int i = 0; i < options.Length; i++) {
-				switch (options[i]) {
+			for (int i = 0; i < options.Length; i++) switch (options[i]) {
 					case "completed":
 					completed = true;
 					break;
@@ -137,7 +118,6 @@ namespace Origins.UI {
 					inJournal = true;
 					break;
 				}
-			}
 			return new Quest_Link_Snippet(text, baseColor, completed, inJournal);
 		}
 	}

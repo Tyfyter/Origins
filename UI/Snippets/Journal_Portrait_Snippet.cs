@@ -1,24 +1,17 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using PegasusLib.Graphics;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System;
-using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI.Chat;
-using CalamityMod.Projectiles.Magic;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.Utilities;
 using Origins.Graphics;
-using Terraria.GameContent;
 using Terraria.ModLoader;
-using PegasusLib;
+using Origins;
 
-namespace Origins.UI {
+namespace Origins.UI.Snippets {
 	public class Journal_Portrait_Handler : ITagHandler {
 		internal static ShaderLayerTargetHandler shaderOroboros = new();
 		public class Journal_Portrait_Snippet : TextSnippet {
@@ -47,15 +40,11 @@ namespace Origins.UI {
 					IsPortrait = true,
 					IsHovered = false
 				};
-				if (NPCID.Sets.NPCBestiaryDrawOffset.TryGetValue(id, out NPCID.Sets.NPCBestiaryDrawModifiers value) && value.CustomTexturePath != null) {
-					ModContent.Request<Texture2D>(value.CustomTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad);
-				}
+				if (NPCID.Sets.NPCBestiaryDrawOffset.TryGetValue(id, out NPCID.Sets.NPCBestiaryDrawModifiers value) && value.CustomTexturePath != null) ModContent.Request<Texture2D>(value.CustomTexturePath, ReLogic.Content.AssetRequestMode.ImmediateLoad);
 				entry.Icon.Update(_collectionInfo, dimensions, settings);
 				bool wasSpritebatchRunning = Main.spriteBatch.IsRunning();
 				SpriteBatchState state = Main.spriteBatch.GetState();
-				if (wasSpritebatchRunning) {
-					Main.spriteBatch.End();
-				}
+				if (wasSpritebatchRunning) Main.spriteBatch.End();
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
 				Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
 				Main.graphics.GraphicsDevice.Clear(Color.Transparent);
@@ -100,9 +89,7 @@ namespace Origins.UI {
 					TangelaVisual.drawDatas.Clear();
 				}
 				Main.spriteBatch.End();
-				if (wasSpritebatchRunning) {
-					Main.spriteBatch.Begin(state);
-				}
+				if (wasSpritebatchRunning) Main.spriteBatch.Begin(state);
 				Main.spriteBatch.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
 			}
 			public override void Update() {
@@ -128,8 +115,7 @@ namespace Origins.UI {
 		}
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
 			Options settings = new(Color: baseColor);
-			SnippetHelper.ParseOptions(options,
-				SnippetOption.CreateFloatOption("lh", match => settings.LineHeight = match),
+			options.ParseOptions(SnippetOption.CreateFloatOption("lh", match => settings.LineHeight = match),
 				SnippetOption.CreateFloatOption("w", match => settings.Width = match),
 				SnippetOption.CreateFloatOption("h", match => settings.Height = match),
 				SnippetOption.CreateFloatOption("s", match => settings.Sharpness = match),

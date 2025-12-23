@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.UI;
 using Terraria.UI.Chat;
 
-namespace Origins.UI {
+namespace Origins.UI.Snippets {
 	public class Player_Name_Handler : ITagHandler {
 		public class Player_Name_Snippet : TextSnippet {
 			public Player_Name_Snippet(Color color = default) : base() {
@@ -15,11 +15,8 @@ namespace Origins.UI {
 			}
 		}
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
-			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
-				baseColor = Color.White;
-			} else if (baseColor.A == Main.mouseTextColor) {
-				baseColor *= 255f / Main.mouseTextColor;
-			}
+			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) baseColor = Color.White;
+			else if (baseColor.A == Main.mouseTextColor) baseColor *= 255f / Main.mouseTextColor;
 			return new Player_Name_Snippet(baseColor);
 		}
 	}
@@ -45,20 +42,13 @@ namespace Origins.UI {
 			}
 			public override void OnHover() {
 				Main.LocalPlayer.mouseInterface = true;
-				if (isRealName) {
-					UICommon.TooltipMouseText(Language.GetOrRegister("Mods.Origins.Generic.Definite_Article").Format(Lang.GetNPCNameValue(type)));
-				}
+				if (isRealName) UICommon.TooltipMouseText(Language.GetOrRegister("Mods.Origins.Generic.Definite_Article").Format(Lang.GetNPCNameValue(type)));
 			}
 		}
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
-			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
-				baseColor = Color.White;
-			} else if (baseColor.A == Main.mouseTextColor) {
-				baseColor *= 255f / Main.mouseTextColor;
-			}
-			if ((int.TryParse(text, out int npcType) && npcType < NPCLoader.NPCCount) || NPCID.Search.TryGetId(text, out npcType)) {
-				return new NPC_Name_Snippet(npcType, baseColor);
-			}
+			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) baseColor = Color.White;
+			else if (baseColor.A == Main.mouseTextColor) baseColor *= 255f / Main.mouseTextColor;
+			if (int.TryParse(text, out int npcType) && npcType < NPCLoader.NPCCount || NPCID.Search.TryGetId(text, out npcType)) return new NPC_Name_Snippet(npcType, baseColor);
 			return new NPC_Name_Snippet(-1, baseColor);
 		}
 	}
@@ -86,14 +76,9 @@ namespace Origins.UI {
 			}
 		}
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
-			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
-				baseColor = Color.White;
-			} else if (baseColor.A == Main.mouseTextColor) {
-				baseColor *= 255f / Main.mouseTextColor;
-			}
-			if ((int.TryParse(text, out int itemType) && itemType < ItemLoader.ItemCount) || ItemID.Search.TryGetId(text, out itemType)) {
-				return new Item_Name_Snippet(itemType, baseColor);
-			}
+			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) baseColor = Color.White;
+			else if (baseColor.A == Main.mouseTextColor) baseColor *= 255f / Main.mouseTextColor;
+			if (int.TryParse(text, out int itemType) && itemType < ItemLoader.ItemCount || ItemID.Search.TryGetId(text, out itemType)) return new Item_Name_Snippet(itemType, baseColor);
 			return new Item_Name_Snippet(-1, baseColor);
 		}
 	}
@@ -121,14 +106,9 @@ namespace Origins.UI {
 			}
 		}
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
-			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
-				baseColor = Color.White;
-			} else if (baseColor.A == Main.mouseTextColor) {
-				baseColor *= 255f / Main.mouseTextColor;
-			}
-			if ((int.TryParse(options, out int itemType) && itemType < ItemLoader.ItemCount) || ItemID.Search.TryGetId(options, out itemType)) {
-				return new Item_Hint_Snippet(text, itemType, baseColor);
-			}
+			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) baseColor = Color.White;
+			else if (baseColor.A == Main.mouseTextColor) baseColor *= 255f / Main.mouseTextColor;
+			if (int.TryParse(options, out int itemType) && itemType < ItemLoader.ItemCount || ItemID.Search.TryGetId(options, out itemType)) return new Item_Hint_Snippet(text, itemType, baseColor);
 			return new Item_Hint_Snippet(text, -1, baseColor);
 		}
 	}
@@ -157,14 +137,9 @@ namespace Origins.UI {
 			}
 		}
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
-			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) {
-				baseColor = Color.White;
-			} else if (baseColor.A == Main.mouseTextColor) {
-				baseColor *= 255f / Main.mouseTextColor;
-			}
-			if ((int.TryParse(text, out int itemType) && itemType < ItemLoader.ItemCount) || ItemID.Search.TryGetId(text, out itemType)) {
-				return new Imperfect_Item_Name_Snippet(itemType, baseColor);
-			}
+			if (baseColor == new Color(Main.mouseTextColor, Main.mouseTextColor, Main.mouseTextColor, 255).MultiplyRGBA(Main.MouseTextColorReal)) baseColor = Color.White;
+			else if (baseColor.A == Main.mouseTextColor) baseColor *= 255f / Main.mouseTextColor;
+			if (int.TryParse(text, out int itemType) && itemType < ItemLoader.ItemCount || ItemID.Search.TryGetId(text, out itemType)) return new Imperfect_Item_Name_Snippet(itemType, baseColor);
 			return new Imperfect_Item_Name_Snippet(-1, baseColor);
 		}
 	}

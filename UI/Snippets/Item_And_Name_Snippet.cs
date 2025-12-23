@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
 
-namespace Origins.UI {
+namespace Origins.UI.Snippets {
 	public class Quest_Reward_Item_List_Handler : ITagHandler {
 		public class Item_And_Name_Snippet : TextSnippet {
 			private Item item;
@@ -44,9 +44,7 @@ namespace Origins.UI {
 					ItemSlot.Draw(spriteBatch, ref item, 14, position - new Vector2(10f) * num, Color.White * (1 - locked.Mul(0.334f)));
 					Main.inventoryScale = inventoryScale;
 					spriteBatch.DrawString(FontAssets.MouseText.Value, item.Name, position + new Vector2(32f, 0) * num, Color.MultiplyRGBA(color));
-					if (!locked) {
-						ChatManager.DrawColorCodedString(spriteBatch, StrikethroughFont.Font, "☐" + item.Name, position, new Color(color.R, color.G, color.B, 255), 0, Vector2.Zero, new(scale));
-					}
+					if (!locked) ChatManager.DrawColorCodedString(spriteBatch, StrikethroughFont.Font, "☐" + item.Name, position, new Color(color.R, color.G, color.B, 255), 0, Vector2.Zero, new(scale));
 				}
 				size = new Vector2(32f) * num + FontAssets.MouseText.Value.MeasureString(item.Name) * Vector2.UnitX;
 				return true;
@@ -59,14 +57,10 @@ namespace Origins.UI {
 		public record struct Options(float Speed = 1f / 60f, float WiggleWidth = 16, float WiggleScale = 2);
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
 			Item item = new();
-			if (int.TryParse(text, out int result) && result < ItemLoader.ItemCount) {
-				item.netDefaults(result);
-			} else if (ItemID.Search.TryGetId(text, out result)) {
-				item.netDefaults(result);
-			}
+			if (int.TryParse(text, out int result) && result < ItemLoader.ItemCount) item.netDefaults(result);
+			else if (ItemID.Search.TryGetId(text, out result)) item.netDefaults(result);
 			bool unlocked = false;
-			SnippetHelper.ParseOptions(options,
-				SnippetOption.CreateFlagOption("u", () => unlocked = true),
+			options.ParseOptions(SnippetOption.CreateFlagOption("u", () => unlocked = true),
 				SnippetOption.CreateStringOption("text", text => {
 					item.GetGlobalItem<AddConditionsTextGlobalItem>().conditions = text.Split(',').TrySelect<string, Condition>(conditions.TryGetValue).ToArray();
 				})
@@ -81,9 +75,7 @@ namespace Origins.UI {
 			public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
 				if (conditions is null) return;
 				if (!ItemSlot.ShiftInUse) tooltips.RemoveRange(1, tooltips.Count - 1);
-				for (int i = 0; i < conditions.Length; i++) {
-					tooltips.Add(new(Mod, "Condition" + i, (conditions[i].IsMet() ? "☑" : "☐") + conditions[i].Description));
-				}
+				for (int i = 0; i < conditions.Length; i++) tooltips.Add(new(Mod, "Condition" + i, (conditions[i].IsMet() ? "☑" : "☐") + conditions[i].Description));
 			}
 		}
 	}

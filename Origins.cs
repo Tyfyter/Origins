@@ -35,6 +35,7 @@ using Origins.Tiles.Banners;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.UI;
+using Origins.UI.Snippets;
 using Origins.Walls;
 using Origins.World.BiomeData;
 using ReLogic.Content;
