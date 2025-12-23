@@ -76,6 +76,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			if (SelectedMode is null) return;
 			tooltips.Add(new(Mod, "Ammo", $"[i:{mode}]{Lang.GetItemNameValue(mode)}"));
+			if (SelectedMode.Description is null) return;
 			tooltips.Add(new(Mod, "AmmoDescription", SelectedMode.Description.Value));
 		}
 		public override bool CanUseItem(Player player) => SelectedMode is not null && (!ItemLoader.NeedsAmmo(Item, player) || ammoCount > 0);
