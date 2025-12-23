@@ -30,7 +30,7 @@ namespace Origins.NPCs.Corrupt {
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			AIType = NPCID.GoblinScout;
 			NPC.lifeMax = 85;
-			NPC.defense = 15;
+			NPC.defense = 6;
 			NPC.damage = 16;
 			NPC.width = 38;
 			NPC.height = 38;

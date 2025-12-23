@@ -17,6 +17,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.Ore[Type] = true;
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(255, 165, 0), name);
+			HitSound = SoundID.Tink;
 			DustType = DustID.Torch;
 			//DustType = DustID.Palladium;
 		}

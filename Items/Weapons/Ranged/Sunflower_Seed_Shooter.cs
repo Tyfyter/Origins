@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void AddRecipes() {
 			CreateRecipe()
 			.AddRecipeGroup(RecipeGroupID.Wood, 20)
-			.AddIngredient(ItemID.Sunflower, 3)
+			.AddIngredient(ItemID.Sunflower)
 			.AddTile(TileID.WorkBenches)
 			.Register();
 		}

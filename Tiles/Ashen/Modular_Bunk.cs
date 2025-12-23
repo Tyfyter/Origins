@@ -18,13 +18,13 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Ashen {
 	public class Modular_Bunk : BedBase {
 		public override void OnLoad() {
-			Mod.AddContent(Item = new TileItem(this).WithOnAddRecipes(item => {
+			Item.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
 				.AddIngredient(ItemID.Silk, 10)
 				.AddIngredient(ModContent.ItemType<Scrap>(), 25)
 				.AddTile(ModContent.TileType<Metal_Presser>())
 				.Register();
-			}));
+			});
 		}
 		public override Color MapColor => new(117, 63, 26);
 		public override void ModifyTileData() {

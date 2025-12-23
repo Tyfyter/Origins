@@ -37,7 +37,7 @@ namespace Origins.NPCs.Crimson {
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Fighter;
-			NPC.lifeMax = 70;
+			NPC.lifeMax = 40;
 			NPC.defense = 6;
 			NPC.damage = 25;
 			NPC.width = 54;
