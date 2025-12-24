@@ -2871,7 +2871,12 @@ Configs: {
 
 		ForceEnableDebugItems: {
 			Label: Force Enable Debug Items
-			Tooltip: Enables debugging items even in release builds
+			DebugBuildTooltip: Has no effect in debug builds
+			Tooltip:
+				'''
+				Enables debugging items even in release builds
+				[c/FFA500:{$tModLoader.ModReloadRequiredMemberTooltip}]
+				'''
 		}
 	}
 
