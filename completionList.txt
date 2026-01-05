@@ -723,7 +723,7 @@ VANITY:
 
 UTILITIES:
 |---
-(#, ^2) Adjust-o-Hook !!!
+(☻) Adjust-o-Hook !!!
 (^) Amoeba Hook
 (^) Chambersite Hook
 (^) Tangela Tether
@@ -738,7 +738,7 @@ UTILITIES:
 
 WINGS:
 |---
-(#, ^2) Gills !!!
+(☻) Gills !!!
 
 (^) Acrid Beam Thrusters
 (X) Marrowick Mantle

@@ -7610,3 +7610,13 @@ Lunatics_Rune: {
 	DisplayName: Lunatic's Rune
 	Tooltip: ""
 }
+
+Adjusto_Hook: {
+	DisplayName: Adjust-o-Hook
+	Tooltip: ""
+}
+
+Gills: {
+	DisplayName: Gills
+	Tooltip: ""
+}
