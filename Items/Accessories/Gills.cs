@@ -1,5 +1,6 @@
-﻿using Terraria.Audio;
+﻿using Origins.Layers;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,6 +9,8 @@ namespace Origins.Items.Accessories;
 public class Gills : ModItem {
 	public override void SetStaticDefaults() {
 		ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new(60, 3.25f, hasHoldDownHoverFeatures: true);
+		Origins.AddGlowMask(this);
+		Accessory_Glow_Layer.AddGlowMasks(Item, EquipType.Wings);
 	}
 	public override void SetDefaults() {
 		Item.DefaultToAccessory();
