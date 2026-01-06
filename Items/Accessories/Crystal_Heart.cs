@@ -31,7 +31,7 @@ public class Crystal_Heart : ModItem {
 		Item.master = true;
 	}
 	public override void UpdateAccessory(Player player, bool isHidden) {
-		if (IsActive(player)) {
+		if (AreWingsActive(player)) {
 			player.wingTimeMax = player.GetWingStats(WingSlot).FlyTime;
 			if (!isHidden || (player.velocity.Y != 0f && !player.mount.Active)) {
 				player.wings = WingSlot;
@@ -49,16 +49,16 @@ public class Crystal_Heart : ModItem {
 				player.GetSource_Accessory(Item),
 				player.MountedCenter,
 				default,
-				ModContent.ProjectileType<Crystal_Heart_Slime_Flying>(),
+				Main.rand.NextBool() ? ModContent.ProjectileType<Crystal_Heart_Slime>() : ModContent.ProjectileType<Crystal_Heart_Slime_Flying>(),
 				damage,
 				player.GetWeaponKnockback(Item)
 			).originalDamage = (int)player.GetTotalDamage(Item.DamageType).GetInverse().ApplyTo(damage);
 		}
 	}
 	public override void UpdateItemDye(Player player, int dye, bool hideVisual) {
-		if (IsActive(player)) player.cWings = dye;
+		if (AreWingsActive(player)) player.cWings = dye;
 	}
-	public static bool IsActive(Player player) => player.statLife <= player.statLifeMax2 * 0.5f;
+	public static bool AreWingsActive(Player player) => player.statLife <= player.statLifeMax2 * 0.5f;
 	public override bool MagicPrefix() => true;
 	public override int ChoosePrefix(UnifiedRandom rand) => Item.AccessoryOrSpecialPrefix(rand, PrefixCategory.AnyWeapon, PrefixCategory.Magic);
 }
@@ -194,5 +194,110 @@ public class Crystal_Heart_Slime_Spike : ModProjectile {
 		Projectile.alpha -= 50;
 		if (Projectile.alpha < 0)
 			Projectile.alpha = 0;
+	}
+}
+public class Crystal_Heart_Slime : ModProjectile, IArtifactMinion {
+	public int MaxLife { get; set; }
+	public float Life { get; set; }
+	public override void SetStaticDefaults() {
+		Main.projFrames[Type] = 7;
+	}
+	public override void SetDefaults() {
+		Projectile.CloneDefaults(ProjectileID.BabySlime);
+		Projectile.minionSlots = 0;
+		Projectile.usesIDStaticNPCImmunity = true;
+		Projectile.idStaticNPCHitCooldown = 10;
+		Projectile.aiStyle = 0;
+		Projectile.ContinuouslyUpdateDamageStats = true;
+		MaxLife = 15 * 60;
+	}
+	public override void AI() {
+		DrawOriginOffsetY = (int)(Projectile.height * -0.15f);
+		Spiked_Slime_Minion.SlimeAI(Projectile, false);
+		int npcTarget = (int)Projectile.localAI[2];
+		NPC target = default;
+		if (npcTarget >= 0) {
+			target = Main.npc[npcTarget];
+			if (!target.active) Projectile.localAI[2] = -1;
+			switch (++Projectile.ai[2]) {
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+				Projectile.frame = 2;
+				break;
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				Projectile.frame = 3;
+				break;
+				case 9:
+				case 10:
+				case 11:
+				case 12:
+				Projectile.frame = 4;
+				break;
+				case 13:
+				case 14:
+				case 16:
+				Projectile.frame = 5;
+				break;
+				case 15:
+				Terraria.Audio.SoundEngine.PlaySound(SoundID.Item154, Projectile.Center);
+				Projectile.SpawnProjectile(
+					Projectile.GetSource_FromAI(),
+					Projectile.Center,
+					Projectile.DirectionTo(target.Center) * 12,
+					ModContent.ProjectileType<Crystal_Heart_Slime_Spike>(),
+					Projectile.damage,
+					Projectile.knockBack
+				);
+				Projectile.frame = 5;
+				break;
+				case 17:
+				case 18:
+				case 19:
+				case 20:
+				Projectile.frame = 6;
+				break;
+				default:
+				if (Projectile.ai[2] >= 15) Projectile.ai[2] = 0;
+				break;
+			}
+		} else {
+			Projectile.ai[2] = 0;
+		}
+		static bool IsPlatform(Tile tile) {
+			return tile.HasTile && Main.tileSolidTop[tile.TileType];
+		}
+		float projectileBottom = Projectile.position.Y + Projectile.height;
+		bool targetBelow = (target ?? (Entity)Main.player[Projectile.owner]).Bottom.Y > projectileBottom - (projectileBottom % 16);
+		if (Projectile.tileCollide
+			&& Projectile.velocity.Y > 0
+			&& !targetBelow
+			&& (IsPlatform(Framing.GetTileSafely((Projectile.BottomLeft + Vector2.UnitY).ToTileCoordinates()))
+			|| IsPlatform(Framing.GetTileSafely((Projectile.BottomRight + Vector2.UnitY).ToTileCoordinates())))
+		) {
+			Projectile.velocity.Y = 0;
+			float tileEmbedpos = projectileBottom;
+			if ((int)tileEmbedpos / 16 == (int)(tileEmbedpos + 1) / 16) {
+				Projectile.position.Y -= tileEmbedpos % 16;
+			}
+		}
+		Life -= float.Pow(1.35f, ++Projectile.localAI[1] / (60 * 15));
+	}
+	public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) { }
+	public void ShootSpikes() {
+	}
+	public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+		fallThrough = true;
+		return true;
+	}
+	public override Color? GetAlpha(Color lightColor) {
+		return lightColor * 0.8f;
+	}
+	public override bool OnTileCollide(Vector2 oldVelocity) {
+		return false;
 	}
 }

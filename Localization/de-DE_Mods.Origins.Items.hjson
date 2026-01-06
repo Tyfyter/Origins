@@ -7635,3 +7635,18 @@ Chambersite_Ebonstone_Wall_Item: {
 	// DisplayName: Chambersite Ebonstone Wall
 	// Tooltip: ""
 }
+
+Artifiber_Breastplate: {
+	// DisplayName: Artifiber Breastplate
+	// Tooltip: ""
+}
+
+Artifiber_Greaves: {
+	// DisplayName: Artifiber Greaves
+	// Tooltip: ""
+}
+
+Artifiber_Helmet: {
+	// DisplayName: Artifiber Helmet
+	// Tooltip: ""
+}

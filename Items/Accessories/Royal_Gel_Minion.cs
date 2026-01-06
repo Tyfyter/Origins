@@ -90,7 +90,7 @@ namespace Origins.Items.Accessories {
 			} else Projectile.ai[2]++;
 			if (Projectile.owner == Main.myPlayer && !Main.LocalPlayer.npcTypeNoAggro[1]) Projectile.Kill();
 		}
-		public static void SlimeAI(Projectile projectile) {
+		public static void SlimeAI(Projectile projectile, bool canFly = true) {
 			Player owner = Main.player[projectile.owner];
 			if (!owner.active) {
 				projectile.active = false;
@@ -117,7 +117,7 @@ namespace Origins.Items.Accessories {
 				targetRight = false;
 			}
 			projectile.tileCollide = true;
-			if (projectile.ai[1] == 0f) {//start flying
+			if (projectile.ai[1] == 0f && canFly) {//start flying
 				int distToStartFlying = 500 + 40 * projectile.minionPos;
 				if (projectile.localAI[0] > 0f) {
 					distToStartFlying += 500;

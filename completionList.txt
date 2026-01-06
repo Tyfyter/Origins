@@ -425,7 +425,7 @@ ARMOR:
 (^) Ancient Defiled Armor
 (^) Ancient Felnum Armor
 (^) Ancient Riven Armor
-(#, ^2) Artifiber Armor !!!
+(☻) Artifiber Armor !!!
 (^) Ashen Armor
 (^) Cryosten Armor
 (^) Defiled Armor
@@ -647,7 +647,7 @@ ACCESSORIES:
 
 (^) Amebic Vial
 (^) Blizzardwalker's Jacket
-(#2, ^2) Crystal Heart !!! (gib balance)
+(☻) Crystal Heart !!! (gib balance)
 (^) Cursed Crown
 (^) Emergency Bee Canister
 (^) Faith Beads
