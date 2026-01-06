@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 using PegasusLib;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Origins.Items.Vanity.Dev.PlagueTexan; 
+namespace Origins.Items.Vanity.Dev.PlagueTexan;
 [AutoloadEquip(EquipType.Wings)]
 public class SceneYMK_Wings : ModItem {
 	public static int WingsID { get; private set; }
@@ -33,11 +33,14 @@ public class SceneYMK_Wings : ModItem {
 			}
 			return true;
 		}
-		if (player.wingFrame == 3) 			if (!player.flapSound) {
+		if (player.wingFrame == 3) {
+			if (!player.flapSound) {
 				SoundEngine.PlaySound(SoundID.Item32, player.Center);
 				player.flapSound = true;
+			} else {
+				player.flapSound = false;
 			}
-else 			player.flapSound = false;
+		}
 		return false;
 	}
 	public override void HorizontalWingSpeeds(Player player, ref float speed, ref float acceleration) {

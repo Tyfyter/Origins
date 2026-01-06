@@ -260,7 +260,10 @@ namespace Origins {
 		[DefaultValue(false)]
 		public bool DebugMode = false;
 
-		[DefaultValue(false), ReloadRequired]
+		[DefaultValue(false)]
+#if DEBUG
+		[TooltipKey("$Mods.Origins.Configs.DebugConfig.ForceEnableDebugItems.DebugBuildTooltip")]
+#endif
 		public bool ForceEnableDebugItems = false;
 
 		[DefaultValue(false)]
@@ -783,6 +786,12 @@ namespace Origins {
 			}
 		}
 		public HashSet<string> IgnoredCompatibilitySuggestions { get; set; } = [];
+		public override bool NeedsReload(ModConfig pendingConfig) {
+#if !DEBUG
+			if (pendingConfig is DebugConfig realPending && (realPending.ForceEnableDebugItems != ForceEnableDebugItems)) return true;
+#endif
+			return base.NeedsReload(pendingConfig);
+		}
 	}
 	public class AssetPathComparer : IComparer<string> {
 		public int Compare(string x, string y) {

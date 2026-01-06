@@ -2164,6 +2164,7 @@ Projectiles: {
 	Phantasm_Dragon_Body.DisplayName: Phantasm Dragon Body
 	Phantasm_Dragon_Head.DisplayName: Phantasm Dragon Head
 	Phantasm_Dragon_Tail.DisplayName: Phantasm Dragon Tail
+	Adjusto_Hook_P.DisplayName: Adjusto Hook P
 }
 
 Prefixes: {
@@ -2876,7 +2877,12 @@ Configs: {
 
 		ForceEnableDebugItems: {
 			Label: Force Enable Debug Items
-			Tooltip: Enables debugging items even in release builds
+			DebugBuildTooltip: Has no effect in debug builds
+			Tooltip:
+				'''
+				Enables debugging items even in release builds
+				[c/FFA500:{$tModLoader.ModReloadRequiredMemberTooltip}]
+				'''
 		}
 	}
 

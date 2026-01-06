@@ -45,6 +45,7 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
+using static Origins.Misc.Physics;
 using static ReLogic.Graphics.DynamicSpriteFont;
 using SetsTiles = Origins.OriginsSets.Tiles;
 using SetsWalls = Origins.OriginsSets.Walls;
@@ -1994,6 +1995,31 @@ namespace Origins {
 						break;
 					}
 				}
+			}
+		}
+		public static void DrawChain(this Texture2D texture, Vector2 start, Vector2 end, Rectangle frame, float linkLength, Func<Vector2, Color> lighting = null, int frameRange = 1, FastRandom fastRandom = default) {
+			lighting ??= pos => Lighting.GetColor(pos.ToTileCoordinates());
+			Vector2 distToProj = end - start;
+			float projRotation = distToProj.ToRotation() - MathHelper.PiOver2;
+			float distance = distToProj.Length();
+			distToProj.Normalize();
+			distToProj *= linkLength;
+
+			Vector2 origin = frame.Size() * 0.5f;
+			while (distance >= linkLength && !float.IsNaN(distance)) {
+				start += distToProj;
+				distance = (end - start).Length();
+				frame.Y = fastRandom.Next(frameRange) * frame.Height;
+				Main.EntitySpriteDraw(
+					texture,
+					start - Main.screenPosition,
+					frame,
+					Color.White,
+					projRotation + (fastRandom.Next(2) == 0).ToDirectionInt() * MathHelper.PiOver2,
+					origin,
+					Vector2.One,
+					SpriteEffects.None
+				);
 			}
 		}
 		//named for the author of https://www.reddit.com/r/learnmath/comments/rrz697/topology_efficiently_create_a_set_of_random/
