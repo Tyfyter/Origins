@@ -18,6 +18,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.useAnimation = 45;
 			Item.useTime = 45;
 			Item.rare = ItemRarityID.Blue;
+			Item.useLimitPerAnimation = 1;
 		}
 		public override bool CanUseItem(Player player) {
 			return player.InModBiome<Ashen_Biome>() && !NPC.AnyNPCs(ModContent.NPCType<Trenchmaker>());

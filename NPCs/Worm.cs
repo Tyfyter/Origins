@@ -259,6 +259,12 @@ namespace Origins.NPCs {
 				int tailType = TailType;
 				while (current is not null) {
 					if (current.realLife != NPC.whoAmI) break;
+					if (parts.Contains(current)) {
+						for (int i = 0; i < parts.Count; i++) {
+							parts[i].active = false;
+						}
+						return;
+					}
 					parts.Add(current);
 					for (int i = 0; i < current.buffTime.Length && buffIndex < buffTime.Length; i++) {
 						int time = current.buffTime[i];

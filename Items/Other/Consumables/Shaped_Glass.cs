@@ -15,6 +15,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SuspiciousLookingEye);
+			Item.useLimitPerAnimation = 1;
 		}
 		public override bool CanUseItem(Player player) => player.InModBiome<Fiberglass_Undergrowth>() && !NPC.AnyNPCs(ModContent.NPCType<Fiberglass_Weaver>());
 		public override bool? UseItem(Player player) {

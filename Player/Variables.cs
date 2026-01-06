@@ -1,4 +1,5 @@
-﻿using Origins.Buffs;
+﻿using Origins.Achievements;
+using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
@@ -592,6 +593,7 @@ namespace Origins {
 		internal bool[] activeShadows = new bool[ShadowType.ShadowTypeCount];
 		public bool lastItemCheckNotSkipped = false;
 		public bool InDanger { get; private set; }
+		RIVEN_WORMS.Tracker rivenBloodTracker;
 		public float tornRCStart = 0;
 		public float tornRCValid = 1;
 		public float tornRCEnd = 0;

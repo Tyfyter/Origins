@@ -128,6 +128,7 @@ namespace Origins.Gores.NPCs {
 		}
 	}
 	public class Riven_Blood_Coating : ModDust {
+		internal static List<int> activeDusts = [];
 		internal static Stack<int> cachedDusts;
 		internal static bool anyActive;
 		public static ScreenTarget SlimeTarget { get; private set; }
@@ -198,8 +199,10 @@ namespace Origins.Gores.NPCs {
 		}
 		static void MaskAura(SpriteBatch spriteBatch) {
 			if (Main.dedServ) return;
+			activeDusts.Clear();
 			while (cachedDusts.Count != 0) {
 				Dust dust = Main.dust[cachedDusts.Pop()];
+				activeDusts.Add(dust.dustIndex);
 				float dustAlpha = dust.alpha / 255f;
 				dustAlpha *= dustAlpha;
 				if (dust.type >= DustID.Count && DustLoader.GetDust(dust.type) is ModDust modDust) spriteBatch.Draw(
@@ -207,7 +210,6 @@ namespace Origins.Gores.NPCs {
 					(dust.position - Main.screenPosition),
 					Color.White * (1 - dustAlpha)
 				);
-				
 			}
 		}
 		static void DrawAura(SpriteBatch spriteBatch) {

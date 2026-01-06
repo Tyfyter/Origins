@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Origins.Gores.NPCs;
 using Origins.NPCs.Ashen.Boss;
 using Origins.NPCs.Brine.Boss;
 using Origins.NPCs.Defiled.Boss;
@@ -6,7 +7,9 @@ using Origins.NPCs.Fiberglass;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.Questing;
+using System;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.Achievements;
 using Terraria.GameContent.Achievements;
 using Terraria.ModLoader;
@@ -133,6 +136,36 @@ namespace Origins.Achievements {
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Challenger);
 			Condition = AddCondition();
+		}
+		public class Tracker {
+			readonly bool[,] coverage = new bool[Player.defaultWidth / 2, Player.defaultHeight / 2];
+			public void Update() {
+				RIVEN_WORMS instance = ModContent.GetInstance<RIVEN_WORMS>();
+				if (instance.Achievement.IsCompleted) return;
+				Array.Clear(coverage);
+				for (int i = 0; i < Riven_Blood_Coating.activeDusts.Count; i++) {
+					if (Main.dust[Riven_Blood_Coating.activeDusts[i]].customData is not (Player player, Vector2 playerOffset) || player.whoAmI != Main.myPlayer) continue;
+					playerOffset *= new Vector2(player.direction, 1);
+					playerOffset.X += Player.defaultWidth * 0.5f;
+					playerOffset.Y += Player.defaultHeight * 0.5f;
+					playerOffset /= 2;
+					for (int x = -2; x < 3; x++) {
+						int xIndex = (int)playerOffset.X + x;
+						if (xIndex < 0 || xIndex >= coverage.GetLength(0)) continue;
+						for (int y = -2; y < 3; y++) {
+							int yIndex = (int)playerOffset.Y + y;
+							if (yIndex < 0 || yIndex >= coverage.GetLength(1)) continue;
+							coverage[xIndex, yIndex] = true;
+						}
+					}
+				}
+				float coveragePercent = 0;
+				foreach (bool item in coverage) {
+					if (item) coveragePercent++;
+				}
+				coveragePercent /= coverage.Length;
+				if (coveragePercent >= 0.8f) instance.Condition.Complete();
+			}
 		}
 	}
 	public class Slow_Loading_Bar : ModAchievement {

@@ -21,6 +21,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.useTime = 45;
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
+			Item.useLimitPerAnimation = 1;
 		}
 		public override bool CanUseItem(Player player) {
 			return player.InModBiome<Riven_Hive>() && !NPC.AnyNPCs(ModContent.NPCType<World_Cracker_Head>());

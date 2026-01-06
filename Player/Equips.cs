@@ -570,8 +570,11 @@ namespace Origins {
 
 			if (OriginsModIntegrations.CheckAprilFools()) ModContent.GetInstance<Different_Game>().Condition.Complete();
 
-			if (Player.HasBuff<Adaptability_Buff>() && warriorEmblem && rangerEmblem && sorcererEmblem && summonerEmblem && explosiveEmblem) ModContent.GetInstance<Cheat_Code>().Condition.Complete();
-
+			if (Player.whoAmI == Main.myPlayer) {
+				if (Player.HasBuff<Adaptability_Buff>() && warriorEmblem && rangerEmblem && sorcererEmblem && summonerEmblem && explosiveEmblem) ModContent.GetInstance<Cheat_Code>().Condition.Complete();
+				rivenBloodTracker ??= new();
+				rivenBloodTracker.Update();
+			}
 			Going_Places goingPlaces = ModContent.GetInstance<Going_Places>();
 			True_Hero trueHero = ModContent.GetInstance<True_Hero>();
 			goingPlaces.Condition.Value = 0; // Reseting their condition values to account for debug mod being able to un-complete quests
