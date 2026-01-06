@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Terraria;
@@ -66,5 +65,9 @@ namespace Origins.Tiles.Ashen {
 	public class Fungarust_Item : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 10);
 		public override bool Hardmode => false;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+		}
 	}
 }

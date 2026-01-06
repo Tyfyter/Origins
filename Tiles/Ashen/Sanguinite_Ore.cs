@@ -35,6 +35,7 @@ namespace Origins.Tiles.Ashen {
 	public class Sanguinite_Ore_Item : ModItem, ICustomWikiStat {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Sanguinite_Ore>());

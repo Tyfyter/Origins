@@ -1,5 +1,4 @@
-﻿using BetterDialogue.UI.VanillaChatButtons;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Dev;
 using Origins.Journal;

@@ -53,5 +53,9 @@ namespace Origins.Tiles.Defiled {
 	public class Soulspore_Item : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 10);
 		public override bool Hardmode => false;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+		}
 	}
 }

@@ -2410,7 +2410,6 @@ Tiles: {
 	Soulspore.MapEntry: Soulspore
 	Wilted_Rose.MapEntry: Wilted Rose
 	Felnum_Ore.MapEntry: Felnum
-	Fiberglass_Tile.MapEntry: Mods.Origins.MapObject.Fiberglass_Tile
 	Acetabularia.MapEntry: Acetabularia
 	Encrusted_Ore.MapEntry: Encrusted
 	Riven_Altar.MapEntry: "{§Riven} Altar"
@@ -2499,19 +2498,6 @@ Tiles: {
 	Music_Box_AM: Music Box ({§Ashen} Mines)
 	Purple_Mechanical_Switch.MapEntry: Purple Mechanical Switch
 	Transistor.MapEntry: Transistor
-}
-
-MapObject: {
-	Origins: {
-		Items: {
-			Other: {
-				Fish: {
-					Chunky_Crate: Crate
-					Crusty_Crate: Crate
-				}
-			}
-		}
-	}
 }
 
 Keybinds: {
@@ -3390,5 +3376,75 @@ Achievements: {
 	Kill_Lost_Diver: {
 		FriendlyName: There's Something in There!
 		Description: Defeat the Lost Diver, a humanoid puppet lying around somewhere in the Brine Pool.
+	}
+
+	Mildew_Death: {
+		FriendlyName: "'Till Death Mildew Us Part"
+		Description: Prevent your death after reaching 0 HP.
+	}
+
+	Auto_Immune_Disease: {
+		FriendlyName: Auto-Immune Disease
+		Description: Obtain 20 [itemname:Origins/Defiled_Banner_NPC_Banner_Item].
+	}
+
+	Cheat_Code: {
+		FriendlyName: Cheat Code
+		Description: Equip each of the class emblems while having a Protean Potion active.
+	}
+
+	Cloning_Factory: {
+		FriendlyName: Cloning Factory
+		Description: Clone a total of 500 Projectiles from Salty Seed
+	}
+
+	Different_Game: {
+		FriendlyName: A Different Game
+		Description: Play Terraria Origins on April Fools' Day.
+	}
+
+	Peat_Obsession: {
+		FriendlyName: Peat Obsession
+		Description: Unlock all of the {$NPCName.Demolitionist}'s shop items from giving Peat Moss to him.
+	}
+
+	Whimsical: {
+		FriendlyName: Whimsical!
+		Description: Get a {$NPCName.Nymph} to fall into Shimmer.
+	}
+
+	Whole_Blend_Evil: {
+		FriendlyName: Whole Blend Evil
+		Description: Have at least 1 of every vanilla and Terraria Origins evil material.
+	}
+
+	Going_Places: {
+		FriendlyName: Going Places
+		Description: Complete 3 quests.
+	}
+
+	True_Hero: {
+		FriendlyName: A True Hero
+		Description: Complete every quest.
+	}
+
+	RIVEN_WORMS: {
+		FriendlyName: RIVEN WORMS
+		Description: Get most of the World Cracker's or Mitoworms' gooey gores stuck to you.
+	}
+
+	Slow_Loading_Bar: {
+		FriendlyName: Slow Loading Bar
+		Description: Walk a total of 1,000 tiles while afflicted by Rastorized.
+	}
+
+	Cracked: {
+		FriendlyName: Cracked
+		Description: Defeat the World Cracker at 80% or higher Torn severity the entire fight.
+	}
+
+	Martyrdom: {
+		FriendlyName: Martyrdom
+		Description: Kill a boss with Self-Destruct after death.
 	}
 }

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using Origins.Achievements;
 using Origins.Backgrounds;
 using Origins.Buffs;
 using Origins.Items;
@@ -19,6 +20,7 @@ using Origins.Items.Weapons.Summoner.Minions;
 using Origins.NPCs;
 using Origins.NPCs.Brine;
 using Origins.NPCs.MiscB.Shimmer_Construct;
+using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
@@ -444,6 +446,7 @@ namespace Origins {
 					orig(self);
 				}
 			};
+			On_NPC.GetShimmered += On_NPC_GetShimmered;
 			chanceNumerators = [];
 			foreach (Mod mod in ModLoader.Mods) {
 				if (mod.Code is null) continue;
@@ -741,6 +744,16 @@ namespace Origins {
 			MonoModHooks.Add(typeof(Player).GetProperty(nameof(Player.ShoppingZone_AnyBiome)).GetMethod, (orig_ShoppingZone_AnyBiome orig, Player self) => {
 				return orig(self) || self.InModBiome<Defiled_Wastelands>() || self.InModBiome<Riven_Hive>() || self.InModBiome<Ashen_Biome>();
 			});
+		}
+
+		private void On_NPC_GetShimmered(On_NPC.orig_GetShimmered orig, NPC self) {
+			int origType = self.type;
+			orig(self);
+			if ((origType == NPCID.LostGirl || origType == NPCID.Nymph) && (self.type == MC.NPCType<Whimsical_Girl>() || self.type == MC.NPCType<Fae_Nymph>())) {
+				if (Main.LocalPlayer.Distance(self.Center) < 70 * 16) {
+					MC.GetInstance<Whimsical>().Condition.Complete();
+				}
+			}
 		}
 
 		delegate bool orig_ShoppingZone_AnyBiome(Player self);

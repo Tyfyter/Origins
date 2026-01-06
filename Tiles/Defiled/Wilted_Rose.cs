@@ -153,7 +153,11 @@ namespace Origins.Tiles.Defiled {
 		public override int Value => Item.sellPrice(copper: 20);
 		public override bool Hardmode => false;
 		public override int Width => 12;
-    }
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+		}
+	}
     public class Wilting_Rose_Seeds : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 16);
 		public override bool Hardmode => false;

@@ -90,6 +90,10 @@ namespace Origins.Items.Materials {
 			public override string TextKey => "Alkahest";
 			public override JournalSortIndex SortIndex => new("Riven", 0);
 		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+		}
 	}
 	public class Alkaliphiliac_Tissue : MaterialItem {
 		public override int ResearchUnlockCount => 99;
@@ -218,6 +222,10 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.UnholyArrow, 5)
 			.AddIngredient(ItemID.WoodenArrow, 5)
@@ -234,6 +242,10 @@ namespace Origins.Items.Materials {
 		public class Black_Bile_Entry : JournalEntry {
 			public override string TextKey => "Black_Bile";
 			public override JournalSortIndex SortIndex => new("The_Defiled", 11);
+		}
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
 		}
 	}
 	public class Bleeding_Obsidian_Shard : MaterialItem {
@@ -255,6 +267,10 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.UnholyArrow, 5)
 			.AddIngredient(ItemID.WoodenArrow, 5)
@@ -385,6 +401,10 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
 		public override bool Hardmode => false;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+		}
 	}
 	public class Nova_Fragment : MaterialItem {
 		public override bool HasGlowmask => true;
@@ -426,6 +446,10 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(silver: 9);
 		public override int Rare => ItemRarityID.Orange;
 		public override bool Hardmode => true;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+		}
 	}
 	public class Riven_Carapace : MaterialItem, IJournalEntrySource {
 		public string EntryName => "Origins/" + typeof(Riven_Carapace_Entry).Name;
@@ -437,6 +461,10 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
 		public override bool Hardmode => false;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+		}
 	}
 	public class Rotor : MaterialItem {
 		public override int ResearchUnlockCount => 99;
@@ -501,6 +529,10 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;
 		public override bool HasTooltip => true;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.UnholyArrow, 5)
 			.AddIngredient(ItemID.WoodenArrow, 5)
@@ -547,6 +579,10 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
 		public override bool Hardmode => false;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+		}
 	}
 	public class Valkyrum_Bar : MaterialItem {
 		//Alloy of Felnum and a Dawn material. I can imagine a pearl-like color now

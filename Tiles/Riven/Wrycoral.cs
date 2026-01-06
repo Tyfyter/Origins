@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -7,7 +8,6 @@ using Terraria.GameContent.Drawing;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
@@ -92,16 +92,18 @@ namespace Origins.Tiles.Riven {
 			return false;
 		}
 	}
-	public class Wrycoral_Item : ModItem {
+	public class Wrycoral_Item : MaterialItem {
+		public override int Value => Item.sellPrice(copper: 20);
+		public override bool Hardmode => false;
+		public override bool HasGlowmask => true;
+		public override int Width => 12;
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
 		}
 		public override void SetDefaults() {
+			base.SetDefaults();
 			Item.DefaultToPlaceableTile(TileType<Hanging_Wrycoral>());
-			Item.maxStack = Item.CommonMaxStack;
-			Item.width = 12;
-			Item.height = 14;
-			Item.value = Item.sellPrice(copper: 20);
 		}
 	}
 }

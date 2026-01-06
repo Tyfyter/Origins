@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
+using Origins.Achievements;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Dusts;
@@ -202,6 +203,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				}
 				NPC.frame.Y = NPC.frame.Height * int.Clamp(frame, 0, 2);
 			}
+
+		}
+		public override void OnSpawn(IEntitySource source) {
+			OriginPlayer localOP = OriginPlayer.LocalOriginPlayer;
+			localOP.tornRCStart = localOP.tornCurrentSeverity;
 		}
 		public static void ProcessShoot(NPC npc) {
 			NPC headNPC = npc.realLife >= 0 ? Main.npc[npc.realLife] : npc;
@@ -467,12 +473,18 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			while (current is not null) {
 				if (!visited[current.whoAmI].TrySet(true)) break;
 				for (int j = 0; j < Main.maxPlayers; j++) {
-					if (Main.player[j].active && !Main.player[j].dead) {
+					Player player = Main.player[j];
+					if (player.active && !player.dead) {
 						float currentDist = Main.player[j].DistanceSQ(current.Center);
 						if (currentDist < dist) {
 							dist = currentDist;
 							closest = current.whoAmI;
 						}
+					}
+					if (NPC.playerInteraction[j]) {
+						OriginPlayer oP = player.OriginPlayer();
+						oP.tornRCEnd = oP.tornCurrentSeverity;
+						if (oP.tornRCStart >= 0.8f && oP.tornRCValid >= 0.8f && oP.tornRCEnd >= 0.8f) ModContent.GetInstance<Cracked>().Condition.Complete();
 					}
 				}
 				DamageArmor(current, new NPC.HitInfo() { SourceDamage = 9999, HideCombatText = true }, 0);

@@ -1,4 +1,4 @@
-﻿using Mono.Cecil;
+﻿using Origins.Achievements;
 using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Items;
@@ -11,12 +11,9 @@ using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Layers;
-using Origins.Projectiles;
-using PegasusLib;
-using PegasusLib.Networking;
+using Origins.Questing;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -566,6 +563,28 @@ namespace Origins {
 				Player.manaRegenDelay = 0;
 				if (necromancyPrefixMana < Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier) necromancyPrefixMana = Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier;
 			}
+
+			#region Achievements
+			Peat_Moss_Quest peatQuest = ModContent.GetInstance<Peat_Moss_Quest>();
+			if (peatQuest.Started && peatQuest.Completed) ModContent.GetInstance<Peat_Obsession>().Condition.Complete();
+
+			if (OriginsModIntegrations.CheckAprilFools()) ModContent.GetInstance<Different_Game>().Condition.Complete();
+
+			if (Player.HasBuff<Adaptability_Buff>() && warriorEmblem && rangerEmblem && sorcererEmblem && summonerEmblem && explosiveEmblem) ModContent.GetInstance<Cheat_Code>().Condition.Complete();
+
+			Going_Places goingPlaces = ModContent.GetInstance<Going_Places>();
+			True_Hero trueHero = ModContent.GetInstance<True_Hero>();
+			goingPlaces.Condition.Value = 0; // Reseting their condition values to account for debug mod being able to un-complete quests
+			trueHero.Condition.Value = 0;
+			foreach (Quest quest in Quest_Registry.Quests) {
+				if (quest.Mod == Mod && quest.Started && quest.Completed) {
+					goingPlaces.Condition.Value++;
+					trueHero.Condition.Value++;
+				}
+			}
+
+			tornRCValid = Math.Min(Math.Max(0, tornRCValid), tornCurrentSeverity);
+			#endregion
 		}
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource) {
 			if (mildewHeart) {
@@ -577,7 +596,9 @@ namespace Origins {
 					lastMildewDeathReason = damageSource;
 					lastMildewDeathPvP = pvp;
 				}
-				return mildewHealth <= 0;
+				bool canDie = mildewHealth <= 0;
+				if (!canDie) ModContent.GetInstance<Mildew_Death>().Condition.Complete();
+				return canDie;
 			}
 			return true;
 		}

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Achievements;
 using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Accessories;
@@ -146,6 +147,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.ai[0] = 1;
 			}
 			Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Self_Destruct_Flash>(), 0, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			if (target.boss || NPCID.Sets.ShouldBeCountedAsBoss[target.type]) {
+				if ((hit.InstantKill || damageDone >= target.life) && Main.player[Projectile.owner].dead)
+					ModContent.GetInstance<Martyrdom>().Condition.Complete();
+			}
 		}
 		public void Explode(int delay = 0) { }
 		public bool IsExploding => true;

@@ -1,5 +1,5 @@
-﻿using Origins.Buffs;
-using Origins.Core.Structures;
+﻿using Origins.Achievements;
+using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riptide;
@@ -11,14 +11,14 @@ using Origins.Items.Other.Fish;
 using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
+using Origins.NPCs.Defiled;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Reflection;
+using Origins.Tiles.Banners;
 using Origins.Tiles.Other;
-using Origins.UI;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
-using Terraria.UI;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -642,6 +641,17 @@ namespace Origins {
 			ValidTicket(Player.bank2.item);
 			ValidTicket(Player.bank3.item);
 			ValidTicket(Player.bank4.item);
+
+			#region Achievements
+			Whole_Blend_Evil blendEvil = ModContent.GetInstance<Whole_Blend_Evil>();
+			blendEvil.Condition.Value = 0;
+			for (int i = 0; i < OriginsSets.Items.EvilMaterialAchievement.Length; i++) {
+				if (OriginsSets.Items.EvilMaterialAchievement[i] && Player.HasItemInInventoryOrOpenVoidBag(i)) blendEvil.Condition.Value++;
+			}
+
+			int bannerType = BannerGlobalNPC.NPCToBannerItem[ModContent.NPCType<Defiled_Banner_NPC>()];
+			ModContent.GetInstance<Auto_Immune_Disease>().Condition.Value = Player.CountItemInInventoryOrOpenVoidBag(bannerType, 20);
+			#endregion
 		}
 		public void ValidTicket(Item[] items) {
 			if (lotteryTicketItem is not null || !OriginConfig.Instance.TicketInBank) return;

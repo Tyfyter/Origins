@@ -12,7 +12,6 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -21,6 +20,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Items {
 	public class OriginGlobalItem : GlobalItem {
@@ -202,6 +202,13 @@ namespace Origins.Items {
 				player.GetDamage(DamageClass.Generic) += Main.raining ? 0.07f : 0.05f;
 				break;
 			}
+		}
+		public override void UpdateAccessory(Item item, Player player, bool hideVisual) {
+			if (item.type == ItemID.WarriorEmblem) player.OriginPlayer().warriorEmblem = true;
+			if (item.type == ItemID.RangerEmblem) player.OriginPlayer().rangerEmblem = true;
+			if (item.type == ItemID.SorcererEmblem) player.OriginPlayer().sorcererEmblem = true;
+			if (item.type == ItemID.SummonerEmblem) player.OriginPlayer().summonerEmblem = true;
+			if (item.type == ItemType<Exploder_Emblem>()) player.OriginPlayer().explosiveEmblem = true;
 		}
 		public override bool OnPickup(Item item, Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

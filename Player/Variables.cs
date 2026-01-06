@@ -1,5 +1,4 @@
-﻿using CalamityMod.Enums;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
@@ -12,8 +11,8 @@ using Origins.Layers;
 using Origins.Misc;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Riven;
+using Origins.NPCs.Riven.World_Cracker;
 using Origins.Projectiles.Misc;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -362,6 +361,11 @@ namespace Origins {
 		public int laserTagHits = 0;
 		public int laserTagHP = 0;
 		public int laserTagRespawnDelay = 0;
+		public bool warriorEmblem = false;
+		public bool rangerEmblem = false;
+		public bool sorcererEmblem = false;
+		public bool summonerEmblem = false;
+		public bool explosiveEmblem = false;
 		#endregion
 
 		#region explosive stats
@@ -588,6 +592,9 @@ namespace Origins {
 		internal bool[] activeShadows = new bool[ShadowType.ShadowTypeCount];
 		public bool lastItemCheckNotSkipped = false;
 		public bool InDanger { get; private set; }
+		public float tornRCStart = 0;
+		public float tornRCValid = 1;
+		public float tornRCEnd = 0;
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
 			oldBonuses = 0;
@@ -1236,6 +1243,16 @@ namespace Origins {
 			if (scytheHitCombo > maxScytheCombo) scytheHitCombo = maxScytheCombo;
 			if (!InDanger) scytheHitCombo = 0;
 			Array.Clear(activeShadows);
+			warriorEmblem = false;
+			rangerEmblem = false;
+			sorcererEmblem = false;
+			summonerEmblem = false;
+			explosiveEmblem = false;
+			if (!(OriginExtensions.AnyNPCs<World_Cracker_Head>() || OriginExtensions.AnyNPCs<World_Cracker_Body>() || OriginExtensions.AnyNPCs<World_Cracker_Tail>())) {
+				tornRCStart = 0;
+				tornRCValid = 1;
+				tornRCEnd = 0;
+			}
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;

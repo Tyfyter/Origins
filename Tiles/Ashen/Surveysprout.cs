@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
 using Origins.Items.Materials;
@@ -161,6 +160,10 @@ namespace Origins.Tiles.Ashen {
 	public class Surveysprout_Item : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 20);
 		public override bool Hardmode => false;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+		}
 	}
 	public class Surveysprout_Seeds : MaterialItem {
 		public override string Texture => typeof(Wilting_Rose_Seeds).GetDefaultTMLName();

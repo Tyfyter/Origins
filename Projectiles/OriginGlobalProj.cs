@@ -1,6 +1,7 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Achievements;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items;
@@ -385,6 +386,7 @@ namespace Origins.Projectiles {
 						projectile.velocity = projectile.velocity.RotatedBy(-0.25f);
 						projectile.rotation -= 0.25f;
 						hasUsedMitosis = true;
+						ModContent.GetInstance<Cloning_Factory>().Condition.Value++;
 						if (projectile.minion) {
 							mitosisTimeLeft = Mitosis_P.minion_duplicate_duration;
 						}

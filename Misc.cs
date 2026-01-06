@@ -8,7 +8,6 @@ using Origins.Tiles.Dusk;
 using Origins.Tiles.Other;
 using Origins.UI;
 using Origins.Walls;
-using PegasusLib;
 using PegasusLib.Graphics;
 using ReLogic.Content;
 using ReLogic.Graphics;
@@ -45,8 +44,6 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
-using static Origins.Misc.Physics;
-using static ReLogic.Graphics.DynamicSpriteFont;
 using SetsTiles = Origins.OriginsSets.Tiles;
 using SetsWalls = Origins.OriginsSets.Walls;
 
@@ -1598,6 +1595,24 @@ namespace Origins {
 			if (player.bank4.item.HasItem(item)) return true;
 			return false;
 		}
+		public static int CountItem(this Player player, int type, Item[] inventory, int stopCountingAt = 0) {
+			int num = 0;
+			for (int i = 0; i != inventory.Length; i++) {
+				if (inventory[i].stack > 0 && inventory[i].type == type) {
+					num += inventory[i].stack;
+					if (num >= stopCountingAt)
+						return num;
+				}
+			}
+
+			return num;
+		}
+		public static int CountItemInInventoryOrOpenVoidBag(this Player player, int type, int stopCountingAt = 0) {
+			int num = player.CountItem(type, stopCountingAt);
+			if (num < stopCountingAt && player.useVoidBag()) num += player.CountItem(type, player.bank4.item, stopCountingAt - num);
+
+			return num;
+		}
 		#region spritebatch
 		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.End();
@@ -2245,6 +2260,7 @@ namespace Origins {
 			}
 		}
 		public static void DoFrames(this NPC self, int counterMax) => self.DoFrames(counterMax, 0..Main.npcFrameCount[self.type]);
+		public static bool AnyNPCs<TModNPC>() where TModNPC : ModNPC => NPC.AnyNPCs(ModContent.NPCType<TModNPC>());
 		public static string Get2ndPersonReference(this Player self, string args = "") {
 			return Language.GetTextValue($"Mods.Origins.Words.2ndref{args}{(self.Male ? "male" : "female")}");
 		}
@@ -2315,7 +2331,7 @@ namespace Origins {
 			return array[i, j];
 		}
 		public static bool IndexInRange<T>(this T[,] array, int i, int j) {
-			return i >= 0 
+			return i >= 0
 				&& j >= 0
 				&& i < array.GetLength(0)
 				&& j < array.GetLength(1);

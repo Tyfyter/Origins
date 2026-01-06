@@ -38,7 +38,8 @@ namespace Origins.Tiles.Defiled {
 	public class Lost_Ore_Item : ModItem, ICustomWikiStat {
         public override void SetStaticDefaults() {
             Item.ResearchUnlockCount = 100;
-        }
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+		}
         public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Lost_Ore>());
 			Item.rare = ItemRarityID.Blue;

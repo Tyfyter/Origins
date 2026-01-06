@@ -33,7 +33,6 @@ using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Banners;
 using Origins.Tiles.Defiled;
-using Origins.Tiles.Other;
 using Origins.UI;
 using Origins.UI.Snippets;
 using Origins.Walls;
@@ -287,7 +286,7 @@ namespace Origins {
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Dusk", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Dusk"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Defiled", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled_Wastelands"));
-			LocalizationMethods.BindArgs(Language.GetOrRegister("The_Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.The_Defiled_Wastelands")); 
+			LocalizationMethods.BindArgs(Language.GetOrRegister("The_Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.The_Defiled_Wastelands"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("the_Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.the_Defiled_Wastelands"));
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Ashen", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Ashen"));
 
@@ -658,7 +657,7 @@ namespace Origins {
 			PaintingsNotFromVendor[ItemID.SparkyPainting] = true;
 			for (int i = 4626; i < 4640; i++) PaintingsNotFromVendor[i] = true;
 			for (int i = 5218; i < 5275; i++) {
-				if (i != 5222 && i != 5225 && i != 5228 && i != 5229 && (i !>= 5231 && i !<= 5233) && (i !>= 5241 && i !<= 5245) && i != 5251 && i != 5253 && i != 5257 && i != 5266) PaintingsNotFromVendor[i] = true;
+				if (i != 5222 && i != 5225 && i != 5228 && i != 5229 && (i! >= 5231 && i! <= 5233) && (i! >= 5241 && i! <= 5245) && i != 5251 && i != 5253 && i != 5257 && i != 5266) PaintingsNotFromVendor[i] = true;
 			}
 			PaintingsNotFromVendor[ItemID.SunOrnament] = true;
 

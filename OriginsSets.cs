@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Projectiles;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -9,8 +8,6 @@ using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
-using ThoriumMod.Items.Placeable;
 using ThoriumTiles = ThoriumMod.Tiles;
 using ThoriumWalls = ThoriumMod.Walls;
 using OMI = Origins.OriginsModIntegrations;
@@ -47,6 +44,19 @@ namespace Origins {
 			public static bool[] PaintingsNotFromVendor { get; } = ItemID.Sets.Factory.CreateBoolSet();
 			public static bool[] InvalidForDefiledPrefix { get; } = ItemID.Sets.Factory.CreateNamedSet(nameof(InvalidForDefiledPrefix))
 			.RegisterBoolSet();
+			public static bool[] EvilMaterialAchievement { get; } = ItemID.Sets.Factory.CreateBoolSet(
+				ItemID.Deathweed,
+				ItemID.VileMushroom,
+				ItemID.DemoniteOre,
+				ItemID.RottenChunk,
+				ItemID.ShadowScale,
+				ItemID.CursedFlame,
+				ItemID.ViciousMushroom,
+				ItemID.CrimtaneOre,
+				ItemID.Vertebrae,
+				ItemID.TissueSample,
+				ItemID.Ichor
+			);
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Projectiles {

@@ -39,6 +39,7 @@ namespace Origins.Tiles.Riven {
 	public class Encrusted_Ore_Item : ModItem, ICustomWikiStat {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Encrusted_Ore>());

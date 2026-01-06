@@ -393,28 +393,28 @@ NPC DIALOGUE:
 
 ACHIEVEMENTS:
 |---
-(X) A Different Game !!!
-(X) A True Hero !!!
+(^3) A Different Game !!!
+(^3) A True Hero !!!
 (^3) An Eye for an Eye !!!
-(X) Auto-Immune Disease !!!
-(X) Cheat Code !!!
-(X) Cloning Factory !!!
-(X) Cracked !!!
+(^3) Auto-Immune Disease !!!
+(^3) Cheat Code !!!
+(^3) Cloning Factory !!!
+(^3) Cracked !!!
 (^3) Enough Yap !!!
-(X) Going Places !!!
+(#2) Going Places !!! (3 day time limit)
 (^3) It Was Watching !!!
 (^3) Kaiju !!!
 (^3) Killimanjaro !!!
-(X) Martyrdom !!!
+(^3) Martyrdom !!!
 (^3) Now You're the One Lying Broken !!!
-(X) Peat Obsession !!!
-(X) RIVEN WORMS !!!
-(X) Slow Loading Bar !!!
+(^3) Peat Obsession !!!
+(#2) RIVEN WORMS !!! (idk how to implement)
+(#2) Slow Loading Bar !!! (idk how to implement)
 (X) The Signal, it's Calling !!!
 (^3) There's Something in There! !!!
-(X) 'Till Death Mildew Us Part !!!
-(X) Whismical! !!!
-(X) Whole Blend Evil !!!
+(^3) 'Till Death Mildew Us Part !!!
+(^3) Whismical! !!!
+(^3) Whole Blend Evil !!!
 ---
 
 
@@ -1481,6 +1481,7 @@ MATERIALS:
 (^) Acetabularia
 (^) Adhesive Wrap
 (^) Aetherite Bar
+(^) Ashen Seeds
 (^) Bark
 (^) Bat Hide
 (^) Biocomponent 10

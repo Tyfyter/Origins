@@ -1,11 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
@@ -51,12 +50,12 @@ namespace Origins.Tiles.Riven {
 			return true;
 		}
 	}
-	public class Acetabularia_Item : ModItem {
+	public class Acetabularia_Item : MaterialItem {
+		public override int Value => Item.sellPrice(copper: 10);
+		public override bool Hardmode => false;
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = 999;
+			base.SetStaticDefaults();
+			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
 		}
 	}
 }
