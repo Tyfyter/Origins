@@ -127,6 +127,7 @@ namespace Origins.Walls {
 		}
 	}
 	public class Chambersite_Crimstone_Wall : ModWall {
+		public override void Load() => Mod.AddContent(new Auto_Chambersite_Wall_Item(this));
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallID.CrimstoneEcho;//what wall type this wall is considered to be when blending
 			AddMapEntry(GetWallMapColor(WallID.CrimstoneUnsafe));
@@ -138,6 +139,7 @@ namespace Origins.Walls {
 		}
 	}
 	public class Chambersite_Ebonstone_Wall : ModWall {
+		public override void Load() => Mod.AddContent(new Auto_Chambersite_Wall_Item(this));
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallID.EbonstoneEcho;//what wall type this wall is considered to be when blending
 			AddMapEntry(GetWallMapColor(WallID.EbonstoneUnsafe));
