@@ -677,7 +677,7 @@ namespace Origins.World.BiomeData {
 			BloodPenguin = NPCType<Bile_Thrower>();
 			BloodGoldfish = NPCType<Shattered_Goldfish>();
 
-			AddWallConversions<Tainted_Stone_Wall>(
+			this.AddOriginsWallConversions<Tainted_Stone_Wall>(WallVersion.Natural,
 				WallID.Cave7Unsafe,
 				WallID.CaveUnsafe,
 				WallID.Cave2Unsafe,
@@ -714,7 +714,7 @@ namespace Origins.World.BiomeData {
 				WallID.GrassUnsafe,
 				WallID.Grass
 			);
-			this.AddChambersiteConversions(Chambersite_Ore.GetOreID(TileType<Tainted_Stone>()), WallType<Chambersite_Tainted_Stone_Wall>());
+			this.AddChambersiteTileConversions(Chambersite_Ore.GetOreID(TileType<Tainted_Stone>()));
 
 			EvilBiomeGenerationPass = new Ashen_Generation_Pass();
 		}

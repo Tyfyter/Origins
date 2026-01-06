@@ -3010,13 +3010,11 @@ namespace Origins {
 				if (SetsTiles.GemTilesToChambersite[i]) biome.AddTileConversion(tile, i, oneWay: true, extraFunctions: false);
 			}
 		}
-		public static void AddChambersiteWallConversions(this AltBiome biome, int wall) {
-			biome.AddWallConversions(wall, ModContent.WallType<Chambersite_Stone_Wall>());
-			biome.AddWallConversions(wall, SetsWalls.GemWallsToChambersite);
+		public static void AddOriginsWallConversions<T>(this AltBiome biome, WallVersion version, params int[] orig) where T : OriginsWall {
+			biome.AddWallConversions(OriginsWall.GetWallID<T>(version), orig);
 		}
-		public static void AddChambersiteConversions(this AltBiome biome, int tile, int wall) {
-			if (tile != -1) biome.AddChambersiteTileConversions(tile);
-			if (wall != -1) biome.AddChambersiteWallConversions(wall);
+		public static void AddOriginsWallConversions<T>(this AltBiome biome, WallVersion version, params bool[] set) where T : OriginsWall {
+			biome.AddWallConversions(OriginsWall.GetWallID<T>(version), set);
 		}
 		public static void AddEvilConversions(this AltBiome biome) {
 			for (int i = 0; i < SetsTiles.ExposedGemsToChambersite.Length; i++) {

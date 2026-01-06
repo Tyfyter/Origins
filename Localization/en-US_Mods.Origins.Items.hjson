@@ -7583,7 +7583,7 @@ Retool_Arm_Cannon: {
 
 Retool_Arm_Laser: {
 	DisplayName: "{$Retool_Arm.DisplayName} (Laser)"
-	Tooltip: "<right> to fire a powerful laser"
+	Tooltip: <right> to fire a powerful laser
 }
 
 Retool_Arm_Saw: {
@@ -7593,5 +7593,35 @@ Retool_Arm_Saw: {
 
 Retool_Arm_Vice: {
 	DisplayName: "{$Retool_Arm.DisplayName} (Vice)"
+	Tooltip: ""
+}
+
+Defiled_Stone_Wall_Safe_Item: {
+	DisplayName: Defiled Stone Wall Safe Item
+	Tooltip: ""
+}
+
+Riven_Flesh_Wall_Safe_Item: {
+	DisplayName: Riven Flesh Wall Safe Item
+	Tooltip: ""
+}
+
+Tainted_Stone_Wall_Safe_Item: {
+	DisplayName: Tainted Stone Wall Safe Item
+	Tooltip: ""
+}
+
+Chambersite_Defiled_Stone_Wall_Item: {
+	DisplayName: Chambersite Defiled Stone Wall Item
+	Tooltip: ""
+}
+
+Chambersite_Riven_Flesh_Wall_Item: {
+	DisplayName: Chambersite Riven Flesh Wall Item
+	Tooltip: ""
+}
+
+Chambersite_Tainted_Stone_Wall_Item: {
+	DisplayName: Chambersite Tainted Stone Wall Item
 	Tooltip: ""
 }

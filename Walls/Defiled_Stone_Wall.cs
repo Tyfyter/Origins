@@ -1,8 +1,10 @@
-﻿using Origins.Tiles;
+﻿using AltLibrary.Common.AltBiomes;
+using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Walls {
 	public class Defiled_Stone_Wall : OriginsWall {
@@ -18,7 +20,11 @@ namespace Origins.Walls {
 			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
 			if (WallVersion == WallVersion.Natural) Origins.WallHammerRequirement[Type] = 70;
 		}
-		public override void Load() {/*
+		public override void Load() {
+			if (WallVersion == WallVersion.Natural) {
+				Mod.AddContent(new Auto_Chambersite_Wall(this, new(150, 150, 150), ModContent.GetInstance<Defiled_Wastelands_Alt_Biome>));
+			}
+			/*
 			if (WallVersion == WallVersion.Safe) {
 				Chambersite_Ore_Wall.Create(this, Item, () => DustType, itemOverlay: Chambersite_Ore_Wall.overlay_path_base + "Item_Chunk", legacyNames: "Chambersite_Defiled_Stone_Wall");
 			}*/

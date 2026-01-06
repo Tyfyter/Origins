@@ -47,6 +47,7 @@ using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
+using Origins.Walls;
 using Origins.World.BiomeData;
 using PegasusLib.Graphics;
 using ReLogic.Content;
@@ -72,6 +73,7 @@ using static Origins.OriginSystem;
 using static Terraria.ModLoader.ModContent;
 using SetsTiles = Origins.OriginsSets.Tiles;
 using ThoriumTiles = ThoriumMod.Tiles;
+using ThoriumWalls = ThoriumMod.Walls;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -179,6 +181,24 @@ namespace Origins {
 				}
 				oldMouse = currentMouse;
 				oldKeyboard = currentKB;
+			}
+		}
+		public static void SetupContent() {
+			if (Thorium is not null) AddThorium();
+			if (Avalon is not null) AddAvalon();
+			[JITWhenModsEnabled("ThoriumMod")]
+			static void AddThorium() {
+				Chambersite_Stone_Wall.baseWallTypes.Add((ushort)WallType<ThoriumWalls.AquamarineWall>());
+				Chambersite_Stone_Wall.baseWallTypes.Add((ushort)WallType<ThoriumWalls.OpalWall>());
+			}
+			[JITWhenModsEnabled("Avalon")]
+			static void AddAvalon() {
+				Chambersite_Stone_Wall.baseWallTypes.Add(GetModContent(Avalon, "PeridotStoneWallUnsafe"));
+				Chambersite_Stone_Wall.baseWallTypes.Add(GetModContent(Avalon, "TourmalineStoneWallUnsafe"));
+				Chambersite_Stone_Wall.baseWallTypes.Add(GetModContent(Avalon, "ZirconStoneWallUnsafe"));
+			}
+			static ushort GetModContent(Mod mod, string name) {
+				return mod.GetContent<ModWall>().First(content => content.Name == name).Type;
 			}
 		}
 		public static void PostSetupContent(Mod mod) {

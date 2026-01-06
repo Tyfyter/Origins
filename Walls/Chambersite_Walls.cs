@@ -1,20 +1,35 @@
 ﻿using AltLibrary.Common.AltBiomes;
+using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
-using Origins.Tiles.Other;
+using Newtonsoft.Json.Linq;
+using Origins.Core;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 using Terraria;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Items.ThrownItems;
 using static Origins.OriginExtensions;
+using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
 	[ReinitializeDuringResizeArrays]
-	public class Chambersite_Stone_Wall : ModWall {
+	public sealed class Chambersite_Stone_Wall : ModWall {
 		public static Dictionary<ushort, ushort> AddChambersite = [];
 		public static List<int> chambersiteWalls = [];
 		public static int[] wallCounts = WallID.Sets.Factory.CreateIntSet();
+		public static ActionZipper<ushort> baseWallTypes = new(
+			WallID.AmethystUnsafe,
+			WallID.TopazUnsafe,
+			WallID.SapphireUnsafe,
+			WallID.EmeraldUnsafe,
+			WallID.RubyUnsafe,
+			WallID.DiamondUnsafe
+		);
 		public override void Unload() {
 			AddChambersite = null;
 		}
@@ -39,6 +54,7 @@ namespace Origins.Walls {
 			//IL_00c6: ldloca.s 7
 			//IL_00c8: call instance bool Terraria.Tile::active()
 			//IL_00cd: brtrue.s IL_00f9
+			Mod.AddContent(new WallItem(this));
 		}
 
 		public override void SetStaticDefaults() {
@@ -47,6 +63,7 @@ namespace Origins.Walls {
 			DustType = DustID.GemEmerald;
 			//AddChambersite.Add(WallID.Stone, Type);
 			chambersiteWalls.Add(Type);
+			OriginsModIntegrations.SetupContent();
 		}
 		public override bool Drop(int i, int j, ref int type) {
 			return false;
@@ -55,16 +72,48 @@ namespace Origins.Walls {
 			biome.AddWallConversions(type, WallType<Chambersite_Stone_Wall>());
 		}
 	}
-	public class Chambersite_Stone_Wall_Item : ModItem {
-		public override void SetDefaults() {
-			Item.DefaultToPlaceableWall((ushort)WallType<Chambersite_Stone_Wall>());
+	[Autoload(false)]
+	public class Auto_Chambersite_Wall(ModWall baseWall, Color mapColor, Func<AltBiome> biome) : ModWall {
+		public ModWall BaseWall { get; } = baseWall;
+		public override string Name => "Chambersite_" + BaseWall.Name;
+		public override string Texture => BaseWall.Texture;
+		public override void Load() => Mod.AddContent(new Auto_Chambersite_Wall_Item(this));
+		static AutoLoadingAsset<Texture2D> overlay = "Origins/Walls/Overlays/Chambersite/Chambersite_Ore_Wall";
+		private static VertexColors _glowPaintColors = new(Color.White);
+		public override void SetStaticDefaults() {
+			Main.wallBlend[Type] = BaseWall.Type;//what wall type this wall is considered to be when blending
+			AddMapEntry(mapColor);
+			Chambersite_Stone_Wall.AddChild(Type, biome());
+			Chambersite_Stone_Wall.baseWallTypes.Add(GemWallAction);
+			Chambersite_Stone_Wall.AddChambersite.Add(BaseWall.Type, Type);
+			DustType = DustID.GemEmerald;
+			Chambersite_Stone_Wall.chambersiteWalls.Add(Type);
 		}
+		void GemWallAction(ushort baseWall) {
+			biome().AddWallConversions(Type, baseWall);
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			Tile tile = Main.tile[i, j];
+			VertexColors vertices;
+			if (tile.IsWallFullbright) {
+				vertices = _glowPaintColors;
+			} else {
+				Lighting.GetCornerColors(i, j, out vertices);
+			}
+			Vector2 offset = new(Main.drawToScreen ? 0 : Main.offScreenRange);
+			Rectangle frame = new(tile.WallFrameX, tile.WallFrameY + Main.wallFrame[tile.WallType] * 180, 32, 32);
+			Main.tileBatch.Draw(overlay, new Vector2(i * 16 - (int)Main.screenPosition.X - 8, j * 16 - (int)Main.screenPosition.Y - 8) + offset, frame, vertices, Vector2.Zero, 1f, SpriteEffects.None);
+		}
+	}
+	public class Auto_Chambersite_Wall_Item(ModWall wall) : WallItem(wall) {
+		public override string Texture => Wall.Texture + "_Item";
 	}
 	public class Chambersite_Crimstone_Wall : ModWall {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallID.CrimstoneEcho;//what wall type this wall is considered to be when blending
 			AddMapEntry(GetWallMapColor(WallID.CrimstoneUnsafe));
 			Chambersite_Stone_Wall.AddChild(Type, GetInstance<CrimsonAltBiome>());
+			Chambersite_Stone_Wall.baseWallTypes.Add(baseWall => GetInstance<CrimsonAltBiome>().AddWallConversions(Type, baseWall));
 			Chambersite_Stone_Wall.AddChambersite.Add(WallID.CrimstoneUnsafe, Type);
 			DustType = DustID.GemEmerald;
 			Chambersite_Stone_Wall.chambersiteWalls.Add(Type);
@@ -75,34 +124,8 @@ namespace Origins.Walls {
 			Main.wallBlend[Type] = WallID.EbonstoneEcho;//what wall type this wall is considered to be when blending
 			AddMapEntry(GetWallMapColor(WallID.EbonstoneUnsafe));
 			Chambersite_Stone_Wall.AddChild(Type, GetInstance<CorruptionAltBiome>());
+			Chambersite_Stone_Wall.baseWallTypes.Add(baseWall => GetInstance<CorruptionAltBiome>().AddWallConversions(Type, baseWall));
 			Chambersite_Stone_Wall.AddChambersite.Add(WallID.EbonstoneUnsafe, Type);
-			DustType = DustID.GemEmerald;
-			Chambersite_Stone_Wall.chambersiteWalls.Add(Type);
-		}
-	}
-	public class Chambersite_Defiled_Stone_Wall : ModWall {
-		public override void SetStaticDefaults() {
-			Main.wallBlend[Type] = WallType<Defiled_Stone_Wall>();//what wall type this wall is considered to be when blending
-			AddMapEntry(new Color(150, 150, 150));
-			Chambersite_Stone_Wall.AddChambersite.Add((ushort)WallType<Defiled_Stone_Wall>(), Type);
-			DustType = DustID.GemEmerald;
-			Chambersite_Stone_Wall.chambersiteWalls.Add(Type);
-		}
-	}
-	public class Chambersite_Riven_Flesh_Wall : ModWall {
-		public override void SetStaticDefaults() {
-			Main.wallBlend[Type] = WallType<Riven_Flesh_Wall>();//what wall type this wall is considered to be when blending
-			AddMapEntry(new Color(40, 140, 200));
-			Chambersite_Stone_Wall.AddChambersite.Add((ushort)WallType<Riven_Flesh_Wall>(), Type);
-			DustType = DustID.GemEmerald;
-			Chambersite_Stone_Wall.chambersiteWalls.Add(Type);
-		}
-	}
-	public class Chambersite_Tainted_Stone_Wall : ModWall {
-		public override void SetStaticDefaults() {
-			Main.wallBlend[Type] = WallType<Tainted_Stone_Wall>();//what wall type this wall is considered to be when blending
-			AddMapEntry(new Color(73, 42, 22));
-			Chambersite_Stone_Wall.AddChambersite.Add((ushort)WallType<Tainted_Stone_Wall>(), Type);
 			DustType = DustID.GemEmerald;
 			Chambersite_Stone_Wall.chambersiteWalls.Add(Type);
 		}

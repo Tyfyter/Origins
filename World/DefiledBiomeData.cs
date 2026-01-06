@@ -860,7 +860,7 @@ namespace Origins.World.BiomeData {
 			BloodPenguin = NPCType<Bile_Thrower>();
 			BloodGoldfish = NPCType<Shattered_Goldfish>();
 
-			AddWallConversions<Defiled_Stone_Wall>(
+			this.AddOriginsWallConversions<Defiled_Stone_Wall>(WallVersion.Natural,
 				WallID.Cave7Unsafe,
 				WallID.CaveUnsafe,
 				WallID.Cave2Unsafe,
@@ -897,7 +897,7 @@ namespace Origins.World.BiomeData {
 				WallID.GrassUnsafe,
 				WallID.Grass
 			);
-			this.AddChambersiteConversions(Chambersite_Ore.GetOreID(TileType<Defiled_Stone>()), WallType<Chambersite_Defiled_Stone_Wall>());
+			this.AddChambersiteTileConversions(Chambersite_Ore.GetOreID(TileType<Defiled_Stone>()));
 
 			EvilBiomeGenerationPass = new Defiled_Wastelands_Generation_Pass();
 		}

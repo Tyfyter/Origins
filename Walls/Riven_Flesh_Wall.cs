@@ -5,6 +5,7 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
@@ -25,10 +26,10 @@ namespace Origins.Walls {
 				Origins.WallHammerRequirement[Type] = 70;
 			}
 		}
-		public override void Load() {/*
-			if (WallVersion == WallVersion.Safe) {
-				Chambersite_Ore_Wall.Create(this, Item, () => DustType, itemOverlay: Chambersite_Ore_Wall.overlay_path_base + "Item_Flesh", legacyNames: "Chambersite_Riven_Flesh_Wall");
-			}*/
+		public override void Load() {
+			if (WallVersion == WallVersion.Natural) {
+				Mod.AddContent(new Auto_Chambersite_Wall(this, new(40, 140, 200), GetInstance<Riven_Hive_Alt_Biome>));
+			}
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (WallVersion == WallVersion.Natural) {

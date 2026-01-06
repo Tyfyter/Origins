@@ -3,6 +3,7 @@ using Origins.Tiles.Ashen;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Walls {
     public class Tainted_Stone_Wall : OriginsWall {
@@ -18,10 +19,10 @@ namespace Origins.Walls {
 			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
 			if (WallVersion == WallVersion.Natural) Origins.WallHammerRequirement[Type] = 70;
 		}
-		public override void Load() {/*
-			if (WallVersion == WallVersion.Safe) {
-				Chambersite_Ore_Wall.Create(this, Item, () => DustType, legacyNames: "Chambersite_Tainted_Stone_Wall");
-			}*/
+		public override void Load() {
+			if (WallVersion == WallVersion.Natural) {
+				Mod.AddContent(new Auto_Chambersite_Wall(this, new(73, 42, 22), ModContent.GetInstance<Ashen_Alt_Biome>));
+			}
 		}
 	}
 /*	public class Tainted_Stone_Wall_Safe : Tainted_Stone_Wall {

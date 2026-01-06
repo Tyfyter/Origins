@@ -9,7 +9,6 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumTiles = ThoriumMod.Tiles;
-using ThoriumWalls = ThoriumMod.Walls;
 using OMI = Origins.OriginsModIntegrations;
 using System.Linq;
 using static Terraria.ModLoader.ModContent;
@@ -401,7 +400,6 @@ namespace Origins {
 			public static bool[] RivenWalls { get; } = WallID.Sets.Factory.CreateNamedSet(nameof(RivenWalls))
 			.RegisterBoolSet(false);
 			public static int[] GeneratesLiquid { get; } = WallID.Sets.Factory.CreateIntSet(-1);
-			public static bool[] GemWallsToChambersite { get; private set; }
 			internal static void Initialize() {
 				try {
 					On_Liquid.Update += (orig, self) => {
@@ -416,35 +414,6 @@ namespace Origins {
 				} catch (Exception e) {
 					if (Origins.LogLoadingILError(nameof(GeneratesLiquid), e)) throw;
 				}
-			}
-			static Walls() {
-				GemWallsToChambersite = TileID.Sets.Factory.CreateNamedSet($"{nameof(Walls)}_{nameof(GemWallsToChambersite)}")
-				.Description("Unsafe gem ore walls in this set can be corrupted into unsafe chambersite ore walls")
-				.RegisterBoolSet(
-					WallID.AmethystUnsafe,
-					WallID.TopazUnsafe,
-					WallID.SapphireUnsafe,
-					WallID.EmeraldUnsafe,
-					WallID.RubyUnsafe,
-					WallID.DiamondUnsafe
-				);
-
-				//if (OMI.Thorium is not null) AddThorium();
-				//if (OMI.Avalon is not null) AddAvalon();
-			}
-			public static int GetModContent(Mod mod, string name) {
-				return mod.GetContent<ModWall>().First(content => content.Name == name).Type;
-			}
-			[JITWhenModsEnabled("ThoriumMod")]
-			static void AddThorium() {
-				GemWallsToChambersite[ModContent.WallType<ThoriumWalls.AquamarineWall>()] = true;
-				GemWallsToChambersite[ModContent.WallType<ThoriumWalls.OpalWall>()] = true;
-			}
-			[JITWhenModsEnabled("Avalon")]
-			static void AddAvalon() {
-				GemWallsToChambersite[GetModContent(OMI.Avalon, "PeridotStoneWallUnsafe")] = true;
-				GemWallsToChambersite[GetModContent(OMI.Avalon, "TourmalineStoneWallUnsafe")] = true;
-				GemWallsToChambersite[GetModContent(OMI.Avalon, "ZirconStoneWallUnsafe")] = true;
 			}
 		}
 		[ReinitializeDuringResizeArrays]

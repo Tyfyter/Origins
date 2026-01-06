@@ -1134,7 +1134,7 @@ namespace Origins.World.BiomeData {
 				WallID.Rocks1Echo
 			);
 
-			AddWallConversions<Riven_Flesh_Wall>(
+			this.AddOriginsWallConversions<Riven_Flesh_Wall>(WallVersion.Natural,
 				WallID.Cave7Unsafe,
 				WallID.CaveUnsafe,
 				WallID.Cave2Unsafe,
@@ -1165,7 +1165,7 @@ namespace Origins.World.BiomeData {
 				WallID.GrassUnsafe,
 				WallID.Grass
 			);
-			this.AddChambersiteConversions(Chambersite_Ore.GetOreID(TileType<Spug_Flesh>()), WallType<Chambersite_Riven_Flesh_Wall>());
+			this.AddChambersiteTileConversions(Chambersite_Ore.GetOreID(TileType<Spug_Flesh>()));
 			EvilBiomeGenerationPass = new Riven_Hive_Generation_Pass();
 		}
 		public IEnumerable<int> ProvideItemObtainability() {
