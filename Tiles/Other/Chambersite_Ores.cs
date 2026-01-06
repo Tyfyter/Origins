@@ -48,7 +48,7 @@ namespace Origins.Tiles.Other {
 
 		public override void Load() {
 			Mod.AddContent(Item = new Chambersite_Ore_Item(this).WithOnAddRecipes(item => ItemRecipe(item)));
-			chambersiteTiles.Add(this); 
+			chambersiteTiles.Add(this);
 			PaintKey = CustomTilePaintLoader.CreateKey();
 		}
 		public override void SetStaticDefaults() {
@@ -66,7 +66,7 @@ namespace Origins.Tiles.Other {
 				}
 			}
 			TileID.Sets.Ore[Type] = true;
-			AddMapEntry(MapColor, Language.GetText("Mods.Origins.Items.Chambersite_Item.DisplayName"));
+			AddMapEntry(MapColor.MultiplyRGB(OriginExtensions.GetTileMapColor(StoneTile)), Language.GetText("Mods.Origins.Items.Chambersite_Item.DisplayName"));
 			MinPick = 65;
 			MineResist = 2f;
 			RegisterItemDrop(ItemType<Chambersite_Item>());

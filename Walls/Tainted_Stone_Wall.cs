@@ -3,21 +3,28 @@ using Origins.Tiles.Ashen;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
-using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
-    public class Tainted_Stone_Wall : ModWall {
+    public class Tainted_Stone_Wall : OriginsWall {
+		public override WallVersion WallVersions => WallVersion.Natural | WallVersion.Safe;
+		public override Color MapColor => new(73, 42, 22);
+		public override int DustType => Ashen_Biome.DefaultTileDust;
+		public override bool CanBeReplacedByWallSpread => false;
+		public override int TileItem => OriginTile.TileItem<Tainted_Stone>();
+		public override string Name => WallVersion == WallVersion.Natural ? base.Name.Replace("_Natural", "") : base.Name;
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			WallID.Sets.Conversion.Stone[Type] = true;
 			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
-			Origins.WallHammerRequirement[Type] = 70;
-			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
-			AddMapEntry(new Color(73, 42, 22));
-			DustType = Ashen_Biome.DefaultTileDust;
+			if (WallVersion == WallVersion.Natural) Origins.WallHammerRequirement[Type] = 70;
+		}
+		public override void Load() {/*
+			if (WallVersion == WallVersion.Safe) {
+				Chambersite_Ore_Wall.Create(this, Item, () => DustType, legacyNames: "Chambersite_Tainted_Stone_Wall");
+			}*/
 		}
 	}
-	public class Tainted_Stone_Wall_Safe : Tainted_Stone_Wall {
+/*	public class Tainted_Stone_Wall_Safe : Tainted_Stone_Wall {
 		public override string Texture => "Origins/Walls/Tainted_Stone_Wall";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -41,5 +48,5 @@ namespace Origins.Walls {
 			.AddTile(TileID.WorkBenches)
 			.Register();
 		}
-	}
+	}*/
 }

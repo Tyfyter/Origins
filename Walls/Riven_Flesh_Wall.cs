@@ -1,37 +1,48 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Tiles;
+﻿using Origins.Tiles;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
-	public class Riven_Flesh_Wall : ModWall {
+	public class Riven_Flesh_Wall : OriginsWall {
+		public override WallVersion WallVersions => WallVersion.Natural | WallVersion.Safe;
+		public override Color MapColor => new(40, 140, 200);
+		public override int DustType => Riven_Hive.DefaultTileDust;
+		public override bool CanBeReplacedByWallSpread => false;
+		public override int TileItem => OriginTile.TileItem<Spug_Flesh>();
+		public override string Name => WallVersion == WallVersion.Natural ? base.Name.Replace("_Natural", "") : base.Name;
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			WallID.Sets.Conversion.Stone[Type] = true;
-			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
-			OriginsSets.Walls.RivenWalls[Type] = true;
 			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
-			AddMapEntry(new Color(40, 140, 200));
-			DustType = DustID.GemEmerald;
-			DustType = Riven_Hive.DefaultTileDust;
+			if (WallVersion == WallVersion.Natural) {
+				OriginsSets.Walls.RivenWalls[Type] = true;
+				Origins.WallHammerRequirement[Type] = 70;
+			}
+		}
+		public override void Load() {/*
+			if (WallVersion == WallVersion.Safe) {
+				Chambersite_Ore_Wall.Create(this, Item, () => DustType, itemOverlay: Chambersite_Ore_Wall.overlay_path_base + "Item_Flesh", legacyNames: "Chambersite_Riven_Flesh_Wall");
+			}*/
 		}
 		public override void RandomUpdate(int i, int j) {
-			Shelf_Coral shelfCoral = GetInstance<Shelf_Coral>();
-			if (shelfCoral.CanGenerate(i, j, out double weight) && Math.Pow(weight, 4) > WorldGen.genRand.NextFloat() && TileExtenstions.CanActuallyPlace(i, j, shelfCoral.Type, 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
-				Point16 topLeft = TileObjectData.TopLeft(i, j);
+			if (WallVersion == WallVersion.Natural) {
+				Shelf_Coral shelfCoral = GetInstance<Shelf_Coral>();
+				if (shelfCoral.CanGenerate(i, j, out double weight) && Math.Pow(weight, 4) > WorldGen.genRand.NextFloat() && TileExtenstions.CanActuallyPlace(i, j, shelfCoral.Type, 0, 0, out TileObject objectData, onlyCheck: false) && TileObject.Place(objectData)) {
+					Point16 topLeft = TileObjectData.TopLeft(i, j);
 
-				int id = GetInstance<Shelf_Coral_TE>().Place(topLeft.X, topLeft.Y);
-				((Shelf_Coral_TE)TileEntity.ByID[id]).CurrentState = Shelf_Coral_TE.State.In;
+					int id = GetInstance<Shelf_Coral_TE>().Place(topLeft.X, topLeft.Y);
+					((Shelf_Coral_TE)TileEntity.ByID[id]).CurrentState = Shelf_Coral_TE.State.In;
+				}
 			}
 		}
 	}
-	public class Riven_Flesh_Wall_Safe : Riven_Flesh_Wall {
+/*	public class Riven_Flesh_Wall_Safe : Riven_Flesh_Wall {
 		public override string Texture => "Origins/Walls/Riven_Flesh_Wall";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -56,5 +67,5 @@ namespace Origins.Walls {
 			.AddTile(TileID.WorkBenches)
 			.Register();
 		}
-	}
+	}*/
 }
