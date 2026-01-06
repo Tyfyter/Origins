@@ -2165,6 +2165,9 @@ Projectiles: {
 	// Phantasm_Dragon_Head.DisplayName: Phantasm Dragon Head
 	// Phantasm_Dragon_Tail.DisplayName: Phantasm Dragon Tail
 	// Adjusto_Hook_P.DisplayName: Adjusto Hook P
+	// Retool_Arm_Bomb.DisplayName: Retool Arm Bomb
+	// Retool_Arm_Laser_P.DisplayName: Retool Arm Laser P
+	// Retool_Arm_Laser_Beam.DisplayName: Retool Arm Laser Beam
 }
 
 Prefixes: {
@@ -2523,6 +2526,7 @@ Keybinds: {
 	// "Open Structure Helper.DisplayName": Open Structure Helper
 	// StressBall.DisplayName: Stress Ball
 	// LunaticsRune.DisplayName: Lunatic's Rune
+	// RetoolArm.DisplayName: Retool Arm
 }
 
 Configs: {

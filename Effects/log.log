@@ -125,6 +125,10 @@ Loading description file: Misc.fx... Done!
 Compiling font... Done!
 Compiling font content file: Misc.xnb... Done!
 
+Loading description file: Overbrighten.fx... Done!
+Compiling font... Done!
+Compiling font content file: Overbrighten.xnb... Done!
+
 Loading description file: PerlinFade.fx... Done!
 Compiling font... Warning: Warning compiling PerlinFade.fx: warning X3081: potentially unintended use of a comma expression in a variable initializer
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect

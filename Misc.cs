@@ -3340,6 +3340,16 @@ namespace Origins {
 			XY = vector.XY();
 			ZW = vector.ZW();
 		}
+		public static SpriteEffects Transpose(this SpriteEffects spriteEffects) {
+			switch (spriteEffects) {
+				case SpriteEffects.FlipHorizontally:
+				return SpriteEffects.FlipVertically;
+				case SpriteEffects.FlipVertically:
+				return SpriteEffects.FlipHorizontally;
+				default:
+				return spriteEffects;
+			}
+		}
 		public static SpriteBatchState FixedCulling(this SpriteBatchState state) {
 			state.rasterizerState.CullMode = CullMode.None;
 			return state;

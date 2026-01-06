@@ -441,6 +441,7 @@ namespace Origins {
 				).originalDamage = damage;
 				strangeToothCooldown = item.useTime;
 			}
+			retoolArm?.UpdateArm(Player);
 			if (statSharePercent != 0f) {
 				foreach (DamageClass damageClass in DamageClasses.All) {
 					if (damageClass == DamageClass.Generic) {

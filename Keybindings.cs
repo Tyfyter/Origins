@@ -20,6 +20,8 @@ namespace Origins {
 		public static ModKeybind JournalBack { get; private set; }
 		[Keybind("Mouse2")]
 		public static ModKeybind StressBall { get; private set; }
+		[Keybind(Keys.K)]
+		public static ModKeybind RetoolArm { get; private set; }
 		public static ModKeybind WishingGlass => ModContent.GetInstance<SyncedKeybinds>().WishingGlass.keybind;
 		public static ModKeybind LunaticsRune => ModContent.GetInstance<SyncedKeybinds>().LunaticsRune.keybind;
 #if DEBUG

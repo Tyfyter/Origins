@@ -7592,3 +7592,25 @@ Gills: {
 	// DisplayName: Gills
 	// Tooltip: ""
 }
+
+// Retool_Arm.DisplayName: Retool Arm
+
+Retool_Arm_Cannon: {
+	// DisplayName: "{$Retool_Arm.DisplayName} (Cannon)"
+	// Tooltip: ""
+}
+
+Retool_Arm_Laser: {
+	// DisplayName: "{$Retool_Arm.DisplayName} (Laser)"
+	// Tooltip: ""
+}
+
+Retool_Arm_Saw: {
+	// DisplayName: "{$Retool_Arm.DisplayName} (Saw)"
+	// Tooltip: ""
+}
+
+Retool_Arm_Vice: {
+	// DisplayName: "{$Retool_Arm.DisplayName} (Vice)"
+	// Tooltip: ""
+}

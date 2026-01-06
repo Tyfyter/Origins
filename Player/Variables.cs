@@ -350,6 +350,11 @@ namespace Origins {
 		public int lunaticsRuneCharge = 0;
 		public int lunaticsRuneSelectedAttack = 0;
 		public float lunaticsRuneRotation = 0;
+		public Retool_Arm retoolArm = null;
+		public float retoolArmBaseRotation = -MathHelper.PiOver2;
+		public float retoolArmRotation = MathHelper.PiOver2;
+		public int retoolArmTimer = 0;
+		public int retoolArmDye = 0;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -885,6 +890,8 @@ namespace Origins {
 			}
 			if (lunaticsRune is null) lunaticsRuneCharge = 0;
 			else lunaticsRune = null;
+			retoolArm = null;
+			retoolArmDye = 0;
 			lotteryTicketItem = null;
 
 

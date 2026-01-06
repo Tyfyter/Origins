@@ -72,6 +72,11 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Power_Core>(), 1, 1, 3));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotor>(), 1, 5, 22));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_Power_Up>(), 50));
+				switch (npc.type) {
+					case NPCID.SkeletronPrime:
+					npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Retool_Arm_Cannon>(), 4));
+					break;
+				}
 				break;
 				case NPCID.MoonLordCore:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Third_Eye>(), 4));

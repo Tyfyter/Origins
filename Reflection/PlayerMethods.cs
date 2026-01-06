@@ -54,6 +54,10 @@ namespace Origins.Reflection {
 		[ReflectionParentType(typeof(Player)), ReflectionMemberName("ItemCheck_EmitHammushProjectiles")]
 		private static ItemCheck_EmitHammushProjectiles_Del _ItemCheck_EmitHammushProjectiles;
 
+		private delegate void ProcessHitAgainstNPC_Del(Item sItem, Rectangle itemRectangle, int originalDamage, float knockBack, int npcIndex);
+		[ReflectionParentType(typeof(Player)), ReflectionMemberName("ProcessHitAgainstNPC")]
+		private static ProcessHitAgainstNPC_Del _ProcessHitAgainstNPC;
+
 		[ReflectionParentType(typeof(Player))]
 		private static Action<int> set_ItemUsesThisAnimation;
 
@@ -110,6 +114,10 @@ namespace Origins.Reflection {
 		public static void Set_ItemUsesThisAnimation(Player player, int value) {
 			DelegateMethods._target.SetValue(set_ItemUsesThisAnimation, player);
 			set_ItemUsesThisAnimation(value);
+		}
+		public static void ProcessHitAgainstNPC(Player player, Item sItem, Rectangle itemRectangle, int originalDamage, float knockBack, int npcIndex) {
+			DelegateMethods._target.SetValue(_ProcessHitAgainstNPC, player);
+			_ProcessHitAgainstNPC(sItem, itemRectangle, originalDamage, knockBack, npcIndex);
 		}
 		/*public static void GrabItems(Player player) {
 			Basic._target.SetValue(_ApplyNPCOnHitEffects, player);
