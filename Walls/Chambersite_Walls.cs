@@ -1,19 +1,15 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
-using Newtonsoft.Json.Linq;
 using Origins.Core;
-using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Items.ThrownItems;
 using static Origins.OriginExtensions;
-using static Terraria.GameContent.Bestiary.IL_BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
@@ -107,6 +103,28 @@ namespace Origins.Walls {
 	}
 	public class Auto_Chambersite_Wall_Item(ModWall wall) : WallItem(wall) {
 		public override string Texture => Wall.Texture + "_Item";
+		static AutoLoadingAsset<Texture2D> overlay = "Origins/Walls/Overlays/Chambersite/Chambersite_Ore_Wall_Item";
+		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
+			Vector2 origin = overlay.Value.Size() * 0.5f;
+			Rectangle originalFrame;
+			{
+				Texture2D texture = TextureAssets.Item[Type].Value;
+				if (Main.itemAnimations[Type] != null) {
+					originalFrame = Main.itemAnimations[Type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
+				} else {
+					originalFrame = texture.Frame();
+				}
+			}
+			Vector2 vector2 = new((Item.width / 2) - originalFrame.Width * 0.5f, Item.height - originalFrame.Height);
+			Vector2 position = Item.position - Main.screenPosition + originalFrame.Size() * 0.5f + vector2;
+			spriteBatch.Draw(overlay, position, null, alphaColor, rotation, origin, scale, SpriteEffects.None, 0f);
+			if (Item.shimmered) {
+				spriteBatch.Draw(overlay, position, null, alphaColor with { A = 0 }, rotation, origin, scale, SpriteEffects.None, 0f);
+			}
+		}
+		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+			spriteBatch.Draw(overlay, position, frame, drawColor, 0f, overlay.Value.Size() * 0.5f, scale, SpriteEffects.None, 0f);
+		}
 	}
 	public class Chambersite_Crimstone_Wall : ModWall {
 		public override void SetStaticDefaults() {
