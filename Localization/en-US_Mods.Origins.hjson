@@ -1426,18 +1426,23 @@ Buffs: {
 	}
 
 	Lunatics_Rune_Duplicates_Buff: {
-		DisplayName: Lunatics Rune Duplicates Buff
-		Description: Mods.Origins.Buffs.Lunatics_Rune_Duplicates_Buff.Description
+		DisplayName: Lunatic Shadows
+		Description: The ancient cultists will fight alongside you
 	}
 
 	Lunatics_Rune_Attacks_Buff: {
-		DisplayName: Lunatics Rune Attacks Buff
-		Description: Mods.Origins.Buffs.Lunatics_Rune_Attacks_Buff.Description
+		DisplayName: Lunacy
+		Description: You can cast long forgotten magicks
 	}
 
 	Lunatics_Rune_Dragon_Buff: {
-		DisplayName: Lunatics Rune Dragon Buff
-		Description: Mods.Origins.Buffs.Lunatics_Rune_Dragon_Buff.Description
+		DisplayName: Phantasm Dragon
+		Description: The phantasm dragon will fight for you
+	}
+
+	Lunatics_Rune_Regen_Buff: {
+		DisplayName: Lunatic Vitality
+		Description: "{$BuffDescription.RapidHealing}"
 	}
 }
 

@@ -177,7 +177,7 @@ namespace Origins.Items.Accessories {
 			public override int BuffTime => 24 * 60;
 		}
 		public class Healing : BuffOption {
-			public override int BuffType => BuffID.RapidHealing;
+			public override int BuffType => ModContent.BuffType<Lunatics_Rune_Regen_Buff>();
 			public override int BuffTime => 24 * 60;
 		}
 		[ReinitializeDuringResizeArrays]
@@ -206,7 +206,7 @@ namespace Origins.Items.Accessories {
 	}
 
 	public class Lunatics_Rune_Attacks_Buff : ModBuff {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.FragmentNebula;
+		public override string Texture => "Origins/Buffs/" + Name;
 		public override void Update(Player player, ref int buffIndex) { }
 	}
 	public abstract class LunaticsRuneAttack : ModTexturedType {
@@ -950,7 +950,7 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Lunatics_Rune_Dragon_Buff : ModBuff {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.FragmentStardust;
+		public override string Texture => "Origins/Buffs/" + Name;
 		public override void SetStaticDefaults() => Main.buffNoSave[Type] = true;
 		public override void Update(Player player, ref int buffIndex) => player.OriginPlayer().lunaticDragon = true;
 	}
@@ -1002,13 +1002,19 @@ namespace Origins.Items.Accessories {
 		public override bool CanInsert(Projectile parent, Projectile child) => child is null;
 	}
 	public class Lunatics_Rune_Duplicates_Buff : ModBuff {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.FragmentVortex;
+		public override string Texture => "Origins/Buffs/" + Name;
 		public override void Update(Player player, ref int buffIndex) {
 			player.EnableShadow<Lunatic_Shadow>();
 			OriginPlayer originPlayer = player.OriginPlayer();
 			originPlayer.lunaticDuplicates = true;
 			originPlayer.lunaticDuplicateOpacity++;
 			Min(ref originPlayer.lunaticDuplicateOpacity, player.buffTime[buffIndex]);
+		}
+	}
+	public class Lunatics_Rune_Regen_Buff : ModBuff {
+		public override string Texture => "Origins/Buffs/" + Name;
+		public override void Update(Player player, ref int buffIndex) {
+			player.lifeRegenCount += 12;
 		}
 	}
 	public class Lunatic_Shadow : ShadowType {
