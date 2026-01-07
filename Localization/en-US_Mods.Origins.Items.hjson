@@ -7650,3 +7650,8 @@ Artifiber_Helmet: {
 	DisplayName: Artifiber Helmet
 	Tooltip: ""
 }
+
+Holy_Hand_Grenade: {
+	DisplayName: Holy Hand Grenade
+	Tooltip: ""
+}

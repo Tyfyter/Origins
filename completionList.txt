@@ -1143,7 +1143,7 @@ EXPLOSIVE WEAPONS:
 (^) Chlorophyte Handcannon
 (#, ^2) Firework Cannon
 (X) Flarefury
-(#, ^2) Holy Hand Grenade !!!
+(☻) Holy Hand Grenade !!!
 (^) Mine Flayer
 (^) Nova Cascade
 (^) Nova Swarm

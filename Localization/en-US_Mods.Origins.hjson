@@ -2165,10 +2165,11 @@ Projectiles: {
 	Phantasm_Dragon_Body.DisplayName: Phantasm Dragon Body
 	Phantasm_Dragon_Head.DisplayName: Phantasm Dragon Head
 	Phantasm_Dragon_Tail.DisplayName: Phantasm Dragon Tail
-	Adjusto_Hook_P.DisplayName: Adjusto Hook P
+	Adjusto_Hook_P.DisplayName: Adjusto Hook
 	Retool_Arm_Bomb.DisplayName: Retool Arm Bomb
-	Retool_Arm_Laser_P.DisplayName: Retool Arm Laser P
+	Retool_Arm_Laser_P.DisplayName: Retool Arm Laser
 	Retool_Arm_Laser_Beam.DisplayName: Retool Arm Laser Beam
+	Holy_Hand_Grenade_P.DisplayName: Holy Hand Grenade
 }
 
 Prefixes: {

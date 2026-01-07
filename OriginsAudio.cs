@@ -52,6 +52,8 @@ namespace Origins {
 			public static SoundStyle EnergyRipple = SoundID.Item8;
 			public static SoundStyle PhaserCrash = SoundID.Item12;
 			public static SoundStyle DeepBoom = SoundID.Item14;
+			public static SoundStyle HolyHandGrenade = new("Origins/Sounds/Custom/HolyHandGrenade");
+
 			public static SoundStyle DefiledIdle = SoundID.Zombie1;
 			public static SoundStyle DefiledHurt = SoundID.DD2_SkeletonHurt;
 			public static SoundStyle DefiledKill => OriginsModIntegrations.CheckAprilFools() ? defiledKillAF : defiledKill;

@@ -117,8 +117,10 @@ Items: {
 		{$Mods.Origins.Items.Lunatics_Rune.Tooltip}
 		'Lunatic is you'
 		''' */
+	// Holy_Hand_Grenade.DisplayName: Holdy Hand Grenade
 }
 
+// Projectiles.Holy_Hand_Grenade_P.DisplayName: Holdy Hand Grenade
 // Prefixes.Wholesome_Prefix.DisplayName: Holesome
 // Dialogue.Brine_Fiend.InteractionWind: It fucken WIMDY!
 
