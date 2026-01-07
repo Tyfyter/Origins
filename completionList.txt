@@ -408,7 +408,7 @@ ACHIEVEMENTS:
 (^3) Martyrdom !!!
 (^3) Now You're the One Lying Broken !!!
 (^3) Peat Obsession !!!
-(#2) RIVEN WORMS !!! (idk how to implement)
+(☻) RIVEN WORMS !!! (see commit name for details)
 (#2) Slow Loading Bar !!! (idk how to implement)
 (X) The Signal, it's Calling !!!
 (^3) There's Something in There! !!!
@@ -1293,7 +1293,7 @@ TILES:
 (^) Type-I Fortified Steel Wall
 (^) Type-III Fortified Steel Wall
 
-(#3, ^2) Air Vent !!! (halp me with noise ples)
+(#3, ^2) Air Vent !!! (I can't halp you with noise if you don't tell me what about it you need halpˢᶦᶜ with)
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
 (^) Artifiber Furniture
