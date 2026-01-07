@@ -1,4 +1,5 @@
 ﻿using CalamityMod.NPCs.TownNPCs;
+using MagicStorage.CrossMod;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dusts;
 using Origins.Items.Weapons.Ammo.Canisters;
@@ -447,13 +448,59 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 	}
 	public class Carpet_Bomb_State : AIState {
+		public static int MaxCount => (int)(12 + DifficultyMult);
+		public static int DropRate => (int)(25 - DifficultyMult);
+		public static int ShotDamage => (int)(18 * DifficultyMult);
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 		}
 		public override void DoAIState(Trenchmaker boss) {
-
+			NPC npc = boss.NPC;
+			if (boss.legs[0].CurrentAnimation is Jump_Preparation_Animation or Jump_Squat_Animation) return;
+			if (boss.legs[0].CurrentAnimation is Jump_Extend_Animation) {
+				npc.ai[1] = 1;
+				return;
+			}
+			if (boss.legs[0].CurrentAnimation is not Jump_Air_Animation) {
+				if (npc.ai[1] > 0) {
+					npc.frame.Y = 0;
+					npc.frameCounter = 0;
+					boss.StartIdle();
+				}
+				return;
+			}
+			npc.velocity.Y -= 0.33f;
+			npc.DoFrames(4, 1..7);
+			if (++npc.ai[0] > (npc.ai[1] * DropRate) && npc.ai[1] < MaxCount + 1) {
+				npc.ai[1]++;
+				npc.SpawnProjectile(null,
+					npc.Center,
+					Vector2.Zero,
+					ModContent.ProjectileType<Trenchmaker_Carpet_Bomb>(),
+					ShotDamage,
+					1,
+					Main.rand.Next(0, 2)
+				);
+			}
 		}
 		public override LegAnimation ForceAnimation(Trenchmaker npc, Leg leg, Leg otherLeg) => ModContent.GetInstance<Jump_Preparation_Animation>();
+		public class Trenchmaker_Carpet_Bomb : ModProjectile {
+			public override void SetDefaults() {
+				Projectile.width = 34;
+				Projectile.height = 34;
+				Projectile.aiStyle = -1;
+				Projectile.hostile = true;
+				Projectile.penetrate = -1;
+				Projectile.timeLeft = 360;
+			}
+			public override void AI() {
+				Projectile.rotation += 0.1f;
+				Projectile.velocity.Y += 0.2f;
+			}
+			public override void OnKill(int timeLeft) {
+				ExplosiveGlobalProjectile.DoExplosion(Projectile, 128, sound: SoundID.Item14, hostile: true);
+			}
+		}
 	}
 	public class Teabag_State : AIState {
 		public override float WalkDist => 16 * 4;
