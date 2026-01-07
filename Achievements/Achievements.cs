@@ -170,10 +170,10 @@ namespace Origins.Achievements {
 	}
 	public class Slow_Loading_Bar : ModAchievement {
 		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
-		public CustomIntCondition Condition { get; private set; }
+		public CustomFloatCondition Condition { get; private set; }
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Challenger);
-			Condition = AddCondition(CustomIntCondition.AddIntCondition(1000));
+			Condition = AddFloatCondition(1000);
 		}
 	}
 	public class Cracked : ModAchievement {
