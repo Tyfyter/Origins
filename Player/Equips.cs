@@ -208,7 +208,7 @@ namespace Origins {
 						const int bossRangeSQ = bossRange * bossRange;
 						for (int i = 0; i < Main.maxNPCs; i++) {
 							NPC npc = Main.npc[i];
-							if (npc.active && npc.damage > 0 && npc.npcSlots > 0 && Player.DistanceSQ(npc.Center) <= (npc.boss ? bossRangeSQ : rangeSQ)) {
+							if (npc.active && npc.damage > 0 && npc.npcSlots > 0 && Player.DistanceSQ(npc.Center) <= ((npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) ? bossRangeSQ : rangeSQ)) {
 								blizzardwalkerDanger = true;
 							}
 						}
@@ -439,6 +439,36 @@ namespace Origins {
 				strangeToothCooldown = item.useTime;
 			}
 			retoolArm?.UpdateArm(Player);
+			if (glitterGlue is not null && glitterGlueTimer >= glitterGlue.useTime) {
+				if (Player.nearbyActiveNPCs > 0) {
+					const int range = 16 * 12;
+					const int rangeSQ = range * range;
+					const int bossRange = 16 * 20;
+					const int bossRangeSQ = bossRange * bossRange;
+					bool doGlitter = false;
+					foreach (NPC npc in Main.ActiveNPCs) {
+						if (npc.CanBeChasedBy(Player) && Player.DistanceSQ(npc.Center) <= ((npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) ? bossRangeSQ : rangeSQ)) {
+							doGlitter = true;
+							break;
+						}
+					}
+					if (doGlitter) {
+						glitterGlueTimer = 0;
+						for (int i = 0; i < glitterGlue.useLimitPerAnimation.Value; i++) {
+							Player.SpawnProjectile(
+								Player.GetSource_Accessory(glitterGlue),
+								Player.MountedCenter,
+								Main.rand.NextVector2Circular(1f, 1f) + Main.rand.NextVector2CircularEdge(3f, 3f),
+								glitterGlue.shoot,
+								Player.GetWeaponDamage(glitterGlue),
+								Player.GetWeaponKnockback(glitterGlue),
+								-1f,
+								(Player.miscCounterNormalized + i / (float)glitterGlue.useLimitPerAnimation) % 1f
+							);
+						}
+					}
+				}
+			}
 			if (statSharePercent != 0f) {
 				foreach (DamageClass damageClass in DamageClasses.All) {
 					if (damageClass == DamageClass.Generic) {

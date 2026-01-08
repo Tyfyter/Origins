@@ -355,6 +355,8 @@ namespace Origins {
 		public float retoolArmRotation = MathHelper.PiOver2;
 		public int retoolArmTimer = 0;
 		public int retoolArmDye = 0;
+		public Item glitterGlue = null;
+		public int glitterGlueTimer = 0;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -902,6 +904,9 @@ namespace Origins {
 			else lunaticsRune = null;
 			retoolArm = null;
 			retoolArmDye = 0;
+			if (glitterGlue is null) glitterGlueTimer = 0;
+			else if (glitterGlueTimer < glitterGlue.useTime) glitterGlueTimer++;
+			glitterGlue = null;
 			lotteryTicketItem = null;
 
 

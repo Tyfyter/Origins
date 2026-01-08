@@ -7661,3 +7661,8 @@ The_Muffler: {
 	// Tooltip: ""
 	// PrefixEfficiency: "{0:+0;-0}% efficiency"
 }
+
+Glitter_Glue: {
+	// DisplayName: Glitter Glue
+	// Tooltip: ""
+}

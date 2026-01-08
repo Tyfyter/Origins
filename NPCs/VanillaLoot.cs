@@ -78,6 +78,9 @@ namespace Origins.NPCs {
 					break;
 				}
 				break;
+				case NPCID.HallowBoss:
+				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Glitter_Glue>(), 4));
+				break;
 				case NPCID.MoonLordCore:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Third_Eye>(), 4));
 				break;
