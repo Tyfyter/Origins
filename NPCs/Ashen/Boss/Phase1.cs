@@ -488,6 +488,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static int ShotDamage => (int)(18 * DifficultyMult);
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
+			iconTexture = typeof(Trenchmaker_Carpet_Bomb).GetDefaultTMLName();
 		}
 		public override void DoAIState(Trenchmaker boss) {
 			NPC npc = boss.NPC;

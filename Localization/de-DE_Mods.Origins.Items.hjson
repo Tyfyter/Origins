@@ -7655,3 +7655,9 @@ Holy_Hand_Grenade: {
 	// DisplayName: Holy Hand Grenade
 	// Tooltip: ""
 }
+
+The_Muffler: {
+	// DisplayName: The Muffler
+	// Tooltip: ""
+	// PrefixEfficiency: "{0:+0;-0}% efficiency"
+}

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using AlchemistNPCLite.NPCs;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo;
 using Origins.NPCs;
 using Origins.UI;
@@ -20,7 +21,7 @@ using Terraria.UI.Chat;
 
 namespace Origins.Items.Weapons.Ranged {
 	[ReinitializeDuringResizeArrays]
-	public class AMRSL_Skewer : ModItem, ICustomDrawItem {
+	public class AMRSL_Skewer : ModItem, ICustomDrawItem, IApplyPrefixItem {
 		public static float[] AmmoCount { get; } = ItemID.Sets.Factory.CreateFloatSet(defaultState: 0,
 			ItemID.IronOre, 1f / 10,
 			ItemID.LeadOre, 1f / 10,
@@ -39,10 +40,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void Load() {
 			On_Item.Prefix += static (orig, self, prefixWeWant) => {
 				bool retValue = orig(self, prefixWeWant);
-				if (prefixWeWant != -3 && self.ModItem is AMRSL_Skewer skewer) {
-					skewer.ammoMax = DefaultAmmoMax - (self.useTime - DefaultAmmoMax);
-					Min(ref skewer.ammoCount, skewer.ammoMax);
-				}
+				if (prefixWeWant != -3 && self.ModItem is IApplyPrefixItem item) item.ApplyPrefix(self.prefix);
 				return retValue;
 			};
 		}
@@ -66,6 +64,10 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(-0.2f);
 			Item.value = Item.sellPrice(gold: 6);
 			Item.rare = ItemRarityID.Lime;
+		}
+		public void ApplyPrefix(int pre) {
+			ammoMax = DefaultAmmoMax - (Item.useTime - DefaultAmmoMax);
+			Min(ref ammoCount, ammoMax);
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-18, -3);

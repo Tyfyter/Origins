@@ -509,6 +509,7 @@ namespace Origins {
 		public int blastFurnaceCharges = 0;
 		public List<int> unlockedPlantModes = [];
 		List<ItemDefinition> unloadedPlantModes = [];
+		public float mufflerAmount = 0f;
 		#endregion
 
 		#region visuals
@@ -1034,6 +1035,10 @@ namespace Origins {
 
 			boatRockerAltUse = false;
 			boatRockerAltUse2 = false;
+			if (mufflerAmount > 0) {
+				Min(ref mufflerAmount, 500);
+				mufflerAmount -= 0.1f + mufflerAmount * 0.001f;
+			}
 
 			shimmerGuardianMinion = false;
 			amnesticRoseHoldTime.Cooldown();

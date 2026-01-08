@@ -2176,6 +2176,7 @@ Projectiles: {
 	Retool_Arm_Laser_Beam.DisplayName: Retool Arm Laser Beam
 	Holy_Hand_Grenade_P.DisplayName: Holy Hand Grenade
 	Trenchmaker_Carpet_Bomb.DisplayName: Trenchmaker Carpet Bomb
+	The_Muffler_P.DisplayName: The Muffler P
 }
 
 Prefixes: {
