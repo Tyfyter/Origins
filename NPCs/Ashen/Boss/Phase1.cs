@@ -1,19 +1,13 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using MagicStorage.CrossMod;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dusts;
+using Origins.Graphics.Primitives;
 using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
-using PegasusLib;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.IO;
 using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -21,7 +15,6 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Buffs;
 using static Origins.NPCs.Ashen.Boss.Trenchmaker;
 using static Origins.OriginExtensions;
 using static Terraria.Utilities.NPCUtils;
@@ -299,19 +292,22 @@ namespace Origins.NPCs.Ashen.Boss {
 			int length = ShotCount;
 			int projType = ModContent.ProjectileType<Trenchmaker_Firecracker>();
 			int mode = Main.rand.Next(0, 2);
+			int lastFirecracker = -1;
 			for (int i = 0; i < length; i++) {
-				npc.SpawnProjectile(null,
+				lastFirecracker = npc.SpawnProjectile(null,
 					npc.Center,
 					Vector2.UnitX * npc.direction * (ShotVelocityMin + ShotVelocityStep * i),
 					projType,
 					ShotDamage,
 					1,
 					mode,
-					i
-				);
+					i,
+					lastFirecracker
+				)?.whoAmI ?? lastFirecracker;
 			}
 		}
 		public class Trenchmaker_Firecracker : ModProjectile {
+			protected static AutoLoadingAsset<Texture2D> fuseTexture = typeof(Trenchmaker_Firecracker).GetDefaultTMLName("_Fuse");
 			public override void SetStaticDefaults() {
 				Main.projFrames[Type] = 2;
 			}
@@ -329,9 +325,9 @@ namespace Origins.NPCs.Ashen.Boss {
 				Projectile.rotation = 0;
 				Projectile.velocity.X *= 
 					float.Pow(0.97f, 1f / (Projectile.ai[1] + 1))
-					* float.Pow(0.999f, Projectile.ai[2] * 0.25f);
+					* float.Pow(0.999f, Projectile.localAI[0] * 0.25f);
 				Projectile.velocity.Y += 0.2f;
-				if (++Projectile.ai[2] > FuseTime((int)Projectile.ai[0], Projectile.ai[1])) {
+				if (++Projectile.localAI[0] > FuseTime((int)Projectile.ai[0], Projectile.ai[1])) {
 					Projectile.Kill();
 				}
 			}
@@ -347,6 +343,45 @@ namespace Origins.NPCs.Ashen.Boss {
 					Projectile.damage,
 					Projectile.knockBack
 				);
+			}
+			public override void SendExtraAI(BinaryWriter writer) {
+				writer.Write((float)Projectile.localAI[0]);
+			}
+			public override void ReceiveExtraAI(BinaryReader reader) {
+				Projectile.localAI[0] = reader.ReadSingle();
+			}
+			Vector2? prevPosition;
+			private static readonly VertexRectangle VertexRectangle = new();
+			public override bool PreDraw(ref Color lightColor) {
+				if (Projectile.GetRelatedProjectile(2) is Projectile prev && prev.type == Type && prev.ai[0] == Projectile.ai[0]) {
+					prevPosition = prev.Center;
+				} else {
+					Projectile.ai[2] = -1;
+					if (prevPosition.HasValue) {
+						if (Projectile.localAI[1] == 0) {
+							Projectile.localAI[1] = FuseTime((int)Projectile.ai[0], Projectile.ai[1]) - Projectile.localAI[0];
+						} else {
+							prevPosition = Vector2.Lerp(prevPosition.Value, Projectile.Center, 1f / Projectile.localAI[1]);
+							Projectile.localAI[1]--;
+						}
+					}
+				}
+				if (prevPosition is Vector2 end) {
+					Asset<Texture2D> texture = fuseTexture;
+					MiscShaderData miscShaderData = GameShaders.Misc["Origins:Beam"];
+					miscShaderData.UseImage0(texture);
+					miscShaderData.UseShaderSpecificData(texture.UVFrame());
+					miscShaderData.Shader.Parameters["uLoopData"].SetValue(new Vector2(
+						Projectile.Center.Distance(end) / 38,
+						0
+					));
+					Vector2 unit = (end - Projectile.Center).Normalized(out _) * 2;
+					(unit.X, unit.Y) = (unit.Y, -unit.X);
+					miscShaderData.Apply();
+					VertexRectangle.DrawLit(Main.screenPosition, Projectile.Center - unit, end - unit, Projectile.Center + unit, end + unit);
+					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+				}
+				return base.PreDraw(ref lightColor);
 			}
 		}
 		public class Trenchmaker_Firecracker_Explosion_1 : ModProjectile {
