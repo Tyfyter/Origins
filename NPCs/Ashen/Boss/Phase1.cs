@@ -277,7 +277,8 @@ namespace Origins.NPCs.Ashen.Boss {
 		/// <param name="kind">0: red, 1: tan</param>
 		public static float FuseTime(int kind, float index) => 90 + index * 4;
 		public static int RedExplosionDuration => 30;
-		public static int TanExplosionRange => 128;
+		public static int RedExplosionSize => (int)(48 + 16 * DifficultyMult);
+		public static float TanExplosionRange => 112 + 16 * DifficultyMult;
 		public static float TanExplosionSpread => 0.5f;
 		#endregion stats
 		public override bool Ranged => true;
@@ -398,9 +399,8 @@ namespace Origins.NPCs.Ashen.Boss {
 			public override bool ShouldUpdatePosition() => false;
 			public override bool? CanDamage() => Projectile.width != 0;
 			public override void AI() {
-				if (++Projectile.ai[2] >= 7) {
-					Projectile.ai[2] = 0;
-					ExplosiveGlobalProjectile.DoExplosion(Projectile, 64, false, SoundID.Item40.WithPitch(0.0f).WithVolume(1f), 10, 0, 0, DustID.IchorTorch, hostile: true);
+				if (Projectile.ai[2].CycleDown(7)) {
+					ExplosiveGlobalProjectile.DoExplosion(Projectile, RedExplosionSize, false, SoundID.Item40.WithPitch(0.0f).WithVolume(1f), 10, 0, 0, DustID.IchorTorch, hostile: true);
 					Projectile.position.X += Projectile.width / 2;
 					Projectile.position.Y += Projectile.height / 2;
 					Projectile.width = 0;
