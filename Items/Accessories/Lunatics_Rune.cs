@@ -31,13 +31,9 @@ namespace Origins.Items.Accessories {
 			Item.DamageType = DamageClass.Magic;
 			Item.damage = 100;
 			Item.mana = 120;
-			Item.rare = ItemRarityID.LightRed;
-			Item.value = Item.sellPrice(gold: 1);
-		}
-		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			for (int i = tooltips.Count - 1; i >= 0; i--) {
-
-			}
+			Item.rare = ItemRarityID.Red;
+			Item.master = true;
+			Item.value = Item.sellPrice(gold: 5);
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) => LunaticsRuneAttack.ModifyWeaponDamage(player, ref damage);
 		public static bool CheckMana(Player player, Item item, float multiplier, bool pay = true) {
