@@ -131,7 +131,7 @@ namespace Origins.Projectiles {
 
 			MoveTowardsTarget();
 
-			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			if (Projectile.velocity != default) Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 			int oldDirection = Projectile.direction;
 			Projectile.direction = (Projectile.spriteDirection = ((Projectile.velocity.X > 0f) ? 1 : (-1)));
 			if (oldDirection != Projectile.direction)

@@ -978,6 +978,40 @@ namespace Origins.Items.Accessories {
 			Projectile.frame = FrameNum;
 		}
 		public override bool MinionContactDamage() => true;
+		public override void MoveTowardsTarget() {
+			bool foundTarget = targetingData.targetID != -1;
+			Rectangle targetHitbox = foundTarget ? targetingData.targetHitbox : RestRegion;
+			if (foundTarget) targetHitbox.Inflate(targetHitbox.Width / 8, targetHitbox.Height / 8);
+
+			Vector2 targetPos = Projectile.Center.Clamp(targetHitbox);
+			if (targetPos == Projectile.Center) targetPos += (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 8;
+			Vector2 direction = (targetPos - Projectile.Center).Normalized(out float distance);
+			if (foundTarget) {
+				float speed = distance switch {
+					< 300f => 0.6f,
+					< 600f => 0.9f,
+					_ => 1.2f
+				};
+				if (Vector2.Dot(Projectile.velocity.Normalized(out _), direction) < 0.25f)
+					speed *= 2;
+					//Projectile.velocity *= 0.99f;
+				Projectile.velocity += direction * speed;
+				Projectile.velocity = Projectile.velocity.Normalized(out speed) * Math.Min(speed, 30);
+			} else {
+				float speed = distance switch {
+					< 300f => 0.1f,
+					< 600f => 0.2f,
+					_ => 0.3f
+				};
+				Projectile.velocity += direction * speed;
+				if (Vector2.Dot(Projectile.velocity.Normalized(out _), direction) < 0.25f)
+					Projectile.velocity *= 0.8f;
+
+				Projectile.velocity = Projectile.velocity.Normalized(out speed);
+				if (speed > 2) speed *= 0.96f;
+				Projectile.velocity *= Math.Min(speed, 15);
+			}
+		}
 		public override ref bool HasBuff(Player player) => ref player.OriginPlayer().lunaticDragon;
 		public override bool IsValidParent(Projectile segment) => SegmentTypes[segment.type];
 	}
