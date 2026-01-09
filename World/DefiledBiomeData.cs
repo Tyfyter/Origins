@@ -165,7 +165,7 @@ namespace Origins.World.BiomeData {
 				const float caveSize = 30;
 
 				ushort stoneID = (ushort)TileType<Defiled_Stone>();
-				ushort stoneWallID = (ushort)WallType<Defiled_Stone_Wall>();
+				ushort stoneWallID = (ushort)OriginsWall.GetWallID<Defiled_Stone_Wall>(WallVersion.Natural);
 				int oreID = TileType<Lost_Ore>();
 				Vector2 startVec = new(i, j);
 				int fisureCount = 0;
@@ -446,7 +446,7 @@ namespace Origins.World.BiomeData {
 			}
 			public static void DefiledCave(float i, float j, float sizeMult = 1f) {
 				ushort stoneID = (ushort)TileType<Defiled_Stone>();
-				ushort stoneWallID = (ushort)WallType<Defiled_Stone_Wall>();
+				ushort stoneWallID = (ushort)OriginsWall.GetWallID<Defiled_Stone_Wall>(WallVersion.Natural);
 				for (int x = (int)Math.Floor(i - (28 * sizeMult + 5)); x < (int)Math.Ceiling(i + (28 * sizeMult + 5)); x++) {
 					for (int y = (int)Math.Ceiling(j + (28 * sizeMult + 4)); y >= (int)Math.Floor(j - (28 * sizeMult + 4)); y--) {
 						if (Main.tile[x, y].HasTile && !WorldGen.CanKillTile(x, y)) continue;
@@ -632,7 +632,7 @@ namespace Origins.World.BiomeData {
 					}
 				}
 				ushort stoneID = (ushort)TileType<Defiled_Stone>();
-				ushort stoneWallID = (ushort)WallType<Defiled_Stone_Wall>();
+				ushort stoneWallID = (ushort)OriginsWall.GetWallID<Defiled_Stone_Wall>(WallVersion.Natural);
 				bool removedAnyTiles;
 				void Stamp() {
 					for (int x = -2; x <= 2; x++) {

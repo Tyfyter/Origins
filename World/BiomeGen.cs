@@ -174,7 +174,7 @@ namespace Origins {
 					}
 					if (tooClose) continue;
 					Vector2 vel = Vector2.Zero;
-					int wallType = ModContent.WallType<Defiled_Stone_Wall>();
+					int wallType = OriginsWall.GetWallID<Defiled_Stone_Wall>(WallVersion.Natural);
 					for (int k = 1; k <= 10 && vel == Vector2.Zero; k = k > 0 ? -k : -(k - 1)) {
 						for (int l = 1; l <= 10 && vel == Vector2.Zero; l = l > 0 ? -l : -(l - 1)) {
 							Tile tile = Main.tile[p.X + k, p.Y + l];

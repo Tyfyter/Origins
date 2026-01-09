@@ -125,7 +125,7 @@ namespace Origins.World.BiomeData {
 			public static void StartHive(int i, int j) {
 				Vector2 pos = new(i, j);
 				ushort fleshBlockType = (ushort)TileType<Tainted_Stone>();
-				ushort fleshWallType = (ushort)WallType<Tainted_Stone_Wall>();
+				ushort fleshWallType = (ushort)OriginsWall.GetWallID<Tainted_Stone_Wall>(WallVersion.Natural);
 				int oreID = TileType<Sanguinite_Ore>();
 				HashSet<ushort> cleaveReplacables = [fleshBlockType];
 				Tile tile;
@@ -381,7 +381,7 @@ namespace Origins.World.BiomeData {
 				const float wallThickness = 4f;
 				ushort fleshID = (ushort)TileType<Tainted_Stone>();
 				ushort weakFleshID = TileID.CrackedBlueDungeonBrick;
-				ushort fleshWallID = (ushort)WallType<Tainted_Stone_Wall>();
+				ushort fleshWallID = (ushort)OriginsWall.GetWallID<Tainted_Stone_Wall>(WallVersion.Natural);
 				int j2 = j;
 				if (j2 > Main.worldSurface) {
 					j2 = (int)Main.worldSurface;
@@ -459,7 +459,7 @@ namespace Origins.World.BiomeData {
 			}
 			public static Point HiveCave_Old(int i, int j, float sizeMult = 1f) {
 				ushort fleshID = (ushort)TileType<Tainted_Stone>();
-				ushort fleshWallID = (ushort)WallType<Tainted_Stone_Wall>();
+				ushort fleshWallID = (ushort)OriginsWall.GetWallID<Tainted_Stone_Wall>(WallVersion.Natural);
 				ushort blisterID = (ushort)TileType<Gel_Blister>();
 				int i2 = i + (int)(genRand.Next(-26, 26) * sizeMult);
 				int j2 = j + (int)(genRand.Next(-2, 22) * sizeMult);

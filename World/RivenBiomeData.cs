@@ -20,6 +20,7 @@ using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.Water;
 using PegasusLib;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,8 +38,8 @@ using Terraria.ObjectData;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
-using static Terraria.WorldGen;
 using static Terraria.ModLoader.ModContent;
+using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
 	public class Riven_Hive : ModBiome {
@@ -155,7 +156,7 @@ namespace Origins.World.BiomeData {
 			public static void StartHive(int i, int j) {
 				Vector2 pos = new(i, j);
 				ushort fleshBlockType = (ushort)TileType<Spug_Flesh>();
-				ushort fleshWallType = (ushort)WallType<Riven_Flesh_Wall>();
+				ushort fleshWallType = (ushort)OriginsWall.GetWallID<Riven_Flesh_Wall>(WallVersion.Natural);
 				ushort gooBlockType = (ushort)TileType<Amoeba_Fluid>();
 				int oreID = TileType<Encrusted_Ore>();
 				HashSet<ushort> cleaveReplacables = [fleshBlockType];
@@ -697,7 +698,7 @@ namespace Origins.World.BiomeData {
 				const float wallThickness = 4f;
 				ushort fleshID = (ushort)TileType<Spug_Flesh>();
 				ushort weakFleshID = TileID.CrackedBlueDungeonBrick;
-				ushort fleshWallID = (ushort)WallType<Riven_Flesh_Wall>();
+				ushort fleshWallID = (ushort)OriginsWall.GetWallID<Riven_Flesh_Wall>(WallVersion.Natural);
 				int j2 = j;
 				if (j2 > Main.worldSurface) {
 					j2 = (int)Main.worldSurface;
@@ -775,7 +776,7 @@ namespace Origins.World.BiomeData {
 			}
 			public static Point HiveCave_Old(int i, int j, float sizeMult = 1f) {
 				ushort fleshID = (ushort)TileType<Spug_Flesh>();
-				ushort fleshWallID = (ushort)WallType<Riven_Flesh_Wall>();
+				ushort fleshWallID = (ushort)OriginsWall.GetWallID<Riven_Flesh_Wall>(WallVersion.Natural);
 				ushort blisterID = (ushort)TileType<Gel_Blister>();
 				int i2 = i + (int)(genRand.Next(-26, 26) * sizeMult);
 				int j2 = j + (int)(genRand.Next(-2, 22) * sizeMult);
@@ -841,8 +842,15 @@ namespace Origins.World.BiomeData {
 					}
 				}
 				bool placedBlister = false;
+				RangeRandom random = new(genRand, 0, 25);
 				while (!placedBlister) {
-					placedBlister = PlaceTile(i2 + genRand.Next(-2, 3), j2 + genRand.Next(-2, 3), blisterID);
+					if (!random.AnyWeight) {
+						Origins.instance.Logger.Warn($"Failed to place a blister near {i2}, {j2}");
+						break;
+					}
+					int r = random.Get();
+					random.Multiply(r, r + 1, 0);
+					placedBlister = PlaceTile(i2 + (r % 5), j2 + (r / 5), blisterID);
 				}
 				DoScar(
 					new(i2, j2),
@@ -1108,7 +1116,7 @@ namespace Origins.World.BiomeData {
 			GERunnerConversion.Add(TileID.Silt, TileType<Silica>());
 
 			BiomeFlesh = TileType<Amoeba_Fluid>(); // temp?
-			BiomeFleshWall = WallType<Amebic_Gel_Wall>();
+			BiomeFleshWall = OriginsWall.GetWallID<Amebic_Gel_Wall>(WallVersion.Natural);
 
 			SeedType = ItemType<Riven_Grass_Seeds>();
 			BiomeOre = TileType<Encrusted_Ore>();
