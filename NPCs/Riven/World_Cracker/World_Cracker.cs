@@ -156,7 +156,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			} else {
 				ForcedTargetPosition = new(NPC.Center.X, (Main.maxTilesY + 100) * 16);
 				MoveSpeed = 4;
-				Min(ref NPC.velocity.Y, 20);
+				NPC.velocity.Y = float.Min(NPC.velocity.Y, 20);
 				if ((NPC.targetRect != default && !NPC.Center.IsWithin(NPC.targetRect.Center(), 6000)) || NPC.Center.Y >= (Main.maxTilesY + 50) * 16) NPC.active = false;
 			}
 			float dot = Vector2.Dot(NPC.velocity.SafeNormalize(default), (ForcedTargetPosition.Value - NPC.Center).SafeNormalize(default));
