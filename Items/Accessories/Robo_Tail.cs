@@ -257,6 +257,9 @@ namespace Origins.Items.Accessories {
 	}
 	public class Robo_Tail_Probe_Laser : ModProjectile {
 		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.MiniRetinaLaser}";
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.MinionShot[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.friendly = true;

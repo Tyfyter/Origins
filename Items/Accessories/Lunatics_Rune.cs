@@ -956,10 +956,12 @@ namespace Origins.Items.Accessories {
 		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.LunaticCultistPet}";
 		protected abstract int FrameNum { get; }
 		public override float ChildDistance => 14;
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.SourceDamage *= 1f;// use this to adjust damage
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			SegmentTypes[Type] = true;
 			Main.projFrames[Type] = 4;
+			Main.projPet[Projectile.type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
@@ -972,8 +974,10 @@ namespace Origins.Items.Accessories {
 			Projectile.ignoreWater = true;
 			Projectile.tileCollide = false;
 			Projectile.netImportant = true;
+			Projectile.ContinuouslyUpdateDamageStats = true;
 			Projectile.frame = FrameNum;
 		}
+		public override bool MinionContactDamage() => true;
 		public override ref bool HasBuff(Player player) => ref player.OriginPlayer().lunaticDragon;
 		public override bool IsValidParent(Projectile segment) => SegmentTypes[segment.type];
 	}
