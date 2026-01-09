@@ -658,7 +658,7 @@ ACCESSORIES:
 (#2/3, ^2) Lunatic's Rune !!!
 (^) Mysterious Spray
 (☻) Retool Arm !!!
-(#, ^2) Robo-tail !!!
+(☻) Robo-tail !!!
 (^) Scribe of the Meat God
 (#, ^2) Space Pirate's Eye !!!
 (^) Stack of Shraps

@@ -117,17 +117,8 @@ namespace Origins.Projectiles {
 			Player player = Main.player[Projectile.owner];
 			if ((int)Main.timeForVisualEffects % 120 == 0)
 				Projectile.netUpdate = true;
-
-			if (!player.active) {
-				Projectile.active = false;
-				return;
-			}
-
-			ref bool hasBuff = ref HasBuff(player);
-			if (player.dead) hasBuff = false;
-
-			if (hasBuff) Projectile.timeLeft = 2;
-			else if (Projectile.IsLocallyOwned()) Min(ref Projectile.timeLeft, 2);
+			DoActiveCheck();
+			if (!Projectile.active) return;
 
 			Vector2 center = player.Center;
 			if (Projectile.Distance(center) > 2000f) {
@@ -149,6 +140,21 @@ namespace Origins.Projectiles {
 			Projectile.position.X = MathHelper.Clamp(Projectile.position.X, 160f, Main.maxTilesX * 16 - 160);
 			Projectile.position.Y = MathHelper.Clamp(Projectile.position.Y, 160f, Main.maxTilesY * 16 - 160);
 		}
+
+		public void DoActiveCheck() {
+			Player player = Main.player[Projectile.owner];
+			if (!player.active) {
+				Projectile.active = false;
+				return;
+			}
+
+			ref bool hasBuff = ref HasBuff(player);
+			if (player.dead) hasBuff = false;
+
+			if (hasBuff) Projectile.timeLeft = 2;
+			else if (Projectile.IsLocallyOwned()) Min(ref Projectile.timeLeft, 2);
+		}
+
 		public override void SendExtraAI(BinaryWriter writer) {
 			targetingData.Send(writer);
 		}
@@ -287,6 +293,8 @@ namespace Origins.Projectiles {
 			base.ReceiveExtraAI(reader);
 			wormData.Receive(reader);
 		}
+		public Projectile GetChild() => OriginExtensions.GetProjectile(Projectile.owner, wormData.Child);
+		public Projectile GetParent() => OriginExtensions.GetProjectile(Projectile.owner, wormData.Parent);
 	}
 	public static class WormExtensions {
 		public static bool CanHaveChild(this WormMinion.BodyPart part) => part switch {

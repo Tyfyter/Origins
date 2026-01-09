@@ -7666,3 +7666,8 @@ Glitter_Glue: {
 	// DisplayName: Glitter Glue
 	// Tooltip: ""
 }
+
+Robo_Tail: {
+	// DisplayName: Robo Tail
+	// Tooltip: ""
+}

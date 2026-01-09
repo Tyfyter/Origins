@@ -573,6 +573,9 @@ namespace Origins {
 			selfDamageRally = 0;
 			blastSetCharge = 0;
 			ownedLargeGems.Clear();
+			UpdateRoboTailLifeTracker();
+			roboTailHurtCount = 0;
+			roboTailHealCount = 0;
 		}
 		public override void ModifyMaxStats(out StatModifier health, out StatModifier mana) {
 			base.ModifyMaxStats(out health, out mana);

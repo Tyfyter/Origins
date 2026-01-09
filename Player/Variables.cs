@@ -1,4 +1,5 @@
-﻿using Origins.Achievements;
+﻿using Newtonsoft.Json.Linq;
+using Origins.Achievements;
 using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Items.Accessories;
@@ -357,6 +358,19 @@ namespace Origins {
 		public int retoolArmDye = 0;
 		public Item glitterGlue = null;
 		public int glitterGlueTimer = 0;
+		public Item roboTail = null;
+		public bool roboTailVanity = false;
+		int roboTailLifeTracker;
+		public void UpdateRoboTailLifeTracker() {
+			int life = Player.statLife;
+			Min(ref life, Player.statLifeMax2);
+			if (roboTailLifeTracker == life) return;
+			if (life < roboTailLifeTracker) roboTailHurtCount += roboTailLifeTracker - life;
+			if (life > roboTailLifeTracker) roboTailHealCount += life - roboTailLifeTracker;
+			roboTailLifeTracker = life;
+		}
+		public int roboTailHurtCount = 0;
+		public int roboTailHealCount = 0;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -907,6 +921,13 @@ namespace Origins {
 			if (glitterGlue is null) glitterGlueTimer = 0;
 			else if (glitterGlueTimer < glitterGlue.useTime) glitterGlueTimer++;
 			glitterGlue = null;
+			if (roboTail is null) {
+				roboTailHurtCount = 0;
+				roboTailHealCount = 0;
+			} else {
+				roboTail = null;
+			}
+			roboTailVanity = false;
 			lotteryTicketItem = null;
 
 

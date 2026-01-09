@@ -2177,6 +2177,10 @@ Projectiles: {
 	Holy_Hand_Grenade_P.DisplayName: Holy Hand Grenade
 	Trenchmaker_Carpet_Bomb.DisplayName: Trenchmaker Carpet Bomb
 	The_Muffler_P.DisplayName: The Muffler P
+	Robo_Tail_Tail_Body.DisplayName: Robo Tail Tail Body
+	Robo_Tail_Tail_Head.DisplayName: Robo Tail Tail Head
+	Robo_Tail_Probe.DisplayName: Robo Tail Probe
+	Robo_Tail_Probe_Laser.DisplayName: Robo Tail Probe Laser
 }
 
 Prefixes: {

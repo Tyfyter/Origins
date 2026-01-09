@@ -974,7 +974,6 @@ namespace Origins.Items.Accessories {
 			Projectile.netImportant = true;
 			Projectile.frame = FrameNum;
 		}
-		public override BodyPart Part { get; }
 		public override ref bool HasBuff(Player player) => ref player.OriginPlayer().lunaticDragon;
 		public override bool IsValidParent(Projectile segment) => SegmentTypes[segment.type];
 	}

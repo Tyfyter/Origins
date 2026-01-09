@@ -469,6 +469,30 @@ namespace Origins {
 					}
 				}
 			}
+			if (roboTail is not null && Player.whoAmI == Main.myPlayer) {
+				int head = ModContent.ProjectileType<Robo_Tail_Tail_Head>();
+				if (Player.ownedProjectileCounts[head] <= 0) {
+					Player.SpawnProjectile(
+						Player.GetSource_Accessory(roboTail),
+						Player.MountedCenter,
+						default,
+						head,
+						Player.GetWeaponDamage(roboTail),
+						Player.GetWeaponKnockback(roboTail)
+					).originalDamage = roboTail.damage;
+				}
+				int body = ModContent.ProjectileType<Robo_Tail_Tail_Body>();
+				if (Player.ownedProjectileCounts[body] < Player.maxMinions) {
+					Player.SpawnProjectile(
+						Player.GetSource_Accessory(roboTail),
+						Player.MountedCenter,
+						default,
+						body,
+						Player.GetWeaponDamage(roboTail),
+						Player.GetWeaponKnockback(roboTail)
+					).originalDamage = roboTail.damage;
+				}
+			}
 			if (statSharePercent != 0f) {
 				foreach (DamageClass damageClass in DamageClasses.All) {
 					if (damageClass == DamageClass.Generic) {
@@ -593,6 +617,8 @@ namespace Origins {
 				Player.manaRegenDelay = 0;
 				if (necromancyPrefixMana < Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier) necromancyPrefixMana = Player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier;
 			}
+
+			UpdateRoboTailLifeTracker();
 
 			#region Achievements
 			Peat_Moss_Quest peatQuest = ModContent.GetInstance<Peat_Moss_Quest>();

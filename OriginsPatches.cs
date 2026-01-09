@@ -815,6 +815,7 @@ namespace Origins {
 			if (self.jumpBoost && self.OriginPlayer().heliumTank) {
 				Player.jumpHeight = (int)(Player.jumpHeight * 1.2f);
 			}
+			self.OriginPlayer().UpdateRoboTailLifeTracker();
 		}
 
 		static bool shouldDoHeliumSound = false;
