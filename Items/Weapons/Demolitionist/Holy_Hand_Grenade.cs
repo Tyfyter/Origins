@@ -27,6 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.AddIngredient(ItemID.Bomb, 10)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
+		public override bool CanUseItem(Player player) => !OriginsModIntegrations.CheckAprilFools() || player.ownedProjectileCounts[Item.shoot] <= 0;
 	}
 	public class Holy_Hand_Grenade_P : ModProjectile {
 		public override string Texture => typeof(Holy_Hand_Grenade).GetDefaultTMLName();
