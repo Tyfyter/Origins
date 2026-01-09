@@ -79,6 +79,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
+			NPCID.Sets.DoesntDespawnToInactivityAndCountsNPCSlots[Type] = true;
 			//NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rasterized_Debuff>()] = true;
 			Origins.RasterizeAdjustment[Type] = (8, 0.05f, 0f);
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Riven_Hive>());
@@ -154,10 +155,12 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				NPC.DiscourageDespawn(NPC.activeTime);
 			} else {
 				ForcedTargetPosition = new(NPC.Center.X, (Main.maxTilesY + 100) * 16);
-				NPC.EncourageDespawn(60 * 5);
+				MoveSpeed = 4;
+				Min(ref NPC.velocity.Y, 20);
+				if ((NPC.targetRect != default && !NPC.Center.IsWithin(NPC.targetRect.Center(), 6000)) || NPC.Center.Y >= (Main.maxTilesY + 50) * 16) NPC.active = false;
 			}
 			float dot = Vector2.Dot(NPC.velocity.SafeNormalize(default), (ForcedTargetPosition.Value - NPC.Center).SafeNormalize(default));
-			CanFly = dot > 0.5f;
+			CanFly = dot > 0.5f || !NPC.Center.IsWithin(NPC.targetRect.Center(), 16 * 250);
 
 			if (NPC.localAI[3] < (((NPC.lifeMax - NPC.life) * DifficultyMult) / NPC.lifeMax) && NPC.Center.WithinRange(ForcedTargetPosition ?? NPC.Center, 45f * 16)) {
 				float dist = 0;
@@ -512,6 +515,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public static AutoCastingAsset<Texture2D> ArmorTexture { get; private set; }
 		public override float SegmentSeparation => 90;
 		public override void SetStaticDefaults() {
+			NPCID.Sets.DoesntDespawnToInactivityAndCountsNPCSlots[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 			if (!Main.dedServ) {
 				ArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
@@ -616,6 +620,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
 		public override void SetStaticDefaults() {
+			NPCID.Sets.DoesntDespawnToInactivityAndCountsNPCSlots[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, NPCExtensions.HideInBestiary);
 		}
 		public override void SetDefaults() {
