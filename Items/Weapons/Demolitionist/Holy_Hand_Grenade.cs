@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.width = 28;
 			Projectile.height = 28;
 			Projectile.friendly = true;
-			Projectile.timeLeft = 60 * 20;
+			Projectile.timeLeft = 60 * 5;
 			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;

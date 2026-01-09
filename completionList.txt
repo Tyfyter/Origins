@@ -408,8 +408,8 @@ ACHIEVEMENTS:
 (^3) Martyrdom !!!
 (^3) Now You're the One Lying Broken !!!
 (^3) Peat Obsession !!!
-(☻) RIVEN WORMS !!! (see commit name for details)
-(☻) Slow Loading Bar !!! (ez)
+(^3) RIVEN WORMS !!!
+(#3) Slow Loading Bar !!! (ez)
 (X) The Signal, it's Calling !!!
 (^3) There's Something in There! !!!
 (^3) 'Till Death Mildew Us Part !!!
@@ -425,7 +425,7 @@ ARMOR:
 (^) Ancient Defiled Armor
 (^) Ancient Felnum Armor
 (^) Ancient Riven Armor
-(☻) Artifiber Armor !!!
+(^) Artifiber Armor
 (^) Ashen Armor
 (^) Cryosten Armor
 (^) Defiled Armor
@@ -647,7 +647,7 @@ ACCESSORIES:
 
 (^) Amebic Vial
 (^) Blizzardwalker's Jacket
-(☻) Crystal Heart !!! (gib balance)
+(^3) Crystal Heart !!! (Needs wing texture)
 (^) Cursed Crown
 (^) Emergency Bee Canister
 (^) Faith Beads
@@ -657,8 +657,8 @@ ACCESSORIES:
 (#, ^2) Glitter Glue !!!
 (#2/3, ^2) Lunatic's Rune !!!
 (^) Mysterious Spray
-(☻) Retool Arm !!!
-(☻) Robo-tail !!!
+(#3) Retool Arm !!!
+(#3) Robo-tail !!!
 (^) Scribe of the Meat God
 (#, ^2) Space Pirate's Eye !!!
 (^) Stack of Shraps
@@ -723,7 +723,7 @@ VANITY:
 
 UTILITIES:
 |---
-(☻) Adjust-o-Hook !!!
+(^) Adjust-o-Hook
 (^) Amoeba Hook
 (^) Chambersite Hook
 (^) Tangela Tether
@@ -738,7 +738,7 @@ UTILITIES:
 
 WINGS:
 |---
-(☻) Gills !!!
+(#3) Gills !!!
 
 (^) Acrid Beam Thrusters
 (X) Marrowick Mantle
@@ -840,7 +840,7 @@ MELEE WEAPONS:
 (X) Soulfire Saw
 (#, ^2) The Claw !!!
 (^) The Foot
-(☻) The Muffler !!!
+(#3) The Muffler !!!
 (X) Unicorn Lance
 
 (X) Chiton Kursarigama
@@ -1143,7 +1143,7 @@ EXPLOSIVE WEAPONS:
 (^) Chlorophyte Handcannon
 (#, ^2) Firework Cannon
 (X) Flarefury
-(☻) Holy Hand Grenade !!!
+(#3) Holy Hand Grenade !!!
 (^) Mine Flayer
 (^) Nova Cascade
 (^) Nova Swarm
