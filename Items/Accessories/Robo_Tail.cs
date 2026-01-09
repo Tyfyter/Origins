@@ -147,10 +147,15 @@ namespace Origins.Items.Accessories {
 		public override bool CanInsert(Projectile parent, Projectile child) => parent.type == ModContent.ProjectileType<Robo_Tail_Tail_Head>();
 		public override void AI() {
 			base.AI();
+			if (Projectile.localAI[0] != 0 && Projectile.ai[2] == 0) {
+				const int delay = 12;
+				Projectile.ai[1] = (GetChild()?.ai[1] ?? (Projectile.localAI[0] * delay - delay)) + delay;
+				Projectile.ai[2] = 1;
+			}
 			Player player = Main.player[Projectile.owner];
 			if (Projectile.localAI[1] > player.maxMinions) Projectile.Kill();
 			OriginPlayer originPlayer = player.OriginPlayer();
-			int threshold = player.statLifeMax2 / Main.player[Projectile.owner].maxMinions;
+			int threshold = (player.statLifeMax2 / 2) / Main.player[Projectile.owner].maxMinions;
 			switch (Projectile.ai[0]) {
 				case 0:
 				Projectile parent = GetParent();
@@ -162,6 +167,19 @@ namespace Origins.Items.Accessories {
 						Projectile.Center,
 						default,
 						ModContent.ProjectileType<Robo_Tail_Probe>(),
+						Projectile.damage,
+						Projectile.knockBack
+					);
+				}
+
+				ResetTargetingData();
+				player.OriginPlayer().GetMinionTarget(TargetingAlgorithm);
+				if (Projectile.ai[1].CycleUp(120) && targetingData.targetID != -1 && CollisionExt.CanHitRay(Projectile.Center, targetingData.targetHitbox.Center())) {
+					Projectile.SpawnProjectile(
+						Projectile.GetSource_FromAI(),
+						Projectile.Center,
+						Projectile.Center.DirectionTo(targetingData.targetHitbox.Center()) * 8,
+						ModContent.ProjectileType<Robo_Tail_Probe_Laser>(),
 						Projectile.damage,
 						Projectile.knockBack
 					);

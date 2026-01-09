@@ -7668,6 +7668,6 @@ Glitter_Glue: {
 }
 
 Robo_Tail: {
-	DisplayName: Robo Tail
+	DisplayName: Robo-Tail
 	Tooltip: ""
 }
