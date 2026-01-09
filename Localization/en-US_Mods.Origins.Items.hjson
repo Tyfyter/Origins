@@ -7671,3 +7671,8 @@ Robo_Tail: {
 	DisplayName: Robo-Tail
 	Tooltip: ""
 }
+
+Exo_Weapon_Mount: {
+	DisplayName: Exo-Weapon Mount
+	Tooltip: ""
+}
