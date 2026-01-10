@@ -11,6 +11,8 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Muffler : ModItem, IApplyPrefixItem {
+		public static bool RollMiasma(float chargeLevel) => float.Max(Main.rand.NextFloat(0f, 3f), Main.rand.NextFloat(0f, 3f)) < chargeLevel;
+		public static int MiasmaDuration(float chargeLevel) => 30;
 		public override void SetStaticDefaults() {
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 14));
 		}
@@ -78,9 +80,7 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.frameCounter = 0;
 				Projectile.frame.CycleUp(Main.projFrames[Type]);
 				if ((Projectile.frame % (Main.projFrames[Type] / 2)) == 4) {
-					if (float.Max(Main.rand.NextFloat(0f, 3f), Main.rand.NextFloat(0f, 3f)) < ChargeLevel) {
-						player.AddBuff(Miasma_Debuff.ID, 30);
-					}
+					if (The_Muffler.RollMiasma(ChargeLevel)) player.AddBuff(Miasma_Debuff.ID, The_Muffler.MiasmaDuration(ChargeLevel));
 					Projectile.friendly = true;
 					Vector2 slamPos = Projectile.Center + Projectile.velocity * 2f;
 					SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolumeScale(0.15f).WithPitch(1), slamPos);
