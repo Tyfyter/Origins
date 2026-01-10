@@ -41,6 +41,7 @@ namespace Origins.Items.Accessories {
 		public IEnumerable<int> ProvideItemObtainability() {
 			yield return NextLowerTier;
 		}
+		public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player) => equippedItem.ModItem is not Brine_Leafed_Clover || incomingItem.ModItem is not Brine_Leafed_Clover;
 	}
 	public class Brine_Leafed_Clover_1 : Brine_Leafed_Clover {
 		public override int Level => 1;
