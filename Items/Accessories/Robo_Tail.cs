@@ -152,6 +152,8 @@ namespace Origins.Items.Accessories {
 				} else {
 					Projectile.rotation -= Projectile.direction * (1 - player.statLife / (float)player.statLifeMax2) * 2;
 				}
+			} else {
+				Projectile.rotation += Projectile.direction * (player.controlUp.ToInt() - player.controlDown.ToInt());
 			}
 		}
 	}

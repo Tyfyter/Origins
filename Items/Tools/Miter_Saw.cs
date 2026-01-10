@@ -3,7 +3,9 @@ using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
 using PegasusLib;
+using PegasusLib.Networking;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -190,6 +192,7 @@ namespace Origins.Items.Tools {
 				}
 			}
 			public override void ResetEffects() {
+				if (Player.whoAmI != Main.myPlayer) return;
 				if (Player.ItemAnimationEndingOrEnded || Player.HeldItem.ModItem is not Miter_Saw) {
 					primaryHitNumber = 0;
 					SecondaryHitCharge = 0;
@@ -197,13 +200,38 @@ namespace Origins.Items.Tools {
 				}
 				if (SecondaryHitCharge > 0) SecondaryHitCharge--;
 				if (SecondaryHitCharge > SecondaryCritMaxCharge) SecondaryHitCharge = SecondaryCritMaxCharge;
+				if (!NetmodeActive.SinglePlayer && (primaryActive.TrySet(primaryHitNumber >= PrimaryCritThreshold) | secondaryActive.TrySet(SecondaryHitCharge >= SecondaryCritThreshold))) {
+					new Miter_Saw_Visuals_Action(Player, primaryActive, secondaryActive).Send();
+				}
 			}
+			bool primaryActive;
+			bool secondaryActive;
 			public bool IncrementPrimaryHit() => ++primaryHitNumber >= PrimaryCritThreshold;
 			public bool CheckSecondaryHit() {
 				SecondaryHitCharge += (Player.itemAnimationMax / Miter_Saw.MaxHitsPerAnimation) * 2 + 4;
 				return IsSecondaryCharged;
 			}
 			public bool IsSecondaryCharged => SecondaryHitCharge >= SecondaryCritThreshold;
+
+			public record class Miter_Saw_Visuals_Action(Player Player, bool Primary, bool Secondary) : SyncedAction {
+				public Miter_Saw_Visuals_Action() : this(default, default, default) { }
+				public override SyncedAction NetReceive(BinaryReader reader) => this with {
+					Player = Main.player[reader.ReadByte()],
+					Primary = reader.ReadBoolean(),
+					Secondary = reader.ReadBoolean()
+				};
+				public override void NetSend(BinaryWriter writer) {
+					writer.Write((byte)Player.whoAmI);
+					writer.Write(Primary);
+					writer.Write(Secondary);
+				}
+				protected override void Perform() {
+					if (Player.whoAmI == Main.myPlayer) return;
+					Miter_Saw_Player sawPlayer = Player.GetModPlayer<Miter_Saw_Player>();
+					sawPlayer.primaryHitNumber = Primary.Mul(PrimaryCritThreshold);
+					sawPlayer.secondaryHitCharge = Secondary.Mul(SecondaryCritThreshold);
+				}
+			}
 		}
 	}
 }
