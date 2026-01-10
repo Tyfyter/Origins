@@ -491,7 +491,7 @@ namespace Origins {
 			if (rasterizedTime > 0) {
 				Player.velocity = Vector2.Lerp(Player.velocity, Player.oldVelocity, rasterizedTime * 0.06f);
 				Player.position = Vector2.Lerp(Player.position, Player.oldPosition, rasterizedTime * 0.06f);
-				ModContent.GetInstance<Slow_Loading_Bar>().Condition.Value += (Player.position - Player.oldPosition).Length() / 16;
+				if (Player.velocity.Y == 0) ModContent.GetInstance<Slow_Loading_Bar>().Condition.Value += Math.Abs(Player.position.X - Player.oldPosition.X) / 16f;
 			}
 			Player.oldVelocity = Player.velocity;
 			rivenWet = false;
