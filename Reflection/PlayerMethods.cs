@@ -58,6 +58,18 @@ namespace Origins.Reflection {
 		[ReflectionParentType(typeof(Player)), ReflectionMemberName("ProcessHitAgainstNPC")]
 		private static ProcessHitAgainstNPC_Del _ProcessHitAgainstNPC;
 
+		private delegate bool IsBottomOfTreeTrunkNoRoots_Del(int x, int y);
+		[ReflectionParentType(typeof(Player)), ReflectionMemberName("IsBottomOfTreeTrunkNoRoots")]
+		private static IsBottomOfTreeTrunkNoRoots_Del _IsBottomOfTreeTrunkNoRoots;
+
+		private delegate void ClearMiningCacheAt_Del(int x, int y, int hitTileCacheType);
+		[ReflectionParentType(typeof(Player)), ReflectionMemberName("ClearMiningCacheAt")]
+		private static ClearMiningCacheAt_Del _ClearMiningCacheAt;
+
+		private delegate void TryReplantingTree_Del(int x, int y);
+		[ReflectionParentType(typeof(Player)), ReflectionMemberName("TryReplantingTree")]
+		private static TryReplantingTree_Del _TryReplantingTree;
+
 		[ReflectionParentType(typeof(Player))]
 		private static Action<int> set_ItemUsesThisAnimation;
 
@@ -118,6 +130,18 @@ namespace Origins.Reflection {
 		public static void ProcessHitAgainstNPC(Player player, Item sItem, Rectangle itemRectangle, int originalDamage, float knockBack, int npcIndex) {
 			DelegateMethods._target.SetValue(_ProcessHitAgainstNPC, player);
 			_ProcessHitAgainstNPC(sItem, itemRectangle, originalDamage, knockBack, npcIndex);
+		}
+		public static bool IsBottomOfTreeTrunkNoRoots(int x, int y) {
+			DelegateMethods._target.SetValue(_IsBottomOfTreeTrunkNoRoots, Main.CurrentPlayer);
+			return _IsBottomOfTreeTrunkNoRoots(x, y);
+		}
+		public static void ClearMiningCacheAt(Player player, int x, int y, int hitTileCacheType) {
+			DelegateMethods._target.SetValue(_ClearMiningCacheAt, player);
+			_ClearMiningCacheAt(x, y, hitTileCacheType);
+		}
+		public static void TryReplantingTree(Player player, int x, int y) {
+			DelegateMethods._target.SetValue(_TryReplantingTree, player);
+			_TryReplantingTree(x, y);
 		}
 		/*public static void GrabItems(Player player) {
 			Basic._target.SetValue(_ApplyNPCOnHitEffects, player);

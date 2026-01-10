@@ -1,4 +1,5 @@
-﻿using CalamityMod.NPCs.TownNPCs;
+﻿using CalamityMod.Items.Potions.Alcohol;
+using CalamityMod.NPCs.TownNPCs;
 using CalamityMod.Projectiles.Magic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Graphics.PackedVector;
@@ -13,6 +14,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Achievements;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -48,6 +50,7 @@ public abstract class Retool_Arm : ModItem {
 		Item.rare = ItemRarityID.Pink;
 		Item.value = Item.sellPrice(gold: 2);
 		Item.master = true;
+		Item.maxStack = 1;
 	}
 	public sealed override void UpdateAccessory(Player player, bool hideVisual) {
 		OriginPlayer originPlayer = player.OriginPlayer();
@@ -328,10 +331,13 @@ public class Retool_Arm_Laser_P : ModProjectile {
 }
 public class Retool_Arm_Laser_Beam : ModProjectile, IShadedProjectile {
 	public override string Texture => $"Terraria/Images/NPC_0";
-	public int Shader => Retool_Arm_Laser.ShaderID;
+	public float ManaMultiplier => 1;
 	public float ChargeTime => Projectile.ai[0] * 2;
+	public bool Charged => Projectile.ai[2] >= ChargeTime;
+	public int Shader => Retool_Arm_Laser.ShaderID;
 	public override void SetStaticDefaults() {
 		ProjectileID.Sets.DrawScreenCheckFluff[Type] = 1600 + 64;
+		Origins.HomingEffectivenessMultiplier[Type] = 50;
 	}
 	public override void SetDefaults() {
 		Projectile.DamageType = DamageClass.Magic;
@@ -352,13 +358,16 @@ public class Retool_Arm_Laser_Beam : ModProjectile, IShadedProjectile {
 		Player player = Main.player[Projectile.owner];
 		OriginPlayer originPlayer = player.OriginPlayer();
 		Retool_Arm arm = originPlayer.retoolArm;
-		if (arm is null or not Retool_Arm_Laser || !Lunatics_Rune.CheckMana(player, arm.Item, 1f / 60, pay: true)) {
+		if (arm is null or not Retool_Arm_Laser || !Lunatics_Rune.CheckMana(player, arm.Item, ManaMultiplier / 60f, pay: true)) {
 			Projectile.Kill();
 			return;
 		}
+		if (Projectile.velocity.X != 0) player.ChangeDir(Math.Sign(Projectile.velocity.X));
 
 		SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(Projectile.ai[2] / 10).WithVolume(0.24f), player.position);
 		Projectile.position = Retool_Arm_Layer.GetShoulder(player, player.position) + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * arm.ArmBaseLength);
+		if (player.mount?.Active ?? false) Projectile.position.Y -= player.mount.PlayerOffset;
+		Projectile.position = player.RotatedRelativePoint(Projectile.position);
 		if (Projectile.IsLocallyOwned()) {
 			if (!player.controlUseTile) {
 				Projectile.Kill();
@@ -379,7 +388,7 @@ public class Retool_Arm_Laser_Beam : ModProjectile, IShadedProjectile {
 			}
 		}
 		Projectile.position += Projectile.velocity * 16;
-		originPlayer.retoolArmRotation = Projectile.velocity.ToRotation();
+		originPlayer.retoolArmRotation = Projectile.velocity.ToRotation() - player.fullRotation;
 		Vector2 newTarget = Projectile.position + Projectile.velocity * CollisionExt.Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64);
 		TargetPos = newTarget;
 		Projectile.ai[2]++;
@@ -388,7 +397,7 @@ public class Retool_Arm_Laser_Beam : ModProjectile, IShadedProjectile {
 		overPlayers.Add(index);
 	}
 	public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-		if (Projectile.ai[2] < ChargeTime) return false;
+		if (!Charged) return false;
 		float collisionPoint = 1;
 		return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.position, TargetPos, 16, ref collisionPoint);
 	}
@@ -442,8 +451,10 @@ public class Retool_Arm_Saw : Retool_Arm {
 		base.SetDefaults();
 		Item.useTime = 5;
 		Item.useAnimation = 5;
-		Item.damage = 15;
+		Item.DamageType = DamageClass.Melee;
+		Item.damage = 35;
 		Item.knockBack = 0.5f;
+		Item.axe = 10;
 	}
 	Rectangle hitbox = new(0, 0, 22, 22);
 	public override void UpdateArm(Player player) {
@@ -485,7 +496,47 @@ public class Retool_Arm_Saw : Retool_Arm {
 			}
 			PlayerMethods.ItemCheck_MeleeHitPVP(player, Item, itemRectangle, weaponDamage, knockBack);
 		}
+
+		if (player.whoAmI == Main.myPlayer && player.ItemAnimationActive && player.HeldItem.axe > 0 && originPlayer.retoolArmTimer == 0) {
+			bool canChop = !player.noBuilding && player.IsTargetTileInItemRange(player.HeldItem);
+			if (canChop) DoChop(player, Player.tileTargetX, Player.tileTargetY);
+		}
 	}
+
+	private static void DoChop(Player player, int x, int y) {
+		Tile tile = Main.tile[x, y];
+		if (!Main.tileAxe[tile.TileType]) return;
+		int axePower = player.OriginPlayer().retoolArm.Item.axe;
+
+		ModTile modTile = TileLoader.GetTile(tile.TileType);
+		int damage = 0;
+		if (Main.tileNoFail[tile.TileType]) {
+			damage = 100;
+		}
+		if (modTile != null) {
+			damage += (int)(axePower / modTile.MineResist);
+		} else {
+			damage += (int)(axePower * 1.2f * (tile.TileType == TileID.Cactus ? 3 : 1));
+			if (Main.getGoodWorld) damage = (int)(damage * 1.3f);
+		}
+		if (!WorldGen.CanKillTile(x, y)) return;
+		AchievementsHelper.CurrentlyMining = true;
+		int hitNum = player.hitTile.HitObject(x, y, 1);
+		bool isBottom = false;
+		bool fail = player.hitTile.AddDamage(hitNum, damage) < 100;
+		if (!fail) {
+			PlayerMethods.ClearMiningCacheAt(player, x, y, 1);
+			isBottom = PlayerMethods.IsBottomOfTreeTrunkNoRoots(x, y);
+		}
+		WorldGen.KillTile(x, y, fail: fail);
+		if (NetmodeActive.MultiplayerClient) NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 0, x, y, fail.ToInt());
+		if (isBottom && !fail && player.HeldItem.type == ItemID.AcornAxe) {
+			PlayerMethods.TryReplantingTree(player, x, y);
+		}
+		if (damage != 0) player.hitTile.Prune();
+		AchievementsHelper.CurrentlyMining = false;
+	}
+
 	public override void DrawArm(ref PlayerDrawSet drawInfo) {
 		Player player = drawInfo.drawPlayer;
 		OriginPlayer originPlayer = player.OriginPlayer();
@@ -518,6 +569,7 @@ public class Retool_Arm_Vice : Retool_Arm {
 		base.SetDefaults();
 		Item.useTime = 15;
 		Item.useAnimation = 15;
+		Item.DamageType = DamageClass.Melee;
 		Item.damage = 60;
 		Item.knockBack = 12f;
 	}
