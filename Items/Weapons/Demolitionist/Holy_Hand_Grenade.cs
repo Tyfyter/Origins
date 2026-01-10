@@ -1,3 +1,5 @@
+using Origins.Projectiles;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -36,7 +38,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.width = 28;
 			Projectile.height = 28;
 			Projectile.friendly = true;
-			Projectile.timeLeft = 60 * 5;
+			Projectile.timeLeft = 60 * 3;
 			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
@@ -96,6 +98,30 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
 			if (Projectile.ai[2] == 0) SoundEngine.PlaySound(Origins.Sounds.HolyHandGrenade, Projectile.Center);
+
+			int tileDestructionRadius = 7;
+			tileDestructionRadius *= 16;
+			tileDestructionRadius = (int)Projectile.GetGlobalProjectile<ExplosiveGlobalProjectile>().modifierBlastRadius
+				.CombineWith(Main.player[Projectile.owner].GetModPlayer<OriginPlayer>().explosiveBlastRadius)
+				.Scale(0.5f)
+				.ApplyTo(tileDestructionRadius);
+			tileDestructionRadius /= 16;
+			Vector2 center = Projectile.Center;
+			int i = (int)(center.X / 16);
+			int j = (int)(center.Y / 16);
+			int minI = Math.Max(i - tileDestructionRadius, 0);
+			int maxI = Math.Min(i + tileDestructionRadius, Main.maxTilesX);
+			int minJ = Math.Max(j - tileDestructionRadius, 0);
+			int maxJ = Math.Min(j + tileDestructionRadius, Main.maxTilesY);
+			Projectile.ExplodeTiles(
+				center,
+				tileDestructionRadius,
+				minI,
+				maxI,
+				minJ,
+				maxJ,
+				Projectile.ShouldWallExplode(center, tileDestructionRadius, minI, maxI, minJ, maxJ)
+			);
 		}
 	}
 }
