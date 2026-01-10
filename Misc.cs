@@ -249,7 +249,9 @@ namespace Origins {
 			if (frameCounterOverride != -1) {
 				return texture.Frame(FrameCount, 1, (frameCounterOverride / TicksPerFrame) % FrameCount, 0);
 			}
-			return texture.Frame(FrameCount, 1, Frame, 0);
+			Rectangle frame = texture.Frame(FrameCount, 1, Frame, 0);
+			frame.Width -= 2;
+			return frame;
 		}
 	}
 	public class DrawAnimationDelegated : DrawAnimation {
