@@ -2,13 +2,13 @@
 using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Projectiles.Minions;
 
 namespace Origins.Items.Accessories {
 	public class Robo_Tail : ModItem {
@@ -28,12 +28,22 @@ namespace Origins.Items.Accessories {
 			originPlayer.roboTail = Item;
 			originPlayer.roboTailVanity = true;
 		}
+		public override void UpdateItemDye(Player player, int dye, bool hideVisual) {
+			if (!hideVisual) player.OriginPlayer().roboTailDye = dye;
+		}
+	}
+	public class Robo_Tail_Glow_Dye_Slot : ExtraDyeSlot {
+		public override bool UseForSlot(Item equipped, Item vanity, bool equipHidden) => equipped?.ModItem is Robo_Tail || vanity?.ModItem is Robo_Tail;
+		public override void ApplyDye(Player player, [NotNull] Item dye) {
+			player.GetModPlayer<OriginsDyeSlots>().cRoboTailGlow = dye.dye;
+		}
 	}
 	[ReinitializeDuringResizeArrays]
-	public abstract class Robo_Tail_Tail : WormMinion {
+	public abstract class Robo_Tail_Tail : WormMinion, IShadedProjectile {
 		static readonly bool[] SegmentTypes = ProjectileID.Sets.Factory.CreateBoolSet();
 		public override string Texture => typeof(Robo_Tail_Tail).GetDefaultTMLName();
 		AutoLoadingAsset<Texture2D> glowTexture = typeof(Robo_Tail_Tail).GetDefaultTMLName("_Glow");
+		public int Shader => Main.player[Projectile.owner].OriginPlayer().roboTailDye;
 		protected abstract Rectangle Frame { get; }
 		public override float ChildDistance => 12;
 		public override void SetStaticDefaults() {
@@ -75,6 +85,9 @@ namespace Origins.Items.Accessories {
 				Projectile.spriteDirection == 1 ? SpriteEffects.FlipVertically : SpriteEffects.None
 			);
 			Main.EntitySpriteDraw(data);
+			if (Main.player[Projectile.owner].GetModPlayer<OriginsDyeSlots>().cRoboTailGlow is int cRoboTailGlow) {
+				Main.instance.PrepareDrawnEntityDrawing(Projectile, cRoboTailGlow, null);
+			}
 			data.texture = glowTexture;
 			data.color = Color.White;
 			Main.EntitySpriteDraw(data);
@@ -155,6 +168,7 @@ namespace Origins.Items.Accessories {
 			Player player = Main.player[Projectile.owner];
 			if (Projectile.localAI[1] > player.maxMinions) Projectile.Kill();
 			OriginPlayer originPlayer = player.OriginPlayer();
+			if (originPlayer.roboTailVanity) return;
 			int threshold = (player.statLifeMax2 / 2) / Main.player[Projectile.owner].maxMinions;
 			switch (Projectile.ai[0]) {
 				case 0:
@@ -197,9 +211,11 @@ namespace Origins.Items.Accessories {
 			}
 		}
 	}
-	public class Robo_Tail_Probe : MinionBase, IArtifactMinion {
+	public class Robo_Tail_Probe : MinionBase, IArtifactMinion, IShadedProjectile {
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
+		AutoLoadingAsset<Texture2D> glowTexture = typeof(Robo_Tail_Probe).GetDefaultTMLName("_Glow");
+		public int Shader => Main.player[Projectile.owner].OriginPlayer().roboTailDye;
 		public override void SetStaticDefaults() {
 			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
@@ -272,9 +288,36 @@ namespace Origins.Items.Accessories {
 		public override void OnKill(int timeLeft) {
 			base.OnKill(timeLeft);
 		}
+		public override bool PreDraw(ref Color lightColor) {
+			DrawData data = new(
+				TextureAssets.Projectile[Type].Value,
+				Projectile.Center - Main.screenPosition,
+				null,
+				lightColor,
+				Projectile.rotation,
+				TextureAssets.Projectile[Type].Size() * 0.5f,
+				1,
+				Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally
+			);
+			Main.EntitySpriteDraw(data);
+			if (Main.player[Projectile.owner].GetModPlayer<OriginsDyeSlots>().cRoboTailGlow is int cRoboTailGlow) {
+				Main.instance.PrepareDrawnEntityDrawing(Projectile, cRoboTailGlow, null);
+			}
+			data.texture = glowTexture;
+			data.color = Color.White;
+			Main.EntitySpriteDraw(data);
+			return false;
+		}
 	}
-	public class Robo_Tail_Probe_Laser : ModProjectile {
+	public class Robo_Tail_Probe_Laser : ModProjectile, IShadedProjectile {
 		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.MiniRetinaLaser}";
+		public int Shader {
+			get {
+				Player player = Main.player[Projectile.owner];
+				return player.GetModPlayer<OriginsDyeSlots>().cRoboTailGlow ?? player.OriginPlayer().roboTailDye;
+			}
+		}
+
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.MinionShot[Type] = true;
 		}

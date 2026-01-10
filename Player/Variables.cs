@@ -360,6 +360,7 @@ namespace Origins {
 		public int glitterGlueTimer = 0;
 		public Item roboTail = null;
 		public bool roboTailVanity = false;
+		public int roboTailDye = 0;
 		int roboTailLifeTracker;
 		public void UpdateRoboTailLifeTracker() {
 			int life = Player.statLife;
@@ -930,6 +931,7 @@ namespace Origins {
 				roboTail = null;
 			}
 			roboTailVanity = false;
+			roboTailDye = 0;
 			lotteryTicketItem = null;
 
 

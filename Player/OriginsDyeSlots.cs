@@ -11,11 +11,13 @@ namespace Origins {
 		public int? cSceneMYKDye1;
 		public int? cSceneMYKDye2;
 		public int? cFuturephonesGlow;
+		public int? cRoboTailGlow;
 		public override void ResetEffects() {
 			cSceneMYKDye0 = null;
 			cSceneMYKDye1 = null;
 			cSceneMYKDye2 = null;
 			cFuturephonesGlow = null;
+			cRoboTailGlow = null;
 		}
 	}
 }
