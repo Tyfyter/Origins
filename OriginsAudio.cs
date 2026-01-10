@@ -1,10 +1,12 @@
-﻿using Terraria.Audio;
+﻿using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins {
 	public partial class Origins : Mod {
 		public static class Music {
+			public static bool ShouldBeOtherworldly => !Main.swapMusic == (Main.drunkWorld && !Main.remixWorld);
 			public static int Fiberglass = MusicID.OtherworldlyJungle;
 
 			public static int BrinePool = MusicID.OtherworldlyEerie;

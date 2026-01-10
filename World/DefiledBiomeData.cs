@@ -43,7 +43,7 @@ namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
 		public static IItemDropRule FirstFissureDropRule;
 		public static IItemDropRule FissureDropRule;
-		public override int Music => Main.swapMusic ? Origins.Music.OtherworldlyDefiled : Origins.Music.Defiled;
+		public override int Music => Origins.Music.ShouldBeOtherworldly ? Origins.Music.OtherworldlyDefiled : Origins.Music.Defiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilDefiled";
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
