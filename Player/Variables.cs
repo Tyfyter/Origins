@@ -925,12 +925,11 @@ namespace Origins {
 			if (glitterGlue is null) glitterGlueTimer = 0;
 			else if (glitterGlueTimer < glitterGlue.useTime) glitterGlueTimer++;
 			glitterGlue = null;
-			if (roboTail is null) {
+			if (roboTail is null || roboTailVanity) {
 				roboTailHurtCount = 0;
 				roboTailHealCount = 0;
-			} else {
-				roboTail = null;
 			}
+			roboTail = null;
 			roboTailVanity = false;
 			roboTailDye = 0;
 			lotteryTicketItem = null;

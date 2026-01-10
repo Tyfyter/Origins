@@ -146,6 +146,13 @@ namespace Origins.Items.Accessories {
 			} else if (player.statLife >= player.statLifeMax2) {
 				originPlayer.roboTailHealCount++;
 			}
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				if (player.statLife >= player.statLifeMax2 * 0.95f) {
+					Projectile.rotation += (Utils.PingPongFrom01To010(player.miscCounter / 15f % 1) * 2 - 1) * 2f;
+				} else {
+					Projectile.rotation -= Projectile.direction * (1 - player.statLife / (float)player.statLifeMax2) * 2;
+				}
+			}
 		}
 	}
 	public class Robo_Tail_Tail_Body : Robo_Tail_Tail {
@@ -168,7 +175,7 @@ namespace Origins.Items.Accessories {
 			Player player = Main.player[Projectile.owner];
 			if (Projectile.localAI[1] > player.maxMinions) Projectile.Kill();
 			OriginPlayer originPlayer = player.OriginPlayer();
-			if (originPlayer.roboTailVanity) return;
+			if (originPlayer.roboTailVanity || originPlayer.roboTail is null) return;
 			int threshold = (player.statLifeMax2 / 2) / Main.player[Projectile.owner].maxMinions;
 			switch (Projectile.ai[0]) {
 				case 0:
