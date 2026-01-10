@@ -23,11 +23,12 @@ namespace Origins.Projectiles {
 			if (isHoming && projectile.friendly) {
 				float targetWeight = 4.5f;
 				Vector2 targetDiff = default;
+				Vector2 direction = projectile.velocity.Normalized(out _);
 				bool foundTarget = Main.player[projectile.owner].DoHoming((target) => {
 					Vector2 currentDiff = target.Center - projectile.Center;
 					float dist = currentDiff.Length();
 					currentDiff /= dist;
-					float weight = Vector2.Dot(projectile.velocity, currentDiff) * (300f / (dist + 100));
+					float weight = Vector2.Dot(direction, currentDiff) * (300f / (dist + 100)) * 15;
 					if (weight > targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, target.position, target.width, target.height)) {
 						targetWeight = weight;
 						targetDiff = currentDiff;
