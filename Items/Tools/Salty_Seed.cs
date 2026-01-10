@@ -5,6 +5,7 @@ using Origins.Journal;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -96,6 +97,9 @@ namespace Origins.Items.Tools {
 			);
 			lightColor = Riven_Hive.GetGlowAlpha(lightColor);
 			return true;
+		}
+		public class EntitySource_Mitosis(Entity duplicated, Projectile mitosis, string context = null) : EntitySource_Parent(duplicated, context) {
+			public Projectile Mitosis { get; } = mitosis;
 		}
 	}
 }

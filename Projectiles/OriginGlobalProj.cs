@@ -198,7 +198,7 @@ namespace Origins.Projectiles {
 				}
 			} else if (source is EntitySource_Parent source_Parent) {
 				if (source_Parent.Entity is Projectile parentProjectile) {
-					if (parentProjectile.type == ModContent.ProjectileType<Mitosis_P>()) {
+					if (source is Mitosis_P.EntitySource_Mitosis) {
 						isFromMitosis = true;
 						projectile.alpha = 100;
 						if (projectile.minion) {
@@ -370,7 +370,7 @@ namespace Origins.Projectiles {
 				for (int i = 0; i < Mitosis_P.mitosises.Count; i++) {
 					if (projectile.Colliding(projectile.Hitbox, Main.projectile[Mitosis_P.mitosises[i]].Hitbox)) {
 						Projectile duplicated = Projectile.NewProjectileDirect(
-							Main.projectile[Mitosis_P.mitosises[i]].GetSource_FromThis(),
+							new Mitosis_P.EntitySource_Mitosis(projectile, Main.projectile[Mitosis_P.mitosises[i]]),
 							projectile.Center,
 							projectile.velocity.RotatedBy(0.25f),
 							projectile.type,
