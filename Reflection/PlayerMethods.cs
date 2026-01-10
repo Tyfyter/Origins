@@ -131,6 +131,18 @@ namespace Origins.Reflection {
 			DelegateMethods._target.SetValue(_ProcessHitAgainstNPC, player);
 			_ProcessHitAgainstNPC(sItem, itemRectangle, originalDamage, knockBack, npcIndex);
 		}
+		public static void ProcessHitAgainstAllNPCsNoCooldown(Player player, Item item, Rectangle itemRectangle, int weaponDamage, float knockBack) {
+			DelegateMethods._target.SetValue(_ProcessHitAgainstNPC, player);
+			foreach (NPC npc in Main.ActiveNPCs) {
+				int attackCD = player.attackCD;
+				int meleeNPCHitCooldown = player.meleeNPCHitCooldown[npc.whoAmI];
+				npc.position += npc.netOffset;
+				_ProcessHitAgainstNPC(item, itemRectangle, weaponDamage, knockBack, npc.whoAmI);
+				npc.position -= npc.netOffset;
+				player.attackCD = attackCD;
+				player.meleeNPCHitCooldown[npc.whoAmI] = meleeNPCHitCooldown;
+			}
+		}
 		public static bool IsBottomOfTreeTrunkNoRoots(int x, int y) {
 			DelegateMethods._target.SetValue(_IsBottomOfTreeTrunkNoRoots, Main.CurrentPlayer);
 			return _IsBottomOfTreeTrunkNoRoots(x, y);

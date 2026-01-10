@@ -1,9 +1,4 @@
-﻿using CalamityMod.Items.Potions.Alcohol;
-using CalamityMod.NPCs.TownNPCs;
-using CalamityMod.Projectiles.Magic;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Origins.Items.Weapons.Magic;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Layers;
 using Origins.Projectiles;
 using Origins.Reflection;
@@ -88,6 +83,7 @@ public abstract class Retool_Arm : ModItem {
 public class Retool_Arm_Cannon : Retool_Arm {
 	public override string Texture => typeof(Retool_Arm).GetDefaultTMLName();
 	AutoLoadingAsset<Texture2D> armTexture = typeof(Retool_Arm_Cannon).GetDefaultTMLName("_Use");
+	AutoLoadingAsset<Texture2D> armGlowTexture = typeof(Retool_Arm_Cannon).GetDefaultTMLName("_Use_Glow");
 	public override void SetStaticDefaults() {
 		Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 4));
 	}
@@ -152,7 +148,7 @@ public class Retool_Arm_Cannon : Retool_Arm {
 		int frameNum = int.Clamp((originPlayer.retoolArmTimer - 4) * 4 / Item.useTime + (originPlayer.retoolArmTimer >= 4).ToInt(), 0, 3);
 		SpriteEffects effects = drawInfo.playerEffect.Transpose();
 		Rectangle frame = armTexture.Value.Frame(verticalFrames: 4, frameY: frameNum);
-		drawInfo.DrawDataCache.Add(new(
+		DrawData data = new(
 			armTexture,
 			Retool_Arm_Layer.GetShoulder(player, drawInfo.Position).Floor() + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength).Floor() - Main.screenPosition,
 			frame,
@@ -163,7 +159,11 @@ public class Retool_Arm_Cannon : Retool_Arm {
 			effects
 			) {
 			shader = originPlayer.retoolArmDye
-		});
+		};
+		drawInfo.DrawDataCache.Add(data);
+		data.texture = armGlowTexture;
+		data.color = Color.White;
+		drawInfo.DrawDataCache.Add(data);
 	}
 	public override int ChoosePrefix(UnifiedRandom rand) {
 		return OriginExtensions.GetAllPrefixes(Item, rand, (PrefixCategory.AnyWeapon, 1), (PrefixCategory.Ranged, 1), (PrefixCategory.Accessory, 2));
@@ -171,12 +171,18 @@ public class Retool_Arm_Cannon : Retool_Arm {
 }
 public class Retool_Arm_Bomb : ModProjectile {
 	public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.DirtGolfBall}";
+	public override void SetStaticDefaults() {
+		ProjectileID.Sets.IsARocketThatDealsDoubleDamageToPrimaryEnemy[Type] = true;
+	}
 	public override void SetDefaults() {
 		Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 		Projectile.friendly = true;
 		Projectile.width = 12;
 		Projectile.height = 12;
 		Projectile.extraUpdates = 1;
+		Projectile.appliesImmunityTimeOnSingleHits = true;
+		Projectile.usesLocalNPCImmunity = true;
+		Projectile.localNPCHitCooldown = -1;
 	}
 	public override void AI() {
 		Projectile.ai[0] += 1f / 15;
@@ -205,6 +211,7 @@ public class Retool_Arm_Bomb : ModProjectile {
 public class Retool_Arm_Laser : Retool_Arm {
 	public override string Texture => typeof(Retool_Arm).GetDefaultTMLName();
 	AutoLoadingAsset<Texture2D> armTexture = typeof(Retool_Arm_Laser).GetDefaultTMLName("_Use");
+	AutoLoadingAsset<Texture2D> armGlowTexture = typeof(Retool_Arm_Laser).GetDefaultTMLName("_Use_Glow");
 	public static int ShaderID { get; private set; }
 	public override void SetStaticDefaults() {
 		Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 4) { Frame = 1 });
@@ -219,8 +226,8 @@ public class Retool_Arm_Laser : Retool_Arm {
 		base.SetDefaults();
 		Item.DamageType = DamageClass.Magic;
 		Item.shootSpeed = 8;
-		Item.useTime = 26;
-		Item.useAnimation = 26;
+		Item.useTime = 22;
+		Item.useAnimation = 22;
 		Item.damage = 60;
 		Item.mana = 60;
 		Item.knockBack = 6f;
@@ -287,7 +294,7 @@ public class Retool_Arm_Laser : Retool_Arm {
 		OriginPlayer originPlayer = player.OriginPlayer();
 		SpriteEffects effects = drawInfo.playerEffect.Transpose();
 		Rectangle frame = armTexture.Value.Frame();
-		drawInfo.DrawDataCache.Add(new(
+		DrawData data = new(
 			armTexture,
 			Retool_Arm_Layer.GetShoulder(player, drawInfo.Position).Floor() + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength).Floor() - Main.screenPosition,
 			frame,
@@ -298,7 +305,11 @@ public class Retool_Arm_Laser : Retool_Arm {
 			effects
 			) {
 			shader = originPlayer.retoolArmDye
-		});
+		};
+		drawInfo.DrawDataCache.Add(data);
+		data.texture = armGlowTexture;
+		data.color = Color.White;
+		drawInfo.DrawDataCache.Add(data);
 	}
 	public override int ChoosePrefix(UnifiedRandom rand) {
 		return OriginExtensions.GetAllPrefixes(Item, rand, (PrefixCategory.AnyWeapon, 1), (PrefixCategory.Magic, 1), (PrefixCategory.Accessory, 2));
@@ -457,6 +468,7 @@ public class Retool_Arm_Saw : Retool_Arm {
 		Item.axe = 10;
 	}
 	Rectangle hitbox = new(0, 0, 22, 22);
+	bool hasTarget;
 	public override void UpdateArm(Player player) {
 		OriginPlayer originPlayer = player.OriginPlayer();
 		arm.start = Retool_Arm_Layer.GetShoulder(player, player.position);
@@ -464,7 +476,7 @@ public class Retool_Arm_Saw : Retool_Arm {
 		arm.bone1.R = 18f * Item.scale;
 		Vector2 targetPos = arm.start + new Vector2(16f * player.direction, -20f);
 		float maxDist = 16 * 16 * 4 * 4;
-		bool hasTarget = player.DoHoming((target) => {
+		hasTarget = player.DoHoming((target) => {
 			Vector2 currentPos = arm.start.Clamp(target.Hitbox);
 			float dist = currentPos.DistanceSQ(arm.start);
 			if (dist < maxDist) {
@@ -487,13 +499,7 @@ public class Retool_Arm_Saw : Retool_Arm {
 		if (originPlayer.retoolArmTimer.CycleUp(Item.useTime) && hasTarget) {
 			int weaponDamage = player.GetWeaponDamage(Item);
 			float knockBack = player.GetWeaponKnockback(Item);
-			foreach (NPC npc in Main.ActiveNPCs) {
-				if (npc.immune[player.whoAmI] == 0) {
-					npc.position += npc.netOffset;
-					PlayerMethods.ProcessHitAgainstNPC(player, Item, itemRectangle, weaponDamage, knockBack, npc.whoAmI);
-					npc.position -= npc.netOffset;
-				}
-			}
+			PlayerMethods.ProcessHitAgainstAllNPCsNoCooldown(player, Item, itemRectangle, weaponDamage, knockBack);
 			PlayerMethods.ItemCheck_MeleeHitPVP(player, Item, itemRectangle, weaponDamage, knockBack);
 		}
 
@@ -545,7 +551,7 @@ public class Retool_Arm_Saw : Retool_Arm {
 		drawInfo.DrawDataCache.Add(new(
 			armTexture,
 			Retool_Arm_Layer.GetShoulder(player, drawInfo.Position).Floor() + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength).Floor() - Main.screenPosition,
-			armTexture.Value.Frame(verticalFrames: 7),
+			armTexture.Value.Frame(verticalFrames: 6, frameY: hasTarget ? (player.miscCounter % 4) + 1 : 0),
 			drawInfo.colorArmorHead,
 			originPlayer.retoolArmRotation,
 			new Vector2(5, 13).Apply(effects, frame.Size()),
@@ -562,6 +568,7 @@ public class Retool_Arm_Saw : Retool_Arm {
 public class Retool_Arm_Vice : Retool_Arm {
 	public override string Texture => typeof(Retool_Arm).GetDefaultTMLName();
 	AutoLoadingAsset<Texture2D> armTexture = typeof(Retool_Arm_Vice).GetDefaultTMLName("_Use");
+	AutoLoadingAsset<Texture2D> armGlowTexture = typeof(Retool_Arm_Vice).GetDefaultTMLName("_Use_Glow");
 	public override void SetStaticDefaults() {
 		Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 4) { Frame = 3 });
 	}
@@ -615,19 +622,11 @@ public class Retool_Arm_Vice : Retool_Arm {
 		if (originPlayer.retoolArmTimer > Item.useTime) {
 			if (originPlayer.retoolArmTimer < Item.useTime + 5) {
 				originPlayer.retoolArmTimer++;
-			} else if (++originPlayer.retoolArmTimer >= 300) {
-				if (originPlayer.retoolArmTimer >= 304) originPlayer.retoolArmTimer = 0;
+			} else if (++originPlayer.retoolArmTimer >= 60) {
+				if (originPlayer.retoolArmTimer >= 64) originPlayer.retoolArmTimer = 0;
 			} else if (itemRectangle.Intersects(targetEntity.Hitbox)) {
-				originPlayer.retoolArmTimer = 300;
-				int weaponDamage = player.GetWeaponDamage(Item);
-				float knockBack = player.GetWeaponKnockback(Item);
-				foreach (NPC npc in Main.ActiveNPCs) {
-					if (npc.immune[player.whoAmI] == 0) {
-						npc.position += npc.netOffset;
-						PlayerMethods.ProcessHitAgainstNPC(player, Item, itemRectangle, weaponDamage, knockBack, npc.whoAmI);
-						npc.position -= npc.netOffset;
-					}
-				}
+				originPlayer.retoolArmTimer = 60;
+				PlayerMethods.ProcessHitAgainstAllNPCsNoCooldown(player, Item, itemRectangle, player.GetWeaponDamage(Item), player.GetWeaponKnockback(Item));
 			}
 		}
 	}
@@ -635,14 +634,14 @@ public class Retool_Arm_Vice : Retool_Arm {
 		Player player = drawInfo.drawPlayer;
 		OriginPlayer originPlayer = player.OriginPlayer();
 		int frameNum = 0;
-		if (originPlayer.retoolArmTimer >= 300) {
+		if (originPlayer.retoolArmTimer >= 60) {
 			frameNum = 2;
 		} else if (originPlayer.retoolArmTimer >= Item.useTime + 4) {
 			frameNum = 1;
 		}
 		SpriteEffects effects = drawInfo.playerEffect;
 		Rectangle frame = armTexture.Value.Frame(verticalFrames: 3, frameY: frameNum);
-		drawInfo.DrawDataCache.Add(new(
+		DrawData data = new(
 			armTexture,
 			Retool_Arm_Layer.GetShoulder(player, drawInfo.Position).Floor() + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength).Floor() - Main.screenPosition,
 			frame,
@@ -653,9 +652,14 @@ public class Retool_Arm_Vice : Retool_Arm {
 			effects
 			) {
 			shader = originPlayer.retoolArmDye
-		});
+		};
+		drawInfo.DrawDataCache.Add(data);
+		data.texture = armGlowTexture;
+		data.color = Color.White;
+		drawInfo.DrawDataCache.Add(data);
 	}
 	public override int ChoosePrefix(UnifiedRandom rand) {
 		return OriginExtensions.GetAllPrefixes(Item, rand, (PrefixCategory.AnyWeapon, 1), (PrefixCategory.Melee, 1), (PrefixCategory.Accessory, 2));
 	}
+	//public override bool ReplacesAltFunctionUse(Player player) => true;
 }
