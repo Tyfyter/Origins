@@ -492,7 +492,13 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void DoAIState(Trenchmaker boss) {
 			NPC npc = boss.NPC;
-			if (boss.legs[0].CurrentAnimation is Jump_Preparation_Animation or Jump_Squat_Animation) return;
+			if (boss.legs[0].CurrentAnimation is Jump_Preparation_Animation or Jump_Squat_Animation) {
+				if (npc.soundDelay == 0) {
+					SoundEngine.PlaySound(Origins.Sounds.ThrusterChargeUp, npc.Center);
+				}
+				npc.soundDelay = 30;
+				return;
+			}
 			if (boss.legs[0].CurrentAnimation is Jump_Extend_Animation) {
 				npc.ai[1] = 1;
 				return;
@@ -506,6 +512,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				return;
 			}
 			npc.velocity.Y -= 0.33f;
+			npc.velocity.X += npc.direction * 0.01f;
 			npc.DoFrames(4, 1..7);
 			if (++npc.ai[0] > (npc.ai[1] * DropRate) && npc.ai[1] < MaxCount + 1) {
 				npc.ai[1]++;
@@ -518,8 +525,12 @@ namespace Origins.NPCs.Ashen.Boss {
 					Main.rand.Next(0, 2)
 				);
 			}
+			if (npc.ai[1] >= MaxCount + 1) {
+				npc.velocity.Y = -0.1f;
+				//Min(ref npc.velocity.Y, 1);
+			}
 		}
-		public override LegAnimation ForceAnimation(Trenchmaker npc, Leg leg, Leg otherLeg) => ModContent.GetInstance<Jump_Preparation_Animation>();
+		public override LegAnimation ForceAnimation(Trenchmaker npc, Leg leg, Leg otherLeg) => npc.NPC.ai[1] == 0 ? ModContent.GetInstance<Jump_Preparation_Animation>() : null;
 		public class Trenchmaker_Carpet_Bomb : ModProjectile {
 			public override void SetDefaults() {
 				Projectile.width = 34;

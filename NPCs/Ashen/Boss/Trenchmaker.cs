@@ -15,11 +15,13 @@ using Origins.World.BiomeData;
 using PegasusLib;
 using PegasusLib.Graphics;
 using ReLogic.Content;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -138,12 +140,20 @@ namespace Origins.NPCs.Ashen.Boss {
 			);
 		}
 		public Leg[] legs = [new(), new()];
+		SlotId thrusterSound;
 		public override void AI() {
 			UpdateTarget();
 			Vector2 diff = NPC.targetRect.Center() - GunPos;
 			Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
 			GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.05f);
 			this.GetState().DoAIState(this);
+			if (!Main.dedServ && NPC.frame.Y != 0 && !(thrusterSound.IsValid && SoundEngine.TryGetActiveSound(thrusterSound, out _))) {
+				thrusterSound = SoundEngine.PlaySound(Origins.Sounds.ThrusterLoop, NPC.Center, sound => {
+					if (!NPC.active) return false;
+					sound.Position = NPC.Center;
+					return NPC.frame.Y != 0;
+				});
+			}
 		}
 		public void DoTargeting() {
 			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.Players);

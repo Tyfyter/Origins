@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -41,6 +42,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			} else if (aiState is Teabag_State && otherLeg.CurrentAnimation is Standing_Animation or Teabag_Animation_1) {
 				return ModContent.GetInstance<Teabag_Animation_1>();
 			} else if (dist <= 0 && npc.NPC.targetRect.Y > npc.NPC.BottomLeft.Y && otherLeg.CurrentAnimation is not Stomp_Animation_1 and not Stomp_Animation_2 and not Stomp_Animation_3) {
+				SoundEngine.PlaySound(Origins.Sounds.PowerStompCharge, npc.NPC.Center);
 				return ModContent.GetInstance<Stomp_Animation_1>();
 			}
 			return this;
@@ -239,7 +241,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void AI() {
 			float num = 15f;
-
+			if (Projectile.ai[0] == 0) SoundEngine.PlaySound(Origins.Sounds.PowerStomp, Projectile.Center);
 			Projectile.ai[0] += 1f;
 			if (Projectile.ai[0] > 9f) {
 				Projectile.Kill();

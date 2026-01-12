@@ -73,6 +73,12 @@ namespace Origins {
 			public static SoundStyle WCHit = SoundID.ForceRoar;
 			public static SoundStyle WCIdle = SoundID.ForceRoar;
 			public static SoundStyle WCScream = SoundID.ForceRoar;
+			public static SoundStyle PowerStompCharge = new("Origins/Sounds/Custom/PowerStompCharge");
+			public static SoundStyle PowerStomp = new("Origins/Sounds/Custom/PowerStomp");
+			public static SoundStyle ThrusterChargeUp = new("Origins/Sounds/Custom/ThrusterChargeUp");
+			public static SoundStyle ThrusterLoop = new("Origins/Sounds/Custom/ThrusterLoop") {
+				IsLooped = true
+			};
 
 			public static SoundStyle Lightning = SoundID.Roar;
 			public static SoundStyle LightningCharging = SoundID.Roar;
