@@ -1414,7 +1414,7 @@ TILES:
 (^) Underwater Vine
 (^) Venus Coral
 (^) Wilting Rose
-(#, ^2) Workstation Extras !!!
+(☻) Workstation Extras !!!
 (^) Wrycoral
 
 (^) A Perfect World

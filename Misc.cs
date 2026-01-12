@@ -4955,6 +4955,11 @@ namespace Origins {
 			tile.TileType = type;
 			tile.TileColor = paint ?? PaintID.None;
 		}
+		public static void SetHeight(this TileObjectData tile, int height, int bottomHeight = 16) {
+			tile.Height = height;
+			tile.CoordinateHeights = Enumerable.Repeat(16, height).ToArray();
+			tile.CoordinateHeights[^1] = bottomHeight;
+		}
 	}
 	public static class ProjectileExtensions {
 		public static void DoBoomerangAI(this Projectile projectile, Entity owner, float returnSpeed = 9f, float returnAcceleration = 0.4f, bool doSound = true) {

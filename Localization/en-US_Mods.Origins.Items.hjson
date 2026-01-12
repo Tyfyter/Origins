@@ -7676,3 +7676,23 @@ Exo_Weapon_Mount: {
 	DisplayName: Exo-Weapon Mount
 	Tooltip: ""
 }
+
+Tool_Rack_Item: {
+	DisplayName: Tool Rack
+	Tooltip: ""
+}
+
+Industrial_Work_Bench_Item: {
+	DisplayName: Industrial Work Bench
+	Tooltip: ""
+}
+
+Table_Saw_Item: {
+	DisplayName: Table Saw
+	Tooltip: ""
+}
+
+Lathe_Item: {
+	DisplayName: Lathe
+	Tooltip: ""
+}
