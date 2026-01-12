@@ -418,6 +418,34 @@ namespace Origins {
 			}*/
 			if (weakShimmer) Player.ignoreWater = true;
 			onSlope = false;
+			if (Player.chest != lastChest) {
+				if (Player.whoAmI == Main.myPlayer) {
+					static (SoundStyle open, SoundStyle close) GetSound(int chest) {
+						if (!Main.chest.IndexInRange(chest)) return default;
+						Tile tile = Main.tile[Main.chest[chest].x, Main.chest[chest].y];
+						if (!tile.HasTile || !OriginsSets.Tiles.ChestSoundOverride.IndexInRange(tile.TileType)) return default;
+						return OriginsSets.Tiles.ChestSoundOverride[tile.TileType];
+					}
+					(SoundStyle open, SoundStyle close) closeSet = GetSound(lastChest);
+					(SoundStyle open, SoundStyle close) openSet = GetSound(Player.chest);
+					bool stopTick = false;
+					if (openSet == closeSet) closeSet = default;
+					if (closeSet.close.SoundPath is not null) {
+						SoundEngine.SoundPlayer.StopAll(SoundID.MenuClose);
+						SoundEngine.PlaySound(closeSet.close);
+						stopTick = true;
+					}
+					if (openSet.open.SoundPath is not null) {
+						SoundEngine.SoundPlayer.StopAll(SoundID.MenuOpen);
+						SoundEngine.PlaySound(openSet.open);
+						stopTick = true;
+					}
+					if (stopTick && Player.chest >= 0 && lastChest >= 0) {
+						SoundEngine.SoundPlayer.StopAll(SoundID.MenuTick);
+					}
+				}
+				lastChest = Player.chest;
+			}
 		}
 		public override void PreUpdate() {
 			Debugging.LogFirstRun(PreUpdate);

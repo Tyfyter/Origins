@@ -12,6 +12,7 @@ using ThoriumTiles = ThoriumMod.Tiles;
 using OMI = Origins.OriginsModIntegrations;
 using System.Linq;
 using static Terraria.ModLoader.ModContent;
+using Terraria.Audio;
 
 namespace Origins {
 	public static class OriginsSets {
@@ -351,6 +352,7 @@ namespace Origins {
 			public static SlowdownPercent[] MinionSlowdown { get; } = TileID.Sets.Factory.CreateCustomSet<SlowdownPercent>(0);
 			public static bool[] DisableHoiking { get; } = TileID.Sets.Factory.CreateBoolSet(false);
 			public static bool[] StructureSerializer_PlaceAsObject { get; } = TileID.Sets.Factory.CreateBoolSet();
+			public static (SoundStyle open, SoundStyle close)[] ChestSoundOverride { get; } = TileID.Sets.Factory.CreateCustomSet<(SoundStyle, SoundStyle)>(default);
 			public static bool[] GemTilesToChambersite { get; } = TileID.Sets.Factory.CreateNamedSet($"{nameof(Tiles)}_{nameof(GemTilesToChambersite)}")
 				.Description("Gem ores in this set can be corrupted into chambersite ores")
 				.RegisterBoolSet(

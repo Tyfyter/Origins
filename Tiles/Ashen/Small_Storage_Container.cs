@@ -37,6 +37,11 @@ namespace Origins.Tiles.Ashen {
 			AdjTiles = [TileID.Containers];
 			DustType = Ashen_Biome.DefaultTileDust;
 			RegisterItemDrop(item.Type);
+			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
+			OriginsSets.Tiles.ChestSoundOverride[Type] = (Origins.Sounds.MetalBoxOpen, default);
+		}
+		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
+			if ((tile.TileFrameY / 18) % 2 != 0) height = -1600;
 		}
 		public override void ModifyTileData() => TileObjectData.newTile.RandomStyleRange = 3;
 		public override bool IsLockedChest(int i, int j) => false;

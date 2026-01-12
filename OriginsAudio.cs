@@ -57,6 +57,9 @@ namespace Origins {
 				IsLooped = true
 			};
 			public static SoundStyle SmallSawEnd = new("Origins/Sounds/Custom/SmallSawEnd");
+			public static SoundStyle MetalBoxOpen = new("Origins/Sounds/Custom/MetalBoxOpen");
+			public static SoundStyle MetalCreakOpen = new("Origins/Sounds/Custom/MetalCreakOpen");
+			public static SoundStyle MetalCreakClose = new("Origins/Sounds/Custom/MetalCreakClose");
 
 			public static SoundStyle DefiledIdle = SoundID.Zombie1;
 			public static SoundStyle DefiledHurt = SoundID.DD2_SkeletonHurt;
