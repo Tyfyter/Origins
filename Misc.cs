@@ -796,6 +796,10 @@ namespace Origins {
 	public interface IApplyPrefixItem {
 		void ApplyPrefix(int pre);
 	}
+	public interface ISwitchUseItem {
+		void StartUse(Player player);
+		void EndUse(Player player);
+	}
 	internal class SpecialTilePreviewOverlay() : Overlay(EffectPriority.High, RenderLayers.TilesAndNPCs), ILoadable {
 		public override void Draw(SpriteBatch spriteBatch) => (Main.LocalPlayer?.HeldItem?.ModItem as ISpecialTilePreviewItem)?.DrawPreview();
 		public override void Update(GameTime gameTime) { }

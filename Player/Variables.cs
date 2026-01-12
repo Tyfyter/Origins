@@ -15,6 +15,7 @@ using Origins.NPCs.Defiled;
 using Origins.NPCs.Riven;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.Projectiles.Misc;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -556,7 +557,6 @@ namespace Origins {
 		internal byte oldBonuses = 0;
 		public const int minionSubSlotValues = 3;
 		public float[] minionSubSlots = new float[minionSubSlotValues];
-		public int wormHeadIndex = -1;
 		public int heldProjectile = -1;
 		public IDrawOverArmProjectile heldProjOverArm = null;
 		public int lastMinionAttackTarget = -1;
@@ -613,6 +613,8 @@ namespace Origins {
 		public int dangerTime = 0;
 		internal bool[] activeShadows = new bool[ShadowType.ShadowTypeCount];
 		public bool lastItemCheckNotSkipped = false;
+		public bool wasUsingItem = false;
+		public SlotId loopedItemUseSound = SlotId.Invalid;
 		public bool InDanger { get; private set; }
 		RIVEN_WORMS.Tracker rivenBloodTracker;
 		public float tornRCStart = 0;

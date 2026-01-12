@@ -52,6 +52,11 @@ namespace Origins {
 			public static SoundStyle PhaserCrash = SoundID.Item12;
 			public static SoundStyle DeepBoom = SoundID.Item14;
 			public static SoundStyle HolyHandGrenade = new("Origins/Sounds/Custom/HolyHandGrenade");
+			public static SoundStyle SmallSawStart = new("Origins/Sounds/Custom/SmallSawStart");
+			public static SoundStyle SmallSaw = new("Origins/Sounds/Custom/SmallSaw") {
+				IsLooped = true
+			};
+			public static SoundStyle SmallSawEnd = new("Origins/Sounds/Custom/SmallSawEnd");
 
 			public static SoundStyle DefiledIdle = SoundID.Zombie1;
 			public static SoundStyle DefiledHurt = SoundID.DD2_SkeletonHurt;

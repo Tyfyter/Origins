@@ -2,17 +2,17 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
-using PegasusLib;
 using PegasusLib.Networking;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-	public class Miter_Saw : ModItem, ICustomDrawItem, ICustomWikiStat {
+	public class Miter_Saw : ModItem, ICustomDrawItem, ICustomWikiStat, ISwitchUseItem {
 		public static float MaxHitsPerAnimation => 8;
 		public string[] Categories => [
 			WikiCategories.ToolWeapon
@@ -29,7 +29,7 @@ namespace Origins.Items.Tools {
 			useTexture = null;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.WarAxeoftheNight);
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.damage = 18;
 			Item.DamageType = DamageClass.Melee;
 			Item.axe = 10;
@@ -41,9 +41,10 @@ namespace Origins.Items.Tools {
 			Item.shoot = ModContent.ProjectileType<Miter_Saw_P>();
 			Item.shootSpeed = 28;
 			Item.value = Item.sellPrice(silver: 40);
-			Item.UseSound = SoundID.Item23;
+			//Item.UseSound = SoundID.Item23;
 			Item.rare = ItemRarityID.Blue;
 			Item.channel = true;
+			Item.autoReuse = true;
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox) {
@@ -132,6 +133,18 @@ namespace Origins.Items.Tools {
 				1
 			));
 		}
+
+		public void StartUse(Player player) {
+			SoundEngine.PlaySound(Origins.Sounds.SmallSawStart, player.MountedCenter);
+			player.OriginPlayer().loopedItemUseSound = SoundEngine.PlaySound(Origins.Sounds.SmallSaw, player.MountedCenter, sound => {
+				sound.Position = player.MountedCenter;
+				return true;
+			});
+		}
+
+		public void EndUse(Player player) {
+			SoundEngine.PlaySound(Origins.Sounds.SmallSawEnd, player.MountedCenter);
+		}
 	}
 	public class Miter_Saw_P : ModProjectile {
 		public override string Texture => typeof(Miter_Saw).GetDefaultTMLName();
@@ -140,8 +153,10 @@ namespace Origins.Items.Tools {
 			Projectile.CloneDefaults(ProjectileID.TitaniumChainsaw);
 			Projectile.friendly = false;
 			Projectile.hide = true;
+			Projectile.soundDelay = 30;
 		}
 		public override void AI() {
+			Projectile.soundDelay = 30;
 			Projectile.position -= Projectile.velocity.SafeNormalize(default) * 4;
 			Player player = Main.player[Projectile.owner];
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation * player.gravDir - MathHelper.PiOver2 * player.direction);

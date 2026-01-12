@@ -995,6 +995,15 @@ namespace Origins {
 			}
 			Debugging.LogFirstRun(PostItemCheck);
 			releaseAltUse = !Player.controlUseTile;
+			if (wasUsingItem.TrySet(Player.ItemAnimationActive) && Player.HeldItem?.ModItem is ISwitchUseItem switchUseItem) {
+				if (wasUsingItem) {
+					if (loopedItemUseSound.IsValid && SoundEngine.TryGetActiveSound(loopedItemUseSound, out ActiveSound sound)) sound.Stop();
+					switchUseItem.StartUse(Player);
+				} else {
+					switchUseItem.EndUse(Player);
+					if (loopedItemUseSound.IsValid && SoundEngine.TryGetActiveSound(loopedItemUseSound, out ActiveSound sound)) sound.Stop();
+				}
+			}
 			Weak_Shimmer_Debuff.isUpdatingShimmeryThing = false;
 		}
 		void RunExtraItemCheck() {
