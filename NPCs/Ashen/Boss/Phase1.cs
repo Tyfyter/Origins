@@ -4,6 +4,7 @@ using Origins.Graphics.Primitives;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
 using ReLogic.Content;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -490,11 +491,12 @@ namespace Origins.NPCs.Ashen.Boss {
 			PhaseOneIdleState.aiStates.Add(this);
 			iconTexture = typeof(Trenchmaker_Carpet_Bomb).GetDefaultTMLName();
 		}
+		SlotId chargeSound;
 		public override void DoAIState(Trenchmaker boss) {
 			NPC npc = boss.NPC;
 			if (boss.legs[0].CurrentAnimation is Jump_Preparation_Animation or Jump_Squat_Animation) {
 				if (npc.soundDelay == 0) {
-					SoundEngine.PlaySound(Origins.Sounds.ThrusterChargeUp, npc.Center);
+					chargeSound = SoundEngine.PlaySound(Origins.Sounds.ThrusterChargeUp, npc.Center);
 				}
 				npc.soundDelay = 30;
 				return;
@@ -514,6 +516,8 @@ namespace Origins.NPCs.Ashen.Boss {
 			npc.velocity.Y -= 0.33f;
 			npc.velocity.X += npc.direction * 0.01f;
 			npc.DoFrames(4, 1..7);
+			// comment out the line below to judge how it sounds without stopping
+			if (npc.soundDelay.TrySet(0) && chargeSound.IsValid && SoundEngine.TryGetActiveSound(chargeSound, out ActiveSound sound)) sound.Stop();
 			if (++npc.ai[0] > (npc.ai[1] * DropRate) && npc.ai[1] < MaxCount + 1) {
 				npc.ai[1]++;
 				npc.SpawnProjectile(null,
