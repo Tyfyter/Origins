@@ -825,8 +825,6 @@ namespace Origins {
 			if (shouldDoMuffledSound) {
 				if (style == SoundID.PlayerHit) style = Sounds.MuffledHitMale;
 				else if (style == SoundID.FemaleHit) style = Sounds.MuffledHitFemale;
-				//else if (style == SoundID.DSTMaleHurt) style = Sounds.MuffledHitDSTMale;
-				//else if (style == SoundID.DSTFemaleHurt) style = Sounds.MuffledHitDSTFemale;
 			}
 			if (shouldDoHeliumSound) {
 				SoundStyle styleCopy = style.WithPitchOffset(heliumSoundPitch);

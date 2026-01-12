@@ -44,9 +44,6 @@ namespace Origins {
 		public static class Sounds {
 			public static SoundStyle MuffledHitMale = new("Origins/Sounds/Custom/ModifiedPlayer/Male_Hit_Mask", 3, SoundType.Sound);
 			public static SoundStyle MuffledHitFemale = new("Origins/Sounds/Custom/ModifiedPlayer/Male_Hit_Mask", 3, SoundType.Sound);
-			// can we really muffle these?
-			//public static SoundStyle MuffledHitDSTMale = new("Origins/Sounds/Custom/ModifiedPlayer/DST_Male_Hit_Mask", 3, SoundType.Sound);
-			//public static SoundStyle MuffledHitDSTFemale = new("Origins/Sounds/Custom/ModifiedPlayer/DST_Male_Hit_Mask", 3, SoundType.Sound);
 
 			public static SoundStyle MultiWhip = SoundID.Item153;
 			public static SoundStyle Krunch = SoundID.Item36;
