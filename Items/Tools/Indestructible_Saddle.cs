@@ -27,7 +27,7 @@ namespace Origins.Items.Tools {
 		public override void SetDefaults() {
 			Item.DefaultToMount(ModContent.MountType<Indestructible_Saddle_Mount>());
 			Item.rare = ItemRarityID.Pink;
-			Item.value = Item.sellPrice(gold: 20);
+			Item.value = Item.buyPrice(gold: 20);
 			Item.DamageType = DamageClasses.Explosive;
 			Item.damage = 150;
 			Item.knockBack = 10;

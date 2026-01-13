@@ -18,6 +18,7 @@ namespace Origins.Items.Vanity.BossMasks {
 		public override void SetDefaults() {
 			Item.rare = ItemRarityID.Blue;
 			Item.vanity = true;
+			Item.value = Item.sellPrice(silver: 75);
 		}
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
 			glowMask = GlowMask;

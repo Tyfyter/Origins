@@ -13,6 +13,7 @@ namespace Origins.Items.Armor.Extremophile {
 		public override void SetDefaults() {
 			Item.defense = 11;
 			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Extremophile_Breastplate>() && legs.type == ModContent.ItemType<Extremophile_Greaves>();
@@ -36,6 +37,7 @@ namespace Origins.Items.Armor.Extremophile {
 		public override void SetDefaults() {
 			Item.defense = 13;
 			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClass.Generic) += 0.15f;
@@ -47,6 +49,7 @@ namespace Origins.Items.Armor.Extremophile {
 		public override void SetDefaults() {
 			Item.defense = 11;
 			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateEquip(Player player) {
 			player.moveSpeed += Collision.DrownCollision(player.position, player.width, player.height, player.gravDir) ? 0.35f : 0.25f;

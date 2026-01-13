@@ -27,10 +27,10 @@ namespace Origins.Items.Pets {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.width = 32;
 			Item.height = 32;
-			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = AltCyanRarity.ID;// dev items are cyan rarity, despite being expert exclusive
 			Item.buffType = buffID;
 			Item.shoot = projectileID;
+			Item.value = Item.sellPrice(gold: 3, silver: 50);
 		}
 
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {

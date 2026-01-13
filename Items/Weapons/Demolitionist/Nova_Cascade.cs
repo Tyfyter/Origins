@@ -32,7 +32,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useAmmo = ModContent.ItemType<Metal_Slug>();
 			Item.knockBack = 8f;
 			Item.shootSpeed = 12f;
-			Item.value = Item.sellPrice(gold: 20);
+			Item.value = Item.sellPrice(gold: 10);
 			Item.rare = ItemRarityID.Red;
 			Item.UseSound = Origins.Sounds.HeavyCannon.WithPitchRange(0.9f, 1f);
 			Item.autoReuse = true;

@@ -17,9 +17,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ID = Type;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Musket);
+			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.noMelee = true;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.damage = 72;
+			Item.crit = 7;
 			Item.width = 56;
 			Item.height = 26;
 			Item.useTime = 57;
@@ -28,7 +30,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useAmmo = ModContent.ItemType<Metal_Slug>();
 			Item.knockBack = 8f;
 			Item.shootSpeed = 12f;
-			Item.value = Item.sellPrice(gold: 10);
+			Item.value = Item.sellPrice(gold: 6);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.25f);
 			Item.autoReuse = true;

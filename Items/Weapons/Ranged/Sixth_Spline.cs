@@ -36,6 +36,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item11;
 			Item.glowMask = glowmask;
+			Item.value = Item.sellPrice(gold: 8);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

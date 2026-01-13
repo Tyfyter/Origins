@@ -8,18 +8,19 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Vanity.BossMasks {
 	[AutoloadEquip(EquipType.Head)]
-    public class World_Cracker_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
+	public class World_Cracker_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public static short GlowMask = -1;
 		public static int armoredHeadID = -1;
 		public override LocalizedText Tooltip => LocalizedText.Empty;
 		public override void SetStaticDefaults() {
-            if (Main.netMode != NetmodeID.Server) 				GlowMask = Origins.AddGlowMask(Texture + "_Head_Glow");
-            Item.ResearchUnlockCount = 1;
-        }
-        public override void SetDefaults() {
-            Item.rare = ItemRarityID.Blue;
-            Item.vanity = true;
-        }
+			if (Main.netMode != NetmodeID.Server) GlowMask = Origins.AddGlowMask(Texture + "_Head_Glow");
+			Item.ResearchUnlockCount = 1;
+		}
+		public override void SetDefaults() {
+			Item.rare = ItemRarityID.Blue;
+			Item.vanity = true;
+			Item.value = Item.sellPrice(silver: 75);
+		}
 		public override void EquipFrameEffects(Player player, EquipType type) {
 			if (player.statLife > player.statLifeMax2 * 0.5f) player.head = armoredHeadID;
 		}
@@ -39,7 +40,7 @@ namespace Origins.Items.Vanity.BossMasks {
 		public override LocalizedText DisplayName => LocalizedText.Empty;
 		public override LocalizedText Tooltip => LocalizedText.Empty;
 		public override void SetStaticDefaults() {
-			if (Main.netMode != NetmodeID.Server) 				GlowMask = Origins.AddGlowMask(base.Texture + "_Head_Glow");
+			if (Main.netMode != NetmodeID.Server) GlowMask = Origins.AddGlowMask(base.Texture + "_Head_Glow");
 			Item.ResearchUnlockCount = 0;
 			ItemID.Sets.Deprecated[Type] = true;
 			World_Cracker_Mask.armoredHeadID = Item.headSlot;

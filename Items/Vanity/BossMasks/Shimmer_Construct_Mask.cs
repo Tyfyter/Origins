@@ -12,6 +12,7 @@ namespace Origins.Items.Vanity.BossMasks {
 		public override void SetDefaults() {
 			Item.rare = ItemRarityID.Blue;
 			Item.vanity = true;
+			Item.value = Item.sellPrice(silver: 75);
 		}
 		public string ArmorSetName => Name;
 		public int HeadItemID => Type;

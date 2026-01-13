@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.reuseDelay = 8;
 			Item.mana = 24;
 			Item.shoot = ModContent.ProjectileType<Caustica_P>();
-			Item.value = Item.sellPrice(gold: 10);
+			Item.value = Item.buyPrice(gold: 50);
 			Item.rare = ItemRarityID.Lime;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {

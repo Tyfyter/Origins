@@ -35,6 +35,7 @@ namespace Origins.Items.Vanity.Dev.KonoDioDa {
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = ItemRarityID.Cyan;
+			Item.value = Item.sellPrice(gold: 5);
 		}
 	}
 	[AutoloadEquip(EquipType.Body)]
@@ -45,6 +46,7 @@ namespace Origins.Items.Vanity.Dev.KonoDioDa {
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = ItemRarityID.Cyan;
+			Item.value = Item.sellPrice(gold: 5);
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -53,6 +55,7 @@ namespace Origins.Items.Vanity.Dev.KonoDioDa {
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = ItemRarityID.Cyan;
+			Item.value = Item.sellPrice(gold: 5);
 		}
 	}
 	[AutoloadEquip(EquipType.Neck)]
@@ -81,6 +84,7 @@ namespace Origins.Items.Vanity.Dev.KonoDioDa {
 			Item.DefaultToAccessory();
 			Item.wingSlot = WingsID;
 			Item.rare = ItemRarityID.Cyan;
+			Item.value = Item.sellPrice(gold: 8);
 		}
 		public override bool WingUpdate(Player player, bool inUse) => true;
 		public override void EquipFrameEffects(Player player, EquipType type) {

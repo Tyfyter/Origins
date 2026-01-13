@@ -20,6 +20,7 @@ public class SceneYMK_Wings : ModItem {
 		Item.DefaultToAccessory();
 		Item.rare = AltCyanRarity.ID;
 		WingsID = Item.wingSlot;
+		Item.value = Item.sellPrice(gold: 8);
 	}
 
 	public override bool WingUpdate(Player player, bool inUse) {

@@ -19,6 +19,7 @@ namespace Origins.Items.Vanity.Other {
 		public override void SetDefaults() {
 			Item.rare = ItemRarityID.Orange;
 			Item.vanity = true;
+			Item.value = Item.sellPrice(silver: 50);
 		}
 		public override void UpdateEquip(Player player) {
 			player.OriginPlayer().felnumEnemiesFriendly = true;

@@ -17,6 +17,7 @@ namespace Origins.Items.Vanity.BossMasks {
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(silver: 35);
 		}
 	}
 	[AutoloadEquip(EquipType.Body)]
@@ -24,6 +25,7 @@ namespace Origins.Items.Vanity.BossMasks {
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(silver: 35);
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -32,6 +34,7 @@ namespace Origins.Items.Vanity.BossMasks {
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(silver: 35);
 		}
 	}
 }

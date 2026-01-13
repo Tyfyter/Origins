@@ -24,6 +24,7 @@ namespace Origins.Items.Armor.Mildew {
 		public override void SetDefaults() {
 			Item.defense = 6;
 			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.OriginPlayer();
@@ -56,6 +57,7 @@ namespace Origins.Items.Armor.Mildew {
 		public override void SetDefaults() {
 			Item.defense = 12;
 			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.OriginPlayer();
@@ -76,6 +78,7 @@ namespace Origins.Items.Armor.Mildew {
 		public override void SetDefaults() {
 			Item.defense = 8;
 			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateEquip(Player player) {
 			player.maxMinions += 2;
