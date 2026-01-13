@@ -20,6 +20,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Pink;
 			Item.consumable = false;
 			Item.maxStack = 1;
+			Item.ammo = AmmoID.None;
 		}
 		public override void AddRecipes() => CreateRecipe()
 			.AddIngredient(ItemID.HallowedBar, 10)
