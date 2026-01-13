@@ -487,16 +487,22 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static int MaxCount => (int)(12 + DifficultyMult);
 		public static int DropRate => (int)(25 - DifficultyMult);
 		public static int ShotDamage => (int)(18 * DifficultyMult);
+		public static float ChargeSoundVolume => 1;
+		public static float ChargeSoundFadeTime => 30;
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 			iconTexture = typeof(Trenchmaker_Carpet_Bomb).GetDefaultTMLName();
 		}
-		SlotId chargeSound;
 		public override void DoAIState(Trenchmaker boss) {
 			NPC npc = boss.NPC;
 			if (boss.legs[0].CurrentAnimation is Jump_Preparation_Animation or Jump_Squat_Animation) {
 				if (npc.soundDelay == 0) {
-					chargeSound = SoundEngine.PlaySound(Origins.Sounds.ThrusterChargeUp, npc.Center);
+					SoundEngine.PlaySound(Origins.Sounds.ThrusterChargeUp.WithVolume(ChargeSoundVolume), npc.Center, sound => {
+						if (npc.ai[0] > 0) {
+							sound.Volume -= ChargeSoundVolume / ChargeSoundFadeTime;
+						}
+						return sound.Volume > 0;
+					});
 				}
 				npc.soundDelay = 30;
 				return;
@@ -516,8 +522,6 @@ namespace Origins.NPCs.Ashen.Boss {
 			npc.velocity.Y -= 0.33f;
 			npc.velocity.X += npc.direction * 0.01f;
 			npc.DoFrames(4, 1..7);
-			// comment out the line below to judge how it sounds without stopping
-			if (npc.soundDelay.TrySet(0) && chargeSound.IsValid && SoundEngine.TryGetActiveSound(chargeSound, out ActiveSound sound)) sound.Stop();
 			if (++npc.ai[0] > (npc.ai[1] * DropRate) && npc.ai[1] < MaxCount + 1) {
 				npc.ai[1]++;
 				npc.SpawnProjectile(null,
