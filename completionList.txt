@@ -409,7 +409,7 @@ ACHIEVEMENTS:
 (^3) Now You're the One Lying Broken !!!
 (^3) Peat Obsession !!!
 (^3) RIVEN WORMS !!!
-(☻) Slow Loading Bar !!!
+(^3) Slow Loading Bar !!!
 (X) The Signal, it's Calling !!!
 (^3) There's Something in There! !!!
 (^3) 'Till Death Mildew Us Part !!!
@@ -738,7 +738,7 @@ UTILITIES:
 
 WINGS:
 |---
-(☻) Gills !!!
+(⚿) Gills !!!
 
 (^) Acrid Beam Thrusters
 (X) Marrowick Mantle
@@ -1143,7 +1143,7 @@ EXPLOSIVE WEAPONS:
 (^) Chlorophyte Handcannon
 (#, ^2) Firework Cannon
 (X) Flarefury
-(☻) Holy Hand Grenade !!!
+(#3) Holy Hand Grenade !!!
 (^) Mine Flayer
 (^) Nova Cascade
 (^) Nova Swarm

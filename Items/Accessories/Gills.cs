@@ -37,7 +37,7 @@ public class Gills : ModItem {
 		}
 		if (ForceHover(player)) {
 			if (gillsDidVisual.TrySet(true)) {
-				SoundEngine.PlaySound(Origins.Sounds.SmallSawStart.WithPitch(-1.2f));
+				SoundEngine.PlaySound(Origins.Sounds.SmallSawStart.WithPitch(-1.2f).WithVolumeScale(0.75f));
 				ArmorShaderData shaderData = GameShaders.Armor.GetSecondaryShader(player.cWings, player);
 				for (int i = -3; i < 3; i++) {
 					for (int j = 0; j < 2; j++) {

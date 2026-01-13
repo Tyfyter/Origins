@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 100;
+			Item.damage = 125;
 			Item.shootSpeed = 9;
 			Item.value = Item.sellPrice(gold: 5);
 			Item.shoot = ModContent.ProjectileType<Holy_Hand_Grenade_P>();

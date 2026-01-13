@@ -93,7 +93,7 @@ public class Retool_Arm_Cannon : Retool_Arm {
 		Item.shootSpeed = 6;
 		Item.useTime = 56;
 		Item.useAnimation = 56;
-		Item.damage = 100;
+		Item.damage = 60;
 		Item.knockBack = 6f;
 	}
 	public override void UpdateArm(Player player) {
