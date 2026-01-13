@@ -2186,6 +2186,8 @@ Projectiles: {
 	Robo_Tail_Tail_Head.DisplayName: Robo-Tail
 	Robo_Tail_Probe.DisplayName: Robo-Tail Probe
 	Robo_Tail_Probe_Laser.DisplayName: Robo-Tail Laser
+	Bomb_Rack_Carpet_Bomb.DisplayName: Bomb Rack Carpet Bomb
+	Decorative_Ashes_Missile.DisplayName: Decorative Ashes Missile
 }
 
 Prefixes: {

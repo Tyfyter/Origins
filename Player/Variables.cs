@@ -377,6 +377,12 @@ namespace Origins {
 		public int exoWeaponMountLastWeapon = 0;
 		public bool gillsDidVisual = false;
 		public bool exoLegs = false;
+		public Item bombRack = null;
+		public int bombRackCount = 0;
+		public int bombRackTimer = 0;
+		public Item decorativeAshes = null;
+		public int decorativeAshesCount = 0;
+		public int decorativeAshesTimer = 0;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -937,6 +943,13 @@ namespace Origins {
 			roboTailVanity = false;
 			roboTailDye = 0;
 			exoLegs = false;
+			bombRack = null;
+			if (decorativeAshes is null) {
+				decorativeAshesCount = 0;
+				decorativeAshesTimer = 0;
+			} else {
+				decorativeAshes = null;
+			}
 			lotteryTicketItem = null;
 
 
@@ -1295,6 +1308,7 @@ namespace Origins {
 				tornRCValid = 1;
 				tornRCEnd = 0;
 			}
+			Player.GetJumpState<Fake_Jump>().Enable();
 		}
 		internal static bool forceWetCollision;
 		internal static bool forceLavaCollision;
@@ -1342,5 +1356,16 @@ namespace Origins {
 			}
 		}
 		internal int GetNewMinionIndexByType(int type) => minionCountByType[type]++;
+		public void OnMovementAbilitiesRefreshed() {
+			bombRackTimer = 0;
+			bombRackCount++;
+			Min(ref bombRackCount, bombRack?.useLimitPerAnimation ?? 0);
+		}
+	}
+	public class Fake_Jump : ExtraJump {
+		public override Position GetDefaultPosition() => BeforeBottleJumps;
+		public override bool CanStart(Player player) => false;
+		public override float GetDurationMultiplier(Player player) => 0;
+		public override void OnRefreshed(Player player) => player.OriginPlayer().OnMovementAbilitiesRefreshed();
 	}
 }

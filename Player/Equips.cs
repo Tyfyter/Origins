@@ -469,6 +469,40 @@ namespace Origins {
 					}
 				}
 			}
+			if (decorativeAshes is not null) {
+				bool doGlitter = false;
+				if (Player.nearbyActiveNPCs > 0 && decorativeAshesCount > 0) {
+					const int range = 16 * 12;
+					const int rangeSQ = range * range;
+					const int bossRange = 16 * 20;
+					const int bossRangeSQ = bossRange * bossRange;
+					foreach (NPC npc in Main.ActiveNPCs) {
+						if (npc.CanBeChasedBy(Player) && Player.DistanceSQ(npc.Center) <= ((npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) ? bossRangeSQ : rangeSQ)) {
+							doGlitter = true;
+							break;
+						}
+					}
+				}
+				if (doGlitter) {
+					Min(ref decorativeAshesTimer, 0);
+					if (--decorativeAshesTimer <= -CombinedHooks.TotalUseTime(decorativeAshes.useTime, Player, decorativeAshes)) {
+						Player.SpawnProjectile(
+							Player.GetSource_Accessory(decorativeAshes),
+							Player.MountedCenter,
+							Main.rand.NextVector2Circular(4f, 4f) + Main.rand.NextVector2CircularEdge(10f, 10f),
+							decorativeAshes.shoot,
+							Player.GetWeaponDamage(decorativeAshes),
+							Player.GetWeaponKnockback(decorativeAshes),
+							-1f
+						);
+						decorativeAshesTimer = 0;
+						if (Main.rand.NextBool(2) || CombinedHooks.CanConsumeAmmo(Player, decorativeAshes, decorativeAshes)) decorativeAshesCount--;
+					}
+				} else if (decorativeAshesCount < decorativeAshes.useLimitPerAnimation.Value) {
+					Max(ref decorativeAshesTimer, 0);
+					if (decorativeAshesTimer.CycleUp(CombinedHooks.TotalUseTime(decorativeAshes.reuseDelay, Player, decorativeAshes))) decorativeAshesCount++;
+				}
+			}
 			if (roboTail is not null && Player.whoAmI == Main.myPlayer) {
 				int head = ModContent.ProjectileType<Robo_Tail_Tail_Head>();
 				if (Player.ownedProjectileCounts[head] <= 0) {
@@ -492,6 +526,17 @@ namespace Origins {
 						Player.GetWeaponKnockback(roboTail)
 					).originalDamage = roboTail.damage;
 				}
+			}
+			if (bombRack is not null && (Player.mount?.Active != true) && Player.controlJump && Player.jump == 0 && Player.velocity.Y != 0f && bombRackCount > 0 && bombRackTimer.Warmup(bombRack.useTime)) {
+				Player.SpawnProjectile(Player.GetSource_Accessory(bombRack),
+					Player.Bottom,
+					Vector2.Zero,
+					bombRack.shoot,
+					Player.GetWeaponDamage(bombRack),
+					Player.GetWeaponKnockback(bombRack)
+				);
+				bombRackCount--;
+				bombRackTimer = 0;
 			}
 			if (statSharePercent != 0f) {
 				foreach (DamageClass damageClass in DamageClasses.All) {

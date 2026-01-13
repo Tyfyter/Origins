@@ -74,7 +74,7 @@ namespace Origins.Items.Accessories {
 			player.GetDamage(DamageClass.Generic) *= 1.05f;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			player.hasMagiluminescence = true;
-			if (player.accRunSpeed < 6f) player.accRunSpeed = 6f;
+			Max(ref player.accRunSpeed, 6f);
 			if (originPlayer.shineSparkCharge > 0) {
 				player.accRunSpeed += 3f;
 			}

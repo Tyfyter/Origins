@@ -18,6 +18,7 @@ using PegasusLib;
 using PegasusLib.ID;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -490,6 +491,10 @@ namespace Origins {
 						);
 					}
 				}
+			}
+
+			if (bombRack is not null) {
+				OriginGlobalNPC.InflictImpedingShrapnel(target, Bomb_Rack.DebuffTime);
 			}
 
 			if (dangerTime < maxDangerTime) dangerTime = maxDangerTime;
@@ -1091,6 +1096,19 @@ namespace Origins {
 					}
 				} finally {
 					coreGeneratorItem.useAmmo = ammoType;
+				}
+				if (decorativeAshes is not null) {
+					for (int i = Decorative_Ashes.ThornsCount; i > 0; i--) {
+						Player.SpawnProjectile(
+							Player.GetSource_Accessory(decorativeAshes),
+							Player.MountedCenter,
+							Main.rand.NextVector2Circular(4f, 4f) + Main.rand.NextVector2CircularEdge(10f, 10f),
+							decorativeAshes.shoot,
+							Player.GetWeaponDamage(decorativeAshes),
+							Player.GetWeaponKnockback(decorativeAshes),
+							-1f
+						);
+					}
 				}
 			}
 			if (info.DamageSource.SourceNPCIndex > -1 && Main.npc[info.DamageSource.SourceNPCIndex].type == ModContent.NPCType<Brine_Latcher>()) {

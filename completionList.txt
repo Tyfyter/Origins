@@ -513,7 +513,7 @@ ACCESSORIES:
 (^) Counter-offensive Scarf
 (#, ^2) CSTAA Jacket !!!
 (^) Danger Barrel
-(#, ^2) Decorative A.S.H.E.S. !!!
+(†) Decorative A.S.H.E.S. !!!
 (^) Destructive Claws
 (^) Dim Starlight
 (^) Donor Wristband
@@ -637,7 +637,7 @@ ACCESSORIES:
 (^) Venom Fang
 (^) Venom Shield
 
-(#, ^2) Bomb Rack !!!
+(†, @2) Bomb Rack !!!
 (^) Entangled Energy
 (^) Mana Drive
 (^) Protozoa Food
