@@ -738,7 +738,7 @@ UTILITIES:
 
 WINGS:
 |---
-(#3) Gills !!!
+(☻) Gills !!!
 
 (^) Acrid Beam Thrusters
 (X) Marrowick Mantle
