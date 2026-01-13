@@ -376,6 +376,7 @@ namespace Origins {
 		public int exoWeaponMountCurrentWeapon = 0;
 		public int exoWeaponMountLastWeapon = 0;
 		public bool gillsDidVisual = false;
+		public bool exoLegs = false;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -935,6 +936,7 @@ namespace Origins {
 			roboTail = null;
 			roboTailVanity = false;
 			roboTailDye = 0;
+			exoLegs = false;
 			lotteryTicketItem = null;
 
 

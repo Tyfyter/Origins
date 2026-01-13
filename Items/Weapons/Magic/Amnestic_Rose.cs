@@ -4,6 +4,7 @@ using Origins.Buffs;
 using Origins.Core;
 using Origins.Dusts;
 using Origins.Graphics;
+using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.NPCs;
 using Origins.Tiles.Defiled;
@@ -92,6 +93,7 @@ namespace Origins.Items.Weapons.Magic {
 				if (self.HeldItem.ModItem is Amnestic_Rose) forceDirection = self.direction;
 				orig(self);
 				if (forceDirection != 0) self.direction = forceDirection;
+				if (self.OriginPlayer().exoLegs) Exo_Legs.UpdateSpeeds(self);
 			};
 		}
 		AutoLoadingAsset<Texture2D> stemTexture;

@@ -18,7 +18,7 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.LightRed;
 		}
-		public override void UpdateEquip(Player player) {
+		public override void UpdateAccessory(Player player, bool hideVisual) {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			int oldSelected = originPlayer.exoWeaponMountCurrentWeapon;
 			if (originPlayer.exoWeaponMountCurrentWeapon.TrySet(player.selectedItem)) {

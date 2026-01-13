@@ -7696,3 +7696,13 @@ Lathe_Item: {
 	// DisplayName: Lathe
 	// Tooltip: ""
 }
+
+Exo_Legs: {
+	// DisplayName: Exo Legs
+	// Tooltip: ""
+}
+
+Exo_Suit: {
+	// DisplayName: Exo Suit
+	// Tooltip: ""
+}

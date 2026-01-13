@@ -524,8 +524,8 @@ ACCESSORIES:
 (^) Eitrite Watch
 (^) Evil Bar Gun Magazines
 (^) Exo-Arm
-(X) Exo-Legs !!!
-(X) Exo-Suit !!!
+(☻, @) Exo-Legs !!!
+(☻, @) Exo-Suit !!!
 (†, @2) Exo-Weapon Mount !!!
 (^) Exploder Emblem
 (^) Explosive Artery
