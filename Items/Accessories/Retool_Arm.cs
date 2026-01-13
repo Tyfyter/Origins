@@ -508,7 +508,6 @@ public class Retool_Arm_Saw : Retool_Arm {
 			if (canChop) DoChop(player, Player.tileTargetX, Player.tileTargetY);
 		}
 	}
-
 	private static void DoChop(Player player, int x, int y) {
 		Tile tile = Main.tile[x, y];
 		if (!Main.tileAxe[tile.TileType]) return;
@@ -542,7 +541,9 @@ public class Retool_Arm_Saw : Retool_Arm {
 		if (damage != 0) player.hitTile.Prune();
 		AchievementsHelper.CurrentlyMining = false;
 	}
-
+	public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers) {
+		modifiers.HitDirectionOverride = Math.Sign(target.Center.X - player.Center.X);
+	}
 	public override void DrawArm(ref PlayerDrawSet drawInfo) {
 		Player player = drawInfo.drawPlayer;
 		OriginPlayer originPlayer = player.OriginPlayer();
@@ -629,6 +630,9 @@ public class Retool_Arm_Vice : Retool_Arm {
 				PlayerMethods.ProcessHitAgainstAllNPCsNoCooldown(player, Item, itemRectangle, player.GetWeaponDamage(Item), player.GetWeaponKnockback(Item));
 			}
 		}
+	}
+	public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers) {
+		modifiers.HitDirectionOverride = Math.Sign(target.Center.X - player.Center.X);
 	}
 	public override void DrawArm(ref PlayerDrawSet drawInfo) {
 		Player player = drawInfo.drawPlayer;
