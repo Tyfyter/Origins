@@ -26,6 +26,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.bait = 193;
 			Item.consumable = false;
 			Item.sentry = true;
+			Item.value = Item.sellPrice(gold: 1);
 		}
 		public override bool? CanConsumeBait(Player player) => false;
 		public override bool AltFunctionUse(Player player) => true;

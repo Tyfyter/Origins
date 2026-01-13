@@ -32,6 +32,7 @@ namespace Origins.Items.Vanity.Dev.PlagueTexan {
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = AltCyanRarity.ID;
+			Item.value = Item.sellPrice(gold: 4);
 		}
 	}
 	[AutoloadEquip(EquipType.Body)]
@@ -43,14 +44,16 @@ namespace Origins.Items.Vanity.Dev.PlagueTexan {
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = AltCyanRarity.ID;
+			Item.value = Item.sellPrice(silver: 5);
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Plague_Texan_Jeans : ModItem, INoSeperateWikiPage {
-		
+
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = AltCyanRarity.ID;
+			Item.value = Item.sellPrice(gold: 4);
 		}
 	}
 	public class Plague_Texan_Sight : ModItem {
@@ -63,17 +66,18 @@ namespace Origins.Items.Vanity.Dev.PlagueTexan {
 			Item.accessory = true;
 			Item.rare = AltCyanRarity.ID;
 			Item.hasVanityEffects = true;
+			Item.value = Item.sellPrice(gold: 3, silver: 50);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.dangerSense = true;
 			player.detectCreature = true;
 			player.GetModPlayer<OriginPlayer>().plagueSightLight = true;
-			if (!hideVisual) 				ApplyVisuals(player);
+			if (!hideVisual) ApplyVisuals(player);
 		}
 		public static void ApplyVisuals(Player player) {
 			player.GetModPlayer<OriginPlayer>().plagueSight = true;
 			Color color = Color.Gold;
-			if (OriginExtensions.IsDevName(player.name, 1)) 				color = new Color(43, 185, 255);
+			if (OriginExtensions.IsDevName(player.name, 1)) color = new Color(43, 185, 255);
 			Lighting.AddLight(player.Center + new Vector2(3 * player.direction, -6), color.ToVector3() / 3f);
 		}
 	}

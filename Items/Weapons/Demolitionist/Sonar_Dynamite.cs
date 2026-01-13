@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.CloneDefaults(ItemID.Dynamite);
 			Item.damage = 175;
 			Item.shoot = ModContent.ProjectileType<Sonar_Dynamite_P>();
-			Item.value = Item.sellPrice(silver: 25);
+			Item.value = Item.buyPrice(silver: 75);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {

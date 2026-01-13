@@ -27,6 +27,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = SoundID.Item15;
 			Item.shoot = ModContent.ProjectileType<Chambersite_Phasesaber_P>();
 			Item.shootSpeed = 11;
+			Item.value = Item.sellPrice(gold: 8);
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override void UseItemFrame(Player player) {

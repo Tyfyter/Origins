@@ -30,6 +30,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.autoReuse = true;
 			Item.UseSound = SoundID.Item5;
 			Item.reuseDelay = 4;
+			Item.value = Item.buyPrice(gold: 10);
 		}
 		public override bool? CanChooseAmmo(Item ammo, Player player) {
 			if (ammo.PaintOrCoating) {

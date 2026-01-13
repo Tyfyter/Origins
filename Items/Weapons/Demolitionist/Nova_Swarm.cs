@@ -31,7 +31,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.height = 30;
 			Item.useTime = 12;
 			Item.useAnimation = 12;
-			Item.value = Item.sellPrice(gold: 20);
+			Item.value = Item.sellPrice(gold: 10);
 			Item.rare = ItemRarityID.Red;
 			Item.autoReuse = true;
 		}
