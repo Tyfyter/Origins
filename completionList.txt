@@ -655,7 +655,7 @@ ACCESSORIES:
 (^) Forbidden Voice (Cursed)
 (^) Forbidden Voice (Uncursed)
 (†) Glitter Glue !!!
-(#2/3, ^2) Lunatic's Rune !!!
+(†) Lunatic's Rune !!!
 (^) Mysterious Spray
 (#3) Retool Arm !!!
 (†) Robo-tail !!!
@@ -1143,7 +1143,7 @@ EXPLOSIVE WEAPONS:
 (^) Chlorophyte Handcannon
 (#, ^2) Firework Cannon
 (X) Flarefury
-(#3) Holy Hand Grenade !!!
+(☻) Holy Hand Grenade !!!
 (^) Mine Flayer
 (^) Nova Cascade
 (^) Nova Swarm

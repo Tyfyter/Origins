@@ -418,6 +418,7 @@ namespace Origins.Items.Accessories {
 				Main.projFrames[Type] = 4;
 			}
 			public override void SetDefaults() {
+				Projectile.DamageType = DamageClass.Magic;
 				Projectile.width = 40;
 				Projectile.height = 40;
 				Projectile.friendly = true;
@@ -582,6 +583,7 @@ namespace Origins.Items.Accessories {
 		public class Cultist_Ice_Mist : ModProjectile {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CultistBossIceMist}";
 			public override void SetDefaults() {
+				Projectile.DamageType = DamageClass.Magic;
 				Projectile.width = 60;
 				Projectile.height = 60;
 				Projectile.friendly = true;
@@ -664,6 +666,7 @@ namespace Origins.Items.Accessories {
 				Main.projFrames[Type] = 3;
 			}
 			public override void SetDefaults() {
+				Projectile.DamageType = DamageClass.Magic;
 				Projectile.width = 30;
 				Projectile.height = 30;
 				Projectile.friendly = true;
@@ -739,6 +742,7 @@ namespace Origins.Items.Accessories {
 				Main.projFrames[Type] = 4;
 			}
 			public override void SetDefaults() {
+				Projectile.DamageType = DamageClass.Magic;
 				Projectile.width = 80;
 				Projectile.height = 80;
 				Projectile.friendly = true;
