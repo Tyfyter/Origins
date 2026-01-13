@@ -3,6 +3,7 @@ using Origins.Graphics;
 using Origins.Projectiles;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -100,6 +101,7 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 			Rectangle hitbox = Projectile.Hitbox;
 			ProjectileLoader.ModifyDamageHitbox(Projectile, ref hitbox);
+			bool doSound = false;
 			foreach (Projectile other in Main.ActiveProjectiles) {
 				if (healCooldown[other.whoAmI] > 0) continue;
 				if (Projectile.Colliding(hitbox, other.Hitbox) && other.ModProjectile is IArtifactMinion artifactMinion && artifactMinion.Life < artifactMinion.MaxLife) {
@@ -109,7 +111,17 @@ namespace Origins.Items.Weapons.Ranged {
 					CombatText.NewText(other.Hitbox, CombatText.HealLife, (int)Math.Round(artifactMinion.Life - oldHealth), true, dot: true);
 					healCooldown[other.whoAmI] = 20;
 					if (Projectile.ai[1] == 2 && other.owner == Projectile.owner) other.GetGlobalProjectile<ArtifactMinionGlobalProjectile>().stayStillSoICanHealYouTime = 6;
+					doSound = true;
 				}
+			}
+			if (doSound) {
+				Player player = Main.player[Projectile.owner];
+				OriginPlayer originPlayer = player.OriginPlayer();
+				originPlayer.weldingTorchSound.PlaySoundIfInactive(Origins.Sounds.WeldingTorch, player.MountedCenter, sound => {
+					sound.Position = player.MountedCenter;
+					return true;
+				});
+				originPlayer.weldingTorchSoundTime = 10;
 			}
 		}
 		int[] healCooldown = new int[Main.maxProjectiles];

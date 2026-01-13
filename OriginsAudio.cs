@@ -57,6 +57,8 @@ namespace Origins {
 				IsLooped = true
 			};
 			public static SoundStyle SmallSawEnd = new("Origins/Sounds/Custom/SmallSawEnd");
+			public static SoundStyle WeldingTorch = new("Origins/Sounds/Custom/WeldingTorch");
+			public static SoundStyle WeldingTorchCancel = new("Origins/Sounds/Custom/WeldingTorchCancel");
 			public static SoundStyle MetalBoxOpen = new("Origins/Sounds/Custom/MetalBoxOpen");
 			public static SoundStyle MetalCreakOpen = new("Origins/Sounds/Custom/MetalCreakOpen");
 			public static SoundStyle MetalCreakClose = new("Origins/Sounds/Custom/MetalCreakClose");

@@ -12,6 +12,7 @@ using PegasusLib.Graphics;
 using ReLogic.Content;
 using ReLogic.Graphics;
 using ReLogic.Reflection;
+using ReLogic.Utilities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5232,6 +5233,13 @@ namespace Origins {
 				}
 				hours = intTime.ToString();
 			}
+		}
+		public static ActiveSound GetSound(this SlotId slot) {
+			return slot.IsValid && SoundEngine.TryGetActiveSound(slot, out ActiveSound sound) ? sound : null;
+		}
+		public static void PlaySoundIfInactive(ref this SlotId slot, in SoundStyle style, Vector2? position = null, SoundUpdateCallback updateCallback = null) {
+			if (slot.IsValid && SoundEngine.TryGetActiveSound(slot, out ActiveSound _)) return;
+			slot = SoundEngine.PlaySound(style, position, updateCallback);
 		}
 	}
 	public static class NetmodeActive {

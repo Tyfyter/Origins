@@ -538,6 +538,8 @@ namespace Origins {
 		public List<int> unlockedPlantModes = [];
 		List<ItemDefinition> unloadedPlantModes = [];
 		public float mufflerAmount = 0f;
+		public SlotId weldingTorchSound;
+		public int weldingTorchSoundTime = 0;
 		#endregion
 
 		#region visuals
@@ -1087,6 +1089,10 @@ namespace Origins {
 			if (mufflerAmount > 0) {
 				Min(ref mufflerAmount, 500);
 				mufflerAmount -= 0.1f + mufflerAmount * 0.001f;
+			}
+			if (weldingTorchSoundTime.Cooldown()) {
+				weldingTorchSound.GetSound()?.Stop();
+				SoundEngine.PlaySound(Origins.Sounds.WeldingTorchCancel, Player.MountedCenter);
 			}
 
 			shimmerGuardianMinion = false;
