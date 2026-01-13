@@ -2188,6 +2188,8 @@ Projectiles: {
 	Robo_Tail_Probe_Laser.DisplayName: Robo-Tail Laser
 	Bomb_Rack_Carpet_Bomb.DisplayName: Bomb Rack Carpet Bomb
 	Decorative_Ashes_Missile.DisplayName: Decorative Ashes Missile
+	Petes_Peat.DisplayName: Pete's Peat
+	Petes_Peat_Slug.DisplayName: Pete's Peat Slug
 }
 
 Prefixes: {

@@ -78,6 +78,7 @@ namespace Origins.Questing {
 			yield return new ShopItem<Sonar_Dynamite>(230, Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
 			yield return new ShopItem<Indestructible_Saddle>(250, Condition.DownedMechBossAny);
 			yield return new ShopItem<Absorption_Potion>(350);
+			yield return new ShopItem<Petes_Peat_Slugger>(500, Condition.DownedPlantera);
 			yield return new ShopItem<Caustica>(999, Condition.DownedGolem);
 		}
 		public override bool Started => LocalPlayerStarted || ModContent.GetInstance<OriginSystem>().peatSold > 0;
