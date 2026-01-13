@@ -1,4 +1,5 @@
 ﻿using BetterDialogue.UI;
+using Origins.Achievements;
 using System.Linq;
 using Terraria;
 using Terraria.ID;
@@ -55,6 +56,7 @@ namespace Origins.Questing {
 		public override double Priority => 0;
 		public override void OnClick(NPC npc, Player player) {
 			Quest.OnComplete(npc);
+			player.OriginPlayer().goingPlacesTracker.CompleteQuest(Quest);
 		}
 		public override string Text(NPC npc, Player player) => Quest.CompleteButtonText;
 		public override bool IsActive(NPC npc, Player player) {

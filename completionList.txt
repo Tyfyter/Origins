@@ -401,7 +401,7 @@ ACHIEVEMENTS:
 (^3) Cloning Factory !!!
 (^3) Cracked !!!
 (^3) Enough Yap !!!
-(#2) Going Places !!! (3 day time limit)
+(☻) Going Places !!!
 (^3) It Was Watching !!!
 (^3) Kaiju !!!
 (^3) Killimanjaro !!!
@@ -409,7 +409,7 @@ ACHIEVEMENTS:
 (^3) Now You're the One Lying Broken !!!
 (^3) Peat Obsession !!!
 (^3) RIVEN WORMS !!!
-(#3) Slow Loading Bar !!! (ez)
+(☻) Slow Loading Bar !!!
 (X) The Signal, it's Calling !!!
 (^3) There's Something in There! !!!
 (^3) 'Till Death Mildew Us Part !!!

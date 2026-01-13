@@ -117,14 +117,47 @@ namespace Origins.Achievements {
 	public class Going_Places : ModAchievement {
 		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomIntCondition Condition { get; private set; }
+		public static int RequiredCount => 3;
+		public static int TimeLimit => (int)(Main.dayLength + Main.nightLength);
 		public override void SetStaticDefaults() {
-			Achievement.SetCategory(AchievementCategory.Collector);
-			Condition = AddCondition(CustomIntCondition.AddIntCondition(3));
+			Achievement.SetCategory(AchievementCategory.Challenger);
+			Condition = AddCondition(CustomIntCondition.AddIntCondition(RequiredCount));
+		}
+		public class Tracker {
+			readonly QuestCompletion[] questCompletions = new QuestCompletion[RequiredCount - 1];
+			public void Update() {
+				Going_Places instance = ModContent.GetInstance<Going_Places>();
+				if (instance.Achievement.IsCompleted) return;
+				int count = 0;
+				for (int i = 0; i < questCompletions.Length; i++) {
+					count += questCompletions[i].Update().ToInt();
+				}
+				ModContent.GetInstance<Going_Places>().Condition.Value = count;
+			}
+			record struct QuestCompletion(Quest Quest, int TimeRemaining) {
+				public bool Update() {
+					if (Quest is not null && --TimeRemaining <= 0) Quest = null;
+					return Quest is not null && TimeRemaining > 0;
+				}
+			}
+			public void CompleteQuest(Quest quest) {
+				for (int i = 0; i < questCompletions.Length; i++) {
+					if (questCompletions[i].Quest is null || questCompletions[i].Quest == quest) {
+						questCompletions[i].Quest = quest;
+						questCompletions[i].TimeRemaining = TimeLimit;
+						return;
+					}
+				}
+				ModContent.GetInstance<Going_Places>().Condition.Value = 3;
+			}
 		}
 	}
 	public class True_Hero : ModAchievement {
 		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomIntCondition Condition { get; private set; }
+		public override void AutoStaticDefaults() {
+			Achievement.UseConditionsCompletedTracker();
+		}
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Challenger);
 			Condition = AddCondition(CustomIntCondition.AddIntCondition(Quest_Registry.Quests.Count));

@@ -625,6 +625,7 @@ namespace Origins {
 		public SlotId loopedItemUseSound = SlotId.Invalid;
 		public bool InDanger { get; private set; }
 		RIVEN_WORMS.Tracker rivenBloodTracker;
+		public Going_Places.Tracker goingPlacesTracker;
 		public float tornRCStart = 0;
 		public float tornRCValid = 1;
 		public float tornRCEnd = 0;

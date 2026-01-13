@@ -14,19 +14,14 @@ using Origins.NPCs.Crimson;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles;
 using Origins.Questing;
-using PegasusLib;
 using PegasusLib.ID;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
-using ThoriumMod.Empowerments;
-using ThoriumMod.Projectiles;
 using static Origins.OriginExtensions;
 
 namespace Origins {
