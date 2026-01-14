@@ -36,7 +36,8 @@ public abstract class Retool_Arm : ModItem {
 		arms.Add(this);
 	}
 	static bool ReplaceAltFunctionUse(orig_AltFunctionUse orig, Item item, Player player) {
-		if (player.OriginPlayer()?.retoolArm?.ReplacesAltFunctionUse(player) ?? false) return false;
+		OriginPlayer originPlayer = player.OriginPlayer();
+		if (!originPlayer.retoolArmVanity && (originPlayer.retoolArm?.ReplacesAltFunctionUse(player) ?? false)) return false;
 		return orig(item, player);
 	}
 	delegate bool orig_AltFunctionUse(Item item, Player player);
@@ -64,6 +65,11 @@ public abstract class Retool_Arm : ModItem {
 				return;
 			}
 		}
+	}
+	public override void UpdateVanity(Player player) {
+		OriginPlayer originPlayer = player.OriginPlayer();
+		originPlayer.retoolArm = this;
+		originPlayer.retoolArmVanity = true;
 	}
 	public sealed override void UpdateItemDye(Player player, int dye, bool hideVisual) {
 		player.OriginPlayer().retoolArmDye = dye;
@@ -126,7 +132,7 @@ public class Retool_Arm_Cannon : Retool_Arm {
 		GeometryUtils.AngularSmoothing(ref originPlayer.retoolArmRotation, angle, 0.2f);
 		if (hasTarget || originPlayer.retoolArmTimer > 0) {
 			if (++originPlayer.retoolArmTimer == 4) {
-				if (hasTarget) {
+				if (!originPlayer.retoolArmVanity && hasTarget) {
 					player.SpawnProjectile(
 						player.GetSource_Accessory(Item),
 						spinningPoint,
@@ -258,7 +264,7 @@ public class Retool_Arm_Laser : Retool_Arm {
 		Vector2 spinningPoint = Retool_Arm_Layer.GetShoulder(player, player.position) + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength);
 		int beamID = ModContent.ProjectileType<Retool_Arm_Laser_Beam>();
 		if (player.ownedProjectileCounts[beamID] > 0) return;
-		if (player.controlUseTile) {
+		if (!originPlayer.retoolArmVanity && player.controlUseTile) {
 			player.SpawnProjectile(
 				player.GetSource_Accessory(Item),
 				spinningPoint,
@@ -273,7 +279,7 @@ public class Retool_Arm_Laser : Retool_Arm {
 		GeometryUtils.AngularSmoothing(ref originPlayer.retoolArmRotation, (targetPos - spinningPoint).ToRotation(), 0.2f);
 		if (hasTarget || originPlayer.retoolArmTimer > 0) {
 			if (++originPlayer.retoolArmTimer == 4) {
-				if (hasTarget) {
+				if (!originPlayer.retoolArmVanity && hasTarget) {
 					player.SpawnProjectile(
 						player.GetSource_Accessory(Item),
 						spinningPoint,
@@ -471,13 +477,13 @@ public class Retool_Arm_Saw : Retool_Arm {
 	bool spin;
 	public override void UpdateArm(Player player) {
 		OriginPlayer originPlayer = player.OriginPlayer();
-		bool hit = originPlayer.retoolArmTimer.CycleUp(Item.useTime);
+		bool hit = originPlayer.retoolArmTimer.CycleUp(Item.useTime) && !originPlayer.retoolArmVanity;
 		arm.start = Retool_Arm_Layer.GetShoulder(player, player.position);
 		arm.bone0.R = ArmBaseLength;
 		arm.bone1.R = 18f * Item.scale;
 		Vector2 targetPos = arm.start + new Vector2(16f * player.direction, -20f);
 		float maxDist = 16 * 16 * 4 * 4;
-		bool hasTarget = player.DoHoming((target) => {
+		bool hasTarget = !originPlayer.retoolArmVanity && player.DoHoming((target) => {
 			Vector2 currentPos = arm.start.Clamp(target.Hitbox);
 			float dist = currentPos.DistanceSQ(arm.start);
 			if (dist < maxDist) {
@@ -599,7 +605,7 @@ public class Retool_Arm_Vice : Retool_Arm {
 		maxDist *= maxDist;
 		if (originPlayer.retoolArmTimer < Item.useTime) {
 			originPlayer.retoolArmTimer++;
-		} else if (originPlayer.retoolArmTimer == Item.useTime) {
+		} else if (!originPlayer.retoolArmVanity && originPlayer.retoolArmTimer == Item.useTime) {
 			if (player.DoHoming((target) => {
 				if (target is not NPC npc || CombinedHooks.CanPlayerHitNPCWithItem(player, Item, npc) == false) return false;
 				Vector2 currentPos = arm.start.Clamp(target.Hitbox);

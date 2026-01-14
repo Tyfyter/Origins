@@ -59,6 +59,7 @@ namespace Origins.Items.Accessories {
 		public static void UpdateEye(Player player, int mode) {
 			if (mode == -1) return;
 			OriginPlayer originPlayer = player.OriginPlayer();
+			if (originPlayer.spacePirateEye is null) return;
 			if (mode < 0) {
 				int lowest = GetPlayerCounts(player);
 				for (int i = 0; i < counts.Length; i++) {

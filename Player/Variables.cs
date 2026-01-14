@@ -353,6 +353,7 @@ namespace Origins {
 		public int lunaticsRuneSelectedAttack = 0;
 		public float lunaticsRuneRotation = 0;
 		public Retool_Arm retoolArm = null;
+		public bool retoolArmVanity = false;
 		public float retoolArmBaseRotation = -MathHelper.PiOver2;
 		public float retoolArmRotation = MathHelper.PiOver2;
 		public int retoolArmTimer = 0;
@@ -936,6 +937,7 @@ namespace Origins {
 			}
 			if (lunaticsRune is null) lunaticsRuneCharge = 0;
 			else lunaticsRune = null;
+			retoolArmVanity = false;
 			retoolArm = null;
 			retoolArmDye = 0;
 			if (roboTail is null || roboTailVanity) {
