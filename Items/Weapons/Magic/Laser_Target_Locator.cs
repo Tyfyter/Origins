@@ -206,7 +206,7 @@ namespace Origins.Items.Weapons.Magic {
 					ModContent.ProjectileType<Laser_Target_Locator_Missile>(),
 					Projectile.damage,
 					Projectile.knockBack,
-					ai0: (spawn_dist - CollisionExt.Raymarch(position, -direction, spawn_dist)) / speed + 48
+					ai0: ((spawn_dist - CollisionExt.Raymarch(position, -direction, spawn_dist)) + 40) / speed
 				);
 				if (++Projectile.localAI[1] >= 16) Projectile.Kill();
 			}
@@ -229,7 +229,6 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.extraUpdates = 1;
 			Projectile.tileCollide = false;
 		}
-		Vector2 HitboxMovement => new Vector2(16 * Projectile.ai[1], 0).RotatedBy(Projectile.ai[1] * Projectile.ai[0]);
 		public override void AI() {
 			Dust.NewDustPerfect(Projectile.Top, DustID.Torch, Projectile.velocity * 0.85f).noGravity = true;
 			Projectile.rotation = Projectile.velocity.ToRotation();
