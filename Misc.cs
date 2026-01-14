@@ -2350,6 +2350,10 @@ namespace Origins {
 			if (!array.IndexInRange(index)) return fallback;
 			return array[index];
 		}
+		public static T GetIfInRange<T>(this IReadOnlyList<T> array, int index, T fallback = default) {
+			if (index < 0 || index >= array.Count) return fallback;
+			return array[index];
+		}
 		public static IEnumerable<int> GetTrueIndexes(this BitArray array) {
 			for (int i = 0; i < array.Length; i++) {
 				if (array[i]) yield return i;

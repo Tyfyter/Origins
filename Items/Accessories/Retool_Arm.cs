@@ -468,15 +468,16 @@ public class Retool_Arm_Saw : Retool_Arm {
 		Item.axe = 10;
 	}
 	Rectangle hitbox = new(0, 0, 22, 22);
-	bool hasTarget;
+	bool spin;
 	public override void UpdateArm(Player player) {
 		OriginPlayer originPlayer = player.OriginPlayer();
+		bool hit = originPlayer.retoolArmTimer.CycleUp(Item.useTime);
 		arm.start = Retool_Arm_Layer.GetShoulder(player, player.position);
 		arm.bone0.R = ArmBaseLength;
 		arm.bone1.R = 18f * Item.scale;
 		Vector2 targetPos = arm.start + new Vector2(16f * player.direction, -20f);
 		float maxDist = 16 * 16 * 4 * 4;
-		hasTarget = player.DoHoming((target) => {
+		bool hasTarget = player.DoHoming((target) => {
 			Vector2 currentPos = arm.start.Clamp(target.Hitbox);
 			float dist = currentPos.DistanceSQ(arm.start);
 			if (dist < maxDist) {
@@ -486,6 +487,16 @@ public class Retool_Arm_Saw : Retool_Arm {
 			}
 			return false;
 		});
+		spin = hasTarget;
+		if (player.whoAmI == Main.myPlayer && player.ItemAnimationActive && player.HeldItem.axe > 0) {
+			Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+			bool canChop = !player.noBuilding && tile.HasTile && Main.tileAxe[tile.TileType] && player.IsTargetTileInItemRange(player.HeldItem);
+			if (canChop) {
+				if (hit) DoChop(player, Player.tileTargetX, Player.tileTargetY);
+				spin = true;
+				targetPos = new(Player.tileTargetX * 16, Player.tileTargetY * 16);
+			}
+		}
 		float[] rotations = arm.GetTargetAngles(targetPos, targetPos.X < arm.start.X);
 		if (!float.IsNaN(rotations[0]) && !float.IsNaN(rotations[1])) {
 			GeometryUtils.AngularSmoothing(ref originPlayer.retoolArmBaseRotation, rotations[0], 0.2f);
@@ -496,16 +507,11 @@ public class Retool_Arm_Saw : Retool_Arm {
 		//hitbox.DrawDebugOutline();
 
 		Rectangle itemRectangle = PlayerMethods.ItemCheck_EmitUseVisuals(player, Item, hitbox);
-		if (originPlayer.retoolArmTimer.CycleUp(Item.useTime) && hasTarget) {
+		if (hit && hasTarget) {
 			int weaponDamage = player.GetWeaponDamage(Item);
 			float knockBack = player.GetWeaponKnockback(Item);
 			PlayerMethods.ProcessHitAgainstAllNPCsNoCooldown(player, Item, itemRectangle, weaponDamage, knockBack);
 			PlayerMethods.ItemCheck_MeleeHitPVP(player, Item, itemRectangle, weaponDamage, knockBack);
-		}
-
-		if (player.whoAmI == Main.myPlayer && player.ItemAnimationActive && player.HeldItem.axe > 0 && originPlayer.retoolArmTimer == 0) {
-			bool canChop = !player.noBuilding && player.IsTargetTileInItemRange(player.HeldItem);
-			if (canChop) DoChop(player, Player.tileTargetX, Player.tileTargetY);
 		}
 	}
 	private static void DoChop(Player player, int x, int y) {
@@ -552,7 +558,7 @@ public class Retool_Arm_Saw : Retool_Arm {
 		drawInfo.DrawDataCache.Add(new(
 			armTexture,
 			Retool_Arm_Layer.GetShoulder(player, drawInfo.Position).Floor() + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength).Floor() - Main.screenPosition,
-			armTexture.Value.Frame(verticalFrames: 6, frameY: hasTarget ? (player.miscCounter % 4) + 1 : 0),
+			armTexture.Value.Frame(verticalFrames: 6, frameY: spin ? (player.miscCounter % 4) + 1 : 0),
 			drawInfo.colorArmorHead,
 			originPlayer.retoolArmRotation,
 			new Vector2(5, 13).Apply(effects, frame.Size()),

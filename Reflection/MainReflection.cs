@@ -28,6 +28,7 @@ namespace Origins.Reflection {
 		public static FastStaticFieldInfo<Main, Player> _currentPlayerOverride;
 		public static List<Player> PlayersThatDrawBehindNPCs { get => _playersThatDrawBehindNPCs.GetValue(Main.instance); set => _playersThatDrawBehindNPCs.SetValue(Main.instance, value); }
 		public static FastFieldInfo<Main, List<Player>> _playersThatDrawBehindNPCs;
+		public static FastStaticFieldInfo<Main, int> currentMapHeight;
 		public static Action<Projectile> DrawProj_Flamethrower { get; private set; }
 		public static Action<NPC, int, Color, float> DrawNPC_SlimeItem { get; private set; }
 		public static Action DrawDust { get; private set; }
@@ -45,6 +46,7 @@ namespace Origins.Reflection {
 			DrawProj_Flamethrower = typeof(Main).GetMethod(nameof(DrawProj_Flamethrower), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).CreateDelegate<Action<Projectile>>();
 			DrawDust = typeof(Main).GetMethod(nameof(DrawDust), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).CreateDelegate<Action>(Main.instance);
 			DrawNPC_SlimeItem = typeof(Main).GetMethod(nameof(DrawNPC_SlimeItem), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).CreateDelegate<Action<NPC, int, Color, float>>();
+			currentMapHeight = "mH";
 		}
 		public void Unload() {
 			bgLoops = null;

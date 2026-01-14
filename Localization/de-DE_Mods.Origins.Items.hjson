@@ -7578,7 +7578,7 @@ Gills: {
 
 Retool_Arm_Cannon: {
 	// DisplayName: "{$Retool_Arm.DisplayName} (Cannon)"
-	// Tooltip: ""
+	// Tooltip: Does extra damage on a direct hit
 }
 
 Retool_Arm_Laser: {
@@ -7720,4 +7720,9 @@ Decorative_Ashes: {
 Petes_Peat_Slugger: {
 	// DisplayName: Pete's Peat Slugger
 	// Tooltip: ""
+}
+
+Space_Pirates_Eye: {
+	// DisplayName: Space Pirate's Eye
+	// Tooltip: <right> to select a color
 }

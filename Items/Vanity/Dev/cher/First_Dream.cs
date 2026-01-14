@@ -1,4 +1,5 @@
-﻿using Origins.Items.Other.Dyes;
+﻿using Origins.Core;
+using Origins.Items.Other.Dyes;
 using Origins.Layers;
 using PegasusLib;
 using System;
@@ -12,7 +13,7 @@ using Terraria.ModLoader.IO;
 using Terraria.UI;
 
 namespace Origins.Items.Vanity.Dev.cher {
-	public class First_Dream : ModItem {
+	public class First_Dream : ModItem, IRightClickableAccessory {
 		protected override bool CloneNewInstances => true;
 		[CloneByReference]
 		readonly List<First_Dream_Mode> modes = [];
@@ -21,7 +22,6 @@ namespace Origins.Items.Vanity.Dev.cher {
 		static readonly List<VisualEffect> visualEffects = [];
 		int mode = 0;
 		public override void Load() {
-			On_ItemSlot.SwapVanityEquip += On_ItemSlot_SwapVanityEquip;
 			On_Player.UpdateVisibleAccessory += On_Player_UpdateVisibleAccessory;
 			int AddTexture(string name, EquipType equipType, params Action<int>[] sets) {
 				string path = "Origins/Items/Vanity/Dev/cher/" + name;
@@ -60,29 +60,10 @@ namespace Origins.Items.Vanity.Dev.cher {
 			}
 			firstDream.modes[firstDream.mode].Slots.Apply(self);
 		}
-
-		private static void On_ItemSlot_SwapVanityEquip(On_ItemSlot.orig_SwapVanityEquip orig, Item[] inv, int context, int slot, Player player) {
-			if (inv[slot]?.ModItem is not First_Dream firstDream || ItemSlot.ShiftInUse) {
-				orig(inv, context, slot, player);
-				return;
-			}
-			firstDream.mode++;
-			if (firstDream.mode >= firstDream.modes.Count) firstDream.mode = 0;
-			if (Main.netMode != NetmodeID.SinglePlayer && player is not null) {
-				int baseSlot;
-				switch (player.CurrentLoadoutIndex) {
-					default:
-					baseSlot = PlayerItemSlotID.Loadout1_Armor_0;
-					break;
-					case 1:
-					baseSlot = PlayerItemSlotID.Loadout2_Armor_0;
-					break;
-					case 2:
-					baseSlot = PlayerItemSlotID.Loadout3_Armor_0;
-					break;
-				}
-				NetMessage.SendData(MessageID.SyncEquipment, -1, -1, null, player.whoAmI, baseSlot + slot);
-			}
+		public bool RightClickAccessory(Item[] inv, int context, int slot) {
+			mode++;
+			if (mode >= modes.Count) mode = 0;
+			return true;
 		}
 		public override void SetStaticDefaults() {
 			for (int i = 0; i < setValues.Count; i++) setValues[i].func(setValues[i].id);
@@ -97,12 +78,12 @@ namespace Origins.Items.Vanity.Dev.cher {
 		void SetNameOverride() {
 			Item.SetNameOverride($"{DisplayName.Value} ({this.GetLocalization($"Mode_{modes[mode].Name}")})");
 		}
-		public override bool CanRightClick() => !ItemSlot.ShiftInUse;
+		/*public override bool CanRightClick() => !ItemSlot.ShiftInUse;
 		public override void RightClick(Player player) {
 			Item.stack++;
 			mode++;
 			if (mode >= modes.Count) mode = 0;
-		}
+		}*/
 		public override void UpdateInventory(Player player) => SetNameOverride();
 		public override void UpdateVanity(Player player) {
 			SetNameOverride();

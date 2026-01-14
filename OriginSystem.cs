@@ -44,6 +44,7 @@ namespace Origins {
 		public StateSwitchingInterface AccessoryHUD { get; } = new("Origins: Accessory HUD", true);
 		public StateSwitchingInterface ItemUseHUD { get; } = new("Origins: Held Item HUD");
 		public StateSwitchingInterface EventHUD { get; } = new("Origins: Event HUD");
+		public SpacePirateEyeInterface SpacePirateEyeUI { get; } = new();
 		public UserInterfaceWithDefaultState journalUI;
 		internal static List<SwitchableUIState> queuedUIStates = [];
 		public static bool HasSetupAllContent { get; private set; }
@@ -528,6 +529,7 @@ namespace Origins {
 				AccessoryHUD.Insert(layers);
 				SetBonusHUD.Insert(layers);
 				EventHUD.Insert(layers);
+				SpacePirateEyeUI.Insert(layers);
 				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().journalUnlocked) {
 					layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
 						"Origins: Journal UI",

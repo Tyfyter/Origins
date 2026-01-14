@@ -439,6 +439,7 @@ namespace Origins {
 				strangeToothCooldown = item.useTime;
 			}
 			retoolArm?.UpdateArm(Player);
+			Space_Pirates_Eye.UpdateEye(Player, spacePirateEyeSelection);
 			if (glitterGlue is not null && glitterGlueTimer >= glitterGlue.useTime) {
 				if (Player.nearbyActiveNPCs > 0) {
 					const int range = 16 * 12;

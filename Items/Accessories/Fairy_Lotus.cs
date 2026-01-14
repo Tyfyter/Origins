@@ -11,6 +11,9 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => [
 			WikiCategories.Misc
 		];
+		public override void SetStaticDefaults() {
+			ArmorIDs.Face.Sets.DrawInFaceFlowerLayer[Item.faceSlot] = true;
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
 			Item.rare = ItemRarityID.LightRed;

@@ -357,8 +357,6 @@ namespace Origins {
 		public float retoolArmRotation = MathHelper.PiOver2;
 		public int retoolArmTimer = 0;
 		public int retoolArmDye = 0;
-		public Item glitterGlue = null;
-		public int glitterGlueTimer = 0;
 		public Item roboTail = null;
 		public bool roboTailVanity = false;
 		public int roboTailDye = 0;
@@ -373,6 +371,11 @@ namespace Origins {
 		}
 		public int roboTailHurtCount = 0;
 		public int roboTailHealCount = 0;
+		public Item spacePirateEye = null;
+		public int spacePirateEyeSelection = -2;
+		public int spacePirateEyeCooldown = -2;
+		public Item glitterGlue = null;
+		public int glitterGlueTimer = 0;
 		public int exoWeaponMountCurrentWeapon = 0;
 		public int exoWeaponMountLastWeapon = 0;
 		public bool gillsDidVisual = false;
@@ -935,9 +938,6 @@ namespace Origins {
 			else lunaticsRune = null;
 			retoolArm = null;
 			retoolArmDye = 0;
-			if (glitterGlue is null) glitterGlueTimer = 0;
-			else if (glitterGlueTimer < glitterGlue.useTime) glitterGlueTimer++;
-			glitterGlue = null;
 			if (roboTail is null || roboTailVanity) {
 				roboTailHurtCount = 0;
 				roboTailHealCount = 0;
@@ -945,6 +945,11 @@ namespace Origins {
 			roboTail = null;
 			roboTailVanity = false;
 			roboTailDye = 0;
+			spacePirateEye = null;
+			spacePirateEyeCooldown.Cooldown();
+			if (glitterGlue is null) glitterGlueTimer = 0;
+			else if (glitterGlueTimer < glitterGlue.useTime) glitterGlueTimer++;
+			glitterGlue = null;
 			exoLegs = false;
 			bombRack = null;
 			if (decorativeAshes is null) {

@@ -18,6 +18,7 @@ namespace Origins.Items.Accessories {
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 3;
 			Item.rare = ItemRarityID.LightRed;
+			Item.master = true;
 			Item.value = Item.sellPrice(gold: 1);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
