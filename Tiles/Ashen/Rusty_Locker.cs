@@ -43,7 +43,7 @@ namespace Origins.Tiles.Ashen {
 			DustType = Ashen_Biome.DefaultTileDust;
 			RegisterItemDrop(item.Type);
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
-			OriginsSets.Tiles.ChestSoundOverride[Type] = (Origins.Sounds.MetalCreakOpen, Origins.Sounds.MetalCreakClose);
+			OriginsSets.Tiles.ChestSoundOverride[Type] = (Origins.Sounds.MetalCreakOpen.WithVolume(0.3f), Origins.Sounds.MetalCreakClose.WithVolume(0.3f));
 		}
 		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
 			if (tile.TileFrameY != 0) height = -1600;
