@@ -660,7 +660,7 @@ ACCESSORIES:
 (#3) Retool Arm !!!
 (†) Robo-tail !!!
 (^) Scribe of the Meat God
-(#, ^2) Space Pirate's Eye !!!
+(◘) Space Pirate's Eye !!!
 (^) Stack of Shraps
 (^) Strange Tooth
 (^) Terrarian Voodoo Doll
