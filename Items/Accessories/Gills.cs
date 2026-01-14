@@ -61,6 +61,14 @@ public class Gills : ModItem {
 		} else {
 			gillsDidVisual = false;
 		}
-		return base.WingUpdate(player, inUse);
+		if (player.controlJump) {
+			player.wingFrameCounter++;
+			const int timePerFrame = 3;
+			if (player.wingFrameCounter >= timePerFrame * 3) player.wingFrameCounter = 0;
+			player.wingFrame = 1 + player.wingFrameCounter / timePerFrame;
+		} else {
+			player.wingFrame = 0;
+		}
+		return true;
 	}
 }
