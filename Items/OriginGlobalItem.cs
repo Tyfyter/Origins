@@ -235,7 +235,7 @@ namespace Origins.Items {
 			}
 		}
 		public override string IsArmorSet(Item head, Item body, Item leg) {
-			if (head.type == ItemID.MiningHelmet && body.type == ItemID.MiningShirt && leg.type == ItemID.MiningPants) return "miner";
+			if (head.type is ItemID.MiningHelmet or ItemID.UltrabrightHelmet && body.type == ItemID.MiningShirt && leg.type == ItemID.MiningPants) return "miner";
 			if (OriginConfig.Instance.WoodBuffs && head.type == ItemID.PearlwoodHelmet && body.type == ItemID.PearlwoodBreastplate && leg.type == ItemID.PearlwoodGreaves) return "pearlwood";
 			if (head.type == ItemID.RainHat && body.type == ItemID.RainCoat) return "rain";
 			return "";
