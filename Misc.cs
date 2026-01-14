@@ -2662,12 +2662,18 @@ namespace Origins {
 			int flatX = 14;
 			int kScaleX = -2;
 			Vector2 position = new Vector2(i * 16f, j * 16f) + offset - Main.screenPosition;
+			short tileFrameX = tile.TileFrameX;
+			short tileFrameY = tile.TileFrameY;
+			Main.instance.TilesRenderer.GetTileDrawData(i, j, tile, tile.TileType, ref tileFrameX, ref tileFrameY, out _, out _, out int tileTop, out _, out int addFrX, out int addFrY, out SpriteEffects tileSpriteEffect, out _, out _, out _);
+			tileFrameX += (short)addFrX;
+			tileFrameY += (short)addFrY;
+			position.Y += tileTop;
 			switch (TileID.Sets.HasSlopeFrames[tile.TileType] ? BlockType.Solid : tile.BlockType) {
 				case BlockType.Solid:
-				spriteBatch.Draw(glowTexture, position, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16), glowColor, 0f, default, 1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(glowTexture, position, new Rectangle(tileFrameX, tileFrameY, 16, 16), glowColor, 0f, default, 1f, SpriteEffects.None, 0f);
 				break;
 				case BlockType.HalfBlock:
-				spriteBatch.Draw(glowTexture, position + new Vector2(0, 8), new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 4), glowColor, 0f, default, 1f, SpriteEffects.None, 0f);
+				spriteBatch.Draw(glowTexture, position + new Vector2(0, 8), new Rectangle(tileFrameX, tileFrameY, 16, 4), glowColor, 0f, default, 1f, SpriteEffects.None, 0f);
 				spriteBatch.Draw(glowTexture, position + new Vector2(0, 12), new Rectangle(144, 66, 16, 4), glowColor, 0f, default, 1f, SpriteEffects.None, 0f);
 				break;
 				case BlockType.SlopeDownLeft://1
@@ -2692,7 +2698,7 @@ namespace Origins {
 					Main.spriteBatch.Draw(
 						glowTexture,
 						position + new Vector2(flatX + kScaleX * k, k * 2 + posYFactor * k),
-						new Rectangle(tile.TileFrameX + flatX + kScaleX * k, tile.TileFrameY + flatY + kScaleY * k, 2, 16 - 2 * k),
+						new Rectangle(tileFrameX + flatX + kScaleX * k, tileFrameY + flatY + kScaleY * k, 2, 16 - 2 * k),
 						glowColor,
 						0f,
 						Vector2.Zero,

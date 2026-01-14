@@ -50,10 +50,10 @@ namespace Origins.Tiles.Ashen {
 			num = fail ? 1 : 3;
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
-			if (frameCounter.CycleUp(7)) frame.CycleUp(2);
+			if (frameCounter.CycleUp(25)) frame.CycleUp(2);
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			if (Main.tileFrame[Type] != 0) this.DrawTileGlow(i, j, spriteBatch);
+			this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			const float brightness = 0.8f;
