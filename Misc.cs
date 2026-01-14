@@ -3357,6 +3357,11 @@ namespace Origins {
 			}
 			return origin;
 		}
+		public static Vector3 TorchColor(int torchID) {
+			Vector3 color = default;
+			TorchID.TorchColor(torchID, out color.X, out color.Y, out color.Z);
+			return color;
+		}
 		public static void Deconstruct(this Vector2 vector, out float X, out float Y) {
 			X = vector.X;
 			Y = vector.Y;

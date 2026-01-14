@@ -7726,3 +7726,18 @@ Space_Pirates_Eye: {
 	// DisplayName: Space Pirate's Eye
 	// Tooltip: <right> to select a color
 }
+
+Laborer_Breastplate: {
+	// DisplayName: Laborer Shirt
+	// Tooltip: +8% explosive attack speed
+}
+
+Laborer_Greaves: {
+	// DisplayName: Laborer Overalls
+	// Tooltip: +8% explosive attack speed
+}
+
+Laborer_Helmet: {
+	// DisplayName: Laborer Helmet
+	// Tooltip: "{$ItemTooltip.MiningHelmet}"
+}

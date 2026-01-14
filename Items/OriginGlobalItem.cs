@@ -1,4 +1,5 @@
 ﻿using Origins.Items.Accessories;
+using Origins.Items.Armor.Laborer;
 using Origins.Items.Weapons;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
@@ -109,6 +110,7 @@ namespace Origins.Items {
 
 				case ItemID.MiningHelmet:
 				case ItemID.MiningShirt:
+				case ItemID.UltrabrightHelmet:
 				statsModified = true;
 				break;
 			}
@@ -189,7 +191,7 @@ namespace Origins.Items {
 		}
 		public override void UpdateEquip(Item item, Player player) {
 			switch (item.type) {
-				case ItemID.MiningHelmet:
+				case ItemID.MiningHelmet or ItemID.UltrabrightHelmet:
 				player.GetCritChance(DamageClasses.Explosive) += 3;
 				break;
 				case ItemID.MiningShirt:
@@ -235,7 +237,7 @@ namespace Origins.Items {
 			}
 		}
 		public override string IsArmorSet(Item head, Item body, Item leg) {
-			if (head.type is ItemID.MiningHelmet or ItemID.UltrabrightHelmet && body.type == ItemID.MiningShirt && leg.type == ItemID.MiningPants) return "miner";
+			if ((head.type is ItemID.MiningHelmet or ItemID.UltrabrightHelmet || head.type == ItemType<Laborer_Helmet>()) && (body.type == ItemID.MiningShirt || body.type == ItemType<Laborer_Breastplate>()) && (leg.type == ItemID.MiningPants || leg.type == ItemType<Laborer_Greaves>())) return "miner";
 			if (OriginConfig.Instance.WoodBuffs && head.type == ItemID.PearlwoodHelmet && body.type == ItemID.PearlwoodBreastplate && leg.type == ItemID.PearlwoodGreaves) return "pearlwood";
 			if (head.type == ItemID.RainHat && body.type == ItemID.RainCoat) return "rain";
 			return "";
@@ -286,7 +288,7 @@ namespace Origins.Items {
 				tooltips.Insert(index + 1, line);
 			}
 			switch (itemType) {
-				case ItemID.MiningHelmet:
+				case ItemID.MiningHelmet or ItemID.UltrabrightHelmet:
 				Add("Tooltip1", "Mods.Origins.Items.MiningHelmet.BuffTooltip");
 				break;
 				case ItemID.MiningShirt:

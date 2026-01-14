@@ -302,7 +302,7 @@ ENEMY NPCS:
 (X) Tendon Terror
 (X) Terrogator
 (^) Torn Ghoul
-(X) Trash Compactor Mimic !!!
+(^3) Trash Compactor Mimic !!!
 (^) Trijaw Shark
 (X) VV-13 !!!
 
@@ -433,7 +433,7 @@ ARMOR:
 (^) Endowood Armor
 (^) Felnum Armor
 (^) Fiberglass Armor
-(#, ^2) Laborer Set !!!
+(†, #3) Laborer Set !!! (idk how to make the mining helmet accept laborer shirt and overalls for vanilla mining set)
 (^) Lost Armor
 (^) Marrowick Armor
 (^) Mythic Armor

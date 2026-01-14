@@ -9,8 +9,7 @@ namespace Origins.Tiles.Marrowick {
 		public override int DustType => DustID.TintablePaint;
 		public override Vector3 LightColor {
 			get {
-				Vector3 color = default;
-				TorchID.TorchColor(TorchID.Torch, out color.X, out color.Y, out color.Z);
+				Vector3 color = OriginExtensions.TorchColor(TorchID.Torch);
 				color.X = 0f;
 				return color;
 			}
