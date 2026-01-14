@@ -3,6 +3,7 @@ using Origins.Layers;
 using Origins.Projectiles;
 using Origins.Reflection;
 using PegasusLib.Graphics;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -56,12 +57,14 @@ public abstract class Retool_Arm : ModItem {
 		originPlayer.retoolArmTimer = 0;
 		for (int i = 0; i < arms.Count; i++) {
 			if (arms[i].Type == Type) {
+				originPlayer.retoolArm.OnSwitchFrom(player);
 				TagCompound tag = ItemIO.Save(Item);
 				Retool_Arm nextArm = arms[(i + 1) % arms.Count];
 				tag["mod"] = nextArm.Mod.Name;
 				tag["name"] = nextArm.Name;
 				ItemIO.Load(Item, tag);
 				originPlayer.retoolArm = nextArm;
+				originPlayer.retoolArm.OnSwitchTo(player);
 				return;
 			}
 		}
@@ -85,6 +88,8 @@ public abstract class Retool_Arm : ModItem {
 	public virtual bool ReplacesAltFunctionUse(Player player) => false;
 	public abstract void UpdateArm(Player player);
 	public abstract void DrawArm(ref PlayerDrawSet drawInfo);
+	public virtual void OnSwitchFrom(Player player) { }
+	public virtual void OnSwitchTo(Player player) { }
 }
 public class Retool_Arm_Cannon : Retool_Arm {
 	public override string Texture => typeof(Retool_Arm).GetDefaultTMLName();
@@ -519,7 +524,33 @@ public class Retool_Arm_Saw : Retool_Arm {
 			PlayerMethods.ProcessHitAgainstAllNPCsNoCooldown(player, Item, itemRectangle, weaponDamage, knockBack);
 			PlayerMethods.ItemCheck_MeleeHitPVP(player, Item, itemRectangle, weaponDamage, knockBack);
 		}
+		if (originPlayer.wasUsingRetoolArmSaw.TrySet(spin)) {
+			if (spin) {
+				SoundEngine.PlaySound(Origins.Sounds.SmallSawStart, player.MountedCenter);
+			} else {
+				SoundEngine.PlaySound(Origins.Sounds.SmallSawEnd, player.MountedCenter);
+			}
+		}
+		if (spin) {
+			loopedUseSound.PlaySoundIfInactive(Origins.Sounds.SmallSaw, player.MountedCenter, sound => {
+				sound.Position = player.MountedCenter;
+				return spin;
+			});
+		} else {
+			loopedUseSound.TryStop();
+		}
 	}
+	public override void OnSwitchFrom(Player player) {
+		player.OriginPlayer().wasUsingRetoolArmSaw = false;
+		loopedUseSound.TryStop();
+		spin = false;
+	}
+	public override void OnSwitchTo(Player player) {
+		player.OriginPlayer().wasUsingRetoolArmSaw = false;
+		loopedUseSound.TryStop();
+		spin = false;
+	}
+	SlotId loopedUseSound = SlotId.Invalid;
 	private static void DoChop(Player player, int x, int y) {
 		Tile tile = Main.tile[x, y];
 		if (!Main.tileAxe[tile.TileType]) return;

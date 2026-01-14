@@ -358,6 +358,7 @@ namespace Origins {
 		public float retoolArmRotation = MathHelper.PiOver2;
 		public int retoolArmTimer = 0;
 		public int retoolArmDye = 0;
+		public bool wasUsingRetoolArmSaw = false;
 		public Item roboTail = null;
 		public bool roboTailVanity = false;
 		public int roboTailDye = 0;

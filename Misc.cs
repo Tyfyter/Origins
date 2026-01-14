@@ -5242,8 +5242,13 @@ namespace Origins {
 			return slot.IsValid && SoundEngine.TryGetActiveSound(slot, out ActiveSound sound) ? sound : null;
 		}
 		public static void PlaySoundIfInactive(ref this SlotId slot, in SoundStyle style, Vector2? position = null, SoundUpdateCallback updateCallback = null) {
-			if (slot.IsValid && SoundEngine.TryGetActiveSound(slot, out ActiveSound _)) return;
+			if (slot.IsValid && SoundEngine.TryGetActiveSound(slot, out ActiveSound sound) && sound.IsPlayingOrPaused) return;
 			slot = SoundEngine.PlaySound(style, position, updateCallback);
+		}
+		public static void TryStop(ref this SlotId slot) {
+			if (slot.IsValid && SoundEngine.TryGetActiveSound(slot, out ActiveSound sound) && sound.IsPlayingOrPaused) {
+				sound.Stop();
+			}
 		}
 	}
 	public static class NetmodeActive {
