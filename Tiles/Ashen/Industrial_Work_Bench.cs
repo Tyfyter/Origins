@@ -53,7 +53,7 @@ namespace Origins.Tiles.Ashen {
 			if (frameCounter.CycleUp(7)) frame.CycleUp(2);
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			this.DrawTileGlow(i, j, spriteBatch);
+			if (Main.tileFrame[Type] != 0) this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			const float brightness = 0.8f;
