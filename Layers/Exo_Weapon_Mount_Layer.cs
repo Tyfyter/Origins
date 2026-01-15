@@ -21,7 +21,7 @@ namespace Origins.Layers {
 			Texture2D fakeTexture = TextureAssets.AccBack[Exo_Weapon_Mount.BackID].Value;
 			Player player = drawInfo.drawPlayer;
 			int buffTime = player.buffTime.GetIfInRange(player.FindBuffIndex(ModContent.BuffType<Exo_Weapon_Mount_Buff>()));
-			int frame = (Exo_Weapon_Mount.BuffTime - buffTime) / 2;
+			int frame = (Exo_Weapon_Mount.BuffTime - buffTime) / 3;
 			if (frame >= 7) frame = 0;
 			for (int i = drawInfo.DrawDataCache.Count - 1; i >= 0; i--) {
 				DrawData data = drawInfo.DrawDataCache[i];
@@ -33,24 +33,74 @@ namespace Origins.Layers {
 				drawInfo.DrawDataCache[i] = data;
 
 				if (frame == 0) break;
+				if (frame > 5) break;
 				Item lastItem = player.inventory[player.OriginPlayer().exoWeaponMountLastWeapon];
+				Texture2D lastItemTexture = TextureAssets.Item[lastItem.type].Value;
 				Rectangle itemDrawFrame = player.GetItemDrawFrame(lastItem.type);
 				Vector2 origin = new(itemDrawFrame.Width * 0.5f - itemDrawFrame.Width * 0.5f * player.direction, itemDrawFrame.Height);
 				if (player.gravDir == -1f) {
 					origin.Y = itemDrawFrame.Height - origin.Y;
 				}
+				float rotation = -MathHelper.PiOver2;
+				rotation -= frame * 0.1f;
 				switch (lastItem.useStyle) {
 					default:
 					return;
-					case ItemUseStyleID.Shoot:
-					Vector2 vector10 = Main.DrawPlayerItemPos(player.gravDir, lastItem.type);
-					if (player.direction == -1) {
-						origin = new Vector2(-vector10.X, itemDrawFrame.Height / 2);
-					} else {
-						origin = new Vector2(itemDrawFrame.Width + vector10.X, itemDrawFrame.Height / 2);
+					case ItemUseStyleID.Guitar: {
+						const int offset = 12;
+						if (player.direction == -1) {
+							origin = new Vector2(itemDrawFrame.Width - offset, offset);
+						} else {
+							origin = new Vector2(offset, offset);
+						}
+						rotation -= frame * 0.2f;
+						rotation += MathHelper.Pi + 0.4f;
+						break;
 					}
-					break;
+					case ItemUseStyleID.Rapier:
+					case ItemUseStyleID.Swing: {
+						const int offset = 12;
+						if (player.direction == -1) {
+							origin = new Vector2(offset, itemDrawFrame.Height - offset);
+						} else {
+							origin = new Vector2(itemDrawFrame.Width - offset, itemDrawFrame.Height - offset);
+						}
+						rotation -= frame * 0.1f;
+						break;
+					}
+					case ItemUseStyleID.Thrust: {
+						const int offset = 12;
+						origin = new Vector2(itemDrawFrame.Width * 0.5f, itemDrawFrame.Height - offset);
+						rotation -= frame * 0.1f;
+						break;
+					}
+					case ItemUseStyleID.RaiseLamp: {
+						const int offset = 12;
+						origin = new Vector2(itemDrawFrame.Width * 0.5f, offset);
+						rotation = 0;
+						break;
+					}
+					case ItemUseStyleID.Shoot: {
+						if (lastItem.CountsAsClass(DamageClasses.Incantation)) {
+							origin = new Vector2(5 - 2 * drawInfo.drawPlayer.direction, 8);
+							rotation = frame * -0.075f;
+							return;
+						}
+						Vector2 offset = Main.DrawPlayerItemPos(player.gravDir, lastItem.type);
+						if (player.direction == -1) {
+							origin = new Vector2(-offset.X, itemDrawFrame.Height / 2);
+						} else {
+							origin = new Vector2(itemDrawFrame.Width + offset.X, itemDrawFrame.Height / 2);
+						}
+						if (lastItem.useAmmo == AmmoID.Arrow) {
+							rotation += MathHelper.PiOver2;
+							origin.X = itemDrawFrame.Width - origin.X;
+							origin.Y -= 12;
+						}
+						break;
+					}
 				}
+				rotation *= player.direction;
 				//origin += vector;
 				Vector2 position = data.position + (frame switch {
 					0 => new(28, -9),
@@ -63,11 +113,11 @@ namespace Origins.Layers {
 					_ => new Vector2(28, -9)
 				}).Apply(data.effect, default).RotatedBy(drawInfo.rotation);
 				drawInfo.DrawDataCache.Add(new DrawData(
-					TextureAssets.Item[lastItem.type].Value,
+					lastItemTexture,
 					position,
 					itemDrawFrame,
 					lastItem.GetAlpha(drawInfo.colorArmorBody),
-					-MathHelper.PiOver2 * player.direction,
+					rotation,
 					origin,
 					lastItem.scale,
 					data.effect
