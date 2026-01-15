@@ -134,7 +134,7 @@ namespace Origins {
 			}
 			if (ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib)) {
 				checkAprilFools = (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
-				HolidayLib.Call("ADDHOLIDAY", "April fools", () => Instance.ForceAF.ToInt());
+				HolidayLib.Call("ADDHOLIDAY", "April fools", () => Instance?.ForceAF.ToInt() ?? 0);
 				holidayForceChanged = (Func<object[], object>)HolidayLib.Call("GETFUNC", "HOLIDAYFORCECHANGED");
 			} else {
 				checkAprilFools = DefaultCheckAprilFools;
