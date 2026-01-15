@@ -7741,3 +7741,18 @@ Laborer_Helmet: {
 	DisplayName: Laborer Helmet
 	Tooltip: "{$ItemTooltip.MiningHelmet}"
 }
+
+Blastberry: {
+	DisplayName: Blastberry
+	Tooltip: ""
+}
+
+Cognac: {
+	DisplayName: Cognac
+	Tooltip: "{$CommonItemTooltip.MinorStats}"
+}
+
+Tangerine: {
+	DisplayName: Tangerine
+	Tooltip: ""
+}

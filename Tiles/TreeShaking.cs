@@ -21,6 +21,8 @@ namespace Origins.Tiles {
 				new (ItemType<Prickly_Pear>(), tree => tree is Petrified_Tree ? 1 : 0),
                 new (ItemType<Pawpaw>(), tree => tree is Exoskeletal_Tree ? 1 : 0),
 				new (ItemType<Periven>(), tree => tree is Exoskeletal_Tree ? 1 : 0),
+				new (ItemType<Blastberry>(), tree => tree is Artifiber_Tree ? 1 : 0),
+				new (ItemType<Tangerine>(), tree => tree is Artifiber_Tree ? 1 : 0),
 			}),
             (3 / 100f, new TreeShakeLoot[] {
                 new (ItemType<Petrified_Prickly_Pear>(), tree => tree is Petrified_Tree ? 1 : 0),

@@ -1631,13 +1631,13 @@ CONSUMABLES:
 (^) Bad Juju Stone
 (^) BBQ Skewer
 (^) Bileberry
-(#, ^2) Blastberry !!!
+(☻) Blastberry !!!
 (^) Blue Bovine
 (^) Bread
 (^) Brine Cheese
 (#, ^2) Budget Fairy Dust
 (^) Caeser Salad
-(#, ^2) Cognac !!!
+(☻) Cognac !!!
 (^) Contaminated Infusion
 (^) Crockin' Sprocks
 (^) Edible Hair Gel
@@ -1658,7 +1658,7 @@ CONSUMABLES:
 (^) Sour Apple
 (^) Spearmint Tea
 (#, ^2) Sweet Tooth Shake
-(#, ^2) Tangerine !!!
+(☻) Tangerine !!!
 (#, ^2) Tasty Booger
 (^) Vanilla Shake
 
