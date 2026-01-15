@@ -27,7 +27,11 @@ namespace Origins.Tiles {
 		CustomTilePaintLoader.CustomTileVariationKey TopPaintKey { get; set; }
 		AutoLoadingAsset<Texture2D> TopGlowTexture { get; }
 		CustomTilePaintLoader.CustomTileVariationKey TopGlowPaintKey { get; set; }
-		(float r, float g, float b) LightEmission { get; }
+		AutoLoadingAsset<Texture2D> BranchesTexture { get; }
+		CustomTilePaintLoader.CustomTileVariationKey BranchesPaintKey { get; set; }
+		AutoLoadingAsset<Texture2D> BranchesGlowTexture { get; }
+		CustomTilePaintLoader.CustomTileVariationKey BranchesGlowPaintKey { get; set; }
+		(float r, float g, float b) LightEmission(int i, int j);
 	}
 	public static class GlowingTileExtensions {
 		public static void SetupGlowKeys(this IGlowingModTile self) {

@@ -23,16 +23,16 @@ namespace Origins.Tiles.Riven {
 		AutoLoadingAsset<Texture2D> IGlowingModTree.TopGlowTexture => TopGlowTexture;
 		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
 		public static float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
-		public (float r, float g, float b) LightEmission {
-			get {
-				float glowValue = GlowValue;
-				return (0.394f * glowValue, 0.879f * glowValue, 0.912f * glowValue);
-			}
+		public (float r, float g, float b) LightEmission(int i, int j) {
+			if (!HasScar(Main.tile[i, j])) return default;
+			float glowValue = GlowValue;
+			return (0.394f * glowValue, 0.879f * glowValue, 0.912f * glowValue);
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (HasScar(tile)) color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
 		}
 		static bool HasScar(Tile tile) {
+			if (tile.TileFrameY >= 198 && tile.TileFrameX == 22) return true;
 			switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {
 				case (3, 0):
 				case (3, 1):
@@ -88,6 +88,10 @@ namespace Origins.Tiles.Riven {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public CustomTilePaintLoader.CustomTileVariationKey TopPaintKey { get; set; }
 		public CustomTilePaintLoader.CustomTileVariationKey TopGlowPaintKey { get; set; }
+		public CustomTilePaintLoader.CustomTileVariationKey BranchesPaintKey { get; set; }
+		public CustomTilePaintLoader.CustomTileVariationKey BranchesGlowPaintKey { get; set; }
+		public AutoLoadingAsset<Texture2D> BranchesTexture { get; }
+		public AutoLoadingAsset<Texture2D> BranchesGlowTexture { get; }
 	}
 	public class Exoskeletal_Tree_Sapling : SaplingBase, IGlowingModTile {
 		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Exoskeletal_Tree_Sapling).GetDefaultTMLName() + "_Glow";
