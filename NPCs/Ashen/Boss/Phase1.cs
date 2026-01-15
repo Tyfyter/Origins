@@ -540,6 +540,9 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override LegAnimation ForceAnimation(Trenchmaker npc, Leg leg, Leg otherLeg) => npc.NPC.ai[1] == 0 ? ModContent.GetInstance<Jump_Preparation_Animation>() : null;
 		public class Trenchmaker_Carpet_Bomb : ModProjectile {
+			public override void SetStaticDefaults() {
+				ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+			}
 			public override void SetDefaults() {
 				Projectile.width = 34;
 				Projectile.height = 34;
@@ -547,6 +550,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				Projectile.hostile = true;
 				Projectile.penetrate = -1;
 				Projectile.timeLeft = 360;
+				Projectile.hide = true;
 			}
 			public override void AI() {
 				Projectile.rotation += 0.1f;
@@ -554,6 +558,9 @@ namespace Origins.NPCs.Ashen.Boss {
 			}
 			public override void OnKill(int timeLeft) {
 				ExplosiveGlobalProjectile.DoExplosion(Projectile, 128, sound: SoundID.Item14, hostile: true);
+			}
+			public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+				behindNPCs.Add(index);
 			}
 		}
 	}
