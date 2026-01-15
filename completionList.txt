@@ -1187,7 +1187,7 @@ TILES:
 |---
 (^) Aetherite Ore
 (^) Amoeba Fluid
-(#2, ^2) Artifiber !!! (needs proper texture and merger overlay usage)
+(☻) Artifiber !!!
 (^) Ashen Cactus
 (^) Baryte
 (^) Batholith
