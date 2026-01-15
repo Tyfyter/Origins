@@ -1151,7 +1151,7 @@ EXPLOSIVE WEAPONS:
 (X) Oil Drum
 (^) Omni-directional Claymore
 (^) Partybringer
-(#, ^2) Pete's Peat Slugger !!!
+(☻) Pete's Peat Slugger !!!
 (X) Puffle
 (^) Rocodile
 (^) Self-Destruct
@@ -1373,7 +1373,7 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
-(#2, ^2) Artifiber Tree !!! (needs glow code)
+(#2, ^2) Artifiber Tree !!! (needs complete reimplementation of the concept of trees)
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
 (^) Background Door
