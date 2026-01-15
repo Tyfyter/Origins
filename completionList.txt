@@ -1373,7 +1373,7 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
-(#2, ^2) Artifiber Tree !!! (needs complete reimplementation of the concept of trees)
+(☻) Artifiber Tree !!!
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
 (^) Background Door
