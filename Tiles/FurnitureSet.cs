@@ -26,7 +26,7 @@ namespace Origins.Tiles {
 		public virtual bool LampFancyGlow => LightFancyGlows;
 		public virtual bool ChandelierFancyGlow => LightFancyGlows;
 		public virtual bool LanternFancyGlow => LightFancyGlows;
-		public virtual Vector3 LightColor { get => OriginExtensions.TorchColor(TorchID.Torch); }
+		public virtual Vector3 LightColor => OriginExtensions.TorchColor(TorchID.Torch);
 		public virtual bool LanternSway => true;
 		public virtual bool ChandelierSway => true;
 		public virtual int CraftingStation => TileID.WorkBenches;

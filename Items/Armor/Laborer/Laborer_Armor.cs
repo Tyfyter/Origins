@@ -8,13 +8,10 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Items.Armor.Laborer {
 	[AutoloadEquip(EquipType.Head)]
 	public class Laborer_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public string[] Categories => [
+		public string[] SetCategories => [
 			WikiCategories.ArmorSet,
 			WikiCategories.ExplosiveBoostGear
 		];
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
 		public override void SetDefaults() {
 			Item.defense = 2;
 			Item.rare = ItemRarityID.Blue;
@@ -22,8 +19,7 @@ namespace Origins.Items.Armor.Laborer {
 		}
 		public override void UpdateEquip(Player player) {
 			Vector3 light = new(1.4f, 0.7f, 0.15f);
-			light *= 0.9f; // adjust brightness here
-			Lighting.AddLight(player.Center, light);
+			Lighting.AddLight(player.Center, light * 0.9f);// adjust brightness here
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			if (body.type != ItemID.MiningShirt && body.type != ItemType<Laborer_Breastplate>()) return false;
@@ -40,9 +36,6 @@ namespace Origins.Items.Armor.Laborer {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Laborer_Breastplate : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
 		public override void SetDefaults() {
 			Item.defense = 2;
 			Item.rare = ItemRarityID.Blue;
@@ -55,9 +48,6 @@ namespace Origins.Items.Armor.Laborer {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Laborer_Greaves : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
 		public override void SetDefaults() {
 			Item.defense = 2;
 			Item.rare = ItemRarityID.Blue;
