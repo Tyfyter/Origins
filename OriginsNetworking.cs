@@ -587,6 +587,7 @@ namespace Origins {
 			internal const byte sync_npc_interactions = 31;
 			internal const byte clone_npc = 32;
 			internal const byte sync_ashen_wires = 33;
+			internal const byte sync_special_chest = 34;
 
 			//public static string[] names;
 		}

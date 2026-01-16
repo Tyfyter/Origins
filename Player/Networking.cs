@@ -1,4 +1,5 @@
 ﻿using Origins.Buffs;
+using Origins.Core;
 using Origins.Questing;
 using Origins.Tiles;
 using System;
@@ -44,6 +45,7 @@ namespace Origins {
 					foreach (Quest quest in Quest_Registry.NetQuests) {
 						quest.Sync(Player.whoAmI);
 					}
+					SpecialChest.SyncToPlayer(Player.whoAmI);
 				}
 			} else {
 				if (!dummyInitialize) {

@@ -7762,3 +7762,8 @@ Autohandcannon: {
 	Tooltip: ""
 	JammedText: Jammed!
 }
+
+Special_Chest_Tester_Item: {
+	DisplayName: Special Chest Tester
+	Tooltip: ""
+}

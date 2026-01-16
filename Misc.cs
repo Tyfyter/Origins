@@ -1,4 +1,5 @@
 ﻿using AltLibrary.Common.AltBiomes;
+using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
@@ -3053,6 +3054,17 @@ namespace Origins {
 				packet.Write(type);
 				packet.Send();
 			}
+		}
+		public static bool IsInInteractionRange(this Player player, int chestWidth, int chestHeight, int chestXOffset = 0, int chestYOffset = 0) {
+			int playerCenterX = (int)((player.position.X + player.width * 0.5f) / 16);
+			int playerCenterY = (int)((player.position.Y + player.height * 0.5f) / 16);
+			Rectangle r = new(player.chestX * 16, player.chestY * 16, chestWidth * 16, chestHeight * 16);
+			r.Inflate(-1, -1);
+			Point point = r.ClosestPointInRect(player.Center).ToTileCoordinates();
+			int chestPointX = point.X;
+			int chestPointY = point.Y;
+			return playerCenterX >= chestPointX - Player.tileRangeX && playerCenterX <= chestPointX + Player.tileRangeX + 1
+				&& playerCenterY >= chestPointY - Player.tileRangeY && playerCenterY <= chestPointY + Player.tileRangeY + 1;
 		}
 		public static void AddChambersiteTileConversions(this AltBiome biome, int tile) {
 			biome.AddTileConversion(tile, ModContent.TileType<Chambersite_Ore>(), extraFunctions: false);
