@@ -136,8 +136,7 @@ namespace Origins.Items.Accessories {
 		public bool CanRightClickAccessory(Item[] inv, int context, int slot) => true;
 		public bool RightClickAccessory(Item[] inv, int context, int slot) {
 			OriginSystem.Instance.SpacePirateEyeUI.Activate();
-			return false;
-			Player player = Main.LocalPlayer;
+			/*Player player = Main.LocalPlayer;
 			OriginPlayer originPlayer = player.OriginPlayer();
 			int lowest = GetPlayerCounts(player);
 			if (ItemSlot.ShiftInUse) {
@@ -166,7 +165,7 @@ namespace Origins.Items.Accessories {
 					originPlayer.spacePirateEyeSelection = i;
 					return false;
 				}
-			}
+			}*/
 			return false;
 		}
 	}
