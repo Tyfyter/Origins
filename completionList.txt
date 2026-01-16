@@ -412,7 +412,7 @@ ACHIEVEMENTS:
 (^3) Peat Obsession !!!
 (^3) RIVEN WORMS !!!
 (^3) Slow Loading Bar !!!
-(X) The Signal, it's Calling !!!
+(々) The Signal, it's Calling !!!
 (^3) There's Something in There! !!!
 (^3) 'Till Death Mildew Us Part !!!
 (^3) Whismical! !!!
@@ -435,7 +435,7 @@ ARMOR:
 (^) Endowood Armor
 (^) Felnum Armor
 (^) Fiberglass Armor
-(†, #3) Laborer Set !!! (idk how to make the mining helmet accept laborer shirt and overalls for vanilla mining set)
+(†) Laborer Set !!!
 (^) Lost Armor
 (^) Marrowick Armor
 (^) Mythic Armor
@@ -1145,7 +1145,7 @@ EXPLOSIVE WEAPONS:
 (^) Chlorophyte Handcannon
 (#, ^2) Firework Cannon
 (X) Flarefury
-(#3) Holy Hand Grenade !!!
+(☻) Holy Hand Grenade !!!
 (^) Mine Flayer
 (^) Nova Cascade
 (^) Nova Swarm
@@ -1260,7 +1260,7 @@ TILES:
 
 (^) Amebic Gel Wall
 (^) Artifiber Wall
-(#, ^2) Ashen Grass Wall !!!
+(☻) Ashen Grass Wall !!!
 (^) Barnacle Wall
 (^) Baryte Wall
 (^) Batholith Wall
@@ -1637,7 +1637,7 @@ CONSUMABLES:
 (^) Blue Bovine
 (^) Bread
 (^) Brine Cheese
-(#, ^2) Budget Fairy Dust
+(々) Budget Fairy Dust
 (^) Caeser Salad
 (☻) Cognac !!!
 (^) Contaminated Infusion
@@ -1659,9 +1659,9 @@ CONSUMABLES:
 (^) Soul Spaghetti
 (^) Sour Apple
 (^) Spearmint Tea
-(#, ^2) Sweet Tooth Shake
+(々) Sweet Tooth Shake
 (☻) Tangerine !!!
-(#, ^2) Tasty Booger
+(々) Tasty Booger
 (^) Vanilla Shake
 
 (X) Catalyst Cell
@@ -1844,9 +1844,9 @@ CROSS-MOD CONTENT:
 (^) Encrusted Storage Unit
 (^) Encrusted Storage Upgrade
 (X) Fargo's Unlimited ammo items
-(#, ^2) High-powered Green Laser !!!
+(々) High-powered Green Laser !!!
 (X) Laden Pressure Incantation
-(#, ^2) Mech Figurine !!!
+(々) Mech Figurine !!!
 (^) Keytar
 (^) Riven Chest
 (^) Riven Renewal

@@ -245,6 +245,10 @@ namespace Origins.Items {
 		public override void UpdateArmorSet(Player player, string set) {
 			switch (set) {
 				case "miner":
+				if (!player.setBonus.Contains(Language.GetTextValue("ArmorSetBonus.Mining"))) {
+					player.setBonus = Language.GetTextValue("ArmorSetBonus.Mining");
+					player.pickSpeed -= 0.1f;
+				}
 				player.setBonus += Language.GetTextValue("Mods.Origins.SetBonuses.Miner");
 				player.GetModPlayer<OriginPlayer>().minerSet = true;
 				return;
