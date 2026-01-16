@@ -1584,6 +1584,36 @@ namespace Origins {
 				}
 			}
 		}
+		public static Vector2 GetHandPosition(this Player player) {
+			if (player.compositeFrontArm.enabled) {
+				return player.GetCompositeArmPosition(false);
+			} else {
+				Vector2 offset = (player.bodyFrame.Y / 56) switch {
+					0 => new(-7, 11),
+					1 => new(-9, -7),
+					2 => new(5, -7),
+					3 => new(8, 7),
+					4 => new(5, 11),
+					5 => new(-9, -7),
+					6 => new(-5, 7),
+					7 => new(-7, 5),
+					8 => new(-7, 5),
+					9 => new(-7, 5),
+					10 => new(-7, 7),
+					11 => new(-5, 7),
+					12 => new(-5, 7),
+					13 => new(-5, 7),
+					14 => new(-3, 5),
+					15 => new(-1, 5),
+					16 => new(-1, 5),
+					17 => new(-3, 7),
+					18 => new(-5, 7),
+					19 => new(-5, 7),
+					_ => default
+				};
+				return player.MountedCenter + offset * new Vector2(player.direction, player.gravDir);
+			}
+		}
 		public static void EnableShadow<TShadow>(this Player player) where TShadow : ShadowType {
 			player.OriginPlayer().activeShadows[ModContent.GetInstance<TShadow>().Type] = true;
 		}

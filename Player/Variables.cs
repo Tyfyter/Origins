@@ -545,6 +545,7 @@ namespace Origins {
 		public float mufflerAmount = 0f;
 		public SlotId weldingTorchSound;
 		public int weldingTorchSoundTime = 0;
+		public bool autohandcannonJammed = false;
 		#endregion
 
 		#region visuals

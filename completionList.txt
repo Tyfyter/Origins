@@ -1139,7 +1139,7 @@ EXPLOSIVE WEAPONS:
 (^) Thermite Launcher
 (^) Torpedo Tube
 
-(#, ^2) Autohandcannon !!!
+(☻) Autohandcannon !!!
 (^) Bomboomstick
 (^) Chlorodynamite
 (^) Chlorophyte Handcannon

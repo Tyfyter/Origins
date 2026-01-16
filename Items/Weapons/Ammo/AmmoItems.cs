@@ -31,7 +31,7 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Metal_Slug_P : ModProjectile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			ID = Type;
+			if (GetType() == typeof(Metal_Slug_P)) ID = Type;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
