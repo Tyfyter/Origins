@@ -675,14 +675,16 @@ namespace Origins {
 			ValidTicket(Player.bank4.item);
 
 			#region Achievements
-			Whole_Blend_Evil blendEvil = ModContent.GetInstance<Whole_Blend_Evil>();
-			blendEvil.Condition.Value = 0;
-			for (int i = 0; i < OriginsSets.Items.EvilMaterialAchievement.Length; i++) {
-				if (OriginsSets.Items.EvilMaterialAchievement[i] && Player.HasItemInInventoryOrOpenVoidBag(i)) blendEvil.Condition.Value++;
-			}
+			if (!NetmodeActive.Server) {
+				Whole_Blend_Evil blendEvil = ModContent.GetInstance<Whole_Blend_Evil>();
+				blendEvil.Condition.Value = 0;
+				for (int i = 0; i < OriginsSets.Items.EvilMaterialAchievement.Length; i++) {
+					if (OriginsSets.Items.EvilMaterialAchievement[i] && Player.HasItemInInventoryOrOpenVoidBag(i)) blendEvil.Condition.Value++;
+				}
 
-			int bannerType = BannerGlobalNPC.NPCToBannerItem[ModContent.NPCType<Defiled_Banner_NPC>()];
-			ModContent.GetInstance<Auto_Immune_Disease>().Condition.Value = Player.CountItemInInventoryOrOpenVoidBag(bannerType, 20);
+				int bannerType = BannerGlobalNPC.NPCToBannerItem[ModContent.NPCType<Defiled_Banner_NPC>()];
+				ModContent.GetInstance<Auto_Immune_Disease>().Condition.Value = Player.CountItemInInventoryOrOpenVoidBag(bannerType, 20);
+			}
 			#endregion
 		}
 		public void ValidTicket(Item[] items) {

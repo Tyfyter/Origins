@@ -667,25 +667,27 @@ namespace Origins {
 			UpdateRoboTailLifeTracker();
 
 			#region Achievements
-			Peat_Moss_Quest peatQuest = ModContent.GetInstance<Peat_Moss_Quest>();
-			if (peatQuest.Started && peatQuest.Completed) ModContent.GetInstance<Peat_Obsession>().Condition.Complete();
+			if (!NetmodeActive.Server) {
+				Peat_Moss_Quest peatQuest = ModContent.GetInstance<Peat_Moss_Quest>();
+				if (peatQuest.Started && peatQuest.Completed) ModContent.GetInstance<Peat_Obsession>().Condition.Complete();
 
-			if (OriginsModIntegrations.CheckAprilFools()) ModContent.GetInstance<Different_Game>().Condition.Complete();
+				if (OriginsModIntegrations.CheckAprilFools()) ModContent.GetInstance<Different_Game>().Condition.Complete();
 
-			if (Player.whoAmI == Main.myPlayer) {
-				if (Player.HasBuff<Adaptability_Buff>() && warriorEmblem && rangerEmblem && sorcererEmblem && summonerEmblem && explosiveEmblem) ModContent.GetInstance<Cheat_Code>().Condition.Complete();
-				(rivenBloodTracker ??= new()).Update();
-				(goingPlacesTracker ??= new()).Update();
-			}
-			True_Hero trueHero = ModContent.GetInstance<True_Hero>();
-			trueHero.Condition.Value = 0;
-			foreach (Quest quest in Quest_Registry.Quests) {
-				if (quest.Mod == Mod && quest.Started && quest.Completed) {
-					trueHero.Condition.Value++;
+				if (Player.whoAmI == Main.myPlayer) {
+					if (Player.HasBuff<Adaptability_Buff>() && warriorEmblem && rangerEmblem && sorcererEmblem && summonerEmblem && explosiveEmblem) ModContent.GetInstance<Cheat_Code>().Condition.Complete();
+					(rivenBloodTracker ??= new()).Update();
+					(goingPlacesTracker ??= new()).Update();
 				}
-			}
+				True_Hero trueHero = ModContent.GetInstance<True_Hero>();
+				trueHero.Condition.Value = 0;
+				foreach (Quest quest in Quest_Registry.Quests) {
+					if (quest.Mod == Mod && quest.Started && quest.Completed) {
+						trueHero.Condition.Value++;
+					}
+				}
 
-			tornRCValid = Math.Min(Math.Max(0, tornRCValid), tornCurrentSeverity);
+				tornRCValid = Math.Min(Math.Max(0, tornRCValid), tornCurrentSeverity);
+			}
 			#endregion
 		}
 		public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource) {
