@@ -6,13 +6,13 @@ using Terraria.ModLoader;
 
 //what is this? bees according to California?
 namespace Origins.Items.Other.Critters {
-	public abstract class Critter_Item<Npc> : ModItem where Npc : ModNPC {
+	public abstract class Critter_Item<TNPC> : ModItem where TNPC : ModNPC {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
 			SafeSetStaticDefaults();
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCapturedCritter(ModContent.NPCType<Npc>());
+			Item.DefaultToCapturedCritter(ModContent.NPCType<TNPC>());
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetStaticDefaults() { }

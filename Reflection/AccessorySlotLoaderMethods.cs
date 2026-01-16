@@ -1,12 +1,12 @@
-﻿using PegasusLib.Reflection;
+﻿#pragma warning disable CS0649
+#pragma warning disable IDE0044
+using PegasusLib.Reflection;
 using System;
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
 using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Reflection {
-	[SuppressMessage("Style", "IDE0044:Add readonly modifier", Justification = "Written to via reflection")]
 	public class AccessorySlotLoaderMethods : ReflectionLoader {
 		static FastFieldInfo<AccessorySlotLoader, int> slotDrawLoopCounter;
 		public static Vector2 CurrentSlotPosition {  get; private set; }

@@ -1559,7 +1559,7 @@ CRITTERS AND FISH:
 (^) Chambersite Bunny
 (^) Chambersite Squirrel
 (^) Cicada 3301
-(#2, ^2) Hyrax !!!
+(☻, @2) Hyrax !!! (missing gores)
 (^) Peppered Moth
 
 (^) Bilemouth
