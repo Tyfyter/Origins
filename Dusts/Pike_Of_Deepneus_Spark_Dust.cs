@@ -2,7 +2,7 @@ using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Dusts {
-	public class Pike_of_Deepneus_Spark_Dust : ModDust {
+	public class Pike_Of_Deepneus_Spark_Dust : ModDust {
 		public override bool Update(Dust dust) {
 			dust.rotation = dust.velocity.ToRotation() - MathHelper.PiOver2;
 			dust.scale *= 0.80f;

@@ -9,15 +9,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Tiles.Other;
 using Origins.Dusts;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Pike_of_Deepneus : ModItem {
+	[LegacyName("Pike_of_Deepneus")]
+	public class Pike_Of_Deepneus : ModItem {
 		public const int baseDamage = 64;
 		public override void SetDefaults() {
 			Item.damage = 160;
 			Item.DamageType = DamageClass.Magic;
-			Item.shoot = ModContent.ProjectileType<Pike_of_Deepneus_P>();
+			Item.shoot = ModContent.ProjectileType<Pike_Of_Deepneus_P>();
 			Item.knockBack = 8;
 			Item.shootSpeed = 12;
 			Item.mana = 34;
@@ -89,9 +89,10 @@ namespace Origins.Items.Weapons.Magic {
 			}
 		}
 	}
-	public class Pike_of_Deepneus_P : ModProjectile, IOutlineDrawer {
-		public override string Texture => "Origins/Items/Weapons/Magic/Pike_of_Deepneus";
-		AutoLoadingAsset<Texture2D> glowTexture = "Origins/Items/Weapons/Magic/Pike_of_Deepneus_Glow";
+	[LegacyName("Pike_of_Deepneus_P")]
+	public class Pike_Of_Deepneus_P : ModProjectile, IOutlineDrawer {
+		public override string Texture => "Origins/Items/Weapons/Magic/Pike_Of_Deepneus";
+		AutoLoadingAsset<Texture2D> glowTexture = "Origins/Items/Weapons/Magic/Pike_Of_Deepneus_Glow";
 		public float squeeze = 1f;
 		public bool ReachedMaxCharge = false;
 		public float chargeProgress = 0f;
@@ -110,7 +111,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Item167, Projectile.position);
 			if (Main.myPlayer == Projectile.owner)
-				Projectile.NewProjectile(null, Projectile.Center, Projectile.oldVelocity * 0.1f, ModContent.ProjectileType<Pike_of_Deepneus_Stuck>(), 0, 0);
+				Projectile.NewProjectile(null, Projectile.Center, Projectile.oldVelocity * 0.1f, ModContent.ProjectileType<Pike_Of_Deepneus_Stuck>(), 0, 0);
 			Dust dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30), 1f);
 			dust.noGravity = false;
 			dust.velocity *= 8f;
@@ -136,13 +137,15 @@ namespace Origins.Items.Weapons.Magic {
 						if (Projectile.ai[1] < 1 && !ReachedMaxCharge) {
 							Projectile.ai[1] += 1 / (Projectile.ai[0] * 5);
 							chargeProgress = Projectile.ai[1];
-
 						} else {
 							ReachedMaxCharge = true;
-							chargeProgress *= 0.995f;
+							chargeProgress *= 0.9985f;
 						}
 					} else {
-						if (ReachedMaxCharge) { SoundEngine.PlaySound(SoundID.Item16, Projectile.position); }
+						if (ReachedMaxCharge) {
+							if (chargeProgress < 0.9f) SoundEngine.PlaySound(SoundID.Item16, Projectile.position);
+							else chargeProgress = 1;
+						}
 						Projectile.ai[0] = 0;
 						Projectile.velocity *= 1 + Projectile.ai[1] * 0.5f;
 						Projectile.netUpdate = true;
@@ -156,7 +159,7 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.rotation = player.itemRotation;
 				Projectile.Center = player.MountedCenter
 					+ new Vector2(player.direction * -4, -6 * player.gravDir)
-					+ OriginExtensions.Vec2FromPolar(player.itemRotation - Pike_of_Deepneus.GetArmDrawAngle(player) * player.gravDir, 16)
+					+ OriginExtensions.Vec2FromPolar(player.itemRotation - Pike_Of_Deepneus.GetArmDrawAngle(player) * player.gravDir, 16)
 					+ Projectile.velocity.SafeNormalize(default) * 36;
 			} else {
 				Projectile.hide = false;
@@ -173,7 +176,7 @@ namespace Origins.Items.Weapons.Magic {
 			modifiers.SourceDamage *= 0.34f + chargeProgress * chargeProgress * .66f;
 			modifiers.Knockback *= 1 + chargeProgress * 0.65f;
 			for (int i = 0; i < 4; i++)
-				Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<Pike_of_Deepneus_Spark_Dust>(), Velocity: -Projectile.velocity.RotatedByRandom(0.35), newColor: Color.Yellow);
+				Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<Pike_Of_Deepneus_Spark_Dust>(), Velocity: -Projectile.velocity.RotatedByRandom(0.35), newColor: Color.Yellow);
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			width = 14;
@@ -205,14 +208,13 @@ namespace Origins.Items.Weapons.Magic {
 			this.DrawOutline();
 			if (Projectile.ai[0] == 0 && chargeProgress >= 0.9f) {
 				Main.EntitySpriteDraw(TextureAssets.Extra[ExtrasID.FallingStar].Value, position, null, Color.Yellow, Projectile.rotation + MathHelper.PiOver2, TextureAssets.Extra[ExtrasID.StarWrath].Size() / 2f - new Vector2(0, 32f), new Vector2(1f, 3f), SpriteEffects.None);
-
 			}
 			Main.EntitySpriteDraw(data);
 			data.texture = glowTexture;
 			data.color = Color.White;
 			Main.EntitySpriteDraw(data);
-			float shineProgress = MathHelper.Lerp(0, 1, (chargeProgress - .9f) * 9f);
-			if (chargeProgress >= .9f) {
+			float shineProgress = MathHelper.Lerp(0, 1, (chargeProgress - 0.9f) * 9f);
+			if (chargeProgress >= 0.9f) {
 				DrawPrettyStarSparkle(SpriteEffects.None, Projectile.Center - Main.screenPosition, Color.Yellow, Color.Turquoise, 0, Vector2.One * 5f * shineProgress, Vector2.One * 2);
 				if (!playedDing) {
 					playedDing = true;
@@ -265,9 +267,9 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 
-	public class Pike_of_Deepneus_Stuck : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Magic/Pike_of_Deepneus";
-		AutoLoadingAsset<Texture2D> glowTexture = "Origins/Items/Weapons/Magic/Pike_of_Deepneus_Glow";
+	public class Pike_Of_Deepneus_Stuck : ModProjectile {
+		public override string Texture => "Origins/Items/Weapons/Magic/Pike_Of_Deepneus";
+		AutoLoadingAsset<Texture2D> glowTexture = "Origins/Items/Weapons/Magic/Pike_Of_Deepneus_Glow";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Daybreak);
 			Projectile.DamageType = DamageClass.Magic;

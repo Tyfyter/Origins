@@ -1626,7 +1626,7 @@ Projectiles: {
 	// Laser_Tag_Laser.DisplayName: Laser Tag Laser
 	// Low_Signal_P.DisplayName: Nerve Signal
 	// Manasynk_P.DisplayName: Manasynk
-	// Pike_of_Deepneus_P.DisplayName: Pike of Deepneus
+	// Pike_Of_Deepneus_P.DisplayName: Pike of Deepneus
 	// Rigged_Cubix_P.DisplayName: Quantum Emission
 	// Seam_Beam_Beam.DisplayName: Seam Beam
 	// Splitsplash_Smol_P.DisplayName: Smaller Amoeba Bubble
@@ -2147,7 +2147,7 @@ Projectiles: {
 	// Laser_Target_Locator_P.DisplayName: Laser Target Locator
 	// Laser_Target_Locator_Marker.DisplayName: Laser Target Locator Marker
 	// Laser_Target_Locator_Missile.DisplayName: Laser Target Locator Missile
-	// Pike_of_Deepneus_Stuck.DisplayName: Pike of Deepneus
+	// Pike_Of_Deepneus_Stuck.DisplayName: Pike of Deepneus
 	// Homing_Rocket_I_Grenade.DisplayName: Homing Grenade I
 	// Homing_Rocket_I_Mine.DisplayName: Homing Mine I
 	// Homing_Rocket_I_Rocket.DisplayName: Homing Rocket I

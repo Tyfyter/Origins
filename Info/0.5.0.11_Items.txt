@@ -677,7 +677,7 @@ Periven
 Personal_Laser_Blade
 Petrified_Prickly_Pear
 Phantom_Fury
-Pike_of_Deepneus
+Pike_Of_Deepneus
 Piledriver
 Pincushion
 Pincushion_Inactive
