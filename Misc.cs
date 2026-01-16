@@ -1,6 +1,7 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Banners;
@@ -5095,6 +5096,32 @@ namespace Origins {
 				vector3 = vector5;
 				vector2 = vector6;
 			}
+		}
+		public static void ExplodeRadius(this Projectile proj, int tileDestructionRadius, bool applyBlastRadiusBonuses = true) {
+			if (applyBlastRadiusBonuses && proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) {
+				tileDestructionRadius *= 16;
+				tileDestructionRadius = (int)global.modifierBlastRadius
+					.CombineWith(Main.player[proj.owner].GetModPlayer<OriginPlayer>().explosiveBlastRadius)
+					.Scale(0.5f)
+					.ApplyTo(tileDestructionRadius);
+				tileDestructionRadius /= 16;
+			}
+			Vector2 center = proj.Center;
+			int i = (int)(center.X / 16);
+			int j = (int)(center.Y / 16);
+			int minI = Math.Max(i - tileDestructionRadius, 0);
+			int maxI = Math.Min(i + tileDestructionRadius, Main.maxTilesX);
+			int minJ = Math.Max(j - tileDestructionRadius, 0);
+			int maxJ = Math.Min(j + tileDestructionRadius, Main.maxTilesY);
+			proj.ExplodeTiles(
+				center,
+				tileDestructionRadius,
+				minI,
+				maxI,
+				minJ,
+				maxJ,
+				proj.ShouldWallExplode(center, tileDestructionRadius, minI, maxI, minJ, maxJ)
+			);
 		}
 	}
 	public static class ContentExtensions {
