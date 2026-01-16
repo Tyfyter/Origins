@@ -13,6 +13,8 @@ SYMBOL KEY:
 $: Needs sound (SFX/music not composed)
 $2: Needs sound (SFX/music is composed but not implemented)
 
+§: Needs other assets (structure data, shaders, etc.)
+
 %: Insufficient planning (item-functionality/NPC-behavior misunderstood or absent from planner)
 %2: Insufficient planning (entirely unplanned and needing concept)
 %3: Insufficient planning (too similar to vanilla counterpart)
@@ -147,9 +149,9 @@ VANILLA MODIFICATIONS:
 
 WORLD GENERATION:
 |---
-(%2, #2) Ashen Factory !!!
-(%2, X) Ashen Outpost !!!
-(%2, X) Ashen Scrapyard !!!
+(§, %2, #2) Ashen Factory !!!
+(§, %2, X) Ashen Outpost !!!
+(§, %2, X) Ashen Scrapyard !!!
 (^) Brine Pool
 (^) Defiled Wastelands
 (^) Fiberglass Undergrowth
