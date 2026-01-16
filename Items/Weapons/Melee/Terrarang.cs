@@ -62,7 +62,13 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.rotation += 0.4f;
 			Projectile.localAI[1] -= 0.25f;
 			if (Projectile.ai[0] != 0) {
-				Projectile.velocity = Vector2.Lerp(Projectile.velocity.ToRotation().AngleTowards(Projectile.Center.DirectionTo(Main.MouseWorld).ToRotation(), 0.1f).ToRotationVector2() * 16, player.DirectionFrom(Projectile.Center) * 12f, MathHelper.Clamp(MathHelper.Lerp(0, 0.1f, MathF.Pow(2, 10 * (Projectile.ai[0] / 36) - 10)), 0, 1));
+				if (Projectile.IsLocallyOwned()) {
+					Projectile.netUpdate |= Projectile.velocity.TrySet(Vector2.Lerp(
+						Projectile.velocity.ToRotation().AngleTowards(Projectile.Center.DirectionTo(Main.MouseWorld).ToRotation(), 0.1f).ToRotationVector2() * 16,
+						player.DirectionFrom(Projectile.Center) * 12f,
+						MathHelper.Clamp(MathHelper.Lerp(0, 0.1f, MathF.Pow(2, 10 * (Projectile.ai[0] / 36) - 10)), 0, 1)
+					));
+				}
 			} else {
 				Projectile.velocity = Projectile.velocity.RotatedByRandom(0.2f);
 			}
@@ -160,7 +166,8 @@ namespace Origins.Items.Weapons.Melee {
 				Main.EntitySpriteDraw(TextureAssets.Projectile[ProjectileID.Excalibur].Value, Projectile.Center - Main.screenPosition, TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4), Color.Lerp(Color.SpringGreen * (1f - trail / 4f), Color.Goldenrod * (1f - trail / 4f), trail / 4f), Projectile.localAI[1] * 2 + MathHelper.ToRadians(trail * 55), TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4).Size() / 2f, 0.4f, Microsoft.Xna.Framework.Graphics.SpriteEffects.FlipHorizontally);
 				Main.EntitySpriteDraw(TextureAssets.Projectile[ProjectileID.Excalibur].Value, Projectile.Center - Main.screenPosition, TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4, 0, 2), Color.Lerp(Color.Yellow * (1f - trail / 4f), Color.SpringGreen * (1f - trail / 4f), trail / 4f), Projectile.localAI[1] * 2 + MathHelper.ToRadians(trail * 55), TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4, 4).Size() / 2f, 0.5f, Microsoft.Xna.Framework.Graphics.SpriteEffects.FlipHorizontally);
 				Main.EntitySpriteDraw(TextureAssets.Projectile[ProjectileID.Excalibur].Value, Projectile.Center - Main.screenPosition, TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4, 0, 3), Color.White * (1f - trail / 4f), Projectile.localAI[1] * 2 + MathHelper.ToRadians(trail * 55), TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4, 4).Size() / 2f, 0.5f, Microsoft.Xna.Framework.Graphics.SpriteEffects.FlipHorizontally);
-				DrawPrettyStarSparkle(1f, SpriteEffects.None, Projectile.Center - Main.screenPosition, Color.SpringGreen, Color.Goldenrod, 1f, 0f, 1f, 2f, 3f, 0f, Vector2.One * 2f, Vector2.One);
+				DrawPrettyStarSparkle(1f, SpriteEffects.None, Projectile.Center - Main.screenPosition, Color.SpringGreen, Color.Goldenrod, 1f, 0f, 1f, 2f, 3f, 0, Vector2.One * 2f, Vector2.One);
+				DrawPrettyStarSparkle(1f, SpriteEffects.None, Projectile.Center - Main.screenPosition, Color.SpringGreen, Color.Goldenrod, 1f, 0f, 1f, 2f, 3f, Projectile.rotation, Vector2.One * 2f, Vector2.One);
 
 			}
 			this.DrawOutline();
