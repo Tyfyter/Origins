@@ -122,25 +122,28 @@ namespace Origins.Items.Weapons.Ranged {
 			for (int i = 0; i < ItemLoader.ItemCount; i++) {
 				Item item = ContentSamples.ItemsByType[i];
 				if (item.ammo != AmmoID.Bullet || AliasedAmmo[item.type] != -1 || ModesByAmmo[item.type] is not null) continue;
-				Main.instance.LoadItem(item.type);
+				if (!NetmodeActive.Server) Main.instance.LoadItem(item.type);
 				Main.QueueMainThreadAction(() => {
-					Asset<Texture2D> texture = TextureAssets.Item[item.type];
-					texture.Wait();
-					Color[] colors = new Color[texture.Width() * texture.Height()];
-					texture.Value.GetData(colors);
+					Asset<Texture2D> texture = default;
 					Color color = default;
-					int mostSaturated = 0;
-					for (int j = 0; j < colors.Length; j++) {
-						if (colors[j].A == 0) continue;
-						int cMin = colors[j].R;
-						int cMid = colors[j].G;
-						int cMax = colors[j].B;
-						MinMax(ref cMin, ref cMid);
-						MinMax(ref cMid, ref cMax);
-						MinMax(ref cMin, ref cMid);
-						if (mostSaturated < cMax - cMin) {
-							mostSaturated = cMax - cMin;
-							color = colors[j];
+					if (!NetmodeActive.Server) {
+						texture = TextureAssets.Item[item.type];
+						texture.Wait();
+						Color[] colors = new Color[texture.Width() * texture.Height()];
+						texture.Value.GetData(colors);
+						int mostSaturated = 0;
+						for (int j = 0; j < colors.Length; j++) {
+							if (colors[j].A == 0) continue;
+							int cMin = colors[j].R;
+							int cMid = colors[j].G;
+							int cMax = colors[j].B;
+							MinMax(ref cMin, ref cMid);
+							MinMax(ref cMid, ref cMax);
+							MinMax(ref cMin, ref cMid);
+							if (mostSaturated < cMax - cMin) {
+								mostSaturated = cMax - cMin;
+								color = colors[j];
+							}
 						}
 					}
 					RegisterAmmoType(item.type, item.shoot, item.damage, item.knockBack, item.shootSpeed, color, texture);
@@ -156,7 +159,7 @@ namespace Origins.Items.Weapons.Ranged {
 			if (tag.TryGet(nameof(mode), out ItemDefinition ammoType) && !ammoType.IsUnloaded) mode = ammoType.Type;
 		}
 		public static void RegisterAmmoType(int itemType, int projectileType, float damage, float knockback, float shootSpeed, Color color, Asset<Texture2D> texture = null, LocalizedText Description = null) {
-			if (!Main.dedServ) {
+			if (!NetmodeActive.Server) {
 				if (texture is null) Main.instance.LoadItem(itemType);
 				texture ??= TextureAssets.Item[itemType];
 			}
