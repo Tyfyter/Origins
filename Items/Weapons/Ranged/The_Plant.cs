@@ -156,7 +156,10 @@ namespace Origins.Items.Weapons.Ranged {
 			if (tag.TryGet(nameof(mode), out ItemDefinition ammoType) && !ammoType.IsUnloaded) mode = ammoType.Type;
 		}
 		public static void RegisterAmmoType(int itemType, int projectileType, float damage, float knockback, float shootSpeed, Color color, Asset<Texture2D> texture = null, LocalizedText Description = null) {
-			if (texture is null) Main.instance.LoadItem(itemType);
+			if (!Main.dedServ) {
+				if (texture is null) Main.instance.LoadItem(itemType);
+				texture ??= TextureAssets.Item[itemType];
+			}
 			ModesByAmmo[itemType] = new(
 				itemType,
 				projectileType,
@@ -164,7 +167,7 @@ namespace Origins.Items.Weapons.Ranged {
 				knockback,
 				shootSpeed,
 				color,
-				texture ?? TextureAssets.Item[itemType],
+				texture,
 				Description ?? LocalizationMethods._text.GetValue(Lang.GetTooltip(itemType))
 			);
 		}
