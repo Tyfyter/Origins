@@ -1665,7 +1665,7 @@ CONSUMABLES:
 (^) Vanilla Shake
 
 (X) Catalyst Cell
-(#2, ^2) Distress Beacon !!!
+(☻) Distress Beacon !!!
 (^) Nerve Impulse Manipulator
 (^) Lost Picture Frame
 (X) Quantum Cell

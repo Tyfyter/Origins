@@ -26,7 +26,7 @@ namespace Origins.Items.Other.Consumables {
 		public override bool? UseItem(Player player) {
 			if (player.whoAmI == Main.myPlayer) {
 				SoundEngine.PlaySound(SoundID.Roar, player.Center);
-				player.SpawnBossOn(ModContent.NPCType<Trenchmaker>());
+				new Spawn_Trenchmaker_Action(player).Perform();
 			}
 			return true;
 		}

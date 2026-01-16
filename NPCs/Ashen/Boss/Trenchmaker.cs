@@ -9,11 +9,13 @@ using Origins.Items.Tools.Wiring;
 using Origins.Items.Vanity.BossMasks;
 using Origins.LootConditions;
 using Origins.Music;
+using Origins.Projectiles;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.BossDrops;
 using Origins.World.BiomeData;
 using PegasusLib;
 using PegasusLib.Graphics;
+using PegasusLib.Networking;
 using ReLogic.Content;
 using ReLogic.Utilities;
 using System;
@@ -29,6 +31,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static Origins.NPCs.Ashen.Boss.Trenchmaker;
 using static Origins.NPCs.StateBossMethods<Origins.NPCs.Ashen.Boss.Trenchmaker>;
 using static Terraria.Utilities.NPCUtils;
 
@@ -174,7 +177,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void PostAI() {
 			if (!NPC.noGravity) return;
-			NPC.velocity.Y += 0.4f;
+			NPC.velocity.Y += 0.4f * NPC.GravityMultiplier.Value;
 			//DoCollision(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, true);
 			for (int i = 0; i < legs.Length; i++) UpdateLeg(i);
 			NPC.position += hoikOffset;
@@ -526,6 +529,77 @@ namespace Origins.NPCs.Ashen.Boss {
 			public bool CanDrop(DropAttemptInfo info) => !info.player.HasItemInAnyInventory(IsScrewdriver);
 			public bool CanShowItemDropInUI() => true;
 			public string GetConditionDescription() => Language.GetTextValue("Mods.Origins.Conditions.NoDuplicates");
+		}
+	}
+	public record class Spawn_Trenchmaker_Action(Player Player) : SyncedAction {
+		public override bool ServerOnly => true;
+		public Spawn_Trenchmaker_Action() : this(default(Player)) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			Player = Main.player[reader.ReadByte()]
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write((byte)Player.whoAmI);
+		}
+		protected override void Perform() {
+			//TODO: trigger building sequence/fly in as appropriate
+
+			//last resort:
+			(NPC.NewNPCDirect(
+				Entity.GetSource_NaturalSpawn(),
+				(int)Player.Center.X,
+				0,
+				ModContent.NPCType<Trenchmaker>()
+			).ModNPC as Trenchmaker).SetAIState(StateIndex<Spawning_Jets_State>());
+		}
+		public class Spawning_Jets_State : AIState {
+			public override void DoAIState(Trenchmaker boss) {
+				NPC npc = boss.NPC;
+				TargetSearchResults searchResults = SearchForTarget(npc, TargetSearchFlag.Players);
+				if (searchResults.FoundTarget) {
+					npc.target = searchResults.NearestTargetIndex;
+					npc.targetRect = searchResults.NearestTargetHitbox;
+					if (npc.ShouldFaceTarget(ref searchResults)) npc.FaceTarget();
+				}
+				if (boss.legs[0].CurrentAnimation is not Jump_Air_Animation) {
+					if (npc.ai[1] > 12) {
+						boss.GetLegPositions(boss.legs[0], out _, out _, out Vector2 footPos);
+						npc.SpawnProjectile(null,
+							footPos,
+							Vector2.Zero,
+							ModContent.ProjectileType<Trenchmaker_Stomp_P>(),
+							20,
+							0,
+							ai1: npc.direction
+						);
+					}
+					if (npc.ai[0] > 0) {
+						npc.frame.Y = 0;
+						npc.frameCounter = 0;
+						boss.StartIdle();
+					}
+					return;
+				} else npc.ai[0] = 1;
+				npc.DoFrames(4, 1..7);
+				const float h_distance = 16 * 5;
+				Vector2 diff = npc.targetRect.Center() - npc.Center;
+				diff.X = Math.Max(Math.Abs(diff.X) - h_distance, 0);
+				if (diff.Y > diff.X) {
+					npc.velocity.Y -= 0.33f;
+				} else {
+					npc.GravityMultiplier *= 0;
+					if (diff.Y < 0) npc.velocity.Y -= 0.1f;
+				}
+				if (diff.X > h_distance) {
+					npc.velocity.X += npc.direction * 0.01f;
+				}
+				npc.ai[1] = npc.velocity.Y;
+			}
+			public override void StartAIState(Trenchmaker boss) {
+				Jump_Air_Animation animation = ModContent.GetInstance<Jump_Air_Animation>();
+				for (int i = 0; i < boss.legs.Length; i++) {
+					boss.legs[i].CurrentAnimation = animation;
+				}
+			}
 		}
 	}
 }

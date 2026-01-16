@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.NPCs.Ashen.Boss;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -138,12 +139,9 @@ namespace Origins.Tiles.Ashen {
 				}
 				AchievementsHelper.NotifyProgressionEvent(7);
 
-				int bossHeadType = NPCID.MisterStabby;// ModContent.NPCType<World_Cracker_Head>();
 				if (WorldGen.shadowOrbCount >= 3) {
-					if (!NPC.AnyNPCs(bossHeadType)) {
-						WorldGen.shadowOrbCount = 0;
-						Main.LocalPlayer.SpawnBossOn(bossHeadType);
-					}
+					new Spawn_Trenchmaker_Action(dropInfo.player).Perform();
+					WorldGen.shadowOrbCount = 0;
 				}
 			}
 			SoundEngine.PlaySound(SoundID.NPCDeath1, new Vector2(i * 16, j * 16));
