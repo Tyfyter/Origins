@@ -100,6 +100,7 @@ namespace Origins {
 			public static SoundStyle ShimmerConstructAmbienceIntro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_Start", SoundType.Ambient);
 			public static SoundStyle ShimmerConstructAmbienceLoop = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_Mid", SoundType.Ambient);
 			public static SoundStyle ShimmerConstructAmbienceOutro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_End", SoundType.Ambient);
+			public static readonly SoundStyle Glorp = new($"Terraria/Sounds/Splash_2") { Volume = 0.75f, PitchVariance = 0.2f, MaxInstances = 0 };
 
 			public static SoundStyle Bonk = SoundID.Roar;
 			public static SoundStyle BikeHorn = new("Origins/Sounds/Custom/BikeHorn", SoundType.Sound) {

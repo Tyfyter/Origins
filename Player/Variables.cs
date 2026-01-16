@@ -636,6 +636,9 @@ namespace Origins {
 		public float tornRCStart = 0;
 		public float tornRCValid = 1;
 		public float tornRCEnd = 0;
+		HashSet<Point> touchedMurkySludges = [];
+		HashSet<Point> touchingMurkySludges = [];
+		float murkySludgeTouchTimer = 0;
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
 			oldBonuses = 0;

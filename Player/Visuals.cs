@@ -10,12 +10,14 @@ using Origins.Items.Vanity.Dev.PlagueTexan;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.Layers;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
@@ -246,6 +248,28 @@ namespace Origins {
 				Player.itemAnimation = itemAnimation;
 			}
 			ShadowType.Draw(camera, Player);
+		}
+
+		internal void UpdateMurkySludgeSounds() {
+			int sludge = ModContent.TileType<Murky_Sludge>();
+			int grass = ModContent.TileType<Ashen_Murky_Sludge_Grass>();
+			Rectangle hitbox = Player.Hitbox;
+			hitbox.Inflate(1, 1);
+			if (hitbox.OverlapsAnyTiles(out List<Point> intersectingTiles)) {
+				for (int i = 0; i < intersectingTiles.Count; i++) {
+					Tile tile = Main.tile[intersectingTiles[i]];
+					if (tile.HasTile && (tile.TileType == sludge || tile.TileType == grass)) {
+						touchingMurkySludges.Add(intersectingTiles[i]);
+					}
+				}
+			}
+			if ((murkySludgeTouchTimer == 0 || touchingMurkySludges.Count == 0) && !touchingMurkySludges.SetEquals(touchedMurkySludges)) {
+				SoundEngine.PlaySound(Origins.Sounds.Glorp, Player.Bottom);
+				murkySludgeTouchTimer = 15 - Math.Clamp(Math.Abs(Player.velocity.X) - 2, 0, 5);
+			}
+			murkySludgeTouchTimer.Cooldown();
+			Utils.Swap(ref touchingMurkySludges, ref touchedMurkySludges);
+			touchingMurkySludges.Clear();
 		}
 	}
 	public class VisualEffectPlayer : ModPlayer {
