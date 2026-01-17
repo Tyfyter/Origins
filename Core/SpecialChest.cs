@@ -1,9 +1,7 @@
-﻿using Humanizer;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
-using Origins.Tiles;
-using Origins.Tiles.Dev;
 using PegasusLib.Networking;
+using rail;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,86 +13,69 @@ using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI;
-using static Origins.Core.SpecialChest;
 
 namespace Origins.Core {
 	public class SpecialChest : ILoadable {
 		public const int chestID = -8479;
+		public static ChestData CurrentChest { get; internal set; }
 		public static void OpenChest(int x, int y) {
 			Tile tile = Main.tile[x, y];
 			int style = TileObjectData.GetTileStyle(tile);
 			if (style >= 0) TileUtils.GetMultiTileTopLeft(x, y, TileObjectData.GetTileData(tile.TileType, style), out x, out y);
-			if (ModContent.GetInstance<SpecialChestSystem>().tileEntities.ContainsKey(new((short)x, (short)y))) {
-				Main.LocalPlayer.chest = chestID;
+			Player player = Main.LocalPlayer;
+			if (player.chest == chestID && player.chestX == x && player.chestY == y) {
+				player.chest = -1;
+				if (OriginsSets.Tiles.ChestSoundOverride[tile.TileType].close == default) SoundEngine.PlaySound(SoundID.MenuClose);
+				CurrentChest = default;
+				return;
+			}
+			if (SpecialChestSystem.TryGetChest(x, y) is ChestData chest) {
+				player.chest = chestID;
 				Main.playerInventory = true;
 				Main.editChest = false;
 				Main.npcChatText = "";
 				Main.ClosePlayerChat();
 				Main.chatText = "";
-				Main.LocalPlayer.chestX = x;
-				Main.LocalPlayer.chestY = y;
-				ModContent.GetInstance<SpecialChestSystem>().chestUI.SetState(new SpecialChestUI((short)x, (short)y));
+				player.chestX = x;
+				player.chestY = y;
+				ModContent.GetInstance<SpecialChestSystem>().chestUI.SetState(new SpecialChestUI());
+				Recipe.FindRecipes();
+				CurrentChest = chest;
 			}
 		}
 		static bool sendChestSync = false;
 		public static void MarkConsumedItem() => sendChestSync = true;
 		void ILoadable.Load(Mod mod) {
 			IL_ChestUI.Draw += IL_ChestUI_Draw;
-			IL_ItemSlot.OverrideHover_ItemArray_int_int += IL_ItemSlot_OverrideHover_ItemArray_int_int;
-			IL_ItemSlot.LeftClick_SellOrTrash += IL_ItemSlot_LeftClick_SellOrTrash;
+			On_ItemSlot.OverrideHover_ItemArray_int_int += On_ItemSlot_OverrideHover_ItemArray_int_int;
+			On_ItemSlot.OverrideLeftClick += On_ItemSlot_OverrideLeftClick;
+			On_ItemSlot.LeftClick_SellOrTrash += On_ItemSlot_LeftClick_SellOrTrash;
 			On_Player.HandleBeingInChestRange += On_Player_HandleBeingInChestRange;
 			On_Recipe.CollectItems_ItemArray_int += On_Recipe_CollectItems_ItemArray_int;
 			On_Recipe.Create += On_Recipe_Create;
+			static bool On_ItemSlot_LeftClick_SellOrTrash(On_ItemSlot.orig_LeftClick_SellOrTrash orig, Item[] inv, int context, int slot) {
+				if (Main.LocalPlayer.chest == chestID) return false;
+				return orig(inv, context, slot);
+			}
 			static void On_Player_HandleBeingInChestRange(On_Player.orig_HandleBeingInChestRange orig, Player self) {
-				if (self.chest == chestID && ModContent.GetInstance<SpecialChestSystem>().tileEntities.TryGetValue(new(self.chestX, self.chestY), out ChestData chest)) {
+				if (self.chest == chestID && SpecialChestSystem.TryGetChest(self.chestX, self.chestY) is ChestData chest) {
 					chest.HandleBeingInChestRange(self);
 					return;
 				}
 				orig(self);
 			}
-			static void IL_ItemSlot_LeftClick_SellOrTrash(ILContext il) {
-				ILCursor c = new(il);
-				while (c.TryGotoNext(MoveType.After,
-					i => i.MatchLdsfld<Main>(nameof(Main.player)),
-					i => i.MatchLdsfld<Main>(nameof(Main.myPlayer)),
-					i => i.MatchLdelemRef(),
-					i => i.MatchLdfld<Player>(nameof(Player.chest)),
-					i => i.MatchLdcI4(-1),
-					i => i.MatchCeq()
-				)) {
-					c.EmitLdsfld(typeof(Main).GetField(nameof(Main.player)));
-					c.EmitLdsfld(typeof(Main).GetField(nameof(Main.myPlayer)));
-					c.EmitLdelemRef();
-					c.EmitLdfld(typeof(Player).GetField(nameof(Player.chest)));
-					c.EmitLdcI4(chestID);
-					c.EmitCeq();
-					c.EmitOr();
-				}
-			}
 
-			static void IL_ItemSlot_OverrideHover_ItemArray_int_int(ILContext il) {
-				ILCursor c = new(il);
-				ILLabel label = default;
-				while (c.TryGotoNext(MoveType.After,
-					i => i.MatchLdsfld<Main>(nameof(Main.player)),
-					i => i.MatchLdsfld<Main>(nameof(Main.myPlayer)),
-					i => i.MatchLdelemRef(),
-					i => i.MatchLdfld<Player>(nameof(Player.chest)),
-					i => i.MatchLdcI4(-1),
-					i => i.MatchBeq(out label)
-				)) {
-					c.EmitLdsfld(typeof(Main).GetField(nameof(Main.player)));
-					c.EmitLdsfld(typeof(Main).GetField(nameof(Main.myPlayer)));
-					c.EmitLdelemRef();
-					c.EmitLdfld(typeof(Player).GetField(nameof(Player.chest)));
-					c.EmitLdcI4(chestID);
-					c.EmitBeq(label);
-				}
+			static void On_ItemSlot_OverrideHover_ItemArray_int_int(On_ItemSlot.orig_OverrideHover_ItemArray_int_int orig, Item[] inv, int context, int slot) {
+				if (Main.LocalPlayer.chest == chestID && CurrentChest.OverrideHover(inv, context, slot)) return;
+				orig(inv, context, slot);
+			}
+			static bool On_ItemSlot_OverrideLeftClick(On_ItemSlot.orig_OverrideLeftClick orig, Item[] inv, int context, int slot) {
+				if (Main.LocalPlayer.chest == chestID && CurrentChest.OverrideLeftClick(inv, context, slot)) return true;
+				return orig(inv, context, slot);
 			}
 			static void IL_ChestUI_Draw(ILContext il) {
 				ILCursor c = new(il);
@@ -233,6 +214,64 @@ namespace Origins.Core {
 			/// Remember to call <see cref="MarkConsumedItem"/> if the item being consumed should produce changes visible to other players, such as if this is a container
 			/// </summary>
 			public virtual void CraftWithItem(Item item, int index) => MarkConsumedItem();
+			public virtual bool CanDestroy() => true;
+			/// <summary>
+			/// Return <see cref="true"/> to skip the vanilla code
+			/// </summary>
+			public virtual bool OverrideHover(Item[] inv, int context, int slot) => false;
+			public virtual bool OverrideLeftClick(Item[] inv, int context, int slot) => false;
+			public bool TryPlacingInChest(Item item, bool justCheck) {
+				Item[] items = Items();
+				bool sync = false;
+				bool success = false;
+				for (int i = 0; i < items.Length; i++) {
+					if (items[i].stack >= items[i].maxStack || item.type != items[i].type || !ItemLoader.CanStack(items[i], item)) {
+						continue;
+					}
+					int depositedCount = item.stack;
+					if (item.stack + items[i].stack > items[i].maxStack) {
+						depositedCount = items[i].maxStack - items[i].stack;
+					}
+					if (justCheck) {
+						success = success || depositedCount > 0;
+						break;
+					}
+					ItemLoader.StackItems(items[i], item, out _);
+					SoundEngine.PlaySound(SoundID.Grab);
+					if (item.stack <= 0) {
+						item.SetDefaults();
+						sync = true;
+						break;
+					}
+					if (items[i].type == ItemID.None) {
+						items[i] = item.Clone();
+						item.SetDefaults();
+					}
+					sync = true;
+				}
+				if (item.stack > 0) {
+					for (int i = 0; i < items.Length; i++) {
+						if (items[i].stack != 0) {
+							continue;
+						}
+						if (justCheck) {
+							success = true;
+							break;
+						}
+						SoundEngine.PlaySound(SoundID.Grab);
+						items[i] = item.Clone();
+						item.SetDefaults();
+						ItemSlot.AnnounceTransfer(new ItemSlot.ItemTransferInfo(items[i], 0, 3));
+						sync = true;
+						break;
+					}
+				}
+				if (sync && !justCheck) {
+					Player player = Main.LocalPlayer;
+					new Set_Special_Chest_Action(new(player.chestX, player.chestY), this).Perform();
+				}
+				return success;
+			}
 			public abstract record class Storage_Container_Data(Item[] Inventory) : ChestData() {
 				public abstract int Capacity { get; }
 				public abstract int Width { get; }
@@ -245,7 +284,7 @@ namespace Origins.Core {
 				}
 				public override Item[] Items(bool forCrafting = false) => Inventory;
 				protected override ChestData LoadData(TagCompound tag) => this with {
-					Inventory = tag.SafeGet("Items", new List<Item>() { new(), new(), new() }).ToArray()
+					Inventory = tag.SafeGet("Items", Enumerable.Repeat(0, Capacity).Select(_ => new Item()).ToList()).ToArray()
 				};
 				protected override void SaveData(TagCompound tag) => tag["Items"] = Inventory.ToList();
 				internal override ChestData NetReceive(BinaryReader reader) => this with {
@@ -263,6 +302,33 @@ namespace Origins.Core {
 						Recipe.FindRecipes();
 					}
 				}
+				public override bool CanDestroy() {
+					Item[] items = Items();
+					for (int i = 0; i < items.Length; i++) {
+						if (items[i]?.IsAir == false) return false;
+					}
+					return true;
+				}
+				public override bool OverrideHover(Item[] inv, int context, int slot) {
+					switch (context) {
+						case ItemSlot.Context.InventoryItem:
+						case ItemSlot.Context.InventoryCoin:
+						case ItemSlot.Context.InventoryAmmo:
+						if (ItemSlot.ShiftInUse && TryPlacingInChest(inv[slot], true)) {
+							Main.cursorOverride = CursorOverrideID.InventoryToChest;
+						}
+						return true;
+					}
+					return false;
+				}
+				public override bool OverrideLeftClick(Item[] inv, int context, int slot) {
+					if (ItemSlot.ShiftInUse && PlayerLoader.ShiftClickSlot(Main.LocalPlayer, inv, context, slot)) return true;
+					if (Main.cursorOverride == 9) {
+						TryPlacingInChest(inv[slot], false);
+						return true;
+					}
+					return false;
+				}
 			}
 			public sealed record class Invalid : ChestData {
 				protected override bool IsValidSpot(Point position) => false;
@@ -275,7 +341,11 @@ namespace Origins.Core {
 		}
 		public static void SyncToPlayer(int player) => ModContent.GetInstance<SpecialChestSystem>().SyncToPlayer(player);
 		class SpecialChestSystem : ModSystem {
-			public static ChestData TryGetChest(int i, int j) => ModContent.GetInstance<SpecialChestSystem>().tileEntities.TryGetValue(new(i, j), out ChestData chest) ? chest : null;
+			public static ChestData TryGetChest(int i, int j) {
+				Player player = Main.LocalPlayer;
+				if (player.chest == chestID && player.chestX == i && player.chestY == j) return CurrentChest;
+				return ModContent.GetInstance<SpecialChestSystem>().tileEntities.TryGetValue(new(i, j), out ChestData chest) ? chest : null;
+			}
 			public UserInterface chestUI = new();
 			public override void UpdateUI(GameTime gameTime) {
 				if (chestUI.CurrentState is not null && (!Main.playerInventory || Main.LocalPlayer.chest != chestID)) {
@@ -319,6 +389,14 @@ namespace Origins.Core {
 					.ToDictionary();
 			}
 		}
+		class PreventDestruction : GlobalTile {
+			public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged) {
+				Tile tile = Main.tile[i, j];
+				int style = TileObjectData.GetTileStyle(tile);
+				if (style >= 0) TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(tile.TileType, style), out i, out j);
+				return SpecialChestSystem.TryGetChest(i, j)?.CanDestroy() ?? true;
+			}
+		}
 		public record class Set_Special_Chest_Action(Point16 Position, ChestData Data) : SyncedAction {
 			public Set_Special_Chest_Action() : this(default, default) { }
 			public override SyncedAction NetReceive(BinaryReader reader) => this with {
@@ -332,15 +410,15 @@ namespace Origins.Core {
 			}
 			protected override void Perform() {
 				ModContent.GetInstance<SpecialChestSystem>().tileEntities[Position] = Data;
+				Player localPlayer = Main.LocalPlayer;
+				if (localPlayer.chest == chestID && localPlayer.chestX == Position.X && localPlayer.chestY == Position.Y) CurrentChest = Data;
 			}
 		}
-		public class SpecialChestUI(short x, short y) : UIState {
+		public class SpecialChestUI() : UIState {
 			public override void OnInitialize() {
-				if (ModContent.GetInstance<SpecialChestSystem>().tileEntities.TryGetValue(new(x, y), out ChestData contents)) {
-					Append(new SpecialChestElement(contents));
-				}
+				Append(new SpecialChestElement());
 			}
-			public class SpecialChestElement(ChestData data) : UIElement {
+			public class SpecialChestElement : UIElement {
 				UIScrollbar scrollbar;
 				public override void OnInitialize() {
 					Left.Set(51f, 0);
@@ -359,16 +437,16 @@ namespace Origins.Core {
 				}
 				public override void Update(GameTime gameTime) {
 					base.Update(gameTime);
-					data.UpdateUI(this);
-					scrollbar.Left.Pixels = data.ItemCount > 40 ? 0 : -Main.screenWidth;
-					scrollbar.SetView(56 * 4, MathF.Ceiling(data.ItemCount / 10f) * 56);
+					CurrentChest.UpdateUI(this);
+					scrollbar.Left.Pixels = CurrentChest.ItemCount > 40 ? 0 : -Main.screenWidth;
+					scrollbar.SetView(56 * 4, MathF.Ceiling(CurrentChest.ItemCount / 10f) * 56);
 				}
 				protected override void DrawSelf(SpriteBatch spriteBatch) {
 					float inventoryScale = Main.inventoryScale;
 					Main.inventoryScale = 0.755f;
 					Player player = Main.LocalPlayer;
 					int viewPos = scrollbar is null ? 0 : (int)(scrollbar.ViewPosition / 56);
-					Item[] items = data.Items();
+					Item[] items = CurrentChest.Items();
 					bool didAnything = false;
 					for (int i = 0; i < 10; i++) {
 						for (int j = 0; j < 4; j++) {
@@ -378,12 +456,12 @@ namespace Origins.Core {
 							Item item = slot >= items.Length ? new() : items[slot].Clone();
 							if (!PlayerInput.IgnoreMouseInterface && Utils.FloatIntersect(Main.mouseX, Main.mouseY, 0f, 0f, xPos, yPos, TextureAssets.InventoryBack.Width() * Main.inventoryScale, TextureAssets.InventoryBack.Height() * Main.inventoryScale)) {
 								player.mouseInterface = true;
-								didAnything |= data.InteractWithItem(item, slot);
+								didAnything |= CurrentChest.InteractWithItem(item, slot);
 							}
-							data.DrawItemSlot(spriteBatch, new(xPos, yPos), item, slot);
+							CurrentChest.DrawItemSlot(spriteBatch, new(xPos, yPos), item, slot);
 						}
 					}
-					if (didAnything) new Set_Special_Chest_Action(new(Main.LocalPlayer.chestX, Main.LocalPlayer.chestY), data).Perform();
+					if (didAnything) new Set_Special_Chest_Action(new(Main.LocalPlayer.chestX, Main.LocalPlayer.chestY), CurrentChest).Perform();
 					Main.inventoryScale = inventoryScale;
 				}
 				public override void ScrollWheel(UIScrollWheelEvent evt) {

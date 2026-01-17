@@ -3507,7 +3507,7 @@ namespace Origins {
 		public static void WriteCompressedItemArray(this BinaryWriter writer, Item[] items) {
 			writer.Write((int)items.Length);
 			BitArray itemsExist = new(items.Length);
-			for (int i = 0; i < items.Length; i++) itemsExist[i] = !(items[i]?.IsAir ?? true);
+			for (int i = 0; i < items.Length; i++) itemsExist[i] = items[i]?.IsAir == false;
 			Utils.SendBitArray(itemsExist, writer);
 			for (int i = 0; i < items.Length; i++) {
 				if (itemsExist[i]) ItemIO.Send(items[i], writer, true);

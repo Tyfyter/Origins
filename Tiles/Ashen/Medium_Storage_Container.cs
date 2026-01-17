@@ -47,9 +47,17 @@ namespace Origins.Tiles.Ashen {
 			OriginsSets.Tiles.ChestSoundOverride[Type] = (Origins.Sounds.MetalBoxOpen, default);
 		}
 		static void OffsetBookcaseCollision(Tile tile, ref float y, ref int height) {
-			int platformHeight = 2;
-			if ((tile.TileFrameX / 18) / 4 > 2) platformHeight = 4;
-			if ((tile.TileFrameY / 18) % platformHeight != 0) height = -1600;
+			switch ((tile.TileFrameX / 18) / 4) {
+				case 0:
+				case 1:
+				if ((tile.TileFrameY / 18) % 2 != 0) height = -1600;
+				else if (tile.TileFrameY != 0) y -= 4;
+				break;
+
+				case 2:
+				if (tile.TileFrameY != 0) height = -1600;
+				break;
+			}
 		}
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 		public override void PlaceInWorld(int i, int j, Item item) {
