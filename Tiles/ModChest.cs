@@ -1,14 +1,17 @@
-﻿using System;
+﻿using Origins.Core;
+using Origins.World.BiomeData;
+using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.ObjectInteractions;
-using Terraria.ModLoader;
-using Terraria.ID;
 using Terraria.DataStructures;
-using Terraria.ObjectData;
 using Terraria.Enums;
+using Terraria.GameContent.ObjectInteractions;
+using Terraria.ID;
 using Terraria.Localization;
-using Origins.World.BiomeData;
+using Terraria.ModLoader;
+using Terraria.ObjectData;
+using static Origins.Core.SpecialChest;
+using static Origins.Tiles.Ashen.Medium_Storage_Container;
 
 namespace Origins.Tiles {
 	public abstract class ModChest : ModTile {
@@ -157,6 +160,43 @@ namespace Origins.Tiles {
 			top = j;
 			if (tile.TileFrameX % 36 != 0) left--;
 			if (tile.TileFrameY != 0) top--;
+		}
+	}
+	public abstract class ModSpecialChest : ModTile {
+		public abstract ChestData CreateChestData();
+		public sealed override void SetStaticDefaults() {
+			Main.tileSpelunker[Type] = true;
+			Main.tileShine2[Type] = true;
+			Main.tileShine[Type] = 12000;
+			Main.tileFrameImportant[Type] = true;
+			Main.tileNoAttach[Type] = true;
+			Main.tileOreFinderPriority[Type] = 500;
+			TileID.Sets.HasOutlines[Type] = true;
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+			TileObjectData.newTile.Origin = new Point16(1, 3);
+			TileObjectData.newTile.Width = 4;
+			TileObjectData.newTile.SetHeight(4);
+			TileObjectData.newTile.AnchorInvalidTiles = [127];
+			TileObjectData.newTile.StyleHorizontal = true;
+			TileObjectData.newTile.LavaDeath = false;
+			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+			ModifyTileData();
+			TileObjectData.addTile(Type);
+			_ = DefaultContainerName(0, 0);
+			Main.tileSolid[Type] = true;
+			Main.tileSolidTop[Type] = true;
+			Main.tileNoAttach[Type] = false;
+			AdjTiles = [TileID.Containers];
+		}
+		public virtual void ModifyTileData() { }
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
+		public override void PlaceInWorld(int i, int j, Item item) {
+			TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out i, out j);
+			new Set_Special_Chest_Action(new(i, j), CreateChestData()).Perform();
+		}
+		public override bool RightClick(int i, int j) {
+			SpecialChest.OpenChest(i, j);
+			return true;
 		}
 	}
 }

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using PegasusLib.Networking;
-using rail;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -175,7 +174,7 @@ namespace Origins.Core {
 			}
 			protected abstract void SaveData(TagCompound tag);
 			protected abstract ChestData LoadData(TagCompound tag);
-			protected abstract bool IsValidSpot(Point position);
+			protected internal abstract bool IsValidSpot(Point position);
 			public virtual void UpdateUI(SpecialChestUI.SpecialChestElement ui) { }
 			public virtual int ItemCount => Items().Length;
 			public virtual string MapName => "";
@@ -272,71 +271,71 @@ namespace Origins.Core {
 				}
 				return success;
 			}
-			public abstract record class Storage_Container_Data(Item[] Inventory) : ChestData() {
-				public abstract int Capacity { get; }
-				public abstract int Width { get; }
-				public abstract int Height { get; }
-				public Storage_Container_Data() : this([]) {
-					Item[] inventory = Inventory;
-					Array.Resize(ref inventory, Capacity);
-					for (int i = 0; i < inventory.Length; i++) inventory[i] ??= new();
-					Inventory = inventory;
-				}
-				public override Item[] Items(bool forCrafting = false) => Inventory;
-				protected override ChestData LoadData(TagCompound tag) => this with {
-					Inventory = tag.SafeGet("Items", Enumerable.Repeat(0, Capacity).Select(_ => new Item()).ToList()).ToArray()
-				};
-				protected override void SaveData(TagCompound tag) => tag["Items"] = Inventory.ToList();
-				internal override ChestData NetReceive(BinaryReader reader) => this with {
-					Inventory = reader.ReadCompressedItemArray()
-				};
-				internal override void NetSend(BinaryWriter writer) {
-					writer.WriteCompressedItemArray(Inventory);
-				}
-				public override void HandleBeingInChestRange(Player player) {
-					if (!player.IsInInteractionRange(Width, Height)) {
-						if (player.chest != -1) {
-							SoundEngine.PlaySound(SoundID.MenuClose);
-						}
-						player.chest = -1;
-						Recipe.FindRecipes();
-					}
-				}
-				public override bool CanDestroy() {
-					Item[] items = Items();
-					for (int i = 0; i < items.Length; i++) {
-						if (items[i]?.IsAir == false) return false;
-					}
-					return true;
-				}
-				public override bool OverrideHover(Item[] inv, int context, int slot) {
-					switch (context) {
-						case ItemSlot.Context.InventoryItem:
-						case ItemSlot.Context.InventoryCoin:
-						case ItemSlot.Context.InventoryAmmo:
-						if (ItemSlot.ShiftInUse && TryPlacingInChest(inv[slot], true)) {
-							Main.cursorOverride = CursorOverrideID.InventoryToChest;
-						}
-						return true;
-					}
-					return false;
-				}
-				public override bool OverrideLeftClick(Item[] inv, int context, int slot) {
-					if (ItemSlot.ShiftInUse && PlayerLoader.ShiftClickSlot(Main.LocalPlayer, inv, context, slot)) return true;
-					if (Main.cursorOverride == 9) {
-						TryPlacingInChest(inv[slot], false);
-						return true;
-					}
-					return false;
-				}
-			}
 			public sealed record class Invalid : ChestData {
-				protected override bool IsValidSpot(Point position) => false;
+				protected internal override bool IsValidSpot(Point position) => false;
 				public override Item[] Items(bool forCrafting = false) => [];
 				protected override ChestData LoadData(TagCompound tag) => this;
 				protected override void SaveData(TagCompound tag) { }
 				internal override ChestData NetReceive(BinaryReader reader) => this;
 				internal override void NetSend(BinaryWriter writer) { }
+			}
+		}
+		public abstract record class Storage_Container_Data(Item[] Inventory) : ChestData() {
+			public abstract int Capacity { get; }
+			public abstract int Width { get; }
+			public abstract int Height { get; }
+			public Storage_Container_Data() : this([]) {
+				Item[] inventory = Inventory;
+				Array.Resize(ref inventory, Capacity);
+				for (int i = 0; i < inventory.Length; i++) inventory[i] ??= new();
+				Inventory = inventory;
+			}
+			public override Item[] Items(bool forCrafting = false) => Inventory;
+			protected override ChestData LoadData(TagCompound tag) => this with {
+				Inventory = tag.SafeGet("Items", Enumerable.Repeat(0, Capacity).Select(_ => new Item()).ToList()).ToArray()
+			};
+			protected override void SaveData(TagCompound tag) => tag["Items"] = Inventory.ToList();
+			internal override ChestData NetReceive(BinaryReader reader) => this with {
+				Inventory = reader.ReadCompressedItemArray()
+			};
+			internal override void NetSend(BinaryWriter writer) {
+				writer.WriteCompressedItemArray(Inventory);
+			}
+			public override void HandleBeingInChestRange(Player player) {
+				if (!player.IsInInteractionRange(Width, Height)) {
+					if (player.chest != -1) {
+						SoundEngine.PlaySound(SoundID.MenuClose);
+					}
+					player.chest = -1;
+					Recipe.FindRecipes();
+				}
+			}
+			public override bool CanDestroy() {
+				Item[] items = Items();
+				for (int i = 0; i < items.Length; i++) {
+					if (items[i]?.IsAir == false) return false;
+				}
+				return true;
+			}
+			public override bool OverrideHover(Item[] inv, int context, int slot) {
+				switch (context) {
+					case ItemSlot.Context.InventoryItem:
+					case ItemSlot.Context.InventoryCoin:
+					case ItemSlot.Context.InventoryAmmo:
+					if (ItemSlot.ShiftInUse && TryPlacingInChest(inv[slot], true)) {
+						Main.cursorOverride = CursorOverrideID.InventoryToChest;
+					}
+					return true;
+				}
+				return false;
+			}
+			public override bool OverrideLeftClick(Item[] inv, int context, int slot) {
+				if (ItemSlot.ShiftInUse && PlayerLoader.ShiftClickSlot(Main.LocalPlayer, inv, context, slot)) return true;
+				if (Main.cursorOverride == 9) {
+					TryPlacingInChest(inv[slot], false);
+					return true;
+				}
+				return false;
 			}
 		}
 		public static void SyncToPlayer(int player) => ModContent.GetInstance<SpecialChestSystem>().SyncToPlayer(player);
@@ -387,6 +386,13 @@ namespace Origins.Core {
 					.SafeGet<List<TagCompound>>($"{nameof(tileEntities)}", [])
 					.Select(t => (t.SafeGet<Point16>("key"), ChestData.Load(t.SafeGet("data", invalidChestData))))
 					.ToDictionary();
+				KeyValuePair<Point16, ChestData>[] entries = tileEntities.ToArray();
+				for (int i = 0; i < entries.Length; i++) {
+					if (!entries[i].Value.IsValidSpot(entries[i].Key.ToPoint())) {
+						ModContent.GetInstance<Origins>().Logger.Warn($"Attempted to load Special Chest {entries[i].Value} at invalid position {entries[i].Key}");
+						((ICollection<KeyValuePair<Point16, ChestData>>)tileEntities).Remove(entries[i]);
+					}
+				}
 			}
 		}
 		class PreventDestruction : GlobalTile {
@@ -409,6 +415,10 @@ namespace Origins.Core {
 				Data.Write(writer);
 			}
 			protected override void Perform() {
+				if (!Data.IsValidSpot(Position.ToPoint())) {
+					ModContent.GetInstance<Origins>().Logger.Warn($"Attempted to place Special Chest {Data} at invalid position {Position}");
+					return;
+				}
 				ModContent.GetInstance<SpecialChestSystem>().tileEntities[Position] = Data;
 				Player localPlayer = Main.LocalPlayer;
 				if (localPlayer.chest == chestID && localPlayer.chestX == Position.X && localPlayer.chestY == Position.Y) CurrentChest = Data;
