@@ -2520,6 +2520,8 @@ Tiles: {
 	// Music_Box_AM: Music Box ({§Ashen} Mines)
 	// Purple_Mechanical_Switch.MapEntry: Purple Mechanical Switch
 	// Transistor.MapEntry: Transistor
+	// Medium_Storage_Container.MapEntry: Medium Storage Container
+	// Large_Storage_Container.MapEntry: Large Storage Container
 }
 
 Keybinds: {

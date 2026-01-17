@@ -1,5 +1,6 @@
 ﻿using Origins.Achievements;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riptide;
@@ -418,16 +419,25 @@ namespace Origins {
 			}*/
 			if (weakShimmer) Player.ignoreWater = true;
 			onSlope = false;
-			if (Player.chest != lastChest) {
+			int chestX = Player.chestX;
+			int chestY = Player.chestY;
+			if (Player.chest < 0 && Player.chest != SpecialChest.chestID) {
+				chestX = -1;
+				chestY = -1;
+			}
+			if (chestX != lastChestX || chestY != lastChestY) {
 				if (Player.whoAmI == Main.myPlayer) {
-					static (SoundStyle open, SoundStyle close) GetSound(int chest) {
-						if (!Main.chest.IndexInRange(chest)) return default;
-						Tile tile = Main.tile[Main.chest[chest].x, Main.chest[chest].y];
+					if (Player.chest is -1 or SpecialChest.chestID && lastChest is -1 or SpecialChest.chestID) {
+						Recipe.FindRecipes();
+					}
+					static (SoundStyle open, SoundStyle close) GetSound(int x, int y) {
+						if (x < 0 || y < 0) return default;
+						Tile tile = Main.tile[x, y];
 						if (!tile.HasTile || !OriginsSets.Tiles.ChestSoundOverride.IndexInRange(tile.TileType)) return default;
 						return OriginsSets.Tiles.ChestSoundOverride[tile.TileType];
 					}
-					(SoundStyle open, SoundStyle close) closeSet = GetSound(lastChest);
-					(SoundStyle open, SoundStyle close) openSet = GetSound(Player.chest);
+					(SoundStyle open, SoundStyle close) closeSet = GetSound(lastChestX, lastChestY);
+					(SoundStyle open, SoundStyle close) openSet = GetSound(chestX, chestY);
 					bool stopTick = false;
 					if (openSet == closeSet) closeSet = default;
 					if (closeSet.close.SoundPath is not null) {
@@ -444,8 +454,10 @@ namespace Origins {
 						SoundEngine.SoundPlayer.StopAll(SoundID.MenuTick);
 					}
 				}
-				lastChest = Player.chest;
 			}
+			lastChest = Player.chest;
+			lastChestX = chestX;
+			lastChestY = chestY;
 		}
 		public override void PreUpdate() {
 			Debugging.LogFirstRun(PreUpdate);

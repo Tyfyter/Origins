@@ -7767,3 +7767,13 @@ Special_Chest_Tester_Item: {
 	DisplayName: Special Chest Tester
 	Tooltip: ""
 }
+
+Medium_Storage_Container_Item: {
+	DisplayName: Medium Storage Container
+	Tooltip: ""
+}
+
+Large_Storage_Container_Item: {
+	DisplayName: Large Storage Container
+	Tooltip: ""
+}

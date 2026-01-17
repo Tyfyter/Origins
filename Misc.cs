@@ -20,6 +20,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Linq;
 using System.Numerics;
 using System.Reflection;
@@ -3494,6 +3495,23 @@ namespace Origins {
 			if (number >= 4) return "IV" + ToRomanNumerals(number - 4);
 			if (number >= 1) return "I" + ToRomanNumerals(number - 1);
 			throw new UnreachableException("Impossible state reached");
+		}
+		public static Item[] ReadCompressedItemArray(this BinaryReader reader) {
+			Item[] items = new Item[reader.ReadInt32()];
+			BitArray itemsExist = Utils.ReceiveBitArray(items.Length, reader);
+			for (int i = 0; i < items.Length; i++) {
+				items[i] = itemsExist[i] ? ItemIO.Receive(reader, true) : new();
+			}
+			return items;
+		}
+		public static void WriteCompressedItemArray(this BinaryWriter writer, Item[] items) {
+			writer.Write((int)items.Length);
+			BitArray itemsExist = new(items.Length);
+			for (int i = 0; i < items.Length; i++) itemsExist[i] = !(items[i]?.IsAir ?? true);
+			Utils.SendBitArray(itemsExist, writer);
+			for (int i = 0; i < items.Length; i++) {
+				if (itemsExist[i]) ItemIO.Send(items[i], writer, true);
+			}
 		}
 	}
 	public static class ShopExtensions {

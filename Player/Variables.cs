@@ -551,6 +551,8 @@ namespace Origins {
 		#region visuals
 		public int shieldGlow = -1;
 		public int lastChest = -1;
+		public int lastChestX = -1;
+		public int lastChestY = -1;
 		#endregion visuals
 
 		public float statSharePercent = 0f;

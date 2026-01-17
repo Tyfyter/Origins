@@ -1,9 +1,8 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Humanizer;
+using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Tiles;
 using Origins.Tiles.Dev;
-using Origins.Tiles.Other;
-using PegasusLib.ID;
 using PegasusLib.Networking;
 using System;
 using System.Collections.Generic;
@@ -16,13 +15,12 @@ using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI;
-using ThoriumMod.NPCs;
 using static Origins.Core.SpecialChest;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Origins.Core {
 	public class SpecialChest : ILoadable {
@@ -43,12 +41,15 @@ namespace Origins.Core {
 				ModContent.GetInstance<SpecialChestSystem>().chestUI.SetState(new SpecialChestUI((short)x, (short)y));
 			}
 		}
+		static bool sendChestSync = false;
+		public static void MarkConsumedItem() => sendChestSync = true;
 		void ILoadable.Load(Mod mod) {
 			IL_ChestUI.Draw += IL_ChestUI_Draw;
-			On_Recipe.FindRecipes += On_Recipe_FindRecipes;
 			IL_ItemSlot.OverrideHover_ItemArray_int_int += IL_ItemSlot_OverrideHover_ItemArray_int_int;
 			IL_ItemSlot.LeftClick_SellOrTrash += IL_ItemSlot_LeftClick_SellOrTrash;
 			On_Player.HandleBeingInChestRange += On_Player_HandleBeingInChestRange;
+			On_Recipe.CollectItems_ItemArray_int += On_Recipe_CollectItems_ItemArray_int;
+			On_Recipe.Create += On_Recipe_Create;
 			static void On_Player_HandleBeingInChestRange(On_Player.orig_HandleBeingInChestRange orig, Player self) {
 				if (self.chest == chestID && ModContent.GetInstance<SpecialChestSystem>().tileEntities.TryGetValue(new(self.chestX, self.chestY), out ChestData chest)) {
 					chest.HandleBeingInChestRange(self);
@@ -106,8 +107,38 @@ namespace Origins.Core {
 				c.EmitDelegate(() => Main.LocalPlayer.chest == chestID);
 				c.EmitBrtrue(label);
 			}
-			static void On_Recipe_FindRecipes(On_Recipe.orig_FindRecipes orig, bool canDelayCheck) {
-				if (Main.LocalPlayer.chest != chestID) orig(canDelayCheck);
+			static void On_Recipe_CollectItems_ItemArray_int(On_Recipe.orig_CollectItems_ItemArray_int orig, Item[] currentInventory, int slotCap) {
+				if (currentInventory is null) return;
+				orig(currentInventory, slotCap);
+			}
+			static void On_Recipe_Create(On_Recipe.orig_Create orig, Recipe self) {
+				sendChestSync = false;
+				orig(self);
+				if (sendChestSync.TrySet(false)) {
+					Player player = Main.LocalPlayer;
+					if (player.chest == chestID && SpecialChestSystem.TryGetChest(player.chestX, player.chestY) is ChestData chest) {
+						new Set_Special_Chest_Action(new(player.chestX, player.chestY), chest).Perform();
+					}
+				}
+			}
+		}
+
+		class SpecialChestCraftingPlayer : ModPlayer {
+			public override IEnumerable<Item> AddMaterialsForCrafting(out ItemConsumedCallback itemConsumedCallback) {
+				if (Player.chest == chestID && SpecialChestSystem.TryGetChest(Player.chestX, Player.chestY) is ChestData chest) {
+					itemConsumedCallback = chest.CraftWithItem;
+					return chest.Items(true);
+				}
+				return base.AddMaterialsForCrafting(out itemConsumedCallback);
+			}
+		}
+		public static string MapChestName(string name, int i, int j) {
+			TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
+			string renamed = SpecialChestSystem.TryGetChest(left, top)?.MapName ?? "";
+			if (renamed == "") {
+				return name;
+			} else {
+				return name + ": " + renamed;
 			}
 		}
 		void ILoadable.Unload() { }
@@ -119,12 +150,6 @@ namespace Origins.Core {
 				specialChestIDsByType?.TryGetValue(GetType(), out type);
 			}
 			private int type;
-			/// <summary>
-			/// In multiplayer, this is used to determine whether or not the action runs on clients
-			/// Return true for anything that should only be run by the process that handles NPCs, the world, etc.
-			/// </summary>
-			public virtual bool ServerOnly => false;
-			protected virtual bool ShouldPerform => true;
 			public void Load(Mod mod) {
 				if (mod.Side != ModSide.Both) throw new InvalidOperationException("ChestDatas can only be added by Both-side mods");
 				type = chestDatas.Count;
@@ -141,7 +166,7 @@ namespace Origins.Core {
 				WriteType(packet);
 				NetSend(packet);
 			}
-			public abstract Item[] Items();
+			public abstract Item[] Items(bool forCrafting = false);
 			internal abstract ChestData NetReceive(BinaryReader reader);
 			internal abstract void NetSend(BinaryWriter writer);
 			void WriteType(BinaryWriter writer) {
@@ -164,13 +189,15 @@ namespace Origins.Core {
 			}
 			public static ChestData Load(TagCompound tag) {
 				if (!tag.TryGet("Type", out string type) || !tag.TryGet("Data", out TagCompound data)) throw new ArgumentException($"Malformed ChestData {tag}", nameof(tag));
-				return chestDatas[specialChestIDsByTypeName[type]].LoadData(data);
+				if (!specialChestIDsByTypeName.TryGetValue(type, out int chestID)) return new Invalid();
+				return chestDatas[chestID].LoadData(data);
 			}
 			protected abstract void SaveData(TagCompound tag);
 			protected abstract ChestData LoadData(TagCompound tag);
 			protected abstract bool IsValidSpot(Point position);
 			public virtual void UpdateUI(SpecialChestUI.SpecialChestElement ui) { }
 			public virtual int ItemCount => Items().Length;
+			public virtual string MapName => "";
 			public virtual void HandleBeingInChestRange(Player player) {
 				if (!player.IsInInteractionRange(2, 2)) {
 					if (player.chest != -1) {
@@ -201,9 +228,45 @@ namespace Origins.Core {
 			public virtual void DrawItemSlot(SpriteBatch spriteBatch, Vector2 position, Item item, int slot) {
 				ItemSlot.Draw(spriteBatch, ref item, slot >= ItemCount ? ItemSlot.Context.GoldDebug : ItemSlot.Context.ChestItem, position);
 			}
+			/// <summary>
+			/// Called when an item from the <see cref="ChestData"/> is consumed via crafting
+			/// Remember to call <see cref="MarkConsumedItem"/> if the item being consumed should produce changes visible to other players, such as if this is a container
+			/// </summary>
+			public virtual void CraftWithItem(Item item, int index) => MarkConsumedItem();
+			public abstract record class Storage_Container_Data(Item[] Inventory) : ChestData() {
+				public abstract int Capacity { get; }
+				public abstract int Width { get; }
+				public abstract int Height { get; }
+				public Storage_Container_Data() : this([]) {
+					Item[] inventory = Inventory;
+					Array.Resize(ref inventory, Capacity);
+					for (int i = 0; i < inventory.Length; i++) inventory[i] ??= new();
+					Inventory = inventory;
+				}
+				public override Item[] Items(bool forCrafting = false) => Inventory;
+				protected override ChestData LoadData(TagCompound tag) => this with {
+					Inventory = tag.SafeGet("Items", new List<Item>() { new(), new(), new() }).ToArray()
+				};
+				protected override void SaveData(TagCompound tag) => tag["Items"] = Inventory.ToList();
+				internal override ChestData NetReceive(BinaryReader reader) => this with {
+					Inventory = reader.ReadCompressedItemArray()
+				};
+				internal override void NetSend(BinaryWriter writer) {
+					writer.WriteCompressedItemArray(Inventory);
+				}
+				public override void HandleBeingInChestRange(Player player) {
+					if (!player.IsInInteractionRange(Width, Height)) {
+						if (player.chest != -1) {
+							SoundEngine.PlaySound(SoundID.MenuClose);
+						}
+						player.chest = -1;
+						Recipe.FindRecipes();
+					}
+				}
+			}
 			public sealed record class Invalid : ChestData {
 				protected override bool IsValidSpot(Point position) => false;
-				public override Item[] Items() => [];
+				public override Item[] Items(bool forCrafting = false) => [];
 				protected override ChestData LoadData(TagCompound tag) => this;
 				protected override void SaveData(TagCompound tag) { }
 				internal override ChestData NetReceive(BinaryReader reader) => this;
@@ -212,6 +275,7 @@ namespace Origins.Core {
 		}
 		public static void SyncToPlayer(int player) => ModContent.GetInstance<SpecialChestSystem>().SyncToPlayer(player);
 		class SpecialChestSystem : ModSystem {
+			public static ChestData TryGetChest(int i, int j) => ModContent.GetInstance<SpecialChestSystem>().tileEntities.TryGetValue(new(i, j), out ChestData chest) ? chest : null;
 			public UserInterface chestUI = new();
 			public override void UpdateUI(GameTime gameTime) {
 				if (chestUI.CurrentState is not null && (!Main.playerInventory || Main.LocalPlayer.chest != chestID)) {
@@ -326,62 +390,6 @@ namespace Origins.Core {
 					if (scrollbar is null) return;
 					int viewPos = (int)(scrollbar.ViewPosition / 56);
 					scrollbar.ViewPosition = (viewPos - evt.ScrollWheelValue / 120) * 56;
-				}
-			}
-		}
-	}
-	public class Special_Chest_Tester : ModTile {
-		public override string Texture => typeof(Room_Socket_Marker).GetDefaultTMLName();
-		public override void Load() {
-			Mod.AddContent(new TileItem(this, true));
-		}
-		public override void SetStaticDefaults() {
-			Main.tileFrameImportant[Type] = true;
-			TileID.Sets.CanBeSloped[Type] = false;
-		}
-		public override bool Slope(int i, int j) {
-			Tile tile = Main.tile[i, j];
-			tile.TileFrameX += 18;
-			tile.TileFrameX %= 5 * 18;
-			return false;
-		}
-		public override void PlaceInWorld(int i, int j, Item item) {
-			Item[] items = new Item[80];
-			for (int k = 0; k < items.Length; k++) items[k] = new();
-
-			items[0].SetDefaults(ItemID.HorseshoeBundle);
-			items[39].SetDefaults(ItemID.DarkHorseSaddle);
-			items[50].SetDefaults(ItemID.TheHorsemansBlade);
-			new Set_Special_Chest_Action(new(i, j), new Test_Chest_Data(items)).Perform();
-		}
-		public override bool RightClick(int i, int j) {
-			SpecialChest.OpenChest(i, j);
-			return true;
-		}
-		public record class Test_Chest_Data(Item[] Inventory) : ChestData() {
-			public Test_Chest_Data() : this([]) { }
-			protected override bool IsValidSpot(Point position) => Main.tile[position].TileIsType(ModContent.TileType<Special_Chest_Tester>());
-			public override Item[] Items() => Inventory;
-			protected override ChestData LoadData(TagCompound tag) => this with {
-				Inventory = tag.SafeGet("Items", new List<Item>() { new(), new(), new() }).ToArray()
-			};
-			protected override void SaveData(TagCompound tag) => tag["Items"] = Inventory.ToList();
-			internal override ChestData NetReceive(BinaryReader reader) {
-				Item[] items = new Item[reader.ReadInt32()];
-				for (int i = 0; i < items.Length; i++) items[i] = ItemIO.Receive(reader, true);
-				return this with { Inventory = items };
-			}
-			internal override void NetSend(BinaryWriter writer) {
-				writer.Write((int)Inventory.Length);
-				for (int i = 0; i < Inventory.Length; i++) ItemIO.Send(Inventory[i], writer, true);
-			}
-			public override void HandleBeingInChestRange(Player player) {
-				if (!player.IsInInteractionRange(1, 1)) {
-					if (player.chest != -1) {
-						SoundEngine.PlaySound(SoundID.MenuClose);
-					}
-					player.chest = -1;
-					Recipe.FindRecipes();
 				}
 			}
 		}
