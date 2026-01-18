@@ -85,7 +85,10 @@ namespace Origins.Items.Accessories {
 			originPlayer.lunaticsRune = Item;
 			ref int charge = ref originPlayer.lunaticsRuneCharge;
 			if (player.SyncedKeybinds().LunaticsRune.Current && (charge >= ChargeThreshold || CheckMana(player, Item, 1f / ChargeThreshold))) {
-				if (charge == 0) DoRitualTeleport(player, true, originPlayer.lunaticDuplicates);
+				if (charge == 0) {
+					SoundEngine.PlaySound(SoundID.Zombie89);
+					DoRitualTeleport(player, true, originPlayer.lunaticDuplicates);
+				}
 				originPlayer.lunaticsRuneRotation += 0.02f;
 				charge.Warmup(ChargeThreshold);
 				float moveMult = 0;// 1 - float.Pow(charge / (float)ChargeThreshold, 2);
@@ -127,6 +130,7 @@ namespace Origins.Items.Accessories {
 			public override int BuffType => ModContent.BuffType<Lunatics_Rune_Dragon_Buff>();
 			public override int BuffTime => 30 * 60;
 			public override void Trigger(Player player) {
+				SoundEngine.PlaySound(SoundID.Item119);
 				base.Trigger(player);
 				Item item = player.OriginPlayer().lunaticsRune;
 				int damage = player.GetWeaponDamage(item);
@@ -566,6 +570,7 @@ namespace Origins.Items.Accessories {
 							player.GetWeaponDamage(item),
 							player.GetWeaponKnockback(item)
 						);
+						SoundEngine.PlaySound(SoundID.Item120);
 					}
 				} else {
 					player.SpawnProjectile(player.GetSource_Accessory(item),
@@ -712,6 +717,7 @@ namespace Origins.Items.Accessories {
 			return Lunatics_Rune.CheckMana(player, player.OriginPlayer().lunaticsRune, 0.10f, !justChecking);
 		}
 		public override void StartAttack(Player player) {
+			SoundEngine.PlaySound(SoundID.Item121);
 			player.SetItemAnimation(30);
 			ForPlayerAndShadows(player, player => {
 				Item item = player.OriginPlayer().lunaticsRune;

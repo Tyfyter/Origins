@@ -1,6 +1,4 @@
 using Origins.Core;
-using Origins.Dev;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;

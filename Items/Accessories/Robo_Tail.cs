@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
 	public class Robo_Tail : ModItem {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 22);
-			Item.damage = 60;
+			Item.damage = 54;
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 3;
 			Item.rare = ItemRarityID.LightRed;
@@ -46,7 +46,7 @@ namespace Origins.Items.Accessories {
 		AutoLoadingAsset<Texture2D> glowTexture = typeof(Robo_Tail_Tail).GetDefaultTMLName("_Glow");
 		public int Shader => Main.player[Projectile.owner].OriginPlayer().roboTailDye;
 		protected abstract Rectangle Frame { get; }
-		public override float ChildDistance => 12;
+		public override float ChildDistance => 9;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			SegmentTypes[Type] = true;

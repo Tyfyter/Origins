@@ -7566,12 +7566,12 @@ Lunatics_Rune: {
 
 Adjusto_Hook: {
 	DisplayName: Adjust-o-Hook
-	Tooltip: ""
+	Tooltip: Give actual tooltip when new controls are implemented
 }
 
 Gills: {
 	DisplayName: Gills
-	Tooltip: ""
+	Tooltip: Allows flight and slow fall
 }
 
 Retool_Arm.DisplayName: Retool Arm
@@ -7653,12 +7653,16 @@ Artifiber_Helmet: {
 
 Holy_Hand_Grenade: {
 	DisplayName: Holy Hand Grenade
-	Tooltip: ""
+	Tooltip: The Lord's chosen weapon
 }
 
 The_Muffler: {
 	DisplayName: The Muffler
-	Tooltip: ""
+	Tooltip:
+		'''
+		Inflicts Miasma to the user in-use
+		Revs up with a killstreak
+		'''
 	PrefixEfficiency: "{0:+0;-0}% efficiency"
 }
 
@@ -7669,12 +7673,22 @@ Glitter_Glue: {
 
 Robo_Tail: {
 	DisplayName: Robo-Tail
-	Tooltip: ""
+	Tooltip:
+		'''
+		A robotic tail follows you
+		Segment amount depends on minion slots you have
+		Segments will fire lasers and release probes on hit
+		Probes will come back as you regenerate
+		'''
 }
 
 Exo_Weapon_Mount: {
 	DisplayName: Exo-Weapon Mount
-	Tooltip: ""
+	Tooltip:
+		'''
+		+15% generic velocity
+		25% increased damage for 1s after swapping weapons
+		'''
 }
 
 Tool_Rack_Item: {
@@ -7709,17 +7723,29 @@ Exo_Suit: {
 
 Bomb_Rack: {
 	DisplayName: Bomb Rack
-	Tooltip: ""
+	Tooltip:
+		'''
+		Allows flight
+		Releases carpet bombs as you fly
+		'''
 }
 
 Decorative_Ashes: {
-	DisplayName: Decorative Ashes
-	Tooltip: ""
+	DisplayName: Decorative A.S.H.E.S.
+	Tooltip:
+		'''
+		Generates homing missiles that launch when enemies are near
+		Launches missiles regardless of magazine upon getting hit
+		'''
 }
 
 Petes_Peat_Slugger: {
 	DisplayName: Pete's Peat Slugger
-	Tooltip: ""
+	Tooltip:
+		'''
+		It releases a lot of peat.
+		A LOT!
+		'''
 }
 
 Space_Pirates_Eye: {
@@ -7759,7 +7785,12 @@ Tangerine: {
 
 Autohandcannon: {
 	DisplayName: Autohandcannon
-	Tooltip: ""
+	Tooltip:
+		'''
+		Can doubletap for faster fire rate in between shots
+		Doubletapping has a chance to jam the weapon
+		<right> while jammed to unjam the weapon
+		'''
 	JammedText: Jammed!
 }
 

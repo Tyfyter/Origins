@@ -1,4 +1,6 @@
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -6,10 +8,9 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Autohandcannon : ModItem, IBrokenContent {
+	public class Autohandcannon : ModItem {
 		public static int ID { get; private set; }
 		public static LocalizedText JammedText { get; private set; }
-		public string BrokenReason => "Needs recipe";
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			ID = Type;
@@ -21,11 +22,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		static void On_Player_ItemCheck_HackHoldStyles(On_Player.orig_ItemCheck_HackHoldStyles orig, Player self, Item sItem) {
 			orig(self, sItem);
-			if (self.whoAmI == Main.myPlayer && sItem.type == ID && self.ItemAnimationActive && self.itemAnimation < self.itemAnimationMax * 0.35f && !self.OriginPlayer().autohandcannonJammed) {
+			if (self.whoAmI == Main.myPlayer && sItem.type == ID && self.ItemAnimationActive && self.itemAnimation < self.itemAnimationMax * 0.8f && !self.OriginPlayer().autohandcannonJammed) {
 				if (self.controlUseItem && self.releaseUseItem) {
 					self.itemAnimation = 0;
 					self.itemTime = 0;
-					if (Main.rand.NextBool(3)) {
+					if (Main.rand.NextBool(7, 37)) {
+						SoundEngine.PlaySound(SoundID.Item178.WithPitch(1.6f));
+						SoundEngine.PlaySound(SoundID.Unlock.WithPitch(-1.2f));
 						self.OriginPlayer().autohandcannonJammed = true;
 						CombatText.NewText(self.Hitbox, Color.DarkGray, JammedText.Value);
 					}
@@ -37,7 +40,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.noMelee = true;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.noMelee = true;
-			Item.damage = 80;
+			Item.damage = 68;
 			Item.crit = 8;
 			Item.width = 56;
 			Item.height = 26;
@@ -49,9 +52,18 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed = 12f;
 			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Pink;
-			Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.25f);
+			Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(1.5f);
 			Item.autoReuse = true;
 			Item.ArmorPenetration += 8;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Busted_Servo>(), 15)
+			.AddIngredient(ModContent.ItemType<Power_Core>())
+			.AddIngredient(ModContent.ItemType<Rotor>(), 4)
+			.AddIngredient(ModContent.ItemType<Rubber>(), 8)
+			.AddTile(ModContent.TileType<Fabricator>())
+			.Register();
 		}
 		public override bool AltFunctionUse(Player player) => true;
 		public override bool CanUseItem(Player player) => (player.altFunctionUse == 2) == player.OriginPlayer().autohandcannonJammed;
@@ -60,10 +72,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {
 			if (player.altFunctionUse != 2) return;
+			SoundEngine.PlaySound(SoundID.Item1.WithPitch(-0.5f));
 			player.itemRotation = (player.itemAnimation / (float)player.itemAnimationMax) * player.direction * MathHelper.TwoPi * 2;
 			player.itemLocation = player.GetHandPosition();
 			player.itemLocation.Y -= 12;
-			if (player.ItemAnimationEndingOrEnded) player.OriginPlayer().autohandcannonJammed = false;
+			if (player.ItemAnimationEndingOrEnded) {
+				player.OriginPlayer().autohandcannonJammed = false;
+				SoundEngine.PlaySound(SoundID.Item149.WithPitch(-0.5f));
+			}
 		}
 		public override bool? UseItem(Player player) {
 			if (player.altFunctionUse != 2) SoundEngine.PlaySound(Item.UseSound, player.itemLocation);
@@ -78,9 +94,5 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Vector2 offset = velocity.RotatedBy(MathHelper.PiOver2 * -player.direction) * 5 / velocity.Length();
 			position += offset;
 		}
-		public override void AddRecipes() => CreateRecipe()
-			// ingredience hear
-			.AddTile(TileID.MythrilAnvil)
-			.Register();
 	}
 }

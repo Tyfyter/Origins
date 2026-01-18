@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.Buffs.Summon;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Other.Critters;
 using Origins.Reflection;
@@ -257,7 +258,7 @@ namespace Origins.NPCs.Critters {
 		}
 		public override void FindFrame(int frameHeight) {
 			if (Main.rand.NextBool(350)) {
-				SoundEngine.PlaySound(Origins.Sounds.Amalgamation.WithPitch(1).WithVolumeScale(0.5f), NPC.Center); // replace with a "AWAWA" sound
+				SoundEngine.PlaySound(SoundID.Zombie15, NPC.Center); // replace with a "AWAWA" sound
 			}
 			if (NPC.ai[0] == 1) {
 				NPC.DoFrames(6, 1..6);

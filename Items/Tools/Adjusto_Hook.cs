@@ -1,12 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-using Terraria.Utilities;
-using Origins.Graphics;
-using Terraria.GameInput;
 
 namespace Origins.Items.Tools {
 	public class Adjusto_Hook : ModItem {

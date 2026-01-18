@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Empowerments;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Petes_Peat_Slugger : ModItem, ICustomWikiStat {
@@ -20,7 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.damage = 80;
+			Item.damage = 62;
 			Item.crit = 7;
 			Item.width = 56;
 			Item.height = 26;
@@ -83,7 +84,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.Center,
 					Main.rand.NextVector2CircularEdge(1, 1) * Main.rand.NextFloat(6, 8),
 					type,
-					Projectile.damage,
+					(int)(Projectile.damage*0.6f),
 					Projectile.knockBack
 				);
 			}
@@ -94,6 +95,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Projectile.timeLeft = 90;
 		}
 	}
 	/*public override void OnKill(int timeLeft) {

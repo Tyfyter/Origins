@@ -639,7 +639,7 @@ ACCESSORIES:
 (^) Venom Fang
 (^) Venom Shield
 
-(†, @2) Bomb Rack !!!
+(#2, ^2) Bomb Rack !!! (needs orange particle effects)
 (^) Entangled Energy
 (^) Mana Drive
 (^) Protozoa Food
@@ -657,9 +657,9 @@ ACCESSORIES:
 (^) Forbidden Voice (Cursed)
 (^) Forbidden Voice (Uncursed)
 (†) Glitter Glue !!!
-(†) Lunatic's Rune !!!
+(#3, ^2) Lunatic's Rune !!!
 (^) Mysterious Spray
-(#3) Retool Arm !!!
+(#3, ^2) Retool Arm !!!
 (†) Robo-tail !!!
 (^) Scribe of the Meat God
 (◘) Space Pirate's Eye !!!
@@ -1139,13 +1139,13 @@ EXPLOSIVE WEAPONS:
 (^) Thermite Launcher
 (^) Torpedo Tube
 
-(☻) Autohandcannon !!!
+(#2, ^2) Autohandcannon !!!
 (^) Bomboomstick
 (^) Chlorodynamite
 (^) Chlorophyte Handcannon
 (#, ^2) Firework Cannon
 (X) Flarefury
-(☻) Holy Hand Grenade !!!
+(^) Holy Hand Grenade
 (^) Mine Flayer
 (^) Nova Cascade
 (^) Nova Swarm
@@ -1153,7 +1153,7 @@ EXPLOSIVE WEAPONS:
 (X) Oil Drum
 (^) Omni-directional Claymore
 (^) Partybringer
-(☻) Pete's Peat Slugger !!!
+(#2, ^2) Pete's Peat Slugger !!!
 (X) Puffle
 (^) Rocodile
 (^) Self-Destruct
@@ -1295,7 +1295,7 @@ TILES:
 (^) Type-I Fortified Steel Wall
 (^) Type-III Fortified Steel Wall
 
-(#3, ^2) Air Vent !!! (I can't halp you with noise if you don't tell me what about it you need halpˢᶦᶜ with)
+(#3, ^2) Air Vent !!! (see reports)
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
 (^) Artifiber Furniture
@@ -1561,7 +1561,7 @@ CRITTERS AND FISH:
 (^) Chambersite Bunny
 (^) Chambersite Squirrel
 (^) Cicada 3301
-(☻, @2) Hyrax !!! (missing gores)
+(#2, $2, ^2) Hyrax !!!
 (^) Peppered Moth
 
 (^) Bilemouth

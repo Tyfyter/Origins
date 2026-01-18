@@ -57,6 +57,7 @@ public abstract class Retool_Arm : ModItem {
 		originPlayer.retoolArmTimer = 0;
 		for (int i = 0; i < arms.Count; i++) {
 			if (arms[i].Type == Type) {
+				SoundEngine.PlaySound(Origins.Sounds.MetalBoxOpen.WithPitch(0.2f).WithVolume(0.2f));
 				originPlayer.retoolArm.OnSwitchFrom(player);
 				TagCompound tag = ItemIO.Save(Item);
 				Retool_Arm nextArm = arms[(i + 1) % arms.Count];
@@ -387,6 +388,7 @@ public class Retool_Arm_Laser_Beam : ModProjectile, IShadedProjectile {
 		if (Projectile.velocity.X != 0) player.ChangeDir(Math.Sign(Projectile.velocity.X));
 
 		SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(Projectile.ai[2] / 10).WithVolume(0.24f), player.position);
+		SoundEngine.SoundPlayer.Play(SoundID.Item132.WithPitch(Projectile.ai[2] / 10).WithVolume(0.24f), player.position);
 		Projectile.position = Retool_Arm_Layer.GetShoulder(player, player.position) + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * arm.ArmBaseLength);
 		if (player.mount?.Active ?? false) Projectile.position.Y -= player.mount.PlayerOffset;
 		Projectile.position = player.RotatedRelativePoint(Projectile.position);
@@ -526,9 +528,9 @@ public class Retool_Arm_Saw : Retool_Arm {
 		}
 		if (originPlayer.wasUsingRetoolArmSaw.TrySet(spin)) {
 			if (spin) {
-				SoundEngine.PlaySound(Origins.Sounds.SmallSawStart, player.MountedCenter);
+				SoundEngine.PlaySound(Origins.Sounds.SmallSawStart.WithVolume(0.2f), player.MountedCenter);
 			} else {
-				SoundEngine.PlaySound(Origins.Sounds.SmallSawEnd, player.MountedCenter);
+				SoundEngine.PlaySound(Origins.Sounds.SmallSawEnd.WithVolume(0.2f), player.MountedCenter);
 			}
 		}
 		if (spin) {

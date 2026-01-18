@@ -23,6 +23,7 @@ public class Bomb_Rack : ModItem {
 		Item.useAnimation = Item.useTime;
 		Item.rare = ItemRarityID.Blue;
 		Item.value = Item.sellPrice(gold: 2);
+		Item.expert = true;
 	}
 	public override void UpdateAccessory(Player player, bool hideVisual) {
 		Max(ref player.accRunSpeed, 6f);

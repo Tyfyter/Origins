@@ -98,7 +98,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
-			if (Projectile.ai[2] == 0) SoundEngine.PlaySound(Origins.Sounds.HolyHandGrenade, Projectile.Center);
+			if (Projectile.ai[2] == 0) SoundEngine.PlaySound(Origins.Sounds.HolyHandGrenade.WithVolume(0.6f), Projectile.Center);
 
 			Projectile.ExplodeRadius(7);
 		}

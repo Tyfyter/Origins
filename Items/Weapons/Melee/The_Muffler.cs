@@ -29,8 +29,8 @@ namespace Origins.Items.Weapons.Melee {
 			Item.knockBack = 6f;
 			Item.shootSpeed = 4f;
 			Item.shoot = ModContent.ProjectileType<The_Muffler_P>();
-			Item.value = Item.sellPrice(silver: 80);
-			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(gold: 8);
+			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item23;
 			Item.channel = true;
 			efficiency = 1;
@@ -97,6 +97,10 @@ namespace Origins.Items.Weapons.Melee {
 				SoundEngine.PlaySound(SoundID.Research.WithVolumeScale(1).WithPitch(-0.5f), Projectile.Center);
 			}
 			if (Projectile.ai[2] != 0 && Projectile.localAI[2].CycleUp(3)) {
+				SoundEngine.PlaySound(SoundID.DD2_BetsyHurt.WithPitch(0.4f));
+				SoundEngine.PlaySound(SoundID.DD2_DrakinHurt.WithPitch(0.4f));
+				//SoundEngine.PlaySound(SoundID.Zombie42.WithPitch(0.6f));
+				SoundEngine.PlaySound(Origins.Sounds.PowerStomp.WithPitch(-0.5f));
 				Projectile.ai[2].CycleUp(exhaust_frames);
 			}
 		}

@@ -1,5 +1,6 @@
 ﻿using Origins.Dev;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
@@ -22,6 +23,9 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			int oldSelected = originPlayer.exoWeaponMountCurrentWeapon;
 			if (originPlayer.exoWeaponMountCurrentWeapon.TrySet(player.selectedItem)) {
+				SoundEngine.PlaySound(SoundID.Item127.WithVolume(0.5f));
+				SoundEngine.PlaySound(SoundID.Item113.WithPitch(2f).WithVolume(0.5f));
+				SoundEngine.PlaySound(SoundID.Item89.WithVolume(0.5f));
 				int buff = ModContent.BuffType<Exo_Weapon_Mount_Buff>();
 				if (originPlayer.exoWeaponMountCurrentWeapon == originPlayer.exoWeaponMountLastWeapon) {
 					int buffIndex = player.FindBuffIndex(buff);
@@ -36,7 +40,6 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Exo_Weapon_Mount_Buff : ModBuff {
-		public override string Texture => typeof(Exo_Weapon_Mount).GetDefaultTMLName();
 		public override void Update(Player player, ref int buffIndex) {
 			player.GetDamage(DamageClass.Generic) += 0.25f;
 		}

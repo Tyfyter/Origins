@@ -1446,8 +1446,8 @@ Buffs: {
 	}
 
 	Exo_Weapon_Mount_Buff: {
-		DisplayName: Exo Weapon Mount Buff
-		Description: Mods.Origins.Buffs.Exo_Weapon_Mount_Buff.Description
+		DisplayName: Quickdraw
+		Description: Increased damage from swapping weapons!
 	}
 }
 
