@@ -1,9 +1,7 @@
-﻿using AlchemistNPCLite.NPCs;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo;
 using Origins.NPCs;
 using Origins.UI;
-using PegasusLib;
 using System;
 using System.Collections;
 using System.Collections.Generic;

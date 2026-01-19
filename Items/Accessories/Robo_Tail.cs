@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
@@ -7,11 +8,17 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Robo_Tail : ModItem {
+		public static int TailSegmentCount(Player player) => player.maxMinions * 2;
+		public static DyedLight dyeableGlow;
+		public override void Load() {
+			dyeableGlow = new(new(0.5f, 0, 0));
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 22);
 			Item.damage = 54;
@@ -32,6 +39,8 @@ namespace Origins.Items.Accessories {
 		public override void UpdateItemDye(Player player, int dye, bool hideVisual) {
 			if (!hideVisual) player.OriginPlayer().roboTailDye = dye;
 		}
+		internal Vector3 glowColor;
+		internal ulong rateLimitTimer;
 	}
 	public class Robo_Tail_Glow_Dye_Slot : ExtraDyeSlot {
 		public override bool UseForSlot(Item equipped, Item vanity, bool equipHidden) => equipped?.ModItem is Robo_Tail || vanity?.ModItem is Robo_Tail;
@@ -161,7 +170,7 @@ namespace Origins.Items.Accessories {
 	public class Robo_Tail_Tail_Body : Robo_Tail_Tail {
 		public override BodyPart Part => BodyPart.Body;
 		int FrameY => (int)Projectile.ai[0] * 14;
-		protected override Rectangle Frame => (int)((Projectile.localAI[1] - 1) * 3f / Main.player[Projectile.owner].maxMinions) switch {
+		protected override Rectangle Frame => (int)((Projectile.localAI[1] - 1) * 3f / Robo_Tail.TailSegmentCount(Main.player[Projectile.owner])) switch {
 			0 => new(6, FrameY, 10, 14),
 			1 => new(18, FrameY, 8, 14),
 			2 => new(28, FrameY, 10, 14),
@@ -176,10 +185,10 @@ namespace Origins.Items.Accessories {
 				Projectile.ai[2] = 1;
 			}
 			Player player = Main.player[Projectile.owner];
-			if (Projectile.localAI[1] > player.maxMinions) Projectile.Kill();
+			if (Projectile.localAI[1] > Robo_Tail.TailSegmentCount(player)) Projectile.Kill();
 			OriginPlayer originPlayer = player.OriginPlayer();
 			if (originPlayer.roboTailVanity || originPlayer.roboTail is null) return;
-			int threshold = (player.statLifeMax2 / 2) / Main.player[Projectile.owner].maxMinions;
+			int threshold = (player.statLifeMax2 / 2) / Robo_Tail.TailSegmentCount(player);
 			switch (Projectile.ai[0]) {
 				case 0:
 				Projectile parent = GetParent();
@@ -208,7 +217,12 @@ namespace Origins.Items.Accessories {
 						Projectile.knockBack
 					);
 				}
-				Lighting.AddLight(Projectile.Center, 0.5f, 0, 0);
+				if (originPlayer.roboTail.ModItem is Robo_Tail roboTail) {
+					Robo_Tail.dyeableGlow.GetColorWithRateLimit(ref roboTail.glowColor, ref roboTail.rateLimitTimer,
+						() => player.GetModPlayer<OriginsDyeSlots>().cRoboTailGlow ?? originPlayer.roboTailDye, player, Projectile
+					);
+					Lighting.AddLight(Projectile.Center, roboTail.glowColor);
+				}
 				break;
 
 				default:

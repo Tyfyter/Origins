@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Origins.Misc {
+﻿namespace Origins.Misc {
 	public static class Swizzles {
 		public static Vector2 XX(this Vector3 v) => new(v.X, v.X);
 		public static Vector2 XY(this Vector3 v) => new(v.X, v.Y);

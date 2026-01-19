@@ -2673,6 +2673,21 @@ Configs: {
 				Enable this to disable and/or replace them
 				''' */
 		}
+
+		DyeLightSources: {
+			// Label: Dye Light Sources
+			// Tooltip: ""
+		}
+
+		ProceduralLightSourceDyeRate: {
+			// Label: Procedural Light Source Dye Rate
+			/* Tooltip:
+				'''
+				How frequently unknown dyes will query their colors for light sources, in ticks per query
+				Set to 0 to exclusively dye light sources with known dyes
+				Low values will require beefy computers
+				''' */
+		}
 	}
 
 	OriginConfig: {

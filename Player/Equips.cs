@@ -517,7 +517,7 @@ namespace Origins {
 					).originalDamage = roboTail.damage;
 				}
 				int body = ModContent.ProjectileType<Robo_Tail_Tail_Body>();
-				if (Player.ownedProjectileCounts[body] < Player.maxMinions) {
+				if (Player.ownedProjectileCounts[body] < Robo_Tail.TailSegmentCount(Player)) {
 					Player.SpawnProjectile(
 						Player.GetSource_Accessory(roboTail),
 						Player.MountedCenter,

@@ -18,8 +18,8 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Walls {
 	[LegacyName("Sulphur_Stone_Wall", "Dolomite_Wall")]
 	public class Baryte_Wall : ModWall {
-		Asset<Texture2D> perlin;
-		float[,] odds;
+		static Asset<Texture2D> perlin;
+		static float[,] odds;
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
 				perlin = Request<Texture2D>("Terraria/Images/Misc/Perlin");
@@ -63,12 +63,9 @@ namespace Origins.Walls {
 				}
 			}
 		}
-		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			if (Main.dedServ || Main.gamePaused) return;
-			Tile tile = Framing.GetTileSafely(i, j);
-			if (tile.LiquidAmount < 200 || tile.HasFullSolidTile()) return;
+		public static float[,] GetPerlin() {
 			if (perlin.IsLoaded && odds is null) {
-				Texture2D perlin = this.perlin.Value;
+				Texture2D perlin = Baryte_Wall.perlin.Value;
 				Color[] color = new Color[perlin.Width * perlin.Height];
 				perlin.GetData(color);
 				odds = new float[perlin.Width, perlin.Height];
@@ -76,6 +73,13 @@ namespace Origins.Walls {
 					odds[k % perlin.Width, k / perlin.Width] = color[k].R / 255f;
 				}
 			}
+			return odds;
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (Main.dedServ || Main.gamePaused) return;
+			Tile tile = Framing.GetTileSafely(i, j);
+			if (tile.LiquidAmount < 200 || tile.HasFullSolidTile()) return;
+			GetPerlin();
 			if (odds is null) return;
 			int width = odds.GetLength(0);
 			int height = odds.GetLength(1);

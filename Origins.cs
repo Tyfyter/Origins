@@ -278,6 +278,7 @@ namespace Origins {
 				}
 			}
 			OriginsSets.Misc.SetupDyes();
+			DyedLight.Initialize();
 		}
 		public override void Load() {
 			AssimilationLoader.Load();

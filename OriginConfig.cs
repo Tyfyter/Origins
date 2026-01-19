@@ -158,6 +158,11 @@ namespace Origins {
 		[DefaultValue(true)]
 		public bool ImproveChlorophyteBulletsPerformance = true;
 
+		[DefaultValue(true)]
+		public bool DyeLightSources = true;
+		[DefaultValue(10), Range(0, 60)]
+		public int ProceduralLightSourceDyeRate = 10;
+
 		[DefaultValue(ArtifactMinionHealthbarStyles.Auto)]
 		public ArtifactMinionHealthbarStyles ArtifactMinionHealthbarStyle = ArtifactMinionHealthbarStyles.Auto;
 
