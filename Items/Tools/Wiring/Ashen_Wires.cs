@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
-using Origins.Items.Other.Consumables;
 using Origins.Reflection;
-using Origins.Tiles.Ashen;
 using Origins.World;
-using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -193,6 +190,11 @@ namespace Origins.Items.Tools.Wiring {
 		public bool IsTilePowered {
 			readonly get => GetBit(data, 7);
 			private set => SetBit(value, ref data, 7);
+		}
+		public void ValidatePowerStates() {
+			BrownWirePowered &= HasBrownWire;
+			BlackWirePowered &= HasBlackWire;
+			WhiteWirePowered &= HasWhiteWire;
 		}
 		public readonly bool GetWire(int wireType) => GetBit(data, wireType << 1);
 		public readonly bool GetPower(int wireType) => GetBit(data, (wireType << 1) + 1);
@@ -421,6 +423,11 @@ namespace Origins.Items.Tools.Wiring {
 						int count = 0;
 						for (int i = 0; i < worldData.Length; i++) {
 							if (worldData[i] != 0) count++;
+						}
+						for (int i = 0; i < Main.maxTilesX; i++) {
+							for (int j = 0; j < Main.maxTilesY; j++) {
+								Main.tile[i, j].Get<Ashen_Wire_Data>().ValidatePowerStates();
+							}
 						}
 					}
 				}
