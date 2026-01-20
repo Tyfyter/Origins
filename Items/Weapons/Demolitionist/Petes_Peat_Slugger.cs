@@ -5,13 +5,12 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Petes_Peat_Slugger : ModItem, ICustomWikiStat {
-		public string[] Categories => [
-			WikiCategories.ToxicSource
-		];
+	public class Petes_Peat_Slugger : ModItem {
+		public static float PeatSprayDamageMult => 0.6f;
+		public static float PeatDropDamageMult => 0.6f;
+		public static float PeatBlastDamageMult => 0.6f;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
@@ -55,7 +54,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					position,
 					velocity.RotatedBy((i - Main.rand.NextFloat(Math.Sign(i) * 0.9f)) * spread),
 					type,
-					damage,
+					(int)(damage * PeatSprayDamageMult),
 					knockback
 				);
 			}
@@ -71,7 +70,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.Center,
 					Projectile.velocity * 0.5f,
 					ModContent.ProjectileType<Petes_Peat>(),
-					Projectile.damage,
+					(int)(Projectile.damage * Petes_Peat_Slugger.PeatDropDamageMult),
 					Projectile.knockBack
 				);
 			}
@@ -84,7 +83,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.Center,
 					Main.rand.NextVector2CircularEdge(1, 1) * Main.rand.NextFloat(6, 8),
 					type,
-					(int)(Projectile.damage*0.6f),
+					(int)(Projectile.damage * Petes_Peat_Slugger.PeatBlastDamageMult),
 					Projectile.knockBack
 				);
 			}
