@@ -1,7 +1,11 @@
-﻿using Origins.Items.Weapons.Ammo;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -46,10 +50,29 @@ namespace Origins.Tiles.Ashen {
 			AnimationFrameHeight = 36;
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
-			if (++frameCounter >= 0) {
-				frameCounter = 0;
-				if (++frame >= 4) frame = 0;
-			}
+			if (frameCounter.CycleUp(2)) frame.CycleUp(4);
+		}
+		public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) {
+			Tile tile = Main.tile[i, j];
+			Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
+			Lighting.GetCornerColors(i, j - 1, out VertexColors vertices);
+			short tileFrameX = tile.TileFrameX;
+			short tileFrameY = tile.TileFrameY;
+			Main.instance.TilesRenderer.GetTileDrawData(i, j, tile, Type, ref tileFrameX, ref tileFrameY, out _, out _, out int tileTop, out _, out int addFrX, out int addFrY, out _, out _, out _, out _);
+			tileFrameX += (short)addFrX;
+			tileFrameY += (short)addFrY;
+			pos.Y += tileTop;
+			Main.tileBatch.Draw(
+				TextureAssets.Tile[Type].Value,
+				new Vector4(pos.X, pos.Y, 16.3f, 16.3f),
+				new Rectangle(tileFrameX, tileFrameY, 16, 16),
+				vertices
+			);
+
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomNonSolid);
+			return false;
 		}
 		public override void NearbyEffects(int i, int j, bool closer) {
 			if (closer) return;
