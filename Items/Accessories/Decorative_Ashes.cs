@@ -10,6 +10,7 @@ using Terraria.UI.Chat;
 using Terraria.Utilities;
 
 namespace Origins.Items.Accessories;
+[AutoloadEquip(EquipType.Back)]
 public class Decorative_Ashes : ModItem {
 	public static int ThornsCount => Main.rand.Next(8, 13);
 	public override void SetDefaults() {
