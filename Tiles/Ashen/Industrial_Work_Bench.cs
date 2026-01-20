@@ -2,6 +2,7 @@
 using Origins.Dusts;
 using Origins.Graphics;
 using Origins.Items.Materials;
+using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
 using System.Linq;
 using Terraria;
@@ -35,7 +36,6 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(BaseTileID, 0));
 			TileObjectData.newTile.LavaDeath = Main.tileLavaDeath[Type];
 			TileObjectData.newTile.SetHeight(3);
-			AnimationFrameHeight = TileObjectData.newTile.CoordinateHeights.Sum() + 2 * TileObjectData.newTile.Height;
 			TileObjectData.addTile(Type);
 
 			AddMapEntry(FromHexRGB(0x0A3623), Item.DisplayName);
@@ -49,15 +49,45 @@ namespace Origins.Tiles.Ashen {
 		public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
 		}
-		public override void AnimateTile(ref int frame, ref int frameCounter) {
-			if (frameCounter.CycleUp(25)) frame.CycleUp(2);
-		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			const float brightness = 0.8f;
-			if (Main.tileFrame[Type] == 0 && tile.TileFrameX == 18 && tile.TileFrameY == 0) color = Vector3.Max(color, new(brightness, brightness * 0.45f, brightness * 0.2f));
+			if (Main.tileFrame[Type] != 0 && tile.TileFrameX == 18 && tile.TileFrameY == 0) color = Vector3.Max(color, new(brightness, brightness * 0.45f, brightness * 0.2f));
+		}
+		public static bool IsPowered(int i, int j) {
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			for (int x = 0; x < data.Width; x++) {
+				for (int y = 0; y < data.Height; y++) {
+					Tile tile = Main.tile[left + x, top + y];
+					tile.WallColor = tile.Get<Ashen_Wire_Data>().AnyPower ? PaintID.DeepCyanPaint : PaintID.DeepRedPaint;
+					if (Main.tile[left + x, top + y].Get<Ashen_Wire_Data>().AnyPower) return true;
+				}
+			}
+			return false;
+		}
+		public override void HitWire(int i, int j) {
+			bool powered = IsPowered(i, j);
+			bool wasPowered = Main.tile[i, j].TileFrameY >= 18 * 3;
+			if (powered != wasPowered) {
+				UpdatePowerState(i, j, powered);
+			}
+		}
+		public static void UpdatePowerState(int i, int j, bool powered) {
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			for (int x = 0; x < data.Width; x++) {
+				for (int y = 0; y < data.Height; y++) {
+					Tile tile = Main.tile[left + x, top + y];
+					tile.TileFrameY = (short)(tile.TileFrameY % (18 * 3) + (powered ? 3 * 18 : 0));
+				}
+			}
+			if (!NetmodeActive.SinglePlayer) NetMessage.SendTileSquare(-1, left, top, data.Width, data.Height);
+		}
+		public override void PlaceInWorld(int i, int j, Item item) {
+			UpdatePowerState(i, j, IsPowered(i, j));
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
