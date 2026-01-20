@@ -65,6 +65,7 @@ public abstract class Retool_Arm : ModItem {
 				tag["name"] = nextArm.Name;
 				ItemIO.Load(Item, tag);
 				originPlayer.retoolArm = nextArm;
+				originPlayer.retoolArmRotation = 0;
 				originPlayer.retoolArm.OnSwitchTo(player);
 				return;
 			}
@@ -179,6 +180,9 @@ public class Retool_Arm_Cannon : Retool_Arm {
 	}
 	public override int ChoosePrefix(UnifiedRandom rand) {
 		return OriginExtensions.GetAllPrefixes(Item, rand, (PrefixCategory.AnyWeapon, 1), (PrefixCategory.Ranged, 1), (PrefixCategory.Accessory, 2));
+	}
+	public override void OnSwitchTo(Player player) {
+		if (player.direction == -1) player.OriginPlayer().retoolArmRotation += MathHelper.Pi;
 	}
 }
 public class Retool_Arm_Bomb : ModProjectile {
@@ -325,6 +329,9 @@ public class Retool_Arm_Laser : Retool_Arm {
 	}
 	public override int ChoosePrefix(UnifiedRandom rand) {
 		return OriginExtensions.GetAllPrefixes(Item, rand, (PrefixCategory.AnyWeapon, 1), (PrefixCategory.Magic, 1), (PrefixCategory.Accessory, 2));
+	}
+	public override void OnSwitchTo(Player player) {
+		if (player.direction == -1) player.OriginPlayer().retoolArmRotation += MathHelper.Pi;
 	}
 	public override bool ReplacesAltFunctionUse(Player player) => true;
 }
