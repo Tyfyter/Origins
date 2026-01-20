@@ -3367,6 +3367,7 @@ namespace Origins {
 			}
 			return foundTarget;
 		}
+		public static Vector2 Directions(this Player player, float xMultiplier = 1, float yMultiplier = 1) => new(player.direction * xMultiplier, player.gravDir * yMultiplier);
 		public static void DoCustomCombatText(Rectangle location, Color color, int amount, bool dramatic = false, bool dot = false, bool fromFriendly = true) {
 			CombatText.NewText(location, color, amount, dramatic, dot);
 			if (Main.netMode != NetmodeID.SinglePlayer) {

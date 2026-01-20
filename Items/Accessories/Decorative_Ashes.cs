@@ -12,7 +12,18 @@ using Terraria.Utilities;
 namespace Origins.Items.Accessories;
 [AutoloadEquip(EquipType.Back)]
 public class Decorative_Ashes : ModItem {
+	public static Vector2 GetRocketShootPosition(Player player) {
+		return player.MountedCenter - player.Directions(8, 8);
+	}
+	public static Vector2 GetRocketShootVelocity(Player player) {
+		Vector2 velocity = (Main.rand.NextVector2Circular(4f, 4f) + Main.rand.NextVector2CircularEdge(10f, 10f)).Abs(out Vector2 signs);
+		MinMax(ref velocity.X, ref velocity.Y);
+		signs.X = -player.direction;
+		signs.Y = -player.gravDir;
+		return velocity * signs;
+	}
 	public static int ThornsCount => Main.rand.Next(8, 13);
+	public static float HomingTightness => 0.12f;
 	public override void SetDefaults() {
 		Item.DefaultToAccessory();
 		Item.rare = ItemRarityID.Yellow;
@@ -61,8 +72,7 @@ public class Decorative_Ashes_Missile : ModProjectile {
 		Projectile.usesLocalNPCImmunity = true;
 		Projectile.appliesImmunityTimeOnSingleHits = true;
 		Projectile.penetrate = 1;
-	}
-	public override void OnSpawn(IEntitySource source) {
+		Projectile.Opacity = 0;
 	}
 	public override void AI() {
 		const int range = 16 * 16;
@@ -88,9 +98,11 @@ public class Decorative_Ashes_Missile : ModProjectile {
 
 			targetVelocity *= 16f;
 			float speed = Projectile.velocity.Length();
-			Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity, 0.083333336f).Normalized(out float newSpeed) * float.Max(speed, newSpeed);
+			Projectile.velocity = Vector2.Lerp(Projectile.velocity, targetVelocity, Decorative_Ashes.HomingTightness).Normalized(out float newSpeed) * float.Max(speed, newSpeed);
 		}
 		Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+		Projectile.alpha.Cooldown(0, 85);
+		if (Projectile.alpha > 0) return;
 		ref Vector2 dustVel = ref Dust.NewDustPerfect(Projectile.Center - Projectile.velocity, DustID.Torch).velocity;
 		dustVel *= 0.5f;
 		dustVel -= Projectile.velocity * 0.25f * Math.Min(++Projectile.localAI[0] / 15f, 1);

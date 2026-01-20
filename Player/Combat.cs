@@ -1092,18 +1092,18 @@ namespace Origins {
 				} finally {
 					coreGeneratorItem.useAmmo = ammoType;
 				}
-				if (decorativeAshes is not null) {
-					for (int i = Decorative_Ashes.ThornsCount; i > 0; i--) {
-						Player.SpawnProjectile(
-							Player.GetSource_Accessory(decorativeAshes),
-							Player.MountedCenter,
-							Main.rand.NextVector2Circular(4f, 4f) + Main.rand.NextVector2CircularEdge(10f, 10f),
-							decorativeAshes.shoot,
-							Player.GetWeaponDamage(decorativeAshes),
-							Player.GetWeaponKnockback(decorativeAshes),
-							-1f
-						);
-					}
+			}
+			if (decorativeAshes is not null && !isSelfDamage) {
+				for (int i = Decorative_Ashes.ThornsCount; i > 0; i--) {
+					Player.SpawnProjectile(
+						Player.GetSource_Accessory(decorativeAshes),
+						Decorative_Ashes.GetRocketShootPosition(Player),
+						Decorative_Ashes.GetRocketShootVelocity(Player),
+						decorativeAshes.shoot,
+						Player.GetWeaponDamage(decorativeAshes),
+						Player.GetWeaponKnockback(decorativeAshes),
+						-1f
+					);
 				}
 			}
 			if (info.DamageSource.SourceNPCIndex > -1 && Main.npc[info.DamageSource.SourceNPCIndex].type == ModContent.NPCType<Brine_Latcher>()) {

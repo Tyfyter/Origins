@@ -489,8 +489,8 @@ namespace Origins {
 					if (--decorativeAshesTimer <= -CombinedHooks.TotalUseTime(decorativeAshes.useTime, Player, decorativeAshes)) {
 						Player.SpawnProjectile(
 							Player.GetSource_Accessory(decorativeAshes),
-							Player.MountedCenter,
-							Main.rand.NextVector2Circular(4f, 4f) + Main.rand.NextVector2CircularEdge(10f, 10f),
+							Decorative_Ashes.GetRocketShootPosition(Player),
+							Decorative_Ashes.GetRocketShootVelocity(Player),
 							decorativeAshes.shoot,
 							Player.GetWeaponDamage(decorativeAshes),
 							Player.GetWeaponKnockback(decorativeAshes),
