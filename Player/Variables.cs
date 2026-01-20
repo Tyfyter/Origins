@@ -380,6 +380,7 @@ namespace Origins {
 		public int glitterGlueTimer = 0;
 		public int exoWeaponMountCurrentWeapon = 0;
 		public int exoWeaponMountLastWeapon = 0;
+		public bool exoWeaponMountCanCancel;
 		public bool gillsDidVisual = false;
 		public bool exoLegs = false;
 		public Item bombRack = null;

@@ -27,7 +27,7 @@ namespace Origins.Items.Accessories {
 				SoundEngine.PlaySound(SoundID.Item113.WithPitch(2f).WithVolume(0.5f));
 				SoundEngine.PlaySound(SoundID.Item89.WithVolume(0.5f));
 				int buff = ModContent.BuffType<Exo_Weapon_Mount_Buff>();
-				if (originPlayer.exoWeaponMountCurrentWeapon == originPlayer.exoWeaponMountLastWeapon) {
+				if (originPlayer.exoWeaponMountCanCancel && originPlayer.exoWeaponMountCurrentWeapon == originPlayer.exoWeaponMountLastWeapon) {
 					int buffIndex = player.FindBuffIndex(buff);
 					if (buffIndex != -1) {
 						player.DelBuff(buffIndex);
@@ -36,7 +36,9 @@ namespace Origins.Items.Accessories {
 				}
 				player.AddBuff(buff, BuffTime);
 				originPlayer.exoWeaponMountLastWeapon = oldSelected;
+				originPlayer.exoWeaponMountCanCancel = true;
 			}
+			if (player.ItemAnimationJustStarted) originPlayer.exoWeaponMountCanCancel = false;
 		}
 	}
 	public class Exo_Weapon_Mount_Buff : ModBuff {
