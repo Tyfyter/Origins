@@ -84,24 +84,28 @@ namespace Origins.Tiles.Ashen {
 			bool powered = IsPowered(i, j);
 			bool wasPowered = Main.tile[i, j].TileFrameX >= 18 * 4;
 			if (powered != wasPowered) {
-				TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
-				TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
-				for (int x = 0; x < data.Width; x++) {
-					for (int y = 0; y < data.Height; y++) {
-						Tile tile = Main.tile[left + x, top + y];
-						tile.TileFrameX = (short)(tile.TileFrameX % (18 * 4) + (powered ? 4 * 18 : 0));
-					}
-				}
-				if (!NetmodeActive.SinglePlayer) NetMessage.SendTileSquare(-1, left, top, data.Width, data.Height);
+				UpdatePowerState(i, j, powered);
 			} else {
 				Toggle(i, j);
 			}
+		}
+		public static void UpdatePowerState(int i, int j, bool powered) {
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			for (int x = 0; x < data.Width; x++) {
+				for (int y = 0; y < data.Height; y++) {
+					Tile tile = Main.tile[left + x, top + y];
+					tile.TileFrameX = (short)(tile.TileFrameX % (18 * 4) + (powered ? 4 * 18 : 0));
+				}
+			}
+			if (!NetmodeActive.SinglePlayer) NetMessage.SendTileSquare(-1, left, top, data.Width, data.Height);
 		}
 		public override bool RightClick(int i, int j) => Toggle(i, j);
 		public override void PlaceInWorld(int i, int j, Item item) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			ModContent.GetInstance<Industrial_Door_TE_System>().AddTileEntity(new(left, top));
+			UpdatePowerState(i, j, IsPowered(i, j));
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);

@@ -103,21 +103,14 @@ namespace Origins.Tiles.Ashen {
 			if (!fail) fail = IsPowered(i, j);
 		}
 		public override void HitWire(int i, int j) {
-			bool powered = IsPowered(i, j);
-			bool wasPowered = Main.tile[i, j].TileFrameX >= 18 * 4;
+			Toggle(i, j);
+			/*bool powered = IsPowered(i, j);
+			bool wasPowered = ;
 			if (powered != wasPowered) {
-				TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
-				TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
-				for (int x = 0; x < data.Width; x++) {
-					for (int y = 0; y < data.Height; y++) {
-						Tile tile = Main.tile[left + x, top + y];
-						tile.TileFrameX = (short)(tile.TileFrameX % (18 * 4) + (powered ? 4 * 18 : 0));
-					}
-				}
-				if (!NetmodeActive.SinglePlayer) NetMessage.SendTileSquare(-1, left, top, data.Width, data.Height);
-			} else {
-				Toggle(i, j);
-			}
+				UpdatePowerState(i, j, powered);
+			}*/
+		}
+		public static void UpdatePowerState(int i, int j, bool powered) {
 		}
 		public override bool RightClick(int i, int j) => Toggle(i, j);
 		public override void PlaceInWorld(int i, int j, Item item) {
@@ -129,6 +122,7 @@ namespace Origins.Tiles.Ashen {
 					WorldGen.SquareTileFrame(left + x, top + y);
 				}
 			}
+			UpdatePowerState(i, j, IsPowered(i, j));
 		}
 		public static bool Toggle(int i, int j, bool actuallyDo = true) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
