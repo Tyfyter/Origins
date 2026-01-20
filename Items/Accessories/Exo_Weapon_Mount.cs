@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Dusts;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -23,9 +24,6 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			int oldSelected = originPlayer.exoWeaponMountCurrentWeapon;
 			if (originPlayer.exoWeaponMountCurrentWeapon.TrySet(player.selectedItem)) {
-				SoundEngine.PlaySound(SoundID.Item127.WithVolume(0.5f));
-				SoundEngine.PlaySound(SoundID.Item113.WithPitch(2f).WithVolume(0.5f));
-				SoundEngine.PlaySound(SoundID.Item89.WithVolume(0.5f));
 				int buff = ModContent.BuffType<Exo_Weapon_Mount_Buff>();
 				if (originPlayer.exoWeaponMountCanCancel && originPlayer.exoWeaponMountCurrentWeapon == originPlayer.exoWeaponMountLastWeapon) {
 					int buffIndex = player.FindBuffIndex(buff);
@@ -33,6 +31,15 @@ namespace Origins.Items.Accessories {
 						player.DelBuff(buffIndex);
 						return;
 					}
+				}
+				SoundEngine.PlaySound(SoundID.Item127.WithVolume(0.5f));
+				SoundEngine.PlaySound(SoundID.Item113.WithPitch(2f).WithVolume(0.5f));
+				SoundEngine.PlaySound(SoundID.Item89.WithVolume(0.5f));
+				for (int i = 0; i < 4; i++) {
+					Dust dust = Dust.NewDustPerfect(player.MountedCenter - new Vector2(player.direction * 12, player.gravDir * 4), ModContent.DustType<Spark_Dust>());
+					dust.velocity *= 0.5f;
+					dust.velocity.X -= player.direction * 1;
+					dust.velocity.Y -= player.gravDir * 1;
 				}
 				player.AddBuff(buff, BuffTime);
 				originPlayer.exoWeaponMountLastWeapon = oldSelected;
