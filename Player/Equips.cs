@@ -528,16 +528,19 @@ namespace Origins {
 					).originalDamage = roboTail.damage;
 				}
 			}
-			if (bombRack is not null && (Player.mount?.Active != true) && Player.controlJump && Player.jump == 0 && Player.velocity.Y != 0f && bombRackCount > 0 && bombRackTimer.Warmup(bombRack.useTime)) {
-				Player.SpawnProjectile(Player.GetSource_Accessory(bombRack),
-					Player.Bottom,
-					Vector2.Zero,
-					bombRack.shoot,
-					Player.GetWeaponDamage(bombRack),
-					Player.GetWeaponKnockback(bombRack)
-				);
-				bombRackCount--;
-				bombRackTimer = 0;
+			if (bombRack is not null && (Player.mount?.Active != true) && Player.controlJump && Player.jump == 0 && Player.velocity.Y != 0f) {
+				if (bombRackCount > 0 && bombRackTimer.Warmup(bombRack.useTime)) {
+					Player.SpawnProjectile(Player.GetSource_Accessory(bombRack),
+						Player.Bottom,
+						Vector2.Zero,
+						bombRack.shoot,
+						Player.GetWeaponDamage(bombRack),
+						Player.GetWeaponKnockback(bombRack)
+					);
+					bombRackCount--;
+					bombRackTimer = 0;
+				}
+				if (bombRackVisual) Dust.NewDust(Player.BottomLeft - Vector2.UnitX * 4, Player.width + 8, 0, ModContent.DustType<Black_Smoke_Dust>(), SpeedY: 4);
 			}
 			if (statSharePercent != 0f) {
 				foreach (DamageClass damageClass in DamageClasses.All) {

@@ -384,6 +384,7 @@ namespace Origins {
 		public bool gillsDidVisual = false;
 		public bool exoLegs = false;
 		public Item bombRack = null;
+		public bool bombRackVisual = false;
 		public int bombRackCount = 0;
 		public int bombRackTimer = 0;
 		public Item decorativeAshes = null;
@@ -962,6 +963,7 @@ namespace Origins {
 			glitterGlue = null;
 			exoLegs = false;
 			bombRack = null;
+			bombRackVisual = false;
 			if (decorativeAshes is null) {
 				decorativeAshesCount = 0;
 				decorativeAshesTimer = 0;

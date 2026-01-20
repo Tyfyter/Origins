@@ -1,4 +1,5 @@
-﻿using Origins.Projectiles;
+﻿using Origins.Dusts;
+using Origins.Projectiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -9,7 +10,7 @@ namespace Origins.Items.Accessories;
 public class Bomb_Rack : ModItem {
 	public static int DebuffTime => Main.rand.Next(3, 7) * 60;
 	public override void SetStaticDefaults() {
-		ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new(60);
+		ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new(160);
 		Origins.AddGlowMask(this);
 	}
 	public override void SetDefaults() {
@@ -27,7 +28,9 @@ public class Bomb_Rack : ModItem {
 	}
 	public override void UpdateAccessory(Player player, bool hideVisual) {
 		Max(ref player.accRunSpeed, 6f);
-		player.OriginPlayer().bombRack = Item;
+		OriginPlayer originPlayer = player.OriginPlayer();
+		originPlayer.bombRack = Item;
+		originPlayer.bombRackVisual = !hideVisual;
 	}
 	public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend) {
 		Min(ref player.wingTime, player.wingTimeMax);
