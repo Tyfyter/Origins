@@ -7566,7 +7566,10 @@ Lunatics_Rune: {
 
 Adjusto_Hook: {
 	// DisplayName: Adjust-o-Hook
-	// Tooltip: Give actual tooltip when new controls are implemented
+	// Tooltip: ControlsOnThisLine
+	// ControlTootlipDefault: ""
+	// ControlTootlipInverted: ""
+	// ControlTootlipWorld: ""
 }
 
 Gills: {

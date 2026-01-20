@@ -5,6 +5,7 @@ using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Fish;
+using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
 using Origins.Layers;
 using Origins.LootConditions;
@@ -130,6 +131,9 @@ namespace Origins {
 
 		[DefaultValue(false)]
 		public bool SetBonusDoubleTap = false;
+
+		[DefaultValue(Adjusto_Hook.ControlSetting.Default)]
+		public Adjusto_Hook.ControlSetting adjustoHookControlSetting = Adjusto_Hook.ControlSetting.Default;
 
 		[DefaultValue(true)]
 		public bool AnimatedRavel = true;

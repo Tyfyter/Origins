@@ -1,17 +1,37 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Items.Tools {
 	public class Adjusto_Hook : ModItem {
-		
+		public override void SetStaticDefaults() {
+			foreach (ControlSetting setting in Enum.GetValues<ControlSetting>()) {
+				this.GetLocalization($"ControlTootlip{setting}", () => "");
+			}
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.AmethystHook);
 			Item.shootSpeed = 16f;
 			Item.shoot = ProjectileType<Adjusto_Hook_P>();
 			Item.value = Item.sellPrice(silver: 8);
+		}
+		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			for (int i = 0; i < tooltips.Count; i++) {
+				if (tooltips[i].Text == "ControlsOnThisLine") {
+					tooltips[i].Text = this.GetLocalization($"ControlTootlip{OriginClientConfig.Instance.adjustoHookControlSetting}").Value;
+					break;
+				}
+			}
+		}
+		public enum ControlSetting {
+			Default,
+			Inverted,
+			World
 		}
 	}
 	public class Adjusto_Hook_P : ModProjectile {
@@ -73,11 +93,12 @@ namespace Origins.Items.Tools {
 				if (Projectile.IsLocallyOwned() && Projectile.localAI[0] <= 0) {
 					float oldValue = Projectile.ai[2];
 
-					Projectile.ai[2] += player.controlDown.ToInt() - player.controlUp.ToInt();
+					Projectile.ai[2] += PickControlDirection();
 
 					Max(ref Projectile.ai[2], Projectile.localAI[1]);
 					Min(ref Projectile.ai[2], Projectile.localAI[2]);
 					if (Projectile.ai[2] != oldValue) Projectile.localAI[0] = GrappleRange() / NodeCount;
+					Projectile.netUpdate = true;
 				}
 				float speed = 11;
 				ProjectileLoader.GrapplePullSpeed(Projectile, player, ref speed);
@@ -133,6 +154,33 @@ namespace Origins.Items.Tools {
 				if (lastLink) break;
 			}
 			return false;
+		}
+		public int PickControlDirection() {
+			Player player = Main.player[Projectile.owner];
+			switch (OriginClientConfig.Instance.adjustoHookControlSetting) {
+				case Adjusto_Hook.ControlSetting.Default:
+				default:
+				return player.controlDown.ToInt() - player.controlUp.ToInt();
+				case Adjusto_Hook.ControlSetting.Inverted:
+				return player.controlUp.ToInt() - player.controlDown.ToInt();
+				case Adjusto_Hook.ControlSetting.World: {
+					Vector2 controlDirection = new(player.controlRight.ToInt() - player.controlLeft.ToInt(), (player.controlDown.ToInt() - player.controlUp.ToInt()) * player.gravDir);
+					if (controlDirection == default) return 0;
+					controlDirection.Normalize();
+					Vector2 current = GetNodes().GetIfInRange((int)Projectile.ai[2]);
+					Vector2 higher = GetNodes().GetIfInRange((int)Projectile.ai[2] + 1);
+					Vector2 lower = GetNodes().GetIfInRange((int)Projectile.ai[2] - 1);
+					float bestQuality = 0.01f;
+					int bestDir = 0;
+					if (higher != default && Maximize(ref bestQuality, Vector2.Dot(current.DirectionTo(higher), controlDirection))) {
+						bestDir = 1;
+					}
+					if (lower != default && Maximize(ref bestQuality, Vector2.Dot(current.DirectionTo(lower), controlDirection))) {
+						bestDir = -1;
+					}
+					return bestDir;
+				}
+			}
 		}
 	}
 }

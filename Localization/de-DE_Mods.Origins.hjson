@@ -2688,6 +2688,11 @@ Configs: {
 				Low values will require beefy computers
 				''' */
 		}
+
+		adjustoHookControlSetting: {
+			// Label: adjusto Hook Control Setting
+			// Tooltip: ""
+		}
 	}
 
 	OriginConfig: {
@@ -3102,6 +3107,25 @@ Configs: {
 
 		Disabled: {
 			// Label: Disabled
+			// Tooltip: ""
+		}
+	}
+
+	ControlSetting: {
+		// Tooltip: ""
+
+		Default: {
+			// Label: Default
+			// Tooltip: ""
+		}
+
+		Inverted: {
+			// Label: Inverted
+			// Tooltip: ""
+		}
+
+		World: {
+			// Label: World
 			// Tooltip: ""
 		}
 	}
