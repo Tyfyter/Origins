@@ -1,7 +1,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Graphics;
+using Origins.Projectiles;
+using Origins.Reflection;
 using Origins.UI;
 using System;
+using System.Drawing;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -30,7 +34,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.shoot = ModContent.ProjectileType<Blast_Furnace_Charge>();
-			Item.shootSpeed = 16f;
+			Item.shootSpeed = 8f;
 			Item.mana = 7;
 			Item.knockBack = 5f;
 			Item.value = Item.sellPrice(gold: 4);
@@ -52,10 +56,11 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.NewProjectile(
 					source,
 					position,
-					velocity.RotatedByRandom(1f),
+					velocity.RotatedByRandom(0.25f),
 					type,
 					damage,
-					knockback
+					knockback,
+					ai1: blastFurnaceCharges
 				);
 			}
 			if (blastFurnaceCharges > 0) blastFurnaceCharges--;
@@ -112,135 +117,65 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Blast_Furnace_P : ModProjectile {
-		public override string Texture => typeof(Blast_Furnace).GetDefaultTMLName();
+		public float Lifetime => 40f + Projectile.ai[1];
+		public float MinSize => 6f + Projectile.ai[1];
+		public float MaxSize => 60f + Projectile.ai[1] * 5;
+		private readonly float[] sizes = new float[21];
 		public override void SetStaticDefaults() {
-			ProjectileID.Sets.TrailCacheLength[Type] = 20;
+			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+			ProjectileID.Sets.TrailCacheLength[Projectile.type] = sizes.Length;
 		}
+		float Size => float.Lerp(MinSize, MaxSize, float.Pow(Utils.GetLerpValue(0f, Lifetime, Projectile.ai[0]), 0.8f));
 		public override void SetDefaults() {
-			Projectile.width = 0;
-			Projectile.height = 0;
-			Projectile.timeLeft = 60;
-			Projectile.extraUpdates = 2;
-			Projectile.penetrate = -1;
+			Projectile.DamageType = DamageClass.Magic;
+			Projectile.width = Projectile.height = 6;
+			Projectile.penetrate = 4;
 			Projectile.friendly = true;
-			Projectile.tileCollide = false;
+			Projectile.alpha = 255;
+			Projectile.extraUpdates = 3;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
+			for (int i = 0; i < Projectile.oldPos.Length; i++)
+				Projectile.oldRot[i] = Main.rand.NextFloatDirection();
 		}
-		public override bool ShouldUpdatePosition() => false;
-		record struct Wave(double Frequency, double Amplitude, double Phase) {
-			public readonly double Sample(double position) => Math.Sin(position * Frequency + Phase) * Amplitude;
-		}
-		Wave[] waves;
-		NPC target;
-		public Vector2 HeadOffset {
-			get => new(Projectile.ai[0], Projectile.ai[1]);
-			set => (Projectile.ai[0], Projectile.ai[1]) = value;
-		}
-		public override void OnSpawn(IEntitySource source) {
-			waves = new Wave[Main.rand.Next(13, 21)];
-			for (int i = 0; i < waves.Length; i++) {
-				waves[i] = new(Main.rand.NextFloat(0.1f, 0.5f), Main.rand.NextFloat(0.02f, 0.1f), Main.rand.NextFloat(MathHelper.TwoPi));
-			}
-			float distanceFromTarget = 16 * 5f;
-			distanceFromTarget *= distanceFromTarget;
-			foreach (NPC npc in Main.ActiveNPCs) {
-				if (npc.CanBeChasedBy()) {
-					Vector2 pos = Main.MouseWorld;
-					float between = pos.Clamp(npc.Hitbox).DistanceSQ(pos);
-					if (distanceFromTarget > between) {
-						distanceFromTarget = between;
-						target = npc;
-					}
+		public override void AI() {
+			float brightnessMult = 1;
+			if (Projectile.ai[2] != 0) brightnessMult = Utils.GetLerpValue(0f, Lifetime, Projectile.ai[0]);
+			Lighting.AddLight(Projectile.Center, 0.85f * brightnessMult, 0.4f * brightnessMult, 0f);
+			if (Projectile.ai[2] != 0) {
+				Projectile.velocity = default;
+				if (--Projectile.ai[0] < 0) {
+					Projectile.Kill();
+				}
+			} else {
+				if (++Projectile.ai[0] > Lifetime) {
+					Projectile.ai[2] = 1;
 				}
 			}
-		}
-		Vector2 originalVelocity;
-		public override void AI() {
-			Projectile.Opacity = Projectile.timeLeft / 25f;
-			if (Projectile.TryGetOwner(out Player player)) Projectile.position = player.MountedCenter;
-			if (Projectile.ai[2] == 0) originalVelocity = Projectile.velocity;
-			if (++Projectile.ai[2] >= Projectile.oldPos.Length) return;
-			Projectile.ai[0] += Projectile.velocity.X;
-			Projectile.ai[1] += Projectile.velocity.Y;
-			ProcessTick();
-			double value = 0;
-			for (int i = 0; i < waves.Length; i++) value += waves[i].Sample(Projectile.ai[2]);
-			if (target is not null) {
-				if (Projectile.localNPCImmunity[target.whoAmI] != 0 || !target.CanBeChasedBy(Projectile)) target = null;
-			}
-			Projectile.velocity = Projectile.velocity.RotatedBy(value);
-			Vector2 originalDir = originalVelocity.Normalized(out float speed);
-			Vector2? targetDir = target?.DirectionFrom(Projectile.position + HeadOffset);
-			Projectile.velocity = (Vector2.Lerp(
-				(targetDir ?? originalDir) * speed,
-				Projectile.velocity,
-				float.Clamp(Vector2.Dot((targetDir ?? originalDir), HeadOffset.Normalized(out _)) * 2, 0, 1)
-			) + (targetDir ?? Vector2.Zero) * speed * 0.25f).Normalized(out _) * speed;
-			SetHitboxCache();
-			void ProcessTick() {
-				Projectile.oldPos[(int)Projectile.ai[2]] = HeadOffset;
-				Projectile.oldRot[(int)Projectile.ai[2]] = Projectile.velocity.ToRotation() + MathHelper.Pi;
-			}
-		}
-		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			if (polygonCache is null) return false;
-			targetHitbox.Offset((-Projectile.position).ToPoint());
-			return CollisionExtensions.PolygonIntersectsRect(polygonCache, targetHitbox);
-		}
-		(Vector2 start, Vector2 end)[] polygonCache;
-		private void SetHitboxCache() {
-			Vector2 width = new(12, 0);
-			Vector2 rot = width.RotatedBy(Projectile.rotation);
-			Vector2 lastPos0 = -rot;
-			Vector2 lastPos1 = rot;
-			Vector2 nextPos0 = default, nextPos1 = default;
-			int count = int.Min((int)Projectile.ai[2], Projectile.oldPos.Length);
-			polygonCache = new (Vector2 start, Vector2 end)[count * 2 + 2];
-			int lineIndex = 0;
-			polygonCache[lineIndex++] = (lastPos1, lastPos0);
-			for (int i = 0; i < count; i++) {
-				Vector2 nextPos = Projectile.oldPos[i];
-				rot = width.RotatedBy(Projectile.oldRot[i]);
-				nextPos0 = nextPos - rot;
-				nextPos1 = nextPos + rot;
+			//Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.FrostStaff);
 
-				polygonCache[lineIndex++] = (lastPos0, nextPos0);
-				polygonCache[lineIndex++] = (nextPos1, lastPos1);
-				lastPos0 = nextPos0;
-				lastPos1 = nextPos1;
+			for (int i = sizes.Length - 1; i > 0; i--) {
+				sizes[i] = sizes[i - 1];
 			}
-			polygonCache[lineIndex++] = (nextPos0, nextPos1);
+			sizes[0] = Size;
+			Projectile.alpha = (int)(200 * (1 - (Projectile.ai[0] / Lifetime)));
+			Projectile.rotation += 0.3f * Projectile.direction;
 		}
-		private static readonly VertexStrip _vertexStrip = new();
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			int scale = (int)(Size / 2) - hitbox.Width;
+			hitbox.Inflate(scale, scale);
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.OnFire, 240);
+		}
 		public override bool PreDraw(ref Color lightColor) {
-			Vector2[] oldPos = new Vector2[int.Min((int)Projectile.ai[2], Projectile.oldPos.Length)];
-			for (int i = 0; i < oldPos.Length; i++) {
-				oldPos[i] = Projectile.oldPos[i] + Projectile.position;
-			}
-			MiscShaderData miscShaderData = GameShaders.Misc["Origins:LaserBlade"];
-			miscShaderData.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]);
-			miscShaderData.UseImage0(TextureAssets.Extra[ExtrasID.FlameLashTrailShape]);
-			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(1, 1, 1, 0));
-			miscShaderData.UseSaturation(-1);
-			miscShaderData.UseOpacity(2);
-			miscShaderData.Apply();
-			_vertexStrip.PrepareStripWithProceduralPadding(oldPos, Projectile.oldRot, BladeSecondaryColors, BladeWidth,  -Main.screenPosition, true);
-			_vertexStrip.DrawTrail();
-			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-
-			miscShaderData.UseSaturation(0.5f);
-			miscShaderData.Apply();
-			_vertexStrip.PrepareStripWithProceduralPadding(oldPos, Projectile.oldRot, BladeColors, BladeWidth, -Main.screenPosition, true);
-			_vertexStrip.DrawTrail();
-			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			float progress = (Projectile.ai[0] / Lifetime);
+			Flamethrower_Drawer.Draw(Projectile, float.Pow(1 - progress, 2f), TextureAssets.Projectile[Type].Value, Color.Black, sizes, brightnessColorExponent: 1.75f, smokeAmount: 0, sizeProgressOverride: _ => progress * 0.5f);
 			return false;
 		}
-
-		private Color BladeColors(float progressOnStrip) => new Color(255, 69, 0, 32) * Projectile.Opacity;
-		private Color BladeSecondaryColors(float progressOnStrip) => new Color(218, 165, 32, 32) * Projectile.Opacity;
-		private static float BladeWidth(float progressOnStrip) {
-			return 12;
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			Projectile.ai[2] = 2;
+			return false;
 		}
 	}
 }

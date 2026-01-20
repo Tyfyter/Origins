@@ -76,13 +76,8 @@ namespace Origins.Items.Weapons.Ranged {
 			if (source is EntitySource_Parent { Entity: Player player }) Projectile.ai[1] = player.altFunctionUse;
 		}
 		public override void AI() {
-			if (Projectile.localAI[2] == 0) {
-				Projectile.localAI[2] = 1 + Projectile.wet.ToInt();
-			}
 			Projectile.localAI[0] += 1f;
-			if (Projectile.localAI[2] == 1) {
-				Lighting.AddLight(Projectile.Center, 0.85f, 0.4f, 0f);
-			}
+			Lighting.AddLight(Projectile.Center, 0.85f, 0.4f, 0f);
 			//Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.FrostStaff);
 			Projectile.ai[0]++;
 			for (int i = sizes.Length - 1; i > 0; i--) {
