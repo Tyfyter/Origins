@@ -1449,6 +1449,11 @@ Buffs: {
 		DisplayName: Quickdraw
 		Description: Increased damage from swapping weapons!
 	}
+
+	Autohandcannon_Jam_Debuff: {
+		DisplayName: Autohandcannon Jam Debuff
+		Description: Mods.Origins.Buffs.Autohandcannon_Jam_Debuff.Description
+	}
 }
 
 DamageClassName: {

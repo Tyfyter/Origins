@@ -9,6 +9,8 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Autohandcannon : ModItem {
+		public static float ReuseThreshold => 0.8f;
+		public static bool ShouldJam(Player player) => Main.rand.NextBool(7, 37);
 		public static int ID { get; private set; }
 		public static LocalizedText JammedText { get; private set; }
 		public override void SetStaticDefaults() {
@@ -22,14 +24,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		static void On_Player_ItemCheck_HackHoldStyles(On_Player.orig_ItemCheck_HackHoldStyles orig, Player self, Item sItem) {
 			orig(self, sItem);
-			if (self.whoAmI == Main.myPlayer && sItem.type == ID && self.ItemAnimationActive && self.itemAnimation < self.itemAnimationMax * 0.8f && !self.OriginPlayer().autohandcannonJammed) {
+			if (self.whoAmI == Main.myPlayer && sItem.type == ID && self.ItemAnimationActive && self.itemAnimation < self.itemAnimationMax * ReuseThreshold && !self.OriginPlayer().autohandcannonJammed) {
 				if (self.controlUseItem && self.releaseUseItem) {
 					self.itemAnimation = 0;
 					self.itemTime = 0;
-					if (Main.rand.NextBool(7, 37)) {
+					if (ShouldJam(self)) {
 						SoundEngine.PlaySound(SoundID.Item178.WithPitch(1.6f));
 						SoundEngine.PlaySound(SoundID.Unlock.WithPitch(-1.2f));
 						self.OriginPlayer().autohandcannonJammed = true;
+						self.AddBuff(ModContent.BuffType<Autohandcannon_Jam_Debuff>(), 5 * 60);
 						CombatText.NewText(self.Hitbox, Color.DarkGray, JammedText.Value);
 					}
 				}
@@ -77,7 +80,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			player.itemLocation = player.GetHandPosition();
 			player.itemLocation.Y -= 12;
 			if (player.ItemAnimationEndingOrEnded) {
-				player.OriginPlayer().autohandcannonJammed = false;
+				player.ClearBuff(ModContent.BuffType<Autohandcannon_Jam_Debuff>());
 				SoundEngine.PlaySound(SoundID.Item149.WithPitch(-0.5f));
 			}
 		}
@@ -93,6 +96,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			Vector2 offset = velocity.RotatedBy(MathHelper.PiOver2 * -player.direction) * 5 / velocity.Length();
 			position += offset;
+		}
+	}
+	public class Autohandcannon_Jam_Debuff : ModBuff {
+		public override string Texture => "Origins/Buffs/Weapon_Jam_Debuff";
+		public override void Update(Player player, ref int buffIndex) {
+			player.OriginPlayer().autohandcannonJammed = true;
+			if (player.buffTime[buffIndex] == 0) SoundEngine.PlaySound(SoundID.Item149.WithPitch(-0.5f));
 		}
 	}
 }

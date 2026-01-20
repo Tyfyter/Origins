@@ -1117,6 +1117,7 @@ namespace Origins {
 			pocketDimensionMonolithActive = false;
 			InfoAccMechShowAshenWires = false;
 			if (blastFurnaceCharges > 0 && Player.HeldItem.ModItem is not Blast_Furnace) blastFurnaceCharges = 0;
+			autohandcannonJammed = false;
 
 			manaShielding = 0f;
 
