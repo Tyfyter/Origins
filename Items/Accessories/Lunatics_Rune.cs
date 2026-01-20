@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.Buffs;
 using Origins.Core;
 using Origins.Layers;
@@ -267,15 +268,21 @@ namespace Origins.Items.Accessories {
 			player.compositeBackArm.enabled = false;
 			player.compositeFrontArm.enabled = false;
 			player.itemTime.Cooldown();
-			bool shouldAttack = (player.controlUseItem && player.releaseUseItem) || originPlayer.lunaticsRuneSelectedAttack != 0;
+			bool shouldAttack = (player.controlUseItem && (player.releaseUseItem || Main.SettingsEnabled_AutoReuseAllItems)) || originPlayer.lunaticsRuneSelectedAttack != 0;
 			if (player.ItemAnimationActive) {
 				player.manaRegenDelay = player.maxRegenDelay;
 				player.itemAnimation--;
-				options[originPlayer.lunaticsRuneSelectedAttack].ProcessAttack(player);
+				options.GetIfInRange(originPlayer.lunaticsRuneSelectedAttack)?.ProcessAttack(player);
 			} else if (shouldAttack && options[originPlayer.lunaticsRuneSelectedAttack].CanStartAttack(player)) {
 				options[originPlayer.lunaticsRuneSelectedAttack].StartAttack(player);
 			}
 			player.releaseUseItem = !player.controlUseItem;
+			if (!player.ItemAnimationActive && player.controlUseTile && player.releaseUseTile && originPlayer.lunaticDragon) {
+				player.SetItemAnimation(20);
+				player.MinionNPCTargetAim(false);
+				originPlayer.lunaticsRuneSelectedAttack = -1;
+			}
+			player.releaseUseTile = !player.controlUseTile;
 			if (!player.ItemAnimationActive && player.ItemTimeIsZero) {
 				originPlayer.lunaticsRuneSelectedAttack = 0;
 			}
@@ -598,10 +605,7 @@ namespace Origins.Items.Accessories {
 				Projectile.ignoreWater = true;
 			}
 			public override void AI() {
-				if (Projectile.localAI[1].TrySet(1)) {
-					SoundEngine.PlaySound(SoundID.Item120, Projectile.position);
-				}
-
+				if (Projectile.ai[0] % 45f == 0) SoundEngine.PlaySound(SoundID.Item120, Projectile.position);
 				Projectile.ai[0]++;
 				if (Projectile.ai[0] >= 150f) {
 					Projectile.Kill();
@@ -758,8 +762,8 @@ namespace Origins.Items.Accessories {
 			}
 			public override void AI() {
 				bool dieNow = Projectile.ai[0] == 5;
-				if (dieNow) Projectile.alpha.Warmup(255, 9);
-				else Projectile.alpha.Cooldown(0, 9);
+				if (dieNow) Projectile.alpha.Warmup(255, 5);
+				else Projectile.alpha.Cooldown(0, 5);
 				if (Projectile.ai[1].CycleDown(30) && Projectile.IsLocallyOwned()) {
 					if (dieNow) {
 						Projectile.Kill();
@@ -776,6 +780,7 @@ namespace Origins.Items.Accessories {
 					);
 				}
 				if (Projectile.frameCounter.CycleUp(6)) Projectile.frame.CycleUp(Main.projFrames[Type]);
+				Lighting.AddLight(Projectile.Center, 0.4f, 0.85f, 0.9f);
 
 				const int HalfSpriteWidth = 100 / 2;
 				const int HalfSpriteHeight = 100 / 2;
@@ -788,6 +793,7 @@ namespace Origins.Items.Accessories {
 				DrawOffsetX = -(HalfSpriteWidth - HalfProjWidth);
 				DrawOriginOffsetY = -(HalfSpriteHeight - HalfProjHeight);
 			}
+			public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 0) * Projectile.Opacity;
 		}
 		public class Cultist_Lightning : ModProjectile {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CultistBossLightningOrbArc}";
@@ -1002,9 +1008,10 @@ namespace Origins.Items.Accessories {
 					< 600f => 0.9f,
 					_ => 1.2f
 				};
-				if (Vector2.Dot(Projectile.velocity.Normalized(out _), direction) < 0.25f)
-					speed *= 2;
-					//Projectile.velocity *= 0.99f;
+				if (Vector2.Dot(Projectile.velocity.Normalized(out _), direction) < 0.25f) {
+					speed *= 5 / speed;
+					Projectile.velocity *= 0.99f;
+				}
 				Projectile.velocity += direction * speed;
 				Projectile.velocity = Projectile.velocity.Normalized(out speed) * Math.Min(speed, 30);
 			} else {
@@ -1024,6 +1031,12 @@ namespace Origins.Items.Accessories {
 		}
 		public override ref bool HasBuff(Player player) => ref player.OriginPlayer().lunaticDragon;
 		public override bool IsValidParent(Projectile segment) => SegmentTypes[segment.type];
+		public override Color? GetAlpha(Color lightColor) {
+			lightColor = Color.Lerp(lightColor, Color.White, 0.4f);
+			lightColor.A = 150;
+			lightColor *= (lightColor.A - Projectile.alpha) / 255f;
+			return lightColor;
+		}
 	}
 	public class Phantasm_Dragon_Head : Phantasm_Dragon_Base {
 		public override BodyPart Part => BodyPart.Head;

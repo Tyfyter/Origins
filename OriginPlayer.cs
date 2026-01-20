@@ -771,7 +771,7 @@ namespace Origins {
 		}
 		public override void SetControls() {
 			Debugging.LogFirstRun(SetControls);
-			if (Player.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
+			if (!Main.mapFullscreen && Player.HasBuff<Lunatics_Rune_Attacks_Buff>()) {
 				PlayerInput.ScrollWheelDelta = 0;
 			}
 			if (lunaticsRuneCharge > 0) {
