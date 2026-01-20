@@ -1088,8 +1088,14 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
-			drawInfo.colorEyeWhites = Color.Transparent;
-			drawInfo.colorEyes = Color.Transparent;
+			drawInfo.colorEyes = new(0, 0, 0, drawInfo.colorArmorHead.A);
+			drawInfo.colorEyeWhites = drawInfo.colorEyes;
+
+			Color skinColor = OriginExtensions.Desaturate(drawInfo.drawPlayer.skinColor, 0.85f);
+			drawInfo.colorLegs = drawInfo.colorArmorLegs.MultiplyRGBA(skinColor);
+			drawInfo.colorBodySkin = drawInfo.colorArmorBody.MultiplyRGBA(skinColor);
+			drawInfo.colorHead = drawInfo.colorArmorHead.MultiplyRGBA(skinColor);
+			drawInfo.colorHair = drawInfo.drawPlayer.GetImmuneAlphaPure(OriginExtensions.Desaturate(drawInfo.drawPlayer.hairColor, 0).MultiplyRGB(new(51, 51, 51)), 0);
 		}
 	}
 }
