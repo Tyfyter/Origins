@@ -11,7 +11,8 @@ namespace Origins.Dusts {
 			dust.frame.X = 10 * DustID.Smoke;
 			dust.scale *= 1.1f;
 			if (dust.color == default) dust.color = Color.White;
-			dust.color = dust.color.MultiplyRGBA(Color.DimGray);
+			const int brightness = 50;
+			dust.color = dust.color.MultiplyRGBA(new Color(brightness, brightness, brightness));
 		}
 		public override bool Update(Dust dust) {
 			if (!dust.noGravity) dust.velocity.Y += 0.05f;
@@ -20,7 +21,7 @@ namespace Origins.Dusts {
 			Vector2 velocity = slopeCollision.ZW();
 			velocity = Collision.TileCollision(position, velocity, 0, 0);
 			if (velocity != dust.velocity || position != dust.position) {
-				dust.scale *= 0.9f;
+				dust.scale *= 0.99f;
 				dust.velocity *= 0f;
 				dust.scale -= 0.001f;
 			}
@@ -32,15 +33,10 @@ namespace Origins.Dusts {
 			}
 			dust.velocity *= 0.97f;
 			dust.rotation += dust.velocity.X * 0.25f;
-			if (dust.fadeIn > 0f && dust.fadeIn < 100f) {
-				dust.scale += 0.03f;
-				if (dust.scale > dust.fadeIn) {
-					dust.fadeIn = 0f;
-				}
-			}
+			dust.fadeIn++;
+			if (dust.fadeIn > 180) dust.alpha++;
 			if (dust.noGravity) {
 				dust.velocity *= 0.92f;
-				if (dust.fadeIn == 0f) dust.scale -= 0.04f;
 			}
 			if (dust.scale <= 0) dust.active = false;
 			if (dust.position.Y > Main.screenPosition.Y + Main.screenHeight) dust.active = false;
@@ -50,7 +46,7 @@ namespace Origins.Dusts {
 			return true;
 		}
 		public override bool PreDraw(Dust dust) {
-			Color newColor = Lighting.GetColor((int)dust.position.X / 16, (int)dust.position.Y / 16).MultiplyRGBA(dust.color);
+			Color newColor = Lighting.GetColor((int)dust.position.X / 16, (int)dust.position.Y / 16).MultiplyRGBA(dust.color) * (1 - dust.alpha / 255f);
 			Main.spriteBatch.Draw(Texture2D.Value, dust.position - Main.screenPosition, dust.frame, newColor, dust.rotation, new Vector2(4f, 4f), dust.scale, SpriteEffects.None, 0f);
 			return false;
 		}

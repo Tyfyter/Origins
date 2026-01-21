@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
+using Origins.Dusts;
 using Origins.Graphics.Primitives;
 using Origins.Items.Materials;
 using Origins.Items.Other;
@@ -150,12 +151,16 @@ namespace Origins.NPCs.Ashen.Boss {
 			Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
 			GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.05f);
 			this.GetState().DoAIState(this);
-			if (!Main.dedServ && NPC.frame.Y != 0 && !(thrusterSound.IsValid && SoundEngine.TryGetActiveSound(thrusterSound, out _))) {
-				thrusterSound = SoundEngine.PlaySound(Origins.Sounds.ThrusterLoop, NPC.Center, sound => {
-					if (!NPC.active) return false;
+			if (!Main.dedServ && NPC.frame.Y != 0) {
+				int type = Type;
+				thrusterSound.PlaySoundIfInactive(Origins.Sounds.ThrusterLoop, NPC.Center, sound => {
+					if (!NPC.active || NPC.type != type) return false;
 					sound.Position = NPC.Center;
 					return NPC.frame.Y != 0;
 				});
+				for (int i = 0; i < 2; i++) {
+					Dust.NewDust(NPC.Bottom - new Vector2((NPC.width * 0.5f - 16) * NPC.direction, 16), 8, 8, ModContent.DustType<Black_Smoke_Dust>(), NPC.direction * -4, 4);
+				}
 			}
 		}
 		public void DoTargeting() {
