@@ -14,6 +14,7 @@ using ThoriumMod.Items.Placeable.Relics;
 namespace Origins.Tiles.BossDrops {
 	[Autoload(false)]
 	public class TrophyItem(TrophyTileBase tile) : ModItem {
+		[field: CloneByReference]
 		public TrophyTileBase Tile { get; } = tile;
 		public override string Name => Tile.Name + "_Item";
 		public override string Texture => Tile.Texture + "_Item";
@@ -57,6 +58,7 @@ namespace Origins.Tiles.BossDrops {
 	}
 	[Autoload(false)]
 	public class RelicItem(RelicTileBase tile) : ModItem {
+		[field: CloneByReference]
 		public RelicTileBase Tile { get; } = tile;
 		public override string Name => Tile.Name + "_Item";
 		public override string Texture => Tile.RelicTextureName + "_Item";

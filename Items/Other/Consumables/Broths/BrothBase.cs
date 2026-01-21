@@ -12,6 +12,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			WikiCategories.Broth
 		];
 		protected override bool CloneNewInstances => true;
+		[field: CloneByReference]
 		public BrothBuff Buff { get; private set; }
 		public virtual LocalizedText BuffDisplayName => DisplayName;
 		public virtual LocalizedText BuffDescription => Tooltip;

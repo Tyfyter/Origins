@@ -709,6 +709,7 @@ namespace Origins.Tiles {
 	}
 	[Autoload(false)]
 	public class FurnitureSet_Chest_Item(FurnitureSet_Chest chest) : ModItem {
+		[CloneByReference] readonly FurnitureSet_Chest chest = chest;
 		protected override bool CloneNewInstances => true;
 		public override string Name => chest.Name + "_Item";
 		public override string Texture => chest.Texture + "_Item";

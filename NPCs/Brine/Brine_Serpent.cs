@@ -389,7 +389,6 @@ namespace Origins.NPCs.Brine {
 		bool IBrinePoolNPC.CanSeeTarget { get => default; set { } }
 		Vector2 IBrinePoolNPC.TargetPos { get => default; set { } }
 		bool IBrinePoolNPC.AggressivePathfinding { get => default; }
-		[CloneByReference]
 		HashSet<int> IBrinePoolNPC.TargetNPCTypes { get => default; }
 		bool IBrinePoolNPC.CheckTargetLOS(Vector2 target) => true;
 		bool IBrinePoolNPC.CanTargetNPC(NPC other) => false;

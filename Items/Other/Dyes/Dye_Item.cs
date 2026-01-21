@@ -28,7 +28,7 @@ namespace Origins.Items.Other.Dyes {
 			dyeItems = null;
 		}
 		public virtual bool AddToDyeTrader(Player player) => true;
-		SpriteBatchState lastState;
+		static SpriteBatchState lastState;
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			if (!UseShaderOnSelf) {
 				return true;

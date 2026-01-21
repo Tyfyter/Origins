@@ -17,13 +17,13 @@ namespace Origins.Tiles {
 		public string[] Categories => [
 			"Monolith"
 		];
-		[CloneByReference]
+		[field: CloneByReference]
 		public MonolithBase Tile { get; } = tile;
 		protected override bool CloneNewInstances => true;
 		public override string Texture => Tile.Texture + "_Item";
 		public override string Name => Tile.Name + "_Item";
-		public event Action<Item> ExtraDefaults;
-		public event Action<Item> OnAddRecipes;
+		[field: CloneByReference] public event Action<Item> ExtraDefaults;
+		[field: CloneByReference] public event Action<Item> OnAddRecipes;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 			Tile.RegisterItemDrop(Type);

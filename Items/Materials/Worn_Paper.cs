@@ -10,6 +10,7 @@ namespace Origins.Items.Materials {
 		public string PaperName => Name.Replace("Worn_Paper_", "");
 		public override LocalizedText Tooltip => LocalizedText.Empty;
 		public string EntryName => $"{Mod.Name}/{PaperName}";
+		[field: CloneByReference]
 		public JournalEntry Entry { get; private set; }
 		public override void Load() {
 			Mod.AddContent(Entry = new Worn_Paper_Entry(this));

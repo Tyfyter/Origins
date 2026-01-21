@@ -24,7 +24,7 @@ namespace Origins.Items.Other.Testing {
 	public class Blood_Mushroom_Soup : TestingItem {
 		public static int mode;
 		static int ModeCount => modes.Count;
-		readonly LinkedQueue<object> parameters = new();
+		[CloneByReference] readonly LinkedQueue<object> parameters = new();
 		public static List<WorldgenTestingMode> modes = [];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 0;

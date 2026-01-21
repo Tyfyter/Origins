@@ -31,6 +31,7 @@ namespace Origins.NPCs.Brine {
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public Range FrameRange => new(28, 64);
 		AutoLoadingAsset<Texture2D> strandTexture = typeof(Sea_Dragon).GetDefaultTMLName() + "_Strand";
+		[field: CloneByReference]
 		public HashSet<int> PredatorNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -240,7 +241,7 @@ namespace Origins.NPCs.Brine {
 				}
 			}
 		}
-		Physics.Chain[] chains;
+		[CloneByReference] Physics.Chain[] chains;
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
 			if (NPC.spriteDirection == 1) {

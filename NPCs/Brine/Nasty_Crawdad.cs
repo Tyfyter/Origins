@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Brine {
 	public class Nasty_Crawdad : Brine_Pool_NPC, ICustomWikiStat {
-		[CloneByReference]
+		[field: CloneByReference]
 		public HashSet<int> PredatorNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

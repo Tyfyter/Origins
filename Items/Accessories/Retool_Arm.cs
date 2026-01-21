@@ -20,7 +20,7 @@ using Terraria.Utilities;
 namespace Origins.Items.Accessories;
 public abstract class Retool_Arm : ModItem {
 	static readonly List<Retool_Arm> arms = [];
-	protected KinematicUtils.Arm arm = new() {
+	[CloneByReference] protected KinematicUtils.Arm arm = new() {
 		bone0 = new(18.9f, 0),
 		bone1 = new(29, 0),
 	};
@@ -634,7 +634,7 @@ public class Retool_Arm_Vice : Retool_Arm {
 		Item.knockBack = 12f;
 	}
 	Rectangle hitbox = new(0, 0, 16, 16);
-	Entity targetEntity;
+	[CloneByReference] Entity targetEntity;
 	public override void UpdateArm(Player player) {
 		OriginPlayer originPlayer = player.OriginPlayer();
 		arm.start = Retool_Arm_Layer.GetShoulder(player, player.position);

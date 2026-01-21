@@ -61,6 +61,7 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 	}
 	[Autoload(false)]
 	public class Hanging_Scrap_Item(HangingScrap scrap) : ModItem, ICustomPlaceTileItem {
+		[CloneByReference] readonly HangingScrap scrap = scrap;
 		protected override bool CloneNewInstances => true;
 		public override string Texture => scrap.Texture;
 		public override string Name => scrap.Name + "_Item";

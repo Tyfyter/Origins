@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public abstract class Assimilation_Potion<TAssimilation> : ModItem where TAssimilation : AssimilationDebuff {
+		[field: CloneByReference]
 		public readonly Assimilation_Potion_Player player = new();
 		protected override bool CloneNewInstances => true;
 		public override LocalizedText Tooltip => Mod.GetLocalization($"{LocalizationCategory}.Assimilation_Potion.{nameof(Tooltip)}").WithFormatArgs(10, ModContent.GetInstance<TAssimilation>().FullName);

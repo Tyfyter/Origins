@@ -45,7 +45,7 @@ namespace Origins.NPCs.Brine.Boss {
 	}
 	public class Lost_Diver_Spawn : Lost_Diver {
 		public override string Texture => "Origins/NPCs/Brine/Boss/Lost_Diver";
-		private SpawnNPCFlicker flicker;
+		[CloneByReference] private SpawnNPCFlicker flicker;
 		public override void SetStaticDefaults() {
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;

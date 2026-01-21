@@ -71,7 +71,7 @@ namespace Origins.UI.Snippets {
 		class AddConditionsTextGlobalItem : GlobalItem {
 			public override string Name => $"{nameof(Item_And_Name_Snippet)}_{base.Name}";
 			public override bool InstancePerEntity => true;
-			public Condition[] conditions = null;
+			[CloneByReference] public Condition[] conditions = null;
 			public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
 				if (conditions is null) return;
 				if (!ItemSlot.ShiftInUse) tooltips.RemoveRange(1, tooltips.Count - 1);

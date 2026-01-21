@@ -12,8 +12,8 @@ namespace Origins.Items.Other.Testing {
 		const float lowerLegAngle = -0.1504474f;
 		const float upperLegLength = 34.2f;
 		const float lowerLegLength = 33.4f;
-		Arm arm;
-		Arm arm2;
+		[CloneByReference] Arm arm;
+		[CloneByReference] Arm arm2;
 		Vector2 target = Vector2.Zero;
 		Vector2 target2 = Vector2.Zero;
 		int mode;

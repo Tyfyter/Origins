@@ -16,6 +16,7 @@ namespace Origins.Tiles {
 		public string[] Categories => [
 			WikiCategories.WaterFountain
 		];
+		[field: CloneByReference]
 		public WaterFountain FountainTile { get; } = fountainTile;
 		public override string Name => FountainTile.Name + "_Item";
 		public override string Texture => FountainTile.Texture + "_Item";

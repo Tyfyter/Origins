@@ -21,7 +21,7 @@ public class Procedural_Sprite_Generator : TestingItem {
 		ColorDestinationBlend = Blend.InverseSourceAlpha,
 		AlphaDestinationBlend = Blend.InverseSourceAlpha
 	};
-	Texture2D newSprite;
+	[CloneByReference] Texture2D newSprite;
 	public override void SetDefaults() {
 		Item.width = 16;
 		Item.height = 26;

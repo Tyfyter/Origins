@@ -14,6 +14,7 @@ namespace Origins.Items.Other.Consumables.Medicine {
 	public abstract class MedicineBase : ModItem {
 		protected sealed override bool CloneNewInstances => true;
 		public abstract int HealAmount { get; }
+		[field: CloneByReference]
 		public bool[] ImmunitySet { get; protected set; }
 		public abstract int ImmunityDuration { get; }
 		/// <summary>
@@ -24,10 +25,12 @@ namespace Origins.Items.Other.Consumables.Medicine {
 		public virtual int Value => Item.sellPrice(silver: 2);
 		public virtual string ImmunityName => Name;
 		public virtual int CooldownIncrease => 60 * 15;
+		[field: CloneByReference]
 		public MedicineBuff ImmunityBuff { get; protected set; }
 		public virtual bool HasSpecialBuff => false;
 		public virtual LocalizedText BuffTooltip => Tooltip;
 		public virtual string BuffTexture => null;
+		[field: CloneByReference]
 		public LocalizedText ImmunityListOverride { get; protected set; }
 		public sealed override void Load() {
 			if (!HasSpecialBuff) Mod.AddContent(ImmunityBuff = new(this));

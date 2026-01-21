@@ -24,7 +24,7 @@ namespace Origins.NPCs.Brine {
 		public Vector2 TargetPos { get; set; }
 		public virtual bool AggressivePathfinding => false;
 		public static List<(Vector2 position, float magnitude)> Ripples { get; private set; } = [];
-		[CloneByReference]
+		[field: CloneByReference]
 		public HashSet<int> TargetNPCTypes { get; private set; } = [];
 		protected override bool CloneNewInstances => true;
 		public override void Load() {
@@ -264,7 +264,6 @@ namespace Origins.NPCs.Brine {
 		public bool CanSeeTarget { get; set; }
 		public Vector2 TargetPos { get; set; }
 		public bool AggressivePathfinding { get; }
-		[CloneByReference]
 		public HashSet<int> TargetNPCTypes { get; }
 		public bool CheckTargetLOS(Vector2 target);
 		public bool CanTargetNPC(NPC other);

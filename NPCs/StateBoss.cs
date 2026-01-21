@@ -180,6 +180,7 @@ namespace Origins.NPCs {
 	public class Boss_Controller_Item<TBoss>(string name, Func<string> texture) : TestingItem where TBoss : ModNPC, IStateBoss<TBoss> {
 		public static HashSet<AIState<TBoss>> disabled;
 		public static HashSet<AIState<TBoss>> activeInLastRoll;
+		[CloneByReference] private readonly Func<string> texture = texture;
 		public override string Name => $"{name}_Controller";
 		public override string Texture => texture();
 		protected override bool CloneNewInstances => true;

@@ -94,13 +94,15 @@ namespace Origins.Tiles.Other {
 	}
 	[Autoload(false)]
 	public class Chambersite_Ore_Item(Chambersite_Ore tile) : TileItem(tile) {
-		public override string Texture => tile.ItemTexture;
-		public override LocalizedText DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Chambersite_Ore.DisplayName")).WithFormatArgs(tile.ItemDisplayName);
+		[field: CloneByReference]
+		Chambersite_Ore Tile { get; } = tile;
+		public override string Texture => Tile.ItemTexture;
+		public override LocalizedText DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Chambersite_Ore.DisplayName")).WithFormatArgs(Tile.ItemDisplayName);
 		public override LocalizedText Tooltip => LocalizedText.Empty;
 		protected Asset<Texture2D> Overlay { get; private set; }
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
-			Overlay = Request<Texture2D>(tile.ItemOverlayPath);
+			Overlay = Request<Texture2D>(Tile.ItemOverlayPath);
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();

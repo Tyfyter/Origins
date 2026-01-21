@@ -1,25 +1,22 @@
-﻿using CalamityMod.Items.Placeables;
-using CalamityMod.Items.Potions.Alcohol;
-using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.Reflection;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
+
 namespace Origins.Items.Accessories {
 	public class Terrarian_Voodoo_Doll : ModItem, ICustomWikiStat {
 		public string[] Categories => [
 		];
 		Guid owner;
-		Player player;
+		[CloneByReference] Player player;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemSpawnDecaySpeed[Type] = 0;
 			ItemID.Sets.OverflowProtectionTimeOffset[Type] = -36000;

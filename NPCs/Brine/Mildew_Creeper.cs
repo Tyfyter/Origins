@@ -74,7 +74,7 @@ namespace Origins.NPCs.Brine {
 			}
 		}
 		public override bool CheckTargetLOS(Vector2 target) => true;
-		Physics.Chain chain;
+		[CloneByReference] Physics.Chain chain;
 		public virtual int ChainLength => 15;
 		public override void AI() {
 			DoTargeting();
@@ -221,7 +221,7 @@ namespace Origins.NPCs.Brine {
 				);
 			}
 		}
-		Vector2[] directions = [
+		[CloneByReference] readonly Vector2[] directions = [
 			Vector2.UnitX,
 			-Vector2.UnitX,
 			Vector2.UnitY,

@@ -881,20 +881,21 @@ namespace Origins.Tiles {
 	}
 	[Autoload(false)]
 	public class TileItem(ModTile tile, bool debug = false) : ModItem() {
-		readonly ModTile tile = tile;
-		public override string Name => tile.Name + "_Item";
-		public override string Texture => debug ? tile.Texture : (tile is FurnitureBase furniture && !string.IsNullOrEmpty(furniture.ItemTexture)) ? furniture.ItemTexture : tile.Texture + "_Item";
-		public override LocalizedText DisplayName => this.GetLocalization(nameof(DisplayName), tile.PrettyPrintName);
-		public event Action<Item> ExtraStaticDefaults;
-		public event Action<Item> ExtraDefaults;
-		public event Action<Item> OnAddRecipes;
+		[field: CloneByReference]
+		ModTile Tile { get; } = tile;
+		public override string Name => Tile.Name + "_Item";
+		public override string Texture => debug ? Tile.Texture : (Tile is FurnitureBase furniture && !string.IsNullOrEmpty(furniture.ItemTexture)) ? furniture.ItemTexture : Tile.Texture + "_Item";
+		public override LocalizedText DisplayName => this.GetLocalization(nameof(DisplayName), Tile.PrettyPrintName);
+		[field: CloneByReference] public event Action<Item> ExtraStaticDefaults;
+		[field: CloneByReference] public event Action<Item> ExtraDefaults;
+		[field: CloneByReference] public event Action<Item> OnAddRecipes;
 		protected override bool CloneNewInstances => true;
 #if !DEBUG
 		public override bool IsLoadingEnabled(Mod mod) => !debug || DebugConfig.Instance.ForceEnableDebugItems;
 #endif
 		public override void SetStaticDefaults() {
-			if (TileID.Sets.BasicChest[tile.Type]) ModCompatSets.AnyChests[Type] = true;
-			if (tile is FurnitureBase furniture) {
+			if (TileID.Sets.BasicChest[Tile.Type]) ModCompatSets.AnyChests[Type] = true;
+			if (Tile is FurnitureBase furniture) {
 				switch (furniture.BaseTileID) {
 					case TileID.Lamps:
 					OriginSystem.LampRecipeGroup.ValidItems.Add(Type);
@@ -909,7 +910,7 @@ namespace Origins.Tiles {
 		}
 
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(tile.Type);
+			Item.DefaultToPlaceableTile(Tile.Type);
 			Item.width = 14;
 			Item.height = 28;
 			Item.value = 150;

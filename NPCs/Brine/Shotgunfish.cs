@@ -18,7 +18,7 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Brine {
 	public class Shotgunfish : Brine_Pool_NPC, ICustomWikiStat {
-		[CloneByReference]
+		[field: CloneByReference]
 		public HashSet<int> PreyNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

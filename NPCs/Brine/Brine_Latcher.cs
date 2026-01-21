@@ -42,7 +42,7 @@ namespace Origins.NPCs.Brine {
 		}
 	}
 	public class Brine_Latcher : Brine_Pool_NPC {
-		[CloneByReference]
+		[field: CloneByReference]
 		public HashSet<int> PreyNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

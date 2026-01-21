@@ -64,6 +64,7 @@ namespace Origins.Tiles.Banners {
 		}
 	}
 	public class Banner_Item(Banner tile) : ModItem {
+		[CloneByReference] readonly Banner tile = tile;
 		protected override bool CloneNewInstances => true;
 		public override string Name => tile.Name + "_Item";
 		public override LocalizedText DisplayName {

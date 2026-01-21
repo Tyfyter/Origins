@@ -20,7 +20,7 @@ namespace Origins.NPCs {
 		internal int shockTime = 0;
 		internal int rasterizedTime = 0;
 		internal int toxicShockStunTime = 0;
-		internal List<int> infusionSpikes;
+		[CloneByReference] internal List<int> infusionSpikes;
 		internal bool amebolizeDebuff = false;
 		internal bool beeAfraidDebuff = false;
 		internal bool hibernalIncantationDebuff = false;
