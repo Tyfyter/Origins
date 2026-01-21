@@ -635,6 +635,7 @@ namespace Origins {
 				} else {
 					if (!Main.IsItRaining && Main.rand.NextBool(6)) {
 						Main.numClouds += 1;
+						if (Main.numClouds > Main.maxClouds) Main.numClouds = Main.maxClouds;
 						if (Main.numClouds > 100) {
 							Main.StartRain();
 						}
@@ -654,6 +655,9 @@ namespace Origins {
 			}
 			Main.tileSolid[Broken_Catwalk.ID] = false;
 			Main.tileSolidTop[Broken_Catwalk.ID] = false;
+		}
+		public override void PostWorldLoad() {
+			if (Main.numClouds > Main.maxClouds) Main.numClouds = Main.maxClouds;
 		}
 		bool hasLoggedPUP = false;
 		public int laserTagActiveTeams = 0;
