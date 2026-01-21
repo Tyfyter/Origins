@@ -13,10 +13,8 @@ namespace Origins.Reflection {
 		public static FastFieldInfo<ShopHelper, float> _currentPriceAdjustment { get; private set; }
 		public void Load(Mod mod) {
 			_AddHappinessReportText = typeof(ShopHelper).GetMethod("AddHappinessReportText", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate<AddHappinessReportText_Del>(new ShopHelper());
-			FieldInfo _currentNPCBeingTalkedTo = typeof(ShopHelper).GetField("_currentNPCBeingTalkedTo", BindingFlags.NonPublic | BindingFlags.Public);
-			if (_currentNPCBeingTalkedTo is not null) ShopMethods._currentNPCBeingTalkedTo = new(_currentNPCBeingTalkedTo);
-			else mod.Logger.Error("could not find ShopHelper._currentNPCBeingTalkedTo");
-			_currentPriceAdjustment = new("_currentPriceAdjustment", BindingFlags.Public | BindingFlags.NonPublic);
+			_currentNPCBeingTalkedTo = "_currentNPCBeingTalkedTo";
+			_currentPriceAdjustment = "_currentPriceAdjustment";
 		}
 		public void Unload() {
 			_AddHappinessReportText = null;
