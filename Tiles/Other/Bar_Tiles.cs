@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Other {
-    [Autoload(false)]
+	[Autoload(false)]
 	public class Bar_Tile : OriginTile {
 		public readonly string name;
 		public readonly LocalizedText displayName;
@@ -39,8 +39,8 @@ namespace Origins.Tiles.Other {
 		}
 		public static int AddBarTile(ModItem item, Color? color = null, int dust = -1, string displayName = "MapObject.MetalBar") {
 			Bar_Tile tile = new(item.Name, Language.GetText(displayName), color);
-			if (!Main.dedServ && !ModContent.HasAsset(tile.Texture)) {
-				throw new System.Exception($"Tried to add bar tile with texture \"{tile.Texture}\", but no texture exists at that path");
+			if (!item.Mod.FileExists(tile.Texture.Replace($"{item.Mod.Name}/", "") + ".rawimg")) {
+				throw new Exception($"Tried to add bar tile with texture \"{tile.Texture}\", but no texture exists at that path");
 			}
 			if (dust != -1) tile.DustType = dust;
 			item.Mod.AddContent(tile);

@@ -961,7 +961,7 @@ MAGIC WEAPONS:
 (^) Splitsplash
 (^) Tones of Agony
 
-(#2, ^2) Blast Furnace !!!
+(☻) Blast Furnace !!!
 (^) Bled Out Staff
 (^) Brine Haze
 (^) Chemical Laser
@@ -1153,7 +1153,7 @@ EXPLOSIVE WEAPONS:
 (X) Oil Drum
 (^) Omni-directional Claymore
 (^) Partybringer
-(#2, ^2) Pete's Peat Slugger !!!
+(☻) Pete's Peat Slugger !!!
 (X) Puffle
 (^) Rocodile
 (^) Self-Destruct

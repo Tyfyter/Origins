@@ -2,7 +2,6 @@
 using Origins.Items.Other.Dyes;
 using Origins.Reflection;
 using Origins.Walls;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,6 @@ using Terraria;
 using Terraria.GameContent.Liquid;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
-using static Origins.Core.DyedLight;
 
 namespace Origins.Core {
 	public class DyedLight {
@@ -21,6 +19,7 @@ namespace Origins.Core {
 		RenderTarget2D renderTarget;
 		public DyedLight(Color color) {
 			this.color = color.ToVector3();
+			if (Main.dedServ) return;
 			Main.QueueMainThreadAction(() => {
 				texture = new(Main.graphics.GraphicsDevice, 1, 1);
 				texture.SetData([color]);
@@ -137,6 +136,7 @@ namespace Origins.Core {
 		static HashSet<ArmorShaderData> dyeFunctionIsBetter = [];
 		static Dictionary<ArmorShaderData, DyeFunction> dyeFunctions = [];
 		internal static void Initialize() {
+			if (Main.dedServ) return;
 			FastFieldInfo<ArmorShaderDataSet, List<ArmorShaderData>> _shaderData = "_shaderData";
 			List<ArmorShaderData> shaderData = _shaderData.GetValue(GameShaders.Armor);
 			FastFieldInfo<ArmorShaderData, Vector3> uColor = "_uColor";

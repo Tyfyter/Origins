@@ -12,7 +12,9 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.NPCs.Ashen.Boss.Spawn_Trenchmaker_Action;
 using static Origins.NPCs.Ashen.Boss.Trenchmaker;
+using static Origins.NPCs.StateBossMethods<Origins.NPCs.Ashen.Boss.Trenchmaker>;
 
 namespace Origins.NPCs.Ashen.Boss {
 	//todo: force chee to become an animator
@@ -95,6 +97,20 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
+			if (leg.TimeInAnimation > 5 * 60) {
+				if (leg.TimeInAnimation > 15 * 60 && npc.GetState() is PhaseOneIdleState) {
+					npc.SetAIState(StateIndex<Carpet_Bomb_State>());
+					leg.CurrentAnimation = ModContent.GetInstance<Standing_Animation>();
+					leg.CurrentAnimation.Reset();
+					leg.TimeInAnimation = 0;
+					leg.NetUpdate = true;
+					npc.NPC.netUpdate = true;
+					return;
+				}
+				leg.ThighRot += 0.07f * (leg.TimeInAnimation % 16 < 8).ToDirectionInt();
+				leg.CalfRot += 0.07f * (leg.TimeInAnimation % 16 < 8).ToDirectionInt();
+				return;
+			}
 			if (leg.ThighRot == 2) {
 				PistonTo(npc, ref leg, 32, 0.2f);
 			} else if (PistonLength(npc, leg) < 3) {
