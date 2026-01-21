@@ -181,6 +181,7 @@ namespace Origins {
 			}
 		}
 		public override void PostWorldLoad() {
+			if (Main.numClouds > Main.maxClouds) Main.numClouds = Main.maxClouds;
 			for (int i = 0; i < Main.maxTilesX; i++) {
 				for (int j = 0; j < Main.maxTilesY; j++) {
 					Tile tile = Main.tile[i, j];
