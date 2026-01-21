@@ -642,6 +642,9 @@ namespace Origins {
 				}
 			}
 		}
+		public override void PostWorldLoad() {
+			if (Main.numClouds > Main.maxClouds) Main.numClouds = Main.maxClouds;
+		}
 		bool hasLoggedPUP = false;
 		public int laserTagActiveTeams = 0;
 		public int laserTagActivePlayers = 0;
