@@ -43,9 +43,11 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Terrarang_Thrown : ModProjectile, IOutlineDrawer {
 		public override string Texture => "Origins/Items/Weapons/Melee/Terrarang";
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailingMode[Type] = 5;
-			ProjectileID.Sets.TrailCacheLength[Type] = 15;
+			ProjectileID.Sets.TrailCacheLength[Type] = 30;
+		}
+		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.LightDisc);
 			Projectile.DamageType = DamageClass.MeleeNoSpeed;
 			Projectile.penetrate = -1;
@@ -162,6 +164,13 @@ namespace Origins.Items.Weapons.Melee {
 			);
 		}
 		public override bool PreDraw(ref Color lightColor) {
+			MiscShaderData miscShaderData = GameShaders.Misc["LightDisc"];
+			miscShaderData.UseSaturation(-2.8f);
+			miscShaderData.UseOpacity(2f);
+			miscShaderData.Apply();
+			_vertexStrip.PrepareStripWithProceduralPadding(Projectile.oldPos, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + Projectile.Size / 2f);
+			_vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			for (int trail = 0; trail < 3; trail++) {
 				Main.EntitySpriteDraw(TextureAssets.Projectile[ProjectileID.Excalibur].Value, Projectile.Center - Main.screenPosition, TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4), Color.Lerp(Color.SpringGreen * (1f - trail / 4f), Color.Goldenrod * (1f - trail / 4f), trail / 4f), Projectile.localAI[1] * 2 + MathHelper.ToRadians(trail * 55), TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4).Size() / 2f, 0.4f, Microsoft.Xna.Framework.Graphics.SpriteEffects.FlipHorizontally);
 				Main.EntitySpriteDraw(TextureAssets.Projectile[ProjectileID.Excalibur].Value, Projectile.Center - Main.screenPosition, TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4, 0, 2), Color.Lerp(Color.Yellow * (1f - trail / 4f), Color.SpringGreen * (1f - trail / 4f), trail / 4f), Projectile.localAI[1] * 2 + MathHelper.ToRadians(trail * 55), TextureAssets.Projectile[ProjectileID.Excalibur].Value.Frame(1, 4, 4).Size() / 2f, 0.5f, Microsoft.Xna.Framework.Graphics.SpriteEffects.FlipHorizontally);
@@ -173,6 +182,15 @@ namespace Origins.Items.Weapons.Melee {
 			this.DrawOutline();
 			return true;
 		}
+		static readonly VertexStrip _vertexStrip = new();
+		static Color StripColors(float progressOnStrip) {
+			float inverseProgress = 1f - progressOnStrip;
+			Color result = new Color(0.25f + float.Pow(inverseProgress, 3) * 0.5f, 0.59f, 0.19f) * float.Pow(inverseProgress, 2) * 0.65f;
+			result.A = 0;
+			return result;
+		}
+
+		static float StripWidth(float progressOnStrip) => 16f;
 
 		public Color? SetOutlineColor(float progress) {
 			return Color.Lerp(Color.SpringGreen, Color.Goldenrod, 0.1f);

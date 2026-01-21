@@ -36,10 +36,11 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class True_Light_Disc_Thrown : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/True_Light_Disc";
-		
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailingMode[Type] = 5;
 			ProjectileID.Sets.TrailCacheLength[Type] = 15;
+		}
+		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.LightDisc);
 			Projectile.DamageType = DamageClass.MeleeNoSpeed;
 			Projectile.penetrate = -1;
