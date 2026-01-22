@@ -86,7 +86,7 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 		}
-		public static void UpdateTransistor(Point pos) {
+		public virtual void UpdateTransistor(Point pos) {
 			Tile input = Main.tile[pos];
 			bool inputPower = input.Get<Ashen_Wire_Data>().AnyPower;
 			SetTilePowerFrame(pos.X, pos.Y, inputPower);

@@ -1694,7 +1694,7 @@ CONSUMABLES:
 (^) Brine Key
 (^) Defiled Key
 (^) Hell Key
-(#, ^2) Mechanical Keys !!!
+(☻) Mechanical Keys !!!
 (^) Mushroom Key
 (^) Ocean Key
 (^) Riven Key

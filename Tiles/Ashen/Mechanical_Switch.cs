@@ -1,4 +1,5 @@
 ﻿using Origins.Items.Other.Consumables;
+using Origins.Items.Tools.Wiring;
 using PegasusLib.Networking;
 using System;
 using System.IO;
@@ -57,6 +58,17 @@ namespace Origins.Tiles.Ashen {
 			return true;
 		}
 		void BaseHitWire(int i, int j) => base.HitWire(i, j);
+		public override void UpdateTransistor(Point pos) {
+			Point originalPos = pos;
+			Point dir = GetDirection(Main.tile[pos]);
+			pos += dir + dir;
+			ref Ashen_Wire_Data output = ref Main.tile[pos].Get<Ashen_Wire_Data>();
+			bool wasPowered = output.IsTilePowered;
+			base.UpdateTransistor(originalPos);
+			if (output.IsTilePowered != wasPowered) {
+				Wiring.TripWire(pos.X, pos.Y, 1, 1);
+			}
+		}
 		public record class Mechanical_Switch_Action(Point16 Pos) : SyncedAction {
 			public override bool ServerOnly => true;
 			public Mechanical_Switch_Action() : this(Point16.Zero) { }

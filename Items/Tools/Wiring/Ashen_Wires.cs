@@ -319,6 +319,12 @@ namespace Origins.Items.Tools.Wiring {
 					colorMult = 0;
 					break;
 				}
+				Tile thisTile = Main.tile[i, j];
+				float opacityReduction = 1 + thisTile.RedWire.ToInt() + thisTile.GreenWire.ToInt() + thisTile.BlueWire.ToInt() + thisTile.YellowWire.ToInt();
+				for (int k = wireType - 1; k >= 0; k--) {
+					if (GetWire(k)) opacityReduction++;
+				}
+				color *= 1 / opacityReduction;
 				Main.spriteBatch.Draw(
 					underlayTexture.Value,
 					new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y),

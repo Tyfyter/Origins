@@ -7811,3 +7811,23 @@ Large_Storage_Container_Item: {
 	DisplayName: Large Storage Container
 	Tooltip: ""
 }
+
+Mechanical_Key_Blue: {
+	DisplayName: Mechanical Key Blue
+	Tooltip: ""
+}
+
+Mechanical_Key_Green: {
+	DisplayName: Mechanical Key Green
+	Tooltip: ""
+}
+
+Mechanical_Key_Orange: {
+	DisplayName: Mechanical Key Orange
+	Tooltip: ""
+}
+
+Mechanical_Key_Yellow: {
+	DisplayName: Mechanical Key Yellow
+	Tooltip: ""
+}
