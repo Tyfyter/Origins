@@ -1343,9 +1343,9 @@ TILES:
 (X) Defiled Pylon
 (^) Fire Extinguisher Holder
 (^) Industrial Door
-(#2, ^2) Large Storage Container !!!
+(☻) Large Storage Container !!!
 (^) Laser Tag Console
-(#2, ^2) Medium Storage Container !!!
+(☻) Medium Storage Container !!!
 (^) Modular Bunk
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
