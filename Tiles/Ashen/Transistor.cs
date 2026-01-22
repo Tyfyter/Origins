@@ -196,7 +196,6 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Transistor>());
-			Item.createTile = -1;
 			Item.mech = true;
 		}
 		public override void AddRecipes() {
@@ -218,6 +217,7 @@ namespace Origins.Tiles.Ashen {
 			return transistor.TryPlace(Player.tileTargetX, Player.tileTargetY);
 		}
 		public void DrawPreview() {
+			if (Item.createTile == -1) return;
 			if (!Transistor.TryGetPlacement(new(Player.tileTargetX, Player.tileTargetY), out IEnumerable<(Point pos, Point frame)> placement)) return;
 			Color color = Color.White;
 			foreach ((Point pos, _) in placement) {
