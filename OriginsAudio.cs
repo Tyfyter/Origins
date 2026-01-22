@@ -84,6 +84,10 @@ namespace Origins {
 			public static SoundStyle ThrusterLoop = new("Origins/Sounds/Custom/ThrusterLoop") {
 				IsLooped = true
 			};
+			public static SoundStyle HyraxCall = new("Origins/Sounds/Custom/Hyrax_Call", 2);
+			public static SoundStyle HyraxIdle = new("Origins/Sounds/Custom/Hyrax_Idle", 2);
+			public static SoundStyle HyraxKill = new("Origins/Sounds/Custom/Hyrax_Kill", 2);
+			public static SoundStyle HyraxWawa = new("Origins/Sounds/Custom/Hyrax_Wawa", 2);
 
 			public static SoundStyle Lightning = SoundID.Roar;
 			public static SoundStyle LightningCharging = SoundID.Roar;

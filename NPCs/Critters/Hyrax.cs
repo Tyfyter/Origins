@@ -34,6 +34,7 @@ namespace Origins.NPCs.Critters {
 			NPC.aiStyle = -1;
 			NPC.width = 26;
 			NPC.height = 26;
+			NPC.DeathSound = Origins.Sounds.HyraxKill;
 			NPC.catchItem = ModContent.ItemType<Hyrax_Item>();
 			SpawnModBiomes = [
 				ModContent.GetInstance<Limestone_Cave>().Type
@@ -41,6 +42,9 @@ namespace Origins.NPCs.Critters {
 		}
 		public ref float MovementTimer => ref NPC.ai[1];
 		public override void AI() {
+			if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.HyraxIdle, NPC.Center);
+			else if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.HyraxWawa, NPC.Center);
+			else if (Main.rand.NextBool(1200)) SoundEngine.PlaySound(Origins.Sounds.HyraxCall, NPC.Center);
 
 			NPC.defense = NPC.defDefense;
 			if (NPC.dryadWard) {
