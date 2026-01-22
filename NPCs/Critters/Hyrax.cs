@@ -249,6 +249,28 @@ namespace Origins.NPCs.Critters {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Leather, 4));
 		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(-8 * NPC.direction, 2).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Hyrax_Gore1")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(2 * NPC.direction, 5).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Hyrax_Gore2")
+				);
+				Gore.NewGore(
+					NPC.GetSource_Death(),
+					NPC.Center + new Vector2(9 * NPC.direction, 6).RotatedBy(NPC.rotation),
+					NPC.velocity,
+					Mod.GetGoreSlot("Gores/NPCs/Hyrax_Gore3")
+				);
+			}
+		}
 		public override void OnKill() {
 			if (!NetmodeActive.MultiplayerClient && NPC.AnyInteractions() && OriginsModIntegrations.CheckAprilFools()) {
 				Player player = Main.player[NPC.lastInteraction];
