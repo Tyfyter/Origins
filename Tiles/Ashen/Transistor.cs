@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Transistor : OriginTile, IAshenTile {
+	public class Transistor : OriginTile, IAshenTile, IAshenPowerConduitTile {
 		public virtual Color MapColor => FromHexRGB(0x7a391a);
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
@@ -72,10 +72,12 @@ namespace Origins.Tiles.Ashen {
 			Tile tile = Main.tile[i, j];
 			switch ((tile.TileFrameY / 18) % 3) {
 				case 0: {
-					if (tile.TileFrameY.TrySet((short)(tile.Get<Ashen_Wire_Data>().AnyPower ? 18 * 3 : 0))) {
+					Wiring.SkipWire(i, j);
+					UpdateTransistor(new(i, j));
+					/*if (tile.TileFrameY.TrySet((short)(tile.Get<Ashen_Wire_Data>().AnyPower ? 18 * 3 : 0))) {
 						Wiring.SkipWire(i, j);
 						UpdateTransistor(new(i, j));
-					}
+					}*/
 					break;
 				}
 				case 1: {
@@ -88,10 +90,15 @@ namespace Origins.Tiles.Ashen {
 		}
 		public virtual void UpdateTransistor(Point pos) {
 			Tile input = Main.tile[pos];
+			Point dir = GetDirection(input);
 			bool inputPower = input.Get<Ashen_Wire_Data>().AnyPower;
+			using (IAshenPowerConduitTile.WalkedConduitOutput _ = new(pos + dir + dir)) {
+				if (inputPower) inputPower = IAshenPowerConduitTile.FindValidPowerSource(pos, 0)
+						|| IAshenPowerConduitTile.FindValidPowerSource(pos, 1)
+						|| IAshenPowerConduitTile.FindValidPowerSource(pos, 2);
+			}
 			SetTilePowerFrame(pos.X, pos.Y, inputPower);
 
-			Point dir = GetDirection(input);
 			pos += dir;
 			Tile @switch = Main.tile[pos];
 			pos += dir;
@@ -188,6 +195,15 @@ namespace Origins.Tiles.Ashen {
 				pos += direction;
 				frame.Y += 18;
 			}
+		}
+
+		public bool ShouldCountAsPowerSource(Point position) {
+			using IAshenPowerConduitTile.WalkedConduitOutput _ = new(position);
+			Point dir = GetDirection(Main.tile[position]);
+			position -= dir + dir;
+			return IAshenPowerConduitTile.FindValidPowerSource(position, 0)
+				|| IAshenPowerConduitTile.FindValidPowerSource(position, 1)
+				|| IAshenPowerConduitTile.FindValidPowerSource(position, 2);
 		}
 	}
 	public class Transistor_Item : ModItem, ISpecialTilePreviewItem {

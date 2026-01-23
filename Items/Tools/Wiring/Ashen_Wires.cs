@@ -12,6 +12,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
+using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -229,7 +230,7 @@ namespace Origins.Items.Tools.Wiring {
 			ref Ashen_Wire_Data data = ref Main.tile[i, j].Get<Ashen_Wire_Data>();
 			bool wasPowered = data.AnyPower;
 			if (value != data.GetPower(wireType)) SetBit(value, ref data.data, (wireType << 1) + 1);
-			if (data.AnyPower != wasPowered && !WiringMethods._wireSkip.Value.ContainsKey(new(i, j))) {
+			if ((data.AnyPower != wasPowered || TileLoader.GetTile(Main.tile[i, j].TileType) is IAshenPowerConduitTile) && !WiringMethods._wireSkip.Value.ContainsKey(new(i, j))) {
 				bool powerMultiTile = true;
 				if (wasPowered && TileObjectData.GetTileData(Main.tile[i, j]) is TileObjectData tileData) {
 					TileUtils.GetMultiTileTopLeft(i, j, tileData, out int left, out int top);
@@ -280,7 +281,10 @@ namespace Origins.Items.Tools.Wiring {
 				return Framing.GetTileSafely(position).Get<Ashen_Wire_Data>().GetWire(wireType);
 			}
 			bool Breaker(AreaAnalysis analysis) {
-				return Framing.GetTileSafely(analysis.Counted[^1]).Get<Ashen_Wire_Data>().IsTilePowered;
+				Tile tile = Framing.GetTileSafely(analysis.Counted[^1]);
+				ref Ashen_Wire_Data data = ref tile.Get<Ashen_Wire_Data>();
+				if (data.IsTilePowered && TileLoader.GetTile(tile.TileType) is IAshenPowerConduitTile conduitTile && !conduitTile.ShouldCountAsPowerSource(analysis.Counted[^1])) return false;
+				return data.IsTilePowered;
 			}
 			if (!AreaAnalysis.March(i, j, AreaAnalysis.Orthogonals, Counter, Breaker).Broke) PropegatePowerState(i, j, wireType, false);
 		}
@@ -442,6 +446,31 @@ namespace Origins.Items.Tools.Wiring {
 					throw new Exception("Unknown world data saved version");
 				}
 			}
+		}
+	}
+	public interface IAshenPowerConduitTile {
+		static readonly HashSet<Point> walkedConduitOutputs = [];
+		public bool ShouldCountAsPowerSource(Point position);
+		public static bool FindValidPowerSource(Point position, int wireType) {
+			bool Counter(Point position) {
+				return Framing.GetTileSafely(position).Get<Ashen_Wire_Data>().GetWire(wireType);
+			}
+			bool Breaker(AreaAnalysis analysis) {
+				if (walkedConduitOutputs.Contains(analysis.Counted[^1])) return false;
+				Tile tile = Framing.GetTileSafely(analysis.Counted[^1]);
+				ref Ashen_Wire_Data data = ref tile.Get<Ashen_Wire_Data>();
+				if (data.IsTilePowered && TileLoader.GetTile(tile.TileType) is IAshenPowerConduitTile conduitTile && !conduitTile.ShouldCountAsPowerSource(analysis.Counted[^1])) return false;
+				return data.IsTilePowered;
+			}
+			return AreaAnalysis.March(position.X, position.Y, AreaAnalysis.Orthogonals, Counter, Breaker).Broke;
+		}
+		protected readonly struct WalkedConduitOutput : IDisposable {
+			public readonly Point position;
+			public WalkedConduitOutput(Point position) {
+				this.position = position;
+				walkedConduitOutputs.Add(position);
+			}
+			public void Dispose() => walkedConduitOutputs.Remove(position);
 		}
 	}
 }
