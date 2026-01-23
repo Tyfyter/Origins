@@ -43,9 +43,9 @@ namespace Origins.NPCs.Critters {
 		}
 		public ref float MovementTimer => ref NPC.ai[1];
 		public override void AI() {
-			if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.HyraxIdle, NPC.Center);
-			else if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.HyraxWawa, NPC.Center);
-			else if (Main.rand.NextBool(1200)) SoundEngine.PlaySound(Origins.Sounds.HyraxCall, NPC.Center);
+			if (Main.rand.NextBool(700)) SoundEngine.PlaySound(Origins.Sounds.HyraxIdle.WithVolume(0.5f), NPC.Center);
+			else if (Main.rand.NextBool(3500)) SoundEngine.PlaySound(Origins.Sounds.HyraxWawa.WithVolume(0.5f), NPC.Center);
+			else if (Main.rand.NextBool(4200)) SoundEngine.PlaySound(Origins.Sounds.HyraxCall.WithVolume(0.5f), NPC.Center);
 
 			NPC.defense = NPC.defDefense;
 			if (NPC.dryadWard) {
@@ -289,9 +289,6 @@ namespace Origins.NPCs.Critters {
 			}
 		}
 		public override void FindFrame(int frameHeight) {
-			if (Main.rand.NextBool(350)) {
-				SoundEngine.PlaySound(SoundID.Zombie15, NPC.Center); // replace with a "AWAWA" sound
-			}
 			if (NPC.ai[0] == 1) {
 				NPC.DoFrames(6, 1..6);
 			} else {

@@ -395,28 +395,28 @@ NPC DIALOGUE:
 
 ACHIEVEMENTS:
 |---
-(^3) A Different Game !!!
-(^3) A True Hero !!!
-(^3) An Eye for an Eye !!!
-(^3) Auto-Immune Disease !!!
-(^3) Cheat Code !!!
-(^3) Cloning Factory !!!
-(^3) Cracked !!!
-(^3) Enough Yap !!!
-(☻) Going Places !!!
-(^3) It Was Watching !!!
-(^3) Kaiju !!!
-(^3) Killimanjaro !!!
-(^3) Martyrdom !!!
-(^3) Now You're the One Lying Broken !!!
-(^3) Peat Obsession !!!
-(^3) RIVEN WORMS !!!
-(^3) Slow Loading Bar !!!
+(@, ^3) A Different Game !!!
+(@, ^3) A True Hero !!!
+(@, ^3) An Eye for an Eye !!!
+(@, ^3) Auto-Immune Disease !!!
+(@, ^3) Cheat Code !!!
+(@, ^3) Cloning Factory !!!
+(@, ^3) Cracked !!!
+(@, ^3) Enough Yap !!!
+(@, ^3) Going Places !!!
+(@, ^3) It Was Watching !!!
+(@, ^3) Kaiju !!!
+(@, ^3) Killimanjaro !!!
+(@, ^3) Martyrdom !!!
+(@, ^3) Now You're the One Lying Broken !!!
+(@, ^3) Peat Obsession !!!
+(@, ^3) RIVEN WORMS !!!
+(@, ^3) Slow Loading Bar !!!
 (々) The Signal, it's Calling !!!
-(^3) There's Something in There! !!!
-(^3) 'Till Death Mildew Us Part !!!
-(^3) Whismical! !!!
-(^3) Whole Blend Evil !!!
+(@, ^3) There's Something in There! !!!
+(@, ^3) 'Till Death Mildew Us Part !!!
+(@, ^3) Whismical! !!!
+(@, ^3) Whole Blend Evil !!!
 ---
 
 
@@ -657,7 +657,7 @@ ACCESSORIES:
 (^) Forbidden Voice (Cursed)
 (^) Forbidden Voice (Uncursed)
 (†) Glitter Glue !!!
-(#3, ^2) Lunatic's Rune !!!
+(†) Lunatic's Rune !!!
 (^) Mysterious Spray
 (#3, ^2) Retool Arm !!!
 (†) Robo-tail !!!
@@ -1069,7 +1069,7 @@ SUMMONER WEAPONS:
 (X) Technomancer 4000
 (^) Terratotem
 (X) Tonal Resonator
-(X) Vampire Fireflower in a Pot
+(X) Vampire Fireflower in a Pot !!!
 
 NO POST-ML CONTENT YET.
 ---
@@ -1312,7 +1312,7 @@ TILES:
 (^) Defiled Torch
 (^) Defiled Water Fountain
 (^) Endowood Furniture
-(☻) Hyrax Cage !!! (random movements)
+(^) Hyrax Cage
 (^) Limestone Furniture
 (^) Living Alkahest Block
 (^) Living Bile Block
@@ -1561,7 +1561,7 @@ CRITTERS AND FISH:
 (^) Chambersite Bunny
 (^) Chambersite Squirrel
 (^) Cicada 3301
-(#2, $2, ^2) Hyrax !!!
+(#2, ^2) Hyrax !!!
 (^) Peppered Moth
 
 (^) Bilemouth
