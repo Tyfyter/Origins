@@ -1,13 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Origins.Layers;
 using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
 using Terraria.Utilities;
 
 namespace Origins.Items.Accessories;
@@ -24,6 +22,9 @@ public class Smog_Pod_4 : ModItem {
 		return velocity * signs;
 	}
 	public static float HomingTightness => 0.12f;
+	public override void SetStaticDefaults() {
+		Accessory_Glow_Layer.AddGlowMasks(Item, EquipType.Back);
+	}
 	public override void SetDefaults() {
 		Item.DefaultToAccessory();
 		Item.rare = ItemRarityID.Yellow;
