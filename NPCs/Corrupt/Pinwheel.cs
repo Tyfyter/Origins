@@ -42,6 +42,7 @@ namespace Origins.NPCs.Corrupt {
 			NPC.behindTiles = true;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerInTown) return 0;
 			if (!spawnInfo.Player.ZoneCorrupt || spawnInfo.Player.ZoneSkyHeight) return 0;
 			return 0.07f * (spawnInfo.Player.position.Y / 16 > Main.rockLayer ? 2 : 1);
 		}
