@@ -390,6 +390,9 @@ namespace Origins {
 		public Item decorativeAshes = null;
 		public int decorativeAshesCount = 0;
 		public int decorativeAshesTimer = 0;
+		public Item smogPod = null;
+		public int smogPodTimer = 0;
+		public float nearestSmogPod = float.PositiveInfinity;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;
@@ -970,6 +973,11 @@ namespace Origins {
 			} else {
 				decorativeAshes = null;
 			}
+			if (smogPod is null) smogPodTimer = 60 * 4;
+			else smogPod = null;
+			smogPodTimer.Cooldown();
+			if (float.IsFinite(nearestSmogPod)) Smog_Pod_4.BuffPlayer(Player, float.Sqrt(nearestSmogPod));
+			nearestSmogPod = float.PositiveInfinity;
 			lotteryTicketItem = null;
 
 

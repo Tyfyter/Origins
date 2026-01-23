@@ -8,20 +8,20 @@ namespace Origins {
 	public class Keybindings : ILoadable {
 		[Keybind("Trigger Set Bonus", "Q")]
 		public static ModKeybind TriggerSetBonus { get; private set; }
+		[Keybind(Keys.J)]
+		public static ModKeybind UseMojoFlask { get; private set; }
+		[Keybind(Keys.Up)]
+		public static ModKeybind JournalBack { get; private set; }
 		[Keybind("Forbidden Voice", "F")]
 		public static ModKeybind ForbiddenVoice { get; private set; }
 		[Keybind(Keys.H)]
 		public static ModKeybind GoldenLotus { get; private set; }
-		[Keybind(Keys.J)]
-		public static ModKeybind UseMojoFlask { get; private set; }
-		/*[Keybind("mouse3")]
-		public static ModKeybind OpenJournal { get; private set; }*/
-		[Keybind(Keys.Up)]
-		public static ModKeybind JournalBack { get; private set; }
 		[Keybind("Mouse2")]
 		public static ModKeybind StressBall { get; private set; }
 		[Keybind(Keys.K)]
 		public static ModKeybind RetoolArm { get; private set; }
+		[Keybind(Keys.V)]
+		public static ModKeybind SmogPod { get; private set; }
 		public static ModKeybind WishingGlass => ModContent.GetInstance<SyncedKeybinds>().WishingGlass.keybind;
 		public static ModKeybind LunaticsRune => ModContent.GetInstance<SyncedKeybinds>().LunaticsRune.keybind;
 #if DEBUG

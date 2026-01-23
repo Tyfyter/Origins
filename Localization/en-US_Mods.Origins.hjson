@@ -2195,6 +2195,8 @@ Projectiles: {
 	Decorative_Ashes_Missile.DisplayName: Decorative Ashes Missile
 	Petes_Peat.DisplayName: Pete's Peat
 	Petes_Peat_Slug.DisplayName: Pete's Peat Slug
+	Smog_Pod_4_Rocket.DisplayName: Smog Pod_4 Rocket
+	Smog_Pod_4_Rod.DisplayName: Smog Pod_4 Rod
 }
 
 Prefixes: {
@@ -2542,6 +2544,7 @@ Keybinds: {
 	StressBall.DisplayName: Stress Ball
 	LunaticsRune.DisplayName: Lunatic's Rune
 	RetoolArm.DisplayName: Retool Arm
+	SmogPod.DisplayName: Smog Pod
 }
 
 Configs: {

@@ -7831,3 +7831,8 @@ Mechanical_Key_Yellow: {
 	DisplayName: Mechanical Key Yellow
 	Tooltip: ""
 }
+
+Smog_Pod_4: {
+	DisplayName: Smog Pod_4
+	Tooltip: ""
+}

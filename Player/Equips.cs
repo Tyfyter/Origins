@@ -504,6 +504,25 @@ namespace Origins {
 					if (decorativeAshesTimer.CycleUp(CombinedHooks.TotalUseTime(decorativeAshes.reuseDelay, Player, decorativeAshes))) decorativeAshesCount++;
 				}
 			}
+			if (smogPod is not null && Main.myPlayer == Player.whoAmI && (smogPodTimer > 0 || Keybindings.SmogPod.JustPressed)) {
+				if (smogPodTimer <= 0) smogPodTimer = smogPod.reuseDelay;
+				if ((smogPod.reuseDelay - smogPodTimer) % smogPod.useTime == 0 && (smogPod.reuseDelay - smogPodTimer) / smogPod.useTime < (smogPod.useLimitPerAnimation ?? 1)) {
+					Rectangle targetRect = new(0, 0, 5, 5);
+					Vector2 position = Player.Bottom + Vector2.UnitX * Main.rand.NextFloatDirection() * 16 * 20;
+					while (targetRect.Recentered(position).OverlapsAnyTiles()) position.Y -= 4;
+					int steps = 100;
+					while (!targetRect.Recentered(position).OverlapsAnyTiles() && --steps > 0) position.Y += 16;
+					Player.SpawnProjectile(
+						Player.GetSource_Accessory(smogPod),
+						Smog_Pod_4.GetRocketShootPosition(Player),
+						Smog_Pod_4.GetRocketShootVelocity(Player),
+						smogPod.shoot,
+						Player.GetWeaponDamage(smogPod),
+						Player.GetWeaponKnockback(smogPod),
+						position.X, position.Y
+					);
+				}
+			}
 			if (roboTail is not null && Player.whoAmI == Main.myPlayer) {
 				int head = ModContent.ProjectileType<Robo_Tail_Tail_Head>();
 				if (Player.ownedProjectileCounts[head] <= 0) {
