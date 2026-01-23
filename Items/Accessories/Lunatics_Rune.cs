@@ -1000,6 +1000,7 @@ namespace Origins.Items.Accessories {
 			if (foundTarget) targetHitbox.Inflate(targetHitbox.Width / 8, targetHitbox.Height / 8);
 
 			Vector2 targetPos = Projectile.Center.Clamp(targetHitbox);
+			bool targetLock = (targetPos == Projectile.Center);	
 			if (targetPos == Projectile.Center) targetPos += (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 8;
 			Vector2 direction = (targetPos - Projectile.Center).Normalized(out float distance);
 			if (foundTarget) {
@@ -1008,6 +1009,7 @@ namespace Origins.Items.Accessories {
 					< 600f => 0.9f,
 					_ => 1.2f
 				};
+				if (targetLock) speed *= 0.1f;
 				if (Vector2.Dot(Projectile.velocity.Normalized(out _), direction) < 0.25f) {
 					speed *= 5 / speed;
 					Projectile.velocity *= 0.99f;

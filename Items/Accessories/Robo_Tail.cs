@@ -21,7 +21,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 22);
-			Item.damage = 54;
+			Item.damage = 35;
 			Item.DamageType = DamageClass.Summon;
 			Item.knockBack = 3;
 			Item.rare = ItemRarityID.LightRed;
