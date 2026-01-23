@@ -1430,7 +1430,7 @@ TILES:
 (@, #, $2) Music Box (Abstract)
 ($2, ^2/3) Music Box (Ashen Factory) !!!
 ($, ^2/3) Music Box (Ashen Mines) !!!
-($2, ^2) Music Box (Ashen Scrapyard) !!!
+($2, ^2/3) Music Box (Ashen Scrapyard) !!!
 (^) Music Box (Brine Pool)
 (^) Music Box (Defiled Caverns)
 (X) Music Box (Defiled Egregocide Route)
@@ -1442,7 +1442,7 @@ TILES:
 (X) Music Box (Repentance)
 (X) Music Box (Rivenran)
 (^) Music Box (Riven Hive)
-($2, ^2) Music Box (Smog Storm) !!!
+($2, ^2/3) Music Box (Smog Storm) !!!
 (^) Music Box (The Dive)
 (^) Otherworldly Music Box (Defiled Wastelands)
 
