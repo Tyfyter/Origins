@@ -1769,6 +1769,11 @@ namespace Origins {
 			if (magnitude > 0) vector /= magnitude;
 			return vector;
 		}
+		public static Vector3 Normalized(this Vector3 vector, out float magnitude) {
+			magnitude = vector.Length();
+			if (magnitude > 0) vector /= magnitude;
+			return vector;
+		}
 		public static Vector2 Abs(this Vector2 vector, out Vector2 signs) {
 			signs = new(Math.Sign(vector.X), Math.Sign(vector.Y));
 			return vector * signs;

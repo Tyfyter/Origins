@@ -1,5 +1,7 @@
-﻿using Origins.Items.Other.Consumables;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Tools.Wiring;
+using Origins.World.BiomeData;
 using PegasusLib.Networking;
 using System;
 using System.IO;
@@ -11,63 +13,66 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public abstract class Mechanical_Switch : Transistor {
+	public abstract class Mechanical_Switch : ModTile, IAshenPowerConduitTile, IGlowingModTile {
 		public abstract int ItemType { get; }
 		public abstract int KeyType { get; }
 		public override string HighlightTexture => typeof(Mechanical_Switch).GetDefaultTMLName("_Highlight");
-		static bool loadedHook = false;
-		delegate void orig_ModifySmartInteractCoords(int type, ref int width, ref int height, ref int frameWidth, ref int frameHeight, ref int extraY);
-		static void Hook_ModifySmartInteractCoords(orig_ModifySmartInteractCoords orig, int type, ref int width, ref int height, ref int frameWidth, ref int frameHeight, ref int extraY) {
-			orig(type, ref width, ref height, ref frameWidth, ref frameHeight, ref extraY);
-			if (TileLoader.GetTile(type) is Mechanical_Switch) {
-				width = 1;
-				height = 1;
-				extraY = 0;
-			}
-		}
-		public override void Load() {
-			if (loadedHook.TrySet(true)) MonoModHooks.Add(((Delegate)TileLoader.ModifySmartInteractCoords).Method, Hook_ModifySmartInteractCoords);
+		public virtual Color MapColor => FromHexRGB(0x7a391a);
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
+		public sealed override void Load() => this.SetupGlowKeys();
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (tile.TileFrameX >= 18) color.DoFancyGlow(new(1.05f, 0.75f, 0f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
+			if (!Main.dedServ) {
+				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
+			}
+			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
+			Origins.PileType.Add(Type, ((ushort)TileType<Ashen_Foliage>(), 0, 6));
+			Main.tileFrameImportant[Type] = true;
+			Main.tileSolid[Type] = false;
+			Main.tileBlockLight[Type] = false;
+			Main.tileMergeDirt[Type] = false;
+			TileID.Sets.DrawTileInSolidLayer[Type] = true;
+			AddMapEntry(MapColor, CreateMapEntryName());
+
+			MinPick = 65;
+			MineResist = 2;
+			HitSound = SoundID.Tink;
+			DustType = Ashen_Biome.DefaultTileDust;
 			TileID.Sets.HasOutlines[Type] = true;
 			RegisterItemDrop(ItemType);
 		}
 		public override void HitWire(int i, int j) {
 			Tile tile = Main.tile[i, j];
-			if ((tile.TileFrameY / 18) % 3 == 1) return;
-			base.HitWire(i, j);
+			Point pos = new(i, j);
+			bool inputPower = tile.Get<Ashen_Wire_Data>().AnyPower;
+			using (IAshenPowerConduitTile.WalkedConduitOutput _ = new(pos)) {
+				if (inputPower) inputPower = IAshenPowerConduitTile.FindValidPowerSource(pos, 0)
+						|| IAshenPowerConduitTile.FindValidPowerSource(pos, 1)
+						|| IAshenPowerConduitTile.FindValidPowerSource(pos, 2);
+			}
+			if (tile.TileFrameX.TrySet(inputPower.Mul<short>(18))) {
+				if (tile.TileFrameY != 0) Ashen_Wire_Data.SetTilePowered(i, j, inputPower);
+				NetMessage.SendData(MessageID.TileSquare, Main.myPlayer, -1, null, i, j, 1, 1);
+			}
 		}
 		public bool HasKey(Player player) => player.HasItemInInventoryOrOpenVoidBag(KeyType);
-		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => (Main.tile[i, j].TileFrameY / 18) % 3 == 1 && HasKey(settings.player);
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => HasKey(settings.player);
 		public override bool RightClick(int i, int j) {
 			if (!HasKey(Main.LocalPlayer)) return false;
-			Point pos = new(i, j);
-			Tile tile = Main.tile[pos];
-			Point dir = GetDirection(tile);
-			switch ((tile.TileFrameY / 18) % 3) {
-				case 0:
-				pos += dir;
-				break;
-
-				case 2:
-				pos -= dir;
-				break;
-			}
-			new Mechanical_Switch_Action(new Point16(pos)).Perform();
+			new Mechanical_Switch_Action(new(i, j)).Perform();
 			return true;
 		}
-		void BaseHitWire(int i, int j) => base.HitWire(i, j);
-		public override void UpdateTransistor(Point pos) {
-			Point originalPos = pos;
-			Point dir = GetDirection(Main.tile[pos]);
-			pos += dir + dir;
-			ref Ashen_Wire_Data output = ref Main.tile[pos].Get<Ashen_Wire_Data>();
-			bool wasPowered = output.IsTilePowered;
-			base.UpdateTransistor(originalPos);
-			if (output.IsTilePowered != wasPowered) {
-				Wiring.TripWire(pos.X, pos.Y, 1, 1);
-			}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			drawData.glowColor = GlowColor;
+			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY, 16, 16);
+			drawData.glowTexture = this.GetGlowTexture(drawData.tileCache.TileColor);
+		}
+		public override void PlaceInWorld(int i, int j, Item item) {
+			new Sync_Mechanical_Switch_Action(i, j).Perform();
 		}
 		public record class Mechanical_Switch_Action(Point16 Pos) : SyncedAction {
 			public override bool ServerOnly => true;
@@ -80,20 +85,59 @@ namespace Origins.Tiles.Ashen {
 				writer.Write((short)Pos.Y);
 			}
 			protected override void Perform() {
-				if (TileLoader.GetTile(Main.tile[Pos].TileType) is Mechanical_Switch @switch) @switch.BaseHitWire(Pos.X, Pos.Y);
+				if (TileLoader.GetTile(Main.tile[Pos].TileType) is Mechanical_Switch) {
+					Tile tile = Main.tile[Pos];
+					tile.TileFrameY ^= 18;
+					bool inputPower = tile.TileFrameX != 0 && tile.TileFrameY != 0;
+					using (IAshenPowerConduitTile.WalkedConduitOutput _ = new(Pos.ToPoint())) {
+						if (inputPower) inputPower = IAshenPowerConduitTile.FindValidPowerSource(Pos.ToPoint(), 0)
+								|| IAshenPowerConduitTile.FindValidPowerSource(Pos.ToPoint(), 1)
+								|| IAshenPowerConduitTile.FindValidPowerSource(Pos.ToPoint(), 2);
+					}
+					Ashen_Wire_Data.SetTilePowered(Pos.X, Pos.Y, inputPower);
+					NetMessage.SendData(MessageID.TileSquare, Main.myPlayer, -1, null, Pos.X, Pos.Y, 1, 1);
+				}
 			}
+		}
+		public record class Sync_Mechanical_Switch_Action(int I, int J) : SyncedAction {
+			public override bool ServerOnly => true;
+			public Sync_Mechanical_Switch_Action() : this(0, 0) { }
+			public override SyncedAction NetReceive(BinaryReader reader) => this with {
+				I = reader.ReadInt16(),
+				J = reader.ReadInt16(),
+			};
+			public override void NetSend(BinaryWriter writer) {
+				writer.Write((short)I);
+				writer.Write((short)J);
+			}
+			protected override void Perform() {
+				if (TileLoader.GetTile(Main.tile[I, J].TileType) is Mechanical_Switch @switch) {
+					@switch.HitWire(I, J);
+				}
+			}
+		}
+		public bool ShouldCountAsPowerSource(Point position, int forWireType) {
+			using IAshenPowerConduitTile.WalkedConduitOutput _ = new(position);
+			bool powered = false;
+			for (int i = 0; !powered && i < 3; i++) {
+				powered = i != forWireType && IAshenPowerConduitTile.FindValidPowerSource(position, i);
+			}
+			return powered;
 		}
 	}
 	public class Purple_Mechanical_Switch : Mechanical_Switch {
-		public override Color MapColor => FromHexRGB(0x6d0a91);
+		public override Color MapColor => FromHexRGB(0x6d0a91);//#6d0a91
 		public override int ItemType => ItemType<Purple_Mechanical_Switch_Item>();
 		public override int KeyType => ItemType<Mechanical_Key_Purple>();
 	}
-	public class Purple_Mechanical_Switch_Item : Transistor_Item {
+	public class Purple_Mechanical_Switch_Item : ModItem {
 		public override string Texture => typeof(Transistor_Item).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 100;
+		}
 		public override void SetDefaults() {
-			base.SetDefaults();
-			Item.createTile = TileType<Purple_Mechanical_Switch>();
+			Item.DefaultToPlaceableTile(TileType<Purple_Mechanical_Switch>());
+			Item.mech = true;
 		}
 	}
 }

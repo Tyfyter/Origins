@@ -7,20 +7,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Transistor : OriginTile, IAshenTile, IAshenPowerConduitTile {
+	public class Transistor : OriginTile, IAshenTile, IAshenPowerConduitTile, IGlowingModTile {
 		public virtual Color MapColor => FromHexRGB(0x7a391a);
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
+		public sealed override void Load() => this.SetupGlowKeys();
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (tile.TileFrameY >= 3 * 18) color.DoFancyGlow(new(1.05f, 0.75f, 0f), tile.TileColor);
+		}
 		public override void SetStaticDefaults() {
+			if (!Main.dedServ) {
+				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
+			}
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)TileType<Ashen_Foliage>(), 0, 6));
 			Main.tileFrameImportant[Type] = true;
 			Main.tileSolid[Type] = false;
-			Main.tileBlockLight[Type] = true;
+			Main.tileBlockLight[Type] = false;
 			Main.tileMergeDirt[Type] = false;
 			TileID.Sets.DrawTileInSolidLayer[Type] = true;
 			AddMapEntry(MapColor, CreateMapEntryName());
@@ -87,6 +98,11 @@ namespace Origins.Tiles.Ashen {
 					break;
 				}
 			}
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			drawData.glowColor = GlowColor;
+			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY, 16, 16);
+			drawData.glowTexture = this.GetGlowTexture(drawData.tileCache.TileColor);
 		}
 		public virtual void UpdateTransistor(Point pos) {
 			Tile input = Main.tile[pos];
@@ -197,7 +213,7 @@ namespace Origins.Tiles.Ashen {
 			}
 		}
 
-		public bool ShouldCountAsPowerSource(Point position) {
+		public bool ShouldCountAsPowerSource(Point position, int forWireType) {
 			using IAshenPowerConduitTile.WalkedConduitOutput _ = new(position);
 			Point dir = GetDirection(Main.tile[position]);
 			position -= dir + dir;

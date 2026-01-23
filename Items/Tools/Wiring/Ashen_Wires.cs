@@ -283,7 +283,7 @@ namespace Origins.Items.Tools.Wiring {
 			bool Breaker(AreaAnalysis analysis) {
 				Tile tile = Framing.GetTileSafely(analysis.Counted[^1]);
 				ref Ashen_Wire_Data data = ref tile.Get<Ashen_Wire_Data>();
-				if (data.IsTilePowered && TileLoader.GetTile(tile.TileType) is IAshenPowerConduitTile conduitTile && !conduitTile.ShouldCountAsPowerSource(analysis.Counted[^1])) return false;
+				if (data.IsTilePowered && TileLoader.GetTile(tile.TileType) is IAshenPowerConduitTile conduitTile && !conduitTile.ShouldCountAsPowerSource(analysis.Counted[^1], wireType)) return false;
 				return data.IsTilePowered;
 			}
 			if (!AreaAnalysis.March(i, j, AreaAnalysis.Orthogonals, Counter, Breaker).Broke) PropegatePowerState(i, j, wireType, false);
@@ -450,7 +450,7 @@ namespace Origins.Items.Tools.Wiring {
 	}
 	public interface IAshenPowerConduitTile {
 		static readonly HashSet<Point> walkedConduitOutputs = [];
-		public bool ShouldCountAsPowerSource(Point position);
+		public bool ShouldCountAsPowerSource(Point position, int forWireType);
 		public static bool FindValidPowerSource(Point position, int wireType) {
 			bool Counter(Point position) {
 				return Framing.GetTileSafely(position).Get<Ashen_Wire_Data>().GetWire(wireType);
@@ -459,7 +459,7 @@ namespace Origins.Items.Tools.Wiring {
 				if (walkedConduitOutputs.Contains(analysis.Counted[^1])) return false;
 				Tile tile = Framing.GetTileSafely(analysis.Counted[^1]);
 				ref Ashen_Wire_Data data = ref tile.Get<Ashen_Wire_Data>();
-				if (data.IsTilePowered && TileLoader.GetTile(tile.TileType) is IAshenPowerConduitTile conduitTile && !conduitTile.ShouldCountAsPowerSource(analysis.Counted[^1])) return false;
+				if (data.IsTilePowered && TileLoader.GetTile(tile.TileType) is IAshenPowerConduitTile conduitTile && !conduitTile.ShouldCountAsPowerSource(analysis.Counted[^1], wireType)) return false;
 				return data.IsTilePowered;
 			}
 			return AreaAnalysis.March(position.X, position.Y, AreaAnalysis.Orthogonals, Counter, Breaker).Broke;
