@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Other.Critters;
 using Origins.Reflection;
+using Origins.Tiles.Limestone;
 using Origins.World;
 using System;
 using System.Collections.Generic;
@@ -242,8 +243,13 @@ namespace Origins.NPCs.Critters {
 			}
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (!spawnInfo.Player.InModBiome<Limestone_Cave>()) return 0f;
-			return spawnInfo.SpawnTileY > Main.worldSurface ? 1 : 0;
+			int limestoneTile = ModContent.TileType<Limestone>();
+			for (int i = 0; i < 10; i++) {
+				if (Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY + i).TileIsType(limestoneTile)) {
+					return spawnInfo.SpawnTileY > Main.worldSurface ? 1 : 0;
+				}
+			}
+			return 0f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(

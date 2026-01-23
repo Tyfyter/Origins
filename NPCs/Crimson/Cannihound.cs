@@ -55,6 +55,7 @@ namespace Origins.NPCs.Crimson {
 			|| spawnInfo.SpawnTileType == TileID.Crimstone || spawnInfo.SpawnTileType == TileID.Crimsand)) return 0;
 			float chance = 0.6f;
 			if (spawnInfo.Player.HasBuff<Cannihound_Lure_Debuff>()) chance *= 2;
+			else if (spawnInfo.PlayerInTown) return 0;
 			return (spawnInfo.Player.ZoneSnow ? 1.5f : 1) * chance;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {

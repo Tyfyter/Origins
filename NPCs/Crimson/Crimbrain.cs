@@ -45,6 +45,7 @@ namespace Origins.NPCs.Crimson {
 			NPC.value = 75;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerInTown || spawnInfo.PlayerSafe) return 0;
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
 			if (!spawnInfo.Player.ZoneCrimson) return 0;
 			return 0.07f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);

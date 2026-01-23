@@ -1,5 +1,6 @@
 ﻿using Origins.Projectiles;
 using Origins.Tiles.Limestone;
+using Origins.World;
 using PegasusLib;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -27,8 +28,12 @@ namespace Origins.NPCs.MiscE {
 			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);
 			NPC.knockBackResist = 0.5f;
 			NPC.value = 90;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Limestone_Cave>().Type
+			];
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerInTown) return 0;
 			int limestoneTile = ModContent.TileType<Limestone>();
 			for (int i = 0; i < 10; i++) {
 				if (Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY + i).TileIsType(limestoneTile)) {

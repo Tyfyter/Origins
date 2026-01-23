@@ -43,6 +43,7 @@ namespace Origins.NPCs.Corrupt {
 			NPC.value = 56;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerInTown) return 0;
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
 			if (!spawnInfo.Player.ZoneCorrupt) return 0;
 			return 0.07f * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
