@@ -10,7 +10,7 @@ namespace Origins.Tiles.Other {
 		public Color GlowColor => new(196, 196, 196, 100);
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (IsEnabled(tile)) {
-				color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue());
+				color.DoFancyGlow(new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue(), tile.TileColor);
 			}
 		}
 		public Riven_Fountain() : base() {

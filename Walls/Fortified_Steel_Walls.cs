@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Tiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics;

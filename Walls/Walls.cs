@@ -1,4 +1,5 @@
-﻿using Origins.Tiles.Other;
+﻿using Origins.Tiles;
+using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;

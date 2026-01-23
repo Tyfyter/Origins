@@ -40,7 +40,7 @@ namespace Origins.Tiles.Riven {
 				if (frameY > 5) return;
 				break;
 			}
-			color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
+			color.DoFancyGlow(new Vector3(0.394f, 0.879f, 0.912f) * GlowValue, tile.TileColor);
 		}
 		public override void Load() {
 			this.SetupGlowKeys();

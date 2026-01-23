@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
 using ReLogic.Content;
+using System;
 using Terraria;
 using Terraria.ID;
 
@@ -52,9 +53,24 @@ namespace Origins.Tiles {
 		public static Texture2D GetTopGlowTexture(this IGlowingModTree self, int paintColor) {
 			return CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(self.TopGlowPaintKey, paintColor, self.TopGlowTexture);
 		}
-		public static void DoFancyGlow(ref this Vector3 fancyLightingCurrentColor, Vector3 color, int paintColor) {
+		public static void DoFancyGlow(ref this Vector3 fancyLightingCurrentColor, Vector3 color, int paintColor) => DoFancyGlow(
+			ref fancyLightingCurrentColor.X, ref fancyLightingCurrentColor.Y, ref fancyLightingCurrentColor.Z,
+			color, paintColor
+		);
+		public static void PaintLight(ref float r, ref float g, ref float b, int paintColor) {
+			Vector3 color = new(r, g, b);
+			r = 0;
+			g = 0;
+			b = 0;
+			DoFancyGlow(ref r, ref g, ref b, color, paintColor);
+		}
+		public static void DoFancyGlow(ref float r, ref float g, ref float b, Vector3 color, int paintColor) {
+			float brightness = color.Length();
 			Vector3 GetColor(int paintColor) {
 				switch (paintColor) {
+					case PaintID.None:
+					return color;
+
 					case PaintID.RedPaint:
 					case PaintID.OrangePaint:
 					case PaintID.YellowPaint:
@@ -67,48 +83,26 @@ namespace Origins.Tiles {
 					case PaintID.PurplePaint:
 					case PaintID.VioletPaint:
 					case PaintID.PinkPaint:
-					return Vector3.Lerp(color, GetColor(paintColor + (PaintID.DeepRedPaint - PaintID.RedPaint)), 0.75f);
-					case PaintID.DeepRedPaint:
-					return Color.Red.ToVector3();
-					case PaintID.DeepOrangePaint:
-					return Color.OrangeRed.ToVector3();
-					case PaintID.DeepYellowPaint:
-					return Color.Yellow.ToVector3();
-					case PaintID.DeepLimePaint:
-					return Color.Lime.ToVector3();
-					case PaintID.DeepGreenPaint:
-					return Color.Green.ToVector3();
-					case PaintID.DeepTealPaint:
-					return Color.Teal.ToVector3();
-					case PaintID.DeepCyanPaint:
-					return Color.Cyan.ToVector3();
-					case PaintID.DeepSkyBluePaint:
-					return Color.DeepSkyBlue.ToVector3();
-					case PaintID.DeepBluePaint:
-					return Color.Blue.ToVector3();
-					case PaintID.DeepPurplePaint:
-					return Color.Purple.ToVector3();
-					case PaintID.DeepVioletPaint:
-					return Color.Violet.ToVector3();
-					case PaintID.DeepPinkPaint:
-					return Color.Pink.ToVector3();
+					return Vector3.Lerp(color, WorldGen.paintColor(paintColor).ToVector3(), 0.75f);
 
-					case PaintID.ShadowPaint:
-					case PaintID.BlackPaint:
-					return Vector3.Zero;
+					case PaintID.NegativePaint:
+					return new Vector3(Math.Max(color.X, Math.Max(color.Y, color.Z))) - color;
 
 					case PaintID.GrayPaint:
-					case PaintID.WhitePaint:
+					brightness *= 0.5f;
 					return Vector3.One;
-					case PaintID.BrownPaint:
-					return Color.Brown.ToVector3();
-					case PaintID.NegativePaint:
-					return Vector3.One - color;
+					case PaintID.BlackPaint:
+					brightness *= 0.25f;
+					return Vector3.One;
+					case PaintID.ShadowPaint:
+					return Vector3.Zero;
 				}
-				return color;
+				return WorldGen.paintColor(paintColor).ToVector3();
 			}
-			float brigtness = color.Length();
-			fancyLightingCurrentColor = Vector3.Max(fancyLightingCurrentColor, GetColor(paintColor).Normalized(out _) * brigtness);
+			color = GetColor(paintColor).Normalized(out _) * brightness;
+			Max(ref r, color.X);
+			Max(ref g, color.Y);
+			Max(ref b, color.Z);
 		}
 	}
 }

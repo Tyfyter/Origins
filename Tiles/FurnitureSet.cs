@@ -163,7 +163,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -194,7 +194,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -223,7 +223,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -251,7 +251,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -281,7 +281,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -316,7 +316,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.CandleFancyGlow && glowTexture.Exists && IsOn(tile)) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -351,7 +351,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.CandelabraFancyGlow && glowTexture.Exists && IsOn(tile)) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -386,7 +386,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.LampFancyGlow && glowTexture.Exists && IsOn(tile)) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -446,7 +446,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.ChandelierFancyGlow && glowTexture.Exists && IsOn(tile)) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -515,7 +515,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.LanternFancyGlow && glowTexture.Exists && IsOn(tile)) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -545,7 +545,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -574,7 +574,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -603,7 +603,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -631,7 +631,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -658,7 +658,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}
@@ -686,7 +686,7 @@ namespace Origins.Tiles {
 		public Color GlowColor => GlowmaskColor;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (furnitureSet.FurnitureFancyGlows && glowTexture.Exists) {
-				color = Vector3.Max(color, furnitureSet.LightColor);
+				color.DoFancyGlow(furnitureSet.LightColor, tile.TileColor);
 			}
 		}
 	}

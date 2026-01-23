@@ -166,6 +166,8 @@ namespace Origins {
 		public bool DyeLightSources = true;
 		[DefaultValue(10), Range(0, 60)]
 		public int ProceduralLightSourceDyeRate = 10;
+		[DefaultValue(true)]
+		public bool DyeLightTiles = true;
 
 		[DefaultValue(ArtifactMinionHealthbarStyles.Auto)]
 		public ArtifactMinionHealthbarStyles ArtifactMinionHealthbarStyle = ArtifactMinionHealthbarStyles.Auto;

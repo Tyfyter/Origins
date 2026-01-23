@@ -13,16 +13,15 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
 	public class Amoeba_Fluid : ComplexFrameTile, IRivenTile, IGlowingModTile {
-		public string[] Categories => [
-			WikiCategories.OtherBlock
-		];
 		Asset<Texture2D> glowTexture;
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public Color GlowColor => new(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue() + 0.2f;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (OriginsModIntegrations.CheckAprilFools()) color = Vector3.Max(color, new Vector3(0.912f) * GlowValue);
-			else color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowValue);
+			Vector3 glowColor;
+			if (OriginsModIntegrations.CheckAprilFools()) glowColor = new Vector3(0.912f) * GlowValue;
+			else glowColor = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
+			color.DoFancyGlow(glowColor, tile.TileColor);
 		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {

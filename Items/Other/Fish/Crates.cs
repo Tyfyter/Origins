@@ -310,7 +310,7 @@ namespace Origins.Items.Other.Fish {
 		public bool Glows { get; private set; } = false;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (!Glows) return;
-			color = Vector3.Max(color, item.TileGlowColor.ToVector3() * item.TileGlowFancyLightAmount);
+			color.DoFancyGlow(item.TileGlowColor.ToVector3() * item.TileGlowFancyLightAmount, tile.TileColor);
 		}
 		public override void SetStaticDefaults() {
 			// Properties

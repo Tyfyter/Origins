@@ -254,6 +254,6 @@ namespace Origins.Tiles.Ashen {
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) => color = Vector3.Max(color, LightColor);
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) => color.DoFancyGlow(LightColor, tile.TileColor);
 	}
 }

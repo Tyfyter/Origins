@@ -102,7 +102,7 @@ namespace Origins.Tiles.Ashen {
 		public AutoCastingAsset<Texture2D> GlowTexture => glowTexture;
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f) * 3);
+			if (ShouldGlow(tile)) color.DoFancyGlow(new Vector3(0.5f, 0.31f, 0f) * 3, tile.TileColor);
 		}
 	}
 }

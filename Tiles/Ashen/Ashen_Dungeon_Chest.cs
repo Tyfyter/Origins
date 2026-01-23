@@ -11,7 +11,7 @@ namespace Origins.Tiles.Ashen {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			color = Vector3.Max(color, new Vector3(0.394f));
+			color.DoFancyGlow(new(0.394f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");

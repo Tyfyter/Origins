@@ -82,7 +82,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			const float brightness = 0.8f;
-			if (Main.tileFrame[Type] == 1) color = Vector3.Max(color, new(brightness, brightness * 0.45f, brightness * 0.2f));
+			if (Main.tileFrame[Type] == 1) color.DoFancyGlow(new(brightness, brightness * 0.45f, brightness * 0.2f), tile.TileColor);
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }

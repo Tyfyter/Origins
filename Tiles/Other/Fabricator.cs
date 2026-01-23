@@ -11,7 +11,7 @@ namespace Origins.Tiles.Other {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			color = Vector3.Max(color, new Vector3(1f, 0.5960784313725490196078431372549f, 0.5960784313725490196078431372549f) * 0.25f);
+			color.DoFancyGlow(new Vector3(1f, 0.5960784313725490196078431372549f, 0.5960784313725490196078431372549f) * 0.25f, tile.TileColor);
 		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {

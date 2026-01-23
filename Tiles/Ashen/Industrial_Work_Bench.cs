@@ -54,7 +54,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			const float brightness = 0.8f;
-			if (Main.tileFrame[Type] != 0 && tile.TileFrameX == 18 && tile.TileFrameY == 0) color = Vector3.Max(color, new(brightness, brightness * 0.45f, brightness * 0.2f));
+			if (Main.tileFrame[Type] != 0 && tile.TileFrameX == 18 && tile.TileFrameY == 0) color.DoFancyGlow(new(brightness, brightness * 0.45f, brightness * 0.2f), tile.TileColor);
 		}
 		public static bool IsPowered(int i, int j) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);

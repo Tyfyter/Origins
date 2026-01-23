@@ -18,14 +18,14 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
-    public class Brineglow : OriginTile, IGlowingModTile {
-        public string[] Categories => [
+	public class Brineglow : OriginTile, IGlowingModTile {
+		public string[] Categories => [
 			WikiCategories.Plant
 		];
 		public AutoCastingAsset<Texture2D> GlowTexture { get; set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (Glows(tile)) color.Z += MathHelper.Max(1 - color.Z * 0.5f, 0);
+			if (Glows(tile)) color.DoFancyGlow(new(0, 0, MathHelper.Max(1 - color.Z * 0.5f, 0)), tile.TileColor);
 		}
 		public static bool Glows(int frameNumX, int frameNumY) {
 			switch ((frameNumX, frameNumY)) {
@@ -106,7 +106,11 @@ namespace Origins.Tiles.Brine {
 			if (Glows(Framing.GetTileSafely(i, j))) yield return new Item(ItemType<Brineglow_Item>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			if (Glows(Framing.GetTileSafely(2, 2))) r = 0.19f; g = 0.33f; b = 0.44f;
+			if (Glows(Framing.GetTileSafely(2, 2))) {
+				r = 0.19f;
+				g = 0.33f;
+				b = 0.44f;
+			}
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!Framing.GetTileSafely(i, j + 1).HasTile) {
@@ -244,7 +248,7 @@ namespace Origins.Tiles.Brine {
 				Vector2 position = new Vector2(i, j) * 16 - Main.screenPosition + zero;
 				//position.Y += 2;
 				Rectangle frame = new(0, 0, 16, 16);//2
-				//float lastWindGridPush = 0;
+													//float lastWindGridPush = 0;
 				for (int k = j; Framing.GetTileSafely(i, k).TileType == Type; k++) {
 					Tile tile = Main.tile[i, k];
 					if (TileDrawing.IsVisible(tile)) {
@@ -353,21 +357,21 @@ namespace Origins.Tiles.Brine {
 		public override void Load() => this.SetupGlowKeys();
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
-    public class Brineglow_Item : ModItem, IJournalEntrySource<Brineglow_Item.Brineglow_Entry> {
+	public class Brineglow_Item : ModItem, IJournalEntrySource<Brineglow_Item.Brineglow_Entry> {
 		public class Brineglow_Entry : JournalEntry {
 			public override string TextKey => "Brineglow";
 			public override JournalSortIndex SortIndex => new("Brine_Fiend", 2);
 		}
 		public override void SetStaticDefaults() {
-            Item.ResearchUnlockCount = 5;
-        }
-        public override void SetDefaults() {
+			Item.ResearchUnlockCount = 5;
+		}
+		public override void SetDefaults() {
 			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(copper: 30);
 			Item.rare = ItemRarityID.Orange;
 		}
-    }
-    public class Brineglow_Debug_Item : TestingItem {
+	}
+	public class Brineglow_Debug_Item : TestingItem {
 		public override string Texture => "Origins/Tiles/Brine/Brineglow_Item";
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TitaniumOre);

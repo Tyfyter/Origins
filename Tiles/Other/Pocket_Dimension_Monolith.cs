@@ -9,7 +9,7 @@ namespace Origins.Tiles.Other {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (IsEnabled(tile)) color = Vector3.Max(color, new Vector3(0.394f));
+			if (IsEnabled(tile)) color.DoFancyGlow(new Vector3(0.394f), tile.TileColor);
 		}
 		public override int Frames => 4;
 		public override Color MapColor => new(157, 157, 157);

@@ -121,7 +121,7 @@ namespace Origins.Tiles.Brine {
 				case (4, 2):
 				case (5, 1):
 				case (5, 2):
-				color = Vector3.Max(color, new Vector3(0.912f, 0.879f, 0.394f));
+				color.DoFancyGlow(new(0.912f, 0.879f, 0.394f), tile.TileColor);
 				break;
 			}
 		}

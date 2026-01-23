@@ -21,6 +21,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.Utilities;
+using ThoriumMod.Tiles;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.MusicBoxes; 
@@ -195,7 +196,7 @@ public class Music_Box_RH : Music_Box, IGlowingModTile {
 		}
 	}
 	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-		if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0.394f, 0.879f, 0.912f) * GlowLightValue(tile));
+		if (ShouldGlow(tile)) color.DoFancyGlow(new Vector3(0.394f, 0.879f, 0.912f) * GlowLightValue(tile), tile.TileColor);
 	}
 	public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 		drawData.glowColor = GlowColor;
@@ -262,7 +263,7 @@ public class Music_Box_BP : Music_Box, IGlowingModTile {
 		}
 	}
 	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-		if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0f, 0.45f, 0.2f) * GlowLightValue(tile));
+		if (ShouldGlow(tile)) color.DoFancyGlow(new Vector3(0f, 0.45f, 0.2f) * GlowLightValue(tile), tile.TileColor);
 	}
 	public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 		drawData.glowColor = GlowColor;
@@ -379,7 +380,7 @@ public class Music_Box_AS : Music_Box, IGlowingModTile {
 	public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 	public Color GlowColor => Color.White;
 	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-		if (tile.TileFrameX > 2 * 18) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f));
+		if (tile.TileFrameX > 2 * 18) color.DoFancyGlow(new(0.5f, 0.31f, 0f), tile.TileColor);
 	}
 }
 public class Music_Box_SS : Music_Box, IGlowingModTile {
@@ -404,7 +405,7 @@ public class Music_Box_SS : Music_Box, IGlowingModTile {
 	public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 	public Color GlowColor => Color.White;
 	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-		if (tile.TileFrameX > 2 * 18) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f) * 0.5f);
+		if (tile.TileFrameX > 2 * 18) color.DoFancyGlow(new Vector3(0.5f, 0.31f, 0f) * 0.5f, tile.TileColor);
 	}
 }
 public class Music_Box_AF : Music_Box, IGlowingModTile {
@@ -429,7 +430,7 @@ public class Music_Box_AF : Music_Box, IGlowingModTile {
 	public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 	public Color GlowColor => Color.White;
 	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-		if (tile.TileFrameX > 2 * 18) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f));
+		if (tile.TileFrameX > 2 * 18) color.DoFancyGlow(new Vector3(0.5f, 0.31f, 0f), tile.TileColor);
 	}
 }
 public class Music_Box_AM : Music_Box, IGlowingModTile {
@@ -454,7 +455,7 @@ public class Music_Box_AM : Music_Box, IGlowingModTile {
 	public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 	public Color GlowColor => Color.White;
 	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-		if (tile.TileFrameX > 2 * 18) color = Vector3.Max(color, new Vector3(0.5f, 0.31f, 0f) * 0.5f);
+		if (tile.TileFrameX > 2 * 18) color.DoFancyGlow(new Vector3(0.5f, 0.31f, 0f) * 0.5f, tile.TileColor);
 	}
 }
 #endregion Normal
@@ -500,7 +501,7 @@ public class Ancient_Music_Box_RH : Music_Box, IGlowingModTile {
 		}
 	}
 	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-		if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0.912f, 0.879f, 0.394f) * GlowLightValue(tile));
+		if (ShouldGlow(tile)) color.DoFancyGlow(new Vector3(0.912f, 0.879f, 0.394f) * GlowLightValue(tile), tile.TileColor);
 	}
 	public override void SetStaticDefaults() {
 		base.SetStaticDefaults();
@@ -579,7 +580,7 @@ public class Ancient_Music_Box_BP : Music_Box, IGlowingModTile {
 		}
 	}
 	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-		if (ShouldGlow(tile)) color = Vector3.Max(color, new Vector3(0f, 0.912f, 0.394f) * GlowLightValue(tile));
+		if (ShouldGlow(tile)) color.DoFancyGlow(new Vector3(0f, 0.912f, 0.394f) * GlowLightValue(tile), tile.TileColor);
 	}
 	public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 		drawData.glowColor = GlowColor;
