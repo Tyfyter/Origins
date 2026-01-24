@@ -7521,11 +7521,6 @@ AMRSL_Skewer: {
 	// PrefixAmmo: "{0:+0;-0} capacity"
 }
 
-Mechanical_Key_Purple: {
-	// DisplayName: Mechanical Key Purple
-	// Tooltip: ""
-}
-
 Purple_Mechanical_Switch_Item: {
 	// DisplayName: Purple Mechanical Switch Item
 	// Tooltip: ""
@@ -7797,11 +7792,6 @@ Autohandcannon: {
 	// JammedText: Jammed!
 }
 
-Special_Chest_Tester_Item: {
-	// DisplayName: Special Chest Tester
-	// Tooltip: ""
-}
-
 Medium_Storage_Container_Item: {
 	// DisplayName: Medium Storage Container
 	// Tooltip: ""
@@ -7812,27 +7802,32 @@ Large_Storage_Container_Item: {
 	// Tooltip: ""
 }
 
+Mechanical_Key_Purple: {
+	// DisplayName: Purple Mechanical Key
+	// Tooltip: ""
+}
+
 Mechanical_Key_Blue: {
-	// DisplayName: Mechanical Key Blue
+	// DisplayName: Blue Mechanical Key
 	// Tooltip: ""
 }
 
 Mechanical_Key_Green: {
-	// DisplayName: Mechanical Key Green
+	// DisplayName: Green Mechanical Key
 	// Tooltip: ""
 }
 
 Mechanical_Key_Orange: {
-	// DisplayName: Mechanical Key Orange
+	// DisplayName: Orange Mechanical Key
 	// Tooltip: ""
 }
 
 Mechanical_Key_Yellow: {
-	// DisplayName: Mechanical Key Yellow
+	// DisplayName: Yellow Mechanical Key
 	// Tooltip: ""
 }
 
 Smog_Pod_4: {
-	// DisplayName: Smog Pod_4
+	// DisplayName: Smog Pod-4
 	// Tooltip: ""
 }

@@ -294,7 +294,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void SetDefaults() {
 			Projectile.width = 4;
 			Projectile.height = 4;
-			Projectile.aiStyle = 1;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
 			Projectile.friendly = true;
 			Projectile.penetrate = 1;
 			Projectile.light = 0.5f;
