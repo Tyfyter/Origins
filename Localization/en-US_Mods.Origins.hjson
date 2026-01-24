@@ -2701,6 +2701,11 @@ Configs: {
 			Label: adjusto Hook Control Setting
 			Tooltip: ""
 		}
+
+		DyeLightTiles: {
+			Label: Dye Light Tiles
+			Tooltip: ""
+		}
 	}
 
 	OriginConfig: {

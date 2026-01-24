@@ -639,7 +639,7 @@ ACCESSORIES:
 (^) Venom Fang
 (^) Venom Shield
 
-(#2, ^2) Bomb Rack !!! (needs orange particle effects)
+(☻) Bomb Rack !!! (has orange particle effects)
 (^) Entangled Energy
 (^) Mana Drive
 (^) Protozoa Food

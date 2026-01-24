@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Origins.Items.Accessories;
 [AutoloadEquip(EquipType.Shoes, EquipType.Wings)]
@@ -43,13 +44,9 @@ public class Bomb_Rack : ModItem {
 		maxAscentMultiplier *= multiplier;
 		constantAscend *= multiplier;
 	}
-	public override bool WingUpdate(Player player, bool inUse) {
-		if (Main.dedServ) return true;
-		if (player.rocketSoundDelay <= 0 && inUse) {
-			player.rocketSoundDelay = 30;
-			SoundEngine.PlaySound(in SoundID.Item13, player.position);
-		}
-		return true;
+	public override bool WeaponPrefix() => true;
+	public override int ChoosePrefix(UnifiedRandom rand) {
+		return OriginExtensions.GetAllPrefixes(Item, rand, (PrefixCategory.AnyWeapon, 1), (PrefixCategory.Accessory, 2));
 	}
 }
 public class Bomb_Rack_Carpet_Bomb : ModProjectile {

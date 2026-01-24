@@ -15,6 +15,7 @@ using Origins.Questing;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -559,7 +560,14 @@ namespace Origins {
 					bombRackCount--;
 					bombRackTimer = 0;
 				}
-				if (bombRackVisual) Dust.NewDust(Player.BottomLeft - Vector2.UnitX * 4, Player.width + 8, 0, ModContent.DustType<Black_Smoke_Dust>(), SpeedY: 4);
+				if (bombRackVisual) {
+					Dust.NewDustDirect(Player.BottomLeft - Vector2.UnitX * 4, Player.width + 8, 0, DustID.OrangeTorch).velocity.Y += 4;
+					Dust.NewDust(Player.BottomLeft - Vector2.UnitX * 4, Player.width + 8, 0, ModContent.DustType<Black_Smoke_Dust>(), SpeedY: 4);
+					if (Player.rocketSoundDelay <= 0) {
+						Player.rocketSoundDelay = 30;
+						SoundEngine.PlaySound(in SoundID.Item13, Player.position);
+					}
+				}
 			}
 			if (statSharePercent != 0f) {
 				foreach (DamageClass damageClass in DamageClasses.All) {

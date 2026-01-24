@@ -41,6 +41,7 @@ public class Smog_Pod_4 : ModItem {
 		player.lifeRegen += 10;
 		player.OriginPlayer().smogPod = Item;
 	}
+	public override bool WeaponPrefix() => true;
 	public override int ChoosePrefix(UnifiedRandom rand) {
 		return OriginExtensions.GetAllPrefixes(Item, rand, (PrefixCategory.AnyWeapon, 1), (PrefixCategory.Accessory, 2));
 	}

@@ -39,6 +39,7 @@ public class Decorative_Ashes : ModItem {
 		Item.value = Item.sellPrice(gold: 5);
 	}
 	public override void UpdateAccessory(Player player, bool hideVisual) => player.OriginPlayer().decorativeAshes = Item;
+	public override bool WeaponPrefix() => true;
 	public override int ChoosePrefix(UnifiedRandom rand) {
 		return OriginExtensions.GetAllPrefixes(Item, rand, (PrefixCategory.AnyWeapon, 1), (PrefixCategory.Accessory, 2));
 	}
