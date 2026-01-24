@@ -1,7 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
-using Origins.Dev;
 using Origins.NPCs;
 using System;
 using System.Collections.Generic;
@@ -11,6 +9,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Summoner {
 	public class Ocotoral_Bud : ModItem, ITornSource {
 		public static float TornSeverity => 0.5f;
@@ -140,6 +139,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (foundTarget) {
 				Vector2 diff = targetCenter - Projectile.Center;
 				if (bestTargetIsVisible) {
+					Utils.ChaseResults chase = Utils.GetChaseResults(Projectile.position + headCenterOffset, 16 * 3, targetCenter, Main.npc[target].velocity);
+					if (chase.InterceptionHappens) diff = chase.ChaserVelocity;
 					if (OriginExtensions.AngularSmoothing(ref Projectile.rotation, diff.ToRotation(), Projectile.ai[0] == target ? 0.2f : 0.125f)) {
 						Projectile.ai[0] = target;
 						if (++Projectile.ai[1] >= 45) {
@@ -291,7 +292,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ProjectileID.Sets.SentryShot[Type] = true;
 		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.CursedBullet);
+			Projectile.width = 4;
+			Projectile.height = 4;
+			Projectile.aiStyle = 1;
+			Projectile.friendly = true;
+			Projectile.penetrate = 1;
+			Projectile.light = 0.5f;
+			Projectile.alpha = 255;
+			Projectile.scale = 1.2f;
+			Projectile.timeLeft = 600;
+			Projectile.extraUpdates = 2;
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.aiStyle = 0;
 		}
