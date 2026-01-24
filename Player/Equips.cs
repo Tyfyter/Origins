@@ -258,6 +258,7 @@ namespace Origins {
 		}
 		public override void PostUpdateMiscEffects() {
 			Debugging.LogFirstRun(PostUpdateMiscEffects);
+			Debugging.ChatOverhead(Main.tileColor);
 			if (oldCryostenHelmet) {
 				if (Player.statLife != Player.statLifeMax2) {
 					bool buffed = cryostenLifeRegenCount > 0;

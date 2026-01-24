@@ -130,6 +130,8 @@ public class Smog_Pod_4_Rod : ModProjectile {
 		Projectile.netUpdate = true;
 	}
 	public override void AI() {
+		float mult = Projectile.Opacity;
+		Lighting.AddLight(Projectile.Top, 3 * mult, 1.86f * mult, 0.3f * mult);
 		Player player = Main.player[Projectile.owner];
 
 		foreach (Player healee in Main.ActivePlayers) {

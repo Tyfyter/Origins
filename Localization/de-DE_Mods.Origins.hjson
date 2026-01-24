@@ -2407,6 +2407,16 @@ Biomes: {
 		// TownNPCDialogueName: the {§Ashen} Desert
 		// DisplayName: "{§Ashen} Desert"
 	}
+
+	Smog_Storm_Biome: {
+		// DisplayName: Smog Storm Biome
+		// TownNPCDialogueName: the Smog_ Storm_ Biome
+	}
+
+	Smog_Storm: {
+		// DisplayName: Smog Storm
+		// TownNPCDialogueName: the Smog_ Storm
+	}
 }
 
 CaptureBiomeChoice: {

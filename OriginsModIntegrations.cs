@@ -90,6 +90,8 @@ namespace Origins {
 		public static Mod Thorium { get => instance.thorium; set => instance.thorium = value; }
 		Mod fancyLighting;
 		public static Mod FancyLighting { get => instance.fancyLighting; set => instance.fancyLighting = value; }
+		Func<bool> FancyLightingEngineEnabled;
+		public static bool FancyLightingEngine => instance.FancyLightingEngineEnabled();
 		Mod fargosMutant;
 		public static Mod FargosMutant { get => instance.fargosMutant; set => instance.fargosMutant = value; }
 		Mod avalon;
@@ -878,12 +880,14 @@ namespace Origins {
 					})
 				);
 				drawingAOMap += (ref bool value) => value |= drawingAO;
+
+				Type LightingConfig = fancyLighting.GetConfig("LightingConfig").GetType();
+				FancyLightingEngineEnabled = LightingConfig.GetMethod("FancyLightingEngineEnabled", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
+					.CreateDelegate<Func<bool>>(LightingConfig.GetField("Instance").GetValue(null));
 			} catch (Exception e) {
-				Origins.LogError("Exception thrown while loading Fancy Lighting Integration:", e);
 				FancyLighting = null;
-#if DEBUG
-				throw;
-#endif
+				FancyLightingEngineEnabled = null;
+				if (Origins.LogLoadingILError("LoadFancyLighting", e)) throw;
 			}
 			/*for (int i = 0; i < OriginTile.IDs.Count; i++) {
 				if (OriginTile.IDs[i] is IGlowingModTile glowingTile) {
