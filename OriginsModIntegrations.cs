@@ -678,6 +678,7 @@ namespace Origins {
 					(Predicate<Item>)(i => i.CountsAsClass<Explosive>())
 				);
 			}
+			instance.FancyLightingEngineEnabled = () => false;
 			if (ModLoader.TryGetMod("FancyLighting", out instance.fancyLighting)) {
 				instance.LoadFancyLighting();
 			} else {
