@@ -6937,9 +6937,9 @@ Welding_Torch: {
 	/* Tooltip:
 		'''
 		Uses gel for ammo
-		Ignores 25 points of enemy Defense
+		Ignores 25 Defense
 		Inflicts hellfire
-		Fire at allied artifact minions to heal them
+		Hold <right> at allied artifact minions to heal them
 		''' */
 }
 
@@ -7576,22 +7576,38 @@ Gills: {
 
 Retool_Arm_Cannon: {
 	// DisplayName: "{$Retool_Arm.DisplayName} (Cannon)"
-	// Tooltip: Does extra damage on a direct hit
+	/* Tooltip:
+		'''
+		Does extra damage on direct hits
+		Press <key> to switch mode
+		''' */
 }
 
 Retool_Arm_Laser: {
 	// DisplayName: "{$Retool_Arm.DisplayName} (Laser)"
-	// Tooltip: <right> to fire a powerful laser
+	/* Tooltip:
+		'''
+		Hold <right> to fire a powerful laser
+		Press <key> to switch mode
+		''' */
 }
 
 Retool_Arm_Saw: {
 	// DisplayName: "{$Retool_Arm.DisplayName} (Saw)"
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Chops down trees with you
+		Press <key> to switch mode
+		''' */
 }
 
 Retool_Arm_Vice: {
 	// DisplayName: "{$Retool_Arm.DisplayName} (Vice)"
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Press and hold <right> on enemies to manipulate them
+		Press <key> to switch mode
+		''' */
 }
 
 Defiled_Stone_Wall_Safe_Item: {
@@ -7658,8 +7674,8 @@ The_Muffler: {
 	// DisplayName: The Muffler
 	/* Tooltip:
 		'''
-		Inflicts Miasma to the user in-use
 		Revs up with a killstreak
+		Inflicts Miasma to the user with revs
 		''' */
 	// PrefixEfficiency: "{0:+0;-0}% efficiency"
 }
@@ -7710,12 +7726,12 @@ Lathe_Item: {
 }
 
 Exo_Legs: {
-	// DisplayName: Exo Legs
+	// DisplayName: Exo-Legs
 	// Tooltip: ""
 }
 
 Exo_Suit: {
-	// DisplayName: Exo Suit
+	// DisplayName: Exo-Suit
 	// Tooltip: ""
 }
 

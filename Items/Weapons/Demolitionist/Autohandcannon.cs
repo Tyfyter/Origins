@@ -43,8 +43,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.noMelee = true;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.noMelee = true;
-			Item.damage = 68;
-			Item.crit = 8;
+			Item.damage = 60;
+			Item.crit = 4;
 			Item.width = 56;
 			Item.height = 26;
 			Item.useTime = 46;

@@ -639,7 +639,7 @@ ACCESSORIES:
 (^) Venom Fang
 (^) Venom Shield
 
-(☻) Bomb Rack !!! (has orange particle effects)
+(#2, ^2) Bomb Rack !!!
 (^) Entangled Energy
 (^) Mana Drive
 (^) Protozoa Food
@@ -649,7 +649,7 @@ ACCESSORIES:
 
 (^) Amebic Vial
 (^) Blizzardwalker's Jacket
-(^3) Crystal Heart !!! (Needs wing texture)
+(^) Crystal Heart
 (^) Cursed Crown
 (^) Emergency Bee Canister
 (^) Faith Beads
@@ -657,7 +657,7 @@ ACCESSORIES:
 (^) Forbidden Voice (Cursed)
 (^) Forbidden Voice (Uncursed)
 (†) Glitter Glue !!!
-(#2) Lunatic's Rune !!! (dragon polish)
+(#2, ^2) Lunatic's Rune !!! (dragon polish)
 (^) Mysterious Spray
 (#3, ^2) Retool Arm !!!
 (#3) Robo-tail !!!
@@ -767,7 +767,7 @@ TOOLS:
 (^) Felnum Pickaxe
 (^) Lightning Rod
 (^) Marrowick Hammer
-(☻) Miter Saw !!!
+(^) Miter Saw
 (^) Parasitic Manipulator
 (^) Piledriver
 (^) Rivenator
@@ -961,7 +961,7 @@ MAGIC WEAPONS:
 (^) Splitsplash
 (^) Tones of Agony
 
-(☻) Blast Furnace !!!
+(^) Blast Furnace
 (^) Bled Out Staff
 (^) Brine Haze
 (^) Chemical Laser
@@ -1139,7 +1139,7 @@ EXPLOSIVE WEAPONS:
 (^) Thermite Launcher
 (^) Torpedo Tube
 
-(☻) Autohandcannon !!!
+(^) Autohandcannon
 (^) Bomboomstick
 (^) Chlorodynamite
 (^) Chlorophyte Handcannon
@@ -1153,7 +1153,7 @@ EXPLOSIVE WEAPONS:
 (X) Oil Drum
 (^) Omni-directional Claymore
 (^) Partybringer
-(☻) Pete's Peat Slugger !!!
+(^) Pete's Peat Slugger
 (X) Puffle
 (^) Rocodile
 (^) Self-Destruct
@@ -1189,7 +1189,7 @@ TILES:
 |---
 (^) Aetherite Ore
 (^) Amoeba Fluid
-(☻) Artifiber !!!
+(^) Artifiber
 (^) Ashen Cactus
 (^) Baryte
 (^) Batholith
@@ -1260,7 +1260,7 @@ TILES:
 
 (^) Amebic Gel Wall
 (^) Artifiber Wall
-(☻) Ashen Grass Wall !!!
+(^) Ashen Grass Wall
 (^) Barnacle Wall
 (^) Baryte Wall
 (^) Batholith Wall
@@ -1295,7 +1295,7 @@ TILES:
 (^) Type-I Fortified Steel Wall
 (^) Type-III Fortified Steel Wall
 
-(☻) Air Vent !!!
+(^) Air Vent
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
 (^) Artifiber Furniture
@@ -1343,9 +1343,10 @@ TILES:
 (X) Defiled Pylon
 (^) Fire Extinguisher Holder
 (^) Industrial Door
-(☻) Large Storage Container !!!
+(^) Large Storage Container
 (^) Laser Tag Console
-(☻) Medium Storage Container !!!
+(@, ^3) Mechanical Key Node !!!
+(#2, ^2) Medium Storage Container !!! (just needs complete fall-through)
 (^) Modular Bunk
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
@@ -1375,7 +1376,7 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
-(☻) Artifiber Tree !!!
+(^) Artifiber Tree
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
 (^) Background Door
@@ -1416,7 +1417,7 @@ TILES:
 (^) Underwater Vine
 (^) Venus Coral
 (^) Wilting Rose
-(☻) Workstation Extras !!!
+(^) Workstation Extras
 (^) Wrycoral
 
 (^) A Perfect World
@@ -1561,7 +1562,7 @@ CRITTERS AND FISH:
 (^) Chambersite Bunny
 (^) Chambersite Squirrel
 (^) Cicada 3301
-(☻) Hyrax !!!
+(^) Hyrax
 (^) Peppered Moth
 
 (^) Bilemouth
@@ -1633,13 +1634,13 @@ CONSUMABLES:
 (^) Bad Juju Stone
 (^) BBQ Skewer
 (^) Bileberry
-(☻) Blastberry !!!
+(^) Blastberry
 (^) Blue Bovine
 (^) Bread
 (^) Brine Cheese
 (々) Budget Fairy Dust
 (^) Caeser Salad
-(☻) Cognac !!!
+(^) Cognac
 (^) Contaminated Infusion
 (^) Crockin' Sprocks
 (^) Edible Hair Gel
@@ -1660,12 +1661,12 @@ CONSUMABLES:
 (^) Sour Apple
 (^) Spearmint Tea
 (々) Sweet Tooth Shake
-(☻) Tangerine !!!
+(^) Tangerine
 (々) Tasty Booger
 (^) Vanilla Shake
 
 (X) Catalyst Cell
-(☻) Distress Beacon !!!
+(^) Distress Beacon
 (^) Nerve Impulse Manipulator
 (^) Lost Picture Frame
 (X) Quantum Cell
@@ -1694,7 +1695,7 @@ CONSUMABLES:
 (^) Brine Key
 (^) Defiled Key
 (^) Hell Key
-(☻) Mechanical Keys !!!
+(^) Mechanical Keys
 (^) Mushroom Key
 (^) Ocean Key
 (^) Riven Key

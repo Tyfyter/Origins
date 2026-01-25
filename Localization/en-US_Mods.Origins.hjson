@@ -1427,7 +1427,7 @@ Buffs: {
 
 	Lunatics_Rune_Duplicates_Buff: {
 		DisplayName: Lunatic Shadows
-		Description: The ancient cultists will fight alongside you
+		Description: Shadow clones will fight by your side
 	}
 
 	Lunatics_Rune_Attacks_Buff: {
@@ -1451,8 +1451,8 @@ Buffs: {
 	}
 
 	Autohandcannon_Jam_Debuff: {
-		DisplayName: Autohandcannon Jam Debuff
-		Description: Mods.Origins.Buffs.Autohandcannon_Jam_Debuff.Description
+		DisplayName: Jammed!
+		Description: The weapon cannot fire.
 	}
 }
 

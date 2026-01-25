@@ -1,4 +1,3 @@
-using Origins.Dev;
 using Origins.Items.Weapons.Ammo;
 using System;
 using Terraria;
@@ -9,8 +8,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Petes_Peat_Slugger : ModItem {
 		public static float PeatSprayDamageMult => 0.6f;
-		public static float PeatDropDamageMult => 0.6f;
-		public static float PeatBlastDamageMult => 0.6f;
+		public static float PeatDropDamageMult => 0.4f;
+		public static float PeatBlastDamageMult => 0.5f;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
@@ -31,7 +30,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 8f;
 			Item.shootSpeed = 12f;
 			Item.value = Item.buyPrice(gold: 30);
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Lime;
 			Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.25f);
 			Item.autoReuse = true;
 			Item.ArmorPenetration += 6;

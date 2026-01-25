@@ -1,16 +1,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
-using Origins.Projectiles;
-using Origins.Reflection;
 using Origins.UI;
-using System;
-using System.Drawing;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.Graphics;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
@@ -27,19 +21,19 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.DamageType = DamageClass.Magic;
-			Item.damage = 30;
+			Item.damage = 64;
 			Item.noMelee = true;
 			Item.width = 44;
 			Item.height = 44;
-			Item.useTime = 20;
-			Item.useAnimation = 20;
+			Item.useTime = 70;
+			Item.useAnimation = 70;
 			Item.shoot = ModContent.ProjectileType<Blast_Furnace_Charge>();
 			Item.shootSpeed = 8f;
 			Item.mana = 7;
 			Item.knockBack = 5f;
 			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.LightRed;
-			Item.UseSound = SoundID.Item34;
+			Item.UseSound = SoundID.Item82;
 			Item.autoReuse = true;
 			Item.channel = true;
 		}
@@ -83,7 +77,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Blast_Furnace_Charge : ModProjectile {
-		public static float ChargeTimeMultiplier => 0.65f;
+		public static float ChargeTimeMultiplier => 0.175f;
 		public override string Texture => typeof(Blast_Furnace).GetDefaultTMLName();
 		public override void SetDefaults() {
 			Projectile.width = 0;

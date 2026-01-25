@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -7,6 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Dusts {
 	public class Black_Smoke_Dust : ModDust {
 		public override string Texture => "Terraria/Images/Dust";
+		//public override string Texture => "Terraria/Images/ChimneySmoke1";
 		public override void OnSpawn(Dust dust) {
 			dust.frame.X = 10 * DustID.Smoke;
 			dust.scale *= 1.1f;

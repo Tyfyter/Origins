@@ -121,9 +121,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			return base.GetWeight(boss, previousStates);
 		}
 		public class Trenchmaker_Cannon_P : ModProjectile {
-			public override string Texture => "Terraria/Images/Item_1";
-			public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Canister_Outer";
-			public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Canister_Inner";
+			public override string Texture => "Origins/Items/Weapons/Ammo/Metal_Slug_P";
 			public static int ID { get; private set; }
 			public override void SetStaticDefaults() {
 				ProjectileID.Sets.TrailingMode[Type] = 2;
@@ -213,10 +211,10 @@ namespace Origins.NPCs.Ashen.Boss {
 				Min(ref Projectile.timeLeft, 1);
 			}
 			public override bool PreDraw(ref Color lightColor) {
-				Vector2 origin = outerTexture.Value.Size() * 0.5f;
+				//Vector2 origin = outerTexture.Value.Size() * 0.5f;
 				SpriteEffects spriteEffects = SpriteEffects.None;
 				if (Projectile.spriteDirection == -1) spriteEffects |= SpriteEffects.FlipHorizontally;
-				Main.EntitySpriteDraw(
+				/*Main.EntitySpriteDraw(
 					innerTexture,
 					Projectile.Center - Main.screenPosition,
 					null,
@@ -235,7 +233,7 @@ namespace Origins.NPCs.Ashen.Boss {
 					origin,
 					Projectile.scale,
 					spriteEffects
-				);
+				);*/
 
 				MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
 				Vector2[] oldPos = [.. Projectile.oldPos];
@@ -497,7 +495,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC npc = boss.NPC;
 			if (boss.legs[0].CurrentAnimation is Jump_Preparation_Animation or Jump_Squat_Animation) {
 				if (npc.soundDelay == 0) {
-					SoundEngine.PlaySound(Origins.Sounds.ThrusterChargeUp.WithVolume(ChargeSoundVolume), npc.Center, sound => {
+					SoundEngine.PlaySound(Origins.Sounds.ThrusterChargeUp.WithVolume(ChargeSoundVolume).WithPitchVarience(1.07f), npc.Center, sound => {
 						if (npc.ai[0] > 0) {
 							sound.Volume -= ChargeSoundVolume / ChargeSoundFadeTime;
 						}
