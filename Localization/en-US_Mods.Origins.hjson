@@ -2195,8 +2195,11 @@ Projectiles: {
 	Decorative_Ashes_Missile.DisplayName: Decorative Ashes Missile
 	Petes_Peat.DisplayName: Pete's Peat
 	Petes_Peat_Slug.DisplayName: Pete's Peat Slug
-	Smog_Pod_4_Rocket.DisplayName: Smog Pod_4 Rocket
-	Smog_Pod_4_Rod.DisplayName: Smog Pod_4 Rod
+	Smog_Pod_4_Rocket.DisplayName: Smog Pod-4 Rocket
+	Smog_Pod_4_Rod.DisplayName: Smog Pod-4 Rod
+	Scrap_Dart_P.DisplayName: Scrap Dart
+	Scrap_Dart_Shrapnel.DisplayName: Scrap Dart Shrapnel
+	Plant_Crystal_Shrapnel.DisplayName: The P.L.A.N.T. Crystal Shrapnel
 }
 
 Prefixes: {

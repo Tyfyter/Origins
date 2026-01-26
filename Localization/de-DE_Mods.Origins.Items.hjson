@@ -7852,3 +7852,8 @@ Smog_Pod_4: {
 	// DisplayName: Smog Pod-4
 	// Tooltip: ""
 }
+
+Scrap_Dart: {
+	// DisplayName: Scrap Dart
+	// Tooltip: ""
+}

@@ -41,12 +41,13 @@ namespace Origins.Buffs {
 	public class Impeding_Shrapnel_Shard : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.BoneGloveProj;
 		public static int ID { get; private set; }
+		public virtual DamageClass DamageType => DamageClasses.Explosive;
 		public override void SetStaticDefaults() {
-			ID = Type;
+			if (GetType() == typeof(Impeding_Shrapnel_Shard)) ID = Type;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bullet);
-			Projectile.DamageType = DamageClasses.Explosive;
+			Projectile.DamageType = DamageType;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 3;
 			Projectile.extraUpdates = 3;

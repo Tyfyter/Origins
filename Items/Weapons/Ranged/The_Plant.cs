@@ -650,7 +650,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void OnKill(int timeLeft) {
 			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
 			SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
-			int type = ModContent.ProjectileType<Impeding_Shrapnel_Shard>();
+			int type = ModContent.ProjectileType<Plant_Crystal_Shrapnel>();
 			for (int i = Math.Min(Main.rand.Next(2, 4), Main.rand.Next(2, 4)); i > 0; i--) {
 				Projectile.NewProjectile(
 					Projectile.GetSource_FromThis(),
@@ -661,6 +661,9 @@ namespace Origins.Items.Weapons.Ranged {
 					Projectile.knockBack
 				);
 			}
+		}
+		public class Plant_Crystal_Shrapnel : Impeding_Shrapnel_Shard {
+			public override DamageClass DamageType => DamageClass.Ranged;
 		}
 	}
 }
