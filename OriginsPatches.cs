@@ -745,8 +745,11 @@ namespace Origins {
 			MonoModHooks.Add(typeof(Player).GetProperty(nameof(Player.ShoppingZone_AnyBiome)).GetMethod, (orig_ShoppingZone_AnyBiome orig, Player self) => {
 				return orig(self) || self.InModBiome<Defiled_Wastelands>() || self.InModBiome<Riven_Hive>() || self.InModBiome<Ashen_Biome>();
 			});
+			On_Player.CapAttackSpeeds += (On_Player.orig_CapAttackSpeeds orig, Player self) => {
+				orig(self);
+				self.OriginPlayer()?.UpdateStatShare();
+			};
 		}
-
 		private void On_NPC_GetShimmered(On_NPC.orig_GetShimmered orig, NPC self) {
 			int origType = self.type;
 			orig(self);
