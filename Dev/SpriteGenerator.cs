@@ -46,6 +46,7 @@ namespace Origins.Dev {
 				Main.screenMaximized = screenMaximized;
 			}
 			spriteBatch.End();
+			renderTarget.GraphicsDevice.SetRenderTarget(null);
 			if (state is SpriteBatchState spriteBatchState) {
 				Main.spriteBatch.Begin(spriteBatchState);
 			}
