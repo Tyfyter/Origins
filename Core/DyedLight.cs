@@ -32,6 +32,7 @@ namespace Origins.Core {
 			shader.Apply(entity);
 			Main.spriteBatch.Draw(texture, dest, tint);
 			Main.spriteBatch.End();
+			Main.graphics.GraphicsDevice.SetRenderTarget(null);
 
 			Color[] data = new Color[1];
 			renderTarget.GetData(data);
