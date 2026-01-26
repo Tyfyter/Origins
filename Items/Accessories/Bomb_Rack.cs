@@ -29,6 +29,7 @@ public class Bomb_Rack : ModItem {
 	}
 	public override void UpdateAccessory(Player player, bool hideVisual) {
 		Max(ref player.accRunSpeed, 6f);
+		player.rocketBoots = player.vanityRocketBoots = 1;
 		OriginPlayer originPlayer = player.OriginPlayer();
 		originPlayer.bombRack = Item;
 		originPlayer.bombRackVisual = !hideVisual;
