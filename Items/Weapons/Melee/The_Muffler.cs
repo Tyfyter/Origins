@@ -67,7 +67,8 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 1;
 		}
-		float ChargeLevel => float.Min(Main.player[Projectile.owner].OriginPlayer().mufflerAmount * 0.01f, 3);
+		public static float GetChargeLevel(float chargeAmount) => float.Min(chargeAmount * 0.01f, 3);
+		float ChargeLevel => GetChargeLevel(Main.player[Projectile.owner].OriginPlayer().mufflerAmount);
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
 			hitbox.Offset((Projectile.velocity * 2).ToPoint());
 		}
@@ -97,10 +98,12 @@ namespace Origins.Items.Weapons.Melee {
 				SoundEngine.PlaySound(SoundID.Research.WithVolumeScale(1).WithPitch(-0.5f), Projectile.Center);
 			}
 			if (Projectile.ai[2] != 0 && Projectile.localAI[2].CycleUp(3)) {
-				SoundEngine.PlaySound(SoundID.DD2_BetsyHurt.WithPitch(0.4f));
-				SoundEngine.PlaySound(SoundID.DD2_DrakinHurt.WithPitch(0.4f));
-				//SoundEngine.PlaySound(SoundID.Zombie42.WithPitch(0.6f));
-				SoundEngine.PlaySound(Origins.Sounds.PowerStomp.WithPitch(-0.5f));
+				if (Projectile.ai[2] == 1) {
+					SoundEngine.PlaySound(SoundID.DD2_BetsyHurt.WithPitch(0.4f));
+					SoundEngine.PlaySound(SoundID.DD2_DrakinHurt.WithPitch(0.4f));
+					//SoundEngine.PlaySound(SoundID.Zombie42.WithPitch(0.6f));
+					SoundEngine.PlaySound(Origins.Sounds.PowerStomp.WithPitch(-0.5f));
+				}
 				Projectile.ai[2].CycleUp(exhaust_frames);
 			}
 		}
