@@ -138,7 +138,7 @@ namespace Origins.Items.Accessories {
 			DoActiveCheck();
 			Player player = Main.player[Projectile.owner];
 			Projectile.direction = player.direction;
-			Projectile.Center = player.MountedCenter + new Vector2(player.direction * -10, player.gravDir * 10);
+			Projectile.Center = player.MountedCenter + new Vector2(player.direction * -10, player.gravDir * 10 + player.gfxOffY);
 			Projectile.rotation = MathHelper.PiOver2 * Projectile.direction;
 			if (wormData.Child == -1) return;
 			int child = wormData.Child;
