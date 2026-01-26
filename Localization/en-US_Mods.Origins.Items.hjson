@@ -7557,11 +7557,11 @@ Ocean_Amulet: {
 Lunatics_Rune: {
 	DisplayName: Lunatic's Rune
 	Tooltip:
-	'''
-	Hold <key> to conduct a ritual
-	The ritual will temporarily grant you a random effect
-	Conducting the ritual repeatedly extends the duration
-	'''
+		'''
+		Hold <key> to conduct a ritual
+		The ritual will temporarily grant you a random effect
+		Conducting the ritual repeatedly extends the duration
+		'''
 }
 
 Adjusto_Hook: {

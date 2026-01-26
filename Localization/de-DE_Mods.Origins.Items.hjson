@@ -6909,7 +6909,7 @@ Hyrax_Cage_Item: {
 
 Hyrax_Item: {
 	// DisplayName: Hyrax
-	// Tooltip: ""
+	// Tooltip: "'WAWA!'"
 }
 
 Ashen_Fountain_Item: {
@@ -7556,7 +7556,12 @@ Ocean_Amulet: {
 
 Lunatics_Rune: {
 	// DisplayName: Lunatic's Rune
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Hold <key> to conduct a ritual
+		The ritual will temporarily grant you a random effect
+		Conducting the ritual repeatedly extends the duration
+		''' */
 }
 
 Adjusto_Hook: {
@@ -7784,7 +7789,7 @@ Laborer_Helmet: {
 
 Blastberry: {
 	// DisplayName: Blastberry
-	// Tooltip: ""
+	// Tooltip: "{$CommonItemTooltip.MinorStats}"
 }
 
 Cognac: {
@@ -7794,7 +7799,7 @@ Cognac: {
 
 Tangerine: {
 	// DisplayName: Tangerine
-	// Tooltip: ""
+	// Tooltip: "{$CommonItemTooltip.MinorStats}"
 }
 
 Autohandcannon: {
