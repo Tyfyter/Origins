@@ -1111,10 +1111,6 @@ namespace Origins {
 
 			boatRockerAltUse = false;
 			boatRockerAltUse2 = false;
-			if (mufflerAmount > 0) {
-				Min(ref mufflerAmount, 500);
-				mufflerAmount -= 0.1f + mufflerAmount * 0.001f;
-			}
 			if (weldingTorchSoundTime.Cooldown()) {
 				weldingTorchSound.GetSound()?.Stop();
 				SoundEngine.PlaySound(Origins.Sounds.WeldingTorchCancel, Player.MountedCenter);

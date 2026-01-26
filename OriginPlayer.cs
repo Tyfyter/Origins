@@ -663,6 +663,18 @@ namespace Origins {
 			}
 		}
 		public override void PostUpdateBuffs() {
+			if (mufflerAmount > 0) {
+				Min(ref mufflerAmount, 500);
+				int oldMufflerLevel = (int)The_Muffler_P.GetChargeLevel(mufflerAmount);
+				mufflerAmount -= 0.1f + mufflerAmount * 0.001f;
+				if (Player.ownedProjectileCounts[ModContent.ProjectileType<The_Muffler_P>()] <= 0) {
+					mufflerAmount -= 1;
+					if ((int)The_Muffler_P.GetChargeLevel(mufflerAmount) != oldMufflerLevel) {
+						SoundEngine.PlaySound(SoundID.Research.WithVolumeScale(0.75f).WithPitch(-0.5f), Player.Center);
+					}
+				}
+				Max(ref mufflerAmount, 0);
+			}
 			foreach (Projectile projectile in Main.ActiveProjectiles) {
 				if (projectile.owner == Player.whoAmI && projectile.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerTarget.HasValue) {
 					Player.ownedProjectileCounts[projectile.type]--;

@@ -842,7 +842,7 @@ MELEE WEAPONS:
 (X) Soulfire Saw
 (#, ^2) The Claw !!!
 (^) The Foot
-(#3) The Muffler !!!
+(☻) The Muffler !!!
 (X) Unicorn Lance
 
 (X) Chiton Kursarigama
