@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Origins.Items.Accessories;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -26,11 +28,30 @@ namespace Origins.Projectiles {
 		public TargetingData targetingData;
 		public struct TargetingData {
 			public Rectangle targetHitbox;
+			public Vector2 targetVelocity;
 			/// <summary>
 			/// the distance from the target squared, or the maximum distance squared if no target is found
 			/// </summary>
 			public float distanceFromTarget;
-			public int targetID;
+			public int TargetID {
+				readonly get => targetID;
+				set {
+					targetID = value;
+					if (Main.npc.GetIfInRange(targetID) is NPC npc) {
+						targetHitbox = npc.Hitbox;
+						targetVelocity = npc.velocity;
+						switch (npc.aiStyle) {
+							case Terraria.ID.NPCAIStyleID.MoonLordHead:
+							targetVelocity = Main.npc[(int)npc.ai[3]].velocity;
+							break;
+							case Terraria.ID.NPCAIStyleID.MoonLordHand:
+							targetVelocity = Main.npc[(int)npc.ai[3]].velocity;
+							break;
+						}
+					}
+				}
+			}
+			int targetID;
 			public int lastTargetID;
 			public readonly bool IsLastTarget(NPC npc) => npc.whoAmI == lastTargetID;
 			public readonly float KeepTargetOrDistance(Projectile projectile, NPC npc) {
@@ -40,14 +61,14 @@ namespace Origins.Projectiles {
 			public void KeepOrPickNearest(Projectile projectile, NPC npc, ref bool foundTarget) {
 				if (Minimize(ref distanceFromTarget, KeepTargetOrDistance(projectile, npc))) {
 					targetHitbox = npc.Hitbox;
-					targetID = npc.whoAmI;
+					TargetID = npc.whoAmI;
 					foundTarget = true;
 				}
 			}
 			public void PickNearest(Projectile projectile, NPC npc, ref bool foundTarget) {
 				if (Minimize(ref distanceFromTarget, projectile.DistanceSQ(npc.Center))) {
 					targetHitbox = npc.Hitbox;
-					targetID = npc.whoAmI;
+					TargetID = npc.whoAmI;
 					foundTarget = true;
 				}
 			}
@@ -55,10 +76,7 @@ namespace Origins.Projectiles {
 				writer.Write((short)targetID);
 			}
 			public void Receive(BinaryReader reader) {
-				targetID = reader.ReadInt16();
-				if (Main.npc.GetIfInRange(targetID) is NPC npc) {
-					targetHitbox = npc.Hitbox;
-				}
+				TargetID = reader.ReadInt16();
 			}
 		}
 		public virtual Rectangle RestRegion {
@@ -72,8 +90,8 @@ namespace Origins.Projectiles {
 		public virtual void ResetTargetingData() {
 			targetingData.targetHitbox = Projectile.Hitbox;
 			targetingData.distanceFromTarget = MaxPriorityRange * MaxPriorityRange;
-			targetingData.lastTargetID = targetingData.targetID;
-			targetingData.targetID = -1;
+			targetingData.lastTargetID = targetingData.TargetID;
+			targetingData.TargetID = -1;
 		}
 		public virtual void TargetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
 			if (!isPriorityTarget) Min(ref targetingData.distanceFromTarget, MaxNonPriorityRange * MaxNonPriorityRange);
@@ -81,7 +99,7 @@ namespace Origins.Projectiles {
 			targetingData.KeepOrPickNearest(Projectile, npc, ref foundTarget);
 		}
 		public virtual void MoveTowardsTarget() {
-			bool foundTarget = targetingData.targetID != -1;
+			bool foundTarget = targetingData.TargetID != -1;
 			Rectangle targetHitbox = foundTarget ? targetingData.targetHitbox : RestRegion;
 			if (foundTarget) targetHitbox.Inflate(targetHitbox.Width / 8, targetHitbox.Height / 8);
 
@@ -287,6 +305,16 @@ namespace Origins.Projectiles {
 				Projectile.spriteDirection = (offset.X > 0f).ToDirectionInt();
 			}
 		}
+		public void ShareLocalIFrames() {
+			int[] localNPCImmunity = Projectile.localNPCImmunity;
+			Projectile[] segments = WalkWorm().ToArray();
+			foreach (Projectile segment in segments) {
+				for (int i = 0; i < localNPCImmunity.Length; i++) Max(ref localNPCImmunity[i], segment.localNPCImmunity[i]);
+			}
+			foreach (Projectile segment in segments) {
+				for (int i = 0; i < localNPCImmunity.Length; i++) segment.localNPCImmunity[i] = localNPCImmunity[i];
+			}
+		}
 		public override void SendExtraAI(BinaryWriter writer) {
 			base.SendExtraAI(writer);
 			wormData.Send(writer);
@@ -297,6 +325,21 @@ namespace Origins.Projectiles {
 		}
 		public Projectile GetChild() => OriginExtensions.GetProjectile(Projectile.owner, wormData.Child);
 		public Projectile GetParent() => OriginExtensions.GetProjectile(Projectile.owner, wormData.Parent);
+		public IEnumerable<Projectile> WalkWorm() {
+			HashSet<int> walked = [];
+			int segment = Projectile.identity;
+			while (OriginExtensions.GetProjectile(Projectile.owner, segment)?.ModProjectile is WormMinion wormSegment) {
+				if (wormSegment.wormData.Parent == -1) break;
+				if (!walked.Add(segment)) break;
+				segment = wormSegment.wormData.Parent;
+			}
+			walked.Clear();
+			while (OriginExtensions.GetProjectile(Projectile.owner, segment)?.ModProjectile is WormMinion wormSegment) {
+				if (!walked.Add(segment)) break;
+				yield return wormSegment.Projectile;
+				segment = wormSegment.wormData.Child;
+			}
+		}
 	}
 	public static class WormExtensions {
 		public static bool CanHaveChild(this WormMinion.BodyPart part) => part switch {

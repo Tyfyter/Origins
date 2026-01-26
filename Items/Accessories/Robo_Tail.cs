@@ -207,7 +207,7 @@ namespace Origins.Items.Accessories {
 
 				ResetTargetingData();
 				player.OriginPlayer().GetMinionTarget(TargetingAlgorithm);
-				if (Projectile.ai[1].CycleUp(120) && targetingData.targetID != -1 && CollisionExt.CanHitRay(Projectile.Center, targetingData.targetHitbox.Center())) {
+				if (Projectile.ai[1].CycleUp(120) && targetingData.TargetID != -1 && CollisionExt.CanHitRay(Projectile.Center, targetingData.targetHitbox.Center())) {
 					Projectile.SpawnProjectile(
 						Projectile.GetSource_FromAI(),
 						Projectile.Center,
@@ -267,7 +267,7 @@ namespace Origins.Items.Accessories {
 			return ref hasBuff;
 		}
 		public override void MoveTowardsTarget() {
-			bool foundTarget = targetingData.targetID != -1;
+			bool foundTarget = targetingData.TargetID != -1;
 			Rectangle targetHitbox = foundTarget ? targetingData.targetHitbox : RestRegion;
 
 			Vector2 targetPos = Projectile.Center.Clamp(targetHitbox);
@@ -280,7 +280,7 @@ namespace Origins.Items.Accessories {
 		}
 		protected override void BasicAI() {
 			base.BasicAI();
-			bool foundTarget = targetingData.targetID != -1;
+			bool foundTarget = targetingData.TargetID != -1;
 			if (foundTarget) {
 				Projectile.rotation = (targetingData.targetHitbox.Center() - Projectile.Center).ToRotation() + MathHelper.PiOver2;
 			}

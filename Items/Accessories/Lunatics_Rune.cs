@@ -992,16 +992,18 @@ namespace Origins.Items.Accessories {
 			Projectile.netImportant = true;
 			Projectile.ContinuouslyUpdateDamageStats = true;
 			Projectile.frame = FrameNum;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
 		public override bool MinionContactDamage() => true;
 		public override void MoveTowardsTarget() {
-			bool foundTarget = targetingData.targetID != -1;
+			bool foundTarget = targetingData.TargetID != -1;
 			Rectangle targetHitbox = foundTarget ? targetingData.targetHitbox : RestRegion;
 			if (foundTarget) targetHitbox.Inflate(targetHitbox.Width / 8, targetHitbox.Height / 8);
 
 			Vector2 targetPos = Projectile.Center.Clamp(targetHitbox);
-			bool targetLock = (targetPos == Projectile.Center);	
-			if (targetPos == Projectile.Center) targetPos += (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 8;
+			bool tourchingTarget = targetPos == Projectile.Center;	
+			if (tourchingTarget) targetPos += (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 8;
 			Vector2 direction = (targetPos - Projectile.Center).Normalized(out float distance);
 			if (foundTarget) {
 				float speed = distance switch {
@@ -1009,13 +1011,20 @@ namespace Origins.Items.Accessories {
 					< 600f => 0.9f,
 					_ => 1.2f
 				};
-				if (targetLock) speed *= 0.1f;
 				if (Vector2.Dot(Projectile.velocity.Normalized(out _), direction) < 0.25f) {
 					speed *= 5 / speed;
-					Projectile.velocity *= 0.99f;
+					Projectile.velocity *= 0.97f;
 				}
 				Projectile.velocity += direction * speed;
-				Projectile.velocity = Projectile.velocity.Normalized(out speed) * Math.Min(speed, 30);
+				Projectile.velocity = Projectile.velocity.Normalized(out float currentSpeed);
+				Min(ref currentSpeed, 30);
+				if (tourchingTarget) {
+					currentSpeed = Utils.Remap(
+						Vector2.Dot(Projectile.velocity.Normalized(out _), targetingData.targetVelocity.Normalized(out float targetSpeed)), -1, 1,
+						currentSpeed * 0.5f, Math.Max(targetSpeed + currentSpeed * 0.1f, speed * 4)
+					);
+				}
+				Projectile.velocity *= currentSpeed;
 			} else {
 				float speed = distance switch {
 					< 300f => 0.1f,
@@ -1039,6 +1048,7 @@ namespace Origins.Items.Accessories {
 			lightColor *= (lightColor.A - Projectile.alpha) / 255f;
 			return lightColor;
 		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => ShareLocalIFrames();
 	}
 	public class Phantasm_Dragon_Head : Phantasm_Dragon_Base {
 		public override BodyPart Part => BodyPart.Head;
