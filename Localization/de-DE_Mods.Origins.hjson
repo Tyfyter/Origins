@@ -2124,8 +2124,10 @@ Projectiles: {
 	// Trenchmaker_Firecracker_Explosion_1.DisplayName: Firecracker
 	// Trenchmaker_Firecracker_Explosion_2.DisplayName: Firecracker
 	// Trenchmaker_Stomp_P.DisplayName: Trenchmaker Stomp
-	// Fuel_Rod_Ball_P.DisplayName: Fuel Rod Ball
 	// Trenchmaker_Cannon_P.DisplayName: Trenchmaker Cannon
+	// Trenchmaker_Carpet_Bomb.DisplayName: Trenchmaker Carpet Bomb
+	// Trenchmaker_Bullet_P.DisplayName: Trenchmaker Bullet
+	// Fuel_Rod_Ball_P.DisplayName: Fuel Rod Ball
 	// Bark_Shield_Splinters.DisplayName: Bark Shield Splinters
 	// Flak_Jacket_Explosion.DisplayName: Flak Jacket Explosion
 	// Flak_Jacket_Flak_1.DisplayName: Flak Jacket Flak
@@ -2185,7 +2187,6 @@ Projectiles: {
 	// Retool_Arm_Laser_P.DisplayName: Retool Arm Laser
 	// Retool_Arm_Laser_Beam.DisplayName: Retool Arm Laser Beam
 	// Holy_Hand_Grenade_P.DisplayName: Holy Hand Grenade
-	// Trenchmaker_Carpet_Bomb.DisplayName: Trenchmaker Carpet Bomb
 	// The_Muffler_P.DisplayName: The Muffler P
 	// Robo_Tail_Tail_Body.DisplayName: Robo-Tail
 	// Robo_Tail_Tail_Head.DisplayName: Robo-Tail

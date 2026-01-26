@@ -70,7 +70,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				npc.SpawnProjectile(null,
 					boss.GunPos + direction * 8 + perp * (6 * ((npc.ai[1] % 2) == 0).ToDirectionInt() + 2),
 					direction * ShotVelocity,
-					ProjectileID.BulletDeadeye,
+					ModContent.ProjectileType<Trenchmaker_Bullet_P>(),
 					ShotDamage,
 					1
 				);
@@ -82,6 +82,13 @@ namespace Origins.NPCs.Ashen.Boss {
 			npc.ai[3] = ShotRate;
 		}
 		public override double GetWeight(Trenchmaker boss, int[] previousStates) => boss.GunType == 0 ? base.GetWeight(boss, previousStates) : 0;
+		public class Trenchmaker_Bullet_P : ModProjectile {
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BulletDeadeye}";
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.BulletDeadeye);
+				AIType = ProjectileID.BulletDeadeye;
+			}
+		}
 	}
 	public class Fire_Cannons_State : AIState {
 		#region stats
