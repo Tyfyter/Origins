@@ -403,6 +403,7 @@ namespace Origins.Dev {
 							break;
 
 							default:
+							if (item.IsAGun()) goto case ItemID.MusketBall;
 							if (item.useAmmo == ModContent.ItemType<Metal_Slug>()) {
 								weaponType = WeaponTypes.Handcannon;
 							} else if (item.useAmmo == ModContent.ItemType<Harpoon>()) {

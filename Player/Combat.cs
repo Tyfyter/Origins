@@ -29,14 +29,14 @@ namespace Origins {
 		#region stats
 		bool focusPotionThisUse = false;
 		public override float UseAnimationMultiplier(Item item) {
-			if (eitriteGunMagazine && item.useTime != item.useAnimation && item.useAmmo >= 0 && AmmoID.Sets.IsBullet[item.useAmmo]) {
+			if (eitriteGunMagazine && item.useTime != item.useAnimation && item.IsAGun()) {
 				return (item.useAnimation + item.useTime) / (float)item.useAnimation;
 			}
 			return 1f;
 		}
 		public override float UseSpeedMultiplier(Item item) {
 			float speed = 1f;
-			if (item.useAmmo >= 0 && AmmoID.Sets.IsBullet[item.useAmmo]) speed += gunSpeedBonus;
+			if (item.IsAGun()) speed += gunSpeedBonus;
 			if (item.damage > 0 && retaliatoryTendrilStrength > 0) speed += retaliatoryTendrilStrength;
 			return speed;
 		}

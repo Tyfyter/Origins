@@ -111,7 +111,7 @@ namespace Origins.Items.Accessories {
 					if (!cursors[0].Prev.MatchCallOrCallvirt<Item>("get_" + nameof(Item.useLimitPerAnimation))) continue;
 					c.EmitLdarg0();
 					c.EmitDelegate<Func<int, Player, int>>((uses, player) => {
-						if (uses >= 2 && player.HeldItem.useAmmo >= 0 && AmmoID.Sets.IsBullet[player.HeldItem.useAmmo] && player.OriginPlayer().eitriteGunMagazine) uses++;
+						if (uses >= 2 && player.HeldItem.IsAGun() && player.OriginPlayer().eitriteGunMagazine) uses++;
 						return uses;
 					});
 				}

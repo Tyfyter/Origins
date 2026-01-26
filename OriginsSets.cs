@@ -44,6 +44,9 @@ namespace Origins {
 			public static bool[] PaintingsNotFromVendor { get; } = ItemID.Sets.Factory.CreateBoolSet();
 			public static bool[] InvalidForDefiledPrefix { get; } = ItemID.Sets.Factory.CreateNamedSet(nameof(InvalidForDefiledPrefix))
 			.RegisterBoolSet();
+			public static bool[] IsGun { get; } = ItemID.Sets.Factory.CreateNamedSet(nameof(IsGun))
+			.Description("Allows weapons with non-bullet ammo to trigger effects meant for guns")
+			.RegisterBoolSet();
 			public static bool[] EvilMaterialAchievement { get; } = ItemID.Sets.Factory.CreateBoolSet(
 				ItemID.Deathweed,
 				ItemID.VileMushroom,
