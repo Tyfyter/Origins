@@ -354,7 +354,7 @@ namespace Origins.Items.Accessories {
 			Projectile.extraUpdates = 1;
 		}
 		public override void AI() {
-			if (Projectile.soundDelay.TrySet(-1)) SoundEngine.PlaySound(SoundID.Item12, Projectile.position);
+			if (Projectile.soundDelay.TrySet(-1)) SoundEngine.PlaySound(SoundID.Item12.WithVolumeScale(0.85f), Projectile.position);
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 			if (Projectile.alpha > 0)
 				Projectile.alpha -= 15;
