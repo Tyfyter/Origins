@@ -1002,8 +1002,8 @@ namespace Origins.Items.Accessories {
 			if (foundTarget) targetHitbox.Inflate(targetHitbox.Width / 8, targetHitbox.Height / 8);
 
 			Vector2 targetPos = Projectile.Center.Clamp(targetHitbox);
-			bool tourchingTarget = targetPos == Projectile.Center;	
-			if (tourchingTarget) targetPos += (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 8;
+			bool touchingTarget = targetPos == Projectile.Center;	
+			if (touchingTarget) targetPos += (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 8;
 			Vector2 direction = (targetPos - Projectile.Center).Normalized(out float distance);
 			if (foundTarget) {
 				float speed = distance switch {
@@ -1018,7 +1018,7 @@ namespace Origins.Items.Accessories {
 				Projectile.velocity += direction * speed;
 				Projectile.velocity = Projectile.velocity.Normalized(out float currentSpeed);
 				Min(ref currentSpeed, 30);
-				if (tourchingTarget) {
+				if (touchingTarget) {
 					currentSpeed = Utils.Remap(
 						Vector2.Dot(Projectile.velocity.Normalized(out _), targetingData.targetVelocity.Normalized(out float targetSpeed)), -1, 1,
 						currentSpeed * 0.5f, Math.Max(targetSpeed + currentSpeed * 0.1f, speed * 4)
