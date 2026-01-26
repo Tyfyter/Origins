@@ -547,6 +547,7 @@ namespace Origins {
 		public int blastFurnaceCharges = 0;
 		public List<int> unlockedPlantModes = [];
 		List<ItemDefinition> unloadedPlantModes = [];
+		public bool hasThePlant = false;
 		public float mufflerAmount = 0f;
 		public SlotId weldingTorchSound;
 		public int weldingTorchSoundTime = 0;
@@ -644,6 +645,7 @@ namespace Origins {
 		public float tornRCStart = 0;
 		public float tornRCValid = 1;
 		public float tornRCEnd = 0;
+		public event Action<Player> OnPostUpdateMiscEffects;
 		HashSet<Point> touchedMurkySludges = [];
 		HashSet<Point> touchingMurkySludges = [];
 		float murkySludgeTouchTimer = 0;
@@ -1124,6 +1126,7 @@ namespace Origins {
 			pocketDimensionMonolithActive = false;
 			InfoAccMechShowAshenWires = false;
 			if (blastFurnaceCharges > 0 && Player.HeldItem.ModItem is not Blast_Furnace) blastFurnaceCharges = 0;
+			hasThePlant = false;
 			autohandcannonJammed = false;
 
 			manaShielding = 0f;
@@ -1326,6 +1329,7 @@ namespace Origins {
 			InDanger = dangerTime > 0;
 			if (scytheHitCombo > maxScytheCombo) scytheHitCombo = maxScytheCombo;
 			if (!InDanger) scytheHitCombo = 0;
+			OnPostUpdateMiscEffects = null;
 			Array.Clear(activeShadows);
 			warriorEmblem = false;
 			rangerEmblem = false;

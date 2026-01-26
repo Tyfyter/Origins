@@ -10,6 +10,7 @@ using Origins.Items.Other;
 using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Ranged;
 using Origins.Layers;
 using Origins.Questing;
 using System;
@@ -282,6 +283,17 @@ namespace Origins {
 		}
 		public override void PostUpdateMiscEffects() {
 			Debugging.LogFirstRun(PostUpdateMiscEffects);
+			if (hasThePlant) {
+				for (int i = 0; i < Player.inventory.Length; i++) {
+					Item ammo = Player.inventory[i];
+					if (ammo is null || ammo.IsAir) continue;
+					int ammoType = ammo.type;
+					if (The_Plant.AliasedAmmo[ammo.type] != -1) ammoType = The_Plant.AliasedAmmo[ammo.type];
+					if (The_Plant.ModesByAmmo[ammoType] is not null && !unlockedPlantModes.Contains(ammoType)) {
+						unlockedPlantModes.InsertOrdered(ammoType);
+					}
+				}
+			}
 			if (oldCryostenHelmet) {
 				if (Player.statLife != Player.statLifeMax2) {
 					bool buffed = cryostenLifeRegenCount > 0;
@@ -593,6 +605,7 @@ namespace Origins {
 					}
 				}
 			}
+			OnPostUpdateMiscEffects?.Invoke(Player);
 
 			if (hookTarget >= 0) {
 				Projectile projectile = Main.projectile[hookTarget];

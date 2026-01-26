@@ -8,6 +8,7 @@ using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -37,7 +38,8 @@ namespace Origins.Items.Weapons.Ranged {
 		public PlantAmmoType SelectedMode => ModesByAmmo.GetIfInRange(mode);
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
-			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(int.MaxValue, 5));
+			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 5));
+			OriginsSets.Items.IsGun[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.damage = 22;
@@ -56,23 +58,19 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.rare = ItemRarityID.Lime;
 		}
 		public override void UpdateInventory(Player player) {
-			if (++ammoTimer > Item.useAnimation * 30 * CombinedHooks.TotalUseAnimationMultiplier(player, Item)) {
+			OriginPlayer originPlayer = player.OriginPlayer();
+			originPlayer.hasThePlant = true;
+			originPlayer.OnPostUpdateMiscEffects += OnPostUpdateMiscEffects;
+		}
+		void OnPostUpdateMiscEffects(Player player) {
+			if (++ammoTimer > Item.useAnimation * 30 * CombinedHooks.TotalUseSpeedMultiplier(player, Item)) {
 				ammoTimer = 0;
 				ammoCount += 3 + ammoCount / 40;
 				Min(ref ammoCount, 999);
-				List<int> unlockedPlantModes = player.OriginPlayer().unlockedPlantModes;
-				for (int i = 0; i < player.inventory.Length; i++) {
-					Item ammo = player.inventory[i];
-					if (ammo is null || ammo.IsAir) continue;
-					int ammoType = ammo.type;
-					if (AliasedAmmo[ammo.type] != -1) ammoType = AliasedAmmo[ammo.type];
-					if (ModesByAmmo[ammoType] is not null && !unlockedPlantModes.Contains(ammoType)) {
-						unlockedPlantModes.InsertOrdered(ammoType);
-					}
-				}
-				if (mode == -1 && unlockedPlantModes.Count > 0) mode = unlockedPlantModes[0];
+				if (mode == -1) mode = player.OriginPlayer().unlockedPlantModes.FirstOrDefault(-1);
 			}
 		}
+
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			if (SelectedMode is null) return;
 			tooltips.Add(new(Mod, "Ammo", $"[i:{mode}]{Lang.GetItemNameValue(mode)}"));
