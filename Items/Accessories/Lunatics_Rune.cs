@@ -30,7 +30,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
 			Item.DamageType = DamageClass.Magic;
-			Item.damage = 60;
+			Item.damage = 100;
 			Item.mana = 120;
 			Item.rare = ItemRarityID.Red;
 			Item.master = true;
@@ -134,7 +134,7 @@ namespace Origins.Items.Accessories {
 				SoundEngine.PlaySound(SoundID.Item119);
 				base.Trigger(player);
 				Item item = player.OriginPlayer().lunaticsRune;
-				int damage = player.GetWeaponDamage(item);
+				int damage = GetDamage(player, item, 1f);
 				float knockback = player.GetWeaponKnockback(item);
 				bool hasDragon = player.ownedProjectileCounts[ModContent.ProjectileType<Phantasm_Dragon_Head>()] > 0;
 				Vector2 position = player.Center + Vector2.UnitY * Cultist_Ritual_Layer.Offset;
@@ -204,6 +204,18 @@ namespace Origins.Items.Accessories {
 			public virtual double GetWeight(Player player) => 1;
 			public abstract void Trigger(Player player);
 		}
+
+		public static int GetDamage(Player player, Item item, float damageMultiplier) {
+			int damage = 1;
+			int originalDamage = item.damage;
+			try {
+				item.damage = (int)(item.damage * damageMultiplier);
+				damage = player.GetWeaponDamage(item);
+			} finally {
+				item.damage = originalDamage;
+			}
+			return damage;
+		}
 	}
 
 	public class Lunatics_Rune_Attacks_Buff : ModBuff {
@@ -232,6 +244,8 @@ namespace Origins.Items.Accessories {
 			}
 			SetStaticDefaults();
 		}
+		public virtual float DamageMultiplier => 1;
+		public int GetDamage(Player player, Item item) => Lunatics_Rune.GetDamage(player, item, DamageMultiplier);
 		public virtual bool CanStartAttack(Player player, bool justChecking = false) => true;
 		public abstract void StartAttack(Player player);
 		public abstract void ProcessAttack(Player player);
@@ -376,6 +390,7 @@ namespace Origins.Items.Accessories {
 		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CultistBossFireBall}";
 		int frameCounter;
 		int frame;
+		public override float DamageMultiplier => 0.6f;
 		public override Rectangle Frame {
 			get {
 				if (frameCounter.CycleUp(6)) frame.CycleUp(4);
@@ -396,7 +411,7 @@ namespace Origins.Items.Accessories {
 							player.MountedCenter,
 							dir,
 							ModContent.ProjectileType<Cultist_Fireball_Shadow>(),
-							player.GetWeaponDamage(item),
+							GetDamage(player, item),
 							player.GetWeaponKnockback(item)
 						);
 					} else {
@@ -404,7 +419,7 @@ namespace Origins.Items.Accessories {
 							player.MountedCenter,
 							dir,
 							ModContent.ProjectileType<Cultist_Fireball>(),
-							player.GetWeaponDamage(item),
+							GetDamage(player, item),
 							player.GetWeaponKnockback(item)
 						);
 						player.itemRotation = dir.ToRotation();
@@ -554,6 +569,7 @@ namespace Origins.Items.Accessories {
 	}
 	public class Ice_Mist_Attack : LunaticsRuneAttack {
 		public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CultistBossIceMist}";
+		public override float DamageMultiplier => 0.6f;
 		public override void ProcessAttack(Player player) {
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation - MathHelper.PiOver2);
 			player.direction = Math.Sign(float.Cos(player.itemRotation));
@@ -574,7 +590,7 @@ namespace Origins.Items.Accessories {
 							player.MountedCenter,
 							dir * 8 + pos[i] * 0.1f,
 							ModContent.ProjectileType<Cultist_Ice_Shard>(),
-							player.GetWeaponDamage(item),
+							GetDamage(player, item),
 							player.GetWeaponKnockback(item)
 						);
 						SoundEngine.PlaySound(SoundID.Item120);
@@ -584,7 +600,7 @@ namespace Origins.Items.Accessories {
 						player.MountedCenter,
 						dir * 4,
 						ModContent.ProjectileType<Cultist_Ice_Mist>(),
-						player.GetWeaponDamage(item),
+						GetDamage(player, item),
 						player.GetWeaponKnockback(item)
 					);
 					player.itemRotation = dir.ToRotation();
@@ -713,6 +729,7 @@ namespace Origins.Items.Accessories {
 				return texture.Frame(verticalFrames: 4, frameY: frame);
 			}
 		}
+		public override float DamageMultiplier => 0.6f;
 		public override void ProcessAttack(Player player) {
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation - MathHelper.PiOver2);
 			player.direction = Math.Sign(float.Cos(player.itemRotation));
@@ -731,7 +748,7 @@ namespace Origins.Items.Accessories {
 						player.MountedCenter,
 						dir,
 						ModContent.ProjectileType<Cultist_Lightning>(),
-						player.GetWeaponDamage(item),
+						GetDamage(player, item),
 						player.GetWeaponKnockback(item)
 					);
 				} else {
@@ -739,7 +756,7 @@ namespace Origins.Items.Accessories {
 						player.Top + new Vector2(float.CopySign(32f, dir.X), -80),
 						Vector2.Zero,
 						ModContent.ProjectileType<Cultist_Lightning_Orb>(),
-						player.GetWeaponDamage(item),
+						GetDamage(player, item),
 						player.GetWeaponKnockback(item)
 					);
 					player.itemRotation = float.CopySign(0.1f, dir.X) - MathHelper.PiOver2;
