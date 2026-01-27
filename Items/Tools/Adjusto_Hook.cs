@@ -42,8 +42,9 @@ namespace Origins.Items.Tools {
 			Projectile.height = 14;
 			Projectile.netImportant = true;
 		}
-		public static int NodeCount => 14;
-		public override float GrappleRange() => 30 * 16;
+		public static int NodeCount => 12;
+		public static int NodeDistance => 40;
+		public override float GrappleRange() => NodeCount * NodeDistance;
 		public override void NumGrappleHooks(Player player, ref int numHooks) => numHooks = 1;
 		public override void GrappleRetreatSpeed(Player player, ref float speed) => speed = 18f;
 		public override void GrapplePullSpeed(Player player, ref float speed) => speed = 8f;
@@ -54,7 +55,7 @@ namespace Origins.Items.Tools {
 			nodeWeights ??= new float[NodeCount + 1];
 			Vector2 position = Projectile.Center;
 			Vector2 offset = -Projectile.ai[1].ToRotationVector2();
-			float length = GrappleRange() / NodeCount;
+			float length = NodeDistance;
 			bool canBend = true;
 			Rectangle check = new(0, 0, 10, 10);
 			for (int i = 0; i < nodes.Length; i++) {
@@ -97,7 +98,7 @@ namespace Origins.Items.Tools {
 
 					Max(ref Projectile.ai[2], Projectile.localAI[1]);
 					Min(ref Projectile.ai[2], Projectile.localAI[2]);
-					if (Projectile.ai[2] != oldValue) Projectile.localAI[0] = GrappleRange() / NodeCount;
+					if (Projectile.ai[2] != oldValue) Projectile.localAI[0] = NodeDistance;
 					Projectile.netUpdate = true;
 				}
 				float speed = 11;
@@ -131,7 +132,14 @@ namespace Origins.Items.Tools {
 		public override bool PreDrawExtras() {
 			Rectangle frame = chain.Value.Frame(verticalFrames: 2, frameY: 1);
 			if (nodes is null) {
-				chain.Value.DrawChain(Projectile.Center, Main.player[Projectile.owner].MountedCenter, frame, 10);
+				chain.Value.DrawChain(
+					Projectile.Center, Main.player[Projectile.owner].MountedCenter,
+					i => {
+						frame.Y = ((i % 5) == 0).ToInt();
+						return frame;
+					},
+					10
+				);
 				return false;
 			}
 			Vector2 origin = frame.Size() * 0.5f;
@@ -140,12 +148,12 @@ namespace Origins.Items.Tools {
 				Vector2 end = nodes[i + 1];
 				bool lastLink = i >= (Projectile.ai[2] - 1);
 				if (lastLink) end = Main.player[Projectile.owner].MountedCenter;
-				chain.Value.DrawChain(nodes[i], end, frame, 10);
+				chain.Value.DrawChain(nodes[i], end, _ => frame with { Y = 0 }, 10);
 				Main.EntitySpriteDraw(
 					chain,
 					end - Main.screenPosition,
 					frame,
-					Color.White,
+					Lighting.GetColor(end.ToTileCoordinates()),
 					0,
 					origin,
 					Vector2.One,
