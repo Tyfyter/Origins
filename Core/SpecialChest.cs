@@ -402,6 +402,9 @@ namespace Origins.Core {
 				if (style >= 0) TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(tile.TileType, style), out i, out j);
 				return SpecialChestSystem.TryGetChest(i, j)?.CanDestroy() ?? true;
 			}
+			public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem) {
+				new Destroy_Special_Chest_Action(new(i, j)).Perform();
+			}
 		}
 		public record class Set_Special_Chest_Action(Point16 Position, ChestData Data) : SyncedAction {
 			public Set_Special_Chest_Action() : this(default, default) { }
@@ -422,6 +425,28 @@ namespace Origins.Core {
 				ModContent.GetInstance<SpecialChestSystem>().tileEntities[Position] = Data;
 				Player localPlayer = Main.LocalPlayer;
 				if (localPlayer.chest == chestID && localPlayer.chestX == Position.X && localPlayer.chestY == Position.Y) CurrentChest = Data;
+			}
+		}
+		public record class Destroy_Special_Chest_Action(Point16 Position) : SyncedAction {
+			protected override bool ShouldPerform => ModContent.GetInstance<SpecialChestSystem>().tileEntities.ContainsKey(Position);
+			public Destroy_Special_Chest_Action() : this(Point16.Zero) { }
+			public override SyncedAction NetReceive(BinaryReader reader) => this with {
+				Position = new(reader.ReadInt16(), reader.ReadInt16())
+			};
+			public override void NetSend(BinaryWriter writer) {
+				writer.Write((short)Position.X);
+				writer.Write((short)Position.Y);
+			}
+			protected override void Perform() {
+				Dictionary<Point16, ChestData> tileEntities = ModContent.GetInstance<SpecialChestSystem>().tileEntities;
+				if (!tileEntities.TryGetValue(Position, out ChestData chest)) return;
+				if (!chest.CanDestroy()) {
+					ModContent.GetInstance<Origins>().Logger.Warn($"Attempted to destroy Special Chest {chest} at position {Position}, but it cannot be destroyed");
+					return;
+				}
+				tileEntities.Remove(Position);
+				Player localPlayer = Main.LocalPlayer;
+				if (localPlayer.chest == chestID && localPlayer.chestX == Position.X && localPlayer.chestY == Position.Y) CurrentChest = null;
 			}
 		}
 		public class SpecialChestUI() : UIState {
