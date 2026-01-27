@@ -22,7 +22,9 @@ namespace Origins.Layers {
 			Color color = Color.White * charge;
 
 			Texture2D ritualExtra = TextureAssets.Extra[ExtrasID.CultistRitual].Value;
-			DrawData data = new(ritualTexture, position, null, color, lunaticsRuneRotation, ritualTexture.Size() * 0.5f, float.Pow(charge, 0.5f) * 0.85f, SpriteEffects.None);
+			DrawData data = new(ritualTexture, position, null, color, lunaticsRuneRotation, ritualTexture.Size() * 0.5f, float.Pow(charge, 0.5f) * 0.85f, SpriteEffects.None) {
+				shader = originPlayer.lunaticsRuneDye
+			};
 			drawInfo.DrawDataCache.Add(data);
 
 			data.texture = ritualExtra;

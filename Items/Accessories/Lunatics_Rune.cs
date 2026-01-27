@@ -122,6 +122,7 @@ namespace Origins.Items.Accessories {
 				charge = 0;
 			}
 		}
+		public override void UpdateItemDye(Player player, int dye, bool hideVisual) => player.OriginPlayer().lunaticsRuneDye = dye;
 		public class Attacks : BuffOption {
 			public override int BuffType => ModContent.BuffType<Lunatics_Rune_Attacks_Buff>();
 			public override int BuffTime => 30 * 60;

@@ -352,6 +352,7 @@ namespace Origins {
 		public int lunaticsRuneCharge = 0;
 		public int lunaticsRuneSelectedAttack = 0;
 		public float lunaticsRuneRotation = 0;
+		public int lunaticsRuneDye;
 		public Retool_Arm retoolArm = null;
 		public bool retoolArmVanity = false;
 		public float retoolArmBaseRotation = -MathHelper.PiOver2;
@@ -951,6 +952,7 @@ namespace Origins {
 			}
 			if (lunaticsRune is null) lunaticsRuneCharge = 0;
 			else lunaticsRune = null;
+			lunaticsRuneDye = 0;
 			retoolArmVanity = false;
 			retoolArm = null;
 			retoolArmDye = 0;
