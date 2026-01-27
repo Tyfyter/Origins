@@ -1,6 +1,6 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
+using Origins.Reflection;
 using PegasusLib.Networking;
 using System;
 using System.Collections.Generic;
@@ -13,10 +13,12 @@ using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.GameInput;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI;
+using Terraria.UI.Chat;
 
 namespace Origins.Core {
 	public class SpecialChest : ILoadable {
@@ -229,6 +231,7 @@ namespace Origins.Core {
 			public virtual bool OverrideHover(Item[] inv, int context, int slot) => false;
 			public virtual bool OverrideLeftClick(Item[] inv, int context, int slot) => false;
 			public virtual Item ReceiveNearbyQuickStack(Point16 chestPosition, Item item, Vector2 playerPosition) => item;
+			public virtual IEnumerable<SpecialChestButton> Buttons { get; }
 			public delegate void ItemTransferHandler(Item item, int countTransfered);
 			public Item ReceiveQuickStack(Item item, ItemTransferHandler onTransfer) {
 				Item[] items = Items();
@@ -307,7 +310,7 @@ namespace Origins.Core {
 				}
 				if (sync && !justCheck) {
 					Player player = Main.LocalPlayer;
-					new Set_Special_Chest_Action(new(player.chestX, player.chestY), this).Perform();
+					ModContent.GetInstance<SpecialChestSystem>().netDirtyChests.Add(new(player.chestX, player.chestY));
 				}
 				return success;
 			}
@@ -324,6 +327,13 @@ namespace Origins.Core {
 			public abstract int Capacity { get; }
 			public abstract int Width { get; }
 			public abstract int Height { get; }
+			public override IEnumerable<SpecialChestButton> Buttons => [
+				ModContent.GetInstance<LootAllButton>(),
+				ModContent.GetInstance<DepositAllButton>(),
+				ModContent.GetInstance<QuickStackButton>(),
+				ModContent.GetInstance<RestockButton>(),
+				ModContent.GetInstance<SortButton>(),
+			];
 			public Storage_Container_Data() : this([]) {
 				Item[] inventory = Inventory;
 				Array.Resize(ref inventory, Capacity);
@@ -362,10 +372,11 @@ namespace Origins.Core {
 					case ItemSlot.Context.InventoryItem:
 					case ItemSlot.Context.InventoryCoin:
 					case ItemSlot.Context.InventoryAmmo:
-					if (ItemSlot.ShiftInUse && TryPlacingInChest(inv[slot], true)) {
-						Main.cursorOverride = CursorOverrideID.InventoryToChest;
+					if (ItemSlot.ShiftInUse) {
+						if (TryPlacingInChest(inv[slot], true)) Main.cursorOverride = CursorOverrideID.InventoryToChest;
+						return true;
 					}
-					return true;
+					break;
 				}
 				return false;
 			}
@@ -373,6 +384,7 @@ namespace Origins.Core {
 				if (ItemSlot.ShiftInUse && PlayerLoader.ShiftClickSlot(Main.LocalPlayer, inv, context, slot)) return true;
 				if (Main.cursorOverride == 9) {
 					TryPlacingInChest(inv[slot], false);
+					ModContent.GetInstance<SpecialChestSystem>().ConsumeNetDirtyChests();
 					return true;
 				}
 				return false;
@@ -543,6 +555,11 @@ namespace Origins.Core {
 					if (player.chest != chestID) return;
 					float inventoryScale = Main.inventoryScale;
 					Main.inventoryScale = 0.755f;
+					int buttonY = Main.instance.invBottom + 40;
+					foreach (SpecialChestButton button in CurrentChest.Buttons) {
+						if (button.Draw(spriteBatch, 506, buttonY)) buttonY += 26;
+					}
+
 					int viewPos = scrollbar is null ? 0 : (int)(scrollbar.ViewPosition / 56);
 					Item[] items = CurrentChest.Items();
 					bool didAnything = false;
@@ -567,6 +584,108 @@ namespace Origins.Core {
 					int viewPos = (int)(scrollbar.ViewPosition / 56);
 					scrollbar.ViewPosition = (viewPos - evt.ScrollWheelValue / 120) * 56;
 				}
+			}
+		}
+		public abstract class SpecialChestButton : ModType, ILocalizedModType {
+			public string LocalizationCategory => "ChestButton";
+			protected sealed override void Register() { }
+			public virtual LocalizedText Text => this.GetLocalization(nameof(Text));
+			public virtual bool CanDisplay => true;
+			public abstract bool Click();
+			bool hovered = false;
+			float scale = 0.75f;
+			public bool Draw(SpriteBatch spriteBatch, int x, int y) {
+				if (!CanDisplay) return false;
+				string text = Text.Value;
+				Vector2 textSize = FontAssets.MouseText.Value.MeasureString(text);
+				Color color = Color.White * 0.97f * (1f - (255f - Main.mouseTextColor) / 255f * 0.5f);
+				color.A = byte.MaxValue;
+				x += (int)(textSize.X * scale / 2f);
+				bool isHovered;
+				if (hovered) {
+					isHovered = Utils.FloatIntersect(Main.mouseX, Main.mouseY, 0f, 0f, x - textSize.X * 0.5f - 10f, y - 12, textSize.X + 16f, 24f);
+				} else {
+					isHovered = Utils.FloatIntersect(Main.mouseX, Main.mouseY, 0f, 0f, x - textSize.X * 0.5f, y - 12, textSize.X, 24f);
+				}
+				if (isHovered) color = Main.OurFavoriteColor;
+				ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, text, new Vector2(x, y), color, 0f, textSize / 2f, new Vector2(scale), -1f, 1.5f);
+				if (isHovered) {
+					if (hovered.TrySet(true)) SoundEngine.PlaySound(SoundID.MenuTick);
+					MathUtils.LinearSmoothing(ref scale, 1f, 0.05f);
+					if (PlayerInput.IgnoreMouseInterface) return true;
+					Main.LocalPlayer.mouseInterface = true;
+					if (Main.mouseLeft && Main.mouseLeftRelease) {
+						if (Click()) ModContent.GetInstance<SpecialChestSystem>().netDirtyChests.Add(new(Main.LocalPlayer.chestX, Main.LocalPlayer.chestY));
+					}
+				} else {
+					hovered = false;
+					MathUtils.LinearSmoothing(ref scale, 0.75f, 0.05f);
+				}
+				return true;
+			}
+		}
+		public class LootAllButton : SpecialChestButton {
+			public override LocalizedText Text => Language.GetText("LegacyInterface.29");
+			public override bool Click() {
+				Item[] items = CurrentChest.Items();
+				GetItemSettings lootAllSettingsRegularChest = GetItemSettings.LootAllSettingsRegularChest;
+				for (int i = 0; i < items.Length; i++) {
+					if (items[i].IsAir) continue;
+					items[i].position = Main.LocalPlayer.Center;
+					items[i] = Main.LocalPlayer.GetItem(Main.myPlayer, items[i], lootAllSettingsRegularChest);
+				}
+				return true;
+			}
+		}
+		public class DepositAllButton : SpecialChestButton {
+			public override LocalizedText Text => Language.GetText("LegacyInterface.30");
+			public override bool Click() {
+				bool didAnything = false;
+				for (int i = 10; i < Main.InventoryItemSlotsCount; i++) {
+					if (Main.LocalPlayer.inventory[i].favorited) continue;
+					didAnything |= CurrentChest.TryPlacingInChest(Main.LocalPlayer.inventory[i], false);
+				}
+				return didAnything;
+			}
+		}
+		public class QuickStackButton : SpecialChestButton {
+			public override LocalizedText Text => Language.GetText("LegacyInterface.31");
+			public override bool Click() {
+				bool didAnything = false;
+				for (int i = 10; i < Main.InventoryItemSlotsCount + Main.InventoryCoinSlotsCount + Main.InventoryAmmoSlotsCount; i++) {
+					if (Main.LocalPlayer.inventory[i].favorited) continue;
+					CurrentChest.ReceiveQuickStack(Main.LocalPlayer.inventory[i], (_, _) => didAnything = true);
+				}
+				return didAnything;
+			}
+		}
+		public class RestockButton : SpecialChestButton {
+			public override LocalizedText Text => Language.GetText("LegacyInterface.82");
+			public override bool Click() {
+				bool didAnything = false;
+				Item[] items = CurrentChest.Items();
+				List<Item> stacksToRestock = [];
+				for (int i = 0; i < Main.InventoryItemSlotsCount + Main.InventoryCoinSlotsCount + Main.InventoryAmmoSlotsCount; i++) {
+					Item item = Main.LocalPlayer.inventory[i];
+					if (item.IsAir || item.stack >= item.maxStack) continue;
+					stacksToRestock.Add(item);
+				}
+				for (int i = 0; i < items.Length; i++) {
+					if (items[i].IsAir) continue;
+					for (int j = stacksToRestock.Count - 1; j >= 0; j--) {
+						if (stacksToRestock[j].type != items[i].type) continue;
+						didAnything |= ItemLoader.TryStackItems(stacksToRestock[j], items[i], out int countTransferred) && countTransferred > 0;
+						if (stacksToRestock[j].stack >= stacksToRestock[j].maxStack) stacksToRestock.RemoveAt(j);
+					}
+				}
+				return didAnything;
+			}
+		}
+		public class SortButton : SpecialChestButton {
+			public override LocalizedText Text => Language.GetText("LegacyInterface.122");
+			public override bool Click() {
+				ItemSortingMethods.Sort(CurrentChest.Items());
+				return true;
 			}
 		}
 	}
