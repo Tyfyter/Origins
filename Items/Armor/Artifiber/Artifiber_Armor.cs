@@ -9,6 +9,7 @@ namespace Origins.Items.Armor.Artifiber {
 	[AutoloadEquip(EquipType.Head)]
 	public class Artifiber_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public override void SetStaticDefaults() {
+			Origins.AddHelmetGlowmask(this);
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {

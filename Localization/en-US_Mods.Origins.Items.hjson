@@ -7732,12 +7732,20 @@ Lathe_Item: {
 
 Exo_Legs: {
 	DisplayName: Exo-Legs
-	Tooltip: ""
+	Tooltip: Greatly increased movement speed and jump height
 }
 
 Exo_Suit: {
 	DisplayName: Exo-Suit
-	Tooltip: ""
+	Tooltip:
+		'''
+		+40% generic velocity
+		Increases mining speed by 20%
+		Increases melee and explosive speed by 10%
+		Increases melee knockback by 10%.
+		Greatly increased movement speed and jump height
+		20% increased damage for 1s after swapping weapons
+		'''
 }
 
 Bomb_Rack: {
@@ -7784,7 +7792,11 @@ Laborer_Greaves: {
 
 Laborer_Helmet: {
 	DisplayName: Laborer Helmet
-	Tooltip: "{$ItemTooltip.MiningHelmet}"
+	Tooltip:
+	'''
+	{$ItemTooltip.MiningHelmet}
+	+5% generic velocity
+	'''
 }
 
 Blastberry: {

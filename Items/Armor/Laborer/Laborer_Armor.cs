@@ -18,8 +18,10 @@ namespace Origins.Items.Armor.Laborer {
 			Item.value = Item.sellPrice(silver: 45);
 		}
 		public override void UpdateEquip(Player player) {
+			OriginPlayer originPlayer = player.OriginPlayer();
+			originPlayer.projectileSpeedBoost += 0.05f;
 			Vector3 light = new(1.4f, 0.7f, 0.15f);
-			Lighting.AddLight(player.Center, light * 0.9f);// adjust brightness here
+			Lighting.AddLight(player.Center, light * 0.9f);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			if (body.type != ItemID.MiningShirt && body.type != ItemType<Laborer_Breastplate>()) return false;

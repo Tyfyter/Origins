@@ -178,6 +178,7 @@ OTHER:
 (^) Explosive Modifiers
 (^) Journal
 (^) Quest System General
+(X) NPC Portraits
 (^) Summoner Plus Modifiers
 ---
 
@@ -304,7 +305,7 @@ ENEMY NPCS:
 (X) Tendon Terror
 (X) Terrogator
 (^) Torn Ghoul
-(^3) Trash Compactor Mimic !!!
+(@, ^3) Trash Compactor Mimic !!!
 (^) Trijaw Shark
 (X) VV-13 !!!
 
@@ -435,7 +436,7 @@ ARMOR:
 (^) Endowood Armor
 (^) Felnum Armor
 (^) Fiberglass Armor
-(†) Laborer Set !!!
+(^) Laborer Set
 (^) Lost Armor
 (^) Marrowick Armor
 (^) Mythic Armor
@@ -526,9 +527,9 @@ ACCESSORIES:
 (^) Eitrite Watch
 (^) Evil Bar Gun Magazines
 (#3) Exo-Arm
-(#3, @) Exo-Legs !!!
-(#3, @) Exo-Suit !!!
-(#3, @2) Exo-Weapon Mount !!!
+(@, #3) Exo-Legs !!!
+(@, #2/3) Exo-Suit !!! (needs updated balance IAW tooltip)
+(@4, #3) Exo-Weapon Mount !!!
 (^) Exploder Emblem
 (^) Explosive Artery
 (^) Fairy Lotus
@@ -639,7 +640,7 @@ ACCESSORIES:
 (^) Venom Fang
 (^) Venom Shield
 
-(#2, ^2) Bomb Rack !!!
+(#2, ^2) Bomb Rack !!! (just needs proper bomb texture)
 (^) Entangled Energy
 (^) Mana Drive
 (^) Protozoa Food
@@ -656,13 +657,13 @@ ACCESSORIES:
 (^) Fiberglass Dagger
 (^) Forbidden Voice (Cursed)
 (^) Forbidden Voice (Uncursed)
-(#3) Glitter Glue !!!
-(☻) Lunatic's Rune !!! (dragon polish)
+(#3, ^2) Glitter Glue !!!
+(@4, ^3) Lunatic's Rune !!!
 (^) Mysterious Spray
 (#3, ^2) Retool Arm !!!
-(#3) Robo-tail !!!
+(#3, ^2) Robo-tail !!!
 (^) Scribe of the Meat God
-(◘) Space Pirate's Eye !!!
+(#2, ^2) Space Pirate's Eye !!!
 (^) Stack of Shraps
 (^) Strange Tooth
 (^) Terrarian Voodoo Doll
@@ -842,7 +843,7 @@ MELEE WEAPONS:
 (X) Soulfire Saw
 (#, ^2) The Claw !!!
 (^) The Foot
-(☻) The Muffler !!!
+(^) The Muffler
 (X) Unicorn Lance
 
 (X) Chiton Kursarigama
