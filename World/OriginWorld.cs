@@ -298,7 +298,7 @@ namespace Origins {
 				+ tileCounts[ModContent.TileType<Limestone_Stalagmite>()]
 				+ tileCounts[ModContent.TileType<Limestone_Pile_Medium>()];
 
-			chambersiteTiles = 0;
+			chambersiteTiles = tileCounts[ModContent.TileType<Chambersite>()];
 			for (int i = 0; i < Chambersite_Ore.chambersiteTiles.Count; i++) {
 				chambersiteTiles += tileCounts[Chambersite_Ore.chambersiteTiles[i].Type];
 			}
