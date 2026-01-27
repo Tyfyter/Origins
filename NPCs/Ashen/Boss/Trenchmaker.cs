@@ -213,7 +213,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				Vector2 newFootPos = oldFootPos;
 				Vector2 footOffset = newFootPos - NPC.position;
 				DoCollision(ref newFootPos, ref footVelocity, 54, 22);
-				standing = Math.Abs(footVelocity.Y - oldFootVelocity.Y) > 0.25f;
+				standing = Math.Abs(footVelocity.Y - oldFootVelocity.Y) > 0.05f;
 				if (standing) footVelocity.X = 0;//*= 1f / float.Pi;
 				SetHoikOffset((newFootPos - NPC.position) - footOffset);
 				NPC.velocity += footVelocity - oldFootVelocity;

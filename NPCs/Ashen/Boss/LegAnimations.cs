@@ -1,18 +1,10 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Origins.Tiles;
-using PegasusLib;
+﻿using Origins.Tiles;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.NPCs.Ashen.Boss.Spawn_Trenchmaker_Action;
 using static Origins.NPCs.Ashen.Boss.Trenchmaker;
 using static Origins.NPCs.StateBossMethods<Origins.NPCs.Ashen.Boss.Trenchmaker>;
 
@@ -198,6 +190,7 @@ namespace Origins.NPCs.Ashen.Boss {
 	#region stomp
 	public class Stomp_Animation_1 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if ((npc.GetState() as AIState).ForceAnimation(npc, leg, otherLeg) is LegAnimation forced) return forced;
 			if (PistonLength(npc, leg) < 3) return ModContent.GetInstance<Stomp_Animation_2>();
 			return this;
 		}
@@ -208,6 +201,7 @@ namespace Origins.NPCs.Ashen.Boss {
 	}
 	public class Stomp_Animation_2 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if ((npc.GetState() as AIState).ForceAnimation(npc, leg, otherLeg) is LegAnimation forced) return forced;
 			if (PistonLength(npc, leg) >= 40) {
 				npc.GetLegPositions(leg, out _, out _, out Vector2 footPos);
 				npc.SpawnProjectile(null,
@@ -231,6 +225,7 @@ namespace Origins.NPCs.Ashen.Boss {
 	}
 	public class Stomp_Animation_3 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
+			if ((npc.GetState() as AIState).ForceAnimation(npc, leg, otherLeg) is LegAnimation forced) return forced;
 			if (PistonLength(npc, leg) <= 22 && !npc.GetFootHitbox(leg).OverlapsAnyTiles()) return ModContent.GetInstance<Standing_Animation>();
 			return this;
 		}
@@ -351,7 +346,7 @@ namespace Origins.NPCs.Ashen.Boss {
 	}
 	public class Jump_Squat_Animation : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
-			if (PistonLength(npc, leg) < 4) return ModContent.GetInstance<Jump_Extend_Animation>();
+			if ((PistonLength(npc, leg) < 4 && (leg.WasStanding || otherLeg.WasStanding)) || otherLeg.CurrentAnimation is Jump_Extend_Animation) return ModContent.GetInstance<Jump_Extend_Animation>();
 			return this;
 		}
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
