@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using PegasusLib.Networking;
 using System;
@@ -56,6 +57,7 @@ namespace Origins.Core {
 			On_Player.HandleBeingInChestRange += On_Player_HandleBeingInChestRange;
 			On_Recipe.CollectItems_ItemArray_int += On_Recipe_CollectItems_ItemArray_int;
 			On_Recipe.Create += On_Recipe_Create;
+			On_Chest.PutItemInNearbyChest += On_Chest_PutItemInNearbyChest;
 			static bool On_ItemSlot_LeftClick_SellOrTrash(On_ItemSlot.orig_LeftClick_SellOrTrash orig, Item[] inv, int context, int slot) {
 				if (Main.LocalPlayer.chest == chestID) return false;
 				return orig(inv, context, slot);
@@ -100,6 +102,13 @@ namespace Origins.Core {
 						new Set_Special_Chest_Action(new(player.chestX, player.chestY), chest).Perform();
 					}
 				}
+			}
+			static Item On_Chest_PutItemInNearbyChest(On_Chest.orig_PutItemInNearbyChest orig, Item item, Vector2 position) {
+				foreach ((Point16 chestPosition, ChestData chest) in ModContent.GetInstance<SpecialChestSystem>().tileEntities) {
+					chest.ReceiveNearbyQuickStack(chestPosition, item, position);
+					if (item.IsAir) return item;
+				}
+				return orig(item, position);
 			}
 		}
 
@@ -219,6 +228,37 @@ namespace Origins.Core {
 			/// </summary>
 			public virtual bool OverrideHover(Item[] inv, int context, int slot) => false;
 			public virtual bool OverrideLeftClick(Item[] inv, int context, int slot) => false;
+			public virtual Item ReceiveNearbyQuickStack(Point16 chestPosition, Item item, Vector2 playerPosition) => item;
+			public delegate void ItemTransferHandler(Item item, int countTransfered);
+			public Item ReceiveQuickStack(Item item, ItemTransferHandler onTransfer) {
+				Item[] items = Items();
+				bool hasMatchingItem = false;
+				bool hasEmptySlot = false;
+				for (int j = 0; j < items.Length; j++) {
+					if (items[j].IsAir) {
+						hasEmptySlot = true;
+					} else if (item.type == items[j].type && ItemLoader.CanStack(items[j], item)) {
+						hasMatchingItem = true;
+						if (ItemLoader.TryStackItems(items[j], item, out int numTransfered)) {
+							onTransfer?.Invoke(item, numTransfered);
+							if (item.stack <= 0) {
+								item.SetDefaults();
+								return item;
+							}
+						}
+					}
+				}
+				if (!hasMatchingItem || !hasEmptySlot || item.stack <= 0) return item;
+				for (int k = 0; k < items.Length; k++) {
+					if (items[k].IsAir) {
+						onTransfer?.Invoke(item, item.stack);
+						items[k] = item.Clone();
+						item.SetDefaults();
+						return item;
+					}
+				}
+				return item;
+			}
 			public bool TryPlacingInChest(Item item, bool justCheck) {
 				Item[] items = Items();
 				bool sync = false;
@@ -337,6 +377,18 @@ namespace Origins.Core {
 				}
 				return false;
 			}
+			public override Item ReceiveNearbyQuickStack(Point16 chestPosition, Item item, Vector2 playerPosition) {
+				Rectangle chestRect = new(chestPosition.X * 16, chestPosition.Y * 16, Width * 16, Height * 16);
+				if (!playerPosition.IsWithin(playerPosition.Clamp(chestRect), 600f)) return item;
+
+				ReceiveQuickStack(item, (item, countTransfered) => {
+					if (countTransfered > 0) {
+						Chest.VisualizeChestTransfer(playerPosition, chestRect.Center(), item, countTransfered);
+						ModContent.GetInstance<SpecialChestSystem>().netDirtyChests.Add(chestPosition);
+					}
+				});
+				return item;
+			}
 		}
 		public static void SyncToPlayer(int player) => ModContent.GetInstance<SpecialChestSystem>().SyncToPlayer(player);
 		class SpecialChestSystem : ModSystem {
@@ -367,6 +419,7 @@ namespace Origins.Core {
 			}
 
 			public Dictionary<Point16, ChestData> tileEntities = [];
+			public HashSet<Point16> netDirtyChests = [];
 			public void SyncToPlayer(int player) {
 				foreach ((Point16 position, ChestData data) in tileEntities) {
 					new Set_Special_Chest_Action(position, data).Send(player);
@@ -394,6 +447,15 @@ namespace Origins.Core {
 					}
 				}
 			}
+			public void ConsumeNetDirtyChests() {
+				if (!NetmodeActive.SinglePlayer) {
+					foreach (Point16 chest in netDirtyChests) {
+						new Set_Special_Chest_Action(chest, tileEntities[chest]).Send();
+					}
+				}
+				netDirtyChests.Clear();
+			}
+			public override void PreUpdateEntities() => ConsumeNetDirtyChests();
 		}
 		class PreventDestruction : GlobalTile {
 			public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged) {
