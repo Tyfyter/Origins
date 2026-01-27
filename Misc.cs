@@ -307,6 +307,13 @@ namespace Origins {
 			return texture.Frame(verticalFrames: FrameCount, frameY: Frame);
 		}
 	}
+	public class DrawAnimationSingleFrame : DrawAnimation {
+		public DrawAnimationSingleFrame(int frameCount, int frameNumber) {
+			FrameCount = frameCount;
+			Frame = frameNumber;
+		}
+		public override Rectangle GetFrame(Texture2D texture, int frameCounterOverride = -1) => texture.Frame(verticalFrames: FrameCount, frameY: Frame, sizeOffsetY: -2);
+	}
 	public readonly struct AutoCastingAsset<T> where T : class {
 		public bool IsLoaded => asset?.IsLoaded ?? false;
 		public T Value => asset?.Value;

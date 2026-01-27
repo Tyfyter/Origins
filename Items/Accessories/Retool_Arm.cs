@@ -43,7 +43,7 @@ public abstract class Retool_Arm : ModItem {
 	}
 	delegate bool orig_AltFunctionUse(Item item, Player player);
 	public override void SetDefaults() {
-		Item.DefaultToAccessory();
+		Item.DefaultToAccessory(32, 32);
 		Item.rare = ItemRarityID.Pink;
 		Item.value = Item.sellPrice(gold: 2);
 		Item.master = true;
@@ -98,7 +98,7 @@ public class Retool_Arm_Cannon : Retool_Arm {
 	AutoLoadingAsset<Texture2D> armTexture = typeof(Retool_Arm_Cannon).GetDefaultTMLName("_Use");
 	AutoLoadingAsset<Texture2D> armGlowTexture = typeof(Retool_Arm_Cannon).GetDefaultTMLName("_Use_Glow");
 	public override void SetStaticDefaults() {
-		Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 4));
+		Main.RegisterItemAnimation(Type, new DrawAnimationSingleFrame(4, 0));
 	}
 	public override void SetDefaults() {
 		base.SetDefaults();
@@ -230,7 +230,7 @@ public class Retool_Arm_Laser : Retool_Arm {
 	AutoLoadingAsset<Texture2D> armGlowTexture = typeof(Retool_Arm_Laser).GetDefaultTMLName("_Use_Glow");
 	public static int ShaderID { get; private set; }
 	public override void SetStaticDefaults() {
-		Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 4) { Frame = 1 });
+		Main.RegisterItemAnimation(Type, new DrawAnimationSingleFrame(4, 1));
 
 		GameShaders.Armor.BindShader(Type, new ArmorShaderData(
 			Mod.Assets.Request<Effect>("Effects/Overbrighten"),
@@ -476,7 +476,7 @@ public class Retool_Arm_Saw : Retool_Arm {
 	public override string Texture => typeof(Retool_Arm).GetDefaultTMLName();
 	AutoLoadingAsset<Texture2D> armTexture = typeof(Retool_Arm_Saw).GetDefaultTMLName("_Use");
 	public override void SetStaticDefaults() {
-		Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 4) { Frame = 2 });
+		Main.RegisterItemAnimation(Type, new DrawAnimationSingleFrame(4, 2));
 	}
 	public override void SetDefaults() {
 		base.SetDefaults();
@@ -623,7 +623,7 @@ public class Retool_Arm_Vice : Retool_Arm {
 	AutoLoadingAsset<Texture2D> armTexture = typeof(Retool_Arm_Vice).GetDefaultTMLName("_Use");
 	AutoLoadingAsset<Texture2D> armGlowTexture = typeof(Retool_Arm_Vice).GetDefaultTMLName("_Use_Glow");
 	public override void SetStaticDefaults() {
-		Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 4) { Frame = 3 });
+		Main.RegisterItemAnimation(Type, new DrawAnimationSingleFrame(4, 3));
 	}
 	public override void SetDefaults() {
 		base.SetDefaults();
