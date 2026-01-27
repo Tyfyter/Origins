@@ -1789,7 +1789,7 @@ AMMO:
 (^) Ichor Harpoon
 (^) Metal Slug
 (^) Resizable Mine V
-(#, ^2) Scrap Dart !!!
+(☻) Scrap Dart !!!
 
 (^) Resizable Mine VI
 
