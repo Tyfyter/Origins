@@ -7869,3 +7869,23 @@ Scrap_Dart: {
 	// DisplayName: Scrap Dart
 	// Tooltip: ""
 }
+
+Ashen_Lock_Box: {
+	// DisplayName: Ashen Lock Box
+	// Tooltip: ""
+}
+
+Brine_Lock_Box: {
+	// DisplayName: Brine Lock Box
+	// Tooltip: ""
+}
+
+Defiled_Lock_Box: {
+	// DisplayName: Defiled Lock Box
+	// Tooltip: ""
+}
+
+Riven_Lock_Box: {
+	// DisplayName: Riven Lock Box
+	// Tooltip: ""
+}

@@ -956,6 +956,9 @@ namespace Origins {
 		}
 		public static bool LogLoadingILError(string methodName, Exception exception) => LogLoadingILError(methodName, exception, []);
 		public static bool LogLoadingILError(string methodName, Exception exception, params (Type exceptionType, string modName, Version modVersion)[] expect) {
+			return LogLoadingError("ILEditException", methodName, exception, expect);
+		}
+		public static bool LogLoadingError(string key, string methodName, Exception exception, params (Type exceptionType, string modName, Version modVersion)[] expect) {
 #if DEBUG
 			for (int i = 0; i < expect.Length; i++) {
 				if (exception.GetType() == expect[i].exceptionType && ModLoader.TryGetMod(expect[i].modName, out Mod mod) && mod.Version == expect[i].modVersion) goto expected;
@@ -963,7 +966,7 @@ namespace Origins {
 			return true;
 #endif
 			expected:
-			Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings.ILEditException").WithFormatArgs(methodName));
+			Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings." + key).WithFormatArgs(methodName));
 			return false;
 		}
 		// for DevHelper

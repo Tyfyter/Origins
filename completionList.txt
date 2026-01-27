@@ -1861,12 +1861,12 @@ CROSS-MOD CONTENT:
 (@, ^3) Suspicious Trash Compactor !!!
 (^) Watered-down Keytar
 
-(#, ^2) Ashen Lock Box !!!
-(#, ^2) Brine Lock Box !!!
-(#, ^2) Defiled Lock Box !!!
+(^) Ashen Lock Box !!!
+(^) Brine Lock Box !!!
+(^) Defiled Lock Box !!!
 (X) Mushroom Lock Box
 (X) Ocean Lock Box
-(#, ^2) Riven Lock Box !!!
+(^) Riven Lock Box !!!
 ---
 
 UI:
