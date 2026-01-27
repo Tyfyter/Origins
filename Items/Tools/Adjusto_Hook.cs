@@ -135,7 +135,7 @@ namespace Origins.Items.Tools {
 				chain.Value.DrawChain(
 					Projectile.Center, Main.player[Projectile.owner].MountedCenter,
 					i => {
-						frame.Y = ((i % 5) == 0).ToInt();
+						frame.Y = ((i * 10) % NodeDistance < 10).ToInt() * 12;
 						return frame;
 					},
 					10
