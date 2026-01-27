@@ -656,7 +656,7 @@ ACCESSORIES:
 (^) Fiberglass Dagger
 (^) Forbidden Voice (Cursed)
 (^) Forbidden Voice (Uncursed)
-(†) Glitter Glue !!!
+(#3) Glitter Glue !!!
 (☻) Lunatic's Rune !!! (dragon polish)
 (^) Mysterious Spray
 (#3, ^2) Retool Arm !!!
@@ -1343,7 +1343,7 @@ TILES:
 (X) Defiled Pylon
 (^) Fire Extinguisher Holder
 (^) Industrial Door
-(^) Large Storage Container
+(#3, ^2) Large Storage Container
 (^) Laser Tag Console
 (@, ^3) Mechanical Key Node !!!
 (#2, ^2) Medium Storage Container !!! (just needs complete fall-through)
