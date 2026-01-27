@@ -452,9 +452,10 @@ namespace Origins.Core {
 					scrollbar.SetView(56 * 4, MathF.Ceiling(CurrentChest.ItemCount / 10f) * 56);
 				}
 				protected override void DrawSelf(SpriteBatch spriteBatch) {
+					Player player = Main.LocalPlayer;
+					if (player.chest != chestID) return;
 					float inventoryScale = Main.inventoryScale;
 					Main.inventoryScale = 0.755f;
-					Player player = Main.LocalPlayer;
 					int viewPos = scrollbar is null ? 0 : (int)(scrollbar.ViewPosition / 56);
 					Item[] items = CurrentChest.Items();
 					bool didAnything = false;
