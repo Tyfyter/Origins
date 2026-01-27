@@ -7793,10 +7793,10 @@ Laborer_Greaves: {
 Laborer_Helmet: {
 	DisplayName: Laborer Helmet
 	Tooltip:
-	'''
-	{$ItemTooltip.MiningHelmet}
-	+5% generic velocity
-	'''
+		'''
+		{$ItemTooltip.MiningHelmet}
+		+5% generic velocity
+		'''
 }
 
 Blastberry: {

@@ -178,6 +178,7 @@ OTHER:
 (^) Explosive Modifiers
 (^) Journal
 (^) Quest System General
+(X) Quirky World Evil Spread mechanics !!!
 (X) NPC Portraits
 (^) Summoner Plus Modifiers
 ---
@@ -1163,6 +1164,7 @@ EXPLOSIVE WEAPONS:
 (X) The Heatseeker
 (X) The Rocketman
 (X) Thundercracker
+(X) Vampire Grenade !!!
 
 (@4, ^3) Black Hole Bomb
 (@4, ^3) Caustica
@@ -1346,7 +1348,7 @@ TILES:
 (^) Industrial Door
 (#3, ^2) Large Storage Container
 (^) Laser Tag Console
-(@, ^3) Mechanical Key Node !!!
+(#2, ^2) Mechanical Key Node !!!
 (#2, ^2) Medium Storage Container !!! (just needs complete fall-through)
 (^) Modular Bunk
 (X) Mushroom Dungeon Chest
@@ -1720,7 +1722,7 @@ MOUNTS & PETS:
 (^) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)
-(X) Dysfunctional Table Saw (Sprockey) !!!
+(#, ^2) Dysfunctional Table Saw (Sprockey) !!!
 (^) Smith's Hammer (Walking Furnace)
 (^) Suspicious Looking Pebble (Defiled Blight)
 
@@ -1858,6 +1860,13 @@ CROSS-MOD CONTENT:
 (^) Sanguinite Storage Upgrade
 (@, ^3) Suspicious Trash Compactor !!!
 (^) Watered-down Keytar
+
+(#, ^2) Ashen Lock Box !!!
+(#, ^2) Brine Lock Box !!!
+(#, ^2) Defiled Lock Box !!!
+(X) Mushroom Lock Box
+(X) Ocean Lock Box
+(#, ^2) Riven Lock Box !!!
 ---
 
 UI:
