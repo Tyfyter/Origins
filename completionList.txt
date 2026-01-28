@@ -1164,7 +1164,7 @@ EXPLOSIVE WEAPONS:
 (X) The Heatseeker
 (X) The Rocketman
 (X) Thundercracker
-(X) Vampire Grenade !!!
+(#, 2) Vampire Grenade !!!
 
 (@4, ^3) Black Hole Bomb
 (@4, ^3) Caustica
@@ -1348,8 +1348,8 @@ TILES:
 (^) Industrial Door
 (#3, ^2) Large Storage Container
 (^) Laser Tag Console
-(@4, ^3) Mechanical Key Node !!!
-(☻) Medium Storage Container !!! (has complete fall-through, I think it's better the other way tho)
+(#2, ^2) Mechanical Key Node !!!
+(#2, ^2) Medium Storage Container !!! (what I meant was keep the top collision, but not the middle)
 (^) Modular Bunk
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
