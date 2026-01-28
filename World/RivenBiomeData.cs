@@ -507,7 +507,7 @@ namespace Origins.World.BiomeData {
 
 								float range = genRand.NextFloat(0.2f, 0.6f); // fan/banana width
 								Vector2 turningPoint = specklePos + rotation.ToRotationVector2() * genRand.NextFloat(5, 10);
-								if (!genRand.NextBool(8)) rotation += MathHelper.PiOver2; // fan/banana selection
+								if ((!genRand.NextBool(8)) ^ OriginsModIntegrations.CheckAprilFools()) rotation += MathHelper.PiOver2; // fan/banana selection
 								Carver.Filter[] lemons = new Carver.Filter[genRand.Next(3, 7)];
 								for (int k = 0; k < lemons.Length; k++) {
 									lemons[k] = Carver.PointyLemon(
