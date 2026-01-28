@@ -1348,7 +1348,7 @@ TILES:
 (^) Industrial Door
 (#3, ^2) Large Storage Container
 (^) Laser Tag Console
-(#2, ^2) Mechanical Key Node !!!
+(@4, ^3) Mechanical Key Node !!!
 (☻) Medium Storage Container !!! (has complete fall-through, I think it's better the other way tho)
 (^) Modular Bunk
 (X) Mushroom Dungeon Chest

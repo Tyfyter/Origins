@@ -333,6 +333,7 @@ namespace Origins.Core {
 				ModContent.GetInstance<QuickStackButton>(),
 				ModContent.GetInstance<RestockButton>(),
 				ModContent.GetInstance<SortButton>(),
+				..RenameButton.Buttons,
 			];
 			public Storage_Container_Data() : this([]) {
 				Item[] inventory = Inventory;
@@ -590,12 +591,16 @@ namespace Origins.Core {
 			public string LocalizationCategory => "ChestButton";
 			protected sealed override void Register() { }
 			public virtual LocalizedText Text => this.GetLocalization(nameof(Text));
-			public virtual bool CanDisplay => true;
+			public virtual bool CanDisplay => !Main.editChest;
 			public abstract bool Click();
 			bool hovered = false;
 			float scale = 0.75f;
 			public bool Draw(SpriteBatch spriteBatch, int x, int y) {
-				if (!CanDisplay) return false;
+				if (!CanDisplay) {
+					hovered = false;
+					MathUtils.LinearSmoothing(ref scale, 0.75f, 0.05f);
+					return false;
+				}
 				string text = Text.Value;
 				Vector2 textSize = FontAssets.MouseText.Value.MeasureString(text);
 				Color color = Color.White * 0.97f * (1f - (255f - Main.mouseTextColor) / 255f * 0.5f);
@@ -686,6 +691,34 @@ namespace Origins.Core {
 			public override bool Click() {
 				ItemSortingMethods.Sort(CurrentChest.Items());
 				return true;
+			}
+		}
+		public class RenameButton : SpecialChestButton {
+			public static IEnumerable<SpecialChestButton> Buttons => [
+				ModContent.GetInstance<RenameButton>(),
+				ModContent.GetInstance<SaveRenameButton>(),
+				ModContent.GetInstance<CancelRenameButton>(),
+			];
+			public override LocalizedText Text => Language.GetText("LegacyInterface.61");
+			public override bool Click() {
+				Main.editChest = true;
+				return false;
+			}
+			public class SaveRenameButton : SpecialChestButton {
+				public override LocalizedText Text => Language.GetText("LegacyInterface.47");
+				public override bool CanDisplay => Main.editChest;
+				public override bool Click() {
+					Main.editChest = false;
+					return false;
+				}
+			}
+			public class CancelRenameButton : SpecialChestButton {
+				public override LocalizedText Text => Language.GetText("LegacyInterface.63");
+				public override bool CanDisplay => Main.editChest;
+				public override bool Click() {
+					Main.editChest = false;
+					return false;
+				}
 			}
 		}
 	}
