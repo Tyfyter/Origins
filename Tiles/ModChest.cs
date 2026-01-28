@@ -183,9 +183,6 @@ namespace Origins.Tiles {
 			ModifyTileData();
 			TileObjectData.addTile(Type);
 			_ = DefaultContainerName(0, 0);
-			Main.tileSolid[Type] = true;
-			Main.tileSolidTop[Type] = true;
-			Main.tileNoAttach[Type] = false;
 			AdjTiles = [TileID.Containers];
 		}
 		public virtual void ModifyTileData() { }

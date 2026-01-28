@@ -22,6 +22,9 @@ namespace Origins.Tiles.Ashen {
 			}
 			AdjTiles = [TileID.Containers];
 			DustType = Ashen_Biome.DefaultTileDust;
+			Main.tileSolid[Type] = true;
+			Main.tileSolidTop[Type] = true;
+			Main.tileNoAttach[Type] = false;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
 			OriginsSets.Tiles.ChestSoundOverride[Type] = (Origins.Sounds.MetalCreakOpen.WithVolume(0.3f), Origins.Sounds.MetalCreakClose.WithVolume(0.3f));
 		}

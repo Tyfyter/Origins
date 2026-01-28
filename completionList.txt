@@ -641,7 +641,7 @@ ACCESSORIES:
 (^) Venom Fang
 (^) Venom Shield
 
-(#2, ^2) Bomb Rack !!! (just needs proper bomb texture)
+(^) Bomb Rack !!!
 (^) Entangled Energy
 (^) Mana Drive
 (^) Protozoa Food
@@ -1349,7 +1349,7 @@ TILES:
 (#3, ^2) Large Storage Container
 (^) Laser Tag Console
 (#2, ^2) Mechanical Key Node !!!
-(#2, ^2) Medium Storage Container !!! (just needs complete fall-through)
+(☻) Medium Storage Container !!! (has complete fall-through, I think it's better the other way tho)
 (^) Modular Bunk
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
