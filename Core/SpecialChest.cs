@@ -125,7 +125,7 @@ namespace Origins.Core {
 		}
 		public static string MapChestName(string name, int i, int j) {
 			TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
-			string renamed = SpecialChestSystem.TryGetChest(left, top)?.MapName ?? "";
+			string renamed = SpecialChestSystem.TryGetChest(left, top)?.GivenName ?? "";
 			if (renamed == "") {
 				return name;
 			} else {
@@ -188,7 +188,7 @@ namespace Origins.Core {
 			protected internal abstract bool IsValidSpot(Point position);
 			public virtual void UpdateUI(SpecialChestUI.SpecialChestElement ui) { }
 			public virtual int ItemCount => Items().Length;
-			public virtual string MapName => "";
+			public virtual string GivenName => "";
 			public virtual void HandleBeingInChestRange(Player player) {
 				if (!player.IsInInteractionRange(2, 2)) {
 					if (player.chest != -1) {
@@ -323,10 +323,12 @@ namespace Origins.Core {
 				internal override void NetSend(BinaryWriter writer) { }
 			}
 		}
-		public abstract record class Storage_Container_Data(Item[] Inventory) : ChestData() {
+		public abstract record class Storage_Container_Data(Item[] Inventory) : ChestData(), RenameButton.IRenamable {
 			public abstract int Capacity { get; }
 			public abstract int Width { get; }
 			public abstract int Height { get; }
+			string RenameButton.IRenamable.Name { get; set; }
+			public override string GivenName => ((RenameButton.IRenamable)this).Name;
 			public override IEnumerable<SpecialChestButton> Buttons => [
 				ModContent.GetInstance<LootAllButton>(),
 				ModContent.GetInstance<DepositAllButton>(),
@@ -546,6 +548,7 @@ namespace Origins.Core {
 					};
 				}
 				public override void Update(GameTime gameTime) {
+					if (player.chest != chestID || CurrentChest is null) return;
 					base.Update(gameTime);
 					CurrentChest.UpdateUI(this);
 					scrollbar.Left.Pixels = CurrentChest.ItemCount > 40 ? 0 : -Main.screenWidth;
@@ -703,6 +706,9 @@ namespace Origins.Core {
 			public override bool Click() {
 				Main.editChest = true;
 				return false;
+			}
+			public interface IRenamable {
+				string Name { get; set; }
 			}
 			public class SaveRenameButton : SpecialChestButton {
 				public override LocalizedText Text => Language.GetText("LegacyInterface.47");
