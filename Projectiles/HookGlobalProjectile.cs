@@ -33,6 +33,16 @@ namespace Origins.Projectiles {
 		public override void GrapplePullSpeed(Projectile projectile, Player player, ref float speed) {
 			if (player.OriginPlayer().automatedReturnsHandler) speed *= 2f;
 		}
+		public override bool? GrappleCanLatchOnTo(Projectile projectile, Player player, int x, int y) {
+			Tile tile = Main.tile[x, y];
+			if (tile.HasTile && OriginsSets.Tiles.MultitileCollisionOffset.GetIfInRange(tile.TileType) is OriginsSets.MultitileCollisionOffsetter collision) {
+				float posY = y * 16;
+				int height = 16;
+				collision(tile, ref posY, ref height);
+				if (height < 0) return false;
+			}
+			return base.GrappleCanLatchOnTo(projectile, player, x, y);
+		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
 			//bitWriter.WriteBit(isRetracting);
 		}
