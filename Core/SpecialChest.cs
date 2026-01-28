@@ -548,7 +548,7 @@ namespace Origins.Core {
 					};
 				}
 				public override void Update(GameTime gameTime) {
-					if (player.chest != chestID || CurrentChest is null) return;
+					if (Main.LocalPlayer.chest != chestID || CurrentChest is null) return;
 					base.Update(gameTime);
 					CurrentChest.UpdateUI(this);
 					scrollbar.Left.Pixels = CurrentChest.ItemCount > 40 ? 0 : -Main.screenWidth;
