@@ -51,7 +51,6 @@ public class Bomb_Rack : ModItem {
 	}
 }
 public class Bomb_Rack_Carpet_Bomb : ModProjectile {
-	public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.ClusterGrenadeI;
 	public override void SetDefaults() {
 		Projectile.DamageType = DamageClasses.Explosive;
 		Projectile.width = 16;
