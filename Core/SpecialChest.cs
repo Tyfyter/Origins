@@ -553,7 +553,7 @@ namespace Origins.Core {
 				}
 				protected override void DrawSelf(SpriteBatch spriteBatch) {
 					Player player = Main.LocalPlayer;
-					if (player.chest != chestID) return;
+					if (player.chest != chestID || CurrentChest is null) return;
 					float inventoryScale = Main.inventoryScale;
 					Main.inventoryScale = 0.755f;
 					int buttonY = Main.instance.invBottom + 40;
