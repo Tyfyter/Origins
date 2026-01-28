@@ -2,10 +2,12 @@
 using MonoMod.Cil;
 using Origins.Reflection;
 using PegasusLib.Networking;
+using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -19,6 +21,7 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI;
 using Terraria.UI.Chat;
+using static Origins.Core.SpecialChest.SpecialChestUI;
 
 namespace Origins.Core {
 	public class SpecialChest : ILoadable {
@@ -35,7 +38,7 @@ namespace Origins.Core {
 				CurrentChest = default;
 				return;
 			}
-			if (SpecialChestSystem.TryGetChest(x, y) is ChestData chest) {
+			if (TryGetChest(x, y) is ChestData chest) {
 				player.chest = chestID;
 				Main.playerInventory = true;
 				Main.editChest = false;
@@ -51,6 +54,26 @@ namespace Origins.Core {
 		}
 		static bool sendChestSync = false;
 		public static void MarkConsumedItem() => sendChestSync = true;
+		public static void MouseOver(int i, int j) {
+			Player player = Main.LocalPlayer;
+			Tile tile = Main.tile[i, j];
+			TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(tile), out int left, out int top);
+			player.cursorItemIconID = -1;
+			string name = TryGetChest(left, top)?.GivenName;
+			if ((name?.Length ?? 0) > 0) {
+				player.cursorItemIconText = name;
+			} else {
+				player.cursorItemIconID = TileLoader.GetItemDropFromTypeAndStyle(tile.TileType);
+				player.cursorItemIconText = "";
+			}
+			player.noThrow = 2;
+			player.cursorItemIconEnabled = true;
+		}
+		public static ChestData TryGetChest(int i, int j) {
+			Player player = Main.LocalPlayer;
+			if (player.chest == chestID && player.chestX == i && player.chestY == j) return CurrentChest;
+			return ModContent.GetInstance<SpecialChestSystem>().tileEntities.TryGetValue(new(i, j), out ChestData chest) ? chest : null;
+		}
 		void ILoadable.Load(Mod mod) {
 			IL_ChestUI.Draw += IL_ChestUI_Draw;
 			On_ItemSlot.OverrideHover_ItemArray_int_int += On_ItemSlot_OverrideHover_ItemArray_int_int;
@@ -65,7 +88,7 @@ namespace Origins.Core {
 				return orig(inv, context, slot);
 			}
 			static void On_Player_HandleBeingInChestRange(On_Player.orig_HandleBeingInChestRange orig, Player self) {
-				if (self.chest == chestID && SpecialChestSystem.TryGetChest(self.chestX, self.chestY) is ChestData chest) {
+				if (self.chest == chestID && TryGetChest(self.chestX, self.chestY) is ChestData chest) {
 					chest.HandleBeingInChestRange(self);
 					return;
 				}
@@ -100,7 +123,7 @@ namespace Origins.Core {
 				orig(self);
 				if (sendChestSync.TrySet(false)) {
 					Player player = Main.LocalPlayer;
-					if (player.chest == chestID && SpecialChestSystem.TryGetChest(player.chestX, player.chestY) is ChestData chest) {
+					if (player.chest == chestID && TryGetChest(player.chestX, player.chestY) is ChestData chest) {
 						new Set_Special_Chest_Action(new(player.chestX, player.chestY), chest).Perform();
 					}
 				}
@@ -116,7 +139,7 @@ namespace Origins.Core {
 
 		class SpecialChestCraftingPlayer : ModPlayer {
 			public override IEnumerable<Item> AddMaterialsForCrafting(out ItemConsumedCallback itemConsumedCallback) {
-				if (Player.chest == chestID && SpecialChestSystem.TryGetChest(Player.chestX, Player.chestY) is ChestData chest) {
+				if (Player.chest == chestID && TryGetChest(Player.chestX, Player.chestY) is ChestData chest) {
 					itemConsumedCallback = chest.CraftWithItem;
 					return chest.Items(true);
 				}
@@ -125,7 +148,7 @@ namespace Origins.Core {
 		}
 		public static string MapChestName(string name, int i, int j) {
 			TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
-			string renamed = SpecialChestSystem.TryGetChest(left, top)?.GivenName ?? "";
+			string renamed = TryGetChest(left, top)?.GivenName ?? "";
 			if (renamed == "") {
 				return name;
 			} else {
@@ -327,8 +350,8 @@ namespace Origins.Core {
 			public abstract int Capacity { get; }
 			public abstract int Width { get; }
 			public abstract int Height { get; }
-			string RenameButton.IRenamable.Name { get; set; }
-			public override string GivenName => ((RenameButton.IRenamable)this).Name;
+			public string RenamableName { get; set; }
+			public override string GivenName => RenamableName;
 			public override IEnumerable<SpecialChestButton> Buttons => [
 				ModContent.GetInstance<LootAllButton>(),
 				ModContent.GetInstance<DepositAllButton>(),
@@ -345,14 +368,20 @@ namespace Origins.Core {
 			}
 			public override Item[] Items(bool forCrafting = false) => Inventory;
 			protected override ChestData LoadData(TagCompound tag) => this with {
-				Inventory = tag.SafeGet("Items", Enumerable.Repeat(0, Capacity).Select(_ => new Item()).ToList()).ToArray()
+				Inventory = tag.SafeGet("Items", Enumerable.Repeat(0, Capacity).Select(_ => new Item()).ToList()).ToArray(),
+				RenamableName = tag.SafeGet<string>("Name")
 			};
-			protected override void SaveData(TagCompound tag) => tag["Items"] = Inventory.ToList();
+			protected override void SaveData(TagCompound tag) {
+				tag["Items"] = Inventory.ToList();
+				if (!string.IsNullOrEmpty(RenamableName)) tag["Name"] = RenamableName;
+			}
 			internal override ChestData NetReceive(BinaryReader reader) => this with {
-				Inventory = reader.ReadCompressedItemArray()
+				Inventory = reader.ReadCompressedItemArray(),
+				RenamableName = reader.ReadString()
 			};
 			internal override void NetSend(BinaryWriter writer) {
 				writer.WriteCompressedItemArray(Inventory);
+				writer.Write(RenamableName);
 			}
 			public override void HandleBeingInChestRange(Player player) {
 				if (!player.IsInInteractionRange(Width, Height)) {
@@ -407,11 +436,6 @@ namespace Origins.Core {
 		}
 		public static void SyncToPlayer(int player) => ModContent.GetInstance<SpecialChestSystem>().SyncToPlayer(player);
 		class SpecialChestSystem : ModSystem {
-			public static ChestData TryGetChest(int i, int j) {
-				Player player = Main.LocalPlayer;
-				if (player.chest == chestID && player.chestX == i && player.chestY == j) return CurrentChest;
-				return ModContent.GetInstance<SpecialChestSystem>().tileEntities.TryGetValue(new(i, j), out ChestData chest) ? chest : null;
-			}
 			public UserInterface chestUI = new();
 			public override void UpdateUI(GameTime gameTime) {
 				if (chestUI.CurrentState is not null && (!Main.playerInventory || Main.LocalPlayer.chest != chestID)) {
@@ -477,7 +501,7 @@ namespace Origins.Core {
 				Tile tile = Main.tile[i, j];
 				int style = TileObjectData.GetTileStyle(tile);
 				if (style >= 0) TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(tile.TileType, style), out i, out j);
-				return SpecialChestSystem.TryGetChest(i, j)?.CanDestroy() ?? true;
+				return TryGetChest(i, j)?.CanDestroy() ?? true;
 			}
 			public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem) {
 				new Destroy_Special_Chest_Action(new(i, j)).Perform();
@@ -527,10 +551,24 @@ namespace Origins.Core {
 			}
 		}
 		public class SpecialChestUI() : UIState {
+			public static int inputCursorIndex;
+			public static StringBuilder inputText = new();
+			public static IInputTextTaker inputTextTaker;
+			public static bool InputtingText => inputTextTaker is not null;
 			public override void OnInitialize() {
 				Append(new SpecialChestElement());
 			}
-			public class SpecialChestElement : UIElement {
+			public static void SubmitText() {
+				inputTextTaker?.Submit(inputText.ToString());
+				inputTextTaker = null;
+			}
+			public static void CancelText() {
+				inputTextTaker?.Cancel();
+				inputTextTaker = null;
+			}
+			public class SpecialChestElement : UIElement, ITextInputContainer {
+				public int CursorIndex { get => inputCursorIndex; set => inputCursorIndex = value; }
+				public StringBuilder Text => inputText;
 				UIScrollbar scrollbar;
 				public override void OnInitialize() {
 					Left.Set(51f, 0);
@@ -547,6 +585,8 @@ namespace Origins.Core {
 						if (element.IsMouseHovering) Main.LocalPlayer.mouseInterface = true;
 					};
 				}
+				public void Submit() => SubmitText();
+				public void Reset() => CancelText();
 				public override void Update(GameTime gameTime) {
 					if (Main.LocalPlayer.chest != chestID || CurrentChest is null) return;
 					base.Update(gameTime);
@@ -559,6 +599,42 @@ namespace Origins.Core {
 					if (player.chest != chestID || CurrentChest is null) return;
 					float inventoryScale = Main.inventoryScale;
 					Main.inventoryScale = 0.755f;
+					{
+						Vector2 position = new(504f, Main.instance.invBottom);
+						string name = CurrentChest.GivenName;
+						if (SpecialChestUI.InputtingText) {
+							this.ProcessInput(out bool typed);
+							name = Text.ToString();
+						} else {
+							CursorIndex = Math.Max(name?.Length ?? 1, 1) - 1;
+							Text.Clear();
+							if (string.IsNullOrEmpty(name)) {
+								Tile tile = Main.tile[player.chestX, player.chestY];
+								name = TileLoader.DefaultContainerName(tile.TileType, tile.TileFrameX, tile.TileFrameY);
+							}
+						}
+						name ??= "";
+
+						Vector2 offset = new(0, 2);
+						bool blink = Main.timeForVisualEffects % 40 < 20;
+						if (SpecialChestUI.InputtingText && blink) {
+							spriteBatch.DrawString(
+								FontAssets.MouseText.Value,
+								"|",
+								position + FontAssets.MouseText.Value.MeasureString(Text.ToString()[..CursorIndex]) * Vector2.UnitX * 1 + offset * new Vector2(0.5f, 1),
+								Color.White * (blink ? 1 : 0.5f),
+								0,
+								new(0, 0),
+								1,
+								SpriteEffects.None,
+							0);
+						}
+
+						Color color = Color.White * (1f - (255f - Main.mouseTextColor) / 255f * 0.5f);
+						color.A = byte.MaxValue;
+						ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value, name, position, color, 0f, Vector2.Zero, Vector2.One, -1f, 1.5f);
+					}
+
 					int buttonY = Main.instance.invBottom + 40;
 					foreach (SpecialChestButton button in CurrentChest.Buttons) {
 						if (button.Draw(spriteBatch, 506, buttonY)) buttonY += 26;
@@ -589,12 +665,16 @@ namespace Origins.Core {
 					scrollbar.ViewPosition = (viewPos - evt.ScrollWheelValue / 120) * 56;
 				}
 			}
+			public interface IInputTextTaker {
+				void Submit(string text);
+				void Cancel();
+			}
 		}
 		public abstract class SpecialChestButton : ModType, ILocalizedModType {
 			public string LocalizationCategory => "ChestButton";
 			protected sealed override void Register() { }
 			public virtual LocalizedText Text => this.GetLocalization(nameof(Text));
-			public virtual bool CanDisplay => !Main.editChest;
+			public virtual bool CanDisplay => !SpecialChestUI.InputtingText;
 			public abstract bool Click();
 			bool hovered = false;
 			float scale = 0.75f;
@@ -635,14 +715,16 @@ namespace Origins.Core {
 		public class LootAllButton : SpecialChestButton {
 			public override LocalizedText Text => Language.GetText("LegacyInterface.29");
 			public override bool Click() {
+				bool didAnything = false;
 				Item[] items = CurrentChest.Items();
 				GetItemSettings lootAllSettingsRegularChest = GetItemSettings.LootAllSettingsRegularChest;
 				for (int i = 0; i < items.Length; i++) {
 					if (items[i].IsAir) continue;
+					didAnything = true;
 					items[i].position = Main.LocalPlayer.Center;
 					items[i] = Main.LocalPlayer.GetItem(Main.myPlayer, items[i], lootAllSettingsRegularChest);
 				}
-				return true;
+				return didAnything;
 			}
 		}
 		public class DepositAllButton : SpecialChestButton {
@@ -696,33 +778,50 @@ namespace Origins.Core {
 				return true;
 			}
 		}
-		public class RenameButton : SpecialChestButton {
+		public class RenameButton : SpecialChestButton, IInputTextTaker {
 			public static IEnumerable<SpecialChestButton> Buttons => [
 				ModContent.GetInstance<RenameButton>(),
 				ModContent.GetInstance<SaveRenameButton>(),
 				ModContent.GetInstance<CancelRenameButton>(),
 			];
 			public override LocalizedText Text => Language.GetText("LegacyInterface.61");
+			public void Submit(string text) {
+				string inputText = SpecialChestUI.inputText.ToString();
+				if (CurrentChest.GivenName != inputText && CurrentChest is IRenamable renamable) {
+					renamable.RenamableName = inputText;
+				}
+			}
+			public void Cancel() { }
 			public override bool Click() {
-				Main.editChest = true;
+				SpecialChestUI.inputTextTaker = this;
+				string name = CurrentChest.GivenName;
+				if (string.IsNullOrEmpty(name)) {
+					Player player = Main.LocalPlayer;
+					Tile tile = Main.tile[player.chestX, player.chestY];
+					name = TileLoader.DefaultContainerName(tile.TileType, tile.TileFrameX, tile.TileFrameY);
+				}
+				SpecialChestUI.inputText.Clear();
+				SpecialChestUI.inputText.Append(name);
+				SpecialChestUI.inputCursorIndex = name.Length;
 				return false;
 			}
 			public interface IRenamable {
-				string Name { get; set; }
+				string RenamableName { get; set; }
 			}
 			public class SaveRenameButton : SpecialChestButton {
 				public override LocalizedText Text => Language.GetText("LegacyInterface.47");
-				public override bool CanDisplay => Main.editChest;
+				public override bool CanDisplay => SpecialChestUI.InputtingText;
 				public override bool Click() {
-					Main.editChest = false;
-					return false;
+					string oldName = CurrentChest.GivenName;
+					SpecialChestUI.SubmitText();
+					return CurrentChest.GivenName != oldName;
 				}
 			}
 			public class CancelRenameButton : SpecialChestButton {
 				public override LocalizedText Text => Language.GetText("LegacyInterface.63");
-				public override bool CanDisplay => Main.editChest;
+				public override bool CanDisplay => SpecialChestUI.InputtingText;
 				public override bool Click() {
-					Main.editChest = false;
+					SpecialChestUI.CancelText();
 					return false;
 				}
 			}

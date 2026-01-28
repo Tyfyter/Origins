@@ -1,5 +1,4 @@
 ﻿using AltLibrary.Common.AltBiomes;
-using CalamityMod.NPCs.TownNPCs;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
@@ -2791,6 +2790,7 @@ namespace Origins {
 			WorldGen.GetTreeBottom(i, j, out int x, out int y);
 			return PlantLoader.GetTree(Main.tile[x, y].TileType);
 		}
+		public static void DropTileItem(this ModTile tile, Item item) => tile.RegisterItemDrop(item.type, -1);
 		public static Point OffsetBy(this Point self, int x = 0, int y = 0) {
 			return new Point(self.X + x, self.Y + y);
 		}
