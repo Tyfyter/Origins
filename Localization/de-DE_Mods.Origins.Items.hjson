@@ -7872,20 +7872,20 @@ Scrap_Dart: {
 
 Ashen_Lock_Box: {
 	// DisplayName: Ashen Lock Box
-	// Tooltip: ""
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Brine_Lock_Box: {
 	// DisplayName: Brine Lock Box
-	// Tooltip: ""
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Defiled_Lock_Box: {
 	// DisplayName: Defiled Lock Box
-	// Tooltip: ""
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
 
 Riven_Lock_Box: {
 	// DisplayName: Riven Lock Box
-	// Tooltip: ""
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
