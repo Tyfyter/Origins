@@ -7837,27 +7837,27 @@ Large_Storage_Container_Item: {
 
 Mechanical_Key_Purple: {
 	// DisplayName: Purple Mechanical Key
-	// Tooltip: ""
+	// Tooltip: Can be used with purple mechanical key nodes
 }
 
 Mechanical_Key_Blue: {
 	// DisplayName: Blue Mechanical Key
-	// Tooltip: ""
+	// Tooltip: Can be used with blue mechanical key nodes
 }
 
 Mechanical_Key_Green: {
 	// DisplayName: Green Mechanical Key
-	// Tooltip: ""
+	// Tooltip: Can be used with green mechanical key nodes
 }
 
 Mechanical_Key_Orange: {
 	// DisplayName: Orange Mechanical Key
-	// Tooltip: ""
+	// Tooltip: Can be used with orange mechanical key nodes
 }
 
 Mechanical_Key_Yellow: {
 	// DisplayName: Yellow Mechanical Key
-	// Tooltip: ""
+	// Tooltip: Can be used with yellow mechanical key nodes
 }
 
 Smog_Pod_4: {
@@ -7867,7 +7867,7 @@ Smog_Pod_4: {
 
 Scrap_Dart: {
 	// DisplayName: Scrap Dart
-	// Tooltip: ""
+	// Tooltip: Inflicts [buffhint:Origins/Impeding_Shrapnel_Debuff]
 }
 
 Ashen_Lock_Box: {

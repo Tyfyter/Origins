@@ -515,7 +515,7 @@ ACCESSORIES:
 (^) Coologne
 (^) CORE Generator
 (^) Counter-offensive Scarf
-(⛥) CSTAA Jacket !!!
+(#2, ^2) CSTAA Jacket !!!
 (^) Danger Barrel
 (†) Decorative A.S.H.E.S. !!!
 (^) Destructive Claws
@@ -527,10 +527,10 @@ ACCESSORIES:
 (^) Eitrite Gun Magazine
 (^) Eitrite Watch
 (^) Evil Bar Gun Magazines
-(#3) Exo-Arm
-(@, #3) Exo-Legs !!!
+(#3, ^2) Exo-Arm !!!
+(#2/3, ^2) Exo-Legs !!!
 (@, #2/3) Exo-Suit !!! (needs updated balance IAW tooltip)
-(@4, #3) Exo-Weapon Mount !!!
+(#3, ^2) Exo-Weapon Mount !!!
 (^) Exploder Emblem
 (^) Explosive Artery
 (^) Fairy Lotus
@@ -641,7 +641,7 @@ ACCESSORIES:
 (^) Venom Fang
 (^) Venom Shield
 
-(^) Bomb Rack !!!
+(^) Bomb Rack
 (^) Entangled Energy
 (^) Mana Drive
 (^) Protozoa Food
@@ -659,7 +659,7 @@ ACCESSORIES:
 (^) Forbidden Voice (Cursed)
 (^) Forbidden Voice (Uncursed)
 (#3, ^2) Glitter Glue !!!
-(@4, ^3) Lunatic's Rune !!!
+(^) Lunatic's Rune
 (^) Mysterious Spray
 (#3, ^2) Retool Arm !!!
 (#3, ^2) Robo-tail !!!
@@ -742,7 +742,7 @@ UTILITIES:
 
 WINGS:
 |---
-(⚿) Gills !!!
+(^) Gills
 
 (^) Acrid Beam Thrusters
 (X) Marrowick Mantle
@@ -1326,6 +1326,7 @@ TILES:
 (X) Residue Furniture
 (^) Riven Torch
 (^) Riven Water Fountain
+(X) Ruined Portal
 (^) Scrap Railing
 (^) Shadow Torch
 (^) Traffic Cone
@@ -1420,7 +1421,7 @@ TILES:
 (^) Underwater Vine
 (^) Venus Coral
 (^) Wilting Rose
-(^) Workstation Extras
+(#2, ^2) Workstation Extras !!! (Administrator Panel, Power Box and Radio Broadcaster)
 (^) Wrycoral
 
 (^) A Perfect World
@@ -1551,6 +1552,7 @@ MISCELLANEOUS ITEMS:
 (^) Defiled Mana
 (^) Large Chambersite
 (^) Worn Paper: Loose Wheel
+(#, ^2) Worn Paper: Mean Baby !!!
 (^) Worn Paper: Self-Preservation
 (^) Worn Paper: Smog Test
 (^) Worn Paper: The Packing Slip
@@ -1599,6 +1601,7 @@ CONSUMABLES:
 (^) Greater Summoning Potion
 (X) Mega Mojo Flask
 (^) Mojo Flask
+(#, ^2) Mojo Harvest !!!
 (#, ^2) Potion of Projection
 (^) Protean Potion
 (^) Purification Potion
@@ -1789,7 +1792,7 @@ AMMO:
 (^) Ichor Harpoon
 (^) Metal Slug
 (^) Resizable Mine V
-(☻) Scrap Dart !!!
+(^) Scrap Dart
 
 (^) Resizable Mine VI
 
@@ -1861,12 +1864,12 @@ CROSS-MOD CONTENT:
 (@, ^3) Suspicious Trash Compactor !!!
 (^) Watered-down Keytar
 
-(^) Ashen Lock Box !!!
-(^) Brine Lock Box !!!
-(^) Defiled Lock Box !!!
+(^) Ashen Lock Box
+(^) Brine Lock Box
+(^) Defiled Lock Box
 (X) Mushroom Lock Box
 (X) Ocean Lock Box
-(^) Riven Lock Box !!!
+(^) Riven Lock Box
 ---
 
 UI:
