@@ -1345,6 +1345,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
+(@, ^3) Dirt Chest
 (^) Fire Extinguisher Holder
 (^) Industrial Door
 (#3, ^2) Large Storage Container
