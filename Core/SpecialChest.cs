@@ -83,6 +83,8 @@ namespace Origins.Core {
 			On_Recipe.CollectItems_ItemArray_int += On_Recipe_CollectItems_ItemArray_int;
 			On_Recipe.Create += On_Recipe_Create;
 			On_Chest.PutItemInNearbyChest += On_Chest_PutItemInNearbyChest;
+			IL_Main.DrawBestiaryIcon += OffsetInventoryButtons;
+			IL_Main.DrawEmoteBubblesButton += OffsetInventoryButtons;
 			static bool On_ItemSlot_LeftClick_SellOrTrash(On_ItemSlot.orig_LeftClick_SellOrTrash orig, Item[] inv, int context, int slot) {
 				if (Main.LocalPlayer.chest == chestID) return false;
 				return orig(inv, context, slot);
@@ -135,8 +137,41 @@ namespace Origins.Core {
 				}
 				return orig(item, position);
 			}
-		}
+			static void OffsetInventoryButtons(ILContext il) {
+				ILCursor c = new(il);
+				int buttonY = -1;
+				c.GotoNext(MoveType.AfterLabel,
+					i => i.MatchLdsfld<Main>(nameof(Main.editChest)),
+					i => i.MatchBrfalse(out _),
 
+					i => i.MatchLdloc(out buttonY),
+					i => i.MatchLdcI4(24),
+					i => i.MatchAdd(),
+					i => i.MatchStloc(buttonY)
+				);
+				c.EmitLdloca(buttonY);
+				c.EmitDelegate(OffsetBelowChestButtons);
+				// <--- inserts here
+				//IL_008b: ldsfld bool Terraria.Main::editChest
+				//IL_0090: brfalse.s IL_0097
+				//
+				//IL_0092: ldloc.1
+				//IL_0093: ldc.i4.s 24
+				//IL_0095: add
+				//IL_0096: stloc.1
+			}
+		}
+		public static void OffsetBelowChestButtons(ref int buttonY) {
+			if (CurrentChest is null) return;
+			int offset = 24;
+			int index = 0;
+			foreach (SpecialChestButton button in CurrentChest.Buttons) {
+				if (!button.CanDisplay) continue;
+				if (++index <= 6) continue;
+				buttonY += offset;
+				offset = 26;
+			}
+		}
 		class SpecialChestCraftingPlayer : ModPlayer {
 			public override IEnumerable<Item> AddMaterialsForCrafting(out ItemConsumedCallback itemConsumedCallback) {
 				if (Player.chest == chestID && TryGetChest(Player.chestX, Player.chestY) is ChestData chest) {

@@ -13,6 +13,7 @@ using Terraria.DataStructures;
 using Origins.Questing;
 using PegasusLib;
 using PegasusLib.Graphics;
+using Origins.Core;
 
 namespace Origins.UI {
 	public class Journal_UI_Button : UIState {
@@ -20,15 +21,16 @@ namespace Origins.UI {
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			Main.inventoryScale = 0.85f;
 			int width = 30;
-			int num4 = 30;
-			int num = 566;
-			int num2 = 244 + num4 + 4;
+			int height = 30;
+			int buttonX = 566;
+			int buttonY = 244 + height + 4;
 			if ((Main.LocalPlayer.chest != -1 || Main.npcShop > 0) && !Main.recBigList) {
-				num2 += 168;
+				buttonY += 168;
 				Main.inventoryScale = 0.755f;
-				num += 5;
+				buttonX += 5;
 			}
-			Rectangle rectangle = new(num, num2, width, num4);
+			SpecialChest.OffsetBelowChestButtons(ref buttonY);
+			Rectangle rectangle = new(buttonX, buttonY, width, height);
 			bool flag = false;
 			Texture2D texture = Texture.Value;
 			Vector2 position = rectangle.Center.ToVector2();

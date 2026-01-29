@@ -7867,7 +7867,11 @@ Smog_Pod_4: {
 
 Scrap_Dart: {
 	// DisplayName: Scrap Dart
-	// Tooltip: Inflicts [buffhint:Origins/Impeding_Shrapnel_Debuff]
+	/* Tooltip:
+		'''
+		Inflicts [buffhint:Origins/Impeding_Shrapnel_Debuff]
+		Releases frenzied shrapnel in flight
+		''' */
 }
 
 Ashen_Lock_Box: {
