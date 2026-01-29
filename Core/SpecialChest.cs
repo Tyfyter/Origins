@@ -810,7 +810,7 @@ namespace Origins.Core {
 			}
 			public class SaveRenameButton : SpecialChestButton {
 				public override LocalizedText Text => Language.GetText("LegacyInterface.47");
-				public override bool CanDisplay => SpecialChestUI.InputtingText;
+				public override bool CanDisplay => SpecialChestUI.inputTextTaker is RenameButton;
 				public override bool Click() {
 					string oldName = CurrentChest.GivenName;
 					SpecialChestUI.SubmitText();
@@ -819,7 +819,7 @@ namespace Origins.Core {
 			}
 			public class CancelRenameButton : SpecialChestButton {
 				public override LocalizedText Text => Language.GetText("LegacyInterface.63");
-				public override bool CanDisplay => SpecialChestUI.InputtingText;
+				public override bool CanDisplay => SpecialChestUI.inputTextTaker is RenameButton;
 				public override bool Click() {
 					SpecialChestUI.CancelText();
 					return false;
