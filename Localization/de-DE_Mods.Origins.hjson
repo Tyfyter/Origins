@@ -2543,6 +2543,7 @@ Tiles: {
 	// Transistor.MapEntry: Transistor
 	// Medium_Storage_Container.MapEntry: Medium Storage Container
 	// Large_Storage_Container.MapEntry: Large Storage Container
+	// Dirt_Chest.MapEntry: Dirt Chest
 }
 
 Keybinds: {

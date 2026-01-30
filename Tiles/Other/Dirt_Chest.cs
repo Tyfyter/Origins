@@ -1,5 +1,6 @@
 ﻿using Origins.Core;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -10,11 +11,25 @@ namespace Origins.Tiles.Other {
 	public class Dirt_Chest : ModSpecialChest {
 		public override ChestData CreateChestData() => new Dirt_Chest_Data();
 		public override void Load() {
-			Mod.AddContent(new TileItem(this).WithExtraStaticDefaults(this.DropTileItem));
+			Mod.AddContent(new TileItem(this).WithExtraStaticDefaults(this.DropTileItem).WithExtraDefaults(item => {
+				item.value = 0;
+			}).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.DirtBlock, 10)
+				.AddTile(TileID.WorkBenches)
+				.AddCondition(OriginsModIntegrations.AprilFools)
+				.Register();
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.DirtiestBlock)
+				.AddTile(TileID.WorkBenches)
+				.AddCondition(OriginsModIntegrations.AprilFools)
+				.Register();
+			}));
 		}
 		public override void ModifyTileData() {
 			TileObjectData.newTile.Width = 1;
 			TileObjectData.newTile.SetHeight(1);
+			TileObjectData.newTile.Origin = Point16.Zero;
 			AddMapEntry(FromHexRGB(0x976B4B), CreateMapEntryName(), MapChestName);
 			AdjTiles = [TileID.Containers];
 			DustType = DustID.Dirt;

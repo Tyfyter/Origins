@@ -7893,3 +7893,8 @@ Riven_Lock_Box: {
 	// DisplayName: Riven Lock Box
 	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 }
+
+Dirt_Chest_Item: {
+	// DisplayName: Dirt Chest
+	// Tooltip: ""
+}
