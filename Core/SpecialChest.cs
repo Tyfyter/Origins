@@ -575,6 +575,9 @@ namespace Origins.Core {
 				netDirtyChests.Clear();
 			}
 			public override void PreUpdateEntities() => ConsumeNetDirtyChests();
+			public override void PostUpdateInput() {
+				if (SpecialChestUI.InputtingText) PlayerInput.WritingText = true;
+			}
 		}
 		class PreventDestruction : GlobalTile {
 			public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged) {
@@ -752,17 +755,50 @@ namespace Origins.Core {
 						}
 						name ??= "";
 
-						Vector2 offset = new(0, 2);
 						bool blink = Main.timeForVisualEffects % 40 < 20;
 						if (SpecialChestUI.InputtingText && blink) {
+							string cursorChar = "";
+							Vector2 offset = default;
+							switch (0) {
+								case 0:
+								cursorChar = "|";
+								offset = new(-3, 2);
+								break;
+
+								case 1: {
+									static bool IsTall(char c, bool before) {
+										switch (c) {
+											case 'g':
+											case 'j':
+											case 'y':
+											return true;
+											case 'p':
+											return !before;
+											case 'q':
+											return before;
+
+											default:
+											return false;
+										}
+									}
+									cursorChar = "^";
+									offset = new(-2, 16);
+									if ((CursorIndex > 0 && IsTall(Text[CursorIndex - 1], true)) || (CursorIndex < Text.Length && IsTall(Text[CursorIndex], false))) {
+										offset.Y += 6;
+									}
+									break;
+								}
+							}
 							ChatManager.DrawColorCodedStringWithShadow(spriteBatch,
 								FontAssets.MouseText.Value,
-								"|",
+								cursorChar,
 								position + FontAssets.MouseText.Value.MeasureString(Text.ToString()[..CursorIndex]) * Vector2.UnitX * 1 + offset * new Vector2(0.5f, 1),
 								Color.White * (blink ? 1 : 0.5f),
 								0,
-								new(0, 0),
-								Vector2.One);
+								new(2, 0),
+								Vector2.One,
+								spread: 1.5f
+							);
 						}
 
 						Color color = Color.White * (1f - (255f - Main.mouseTextColor) / 255f * 0.5f);
