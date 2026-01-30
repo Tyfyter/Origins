@@ -47,8 +47,9 @@ namespace Origins.Items.Materials {
 				}
 			} else {
 				resultType = Main.rand.NextFromList(AltLib.GetAltOres()
-					.Where(o => o.OreSlot >= ModContent.GetInstance<CobaltOreSlot>())
-					.Select(o => o.oreItem)
+					.Where(o => o.OreSlot >= ModContent.GetInstance<CobaltOreSlot>()
+						|| o.OreSlot <= ModContent.GetInstance<AdamantiteOreSlot>()
+					).Select(o => o.oreItem)
 					.ToArray()
 				);
 				if (Main.rand.NextBool(20)) resultStack += Main.rand.Next(0, 2);
