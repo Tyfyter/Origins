@@ -421,6 +421,7 @@ namespace Origins.Core {
 				ModContent.GetInstance<RestockButton>(),
 				ModContent.GetInstance<SortButton>(),
 				..RenameButton.Buttons,
+				..SearchButton.Buttons,
 				..SpecialChestButton.GlobalButtons
 			];
 			public Storage_Container_Data() : this([]) {
@@ -917,6 +918,38 @@ namespace Origins.Core {
 			public class CancelRenameButton : SpecialChestButton {
 				public override LocalizedText Text => Language.GetText("LegacyInterface.63");
 				public override bool CanDisplay => SpecialChestUI.inputTextTaker is RenameButton;
+				public override bool Click() {
+					SpecialChestUI.CancelText();
+					return false;
+				}
+			}
+		}
+		public class SearchButton : SpecialChestButton, IInputTextTaker {
+			public static IEnumerable<SpecialChestButton> Buttons => [
+				ModContent.GetInstance<SearchButton>(),
+				ModContent.GetInstance<CancelSearchButton>(),
+			];
+			public override LocalizedText Text => Language.GetText("Mods.Origins.Generic.Search");
+
+			public void Cancel() {
+			}
+			public override bool Click() {
+				SpecialChestUI.inputTextTaker = this;
+				SpecialChestUI.inputText.Clear();
+				SpecialChestUI.inputCursorIndex = 0;
+				return false;
+			}
+			public void Submit(string text) { }
+			public bool OnTyped(string before, string after) {
+				foreach (Item item in CurrentChest.Items()) {
+					item.newAndShiny = item.Name.Contains(after, StringComparison.CurrentCultureIgnoreCase);
+				}
+				return true;
+			}
+
+			public class CancelSearchButton : SpecialChestButton {
+				public override LocalizedText Text => Language.GetText("LegacyInterface.63");
+				public override bool CanDisplay => SpecialChestUI.inputTextTaker is SearchButton;
 				public override bool Click() {
 					SpecialChestUI.CancelText();
 					return false;
