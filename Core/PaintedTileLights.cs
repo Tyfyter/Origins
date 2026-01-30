@@ -21,8 +21,6 @@ namespace Origins.Core {
 			if (OriginClientConfig.Instance.DyeLightTiles) GlowingTileExtensions.PaintLight(ref r, ref g, ref b, Main.tile[i, j].TileColor);
 		}
 		delegate void orig_ModifyLight(int i, int j, int type, ref float r, ref float g, ref float b);
-		void ILoadable.Unload() {
-			throw new NotImplementedException();
-		}
+		void ILoadable.Unload() { }
 	}
 }
