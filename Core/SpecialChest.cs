@@ -757,11 +757,17 @@ namespace Origins.Core {
 			public interface IInputTextTaker {
 				void Submit(string text);
 				void Cancel();
+				/// <summary>
+				/// Runs when something is typed
+				/// </summary>
+				/// <param name="before"></param>
+				/// <param name="after"></param>
+				/// <returns>If this returns false, the input text will be reset back to the value of <paramref name="before"/></returns>
 				bool OnTyped(string before, string after) => true;
 			}
 		}
 		public abstract class SpecialChestButton : ModType, ILocalizedModType {
-			public static List<SpecialChestButton> GlobalButtons { get; }
+			public static List<SpecialChestButton> GlobalButtons { get; } = [];
 			public string LocalizationCategory => "ChestButton";
 			protected sealed override void Register() { }
 			public virtual LocalizedText Text => this.GetLocalization(nameof(Text));
