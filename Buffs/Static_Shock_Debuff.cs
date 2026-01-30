@@ -31,8 +31,8 @@ namespace Origins.Buffs {
 			DoDust(npc);
 		}
 		public static void DoDust(Entity entity) {
-			int zappiness = 1 + entity.wet.ToInt();
-			if (entity is NPC npc) zappiness += npc.HasBuff<Static_Shock_Damage_Debuff>().ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
+			float zappiness = 1 + entity.wet.ToInt();
+			if (entity is NPC npc) zappiness += npc.HasBuff<Static_Shock_Damage_Debuff>().ToInt() + IDefiledEnemy.GetZapWeakness(npc);
 			else if (entity is Player player) zappiness += player.HasBuff<Static_Shock_Damage_Debuff>().ToInt();
 			if (Main.rand.Next(4) < zappiness) {
 				Vector2 offset = Main.rand.NextVector2FromRectangle(entity.Hitbox) - entity.Center;

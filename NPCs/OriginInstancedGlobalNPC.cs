@@ -253,14 +253,14 @@ namespace Origins.NPCs {
 				if (npc.lifeRegen > 0) {
 					npc.lifeRegen = 0;
 				}
-				int damageMult = 1 + npc.wet.ToInt() + ((staticShock || miniStaticShock) && staticShockDamage).ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
-				npc.lifeRegen -= 8 * damageMult;
-				if (damage < 3 * damageMult) damage = 3 * damageMult;
+				float damageMult = 1 + npc.wet.ToInt() + ((staticShock || miniStaticShock) && staticShockDamage).ToInt() + IDefiledEnemy.GetZapWeakness(npc);
+				npc.lifeRegen -= Main.rand.RandomRound(8 * damageMult);
+				Max(ref damage, Main.rand.RandomRound(3 * damageMult));
 			}
 			if (electrified) {
-				int damageMult = 1 + npc.wet.ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
-				npc.lifeRegen -= 40 * damageMult;
-				if (damage < 40 * damageMult) damage = 20 * damageMult;
+				float damageMult = 1 + npc.wet.ToInt() + IDefiledEnemy.GetZapWeakness(npc);
+				npc.lifeRegen -= Main.rand.RandomRound(40 * damageMult);
+				Max(ref damage, Main.rand.RandomRound(20 * damageMult));
 			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				npc.lifeRegen -= 15;

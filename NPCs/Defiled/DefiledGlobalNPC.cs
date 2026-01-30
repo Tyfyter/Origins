@@ -124,6 +124,7 @@ namespace Origins.NPCs.Defiled {
 	public interface IDefiledEnemy {
 		int MaxManaDrain => 0;
 		int MaxMana => 0;
+		float ZapWeakness => 1;
 		AssimilationAmount? Assimilation => null;
 		float Mana { get; set; }
 		bool ForceSyncMana => true;
@@ -140,5 +141,6 @@ namespace Origins.NPCs.Defiled {
 		}
 		public (Rectangle startArea, Predicate<Vector2> customShape)? GetCustomChrysalisShape(NPC chrysalisNPC) => null;
 		public void OnChrysalisSpawn() { }
+		public static float GetZapWeakness(NPC npc) => npc.ModNPC is IDefiledEnemy zapee ? zapee.ZapWeakness : 0;
 	}
 }

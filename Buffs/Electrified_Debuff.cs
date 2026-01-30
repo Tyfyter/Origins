@@ -24,7 +24,7 @@ namespace Origins.Buffs {
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().electrified = true;
-			int zappiness = 1 + npc.wet.ToInt() + (npc.ModNPC is IDefiledEnemy).ToInt();
+			float zappiness = 1 + npc.wet.ToInt() + IDefiledEnemy.GetZapWeakness(npc);
 			if (Main.rand.Next(4) < zappiness) {
 				Vector2 offset = Main.rand.NextVector2FromRectangle(npc.Hitbox) - npc.Center;
 				Dust dust = Dust.NewDustPerfect(

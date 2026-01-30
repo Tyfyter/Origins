@@ -17,6 +17,7 @@ namespace Origins.NPCs.Defiled {
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
+		public float ZapWeakness => 0.5f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
