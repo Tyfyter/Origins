@@ -3958,6 +3958,10 @@ namespace Origins {
 			for (int i = 0; i < lines.Length; i++) {
 				Vector2 a = lines[i].start;
 				Vector2 b = lines[i].end;
+				if (a == b) {
+					if (hitbox.Contains(a)) return true;
+					continue;
+				}
 				for (int j = 0; j < boxLines.Length; j++) {
 					if (Collision.CheckLinevLine(a, b, boxLines[j].start, boxLines[j].end).Length > 0) return true;
 				}
