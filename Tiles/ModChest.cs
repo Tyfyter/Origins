@@ -181,6 +181,10 @@ namespace Origins.Tiles {
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			ModifyTileData();
+			if (TileObjectData.newTile.AnchorBottom != default) {
+				TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+				TileID.Sets.PreventsSandfall[Type] = true;
+			}
 			TileObjectData.addTile(Type);
 			_ = DefaultContainerName(0, 0);
 			AdjTiles = [TileID.Containers];
