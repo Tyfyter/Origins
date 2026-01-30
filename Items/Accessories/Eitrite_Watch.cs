@@ -23,7 +23,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
-			
+
 		}
 		public override void UpdateInfoAccessory(Player player) {
 			Max(ref player.accWatch, 4);

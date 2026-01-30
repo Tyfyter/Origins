@@ -51,6 +51,7 @@ namespace Origins.Items.Tools.Wiring {
 		Enabled = 1 << 0,
 		Cutter = 1 << 1
 	}
+	//TODO: move to PegasusLib
 	public abstract class WireMode : ModTexturedType, IFlowerMenuItem<WirePetalData> {
 		public int Type { get; internal set; }
 		public virtual int ItemType { get; } = ItemID.Wire;

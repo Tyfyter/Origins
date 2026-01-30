@@ -50,7 +50,6 @@ namespace Origins.Core {
 			}
 		}
 	}
-	//TODO: use this to implement actually proper grass seeds
 	public interface ICustomPlaceTileItem {
 		public void PlaceTile(On_Player.orig_PlaceThing_Tiles orig, bool inRange);
 	}

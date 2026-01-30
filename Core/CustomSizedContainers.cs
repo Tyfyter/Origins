@@ -1,12 +1,12 @@
 ﻿using MonoMod.Cil;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Origins.Core {
+	//TODO: move to PegasusLib
 	internal class CustomSizedContainers : ILoadable {
 		public void Load(Mod mod) {
 			try {

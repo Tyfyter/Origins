@@ -800,10 +800,7 @@ namespace Origins {
 			if (refactoringPieces) {
 				modifiers.SourceDamage *= 0.9f;
 			}
-			if (toxicShock) { //TODO: Add stun
-				/*if (Main.rand.NextBool(400)) {// roughly 15% chance each second
-					Player.GetModPlayer<OriginPlayer>().stunTime;
-				}*/
+			if (toxicShock) {
 				Player.lifeRegen -= 15;
 				modifiers.ScalingArmorPenetration += 0.1f;
 			}

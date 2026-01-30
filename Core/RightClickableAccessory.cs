@@ -16,6 +16,7 @@ using Terraria.UI;
 using ThoriumMod.NPCs;
 
 namespace Origins.Core {
+	//TODO: move to PegasusLib
 	class RightClickableAccessory : ILoadable {
 		void ILoadable.Load(Mod mod) {
 			On_ItemSlot.RightClick_ItemArray_int_int += On_ItemSlot_RightClick_ItemArray_int_int;

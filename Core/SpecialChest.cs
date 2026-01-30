@@ -24,6 +24,7 @@ using Terraria.UI.Chat;
 using static Origins.Core.SpecialChest.SpecialChestUI;
 
 namespace Origins.Core {
+	//TODO: move to PegasusLib
 	public class SpecialChest : ILoadable {
 		public const int chestID = -8479;
 		public static ChestData CurrentChest { get; internal set; }
