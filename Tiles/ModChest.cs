@@ -11,7 +11,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Origins.Core.SpecialChest;
-using static Origins.Tiles.Ashen.Medium_Storage_Container;
 
 namespace Origins.Tiles {
 	public abstract class ModChest : ModTile {
@@ -181,7 +180,7 @@ namespace Origins.Tiles {
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			ModifyTileData();
-			if (TileObjectData.newTile.AnchorBottom != default) {
+			if (TileObjectData.newTile.AnchorBottom != AnchorData.Empty) {
 				TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 				TileID.Sets.PreventsSandfall[Type] = true;
 			}

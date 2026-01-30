@@ -417,7 +417,7 @@ namespace Origins.Core {
 			};
 			internal override void NetSend(BinaryWriter writer) {
 				writer.WriteCompressedItemArray(Inventory);
-				writer.Write(RenamableName);
+				writer.Write(RenamableName ?? "");
 			}
 			public override void HandleBeingInChestRange(Player player) {
 				if (!player.IsInInteractionRange(Width, Height)) {
@@ -536,8 +536,27 @@ namespace Origins.Core {
 			public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged) {
 				Tile tile = Main.tile[i, j];
 				int style = TileObjectData.GetTileStyle(tile);
-				if (style >= 0) TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(tile.TileType, style), out i, out j);
-				return TryGetChest(i, j)?.CanDestroy() ?? true;
+
+				TileObjectData data = style >= 0 ? TileObjectData.GetTileData(tile.TileType, style) : null;
+				if (style >= 0) TileUtils.GetMultiTileTopLeft(i, j, data, out i, out j);
+				if (!(TryGetChest(i, j)?.CanDestroy() ?? true)) return false;
+				if (!Main.tileNoAttach[type]) {
+					for (int k = 0; k < (data?.Width ?? 1); k++) {
+						tile = Main.tile[i + k, j - 1];
+						if (!tile.HasTile) continue;
+						if (Main.tileContainer[tile.TileType]) return false;
+						style = TileObjectData.GetTileStyle(tile);
+						if (style < 0) continue;
+						TileObjectData aboveData = TileObjectData.GetTileData(tile.TileType, style);
+						if (aboveData is not null && aboveData.AnchorBottom != AnchorData.Empty) {
+							TileUtils.GetMultiTileTopLeft(i + k, j - 1, aboveData, out int x, out int y);
+							if (i + k >= x + aboveData.AnchorBottom.checkStart && i + k <= x + aboveData.AnchorBottom.checkStart + aboveData.AnchorBottom.tileCount) {
+								if (!WorldGen.CanKillTile(i + k, j - 1)) return false;
+							}
+						}
+					}
+				}
+				return true;
 			}
 			public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem) {
 				new Destroy_Special_Chest_Action(new(i, j)).Perform();
