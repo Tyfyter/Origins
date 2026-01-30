@@ -429,6 +429,7 @@ namespace Origins {
 				if (Player.whoAmI == Main.myPlayer) {
 					if (Player.chest is -1 or SpecialChest.chestID && lastChest is -1 or SpecialChest.chestID) {
 						Recipe.FindRecipes();
+						new SpecialChest.Sync_Open_Special_Chest_Action(Player, Player.chest == SpecialChest.chestID, (short)chestX, (short)chestY).Send();
 					}
 					static (SoundStyle open, SoundStyle close) GetSound(int x, int y) {
 						if (x < 0 || y < 0) return default;

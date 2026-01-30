@@ -39,7 +39,7 @@ namespace Origins.Core {
 				CurrentChest = default;
 				return;
 			}
-			if (TryGetChest(x, y) is ChestData chest && chest.CanBeOpened()) {
+			if (TryGetChest(x, y) is ChestData chest && chest.CanBeOpened(x, y)) {
 				player.chest = chestID;
 				Main.playerInventory = true;
 				Main.editChest = false;
@@ -133,7 +133,7 @@ namespace Origins.Core {
 			}
 			static Item On_Chest_PutItemInNearbyChest(On_Chest.orig_PutItemInNearbyChest orig, Item item, Vector2 position) {
 				foreach ((Point16 chestPosition, ChestData chest) in ModContent.GetInstance<SpecialChestSystem>().tileEntities) {
-					if (!chest.CanReceiveNearbyQuickStack()) continue;
+					if (!chest.CanReceiveNearbyQuickStack(chestPosition.X, chestPosition.Y)) continue;
 					chest.ReceiveNearbyQuickStack(chestPosition, item, position);
 					if (item.IsAir) return item;
 				}
@@ -267,12 +267,12 @@ namespace Origins.Core {
 				bool isLeft = Main.mouseLeftRelease && Main.mouseLeft;
 				bool didSomething = false;
 				if (!Main.LocalPlayer.ItemAnimationActive && slot <= ItemCount) {
-					Item clone = item.Clone();
+					ref Item original = ref Items()[slot];
 					ItemSlot.LeftClick(ref item, ItemSlot.Context.BankItem);
 					ItemSlot.RightClick(ref item, ItemSlot.Context.BankItem);
-					didSomething = item.IsNetStateDifferent(clone);
+					didSomething = item.IsNetStateDifferent(original);
 					if (didSomething) {
-						Items()[slot] = item;
+						original = item;
 						Recipe.FindRecipes();
 						SoundEngine.PlaySound(SoundID.Grab);
 					}
@@ -289,8 +289,8 @@ namespace Origins.Core {
 			/// </summary>
 			public virtual void CraftWithItem(Item item, int index) => MarkConsumedItem();
 			public virtual bool CanDestroy() => true;
-			public virtual bool CanBeOpened() => true;
-			public abstract bool CanReceiveNearbyQuickStack();
+			public virtual bool CanBeOpened(int x, int y) => true;
+			public abstract bool CanReceiveNearbyQuickStack(int x, int y);
 			/// <summary>
 			/// Return <see cref="true"/> to skip the vanilla code
 			/// </summary>
@@ -383,8 +383,8 @@ namespace Origins.Core {
 			public sealed record class Invalid : ChestData {
 				protected internal override bool IsValidSpot(Point position) => false;
 				public override Item[] Items(bool forCrafting = false) => [];
-				public override bool CanBeOpened() => false;
-				public override bool CanReceiveNearbyQuickStack() => false;
+				public override bool CanBeOpened(int x, int y) => false;
+				public override bool CanReceiveNearbyQuickStack(int x, int y) => false;
 				protected override ChestData LoadData(TagCompound tag) => this;
 				protected override void SaveData(TagCompound tag) { }
 				internal override ChestData NetReceive(BinaryReader reader) => this;
@@ -394,8 +394,8 @@ namespace Origins.Core {
 				private protected override string FullNameImpl => Type;
 				protected internal override bool IsValidSpot(Point position) => true;
 				public override Item[] Items(bool forCrafting = false) => [];
-				public override bool CanBeOpened() => false;
-				public override bool CanReceiveNearbyQuickStack() => false;
+				public override bool CanBeOpened(int x, int y) => false;
+				public override bool CanReceiveNearbyQuickStack(int x, int y) => false;
 				protected override ChestData LoadData(TagCompound tag) => this with {
 					Data = tag
 				};
@@ -431,7 +431,13 @@ namespace Origins.Core {
 				Inventory = inventory;
 			}
 			public override Item[] Items(bool forCrafting = false) => Inventory;
-			public override bool CanReceiveNearbyQuickStack() => true;
+			public override bool CanBeOpened(int x, int y) {
+				foreach (Player player in Main.ActivePlayers) {
+					if (player.chest == chestID && player.chestX == x && player.chestY == y) return false;
+				}
+				return true;
+			}
+			public override bool CanReceiveNearbyQuickStack(int x, int y) => CanBeOpened(x, y);
 			protected override ChestData LoadData(TagCompound tag) => this with {
 				Inventory = tag.SafeGet("Items", Enumerable.Repeat(0, Capacity).Select(_ => new Item()).ToList()).ToArray(),
 				RenamableName = tag.SafeGet<string>("Name")
@@ -632,6 +638,38 @@ namespace Origins.Core {
 				tileEntities.Remove(Position);
 				Player localPlayer = Main.LocalPlayer;
 				if (localPlayer.chest == chestID && localPlayer.chestX == Position.X && localPlayer.chestY == Position.Y) CurrentChest = null;
+			}
+		}
+		public record class Sync_Open_Special_Chest_Action(Player Player, bool Open, short X = -1, short Y = -1) : SyncedAction {
+			public Sync_Open_Special_Chest_Action() : this(default, false) { }
+			public override SyncedAction NetReceive(BinaryReader reader) {
+				Player player = Main.player[reader.ReadByte()];
+				bool open = reader.ReadBoolean();
+				short x = -1, y = -1;
+				if (open) {
+					x = reader.ReadInt16();
+					y = reader.ReadInt16();
+				}
+				return this with {
+					Player = player,
+					Open = open,
+					X = x,
+					Y = y
+				};
+			}
+
+			public override void NetSend(BinaryWriter writer) {
+				writer.Write((byte)Player.whoAmI);
+				writer.Write(Open);
+				if (Open) {
+					writer.Write((short)X);
+					writer.Write((short)Y);
+				}
+			}
+			protected override void Perform() {
+				Player.chest = Open ? chestID : -1;
+				Player.chestX = X;
+				Player.chestY = Y;
 			}
 		}
 		public class SpecialChestUI() : UIState {
