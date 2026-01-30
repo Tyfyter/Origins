@@ -51,6 +51,9 @@ namespace Origins.Core {
 				ModContent.GetInstance<SpecialChestSystem>().chestUI.SetState(new SpecialChestUI());
 				Recipe.FindRecipes();
 				CurrentChest = chest;
+				foreach (SpecialChestButton button in CurrentChest.Buttons) {
+					if (button is IInputTextTaker textTaker) textTaker.ResetData();
+				}
 			}
 		}
 		static bool sendChestSync = false;
@@ -803,6 +806,7 @@ namespace Origins.Core {
 				/// <param name="after"></param>
 				/// <returns>If this returns false, the input text will be reset back to the value of <paramref name="before"/></returns>
 				bool OnTyped(string before, string after) => true;
+				void ResetData() { }
 			}
 		}
 		public abstract class SpecialChestButton : ModType, ILocalizedModType {
