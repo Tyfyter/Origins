@@ -284,7 +284,13 @@ namespace Origins.Core {
 				return didSomething;
 			}
 			public virtual void DrawItemSlot(SpriteBatch spriteBatch, Vector2 position, Item item, int slot) {
-				ItemSlot.Draw(spriteBatch, ref item, slot >= ItemCount ? ItemSlot.Context.GoldDebug : ItemSlot.Context.ChestItem, position);
+				int context = slot >= ItemCount ? ItemSlot.Context.GoldDebug : ItemSlot.Context.ChestItem;
+				Color color = default;
+				if (!string.IsNullOrEmpty(SearchButton.SearchString)) {
+					if (item.Name.Contains(SearchButton.SearchString, StringComparison.CurrentCultureIgnoreCase)) context = ItemSlot.Context.ShopItem;
+					else color = Color.Gray;
+				}
+				ItemSlot.Draw(spriteBatch, ref item, context, position, color);
 			}
 			/// <summary>
 			/// Called when an item from the <see cref="ChestData"/> is consumed via crafting
@@ -749,16 +755,14 @@ namespace Origins.Core {
 						Vector2 offset = new(0, 2);
 						bool blink = Main.timeForVisualEffects % 40 < 20;
 						if (SpecialChestUI.InputtingText && blink) {
-							spriteBatch.DrawString(
+							ChatManager.DrawColorCodedStringWithShadow(spriteBatch,
 								FontAssets.MouseText.Value,
 								"|",
 								position + FontAssets.MouseText.Value.MeasureString(Text.ToString()[..CursorIndex]) * Vector2.UnitX * 1 + offset * new Vector2(0.5f, 1),
 								Color.White * (blink ? 1 : 0.5f),
 								0,
 								new(0, 0),
-								1,
-								SpriteEffects.None,
-							0);
+								Vector2.One);
 						}
 
 						Color color = Color.White * (1f - (255f - Main.mouseTextColor) / 255f * 0.5f);
@@ -972,22 +976,28 @@ namespace Origins.Core {
 				ModContent.GetInstance<CancelSearchButton>(),
 			];
 			public override LocalizedText Text => Language.GetText("Mods.Origins.Generic.Search");
+			public override bool CanDisplay => SpecialChestUI.inputTextTaker is null or SearchButton;
+			public static string SearchString { get; protected set; }
 
-			public void Cancel() {
-			}
+			public void Cancel() => SearchString = null;
 			public override bool Click() {
+				if (SpecialChestUI.inputTextTaker == this) {
+					SpecialChestUI.inputTextTaker = null;
+					return false;
+				}
 				SpecialChestUI.inputTextTaker = this;
 				SpecialChestUI.inputText.Clear();
-				SpecialChestUI.inputCursorIndex = 0;
+				SpecialChestUI.inputText.Append(SearchString);
+				SpecialChestUI.inputCursorIndex = SearchString?.Length ?? 0;
 				return false;
 			}
-			public void Submit(string text) { }
+			public void Submit(string text) {
+			}
 			public bool OnTyped(string before, string after) {
-				foreach (Item item in CurrentChest.Items()) {
-					item.newAndShiny = item.Name.Contains(after, StringComparison.CurrentCultureIgnoreCase);
-				}
+				SearchString = after;
 				return true;
 			}
+			public void ResetData() => SearchString = null;
 
 			public class CancelSearchButton : SpecialChestButton {
 				public override LocalizedText Text => Language.GetText("LegacyInterface.63");
