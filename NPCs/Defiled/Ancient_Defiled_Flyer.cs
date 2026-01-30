@@ -12,7 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Ancient_Defiled_Flyer : ModNPC, IWikiNPC {
+	public class Ancient_Defiled_Flyer : ModNPC, IWikiNPC, IDefiledEnemy {
 		public Rectangle DrawRect => new(0, 34, 136, 44);
 		public int AnimationFrames => 24;
 		public int FrameDuration => 1;
@@ -45,6 +45,8 @@ namespace Origins.NPCs.Defiled {
 			];
 			this.CopyBanner<Defiled_Banner_NPC>();
 		}
+		public bool ForceSyncMana => false;
+		public float Mana { get; set; }
 		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (spawnInfo.PlayerFloorY > Main.worldSurface + 50 || spawnInfo.SpawnTileY >= Main.worldSurface - 50) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo) * Defiled_Wastelands.SpawnRates.AncientFlyer * (spawnInfo.Player.ZoneSkyHeight ? 2 : 1);
