@@ -242,9 +242,9 @@ ENEMY NPCS:
 (#3, ^2) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
-(X) QM-76 'Quakemaker' !!!
+(#, ^2) QM-76 'Quakemaker' !!!
 (X) Reject !!!
-(X) Repairboy !!!
+(#, ^2) Repairboy !!!
 (^) Riven Penguin
 (^) Riven Protoform
 (X) Rivenpotamus
@@ -1398,7 +1398,7 @@ TILES:
 (^) Fungarust
 (^) Fuzzvine
 (^) Gel Blister
-(々 (power core)) Generation Station
+(#2, ^2) Generation Station !!!
 (^) Hanging Scrap
 (^) Heat Vent
 (^) Hydrothermal Vent
