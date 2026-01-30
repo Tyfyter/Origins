@@ -39,7 +39,7 @@ namespace Origins.Core {
 				CurrentChest = default;
 				return;
 			}
-			if (TryGetChest(x, y) is ChestData chest) {
+			if (TryGetChest(x, y) is ChestData chest && chest.CanBeOpened()) {
 				player.chest = chestID;
 				Main.playerInventory = true;
 				Main.editChest = false;
@@ -133,6 +133,7 @@ namespace Origins.Core {
 			}
 			static Item On_Chest_PutItemInNearbyChest(On_Chest.orig_PutItemInNearbyChest orig, Item item, Vector2 position) {
 				foreach ((Point16 chestPosition, ChestData chest) in ModContent.GetInstance<SpecialChestSystem>().tileEntities) {
+					if (!chest.CanReceiveNearbyQuickStack()) continue;
 					chest.ReceiveNearbyQuickStack(chestPosition, item, position);
 					if (item.IsAir) return item;
 				}
@@ -163,7 +164,7 @@ namespace Origins.Core {
 			}
 		}
 		public static void OffsetBelowChestButtons(ref int buttonY) {
-			if (CurrentChest is null) return;
+			if (Main.LocalPlayer.chest != chestID || CurrentChest is null) return;
 			int offset = 24;
 			int index = 0;
 			foreach (SpecialChestButton button in CurrentChest.Buttons) {
@@ -172,6 +173,7 @@ namespace Origins.Core {
 				buttonY += offset;
 				offset = 26;
 			}
+			if (index <= 6) buttonY -= offset;
 		}
 		class SpecialChestCraftingPlayer : ModPlayer {
 			public override IEnumerable<Item> AddMaterialsForCrafting(out ItemConsumedCallback itemConsumedCallback) {
@@ -200,13 +202,16 @@ namespace Origins.Core {
 				specialChestIDsByType?.TryGetValue(GetType(), out type);
 			}
 			private int type;
+			private protected virtual string FullNameImpl => $"{GetType().Namespace.Split('.')[0]}/{GetType().Name}";
+			public string FullName => FullNameImpl;
 			public void Load(Mod mod) {
 				if (mod.Side != ModSide.Both) throw new InvalidOperationException("ChestDatas can only be added by Both-side mods");
 				type = chestDatas.Count;
 				chestDatas.Add(this);
 				specialChestIDsByType.Add(GetType(), type);
 				specialChestIDsByTypeName.Add(GetType().Name, type);
-				mod.Logger.Info($"{nameof(ChestData)} Loading {GetType().Name}");
+				specialChestIDsByTypeName.Add(FullName, type);
+				mod.Logger.Info($"{nameof(ChestData)} Loading {FullName}");
 			}
 			public void Unload() { }
 			public static ChestData Read(BinaryReader reader) {
@@ -233,13 +238,13 @@ namespace Origins.Core {
 				TagCompound data = new();
 				SaveData(data);
 				return new() {
-					["Type"] = GetType().Name,
+					["Type"] = FullName,
 					["Data"] = data
 				};
 			}
 			public static ChestData Load(TagCompound tag) {
 				if (!tag.TryGet("Type", out string type) || !tag.TryGet("Data", out TagCompound data)) throw new ArgumentException($"Malformed ChestData {tag}", nameof(tag));
-				if (!specialChestIDsByTypeName.TryGetValue(type, out int chestID)) return new Invalid();
+				if (!specialChestIDsByTypeName.TryGetValue(type, out int chestID)) return new Unloaded(type, data);
 				return chestDatas[chestID].LoadData(data);
 			}
 			protected abstract void SaveData(TagCompound tag);
@@ -284,6 +289,8 @@ namespace Origins.Core {
 			/// </summary>
 			public virtual void CraftWithItem(Item item, int index) => MarkConsumedItem();
 			public virtual bool CanDestroy() => true;
+			public virtual bool CanBeOpened() => true;
+			public abstract bool CanReceiveNearbyQuickStack();
 			/// <summary>
 			/// Return <see cref="true"/> to skip the vanilla code
 			/// </summary>
@@ -376,8 +383,27 @@ namespace Origins.Core {
 			public sealed record class Invalid : ChestData {
 				protected internal override bool IsValidSpot(Point position) => false;
 				public override Item[] Items(bool forCrafting = false) => [];
+				public override bool CanBeOpened() => false;
+				public override bool CanReceiveNearbyQuickStack() => false;
 				protected override ChestData LoadData(TagCompound tag) => this;
 				protected override void SaveData(TagCompound tag) { }
+				internal override ChestData NetReceive(BinaryReader reader) => this;
+				internal override void NetSend(BinaryWriter writer) { }
+			}
+			public sealed record class Unloaded(string Type, TagCompound Data) : ChestData {
+				private protected override string FullNameImpl => Type;
+				protected internal override bool IsValidSpot(Point position) => true;
+				public override Item[] Items(bool forCrafting = false) => [];
+				public override bool CanBeOpened() => false;
+				public override bool CanReceiveNearbyQuickStack() => false;
+				protected override ChestData LoadData(TagCompound tag) => this with {
+					Data = tag
+				};
+				protected override void SaveData(TagCompound tag) {
+					foreach ((string key, object value) in Data) {
+						tag[key] = value;
+					}
+				}
 				internal override ChestData NetReceive(BinaryReader reader) => this;
 				internal override void NetSend(BinaryWriter writer) { }
 			}
@@ -395,6 +421,7 @@ namespace Origins.Core {
 				ModContent.GetInstance<RestockButton>(),
 				ModContent.GetInstance<SortButton>(),
 				..RenameButton.Buttons,
+				..SpecialChestButton.GlobalButtons
 			];
 			public Storage_Container_Data() : this([]) {
 				Item[] inventory = Inventory;
@@ -403,6 +430,7 @@ namespace Origins.Core {
 				Inventory = inventory;
 			}
 			public override Item[] Items(bool forCrafting = false) => Inventory;
+			public override bool CanReceiveNearbyQuickStack() => true;
 			protected override ChestData LoadData(TagCompound tag) => this with {
 				Inventory = tag.SafeGet("Items", Enumerable.Repeat(0, Capacity).Select(_ => new Item()).ToList()).ToArray(),
 				RenamableName = tag.SafeGet<string>("Name")
@@ -659,7 +687,12 @@ namespace Origins.Core {
 						Vector2 position = new(504f, Main.instance.invBottom);
 						string name = CurrentChest.GivenName;
 						if (SpecialChestUI.InputtingText) {
+							string oldText = Text.ToString();
 							this.ProcessInput(out bool typed);
+							if (typed && !inputTextTaker.OnTyped(oldText, Text.ToString())) {
+								Text.Clear();
+								Text.Append(oldText);
+							}
 							name = Text.ToString();
 						} else {
 							CursorIndex = Math.Max(name?.Length ?? 1, 1) - 1;
@@ -724,9 +757,11 @@ namespace Origins.Core {
 			public interface IInputTextTaker {
 				void Submit(string text);
 				void Cancel();
+				bool OnTyped(string before, string after) => true;
 			}
 		}
 		public abstract class SpecialChestButton : ModType, ILocalizedModType {
+			public static List<SpecialChestButton> GlobalButtons { get; }
 			public string LocalizationCategory => "ChestButton";
 			protected sealed override void Register() { }
 			public virtual LocalizedText Text => this.GetLocalization(nameof(Text));

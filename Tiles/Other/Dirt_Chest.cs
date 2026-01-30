@@ -1,4 +1,5 @@
 ﻿using Origins.Core;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -49,6 +50,14 @@ namespace Origins.Tiles.Other {
 			public override int Capacity => 1;
 			public override int Width => 1;
 			public override int Height => 1;
+			public override IEnumerable<SpecialChestButton> Buttons => [
+				ModContent.GetInstance<LootAllButton>(),
+				ModContent.GetInstance<DepositAllButton>(),
+				ModContent.GetInstance<QuickStackButton>(),
+				ModContent.GetInstance<RestockButton>(),
+				..RenameButton.Buttons,
+				..SpecialChestButton.GlobalButtons
+			];
 			protected internal override bool IsValidSpot(Point position) => Main.tile[position].TileIsType(ModContent.TileType<Dirt_Chest>());
 		}
 	}
