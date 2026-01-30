@@ -1,10 +1,13 @@
-﻿using Origins.Tiles.Other;
+﻿using AltLibrary.Common.AltOres;
+using Origins.Dev;
+using Origins.Tiles.Other;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
-	public class Geothermal_Sludge : ModItem {
+	public class Geothermal_Sludge : ModItem, ICustomWikiStat {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ExtractinatorMode[Type] = Type;
 			Item.ResearchUnlockCount = 20;
@@ -43,14 +46,11 @@ namespace Origins.Items.Materials {
 					if (Main.rand.NextBool(3)) resultStack += Main.rand.Next(1, 25);
 				}
 			} else {
-				resultType = Main.rand.NextFromList(
-					ItemID.CobaltOre,
-					ItemID.PalladiumOre,
-					ItemID.MythrilOre,
-					ItemID.OrichalcumOre,
-					ItemID.AdamantiteOre,
-					ItemID.TitaniumOre
-				); // TODO: Alt Ore support
+				resultType = Main.rand.NextFromList(AltLib.GetAltOres()
+					.Where(o => o.OreSlot >= ModContent.GetInstance<CobaltOreSlot>())
+					.Select(o => o.oreItem)
+					.ToArray()
+				);
 				if (Main.rand.NextBool(20)) resultStack += Main.rand.Next(0, 2);
 				if (Main.rand.NextBool(30)) resultStack += Main.rand.Next(0, 3);
 				if (Main.rand.NextBool(40)) resultStack += Main.rand.Next(0, 4);
