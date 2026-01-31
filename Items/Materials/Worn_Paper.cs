@@ -45,4 +45,5 @@ namespace Origins.Items.Materials {
 	public class Worn_Paper_Smog_Test : Worn_Paper { }
 	public class Worn_Paper_The_Packing_Slip : Worn_Paper { }
 	public class Worn_Paper_They_Found_Us : Worn_Paper { }
+	public class Worn_Paper_Mean_Baby : Worn_Paper { }
 }
