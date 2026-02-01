@@ -768,40 +768,11 @@ namespace Origins.Core {
 						}
 						name ??= "";
 
+						///todo: use <see cref="TextInputContainerExtensions.DrawInputContainerText"/>
 						bool blink = Main.timeForVisualEffects % 40 < 20;
 						if (SpecialChestUI.InputtingText && blink) {
-							string cursorChar = "";
-							Vector2 offset = default;
-							switch (0) {
-								case 0:
-								cursorChar = "|";
-								offset = new(-3, 2);
-								break;
-
-								case 1: {
-									static bool IsTall(char c, bool before) {
-										switch (c) {
-											case 'g':
-											case 'j':
-											case 'y':
-											return true;
-											case 'p':
-											return !before;
-											case 'q':
-											return before;
-
-											default:
-											return false;
-										}
-									}
-									cursorChar = "^";
-									offset = new(-2, 16);
-									if ((CursorIndex > 0 && IsTall(Text[CursorIndex - 1], true)) || (CursorIndex < Text.Length && IsTall(Text[CursorIndex], false))) {
-										offset.Y += 6;
-									}
-									break;
-								}
-							}
+							string cursorChar = "|";
+							Vector2 offset = new(-3, 2);
 							ChatManager.DrawColorCodedStringWithShadow(spriteBatch,
 								FontAssets.MouseText.Value,
 								cursorChar,
