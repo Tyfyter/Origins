@@ -19,7 +19,7 @@ namespace Origins.Tiles {
 		public abstract int BaseTileID { get; }
 		public abstract Color MapColor { get; }
 		public virtual bool LavaDeath => true;
-		public virtual string ItemTexture => string.Empty;
+		public virtual string ItemTexture => null;
 		public TileItem Item { get; protected set; }
 		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public virtual Color GlowmaskColor => Color.White;
@@ -34,7 +34,7 @@ namespace Origins.Tiles {
 		public virtual int[] AdjacentTiles => [BaseTileID];
 		public virtual int HitDust => DustID.Dirt;
 		public sealed override void Load() {
-			Mod.AddContent(Item = new TileItem(this));
+			Mod.AddContent(Item = new TileItem(this, textureOverride: ItemTexture));
 			OnLoad();
 		}
 		public virtual void OnLoad() { }
@@ -880,11 +880,11 @@ namespace Origins.Tiles {
 		}
 	}
 	[Autoload(false)]
-	public class TileItem(ModTile tile, bool debug = false) : ModItem() {
+	public class TileItem(ModTile tile, bool debug = false, string textureOverride = null) : ModItem() {
 		[field: CloneByReference]
 		ModTile Tile { get; } = tile;
 		public override string Name => Tile.Name + "_Item";
-		public override string Texture => debug ? Tile.Texture : (Tile is FurnitureBase furniture && !string.IsNullOrEmpty(furniture.ItemTexture)) ? furniture.ItemTexture : Tile.Texture + "_Item";
+		public override string Texture => textureOverride ?? (debug ? Tile.Texture : (Tile.Texture + "_Item"));
 		public override LocalizedText DisplayName => this.GetLocalization(nameof(DisplayName), Tile.PrettyPrintName);
 		[field: CloneByReference] public event Action<Item> ExtraStaticDefaults;
 		[field: CloneByReference] public event Action<Item> ExtraDefaults;
