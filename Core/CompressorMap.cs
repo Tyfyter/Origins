@@ -2,7 +2,6 @@
 using System.Linq;
 
 namespace Origins.Core {
-	//TODO: move to PegasusLib
 	public class CompressorMap<TKey, TValue>(IEqualityComparer<TKey> keyComparer = null, IEqualityComparer<TValue> valueComparer = null) {
 		readonly static CountComparer countComparer = new();
 		readonly Dictionary<TKey, Dictionary<TValue, int>> innerDictionary = new(keyComparer);

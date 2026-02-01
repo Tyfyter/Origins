@@ -1,22 +1,11 @@
-﻿using CalamityMod.Items.Potions.Alcohol;
-using CalamityMod.NPCs.TownNPCs;
-using Humanizer;
-using Origins.Items.Vanity.Dev.cher;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using Terraria;
-using Terraria.Audio;
-using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
-using ThoriumMod.NPCs;
 
 namespace Origins.Core {
-	//TODO: move to PegasusLib
+	//TODO: remove, moved to PegasusLib
 	class RightClickableAccessory : ILoadable {
 		void ILoadable.Load(Mod mod) {
 			On_ItemSlot.RightClick_ItemArray_int_int += On_ItemSlot_RightClick_ItemArray_int_int;
