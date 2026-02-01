@@ -196,7 +196,7 @@ namespace Origins.Tiles {
 		public virtual void ModifyTileData() { }
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 		public override void PlaceInWorld(int i, int j, Item item) {
-			TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out i, out j);
+			if (TileObjectData.GetTileData(Main.tile[i, j]) is TileObjectData objectData) TileUtils.GetMultiTileTopLeft(i, j, objectData, out i, out j);
 			new Set_Special_Chest_Action(new(i, j), CreateChestData()).Perform();
 		}
 		public override bool RightClick(int i, int j) {

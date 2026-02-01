@@ -30,8 +30,7 @@ namespace Origins.Core {
 		public static ChestData CurrentChest { get; internal set; }
 		public static void OpenChest(int x, int y) {
 			Tile tile = Main.tile[x, y];
-			int style = TileObjectData.GetTileStyle(tile);
-			if (style >= 0) TileUtils.GetMultiTileTopLeft(x, y, TileObjectData.GetTileData(tile.TileType, style), out x, out y);
+			if (TileObjectData.GetTileData(tile) is TileObjectData objectData) TileUtils.GetMultiTileTopLeft(x, y, objectData, out x, out y);
 			Player player = Main.LocalPlayer;
 			if (player.chest == chestID && player.chestX == x && player.chestY == y) {
 				player.chest = -1;
@@ -61,7 +60,8 @@ namespace Origins.Core {
 		public static void MouseOver(int i, int j) {
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
-			TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(tile), out int left, out int top);
+			int left = i, top = j;
+			if (TileObjectData.GetTileData(tile) is TileObjectData objectData) TileUtils.GetMultiTileTopLeft(i, j, objectData, out left, out top);
 			player.cursorItemIconID = -1;
 			string name = TryGetChest(left, top)?.GivenName;
 			if ((name?.Length ?? 0) > 0) {
