@@ -43,7 +43,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.DrawsWalls[Type] = true;
-			TileID.Sets.HasOutlines[Type] = false;
+			TileID.Sets.HasOutlines[Type] = true;
 			HitSound = SoundID.Tink;
 
 			// Names
@@ -88,7 +88,14 @@ namespace Origins.Tiles.Ashen {
 			g = 0.001f;
 			b = 0.001f;
 		}
-		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => !IsPowered(i, j);
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) {
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			Door_Animation animation = Cargo_Elevator_Door_TE_System.GetAnimation(new(left, top));
+			if (animation.IsAnimating) return false;
+			if (IsPowered(i, j)) return false;
+			return true;
+		}
 		public static bool IsPowered(int i, int j) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
