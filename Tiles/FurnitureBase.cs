@@ -903,6 +903,7 @@ namespace Origins.Tiles {
 				}
 			}
 			Origins.AddGlowMask(this);
+			if (debug) Item.ResearchUnlockCount = 0;
 			if (ExtraStaticDefaults is not null) {
 				ExtraStaticDefaults(Item);
 				ExtraStaticDefaults = null;
