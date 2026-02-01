@@ -13,14 +13,19 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public abstract class Mechanical_Switch : ModTile, IAshenPowerConduitTile, IGlowingModTile {
-		public abstract int ItemType { get; }
+	public abstract class Mechanical_Key_Node : ModTile, IAshenPowerConduitTile, IGlowingModTile {
+		public Mechanical_Key_Node_Item Item { get; private set; }
 		public abstract int KeyType { get; }
-		public override string HighlightTexture => typeof(Mechanical_Switch).GetDefaultTMLName("_Highlight");
-		public virtual Color MapColor => FromHexRGB(0x7a391a);
+		public override string Texture => typeof(Mechanical_Key_Node).GetDefaultTMLName();
+		public override string HighlightTexture => typeof(Mechanical_Key_Node).GetDefaultTMLName("_Highlight");
+		public virtual Color SwitchColor => FromHexRGB(0x7a391a);
+		public virtual Color MapColor => SwitchColor;
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
-		public Color GlowColor => Color.White;
-		public sealed override void Load() => this.SetupGlowKeys();
+		public Color GlowColor => SwitchColor;
+		public sealed override void Load() {
+			Mod.AddContent(Item = new(this));
+			this.SetupGlowKeys();
+		}
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (tile.TileFrameX >= 18) color.DoFancyGlow(new(1.05f, 0.75f, 0f), tile.TileColor);
@@ -43,7 +48,7 @@ namespace Origins.Tiles.Ashen {
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 			TileID.Sets.HasOutlines[Type] = true;
-			RegisterItemDrop(ItemType);
+			RegisterItemDrop(Item.Type);
 		}
 		public override void HitWire(int i, int j) {
 			Tile tile = Main.tile[i, j];
@@ -85,7 +90,7 @@ namespace Origins.Tiles.Ashen {
 				writer.Write((short)Pos.Y);
 			}
 			protected override void Perform() {
-				if (TileLoader.GetTile(Main.tile[Pos].TileType) is Mechanical_Switch) {
+				if (TileLoader.GetTile(Main.tile[Pos].TileType) is Mechanical_Key_Node) {
 					Tile tile = Main.tile[Pos];
 					tile.TileFrameY ^= 18;
 					bool inputPower = tile.TileFrameX != 0 && tile.TileFrameY != 0;
@@ -111,7 +116,7 @@ namespace Origins.Tiles.Ashen {
 				writer.Write((short)J);
 			}
 			protected override void Perform() {
-				if (TileLoader.GetTile(Main.tile[I, J].TileType) is Mechanical_Switch @switch) {
+				if (TileLoader.GetTile(Main.tile[I, J].TileType) is Mechanical_Key_Node @switch) {
 					@switch.HitWire(I, J);
 				}
 			}
@@ -124,20 +129,22 @@ namespace Origins.Tiles.Ashen {
 			}
 			return powered;
 		}
+		public class Mechanical_Key_Node_Item(Mechanical_Key_Node tile) : ModItem {
+			public override string Name => tile.Name + "_Item";
+			public override string Texture => GetType().GetDefaultTMLName();
+			protected override bool CloneNewInstances => true;
+			public override void SetStaticDefaults() {
+				Item.ResearchUnlockCount = 100;
+			}
+			public override void SetDefaults() {
+				Item.DefaultToPlaceableTile(tile.Type);
+				Item.mech = true;
+			}
+		}
 	}
-	public class Purple_Mechanical_Switch : Mechanical_Switch {
-		public override Color MapColor => FromHexRGB(0x6d0a91);//#6d0a91
-		public override int ItemType => ItemType<Purple_Mechanical_Switch_Item>();
+	[LegacyName("Purple_Mechanical_Switch")]
+	public class Purple_Mechanical_Key_Node : Mechanical_Key_Node {
+		public override Color SwitchColor => FromHexRGB(0x6d0a91);//#6d0a91
 		public override int KeyType => ItemType<Mechanical_Key_Purple>();
-	}
-	public class Purple_Mechanical_Switch_Item : ModItem {
-		public override string Texture => typeof(Transistor_Item).GetDefaultTMLName();
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 100;
-		}
-		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(TileType<Purple_Mechanical_Switch>());
-			Item.mech = true;
-		}
 	}
 }

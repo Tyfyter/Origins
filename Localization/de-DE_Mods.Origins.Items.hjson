@@ -7904,3 +7904,8 @@ Dirt_Chest_Natural_Item: {
 	// DisplayName: "{$ItemName.DirtBlock}"
 	// Tooltip: "{$Dirt_Chest_Item.DisplayName} (Debugging Item)"
 }
+
+Purple_Mechanical_Key_Node_Item: {
+	// DisplayName: Purple Mechanical Key Node Item
+	// Tooltip: ""
+}
