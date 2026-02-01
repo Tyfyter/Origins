@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
+using Newtonsoft.Json.Linq;
 using Origins.Reflection;
 using PegasusLib.Networking;
 using ReLogic.Graphics;
@@ -27,6 +28,8 @@ namespace Origins.Core {
 	//TODO: move to PegasusLib
 	public class SpecialChest : ILoadable {
 		public const int chestID = -8479;
+		static readonly List<SlotDrawData.Modifier> slotVisualModifiers = [];
+		public static void AddSlotVisualModifier(SlotDrawData.Modifier modifier) => slotVisualModifiers.Add(modifier);
 		public static ChestData CurrentChest { get; internal set; }
 		public static void OpenChest(int x, int y) {
 			Tile tile = Main.tile[x, y];
@@ -283,14 +286,15 @@ namespace Origins.Core {
 				ItemSlot.MouseHover(ref item, ItemSlot.Context.ChestItem);
 				return didSomething;
 			}
+			public static void ApplySlotVisualModifiers(Item item, ref SlotDrawData data) {
+				SlotDrawData original = data;
+				for (int i = 0; i < slotVisualModifiers.Count; i++) slotVisualModifiers[i](item, ref data, original);
+			}
 			public virtual void DrawItemSlot(SpriteBatch spriteBatch, Vector2 position, Item item, int slot) {
 				int context = slot >= ItemCount ? ItemSlot.Context.GoldDebug : ItemSlot.Context.ChestItem;
-				Color color = default;
-				if (!string.IsNullOrEmpty(SearchButton.SearchString)) {
-					if (item.Name.Contains(SearchButton.SearchString, StringComparison.CurrentCultureIgnoreCase)) context = ItemSlot.Context.ShopItem;
-					else color = Color.Gray;
-				}
-				ItemSlot.Draw(spriteBatch, ref item, context, position, color);
+				SlotDrawData data = new(item, context, default);
+				ApplySlotVisualModifiers(item, ref data);
+				data.Draw(ref item, spriteBatch, position);
 			}
 			/// <summary>
 			/// Called when an item from the <see cref="ChestData"/> is consumed via crafting
@@ -415,6 +419,15 @@ namespace Origins.Core {
 				}
 				internal override ChestData NetReceive(BinaryReader reader) => this;
 				internal override void NetSend(BinaryWriter writer) { }
+			}
+		}
+		public record struct SlotDrawData(Item Item, int Context, Color ItemColor, Texture2D TextureOverride = null, Color TextureColor = default) {
+			public delegate void Modifier(Item item, ref SlotDrawData value, SlotDrawData original);
+			public readonly void Draw(ref Item item, SpriteBatch spriteBatch, Vector2 position) {
+				if (TextureOverride is not null && TextureColor != default) {
+					spriteBatch.Draw(TextureOverride, position, null, TextureColor, 0f, default, Main.inventoryScale, SpriteEffects.None, 0f);
+				}
+				ItemSlot.Draw(spriteBatch, ref item, Context, position, ItemColor);
 			}
 		}
 		public abstract record class Storage_Container_Data(Item[] Inventory) : ChestData(), RenameButton.IRenamable {
@@ -1014,7 +1027,12 @@ namespace Origins.Core {
 			public override LocalizedText Text => Language.GetText("Mods.Origins.Generic.Search");
 			public override bool CanDisplay => SpecialChestUI.inputTextTaker is null or SearchButton;
 			public static string SearchString { get; protected set; }
-
+			public override void Load() => AddSlotVisualModifier((Item item, ref SlotDrawData value, SlotDrawData original) => {
+				if (!string.IsNullOrEmpty(SearchButton.SearchString)) {
+					if (item.Name.Contains(SearchButton.SearchString, StringComparison.CurrentCultureIgnoreCase)) value.Context = ItemSlot.Context.ShopItem;
+					else value.ItemColor = Color.Gray;
+				}
+			});
 			public void Cancel() => SearchString = null;
 			public override bool Click() {
 				if (SpecialChestUI.inputTextTaker == this) {
