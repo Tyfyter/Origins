@@ -39,7 +39,7 @@ namespace Origins.Tiles.Ashen {
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
 			TileObjectData.newTile.Width = 5;
-			TileObjectData.newTile.Height = 7;
+			TileObjectData.newTile.Height = 4;
 			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
 			TileObjectData.newTile.Origin = new Point16(TileObjectData.newTile.Width / 2, TileObjectData.newTile.Height - 1);
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
