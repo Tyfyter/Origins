@@ -2544,7 +2544,7 @@ Tiles: {
 	// Transistor.MapEntry: Transistor
 	// Medium_Storage_Container.MapEntry: Medium Storage Container
 	// Large_Storage_Container.MapEntry: Large Storage Container
-	// Dirt_Chest.MapEntry: "{$Items.Dirt_Chest_Item.DisplayName}"
+	// Dirt_Chest.MapEntry: "[c/976B4B:{$Items.Dirt_Chest_Item.DisplayName}]"
 }
 
 Keybinds: {
