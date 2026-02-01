@@ -1127,7 +1127,7 @@ EXPLOSIVE WEAPONS:
 (^) Acrid Handcannon
 (^) Alkaline Bomb
 (^) Alkaline Grenade
-(#, ^2) Bloodshot
+(⛥) Bloodshot
 (^) Boomphracken
 (^) Chambersite Mine Launcher
 (^) Crystal Bomb
