@@ -2545,6 +2545,7 @@ Tiles: {
 	// Medium_Storage_Container.MapEntry: Medium Storage Container
 	// Large_Storage_Container.MapEntry: Large Storage Container
 	// Dirt_Chest.MapEntry: "[c/976B4B:{$Items.Dirt_Chest_Item.DisplayName}]"
+	// Dirt_Chest_Natural.MapEntry: "{$Dirt_Chest.MapEntry}"
 }
 
 Keybinds: {

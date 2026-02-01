@@ -191,8 +191,9 @@ namespace Origins.Core {
 			}
 		}
 		public static string MapChestName(string name, int i, int j) {
-			TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
-			string renamed = TryGetChest(left, top)?.GivenName ?? "";
+			if (TileObjectData.GetTileData(Main.tile[i, j]) is TileObjectData objectData)
+				TileUtils.GetMultiTileTopLeft(i, j, objectData, out i, out j);
+			string renamed = TryGetChest(i, j)?.GivenName ?? "";
 			if (renamed == "") {
 				return name;
 			} else {
