@@ -163,6 +163,7 @@ namespace Origins.Tiles {
 	}
 	public abstract class ModSpecialChest : ModTile {
 		public abstract ChestData CreateChestData();
+		public virtual bool IsMultitile => true;
 		public sealed override void SetStaticDefaults() {
 			Main.tileSpelunker[Type] = true;
 			Main.tileShine2[Type] = true;
@@ -171,22 +172,26 @@ namespace Origins.Tiles {
 			Main.tileNoAttach[Type] = true;
 			Main.tileOreFinderPriority[Type] = 500;
 			TileID.Sets.HasOutlines[Type] = true;
-			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
-			TileObjectData.newTile.Origin = new Point16(1, 3);
-			TileObjectData.newTile.Width = 4;
-			TileObjectData.newTile.SetHeight(4);
-			TileObjectData.newTile.AnchorInvalidTiles = [TileID.MagicalIceBlock];
-			TileObjectData.newTile.StyleHorizontal = true;
-			TileObjectData.newTile.LavaDeath = false;
-			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
-			ModifyTileData();
-			if (TileObjectData.newTile.AnchorBottom != AnchorData.Empty) {
-				TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
-				TileID.Sets.PreventsSandfall[Type] = true;
-			}
-			TileObjectData.addTile(Type);
-			_ = DefaultContainerName(0, 0);
 			AdjTiles = [TileID.Containers];
+			if (IsMultitile) {
+				TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+				TileObjectData.newTile.Origin = new Point16(1, 3);
+				TileObjectData.newTile.Width = 4;
+				TileObjectData.newTile.SetHeight(4);
+				TileObjectData.newTile.AnchorInvalidTiles = [TileID.MagicalIceBlock];
+				TileObjectData.newTile.StyleHorizontal = true;
+				TileObjectData.newTile.LavaDeath = false;
+				TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+				ModifyTileData();
+				if (TileObjectData.newTile.AnchorBottom != AnchorData.Empty) {
+					TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+					TileID.Sets.PreventsSandfall[Type] = true;
+				}
+				TileObjectData.addTile(Type);
+			} else {
+				ModifyTileData();
+			}
+			_ = DefaultContainerName(0, 0);
 		}
 		public virtual void ModifyTileData() { }
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;

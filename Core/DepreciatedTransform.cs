@@ -8,12 +8,11 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Core {
-	//TODO: move to PegasusLib
+	//TODO: remove, moved to PegasusLib
 	internal class DepreciatedTransform : ILoadable {
 		public static Dictionary<string, string> conversions = new() {
 			["Origins/Dusk_Stone_Item"] = nameof(ItemID.AshBlock)
 		};
-		public static int[] Set { get; } = ItemID.Sets.Factory.CreateIntSet(-1);
 		public void Load(Mod mod) {
 			try {
 				MonoModHooks.Add(((orig_Load)ItemIO.Load).Method, LoadItem);

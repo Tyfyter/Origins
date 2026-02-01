@@ -3,7 +3,7 @@ using Terraria.GameInput;
 using Terraria.ModLoader;
 
 namespace Origins.Core {
-	//TODO: move to PegasusLib
+	//TODO: remove, moved to PegasusLib
 	internal class IgnoreRemainingInterface : ModSystem {
 		public static void Activate() => active = true;
 		static bool active;
