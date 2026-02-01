@@ -914,7 +914,7 @@ namespace Origins.Tiles {
 			Item.DefaultToPlaceableTile(Tile.Type);
 			Item.width = 14;
 			Item.height = 28;
-			Item.value = 150;
+			if (!debug) Item.value = 150;
 			ExtraDefaults?.Invoke(Item);
 		}
 		public override void AddRecipes() {
