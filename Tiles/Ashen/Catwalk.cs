@@ -68,10 +68,10 @@ namespace Origins.Tiles.Ashen {
 			platformFrame = 0;
 			Tile leftTile = Main.tile[i - 1, j];
 			Tile rightTile = Main.tile[i + 1, j];
-			Tile tile6 = Main.tile[i - 1, j + 1];
-			Tile tile7 = Main.tile[i + 1, j + 1];
-			Tile tile8 = Main.tile[i - 1, j - 1];
-			Tile tile9 = Main.tile[i + 1, j - 1];
+			Tile downLeft = Main.tile[i - 1, j + 1];
+			Tile downRight = Main.tile[i + 1, j + 1];
+			Tile upLeft = Main.tile[i - 1, j - 1];
+			Tile upRight = Main.tile[i + 1, j - 1];
 			int left = -1;
 			int right = -1;
 			if (leftTile != null && leftTile.HasTile)
@@ -90,9 +90,9 @@ namespace Origins.Tiles.Ashen {
 				left = -1;
 			if (right != -1 && right != Type && tile.IsHalfBlock)
 				right = -1;
-			if (left == -1 && tile8.HasTile && tile8.TileType == Type && tile8.Slope == SlopeType.SlopeDownLeft)
+			if (left == -1 && upLeft.HasTile && upLeft.TileType == Type && upLeft.Slope == SlopeType.SlopeDownLeft)
 				left = Type;
-			if (right == -1 && tile9.HasTile && tile9.TileType == Type && tile9.Slope == SlopeType.SlopeDownRight)
+			if (right == -1 && upRight.HasTile && upRight.TileType == Type && upRight.Slope == SlopeType.SlopeDownRight)
 				right = Type;
 			if (left == Type && leftTile.Slope == SlopeType.SlopeDownRight && right != Type)
 				right = -1;
@@ -101,15 +101,15 @@ namespace Origins.Tiles.Ashen {
 			if (tile.Slope == SlopeType.SlopeDownLeft) {
 				if (TileID.Sets.Platforms[rightTile.TileType] && rightTile.Slope == 0 && !rightTile.IsHalfBlock) {
 					platformFrame = 468;
-				} else if (!tile7.HasTile && (!TileID.Sets.Platforms[tile7.TileType] || tile7.Slope == SlopeType.SlopeDownRight)) {
-					if (!leftTile.HasTile && (!TileID.Sets.Platforms[tile8.TileType] || tile8.Slope != SlopeType.SlopeDownLeft)) {
+				} else if (!downRight.HasTile && (!TileID.Sets.Platforms[downRight.TileType] || downRight.Slope == SlopeType.SlopeDownRight)) {
+					if (!leftTile.HasTile && (!TileID.Sets.Platforms[upLeft.TileType] || upLeft.Slope != SlopeType.SlopeDownLeft)) {
 						platformFrame = 432;
 					} else if (rightTile.HasTile && Catwalks[right] && rightTile.BlockType is BlockType.HalfBlock or BlockType.SlopeDownRight) {
 						platformFrame = 504;
 					} else {
 						platformFrame = 360;
 					}
-				} else if (!leftTile.HasTile && (!TileID.Sets.Platforms[tile8.TileType] || tile8.Slope != SlopeType.SlopeDownLeft)) {
+				} else if (!leftTile.HasTile && (!TileID.Sets.Platforms[upLeft.TileType] || upLeft.Slope != SlopeType.SlopeDownLeft)) {
 					platformFrame = 396;
 				} else {
 					platformFrame = 180;
@@ -117,15 +117,15 @@ namespace Origins.Tiles.Ashen {
 			} else if (tile.Slope == SlopeType.SlopeDownRight) {
 				if (TileID.Sets.Platforms[leftTile.TileType] && leftTile.Slope == 0 && !leftTile.IsHalfBlock) {
 					platformFrame = 450;
-				} else if (!tile6.HasTile && (!TileID.Sets.Platforms[tile6.TileType] || tile6.Slope == SlopeType.SlopeDownLeft)) {
-					if (!rightTile.HasTile && (!TileID.Sets.Platforms[tile9.TileType] || tile9.Slope != SlopeType.SlopeDownRight)) {
+				} else if (!downLeft.HasTile && (!TileID.Sets.Platforms[downLeft.TileType] || downLeft.Slope == SlopeType.SlopeDownLeft)) {
+					if (!rightTile.HasTile && (!TileID.Sets.Platforms[upRight.TileType] || upRight.Slope != SlopeType.SlopeDownRight)) {
 						platformFrame = 414;
 					} else if (leftTile.HasTile && Catwalks[left] && leftTile.BlockType is BlockType.HalfBlock or BlockType.SlopeDownLeft) {
 						platformFrame = 486;
 					} else {
 						platformFrame = 342;
 					}
-				} else if (!rightTile.HasTile && (!TileID.Sets.Platforms[tile9.TileType] || tile9.Slope != SlopeType.SlopeDownRight)) {
+				} else if (!rightTile.HasTile && (!TileID.Sets.Platforms[upRight.TileType] || upRight.Slope != SlopeType.SlopeDownRight)) {
 					platformFrame = 378;
 				} else {
 					platformFrame = 144;
@@ -172,10 +172,17 @@ namespace Origins.Tiles.Ashen {
 		}
 		static bool IsCatwalk(Tile tile) => tile.HasTile && Catwalks[tile.TileType];
 		public static void UpdateRailingFrame(int i, int j) {
+			static bool IsNonCatwalkTile(Tile tile) => tile.HasTile && !Catwalks[tile.TileType];
+			bool canConnectLeft = !IsNonCatwalkTile(Main.tile[i - 1, j - 2]);
+			bool canConnectRight = !IsNonCatwalkTile(Main.tile[i + 1, j - 2]);
 			Tile tile = Main.tile[i, j];
 			ref byte railingFrame = ref tile.Get<ExtraFrameData>().value;
 			byte oldRailingFrame = railingFrame;
 			railingFrame = 0;
+			if (IsNonCatwalkTile(Main.tile[i, j - 2])) {
+				railingFrame = 5;
+				return;
+			}
 			byte tileFrame = (byte)(tile.TileFrameX / 18);
 			const int max_connection_dist = 4;
 			switch (tileFrame) {
@@ -229,6 +236,10 @@ namespace Origins.Tiles.Ashen {
 				break;
 
 				case 0: {
+					if (!IsCatwalk(Main.tile[i - 1, j]) && !IsCatwalk(Main.tile[i + 1, j])) {
+						railingFrame = 5;
+						break;
+					}
 					railingFrame = 14;
 					int k;
 					for (k = 1; k <= max_connection_dist; k++) {
@@ -266,6 +277,34 @@ namespace Origins.Tiles.Ashen {
 					}
 					break;
 				}
+			}
+			switch (railingFrame) {
+				case 1:
+				case 3:
+				case 15:
+				if (!canConnectLeft) railingFrame = 5;
+				break;
+				case 2:
+				case 4:
+				case 16:
+				if (!canConnectRight) railingFrame = 5;
+				break;
+
+				case 0:
+				case 6:
+				case 14:
+				switch ((canConnectLeft, canConnectRight)) {
+					case (false, true):
+					railingFrame = 3;
+					break;
+					case (true, false):
+					railingFrame = 4;
+					break;
+					case (false, false):
+					railingFrame = 5;
+					break;
+				}
+				break;
 			}
 			if (railingFrame != 6 && railingFrame != oldRailingFrame) {
 				int k;
@@ -318,7 +357,7 @@ namespace Origins.Tiles.Ashen {
 				topFrame.Y -= 18;
 				break;
 			}
-			const bool draw_above_all = true;
+			const bool draw_above_all = false;
 			Lighting.GetCornerColors(i, j - 1, out VertexColors vertices);
 			if (draw_above_all) {
 				Catwalk_Railing_System.toDraw.Add((
