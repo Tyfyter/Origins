@@ -89,6 +89,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 			if (Main.dedServ) return;
 			const string texture_path = "Origins/Items/Weapons/Summoner/Minions/";
+			BrothTextures.Add(ModContent.GetInstance<Spicy_Broth>(), ModContent.Request<Texture2D>(texture_path + "Firey_Sunflower"));
 		}
 
 		public override void SetDefaults() {
