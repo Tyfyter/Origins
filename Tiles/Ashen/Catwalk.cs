@@ -1,11 +1,20 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
+using PegasusLib.Graphics;
+using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Tiles.Ashen.Beacon_Light_TE_System;
+using static Terraria.GameContent.TextureAssets;
 
 namespace Origins.Tiles.Ashen {
 	[ReinitializeDuringResizeArrays]
@@ -309,20 +318,37 @@ namespace Origins.Tiles.Ashen {
 				topFrame.Y -= 18;
 				break;
 			}
+			const bool draw_above_all = true;
 			Lighting.GetCornerColors(i, j - 1, out VertexColors vertices);
-			Main.tileBatch.Draw(
-				TextureAssets.Tile[Type].Value,
-				new Vector4(pos.X, pos.Y + 16, 16, 16),
-				new Rectangle(railingFrame * 18, 4 * 18, 16, 16),
-				vertices
-			);
+			if (draw_above_all) {
+				Catwalk_Railing_System.toDraw.Add((
+					new Vector4(pos.X, pos.Y + 16, 16, 16),
+					new Rectangle(railingFrame * 18, 4 * 18, 16, 16),
+					vertices
+				));
+			} else {
+				Main.tileBatch.Draw(
+					TextureAssets.Tile[Type].Value,
+					new Vector4(pos.X, pos.Y + 16, 16, 16),
+					new Rectangle(railingFrame * 18, 4 * 18, 16, 16),
+					vertices
+				);
+			}
 			Lighting.GetCornerColors(i, j - 2, out vertices);
-			Main.tileBatch.Draw(
-				TextureAssets.Tile[Type].Value,
-				new Vector4(pos, 16, 16),
-				topFrame,
-				vertices
-			);
+			if (draw_above_all) {
+				Catwalk_Railing_System.toDraw.Add((
+					new Vector4(pos, 16, 16),
+					topFrame,
+					vertices
+				));
+			} else {
+				Main.tileBatch.Draw(
+					TextureAssets.Tile[Type].Value,
+					new Vector4(pos, 16, 16),
+					topFrame,
+					vertices
+				);
+			}
 			return base.PreDraw(i, j, spriteBatch);
 		}
 	}
@@ -362,5 +388,71 @@ namespace Origins.Tiles.Ashen {
 	}
 	public struct ExtraFrameData : ITileData {
 		public byte value;
+	}
+	public class Catwalk_Railing_System : ModSystem {
+		public const string biome_name = "Origins:CatwalkRailing";
+		public static List<(Vector4 destination, Rectangle sourceRectangle, VertexColors colors)> toDraw = [];
+		internal static RenderTarget2D renderTarget;
+		bool drawAny = false;
+		public override void Load() {
+			Overlays.Scene[biome_name] = new Catwalk_Railing_Overlay();
+			if (Main.dedServ) return;
+			Main.QueueMainThreadAction(SetupRenderTargets);
+			Main.OnResolutionChanged += Resize;
+		}
+		public override void PostDrawTiles() {
+			if (Main.renderNow || Main.renderCount == 0) drawAny = toDraw.Count > 0;
+			if (drawAny != (Overlays.Scene[biome_name].Mode != OverlayMode.Inactive)) {
+				if (drawAny)
+					Overlays.Scene.Activate(biome_name, default);
+				else
+					Overlays.Scene[biome_name].Deactivate();
+			}
+		}
+		public void Resize(Vector2 _) {
+			if (Main.dedServ) return;
+			renderTarget.Dispose();
+			SetupRenderTargets();
+		}
+		void SetupRenderTargets() {
+			if (renderTarget is not null && !renderTarget.IsDisposed) return;
+			int width = Main.graphics.GraphicsDevice.PresentationParameters.BackBufferWidth;
+			int height = Main.graphics.GraphicsDevice.PresentationParameters.BackBufferHeight;
+			Main.offScreenRange = 192;
+			/*if (width + Main.offScreenRange * 2 > 2048) {
+				Main.offScreenRange = (2048 - width) / 2;
+			}*/
+			width += Main.offScreenRange * 2;
+			height += Main.offScreenRange * 2;
+			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, width, height, false, Main.graphics.GraphicsDevice.PresentationParameters.BackBufferFormat, DepthFormat.None);
+		}
+		public override void Unload() {
+			Main.QueueMainThreadAction(renderTarget.Dispose);
+			Main.OnResolutionChanged -= Resize;
+			renderTarget = null;
+		}
+		public class Catwalk_Railing_Overlay() : Overlay(EffectPriority.High, RenderLayers.ForegroundWater) {
+			public override void Draw(SpriteBatch spriteBatch) {
+				if (toDraw.Count > 0) {
+					Texture2D texture = TextureAssets.Tile[ModContent.TileType<Catwalk>()].Value;
+					RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
+					Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
+					Main.graphics.GraphicsDevice.Clear(Color.Transparent);
+					Main.tileBatch.Begin();
+					for (int i = 0; i < toDraw.Count; i++) {
+						(Vector4 destination, Rectangle sourceRectangle, VertexColors colors) = toDraw[i];
+						Main.tileBatch.Draw(texture, destination, sourceRectangle, colors);
+					}
+					Main.tileBatch.End();
+					Main.graphics.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
+					toDraw.Clear();
+				}
+				spriteBatch.Draw(renderTarget, Main.sceneTilePos - Main.screenPosition, Color.White);
+			}
+			public override void Update(GameTime gameTime) { }
+			public override void Activate(Vector2 position, params object[] args) { }
+			public override void Deactivate(params object[] args) { }
+			public override bool IsVisible() => true;
+		}
 	}
 }
