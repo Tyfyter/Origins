@@ -1461,10 +1461,12 @@ Buffs: {
 		DisplayName: Bitter Broth
 		Description:
 			'''
-			Minions inflict {$BuffName.Weak}
-			Minions have a chance to inflict {$BuffName.BrokenArmor}
+			Minions inflict [buffhint:Origins/Weak_Debuff]
+			Minions have a chance to inflict [buffhint:Origins/Broken_Armor_Debuff]
 			'''
 	}
+
+	Broken_Armor_Debuff.EffectDescription: Reduces effective armor by 20
 }
 
 DamageClassName: {

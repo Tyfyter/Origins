@@ -7914,7 +7914,25 @@ Bitter_Broth: {
 	DisplayName: Bitter Broth
 	Tooltip:
 		'''
-		All minions inflict [buffhint:Origins/Weak_Debuff] and a chance to inflict [buffhint:BrokenArmor]
+		All minions inflict [buffhint:Origins/Weak_Debuff] and a chance to inflict [buffhint:Origins/Broken_Armor_Debuff]
 		Longer debuff duration for artifact minions
+		'''
+}
+
+Astringent_Broth: {
+	DisplayName: Astringent Broth
+	Tooltip:
+		'''
+		All minions inflict [buffhint:CursedInferno]
+		Artifact minions also inflict [buffhint:ShadowFlame]
+		'''
+}
+
+Metallic_Broth: {
+	DisplayName: Metallic Broth
+	Tooltip:
+		'''
+		All minions inflict [buffhint:Ichor]
+		Artifact minions also inflict [buffhint:Bleeding] and heal when hitting bleeding enemies
 		'''
 }
