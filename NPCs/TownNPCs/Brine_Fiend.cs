@@ -7,6 +7,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Journal;
 using Origins.Questing;
 using Origins.Tiles.Brine;
+using Origins.Tiles.Defiled;
 using Origins.Tiles.MusicBoxes;
 using Origins.World.BiomeData;
 using ReLogic.Content;
@@ -122,6 +123,7 @@ namespace Origins.NPCs.TownNPCs {
 			.Add<Greasy_Broth>()
 			.Add<Savory_Broth>()
 			.Add<Spicy_Broth>()
+			.Add<Bitter_Broth>(Defiled_Heart_TE_System.No_Defiled_Hearts)
 			.Add<Minishark_Broth>(OriginsModIntegrations.AprilFools)
 			.Add<Akaliegis>(Quest.QuestCondition<Alkaliegis_Quest>())
 			.Add(Music_Box.ItemType<Ancient_Music_Box_BP>(), Quest.QuestCondition<Old_Brine_Music_Box_Quest>())

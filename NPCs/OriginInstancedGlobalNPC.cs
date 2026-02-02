@@ -41,6 +41,10 @@ namespace Origins.NPCs {
 		public Vector2 tornOffset = default;
 		public bool slowDebuff = false;
 		public bool silencedDebuff = false;
+		public bool weakDebuff = false;
+		public const float weakDebuffAmount = 0.5f;
+		public const float weakDebuffAmountBoss = 0.2f;
+		public bool brokenArmorDebuff = false;
 		public bool barnacleBuff = false;
 		public bool oldSlowDebuff = false;
 		public bool shadeFire = false;
@@ -115,6 +119,8 @@ namespace Origins.NPCs {
 			oldSlowDebuff = slowDebuff;
 			slowDebuff = false;
 			silencedDebuff = false;
+			weakDebuff = false;
+			brokenArmorDebuff = false;
 			shadeFire = false;
 			soulhideWeakenedDebuff = false;
 			cavitationDebuff = false;
@@ -167,6 +173,9 @@ namespace Origins.NPCs {
 			if (barnacleBuff) {
 				modifiers.SourceDamage *= Main.masterMode ? 1.5f : (Main.expertMode ? 1.55f : 1.6f);
 			}
+			if (weakDebuff) {
+				modifiers.SourceDamage *= (1f - (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type] ? weakDebuffAmountBoss : weakDebuffAmount));
+			}
 		}
 		public override void ModifyHitNPC(NPC npc, NPC target, ref NPC.HitModifiers modifiers) {
 			if (soulhideWeakenedDebuff && !weakenedOnSpawn) {
@@ -174,6 +183,9 @@ namespace Origins.NPCs {
 			}
 			if (barnacleBuff) {
 				modifiers.SourceDamage *= 1.7f;
+			}
+			if (weakDebuff) {
+				modifiers.SourceDamage *= (1f - (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type] ? weakDebuffAmountBoss : weakDebuffAmount));
 			}
 		}
 		public override void OnSpawn(NPC npc, IEntitySource source) {
@@ -307,9 +319,11 @@ namespace Origins.NPCs {
 			}
 			return true;
 		}
-		AutoLoadingAsset<Texture2D> slowIndicator = "Origins/Textures/Enemy_Slow_Indicator";
-		AutoLoadingAsset<Texture2D> silencedIndicator = "Origins/Textures/Enemy_Silenced_Indicator";
-		AutoLoadingAsset<Texture2D> blindIndicator = "Origins/Textures/Enemy_Blind_Indicator";
+		AutoLoadingAsset<Texture2D> slowIndicator = "Origins/Buffs/Indicators/Enemy_Slow";
+		AutoLoadingAsset<Texture2D> silencedIndicator = "Origins/Buffs/Indicators/Enemy_Silenced";
+		AutoLoadingAsset<Texture2D> blindIndicator = "Origins/Buffs/Indicators/Enemy_Blind";
+		AutoLoadingAsset<Texture2D> weakIndicator = "Origins/Buffs/Indicators/Enemy_Weak";
+		AutoLoadingAsset<Texture2D> brokenArmorIndicator = "Origins/Buffs/Indicators/Enemy_Broken_Armor";
 		public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			List<Texture2D> indicators = [];
 			Vector2 pos = Vector2.Zero;
@@ -320,6 +334,8 @@ namespace Origins.NPCs {
 			if (slowDebuff) AddIndicator(slowIndicator);
 			if (silencedDebuff) AddIndicator(silencedIndicator);
 			if (npc.TryGetGlobalNPC(out Blind_Debuff_Global blindGlobal) && blindGlobal.IsReallyBlinded) AddIndicator(blindIndicator);
+			if (weakDebuff) AddIndicator(weakIndicator);
+			if (brokenArmorDebuff) AddIndicator(brokenArmorIndicator);
 			for (int i = 0; i < indicators.Count; i++) {
 				Texture2D indicator = indicators[i];
 				pos.X += indicator.Width * 0.5f;

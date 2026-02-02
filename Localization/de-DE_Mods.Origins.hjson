@@ -36,6 +36,7 @@ Conditions: {
 	// NoDuplicates: When the player doesn't already have the item
 	// WithoutScavengerSet: Without a full set of Scavenger Armor
 	// WithScavengerSet: With a full set of Scavenger Armor
+	// NoDefiledHearts: No Defiled Hearts are left in the world
 }
 
 ModMenu: {
@@ -1454,6 +1455,15 @@ Buffs: {
 	Autohandcannon_Jam_Debuff: {
 		// DisplayName: Jammed!
 		// Description: The weapon cannot fire.
+	}
+
+	Bitter_Broth_Buff: {
+		// DisplayName: Bitter Broth
+		/* Description:
+			'''
+			Minions inflict {$BuffName.Weak}
+			Minions have a chance to inflict {$BuffName.BrokenArmor}
+			''' */
 	}
 }
 

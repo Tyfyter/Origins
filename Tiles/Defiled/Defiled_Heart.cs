@@ -102,15 +102,18 @@ namespace Origins.Tiles.Defiled {
 		}
 	}
 	public class Defiled_Heart_TE_System : TESystem {
+		public static int Hearts {  get; protected set; }
+		public static Condition No_Defiled_Hearts => new("Mods.Origins.Conditions.NoDefiledHearts", () => Hearts <= 0);
 		public override void PreUpdateEntities() {
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
+			Hearts = 0;
 			for (int i = 0; i < tileEntityLocations.Count; i++) {
 				Point16 pos = tileEntityLocations[i];
 				if (!Main.tile[pos.X, pos.Y].TileIsType(Defiled_Heart.ID)) {
 					tileEntityLocations.RemoveAt(i);
 					i--;
 					continue;
-				}
+				} else Hearts++;
 			}
 		}
 		public override void LoadWorldData(TagCompound tag) {

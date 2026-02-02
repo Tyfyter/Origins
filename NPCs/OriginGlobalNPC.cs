@@ -320,6 +320,8 @@ namespace Origins.NPCs {
 				modifiers.Defense.Flat += 5;
 			}
 			if (amberDebuff) modifiers.Defense *= 0.5f;
+			if (weakDebuff) modifiers.Defense *= (1f - (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type] ? weakDebuffAmountBoss : weakDebuffAmount));
+			if (brokenArmorDebuff) modifiers.Defense.Flat -= 20;
 		}
 		public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers) {
 			if (projectile.IsMinionOrSentryRelated) {

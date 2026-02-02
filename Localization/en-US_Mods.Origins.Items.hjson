@@ -7906,6 +7906,15 @@ Dirt_Chest_Natural_Item: {
 }
 
 Purple_Mechanical_Key_Node_Item: {
-	DisplayName: Purple Mechanical Key Node Item
+	DisplayName: Purple Mechanical Key Node
 	Tooltip: ""
+}
+
+Bitter_Broth: {
+	DisplayName: Bitter Broth
+	Tooltip:
+		'''
+		All minions inflict [buffhint:Origins/Weak_Debuff] and a chance to inflict [buffhint:BrokenArmor]
+		Longer debuff duration for artifact minions
+		'''
 }
