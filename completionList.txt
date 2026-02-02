@@ -1423,7 +1423,13 @@ TILES:
 (^) Underwater Vine
 (^) Venus Coral
 (^) Wilting Rose
-(#2, ^2) Workstation Extras !!! (Administrator Panel, Power Box and Radio Broadcaster)
+(^) Lathe
+(^) Table Saw
+(^) Industrial Work Bench
+(^) Tool Rack
+(#, ^2) Administrator Panel !!!
+(#, ^2) Power Box !!!
+(#, ^2) Radio Broadcaster !!!
 (^) Wrycoral
 
 (^) A Perfect World
