@@ -1341,6 +1341,7 @@ TILES:
 (^) Cargo Elevator Door (Jammed)
 (^) Chambersite Gem Lock
 (^) Cleansing Station
+(X) Defiled Boulder
 (^) Defiled Campfire
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith

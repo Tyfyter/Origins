@@ -184,6 +184,7 @@ namespace Origins.Tiles.Ashen {
 			foreach (Point16 pos in tileEntityLocations) {
 				Tile tile = Main.tile[pos];
 				TileObjectData data = TileObjectData.GetTileData(tile);
+				if (data is null) continue;
 				TileUtils.GetMultiTileTopLeft(pos.X, pos.Y, data, out int left, out int top);
 				if (pos.X == left && pos.Y == top) {
 					Door_Animation animation = GetAnimation(pos);

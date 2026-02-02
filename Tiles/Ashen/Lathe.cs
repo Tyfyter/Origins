@@ -1,9 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Dusts;
-using Origins.Graphics;
-using Origins.Items.Materials;
-using Origins.World.BiomeData;
-using System.Linq;
+﻿using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -17,7 +12,7 @@ namespace Origins.Tiles.Ashen {
 			Mod.AddContent(Item = new TileItem(this).WithExtraDefaults(item => {
 				item.CloneDefaults(ItemID.Sawmill);
 				item.createTile = Type;
-				item.rare++;
+				//item.rare++;
 				item.value += Terraria.Item.buyPrice(gold: 1);
 			}));
 		}

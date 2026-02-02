@@ -1,4 +1,5 @@
 ﻿using Origins.Core;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
@@ -12,7 +13,13 @@ namespace Origins.Tiles.Ashen {
 	public class Large_Storage_Container : ModSpecialChest {
 		public override ChestData CreateChestData() => new Large_Storage_Container_Data();
 		public override void Load() {
-			Mod.AddContent(new TileItem(this).WithExtraStaticDefaults(this.DropTileItem));
+			Mod.AddContent(new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddRecipeGroup(RecipeGroupID.IronBar, 25)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 80)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}).WithExtraStaticDefaults(this.DropTileItem));
 		}
 		public override void ModifyTileData() {
 			TileObjectData.newTile.Origin = new Point16(4, 4);

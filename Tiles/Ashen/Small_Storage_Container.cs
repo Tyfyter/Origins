@@ -10,7 +10,7 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Small_Storage_Container : ModChest {
-		TileItem item;
+		public static TileItem item { get; protected set; }
 		public override void Load() {
 			Mod.AddContent(item = new TileItem(this).WithOnAddRecipes(item => {
 				Recipe.Create(item.type)

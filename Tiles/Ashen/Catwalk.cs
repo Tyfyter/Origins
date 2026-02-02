@@ -30,6 +30,7 @@ namespace Origins.Tiles.Ashen {
 			Catwalks[Type] = true;
 			DustType = DustID.Lihzahrd;
 			HitSound = SoundID.Tink;
+			AddMapEntry(new Color(72, 70, 79));
 		}
 		// For some reason this runs after tile framing for platforms
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {

@@ -14,7 +14,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Fortified_Steel_Block1 : ComplexFrameTile, IAshenTile {
-		public virtual Color MapColor => FromHexRGB(0x3b2b21);
+		public virtual Color MapColor => FromHexRGB(0x4a3223);
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)TileType<Ashen_Foliage>(), 0, 6));

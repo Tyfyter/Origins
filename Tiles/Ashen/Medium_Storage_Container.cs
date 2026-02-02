@@ -11,7 +11,12 @@ namespace Origins.Tiles.Ashen {
 	public class Medium_Storage_Container : ModSpecialChest {
 		public override ChestData CreateChestData() => new Medium_Storage_Container_Data();
 		public override void Load() {
-			Mod.AddContent(new TileItem(this).WithExtraStaticDefaults(this.DropTileItem));
+			Mod.AddContent(new TileItem(this).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(Small_Storage_Container.item, 4)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}).WithExtraStaticDefaults(this.DropTileItem));
 		}
 		public override void ModifyTileData() {
 			TileObjectData.newTile.Width = 4;

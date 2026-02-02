@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
-using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Origins.World;
 using System.Collections.Generic;
@@ -11,6 +10,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Ashen {
 	public class Modular_Light_Fixture : OriginTile, IGlowingModTile {
+		public static TileItem item { get; protected set; }
 		public static Vector3 LightColor => new(1.05f, 0.75f, 0f);
 		public override void SetStaticDefaults() {
 			// Properties
@@ -243,7 +243,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void Load() {
 			this.SetupGlowKeys();
-			Mod.AddContent(new TileItem(this).WithOnAddRecipes(item => {
+			Mod.AddContent(item = new TileItem(this).WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
 				.AddIngredient(ModContent.ItemType<Ashen_Torch>())
 				.AddIngredient(ModContent.ItemType<Scrap>())
