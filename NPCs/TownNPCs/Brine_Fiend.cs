@@ -123,6 +123,7 @@ namespace Origins.NPCs.TownNPCs {
 			.Add<Greasy_Broth>()
 			.Add<Savory_Broth>()
 			.Add<Spicy_Broth>()
+			.Add<Astringent_Broth>() // add condition for miscreant defeated when added
 			.Add<Bitter_Broth>(Defiled_Heart_TE_System.No_Defiled_Hearts)
 			.Add<Minishark_Broth>(OriginsModIntegrations.AprilFools)
 			.Add<Akaliegis>(Quest.QuestCondition<Alkaliegis_Quest>())
