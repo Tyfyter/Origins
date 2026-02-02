@@ -1,9 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Weapons.Summoner;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
-using PegasusLib;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -63,15 +64,16 @@ namespace Origins.Buffs {
 		public override bool IsArtifact => true;
 	}
 }
-
 namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Sunny_Sunflower : ModProjectile, IArtifactMinion {
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
 		public static int ID { get; private set; }
+		public static Dictionary<BrothBase, Asset<Texture2D>> BrothTextures { get; } = [];
+		public static Dictionary<BrothBase, Asset<Texture2D>> BrothGlowTextures { get; } = [];
 		//public override string Texture => typeof(Sunny_Sunflower).GetDefaultTMLName() + "_Base";
 		//static readonly AutoLoadingAsset<Texture2D> headTexture = typeof(Sunny_Sunflower).GetDefaultTMLName() + "_Head";
-		Vector2 headCenterOffset => new(Projectile.width * 0.5f, 6);
+		Vector2 HeadCenterOffset => new(Projectile.width * 0.5f, 6);
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 15;
 			// Sets the amount of frames this minion has on its spritesheet
@@ -84,6 +86,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
 			ID = Type;
+
+			if (Main.dedServ) return;
+			const string texture_path = "Origins/Items/Weapons/Summoner/Minions/";
 		}
 
 		public override void SetDefaults() {
@@ -172,7 +177,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				bool isCurrentTarget = npc.whoAmI == Projectile.ai[0];
 				if ((isCurrentTarget || isPriorityTarget || !hasPriorityTarget) && npc.CanBeChasedBy()) {
 					Vector2 pos = Projectile.position;
-					Vector2 offset = headCenterOffset;
+					Vector2 offset = HeadCenterOffset;
 					int dir = Math.Sign(npc.Center.X - (pos.X + offset.X));
 					Vector2 stepDown = new(16, 32);
 					for (int i = 0; i < 5; i++) {
@@ -217,7 +222,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1f).WithVolume(0.25f), Projectile.Center);
 						if (Main.myPlayer == player.whoAmI) Projectile.NewProjectile(
 							Projectile.GetSource_FromAI(),
-							Projectile.position + headCenterOffset,
+							Projectile.position + HeadCenterOffset,
 							diff.SafeNormalize(default) * 16,
 							ModContent.ProjectileType<Sunny_Sunflower_P>(),
 							Projectile.damage,
@@ -359,7 +364,14 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (Life > 0) SoundEngine.PlaySound(SoundID.FemaleHit.WithPitch(1f).WithVolume(0.25f), Projectile.Center);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Texture2D baseTexture = TextureAssets.Projectile[Type].Value;
+			Asset<Texture2D> textureAsset = null;
+			Asset<Texture2D> glowTexture = null;
+			if (Main.player[Projectile.owner]?.OriginPlayer()?.broth is BrothBase broth) {
+				BrothTextures.TryGetValue(broth, out textureAsset);
+				BrothGlowTextures.TryGetValue(broth, out glowTexture);
+			}
+			textureAsset ??= TextureAssets.Projectile[Type];
+			Texture2D baseTexture = textureAsset.Value;
 			Rectangle baseFrame = baseTexture.Frame(verticalFrames: Main.projFrames[Projectile.type], frameY: Projectile.frame);
 			SpriteEffects baseEffects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			Vector2 offset = Vector2.UnitY * 2;
@@ -394,7 +406,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					);
 				}
 			}
-			Main.EntitySpriteDraw(
+			DrawData data = new(
 				baseTexture,
 				Projectile.Bottom + offset + gfxOffset - Main.screenPosition,
 				baseFrame,
@@ -404,6 +416,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.scale,
 				baseEffects
 			);
+			Main.EntitySpriteDraw(data);
+			if (glowTexture is not null) {
+				data.texture = glowTexture.Value;
+				data.color = Color.White;
+				Main.EntitySpriteDraw(data);
+			}
 			return false;
 		}
 	}
