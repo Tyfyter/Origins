@@ -22,8 +22,10 @@ namespace Origins.Tiles.Ashen {
 						break;
 
 						default:
-						if (!TileID.Sets.Grass[i]) continue;
-						break;
+						if (TileID.Sets.Dirt[i]) break;
+						if (TileID.Sets.Grass[i]) break;
+						if (Main.tileMerge[i][Type]) break;
+						continue;
 					}
 					VanillaTileOverlays.AddOverlay(i, mergeOverlay);
 				}

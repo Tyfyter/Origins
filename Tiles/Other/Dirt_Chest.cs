@@ -12,11 +12,11 @@ namespace Origins.Tiles.Other {
 		public override string HighlightTexture => base.Texture + "_Highlight";
 		public override bool IsMultitile => false;
 		public override ChestData CreateChestData() => new Dirt_Chest_Data();
-		public static TileItem Item { get; protected set; }
 		public override void Load() {
-			Mod.AddContent(Item = new TileItem(this, textureOverride: base.Texture + "_Item").WithExtraStaticDefaults(this.DropTileItem).WithExtraDefaults(item => {
-				item.value = 0;
-			}).WithOnAddRecipes(item => {
+			new TileItem(this, textureOverride: base.Texture + "_Item")
+			.WithExtraStaticDefaults(this.DropTileItem)
+			.WithExtraDefaults(item => item.value = 0)
+			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
 				.AddIngredient(ItemID.DirtBlock, 10)
 				.AddTile(TileID.WorkBenches)
@@ -27,7 +27,7 @@ namespace Origins.Tiles.Other {
 				.AddTile(TileID.WorkBenches)
 				.AddCondition(OriginsModIntegrations.AprilFools)
 				.Register();
-			}));
+			}).RegisterItem();
 		}
 		public override void ModifyTileData() {
 			AddMapEntry(FromHexRGB(0x976B4B), CreateMapEntryName(), MapChestName);
@@ -73,6 +73,10 @@ namespace Origins.Tiles.Other {
 	public class Dirt_Chest_Natural : Dirt_Chest {
 		public override void Load() => Mod.AddContent(new TileItem(this, true));
 		public override void ModifyTileData() {
+			Main.tileSpelunker[Type] = false;
+			Main.tileShine2[Type] = false;
+			Main.tileShine[Type] = 0;
+			Main.tileOreFinderPriority[Type] = 1;
 			AddMapEntry(FromHexRGB(0x976B4B));
 			AdjTiles = [TileID.Containers, TileID.Dirt];
 			DustType = DustID.Dirt;
@@ -83,7 +87,8 @@ namespace Origins.Tiles.Other {
 			Main.tileFrameImportant[Type] = false;
 			Main.tileSolid[Type] = true;
 			Main.tileNoAttach[Type] = false;
-			RegisterItemDrop(Item.Type);
+			RegisterItemDrop(TileItem.Get<Dirt_Chest>().Type);
 		}
+		public override void MouseOver(int i, int j) { }
 	}
 }

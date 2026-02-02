@@ -881,6 +881,7 @@ namespace Origins.Tiles {
 	}
 	[Autoload(false)]
 	public class TileItem(ModTile tile, bool debug = false, string textureOverride = null) : ModItem() {
+		private static readonly Dictionary<ModTile, TileItem> itemsByTile = [];
 		[field: CloneByReference]
 		ModTile Tile { get; } = tile;
 		public override string Name => Tile.Name + "_Item";
@@ -893,7 +894,9 @@ namespace Origins.Tiles {
 #if !DEBUG
 		public override bool IsLoadingEnabled(Mod mod) => !debug || DebugConfig.Instance.ForceEnableDebugItems;
 #endif
+		public sealed override void Load() => itemsByTile.Add(Tile, this);
 		public override void SetStaticDefaults() {
+			if (debug) ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 			if (TileID.Sets.BasicChest[Tile.Type]) ModCompatSets.AnyChests[Type] = true;
 			if (Tile is FurnitureBase furniture) {
 				switch (furniture.BaseTileID) {
@@ -935,5 +938,9 @@ namespace Origins.Tiles {
 			OnAddRecipes += recipes;
 			return this;
 		}
+		public void RegisterItem() => Tile.Mod.AddContent(this);
+
+		public static TileItem Get(ModTile tile) => itemsByTile.TryGetValue(tile, out TileItem item) ? item : null;
+		public static TileItem Get<TTile>() where TTile : ModTile => Get(ModContent.GetInstance<TTile>());
 	}
 }
