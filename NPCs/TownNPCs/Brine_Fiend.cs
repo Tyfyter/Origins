@@ -6,7 +6,6 @@ using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Weapons.Melee;
 using Origins.Journal;
 using Origins.Questing;
-using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.MusicBoxes;
 using Origins.World.BiomeData;
@@ -123,7 +122,8 @@ namespace Origins.NPCs.TownNPCs {
 			.Add<Greasy_Broth>()
 			.Add<Savory_Broth>()
 			.Add<Spicy_Broth>()
-			.Add<Astringent_Broth>() // add condition for miscreant defeated when added
+			.Add<Astringent_Broth>() // add condition for Miscreant defeated when added
+			.Add<Metallic_Broth>() // add condition for Crimson King defeated when added
 			.Add<Bitter_Broth>(Defiled_Heart_TE_System.No_Defiled_Hearts)
 			.Add<Minishark_Broth>(OriginsModIntegrations.AprilFools)
 			.Add<Akaliegis>(Quest.QuestCondition<Alkaliegis_Quest>())

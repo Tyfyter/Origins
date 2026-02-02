@@ -1,14 +1,8 @@
-﻿using CalamityMod.Prefixes;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
-using Origins.Items.Accessories;
-using Origins.Items.Weapons.Magic;
+﻿using Origins.Items.Accessories;
 using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
 using Origins.Questing;
-using PegasusLib;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -605,14 +599,7 @@ namespace Origins.Items {
 			valueMult *= 1.25f;
 		}
 		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
-			if (OriginsSets.NPCs.TargetDummies[target.type]) return;
-			Projectile ownerMinion = MinionGlobalProjectile.GetOwnerMinion(projectile);
-			if (ownerMinion?.ModProjectile is IArtifactMinion artifactMinion && artifactMinion.Life < artifactMinion.MaxLife) {
-				float oldHealth = artifactMinion.Life;
-				artifactMinion.Life += Math.Min(damageDone, target.lifeMax);
-				if (artifactMinion.Life > artifactMinion.MaxLife) artifactMinion.Life = artifactMinion.MaxLife;
-				CombatText.NewText(ownerMinion.Hitbox, CombatText.HealLife, (int)Math.Round(artifactMinion.Life - oldHealth), true, dot: true);
-			}
+			OriginExtensions.MinionLifeSteal(projectile, target, damageDone);
 		}
 	}
 	public class Firestarter_Prefix : ArtifactMinionPrefix, IOnHitNPCPrefix {

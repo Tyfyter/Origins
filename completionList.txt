@@ -1616,7 +1616,7 @@ CONSUMABLES:
 (^) Greasy Broth
 (^) Hearty Broth
 (^) Light Broth
-(#, ^2) Metallic Broth
+(†, 々) Metallic Broth
 (^) Minishark Broth
 (^) Minty Broth
 (^) Plain Broth

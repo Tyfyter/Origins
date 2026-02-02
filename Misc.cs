@@ -48,7 +48,6 @@ using Terraria.ObjectData;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
 using SetsTiles = Origins.OriginsSets.Tiles;
-using SetsWalls = Origins.OriginsSets.Walls;
 
 namespace Origins {
 	#region classes
@@ -1441,7 +1440,16 @@ namespace Origins {
 		}
 		#endregion sound
 		#region combat mechanics
-
+		public static void MinionLifeSteal(Projectile proj, NPC target, int damageDone, float strength = 1f) {
+			if (OriginsSets.NPCs.TargetDummies[target.type]) return;
+			Projectile ownerMinion = MinionGlobalProjectile.GetOwnerMinion(proj);
+			if (ownerMinion?.ModProjectile is IArtifactMinion artifactMinion && artifactMinion.Life < artifactMinion.MaxLife) {
+				float oldHealth = artifactMinion.Life;
+				artifactMinion.Life += Math.Min(damageDone, target.lifeMax) * strength;
+				if (artifactMinion.Life > artifactMinion.MaxLife) artifactMinion.Life = artifactMinion.MaxLife;
+				CombatText.NewText(ownerMinion.Hitbox, CombatText.HealLife, (int)Math.Round(artifactMinion.Life - oldHealth), true, dot: true);
+			}
+		}
 		#endregion
 		public static StatModifier Scale(this StatModifier statModifier, float additive = 1f, float multiplicative = 1f, float flat = 1f, float @base = 1f) {
 			return new StatModifier(
