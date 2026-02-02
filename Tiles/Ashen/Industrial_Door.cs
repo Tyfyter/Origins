@@ -60,6 +60,7 @@ namespace Origins.Tiles.Ashen {
 
 			TileID.Sets.Suffocate[Type] = true;
 		}
+		public override bool CanExplode(int i, int j) => false;
 		public override bool Slope(int i, int j) => false;
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX < 18 * 4;
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {

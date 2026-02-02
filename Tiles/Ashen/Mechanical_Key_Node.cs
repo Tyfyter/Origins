@@ -64,6 +64,11 @@ namespace Origins.Tiles.Ashen {
 				NetMessage.SendData(MessageID.TileSquare, Main.myPlayer, -1, null, i, j, 1, 1);
 			}
 		}
+		public override bool CanExplode(int i, int j) => false;
+		/*public override bool CanKillTile(int i, int j, ref bool blockDamaged) {
+			Tile tile = Main.tile[i, j];
+			return tile.TileFrameX == 0 || tile.TileFrameY == 0;
+		}*/
 		public bool HasKey(Player player) => player.HasItemInInventoryOrOpenVoidBag(KeyType);
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => HasKey(settings.player);
 		public override bool RightClick(int i, int j) {

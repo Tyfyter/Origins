@@ -82,6 +82,7 @@ namespace Origins.Tiles.Ashen {
 			}
 			return true;
 		}
+		public override bool CanExplode(int i, int j) => false;
 		public override bool Slope(int i, int j) => false;
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = 0.001f;
