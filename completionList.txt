@@ -1611,7 +1611,7 @@ CONSUMABLES:
 (^) Voidsight Potion
 
 (#, ^2) Astringent Broth
-(†) Bitter Broth
+(†) Bitter Broth !!!
 (^) Foul Broth
 (^) Greasy Broth
 (^) Hearty Broth
