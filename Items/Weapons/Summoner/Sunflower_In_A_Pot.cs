@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item44;
 			Item.buffType = Sunny_Sunflower_Buff.ID;
-			Item.shoot = Sunny_Sunflower.ID;
+			Item.shoot = Sunflower_Sunny.ID;
 			Item.noMelee = true;
 		}
 		public override void AddRecipes() {
@@ -59,13 +59,14 @@ namespace Origins.Buffs {
 	public class Sunny_Sunflower_Buff : MinionBuff {
 		public static int ID { get; private set; }
 		public override IEnumerable<int> ProjectileTypes() => [
-			Sunny_Sunflower.ID
+			Sunflower_Sunny.ID
 		];
 		public override bool IsArtifact => true;
 	}
 }
 namespace Origins.Items.Weapons.Summoner.Minions {
-	public class Sunny_Sunflower : ModProjectile, IArtifactMinion {
+	[LegacyName("Sunny_Sunflower")]
+	public class Sunflower_Sunny : ModProjectile, IArtifactMinion {
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
 		public static int ID { get; private set; }
@@ -88,8 +89,13 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ID = Type;
 
 			if (Main.dedServ) return;
-			const string texture_path = "Origins/Items/Weapons/Summoner/Minions/";
-			BrothTextures.Add(ModContent.GetInstance<Spicy_Broth>(), ModContent.Request<Texture2D>(texture_path + "Firey_Sunflower"));
+			const string texture_path = "Origins/Items/Weapons/Summoner/Minions/Sunflower_";
+			BrothTextures.Add(ModContent.GetInstance<Spicy_Broth>(), ModContent.Request<Texture2D>(texture_path + "Firey"));
+			BrothTextures.Add(ModContent.GetInstance<Greasy_Broth>(), ModContent.Request<Texture2D>(texture_path + "Greasy"));
+			BrothTextures.Add(ModContent.GetInstance<Minty_Broth>(), ModContent.Request<Texture2D>(texture_path + "Icy"));
+			BrothTextures.Add(ModContent.GetInstance<Savory_Broth>(), ModContent.Request<Texture2D>(texture_path + "Shadowy"));
+			BrothGlowTextures.Add(ModContent.GetInstance<Savory_Broth>(), ModContent.Request<Texture2D>(texture_path + "Shadowy_Glow"));
+			BrothTextures.Add(ModContent.GetInstance<Sharp_Broth>(), ModContent.Request<Texture2D>(texture_path + "Zappy"));
 		}
 
 		public override void SetDefaults() {
@@ -225,7 +231,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 							Projectile.GetSource_FromAI(),
 							Projectile.position + HeadCenterOffset,
 							diff.SafeNormalize(default) * 16,
-							ModContent.ProjectileType<Sunny_Sunflower_P>(),
+							ModContent.ProjectileType<Sunflower_Sunny_P>(),
 							Projectile.damage,
 							Projectile.knockBack,
 							Projectile.owner
@@ -426,7 +432,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			return false;
 		}
 	}
-	public class Sunny_Sunflower_P : ModProjectile {
+	[LegacyName("Sunny_Sunflower_P")]
+	public class Sunflower_Sunny_P : ModProjectile {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.MinionShot[Type] = true;
 		}
