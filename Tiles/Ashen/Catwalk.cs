@@ -172,9 +172,10 @@ namespace Origins.Tiles.Ashen {
 		}
 		static bool IsCatwalk(Tile tile) => tile.HasTile && Catwalks[tile.TileType];
 		public static void UpdateRailingFrame(int i, int j) {
-			static bool IsNonCatwalkTile(Tile tile) => tile.HasTile && !Catwalks[tile.TileType];
-			bool canConnectLeft = !IsNonCatwalkTile(Main.tile[i - 1, j - 2]);
-			bool canConnectRight = !IsNonCatwalkTile(Main.tile[i + 1, j - 2]);
+			static bool IsNonCatwalkTile(Tile tile) => tile.HasTile && !Catwalks[tile.TileType] && TileLoader.GetTile(tile.TileType) is not Industrial_Door;
+			static bool BlocksConnection(Tile tile) => IsNonCatwalkTile(tile) && (!Main.tileSolid[tile.TileType] || Main.tileNoAttach[tile.TileType]);
+			bool canConnectLeft = !BlocksConnection(Main.tile[i - 1, j - 2]);
+			bool canConnectRight = !BlocksConnection(Main.tile[i + 1, j - 2]);
 			Tile tile = Main.tile[i, j];
 			ref byte railingFrame = ref tile.Get<ExtraFrameData>().value;
 			byte oldRailingFrame = railingFrame;
