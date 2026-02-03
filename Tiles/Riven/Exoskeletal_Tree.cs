@@ -77,10 +77,6 @@ namespace Origins.Tiles.Riven {
 		public override Asset<Texture2D> GetBranchTextures() {
 			return ModContent.Request<Texture2D>(typeof(Exoskeletal_Tree).GetDefaultTMLName() + "_Branches");
 		}
-
-		public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
-
-		}
 		public override int SaplingGrowthType(ref int style) {
 			style = 0;
 			return ModContent.TileType<Exoskeletal_Tree_Sapling>();

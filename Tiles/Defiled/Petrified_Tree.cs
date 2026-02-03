@@ -49,10 +49,6 @@ namespace Origins.Tiles.Defiled {
 		public override Asset<Texture2D> GetBranchTextures() {
 			return Mod.Assets.Request<Texture2D>("Tiles/Defiled/Petrified_Tree_Branches");
 		}
-
-		public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
-
-		}
 	}
 	public class Petrified_Tree_Sapling : SaplingBase {
 		public override Color MapColor => new(200, 200, 200);

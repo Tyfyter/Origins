@@ -37,9 +37,8 @@ namespace Origins.Tiles.Ashen {
 		public override Asset<Texture2D> GetTexture() => Mod.Assets.Request<Texture2D>("Tiles/Ashen/Artifiber_Tree");
 		public override Asset<Texture2D> GetTopTextures() => Mod.Assets.Request<Texture2D>("Tiles/Ashen/Artifiber_Tree_Tops");
 		public override Asset<Texture2D> GetBranchTextures() => Mod.Assets.Request<Texture2D>("Tiles/Ashen/Artifiber_Tree_Branches");
-
-		public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
-			tile = Main.tile[AnyBasicTreeSupportWhatsoever.CurrentTreeTilePos];
+		public override void SetTreeFoliageSettings(int i, int j, Tile tile, int xoffset, ref int treeFrame, int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
+			tile = Main.tile[i, j];
 			switch (tile.TileFrameX) {
 				case 22:
 				case 44:
