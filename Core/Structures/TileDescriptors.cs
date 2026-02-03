@@ -164,7 +164,7 @@ namespace Origins.Core.Structures {
 		public override void Load() {
 			AddSerializer(tile => {
 				if (tile.HasTile && GetDescriptorType(tile) == typeof(PlaceFramedTile)) {
-					if (tile.TileType == ModContent.TileType<Room_Socket_Marker>()) return "Empty";
+					if (Room_Socket_Marker.IsSocketMarker(tile)) return "Empty";
 					if (TileObjectData.GetTileData(tile) is not null) return null;
 					return $"PlaceFramedTile({TileID.Search.GetName(tile.TileType)},{tile.TileFrameX},{tile.TileFrameY})";
 				}

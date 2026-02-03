@@ -544,7 +544,7 @@ namespace Origins.Core.Structures {
 						Tile tile = Main.tile[i, j];
 						CurrentTileData = SerializableTileDescriptor.Serialize(tile);
 						SpinWait.SpinUntil(() => StructureCommand.ReadyForNewAss);
-						if (tile.TileType == ModContent.TileType<Room_Socket_Marker>()) {
+						if (Room_Socket_Marker.IsSocketMarker(tile)) {
 							string pattern = CurrentTileData;
 							char? ch = null;
 							RoomSocket socket = new(null, default);
