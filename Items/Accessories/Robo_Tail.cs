@@ -11,6 +11,7 @@ using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Projectiles.ArtifactMinionExtensions;
 
 namespace Origins.Items.Accessories {
 	public class Robo_Tail : ModItem {
@@ -305,7 +306,7 @@ namespace Origins.Items.Accessories {
 				hit.Knockback = 6;
 				hit.Crit = false;
 				Projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
-				this.DamageArtifactMinion(target.damage);
+				this.DamageArtifactMinion(target.damage, new NPCDamageSource(target));
 				Projectile.ai[1] = 1;
 				Projectile.netUpdate = true;
 			}

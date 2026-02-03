@@ -1,4 +1,6 @@
 ﻿using Origins.Dev;
+using Origins.Projectiles;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -38,8 +40,12 @@ namespace Origins.Items.Other.Consumables.Broths {
 		public virtual void OnMinionHit(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) { }
 		public virtual void PreUpdateMinion(Projectile minion) { }
 		public virtual void UpdateMinion(Projectile minion, int time) { }
+		[Obsolete("Use the overload with a IArtifactDamageSource")]
 		public virtual void ModifyHurt(Projectile minion, ref int damage, bool fromDoT) { }
+		public virtual void ModifyHurt(Projectile minion, ref int damage, bool fromDoT, IArtifactDamageSource damageSource) => ModifyHurt(minion, ref damage, fromDoT);
+		[Obsolete("Use the overload with a IArtifactDamageSource")]
 		public virtual void OnHurt(Projectile minion, int damage, bool fromDoT) { }
+		public virtual void OnHurt(Projectile minion, int damage, bool fromDoT, IArtifactDamageSource damageSource) => OnHurt(minion, damage, fromDoT);
 		public virtual void PostDrawMinion(Projectile minion, Color lightColor) { }
 		/// <summary>
 		/// Runs when the broth a minion is affected by changes, including when a new minion is spawned

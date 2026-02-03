@@ -1,22 +1,23 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.Dev;
+using Origins.Gores;
 using Origins.Items.Weapons.Summoner;
+using Origins.Items.Weapons.Summoner.Minions;
+using Origins.Projectiles;
+using PegasusLib;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using System.IO;
-using Origins.Items.Weapons.Summoner.Minions;
-using Origins.Buffs;
-using Terraria.Graphics.Shaders;
-using Origins.Projectiles;
-using Terraria.Audio;
-using Origins.Gores;
-using System.Collections.Generic;
-using PegasusLib;
+using static Origins.Projectiles.ArtifactMinionExtensions;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Fresh_Meat_Artifact : ModItem {
@@ -405,7 +406,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						if (foundTarget) {
 							Projectile.friendly = true;
 						} else {
-							meat.DamageArtifactMinion(Projectile.damage);
+							meat.DamageArtifactMinion(Projectile.damage, new ProjectileDamageSource(Projectile));
 						}
 					}
 					if (Projectile.localAI[2] >= 18) Projectile.localAI[2] = 0;

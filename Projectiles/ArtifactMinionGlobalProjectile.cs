@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items;
+using Origins.NPCs;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,10 @@ using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
+using Terraria.WorldBuilding;
+using ThoriumMod.Empowerments;
 using Tyfyter.Utils;
+using static Origins.Core.SpecialChest.SlotDrawData;
 
 namespace Origins.Projectiles {
 	//separate global for organization, might also make non-artifact projectiles less laggy than the alternative
@@ -48,14 +52,19 @@ namespace Origins.Projectiles {
 				artifact.Life = artifact.MaxLife;
 			}
 		}
-		public static void ModifyHurt(Projectile projectile, ref int damage, bool fromDoT) {
+		public static void ModifyHurt(Projectile projectile, ref int damage, bool fromDoT, IArtifactDamageSource damageSource) {
+			if (damageSource is NPCDamageSource source && source.NPC is NPC fromNPC) {
+				if (fromNPC.GetGlobalNPC<OriginGlobalNPC>().weakDebuff) {
+					damage = Main.rand.RandomRound(damage * (1f - (fromNPC.boss || NPCID.Sets.ShouldBeCountedAsBoss[fromNPC.type] ? OriginGlobalNPC.weakDebuffAmountBoss : OriginGlobalNPC.weakDebuffAmount)));
+				}
+			}
 			if (projectile.TryGetOwner(out Player player)) {
-				player.OriginPlayer()?.broth?.ModifyHurt(projectile, ref damage, fromDoT);
+				player.OriginPlayer()?.broth?.ModifyHurt(projectile, ref damage, fromDoT, damageSource);
 			}
 		}
-		public static void OnHurt(Projectile projectile, int damage, bool fromDoT) {
+		public static void OnHurt(Projectile projectile, int damage, bool fromDoT, IArtifactDamageSource damageSource) {
 			if (projectile.TryGetOwner(out Player player)) {
-				player.OriginPlayer()?.broth?.OnHurt(projectile, damage, fromDoT);
+				player.OriginPlayer()?.broth?.OnHurt(projectile, damage, fromDoT, damageSource);
 			}
 		}
 		public override void PostAI(Projectile projectile) {
@@ -291,11 +300,20 @@ namespace Origins.Projectiles {
 			return true;
 		}
 	}
+	public interface IArtifactDamageSource { }
+	public record struct NPCDamageSource(NPC NPC) : IArtifactDamageSource { }
+	public record struct ProjectileDamageSource(Projectile Projectile) : IArtifactDamageSource { }
+	public record struct TileDamageSource() : IArtifactDamageSource { }
+	public record struct PrefixDamageSource(ModPrefix Prefix) : IArtifactDamageSource { }
 	public static class ArtifactMinionExtensions {
+		[Obsolete("Use the overload with a IArtifactDamageSource", true)]
 		public static void DamageArtifactMinion(this IArtifactMinion minion, int damage, bool fromDoT = false, bool noCombatText = false) {
+			minion.DamageArtifactMinion(damage, null, fromDoT, noCombatText);
+		}
+		public static void DamageArtifactMinion(this IArtifactMinion minion, int damage, IArtifactDamageSource damageSource, bool fromDoT = false, bool noCombatText = false) {
 			minion.ModifyHurt(ref damage, fromDoT);
 			ModProjectile proj = minion as ModProjectile;
-			ArtifactMinionGlobalProjectile.ModifyHurt(proj.Projectile, ref damage, fromDoT);
+			ArtifactMinionGlobalProjectile.ModifyHurt(proj.Projectile, ref damage, fromDoT, damageSource);
 			ArtifactMinionGlobalProjectile global = proj.Projectile.GetGlobalProjectile<ArtifactMinionGlobalProjectile>();
 			if (!fromDoT) {
 				damage -= global.defense;
@@ -304,12 +322,16 @@ namespace Origins.Projectiles {
 			float healthModifiedDamage = damage * (minion.MaxLife / global.maxHealthModifier.ApplyTo(minion.MaxLife));
 			minion.Life -= healthModifiedDamage;
 			minion.OnHurt(damage, fromDoT);
-			ArtifactMinionGlobalProjectile.OnHurt(proj.Projectile, damage, fromDoT);
+			ArtifactMinionGlobalProjectile.OnHurt(proj.Projectile, damage, fromDoT, damageSource);
 			if (minion.Life <= 0 && minion.CanDie) proj.Projectile.Kill();
 			if (!noCombatText) CombatText.NewText(proj.Projectile.Hitbox, damage == 0 ? Color.Gray : CombatText.DamagedFriendly, damage, !fromDoT, dot: true);
 		}
+		[Obsolete("Use the overload with a IArtifactDamageSource", true)]
 		public static void DamageArtifactMinion(this Projectile minion, int damage, bool fromDoT = false, bool noCombatText = false) {
-			if (minion.ModProjectile is IArtifactMinion artifact) artifact.DamageArtifactMinion(damage, fromDoT, noCombatText);
+			minion.DamageArtifactMinion(damage, null, fromDoT, noCombatText);
+		}
+		public static void DamageArtifactMinion(this Projectile minion, int damage, IArtifactDamageSource damageSource, bool fromDoT = false, bool noCombatText = false) {
+			if (minion.ModProjectile is IArtifactMinion artifact) artifact.DamageArtifactMinion(damage, damageSource, fromDoT, noCombatText);
 		}
 		public static bool GetHurtByHostiles(this IArtifactMinion minion, StatModifier? damageModifier = null, bool skipNPCs = false) {
 			if (minion is not ModProjectile proj) return false;
@@ -331,7 +353,7 @@ namespace Origins.Projectiles {
 							};
 							projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
 							float oldLife = minion.Life;
-							minion.DamageArtifactMinion((int)damageMod.ApplyTo(npc.damage * damageMultiplier));
+							minion.DamageArtifactMinion((int)damageMod.ApplyTo(npc.damage * damageMultiplier), new NPCDamageSource(npc));
 							return minion.Life < oldLife;
 						}
 					}
@@ -346,7 +368,7 @@ namespace Origins.Projectiles {
 					};
 					projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
 					float oldLife = minion.Life;
-					minion.DamageArtifactMinion((int)damageMod.ApplyTo(enemyProj.damage));
+					minion.DamageArtifactMinion((int)damageMod.ApplyTo(enemyProj.damage), new ProjectileDamageSource(enemyProj));
 					if (!enemyProj.hostile) {
 						enemyProj.penetrate--;
 					}

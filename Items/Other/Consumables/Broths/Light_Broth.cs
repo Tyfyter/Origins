@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Origins.Projectiles;
+using Terraria;
 using Terraria.ID;
 
 namespace Origins.Items.Other.Consumables.Broths {
@@ -12,7 +13,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 			];
 		}
 		public override int Duration => 6;
-		public override void ModifyHurt(Projectile minion, ref int damage, bool fromDoT) {
+		public override void ModifyHurt(Projectile minion, ref int damage, bool fromDoT, IArtifactDamageSource damageSource) {
 			damage -= damage / 4;
 		}
 	}

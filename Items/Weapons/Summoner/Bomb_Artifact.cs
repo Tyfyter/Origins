@@ -1,16 +1,17 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
+using Origins.NPCs.MiscE;
+using Origins.Projectiles;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.Projectiles;
-using System.Collections.Generic;
-using Origins.Buffs;
-using Origins.NPCs.MiscE;
+using static Origins.Projectiles.ArtifactMinionExtensions;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Bomb_Artifact : ModItem {
@@ -288,7 +289,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.frame = 7 + (int)(Projectile.ai[0] / 6f);
 				if (++Projectile.ai[0] > 30) {
 					//Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, projectile.damage, 0, projectile.owner, 1, 1);
-					Projectile.DamageArtifactMinion(50, noCombatText: true);
+					Projectile.DamageArtifactMinion(50, new ProjectileDamageSource(Projectile), noCombatText: true);
 				}
 			} else if (OnGround) {
 				Projectile.localAI[1]--;

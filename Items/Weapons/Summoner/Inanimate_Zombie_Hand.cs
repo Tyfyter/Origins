@@ -17,6 +17,7 @@ using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Projectiles.ArtifactMinionExtensions;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Inanimate_Zombie_Hand : ModItem {
@@ -291,7 +292,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 				if (Projectile.localAI[0] <= 0) {
 					if (hurtAmount > 0) {
-						this.DamageArtifactMinion(hurtAmount);
+						this.DamageArtifactMinion(hurtAmount, new TileDamageSource());
 						Projectile.localAI[0] = 5;
 					}
 				} else {
@@ -333,7 +334,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				hit.Knockback = 2;
 				hit.Crit = false;
 				Projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
-				this.DamageArtifactMinion(target.damage);
+				this.DamageArtifactMinion(target.damage, new NPCDamageSource(target));
 			}
 		}
 		public void OnHurt(int damage, bool fromDoT) {

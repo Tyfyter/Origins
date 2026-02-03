@@ -15,6 +15,7 @@ using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Projectiles.ArtifactMinionExtensions;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Old_Brine_Rock : ModItem, IJournalEntrySource {
@@ -404,7 +405,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					if (this.GetHurtByHostiles(skipNPCs: true)) {
 						Projectile.localAI[0] = 20;
 					} else if (hurtAmount > 0) {
-						this.DamageArtifactMinion(hurtAmount);
+						this.DamageArtifactMinion(hurtAmount, new TileDamageSource());
 						Projectile.localAI[0] = 5;
 					}
 				} else {
@@ -454,7 +455,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				hit.Crit = false;
 				Projectile.velocity = OriginExtensions.GetKnockbackFromHit(hit);
 				float oldLife = Life;
-				this.DamageArtifactMinion(target.damage);
+				this.DamageArtifactMinion(target.damage, new NPCDamageSource(target));
 				if (Life < oldLife) Projectile.localAI[0] = 20;
 			}
 		}

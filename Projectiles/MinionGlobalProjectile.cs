@@ -247,11 +247,11 @@ namespace Origins.Projectiles {
 			return null;
 		}
 	}
-	public abstract class SpeedModifierMinion : ModProjectile {
+	public abstract class MinionSpeedModifierProjectile : ModProjectile {
 		public float SpeedModifier { get; protected set; } = 1;
 		public override void SetStaticDefaults() {
 			OriginsSets.Projectiles.SupportsRealSpeedBuffs[Type] = static (projectile, bonus) => {
-				if (projectile.ModProjectile is SpeedModifierMinion tab) tab.SpeedModifier = bonus + 1;
+				if (projectile.ModProjectile is MinionSpeedModifierProjectile tab) tab.SpeedModifier = bonus + 1;
 			};
 		}
 	}

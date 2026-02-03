@@ -61,7 +61,7 @@ namespace Origins.Items.Accessories {
 			return OriginExtensions.AccessoryOrSpecialPrefix(Item, rand, PrefixCategory.AnyWeapon, PrefixCategory.Magic);
 		}
 	}
-	public class Lazy_Cloak_P : SpeedModifierMinion, IShadedProjectile {
+	public class Lazy_Cloak_P : MinionSpeedModifierProjectile, IShadedProjectile {
 		public const int frameSpeed = 5;
 		public static int ID { get; private set; }
 		public virtual int BuffID => Lazy_Cloak_Buff.ID;

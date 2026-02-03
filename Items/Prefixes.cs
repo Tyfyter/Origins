@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static Origins.Projectiles.ArtifactMinionExtensions;
 
 namespace Origins.Items {
 	public interface IOnSpawnProjectilePrefix {
@@ -610,7 +611,7 @@ namespace Origins.Items {
 		}
 		public override void UpdateProjectile(Projectile projectile, int time) {
 			if (projectile.numUpdates == -1 && time > 0 && time % 30 == 0) {
-				projectile.DamageArtifactMinion(2, true);
+				projectile.DamageArtifactMinion(2, new PrefixDamageSource(this), true);
 			}
 			if (Main.rand.NextBool(3, 4)) {
 				Dust dust = Dust.NewDustDirect(projectile.position - Vector2.One * 2, projectile.width + 4, projectile.height + 4, DustID.Torch, projectile.velocity.X * 0.4f, projectile.velocity.Y * 0.4f, 100);

@@ -100,7 +100,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 	}
 	#endregion balance
-	public class Terratotem_Tab : SpeedModifierMinion, IArtifactMinion, ISpecialOverCapacityMinion {
+	public class Terratotem_Tab : MinionSpeedModifierProjectile, IArtifactMinion, ISpecialOverCapacityMinion {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
@@ -329,7 +329,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 		}
 	}
-	public abstract class Terratotem_Mask_Base : SpeedModifierMinion {
+	public abstract class Terratotem_Mask_Base : MinionSpeedModifierProjectile {
 		public AutoLoadingAsset<Texture2D> sideTexture;
 		public AutoLoadingAsset<Texture2D> sideGlowTexture;
 		public virtual int FrameCount => 1;

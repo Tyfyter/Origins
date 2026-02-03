@@ -12,6 +12,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Projectiles.ArtifactMinionExtensions;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Ocean_Amulet : ModItem {
@@ -271,7 +272,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Projectile.DamageArtifactMinion(MaxLife, noCombatText: true);
+			Projectile.DamageArtifactMinion(MaxLife, new NPCDamageSource(target), noCombatText: true);
 		}
 		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.Center);

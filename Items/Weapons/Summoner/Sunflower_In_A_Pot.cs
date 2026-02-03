@@ -13,6 +13,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Projectiles.ArtifactMinionExtensions;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Sunflower_In_A_Pot : ModItem {
@@ -66,7 +67,7 @@ namespace Origins.Buffs {
 }
 namespace Origins.Items.Weapons.Summoner.Minions {
 	[LegacyName("Sunny_Sunflower")]
-	public class Sunflower_Sunny : ModProjectile, IArtifactMinion {
+	public class Sunflower_Sunny : MinionSpeedModifierProjectile, IArtifactMinion {
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
 		public static int ID { get; private set; }
@@ -76,6 +77,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		//static readonly AutoLoadingAsset<Texture2D> headTexture = typeof(Sunny_Sunflower).GetDefaultTMLName() + "_Head";
 		Vector2 HeadCenterOffset => new(Projectile.width * 0.5f, 6);
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			Main.projFrames[Type] = 15;
 			// Sets the amount of frames this minion has on its spritesheet
 			// This is necessary for right-click targeting
@@ -133,7 +135,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 			// die if distance is too big
 			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
-			float distanceToIdlePosition = vectorToIdlePosition.Length();
+			if (vectorToIdlePosition.HasNaNs()) vectorToIdlePosition = default;
+			Vector2 directionToIdlePosition = vectorToIdlePosition.Normalized(out float distanceToIdlePosition);
 			if (Main.myPlayer == player.whoAmI) {
 				if (distanceToIdlePosition > 400) {
 					if (distanceToIdlePosition > 2000) {
@@ -148,12 +151,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			if (Projectile.ai[2] == 1) {
 				Projectile.localAI[1] = 300;
-				float speed = 8f;
+				float speed = 8f * SpeedModifier;
 				float inertia = 12f;
-				Vector2 direction = vectorToIdlePosition * (speed / distanceToIdlePosition);
+				Vector2 direction = directionToIdlePosition * speed;
 				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
 				Projectile.tileCollide = false;
-				Projectile.direction = Math.Sign(vectorToIdlePosition.X);
+				if (vectorToIdlePosition.X != 0) Projectile.direction = Math.Sign(vectorToIdlePosition.X);
 				if (++Projectile.frameCounter >= 20) Projectile.frameCounter = 0;
 				Projectile.frame = 9;
 				if (distanceToIdlePosition > 64 || Projectile.Hitbox.OverlapsAnyTiles()) return;
@@ -225,7 +228,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Vector2 diff = targetCenter - Projectile.Center;
 				Projectile.direction = Math.Sign(diff.X);
 				if (bestTargetIsVisible) {
-					if (++Projectile.ai[1] >= 25) {
+					if (Projectile.ai[1].CycleUp(25, SpeedModifier)) {
 						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1f).WithVolume(0.25f), Projectile.Center);
 						if (Main.myPlayer == player.whoAmI) Projectile.NewProjectile(
 							Projectile.GetSource_FromAI(),
@@ -237,7 +240,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 							Projectile.owner
 						);
 						Projectile.ai[0] = -1;
-						Projectile.ai[1] = 0;
 					}
 				} else {
 					Projectile.velocity.X += walkSpeed * Math.Sign(diff.X);
@@ -279,7 +281,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			if (Projectile.lavaWet) {
 				Projectile.localAI[2] = -1;
-				this.DamageArtifactMinion(200);
+				this.DamageArtifactMinion(200, new TileDamageSource());
 			}
 			if (Main.dayTime) {
 				foreach (Player healee in Main.ActivePlayers) {
