@@ -147,9 +147,25 @@ namespace Origins.Tiles.Ashen {
 			}
 		}
 	}
+	public class Blue_Mechanical_Key_Node : Mechanical_Key_Node {
+		public override Color SwitchColor => new Color(0, 80, 240);
+		public override int KeyType => ItemType<Mechanical_Key_Blue>();
+	}
+	public class Green_Mechanical_Key_Node : Mechanical_Key_Node {
+		public override Color SwitchColor => new Color(16, 240, 0);
+		public override int KeyType => ItemType<Mechanical_Key_Green>();
+	}
+	public class Orange_Mechanical_Key_Node : Mechanical_Key_Node {
+		public override Color SwitchColor => new Color(255, 81, 0);
+		public override int KeyType => ItemType< Mechanical_Key_Orange>();
+	}
 	[LegacyName("Purple_Mechanical_Switch")]
 	public class Purple_Mechanical_Key_Node : Mechanical_Key_Node {
-		public override Color SwitchColor => FromHexRGB(0x6d0a91);//#6d0a91
+		public override Color SwitchColor => new Color(109, 10, 145);
 		public override int KeyType => ItemType<Mechanical_Key_Purple>();
+	}
+	public class Yellow_Mechanical_Key_Node : Mechanical_Key_Node {
+		public override Color SwitchColor => new Color(255, 179, 0);
+		public override int KeyType => ItemType<Mechanical_Key_Yellow>();
 	}
 }
