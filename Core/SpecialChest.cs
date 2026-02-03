@@ -273,7 +273,7 @@ namespace Origins.Core {
 				ItemSlot.OverrideHover(ref item, ItemSlot.Context.ChestItem);
 				bool isLeft = Main.mouseLeftRelease && Main.mouseLeft;
 				bool didSomething = false;
-				if (!Main.LocalPlayer.ItemAnimationActive && slot <= ItemCount) {
+				if (!Main.LocalPlayer.ItemAnimationActive && slot < ItemCount) {
 					ref Item original = ref Items()[slot];
 					ItemSlot.LeftClick(ref item, ItemSlot.Context.BankItem);
 					ItemSlot.RightClick(ref item, ItemSlot.Context.BankItem);

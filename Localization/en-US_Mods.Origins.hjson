@@ -2561,6 +2561,10 @@ Tiles: {
 	Dirt_Chest.MapEntry: "[c/976B4B:{$Items.Dirt_Chest_Item.DisplayName}]"
 	Dirt_Chest_Natural.MapEntry: "{$Dirt_Chest.MapEntry}"
 	Purple_Mechanical_Key_Node.MapEntry: Purple Mechanical Key Node
+	Blue_Mechanical_Key_Node.MapEntry: Blue Mechanical Key Node
+	Green_Mechanical_Key_Node.MapEntry: Green Mechanical Key Node
+	Orange_Mechanical_Key_Node.MapEntry: Orange Mechanical Key Node
+	Yellow_Mechanical_Key_Node.MapEntry: Yellow Mechanical Key Node
 }
 
 Keybinds: {

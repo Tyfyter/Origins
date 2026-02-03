@@ -7942,3 +7942,23 @@ Structure_Void_Marker_Item: {
 	// DisplayName: Structure Void Marker
 	// Tooltip: ""
 }
+
+Blue_Mechanical_Key_Node_Item: {
+	// DisplayName: Blue Mechanical Key Node Item
+	// Tooltip: ""
+}
+
+Green_Mechanical_Key_Node_Item: {
+	// DisplayName: Green Mechanical Key Node Item
+	// Tooltip: ""
+}
+
+Orange_Mechanical_Key_Node_Item: {
+	// DisplayName: Orange Mechanical Key Node Item
+	// Tooltip: ""
+}
+
+Yellow_Mechanical_Key_Node_Item: {
+	// DisplayName: Yellow Mechanical Key Node Item
+	// Tooltip: ""
+}
