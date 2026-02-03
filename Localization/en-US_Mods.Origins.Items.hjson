@@ -7937,3 +7937,8 @@ Metallic_Broth: {
 		Artifact minions also inflict [buffhint:Bleeding] and heal when hitting bleeding enemies
 		'''
 }
+
+Structure_Void_Marker_Item: {
+	DisplayName: Structure Void Marker
+	Tooltip: ""
+}

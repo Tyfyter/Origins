@@ -2214,6 +2214,8 @@ Projectiles: {
 	// Scrap_Dart_P.DisplayName: Scrap Dart
 	// Scrap_Dart_Shrapnel.DisplayName: Scrap Dart Shrapnel
 	// Plant_Crystal_Shrapnel.DisplayName: The P.L.A.N.T. Crystal Shrapnel
+	// Sunflower_Sunny.DisplayName: Sunflower Sunny
+	// Sunflower_Sunny_P.DisplayName: Sunflower Sunny P
 }
 
 Prefixes: {

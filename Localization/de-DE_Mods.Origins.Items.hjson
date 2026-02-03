@@ -7023,6 +7023,7 @@ Unmarked_Antidote: {
 // Worn_Paper_The_Packing_Slip.DisplayName: Worn Paper: The Packing Slip
 // Worn_Paper_They_Found_Us.DisplayName: Worn Paper: They Found Us
 // Worn_Paper_Mean_Baby.DisplayName: Worn Paper: Mean Baby
+// Worn_Paper_Workplace_Safety_Concern.DisplayName: Worn Paper: Workplace Safety Concern
 
 Minishark_Broth: {
 	// DisplayName: Minishark Broth
@@ -7935,4 +7936,9 @@ Metallic_Broth: {
 		All minions inflict [buffhint:Ichor]
 		Artifact minions also inflict [buffhint:Bleeding] and heal when hitting bleeding enemies
 		''' */
+}
+
+Structure_Void_Marker_Item: {
+	// DisplayName: Structure Void Marker
+	// Tooltip: ""
 }

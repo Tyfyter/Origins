@@ -115,6 +115,7 @@ namespace Origins.Core.Structures {
 	public class PlaceTile : SerializableTileDescriptor {
 		readonly ConcurrentDictionary<string, TileDescriptor> descriptors = [];
 		protected static Type GetDescriptorType(Tile tile) {
+			if (Structure_Void_Marker.IsVoid(tile)) return typeof(Void);
 			if (Main.tileContainer[tile.TileType]) return typeof(PlaceChest);
 			if (TileObjectData.GetTileData(tile) is not null) return typeof(PlaceSpecialTile);
 			if (Main.tileFrameImportant[tile.TileType]) return typeof(PlaceFramedTile);
@@ -389,6 +390,9 @@ namespace Origins.Core.Structures {
 	}
 	public class Void : SerializableTileDescriptor {
 		readonly TileDescriptor descriptor = new(null, null, Ignore: true);
+		public override void Load() {
+			AddSerializer(tile => Structure_Void_Marker.IsVoid(tile) ? nameof(Void) : null);
+		}
 		protected override TileDescriptor Create(string[] parameters, string originalText) => descriptor;
 	}
 	public class Empty : SerializableTileDescriptor {
@@ -398,7 +402,7 @@ namespace Origins.Core.Structures {
 			tile.HasTile = false;
 		}, Parts: ["Empty"]);
 		public override void Load() {
-			AddSerializer(tile => tile.HasTile ? null : "Empty");
+			AddSerializer(tile => tile.HasTile ? null : nameof(Empty));
 		}
 		protected override TileDescriptor Create(string[] parameters, string originalText) => descriptor;
 	}
