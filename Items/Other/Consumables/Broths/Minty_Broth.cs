@@ -5,6 +5,7 @@ using PegasusLib;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Origins.Projectiles;
 
 namespace Origins.Items.Other.Consumables.Broths {
 	public class Minty_Broth : BrothBase {
@@ -32,7 +33,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 				Main.CurrentDrawnEntityShader = oldShader;
 			}
 		}
-		public override void OnHurt(Projectile minion, int damage, bool fromDoT) {
+		public override void OnHurt(Projectile minion, int damage, bool fromDoT, IArtifactDamageSource damageSource) {
 			if (Main.myPlayer != minion.owner || fromDoT) return;
 			Vector2 center = minion.Center;
 			NPC.HitInfo hit = new() {
