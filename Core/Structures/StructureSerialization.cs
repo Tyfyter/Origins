@@ -199,7 +199,7 @@ namespace Origins.Core.Structures {
 			StartPos = descriptor.StartPos;
 			postGenerate = PostGenerateDescriptor.Create(mod, descriptor.PostGenerate);
 			weight = WeightDescriptor.Create(mod, descriptor.Weight);
-			tags = descriptor.Tags.ToHashSet();
+			tags = (descriptor.Tags ?? []).ToHashSet();
 		}
 		public override RoomDescriptor Serialize(StructorDescriptor forStructure) => new() {
 			Map = Map.Split('\n', StringSplitOptions.RemoveEmptyEntries),
@@ -213,7 +213,7 @@ namespace Origins.Core.Structures {
 			StartPos = StartPos,
 			PostGenerate = ExportPostGenerate(),
 			Weight = ExportWeight(),
-			Tags = tags.ToArray(),
+			Tags = (tags ?? []).ToArray(),
 		};
 		public override void PostGenerate(PostGenerateParameters parameters) => postGenerate?.Invoke(parameters);
 		public override float GetWeight(WeightParameters parameters) => weight.Accumulate(parameters, 1);
