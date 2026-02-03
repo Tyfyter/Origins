@@ -649,7 +649,6 @@ namespace Origins {
 				LibFeature.IDrawNPCEffect,
 				LibFeature.IComplexMineDamageTile_Hammer,
 				LibFeature.WrappingTextSnippet,
-				LibFeature.ExtraDyeSlots,
 				LibFeature.ITextInputContainer
 			);
 			ApplyPatches();
