@@ -10,6 +10,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Sockets;
 using System.Numerics;
 using System.Text;
 using Terraria;
@@ -102,7 +103,7 @@ namespace Origins.Core.Structures {
 		public virtual string ExportPostGenerate() => null;
 		public virtual RoomDescriptor Serialize(StructorDescriptor forStructure) => new() { Special = FullName };
 		public record struct PostGenerateParameters(RoomInstance Instance, Rectangle Area);
-		public record struct WeightParameters(StructureInstance Structure, Point Position);
+		public record struct WeightParameters(StructureInstance Structure, Point Position, ARoom FromRoom, string FromSocket);
 	}
 	public static class RoomExtensions {
 		public static void Validate(this ARoom room) {
@@ -341,7 +342,7 @@ namespace Origins.Core.Structures {
 		}
 		public void AddRoomsToExtend(WeightedRandom<(RoomInstance room, int index)> newRoomOptions, Dictionary<string, List<(ARoom room, char entrance)>[]> lookup) {
 			for (int i = 0; i < socketTracker.sockets.Count; i++) {
-				(RoomSocket socket, int x, int y) = socketTracker.sockets[i];
+				(RoomSocket socket, ARoom fromRoom, int x, int y) = socketTracker.sockets[i];
 
 				Direction direction = socket.Direction;
 				Point pos = new(x, y);
@@ -360,7 +361,7 @@ namespace Origins.Core.Structures {
 					break;
 				}
 				foreach ((ARoom room, char entrance) in lookup[socket.Key][direction.Index()]) {
-					float weight = room.GetWeight(new(this, pos));
+					float weight = room.GetWeight(new(this, pos, fromRoom, socket.Key));
 					if (weight <= 0) continue;
 					RoomInstance template = new(room, pos - room.GetOrigin(entrance));
 					foreach (Direction repeatDirection in room.GetRepetitionDirections(direction)) {
@@ -399,7 +400,7 @@ namespace Origins.Core.Structures {
 				connectedSockets.Clear();
 				for (int k = 0; k < expectedSockets.Count; k++) {
 					(char key, RoomSocket socket, Point origin) = expectedSockets[k];
-					if (!socketTracker.sockets.Contains((socket, i + origin.X, j + origin.Y))) connectedSockets.Add(key);
+					if (!socketTracker.Contains(socket, i + origin.X, j + origin.Y)) connectedSockets.Add(key);
 				}
 				for (int y = 0; y < map.Length; y++) {
 					for (int x = 0; x < map[y].Length; x++) {
@@ -448,7 +449,7 @@ namespace Origins.Core.Structures {
 						int posIndex = i + x + (j + y) * Main.maxTilesX;
 						char currentTile = map[y][x];
 						if (Room.Key[currentTile].Ignore) continue;
-						if (Room.SocketKey.TryGetValue(currentTile, out RoomSocket socket)) socketTracker.Add(socket, i + x, j + y, socket.Optional);
+						if (Room.SocketKey.TryGetValue(currentTile, out RoomSocket socket)) socketTracker.Add(socket, Room, i + x, j + y, socket.Optional);
 						else if (socketTracker.IsImportant(i + x, j + y)) return false;
 						Tile existing = Main.tile[i + x, j + y];
 						if (existing.HasTile && !TileID.Sets.CanBeClearedDuringGeneration[existing.TileType]) return false;
@@ -490,14 +491,14 @@ namespace Origins.Core.Structures {
 	}
 	public class SocketTracker {
 		readonly List<int> requiredSockets = [];
-		public List<(RoomSocket socket, int i, int j)> sockets = [];
+		public List<TrackedSocket> sockets = [];
 		public int RequiredCount => requiredSockets.Count;
-		public void Add(RoomSocket socket, int i, int j, bool optional) {
+		public void Add(RoomSocket socket, ARoom fromRoom, int i, int j, bool optional) {
 			int x = i;
 			int y = j;
 			socket.Direction.Nudge(ref x, ref y);
 			for (int k = 0; k < sockets.Count; k++) {
-				(RoomSocket socket2, int i2, int j2) = sockets[k];
+				(RoomSocket socket2, _, int i2, int j2) = sockets[k];
 				if (i2 == x && j2 == y) {
 					if (socket.Direction.IsInverse(socket2.Direction)) {
 						requiredSockets.Remove(k);
@@ -507,17 +508,26 @@ namespace Origins.Core.Structures {
 				}
 			}
 			if (!optional) requiredSockets.Add(sockets.Count);
-			sockets.Add((socket, i, j));
+			sockets.Add(new(socket, fromRoom, i, j));
 		}
 		public bool IsImportant(int i, int j) {
 			for (int k = 0; k < sockets.Count; k++) {
-				(RoomSocket socket, int i2, int j2) = sockets[k];
+				(RoomSocket socket, _, int i2, int j2) = sockets[k];
 				socket.Direction.Nudge(ref i2, ref j2);
 				if (i2 == i && j2 == j) return true;
 			}
 			return false;
 		}
 		public SocketTracker Clone() => new() { sockets = sockets.ToList() };
+		public record struct TrackedSocket(RoomSocket Socket, ARoom FromRoom, int I, int J) {
+			public readonly bool Matches(RoomSocket socket, int i, int j) => socket == Socket && i == I && j == J;
+		}
+		public bool Contains(RoomSocket socket, int i, int j) {
+			for (int k = 0; k < sockets.Count; k++) {
+				if (sockets[k].Matches(socket, i, j)) return true;
+			}
+			return false;
+		}
 	}
 	/*public class TestStructure() : Structure(ModContent.GetInstance<Origins>()) {
 		public override void Load() {

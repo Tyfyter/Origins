@@ -189,6 +189,7 @@ namespace Origins.Core.Structures {
 	public class DeserializedRoom : ARoom {
 		readonly PostGenerateDescriptor postGenerate;
 		readonly WeightDescriptor weight;
+		readonly HashSet<string> tags;
 		public DeserializedRoom(Mod mod, RoomDescriptor descriptor) {
 			Identifier = descriptor.Identifier;
 			Map = string.Join('\n', descriptor.Map);
@@ -198,6 +199,7 @@ namespace Origins.Core.Structures {
 			StartPos = descriptor.StartPos;
 			postGenerate = PostGenerateDescriptor.Create(mod, descriptor.PostGenerate);
 			weight = WeightDescriptor.Create(mod, descriptor.Weight);
+			tags = descriptor.Tags.ToHashSet();
 		}
 		public override RoomDescriptor Serialize(StructorDescriptor forStructure) => new() {
 			Map = Map.Split('\n', StringSplitOptions.RemoveEmptyEntries),
@@ -210,7 +212,8 @@ namespace Origins.Core.Structures {
 			RepetitionRange = RepetitionRange,
 			StartPos = StartPos,
 			PostGenerate = ExportPostGenerate(),
-			Weight = ExportWeight()
+			Weight = ExportWeight(),
+			Tags = tags.ToArray(),
 		};
 		public override void PostGenerate(PostGenerateParameters parameters) => postGenerate?.Invoke(parameters);
 		public override float GetWeight(WeightParameters parameters) => weight.Accumulate(parameters, 1);
@@ -302,6 +305,7 @@ namespace Origins.Core.Structures {
 			public char StartPos = char.MinValue;
 			public string PostGenerate;
 			public string Weight;
+			public string[] Tags;
 			public ARoom CreateRoom(Mod mod) {
 				if (!string.IsNullOrWhiteSpace(Special)) {
 					string[] parts = Special.Split('/');
