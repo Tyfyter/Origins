@@ -358,37 +358,20 @@ namespace Origins.Tiles.Ashen {
 				topFrame.Y -= 18;
 				break;
 			}
-			const bool draw_above_all = false;
 			Lighting.GetCornerColors(i, j - 1, out VertexColors vertices);
-			if (draw_above_all) {
-				Catwalk_Railing_System.toDraw.Add((
-					new Vector4(pos.X, pos.Y + 16, 16, 16),
-					new Rectangle(railingFrame * 18, 4 * 18, 16, 16),
-					vertices
-				));
-			} else {
-				Main.tileBatch.Draw(
-					TextureAssets.Tile[Type].Value,
-					new Vector4(pos.X, pos.Y + 16, 16, 16),
-					new Rectangle(railingFrame * 18, 4 * 18, 16, 16),
-					vertices
-				);
-			}
+			Main.tileBatch.Draw(
+				TextureAssets.Tile[Type].Value,
+				new Vector4(pos.X, pos.Y + 16, 16, 16),
+				new Rectangle(railingFrame * 18, 4 * 18, 16, 16),
+				vertices
+			);
 			Lighting.GetCornerColors(i, j - 2, out vertices);
-			if (draw_above_all) {
-				Catwalk_Railing_System.toDraw.Add((
-					new Vector4(pos, 16, 16),
-					topFrame,
-					vertices
-				));
-			} else {
-				Main.tileBatch.Draw(
-					TextureAssets.Tile[Type].Value,
-					new Vector4(pos, 16, 16),
-					topFrame,
-					vertices
-				);
-			}
+			Main.tileBatch.Draw(
+				TextureAssets.Tile[Type].Value,
+				new Vector4(pos, 16, 16),
+				topFrame,
+				vertices
+			);
 			return base.PreDraw(i, j, spriteBatch);
 		}
 	}
