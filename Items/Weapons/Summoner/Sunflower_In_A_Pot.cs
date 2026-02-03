@@ -27,8 +27,8 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 14;
 			Item.shootSpeed = 9f;
-			Item.width = 24;
-			Item.height = 38;
+			Item.width = 14;
+			Item.height = 23;
 			Item.useTime = 24;
 			Item.useAnimation = 24;
 			Item.useStyle = ItemUseStyleID.Shoot;

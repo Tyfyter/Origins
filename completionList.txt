@@ -1031,7 +1031,7 @@ SUMMONER WEAPONS:
 (^) Relay Rod
 (^) Rotted Worm Staff
 (X) Shadow Cast
-(ᗢ) Sunflower in a Pot (Sunflower variants)
+(#2, ^2) Sunflower in a Pot (particle effects for variants)
 (^) Teardown
 (^) Thread Rod
 (^) Woodsprite Staff
@@ -1382,6 +1382,7 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
+(#, ^2) Administrator Panel !!!
 (^) Artifiber Tree
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
@@ -1403,6 +1404,8 @@ TILES:
 (^) Hanging Scrap
 (^) Heat Vent
 (^) Hydrothermal Vent
+(^) Industrial Work Bench
+(^) Lathe
 (^) Limestone Rubble
 (^) Marrowick Coral
 (^) Marrowick Flange
@@ -1410,6 +1413,8 @@ TILES:
 (^) Ocotillo
 (X) Petrified Baobab Tree
 (^) Petrified Tree
+(#, ^2) Power Box !!!
+(#, ^2) Radio Broadcaster !!!
 (^) Riven Altar
 (^) Riven Foliage
 (^) Riven Pot
@@ -1419,17 +1424,12 @@ TILES:
 (^) Steel Support Beam
 (^) Suit Locker
 (^) Surveysprout
+(^) Table Saw
 (^) Tangela Bramble
+(^) Tool Rack
 (^) Underwater Vine
 (^) Venus Coral
 (^) Wilting Rose
-(^) Lathe
-(^) Table Saw
-(^) Industrial Work Bench
-(^) Tool Rack
-(#, ^2) Administrator Panel !!!
-(#, ^2) Power Box !!!
-(#, ^2) Radio Broadcaster !!!
 (^) Wrycoral
 
 (^) A Perfect World

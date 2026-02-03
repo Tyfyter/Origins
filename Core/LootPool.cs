@@ -204,6 +204,20 @@ public class Ashen_Medical : LootPool {
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Medicinal_Acid>(), 2, 1, 3));
 	}
 }
+public class Ashen_MedicalLore : LootPool {
+	public override void SetStaticDefaults() {
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Workplace_Safety_Concern>()));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Morphine>(), 5, 8, 16));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Blood_Pack>(), 2, 3, 11));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Fire_Band>(), 1, 11, 20));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Adrenaline>(), 4, 3, 8));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Sanguis_Pack>(), 1, 1, 2));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Rasterwrap>(), 3, 1, 2));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Brightsee>(), 3, 5, 15));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Unmarked_Antidote>(), 1, 1, 4));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Medicinal_Acid>(), 2, 1, 3));
+	}
+}
 public class Ashen_Personal : LootPool {
 	public class Rarer : LootPool {
 		public override void SetStaticDefaults() {
@@ -268,13 +282,15 @@ public class Ashen_Armory : LootPool {
 	public class Rarer : LootPool {
 		public override void SetStaticDefaults() {
 			Sequential = true;
-			AddRule(ItemDropRule.Common(ModContent.ItemType<Switchblade_Broadsword>(), 1, 1, 3));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Switchblade_Broadsword>(), 2, 1, 3));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Soldering_Iron>(), 2));
-			AddRule(ItemDropRule.Common(ModContent.ItemType<Defective_Mortar_Shell>()));
+			AddRule(ItemDropRule.Common(ModContent.ItemType<Defective_Mortar_Shell>(), 2));
 		}
 	}
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
+		AddRule(ItemDropRule.Common(ItemID.Revolver, 40));
+		AddRule(ItemDropRule.Common(ItemID.Handgun, 10, 1, 3));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Flashbang>(), 2, 35, 185));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Link_Grenade>(), 1, 50, 150));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Armor_Piercing_Bullet>(), 3, 55, 210));
