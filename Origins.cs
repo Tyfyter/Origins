@@ -645,7 +645,13 @@ namespace Origins {
 			//OriginExtensions.initClone();
 
 			Main.OnPostDraw += IncrementFrameCount;
-			PegasusLib.PegasusLib.Require(this, LibFeature.IDrawNPCEffect, LibFeature.IComplexMineDamageTile_Hammer, LibFeature.WrappingTextSnippet);
+			PegasusLib.PegasusLib.Require(this, 
+				LibFeature.IDrawNPCEffect,
+				LibFeature.IComplexMineDamageTile_Hammer,
+				LibFeature.WrappingTextSnippet,
+				LibFeature.ExtraDyeSlots,
+				LibFeature.ITextInputContainer
+			);
 			ApplyPatches();
 
 			for (int i = 1372; i < 1376; i++) PaintingsNotFromVendor[i] = true;
