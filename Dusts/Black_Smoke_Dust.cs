@@ -10,9 +10,8 @@ namespace Origins.Dusts {
 		public override void OnSpawn(Dust dust) {
 			dust.frame.X = 10 * DustID.Smoke;
 			dust.scale *= 1.1f;
-			if (dust.color == default) dust.color = Color.White;
 			const int brightness = 50;
-			dust.color = dust.color.MultiplyRGBA(new Color(brightness, brightness, brightness));
+			if (dust.color == default) dust.color = new Color(brightness, brightness, brightness);
 		}
 		public override bool Update(Dust dust) {
 			if (!dust.noGravity) dust.velocity.Y += 0.05f;

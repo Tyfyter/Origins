@@ -13,6 +13,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Projectiles {
 	public abstract class MinionBase : ModProjectile {
+		public float SpeedModifier { get; protected set; } = 1;
 		public override void SetStaticDefaults() {
 			// Sets the amount of frames this minion has on its spritesheet
 			// This is necessary for right-click targeting
@@ -23,6 +24,10 @@ namespace Origins.Projectiles {
 			Main.projPet[Type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
+			OriginsSets.Projectiles.SupportsRealSpeedBuffs[Type] = RealSpeedBuffAction;
+		}
+		protected static void RealSpeedBuffAction(Projectile projectile, float bonus) {
+			if (projectile.ModProjectile is MinionBase minion) minion.SpeedModifier = bonus + 1;
 		}
 		public abstract ref bool HasBuff(Player player);
 		public TargetingData targetingData;
@@ -111,7 +116,7 @@ namespace Origins.Projectiles {
 					< 600f => 0.9f,
 					_ => 1.2f
 				};
-				Projectile.velocity += direction * speed;
+				Projectile.velocity += direction * speed * SpeedModifier;
 				if (Vector2.Dot(Projectile.velocity.Normalized(out _), direction) < 0.25f)
 					Projectile.velocity *= 0.8f;
 				Projectile.velocity = Projectile.velocity.Normalized(out speed) * Math.Min(speed, 30);

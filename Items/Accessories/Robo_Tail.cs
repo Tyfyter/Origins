@@ -207,7 +207,7 @@ namespace Origins.Items.Accessories {
 
 				ResetTargetingData();
 				player.OriginPlayer().GetMinionTarget(TargetingAlgorithm);
-				if (Projectile.ai[1].CycleUp(120) && targetingData.TargetID != -1 && CollisionExt.CanHitRay(Projectile.Center, targetingData.targetHitbox.Center())) {
+				if (Projectile.ai[1].CycleUp(120, SpeedModifier) && targetingData.TargetID != -1 && CollisionExt.CanHitRay(Projectile.Center, targetingData.targetHitbox.Center())) {
 					Projectile.SpawnProjectile(
 						Projectile.GetSource_FromAI(),
 						Projectile.Center,
@@ -246,6 +246,7 @@ namespace Origins.Items.Accessories {
 			Main.projPet[Projectile.type] = true;
 
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+			OriginsSets.Projectiles.SupportsRealSpeedBuffs[Type] = RealSpeedBuffAction;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
@@ -273,7 +274,7 @@ namespace Origins.Items.Accessories {
 			Vector2 targetPos = Projectile.Center.Clamp(targetHitbox);
 			Vector2 direction = (targetPos - Projectile.Center).Normalized(out float distance);
 			if (distance == 0) return;
-			float speed = 0.3f;
+			float speed = 0.3f * SpeedModifier;
 			Projectile.velocity *= float.Lerp(0.8f, 0.98f, float.Abs(Vector2.Dot(direction, Projectile.velocity.Normalized(out _))));
 			Projectile.velocity += direction * speed;
 			Projectile.velocity = Projectile.velocity.Normalized(out speed) * Math.Min(speed, 16);
@@ -286,7 +287,7 @@ namespace Origins.Items.Accessories {
 			}
 			if (Projectile.ai[1].TrySet(0)) SoundEngine.PlaySound(SoundID.NPCHit4, Projectile.Center);
 
-			if (foundTarget && Projectile.ai[0].CycleDown(30) && CollisionExt.CanHitRay(Projectile.Center, targetingData.targetHitbox.Center())) {
+			if (foundTarget && Projectile.ai[0].CycleDown(30, SpeedModifier) && CollisionExt.CanHitRay(Projectile.Center, targetingData.targetHitbox.Center())) {
 				Projectile.SpawnProjectile(
 					Projectile.GetSource_FromAI(),
 					Projectile.Center,

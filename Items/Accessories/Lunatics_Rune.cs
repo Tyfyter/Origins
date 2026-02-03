@@ -1027,7 +1027,7 @@ namespace Origins.Items.Accessories {
 					< 300f => 0.6f,
 					< 600f => 0.9f,
 					_ => 1.2f
-				};
+				} * SpeedModifier;
 				if (Vector2.Dot(Projectile.velocity.Normalized(out _), direction) < 0.25f) {
 					speed *= 5 / speed;
 					Projectile.velocity *= 0.97f;
