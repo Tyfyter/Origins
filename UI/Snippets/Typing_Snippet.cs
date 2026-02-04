@@ -17,9 +17,16 @@ namespace Origins.UI.Snippets {
 		public class Typing_Snippet(string text, Options options, float scale = 1) : TextSnippet(text, options.Color, scale) {
 			readonly StringBuilder DisplayedText = new();
 			readonly string OriginalText = text;
-			int timer = options.Delay;
+			int timer = options.Delay * options.GlowTimeMult;
+			uint lastUpdatedOn = OriginSystem.gameTickCount;
 			public override void Update() {
-				if (DisplayedText.Length < OriginalText.Length && timer.CycleDown(options.Speed)) {
+				if (options.Glow) {
+					if (lastUpdatedOn <= OriginSystem.gameTickCount * 5) lastUpdatedOn++;
+					else return;
+				} else {
+					if (!lastUpdatedOn.TrySet(OriginSystem.gameTickCount)) return;
+				}
+				if (DisplayedText.Length < OriginalText.Length && timer.CycleDown(options.Speed * options.GlowTimeMult)) {
 					DisplayedText.Append(OriginalText[DisplayedText.Length]);
 					if (options.Clack) SoundEngine.PlaySound(SoundID.MenuTick);
 				}
@@ -43,7 +50,9 @@ namespace Origins.UI.Snippets {
 				return base.UniqueDraw(justCheckingString, out size, spriteBatch, position, color, scale);
 			}
 		}
-		public record struct Options(int Speed = 6, int Delay = 0, int Blink = 20, Color Color = default, bool Cursor = true, bool KeepCursor = false, bool Clack = false);
+		public record struct Options(int Speed = 6, int Delay = 0, int Blink = 20, Color Color = default, bool Cursor = true, bool KeepCursor = false, bool Clack = false, bool Glow = false) {
+			public readonly int GlowTimeMult => Glow ? 5 : 1;
+		}
 		public override IEnumerable<SnippetOption> GetOptions() {
 			yield return SnippetOption.CreateIntOption("s", speed => options.Speed = speed);
 			yield return SnippetOption.CreateIntOption("b", blink => options.Blink = blink);
@@ -52,6 +61,7 @@ namespace Origins.UI.Snippets {
 			yield return SnippetOption.CreateFlagOption("cur", () => options.Cursor = true);//TODO: use TextInputContainerExtensions.CursorType
 			yield return SnippetOption.CreateFlagOption("k", () => options.KeepCursor = true);
 			yield return SnippetOption.CreateFlagOption("cl", () => options.Clack = true);
+			yield return SnippetOption.CreateFlagOption("g", () => options.Glow = true);
 		}
 		public override TextSnippet Parse(string text, Color baseColor, Options options) {
 			if (options.Speed == default) options.Speed = 6;

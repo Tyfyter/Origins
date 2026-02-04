@@ -34,6 +34,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using static Origins.OriginsSets.Items;
+using static Origins.Tiles.Ashen.Administrator_Panel;
 using static Tyfyter.Utils.UITools;
 
 namespace Origins {
@@ -655,7 +656,12 @@ namespace Origins {
 			}
 			Main.tileSolid[Broken_Catwalk.ID] = false;
 			Main.tileSolidTop[Broken_Catwalk.ID] = false;
+			unchecked {
+				gameTickCount++;
+			}
+			Nuke_Launch_Program.Update();
 		}
+		public static uint gameTickCount = 0;
 		bool hasLoggedPUP = false;
 		public int laserTagActiveTeams = 0;
 		public int laserTagActivePlayers = 0;

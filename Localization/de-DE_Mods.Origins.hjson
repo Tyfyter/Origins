@@ -70,15 +70,16 @@ Status_Messages: {
 	// Felnum_Spawn: The clouds have been blessed with Felnum!
 
 	Nuke_Launch_Program: {
-		// Start: "[c/FF5100:>] [type/d10s5cFFB18C:{0} has initialized Nuclear Launch Program]"
-		// Destination: "[c/FF5100:>] [type/d10s5cFFB18C:Select Destination:]"
-		// DestName: "[c/FF5100:>] [type/d10s5cFFB18C:{0}]"
-		// InitCD: "[c/FF5100:>] [type/d10s5cFFB18C:Initializing Countdown]"
-		// 5: "[c/FF5100:>] 5"
-		// 4: "[c/FF5100:>] 4"
-		// 3: "[c/FF5100:>] 3"
-		// 2: "[c/FF5100:>] 2"
-		// 1: "[c/FF5100:>] 1"
+		// Cursor: "[c/FF5100:>] "
+		// TypingSnippet: "[type/gd{0}s{1}cFFB18C:{2}]"
+		// Start: "{0} has initialized Nuclear Launch Program"
+		// Destination: Select Destination:
+		// InitCD: Initializing Countdown
+		// 5: "5"
+		// 4: "4"
+		// 3: "3"
+		// 2: "2"
+		// 1: "1"
 	}
 }
 
@@ -3583,6 +3584,7 @@ AdvancedTextSnippet: {
 		// Option_cur: Disable Cursor
 		// Option_b: Blink Time
 		// Option_cl: Clack
+		// Option_g: Glow
 	}
 }
 

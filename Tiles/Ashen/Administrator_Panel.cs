@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using Origins.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
@@ -30,10 +31,6 @@ namespace Origins.Tiles.Ashen {
 				.Register();
 			}).RegisterItem();
 			this.SetupGlowKeys();
-			Main.OnPostDraw += Nuke_Launch_Program.Update;
-		}
-		public override void Unload() {
-			Main.OnPostDraw -= Nuke_Launch_Program.Update;
 		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
@@ -115,6 +112,7 @@ namespace Origins.Tiles.Ashen {
 		public record class Nuke_Launch_Program(Player Player) : SyncedAction {
 			private static int Countdown = 0;
 			private static int CountdownStage = 0;
+			const string base_key = "Mods.Origins.Status_Messages.Nuke_Launch_Program.";
 			public Nuke_Launch_Program() : this(default(Player)) { }
 			public override SyncedAction NetReceive(BinaryReader reader) => this with {
 				Player = Main.player[reader.ReadByte()]
@@ -122,42 +120,47 @@ namespace Origins.Tiles.Ashen {
 			public override void NetSend(BinaryWriter writer) {
 				writer.Write((byte)Player.whoAmI);
 			}
-			public override bool ServerOnly => true;
 			protected override bool ShouldPerform => Countdown == 0;
-			static void DisplayMessage(string key, params object[] substitutions) {
-				WorldGen.BroadcastText(NetworkText.FromKey("Mods.Origins.Status_Messages.Nuke_Launch_Program." + key, substitutions), FromHexRGB(0xFFB18C));
+			/// <summary>
+			/// <paramref name="delayAfter"/> is ignored if <paramref name="typeOut"/> is false
+			/// </summary>
+			static void DisplayMessage(string message, bool typeOut = true, int delayAfter = 15) {
+				if (typeOut) {
+					const int delay = 2;
+					const int speed = 1;
+					Countdown = (message.Length - 1) * speed + delay + delayAfter;
+					message = GetText("TypingSnippet", delay, speed, message);
+				}
+				Main.NewText(GetText("Cursor") + message, FromHexRGB(0xFFB18C));
 			}
-			public static void Update(GameTime _) {
+			static string GetText(string key, params object[] substitutions) => Language.GetTextValue(base_key + key, substitutions);
+			public static void Update() {
 				if (Countdown == 0) return;
 
-				Debugging.ChatOverhead($"CD: {Countdown}, CDS: {CountdownStage}");
 				switch (CountdownStage) {
 					case 0:
 					if (--Countdown == 0) {
 						++CountdownStage;
-						Countdown = (19 - 1) * 5 + 10;
-						DisplayMessage("Destination");
+						DisplayMessage(GetText("Destination"));
 					}
 					break;
 					case 1:
 					if (--Countdown == 0) {
 						++CountdownStage;
-						Countdown = (Main.worldName.Length - 1) * 5 + 10;
-						DisplayMessage("DestName", Main.worldName);
+						DisplayMessage(Main.worldName);
 					}
 					break;
 					case 2:
 					if (--Countdown == 0) {
 						++CountdownStage;
-						Countdown = (22 - 1) * 5 + 10;
-						DisplayMessage("InitCD");
+						DisplayMessage(GetText("InitCD"));
 					}
 					break;
 					case 3:
 					if (--Countdown == 0) {
 						++CountdownStage;
 						Countdown = 300;
-						DisplayMessage("5");
+						DisplayMessage("5", false);
 					}
 					break;
 					case 4:
@@ -166,16 +169,15 @@ namespace Origins.Tiles.Ashen {
 						case 180:
 						case 120:
 						case 60:
-						DisplayMessage((Countdown / 60).ToString());
+						DisplayMessage((Countdown / 60).ToString(), false);
 						break;
 					}
 					break;
 				}
 			}
 			protected override void Perform() {
-				Countdown = (Player.name.Length + 39 - 1) * 5 + 10;
 				CountdownStage = 0;
-				DisplayMessage("Start", Player.name);
+				DisplayMessage(GetText("Start", Player.name));
 			}
 		}
 	}
