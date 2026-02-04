@@ -68,6 +68,18 @@ Status_Messages: {
 	// Heat_Vent_3: VENT [{0:00}] HEAVILY DAMAGED - HEAT CRITICAL. REDUCING GENERATOR OUTPUT. DEPLOY TM-[{1:00}]. DESTROY.
 	// Cleansing_Station_Invalid_Location: You cannot use this with an evil presence nearby.
 	// Felnum_Spawn: The clouds have been blessed with Felnum!
+
+	Nuke_Launch_Program: {
+		// Start: "[c/FF5100:>] [type/d10s5cFFB18C:{0} has initialized Nuclear Launch Program]"
+		// Destination: "[c/FF5100:>] [type/d10s5cFFB18C:Select Destination:]"
+		// DestName: "[c/FF5100:>] [type/d10s5cFFB18C:{0}]"
+		// InitCD: "[c/FF5100:>] [type/d10s5cFFB18C:Initializing Countdown]"
+		// 5: "[c/FF5100:>] 5"
+		// 4: "[c/FF5100:>] 4"
+		// 3: "[c/FF5100:>] 3"
+		// 2: "[c/FF5100:>] 2"
+		// 1: "[c/FF5100:>] 1"
+	}
 }
 
 Laser_Tag: {
@@ -3572,4 +3584,12 @@ AdvancedTextSnippet: {
 		// Option_b: Blink Time
 		// Option_cl: Clack
 	}
+}
+
+World_Sizes: {
+	// Custom: Custom ({0}x{1})
+	// 1750x900: "{$RandomWorldName_Adjective.Tiny}"
+	// 4200x1200: "{$LegacyMenu.92}"
+	// 6400x1800: "{$LegacyMenu.93}"
+	// 8400x2400: "{$LegacyMenu.94}"
 }

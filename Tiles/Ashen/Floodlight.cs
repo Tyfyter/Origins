@@ -18,20 +18,16 @@ namespace Origins.Tiles.Ashen {
 		TileItem Item;
 		protected int width, height;
 		public override void Load() {
-			Mod.AddContent(Item = new TileItem(this).WithOnAddRecipes(item => {
+			new TileItem(this)
+			.WithExtraStaticDefaults(this.DropTileItem)
+			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
-				.AddIngredient(ItemID.IronBar, 4)
+				.AddRecipeGroup(ALRecipeGroups.IronBars, 4)
 				.AddIngredient(ModContent.ItemType<Ashen_Torch>(), 8)
 				.AddIngredient(ModContent.ItemType<Scrap>(), 15)
 				.AddTile(ModContent.TileType<Metal_Presser>())
 				.Register();
-				Recipe.Create(item.type)
-				.AddIngredient(ItemID.LeadBar, 4)
-				.AddIngredient(ModContent.ItemType<Ashen_Torch>(), 8)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 15)
-				.AddTile(ModContent.TileType<Metal_Presser>())
-				.Register();
-			}));
+			}).RegisterItem();
 			this.SetupGlowKeys();
 		}
 		public override void SetStaticDefaults() {
@@ -61,7 +57,6 @@ namespace Origins.Tiles.Ashen {
 			ID = Type;
 			DustType = Ashen_Biome.DefaultTileDust;
 			glowTexture = Texture + "_Glow";
-			RegisterItemDrop(Item.Type);
 		}
 		public override void HitWire(int i, int j) {
 			Tile tile = Main.tile[i, j];

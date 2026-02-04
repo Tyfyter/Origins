@@ -8,18 +8,15 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Ashen {
 	public class Tool_Rack : OriginTile {
 		public override void Load() {
-			Mod.AddContent(new TileItem(this).WithOnAddRecipes(item => {
+			new TileItem(this)
+			.WithExtraStaticDefaults(this.DropTileItem)
+			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
-				.AddIngredient(ItemID.CopperBar)
+				.AddRecipeGroup(ALRecipeGroups.CopperBars)
 				.AddIngredient(ModContent.ItemType<Scrap>(), 6)
 				.AddTile(ModContent.TileType<Metal_Presser>())
 				.Register();
-				Recipe.Create(item.type)
-				.AddIngredient(ItemID.TinBar)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 6)
-				.AddTile(ModContent.TileType<Metal_Presser>())
-				.Register();
-			}).WithExtraStaticDefaults(i => RegisterItemDrop(i.type, -1)));
+			}).RegisterItem();
 		}
 		public override void SetStaticDefaults() {
 			// Properties
@@ -28,7 +25,6 @@ namespace Origins.Tiles.Ashen {
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.HasOutlines[Type] = false;
-			TileID.Sets.DisableSmartCursor[Type] = true;
 			HitSound = SoundID.Tink;
 
 			// Names

@@ -83,6 +83,7 @@ namespace Origins.Tiles.Other {
 			TileID.Sets.Dirt[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;
 			TileID.Sets.HasOutlines[Type] = false;
+			TileID.Sets.DisableSmartCursor[Type] = true;
 			Main.tileMerge[Type] = Main.tileMerge[TileID.Dirt];
 			Main.tileFrameImportant[Type] = false;
 			Main.tileSolid[Type] = true;

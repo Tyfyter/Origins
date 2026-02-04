@@ -7962,3 +7962,8 @@ Yellow_Mechanical_Key_Node_Item: {
 	// DisplayName: Yellow Mechanical Key Node Item
 	// Tooltip: ""
 }
+
+Administrator_Panel_Item: {
+	// DisplayName: Administrator Panel
+	// Tooltip: ""
+}
