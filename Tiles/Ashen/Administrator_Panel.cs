@@ -30,6 +30,10 @@ namespace Origins.Tiles.Ashen {
 				.Register();
 			}).RegisterItem();
 			this.SetupGlowKeys();
+			Main.OnPostDraw += Nuke_Launch_Program.Update;
+		}
+		public override void Unload() {
+			Main.OnPostDraw -= Nuke_Launch_Program.Update;
 		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
@@ -123,7 +127,7 @@ namespace Origins.Tiles.Ashen {
 			static void DisplayMessage(string key, params object[] substitutions) {
 				WorldGen.BroadcastText(NetworkText.FromKey("Mods.Origins.Status_Messages.Nuke_Launch_Program." + key, substitutions), FromHexRGB(0xFFB18C));
 			}
-			public static void Update() {
+			public static void Update(GameTime _) {
 				if (Countdown == 0) return;
 
 				Debugging.ChatOverhead($"CD: {Countdown}, CDS: {CountdownStage}");

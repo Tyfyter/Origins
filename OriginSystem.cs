@@ -324,7 +324,6 @@ namespace Origins {
 				}
 				TileEntity.UpdateEnd();
 			}
-			Administrator_Panel.Nuke_Launch_Program.Update();
 		}
 		public override void PostUpdateEverything() {
 			Debugging.LogFirstRun(PostUpdateEverything);
