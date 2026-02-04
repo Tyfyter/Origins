@@ -3561,3 +3561,15 @@ Achievements: {
 		Description: Kill a boss with Self-Destruct after death.
 	}
 }
+
+AdvancedTextSnippet: {
+	Typing_Handler: {
+		Option_s: Speed
+		Option_d: Delay
+		Option_c: Color
+		Option_k: Keep Cursor
+		Option_cur: Disable Cursor
+		Option_b: Blink Time
+		Option_cl: Clack
+	}
+}
