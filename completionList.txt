@@ -1382,7 +1382,7 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
-(#, ^2) Administrator Panel !!!
+(†) Administrator Panel !!!
 (^) Artifiber Tree
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage

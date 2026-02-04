@@ -32,6 +32,16 @@ namespace Origins.Tiles.Ashen {
 			}).RegisterItem();
 			this.SetupGlowKeys();
 		}
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			switch (tile.TileFrameY) {
+				case 18 * 4 + 18:
+				color.DoFancyGlow(new Vector3(0.54901963f, 0.10980393f, 0.7137255f), tile.TileColor);
+				break;
+				case 18 * 4 + (18 * 2):
+				color.DoFancyGlow(new Vector3(0.2352941f, 0.04705883f, 0.3058824f), tile.TileColor);
+				break;
+			}
+		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
 			// Properties
