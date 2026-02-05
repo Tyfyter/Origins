@@ -16,9 +16,9 @@ namespace Origins.Items.Other.Consumables.Broths {
 			];
 		}
 		public override void OnMinionHit(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) {
-			float multi = MinionGlobalProjectile.IsArtifact(proj) ? 1.8f : 1;
-			if (Main.rand.NextBool(5)) target.AddBuff(Broken_Armor_Debuff.ID, (int)(30 * multi));
-			target.AddBuff(Weak_Debuff.ID, (int)(30 * multi));
+			float multi = MinionGlobalProjectile.IsArtifact(proj) ? 5 : 3;
+			if (Main.rand.NextBool(10)) target.AddBuff(Broken_Armor_Debuff.ID, (int)(60 * multi));
+			target.AddBuff(Weak_Debuff.ID, (int)(60 * multi));
 		}
 	}
 }
