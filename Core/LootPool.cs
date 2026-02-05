@@ -244,6 +244,7 @@ public class Ashen_Personal : LootPool {
 		AddRule(ItemDropRule.Common(ItemID.FlowerPacketYellow, 4, 1, 8));
 		AddRule(ItemDropRule.Common(ItemID.GenderChangePotion, 14));
 		AddRule(ItemDropRule.Common(ItemID.DrumSet, 10));
+		AddRule(ItemDropRule.Common(ItemID.Fertilizer, 10));
 		AddRule(ItemDropRule.Common(ItemID.GoldWatch, 10));
 		AddRule(ItemDropRule.Common(ItemID.ShadowCandle, 10));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Bang_Snap>(), 10, 35, 70));
