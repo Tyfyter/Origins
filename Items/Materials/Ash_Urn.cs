@@ -4,6 +4,7 @@ using Origins.Dusts;
 using Origins.NPCs.Defiled;
 using Origins.Tiles.Ashen;
 using Origins.World.BiomeData;
+using System;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -100,23 +101,7 @@ namespace Origins.Items.Materials {
 			if (maxY > Main.maxTilesY) {
 				maxY = Main.maxTilesY;
 			}
-			Vector2 comparePos = default;
-			AltBiome biome = ModContent.GetInstance<Ashen_Alt_Biome>();
-			for (int x = minX; x < maxX; x++) {
-				for (int y = minY; y < maxY; y++) {
-					comparePos.X = x * 16;
-					comparePos.Y = y * 16;
-					if ((Projectile.position.X + Projectile.width > comparePos.X) &&
-						(Projectile.position.X < comparePos.X + 16f) &&
-						(Projectile.position.Y + Projectile.height > comparePos.Y) &&
-						(Projectile.position.Y < comparePos.Y + 16f) &&
-						Main.tile[x, y].HasTile) {
-						AltLibrary.Core.ALConvert.ConvertTile(x, y, biome);
-						AltLibrary.Core.ALConvert.ConvertWall(x, y, biome);
-						//WorldGen.Convert(x, y, OriginSystem.origin_conversion_type, 1);
-					}
-				}
-			}
+			AltLibrary.Core.ALConvert.Convert<Ashen_Alt_Biome>((minX + maxX) / 2, (minY + maxY) / 2, Math.Max(maxX - minX, maxY - minY));
 		}
 	}
 }
