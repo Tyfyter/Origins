@@ -7967,3 +7967,8 @@ Administrator_Panel_Item: {
 	DisplayName: Administrator Panel
 	Tooltip: ""
 }
+
+OilBucket: {
+	DisplayName: Oil Bucket
+	Tooltip: ""
+}

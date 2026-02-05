@@ -6,5 +6,5 @@ buildIgnore = .git\*, *.csproj, *.xcf, *.user, obj\*, bin\*, .vs\*, Items\Weapon
 includePDB = false
 sortAfter = CalamityMod, WingSlot, AltLibrary, ThoriumMod, ColoredDamageTypes, MusicDisplay, ProceduralMusicLib, Fargowiltas, AlchemistNPCLite, miningcracks_take_on_luiafk, ModLiquidLib, WaasephisFishingPlus
 sortBefore = CritRework
-modReferences = AltLibrary, BetterDialogue, PegasusLib
+modReferences = AltLibrary, BetterDialogue, PegasusLib, ModLiquidLib
 weakReferences = ThoriumMod, CalamityMod, MagicStorage, Fargowiltas
