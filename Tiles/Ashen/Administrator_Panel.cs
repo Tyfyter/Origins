@@ -33,11 +33,12 @@ namespace Origins.Tiles.Ashen {
 			this.SetupGlowKeys();
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (tile.TileFrameX < 18 * 2) return;
 			switch (tile.TileFrameY) {
-				case 18 * 4 + 18:
+				case 18:
 				color.DoFancyGlow(new Vector3(0.54901963f, 0.10980393f, 0.7137255f), tile.TileColor);
 				break;
-				case 18 * 4 + (18 * 2):
+				case 18 * 2:
 				color.DoFancyGlow(new Vector3(0.2352941f, 0.04705883f, 0.3058824f), tile.TileColor);
 				break;
 			}
@@ -58,20 +59,20 @@ namespace Origins.Tiles.Ashen {
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
-			TileObjectData.newTile.SetHeight(4, 16);
+			TileObjectData.newTile.SetHeight(4, 18);
 			TileObjectData.newTile.Origin = new Point16(TileObjectData.newTile.Width / 2 - 1, TileObjectData.newTile.Height - 1);
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
 			DustType = Ashen_Biome.DefaultTileDust;
-			AnimationFrameHeight = 72;
+			AnimationFrameHeight = 36;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
 		}
-		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameY >= 18 * 4 && OriginsModIntegrations.CheckAprilFools();
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX >= 18 * 2 && OriginsModIntegrations.CheckAprilFools();
 		public override bool RightClick(int i, int j) {
-			if (Main.tile[i, j].TileFrameY >= 18 * 4 && OriginsModIntegrations.CheckAprilFools()) {
+			if (Main.tile[i, j].TileFrameX >= 18 * 2 && OriginsModIntegrations.CheckAprilFools()) {
 				new Nuke_Launch_Program(Main.LocalPlayer).Perform();
 				return true;
 			}
@@ -89,7 +90,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void HitWire(int i, int j) {
 			bool powered = IsPowered(i, j);
-			bool wasPowered = Main.tile[i, j].TileFrameY >= 18 * 4;
+			bool wasPowered = Main.tile[i, j].TileFrameX >= 18 * 2;
 			if (powered != wasPowered) {
 				UpdatePowerState(i, j, powered);
 			}
@@ -100,14 +101,16 @@ namespace Origins.Tiles.Ashen {
 			for (int x = 0; x < data.Width; x++) {
 				for (int y = 0; y < data.Height; y++) {
 					Tile tile = Main.tile[left + x, top + y];
-					tile.TileFrameY = (short)(tile.TileFrameY % (18 * 4) + (powered ? 4 * 18 : 0));
+					tile.TileFrameX = (short)(tile.TileFrameX % (18 * 2) + (powered ? 2 * 18 : 0));
 				}
 			}
 			if (!NetmodeActive.SinglePlayer) NetMessage.SendTileSquare(-1, left, top, data.Width, data.Height);
 		}
 		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
 			Tile tile = Main.tile[i, j];
-			if (tile.TileFrameY < 18 * 4) frameYOffset = 0;
+			if (tile.TileFrameX < 18 * 2) frameYOffset = 0;
+			frameXOffset = frameYOffset;
+			frameYOffset = 0;
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
 			if (++frameCounter >= 5) {
