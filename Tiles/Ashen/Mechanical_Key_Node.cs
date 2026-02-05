@@ -16,12 +16,11 @@ namespace Origins.Tiles.Ashen {
 	public abstract class Mechanical_Key_Node : ModTile, IAshenPowerConduitTile, IGlowingModTile {
 		public Mechanical_Key_Node_Item Item { get; private set; }
 		public abstract int KeyType { get; }
-		public override string Texture => typeof(Mechanical_Key_Node).GetDefaultTMLName();
 		public override string HighlightTexture => typeof(Mechanical_Key_Node).GetDefaultTMLName("_Highlight");
 		public virtual Color SwitchColor => FromHexRGB(0x7a391a);
 		public virtual Color MapColor => SwitchColor;
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
-		public Color GlowColor => SwitchColor;
+		public Color GlowColor => Color.White;
 		public sealed override void Load() {
 			Mod.AddContent(Item = new(this));
 			this.SetupGlowKeys();
@@ -147,24 +146,28 @@ namespace Origins.Tiles.Ashen {
 			}
 		}
 	}
-	public class Blue_Mechanical_Key_Node : Mechanical_Key_Node {
+	[LegacyName("Blue_Mechanical_Key_Node")]
+	public class Mechanical_Key_Node_Blue : Mechanical_Key_Node {
 		public override Color SwitchColor => new Color(0, 80, 240);
 		public override int KeyType => ItemType<Mechanical_Key_Blue>();
 	}
-	public class Green_Mechanical_Key_Node : Mechanical_Key_Node {
+	[LegacyName("Green_Mechanical_Key_Node")]
+	public class Mechanical_Key_Node_Green : Mechanical_Key_Node {
 		public override Color SwitchColor => new Color(16, 240, 0);
 		public override int KeyType => ItemType<Mechanical_Key_Green>();
 	}
-	public class Orange_Mechanical_Key_Node : Mechanical_Key_Node {
+	[LegacyName("Orange_Mechanical_Key_Node")]
+	public class Mechanical_Key_Node_Orange : Mechanical_Key_Node {
 		public override Color SwitchColor => new Color(255, 81, 0);
 		public override int KeyType => ItemType< Mechanical_Key_Orange>();
 	}
-	[LegacyName("Purple_Mechanical_Switch")]
-	public class Purple_Mechanical_Key_Node : Mechanical_Key_Node {
+	[LegacyName("Purple_Mechanical_Switch", "Purple_Mechanical_Key_Node")]
+	public class Mechanical_Key_Node_Purple : Mechanical_Key_Node {
 		public override Color SwitchColor => new Color(109, 10, 145);
 		public override int KeyType => ItemType<Mechanical_Key_Purple>();
 	}
-	public class Yellow_Mechanical_Key_Node : Mechanical_Key_Node {
+	[LegacyName("Yellow_Mechanical_Key_Node")]
+	public class Mechanical_Key_Node_Yellow : Mechanical_Key_Node {
 		public override Color SwitchColor => new Color(255, 179, 0);
 		public override int KeyType => ItemType<Mechanical_Key_Yellow>();
 	}
