@@ -2578,6 +2578,11 @@ Tiles: {
 	Green_Mechanical_Key_Node.MapEntry: Green Mechanical Key Node
 	Orange_Mechanical_Key_Node.MapEntry: Orange Mechanical Key Node
 	Yellow_Mechanical_Key_Node.MapEntry: Yellow Mechanical Key Node
+	Mechanical_Key_Node_Blue.MapEntry: Mechanical Key Node Blue
+	Mechanical_Key_Node_Green.MapEntry: Mechanical Key Node Green
+	Mechanical_Key_Node_Orange.MapEntry: Mechanical Key Node Orange
+	Mechanical_Key_Node_Purple.MapEntry: Mechanical Key Node Purple
+	Mechanical_Key_Node_Yellow.MapEntry: Mechanical Key Node Yellow
 }
 
 Keybinds: {

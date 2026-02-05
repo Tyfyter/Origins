@@ -35,7 +35,7 @@ namespace Origins.Liquids {
 			NPCMovementMultiplierDefault = PlayerMovementMultiplier;
 			ProjectileMovementMultiplier = PlayerMovementMultiplier;
 			ExtinguishesOnFireDebuffs = false;
-			AddMapEntry(new Color(200, 200, 200));
+			AddMapEntry(FromHexRGB(0x0A0A0A));
 		}
 		//ChooseWaterfallStyle allows for the selection of what waterfall style this liquid chooses when next to a slope.
 		public override int ChooseWaterfallStyle(int i, int j) {
@@ -118,7 +118,12 @@ namespace Origins.Liquids {
 			rippleStrength *= 0.75f;
 		}
 		public override bool PreLiquidMerge(int liquidX, int liquidY, int tileX, int tileY, int otherLiquid) {
-			new Oil_Liquid_Merge(tileX, tileY, otherLiquid).Perform();
+			switch (otherLiquid) {
+				case LiquidID.Shimmer:
+				Main.tile[tileX, tileY].SetLiquidType(LiquidID.Water);
+				break;
+			}
+			//new Oil_Liquid_Merge(tileX, tileY, otherLiquid).Perform();
 			return false;
 		}
 	}

@@ -7972,3 +7972,38 @@ OilBucket: {
 	// DisplayName: Oil Bucket
 	// Tooltip: ""
 }
+
+Oil_Bottomless_Bucket: {
+	// DisplayName: Oil Bottomless Bucket
+	// Tooltip: ""
+}
+
+Oil_Bucket: {
+	// DisplayName: Oil Bucket
+	// Tooltip: ""
+}
+
+Mechanical_Key_Node_Blue_Item: {
+	// DisplayName: Mechanical Key Node Blue Item
+	// Tooltip: ""
+}
+
+Mechanical_Key_Node_Green_Item: {
+	// DisplayName: Mechanical Key Node Green Item
+	// Tooltip: ""
+}
+
+Mechanical_Key_Node_Orange_Item: {
+	// DisplayName: Mechanical Key Node Orange Item
+	// Tooltip: ""
+}
+
+Mechanical_Key_Node_Purple_Item: {
+	// DisplayName: Mechanical Key Node Purple Item
+	// Tooltip: ""
+}
+
+Mechanical_Key_Node_Yellow_Item: {
+	// DisplayName: Mechanical Key Node Yellow Item
+	// Tooltip: ""
+}
