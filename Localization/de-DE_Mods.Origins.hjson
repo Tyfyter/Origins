@@ -2567,22 +2567,16 @@ Tiles: {
 	// Rusty_Locker.MapEntry: Rusty Locker
 	// Music_Box_AF: Music Box ({§Ashen} Factory)
 	// Music_Box_AM: Music Box ({§Ashen} Mines)
-	// Purple_Mechanical_Switch.MapEntry: Purple Mechanical Switch
 	// Transistor.MapEntry: Transistor
 	// Medium_Storage_Container.MapEntry: Medium Storage Container
 	// Large_Storage_Container.MapEntry: Large Storage Container
 	// Dirt_Chest.MapEntry: "[c/976B4B:{$Items.Dirt_Chest_Item.DisplayName}]"
 	// Dirt_Chest_Natural.MapEntry: "{$Dirt_Chest.MapEntry}"
-	// Purple_Mechanical_Key_Node.MapEntry: Purple Mechanical Key Node
-	// Blue_Mechanical_Key_Node.MapEntry: Blue Mechanical Key Node
-	// Green_Mechanical_Key_Node.MapEntry: Green Mechanical Key Node
-	// Orange_Mechanical_Key_Node.MapEntry: Orange Mechanical Key Node
-	// Yellow_Mechanical_Key_Node.MapEntry: Yellow Mechanical Key Node
-	// Mechanical_Key_Node_Blue.MapEntry: Mechanical Key Node Blue
-	// Mechanical_Key_Node_Green.MapEntry: Mechanical Key Node Green
-	// Mechanical_Key_Node_Orange.MapEntry: Mechanical Key Node Orange
-	// Mechanical_Key_Node_Purple.MapEntry: Mechanical Key Node Purple
-	// Mechanical_Key_Node_Yellow.MapEntry: Mechanical Key Node Yellow
+	// Mechanical_Key_Node_Blue.MapEntry: Blue Mechanical Key Node
+	// Mechanical_Key_Node_Green.MapEntry: Green Mechanical Key Node
+	// Mechanical_Key_Node_Orange.MapEntry: Orange Mechanical Key Node
+	// Mechanical_Key_Node_Purple.MapEntry: Purple Mechanical Key Node
+	// Mechanical_Key_Node_Yellow.MapEntry: Yellow Mechanical Key Node
 }
 
 Keybinds: {

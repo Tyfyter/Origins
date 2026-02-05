@@ -7906,11 +7906,6 @@ Dirt_Chest_Natural_Item: {
 	// Tooltip: "{$Dirt_Chest_Item.DisplayName} (Debugging Item)"
 }
 
-Purple_Mechanical_Key_Node_Item: {
-	// DisplayName: Purple Mechanical Key Node
-	// Tooltip: ""
-}
-
 Bitter_Broth: {
 	// DisplayName: Bitter Broth
 	/* Tooltip:
@@ -7943,26 +7938,6 @@ Structure_Void_Marker_Item: {
 	// Tooltip: ""
 }
 
-Blue_Mechanical_Key_Node_Item: {
-	// DisplayName: Blue Mechanical Key Node Item
-	// Tooltip: ""
-}
-
-Green_Mechanical_Key_Node_Item: {
-	// DisplayName: Green Mechanical Key Node Item
-	// Tooltip: ""
-}
-
-Orange_Mechanical_Key_Node_Item: {
-	// DisplayName: Orange Mechanical Key Node Item
-	// Tooltip: ""
-}
-
-Yellow_Mechanical_Key_Node_Item: {
-	// DisplayName: Yellow Mechanical Key Node Item
-	// Tooltip: ""
-}
-
 Administrator_Panel_Item: {
 	// DisplayName: Administrator Panel
 	// Tooltip: ""
@@ -7984,26 +7959,26 @@ Oil_Bucket: {
 }
 
 Mechanical_Key_Node_Blue_Item: {
-	// DisplayName: Mechanical Key Node Blue Item
+	// DisplayName: Blue Mechanical Key Node
 	// Tooltip: ""
 }
 
 Mechanical_Key_Node_Green_Item: {
-	// DisplayName: Mechanical Key Node Green Item
+	// DisplayName: Green Mechanical Key Node
 	// Tooltip: ""
 }
 
 Mechanical_Key_Node_Orange_Item: {
-	// DisplayName: Mechanical Key Node Orange Item
+	// DisplayName: Orange Mechanical Key Node
 	// Tooltip: ""
 }
 
 Mechanical_Key_Node_Purple_Item: {
-	// DisplayName: Mechanical Key Node Purple Item
+	// DisplayName: Purple Mechanical Key Node
 	// Tooltip: ""
 }
 
 Mechanical_Key_Node_Yellow_Item: {
-	// DisplayName: Mechanical Key Node Yellow Item
+	// DisplayName: Yellow Mechanical Key Node
 	// Tooltip: ""
 }

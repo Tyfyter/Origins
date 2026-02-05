@@ -207,6 +207,9 @@ namespace Origins.Tiles.Ashen {
 							Tile tile = Main.tile[left + x, top + y];
 							tile.TileType = tileType;
 							tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
+							if (TargetOpen && !NetmodeActive.MultiplayerClient && tile.LiquidAmount > 0 && !WorldGen.noLiquidCheck) {
+								Liquid.AddWater(left + x, top + y);
+							}
 						}
 					}
 					if (!TargetOpen && frame < 4 && !NetmodeActive.MultiplayerClient) {
