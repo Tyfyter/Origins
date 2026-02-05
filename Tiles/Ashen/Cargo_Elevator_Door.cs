@@ -237,9 +237,13 @@ namespace Origins.Tiles.Ashen {
 						for (int y = 0; y < data.Height; y++) {
 							Tile tile = Main.tile[left + x, top + y];
 							tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
-							if (tile.TileType.TrySet(Cargo_Elevator_Door.IsSolid(left + x, top + y) ? closed : open) && !TargetOpen) {
-								if (x < (data.Width + 1) / 2) leftClosing.Add(new(left + x, top + y));
-								if (x > (data.Width - 2) / 2) rightClosing.Add(new(left + x, top + y));
+							if (tile.TileType.TrySet(Cargo_Elevator_Door.IsSolid(left + x, top + y) ? closed : open)) {
+								if (!TargetOpen) {
+									if (x < (data.Width + 1) / 2) leftClosing.Add(new(left + x, top + y));
+									if (x > (data.Width - 2) / 2) rightClosing.Add(new(left + x, top + y));
+								} else if (!NetmodeActive.MultiplayerClient && tile.TileType == open && tile.LiquidAmount > 0 && !WorldGen.noLiquidCheck) {
+									Liquid.AddWater(left + x, top + y);
+								}
 								//if (leftClosing.Contains(new(left + x, top + y))) tile.TileColor = rightClosing.Contains(new(left + x, top + y)) ? PaintID.DeepPurplePaint : PaintID.DeepCyanPaint;
 								//else if (rightClosing.Contains(new(left + x, top + y))) tile.TileColor = PaintID.DeepRedPaint;
 							}
