@@ -226,7 +226,6 @@ namespace Origins.NPCs.Defiled {
 				maxY = Main.maxTilesY;
 			}
 			Vector2 comparePos = default;
-			AltBiome biome = ModContent.GetInstance<Defiled_Wastelands_Alt_Biome>();
 			for (int x = minX; x < maxX; x++) {
 				for (int y = minY; y < maxY; y++) {
 					comparePos.X = x * 16;
@@ -236,9 +235,7 @@ namespace Origins.NPCs.Defiled {
 						(Projectile.position.Y + Projectile.height > comparePos.Y) &&
 						(Projectile.position.Y < comparePos.Y + 16f)
 						&& Main.tile[x, y].HasTile) {
-						AltLibrary.Core.ALConvert.ConvertTile(x, y, biome);
-						AltLibrary.Core.ALConvert.ConvertWall(x, y, biome);
-						//WorldGen.Convert(x, y, OriginSystem.origin_conversion_type, 1);
+						AltLibrary.Core.ALConvert.Convert<Defiled_Wastelands_Alt_Biome>(x, y, 0);
 					}
 				}
 			}

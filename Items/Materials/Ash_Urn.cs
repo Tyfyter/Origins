@@ -102,8 +102,6 @@ namespace Origins.Items.Materials {
 				maxY = Main.maxTilesY;
 			}
 			Vector2 comparePos = default;
-			AltBiome biome = ModContent.GetInstance<Ashen_Alt_Biome>();
-			;
 			for (int x = minX; x < maxX; x++) {
 				for (int y = minY; y < maxY; y++) {
 					comparePos.X = x * 16;

@@ -966,8 +966,7 @@ namespace Origins.World.BiomeData {
 						if (range.Bottom - j < 5 && genRand.NextBool(5)) break;
 						Tile tile = Framing.GetTileSafely(i, j);
 						if (tile.HasTile) {
-							ALConvert.ConvertTile(i, j, biome);
-							ALConvert.ConvertWall(i, j, biome);
+							ALConvert.Convert(biome, i, j, 0);
 						}
 					}
 				}

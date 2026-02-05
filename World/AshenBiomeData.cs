@@ -766,13 +766,10 @@ namespace Origins.World.BiomeData {
 						if (genRand.NextBool(5) && genRand.Next(slopeFactor, 100) < 20) continue;
 						if (range.Bottom - j < 5 && genRand.NextBool(5)) break;
 						Tile tile = Framing.GetTileSafely(i, j);
-						if (tile.HasTile) {
-							AltLibrary.Core.ALConvert.ConvertTile(i, j, biome);
-							if (tile.TileType == TileID.Dirt && (!Framing.GetTileSafely(i - 1, j).HasTile || !Framing.GetTileSafely(i + 1, j).HasTile || !Framing.GetTileSafely(i, j - 1).HasTile || !Framing.GetTileSafely(i, j + 1).HasTile)) {
-								tile.TileType = grass;
-							}
+						AltLibrary.Core.ALConvert.Convert(biome, i, j, 0);
+						if (tile.TileType == TileID.Dirt && (!Framing.GetTileSafely(i - 1, j).HasTile || !Framing.GetTileSafely(i + 1, j).HasTile || !Framing.GetTileSafely(i, j - 1).HasTile || !Framing.GetTileSafely(i, j + 1).HasTile)) {
+							tile.TileType = grass;
 						}
-						AltLibrary.Core.ALConvert.ConvertWall(i, j, biome);
 					}
 				}
 				OriginSystem.Instance.hasAshen = true;

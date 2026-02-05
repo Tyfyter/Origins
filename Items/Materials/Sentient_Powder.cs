@@ -108,7 +108,6 @@ namespace Origins.Items.Materials {
 				maxY = Main.maxTilesY;
 			}
 			Vector2 comparePos = default;
-			AltBiome biome = ModContent.GetInstance<Riven_Hive_Alt_Biome>();
 			for (int x = minX; x < maxX; x++) {
 				for (int y = minY; y < maxY; y++) {
 					comparePos.X = x * 16;
@@ -118,9 +117,7 @@ namespace Origins.Items.Materials {
 						(Projectile.position.Y + Projectile.height > comparePos.Y) &&
 						(Projectile.position.Y < comparePos.Y + 16f) &&
 						Main.tile[x, y].HasTile) {
-						AltLibrary.Core.ALConvert.ConvertTile(x, y, biome);
-						AltLibrary.Core.ALConvert.ConvertWall(x, y, biome);
-						//WorldGen.Convert(x, y, OriginSystem.origin_conversion_type, 1);
+						AltLibrary.Core.ALConvert.Convert<Riven_Hive_Alt_Biome>(x, y, 0);
 					}
 				}
 			}
