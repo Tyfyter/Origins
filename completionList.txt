@@ -1385,7 +1385,7 @@ TILES:
 (X) The Demaker
 
 (^) Acetabularia
-(†) Administrator Panel !!!
+(^) Administrator Panel
 (^) Artifiber Tree
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
@@ -1620,7 +1620,7 @@ CONSUMABLES:
 (^) Voidsight Potion
 
 (†, 々) Astringent Broth
-(†) Bitter Broth !!!
+(^) Bitter Broth
 (^) Foul Broth
 (^) Greasy Broth
 (^) Hearty Broth
