@@ -101,7 +101,22 @@ namespace Origins.Items.Materials {
 			if (maxY > Main.maxTilesY) {
 				maxY = Main.maxTilesY;
 			}
-			AltLibrary.Core.ALConvert.Convert<Ashen_Alt_Biome>((minX + maxX) / 2, (minY + maxY) / 2, Math.Max(maxX - minX, maxY - minY));
+			Vector2 comparePos = default;
+			AltBiome biome = ModContent.GetInstance<Ashen_Alt_Biome>();
+			;
+			for (int x = minX; x < maxX; x++) {
+				for (int y = minY; y < maxY; y++) {
+					comparePos.X = x * 16;
+					comparePos.Y = y * 16;
+					if ((Projectile.position.X + Projectile.width > comparePos.X) &&
+						(Projectile.position.X < comparePos.X + 16f) &&
+						(Projectile.position.Y + Projectile.height > comparePos.Y) &&
+						(Projectile.position.Y < comparePos.Y + 16f) &&
+						Main.tile[x, y].HasTile) {
+						AltLibrary.Core.ALConvert.Convert<Ashen_Alt_Biome>(x, y, 0);
+					}
+				}
+			}
 		}
 	}
 }
