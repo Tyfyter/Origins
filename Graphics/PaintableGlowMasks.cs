@@ -2,6 +2,7 @@
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -40,8 +41,8 @@ namespace Origins.Graphics {
 			};
 		}
 		public void Unload() {
-			_glowsRenders.Unload();
-			_requests.Unload();
+			Main.QueueMainThreadAction(_glowsRenders.Unload);
+			Main.QueueMainThreadAction(_requests.Unload);
 			_glowsRenders = null;
 			_requests = null;
 			settingss = null;
