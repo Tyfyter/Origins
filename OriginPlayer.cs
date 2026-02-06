@@ -456,7 +456,6 @@ namespace Origins {
 					}
 				}
 			}
-			Player.chatOverhead.NewMessage($"{Player.chest}: {chestX}, {chestY}", 5);
 			lastChest = Player.chest;
 			lastChestX = chestX;
 			lastChestY = chestY;

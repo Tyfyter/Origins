@@ -954,6 +954,7 @@ namespace Origins.Core {
 				string inputText = SpecialChestUI.inputText.ToString();
 				if (CurrentChest.GivenName != inputText && CurrentChest is IRenamable renamable) {
 					renamable.RenamableName = inputText;
+					ModContent.GetInstance<SpecialChestSystem>().netDirtyChests.Add(new(Main.LocalPlayer.chestX, Main.LocalPlayer.chestY));
 				}
 			}
 			public void Cancel() { }
@@ -977,9 +978,8 @@ namespace Origins.Core {
 				public override LocalizedText Text => Language.GetText("LegacyInterface.47");
 				public override bool CanDisplay => SpecialChestUI.inputTextTaker is RenameButton;
 				public override bool Click() {
-					string oldName = CurrentChest.GivenName;
 					SpecialChestUI.SubmitText();
-					return CurrentChest.GivenName != oldName;
+					return false;
 				}
 			}
 			public class CancelRenameButton : SpecialChestButton {
