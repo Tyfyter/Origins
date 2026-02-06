@@ -1,14 +1,13 @@
 using AltLibrary.Common.Systems;
-using Microsoft.Xna.Framework.Input;
+using ModLiquidLib.ModLoader;
 using Origins.Items.Accessories;
-using Origins.Tiles.Ashen;
+using Origins.Liquids;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.World;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -301,6 +300,57 @@ namespace Origins {
 					}
 				}
 			}));
+			tasks.Add(new PassLegacy("Oil", (progress, _) => {
+				int oilCountTarget = (int)(Main.maxTilesX * Main.maxTilesY * 0.1f * genRand.NextFloat(0.9f, 1f));
+				int oil = LiquidLoader.LiquidType<Oil>();
+				int burningOil = LiquidLoader.LiquidType<Oil>();//TODO: set to burning oil
+				int tries = 0;
+				int oilCount = 0;
+				const int max_tries = 10000;
+				while (oilCount < oilCountTarget) {
+					int i = genRand.Next(0, Main.maxTilesX);
+					int j = genRand.Next((int)GenVars.rockLayer + 40, Main.UnderworldLayer);
+					Tile tile = Main.tile[i, j];
+					if (tile.LiquidAmount > 0 && tile.LiquidType is LiquidID.Water or LiquidID.Lava) {
+						tries = 0;
+						int liquidType = tile.LiquidType;
+						bool ignite = false;
+						bool Counter(Point pos) {
+							if (pos.X < 0 || pos.Y < 0 || pos.X >= Main.maxTilesX || pos.Y >= Main.maxTilesY) return false;
+							Tile tile = Main.tile[pos];
+							if (tile.HasTile && Main.tileSolid[tile.TileType]) return false;
+							return tile.LiquidAmount > 0 && tile.LiquidType == liquidType;
+						}
+						bool Breaker(AreaAnalysis analysis) {
+							if (analysis.Counted.Count > 50 * 50) return true;
+							bool IsSnowBiome(Point pos) {
+								if (pos.X < 0 || pos.Y < 0 || pos.X >= Main.maxTilesX || pos.Y >= Main.maxTilesY) return false;
+								Tile tile = Main.tile[pos];
+								if (tile.HasTile) return false;
+								if (tile.TileType == TileID.Spikes) ignite = true;
+								return tile.TileType == TileID.BreakableIce || TileID.Sets.IcesSnow[tile.TileType];
+							}
+							Point pos = analysis.Counted[^1];
+							if (pos.Y < GenVars.rockLayer + 40) return true;
+							return IsSnowBiome(pos + UnitX)
+							|| IsSnowBiome(pos - UnitX)
+							|| IsSnowBiome(pos + UnitY)
+							|| IsSnowBiome(pos - UnitY);
+						}
+						AreaAnalysis analysis = AreaAnalysis.March(i, j, AreaAnalysis.Orthogonals, Counter, Breaker);
+						if (analysis.Broke) continue;
+						int multiPoolCounter = 0;
+						foreach (Point pos in analysis.Counted) {
+							tile = Main.tile[pos];
+							oilCount += tile.LiquidAmount;
+							multiPoolCounter += tile.LiquidAmount;
+							if (multiPoolCounter > 64 * 255 && oilCountTarget < Main.maxTilesX * Main.maxTilesY * 0.2f) oilCountTarget += tile.LiquidAmount;
+							tile.LiquidType = ignite ? burningOil : oil;
+						}
+					} else if (++tries > max_tries) break;
+				}
+				Mod.Logger.Info($"Generated {oilCount / 255f:0.##} blocks of oil, finished because {(tries > max_tries ? "more liquid could not be found, " : "")}target was {oilCountTarget / 255f:0.##}");
+			}));
 
 			if (remixWorldGen) {
 				genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
@@ -325,6 +375,8 @@ namespace Origins {
 				}));
 			}
 		}
+		static Point UnitX = new(1, 0);
+		static Point UnitY = new(0, 1);
 		public static bool HasTriggerWithinRange(int i, int j, int range) {
 			List<Point> currentPoints = [];
 			List<Point> nextPoints = [];
