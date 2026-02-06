@@ -19,7 +19,7 @@ using Terraria.ModLoader;
 namespace Origins.Liquids {
 	public class Oil : ModLiquid {
 		public override void SetStaticDefaults() {
-			LiquidRenderer.VISCOSITY_MASK[Type] = 100;
+			LiquidRenderer.VISCOSITY_MASK[Type] = 50;
 			LiquidRenderer.WATERFALL_LENGTH[Type] = 10;
 			LiquidRenderer.DEFAULT_OPACITY[Type] = 0.98f;
 			SlopeOpacity = 1f;

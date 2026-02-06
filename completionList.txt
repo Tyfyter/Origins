@@ -794,6 +794,8 @@ TOOLS:
 (X) Perihelion Jackhammer
 (X) Perihelion Pickaxe
 
+(^) Bottomless Oil Bucket
+(^) Oil Bucket
 (^) Pincushion
 ---
 
@@ -1068,9 +1070,11 @@ SUMMONER WEAPONS:
 (X) Cursor Brick
 (X) Fiber Optic Whips
 (X) Mojo Mask Staff
+(X) Neutron Soup !!!
 (X) Probe Controller
 (X) Ribatar
 (#, ^2) SMART Wrench !!!
+(X) Star Harvest !!!
 (X) Technomancer 4000
 (^) Terratotem
 (X) Tonal Resonator
@@ -1257,6 +1261,7 @@ TILES:
 (X) Space Goo
 (^) Spug Flesh
 (X) Spug Flesh Brick
+(X) Super Sludge !!!
 (^) Tainted Stone
 (X) Tainted Stone Brick
 (^) Truss Block
@@ -1563,7 +1568,7 @@ MISCELLANEOUS ITEMS:
 (^) Defiled Mana
 (^) Large Chambersite
 (^) Worn Paper: Loose Wheel
-(#, ^2) Worn Paper: Mean Baby !!!
+(^) Worn Paper: Mean Baby
 (^) Worn Paper: Self-Preservation
 (^) Worn Paper: Smog Test
 (^) Worn Paper: The Packing Slip
@@ -1809,6 +1814,7 @@ AMMO:
 
 (^) Homing Rocket I
 (^) Homing Rocket II
+(X) Oil Rocket !!!
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
 (^) Valkyrum Bullet

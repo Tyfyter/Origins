@@ -5,6 +5,7 @@ using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools;
+using Origins.Items.Tools.Liquids;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
@@ -142,6 +143,7 @@ public class Ashen_Mineral : LootPool {
 	}*/
 	public override void SetStaticDefaults() {
 		//AddRule(new DropLootPoolRule<Rarer>());
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Oil_Bucket>(), 2, 80, 260));
 		AddRule(ItemDropRule.Common(ItemID.TinOre, 1, 21, 270));
 		AddRule(ItemDropRule.Common(ItemID.LeadOre, 2, 38, 250));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Silicon_Ore_Item>(), 1, 40, 200));

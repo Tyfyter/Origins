@@ -59,7 +59,7 @@ namespace Origins.Walls {
 		}
 	}
 	public class Fortified_Steel_Wall3 : Fortified_Steel_Wall1 {
-		public override Color MapColor => FromHexRGB(0x211115);
+		public override Color MapColor => FromHexRGB(0x170c0f);
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			if (WallVersion == WallVersion.Natural) Origins.WallHammerRequirement[Type] = 100;

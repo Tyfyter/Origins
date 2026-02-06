@@ -7943,13 +7943,8 @@ Administrator_Panel_Item: {
 	// Tooltip: ""
 }
 
-OilBucket: {
-	// DisplayName: Oil Bucket
-	// Tooltip: ""
-}
-
 Oil_Bottomless_Bucket: {
-	// DisplayName: Oil Bottomless Bucket
+	// DisplayName: Bottomless Oil Bucket
 	// Tooltip: ""
 }
 
