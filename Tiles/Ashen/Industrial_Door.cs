@@ -18,7 +18,7 @@ using Terraria.ObjectData;
 using static Origins.Tiles.Ashen.Industrial_Door_TE_System;
 
 namespace Origins.Tiles.Ashen {
-	public class Industrial_Door : OriginTile, IComplexMineDamageTile, IGlowingModTile {
+	public class Industrial_Door : OriginTile, IComplexMineDamageTile, IGlowingModTile, IAshenWireTile {
 		public TileItem Item { get; protected set; }
 		public override void Load() {
 			Mod.AddContent(Item = new TileItem(this).WithOnAddRecipes(item => {
@@ -68,29 +68,14 @@ namespace Origins.Tiles.Ashen {
 			g = 0.001f;
 			b = 0.001f;
 		}
-		public static bool IsPowered(int i, int j) {
-			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
-			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
-			for (int x = 0; x < data.Width; x++) {
-				for (int y = 0; y < data.Height; y++) {
-					if (Main.tile[left + x, top + y].Get<Ashen_Wire_Data>().AnyPower) return true;
-				}
-			}
-			return false;
-		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			if (!fail) fail = IsPowered(i, j);
+			if (!fail) fail = AshenWireTile.DefaultIsPowered(i, j);
 		}
 		public override void HitWire(int i, int j) {
-			bool powered = IsPowered(i, j);
-			bool wasPowered = Main.tile[i, j].TileFrameX >= 18 * 4;
-			if (powered != wasPowered) {
-				UpdatePowerState(i, j, powered);
-			} else {
-				Toggle(i, j);
-			}
+			UpdatePowerState(i, j, AshenWireTile.DefaultIsPowered(i, j));
+			if (!Ashen_Wire_Data.HittingAshenWires) Toggle(i, j);
 		}
-		public static void UpdatePowerState(int i, int j, bool powered) {
+		public void UpdatePowerState(int i, int j, bool powered) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			for (int x = 0; x < data.Width; x++) {
@@ -106,7 +91,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			ModContent.GetInstance<Industrial_Door_TE_System>().AddTileEntity(new(left, top));
-			UpdatePowerState(i, j, IsPowered(i, j));
+			UpdatePowerState(i, j, AshenWireTile.DefaultIsPowered(i, j));
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);

@@ -78,18 +78,8 @@ namespace Origins.Tiles.Ashen {
 			}
 			return false;
 		}
-		public bool IsPowered(int i, int j) {
-			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
-			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
-			for (int x = 0; x < data.Width; x++) {
-				for (int y = 0; y < data.Height; y++) {
-					if (Main.tile[left + x, top + y].Get<Ashen_Wire_Data>().AnyPower) return true;
-				}
-			}
-			return false;
-		}
 		public override void HitWire(int i, int j) {
-			UpdatePowerState(i, j, IsPowered(i, j));
+			UpdatePowerState(i, j, AshenWireTile.DefaultIsPowered(i, j));
 		}
 		public void UpdatePowerState(int i, int j, bool powered) {
 			bool wasPowered = Main.tile[i, j].TileFrameX >= 18 * 2;

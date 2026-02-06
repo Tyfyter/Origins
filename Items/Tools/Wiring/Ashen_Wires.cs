@@ -160,6 +160,11 @@ namespace Origins.Items.Tools.Wiring {
 		}
 	}
 	public struct Ashen_Wire_Data : ITileData {
+		public readonly struct HittingWiresOverride : IDisposable {
+			readonly bool wasHittingWires = HittingAshenWires;
+			public HittingWiresOverride(bool hittingWires) => HittingAshenWires = hittingWires;
+			void IDisposable.Dispose() => HittingAshenWires = wasHittingWires;
+		}
 		public static bool HittingAshenWires { get; private set; }
 		public static readonly FrameCachedValue<float> pulse = new(() => MathF.Sin((float)Main.timeForVisualEffects / 20) * 0.5f + 0.5f);
 		internal byte data;
@@ -242,12 +247,8 @@ namespace Origins.Items.Tools.Wiring {
 					}
 				}
 				if (powerMultiTile) {
-					try {
-						HittingAshenWires = true;
-						WiringMethods.HitWireSingle(i, j);
-					} finally {
-						HittingAshenWires = false;
-					}
+					using HittingWiresOverride _ = new(true);
+					WiringMethods.HitWireSingle(i, j);
 				}
 			}
 			Ashen_Wire_System.SendWireData(i, j, Main.myPlayer);

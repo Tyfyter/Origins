@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Items.Tools.Wiring.Ashen_Wire_Data;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
@@ -121,6 +122,7 @@ namespace Origins.Tiles.Ashen {
 			Tile output = Main.tile[pos];
 
 			bool power = @switch.TileFrameY >= 3 * 18 && inputPower;
+			using HittingWiresOverride hwo = new(true);
 			Ashen_Wire_Data.SetTilePowered(pos.X, pos.Y, power);
 			SetTilePowerFrame(pos.X, pos.Y, power);
 		}
