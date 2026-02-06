@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Graphics;
+using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using PegasusLib;
@@ -12,10 +14,9 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
-	public class Floodlight : OriginTile, IComplexMineDamageTile, IGlowingModTile {
+	public class Floodlight : OriginTile, IComplexMineDamageTile, IGlowingModTile, IAshenWireTile, IMultiTypeMultiTile {
 		protected AutoLoadingAsset<Texture2D> glowTexture;
 		public static int ID { get; private set; }
-		TileItem Item;
 		protected int width, height;
 		public override void Load() {
 			new TileItem(this)
@@ -50,6 +51,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height - 1).Concat([18]).ToArray();
 			TileObjectData.newTile.Origin = new Point16(TileObjectData.newTile.Width / 2, TileObjectData.newTile.Height - 1);
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
+			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(TileObjectData.newTile, IsPart);
 			TileObjectData.newTile.FlattenAnchors = true;
 			width = TileObjectData.newTile.Width;
 			height = TileObjectData.newTile.Height;
@@ -59,23 +61,7 @@ namespace Origins.Tiles.Ashen {
 			glowTexture = Texture + "_Glow";
 		}
 		public override void HitWire(int i, int j) {
-			Tile tile = Main.tile[i, j];
-			int leftX = i - ((tile.TileFrameX / 18) % width);
-			int topY = j - ((tile.TileFrameY / 18) % height);
-			int offset = IsOn(tile) ? 18 : -18;
-			short frameAdjustment = (short)(offset * width);
-
-			for (int x = 0; x < width; x++) {
-				for (int y = 0; y < height; y++) {
-					Main.tile[leftX + x, topY + y].TileFrameX += frameAdjustment;
-					Wiring.SkipWire(leftX + x, topY + y);
-				}
-			}
-
-			// Avoid trying to send packets in singleplayer.
-			if (Main.netMode != NetmodeID.SinglePlayer) {
-				NetMessage.SendTileSquare(-1, leftX, topY, width, height, TileChangeType.None);
-			}
+			UpdatePowerState(i, j, IsPowered(i, j));
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (ShouldGlow(Main.tile[i, j])) {
@@ -98,6 +84,62 @@ namespace Origins.Tiles.Ashen {
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (ShouldGlow(tile)) color.DoFancyGlow(new Vector3(0.5f, 0.31f, 0f) * 3, tile.TileColor);
+		}
+		public bool IsPowered(int i, int j) {
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			for (int x = 0; x < data.Width; x++) {
+				for (int y = 0; y < data.Height; y++) {
+					if (!IsPart(x, y)) continue;
+					if (Main.tile[left + x, top + y].Get<Ashen_Wire_Data>().AnyPower) return true;
+				}
+			}
+			return false;
+		}
+		public void UpdatePowerState(int i, int j, bool powered) {
+			int frameSize = width * 18;
+			bool wasPowered = Main.tile[i, j].TileFrameX >= frameSize;
+			powered ^= true;
+			if (powered == wasPowered) return;
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			for (int x = 0; x < data.Width; x++) {
+				for (int y = 0; y < data.Height; y++) {
+					if (!IsPart(x, y)) continue;
+					Tile tile = Main.tile[left + x, top + y];
+					tile.TileFrameX = (short)(tile.TileFrameX % frameSize + (powered ? frameSize : 0));
+				}
+			}
+			if (!NetmodeActive.SinglePlayer) NetMessage.SendTileSquare(-1, left, top, data.Width, data.Height);
+		}
+		public static bool IsPart(int i, int j) {
+			switch (i) {
+				case 2:
+				case 3:
+				return true;
+			}
+			switch (j) {
+				case 0:
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				case 9:
+				return false;
+			}
+			return true;
+		}
+
+		public bool IsValidTile(Tile tile, int left, int top) {
+			(int i, int j) = tile.GetTilePosition();
+			i -= left;
+			j -= top;
+			if (IsPart(i, j)) {
+				if (tile.TileType != Type) return false;
+				Tile topLeft = Main.tile[left, top];
+				return tile.TileFrameX == topLeft.TileFrameX + i * 18 && tile.TileFrameY == topLeft.TileFrameY + j * 18;
+			}
+			return true;
 		}
 	}
 }

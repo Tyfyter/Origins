@@ -17,7 +17,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
-	public class Administrator_Panel : OriginTile, IGlowingModTile {
+	public class Administrator_Panel : OriginTile, IGlowingModTile, IAshenWireTile {
 		public override void Load() {
 			new TileItem(this)
 			.WithExtraStaticDefaults(this.DropTileItem)
@@ -78,7 +78,7 @@ namespace Origins.Tiles.Ashen {
 			}
 			return false;
 		}
-		public static bool IsPowered(int i, int j) {
+		public bool IsPowered(int i, int j) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			for (int x = 0; x < data.Width; x++) {
@@ -89,13 +89,11 @@ namespace Origins.Tiles.Ashen {
 			return false;
 		}
 		public override void HitWire(int i, int j) {
-			bool powered = IsPowered(i, j);
-			bool wasPowered = Main.tile[i, j].TileFrameX >= 18 * 2;
-			if (powered != wasPowered) {
-				UpdatePowerState(i, j, powered);
-			}
+			UpdatePowerState(i, j, IsPowered(i, j));
 		}
-		public static void UpdatePowerState(int i, int j, bool powered) {
+		public void UpdatePowerState(int i, int j, bool powered) {
+			bool wasPowered = Main.tile[i, j].TileFrameX >= 18 * 2;
+			if (powered == wasPowered) return;
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			for (int x = 0; x < data.Width; x++) {

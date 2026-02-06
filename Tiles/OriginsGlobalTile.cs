@@ -28,6 +28,11 @@ namespace Origins.Tiles {
 		public override void Unload() {
 			stalactiteTextures = null;
 		}
+		public override void PlaceInWorld(int i, int j, int type, Item item) {
+			if (TileLoader.GetTile(type) is IAshenWireTile ashenWireTile) {
+				ashenWireTile.UpdatePowerState(i, j, ashenWireTile.IsPowered(i, j));
+			}
+		}
 		public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged) {
 			//if (Main.tile[i, j - 1].TileType == Defiled_Altar.ID && type != Defiled_Altar.ID) return false;
 			//if (Main.tile[i, j - 1].TileType == Riven_Altar.ID && type != Riven_Altar.ID) return false;

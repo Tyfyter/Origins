@@ -141,7 +141,10 @@ namespace Origins.Tiles.Ashen {
 			return true;
 		}
 
-		public bool IsValidTile(Tile tile) => tile.TileType == ModContent.TileType<Cargo_Elevator_Door>() || tile.TileType == ModContent.TileType<Cargo_Elevator_Door_Open>();
+		public bool IsValidTile(Tile tile, int left, int top) {
+			if (tile.HasTile && (tile.TileType == ModContent.TileType<Cargo_Elevator_Door>() || tile.TileType == ModContent.TileType<Cargo_Elevator_Door_Open>())) return true;
+			return false;
+		}
 	}
 	public class Cargo_Elevator_Door_Open : Cargo_Elevator_Door {
 		public override string Texture => typeof(Cargo_Elevator_Door).GetDefaultTMLName();

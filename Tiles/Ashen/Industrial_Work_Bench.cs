@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
-	public class Industrial_Work_Bench : ModTile, IGlowingModTile {
+	public class Industrial_Work_Bench : ModTile, IGlowingModTile, IAshenWireTile {
 		public const int BaseTileID = TileID.HeavyWorkBench;
 		public static int ID { get; private set; }
 		public TileItem Item { get; protected set; }
@@ -56,26 +56,22 @@ namespace Origins.Tiles.Ashen {
 			const float brightness = 0.8f;
 			if (Main.tileFrame[Type] != 0 && tile.TileFrameX == 18 && tile.TileFrameY == 0) color.DoFancyGlow(new(brightness, brightness * 0.45f, brightness * 0.2f), tile.TileColor);
 		}
-		public static bool IsPowered(int i, int j) {
+		public bool IsPowered(int i, int j) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			for (int x = 0; x < data.Width; x++) {
 				for (int y = 0; y < data.Height; y++) {
-					Tile tile = Main.tile[left + x, top + y];
-					tile.WallColor = tile.Get<Ashen_Wire_Data>().AnyPower ? PaintID.DeepCyanPaint : PaintID.DeepRedPaint;
 					if (Main.tile[left + x, top + y].Get<Ashen_Wire_Data>().AnyPower) return true;
 				}
 			}
 			return false;
 		}
 		public override void HitWire(int i, int j) {
-			bool powered = IsPowered(i, j);
-			bool wasPowered = Main.tile[i, j].TileFrameY >= 18 * 3;
-			if (powered != wasPowered) {
-				UpdatePowerState(i, j, powered);
-			}
+			UpdatePowerState(i, j, IsPowered(i, j));
 		}
-		public static void UpdatePowerState(int i, int j, bool powered) {
+		public void UpdatePowerState(int i, int j, bool powered) {
+			bool wasPowered = Main.tile[i, j].TileFrameY >= 18 * 3;
+			if (powered == wasPowered) return;
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			for (int x = 0; x < data.Width; x++) {
@@ -85,9 +81,6 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 			if (!NetmodeActive.SinglePlayer) NetMessage.SendTileSquare(-1, left, top, data.Width, data.Height);
-		}
-		public override void PlaceInWorld(int i, int j, Item item) {
-			UpdatePowerState(i, j, IsPowered(i, j));
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }

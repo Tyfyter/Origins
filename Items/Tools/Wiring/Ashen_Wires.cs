@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Reflection;
+using Origins.Tiles.Ashen;
 using Origins.World;
 using ReLogic.Content;
 using System;
@@ -444,6 +445,14 @@ namespace Origins.Items.Tools.Wiring {
 				// add more else-ifs for newer versions of the data
 				else {
 					throw new Exception("Unknown world data saved version");
+				}
+				for (int j = 0; j < Main.maxTilesY; j++) {
+					for (int i = 0; i < Main.maxTilesX; i++) {
+						Tile tile = Main.tile[i, j];
+						if (tile.HasTile && TileLoader.GetTile(tile.TileType) is IAshenWireTile ashenWireTile) {
+							ashenWireTile.UpdatePowerState(i, j, ashenWireTile.IsPowered(i, j));
+						}
+					}
 				}
 			}
 		}
