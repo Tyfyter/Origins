@@ -15,7 +15,7 @@ using static Origins.Items.Tools.Wiring.Ashen_Wire_Data;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Transistor : OriginTile, IAshenTile, IAshenPowerConduitTile, IGlowingModTile {
+	public class Transistor : OriginTile, IAshenTile, IAshenPowerConduitTile, IGlowingModTile, IAshenWireTile {
 		public virtual Color MapColor => FromHexRGB(0x7a391a);
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
@@ -85,7 +85,7 @@ namespace Origins.Tiles.Ashen {
 			switch ((tile.TileFrameY / 18) % 3) {
 				case 0: {
 					Wiring.SkipWire(i, j);
-					UpdateTransistor(new(i, j));
+					if (Ashen_Wire_Data.HittingAshenWires) UpdatePowerState(i, j, IsPowered(i, j));
 					/*if (tile.TileFrameY.TrySet((short)(tile.Get<Ashen_Wire_Data>().AnyPower ? 18 * 3 : 0))) {
 						Wiring.SkipWire(i, j);
 						UpdateTransistor(new(i, j));
@@ -105,24 +105,35 @@ namespace Origins.Tiles.Ashen {
 			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY, 16, 16);
 			drawData.glowTexture = this.GetGlowTexture(drawData.tileCache.TileColor);
 		}
-		public virtual void UpdateTransistor(Point pos) {
-			Tile input = Main.tile[pos];
-			Point dir = GetDirection(input);
-			bool inputPower = input.Get<Ashen_Wire_Data>().AnyPower;
-			using (IAshenPowerConduitTile.WalkedConduitOutput _ = new(pos + dir + dir)) {
-				if (inputPower) inputPower = IAshenPowerConduitTile.FindValidPowerSource(pos, 0)
+		public void UpdatePowerState(int i, int j, bool powered) {
+			Tile tile = Main.tile[i, j];
+			if ((tile.TileFrameY / 18) % 3 != 0) return;
+			SetTilePowerFrame(i, j, powered);
+			UpdateTransistor(new(i, j));
+		}
+		public bool IsPowered(int i, int j) {
+			Tile tile = Main.tile[i, j];
+			if ((tile.TileFrameY / 18) % 3 != 0) return false;
+			Point pos = new(i, j);
+			bool inputPower = false;
+			if (tile.Get<Ashen_Wire_Data>().AnyPower) {
+				using IAshenPowerConduitTile.WalkedConduitOutput _ = new(pos);
+				inputPower = IAshenPowerConduitTile.FindValidPowerSource(pos, 0)
 						|| IAshenPowerConduitTile.FindValidPowerSource(pos, 1)
 						|| IAshenPowerConduitTile.FindValidPowerSource(pos, 2);
 			}
-			SetTilePowerFrame(pos.X, pos.Y, inputPower);
+			return inputPower;
+		}
+		public static void UpdateTransistor(Point pos) {
+			Tile input = Main.tile[pos];
+			Point dir = GetDirection(input);
 
 			pos += dir;
 			Tile @switch = Main.tile[pos];
 			pos += dir;
 			Tile output = Main.tile[pos];
 
-			bool power = @switch.TileFrameY >= 3 * 18 && inputPower;
-			using HittingWiresOverride hwo = new(true);
+			bool power = @switch.TileFrameY >= 3 * 18 && input.TileFrameY >= 3 * 18;
 			Ashen_Wire_Data.SetTilePowered(pos.X, pos.Y, power);
 			SetTilePowerFrame(pos.X, pos.Y, power);
 		}

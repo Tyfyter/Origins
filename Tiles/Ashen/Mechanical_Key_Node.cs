@@ -7,13 +7,14 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public abstract class Mechanical_Key_Node : ModTile, IAshenPowerConduitTile, IGlowingModTile {
+	public abstract class Mechanical_Key_Node : ModTile, IAshenPowerConduitTile, IGlowingModTile, IAshenWireTile {
 		public Mechanical_Key_Node_Item Item { get; private set; }
 		public abstract int KeyType { get; }
 		public override string HighlightTexture => typeof(Mechanical_Key_Node).GetDefaultTMLName("_Highlight");
@@ -27,7 +28,10 @@ namespace Origins.Tiles.Ashen {
 		}
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (tile.TileFrameX >= 18) color.DoFancyGlow(new(1.05f, 0.75f, 0f), tile.TileColor);
+			if (tile.TileFrameX >= 18) {
+				color.DoFancyGlow(SwitchColor.ToVector3(), tile.TileColor);
+				color.DoFancyGlow(tile.TileFrameY >= 18 ? Vector3.Up : Vector3.Right, tile.TileColor);
+			}
 		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
@@ -50,16 +54,24 @@ namespace Origins.Tiles.Ashen {
 			RegisterItemDrop(Item.Type);
 		}
 		public override void HitWire(int i, int j) {
+			if (Ashen_Wire_Data.HittingAshenWires) UpdatePowerState(i, j, IsPowered(i, j));
+		}
+		public bool IsPowered(int i, int j) {
 			Tile tile = Main.tile[i, j];
 			Point pos = new(i, j);
-			bool inputPower = tile.Get<Ashen_Wire_Data>().AnyPower;
-			using (IAshenPowerConduitTile.WalkedConduitOutput _ = new(pos)) {
-				if (inputPower) inputPower = IAshenPowerConduitTile.FindValidPowerSource(pos, 0)
+			bool inputPower = false;
+			if (tile.Get<Ashen_Wire_Data>().AnyPower) {
+				using IAshenPowerConduitTile.WalkedConduitOutput _ = new(pos);
+				inputPower = IAshenPowerConduitTile.FindValidPowerSource(pos, 0)
 						|| IAshenPowerConduitTile.FindValidPowerSource(pos, 1)
 						|| IAshenPowerConduitTile.FindValidPowerSource(pos, 2);
 			}
-			if (tile.TileFrameX.TrySet(inputPower.Mul<short>(18))) {
-				if (tile.TileFrameY != 0) Ashen_Wire_Data.SetTilePowered(i, j, inputPower);
+			return inputPower;
+		}
+		public void UpdatePowerState(int i, int j, bool powered) {
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameX.TrySet(powered.Mul<short>(18))) {
+				if (tile.TileFrameY != 0) Ashen_Wire_Data.SetTilePowered(i, j, powered);
 				NetMessage.SendData(MessageID.TileSquare, Main.myPlayer, -1, null, i, j, 1, 1);
 			}
 		}
@@ -133,7 +145,9 @@ namespace Origins.Tiles.Ashen {
 			}
 			return powered;
 		}
+
 		public class Mechanical_Key_Node_Item(Mechanical_Key_Node tile) : ModItem {
+			static AutoLoadingAsset<Texture2D> overlay = typeof(Mechanical_Key_Node_Item).GetDefaultTMLName("_Color");
 			public override string Name => tile.Name + "_Item";
 			public override string Texture => GetType().GetDefaultTMLName();
 			protected override bool CloneNewInstances => true;
@@ -143,6 +157,28 @@ namespace Origins.Tiles.Ashen {
 			public override void SetDefaults() {
 				Item.DefaultToPlaceableTile(tile.Type);
 				Item.mech = true;
+			}
+			public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+				spriteBatch.Draw(overlay, position, frame, tile.SwitchColor.MultiplyRGBA(drawColor), 0, origin, scale, SpriteEffects.None, 0);
+			}
+			public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
+				Vector2 origin = overlay.Value.Size() * 0.5f;
+				Rectangle originalFrame;
+				{
+					Texture2D texture = TextureAssets.Item[Type].Value;
+					if (Main.itemAnimations[Type] != null) {
+						originalFrame = Main.itemAnimations[Type].GetFrame(texture, Main.itemFrameCounter[whoAmI]);
+					} else {
+						originalFrame = texture.Frame();
+					}
+				}
+				alphaColor = alphaColor.MultiplyRGBA(tile.SwitchColor);
+				Vector2 vector2 = new((Item.width / 2) - originalFrame.Width * 0.5f, Item.height - originalFrame.Height);
+				Vector2 position = Item.position - Main.screenPosition + originalFrame.Size() * 0.5f + vector2;
+				spriteBatch.Draw(overlay, position, null, alphaColor, rotation, origin, scale, SpriteEffects.None, 0f);
+				if (Item.shimmered) {
+					spriteBatch.Draw(overlay, position, null, alphaColor with { A = 0 }, rotation, origin, scale, SpriteEffects.None, 0f);
+				}
 			}
 		}
 	}

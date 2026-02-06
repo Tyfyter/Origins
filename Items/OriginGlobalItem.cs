@@ -319,6 +319,20 @@ namespace Origins.Items {
 			if (PrefixLoader.GetPrefix(item.prefix) is IModifyTooltipsPrefix modifyTooltipsPrefix) {
 				modifyTooltipsPrefix.ModifyTooltips(item, tooltips);
 			}
+			if (item.createTile > -1 && TileLoader.GetTile(item.createTile) is IAshenWireTile) {
+				for (int i = tooltips.Count - 1; i >= 0; i--) {
+					switch (tooltips[i].Name) {
+						case "Placeable":
+						case "Ammo":
+						case "Consumable":
+						case "Material":
+						case "Wireable":
+						tooltips.Insert(i + 1, new(Mod, "AshenWireable", Language.GetTextValue("Mods.Origins.Items.GenericTooltip.AshenWireable")));
+						i = 0;
+						break;
+					}
+				}
+			}
 		}
 		public override bool CanReforge(Item item)/* tModPorter Note: Use CanReforge instead for logic determining if a reforge can happen. */ {
 			if (PrefixLoader.GetPrefix(item.prefix) is ICanReforgePrefix canReforgePrefix) {

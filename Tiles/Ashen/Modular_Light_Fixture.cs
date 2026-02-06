@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
 using Origins.World;
 using System.Collections.Generic;
@@ -7,9 +8,10 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using ThoriumMod.Projectiles.Pets;
 
 namespace Origins.Tiles.Ashen {
-	public class Modular_Light_Fixture : OriginTile, IGlowingModTile {
+	public class Modular_Light_Fixture : OriginTile, IGlowingModTile, IAshenWireTile {
 		public static TileItem item { get; protected set; }
 		public static Vector3 LightColor => new(1.05f, 0.75f, 0f);
 		public override void SetStaticDefaults() {
@@ -175,13 +177,21 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 		}
+		public bool IsPowered(int i, int j) {
+			foreach (Point pos in CrawlEntireLight(i, j)) {
+				if (Main.tile[pos].Get<Ashen_Wire_Data>().AnyPower) return true;
+			}
+			return false;
+		}
 		public override void HitWire(int i, int j) {
-			Tile tile = Framing.GetTileSafely(i, j);
+			if (Ashen_Wire_Data.HittingAshenWires) UpdatePowerState(i, j, IsPowered(i, j));
+		}
+		public void UpdatePowerState(int i, int j, bool powered) {
 			short litMod = 18 * 3;
-			if (tile.TileFrameY >= 18 * 3) litMod = 0;
+			if (powered) litMod = 0;
 			foreach (Point pos in CrawlEntireLight(i, j)) {
 				Wiring.SkipWire(pos.X, pos.Y);
-				tile = Framing.GetTileSafely(pos.X, pos.Y);
+				Tile tile = Framing.GetTileSafely(pos.X, pos.Y);
 				tile.TileFrameY %= 18 * 3;
 				tile.TileFrameY += litMod;
 			}

@@ -19,7 +19,7 @@ using Terraria.ObjectData;
 using static Origins.Tiles.Ashen.Cargo_Elevator_Door_TE_System;
 
 namespace Origins.Tiles.Ashen {
-	public class Cargo_Elevator_Door : OriginTile, IComplexMineDamageTile, IMultiTypeMultiTile {
+	public class Cargo_Elevator_Door : OriginTile, IComplexMineDamageTile, IMultiTypeMultiTile, IAshenWireTile {
 		public TileItem Item { get; protected set; }
 		public override void Load() {
 			Mod.AddContent(Item = new TileItem(this).WithOnAddRecipes(item => {
@@ -90,35 +90,22 @@ namespace Origins.Tiles.Ashen {
 			b = 0.001f;
 		}
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) {
-			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameX >= 11 * 18) return false;
+			TileObjectData data = TileObjectData.GetTileData(tile);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			Door_Animation animation = Cargo_Elevator_Door_TE_System.GetAnimation(new(left, top));
 			if (animation.IsAnimating) return false;
-			if (IsPowered(i, j)) return false;
+			if (AshenWireTile.DefaultIsPowered(i, j)) return false;
 			return true;
 		}
-		public static bool IsPowered(int i, int j) {
-			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
-			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
-			for (int x = 0; x < data.Width; x++) {
-				for (int y = 0; y < data.Height; y++) {
-					if (Main.tile[left + x, top + y].Get<Ashen_Wire_Data>().AnyPower) return true;
-				}
-			}
-			return false;
-		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
-			if (!fail) fail = IsPowered(i, j);
+			if (!fail) fail = AshenWireTile.DefaultIsPowered(i, j);
 		}
+		public void UpdatePowerState(int i, int j, bool powered) => AshenWireTile.DefaultUpdatePowerState(i, j, powered, tile => ref tile.TileFrameX, 18 * 11);
 		public override void HitWire(int i, int j) {
-			Toggle(i, j);
-			/*bool powered = IsPowered(i, j);
-			bool wasPowered = ;
-			if (powered != wasPowered) {
-				UpdatePowerState(i, j, powered);
-			}*/
-		}
-		public static void UpdatePowerState(int i, int j, bool powered) {
+			UpdatePowerState(i, j, AshenWireTile.DefaultIsPowered(i, j));
+			if (!Ashen_Wire_Data.HittingAshenWires) Toggle(i, j);
 		}
 		public override bool RightClick(int i, int j) => Toggle(i, j);
 		public override void PlaceInWorld(int i, int j, Item item) {
@@ -130,20 +117,34 @@ namespace Origins.Tiles.Ashen {
 					WorldGen.SquareTileFrame(left + x, top + y);
 				}
 			}
-			UpdatePowerState(i, j, IsPowered(i, j));
 		}
 		public static bool Toggle(int i, int j, bool actuallyDo = true) {
-			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameX >= 11 * 18) return false;
+			TileObjectData data = TileObjectData.GetTileData(tile);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			Door_Animation animation = Cargo_Elevator_Door_TE_System.GetAnimation(new(left, top));
-			if (animation.IsAnimating) return false;
-			if (actuallyDo) new Cargo_Elevator_Door_Action(new(left, top), !animation.TargetOpen).Perform();
+			if (animation.IsAnimating) {
+				switch (animation.TargetFrame) {
+					case Door_Animation.locked_frame:
+					return false;
+					case Door_Animation.closed_frame:
+					if (animation.frame >= Door_Animation.closed_frame) return false;
+					break;
+					case Door_Animation.open_frame:
+					return false;
+				}
+			}
+			if (actuallyDo) new Cargo_Elevator_Door_Action(new(left, top), animation.TargetFrame != Door_Animation.open_frame).Perform();
 			return true;
 		}
 
 		public bool IsValidTile(Tile tile, int left, int top) {
 			if (tile.HasTile && (tile.TileType == ModContent.TileType<Cargo_Elevator_Door>() || tile.TileType == ModContent.TileType<Cargo_Elevator_Door_Open>())) return true;
 			return false;
+		}
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
+			tileFrameX %= 18 * 11;
 		}
 	}
 	public class Cargo_Elevator_Door_Open : Cargo_Elevator_Door {
@@ -182,8 +183,6 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void LoadWorldData(TagCompound tag) {
 			base.LoadWorldData(tag);
-			int closed = ModContent.TileType<Cargo_Elevator_Door>();
-			int open = ModContent.TileType<Cargo_Elevator_Door_Open>();
 			openDoors ??= [];
 			foreach (Point16 pos in tileEntityLocations) {
 				Tile tile = Main.tile[pos];
@@ -192,9 +191,12 @@ namespace Origins.Tiles.Ashen {
 				TileUtils.GetMultiTileTopLeft(pos.X, pos.Y, data, out int left, out int top);
 				if (pos.X == left && pos.Y == top) {
 					Door_Animation animation = GetAnimation(pos);
-					if (tile.TileFrameY == Door_Animation.max_frame * data.Height * 18) {
-						animation.TargetOpen = true;
-						animation.frame = Door_Animation.max_frame;
+					if (tile.TileFrameX >= 11 * 18) {
+						animation.TargetFrame = Door_Animation.locked_frame;
+						animation.frame = Door_Animation.locked_frame;
+					} else if (tile.TileFrameY == Door_Animation.open_frame * data.Height * 18) {
+						animation.TargetFrame = Door_Animation.open_frame;
+						animation.frame = Door_Animation.open_frame;
 					}
 				}
 			}
@@ -205,33 +207,41 @@ namespace Origins.Tiles.Ashen {
 			return openDoors[position];
 		}
 		public class Door_Animation {
-			public bool TargetOpen = false;
+			public int TargetFrame = closed_frame;
 			public int frame = 0;
 			public int frameCounter = 0;
-			public bool IsAnimating => frame != TargetOpen.Mul(max_frame);
-			public const int max_frame = 18;
+			public bool IsAnimating => frame != TargetFrame;
+			public const int locked_frame = 0;
+			public const int closed_frame = 7;
+			public const int open_frame = 18;
 
-			HashSet<Point> leftClosing = [];
-			HashSet<Point> rightClosing = [];
+			readonly HashSet<Point> leftClosing = [];
+			readonly HashSet<Point> rightClosing = [];
 			public void Update(Point16 position) {
-				if (TargetOpen && Main.tile[position].TileFrameX >= 4 * 18) TargetOpen = false;
+				if ((Main.tile[position].TileFrameX >= 11 * 18) != (TargetFrame == locked_frame)) {
+					if (TargetFrame == locked_frame) {
+						TargetFrame = closed_frame;
+					} else {
+						TargetFrame = locked_frame;
+					}
+				}
 				if (!IsAnimating) return;
 				if (++frameCounter > 4) {
 					frameCounter = 0;
 					TileObjectData data = TileObjectData.GetTileData(Main.tile[position]);
 					TileUtils.GetMultiTileTopLeft(position.X, position.Y, data, out int left, out int top);
-					if (TargetOpen && frame == 11) {
+					if (TargetFrame == open_frame && frame == 11) {
 						for (int x = 0; x < data.Width; x++) {
 							for (int y = 0; y < data.Height; y++) {
 								if (Main.tile[left + x, top + y].Get<Hanging_Scrap_Data>().HasScrap) {
 
-									TargetOpen = false;
+									TargetFrame = closed_frame;
 									break;
 								}
 							}
 						}
 					}
-					frame += TargetOpen.ToDirectionInt();
+					frame += TargetFrame.CompareTo(frame);
 					ushort closed = (ushort)ModContent.TileType<Cargo_Elevator_Door>();
 					ushort open = (ushort)ModContent.TileType<Cargo_Elevator_Door_Open>();
 					leftClosing.Clear();
@@ -241,7 +251,7 @@ namespace Origins.Tiles.Ashen {
 							Tile tile = Main.tile[left + x, top + y];
 							tile.TileFrameY = (short)(frame * 3 * 18 + y * 18);
 							if (tile.TileType.TrySet(Cargo_Elevator_Door.IsSolid(left + x, top + y) ? closed : open)) {
-								if (!TargetOpen) {
+								if (TargetFrame != open_frame) {
 									if (x < (data.Width + 1) / 2) leftClosing.Add(new(left + x, top + y));
 									if (x > (data.Width - 2) / 2) rightClosing.Add(new(left + x, top + y));
 								} else if (!NetmodeActive.MultiplayerClient && tile.TileType == open && tile.LiquidAmount > 0 && !WorldGen.noLiquidCheck) {
@@ -251,7 +261,7 @@ namespace Origins.Tiles.Ashen {
 						}
 					}
 				}
-				if (!TargetOpen && frame > 5) {
+				if (TargetFrame != open_frame && frame > 5) {
 					ushort closed = (ushort)ModContent.TileType<Cargo_Elevator_Door>();
 					ushort open = (ushort)ModContent.TileType<Cargo_Elevator_Door_Open>();
 					Vector2? GetPushDirection(Rectangle hitbox) {
@@ -332,7 +342,7 @@ namespace Origins.Tiles.Ashen {
 			}
 		}
 		public record class Cargo_Elevator_Door_Action(Point16 Position, bool Open) : SyncedAction {
-			protected override bool ShouldPerform => GetAnimation(Position).TargetOpen != Open;
+			protected override bool ShouldPerform => (GetAnimation(Position).TargetFrame == Door_Animation.open_frame) != Open;
 			public Cargo_Elevator_Door_Action() : this(default, default) { }
 			public override SyncedAction NetReceive(BinaryReader reader) => this with {
 				Position = new(reader.ReadInt16(), reader.ReadInt16()),
@@ -343,7 +353,7 @@ namespace Origins.Tiles.Ashen {
 				writer.Write((short)Position.Y);
 				writer.Write(Open);
 			}
-			protected override void Perform() => GetAnimation(Position).TargetOpen = Open;
+			protected override void Perform() => GetAnimation(Position).TargetFrame = Open ? Door_Animation.open_frame : Door_Animation.closed_frame;
 		}
 	}
 }

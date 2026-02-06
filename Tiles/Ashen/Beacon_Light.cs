@@ -15,7 +15,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
-	public class Beacon_Light : OriginTile {
+	public class Beacon_Light : OriginTile, IComplexMineDamageTile, IAshenWireTile {
 		public static int ID { get; private set; }
 		TileItem item;
 		public override void Load() {
@@ -43,9 +43,34 @@ namespace Origins.Tiles.Ashen {
 			DustType = Ashen_Biome.DefaultTileDust;
 			RegisterItemDrop(item.Type);
 		}
+		public void MinePower(int i, int j, int minePower, ref int damage) {
+			if (minePower < 55 && Main.tile[i, j].TileFrameX >= 18 * 2 * 2) damage = 0;
+		}
 		public override void PlaceInWorld(int i, int j, Item item) {
 			ModContent.GetInstance<Beacon_Light_TE_System>().AddTileEntity(new(i, j));
-
+		}
+		public void UpdatePowerState(int i, int j, bool powered) {
+			if (Main.tile[i, j].TileFrameX < 18 * 2 * 2) AshenWireTile.DefaultUpdatePowerState(i, j, powered, tile => ref tile.TileFrameX, 18 * 2, true);
+		}
+		public override void HitWire(int i, int j) {
+			UpdatePowerState(i, j, AshenWireTile.DefaultIsPowered(i, j));
+		}
+		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
+			if (!fail) {
+				Tile tile = Main.tile[i, j];
+				if (tile.TileFrameX < 18 * 2 * 2) {
+					TileObjectData data = TileObjectData.GetTileData(tile);
+					TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+					for (int x = 0; x < data.Width; x++) {
+						for (int y = 0; y < data.Height; y++) {
+							tile = Main.tile[left + x, top + y];
+							tile.TileFrameX %= 18 * 2;
+							tile.TileFrameX += 18 * 2 * 2;
+						}
+					}
+					fail = true;
+				}
+			}
 		}
 	}
 	public class Beacon_Light_TE_System : TESystem {
@@ -60,8 +85,9 @@ namespace Origins.Tiles.Ashen {
 			hitboxes ??= [];
 			for (int i = 0; i < tileEntityLocations.Count; i++) {
 				Point16 pos = tileEntityLocations[i];
-				if (Main.tile[pos].TileIsType(Beacon_Light.ID) && processedLocations.Add(pos)) {
-					hitboxes.Add(new(pos.X * 16 - 32, pos.Y * 16 - 16, 64, 64));
+				Tile tile = Main.tile[pos];
+				if (tile.TileIsType(Beacon_Light.ID) && processedLocations.Add(pos)) {
+					if (tile.TileFrameX < 18 * 2) hitboxes.Add(new(pos.X * 16 - 32, pos.Y * 16 - 16, 64, 64));
 				} else {
 					tileEntityLocations.RemoveAt(i--);
 				}
@@ -91,11 +117,6 @@ namespace Origins.Tiles.Ashen {
 					Overlays.Scene[biome_name].Deactivate();
 			}
 		}
-		internal static bool RegisterProjPosition(Point16 pos) {
-			Beacon_Light_TE_System instance = ModContent.GetInstance<Beacon_Light_TE_System>();
-			instance.processedLocations ??= [];
-			return instance.processedLocations.Add(pos);
-		}
 		public class Beacon_Light_Overlay() : Overlay(EffectPriority.High, RenderLayers.ForegroundWater) {
 			public override void Draw(SpriteBatch spriteBatch) {
 				List<Point16> tileEntityLocations = ModContent.GetInstance<Beacon_Light_TE_System>().tileEntityLocations;
@@ -104,7 +125,10 @@ namespace Origins.Tiles.Ashen {
 				Color color = new(255, 123, 72);
 				const float range = 16 * 2640; // a mile
 				for (int i = 0; i < tileEntityLocations.Count; i++) {
-					Vector2 pos = tileEntityLocations[i].ToWorldCoordinates(0, 0);
+					Point16 tilePos = tileEntityLocations[i];
+					Tile tile = Main.tile[tilePos];
+					if (tile.TileFrameX >= 18 * 2) continue;
+					Vector2 pos = tilePos.ToWorldCoordinates(0, 0);
 					float obscureFactor = 1f;
 					foreach (Player player in Main.ActivePlayers) {
 						Rectangle rect = player.Hitbox;
