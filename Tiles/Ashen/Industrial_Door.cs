@@ -212,26 +212,30 @@ namespace Origins.Tiles.Ashen {
 							}
 						}
 					}
-					if (!TargetOpen && frame < 4 && !NetmodeActive.MultiplayerClient) {
+					if (!TargetOpen && frame < 4) {
 						Rectangle hitbox = new(left * 16, top * 16, 16 * 2, 16 * 3);
-						foreach (Player player in Main.ActivePlayers) {
-							if (player.shimmering) continue;
-							if (player.Hitbox.Intersects(hitbox)) {
-								player.Hurt(
-									PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Crushed").SelectFrom(player.name).ToNetworkText()),
-									player.statLife / (frame + 1),
-									0,
-									cooldownCounter: -2,
-									dodgeable: false,
-									knockback: 18,
-									scalingArmorPenetration: 1
-								);
+						if (!NetmodeActive.Server) {
+							Player player = Main.LocalPlayer;
+							if (!player.shimmering) {
+								if (player.Hitbox.Intersects(hitbox)) {
+									player.Hurt(
+										PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Crushed").SelectFrom(player.name).ToNetworkText()),
+										player.statLife / (frame + 1),
+										0,
+										cooldownCounter: -2,
+										dodgeable: false,
+										knockback: 18,
+										scalingArmorPenetration: 1
+									);
+								}
 							}
 						}
-						foreach (NPC npc in Main.ActiveNPCs) {
-							if (npc.noTileCollide || npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) continue;
-							if (npc.Hitbox.Intersects(hitbox)) {
-								npc.SimpleStrikeNPC(npc.life / (frame + 1), 0, true, 18, noPlayerInteraction: true);
+						if (!NetmodeActive.MultiplayerClient) {
+							foreach (NPC npc in Main.ActiveNPCs) {
+								if (npc.noTileCollide || npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) continue;
+								if (npc.Hitbox.Intersects(hitbox)) {
+									npc.SimpleStrikeNPC(npc.life / (frame + 1), 0, true, 18, noPlayerInteraction: true);
+								}
 							}
 						}
 					}

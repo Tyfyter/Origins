@@ -145,7 +145,7 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Cargo_Elevator_Door_Open : Cargo_Elevator_Door {
 		public override string Texture => typeof(Cargo_Elevator_Door).GetDefaultTMLName();
-		public override void Load() {}
+		public override void Load() { }
 		public override void SetStaticDefaults() {
 			Item = ModContent.GetInstance<Cargo_Elevator_Door>().Item;
 			base.SetStaticDefaults();
@@ -244,13 +244,11 @@ namespace Origins.Tiles.Ashen {
 								} else if (!NetmodeActive.MultiplayerClient && tile.TileType == open && tile.LiquidAmount > 0 && !WorldGen.noLiquidCheck) {
 									Liquid.AddWater(left + x, top + y);
 								}
-								//if (leftClosing.Contains(new(left + x, top + y))) tile.TileColor = rightClosing.Contains(new(left + x, top + y)) ? PaintID.DeepPurplePaint : PaintID.DeepCyanPaint;
-								//else if (rightClosing.Contains(new(left + x, top + y))) tile.TileColor = PaintID.DeepRedPaint;
 							}
 						}
 					}
 				}
-				if (!TargetOpen && frame > 5 && !NetmodeActive.MultiplayerClient) {
+				if (!TargetOpen && frame > 5) {
 					ushort closed = (ushort)ModContent.TileType<Cargo_Elevator_Door>();
 					ushort open = (ushort)ModContent.TileType<Cargo_Elevator_Door_Open>();
 					Vector2? GetPushDirection(Rectangle hitbox) {
@@ -282,43 +280,48 @@ namespace Origins.Tiles.Ashen {
 						if (left == 0 && right == 0) return null;
 						return Vector2.UnitX * (left - right);
 					}
-					foreach (Player player in Main.ActivePlayers) {
-						if (player.shimmering) continue;
-						int tryCount = 0;
-						while (++tryCount < 4 && GetPushDirection(player.Hitbox) is Vector2 push) {
-							if (push == default) {
-								if (frameCounter == 0) {
-									player.Hurt(
-										PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Crushed").SelectFrom(player.name).ToNetworkText()),
-										player.statLife,
-										0,
-										cooldownCounter: -2,
-										dodgeable: false,
-										knockback: 18,
-										scalingArmorPenetration: 1
-									);
+					if (!NetmodeActive.Server) {
+						Player player = Main.LocalPlayer;
+						if (!player.shimmering) {
+							int tryCount = 0;
+							while (++tryCount < 4 && GetPushDirection(player.Hitbox) is Vector2 push) {
+								if (push == default) {
+									if (frameCounter == 0) {
+										player.Hurt(
+											PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Crushed").SelectFrom(player.name).ToNetworkText()),
+											player.statLife,
+											0,
+											cooldownCounter: -2,
+											dodgeable: false,
+											knockback: 18,
+											scalingArmorPenetration: 1
+										);
+									}
+									break;
 								}
-								break;
+								player.position += push * 4;
 							}
-							player.position += push * 4;
 						}
 					}
-					foreach (NPC npc in Main.ActiveNPCs) {
-						if (npc.noTileCollide || npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) continue;
-						int tryCount = 0;
-						while (++tryCount < 4 && GetPushDirection(npc.Hitbox) is Vector2 push) {
-							if (push == default) {
-								if (frameCounter == 0) {
-									npc.SimpleStrikeNPC(npc.life, 0, true, 18, noPlayerInteraction: true);
+					if (!NetmodeActive.MultiplayerClient) {
+						foreach (NPC npc in Main.ActiveNPCs) {
+							if (npc.noTileCollide || npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) continue;
+							int tryCount = 0;
+							while (++tryCount < 4 && GetPushDirection(npc.Hitbox) is Vector2 push) {
+								if (push == default) {
+									if (frameCounter == 0) {
+										npc.SimpleStrikeNPC(npc.life, 0, true, 18, noPlayerInteraction: true);
+									}
+									break;
+								} else {
+									npc.position += push * 4;
+									npc.netUpdate = true;
 								}
-								break;
-							} else {
-								npc.position += push * 4;
 							}
+							/*if (npc.Hitbox.Intersects(hitbox)) {
+								npc.SimpleStrikeNPC(npc.life / (frame + 1), 0, true, 18, noPlayerInteraction: true);
+							}*/
 						}
-						/*if (npc.Hitbox.Intersects(hitbox)) {
-							npc.SimpleStrikeNPC(npc.life / (frame + 1), 0, true, 18, noPlayerInteraction: true);
-						}*/
 					}
 				}
 				leftClosing.Clear();
