@@ -7946,7 +7946,7 @@ Administrator_Panel_Item: {
 
 Oil_Bottomless_Bucket: {
 	// DisplayName: Bottomless Oil Bucket
-	// Tooltip: ""
+	// Tooltip: "'More oil for your oil!'"
 }
 
 Oil_Bucket: {

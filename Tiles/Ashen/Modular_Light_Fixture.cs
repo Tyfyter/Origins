@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using ThoriumMod.Projectiles.Pets;
 
 namespace Origins.Tiles.Ashen {
-	public class Modular_Light_Fixture : OriginTile, IGlowingModTile, IAshenWireTile {
+	public class Modular_Light_Fixture : OriginTile, IGlowingModTile/*, IAshenWireTile*/ {
 		public static TileItem item { get; protected set; }
 		public static Vector3 LightColor => new(1.05f, 0.75f, 0f);
 		public override void SetStaticDefaults() {
@@ -177,7 +177,8 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 		}
-		public bool IsPowered(int i, int j) {
+		//TODO: Uncomment when done with concept builds
+		/*public bool IsPowered(int i, int j) {
 			foreach (Point pos in CrawlEntireLight(i, j)) {
 				if (Main.tile[pos].Get<Ashen_Wire_Data>().AnyPower) return true;
 			}
@@ -195,7 +196,7 @@ namespace Origins.Tiles.Ashen {
 				tile.TileFrameY %= 18 * 3;
 				tile.TileFrameY += litMod;
 			}
-		}
+		}*/
 		static IEnumerable<Point> GetConnected(int i, int j) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			switch ((tile.TileFrameX / 18, (tile.TileFrameY / 18) % 3)) {

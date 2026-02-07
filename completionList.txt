@@ -132,7 +132,7 @@ TOWN NPC Quests:
 
 VANILLA MODIFICATIONS:
 |---
-(^) Recipes General
+(#2) Recipes General !!! (Ultra Absorbent Sponge)
 
 (^) Advanced weapon functionality in PVP
 (^) Boss Resistances (make every boss immune to anything with Stun)
@@ -168,6 +168,7 @@ WORLD GENERATION:
 
 (^) Chambersite Conversion
 (^) Felnum Veins
+(^) Natural Oil
 ---
 
 
@@ -795,6 +796,7 @@ TOOLS:
 (X) Perihelion Pickaxe
 
 (^) Bottomless Oil Bucket
+(X) Oil Absorbent Sponge !!!
 (^) Oil Bucket
 (^) Pincushion
 ---
@@ -1119,6 +1121,7 @@ EXPLOSIVE WEAPONS:
 (^) Link Grenade
 (^) Matrix
 (^) Meteor
+(#, ^2) Oil Bomb !!!
 (^) Peatball
 (^) Potato Mine
 (^) Regurgitator of Souls
@@ -1356,6 +1359,7 @@ TILES:
 (X) Defiled Pylon
 (@, ^3) Dirt Chest
 (^) Fire Extinguisher Holder
+(X) Gas Generator !!!
 (^) Industrial Door
 (#3, ^2) Large Storage Container
 (^) Laser Tag Console
@@ -1375,10 +1379,12 @@ TILES:
 (^) Riven Dungeon Chest
 (^) Rusty Locker
 (^) Small Storage Container
+(X) Solar Battery !!!
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (#2, ^2) Transistor !!! (needs obtain method)
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)
+(X) Wind Generator !!!
 (X) Wrycoral Planter Box
 
 (X) Elderforge
@@ -1709,6 +1715,7 @@ CONSUMABLES:
 (^) Latchkey
 (^) Lottery Ticket
 (^) Magic Brine Dropper
+(#2, ^2) Magic Oil Dropper !!!
 (^) Spyglass
 (^) Void Lock
 (^) White Water
@@ -1781,6 +1788,7 @@ AMMO:
 (^) Flammable Harpoon
 (X) Foolean Canister
 (^) Harpoon
+(#, ^2) Oil Canister I !!!
 (^) Peatball
 (^) Resizable Mine I
 (^) Resizable Mine II
@@ -1807,6 +1815,7 @@ AMMO:
 (^) Ichor Canister
 (^) Ichor Harpoon
 (^) Metal Slug
+(#, ^2) Oil Canister II !!!
 (^) Resizable Mine V
 (^) Scrap Dart
 
@@ -1814,7 +1823,7 @@ AMMO:
 
 (^) Homing Rocket I
 (^) Homing Rocket II
-(X) Oil Rocket !!!
+(#, ^2) Oil Rocket !!!
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
 (^) Valkyrum Bullet
@@ -1880,6 +1889,7 @@ CROSS-MOD CONTENT:
 (^) Sanguinite Storage Upgrade
 (@, ^3) Suspicious Trash Compactor !!!
 (^) Watered-down Keytar
+(X) Wave Energy Converter !!!
 
 (^) Ashen Lock Box
 (^) Brine Lock Box
@@ -1948,7 +1958,7 @@ VOLUME I MUSIC:
 (X) Underground Riven Hive
 
 (X) Arabel
-(X) Ashen Mini-Boss Encounter !!!
+(#, ^4) Ashen Mini-Boss Encounter !!!
 (X) Blue Lobster 'Tearror'
 (X) Crimson King
 (^) Defiled Amalgamation
