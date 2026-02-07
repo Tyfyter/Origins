@@ -63,7 +63,7 @@ BOSSES AND MINI-BOSSES:
 (^) Defiled Amalgamation
 ($, #2 ^2) Fiberglass Weaver !!!
 (^) Shimmer Construct
-(#, ^2) Trenchmaker !!!
+(#2, ^2) Trenchmaker !!!
 (^) World Cracker
 
 (^) Lost Diver/Mildew Carrion
@@ -132,7 +132,7 @@ TOWN NPC Quests:
 
 VANILLA MODIFICATIONS:
 |---
-(#2) Recipes General !!! (Ultra Absorbent Sponge)
+(#2) Recipes General !!! (Ultra Absorbent Sponge, Oil Bucket additions)
 
 (^) Advanced weapon functionality in PVP
 (^) Boss Resistances (make every boss immune to anything with Stun)
@@ -176,6 +176,7 @@ OTHER:
 |---
 (X) Cubekon Tinkerer's Modifiers
 (^) Defiled "Chrysalis" Spawning
+(X) Equipment Lubing mechanics !!!
 (^) Explosive Modifiers
 (^) Journal
 (^) Quest System General

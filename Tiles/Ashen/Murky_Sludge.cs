@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Origins.Items.Tools.Liquids;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -55,6 +56,12 @@ namespace Origins.Tiles.Ashen {
 			.AddIngredient(ItemID.Gel, 10)
 			.AddIngredient(ItemID.AshBlock, 5)
 			.AddIngredient(ItemID.MudBlock, 5)
+			.AddTile(TileID.HeavyWorkBench)
+			.Register();
+
+			CreateRecipe(20)
+			.AddIngredient(ItemID.MudBlock, 20)
+			.AddIngredient(ModContent.ItemType<Oil_Bucket>())
 			.AddTile(TileID.HeavyWorkBench)
 			.Register();
 		}
