@@ -302,8 +302,8 @@ namespace Origins {
 			}));
 			tasks.Add(new PassLegacy("Oil", (progress, _) => {
 				int oilCountTarget = (int)(Main.maxTilesX * Main.maxTilesY * 0.1f * genRand.NextFloat(0.9f, 1f));
-				int oil = LiquidLoader.LiquidType<Oil>();
-				int burningOil = LiquidLoader.LiquidType<Oil>();//TODO: set to burning oil
+				int oil = Oil.ID;
+				int burningOil = Burning_Oil.ID;
 				int tries = 0;
 				int oilCount = 0;
 				const int max_tries = 10000;

@@ -1,4 +1,5 @@
 ﻿using ModLiquidLib.ID;
+using ModLiquidLib.ModLoader;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -8,6 +9,9 @@ namespace Origins.Items.Tools.Liquids {
 	//This is an example of a modded bucket
 	//Here we do some extra logic to make our bucket dispense liquid
 	//While also using a new ID Set added by ModLiquid Library to allow buckets to create this item
+	public abstract class BucketBase<TLiquid> : BucketBase where TLiquid : ModLiquid {
+		public override int LiquidType => LiquidLoader.LiquidType<TLiquid>();
+	}
 	public abstract class BucketBase : ModItem {
 		public abstract int LiquidType { get; }
 		public virtual bool Endless { get; }
@@ -16,7 +20,6 @@ namespace Origins.Items.Tools.Liquids {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.IsLavaImmuneRegardlessOfRarity[Type] = LavaImmune;
 			ItemID.Sets.AlsoABuildingItem[Type] = true; //Unused ID Set, but may be useful for other modders or when the game updates
-														//ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<ExampleBottomlessBucket>();
 			ItemID.Sets.DuplicationMenuToolsFilter[Type] = true;
 
 			//Here is how we make buckets create this item
@@ -52,6 +55,7 @@ namespace Origins.Items.Tools.Liquids {
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults() { }
+		public virtual int GetLiquid(int x, int y) => LiquidType;
 
 		//Here is how we do the bucket logic. Calculating when the player is able to place a liquid tile or not.
 		//This is taken from the Lava bucket logic
@@ -92,14 +96,15 @@ namespace Origins.Items.Tools.Liquids {
 					}
 				}
 				//We then check if the liquid at the position is ours if the liquid amount isn't zero
+				int liquid = GetLiquid(Player.tileTargetX, Player.tileTargetY);
 				if (tile.LiquidAmount != 0)
-					if (tile.LiquidType != LiquidType)
+					if (tile.LiquidType != liquid)
 						return;
 
 				//After all of that, we are able to place the liquid 
 				//In which we...
 				SoundEngine.PlaySound(SoundID.SplashWeak, player.position); //...play a sound
-				tile.LiquidType = LiquidType; //...create a liquid tile...
+				tile.LiquidType = liquid; //...create a liquid tile...
 				tile.LiquidAmount = byte.MaxValue; //...at full liquid capacity
 				WorldGen.SquareTileFrame(Player.tileTargetX, Player.tileTargetY); //...frame the tile to update the liquid
 				if (!Endless) {

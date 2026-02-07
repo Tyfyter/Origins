@@ -47,7 +47,6 @@
 		</Reference>
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="Liquids\Waterfalls\" />
 	  <Folder Include="Walls\Overlays\" />
 	</ItemGroup>
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
