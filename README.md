@@ -14,4 +14,4 @@ Sound designer: chrersis
 Wiki developer: chrersis, Jadams, Reivax, Kono Dio Da
 Playtester: Kono Dio Da
 
-Huge thanks to gojisturba, forg, and Rakan for their contributions!
+Huge thanks to gojisturba, forg and Rakan for their contributions!
