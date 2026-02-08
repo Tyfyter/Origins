@@ -938,7 +938,10 @@ namespace Origins.Tiles {
 			OnAddRecipes += recipes;
 			return this;
 		}
-		public void RegisterItem() => Tile.Mod.AddContent(this);
+		public TileItem RegisterItem() {
+			Tile.Mod.AddContent(this);
+			return this;
+		}
 
 		public static TileItem Get(ModTile tile) => itemsByTile.TryGetValue(tile, out TileItem item) ? item : null;
 		public static TileItem Get<TTile>() where TTile : ModTile => Get(ModContent.GetInstance<TTile>());

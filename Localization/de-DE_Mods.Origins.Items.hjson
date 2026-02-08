@@ -7978,3 +7978,23 @@ Mechanical_Key_Node_Yellow_Item: {
 	// DisplayName: Yellow Mechanical Key Node
 	// Tooltip: ""
 }
+
+Oil_Rocket: {
+	// DisplayName: Oil Rocket
+	// Tooltip: Spreads oil on impact
+}
+
+Oil_Bomb: {
+	// DisplayName: Oil Bomb
+	// Tooltip: A small explosion that will spread oil
+}
+
+Magic_Dropper_Oil_Item: {
+	// DisplayName: Magic Oil Dropper
+	// Tooltip: ""
+}
+
+Oil_Liquid_Sensor_Item: {
+	// DisplayName: Liquid Sensor (Oil)
+	// Tooltip: Signals when oil starts or stops touching it
+}

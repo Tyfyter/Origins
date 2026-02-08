@@ -1,12 +1,8 @@
-﻿using CalamityMod.Projectiles.Melee.Spears;
-using Microsoft.Xna.Framework;
+﻿using Origins.Dusts;
+using Origins.Liquids;
 using Origins.Projectiles;
-using PegasusLib;
+using Origins.Projectiles.Weapons;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -50,6 +46,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			new Liquid_Rocket_Dummy_Canister(Canister(0xc3c3c3, 0x5698ff, true), DelegateMethods.SpreadWater).Register(ItemID.WetRocket);
 			new Liquid_Rocket_Dummy_Canister(Canister(0x655dc5, 0xf59300, true), DelegateMethods.SpreadLava).Register(ItemID.LavaRocket);
 			new Liquid_Rocket_Dummy_Canister(Canister(0x9b7c40, 0xfec214, true), DelegateMethods.SpreadHoney).Register(ItemID.HoneyRocket);
+			new Liquid_Rocket_Dummy_Canister(Canister(0x0A0A0A, 0x3B2B1F, true), BaseLiquidRocketP.SpreadLiquid<Oil, Black_Smoke_Dust>()).Register(ModContent.ItemType<Oil_Rocket>()); // TODO: select better colors
 		}
 	}
 	public class Rocket_Dummy_Canister(CanisterData canisterData, int explosionSize, int tileDestructionRadius = 0) : ICanisterAmmo {

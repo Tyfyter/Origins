@@ -1122,7 +1122,7 @@ EXPLOSIVE WEAPONS:
 (^) Link Grenade
 (^) Matrix
 (^) Meteor
-(#, ^2) Oil Bomb !!!
+(^) Oil Bomb
 (^) Peatball
 (^) Potato Mine
 (^) Regurgitator of Souls
@@ -1503,6 +1503,19 @@ TILES:
 (^) Trenchmaker Trophy
 (^) World Cracker Relic
 (^) World Cracker Trophy
+
+(these 3 entries are temporarily here bc idk where to put them)
+(X) Amebic Gel Liquid Sensor !!!
+(X) Brine Liquid Sensor !!!
+(@, †) Oil Liquid Sensor !!! (using temp sprites, unless it's decided that they're good enough, needs multiplayer testing)
+---
+
+
+LIQUIDS:
+|---
+(X) Amebic Gel !!!
+(X) Brine !!!
+(#2) Oil !!!
 ---
 
 
@@ -1715,8 +1728,9 @@ CONSUMABLES:
 (^) Holiday Hair Dye
 (^) Latchkey
 (^) Lottery Ticket
-(^) Magic Brine Dropper
-(#2, ^2) Magic Oil Dropper !!!
+(X) Magic Amebic Gel Dropper !!!
+(@2, #2) Magic Brine Dropper !!! (needs dropplet sprite)
+(^) Magic Oil Dropper !!!
 (^) Spyglass
 (^) Void Lock
 (^) White Water
@@ -1824,7 +1838,7 @@ AMMO:
 
 (^) Homing Rocket I
 (^) Homing Rocket II
-(#, ^2) Oil Rocket !!!
+(†) Oil Rocket !!! (needs proper colors when used in place of a canister otherwise ☻)
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
 (^) Valkyrum Bullet

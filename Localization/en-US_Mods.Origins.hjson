@@ -168,7 +168,7 @@ FishQuest: {
 			Oh right! I am its only predator, and I want you to go to the Ashen Scrapyard to fish it out for me!
 			Don't forget your gas mask!
 			'''
-		Location: Caught in {§Defiled_Wastelands}
+		Location: Caught in {§Ashen}
 	}
 }
 
@@ -2577,6 +2577,7 @@ Tiles: {
 	Mechanical_Key_Node_Orange.MapEntry: Orange Mechanical Key Node
 	Mechanical_Key_Node_Purple.MapEntry: Purple Mechanical Key Node
 	Mechanical_Key_Node_Yellow.MapEntry: Yellow Mechanical Key Node
+	Magic_Dropper_Oil.MapEntry: Dripping Oil
 }
 
 Keybinds: {
