@@ -7998,3 +7998,13 @@ Oil_Liquid_Sensor_Item: {
 	// DisplayName: Liquid Sensor (Oil)
 	// Tooltip: Signals when oil starts or stops touching it
 }
+
+Power_Box_Item: {
+	// DisplayName: Power Box
+	// Tooltip: ""
+}
+
+Power_Box_Wide_Item: {
+	// DisplayName: Power Box Wide
+	// Tooltip: ""
+}

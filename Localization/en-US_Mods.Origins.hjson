@@ -2578,6 +2578,8 @@ Tiles: {
 	Mechanical_Key_Node_Purple.MapEntry: Purple Mechanical Key Node
 	Mechanical_Key_Node_Yellow.MapEntry: Yellow Mechanical Key Node
 	Magic_Dropper_Oil.MapEntry: Dripping Oil
+	Power_Box.MapEntry: Power Box
+	Power_Box_Wide.MapEntry: Power Box Wide
 }
 
 Keybinds: {

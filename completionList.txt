@@ -1428,7 +1428,7 @@ TILES:
 (^) Ocotillo
 (X) Petrified Baobab Tree
 (^) Petrified Tree
-(#, ^2) Power Box !!!
+(#2, ^2) Power Box !!!
 (#, ^2) Radio Broadcaster !!!
 (^) Riven Altar
 (^) Riven Foliage

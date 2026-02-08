@@ -195,7 +195,7 @@ namespace Origins.Tiles.Ashen {
 	[LegacyName("Orange_Mechanical_Key_Node")]
 	public class Mechanical_Key_Node_Orange : Mechanical_Key_Node {
 		public override Color SwitchColor => new Color(255, 81, 0);
-		public override int KeyType => ItemType< Mechanical_Key_Orange>();
+		public override int KeyType => ItemType<Mechanical_Key_Orange>();
 	}
 	[LegacyName("Purple_Mechanical_Switch", "Purple_Mechanical_Key_Node")]
 	public class Mechanical_Key_Node_Purple : Mechanical_Key_Node {

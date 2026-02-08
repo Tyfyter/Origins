@@ -1,0 +1,181 @@
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Tools.Wiring;
+using Origins.World.BiomeData;
+using PegasusLib.Networking;
+using System.IO;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.ObjectData;
+using static Terraria.ModLoader.ModContent;
+
+namespace Origins.Tiles.Ashen {
+	public class Power_Box : ModTile, IAshenPowerConduitTile, IGlowingModTile, IAshenWireTile {
+		public override string HighlightTexture => base.Texture + "_Highlight";
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => Color.White;
+		public TileItem Item { get; protected set; }
+		public sealed override void Load() {
+			Item = new TileItem(this)
+			.WithExtraStaticDefaults(item => {
+				this.DropTileItem(item);
+				item.ResearchUnlockCount = 100;
+			})
+			.WithExtraDefaults(item => item.mech = true)
+			.WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.Wire, 20)
+				.AddIngredient<Fortified_Steel_Block1_Item>(10)
+				.AddTile<Metal_Presser>()
+				.Register();
+			}).RegisterItem();
+			this.SetupGlowKeys();
+			OnLoad();
+		}
+		public virtual void OnLoad() { }
+		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public virtual void FancyLightingGlowColor(Tile tile, ref Vector3 color) {/*
+			if (tile.TileFrameX >= 18) {
+				color.DoFancyGlow(SwitchColor.ToVector3(), tile.TileColor);
+				color.DoFancyGlow(tile.TileFrameY >= 18 ? Vector3.Up : Vector3.Right, tile.TileColor);
+			}*/
+		}
+		public override void SetStaticDefaults() {
+			if (!Main.dedServ) GlowTexture = Request<Texture2D>(Texture + "_Glow");
+			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
+			Origins.PileType.Add(Type, ((ushort)TileType<Ashen_Foliage>(), 0, 6));
+			Main.tileFrameImportant[Type] = true;
+			Main.tileSolid[Type] = false;
+			Main.tileBlockLight[Type] = false;
+			Main.tileMergeDirt[Type] = false;
+			TileID.Sets.DrawTileInSolidLayer[Type] = true;
+			AddMapEntry(FromHexRGB(0xBE845A), CreateMapEntryName());
+
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3Wall);
+			TileObjectData.newTile.SetHeight(2);
+			TileObjectData.newTile.Width = 2;
+			TileObjectData.newTile.Origin = new(0, 1);
+			TileObjectData.newTile.LavaDeath = false;
+			ModifyTileObject();
+			TileObjectData.addTile(Type);
+
+			HitSound = SoundID.Tink;
+			DustType = Ashen_Biome.DefaultTileDust;
+			TileID.Sets.HasOutlines[Type] = true;
+		}
+		public virtual void ModifyTileObject() { }
+		public override void HitWire(int i, int j) {
+			if (Ashen_Wire_Data.HittingAshenWires) UpdatePowerState(i, j, IsPowered(i, j));
+		}
+		public bool IsPowered(int i, int j) {
+			Tile tile = Main.tile[i, j];
+			Point pos = new(i, j);
+			bool inputPower = false;
+			if (tile.Get<Ashen_Wire_Data>().AnyPower) {
+				using IAshenPowerConduitTile.WalkedConduitOutput _ = new(pos);
+				inputPower = IAshenPowerConduitTile.FindValidPowerSource(pos, 0)
+						|| IAshenPowerConduitTile.FindValidPowerSource(pos, 1)
+						|| IAshenPowerConduitTile.FindValidPowerSource(pos, 2);
+			}
+			return inputPower;
+		}
+		public void UpdatePowerState(int i, int j, bool powered) {
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameX.TrySet(powered.Mul<short>(18))) {
+				if (tile.TileFrameY != 0) Ashen_Wire_Data.SetTilePowered(i, j, powered);
+				NetMessage.SendData(MessageID.TileSquare, Main.myPlayer, -1, null, i, j, 1, 1);
+			}
+		}
+		public override bool CanExplode(int i, int j) => false;
+		/*public override bool CanKillTile(int i, int j, ref bool blockDamaged) {
+			Tile tile = Main.tile[i, j];
+			return tile.TileFrameX == 0 || tile.TileFrameY == 0;
+		}*/
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
+		public override bool RightClick(int i, int j) {
+			new Power_Box_Action(new(i, j)).Perform();
+			return true;
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			drawData.glowColor = GlowColor;
+			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY, 16, 16);
+			drawData.glowTexture = this.GetGlowTexture(drawData.tileCache.TileColor);
+		}
+		public override void PlaceInWorld(int i, int j, Item item) {
+			new Sync_Power_Box_Action(i, j).Perform();
+		}
+		public record class Power_Box_Action(Point16 Pos) : SyncedAction {
+			public override bool ServerOnly => true;
+			public Power_Box_Action() : this(Point16.Zero) { }
+			public override SyncedAction NetReceive(BinaryReader reader) => this with {
+				Pos = new(reader.ReadInt16(), reader.ReadInt16())
+			};
+			public override void NetSend(BinaryWriter writer) {
+				writer.Write((short)Pos.X);
+				writer.Write((short)Pos.Y);
+			}
+			protected override void Perform() {
+				if (TileLoader.GetTile(Main.tile[Pos].TileType) is Power_Box) {
+					Tile tile = Main.tile[Pos];
+					tile.TileFrameY ^= 18;
+					bool inputPower = tile.TileFrameX != 0 && tile.TileFrameY != 0;
+					using (IAshenPowerConduitTile.WalkedConduitOutput _ = new(Pos.ToPoint())) {
+						if (inputPower) inputPower = IAshenPowerConduitTile.FindValidPowerSource(Pos.ToPoint(), 0)
+								|| IAshenPowerConduitTile.FindValidPowerSource(Pos.ToPoint(), 1)
+								|| IAshenPowerConduitTile.FindValidPowerSource(Pos.ToPoint(), 2);
+					}
+					Ashen_Wire_Data.SetTilePowered(Pos.X, Pos.Y, inputPower);
+					NetMessage.SendData(MessageID.TileSquare, Main.myPlayer, -1, null, Pos.X, Pos.Y, 1, 1);
+				}
+			}
+		}
+		public record class Sync_Power_Box_Action(int I, int J) : SyncedAction {
+			public override bool ServerOnly => true;
+			public Sync_Power_Box_Action() : this(0, 0) { }
+			public override SyncedAction NetReceive(BinaryReader reader) => this with {
+				I = reader.ReadInt16(),
+				J = reader.ReadInt16(),
+			};
+			public override void NetSend(BinaryWriter writer) {
+				writer.Write((short)I);
+				writer.Write((short)J);
+			}
+			protected override void Perform() {
+				if (TileLoader.GetTile(Main.tile[I, J].TileType) is Power_Box @switch) {
+					@switch.HitWire(I, J);
+				}
+			}
+		}
+		public bool ShouldCountAsPowerSource(Point position, int forWireType) {
+			using IAshenPowerConduitTile.WalkedConduitOutput _ = new(position);
+			bool powered = false;
+			for (int i = 0; !powered && i < 3; i++) {
+				powered = i != forWireType && IAshenPowerConduitTile.FindValidPowerSource(position, i);
+			}
+			return powered;
+		}
+	}
+	public class Power_Box_Wide : Power_Box {
+		public override void OnLoad() {
+			Item.OnAddRecipes += item => {
+				Recipe.Create(item.type)
+				.AddIngredient(TileItem.Get<Power_Box>())
+				.DisableDecraft()
+				.Register();
+				Recipe.Create(TileItem.Get<Power_Box>().Type)
+				.AddIngredient(item.type)
+				.DisableDecraft()
+				.Register();
+			};
+		}
+		public override void ModifyTileObject() {
+			TileObjectData.newTile.Width = 3;
+			TileObjectData.newTile.Origin = new(1, 1);
+		}
+		public override void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			base.FancyLightingGlowColor(tile, ref color);
+		}
+	}
+}
