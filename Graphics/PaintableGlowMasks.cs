@@ -22,6 +22,9 @@ namespace Origins.Graphics {
 			}
 		}
 		public struct CustomTileVariationKey {
+			public static readonly CustomTileVariationKey Invalid = new() {
+				CustomTileType = -1
+			};
 			public int CustomTileType;
 			public int PaintColor;
 			public readonly bool Equals(CustomTileVariationKey other) => CustomTileType == other.CustomTileType && PaintColor == other.PaintColor;

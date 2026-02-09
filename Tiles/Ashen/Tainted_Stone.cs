@@ -43,11 +43,24 @@ namespace Origins.Tiles.Ashen {
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
+			//Add/Remove a slash below to switch between the two
+			//A full reload will be necessary in order to test performance
+			/*
 			yield return new TileMergeOverlay(merge + "Dirt_Overlay", TileID.Dirt);
 			yield return new TileMergeOverlay(merge + "Mud_Overlay", TileID.Mud);
 			yield return new TileMergeOverlay(merge + "Ash_Overlay", TileID.Ash);
 			yield return new TileMergeOverlay(merge + "Sootsand_Overlay", TileType<Sootsand>());
 			yield return new TileMergeOverlay(merge + "Murk_Overlay", TileType<Murky_Sludge>(), TileType<Ashen_Murky_Sludge_Grass>());
+			/*/
+			yield return new MultiTileMergeOverlay(
+				(TileID.Dirt, merge + "Dirt_Overlay"),
+				(TileID.Mud, merge + "Mud_Overlay"),
+				(TileID.Ash, merge + "Ash_Overlay"),
+				(TileType<Sootsand>(), merge + "Sootsand_Overlay"),
+				(TileType<Ashen_Murky_Sludge_Grass>(), merge + "Murk_Overlay"),
+				(TileType<Ashen_Murky_Sludge_Grass>(), merge + "Murk_Overlay")
+			);
+			//*/
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile above = Framing.GetTileSafely(i, j - 1);

@@ -1,17 +1,17 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using Origins.Graphics;
-using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Tiles.ComplexFrameTile;
+using static Origins.Tiles.ComplexFrameTile.MultiTileMergeOverlay.TextureData;
+using CustomTileVariationKey = Origins.Graphics.CustomTilePaintLoader.CustomTileVariationKey;
 
 namespace Origins.Tiles {
 	public abstract class OriginTile : ModTile {
@@ -68,6 +68,7 @@ namespace Origins.Tiles {
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			if (!TileDrawing.IsVisible(tile)) return;
+			TileMergeOverlay.ResetSkipMask();
 			for (int k = 0; k < overlays.Length; k++) {
 				overlays[k].Draw(i, j, tile, spriteBatch);
 			}
@@ -124,7 +125,7 @@ namespace Origins.Tiles {
 			return directionsByFrame[frameX, frameY];
 		}
 		[Flags]
-		public enum Direction {
+		public enum Direction : byte {
 			Down = 1 << 0,
 			Up = 1 << 1,
 			Left = 1 << 2,
@@ -135,7 +136,7 @@ namespace Origins.Tiles {
 			protected Asset<Texture2D> Texture { get; private set; }
 			protected TreePaintingSettings settings;
 			protected CustomTilePaintLoader.CustomTileVariationKey PaintKey { get; private set; }
-			public void SetupTexture() {
+			public virtual void SetupTexture() {
 				Texture = ModContent.Request<Texture2D>(TexturePath);
 				PaintKey = CustomTilePaintLoader.CreateKey();
 			}
@@ -196,9 +197,10 @@ namespace Origins.Tiles {
 						frame.Y = blendTile.TileFrameNumber * 18;
 						Texture2D texture = GetPaintedTexture(blendTile.TileColor);
 						spriteBatch.Draw(texture, position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
+						skipMask &= ~direction;
 					}
 				}
-				Direction directions = GetDirectionsByFrame(tile.TileFrameX / 18, (tile.TileFrameY % parentFrameHeight) / 18);
+				Direction directions = GetDirectionsByFrame(tile.TileFrameX / 18, (tile.TileFrameY % parentFrameHeight) / 18) & skipMask;
 				Do(directions.GetFlags());
 				if (Texture.Width() > 72) {
 					bool down = directions.HasFlag(Direction.Down);
@@ -244,6 +246,149 @@ namespace Origins.Tiles {
 				}
 			}
 			public virtual Color GetColor(Color color) => color;
+			public static void ResetSkipMask() {
+				skipMask = ~(Direction)0;
+			}
+			static Direction skipMask;
+		}
+		public class MultiTileMergeOverlay : TileOverlay {
+			protected override string TexturePath { get; }
+			readonly TextureData[] textures;
+			readonly int parentFrameHeight;
+			public MultiTileMergeOverlay(params (int tileType, string texture)[] overlays) : this(270, overlays) { }
+			public MultiTileMergeOverlay(int parentFrameHeight, params (int tileType, string texture)[] overlays) {
+				this.parentFrameHeight = parentFrameHeight;
+				textures = TileID.Sets.Factory.CreateCustomSet<TextureData>(default);
+				for (int i = 0; i < overlays.Length; i++) textures[overlays[i].tileType] = new(overlays[i].texture);
+			}
+			public override void SetupTexture() {
+				for (int i = 0; i < textures.Length; i++) {
+					textures[i].SetupPaintKey();
+				}
+			}
+			public override void SetupOther(int type) {
+				for (int i = 0; i < textures.Length; i++) {
+					if (!textures[i].Exists) continue;
+					Main.tileMerge[type][i] = true;
+					Main.tileMerge[i][type] = true;
+				}
+			}
+			public override void Draw(int i, int j, Tile tile, SpriteBatch spriteBatch) {
+				Vector2 offset = new(Main.offScreenRange, Main.offScreenRange);
+				if (Main.drawToScreen) offset = Vector2.Zero;
+				Vector2 position = new Vector2(i * 16f, j * 16f) + offset - Main.screenPosition;
+				Color color = Lighting.GetColor(i, j);
+				const int threshold = 15;
+				bool wasTooDark = color.R + color.G + color.B < threshold;
+				color = GetColor(color);
+				if (wasTooDark && color.R + color.G + color.B < threshold) return;
+				Rectangle frame = new(0, 0, 16, 16);
+				Direction directions = GetDirectionsByFrame(tile.TileFrameX / 18, (tile.TileFrameY % parentFrameHeight) / 18);
+				Asset<Texture2D>[] cornerMergeTypes = new Asset<Texture2D>[4];
+				for (int dirIndex = 0; dirIndex < 4; dirIndex++) {
+					Tile blendTile;
+					switch ((Direction)(1 << dirIndex) & directions) {
+						case Direction.Down:
+						blendTile = Framing.GetTileSafely(i, j + 1);
+						if (blendTile.TopSlope || blendTile.IsHalfBlock) continue;
+						break;
+						case Direction.Up:
+						blendTile = Framing.GetTileSafely(i, j - 1);
+						if (blendTile.BottomSlope) continue;
+						break;
+						case Direction.Left:
+						blendTile = Framing.GetTileSafely(i - 1, j);
+						if (blendTile.RightSlope || blendTile.IsHalfBlock) continue;
+						break;
+						case Direction.Right:
+						blendTile = Framing.GetTileSafely(i + 1, j);
+						if (blendTile.LeftSlope || blendTile.IsHalfBlock) continue;
+						break;
+						default:
+						continue;
+					}
+					if (!blendTile.HasTile) continue;
+					TextureData texture = textures[blendTile.TileType];
+					if (!texture.Exists) continue;
+					if (texture.HasCorners) cornerMergeTypes[dirIndex] = texture.Texture;
+					frame.X = dirIndex * 18;
+					frame.Y = blendTile.TileFrameNumber * 18;
+					spriteBatch.Draw(texture.GetTexture(blendTile.TileColor), position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
+				}
+				if (cornerMergeTypes[0] is not null) {
+					if (cornerMergeTypes[0] == cornerMergeTypes[3]) {
+						Tile blendTile = Framing.GetTileSafely(i + 1, j + 1);
+						if (blendTile.HasTile && blendTile.BlockType is BlockType.Solid or BlockType.SlopeUpLeft) {
+							TextureData texture = textures[blendTile.TileType];
+							if (cornerMergeTypes[0] == texture.Texture) {
+								frame.X = 4 * 18;
+								frame.Y = blendTile.TileFrameNumber * 18;
+								spriteBatch.Draw(texture.GetTexture(blendTile.TileColor), position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
+							}
+						}
+					}
+					if (cornerMergeTypes[0] == cornerMergeTypes[2]) {
+						Tile blendTile = Framing.GetTileSafely(i - 1, j + 1);
+						if (blendTile.HasTile && blendTile.BlockType is BlockType.Solid or BlockType.SlopeUpLeft) {
+							TextureData texture = textures[blendTile.TileType];
+							if (cornerMergeTypes[0] == texture.Texture) {
+								frame.X = 5 * 18;
+								frame.Y = blendTile.TileFrameNumber * 18;
+								spriteBatch.Draw(texture.GetTexture(blendTile.TileColor), position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
+							}
+						}
+					}
+				}
+				if (cornerMergeTypes[1] is not null) {
+					if (cornerMergeTypes[1] == cornerMergeTypes[3]) {
+						Tile blendTile = Framing.GetTileSafely(i + 1, j - 1);
+						if (blendTile.HasTile && blendTile.Slope is SlopeType.Solid or SlopeType.SlopeDownLeft) {
+							TextureData texture = textures[blendTile.TileType];
+							if (cornerMergeTypes[1] == texture.Texture) {
+								frame.X = 6 * 18;
+								frame.Y = blendTile.TileFrameNumber * 18;
+								spriteBatch.Draw(texture.GetTexture(blendTile.TileColor), position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
+							}
+						}
+					}
+					if (cornerMergeTypes[1] == cornerMergeTypes[2]) {
+						Tile blendTile = Framing.GetTileSafely(i - 1, j - 1);
+						if (blendTile.HasTile && blendTile.Slope is SlopeType.Solid or SlopeType.SlopeDownRight) {
+							TextureData texture = textures[blendTile.TileType];
+							if (cornerMergeTypes[1] == texture.Texture) {
+								frame.X = 7 * 18;
+								frame.Y = blendTile.TileFrameNumber * 18;
+								spriteBatch.Draw(texture.GetTexture(blendTile.TileColor), position, frame, color, 0f, default, 1f, SpriteEffects.None, 0f);
+							}
+						}
+					}
+				}
+			}
+			public virtual Color GetColor(Color color) => color;
+			public record struct TextureData(Asset<Texture2D> Texture, PaintHolder PaintKey) {
+				static readonly Dictionary<Asset<Texture2D>, PaintHolder> paintKeys = [];
+				public TextureData(string texturePath) : this(ModContent.Request<Texture2D>(texturePath), default) { }
+				public readonly bool Exists => Texture is not null;
+				public readonly bool HasCorners => Texture.Width() > 72;
+				public void SetupPaintKey() {
+					if (!Exists) return;
+					if (!paintKeys.TryGetValue(Texture, out PaintHolder paintKey)) paintKeys[Texture] = paintKey = new();
+					PaintKey = paintKey;
+				}
+				public readonly Texture2D GetTexture(int paintColor) => PaintKey.GetTexture(Texture, paintColor);
+				public class PaintHolder {
+					CustomTileVariationKey key = CustomTilePaintLoader.CreateKey();
+					readonly Texture2D[] textures = new Texture2D[PaintID.NegativePaint];
+					public Texture2D GetTexture(Asset<Texture2D> Texture, int paintColor) {
+						if (paintColor == PaintID.None) return Texture.Value;
+						paintColor--;
+						if (textures[paintColor] is null || textures[paintColor] == Asset<Texture2D>.DefaultValue) {
+							textures[paintColor] = CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(key, paintColor + 1, Texture);
+						}
+						return textures[paintColor];
+					}
+				}
+			}
 		}
 		public class CornerMergeOverlay(ModTile tile, string textureOverride = null, int parentFrameHeight = 270) : TileOverlay {
 			protected override string TexturePath => textureOverride ?? (tile.Texture + "_Inverse_Edges");
@@ -324,6 +469,7 @@ namespace Origins.Tiles {
 			if (forcedTileOverlays[type] is not ComplexFrameTile.TileOverlay[] overlays) return;
 			Tile tile = Framing.GetTileSafely(i, j);
 			if (!TileDrawing.IsVisible(tile)) return;
+			TileMergeOverlay.ResetSkipMask();
 			for (int k = 0; k < overlays.Length; k++) {
 				overlays[k].Draw(i, j, tile, spriteBatch);
 			}
