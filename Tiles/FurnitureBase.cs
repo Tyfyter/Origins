@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Ranged;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,9 +36,15 @@ namespace Origins.Tiles {
 		public virtual int HitDust => DustID.Dirt;
 		public sealed override void Load() {
 			Mod.AddContent(Item = new TileItem(this, textureOverride: ItemTexture));
+			GenericOnLoad();
 			OnLoad();
 		}
 		public virtual void OnLoad() { }
+		/// <summary>
+		/// Should only be overridden by abstract classes
+		/// Should be sealed
+		/// </summary>
+		public virtual void GenericOnLoad() { }
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = LavaDeath;
@@ -652,6 +659,9 @@ namespace Origins.Tiles {
 	public abstract class Platform_Tile : FurnitureBase {
 		public override int BaseTileID => TileID.Platforms;
 		public override Color MapColor => new(190, 141, 110);
+		public sealed override void GenericOnLoad() {
+			Item.ExtraStaticDefaults += item => item.ResearchUnlockCount = 200;
+		}
 		public override void SetStaticDefaults() {
 			// Properties
 			Main.tileLighted[Type] = true;
