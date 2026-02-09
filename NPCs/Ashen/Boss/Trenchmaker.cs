@@ -13,6 +13,7 @@ using Origins.Music;
 using Origins.Projectiles;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.BossDrops;
+using Origins.UI;
 using Origins.World.BiomeData;
 using PegasusLib;
 using PegasusLib.Graphics;
@@ -142,6 +143,8 @@ namespace Origins.NPCs.Ashen.Boss {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);
+			bestiaryEntry.Info.RemoveAll(x => x is NamePlateInfoElement);
+			bestiaryEntry.Info.Add(new CustomNamePlateInfoElement(_ => this.GetLocalization($"{nameof(DisplayName)}Generic")));
 		}
 		public Leg[] legs = [new(), new()];
 		SlotId thrusterSound;
@@ -314,6 +317,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			spriteBatch.Restart(state);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (NPC.IsABestiaryIconDummy) NPC.rotation = MathHelper.Pi;
 			SpriteEffects effects = SpriteEffects;
 			int i = legs.Length - 1;
 			int halfLegs = legs.Length / 2;
