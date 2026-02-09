@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Tiles.Ashen;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using Terraria.GameContent.Drawing;
 using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 using static Origins.Tiles.ComplexFrameTile;
 using static Origins.Tiles.ComplexFrameTile.MultiTileMergeOverlay.TextureData;
 using CustomTileVariationKey = Origins.Graphics.CustomTilePaintLoader.CustomTileVariationKey;
@@ -34,6 +36,15 @@ namespace Origins.Tiles {
 			}
 		}
 		public static int TileItem<TTile>() where TTile : ModTile, ITileWithItem => ModContent.GetInstance<TTile>().Item.Type;
+		public static void FrameSurrounding(int i, int j, out int left, out int top) {
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			TileUtils.GetMultiTileTopLeft(i, j, data, out left, out top);
+			for (int x = 0; x < data.Width; x++) {
+				for (int y = 0; y < data.Height; y++) {
+					WorldGen.SquareTileFrame(left + x, top + y);
+				}
+			}
+		}
 	}
 	//temp solution
 	public interface IDefiledTile { }

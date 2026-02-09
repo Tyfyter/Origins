@@ -78,8 +78,7 @@ namespace Origins.Tiles.Ashen {
 		public void UpdatePowerState(int i, int j, bool powered) => AshenWireTile.DefaultUpdatePowerState(i, j, powered, tile => ref tile.TileFrameX, 18 * 4);
 		public override bool RightClick(int i, int j) => Toggle(i, j);
 		public override void PlaceInWorld(int i, int j, Item item) {
-			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
-			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			FrameSurrounding(i, j, out int left, out int top);
 			ModContent.GetInstance<Industrial_Door_TE_System>().AddTileEntity(new(left, top));
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
