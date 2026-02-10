@@ -1364,6 +1364,8 @@ TILES:
 (^) Industrial Door
 (#3, ^2) Large Storage Container
 (^) Laser Tag Console
+(X) Liquid Sensor (Amebic Gel) !!!
+(^) Liquid Sensor (Oil)
 (#2, ^2) Mechanical Key Node !!!
 (#2, ^2) Medium Storage Container !!! (what I meant was keep the top collision, but not the middle)
 (^) Modular Bunk
@@ -1587,12 +1589,14 @@ MISCELLANEOUS ITEMS:
 (^) Armor+ Power-Up
 (^) Defiled Mana
 (^) Large Chambersite
+(X) Worn Paper: Famine !!!
 (^) Worn Paper: Loose Wheel
 (^) Worn Paper: Mean Baby
 (^) Worn Paper: Self-Preservation
 (^) Worn Paper: Smog Test
 (^) Worn Paper: The Packing Slip
 (^) Worn Paper: They Found Us
+(^) Worn Paper: Workplace Safety Concern
 ---
 
 
