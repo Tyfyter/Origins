@@ -1,12 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Origins.Graphics;
-using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using PegasusLib.Networking;
 using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -24,9 +21,9 @@ namespace Origins.Tiles.Ashen {
 			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
 				.AddRecipeGroup(ALRecipeGroups.CopperBars)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 6)
 				.AddIngredient(ItemID.Glass, 3)
 				.AddIngredient(ItemID.Wire, 8)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 6)
 				.AddTile(ModContent.TileType<Metal_Presser>())
 				.Register();
 			}).RegisterItem();

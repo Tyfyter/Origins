@@ -1432,7 +1432,7 @@ TILES:
 (X) Petrified Baobab Tree
 (^) Petrified Tree
 (#2, ^2) Power Box !!!
-(#, ^2) Radio Broadcaster !!!
+(#2, ^2) Radio Broadcaster !!! (bottom 2px not appearing in the ground)
 (^) Riven Altar
 (^) Riven Foliage
 (^) Riven Pot

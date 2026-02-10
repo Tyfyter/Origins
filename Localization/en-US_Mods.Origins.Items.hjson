@@ -8008,3 +8008,8 @@ Power_Box_Wide_Item: {
 	DisplayName: Power Box Wide
 	Tooltip: ""
 }
+
+Radio_Broadcaster_Item: {
+	DisplayName: Radio Broadcaster
+	Tooltip: ""
+}
