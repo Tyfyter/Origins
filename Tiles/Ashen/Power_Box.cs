@@ -17,6 +17,7 @@ namespace Origins.Tiles.Ashen {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
 		public TileItem Item { get; protected set; }
+		protected int frameHeight;
 		public sealed override void Load() {
 			Item = new TileItem(this)
 			.WithExtraStaticDefaults(item => {
@@ -58,34 +59,48 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.Width = 2;
 			TileObjectData.newTile.Origin = new(0, 1);
 			TileObjectData.newTile.LavaDeath = false;
+			TileObjectData.newTile.StyleHorizontal = true;
 			ModifyTileObject();
+			frameHeight = TileObjectData.newTile.Height * 18;
 			TileObjectData.addTile(Type);
 
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 			TileID.Sets.HasOutlines[Type] = true;
+			AnimationFrameHeight = frameHeight;
 		}
-		public virtual void ModifyTileObject() { }
+		public virtual void ModifyTileObject() => TileObjectData.newTile.RandomStyleRange = 2;
 		public override void HitWire(int i, int j) {
 			if (Ashen_Wire_Data.HittingAshenWires) UpdatePowerState(i, j, IsPowered(i, j));
 		}
 		public bool IsPowered(int i, int j) {
 			Tile tile = Main.tile[i, j];
-			Point pos = new(i, j);
 			bool inputPower = false;
 			if (tile.Get<Ashen_Wire_Data>().AnyPower) {
-				using IAshenPowerConduitTile.WalkedConduitOutput _ = new(pos);
-				inputPower = IAshenPowerConduitTile.FindValidPowerSource(pos, 0)
-						|| IAshenPowerConduitTile.FindValidPowerSource(pos, 1)
-						|| IAshenPowerConduitTile.FindValidPowerSource(pos, 2);
+				Point pos = default;
+				TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+				TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+				using IAshenPowerConduitTile.WalkedConduitOutputs _ = new(left, top, data.Width, data.Height);
+				for (int y = 0; !inputPower && y < data.Height; y++) {
+					pos.Y = top + y;
+					for (int x = 0; !inputPower && x < data.Width; x++) {
+						pos.X = left + x;
+						inputPower = IAshenPowerConduitTile.FindValidPowerSource(pos, 0)
+								|| IAshenPowerConduitTile.FindValidPowerSource(pos, 1)
+								|| IAshenPowerConduitTile.FindValidPowerSource(pos, 2);
+					}
+				}
 			}
 			return inputPower;
 		}
 		public void UpdatePowerState(int i, int j, bool powered) {
-			Tile tile = Main.tile[i, j];
-			if (tile.TileFrameX.TrySet(powered.Mul<short>(18))) {
-				if (tile.TileFrameY != 0) Ashen_Wire_Data.SetTilePowered(i, j, powered);
-				NetMessage.SendData(MessageID.TileSquare, Main.myPlayer, -1, null, i, j, 1, 1);
+			AshenWireTile.DefaultUpdatePowerState(i, j, powered, tile => ref tile.TileFrameY, frameHeight);
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			for (int y = 0; y < data.Height; y++) {
+				for (int x = 0; x < data.Width; x++) {
+					Ashen_Wire_Data.SetTilePowered(left + x, top + y, powered);
+				}
 			}
 		}
 		public override bool CanExplode(int i, int j) => false;
@@ -93,9 +108,16 @@ namespace Origins.Tiles.Ashen {
 			Tile tile = Main.tile[i, j];
 			return tile.TileFrameX == 0 || tile.TileFrameY == 0;
 		}*/
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			if (frameCounter.CycleUp(8)) frame.CycleUp(4);
+		}
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameY < 18 * 2) frameYOffset = 0;
+		}
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 		public override bool RightClick(int i, int j) {
-			new Power_Box_Action(new(i, j)).Perform();
+			//new Power_Box_Action(new(i, j)).Perform();
 			return true;
 		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {

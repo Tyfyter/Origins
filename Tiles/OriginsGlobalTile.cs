@@ -32,6 +32,13 @@ namespace Origins.Tiles {
 			if (TileLoader.GetTile(type) is IAshenWireTile ashenWireTile) {
 				ashenWireTile.UpdatePowerState(i, j, ashenWireTile.IsPowered(i, j));
 			}
+			if (TileObjectData.GetTileData(Main.tile[i, j]) is TileObjectData data) {
+				TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+				for (int x = -1; x <= data.Width; x++) {
+					Tile tile = Main.tile[left + x, top + data.Height];
+					if (tile.HasTile && Catwalk.Catwalks[tile.TileType]) WorldGen.TileFrame(left + x, top + data.Height);
+				}
+			}
 		}
 		public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged) {
 			//if (Main.tile[i, j - 1].TileType == Defiled_Altar.ID && type != Defiled_Altar.ID) return false;

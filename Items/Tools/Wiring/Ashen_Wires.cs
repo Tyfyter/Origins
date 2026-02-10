@@ -236,9 +236,10 @@ namespace Origins.Items.Tools.Wiring {
 			ref Ashen_Wire_Data data = ref Main.tile[i, j].Get<Ashen_Wire_Data>();
 			bool wasPowered = data.AnyPower;
 			if (value != data.GetPower(wireType)) SetBit(value, ref data.data, (wireType << 1) + 1);
-			if ((data.AnyPower != wasPowered || TileLoader.GetTile(Main.tile[i, j].TileType) is IAshenPowerConduitTile) && !WiringMethods._wireSkip.Value.ContainsKey(new(i, j))) {
+			bool isConduit = TileLoader.GetTile(Main.tile[i, j].TileType) is IAshenPowerConduitTile;
+			if ((data.AnyPower != wasPowered || isConduit) && !WiringMethods._wireSkip.Value.ContainsKey(new(i, j))) {
 				bool powerMultiTile = true;
-				if (wasPowered && TileObjectData.GetTileData(Main.tile[i, j]) is TileObjectData tileData) {
+				if (wasPowered && !isConduit && TileObjectData.GetTileData(Main.tile[i, j]) is TileObjectData tileData) {
 					TileUtils.GetMultiTileTopLeft(i, j, tileData, out int left, out int top);
 					for (int x = 0; x < tileData.Width && powerMultiTile; x++) {
 						for (int y = 0; y < tileData.Height && powerMultiTile; y++) {
@@ -459,14 +460,14 @@ namespace Origins.Items.Tools.Wiring {
 		}
 	}
 	public interface IAshenPowerConduitTile {
-		static readonly HashSet<Point> walkedConduitOutputs = [];
+		static readonly FungibleSet<Point> walkedConduitOutputs = [];
 		public bool ShouldCountAsPowerSource(Point position, int forWireType);
 		public static bool FindValidPowerSource(Point position, int wireType) {
 			bool Counter(Point position) {
 				return Framing.GetTileSafely(position).Get<Ashen_Wire_Data>().GetWire(wireType);
 			}
 			bool Breaker(AreaAnalysis analysis) {
-				if (walkedConduitOutputs.Contains(analysis.Counted[^1])) return false;
+				if (walkedConduitOutputs[analysis.Counted[^1]] > 0) return false;
 				Tile tile = Framing.GetTileSafely(analysis.Counted[^1]);
 				ref Ashen_Wire_Data data = ref tile.Get<Ashen_Wire_Data>();
 				if (data.IsTilePowered && TileLoader.GetTile(tile.TileType) is IAshenPowerConduitTile conduitTile && !conduitTile.ShouldCountAsPowerSource(analysis.Counted[^1], wireType)) return false;
@@ -478,9 +479,25 @@ namespace Origins.Items.Tools.Wiring {
 			public readonly Point position;
 			public WalkedConduitOutput(Point position) {
 				this.position = position;
-				walkedConduitOutputs.Add(position);
+				walkedConduitOutputs[position]++;
 			}
-			public void Dispose() => walkedConduitOutputs.Remove(position);
+			public void Dispose() => walkedConduitOutputs[position]--;
+		}
+		protected readonly struct WalkedConduitOutputs : IDisposable {
+			public readonly WalkedConduitOutput[] positions;
+			public WalkedConduitOutputs(params Point[] positions) {
+				this.positions = new WalkedConduitOutput[positions.Length];
+				for (int i = 0; i < positions.Length; i++) this.positions[i] = new(positions[i]);
+			}
+			public WalkedConduitOutputs(int i, int j, int width, int height) {
+				positions = new WalkedConduitOutput[width * height];
+				for (int l = 0; l < height; l++) {
+					for (int k = 0; k < width; k++) positions[k + l * height] = new(new(i + k, j + l));
+				}
+			}
+			public void Dispose() {
+				for (int i = 0; i < positions.Length; i++) positions[i].Dispose();
+			}
 		}
 	}
 }
