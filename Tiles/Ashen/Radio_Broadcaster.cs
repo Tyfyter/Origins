@@ -63,7 +63,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
 			Tile tile = Main.tile[i, j];
-			if (tile.TileFrameY >= 18 * 4) frameYOffset = 8;
+			if (tile.TileFrameX >= 18 * 2) frameYOffset = 0;
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
 			if (++frameCounter >= 8) {
@@ -73,9 +73,11 @@ namespace Origins.Tiles.Ashen {
 		}
 
 		public void UpdatePowerState(int i, int j, bool powered) {
-			AshenWireTile.DefaultUpdatePowerState(i, j, powered, tile => ref tile.TileFrameY, 18 * 4 * 4, true);
+			AshenWireTile.DefaultUpdatePowerState(i, j, powered, tile => ref tile.TileFrameX, 18 * 2, true);
 		}
-
+		public override void PlaceInWorld(int i, int j, Item item) {
+			FrameSurrounding(i, j, out _, out _);
+		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
