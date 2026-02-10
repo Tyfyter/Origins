@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Humanizer;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
 using PegasusLib.Networking;
@@ -9,6 +10,7 @@ using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
@@ -76,10 +78,16 @@ namespace Origins.Tiles.Ashen {
 		public bool IsPowered(int i, int j) {
 			Tile tile = Main.tile[i, j];
 			bool inputPower = false;
-			if (tile.Get<Ashen_Wire_Data>().AnyPower) {
-				Point pos = default;
-				TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
-				TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			Point pos = default;
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+			for (int y = 0; !inputPower && y < data.Height; y++) {
+				for (int x = 0; !inputPower && x < data.Width; x++) {
+					inputPower = Main.tile[left + x, top + y].Get<Ashen_Wire_Data>().AnyPower;
+				}
+			}
+			if (inputPower) {
+				inputPower = false;
 				using IAshenPowerConduitTile.WalkedConduitOutputs _ = new(left, top, data.Width, data.Height);
 				for (int y = 0; !inputPower && y < data.Height; y++) {
 					pos.Y = top + y;
@@ -94,8 +102,10 @@ namespace Origins.Tiles.Ashen {
 			return inputPower;
 		}
 		public void UpdatePowerState(int i, int j, bool powered) {
-			AshenWireTile.DefaultUpdatePowerState(i, j, powered, tile => ref tile.TileFrameY, frameHeight);
-			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameY >= frameHeight && tile.TileFrameY < frameHeight * 2) return;
+			AshenWireTile.DefaultUpdatePowerState(i, j, powered, tile => ref tile.TileFrameY, frameHeight * 2);
+			TileObjectData data = TileObjectData.GetTileData(tile);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			for (int y = 0; y < data.Height; y++) {
 				for (int x = 0; x < data.Width; x++) {
@@ -113,11 +123,11 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
 			Tile tile = Main.tile[i, j];
-			if (tile.TileFrameY < 18 * 2) frameYOffset = 0;
+			if (tile.TileFrameY < frameHeight * 2) frameYOffset = 0;
 		}
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 		public override bool RightClick(int i, int j) {
-			//new Power_Box_Action(new(i, j)).Perform();
+			new Power_Box_Action(new(i, j)).Perform();
 			return true;
 		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
@@ -139,17 +149,29 @@ namespace Origins.Tiles.Ashen {
 				writer.Write((short)Pos.Y);
 			}
 			protected override void Perform() {
-				if (TileLoader.GetTile(Main.tile[Pos].TileType) is Power_Box) {
-					Tile tile = Main.tile[Pos];
-					tile.TileFrameY ^= 18;
-					bool inputPower = tile.TileFrameX != 0 && tile.TileFrameY != 0;
-					using (IAshenPowerConduitTile.WalkedConduitOutput _ = new(Pos.ToPoint())) {
-						if (inputPower) inputPower = IAshenPowerConduitTile.FindValidPowerSource(Pos.ToPoint(), 0)
-								|| IAshenPowerConduitTile.FindValidPowerSource(Pos.ToPoint(), 1)
-								|| IAshenPowerConduitTile.FindValidPowerSource(Pos.ToPoint(), 2);
+				(int i, int j) = Pos;
+				Tile tile = Main.tile[i, j];
+				if (!tile.HasTile) return;
+				if (TileLoader.GetTile(tile.TileType) is Power_Box box) {
+					bool wasDisabled = tile.TileFrameY >= box.frameHeight && tile.TileFrameY < box.frameHeight * 2;
+					TileObjectData data = TileObjectData.GetTileData(tile);
+					TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+					for (int x = 0; x < data.Width; x++) {
+						for (int y = 0; y < data.Height; y++) {
+							ref short useFrame = ref Main.tile[left + x, top + y].TileFrameY;
+							useFrame = (short)(useFrame % box.frameHeight + (wasDisabled ? 0 : box.frameHeight));
+						}
 					}
-					Ashen_Wire_Data.SetTilePowered(Pos.X, Pos.Y, inputPower);
-					NetMessage.SendData(MessageID.TileSquare, Main.myPlayer, -1, null, Pos.X, Pos.Y, 1, 1);
+					if (wasDisabled) {
+						box.UpdatePowerState(i, j, box.IsPowered(i, j));
+					} else {
+						for (int y = 0; y < data.Height; y++) {
+							for (int x = 0; x < data.Width; x++) {
+								Ashen_Wire_Data.SetTilePowered(left + x, top + y, false);
+							}
+						}
+						if (!NetmodeActive.SinglePlayer) NetMessage.SendTileSquare(-1, left, top, data.Width, data.Height);
+					}
 				}
 			}
 		}

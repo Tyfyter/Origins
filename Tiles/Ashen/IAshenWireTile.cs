@@ -20,7 +20,7 @@ namespace Origins.Tiles.Ashen {
 			return false;
 		}
 		public delegate ref short GetFrame(Tile tile);
-		public static void DefaultUpdatePowerState(int i, int j, bool powered, GetFrame frame, int frameSize, bool invertOrder = false) {
+		public static void DefaultUpdatePowerState(int i, int j, bool powered, GetFrame frame, int frameSize, bool invertOrder = false, bool quiet = false) {
 			bool wasPowered = frame(Main.tile[i, j]) >= frameSize;
 			powered ^= invertOrder;
 			if (powered == wasPowered) return;
@@ -32,7 +32,7 @@ namespace Origins.Tiles.Ashen {
 					useFrame = (short)(useFrame % frameSize + (powered ? frameSize : 0));
 				}
 			}
-			if (!NetmodeActive.SinglePlayer) NetMessage.SendTileSquare(-1, left, top, data.Width, data.Height);
+			if (!NetmodeActive.SinglePlayer && !quiet) NetMessage.SendTileSquare(-1, left, top, data.Width, data.Height);
 		}
 	}
 }
