@@ -3584,6 +3584,9 @@ namespace Origins {
 				() => !value.Predicate()
 			);
 		}
+		public static Condition PlayerCarriesItem<T>() where T : ModItem {
+			return Condition.PlayerCarriesItem(ModContent.ItemType<T>());
+		}
 	}
 	public static class CollisionExtensions {
 		static Triangle[] tileTriangles;

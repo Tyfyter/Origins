@@ -1,7 +1,5 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Conditions;
-using Microsoft.Build.Tasks;
-using Newtonsoft.Json.Linq;
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
@@ -25,7 +23,6 @@ using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.World.BiomeData;
-using PegasusLib;
 using PegasusLib.UI;
 using System;
 using System.Collections.Generic;
@@ -81,6 +78,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Demolitionist: {
+					shop.InsertAfter<Oil_Bomb>(ItemID.HoneyBomb, ConditionExtensions.PlayerCarriesItem<Oil_Bomb>());
 					shop.Add(ItemID.ExplosivePowder, Condition.PreHardmode);
 					for (int i = 0; i < Peat_Moss_Quest.Rewards.Length; i++) {
 						shop.Add(Peat_Moss_Quest.Rewards[i].ItemID, Peat_Moss_Quest.Rewards[i].Conditions);
@@ -144,6 +142,7 @@ namespace Origins.NPCs {
 				case NPCID.WitchDoctor: {
 					shop.InsertAfter(ItemID.CorruptWaterFountain, WaterFountain.ItemType<Defiled_Fountain>());
 					shop.InsertAfter(WaterFountain.ItemType<Defiled_Fountain>(), WaterFountain.ItemType<Riven_Fountain>());
+					shop.InsertAfter(WaterFountain.ItemType<Riven_Fountain>(), WaterFountain.ItemType<Ashen_Fountain>());
 					shop.InsertAfter(ItemID.JungleWaterFountain, WaterFountain.ItemType<Brine_Fountain>());
 					break;
 				}
