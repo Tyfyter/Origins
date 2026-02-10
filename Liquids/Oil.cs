@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Humanizer;
+using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ID;
 using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils.Structs;
@@ -11,13 +12,16 @@ using Terraria.GameContent.Liquid;
 using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace Origins.Liquids {
 	public class Oil : ModLiquid {
+		public static int CanBurnBeBlockedThreshold => 191;
 		public override string Texture => base.Texture.Replace("Burning_", string.Empty);
 		public override string BlockTexture => base.BlockTexture.Replace("Burning_", string.Empty);
 		public override string SlopeTexture => base.SlopeTexture.Replace("Burning_", string.Empty);
 		public static int ID { get; private set; }
+		public virtual Color MapColor => FromHexRGB(0x0A0A0A);
 		public override void SetStaticDefaults() {
 			LiquidRenderer.VISCOSITY_MASK[Type] = 50;
 			LiquidRenderer.WATERFALL_LENGTH[Type] = 10;
@@ -28,7 +32,7 @@ namespace Origins.Liquids {
 			WaterRippleMultiplier = 0.3f;
 			SplashDustType = ModContent.DustType<Black_Smoke_Dust>();
 			SplashSound = SoundID.SplashWeak;
-			FallDelay = 8;
+			FallDelay = 0;
 			ChecksForDrowning = true;
 			AllowEmitBreathBubbles = false;
 			PlayerMovementMultiplier = 0.375f;
@@ -36,8 +40,8 @@ namespace Origins.Liquids {
 			NPCMovementMultiplierDefault = PlayerMovementMultiplier;
 			ProjectileMovementMultiplier = PlayerMovementMultiplier;
 			ExtinguishesOnFireDebuffs = false;
-			AddMapEntry(FromHexRGB(0x0A0A0A));
-			ID = Type;
+			AddMapEntry(MapColor);
+			if (GetType() == typeof(Oil)) ID = Type;
 		}
 		//ChooseWaterfallStyle allows for the selection of what waterfall style this liquid chooses when next to a slope.
 		public override int ChooseWaterfallStyle(int i, int j) {
@@ -51,9 +55,8 @@ namespace Origins.Liquids {
 		//Using EvaporatesInHell, we are able to choose whether this liquid evaporates in hell, based on a condition.
 		//For custom evaporation, use UpdateLiquid override.
 		public override bool EvaporatesInHell(int i, int j) {
-			//Here, our liquid in the bottom half of the underworld evaporates, while in the upper half does not evaporate
 			if (j > Main.UnderworldLayer) {
-				Main.tile[i, j].SetLiquidType(ID);
+				Main.tile[i, j].SetLiquidType(Burning_Oil.ID);
 			}
 			return false;
 		}
@@ -75,6 +78,17 @@ namespace Origins.Liquids {
 		//Secondly, we apply the 2nd tier of Well Fed for 30 seconds
 		public override void OnPlayerCollision(Player player) {
 			player.AddBuff(BuffID.Oiled, 3 * 60);
+		}
+		public override void OnProjectileCollision(Projectile proj) {
+			if (OriginsSets.Projectiles.FireProjectiles[proj.type]) {
+				foreach (Point pos in ContentExtensions.LiquidCollision(proj.position, proj.width, proj.height)) {
+					Tile tile = Main.tile[pos];
+					if (tile.LiquidType == Oil.ID) {
+						tile.LiquidType = Burning_Oil.ID;
+						UpdateAdjacentLiquids(pos.X, pos.Y);
+					}
+				}
+			}
 		}
 		//Here we animate our liquid seperately from other liquids in the game.
 		//Instead of having our liquid animate normally, we animate it simiarly, except the liquid is animated almost half as slow
@@ -122,19 +136,60 @@ namespace Origins.Liquids {
 			return ModContent.TileType<Murky_Sludge>();
 		}
 		public override bool PreLiquidMerge(int liquidX, int liquidY, int tileX, int tileY, int otherLiquid) {
-			if (otherLiquid == ID) Main.tile[tileX, tileY].SetLiquidType(ID);
 			switch (otherLiquid) {
-				case LiquidID.Lava:
-				Main.tile[tileX, tileY].SetLiquidType(ID);
-				break;
-
 				case LiquidID.Shimmer: return true;
 			}
+			if (Type == Burning_Oil.ID) {
+				IgniteOil(tileX - 1, tileY);
+				IgniteOil(tileX + 1, tileY);
+				IgniteOil(tileX, tileY);
+				IgniteOil(liquidX, liquidY);
+			} else {
+				switch (otherLiquid) {
+					case LiquidID.Lava:
+					IgniteOil(tileX, tileY);
+					IgniteOil(liquidX, liquidY);
+					break;
+
+					default:
+					if (otherLiquid == Burning_Oil.ID) goto case LiquidID.Lava;
+					break;
+				}
+			}
 			return false;
+		}
+		public static void IgniteOil(int i, int j) {
+			Tile tile = Main.tile[i, j];
+			if (tile.LiquidType == ID && (tile.LiquidAmount <= CanBurnBeBlockedThreshold || !BlocksIgniting(Main.tile[i, j - 1]))) {
+				tile.LiquidType = Burning_Oil.ID;
+				UpdateAdjacentLiquids(i, j);
+			}
+		}
+		public static bool BlocksIgniting(Tile tile) {
+			return (tile.HasTile && Main.tileSolid[tile.TileType]) || tile.LiquidAmount > CanBurnBeBlockedThreshold;
+		}
+		public static void UpdateAdjacentLiquids(int i, int j) {
+			static void TileFrame(int i, int j) {
+				if (Main.tile[i, j].LiquidAmount > 0) WorldGen.TileFrame(i, j);
+			}
+			TileFrame(i - 1, j - 1);
+			TileFrame(i - 1, j);
+			TileFrame(i - 1, j + 1);
+			TileFrame(i, j - 1);
+			TileFrame(i, j);
+			TileFrame(i, j + 1);
+			TileFrame(i + 1, j - 1);
+			TileFrame(i + 1, j);
+			TileFrame(i + 1, j + 1);
 		}
 	}
 	public class Burning_Oil : Oil { // TODO: figure out a way to un-burn the oil
 		public new static int ID { get; private set; }
+		public override Color MapColor => FromHexRGB(0xFA8A0A);
+		//Temp, so that a difference can be seen
+		public override string Texture => "Origins/Water/Riven_Water_Style";
+		public override string BlockTexture => "Terraria/Images/Liquid_12";
+		public override string SlopeTexture => "Terraria/Images/LiquidSlope_12";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			LiquidID_TLmod.Sets.CanBeAbsorbedBy[Type].Remove(ItemID.SuperAbsorbantSponge);
@@ -156,12 +211,32 @@ namespace Origins.Liquids {
 			player.AddBuff(BuffID.Oiled, 3 * 60);
 			player.AddBuff(BuffID.OnFire3, 2 * 60);
 		}
+		public override void OnProjectileCollision(Projectile proj) { }
 		public override bool UpdateLiquid(int i, int j, Liquid liquid) {
-			if (Main.tile[i, j].LiquidAmount >= 127 && Main.rand.NextBool(200)) Dust.NewDust(new Vector2(i, j) * 16, 1, 1, DustID.Torch);
-			return true;
+			Tile tile = Main.tile[i, j];
+			if (tile.LiquidAmount > CanBurnBeBlockedThreshold && BlocksIgniting(Main.tile[i, j - 1]) && (Liquid.quickFall || Main.rand.NextBool(3))) {
+				tile.LiquidType = Oil.ID;
+			} else {
+				const int rate = 2;
+				if (tile.LiquidAmount > rate) {
+					tile.LiquidAmount -= rate;
+				} else {
+					tile.LiquidAmount = 0;
+				}
+				UpdateAdjacentLiquids(i, j);
+			}
+			return base.UpdateLiquid(i, j, liquid);
 		}
-		public override bool PreLiquidMerge(int liquidX, int liquidY, int tileX, int tileY, int otherLiquid) {
-			return false;
+		public override void EmitEffects(int i, int j, LiquidRenderer.LiquidCache liquidCache) {
+			int amount = Main.tile[i, j].LiquidAmount;
+			if (amount == 0) return;
+			if (Main.rand.NextBool(10000 / amount)) Dust.NewDustPerfect(new Vector2(i + Main.rand.NextFloat(), j + Main.rand.NextFloat() * (255 - amount)) * 16, DustID.Torch);
+		}
+		public override bool PreDraw(int i, int j, LiquidRenderer.LiquidDrawCache liquidDrawCache, Vector2 drawOffset, bool isBackgroundDraw) {
+			return base.PreDraw(i, j, liquidDrawCache, drawOffset, isBackgroundDraw);
+		}
+		public override void PostDraw(int i, int j, LiquidRenderer.LiquidDrawCache liquidDrawCache, Vector2 drawOffset, bool isBackgroundDraw) {
+			base.PostDraw(i, j, liquidDrawCache, drawOffset, isBackgroundDraw);
 		}
 	}
 }

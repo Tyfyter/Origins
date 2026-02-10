@@ -5385,6 +5385,38 @@ namespace Origins {
 				sound.Stop();
 			}
 		}
+		public static IEnumerable<Point> LiquidCollision(Vector2 Position, int Width, int Height) {
+			Vector2 checkCenter = new(Position.X + (Width / 2), Position.Y + (Height / 2));
+			int num = 10;
+			int num2 = Height / 2;
+			Min(ref num, Width);
+			Min(ref num2, Height);
+			checkCenter = new Vector2(checkCenter.X - (num / 2), checkCenter.Y - (num2 / 2));
+			int value5 = (int)(Position.X / 16f) - 1;
+			int rightEdge = (int)((Position.X + Width) / 16f) + 2;
+			int topEdge = (int)(Position.Y / 16f) - 1;//great character, btw
+			int bottomEdge = (int)((Position.Y + Height) / 16f) + 2;
+			int leftEdge = Utils.Clamp(value5, 0, Main.maxTilesX - 1);
+			rightEdge = Utils.Clamp(rightEdge, 0, Main.maxTilesX - 1);
+			topEdge = Utils.Clamp(topEdge, 0, Main.maxTilesY - 1);
+			bottomEdge = Utils.Clamp(bottomEdge, 0, Main.maxTilesY - 1);
+			Point currentPos = default;
+			for (currentPos.X = leftEdge; currentPos.X < rightEdge; currentPos.X++) {
+				for (currentPos.Y = topEdge; currentPos.Y < bottomEdge; currentPos.Y++) {
+					if (Main.tile[currentPos].LiquidAmount > 0) {
+						Vector2 vector2 = currentPos.ToWorldCoordinates(0, 0);
+						int liquidHeight = 16;
+						float airAmount = 256 - Main.tile[currentPos].LiquidAmount;
+						airAmount /= 32f;
+						vector2.Y += airAmount * 2f;
+						liquidHeight -= (int)(airAmount * 2f);
+						if (checkCenter.X + num > vector2.X && checkCenter.X < vector2.X + 16f && checkCenter.Y + num2 > vector2.Y && checkCenter.Y < vector2.Y + liquidHeight) {
+							yield return currentPos;
+						}
+					}
+				}
+			}
+		}
 	}
 	public static class NetmodeActive {
 		public static bool SinglePlayer => Main.netMode == NetmodeID.SinglePlayer;

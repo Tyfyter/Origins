@@ -89,7 +89,7 @@ namespace Origins.Items.Accessories {
 			if (slimeTime > 0) slimeTime--;
 		}
 		public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone) {
-			if (slimeTime > 0 && (ExplosiveGlobalProjectile.IsExploding(projectile, true) || projectile.type is ProjectileID.Sunfury or ProjectileID.Flamelash)) {
+			if (slimeTime > 0 && (ExplosiveGlobalProjectile.IsExploding(projectile, true) || OriginsSets.Projectiles.FireProjectiles[projectile.type])) {
 				slimeTime = 0;
 				Projectile.NewProjectile(
 					projectile.GetSource_OnHit(npc, OriginGlobalProj.no_multishot_context),

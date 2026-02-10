@@ -297,6 +297,70 @@ namespace Origins {
 			.RegisterCustomSet<Action<Projectile, float>>(null);
 			public static bool[] DontPushBulletForward { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(DontPushBulletForward))
 			.RegisterBoolSet();
+			public static bool[] FireProjectiles { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(FireProjectiles))
+			.Description("Projectiles which should trigger interactions involving heat or fire")
+			.RegisterBoolSet(
+				ProjectileID.WandOfSparkingSpark,
+				ProjectileID.FlamingMace,
+
+				ProjectileID.Flare,
+				ProjectileID.BlueFlare,
+				ProjectileID.RainbowFlare,
+				ProjectileID.ShimmerFlare,
+				ProjectileID.SpelunkerFlare,
+
+				ProjectileID.FireArrow,
+
+				ProjectileID.Flames,
+				ProjectileID.FlamesTrap,
+
+				ProjectileID.MolotovCocktail,
+				ProjectileID.MolotovFire,
+				ProjectileID.MolotovFire2,
+				ProjectileID.MolotovFire3,
+
+				ProjectileID.Sunfury,
+				ProjectileID.Flamelash,
+				ProjectileID.BallofFire,
+				ProjectileID.Cascade,
+				ProjectileID.Volcano,
+				ProjectileID.Flamarang,
+				ProjectileID.ImpFireball,
+
+				ProjectileID.HelFire,
+				ProjectileID.DD2PhoenixBowShot,
+
+				ProjectileID.InfernoFriendlyBolt,
+				ProjectileID.InfernoFriendlyBlast,
+				ProjectileID.InfernoHostileBolt,
+				ProjectileID.InfernoHostileBlast,
+
+				ProjectileID.Spark,
+
+				ProjectileID.DD2FlameBurstTowerT1Shot,
+				ProjectileID.DD2FlameBurstTowerT2Shot,
+				ProjectileID.DD2FlameBurstTowerT3Shot,
+
+				ProjectileID.Fireball,
+				ProjectileID.FlamingArrow,
+				ProjectileID.DD2BetsyFlameBreath,
+
+				ProjectileID.CursedFlare,
+				ProjectileID.CursedArrow,
+				ProjectileID.CursedDart,
+				ProjectileID.CursedDartFlame,
+				ProjectileID.CursedBullet,
+				ProjectileID.ClingerStaff,
+				ProjectileID.CursedFlameFriendly,
+
+				ProjectileID.CursedFlameHostile,
+				ProjectileID.EyeFire,
+
+				ProjectileID.DarkLance,
+				ProjectileID.ShadowFlame,
+				ProjectileID.ShadowFlameArrow,
+				ProjectileID.ShadowFlameKnife
+			);
 			static Projectiles() {
 				foreach (KeyValuePair<int, Projectile> proj in ContentSamples.ProjectilesByType) {
 					if (!NoMultishot.IndexInRange(proj.Key)) continue;
