@@ -1358,13 +1358,14 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(@, ^3) Dirt Chest
+(^) Dirt Chest
 (^) Fire Extinguisher Holder
 (X) Gas Generator !!!
 (^) Industrial Door
 (#3, ^2) Large Storage Container
 (^) Laser Tag Console
-(X) Liquid Sensor (Amebic Gel) !!!
+(#, ^2) Liquid Sensor (Amebic Gel) !!!
+(#, ^2) Liquid Sensor (Brine) !!!
 (^) Liquid Sensor (Oil)
 (#2, ^2) Mechanical Key Node !!!
 (#2, ^2) Medium Storage Container !!! (what I meant was keep the top collision, but not the middle)
@@ -1505,11 +1506,6 @@ TILES:
 (^) Trenchmaker Trophy
 (^) World Cracker Relic
 (^) World Cracker Trophy
-
-(these 3 entries are temporarily here bc idk where to put them)
-(X) Amebic Gel Liquid Sensor !!!
-(X) Brine Liquid Sensor !!!
-(@, †) Oil Liquid Sensor !!! (using temp sprites, unless it's decided that they're good enough, needs multiplayer testing)
 ---
 
 
@@ -1732,9 +1728,9 @@ CONSUMABLES:
 (^) Holiday Hair Dye
 (^) Latchkey
 (^) Lottery Ticket
-(X) Magic Amebic Gel Dropper !!!
-(@2, #2) Magic Brine Dropper !!! (needs dropplet sprite)
-(^) Magic Oil Dropper !!!
+(#, ^2) Magic Gel Dropper !!!
+(#2, ^2) Magic Brine Dropper !!!
+(^) Magic Oil Dropper
 (^) Spyglass
 (^) Void Lock
 (^) White Water
