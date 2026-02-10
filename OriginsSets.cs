@@ -291,7 +291,7 @@ namespace Origins {
 			.Description("Controls which npcs are associated with which journal entries, multiple entries can be assigned by separating them with semicolons")
 			.RegisterCustomSet<string>(null);
 			public static Func<bool>[] BossKillCounterOverrider { get; } = NPCID.Sets.Factory.CreateNamedSet(nameof(BossKillCounterOverrider))
-			.Description("If an NPC type has an entry in this set, that will be used instead of ")
+			.Description("If an NPC type has an entry in this set, that will be used instead of the Bestiary Tracker")
 			.RegisterCustomSet<Func<bool>>(null,
 				NPCID.Retinazer, () => NPC.downedMechBoss2,
 				NPCID.Spazmatism, () => false
