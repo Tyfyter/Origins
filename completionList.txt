@@ -1359,6 +1359,7 @@ TILES:
 (^) Defiled Monolith
 (X) Defiled Pylon
 (^) Dirt Chest
+(^) Edge Detector
 (^) Fire Extinguisher Holder
 (X) Gas Generator !!!
 (^) Industrial Door

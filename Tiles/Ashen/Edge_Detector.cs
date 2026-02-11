@@ -1,5 +1,5 @@
 ﻿using Origins.Items.Tools.Wiring;
-using Origins.Reflection;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -12,7 +12,14 @@ namespace Origins.Tiles.Ashen {
 		public sealed override void Load() {
 			new TileItem(this)
 			.WithExtraStaticDefaults(this.DropTileItem)
-			.RegisterItem();
+			.WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.Lens)
+				.AddIngredient(ItemID.Wire, 8)
+				.AddIngredient(ModContent.ItemType<Scrap>(), 12)
+				.AddTile(ModContent.TileType<Metal_Presser>())
+				.Register();
+			}).RegisterItem();
 		}
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
