@@ -2580,6 +2580,7 @@ Tiles: {
 	Magic_Dropper_Oil.MapEntry: Dripping Oil
 	Power_Box.MapEntry: Power Box
 	Power_Box_Wide.MapEntry: Power Box Wide
+	Edge_Detector.MapEntry: Edge Detector
 }
 
 Keybinds: {

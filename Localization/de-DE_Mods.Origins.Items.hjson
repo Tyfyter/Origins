@@ -8013,3 +8013,8 @@ Radio_Broadcaster_Item: {
 	// DisplayName: Radio Broadcaster
 	// Tooltip: ""
 }
+
+Edge_Detector_Item: {
+	// DisplayName: Edge Detector
+	// Tooltip: ""
+}

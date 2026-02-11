@@ -44,6 +44,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileBlockLight[Type] = false;
 			Main.tileMergeDirt[Type] = false;
 			TileID.Sets.DrawTileInSolidLayer[Type] = true;
+			TileID.Sets.CanPlaceNextToNonSolidTile[Type] = true;
 			AddMapEntry(MapColor, CreateMapEntryName());
 
 			MinPick = 65;

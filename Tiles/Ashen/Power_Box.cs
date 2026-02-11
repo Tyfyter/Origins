@@ -109,6 +109,7 @@ namespace Origins.Tiles.Ashen {
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			for (int y = 0; y < data.Height; y++) {
 				for (int x = 0; x < data.Width; x++) {
+					Wiring.SkipWire(left + x, top + y);
 					Ashen_Wire_Data.SetTilePowered(left + x, top + y, powered);
 				}
 			}
@@ -193,10 +194,19 @@ namespace Origins.Tiles.Ashen {
 			}
 		}
 		public bool ShouldCountAsPowerSource(Point position, int forWireType) {
-			using IAshenPowerConduitTile.WalkedConduitOutput _ = new(position);
+			Point pos = default;
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[position]);
+			TileUtils.GetMultiTileTopLeft(position.X, position.Y, data, out int left, out int top);
 			bool powered = false;
-			for (int i = 0; !powered && i < 3; i++) {
-				powered = i != forWireType && IAshenPowerConduitTile.FindValidPowerSource(position, i);
+			using IAshenPowerConduitTile.WalkedConduitOutputs _ = new(left, top, data.Width, data.Height);
+			for (int y = 0; !powered && y < data.Height; y++) {
+				pos.Y = top + y;
+				for (int x = 0; !powered && x < data.Width; x++) {
+					pos.X = left + x;
+					for (int i = 0; !powered && i < 3; i++) {
+						powered = IAshenPowerConduitTile.FindValidPowerSource(pos, i);
+					}
+				}
 			}
 			return powered;
 		}
