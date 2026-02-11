@@ -1,16 +1,12 @@
-﻿using CalamityMod.Items.Potions.Alcohol;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Dusts;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
 using Origins.UI;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -726,6 +722,106 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ExplosiveGlobalProjectile.DoExplosion(Projectile, 64, false, SoundID.Item14, 0, 15, 0);
 			Color color = Color;
 			MakeShape(color, 2, Star(6, 2, 0.75f).Scaled(new(0.75f, 1f)).RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)));
+		}
+	}
+	public record class TUDFLOMD_Explosion() {
+
+	}
+	public record class Vector_Image(Vector_Image.Gradient Color, Vector2[] Vertices, bool Closed = true) {
+		public float TotalLength { get; } = CalculateLength(Vertices, Closed);
+		static float CalculateLength(Vector2[] vertices, bool closed) {
+			float len = 0;
+			for (int i = 1; i < vertices.Length; i++) {
+				len += vertices[i].Distance(vertices[i - 1]);
+			}
+			if (closed) len += vertices[0].Distance(vertices[^1]);
+			return len;
+		}
+		public delegate Color Gradient(float progressOnShape, float progressOnLine);
+		public void SpawnFireworkDust(Vector2 position, float scale = 1, Vector2 offset = default) {
+			float spread = 0.25f / scale;
+			List<TUDFLOMD_Subdust> dusts = [];
+			float totalDist = 0;
+			for (int i = 0; i < Vertices.Length; i++) {
+				Vector2 a = Vertices[i];
+				Vector2 b = Vertices[(i + 1) % Vertices.Length];
+				float dist = a.Distance(b);
+				float speed = spread / dist;
+				for (float j = 0; j < 1; j += speed) {
+					Vector2 direction = (Vector2.Lerp(a, b, j) + offset) * scale;
+					dusts.Add(new(position, direction, 0.85f, Color((totalDist + j * dist) / TotalLength, j)));
+				}
+				totalDist += dist;
+				if (!Closed && i == Vertices.Length - 1) break;
+			}
+			Dust.NewDustPerfect(
+				position,
+				ModContent.DustType<TUDFLOMDust>(),
+				Vector2.Zero
+			).customData = dusts.ToArray();
+		}
+	}
+	public record class TUDFLOMD_Configuration(TUDFLOMD_Explosion Explosion, TUDFLOMD_Path Path, TUDFLOMD_Modifier[] Modifiers) {
+		public TUDFLOMD_Configuration(TUDFLOMD_Configuration orig) {
+			Explosion = orig.Explosion;
+			Path = (TUDFLOMD_Path)orig.Path.Clone(null);
+			Modifiers = new TUDFLOMD_Modifier[orig.Modifiers.Length];
+			for (int i = 0; i < Modifiers.Length; i++) Modifiers[i] = orig.Modifiers[i].Clone(null);
+		}
+		public static int BaseCapacity => 5;
+		public int TotalCapacity => BaseCapacity + Path.ExtraCapacity;
+		public bool IsValidCapacity => TotalCapacity >= Modifiers.Sum(m => m.CapacityCost);
+		public static Projectile CurrentProjectile { get; private set; }
+		public void SetupProjectile(Projectile projectile) => PerformAction(projectile, m => m.SetupProjectile());
+		public void AI(Projectile projectile) => PerformAction(projectile, m => m.AI());
+		public void OnKill(Projectile projectile, int timeLeft) => PerformAction(projectile, m => m.OnKill(timeLeft));
+		public bool? CanHitNPC(Projectile projectile, NPC target) {
+			bool? canHit = null;
+			PerformAction(projectile, m => {
+				bool? modCanHit = m.CanHitNPC(target);
+				if (canHit != true && modCanHit.HasValue) canHit = modCanHit;
+			});
+			return null;
+		}
+		void PerformAction(Projectile projectile, Action<TUDFLOMD_Modifier> action) {
+			using CurrentProjectileOverride _ = new(projectile);
+			CurrentProjectile = projectile;
+			action(Path);
+			for (int i = 0; i < Modifiers.Length; i++) action(Modifiers[i]);
+		}
+		readonly struct CurrentProjectileOverride : IDisposable {
+			readonly Projectile oldProjectile;
+			public CurrentProjectileOverride(Projectile projectile) {
+				oldProjectile = CurrentProjectile;
+				CurrentProjectile = projectile;
+			}
+			public void Dispose() => CurrentProjectile = oldProjectile;
+		}
+	}
+	public abstract class TUDFLOMD_Path : TUDFLOMD_Modifier {
+		public abstract int ExtraCapacity { get; }
+		public sealed override bool CanAdd(TUDFLOMD_Configuration configuration) => false;
+	}
+	public abstract class TUDFLOMD_Modifier : AutonomousModType<TUDFLOMD_Modifier> {
+		public static Projectile Projectile => TUDFLOMD_Configuration.CurrentProjectile;
+		public abstract int CapacityCost { get; }
+		public virtual void SetupProjectile() { }
+		public virtual bool CanAdd(TUDFLOMD_Configuration configuration) => true;
+		public virtual void AI() { }
+		public virtual bool? CanHitNPC(NPC target) => null;
+		public virtual void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) { }
+		public virtual void OnKill(int timeLeft) { }
+		public static void SetTarget(NPC target = null) => Projectile.ai[0] = target?.whoAmI ?? -1;
+		public static NPC GetTarget() {
+			if (Projectile.ai[0] != -1) {
+				NPC target = Main.npc[(int)Projectile.ai[0]];
+				if (target.CanBeChasedBy(Projectile)) {
+					return target;
+				} else {
+					Projectile.ai[0] = -1;
+				}
+			}
+			return null;
 		}
 	}
 }
