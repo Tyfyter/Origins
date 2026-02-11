@@ -1,8 +1,10 @@
 ﻿using Origins.Items.Tools.Wiring;
+using Origins.Reflection;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Items.Tools.Wiring.Ashen_Wire_Data;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
@@ -21,7 +23,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMergeDirt[Type] = false;
 			TileID.Sets.DrawTileInSolidLayer[Type] = true;
 			TileID.Sets.CanPlaceNextToNonSolidTile[Type] = true;
-			AddMapEntry(FromHexRGB(0xe47430), CreateMapEntryName());
+			AddMapEntry(FromHexRGB(0xe47430), this.GetTileItem().DisplayName);
 
 			MinPick = 65;
 			MineResist = 2;
@@ -29,12 +31,13 @@ namespace Origins.Tiles.Ashen {
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
 		public override void HitWire(int i, int j) {
-			if (Ashen_Wire_Data.HittingAshenWires) UpdatePowerState(i, j, IsPowered(i, j));
+			if (HittingAshenWires) UpdatePowerState(i, j, IsPowered(i, j));
 		}
 		public bool IsPowered(int i, int j) => Main.tile[i, j].Get<Ashen_Wire_Data>().AnyPower;
 		public void UpdatePowerState(int i, int j, bool powered) {
 			if (Main.tile[i, j].TileFrameX.TrySet(powered.Mul<short>(18))) {
-				Wiring.TripWire(i, j, 1, 1);
+				using HittingWiresOverride _ = new(false);
+				OriginSystem.QueueTripWire(i, j);
 				NetMessage.SendData(MessageID.TileSquare, Main.myPlayer, -1, null, i, j, 1, 1);
 			}
 		}

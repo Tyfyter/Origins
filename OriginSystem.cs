@@ -685,6 +685,7 @@ namespace Origins {
 		static Stack<Point> QueuedTileFrames { get; } = new();
 		static Stack<Point> queuedSpecialTileFrames = new();
 		static Stack<Point> workingQueuedSpecialTileFrames = new();
+		static Stack<Point> queuedTripWires = new();
 		static bool isFramingQueuedTiles = false;
 		public static void QueueTileFrames(int i, int j) {
 			if (!isFramingQueuedTiles) QueuedTileFrames.Push(new(i, j));
@@ -692,6 +693,7 @@ namespace Origins {
 		public static void QueueSpecialTileFrames(int i, int j) {
 			workingQueuedSpecialTileFrames.Push(new(i, j));
 		}
+		public static void QueueTripWire(int i, int j) => queuedTripWires.Push(new(i, j));
 		public override void PostUpdatePlayers() {
 			try {
 				isFramingQueuedTiles = true;
@@ -705,6 +707,7 @@ namespace Origins {
 				if (TileLoader.GetTile(Main.tile[pos].TileType) is not ISpecialFrameTile specialTile) continue;
 				specialTile.SpecialFrame(pos.X, pos.Y);
 			}
+			while (queuedTripWires.TryPop(out Point pos)) Wiring.TripWire(pos.X, pos.Y, 1, 1);
 		}
 		public override void PreUpdateNPCs() {
 			Debugging.LogFirstRun(PreUpdateNPCs);

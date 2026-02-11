@@ -2580,14 +2580,13 @@ Tiles: {
 	Magic_Dropper_Oil.MapEntry: Dripping Oil
 	Power_Box.MapEntry: Power Box
 	Power_Box_Wide.MapEntry: Power Box Wide
-	Edge_Detector.MapEntry: Edge Detector
 }
 
 Keybinds: {
 	"Trigger Set Bonus.DisplayName": Trigger set bonus ability
 	"Inspect Item.DisplayName": Inspect item
 	"Forbidden Voice.DisplayName": Use Forbidden Voice
-	"Debug Screen Shader.DisplayName": Debug  Screen  Shader
+	"Debug Screen Shader.DisplayName": Debug Screen Shader
 	GoldenLotus.DisplayName: Golden Lotus
 	UseMojoFlask.DisplayName: Use Mojo Flask
 	JournalBack.DisplayName: "{§Journal}: Back"

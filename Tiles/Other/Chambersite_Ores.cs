@@ -95,7 +95,7 @@ namespace Origins.Tiles.Other {
 	[Autoload(false)]
 	public class Chambersite_Ore_Item(Chambersite_Ore tile) : TileItem(tile) {
 		[field: CloneByReference]
-		Chambersite_Ore Tile { get; } = tile;
+		public new Chambersite_Ore Tile { get; } = tile;
 		public override string Texture => Tile.ItemTexture;
 		public override LocalizedText DisplayName => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.Chambersite_Ore.DisplayName")).WithFormatArgs(Tile.ItemDisplayName);
 		public override LocalizedText Tooltip => LocalizedText.Empty;

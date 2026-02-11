@@ -893,20 +893,21 @@ namespace Origins.Tiles {
 	public class TileItem(ModTile tile, bool debug = false, string textureOverride = null) : ModItem() {
 		private static readonly Dictionary<ModTile, TileItem> itemsByTile = [];
 		[field: CloneByReference]
-		ModTile Tile { get; } = tile;
+		public ModTile Tile { get; } = tile;
+		public bool IsDebug { get; } = debug;
 		public override string Name => Tile.Name + "_Item";
-		public override string Texture => textureOverride ?? (debug ? Tile.Texture : (Tile.Texture + "_Item"));
+		public override string Texture => textureOverride ?? (IsDebug ? Tile.Texture : (Tile.Texture + "_Item"));
 		public override LocalizedText DisplayName => this.GetLocalization(nameof(DisplayName), Tile.PrettyPrintName);
 		[field: CloneByReference] public event Action<Item> ExtraStaticDefaults;
 		[field: CloneByReference] public event Action<Item> ExtraDefaults;
 		[field: CloneByReference] public event Action<Item> OnAddRecipes;
 		protected override bool CloneNewInstances => true;
 #if !DEBUG
-		public override bool IsLoadingEnabled(Mod mod) => !debug || DebugConfig.Instance.ForceEnableDebugItems;
+		public override bool IsLoadingEnabled(Mod mod) => !Debug || DebugConfig.Instance.ForceEnableDebugItems;
 #endif
 		public sealed override void Load() => itemsByTile.Add(Tile, this);
 		public override void SetStaticDefaults() {
-			if (debug) ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
+			if (IsDebug) ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 			if (TileID.Sets.BasicChest[Tile.Type]) ModCompatSets.AnyChests[Type] = true;
 			if (Tile is FurnitureBase furniture) {
 				switch (furniture.BaseTileID) {
@@ -916,7 +917,7 @@ namespace Origins.Tiles {
 				}
 			}
 			Origins.AddGlowMask(this);
-			if (debug) Item.ResearchUnlockCount = 0;
+			if (IsDebug) Item.ResearchUnlockCount = 0;
 			if (ExtraStaticDefaults is not null) {
 				ExtraStaticDefaults(Item);
 				ExtraStaticDefaults = null;
@@ -927,7 +928,7 @@ namespace Origins.Tiles {
 			Item.DefaultToPlaceableTile(Tile.Type);
 			Item.width = 14;
 			Item.height = 28;
-			if (!debug) Item.value = 150;
+			if (!IsDebug) Item.value = 150;
 			ExtraDefaults?.Invoke(Item);
 		}
 		public override void AddRecipes() {
