@@ -137,5 +137,6 @@ namespace Origins.Tiles.Ashen {
 			}
 			return true;
 		}
+		public bool ShouldBreak(int x, int y, int left, int top) => IsPart(x - left, y - top);
 	}
 }

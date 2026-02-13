@@ -13,6 +13,11 @@ namespace Origins.Core {
 	public interface IMultiTypeMultiTile {
 		public bool IsValidTile(Tile tile, int left, int top);
 		public bool CanBlockPlacement(Tile tile, int left, int top) => tile.HasTile;
+		/// <summary>
+		/// Called for each tile of the multitile's type in the area of the multitile when it's broken
+		/// Return false to prevent the tile being broken
+		/// </summary>
+		public bool ShouldBreak(int x, int y, int left, int top) => true;
 	}
 	internal class MultiTypeMultiTile : ILoadable {
 		public delegate bool PlacePartCheck(int i, int j);
@@ -193,6 +198,27 @@ namespace Origins.Core {
 				return TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile && multiTypeMultiTile.IsValidTile(Main.tile[x, y], left, top);
 			});
 			c.EmitBrtrue(label);
+
+			c.GotoNext(MoveType.Before,
+				i => i.MatchBrfalse(out label),
+
+				i => i.MatchLdloc(out x),
+				i => i.MatchLdloc(out y),
+				i => i.MatchLdcI4(0),
+				i => i.MatchLdcI4(0),
+				i => i.MatchLdcI4(0),
+				i => i.MatchCall<WorldGen>(nameof(WorldGen.KillTile))
+			);
+			c.EmitBrfalse(label);
+			c.EmitLdarg2();
+			c.EmitLdloc(x);
+			c.EmitLdloc(y);
+			c.EmitLdarg(il.Method.Parameters.First(p => p.Name == "i"));
+			c.EmitLdarg(il.Method.Parameters.First(p => p.Name == "j"));
+			c.EmitDelegate((int tileType, int x, int y, int left, int top) => {
+				if (TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile) return multiTypeMultiTile.ShouldBreak(x, y, left, top);
+				return true;
+			});
 		}
 		void ILoadable.Unload() { }
 	}
