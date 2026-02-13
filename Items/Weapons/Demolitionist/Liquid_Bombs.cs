@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.DryBomb)
 			.AddIngredient(Type)
-			.SortAfterFirstRecipesOf(ItemID.DryBomb)
+			.SortBeforeFirstRecipesOf(ItemID.DryBomb)
 			.Register();
 
 			CreateRecipe()
