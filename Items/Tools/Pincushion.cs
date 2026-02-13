@@ -17,7 +17,7 @@ namespace Origins.Items.Tools {
 			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateInventory(Player player) {
-			player.GetModPlayer<OriginPlayer>().pincushion = true;
+			if (player.TryGetModPlayer(out OriginPlayer originPlayer)) originPlayer.pincushion = true;
 		}
 		public override bool CanRightClick() {
 			if (Terraria.GameInput.PlayerInput.Triggers.Old.MouseRight) {
@@ -33,6 +33,7 @@ namespace Origins.Items.Tools {
 	}
 	public class Pincushion_Inactive : ModItem, ICustomWikiStat {
 		public bool ShouldHavePage => false;
+		public override void SetStaticDefaults() => OriginsSets.Items.InfoAccessorySlots_IsAMechanicalAccessory[Type] = true;
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.UncumberingStone);
             Item.accessory = false;

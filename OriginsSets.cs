@@ -60,6 +60,7 @@ namespace Origins {
 				ItemID.TissueSample,
 				ItemID.Ichor
 			);
+			internal static bool[] InfoAccessorySlots_IsAMechanicalAccessory { get; } = ItemID.Sets.Factory.CreateNamedSet("InfoAccessorySlots", "IsAMechanicalAccessory").RegisterBoolSet();
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Projectiles {

@@ -21,9 +21,10 @@ namespace Origins.Items.Accessories {
 		public override void Unload() {
 			messageCountsByType = null;
 		}
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
-        }
+			OriginsSets.Items.InfoAccessorySlots_IsAMechanicalAccessory[Type] = false;
+		}
         static short glowmask;
         public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 28);
