@@ -707,6 +707,7 @@ namespace Origins {
 				if (TileLoader.GetTile(Main.tile[pos].TileType) is not ISpecialFrameTile specialTile) continue;
 				specialTile.SpecialFrame(pos.X, pos.Y);
 			}
+			queuedTripWires.Finish();
 			while (queuedTripWires.TryPop(out Point pos)) Wiring.TripWire(pos.X, pos.Y, 1, 1);
 		}
 		public override void PreUpdateNPCs() {
