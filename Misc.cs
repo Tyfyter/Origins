@@ -5077,6 +5077,13 @@ namespace Origins {
 			tile.CoordinateHeights = Enumerable.Repeat(16, height).ToArray();
 			tile.CoordinateHeights[^1] = bottomHeight;
 		}
+		public static void SetOriginBottom(this TileObjectData tile) {
+			tile.Origin = new(0, tile.Height - 1);
+		}
+		public static void SetOriginBottomCenter(this TileObjectData tile, bool right = false) {
+			float width = (tile.Width - 1) / 2f;
+			tile.Origin = new((int)(right ? Math.Ceiling(width) : Math.Floor(width)), tile.Height - 1);
+		}
 		public static TileItem GetTileItem(this ModTile tile) {
 			if (TileItem.Get(tile) is TileItem item && !item.IsDebug) return item;
 			throw new ArgumentException($"Cannot get TileItem of {tile} as it does not add one", nameof(tile));

@@ -11,23 +11,18 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Ashen {
 	public class Suit_Locker : OriginTile, IGlowingModTile {
 		public static int ID { get; private set; }
-		TileItem item;
 		public override void Load() {
 			this.SetupGlowKeys();
-			Mod.AddContent(item = new TileItem(this).WithOnAddRecipes(item => {
+			new TileItem(this)
+			.WithExtraStaticDefaults(this.DropTileItem)
+			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
-				.AddIngredient(ItemID.CopperBar)
-				.AddIngredient(ModContent.ItemType<Ashen_Torch>())
-				.AddIngredient(ModContent.ItemType<Scrap>(), 16)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddRecipeGroup(ALRecipeGroups.CopperBars)
+				.AddIngredient<Ashen_Torch>()
+				.AddIngredient<Scrap>(16)
+				.AddTile<Metal_Presser>()
 				.Register();
-				Recipe.Create(item.type)
-				.AddIngredient(ItemID.TinBar)
-				.AddIngredient(ModContent.ItemType<Ashen_Torch>())
-				.AddIngredient(ModContent.ItemType<Scrap>(), 16)
-				.AddTile(ModContent.TileType<Metal_Presser>())
-				.Register();
-			}));
+			}).RegisterItem();
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (tile.TileFrameX < 3 * 18 * 2) color.DoFancyGlow(new Vector3(0.912f, 0.579f, 0f) * (tile.TileFrameY < 2 * 18 ? 1 : 0.125f), tile.TileColor);
@@ -54,7 +49,6 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.addTile(Type);
 			ID = Type;
 			DustType = Ashen_Biome.DefaultTileDust;
-			RegisterItemDrop(item.Type);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			Tile tile = Main.tile[i, j];

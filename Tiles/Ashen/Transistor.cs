@@ -2,7 +2,6 @@
 using Origins.Items.Materials;
 using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Tools.Wiring.Ashen_Wire_Data;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
@@ -25,9 +23,7 @@ namespace Origins.Tiles.Ashen {
 			if (tile.TileFrameY >= 3 * 18) color.DoFancyGlow(new(1.05f, 0.75f, 0f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {
-			if (!Main.dedServ) {
-				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
-			}
+			if (!Main.dedServ) GlowTexture = Request<Texture2D>(Texture + "_Glow");
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)TileType<Ashen_Foliage>(), 0, 6));
 			Main.tileFrameImportant[Type] = true;
@@ -246,15 +242,9 @@ namespace Origins.Tiles.Ashen {
 		public override void AddRecipes() {
 			CreateRecipe(2)
 			.AddIngredient(ItemID.Wire, 4)
-			.AddIngredient(ItemID.CopperBar)
+			.AddRecipeGroup(ALRecipeGroups.CopperBars)
 			.AddIngredient<Silicon_Bar>()
-			.AddTile(ModContent.TileType<Metal_Presser>())
-			.Register();
-			CreateRecipe(2)
-			.AddIngredient(ItemID.Wire, 4)
-			.AddIngredient(ItemID.TinBar)
-			.AddIngredient<Silicon_Bar>()
-			.AddTile(ModContent.TileType<Metal_Presser>())
+			.AddTile<Metal_Presser>()
 			.Register();
 		}
 		public override bool? UseItem(Player player) {

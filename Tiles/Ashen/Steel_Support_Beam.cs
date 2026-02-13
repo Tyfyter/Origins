@@ -5,25 +5,25 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.ID;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Steel_Support_Beam : OriginTile, IAshenTile {
 		public override void Load() {
-			Mod.AddContent(new TileItem(this).WithOnAddRecipes(item => {
-			Recipe.Create(Type, 20)
-			.AddRecipeGroup(RecipeGroupID.IronBar)
-			.AddIngredient(ModContent.ItemType<Scrap>(), 10)
-			.AddTile(ModContent.TileType<Metal_Presser>())
-			.Register();
-			Recipe.Create(Type, 20)
-			.AddIngredient(ItemID.Coal)
-			.AddRecipeGroup(RecipeGroupID.IronBar)
-			.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 2)
-			.AddTile(ModContent.TileType<Metal_Presser>())
-			.Register();
-			}));
+			new TileItem(this)
+			.WithOnAddRecipes(item => {
+				Recipe.Create(item.type, 20)
+				.AddRecipeGroup(RecipeGroupID.IronBar)
+				.AddIngredient<Scrap>(10)
+				.AddTile<Metal_Presser>()
+				.Register();
+				Recipe.Create(item.type, 20)
+				.AddIngredient(ItemID.Coal)
+				.AddRecipeGroup(RecipeGroupID.IronBar)
+				.AddIngredient<Sanguinite_Ore_Item>(2)
+				.AddTile<Metal_Presser>()
+				.Register();
+			}).RegisterItem();
 		}
 		public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Ashen_Pot>(), 0, 0));

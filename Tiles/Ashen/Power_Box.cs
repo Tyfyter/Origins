@@ -21,7 +21,7 @@ namespace Origins.Tiles.Ashen {
 		public TileItem Item { get; protected set; }
 		protected int frameHeight;
 		public sealed override void Load() {
-			Item = new TileItem(this)
+			new TileItem(this)
 			.WithExtraStaticDefaults(item => {
 				this.DropTileItem(item);
 				item.ResearchUnlockCount = 100;
@@ -213,7 +213,7 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Power_Box_Wide : Power_Box {
 		public override void OnLoad() {
-			Item.OnAddRecipes += item => {
+			this.GetTileItem().OnAddRecipes += item => {
 				Recipe.Create(item.type)
 				.AddIngredient(TileItem.Get<Power_Box>())
 				.DisableDecraft()

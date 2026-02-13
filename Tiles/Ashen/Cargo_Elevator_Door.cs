@@ -20,20 +20,16 @@ using static Origins.Tiles.Ashen.Cargo_Elevator_Door_TE_System;
 
 namespace Origins.Tiles.Ashen {
 	public class Cargo_Elevator_Door : OriginTile, IComplexMineDamageTile, IMultiTypeMultiTile, IAshenWireTile {
-		public TileItem Item { get; protected set; }
 		public override void Load() {
-			Mod.AddContent(Item = new TileItem(this).WithOnAddRecipes(item => {
+			new TileItem(this)
+			.WithExtraStaticDefaults(this.DropTileItem)
+			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
-				.AddIngredient(ItemID.AdamantiteBar, 2)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 30)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddRecipeGroup(ALRecipeGroups.AdamantiteBars, 2)
+				.AddIngredient<Scrap>(30)
+				.AddTile<Metal_Presser>()
 				.Register();
-				Recipe.Create(item.type)
-				.AddIngredient(ItemID.TitaniumBar, 2)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 30)
-				.AddTile(ModContent.TileType<Metal_Presser>())
-				.Register();
-			}));
+			}).RegisterItem();
 		}
 		public override void SetStaticDefaults() {
 			// Properties
@@ -52,13 +48,13 @@ namespace Origins.Tiles.Ashen {
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
 			TileObjectData.newTile.Width = 11;
+			TileObjectData.newTile.SetOriginBottomCenter();
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.newTile.AnchorBottom = new();
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
 			DustType = Ashen_Biome.DefaultTileDust;
 			MineResist = 8;
-			if (this is not Cargo_Elevator_Door_Open) RegisterItemDrop(Item.Type);
 		}
 		public static bool IsSolid(int i, int j) {
 			Tile tile = Main.tile[i, j];
@@ -145,7 +141,6 @@ namespace Origins.Tiles.Ashen {
 		public override string Texture => typeof(Cargo_Elevator_Door).GetDefaultTMLName();
 		public override void Load() { }
 		public override void SetStaticDefaults() {
-			Item = ModContent.GetInstance<Cargo_Elevator_Door>().Item;
 			base.SetStaticDefaults();
 			Main.tileSolidTop[Type] = true;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;

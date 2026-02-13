@@ -16,8 +16,8 @@ namespace Origins.Tiles.Ashen {
 				Recipe.Create(item.type)
 				.AddIngredient(ItemID.Lens)
 				.AddIngredient(ItemID.Wire, 8)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 12)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddIngredient<Scrap>(12)
+				.AddTile<Metal_Presser>()
 				.Register();
 			}).RegisterItem();
 		}

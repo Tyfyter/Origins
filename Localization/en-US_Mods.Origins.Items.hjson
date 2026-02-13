@@ -8005,7 +8005,7 @@ Power_Box_Item: {
 }
 
 Power_Box_Wide_Item: {
-	DisplayName: Power Box Wide
+	DisplayName: Power Box (Wide)
 	Tooltip: ""
 }
 

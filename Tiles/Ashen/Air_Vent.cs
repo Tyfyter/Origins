@@ -7,24 +7,20 @@ using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.Graphics;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Air_Vent : OriginTile {
 		public override void Load() {
-			Mod.AddContent(new TileItem(this).WithOnAddRecipes(item => {
+			new TileItem(this)
+			.WithExtraStaticDefaults(this.DropTileItem)
+			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
-				.AddIngredient(ItemID.CopperBar)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 6)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddRecipeGroup(ALRecipeGroups.CopperBars)
+				.AddIngredient<Scrap>(6)
+				.AddTile<Metal_Presser>()
 				.Register();
-				Recipe.Create(item.type)
-				.AddIngredient(ItemID.TinBar)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 6)
-				.AddTile(ModContent.TileType<Metal_Presser>())
-				.Register();
-			}).WithExtraStaticDefaults(i => RegisterItemDrop(i.type, -1)));
+			}).RegisterItem();
 		}
 		public override void SetStaticDefaults() {
 			// Properties

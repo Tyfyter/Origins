@@ -16,7 +16,7 @@ namespace Origins.Tiles.Ashen {
 	public class Generation_Station : OriginTile, IComplexMineDamageTile, IGlowingModTile {
 		public static int ID { get; private set; }
 		public override void Load() {
-			Mod.AddContent(new TileItem(this, true));
+			new TileItem(this, true).RegisterItem();
 			this.SetupGlowKeys();
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {

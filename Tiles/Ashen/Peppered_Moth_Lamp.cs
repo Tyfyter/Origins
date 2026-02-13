@@ -27,9 +27,8 @@ namespace Origins.Tiles.Ashen {
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
 		public override void ModifyTileData() {
-			TileObjectData.newTile.Height = 4;
+			TileObjectData.newTile.SetHeight(4);
 			TileObjectData.newTile.Origin = new(0, TileObjectData.newTile.Height - 1);
-			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (Framing.GetTileSafely(i, j).TileFrameY > 0) return;

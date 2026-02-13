@@ -21,23 +21,21 @@ namespace Origins.Tiles.Ashen {
 			Item.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
 				.AddIngredient(ItemID.Silk, 10)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 25)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddIngredient<Scrap>(25)
+				.AddTile<Metal_Presser>()
 				.Register();
 			});
 		}
 		public override Color MapColor => new(117, 63, 26);
 		public override void ModifyTileData() {
-			TileObjectData.newTile.Height = 5;
-			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
-			TileObjectData.newTile.Origin = new Point16(TileObjectData.newTile.Width / 2, TileObjectData.newTile.Height - 1);
+			TileObjectData.newTile.SetHeight(5);
+			TileObjectData.newTile.SetOriginBottomCenter();
 			foreach (TileObjectData data in TileMethods.GetAlternates(TileObjectData.newTile)) {
 				data.Style = 3;
 				data.RandomStyleRange = 3;
 				data.StyleWrapLimit = 0;
-				data.Height = TileObjectData.newTile.Height;
-				data.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
-				data.Origin = new Point16(TileObjectData.newTile.Width / 2, TileObjectData.newTile.Height - 1);
+				data.SetHeight(TileObjectData.newTile.Height);
+				data.SetOriginBottomCenter();
 			}
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.StyleWrapLimit = 0;
@@ -61,7 +59,7 @@ namespace Origins.Tiles.Ashen {
 		public override void ModifySmartInteractCoords(ref int width, ref int height, ref int frameWidth, ref int frameHeight, ref int extraY) {
 			width = 2; // Default to the Width defined for TileObjectData.newTile
 			height = 2; // Default to the Height defined for TileObjectData.newTile
-						//extraY = 0; // Depends on how you set up frameHeight and CoordinateHeights and CoordinatePaddingFix.Y
+			//extraY = 0; // Depends on how you set up frameHeight and CoordinateHeights and CoordinatePaddingFix.Y
 		}
 		public override void ModifySleepingTargetInfo(int i, int j, ref TileRestingInfo info) {
 			Tile tile = Main.tile[i, j];

@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Dusts;
 using Origins.Graphics;
-using Origins.Items.Materials;
-using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
-using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,14 +10,14 @@ namespace Origins.Tiles.Ashen {
 	public class Industrial_Work_Bench : ModTile, IGlowingModTile, IAshenWireTile {
 		public const int BaseTileID = TileID.HeavyWorkBench;
 		public static int ID { get; private set; }
-		public TileItem Item { get; protected set; }
 		public override void Load() {
-			Mod.AddContent(Item = new TileItem(this).WithExtraDefaults(item => {
+			new TileItem(this)
+			.WithExtraDefaults(item => {
 				item.CloneDefaults(ItemID.HeavyWorkBench);
 				item.createTile = Type;
 				item.rare++;
-				item.value += Terraria.Item.buyPrice(gold: 1);
-			}));
+				item.value += Item.buyPrice(gold: 1);
+			}).RegisterItem();
 			this.SetupGlowKeys();
 		}
 		public override void SetStaticDefaults() {
@@ -38,12 +34,10 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.SetHeight(3);
 			TileObjectData.addTile(Type);
 
-			AddMapEntry(FromHexRGB(0x0A3623), Item.DisplayName);
+			AddMapEntry(FromHexRGB(0x0A3623), this.GetTileItem().DisplayName);
 			AdjTiles = [BaseTileID, Type];
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
-
-			RegisterItemDrop(Item.Type);
 			ID = Type;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num) {

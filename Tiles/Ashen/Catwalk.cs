@@ -1,20 +1,14 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
 using PegasusLib.Graphics;
-using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Tiles.Ashen.Beacon_Light_TE_System;
-using static Terraria.GameContent.TextureAssets;
 
 namespace Origins.Tiles.Ashen {
 	[ReinitializeDuringResizeArrays]
@@ -23,10 +17,11 @@ namespace Origins.Tiles.Ashen {
 		public override void OnLoad() {
 			Item.OnAddRecipes += item => {
 				Recipe.Create(item.type, 2)
-				.AddIngredient(ModContent.ItemType<Scrap>())
+				.AddIngredient<Scrap>()
 				.Register();
 				Recipe.Create(ModContent.ItemType<Scrap>())
 				.AddIngredient(item.type, 2)
+				.DisableDecraft()
 				.Register();
 			};
 			Item.ExtraStaticDefaults += item => {
@@ -380,7 +375,7 @@ namespace Origins.Tiles.Ashen {
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type, 2)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 1)
+				.AddIngredient<Scrap>()
 				.AddCondition(Condition.InGraveyard)
 				.Register();
 				Recipe.Create(ModContent.ItemType<Scrap>())

@@ -13,8 +13,8 @@ namespace Origins.Tiles.Ashen {
 			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
 				.AddRecipeGroup(ALRecipeGroups.CopperBars)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 6)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddIngredient<Scrap>(6)
+				.AddTile<Metal_Presser>()
 				.Register();
 			}).RegisterItem();
 		}

@@ -1,11 +1,9 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
-using Origins.Buffs;
+﻿using Origins.Buffs;
 using Origins.Items.Materials;
-using PegasusLib;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
+using Origins.Tiles.Riven;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -57,23 +55,75 @@ namespace Origins.Items.Other.Consumables {
 		}
 	}
 	public class Bad_Juju_Stone : Assimilation_Potion<Corrupt_Assimilation> {
-		public override void PostSetDefaults() {
-
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient(ItemID.RottenChunk, 5)
+			.AddIngredient(ItemID.UnholyWater)
+			.AddIngredient(ItemID.VileMushroom, 2)
+			.AddTile(TileID.DemonAltar)
+			.AddCondition(OriginsModIntegrations.NotAprilFools)
+			.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.RottenChunk, 5)
+			.AddIngredient(ItemID.UnholyWater)
+			.AddIngredient(ItemID.VileMushroom, 2)
+			.AddTile<Cleansing_Station>()
+			.AddCondition(OriginsModIntegrations.AprilFools)
+			.Register();
 		}
 	}
 	public class Contaminated_Infusion : Assimilation_Potion<Crimson_Assimilation> {
-		public override void PostSetDefaults() {
-
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient(ItemID.BloodWater)
+			.AddIngredient(ItemID.Vertebrae, 5)
+			.AddIngredient(ItemID.ViciousMushroom, 2)
+			.AddTile(TileID.DemonAltar)
+			.AddCondition(OriginsModIntegrations.NotAprilFools)
+			.Register();
+			CreateRecipe()
+			.AddIngredient(ItemID.BloodWater)
+			.AddIngredient(ItemID.Vertebrae, 5)
+			.AddIngredient(ItemID.ViciousMushroom, 2)
+			.AddTile<Cleansing_Station>()
+			.AddCondition(OriginsModIntegrations.AprilFools)
+			.Register();
 		}
 	}
 	public class Pen_Ink : Assimilation_Potion<Defiled_Assimilation> {
-		public override void PostSetDefaults() {
-
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient<Soulspore_Item>(2)
+			.AddIngredient<Strange_String>(5)
+			.AddIngredient<White_Water>()
+			.AddTile(TileID.DemonAltar)
+			.AddCondition(OriginsModIntegrations.NotAprilFools)
+			.Register();
+			CreateRecipe()
+			.AddIngredient<Soulspore_Item>(2)
+			.AddIngredient<Strange_String>(5)
+			.AddIngredient<White_Water>()
+			.AddTile<Cleansing_Station>()
+			.AddCondition(OriginsModIntegrations.AprilFools)
+			.Register();
 		}
 	}
 	public class Edible_Hair_Gel : Assimilation_Potion<Riven_Assimilation> {
-		public override void PostSetDefaults() {
-
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient<Bud_Barnacle>(5)
+			.AddIngredient<Gooey_Water>()
+			.AddIngredient<Wrycoral_Item>(2)
+			.AddTile(TileID.DemonAltar)
+			.AddCondition(OriginsModIntegrations.NotAprilFools)
+			.Register();
+			CreateRecipe()
+			.AddIngredient<Bud_Barnacle>(5)
+			.AddIngredient<Gooey_Water>()
+			.AddIngredient<Wrycoral_Item>(2)
+			.AddTile<Cleansing_Station>()
+			.AddCondition(OriginsModIntegrations.AprilFools)
+			.Register();
 		}
 	}
 }

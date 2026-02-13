@@ -234,16 +234,15 @@ namespace Origins.Tiles.Ashen {
 			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block1>());
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			CreateRecipe(10)
 			.AddRecipeGroup(RecipeGroupID.IronBar)
-			.AddIngredient(ModContent.ItemType<Scrap>(), 10)
-			.AddTile(ModContent.TileType<Metal_Presser>())
+			.AddIngredient<Scrap>(10)
+			.AddTile<Metal_Presser>()
 			.Register();
-			Recipe.Create(Type, 10)
+			CreateRecipe(10)
 			.AddIngredient(ItemID.Coal)
 			.AddRecipeGroup(RecipeGroupID.IronBar)
-			.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 2)
-			.AddTile(ModContent.TileType<Metal_Presser>())
+			.AddTile<Metal_Presser>()
 			.Register();
 		}
 		public LocalizedText PageTextMain => WikiPageExporter.GetDefaultMainPageText(this)
@@ -259,11 +258,11 @@ namespace Origins.Tiles.Ashen {
 			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block2>());
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			CreateRecipe(10)
 			.AddIngredient(ItemID.HellstoneBar)
-			.AddIngredient(ModContent.ItemType<Fortified_Steel_Block1_Item>(), 10)
-			.AddIngredient(ModContent.ItemType<Scrap>(), 10)
-			.AddTile(ModContent.TileType<Metal_Presser>())
+			.AddIngredient<Fortified_Steel_Block1_Item>(10)
+			.AddIngredient<Scrap>(10)
+			.AddTile<Metal_Presser>()
 			.Register();
 		}
 	}
@@ -274,11 +273,11 @@ namespace Origins.Tiles.Ashen {
 			Item.DefaultToPlaceableTile(TileType<Fortified_Steel_Block3>());
 		}
 		public override void AddRecipes() {
-			Recipe.Create(Type, 10)
+			CreateRecipe(10)
 			.AddIngredient(ItemID.ChlorophyteOre)
-			.AddIngredient(ModContent.ItemType<Fortified_Steel_Block2_Item>(), 10)
-			.AddIngredient(ModContent.ItemType<Scrap>(), 10)
-			.AddTile(ModContent.TileType<Metal_Presser>())
+			.AddIngredient<Fortified_Steel_Block2_Item>(10)
+			.AddIngredient<Scrap>(10)
+			.AddTile<Metal_Presser>()
 			.Register();
 		}
 	}

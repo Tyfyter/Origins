@@ -10,19 +10,22 @@ namespace Origins.Tiles.Ashen {
 	public class Medicine_Fabricator : ModTile {
 		public const int BaseTileID = TileID.AlchemyTable;
 		public static int ID { get; private set; }
-		public TileItem Item { get; protected set; }
 		public override void Load() {
-			Mod.AddContent(Item = new TileItem(this).WithExtraDefaults(item => {
+			new TileItem(this)
+			.WithExtraDefaults(item => {
 				item.CloneDefaults(ItemID.AlchemyTable);
 				item.createTile = Type;
 				item.rare++;
-				item.value += Terraria.Item.buyPrice(gold: 1);
-			}).WithOnAddRecipes(item => Recipe.Create(Item.Type)
+				item.value += Item.buyPrice(gold: 1);
+			})
+			.WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
 				.AddIngredient(ItemID.AlchemyTable)
 				.AddIngredient<NE8>(10)
 				.AddIngredient<Silicon_Bar>(6)
 				.AddTile(TileID.TinkerersWorkbench)
-				.Register()));
+				.Register();
+			}).RegisterItem();
 		}
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -37,11 +40,9 @@ namespace Origins.Tiles.Ashen {
 			AnimationFrameHeight = TileObjectData.newTile.CoordinateHeights.Sum() + 2 * TileObjectData.newTile.Height;
 			TileObjectData.addTile(Type);
 
-			AddMapEntry(FromHexRGB(0x0A3623), Item.DisplayName);
+			AddMapEntry(FromHexRGB(0x0A3623), this.GetTileItem().DisplayName);
 			AdjTiles = [ BaseTileID, Type, TileID.Bottles ];
 			DustType = Ashen_Biome.DefaultTileDust;
-
-			RegisterItemDrop(Item.Type);
 			ID = Type;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num) {

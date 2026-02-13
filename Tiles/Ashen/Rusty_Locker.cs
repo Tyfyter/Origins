@@ -4,32 +4,25 @@ using Origins.Items.Weapons.Ammo;
 using Origins.Reflection;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Rusty_Locker : ModChest, ICustomSizeContainer {
-		TileItem item;
 		public int Width { get; } = 2;
 		public int Height { get; } = 3;
 		public override void Load() {
-			Mod.AddContent(item = new TileItem(this).WithOnAddRecipes(item => {
+			new TileItem(this)
+			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
-				.AddIngredient(ItemID.SilverBar)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 10)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddRecipeGroup(ALRecipeGroups.SilverBars)
+				.AddIngredient<Scrap>(10)
+				.AddTile<Metal_Presser>()
 				.Register();
-				Recipe.Create(item.type)
-				.AddIngredient(ItemID.TungstenBar)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 10)
-				.AddTile(ModContent.TileType<Metal_Presser>())
-				.Register();
-			}));
+			}).RegisterItem();
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -41,7 +34,6 @@ namespace Origins.Tiles.Ashen {
 			AdjTiles = [TileID.Containers];
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
-			RegisterItemDrop(item.Type);
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
 			OriginsSets.Tiles.ChestSoundOverride[Type] = (Origins.Sounds.MetalCreakOpen.WithVolume(0.3f), Origins.Sounds.MetalCreakClose.WithVolume(0.3f));
 		}
@@ -49,8 +41,7 @@ namespace Origins.Tiles.Ashen {
 			if (tile.TileFrameY != 0) height = -1600;
 		}
 		public override void ModifyTileData() {
-			TileObjectData.newTile.Height = 3;
-			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
+			TileObjectData.newTile.SetHeight(3);
 			TileObjectData.newTile.Origin = new(0, 2);
 		}
 		public override bool IsLockedChest(int i, int j) => false;

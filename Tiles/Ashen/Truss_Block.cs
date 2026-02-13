@@ -1,24 +1,19 @@
 using Origins.Items.Weapons.Ammo;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
 	public class Truss_Block : OriginTile, IAshenTile {
 		public override void Load() {
-			Mod.AddContent(new TileItem(this).WithOnAddRecipes(item => {
+			new TileItem(this)
+			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type, 40)
-				.AddIngredient(ItemID.IronBar, 2)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 40)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddRecipeGroup(RecipeGroupID.IronBar, 2)
+				.AddIngredient<Scrap>(40)
+				.AddTile<Metal_Presser>()
 				.Register();
-				Recipe.Create(item.type, 40)
-				.AddIngredient(ItemID.LeadBar, 2)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 40)
-				.AddTile(ModContent.TileType<Metal_Presser>())
-				.Register();
-			}));
+			}).RegisterItem();
 			On_Collision.SlopeCollision += On_Collision_SlopeCollision;
 			On_Collision.StepUp += On_Collision_StepUp;
 		}

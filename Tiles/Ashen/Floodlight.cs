@@ -4,13 +4,9 @@ using Origins.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
-using PegasusLib;
-using System.Linq;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
@@ -23,10 +19,10 @@ namespace Origins.Tiles.Ashen {
 			.WithExtraStaticDefaults(this.DropTileItem)
 			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
-				.AddRecipeGroup(ALRecipeGroups.IronBars, 4)
-				.AddIngredient(ModContent.ItemType<Ashen_Torch>(), 8)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 15)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddRecipeGroup(RecipeGroupID.IronBar, 4)
+				.AddIngredient<Ashen_Torch>(8)
+				.AddIngredient<Scrap>(15)
+				.AddTile<Metal_Presser>()
 				.Register();
 			}).RegisterItem();
 			this.SetupGlowKeys();
@@ -47,11 +43,11 @@ namespace Origins.Tiles.Ashen {
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
 			TileObjectData.newTile.Width = 6;
-			TileObjectData.newTile.Height = 11;
-			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height - 1).Concat([18]).ToArray();
-			TileObjectData.newTile.Origin = new Point16(TileObjectData.newTile.Width / 2, TileObjectData.newTile.Height - 1);
+			TileObjectData.newTile.SetHeight(11, 18);
+			TileObjectData.newTile.SetOriginBottomCenter();
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(TileObjectData.newTile, IsPart);
+			TileObjectData.newTile.AnchorBottom = new(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.FlattenAnchors = true;
 			width = TileObjectData.newTile.Width;
 			height = TileObjectData.newTile.Height;

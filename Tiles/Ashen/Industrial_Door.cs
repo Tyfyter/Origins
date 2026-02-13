@@ -19,15 +19,16 @@ using static Origins.Tiles.Ashen.Industrial_Door_TE_System;
 
 namespace Origins.Tiles.Ashen {
 	public class Industrial_Door : OriginTile, IComplexMineDamageTile, IGlowingModTile, IAshenWireTile {
-		public TileItem Item { get; protected set; }
 		public override void Load() {
-			Mod.AddContent(Item = new TileItem(this).WithOnAddRecipes(item => {
+			new TileItem(this)
+			.WithExtraStaticDefaults(this.DropTileItem)
+			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
 				.AddRecipeGroup(RecipeGroupID.IronBar)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 12)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddIngredient<Scrap>(12)
+				.AddTile<Metal_Presser>()
 				.Register();
-			}));
+			}).RegisterItem();
 			this.SetupGlowKeys();
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) { }
@@ -56,7 +57,6 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.addTile(Type);
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
-			RegisterItemDrop(Item.Type);
 
 			TileID.Sets.Suffocate[Type] = true;
 		}
@@ -100,11 +100,11 @@ namespace Origins.Tiles.Ashen {
 		public override void Load() { }
 		public override string Texture => typeof(Industrial_Door).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
-			Item = ModContent.GetInstance<Industrial_Door>().Item;
 			base.SetStaticDefaults();
 			Main.tileSolidTop[Type] = true;
 			TileID.Sets.Suffocate[Type] = false;
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
+			RegisterItemDrop(Tiles.TileItem.Get<Industrial_Door>().Type);
 		}
 		public override void PostSetDefaults() {
 			Main.tileBlockLight[Type] = false;

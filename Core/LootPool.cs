@@ -13,6 +13,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
+using Origins.Tiles;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Other;
 using System;
@@ -175,7 +176,7 @@ public class Ashen_Supplies : LootPool {
 		AddRule(ItemDropRule.Common(ItemID.IronPickaxe, 7, 15, 35));
 		AddRule(ItemDropRule.Common(ItemID.IronHammer, 7, 12, 26));
 		AddRule(ItemDropRule.Common(ItemID.Minecart, 7, 10, 15));
-		AddRule(ItemDropRule.Common(Modular_Light_Fixture.item.Type, 7, 20, 40));
+		AddRule(ItemDropRule.Common(TileItem.Get<Modular_Light_Fixture>().Type, 7, 20, 40));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Transistor_Item>(), 7, 10, 25));
 		AddRule(ItemDropRule.Common(ItemID.Wire, 7, 35, 125));
 		AddRule(ItemDropRule.Common(ItemID.OrangePaint, 7, 115, 250));

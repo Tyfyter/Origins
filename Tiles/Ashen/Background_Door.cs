@@ -1,20 +1,13 @@
-﻿using Origins.Items.Weapons.Ammo;
-using Origins.World.BiomeData;
+﻿using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
-using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Background_Door : OriginTile {
 		public override void Load() {
-			Mod.AddContent(new TileItem(this, true).WithOnAddRecipes(item => {
-				Recipe.Create(item.type)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 6)
-				.AddTile(ModContent.TileType<Metal_Presser>())
-				.Register();
-			}));
+			new TileItem(this, true).RegisterItem();
 		}
 		public override void SetStaticDefaults() {
 			// Properties

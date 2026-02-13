@@ -23,8 +23,8 @@ namespace Origins.Tiles.Ashen {
 				.AddRecipeGroup(ALRecipeGroups.CopperBars)
 				.AddIngredient(ItemID.Glass, 3)
 				.AddIngredient(ItemID.Wire, 8)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 6)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddIngredient<Scrap>(6)
+				.AddTile<Metal_Presser>()
 				.Register();
 			}).RegisterItem();
 			this.SetupGlowKeys();

@@ -8,11 +8,9 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Projectiles.Pets;
 
 namespace Origins.Tiles.Ashen {
 	public class Modular_Light_Fixture : OriginTile, IGlowingModTile/*, IAshenWireTile*/ {
-		public static TileItem item { get; protected set; }
 		public static Vector3 LightColor => new(1.05f, 0.75f, 0f);
 		public override void SetStaticDefaults() {
 			// Properties
@@ -253,14 +251,15 @@ namespace Origins.Tiles.Ashen {
 			}
 		}
 		public override void Load() {
-			this.SetupGlowKeys();
-			Mod.AddContent(item = new TileItem(this).WithOnAddRecipes(item => {
+			new TileItem(this)
+			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
-				.AddIngredient(ModContent.ItemType<Ashen_Torch>())
-				.AddIngredient(ModContent.ItemType<Scrap>())
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddIngredient<Ashen_Torch>()
+				.AddIngredient<Scrap>()
+				.AddTile<Metal_Presser>()
 				.Register();
-			}));
+			}).RegisterItem();
+			this.SetupGlowKeys();
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }

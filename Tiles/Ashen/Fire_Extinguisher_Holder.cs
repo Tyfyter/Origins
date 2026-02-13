@@ -1,7 +1,6 @@
 ﻿using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
-using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -13,15 +12,15 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Ashen {
 	public class Fire_Extinguisher_Holder : OriginTile {
 		public static int ID { get; private set; }
-		TileItem item;
 		public override void Load() {
-			Mod.AddContent(item = new TileItem(this).WithOnAddRecipes(item => {
+			new TileItem(this)
+			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
 				.AddIngredient(ItemID.Gel, 4)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 8)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddIngredient<Scrap>(8)
+				.AddTile<Metal_Presser>()
 				.Register();
-			}));
+			}).RegisterItem();
 		}
 		public override void SetStaticDefaults() {
 			// Properties
@@ -34,20 +33,18 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 
 			// Names
-			AddMapEntry(FromHexRGB(0xFFB18C), item.DisplayName);
+			AddMapEntry(FromHexRGB(0xFFB18C), this.GetTileItem().DisplayName);
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1xX);
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
-			TileObjectData.newTile.Height = 2;
-			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
+			TileObjectData.newTile.SetHeight(2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.AnchorBottom = new AnchorData();
 			TileObjectData.newTile.AnchorWall = true;
 			TileObjectData.addTile(Type);
 			ID = Type;
 			DustType = Ashen_Biome.DefaultTileDust;
-			RegisterItemDrop(item.Type);
 		}
 		static Fire_Extinguisher HeldExtinguisher => Main.LocalPlayer?.HeldItem?.ModItem as Fire_Extinguisher;
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX != 0 || HeldExtinguisher is not null;

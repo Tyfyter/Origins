@@ -2,7 +2,6 @@
 using Origins.Graphics;
 using Origins.NPCs.Ashen.Boss;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,10 +20,8 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Ashen {
 	public class Heat_Vent : OriginTile, IComplexMineDamageTile, IGlowingModTile {
 		public static int ID { get; private set; }
-		TileItem item;
 		public override void Load() {
-			Mod.AddContent(item = new(this, true));
-			this.SetupGlowKeys();
+			new TileItem(this, true).RegisterItem();
 		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (ShouldGlow(tile)) color.DoFancyGlow(new(0.912f, 0.579f, 0f), tile.TileColor);
@@ -47,8 +44,7 @@ namespace Origins.Tiles.Ashen {
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
-			TileObjectData.newTile.Height = 6;
-			TileObjectData.newTile.CoordinateHeights = Enumerable.Repeat(16, TileObjectData.newTile.Height).ToArray();
+			TileObjectData.newTile.SetHeight(6);
 			TileObjectData.newTile.Origin = new Point16(0, 5);
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.StyleWrapLimit = 3;

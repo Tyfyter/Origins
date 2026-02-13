@@ -4,7 +4,6 @@ using Origins.Items.Tools.Liquids;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,13 +13,12 @@ namespace Origins.Tiles.Ashen {
 	public class Radio_Broadcaster : OriginTile, IGlowingModTile, IAshenWireTile {
 		public override void Load() {
 			new TileItem(this)
-			.WithExtraStaticDefaults(this.DropTileItem)
 			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
 				.AddIngredient(ItemID.Wire, 8)
 				.AddIngredient<Oil_Bucket>()
-				.AddIngredient(ModContent.ItemType<Scrap>(), 12)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddIngredient<Scrap>(12)
+				.AddTile<Metal_Presser>()
 				.AddOnCraftCallback((recipe, item, consumedItems, destinationStack) => {
 					for (int i = 0; i < consumedItems.Count; i++) {
 						if (consumedItems[i].type == ModContent.ItemType<Oil_Bucket>()) {
@@ -48,7 +46,7 @@ namespace Origins.Tiles.Ashen {
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
 			TileObjectData.newTile.SetHeight(4, 18);
-			TileObjectData.newTile.Origin = new Point16(TileObjectData.newTile.Width / 2 - 1, TileObjectData.newTile.Height - 1);
+			TileObjectData.newTile.SetOriginBottomCenter();
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);

@@ -10,15 +10,16 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Small_Storage_Container : ModChest {
-		public static TileItem item { get; protected set; }
 		public override void Load() {
-			Mod.AddContent(item = new TileItem(this).WithOnAddRecipes(item => {
+			new TileItem(this)
+			.WithExtraStaticDefaults(this.DropTileItem)
+			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
 				.AddRecipeGroup(RecipeGroupID.IronBar, 2)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 8)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddIngredient<Scrap>(8)
+				.AddTile<Metal_Presser>()
 				.Register();
-			}));
+			}).RegisterItem();
 			On_WorldGen.WouldTileReplacementWork += On_WorldGen_WouldTileReplacementWork;
 		}
 		bool On_WorldGen_WouldTileReplacementWork(On_WorldGen.orig_WouldTileReplacementWork orig, ushort attemptingToReplaceWith, int x, int y) {
@@ -36,7 +37,6 @@ namespace Origins.Tiles.Ashen {
 			}
 			AdjTiles = [TileID.Containers];
 			DustType = Ashen_Biome.DefaultTileDust;
-			RegisterItemDrop(item.Type);
 			OriginsSets.Tiles.MultitileCollisionOffset[Type] = OffsetBookcaseCollision;
 			OriginsSets.Tiles.ChestSoundOverride[Type] = (Origins.Sounds.MetalBoxOpen, default);
 		}

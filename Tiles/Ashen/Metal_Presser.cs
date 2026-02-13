@@ -13,19 +13,22 @@ namespace Origins.Tiles.Ashen {
 	public class Metal_Presser : ModTile, IGlowingModTile {
 		public const int BaseTileID = TileID.HeavyWorkBench;
 		public static int ID { get; private set; }
-		public TileItem Item { get; protected set; }
 		public override void Load() {
-			Mod.AddContent(Item = new TileItem(this).WithExtraDefaults(item => {
+			 new TileItem(this)
+			.WithExtraDefaults(item => {
 				item.CloneDefaults(ItemID.HeavyWorkBench);
 				item.createTile = Type;
 				item.rare++;
-				item.value += Terraria.Item.buyPrice(gold: 1);
-			}).WithOnAddRecipes(item => Recipe.Create(Item.Type)
+				item.value += Item.buyPrice(gold: 1);
+			})
+			.WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
 				.AddIngredient(ItemID.HeavyWorkBench)
 				.AddIngredient<NE8>(10)
 				.AddIngredient<Silicon_Bar>(6)
 				.AddTile(TileID.TinkerersWorkbench)
-				.Register()));
+				.Register();
+			}).RegisterItem();
 			this.SetupGlowKeys();
 		}
 		public override void SetStaticDefaults() {
@@ -42,12 +45,10 @@ namespace Origins.Tiles.Ashen {
 			AnimationFrameHeight = TileObjectData.newTile.CoordinateHeights.Sum() + 2 * TileObjectData.newTile.Height;
 			TileObjectData.addTile(Type);
 
-			AddMapEntry(FromHexRGB(0x0A3623), Item.DisplayName);
+			AddMapEntry(FromHexRGB(0x0A3623), TileItem.Get(this).DisplayName);
 			AdjTiles = [BaseTileID, Type];
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
-
-			RegisterItemDrop(Item.Type);
 			ID = Type;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num) {

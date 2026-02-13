@@ -118,6 +118,7 @@ Items: {
 		'Lunatic is you'
 		''' */
 	// Holy_Hand_Grenade.DisplayName: Holdy Hand Grenade
+	// Edge_Detector_Item.Tooltip: "'It detects edges'"
 }
 
 // Projectiles.Holy_Hand_Grenade_P.DisplayName: Holdy Hand Grenade

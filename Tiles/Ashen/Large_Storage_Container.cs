@@ -13,13 +13,15 @@ namespace Origins.Tiles.Ashen {
 	public class Large_Storage_Container : ModSpecialChest {
 		public override ChestData CreateChestData() => new Large_Storage_Container_Data();
 		public override void Load() {
-			Mod.AddContent(new TileItem(this).WithOnAddRecipes(item => {
+			new TileItem(this)
+			.WithExtraStaticDefaults(this.DropTileItem)
+			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
 				.AddRecipeGroup(RecipeGroupID.IronBar, 25)
-				.AddIngredient(ModContent.ItemType<Scrap>(), 80)
-				.AddTile(ModContent.TileType<Metal_Presser>())
+				.AddIngredient<Scrap>(80)
+				.AddTile<Metal_Presser>()
 				.Register();
-			}).WithExtraStaticDefaults(this.DropTileItem));
+			}).RegisterItem();
 		}
 		public override void ModifyTileData() {
 			TileObjectData.newTile.Origin = new Point16(4, 4);
