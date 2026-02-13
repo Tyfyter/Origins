@@ -276,14 +276,20 @@ namespace Origins.Tiles.Ashen {
 			}
 			switch (railingFrame) {
 				case 1:
-				case 3:
 				case 15:
 				if (!canConnectLeft) railingFrame = 5;
 				break;
 				case 2:
-				case 4:
 				case 16:
 				if (!canConnectRight) railingFrame = 5;
+				break;
+
+				case 3:
+				if (!canConnectLeft) railingFrame = 2;
+				break;
+
+				case 4:
+				if (!canConnectLeft) railingFrame = 1;
 				break;
 
 				case 0:
