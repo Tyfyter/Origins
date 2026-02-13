@@ -15,23 +15,17 @@ namespace Origins.Items.Weapons.Ranged {
 			Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
+			DefaultToHarpoonGun();
 			Item.damage = 48;
-			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 4;
-			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.noMelee = true;
 			Item.useAnimation = 30;
 			Item.useTime = 30;
 			Item.reuseDelay = 2;
 			Item.width = 58;
 			Item.height = 22;
-			Item.useAmmo = Harpoon.ID;
-			Item.shoot = Harpoon_P.ID;
 			Item.shootSpeed = 15.75f;
-			Item.UseSound = SoundID.Item11;
 			Item.value = Item.sellPrice(gold: 3);
 			Item.rare = ItemRarityID.LightRed;
-			Item.autoReuse = true;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

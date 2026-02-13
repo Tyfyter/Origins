@@ -18,23 +18,17 @@ namespace Origins.Items.Weapons.Ranged {
 			ChainFrames = 3;
 		}
 		public override void SetDefaults() {
+			DefaultToHarpoonGun();
 			Item.damage = 98;
-			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 4.5f;
-			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.noMelee = true;
 			Item.useAnimation = 30;
 			Item.useTime = 30;
 			Item.reuseDelay = 1;
 			Item.width = 48;
 			Item.height = 22;
-			Item.useAmmo = Harpoon.ID;
-			Item.shoot = Harpoon_P.ID;
 			Item.shootSpeed = 14f;
-			Item.UseSound = SoundID.Item11;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
-			Item.autoReuse = true;
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override bool CanConsumeAmmo(Item ammo, Player player) {

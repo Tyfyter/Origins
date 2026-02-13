@@ -8,23 +8,17 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
     public class Magma_Grappler : Harpoon_Gun {
         public override void SetDefaults() {
+			DefaultToHarpoonGun();
 			Item.damage = 40;
-			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 5;
-			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.noMelee = true;
 			Item.useAnimation = 30;
 			Item.useTime = 30;
 			Item.reuseDelay = 2;
 			Item.width = 58;
 			Item.height = 22;
-			Item.useAmmo = Harpoon.ID;
-			Item.shoot = Harpoon_P.ID;
 			Item.shootSpeed = 15.25f;
-			Item.UseSound = SoundID.Item11;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Orange;
-			Item.autoReuse = true;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

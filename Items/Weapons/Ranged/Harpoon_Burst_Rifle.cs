@@ -23,24 +23,19 @@ namespace Origins.Items.Weapons.Ranged {
 			ID = Type;
 		}
 		public override void SetDefaults() {
+			DefaultToHarpoonGun();
 			Item.damage = 47;
-			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 5;
-			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.noMelee = true;
 			Item.useAnimation = 5;
 			Item.useTime = 5;
 			Item.reuseDelay = 2;
 			Item.width = 56;
 			Item.height = 26;
-			Item.useAmmo = Harpoon.ID;
 			Item.shoot = ModContent.ProjectileType<Harpoon_Burst_Rifle_P>();
 			Item.shootSpeed = 13.75f;
-			Item.UseSound = SoundID.Item11;
 			Item.value = Item.sellPrice(gold: 2, silver: 80);
 			Item.rare = ItemRarityID.LightRed;
 			Item.noUseGraphic = true;
-			Item.autoReuse = true;
 			Item.channel = true;
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);

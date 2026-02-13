@@ -21,24 +21,36 @@ namespace Origins.Items.Weapons.Ranged {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Harpoon;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.Harpoon] = Type;
 		}
-		public override void SetDefaults() {
-			Item.damage = 24;
+		/// <summary>
+		/// Item.DamageType = DamageClass.Ranged; <br/>
+		/// Item.useStyle = ItemUseStyleID.Shoot; <br/>
+		/// Item.noMelee = true; <br/>
+		/// Item.useAmmo = Harpoon.ID; <br/>
+		/// Item.shoot = Harpoon_P.ID; <br/>
+		/// Item.UseSound = SoundID.Item11; <br/>
+		/// Item.autoReuse = true; <br/>
+		/// </summary>
+		protected void DefaultToHarpoonGun() {
 			Item.DamageType = DamageClass.Ranged;
-			Item.knockBack = 4;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noMelee = true;
+			Item.useAmmo = Harpoon.ID;
+			Item.shoot = Harpoon_P.ID;
+			Item.UseSound = SoundID.Item11;
+			Item.autoReuse = true;
+		}
+		public override void SetDefaults() {
+			DefaultToHarpoonGun();
+			Item.damage = 24;
+			Item.knockBack = 4;
 			Item.useAnimation = 30;
 			Item.useTime = 30;
 			Item.reuseDelay = 2;
 			Item.width = 58;
 			Item.height = 22;
-			Item.useAmmo = Harpoon.ID;
-			Item.shoot = Harpoon_P.ID;
 			Item.shootSpeed = 14.75f;
-			Item.UseSound = SoundID.Item11;
 			Item.value = Item.sellPrice(silver: 54);
 			Item.rare = ItemRarityID.Green;
-			Item.autoReuse = true;
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		protected bool consume = false;
