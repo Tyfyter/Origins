@@ -1670,6 +1670,8 @@ namespace Origins {
 
 			return num;
 		}
+		public static void StartChanneling(this Player player, int projectileType) => startChanneling(player, projectileType);
+
 		#region spritebatch
 		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.End();
@@ -1791,6 +1793,9 @@ namespace Origins {
 		public static Vector2 Abs(this Vector2 vector, out Vector2 signs) {
 			signs = new(Math.Sign(vector.X), Math.Sign(vector.Y));
 			return vector * signs;
+		}
+		public static float Average(this Vector2 vector) {
+			return (vector.X + vector.Y) * 0.5f;
 		}
 		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox) {
 			float xoffset = 10f;
@@ -2341,8 +2346,30 @@ namespace Origins {
 		private static FieldInfo _seedArray;
 		internal static FieldInfo SeedArray => _seedArray ??= typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic | BindingFlags.Instance);
 		#endregion
+		private static Action<Player, int> startChanneling;
 		internal static void InitExt() {
 			CollisionExtensions.Load();
+
+			FieldInfo field = typeof(Player).GetField("_channelShotCache", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+			Type ChannelCancelKey = field.FieldType;
+			DynamicMethod method = new(nameof(StartChanneling), typeof(void), [typeof(Player), typeof(int)], true);
+			ILGenerator gen = method.GetILGenerator();
+
+			gen.Emit(OpCodes.Ldarg_0);
+			gen.Emit(OpCodes.Ldc_I4_1);
+			gen.Emit(OpCodes.Stfld, typeof(Player).GetField(nameof(Player.channel)));
+
+			gen.Emit(OpCodes.Ldarg_0);
+			gen.Emit(OpCodes.Ldflda, field);
+			gen.Emit(OpCodes.Initobj, ChannelCancelKey);
+			gen.Emit(OpCodes.Ldarg_0);
+			gen.Emit(OpCodes.Ldflda, field);
+			gen.Emit(OpCodes.Ldarg_1);
+			gen.Emit(OpCodes.Stfld, ChannelCancelKey.GetField("ProjectileTypeExpected", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance));
+
+			gen.Emit(OpCodes.Ret);
+
+			startChanneling = method.CreateDelegate<Action<Player, int>>();
 		}
 		private static FastStaticFieldInfo<Color[]> _colorLookup;
 		private static FastStaticFieldInfo<Color[]> MapColorLookup => _colorLookup ??= new(typeof(MapHelper), "colorLookup", BindingFlags.NonPublic);
@@ -5233,6 +5260,11 @@ namespace Origins {
 				maxJ,
 				proj.ShouldWallExplode(center, tileDestructionRadius, minI, maxI, minJ, maxJ)
 			);
+		}
+		public static Vector2 GetModifiedScale(this Projectile proj) {
+			Rectangle hitbox = proj.Hitbox;
+			ProjectileLoader.ModifyDamageHitbox(proj, ref hitbox);
+			return new(hitbox.Width / (float)proj.width, hitbox.Height / (float)proj.height);
 		}
 	}
 	public static class ContentExtensions {

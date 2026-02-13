@@ -2839,6 +2839,11 @@ Configs: {
 			// Label: "[itemname:Origins/Lottery_Ticket] usable in Banks"
 			// Tooltip: Should the [itemname:Origins/Lottery_Ticket] work while in player banks
 		}
+
+		NewHarpoonsFromTheFuture: {
+			// Label: New Harpoons From The Future
+			// Tooltip: ""
+		}
 	}
 
 	DebugConfig: {

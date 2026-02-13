@@ -1,11 +1,9 @@
 ﻿#pragma warning disable CS0649
 #pragma warning disable IDE0044
-using Microsoft.Xna.Framework;
+using PegasusLib.Reflection;
 using System;
 using Terraria;
 using Terraria.ModLoader;
-using PegasusLib;
-using PegasusLib.Reflection;
 using DelegateMethods = PegasusLib.Reflection.DelegateMethods;
 
 namespace Origins.Reflection {

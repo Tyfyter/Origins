@@ -26,6 +26,7 @@ namespace Origins.Projectiles {
 		public int chainFrameSeed = -1;
 		public FastRandom chainRandom;
 		float oldWeakpointAnalyzerDist = float.PositiveInfinity;
+		bool startedChanneling = false;
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
@@ -40,6 +41,7 @@ namespace Origins.Projectiles {
 				if (itemUse.Item.ModItem is Boat_Rocker and not Boat_Rocker_Alt) {
 					boatRockerCanEmbed = true;
 				}
+				startedChanneling = itemUse.Player.channel;
 			}
 		}
 		public override bool PreAI(Projectile projectile) {
@@ -86,6 +88,10 @@ namespace Origins.Projectiles {
 		public override void AI(Projectile projectile) {
 			Player player = Main.player[projectile.owner];
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			if (OriginConfig.Instance.NewHarpoonsFromTheFuture && startedChanneling && !player.channel && projectile.ai[0] == 0 && projectile.IsLocallyOwned()) {
+				projectile.ai[0] = 1;
+				projectile.netUpdate = true;
+			}
 			if (projectile.ai[0] == 1) {
 				if (!isRetracting) {
 					if (projectile.aiStyle == ProjAIStyleID.Harpoon) {

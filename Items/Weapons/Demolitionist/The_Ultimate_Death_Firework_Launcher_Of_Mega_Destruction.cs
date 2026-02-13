@@ -663,7 +663,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				new Vector2(-0.32f, -0.38f)
 			];
 			if (Main.rand.NextBool()) directions = directions.Scaled(new(-1, 1));
-			MakeShape(color, 6, directions);
+			MakeShape(color, 6 * Projectile.GetModifiedScale().Average(), directions);
 		}
 	}
 	public class TUDFLOMD_Rocket_Purple : TUDFLOMD_Rocket {
