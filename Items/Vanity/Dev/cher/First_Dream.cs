@@ -68,6 +68,7 @@ namespace Origins.Items.Vanity.Dev.cher {
 		public override void SetStaticDefaults() {
 			for (int i = 0; i < setValues.Count; i++) setValues[i].func(setValues[i].id);
 			setValues.Clear();
+			OriginsSets.Items.InfoAccessorySlots_IsAMechanicalAccessory[Type] = false;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);

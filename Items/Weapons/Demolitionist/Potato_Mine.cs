@@ -13,6 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		];
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
+			OriginsSets.Items.InfoAccessorySlots_IsAMechanicalAccessory[Type] = false;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.LandMine);

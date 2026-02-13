@@ -15,6 +15,7 @@ namespace Origins.Items.Other.Consumables {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
+			OriginsSets.Items.InfoAccessorySlots_IsAMechanicalAccessory[Type] = false;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -64,6 +65,7 @@ namespace Origins.Items.Other.Consumables {
 			ItemID.Sets.IsFood[Type] = true;
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 3));
 			ContentSamples.CreativeResearchItemPersistentIdOverride[Type] = ModContent.ItemType<Greater_Summoning_Potion>();
+			OriginsSets.Items.InfoAccessorySlots_IsAMechanicalAccessory[Type] = false;
 			ID = Type;
 		}
 		public override void SetDefaults() {

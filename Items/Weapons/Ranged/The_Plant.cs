@@ -39,6 +39,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 5));
+			OriginsSets.Items.InfoAccessorySlots_IsAMechanicalAccessory[Type] = false;
 			OriginsSets.Items.IsGun[Type] = true;
 		}
 		public override void SetDefaults() {

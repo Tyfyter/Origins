@@ -21,6 +21,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
+			OriginsSets.Items.InfoAccessorySlots_IsAMechanicalAccessory[Type] = false;
 			AchievementsHelper.OnProgressionEvent += AchievementsHelper_OnProgressionEvent;
 		}
 		static short glowmask;

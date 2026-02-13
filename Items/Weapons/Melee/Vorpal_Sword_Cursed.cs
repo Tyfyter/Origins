@@ -37,6 +37,7 @@ namespace Origins.Items.Weapons.Melee {
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override void SetStaticDefaults() {
 			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;
+			OriginsSets.Items.InfoAccessorySlots_IsAMechanicalAccessory[Type] = false;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}
