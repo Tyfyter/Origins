@@ -2213,7 +2213,7 @@ Projectiles: {
 	Retool_Arm_Laser_P.DisplayName: Retool Arm Laser
 	Retool_Arm_Laser_Beam.DisplayName: Retool Arm Laser Beam
 	Holy_Hand_Grenade_P.DisplayName: Holy Hand Grenade
-	The_Muffler_P.DisplayName: The Muffler P
+	The_Muffler_P.DisplayName: The Muffler
 	Robo_Tail_Tail_Body.DisplayName: Robo-Tail
 	Robo_Tail_Tail_Head.DisplayName: Robo-Tail
 	Robo_Tail_Probe.DisplayName: Robo-Tail Probe
@@ -2228,7 +2228,8 @@ Projectiles: {
 	Scrap_Dart_Shrapnel.DisplayName: Scrap Dart Shrapnel
 	Plant_Crystal_Shrapnel.DisplayName: The P.L.A.N.T. Crystal Shrapnel
 	Sunflower_Sunny.DisplayName: Sunflower Sunny
-	Sunflower_Sunny_P.DisplayName: Sunflower Sunny P
+	Sunflower_Sunny_P.DisplayName: Sunflower Sunny
+	Polluted_Water_P.DisplayName: Polluted Water
 }
 
 Prefixes: {

@@ -1722,6 +1722,7 @@ CONSUMABLES:
 (^) Crusty Crate
 (^) Festering Crate
 (^) Pointy Crate
+(@, ^3) Polluted Water
 (^) Residual Crate
 
 (^) Fire Extinguisher

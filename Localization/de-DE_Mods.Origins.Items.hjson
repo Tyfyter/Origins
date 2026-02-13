@@ -8018,3 +8018,8 @@ Edge_Detector_Item: {
 	// DisplayName: Edge Detector
 	// Tooltip: ""
 }
+
+Polluted_Water: {
+	// DisplayName: Polluted Water
+	// Tooltip: Spreads the {§Ashen} to some blocks
+}
