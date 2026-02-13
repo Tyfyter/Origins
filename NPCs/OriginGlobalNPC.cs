@@ -78,8 +78,8 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Demolitionist: {
-					for (int i = 0; i < ItemLoader.ItemCount; i++) {
-						if (ItemLoader.GetItem(i) is LiquidBomb) shop.InsertAfter(ItemID.HoneyBomb, i, Condition.PlayerCarriesItem(i));
+					foreach (LiquidBomb bomb in ModContent.GetContent<LiquidBomb>()) {
+						shop.InsertAfter(ItemID.HoneyBomb, bomb.Type, Condition.PlayerCarriesItem(bomb.Type));
 					}
 					shop.Add(ItemID.ExplosivePowder, Condition.PreHardmode);
 					for (int i = 0; i < Peat_Moss_Quest.Rewards.Length; i++) {
