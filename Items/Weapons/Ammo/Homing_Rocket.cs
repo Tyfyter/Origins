@@ -90,6 +90,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public CanisterData GetCanisterData => IRocketItem.GetCanisterData<Homing_Rocket_I>();
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
+			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.Celeb2][Type] = ProjectileID.Celeb2Rocket;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
@@ -120,6 +121,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public CanisterData GetCanisterData => IRocketItem.GetCanisterData<Homing_Rocket_II>();
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
+			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.Celeb2][Type] = ProjectileID.Celeb2RocketExplosive;
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
