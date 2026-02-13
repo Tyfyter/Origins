@@ -1339,7 +1339,7 @@ TILES:
 (^) Riven Torch
 (^) Riven Water Fountain
 (X) Ruined Portal
-(^) Scrap Railing
+(@3, ^2) Scrap Railing
 (^) Shadow Torch
 (^) Traffic Cone
 
