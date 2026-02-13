@@ -26,12 +26,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			return null;
 		}
 		public override void SetStaticDefaults() {
-			static CanisterData Canister(uint outer, uint inner, bool special = false) {
-				static Color FromHex(uint value) {
-					return new((int)((0xff0000 & value) >> 16), (int)((0x00ff00 & value) >> 8), (int)((0x0000ff & value) >> 0));
-				}
-				return new(FromHex(outer), FromHex(inner), special);
-			}
 			new Rocket_Dummy_Canister(Canister(0xc3c3c3, 0xed1c24), 128).Register(ItemID.RocketI);
 			new Rocket_Dummy_Canister(Canister(0x4b4b4b, 0x63c45e), 128, 3).Register(ItemID.RocketII);
 			new Rocket_Dummy_Canister(Canister(0xc3c3c3, 0x066bff), 200).Register(ItemID.RocketIII);
@@ -46,7 +40,15 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			new Liquid_Rocket_Dummy_Canister(Canister(0xc3c3c3, 0x5698ff, true), DelegateMethods.SpreadWater).Register(ItemID.WetRocket);
 			new Liquid_Rocket_Dummy_Canister(Canister(0x655dc5, 0xf59300, true), DelegateMethods.SpreadLava).Register(ItemID.LavaRocket);
 			new Liquid_Rocket_Dummy_Canister(Canister(0x9b7c40, 0xfec214, true), DelegateMethods.SpreadHoney).Register(ItemID.HoneyRocket);
-			new Liquid_Rocket_Dummy_Canister(Canister(0x0A0A0A, 0x3B2B1F, true), BaseLiquidRocketP.SpreadLiquid<Oil, Black_Smoke_Dust>()).Register(ModContent.ItemType<Oil_Rocket>()); // TODO: select better colors
+			new Liquid_Rocket_Dummy_Canister(Canister(new Color(48, 48, 48), new Color(79, 68, 59), true), BaseLiquidRocketP.SpreadLiquid<Oil, Black_Smoke_Dust>()).Register(ModContent.ItemType<Oil_Rocket>());
+		}
+		//Shorthand methods
+		static CanisterData Canister(Color o, Color i, bool special = false) => new(o, i, special);
+		static CanisterData Canister(uint outer, uint inner, bool special = false) {
+			static Color FromHex(uint value) {
+				return new((int)((0xff0000 & value) >> 16), (int)((0x00ff00 & value) >> 8), (int)((0x0000ff & value) >> 0));
+			}
+			return new(FromHex(outer), FromHex(inner), special);
 		}
 	}
 	public class Rocket_Dummy_Canister(CanisterData canisterData, int explosionSize, int tileDestructionRadius = 0) : ICanisterAmmo {

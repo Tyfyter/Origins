@@ -127,6 +127,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.NeedsUUID[Type] = true;
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
 			ID = Type;
 		}
 		public override void SetDefaults() {
