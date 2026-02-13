@@ -685,7 +685,7 @@ namespace Origins {
 		static Stack<Point> QueuedTileFrames { get; } = new();
 		static Stack<Point> queuedSpecialTileFrames = new();
 		static Stack<Point> workingQueuedSpecialTileFrames = new();
-		static Stack<Point> queuedTripWires = new();
+		static readonly WorkingStack<Point> queuedTripWires = new();
 		static bool isFramingQueuedTiles = false;
 		public static void QueueTileFrames(int i, int j) {
 			if (!isFramingQueuedTiles) QueuedTileFrames.Push(new(i, j));
