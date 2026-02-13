@@ -246,7 +246,7 @@ ENEMY NPCS:
 (^) Pustule Jellyfish
 (#, ^2) QM-76 'Quakemaker' !!!
 (X) Reject !!!
-(#, ^2) Repairboy !!!
+(#, ^2) Repairboy !!!!!!
 (^) Riven Penguin
 (^) Riven Protoform
 (X) Rivenpotamus
@@ -1432,8 +1432,8 @@ TILES:
 (^) Ocotillo
 (X) Petrified Baobab Tree
 (^) Petrified Tree
-(#2, ^2) Power Box !!!
-(#2, ^2) Radio Broadcaster !!! (bottom 2px not appearing in the ground)
+(☻) Power Box !!!
+(☻) Radio Broadcaster !!!
 (^) Riven Altar
 (^) Riven Foliage
 (^) Riven Pot
