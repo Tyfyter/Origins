@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Items.Weapons.Ammo;
+using Origins.Reflection;
+using PegasusLib.Graphics;
 using PegasusLib.Networking;
 using ReLogic.Content;
 using System;
@@ -271,6 +273,7 @@ namespace Origins.Tiles.Ashen.Hanging_Scrap {
 
 		static void On_TileDrawing_PreDrawTiles(On_TileDrawing.orig_PreDrawTiles orig, TileDrawing self, bool solidLayer, bool forRenderTargets, bool intoRenderTargets) {
 			orig(self, solidLayer, forRenderTargets, intoRenderTargets);
+			if (OriginClientConfig.Instance.FixNonSolidTileBlurring && SpriteBatchMethods.beginCalled.GetValue(Main.spriteBatch)) Main.spriteBatch.Restart(Main.spriteBatch.GetState(), samplerState: Main.DefaultSamplerState);
 			if (!intoRenderTargets && !Lighting.UpdateEveryFrame) return;
 			if (solidLayer) {
 				fromSolids.Clear();

@@ -196,6 +196,9 @@ namespace Origins {
 
 		[DefaultValue(false)]
 		public bool DisableCoolVisualEffects = false;
+
+		[DefaultValue(true)]
+		public bool FixNonSolidTileBlurring = true;
 		internal void Save() {
 			Directory.CreateDirectory(ConfigManager.ModConfigPath);
 			string filename = Mod.Name + "_" + Name + ".json";

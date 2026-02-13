@@ -2757,6 +2757,11 @@ Configs: {
 			// Label: Dye Light Tiles
 			// Tooltip: ""
 		}
+
+		FixNonSolidTileBlurring: {
+			// Label: Fix Non-Solid Tile Blurring
+			// Tooltip: ""
+		}
 	}
 
 	OriginConfig: {
