@@ -47,6 +47,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Recipe.Create(ItemID.DryBomb)
 			.AddIngredient(Type)
 			.SortBeforeFirstRecipesOf(ItemID.DryBomb)
+			.DisableDecraft()
 			.Register();
 
 			CreateRecipe()
