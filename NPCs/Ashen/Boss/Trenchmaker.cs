@@ -146,11 +146,17 @@ namespace Origins.NPCs.Ashen.Boss {
 			bestiaryEntry.Info.RemoveAll(x => x is NamePlateInfoElement);
 			int[] funiNums = [69, 420];
 			LocalizedText name = this.GetLocalization(nameof(DisplayName));
+			int currentFunnyNumber = Main.rand.Next(funiNums);
 			bestiaryEntry.Info.Add(new CustomNamePlateInfoElement(_ => {
-				if (OriginsModIntegrations.CheckAprilFools()) return name.WithFormatArgs(Main.rand.Next(funiNums));
+				if (OriginsModIntegrations.CheckAprilFools()) return name.WithFormatArgs(currentFunnyNumber);
 				return this.GetLocalization($"{nameof(DisplayName)}Generic");
 			}));
-			bestiaryEntry.Icon = new AprilFoolsNameEntryIcon(Type, this.GetLocalizationKey($"{nameof(DisplayName)}Generic"), () => name.WithFormatArgs(Main.rand.Next(funiNums)).Value);
+			bestiaryEntry.Icon = new AprilFoolsNameEntryIcon(
+				Type,
+				this.GetLocalizationKey($"{nameof(DisplayName)}Generic"),
+				() => name.WithFormatArgs(currentFunnyNumber).Value,
+				() => currentFunnyNumber = Main.rand.Next(funiNums)
+			);
 		}
 		public Leg[] legs = [new(), new()];
 		SlotId thrusterSound;
@@ -380,8 +386,6 @@ namespace Origins.NPCs.Ashen.Boss {
 				effects,
 			0);
 			return false;
-		}
-		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 		}
 		public override void BossLoot(ref int potionType) => potionType = ModContent.ItemType<Morphine>();
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
