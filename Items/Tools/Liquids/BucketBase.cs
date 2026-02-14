@@ -28,7 +28,10 @@ namespace Origins.Items.Tools.Liquids {
 			LiquidID_TLmod.Sets.CreateLiquidBucketItem[LiquidType] = Type;
 
 			if (Endless) Item.ResearchUnlockCount = 1;
-			else Item.ResearchUnlockCount = 5;
+			else {
+				Item.ResearchUnlockCount = 5;
+				OriginExtensions.InsertIntoShimmerCycle(Type, ItemID.HoneyBucket);
+			}
 			SafeSetStaticDefaults();
 		}
 		public virtual void SafeSetStaticDefaults() { }
