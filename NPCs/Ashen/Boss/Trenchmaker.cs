@@ -144,7 +144,13 @@ namespace Origins.NPCs.Ashen.Boss {
 				this.GetBestiaryFlavorText()
 			);
 			bestiaryEntry.Info.RemoveAll(x => x is NamePlateInfoElement);
-			bestiaryEntry.Info.Add(new CustomNamePlateInfoElement(_ => this.GetLocalization($"{nameof(DisplayName)}Generic")));
+			int[] funiNums = [69, 420];
+			LocalizedText name = this.GetLocalization(nameof(DisplayName));
+			bestiaryEntry.Info.Add(new CustomNamePlateInfoElement(_ => {
+				if (OriginsModIntegrations.CheckAprilFools()) return name.WithFormatArgs(Main.rand.Next(funiNums));
+				return this.GetLocalization($"{nameof(DisplayName)}Generic");
+			}));
+			bestiaryEntry.Icon = new AprilFoolsNameEntryIcon(Type, this.GetLocalizationKey($"{nameof(DisplayName)}Generic"), () => name.WithFormatArgs(Main.rand.Next(funiNums)).Value);
 		}
 		public Leg[] legs = [new(), new()];
 		SlotId thrusterSound;
