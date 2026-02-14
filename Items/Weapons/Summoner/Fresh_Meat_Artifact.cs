@@ -83,6 +83,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
 			ProjectileID.Sets.NeedsUUID[Type] = true;
 			Origins.ForceFelnumShockOnShoot[Type] = true;
+			OriginsSets.Projectiles.Apostasy_AnimalMinions[Type] = true;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -263,6 +264,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Main.projPet[Type] = true;
 			ProjectileID.Sets.NeedsUUID[Type] = true;
 			ProjectileID.Sets.MinionShot[Type] = true;
+			OriginsSets.Projectiles.Apostasy_AnimalMinions[Type] = true;
 			ID = Type;
 		}
 

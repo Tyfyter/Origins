@@ -75,6 +75,7 @@ namespace Origins.Items.Weapons.Summoner {
 			public override void SetStaticDefaults() {
 				Main.projFrames[Type] = 5;
 				Hydrolantern_Force_Global.ProjectileTypes.Add(Type);
+				OriginsSets.Projectiles.Apostasy_AnimalMinions[Type] = true;
 			}
 			public override void SetDefaults() {
 				Projectile.DamageType = DamageClass.Summon;

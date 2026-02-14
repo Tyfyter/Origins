@@ -362,6 +362,7 @@ namespace Origins {
 				ProjectileID.ShadowFlameArrow,
 				ProjectileID.ShadowFlameKnife
 			);
+			public static bool[] Apostasy_AnimalMinions { get; } = ProjectileID.Sets.Factory.CreateNamedSet("Apostasy", "AnimalMinions").RegisterBoolSet();
 			static Projectiles() {
 				foreach (KeyValuePair<int, Projectile> proj in ContentSamples.ProjectilesByType) {
 					if (!NoMultishot.IndexInRange(proj.Key)) continue;

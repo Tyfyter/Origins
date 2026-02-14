@@ -61,6 +61,7 @@ namespace Origins.Buffs {
 }
 
 namespace Origins.Items.Weapons.Summoner.Minions {
+	[ReinitializeDuringResizeArrays]
 	public class School_Fish : ModProjectile, IArtifactMinion {
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
@@ -77,6 +78,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Main.projPet[Type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
+			OriginsSets.Projectiles.Apostasy_AnimalMinions[Type] = true;
 			ID = Type;
 		}
 

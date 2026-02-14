@@ -14,6 +14,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Items.Other.Consumables {
+	[ReinitializeDuringResizeArrays]
 	public class Fire_Extinguisher : ModItem, ICustomWikiStat, ICustomDrawItem {
 		AutoLoadingAsset<Texture2D> bottleTexture = typeof(Fire_Extinguisher).GetDefaultTMLName("_Bottle");
 		AutoLoadingAsset<Texture2D> cordTexture = typeof(Fire_Extinguisher).GetDefaultTMLName("_Cord");
