@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
 using Origins.Graphics;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Magic;
@@ -516,6 +517,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (info is not NPCStatsReportInfoElement stats) continue;
 				stats.OnRefreshStats += Stats_OnRefreshStats;
 			}
+			bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<Shimmer_Construct>()], quickUnlock: true);
 		}
 
 		private void Stats_OnRefreshStats(NPCStatsReportInfoElement element) {
@@ -560,6 +562,8 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 				if (!NetmodeActive.MultiplayerClient) owner.StrikeNPC(new() { Damage = NPC.lifeMax }, noPlayerInteraction: true);
 			}
+			NPC.netID = ModContent.NPCType<Shimmer_Chunk1>();
+			Main.BestiaryTracker.Kills.RegisterKill(NPC);
 			NPC.active = false;
 		}
 		public override bool CheckDead() {
