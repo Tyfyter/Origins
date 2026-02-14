@@ -18,6 +18,8 @@ using Origins.Projectiles.Misc;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using System.Reflection.Emit;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -27,6 +29,8 @@ using Terraria.ModLoader.Config;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
+		public override void Load() => autoReset = AutoResetAttribute.GenerateReset<OriginPlayer>();
+		static Action<OriginPlayer> autoReset;
 		public const float rivenMaxMult = 0.3f;
 		public float rivenMult => (1f - rivenMaxMult) + Math.Max((Player.statLife / (float)Player.statLifeMax2) * (rivenMaxMult * 2), rivenMaxMult);
 
@@ -563,8 +567,8 @@ namespace Origins {
 		#endregion visuals
 
 		public float statSharePercent = 0f;
-		public StatModifier thrownProjectileSpeed = StatModifier.Default;
-		public StatModifier projectileSpeedBoost = StatModifier.Default;
+		[AutoReset] public StatModifier thrownProjectileSpeed = StatModifier.Default;
+		[AutoReset] public StatModifier projectileSpeedBoost = StatModifier.Default;
 
 		public bool journalUnlocked = false;
 		public Item journalDye = null;
@@ -652,6 +656,7 @@ namespace Origins {
 		float murkySludgeTouchTimer = 0;
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
+			autoReset(this);
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
 			if (felnumSet) oldBonuses |= 2;
@@ -1148,8 +1153,6 @@ namespace Origins {
 			artifactManaCost = 1f;
 
 			statSharePercent = 0f;
-			thrownProjectileSpeed = StatModifier.Default;
-			projectileSpeedBoost = StatModifier.Default;
 
 			if (itemComboAnimationTime > 0)
 				itemComboAnimationTime--;
@@ -1402,5 +1405,28 @@ namespace Origins {
 		public override bool CanStart(Player player) => false;
 		public override float GetDurationMultiplier(Player player) => 0;
 		public override void OnRefreshed(Player player) => player.OriginPlayer().OnMovementAbilitiesRefreshed();
+	}
+	[AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
+	public sealed class AutoResetAttribute : Attribute {
+		public static Action<TPlayer> GenerateReset<TPlayer>() where TPlayer : ModPlayer {
+			DynamicMethod method = new("AutoReset", typeof(void), [typeof(TPlayer)], true);
+			ILGenerator gen = method.GetILGenerator();
+			LocalBuilder @default = gen.DeclareLocal(typeof(TPlayer));
+
+			gen.Emit(OpCodes.Call, ((Delegate)ModContent.GetInstance<TPlayer>).Method);
+			gen.Emit(OpCodes.Stloc, @default);
+
+			foreach (FieldInfo field in typeof(TPlayer).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
+				if (field.GetCustomAttribute<AutoResetAttribute>() is null) continue;
+				gen.Emit(OpCodes.Ldarg_0);
+				gen.Emit(OpCodes.Ldloc, @default);
+				gen.Emit(OpCodes.Ldfld, field);
+				gen.Emit(OpCodes.Stfld, field);
+			}
+
+			gen.Emit(OpCodes.Ret);
+
+			return method.CreateDelegate<Action<TPlayer>>();
+		}
 	}
 }
