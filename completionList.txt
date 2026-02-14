@@ -802,7 +802,7 @@ TOOLS:
 (X) Perihelion Pickaxe
 
 (^) Bottomless Oil Bucket
-(X) Oil Absorbent Sponge !!!
+(@, ^3) Oil Absorbent Sponge !!!
 (^) Oil Bucket
 (^) Pincushion
 ---

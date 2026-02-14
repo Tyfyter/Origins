@@ -13,6 +13,7 @@ namespace Origins.Items.Tools.Liquids {
 		public override int LiquidType => LiquidLoader.LiquidType<TLiquid>();
 	}
 	public abstract class BucketBase : ModItem {
+		public static int[] EndlessBucketByLiquid { get; } = LiquidID_TLmod.Sets.Factory.CreateIntSet();
 		public abstract int LiquidType { get; }
 		public virtual bool Endless { get; }
 		public virtual bool LavaImmune => true;
@@ -27,8 +28,10 @@ namespace Origins.Items.Tools.Liquids {
 			//NOTE: a liquid can only create 1 bucket item at a time
 			LiquidID_TLmod.Sets.CreateLiquidBucketItem[LiquidType] = Type;
 
-			if (Endless) Item.ResearchUnlockCount = 1;
-			else {
+			if (Endless) {
+				Item.ResearchUnlockCount = 1;
+				EndlessBucketByLiquid[LiquidType] = Type;
+			} else {
 				Item.ResearchUnlockCount = 5;
 				OriginExtensions.InsertIntoShimmerCycle(Type, ItemID.HoneyBucket);
 			}

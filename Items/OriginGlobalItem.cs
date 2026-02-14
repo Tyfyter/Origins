@@ -271,45 +271,25 @@ namespace Origins.Items {
 			}
 		}
 		public static void AddVanillaTooltips(int itemType, List<TooltipLine> tooltips, bool forceAll = false) {
-#pragma warning disable CS8321 // Local function is declared but never used
-			void Insert(string target, string name, string textKey, bool after = true) {
-				int index = tooltips.FindIndex(line => line.Name == target);
-				TooltipLine line = new(Origins.instance, "name", Language.GetOrRegister(textKey).Value);
-				if (index == -1) {
-					tooltips.Add(line);
-					return;
-				}
-				tooltips.Insert(index + after.ToInt(), line);
-			}
-#pragma warning restore CS8321 // Local function is declared but never used
-			void Add(string name, string textKey) {
-				int index = tooltips.FindLastIndex(line => line.Name.StartsWith("Tooltip"));
-				TooltipLine line = new(Origins.instance, "name", Language.GetOrRegister(textKey).Value);
-				if (index == -1) {
-					tooltips.Add(line);
-					return;
-				}
-				tooltips.Insert(index + 1, line);
-			}
 			switch (itemType) {
 				case ItemID.MiningHelmet or ItemID.UltrabrightHelmet:
-				Add("Tooltip1", "Mods.Origins.Items.MiningHelmet.BuffTooltip");
+				tooltips.Add("Tooltip1", "Mods.Origins.Items.MiningHelmet.BuffTooltip");
 				break;
 				case ItemID.MiningShirt:
-				Add("Tooltip1", "Mods.Origins.Items.MiningShirt.BuffTooltip");
+				tooltips.Add("Tooltip1", "Mods.Origins.Items.MiningShirt.BuffTooltip");
 				break;
 				case ItemID.RainHat:
 				if (forceAll || OriginConfig.Instance.RainSetBuff) {
-					Add("Tooltip0", "Mods.Origins.Items.RainHat.BuffTooltip");
+					tooltips.Add("Tooltip0", "Mods.Origins.Items.RainHat.BuffTooltip");
 				}
 				break;
 				case ItemID.RainCoat:
 				if (forceAll || OriginConfig.Instance.RainSetBuff) {
-					Add("Tooltip0", "Mods.Origins.Items.RainCoat.BuffTooltip");
+					tooltips.Add("Tooltip0", "Mods.Origins.Items.RainCoat.BuffTooltip");
 				}
 				break;
 				case ItemID.Harpoon:
-				Add("Tooltip0", "Mods.Origins.Items.Harpoon_Gun.VanillaTooltip");
+				tooltips.Add("Tooltip0", "Mods.Origins.Items.Harpoon_Gun.VanillaTooltip");
 				break;
 			}
 		}

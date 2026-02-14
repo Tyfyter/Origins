@@ -8023,3 +8023,8 @@ Polluted_Water: {
 	// DisplayName: Polluted Water
 	// Tooltip: Spreads the {§Ashen} to some blocks
 }
+
+Oil_Sponge: {
+	// DisplayName: Oil Absorbant Sponge
+	// Tooltip: Capable of soaking up endless amount of oil
+}
