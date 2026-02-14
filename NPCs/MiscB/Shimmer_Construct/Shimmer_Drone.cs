@@ -34,6 +34,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				this.GetBestiaryFlavorText(),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Caverns
 			);
+			bestiaryEntry.UIInfoProvider = new CommonEnemyUICollectionInfoProvider(ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[ModContent.NPCType<Shimmer_Construct>()], quickUnlock: true);
 		}
 		public override void OnSpawn(IEntitySource source) => NPC.ai[1] = -2;
 		public override void AI() {
