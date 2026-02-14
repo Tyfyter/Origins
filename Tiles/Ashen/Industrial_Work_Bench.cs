@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -17,6 +18,12 @@ namespace Origins.Tiles.Ashen {
 				item.createTile = Type;
 				item.rare++;
 				item.value += Item.buyPrice(gold: 1);
+			}).WithOnAddRecipes(item => {
+				Recipe.Create(item.type)
+				.AddRecipeGroup(ALRecipeGroups.IronBars, 8)
+				.AddIngredient<Scrap>(12)
+				.AddTile<Metal_Presser>()
+				.Register();
 			}).RegisterItem();
 			this.SetupGlowKeys();
 		}

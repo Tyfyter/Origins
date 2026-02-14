@@ -9,7 +9,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Polluted_Water : ModItem {
-		public override string Texture => base.Texture.Replace("Polluted", "White");
         public string[] Categories => [
             WikiCategories.ExpendableTool
         ];

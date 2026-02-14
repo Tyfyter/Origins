@@ -201,7 +201,7 @@ ENEMY NPCS:
 (^) Boulder Mimic
 (^) Buckethead Zombie
 (^) Cannihound
-(X) Cartwheeler !!!
+(#, ^2) Cartwheeler !!!
 (^) Catacomb Clearer
 (^) Cellarkeep
 (^) Cleaver
@@ -251,7 +251,7 @@ ENEMY NPCS:
 (^) Riven Protoform
 (X) Rivenpotamus
 (X) Robot Penguin !!!
-(X) Scraptooth !!!
+(#, ^2) Scraptooth !!!
 (^) Shattered Goldfish
 (^) Shimmer Drone
 (X) Shooter Creeper
@@ -260,7 +260,7 @@ ENEMY NPCS:
 (^) Spider Amoeba
 (X) Spiteful Flesh
 (X) Tubefish
-(X) Wind Pail !!!
+(#, ^2) Wind Pail !!!
 
 (^) Airsnatcher
 (^) Amoebeye
@@ -286,7 +286,7 @@ ENEMY NPCS:
 (^) Leaf Snapper
 (X) Madman
 (X) Molten Aberration
-(X) Oil Ghoul !!!
+(#, ^2) Oil Ghoul !!!
 (^) King Crab
 (^) Mildew Creeper
 (^) Mitoworm
@@ -316,8 +316,13 @@ ENEMY NPCS:
 (@2/3, #) Electromancer
 (^, 赏) Etherealizer
 (@2, #) Illusionary
+(X) L2/A 'Legate'
+(X) L2/R 'Legate'
+(X) L2/S 'Legate'
 (X) Lamp Oil Tender
 (X) Meteor Crawler
+(X) OO-13/F 'Ootheca'
+(X) OO-13/M 'Ootheca'
 (X) Tiny Skeleton Sniper
 
 (X) Asteroid Siren
@@ -1122,7 +1127,7 @@ EXPLOSIVE WEAPONS:
 (^) Link Grenade
 (^) Matrix
 (^) Meteor
-(^) Oil Bomb
+(#2, ^2) Oil Bomb !!! (permanent dusts)
 (^) Peatball
 (^) Potato Mine
 (^) Regurgitator of Souls
@@ -1419,7 +1424,7 @@ TILES:
 (^) Fungarust
 (^) Fuzzvine
 (^) Gel Blister
-(#2, ^2) Generation Station !!!
+(#2, ^2) Generation Station !!! (still needs other anim frames)
 (^) Hanging Scrap
 (^) Heat Vent
 (^) Hydrothermal Vent
@@ -1432,8 +1437,8 @@ TILES:
 (^) Ocotillo
 (X) Petrified Baobab Tree
 (^) Petrified Tree
-(☻) Power Box !!!
-(☻) Radio Broadcaster !!!
+(^) Power Box
+(#2, ^2) Radio Broadcaster !!! (frame-based sound system)
 (^) Riven Altar
 (^) Riven Foliage
 (^) Riven Pot
@@ -1441,7 +1446,7 @@ TILES:
 (^) Shelf Coral
 (^) Soulspore
 (^) Steel Support Beam
-(^) Suit Locker
+(#2, ^2) Suit Locker !!!
 (^) Surveysprout
 (^) Table Saw
 (^) Tangela Bramble
@@ -1722,7 +1727,6 @@ CONSUMABLES:
 (^) Crusty Crate
 (^) Festering Crate
 (^) Pointy Crate
-(@, ^3) Polluted Water
 (^) Residual Crate
 
 (^) Fire Extinguisher
@@ -1733,6 +1737,7 @@ CONSUMABLES:
 (#, ^2) Magic Gel Dropper !!!
 (#2, ^2) Magic Brine Dropper !!!
 (^) Magic Oil Dropper
+(^) Polluted Water
 (^) Spyglass
 (^) Void Lock
 (^) White Water
@@ -1840,7 +1845,7 @@ AMMO:
 
 (^) Homing Rocket I
 (^) Homing Rocket II
-(†) Oil Rocket !!! (needs proper colors when used in place of a canister otherwise ☻)
+(#2, ^2) Oil Rocket !!! (permanent dusts)
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
 (^) Valkyrum Bullet

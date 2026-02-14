@@ -234,7 +234,7 @@ public class Ashen_Personal : LootPool {
 		AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Pincushion>(), 40));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Nineball>(), 25));
-		AddRule(ItemDropRule.Common(ModContent.ItemType<Stress_Ball>(), 2));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Stress_Ball>(), 3));
 		AddRule(ItemDropRule.Common(ItemID.FamiliarShirt, 15));
 		AddRule(ItemDropRule.Common(ItemID.FamiliarPants, 15));
 		AddRule(ItemDropRule.Common(ItemID.Fedora, 20));
@@ -295,6 +295,7 @@ public class Ashen_Armory : LootPool {
 		AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ItemID.Revolver, 40));
 		AddRule(ItemDropRule.Common(ItemID.Handgun, 10, 1, 3));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Flak_Jacket>(), 3));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Flashbang>(), 2, 35, 185));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Link_Grenade>(), 1, 50, 150));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Armor_Piercing_Bullet>(), 3, 55, 210));
@@ -342,8 +343,6 @@ public class Ashen_Command : LootPool {
 		public override void SetStaticDefaults() {
 			Sequential = true;
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Flak_Jacket>(), 5));
-			AddRule(ItemDropRule.Common(ItemID.ExtendoGrip, 5));
-			AddRule(ItemDropRule.Common(ItemID.BallOfFuseWire, 5));
 		}
 	}*/
 	public override void SetStaticDefaults() {

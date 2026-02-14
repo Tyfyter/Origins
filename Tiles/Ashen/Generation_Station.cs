@@ -6,6 +6,7 @@ using PegasusLib.Networking;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
@@ -81,6 +82,9 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 			new Power_Multitile_Action(i, j, diff < 0).Perform();
+			SoundEngine.PlaySound(SoundID.Item143.WithPitch(-0.5f), new(i * 16 + 8, j * 16 + 8));
+			SoundEngine.PlaySound(SoundID.Unlock.WithPitch(-0.5f), new(i * 16 + 8, j * 16 + 8));
+			SoundEngine.PlaySound(SoundID.Zombie49.WithPitch(1.2f), new(i * 16 + 8, j * 16 + 8));
 			return base.RightClick(i, j);
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }

@@ -4,6 +4,7 @@ using Origins.Items.Tools.Liquids;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -67,7 +68,14 @@ namespace Origins.Tiles.Ashen {
 			if (++frameCounter >= 8) {
 				frameCounter = 0;
 				frame = ++frame % 4;
+				//SoundEngine.PlaySound(Origins.Sounds.HawkenThruster.WithPitch(2.5f).WithVolume(0.05f));
 			}
+			/*if (frame == 1) {
+				SoundEngine.PlaySound(SoundID.Camera.WithPitch(0.5f).WithVolume(0.08f));
+			}
+			if (Main.rand.NextBool(10)) {
+				SoundEngine.PlaySound(SoundID.Item141.WithPitch(3f).WithVolume(0.12f));
+			}*/
 		}
 
 		public void UpdatePowerState(int i, int j, bool powered) {

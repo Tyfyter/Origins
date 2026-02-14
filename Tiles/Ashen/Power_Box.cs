@@ -5,6 +5,7 @@ using Origins.World.BiomeData;
 using PegasusLib.Networking;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
@@ -129,6 +130,8 @@ namespace Origins.Tiles.Ashen {
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 		public override bool RightClick(int i, int j) {
 			new Power_Box_Action(new(i, j)).Perform();
+			SoundEngine.PlaySound(SoundID.Item143.WithPitch(-0.5f), new(i * 16 + 8, j * 16 + 8));
+			SoundEngine.PlaySound(SoundID.Unlock.WithPitch(-0.5f), new(i * 16 + 8, j * 16 + 8));
 			return true;
 		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {

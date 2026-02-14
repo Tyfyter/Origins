@@ -39,6 +39,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WetBomb);
 			Item.shoot = projectile.Type;
+			Item.rare = ItemRarityID.Blue;
 			SafeSetDefaults();
 		}
 		public virtual void SafeSetDefaults() { }
