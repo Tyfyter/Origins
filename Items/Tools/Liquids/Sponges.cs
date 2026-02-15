@@ -28,8 +28,6 @@ namespace Origins.Items.Tools.Liquids {
 
 			//Unlike buckets, sponges have extra functionality to allow the removing and adding of sponge items to liquids
 			LiquidID_TLmod.Sets.CanBeAbsorbedBy[LiquidType].Add(Type);
-
-			Item.ResearchUnlockCount = 1;
 			SafeSetStaticDefaults();
 		}
 		public virtual void SafeSetStaticDefaults() { }
@@ -85,7 +83,6 @@ namespace Origins.Items.Tools.Liquids {
 	}
 	#endregion
 	public class Oil_Sponge : SpongeBase<Oil> {
-		public override string Texture => "Origins/Items/Tools/Oil_Absorbant_Sponge";
 		public override void SafeSetStaticDefaults() {
 			LiquidID_TLmod.Sets.CanBeAbsorbedBy[LiquidLoader.LiquidType<Burning_Oil>()].Add(Type);
 		}
