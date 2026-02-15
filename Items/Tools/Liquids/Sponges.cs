@@ -85,7 +85,7 @@ namespace Origins.Items.Tools.Liquids {
 	}
 	#endregion
 	public class Oil_Sponge : SpongeBase<Oil> {
-		public override string Texture => $"Terraria/Images/Item_{ItemID.UltraAbsorbantSponge}";
+		public override string Texture => "Origins/Items/Tools/Oil_Absorbant_Sponge";
 		public override void SafeSetStaticDefaults() {
 			LiquidID_TLmod.Sets.CanBeAbsorbedBy[LiquidLoader.LiquidType<Burning_Oil>()].Add(Type);
 		}

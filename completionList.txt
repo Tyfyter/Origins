@@ -132,7 +132,7 @@ TOWN NPC Quests:
 
 VANILLA MODIFICATIONS:
 |---
-(#2) Recipes General !!! (Ultra Absorbent Sponge, Oil Bucket additions)
+(#2) Recipes General !!! (Ultra Absorbant Sponge, Oil Bucket additions)
 
 (^) Advanced weapon functionality in PVP
 (^) Boss Resistances (make every boss immune to anything with Stun)
@@ -802,7 +802,7 @@ TOOLS:
 (X) Perihelion Pickaxe
 
 (^) Bottomless Oil Bucket
-(@, ^3) Oil Absorbent Sponge !!!
+(^) Oil Absorbant Sponge
 (^) Oil Bucket
 (^) Pincushion
 ---
@@ -1044,7 +1044,7 @@ SUMMONER WEAPONS:
 (^) Relay Rod
 (^) Rotted Worm Staff
 (X) Shadow Cast
-(#2, ^2) Sunflower in a Pot (particle effects for variants)
+(#2, ^2) Sunflower in a Pot (particle effects for variants + remaining variants)
 (^) Teardown
 (^) Thread Rod
 (^) Woodsprite Staff
@@ -1062,6 +1062,7 @@ SUMMONER WEAPONS:
 (^) Mildew Whip
 (X) Obsidian Bone
 (^) Old Brine Rock
+(#, ^2) Pharaoh's Turquoise !!!
 (X) Riven Rain Rod
 (^) Scabcoral Lyre
 (X) Snowman Trophy
@@ -1077,16 +1078,17 @@ SUMMONER WEAPONS:
 (X) Culltivator
 (X) Cursor Brick
 (X) Fiber Optic Whips
+(#, ^2) Matryoshka Doll !!!
 (X) Mojo Mask Staff
-(X) Neutron Soup !!!
+(#, ^2) Neutron Soup !!!
 (X) Probe Controller
 (X) Ribatar
 (#, ^2) SMART Wrench !!!
-(X) Star Harvest !!!
+(#, ^2) Star Harvest !!!
 (X) Technomancer 4000
 (^) Terratotem
 (X) Tonal Resonator
-(X) Vampire Fireflower in a Pot !!!
+(#, ^2) Vampire Fireflower in a Pot !!!
 
 NO POST-ML CONTENT YET.
 ---
