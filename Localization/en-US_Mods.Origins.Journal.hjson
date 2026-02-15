@@ -1017,6 +1017,15 @@ Worn_Paper: {
 		I get why the layout of the facility is so wacky because it’s bits-and-pieces, but that doesn’t mean we can’t reinstall and update our equipment.
 		And, he wonders why I burn through so much morphine and fire bands.
 		'''
+	Famine.Text:
+		'''
+		Sir, no matter what we try to do our crops always die out.
+		We’ve even cleaned out the entirety of hydroponics over and over again, but none of the plants are surviving.
+		The water supply is poisoned and it seems no amount of plumbing work will fix that.
+		We can’t rely on our own food production facilities anymore unless you plan on replacing the entire laborer caste with war engines.
+		I hope you have that deal with for them to make food for us.
+		We’re going to need it.
+		'''
 }
 
 µTutorial: {

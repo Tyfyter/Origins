@@ -234,7 +234,7 @@ ENEMY NPCS:
 (^) Felnum Slime
 (^) Flagellant
 (^) Flying Exoskeleton
-(X) Gas Mask Zombie !!!
+(#, ^2) Gas Mask Zombie !!!
 (^) Goo Wall
 (^) Graveshield Zombie
 (X) Hammerhand !!!
@@ -885,14 +885,14 @@ RANGED WEAPONS:
 (^) Bolt Gun
 (^) Chipper Knife
 (^) Constellation
-(X) DMR !!!
+(#, ^2) DMR !!!
 (^) Endowood Bow
 (^) Felnum Longbow
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
 (^) Fiberglass Shard
 (^) Gelled Knife
-(X) Grease Gun !!!
+(#, ^2) Grease Gun !!!
 (^) Harpoon Gun
 (^) Longbone
 (^) Magma Grappler
@@ -903,7 +903,7 @@ RANGED WEAPONS:
 (^) Shimmershot
 (^) Sleetfire
 (^) Sunflower Seed Shooter
-(X) Tactical SMG !!!
+(#, ^2) Tactical SMG !!!
 (^) Tendon Tear
 (^) The Kruncher
 (^) Threemoepeater
@@ -1272,7 +1272,7 @@ TILES:
 (X) Space Goo
 (^) Spug Flesh
 (X) Spug Flesh Brick
-(X) Super Sludge !!!
+(#, ^2) Super Sludge !!!
 (^) Tainted Stone
 (X) Tainted Stone Brick
 (^) Truss Block
@@ -1519,8 +1519,8 @@ TILES:
 
 LIQUIDS:
 |---
-(X) Amebic Gel !!!
-(X) Brine !!!
+(#) Amebic Gel !!!
+(#) Brine !!!
 (#2) Oil !!!
 ---
 
@@ -1593,7 +1593,7 @@ MISCELLANEOUS ITEMS:
 (^) Armor+ Power-Up
 (^) Defiled Mana
 (^) Large Chambersite
-(X) Worn Paper: Famine !!!
+(^) Worn Paper: Famine
 (^) Worn Paper: Loose Wheel
 (^) Worn Paper: Mean Baby
 (^) Worn Paper: Self-Preservation
@@ -1657,6 +1657,7 @@ CONSUMABLES:
 (^) Foul Broth
 (^) Greasy Broth
 (^) Hearty Broth
+(#, ^2) Insubstantial Broth !!!
 (^) Light Broth
 (†, 々) Metallic Broth
 (^) Minishark Broth
