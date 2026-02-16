@@ -1245,7 +1245,7 @@ namespace Origins.World.BiomeData {
 					FishingCatch.Item(ItemID.ScalyTruffle, (player, attempt) => Main.hardMode && player.ZoneSnow && attempt.heightLevel == 3 && !Main.rand.NextBool(3)),
 					FishingCatch.Item(ItemType<Scabcoral_Lyre>(), (player, attempt) => Main.hardMode && Main.rand.NextBool(2))
 				));
-				Rare.Add(FishingCatch.Item(ItemType<Scabcoral_Lyre>()));
+				Rare.Add(FishingCatch.Item(ItemType<Ocotoral_Bud>()));
 				Uncommon.Add(new SequentialCatches(
 					FishingCatch.QuestFish(ItemType<Bonehead_Jellyfish>()),
 					FishingCatch.Item(ItemType<Tearracuda>())
