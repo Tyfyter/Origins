@@ -132,7 +132,7 @@ TOWN NPC Quests:
 
 VANILLA MODIFICATIONS:
 |---
-(#2) Recipes General !!! (Ultra Absorbant Sponge, Oil Bucket additions)
+(☻) Recipes General !!! (Ultra Absorbant Sponge, Oil Bucket additions)
 
 (^) Advanced weapon functionality in PVP
 (^) Boss Resistances (make every boss immune to anything with Stun)
@@ -1944,6 +1944,8 @@ UI:
 (^) Fiberglass Icon
 (^) Fiberglass Map/Bestiary Backdrop
 (X) Fractured Isles Icon
+(X) Limestone Cave Icon
+(X) Limestone Map/Bestiary Backdrop
 (X) Repentance Icon
 (X) Repentance Map/Bestiary Backdrop
 (^) Riven Caverns Icon

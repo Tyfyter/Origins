@@ -14,8 +14,11 @@ namespace Origins.Items.Tools.Liquids {
 	public abstract class SpongeBase<TLiquid> : SpongeBase where TLiquid : ModLiquid {
 		public override int LiquidType => LiquidLoader.LiquidType<TLiquid>();
 	}
+	[ReinitializeDuringResizeArrays]
 	public abstract class SpongeBase : ModItem {
+		public static bool[] UltraSpongeIngredients { get; } = ItemID.Sets.Factory.CreateBoolSet();
 		public abstract int LiquidType { get; }
+		public virtual bool UsedForUltraSponge => true;
 		//The SetStaticDefaults of a sponge
 		public override void SetStaticDefaults() {
 			ItemID.Sets.AlsoABuildingItem[Type] = true; //Unused, but useful to have here for both other mods and future game updates
@@ -28,6 +31,7 @@ namespace Origins.Items.Tools.Liquids {
 
 			//Unlike buckets, sponges have extra functionality to allow the removing and adding of sponge items to liquids
 			LiquidID_TLmod.Sets.CanBeAbsorbedBy[LiquidType].Add(Type);
+			if (UsedForUltraSponge) UltraSpongeIngredients[Type] = true;
 			SafeSetStaticDefaults();
 		}
 		public virtual void SafeSetStaticDefaults() { }
