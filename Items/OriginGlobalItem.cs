@@ -158,7 +158,7 @@ namespace Origins.Items {
 			if (statsModified && !isOriginsItemCloningDefaults) {
 				item.StatsModifiedBy.Add(Mod);
 			}
-			if (Origins.itemGlowmasks?[item.type] is not 0 and not -1 and not null) item.glowMask = Origins.itemGlowmasks[item.type];
+			if (Origins.itemGlowmasks.IndexInRange(item.type) && Origins.itemGlowmasks?[item.type] is not 0 and not -1 and not null) item.glowMask = Origins.itemGlowmasks[item.type];
 		}
 		public override void ModifyItemScale(Item item, Player player, ref float scale) {
 			OriginPlayer originPlayer = player.OriginPlayer();
