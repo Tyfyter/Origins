@@ -986,17 +986,12 @@ namespace Origins.World.BiomeData {
 				WorldBiomeGeneration.ChangeRange.AddChangeToRange(evilBiomePositionEastBound, minY);
 				Rectangle range = WorldBiomeGeneration.ChangeRange.GetRange();
 				WorldBiomeGeneration.EvilBiomeGenRanges.Add(range);
-				AltBiome biome = ModContent.GetInstance<Defiled_Wastelands_Alt_Biome>();
 				for (int i = range.Left; i < range.Right; i++) {
 					int slopeFactor = Math.Min(Math.Min(i - range.Left, range.Right - i), 99);
 					for (int j = range.Top - 10; j < range.Bottom; j++) {
 						if (genRand.NextBool(5) && genRand.Next(slopeFactor, 100) < 20) continue;
 						if (range.Bottom - j < 5 && genRand.NextBool(5)) break;
-						Tile tile = Framing.GetTileSafely(i, j);
-						if (tile.HasTile) {
-							ALConvert.ConvertTile(i, j, biome);
-							ALConvert.ConvertWall(i, j, biome);
-						}
+						ALConvert.Convert<Defiled_Wastelands_Alt_Biome>(i, j, 0);
 					}
 				}
 

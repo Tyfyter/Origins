@@ -12,7 +12,7 @@
 		  <HintPath>..\ModAssemblies\AlchemistNPCLite_v1.9.8.dll</HintPath>
 		</Reference>
 		<Reference Include="AltLibrary">
-			<HintPath>..\ModAssemblies\AltLibrary_v2.1.2.dll</HintPath>
+			<HintPath>..\ModAssemblies\AltLibrary_v2.2.dll</HintPath>
 		</Reference>
 		<Reference Include="BetterDialogue">
 			<HintPath>..\ModAssemblies\BetterDialogue_v1.1.6.3.dll</HintPath>

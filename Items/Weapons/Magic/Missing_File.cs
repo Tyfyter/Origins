@@ -54,7 +54,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useAnimation = 30;
 			Item.useTime = 30;
 			Item.shootSpeed = 0;
-			Item.useStyle = ItemHoldStyleID.HoldUp;
+			Item.useStyle = ItemUseStyleID.EatFood;
 			Item.knockBack = 0;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Yellow;

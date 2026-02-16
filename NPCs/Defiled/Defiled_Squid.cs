@@ -236,8 +236,7 @@ namespace Origins.NPCs.Defiled {
 						(Projectile.position.Y + Projectile.height > comparePos.Y) &&
 						(Projectile.position.Y < comparePos.Y + 16f)
 						&& Main.tile[x, y].HasTile) {
-						AltLibrary.Core.ALConvert.ConvertTile(x, y, biome);
-						AltLibrary.Core.ALConvert.ConvertWall(x, y, biome);
+						AltLibrary.Core.ALConvert.Convert<Defiled_Wastelands_Alt_Biome>(x, y, 0);
 						//WorldGen.Convert(x, y, OriginSystem.origin_conversion_type, 1);
 					}
 				}

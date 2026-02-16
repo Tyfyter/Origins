@@ -4703,7 +4703,11 @@ Desert_Crown: {
 
 Scabcoral_Lyre: {
 	// DisplayName: Scabcoral Lyre
-	// Tooltip: Summons a vein of scabcoral that attacks nearby enemies
+	/* Tooltip:
+		'''
+		Summons a vein of scabcoral that attacks nearby enemies
+		Must be placed directly on a block
+		''' */
 }
 
 Laser_Tag_Base_Console_Item: {
