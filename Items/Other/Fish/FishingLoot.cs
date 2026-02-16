@@ -1,8 +1,5 @@
 ﻿using AltLibrary.Common.AltBiomes;
-using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
-using Origins.Items.Weapons.Magic;
-using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.Reflection;
