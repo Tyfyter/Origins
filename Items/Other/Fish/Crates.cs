@@ -146,7 +146,7 @@ namespace Origins.Items.Other.Fish {
 		}
 	}
 	#endregion
-	#region resual crate
+	#region residual crate
 	public class Residual_Crate : Fishing_Crate_Item {
 		public override Color MapColor => new(0, 100, 102);
 		public override void ModifyItemLoot(ItemLoot itemLoot) {

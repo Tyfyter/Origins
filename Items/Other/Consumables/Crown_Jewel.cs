@@ -64,7 +64,7 @@ namespace Origins.Items.Other.Consumables {
 			SpriteBatchState state = spriteBatch.GetState();
 			try {
 				spriteBatch.Restart(state, sortMode: SpriteSortMode.Immediate);
-				Texture2D texture = TextureAssets.Extra[193].Value;
+				Texture2D texture = TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion].Value;
 				DrawData data = new() {
 					texture = texture,
 					position = Item.Center - Main.screenPosition,
