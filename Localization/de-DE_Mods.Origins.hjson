@@ -1492,13 +1492,13 @@ Buffs: {
 	}
 
 	Pharaohs_Turquoise_Buff: {
-		// DisplayName: Pharaohs Turquoise Buff
-		// Description: Mods.Origins.Buffs.Pharaohs_Turquoise_Buff.Description
+		// DisplayName: Pharaoh's Turquoise
+		// Description: ""
 	}
 
 	Pharaohs_Turquoise_Buff2: {
-		// DisplayName: Pharaohs Turquoise Buff2
-		// Description: Mods.Origins.Buffs.Pharaohs_Turquoise_Buff2.Description
+		// DisplayName: Pharaoh's Turquoise
+		// Description: ""
 	}
 }
 
@@ -2250,8 +2250,8 @@ Projectiles: {
 	// Sunflower_Sunny.DisplayName: Sunflower Sunny
 	// Sunflower_Sunny_P.DisplayName: Sunflower Sunny
 	// Polluted_Water_P.DisplayName: Polluted Water
-	// Pharaohs_Turquoise_P.DisplayName: Pharaohs Turquoise P
-	// Pharaohs_Turquoise_Freeze.DisplayName: Pharaohs Turquoise Freeze
+	// Pharaohs_Turquoise_P.DisplayName: Pharaoh's Turquoise
+	// Pharaohs_Turquoise_Freeze.DisplayName: Pharaoh's Turquoise Freeze
 }
 
 Prefixes: {

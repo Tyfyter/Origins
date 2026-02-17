@@ -316,7 +316,7 @@ namespace Origins {
 					}
 				}
 			}
-
+			if (!Main.dedServ) EnvironmentSounds.UpdateSounds();
 			if (!Main.dedServ && nearestFanSound.HasValue && (!fanSoundInstance.IsValid || !SoundEngine.TryGetActiveSound(fanSoundInstance, out _))) {
 				fanSoundInstance = SoundEngine.PlaySound(Origins.Sounds.ThrusterLoop.WithPitch(-0.5f).WithVolume(0.1f), nearestFanSound.Value, sound => {
 					sound.Position = nearestFanSound;

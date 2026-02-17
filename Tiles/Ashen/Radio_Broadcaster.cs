@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Graphics;
 using Origins.Items.Tools.Liquids;
 using Origins.Items.Weapons.Ammo;
@@ -12,6 +13,7 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Radio_Broadcaster : OriginTile, IGlowingModTile, IAshenWireTile {
+		Sound ambientSound = EnvironmentSounds.Register<Sound>();
 		public override void Load() {
 			new TileItem(this)
 			.WithOnAddRecipes(item => {
@@ -85,8 +87,23 @@ namespace Origins.Tiles.Ashen {
 		public override void PlaceInWorld(int i, int j, Item item) {
 			FrameSurrounding(i, j, out _, out _);
 		}
+		public override void NearbyEffects(int i, int j, bool closer) {
+			if (closer) return;
+			ambientSound.TrySetNearest(new(i * 16 + 8, j * 16 + 8));
+		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
+		class Sound : AEnvironmentSound {
+			public override void UpdateSound(Vector2 position) {
+				int type = ModContent.TileType<Radio_Broadcaster>();
+				float mult = 1 / float.Max(position.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1);
+				if (Main.tileFrameCounter[type] == 0) {
+					SoundEngine.PlaySound(Origins.Sounds.HawkenThruster.WithPitch(2.5f).WithVolume(0.2f * mult), position);
+				}
+				if (Main.tileFrame[type] == 1) SoundEngine.PlaySound(SoundID.Camera.WithPitch(0.5f).WithVolume(0.32f * mult), position);
+				if (Main.rand.NextBool(10)) SoundEngine.PlaySound(SoundID.Item141.WithPitch(3f).WithVolume(0.48f * mult), position);
+			}
+		}
 	}
 }
