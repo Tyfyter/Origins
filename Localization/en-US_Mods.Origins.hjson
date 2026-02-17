@@ -1485,6 +1485,11 @@ Buffs: {
 		DisplayName: Oiled
 		Description: Fire debuffs inflict more damage
 	}
+
+	Super_Sludge_Debuff: {
+		DisplayName: Super Sludge
+		Description: Your movement speed is heightened!
+	}
 }
 
 DamageClassName: {

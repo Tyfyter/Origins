@@ -1272,7 +1272,7 @@ TILES:
 (X) Space Goo
 (^) Spug Flesh
 (X) Spug Flesh Brick
-(#, ^2) Super Sludge !!!
+(☻) Super Sludge !!!
 (^) Tainted Stone
 (X) Tainted Stone Brick
 (^) Truss Block

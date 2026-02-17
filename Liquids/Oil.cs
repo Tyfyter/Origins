@@ -7,6 +7,7 @@ using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Liquids.Waterfalls;
 using Origins.Tiles.Ashen;
+using Origins.Tiles.Other;
 using System;
 using Terraria;
 using Terraria.GameContent.Liquid;
@@ -131,7 +132,7 @@ namespace Origins.Liquids {
 		}
 		public override int LiquidMerge(int i, int j, int otherLiquid) {
 			switch (otherLiquid) {
-				case LiquidID.Shimmer: return ModContent.TileType<Murky_Sludge>(); // TODO: replace with "Super Sludge"
+				case LiquidID.Shimmer: return ModContent.TileType<Super_Sludge>(); // TODO: replace with "Super Sludge"
 			}
 			return ModContent.TileType<Murky_Sludge>();
 		}

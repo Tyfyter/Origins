@@ -245,14 +245,12 @@ namespace Origins {
 		}
 
 		internal void UpdateMurkySludgeSounds() {
-			int sludge = ModContent.TileType<Murky_Sludge>();
-			int grass = ModContent.TileType<Ashen_Murky_Sludge_Grass>();
 			Rectangle hitbox = Player.Hitbox;
 			hitbox.Inflate(1, 1);
 			if (hitbox.OverlapsAnyTiles(out List<Point> intersectingTiles)) {
 				for (int i = 0; i < intersectingTiles.Count; i++) {
 					Tile tile = Main.tile[intersectingTiles[i]];
-					if (tile.HasTile && (tile.TileType == sludge || tile.TileType == grass)) {
+					if (tile.HasTile && Murky_Sludge.TilesForSound[tile.TileType]) {
 						touchingMurkySludges.Add(intersectingTiles[i]);
 					}
 				}

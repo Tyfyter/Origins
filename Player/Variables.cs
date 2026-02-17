@@ -488,6 +488,7 @@ namespace Origins {
 		public bool lunaticDragon = false;
 		public int lunaticDuplicateOpacity = 0;
 		[AutoReset] public bool oiled = false;
+		[AutoReset] public bool superSludge = false;
 
 		public bool DisableBreathRestore => toxicShock || miasma;
 		public bool sendBuffs = false;

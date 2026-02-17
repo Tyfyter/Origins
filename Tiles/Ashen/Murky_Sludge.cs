@@ -5,8 +5,11 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
+	[ReinitializeDuringResizeArrays]
 	public class Murky_Sludge : ComplexFrameTile, IAshenTile {
+		public static bool[] TilesForSound { get; } = TileID.Sets.Factory.CreateBoolSet();
 		public override void SetStaticDefaults() {
+			TilesForSound[Type] = true;
 			Main.tileSolid[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileBlockLight[Type] = true;

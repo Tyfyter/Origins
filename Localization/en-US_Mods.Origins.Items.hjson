@@ -8033,3 +8033,8 @@ Oil_Sponge: {
 	DisplayName: Oil Absorbant Sponge
 	Tooltip: Capable of soaking up endless amount of oil
 }
+
+Super_Sludge_Item: {
+	DisplayName: Super Sludge
+	Tooltip: ""
+}

@@ -82,6 +82,7 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Ashen_Murky_Sludge_Grass : OriginTile, IAshenTile {
 		public override void SetStaticDefaults() {
+			Murky_Sludge.TilesForSound[Type] = true;
 			Origins.PotType.Add(Type, ((ushort)ModContent.TileType<Ashen_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)ModContent.TileType<Ashen_Foliage>(), 0, 6));
 			TileID.Sets.Grass[Type] = true;
