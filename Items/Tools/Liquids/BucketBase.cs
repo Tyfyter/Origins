@@ -12,6 +12,7 @@ namespace Origins.Items.Tools.Liquids {
 	public abstract class BucketBase<TLiquid> : BucketBase where TLiquid : ModLiquid {
 		public override int LiquidType => LiquidLoader.LiquidType<TLiquid>();
 	}
+	[ReinitializeDuringResizeArrays]
 	public abstract class BucketBase : ModItem {
 		public static int[] EndlessBucketByLiquid { get; } = LiquidID_TLmod.Sets.Factory.CreateIntSet();
 		public abstract int LiquidType { get; }
@@ -29,7 +30,6 @@ namespace Origins.Items.Tools.Liquids {
 			LiquidID_TLmod.Sets.CreateLiquidBucketItem[LiquidType] = Type;
 
 			if (Endless) {
-				Item.ResearchUnlockCount = 1;
 				EndlessBucketByLiquid[LiquidType] = Type;
 			} else {
 				Item.ResearchUnlockCount = 5;

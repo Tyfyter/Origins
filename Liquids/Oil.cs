@@ -26,7 +26,6 @@ namespace Origins.Liquids {
 			LiquidRenderer.VISCOSITY_MASK[Type] = 50;
 			LiquidRenderer.WATERFALL_LENGTH[Type] = 10;
 			LiquidRenderer.DEFAULT_OPACITY[Type] = 0.98f;
-			LiquidID_TLmod.Sets.CanBeAbsorbedBy[Type].Add(ItemID.SuperAbsorbantSponge);
 			SlopeOpacity = 1f;
 			LiquidfallOpacityMultiplier = 0.8f;
 			WaterRippleMultiplier = 0.3f;
@@ -192,8 +191,6 @@ namespace Origins.Liquids {
 		public override string SlopeTexture => "Terraria/Images/LiquidSlope_12";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			LiquidID_TLmod.Sets.CanBeAbsorbedBy[Type].Remove(ItemID.SuperAbsorbantSponge);
-			LiquidID_TLmod.Sets.CanBeAbsorbedBy[Type].Add(ItemID.LavaAbsorbantSponge);
 			LiquidID_TLmod.Sets.CountsAsLiquidSource[Type][Oil.ID] = true;
 			UsesLavaCollisionForWet = true;
 			ID = Type;

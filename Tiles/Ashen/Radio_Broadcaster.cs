@@ -20,13 +20,14 @@ namespace Origins.Tiles.Ashen {
 				.AddIngredient<Oil_Bucket>()
 				.AddIngredient<Scrap>(12)
 				.AddTile<Metal_Presser>()
-				.AddOnCraftCallback((recipe, item, consumedItems, destinationStack) => {
-					for (int i = 0; i < consumedItems.Count; i++) {
-						if (consumedItems[i].type == ModContent.ItemType<Oil_Bucket>()) {
-							Main.LocalPlayer.GetItem(Main.myPlayer, new Item(ItemID.EmptyBucket, consumedItems[i].stack), new GetItemSettings(NoText: true, CanGoIntoVoidVault: true));
-						}
-					}
-				})
+				.AddOnCraftCallback(CraftingCallbacks.BucketCrafting<Oil_Bucket>)
+				.Register();
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.Wire, 8)
+				.AddIngredient<Oil_Bottomless_Bucket>()
+				.AddIngredient<Scrap>(12)
+				.AddTile<Metal_Presser>()
+				.AddOnCraftCallback(CraftingCallbacks.NoConsumeCrafting<Oil_Bottomless_Bucket>)
 				.Register();
 			}).RegisterItem();
 			this.SetupGlowKeys();
