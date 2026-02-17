@@ -103,9 +103,14 @@ namespace Origins.Items.Weapons.Melee {
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			float range = 192 * Projectile.scale;
 			if (target.DistanceSQ(Main.player[Projectile.owner].Center) > range * range) {
-				modifiers.HitDirectionOverride = -modifiers.HitDirection;
 				modifiers.Knockback *= 1.5f;
 			}
+		}
+		public override bool? CanHitNPC(NPC target) {
+			float range = 192 * Projectile.scale;
+			Projectile.direction = Projectile.velocity.X < 0 ? -1 : 1;
+			if (!Main.player[Projectile.owner].WithinRange(target.Center, range)) Projectile.direction *= -1;
+			return base.CanHitNPC(target);
 		}
 
 		private void DrawLine(List<Vector2> list) {
