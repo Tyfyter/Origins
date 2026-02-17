@@ -111,6 +111,9 @@ namespace Origins {
 			if (item.CountsAsClass(DamageClass.Throwing)) {
 				velocityModifier = velocityModifier.CombineWith(thrownProjectileSpeed);
 			}
+			if (item.CountsAsClass(DamageClasses.Incantation)) {
+				velocityModifier = velocityModifier.CombineWith(incantationProjSpeedBoost);
+			}
 			float speed = velocity.Length();
 			if (speed != 0 && velocityModifier != StatModifier.Default) {
 				velocity *= velocityModifier.ApplyTo(speed) / speed;

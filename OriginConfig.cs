@@ -47,6 +47,8 @@ namespace Origins {
 		public bool WoodBuffs = true;
 		[DefaultValue(true)]
 		public bool RainSetBuff = true;
+		[DefaultValue(true)]
+		public bool ForbiddenArmor = true;
 		[LabelKey($"$ItemName.{nameof(ItemID.ThunderStaff)}"), DefaultValue(true)]
 		[TooltipKey(add_debuff_tooltip), TooltipArgs($"$ItemName.{nameof(ItemID.ThunderStaff)}", "$Buffs.Static_Shock_Debuff.DisplayName")]
 		public bool ThunderStaff = true;

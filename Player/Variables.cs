@@ -115,6 +115,7 @@ namespace Origins {
 		public bool mildewHead = false;
 		public bool mildewSet = false;
 		public bool chambersiteCommandoSet = false;
+		[AutoReset] public bool buffedForbiddenSet;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -571,6 +572,7 @@ namespace Origins {
 		public float statSharePercent = 0f;
 		[AutoReset] public StatModifier thrownProjectileSpeed = StatModifier.Default;
 		[AutoReset] public StatModifier projectileSpeedBoost = StatModifier.Default;
+		[AutoReset] public StatModifier incantationProjSpeedBoost = StatModifier.Default;
 
 		public bool journalUnlocked = false;
 		public Item journalDye = null;

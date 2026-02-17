@@ -4210,8 +4210,10 @@ namespace Origins {
 			self.consumable = true;
 		}
 		public static void Insert(this List<TooltipLine> tooltips, string target, string name, string textKey, bool after = true) {
+			string text = Language.GetOrRegister(textKey).Value;
+			if (string.IsNullOrWhiteSpace(text)) return;
 			int index = tooltips.FindIndex(line => line.Name == target);
-			TooltipLine line = new(Origins.instance, name, Language.GetOrRegister(textKey).Value);
+			TooltipLine line = new(Origins.instance, name, text);
 			if (index == -1) {
 				tooltips.Add(line);
 				return;
@@ -4219,8 +4221,10 @@ namespace Origins {
 			tooltips.Insert(index + after.ToInt(), line);
 		}
 		public static void Add(this List<TooltipLine> tooltips, string name, string textKey) {
+			string text = Language.GetOrRegister(textKey).Value;
+			if (string.IsNullOrWhiteSpace(text)) return;
 			int index = tooltips.FindLastIndex(line => line.Name.StartsWith("Tooltip"));
-			TooltipLine line = new(Origins.instance, name, Language.GetOrRegister(textKey).Value);
+			TooltipLine line = new(Origins.instance, name, text);
 			if (index == -1) {
 				tooltips.Add(line);
 				return;

@@ -2854,6 +2854,11 @@ Configs: {
 			// Label: New Harpoons From The Future
 			// Tooltip: ""
 		}
+
+		ForbiddenArmor: {
+			// Label: Forbidden Armor
+			// Tooltip: ""
+		}
 	}
 
 	DebugConfig: {
