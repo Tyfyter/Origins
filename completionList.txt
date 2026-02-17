@@ -250,7 +250,7 @@ ENEMY NPCS:
 (^) Riven Penguin
 (^) Riven Protoform
 (X) Rivenpotamus
-(X) Robot Penguin !!!
+(#, ^2) Robot Penguin !!!
 (#, ^2) Scraptooth !!!
 (^) Shattered Goldfish
 (^) Shimmer Drone
