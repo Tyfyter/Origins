@@ -17,6 +17,8 @@ namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
 		protected override bool CloneNewInstances => true;
 		public override bool InstancePerEntity => true;
+		public override void Load() => autoReset = AutoResetAttribute.GenerateReset<OriginGlobalNPC>();
+		static Action<OriginGlobalNPC> autoReset;
 		internal int shockTime = 0;
 		internal int rasterizedTime = 0;
 		internal int toxicShockStunTime = 0;
@@ -33,6 +35,8 @@ namespace Origins.NPCs {
 		internal bool brineIncantationDebuff = false;
 		internal bool injectIncantationDebuff = false;
 		internal bool mildewIncantationDebuff = false;
+		[AutoReset] internal bool forbiddenIncantationDebuff = false;
+		[AutoReset] internal bool forbiddenIncantationDebuffStrengthen = false;
 		public bool tornDebuff = false;
 		public float tornCurrentSeverity = 0;
 		public float tornSeverityRate = 0.3f / 180;
@@ -77,6 +81,7 @@ namespace Origins.NPCs {
 		public int amnesticRoseGooProj = 0;
 		public bool tetanus = false;
 		public override void ResetEffects(NPC npc) {
+			autoReset(this);
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
 				rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 16), npc.buffTime[rasterized] - 1);

@@ -1490,6 +1490,16 @@ Buffs: {
 		// DisplayName: Super Sludge
 		// Description: Your movement speed is heightened!
 	}
+
+	Pharaohs_Turquoise_Buff: {
+		// DisplayName: Pharaoh's Turquoise
+		// Description: ""
+	}
+
+	Pharaohs_Turquoise_Buff2: {
+		// DisplayName: Pharaoh's Turquoise
+		// Description: ""
+	}
 }
 
 DamageClassName: {
@@ -2240,6 +2250,8 @@ Projectiles: {
 	// Sunflower_Sunny.DisplayName: Sunflower Sunny
 	// Sunflower_Sunny_P.DisplayName: Sunflower Sunny
 	// Polluted_Water_P.DisplayName: Polluted Water
+	// Pharaohs_Turquoise_P.DisplayName: Pharaoh's Turquoise
+	// Pharaohs_Turquoise_Freeze.DisplayName: Pharaoh's Turquoise Freeze
 }
 
 Prefixes: {

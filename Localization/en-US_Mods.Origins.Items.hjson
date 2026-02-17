@@ -8043,6 +8043,11 @@ Super_Sludge_Item: {
 	Tooltip: ""
 }
 
+Pharaohs_Turquoise: {
+	DisplayName: Pharaoh's Turquoise
+	Tooltip: ""
+}
+
 Brine_Bottomless_Bucket: {
 	DisplayName: Bottomless Brine Bucket
 	Tooltip: Contains an endless amount of brine
