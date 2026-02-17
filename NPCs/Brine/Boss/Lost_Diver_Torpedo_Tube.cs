@@ -2,7 +2,6 @@
 using Origins.Buffs;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
-using PegasusLib;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;

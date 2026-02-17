@@ -23,6 +23,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public abstract class LiquidBomb : ModItem {
 		public abstract int LiquidType { get; }
 		public abstract int DustType { get; }
+		public virtual Color DustColor { get; }
 		LiquidBombP projectile;
 		protected override bool CloneNewInstances => true;
 		public override void Load() {
@@ -59,7 +60,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	#endregion
-	public class Oil_Bomb : LiquidBomb<Oil, Black_Smoke_Dust> { }
+	public class Oil_Bomb : LiquidBomb<Oil> {
+		public override int DustType => OriginsModIntegrations.CheckAprilFools() ? ModContent.DustType<Black_Smoke_Dust>() : White_Water_Dust.ID;
+		public override Color DustColor => OriginsModIntegrations.CheckAprilFools() ? default : FromHexRGB(0x1B1B1B);
+	}
+	public class Brine_Bomb : LiquidBomb<Brine> {
+		public override string Texture => typeof(Oil_Bomb).GetDefaultTMLName();
+		public override int DustType => DustID.Water_Jungle;
+	}
 }
 
 namespace Origins.Projectiles.Weapons {
@@ -98,7 +106,7 @@ namespace Origins.Projectiles.Weapons {
 			return true;
 		}
 		public override void OnKill(int timeLeft) {
-			BaseLiquidRocketP.BaseLiquidExplosiveKill(Projectile, Item.LiquidType, Item.DustType);
+			BaseLiquidRocketP.BaseLiquidExplosiveKill(Projectile, Item.LiquidType, Item.DustType, Item.DustColor);
 		}
 	}
 }

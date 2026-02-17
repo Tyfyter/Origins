@@ -25,6 +25,7 @@ namespace Origins.Items.Weapons.Ammo {
 	public abstract class BaseLiquidRocket : ModItem {
 		public abstract int LiquidType { get; }
 		public abstract int DustType { get; }
+		public virtual Color DustColor { get; }
 		protected override bool CloneNewInstances => true;
 		public override void Load() {
 			Mod.AddContent(new BaseLiquidRocketP(this));
@@ -63,6 +64,7 @@ namespace Origins.Items.Weapons.Ammo {
 		[field: CloneByReference]
 		BaseLiquidRocket Item { get; } = item;
 		public override string Name => Item.Name + "_P";
+		public override string Texture => Item.Texture + "_P";
 		public override LocalizedText DisplayName => Item.DisplayName;
 		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
@@ -78,15 +80,14 @@ namespace Origins.Items.Weapons.Ammo {
 			return true;
 		}
 		public override void OnKill(int timeLeft) {
-			BaseLiquidExplosiveKill(Projectile, Item.LiquidType, Item.DustType);
+			BaseLiquidExplosiveKill(Projectile, Item.LiquidType, Item.DustType, Item.DustColor);
 		}
 
-		public static void BaseLiquidExplosiveKill(Projectile proj, int liquid, int dust, bool isGrenade = false) {
+		public static void BaseLiquidExplosiveKill(Projectile proj, int liquid, int dust, Color color, bool isGrenade = false) {
 			proj.Resize(22, 22);
 			if (isGrenade) SoundEngine.PlaySound(in SoundID.Item62, proj.position);
 			else SoundEngine.PlaySound(in SoundID.Item14, proj.position);
 
-			Color color = Color.Transparent;
 			for (int i = 0; i < 30; i++) {
 				Dust.NewDustDirect(proj.position, proj.width, proj.height, DustID.Smoke, 0f, 0f, 100, color, 1.5f)
 				.velocity *= 1.4f;
@@ -114,18 +115,22 @@ namespace Origins.Items.Weapons.Ammo {
 		public static Utils.TileActionAttempt SpreadLiquid<TLiquid, TDust>() where TLiquid : ModLiquid where TDust : ModDust {
 			return SpreadLiquid(LiquidLoader.LiquidType<TLiquid>(), ModContent.DustType<TDust>());
 		}
+		public static Utils.TileActionAttempt SpreadLiquid<TLiquid>(int dust) where TLiquid : ModLiquid {
+			return SpreadLiquid(LiquidLoader.LiquidType<TLiquid>(), dust);
+		}
 		public static Utils.TileActionAttempt SpreadLiquid(int liquid, int dust) {
 			bool SpreadLiquid(int x, int y) {
 				if (Vector2.Distance(DelegateMethods.v2_1, new Vector2(x, y)) > DelegateMethods.f_1)
 					return false;
 
+				Color color = Color.Transparent;
 				if (WorldGen.PlaceLiquid(x, y, (byte)liquid, byte.MaxValue)) {
 					Vector2 position = new(x * 16, y * 16);
 					for (int i = 0; i < 3; i++) {
-						Dust dust1 = Dust.NewDustDirect(position, 16, 16, dust, 0f, 0f, 100, Color.Transparent, 2.2f);
+						Dust dust1 = Dust.NewDustDirect(position, 16, 16, dust, 0f, 0f, 100, color, 2.2f);
 						dust1.velocity.Y -= 1.2f;
 						dust1.velocity *= 7f;
-						Dust dust2 = Dust.NewDustDirect(position, 16, 16, dust, 0f, 0f, 100, Color.Transparent, 1.3f);
+						Dust dust2 = Dust.NewDustDirect(position, 16, 16, dust, 0f, 0f, 100, color, 1.3f);
 						dust2.velocity.Y -= 1.2f;
 						dust2.velocity *= 4f;
 					}
@@ -141,6 +146,7 @@ namespace Origins.Items.Weapons.Ammo {
 		[field: CloneByReference]
 		BaseLiquidRocket Item { get; } = item;
 		public override string Name => Item.Name + "_Grenade_P";
+		public override string Texture => Item.Texture + "_Grenade_P";
 		public override LocalizedText DisplayName => Item.DisplayName;
 		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
@@ -157,7 +163,7 @@ namespace Origins.Items.Weapons.Ammo {
 			return true;
 		}
 		public override void OnKill(int timeLeft) {
-			BaseLiquidRocketP.BaseLiquidExplosiveKill(Projectile, Item.LiquidType, Item.DustType, true);
+			BaseLiquidRocketP.BaseLiquidExplosiveKill(Projectile, Item.LiquidType, Item.DustType, Item.DustColor, true);
 		}
 	}
 	[Autoload(false)]
@@ -165,6 +171,7 @@ namespace Origins.Items.Weapons.Ammo {
 		[field: CloneByReference]
 		BaseLiquidRocket Item { get; } = item;
 		public override string Name => Item.Name + "_Mine_P";
+		public override string Texture => Item.Texture + "_Mine_P";
 		public override LocalizedText DisplayName => Item.DisplayName;
 		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
@@ -180,7 +187,7 @@ namespace Origins.Items.Weapons.Ammo {
 			return true;
 		}
 		public override void OnKill(int timeLeft) {
-			BaseLiquidRocketP.BaseLiquidExplosiveKill(Projectile, Item.LiquidType, Item.DustType);
+			BaseLiquidRocketP.BaseLiquidExplosiveKill(Projectile, Item.LiquidType, Item.DustType, Item.DustColor);
 		}
 	}
 	[Autoload(false)]
@@ -188,6 +195,7 @@ namespace Origins.Items.Weapons.Ammo {
 		[field: CloneByReference]
 		BaseLiquidRocket Item { get; } = item;
 		public override string Name => Item.Name + "_Snowman_P";
+		public override string Texture => Item.Texture + "_Snowman_P";
 		public override LocalizedText DisplayName => Item.DisplayName;
 		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
@@ -203,9 +211,16 @@ namespace Origins.Items.Weapons.Ammo {
 			return true;
 		}
 		public override void OnKill(int timeLeft) {
-			BaseLiquidRocketP.BaseLiquidExplosiveKill(Projectile, Item.LiquidType, Item.DustType);
+			BaseLiquidRocketP.BaseLiquidExplosiveKill(Projectile, Item.LiquidType, Item.DustType, Item.DustColor);
 		}
 	}
 	#endregion
-	public class Oil_Rocket : BaseLiquidRocket<Oil, Black_Smoke_Dust> { }
+	public class Oil_Rocket : BaseLiquidRocket<Oil> {
+		public override int DustType => OriginsModIntegrations.CheckAprilFools() ? ModContent.DustType<Black_Smoke_Dust>() : White_Water_Dust.ID;
+		public override Color DustColor => OriginsModIntegrations.CheckAprilFools() ? default : FromHexRGB(0x1B1B1B);
+	}
+	public class Brine_Rocket : BaseLiquidRocket<Brine> {
+		public override string Texture => typeof(Oil_Rocket).GetDefaultTMLName();
+		public override int DustType => DustID.Water_Jungle;
+	}
 }

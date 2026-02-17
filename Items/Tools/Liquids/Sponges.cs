@@ -19,6 +19,7 @@ namespace Origins.Items.Tools.Liquids {
 		public static bool[] UltraSpongeIngredients { get; } = ItemID.Sets.Factory.CreateBoolSet();
 		public abstract int LiquidType { get; }
 		public virtual bool UsedForUltraSponge => true;
+		public virtual bool LargeSuck => OriginsModIntegrations.Avalon is not null;
 		//The SetStaticDefaults of a sponge
 		public override void SetStaticDefaults() {
 			ItemID.Sets.AlsoABuildingItem[Type] = true; //Unused, but useful to have here for both other mods and future game updates
@@ -42,9 +43,8 @@ namespace Origins.Items.Tools.Liquids {
 		}
 		public virtual void SafeSetDefaults() { }
 		public override bool AltFunctionUse(Player player) {
-			return OriginsModIntegrations.Avalon is not null;
+			return LargeSuck;
 		}
-
 		//Here in HoldItem we do our sponge logic
 		//We use HoldItem as it is the hook/method run right before sponge logic
 		//This is so no extra item logic is run inbetween this hook/method and when the normal sponge logic would occur
@@ -75,13 +75,13 @@ namespace Origins.Items.Tools.Liquids {
 					if (tile.LiquidAmount <= 0) {
 						return;
 					}
-					ContentExtensions.SpongeAbsorb(Item, player, tile, origType, player.altFunctionUse == 2);
+					ContentExtensions.SpongeAbsorb(Item, player, tile, origType, LargeSuck && player.altFunctionUse == 2);
 				}
 			}
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			if (OriginsModIntegrations.Avalon is not null) {
-				tooltips.Insert("Tooltip0", "Tooltip0", Language.GetTextValue("Mods.Avalon.TooltipEdits.Sponges"));
+			if (LargeSuck && OriginsModIntegrations.Avalon is not null) {
+				tooltips.Insert("Tooltip0", Language.GetTextValue("Mods.Avalon.TooltipEdits.Sponges"));
 			}
 		}
 	}
@@ -90,5 +90,8 @@ namespace Origins.Items.Tools.Liquids {
 		public override void SafeSetStaticDefaults() {
 			LiquidID_TLmod.Sets.CanBeAbsorbedBy[LiquidLoader.LiquidType<Burning_Oil>()].Add(Type);
 		}
+	}
+	public class Brine_Sponge : SpongeBase<Brine> {
+		public override string Texture => typeof(Oil_Sponge).GetDefaultTMLName();
 	}
 }

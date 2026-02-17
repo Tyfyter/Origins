@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.ID;
 using Origins.Buffs;
 using Origins.Core;
 using Origins.CrossMod.Thorium.Items.Weapons.Bard;
@@ -15,7 +16,6 @@ using Origins.Journal;
 using Origins.Misc;
 using Origins.Music;
 using Origins.Tiles.BossDrops;
-using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -41,6 +41,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
+			LiquidID_TLmod.Sets.CanModdedNPCSpawnInModdedLiquid[Type][Liquids.Brine.ID] = true;
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 			AprilFoolsTextures.AddNPC(this);
 		}
@@ -459,6 +460,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			LiquidID_TLmod.Sets.CanModdedNPCSpawnInModdedLiquid[Type][Liquids.Brine.ID] = true;
 			Mildew_Carrion.Minions.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 			AprilFoolsTextures.AddNPC(this);
@@ -661,6 +663,7 @@ namespace Origins.NPCs.Brine.Boss {
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			LiquidID_TLmod.Sets.CanModdedNPCSpawnInModdedLiquid[Type][Liquids.Brine.ID] = true;
 			Mildew_Carrion.Minions.Add(Type);
 			Mildew_Creeper.FriendlyNPCTypes.Add(Type);
 		}

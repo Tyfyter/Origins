@@ -1,10 +1,7 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;

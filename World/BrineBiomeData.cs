@@ -1,5 +1,6 @@
 ﻿using AltLibrary.Common.Systems;
 using Origins.Backgrounds;
+using Origins.Liquids;
 using Origins.Tiles.Brine;
 using Origins.Walls;
 using Origins.Water;
@@ -67,11 +68,11 @@ namespace Origins.World.BiomeData {
 
 			public static bool IsInBrinePool(NPCSpawnInfo spawnInfo) {
 				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1);
-				return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && (tile.WallType == ModContent.WallType<Baryte_Wall>() || forcedBiomeActive);
+				return tile.LiquidAmount >= 255 && tile.LiquidType == Brine.ID && (tile.WallType == ModContent.WallType<Baryte_Wall>() || forcedBiomeActive);
 			}
 			public static bool IsInBrinePool(Vector2 pos) {
 				Tile tile = Framing.GetTileSafely(pos);
-				return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && (tile.WallType == ModContent.WallType<Baryte_Wall>() || forcedBiomeActive);
+				return tile.LiquidAmount >= 255 && tile.LiquidType == Brine.ID && (tile.WallType == ModContent.WallType<Baryte_Wall>() || forcedBiomeActive);
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) => IsInBrinePool(spawnInfo);
 		}
@@ -415,7 +416,7 @@ namespace Origins.World.BiomeData {
 						} /*else if (dist < 20 * sizeMult - 7f) {
 							tile.ResetToType(genRand.NextBool(5) ? mossID : TileID.Mud);
 						}*/
-						tile.LiquidType = LiquidID.Water;
+						tile.LiquidType = Brine.ID;
 						tile.LiquidAmount = 255;
 						WorldBiomeGeneration.ChangeRange.AddChangeToRange(x, y);
 					}

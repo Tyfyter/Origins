@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.ID;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
@@ -41,6 +42,7 @@ namespace Origins.NPCs.Brine {
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 			ModContent.GetInstance<Brine_Pool.SpawnRates>().AddSpawn(Type, SpawnChance);
+			LiquidID_TLmod.Sets.CanModdedNPCSpawnInModdedLiquid[Type][Liquids.Brine.ID] = true;
 			SegmentTypes = [
 				Type,
 				ModContent.NPCType<Brine_Serpent_Body>(),

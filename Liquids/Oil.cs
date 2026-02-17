@@ -1,5 +1,4 @@
-﻿using Humanizer;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ID;
 using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils.Structs;
@@ -10,11 +9,11 @@ using Origins.Tiles.Ashen;
 using Origins.Tiles.Other;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Liquid;
 using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace Origins.Liquids {
 	public class Oil : ModLiquid {
@@ -28,10 +27,11 @@ namespace Origins.Liquids {
 			LiquidRenderer.VISCOSITY_MASK[Type] = 50;
 			LiquidRenderer.WATERFALL_LENGTH[Type] = 10;
 			LiquidRenderer.DEFAULT_OPACITY[Type] = 0.98f;
+			LiquidRenderer.WATERFALL_LENGTH[Type] = 4;
 			SlopeOpacity = 1f;
 			LiquidfallOpacityMultiplier = 0.8f;
 			WaterRippleMultiplier = 0.3f;
-			SplashDustType = ModContent.DustType<Black_Smoke_Dust>();
+			SplashDustType = ModContent.DustType<White_Water_Dust>();
 			SplashSound = SoundID.SplashWeak;
 			FallDelay = 0;
 			ChecksForDrowning = true;
@@ -132,7 +132,7 @@ namespace Origins.Liquids {
 		}
 		public override int LiquidMerge(int i, int j, int otherLiquid) {
 			switch (otherLiquid) {
-				case LiquidID.Shimmer: return ModContent.TileType<Super_Sludge>(); // TODO: replace with "Super Sludge"
+				case LiquidID.Shimmer: return ModContent.TileType<Super_Sludge>();
 			}
 			return ModContent.TileType<Murky_Sludge>();
 		}
@@ -183,8 +183,57 @@ namespace Origins.Liquids {
 			TileFrame(i + 1, j);
 			TileFrame(i + 1, j + 1);
 		}
+		#region Splashing
+		public void CreateDust(Entity entity) {
+			int type = OriginsModIntegrations.CheckAprilFools() ? ModContent.DustType<Black_Smoke_Dust>() : SplashDustType;
+			Color color = OriginsModIntegrations.CheckAprilFools() ? default : FromHexRGB(0x1B1B1B);
+			Dust dust = Dust.NewDustDirect(new Vector2(entity.position.X - 6f, entity.position.Y + (entity.height / 2) - 8f), entity.width + 12, 24, type, newColor: color);
+			dust.velocity.Y -= 1f;
+			dust.velocity.X *= 2.5f;
+			dust.scale = 1.3f;
+			dust.alpha = 100;
+			dust.noGravity = true;
+		}
+		public override bool OnPlayerSplash(Player player, bool isEnter) {
+			for (int i = 0; i < 20; i++) {
+				CreateDust(player);
+			}
+			SoundEngine.PlaySound(SplashSound, player.position);
+			return false;
+		}
+		public override bool OnNPCSplash(NPC npc, bool isEnter) {
+			for (int i = 0; i < 10; i++) {
+				CreateDust(npc);
+			}
+			//only play the sound if the npc isnt a slime, mouse, tortoise, or if it has no gravity
+			if (npc.aiStyle != NPCAIStyleID.Slime &&
+					npc.type != NPCID.BlueSlime && npc.type != NPCID.MotherSlime && npc.type != NPCID.IceSlime && npc.type != NPCID.LavaSlime &&
+					npc.type != NPCID.Mouse &&
+					npc.aiStyle != Terraria.ID.NPCAIStyleID.GiantTortoise &&
+					!npc.noGravity) {
+				SoundEngine.PlaySound(SplashSound, npc.position);
+			}
+			return false;
+		}
+
+		public override bool OnProjectileSplash(Projectile proj, bool isEnter) {
+			for (int i = 0; i < 10; i++) {
+				CreateDust(proj);
+			}
+			SoundEngine.PlaySound(SplashSound, proj.position);
+			return false;
+		}
+
+		public override bool OnItemSplash(Item item, bool isEnter) {
+			for (int i = 0; i < 5; i++) {
+				CreateDust(item);
+			}
+			SoundEngine.PlaySound(SplashSound, item.position);
+			return false;
+		}
+		#endregion
 	}
-	public class Burning_Oil : Oil { // TODO: figure out a way to un-burn the oil
+	public class Burning_Oil : Oil {
 		public new static int ID { get; private set; }
 		public override Color MapColor => FromHexRGB(0xFA8A0A);
 		//Temp, so that a difference can be seen

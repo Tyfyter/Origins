@@ -1,5 +1,7 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.Hooks;
+using ModLiquidLib.ModLoader;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
 using Origins.Reflection;
@@ -4209,9 +4211,10 @@ namespace Origins {
 			self.maxStack = Item.CommonMaxStack;
 			self.consumable = true;
 		}
-		public static void Insert(this List<TooltipLine> tooltips, string target, string name, string textKey, bool after = true) {
+		public static void Insert(this List<TooltipLine> tooltips, string target, string textKey, string name = null, bool after = true) {
 			string text = Language.GetOrRegister(textKey).Value;
 			if (string.IsNullOrWhiteSpace(text)) return;
+			if (string.IsNullOrEmpty(name)) name = target;
 			int index = tooltips.FindIndex(line => line.Name == target);
 			TooltipLine line = new(Origins.instance, name, text);
 			if (index == -1) {
@@ -5485,6 +5488,71 @@ namespace Origins {
 				}
 			}
 		}
+		public static void PourBucket<TLiquid>(Item item, Player player, bool largePour, bool overwriteLiquids = false, bool bottomless = false) where TLiquid : ModLiquid {
+			PourBucket(item, player, (i, j) => LiquidLoader.LiquidType<TLiquid>(), largePour, overwriteLiquids, bottomless);
+		}
+		public static void PourBucket(Item item, Player player, int liquidType, bool largePour, bool overwriteLiquids = false, bool bottomless = false) {
+			PourBucket(item, player, (i, j) => liquidType, largePour, overwriteLiquids, bottomless);
+		}
+		public static void PourBucket(Item item, Player player, Func<int, int, int> liquidTypeFunc, bool largePour, bool overwriteLiquids = false, bool bottomless = false) {
+			bool placed = false;
+			int radiusMod = largePour ? 1 : 0;
+			for (int i = Player.tileTargetX - radiusMod; i <= Player.tileTargetX + radiusMod; i++) {
+				bool filledLiquidAbove = false; // when right clicking, tries to ensure that lower liquid tiles get entirely filled in, so the liquid doesn't settle and require more filling
+				for (int j = Player.tileTargetY - radiusMod; j <= Player.tileTargetY + radiusMod; j++) {
+					Tile tile = Main.tile[i, j];
+					int liquidType = liquidTypeFunc(i, j);
+					if (tile.LiquidAmount >= 200 && !filledLiquidAbove) {
+						if (overwriteLiquids) {
+							if (tile.LiquidType == liquidType) {
+								continue;
+							}
+						} else {
+							continue;
+						}
+					}
+					if (tile.HasUnactuatedTile) {
+						if (Main.tileSolid[tile.TileType]) {
+							if (!Main.tileSolidTop[tile.TileType]) {
+								if (tile.TileType != TileID.Grate) {
+									filledLiquidAbove = false;
+									continue;
+								}
+							}
+						}
+					}
+
+					if (tile.LiquidAmount != 0) {
+						if (tile.LiquidType != liquidType) {
+							if (overwriteLiquids) {
+								LiquidHooks.PlayLiquidChangeSound(i, j, liquidType, tile.LiquidType);
+							} else {
+								continue;
+							}
+						}
+					}
+					tile.LiquidType = liquidType;
+					tile.LiquidAmount = byte.MaxValue;
+					WorldGen.SquareTileFrame(i, j);
+					if (!bottomless) {
+						item.stack--;
+						player.PutItemInInventoryFromItemUsage(ItemID.EmptyBucket, player.selectedItem);
+					}
+					player.ApplyItemTime(item);
+					if (Main.netMode == NetmodeID.MultiplayerClient) {
+						NetMessage.sendWater(i, j);
+					}
+					placed = true;
+					filledLiquidAbove = true;
+				}
+			}
+			if (placed) {
+				SoundEngine.PlaySound(SoundID.SplashWeak, player.position);
+			}
+		}
+		public static void SpongeAbsorb<TLiquid>(Item item, Player player, Tile tile, bool largeSuck, bool anyLiquid = false) where TLiquid : ModLiquid {
+			SpongeAbsorb(item, player, tile, LiquidLoader.LiquidType<TLiquid>(), largeSuck, anyLiquid);
+		}
 		public static void SpongeAbsorb(Item item, Player player, Tile tile, int origType, bool largeSuck, bool anyLiquid = false) {
 			//The following is the code to then suck up liquid
 			//We do this by...
@@ -5522,7 +5590,7 @@ namespace Origins {
 						if (largeSuck) {
 							// if right clicking, suck up the entirety of the liquid in surrounding tiles
 							tile3.LiquidAmount = 0;
-							tile3.LiquidType = 0;
+							tile3.LiquidType = LiquidID.Water;
 						} else {
 							// left click behaviour
 							int currentAmount = tile3.LiquidAmount;
@@ -5534,7 +5602,7 @@ namespace Origins {
 							tile3.LiquidType = liquidType;
 							if (tile3.LiquidAmount == 0) //If the tile has been set to have no liquid, we reset the liquid's type
 							{
-								tile3.LiquidType = 0;
+								tile3.LiquidType = LiquidID.Water;
 							}
 						}
 						//We make sure we update nearby tiles 

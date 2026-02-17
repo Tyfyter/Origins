@@ -1,21 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Items.Accessories;
-using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner;
-using Origins.NPCs.Felnum;
-using Origins.Projectiles;
-using PegasusLib;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -7,7 +6,7 @@ namespace Origins.Water {
 	public class Brine_Water_Style : ModWaterStyle {
 		public override int ChooseWaterfallStyle() => ModContent.GetInstance<Brine_Waterfall_Style>().Slot;
 		public override int GetDropletGore() => GoreID.ChimneySmoke1 + Main.rand.Next(3);
-		public override int GetSplashDust() => 99;
+		public override int GetSplashDust() => DustID.Water_Jungle;
 		public override void LightColorMultiplier(ref float r, ref float g, ref float b) {
 			r = 0.5f;
 			g = 0.9f;

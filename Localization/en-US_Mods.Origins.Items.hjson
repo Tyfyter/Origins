@@ -7951,7 +7951,11 @@ Administrator_Panel_Item: {
 
 Oil_Bottomless_Bucket: {
 	DisplayName: Bottomless Oil Bucket
-	Tooltip: "'More oil for your oil!'"
+	Tooltip:
+		'''
+		Contains an endless amount of oil
+		'More oil for your oil!'
+		'''
 }
 
 Oil_Bucket: {
@@ -8037,4 +8041,29 @@ Oil_Sponge: {
 Super_Sludge_Item: {
 	DisplayName: Super Sludge
 	Tooltip: ""
+}
+
+Brine_Bottomless_Bucket: {
+	DisplayName: Bottomless Brine Bucket
+	Tooltip: Contains an endless amount of brine
+}
+
+Brine_Bucket: {
+	DisplayName: Brine Bucket
+	Tooltip: ""
+}
+
+Brine_Sponge: {
+	DisplayName: Brine Absorbant Sponge
+	Tooltip: Capable of soaking up endless amount of brine
+}
+
+Brine_Rocket: {
+	DisplayName: Brine Rocket
+	Tooltip: Spreads brine on impact
+}
+
+Brine_Bomb: {
+	DisplayName: Brine Bomb
+	Tooltip: A small explosion that will spread brine
 }

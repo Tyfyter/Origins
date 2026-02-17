@@ -1104,6 +1104,7 @@ EXPLOSIVE WEAPONS:
 (^) Bombardment
 (^) Bomb Launcher
 (^) Brainade
+(@, ^3) Brine Bomb !!!
 (^) Cold Snap
 (^) Defiled Spirit
 (^) Eruption
@@ -1129,7 +1130,7 @@ EXPLOSIVE WEAPONS:
 (^) Link Grenade
 (^) Matrix
 (^) Meteor
-(#2, ^2) Oil Bomb !!! (permanent dusts)
+(☻) Oil Bomb !!! (permanent dusts)
 (^) Peatball
 (^) Potato Mine
 (^) Regurgitator of Souls
@@ -1520,7 +1521,7 @@ TILES:
 LIQUIDS:
 |---
 (#) Amebic Gel !!!
-(#) Brine !!!
+(☻) Brine !!!
 (#2) Oil !!!
 ---
 
@@ -1846,6 +1847,7 @@ AMMO:
 
 (^) Resizable Mine VI
 
+(@, ^3) Brine Rocket !!!
 (^) Homing Rocket I
 (^) Homing Rocket II
 (#2, ^2) Oil Rocket !!! (permanent dusts)

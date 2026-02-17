@@ -1,5 +1,8 @@
-﻿using MonoMod.Cil;
+﻿using ModLiquidLib.ID;
+using ModLiquidLib.ModLoader;
+using MonoMod.Cil;
 using Origins.Buffs;
+using Origins.Liquids;
 using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.Tiles.Brine;
@@ -34,6 +37,7 @@ namespace Origins.NPCs.Brine {
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][Toxic_Shock_Debuff.ID] = true;
 			ModContent.GetInstance<Brine_Pool.SpawnRates>().AddSpawn(Type, SpawnChance);
+			LiquidID_TLmod.Sets.CanModdedNPCSpawnInModdedLiquid[Type][Liquids.Brine.ID] = true;
 		}
 		public static void DisableRipples(ILContext il) {
 			ILCursor c = new(il);

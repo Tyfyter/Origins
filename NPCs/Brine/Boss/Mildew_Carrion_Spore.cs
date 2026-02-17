@@ -1,5 +1,4 @@
 ﻿using MonoMod.Cil;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;

@@ -4,7 +4,6 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
 using Origins.Music;
 using Origins.World.BiomeData;
-using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.IO;
