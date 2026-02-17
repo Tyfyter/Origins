@@ -27,6 +27,7 @@ namespace Origins.Core {
 				if (positions[environmentSound.Type] is Vector2 oldPos && position.DistanceSQ(Main.Camera.Center) >= oldPos.DistanceSQ(Main.Camera.Center)) return;
 				positions[environmentSound.Type] = position;
 			}
+			public static bool IsPlaying(AEnvironmentSound environmentSound) => positions[environmentSound.Type].HasValue;
 			public static void UpdateSounds() {
 				for (int i = 0; i < positions.Length; i++) {
 					if (positions[i] is Vector2 pos) Sounds[i].UpdateSound(pos);
@@ -42,6 +43,7 @@ namespace Origins.Core {
 			Type = index;
 		}
 		public void TrySetNearest(Vector2 position) => EnvironmentSounds.SoundPositions.TrySet(this, position);
+		public bool IsPlaying() => EnvironmentSounds.SoundPositions.IsPlaying(this);
 		public abstract void UpdateSound(Vector2 position);
 	}
 }

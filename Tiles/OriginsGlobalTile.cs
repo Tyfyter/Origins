@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Items.Other.Consumables;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
@@ -165,6 +166,9 @@ namespace Origins.Tiles {
 					}
 				}
 			}
+		}
+		public override void AnimateTile() {
+			if (!Main.dedServ) EnvironmentSounds.UpdateSounds();
 		}
 	}
 }
