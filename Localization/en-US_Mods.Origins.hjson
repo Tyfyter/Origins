@@ -1480,6 +1480,11 @@ Buffs: {
 	}
 
 	Broken_Armor_Debuff.EffectDescription: Reduces effective armor by 20
+
+	Oiled_Debuff: {
+		DisplayName: Oiled
+		Description: Fire debuffs inflict more damage
+	}
 }
 
 DamageClassName: {

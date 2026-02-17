@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ID;
 using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils.Structs;
+using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Liquids.Waterfalls;
 using Origins.Tiles.Ashen;
@@ -76,7 +77,7 @@ namespace Origins.Liquids {
 		}
 		//Secondly, we apply the 2nd tier of Well Fed for 30 seconds
 		public override void OnPlayerCollision(Player player) {
-			player.AddBuff(BuffID.Oiled, 3 * 60);
+			player.AddBuff(ModContent.BuffType<Oiled_Debuff>(), 3 * 60);
 		}
 		public override void OnProjectileCollision(Projectile proj) {
 			if (OriginsSets.Projectiles.FireProjectiles[proj.type]) {
@@ -205,8 +206,8 @@ namespace Origins.Liquids {
 			}
 		}
 		public override void OnPlayerCollision(Player player) {
-			player.AddBuff(BuffID.Oiled, 3 * 60);
-			player.AddBuff(BuffID.OnFire3, 2 * 60);
+			player.AddBuff(ModContent.BuffType<Oiled_Debuff>(), 3 * 60);
+			player.AddBuff(BuffID.OnFire, 2 * 60);
 		}
 		public override void OnProjectileCollision(Projectile proj) { }
 		public override bool UpdateLiquid(int i, int j, Liquid liquid) {

@@ -536,6 +536,10 @@ namespace Origins {
 				Player.lifeRegen -= 9 * damageMult;
 			}
 
+			if (oiled && (Player.onFire || Player.onFire2 || Player.onFire3 || Player.onFrostBurn || Player.onFrostBurn2)) {
+				Player.lifeRegen -= 50;
+			}
+
 			if (Player.lifeRegen < 0 && dangerTime < maxDangerTime) dangerTime = maxDangerTime;
 		}
 		public override bool CanBeHitByProjectile(Projectile proj) {

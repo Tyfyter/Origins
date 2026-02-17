@@ -675,6 +675,7 @@ namespace Origins {
 					}
 				}
 				Max(ref mufflerAmount, 0);
+				if (oiled && Player.burned) Player.AddBuff(BuffID.OnFire, 30);
 			}
 			foreach (Projectile projectile in Main.ActiveProjectiles) {
 				if (projectile.owner == Player.whoAmI && projectile.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerTarget.HasValue) {

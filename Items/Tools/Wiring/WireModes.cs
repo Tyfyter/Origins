@@ -52,7 +52,8 @@ namespace Origins.Items.Tools.Wiring {
 		Cutter = 1 << 1
 	}
 	//TODO: remove, moved to PegasusLib
-	public abstract class WireMode : ModTexturedType, IFlowerMenuItem<WirePetalData> {
+	public abstract class WireMode : ModTexturedType, IFlowerMenuItem<WirePetalData>, IBrokenContent {
+		public string BrokenReason => "Moved to PegasusLib";
 		public int Type { get; internal set; }
 		public virtual int ItemType { get; } = ItemID.Wire;
 		public virtual bool IsExtra => false;
