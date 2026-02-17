@@ -3495,6 +3495,7 @@ CritType: {
 	// Communion_Type: Critically strikes when hitting the same target multiple times
 	// Viper_Rifle_Crit_Type: Critically strikes on otherwise afflicted enemies
 	// Felnum_Crit_Type: "{$Mods.CritRework.CritTypes.FoeIsWet.Description}"
+	// Pharaohs_Turquoise_Crit_Type: Critically strikes when hitting the same target with all {0} shots
 }
 
 BuilderToggle: {

@@ -85,9 +85,6 @@ namespace Origins.CrossMod {
 	public abstract class CritType<TItem> : CritType where TItem : ModItem {
 		public override void PreSetup() {
 			ForcedCritTypes[ModContent.ItemType<TItem>()] = this;
-			if (this is Miter_Saw_Crit_Type) {
-
-			}
 		}
 	}
 	public class Felnum_Crit_Type : CritType {

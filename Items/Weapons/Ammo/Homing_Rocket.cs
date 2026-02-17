@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public static virtual int TileDestructionRadius => 0;
 		public static abstract Color InnerColor { get; }
 		public static abstract Color OuterColor { get; }
-		public sealed static void DoAI(Projectile projectile) {
+		public sealed static void DoHomingAI(Projectile projectile) {
 			float targetWeight = 300;
 			Vector2 targetPos = default;
 			bool foundTarget = Main.player[projectile.owner].DoHoming((target) => {
@@ -48,7 +48,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.CloneDefaults(projectileType);
 			AIType = projectileType;
 		}
-		public override void AI() => IRocketItem.DoAI(Projectile);
+		public override void AI() => IRocketItem.DoHomingAI(Projectile);
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.Kill();
 			return base.OnTileCollide(oldVelocity);
@@ -102,7 +102,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.buyPrice(silver: 1);
 			Item.rare = ItemRarityID.Red;
 		}
-		public void AI(Projectile projectile, bool child) => IRocketItem.DoAI(projectile);
+		public void AI(Projectile projectile, bool child) => IRocketItem.DoHomingAI(projectile);
 	}
 	public class Homing_Rocket_I_Rocket() : Homing_Rocket_Version<Homing_Rocket_I>(ItemID.RocketLauncher, ProjectileID.RocketI) {
 		public override string Texture => typeof(Homing_Rocket_I).GetDefaultTMLName();
@@ -133,7 +133,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.buyPrice(silver: 1);
 			Item.rare = ItemRarityID.Red;
 		}
-		public void AI(Projectile projectile, bool child) => IRocketItem.DoAI(projectile);
+		public void AI(Projectile projectile, bool child) => IRocketItem.DoHomingAI(projectile);
 	}
 	public class Homing_Rocket_II_Rocket() : Homing_Rocket_Version<Homing_Rocket_II>(ItemID.RocketLauncher, ProjectileID.RocketI) {
 		public override string Texture => typeof(Homing_Rocket_II).GetDefaultTMLName();

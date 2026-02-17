@@ -5,6 +5,7 @@ using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Liquids;
 using Origins.Projectiles.Weapons;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -12,6 +13,7 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using ThoriumMod.Projectiles;
 
 namespace Origins.Items.Weapons.Ammo {
 	#region Base Class
@@ -112,27 +114,32 @@ namespace Origins.Items.Weapons.Ammo {
 				proj.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(projPos, 3f, SpreadLiquid(liquid, dust));
 			}
 		}
-		public static Utils.TileActionAttempt SpreadLiquid<TLiquid, TDust>() where TLiquid : ModLiquid where TDust : ModDust {
-			return SpreadLiquid(LiquidLoader.LiquidType<TLiquid>(), ModContent.DustType<TDust>());
+		public static Utils.TileActionAttempt SpreadLiquid<TLiquid, TDust>(Func<Color> color = null) where TLiquid : ModLiquid where TDust : ModDust {
+			return SpreadLiquid(LiquidLoader.LiquidType<TLiquid>, ModContent.DustType<TDust>, color);
 		}
-		public static Utils.TileActionAttempt SpreadLiquid<TLiquid>(int dust) where TLiquid : ModLiquid {
-			return SpreadLiquid(LiquidLoader.LiquidType<TLiquid>(), dust);
+		public static Utils.TileActionAttempt SpreadLiquid<TLiquid>(Func<int> dust, Func<Color> color = null) where TLiquid : ModLiquid {
+			return SpreadLiquid(LiquidLoader.LiquidType<TLiquid>, dust, color);
 		}
-		public static Utils.TileActionAttempt SpreadLiquid(int liquid, int dust) {
+		public static Utils.TileActionAttempt SpreadLiquid(int liquid, int dust, Color color = default) {
+			return SpreadLiquid(() => liquid, () => dust, () => color);
+		}
+		public static Utils.TileActionAttempt SpreadLiquid(Func<int> liquid, Func<int> dust, Func<Color> color = null) {
 			bool SpreadLiquid(int x, int y) {
 				if (Vector2.Distance(DelegateMethods.v2_1, new Vector2(x, y)) > DelegateMethods.f_1)
 					return false;
 
-				Color color = Color.Transparent;
-				if (WorldGen.PlaceLiquid(x, y, (byte)liquid, byte.MaxValue)) {
+				Color dustColor = color?.Invoke() ?? Color.Transparent;
+				if (WorldGen.PlaceLiquid(x, y, (byte)liquid(), byte.MaxValue)) {
 					Vector2 position = new(x * 16, y * 16);
+					int dustType = dust();
 					for (int i = 0; i < 3; i++) {
-						Dust dust1 = Dust.NewDustDirect(position, 16, 16, dust, 0f, 0f, 100, color, 2.2f);
-						dust1.velocity.Y -= 1.2f;
-						dust1.velocity *= 7f;
-						Dust dust2 = Dust.NewDustDirect(position, 16, 16, dust, 0f, 0f, 100, color, 1.3f);
-						dust2.velocity.Y -= 1.2f;
-						dust2.velocity *= 4f;
+						Dust dust = Dust.NewDustDirect(position, 16, 16, dustType, 0f, 0f, 100, dustColor, 2.2f);
+						dust.velocity.Y -= 1.2f;
+						dust.velocity *= 7f;
+
+						dust = Dust.NewDustDirect(position, 16, 16, dustType, 0f, 0f, 100, dustColor, 1.3f);
+						dust.velocity.Y -= 1.2f;
+						dust.velocity *= 4f;
 					}
 					return true;
 				}
@@ -216,8 +223,10 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	#endregion
 	public class Oil_Rocket : BaseLiquidRocket<Oil> {
-		public override int DustType => OriginsModIntegrations.CheckAprilFools() ? ModContent.DustType<Black_Smoke_Dust>() : White_Water_Dust.ID;
-		public override Color DustColor => OriginsModIntegrations.CheckAprilFools() ? default : FromHexRGB(0x1B1B1B);
+		public override int DustType => GetDustType();
+		public override Color DustColor => GetDustColor();
+		public static int GetDustType() => OriginsModIntegrations.CheckAprilFools() ? ModContent.DustType<Black_Smoke_Dust>() : White_Water_Dust.ID;
+		public static Color GetDustColor() => OriginsModIntegrations.CheckAprilFools() ? default : FromHexRGB(0x1B1B1B);
 	}
 	public class Brine_Rocket : BaseLiquidRocket<Brine> {
 		public override string Texture => typeof(Oil_Rocket).GetDefaultTMLName();

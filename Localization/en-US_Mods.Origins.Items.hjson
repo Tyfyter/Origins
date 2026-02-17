@@ -8046,6 +8046,7 @@ Super_Sludge_Item: {
 Pharaohs_Turquoise: {
 	DisplayName: Pharaoh's Turquoise
 	Tooltip: ""
+	CantGetBonus: "{$DisplayName} has default stats which would prevent it from behaving properly, its stats may have been modified by another mod"
 }
 
 Brine_Bottomless_Bucket: {

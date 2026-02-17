@@ -1,20 +1,24 @@
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
+using Origins.CrossMod;
 using Origins.Dev;
-using Origins.Items.Weapons.Magic;
 using Origins.NPCs;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Pharaohs_Turquoise : ModItem, ICustomDrawItem {
+		public static int HitsForBonus => 3;
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
 		public override void SetStaticDefaults() {
 			OriginsSets.Items.ItemsThatCanChannelWithRightClick[Type] = true;
+			if (Item.useAnimation / Item.useTime < HitsForBonus) PegasusLib.PegasusLib.LogLoadingWarning(this.GetLocalization("CantGetBonus"));
 		}
 		public override void SetDefaults() {
 			Item.damage = 50;
@@ -33,7 +37,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item8;
 			Item.holdStyle = ItemHoldStyleID.HoldLamp;
-			Item.useLimitPerAnimation = 3;
+			Item.useLimitPerAnimation = HitsForBonus;
 		}
 		public override void UseItemFrame(Player player) => Incantations.HoldItemFrame(player);
 		public override void HoldItemFrame(Player player) => Incantations.HoldItemFrame(player);
@@ -46,6 +50,9 @@ namespace Origins.Items.Weapons.Summoner {
 			);
 		}
 		public override bool AltFunctionUse(Player player) => player.ownedProjectileCounts[ModContent.ProjectileType<Pharaohs_Turquoise_Freeze>()] <= 0;
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			if (player.altFunctionUse == 2) velocity = player.Directions(yMultiplier: -1);
+		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {
 				type = ModContent.ProjectileType<Pharaohs_Turquoise_Freeze>();
@@ -136,11 +143,20 @@ namespace Origins.Items.Weapons.Summoner {
 		class Counter {
 			int count = 0;
 			int targetIndex = -1;
+			public int Count => count;
 			public bool HitTarget(int target) {
 				if (targetIndex == -1) targetIndex = target;
 				else if (targetIndex != target) count = -9999;
-				return ++count >= 3;
+				return ++count >= Pharaohs_Turquoise.HitsForBonus;
 			}
+		}
+		public class Pharaohs_Turquoise_Crit_Type : CritType<Pharaohs_Turquoise> {
+			public override LocalizedText Description => base.Description.WithFormatArgs(Pharaohs_Turquoise.HitsForBonus);
+			public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
+				if (projectile?.ModProjectile is not Pharaohs_Turquoise_P proj) return false;
+				return proj.counter.Count + 1 >= Pharaohs_Turquoise.HitsForBonus;
+			}
+			public override float CritMultiplier(Player player, Item item) => 1.25f;
 		}
 	}
 	public class Pharaohs_Turquoise_Freeze : ModProjectile {

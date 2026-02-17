@@ -40,8 +40,8 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			new Liquid_Rocket_Dummy_Canister(Canister(0xc3c3c3, 0x5698ff, true), DelegateMethods.SpreadWater).Register(ItemID.WetRocket);
 			new Liquid_Rocket_Dummy_Canister(Canister(0x655dc5, 0xf59300, true), DelegateMethods.SpreadLava).Register(ItemID.LavaRocket);
 			new Liquid_Rocket_Dummy_Canister(Canister(0x9b7c40, 0xfec214, true), DelegateMethods.SpreadHoney).Register(ItemID.HoneyRocket);
-			new Liquid_Rocket_Dummy_Canister(Canister(new Color(48, 48, 48), new Color(79, 68, 59), true), BaseLiquidRocketP.SpreadLiquid<Oil, Black_Smoke_Dust>()).Register(ModContent.ItemType<Oil_Rocket>());
-			new Liquid_Rocket_Dummy_Canister(Canister(new Color(29, 98, 12), new Color(26, 61, 4), true), BaseLiquidRocketP.SpreadLiquid<Brine>(DustID.Water_Jungle)).Register(ModContent.ItemType<Brine_Rocket>());
+			new Liquid_Rocket_Dummy_Canister(Canister(new Color(48, 48, 48), new Color(79, 68, 59), true), BaseLiquidRocketP.SpreadLiquid<Oil>(Oil_Rocket.GetDustType, Oil_Rocket.GetDustColor)).Register(ModContent.ItemType<Oil_Rocket>());
+			new Liquid_Rocket_Dummy_Canister(Canister(new Color(29, 98, 12), new Color(26, 61, 4), true), BaseLiquidRocketP.SpreadLiquid<Brine>(() => DustID.Water_Jungle)).Register(ModContent.ItemType<Brine_Rocket>());
 		}
 		//Shorthand methods
 		static CanisterData Canister(Color o, Color i, bool special = false) => new(o, i, special);
