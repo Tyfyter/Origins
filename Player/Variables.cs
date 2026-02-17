@@ -1412,15 +1412,15 @@ namespace Origins {
 	}
 	[AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
 	public sealed class AutoResetAttribute : Attribute {
-		public static Action<TPlayer> GenerateReset<TPlayer>() where TPlayer : ModPlayer {
-			DynamicMethod method = new("AutoReset", typeof(void), [typeof(TPlayer)], true);
+		public static Action<TEntity> GenerateReset<TEntity>() where TEntity : class {
+			DynamicMethod method = new("AutoReset", typeof(void), [typeof(TEntity)], true);
 			ILGenerator gen = method.GetILGenerator();
-			LocalBuilder @default = gen.DeclareLocal(typeof(TPlayer));
+			LocalBuilder @default = gen.DeclareLocal(typeof(TEntity));
 
-			gen.Emit(OpCodes.Call, ((Delegate)ModContent.GetInstance<TPlayer>).Method);
+			gen.Emit(OpCodes.Call, ((Delegate)ModContent.GetInstance<TEntity>).Method);
 			gen.Emit(OpCodes.Stloc, @default);
 
-			foreach (FieldInfo field in typeof(TPlayer).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
+			foreach (FieldInfo field in typeof(TEntity).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
 				if (field.GetCustomAttribute<AutoResetAttribute>() is null) continue;
 				gen.Emit(OpCodes.Ldarg_0);
 				gen.Emit(OpCodes.Ldloc, @default);
@@ -1430,7 +1430,7 @@ namespace Origins {
 
 			gen.Emit(OpCodes.Ret);
 
-			return method.CreateDelegate<Action<TPlayer>>();
+			return method.CreateDelegate<Action<TEntity>>();
 		}
 	}
 }

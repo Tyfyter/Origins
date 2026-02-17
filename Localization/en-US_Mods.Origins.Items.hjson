@@ -8038,3 +8038,8 @@ Super_Sludge_Item: {
 	DisplayName: Super Sludge
 	Tooltip: ""
 }
+
+Pharaohs_Turquoise: {
+	DisplayName: Pharaoh's Turquoise
+	Tooltip: ""
+}
