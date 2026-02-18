@@ -54,13 +54,13 @@ namespace Origins.Backgrounds {
 		/// <param name="chosenBiome"></param>
 		/// <returns></returns>
 		internal CaptureBiome? CaptureIconBiomeSettings(int chosenBiome) {
-			if (chosenBiome == biomeCapturesIndexs[2]) { //biomeChoice is bacially the icon ID
+			if (chosenBiome == biomeCapturesIndexs[0]) { //biomeChoice is bacially the icon ID
 				return new CaptureBiome(ModContent.GetInstance<Ashen_Surface_Background>().Slot, ModContent.GetInstance<Ashen_Water_Style>().Slot); //create a new capture biome
 			}
-			if (chosenBiome == biomeCapturesIndexs[2]) { //biomeChoice is bacially the icon ID
+			if (chosenBiome == biomeCapturesIndexs[1]) { //biomeChoice is bacially the icon ID
 				return new CaptureBiome(ModContent.GetInstance<Defiled_Surface_Background>().Slot, ModContent.GetInstance<Defiled_Water_Style>().Slot); //create a new capture biome
 			}
-			if (chosenBiome == biomeCapturesIndexs[3]) { //biomeChoice is bacially the icon ID
+			if (chosenBiome == biomeCapturesIndexs[2]) { //biomeChoice is bacially the icon ID
 				return new CaptureBiome(ModContent.GetInstance<Riven_Surface_Background>().Slot, ModContent.GetInstance<Riven_Water_Style>().Slot); //create a new capture biome
 			}
 			return null;
