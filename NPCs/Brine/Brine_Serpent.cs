@@ -1,10 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ID;
+using ModLiquidLib.Utils;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -151,7 +151,7 @@ namespace Origins.NPCs.Brine {
 		public override bool CanHitNPC(NPC target) => TargetTypes.Contains(target.type) || (target.ModNPC is not IBrinePoolNPC && !SegmentTypes.Contains(target.type));
 		public virtual bool CanTargetNPC(NPC other) {
 			if (OriginsSets.NPCs.TargetDummies[other.type]) return false;
-			return other.wet && CanHitNPC(other);
+			return other.GetWet(Liquids.Brine.ID) && CanHitNPC(other);
 		}
 		public virtual bool CheckTargetLOS(Vector2 target) => true;
 		private static VertexStrip _vertexStrip = new();

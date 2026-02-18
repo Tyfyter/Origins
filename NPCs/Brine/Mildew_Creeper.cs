@@ -5,7 +5,6 @@ using Origins.Items.Weapons.Summoner;
 using Origins.Misc;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;

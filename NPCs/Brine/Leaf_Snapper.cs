@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.Utils;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -66,7 +66,7 @@ namespace Origins.NPCs.Brine {
 			PathfindingTime = 0;
 			DoTargeting();
 			Vector2 direction;
-			if (NPC.wet) {
+			if (NPC.GetWet(Liquids.Brine.ID)) {
 				NPC.width = (int)(28 * NPC.scale);
 				NPC.height = (int)(28 * NPC.scale);
 				NPC.aiStyle = NPCAIStyleID.ActuallyNone;
@@ -163,7 +163,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
-			if (NPC.wet) NPC.DoFrames(6, 7..^1);
+			if (NPC.GetWet(Liquids.Brine.ID)) NPC.DoFrames(6, 7..^1);
 			else if (NPC.velocity.X != 0) NPC.DoFrames(6, 0..7);
 			else NPC.frame.Y = 0;
 		}
@@ -196,7 +196,7 @@ namespace Origins.NPCs.Brine {
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (!NPC.wet) return true;
+			if (!NPC.GetWet(Liquids.Brine.ID)) return true;
 			SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
 			if (NPC.spriteDirection != 1) {
 				spriteEffects |= SpriteEffects.FlipVertically;

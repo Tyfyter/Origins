@@ -1,4 +1,5 @@
-﻿using Origins.Buffs;
+﻿using ModLiquidLib.Utils;
+using Origins.Buffs;
 using Origins.Items.Weapons.Melee;
 using Origins.Projectiles;
 using Terraria;
@@ -57,13 +58,13 @@ namespace Origins.NPCs.Brine.Boss {
 			return null;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 90);
+			if (target.GetWet(Liquids.Brine.ID)) target.AddBuff(Cavitation_Debuff.ID, 90);
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 90);
+			if (target.GetWet(Liquids.Brine.ID)) target.AddBuff(Cavitation_Debuff.ID, 90);
 		}
 		public void Explode(int delay = 0) { }
 		public bool IsExploding => true;

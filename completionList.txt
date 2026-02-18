@@ -1104,7 +1104,7 @@ EXPLOSIVE WEAPONS:
 (^) Bombardment
 (^) Bomb Launcher
 (^) Brainade
-(@, ^3) Brine Bomb !!!
+(☻, †) Brine Bomb !!!
 (^) Cold Snap
 (^) Defiled Spirit
 (^) Eruption
@@ -1374,7 +1374,7 @@ TILES:
 (#3, ^2) Large Storage Container
 (^) Laser Tag Console
 (#, ^2) Liquid Sensor (Amebic Gel) !!!
-(#, ^2) Liquid Sensor (Brine) !!!
+(☻, †) Liquid Sensor (Brine) !!!
 (^) Liquid Sensor (Oil)
 (#2, ^2) Mechanical Key Node !!!
 (#2, ^2) Medium Storage Container !!! (what I meant was keep the top collision, but not the middle)
@@ -1521,7 +1521,7 @@ TILES:
 LIQUIDS:
 |---
 (#) Amebic Gel !!!
-(☻) Brine !!!
+(☻, †) Brine !!!
 (#2) Oil !!!
 ---
 
@@ -1739,7 +1739,7 @@ CONSUMABLES:
 (^) Latchkey
 (^) Lottery Ticket
 (#, ^2) Magic Gel Dropper !!!
-(#2, ^2) Magic Brine Dropper !!!
+(☻) Magic Brine Dropper !!!
 (^) Magic Oil Dropper
 (^) Polluted Water
 (^) Spyglass
@@ -1847,10 +1847,10 @@ AMMO:
 
 (^) Resizable Mine VI
 
-(@, ^3) Brine Rocket !!!
+(☻, †) Brine Rocket !!!
 (^) Homing Rocket I
 (^) Homing Rocket II
-(#2, ^2) Oil Rocket !!! (permanent dusts)
+(☻, †) Oil Rocket !!! (permanent dusts)
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
 (^) Valkyrum Bullet

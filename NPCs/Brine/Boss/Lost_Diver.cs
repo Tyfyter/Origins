@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.Utils;
 using Origins.Graphics;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
@@ -139,7 +140,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override bool CanTargetNPC(NPC other) => !OriginsSets.NPCs.TargetDummies[other.type] && NPC.WithinRange(other.Center, 16 * 400) && CanHitNPC(other);
 		public override bool CanHitNPC(NPC target) => !Mildew_Creeper.FriendlyNPCTypes.Contains(target.type);
 		public override bool CheckTargetLOS(Vector2 target) {
-			if (!NPC.wet) return true;
+			if (!NPC.GetWet(Liquids.Brine.ID)) return true;
 			if (!base.CheckTargetLOS(target)) return false;
 			for (int i = 0; i < 2; i++) {
 				for (int j = 0; j < 2; j++) {
@@ -149,7 +150,7 @@ namespace Origins.NPCs.Brine.Boss {
 			return true;
 		}
 		public override float RippleTargetWeight(float magnitude, float distance) => 0;
-		public override bool? CanFallThroughPlatforms() => NPC.wet || NPC.targetRect.Bottom > NPC.BottomLeft.Y;
+		public override bool? CanFallThroughPlatforms() => NPC.GetWet(Liquids.Brine.ID) || NPC.targetRect.Bottom > NPC.BottomLeft.Y;
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
@@ -163,14 +164,14 @@ namespace Origins.NPCs.Brine.Boss {
 			bool targetWet = false;
 			if (NPC.HasPlayerTarget) {
 				Player player = Main.player[NPC.target];
-				targetWet = player.wet;
+				targetWet = player.GetWet(Liquids.Brine.ID);
 				targetVelocity = player.velocity;
 			} else if (NPC.HasNPCTarget) {
 				NPC npcTarget = Main.npc[NPC.TranslatedTargetIndex];
-				targetWet = npcTarget.wet;
+				targetWet = npcTarget.GetWet(Liquids.Brine.ID);
 				targetVelocity = npcTarget.velocity;
 			}
-			bool enraged = NPC.wet && !targetWet;
+			bool enraged = NPC.GetWet(Liquids.Brine.ID) && !targetWet;
 			Vector2 differenceFromTarget = TargetPos - NPC.Center;
 			float distanceFromTarget = differenceFromTarget.Length();
 			Vector2 direction = differenceFromTarget / distanceFromTarget;
@@ -197,7 +198,7 @@ namespace Origins.NPCs.Brine.Boss {
 			} else if (NPC.velocity.Y != 0f) {
 				bodyFrame.Y = bodyFrame.Height * 5;
 			} else {
-				if (NPC.wet) NPC.frameCounter = 0;
+				if (NPC.GetWet(Liquids.Brine.ID)) NPC.frameCounter = 0;
 				bodyFrame.Y = 0;
 			}
 			void TrySwim() {
@@ -206,7 +207,7 @@ namespace Origins.NPCs.Brine.Boss {
 				swimCharge -= swimTime - oldTime;
 			}
 			if (enraged) swimCharge = 60 * 10;
-			if (NPC.wet) {
+			if (NPC.GetWet(Liquids.Brine.ID)) {
 				NPC.velocity *= 0.96f;
 				if (TargetPos != default) {
 					if (Math.Abs(differenceFromTarget.Y) > 16 * 100) {

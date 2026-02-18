@@ -1,14 +1,11 @@
 ﻿using ModLiquidLib.ID;
-using ModLiquidLib.ModLoader;
+using ModLiquidLib.Utils;
 using MonoMod.Cil;
 using Origins.Buffs;
-using Origins.Liquids;
-using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.Tiles.Brine;
 using Origins.Walls;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -70,10 +67,10 @@ namespace Origins.NPCs.Brine {
 		public override bool CanHitNPC(NPC target) => TargetNPCTypes.Contains(target.type) || target.ModNPC is not IBrinePoolNPC;
 		public virtual bool CanTargetNPC(NPC other) {
 			if (OriginsSets.NPCs.TargetDummies[other.type]) return false;
-			return other.wet && CanHitNPC(other);
+			return other.GetWet(Liquids.Brine.ID) && CanHitNPC(other);
 		}
 		public virtual bool CanTargetPlayer(Player player) {
-			return player.wet && !player.invis;
+			return player.GetWet(Liquids.Brine.ID) && !player.invis;
 		}
 		public virtual float RippleTargetWeight(float magnitude, float distance) {
 			return (magnitude / distance) * 7.5f;
@@ -254,7 +251,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public virtual bool CanSpawnInPosition(int tileX, int tileY) {
 			Tile tile = Framing.GetTileSafely(tileX, tileY);
-			return tile.LiquidAmount >= 255 && tile.LiquidType == LiquidID.Water && (tile.WallType == ModContent.WallType<Baryte_Wall>() || Brine_Pool.forcedBiomeActive);
+			return tile.LiquidAmount >= 255 && tile.LiquidType == Liquids.Brine.ID && (tile.WallType == ModContent.WallType<Baryte_Wall>() || Brine_Pool.forcedBiomeActive);
 		}
 		public override int SpawnNPC(int tileX, int tileY) {
 			tileY = OriginGlobalNPC.GetAerialSpawnPosition(tileX, tileY, this, (spawnY) => CanSpawnInPosition(tileX, spawnY));
@@ -272,7 +269,7 @@ namespace Origins.NPCs.Brine {
 		public bool CheckTargetLOS(Vector2 target);
 		public bool CanTargetNPC(NPC other);
 		public bool CanTargetPlayer(Player player) {
-			return player.wet && !player.invis;
+			return player.GetWet(Liquids.Brine.ID) && !player.invis;
 		}
 		public float RippleTargetWeight(float magnitude, float distance) {
 			return (magnitude / distance) * 7.5f;

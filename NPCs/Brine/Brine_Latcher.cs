@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.Utils;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -98,7 +98,7 @@ namespace Origins.NPCs.Brine {
 			Lighting.AddLight(NPC.Center, 0f, 0.4f, 0f);
 			DoTargeting();
 			Vector2 direction = default;
-			if (NPC.wet) {
+			if (NPC.GetWet(Liquids.Brine.ID)) {
 				NPC.noGravity = true;
 				bool targetIsPrey = TargetPos != default && !TargetIsRipple && NPC.HasNPCTarget && PreyNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type);
 				if (TargetPos != default) {
@@ -155,7 +155,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
-			if (NPC.wet) NPC.DoFrames(6);
+			if (NPC.GetWet(Liquids.Brine.ID)) NPC.DoFrames(6);
 		}
 		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
 			if (NPC.ai[0] > 0) {

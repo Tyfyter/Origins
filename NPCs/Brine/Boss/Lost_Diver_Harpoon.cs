@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.Utils;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
@@ -111,7 +112,7 @@ namespace Origins.NPCs.Brine.Boss {
 					return;
 				}
 				float multiplier = ContentExtensions.DifficultyDamageMultiplier - 1;
-				if (owner.wet && !player.wet) {
+				if (owner.GetWet(Liquids.Brine.ID) && !player.GetWet(Liquids.Brine.ID)) {
 					multiplier += 2;
 				} else Projectile.hostile = false;
 				MathUtils.LinearSmoothing(ref player.velocity, Projectile.velocity * 0.2f * multiplier, 0.6f * multiplier);
@@ -136,7 +137,7 @@ namespace Origins.NPCs.Brine.Boss {
 			modifiers.ScalingArmorPenetration += Brine_Pool_NPC.ScalingArmorPenetrationToCompensateForTSNerf;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			if ((Main.expertMode || (Owner.wet && !target.wet)) && Projectile.ai[0] == 0) Projectile.ai[1] = target.whoAmI;
+			if ((Main.expertMode || (Owner.GetWet(Liquids.Brine.ID) && !target.GetWet(Liquids.Brine.ID))) && Projectile.ai[0] == 0) Projectile.ai[1] = target.whoAmI;
 			Projectile.ai[0] = 1f;
 			Projectile.netUpdate = true;
 		}

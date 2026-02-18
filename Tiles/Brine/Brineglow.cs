@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Other.Testing;
@@ -133,7 +132,7 @@ namespace Origins.Tiles.Brine {
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			Tile below = Framing.GetTileSafely(i, j - 1);
-			if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water || !below.TileIsType(Type) && !below.TileIsType(TileType<Peat_Moss>()) && !below.TileIsType(TileType<Baryte>())) {
+			if (tile.LiquidAmount < 255 || tile.LiquidType != Liquids.Brine.ID || !below.TileIsType(Type) && !below.TileIsType(TileType<Peat_Moss>()) && !below.TileIsType(TileType<Baryte>())) {
 				WorldGen.KillTile(i, j);
 				return false;
 			}
@@ -374,7 +373,15 @@ namespace Origins.Tiles.Brine {
 	public class Brineglow_Debug_Item : TestingItem {
 		public override string Texture => "Origins/Tiles/Brine/Brineglow_Item";
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.TitaniumOre);
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.useTurn = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.autoReuse = true;
+			Item.maxStack = Item.CommonMaxStack;
+			Item.consumable = true;
+			Item.width = 12;
+			Item.height = 12;
 			Item.createTile = TileType<Brineglow>();
 
 			Item.maxStack = 9999;

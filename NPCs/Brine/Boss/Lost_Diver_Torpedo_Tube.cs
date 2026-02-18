@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.Utils;
 using Origins.Buffs;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
@@ -40,7 +41,7 @@ namespace Origins.NPCs.Brine.Boss {
 				bool foundTarget = false;
 				if (Projectile.reflected) {
 					foreach (NPC target in Main.ActiveNPCs) {
-						if (target.wet && target.CanBeChasedBy(Projectile)) {
+						if (target.GetWet(Liquids.Brine.ID) && target.CanBeChasedBy(Projectile)) {
 							Vector2 currentDiff = target.Center - Projectile.Center;
 							float dist = currentDiff.Length();
 							currentDiff /= dist;
@@ -54,7 +55,7 @@ namespace Origins.NPCs.Brine.Boss {
 					}
 				} else {
 					foreach (Player target in Main.ActivePlayers) {
-						if (!target.dead && target.wet) {
+						if (!target.dead && target.GetWet(Liquids.Brine.ID)) {
 							Vector2 currentDiff = target.Center - Projectile.Center;
 							float dist = currentDiff.Length();
 							currentDiff /= dist;
@@ -98,10 +99,10 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			Projectile.penetrate--;
-			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 120);
+			if (target.GetWet(Liquids.Brine.ID)) target.AddBuff(Cavitation_Debuff.ID, 120);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (target.wet) target.AddBuff(Cavitation_Debuff.ID, 120);
+			if (target.GetWet(Liquids.Brine.ID)) target.AddBuff(Cavitation_Debuff.ID, 120);
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			if (Projectile.alpha < 200) {

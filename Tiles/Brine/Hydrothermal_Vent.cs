@@ -1,13 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Origins.Items.Other.Testing;
-using Origins.Tiles.Defiled;
-using Origins.World.BiomeData;
-using PegasusLib;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;

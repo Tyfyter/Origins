@@ -1,11 +1,8 @@
 ﻿using Terraria;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Terraria.Localization;
 using Origins.Items.Materials;
-using Origins.World.BiomeData;
-using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Melee;
 
 namespace Origins.Tiles.Brine {

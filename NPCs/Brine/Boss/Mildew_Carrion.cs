@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.ID;
+using ModLiquidLib.Utils;
 using Origins.Buffs;
 using Origins.Core;
 using Origins.CrossMod.Thorium.Items.Weapons.Bard;
@@ -221,7 +222,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override bool CanHitNPC(NPC target) => !Mildew_Creeper.FriendlyNPCTypes.Contains(target.type);
 		public override bool CheckTargetLOS(Vector2 target) => true;
 		public override float RippleTargetWeight(float magnitude, float distance) => 0;
-		public override bool? CanFallThroughPlatforms() => NPC.wet || NPC.targetRect.Bottom > NPC.BottomLeft.Y;
+		public override bool? CanFallThroughPlatforms() => NPC.GetWet(Liquids.Brine.ID) || NPC.targetRect.Bottom > NPC.BottomLeft.Y;
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()

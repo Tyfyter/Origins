@@ -78,7 +78,7 @@ namespace Origins.Tiles {
 			Tile tile = Main.tile[i, j];
 			if (tile.WallType == ModContent.WallType<Baryte_Wall>()) {
 				tile.LiquidAmount = 255;
-				tile.LiquidType = LiquidID.Water;
+				tile.LiquidType = Liquids.Brine.ID;
 			}
 		}
 		public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak) {

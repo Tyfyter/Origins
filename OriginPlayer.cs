@@ -558,8 +558,6 @@ namespace Origins {
 					InflictTorn(Player, 188, 750, 1f, true);
 					Player.velocity *= 0.95f;
 					GetAssimilation<Riven_Assimilation>().Percent += 0.001f; // This value x60 for every second, remember 100% is the max assimilation. This should be 6% every second resulting in 16.67 seconds of total time to play in Riven Water
-				} else if (Player.InModBiome<Brine_Pool>()) {
-					Player.AddBuff(Toxic_Shock_Debuff.ID, 300);
 				}
 			}
 

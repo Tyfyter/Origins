@@ -1,12 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
-using Origins.Items.Materials;
-using Origins.Items.Other.Testing;
-using Origins.Projectiles;
-using Origins.Tiles.Other;
-using PegasusLib;
+﻿using Origins.Dev;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;

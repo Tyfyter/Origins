@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.Utils;
 using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -75,7 +75,7 @@ namespace Origins.NPCs.Brine {
 		public override void AI() {
 			DoTargeting();
 			Vector2 direction;
-			if (NPC.wet) {
+			if (NPC.GetWet(Liquids.Brine.ID)) {
 				bool flipTargetRotation = false;
 				NPC.noGravity = true;
 				bool targetIsPrey = TargetPos != default && !TargetIsRipple && NPC.HasNPCTarget && PreyNPCTypes.Contains(Main.npc[NPC.TranslatedTargetIndex].type);
@@ -197,7 +197,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
-			if (NPC.wet) NPC.DoFrames(6);
+			if (NPC.GetWet(Liquids.Brine.ID)) NPC.DoFrames(6);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {

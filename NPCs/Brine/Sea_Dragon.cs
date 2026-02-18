@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.Utils;
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Materials;
@@ -7,7 +8,6 @@ using Origins.Items.Weapons.Melee;
 using Origins.Journal;
 using Origins.Misc;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -83,7 +83,7 @@ namespace Origins.NPCs.Brine {
 		public override void AI() {
 			DoTargeting();
 			Vector2 direction;
-			if (NPC.wet) {
+			if (NPC.GetWet(Liquids.Brine.ID)) {
 				NPC.noGravity = true;
 				if (TargetPos != default && !(NPC.HasValidTarget || TargetIsRipple)) TargetPos = default;
 				if (TargetPos != default) {

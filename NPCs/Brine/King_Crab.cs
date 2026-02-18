@@ -3,7 +3,6 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using Terraria;
 using Terraria.DataStructures;

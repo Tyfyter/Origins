@@ -1,9 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.Utils;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -76,7 +76,7 @@ namespace Origins.NPCs.Brine {
 			DoTargeting();
 			Vector2 direction;
 			bool canCharge = false;
-			if (NPC.wet) {
+			if (NPC.GetWet(Liquids.Brine.ID)) {
 				NPC.noGravity = true;
 				if (TargetPos != default) {
 					direction = NPC.DirectionTo(TargetPos);

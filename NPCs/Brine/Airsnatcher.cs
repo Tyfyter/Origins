@@ -1,19 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.Utils;
 using Origins.Dev;
-using Origins.Items.Accessories;
-using Origins.Items.Materials;
 using Origins.Items.Tools;
 using Origins.Tiles.Brine;
 using Origins.Walls;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -66,7 +63,7 @@ namespace Origins.NPCs.Brine {
 				if (!tile.HasTile || tile.BottomSlope || !tileTypes.Contains(tile.TileType)) return 0;
 				for (int j = 1; j < NPC.height / 16; j++) {
 					tile = Framing.GetTileSafely(spawnInfo.SpawnTileX + i, spawnInfo.SpawnTileY - j);
-					if (tile.LiquidAmount < 255 || tile.LiquidType != LiquidID.Water) return 0;
+					if (tile.LiquidAmount < 255 || tile.LiquidType != Liquids.Brine.ID) return 0;
 					if (!hasRightWall && tile.WallType == wallType) hasRightWall = true;
 				}
 			}
@@ -127,7 +124,7 @@ namespace Origins.NPCs.Brine {
 			NPC.timeLeft = 60;
 		}
 		public override void UpdateLifeRegen(ref int damage) {
-			if (!NPC.wet) {
+			if (!NPC.GetWet(Liquids.Brine.ID)) {
 				NPC.lifeRegen -= 120;
 				if (damage < 0) damage = 0;
 				damage += 30;

@@ -1,16 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.Dusts;
 using Origins.Graphics;
 using Origins.Items.Other.Testing;
 using Origins.Items.Tools;
 using Origins.Tiles.Brine;
-using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -26,19 +23,19 @@ namespace Origins.Walls {
 			}
 			Origins.WallHammerRequirement[Type] = 70;
 			Origins.WallBlocksMinecartTracks[Type] = true;
-			OriginsSets.Walls.GeneratesLiquid[Type] = LiquidID.Water;
+			OriginsSets.Walls.GeneratesLiquid[Type] = Liquids.Brine.ID;
 			WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
 			AddMapEntry(new Color(6, 26, 19));
 			DustType = DustID.GreenMoss;
 		}
 		public override void RandomUpdate(int i, int j) {
 			Tile tile = Framing.GetTileSafely(i, j);
-			if (j >= Main.worldSurface - 50 && (tile.LiquidAmount == 0 || (tile.LiquidAmount < 255 && tile.LiquidType == LiquidID.Water))) {
+			if (j >= Main.worldSurface - 50 && (tile.LiquidAmount == 0 || (tile.LiquidAmount < 255 && tile.LiquidType == Liquids.Brine.ID))) {
 				tile.LiquidAmount = 255;
-				tile.LiquidType = LiquidID.Water;
+				tile.LiquidType = Liquids.Brine.ID;
 				WorldGen.SquareTileFrame(i, j);
 			}
-			if (!tile.HasTile && tile.LiquidAmount >= 200 && tile.LiquidType == LiquidID.Water && WorldGen.genRand.NextBool(4)) {
+			if (!tile.HasTile && tile.LiquidAmount >= 200 && tile.LiquidType == Liquids.Brine.ID && WorldGen.genRand.NextBool(4)) {
 				int coral = TileType<Venus_Coral>();
 				static bool IsSolid(Tile tile) {
 					return tile.HasTile && Main.tileSolid[tile.TileType];
