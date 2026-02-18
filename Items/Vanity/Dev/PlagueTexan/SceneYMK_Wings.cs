@@ -5,12 +5,12 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using PegasusLib;
 using System.Diagnostics.CodeAnalysis;
+using Origins.Core;
 
 namespace Origins.Items.Vanity.Dev.PlagueTexan;
 [AutoloadEquip(EquipType.Wings)]
-public class SceneYMK_Wings : ModItem {
+public class SceneYMK_Wings : ModItem, IRightClickableAccessory {
 	public static int WingsID { get; private set; }
 
 	public override void SetStaticDefaults() {
@@ -68,6 +68,12 @@ public class SceneYMK_Wings : ModItem {
 			constantAscend = -player.gravity;
 		}
 	}
+	public bool RightClickAccessory(Item[] inv, int context, int slot) {
+		OriginPlayer originPlayer = Main.LocalPlayer.OriginPlayer();
+		originPlayer.sceneYMKWingsNaturalColor[Main.LocalPlayer.CurrentLoadoutIndex] ^= true;
+		originPlayer.SyncPlayer(-1, Main.myPlayer, false, 0, PlayerVisualSyncDatas.NaturalMoonlightWings);
+		return false;
+	}
 }
 public abstract class SceneYMK_Dye_Slot(SceneYMK_Dye_Slot.GetDye dyeGetter) : ExtraDyeSlot {
 	public delegate ref int? GetDye(OriginsDyeSlots player);
@@ -85,6 +91,7 @@ public class SceneYMK_Dye_Slot_0() : SceneYMK_Dye_Slot(player => ref player.cSce
 public class SceneYMK_Dye_Slot_1() : SceneYMK_Dye_Slot(player => ref player.cSceneMYKDye1) { }
 public class SceneYMK_Dye_Slot_2() : SceneYMK_Dye_Slot(player => ref player.cSceneMYKDye2) { }
 public class SceneYMK_Wings_Layer : PlayerDrawLayer {
+	AutoLoadingAsset<Texture2D> undyed = typeof(SceneYMK_Wings).GetDefaultTMLName() + "_Undyed";
 	AutoLoadingAsset<Texture2D> feathers0 = typeof(SceneYMK_Wings).GetDefaultTMLName() + "_Feathers_0";
 	AutoLoadingAsset<Texture2D> feathers1 = typeof(SceneYMK_Wings).GetDefaultTMLName() + "_Feathers_1";
 	AutoLoadingAsset<Texture2D> feathers2 = typeof(SceneYMK_Wings).GetDefaultTMLName() + "_Feathers_2";
@@ -95,7 +102,10 @@ public class SceneYMK_Wings_Layer : PlayerDrawLayer {
 			DrawData data = drawInfo.DrawDataCache[i];
 			if (data.texture == TextureAssets.Wings[SceneYMK_Wings.WingsID]?.Value) {
 				OriginsDyeSlots dyes = drawInfo.drawPlayer.GetModPlayer<OriginsDyeSlots>();
-
+				if (drawInfo.drawPlayer.OriginPlayer().sceneYMKWingsNaturalColor[drawInfo.drawPlayer.CurrentLoadoutIndex]) {
+					data.texture = undyed;
+					drawInfo.DrawDataCache[i] = data;
+				}
 				data.texture = feathers0;
 				data.shader = dyes.cSceneMYKDye0 ?? drawInfo.cWings;
 				drawInfo.DrawDataCache.Insert(++i, data);

@@ -1,17 +1,17 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Reflection;
-using PegasusLib;
+﻿using Microsoft.Xna.Framework.Graphics;
 using PegasusLib.Graphics;
 using PegasusLib.Reflection;
+using ReLogic.Content;
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Dev {
@@ -214,6 +214,48 @@ namespace Origins.Dev {
 				frame.Y += frame.Height;
 			}
 			return sprites;
+		}
+	}
+	public class DyeTextureCommand : ModCommand {
+#if !DEBUG
+		public override bool IsLoadingEnabled(Mod mod) => false;
+#endif
+		public override CommandType Type => CommandType.Chat;
+		public override string Command => "dye";
+		public override string Usage => "/dye <texture> <dye item> <save path>";
+		public override string Description => "Dyes a texture and ";
+		public override bool IsCaseSensitive => true;
+		public override void Action(CommandCaller caller, string input, string[] args) {
+			if (!ModContent.RequestIfExists(args[0], out Asset<Texture2D> texture, AssetRequestMode.ImmediateLoad)) {
+				caller.Reply($"Texture \"{args[0]}\" does not exist");
+				return;
+			}
+			if (!int.TryParse(args[1], out int dyeID) && !ItemID.Search.TryGetId(args[1], out dyeID)) {
+				caller.Reply($"Item \"{args[1]}\" does not exist");
+				return;
+			}
+			if (dyeID < 0 || dyeID > ItemLoader.ItemCount) {
+				caller.Reply($"Item \"{args[1]}\" does not exist");
+				return;
+			}
+			ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(dyeID);
+			if (shader == null) {
+				caller.Reply($"Item \"{args[1]}\" does not have an associated shader");
+				return;
+			}
+			args[2] = string.Join(" ", args[2..]);
+			Array.Resize(ref args, 3);
+			FileInfo saveFile = new(args[2]);
+			if (saveFile.Exists) {
+				caller.Reply($"Cannot overwrite existing file \"{args[2]}\"");
+				return;
+			}
+			SpriteGenerator.Generate(spriteBatch => {
+				DrawData data = new(texture.Value, Vector2.Zero, Color.White);
+				shader.Apply(Main.LocalPlayer, data);
+				data.Draw(spriteBatch);
+				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			}, (texture.Width(), texture.Height())).SaveAsPng(saveFile.OpenWrite(), texture.Width(), texture.Height());
 		}
 	}
 }

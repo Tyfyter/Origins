@@ -411,6 +411,7 @@ namespace Origins {
 		public bool sorcererEmblem = false;
 		public bool summonerEmblem = false;
 		public bool explosiveEmblem = false;
+		public bool[] sceneYMKWingsNaturalColor = new bool[3];
 		#endregion
 
 		#region explosive stats

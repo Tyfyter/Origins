@@ -15,7 +15,14 @@ namespace Origins.Core {
 		private void On_ItemSlot_LeftClick_ItemArray_int_int(On_ItemSlot.orig_LeftClick_ItemArray_int_int orig, Item[] inv, int context, int slot) {
 			orig(inv, context, slot);
 			if (Main.mouseRight && Main.mouseRightRelease) {
-				ProcessRightClick(inv, context, slot);
+				switch (Math.Abs(context)) {
+					case ItemSlot.Context.EquipArmorVanity:
+					case ItemSlot.Context.EquipAccessoryVanity:
+					break;
+					default:
+					ProcessRightClick(inv, context, slot);
+					break;
+				}
 			}
 		}
 

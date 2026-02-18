@@ -114,6 +114,8 @@ namespace Origins {
 
 			if (clone.blastSetActive != blastSetActive) visualSyncDatas |= BlastSetActive;
 
+			if (clone.sceneYMKWingsNaturalColor != sceneYMKWingsNaturalColor) visualSyncDatas |= NaturalMoonlightWings;
+
 			SyncPlayer(-1, Main.myPlayer, false, syncDatas, visualSyncDatas);
 		}
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
@@ -158,6 +160,7 @@ namespace Origins {
 			packet.Write((ushort)visualSyncDatas);
 
 			if (visualSyncDatas.HasFlag(BlastSetActive)) packet.Write(blastSetActive);
+			if (visualSyncDatas.HasFlag(NaturalMoonlightWings)) packet.Write(sceneYMKWingsNaturalColor[Player.CurrentLoadoutIndex]);
 
 			packet.Send(toWho, fromWho);
 		}
@@ -185,6 +188,7 @@ namespace Origins {
 
 			PlayerVisualSyncDatas visualSyncDatas = (PlayerVisualSyncDatas)reader.ReadUInt16();
 			if (visualSyncDatas.HasFlag(BlastSetActive)) blastSetActive = reader.ReadBoolean();
+			if (visualSyncDatas.HasFlag(NaturalMoonlightWings)) sceneYMKWingsNaturalColor[Player.CurrentLoadoutIndex] = reader.ReadBoolean();
 		}
 	}
 	[Flags]
@@ -200,6 +204,7 @@ namespace Origins {
 	}
 	[Flags]
 	public enum PlayerVisualSyncDatas : ushort {
-		BlastSetActive   = 0b0000000000000001,
+		BlastSetActive			= 0b0000000000000001,
+		NaturalMoonlightWings	= 0b0000000000000010,
 	}
 }

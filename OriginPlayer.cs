@@ -878,6 +878,9 @@ namespace Origins {
 			tag.Add("crownJewel", crownJewel);
 			tag.Add("thePlantUnlocks", unlockedPlantModes.Select(mode => new ItemDefinition(mode)).Concat(unloadedPlantModes).ToList());
 			tag.Add("GUID", guid.ToByteArray());
+			for (int i = 0; i < sceneYMKWingsNaturalColor.Length; i++) {
+				if (sceneYMKWingsNaturalColor[i]) tag.Add($"{nameof(sceneYMKWingsNaturalColor)}{i}", true);
+			}
 		}
 		public override void LoadData(TagCompound tag) {
 			if (tag.SafeGet<Item>("EyndumCore") is Item eyndumCoreItem) {
@@ -928,6 +931,9 @@ namespace Origins {
 				guid = new Guid(guidBytes, false);
 			} else {
 				guid = Guid.NewGuid();
+			}
+			for (int i = 0; i < sceneYMKWingsNaturalColor.Length; i++) {
+				tag.TryGet($"{nameof(sceneYMKWingsNaturalColor)}{i}", out sceneYMKWingsNaturalColor[i]);
 			}
 		}
 		TagCompound questsTag;
