@@ -108,11 +108,16 @@ namespace Origins.Items.Weapons.Summoner {
 				DrawOffsetX = 0;
 				DrawOriginOffsetY = 0;
 			}
+			if (!ShouldUpdatePosition()) {
+				DrawOriginOffsetX += Main.rand.Next(3) * Main.rand.NextBool().ToDirectionInt();
+				DrawOriginOffsetY += Main.rand.Next(3) * Main.rand.NextBool().ToDirectionInt();
+				if (Projectile.localAI[1].TrySet(1)) Projectile.extraUpdates++;
+			}
 			Projectile.frame = (int)Projectile.localAI[0] * 5;
 			int addFrame = (int)(Projectile.ai[2] * (1f / 15) * 5);
 			if (addFrame >= 5) Projectile.Kill();
 			Projectile.frame += addFrame;
-			if (Projectile.ai[2] != 0) Projectile.ai[2]++;
+			if (Projectile.ai[2] != 0) Projectile.ai[2] += 2;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.penetrate++;
@@ -140,6 +145,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.position += oldVelocity * CollisionExt.Raymarch(Projectile.Center, oldVelocity, maxDist);
 			return false;
 		}
+		public override Color? GetAlpha(Color lightColor) => Color.White * Projectile.Opacity;
 		class Counter {
 			int count = 0;
 			int targetIndex = -1;
