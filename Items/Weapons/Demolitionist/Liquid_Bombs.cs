@@ -86,10 +86,6 @@ namespace Origins.Projectiles.Weapons {
 			Projectile.timeLeft = 180;
 			//Origins.instance.Logger.Info($"Projectile: Name: {Name}, Type: {Type}, Texture: {Texture}");
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			fallThrough = false;
-			return true;
-		}
 		//This is to make the bomb emit our liquid's splash at its fuse like other liquid bombs
 		public override bool PreAI() {
 			if (Projectile.owner != Main.myPlayer || Projectile.timeLeft > 3) {

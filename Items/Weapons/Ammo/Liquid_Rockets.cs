@@ -1,10 +1,7 @@
 ﻿using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils;
 using Origins.Dusts;
-using Origins.Items.Weapons.Ammo;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Liquids;
-using Origins.Projectiles.Weapons;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -13,7 +10,6 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using ThoriumMod.Projectiles;
 
 namespace Origins.Items.Weapons.Ammo {
 	#region Base Class
@@ -165,10 +161,6 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.timeLeft = 180;
 			//Origins.instance.Logger.Info($"Projectile: Name: {Name}, Type: {Type}, Texture: {Texture}");
 		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			fallThrough = false;
-			return true;
-		}
 		public override void OnKill(int timeLeft) {
 			BaseLiquidRocketP.BaseLiquidExplosiveKill(Projectile, Item.LiquidType, Item.DustType, Item.DustColor, true);
 		}
@@ -188,10 +180,6 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.CloneDefaults(ProjectileID.DryMine);
 			AIType = ProjectileID.DryMine;
 			//Origins.instance.Logger.Info($"Projectile: Name: {Name}, Type: {Type}, Texture: {Texture}");
-		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			fallThrough = false;
-			return true;
 		}
 		public override void OnKill(int timeLeft) {
 			BaseLiquidRocketP.BaseLiquidExplosiveKill(Projectile, Item.LiquidType, Item.DustType, Item.DustColor);

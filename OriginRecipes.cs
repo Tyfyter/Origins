@@ -371,6 +371,12 @@ namespace Origins {
 					}
 				}
 
+				if (r.Matches((ItemID.LogicSensor_Liquid, null), null, (ItemID.Cog, null), (ItemID.MagicWaterDropper, null), (ItemID.MagicLavaDropper, null), (ItemID.MagicHoneyDropper, null), (ItemID.Wire, null))) {
+					foreach (BaseMagicDropper dropper in ModContent.GetContent<BaseMagicDropper>()) {
+						if (BaseMagicDropper.AnyLiquidSensorIngredient[dropper.GetTileItem().Type]) r.requiredItem.Insert(4, new Item(dropper.GetTileItem().Type));
+					}
+				}
+
 				/*if (r.Matches((ItemID.CelestialShell, null), new int[] { TileID.TinkerersWorkbench }, (ItemID.CelestialStone, 1), (ItemID.MoonShell, 1))) {
 					r.DisableRecipe();
 				} only uncomment when Ornament of Metamorphosis is implemented */

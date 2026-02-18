@@ -8073,3 +8073,13 @@ Brine_Bomb: {
 	DisplayName: Brine Bomb
 	Tooltip: A small explosion that will spread brine
 }
+
+Brine_Liquid_Sensor_Item: {
+	DisplayName: Liquid Sensor (Brine)
+	Tooltip: Signals when brine starts or stops touching it
+}
+
+Magic_Dropper_Brine_Item: {
+	DisplayName: Magic Brine Dropper
+	Tooltip: ""
+}

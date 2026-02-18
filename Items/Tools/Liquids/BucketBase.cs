@@ -27,6 +27,9 @@ namespace Origins.Items.Tools.Liquids {
 		public virtual bool Debug { get; }
 		public virtual bool LavaImmune => true;
 		public virtual bool LargePour => (Endless || Debug) && OriginsModIntegrations.Avalon is not null;
+#if !DEBUG
+		public override bool IsLoadingEnabled(Mod mod) => !Debug || DebugConfig.Instance.ForceEnableDebugItems;
+#endif
 		//The SetStaticDefaults of a bucket
 		public override void SetStaticDefaults() {
 			ItemID.Sets.IsLavaImmuneRegardlessOfRarity[Type] = LavaImmune;
@@ -113,7 +116,7 @@ namespace Origins.Items.Tools.Liquids {
 			}
 		}
 	}
-	#endregion
+#endregion
 	#region Debug
 	// TODO: uncomment me when Ameebic Gel liquid is created
 	/*public class Amebic_Bucket : BucketBase<Amebic_Gel> {

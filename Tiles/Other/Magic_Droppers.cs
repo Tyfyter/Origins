@@ -19,25 +19,30 @@ namespace Origins.Tiles.Other {
 	public abstract class BaseMagicDropper<TLiquid> : BaseMagicDropper where TLiquid : ModLiquid {
 		public override int LiquidType => LiquidLoader.LiquidType<TLiquid>();
 	}
+	[ReinitializeDuringResizeArrays]
 	public abstract class BaseMagicDropper : ModTile {
+		public static bool[] AnyLiquidSensorIngredient = ItemID.Sets.Factory.CreateBoolSet();
 		public override string Texture => $"Terraria/Images/Tiles_{TileID.WaterDrip}";
 		public abstract Color MapColor { get; }
 		public abstract int LiquidType { get; }
 		public abstract int DroppletType { get; }
 		public virtual int HitDust => DustID.Dirt;
+		public virtual bool UsedForLiquidSensorAny => true;
+		public virtual string[] ItemLegacyNames => null;
 		public virtual string ItemTexture => base.Texture;
-		public TileItem Item { get; protected set; }
 		public sealed override void Load() {
-			Item = new TileItem(this, textureOverride: ItemTexture)
-			.WithExtraStaticDefaults(item => item.ResearchUnlockCount = 100)
-			.WithExtraDefaults(item => item.value = Terraria.Item.sellPrice(copper: 40))
+			new TileItem(this, textureOverride: ItemTexture)
+			.WithExtraStaticDefaults(item => AnyLiquidSensorIngredient[item.type] = UsedForLiquidSensorAny)
+			.WithExtraDefaults(item => item.value = Item.sellPrice(copper: 40))
 			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
 				.AddIngredient(ItemID.EmptyDropper)
 				.AddLiquid(LiquidType)
 				.AddTile(TileID.CrystalBall)
+				.SortAfterFirstRecipesOf(ItemID.MagicHoneyDropper)
 				.Register();
 			}).RegisterItem();
+			if (ItemLegacyNames is not null) ModTypeLookup<ModItem>.RegisterLegacyNames(this.GetTileItem(), ItemLegacyNames);
 			OnLoad();
 		}
 		public virtual void OnLoad() { }
@@ -45,7 +50,6 @@ namespace Origins.Tiles.Other {
 			Main.tileFrameImportant[Type] = true;
 			TileID.Sets.BreakableWhenPlacing[Type] = true;
 			AddMapEntry(MapColor, CreateMapEntryName());
-			DustType = HitDust;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
 			EmitLiquidDrops(i, j, Main.tile[i, j], 180);
@@ -101,5 +105,9 @@ namespace Origins.Tiles.Other {
 	#endregion
 	public class Magic_Dropper_Oil : BaseMagicDropper<Oil, Oil_Drip> {
 		public override Color MapColor => FromHexRGB(0x0A0A0A);
+	}
+	public class Magic_Dropper_Brine : BaseMagicDropper<Liquids.Brine, Brine_Drip> {
+		public override string[] ItemLegacyNames => ["Magic_Brine_Dropper"];
+		public override Color MapColor => FromHexRGB(0x00583F);
 	}
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System.Linq;
+﻿using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -21,6 +20,7 @@ namespace Origins.Gores {
 			ChildSafety.SafeGore[Type] = true;
 			GoreID.Sets.LiquidDroplet[Type] = true;
 		}
+		public virtual void KillGore(Gore gore) => gore.active = false;
 		public override bool Update(Gore gore) {
 			if (GoreID.Sets.LiquidDroplet[Type]) {
 				if (gore.position.Y < Main.worldSurface * 16.0 + 8.0) gore.alpha = 0;
@@ -30,7 +30,7 @@ namespace Origins.Gores {
 				if (gore.frame <= 4) {
 					int num3 = (int)(gore.position.X / 16f);
 					int num4 = (int)(gore.position.Y / 16f) - 1;
-					if (WorldGen.InWorld(num3, num4) && !Main.tile[num3, num4].HasTile) gore.active = false;
+					if (WorldGen.InWorld(num3, num4) && !Main.tile[num3, num4].HasTile) KillGore(gore);
 					if (gore.frame == 0) frameSpeed = 24 + Main.rand.Next(256);
 					if (gore.frame == 1) frameSpeed = 24 + Main.rand.Next(256);
 					if (gore.frame == 2) frameSpeed = 24 + Main.rand.Next(256);
@@ -57,7 +57,7 @@ namespace Origins.Gores {
 					if (gore.frameCounter >= frameSpeed) {
 						gore.frameCounter = 0;
 						gore.frame++;
-						if (gore.frame == 7) gore.active = false;
+						if (gore.frame == 7) KillGore(gore);
 					}
 				} else if (gore.frame <= 9) {
 					frameSpeed = 6;
@@ -81,7 +81,7 @@ namespace Origins.Gores {
 						gore.frame++;
 					}
 					gore.velocity *= 0f;
-					if (gore.frame > 14) gore.active = false;
+					if (gore.frame > 14) KillGore(gore);
 				}
 			}
 
@@ -126,7 +126,7 @@ namespace Origins.Gores {
 
 			gore.position += gore.velocity;
 
-			if (gore.alpha >= 255) gore.active = false;
+			if (gore.alpha >= 255) KillGore(gore);
 			return false;
 		}
 
@@ -137,5 +137,12 @@ namespace Origins.Gores {
 	#endregion
 	public class Oil_Drip : BaseLiquidDroplet {
 		public override int[] AnimSpeedMulti => [4, 3, 2, 6];
+	}
+	public class Brine_Drip : BaseLiquidDroplet {
+		public override string Texture => typeof(Oil_Drip).GetDefaultTMLName();
+		public override void KillGore(Gore gore) {
+			base.KillGore(gore);
+			Gore.NewGore(Entity.GetSource_None(), gore.position, gore.velocity * new Vector2(1, -4), GoreID.ChimneySmoke1 + Main.rand.Next(3));
+		}
 	}
 }

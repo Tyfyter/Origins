@@ -19,9 +19,8 @@ namespace Origins.Tiles.Mechanical {
 	public sealed class BaseLiquidSensor(BaseLiquidSensorEntity sensor) : ModTile {
 		public override string Name => sensor.Name;
 		public override string Texture => sensor.GetType().GetDefaultTMLName();
-		public TileItem Item { get; private set; }
 		public sealed override void Load() {
-			Item = new TileItem(this, textureOverride: sensor.ItemTexture)
+			new TileItem(this, textureOverride: sensor.ItemTexture)
 			.WithExtraStaticDefaults(item => {
 				item.ResearchUnlockCount = 5;
 				this.DropTileItem(item);
@@ -35,6 +34,7 @@ namespace Origins.Tiles.Mechanical {
 				.AddIngredient(sensor.DropperType)
 				.AddIngredient(ItemID.Wire)
 				.AddTile(TileID.MythrilAnvil)
+				.SortAfterFirstRecipesOf(ItemID.LogicSensor_Honey)
 				.Register();
 			}).RegisterItem();
 			sensor.OnLoad(this);
@@ -212,5 +212,8 @@ namespace Origins.Tiles.Mechanical {
 	#endregion
 	public class Oil_Liquid_Sensor : BaseLiquidSensorEntity<Oil, Magic_Dropper_Oil> {
 		public override Color MapColor => FromHexRGB(0x212121);
+	}
+	public class Brine_Liquid_Sensor : BaseLiquidSensorEntity<Liquids.Brine, Magic_Dropper_Brine> {
+		public override Color MapColor => FromHexRGB(0x216E58);
 	}
 }
