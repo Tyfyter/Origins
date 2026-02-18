@@ -152,7 +152,7 @@ WORLD GENERATION:
 (§, %2, #2) Ashen Factory !!!
 (§, %2, X) Ashen Outpost !!!
 (§, %2, X) Ashen Scrapyard !!!
-(^) Brine Pool
+(☻) Brine Pool !!! (test generation with brine liquid and new water style)
 (^) Defiled Wastelands
 (^) Fiberglass Undergrowth
 (X) Fractured Isles
