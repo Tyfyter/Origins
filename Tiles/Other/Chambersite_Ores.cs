@@ -138,6 +138,10 @@ namespace Origins.Tiles.Other {
 		public override SoundStyle HitSound => parameters.HitSound();
 		public override int DustType => parameters.DustType();
 		public override Recipe ItemRecipe(Item item) => base.ItemRecipe(item).SortAfterFirstRecipesOf(GetOre(TileID.Stone).Item.Type);
+		public override void Load() {
+			base.Load();
+			ModTypeLookup<ModTile>.RegisterLegacyNames(this, parameters.LegacyNames);
+		}
 	}
 	#endregion
 	public class Chambersite_Ore_Ebonstone : Chambersite_Ore {
