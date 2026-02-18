@@ -140,7 +140,7 @@ namespace Origins.Tiles.Other {
 		public override Recipe ItemRecipe(Item item) => base.ItemRecipe(item).SortAfterFirstRecipesOf(GetOre(TileID.Stone).Item.Type);
 		public override void Load() {
 			base.Load();
-			ModTypeLookup<ModTile>.RegisterLegacyNames(this, parameters.LegacyNames);
+			if (parameters.LegacyNames is not null) ModTypeLookup<ModTile>.RegisterLegacyNames(this, parameters.LegacyNames);
 		}
 	}
 	#endregion
