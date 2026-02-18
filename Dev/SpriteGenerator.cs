@@ -223,7 +223,7 @@ namespace Origins.Dev {
 		public override CommandType Type => CommandType.Chat;
 		public override string Command => "dye";
 		public override string Usage => "/dye <texture> <dye item> <save path>";
-		public override string Description => "Dyes a texture and ";
+		public override string Description => "Dyes a texture and saves it to a file";
 		public override bool IsCaseSensitive => true;
 		public override void Action(CommandCaller caller, string input, string[] args) {
 			if (!ModContent.RequestIfExists(args[0], out Asset<Texture2D> texture, AssetRequestMode.ImmediateLoad)) {
