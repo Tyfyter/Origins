@@ -29,6 +29,7 @@ namespace Origins.Tiles.Ashen {
 			TileID.Sets.Conversion.Stone[Type] = false;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+			TileID.Sets.BlocksStairsAbove[Type] = true;
 			AddMapEntry(MapColor);
 
 			MinPick = 65;
