@@ -4,6 +4,7 @@ using Origins.Graphics;
 using Origins.Items.Tools.Liquids;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
+using ReLogic.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Enums;
@@ -88,12 +89,15 @@ namespace Origins.Tiles.Ashen {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
 		class Sound : AEnvironmentSound {
+			SlotId droning;
 			public override void UpdateSound(Vector2 position) {
 				int type = ModContent.TileType<Radio_Broadcaster>();
 				float mult = 1 / float.Max(position.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1);
-				if (Main.tileFrameCounter[type] == 0) {
-					SoundEngine.PlaySound(Origins.Sounds.HawkenThruster.WithPitch(2.5f).WithVolume(0.2f * mult), position);
-				}
+				droning.PlaySoundIfInactive(Origins.Sounds.RadioBroadcaster, position, playingSound => {
+					if (GetPosition() is not Vector2 pos) return false;
+					playingSound.Volume = 0.2f / float.Max(pos.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1);
+					return true;
+				});
 				if (Main.tileFrame[type] == 1) SoundEngine.PlaySound(SoundID.Camera.WithPitch(0.5f).WithVolume(0.32f * mult), position);
 				if (Main.rand.NextBool(10)) SoundEngine.PlaySound(SoundID.Item141.WithPitch(3f).WithVolume(0.48f * mult), position);
 			}

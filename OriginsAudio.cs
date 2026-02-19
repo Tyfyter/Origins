@@ -101,6 +101,9 @@ namespace Origins {
 			public static SoundStyle HawkenThruster = new("Origins/Sounds/Custom/HawkenThrusterDistant", SoundType.Sound) {
 				IsLooped = true
 			};
+			public static SoundStyle RadioBroadcaster = new SoundStyle("Origins/Sounds/Custom/HawkenThrusterDistant", SoundType.Sound) {
+				IsLooped = true
+			}.WithPitch(2.5f);
 			public static SoundStyle ShimmerConstructAmbienceIntro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_Start", SoundType.Ambient);
 			public static SoundStyle ShimmerConstructAmbienceLoop = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_Mid", SoundType.Ambient);
 			public static SoundStyle ShimmerConstructAmbienceOutro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_End", SoundType.Ambient);
