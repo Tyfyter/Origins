@@ -82,6 +82,25 @@ namespace Origins.Liquids {
 			}
 			return true;
 		}
+		public override bool PlayerLiquidMovement(Player player, bool fallThrough, bool ignorePlats) {
+			if (player.merman || player.ignoreWater || player.trident) {
+				player.DryCollision(fallThrough, ignorePlats);
+				Vector2 oldVelocity = player.velocity;
+				if (player.mount.Active && player.velocity.Y != 0f) {
+					if (player.mount.IsConsideredASlimeMount && !player.SlimeDontHyperJump) {
+						player.velocity.X = 0f;
+						player.DryCollision(fallThrough, ignorePlats);
+						player.velocity.X = oldVelocity.X;
+					} else if (player.mount.Type == MountID.PogoStick) {
+						player.velocity.X = 0f;
+						player.DryCollision(fallThrough, ignorePlats);
+						player.velocity.X = oldVelocity.X;
+					}
+				}
+				return false;
+			}
+			return LiquidLoader.PlayerLiquidMovement(LiquidID.Water, player, fallThrough, ignorePlats);
+		}
 		delegate int? hook_LiquidMergeTilesType(orig_LiquidMergeTilesType orig, int i, int j, int type, int otherLiquid);
 		delegate int? orig_LiquidMergeTilesType(int i, int j, int type, int otherLiquid);
 		delegate void hook_LiquidMergeSounds(orig_LiquidMergeTilesType orig, int i, int j, int type, int otherLiquid, ref SoundStyle? collisionSound);
