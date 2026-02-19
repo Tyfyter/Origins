@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
@@ -10,7 +11,7 @@ using Terraria.ID;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
-	public class Air_Vent : OriginTile {
+	public class Air_Vent : OriginTile, IAshenWireTile {
 		public override void Load() {
 			new TileItem(this)
 			.WithExtraStaticDefaults(this.DropTileItem)
@@ -22,6 +23,7 @@ namespace Origins.Tiles.Ashen {
 				.Register();
 			}).RegisterItem();
 		}
+		AutoLoadingAsset<Texture2D> glowTexture = typeof(Air_Vent).GetDefaultTMLName("_Glow");
 		public override void SetStaticDefaults() {
 			// Properties
 			TileID.Sets.CanBeSloped[Type] = false;
@@ -64,7 +66,23 @@ namespace Origins.Tiles.Ashen {
 				new Rectangle(tileFrameX, tileFrameY, 16, 16),
 				vertices
 			);
-
+			vertices = new(Color.White);
+			Main.tileBatch.Draw(
+				glowTexture,
+				new Vector4(pos.X, pos.Y, 16.3f, 16.3f),
+				new Rectangle(tileFrameX, tileFrameY, 16, 16),
+				vertices
+			);
+		}
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameY < 18 * 2) frameYOffset = 0;
+		}
+		public override void HitWire(int i, int j) {
+			if (Ashen_Wire_Data.HittingAshenWires) UpdatePowerState(i, j, AshenWireTile.DefaultIsPowered(i, j));
+		}
+		public void UpdatePowerState(int i, int j, bool powered) {
+			AshenWireTile.DefaultUpdatePowerState(i, j, powered, tile => ref tile.TileFrameY, 18 * 2);
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
 			Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomNonSolid);
@@ -72,6 +90,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void NearbyEffects(int i, int j, bool closer) {
 			if (closer) return;
+			if (Main.tile[i, j].TileFrameY < 18 * 2) return;
 			Vector2 targetPoint = Main.LocalPlayer.Center;
 			Vector2 fanPoint = new(i * 16, j * 16);
 			OriginSystem instance = OriginSystem.Instance;
