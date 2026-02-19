@@ -16,19 +16,24 @@ namespace Origins.Liquids {
 		public override void Load() {
 			MonoModHooks.Add(typeof(LiquidLoader).GetMethod(nameof(LiquidLoader.LiquidMergeTilesType)),
 				(orig_LiquidMergeTilesType orig, int i, int j, int type, int otherLiquid) => {
-					if (otherLiquid == ID) otherLiquid = LiquidID.Water;
+					TreatAsWater(ref type, ref otherLiquid);
 					return orig(i, j, type, otherLiquid);
 			});
 			MonoModHooks.Add(typeof(LiquidLoader).GetMethod(nameof(LiquidLoader.LiquidMergeSounds)),
 				(orig_LiquidMergeSounds orig, int i, int j, int type, int otherLiquid, ref SoundStyle? collisionSound) => {
-					if (otherLiquid == ID) otherLiquid = LiquidID.Water;
+					TreatAsWater(ref type, ref otherLiquid);
 					orig(i, j, type, otherLiquid, ref collisionSound);
 				});
 			MonoModHooks.Add(typeof(LiquidLoader).GetMethod(nameof(LiquidLoader.PreLiquidMerge)),
 				(orig_PreLiquidMerge orig, int liquidX, int liquidY, int tileX, int tileY, int type, int otherLiquid) => {
-					if (otherLiquid == ID) otherLiquid = LiquidID.Water;
+					TreatAsWater(ref type, ref otherLiquid);
 					return orig(liquidX, liquidY, tileX, tileY, type, otherLiquid);
 				});
+		}
+		static void TreatAsWater(ref int type, ref int otherLiquid) {
+			if (type == LiquidID.Water || otherLiquid == LiquidID.Water) return;
+			if (otherLiquid == ID) otherLiquid = LiquidID.Water;
+			if (type == ID) type = LiquidID.Water;
 		}
 		public override void SetStaticDefaults() {
 			LiquidID_TLmod.Sets.UsesWaterFishingLootPool[Type] = true;
