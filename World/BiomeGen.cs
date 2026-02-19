@@ -2,6 +2,7 @@ using AltLibrary.Common.Systems;
 using ModLiquidLib.ModLoader;
 using Origins.Items.Accessories;
 using Origins.Liquids;
+using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
@@ -350,6 +351,19 @@ namespace Origins {
 					} else if (++tries > max_tries) break;
 				}
 				Mod.Logger.Info($"Generated {oilCount / 255f:0.##} blocks of oil, finished because {(tries > max_tries ? "more liquid could not be found, " : "")}target was {oilCountTarget / 255f:0.##}");
+			}));
+			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Tile Cleanup"));
+			tasks.Insert(genIndex + 1, new PassLegacy("Brine Droplets", (progress, _) => {
+				ushort stoneID = (ushort)ModContent.TileType<Baryte>();
+				ushort dropletID = (ushort)ModContent.TileType<Magic_Dropper_Brine>();
+				for (int j = 0; j < Main.maxTilesY - 1; j++) {
+					for (int i = 0; i < Main.maxTilesX; i++) {
+						if (Main.tile[i, j].TileType == stoneID) {
+							Tile tile = Main.tile[i, j + 1];
+							if (tile.TileIsType(TileID.WaterDrip)) tile.TileType = dropletID;
+						}
+					}
+				}
 			}));
 
 			if (remixWorldGen) {
