@@ -3133,10 +3133,10 @@ namespace Origins {
 		}
 		public static void AddEvilConversions(this AltBiome biome) {
 			for (int i = 0; i < SetsTiles.ExposedGemsToChambersite.Length; i++) {
-				if (SetsTiles.ExposedGemsToChambersite[i]) biome.AddTileConversion(ModContent.TileType<Chambersite>(), i, false, false, false);
+				if (SetsTiles.ExposedGemsToChambersite[i]) biome.AddTileConversion(ModContent.TileType<Chambersite>(), i, false, true, false);
 			}
 
-			biome.AddTileConversion(ModContent.TileType<Bleeding_Obsidian>(), TileID.Obsidian, false, false, false);
+			biome.AddTileConversion(ModContent.TileType<Bleeding_Obsidian>(), TileID.Obsidian, false, true, false);
 		}
 		public static float SpecificTilesEnemyRate(this NPCSpawnInfo spawnInfo, HashSet<int> tiles, bool hardmode = false) {
 			if (hardmode && !Main.hardMode) return 0f;
