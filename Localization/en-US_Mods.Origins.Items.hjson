@@ -8100,3 +8100,8 @@ Mojo_Harvest: {
 	DisplayName: Mojo Harvest
 	Tooltip: "{$Mojo_Flask.CureAmount}"
 }
+
+Vampire_Grenade: {
+	DisplayName: Vampire Grenade
+	Tooltip: ""
+}

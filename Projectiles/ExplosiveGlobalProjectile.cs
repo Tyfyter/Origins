@@ -230,6 +230,18 @@ namespace Origins.Projectiles {
 				}
 			}
 		}
+		public float ApplyBlastRadius(float value, int owner) {
+			if (modifierBlastRadius != StatModifier.Default) {
+				StatModifier modifier = modifierBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+				value = modifier.ApplyTo(value);
+			}
+			OriginPlayer originPlayer = Main.player[owner].GetModPlayer<OriginPlayer>();
+			if (originPlayer.explosiveBlastRadius != StatModifier.Default) {
+				StatModifier modifier = originPlayer.explosiveBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+				value = modifier.ApplyTo(value);
+			}
+			return value;
+		}
 		public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
 			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
 			if (IsExploding(projectile)) {
