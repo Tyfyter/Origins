@@ -1658,7 +1658,7 @@ CONSUMABLES:
 (^) Foul Broth
 (^) Greasy Broth
 (^) Hearty Broth
-(#, ^2) Insubstantial Broth !!!
+(☻) Insubstantial Broth !!!
 (^) Light Broth
 (†, 々) Metallic Broth
 (^) Minishark Broth

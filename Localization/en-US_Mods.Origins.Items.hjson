@@ -8083,3 +8083,12 @@ Magic_Dropper_Brine_Item: {
 	DisplayName: Magic Brine Dropper
 	Tooltip: ""
 }
+
+Insubstantial_Broth: {
+	DisplayName: Insubstantial Broth
+	Tooltip:
+		'''
+		All minions shimmer enemies into the ground
+		Artifact minions also inflict [buffhint:Confused]
+		'''
+}

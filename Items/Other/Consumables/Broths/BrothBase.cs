@@ -75,8 +75,10 @@ namespace Origins.Items.Other.Consumables.Broths {
 						self.DelBuff(i);
 					}
 				}
+				if (type != GetBrothBuff<Insubstantial_Broth>().Type) self.TryToResetHungerToNeutral();
 			}
 		}
+		public static BrothBuff GetBrothBuff<TBroth>() where TBroth : BrothBase => ModContent.GetInstance<TBroth>().Buff;
 	}
 	[Autoload(false)]
 	public class BrothBuff(BrothBase item) : ModBuff {
