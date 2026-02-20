@@ -26,6 +26,24 @@ namespace Origins.World.BiomeData {
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Placeholder_Surface_Background>();
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => null;
 		public static bool forcedBiomeActive;
+		public override void Load() {
+			On_Player.UpdateBiomes += On_Player_UpdateBiomes;
+			MonoModHooks.Add(typeof(WaterStylesLoader).GetMethod("ChooseStyle"), (orig_ChooseStyle _, WaterStylesLoader _, out int style, out SceneEffectPriority priority) => {
+				SceneEffectLoader.SceneEffectInstance.PrioritizedPair waterStyle = Main.LocalPlayer.CurrentSceneEffect.waterStyle;
+				style = waterStyle.value;
+				priority = waterStyle.priority;
+				if (priority == SceneEffectPriority.None) style = -1;
+			});
+		}
+		delegate void orig_ChooseStyle(WaterStylesLoader self, out int style, out SceneEffectPriority priority);
+
+		static void On_Player_UpdateBiomes(On_Player.orig_UpdateBiomes orig, Player self) {
+			orig(self);
+			if (self.CurrentSceneEffect.waterStyle.value == ModContent.GetInstance<Brine_Water_Style>().Slot) {
+				self.CurrentSceneEffect.waterStyle.value = WaterStyleID.Jungle;
+			}
+		}
+
 		public override bool IsBiomeActive(Player player) {
 			return OriginSystem.brineTiles > Brine_Pool.NeededTiles;
 		}
