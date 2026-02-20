@@ -1741,7 +1741,7 @@ CONSUMABLES:
 (^) Latchkey
 (^) Lottery Ticket
 (#, ^2) Magic Gel Dropper !!!
-(#3, ^2) Magic Brine Dropper !!!
+(#3?, ^2) Magic Brine Dropper !!!
 (^) Magic Oil Dropper
 (^) Polluted Water
 (^) Spyglass
