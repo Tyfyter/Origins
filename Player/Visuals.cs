@@ -1,4 +1,5 @@
-﻿using Origins.Buffs;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Dyes;
@@ -8,6 +9,7 @@ using Origins.Items.Weapons.Ranged;
 using Origins.Layers;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -119,6 +121,8 @@ namespace Origins {
 				hsl.Z = float.Lerp(hsl.Z, 1 - 0.5f * hsl.Y, charge);
 				drawInfo.colorEyes = Main.hslToRgb(hsl);
 			}
+			if (Player.HeldItem?.ModItem is DropperItem) drawInfo.itemEffect ^= SpriteEffects.FlipHorizontally | SpriteEffects.FlipVertically;
+
 			for (int i = 0; i < (ShadowType.currentlyDrawing?.Length ?? 0); i++) {
 				ShadowType.currentlyDrawing[i].ModifyDrawInfo(ref drawInfo);
 			}

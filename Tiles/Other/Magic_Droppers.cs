@@ -31,7 +31,7 @@ namespace Origins.Tiles.Other {
 		public virtual string[] ItemLegacyNames => null;
 		public virtual string ItemTexture => base.Texture;
 		public sealed override void Load() {
-			new TileItem(this, textureOverride: ItemTexture)
+			new DropperItem(this)
 			.WithExtraStaticDefaults(item => AnyLiquidSensorIngredient[item.type] = UsedForLiquidSensorAny)
 			.WithExtraDefaults(item => item.value = Item.sellPrice(copper: 40))
 			.WithOnAddRecipes(item => {
@@ -102,6 +102,8 @@ namespace Origins.Tiles.Other {
 			return false;
 		}
 	}
+	[Autoload(false)]
+	public class DropperItem(BaseMagicDropper dropper, bool debug = false) : TileItem(dropper, debug, dropper.ItemTexture) {}
 	#endregion
 	public class Magic_Dropper_Oil : BaseMagicDropper<Oil, Oil_Drip> {
 		public override Color MapColor => FromHexRGB(0x0A0A0A);
