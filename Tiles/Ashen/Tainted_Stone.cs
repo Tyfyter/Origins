@@ -57,7 +57,7 @@ namespace Origins.Tiles.Ashen {
 				(TileID.Mud, merge + "Mud_Overlay"),
 				(TileID.Ash, merge + "Ash_Overlay"),
 				(TileType<Sootsand>(), merge + "Sootsand_Overlay"),
-				(TileType<Ashen_Murky_Sludge_Grass>(), merge + "Murk_Overlay"),
+				(TileType<Murky_Sludge>(), merge + "Murk_Overlay"),
 				(TileType<Ashen_Murky_Sludge_Grass>(), merge + "Murk_Overlay")
 			);
 			//*/
