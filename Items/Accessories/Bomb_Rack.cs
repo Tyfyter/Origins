@@ -45,6 +45,7 @@ public class Bomb_Rack : ModItem {
 		maxAscentMultiplier *= multiplier;
 		constantAscend *= multiplier;
 	}
+	public override bool WingUpdate(Player player, bool inUse) => true;
 	public override bool WeaponPrefix() => true;
 	public override int ChoosePrefix(UnifiedRandom rand) {
 		return OriginExtensions.GetAllPrefixes(Item, rand, (PrefixCategory.AnyWeapon, 1), (PrefixCategory.Accessory, 2));
