@@ -5,6 +5,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner;
 using Origins.Journal;
 using Origins.Layers;
+using Origins.LootConditions;
 using Origins.NPCs;
 using Origins.Projectiles;
 using ReLogic.Content;
@@ -279,7 +280,7 @@ namespace Origins.Items.Accessories {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Main.player[Projectile.owner].IsWithinRectangular(target, new Vector2(16 * 4, 16 * 2))) {
 				target.AddBuff(ModContent.BuffType<Lazy_Cloak_Buff>(), 10);
-				target.DoCustomKnockback(Vector2.UnitY * Main.player[Projectile.owner].GetTotalKnockback(DamageClass.Summon).ApplyTo(4));
+				if (target.collideY) target.DoCustomKnockback(Vector2.UnitY * Main.player[Projectile.owner].GetTotalKnockback(DamageClass.Summon).ApplyTo(4));
 			}
 		}
 	}
@@ -301,11 +302,36 @@ namespace Origins.Buffs {
 
 			c.GotoPrev(MoveType.After, i => i.MatchLdfld<NPC>(nameof(NPC.noTileCollide)));
 			c.EmitLdarg0();
-			c.EmitDelegate((bool noTileCollide, NPC npc) => noTileCollide || (npc.TryGetGlobalNPC(out OriginGlobalNPC global) && global.lazyCloakShimmer));
+			c.EmitDelegate((bool noTileCollide, NPC npc) => {
+				if (noTileCollide) return true;
+				if (npc.TryGetGlobalNPC(out OriginGlobalNPC global) && global.lazyCloakShimmer) {
+					switch (GetNPCShimmerState(npc)) {
+						case 2:
+						return false;
+
+						case 3:
+						Min(ref npc.velocity.Y, -10);
+						return true;
+
+						default:
+						return true;
+					}
+				}
+				return false;
+			});
 
 			c.GotoNext(MoveType.After, i => i.MatchLdfld<Entity>(nameof(Entity.velocity)));
 			c.EmitLdarg0();
 			c.EmitDelegate((Vector2 velocity, NPC npc) => velocity * (npc.TryGetGlobalNPC(out OriginGlobalNPC global) && global.lazyCloakShimmer ? 0.375f : 1));
+		}
+		public static int GetNPCShimmerState(NPC npc) {
+			Rectangle hitbox = npc.Hitbox;
+			if (!hitbox.OverlapsAnyTiles()) return 0;
+			int index = npc.FindBuffIndex(ModContent.BuffType<Lazy_Cloak_Buff>());
+			if (index != -1 && npc.buffTime[index] >= 60) return 3;
+			hitbox.Y -= 16;
+			hitbox.Height = 8;
+			return hitbox.OverlapsAnyTiles() ? 2 : 1;
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -323,6 +349,24 @@ namespace Origins.Buffs {
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
 			npc.GetGlobalNPC<OriginGlobalNPC>().lazyCloakShimmer = true;
+			npc.buffTime[buffIndex]++;
+			switch (GetNPCShimmerState(npc)) {
+				case 3:
+				case 2:
+				if (++npc.buffTime[buffIndex] % 10 == 0) {
+					NPC.HitInfo hit = new() {
+						Damage = 10
+					};
+					npc.StrikeNPC(hit, fromNet: false, true);
+					if (Main.netMode != NetmodeID.SinglePlayer)
+						NetMessage.SendStrikeNPC(npc, hit);
+				}
+				break;
+				case 0:
+				npc.buffTime[buffIndex]--;
+				if (npc.buffTime[buffIndex] > 60) npc.buffTime[buffIndex] = 0;
+				break;
+			}
 		}
 
 		public override IEnumerable<int> ProjectileTypes() => [
