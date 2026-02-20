@@ -65,7 +65,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override Color DustColor => OriginsModIntegrations.CheckAprilFools() ? default : FromHexRGB(0x1B1B1B);
 	}
 	public class Brine_Bomb : LiquidBomb<Brine> {
-		public override string Texture => typeof(Oil_Bomb).GetDefaultTMLName();
 		public override int DustType => DustID.Water_Jungle;
 	}
 }

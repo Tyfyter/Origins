@@ -8040,7 +8040,7 @@ Oil_Sponge: {
 
 Super_Sludge_Item: {
 	DisplayName: Super Sludge
-	Tooltip: ""
+	Tooltip: "Sludge from the heavens."
 }
 
 Pharaohs_Turquoise: {

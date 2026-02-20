@@ -12,7 +12,7 @@ namespace Origins.Tiles.Other {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			AddMapEntry(FromHexRGB(0x2c212a));
+			AddMapEntry(FromHexRGB(0x633354));
 			DustType = DustID.Mud;
 			HitSound = SoundID.NPCHit18;
 		}
@@ -37,7 +37,6 @@ namespace Origins.Tiles.Other {
 		}
 	}
 	public class Super_Sludge_Debuff : ModBuff {
-		public override string Texture => typeof(Murky_Sludge_Debuff).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.debuff[Type] = true;

@@ -92,6 +92,5 @@ namespace Origins.Items.Tools.Liquids {
 		}
 	}
 	public class Brine_Sponge : SpongeBase<Brine> {
-		public override string Texture => typeof(Oil_Sponge).GetDefaultTMLName();
 	}
 }

@@ -132,7 +132,7 @@ TOWN NPC Quests:
 
 VANILLA MODIFICATIONS:
 |---
-(☻) Recipes General !!! (Ultra Absorbant Sponge, Oil Bucket additions)
+(^) Recipes General
 
 (^) Advanced weapon functionality in PVP
 (^) Boss Resistances (make every boss immune to anything with Stun)
@@ -152,7 +152,7 @@ WORLD GENERATION:
 (§, %2, #2) Ashen Factory !!!
 (§, %2, X) Ashen Outpost !!!
 (§, %2, X) Ashen Scrapyard !!!
-(☻) Brine Pool !!! (test generation with brine liquid and new water style)
+(^) Brine Pool
 (^) Defiled Wastelands
 (^) Fiberglass Undergrowth
 (X) Fractured Isles
@@ -802,6 +802,8 @@ TOOLS:
 (X) Perihelion Pickaxe
 
 (^) Bottomless Oil Bucket
+(^) Brine Absorbant Sponge
+(#, ^2) Multi-Bucket !!!
 (^) Oil Absorbant Sponge
 (^) Oil Bucket
 (^) Pincushion
@@ -1104,7 +1106,6 @@ EXPLOSIVE WEAPONS:
 (^) Bombardment
 (^) Bomb Launcher
 (^) Brainade
-(☻, †) Brine Bomb !!!
 (^) Cold Snap
 (^) Defiled Spirit
 (^) Eruption
@@ -1130,7 +1131,7 @@ EXPLOSIVE WEAPONS:
 (^) Link Grenade
 (^) Matrix
 (^) Meteor
-(☻) Oil Bomb !!! (permanent dusts)
+(^) Oil Bomb
 (^) Peatball
 (^) Potato Mine
 (^) Regurgitator of Souls
@@ -1148,6 +1149,7 @@ EXPLOSIVE WEAPONS:
 (^) Alkaline Grenade
 (⛥) Bloodshot
 (^) Boomphracken
+(^) Brine Bomb
 (^) Chambersite Mine Launcher
 (^) Crystal Bomb
 (^) Crystal Grenade
@@ -1273,7 +1275,7 @@ TILES:
 (X) Space Goo
 (^) Spug Flesh
 (X) Spug Flesh Brick
-(☻) Super Sludge !!!
+(^) Super Sludge
 (^) Tainted Stone
 (X) Tainted Stone Brick
 (^) Truss Block
@@ -1374,7 +1376,7 @@ TILES:
 (#3, ^2) Large Storage Container
 (^) Laser Tag Console
 (#, ^2) Liquid Sensor (Amebic Gel) !!!
-(☻, †) Liquid Sensor (Brine) !!!
+(^) Liquid Sensor (Brine)
 (^) Liquid Sensor (Oil)
 (#2, ^2) Mechanical Key Node !!!
 (#2, ^2) Medium Storage Container !!! (what I meant was keep the top collision, but not the middle)
@@ -1521,7 +1523,7 @@ TILES:
 LIQUIDS:
 |---
 (#) Amebic Gel !!!
-(☻, †) Brine !!!
+(^) Brine
 (#2) Oil !!!
 ---
 
@@ -1739,7 +1741,7 @@ CONSUMABLES:
 (^) Latchkey
 (^) Lottery Ticket
 (#, ^2) Magic Gel Dropper !!!
-(☻) Magic Brine Dropper !!!
+(#3, ^2) Magic Brine Dropper !!!
 (^) Magic Oil Dropper
 (^) Polluted Water
 (^) Spyglass
@@ -1847,10 +1849,10 @@ AMMO:
 
 (^) Resizable Mine VI
 
-(☻, †) Brine Rocket !!!
+(^) Brine Rocket
 (^) Homing Rocket I
 (^) Homing Rocket II
-(☻, †) Oil Rocket !!! (permanent dusts)
+(^) Oil Rocket
 (^) Resizable Mine VII
 (X) Resizable Mine VIII
 (^) Valkyrum Bullet
