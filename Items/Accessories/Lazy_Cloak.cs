@@ -328,7 +328,7 @@ namespace Origins.Buffs {
 			Rectangle hitbox = npc.Hitbox;
 			if (!hitbox.OverlapsAnyTiles()) return 0;
 			int index = npc.FindBuffIndex(ModContent.BuffType<Lazy_Cloak_Buff>());
-			if (index != -1 && npc.buffTime[index] >= 60) return 3;
+			if (index != -1 && npc.buffTime[index] >= (npc.boss ? 20 : 60)) return 3;
 			hitbox.Y -= 16;
 			hitbox.Height = 8;
 			return hitbox.OverlapsAnyTiles() ? 2 : 1;
@@ -364,7 +364,7 @@ namespace Origins.Buffs {
 				break;
 				case 0:
 				npc.buffTime[buffIndex]--;
-				if (npc.buffTime[buffIndex] > 60) npc.buffTime[buffIndex] = 0;
+				if (npc.buffTime[buffIndex] > (npc.boss ? 20 : 60)) npc.buffTime[buffIndex] = 0;
 				break;
 			}
 		}
