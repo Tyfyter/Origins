@@ -19,6 +19,13 @@ using Terraria.ObjectData;
 namespace Origins.Tiles {
 	public class OriginsGlobalTile : GlobalTile {
 		static Dictionary<int, AutoLoadingAsset<Texture2D>> stalactiteTextures;
+		public override void Load() {
+			MonoModHooks.Add(typeof(TileLoader).GetMethod(nameof(TileLoader.GetItemDrops)), static (orig_GetItemDrops orig, int x, int y, Tile tileCache, bool includeLargeObjectDrops = false, bool includeAllModdedLargeObjectDrops = false) => {
+				orig(x, y, tileCache, includeLargeObjectDrops, includeAllModdedLargeObjectDrops);
+				Drop(x, y, tileCache);
+			});
+		}
+		delegate void orig_GetItemDrops(int x, int y, Tile tileCache, bool includeLargeObjectDrops = false, bool includeAllModdedLargeObjectDrops = false);
 		public override void SetStaticDefaults() {
 			stalactiteTextures = new() {
 				[ModContent.TileType<Brown_Ice>()] = "Origins/Tiles/Ashen/Brown_Icicle",
@@ -152,8 +159,6 @@ namespace Origins.Tiles {
 				}
 			}
 		}
-		public override void FloorVisuals(int type, Player player) {
-		}
 		public override void ReplaceTile(int i, int j, int type, int targetType, int targetStyle) {
 			if (targetType == ModContent.TileType<Small_Storage_Container>()) {
 				int randomStyle = Main.rand.Next(3);
@@ -165,6 +170,20 @@ namespace Origins.Tiles {
 						tile.TileFrameX = (short)((x + randomStyle * 2) * 18);
 					}
 				}
+			}
+		}
+		public static void Drop(int i, int j, Tile tile) {
+			switch (tile.TileType) {
+				case TileID.MatureHerbs:
+				case TileID.BloomingHerbs:
+				switch (tile.TileFrameX / 18) {
+					case 1:
+					if (!Main.dayTime && Main.rand.NextBool(10)) {
+						Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Mojo_Harvest>());
+					}
+					break;
+				}
+				break;
 			}
 		}
 		public override void AnimateTile() {

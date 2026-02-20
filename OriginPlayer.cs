@@ -761,9 +761,10 @@ namespace Origins {
 				if (Player.nonTorch == -1) Player.nonTorch = Player.selectedItem;
 
 				for (int i = 0; i < Player.inventory.Length; i++) {
-					if (Player.inventory[i]?.ModItem is Mojo_Flask) {
+					if (Player.inventory[i]?.ModItem is Mojo_Flask flask && flask.CanUseItem(Player)) {
 						Player.selectedItem = i;
 						Player.controlUseItem = true;
+						break;
 					}
 				}
 			}

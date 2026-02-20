@@ -14,6 +14,7 @@ namespace Origins.Items.Other.Consumables {
 	public class Mojo_Flask : ModItem, ICustomWikiStat {
 		public override LocalizedText Tooltip => Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.{nameof(Mojo_Flask)}.{nameof(Tooltip)}"));
 		public override void SetStaticDefaults() {
+			if (FlaskUseCount <= 0) return;
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationDelegated(GetFrameGetter(Type, FlaskUseCount)));
 		}
 		public virtual int CooldownTime => 5 * 60;
@@ -50,6 +51,10 @@ namespace Origins.Items.Other.Consumables {
 					);
 					break;
 				}
+				if (FlaskUseCount <= 0 && tooltips[i].Text.Contains("{FlaskUseCount}")) {
+					tooltips.RemoveAt(i--);
+					continue;
+				}
 				tooltips[i].Text = tooltips[i].Text.Replace("{FlaskCureAmount}", Item.buffTime.ToString()).Replace("{FlaskUseCount}", FlaskUseCount.ToString());
 			}
 			if (OriginsModIntegrations.GoToKeybindKeybindPressed) {
@@ -63,24 +68,35 @@ namespace Origins.Items.Other.Consumables {
 				player.DpadRadial.ChangeSelection(-1);
 			}
 		}
-		public override bool CanUseItem(Player player) {
-			if (player.HasBuff(ModContent.BuffType<Mojo_Flask_Cooldown>())) return false;
-			return player.OriginPlayer().mojoFlaskChargesUsed < FlaskUseCount;
+		public static bool CooldownUp(Player player) => !player.HasBuff(ModContent.BuffType<Mojo_Flask_Cooldown>());
+		public bool HasCharges(Player player) => FlaskUseCount <= 0 || player.OriginPlayer().mojoFlaskChargesUsed < FlaskUseCount;
+		public override bool CanUseItem(Player player) => CooldownUp(player) && HasCharges(player);
+		public void ApplyAssimilationHeal(Player player, bool slow = false) {
+			player.AddBuff(ModContent.BuffType<Mojo_Flask_Cooldown>(), CooldownTime);
+			if (slow) {
+				player.AddBuff(Purifying_Buff_Slow.ID, Item.buffTime * 12);
+			} else {
+				player.AddBuff(Purifying_Buff.ID, Item.buffTime);
+			}
 		}
 		public override bool? UseItem(Player player) {
-			player.OriginPlayer().mojoFlaskChargesUsed++;
-			player.AddBuff(ModContent.BuffType<Mojo_Flask_Cooldown>(), CooldownTime);
-			player.AddBuff(Purifying_Buff.ID, Item.buffTime);
+			if (FlaskUseCount > 0) player.OriginPlayer().mojoFlaskChargesUsed++;
+			ApplyAssimilationHeal(player);
 			return true;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			if (Main.gameMenu) return;
-			float inventoryScale = Main.inventoryScale;
-			int buffIndex = Main.LocalPlayer.FindBuffIndex(Item.buffType);
-			if (buffIndex >= 0) {
-				Color color3 = drawColor * (Main.LocalPlayer.buffTime[buffIndex] / (float)Item.buffTime);
-				spriteBatch.Draw(TextureAssets.Cd.Value, position, null, color3, 0f, TextureAssets.Cd.Value.Size() * 0.5f, scale, SpriteEffects.None, 0f);
-			}
+			DrawCooldown(spriteBatch, position, drawColor, scale);
+			DrawRemainingUses(spriteBatch, position, drawColor, origin, scale);
+		}
+		public static void DrawCooldown(SpriteBatch spriteBatch, Vector2 position, Color drawColor, float scale) {
+			int buffIndex = Main.LocalPlayer.FindBuffIndex(ModContent.BuffType<Mojo_Flask_Cooldown>());
+			if (buffIndex < 0) return;
+			drawColor *= Math.Min(Main.LocalPlayer.buffTime[buffIndex] / (5f * 60), 1);
+			spriteBatch.Draw(TextureAssets.Cd.Value, position, null, drawColor, 0f, TextureAssets.Cd.Value.Size() * 0.5f, scale, SpriteEffects.None, 0f);
+		}
+		public void DrawRemainingUses(SpriteBatch spriteBatch, Vector2 position, Color drawColor, Vector2 origin, float scale) {
+			if (FlaskUseCount <= 0) return;
 			ChatManager.DrawColorCodedStringWithShadow(
 				spriteBatch,
 				FontAssets.ItemStack.Value,
@@ -89,9 +105,9 @@ namespace Origins.Items.Other.Consumables {
 				drawColor,
 				0f,
 				Vector2.Zero,
-				new Vector2(inventoryScale),
+				new Vector2(Main.inventoryScale),
 				-1f,
-				inventoryScale
+				Main.inventoryScale
 			);
 		}
 	}

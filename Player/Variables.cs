@@ -1120,7 +1120,10 @@ namespace Origins {
 
 			mojoFlaskCountMax = 0;
 			for (int i = 0; i < Player.inventory.Length; i++) {
-				if (Player.inventory[i]?.ModItem is Mojo_Flask mojoFlask) mojoFlaskCountMax = mojoFlask.FlaskUseCount;
+				if (Player.inventory[i]?.ModItem is Mojo_Flask mojoFlask && mojoFlask.CanUseItem(Player)) {
+					mojoFlaskCountMax = mojoFlask.FlaskUseCount;
+					break;
+				}
 			}
 
 			boatRockerAltUse = false;

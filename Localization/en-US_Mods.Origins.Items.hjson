@@ -1843,11 +1843,14 @@ Magic_Brine_Dropper: {
 
 Mojo_Flask: {
 	DisplayName: Mojo Flask
+	UseCount: "{FlaskUseCount} uses"
+	CureAmount: Reduces all assimilation by {FlaskCureAmount}% each
+	RestoresUses: All uses are restored when you use a {$Mods.Origins.Items.Cleansing_Station_Item.DisplayName}
 	Tooltip:
 		'''
-		{FlaskUseCount} uses
-		Reduces all assimilation by {FlaskCureAmount}% each
-		All uses are restored when you use a {$Mods.Origins.Items.Cleansing_Station_Item.DisplayName}
+		{$UseCount}
+		{$CureAmount}
+		{$RestoresUses}
 		'''
 }
 
@@ -8040,7 +8043,7 @@ Oil_Sponge: {
 
 Super_Sludge_Item: {
 	DisplayName: Super Sludge
-	Tooltip: "Sludge from the heavens."
+	Tooltip: Sludge from the heavens.
 }
 
 Pharaohs_Turquoise: {
@@ -8091,4 +8094,9 @@ Insubstantial_Broth: {
 		All minions shimmer enemies into the ground
 		Artifact minions also inflict [buffhint:Confused]
 		'''
+}
+
+Mojo_Harvest: {
+	DisplayName: Mojo Harvest
+	Tooltip: "{$Mojo_Flask.CureAmount}"
 }

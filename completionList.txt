@@ -1648,7 +1648,7 @@ CONSUMABLES:
 (^) Greater Summoning Potion
 (X) Mega Mojo Flask
 (^) Mojo Flask
-(#, ^2) Mojo Harvest !!!
+(☻) Mojo Harvest !!!
 (#, ^2) Potion of Projection
 (^) Protean Potion
 (^) Purification Potion
@@ -1741,7 +1741,7 @@ CONSUMABLES:
 (^) Latchkey
 (^) Lottery Ticket
 (#, ^2) Magic Gel Dropper !!!
-(#3?, ^2) Magic Brine Dropper !!!
+(^) Magic Brine Dropper !!!
 (^) Magic Oil Dropper
 (^) Polluted Water
 (^) Spyglass
