@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
 using Origins.UI;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -50,7 +51,7 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.NewProjectile(
 					source,
 					position,
-					velocity.RotatedByRandom(0.25f),
+					velocity.RotatedByRandom(0.25f) * Main.rand.NextFloat(0.85f, 1f),
 					type,
 					damage,
 					knockback,
@@ -63,16 +64,22 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Blast_Furnace_UI : SwitchableUIState {
 		public override void AddToList() => OriginSystem.Instance.ItemUseHUD.AddState(this);
-		public override bool IsActive() => Main.LocalPlayer.HeldItem.ModItem is Blast_Furnace;
+		public override bool IsActive() => opacity > 0 || Main.LocalPlayer.HeldItem.ModItem is Blast_Furnace;
 		public override InterfaceScaleType ScaleType => InterfaceScaleType.Game;
 		readonly AutoLoadingAsset<Texture2D> texture = typeof(Blast_Furnace_UI).GetDefaultTMLName();
+		float opacity = 0;
 		public override void Draw(SpriteBatch spriteBatch) {
-			Rectangle frame = texture.Frame(verticalFrames: Blast_Furnace.max_charges + 1, frameY: Main.LocalPlayer.OriginPlayer().blastFurnaceCharges);
+			int blastFurnaceCharges = Main.LocalPlayer.OriginPlayer().blastFurnaceCharges;
+			if (opacity > 1 && Main.LocalPlayer.HeldItem.ModItem is not Blast_Furnace) opacity = 1;
+			if (blastFurnaceCharges > 0) opacity = 2;
+			else MathUtils.LinearSmoothing(ref opacity, 0, 1f / 40);
+			if (opacity <= 0) return;
+			Rectangle frame = texture.Frame(verticalFrames: Blast_Furnace.max_charges + 1, frameY: blastFurnaceCharges);
 			spriteBatch.Draw(
 				texture,
 				Main.LocalPlayer.Top.Floor() - Vector2.UnitY * (12 - Main.LocalPlayer.gfxOffY) - frame.Size() * new Vector2(0.5f, 1f) - Main.screenPosition,
 				frame,
-				Color.White
+				Color.White * Math.Min(opacity, 1)
 			);
 		}
 	}
@@ -119,7 +126,7 @@ namespace Origins.Items.Weapons.Magic {
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = sizes.Length;
 		}
-		float Size => float.Lerp(MinSize, MaxSize, float.Pow(Utils.GetLerpValue(0f, Lifetime, Projectile.ai[0]), 0.8f));
+		float Size => Math.Max(float.Lerp(MinSize, MaxSize, float.Pow(Utils.GetLerpValue(0f, Lifetime, Projectile.ai[0]), Projectile.ai[0] < 0 ? 1 : 0.8f)), 0);
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.width = Projectile.height = 6;
@@ -137,9 +144,12 @@ namespace Origins.Items.Weapons.Magic {
 			if (Projectile.ai[2] != 0) brightnessMult = Utils.GetLerpValue(0f, Lifetime, Projectile.ai[0]);
 			Lighting.AddLight(Projectile.Center, 0.85f * brightnessMult, 0.4f * brightnessMult, 0f);
 			if (Projectile.ai[2] != 0) {
-				Projectile.velocity = default;
+				Projectile.velocity *= 0.9f;
 				if (--Projectile.ai[0] < 0) {
-					Projectile.Kill();
+					if (sizes[^1] <= 0) {
+						Projectile.Kill();
+					}
+					Projectile.friendly = false;
 				}
 			} else {
 				if (++Projectile.ai[0] > Lifetime) {
@@ -169,6 +179,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.ai[2] = 2;
+			Projectile.velocity = default;
 			return false;
 		}
 	}
