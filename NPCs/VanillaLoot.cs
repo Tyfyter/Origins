@@ -261,6 +261,11 @@ namespace Origins.NPCs {
 				case NPCID.DemonEye:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Eyeball_Staff>(), 63));
 				break;
+
+				case NPCID.Vampire:
+				case NPCID.VampireBat:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Vampire_Grenade>(), 5, 20, 30));
+				break;
 			}
 			CommonDrop harpoonRule = null;
 			foreach (IItemDropRule rule in npcLoot.Get(includeGlobalDrops: false)) {

@@ -1185,7 +1185,7 @@ EXPLOSIVE WEAPONS:
 (X) The Heatseeker
 (X) The Rocketman
 (X) Thundercracker
-(#, 2) Vampire Grenade !!!
+(☻) Vampire Grenade !!!
 
 (@4, ^3) Black Hole Bomb
 (@4, ^3) Caustica
