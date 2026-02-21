@@ -7959,6 +7959,7 @@ Oil_Bottomless_Bucket: {
 		Contains an endless amount of oil
 		'More oil for your oil!'
 		''' */
+	// LiquidName: Oil
 }
 
 Oil_Bucket: {
@@ -8055,6 +8056,7 @@ Pharaohs_Turquoise: {
 Brine_Bottomless_Bucket: {
 	// DisplayName: Bottomless Brine Bucket
 	// Tooltip: Contains an endless amount of brine
+	// LiquidName: Brine
 }
 
 Brine_Bucket: {
@@ -8114,4 +8116,5 @@ Multi_Bucket: {
 		Press <key> to choose liquid
 		Right Click to place a 3x3 area of liquid
 		''' */
+	// Shimmer: Shimmer
 }
