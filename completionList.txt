@@ -803,7 +803,7 @@ TOOLS:
 
 (^) Bottomless Oil Bucket
 (^) Brine Absorbant Sponge
-(#, ^2) Multi-Bucket !!!
+(☻) Multi-Bucket !!!
 (^) Oil Absorbant Sponge
 (^) Oil Bucket
 (^) Pincushion
