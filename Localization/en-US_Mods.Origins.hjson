@@ -2252,8 +2252,9 @@ Projectiles: {
 	Polluted_Water_P.DisplayName: Polluted Water
 	Pharaohs_Turquoise_P.DisplayName: Pharaoh's Turquoise
 	Pharaohs_Turquoise_Freeze.DisplayName: Pharaoh's Turquoise Freeze
-	Vampire_Grenade_P.DisplayName: Vampire Grenade P
-	Vampire_Grenade_Suck.DisplayName: Vampire Grenade Suck
+	Vampire_Grenade_P.DisplayName: Vampire Grenade
+	Vampire_Grenade_Suck.DisplayName: Vampire Grenade
+	Vampire_Grenade_Heal.DisplayName: Vampire Grenade Heal
 }
 
 Prefixes: {

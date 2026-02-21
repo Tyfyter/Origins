@@ -1,6 +1,7 @@
 using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Utils;
+using Origins.Items.Tools.Liquids;
 using Origins.Items.Tools.Wiring;
 using Origins.Tiles.Other;
 using System;
@@ -15,6 +16,7 @@ namespace Origins {
 			GetExplosiveClassesDict,
 			AddBasicColorDyeShaderPass,
 			AddWireMode,
+			AddBottomlessBucketMode,
 			AddChambersiteOre,
 			GetChambersiteOre
 		}
@@ -51,6 +53,15 @@ namespace Origins {
 					(bool)args.GetIfInRange(10, false),
 					(string)args.GetIfInRange(11)
 				);
+				case CallType.AddBottomlessBucketMode: {
+					ModBucketMode modBucketMode = new(
+						(ModItem)args[2],
+						((Delegate)args[3]).CastDelegate<Func<int, int, int>>(),
+						(bool)args.GetIfInRange(4, false)
+					);
+					((Mod)args[1]).AddContent(modBucketMode);
+					return modBucketMode;
+				}
 				case CallType.AddChambersiteOre: {
 					CallExtension(out CallTypeExtension callTypeExtension);
 					try {

@@ -219,6 +219,7 @@ namespace Origins.Items.Tools.Wiring {
 		public static bool[] EnabledWires { get; } = WireMode.Sets.Factory.CreateBoolSet();
 		public static IWireTool WireTool => Main.LocalPlayer.HeldItem.ModItem as IWireTool;
 		public override bool Toggle => RightClicked;
+		protected override bool Clockwise => false;
 		public override bool IsActive() => WireTool is not null;
 		AutoLoadingAsset<Texture2D> wireMiniIcons = "Origins/Items/Tools/Wiring/Mini_Wire_Icons";
 		AutoLoadingAsset<Texture2D> extraMiniIcons = "Origins/Items/Tools/Wiring/Mini_Wire_Extra_Icons";

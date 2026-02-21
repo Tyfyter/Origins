@@ -803,7 +803,7 @@ TOOLS:
 
 (^) Bottomless Oil Bucket
 (^) Brine Absorbant Sponge
-(#, ^2) Multi-Bucket !!!
+(☻) Multi-Bucket !!!
 (^) Oil Absorbant Sponge
 (^) Oil Bucket
 (^) Pincushion
@@ -1185,7 +1185,7 @@ EXPLOSIVE WEAPONS:
 (X) The Heatseeker
 (X) The Rocketman
 (X) Thundercracker
-(#, 2) Vampire Grenade !!!
+(☻) Vampire Grenade !!!
 
 (@4, ^3) Black Hole Bomb
 (@4, ^3) Caustica

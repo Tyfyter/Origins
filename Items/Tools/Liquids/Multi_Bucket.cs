@@ -10,7 +10,6 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.UI;
 
 namespace Origins.Items.Tools.Liquids {
 	public class Multi_Bucket : ModItem {
@@ -30,21 +29,14 @@ namespace Origins.Items.Tools.Liquids {
 			return true;
 		}
 		public override void AddRecipes() {
-			Recipe r = CreateRecipe()
-			.AddIngredient(ItemID.BottomlessBucket)
-			.AddIngredient(ItemID.BottomlessLavaBucket)
-			.AddIngredient(ItemID.BottomlessHoneyBucket);
-			foreach (int bucket in BucketBase.EndlessBucketByLiquid) {
-				if (bucket > -1) r.AddIngredient(bucket);
+			Recipe recipe = CreateRecipe().AddTile(TileID.TinkerersWorkbench);
+			foreach (BucketMode mode in Modes) {
+				if (mode.AddToRecipe) recipe.AddIngredient(mode.Item);
 			}
-			r.AddTile(TileID.TinkerersWorkbench)
-			.Register();
+			recipe.Register();
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			tooltips.SubstituteKeybind(Keybindings.MultiBucket);
-		}
-		public static BucketMode GetMode(int index) {
-			return Modes[index];
 		}
 		public override void HoldItem(Player player) {
 			if (!player.JustDroppedAnItem)//make sure the player hasn't just dropped an item recently
@@ -89,6 +81,7 @@ namespace Origins.Items.Tools.Liquids {
 		public Asset<Texture2D> Texture2D { get; private set; }
 		public virtual bool IsAvailable => true;
 		public virtual bool ReplaceLiquids => false;
+		public virtual bool AddToRecipe => true;
 		public abstract int GetLiquid(int x, int y);
 		protected sealed override void Register() {
 			Multi_Bucket.Register(this);
@@ -97,6 +90,7 @@ namespace Origins.Items.Tools.Liquids {
 		public sealed override void SetupContent() {
 			if (!Main.dedServ) Texture2D = ModContent.Request<Texture2D>(Texture);
 			SetStaticDefaults();
+			_ = DisplayName;
 		}
 		public static void DrawIcon(Texture2D texture, Vector2 position, Color tint, float scale = 1) {
 			Main.spriteBatch.Draw(
@@ -126,26 +120,29 @@ namespace Origins.Items.Tools.Liquids {
 			GetTints(hovered, extraData.HasFlag(BucketPetalData.Selected), out Color backTint, out Color iconTint);
 			DrawIcon(TextureAssets.WireUi[hovered.ToInt()].Value, position, backTint);
 			DrawIcon(Texture2D.Value, position, iconTint, 0.8f);
-			if (hovered) Main.instance.MouseText(PrettyPrintName().Replace("Bottomless ", "").Replace(" Mode", ""));
+			if (hovered) Main.instance.MouseText(DisplayName.Value);
 		}
 		public virtual IEnumerable<BucketMode> SortAfter() => [];
 		public virtual IEnumerable<BucketMode> SortBefore() => [];
 		public bool IsHovered(Vector2 position) => Main.MouseScreen.WithinRange(position, 20);
 	}
 	[Autoload(false)]
-	public class AutoBucketMode(BucketBase bucket) : BucketMode {
+	public class AutoBucketMode(BucketBase bucket, bool addToRecipe = true) : ModBucketMode(bucket, bucket.GetLiquid, addToRecipe) {
+		public override IEnumerable<BucketMode> SortAfter() => [ModContent.GetInstance<ShimmerBucketMode>()];
+	}
+	[Autoload(false)]
+	public class ModBucketMode(ModItem bucket, Func<int, int, int> getLiquid, bool addToRecipe = true) : BucketMode {
 		public override string Name => $"{bucket.Name}Mode";
-		public override LocalizedText DisplayName => bucket.DisplayName;
+		public override LocalizedText DisplayName => bucket.GetLocalization("LiquidName", () => bucket.DisplayName.Value.Replace("Bottomless ", "").Replace(" Bucket", ""));
 		public override string Texture => bucket.Texture;
 		public override int Item => bucket.Type;
-		public override int GetLiquid(int x, int y) {
-			return bucket.GetLiquid(x, y);
-		}
-		public override IEnumerable<BucketMode> SortAfter() => [ModContent.GetInstance<ShimmerBucketMode>()];
+		public override bool AddToRecipe => addToRecipe;
+		public override int GetLiquid(int x, int y) => getLiquid(x, y);
+		public override IEnumerable<BucketMode> SortAfter() => ContentInstance<AutoBucketMode>.Instances;
 	}
 	public class WaterBucketMode : BucketMode {
 		public override int Item => ItemID.BottomlessBucket;
-		public override LocalizedText DisplayName => Language.GetText($"ItemName.{Item}");
+		public override LocalizedText DisplayName => Language.GetText("LegacyInterface.53");
 		public override string Texture => $"Terraria/Images/Item_{Item}";
 		public override int GetLiquid(int x, int y) {
 			return LiquidID.Water;
@@ -153,7 +150,7 @@ namespace Origins.Items.Tools.Liquids {
 	}
 	public class LavaBucketMode : BucketMode {
 		public override int Item => ItemID.BottomlessLavaBucket;
-		public override LocalizedText DisplayName => Language.GetText($"ItemName.{Item}");
+		public override LocalizedText DisplayName => Language.GetText("LegacyInterface.56");
 		public override string Texture => $"Terraria/Images/Item_{Item}";
 		public override int GetLiquid(int x, int y) {
 			return LiquidID.Lava;
@@ -162,7 +159,7 @@ namespace Origins.Items.Tools.Liquids {
 	}
 	public class HoneyBucketMode : BucketMode {
 		public override int Item => ItemID.BottomlessHoneyBucket;
-		public override LocalizedText DisplayName => Language.GetText($"ItemName.{Item}");
+		public override LocalizedText DisplayName => Language.GetText("LegacyInterface.58");
 		public override string Texture => $"Terraria/Images/Item_{Item}";
 		public override int GetLiquid(int x, int y) {
 			return LiquidID.Honey;
@@ -171,7 +168,7 @@ namespace Origins.Items.Tools.Liquids {
 	}
 	public class ShimmerBucketMode : BucketMode {
 		public override int Item => ItemID.BottomlessShimmerBucket;
-		public override LocalizedText DisplayName => Language.GetText($"ItemName.{Item}");
+		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.Items.Multi_Bucket.Shimmer");
 		public override string Texture => $"Terraria/Images/Item_{Item}";
 		public override bool IsAvailable => Main.Achievements.GetAchievement("CHAMPION_OF_TERRARIA").IsCompleted;
 		public override int GetLiquid(int x, int y) {
