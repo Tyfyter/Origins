@@ -8105,3 +8105,13 @@ Vampire_Grenade: {
 	DisplayName: Vampire Grenade
 	Tooltip: ""
 }
+
+Multi_Bucket: {
+	DisplayName: Multi-Bucket
+	Tooltip:
+		'''
+		Contains an endless amount of any liquid
+		Press <key> to choose liquid
+		Right Click to place a 3x3 area of liquid
+		'''
+}

@@ -30,6 +30,9 @@ namespace Origins.Items.Tools.Liquids {
 #if !DEBUG
 		public override bool IsLoadingEnabled(Mod mod) => !Debug || DebugConfig.Instance.ForceEnableDebugItems;
 #endif
+		public override void Load() {
+			if (Endless) Mod.AddContent(new AutoBucketMode(this));
+		}
 		//The SetStaticDefaults of a bucket
 		public override void SetStaticDefaults() {
 			ItemID.Sets.IsLavaImmuneRegardlessOfRarity[Type] = LavaImmune;
