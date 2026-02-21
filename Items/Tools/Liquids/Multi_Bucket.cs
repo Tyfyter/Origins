@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Reflection;
 using Origins.UI;
 using ReLogic.Content;
 using System;
@@ -72,10 +73,10 @@ namespace Origins.Items.Tools.Liquids {
 		}
 		public static IEnumerable<BucketMode> GetSorted() => Modes;
 		internal static void Sort() {
-			/*Modes = new TopoSort<BucketMode>(Modes,
+			Modes = new TopoSort<BucketMode>(Modes,
 				mode => mode.SortAfter(),
 				mode => mode.SortBefore()
-			).Sort();*/
+			).Sort();
 			for (int i = 0; i < Modes.Count; i++) {
 				Modes[i].Type = i;
 			}
@@ -186,6 +187,7 @@ namespace Origins.Items.Tools.Liquids {
 	public class MultiBucketUI : ItemModeFlowerMenu<BucketMode, BucketPetalData> {
 		public static int SelectedMode = 0;
 		static MultiBucketUI() {
+			if (!PrivateClassMethods.ContentLoadingFinished.Value) return;
 			Multi_Bucket.Sort();
 		}
 		public override void Click(BucketMode mode) {

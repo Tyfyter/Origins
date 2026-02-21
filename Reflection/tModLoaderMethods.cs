@@ -1,9 +1,14 @@
 ﻿using PegasusLib;
+using PegasusLib.Reflection;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria.ModLoader;
 
 namespace Origins.Reflection {
+	public class PrivateClassMethods {
+		//TODO: remove, moved to PegasusLib
+		public static FastStaticFieldInfo<bool> ContentLoadingFinished { get; } = new(typeof(ModLoader).Assembly.GetType("Terraria.ModLoader.ContentCache"), "contentLoadingFinished");
+	}
 	public class TileLoaderMethods : ILoadable {
 		public static FastStaticFieldInfo<Dictionary<(int, int), int>> tileTypeAndTileStyleToItemType;
 		public static FastStaticFieldInfo<Dictionary<int, int>> wallTypeToItemType;
