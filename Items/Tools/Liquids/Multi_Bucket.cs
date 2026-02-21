@@ -126,7 +126,7 @@ namespace Origins.Items.Tools.Liquids {
 			GetTints(hovered, extraData.HasFlag(BucketPetalData.Selected), out Color backTint, out Color iconTint);
 			DrawIcon(TextureAssets.WireUi[hovered.ToInt()].Value, position, backTint);
 			DrawIcon(Texture2D.Value, position, iconTint, 0.8f);
-			if (hovered) Main.instance.MouseText(DisplayName.Value.Replace("Bottomless ", "").Replace(" Mode", ""));
+			if (hovered) Main.instance.MouseText(DisplayName.Value.Replace("Bottomless ", ""));
 		}
 		public virtual IEnumerable<BucketMode> SortAfter() => [];
 		public virtual IEnumerable<BucketMode> SortBefore() => [];
