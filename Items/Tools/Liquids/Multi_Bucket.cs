@@ -54,7 +54,7 @@ namespace Origins.Items.Tools.Liquids {
 				//We make sure the player is in range to be able to place the liquid tile
 				if (player.noBuilding || !player.IsTargetTileInItemRange(Item))
 					return;
-				BucketMode mode = GetMode(MultiBucketUI.SelectedMode);
+				BucketMode mode = MultiBucketUI.SelectedMode;
 				//We set the cursor's item to be of the bucket item. To show the player that they are able to place a liquid tile at that coordinate normally
 				if (!Main.GamepadDisableCursorItemIcon) {
 					player.cursorItemIconEnabled = true;
@@ -77,9 +77,6 @@ namespace Origins.Items.Tools.Liquids {
 				mode => mode.SortAfter(),
 				mode => mode.SortBefore()
 			).Sort();
-			for (int i = 0; i < Modes.Count; i++) {
-				Modes[i].Type = i;
-			}
 		}
 	}
 	[Flags]
@@ -87,7 +84,6 @@ namespace Origins.Items.Tools.Liquids {
 		Selected = 1 << 0
 	}
 	public abstract class BucketMode : ModTexturedType, IFlowerMenuItem<BucketPetalData> {
-		public int Type { get; internal set; }
 		public abstract int Item { get; }
 		public abstract LocalizedText DisplayName { get; }
 		public Asset<Texture2D> Texture2D { get; private set; }
@@ -185,14 +181,15 @@ namespace Origins.Items.Tools.Liquids {
 	}
 	[ReinitializeDuringResizeArrays]
 	public class MultiBucketUI : ItemModeFlowerMenu<BucketMode, BucketPetalData> {
-		public static int SelectedMode = 0;
+		public static BucketMode SelectedMode;
 		static MultiBucketUI() {
 			if (!PrivateClassMethods.ContentLoadingFinished.Value) return;
 			Multi_Bucket.Sort();
+			SelectedMode = Multi_Bucket.GetSorted().First();
 		}
 		public override void Click(BucketMode mode) {
 			if (RightClicked) return;
-			SelectedMode = mode.Type;
+			SelectedMode = mode;
 		}
 		public override float DrawCenter() {
 			return 44;
@@ -205,7 +202,7 @@ namespace Origins.Items.Tools.Liquids {
 		}
 		public override BucketPetalData GetData(BucketMode mode) {
 			BucketPetalData data = 0;
-			if (SelectedMode == mode.Type) data |= BucketPetalData.Selected;
+			if (SelectedMode == mode) data |= BucketPetalData.Selected;
 			return data;
 		}
 		public override IEnumerable<BucketMode> GetModes() {
