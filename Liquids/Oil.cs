@@ -18,14 +18,10 @@ using Terraria.ModLoader;
 namespace Origins.Liquids {
 	public class Oil : ModLiquid {
 		public static int CanBurnBeBlockedThreshold => 191;
-		public override string Texture => base.Texture.Replace("Burning_", string.Empty);
-		public override string BlockTexture => base.BlockTexture.Replace("Burning_", string.Empty);
-		public override string SlopeTexture => base.SlopeTexture.Replace("Burning_", string.Empty);
 		public static int ID { get; private set; }
 		public virtual Color MapColor => FromHexRGB(0x0A0A0A);
 		public override void SetStaticDefaults() {
 			LiquidRenderer.VISCOSITY_MASK[Type] = 50;
-			LiquidRenderer.WATERFALL_LENGTH[Type] = 10;
 			LiquidRenderer.DEFAULT_OPACITY[Type] = 0.98f;
 			LiquidRenderer.WATERFALL_LENGTH[Type] = 4;
 			SlopeOpacity = 1f;
@@ -94,9 +90,7 @@ namespace Origins.Liquids {
 		//Here we animate our liquid seperately from other liquids in the game.
 		//Instead of having our liquid animate normally, we animate it simiarly, except the liquid is animated almost half as slow
 		public override void AnimateLiquid(GameTime gameTime, ref int frame, ref float frameState) {
-			float frameSpeed = Main.windSpeedCurrent * 25f;
-
-			frameSpeed = Main.windSpeedCurrent * 15f;
+			float frameSpeed = Main.windSpeedCurrent * 15f;
 			frameSpeed = ((!(frameSpeed < 0f)) ? (frameSpeed + 5f) : (frameSpeed - 5f));
 			frameSpeed = MathF.Abs(frameSpeed);
 			frameState += frameSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -113,7 +107,7 @@ namespace Origins.Liquids {
 			if (!npc.wet)
 				rippleOffset = -1f;
 
-			float factor = ((float)(int)npc.wetCount / 9f);
+			float factor = npc.wetCount / 9f;
 
 			rippleStrength += 0.25f * factor;
 
@@ -124,7 +118,7 @@ namespace Origins.Liquids {
 			if (!player.wet)
 				rippleOffset = -1f;
 
-			float factor = ((float)(int)player.wetCount / 9f);
+			float factor = player.wetCount / 9f;
 
 			rippleStrength += 0.5f * factor;
 
@@ -236,10 +230,6 @@ namespace Origins.Liquids {
 	public class Burning_Oil : Oil {
 		public new static int ID { get; private set; }
 		public override Color MapColor => FromHexRGB(0xFA8A0A);
-		//Temp, so that a difference can be seen
-		public override string Texture => "Origins/Water/Riven_Water_Style";
-		public override string BlockTexture => "Terraria/Images/Liquid_12";
-		public override string SlopeTexture => "Terraria/Images/LiquidSlope_12";
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			LiquidID_TLmod.Sets.CountsAsLiquidSource[Type][Oil.ID] = true;
