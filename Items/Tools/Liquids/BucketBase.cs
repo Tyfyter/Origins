@@ -1,5 +1,6 @@
 ﻿using ModLiquidLib.ID;
 using ModLiquidLib.ModLoader;
+using Origins.Liquids;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -17,7 +18,7 @@ namespace Origins.Items.Tools.Liquids {
 	[ReinitializeDuringResizeArrays]
 	public abstract class BucketBase : ModItem {
 		public string GetTexture() {
-			if (Debug) return LiquidLoader.GetLiquid(LiquidType).Texture;
+			if (Debug) return LiquidLoader.GetLiquid(LiquidType).SlopeTexture;
 			return base.Texture;
 		}
 		public override string Texture => GetTexture();
@@ -31,7 +32,7 @@ namespace Origins.Items.Tools.Liquids {
 		public override bool IsLoadingEnabled(Mod mod) => !Debug || DebugConfig.Instance.ForceEnableDebugItems;
 #endif
 		public override void Load() {
-			if (Endless) Mod.AddContent(new AutoBucketMode(this));
+			if (Endless || Debug) Mod.AddContent(new AutoBucketMode(this, !Debug));
 		}
 		//The SetStaticDefaults of a bucket
 		public override void SetStaticDefaults() {
@@ -44,11 +45,11 @@ namespace Origins.Items.Tools.Liquids {
 			//NOTE: a liquid can only create 1 bucket item at a time
 			if (!Debug) LiquidID_TLmod.Sets.CreateLiquidBucketItem[LiquidType] = Type;
 
-			if (Endless) {
-				ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
-				EndlessBucketByLiquid[LiquidType] = Type;
-			} else if (Debug) {
+			if (Endless || Debug) ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			if (Debug) {
 				Item.ResearchUnlockCount = 0;
+			} else if (Endless) {
+				EndlessBucketByLiquid[LiquidType] = Type;
 			} else {
 				Item.ResearchUnlockCount = 5;
 				OriginExtensions.InsertIntoShimmerCycle(Type, ItemID.HoneyBucket);
@@ -67,7 +68,7 @@ namespace Origins.Items.Tools.Liquids {
 				Item.CloneDefaults(ItemID.BottomlessBucket);
 				if (Debug) {
 					Item.value = 0;
-					Item.tileBoost += 10;
+					Item.tileBoost += 18;
 				}
 				/*Item.maxStack = 1;
 				Item.useAnimation = 12;
@@ -119,11 +120,13 @@ namespace Origins.Items.Tools.Liquids {
 			}
 		}
 	}
-#endregion
+	#endregion
 	#region Debug
-	// TODO: uncomment me when Ameebic Gel liquid is created
-	/*public class Amebic_Bucket : BucketBase<Amebic_Gel> {
+	public class Burning_Oil_Bucket : BucketBase<Burning_Oil> {
 		public override bool Debug => true;
-	}*/
+	}
+	public class Amebic_Bucket : BucketBase<Amebic_Gel> {
+		public override bool Debug => true;
+	}
 	#endregion
 }
