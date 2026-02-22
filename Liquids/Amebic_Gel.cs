@@ -8,6 +8,7 @@ using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Liquids.Waterfalls;
 using Origins.NPCs;
+using Origins.Tiles;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using System;
@@ -65,6 +66,15 @@ namespace Origins.Liquids {
 
 			g += 0.9f * mult;
 			b += 1f * mult;
+		}
+		public override void ModifyNearbyTiles(int i, int j, int liquidX, int liquidY) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			if ((TileID.Sets.Grass[tile.TileType] || TileID.Sets.GrassSpecial[tile.TileType]) && ModContent.GetModTile(tile.TileType) is not IRivenTile) {
+				WorldGen.KillTile(i, j, true);/*
+				if (Main.netMode == NetmodeID.Server) {
+					NetMessage.SendTileSquare(-1, i, j, 3);
+				}*/
+			}
 		}
 		public override void OnNPCCollision(NPC npc) {
 			if (!npc.dontTakeDamage && !NetmodeActive.MultiplayerClient) {

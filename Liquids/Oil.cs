@@ -236,6 +236,15 @@ namespace Origins.Liquids {
 			UsesLavaCollisionForWet = true;
 			ID = Type;
 		}
+		public override void ModifyNearbyTiles(int i, int j, int liquidX, int liquidY) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			if (TileID.Sets.Grass[tile.TileType] || TileID.Sets.GrassSpecial[tile.TileType]) {
+				WorldGen.KillTile(i, j, true);/*
+				if (Main.netMode == NetmodeID.Server) {
+					NetMessage.SendTileSquare(-1, i, j, 3);
+				}*/
+			}
+		}
 		public override int ChooseWaterfallStyle(int i, int j) {
 			return ModContent.GetInstance<Burning_Oil_Fall>().Slot;
 		}
