@@ -2607,6 +2607,11 @@ Tiles: {
 	Power_Box.MapEntry: Power Box
 	Power_Box_Wide.MapEntry: Power Box Wide
 	Magic_Dropper_Brine.MapEntry: Dripping Brine
+	Magic_Dropper_Amebic_Gel.MapEntry: Dripping Amebic Gel
+}
+
+Liquids: {
+	Amebic_Gel.MapEntry: Amebic Gel
 }
 
 Keybinds: {

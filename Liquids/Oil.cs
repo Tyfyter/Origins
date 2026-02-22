@@ -229,7 +229,7 @@ namespace Origins.Liquids {
 	}
 	public class Burning_Oil : Oil {
 		public new static int ID { get; private set; }
-		public override Color MapColor => FromHexRGB(0xFA8A0A);
+		public override Color MapColor => FromHexRGB(0x1C120D);
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			LiquidID_TLmod.Sets.CountsAsLiquidSource[Type][Oil.ID] = true;
@@ -266,7 +266,8 @@ namespace Origins.Liquids {
 			} else {
 				const int rate = 2;
 				if (tile.LiquidAmount > rate) {
-					tile.LiquidAmount -= rate;
+					// TODO: uncomment below line after mp test for ModifyNearbyTiles is done
+					//tile.LiquidAmount -= rate;
 				} else {
 					tile.LiquidAmount = 0;
 				}
