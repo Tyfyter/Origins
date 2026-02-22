@@ -178,7 +178,7 @@ namespace Origins.Tiles {
 				case TileID.BloomingHerbs:
 				switch (tile.TileFrameX / 18) {
 					case 1:
-					if (!Main.dayTime && Main.rand.NextBool(10)) {
+					if (!Main.dayTime && Main.rand.NextBool(7)) {
 						Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Mojo_Harvest>());
 					}
 					break;

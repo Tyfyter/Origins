@@ -12,7 +12,7 @@ namespace Origins.Buffs {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			player.GetArmorPenetration(DamageClass.Generic) += 7;
+			player.GetArmorPenetration(DamageClass.Generic) += 5;
 		}
 	}
 }

@@ -98,6 +98,14 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			BrothTextures.Add(ModContent.GetInstance<Savory_Broth>(), ModContent.Request<Texture2D>(texture_path + "Shadowy"));
 			BrothGlowTextures.Add(ModContent.GetInstance<Savory_Broth>(), ModContent.Request<Texture2D>(texture_path + "Shadowy_Glow"));
 			BrothTextures.Add(ModContent.GetInstance<Sharp_Broth>(), ModContent.Request<Texture2D>(texture_path + "Zappy"));
+			BrothTextures.Add(ModContent.GetInstance<Insubstantial_Broth>(), ModContent.Request<Texture2D>(texture_path + "Shimmery"));
+			BrothGlowTextures.Add(ModContent.GetInstance<Insubstantial_Broth>(), ModContent.Request<Texture2D>(texture_path + "Shimmery_Glow"));
+			BrothTextures.Add(ModContent.GetInstance<Bitter_Broth>(), ModContent.Request<Texture2D>(texture_path + "Defiled"));
+			BrothGlowTextures.Add(ModContent.GetInstance<Bitter_Broth>(), ModContent.Request<Texture2D>(texture_path + "Defiled_Glow"));
+			BrothTextures.Add(ModContent.GetInstance<Hearty_Broth>(), ModContent.Request<Texture2D>(texture_path + "Pinkie"));
+			BrothTextures.Add(ModContent.GetInstance<Foul_Broth>(), ModContent.Request<Texture2D>(texture_path + "Sleepy"));
+			BrothTextures.Add(ModContent.GetInstance<Metallic_Broth>(), ModContent.Request<Texture2D>(texture_path + "Vampy"));
+			BrothTextures.Add(ModContent.GetInstance<Minishark_Broth>(), ModContent.Request<Texture2D>(texture_path + "Minisharky"));
 		}
 
 		public override void SetDefaults() {
@@ -228,8 +236,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Vector2 diff = targetCenter - Projectile.Center;
 				Projectile.direction = Math.Sign(diff.X);
 				if (bestTargetIsVisible) {
-					if (Projectile.ai[1].CycleUp(25, SpeedModifier)) {
+					if (Projectile.ai[1].CycleUp(9, SpeedModifier)) {
 						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1f).WithVolume(0.25f), Projectile.Center);
+						SoundEngine.PlaySound(SoundID.Item26.WithPitchRange(1.2f, 1.28f).WithVolume(0.1f), Projectile.Center);
+						SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.2f, 0.3f).WithVolume(0.2f), Projectile.Center);
 						if (Main.myPlayer == player.whoAmI) Projectile.NewProjectile(
 							Projectile.GetSource_FromAI(),
 							Projectile.position + HeadCenterOffset,

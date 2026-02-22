@@ -32,7 +32,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Vampire_Grenade_P>();
 			Item.shootSpeed *= 1.25f;
 			Item.value *= 9;
-			Item.rare = ItemRarityID.Orange;
+			Item.rare = ItemRarityID.Yellow;
 		}
 	}
 	public class Vampire_Grenade_P : ModProjectile {
@@ -61,6 +61,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			);
 		}
 		public override void OnKill(int timeLeft) {
+			SoundEngine.PlaySound(SoundID.Item66, Projectile.Center);
+			SoundEngine.PlaySound(SoundID.Item96.WithPitch(1.2f), Projectile.Center);
 			if (!Projectile.IsLocallyOwned()) return;
 			int identity = Projectile.NewProjectile(
 				Projectile.GetSource_Death(),
@@ -197,6 +199,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 					Projectile.velocity = Vampire_Grenade_Suck.MoveInRange(suck, Projectile.Center) - Projectile.Center;
 					float size = suck.ai[1];
 					if (Vampire_Grenade_Suck.Collapse(ref size)) {
+						SoundEngine.PlaySound(SoundID.Item91.WithPitch(1.8f), Projectile.Center);
+						SoundEngine.PlaySound(SoundID.Item19.WithPitch(-0.5f), Projectile.Center);
 						Projectile.ai[2] = -1;
 					}
 				}
@@ -208,6 +212,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 					if (Projectile.owner == Main.myPlayer && !player.moonLeech) {
 						player.Heal(Main.rand.RandomRound(Projectile.ai[0]));
 					}
+					SoundEngine.PlaySound(SoundID.Item75.WithPitch(1.2f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item85.WithPitch(2f), Projectile.Center);
 					Projectile.Kill();
 				} else {
 					direction *= 4 / MathF.Sqrt(dist);

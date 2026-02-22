@@ -5,6 +5,7 @@ using Origins.Dev;
 using Origins.NPCs;
 using ReLogic.Content;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
@@ -28,16 +29,17 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.height = 34;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.useTime = 7;
-			Item.useAnimation = 27;
+			Item.useAnimation = 21;
 			Item.shoot = ModContent.ProjectileType<Pharaohs_Turquoise_P>();
-			Item.shootSpeed = 8f;
+			Item.shootSpeed = 16f;
 			Item.mana = 14;
 			Item.knockBack = 1f;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
-			Item.UseSound = SoundID.Item8;
+			Item.UseSound = null;
 			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 			Item.useLimitPerAnimation = HitsForBonus;
+			Item.reuseDelay = 9;
 		}
 		public override void UseItemFrame(Player player) => Incantations.HoldItemFrame(player);
 		public override void HoldItemFrame(Player player) => Incantations.HoldItemFrame(player);
@@ -55,6 +57,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {
+				SoundEngine.PlaySound(SoundID.Item30.WithVolume(0.3f));
 				type = ModContent.ProjectileType<Pharaohs_Turquoise_Freeze>();
 				if (player.ownedProjectileCounts[type] <= 0) {
 					player.StartChanneling(type);
@@ -83,6 +86,7 @@ namespace Origins.Items.Weapons.Summoner {
 		static Counter currentCounter;
 		Counter counter;
 		public override void OnSpawn(IEntitySource source) {
+			SoundEngine.PlaySound(SoundID.Item4.WithVolume(0.3f), Projectile.Center);
 			if (source is EntitySource_ItemUse itemUse && itemUse.Player.ItemAnimationJustStarted) currentCounter = new Counter();
 			if (currentCounter is not null) counter = currentCounter;
 			Projectile.localAI[0] = Main.rand.Next(2);
@@ -92,6 +96,9 @@ namespace Origins.Items.Weapons.Summoner {
 			return !player.channel || (player.HeldItem?.shoot != Type);
 		}
 		public override void AI() {
+			//Lighting.AddLight(Projectile.Center, 0.9f, 0.4f, 0f);
+			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.AmberBolt, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f);
+			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.BlueTorch, Projectile.velocity.X * 0.25f, Projectile.velocity.Y * 0.25f);
 			Main.projFrames[Type] = 10;
 			if (Projectile.velocity != default) Projectile.rotation = Projectile.velocity.ToRotation();
 			const int HalfSpriteWidth = 30 / 2;
@@ -132,6 +139,8 @@ namespace Origins.Items.Weapons.Summoner {
 			Dissipate();
 		}
 		public void Dissipate() {
+			SoundEngine.PlaySound(SoundID.Item9.WithPitch(1.5f).WithVolume(0.25f), Projectile.Center);
+			SoundEngine.PlaySound(SoundID.NPCHit3.WithVolume(0.25f), Projectile.Center);
 			Projectile.velocity = default;
 			Projectile.friendly = false;
 			Projectile.tileCollide = false;

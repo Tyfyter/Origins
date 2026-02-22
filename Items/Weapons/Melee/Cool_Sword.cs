@@ -36,6 +36,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item71.WithPitch(-1f);
 			Item.autoReuse = false;
+			Item.reuseDelay = 10;
 		}
 		public override bool MeleePrefix() => true;
 		public override void AddRecipes() {

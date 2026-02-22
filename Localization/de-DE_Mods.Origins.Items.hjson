@@ -3458,7 +3458,7 @@ Chambersite_Gemspark_Item: {
 
 Ambition_Potion: {
 	// DisplayName: Ambition Potion
-	// Tooltip: Increases armor penetration by 7
+	// Tooltip: Increases armor penetration by 5
 }
 
 // Defiled_Amalgamation_Relic_Item.DisplayName: "{§Defiled} Amalgamation Relic"
@@ -5505,8 +5505,8 @@ Minty_Broth: {
 	// DisplayName: Minty Broth
 	/* Tooltip:
 		'''
-		Artifact minions deal damage to nearby enemies when hurt
 		All minions inflict [buffhint:Frostburn2] in a small area around them
+		Artifact minions deal damage to nearby enemies when hurt
 		''' */
 }
 
@@ -8049,7 +8049,12 @@ Super_Sludge_Item: {
 
 Pharaohs_Turquoise: {
 	// DisplayName: Pharaoh's Turquoise
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Fires a burst of sun pulses
+		Pressing and holding <right> then firing will suspend pulses until released
+		Pulses that hit enemies after being suspended benefit from bonus damage
+		''' */
 	// CantGetBonus: "{$DisplayName} has default stats which would prevent it from behaving properly, its stats may have been modified by another mod"
 }
 
@@ -8093,7 +8098,7 @@ Insubstantial_Broth: {
 	// DisplayName: Insubstantial Broth
 	/* Tooltip:
 		'''
-		All minions shimmer enemies into the ground
+		All minions have a chance to shimmer enemies into the ground
 		Artifact minions also inflict [buffhint:Confused]
 		''' */
 }
@@ -8105,7 +8110,7 @@ Mojo_Harvest: {
 
 Vampire_Grenade: {
 	// DisplayName: Vampire Grenade
-	// Tooltip: ""
+	// Tooltip: Explosions leave lifestealing rings in their wake
 }
 
 Multi_Bucket: {

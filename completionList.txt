@@ -803,7 +803,7 @@ TOOLS:
 
 (^) Bottomless Oil Bucket
 (^) Brine Absorbant Sponge
-(☻) Multi-Bucket !!!
+(^) Multi-Bucket
 (^) Oil Absorbant Sponge
 (^) Oil Bucket
 (^) Pincushion
@@ -1046,7 +1046,7 @@ SUMMONER WEAPONS:
 (^) Relay Rod
 (^) Rotted Worm Staff
 (X) Shadow Cast
-(#2, ^2) Sunflower in a Pot (particle effects for variants + remaining variants)
+(#2, ^2) Sunflower in a Pot (particle effects for variants)
 (^) Teardown
 (^) Thread Rod
 (^) Woodsprite Staff
@@ -1064,7 +1064,7 @@ SUMMONER WEAPONS:
 (^) Mildew Whip
 (X) Obsidian Bone
 (^) Old Brine Rock
-(#, ^2) Pharaoh's Turquoise !!!
+(#2, ^2) Pharaoh's Turquoise !!!
 (X) Riven Rain Rod
 (^) Scabcoral Lyre
 (X) Snowman Trophy
@@ -1163,6 +1163,7 @@ EXPLOSIVE WEAPONS:
 (^) Torpedo Tube
 
 (^) Autohandcannon
+(X) Big Bang !!!
 (^) Bomboomstick
 (^) Chlorodynamite
 (^) Chlorophyte Handcannon
@@ -1185,7 +1186,7 @@ EXPLOSIVE WEAPONS:
 (X) The Heatseeker
 (X) The Rocketman
 (X) Thundercracker
-(☻) Vampire Grenade !!!
+(#2, ^2) Vampire Grenade !!! (finite duration projectiles)
 
 (@4, ^3) Black Hole Bomb
 (@4, ^3) Caustica
@@ -1351,6 +1352,7 @@ TILES:
 (X) Ruined Portal
 (#3, ^2) Scrap Railing
 (^) Shadow Torch
+(X) Strange Plant (Stardust) !!!
 (^) Traffic Cone
 
 (^) Ashen Campfire
@@ -1524,7 +1526,7 @@ LIQUIDS:
 |---
 (#) Amebic Gel !!!
 (^) Brine
-(#2) Oil !!!
+(#2) Oil !!! (needs Burning Oil textures)
 ---
 
 
@@ -1648,7 +1650,7 @@ CONSUMABLES:
 (^) Greater Summoning Potion
 (X) Mega Mojo Flask
 (^) Mojo Flask
-(☻) Mojo Harvest !!!
+(^) Mojo Harvest
 (#, ^2) Potion of Projection
 (^) Protean Potion
 (^) Purification Potion
@@ -1766,7 +1768,7 @@ CONSUMABLES:
 ---
 
 
-MOUNTS & PETS:
+MOUNTS, PETS AND TRANSFORMATIONS:
 |---
 (^) Blockus Tube (Juvenile Amalgamation)
 (^) Fleshy Globe (Self-Contained Universe)
@@ -1797,6 +1799,7 @@ MOUNTS & PETS:
 (^) Spider Ravel
 (X) SS-22 'Star Soldier' !!!
 (^) Stealth Ravel
+(X) Sunflower Veil
 (X) Thrust Ravel
 (X) True Ravel
 ---
