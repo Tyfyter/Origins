@@ -91,6 +91,8 @@ namespace Origins.Items.Tools.Liquids {
 			LiquidID_TLmod.Sets.CanBeAbsorbedBy[LiquidLoader.LiquidType<Burning_Oil>()].Add(Type);
 		}
 	}
-	public class Brine_Sponge : SpongeBase<Brine> {
+	public class Brine_Sponge : SpongeBase<Brine> { }
+	public class Amebic_Gel_Sponge : SpongeBase<Amebic_Gel> {
+		public override string Texture => typeof(Brine_Sponge).GetDefaultTMLName();
 	}
 }

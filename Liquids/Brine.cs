@@ -36,6 +36,7 @@ namespace Origins.Liquids {
 			if (type == ID) type = LiquidID.Water;
 		}
 		public override void SetStaticDefaults() {
+			Amebic_Gel.ConvertToAmebicGel[Type] = true;
 			LiquidID_TLmod.Sets.UsesWaterFishingLootPool[Type] = true;
 			SplashDustType = DustID.Water_Jungle;
 			UsesLavaCollisionForWet = true;

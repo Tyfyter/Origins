@@ -8123,3 +8123,14 @@ Multi_Bucket: {
 		''' */
 	// Shimmer: Shimmer
 }
+
+Amebic_Bucket: {
+	// DisplayName: Amebic Gel Bucket (Debug)
+	// Tooltip: Contains an endless amount of amebic gel
+	// LiquidName: Amebic Gel (Debug)
+}
+
+Amebic_Gel_Sponge: {
+	// DisplayName: Amebic Gel Absorbant Sponge
+	// Tooltip: Capable of soaking up endless amount of amebic gel
+}

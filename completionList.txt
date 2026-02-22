@@ -801,6 +801,8 @@ TOOLS:
 (X) Perihelion Jackhammer
 (X) Perihelion Pickaxe
 
+(@, ^2) Amebic Gel Absorbant Sponge !!!
+(@, ^2) Bottomless Brine Bucket !!!
 (^) Bottomless Oil Bucket
 (^) Brine Absorbant Sponge
 (^) Multi-Bucket

@@ -581,11 +581,6 @@ namespace Origins {
 			};
 			On_Player.QuickBuff_ShouldBotherUsingThisBuff += BrothBase.On_Player_QuickBuff_ShouldBotherUsingThisBuff;
 			On_Player.AddBuff_RemoveOldMeleeBuffsOfMatchingType += BrothBase.On_Player_AddBuff_RemoveOldMeleeBuffsOfMatchingType;
-			On_Main.CalculateWaterStyle += (orig, ignoreFountains) => {
-				int chosenStyle = Main.LocalPlayer.CurrentSceneEffect.waterStyle.value;
-				if (chosenStyle == MC.GetInstance<Riven_Water_Style>().Slot || chosenStyle == MC.GetInstance<Brine_Water_Style>().Slot) return chosenStyle;
-				return orig(ignoreFountains);
-			};
 			On_Mount.Dismount += Ravel_Mount.On_Mount_Dismount;
 			IL_ShopHelper.ProcessMood += il => {
 				ILCursor c = new(il);
@@ -1201,10 +1196,10 @@ namespace Origins {
 			}
 		}
 		static bool FixWrongWaterfallAlpha(int type, float baseAlpha, ref float alpha) {
-			if (type == Riven_Waterfall_Style.ID) {
+			/*if (type == Riven_Waterfall_Style.ID) {
 				alpha = baseAlpha * Riven_Water_Style.GlowValue;
 				return true;
-			}
+			}*/
 			if (type == Ashen_Waterfall_Style.ID) {
 				alpha = 0.8f;
 				return true;

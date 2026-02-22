@@ -19,8 +19,6 @@ using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.Water;
-using PegasusLib;
-using Steamworks;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -1017,12 +1015,6 @@ namespace Origins.World.BiomeData {
 			SoundEngine.PlaySound(SoundID.NPCDeath1, new Vector2(i * 16, j * 16));
 			destroyObject = false;
 		}
-	}
-	public class Riven_Hive_Water_Control : ModSceneEffect {
-		public override ModWaterStyle WaterStyle => GetInstance<Riven_Water_Style>();
-		public override SceneEffectPriority Priority => SceneEffectPriority.BossHigh;
-		public override bool IsSceneEffectActive(Player player) => OriginSystem.rivenTiles > Riven_Hive.NeededTiles;
-		public override float GetWeight(Player player) => 1f;
 	}
 	#region variations
 	public class Underground_Riven_Hive_Biome : ModBiome {
