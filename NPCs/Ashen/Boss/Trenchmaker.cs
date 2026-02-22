@@ -290,13 +290,13 @@ namespace Origins.NPCs.Ashen.Boss {
 					0
 				));
 				miscShaderData.Apply();
-				VertexRectangle.DrawLit(screenPos, thighPistonPos - thighUnit, calfPistonPos - calfUnit, thighPistonPos + thighUnit, calfPistonPos + calfUnit);
+				VertexRectangle.DrawLit(screenPos, thighPistonPos - thighUnit, calfPistonPos - calfUnit, thighPistonPos + thighUnit, calfPistonPos + calfUnit, NPC.IsABestiaryIconDummy ? _ => Color.White : null);
 				Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 				spriteBatch.Draw(
 					thighTexture,
 					thighPos - screenPos,
 					null,
-					NPC.GetTintColor(Lighting.GetColor(thighPos.ToTileCoordinates(), tintColor)),
+					NPC.GetTintColor(NPC.IsABestiaryIconDummy ? Color.White : Lighting.GetColor(thighPos.ToTileCoordinates(), tintColor)),
 					leg.ThighRot * NPC.direction,
 					new Vector2(49, 15).Apply(effects, thighTexture.Value.Size()),
 					1,
@@ -306,7 +306,7 @@ namespace Origins.NPCs.Ashen.Boss {
 					calfTexture,
 					calfPos - screenPos,
 					null,
-					NPC.GetTintColor(Lighting.GetColor(calfPos.ToTileCoordinates(), tintColor)),
+					NPC.GetTintColor(NPC.IsABestiaryIconDummy ? Color.White : Lighting.GetColor(calfPos.ToTileCoordinates(), tintColor)),
 					leg.CalfRot * NPC.direction,
 					new Vector2(14, 14).Apply(effects, calfTexture.Value.Size()),
 					1,
@@ -316,7 +316,7 @@ namespace Origins.NPCs.Ashen.Boss {
 					footTexture,
 					footPos - screenPos,
 					footTexture.Frame(verticalFrames: 2, frameY: (!GetFootHitbox(leg).Add(Vector2.UnitY).OverlapsAnyTiles()).ToInt()),
-					NPC.GetTintColor(Lighting.GetColor(footPos.ToTileCoordinates(), tintColor)),
+					NPC.GetTintColor(NPC.IsABestiaryIconDummy ? Color.White : Lighting.GetColor(footPos.ToTileCoordinates(), tintColor)),
 					0,
 					new Vector2(27, 7).Apply(effects, footTexture.Value.Size()),
 					1,
