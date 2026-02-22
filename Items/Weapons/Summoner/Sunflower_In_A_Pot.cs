@@ -458,11 +458,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.friendly = true;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 300;
-			Projectile.alpha = 0;
+			Projectile.Opacity = 0;
 			Projectile.extraUpdates = 1;
 			Projectile.ArmorPenetration += 5;
 		}
 		public override void AI() {
+			Projectile.alpha = 0;
 			const int HalfSpriteWidth = 32 / 2;
 
 			int HalfProjWidth = Projectile.width / 2;
