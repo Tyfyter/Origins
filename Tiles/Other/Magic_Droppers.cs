@@ -112,4 +112,8 @@ namespace Origins.Tiles.Other {
 		public override string[] ItemLegacyNames => ["Magic_Brine_Dropper"];
 		public override Color MapColor => FromHexRGB(0x00583F);
 	}
+	public class Magic_Dropper_Amebic_Gel : BaseMagicDropper<Amebic_Gel> {
+		public override int DroppletType => GoreID.ChimneySmoke1 + Main.rand.Next(3);
+		public override Color MapColor => FromHexRGB(0x00C4A7);
+	}
 }

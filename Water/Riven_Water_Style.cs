@@ -6,7 +6,7 @@ namespace Origins.Water {
     public class Riven_Water_Style : ModWaterStyle {
 		public override int ChooseWaterfallStyle() => ModContent.GetInstance<Riven_Waterfall_Style>().Slot;
 		public override int GetDropletGore() => GoreID.ChimneySmoke1 + Main.rand.Next(3);
-		public override int GetSplashDust() => 99;
+		public override int GetSplashDust() => DustID.Water_Jungle;
 		public override void LightColorMultiplier(ref float r, ref float g, ref float b) {
 			float glowValue = 1 / 1.05f;
 			r = 0.1f * glowValue;

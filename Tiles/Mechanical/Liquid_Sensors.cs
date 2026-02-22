@@ -210,10 +210,13 @@ namespace Origins.Tiles.Mechanical {
 		}
 	}
 	#endregion
-	public class Oil_Liquid_Sensor : BaseLiquidSensorEntity<Oil, Magic_Dropper_Oil> {
+	public class Liquid_Sensor_Oil : BaseLiquidSensorEntity<Oil, Magic_Dropper_Oil> {
 		public override Color MapColor => FromHexRGB(0x212121);
 	}
-	public class Brine_Liquid_Sensor : BaseLiquidSensorEntity<Liquids.Brine, Magic_Dropper_Brine> {
+	public class Liquid_Sensor_Brine : BaseLiquidSensorEntity<Liquids.Brine, Magic_Dropper_Brine> {
 		public override Color MapColor => FromHexRGB(0x216E58);
+	}
+	public class Liquid_Sensor_Amebic_Gel : BaseLiquidSensorEntity<Amebic_Gel, Magic_Dropper_Amebic_Gel> {
+		public override Color MapColor => FromHexRGB(0x1DA692);
 	}
 }
