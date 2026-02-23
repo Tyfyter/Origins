@@ -13,7 +13,6 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 using static Terraria.WorldGen;
-using static Tyfyter.Utils.WaveFunctionCollapse.Generator<T>;
 
 namespace Origins.World.BiomeData {
 	public class Brine_Pool : ModBiome {
