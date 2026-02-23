@@ -14,6 +14,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 using static Terraria.WorldGen;
+using static Tyfyter.Utils.WaveFunctionCollapse.Generator<T>;
 
 namespace Origins.World.BiomeData {
 	public class Brine_Pool : ModBiome {
@@ -244,29 +245,42 @@ namespace Origins.World.BiomeData {
 						wallType: stoneWallID
 					);
 				}
-				if (!WorldGen.remixWorldGen) {
+				{
 					List<Vector2> validSurfaceCells = [];
-					for (int index = 0; index < cells.Count; index++) {
-						Vector2 cell = cells[index];
-						if (cell.Y > j) continue;
-						bool foundAnyCompetition = false;
-						for (int index2 = 0; index2 < validSurfaceCells.Count; index2++) {
-							Vector2 otherCell = validSurfaceCells[index2];
-							if (Math.Abs(otherCell.X - cell.X) < 35) {
-								if (otherCell.Y > cell.Y) {
-									if (foundAnyCompetition) {
-										validSurfaceCells.RemoveAt(index2--);
+					if (WorldGen.remixWorldGen) {
+						float dist = 0;
+						for (int index = 0; index < cells.Count; index++) {
+							Vector2 cell = cells[index];
+							float newDist = Math.Abs(cell.X - i);
+							if (newDist > dist) {
+								dist = newDist;
+								validSurfaceCells.Clear();
+							}
+							validSurfaceCells.Add(cell);
+						}
+					} else {
+						for (int index = 0; index < cells.Count; index++) {
+							Vector2 cell = cells[index];
+							if (cell.Y > j) continue;
+							bool foundAnyCompetition = false;
+							for (int index2 = 0; index2 < validSurfaceCells.Count; index2++) {
+								Vector2 otherCell = validSurfaceCells[index2];
+								if (Math.Abs(otherCell.X - cell.X) < 35) {
+									if (otherCell.Y > cell.Y) {
+										if (foundAnyCompetition) {
+											validSurfaceCells.RemoveAt(index2--);
+										} else {
+											validSurfaceCells[index2] = cell;
+										}
+										foundAnyCompetition = true;
 									} else {
-										validSurfaceCells[index2] = cell;
+										foundAnyCompetition = true;
+										break;
 									}
-									foundAnyCompetition = true;
-								} else {
-									foundAnyCompetition = true;
-									break;
 								}
 							}
+							if (!foundAnyCompetition) validSurfaceCells.Add(cell);
 						}
-						if (!foundAnyCompetition) validSurfaceCells.Add(cell);
 					}
 					Vector2 surfaceConnection = genRand.Next(validSurfaceCells);
 					// make sure the surface cell has 
@@ -324,11 +338,18 @@ namespace Origins.World.BiomeData {
 					while (!Framing.GetTileSafely(surfaceConnection.ToPoint()).HasTile) {
 						surfaceConnection.Y--;
 					}
+					retryDir:
+					Vector2 direction = -Vector2.UnitY.RotatedByRandom(0.15f);
+					if (WorldGen.remixWorldGen) {
+						direction.X = float.CopySign(direction.Y * genRand.NextFloat(1f, 1.25f), surfaceConnection.X - i);
+						direction.Normalize();
+					}
+					if (direction.HasNaNs()) goto retryDir;
 					GenRunners.OpeningRunner(
 						(int)surfaceConnection.X, (int)surfaceConnection.Y,
 						genRand.NextFloat(4, 6),
 						genRand.NextFloat(0.95f, 1.2f),
-						-Vector2.UnitY.RotatedByRandom(0.15f),
+						direction,
 						75,
 						validTiles
 					);
