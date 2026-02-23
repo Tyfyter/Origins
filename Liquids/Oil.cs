@@ -271,6 +271,7 @@ namespace Origins.Liquids {
 				} else {
 					tile.LiquidAmount = 0;
 				}
+				if (Liquid.quickFall && tile.LiquidAmount > rate) tile.LiquidAmount = rate;
 				UpdateAdjacentLiquids(i, j);
 			}
 			return base.UpdateLiquid(i, j, liquid);
