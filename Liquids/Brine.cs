@@ -18,7 +18,7 @@ namespace Origins.Liquids {
 				(orig_LiquidMergeTilesType orig, int i, int j, int type, int otherLiquid) => {
 					TreatAsWater(ref type, ref otherLiquid);
 					return orig(i, j, type, otherLiquid);
-			});
+				});
 			MonoModHooks.Add(typeof(LiquidLoader).GetMethod(nameof(LiquidLoader.LiquidMergeSounds)),
 				(orig_LiquidMergeSounds orig, int i, int j, int type, int otherLiquid, ref SoundStyle? collisionSound) => {
 					TreatAsWater(ref type, ref otherLiquid);
@@ -82,6 +82,10 @@ namespace Origins.Liquids {
 				return false;
 			}
 			return true;
+		}
+		public override void LiquidMergeSound(int i, int j, int otherLiquid, ref SoundStyle? collisionSound) {
+			if (otherLiquid == LiquidID.Water) collisionSound = null;
+			else LiquidLoader.LiquidMergeSounds(i, j, LiquidID.Water, otherLiquid, ref collisionSound);
 		}
 		public override bool PlayerLiquidMovement(Player player, bool fallThrough, bool ignorePlats) {
 			if (player.merman || player.ignoreWater || player.trident) {
