@@ -8007,7 +8007,7 @@ Magic_Dropper_Oil_Item: {
 	// Tooltip: ""
 }
 
-Oil_Liquid_Sensor_Item: {
+Liquid_Sensor_Oil_Item: {
 	// DisplayName: Liquid Sensor (Oil)
 	// Tooltip: Signals when oil starts or stops touching it
 }
@@ -8084,7 +8084,7 @@ Brine_Bomb: {
 	// Tooltip: A small explosion that will spread brine
 }
 
-Brine_Liquid_Sensor_Item: {
+Liquid_Sensor_Brine_Item: {
 	// DisplayName: Liquid Sensor (Brine)
 	// Tooltip: Signals when brine starts or stops touching it
 }
@@ -8127,10 +8127,26 @@ Multi_Bucket: {
 Amebic_Bucket: {
 	// DisplayName: Amebic Gel Bucket (Debug)
 	// Tooltip: Contains an endless amount of amebic gel
-	// LiquidName: Amebic Gel (Debug)
+	// LiquidName: Amebic Gel
 }
 
 Amebic_Gel_Sponge: {
 	// DisplayName: Amebic Gel Absorbant Sponge
 	// Tooltip: Capable of soaking up endless amount of amebic gel
+}
+
+Burning_Oil_Bucket: {
+	// DisplayName: Burning Oil Bucket (Debug)
+	// LiquidName: Burning Oil
+	// Tooltip: Contains an endless amount of burning oil
+}
+
+Liquid_Sensor_Amebic_Gel_Item: {
+	// DisplayName: Liquid Sensor (Amebic Gel)
+	// Tooltip: Signals when amebic gel starts or stops touching it
+}
+
+Magic_Dropper_Amebic_Gel_Item: {
+	// DisplayName: Magic Amebic Gel Dropper
+	// Tooltip: ""
 }

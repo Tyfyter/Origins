@@ -69,6 +69,10 @@ namespace Origins.Items.Tools.Liquids {
 				mode => mode.SortAfter(),
 				mode => mode.SortBefore()
 			).Sort();
+			static bool IsDebug(BucketMode mode) => mode is AutoBucketMode auto && auto.Bucket.Debug;
+			BucketMode[] debugModes = Modes.Where(IsDebug).ToArray();
+			Modes.RemoveAll(IsDebug);
+			Modes.AddRange(debugModes);
 		}
 	}
 	[Flags]
@@ -128,10 +132,12 @@ namespace Origins.Items.Tools.Liquids {
 	}
 	[Autoload(false)]
 	public class AutoBucketMode(BucketBase bucket, bool addToRecipe = true) : ModBucketMode(bucket, bucket.GetLiquid, addToRecipe) {
+		public new BucketBase Bucket => bucket;
 		public override IEnumerable<BucketMode> SortAfter() => [ModContent.GetInstance<ShimmerBucketMode>()];
 	}
 	[Autoload(false)]
 	public class ModBucketMode(ModItem bucket, Func<int, int, int> getLiquid, bool addToRecipe = true) : BucketMode {
+		public ModItem Bucket => bucket;
 		public override string Name => $"{bucket.Name}Mode";
 		public override LocalizedText DisplayName => bucket.GetLocalization("LiquidName", () => bucket.DisplayName.Value.Replace("Bottomless ", "").Replace(" Bucket", ""));
 		public override string Texture => bucket.Texture;
