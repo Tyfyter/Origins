@@ -53,9 +53,7 @@ namespace Origins.Liquids {
 		public override LightMaskMode LiquidLightMaskMode(int i, int j) {
 			return LightMaskMode.Water;
 		}
-		public override bool EvaporatesInHell(int i, int j) {
-			return true;
-		}
+		public override bool EvaporatesInHell(int i, int j) => true;
 		public override void RetroDrawEffects(int i, int j, SpriteBatch spriteBatch, ref RetroLiquidDrawInfo drawData, float liquidAmountModified, int liquidGFXQuality) {
 			/*drawData.liquidAlphaMultiplier *= 1.8f;
 			if (drawData.liquidAlphaMultiplier > 1f) {
