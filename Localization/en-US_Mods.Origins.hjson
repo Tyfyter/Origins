@@ -1229,7 +1229,7 @@ Buffs: {
 		Description:
 			'''
 			Artifact minions have the Thorns effect
-			All minions inflict [buffhint:Frostbite2] in a small area around them
+			All minions inflict [buffhint:Frostburn2] in a small area around them
 			'''
 	}
 
@@ -1499,6 +1499,60 @@ Buffs: {
 	Pharaohs_Turquoise_Buff2: {
 		DisplayName: Pharaoh's Turquoise
 		Description: ""
+	}
+
+	Moonflower_Buff: {
+		Arcane: {
+			DisplayName: Arcane
+			Description: Mods.Origins.Buffs.Moonflower_Buff.Arcane.Description
+		}
+
+		Brilliant: {
+			DisplayName: Brilliant
+			Description: Mods.Origins.Buffs.Moonflower_Buff.Brilliant.Description
+		}
+
+		Tranquil: {
+			DisplayName: Tranquil
+			Description: Mods.Origins.Buffs.Moonflower_Buff.Tranquil.Description
+		}
+
+		Balanced: {
+			DisplayName: Balanced
+			Description: Mods.Origins.Buffs.Moonflower_Buff.Balanced.Description
+		}
+
+		Reticent: {
+			DisplayName: Reticent
+			Description: Mods.Origins.Buffs.Moonflower_Buff.Reticent.Description
+		}
+
+		Hidden: {
+			DisplayName: Hidden
+			Description: Mods.Origins.Buffs.Moonflower_Buff.Hidden.Description
+		}
+
+		Curious: {
+			DisplayName: Curious
+			Description: Mods.Origins.Buffs.Moonflower_Buff.Curious.Description
+		}
+
+		Sanguine: {
+			DisplayName: Sanguine
+			Description: Mods.Origins.Buffs.Moonflower_Buff.Sanguine..Description
+		}
+
+		Cold: {
+			DisplayName: Cold
+			Description:
+				'''
+				Cold debuffs help you instead of harming you
+				[bufftip/self:Chilled] grants 8 defense
+				[bufftip/self:Frozen] reduces damage taken by 8%
+				[bufftip/self:Frostburn] and [bufftip/self:Frostburn2] grant life regeneration and imbue attacks with [bufftip:Frostburn2]
+				'Someday, you'll pay the price, I know'
+				'''
+		}
 	}
 }
 
@@ -2608,11 +2662,10 @@ Tiles: {
 	Power_Box_Wide.MapEntry: Power Box Wide
 	Magic_Dropper_Brine.MapEntry: Dripping Brine
 	Magic_Dropper_Amebic_Gel.MapEntry: Dripping Amebic Gel
+	Moonflower.MapEntry: Moonflower
 }
 
-Liquids: {
-	Amebic_Gel.MapEntry: Amebic Gel
-}
+Liquids.Amebic_Gel.MapEntry: Amebic Gel
 
 Keybinds: {
 	"Trigger Set Bonus.DisplayName": Trigger set bonus ability

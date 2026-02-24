@@ -8150,3 +8150,8 @@ Magic_Dropper_Amebic_Gel_Item: {
 	DisplayName: Magic Amebic Gel Dropper
 	Tooltip: ""
 }
+
+Moonflower_Item: {
+	DisplayName: Moonflower
+	Tooltip: ""
+}

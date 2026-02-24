@@ -57,7 +57,7 @@ namespace Origins.NPCs {
 				}
 				break;
 			}
-			settings.PriceAdjustment *= 1 - discount;
+			settings.PriceAdjustment -= discount;
 			return settings;
 		}
 		public override void ModifyShop(NPCShop shop) {
