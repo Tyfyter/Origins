@@ -217,7 +217,6 @@ namespace Origins.Items.Weapons.Ammo {
 		public static Color GetDustColor() => OriginsModIntegrations.CheckAprilFools() ? default : FromHexRGB(0x1B1B1B);
 	}
 	public class Brine_Rocket : BaseLiquidRocket<Brine> {
-		public override string Texture => typeof(Oil_Rocket).GetDefaultTMLName();
 		public override int DustType => DustID.Water_Jungle;
 	}
 }
