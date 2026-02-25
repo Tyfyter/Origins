@@ -347,6 +347,7 @@ namespace Origins {
 		public override int GetHashCode() {
 			return a.GetHashCode() + b.GetHashCode();
 		}
+		public override string ToString() => $"{{{a}, {b}}}";
 	}
 	public struct PlayerShaderSet {
 		public int cHead;
@@ -4825,6 +4826,14 @@ namespace Origins {
 		}
 	}
 	public static class TileExtenstions {
+		public static bool TrySet<T>(ref this T value, T newValue) where T : struct => PegasusLib.PegasusLib.TrySet(ref value, newValue);
+		public static bool IsBrokenBottomAnchor(int i, int j) {
+			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j - 1]);
+			if (data is null) return false;
+			TileUtils.GetMultiTileTopLeft(i, j, data, out int originX, out _);
+			if (data.AnchorBottom == AnchorData.Empty) return false;
+			return i >= originX + data.AnchorBottom.checkStart && i <= originX + data.AnchorBottom.checkStart + data.AnchorBottom.tileCount;
+		}
 		public record class MergeMatcher(int Up, int Down, int Left, int Right, int? UpLeft = null, int? UpRight = null, int? DownLeft = null, int? DownRight = null) {
 			public int Match(int up, int down, int left, int right, int upLeft, int upRight, int downLeft, int downRight) {
 				if (up != Up) return 0;
