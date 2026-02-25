@@ -903,7 +903,7 @@ namespace Origins.Tiles {
 		[field: CloneByReference] public event Action<Item> OnAddRecipes;
 		protected override bool CloneNewInstances => true;
 #if !DEBUG
-		public override bool IsLoadingEnabled(Mod mod) => !Debug || DebugConfig.Instance.ForceEnableDebugItems;
+		public override bool IsLoadingEnabled(Mod mod) => !debug || DebugConfig.Instance.ForceEnableDebugItems;
 #endif
 		public sealed override void Load() => itemsByTile.Add(Tile, this);
 		public override void SetStaticDefaults() {

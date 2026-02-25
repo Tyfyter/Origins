@@ -5,6 +5,7 @@ using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils;
 using ModLiquidLib.Utils.Structs;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Dusts;
 using Origins.Liquids.Waterfalls;
 using Origins.NPCs;
@@ -71,10 +72,10 @@ namespace Origins.Liquids {
 		public override void ModifyNearbyTiles(int i, int j, int liquidX, int liquidY) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			if ((TileID.Sets.Grass[tile.TileType] || TileID.Sets.GrassSpecial[tile.TileType]) && ModContent.GetModTile(tile.TileType) is not IRivenTile) {
-				WorldGen.KillTile(i, j, true);/*
-				if (Main.netMode == NetmodeID.Server) {
-					NetMessage.SendTileSquare(-1, i, j, 3);
-				}*/
+				using WorldGenOverride _ = new();
+				WorldGen.KillTile(i, j, true);
+				
+				if (NetmodeActive.Server) NetMessage.SendTileSquare(-1, i, j, 3);
 			}
 		}
 		public override void OnNPCCollision(NPC npc) {
