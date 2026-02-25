@@ -1,5 +1,6 @@
 ﻿using AltLibrary.Common.Systems;
 using Origins.Backgrounds;
+using Origins.Core;
 using Origins.Tiles.Brine;
 using Origins.Walls;
 using Origins.Water;
@@ -40,7 +41,7 @@ namespace Origins.World.BiomeData {
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) {
 				if (SpawnRates.IsInBrinePool(spawnInfo) || !spawnInfo.Player.InModBiome<Brine_Pool>()) return false;
-				
+
 				return Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY - 1].WallType == ModContent.WallType<Baryte_Wall>()
 					|| Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).WallType == ModContent.WallType<Baryte_Wall>() || Brine_Pool.forcedBiomeActive;
 			}
@@ -81,6 +82,32 @@ namespace Origins.World.BiomeData {
 			static IEnumerable<(int min, int max, int padding)> _JungleAvoider(object pass, int minPriority) {
 				int brineX = ModContent.GetInstance<OriginSystem>().brineCenter.X;
 				yield return (brineX - 100, brineX + 100, 50);
+			}
+			public static void PullTogether(ref Vector2 currentCell, ref Vector2 targetCell) {
+				Vector2 diff = (targetCell - currentCell).Normalized(out float remainingDist);
+				Tile currentTile = Framing.GetTileSafely(currentCell.ToPoint());
+				while (!currentTile.HasTile) {
+					currentCell += diff;
+					currentTile = Framing.GetTileSafely(currentCell.ToPoint());
+					if (--remainingDist < 0) break;
+				}
+				while (currentTile.HasTile) {
+					currentCell -= diff;
+					currentTile = Framing.GetTileSafely(currentCell.ToPoint());
+					remainingDist++;
+				}
+
+				currentTile = Framing.GetTileSafely(currentCell.ToPoint());
+				while (!currentTile.HasTile) {
+					targetCell -= diff;
+					currentTile = Framing.GetTileSafely(targetCell.ToPoint());
+					if (--remainingDist < 0) break;
+				}
+				while (currentTile.HasTile) {
+					targetCell += diff;
+					currentTile = Framing.GetTileSafely(targetCell.ToPoint());
+					remainingDist++;
+				}
 			}
 			public static void BrineStart(int i, int j) {
 				WorldBiomeGeneration.ChangeRange.ResetRange();
@@ -137,7 +164,7 @@ namespace Origins.World.BiomeData {
 				}*/
 				ushort mossID = (ushort)ModContent.TileType<Peat_Moss>();
 				int cellCount = cells.Count;
-				bool[] canBeClearedDuringOreRunner = TileID.Sets.CanBeClearedDuringOreRunner; 
+				bool[] canBeClearedDuringOreRunner = TileID.Sets.CanBeClearedDuringOreRunner;
 				try {
 					void DoOre(ushort oreID, bool[] validOreTiles, double strength = 7, int steps = 5) {
 						List<Vector2> cellsForOre = cells.ToList();
@@ -182,6 +209,7 @@ namespace Origins.World.BiomeData {
 				}
 				List<Vector2> cellsForConnections = cells.ToList();
 				HashSet<UnorderedTuple<Vector2>> connections = new();
+				using SetOverride<bool> _ = new(TileID.Sets.CanBeClearedDuringGeneration, stoneID, true);
 				for (int i0 = genRand.Next((int)(cellCount * 0.4f), (int)(cellCount * 0.8f)); i0 > 0; i0--) {
 					Vector2 currentCell = genRand.Next(cellsForConnections);
 					cellsForConnections.Remove(currentCell);
@@ -199,27 +227,16 @@ namespace Origins.World.BiomeData {
 							}
 						);
 					}).ToList());
-					Vector2 diff = targetCell - currentCell;
-					float length = diff.Length();
-					diff /= length;
-					Vector2 pos = currentCell;
-					Tile currentTile = Framing.GetTileSafely(pos.ToPoint());
-					while (!currentTile.HasTile) {
-						pos += diff;
-						currentTile = Framing.GetTileSafely(pos.ToPoint());
-					}
-					int wallThickness = 0;
-					while (currentTile.HasTile) {
-						pos += diff;
-						currentTile = Framing.GetTileSafely(pos.ToPoint());
-						wallThickness++;
-					}
 					connections.Add((currentCell, targetCell));
+					if (currentCell == new Vector2(6237.12f, 573.6497f)) ;
+					PullTogether(ref currentCell, ref targetCell);
+					Vector2 diff = (targetCell - currentCell).Normalized(out float dist);
+					Vector2 offshoot = diff.RotatedByRandom(0.1f);
 					GenRunners.WalledVeinRunner(
-						(int)pos.X, (int)pos.Y,
+						(int)currentCell.X, (int)currentCell.Y,
 						genRand.NextFloat(1.8f, 3),
-						-diff.RotatedByRandom(0.1f),
-						wallThickness * genRand.NextFloat(0.8f, 1f),
+						offshoot,
+						dist / Vector2.Dot(diff, offshoot),
 						stoneID,
 						1,
 						wallType: stoneWallID
@@ -265,11 +282,10 @@ namespace Origins.World.BiomeData {
 					Vector2 surfaceConnection = genRand.Next(validSurfaceCells);
 					// make sure the surface cell has 
 					{
+						bool needsNewConnection = true;
 						List<Vector2> validOthers = cells.Where(v0 => {
-							if (v0 == surfaceConnection || connections.Contains((surfaceConnection, v0))) return false;
-							Vector2 potentialDiff = v0 - surfaceConnection;
-							float potentialLength = potentialDiff.Length();
-							potentialDiff /= potentialLength;
+							if (v0 == surfaceConnection || connections.Contains((surfaceConnection, v0))) return needsNewConnection = false;
+							Vector2 potentialDiff = (v0 - surfaceConnection).Normalized(out float potentialLength);
 							return !cells.Any(
 								v1 => {
 									if (v1 == v0) return false;
@@ -281,28 +297,21 @@ namespace Origins.World.BiomeData {
 								}
 							);
 						}).ToList();
+						if (needsNewConnection && validOthers.Count <= 0) {
+							validOthers.Add(cells.Except([surfaceConnection]).MinBy(o => surfaceConnection.DistanceSQ(o)));
+						}
 						if (validOthers.Count > 0) {
+							Vector2 currentCell = surfaceConnection;
 							Vector2 targetCell = genRand.Next(validOthers);
-							Vector2 diff = targetCell - surfaceConnection;
-							float length = diff.Length();
-							diff /= length;
-							Vector2 pos = surfaceConnection;
-							Tile currentTile = Framing.GetTileSafely(pos.ToPoint());
-							while (!currentTile.HasTile) {
-								pos += diff;
-								currentTile = Framing.GetTileSafely(pos.ToPoint());
-							}
-							int wallThickness = 0;
-							while (currentTile.HasTile) {
-								pos += diff;
-								currentTile = Framing.GetTileSafely(pos.ToPoint());
-								wallThickness++;
-							}
+
+							PullTogether(ref currentCell, ref targetCell);
+							Vector2 diff = targetCell - currentCell;
+							Vector2 offshoot = diff.RotatedByRandom(0.1f);
 							GenRunners.WalledVeinRunner(
-								(int)pos.X, (int)pos.Y,
+								(int)currentCell.X, (int)currentCell.Y,
 								genRand.NextFloat(1.8f, 3),
-								-diff.RotatedByRandom(0.1f),
-								wallThickness * genRand.NextFloat(0.8f, 1f),
+								offshoot,
+								diff.Length() / Vector2.Dot(diff, offshoot),
 								stoneID,
 								1,
 								wallType: stoneWallID
@@ -376,6 +385,13 @@ namespace Origins.World.BiomeData {
 						Tile tile = Main.tile[x, y];
 						if (tile.WallType == replacementWallID) {
 							tile.WallType = (ushort)tile.Get<TemporaryWallData>().value;
+						}
+						if (!tile.HasTile) {
+							Tile tileAbove = Main.tile[x, y - 1];
+							if (tileAbove.HasTile && (TileID.Sets.PreventsTileRemovalIfOnTopOfIt[tileAbove.TileType] || TileExtenstions.IsBrokenBottomAnchor(x, y))) {
+								tile.HasTile = true;
+								if (!Main.tileContainer[tile.TileType]) tile.TileType = mossID;
+							}
 						}
 					}
 				}
@@ -504,8 +520,8 @@ namespace Origins.World.BiomeData {
 				int c = 0;
 				float size = 70;
 				int wallSize = 10;
-				Vector2 topLeft = new Vector2(i2, (float)GenVars.worldSurfaceHigh);
-				Vector2 topRight = new Vector2(i2, (float)GenVars.worldSurfaceHigh);
+				Vector2 topLeft = new(i2, (float)GenVars.worldSurfaceHigh);
+				Vector2 topRight = new(i2, (float)GenVars.worldSurfaceHigh);
 				int minX = int.MaxValue;
 				int maxX = int.MinValue;
 				for (int y = j2 - (int)(50 * sizeMult + 8); y > GenVars.worldSurfaceLow; y--) {
@@ -625,7 +641,7 @@ namespace Origins.World.BiomeData {
 				return Main.jungleBG[0];
 			}
 			public override void ModifyFarFades(float[] fades, float transitionSpeed) {
-				
+
 			}
 		}
 	}
