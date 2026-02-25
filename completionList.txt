@@ -802,11 +802,10 @@ TOOLS:
 (X) Perihelion Pickaxe
 
 (@, ^2) Amebic Gel Absorbant Sponge !!!
-(@, ^2) Bottomless Brine Bucket !!!
-(@, ^3) Bottomless Brine Bucket !!!
+(^) Bottomless Brine Bucket
 (^) Bottomless Oil Bucket
 (^) Brine Absorbant Sponge
-(@, ^3) Brine Bucket !!!
+(^) Brine Bucket
 (^) Multi-Bucket
 (^) Oil Absorbant Sponge
 (^) Oil Bucket
