@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Weapons.Summoner;
 using Origins.Items.Weapons.Summoner.Minions;
@@ -73,9 +74,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public static int ID { get; private set; }
 		public static Dictionary<BrothBase, Asset<Texture2D>> BrothTextures { get; } = [];
 		public static Dictionary<BrothBase, Asset<Texture2D>> BrothGlowTextures { get; } = [];
+		public static Dictionary<BrothBase, DustSpawnData> BrothDusts { get; } = [];
 		//public override string Texture => typeof(Sunny_Sunflower).GetDefaultTMLName() + "_Base";
 		//static readonly AutoLoadingAsset<Texture2D> headTexture = typeof(Sunny_Sunflower).GetDefaultTMLName() + "_Head";
 		Vector2 HeadCenterOffset => new(Projectile.width * 0.5f, 6);
+		const string texture_path = "Origins/Items/Weapons/Summoner/Minions/Sunflower_";
+		public static void AddBrothVisuals<TBroth>(string texturePath = null, string glowTexturePath = null, DustSpawnData? dustType = null) where TBroth : BrothBase {
+			if (texturePath is not null) BrothTextures.Add(ModContent.GetInstance<TBroth>(), ModContent.Request<Texture2D>(texture_path + texturePath));
+			if (glowTexturePath is not null) BrothGlowTextures.Add(ModContent.GetInstance<TBroth>(), ModContent.Request<Texture2D>(texture_path + glowTexturePath));
+			if (dustType.HasValue) BrothDusts.Add(ModContent.GetInstance<TBroth>(), dustType.Value);
+		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.projFrames[Type] = 15;
@@ -91,21 +99,23 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ID = Type;
 
 			if (Main.dedServ) return;
-			const string texture_path = "Origins/Items/Weapons/Summoner/Minions/Sunflower_";
-			BrothTextures.Add(ModContent.GetInstance<Spicy_Broth>(), ModContent.Request<Texture2D>(texture_path + "Firey"));
-			BrothTextures.Add(ModContent.GetInstance<Greasy_Broth>(), ModContent.Request<Texture2D>(texture_path + "Greasy"));
-			BrothTextures.Add(ModContent.GetInstance<Minty_Broth>(), ModContent.Request<Texture2D>(texture_path + "Icy"));
-			BrothTextures.Add(ModContent.GetInstance<Savory_Broth>(), ModContent.Request<Texture2D>(texture_path + "Shadowy"));
-			BrothGlowTextures.Add(ModContent.GetInstance<Savory_Broth>(), ModContent.Request<Texture2D>(texture_path + "Shadowy_Glow"));
-			BrothTextures.Add(ModContent.GetInstance<Sharp_Broth>(), ModContent.Request<Texture2D>(texture_path + "Zappy"));
-			BrothTextures.Add(ModContent.GetInstance<Insubstantial_Broth>(), ModContent.Request<Texture2D>(texture_path + "Shimmery"));
-			BrothGlowTextures.Add(ModContent.GetInstance<Insubstantial_Broth>(), ModContent.Request<Texture2D>(texture_path + "Shimmery_Glow"));
-			BrothTextures.Add(ModContent.GetInstance<Bitter_Broth>(), ModContent.Request<Texture2D>(texture_path + "Defiled"));
-			BrothGlowTextures.Add(ModContent.GetInstance<Bitter_Broth>(), ModContent.Request<Texture2D>(texture_path + "Defiled_Glow"));
-			BrothTextures.Add(ModContent.GetInstance<Hearty_Broth>(), ModContent.Request<Texture2D>(texture_path + "Pinkie"));
-			BrothTextures.Add(ModContent.GetInstance<Foul_Broth>(), ModContent.Request<Texture2D>(texture_path + "Sleepy"));
-			BrothTextures.Add(ModContent.GetInstance<Metallic_Broth>(), ModContent.Request<Texture2D>(texture_path + "Vampy"));
-			BrothTextures.Add(ModContent.GetInstance<Minishark_Broth>(), ModContent.Request<Texture2D>(texture_path + "Minisharky"));
+			AddBrothVisuals<Spicy_Broth>("Firey", dustType: DustID.Torch);
+			AddBrothVisuals<Greasy_Broth>("Greasy", dustType: new(DustID.TintableDust, 175, new(0, 0, 0, 250), 1.4f, dust => {
+				if (Main.rand.NextBool(2)) dust.alpha += 25;
+				if (Main.rand.NextBool(2)) dust.alpha += 25;
+				dust.velocity *= 0.2f;
+				dust.velocity.Y += 0.2f;
+				dust.velocity += Projectile.velocity;
+			}));
+			AddBrothVisuals<Minty_Broth>("Icy", dustType: DustID.IceTorch);
+			AddBrothVisuals<Savory_Broth>("Shadowy", "Shadowy_Glow");
+			AddBrothVisuals<Sharp_Broth>("Zappy", dustType: DustID.Electric);
+			AddBrothVisuals<Insubstantial_Broth>("Shimmery", "Shimmery_Glow");
+			AddBrothVisuals<Bitter_Broth>("Defiled", "Defiled_Glow");
+			AddBrothVisuals<Hearty_Broth>("Pinkie");
+			AddBrothVisuals<Foul_Broth>("Sleepy");
+			AddBrothVisuals<Metallic_Broth>("Vampy");
+			AddBrothVisuals<Minishark_Broth>("Minisharky");
 		}
 
 		public override void SetDefaults() {
@@ -137,6 +147,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
+
+			if (Main.rand.NextBool(3) && player.OriginPlayer()?.broth is BrothBase broth && BrothDusts.TryGetValue(broth, out DustSpawnData dustType)) {
+				dustType.SpawnDust(Projectile.position - Vector2.One * 2, Projectile.width + 4, Projectile.height + 2);
+			}
 
 			#region General behavior
 			Vector2 idlePosition = player.Bottom - new Vector2(player.direction * (Projectile.minionPos + 1) * 32, Projectile.height * 0.5f);
