@@ -803,8 +803,10 @@ TOOLS:
 
 (@, ^2) Amebic Gel Absorbant Sponge !!!
 (@, ^2) Bottomless Brine Bucket !!!
+(@, ^3) Bottomless Brine Bucket !!!
 (^) Bottomless Oil Bucket
 (^) Brine Absorbant Sponge
+(@, ^3) Brine Bucket !!!
 (^) Multi-Bucket
 (^) Oil Absorbant Sponge
 (^) Oil Bucket
@@ -1188,7 +1190,7 @@ EXPLOSIVE WEAPONS:
 (X) The Heatseeker
 (X) The Rocketman
 (X) Thundercracker
-(#2, ^2) Vampire Grenade !!! (finite duration projectiles)
+(#3, ^2) Vampire Grenade !!!
 
 (@4, ^3) Black Hole Bomb
 (@4, ^3) Caustica
@@ -1375,7 +1377,7 @@ TILES:
 (^) Dirt Chest
 (^) Edge Detector
 (^) Fire Extinguisher Holder
-(X) Gas Generator !!!
+(#, ^2) Gas Generator !!!
 (^) Industrial Door
 (#3, ^2) Large Storage Container
 (^) Laser Tag Console
@@ -1526,9 +1528,9 @@ TILES:
 
 LIQUIDS:
 |---
-(#) Amebic Gel !!!
-(^) Brine
-(#2) Oil !!! (needs Burning Oil textures)
+(#2, ^2) Amebic Gel !!!
+(#2, ^2) Brine !!! (still needs to spread to water)
+(^) Oil
 ---
 
 
@@ -1640,6 +1642,7 @@ CONSUMABLES:
 (^) Mojo Injection
 (X) Mother's Ward
 (^) Quantum Injector
+(#, ^2) Screwdriver Upgrade: White Wire !!!
 (%2) The Defiled Will
 
 (^) Absorption Potion
@@ -1664,7 +1667,7 @@ CONSUMABLES:
 (^) Foul Broth
 (^) Greasy Broth
 (^) Hearty Broth
-(☻) Insubstantial Broth !!!
+(^) Insubstantial Broth
 (^) Light Broth
 (†, 々) Metallic Broth
 (^) Minishark Broth

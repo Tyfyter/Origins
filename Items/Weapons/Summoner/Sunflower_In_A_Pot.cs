@@ -99,20 +99,22 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ID = Type;
 
 			if (Main.dedServ) return;
-			AddBrothVisuals<Spicy_Broth>("Firey", dustType: DustID.Torch);
-			AddBrothVisuals<Greasy_Broth>("Greasy", dustType: new(DustID.TintableDust, 175, new(0, 0, 0, 250), 1.4f, dust => {
+			AddBrothVisuals<Spicy_Broth>("Firey", dustType: DustID.GoldFlame);
+			AddBrothVisuals<Greasy_Broth>("Greasy", dustType: new(DustID.TintableDust, 175, new(0, 0, 0, 250), 1f, dust => {
 				if (Main.rand.NextBool(2)) dust.alpha += 25;
 				if (Main.rand.NextBool(2)) dust.alpha += 25;
 				dust.velocity *= 0.2f;
-				dust.velocity.Y += 0.2f;
+				//dust.velocity.Y += 0.2f;
 				dust.velocity += Projectile.velocity;
 			}));
 			AddBrothVisuals<Minty_Broth>("Icy", dustType: DustID.IceTorch);
 			AddBrothVisuals<Savory_Broth>("Shadowy", "Shadowy_Glow");
-			AddBrothVisuals<Sharp_Broth>("Zappy", dustType: DustID.Electric);
+			AddBrothVisuals<Sharp_Broth>("Zappy", dustType: new(DustID.Electric, 255, new(0, 0, 0, 250), 0.35f));
 			AddBrothVisuals<Insubstantial_Broth>("Shimmery", "Shimmery_Glow");
 			AddBrothVisuals<Bitter_Broth>("Defiled", "Defiled_Glow");
-			AddBrothVisuals<Hearty_Broth>("Pinkie");
+			AddBrothVisuals<Hearty_Broth>("Pinkie", dustType: new(DustID.HealingPlus, 255, new(0, 0, 0, 250), 1f, dust => {
+				dust.velocity *= 0.05f;
+			}));
 			AddBrothVisuals<Foul_Broth>("Sleepy");
 			AddBrothVisuals<Metallic_Broth>("Vampy");
 			AddBrothVisuals<Minishark_Broth>("Minisharky");
