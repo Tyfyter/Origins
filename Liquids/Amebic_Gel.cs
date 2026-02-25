@@ -75,7 +75,7 @@ namespace Origins.Liquids {
 				using WorldGenOverride _ = new();
 				WorldGen.KillTile(i, j, true);
 				
-				if (NetmodeActive.Server) NetMessage.SendTileSquare(-1, i, j, 3);
+				if (NetmodeActive.Server) NetMessage.SendTileSquare(-1, i, j, 1);
 			}
 		}
 		public override void OnNPCCollision(NPC npc) {
