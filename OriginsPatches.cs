@@ -1587,7 +1587,7 @@ namespace Origins {
 		}
 		#region quests
 		private void Player_SetTalkNPC(On_Player.orig_SetTalkNPC orig, Player self, int npcIndex, bool fromNet) {
-			if (self.talkNPC != npcIndex) Questing.Questing.ExitChat();
+			if (self.whoAmI == Main.myPlayer && self.talkNPC != npcIndex) Questing.Questing.ExitChat();
 			orig(self, npcIndex, fromNet);
 		}
 

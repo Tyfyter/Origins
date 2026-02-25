@@ -202,6 +202,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 						SoundEngine.PlaySound(SoundID.Item91.WithPitch(1.8f), Projectile.Center);
 						SoundEngine.PlaySound(SoundID.Item19.WithPitch(-0.5f), Projectile.Center);
 						Projectile.ai[2] = -1;
+						Projectile.netUpdate = true;
 					}
 				}
 			} else {
@@ -216,7 +217,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					SoundEngine.PlaySound(SoundID.Item85.WithPitch(2f), Projectile.Center);
 					Projectile.Kill();
 				} else {
-					direction *= (4 + (++Projectile.ai[0] / 300f)) / MathF.Sqrt(dist);
+					direction *= (4 + (++Projectile.ai[1] / 300f)) / MathF.Sqrt(dist);
 
 					Projectile.velocity = (Projectile.velocity * 15f + direction) / 16f;
 				}
