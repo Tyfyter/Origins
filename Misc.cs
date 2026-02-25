@@ -4826,7 +4826,6 @@ namespace Origins {
 		}
 	}
 	public static class TileExtenstions {
-		public static bool TrySet<T>(ref this T value, T newValue) where T : struct => PegasusLib.PegasusLib.TrySet(ref value, newValue);
 		public static bool IsBrokenBottomAnchor(int i, int j) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j - 1]);
 			if (data is null) return false;
