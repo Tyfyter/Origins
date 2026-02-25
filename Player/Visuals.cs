@@ -65,6 +65,8 @@ namespace Origins {
 				drawInfo.floatingTubeColor = drawInfo.drawPlayer.GetImmuneAlphaPure(Color.White, drawInfo.shadow);
 			}
 
+			if (oiled) drawInfo.Tint(new Color(0.4f, 0.4f, 0.4f, 1));
+
 			if (cursedCrownVisual) {
 				drawInfo.skinDyePacked = GameShaders.Armor.GetShaderIdFromItemId(ItemID.BlueAcidDye);
 				const float alphaMult = 0.9f;

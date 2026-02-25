@@ -539,6 +539,16 @@ namespace Origins {
 				Player.lifeRegen -= 9 * damageMult;
 			}
 
+			if (oiled && Main.rand.NextBool(3)) {
+				Dust dust = Dust.NewDustDirect(Player.position - Vector2.One * 2, Player.width + 4, Player.height + 2, DustID.TintableDust, 0f, 0f, 175, new(0, 0, 0, 250), 1.4f);
+				if (Main.rand.NextBool(2)) dust.alpha += 25;
+				if (Main.rand.NextBool(2)) dust.alpha += 25;
+				dust.noLight = true;
+				dust.velocity *= 0.2f;
+				dust.velocity.Y += 0.2f;
+				dust.velocity += Player.velocity;
+			}
+
 			if (oiled && (Player.onFire || Player.onFire2 || Player.onFire3 || Player.onFrostBurn || Player.onFrostBurn2)) {
 				Player.lifeRegen -= 50;
 			}

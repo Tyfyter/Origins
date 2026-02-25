@@ -3572,6 +3572,23 @@ namespace Origins {
 				if (itemsExist[i]) ItemIO.Send(items[i], writer, true);
 			}
 		}
+		public static void Tint(ref this PlayerDrawSet drawInfo, Color tint) {
+			drawInfo.colorHair = drawInfo.colorHair.MultiplyRGBA(tint);
+			drawInfo.colorEyeWhites = drawInfo.colorEyeWhites.MultiplyRGBA(tint);
+			drawInfo.colorEyes = drawInfo.colorEyes.MultiplyRGBA(tint);
+			drawInfo.colorHead = drawInfo.colorHead.MultiplyRGBA(tint);
+			drawInfo.colorBodySkin = drawInfo.colorBodySkin.MultiplyRGBA(tint);
+			drawInfo.colorLegs = drawInfo.colorLegs.MultiplyRGBA(tint);
+			drawInfo.colorShirt = drawInfo.colorShirt.MultiplyRGBA(tint);
+			drawInfo.colorUnderShirt = drawInfo.colorUnderShirt.MultiplyRGBA(tint);
+			drawInfo.colorPants = drawInfo.colorPants.MultiplyRGBA(tint);
+			drawInfo.colorShoes = drawInfo.colorShoes.MultiplyRGBA(tint);
+			drawInfo.colorArmorHead = drawInfo.colorArmorHead.MultiplyRGBA(tint);
+			drawInfo.colorArmorBody = drawInfo.colorArmorBody.MultiplyRGBA(tint);
+			drawInfo.colorMount = drawInfo.colorMount.MultiplyRGBA(tint);
+			drawInfo.colorArmorLegs = drawInfo.colorArmorLegs.MultiplyRGBA(tint);
+			drawInfo.floatingTubeColor = drawInfo.floatingTubeColor.MultiplyRGBA(tint);
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>

@@ -1,4 +1,6 @@
-﻿using Origins.Achievements;
+﻿using ModLiquidLib.ModLoader;
+using ModLiquidLib.Utils;
+using Origins.Achievements;
 using Origins.Buffs;
 using Origins.Core;
 using Origins.Items;
@@ -12,6 +14,7 @@ using Origins.Items.Other.Fish;
 using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
+using Origins.Liquids;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
@@ -466,7 +469,7 @@ namespace Origins {
 					if (info.Percent > 0) Player.AddBuff(info.Type.Type, 5);
 				}
 			}
-			if (rivenWet) {
+			if (rivenWet = Player.GetWet(LiquidLoader.LiquidType<Amebic_Gel>())) {
 				Player.gravity = 0.25f;
 			}
 			ceilingRavel = false;
@@ -534,32 +537,6 @@ namespace Origins {
 				if (Player.velocity.Y == 0 && (Player.mount?.Active != true)) ModContent.GetInstance<Slow_Loading_Bar>().Condition.Value += Math.Abs(Player.position.X - Player.oldPosition.X) / 16f;
 			}
 			Player.oldVelocity = Player.velocity;
-			rivenWet = false;
-			if (!weakShimmer && (Player.wet || WaterCollision(Player.position, Player.width, Player.height)) && !(Player.lavaWet || Player.honeyWet || Player.shimmerWet)) {
-				if (Player.InModBiome<Riven_Hive>()) {
-					rivenWet = true;
-					/*if (GameModeData.ExpertMode) {
-						int duration = 432;
-						int targetTime = 1440;
-						float targetSeverity = 0f;
-					} else if (GameModeData.MasterMode) {
-						int duration = 676;
-						int targetTime = 1440;
-						float targetSeverity = 0f;
-					} else if (GameModeData.NormalMode) {
-						int duration = 188;
-						int targetTime = 1440;
-						float targetSeverity = 0f;
-					} else if (GameModeData.Creative) {
-						int duration = 188;
-						int targetTime = 1440;
-						float targetSeverity = 0.08f;
-					}*/
-					InflictTorn(Player, 188, 750, 1f, true);
-					Player.velocity *= 0.95f;
-					GetAssimilation<Riven_Assimilation>().Percent += 0.001f; // This value x60 for every second, remember 100% is the max assimilation. This should be 6% every second resulting in 16.67 seconds of total time to play in Riven Water
-				}
-			}
 
 			if (shineSpark) {
 				if (shineSparkDashTime > 0) {
@@ -672,8 +649,8 @@ namespace Origins {
 					}
 				}
 				Max(ref mufflerAmount, 0);
-				if (oiled && Player.burned) Player.AddBuff(BuffID.OnFire, 30);
 			}
+			if (oiled && Player.burned) Player.AddBuff(BuffID.OnFire, 30);
 			foreach (Projectile projectile in Main.ActiveProjectiles) {
 				if (projectile.owner == Player.whoAmI && projectile.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerTarget.HasValue) {
 					Player.ownedProjectileCounts[projectile.type]--;

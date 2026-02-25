@@ -1229,7 +1229,7 @@ Buffs: {
 		/* Description:
 			'''
 			Artifact minions have the Thorns effect
-			All minions inflict [buffhint:Frostbite2] in a small area around them
+			All minions inflict [buffhint:Frostburn2] in a small area around them
 			''' */
 	}
 
