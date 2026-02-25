@@ -1,5 +1,4 @@
-﻿using Origins.Tiles;
-using Origins.Tiles.Other;
+﻿using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -29,7 +28,6 @@ namespace Origins.Walls {
 		}
 	}
 	public class Ashen_Grass_Wall : OriginsWall {
-		public override string Texture => typeof(Defiled_Grass_Wall).GetDefaultTMLName();
 		public override WallVersion WallVersions => WallVersion.Natural | WallVersion.Safe | WallVersion.Placed_Unsafe;
 		public override Color MapColor => FromHexRGB(0x463C54);
 		public override bool CanBeReplacedByWallSpread => false;
