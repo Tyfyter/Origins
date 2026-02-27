@@ -46,6 +46,7 @@ namespace Origins.Projectiles {
 			c.EmitLdarg0();
 			c.EmitDelegate((int updates, Projectile proj) => {
 				OriginsGlobalBiome.isConvertingProjectilePlayerOwned = !proj.hostile && !proj.npcProj && proj.owner != Main.maxPlayers;
+				if (!proj.IsMinionOrSentryRelated) return updates;
 				if (proj.TryGetGlobalProjectile(out MinionGlobalProjectile global)) {
 					if (proj.TryGetOwner(out Player player)) {
 						if (proj.TryGetGlobalProjectile(out ArtifactMinionGlobalProjectile artifact)) {
@@ -143,6 +144,7 @@ namespace Origins.Projectiles {
 			if (prefix is MinionPrefix minionPrefix) minionPrefix.OnSpawn(projectile, source);
 		}
 		public override bool PreAI(Projectile projectile) {
+			if (!projectile.IsMinionOrSentryRelated) return true;
 			if (relayRodStrength != 0) {
 				float strength = relayRodStrength * 0.01f;
 				if (projectile.minion || projectile.sentry || projectile.ContinuouslyUpdateDamageStats) projectile.damage += (int)(projectile.damage * strength * 0.1f);
@@ -159,6 +161,7 @@ namespace Origins.Projectiles {
 			return true;
 		}
 		public override void PostAI(Projectile projectile) {
+			if (!projectile.IsMinionOrSentryRelated) return;
 			if (projectile.TryGetGlobalProjectile(out OriginGlobalProj self) && self.prefix is MinionPrefix minionPrefixPrefix) {
 				minionPrefixPrefix.UpdateProjectile(projectile, timer);
 			}
@@ -184,6 +187,7 @@ namespace Origins.Projectiles {
 		float? mildewGrowthAngle = null;
 		float mildewGrowthFrame = 0;
 		public override void PostDraw(Projectile projectile, Color lightColor) {
+			if (!projectile.IsMinionOrSentryRelated) return;
 			if (projectile.TryGetOwner(out Player player)) {
 				OriginPlayer originPlayer = player.OriginPlayer();
 				originPlayer.broth?.PostDrawMinion(projectile, lightColor);

@@ -138,6 +138,7 @@ namespace Origins.Items.Accessories {
 		public override void AI() {
 			DoActiveCheck();
 			Player player = Main.player[Projectile.owner];
+			Projectile.minion = !player.OriginPlayer().roboTailVanity;
 			Projectile.direction = player.direction;
 			Projectile.Center = player.MountedCenter + new Vector2(player.direction * -10, player.gravDir * 10 + player.gfxOffY);
 			Projectile.rotation = MathHelper.PiOver2 * Projectile.direction;
@@ -188,7 +189,8 @@ namespace Origins.Items.Accessories {
 			Player player = Main.player[Projectile.owner];
 			if (Projectile.localAI[1] > Robo_Tail.TailSegmentCount(player)) Projectile.Kill();
 			OriginPlayer originPlayer = player.OriginPlayer();
-			if (originPlayer.roboTailVanity || originPlayer.roboTail is null) return;
+			Projectile.minion = !originPlayer.roboTailVanity;
+			if (!Projectile.minion || originPlayer.roboTail is null) return;
 			int threshold = (player.statLifeMax2 / 2) / Robo_Tail.TailSegmentCount(player);
 			switch (Projectile.ai[0]) {
 				case 0:
