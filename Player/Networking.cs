@@ -2,6 +2,7 @@
 using Origins.Core;
 using Origins.Questing;
 using Origins.Tiles;
+using PegasusLib.Networking;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -206,5 +207,20 @@ namespace Origins {
 	public enum PlayerVisualSyncDatas : ushort {
 		BlastSetActive			= 0b0000000000000001,
 		NaturalMoonlightWings	= 0b0000000000000010,
+	}
+	public record class Channel_Action(Player Player, bool Channel) : SyncedAction {
+		public Channel_Action(Player player) : this(player, player.channel) { }
+		Channel_Action() : this(default, default) { }
+		public override SyncedAction NetReceive(BinaryReader reader) => this with {
+			Player = Main.player[reader.ReadByte()],
+			Channel = reader.ReadBoolean()
+		};
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write((byte)Player.whoAmI);
+			writer.Write(Channel);
+		}
+		protected override void Perform() {
+			Player.channel = Channel;
+		}
 	}
 }

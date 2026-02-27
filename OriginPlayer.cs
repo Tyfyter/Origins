@@ -565,7 +565,9 @@ namespace Origins {
 				if (min > Player.velocity.Y) min = Player.velocity.Y;
 				if (max < Player.velocity.Y) max = Player.velocity.Y;
 			}
+			if (Player.whoAmI == Main.myPlayer && wasChanneling.TrySet(Player.channel)) new Channel_Action(Player).Send();
 		}
+		bool wasChanneling = false;
 		float min = float.MaxValue;
 		float max = float.MinValue;
 		public override void OnRespawn() {
