@@ -10,12 +10,10 @@ using Origins.Items.Tools.Wiring;
 using Origins.Items.Vanity.BossMasks;
 using Origins.LootConditions;
 using Origins.Music;
-using Origins.Projectiles;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.BossDrops;
 using Origins.UI;
 using Origins.World.BiomeData;
-using PegasusLib;
 using PegasusLib.Graphics;
 using PegasusLib.Networking;
 using ReLogic.Content;
@@ -25,7 +23,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -139,6 +136,12 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override void ModifyTypeName(ref string typeName) {
 			typeName = string.Format(typeName, GunType);
 		}
+		public override LocalizedText DeathMessage => Language.GetText("Announcement.HasBeenDefeated_Single");
+		public override bool ModifyDeathMessage(ref NetworkText customText, ref Color color) {
+			customText = DeathMessage.WithFormatArgs(DisplayName.WithFormatArgs(GunType.ToString("00"))).ToNetworkText();
+			Mod.Logger.Debug(customText);
+			return true;
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
@@ -166,6 +169,10 @@ namespace Origins.NPCs.Ashen.Boss {
 			Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
 			GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.05f);
 			this.GetState().DoAIState(this);
+			if (!(this.GetState() as AIState).CanHaveThrustersActive) {
+				NPC.frame.Y = 0;
+				NPC.frameCounter = 0;
+			}
 			if (!Main.dedServ && NPC.frame.Y != 0) {
 				int type = Type;
 				thrusterSound.PlaySoundIfInactive(Origins.Sounds.ThrusterLoop, NPC.Center, sound => {
@@ -445,6 +452,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public class AutomaticIdleState : AutomaticIdleState<Trenchmaker> { }
 		public abstract class AIState : AIState<Trenchmaker> {
 			public virtual float WalkDist => 10 * 16;
+			public virtual bool CanHaveThrustersActive => false;
 			public virtual LegAnimation ForceAnimation(Trenchmaker npc, Leg leg, Leg otherLeg) => null;
 		}
 		public record struct Leg(float ThighRot, float CalfRot, LegAnimation CurrentAnimation, bool WasStanding = false, int TimeStanding = 0, int TimeInAnimation = 0, bool NetUpdate = true) {
@@ -571,6 +579,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			).ModNPC as Trenchmaker).SetAIState(StateIndex<Spawning_Jets_State>());
 		}
 		public class Spawning_Jets_State : AIState {
+			public override bool CanHaveThrustersActive => true;
 			public override void DoAIState(Trenchmaker boss) {
 				NPC npc = boss.NPC;
 				TargetSearchResults searchResults = SearchForTarget(npc, TargetSearchFlag.Players);
@@ -579,7 +588,7 @@ namespace Origins.NPCs.Ashen.Boss {
 					npc.targetRect = searchResults.NearestTargetHitbox;
 					if (npc.ShouldFaceTarget(ref searchResults)) npc.FaceTarget();
 				}
-				if (boss.legs[0].CurrentAnimation is not Jump_Air_Animation) {
+				if (!NetmodeActive.MultiplayerClient && boss.legs[0].CurrentAnimation is not Jump_Air_Animation) {
 					if (npc.ai[1] > 12) {
 						boss.GetLegPositions(boss.legs[0], out _, out _, out Vector2 footPos);
 						npc.SpawnProjectile(null,

@@ -494,6 +494,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static int ShotDamage => (int)(18 * DifficultyMult);
 		public static float ChargeSoundVolume => 1;
 		public static float ChargeSoundFadeTime => 30;
+		public override bool CanHaveThrustersActive => true;
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 			iconTexture = typeof(Trenchmaker_Carpet_Bomb).GetDefaultTMLName();
