@@ -338,7 +338,7 @@ ENEMY NPCS:
 
 EVENTS:
 |---
-(X) Smog Storm !!!
+(#) Smog Storm !!!
 
 (X) Ashen Invasion
 (#, %2) Corruption Invasion
@@ -801,7 +801,7 @@ TOOLS:
 (X) Perihelion Jackhammer
 (X) Perihelion Pickaxe
 
-(@, ^2) Amebic Gel Absorbant Sponge !!!
+(␡, @, ^2) Amebic Gel Absorbant Sponge !!!
 (^) Bottomless Brine Bucket
 (^) Bottomless Oil Bucket
 (^) Brine Absorbant Sponge
@@ -1049,7 +1049,7 @@ SUMMONER WEAPONS:
 (^) Relay Rod
 (^) Rotted Worm Staff
 (X) Shadow Cast
-(#2, ^2) Sunflower in a Pot (particle effects for variants)
+(^) Sunflower in a Pot
 (^) Teardown
 (^) Thread Rod
 (^) Woodsprite Staff
@@ -1355,7 +1355,7 @@ TILES:
 (X) Ruined Portal
 (#3, ^2) Scrap Railing
 (^) Shadow Torch
-(X) Strange Plant (Stardust) !!!
+(#, ^2) Strange Plant (Stardust) !!!
 (^) Traffic Cone
 
 (^) Ashen Campfire
@@ -1389,6 +1389,7 @@ TILES:
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
 (X) Ocean Dungeon Chest
+(#, ^2) Oil Derrick !!!
 (^) Pocket Dimension Monolith
 (X) Qube Generator
 (X) Ravel Lock: Builder
@@ -1399,12 +1400,12 @@ TILES:
 (^) Riven Dungeon Chest
 (^) Rusty Locker
 (^) Small Storage Container
-(X) Solar Battery !!!
+(#, ^2) Solar Battery !!!
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (#2, ^2) Transistor !!! (needs obtain method)
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)
-(X) Wind Generator !!!
+(#, ^2) Wind Turbine !!!
 (X) Wrycoral Planter Box
 
 (X) Elderforge
