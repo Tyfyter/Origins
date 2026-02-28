@@ -9,6 +9,7 @@ using Origins.Core;
 using Origins.Dusts;
 using Origins.Liquids.Waterfalls;
 using Origins.NPCs;
+using Origins.NPCs.Riven;
 using Origins.Tiles;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
@@ -74,7 +75,7 @@ namespace Origins.Liquids {
 			if ((TileID.Sets.Grass[tile.TileType] || TileID.Sets.GrassSpecial[tile.TileType]) && ModContent.GetModTile(tile.TileType) is not IRivenTile) {
 				using WorldGenOverride _ = new();
 				WorldGen.KillTile(i, j, true);
-				
+
 				if (NetmodeActive.Server) NetMessage.SendTileSquare(-1, i, j, 1);
 			}
 		}
@@ -99,17 +100,32 @@ namespace Origins.Liquids {
 			}
 		}
 		public override int LiquidMerge(int i, int j, int otherLiquid) {
-			switch (otherLiquid) {
-				case LiquidID.Shimmer: return ModContent.TileType<Amoeba_Fluid>();
-			}
 			return ModContent.TileType<Amoeba_Fluid>();
 		}
 		public override bool PreLiquidMerge(int liquidX, int liquidY, int tileX, int tileY, int otherLiquid) {
-			if (!DoesntDissolveByAmebicGel[otherLiquid]) {
-				UpdateLiquids(liquidX, liquidY, tileX, tileY, otherLiquid);
+			switch (otherLiquid) {
+				case LiquidID.Shimmer:
+				Tile tile = Main.tile[tileX, tileY];
+				Tile liquid = Main.tile[liquidX, liquidY];
+				if (tile.LiquidType == ID) Utils.Swap(ref tile, ref liquid);
+				byte amt = 10;
+				if (liquid.LiquidAmount >= amt) {
+					tile.LiquidAmount = (byte)Math.Max(0, tile.LiquidAmount - 25);
+					liquid.LiquidAmount = (byte)Math.Max(0, liquid.LiquidAmount - amt);
+					if (!NetmodeActive.MultiplayerClient) {
+						Vector2 pos = tile.GetTilePosition().ToWorldCoordinates();
+						NPC.NewNPC(Entity.GetSource_NaturalSpawn(), (int)pos.X, (int)pos.Y, ModContent.NPCType<Amebic_Slime>());
+					}
+				}
 				return false;
+
+				default:
+				if (!DoesntDissolveByAmebicGel[otherLiquid]) {
+					UpdateLiquids(liquidX, liquidY, tileX, tileY, otherLiquid);
+					return false;
+				}
+				return true;
 			}
-			return true;
 		}
 		public static void UpdateLiquids(int liquidX, int liquidY, int tileX, int tileY, int otherLiquid) {
 			//tile variables, these help us edit the liquid at certain tile positions
