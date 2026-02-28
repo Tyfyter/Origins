@@ -267,8 +267,7 @@ namespace Origins.Liquids {
 			} else {
 				const int rate = 2;
 				if (tile.LiquidAmount > rate) {
-					// TODO: uncomment below line after mp test for ModifyNearbyTiles is done
-					//tile.LiquidAmount -= rate;
+					tile.LiquidAmount -= rate;
 				} else {
 					tile.LiquidAmount = 0;
 				}
