@@ -8150,3 +8150,8 @@ Magic_Dropper_Amebic_Gel_Item: {
 	DisplayName: Magic Amebic Gel Dropper
 	Tooltip: ""
 }
+
+Awesome_Prosthetic_Tail: {
+	DisplayName: Awesome Prosthetic Tail
+	Tooltip: "'Magic prosthetics are so cool! You didn't have a tail at all and we can still fix that!'"
+}

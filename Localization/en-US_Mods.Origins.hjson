@@ -3480,6 +3480,7 @@ ExtraDyeSlots: {
 	SceneYMK_Dye_Slot_2.DisplayText: "{$LegacyInterface.57} (Blue Primaries)"
 	Futurephones_Glow_Dye_Slot.DisplayText: "{$LegacyInterface.57} (Lights)"
 	Robo_Tail_Glow_Dye_Slot.DisplayText: "{$LegacyInterface.57} (Lights)"
+	Awesome_Tail_Glow_Dye_Slot.DisplayText: "{$LegacyInterface.57}"
 }
 
 CritType: {

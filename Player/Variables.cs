@@ -5,6 +5,7 @@ using Origins.Dusts;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Broths;
+using Origins.Items.Vanity.Other;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
@@ -412,6 +413,8 @@ namespace Origins {
 		public bool summonerEmblem = false;
 		public bool explosiveEmblem = false;
 		public bool[] sceneYMKWingsNaturalColor = new bool[3];
+		[AutoReset] public ATail vanityTail;
+		public List<TailSegment> vanityTailSegments = [];
 		#endregion
 
 		#region explosive stats
@@ -661,6 +664,7 @@ namespace Origins {
 		float murkySludgeTouchTimer = 0;
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
+			if (vanityTail is null) vanityTailSegments.Clear();
 			autoReset(this);
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;

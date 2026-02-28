@@ -21,11 +21,16 @@ namespace Origins.Core {
 		public DyedLight(Color color) {
 			this.color = color.ToVector3();
 			if (Main.dedServ) return;
-			Main.QueueMainThreadAction(() => {
-				texture = new(Main.graphics.GraphicsDevice, 1, 1);
-				texture.SetData([color]);
-				renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, 1, 1, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PlatformContents);
-			});
+			if (Program.IsMainThread) {
+				SetupRenderTarget();
+			} else {
+				Main.QueueMainThreadAction(SetupRenderTarget);
+			}
+		}
+		void SetupRenderTarget() {
+			texture = new(Main.graphics.GraphicsDevice, 1, 1);
+			texture.SetData([color]);
+			renderTarget = new RenderTarget2D(Main.instance.GraphicsDevice, 1, 1, false, SurfaceFormat.Color, DepthFormat.None, 0, RenderTargetUsage.PlatformContents);
 		}
 		Color Get(ArmorShaderData shader, Entity entity) {
 			Main.graphics.GraphicsDevice.SetRenderTarget(renderTarget);
@@ -51,7 +56,7 @@ namespace Origins.Core {
 		public Vector3 GetColor(Func<int?> armorShaderID, Player player, Entity entity) {
 			if (Main.dedServ) return color;
 			if (!OriginClientConfig.Instance.DyeLightSources) return color;
-			if (armorShaderID() is not int dye) return color;
+			if (armorShaderID() is not int dye || dye == 0) return color;
 			ArmorShaderData shader = GameShaders.Armor.GetSecondaryShader(dye, player);
 			if (shader is null) return color;
 			if (OriginClientConfig.Instance.ProceduralLightSourceDyeRate == 0 || dyeFunctionIsBetter.Contains(shader)) {

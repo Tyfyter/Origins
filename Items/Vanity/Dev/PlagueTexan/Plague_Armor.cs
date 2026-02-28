@@ -18,6 +18,7 @@ namespace Origins.Items.Vanity.Dev.PlagueTexan {
 			yield return ModContent.ItemType<Plague_Texan_Sight>();
 			yield return new(ItemDropRule.ByCondition(DropConditions.HardmodeBossBag, ModContent.ItemType<SceneYMK_Wings>()));
 			yield return ModContent.ItemType<Chromatic_Scale>();
+			yield return ModContent.ItemType<Awesome_Prosthetic_Tail>();
 		}
 	}
 	[AutoloadEquip(EquipType.Head)]
@@ -53,7 +54,7 @@ namespace Origins.Items.Vanity.Dev.PlagueTexan {
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = AltCyanRarity.ID;
-			Item.value = Item.sellPrice(gold: 4);
+			Item.value = Item.sellPrice(gold: 3);
 		}
 	}
 	public class Plague_Texan_Sight : ModItem {
