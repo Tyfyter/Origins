@@ -41,7 +41,7 @@ namespace Origins.NPCs.Brine {
 			//NPC.active = false;
 		}
 	}
-	public class Brine_Latcher : Brine_Pool_NPC {
+	public class Brine_Latcher : Brine_Pool_NPC, ICustomWikiStat {
 		[field: CloneByReference]
 		public HashSet<int> PreyNPCTypes { get; private set; } = [];
 		public override void SetStaticDefaults() {

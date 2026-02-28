@@ -15,6 +15,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 using static Terraria.WorldGen;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Origins.World.BiomeData {
 	public class Brine_Pool : ModBiome {
@@ -81,6 +82,7 @@ namespace Origins.World.BiomeData {
 			public override void SetStaticDefaults() {
 				Priority = SpawnPoolPriority.Environment;
 			}
+			[SuppressMessage("Style", "IDE0060:Remove unused parameter")]
 			public static float EnemyRate(NPCSpawnInfo spawnInfo, float rate, bool needsMoss = false) {
 				return rate;
 			}
@@ -98,6 +100,7 @@ namespace Origins.World.BiomeData {
 		public static class Gen {
 			internal delegate IEnumerable<(int min, int max, int padding)> InvalidRangeHandler(object pass, int minPriority);
 			internal static InvalidRangeHandler JungleAvoider => _JungleAvoider;
+			[SuppressMessage("Style", "IDE1006:Naming Styles")]
 			static IEnumerable<(int min, int max, int padding)> _JungleAvoider(object pass, int minPriority) {
 				int brineX = ModContent.GetInstance<OriginSystem>().brineCenter.X;
 				yield return (brineX - 100, brineX + 100, 50);
@@ -247,7 +250,7 @@ namespace Origins.World.BiomeData {
 						);
 					}).ToList());
 					connections.Add((currentCell, targetCell));
-					if (currentCell == new Vector2(6237.12f, 573.6497f)) ;
+
 					PullTogether(ref currentCell, ref targetCell);
 					Vector2 diff = (targetCell - currentCell).Normalized(out float dist);
 					Vector2 offshoot = diff.RotatedByRandom(0.1f);
