@@ -39,6 +39,10 @@ namespace Origins.Tiles.Other {
 			Main.tileFrameImportant[Type] = false;
 			Main.tileSolid[Type] = true;
 			Main.tileNoAttach[Type] = false;
+			Main.tileSpelunker[Type] = false;
+			Main.tileShine2[Type] = false;
+			Main.tileShine[Type] = 0;
+			Main.tileOreFinderPriority[Type] = 0;
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 		public override void MouseOver(int i, int j) => SpecialChest.MouseOver(i, j);
@@ -76,7 +80,7 @@ namespace Origins.Tiles.Other {
 			Main.tileSpelunker[Type] = false;
 			Main.tileShine2[Type] = false;
 			Main.tileShine[Type] = 0;
-			Main.tileOreFinderPriority[Type] = 1;
+			Main.tileOreFinderPriority[Type] = 0;
 			AddMapEntry(FromHexRGB(0x976B4B));
 			AdjTiles = [TileID.Containers, TileID.Dirt];
 			DustType = DustID.Dirt;
