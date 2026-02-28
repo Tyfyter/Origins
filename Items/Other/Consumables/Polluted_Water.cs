@@ -29,7 +29,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 	}
 	public class Polluted_Water_P : ModProjectile {
-		public override string Texture => base.Texture.Substring(0, base.Texture.Length - 2).Replace("Polluted", "White");
+		public override string Texture => base.Texture.Substring(0, base.Texture.Length - 2);
 		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BloodWater);
