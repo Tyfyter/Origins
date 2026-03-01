@@ -237,7 +237,7 @@ ENEMY NPCS:
 (#, ^2) Gas Mask Zombie !!!
 (^) Goo Wall
 (^) Graveshield Zombie
-(X) Hammerhand !!!
+(#, ^2) Hammerhand !!!
 (X) Limestone Creeper
 (^) Optiphage
 (#, ^2) Packhunter !!!
@@ -1166,7 +1166,7 @@ EXPLOSIVE WEAPONS:
 (^) Torpedo Tube
 
 (^) Autohandcannon
-(X) Big Bang !!!
+(#, ^2) Big Bang !!!
 (^) Bomboomstick
 (^) Chlorodynamite
 (^) Chlorophyte Handcannon
