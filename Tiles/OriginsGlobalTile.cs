@@ -171,6 +171,9 @@ namespace Origins.Tiles {
 					}
 				}
 			}
+			if (TileLoader.GetTile(targetType) is ModTile modTile && modTile.Mod is Origins) {
+				modTile.PlaceInWorld(i, j, Main.LocalPlayer.HeldItem);
+			}
 		}
 		public static void Drop(int i, int j, Tile tile) {
 			switch (tile.TileType) {
