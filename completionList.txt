@@ -212,7 +212,7 @@ ENEMY NPCS:
 (🤡) Creme-filled Bat
 (^) Crimbrain
 (X) Crying Creeper
-(X) Defensive Turret !!!
+(#, ^2) Defensive Turret !!!
 (^) Defiled Broadcaster
 (^) Defiled Cyclops
 (^) Defiled Digger
@@ -245,7 +245,7 @@ ENEMY NPCS:
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
 (#, ^2) QM-76 'Quakemaker' !!!
-(X) Reject !!!
+(#, ^2) Reject !!!
 (#, ^2) Repairboy !!!!!!
 (^) Riven Penguin
 (^) Riven Protoform
@@ -411,12 +411,12 @@ ACHIEVEMENTS:
 (@, ^3) Cheat Code !!!
 (@, ^3) Cloning Factory !!!
 (@, ^3) Cracked !!!
-(@, ^3) Enough Yap !!!
-(@, ^3) Going Places !!!
+(^) Enough Yap
+(^) Going Places
 (@, ^3) It Was Watching !!!
 (@, ^3) Kaiju !!!
-(@, ^3) Killimanjaro !!!
-(@, ^3) Martyrdom !!!
+(^) Killimanjaro
+(^) Martyrdom
 (@, ^3) Now You're the One Lying Broken !!!
 (@, ^3) Peat Obsession !!!
 (@, ^3) RIVEN WORMS !!!

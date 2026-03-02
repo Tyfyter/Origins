@@ -16,7 +16,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Achievements {
 	public class Killimanjaro : SlayerAchievement<Defiled_Amalgamation> {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public override Position GetDefaultPosition() => new After("MASTERMIND");
 	}
 	public class Kaiju : SlayerAchievement<World_Cracker_Head> {
@@ -42,7 +41,6 @@ namespace Origins.Achievements {
 		public override Position GetDefaultPosition() => new After("ITS_HARD");
 	}
 	public class Enough_Yap : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomFlagCondition Condition { get; private set; }
 		public override bool Hidden => !ModContent.GetInstance<Killimanjaro>().Achievement.IsCompleted;
 		public override void SetStaticDefaults() {
@@ -115,7 +113,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class Going_Places : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomIntCondition Condition { get; private set; }
 		public static int RequiredCount => 3;
 		public static int TimeLimit => (int)(Main.dayLength + Main.nightLength);
@@ -219,7 +216,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class Martyrdom : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomFlagCondition Condition { get; private set; }
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Challenger);
