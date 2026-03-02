@@ -805,9 +805,6 @@ namespace Origins {
 	public interface IComplexMineDamageWall {
 		bool CanMine(Player self, Item item, int i, int j);
 	}
-	public interface IApplyPrefixItem {
-		void ApplyPrefix(int pre);
-	}
 	public interface ISwitchUseItem {
 		void StartUse(Player player);
 		void EndUse(Player player);

@@ -19,7 +19,7 @@ using Terraria.UI.Chat;
 
 namespace Origins.Items.Weapons.Ranged {
 	[ReinitializeDuringResizeArrays]
-	public class AMRSL_Skewer : ModItem, ICustomDrawItem, IApplyPrefixItem {
+	public class AMRSL_Skewer : ModItem, ICustomDrawItem {
 		public static float[] AmmoCount { get; } = ItemID.Sets.Factory.CreateFloatSet(defaultState: 0,
 			ItemID.IronOre, 1f / 10,
 			ItemID.LeadOre, 1f / 10,
@@ -35,13 +35,6 @@ namespace Origins.Items.Weapons.Ranged {
 		public SkewerAmmoList ammoTypes = new();
 		int animationFrame = 0;
 		int animationCounter = 0;
-		public override void Load() {
-			On_Item.Prefix += static (orig, self, prefixWeWant) => {
-				bool retValue = orig(self, prefixWeWant);
-				if (prefixWeWant != -3 && self.ModItem is IApplyPrefixItem item) item.ApplyPrefix(self.prefix);
-				return retValue;
-			};
-		}
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(int.MaxValue, 19));
@@ -64,7 +57,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.value = Item.sellPrice(gold: 6);
 			Item.rare = ItemRarityID.Lime;
 		}
-		public void ApplyPrefix(int pre) {
+		public override void ApplyPrefix(int pre) {
 			ammoMax = DefaultAmmoMax - (Item.useTime - DefaultAmmoMax);
 			Min(ref ammoCount, ammoMax);
 		}

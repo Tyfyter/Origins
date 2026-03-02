@@ -10,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
-	public class The_Muffler : ModItem, IApplyPrefixItem {
+	public class The_Muffler : ModItem {
 		public static bool RollMiasma(float chargeLevel) => float.Max(Main.rand.NextFloat(0f, 3f), Main.rand.NextFloat(0f, 3f)) < chargeLevel;
 		public static int MiasmaDuration(float chargeLevel) => 30;
 		public override void SetStaticDefaults() {
@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Melee {
 			efficiency = 1;
 		}
 		public override bool MeleePrefix() => true;
-		public void ApplyPrefix(int pre) {
+		public override void ApplyPrefix(int pre) {
 			efficiency = 40f / Item.useTime;
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
