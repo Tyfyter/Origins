@@ -610,7 +610,7 @@ namespace Origins.Core {
 						if (style < 0) continue;
 						TileObjectData aboveData = TileObjectData.GetTileData(tile.TileType, style);
 						if (aboveData is not null && aboveData.AnchorBottom != AnchorData.Empty) {
-							TileUtils.GetMultiTileTopLeft(i + k, j - 1, aboveData, out int x, out int y);
+							TileUtils.GetMultiTileTopLeft(i + k, j - 1, aboveData, out int x, out _);
 							if (i + k >= x + aboveData.AnchorBottom.checkStart && i + k <= x + aboveData.AnchorBottom.checkStart + aboveData.AnchorBottom.tileCount) {
 								if (!WorldGen.CanKillTile(i + k, j - 1)) return false;
 							}
