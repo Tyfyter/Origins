@@ -50,9 +50,9 @@ namespace Origins.Core {
 				Main.chatText = "";
 				player.chestX = x;
 				player.chestY = y;
+				CurrentChest = chest;
 				ModContent.GetInstance<SpecialChestSystem>().chestUI.SetState(new SpecialChestUI());
 				Recipe.FindRecipes();
-				CurrentChest = chest;
 				foreach (SpecialChestButton button in CurrentChest.Buttons) {
 					if (button is IInputTextTaker textTaker) textTaker.ResetData();
 				}
@@ -732,15 +732,19 @@ namespace Origins.Core {
 					scrollbar.OnUpdate += element => {
 						if (element.IsMouseHovering) Main.LocalPlayer.mouseInterface = true;
 					};
+					UpdateScrollbar();
 				}
 				public void Submit() => SubmitText();
 				public void Reset() => CancelText();
+				void UpdateScrollbar() {
+					scrollbar.Left.Pixels = CurrentChest.ItemCount > 40 ? 0 : -Main.screenWidth;
+					scrollbar.SetView(56 * 4, MathF.Ceiling(CurrentChest.ItemCount / 10f) * 56);
+				}
 				public override void Update(GameTime gameTime) {
 					if (Main.LocalPlayer.chest != chestID || CurrentChest is null) return;
 					base.Update(gameTime);
 					CurrentChest.UpdateUI(this);
-					scrollbar.Left.Pixels = CurrentChest.ItemCount > 40 ? 0 : -Main.screenWidth;
-					scrollbar.SetView(56 * 4, MathF.Ceiling(CurrentChest.ItemCount / 10f) * 56);
+					UpdateScrollbar();
 				}
 				protected override void DrawSelf(SpriteBatch spriteBatch) {
 					if (Main.recBigList) return;
