@@ -1,5 +1,6 @@
 ﻿using ModLiquidLib.ModLoader;
 using ModLiquidLib.Utils;
+using Origins.Core;
 using Origins.Dusts;
 using Origins.Liquids;
 using System;
@@ -139,7 +140,7 @@ namespace Origins.Items.Weapons.Ammo {
 					}
 					return true;
 				}
-				return false;
+				return FixNonMergingLiquidBombs.SucceedWithoutMerge(x, y);
 			}
 			return SpreadLiquid;
 		}

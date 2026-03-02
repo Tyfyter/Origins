@@ -2610,7 +2610,11 @@ Tiles: {
 	// Magic_Dropper_Amebic_Gel.MapEntry: Dripping Amebic Gel
 }
 
-// Liquids.Amebic_Gel.MapEntry: Amebic Gel
+Liquids: {
+	// Amebic_Gel.MapEntry: Amebic Gel
+	// Brine.MapEntry: Brine
+	// Oil.MapEntry: Oil
+}
 
 Keybinds: {
 	// "Trigger Set Bonus.DisplayName": Trigger set bonus ability

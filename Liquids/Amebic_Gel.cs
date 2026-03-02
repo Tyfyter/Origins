@@ -212,7 +212,7 @@ namespace Origins.Liquids {
 				}
 				//frame the tile/s around the tile
 				Oil.UpdateAdjacentLiquids(tileX, tileY);
-				//sync tile changs around
+				//sync tile changes around
 				if (Main.netMode == NetmodeID.Server) {
 					NetMessage.SendTileSquare(-1, tileX - 1, tileY, 3);
 				}
@@ -221,6 +221,9 @@ namespace Origins.Liquids {
 		public static void AssimilateLiquid(int i, int j) {
 			Main.tile[i, j].SetLiquidType(ID);
 			Oil.UpdateAdjacentLiquids(i, j);
+		}
+		public override bool UpdateLiquid(int i, int j, Liquid liquid) {
+			return base.UpdateLiquid(i, j, liquid);
 		}
 	}
 }
