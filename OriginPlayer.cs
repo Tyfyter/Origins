@@ -967,6 +967,8 @@ namespace Origins {
 			}
 			if (disableUseItem) {
 				itemUseOldDirection = Player.direction;
+				Player.itemTime = 0;
+				Player.itemAnimation = 0;
 				return false;
 			}
 			if (luckyHatSet && !Player.ItemAnimationActive && Player.HeldItem.ChangePlayerDirectionOnShoot && (Player.HeldItem.CountsAsClass(DamageClass.Ranged) || Player.HeldItem.CountsAsClass(DamageClasses.Explosive)) && luckyHatSetTime < 90) {
