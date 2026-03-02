@@ -83,7 +83,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
 			float progress = npc.ai[0] / Main.npcFrameCount[npc.type];
 			float inverseProgress = MathF.Pow(1 - progress, 0.5f);
-			(_, Vector2 barCenter, Texture2D iconTexture, Rectangle iconFrame, Color iconColor, float life, float lifeMax, float shield, float shieldMax, float iconScale, bool showText, Vector2 textOffset) = drawParams;
+			drawParams.Deconstruct(out Texture2D barTexture, out Vector2 barCenter, out Color barColor, out Texture2D iconTexture, out Rectangle iconFrame, out Color iconColor, out float life, out float lifeMax, out float shield, out float shieldMax, out float iconScale, out bool showText, out Vector2 textOffset);
 			life = npc.lifeMax * MathF.Pow(progress, 0.5f);
 			lifeMax = MathHelper.Lerp(lastLostDiverMaxHealth, npc.lifeMax, progress);
 			Point barSize = new(456, 22); //Size of the bar
@@ -116,7 +116,7 @@ namespace Origins.NPCs.Brine.Boss {
 
 			// Bar itself
 			Vector2 stretchScale = new(scale / barFrame.Width, 1f);
-			Color barColor = Color.White * inverseProgress;
+			barColor = Color.White * inverseProgress;
 			spriteBatch.Draw(barTextureLD, barTopLeft, barFrame, barColor, 0f, Vector2.Zero, stretchScale, SpriteEffects.None, 0f);
 
 			// Tip
