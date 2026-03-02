@@ -60,7 +60,7 @@ using static Origins.OriginsSets.Items;
 using MC = Terraria.ModLoader.ModContent;
 
 namespace Origins {
-	public partial class Origins : Mod {
+	public sealed partial class Origins : Mod {
 		public static Origins instance;
 
 		public static Dictionary<int, int> ExplosiveBaseDamage { get; private set; }
