@@ -222,8 +222,5 @@ namespace Origins.Liquids {
 			Main.tile[i, j].SetLiquidType(ID);
 			Oil.UpdateAdjacentLiquids(i, j);
 		}
-		public override bool UpdateLiquid(int i, int j, Liquid liquid) {
-			return base.UpdateLiquid(i, j, liquid);
-		}
 	}
 }
