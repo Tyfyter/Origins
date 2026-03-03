@@ -60,10 +60,11 @@ namespace Origins.NPCs.Ashen {
 			if (faceTarget) NPC.FaceTarget();
 		}
 		static float? NPCSearcher(NPC target, Rectangle area, NPC searcher) {
-			if ((target.type == searcher.type || target.ModNPC is not IAshenEnemy || target.life >= target.lifeMax)) {
+			if (target.ModNPC is not IAshenEnemy { IsRobotic: true }) {
 				if (target.friendly || target.CountsAsACritter) return searcher.Distance(target.Center);
 				return null;
 			}
+			if (target.type == searcher.type || target.life >= target.lifeMax) return null;
 			return searcher.Distance(target.Center) + (target.life - target.lifeMax);
 		}
 		static (float cost, int id, Rectangle hitbox)? TileSearcher(Rectangle area, NPC searcher) {
