@@ -41,6 +41,12 @@ namespace Origins.NPCs.Ashen {
 					NPC.velocity += targetDir * acceleration;
 				}
 			}
+			if (dist < target_dist_max) {
+				if (NPC.ai[0].CycleUp(30)) {
+					NPC.velocity += new Vector2(targetDir.Y, -targetDir.X) * Main.rand.NextBool().ToDirectionInt();
+					NPC.netUpdate = true;
+				}
+			} else NPC.ai[0] = 0;
 			NPC.direction = targetDir.X < 0 ? -1 : 1;
 		}
 		public void TargetClosest(bool resetTarget = true, bool faceTarget = true) {
