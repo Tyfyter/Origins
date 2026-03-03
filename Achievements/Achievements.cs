@@ -19,7 +19,6 @@ namespace Origins.Achievements {
 		public override Position GetDefaultPosition() => new After("MASTERMIND");
 	}
 	public class Kaiju : SlayerAchievement<World_Cracker_Head> {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public override Position GetDefaultPosition() => new After("MASTERMIND");
 		public override IEnumerable<Position> GetModdedConstraints() => [new After(ModContent.GetInstance<Killimanjaro>())];
 	}
@@ -73,7 +72,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class Cloning_Factory : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomIntCondition Condition { get; private set; }
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Challenger);
@@ -207,7 +205,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class Cracked : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomFlagCondition Condition { get; private set; }
 		public override bool Hidden => !ModContent.GetInstance<Kaiju>().Achievement.IsCompleted;
 		public override void SetStaticDefaults() {

@@ -409,12 +409,12 @@ ACHIEVEMENTS:
 (@, ^3) An Eye for an Eye !!!
 (@, ^3) Auto-Immune Disease !!!
 (@, ^3) Cheat Code !!!
-(@, ^3) Cloning Factory !!!
-(@, ^3) Cracked !!!
+(^) Cloning Factory
+(^) Cracked
 (^) Enough Yap
 (^) Going Places
 (@, ^3) It Was Watching !!!
-(@, ^3) Kaiju !!!
+(^) Kaiju
 (^) Killimanjaro
 (^) Martyrdom
 (@, ^3) Now You're the One Lying Broken !!!
