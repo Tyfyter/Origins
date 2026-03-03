@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Magic;
+using Origins.NPCs.Ashen;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Weapons;
 using System;
@@ -208,7 +209,7 @@ namespace Origins.NPCs {
 			}
 		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
-			if (npc.HasBuff(BuffID.Bleeding)) {
+			if (npc.HasBuff(BuffID.Bleeding) && npc.ModNPC is not IAshenEnemy { IsRobotic: true }) {
 				if (npc.lifeRegen > 0) {
 					npc.lifeRegen = 0;
 				}

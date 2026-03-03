@@ -6,6 +6,7 @@ using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
+using Origins.NPCs.Ashen;
 using Origins.NPCs.Brine;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.NPCs.MiscE.Quests;
@@ -58,6 +59,7 @@ namespace Origins {
 		}
 		public override void ModifyGameTipVisibility(IReadOnlyList<GameTipData> gameTips) {
 			HasSetupAllContent = true;
+			AshenGlobalNPC.SetStaticDefaults();
 		}
 		public override void SetStaticDefaults() {
 			for (int i = 0; i < queuedUIStates.Count; i++) {
