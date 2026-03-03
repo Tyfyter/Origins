@@ -1,4 +1,5 @@
 ﻿using AltLibrary.Common.AltBiomes;
+using MagicStorage;
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.Hooks;
 using ModLiquidLib.ModLoader;
@@ -49,6 +50,7 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
+using static Terraria.Utilities.NPCUtils;
 using SetsTiles = Origins.OriginsSets.Tiles;
 
 namespace Origins {
@@ -4837,6 +4839,148 @@ namespace Origins {
 			if (npc.IsABestiaryIconDummy) return baseColor;
 			NPCLoader.DrawEffects(npc, ref baseColor);
 			return npc.GetNPCColorTintedByBuffs(baseColor);
+		}
+		[Flags]
+		public enum TargetSearchTypes : byte {
+			None = 0b000,
+			Players = 0b001,
+			NPCs = 0b010,
+			Tiles = 0b100,
+			All = 0b111
+		}
+		public record struct AdvancedTargetSearchResults(TargetSearchTypes TargetType, int TargetIndex, float TargetCost, Rectangle LastTargetRect) {
+			public Rectangle TargetRect {
+				get {
+					switch (TargetType) {
+						case TargetSearchTypes.Players:
+						if (TargetIndex == -1) break;
+						Player targetPlayer = Main.player[TargetIndex];
+						if (!targetPlayer.active || targetPlayer.dead) {
+							TargetIndex = -1;
+							break;
+						}
+						LastTargetRect = targetPlayer.Hitbox;
+						break;
+						case TargetSearchTypes.NPCs:
+						if (TargetIndex == -1) break;
+						NPC targetNPC = Main.npc[TargetIndex];
+						if (!targetNPC.active) {
+							TargetIndex = -1;
+							break;
+						}
+						LastTargetRect = targetNPC.Hitbox;
+						break;
+					}
+					return LastTargetRect;
+				}
+			}
+			public readonly bool HasTarget => TargetType switch {
+				TargetSearchTypes.Players or TargetSearchTypes.NPCs => TargetIndex != -1,
+				TargetSearchTypes.Tiles => true,
+				_ => false,
+			};
+			public readonly Player TargetPlayer => TargetType == TargetSearchTypes.Players && TargetIndex != -1 ? Main.player[TargetIndex] : null;
+			public readonly NPC TargetNPC => TargetType == TargetSearchTypes.NPCs && TargetIndex != -1 ? Main.npc[TargetIndex] : null;
+			public readonly Tile? TargetTile {
+				get {
+					if (TargetType != TargetSearchTypes.Tiles) return null;
+					return Unsafe.BitCast<int, Tile>(TargetIndex);
+				}
+			}
+			public readonly int TranslatedTargetIndex => TargetType switch {
+				TargetSearchTypes.Players => TargetIndex,
+				TargetSearchTypes.NPCs => TargetIndex + 300,
+				TargetSearchTypes.Tiles => -2,
+				_ => -1
+			};
+			public readonly void Write(BinaryWriter writer) {
+				writer.Write((byte)TargetType);
+				switch (TargetType) {
+					case TargetSearchTypes.Players:
+					case TargetSearchTypes.NPCs:
+					case TargetSearchTypes.Tiles:
+					break;
+					default:
+					return;
+				}
+				writer.Write((short)TargetIndex);
+				writer.Write(TargetCost);
+				switch (TargetType) {
+					case TargetSearchTypes.Players:
+					case TargetSearchTypes.NPCs:
+					return;
+				}
+				writer.Write(LastTargetRect.X);
+				writer.Write(LastTargetRect.Y);
+				writer.Write(LastTargetRect.Width);
+				writer.Write(LastTargetRect.Height);
+			}
+			public static AdvancedTargetSearchResults Read(BinaryReader reader) {
+				AdvancedTargetSearchResults results = default;
+				results.TargetType = (TargetSearchTypes)reader.ReadByte();
+				switch (results.TargetType) {
+					case TargetSearchTypes.Players:
+					case TargetSearchTypes.NPCs:
+					case TargetSearchTypes.Tiles:
+					break;
+					default:
+					return results;
+				}
+				results.TargetIndex = reader.ReadInt16();
+				results.TargetCost = reader.ReadSingle();
+				switch (results.TargetType) {
+					case TargetSearchTypes.Players:
+					case TargetSearchTypes.NPCs:
+					_ = results.LastTargetRect;
+					return results;
+				}
+				results.LastTargetRect = new(reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32(), reader.ReadInt32());
+				return results;
+			}
+		}
+		public delegate float? Searcher<T>(T target, Rectangle area, NPC searcher);
+		public delegate (float cost, int id, Rectangle hitbox)? Searcher(Rectangle area, NPC searcher);
+		public static AdvancedTargetSearchResults SearchForTarget(this NPC searcher, Rectangle area, TargetSearchTypes flags = TargetSearchTypes.Players | TargetSearchTypes.NPCs, Searcher<Player> playerSearcher = null, Searcher<NPC> npcSearcher = null, Searcher tileSearcher = null) {
+			playerSearcher ??= static (player, area, searcher) => searcher.Distance(player.Center) - player.aggro;
+			npcSearcher ??= static (npc, area, searcher) => searcher.Distance(npc.Center);
+
+			float cost = float.PositiveInfinity;
+			int targetIndex = -1;
+			TargetSearchTypes targetType = TargetSearchTypes.None;
+			Vector2 position = area.Center();
+			Rectangle targetRect = default;
+
+			if (flags.HasFlag(TargetSearchTypes.Players)) {
+				foreach (Player player in Main.ActivePlayers) {
+					if (player.dead || player.ghost || player.npcTypeNoAggro[searcher.type] || !player.Hitbox.Intersects(area)) continue;
+					if (playerSearcher(player, area, searcher) is float targetCost && Minimize(ref cost, targetCost)) {
+						targetType = TargetSearchTypes.Players;
+						targetIndex = player.whoAmI;
+						targetRect = player.Hitbox;
+					}
+				}
+			}
+
+			if (flags.HasFlag(TargetSearchTypes.NPCs)) {
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (!npc.active || npc.whoAmI == searcher.whoAmI || !npc.Hitbox.Intersects(area)) continue;
+					if (npcSearcher(npc, area, searcher) is float targetCost && Minimize(ref cost, targetCost)) {
+						targetType = TargetSearchTypes.NPCs;
+						targetIndex = npc.whoAmI;
+						targetRect = npc.Hitbox;
+					}
+				}
+			}
+
+			if (flags.HasFlag(TargetSearchTypes.Tiles)) {
+				if (tileSearcher(area, searcher) is (float targetCost, int id, Rectangle targetHitbox) && Minimize(ref cost, targetCost)) {
+					targetType = TargetSearchTypes.Tiles;
+					targetIndex = id;
+					targetRect = targetHitbox;
+				}
+			}
+
+			return new AdvancedTargetSearchResults(targetType, targetIndex, cost, targetRect);
 		}
 	}
 	public static class TileExtenstions {

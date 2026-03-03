@@ -13,9 +13,10 @@ using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static Origins.NPCs.Ashen.Repairboy;
 
 namespace Origins.Tiles.Ashen {
-	public class Beacon_Light : OriginTile, IComplexMineDamageTile, IAshenWireTile {
+	public class Beacon_Light : OriginTile, IComplexMineDamageTile, IAshenWireTile, IReparableTile {
 		public static int ID { get; private set; }
 		TileItem item;
 		public override void Load() {
@@ -70,6 +71,21 @@ namespace Origins.Tiles.Ashen {
 					}
 					fail = true;
 				}
+			}
+		}
+		public bool NeedsRepair(int i, int j) => Main.tile[i, j].TileFrameX >= 18 * 2 * 2;
+		public void Repair(int i, int j) {
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameX >= 18 * 2 * 2) {
+				TileObjectData data = TileObjectData.GetTileData(tile);
+				TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+				for (int x = 0; x < data.Width; x++) {
+					for (int y = 0; y < data.Height; y++) {
+						tile = Main.tile[left + x, top + y];
+						tile.TileFrameX %= 18 * 2;
+					}
+				}
+				UpdatePowerState(i, j, AshenWireTile.DefaultIsPowered(i, j));
 			}
 		}
 	}
