@@ -26,6 +26,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
+using Origins.NPCs.Ashen;
 using Origins.NPCs.Ashen.Boss;
 using Origins.NPCs.Brine;
 using Origins.NPCs.Brine.Boss;
@@ -1226,7 +1227,6 @@ namespace Origins {
 			AddItemsToGroup(GetGroup("MagicStorage:AnyBookcase"), ModCompatSets.AnyBookcases);
 			AddItemsToGroup(GetGroup("MagicStorage:AnyCampfire"), ModCompatSets.AnyCampfires);
 		}
-		public interface IAshenEnemy { } // move into an ashen global npc file when made
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosGroups() {
 			static int GetBanner(int npc, bool item = false) {

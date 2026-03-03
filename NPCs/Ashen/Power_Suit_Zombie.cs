@@ -12,10 +12,11 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.Ashen {
-	public class Power_Suit_Zombie : ModNPC, IWikiNPC {
+	public class Power_Suit_Zombie : ModNPC, IWikiNPC, IAshenEnemy {
 		public Rectangle DrawRect => new(0, 0, 34, 46);
 		public int AnimationFrames => 7;
 		public int FrameDuration => 3;
+		bool IAshenEnemy.IsRobotic => false;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 7;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;

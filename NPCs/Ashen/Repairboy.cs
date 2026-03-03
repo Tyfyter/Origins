@@ -1,11 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.NPCs.Brine;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginsModIntegrations;
 using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Ashen {

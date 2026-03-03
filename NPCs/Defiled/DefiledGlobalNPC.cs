@@ -85,7 +85,7 @@ namespace Origins.NPCs.Defiled {
 			}
 			if (npc.dryadBane) {
 				const float baseDPS = 2;
-				int totalDPS = (int)(baseDPS * BiomeNPCGlobals.CalcDryadDPSMult());
+				int totalDPS = Main.rand.RandomRound(baseDPS * BiomeNPCGlobals.CalcDryadDPSMult());
 				npc.lifeRegen -= 2 * totalDPS;
 				damage += totalDPS / 3;
 			}

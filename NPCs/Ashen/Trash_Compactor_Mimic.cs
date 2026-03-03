@@ -21,9 +21,6 @@ namespace Origins.NPCs.Ashen {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 14;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
-			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
-			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
-			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire3] = true;
 		}
 		public bool? Hardmode => true;
 		public override void SetDefaults() {

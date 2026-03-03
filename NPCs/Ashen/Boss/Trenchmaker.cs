@@ -36,7 +36,7 @@ using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Ashen.Boss {
 	[AutoloadBossHead]
-	public class Trenchmaker : ModNPC, IStateBoss<Trenchmaker> {
+	public class Trenchmaker : ModNPC, IStateBoss<Trenchmaker>, IAshenEnemy {
 		public static AIList<Trenchmaker> AIStates { get; } = [];
 		public int[] PreviousStates { get; } = new int[6];
 		internal static IItemDropRule normalDropRule;
