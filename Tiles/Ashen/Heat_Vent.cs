@@ -16,9 +16,10 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static Origins.NPCs.Ashen.Repairboy;
 
 namespace Origins.Tiles.Ashen {
-	public class Heat_Vent : OriginTile, IComplexMineDamageTile, IGlowingModTile {
+	public class Heat_Vent : OriginTile, IComplexMineDamageTile, IGlowingModTile, IReparableTile {
 		public static int ID { get; private set; }
 		public override void Load() {
 			new TileItem(this, true).RegisterItem();
@@ -87,6 +88,20 @@ namespace Origins.Tiles.Ashen {
 					fail = true;
 					if (tile.TileFrameY >= 18 * 6 * 2) {
 						CheckVent(left, top);
+					}
+				}
+			}
+		}
+		public bool NeedsRepair(int i, int j) => Main.tile[i, j].TileFrameY >= 18 * 6;
+		public void Repair(int i, int j) {
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameY >= 18 * 6) {
+				TileObjectData data = TileObjectData.GetTileData(tile);
+				TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
+				for (int x = 0; x < data.Width; x++) {
+					for (int y = 0; y < data.Height; y++) {
+						tile = Main.tile[left + x, top + y];
+						tile.TileFrameY -= 18 * 6;
 					}
 				}
 			}

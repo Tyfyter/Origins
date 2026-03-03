@@ -60,7 +60,10 @@ namespace Origins.NPCs.Ashen {
 			if (faceTarget) NPC.FaceTarget();
 		}
 		static float? NPCSearcher(NPC target, Rectangle area, NPC searcher) {
-			if (target.type == searcher.type || target.ModNPC is not IAshenEnemy || target.life >= target.lifeMax) return null;
+			if ((target.type == searcher.type || target.ModNPC is not IAshenEnemy || target.life >= target.lifeMax)) {
+				if (target.friendly || target.CountsAsACritter) return searcher.Distance(target.Center);
+				return null;
+			}
 			return searcher.Distance(target.Center) + (target.life - target.lifeMax);
 		}
 		static (float cost, int id, Rectangle hitbox)? TileSearcher(Rectangle area, NPC searcher) {
@@ -95,12 +98,12 @@ namespace Origins.NPCs.Ashen {
 			return (float.Sqrt(bestCost) * 16, Unsafe.BitCast<Tile, int>(bestTile), bestHitbox.Scaled(16));
 		}
 		public override void AI() {
-			if (!target.HasTarget || NPC.life < NPC.lifeMax) TargetClosest();
+			if (!target.HasTarget || NPC.life < NPC.lifeMax || target.TargetType == TargetSearchTypes.Players) TargetClosest();
 			if (target.HasTarget) {
 				NPC.targetRect = target.TargetRect;
 				MoveTowards(NPC.Center.Clamp(NPC.targetRect), out Vector2 targetDir, out float dist);
 				if (target.TargetType != TargetSearchTypes.Tiles) NPC.ai[1] = 0;
-				if (dist <= target_dist_max) {
+				if (dist <= target_dist_max + 16) {
 					if (NPC.ai[0].CycleUp(30)) {
 						NPC.velocity += new Vector2(targetDir.Y, -targetDir.X) * Main.rand.NextBool().ToDirectionInt();
 						NPC.netUpdate = true;
@@ -123,6 +126,7 @@ namespace Origins.NPCs.Ashen {
 		public override bool? CanFallThroughPlatforms() => true;
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			SpriteEffects effects = NPC.direction < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			drawColor = NPC.GetTintColor(drawColor);
 			spriteBatch.Draw(
 				TextureAssets.Npc[Type].Value,
 				NPC.Center - screenPos,
