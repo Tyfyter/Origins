@@ -151,6 +151,7 @@ namespace Origins.NPCs.Ashen {
 					if (MathUtils.LinearSmoothing(ref NPC.localAI[0], 3, 1 / 5f)) {
 						if (NPC.ai[2].CycleUp(20)) {
 							SoundEngine.PlaySound(SoundID.Item34.WithPitch(0.5f).WithVolume(0.75f), WeldingTorchPos);
+							if (NPC.life >= NPC.lifeMax) TargetClosest();
 						}
 						if (NPC.ai[2] % 5 == 0) {
 							Vector2 targetPos = WeldingTorchPos.Clamp(NPC.targetRect);
