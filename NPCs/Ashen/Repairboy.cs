@@ -14,6 +14,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Origins.NPCExtensions;
+using static Origins.NPCs.Ashen.Repairboy;
 
 namespace Origins.NPCs.Ashen {
 	public class Repairboy : ModNPC, IAshenEnemy {
@@ -218,7 +219,10 @@ namespace Origins.NPCs.Ashen {
 		}
 		public interface IReparable {
 			public bool? NeedsRepair(NPC repairboy, ref float weight, ref Rectangle hitbox);
-			public void Repair(NPC repairboy);
+			/// <summary>
+			/// Return true to skip healing
+			/// </summary>
+			public bool Repair(int repairAmount);
 		}
 		public interface IReparableTile {
 			public bool NeedsRepair(int i, int j, ref float weight, ref Rectangle hitbox);
@@ -245,13 +249,16 @@ namespace Origins.NPCs.Ashen {
 			bool doSound = false;
 			foreach (NPC other in Main.ActiveNPCs) {
 				if (healCooldown[other.whoAmI] > 0) continue;
-				if (other.life < other.lifeMax && Projectile.Colliding(hitbox, other.Hitbox) && other.ModNPC is IAshenEnemy { CanBeRepaired: true }) {
-					float oldHealth = other.life;
-					other.life += Main.rand.RandomRound(Projectile.damage * 0.15f);
-					if (other.life > other.lifeMax) other.life = other.lifeMax;
-					CombatText.NewText(other.Hitbox, CombatText.HealLife, (int)Math.Round(other.life - oldHealth), true, dot: true);
-					healCooldown[other.whoAmI] = 20;
+				if (other.life < other.lifeMax && Projectile.Colliding(hitbox, other.Hitbox)) {
 					doSound = true;
+					if (other.ModNPC is IReparable reparable && reparable.Repair(Projectile.damage)) continue;
+					if (other.ModNPC is IAshenEnemy { CanBeRepaired: true }) {
+						float oldHealth = other.life;
+						other.life += Main.rand.RandomRound(Projectile.damage * 0.15f);
+						if (other.life > other.lifeMax) other.life = other.lifeMax;
+						CombatText.NewText(other.Hitbox, CombatText.HealLife, (int)Math.Round(other.life - oldHealth), true, dot: true);
+						healCooldown[other.whoAmI] = 20;
+					}
 				}
 			}
 			if (doSound && Main.npc.GetIfInRange((int)Projectile.ai[1])?.ModNPC is Repairboy repairboy) {
