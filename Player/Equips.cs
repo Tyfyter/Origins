@@ -29,6 +29,8 @@ namespace Origins {
 		}
 		public override void PostUpdateEquips() {
 			Debugging.LogFirstRun(PostUpdateEquips);
+			Exo_Arm.Update(this);
+			if (exoWeaponMountBuff) Exo_Weapon_Mount.UpdateBuff(this);
 			if (bugZapper && tornCurrentSeverity > 0) {
 				Player.statDefense *= 1.15f + tornCurrentSeverity;
 			}

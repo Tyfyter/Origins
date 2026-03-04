@@ -534,10 +534,10 @@ ACCESSORIES:
 (^) Eitrite Gun Magazine
 (^) Eitrite Watch
 (^) Evil Bar Gun Magazines
-(#3, ^2) Exo-Arm !!!
-(#2/3, ^2) Exo-Legs !!!
+(☻) Exo-Arm !!!
+(☻) Exo-Legs !!!
 (#2/3, ^2) Exo-Suit !!! (needs updated balance IAW tooltip)
-(#3, ^2) Exo-Weapon Mount !!!
+(☻) Exo-Weapon Mount !!!
 (^) Exploder Emblem
 (^) Explosive Artery
 (^) Fairy Lotus

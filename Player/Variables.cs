@@ -385,6 +385,9 @@ namespace Origins {
 		public int spacePirateEyeCooldown = -2;
 		public Item glitterGlue = null;
 		public int glitterGlueTimer = 0;
+		[AutoReset] public float exoArmMult = 0;
+		[AutoReset] public float exoWeaponMountMult = 0;
+		[AutoReset] public bool exoWeaponMountBuff = false;
 		public int exoWeaponMountCurrentWeapon = 0;
 		public int exoWeaponMountLastWeapon = 0;
 		public bool exoWeaponMountCanCancel;

@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,11 +20,16 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
-			player.OriginPlayer().thrownProjectileSpeed += 0.2f;
-			player.pickSpeed -= 0.2f;
-			player.GetAttackSpeed(DamageClass.Melee) += 0.1f;
-			player.GetAttackSpeed(DamageClasses.Explosive) += 0.1f;
-			player.GetKnockback(DamageClass.Melee) += 0.1f;
+			Max(ref player.OriginPlayer().exoArmMult, 1);
+		}
+
+		public static void Update(OriginPlayer originPlayer) {
+			float exoArmMult = originPlayer.exoArmMult;
+			originPlayer.thrownProjectileSpeed += 0.2f * exoArmMult;
+			originPlayer.Player.pickSpeed -= 0.2f * exoArmMult;
+			originPlayer.Player.GetAttackSpeed(DamageClass.Melee) += 0.1f * exoArmMult;
+			originPlayer.Player.GetAttackSpeed(DamageClasses.Explosive) += 0.1f * exoArmMult;
+			originPlayer.Player.GetKnockback(DamageClass.Melee) += 0.1f * exoArmMult;
 		}
 	}
 }

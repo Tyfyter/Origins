@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Exo_Suit : ModItem, ICustomWikiStat {
-		public override string Texture => "Terraria/Images/Buff_" + BuffID.Swiftness;
 		public string[] Categories => [
 			WikiCategories.Movement,
 			WikiCategories.Combat,
@@ -19,9 +18,10 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
-			ModContent.GetInstance<Exo_Arm>().UpdateAccessory(player, hideVisual);
+			OriginPlayer originPlayer = player.OriginPlayer();
+			Max(ref originPlayer.exoArmMult, 1);
 			ModContent.GetInstance<Exo_Legs>().UpdateAccessory(player, hideVisual);
-			ModContent.GetInstance<Exo_Weapon_Mount>().UpdateAccessory(player, hideVisual);
+			Exo_Weapon_Mount.ProcessEffect(player, 1);
 		}
 		public override void AddRecipes() => CreateRecipe()
 			.AddIngredient<Exo_Arm>()

@@ -3,9 +3,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	//[AutoloadEquip(EquipType.Shoes)]
+	[AutoloadEquip(EquipType.Shoes)]
 	public class Exo_Legs : ModItem, ICustomWikiStat {
-		public override string Texture => "Terraria/Images/Buff_" + BuffID.Swiftness;
 		public string[] Categories => [
 			WikiCategories.Movement
 		];

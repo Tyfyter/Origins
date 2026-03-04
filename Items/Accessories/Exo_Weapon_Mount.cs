@@ -21,7 +21,11 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
+			ProcessEffect(player, 1);
+		}
+		public static void ProcessEffect(Player player, float multiplier) {
 			OriginPlayer originPlayer = player.OriginPlayer();
+			Max(ref player.OriginPlayer().exoWeaponMountMult, 1);
 			int oldSelected = originPlayer.exoWeaponMountCurrentWeapon;
 			if (originPlayer.exoWeaponMountCurrentWeapon.TrySet(player.selectedItem)) {
 				int buff = ModContent.BuffType<Exo_Weapon_Mount_Buff>();
@@ -47,10 +51,13 @@ namespace Origins.Items.Accessories {
 			}
 			if (player.ItemAnimationJustStarted) originPlayer.exoWeaponMountCanCancel = false;
 		}
+		public static void UpdateBuff(OriginPlayer originPlayer) {
+			originPlayer.Player.GetDamage(DamageClass.Generic) += 0.25f * originPlayer.exoWeaponMountMult;
+		}
 	}
 	public class Exo_Weapon_Mount_Buff : ModBuff {
 		public override void Update(Player player, ref int buffIndex) {
-			player.GetDamage(DamageClass.Generic) += 0.25f;
+			player.OriginPlayer().exoWeaponMountBuff = true;
 		}
 	}
 }
