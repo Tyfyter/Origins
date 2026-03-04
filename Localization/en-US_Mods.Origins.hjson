@@ -2255,6 +2255,7 @@ Projectiles: {
 	Vampire_Grenade_P.DisplayName: Vampire Grenade
 	Vampire_Grenade_Suck.DisplayName: Vampire Grenade
 	Vampire_Grenade_Heal.DisplayName: Vampire Grenade Heal
+	Repairboy_P.DisplayName: Repairboy
 }
 
 Prefixes: {

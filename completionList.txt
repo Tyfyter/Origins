@@ -246,7 +246,7 @@ ENEMY NPCS:
 (^) Pustule Jellyfish
 (#, ^2) QM-76 'Quakemaker' !!!
 (#, ^2) Reject !!!
-(#, ^2) Repairboy !!!!!!
+(☻) Repairboy !!!!!!
 (^) Riven Penguin
 (^) Riven Protoform
 (X) Rivenpotamus
@@ -1422,7 +1422,7 @@ TILES:
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
 (^) Background Door
-(々) Beacon Light !!! (needs Repairboys to be implemented first)
+(☻) Beacon Light !!!
 (^) Brineglow Vine
 (^) Defiled Altar
 (^) Defiled Foliage

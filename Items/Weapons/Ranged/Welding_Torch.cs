@@ -54,6 +54,9 @@ namespace Origins.Items.Weapons.Ranged {
 		public static float MinSize => 30f;
 		public static float MaxSize => 6f;
 		private readonly float[] sizes = new float[21];
+		protected Welding_Torch_P() : base() {
+			healCooldown ??= new int[Main.maxProjectiles];
+		}
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 7;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
@@ -96,6 +99,9 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 			Rectangle hitbox = Projectile.Hitbox;
 			ProjectileLoader.ModifyDamageHitbox(Projectile, ref hitbox);
+			DoHealing(hitbox);
+		}
+		public virtual void DoHealing(Rectangle hitbox) {
 			bool doSound = false;
 			foreach (Projectile other in Main.ActiveProjectiles) {
 				if (healCooldown[other.whoAmI] > 0) continue;
@@ -119,7 +125,7 @@ namespace Origins.Items.Weapons.Ranged {
 				originPlayer.weldingTorchSoundTime = 10;
 			}
 		}
-		int[] healCooldown = new int[Main.maxProjectiles];
+		protected int[] healCooldown;
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
 			int scale = (int)(Size / 2) - hitbox.Width;
 			hitbox.Inflate(scale, scale);

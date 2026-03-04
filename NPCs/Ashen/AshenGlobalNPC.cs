@@ -52,5 +52,6 @@ namespace Origins.NPCs.Ashen {
 	public interface IAshenEnemy {
 		public bool IsRobotic => true;
 		public bool FireImmuneUnlessOiled => IsRobotic;
+		public bool CanBeRepaired => IsRobotic;
 	}
 }
