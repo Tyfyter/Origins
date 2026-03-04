@@ -234,12 +234,13 @@ namespace Origins.NPCs.Ashen.Boss {
 			if (tileCollide) {
 				Vector2 newFootPos = oldFootPos;
 				Vector2 footOffset = newFootPos - NPC.position;
-				DoCollision(ref newFootPos, ref footVelocity, 54, 22);
+				bool shouldFallThrough = newFootPos.Y < NPC.targetRect.Y - 480;
+				DoCollision(ref newFootPos, ref footVelocity, 54, 22, shouldFallThrough);
 				standing = Math.Abs(footVelocity.Y - oldFootVelocity.Y) > 0.05f;
 				if (standing) footVelocity.X = 0;//*= 1f / float.Pi;
 				SetHoikOffset((newFootPos - NPC.position) - footOffset);
 				NPC.velocity += footVelocity - oldFootVelocity;
-				DoCollision(ref newFootPos, ref NPC.velocity, 54, 22);
+				DoCollision(ref newFootPos, ref NPC.velocity, 54, 22, shouldFallThrough);
 			}
 
 			if (legs[index].WasStanding == standing) legs[index].TimeStanding++;
