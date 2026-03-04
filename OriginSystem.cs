@@ -402,6 +402,7 @@ namespace Origins {
 		}
 		internal static List<IPreDrawAnything> assetSwitchers = [];
 		public override void ModifyScreenPosition() {
+			OriginPlayer.LocalOriginPlayer?.UpdateUsingScope();
 			for (int i = 0; i < assetSwitchers.Count; i++) assetSwitchers[i].PreDrawAnything();
 		}
 		public override void PostDrawTiles() {

@@ -665,6 +665,13 @@ namespace Origins {
 		HashSet<Point> touchedMurkySludges = [];
 		HashSet<Point> touchingMurkySludges = [];
 		float murkySludgeTouchTimer = 0;
+		internal void SetUsingScope() => willBeUsingScope = true;
+		internal void UpdateUsingScope() {
+			isUsingScope = willBeUsingScope;
+			willBeUsingScope = false;
+		}
+		bool willBeUsingScope;
+		public bool isUsingScope;
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
 			if (vanityTail is null) vanityTailSegments.Clear();

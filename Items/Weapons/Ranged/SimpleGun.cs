@@ -2,6 +2,7 @@
 using Origins.Tiles.Ashen;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -76,6 +77,8 @@ public abstract class SimpleGun : ModItem {
 	public float defaultSpread;
 	public sealed override void SetStaticDefaults() {
 		ItemID.Sets.ExtractinatorMode[Type] = Type;
+		ItemID.Sets.SkipsInitialUseSound[Type] = true;
+		ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 		OnSetStaticDefaults();
 	}
 	public sealed override void SetDefaults() {
@@ -117,6 +120,40 @@ public abstract class SimpleGun : ModItem {
 		.AddTile<Metal_Presser>()
 		.Register();
 		OnAddRecipes();
+	}
+	public override bool AltFunctionUse(Player player) {
+		if (OriginPlayer.LocalOriginPlayer?.isUsingScope ?? false) return false;
+		Tile tile = Main.tile[Player.tileTargetX, Player.tileTargetY];
+		return tile.TileType == TileID.Extractinator || tile.TileType == TileID.ChlorophyteExtractinator;
+	}
+	public override bool? UseItem(Player player) {
+		if (player.altFunctionUse == 2) return true;
+		SoundEngine.PlaySound(Item.UseSound, player.MountedCenter);
+		return base.UseItem(player);
+	}
+	public override bool CanShoot(Player player) {
+		if (player.altFunctionUse == 2) {
+			Item.useStyle = ItemUseStyleID.Swing;
+			player.altFunctionUse = 2;
+			player.controlUseItem = true;
+			int useTime = Item.useTime;
+			int useAnimation = Item.useAnimation;
+			try {
+				Item.useTime = 10;
+				Item.useAnimation = 15;
+				Player.ItemCheckContext context = default;
+				player.PlaceThing(ref context);
+			} finally {
+				Item.useTime = useTime;
+				Item.useAnimation = useAnimation;
+			}
+			if (ItemLoader.ConsumeItem(Item, player) && --Item.stack <= 0) Item.TurnToAir();
+			player.itemAnimation = player.itemTime;
+			player.itemAnimationMax = player.itemTimeMax;
+			return false;
+		}
+		Item.useStyle = ItemUseStyleID.Shoot;
+		return base.CanShoot(player);
 	}
 	public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack) {
 		if (Main.rand.NextBool(10)) {

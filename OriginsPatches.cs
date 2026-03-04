@@ -746,7 +746,13 @@ namespace Origins {
 				orig(self);
 				self.OriginPlayer()?.UpdateStatShare();
 			};
+			MonoModHooks.Add(((orig_ModifyZoom)PlayerLoader.ModifyZoom).Method, (orig_ModifyZoom orig, Player player, ref float zoom) => {
+				orig(player, ref zoom);
+				if (Main.mouseRight) player?.OriginPlayer()?.SetUsingScope();
+			});
 		}
+		public delegate void orig_ModifyZoom(Player player, ref float zoom);
+		public delegate void hook_ModifyZoom(orig_ModifyZoom orig, Player player, ref float zoom);
 		private void On_NPC_GetShimmered(On_NPC.orig_GetShimmered orig, NPC self) {
 			int origType = self.type;
 			orig(self);
