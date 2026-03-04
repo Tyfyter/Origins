@@ -134,7 +134,7 @@ namespace Origins.NPCs.Ashen {
 						NPC.netUpdate = true;
 					}
 					if (target.TargetTile is Tile tile) {
-						if (NPC.ai[1].CycleUp(60)) {
+						if (NPC.ai[1].CycleUp(60 * 60 * 5)) {
 							bool canKeepTarget = false;
 							if (tile.HasTile && TileLoader.GetTile(tile.TileType) is IReparableTile reparableTile) {
 								(int i, int j) = tile.GetTilePosition();
