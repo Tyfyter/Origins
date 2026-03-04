@@ -64,7 +64,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class Cheat_Code : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomFlagCondition Condition { get; private set; }
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Challenger);
@@ -95,7 +94,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class Auto_Immune_Disease : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomIntCondition Condition { get; private set; }
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Collector);
