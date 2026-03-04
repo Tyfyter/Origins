@@ -37,8 +37,15 @@ public abstract class ATail : ModItem {
 	}
 	public abstract void UpdateTailSegment(Player player, IReadOnlyList<TailSegment> segments, int index);
 	public virtual void DrawTail(ref PlayerDrawSet drawInfo, List<TailSegment> tailSegments) {
+		int dataCount = drawInfo.DrawDataCache.Count;
 		for (int i = 0; i < tailSegments.Count; i++) {
 			DrawTailSegment(ref drawInfo, tailSegments, i);
+		}
+		for (int i = dataCount; i < drawInfo.DrawDataCache.Count; i++) {
+			DrawData data = drawInfo.DrawDataCache[i];
+			data.rotation -= drawInfo.rotation;
+			data.position = data.position.RotatedBy(-drawInfo.rotation, drawInfo.Position + drawInfo.rotationOrigin - Main.screenPosition);
+			drawInfo.DrawDataCache[i] = data;
 		}
 	}
 	public abstract void DrawTailSegment(ref PlayerDrawSet drawInfo, IReadOnlyList<TailSegment> segments, int index);
@@ -46,7 +53,7 @@ public abstract class ATail : ModItem {
 		TailSegment segment = segments[index];
 		if (index == 0) {
 			segment.position = player.MountedCenter + player.Directions(-10, 10);
-			segment.rotation = MathHelper.PiOver2 * player.direction;
+			segment.rotation = player.fullRotation + MathHelper.PiOver2 * player.direction;
 			return;
 		}
 		TailSegment parent = segments[index - 1];

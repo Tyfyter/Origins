@@ -1067,7 +1067,7 @@ SUMMONER WEAPONS:
 (^) Mildew Whip
 (X) Obsidian Bone
 (^) Old Brine Rock
-(#2, ^2) Pharaoh's Turquoise !!!
+(☻) Pharaoh's Turquoise !!!
 (X) Riven Rain Rod
 (^) Scabcoral Lyre
 (X) Snowman Trophy
@@ -1383,7 +1383,7 @@ TILES:
 (#, ^2) Liquid Sensor (Amebic Gel) !!!
 (^) Liquid Sensor (Brine)
 (^) Liquid Sensor (Oil)
-(#2, ^2) Mechanical Key Node !!!
+(☻) Mechanical Key Node !!!
 (#2, ^2) Medium Storage Container !!! (what I meant was keep the top collision, but not the middle)
 (^) Modular Bunk
 (X) Mushroom Dungeon Chest
@@ -1449,7 +1449,7 @@ TILES:
 (X) Petrified Baobab Tree
 (^) Petrified Tree
 (^) Power Box
-(#2, ^2) Radio Broadcaster !!! (frame-based sound system)
+(☻) Radio Broadcaster !!! (frame-based sound system)
 (^) Riven Altar
 (^) Riven Foliage
 (^) Riven Pot
@@ -1747,7 +1747,7 @@ CONSUMABLES:
 (^) Holiday Hair Dye
 (^) Latchkey
 (^) Lottery Ticket
-(#, ^2) Magic Gel Dropper !!!
+(^) Magic Gel Dropper !!!
 (^) Magic Brine Dropper
 (^) Magic Oil Dropper
 (^) Polluted Water
