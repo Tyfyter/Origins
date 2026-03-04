@@ -404,7 +404,7 @@ NPC DIALOGUE:
 
 ACHIEVEMENTS:
 |---
-(@, ^3) A Different Game !!!
+(^) A Different Game
 (@, ^3) A True Hero !!!
 (@, ^3) An Eye for an Eye !!!
 (^) Auto-Immune Disease
