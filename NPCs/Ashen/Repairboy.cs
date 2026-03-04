@@ -250,6 +250,7 @@ namespace Origins.NPCs.Ashen {
 			bool doSound = false;
 			foreach (NPC other in Main.ActiveNPCs) {
 				if (healCooldown[other.whoAmI] > 0) continue;
+				if (other.ModNPC is Repairboy) continue;
 				if (other.life < other.lifeMax && Projectile.Colliding(hitbox, other.Hitbox)) {
 					doSound = true;
 					if (other.ModNPC is IReparable reparable && reparable.Repair(Projectile.damage)) continue;
