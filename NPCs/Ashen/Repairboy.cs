@@ -46,7 +46,11 @@ namespace Origins.NPCs.Ashen {
 			Vector2 movementDir = NPC.velocity.Normalized(out float speed);
 			targetDir = (targetPos - NPC.Center).Normalized(out dist);
 			if (dist < TargetDistMin) {
-				NPC.velocity -= targetDir * acceleration;
+				NPC.velocity -= targetDir * acceleration * 0.5f;
+				if (targetDir == default) {
+					if (NPC.velocity.X * NPC.direction > -0.1f) NPC.velocity.X -= NPC.direction * acceleration * 0.5f;
+					targetDir.X = NPC.direction;
+				}
 			} else if (dist > TargetDistMax) {
 				float speedInRightDir = Vector2.Dot(movementDir, targetDir) * speed;
 				float predictedTime = (float.Sqrt(2 * (dist - TargetDistMax) * -acceleration + speedInRightDir * speedInRightDir) + speedInRightDir) / acceleration;
