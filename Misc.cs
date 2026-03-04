@@ -1799,6 +1799,7 @@ namespace Origins {
 		public static float Average(this Vector2 vector) {
 			return (vector.X + vector.Y) * 0.5f;
 		}
+		public static Vector2 Perpendicular(this Vector2 vector, int direction = 1) => new(vector.Y * direction, vector.X * -direction);
 		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox) {
 			float xoffset = 10f;
 			float yoffset = 24f;

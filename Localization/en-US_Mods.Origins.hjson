@@ -119,6 +119,7 @@ Tooltips: {
 		BlastRadius: "{0} blast radius"
 		SelfDamage: "{0} self-damage"
 		Spread: "{0}° spread"
+		SpreadPercent: "{0:+0;-0}% spread"
 		ArtifactMaxLife: "{0} maximum life"
 	}
 }
