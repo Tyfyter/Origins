@@ -890,14 +890,14 @@ RANGED WEAPONS:
 (^) Bolt Gun
 (^) Chipper Knife
 (^) Constellation
-(#, ^2) DMR !!!
+(☻) DMR !!!
 (^) Endowood Bow
 (^) Felnum Longbow
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
 (^) Fiberglass Shard
 (^) Gelled Knife
-(#, ^2) Grease Gun !!!
+(☻) Grease Gun !!!
 (^) Harpoon Gun
 (^) Longbone
 (^) Magma Grappler
@@ -908,7 +908,7 @@ RANGED WEAPONS:
 (^) Shimmershot
 (^) Sleetfire
 (^) Sunflower Seed Shooter
-(#, ^2) Tactical SMG !!!
+(☻) Tactical SMG !!!
 (^) Tendon Tear
 (^) The Kruncher
 (^) Threemoepeater
