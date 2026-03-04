@@ -4938,11 +4938,11 @@ namespace Origins {
 				return results;
 			}
 		}
-		public delegate float? Searcher<T>(T target, Rectangle area, NPC searcher);
+		public delegate float? Searcher<T>(T target, Rectangle area, NPC searcher, ref Rectangle hitbox);
 		public delegate (float cost, int id, Rectangle hitbox)? Searcher(Rectangle area, NPC searcher);
 		public static AdvancedTargetSearchResults SearchForTarget(this NPC searcher, Rectangle area, TargetSearchTypes flags = TargetSearchTypes.Players | TargetSearchTypes.NPCs, Searcher<Player> playerSearcher = null, Searcher<NPC> npcSearcher = null, Searcher tileSearcher = null) {
-			playerSearcher ??= static (player, area, searcher) => searcher.Distance(player.Center) - player.aggro;
-			npcSearcher ??= static (npc, area, searcher) => searcher.Distance(npc.Center);
+			playerSearcher ??= static (Player player, Rectangle area, NPC searcher, ref Rectangle hitbox) => searcher.Distance(player.Center) - player.aggro;
+			npcSearcher ??= static (NPC npc, Rectangle area, NPC searcher, ref Rectangle hitbox) => searcher.Distance(npc.Center);
 
 			float cost = float.PositiveInfinity;
 			int targetIndex = -1;
@@ -4953,10 +4953,11 @@ namespace Origins {
 			if (flags.HasFlag(TargetSearchTypes.Players)) {
 				foreach (Player player in Main.ActivePlayers) {
 					if (player.dead || player.ghost || player.npcTypeNoAggro[searcher.type] || !player.Hitbox.Intersects(area)) continue;
-					if (playerSearcher(player, area, searcher) is float targetCost && Minimize(ref cost, targetCost)) {
+					Rectangle targetHitbox = player.Hitbox;
+					if (playerSearcher(player, area, searcher, ref targetHitbox) is float targetCost && Minimize(ref cost, targetCost)) {
 						targetType = TargetSearchTypes.Players;
 						targetIndex = player.whoAmI;
-						targetRect = player.Hitbox;
+						targetRect = targetHitbox;
 					}
 				}
 			}
@@ -4964,10 +4965,11 @@ namespace Origins {
 			if (flags.HasFlag(TargetSearchTypes.NPCs)) {
 				foreach (NPC npc in Main.ActiveNPCs) {
 					if (!npc.active || npc.whoAmI == searcher.whoAmI || !npc.Hitbox.Intersects(area)) continue;
-					if (npcSearcher(npc, area, searcher) is float targetCost && Minimize(ref cost, targetCost)) {
+					Rectangle targetHitbox = npc.Hitbox;
+					if (npcSearcher(npc, area, searcher, ref targetHitbox) is float targetCost && Minimize(ref cost, targetCost)) {
 						targetType = TargetSearchTypes.NPCs;
 						targetIndex = npc.whoAmI;
-						targetRect = npc.Hitbox;
+						targetRect = targetHitbox;
 					}
 				}
 			}

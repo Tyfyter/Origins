@@ -73,7 +73,7 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 		}
-		public bool NeedsRepair(int i, int j, ref float weight, ref Rectangle area) => Main.tile[i, j].TileFrameX >= 18 * 2 * 2;
+		public bool NeedsRepair(int i, int j, ref float weight, ref Rectangle hitbox) => Main.tile[i, j].TileFrameX >= 18 * 2 * 2;
 		public void Repair(int i, int j) {
 			Tile tile = Main.tile[i, j];
 			if (tile.TileFrameX >= 18 * 2 * 2) {

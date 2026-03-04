@@ -92,12 +92,12 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 		}
-		public bool NeedsRepair(int i, int j, ref float weight, ref Rectangle area) {
+		public bool NeedsRepair(int i, int j, ref float weight, ref Rectangle hitbox) {
 			Tile tile = Main.tile[i, j];
 			if (tile.TileFrameY >= 18 * 6 * 2) {
 				weight -= 160 + weight * 0.25f;
-				area.Y += 16 * 2;
-				area.Height -= 16 * 2;
+				hitbox.Y += 16 * 2;
+				hitbox.Height -= 16 * 2;
 			} 
 			return tile.TileFrameY >= 18 * 6;
 		}

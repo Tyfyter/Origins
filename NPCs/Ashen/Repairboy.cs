@@ -62,7 +62,7 @@ namespace Origins.NPCs.Ashen {
 			AdvancedTargetSearchResults searchResults = NPC.SearchForTarget(
 				new Rectangle(0, 0, 1920 * 2, 1080 * 2).Recentered(NPC.Center),
 				TargetSearchTypes.All,
-				playerSearcher: static (player, area, searcher) => searcher.Distance(player.Center) + (!searcher.playerInteraction[player.whoAmI]).Mul(800) - player.aggro,
+				playerSearcher: static (Player player, Rectangle area, NPC searcher, ref Rectangle hitbox) => searcher.Distance(player.Center) + (!searcher.playerInteraction[player.whoAmI]).Mul(800) - player.aggro,
 				npcSearcher: NPCSearcher,
 				tileSearcher: TileSearcher
 			);
@@ -70,7 +70,11 @@ namespace Origins.NPCs.Ashen {
 			NPC.targetRect = target.TargetRect;
 			if (faceTarget) NPC.FaceTarget();
 		}
-		static float? NPCSearcher(NPC target, Rectangle area, NPC searcher) {
+		static float? NPCSearcher(NPC target, Rectangle area, NPC searcher, ref Rectangle hitbox) {
+			if (target.ModNPC is IReparable reparable) {
+				float weight = searcher.Distance(target.Center);
+				if (reparable.NeedsRepair(searcher, ref weight, ref hitbox) is bool canBeRepaired) return canBeRepaired ? weight : null;
+			}
 			if (target.ModNPC is not IAshenEnemy { CanBeRepaired: true }) {
 				if (target.friendly || target.CountsAsACritter) return searcher.Distance(target.Center);
 				return null;
@@ -208,8 +212,12 @@ namespace Origins.NPCs.Ashen {
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			target = AdvancedTargetSearchResults.Read(reader);
 		}
+		public interface IReparable {
+			public bool? NeedsRepair(NPC repairboy, ref float weight, ref Rectangle hitbox);
+			public void Repair(NPC repairboy);
+		}
 		public interface IReparableTile {
-			public bool NeedsRepair(int i, int j, ref float weight, ref Rectangle area);
+			public bool NeedsRepair(int i, int j, ref float weight, ref Rectangle hitbox);
 			public void Repair(int i, int j);
 		}
 		public SlotId weldingTorchSound;
