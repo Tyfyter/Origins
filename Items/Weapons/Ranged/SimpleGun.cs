@@ -15,6 +15,7 @@ public class Grease_Gun : SimpleGun {
 		Item.knockBack = 1;
 		Item.useTime = Item.useAnimation = 16;
 		spread = 3;
+		Item.autoReuse = true;
 	}
 	public override Vector2? HoldoutOffset() => new Vector2(-8, -2);
 }
@@ -27,6 +28,7 @@ public class Tactical_SMG : SimpleGun {
 		Item.shootSpeed = 5;
 		Item.useTime = Item.useAnimation = 12;
 		spread = 1;
+		Item.autoReuse = true;
 	}
 	public override Vector2? HoldoutOffset() => new Vector2(-8, -2);
 }
