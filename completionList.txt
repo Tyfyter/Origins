@@ -405,7 +405,7 @@ NPC DIALOGUE:
 ACHIEVEMENTS:
 |---
 (^) A Different Game
-(@, ^3) A True Hero !!!
+(^) A True Hero
 (@, ^3) An Eye for an Eye !!!
 (^) Auto-Immune Disease
 (^) Cheat Code
@@ -424,8 +424,8 @@ ACHIEVEMENTS:
 (々) The Signal, it's Calling !!!
 (@, ^3) There's Something in There! !!!
 (@, ^3) 'Till Death Mildew Us Part !!!
-(@, ^3) Whismical! !!!
-(@, ^3) Whole Blend Evil !!!
+(^) Whismical!
+(^) Whole Blend Evil
 ---
 
 
@@ -2022,4 +2022,6 @@ VOLUME I MUSIC:
 (X) Riven Invasion
 (#, ^4) Smog Storm !!!
 (X) Test of Ancients
+
+(^) Revelation
 ---

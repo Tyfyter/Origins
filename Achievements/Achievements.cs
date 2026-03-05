@@ -78,7 +78,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class Whimsical : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomFlagCondition Condition { get; private set; }
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Challenger);
@@ -101,7 +100,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class Whole_Blend_Evil : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomIntCondition Condition { get; private set; }
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Collector);
@@ -146,7 +144,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class True_Hero : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomIntCondition Condition { get; private set; }
 		public override void AutoStaticDefaults() {
 			Achievement.UseConditionsCompletedTracker();
