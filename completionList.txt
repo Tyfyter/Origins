@@ -246,7 +246,7 @@ ENEMY NPCS:
 (^) Pustule Jellyfish
 (#, ^2) QM-76 'Quakemaker' !!!
 (#, ^2) Reject !!!
-(#2/3, ^2) Repairboy !!! (needs randomized repairs and building TM sequence + bugs + repair sparks + summoned every time something is broken by player + localized sound)
+(☻) Repairboy !!!
 (^) Riven Penguin
 (^) Riven Protoform
 (X) Rivenpotamus

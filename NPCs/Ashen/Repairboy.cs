@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Dusts;
 using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
@@ -133,10 +134,11 @@ namespace Origins.NPCs.Ashen {
 			if (!target.HasTarget || NPC.life < NPC.lifeMax || target.TargetType == TargetSearchTypes.Players) TargetClosest();
 			if (target.HasTarget) {
 				NPC.targetRect = target.TargetRect;
-				MoveTowards(NPC.Center.Clamp(NPC.targetRect), out Vector2 targetDir, out float dist);
+				Vector2 targetPos = NPC.Center.Clamp(NPC.targetRect);
+				MoveTowards(targetPos, out Vector2 targetDir, out float dist);
 				if (target.TargetType != TargetSearchTypes.Tiles) NPC.ai[1] = 0;
 				if (dist <= AttackDist) {
-					Vector2 targetPos = WeldingTorchPos.Clamp(NPC.targetRect);
+					targetPos = WeldingTorchPos.Clamp(NPC.targetRect);
 					Vector2 torchDir = targetDir;
 					if (targetPos != WeldingTorchPos) torchDir = WeldingTorchPos.DirectionTo(targetPos);
 
@@ -154,24 +156,38 @@ namespace Origins.NPCs.Ashen {
 							SoundEngine.PlaySound(SoundID.Item34.WithPitch(0.5f).WithVolume(0.75f), WeldingTorchPos);
 							if (NPC.life >= NPC.lifeMax) TargetClosest();
 						}
-						if (NPC.ai[2] % 5 == 0) {
-							NPC.SpawnProjectile(
-								null,
-								WeldingTorchPos,
-								torchDir * 4,
-								ModContent.ProjectileType<Repairboy_P>(),
-								Main.rand.RandomRound(11 * ContentExtensions.DifficultyDamageMultiplier),
-								0.425f
-							);
-							if (target.TargetType == TargetSearchTypes.Tiles) {
-								bool canKeepTarget = false;
-								if (target.TargetTile is Tile tile) {
-									Rectangle targetHitbox = target.LastTargetRect;
-									canKeepTarget = ProgressRepair(tile, ref targetHitbox);
-									target.LastTargetRect = targetHitbox;
-									PlayWeldingSound(7);
+						switch (NPC.ai[2] % 5) {
+							case 0: {
+								NPC.SpawnProjectile(
+									null,
+									WeldingTorchPos,
+									torchDir * 4,
+									ModContent.ProjectileType<Repairboy_P>(),
+									Main.rand.RandomRound(11 * ContentExtensions.DifficultyDamageMultiplier),
+									0.425f
+								);
+								if (target.TargetType == TargetSearchTypes.Tiles) {
+									bool canKeepTarget = false;
+									if (target.TargetTile is Tile tile) {
+										Rectangle targetHitbox = target.LastTargetRect;
+										canKeepTarget = ProgressRepair(tile, ref targetHitbox);
+										target.LastTargetRect = targetHitbox;
+										PlayWeldingSound(7);
+									}
+									if (!canKeepTarget) TargetClosest();
 								}
-								if (!canKeepTarget) TargetClosest();
+								break;
+							}
+							case 4: {
+								Vector2 pos = targetPos;
+								float collisionPoint = 0f;
+								if (Collision.CheckAABBvLineCollision(NPC.targetRect.TopLeft(), NPC.targetRect.Size(), WeldingTorchPos, WeldingTorchPos + torchDir * 64, 0.0001f, ref collisionPoint)) {
+									pos = WeldingTorchPos + torchDir * collisionPoint;
+								}
+								Dust dust = Dust.NewDustDirect(pos, 0, 0, ModContent.DustType<Spark_Dust>(), Scale: 1.43f);
+								dust.velocity *= 2;
+								dust.noGravity = true;
+								break;
 							}
 						}
 					}

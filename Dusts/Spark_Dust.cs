@@ -36,6 +36,7 @@ namespace Origins.Dusts {
 				dust.velocity *= 0.92f;
 				if (dust.fadeIn == 0f) dust.scale -= 0.04f;
 			}
+			if (dust.scale <= 0) dust.active = false;
 			if (dust.position.Y > Main.screenPosition.Y + Main.screenHeight) dust.active = false;
 			return false;
 		}
