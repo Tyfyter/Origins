@@ -246,7 +246,7 @@ ENEMY NPCS:
 (^) Pustule Jellyfish
 (#, ^2) QM-76 'Quakemaker' !!!
 (#, ^2) Reject !!!
-(☻) Repairboy !!!!!!
+(#2/3, ^2) Repairboy !!! (needs randomized repairs and building TM sequence + bugs + repair sparks + summoned every time something is broken by player + localized sound)
 (^) Riven Penguin
 (^) Riven Protoform
 (X) Rivenpotamus
@@ -534,10 +534,10 @@ ACCESSORIES:
 (^) Eitrite Gun Magazine
 (^) Eitrite Watch
 (^) Evil Bar Gun Magazines
-(☻) Exo-Arm !!!
-(☻) Exo-Legs !!!
+(^) Exo-Arm
+(^) Exo-Legs
 (#2/3, ^2) Exo-Suit !!! (needs updated balance IAW tooltip)
-(☻) Exo-Weapon Mount !!!
+(^) Exo-Weapon Mount
 (^) Exploder Emblem
 (^) Explosive Artery
 (^) Fairy Lotus
@@ -890,14 +890,14 @@ RANGED WEAPONS:
 (^) Bolt Gun
 (^) Chipper Knife
 (^) Constellation
-(^) DMR
+(†) DMR !!!
 (^) Endowood Bow
 (^) Felnum Longbow
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
 (^) Fiberglass Shard
 (^) Gelled Knife
-(^) Grease Gun
+(†) Grease Gun !!!
 (^) Harpoon Gun
 (^) Longbone
 (^) Magma Grappler
@@ -908,7 +908,7 @@ RANGED WEAPONS:
 (^) Shimmershot
 (^) Sleetfire
 (^) Sunflower Seed Shooter
-(^) Tactical SMG
+(†) Tactical SMG !!!
 (^) Tendon Tear
 (^) The Kruncher
 (^) Threemoepeater
@@ -1422,7 +1422,7 @@ TILES:
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
 (^) Background Door
-(☻) Beacon Light !!!
+(#2, ^2) Beacon Light !!! (probably doesn't need power mechanics)
 (^) Brineglow Vine
 (^) Defiled Altar
 (^) Defiled Foliage
