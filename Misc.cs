@@ -5298,6 +5298,9 @@ namespace Origins {
 			tile.CoordinateHeights = Enumerable.Repeat(16, height).ToArray();
 			tile.CoordinateHeights[^1] = bottomHeight;
 		}
+		public static void SetAnimationHeight(this ModTile tile) {
+			tile.AnimationFrameHeight = TileObjectData.newTile.CoordinateFullHeight;
+		}
 		public static void SetOriginBottom(this TileObjectData tile) {
 			tile.Origin = new(0, tile.Height - 1);
 		}

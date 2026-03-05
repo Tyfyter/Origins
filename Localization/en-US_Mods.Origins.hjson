@@ -2610,6 +2610,7 @@ Tiles: {
 	Power_Box_Wide.MapEntry: Power Box Wide
 	Magic_Dropper_Brine.MapEntry: Dripping Brine
 	Magic_Dropper_Amebic_Gel.MapEntry: Dripping Amebic Gel
+	Oil_Derrick.MapEntry: Oil Derrick
 }
 
 Liquids: {

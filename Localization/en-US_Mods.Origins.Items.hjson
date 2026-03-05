@@ -8170,3 +8170,8 @@ Tactical_SMG: {
 	DisplayName: Tactical SMG
 	Tooltip: ""
 }
+
+Oil_Derrick_Item: {
+	DisplayName: Oil Derrick
+	Tooltip: ""
+}
