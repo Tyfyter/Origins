@@ -23,6 +23,9 @@ namespace Origins.NPCs.Ashen {
 		static float TargetDistMax => 48;
 		static float AttackDist => TargetDistMax + 16;
 		static float TileRepairTime => 20 * 60 * 5;
+		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
+			return OriginSystem.repairboyTiles > 0 ? 0.2f : 0.001f;
+		}
 		Vector2 WeldingTorchPos => NPC.Center + new Vector2(NPC.direction * 26, 4);
 		AutoLoadingAsset<Texture2D> glowTexture = typeof(Repairboy).GetDefaultTMLName("_Glow");
 		AutoLoadingAsset<Texture2D> armTexture = typeof(Repairboy).GetDefaultTMLName("_Arm");
@@ -30,6 +33,7 @@ namespace Origins.NPCs.Ashen {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
+			ModContent.GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
@@ -187,7 +191,7 @@ namespace Origins.NPCs.Ashen {
 		public void PlayWeldingSound(int duration) {
 			weldingTorchSound.PlaySoundIfInactive(Origins.Sounds.WeldingTorch, NPC.Center, sound => {
 				sound.Position = NPC.Center;
-				return NPC.active;
+				return NPC.active && Main.npc[NPC.whoAmI] == NPC;
 			});
 			weldingTorchSoundTime = duration;
 		}
@@ -225,14 +229,14 @@ namespace Origins.NPCs.Ashen {
 			target = AdvancedTargetSearchResults.Read(reader);
 		}
 		public interface IReparable {
-			public bool? NeedsRepair(NPC repairboy, ref float weight, ref Rectangle hitbox);
+			public bool? NeedsRepair(NPC repairboy, ref float cost, ref Rectangle hitbox);
 			/// <summary>
 			/// Return true to skip healing
 			/// </summary>
 			public bool Repair(int repairAmount);
 		}
 		public interface IReparableTile {
-			public bool NeedsRepair(int i, int j, ref float weight, ref Rectangle hitbox);
+			public bool NeedsRepair(int i, int j, ref float cost, ref Rectangle hitbox);
 			public void Repair(int i, int j);
 		}
 		public SlotId weldingTorchSound;
@@ -255,6 +259,7 @@ namespace Origins.NPCs.Ashen {
 		public static void ResetRepair(Point pos) => ResetRepair(new Point16(pos));
 		public static void ResetRepair(int i, int j) => ResetRepair(new Point16(i, j));
 		public static void ResetRepair(Point16 pos) {
+			repairProgress ??= [];
 			repairProgress[pos] = 0;
 		}
 		internal static FungibleSet<Point16> repairProgress;

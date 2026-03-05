@@ -15,6 +15,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static Origins.NPCs.Ashen.Repairboy;
 
 namespace Origins.Tiles {
 	public class OriginsGlobalTile : GlobalTile {
@@ -191,6 +192,17 @@ namespace Origins.Tiles {
 		}
 		public override void AnimateTile() {
 			if (!Main.dedServ) EnvironmentSounds.UpdateSounds();
+		}
+		public override void NearbyEffects(int i, int j, int type, bool closer) {
+			if (!closer) {
+				if (TileObjectData.IsTopLeft(i, j)) {
+					if (TileLoader.GetTile(type) is IReparableTile reparableTile) {
+						float cost = default;
+						Rectangle hitbox = default;
+						if (reparableTile.NeedsRepair(i, j, ref cost, ref hitbox)) OriginSystem.repairboyTiles++;
+					}
+				}
+			}
 		}
 	}
 }

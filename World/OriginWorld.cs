@@ -39,6 +39,7 @@ namespace Origins {
 		public static int defiledTiles;
 		public static int rivenTiles;
 		public static int ashenTiles;
+		public static int repairboyTiles;
 		public static int brineTiles;
 		public static int fiberglassTiles;
 		public static int limestoneTiles;
@@ -250,6 +251,7 @@ namespace Origins {
 			defiledTiles = 0;
 			rivenTiles = 0;
 			ashenTiles = 0;
+			repairboyTiles = 0;
 			brineTiles = 0;
 			fiberglassTiles = 0;
 			limestoneTiles = 0;
