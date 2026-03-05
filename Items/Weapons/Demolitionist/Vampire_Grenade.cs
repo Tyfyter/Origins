@@ -49,6 +49,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.localNPCHitCooldown = -1;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			if (OriginsSets.NPCs.TargetDummies[target.type]) return;
 			Projectile.NewProjectile(
 				Projectile.GetSource_Death(),
 				target.Center,
@@ -124,6 +125,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public static bool Collapse(ref float size) => MathUtils.LinearSmoothing(ref size, 0, (1 - size) * 0.1f + 0.001f);
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			if (OriginsSets.NPCs.TargetDummies[target.type]) return;
 			Projectile.NewProjectile(
 				Projectile.GetSource_Death(),
 				Vampire_Grenade_Suck.MoveInRange(Projectile, target.Center),
@@ -195,7 +197,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				return;
 			}
 			if (Projectile.GetRelatedProjectile(2) is Projectile suck) {
-				if (suck.ai[0] != 0) {
+				if (suck.ai[0] != 0 && suck.ModProjectile is Vampire_Grenade_Suck) {
 					Projectile.velocity = Vampire_Grenade_Suck.MoveInRange(suck, Projectile.Center) - Projectile.Center;
 					float size = suck.ai[1];
 					if (Vampire_Grenade_Suck.Collapse(ref size)) {
