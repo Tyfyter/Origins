@@ -1457,7 +1457,7 @@ TILES:
 (^) Shelf Coral
 (^) Soulspore
 (^) Steel Support Beam
-(#2, ^2) Suit Locker !!!
+(☻) Suit Locker !!!
 (^) Surveysprout
 (^) Table Saw
 (^) Tangela Bramble

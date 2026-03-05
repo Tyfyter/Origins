@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
-	public class Suit_Locker : OriginTile, IGlowingModTile {
+	public class Suit_Locker : OriginTile, IGlowingModTile, IAshenWireTile {
 		public static int ID { get; private set; }
 		public override void Load() {
 			this.SetupGlowKeys();
@@ -46,6 +46,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.newTile.RandomStyleRange = 3;
+			TileObjectData.newTile.StyleWrapLimit = 6;
 			TileObjectData.addTile(Type);
 			ID = Type;
 			DustType = Ashen_Biome.DefaultTileDust;
@@ -61,6 +62,10 @@ namespace Origins.Tiles.Ashen {
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
 		}
+
+		public override void HitWire(int i, int j) => UpdatePowerState(i, j, AshenWireTile.DefaultIsPowered(i, j));
+		public void UpdatePowerState(int i, int j, bool powered) => AshenWireTile.DefaultUpdatePowerState(i, j, powered, tile => ref tile.TileFrameY, 3 * 18, true);
+
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
