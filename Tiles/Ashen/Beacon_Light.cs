@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.NPCs.Ashen;
 using Origins.World.BiomeData;
 using PegasusLib.Graphics;
 using System;
@@ -69,6 +70,7 @@ namespace Origins.Tiles.Ashen {
 							tile.TileFrameX += 18 * 2 * 2;
 						}
 					}
+					Repairboy.ResetRepair(left, top);
 					fail = true;
 				}
 			}

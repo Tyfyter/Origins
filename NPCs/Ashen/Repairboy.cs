@@ -5,6 +5,7 @@ using Origins.World.BiomeData;
 using ReLogic.Utilities;
 using System;
 using System.IO;
+using System.IO.Compression;
 using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Audio;
@@ -21,6 +22,7 @@ namespace Origins.NPCs.Ashen {
 		static float TargetDistMin => 24;
 		static float TargetDistMax => 48;
 		static float AttackDist => TargetDistMax + 16;
+		static float TileRepairTime => 20 * 60 * 5;
 		Vector2 WeldingTorchPos => NPC.Center + new Vector2(NPC.direction * 26, 4);
 		AutoLoadingAsset<Texture2D> glowTexture = typeof(Repairboy).GetDefaultTMLName("_Glow");
 		AutoLoadingAsset<Texture2D> armTexture = typeof(Repairboy).GetDefaultTMLName("_Arm");
@@ -123,49 +125,53 @@ namespace Origins.NPCs.Ashen {
 			return (bestCost, Unsafe.BitCast<Tile, int>(bestTile), bestHitbox);
 		}
 		public override void AI() {
+			const float strafe_accel = 0.05f;
 			if (!target.HasTarget || NPC.life < NPC.lifeMax || target.TargetType == TargetSearchTypes.Players) TargetClosest();
 			if (target.HasTarget) {
 				NPC.targetRect = target.TargetRect;
 				MoveTowards(NPC.Center.Clamp(NPC.targetRect), out Vector2 targetDir, out float dist);
 				if (target.TargetType != TargetSearchTypes.Tiles) NPC.ai[1] = 0;
 				if (dist <= AttackDist) {
-					if (NPC.ai[0].CycleUp(30)) {
-						NPC.velocity += new Vector2(targetDir.Y, -targetDir.X) * Main.rand.NextBool().ToDirectionInt();
+					Vector2 targetPos = WeldingTorchPos.Clamp(NPC.targetRect);
+					Vector2 torchDir = targetDir;
+					if (targetPos != WeldingTorchPos) torchDir = WeldingTorchPos.DirectionTo(targetPos);
+
+					if (!MathUtils.LinearSmoothing(ref NPC.ai[1], 0, 1)) {
+						NPC.velocity += targetDir.Perpendicular(Math.Sign(NPC.ai[1])) * strafe_accel;
+					} else if (NPC.ai[0].CycleUp(target.TargetType == TargetSearchTypes.Tiles ? 180 : 30)) {
+						NPC.ai[1] = Main.rand.NextBool().ToDirectionInt() * (Main.rand.Next(20, 40) + 1);
+						if (Math.Abs(torchDir.Y) > Math.Abs(torchDir.X)) {
+							NPC.ai[1] = -40 * Math.Sign(torchDir.Y) * NPC.direction;
+						}
 						NPC.netUpdate = true;
 					}
-					if (target.TargetTile is Tile tile) {
-						if (NPC.ai[1].CycleUp(60 * 60 * 5)) {
-							bool canKeepTarget = false;
-							if (tile.HasTile && TileLoader.GetTile(tile.TileType) is IReparableTile reparableTile) {
-								(int i, int j) = tile.GetTilePosition();
-								reparableTile.Repair(i, j);
-								Rectangle targetHitbox = target.LastTargetRect;
-								float _ = 0;
-								canKeepTarget = reparableTile.NeedsRepair(i, j, ref _, ref targetHitbox);
-								target.LastTargetRect = targetHitbox;
-							}
-							if (!canKeepTarget) TargetClosest();
-						}
-						PlayWeldingSound(2);
-					}
-					if (MathUtils.LinearSmoothing(ref NPC.localAI[0], 3, 1 / 5f)) {
+					if (NPC.ai[1] == 0 && MathUtils.LinearSmoothing(ref NPC.localAI[0], 3, 1 / 5f)) {
 						if (NPC.ai[2].CycleUp(20)) {
 							SoundEngine.PlaySound(SoundID.Item34.WithPitch(0.5f).WithVolume(0.75f), WeldingTorchPos);
 							if (NPC.life >= NPC.lifeMax) TargetClosest();
 						}
 						if (NPC.ai[2] % 5 == 0) {
-							Vector2 targetPos = WeldingTorchPos.Clamp(NPC.targetRect);
-							if (targetPos != WeldingTorchPos) targetDir = WeldingTorchPos.DirectionTo(targetPos);
 							NPC.SpawnProjectile(
 								null,
 								WeldingTorchPos,
-								targetDir * 4,
+								torchDir * 4,
 								ModContent.ProjectileType<Repairboy_P>(),
 								Main.rand.RandomRound(11 * ContentExtensions.DifficultyDamageMultiplier),
 								0.425f
 							);
+							if (target.TargetType == TargetSearchTypes.Tiles) {
+								bool canKeepTarget = false;
+								if (target.TargetTile is Tile tile) {
+									Rectangle targetHitbox = target.LastTargetRect;
+									canKeepTarget = ProgressRepair(tile, ref targetHitbox);
+									target.LastTargetRect = targetHitbox;
+									PlayWeldingSound(7);
+								}
+								if (!canKeepTarget) TargetClosest();
+							}
 						}
 					}
+					if (NPC.ai[1] != 0) MathUtils.LinearSmoothing(ref NPC.localAI[0], 0, 1 / 5f);
 				} else {
 					MathUtils.LinearSmoothing(ref NPC.localAI[0], 0, 1 / 5f);
 					NPC.ai[0] = 0;
@@ -231,6 +237,27 @@ namespace Origins.NPCs.Ashen {
 		}
 		public SlotId weldingTorchSound;
 		public int weldingTorchSoundTime = 0;
+		/// <returns>Whether or not repairs should continue</returns>
+		public static bool ProgressRepair(Tile tile, ref Rectangle hitbox, int amount = 5) {
+			repairProgress ??= [];
+			if (!tile.HasTile || TileLoader.GetTile(tile.TileType) is not IReparableTile reparableTile) return false;
+			Point16 pos = new(tile.GetTilePosition());
+			if ((repairProgress[pos] += amount) >= TileRepairTime) {
+				reparableTile.Repair(pos.X, pos.Y);
+				repairProgress[pos] = 0;
+			}
+			float _ = 0;
+			if (reparableTile.NeedsRepair(pos.X, pos.Y, ref _, ref hitbox)) return true;
+			repairProgress[pos] = 0;
+			return false;
+		}
+		public static void ResetRepair(Tile tile) => ResetRepair(tile.GetTilePosition());
+		public static void ResetRepair(Point pos) => ResetRepair(new Point16(pos));
+		public static void ResetRepair(int i, int j) => ResetRepair(new Point16(i, j));
+		public static void ResetRepair(Point16 pos) {
+			repairProgress[pos] = 0;
+		}
+		internal static FungibleSet<Point16> repairProgress;
 	}
 	public class Repairboy_P : Welding_Torch_P {
 		public override string Texture => typeof(Welding_Torch_P).GetDefaultTMLName();

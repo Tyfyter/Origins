@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.NPCs.Ashen;
 using Origins.NPCs.Ashen.Boss;
 using Origins.World.BiomeData;
 using System;
@@ -85,6 +86,7 @@ namespace Origins.Tiles.Ashen {
 							tile.TileFrameY += 18 * 6;
 						}
 					}
+					Repairboy.ResetRepair(left, top);
 					fail = true;
 					if (tile.TileFrameY >= 18 * 6 * 2) {
 						CheckVent(left, top);
@@ -94,6 +96,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public bool NeedsRepair(int i, int j, ref float weight, ref Rectangle hitbox) {
 			Tile tile = Main.tile[i, j];
+			hitbox = new(i * 16, j * 16, 2 * 16, 6 * 16);
 			if (tile.TileFrameY >= 18 * 6 * 2) {
 				weight -= 160 + weight * 0.25f;
 				hitbox.Y += 16 * 2;

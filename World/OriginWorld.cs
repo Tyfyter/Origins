@@ -1,5 +1,6 @@
 ﻿using Origins.Core;
 using Origins.Items.Weapons.Summoner.Minions;
+using Origins.NPCs.Ashen;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Questing;
 using Origins.Tiles.Ashen;
@@ -127,6 +128,7 @@ namespace Origins {
 		}
 		public override void ClearWorld() {
 			peatSold = 0;
+			Repairboy.repairProgress?.Clear();
 			foreach (LootPool pool in ModContent.GetContent<LootPool>()) pool.sequenceIndex = 0;
 		}
 		public override void LoadWorldData(TagCompound tag) {
