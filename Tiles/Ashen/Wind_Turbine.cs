@@ -1,10 +1,10 @@
-﻿using Origins.Items.Tools.Wiring;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
+using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
-using PegasusLib.Networking;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -14,7 +14,10 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
-	public class Wind_Turbine : ModTile {
+	public class Wind_Turbine : ModTile, IGlowingModTile {
+		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Wind_Turbine).GetDefaultTMLName() + "_Glow";
+		public Color GlowColor => Color.White;
+		AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
 		public override void Load() {
 			new TileItem(this)
 			.WithExtraDefaults(item => {
@@ -30,6 +33,25 @@ namespace Origins.Tiles.Ashen {
 				.AddTile<Metal_Presser>()
 				.Register();
 			}).RegisterItem();
+			this.SetupGlowKeys();
+		}
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			switch (tile.TileFrameY) {
+				case 0:
+				if (tile.TileFrameX == 18) break;
+				return;
+				case 18 * 8:
+				case 18 * 9:
+				break;
+				default:
+				return;
+			}
+			color.DoFancyGlow(Color.OrangeRed.ToVector3(), tile.TileColor);
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			drawData.glowTexture = GlowTexture;
+			drawData.glowSourceRect = new Rectangle(drawData.tileFrameX, drawData.tileFrameY + drawData.addFrY, 16, 16);
+			drawData.glowColor = GlowColor;
 		}
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -124,5 +146,6 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 	}
 }
