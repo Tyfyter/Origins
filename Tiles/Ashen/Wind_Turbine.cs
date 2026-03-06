@@ -56,7 +56,6 @@ namespace Origins.Tiles.Ashen {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
-			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.Width = 3;
 			TileObjectData.newTile.SetHeight(10);
