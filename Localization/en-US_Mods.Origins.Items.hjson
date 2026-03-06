@@ -8175,3 +8175,8 @@ Oil_Derrick_Item: {
 	DisplayName: Oil Derrick
 	Tooltip: ""
 }
+
+Wind_Turbine_Item: {
+	DisplayName: Wind Turbine
+	Tooltip: ""
+}

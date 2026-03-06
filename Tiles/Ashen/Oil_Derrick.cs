@@ -17,7 +17,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.SetOriginBottomCenter();
 			this.SetAnimationHeight();
 			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(40, 30, 18), CreateMapEntryName());
+			AddMapEntry(new Color(40, 30, 18), this.GetTileItem().DisplayName);
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;
