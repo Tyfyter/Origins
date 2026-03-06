@@ -112,7 +112,7 @@ namespace Origins.Tiles.Ashen {
 						}
 					}
 					const int min_frames = 4;
-					const int frame_num = 6;
+					const int frame_num = 5;
 					switch (Math.Sign(speed)) {
 						case -1:
 						if (frameCounter.CycleDown(min_frames, Math.Abs(speed))) frame.CycleDown(frame_num - 1);
