@@ -941,7 +941,7 @@ namespace Origins.Tiles {
 		}
 		public delegate void ModifySorting(Item item, ref ItemGroup itemGroup);
 		public override void ModifyResearchSorting(ref ItemGroup itemGroup) {
-			base.ModifyResearchSorting(ref itemGroup);
+			OnModifyResearchSorting?.Invoke(Item, ref itemGroup);
 		}
 		public TileItem WithExtraStaticDefaults(Action<Item> extra) {
 			ExtraStaticDefaults += extra;
