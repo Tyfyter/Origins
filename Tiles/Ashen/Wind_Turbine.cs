@@ -87,7 +87,7 @@ namespace Origins.Tiles.Ashen {
 				public int frame = 0;
 				public float frameCounter = 0;
 				public float speed = 0;
-				public bool ShouldSupplyPower => speed > 0.15f;
+				public bool ShouldSupplyPower => Math.Abs(speed) > 0.15f;
 				const float wind_speed_range = 0.8f;
 				public static float WindSpeed => float.Clamp(Main.windSpeedCurrent / wind_speed_range, -1, 1);
 				public void Update(Point16 position, bool instant = false) {
@@ -104,7 +104,7 @@ namespace Origins.Tiles.Ashen {
 					if (instant) {
 						speed = targetSpeed;
 					} else {
-						MathUtils.LinearSmoothing(ref speed, targetSpeed, targetSpeed > speed ? Math.Abs(targetSpeed) * 0.01f : 0.01f);
+						MathUtils.LinearSmoothing(ref speed, targetSpeed, Math.Abs(targetSpeed) > Math.Abs(speed) ? Math.Abs(targetSpeed) * 0.01f : 0.01f);
 					}
 					for (int j = 0; j < data.Height; j++) {
 						for (int i = 0; i < data.Width; i++) {
