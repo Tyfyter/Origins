@@ -1405,7 +1405,7 @@ TILES:
 (#2, ^2) Transistor !!! (needs obtain method)
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)
-(#, ^2) Wind Turbine !!!
+(☻) Wind Turbine !!!
 (X) Wrycoral Planter Box
 
 (X) Elderforge
