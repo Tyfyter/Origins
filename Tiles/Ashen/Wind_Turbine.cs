@@ -100,7 +100,7 @@ namespace Origins.Tiles.Ashen {
 							if (Main.tile[left + i, top + j].WallType == WallID.None) openWalls++;
 						}
 					}
-					float targetSpeed = (-openWalls) * WindSpeed / (data.Width * 5);
+					float targetSpeed = openWalls * WindSpeed / (data.Width * 5);
 					if (instant) {
 						speed = targetSpeed;
 					} else {
