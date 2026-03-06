@@ -1,14 +1,18 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ModLiquidLib.Hooks;
 using ModLiquidLib.ID;
 using ModLiquidLib.ModLoader;
+using ModLiquidLib.Utils;
 using ModLiquidLib.Utils.Structs;
 using Origins.Buffs;
 using Origins.Liquids.Waterfalls;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static ModLiquidLib.ModLiquidLib;
 
 namespace Origins.Liquids {
 	public class Brine : ModLiquid {
@@ -80,6 +84,95 @@ namespace Origins.Liquids {
 				return false;
 			}
 			return true;
+		}
+		public static void UpdateLiquids(int liquidX, int liquidY, int tileX, int tileY, int otherLiquid) {
+			//tile variables, these help us edit the liquid at certain tile positions
+			Tile leftTile = Main.tile[tileX - 1, tileY];
+			Tile rightTile = Main.tile[tileX + 1, tileY];
+			Tile upTile = Main.tile[tileX, tileY - 1];
+			Tile tile = Main.tile[tileX, tileY];
+			Tile liquidTile = Main.tile[liquidX, liquidY];
+
+			void ReduceLiquid(Tile tile1, Tile tile2) {
+				if (tile2.LiquidType == ID) Utils.Swap(ref tile1, ref tile2);
+				if (tile2.LiquidType == LiquidID.Water) AssimilateLiquid(tile2.X(), tile2.Y());
+			}
+
+			//Checks the type of merging
+			//
+			//For more context:
+			//Liquid to Liquid merging is split up into 2 types, 
+			// * Top/Side merging
+			// * Down merging
+			//
+			//Here we get which type the merging is based on the liquidY relitive to the tileY.
+			//This is because liquidY and tileY are different in the down merging, but the same in the up/side merging
+			if (liquidY == tileY) {
+				//This is up/side merging for the liquid
+
+				//Here we remove the liquid when merging
+				//Majority of this code determines whether a liquid merge is spawned or not by checking the surrounding liquid amounts
+				if (leftTile.LiquidType != ID) ReduceLiquid(liquidTile, leftTile);
+				if (rightTile.LiquidType != ID) ReduceLiquid(liquidTile, rightTile);
+				if (upTile.LiquidType != ID) ReduceLiquid(liquidTile, upTile);
+
+				//check is the nearby amount is more than 24, and the other liquid is not this liquid
+				if (otherLiquid == ID) {
+					return;
+				}
+
+				// don't do anything to delete liquid
+				// doNothing();
+
+				//play the liquid merge sound
+				if (!WorldGen.gen) {
+					LiquidHooks.PlayLiquidChangeSound(tileX, tileY, ID, otherLiquid);
+				}
+				if (Main.netMode == NetmodeID.Server) {
+					ModPacket packet = ModContent.GetInstance<ModLiquidLib.ModLiquidLib>().GetPacket();
+					packet.Write((byte)MessageType.SyncCollisionSounds);
+					packet.Write(tileX);
+					packet.Write(tileY);
+					packet.Write(ID);
+					packet.Write(otherLiquid);
+					packet.Send();
+				}
+				//frame the tile/update the tile/s nearby
+				Oil.UpdateAdjacentLiquids(tileX, tileY);
+				//sync changes in multiplayer
+				if (Main.netMode == NetmodeID.Server) {
+					NetMessage.SendTileSquare(-1, tileX - 1, tileY - 1, 3);
+				}
+			} else {
+				//This is down merging for the liquid
+
+				//remove the liquid amount 
+				ReduceLiquid(liquidTile, tile);
+				tile.LiquidType = ID;
+				//play liquid merge sound
+				if (!WorldGen.gen) {
+					LiquidHooks.PlayLiquidChangeSound(tileX, tileY, ID, otherLiquid);
+				}
+				if (Main.netMode == NetmodeID.Server) {
+					ModPacket packet = ModContent.GetInstance<ModLiquidLib.ModLiquidLib>().GetPacket();
+					packet.Write((byte)MessageType.SyncCollisionSounds);
+					packet.Write(tileX);
+					packet.Write(tileY);
+					packet.Write(ID);
+					packet.Write(otherLiquid);
+					packet.Send();
+				}
+				//frame the tile/s around the tile
+				Oil.UpdateAdjacentLiquids(tileX, tileY);
+				//sync tile changes around
+				if (Main.netMode == NetmodeID.Server) {
+					NetMessage.SendTileSquare(-1, tileX - 1, tileY, 3);
+				}
+			}
+		}
+		public static void AssimilateLiquid(int i, int j) {
+			Main.tile[i, j].SetLiquidType(ID);
+			Oil.UpdateAdjacentLiquids(i, j);
 		}
 		public override void LiquidMergeSound(int i, int j, int otherLiquid, ref SoundStyle? collisionSound) {
 			if (otherLiquid == LiquidID.Water) collisionSound = null;
