@@ -5,6 +5,7 @@ using ReLogic.Utilities;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -36,6 +37,15 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override bool PreDrawPlacementPreview(int i, int j, SpriteBatch spriteBatch, ref Rectangle frame, ref Vector2 position, ref Color color, bool validPlacement, ref SpriteEffects spriteEffects) {
 			position.Y += 2;
+			if (!validPlacement && frame.X == 18 * 3 && frame.Y == 18 * 1 && Main.tile[i, j].HasTile) {
+				Point offset = (Main.screenPosition - new Vector2(Main.offScreenRange)).ToPoint();
+				spriteBatch.Draw(
+					TextureAssets.Cd.Value,
+					new Rectangle(i * 16 - offset.X, j * 16 - offset.Y, 16, 16),
+					null,
+					color
+				);
+			}
 			return base.PreDrawPlacementPreview(i, j, spriteBatch, ref frame, ref position, ref color, validPlacement, ref spriteEffects);
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
