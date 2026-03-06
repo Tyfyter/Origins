@@ -8173,12 +8173,16 @@ Tactical_SMG: {
 
 Oil_Derrick_Item: {
 	DisplayName: Oil Derrick
-	Tooltip: ""
+	Tooltip:
+		'''
+		Harvests oil from the ground
+		Can be used to fill buckets with Oil
+		'''
 }
 
 Wind_Turbine_Item: {
 	DisplayName: Wind Turbine
-	Tooltip: ""
+	Tooltip: Generates power from wind
 }
 
 Stardust_Strange_Plant_Item: {

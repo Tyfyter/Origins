@@ -1189,7 +1189,7 @@ EXPLOSIVE WEAPONS:
 (X) The Heatseeker
 (X) The Rocketman
 (X) Thundercracker
-(☻) Vampire Grenade !!!
+(^) Vampire Grenade
 
 (@4, ^3) Black Hole Bomb
 (@4, ^3) Caustica
@@ -1355,7 +1355,7 @@ TILES:
 (X) Ruined Portal
 (#3, ^2) Scrap Railing
 (^) Shadow Torch
-(#, ^2) Strange Plant (Stardust) !!!
+(#2/3, ^2) Strange Plant (Stardust) !!! (glow)
 (^) Traffic Cone
 
 (^) Ashen Campfire
@@ -1389,7 +1389,7 @@ TILES:
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
 (X) Ocean Dungeon Chest
-(#, ^2) Oil Derrick !!!
+(#2, ^2) Oil Derrick !!! (just needs to be planted into the ground)
 (^) Pocket Dimension Monolith
 (X) Qube Generator
 (X) Ravel Lock: Builder
@@ -1405,7 +1405,7 @@ TILES:
 (#2, ^2) Transistor !!! (needs obtain method)
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)
-(☻) Wind Turbine !!!
+(^) Wind Turbine
 (X) Wrycoral Planter Box
 
 (X) Elderforge
@@ -1457,7 +1457,7 @@ TILES:
 (^) Shelf Coral
 (^) Soulspore
 (^) Steel Support Beam
-(☻) Suit Locker !!!
+(^) Suit Locker
 (^) Surveysprout
 (^) Table Saw
 (^) Tangela Bramble
