@@ -18,6 +18,7 @@ namespace Origins.Tiles.Limestone {
 			TileID.Sets.ForAdvancedCollision.ForSandshark[Type] = true;
 			//TileID.Sets.Conversion.Sandstone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+			TileID.Sets.GeneralPlacementTiles[Type] = false;
 			TileID.Sets.ChecksForMerge[Type] = true;
 			// for some reason these hardened sand and sandstone aren't true in isDeserBiomeSand
 			Main.tileMerge[Type][TileID.CorruptSandstone] = true;

@@ -33,6 +33,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileMergeDirt[Type] = false;
 			TileID.Sets.IsBeam[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+			TileID.Sets.GeneralPlacementTiles[Type] = false;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 			AddMapEntry(FromHexRGB(0x6b5e56));
 

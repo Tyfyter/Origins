@@ -18,6 +18,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileLighted[Type] = true;
 			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+			TileID.Sets.GeneralPlacementTiles[Type] = false;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.CoordinateHeights = [18, 18];

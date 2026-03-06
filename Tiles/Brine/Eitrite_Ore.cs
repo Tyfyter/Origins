@@ -15,6 +15,7 @@ namespace Origins.Tiles.Brine {
 			Main.tileSpelunker[Type] = true;
 			TileID.Sets.Ore[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.GeneralPlacementTiles[Type] = false;
 			AddMapEntry(new Color(8, 190, 151), CreateMapEntryName());
 			MinPick = 180;
 			HitSound = SoundID.Tink;

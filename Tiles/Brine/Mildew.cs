@@ -14,6 +14,7 @@ namespace Origins.Tiles.Brine {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.GeneralPlacementTiles[Type] = false;
 			RegisterItemDrop(ItemType<Mildew_Item>());
 			AddMapEntry(new Color(18, 160, 56));
 			HitSound = SoundID.Dig;
