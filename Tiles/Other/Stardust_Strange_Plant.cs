@@ -98,5 +98,6 @@ namespace Origins.Tiles.Other {
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {
 			if (i % 2 == 0) spriteEffects = SpriteEffects.FlipHorizontally;
 		}
+		public override bool CanPlace(int i, int j) => !Main.tile[i, j].TileIsType(Type);
 	}
 }
