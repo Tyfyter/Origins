@@ -162,7 +162,7 @@ namespace Origins.Core {
 			c.EmitLdloc(coordinateSets[correctIndex].x);
 			c.EmitLdloc(coordinateSets[correctIndex].y);
 			c.EmitDelegate((int tileType, Tile tile, int left, int top) => {
-				return TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile && (multiTypeMultiTile.CanBlockPlacement(tile, left, top) || multiTypeMultiTile.IsValidTile(tile, left, top));
+				return TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile && (!multiTypeMultiTile.CanBlockPlacement(tile, left, top) || multiTypeMultiTile.IsValidTile(tile, left, top));
 			});
 			c.EmitBrtrue(label);
 		}
