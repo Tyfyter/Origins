@@ -8180,3 +8180,8 @@ Wind_Turbine_Item: {
 	DisplayName: Wind Turbine
 	Tooltip: ""
 }
+
+Stardust_Strange_Plant_Item: {
+	DisplayName: Strange Plant
+	Tooltip: ""
+}

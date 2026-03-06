@@ -70,7 +70,7 @@ public abstract class ATail : ModItem {
 
 		if (offset != Vector2.Zero)
 			segment.position = parentCenter - Vector2.Normalize(offset) * parentDistance;
-		segment.effects = offset.X > 0f ? SpriteEffects.FlipVertically : SpriteEffects.None;
+		segment.effects = (Math.Abs(offset.X) > Math.Abs(offset.Y) ? offset.X : player.direction) > 0f ? SpriteEffects.FlipVertically : SpriteEffects.None;
 	}
 }
 [Autoload(false)]

@@ -14,6 +14,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static Terraria.ID.ContentSamples.CreativeHelper;
 
 namespace Origins.Tiles {
 	public abstract class FurnitureBase : ModTile {
@@ -901,6 +902,7 @@ namespace Origins.Tiles {
 		[field: CloneByReference] public event Action<Item> ExtraStaticDefaults;
 		[field: CloneByReference] public event Action<Item> ExtraDefaults;
 		[field: CloneByReference] public event Action<Item> OnAddRecipes;
+		[field: CloneByReference] public event ModifySorting OnModifyResearchSorting;
 		protected override bool CloneNewInstances => true;
 #if !DEBUG
 		public override bool IsLoadingEnabled(Mod mod) => !debug || DebugConfig.Instance.ForceEnableDebugItems;
@@ -937,16 +939,27 @@ namespace Origins.Tiles {
 				OnAddRecipes = null;
 			}
 		}
+		public delegate void ModifySorting(Item item, ref ItemGroup itemGroup);
+		public override void ModifyResearchSorting(ref ItemGroup itemGroup) {
+			base.ModifyResearchSorting(ref itemGroup);
+		}
 		public TileItem WithExtraStaticDefaults(Action<Item> extra) {
 			ExtraStaticDefaults += extra;
 			return this;
 		}
+		public TileItem WithSet(Func<bool[]> set) => WithSet(set, true);
+		public TileItem WithSet<T>(Func<T[]> set, T value) => WithExtraStaticDefaults(item => set()[item.type] = value);
 		public TileItem WithExtraDefaults(Action<Item> extra) {
 			ExtraDefaults += extra;
 			return this;
 		}
 		public TileItem WithOnAddRecipes(Action<Item> recipes) {
 			OnAddRecipes += recipes;
+			return this;
+		}
+		public TileItem WithResearchSorting(ItemGroup itemGroup) => WithModifyResearchSorting((Item item, ref ItemGroup group) => group = itemGroup);
+		public TileItem WithModifyResearchSorting(ModifySorting sorting) {
+			OnModifyResearchSorting += sorting;
 			return this;
 		}
 		public TileItem RegisterItem() {
