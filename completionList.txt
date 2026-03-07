@@ -413,11 +413,11 @@ ACHIEVEMENTS:
 (^) Cracked
 (^) Enough Yap
 (^) Going Places
-(@, ^3) It Was Watching !!!
+(^) It Was Watching
 (^) Kaiju
 (^) Killimanjaro
 (^) Martyrdom
-(@, ^3) Now You're the One Lying Broken !!!
+(^) Now You're the One Lying Broken
 (@, ^3) Peat Obsession !!!
 (@, ^3) RIVEN WORMS !!!
 (@, ^3) Slow Loading Bar !!!

@@ -23,12 +23,10 @@ namespace Origins.Achievements {
 		public override IEnumerable<Position> GetModdedConstraints() => [new After(ModContent.GetInstance<Killimanjaro>())];
 	}
 	public class Kill_Trenchmaker : SlayerAchievement<Trenchmaker> {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public override Position GetDefaultPosition() => new After("MASTERMIND");
 		public override IEnumerable<Position> GetModdedConstraints() => [new After(ModContent.GetInstance<Kaiju>())];
 	}
 	public class It_Was_Watching : SlayerAchievement<Fiberglass_Weaver> {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public override Position GetDefaultPosition() => new After("BONED");
 	}
 	public class An_Eye_For_An_Eye : SlayerAchievement<Shimmer_Construct> {
