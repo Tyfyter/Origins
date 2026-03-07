@@ -110,6 +110,7 @@ namespace Origins.Items.Tools.Wiring {
 			public static SetFactory Factory = new(WireModeLoader.WireModeCount, nameof(WireModeID), WireModeID.Search);
 			public static BitArray NormalWires = new(Factory.CreateBoolSet());
 			public static BitArray AshenWires = new(Factory.CreateBoolSet());
+			public static BitArray GreaterAshenWires = new(Factory.CreateBoolSet());
 			static Sets() {
 				foreach (WireMode mode in ModContent.GetContent<WireMode>()) mode.SetupPreSort();
 				WireModeLoader.Sort();

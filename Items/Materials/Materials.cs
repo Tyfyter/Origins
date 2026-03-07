@@ -602,6 +602,11 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
+	public class Screwdriver_Upgrade_White : MaterialItem {
+		public override int Value => Item.sellPrice(gold: 1);
+		public override int Rare => ItemRarityID.Yellow;
+		public override bool Hardmode => true;
+	}
 
 	#region biome keys
 	public abstract class Key_Base<TChest> : Key_Base where TChest : ModItem {

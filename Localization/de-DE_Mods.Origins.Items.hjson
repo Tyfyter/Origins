@@ -22,7 +22,8 @@ GenericTooltip: {
 	}
 }
 
-// Ashen_Wires: brown, black[ox:,] and white wires
+// Ashen_Wires: brown and black wires
+// Greater_Ashen_Wires: white wires
 
 Krunch_Mix: {
 	DisplayName: Knirschessen
@@ -8188,4 +8189,9 @@ Wind_Turbine_Item: {
 Stardust_Strange_Plant_Item: {
 	// DisplayName: Strange Plant
 	// Tooltip: ""
+}
+
+Screwdriver_Upgrade_White: {
+	// DisplayName: White Screwdriver Upgrade
+	// UpgradeTooltip: Can place {$Greater_Ashen_Wires}
 }

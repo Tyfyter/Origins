@@ -67,7 +67,7 @@ namespace Origins.Items.Tools.Wiring {
 		AutoLoadingAsset<Texture2D> back = "Origins/Items/Tools/Wiring/Ashen_Wires_BG";
 		public override Color? WireKiteColor => Color.White;
 		public override void SetupSets() {
-			Sets.AshenWires[Type] = true;
+			Sets.GreaterAshenWires[Type] = true;
 		}
 		public override bool GetWire(int x, int y) => Main.tile[x, y].Get<Ashen_Wire_Data>().HasWhiteWire;
 		public override bool SetWire(int x, int y, bool value) {
