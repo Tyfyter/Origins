@@ -32,7 +32,6 @@ namespace Origins.Achievements {
 		public override Position GetDefaultPosition() => new After("BONED");
 	}
 	public class An_Eye_For_An_Eye : SlayerAchievement<Shimmer_Construct> {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public override Position GetDefaultPosition() => new Before("STILL_HUNGRY");
 	}
 	public class Kill_Lost_Diver : SlayerAchievement<Mildew_Carrion> {

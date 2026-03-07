@@ -76,6 +76,13 @@ namespace Origins.Tiles.Ashen {
 			TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
 			ModContent.GetInstance<Wind_Turbine_TE>().AddTileEntity(new(left, top));
 		}
+		public override bool PreDrawPlacementPreview(int i, int j, SpriteBatch spriteBatch, ref Rectangle frame, ref Vector2 position, ref Color color, bool validPlacement, ref SpriteEffects spriteEffects) {
+			position.Y += 2;
+			return base.PreDrawPlacementPreview(i, j, spriteBatch, ref frame, ref position, ref color, validPlacement, ref spriteEffects);
+		}
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
+			offsetY = 2;
+		}
 		public class Wind_Turbine_TE : TESystem {
 			Dictionary<Point16, Turbine_Animation> animations;
 			public override void PreUpdateEntities() {

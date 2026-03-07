@@ -8176,7 +8176,7 @@ Oil_Derrick_Item: {
 	// DisplayName: Oil Derrick
 	/* Tooltip:
 		'''
-		Harvests oil from the ground
+		Harvests Oil from the ground
 		Can be used to fill buckets with Oil
 		''' */
 }
@@ -8193,6 +8193,7 @@ Stardust_Strange_Plant_Item: {
 
 Screwdriver_Upgrade_White: {
 	// DisplayName: White Screwdriver Upgrade
+	// Tooltip: Combined into the Screwdriver
 	// UpgradeTooltip: Can place {$Greater_Ashen_Wires}
 }
 

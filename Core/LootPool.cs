@@ -6,6 +6,7 @@ using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools;
 using Origins.Items.Tools.Liquids;
+using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Demolitionist;
@@ -293,8 +294,9 @@ public class Ashen_Armory : LootPool {
 	}
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
-		AddRule(ItemDropRule.Common(ItemID.Revolver, 40));
-		AddRule(ItemDropRule.Common(ItemID.Handgun, 10, 1, 3));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Tactical_SMG>(), 2, 1, 3));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Grease_Gun>(), 5, 1, 2));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<DMR>(), 10, 1, 2));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Flak_Jacket>(), 3));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Flashbang>(), 2, 35, 185));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Link_Grenade>(), 1, 50, 150));
@@ -328,14 +330,15 @@ public class Ashen_Closet : LootPool {
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Worn_Paper_Loose_Wheel>()));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Screwdriver_Upgrade_White>(), 1, 3, 7));
 		AddRule(ItemDropRule.Common(ItemID.Bomb, 1, 65, 135));
 		AddRule(ItemDropRule.Common(ItemID.Dynamite, 1, 35, 80));
 		AddRule(ItemDropRule.Common(ItemID.TitaniumDrill));
 		AddRule(ItemDropRule.Common(ItemID.SteampunkMinecart));
-		AddRule(ItemDropRule.Common(ItemID.Wire, 7, 35, 125));
-		AddRule(ItemDropRule.Common(ItemID.OrangePaint, 7, 115, 250));
-		AddRule(ItemDropRule.Common(ItemID.Chain, 7, 80, 120));
-		AddRule(ItemDropRule.Common(ItemID.Cog, 7, 50, 75));
+		AddRule(ItemDropRule.Common(ItemID.Wire, 2, 35, 125));
+		AddRule(ItemDropRule.Common(ItemID.OrangePaint, 2, 115, 250));
+		AddRule(ItemDropRule.Common(ItemID.Chain, 2, 80, 120));
+		AddRule(ItemDropRule.Common(ItemID.Cog, 2, 50, 75));
 	}
 }
 public class Ashen_Command : LootPool {
@@ -351,5 +354,23 @@ public class Ashen_Command : LootPool {
 		AddRule(ItemDropRule.Common(ItemID.Grenade, 1, 7, 24));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Mask>()));
 		AddRule(ItemDropRule.Common(ItemID.GoldCoin));
+	}
+}
+public class Ashen_Lab : LootPool {
+	/*public class Rarer : LootPool {
+		public override void SetStaticDefaults() {
+			Sequential = true;
+			AddRule(ItemDropRule.Common(ModContent.ItemType<SMART_Wrench>(), 1, 1, 2));
+		}
+	}*/
+	public override void SetStaticDefaults() {
+		//AddRule(new DropLootPoolRule<Rarer>());
+		//AddRule(ItemDropRule.Common(ModContent.ItemType<Solar_Battery_Item>(), 5));
+		//AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Generator_Item>(), 5));
+		//AddRule(ItemDropRule.Common(ModContent.ItemType<Wave_Energy_Converter_Item>(), 5));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Screwdriver>(), 2, 1, 3));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Fire_Band>(), 3, 15, 30));
+		AddRule(ItemDropRule.Common(ItemID.Wire, 3, 15, 60));
+		AddRule(ItemDropRule.Common(ItemID.Cog, 3, 10, 40));
 	}
 }

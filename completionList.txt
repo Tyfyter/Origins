@@ -406,7 +406,7 @@ ACHIEVEMENTS:
 |---
 (^) A Different Game
 (^) A True Hero
-(@, ^3) An Eye for an Eye !!!
+(^) An Eye for an Eye
 (^) Auto-Immune Disease
 (^) Cheat Code
 (^) Cloning Factory
@@ -1355,7 +1355,7 @@ TILES:
 (X) Ruined Portal
 (#3, ^2) Scrap Railing
 (^) Shadow Torch
-(#2/3, ^2) Strange Plant (Stardust) !!! (glow)
+(^) Strange Plant (Stardust)
 (^) Traffic Cone
 
 (^) Ashen Campfire
@@ -1380,16 +1380,16 @@ TILES:
 (^) Industrial Door
 (#3, ^2) Large Storage Container
 (^) Laser Tag Console
-(#, ^2) Liquid Sensor (Amebic Gel) !!!
+(^) Liquid Sensor (Amebic Gel)
 (^) Liquid Sensor (Brine)
 (^) Liquid Sensor (Oil)
 (^) Mechanical Key Node
-(#2, ^2) Medium Storage Container !!! (what I meant was keep the top collision, but not the middle)
+(^) Medium Storage Container
 (^) Modular Bunk
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
 (X) Ocean Dungeon Chest
-(#2, ^2) Oil Derrick !!! (just needs to be planted into the ground)
+(#2, ^2) Oil Derrick !!!
 (^) Pocket Dimension Monolith
 (X) Qube Generator
 (X) Ravel Lock: Builder
@@ -1405,7 +1405,7 @@ TILES:
 (#2, ^2) Transistor !!! (needs obtain method)
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)
-(^) Wind Turbine
+(#2, ^2) Wind Turbine !!!
 (X) Wrycoral Planter Box
 
 (X) Elderforge
@@ -1642,7 +1642,7 @@ CONSUMABLES:
 (^) Mojo Injection
 (X) Mother's Ward
 (^) Quantum Injector
-(☻) Screwdriver Upgrade: White Wire !!!
+(^) Screwdriver Upgrade: White Wire
 (%2) The Defiled Will
 
 (^) Absorption Potion
@@ -1926,7 +1926,7 @@ CROSS-MOD CONTENT:
 (^) Sanguinite Storage Upgrade
 (@, ^3) Suspicious Trash Compactor !!!
 (^) Watered-down Keytar
-(X) Wave Energy Converter !!!
+(#, ^2) Wave Energy Converter !!!
 
 (^) Ashen Lock Box
 (^) Brine Lock Box
@@ -1934,6 +1934,8 @@ CROSS-MOD CONTENT:
 (X) Mushroom Lock Box
 (X) Ocean Lock Box
 (^) Riven Lock Box
+
+(X) The Stars Above World Evil Compat
 ---
 
 UI:
