@@ -1501,6 +1501,11 @@ Buffs: {
 		DisplayName: Pharaoh's Turquoise
 		Description: ""
 	}
+
+	Matryoshka_Doll_Buff: {
+		DisplayName: Matryoshka Doll Buff
+		Description: Mods.Origins.Buffs.Matryoshka_Doll_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -2257,6 +2262,7 @@ Projectiles: {
 	Vampire_Grenade_Suck.DisplayName: Vampire Grenade
 	Vampire_Grenade_Heal.DisplayName: Vampire Grenade Heal
 	Repairboy_P.DisplayName: Repairboy
+	Matryoshka_Doll_Minion.DisplayName: Matryoshka Doll Minion
 }
 
 Prefixes: {

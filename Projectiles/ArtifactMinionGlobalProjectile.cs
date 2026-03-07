@@ -30,6 +30,7 @@ namespace Origins.Projectiles {
 		public StatModifier maxHealthModifier = StatModifier.Default;
 		public int defense = 0;
 		public int stayStillSoICanHealYouTime = 0;
+		internal uint lastTrackedFrameForHealthBar = 0;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
 			if (entity.ModProjectile is IArtifactMinion) Origins.ArtifactMinion[entity.type] = true;
 			return Origins.ArtifactMinion[entity.type];

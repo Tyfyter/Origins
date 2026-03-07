@@ -31,6 +31,8 @@ namespace Origins.Items.Weapons.Summoner {
 				if (player.ownedProjectileCounts[proj] > 0) {
 					player.buffTime[buffIndex] = 18000;
 					foundAny = true;
+					SetBuffFlag(player);
+					break;
 				}
 			}
 			if (!foundAny) {
@@ -38,6 +40,7 @@ namespace Origins.Items.Weapons.Summoner {
 				buffIndex--;
 			}
 		}
+		protected virtual void SetBuffFlag(Player player) { }
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			if (DrawHealthBars && OriginClientConfig.Instance.ArtifactMinionHealthbarStyle != ArtifactMinionHealthbarStyles.UnderMinion) {
 				float startY = drawParams.TextPosition.Y;

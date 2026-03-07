@@ -8195,3 +8195,8 @@ Screwdriver_Upgrade_White: {
 	DisplayName: White Screwdriver Upgrade
 	UpgradeTooltip: Can place {$Greater_Ashen_Wires}
 }
+
+Matryoshka_Doll: {
+	DisplayName: Matryoshka Doll
+	Tooltip: ""
+}
