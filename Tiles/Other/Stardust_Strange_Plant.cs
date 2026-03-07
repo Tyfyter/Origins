@@ -86,6 +86,7 @@ namespace Origins.Tiles.Other {
 			TileID.Sets.SwaysInWindBasic[Type] = true;
 			TileID.Sets.BreakableWhenPlacing[Type] = true;
 			TileID.Sets.FriendlyFairyCanLureTo[Type] = true;
+			Main.tileLighted[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleDye);
 			TileObjectData.addTile(Type);
 			HitSound = SoundID.Grass;
@@ -99,5 +100,10 @@ namespace Origins.Tiles.Other {
 			if (i % 2 == 0) spriteEffects = SpriteEffects.FlipHorizontally;
 		}
 		public override bool CanPlace(int i, int j) => !Main.tile[i, j].TileIsType(Type);
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			r = 0.016470589f;
+			g = 0.18117648f;
+			b = 0.27058825f;
+		}
 	}
 }
