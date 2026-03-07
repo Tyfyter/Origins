@@ -1642,7 +1642,7 @@ CONSUMABLES:
 (^) Mojo Injection
 (X) Mother's Ward
 (^) Quantum Injector
-(#, ^2) Screwdriver Upgrade: White Wire !!!
+(☻) Screwdriver Upgrade: White Wire !!!
 (%2) The Defiled Will
 
 (^) Absorption Potion
