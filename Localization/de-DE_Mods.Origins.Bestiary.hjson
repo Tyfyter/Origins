@@ -113,12 +113,11 @@ Chambersite_Squirrel: "{$Bestiary_FlavorText.npc_GemSquirrelAmethyst}"
 // Trenchmaker: The oldest man-made machination still manufactured by the Ashen Factory. It was not only the first war engine, but also the first creation to utilize both an internal combustion engine and phoenum power generator. The Trenchmaker was a fearsome sight on the battlefield before it was turned against its very own creators.
 // Fearmaker: "'Putting the fear in everyone since 1XXX'"
 // Fearmaker_Alt: "'Fish fear me, robots love me'"
-// Gas_Mask_Zombie11: bestiary text here
-// Gas_Mask_Zombie21: bestiary text here
-// Gas_Mask_Zombie31: bestiary text here
-// Gas_Mask_Zombie41: bestiary text here
-// Gas_Mask_Zombie51: bestiary text here
-// Gas_Mask_Zombie61: bestiary text here
-// Gas_Mask_Zombie71: bestiary text here
+// Gas_Mask_Zombie11: He woke up one night in the Scrapyard wondering how he got there, but he hasn’t had time to ponder being too busy making mud angels in the murky mud.
+// Gas_Mask_Zombie21: "{$Gas_Mask_Zombie11}"
+// Gas_Mask_Zombie31: "{$Gas_Mask_Zombie11}"
+// Gas_Mask_Zombie41: "{$Gas_Mask_Zombie11}"
+// Gas_Mask_Zombie51: "{$Gas_Mask_Zombie11}"
+// Gas_Mask_Zombie61: "{$Gas_Mask_Zombie11}"
+// Gas_Mask_Zombie71: "{$CommonBestiaryFlavor.CostumeZombie}"
 // Gas_Mask_Zombie81: bestiary text here
-// Gas_Mask_Zombie91: bestiary text here

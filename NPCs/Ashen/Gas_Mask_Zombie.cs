@@ -27,7 +27,8 @@ namespace Origins.NPCs.Ashen {
 		bool IAshenEnemy.IsRobotic => false;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[variant.VanillaVariant];
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = scale == 1f ? NPCID.Sets.NPCBestiaryDrawOffset[variant.VanillaVariant] : NPCExtensions.HideInBestiary;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			//NPCID.Sets.NPCBestiaryDrawOffset[Type] = scale == 1f ? NPCID.Sets.NPCBestiaryDrawOffset[variant.VanillaVariant] : NPCExtensions.HideInBestiary;
 			/*NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			OriginsSets.NPCs.CustomExpertScaling[Type] = npc => {
 				if (Main.hardMode) {
@@ -48,14 +49,15 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(variant.VanillaVariant);
-			NPC.lifeMax = 45;
-			NPC.defense = 8;
-			NPC.damage = 18;
-			NPC.width = 24;
-			NPC.height = 38;
-			//NPC.value = Item.buyPrice(0, 0, 2);
+			NPC.defense = (int)(NPC.defense * scale);
+			NPC.damage = (int)(NPC.damage * scale);
+			NPC.lifeMax = (int)(NPC.lifeMax * scale);
+			NPC.value = (int)(NPC.value * scale);
+			NPC.npcSlots *= scale;
+			NPC.knockBackResist *= 2f - scale;
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			NPC.scale = scale;
+			NPC.DeathSound = Origins.Sounds.MaskedZombieDeath;
 			AIType = variant.VanillaVariant;
 			Banner = Item.NPCtoBanner(NPCID.Zombie);
 			SpawnModBiomes = [
@@ -117,8 +119,8 @@ namespace Origins.NPCs.Ashen {
 		public void Load(Mod mod) {
 			zomb = new(this);
 			mod.AddContent(zomb);
-			mod.AddContent(new Gas_Mask_Zombie(this, 0.85f));
-			mod.AddContent(new Gas_Mask_Zombie(this, 1.15f));
+			mod.AddContent(new Gas_Mask_Zombie(this, 0.9f));
+			mod.AddContent(new Gas_Mask_Zombie(this, 1.1f));
 			variants.Add(this);
 		}
 

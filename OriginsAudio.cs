@@ -89,6 +89,9 @@ namespace Origins {
 			public static SoundStyle HyraxKill = new("Origins/Sounds/Custom/Hyrax_Kill", 2);
 			public static SoundStyle HyraxWawa = new("Origins/Sounds/Custom/Hyrax_Wawa", 2);
 
+			public static SoundStyle MaskedZombieAmbient = new("Origins/Sounds/Custom/MaskedZombie", 3);
+			public static SoundStyle MaskedZombieDeath = new("Origins/Sounds/Custom/MaskedKilled", 0);
+
 			public static SoundStyle Lightning = SoundID.Roar;
 			public static SoundStyle LightningCharging = SoundID.Roar;
 			public static SoundStyle LightningChargingSoft = SoundID.Roar;
