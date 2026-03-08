@@ -33,7 +33,6 @@ namespace Origins.Achievements {
 		public override Position GetDefaultPosition() => new Before("STILL_HUNGRY");
 	}
 	public class Kill_Lost_Diver : SlayerAchievement<Mildew_Carrion> {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public override Position GetDefaultPosition() => new After("ITS_HARD");
 	}
 	public class Enough_Yap : ModAchievement {

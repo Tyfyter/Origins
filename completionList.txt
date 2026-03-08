@@ -422,7 +422,7 @@ ACHIEVEMENTS:
 (@, ^3) RIVEN WORMS !!!
 (@, ^3) Slow Loading Bar !!!
 (々) The Signal, it's Calling !!!
-(@, ^3) There's Something in There! !!!
+(^) There's Something in There!
 (@, ^3) 'Till Death Mildew Us Part !!!
 (^) Whismical!
 (^) Whole Blend Evil
@@ -801,7 +801,7 @@ TOOLS:
 (X) Perihelion Jackhammer
 (X) Perihelion Pickaxe
 
-(␡, @, ^2) Amebic Gel Absorbant Sponge !!!
+(␡) Amebic Gel Absorbant Sponge !!!
 (^) Bottomless Brine Bucket
 (^) Bottomless Oil Bucket
 (^) Brine Absorbant Sponge
