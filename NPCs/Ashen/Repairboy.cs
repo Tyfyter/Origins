@@ -12,6 +12,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -47,6 +48,11 @@ namespace Origins.NPCs.Ashen {
 			SpawnModBiomes = [
 				ModContent.GetInstance<Ashen_Biome>().Type,
 			];
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		AdvancedTargetSearchResults target;
 		void MoveTowards(Vector2 targetPos, out Vector2 targetDir, out float dist) {
