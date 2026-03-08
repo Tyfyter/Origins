@@ -17,26 +17,24 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Critters {
-	public class Hyrax : ModNPC, IWikiNPC {
+	public class Hyrax : Critter_Mod_NPC<Hyrax_Item>, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 20, 13);
 		public int AnimationFrames => 2;
 		public int FrameDuration => 8;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
-			Main.npcCatchable[Type] = true;
+			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 6;
-			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.Shimmerfly;
 			NPCID.Sets.TownCritter[Type] = true;
-			NPCID.Sets.CountsAsCritter[Type] = true;
 			NPCID.Sets.TakesDamageFromHostilesWithoutBeingFriendly[Type] = true;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Bunny);
+			base.SetDefaults();
 			NPC.aiStyle = -1;
 			NPC.width = 26;
 			NPC.height = 26;
 			NPC.DeathSound = Origins.Sounds.HyraxKill;
-			NPC.catchItem = ModContent.ItemType<Hyrax_Item>();
 			SpawnModBiomes = [
 				ModContent.GetInstance<Limestone_Cave>().Type
 			];

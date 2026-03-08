@@ -3,6 +3,7 @@ using Origins.Items.Other.Critters;
 using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -10,16 +11,39 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Critters {
-	public class Amoeba_Buggy : Glowing_Mod_NPC, IWikiNPC {
+	#region Base Classes
+	public abstract class Critter_Mod_NPC<TCritter, TItem> : Critter_Mod_NPC where TCritter : ModItem where TItem : ModItem {
+		public override int CritterItem => ModContent.ItemType<TCritter>();
+		public override int ShimmeredNPC => 0;
+		public override int ShimmeredItem => ModContent.ItemType<TItem>();
+	}
+	public abstract class Critter_Mod_NPC<TCritter> : Critter_Mod_NPC where TCritter : ModItem {
+		public override int CritterItem => ModContent.ItemType<TCritter>();
+	}
+	public abstract class Critter_Mod_NPC : Glowing_Mod_NPC, IItemObtainabilityProvider {
+		public abstract int CritterItem { get; }
+		public virtual int ShimmeredNPC => NPCID.Shimmerfly;
+		public virtual int ShimmeredItem => 0;
+		public override void SetStaticDefaults() {
+			Main.npcCatchable[Type] = true;
+			NPCID.Sets.CountsAsCritter[Type] = true;
+			if (ShimmeredItem > 0) NPCID.Sets.ShimmerTransformToItem[Type] = ShimmeredItem;
+			if (ShimmeredNPC != 0) NPCID.Sets.ShimmerTransformToNPC[Type] = ShimmeredNPC;
+		}
+		public override void SetDefaults() {
+			NPC.catchItem = CritterItem;
+		}
+		public IEnumerable<int> ProvideItemObtainability() => [CritterItem];
+	}
+	#endregion
+	public class Amoeba_Buggy : Critter_Mod_NPC<Amoeba_Buggy_Item>, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 18, 12);
 		public int AnimationFrames => 4;
 		public int FrameDuration => 8;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
-			Main.npcCatchable[Type] = true;
+			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 4;
-			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.Shimmerfly;
-			NPCID.Sets.CountsAsCritter[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = new(0, 22),
 				PortraitPositionYOverride = 42
@@ -27,7 +51,7 @@ namespace Origins.NPCs.Critters {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BlueDragonfly);
-			NPC.catchItem = ModContent.ItemType<Amoeba_Buggy_Item>();
+			base.SetDefaults();
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive>().Type
 			];
@@ -45,20 +69,18 @@ namespace Origins.NPCs.Critters {
 			}
 		}
 	}
-	public class Bug : ModNPC, IWikiNPC {
+	public class Bug : Critter_Mod_NPC<Bug_Item>, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 20, 12);
 		public int AnimationFrames => 2;
 		public int FrameDuration => 8;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
-			Main.npcCatchable[Type] = true;
+			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 2;
-			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.Shimmerfly;
-			NPCID.Sets.CountsAsCritter[Type] = true;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.GoldWaterStrider);
-			NPC.catchItem = ModContent.ItemType<Bug_Item>();
+			base.SetDefaults();
 		}
 		public override void FindFrame(int frameHeight) {
 			if (++NPC.frameCounter >= 7) {
@@ -103,20 +125,18 @@ namespace Origins.NPCs.Critters {
 			}
 		}
 	}
-	public class Cicada_3301 : ModNPC, IWikiNPC {
+	public class Cicada_3301 : Critter_Mod_NPC<Cicada_3301_Item>, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 20, 13);
 		public int AnimationFrames => 2;
 		public int FrameDuration => 8;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
-			Main.npcCatchable[Type] = true;
+			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 2;
-			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.Shimmerfly;
-			NPCID.Sets.CountsAsCritter[Type] = true;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Buggy);
-			NPC.catchItem = ModContent.ItemType<Cicada_3301_Item>();
+			base.SetDefaults();
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands>().Type
 			];
@@ -135,25 +155,23 @@ namespace Origins.NPCs.Critters {
 			}
 		}
 	}
-	public class Chambersite_Bunny : Glowing_Mod_NPC, IWikiNPC {
+	public class Chambersite_Bunny : Critter_Mod_NPC<Chambersite_Bunny_Item, Chambersite_Item>, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 48, 40);
 		public int AnimationFrames => 7;
 		public int FrameDuration => 8;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override string GlowTexturePath => $"Terraria/Images/Glow_{GlowMaskID.GemBunny}";
 		public override void SetStaticDefaults() {
-			Main.npcCatchable[Type] = true;
+			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 7;
-			NPCID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Chambersite_Item>();
-			NPCID.Sets.CountsAsCritter[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers {
 				Velocity = 0.25f
 			};
-			NPCID.Sets.SpecificDebuffImmunity[Type][31] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type] = NPCID.Sets.SpecificDebuffImmunity[NPCID.GemBunnyAmethyst];
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.GemBunnyAmethyst);
-			NPC.catchItem = ModContent.ItemType<Chambersite_Bunny_Item>();
+			base.SetDefaults();
 			AnimationType = NPCID.GemBunnyAmethyst;
 			AIType = NPCID.GemBunnyAmethyst;
 		}
@@ -170,25 +188,23 @@ namespace Origins.NPCs.Critters {
 			return 0.045f;
 		}*/
 	}
-	public class Chambersite_Squirrel: Glowing_Mod_NPC, IWikiNPC {
+	public class Chambersite_Squirrel: Critter_Mod_NPC<Chambersite_Squirrel_Item, Chambersite_Item>, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 50, 32);
 		public int AnimationFrames => 6;
 		public int FrameDuration => 8;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override string GlowTexturePath => $"Terraria/Images/Glow_{GlowMaskID.GemSquirrel}";
 		public override void SetStaticDefaults() {
-			Main.npcCatchable[Type] = true;
+			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 6;
-			NPCID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Chambersite_Item>();
-			NPCID.Sets.CountsAsCritter[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers {
 				Velocity = 0.25f
 			};
-			NPCID.Sets.SpecificDebuffImmunity[Type][31] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type] = NPCID.Sets.SpecificDebuffImmunity[NPCID.GemSquirrelAmethyst];
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.GemSquirrelAmethyst);
-			NPC.catchItem = ModContent.ItemType<Chambersite_Squirrel_Item>();
+			base.SetDefaults();
 			AnimationType = NPCID.GemSquirrelAmethyst;
 			AIType = NPCID.GemSquirrelAmethyst;
 		}
@@ -205,16 +221,14 @@ namespace Origins.NPCs.Critters {
 			return 0.045f;
 		}*/
 	}
-	public class Peppered_Moth : ModNPC, IWikiNPC {
+	public class Peppered_Moth : Critter_Mod_NPC<Peppered_Moth_Item>, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 18, 12);
 		public int AnimationFrames => 4;
 		public int FrameDuration => 8;
 		public NPCExportType ImageExportType => NPCExportType.SpriteSheet;
 		public override void SetStaticDefaults() {
-			Main.npcCatchable[Type] = true;
+			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 4;
-			NPCID.Sets.ShimmerTransformToNPC[Type] = NPCID.Shimmerfly;
-			NPCID.Sets.CountsAsCritter[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = new(0, 22),
 				PortraitPositionYOverride = 42
@@ -222,7 +236,7 @@ namespace Origins.NPCs.Critters {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BlueDragonfly);
-			NPC.catchItem = ModContent.ItemType<Peppered_Moth_Item>();
+			base.SetDefaults();
 			SpawnModBiomes = [
 				ModContent.GetInstance<Ashen_Biome>().Type
 			];

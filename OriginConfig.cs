@@ -720,6 +720,14 @@ namespace Origins {
 							obtainableItems.Add(ItemID.Sets.ShimmerTransformToItem[i]);
 						}
 					}
+					for (int i = 0; i < NPCID.Sets.ShimmerTransformToItem.Length; i++) {
+						if (i != -1 && (i < NPCID.Count || obtainableItems.Contains(i))) {
+							obtainableItems.Add(NPCID.Sets.ShimmerTransformToItem[i]);
+						}
+					}
+					foreach (ModNPC npc in Origins.instance.GetContent<ModNPC>()) {
+						if (npc.NPC.catchItem > 0) obtainableItems.Add(npc.NPC.catchItem);
+					}
 					int tries = 0;
 					while (recipeResultItems.Count > 0 && ++tries < 1000) {
 						for (int i = 0; i < ItemID.Sets.ShimmerTransformToItem.Length; i++) {
