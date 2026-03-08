@@ -603,6 +603,7 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Screwdriver_Upgrade_White : MaterialItem {
+		public override bool HasTooltip => true;
 		public override int Value => Item.sellPrice(gold: 1);
 		public override int Rare => ItemRarityID.Yellow;
 		public override bool Hardmode => true;

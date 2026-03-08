@@ -8188,7 +8188,7 @@ Wind_Turbine_Item: {
 
 Stardust_Strange_Plant_Item: {
 	DisplayName: Strange Plant
-	Tooltip: ""
+	Tooltip: "{$ItemTooltip.StrangePlant1}"
 }
 
 Screwdriver_Upgrade_White: {
