@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.LootConditions;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -63,6 +64,7 @@ namespace Origins.NPCs.MiscE {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Diamond, 20));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Traffic_Cone_Item>(), 15));
+			npcLoot.Add(new CopyNPCDropRule(NPCID.Zombie));
         }
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0 || OriginsModIntegrations.CheckAprilFools()) {

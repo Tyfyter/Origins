@@ -234,7 +234,7 @@ ENEMY NPCS:
 (^) Felnum Slime
 (^) Flagellant
 (^) Flying Exoskeleton
-(#, ^2) Gas Mask Zombie !!!
+(#2, ^2, †) Gas Mask Zombie !!! (needs to use their custom sounds and beestiary entries but otherwise completely done)
 (^) Goo Wall
 (^) Graveshield Zombie
 (#, ^2) Hammerhand !!!

@@ -113,3 +113,11 @@ Pinwheel: A saw blade made of Demonite, forged by an unknown force. They scour t
 Trenchmaker: The oldest man-made machination still manufactured by the Ashen Factory. It was not only the first war engine, but also the first creation to utilize both an internal combustion engine and phoenum power generator. The Trenchmaker was a fearsome sight on the battlefield before it was turned against its very own creators.
 Fearmaker: "'Putting the fear in everyone since 1XXX'"
 Fearmaker_Alt: "'Fish fear me, robots love me'"
+Gas_Mask_Zombie11: bestiary text here
+Gas_Mask_Zombie21: "{$Gas_Mask_Zombie11}"
+Gas_Mask_Zombie31: "{$Gas_Mask_Zombie11}"
+Gas_Mask_Zombie41: "{$Gas_Mask_Zombie11}"
+Gas_Mask_Zombie51: "{$Gas_Mask_Zombie11}"
+Gas_Mask_Zombie61: "{$Gas_Mask_Zombie11}"
+Gas_Mask_Zombie71: "{$CommonBestiaryFlavor.CostumeZombie}"
+Gas_Mask_Zombie81: bestiary text here

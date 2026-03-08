@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.LootConditions;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -68,6 +69,7 @@ namespace Origins.NPCs.MiscE {
 				ItemID.CrossGraveMarker,
 				ItemID.Obelisk
 			)));
+			npcLoot.Add(new CopyNPCDropRule(NPCID.Zombie));
 		}
 		public override void OnKill() {
 			if (!OriginConfig.GraveshieldZombiesShouldDropAsItem) NPC.DropTombstoneTownNPC(NetworkText.FromKey(Lang.misc[19].Key, NPC.GetFullNetName()));

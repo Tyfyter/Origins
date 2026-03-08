@@ -1,0 +1,158 @@
+﻿using AltLibrary.Common.Systems;
+using Origins.Dev;
+using Origins.Items.Accessories;
+using Origins.LootConditions;
+using Origins.World.BiomeData;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using static Terraria.ModLoader.ModContent;
+
+namespace Origins.NPCs.Ashen {
+	[Autoload(false)]
+	public class Gas_Mask_Zombie(Gas_Mask_Variants variant, float scale = 1f) : ModNPC, IWikiNPC, IAshenEnemy {
+		public override string Name => $"{base.Name}{variant.VariantName}{scale}";
+		public override string Texture => typeof(Gas_Mask_Zombie).GetDefaultTMLName() + variant.VariantName;
+		public override LocalizedText DisplayName => Mod.GetLocalization($"{LocalizationCategory}.{base.Name}.{nameof(DisplayName)}");
+		protected override bool CloneNewInstances => true;
+		public Rectangle DrawRect => new(0, 0, 34, 46);
+		public int AnimationFrames => 3;
+		public int FrameDuration => 3;
+		bool IAshenEnemy.IsRobotic => false;
+		public override void SetStaticDefaults() {
+			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[variant.VanillaVariant];
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = scale == 1f ? NPCID.Sets.NPCBestiaryDrawOffset[variant.VanillaVariant] : NPCExtensions.HideInBestiary;
+			/*NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+			OriginsSets.NPCs.CustomExpertScaling[Type] = npc => {
+				if (Main.hardMode) {
+					int strength = npc.damage + 6 + npc.lifeMax / 4;
+					if (strength == 0) strength = 1;
+					int targetStrength = 80;
+					if (NPC.downedPlantBoss) targetStrength += 40;
+					if (strength < targetStrength) {
+						float num3 = targetStrength / strength;
+						npc.damage = (int)(npc.damage * num3 * 0.9);
+						npc.defense = (int)(npc.defense * (num3 + 4) / 5);
+						npc.lifeMax = (int)(npc.lifeMax * num3 * 1.1);
+						npc.value = (int)(npc.value * num3 * 0.8);
+					}
+				}
+			};*/
+			GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, BiomeSpawnChance);
+		}
+		public override void SetDefaults() {
+			NPC.CloneDefaults(variant.VanillaVariant);
+			NPC.lifeMax = 45;
+			NPC.defense = 8;
+			NPC.damage = 18;
+			NPC.width = 24;
+			NPC.height = 38;
+			//NPC.value = Item.buyPrice(0, 0, 2);
+			NPC.aiStyle = NPCAIStyleID.Fighter;
+			NPC.scale = scale;
+			AIType = variant.VanillaVariant;
+			Banner = Item.NPCtoBanner(NPCID.Zombie);
+			SpawnModBiomes = [
+				GetInstance<Ashen_Biome>().Type,
+			];
+		}
+		public override bool PreAI() {
+			NPC.spriteDirection = NPC.direction;
+			return true;
+		}
+		bool SharedSpawnConditions(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerInTown) return false;
+			if (spawnInfo.Player.ZoneGraveyard || !Main.dayTime) return variant.CanSpawn(spawnInfo);
+			return false;
+		}
+		static float PortionedSpawnRate(NPCSpawnInfo spawnInfo) => Ashen_Biome.SpawnRates.PowerZombie / Gas_Mask_Variants.TotalSpawnWeight(spawnInfo);
+		public float BiomeSpawnChance(NPCSpawnInfo spawnInfo) {
+			if (!SharedSpawnConditions(spawnInfo)) return 0;
+			return PortionedSpawnRate(spawnInfo);
+		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (!SharedSpawnConditions(spawnInfo)) return 0;
+			if (WorldBiomeManager.GetWorldEvil(true) is not Ashen_Alt_Biome) return 0;
+			return PortionedSpawnRate(spawnInfo) * 0.08f;
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				variant.zomb.GetBestiaryFlavorText(),
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime
+			);
+		}
+		public override void FindFrame(int frameHeight) {
+			NPC.VanillaFindFrame(frameHeight, false, variant.VanillaVariant);
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ItemID.Amber, 20));
+			npcLoot.Add(new CommonDrop(ItemType<Gas_Mask>(), 50));
+			npcLoot.Add(new CopyNPCDropRule(variant.VanillaVariant));
+		}
+		public override void AddShops() {
+			ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type] = ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[variant.zomb.Type];
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0 || OriginsModIntegrations.CheckAprilFools()) {
+				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, 4);
+				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, 4);
+				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, 5);
+				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, 5);
+			}
+		}
+	}
+	public abstract class Gas_Mask_Variants : ILoadable {
+		public virtual string VariantName => GetType().Name["Variant".Length..];
+		public virtual int VanillaVariant => NPCID.Zombie;
+		private static readonly List<Gas_Mask_Variants> variants = [];
+		public Gas_Mask_Zombie zomb;
+		public virtual bool CanSpawn(NPCSpawnInfo spawnInfo) => true;
+		public static float TotalSpawnWeight(NPCSpawnInfo spawnInfo) => variants.Count(v => v.CanSpawn(spawnInfo)) * 3;
+		public void Load(Mod mod) {
+			zomb = new(this);
+			mod.AddContent(zomb);
+			mod.AddContent(new Gas_Mask_Zombie(this, 0.85f));
+			mod.AddContent(new Gas_Mask_Zombie(this, 1.15f));
+			variants.Add(this);
+		}
+
+		public void Unload() { }
+		public class Variant1 : Gas_Mask_Variants { }
+		public class Variant2 : Gas_Mask_Variants {
+			public override int VanillaVariant => NPCID.BaldZombie;
+		}
+		public class Variant3 : Gas_Mask_Variants {
+			public override int VanillaVariant => NPCID.PincushionZombie;
+		}
+		public class Variant4 : Gas_Mask_Variants {
+			public override int VanillaVariant => NPCID.SwampZombie;
+		}
+		public class Variant5 : Gas_Mask_Variants {
+			public override int VanillaVariant => NPCID.TwiggyZombie;
+		}
+		public class Variant6 : Gas_Mask_Variants {
+			public override int VanillaVariant => NPCID.FemaleZombie;
+		}
+		public class Variant7 : Gas_Mask_Variants {
+			public override int VanillaVariant => NPCID.ZombieDoctor;
+			public override bool CanSpawn(NPCSpawnInfo spawnInfo) {
+				return Main.halloween;
+			}
+		}
+		public class Variant8 : Gas_Mask_Variants {
+			public override int VanillaVariant => NPCID.TorchZombie;
+		}
+		public class Variant9 : Gas_Mask_Variants {
+			public override int VanillaVariant => NPCID.ArmedTorchZombie;
+			public override bool CanSpawn(NPCSpawnInfo spawnInfo) {
+				return Main.expertMode;
+			}
+		}
+	}
+}

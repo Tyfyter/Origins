@@ -331,4 +331,22 @@ namespace Origins.LootConditions {
 			return result;
 		}
 	}
+	public class CopyNPCDropRule(int type) : IItemDropRule {
+		public List<IItemDropRuleChainAttempt> ChainedRules { get; } = [];
+
+		public bool CanDrop(DropAttemptInfo info) => true;
+
+		public void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
+			foreach (IItemDropRule rule in Main.ItemDropsDB.GetRulesForNPCID(type, false)) {
+				rule.ReportDroprates(drops, ratesInfo);
+			}
+		}
+
+		public ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
+			foreach (IItemDropRule rule in Main.ItemDropsDB.GetRulesForNPCID(type, false)) {
+				OriginExtensions.ResolveRule(rule, info);
+			}
+			return new ItemDropAttemptResult() { State = ItemDropAttemptResultState.Success };
+		}
+	}
 }

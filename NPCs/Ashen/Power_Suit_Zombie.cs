@@ -2,6 +2,7 @@
 using Origins.Items.Armor.Ashen;
 using Origins.Items.Materials;
 using Origins.Journal;
+using Origins.LootConditions;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -36,7 +37,7 @@ namespace Origins.NPCs.Ashen {
 					}
 				}
 			};
-			ModContent.GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, BiomeSpawnChance);
+			GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, BiomeSpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -88,6 +89,7 @@ namespace Origins.NPCs.Ashen {
 			npcLoot.Add(new CommonDrop(ItemType<Ashen2_Helmet>(), 300, 1, 1, 11));
 			npcLoot.Add(new CommonDrop(ItemType<Ashen2_Breastplate>(), 300, 1, 1, 11));
 			npcLoot.Add(new CommonDrop(ItemType<Ashen2_Greaves>(), 300, 1, 1, 11));
+			npcLoot.Add(new CopyNPCDropRule(NPCID.Zombie));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0 || OriginsModIntegrations.CheckAprilFools()) {
