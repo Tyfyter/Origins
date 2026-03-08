@@ -2317,9 +2317,10 @@ namespace Origins {
 			int projIndex = Projectile.GetByUUID(self.owner, self.ai[index]);
 			return Main.projectile.IndexInRange(projIndex) ? Main.projectile[projIndex] : null;
 		}
-		public static void DoFrames(this NPC self, int counterMax, Range frames) {
+		public static void DoFrames(this NPC self, int counterMax, Range frames) => self.DoFrames(counterMax, frames, 1);
+		public static void DoFrames(this NPC self, int counterMax, Range frames, float rate) {
 			int heightEtBuffer = self.frame.Height;
-			self.frameCounter += 1;
+			self.frameCounter += rate;
 			if (self.frameCounter >= counterMax) {
 				self.frame.Y += heightEtBuffer;
 				self.frameCounter = 0;
@@ -2332,6 +2333,7 @@ namespace Origins {
 			}
 		}
 		public static void DoFrames(this NPC self, int counterMax) => self.DoFrames(counterMax, 0..Main.npcFrameCount[self.type]);
+		public static void DoFrames(this NPC self, int counterMax, float rate) => self.DoFrames(counterMax, 0..Main.npcFrameCount[self.type], rate);
 		public static bool AnyNPCs<TModNPC>() where TModNPC : ModNPC => NPC.AnyNPCs(ModContent.NPCType<TModNPC>());
 		public static string Get2ndPersonReference(this Player self, string args = "") {
 			return Language.GetTextValue($"Mods.Origins.Words.2ndref{args}{(self.Male ? "male" : "female")}");
