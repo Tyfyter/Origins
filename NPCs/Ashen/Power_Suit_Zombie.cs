@@ -36,6 +36,7 @@ namespace Origins.NPCs.Ashen {
 					}
 				}
 			};
+			ModContent.GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, BiomeSpawnChance);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -58,13 +59,18 @@ namespace Origins.NPCs.Ashen {
 			NPC.spriteDirection = OriginsModIntegrations.CheckAprilFools() ? -NPC.direction : NPC.direction;
 			return true;
 		}
+		static bool SharedSpawnConditions(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerInTown) return false;
+			if (spawnInfo.Player.ZoneGraveyard || !Main.dayTime) return true;
+			return false;
+		}
+		public static float BiomeSpawnChance(NPCSpawnInfo spawnInfo) {
+			if (!SharedSpawnConditions(spawnInfo)) return 0;
+			return Ashen_Biome.SpawnRates.PowerZombie;
+		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.PlayerInTown) return 0;
-			if (spawnInfo.Player.ZoneGraveyard || !Main.dayTime) {
-				if (spawnInfo.Player.InModBiome<Ashen_Biome>()) return Ashen_Biome.SpawnRates.PowerZombie;
-				else return Ashen_Biome.SpawnRates.PowerZombie * 0.08f;
-			}
-			return 0;
+			if (!SharedSpawnConditions(spawnInfo)) return 0;
+			return Ashen_Biome.SpawnRates.PowerZombie * 0.08f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
