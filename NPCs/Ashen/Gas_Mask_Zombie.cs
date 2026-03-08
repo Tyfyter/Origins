@@ -112,6 +112,7 @@ namespace Origins.NPCs.Ashen {
 	public abstract class Gas_Mask_Variants : ILoadable {
 		public virtual string VariantName => GetType().Name["Variant".Length..];
 		public virtual int VanillaVariant => NPCID.Zombie;
+		public virtual bool HasScaledVariants => true;
 		private static readonly List<Gas_Mask_Variants> variants = [];
 		public Gas_Mask_Zombie zomb;
 		public virtual bool CanSpawn(NPCSpawnInfo spawnInfo) => true;
@@ -119,8 +120,10 @@ namespace Origins.NPCs.Ashen {
 		public void Load(Mod mod) {
 			zomb = new(this);
 			mod.AddContent(zomb);
-			mod.AddContent(new Gas_Mask_Zombie(this, 0.9f));
-			mod.AddContent(new Gas_Mask_Zombie(this, 1.1f));
+			if (HasScaledVariants) {
+				mod.AddContent(new Gas_Mask_Zombie(this, 0.9f));
+				mod.AddContent(new Gas_Mask_Zombie(this, 1.1f));
+			}
 			variants.Add(this);
 		}
 
@@ -143,18 +146,17 @@ namespace Origins.NPCs.Ashen {
 		}
 		public class Variant7 : Gas_Mask_Variants {
 			public override int VanillaVariant => NPCID.ZombieDoctor;
-			public override bool CanSpawn(NPCSpawnInfo spawnInfo) {
-				return Main.halloween;
-			}
+			public override bool HasScaledVariants => false;
+			public override bool CanSpawn(NPCSpawnInfo spawnInfo) => Main.halloween;
 		}
 		public class Variant8 : Gas_Mask_Variants {
 			public override int VanillaVariant => NPCID.TorchZombie;
+			public override bool HasScaledVariants => false;
 		}
 		public class Variant9 : Gas_Mask_Variants {
 			public override int VanillaVariant => NPCID.ArmedTorchZombie;
-			public override bool CanSpawn(NPCSpawnInfo spawnInfo) {
-				return Main.expertMode;
-			}
+			public override bool HasScaledVariants => false;
+			public override bool CanSpawn(NPCSpawnInfo spawnInfo) => Main.expertMode;
 		}
 	}
 }
