@@ -290,6 +290,7 @@ public class Ashen_Armory : LootPool {
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Switchblade_Broadsword>(), 2, 1, 3));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Soldering_Iron>(), 2));
 			AddRule(ItemDropRule.Common(ModContent.ItemType<Defective_Mortar_Shell>(), 2));
+			//AddRule(ItemDropRule.Common(ModContent.ItemType<Clunkaclusta>()));
 		}
 	}
 	public override void SetStaticDefaults() {

@@ -1109,6 +1109,7 @@ EXPLOSIVE WEAPONS:
 (^) Bombardment
 (^) Bomb Launcher
 (^) Brainade
+(#, ^2) Clunkaclusta !!!
 (^) Cold Snap
 (^) Defiled Spirit
 (^) Eruption
@@ -1338,6 +1339,9 @@ TILES:
 (^) Chambersite Bunny Cage
 (^) Chambersite Squirrel Cage
 (^) Cicada 3301 Cage
+(#, ^2) Deactivated Repairboy !!!
+(X) Deactivated Stryder !!!
+(#, ^2) Deactivated Trenchmaker !!!
 (^) Defiled Torch
 (^) Defiled Water Fountain
 (^) Endowood Furniture
