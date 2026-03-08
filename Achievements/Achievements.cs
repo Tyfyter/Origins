@@ -82,7 +82,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class Different_Game : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomFlagCondition Condition { get; private set; }
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Challenger);
