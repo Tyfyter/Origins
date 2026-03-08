@@ -25,7 +25,7 @@ namespace Origins.NPCs.Ashen {
 		static float AttackDist => TargetDistMax + 16;
 		static float TileRepairTime => 20 * 60 * 5;
 		public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
-			return OriginSystem.repairboyTiles > 0 ? 0.2f : 0.001f;
+			return OriginSystem.repairboyTiles > 0 ? 0.2f : 0.0001f;
 		}
 		Vector2 WeldingTorchPos => NPC.Center + new Vector2(NPC.direction * 26, 4);
 		AutoLoadingAsset<Texture2D> glowTexture = typeof(Repairboy).GetDefaultTMLName("_Glow");
