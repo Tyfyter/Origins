@@ -13,15 +13,16 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Vanity.Dev.PlagueTexan {
-	public class Awesome_Prosthetic_Tail : ATail {
+	public class Awesome_Prosthetic_Tail : ATail, IStackableAccessory {
 		AutoLoadingAsset<Texture2D> tailTexture = typeof(Awesome_Prosthetic_Tail).GetDefaultTMLName("_Tail");
 		AutoLoadingAsset<Texture2D> tailGlowTexture = typeof(Awesome_Prosthetic_Tail).GetDefaultTMLName("_Tail_Glow");
 		public static DyedLight dyeableGlow = new(new(0.0845f, 0.3625f, 0.5f));
-		public override int Length => 20;
+		public override int Length => 3 * Item.stack;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 22);
 			Item.rare = AltCyanRarity.ID;
 			Item.value = Item.sellPrice(gold: 1);
+			Item.maxStack = 999;
 		}
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);

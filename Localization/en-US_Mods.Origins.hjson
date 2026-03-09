@@ -3658,3 +3658,5 @@ World_Sizes: {
 	6400x1800: "{$LegacyMenu.93}"
 	8400x2400: "{$LegacyMenu.94}"
 }
+
+StackableAccessory.Tooltip: Can be stacked
