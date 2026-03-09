@@ -230,8 +230,8 @@ namespace Origins.NPCs.Critters {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Position = new(0, 22),
-				PortraitPositionYOverride = 42
+				Position = new(2, 3),
+				PortraitPositionYOverride = 1
 			};
 		}
 		public override void SetDefaults() {
