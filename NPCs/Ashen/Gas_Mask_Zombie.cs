@@ -84,8 +84,8 @@ namespace Origins.NPCs.Ashen {
 			return PortionedSpawnRate(spawnInfo) * 0.08f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			IBestiaryInfoElement text = Gas_Mask_Variants.variants[0].zomb.GetBestiaryFlavorText();
-			if (!variant.VariantName.Contains("Armed")) text = variant.zomb.GetBestiaryFlavorText();
+			IBestiaryInfoElement text = new FlavorTextBestiaryInfoElement($"Variant: {variant.VariantName}\nScale: {scale}");
+			if (!variant.VariantName.Contains("Armed") && scale == 1f) text = variant.zomb.GetBestiaryFlavorText();
 
 			bestiaryEntry.AddTags(
 				text,
