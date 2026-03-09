@@ -89,7 +89,11 @@ namespace Origins {
 			public static SoundStyle HyraxKill = new("Origins/Sounds/Custom/Hyrax_Kill", 2);
 			public static SoundStyle HyraxWawa = new("Origins/Sounds/Custom/Hyrax_Wawa", 2);
 
-			public static SoundStyle MaskedZombieAmbient = new("Origins/Sounds/Custom/MaskedZombie", 3);
+			public static SoundStyle MaskedZombieAmbient = new("Origins/Sounds/Custom/MaskedZombie", 3) {
+				Identifier = "Terraria/ZombieMoan",
+				Volume = 0.4f,
+				MaxInstances = 0
+			};
 			public static SoundStyle MaskedZombieDeath = new("Origins/Sounds/Custom/MaskKilled", 0);
 
 			public static SoundStyle Lightning = SoundID.Roar;
@@ -101,10 +105,10 @@ namespace Origins {
 			public static SoundStyle ShimmershotCharging = new("Origins/Sounds/Custom/SoftCharge", SoundType.Sound) {
 				IsLooped = true
 			};
-			public static SoundStyle HawkenThruster = new("Origins/Sounds/Custom/HawkenThrusterDistant", SoundType.Sound) {
+			public static SoundStyle HawkenThruster = new("Origins/Sounds/Custom/HawkenThrusterDistant", SoundType.Ambient) {
 				IsLooped = true
 			};
-			public static SoundStyle RadioBroadcaster = new SoundStyle("Origins/Sounds/Custom/HawkenThrusterDistant", SoundType.Sound) {
+			public static SoundStyle RadioBroadcaster = new SoundStyle("Origins/Sounds/Custom/HawkenThrusterDistant", SoundType.Ambient) {
 				IsLooped = true
 			}.WithPitch(2.5f);
 			public static SoundStyle ShimmerConstructAmbienceIntro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_Start", SoundType.Ambient);
