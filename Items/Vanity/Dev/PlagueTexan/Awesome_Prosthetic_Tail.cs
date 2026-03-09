@@ -79,6 +79,9 @@ namespace Origins.Items.Vanity.Dev.PlagueTexan {
 		public override void UpdateItemDye(Player player, int dye, bool hideVisual) {
 			player.GetModPlayer<Awesome_Prosthetic_Tail_Player>().cTail = dye;
 		}
+		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			if (Length > 100 && OriginsModIntegrations.CheckAprilFools()) tooltips.Add("TailBeLong", "Tail be long because tail belong");
+		}
 		public class Awesome_Tail_Glow_Dye_Slot : ExtraDyeSlot {
 			public override bool UseForSlot(Item equipped, Item vanity, bool equipHidden) => equipped?.ModItem is Awesome_Prosthetic_Tail || vanity?.ModItem is Awesome_Prosthetic_Tail;
 			public override void ApplyDye(Player player, [NotNull] Item dye) {
