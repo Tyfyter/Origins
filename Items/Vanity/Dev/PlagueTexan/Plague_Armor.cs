@@ -18,7 +18,7 @@ namespace Origins.Items.Vanity.Dev.PlagueTexan {
 			yield return ModContent.ItemType<Plague_Texan_Sight>();
 			yield return new(ItemDropRule.ByCondition(DropConditions.HardmodeBossBag, ModContent.ItemType<SceneYMK_Wings>()));
 			yield return ModContent.ItemType<Chromatic_Scale>();
-			yield return ModContent.ItemType<Awesome_Prosthetic_Tail>();
+			yield return new(ItemDropRule.Common(ModContent.ItemType<Awesome_Prosthetic_Tail>(), minimumDropped: 7, maximumDropped: 7));
 		}
 	}
 	[AutoloadEquip(EquipType.Head)]

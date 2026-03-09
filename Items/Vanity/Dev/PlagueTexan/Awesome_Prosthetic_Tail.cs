@@ -21,7 +21,7 @@ namespace Origins.Items.Vanity.Dev.PlagueTexan {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 22);
 			Item.rare = AltCyanRarity.ID;
-			Item.value = Item.sellPrice(gold: 1);
+			Item.value = Item.sellPrice(silver: 14, copper: 29);
 			Item.maxStack = 999;
 		}
 		public override void SetStaticDefaults() {
