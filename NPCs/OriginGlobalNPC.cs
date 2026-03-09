@@ -119,6 +119,8 @@ namespace Origins.NPCs {
 				}
 				case NPCID.Cyborg: {
 					shop.Add<Advanced_Imaging>(Quest.QuestCondition<Advanced_Imaging_Quest>());
+					shop.InsertAfter<Homing_Rocket_I>(ItemID.ClusterRocketII, Condition.DownedMoonLord);
+					shop.InsertAfter<Homing_Rocket_I, Homing_Rocket_II>(Condition.DownedMoonLord);
 					break;
 				}
 				case NPCID.SkeletonMerchant: {
