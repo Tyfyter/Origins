@@ -597,7 +597,7 @@ namespace Origins {
 					DamageClasses.Explosive.GetLocalization("ThoriumMod_TerrariumArmorAddClassFocus.Description").WithFormatArgs(ExplosivePierce)
 				);
 
-				instance.thorium.Call("BirdFeederAddFruitsToBiome", "Evil", (int[])[ItemType<Bileberry>(), ItemType<Prickly_Pear>(), ItemType<Petrified_Prickly_Pear>(), ItemType<Pawpaw>(), ItemType<Periven>()]);
+				instance.thorium.Call("BirdFeederAddFruitsToBiome", "Evil", (int[])[ItemType<Bileberry>(), ItemType<Prickly_Pear>(), ItemType<Petrified_Prickly_Pear>(), ItemType<Pawpaw>(), ItemType<Periven>(), ItemType<Blastberry>(), ItemType<Tangerine>()]);
 				instance.thorium.Call("BirdFeederAddPotionsToBiome", "Evil", (int[])[ItemType<Fervor_Potion>(), ItemType<Protean_Potion>(), ItemType<Ambition_Potion>()]);
 
 				instance.thorium.Call("AddFlailProjectileID", ProjectileType<Depth_Charge_P>());
