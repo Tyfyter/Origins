@@ -88,7 +88,7 @@ namespace Origins.Tiles.Other {
 			Main.tileLighted[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleDye);
 			TileObjectData.addTile(Type);
-			AddMapEntry(new Color(33, 76, 140), this.GetTileItem().DisplayName);
+			AddMapEntry(new Color(6, 106, 255), this.GetTileItem().DisplayName);
 			HitSound = SoundID.Grass;
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
