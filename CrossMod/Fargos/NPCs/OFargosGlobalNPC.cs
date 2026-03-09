@@ -2,8 +2,10 @@
 using Fargowiltas.NPCs;
 using Origins.CrossMod.Fargos.Items;
 using Origins.NPCs;
+using Origins.Tiles;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using System;
 using System.Linq;
@@ -16,6 +18,9 @@ namespace Origins.CrossMod.Fargos.NPCs {
 	public class OFargosGlobalNPC : GlobalNPC {
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => entity.ModNPC?.Mod is Fargowiltas.Fargowiltas;
 		public override void ModifyShop(NPCShop shop) {
+			if (shop.NpcType == NPCID.Dryad && shop.TryGetEntry(ItemID.StrangePlant4, out NPCShop.Entry plant)) {
+				shop.InsertAfter(plant, new(TileItem.Get<Stardust_Strange_Plant>().Type) { shopCustomPrice = Item.buyPrice(gold: 30) }, Condition.Hardmode);
+			}
 			if (shop.NpcType == ModContent.NPCType<LumberJack>() && shop.TryGetEntry(ItemID.Shadewood, out NPCShop.Entry shadewood)) {
 				shop.InsertAfter(shadewood, new(ModContent.ItemType<Endowood_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) });
 				shop.InsertAfter(shadewood, new(ModContent.ItemType<Marrowick_Item>()) { shopCustomPrice = Item.buyPrice(copper: 15) });
