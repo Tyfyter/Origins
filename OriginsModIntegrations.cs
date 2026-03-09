@@ -609,6 +609,9 @@ namespace Origins {
 				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Conehead_Zombie>());
 				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Graveshield_Zombie>());
 				instance.thorium.Call("AddZombieRepellentNPCID", NPCType<Buckethead_Zombie>());
+				foreach (Gas_Mask_Zombie zombie in Origins.instance.GetContent<Gas_Mask_Zombie>()) {
+					instance.thorium.Call("AddZombieRepellentNPCID", zombie.Type);
+				}
 				instance.thorium.Call("AddSkeletonRepellentNPCID", NPCType<Cellarkeep>());
 				instance.thorium.Call("AddSkeletonRepellentNPCID", NPCType<Catacomb_Clearer>());
 				instance.thorium.Call("AddFishRepellentNPCID", NPCType<Bottomfeeder>());
