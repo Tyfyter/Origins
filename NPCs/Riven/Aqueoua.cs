@@ -1,9 +1,12 @@
 ﻿using Origins.Gores.NPCs;
+using Origins.Items.Armor.Riven;
+using Origins.Items.Materials;
+using Origins.Items.Other.Consumables.Food;
 using Origins.World.BiomeData;
-using PegasusLib;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -50,6 +53,13 @@ namespace Origins.NPCs.Riven {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Jam_Sandwich>(), 16));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Mask>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Coat>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 525));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
