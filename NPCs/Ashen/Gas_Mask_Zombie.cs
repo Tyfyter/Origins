@@ -1,4 +1,5 @@
 ﻿using AltLibrary.Common.Systems;
+using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.LootConditions;
@@ -7,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -16,7 +18,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.Ashen {
 	[Autoload(false)]
-	public class Gas_Mask_Zombie(Gas_Mask_Variants variant, float scale = 1f) : ModNPC, IWikiNPC, IAshenEnemy {
+	public class Gas_Mask_Zombie(Gas_Mask_Variants variant, float scale = 1f) : ModNPC, IWikiNPC, IAshenEnemy, IReplaceAITypeSounds {
 		public override string Name => $"{base.Name}{variant.VariantName}{scale}";
 		public override string Texture => typeof(Gas_Mask_Zombie).GetDefaultTMLName() + variant.VariantName;
 		public override LocalizedText DisplayName => Mod.GetLocalization($"{LocalizationCategory}.{base.Name}.{nameof(DisplayName)}");
@@ -110,6 +112,11 @@ namespace Origins.NPCs.Ashen {
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, 5);
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 34f), NPC.velocity, 5);
 			}
+		}
+
+		public bool PlaySound() {
+			if (Main.rand.NextBool(1000)) SoundEngine.PlaySound(Origins.Sounds.MaskedZombieAmbient, NPC.Center);
+			return true;
 		}
 	}
 	public abstract class Gas_Mask_Variants : ILoadable {
