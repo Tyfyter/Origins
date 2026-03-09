@@ -46,6 +46,24 @@ public abstract class LootPool : ModType {
 		}
 	}
 	public int sequenceIndex = 0;
+	public void Resolve(Item[] chest, DropAttemptInfo info, bool selectRandomly = false) {
+		using Origins.ItemDropHandler _ = new((info, item, stack, _) => {
+			for (int i = 0; i < chest.Length; i++) {
+				switch (chest[i]?.IsAir) {
+					case false:
+					continue;
+					case null:
+					chest[i] = new();
+					break;
+				}
+				chest[i].SetDefaults(item);
+				chest[i].stack = stack;
+				chest[i].Prefix(-1);
+				break;
+			}
+		});
+		Resolve(info, selectRandomly);
+	}
 	public void Resolve(DropAttemptInfo info, bool selectRandomly = false) {
 		if (Sequential) {
 			IItemDropRule rule;

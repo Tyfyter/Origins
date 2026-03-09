@@ -298,22 +298,7 @@ namespace Origins.Core.Structures {
 			TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
 			if (parameters.Length <= 2) return;
 			if (Main.chest.GetIfInRange(Chest.FindChest(left, top)) is not Chest chest || !ModContent.TryFind(parameters[2], out LootPool pool)) return;
-			using Origins.ItemDropHandler _ = new((info, item, stack, _) => {
-				for (int i = 0; i < chest.item.Length; i++) {
-					switch (chest.item[i]?.IsAir) {
-						case false:
-						continue;
-						case null:
-						chest.item[i] = new();
-						break;
-					}
-					chest.item[i].SetDefaults(item);
-					chest.item[i].stack = stack;
-					chest.item[i].Prefix(-1);
-					break;
-				}
-			});
-			pool.Resolve(new DropAttemptInfo() {
+			pool.Resolve(chest.item, new DropAttemptInfo() {
 				player = new() { luck = (float)Main.starGameMath() - 1 },
 				rng = WorldGen.genRand,
 				IsExpertMode = Main.expertMode,
