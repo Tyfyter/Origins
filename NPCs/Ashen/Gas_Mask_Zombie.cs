@@ -2,6 +2,7 @@
 using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Accessories;
+using Origins.Items.Other.Consumables.Food;
 using Origins.LootConditions;
 using Origins.World.BiomeData;
 using System;
@@ -99,6 +100,7 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Amber, 20));
+			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
 			npcLoot.Add(new CommonDrop(ItemType<Gas_Mask>(), 50));
 			npcLoot.Add(new CopyNPCDropRule(variant.VanillaVariant));
 		}
