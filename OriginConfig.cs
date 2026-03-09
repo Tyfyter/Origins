@@ -657,7 +657,7 @@ namespace Origins {
 				}
 			}
 		}
-		static void SearchLootForObtainability(List<DropRateInfo> dropInfoList, IEnumerable<IItemDropRule> rules) {
+		internal static void SearchLootForObtainability(List<DropRateInfo> dropInfoList, IEnumerable<IItemDropRule> rules) {
 			DropRateInfoChainFeed ratesInfo = new(1f);
 			foreach (IItemDropRule rule in rules) {
 				rule.ReportDroprates(dropInfoList, ratesInfo);

@@ -16,16 +16,18 @@ using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Tiles;
 using Origins.Tiles.Ashen;
+using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Core;
-public abstract class LootPool : ModType {
+public abstract class LootPool : ModType, IItemObtainabilityProvider {
 	protected string GetNestHierarchy() {
 		Type type = GetType();
 		string nests = "";
@@ -76,6 +78,12 @@ public abstract class LootPool : ModType {
 		if (OriginSystem.HasSetupAllContent) throw new InvalidOperationException($"{nameof(AddRule)} can only be called during content setup");
 		rules.Add(rule);
 	}
+
+	public IEnumerable<int> ProvideItemObtainability() {
+		List<DropRateInfo> list = [];
+		DebugConfig.SearchLootForObtainability(list, rules);
+		return list.Select(rate => rate.itemId);
+	}
 }
 public class Example_Chest : LootPool {
 	public class Rare : LootPool {
@@ -90,6 +98,12 @@ public class Example_Chest : LootPool {
 		AddRule(new DropLootPoolRule<Rare>());
 		AddRule(ItemDropRule.Common(ItemID.Pigronata, 1, 69, 420));
 		AddRule(ItemDropRule.Common(ItemID.ThrowingKnife, 2, 13, 17));
+	}
+}
+public class Dirt_Chest : LootPool {
+	public override void SetStaticDefaults() {
+		AddRule(ItemDropRule.Common(ItemID.DirtBlock, 100, 69, 420)
+			.WithOnFailedRoll(ItemDropRule.Common(ItemID.DirtiestBlock, 2000)));
 	}
 }
 public class Ashen_Generic : LootPool {
