@@ -114,11 +114,12 @@ Trenchmaker: The oldest man-made machination still manufactured by the Ashen Fac
 Fearmaker: "'Putting the fear in everyone since 1XXX'"
 Fearmaker_Alt: "'Fish fear me, robots love me'"
 Repairboy: Named after the mechanics and electricians responsible for repairs in the Mechanicus. They didn’t fully replace them until one day they just did…
-Gas_Mask_Zombie11: He woke up one night in the Scrapyard wondering how he got there, but he hasn’t had time to ponder being too busy making mud angels in the murky mud.
-Gas_Mask_Zombie21: "{$Gas_Mask_Zombie11}"
-Gas_Mask_Zombie31: "{$Gas_Mask_Zombie11}"
-Gas_Mask_Zombie41: "{$Gas_Mask_Zombie11}"
-Gas_Mask_Zombie51: "{$Gas_Mask_Zombie11}"
-Gas_Mask_Zombie61: She woke up one night in the Scrapyard wondering how she got there, but she hasn’t had time to ponder being too busy making mud angels in the murky mud.
-Gas_Mask_Zombie71: Remarkably, her dress uniform is still in mint condition despite exposure to the elements. As to why there is a zombified nurse wearing a gas mask runnng about is anyone's guess.
-Gas_Mask_Zombie81: The poor soul just needed to get through the Scrapyard to get to the next town, but they got lost and ended up in the middle of the Ashen. They’ve been trying to find their way out ever since.
+Gas_Mask_Zombie1: He woke up one night in the Scrapyard wondering how he got there, but he hasn’t had time to ponder being too busy making mud angels in the murky mud.
+Gas_Mask_ZombieBald1: "{$Gas_Mask_Zombie1}"
+Gas_Mask_ZombiePincushion1: "{$Gas_Mask_Zombie1}"
+Gas_Mask_ZombieSwamp1: "{$Gas_Mask_Zombie1}"
+Gas_Mask_ZombieTwiggy1: "{$Gas_Mask_Zombie1}"
+Gas_Mask_ZombieFemale1: She woke up one night in the Scrapyard wondering how she got there, but she hasn’t had time to ponder being too busy making mud angels in the murky mud.
+Gas_Mask_ZombieTorch1: The poor soul just needed to get through the Scrapyard to get to the next town, but they got lost and ended up in the middle of the Ashen. They’ve been trying to find their way out ever since.
+Gas_Mask_ZombieDoctor1: Remarkably, her dress uniform is still in mint condition despite exposure to the elements. As to why there is a zombified nurse wearing a gas mask runnng about is anyone's guess.
+Hammerhand: A faithful application of the Mechanicus Sovereignty’s approach to efficiency in making all of its machines combat and utility-focused. The Hammerhand can knock anybody’s lights out at only 20% of its maximum force exertion.

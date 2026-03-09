@@ -27,7 +27,7 @@ namespace Origins.NPCs.Ashen {
 		bool IAshenEnemy.IsRobotic => false;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[variant.VanillaVariant];
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft; // uncomment this line and comment the line underneath this line to check the stats of all variants
 			//NPCID.Sets.NPCBestiaryDrawOffset[Type] = scale == 1f ? NPCID.Sets.NPCBestiaryDrawOffset[variant.VanillaVariant] : NPCExtensions.HideInBestiary;
 			/*NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			OriginsSets.NPCs.CustomExpertScaling[Type] = npc => {
@@ -84,8 +84,11 @@ namespace Origins.NPCs.Ashen {
 			return PortionedSpawnRate(spawnInfo) * 0.08f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			IBestiaryInfoElement text = Gas_Mask_Variants.variants[0].zomb.GetBestiaryFlavorText();
+			if (!variant.VariantName.Contains("Armed")) text = variant.zomb.GetBestiaryFlavorText();
+
 			bestiaryEntry.AddTags(
-				variant.zomb.GetBestiaryFlavorText(),
+				text,
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime
 			);
 		}
@@ -113,7 +116,7 @@ namespace Origins.NPCs.Ashen {
 		public virtual string VariantName => GetType().Name["Variant".Length..];
 		public virtual int VanillaVariant => NPCID.Zombie;
 		public virtual bool HasScaledVariants => true;
-		private static readonly List<Gas_Mask_Variants> variants = [];
+		public static readonly List<Gas_Mask_Variants> variants = [];
 		public Gas_Mask_Zombie zomb;
 		public virtual bool CanSpawn(NPCSpawnInfo spawnInfo) => true;
 		public static float TotalSpawnWeight(NPCSpawnInfo spawnInfo) => variants.Count(v => v.CanSpawn(spawnInfo)) * 3;
@@ -128,35 +131,35 @@ namespace Origins.NPCs.Ashen {
 		}
 
 		public void Unload() { }
-		public class Variant1 : Gas_Mask_Variants { }
-		public class Variant2 : Gas_Mask_Variants {
+		public class Variant : Gas_Mask_Variants { }
+		public class VariantBald : Gas_Mask_Variants {
 			public override int VanillaVariant => NPCID.BaldZombie;
 		}
-		public class Variant3 : Gas_Mask_Variants {
+		public class VariantPincushion : Gas_Mask_Variants {
 			public override int VanillaVariant => NPCID.PincushionZombie;
 		}
-		public class Variant4 : Gas_Mask_Variants {
+		public class VariantSwamp : Gas_Mask_Variants {
 			public override int VanillaVariant => NPCID.SwampZombie;
 		}
-		public class Variant5 : Gas_Mask_Variants {
+		public class VariantTwiggy : Gas_Mask_Variants {
 			public override int VanillaVariant => NPCID.TwiggyZombie;
 		}
-		public class Variant6 : Gas_Mask_Variants {
+		public class VariantFemale : Gas_Mask_Variants {
 			public override int VanillaVariant => NPCID.FemaleZombie;
 		}
-		public class Variant7 : Gas_Mask_Variants {
-			public override int VanillaVariant => NPCID.ZombieDoctor;
-			public override bool HasScaledVariants => false;
-			public override bool CanSpawn(NPCSpawnInfo spawnInfo) => Main.halloween;
-		}
-		public class Variant8 : Gas_Mask_Variants {
+		public class VariantTorch : Gas_Mask_Variants {
 			public override int VanillaVariant => NPCID.TorchZombie;
 			public override bool HasScaledVariants => false;
 		}
-		public class Variant9 : Gas_Mask_Variants {
+		public class VariantArmedTorch : Gas_Mask_Variants {
 			public override int VanillaVariant => NPCID.ArmedTorchZombie;
 			public override bool HasScaledVariants => false;
 			public override bool CanSpawn(NPCSpawnInfo spawnInfo) => Main.expertMode;
+		}
+		public class VariantDoctor : Gas_Mask_Variants {
+			public override int VanillaVariant => NPCID.ZombieDoctor;
+			public override bool HasScaledVariants => false;
+			public override bool CanSpawn(NPCSpawnInfo spawnInfo) => Main.halloween;
 		}
 	}
 }
