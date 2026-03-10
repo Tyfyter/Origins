@@ -92,15 +92,18 @@ namespace Origins.Projectiles {
 				if (Origins.ArtifactMinion[proj.type]) damage = damage.CombineWith(Main.player[proj.owner].OriginPlayer().artifactDamage);
 				return damage;
 			});
-			c.GotoNext(MoveType.Before,
+			c.GotoNext(MoveType.AfterLabel,
 				il => il.MatchLdarg0(),
 				il => il.MatchCall<Projectile>(nameof(Projectile.AI))
 			);
 			c.EmitLdarg0();
 			c.EmitDelegate((Projectile projectile) => {
+				if (projectile?.ModProjectile is ISkipInMinionIndex skip && skip.Skip/* skip to my lou*/) {
+					Main.player[projectile.owner].numMinions--;
+					return;
+				}
 				if (projectile.numUpdates == -1 && OriginsSets.Projectiles.UsesTypeSpecificMinionPos[projectile.type]) {
-					Player owner = Main.player[projectile.owner];
-					projectile.minionPos = owner.OriginPlayer().GetNewMinionIndexByType(projectile.type);
+					projectile.minionPos = Main.player[projectile.owner].OriginPlayer().GetNewMinionIndexByType(projectile.type);
 				}
 			});
 
@@ -263,5 +266,8 @@ namespace Origins.Projectiles {
 	}
 	public interface ISpecialOverCapacityMinion {
 		public void KillOverCapacity();
+	}
+	public interface ISkipInMinionIndex {
+		public bool Skip { get; }
 	}
 }

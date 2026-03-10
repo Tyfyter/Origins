@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
 using Origins.Buffs;
 using Origins.Items.Weapons.Summoner;
@@ -58,7 +59,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		protected override void SetBuffFlag(Player player) => player.OriginPlayer().matryoshkaDoll = true;
 	}
 	[ReinitializeDuringResizeArrays]
-	public class Matryoshka_Doll_Minion : MinionBase, IArtifactMinion {
+	public class Matryoshka_Doll_Minion : MinionBase, IArtifactMinion, ISkipInMinionIndex {
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
 		public static int ID { get; private set; }
@@ -73,6 +74,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			);
 			return true;
 		}
+		public override Rectangle RestRegion => base.RestRegion.Modified(-8, 16, 16, -16);
+		bool ISkipInMinionIndex.Skip => Parent != -1;
 		public ref float Size => ref Projectile.ai[0];
 		public ref float Child => ref Projectile.ai[1];
 		public ref float Parent => ref Projectile.ai[2];
@@ -89,11 +92,19 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
 			ID = Type;
 		}
-
+		Vector2 HitboxSize => Size switch {
+			0 => new(8, 12),
+			1 => new(10, 14),
+			2 => new(14, 16),
+			3 => new(18, 22),
+			4 => new(22, 30),
+			5 => new(24, 36),
+			_ => new(28, 42),
+		};
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
-			Projectile.width = 14;
-			Projectile.height = 14;
+			Projectile.width = 0;
+			Projectile.height = 0;
 			Projectile.tileCollide = true;
 			Projectile.friendly = true;
 			Projectile.minion = true;
@@ -104,16 +115,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.manualDirectionChange = true;
 			Projectile.netImportant = true;
 			MaxLife = 25;
-		}
-		public override Rectangle RestRegion {
-			get {
-				Player player = Main.player[Projectile.owner];
-				Rectangle box = player.Hitbox.Add(Vector2.UnitX * player.direction * -48);
-				box.Inflate(16, 0);
-				box.Y += 24;
-				box.Height -= 24;
-				return box;
-			}
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Child = -1;
@@ -149,8 +150,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.hide = false;
 			Projectile.velocity *= 0.97f;
 			base.BasicAI();
-			Projectile.velocity.Y += 0.2f;
 			Projectile.rotation = Projectile.direction * Projectile.velocity.Y * -0.1f;
+			Projectile.velocity.Y += 0.2f;
 		}
 		public override void MoveTowardsTarget() {
 			bool foundTarget = targetingData.TargetID != -1;
@@ -191,12 +192,24 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public void OnHurt(int damage, bool fromDoT) {
 			SoundEngine.PlaySound(SoundID.NPCHit3.WithPitch(1f).WithVolume(0.25f), Projectile.Center);
 		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			(width, height) = HitboxSize.ToPoint();
+			hitboxCenterFrac = new(0.5f, 1f);
+			return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
+		}
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			if (Parent == -1) {
+				(hitbox.Width, hitbox.Height) = HitboxSize.ToPoint();
+				hitbox.X -= hitbox.Width / 2;
+				hitbox.Y -= hitbox.Height;
+			} else hitbox = default;
+		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
 			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Type], frameY: Math.Min((int)Size, Main.projFrames[Type]));
 			Main.EntitySpriteDraw(
 				texture,
-				Projectile.Bottom - Main.screenPosition,
+				Projectile.Bottom + Vector2.UnitY * 2 - Main.screenPosition,
 				frame,
 				lightColor,
 				Projectile.rotation,

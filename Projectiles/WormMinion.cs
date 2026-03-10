@@ -87,7 +87,7 @@ namespace Origins.Projectiles {
 		public virtual Rectangle RestRegion {
 			get {
 				Player player = Main.player[Projectile.owner];
-				return player.Hitbox.Add(Vector2.UnitX * player.direction * -48);
+				return player.Hitbox.Add(Vector2.UnitX * player.direction * -48 * (Projectile.minionPos + 1));
 			}
 		}
 		public virtual float MaxPriorityRange => 1000;
