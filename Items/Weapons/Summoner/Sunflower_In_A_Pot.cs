@@ -8,6 +8,7 @@ using Origins.Projectiles;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -69,6 +70,9 @@ namespace Origins.Buffs {
 namespace Origins.Items.Weapons.Summoner.Minions {
 	[LegacyName("Sunny_Sunflower")]
 	public class Sunflower_Sunny : MinionSpeedModifierProjectile, IArtifactMinion {
+		public virtual bool DiesHorriblyInLava => true;
+		public virtual int ProjectileType => ModContent.ProjectileType<Sunflower_Sunny_P>();
+		public virtual int ProjectileTime => 9;
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
 		public static int ID { get; private set; }
@@ -96,9 +100,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Main.projPet[Type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
-			ID = Type;
+			if (GetType().GetProperty(nameof(ID), BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly)?.SetMethod is MethodInfo method) method.Invoke(null, [Type]);
 
 			if (Main.dedServ) return;
+			if (GetType() != typeof(Sunflower_Sunny)) return;
 			AddBrothVisuals<Spicy_Broth>("Firey", dustType: DustID.GoldFlame);
 			AddBrothVisuals<Greasy_Broth>("Greasy", dustType: new(DustID.TintableDust, 175, new(0, 0, 0, 250), 1f, dust => {
 				if (Main.rand.NextBool(2)) dust.alpha += 25;
@@ -252,7 +257,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Vector2 diff = targetCenter - Projectile.Center;
 				Projectile.direction = Math.Sign(diff.X);
 				if (bestTargetIsVisible) {
-					if (Projectile.ai[1].CycleUp(9, SpeedModifier)) {
+					if (Projectile.ai[1].CycleUp(ProjectileTime, SpeedModifier)) {
 						SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1f).WithVolume(0.25f), Projectile.Center);
 						SoundEngine.PlaySound(SoundID.Item26.WithPitchRange(1.2f, 1.28f).WithVolume(0.1f), Projectile.Center);
 						SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.2f, 0.3f).WithVolume(0.2f), Projectile.Center);
@@ -260,7 +265,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 							Projectile.GetSource_FromAI(),
 							Projectile.position + HeadCenterOffset,
 							diff.SafeNormalize(default) * 16,
-							ModContent.ProjectileType<Sunflower_Sunny_P>(),
+							ProjectileType,
 							Projectile.damage,
 							Projectile.knockBack,
 							Projectile.owner
@@ -407,6 +412,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			textureAsset ??= TextureAssets.Projectile[Type];
 			Texture2D baseTexture = textureAsset.Value;
+			Main.instance.LoadProjectile(ProjectileID.DandelionSeed);
+			Texture2D wingTexture = TextureAssets.Projectile[ProjectileID.DandelionSeed].Value;
+			Draw(lightColor, baseTexture, glowTexture, wingTexture);
+			return false;
+		}
+		public void Draw(Color lightColor, Texture2D baseTexture, Asset<Texture2D> glowTexture, Texture2D wingTexture) {
 			Rectangle baseFrame = baseTexture.Frame(verticalFrames: Main.projFrames[Projectile.type], frameY: Projectile.frame);
 			SpriteEffects baseEffects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			Vector2 offset = Vector2.UnitY * 2;
@@ -415,8 +426,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			Vector2 gfxOffset = new(0, Projectile.gfxOffY);
 			if (Projectile.ai[2] == 1) {
-				Main.instance.LoadProjectile(ProjectileID.DandelionSeed);
-				Texture2D wingTexture = TextureAssets.Projectile[ProjectileID.DandelionSeed].Value;
 				for (int i = -1; i <= 1; i++) {
 					int frameNum = ((Projectile.frameCounter / 5) + i + 1) % 4;
 					Rectangle wingFrame = wingTexture.Frame(horizontalFrames: 4, frameX: frameNum);
@@ -457,7 +466,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				data.color = Color.White;
 				Main.EntitySpriteDraw(data);
 			}
-			return false;
 		}
 	}
 	[LegacyName("Sunny_Sunflower_P")]

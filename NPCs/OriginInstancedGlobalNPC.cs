@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Summoner.Minions;
 using Origins.NPCs.Ashen;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Weapons;
@@ -81,6 +82,10 @@ namespace Origins.NPCs {
 		public bool amnesticRose = false;
 		public int amnesticRoseGooProj = 0;
 		public bool tetanus = false;
+		/// <summary>
+		/// Do not sync
+		/// </summary>
+		public int vampireFireflowerTime = 0;
 		public override void ResetEffects(NPC npc) {
 			autoReset(this);
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
@@ -149,6 +154,10 @@ namespace Origins.NPCs {
 			lazyCloakShimmer = false;
 			amnesticRose = false;
 			tetanus = false;
+			if (vampireFireflowerTime > 0) {
+				vampireFireflowerTime--;
+				Vampire_Fireflower.UpdateDOTLifesteal();
+			}
 		}
 		public override void DrawEffects(NPC npc, ref Color drawColor) {
 			if (priorityMailTime > 0) {

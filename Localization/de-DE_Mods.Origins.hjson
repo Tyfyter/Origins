@@ -1506,6 +1506,11 @@ Buffs: {
 		// DisplayName: Matryoshka Doll Buff
 		// Description: Mods.Origins.Buffs.Matryoshka_Doll_Buff.Description
 	}
+
+	Vampire_Sunflower_Buff: {
+		// DisplayName: Vampire Sunflower Buff
+		// Description: Mods.Origins.Buffs.Vampire_Sunflower_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -2263,6 +2268,8 @@ Projectiles: {
 	// Vampire_Grenade_Heal.DisplayName: Vampire Grenade Heal
 	// Repairboy_P.DisplayName: Repairboy
 	// Matryoshka_Doll_Minion.DisplayName: Matryoshka Doll Minion
+	// Vampire_Fireflower.DisplayName: Vampire Fireflower
+	// Vampire_Sunflower_P.DisplayName: Vampire Sunflower P
 }
 
 Prefixes: {
