@@ -9,7 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Strange_Computer : ModItem, ICustomWikiStat {
+	public class Strange_Computer : ModItem, ICustomWikiStat, IExpectToBeUnobtainable {
 		internal static bool drawingStrangeLine = false;
 		internal static List<int> projectiles = [];
 		public string[] Categories => [

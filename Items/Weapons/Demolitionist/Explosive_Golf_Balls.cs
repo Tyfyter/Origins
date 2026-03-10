@@ -164,7 +164,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 	}
-	public class Remote_Golf_Ball : ModItem {
+	public class Remote_Golf_Ball : ModItem, IExpectToBeUnobtainable {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.GolfBallDyedBlack;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GolfBallDyedBlack);

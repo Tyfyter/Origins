@@ -389,7 +389,7 @@ namespace Origins.Items.Materials {
 		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this, new(0, 148, 148));
+			if (this is not IExpectToBeUnobtainable) tileID = Bar_Tile.AddBarTile(this, new(0, 148, 148));
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

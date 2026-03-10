@@ -53,7 +53,7 @@ namespace Origins.Walls {
 			biome.AddWallConversions(type, WallType<Chambersite_Stone_Wall>());
 		}
 	}
-	public class Chambersite_Stone_Wall_Item : ModItem {
+	public class Chambersite_Stone_Wall_Item : ModItem, IExpectToBeUnobtainable {
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableWall((ushort)WallType<Chambersite_Stone_Wall>());
 		}

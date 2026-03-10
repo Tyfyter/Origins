@@ -12,7 +12,7 @@ using static Microsoft.Xna.Framework.MathHelper;
 using Origins.Dev;
 using PegasusLib;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Black_Hole_Bomb : ModItem, ICustomWikiStat {
+	public class Black_Hole_Bomb : ModItem, ICustomWikiStat, IExpectToBeUnobtainable {
         public string[] Categories => [
             "ThrownExplosive",
 			"IsBomb",

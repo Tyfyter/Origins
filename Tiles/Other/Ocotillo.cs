@@ -16,7 +16,7 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Other {
-	public class Ocotillo : ModTile {
+	public class Ocotillo : ModTile, IItemObtainabilityProvider {
 		public static int ID { get; private set; }
 		internal static TileObjectData data;
 		public override void Unload() => data = null;
@@ -44,6 +44,11 @@ namespace Origins.Tiles.Other {
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {
 			if (Framing.GetTileSafely(i, j).TileFrameX >= 18 * 3 * 4) yield return new Item(ModContent.ItemType<Ocotillo_Flower>(), 1, -1);
 			if (Main.rand.NextBool(5)) yield return new Item(ModContent.ItemType<Ocotillo_Finger>(), 1, -1);
+		}
+
+		IEnumerable<int> IItemObtainabilityProvider.ProvideItemObtainability() {
+			yield return ModContent.ItemType<Ocotillo_Flower>();
+			yield return ModContent.ItemType<Ocotillo_Finger>();
 		}
 	}
 	public class Ocotillo_Item : TestingItem {

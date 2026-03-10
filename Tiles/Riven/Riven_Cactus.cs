@@ -44,7 +44,7 @@ namespace Origins.Tiles.Riven {
 		public override Asset<Texture2D> GetFruitTexture() => ModContent.Request<Texture2D>(typeof(Riven_Cactus).GetDefaultTMLName() + "_Fruit");
 		public bool ShouldHavePage => false;
 	}
-	public class Riven_Cactus_Item : ModItem, ICustomWikiStat, INoSeperateWikiPage {
+	public class Riven_Cactus_Item : ModItem, ICustomWikiStat, INoSeperateWikiPage, IExpectToBeUnobtainable {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 		}

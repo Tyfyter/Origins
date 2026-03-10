@@ -1,5 +1,7 @@
 ﻿using Origins.Dev;
+using Origins.Items.Weapons.Ranged;
 using Origins.Layers;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -32,6 +34,12 @@ namespace Origins.Items.Accessories {
 			originPlayer.gunGlove = true;
 			originPlayer.gunGloveItem = Item;
 		}
+		public override void AddRecipes() => CreateRecipe()
+			.AddIngredient<Gun_Glove>()
+			.AddIngredient<Shotty_x3>()
+			.AddIngredient(ItemID.SoulofFright, 5)
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		public override bool RangedPrefix() => false;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			for (int i = 3; i-- > 0;) {

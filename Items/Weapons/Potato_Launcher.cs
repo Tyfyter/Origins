@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons {
-	public class Potato_Launcher : ModItem {
+	public class Potato_Launcher : ModItem, IExpectToBeUnobtainable {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FlintlockPistol);
 			Item.damage = 17;

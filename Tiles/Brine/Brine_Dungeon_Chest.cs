@@ -7,9 +7,10 @@ using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Melee;
+using System.Collections.Generic;
 
 namespace Origins.Tiles.Brine {
-	public class Brine_Dungeon_Chest : ModChest {
+	public class Brine_Dungeon_Chest : ModChest, IItemObtainabilityProvider {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			AddMapEntry(new Color(15, 86, 88), CreateMapEntryName(), MapChestName);
@@ -26,6 +27,8 @@ namespace Origins.Tiles.Brine {
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 		public override bool CanUnlockChest(int i, int j) => NPC.downedPlantBoss;
+
+		IEnumerable<int> IItemObtainabilityProvider.ProvideItemObtainability() => [ModContent.ItemType<The_Foot>()];
 	}
 	public class Brine_Dungeon_Chest_Item : ModItem {
 		public override void SetStaticDefaults() {

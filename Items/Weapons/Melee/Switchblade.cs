@@ -56,7 +56,7 @@ namespace Origins.Items.Weapons.Melee {
 			.Register();
 		}
 		public IEnumerable<int> ProvideItemObtainability() {
-			yield return ModContent.ItemType<Pincushion_Inactive>();
+			yield return ModContent.ItemType<Switchblade_Shortsword>();
 		}
 	}
 	public class Switchblade_Shortsword : ModItem, ICustomWikiStat, INoSeperateWikiPage {

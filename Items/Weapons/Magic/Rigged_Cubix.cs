@@ -11,7 +11,7 @@ using Tyfyter.Utils;
 using Origins.Dev;
 using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
-    public class Rigged_Cubix : ModItem, ICustomWikiStat {
+    public class Rigged_Cubix : ModItem, ICustomWikiStat, IExpectToBeUnobtainable {
 		static short glowmask;
         public string[] Categories => [
             "MagicGun"

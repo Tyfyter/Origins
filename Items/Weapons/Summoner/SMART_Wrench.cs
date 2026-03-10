@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Summoner {
 	/// <summary>
 	/// TODO: implement
 	/// </summary>
-	public class SMART_Wrench : ModItem, ICustomWikiStat {
+	public class SMART_Wrench : ModItem, ICustomWikiStat, IExpectToBeUnobtainable {
         public override void SetDefaults() {
 			return;
 			Item.damage = 11;

@@ -17,7 +17,8 @@ namespace Origins.Items.Tools {
 		public override void AddRecipes() {
 			CreateRecipe()
 				.AddIngredient<Chambersite_Item>(15)
-				.AddTile(TileID.MythrilAnvil);
+				.AddTile(TileID.MythrilAnvil)
+				.Register();
 		}
 	}
 	public class Chambersite_Hook_P : ModProjectile {
