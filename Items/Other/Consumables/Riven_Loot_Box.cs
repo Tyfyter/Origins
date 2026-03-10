@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-	public class Riven_Loot_Box : ModItem {
+	public class Riven_Loot_Box : ModItem, IExpectToBeUnobtainable {
         public string[] Categories => [
             "GrabBag"
         ];

@@ -436,7 +436,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 	}
 	// joke variation
-	public class Shimmershotgun : Shimmershot {
+	public class Shimmershotgun : Shimmershot, IExpectToBeUnobtainable {
 		public override string Texture => typeof(Shimmershot).GetDefaultTMLName();
 		public override void AddRecipes() { }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {

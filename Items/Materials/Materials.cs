@@ -375,12 +375,12 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Fibron_Plating : MaterialItem {
+	public class Fibron_Plating : MaterialItem, IExpectToBeUnobtainable {
 		public override int Value => Item.sellPrice(silver: 68);
 		public override int Rare => ButterscotchRarity.ID;
 		public override bool Hardmode => true;
 	}
-	public class Formium_Bar : MaterialItem, ICustomWikiStat {
+	public class Formium_Bar : MaterialItem, ICustomWikiStat, IExpectToBeUnobtainable {
 		string[] ICustomWikiStat.Categories => [
 			"Bar",
 		];
@@ -398,7 +398,7 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Formium_Scrap : MaterialItem {
+	public class Formium_Scrap : MaterialItem, IExpectToBeUnobtainable {
 		public override int Value => Item.sellPrice(silver: 10);
 		public override int Rare => ItemRarityID.Purple;
 		public override bool Hardmode => true;

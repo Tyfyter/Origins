@@ -1,0 +1,24 @@
+
+Ace_Shrapnel_Old
+Black_Hole_Bomb
+Brine_Cheese
+Chambersite_Hook
+Chambersite_Stone_Wall_Item
+Extremophile_Breastplate
+Extremophile_Greaves
+Extremophile_Helmet
+Formium_Bar
+Obtainable, but marked as unobtainable:
+Ocotillo_Flower
+Potato_Launcher
+Remote_Golf_Ball
+Riven_Cactus_Item
+Scrap_Compactor
+Shotgun_Glove
+SMART_Wrench
+Strange_Computer
+Switchblade_Shortsword
+The_Foot
+Wet_Wood
+Willy_Aftershave
+World_Cracker_Mask2

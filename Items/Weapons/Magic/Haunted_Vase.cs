@@ -12,7 +12,7 @@ using Tyfyter.Utils;
 using Origins.Dev;
 using PegasusLib;
 namespace Origins.Items.Weapons.Magic {
-	public class Haunted_Vase : ModItem, ICustomWikiStat {
+	public class Haunted_Vase : ModItem, ICustomWikiStat, IExpectToBeUnobtainable {
 		static short glowmask;
         public string[] Categories => [
             "OtherMagic"

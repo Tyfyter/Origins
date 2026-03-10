@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Flakjack : ModItem, ICustomDrawItem, ICustomWikiStat {
+    public class Flakjack : ModItem, ICustomDrawItem, ICustomWikiStat, IExpectToBeUnobtainable {
         public string[] Categories => [
             "Handcannon"
         ];

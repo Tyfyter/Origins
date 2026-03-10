@@ -29,7 +29,7 @@ using Terraria.ModLoader.IO;
 using static Origins.OriginExtensions;
 
 namespace Origins {
-	public partial class OriginPlayer : ModPlayer {
+	public partial class OriginPlayer : ModPlayer, IItemObtainabilityProvider {
 		public static Dictionary<Guid, int> playersByGuid;
 		public const float explosive_defense_factor = 2f;
 		public static OriginPlayer LocalOriginPlayer { get; internal set; }
@@ -884,6 +884,7 @@ namespace Origins {
 		public override IEnumerable<Item> AddStartingItems(bool mediumCoreDeath) {
 			if (Gelatin_Bloom_Brooch.GetNameIndex(Player.name) != -1) yield return new(ModContent.ItemType<Gelatin_Bloom_Brooch>());
 		}
+		IEnumerable<int> IItemObtainabilityProvider.ProvideItemObtainability() => [ModContent.ItemType<Gelatin_Bloom_Brooch>()];
 		public void InflictAssimilation<TAssimilation>(float assimilationAmount) where TAssimilation : AssimilationDebuff => InflictAssimilation((ushort)ModContent.GetInstance<TAssimilation>().AssimilationType, assimilationAmount);
 		public void InflictAssimilation(ushort assimilationType, float assimilationAmount) {
 			GetAssimilation(assimilationType).Percent += assimilationAmount;

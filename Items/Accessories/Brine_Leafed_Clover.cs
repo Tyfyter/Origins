@@ -37,7 +37,7 @@ namespace Origins.Items.Accessories {
 			yield return NextLowerTier;
 		}
 	}
-	public class Brine_Leafed_Clover_0 : Brine_Leafed_Clover {
+	public class Brine_Leafed_Clover_0 : Brine_Leafed_Clover, IExpectToBeUnobtainable {
 		
 		public override int Level => 0;
 		public override int NextLowerTier => 0;

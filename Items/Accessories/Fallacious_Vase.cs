@@ -1,11 +1,12 @@
 ﻿using Origins.Dev;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
-	public class Fallacious_Vase : ModItem, ICustomWikiStat {
+	public class Fallacious_Vase : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
 		public string[] Categories => [
 			"Movement"
 		];
@@ -32,5 +33,7 @@ namespace Origins.Items.Accessories {
 			}
 			orig(i, j, x2, y2, style);
 		}
+
+		IEnumerable<int> IItemObtainabilityProvider.ProvideItemObtainability() => [Type];
 	}
 }

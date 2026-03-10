@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-	public class The_Defiled_Will : ModItem {
+	public class The_Defiled_Will : ModItem, IExpectToBeUnobtainable {
 		public const int max_uses = 1;
         public string[] Categories => [
             "PermaBoost"

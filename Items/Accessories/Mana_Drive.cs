@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Mana_Drive : ModItem {
+	public class Mana_Drive : ModItem, IExpectToBeUnobtainable {
 		static short glowmask;
         public string[] Categories => [
             "Vitality"

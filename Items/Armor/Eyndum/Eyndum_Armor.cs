@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Eyndum {
     [AutoloadEquip(EquipType.Head)]
-	public class Eyndum_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
+	public class Eyndum_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage, IExpectToBeUnobtainable {
         public string[] Categories => [
             "PostMLArmorSet",
             "MeleeBoostGear",
@@ -46,7 +46,7 @@ namespace Origins.Items.Armor.Eyndum {
 		public int LegsItemID => ModContent.ItemType<Eyndum_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Eyndum_Breastplate : ModItem, INoSeperateWikiPage {
+	public class Eyndum_Breastplate : ModItem, INoSeperateWikiPage, IExpectToBeUnobtainable {
 		public override void SetStaticDefaults() {
 			Origins.AddBreastplateGlowmask(this);
 		}
@@ -68,7 +68,7 @@ namespace Origins.Items.Armor.Eyndum {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Eyndum_Greaves : ModItem, INoSeperateWikiPage {
+	public class Eyndum_Greaves : ModItem, INoSeperateWikiPage, IExpectToBeUnobtainable {
 		public override void SetStaticDefaults() {
 			Origins.AddLeggingGlowMask(this);
 		}
