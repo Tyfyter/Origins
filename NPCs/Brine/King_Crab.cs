@@ -2,6 +2,7 @@
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
+using Origins.Items.Weapons.Summoner;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -59,6 +60,8 @@ namespace Origins.NPCs.Brine {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(new LeadingConditionRule(DropConditions.PlayerInteraction).WithOnSuccess(
 				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 6)
+			).WithOnSuccess(
+				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Old_Brine_Rock>(), 50)
 			).WithOnSuccess(
 				new LeadingConditionRule(new Conditions.IsHardmode()).WithOnSuccess(ItemDropRule.Food(ModContent.ItemType<Caeser_Salad>(), 40))
 			).WithOnSuccess(
