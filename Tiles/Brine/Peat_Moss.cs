@@ -25,6 +25,7 @@ namespace Origins.Tiles.Brine {
 			DustType = DustID.GrassBlades;
 		}
 		static void DoBoom(int i, int j) {
+			if (Main.gameMenu) return;
 			Projectile.NewProjectile(
 				WorldGen.GetItemSource_FromTileBreak(i, j),
 				new Vector2(i * 16 + 8, j * 16 + 8),

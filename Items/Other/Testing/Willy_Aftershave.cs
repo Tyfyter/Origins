@@ -2,10 +2,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Other.Testing
-{
-	public class Willy_Aftershave : ModItem
-	{
+namespace Origins.Items.Other.Testing {
+	public class Willy_Aftershave : ModItem, IExpectToBeUnobtainable {
 		public override void SetDefaults() {
 			Item.width = 40; // The item texture's width.
 			Item.height = 40; // The item texture's height.

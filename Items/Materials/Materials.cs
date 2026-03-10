@@ -367,18 +367,21 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Fibron_Plating : MaterialItem {
+	public class Fibron_Plating : MaterialItem, IExpectToBeUnobtainable {
 		public override int Value => Item.sellPrice(silver: 68);
 		public override int Rare => ButterscotchRarity.ID;
 		public override bool Hardmode => true;
 	}
-	public class Formium_Bar : MaterialItem {
+	public class Formium_Bar : MaterialItem, ICustomWikiStat, IExpectToBeUnobtainable {
+		string[] ICustomWikiStat.Categories => [
+			"Bar",
+		];
 		public override int Value => Item.sellPrice(silver: 68);
 		public override int Rare => ButterscotchRarity.ID;
 		public override bool Hardmode => true;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this, new(0, 148, 148));
+			if (this is not IExpectToBeUnobtainable) tileID = Bar_Tile.AddBarTile(this, new(0, 148, 148));
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -387,7 +390,7 @@ namespace Origins.Items.Materials {
 			.Register();
 		}
 	}
-	public class Formium_Scrap : MaterialItem {
+	public class Formium_Scrap : MaterialItem, IExpectToBeUnobtainable {
 		public override int Value => Item.sellPrice(silver: 10);
 		public override int Rare => ItemRarityID.Purple;
 		public override bool Hardmode => true;

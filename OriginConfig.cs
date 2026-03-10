@@ -4,6 +4,8 @@ using Newtonsoft.Json.Converters;
 using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Accessories;
+using Origins.Items.Materials;
+using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
@@ -666,115 +668,138 @@ namespace Origins {
 				}*/
 			}
 		}
+		public static List<string> GetUnobtainableItems(bool includeExpected = false) {
+			static bool ShouldBeUnobtainable(ModItem item) => ItemID.Sets.IsAPickup[item.Type] || ItemID.Sets.Deprecated[item.Type] || item is IExpectToBeUnobtainable;
+			HashSet<int> obtainableItems = [];
+			void AddObtainableItem(int type) {
+				if (ItemLoader.GetItem(type) is Formium_Bar) ;
+				obtainableItems.Add(type);
+			}
+			List<(int, List<int>)> recipeResultItems = [];
+			for (int i = 0; i < Main.recipe.Length; i++) {
+				Recipe recipe = Main.recipe[i];
+				List<int> requiredItems = recipe.requiredItem.Where(item => item.ModItem?.Mod is Origins).Select(item => item.type).ToList();
+				if (requiredItems.Count <= 0) {
+					AddObtainableItem(recipe.createItem.type);
+				} else {
+					recipeResultItems.Add((recipe.createItem.type, requiredItems));
+				}
+			}
+			List<DropRateInfo> dropInfoList = [];
+			SearchLootForObtainability(dropInfoList, ItemDropDatabaseMethods._entriesByNpcNetId.GetValue(Main.ItemDropsDB).Values
+				.Concat(ItemDropDatabaseMethods._entriesByItemId.GetValue(Main.ItemDropsDB).Values)
+				.SelectMany(l => l)
+				.Concat(ItemDropDatabaseMethods._globalEntries.GetValue(Main.ItemDropsDB))
+			);
+			for (int i = 0; i < dropInfoList.Count; i++) {
+				AddObtainableItem(dropInfoList[i].itemId);
+			}
+			foreach (var item in TileLoaderMethods.tileTypeAndTileStyleToItemType.GetValue()) {
+				AddObtainableItem(item.Value);
+			}
+			foreach (var item in TileLoaderMethods.tiles.GetValue().SelectMany(l => l.GetItemDrops(0, 0))) {
+				AddObtainableItem(item.type);
+			}
+			Dye_Item.dyeItems.ForEach(dye => AddObtainableItem(dye.Type));
+			foreach (NPC npc in ContentSamples.NpcsByNetId.Values) AddObtainableItem(npc.catchItem);
+
+			foreach (var item in TileLoaderMethods.wallTypeToItemType.GetValue()) {
+				AddObtainableItem(item.Value);
+			}
+			foreach (var wall in TileLoaderMethods.walls.GetValue()) {
+				int drop = -1;
+				wall.Drop(0, 0, ref drop);
+				if (drop != -1) {
+					AddObtainableItem(drop);
+				}
+			}
+
+			foreach (int itemType in Origins.instance.GetContent().SelectMany(c => c is IItemObtainabilityProvider provider ? provider.ProvideItemObtainability() : [])) {
+				AddObtainableItem(itemType);
+			}
+			foreach (NPCShop.Entry entry in NPCShopDatabase.AllShops.SelectMany(s => s is NPCShop shop ? shop.Entries : [])) {
+				AddObtainableItem(entry.Item.type);
+			}
+			for (int i = 0; i < ItemID.Sets.ShimmerTransformToItem.Length; i++) {
+				if (i != -1 && (i < ItemID.Count || obtainableItems.Contains(i))) {
+					AddObtainableItem(ItemID.Sets.ShimmerTransformToItem[i]);
+				}
+			}
+			int tries = 0;
+			while (recipeResultItems.Count > 0 && ++tries < 1000) {
+				for (int i = 0; i < ItemID.Sets.ShimmerTransformToItem.Length; i++) {
+					if (i != -1 && obtainableItems.Contains(i)) {
+						AddObtainableItem(ItemID.Sets.ShimmerTransformToItem[i]);
+					}
+				}
+				for (int i = recipeResultItems.Count; i-- > 0;) {
+					(int result, List<int> ingredients) = recipeResultItems[i];
+					if (obtainableItems.Contains(result)) {
+						recipeResultItems.RemoveAt(i);
+						continue;
+					}
+					for (int j = ingredients.Count; j-- > 0;) {
+						if (obtainableItems.Contains(ingredients[j])) {
+							ingredients.RemoveAt(j);
+						}
+					}
+					if (ingredients.Count <= 0) {
+						AddObtainableItem(result);
+					}
+					if (obtainableItems.Contains(result)) {
+						recipeResultItems.RemoveAt(i);
+					}
+				}
+			}
+			Dictionary<int, HashSet<int>> missingIngredients = [];
+			for (int i = recipeResultItems.Count; i-- > 0;) {
+				(int result, List<int> ingredients) = recipeResultItems[i];
+				if (!missingIngredients.TryGetValue(result, out HashSet<int> missing)) {
+					missingIngredients.Add(result, ingredients.ToHashSet());
+				} else {
+					foreach (int item in ingredients) {
+						missing.Add(item);
+					}
+				}
+			}
+			List<string> unobtainable = [];
+			foreach (ModItem item in Origins.instance.GetContent<ModItem>()) {
+				if (!includeExpected && ShouldBeUnobtainable(item)) continue; 
+				if (!obtainableItems.Contains(item.Type)) {
+					if (missingIngredients.TryGetValue(item.Type, out HashSet<int> missing)) {
+						unobtainable.Add($"{item.Name}: [{string.Join(", ", missing.Select(Lang.GetItemName))}]");
+					} else {
+						unobtainable.Add(item.Name);
+					}
+				}
+			}
+			unobtainable.Sort(new AssetPathComparer());
+			List<string> overobtainable = [];
+			if (!includeExpected) {
+				foreach (ModItem item in Origins.instance.GetContent<ModItem>()) {
+					if (!ShouldBeUnobtainable(item)) continue;
+					if (obtainableItems.Contains(item.Type)) {
+						if (missingIngredients.TryGetValue(item.Type, out HashSet<int> missing)) {
+							overobtainable.Add($"{item.Name}: [{string.Join(", ", missing.Select(Lang.GetItemName))}]");
+						} else {
+							overobtainable.Add(item.Name);
+						}
+					}
+				}
+				overobtainable.Sort(new AssetPathComparer());
+				if (overobtainable.Count > 0) {
+					overobtainable.Insert(0, "");
+					overobtainable.Insert(1, "Obtainable, but marked as unobtainable:");
+				}
+				unobtainable.AddRange(overobtainable);
+			}
+			return unobtainable;
+		}
 		public bool CheckItemObtainability {
 			get => default;
 			set {
 				if (value) {
-					List<string> unobtainable = [];
-					HashSet<int> obtainableItems = [];
-					List<(int, List<int>)> recipeResultItems = [];
-					for (int i = 0; i < Main.recipe.Length; i++) {
-						Recipe recipe = Main.recipe[i];
-						List<int> requiredItems = recipe.requiredItem.Where(item => item.ModItem?.Mod is Origins).Select(item => item.type).ToList();
-						if (requiredItems.Count <= 0) {
-							obtainableItems.Add(recipe.createItem.type);
-						} else {
-							recipeResultItems.Add((recipe.createItem.type, requiredItems));
-						}
-					}
-					List<DropRateInfo> dropInfoList = [];
-					SearchLootForObtainability(dropInfoList, ItemDropDatabaseMethods._entriesByNpcNetId.GetValue(Main.ItemDropsDB).Values
-						.Concat(ItemDropDatabaseMethods._entriesByItemId.GetValue(Main.ItemDropsDB).Values)
-						.SelectMany(l => l)
-						.Concat(ItemDropDatabaseMethods._globalEntries.GetValue(Main.ItemDropsDB))
-					);
-					for (int i = 0; i < dropInfoList.Count; i++) {
-						obtainableItems.Add(dropInfoList[i].itemId);
-					}
-					foreach (KeyValuePair<(int, int), int> item in TileLoaderMethods.tileTypeAndTileStyleToItemType.GetValue()) {
-						obtainableItems.Add(item.Value);
-					}
-					foreach (Item item in TileLoaderMethods.tiles.GetValue().SelectMany(l => l.GetItemDrops(0, 0))) {
-						obtainableItems.Add(item.type);
-					}
-
-					foreach (KeyValuePair<int, int> item in TileLoaderMethods.wallTypeToItemType.GetValue()) {
-						obtainableItems.Add(item.Value);
-					}
-					foreach (ModWall wall in TileLoaderMethods.walls.GetValue()) {
-						int drop = -1;
-						wall.Drop(0, 0, ref drop);
-						if (drop != -1) {
-							obtainableItems.Add(drop);
-						}
-					}
-
-					foreach (int itemType in Origins.instance.GetContent().SelectMany(c => c is IItemObtainabilityProvider provider ? provider.ProvideItemObtainability() : [])) {
-						obtainableItems.Add(itemType);
-					}
-					foreach (NPCShop.Entry entry in NPCShopDatabase.AllShops.SelectMany(s => s is NPCShop shop ? shop.Entries : [])) {
-						obtainableItems.Add(entry.Item.type);
-					}
-					for (int i = 0; i < ItemID.Sets.ShimmerTransformToItem.Length; i++) {
-						if (i != -1 && (i < ItemID.Count || obtainableItems.Contains(i))) {
-							obtainableItems.Add(ItemID.Sets.ShimmerTransformToItem[i]);
-						}
-					}
-					for (int i = 0; i < NPCID.Sets.ShimmerTransformToItem.Length; i++) {
-						if (i != -1 && (i < NPCID.Count || obtainableItems.Contains(i))) {
-							obtainableItems.Add(NPCID.Sets.ShimmerTransformToItem[i]);
-						}
-					}
-					foreach (ModNPC npc in Origins.instance.GetContent<ModNPC>()) {
-						if (npc.NPC.catchItem > 0) obtainableItems.Add(npc.NPC.catchItem);
-					}
-					int tries = 0;
-					while (recipeResultItems.Count > 0 && ++tries < 1000) {
-						for (int i = 0; i < ItemID.Sets.ShimmerTransformToItem.Length; i++) {
-							if (i != -1 && obtainableItems.Contains(i)) {
-								obtainableItems.Add(ItemID.Sets.ShimmerTransformToItem[i]);
-							}
-						}
-						for (int i = recipeResultItems.Count; i --> 0;) {
-							(int result, List<int> ingredients) = recipeResultItems[i];
-							if (obtainableItems.Contains(result)) {
-								recipeResultItems.RemoveAt(i);
-								continue;
-							}
-							for (int j = ingredients.Count; j --> 0;) {
-								if (obtainableItems.Contains(ingredients[j])) {
-									ingredients.RemoveAt(j);
-								}
-							}
-							if (ingredients.Count <= 0) {
-								obtainableItems.Add(result);
-							}
-							if (obtainableItems.Contains(result)) {
-								recipeResultItems.RemoveAt(i);
-							}
-						}
-					}
-					Dictionary<int, HashSet<int>> missingIngredients = [];
-					for (int i = recipeResultItems.Count; i-- > 0;) {
-						(int result, List<int> ingredients) = recipeResultItems[i];
-						if (!missingIngredients.TryGetValue(result, out HashSet<int> missing)) {
-							missingIngredients.Add(result, ingredients.ToHashSet());
-						} else {
-							foreach (int item in ingredients) {
-								missing.Add(item);
-							}
-						}
-					}
-					foreach (ILoadable content in Origins.instance.GetContent()) {
-						if (content is ModItem item && !obtainableItems.Contains(item.Type)) {
-							if (missingIngredients.TryGetValue(item.Type, out HashSet<int> missing)) {
-								unobtainable.Add($"{item.Name}: [{string.Join(", ", missing.Select(Lang.GetItemName))}]");
-							} else {
-								unobtainable.Add(item.Name);
-							}
-						}
-					}
-					unobtainable.Sort(new AssetPathComparer());
+					List<string> unobtainable = GetUnobtainableItems(Terraria.UI.ItemSlot.ShiftInUse);
 					for (int i = 0; i < unobtainable.Count - 1; i++) {
 						string[] a = unobtainable[i].Split('/');
 						string[] b = unobtainable[i + 1].Split('/');
@@ -786,9 +811,9 @@ namespace Origins {
 							}
 						}
 					}
-					Directory.CreateDirectory(ConfigManager.ModConfigPath);
-					string filename = nameof(Origins) + "_Unobtainable_Items.txt";
-					string path = Path.Combine(ConfigManager.ModConfigPath, filename);
+					string directory = Path.Combine(Program.SavePathShared, "ModSources", nameof(Origins));
+					Directory.CreateDirectory(directory);
+					string path = Path.Combine(directory, "Unobtainable_Items.txt");
 					WikiPageExporter.WriteFileNoUnneededRewrites(path, string.Join('\n', unobtainable));
 				}
 			}
@@ -851,4 +876,5 @@ namespace Origins {
 		[DefaultValue(1f), Range(0, 1)]
 		public float RivenAsimilationMultiplier = 1f;
 	}
+	public interface IExpectToBeUnobtainable { }
 }

@@ -1007,6 +1007,15 @@ namespace Origins {
 				}
 
 				RestartStopwatch();
+				List<string> unobtainable = DebugConfig.GetUnobtainableItems();
+				if (unobtainable.Count > 0) {
+					AddReason("Unobtainable items:");
+					unobtainable.ForEach(AddReason);
+				}
+				stopwatch.Stop();
+				instance.Logger.Info($"Finished querying unobtainable items in {stopwatch.Elapsed}");
+
+				RestartStopwatch();
 				foreach (LanguageTree branch in TextUtils.LanguageTree.Find("Mods.Origins").GetDescendants()) {
 					if (branch.TextValue.Contains("<PH>")) AddReason($"{branch.value.Key.Replace("Mods.Origins.", "")}: {branch.TextValue}");
 					WarnHang("placeholder text");

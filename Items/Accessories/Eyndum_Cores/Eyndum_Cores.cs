@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories.Eyndum_Cores {
-	public abstract class Eyndum_Core : ModItem {
+	public abstract class Eyndum_Core : ModItem, IExpectToBeUnobtainable {
 		public abstract Color CoreGlowColor { get; }
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(platinum: 1);

@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Accessories;
+using Origins.Items.Armor.Extremophile;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Weapons.Melee;
 using Origins.Journal;
@@ -110,6 +111,9 @@ namespace Origins.NPCs.TownNPCs {
 		}
 		public override void AddShops() {
 			new NPCShop(Type)
+			.Add<Extremophile_Helmet>()
+			.Add<Extremophile_Breastplate>()
+			.Add<Extremophile_Greaves>()
 			.Add<Plain_Broth>()
 			.Add<Hearty_Broth>()
 			.Add<Sour_Broth>()

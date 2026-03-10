@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 using Origins.Dev;
 
 namespace Origins.Items.Weapons {
-	public class Fragarach : ModItem, ICustomWikiStat {
+	public class Fragarach : ModItem, ICustomWikiStat, IExpectToBeUnobtainable {
 		static short glowmask;
         //public override bool OnlyShootOnSwing => true;
         public string[] Categories => [

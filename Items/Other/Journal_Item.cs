@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other {
-	public class Journal_Item : ModItem {
+	public class Journal_Item : ModItem, IExpectToBeUnobtainable {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FallenStar);
 			Item.ammo = AmmoID.None;

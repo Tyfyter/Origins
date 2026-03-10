@@ -8,8 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Testing {
-	public abstract class TestingItem : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
-		public IEnumerable<int> ProvideItemObtainability() => [Type];
+	public abstract class TestingItem : ModItem, ICustomWikiStat, IExpectToBeUnobtainable {
 		public bool ShouldHavePage => false;
 /*#if !DEBUG
 		public override bool IsLoadingEnabled(Mod mod) => DebugConfig.Instance.ForceEnableDebugItems;

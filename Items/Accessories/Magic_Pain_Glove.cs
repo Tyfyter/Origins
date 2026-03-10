@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
-	public class Magic_Pain_Glove : ModItem, ICustomWikiStat {
+	public class Magic_Pain_Glove : ModItem, ICustomWikiStat, IExpectToBeUnobtainable {
 		public string[] Categories => [
 			WikiCategories.Combat,
 			WikiCategories.MagicBoostAcc

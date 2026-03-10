@@ -8,6 +8,7 @@ using Origins.Gores.NPCs;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.LootBags;
+using Origins.Items.Pets;
 using Origins.Items.Vanity.BossMasks;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
@@ -403,6 +404,7 @@ namespace Origins.NPCs.Brine.Boss {
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Lost_Diver_Bag>(), 1, 1, 1, null)
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Faith_Beads>(), 4));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Wet_Wood>(), 4));
 			npcLoot.Add(new Crown_Jewel_Drop());
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Lost_Diver_Relic>()));
 		}

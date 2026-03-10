@@ -12,7 +12,7 @@ using Origins.Dev;
 using PegasusLib;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Haunted_Vase : ModItem {
+	public class Haunted_Vase : ModItem, ICustomWikiStat, IExpectToBeUnobtainable {
 		static short glowmask;
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

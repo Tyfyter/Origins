@@ -15,6 +15,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 10);
 			Item.rare = ItemRarityID.Lime;
 		}
+		public override void AddRecipes() => Ace_Shrapnel.GetRecipe(Type).Register().DisableRecipe();
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			type -= ModContent.ProjectileType<Ace_Shrapnel_Old_P>();
 			type /= 3;

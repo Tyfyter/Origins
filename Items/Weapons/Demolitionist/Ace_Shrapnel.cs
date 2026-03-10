@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetStaticDefaults() {
 			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Impeding_Shrapnel_Debuff.ID];
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Ace_Shrapnel_Old>();
 		}
 		public override void SetDefaults() {
 			Item.DefaultToLauncher(12, 20, 54, 26);
@@ -30,13 +31,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.reuseDelay = 0;
 			Item.autoReuse = true;
 		}
-		public override void AddRecipes() {
-			Recipe.Create(Type)
+		public static Recipe GetRecipe(int type) => Recipe.Create(type)
 			.AddIngredient(ModContent.ItemType<NE8>(), 10)
 			.AddIngredient(ModContent.ItemType<Scrap>(), 15)
-			.AddTile(TileID.Anvils)
-			.Register();
-		}
+			.AddTile(TileID.Anvils);
+		public override void AddRecipes() => GetRecipe(Type).Register();
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-18, -7);
 		}
