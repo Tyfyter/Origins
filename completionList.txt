@@ -1552,12 +1552,14 @@ CONSUMABLES:
 (#, ^2) Sanguis Pack
 (#, ^2) Unmarked Antidote
 
-(#, ^2) Bad Juju Stone
-(^) Bileberry*
-(^) Blue Bovine*
-(^) Bread*
-(^) Brine Cheese*
-(#, ^2) Budget Fairy Dust
+(^) Bad Juju Stone
+(^) BBQ Skewer
+(^) Bileberry
+(^) Blastberry
+(^) Blue Bovine
+(^) Bread
+(†) Brine Cheese !!! (balance drop chances)
+(々) Budget Fairy Dust
 (^) Caeser Salad
 (#, ^2) Contaminated Infusion
 (#, ^2) Edible Hair Gel

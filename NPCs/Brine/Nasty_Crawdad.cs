@@ -1,5 +1,6 @@
 ﻿using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
 using Origins.World.BiomeData;
@@ -57,6 +58,8 @@ namespace Origins.NPCs.Brine {
 				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Crawdaddys_Revenge>(), 40)
 			).WithOnSuccess(
 				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Grenade_Lawnchair>(), 120)
+			).WithOnSuccess(
+				ItemDropRule.ByCondition(OriginsModIntegrations.AprilFools.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied), ModContent.ItemType<Brine_Cheese>(), 78, 1, 3)
 			));
 		}
 		public override bool CanTargetNPC(NPC other) => !OriginsSets.NPCs.TargetDummies[other.type] && CanHitNPC(other);

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Accessories;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Summoner;
 using Origins.Misc;
 using Origins.Tiles.Brine;
@@ -53,6 +54,7 @@ namespace Origins.NPCs.Brine {
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Item>(), 1, 7, 16));
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Incantation>(), 23));
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Mildew_Heart>(), 40));
+			npcLoot.Add(ItemDropRule.ByCondition(OriginsModIntegrations.AprilFools.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied), ModContent.ItemType<Brine_Cheese>(), 78, 1, 3));
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Brine_Pool.SpawnRates.EnemyRate(spawnInfo, Brine_Pool.SpawnRates.Creeper);

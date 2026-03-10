@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables.Food;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -84,6 +85,8 @@ namespace Origins.NPCs.Brine {
 				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 10)
 			).WithOnSuccess(
 				ItemDropRule.ByCondition(new Conditions.PlayerNeedsHealing(), ItemID.Heart, 10) //Metroid reference
+			).WithOnSuccess(
+				ItemDropRule.ByCondition(OriginsModIntegrations.AprilFools.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied), ModContent.ItemType<Brine_Cheese>(), 78, 1, 3)
 			));
 		}
 		public override bool CanTargetNPC(NPC other) {
