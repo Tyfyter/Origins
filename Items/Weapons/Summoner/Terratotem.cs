@@ -66,7 +66,6 @@ namespace Origins.Items.Weapons.Summoner {
 			.AddIngredient(ItemID.BabyBirdStaff)
 			.AddIngredient(ItemID.ImpStaff)
 			.AddIngredient(ItemID.OpticStaff)
-			.AddIngredient(ItemID.PygmyStaff)
 			.AddIngredient(ItemID.SanguineStaff)
 			.AddIngredient(ItemID.Smolstar)
 			.AddIngredient(ItemID.OpticStaff)
