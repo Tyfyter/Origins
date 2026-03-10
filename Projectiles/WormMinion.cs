@@ -186,6 +186,12 @@ namespace Origins.Projectiles {
 		}
 	}
 	public abstract class WormMinion : MinionBase {
+		public override Rectangle RestRegion {
+			get {
+				Player player = Main.player[Projectile.owner];
+				return player.Hitbox.Add(Vector2.UnitX * player.direction * -48);
+			}
+		}
 		public enum BodyPart {
 			Invalid,
 			Head,
