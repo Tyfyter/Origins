@@ -61,6 +61,8 @@ namespace Origins.NPCs.Brine {
 				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 6)
 			).WithOnSuccess(
 				new LeadingConditionRule(new Conditions.IsHardmode()).WithOnSuccess(ItemDropRule.Food(ModContent.ItemType<Caeser_Salad>(), 40))
+			).WithOnSuccess(
+				ItemDropRule.ByCondition(OriginsModIntegrations.AprilFools.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied), ModContent.ItemType<Brine_Cheese>(), 78, 1, 3)
 			));
 		}
 		public override bool CanTargetNPC(NPC other) => !OriginsSets.NPCs.TargetDummies[other.type] && CanHitNPC(other);

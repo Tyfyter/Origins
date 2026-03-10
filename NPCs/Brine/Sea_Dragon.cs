@@ -78,6 +78,8 @@ namespace Origins.NPCs.Brine {
 				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Nematoclaw>(), 40)
 			).WithOnSuccess(
 				new LeadingConditionRule(new Conditions.IsHardmode()).WithOnSuccess(ItemDropRule.Food(ModContent.ItemType<Sour_Apple>(), 40))
+			).WithOnSuccess(
+				ItemDropRule.ByCondition(OriginsModIntegrations.AprilFools.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied), ModContent.ItemType<Brine_Cheese>(), 78, 1, 3)
 			));
 		}
 		public override void AI() {

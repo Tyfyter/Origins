@@ -2,6 +2,7 @@
 using ModLiquidLib.Utils;
 using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
 using System;
@@ -54,6 +55,8 @@ namespace Origins.NPCs.Brine {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(new LeadingConditionRule(DropConditions.PlayerInteraction).WithOnSuccess(
 				ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<Alkaliphiliac_Tissue>(), 1, 1, 2)
+			).WithOnSuccess(
+				ItemDropRule.ByCondition(OriginsModIntegrations.AprilFools.ToDropCondition(ShowItemDropInUI.WhenConditionSatisfied), ModContent.ItemType<Brine_Cheese>(), 78, 1, 3)
 			));
 		}
 		public override bool CanTargetNPC(NPC other) {

@@ -1702,7 +1702,7 @@ CONSUMABLES:
 (^) Blastberry
 (^) Blue Bovine
 (^) Bread
-(^) Brine Cheese
+(†) Brine Cheese !!! (balance drop chances)
 (々) Budget Fairy Dust
 (^) Caeser Salad
 (^) Cognac
