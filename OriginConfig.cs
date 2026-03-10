@@ -35,6 +35,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.Config.UI;
+using Terraria.ModLoader.Core;
 using Terraria.ModLoader.IO;
 
 namespace Origins {
@@ -592,10 +593,15 @@ namespace Origins {
 		public string WikiSpritesPath { get; set; }
 		public string WikiPagePath { get; set; }
 		#endregion
+		static readonly Dictionary<Type, MethodInfo> loads = [];
+		static void LoadAsset<T>(AutoLoadingAsset<T> asset) where T : class {
+			asset.LoadAsset();
+		}
 		public bool CheckTextureUsage {
 			get => default;
 			set {
 				if (value) {
+					MethodInfo doLoad = ((Delegate)LoadAsset<Texture2D>).Method.GetGenericMethodDefinition();
 					foreach (ILoadable content in Origins.instance.GetContent()) {
 						if (content is ModItem item) {
 							Main.instance.LoadItem(item.Type);
@@ -611,7 +617,24 @@ namespace Origins {
 						if (content is ILoadExtraTextures extras) {
 							extras.LoadTextures();
 						}
+						foreach (FieldInfo field in content.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
+							if (field.FieldType.IsConstructedGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(AutoLoadingAsset<>)) {
+								Type assetType = field.FieldType.GenericTypeArguments[0];
+								if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
+								load.Invoke(null, [field.GetValue(content)]);
+							}
+						}
 					}
+					foreach (Type type in AssemblyManager.GetLoadableTypes(Origins.instance.Code)) {
+						foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
+							if (field.FieldType.IsConstructedGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(AutoLoadingAsset<>)) {
+								Type assetType = field.FieldType.GenericTypeArguments[0];
+								if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
+								load.Invoke(null, [field.GetValue(null)]);
+							}
+						}
+					}
+
 					foreach (Accessory_Glow_Layer glowLayer in Origins.instance.GetContent<Accessory_Glow_Layer>()) {
 						glowLayer.LoadAllTextures();
 					}
