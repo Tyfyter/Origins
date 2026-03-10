@@ -29,7 +29,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
 			Item.DamageType = DamageClass.Magic;
-			Item.damage = 100;
+			Item.damage = 100; // this controls damage from everything this does, to balance specific attacks, see their code
 			Item.mana = 120;
 			Item.rare = ItemRarityID.Red;
 			Item.master = true;
