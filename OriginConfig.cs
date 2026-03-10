@@ -652,9 +652,9 @@ namespace Origins {
 							}
 						}
 					}
-					Directory.CreateDirectory(ConfigManager.ModConfigPath);
-					string filename = nameof(Origins) + "_Unused_Assets.txt";
-					string path = Path.Combine(ConfigManager.ModConfigPath, filename);
+					string directory = Path.Combine(Program.SavePathShared, "ModSources", nameof(Origins));
+					Directory.CreateDirectory(directory);
+					string path = Path.Combine(directory, "Unused_Assets.txt");
 					WikiPageExporter.WriteFileNoUnneededRewrites(path, string.Join('\n', unused));
 				}
 			}
