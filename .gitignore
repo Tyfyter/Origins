@@ -20,6 +20,5 @@ Old_Sprites\*
 *.ide-shm
 Items/Armor/Felnum/Charged
 Items/Armor/Vanity/Terlet/PlagueCowboy(Old)
-Properties/launchSettings.json
 *.csproj.user
 *.sln
