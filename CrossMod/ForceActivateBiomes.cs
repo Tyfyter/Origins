@@ -32,6 +32,7 @@ namespace Origins.CrossMod {
 			Brine_Pool.forcedBiomeActive = false;
 			Defiled_Wastelands.forcedBiomeActive = false;
 			Riven_Hive.forcedBiomeActive = false;
+			Ashen_Biome.forcedBiomeActive = false;
 			for (int i = 0; i < controllers.Count; i++) {
 				controllers[i].CheckBiomes(self);
 			}
