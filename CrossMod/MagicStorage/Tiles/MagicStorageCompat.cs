@@ -7,6 +7,7 @@ using MagicStorage.CrossMod.Storage;
 using MagicStorage.Items;
 using MagicStorage.Components;
 using StorageUnit = MagicStorage.Components.StorageUnit;
+using System.Collections.Generic;
 
 namespace Origins.CrossMod.MagicStorage.Tiles {
 	[ExtendsFromMod(nameof(MagicStorage))]
@@ -42,7 +43,7 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 		public void Unload() {}
 	}
 	[ExtendsFromMod(nameof(MagicStorage))]
-	public abstract class OriginsStorageTier(int tier) : StorageUnitTier {
+	public abstract class OriginsStorageTier(int tier) : StorageUnitTier, IItemObtainabilityProvider {
 		internal int upgradeItemType;
 		internal int coreItemType;
 		internal int storageUnitItemType;
@@ -85,6 +86,8 @@ namespace Origins.CrossMod.MagicStorage.Tiles {
 			active = frameX < 108;
 		}
 		public override bool IsValidTile(int frameX, int frameY) => true;
+
+		public IEnumerable<int> ProvideItemObtainability() => [coreItemType];
 	}
 	[ExtendsFromMod(nameof(MagicStorage))]
 	public class OriginsStorageUpgrade(OriginsStorageTier tier) : BaseStorageUpgradeItem {
