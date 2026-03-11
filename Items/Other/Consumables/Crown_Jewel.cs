@@ -38,6 +38,7 @@ namespace Origins.Items.Other.Consumables {
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
 		}
 		public override void SetDefaults() {
+			Item.dye = 0;
 			Item.rare = ItemRarityID.Lime;
 			Item.value = Item.buyPrice(gold: 5);
 			Item.useTime = 30;
@@ -71,10 +72,10 @@ namespace Origins.Items.Other.Consumables {
 					color = Color.Lime,
 					rotation = 0f,
 					scale = new Vector2(scale),
-					shader = Item.dye,
+					shader = ShaderID,
 					origin = texture.Size() * 0.5f
 				};
-				GameShaders.Armor.ApplySecondary(Item.dye, null, data);
+				GameShaders.Armor.ApplySecondary(ShaderID, null, data);
 				data.Draw(spriteBatch);
 			} finally {
 				spriteBatch.Restart(state);
