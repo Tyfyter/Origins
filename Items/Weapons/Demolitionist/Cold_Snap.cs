@@ -48,12 +48,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.localNPCHitCooldown = -1;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-			if (Projectile.velocity.X == 0f) {
-				Projectile.velocity.X = -oldVelocity.X;
-			}
-			if (Projectile.velocity.Y == 0f) {
-				Projectile.velocity.Y = -oldVelocity.Y;
-			}
 			Projectile.timeLeft = 1;
 			return true;
 		}
