@@ -45,6 +45,7 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Defiled_Altar_Item : TestingItem {
 		public override void SetDefaults() {
+			Item.dye = 0;
 			Item.width = 26;
 			Item.height = 22;
 			Item.maxStack = 99;
