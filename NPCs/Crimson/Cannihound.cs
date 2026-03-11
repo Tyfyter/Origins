@@ -32,7 +32,7 @@ namespace Origins.NPCs.Crimson {
 			Main.npcFrameCount[NPC.type] = 18;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			CrimsonGlobalNPC.NPCTypes.Add(Type);
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Position = new Vector2(7, 0)};
 			AssimilationLoader.AddNPCAssimilation<Crimson_Assimilation>(Type, 0.04f);
 		}
 		public override void SetDefaults() {
@@ -231,7 +231,7 @@ namespace Origins.NPCs.Crimson {
 					NPC.frame.Height = 900 / Main.npcFrameCount[NPC.type];
 					NPC.DoFrames(6, (NPC.frame.Y / NPC.frame.Height)..15);
 					turnTime = 180;
-				} else if (++turnTime < 6 * 2) {
+				} else if (++turnTime < 6 * 2 && !NPC.IsABestiaryIconDummy) {
 					NPC.frame.Y = NPC.frame.Height * Math.Min(16 + turnTime / 6, Main.npcFrameCount[NPC.type]);
 				} else {
 					NPC.DoFrames(4 - (int)speed, 0..5);
