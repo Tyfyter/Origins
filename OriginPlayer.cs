@@ -930,9 +930,6 @@ namespace Origins {
 			netInitialized = false;
 			ResetLaserTag();
 		}
-		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
-			FishingLoot.Pool.CatchFish(Player, attempt, ref itemDrop, ref npcSpawn, ref sonar, ref sonarPosition);
-		}
 		public override void GetDyeTraderReward(List<int> rewardPool) {
 			for (int i = 0; i < Dye_Item.dyeItems.Count; i++) {
 				Dye_Item dyeItem = Dye_Item.dyeItems[i];
