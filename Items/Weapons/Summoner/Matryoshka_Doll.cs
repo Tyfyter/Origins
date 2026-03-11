@@ -23,19 +23,19 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 12;
+			Item.damage = 60;
 			Item.knockBack = 2f;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 14;
 			Item.shootSpeed = 9f;
 			Item.width = 24;
 			Item.height = 38;
-			Item.useTime = 24;
-			Item.useAnimation = 24;
+			Item.useTime = 18;
+			Item.useAnimation = 18;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noUseGraphic = true;
 			Item.value = Item.sellPrice(silver: 1, copper: 50);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item44;
 			Item.buffType = Matryoshka_Doll_Buff.ID;
 			Item.shoot = Matryoshka_Doll_Minion.ID;
@@ -65,19 +65,30 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public static int ID { get; private set; }
 		public bool DrawHealthBar(Vector2 position, float light, bool inBuffList) {
 			if (Parent != -1) return false;
-			Main.instance.DrawHealthBar(
-				position.X, position.Y,
-				(int)(Size + 1),
-				Main.projFrames[Type],
-				light,
-				0.85f
-			);
+			if (inBuffList) {
+				Main.instance.DrawHealthBar(
+					position.X, position.Y,
+					(int)(Size + 1),
+					Main.projFrames[Type],
+					light,
+					0.85f
+				);
+			} else {
+				Main.instance.DrawHealthBar(
+					position.X, position.Y,
+					(int)Life,
+					MaxLife,
+					light,
+					0.85f
+				);
+			}
 			return true;
 		}
-		public override Rectangle RestRegion => base.RestRegion.Modified(-8, 16, 16, -16);
+		public override Rectangle RestRegion => base.RestRegion.Modified(-8, (int)(Flying + 1) * 16, 16, (int)(Flying + 1) * -16);
 		bool ISkipInMinionIndex.Skip => Parent != -1;
 		public ref float Size => ref Projectile.ai[0];
-		public ref float Child => ref Projectile.ai[1];
+		public ref float Flying => ref Projectile.ai[1];
+		public ref float Child => ref Projectile.localAI[0];
 		public ref float Parent => ref Projectile.ai[2];
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 7;
@@ -114,7 +125,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.idStaticNPCHitCooldown = 6;
 			Projectile.manualDirectionChange = true;
 			Projectile.netImportant = true;
-			MaxLife = 25;
+			MaxLife = 100;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Child = -1;
@@ -138,25 +149,54 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		protected override void BasicAI() {
 			Projectile.hide = true;
 			if (Parent >= 0) {
-				if (Projectile.GetRelatedProjectile(2) is not Projectile shell || !shell.active || shell.type != Type || shell.ai[1] != Projectile.identity) {
+				if (Projectile.GetRelatedProjectile(2) is not Projectile shell || !shell.active || shell.type != Type || shell.localAI[0] != Projectile.identity) {
 					Parent = -1;
 				} else {
 					Projectile.Bottom = shell.Bottom;
 					Projectile.velocity = shell.velocity;
+					Flying = 0;
 					DoActiveCheck();
 					return;
 				}
 			}
 			Projectile.hide = false;
 			Projectile.velocity *= 0.97f;
-			base.BasicAI();
-			Projectile.rotation = Projectile.direction * Projectile.velocity.Y * -0.1f;
-			Projectile.velocity.Y += 0.2f;
+			if (Flying == 0) {
+				Projectile.tileCollide = true;
+				base.BasicAI();
+				Projectile.rotation = Projectile.direction * Projectile.velocity.Y * -0.1f;
+				Projectile.velocity.Y += 0.2f;
+			} else {
+				Projectile.tileCollide = false;
+				targetingData.TargetID = -1;
+				DoActiveCheck();
+
+				Vector2 targetPos = Projectile.Center.Clamp(RestRegion);
+				Vector2 direction = (targetPos - Projectile.Center).Normalized(out float distance);
+				float speed = distance switch {
+					< 300f => 0.3f,
+					< 600f => 0.6f,
+					_ => 0.9f
+				};
+				Projectile.velocity += direction * speed;
+				if (Vector2.Dot(Projectile.velocity.Normalized(out _), direction) < 0.25f)
+					Projectile.velocity *= 0.8f;
+
+				Projectile.velocity = Projectile.velocity.Normalized(out speed);
+				if (speed > 8) speed *= 0.96f;
+				Projectile.velocity *= Math.Min(speed, 15);
+				Rectangle hitbox = Projectile.Hitbox;
+				if (hitbox.Intersects(RestRegion) && !hitbox.OverlapsAnyTiles() && hitbox.Add(Vector2.UnitY * 24).OverlapsAnyTiles(false)) Flying = 0;
+			}
 		}
 		public override void MoveTowardsTarget() {
 			bool foundTarget = targetingData.TargetID != -1;
 			Rectangle targetHitbox = foundTarget ? targetingData.targetHitbox : RestRegion;
 			Vector2 targetPos = Projectile.Center.Clamp(targetHitbox);
+			if (!Projectile.Center.IsWithin(Main.player[Projectile.owner].MountedCenter, foundTarget ? 1200 : 600)) {
+				Flying = 1;
+				return;
+			}
 			Projectile.direction = Math.Sign(targetPos.X - Projectile.Center.X);
 			if (Projectile.direction == 0) Projectile.direction = 1;
 			if (!foundTarget && targetPos.X == Projectile.Center.X) {
