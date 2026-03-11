@@ -125,8 +125,5 @@ namespace Origins.Items.Tools.Liquids {
 	public class Burning_Oil_Bucket : BucketBase<Burning_Oil> {
 		public override bool Debug => true;
 	}
-	public class Amebic_Bucket : BucketBase<Amebic_Gel> {
-		public override bool Debug => true;
-	}
 	#endregion
 }
