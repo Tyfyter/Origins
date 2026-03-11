@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			nameof(WeaponTypes.OtherExplosive)
 		];
 		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				global.SetUpdateCountBoost(proj, global.UpdateCountBoost + 2);
 			});
