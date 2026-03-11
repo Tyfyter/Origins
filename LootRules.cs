@@ -331,22 +331,26 @@ namespace Origins.LootConditions {
 			return result;
 		}
 	}
+	//TODO: move to PegasusLib
 	public class CopyNPCDropRule(int type) : IItemDropRule {
+		static readonly RecursionCheckedSet<int> recursionBlocker = new();
 		public List<IItemDropRuleChainAttempt> ChainedRules { get; } = [];
-
 		public bool CanDrop(DropAttemptInfo info) => true;
-
 		public void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
-			foreach (IItemDropRule rule in Main.ItemDropsDB.GetRulesForNPCID(type, false)) {
-				rule.ReportDroprates(drops, ratesInfo);
-			}
+			using IDisposable recursionBlock = recursionBlocker.TryAdd(type);
+			if (recursionBlock is null) return;
+			foreach (IItemDropRule rule in Main.ItemDropsDB.GetRulesForNPCID(type, false)) rule.ReportDroprates(drops, ratesInfo);
 		}
 
 		public ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
-			foreach (IItemDropRule rule in Main.ItemDropsDB.GetRulesForNPCID(type, false)) {
-				OriginExtensions.ResolveRule(rule, info);
-			}
-			return new ItemDropAttemptResult() { State = ItemDropAttemptResultState.Success };
+			using IDisposable recursionBlock = recursionBlocker.TryAdd(type);
+			if (recursionBlock is null) return new ItemDropAttemptResult() {
+				State = ItemDropAttemptResultState.DidNotRunCode
+			};
+			foreach (IItemDropRule rule in Main.ItemDropsDB.GetRulesForNPCID(type, false)) OriginExtensions.ResolveRule(rule, info);
+			return new ItemDropAttemptResult() {
+				State = ItemDropAttemptResultState.Success
+			};
 		}
 	}
 }

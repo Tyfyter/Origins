@@ -237,6 +237,7 @@ csharp_style_prefer_null_check_over_type_check = true:suggestion
 
 # CA1707: Identifiers should not contain underscores
 dotnet_diagnostic.CA1707.severity = none
+csharp_style_prefer_implicitly_typed_lambda_expression = true:suggestion
 
 [*.{cs,vb}]
 dotnet_style_coalesce_expression = true:suggestion
