@@ -20,7 +20,6 @@ using Origins.Tiles.Ashen;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -34,6 +33,8 @@ using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
 using static Terraria.WorldGen;
 using static Terraria.ModLoader.ModContent;
+using Terraria.DataStructures;
+using Origins.Liquids;
 
 namespace Origins.World.BiomeData {
 	public class Ashen_Biome : ModBiome {
@@ -778,6 +779,7 @@ namespace Origins.World.BiomeData {
 			public override void PostGenerateEvil() { }
 		}
 		public class Ashen_Fishing_Pool : FishingLootPool<Ashen_Alt_Biome> {
+			public override bool IsActive(Player player, FishingAttempt attempt) => base.IsActive(player, attempt) && (attempt.BobberInLiquid(LiquidID.Water) || attempt.BobberInLiquid<Oil>());
 			public override void SetStaticDefaults() {
 				//AddCrates(ItemType<Crate>(), ItemType<Really_Crate>());
 				Legendary.Add(new SequentialCatches(

@@ -1,11 +1,11 @@
-﻿using Origins.Backgrounds;
+﻿using Origins.Items.Other.Fish;
 using Origins.NPCs.Fiberglass;
 using Origins.Tiles.Other;
 using Origins.Walls;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -118,6 +118,12 @@ namespace Origins.World.BiomeData {
 						}
 					}
 				}
+			}
+		}
+		public class Fiberglass_Undergrowth_Fishing_Loot : FishingLootPool {
+			public override bool IsActive(Player player, FishingAttempt attempt) => player.InModBiome<Fiberglass_Undergrowth>();
+			public override void SetStaticDefaults() {
+				Uncommon.Add(FishingCatch.QuestFish(ModContent.ItemType<Fiberbass>()));
 			}
 		}
 	}

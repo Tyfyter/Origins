@@ -1,5 +1,4 @@
 ﻿using AltLibrary.Common.AltBiomes;
-using MagicStorage;
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.Hooks;
 using ModLiquidLib.ModLoader;
@@ -50,7 +49,6 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
-using static Terraria.Utilities.NPCUtils;
 using SetsTiles = Origins.OriginsSets.Tiles;
 
 namespace Origins {
@@ -5314,6 +5312,8 @@ namespace Origins {
 			if (TileItem.Get(tile) is TileItem item && !item.IsDebug) return item;
 			throw new ArgumentException($"Cannot get TileItem of {tile} as it does not add one", nameof(tile));
 		}
+		public static bool BobberInLiquid(this FishingAttempt attempt, int liquid) => Main.tile[attempt.X, attempt.Y].LiquidType == liquid;
+		public static bool BobberInLiquid<TLiquid>(this FishingAttempt attempt) where TLiquid : ModLiquid => attempt.BobberInLiquid(LiquidLoader.LiquidType<TLiquid>());
 	}
 	public static class ProjectileExtensions {
 		public static void DoBoomerangAI(this Projectile projectile, Entity owner, float returnSpeed = 9f, float returnAcceleration = 0.4f, bool doSound = true) {

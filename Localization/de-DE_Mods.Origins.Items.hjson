@@ -8206,3 +8206,9 @@ Vampire_Fireflower_In_A_Pot: {
 	// DisplayName: Vampire Fireflower In A Pot
 	// Tooltip: ""
 }
+
+Amebic_Gel_Bottomless_Bucket: {
+	// DisplayName: Amebic Gel Bottomless Bucket
+	// LiquidName: Amebic Gel
+	// Tooltip: ""
+}

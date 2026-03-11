@@ -11,6 +11,7 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
+using Origins.Liquids;
 using Origins.NPCs.Riven;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.Reflection;
@@ -25,6 +26,7 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
+using Terraria.DataStructures;
 using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -1231,6 +1233,7 @@ namespace Origins.World.BiomeData {
 			public override void PostGenerateEvil() { }
 		}
 		public class Riven_Hive_Fishing_Pool : FishingLootPool<Riven_Hive_Alt_Biome> {
+			public override bool IsActive(Player player, FishingAttempt attempt) => base.IsActive(player, attempt) && (attempt.BobberInLiquid(LiquidID.Water) || attempt.BobberInLiquid<Amebic_Gel>());
 			public override void SetStaticDefaults() {
 				AddCrates(ItemType<Crusty_Crate>(), ItemType<Festering_Crate>());
 				Legendary.Add(new SequentialCatches(
@@ -1238,10 +1241,7 @@ namespace Origins.World.BiomeData {
 					FishingCatch.Item(ItemType<Scabcoral_Lyre>(), (player, attempt) => Main.hardMode && Main.rand.NextBool(2))
 				));
 				Rare.Add(FishingCatch.Item(ItemType<Ocotoral_Bud>()));
-				Uncommon.Add(new SequentialCatches(
-					FishingCatch.QuestFish(ItemType<Bonehead_Jellyfish>()),
-					FishingCatch.Item(ItemType<Tearracuda>())
-				));
+				Uncommon.Add(FishingCatch.QuestFish(ItemType<Bonehead_Jellyfish>()));
 			}
 		}
 	}

@@ -1,21 +1,24 @@
 ﻿using AltLibrary.Common.Systems;
-using Origins.Backgrounds;
-using Origins.Liquids;
 using Origins.Core;
+using Origins.Items.Accessories;
+using Origins.Items.Other.Fish;
+using Origins.Items.Tools.Liquids;
+using Origins.Items.Weapons.Summoner;
+using Origins.Liquids;
 using Origins.Tiles.Brine;
 using Origins.Walls;
 using Origins.Water;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
 using Terraria.WorldBuilding;
+using static Terraria.ModLoader.ModContent;
 using static Terraria.WorldGen;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Origins.World.BiomeData {
 	public class Brine_Pool : ModBiome {
@@ -24,8 +27,8 @@ namespace Origins.World.BiomeData {
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Brine_Pool";
 		public override string MapBackground => BackgroundPath;
-		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Brine_Water_Style>();
-		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Placeholder_Surface_Background>();
+		public override ModWaterStyle WaterStyle => GetInstance<Brine_Water_Style>();
+		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<Placeholder_Surface_Background>();
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => null;
 		public static bool forcedBiomeActive;
 		public override void Load() {
@@ -41,9 +44,9 @@ namespace Origins.World.BiomeData {
 
 		static void On_Player_UpdateBiomes(On_Player.orig_UpdateBiomes orig, Player self) {
 			orig(self);
-			if (self.CurrentSceneEffect.waterStyle.value == ModContent.GetInstance<Brine_Water_Style>().Slot) {
+			/*if (self.CurrentSceneEffect.waterStyle.value == GetInstance<Brine_Water_Style>().Slot) {
 				self.CurrentSceneEffect.waterStyle.value = WaterStyleID.Jungle;
-			}
+			}*/
 		}
 
 		public override bool IsBiomeActive(Player player) {
@@ -62,8 +65,8 @@ namespace Origins.World.BiomeData {
 			public override bool IsActive(NPCSpawnInfo spawnInfo) {
 				if (SpawnRates.IsInBrinePool(spawnInfo) || !spawnInfo.Player.InModBiome<Brine_Pool>()) return false;
 
-				return Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY - 1].WallType == ModContent.WallType<Baryte_Wall>()
-					|| Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).WallType == ModContent.WallType<Baryte_Wall>() || Brine_Pool.forcedBiomeActive;
+				return Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY - 1].WallType == WallType<Baryte_Wall>()
+					|| Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY).WallType == WallType<Baryte_Wall>() || Brine_Pool.forcedBiomeActive;
 			}
 		}
 		public class SpawnRates : SpawnPool {
@@ -89,11 +92,11 @@ namespace Origins.World.BiomeData {
 
 			public static bool IsInBrinePool(NPCSpawnInfo spawnInfo) {
 				Tile tile = Framing.GetTileSafely(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY - 1);
-				return tile.LiquidAmount >= 255 && tile.LiquidType == Brine.ID && (tile.WallType == ModContent.WallType<Baryte_Wall>() || forcedBiomeActive);
+				return tile.LiquidAmount >= 255 && tile.LiquidType == Brine.ID && (tile.WallType == WallType<Baryte_Wall>() || forcedBiomeActive);
 			}
 			public static bool IsInBrinePool(Vector2 pos) {
 				Tile tile = Framing.GetTileSafely(pos);
-				return tile.LiquidAmount >= 255 && tile.LiquidType == Brine.ID && (tile.WallType == ModContent.WallType<Baryte_Wall>() || forcedBiomeActive);
+				return tile.LiquidAmount >= 255 && tile.LiquidType == Brine.ID && (tile.WallType == WallType<Baryte_Wall>() || forcedBiomeActive);
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) => IsInBrinePool(spawnInfo);
 		}
@@ -102,7 +105,7 @@ namespace Origins.World.BiomeData {
 			internal static InvalidRangeHandler JungleAvoider => _JungleAvoider;
 			[SuppressMessage("Style", "IDE1006:Naming Styles")]
 			static IEnumerable<(int min, int max, int padding)> _JungleAvoider(object pass, int minPriority) {
-				int brineX = ModContent.GetInstance<OriginSystem>().brineCenter.X;
+				int brineX = GetInstance<OriginSystem>().brineCenter.X;
 				yield return (brineX - 100, brineX + 100, 50);
 			}
 			public static void PullTogether(ref Vector2 currentCell, ref Vector2 targetCell) {
@@ -166,8 +169,8 @@ namespace Origins.World.BiomeData {
 					genRand.NextFloat(1.4f, 1.6f) * scale,
 					OriginExtensions.Vec2FromPolar(genRand.NextFloat(MathHelper.TwoPi), MathF.Pow(genRand.NextFloat(0.25f, 0.7f), 1.5f) * 1.5f)
 				);
-				ushort stoneID = (ushort)ModContent.TileType<Baryte>();
-				ushort stoneWallID = (ushort)ModContent.WallType<Baryte_Wall>();
+				ushort stoneID = (ushort)TileType<Baryte>();
+				ushort stoneWallID = (ushort)WallType<Baryte_Wall>();
 				/*Tile tile;
 				for (int x = (int)MathF.Floor(i - 55); x < (int)MathF.Ceiling(i + 55); x++) {
 					for (int y = (int)MathF.Ceiling(j - 55); y < (int)MathF.Floor(j + 55); y++) {
@@ -184,7 +187,7 @@ namespace Origins.World.BiomeData {
 						tile.WallType = stoneWallID;
 					}
 				}*/
-				ushort mossID = (ushort)ModContent.TileType<Peat_Moss>();
+				ushort mossID = (ushort)TileType<Peat_Moss>();
 				int cellCount = cells.Count;
 				bool[] canBeClearedDuringOreRunner = TileID.Sets.CanBeClearedDuringOreRunner;
 				try {
@@ -223,7 +226,7 @@ namespace Origins.World.BiomeData {
 						}
 					}
 					bool[] validOreTiles = TileID.Sets.Factory.CreateBoolSet(stoneID, TileID.Mud, mossID);
-					DoOre((ushort)ModContent.TileType<Eitrite_Ore>(), validOreTiles);
+					DoOre((ushort)TileType<Eitrite_Ore>(), validOreTiles);
 					validOreTiles[stoneID] = false;
 					DoOre(stoneID, validOreTiles, steps: 3);
 				} finally {
@@ -365,7 +368,7 @@ namespace Origins.World.BiomeData {
 						validTiles
 					);
 				}
-				ushort rivenAltar = (ushort)ModContent.TileType<Hydrothermal_Vent>();
+				ushort rivenAltar = (ushort)TileType<Hydrothermal_Vent>();
 				Rectangle range = WorldBiomeGeneration.ChangeRange.GetRange();
 				for (int k = genRand.Next(40, 60); k > 0;) {
 					int posX = genRand.Next(range.Left, range.Right);
@@ -376,8 +379,8 @@ namespace Origins.World.BiomeData {
 					}
 				}
 				int vineTries = 0;
-				int brineglowTile = ModContent.TileType<Brineglow>();
-				int vineTile = ModContent.TileType<Underwater_Vine>();
+				int brineglowTile = TileType<Brineglow>();
+				int vineTile = TileType<Underwater_Vine>();
 				int vineCount = 0;
 				for (int k = genRand.Next(400, 600); k > 0;) {
 					int posX = genRand.Next(range.Left, range.Right);
@@ -401,7 +404,7 @@ namespace Origins.World.BiomeData {
 					if (length > 0 || ++vineTries > 1000) k--;
 					if (length > 0) vineCount++;
 				}
-				ushort replacementWallID = (ushort)ModContent.WallType<Replacement_Wall>();
+				ushort replacementWallID = (ushort)WallType<Replacement_Wall>();
 				for (int x = range.Left; x < range.Right; x++) {
 					for (int y = range.Top; y < range.Bottom; y++) {
 						Tile tile = Main.tile[x, y];
@@ -421,10 +424,10 @@ namespace Origins.World.BiomeData {
 				GenVars.structures?.AddProtectedStructure(range, 6);
 			}
 			public static void SmallCave(float i, float j, float sizeMult = 1f, Vector2 stretch = default) {
-				ushort stoneID = (ushort)ModContent.TileType<Baryte>();
-				ushort mossID = (ushort)ModContent.TileType<Peat_Moss>();
-				ushort stoneWallID = (ushort)ModContent.WallType<Baryte_Wall>();
-				ushort replacementWallID = (ushort)ModContent.WallType<Replacement_Wall>();
+				ushort stoneID = (ushort)TileType<Baryte>();
+				ushort mossID = (ushort)TileType<Peat_Moss>();
+				ushort stoneWallID = (ushort)WallType<Baryte_Wall>();
+				ushort replacementWallID = (ushort)WallType<Replacement_Wall>();
 				float stretchScale = stretch.Length();
 				Vector2 stretchNorm = stretch / stretchScale;
 				float totalSize = 20 * sizeMult * (stretchScale + 1);
@@ -480,8 +483,8 @@ namespace Origins.World.BiomeData {
 				}
 			}
 			public static Point BrineStart_Old(int i, int j, float sizeMult = 1f) {
-				ushort stoneID = (ushort)ModContent.TileType<Baryte>();
-				ushort stoneWallID = WallID.BlueDungeonSlab;//(ushort)ModContent.WallType<Riven_Flesh_Wall>();
+				ushort stoneID = (ushort)TileType<Baryte>();
+				ushort stoneWallID = WallID.BlueDungeonSlab;//(ushort)WallType<Riven_Flesh_Wall>();
 				int i2 = i + (int)(genRand.Next(-22, 22) * sizeMult);
 				int j2 = j + (int)(44 * sizeMult);
 				for (int x = i2 - (int)(66 * sizeMult + 10); x < i2 + (int)(66 * sizeMult + 10); x++) {
@@ -666,9 +669,29 @@ namespace Origins.World.BiomeData {
 
 			}
 		}
+		public class Brine_Pool_Fishing_Loot : FishingLootPool {
+			public override bool IsActive(Player player, FishingAttempt attempt) => player.InModBiome<Brine_Pool>() || attempt.BobberInLiquid<Brine>();
+			public override void SetStaticDefaults() {
+				Crate.AddRange([
+					FishingCatch.Item(ItemType<Residual_Crate>(), (player, attempt) => Main.hardMode == false && ShouldDropBiomeCrate(player, attempt) && player.InModBiome<Brine_Pool>()),
+					FishingCatch.Item(ItemType<Basic_Crate>(), (player, attempt) => Main.hardMode == true && ShouldDropBiomeCrate(player, attempt) && player.InModBiome<Brine_Pool>())
+				]);
+				Legendary.AddRange([
+					FishingCatch.Item(ItemType<Brine_Bottomless_Bucket>()),
+					FishingCatch.Item(ItemType<Brine_Sponge>())
+				]);
+				Rare.Add(FishingCatch.Item(ItemType<Huff_Puffer_Bait>(), (player, attempt) => player.InModBiome<Brine_Pool>()));
+				Uncommon.AddRange([
+					FishingCatch.Item(ItemType<Bobbit_Worm>(), (player, attempt) => player.InModBiome<Brine_Pool>() && attempt.questFish == ItemType<Bobbit_Worm>()),
+					FishingCatch.Item(ItemType<Mithrafin>()),
+					FishingCatch.Item(ItemType<Toadfish>(), weight: 9),
+					new FallthroughFishingCatch((player, _) => !player.InModBiome<Brine_Pool>(), 40)
+				]);
+			}
+		}
 	}
 	public class Brine_Pool_Water_Control : ModSceneEffect {
-		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Brine_Water_Style>();
+		public override ModWaterStyle WaterStyle => GetInstance<Brine_Water_Style>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override bool IsSceneEffectActive(Player player) => OriginSystem.brineTiles > Brine_Pool.NeededTiles;
 		public override float GetWeight(Player player) => 1f;
