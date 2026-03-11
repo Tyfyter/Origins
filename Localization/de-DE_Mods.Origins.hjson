@@ -161,6 +161,16 @@ FishQuest: {
 		// Location: Caught in Fiberglass Undergrowth
 	}
 
+	Bobbit_Worm: {
+		/* Description:
+			'''
+			Watch your fingers when you fish in the Brine Pool.
+			There's a weird worm thingy in there that will think your fingers are bait!
+			Go catch it for me and don't lose your fingers!
+			''' */
+		// Location: Caught in Brine Pool
+	}
+
 	Scrapfish: {
 		/* Description:
 			'''

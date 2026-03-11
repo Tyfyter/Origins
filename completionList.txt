@@ -1743,8 +1743,10 @@ CONSUMABLES:
 (^) Bilious Crate
 (^) Crusty Crate
 (^) Festering Crate
+(#, ^2) Hazardous Waste Crate !!!
 (^) Pointy Crate
 (^) Residual Crate
+(#, ^2) Waste Crate !!!
 
 (^) Fire Extinguisher
 (^) Gooey Water
