@@ -226,7 +226,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						bool closer = distanceFromTarget > between;
 						if (!closer) break;
 						bool lineOfSight = CollisionExt.CanHitRay(pos + offset, npc.Center);
-						
+
 						for (int j = 0; j < 40 && !lineOfSight; j++) {
 							lineOfSight = CollisionExt.CanHitRay(pos + offset, Main.rand.NextVector2FromRectangle(npc.Hitbox));
 						}
@@ -314,22 +314,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.localAI[2] = -1;
 				this.DamageArtifactMinion(200, new TileDamageSource());
 			}
-			if (Main.dayTime) {
-				foreach (Player healee in Main.ActivePlayers) {
-					if (healee.team == player.team && Projectile.Center.Clamp(healee.Hitbox).WithinRange(Projectile.Center, 16 * 15)) {
-						healee.lifeRegen += 2;
-						Dust dust = Dust.NewDustDirect(
-							healee.position,
-							healee.width,
-							healee.height,
-							DustID.YellowTorch,
-							SpeedY: -2
-						);
-						dust.velocity *= 0.5f;
-						dust.noGravity = true;
-					}
-				}
-			}
+			BuffAllies(player.team);
 			if (Projectile.velocity.Y != 0) {
 				Projectile.frameCounter = 0;
 				Projectile.frame = 9;
@@ -346,6 +331,26 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			Projectile.velocity.Y += 0.4f;
 		}
+
+		protected virtual void BuffAllies(int team) {
+			if (Main.dayTime) {
+				foreach (Player healee in Main.ActivePlayers) {
+					if (healee.team == team && Projectile.Center.Clamp(healee.Hitbox).WithinRange(Projectile.Center, 16 * 15)) {
+						healee.lifeRegen += 2;
+						Dust dust = Dust.NewDustDirect(
+							healee.position,
+							healee.width,
+							healee.height,
+							DustID.YellowTorch,
+							SpeedY: -2
+						);
+						dust.velocity *= 0.5f;
+						dust.noGravity = true;
+					}
+				}
+			}
+		}
+
 		public bool CanWalkOnto(Vector2 position, int dir = 0) {
 			List<Point> tiles = Collision.GetTilesIn(position + new Vector2(0, Projectile.height), position + Projectile.Size);
 			bool[] solid = new bool[3];
