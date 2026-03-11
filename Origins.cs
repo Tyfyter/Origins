@@ -22,7 +22,6 @@ using Origins.Items.Accessories;
 using Origins.Items.Armor.Bleeding;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Other.Dyes;
-using Origins.Items.Other.Fish;
 using Origins.Items.Vanity.Dev.PlagueTexan;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
@@ -37,7 +36,6 @@ using Origins.Tiles.Banners;
 using Origins.Tiles.Defiled;
 using Origins.UI;
 using Origins.UI.Snippets;
-using Origins.Walls;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
@@ -59,6 +57,7 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 using static Origins.OriginsSets.Items;
 using MC = Terraria.ModLoader.ModContent;
+using Origins.Liquids;
 
 namespace Origins {
 	public sealed partial class Origins : Mod {
@@ -753,7 +752,7 @@ namespace Origins {
 		}
 		public override void PostSetupContent() {
 			FishingLoot.AddToVanillaPools();
-			Regex safeGoreRegex = new("^(DF|FG|Felnum|Shimmer)", RegexOptions.Compiled);
+			Regex safeGoreRegex = new("^(Ashen|DF|FG|Felnum|Shimmer)", RegexOptions.Compiled);
 			foreach (SimpleModGore gore in GetContent<SimpleModGore>()) {
 				if (safeGoreRegex.IsMatch(gore.Name)) ChildSafety.SafeGore[gore.Type] = true;
 			}
