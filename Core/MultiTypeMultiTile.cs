@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Core {
+	//TODO: move to PegasusLib
 	public interface IMultiTypeMultiTile {
 		public bool IsValidTile(Tile tile, int left, int top);
 		public bool CanBlockPlacement(Tile tile, int left, int top) => tile.HasTile;
@@ -216,6 +217,7 @@ namespace Origins.Core {
 			c.EmitLdarg(il.Method.Parameters.First(p => p.Name == "i"));
 			c.EmitLdarg(il.Method.Parameters.First(p => p.Name == "j"));
 			c.EmitDelegate((int tileType, int x, int y, int left, int top) => {
+				Tile otherTile = Main.tile[left + 1, top + 1];
 				if (TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile) return multiTypeMultiTile.ShouldBreak(x, y, left, top);
 				return true;
 			});

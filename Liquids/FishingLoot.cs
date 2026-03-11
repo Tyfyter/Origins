@@ -62,6 +62,7 @@ namespace Origins.Liquids {
 	}
 	#endregion
 	#region Misc
+	//TODO: Add to JunkLootPool's Any instead once we use newer PegasusLib.
 	public class Trash_Fishing_Loot : FishingLootPool {
 		public override bool IsActive(Player player, FishingAttempt attempt) => attempt.rolledItemDrop >= ItemID.OldShoe && attempt.rolledItemDrop <= ItemID.TinCan;
 		public override void SetStaticDefaults() {
