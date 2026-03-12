@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
+using Origins.Items.Materials;
 using Origins.UI;
 using System;
 using Terraria;
@@ -60,6 +61,14 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			if (blastFurnaceCharges > 0) blastFurnaceCharges--;
 			return false;
+		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient(ItemID.SoulofNight, 5)
+			.AddIngredient(ItemID.SpellTome)
+			.AddIngredient<Phoenum>(20)
+			.AddTile(TileID.Bookcases)
+			.Register();
 		}
 	}
 	public class Blast_Furnace_UI : SwitchableUIState {

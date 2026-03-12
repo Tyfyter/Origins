@@ -1,7 +1,6 @@
 Area_Denial
 ASH_Attack_Relay: [Seal of Cinders]
 Background_Door_Item
-Blast_Furnace
 Bomb_Rack
 Burning_Oil_Bucket
 Corona
