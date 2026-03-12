@@ -5,6 +5,7 @@ using Origins.Liquids;
 using Origins.Projectiles;
 using Origins.Projectiles.Weapons;
 using System;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -53,6 +54,37 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			ILCursor c = new(il);
 			while (c.TryGotoNext(MoveType.Before, i => i.MatchCall<Dust>(nameof(Dust.NewDustDirect)))) {
 				c.Next.Operand = il.Import(((Delegate)EfficientDust.NewDustDirect).Method);
+			}
+			c = new(il);
+
+			int count = -1;
+			FieldInfo f_1 = typeof(DelegateMethods).GetField(nameof(DelegateMethods.f_1));
+			while (c.TryGotoNext(MoveType.After,
+				i => i.MatchLdloc(out count),//IL_00b3: ldloc.2
+				i => i.MatchLdcI4(1),//IL_00b4: ldc.i4.1
+				i => i.MatchAdd(),  //IL_00b5: add
+				i => i.MatchStloc(count),//IL_00b6: stloc.2
+
+				i => i.MatchLdloc(count),//IL_00b7: ldloc.2
+				i => i.MatchLdcI4(3),//IL_00b8: ldc.i4.3
+				i => i.MatchBlt(out _)   //IL_00b9: blt.s IL_0040
+			)) {
+				int index = c.Index;
+				if (c.TryGotoPrev(MoveType.After,
+					i => i.MatchLdcI4(0),   //IL_003d: ldc.i4.0
+					i => i.MatchStloc(count)	//IL_003d: stloc.2
+				)) {
+					c.Index--;
+					c.EmitLdsfld(f_1);
+					c.EmitLdcR4(float.BitDecrement(7f));
+					c.EmitCgt();
+					c.EmitAdd();
+					c.EmitLdsfld(f_1);
+					c.EmitLdcR4(float.BitDecrement(10.5f));
+					c.EmitCgt();
+					c.EmitAdd();
+				}
+				c.Index = index;
 			}
 		}
 		//Shorthand methods
