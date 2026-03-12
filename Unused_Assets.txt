@@ -25,21 +25,16 @@ CrossMod/Fargos/Items/Riven_Chest
 CrossMod/Fargos/Items/RivenRenewal
 CrossMod/Fargos/Items/RivenSupremeRenewal
 
-CrossMod/MagicStorage/Tiles/Defiled_Storage_Core
-CrossMod/MagicStorage/Tiles/Defiled_Storage_Unit
 CrossMod/MagicStorage/Tiles/Defiled_Storage_Unit_Glow
-CrossMod/MagicStorage/Tiles/Defiled_Storage_Unit_Item
-CrossMod/MagicStorage/Tiles/Defiled_Storage_Upgrade
-CrossMod/MagicStorage/Tiles/Encrusted_Storage_Core
-CrossMod/MagicStorage/Tiles/Encrusted_Storage_Unit
 CrossMod/MagicStorage/Tiles/Encrusted_Storage_Unit_Glow
-CrossMod/MagicStorage/Tiles/Encrusted_Storage_Unit_Item
-CrossMod/MagicStorage/Tiles/Encrusted_Storage_Upgrade
-CrossMod/MagicStorage/Tiles/Sanguinite_Storage_Core
-CrossMod/MagicStorage/Tiles/Sanguinite_Storage_Unit
 CrossMod/MagicStorage/Tiles/Sanguinite_Storage_Unit_Glow
-CrossMod/MagicStorage/Tiles/Sanguinite_Storage_Unit_Item
-CrossMod/MagicStorage/Tiles/Sanguinite_Storage_Upgrade
+
+CrossMod/Thorium/Items/Accessories/Chambersite_Ring
+
+CrossMod/WaasephisFishingPlus/Items/Consumables/Ashen_Lock_Box
+CrossMod/WaasephisFishingPlus/Items/Consumables/Brine_Lock_Box
+CrossMod/WaasephisFishingPlus/Items/Consumables/Defiled_Lock_Box
+CrossMod/WaasephisFishingPlus/Items/Consumables/Riven_Lock_Box
 
 Gores/NPCs/Amoebeye2_Gore
 Gores/NPCs/Amoebeye3_Gore
@@ -147,6 +142,9 @@ Items/Other/Consumables/Potion_of_Projection
 Items/Other/Consumables/Sweet_Tooth_Shake
 Items/Other/Consumables/Tasty_Booger
 
+Items/Other/Fish/Hazardous_Waste_Crate
+Items/Other/Fish/Waste_Crate
+
 Items/Pets/Dysfunctional_Table_Saw
 Items/Pets/Dysfunctional_Table_Saw_Use
 Items/Pets/Meberoid_Glow
@@ -196,11 +194,8 @@ Items/Weapons/Demolitionist/Big_Bang_Glow
 Items/Weapons/Demolitionist/Big_Bang_P
 Items/Weapons/Demolitionist/Bloodshot
 Items/Weapons/Demolitionist/Bomb_Example
-Items/Weapons/Demolitionist/Clunkaclusta
-Items/Weapons/Demolitionist/Clunkaclusta_Glow
 Items/Weapons/Demolitionist/Crystal_Grenade_Blue
 Items/Weapons/Demolitionist/Crystal_Grenade_Pink
-Items/Weapons/Demolitionist/Dreikan_Glow
 Items/Weapons/Demolitionist/Example_Dyna
 Items/Weapons/Demolitionist/Firework_Cannon
 Items/Weapons/Demolitionist/Grenade_Lawnchair_Alt
@@ -786,7 +781,6 @@ Tiles/Riven/Riven_Campfire_Flame
 UI/Logos/Defiled_Terraria
 UI/Logos/ExampleLogo
 UI/Logos/Neutral_Origins
-UI/Logos/Riven_Terraria
 UI/Logos/Shimmer_Terraria
 
 UI/Lore/Journal_Scroll
@@ -806,10 +800,12 @@ UI/MapBGs/Riven_Surface
 
 UI/WorldGen/IconDefiledCrimson
 UI/WorldGen/IconDefiledHallow
+UI/WorldGen/IconDefiledNormal
 UI/WorldGen/IconDefiledRiven
 UI/WorldGen/IconHallowDefiledCrimson
 UI/WorldGen/IconRivenCorruption
 UI/WorldGen/IconRivenHallow
+UI/WorldGen/IconRivenNormal
 UI/WorldGen/IconTemplate
 UI/WorldGen/PreviewEvilDefiled
 UI/WorldGen/PreviewEvilRiven

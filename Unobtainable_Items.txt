@@ -1,14 +1,10 @@
 Adjusto_Hook
-Amebic_Bucket
-Amebic_Gel_Sponge
 AMRSL_Skewer
 Area_Denial
 ASH_Attack_Relay: [Seal of Cinders]
 Background_Door_Item
 Blast_Furnace
 Bomb_Rack
-Brine_Bottomless_Bucket
-Brine_Sponge
 Burning_Oil_Bucket
 Corona
 Decorative_Ashes
@@ -36,11 +32,8 @@ Mechanical_Key_Orange
 Mechanical_Key_Purple
 Mechanical_Key_Yellow
 Mojo_Harvest
-Multi_Bucket: [Bottomless Brine Bucket, Bottomless Oil Bucket]
 Mushroom_Key
 Ocean_Key
-Oil_Bottomless_Bucket
-Oil_Sponge
 PEE_Breastplate
 PEE_Greaves
 PEE_Helmet
@@ -61,7 +54,6 @@ Space_Pirates_Eye
 Structure_Void_Marker_Item
 Tank_Rifle
 The_Muffler
-Vampire_Fireflower_In_A_Pot
 Welding_Torch
 Worn_Paper_Famine
 Worn_Paper_Smog_Test
