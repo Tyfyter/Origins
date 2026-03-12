@@ -1521,6 +1521,11 @@ Buffs: {
 		DisplayName: Vampire Sunflower Buff
 		Description: Mods.Origins.Buffs.Vampire_Sunflower_Buff.Description
 	}
+
+	Crazy_Buff: {
+		DisplayName: Crazy!
+		Description: Mods.Origins.Buffs.Crazy_Buff.Description
+	}
 }
 
 DamageClassName: {

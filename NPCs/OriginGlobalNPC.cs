@@ -508,26 +508,19 @@ namespace Origins.NPCs {
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) {
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			float spawnRateMultiplier = 1f;
-			float maxSpawnsMultiplier = 1f;
-			if (originPlayer.necroSet || originPlayer.necroSet2) {
-				spawnRateMultiplier *= 0.5f;
-				maxSpawnsMultiplier *= 2f;
-			}
+			OriginPlayer oP = player.GetModPlayer<OriginPlayer>();
+			ref float spawnRateMultiplier = ref oP.spawnRateMultiplier;
+			ref float maxSpawnsMultiplier = ref oP.maxSpawnsMultiplier;
 			if (player.InModBiome<Defiled_Wastelands>() || player.InModBiome<Riven_Hive>()) {
-				spawnRateMultiplier *= 0.65f;
+				spawnRateMultiplier /= 0.65f;
 				maxSpawnsMultiplier *= 1.3f;
 			}
 			if (Framing.GetTileSafely(player.Bottom - Vector2.UnitY).WallType == ModContent.WallType<Baryte_Wall>()) {
-				spawnRateMultiplier *= 0.2f;
+				spawnRateMultiplier *= 5f;
 			}
-			if (player.HasBuff<Cannihound_Lure_Debuff>()) {
-				spawnRateMultiplier *= 0.8f;
-			}
-			spawnRate = (int)(spawnRate * spawnRateMultiplier);
+			spawnRate = (int)(spawnRate / spawnRateMultiplier);
 			maxSpawns = (int)(maxSpawns * maxSpawnsMultiplier);
-			if (originPlayer.rapidSpawnFrames > 0 || originPlayer.swarmStatue) {
+			if (oP.rapidSpawnFrames > 0 || oP.swarmStatue) {
 				spawnRate = 1;
 			}
 		}

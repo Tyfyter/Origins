@@ -36,6 +36,8 @@ namespace Origins.Items.Armor.Necromancer {
 				player.manaCost *= 0.5f;
 			}
 			originPlayer.necroSet = true;
+			originPlayer.spawnRateMultiplier *= 2;
+			originPlayer.maxSpawnsMultiplier *= 2;
 			float killMult = originPlayer.necroSetAmount * 0.002f;
 			player.GetAttackSpeed(DamageClass.Summon) += Math.Min(0.1f * killMult, 0.6f);
 			player.GetDamage(DamageClass.Summon) += Math.Min(0.1f * killMult, 0.75f);
@@ -150,6 +152,8 @@ namespace Origins.Items.Armor.Necromancer {
 				player.manaCost *= 0.5f;
 			}
 			originPlayer.necroSet2 = true;
+			originPlayer.spawnRateMultiplier *= 2;
+			originPlayer.maxSpawnsMultiplier *= 2;
 
 			player.maxMinions += 3;
 		}

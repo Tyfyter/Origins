@@ -288,5 +288,8 @@ namespace Origins.NPCs.Crimson {
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
 		}
+		public override void Update(Player player, ref int buffIndex) {
+			player.OriginPlayer().spawnRateMultiplier *= 1.25f;
+		}
 	}
 }

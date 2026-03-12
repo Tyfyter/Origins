@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Core;
+using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Weapons.Summoner;
 using Origins.Items.Weapons.Summoner.Minions;
@@ -23,7 +24,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 9;
+			Item.damage = 20;
 			Item.knockBack = 1f;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 14;
@@ -42,13 +43,12 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.noMelee = true;
 		}
 		public override void AddRecipes() {
-			//CreateRecipe()
-			//.AddIngredient(ItemID.ClayPot)
-			//.AddIngredient(ItemID.DirtBlock, 5)
-			//.AddIngredient(ItemID.FallenStar, 3)
-			//.AddIngredient(ItemID.Sunflower)
-			//.AddTile(TileID.WorkBenches)
-			//.Register();
+			CreateRecipe()
+			.AddIngredient<Sunflower_In_A_Pot>()
+			.AddIngredient(ItemID.BrokenHeroSword)
+			.AddIngredient<Messy_Magma_Leech>()
+			.AddTile(TileID.MythrilAnvil)
+			.Register();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			player.AddBuff(Item.buffType, 2);
@@ -72,6 +72,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool DiesHorriblyInLava => false;
 		public override int ProjectileType => ModContent.ProjectileType<Vampire_Sunflower_P>();
 		public override int ProjectileTime => 9;
+		public override int BuffToCheck => Vampire_Sunflower_Buff.ID;
 		public static new int ID { get; private set; }
 		public override bool PreDraw(ref Color lightColor) {
 			Main.instance.LoadProjectile(ProjectileID.DandelionSeed);
@@ -79,7 +80,26 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Draw(lightColor, TextureAssets.Projectile[Type].Value, null, wingTexture);
 			return false;
 		}
-
+		protected override void BuffAllies(int team) {
+			int buff = 0;
+			if (Main.dayTime) buff = BuffID.Sunflower;
+			if (Main.bloodMoon || Main.eclipse) buff = ModContent.BuffType<Crazy_Buff>();
+			foreach (Player healee in Main.ActivePlayers) {
+				if (healee.team == team && Projectile.Center.Clamp(healee.Hitbox).WithinRange(Projectile.Center, 16 * 30.5f)) {
+					healee.lifeRegen += 2;
+					healee.AddBuff(buff, 2);
+					Dust dust = Dust.NewDustDirect(
+						healee.position,
+						healee.width,
+						healee.height,
+						DustID.YellowTorch,
+						SpeedY: -2
+					);
+					dust.velocity *= 0.5f;
+					dust.noGravity = true;
+				}
+			}
+		}
 		internal static void UpdateDOTLifesteal() {
 			if (Main.LocalPlayer is not null) Main.LocalPlayer.lifeRegenCount += 5;
 		}
@@ -91,6 +111,20 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			int time = 60 * Main.rand.Next(3, 6);
 			target.AddBuff(BuffID.OnFire3, time);
 			Max(ref target.GetGlobalNPC<OriginGlobalNPC>().vampireFireflowerTime, time);
+		}
+	}
+	public class Crazy_Buff : ModBuff {
+		public override string Texture => $"Terraria/Images/Buff_{BuffID.Sunflower}";
+		public override void SetStaticDefaults() {
+			Main.buffNoTimeDisplay[Type] = true;
+			BuffID.Sets.GrantImmunityWith[Type].Add(BuffID.Sunflower);
+		}
+		public override void Update(Player player, ref int buffIndex) {
+			OriginPlayer oP = player.OriginPlayer();
+			player.moveSpeed += 0.15f;
+			oP.moveSpeedMult *= 1.3f;
+			oP.spawnRateMultiplier *= 1.17f;
+			oP.maxSpawnsMultiplier *= 1.2f;
 		}
 	}
 }

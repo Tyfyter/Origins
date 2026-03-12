@@ -73,6 +73,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public virtual bool DiesHorriblyInLava => true;
 		public virtual int ProjectileType => ModContent.ProjectileType<Sunflower_Sunny_P>();
 		public virtual int ProjectileTime => 9;
+		public virtual int BuffToCheck => Sunny_Sunflower_Buff.ID;
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
 		public static int ID { get; private set; }
@@ -149,8 +150,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active) {
-				player.ClearBuff(Sunny_Sunflower_Buff.ID);
-			} else if (player.HasBuff(Sunny_Sunflower_Buff.ID)) {
+				player.ClearBuff(BuffToCheck);
+			} else if (player.HasBuff(BuffToCheck)) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion

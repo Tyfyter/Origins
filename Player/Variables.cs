@@ -666,6 +666,8 @@ namespace Origins {
 		HashSet<Point> touchedMurkySludges = [];
 		HashSet<Point> touchingMurkySludges = [];
 		float murkySludgeTouchTimer = 0;
+		[AutoReset] public float spawnRateMultiplier = 1f;
+		[AutoReset] public float maxSpawnsMultiplier = 1f;
 		internal void SetUsingScope() => willBeUsingScope = true;
 		internal void UpdateUsingScope() {
 			isUsingScope = willBeUsingScope;
