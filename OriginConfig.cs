@@ -626,6 +626,7 @@ namespace Origins {
 						}
 					}
 					foreach (Type type in AssemblyManager.GetLoadableTypes(Origins.instance.Code)) {
+						if (type.Name.Contains('<')) continue;
 						foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
 							if (field.FieldType.IsConstructedGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(AutoLoadingAsset<>)) {
 								Type assetType = field.FieldType.GenericTypeArguments[0];
