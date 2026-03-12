@@ -67,20 +67,20 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 
 				i => i.MatchLdloc(count),//IL_00b7: ldloc.2
 				i => i.MatchLdcI4(3),//IL_00b8: ldc.i4.3
-				i => i.MatchBlt(out _)   //IL_00b9: blt.s IL_0040
+				i => i.MatchBlt(out _)//IL_00b9: blt.s IL_0040
 			)) {
 				int index = c.Index;
 				if (c.TryGotoPrev(MoveType.After,
-					i => i.MatchLdcI4(0),   //IL_003d: ldc.i4.0
-					i => i.MatchStloc(count)	//IL_003d: stloc.2
+					i => i.MatchLdcI4(0),//IL_003d: ldc.i4.0
+					i => i.MatchStloc(count)//IL_003d: stloc.2
 				)) {
 					c.Index--;
 					c.EmitLdsfld(f_1);
-					c.EmitLdcR4(float.BitDecrement(7f));
+					c.EmitLdcR4(float.BitDecrement(5.25f));
 					c.EmitCgt();
 					c.EmitAdd();
 					c.EmitLdsfld(f_1);
-					c.EmitLdcR4(float.BitDecrement(10.5f));
+					c.EmitLdcR4(float.BitDecrement(7f));
 					c.EmitCgt();
 					c.EmitAdd();
 				}
