@@ -192,7 +192,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public const string base_texture_path = "Origins/Items/Weapons/Ammo/Canisters/";
 		public abstract AutoLoadingAsset<Texture2D> OuterTexture { get; }
 		public abstract AutoLoadingAsset<Texture2D> InnerTexture { get; }
-		public book SkipKillEffects => false;
+		public bool SkipKillEffects => false;
 		public void DefaultExplosion(Projectile projectile, int fireDustType = DustID.Torch, int size = 96) => CanisterGlobalProjectile.DefaultExplosion(projectile, false, fireDustType: fireDustType, size: size);
 		public void CustomDraw(Projectile projectile, CanisterData canisterData, Color lightColor) {
 			Vector2 origin = OuterTexture.Value.Size() * 0.5f;
