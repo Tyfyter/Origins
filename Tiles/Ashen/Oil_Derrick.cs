@@ -46,6 +46,7 @@ namespace Origins.Tiles.Ashen {
 					color
 				);
 			}
+			frame.Y = (frame.Y + 7 * 18 * 4) % (7 * 18 * 8);
 			return base.PreDrawPlacementPreview(i, j, spriteBatch, ref frame, ref position, ref color, validPlacement, ref spriteEffects);
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
@@ -65,9 +66,17 @@ namespace Origins.Tiles.Ashen {
 					playingSound.Volume = 0.2f / float.Max(pos.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1);
 					return true;
 				});
-				if (Main.tileFrame[type] == 5) SoundEngine.PlaySound(SoundID.Item108.WithPitch(-1.4f).WithVolume(0.32f * mult), position);
+				if (Main.tileFrame[type] == 1) SoundEngine.PlaySound(SoundID.Item108.WithPitch(-1.4f).WithVolume(0.32f * mult), position);
 				if (Main.rand.NextBool(150)) SoundEngine.PlaySound(SoundID.Item148.WithPitch(-0.5f).WithVolume(0.48f * mult), position);
 			}
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			Tile tile = Main.tile[i, j];
+			if (!IsPart(tile.TileFrameX / 18, tile.TileFrameY / 18)) {
+				tile.HasTile = false;
+				return false;
+			}
+			return true;
 		}
 		public static bool IsPart(int i, int j) {
 			switch (i, j) {
@@ -86,8 +95,11 @@ namespace Origins.Tiles.Ashen {
 				case (2, 2):
 
 				case (3, 0):
+				case (3, 1):
+
 				case (4, 0):
 				case (5, 0):
+				case (7, 0):
 				return false;
 			}
 			return true;

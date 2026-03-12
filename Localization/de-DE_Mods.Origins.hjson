@@ -2280,8 +2280,8 @@ Projectiles: {
 	// Matryoshka_Doll_Minion.DisplayName: Matryoshka Doll Minion
 	// Vampire_Fireflower.DisplayName: Vampire Fireflower
 	// Vampire_Sunflower_P.DisplayName: Vampire Sunflower
-	// Clunkaclusta_P.DisplayName: Clunkaclusta
-	// Clunkaclusta_Mini_P.DisplayName: Clunkaclusta
+	// Clunkaclusta_P.DisplayName: "[fool:Items.Clunkaclusta.DisplayName]"
+	// Clunkaclusta_Mini_P.DisplayName: "[fool:Items.Clunkaclusta.DisplayName]"
 }
 
 Prefixes: {
