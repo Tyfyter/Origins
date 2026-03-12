@@ -104,7 +104,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			Projectile.rotation += 0.01f;
-			Projectile.localAI[0] = Projectile.GetGlobalProjectile<ExplosiveGlobalProjectile>().ApplyBlastRadius(BaseRadius, Projectile.owner);
+			Projectile.localAI[0] = Projectile.GetBlastRadius().ApplyTo(BaseRadius);
 			if (Projectile.ai[0] == 0) {
 				Projectile.ai[1] = 1 - (1 - Projectile.ai[1]) * 0.82f;
 				if (MathUtils.LinearSmoothing(ref Projectile.ai[1], 1, 0.001f)) {

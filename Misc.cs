@@ -5437,8 +5437,7 @@ namespace Origins {
 		public static void ExplodeRadius(this Projectile proj, int tileDestructionRadius, bool applyBlastRadiusBonuses = true) {
 			if (applyBlastRadiusBonuses && proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) {
 				tileDestructionRadius *= 16;
-				tileDestructionRadius = (int)global.modifierBlastRadius
-					.CombineWith(Main.player[proj.owner].GetModPlayer<OriginPlayer>().explosiveBlastRadius)
+				tileDestructionRadius = (int)global.GetBlastRadius(proj)
 					.Scale(0.5f)
 					.ApplyTo(tileDestructionRadius);
 				tileDestructionRadius /= 16;
@@ -5464,6 +5463,9 @@ namespace Origins {
 			Rectangle hitbox = proj.Hitbox;
 			ProjectileLoader.ModifyDamageHitbox(proj, ref hitbox);
 			return new(hitbox.Width / (float)proj.width, hitbox.Height / (float)proj.height);
+		}
+		public static StatModifier GetBlastRadius(this Projectile proj, BlastRadiusSources includeSources = BlastRadiusSources.All) {
+			return proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global) ? global.GetBlastRadius(proj, includeSources) : default;
 		}
 	}
 	public static class ContentExtensions {
@@ -5808,6 +5810,10 @@ namespace Origins {
 		}
 		public static void Max<T>(ref T current, T @new) where T : IComparisonOperators<T, T, bool> {
 			if (current < @new) current = @new;
+		}
+		public static void Clamp<T>(ref T current, T min, T max) where T : IComparisonOperators<T, T, bool> {
+			if (current < min) current = min;
+			else if (current > max) current = max;
 		}
 		public static bool Minimize<T>(ref T current, T @new) where T : IComparisonOperators<T, T, bool> {
 			if (current > @new) {

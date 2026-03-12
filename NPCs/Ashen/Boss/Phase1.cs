@@ -152,7 +152,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				Projectile.localNPCHitCooldown = 6;
 			}
 			public override void OnSpawn(IEntitySource source) {
-				if (Projectile.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) global.modifierBlastRadius *= 2;
+				if (Projectile.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) global.projectileBlastRadius *= 2;
 			}
 			public override bool OnTileCollide(Vector2 oldVelocity) {
 				if (Projectile.velocity.X == 0f) {

@@ -154,7 +154,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.rotation += Projectile.velocity.X * 0.03f;
 		}
 		public override void OnSpawn(IEntitySource source) {
-			if (Projectile.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) global.modifierBlastRadius *= 0.3f;
+			if (Projectile.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) global.projectileBlastRadius *= 0.3f;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			float gravMult = Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().gravityMultiplier;

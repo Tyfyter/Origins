@@ -61,9 +61,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.localNPCHitCooldown = 10;
 		}
 		public override void OnSpawn(IEntitySource source) {
-			if (Projectile.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) {
-				global.modifierBlastRadius = global.modifierBlastRadius.CombineWith(new(1, 1.5f));
-			}
+			if (Projectile.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) global.projectileBlastRadius *= 1.5f;
 		}
 		public override void AI() {
 			if (++Projectile.localAI[0] < 7) return;

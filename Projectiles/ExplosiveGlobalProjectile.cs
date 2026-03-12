@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using MonoMod.Utils;
 using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Armor.Amber;
@@ -32,6 +33,7 @@ namespace Origins.Projectiles {
 		public bool scrapCompactor = false;
 		public bool hasAmber = false;
 		public bool fromDeath = false;
+		public StatModifier projectileBlastRadius = StatModifier.Default;
 		public StatModifier selfDamageModifier = StatModifier.Default;
 		public StatModifier modifierBlastRadius = StatModifier.Default;
 		public override bool InstancePerEntity => true;
@@ -145,6 +147,13 @@ namespace Origins.Projectiles {
 				//nextExplodingProjectiles.Add(projectile.Center);
 			}*/
 		}
+		public StatModifier GetBlastRadius(Projectile projectile, BlastRadiusSources includeSources = BlastRadiusSources.All) {
+			StatModifier modifier = StatModifier.Default;
+			if (includeSources.Has(BlastRadiusSources.Base)) modifier = modifier.CombineWith(projectileBlastRadius);
+			if (includeSources.Has(BlastRadiusSources.Prefix)) modifier = modifier.CombineWith(modifierBlastRadius);
+			if (includeSources.Has(BlastRadiusSources.Player)) modifier = modifier.CombineWith(Main.player[projectile.owner].OriginPlayer().explosiveBlastRadius);
+			return modifier;
+		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
 			Player player = Main.player[projectile.owner];
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
@@ -192,18 +201,12 @@ namespace Origins.Projectiles {
 		}
 		public override void CutTiles(Projectile projectile) {
 			if (IsExploding(projectile)) {
-				OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
 				Rectangle hitbox = projectile.Hitbox;
-				bool modifiedBlastRadius = false;
-				if (modifierBlastRadius != StatModifier.Default) {
-					StatModifier modifier = modifierBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+				StatModifier modifier = GetBlastRadius(projectile);
+				bool modifiedBlastRadius = modifier != StatModifier.Default;
+				if (modifiedBlastRadius) {
+					modifier = modifierBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
 					hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
-					modifiedBlastRadius = true;
-				}
-				if (originPlayer.explosiveBlastRadius != StatModifier.Default) {
-					StatModifier modifier = originPlayer.explosiveBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
-					hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
-					modifiedBlastRadius = true;
 				}
 				if (modifiedBlastRadius) {
 					int minX = hitbox.X / 16;
@@ -230,28 +233,12 @@ namespace Origins.Projectiles {
 				}
 			}
 		}
-		public float ApplyBlastRadius(float value, int owner) {
-			if (modifierBlastRadius != StatModifier.Default) {
-				StatModifier modifier = modifierBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
-				value = modifier.ApplyTo(value);
-			}
-			OriginPlayer originPlayer = Main.player[owner].GetModPlayer<OriginPlayer>();
-			if (originPlayer.explosiveBlastRadius != StatModifier.Default) {
-				StatModifier modifier = originPlayer.explosiveBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
-				value = modifier.ApplyTo(value);
-			}
-			return value;
-		}
 		public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
-			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
 			if (IsExploding(projectile)) {
 				nextExplodingProjectiles.Add(projectile.Center);
-				if (modifierBlastRadius != StatModifier.Default) {
-					StatModifier modifier = modifierBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
-					hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
-				}
-				if (originPlayer.explosiveBlastRadius != StatModifier.Default) {
-					StatModifier modifier = originPlayer.explosiveBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+				StatModifier modifier = GetBlastRadius(projectile);
+				if (modifier != StatModifier.Default) {
+					modifier = modifierBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
 					hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
 				}
 			}
@@ -820,5 +807,13 @@ namespace Origins.Projectiles {
 		}
 		public void Explode(int delay = 0) { }
 		public bool IsExploding => true;
+	}
+	[Flags]
+	public enum BlastRadiusSources : byte {
+		None = 0,
+		Base = 1 << 0,
+		Prefix = 1 << 1,
+		Player = 1 << 2,
+		All = 0xFF
 	}
 }

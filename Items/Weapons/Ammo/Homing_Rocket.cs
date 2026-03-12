@@ -59,8 +59,7 @@ namespace Origins.Items.Weapons.Ammo {
 			int tileDestructionRadius = TRocketItem.TileDestructionRadius;
 			if (tileDestructionRadius > 0) {
 				tileDestructionRadius *= 16;
-				tileDestructionRadius = (int)Projectile.GetGlobalProjectile<ExplosiveGlobalProjectile>().modifierBlastRadius
-					.CombineWith(Main.player[Projectile.owner].GetModPlayer<OriginPlayer>().explosiveBlastRadius)
+				tileDestructionRadius = (int)Projectile.GetBlastRadius()
 					.Scale(0.5f)
 					.ApplyTo(tileDestructionRadius);
 				tileDestructionRadius /= 16;
