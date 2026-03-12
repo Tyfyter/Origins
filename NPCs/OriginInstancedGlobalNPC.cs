@@ -156,6 +156,7 @@ namespace Origins.NPCs {
 			tetanus = false;
 			if (vampireFireflowerTime > 0) {
 				vampireFireflowerTime--;
+				if (!npc.HasBuff(BuffID.OnFire3)) vampireFireflowerTime = 0;
 				Vampire_Fireflower.UpdateDOTLifesteal();
 			}
 		}
