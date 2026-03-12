@@ -12,7 +12,7 @@ namespace Origins.Buffs {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			player.moveSpeed *= 1.5f;
+			player.OriginPlayer().moveSpeedMult *= 1.5f;
 			player.GetDamage(DamageClass.Generic) *= 1.2f;
 		}
 	}

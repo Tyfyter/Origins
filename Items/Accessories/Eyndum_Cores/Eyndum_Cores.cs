@@ -31,7 +31,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 		public override Color CoreGlowColor => new(255, 220, 0, 160);
 		public override void UpdateEquip(Player player) {
 			player.wingTimeMax *= 2;
-			player.moveSpeed *= 4f;
+			player.OriginPlayer().moveSpeedMult *= 4f;
 			player.runAcceleration *= 3f;
 			player.maxRunSpeed *= 3f;
 			player.jumpSpeedBoost += 5;
