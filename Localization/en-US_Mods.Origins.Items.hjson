@@ -8212,3 +8212,8 @@ Amebic_Gel_Bottomless_Bucket: {
 	Tooltip: Contains an endless amount of amebic gel
 	LiquidName: Amebic Gel
 }
+
+Clunkaclusta: {
+	DisplayName: Clunkaclusta
+	Tooltip: ""
+}

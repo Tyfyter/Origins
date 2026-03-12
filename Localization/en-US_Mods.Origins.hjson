@@ -2279,7 +2279,9 @@ Projectiles: {
 	Repairboy_P.DisplayName: Repairboy
 	Matryoshka_Doll_Minion.DisplayName: Matryoshka Doll Minion
 	Vampire_Fireflower.DisplayName: Vampire Fireflower
-	Vampire_Sunflower_P.DisplayName: Vampire Sunflower P
+	Vampire_Sunflower_P.DisplayName: Vampire Sunflower
+	Clunkaclusta_P.DisplayName: "[fool:Items.Clunkaclusta.DisplayName]"
+	Clunkaclusta_Mini_P.DisplayName: "[fool:Items.Clunkaclusta.DisplayName]"
 }
 
 Prefixes: {
