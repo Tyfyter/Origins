@@ -1518,8 +1518,8 @@ Buffs: {
 	}
 
 	Vampire_Sunflower_Buff: {
-		DisplayName: Vampire Sunflower Buff
-		Description: Mods.Origins.Buffs.Vampire_Sunflower_Buff.Description
+		DisplayName: Vampire Sunflower
+		Description: "{$Sunny_Sunflower_Buff.Description}"
 	}
 
 	Crazy_Buff: {
