@@ -505,13 +505,17 @@ namespace Origins.NPCs {
 					pool.Add(ModContent.NPCType<Riven_Mimic>(), Riven_Hive.SpawnRates.Mimic);
 					pool.Add(ModContent.NPCType<Savage_Whip>(), Riven_Hive.SpawnRates.Whip);
 				}
+				if (player.InModBiome<Ashen_Biome>() && !ModContent.GetInstance<Ashen_Biome.SpawnRates>().IsActive(spawnInfo)) {
+					pool.Add(ModContent.NPCType<Riven_Mimic>(), Ashen_Biome.SpawnRates.Mimic);
+					pool.Add(ModContent.NPCType<Savage_Whip>(), Ashen_Biome.SpawnRates.CursedWeapon);
+				}
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) {
 			OriginPlayer oP = player.GetModPlayer<OriginPlayer>();
 			ref float spawnRateMultiplier = ref oP.spawnRateMultiplier;
 			ref float maxSpawnsMultiplier = ref oP.maxSpawnsMultiplier;
-			if (player.InModBiome<Defiled_Wastelands>() || player.InModBiome<Riven_Hive>()) {
+			if (player.InModBiome<Defiled_Wastelands>() || player.InModBiome<Riven_Hive>() || player.InModBiome<Ashen_Biome>()) {
 				spawnRateMultiplier /= 0.65f;
 				maxSpawnsMultiplier *= 1.3f;
 			}
