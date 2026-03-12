@@ -2,6 +2,7 @@
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
+using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -90,6 +91,10 @@ namespace Origins.NPCs.Riven {
 			NPC.DoFlyingAI(4f, 0.02f, 0.4f);
 			if (!NPC.velocity.IsWithin(default, 1)) NPC.velocity = NPC.velocity.RotatedBy(MathF.Cos(NPC.ai[0] * MathHelper.PiOver4 * 0.25f) * 0.03f);
 			NPC.rotation = NPC.velocity.ToRotation() - MathHelper.PiOver2;
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			base.ModifyNPCLoot(npcLoot);
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Marrowick_Item>(), 5, 6, 14));
 		}
 	}
 }
