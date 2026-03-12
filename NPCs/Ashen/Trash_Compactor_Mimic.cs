@@ -1,6 +1,8 @@
 ﻿using Origins.Dev;
 using Origins.Items.Accessories;
+using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Ranged;
 using Origins.NPCs.Defiled;
 using Origins.World.BiomeData;
 using Terraria;
@@ -8,7 +10,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginsModIntegrations;
 
 namespace Origins.NPCs.Ashen {
 	public class Trash_Compactor_Mimic : ModNPC, IAshenEnemy, IWikiNPC, ICustomWikiStat {
@@ -50,10 +51,10 @@ namespace Origins.NPCs.Ashen {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.OneFromOptions(1,
 				ModContent.ItemType<Pacemaker>(),
-				ModContent.ItemType<Laser_Target_Locator>()
-				/*ModContent.ItemType<Ziptie>(),
-				ModContent.ItemType<Ravel>(),
-				ModContent.ItemType<Tangela_Tether>()*/
+				ModContent.ItemType<Laser_Target_Locator>(),
+				ModContent.ItemType<AMRSL_Skewer>(),
+				//ModContent.ItemType<Ravel>(),
+				ModContent.ItemType<Adjusto_Hook>()
 			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));

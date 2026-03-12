@@ -1,5 +1,3 @@
-Adjusto_Hook
-AMRSL_Skewer
 Area_Denial
 ASH_Attack_Relay: [Seal of Cinders]
 Background_Door_Item
