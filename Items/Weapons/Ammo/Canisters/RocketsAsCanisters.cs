@@ -1,4 +1,6 @@
-﻿using Origins.Dusts;
+﻿using MonoMod.Cil;
+using Origins.Dusts;
+using Origins.Graphics;
 using Origins.Liquids;
 using Origins.Projectiles;
 using Origins.Projectiles.Weapons;
@@ -42,6 +44,16 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			new Liquid_Rocket_Dummy_Canister(Canister(0x9b7c40, 0xfec214, true), DelegateMethods.SpreadHoney).Register(ItemID.HoneyRocket);
 			new Liquid_Rocket_Dummy_Canister(Canister(new Color(48, 48, 48), new Color(79, 68, 59), true), BaseLiquidRocketP.SpreadLiquid<Oil>(Oil_Rocket.GetDustType, Oil_Rocket.GetDustColor)).Register(ModContent.ItemType<Oil_Rocket>());
 			new Liquid_Rocket_Dummy_Canister(Canister(new Color(29, 98, 12), new Color(26, 61, 4), true), BaseLiquidRocketP.SpreadLiquid<Brine>(() => DustID.Water_Jungle)).Register(ModContent.ItemType<Brine_Rocket>());
+			IL_DelegateMethods.SpreadDry += EfficientifyDust;
+			IL_DelegateMethods.SpreadWater += EfficientifyDust;
+			IL_DelegateMethods.SpreadLava += EfficientifyDust;
+			IL_DelegateMethods.SpreadHoney += EfficientifyDust;
+		}
+		static void EfficientifyDust(ILContext il) {
+			ILCursor c = new(il);
+			while (c.TryGotoNext(MoveType.Before, i => i.MatchCall<Dust>(nameof(Dust.NewDustDirect)))) {
+				c.Next.Operand = il.Import(((Delegate)EfficientDust.NewDustDirect).Method);
+			}
 		}
 		//Shorthand methods
 		static CanisterData Canister(Color o, Color i, bool special = false) => new(o, i, special);
@@ -72,8 +84,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			int tileDestructionRadius = this.tileDestructionRadius;
 			if (tileDestructionRadius > 0) {
 				tileDestructionRadius *= 16;
-				tileDestructionRadius = (int)projectile.GetGlobalProjectile<ExplosiveGlobalProjectile>().modifierBlastRadius
-					.CombineWith(Main.player[projectile.owner].GetModPlayer<OriginPlayer>().explosiveBlastRadius)
+				tileDestructionRadius = (int)projectile.GetBlastRadius()
 					.Scale(0.5f)
 					.ApplyTo(tileDestructionRadius);
 				tileDestructionRadius /= 16;
@@ -139,9 +150,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 						pos = offsetCenter.ToTileCoordinates();
 					}
 				}
-				float liquidRadius = projectile.GetGlobalProjectile<ExplosiveGlobalProjectile>().modifierBlastRadius
-					.CombineWith(Main.player[projectile.owner].GetModPlayer<OriginPlayer>().explosiveBlastRadius)
-					.ApplyTo(liquidSize);
+				float liquidRadius = projectile.GetBlastRadius().ApplyTo(liquidSize);
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pos, liquidRadius, tileAction);
 			}
 		}

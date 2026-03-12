@@ -751,6 +751,7 @@ namespace Origins {
 			currentScreenTarget = null;
 		}
 		public override void PostSetupContent() {
+			EfficientDust.SetupDefaults();
 			FishingLoot.AddToVanillaPools();
 			Regex safeGoreRegex = new("^(Ashen|DF|FG|Felnum|Shimmer)", RegexOptions.Compiled);
 			foreach (SimpleModGore gore in GetContent<SimpleModGore>()) {
