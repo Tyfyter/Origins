@@ -182,7 +182,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 						pos = offsetCenter.ToTileCoordinates();
 					}
 				}
-				float liquidRadius = projectile.GetBlastRadius().ApplyTo(liquidSize);
+				float liquidRadius = projectile.GetBlastRadius().ApplyTo(liquidSize * 16) / 16;
 				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pos, liquidRadius, tileAction);
 			}
 		}
