@@ -2,6 +2,7 @@
 using ModLiquidLib.Utils;
 using Origins.Core;
 using Origins.Dusts;
+using Origins.Graphics;
 using Origins.Liquids;
 using System;
 using Terraria;
@@ -92,9 +93,9 @@ namespace Origins.Items.Weapons.Ammo {
 				.velocity *= 1.4f;
 			}
 			for (int i = 0; i < 80; i++) {
-				Dust.NewDustDirect(proj.position, proj.width, proj.height, dust, 0f, 0f, 100, color, 2.2f)
+				EfficientDust.NewDustDirect(proj.position, proj.width, proj.height, dust, 0f, 0f, 100, color, 2.2f)
 				.velocity *= 7f;
-				Dust.NewDustDirect(proj.position, proj.width, proj.height, dust, 0f, 0f, 100, color, 1.3f)
+				EfficientDust.NewDustDirect(proj.position, proj.width, proj.height, dust, 0f, 0f, 100, color, 1.3f)
 				.velocity *= 4f;
 			}
 			for (int i = 1; i <= 2; i++) {
