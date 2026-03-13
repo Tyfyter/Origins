@@ -289,5 +289,11 @@ namespace Origins.Liquids {
 		public override void PostDraw(int i, int j, LiquidRenderer.LiquidDrawCache liquidDrawCache, Vector2 drawOffset, bool isBackgroundDraw) {
 			base.PostDraw(i, j, liquidDrawCache, drawOffset, isBackgroundDraw);
 		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			float strength = 0.55f + (270 - Main.mouseTextColor) / 900f;
+			Max(ref r, strength);
+			Max(ref g, strength * 0.6f);
+			Max(ref b, strength * 0.2f);
+		}
 	}
 }
