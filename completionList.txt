@@ -1110,7 +1110,7 @@ EXPLOSIVE WEAPONS:
 (^) Bombardment
 (^) Bomb Launcher
 (^) Brainade
-(#3, ^2) Clunkaclusta !!! (explosion on the small projectiles aren't being scaled, can't channel when using aether canister, liquid/dry rockets makes the big projectile explode upon contact with liquids)
+(#3, ^2) Clunkaclusta !!! (liquid/dry rockets makes the big projectile explode upon contact with liquids)
 (^) Cold Snap
 (^) Defiled Spirit
 (^) Eruption

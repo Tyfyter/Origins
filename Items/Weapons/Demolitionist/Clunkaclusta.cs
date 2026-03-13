@@ -97,7 +97,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			this.DoGravity(0.08f);
 			Projectile.rotation += Projectile.velocity.X * 0.05f;
 			if (player.channel && StoppedChanneling == 0) {
-				Max(ref Projectile.timeLeft, 2);
+				Max(ref Projectile.timeLeft, 3);
 				Max(ref player.itemAnimation, (int)((1 - 10f / 12f) * player.itemAnimationMax));
 				Max(ref player.itemTime, (int)((1 - 10f / 12f) * player.itemTimeMax));
 

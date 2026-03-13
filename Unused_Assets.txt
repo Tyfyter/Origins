@@ -790,7 +790,6 @@ UI/MapBGs/Brine_Pool
 UI/MapBGs/Defiled_Ocean
 UI/MapBGs/Defiled_Snow
 UI/MapBGs/Defiled_Wastelands_Desert
-UI/MapBGs/Defiled_Wastelands_Normal
 UI/MapBGs/Eutrophic_Sea
 UI/MapBGs/Fiberglass_Caverns
 UI/MapBGs/Riven_Desert
