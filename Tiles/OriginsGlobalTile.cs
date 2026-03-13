@@ -18,7 +18,7 @@ using Terraria.ObjectData;
 using static Origins.NPCs.Ashen.Repairboy;
 
 namespace Origins.Tiles {
-	public class OriginsGlobalTile : GlobalTile {
+	public class OriginsGlobalTile : GlobalTile, IItemObtainabilityProvider {
 		static Dictionary<int, AutoLoadingAsset<Texture2D>> stalactiteTextures;
 		public override void Load() {
 			MonoModHooks.Add(typeof(TileLoader).GetMethod(nameof(TileLoader.GetItemDrops)), static (orig_GetItemDrops orig, int x, int y, Tile tileCache, bool includeLargeObjectDrops = false, bool includeAllModdedLargeObjectDrops = false) => {
@@ -204,5 +204,6 @@ namespace Origins.Tiles {
 				}
 			}
 		}
+		public IEnumerable<int> ProvideItemObtainability() => [ModContent.ItemType<Mojo_Harvest>()];
 	}
 }

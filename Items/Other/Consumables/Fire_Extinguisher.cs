@@ -15,7 +15,7 @@ using Terraria.ModLoader.IO;
 
 namespace Origins.Items.Other.Consumables {
 	[ReinitializeDuringResizeArrays]
-	public class Fire_Extinguisher : ModItem, ICustomWikiStat, ICustomDrawItem {
+	public class Fire_Extinguisher : ModItem, ICustomWikiStat, ICustomDrawItem, IItemObtainabilityProvider {
 		AutoLoadingAsset<Texture2D> bottleTexture = typeof(Fire_Extinguisher).GetDefaultTMLName("_Bottle");
 		AutoLoadingAsset<Texture2D> cordTexture = typeof(Fire_Extinguisher).GetDefaultTMLName("_Cord");
 		public static bool[] FireExtinguisherExtinguishes { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(FireExtinguisherExtinguishes)}")
@@ -135,6 +135,7 @@ namespace Origins.Items.Other.Consumables {
 		public override void NetReceive(BinaryReader reader) => durability = reader.ReadInt32();
 		public override void SaveData(TagCompound tag) => tag[nameof(durability)] = durability;
 		public override void LoadData(TagCompound tag) => durability = tag.TryGet(nameof(durability), out durability) ? durability : MaxDurability;
+		public IEnumerable<int> ProvideItemObtainability() => [ModContent.ItemType<Empty_Fire_Extinguisher>()];
 	}
 	public class Empty_Fire_Extinguisher : Fire_Extinguisher {
 		public override int MaxDurability => 0;

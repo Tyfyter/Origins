@@ -18,7 +18,7 @@ using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 
 namespace Origins.Items.Accessories;
-public abstract class Retool_Arm : ModItem {
+public abstract class Retool_Arm : ModItem, IItemObtainabilityProvider {
 	static readonly List<Retool_Arm> arms = [];
 	[CloneByReference] protected KinematicUtils.Arm arm = new() {
 		bone0 = new(18.9f, 0),
@@ -92,6 +92,7 @@ public abstract class Retool_Arm : ModItem {
 	public abstract void DrawArm(ref PlayerDrawSet drawInfo);
 	public virtual void OnSwitchFrom(Player player) { }
 	public virtual void OnSwitchTo(Player player) { }
+	public IEnumerable<int> ProvideItemObtainability() => [Type];
 }
 public class Retool_Arm_Cannon : Retool_Arm {
 	public override string Texture => typeof(Retool_Arm).GetDefaultTMLName();

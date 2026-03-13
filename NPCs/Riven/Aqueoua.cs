@@ -93,8 +93,8 @@ namespace Origins.NPCs.Riven {
 			NPC.rotation = NPC.velocity.ToRotation() - MathHelper.PiOver2;
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			base.ModifyNPCLoot(npcLoot);
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Marrowick_Item>(), 5, 6, 14));
+			base.ModifyNPCLoot(npcLoot);
 		}
 	}
 }

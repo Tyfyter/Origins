@@ -76,6 +76,12 @@ namespace Origins.NPCs {
 					case NPCID.SkeletronPrime:
 					npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Retool_Arm_Cannon>(), 4));
 					break;
+					case NPCID.TheDestroyer or NPCID.TheDestroyerBody or NPCID.TheDestroyerTail:
+					npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Robo_Tail>(), 4));
+					break;
+					case NPCID.Retinazer or NPCID.Spazmatism:
+					npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Space_Pirates_Eye>(), 4));
+					break;
 				}
 				break;
 				case NPCID.QueenSlimeBoss:
@@ -239,6 +245,9 @@ namespace Origins.NPCs {
 					int itemType = ModContent.ItemType<Nova_Fragment>();
 					npcLoot.Add(new DropBasedOnExpertMode(new DropOneByOne(itemType, normalParameters), new DropOneByOne(itemType, expertParameters)));
 				}
+				break;
+				case NPCID.SandElemental:
+				npcLoot.Add(new CommonDrop(ModContent.ItemType<Rattlesnake>(), 20, chanceNumerator: 3));
 				break;
 			}
 			bool alreadyAddedHandDrop = false;

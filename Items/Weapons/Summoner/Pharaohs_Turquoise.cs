@@ -67,6 +67,14 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 			return true;
 		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddRecipeGroup(ALRecipeGroups.AdamantiteBars, 10)
+			.AddIngredient(ItemID.AncientBattleArmorMaterial, 2)
+			.AddIngredient(ItemID.SpellTome)
+			.AddTile(TileID.Bookcases)
+			.Register();
+		}
 	}
 	public class Pharaohs_Turquoise_P : ModProjectile {
 		public override void SetDefaults() {

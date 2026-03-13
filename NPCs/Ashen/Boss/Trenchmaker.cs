@@ -2,12 +2,15 @@
 using MonoMod.Cil;
 using Origins.Dusts;
 using Origins.Graphics.Primitives;
+using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other;
 using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Other.LootBags;
+using Origins.Items.Pets;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Vanity.BossMasks;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.LootConditions;
 using Origins.Music;
 using Origins.Tiles.Ashen;
@@ -402,7 +405,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Sanguinite_Ore_Item>(), 1, 140, 330));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<NE8>(), 1, 40, 100));
 			normalDropRule.OnSuccess(ScavengerBonus.Scrap(1, 1, 250, 660));
-			//normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>()));
+			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Fuel_Rod_Ball>(), ModContent.ItemType<Return_To_Sender>()));
 
 			normalDropRule.OnSuccess(ItemDropRule.Common(TrophyTileBase.ItemType<Trenchmaker_Trophy>(), 10));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Trenchmaker_Mask>(), 10));
@@ -412,9 +415,9 @@ namespace Origins.NPCs.Ashen.Boss {
 				normalDropRule,
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Trenchmaker_Bag>(), 1, 1, 1, null)
 			));
-			//npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Mysterious_Spray>(), 4));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Bomb_Rack>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Trenchmaker_Relic>()));
-			//npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Blockus_Tube>(), 4));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Smiths_Hammer>(), 4));
 		}
 		public Rectangle GetFootHitbox(Leg leg) {
 			GetLegPositions(leg, out _, out _, out Vector2 footPos);

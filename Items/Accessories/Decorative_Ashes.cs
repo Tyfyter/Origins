@@ -2,7 +2,6 @@
 using Origins.Projectiles;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -59,6 +58,13 @@ public class Decorative_Ashes : ModItem {
 			-1f,
 			inventoryScale
 		);
+	}
+	public override void AddRecipes() {
+		CreateRecipe()
+		.AddIngredient<ASH_Attack_Relay>()
+		.AddIngredient<Glitter_Glue>()
+		.AddTile(TileID.TinkerersWorkbench)
+		.Register();
 	}
 }
 public class Decorative_Ashes_Missile : ModProjectile {

@@ -4,6 +4,7 @@ using Origins.Items.Armor.Ashen;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Ammo;
+using Origins.LootConditions;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -76,7 +77,7 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(new CommonDrop(ItemType<Biocomponent10>(), 1, 1, 3));
-			npcLoot.Add(new CommonDrop(ItemType<Scrap>(), 8, 2, 5));
+			npcLoot.Add(ScavengerBonus.Scrap(8, 1, 2, 5));
 			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 525));

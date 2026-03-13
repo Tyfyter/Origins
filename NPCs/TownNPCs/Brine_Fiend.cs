@@ -126,6 +126,7 @@ namespace Origins.NPCs.TownNPCs {
 			.Add<Greasy_Broth>()
 			.Add<Savory_Broth>()
 			.Add<Spicy_Broth>()
+			.Add<Insubstantial_Broth>(Boss_Tracker.Conditions[nameof(Boss_Tracker.downedShimmerConstruct)])
 			.Add<Astringent_Broth>() // add condition for Miscreant defeated when added
 			.Add<Metallic_Broth>() // add condition for Crimson King defeated when added
 			.Add<Bitter_Broth>(Defiled_Heart_TE_System.No_Defiled_Hearts)

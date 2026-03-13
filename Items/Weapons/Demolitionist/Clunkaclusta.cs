@@ -9,6 +9,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Clunkaclusta : ModItem, ICustomDrawItem {
 		public override void SetStaticDefaults() {
