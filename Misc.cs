@@ -5833,7 +5833,7 @@ namespace Origins {
 			if (min > max) Utils.Swap(ref min, ref max);
 		}
 		//https://en.wikipedia.org/wiki/Euclidean_algorithm
-		public static T GCF<T>(this T a, T b) where T : struct, IComparisonOperators<T, T, bool>, IModulusOperators<T, T, T>, INumber<T> {
+		public static T GCF<T>(this T a, T b) where T : struct, INumber<T> {
 			if (T.IsZero(a) || T.IsNegative(a)) return T.One;
 			if (T.IsZero(b) || T.IsNegative(b)) return T.One;
 			MinMax(ref a, ref b);
