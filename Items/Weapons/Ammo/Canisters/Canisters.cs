@@ -150,7 +150,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	public class CanisterChildGlobalProjectile : GlobalProjectile {
 		public float gravityMultiplier = 1f;
 		public override bool InstancePerEntity => true;
-		int canisterID;
+		int canisterID = -1;
 		public CanisterData CanisterData { get; private set; }
 		bool isVisual = false;
 		public int CanisterID {
