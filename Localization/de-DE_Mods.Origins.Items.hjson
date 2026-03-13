@@ -8217,3 +8217,18 @@ Clunkaclusta: {
 	// DisplayName: Clunkaclusta
 	// Tooltip: ""
 }
+
+Deactivated_Repairboy_Item: {
+	// DisplayName: Deactivated Repairboy
+	// Tooltip: ""
+}
+
+Deactivated_Trenchmaker_Item: {
+	// DisplayName: Deactivated Trenchmaker
+	// Tooltip: ""
+}
+
+Deactivated_Trenchmaker_Side_Item: {
+	// DisplayName: Deactivated Trenchmaker Side
+	// Tooltip: ""
+}
