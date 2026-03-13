@@ -83,10 +83,12 @@ namespace Origins.Tiles.Ashen {
 		}
 		public bool IsPowered(int i, int j) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			int style = 0, alternate = 0;
+			TileObjectData.GetTileInfo(Main.tile[i, j], ref style, ref alternate);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			for (int x = 0; x < data.Width; x++) {
 				for (int y = 0; y < data.Height; y++) {
-					if (!IsPart(x, y)) continue;
+					if (!IsPart(x, y, style)) continue;
 					if (Main.tile[left + x, top + y].Get<Ashen_Wire_Data>().AnyPower) return true;
 				}
 			}
@@ -98,17 +100,19 @@ namespace Origins.Tiles.Ashen {
 			powered ^= true;
 			if (powered == wasPowered) return;
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
+			int style = 0, alternate = 0;
+			TileObjectData.GetTileInfo(Main.tile[i, j], ref style, ref alternate);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
 			for (int x = 0; x < data.Width; x++) {
 				for (int y = 0; y < data.Height; y++) {
-					if (!IsPart(x, y)) continue;
+					if (!IsPart(x, y, style)) continue;
 					Tile tile = Main.tile[left + x, top + y];
 					tile.TileFrameX = (short)(tile.TileFrameX % frameSize + (powered ? frameSize : 0));
 				}
 			}
 			if (!NetmodeActive.SinglePlayer) NetMessage.SendTileSquare(-1, left, top, data.Width, data.Height);
 		}
-		public static bool IsPart(int i, int j) {
+		public static bool IsPart(int i, int j, int style) {
 			switch (i) {
 				case 2:
 				case 3:
@@ -126,17 +130,17 @@ namespace Origins.Tiles.Ashen {
 			return true;
 		}
 
-		public bool IsValidTile(Tile tile, int left, int top) {
+		public bool IsValidTile(Tile tile, int left, int top, int style) {
 			(int i, int j) = tile.GetTilePosition();
 			i -= left;
 			j -= top;
-			if (IsPart(i, j)) {
+			if (IsPart(i, j, style)) {
 				if (tile.TileType != Type) return false;
 				Tile topLeft = Main.tile[left, top];
 				return tile.TileFrameX == topLeft.TileFrameX + i * 18 && tile.TileFrameY == topLeft.TileFrameY + j * 18;
 			}
 			return true;
 		}
-		public bool ShouldBreak(int x, int y, int left, int top) => IsPart(x - left, y - top);
+		public bool ShouldBreak(int x, int y, int left, int top, int style) => IsPart(x - left, y - top, style);
 	}
 }

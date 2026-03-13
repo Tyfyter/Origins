@@ -12,16 +12,16 @@ using Terraria.ObjectData;
 namespace Origins.Core {
 	//TODO: move to PegasusLib
 	public interface IMultiTypeMultiTile {
-		public bool IsValidTile(Tile tile, int left, int top);
-		public bool CanBlockPlacement(Tile tile, int left, int top) => tile.HasTile;
+		public bool IsValidTile(Tile tile, int left, int top, int style);
+		public bool CanBlockPlacement(Tile tile, int left, int top, int style) => tile.HasTile;
 		/// <summary>
 		/// Called for each tile of the multitile's type in the area of the multitile when it's broken
 		/// Return false to prevent the tile being broken
 		/// </summary>
-		public bool ShouldBreak(int x, int y, int left, int top) => true;
+		public bool ShouldBreak(int x, int y, int left, int top, int style) => true;
 	}
-	internal class MultiTypeMultiTile : ILoadable {
-		public delegate bool PlacePartCheck(int i, int j);
+	public class MultiTypeMultiTile : ILoadable {
+		public delegate bool PlacePartCheck(int i, int j, int style);
 		public static PlacementHook PlaceWhereTrue(TileObjectData tileData, PlacePartCheck placeCheck) => new((x, y, type, style, _, alternate) => {
 			int num2 = 0;
 			int num3 = 0;
@@ -40,7 +40,7 @@ namespace Origins.Core {
 			}
 			for (int i = 0; i < tileData.Width; i++) {
 				for (int j = 0; j < tileData.Height; j++) {
-					if (!placeCheck(i, j)) continue;
+					if (!placeCheck(i, j, style)) continue;
 					Tile tileSafely = Framing.GetTileSafely(x + i, y + j);
 					if (tileSafely.HasTile && tileSafely.TileType != TileID.RollingCactus && (Main.tileCut[tileSafely.TileType] || TileID.Sets.BreakableWhenPlacing[tileSafely.TileType])) {
 						WorldGen.KillTile(x + i, y + j);
@@ -54,7 +54,7 @@ namespace Origins.Core {
 				int num8 = num2 + i * (tileData.CoordinateWidth + tileData.CoordinatePadding);
 				int num9 = num3;
 				for (int j = 0; j < tileData.Height; j++) {
-					if (placeCheck(i, j)) {
+					if (placeCheck(i, j, style)) {
 						Tile tile = Framing.GetTileSafely(x + i, y + j);
 						if (!tile.HasTile) {
 							tile.SetActive(true);
@@ -68,6 +68,37 @@ namespace Origins.Core {
 			}
 			return 0;
 		}, -1, 0, true);
+		public static bool[,,] GenerateShapeMap(params string[] map) {
+			int height = map.Length;
+			int width = map[0].Length;
+			for (int i = 0; i < height; i++) {
+				if (map[i].Length != width) throw new ArgumentException("All lines must have equal length", nameof(map));
+			}
+			int styleWidth = -1;
+			for (int i = 0; i < width; i++) {
+				if (map[0][i] == '|') {
+					styleWidth = i;
+					break;
+				}
+			}
+			bool[,,] shapes = new bool[width / styleWidth, styleWidth, height];
+			for (int y = 0; y < height; y++) {
+				int style = 0;
+				int inStyleIndex = 0;
+				for (int x = 0; x < width; x++) {
+					bool shouldBeBreak = map[y][x] == '|';
+					if (shouldBeBreak != (inStyleIndex == styleWidth)) throw new ArgumentException("All styles must have equal length", nameof(map));
+					if (shouldBeBreak) {
+						inStyleIndex = 0;
+						style++;
+					} else {
+						shapes[style, inStyleIndex, y] = map[y][x] != ' ';
+						inStyleIndex++;
+					}
+				}
+			}
+			return shapes;
+		} 
 		void ILoadable.Load(Mod mod) {
 			try {
 				MonoModHooks.Modify(typeof(TileLoader).GetMethod(nameof(TileLoader.CheckModTile)), IL_MultiTypeMultiTile);
@@ -162,8 +193,9 @@ namespace Origins.Core {
 			c.EmitLdloc(tile);
 			c.EmitLdloc(coordinateSets[correctIndex].x);
 			c.EmitLdloc(coordinateSets[correctIndex].y);
-			c.EmitDelegate((int tileType, Tile tile, int left, int top) => {
-				return TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile && (!multiTypeMultiTile.CanBlockPlacement(tile, left, top) || multiTypeMultiTile.IsValidTile(tile, left, top));
+			c.EmitLdarg3();
+			c.EmitDelegate((int tileType, Tile tile, int left, int top, int style) => {
+				return TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile && (!multiTypeMultiTile.CanBlockPlacement(tile, left, top, style) || multiTypeMultiTile.IsValidTile(tile, left, top, style));
 			});
 			c.EmitBrtrue(label);
 		}
@@ -173,6 +205,12 @@ namespace Origins.Core {
 			ILLabel label = default;
 			int x = -1;
 			int y = -1;
+			int style = -1;
+			c.GotoNext(MoveType.AfterLabel,
+				i => i.MatchCallOrCallvirt<TileObjectData>("get_" + nameof(TileObjectData.StyleMultiplier)),
+				i => i.MatchDiv(),
+				i => i.MatchStloc(out style)
+			);
 			c.GotoNext(MoveType.AfterLabel,
 				i => i.MatchLdloca(out _),
 				i => i.MatchCall<Tile>($"get_type"),
@@ -195,8 +233,9 @@ namespace Origins.Core {
 			c.EmitLdloc(y);
 			c.EmitLdarg(il.Method.Parameters.First(p => p.Name == "i"));
 			c.EmitLdarg(il.Method.Parameters.First(p => p.Name == "j"));
-			c.EmitDelegate((int tileType, int x, int y, int left, int top) => {
-				return TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile && multiTypeMultiTile.IsValidTile(Main.tile[x, y], left, top);
+			c.EmitLdloc(style);
+			c.EmitDelegate((int tileType, int x, int y, int left, int top, int style) => {
+				return TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile && multiTypeMultiTile.IsValidTile(Main.tile[x, y], left, top, style);
 			});
 			c.EmitBrtrue(label);
 
@@ -216,9 +255,10 @@ namespace Origins.Core {
 			c.EmitLdloc(y);
 			c.EmitLdarg(il.Method.Parameters.First(p => p.Name == "i"));
 			c.EmitLdarg(il.Method.Parameters.First(p => p.Name == "j"));
-			c.EmitDelegate((int tileType, int x, int y, int left, int top) => {
+			c.EmitLdloc(style);
+			c.EmitDelegate((int tileType, int x, int y, int left, int top, int style) => {
 				Tile otherTile = Main.tile[left + 1, top + 1];
-				if (TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile) return multiTypeMultiTile.ShouldBreak(x, y, left, top);
+				if (TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile) return multiTypeMultiTile.ShouldBreak(x, y, left, top, style);
 				return true;
 			});
 		}

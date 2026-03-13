@@ -129,7 +129,7 @@ namespace Origins.Tiles.Ashen {
 			return true;
 		}
 
-		public bool IsValidTile(Tile tile, int left, int top) {
+		public bool IsValidTile(Tile tile, int left, int top, int style) {
 			if (tile.HasTile && (tile.TileType == ModContent.TileType<Cargo_Elevator_Door>() || tile.TileType == ModContent.TileType<Cargo_Elevator_Door_Open>())) return true;
 			return false;
 		}

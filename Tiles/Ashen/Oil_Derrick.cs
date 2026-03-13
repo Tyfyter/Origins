@@ -72,13 +72,13 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Main.tile[i, j];
-			if (!IsPart(tile.TileFrameX / 18, tile.TileFrameY / 18)) {
+			if (!IsPart(tile.TileFrameX / 18, tile.TileFrameY / 18, TileObjectData.GetTileStyle(tile))) {
 				tile.HasTile = false;
 				return false;
 			}
 			return true;
 		}
-		public static bool IsPart(int i, int j) {
+		public static bool IsPart(int i, int j, int style) {
 			switch (i, j) {
 				case (0, 0):
 				case (0, 1):
@@ -105,17 +105,17 @@ namespace Origins.Tiles.Ashen {
 			return true;
 		}
 
-		public bool IsValidTile(Tile tile, int left, int top) {
+		public bool IsValidTile(Tile tile, int left, int top, int style) {
 			(int i, int j) = tile.GetTilePosition();
 			i -= left;
 			j -= top;
-			if (IsPart(i, j)) {
+			if (IsPart(i, j, style)) {
 				if (tile.TileType != Type) return false;
 				Tile topLeft = Main.tile[left, top];
 				return tile.TileFrameX == topLeft.TileFrameX + i * 18 && tile.TileFrameY == topLeft.TileFrameY + j * 18;
 			}
 			return true;
 		}
-		public bool ShouldBreak(int x, int y, int left, int top) => IsPart(x - left, y - top);
+		public bool ShouldBreak(int x, int y, int left, int top, int style) => IsPart(x - left, y - top, style);
 	}
 }
