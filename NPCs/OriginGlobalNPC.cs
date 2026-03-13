@@ -10,6 +10,7 @@ using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
+using Origins.NPCs.Ashen;
 using Origins.NPCs.Crimson;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Riven;
@@ -506,7 +507,7 @@ namespace Origins.NPCs {
 					pool.Add(ModContent.NPCType<Savage_Whip>(), Riven_Hive.SpawnRates.Whip);
 				}
 				if (player.InModBiome<Ashen_Biome>() && !ModContent.GetInstance<Ashen_Biome.SpawnRates>().IsActive(spawnInfo)) {
-					pool.Add(ModContent.NPCType<Riven_Mimic>(), Ashen_Biome.SpawnRates.Mimic);
+					pool.Add(ModContent.NPCType<Trash_Compactor_Mimic>(), Ashen_Biome.SpawnRates.Mimic);
 					pool.Add(ModContent.NPCType<Savage_Whip>(), Ashen_Biome.SpawnRates.CursedWeapon);
 				}
 			}
