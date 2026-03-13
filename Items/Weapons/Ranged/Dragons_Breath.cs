@@ -50,6 +50,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Main.projFrames[Type] = 7;
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 21;
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.width = Projectile.height = 6;

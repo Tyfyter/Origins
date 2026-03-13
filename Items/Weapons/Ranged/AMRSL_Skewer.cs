@@ -377,6 +377,9 @@ namespace Origins.Items.Weapons.Ranged {
 		static AutoLoadingAsset<Texture2D> moltenTexture = typeof(AMRSL_Skewer_Sabot).GetDefaultTMLName("_Molten");
 		public virtual int DustType => DustID.Iron;
 		public virtual Color MoltenTint => Color.White;
+		public override void SetStaticDefaults() {
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
 			Projectile.DamageType = DamageClass.Ranged;
@@ -455,6 +458,7 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class AMRSL_Skewer_Sabot_Scrap : AMRSL_Skewer_Sabot {
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			AMRSL_Skewer.AmmoProjectile[ModContent.ItemType<Scrap>()] = Type;
 		}
 		public override void SetDefaults() {
@@ -472,6 +476,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class AMRSL_Skewer_Sabot_Cursed : AMRSL_Skewer_Sabot {
 		public override Color MoltenTint => new(40, 255, 0);
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			AMRSL_Skewer.AmmoProjectile[ItemID.CursedFlame] = Type;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
@@ -481,6 +486,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class AMRSL_Skewer_Sabot_Ichor : AMRSL_Skewer_Sabot {
 		public override Color MoltenTint => new(120, 255, 0);
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			AMRSL_Skewer.AmmoProjectile[ItemID.Ichor] = Type;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {

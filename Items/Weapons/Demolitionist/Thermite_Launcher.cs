@@ -185,6 +185,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Thermite_Lingering_P : ModProjectile, ICanisterChildProjectile, IIsExplodingProjectile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -215,8 +216,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 				newColor: Projectile.GetGlobalProjectile<CanisterChildGlobalProjectile>().CanisterData.InnerColor
 			).velocity *= 2 * Projectile.scale;
 		}
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			hitbox.Inflate((int)(hitbox.Width * (Projectile.scale * 0.5f - 0.5f)), (int)(hitbox.Height * (Projectile.scale * 0.5f - 0.5f)));
+		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			float range = projHitbox.Width * Projectile.scale * 0.5f;
+			float range = projHitbox.Width * 0.5f;
 			return Projectile.Center.DistanceSQ(Projectile.Center.Clamp(targetHitbox)) < range * range;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {

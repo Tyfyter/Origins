@@ -79,7 +79,9 @@ namespace Origins.Liquids {
 		}
 		public override void OnProjectileCollision(Projectile proj) {
 			if (OriginsSets.Projectiles.FireProjectiles[proj.type]) {
-				foreach (Point pos in ContentExtensions.LiquidCollision(proj.position, proj.width, proj.height)) {
+				Rectangle hitbox = proj.Hitbox;
+				ProjectileLoader.ModifyDamageHitbox(proj, ref hitbox);
+				foreach (Point pos in ContentExtensions.LiquidCollision(hitbox.TopLeft(), hitbox.Width, hitbox.Height)) {
 					Tile tile = Main.tile[pos];
 					if (tile.LiquidType == Oil.ID) {
 						tile.LiquidType = Burning_Oil.ID;

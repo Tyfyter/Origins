@@ -74,6 +74,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override int SmokeDustAmount => 1;
 		public override int SmokeGoreAmount => 0;
 		public override int SelfDamageCooldownCounter => ImmunityCooldownID.WrongBugNet;
+		public override void SetStaticDefaults() {
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
+		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Projectile.timeLeft = 60;

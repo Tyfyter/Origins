@@ -47,6 +47,9 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Hot_Potato_P : ModProjectile {
+		public override void SetStaticDefaults() {
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.SnowBallFriendly);
 			Projectile.aiStyle = 0;

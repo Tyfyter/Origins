@@ -134,6 +134,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = sizes.Length;
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
 		}
 		float Size => Math.Max(float.Lerp(MinSize, MaxSize, float.Pow(Utils.GetLerpValue(0f, Lifetime, Projectile.ai[0]), Projectile.ai[0] < 0 ? 1 : 0.8f)), 0);
 		public override void SetDefaults() {

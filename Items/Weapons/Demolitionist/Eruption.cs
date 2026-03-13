@@ -95,11 +95,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Eruption_Geyser : ModProjectile, ICanisterChildProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GeyserTrap;
+		public override void SetStaticDefaults() {
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.GeyserTrap);
 			Projectile.trap = false;
 			Projectile.hostile = false;
+			Projectile.ignoreWater = false;
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+		}
+		public override void AI() {
+			if (Projectile.ai[1] == 1) {
+				while (Projectile.position.Y > 0 && Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height - 8)) Projectile.position.Y -= 4;
+			}
 		}
 	}
 }

@@ -38,7 +38,11 @@ namespace Origins.Items.Weapons.Magic {
     }
 	public class Eternabrite_P : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Flames;
+		public override void SetStaticDefaults() {
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
+		}
 		public override void SetDefaults() {
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
 			Projectile.CloneDefaults(ProjectileID.Flames);
 			Projectile.DamageType = DamageClass.Magic;
 			AIType = ProjectileID.Flames;

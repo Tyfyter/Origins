@@ -17,6 +17,7 @@ namespace Origins.Projectiles.Weapons {
 		public override string Texture => "Origins/Projectiles/Weapons/Lava_Cast_P";
 		public override void SetStaticDefaults() {
 			Main.projFrames[Projectile.type] = 2;
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Flamelash);

@@ -354,7 +354,9 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 	}
 	public class Napalm_P : ModProjectile, ICanisterChildProjectile {
 		public override string Texture => "Origins/Projectiles/Ammo/Napalm_Pellet_P";
-
+		public override void SetStaticDefaults() {
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Projectile.friendly = true;

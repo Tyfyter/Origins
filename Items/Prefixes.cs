@@ -658,6 +658,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 19;
 			ProjectileID.Sets.MinionShot[Type] = true;
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;

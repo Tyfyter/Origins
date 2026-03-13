@@ -39,6 +39,7 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Cursed_Harpoon_P : Harpoon_P {
 		public static new int ID { get; private set; }
 		public override void SetStaticDefaults() {
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
 			ID = Type;
 		}
 		public override void AI() {//still needs its own AI override since it has unique AI functionality
@@ -65,7 +66,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.CursedDartFlame;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Cursed Harpoon");
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
 			ID = Type;
 		}
 		public override void SetDefaults() {

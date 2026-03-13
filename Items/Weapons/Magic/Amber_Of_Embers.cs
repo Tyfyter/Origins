@@ -43,6 +43,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 19;
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.DD2SquireSonicBoom);

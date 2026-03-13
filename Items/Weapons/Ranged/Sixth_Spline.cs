@@ -84,6 +84,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Sixth_Spline_Soldering_Iron : Sixth_Spline_Nut {
 		public override void SetStaticDefaults() {
 			Sixth_Spline.Projectiles.Add(new(Type, 0.9f, 0.9f), 0.75f);
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire3, 300);
