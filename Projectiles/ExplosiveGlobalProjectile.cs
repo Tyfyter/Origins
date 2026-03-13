@@ -205,7 +205,7 @@ namespace Origins.Projectiles {
 				StatModifier modifier = GetBlastRadius(projectile);
 				bool modifiedBlastRadius = modifier != StatModifier.Default;
 				if (modifiedBlastRadius) {
-					modifier = modifierBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+					modifier = modifier.Scale(additive: 0.5f, multiplicative: 0.5f);
 					hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
 				}
 				if (modifiedBlastRadius) {
@@ -238,7 +238,7 @@ namespace Origins.Projectiles {
 				nextExplodingProjectiles.Add(projectile.Center);
 				StatModifier modifier = GetBlastRadius(projectile);
 				if (modifier != StatModifier.Default) {
-					modifier = modifierBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+					modifier = modifier.Scale(additive: 0.5f, multiplicative: 0.5f);
 					hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
 				}
 			}
