@@ -25,7 +25,7 @@ namespace Origins.Tiles.Ashen {
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
-			TileObjectData.newTile.RandomStyleRange = 6;
+			TileObjectData.newTile.RandomStyleRange = 5;
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
 			DustType = Ashen_Biome.DefaultTileDust;
