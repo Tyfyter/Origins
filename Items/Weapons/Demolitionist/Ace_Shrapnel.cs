@@ -31,11 +31,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.reuseDelay = 0;
 			Item.autoReuse = true;
 		}
-		public static Recipe GetRecipe(int type) => Recipe.Create(type)
+		public override void AddRecipes() => CreateRecipe()
 			.AddIngredient(ModContent.ItemType<NE8>(), 10)
 			.AddIngredient(ModContent.ItemType<Scrap>(), 15)
-			.AddTile(TileID.Anvils);
-		public override void AddRecipes() => GetRecipe(Type).Register();
+			.AddTile(TileID.Anvils).Register();
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-18, -7);
 		}
