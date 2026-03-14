@@ -4,6 +4,7 @@ using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameInput;
 using Terraria.ID;
@@ -42,7 +43,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.SetOriginBottomCenter();
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart);
-			TileObjectData.newTile.AnchorBottom = new(AnchorType.SolidTile, 7, 1);
+			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
@@ -57,6 +58,21 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			offsetY = 2;
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			Tile tile = Main.tile[i, j];
+			if (!IsPart((tile.TileFrameX / 18) % Shape.GetLength(1), tile.TileFrameY / 18, TileObjectData.GetTileStyle(tile))) {
+				tile.HasTile = false;
+				return false;
+			}
+			if (tile.TileFrameY >= (Shape.GetLength(2) - 1) * 18) {
+				Tile anchor = Main.tile[i, j + 1];
+				if (!anchor.HasTile || !Main.tileSolid[anchor.TileType] || Main.tileSolidTop[anchor.TileType] || Main.tileNoAttach[anchor.TileType]) {
+					WorldGen.KillTile(i, j);
+					return false;
+				}
+			}
+			return true;
 		}
 		public static bool IsPart(int i, int j, int style) {
 			return Shape[style, i, j];
