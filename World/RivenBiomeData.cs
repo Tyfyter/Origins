@@ -42,7 +42,7 @@ using static Terraria.ModLoader.ModContent;
 using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
-	public class Riven_Hive : ModBiome {
+	public class Riven_Hive : ModBiome, IItemObtainabilityProvider {
 		public static IItemDropRule FirstLesionDropRule;
 		public static IItemDropRule LesionDropRule;
 		public override int Music => Origins.Music.Riven;
@@ -92,6 +92,11 @@ namespace Origins.World.BiomeData {
 			FirstLesionDropRule = null;
 			LesionDropRule = null;
 			NormalGlowValue = null;
+		}
+		public IEnumerable<int> ProvideItemObtainability() {
+			List<DropRateInfo> drops = [];
+			LesionDropRule.ReportDroprates(drops, new DropRateInfoChainFeed(1));
+			return drops.Select(d => d.itemId);
 		}
 
 		public static Color GetGlowAlpha(Color lightColor) {

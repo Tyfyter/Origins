@@ -19,7 +19,6 @@ using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Walls;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -40,7 +39,7 @@ using static Terraria.WorldGen;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.World.BiomeData {
-	public class Defiled_Wastelands : ModBiome {
+	public class Defiled_Wastelands : ModBiome, IItemObtainabilityProvider {
 		public static IItemDropRule FirstFissureDropRule;
 		public static IItemDropRule FissureDropRule;
 		public override int Music => Origins.Music.ShouldBeOtherworldly ? Origins.Music.OtherworldlyDefiled : Origins.Music.Defiled;
@@ -109,6 +108,11 @@ namespace Origins.World.BiomeData {
 		public override void Unload() {
 			FirstFissureDropRule = null;
 			FissureDropRule = null;
+		}
+		public IEnumerable<int> ProvideItemObtainability() {
+			List<DropRateInfo> drops = [];
+			FissureDropRule.ReportDroprates(drops, new DropRateInfoChainFeed(1));
+			return drops.Select(d => d.itemId);
 		}
 		public const int NeededTiles = 200;
 		public const int ShaderTileCount = 75;

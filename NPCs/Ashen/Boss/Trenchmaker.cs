@@ -417,7 +417,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Bomb_Rack>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(RelicTileBase.ItemType<Trenchmaker_Relic>()));
-			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Smiths_Hammer>(), 4));
+			//npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Smiths_Hammer>(), 4));
 		}
 		public Rectangle GetFootHitbox(Leg leg) {
 			GetLegPositions(leg, out _, out _, out Vector2 footPos);

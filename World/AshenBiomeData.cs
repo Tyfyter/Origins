@@ -12,6 +12,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
+using Origins.Liquids;
 using Origins.NPCs.Ashen;
 using Origins.NPCs.Defiled;
 using Origins.Reflection;
@@ -22,7 +23,9 @@ using Origins.Tiles.Riven;
 using Origins.Walls;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Personalities;
 using Terraria.ID;
@@ -31,13 +34,11 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
-using static Terraria.WorldGen;
 using static Terraria.ModLoader.ModContent;
-using Terraria.DataStructures;
-using Origins.Liquids;
+using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
-	public class Ashen_Biome : ModBiome {
+	public class Ashen_Biome : ModBiome, IItemObtainabilityProvider {
 		public static IItemDropRule FirstOrbDropRule;
 		public static IItemDropRule OrbDropRule;
 		public override int Music => Origins.Music.AshenScrapyard;
@@ -85,6 +86,12 @@ namespace Origins.World.BiomeData {
 			FirstOrbDropRule = null;
 			OrbDropRule = null;
 		}
+		public IEnumerable<int> ProvideItemObtainability() {
+			List<DropRateInfo> drops = [];
+			OrbDropRule.ReportDroprates(drops, new DropRateInfoChainFeed(1));
+			return drops.Select(d => d.itemId);
+		}
+
 		public const int NeededTiles = 200;
 		public const int ShaderTileCount = 25;
 		public const short DefaultTileDust = DustID.Lihzahrd;
