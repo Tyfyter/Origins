@@ -22,10 +22,11 @@ namespace Origins.Core {
 	}
 	public class MultiTypeMultiTile : ILoadable {
 		public delegate bool PlacePartCheck(int i, int j, int style);
-		public static PlacementHook PlaceWhereTrue(TileObjectData tileData, PlacePartCheck placeCheck) => new((x, y, type, style, _, alternate) => {
+		public static PlacementHook PlaceWhereTrue(PlacePartCheck placeCheck) => new((x, y, type, style, _, alternate) => {
 			int num2 = 0;
 			int num3 = 0;
-			int num4 = tileData.CalculatePlacementStyle(style, alternate, 0);
+			TileObjectData tileData = TileObjectData.GetTileData(type, style, alternate);
+			int num4 = style = tileData.CalculatePlacementStyle(style, alternate, toBePlaced.random);
 			int num5 = 0;
 			if (tileData.StyleWrapLimit > 0) {
 				num5 = num4 / tileData.StyleWrapLimit * tileData.StyleLineSkip;
@@ -101,11 +102,21 @@ namespace Origins.Core {
 		} 
 		void ILoadable.Load(Mod mod) {
 			try {
-				MonoModHooks.Modify(typeof(TileLoader).GetMethod(nameof(TileLoader.CheckModTile)), IL_MultiTypeMultiTile);
+				MonoModHooks.Modify(typeof(TileLoader).GetMethod(nameof(TileLoader.CheckModTile)), IL_TileLoader_CheckModTile);
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError(nameof(IL_TileLoader_CheckModTile), e)) throw;
+			}
+			try {
 				IL_TileObject.CanPlace += IL_TileObject_CanPlace;
 			} catch (Exception e) {
-				if (Origins.LogLoadingILError(nameof(IL_MultiTypeMultiTile), e)) throw;
+				if (Origins.LogLoadingILError(nameof(IL_TileObject_CanPlace), e)) throw;
 			}
+			On_TileObject.Place += On_TileObject_Place;
+		}
+		static TileObject toBePlaced;
+		static bool On_TileObject_Place(On_TileObject.orig_Place orig, TileObject toBePlaced) {
+			MultiTypeMultiTile.toBePlaced = toBePlaced;
+			return orig(toBePlaced);
 		}
 
 		static void IL_TileObject_CanPlace(ILContext il) {
@@ -195,12 +206,12 @@ namespace Origins.Core {
 			c.EmitLdloc(coordinateSets[correctIndex].y);
 			c.EmitLdarg3();
 			c.EmitDelegate((int tileType, Tile tile, int left, int top, int style) => {
-				return TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile && (!multiTypeMultiTile.CanBlockPlacement(tile, left, top, style) || multiTypeMultiTile.IsValidTile(tile, left, top, style));
+				return TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile && !multiTypeMultiTile.CanBlockPlacement(tile, left, top, style);
 			});
 			c.EmitBrtrue(label);
 		}
 
-		static void IL_MultiTypeMultiTile(ILContext il) {
+		static void IL_TileLoader_CheckModTile(ILContext il) {
 			ILCursor c = new(il);
 			ILLabel label = default;
 			int x = -1;
@@ -257,7 +268,6 @@ namespace Origins.Core {
 			c.EmitLdarg(il.Method.Parameters.First(p => p.Name == "j"));
 			c.EmitLdloc(style);
 			c.EmitDelegate((int tileType, int x, int y, int left, int top, int style) => {
-				Tile otherTile = Main.tile[left + 1, top + 1];
 				if (TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile) return multiTypeMultiTile.ShouldBreak(x, y, left, top, style);
 				return true;
 			});

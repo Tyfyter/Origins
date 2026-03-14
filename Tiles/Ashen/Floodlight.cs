@@ -46,7 +46,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.SetHeight(11, 18);
 			TileObjectData.newTile.SetOriginBottomCenter();
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
-			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(TileObjectData.newTile, IsPart);
+			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart);
 			TileObjectData.newTile.AnchorBottom = new(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.FlattenAnchors = true;
 			width = TileObjectData.newTile.Width;
@@ -140,6 +140,11 @@ namespace Origins.Tiles.Ashen {
 				return tile.TileFrameX == topLeft.TileFrameX + i * 18 && tile.TileFrameY == topLeft.TileFrameY + j * 18;
 			}
 			return true;
+		}
+		public bool CanBlockPlacement(Tile tile, int left, int top, int style) {
+			if (tile.HasTile) return false;
+			Point pos = tile.GetTilePosition();
+			return IsPart(pos.X - left, pos.Y - top, style);
 		}
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => IsPart(x - left, y - top, style);
 	}
