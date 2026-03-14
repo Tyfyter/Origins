@@ -229,7 +229,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.SetOriginBottomCenter();
 			TileObjectData.newTile.Direction = TileObjectDirection.PlaceRight;
 			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart);
-			TileObjectData.newTile.AnchorBottom = new(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
+			TileObjectData.newTile.AnchorBottom = new(AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
