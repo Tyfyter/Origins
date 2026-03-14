@@ -1897,6 +1897,7 @@ CROSS-MOD CONTENT:
 (^) Thorium gem support
 (^) Thorium flail accessories support
 (^) Thorium buff support
+(†) Thorium explosive weapon change !!!
 
 (#, ^2) Confection Assimilation
 (#, ^2) Contagion Assimilation
