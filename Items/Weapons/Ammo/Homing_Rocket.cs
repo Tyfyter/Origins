@@ -94,7 +94,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.damage = 40;
-			Item.DamageType = DamageClass.Ranged;
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.consumable = true;
 			Item.maxStack = Item.CommonMaxStack;
 			Item.ammo = AmmoID.Rocket;
@@ -109,9 +109,9 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.rotation += MathHelper.PiOver2;
 		}
 	}
-	public class Homing_Rocket_I_Grenade() : Homing_Rocket_Version<Homing_Rocket_I>(ItemID.GrenadeLauncher, ProjectileID.GrenadeI) {}
-	public class Homing_Rocket_I_Mine() : Homing_Rocket_Version<Homing_Rocket_I>(ItemID.ProximityMineLauncher, ProjectileID.ProximityMineI) {}
-	public class Homing_Rocket_I_Snowman() : Homing_Rocket_Version<Homing_Rocket_I>(ItemID.SnowmanCannon, ProjectileID.RocketSnowmanI) {}
+	public class Homing_Rocket_I_Grenade() : Homing_Rocket_Version<Homing_Rocket_I>(ItemID.GrenadeLauncher, ProjectileID.GrenadeI) { }
+	public class Homing_Rocket_I_Mine() : Homing_Rocket_Version<Homing_Rocket_I>(ItemID.ProximityMineLauncher, ProjectileID.ProximityMineI) { }
+	public class Homing_Rocket_I_Snowman() : Homing_Rocket_Version<Homing_Rocket_I>(ItemID.SnowmanCannon, ProjectileID.RocketSnowmanI) { }
 	public class Homing_Rocket_II : ModItem, IRocketItem {
 		public static int ExplosionSize => 128;
 		public static int TileDestructionRadius => 3;
@@ -125,7 +125,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.damage = 40;
-			Item.DamageType = DamageClass.Ranged;
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.consumable = true;
 			Item.maxStack = Item.CommonMaxStack;
 			Item.ammo = AmmoID.Rocket;
@@ -140,7 +140,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.rotation += MathHelper.PiOver2;
 		}
 	}
-	public class Homing_Rocket_II_Grenade() : Homing_Rocket_Version<Homing_Rocket_II>(ItemID.GrenadeLauncher, ProjectileID.GrenadeI) {}
-	public class Homing_Rocket_II_Mine() : Homing_Rocket_Version<Homing_Rocket_II>(ItemID.ProximityMineLauncher, ProjectileID.ProximityMineI) {}
-	public class Homing_Rocket_II_Snowman() : Homing_Rocket_Version<Homing_Rocket_II>(ItemID.SnowmanCannon, ProjectileID.RocketSnowmanI) {}
+	public class Homing_Rocket_II_Grenade() : Homing_Rocket_Version<Homing_Rocket_II>(ItemID.GrenadeLauncher, ProjectileID.GrenadeI) { }
+	public class Homing_Rocket_II_Mine() : Homing_Rocket_Version<Homing_Rocket_II>(ItemID.ProximityMineLauncher, ProjectileID.ProximityMineI) { }
+	public class Homing_Rocket_II_Snowman() : Homing_Rocket_Version<Homing_Rocket_II>(ItemID.SnowmanCannon, ProjectileID.RocketSnowmanI) { }
 }

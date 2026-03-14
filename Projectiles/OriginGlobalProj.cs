@@ -1,9 +1,7 @@
 ﻿using AltLibrary.Common.AltBiomes;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Achievements;
 using Origins.Buffs;
-using Origins.Graphics;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
@@ -18,12 +16,9 @@ using Origins.NPCs;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.NPCs.MiscE;
 using Origins.Projectiles.Weapons;
-using Origins.Questing;
 using Origins.Reflection;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using Terraria;
@@ -391,7 +386,7 @@ namespace Origins.Projectiles {
 							mitosisTimeLeft = Mitosis_P.minion_duplicate_duration;
 						}
 					}
-					
+
 				}
 			} else {
 				if (isFromMitosis) {
@@ -772,7 +767,7 @@ namespace Origins.Projectiles {
 			if (felnumBonus > Felnum_Helmet.shock_damage_divisor * 2 && ProjectileID.Sets.IsAWhip[projectile.type]) {
 				List<Vector2> controlPoints = [];
 				Projectile.FillWhipControlPoints(projectile, controlPoints);
-				for (int i = 1; i <= controlPoints.Count - 2; i+=2) {
+				for (int i = 1; i <= controlPoints.Count - 2; i += 2) {
 					Main.spriteBatch.DrawLightningArcBetween(controlPoints[^i] - Main.screenPosition, controlPoints[^(i + 2)] - Main.screenPosition, Main.rand.NextFloat(-4, 4));
 				}
 				if (controlPoints.Count % 2 == 1) {

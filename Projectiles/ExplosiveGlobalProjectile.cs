@@ -1,5 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using MonoMod.Utils;
+﻿using MonoMod.Utils;
 using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Armor.Amber;
@@ -7,7 +6,6 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles.Weapons;
 using Origins.Reflection;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,11 +13,9 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria.WorldBuilding;
 
 namespace Origins.Projectiles {
 	public class ExplosiveGlobalProjectile : GlobalProjectile {
@@ -264,7 +260,7 @@ namespace Origins.Projectiles {
 					Point scarabBombDigDirectionSnap = ProjectileMethods.GetScarabBombDigDirectionSnap8(projectile);
 					bool axisAligned = scarabBombDigDirectionSnap.X == 0 || scarabBombDigDirectionSnap.Y == 0;
 					projHitbox.Inflate((48 - projHitbox.Width) / 2, (48 - projHitbox.Height) / 2);
-					for (int i = axisAligned ? 21 : 15; i-->0;) {
+					for (int i = axisAligned ? 21 : 15; i-- > 0;) {
 						if (projHitbox.Intersects(targetHitbox)) return true;
 						projHitbox.X += scarabBombDigDirectionSnap.X * 16;
 						projHitbox.Y += scarabBombDigDirectionSnap.Y * 16;
@@ -623,6 +619,7 @@ namespace Origins.Projectiles {
 				case ProjectileID.Celeb2RocketExplosiveLarge:
 
 				case ProjectileID.ElectrosphereMissile:
+				case ProjectileID.Electrosphere:
 
 				case ProjectileID.ClusterFragmentsI:
 				case ProjectileID.ClusterFragmentsII:

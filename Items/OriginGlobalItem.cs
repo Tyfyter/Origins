@@ -97,6 +97,21 @@ namespace Origins.Items {
 				case ItemID.HellfireArrow:
 				case ItemID.Stynger:
 				case ItemID.StyngerBolt:
+				case ItemID.ElectrosphereLauncher:
+				case ItemID.FireworksLauncher:
+				case ItemID.Celeb2:
+				case ItemID.RocketI:
+				case ItemID.RocketII:
+				case ItemID.RocketIII:
+				case ItemID.RocketIV:
+				case ItemID.ClusterRocketI:
+				case ItemID.ClusterRocketII:
+				case ItemID.WetRocket:
+				case ItemID.LavaRocket:
+				case ItemID.HoneyRocket:
+				case ItemID.DryRocket:
+				case ItemID.MiniNukeI:
+				case ItemID.MiniNukeII:
 				item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 				statsModified = true;
 				break;
