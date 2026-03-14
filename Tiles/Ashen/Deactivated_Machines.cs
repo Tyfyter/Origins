@@ -3,7 +3,6 @@ using Origins.Core;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
-using System.Diagnostics;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
@@ -15,10 +14,10 @@ namespace Origins.Tiles.Ashen {
 		public static int ID { get; private set; }
 		public static bool[,,] Shape = MultiTypeMultiTile.GenerateShapeMap(
 			"     XX  |XXXX XX  |XXXX XX  ",
+			"XXXXXXXXX|XXXXXXXX |XXXXXXXXX",
 			"XXXXXXXXX|XXXXXXXXX|XXXXXXXXX",
 			"XXXXXXXXX|XXXXXXXXX|XXXXXXXXX",
-			"XXXXXXXXX|XXXXXXXXX|XXXXXXXXX",
-			"XXXXXXXXX|XXXXXXXXX|XXXXXXXXX",
+			"XXXXXXXXX|XXXXXXXX |XXXXXXXXX",
 			" XXXXXXX | XXXXXXX | XXXXXXX ",
 			" XXXXXXX | XXXXXXX | XXXXXXX ",
 			" XXX XXX | XXX XXX | XXX XXX ",
