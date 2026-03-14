@@ -8225,10 +8225,5 @@ Deactivated_Repairboy_Item: {
 
 Deactivated_Trenchmaker_Item: {
 	DisplayName: Deactivated Trenchmaker
-	Tooltip: ""
-}
-
-Deactivated_Trenchmaker_Side_Item: {
-	DisplayName: Deactivated Trenchmaker Side
-	Tooltip: ""
+	Tooltip: "<right> to cycle tile to place.
 }

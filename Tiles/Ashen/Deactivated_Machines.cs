@@ -3,9 +3,11 @@ using Origins.Core;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
+using System.Diagnostics;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
@@ -22,19 +24,6 @@ namespace Origins.Tiles.Ashen {
 			" XXX XXX | XXX XXX | XXX XXX ",
 			" XXX XXX | XXX XXX | XXX XXX "
 		);
-		public override void Load() {
-			new TileItem(this)
-			.WithExtraStaticDefaults(item => {
-				this.DropTileItem(item);
-				item.ResearchUnlockCount = 25;
-			}).WithOnAddRecipes(item => {
-				Recipe.Create(item.type)
-				.AddIngredient<Biocomponent10>(15)
-				.AddIngredient<Scrap>(45)
-				.AddTile<Metal_Presser>()
-				.Register();
-			}).RegisterItem();
-		}
 		public override void SetStaticDefaults() {
 			// Properties
 			TileID.Sets.CanBeSloped[Type] = false;
@@ -58,6 +47,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
 			ID = Type;
+			RegisterItemDrop(ModContent.ItemType<Deactivated_Trenchmaker_Item>(), -1);
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
@@ -97,19 +87,6 @@ namespace Origins.Tiles.Ashen {
 			" XXXX   | XXXX   | XXXX   |   XXXX |   XXXX |   XXXX ",
 			" XXXX   | XXXX   | XXXX   |   XXXX |   XXXX |   XXXX "
 		);
-		public override void Load() {
-			new TileItem(this, textureOverride: base.Texture.Replace("_Side", "") + "_Item")
-			.WithExtraStaticDefaults(item => {
-				this.DropTileItem(item);
-				item.ResearchUnlockCount = 25;
-			}).WithOnAddRecipes(item => {
-				Recipe.Create(item.type)
-				.AddIngredient<Biocomponent10>(15)
-				.AddIngredient<Scrap>(45)
-				.AddTile<Metal_Presser>()
-				.Register();
-			}).RegisterItem();
-		}
 		public override void SetStaticDefaults() {
 			// Properties
 			TileID.Sets.CanBeSloped[Type] = false;
@@ -137,6 +114,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.addAlternate(3);
 			TileObjectData.addTile(Type);
 			ID = Type;
+			RegisterItemDrop(ModContent.ItemType<Deactivated_Trenchmaker_Item>(), -1);
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
@@ -163,7 +141,34 @@ namespace Origins.Tiles.Ashen {
 		}
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => IsPart(x - left, y - top, style);
 	}
-	public class Deactivated_Repairboy: OriginTile, IMultiTypeMultiTile {
+	public class Deactivated_Trenchmaker_Item : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 25;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToPlaceableTile(Deactivated_Trenchmaker.ID);
+			Item.width = 14;
+			Item.height = 28;
+			Item.value = 150;
+		}
+		public override bool AltFunctionUse(Player player) => true;
+		public override bool? UseItem(Player player) {
+			if (player.altFunctionUse == 2) {
+				if (Item.createTile == Deactivated_Trenchmaker.ID) Item.createTile = Deactivated_Trenchmaker_Side.ID;
+				else Item.createTile = Deactivated_Trenchmaker.ID;
+				return false;
+			}
+			return null;
+		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient<Biocomponent10>(15)
+			.AddIngredient<Scrap>(45)
+			.AddTile<Metal_Presser>()
+			.Register();
+		}
+	}
+	public class Deactivated_Repairboy : OriginTile, IMultiTypeMultiTile {
 		public static int ID { get; private set; }
 		public static bool[,,] Shape = MultiTypeMultiTile.GenerateShapeMap(
 			"  X|  X|  X|X  |X  |X  ",
