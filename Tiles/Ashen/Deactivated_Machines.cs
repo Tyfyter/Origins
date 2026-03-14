@@ -5,6 +5,7 @@ using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Enums;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -160,14 +161,11 @@ namespace Origins.Tiles.Ashen {
 			Item.height = 28;
 			Item.value = 150;
 		}
-		public override bool AltFunctionUse(Player player) => true;
-		public override bool? UseItem(Player player) {
-			if (player.altFunctionUse == 2) {
+		public override void HoldItem(Player player) {
+			if (PlayerInput.Triggers.JustPressed.Up || PlayerInput.Triggers.JustPressed.Down) {
 				if (Item.createTile == Deactivated_Trenchmaker.ID) Item.createTile = Deactivated_Trenchmaker_Side.ID;
 				else Item.createTile = Deactivated_Trenchmaker.ID;
-				return false;
 			}
-			return null;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
