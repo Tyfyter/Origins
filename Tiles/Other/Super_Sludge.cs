@@ -12,9 +12,28 @@ namespace Origins.Tiles.Other {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			Main.tileMerge[TileType<Murky_Sludge>()][Type] = true;
 			AddMapEntry(FromHexRGB(0x633354));
 			DustType = DustID.Mud;
 			HitSound = SoundID.NPCHit18;
+			LateSetupActions.Add(() => {
+				TileMergeOverlay mergeOverlay = new(merge + "Sludge_Overlay", Type);
+				for (int i = 0; i < TileLoader.TileCount; i++) {
+					switch (i) {
+						case TileID.Dirt:
+						case TileID.Mud:
+						case TileID.Ash:
+						break;
+
+						default:
+						if (TileID.Sets.Dirt[i]) break;
+						if (TileID.Sets.Grass[i]) break;
+						if (Main.tileMerge[i][Type]) break;
+						continue;
+					}
+					VanillaTileOverlays.AddOverlay(i, mergeOverlay);
+				}
+			});
 		}
 		public override void FloorVisuals(Player player) {
 			player.AddBuff(BuffType<Super_Sludge_Debuff>(), 30);
