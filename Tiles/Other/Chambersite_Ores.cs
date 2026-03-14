@@ -54,6 +54,11 @@ namespace Origins.Tiles.Other {
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) Overlay = Request<Texture2D>(OverlayPath);
 			Main.tileSolid[Type] = true;
+			Main.tileStone[Type] = true;
+			Main.tileBlockLight[Type] = true;
+			Main.tileSpelunker[Type] = true;
+			Main.tileShine2[Type] = true;
+			Main.tileShine[Type] = 600;
 			Main.tileMerge[Type] = Main.tileMerge[StoneTile];
 			Main.tileMerge[Type][StoneTile] = true;
 			Main.tileMerge[StoneTile][Type] = true;
