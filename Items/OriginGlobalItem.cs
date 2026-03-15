@@ -95,6 +95,7 @@ namespace Origins.Items {
 				case ItemID.ProximityMineLauncher:
 				case ItemID.GrenadeLauncher:
 				case ItemID.HellfireArrow:
+				case ItemID.JackOLanternLauncher:
 				case ItemID.Stynger:
 				case ItemID.StyngerBolt:
 				case ItemID.ElectrosphereLauncher:
