@@ -51,7 +51,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.DeathSound = SoundID.NPCDeath44;
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			NPC.knockBackResist = 0.1f;
-			AIType = NPCID.GoblinScout;
+			AIType = NPCID.Mummy;
 			SpawnModBiomes = [
 				GetInstance<Ashen_Biome>().Type,
 			];
