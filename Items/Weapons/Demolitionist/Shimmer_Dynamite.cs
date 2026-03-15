@@ -1,3 +1,4 @@
+using ModLiquidLib.ID;
 using Origins.Dev;
 using Origins.Projectiles;
 using PegasusLib.Networking;
@@ -127,14 +128,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 					if (Main.tile[i, j] != null) {
 						if (tile.HasTile) {
 							void TransformToTile(int type) {
-								if (type >= 0) {
-									tile.TileType = (ushort)type;
-									if (tile.TileType == TileID.Torches) {
-										tile.TileFrameY = 23 * 22;
-									}
-								}
+								if (type >= 0) tile.TileType = (ushort)type;
 							}
 							switch (tile.TileType) {
+								case TileID.Torches:
+								tile.TileFrameY = 23 * 22;
+								break;
+
 								case TileID.LunarBrick: {
 									switch (Main.GetMoonPhase()) {
 										case MoonPhase.Full:
@@ -172,19 +172,18 @@ namespace Origins.Items.Weapons.Demolitionist {
 								} else {
 									TransformToTile(OriginsSets.Tiles.ShimmerTransformToTile[tile.TileType]);
 								}
+								if (TileID.Sets.Torch[tile.TileType]) {
+									tile.TileType = TileID.Torches;
+									goto case TileID.Torches;
+								}
 								break;
 							}
 						}
-						switch (tile.LiquidType) {
-							case LiquidID.Water:
-							tile.LiquidType = LiquidID.Lava;
-							break;
-							case LiquidID.Lava:
-							tile.LiquidType = LiquidID.Honey;
-							break;
-							case LiquidID.Honey:
-							tile.LiquidType = LiquidID.Water;
-							break;
+						int bucket1 = LiquidID_TLmod.Sets.CreateLiquidBucketItem[tile.LiquidType];
+						if (tile.LiquidAmount > 0 && bucket1 > 0 && ItemID.Sets.ShimmerTransformToItem[bucket1] > 0) {
+							int bucket2 = ItemID.Sets.ShimmerTransformToItem[bucket1];
+							int liquidType = Array.IndexOf(LiquidID_TLmod.Sets.CreateLiquidBucketItem, bucket2);
+							if (liquidType > -1) tile.LiquidType = liquidType;
 						}
 					}
 				}
