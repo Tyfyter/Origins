@@ -1981,8 +1981,8 @@ UI:
 (@4) Underground Fiberglass Background
 (^) Underground Riven Background
 
-(@) 30x30 Origins Icon !!!
-(@) Origins Mod Browser Logo !!!
+(^) 30x30 Origins Icon
+(^) Origins Mod Browser Logo
 ---
 
 VOLUME I MUSIC:
@@ -2033,5 +2033,5 @@ VOLUME I MUSIC:
 (#, ^4) Smog Storm !!!
 (X) Test of Ancients
 
-(^) Revelation
+($2) Revelation !!!
 ---
