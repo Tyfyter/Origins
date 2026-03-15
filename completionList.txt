@@ -1340,9 +1340,9 @@ TILES:
 (^) Chambersite Bunny Cage
 (^) Chambersite Squirrel Cage
 (^) Cicada 3301 Cage
-(#, ^2) Deactivated Repairboy !!!
+(^) Deactivated Repairboy
 (X) Deactivated Stryder !!!
-(#, ^2) Deactivated Trenchmaker !!!
+(#3, ^2) Deactivated Trenchmaker !!!
 (^) Defiled Torch
 (^) Defiled Water Fountain
 (^) Endowood Furniture
@@ -1441,6 +1441,7 @@ TILES:
 (^) Fuzzvine
 (^) Gel Blister
 (#2, ^2) Generation Station !!! (still needs other anim frames)
+(X) Half-baked Standing Refinery !!!
 (^) Hanging Scrap
 (^) Heat Vent
 (^) Hydrothermal Vent
@@ -1642,6 +1643,7 @@ CRITTERS AND FISH:
 
 CONSUMABLES:
 |---
+(X) Classified Blueprint !!!
 (^) Crown Jewel
 (X) Evil DNA
 (^) Mojo Injection
