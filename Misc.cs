@@ -5467,6 +5467,7 @@ namespace Origins {
 		public static StatModifier GetBlastRadius(this Projectile proj, BlastRadiusSources includeSources = BlastRadiusSources.All) {
 			return proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global) ? global.GetBlastRadius(proj, includeSources) : default;
 		}
+		public static bool IsType<TProj>(this Projectile proj) where TProj : ModProjectile => proj.type == ModContent.ProjectileType<TProj>();
 	}
 	public static class ContentExtensions {
 		public static LocalizedText[] GetChildren(this LanguageTree languageTree) => languageTree.Values.Select(tree => tree.value).ToArray();
