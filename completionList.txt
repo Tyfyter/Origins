@@ -237,7 +237,7 @@ ENEMY NPCS:
 (^) Gas Mask Zombie
 (^) Goo Wall
 (^) Graveshield Zombie
-(☻) Hammerhand !!! (needs glow, and slower anim)
+(^) Hammerhand
 (X) Limestone Creeper
 (^) Optiphage
 (#, ^2) Packhunter !!!
@@ -259,6 +259,7 @@ ENEMY NPCS:
 (^) Slime Worm (Slorm)
 (^) Spider Amoeba
 (X) Spiteful Flesh
+(X) Springjumper !!!
 (X) Tubefish
 (#, ^2) Wind Pail !!!
 
@@ -1094,7 +1095,7 @@ SUMMONER WEAPONS:
 (X) Technomancer 4000
 (^) Terratotem
 (X) Tonal Resonator
-(#, ^2) Vampire Fireflower in a Pot !!!
+(#2, ^2) Vampire Fireflower in a Pot !!!
 
 NO POST-ML CONTENT YET.
 ---

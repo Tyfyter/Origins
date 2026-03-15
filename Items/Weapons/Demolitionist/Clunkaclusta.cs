@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 11));
 		}
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Clunkaclusta_P>(30, 30, 9f, 62, 40);
+			Item.DefaultToCanisterLauncher<Clunkaclusta_P>(22, 42, 13f, 62, 40);
 			Item.knockBack = 2f;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(silver: 45);
@@ -66,9 +66,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
-		public override bool CanConsumeAmmo(Item ammo, Player player) {
-			return !Main.rand.NextBool(2);
-		}
 	}
 	public class Clunkaclusta_P : ModProjectile, ICanisterProjectile, IIsExplodingProjectile {
 		public override string Texture => "Terraria/Images/Item_1";
@@ -86,11 +83,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Origins.HomingEffectivenessMultiplier[Type] = 0.025f;
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.timeLeft = 30;
-			Projectile.scale = 1.3f;
+			//Projectile.scale = 1.3f;
 			Projectile.penetrate = 1;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 1;
 			Projectile.friendly = false;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
+			Projectile.extraUpdates = 0;
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];

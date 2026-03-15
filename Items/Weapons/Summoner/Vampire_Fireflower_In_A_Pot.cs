@@ -1,17 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
-using Origins.Core;
 using Origins.Items.Accessories;
-using Origins.Items.Other.Consumables.Broths;
 using Origins.Items.Weapons.Summoner;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.NPCs;
-using Origins.Projectiles;
-using ReLogic.Content;
-using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -24,7 +18,7 @@ namespace Origins.Items.Weapons.Summoner {
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 20;
+			Item.damage = 26;
 			Item.knockBack = 1f;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 14;
@@ -35,8 +29,8 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.useAnimation = 24;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.noUseGraphic = true;
-			Item.value = Item.sellPrice(silver: 1, copper: 50);
-			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.sellPrice(gold: 3);
+			Item.rare = ItemRarityID.Yellow;
 			Item.UseSound = SoundID.Item44;
 			Item.buffType = Vampire_Sunflower_Buff.ID;
 			Item.shoot = Vampire_Fireflower.ID;
@@ -44,9 +38,9 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient<Sunflower_In_A_Pot>()
 			.AddIngredient(ItemID.BrokenHeroSword)
 			.AddIngredient<Messy_Magma_Leech>()
+			.AddIngredient<Sunflower_In_A_Pot>()
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -107,6 +101,20 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Vampire_Sunflower_P : Sunflower_Sunny_P {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Sunflower_Sunny_P";
 		public override Color? GetAlpha(Color lightColor) => new(255, 80, 0, 100);
+		public override void SetStaticDefaults() {
+			ProjectileID.Sets.MinionShot[Type] = true;
+		}
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.aiStyle = 0;
+			Projectile.DamageType = DamageClass.Summon;
+			Projectile.width = 6;
+			Projectile.height = 4;
+			Projectile.friendly = true;
+			Projectile.penetrate = 1;
+			Projectile.timeLeft = 300;
+			Projectile.Opacity = 0;
+		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			int time = 60 * Main.rand.Next(3, 6);
 			target.AddBuff(BuffID.OnFire3, time);

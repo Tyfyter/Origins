@@ -8204,7 +8204,13 @@ Matryoshka_Doll: {
 
 Vampire_Fireflower_In_A_Pot: {
 	// DisplayName: Vampire Fireflower in a Pot
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Summons a vampire fireflower to fight for you
+		Inflicts [buffhint:Hellfire]
+		Heals you and slightly increases your speed during the day
+		Heals herself from her attacks and you while at full health herself
+		''' */
 }
 
 Amebic_Gel_Bottomless_Bucket: {
@@ -8215,7 +8221,11 @@ Amebic_Gel_Bottomless_Bucket: {
 
 Clunkaclusta: {
 	// DisplayName: Clunkaclusta
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		Press and hold <left> to manually detonate projectile upon release
+		Releases cluster bombs on detonation
+		''' */
 }
 
 Deactivated_Repairboy_Item: {
