@@ -1,6 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dusts;
+using Origins.Items.Armor.Ashen;
+using Origins.Items.Materials;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Ranged;
+using Origins.LootConditions;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
 using ReLogic.Utilities;
@@ -13,6 +17,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -42,12 +47,22 @@ namespace Origins.NPCs.Ashen {
 			NPC.lifeMax = 45;
 			NPC.defense = 8;
 			NPC.damage = 18;
-			NPC.width = 40;
+			NPC.width = 32;
 			NPC.height = 26;
 			NPC.noGravity = true;
+			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1f);
+			NPC.DeathSound = SoundID.NPCDeath44;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Ashen_Biome>().Type,
 			];
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(new CommonDrop(ModContent.ItemType<Biocomponent10>(), 1, 1, 3));
+			npcLoot.Add(ScavengerBonus.Scrap(1, 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BBQ_Skewer>(), 19));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Helmet>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Breastplate>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Greaves>(), 525));
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
@@ -285,6 +300,17 @@ namespace Origins.NPCs.Ashen {
 			repairProgress[pos] = 0;
 		}
 		internal static FungibleSet<Point16> repairProgress;
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore1");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore2");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore3");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore4");
+				for (int i = 0; i < 5; i++) {
+					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+				}
+			}
+		}
 	}
 	public class Repairboy_P : Welding_Torch_P {
 		public override string Texture => typeof(Welding_Torch_P).GetDefaultTMLName();

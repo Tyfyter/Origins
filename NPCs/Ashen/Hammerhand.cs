@@ -3,7 +3,6 @@ using Origins.Dev;
 using Origins.Items.Armor.Ashen;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
-using Origins.Items.Weapons.Ammo;
 using Origins.LootConditions;
 using Origins.World.BiomeData;
 using System;
@@ -18,7 +17,7 @@ namespace Origins.NPCs.Ashen {
 	public class Hammerhand : ModNPC, IWikiNPC, IAshenEnemy, IReplaceAITypeSounds {
 		public Rectangle DrawRect => new(0, 0, 40, 60);
 		public int AnimationFrames => 6;
-		public int FrameDuration => 3;
+		public int FrameDuration => 8;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
@@ -43,14 +42,15 @@ namespace Origins.NPCs.Ashen {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.lifeMax = 80;
-			NPC.defense = 10;
-			NPC.damage = 18;
-			NPC.width = 36;
-			NPC.height = 56;
+			NPC.defense = 22;
+			NPC.damage = 24;
+			NPC.width = 32;
+			NPC.height = 48;
 			NPC.value = Item.buyPrice(0, 0, 2);
-			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-2f);
-			NPC.DeathSound = SoundID.NPCHit4.WithPitchOffset(-2f);
+			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
+			NPC.DeathSound = SoundID.NPCDeath44;
 			NPC.aiStyle = NPCAIStyleID.Fighter;
+			NPC.knockBackResist = 0.1f;
 			AIType = NPCID.Mummy;
 			SpawnModBiomes = [
 				GetInstance<Ashen_Biome>().Type,
@@ -72,12 +72,12 @@ namespace Origins.NPCs.Ashen {
 			);
 		}
 		public override void FindFrame(int frameHeight) {
-			NPC.DoFrames(3, Math.Abs(NPC.velocity.X));
+			NPC.DoFrames(5, Math.Abs(NPC.velocity.X));
 			if (!NPC.collideY && !NPC.IsABestiaryIconDummy) NPC.DoFrames(1, 0..1);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(new CommonDrop(ItemType<Biocomponent10>(), 1, 1, 3));
-			npcLoot.Add(ScavengerBonus.Scrap(8, 1, 2, 5));
+			npcLoot.Add(ScavengerBonus.Scrap(1, 1, 2, 5));
 			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 525));
@@ -94,7 +94,6 @@ namespace Origins.NPCs.Ashen {
 				}
 			}
 		}
-
 		public bool PlaySound() => true;
 	}
 }

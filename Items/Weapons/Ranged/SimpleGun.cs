@@ -25,7 +25,7 @@ public class Tactical_SMG : SimpleGun {
 	public override int ScrapAmount => 20;
 	public override int BarrelYOffset => 5;
 	public override void OnSetDefaults() {
-		Item.damage = 8;
+		Item.damage = 4;
 		Item.knockBack = 1;
 		Item.shootSpeed = 5;
 		Item.useTime = Item.useAnimation = 5;

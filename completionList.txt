@@ -234,10 +234,10 @@ ENEMY NPCS:
 (^) Felnum Slime
 (^) Flagellant
 (^) Flying Exoskeleton
-(☻) Gas Mask Zombie !!!
+(^) Gas Mask Zombie
 (^) Goo Wall
 (^) Graveshield Zombie
-(#2, ^2) Hammerhand !!! (needs sounds)
+(#2, ^2) Hammerhand !!! (needs glow, and slower anim)
 (X) Limestone Creeper
 (^) Optiphage
 (#, ^2) Packhunter !!!
@@ -246,7 +246,7 @@ ENEMY NPCS:
 (^) Pustule Jellyfish
 (#, ^2) QM-76 'Quakemaker' !!!
 (#, ^2) Reject !!!
-(☻) Repairboy !!!
+(#2, ^2) Repairboy !!! (cool repair torch effect)
 (^) Riven Penguin
 (^) Riven Protoform
 (X) Rivenpotamus
@@ -915,7 +915,7 @@ RANGED WEAPONS:
 (^) Threemoepeater
 (^) Unmisfire
 (^) Unstrung Fiberglass Bow
-(^) Welding Torch
+(#2, ^2) Welding Torch !!! (cool repair visual effect)
 (^) 2-in-1 Shotty
 
 (^) Acrid Impaler

@@ -212,7 +212,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			}
 			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 				modifiers.ScalingArmorPenetration += 0.75f;
-				modifiers.Knockback *= 3;
+				modifiers.Knockback *= 1.8f;
 			}
 			public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 				Min(ref Projectile.timeLeft, 1);
