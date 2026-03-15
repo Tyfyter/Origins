@@ -237,7 +237,7 @@ ENEMY NPCS:
 (^) Gas Mask Zombie
 (^) Goo Wall
 (^) Graveshield Zombie
-(#2, ^2) Hammerhand !!! (needs glow, and slower anim)
+(☻) Hammerhand !!! (needs glow, and slower anim)
 (X) Limestone Creeper
 (^) Optiphage
 (#, ^2) Packhunter !!!

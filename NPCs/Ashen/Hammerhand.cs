@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.Ashen {
-	public class Hammerhand : ModNPC, IWikiNPC, IAshenEnemy, IReplaceAITypeSounds {
+	public class Hammerhand : Glowing_Mod_NPC, IWikiNPC, IAshenEnemy, IReplaceAITypeSounds {
 		public Rectangle DrawRect => new(0, 0, 40, 60);
 		public int AnimationFrames => 6;
 		public int FrameDuration => 8;
@@ -51,7 +51,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.DeathSound = SoundID.NPCDeath44;
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			NPC.knockBackResist = 0.1f;
-			AIType = NPCID.Mummy;
+			AIType = NPCID.GoblinScout;
 			SpawnModBiomes = [
 				GetInstance<Ashen_Biome>().Type,
 			];
@@ -73,7 +73,7 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.DoFrames(5, Math.Abs(NPC.velocity.X));
-			if (!NPC.collideY && !NPC.IsABestiaryIconDummy) NPC.DoFrames(1, 0..1);
+			if (!NPC.collideY && !NPC.IsABestiaryIconDummy && Math.Abs(NPC.velocity.Y) != 0) NPC.DoFrames(1, 0..1);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(new CommonDrop(ItemType<Biocomponent10>(), 1, 1, 3));
@@ -92,6 +92,8 @@ namespace Origins.NPCs.Ashen {
 				for (int i = 0; i < 7; i++) {
 					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
 				}
+			} else if (Main.rand.NextBool(5)) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
 			}
 		}
 		public bool PlaySound() => true;

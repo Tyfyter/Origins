@@ -81,7 +81,7 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.DoFrames(3, Math.Abs(NPC.velocity.X));
-			if (!NPC.collideY && !NPC.IsABestiaryIconDummy) NPC.DoFrames(1, 2..3);
+			if (!NPC.collideY && !NPC.IsABestiaryIconDummy && Math.Abs(NPC.velocity.Y) != 0) NPC.DoFrames(1, 2..3);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Amber, 20));
