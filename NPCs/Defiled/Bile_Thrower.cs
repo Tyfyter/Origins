@@ -3,7 +3,6 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
 using Origins.Projectiles.Enemies;
-using PegasusLib;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
@@ -46,6 +45,9 @@ namespace Origins.NPCs.Defiled {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 2));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 8, 2, 5));
+			npcLoot.Add(ItemDropRule.Common(ItemID.PedguinHat, 150));
+			npcLoot.Add(ItemDropRule.Common(ItemID.PedguinShirt, 150));
+			npcLoot.Add(ItemDropRule.Common(ItemID.PedguinPants, 150));
 		}
 		public override void AI() {
 			NPCAimedTarget target = NPC.GetTargetData(false);

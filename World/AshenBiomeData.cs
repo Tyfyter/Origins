@@ -682,8 +682,8 @@ namespace Origins.World.BiomeData {
 			MimicType = NPCType<Trash_Compactor_Mimic>();
 
 			BloodBunny = NPCType<Defiled_Mite>();
-			BloodPenguin = NPCType<Bile_Thrower>();
-			BloodGoldfish = NPCType<Shattered_Goldfish>();
+			BloodPenguin = NPCType<Robot_Penguin>();
+			BloodGoldfish = NPCType<Scraptooth>();
 
 			this.AddOriginsWallConversions<Tainted_Stone_Wall>(WallVersion.Natural,
 				WallID.Cave7Unsafe,

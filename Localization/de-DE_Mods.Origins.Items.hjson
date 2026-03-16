@@ -8207,7 +8207,7 @@ Vampire_Fireflower_In_A_Pot: {
 	/* Tooltip:
 		'''
 		Summons a vampire fireflower to fight for you
-		Inflicts [buffhint:Hellfire]
+		Inflicts [buffhint:OnFire3]
 		Heals you and slightly increases your speed during the day
 		Heals herself from her attacks and you while at full health herself
 		''' */

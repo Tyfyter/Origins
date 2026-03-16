@@ -18,6 +18,7 @@ namespace Origins.NPCs.Ashen {
 		public Rectangle DrawRect => new(0, 0, 40, 60);
 		public int AnimationFrames => 6;
 		public int FrameDuration => 8;
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;

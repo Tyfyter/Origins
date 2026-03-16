@@ -37,6 +37,7 @@ namespace Origins.NPCs.Ashen {
 		AutoLoadingAsset<Texture2D> glowTexture = typeof(Repairboy).GetDefaultTMLName("_Glow");
 		AutoLoadingAsset<Texture2D> armTexture = typeof(Repairboy).GetDefaultTMLName("_Arm");
 		AutoLoadingAsset<Texture2D> armGlowTexture = typeof(Repairboy).GetDefaultTMLName("_Arm_Glow");
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.UsesNewTargetting[Type] = true;

@@ -1,6 +1,7 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Origins.Dev;
 using Origins.Dusts;
+using Origins.NPCs.Ashen;
 using Origins.NPCs.Defiled;
 using Origins.Tiles.Ashen;
 using Origins.World.BiomeData;
@@ -72,10 +73,10 @@ namespace Origins.Items.Materials {
 							targetType = ModContent.NPCType<Defiled_Mite>();
 							break;
 							case NPCID.Penguin or NPCID.PenguinBlack:
-							targetType = ModContent.NPCType<Bile_Thrower>();
+							targetType = ModContent.NPCType<Robot_Penguin>();
 							break;
 							case NPCID.Goldfish or NPCID.GoldfishWalker:
-							targetType = ModContent.NPCType<Shattered_Goldfish>();
+							targetType = ModContent.NPCType<Scraptooth>();
 							break;
 						}
 						if (targetType != -1) {

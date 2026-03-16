@@ -1,11 +1,10 @@
-﻿using Microsoft.Xna.Framework;
-using Newtonsoft.Json.Linq;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using ThoriumMod.Empowerments;
+using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Riven_Penguin : Glowing_Mod_NPC, IRivenEnemy, IWikiNPC {
@@ -32,6 +31,11 @@ namespace Origins.NPCs.Riven {
                 this.GetBestiaryFlavorText(),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.BloodMoon
 			});
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ItemID.PedguinHat, 150));
+			npcLoot.Add(ItemDropRule.Common(ItemID.PedguinShirt, 150));
+			npcLoot.Add(ItemDropRule.Common(ItemID.PedguinPants, 150));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			//spawn gore if npc is dead after being hit
