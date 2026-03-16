@@ -142,7 +142,7 @@ namespace Origins.Tiles.Ashen {
 			return true;
 		}
 		public bool CanBlockPlacement(Tile tile, int left, int top, int style) {
-			if (tile.HasTile) return false;
+			if (!tile.HasTile) return false;
 			Point pos = tile.GetTilePosition();
 			return IsPart(pos.X - left, pos.Y - top, style);
 		}
