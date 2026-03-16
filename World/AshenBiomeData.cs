@@ -24,10 +24,12 @@ using Origins.Walls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Personalities;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -61,8 +63,15 @@ namespace Origins.World.BiomeData {
 		public static bool IsActive => OriginSystem.ashenTiles > NeededTiles;
 		public override void SpecialVisuals(Player player, bool isActive) {
 			//OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			//Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(originPlayer.ZoneRivenProgressSmoothed);
-			//player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", originPlayer.ZoneRivenProgressSmoothed > 0, player.Center);
+			//Filters.Scene["Origins:ZoneAshen"].GetShader().UseProgress(originPlayer.ZoneAshenProgressSmoothed);
+			//player.ManageSpecialBiomeVisuals("Origins:ZoneAshen", originPlayer.ZoneAshenProgressSmoothed > 0, player.Center);
+
+			if (SkyManager.Instance["Origins:ZoneAshen"] != null && isActive != SkyManager.Instance["Origins:ZoneAshen"].IsActive()) {
+				if (isActive)
+					SkyManager.Instance.Activate("Origins:ZoneAshen", player.Center);
+				else
+					SkyManager.Instance["Origins:ZoneAshen"].Deactivate();
+			}
 		}
 		public override float GetWeight(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneAshenProgress * 0.98f;

@@ -54,7 +54,7 @@ namespace Origins.Events {
 		}
 		public override bool IsBiomeActive(Player player) => Main.WindyEnoughForKiteDrops && Main.LocalPlayer.InModBiome<Ashen_Biome>();
 		public override void SpecialVisuals(Player player, bool isActive) {
-			if (SkyManager.Instance[biomeName] is CustomSky sky && isActive != sky.IsActive()) {
+			if (SkyManager.Instance[biomeName] is Smog_Storm_Sky sky && isActive != sky.IsActive()) {
 				if (isActive) {
 					SkyManager.Instance.Activate(biomeName);
 				} else {
