@@ -259,7 +259,7 @@ ENEMY NPCS:
 (^) Slime Worm (Slorm)
 (^) Spider Amoeba
 (X) Spiteful Flesh
-(X) Springjumper !!!
+(#, ^2) Springjumper !!!
 (X) Tubefish
 (#, ^2) Wind Pail !!!
 
@@ -301,7 +301,7 @@ ENEMY NPCS:
 (^) Rock Bottom
 (X) Rotting Husk
 (^) Savage Whip
-(X) Scrapyard Stryder !!!
+(#, ^2) Scrapyard Stryder !!!
 (^) Sea Dragon
 (^) Shattered Ghoul
 (^) Shattered Mummy
