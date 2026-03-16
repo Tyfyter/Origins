@@ -46,7 +46,7 @@ namespace Origins.World.BiomeData {
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
 		public override string MapBackground => BackgroundPath;
-		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<Defiled_Surface_Background>();
+		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<Ashen_Surface_Background>();
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => BiomeUGBackground<Riven_Underground_Background>();
 		public override int BiomeTorchItemType => ItemType<Ashen_Torch>();
 		public override int BiomeCampfireItemType => ItemType<Ashen_Campfire_Item>();
