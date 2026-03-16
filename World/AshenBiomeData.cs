@@ -97,6 +97,8 @@ namespace Origins.World.BiomeData {
 		public const short DefaultTileDust = DustID.Lihzahrd;
 		public class SpawnRates : SpawnPool {
 			public const float PowerZombie = 0.8f;
+			public const float Mummy = 1;
+			public const float Ghoul = 2;
 			public const float Mimic = 0.01f;
 			public const float CursedWeapon = 0.01f;
 			public override string Name => $"{nameof(Ashen_Biome)}_{base.Name}";
