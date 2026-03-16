@@ -194,7 +194,6 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 							shop.Add(new Item(ItemType<Fervor_Potion>()) { shopCustomPrice = 25000 }, Condition.DownedEowOrBoc);
 							shop.Add(new Item(ItemType<Protean_Potion>()) { shopCustomPrice = 25000 }, Condition.DownedEowOrBoc);
 							shop.Add(new Item(ItemType<Ambition_Potion>()) { shopCustomPrice = 25000 }, Condition.DownedEowOrBoc);
-							shop.Add(new Item(ItemType<Fervor_Potion>()) { shopCustomPrice = 25000 }, Condition.DownedEowOrBoc);
 							shop.Add(new Item(ItemType<Antisolve_Potion>()) { shopCustomPrice = 25000 }, Condition.Hardmode);
 							shop.Add(new Item(ItemType<Focus_Potion>()) { shopCustomPrice = Item.buyPrice(gold: 2, silver: 50) }, Condition.Hardmode);
 							shop.Add(new Item(ItemType<Greater_Summoning_Potion>()) { shopCustomPrice = 25000 }, OriginsModIntegrations.NotAprilFools.And(Condition.Hardmode));
