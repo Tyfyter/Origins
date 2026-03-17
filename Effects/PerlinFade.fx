@@ -19,7 +19,7 @@ float4 uShaderSpecificData;
 
 float4 RedFade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0{
 	float4 color = tex2D(uImage0, coords);
-	float2 center = (coords.x-0.5,coords.y-0.5);
+	float2 center = float2(coords.x-0.5, coords.y-0.5);
 	float sinr = sin(uRotation);
 	float cosr = cos(uRotation);
 	float2 rotCoords = float2((center.x*cosr-center.y*sinr), (center.x*sinr+center.y*cosr))+(0.5,0.5);
