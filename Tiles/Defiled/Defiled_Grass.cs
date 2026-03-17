@@ -27,6 +27,7 @@ namespace Origins.Tiles.Defiled {
 			//SetModTree(Defiled_Tree.Instance);
 			Defiled_Grass_Seeds.TileAssociations[TileID.Dirt] = Type;
 			DustType = Defiled_Wastelands.DefaultTileDust;
+			RegisterItemDrop(ItemID.DirtBlock);
 		}
 		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != TileID.Dirt;
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
@@ -101,6 +102,7 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(180, 180, 180));
 			//SetModTree(Defiled_Tree.Instance);
 			Defiled_Grass_Seeds.TileAssociations[TileID.Mud] = Type;
+			RegisterItemDrop(ItemID.MudBlock);
 		}
 		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != TileID.Mud;
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
