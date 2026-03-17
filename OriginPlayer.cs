@@ -346,7 +346,7 @@ namespace Origins {
 				}
 			}
 			if (dashVase && !otherDash) {
-				if (Player.dashDelay > 0 && !Player.grappling.All(i => i is 0 or -1)) Player.dashDelay--;
+				if (Player.dashDelay > 0 && Player.grapCount > 0) Player.dashDelay--;
 				Player.dashTime = 0;
 				const int vaseDashDuration = 12;
 				const int vaseDashCooldown = 18;
