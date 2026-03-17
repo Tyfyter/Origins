@@ -42,20 +42,22 @@ namespace Origins.Backgrounds {
 			double space = Main.worldSurface * 0.35 * 16;
 			double surface = position.Y;
 			float parallaxYBase = (float)Utils.GetLerpValue(surface, space, Main.screenPosition.Y, false);
+			Color color = Main.ColorOfTheSkies * Opacity;
 			for (int i = clouds.Length - 1; i >= 0; i--) {
 				Vector2 size = clouds[i].Value.Size();
 				float parallaxX = 0.10f * (i + 1);
 				float parallaxY = float.Lerp(parallaxYBase, 0.5f, i / 6f);
 				pos.Y = parallaxY * Main.screenHeight - size.Y * 0.5f;
-				for (pos.X = -(Main.screenPosition.X * parallaxX) % size.X; pos.X < Main.screenWidth; pos.X += size.X) {
-					spriteBatch.Draw(clouds[i], pos, Main.ColorOfTheSkies);
+				for (pos.X = -(Main.screenPosition.X * parallaxX + position.X / (1 + i)) % size.X; pos.X < Main.screenWidth; pos.X += size.X) {
+					spriteBatch.Draw(clouds[i], pos, color);
 				}
 			}
 		}
 		public override void Reset() { }
 		public override Color OnTileColor(Color inColor) => Color.Lerp(inColor, inColor.MultiplyRGB(Color.DarkGray), Opacity);
 		public override void Update(GameTime gameTime) {
-			MathUtils.LinearSmoothing(ref Opacity, isActive.ToInt(), 1f / 180);
+			MathUtils.LinearSmoothing(ref Opacity, isActive.ToInt(), 1f / 60);
+			position.X += Main.windSpeedCurrent * 5;
 		}
 		public void Load(Mod mod) {
 			SkyManager.Instance["Origins:ZoneAshen"] = this;

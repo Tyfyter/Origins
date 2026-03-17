@@ -1111,7 +1111,7 @@ EXPLOSIVE WEAPONS:
 (^) Bombardment
 (^) Bomb Launcher
 (^) Brainade
-(#3, ^2) Clunkaclusta !!! (liquid/dry rockets makes the big projectile explode upon contact with liquids)
+(☻) Clunkaclusta !!!
 (^) Cold Snap
 (^) Defiled Spirit
 (^) Eruption
