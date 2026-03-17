@@ -159,9 +159,11 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			}
 		}
 	}
+	[ReinitializeDuringResizeArrays]
 	public class Liquid_Rocket_Dummy_Canister(CanisterData canisterData, Utils.TileActionAttempt tileAction, float liquidSize = 3f, int explosionSize = 48) : Rocket_Dummy_Canister(canisterData, explosionSize) {
+		public static bool[] IgnoreExplodeOnLiquid = ProjectileID.Sets.Factory.CreateBoolSet(false);
 		public override void AI(Projectile projectile, bool child) {
-			if (projectile.wet) projectile.timeLeft = 1;
+			if (projectile.wet && !IgnoreExplodeOnLiquid[projectile.type]) projectile.timeLeft = 1;
 		}
 		public override void OnKill(Projectile projectile, bool child) {
 			base.OnKill(projectile, child);

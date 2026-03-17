@@ -78,6 +78,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 30;
 			Origins.MagicTripwireDetonationStyle[Type] = 2;
+			Liquid_Rocket_Dummy_Canister.IgnoreExplodeOnLiquid[Type] = true;
 		}
 		public override void SetDefaults() {
 			Origins.HomingEffectivenessMultiplier[Type] = 0.025f;
