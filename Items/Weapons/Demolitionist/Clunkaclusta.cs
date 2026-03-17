@@ -132,7 +132,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			int count = 5 - Main.rand.Next(3);
 			float rot = MathHelper.TwoPi / count;
 			for (int i = count; i > 0; i--) {
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, OriginExtensions.Vec2FromPolar(5, rot * i) + Main.rand.NextVector2Unit() + Projectile.velocity, t, (int)(Projectile.damage / 3), Projectile.knockBack, Projectile.owner);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, OriginExtensions.Vec2FromPolar(rot * i, 5) + Main.rand.NextVector2Unit() + Projectile.velocity, t, (int)(Projectile.damage / 3), Projectile.knockBack, Projectile.owner);
 			}
 		}
 		public bool IsExploding => Projectile.timeLeft <= 0;
