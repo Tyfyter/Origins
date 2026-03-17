@@ -35,6 +35,23 @@ public abstract class ATail : ModItem {
 			UpdateTailSegment(player, tailSegments, i);
 		}
 	}
+	public virtual void OnKilled(Player player, List<TailSegment> tailSegments, PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp = false) {
+		for (int i = 0; i < tailSegments.Count; i++) {
+			tailSegments[i].velocity = new(
+				Main.rand.Next(-20, 21) * 0.1f + (2 * hitDirection),
+				Main.rand.Next(-40, -10) * 0.1f
+			);
+		}
+	}
+	public virtual void UpdateTailDead(Player player, List<TailSegment> tailSegments) {
+		for (int i = 0; i < tailSegments.Count; i++) {
+			TailSegment segment = tailSegments[i];
+			segment.position += segment.velocity;
+			segment.rotation += segment.velocity.X * 0.1f;
+			segment.velocity.Y += 0.1f;
+			segment.velocity.X *= 0.99f;
+		}
+	}
 	public abstract void UpdateTailSegment(Player player, IReadOnlyList<TailSegment> segments, int index);
 	public virtual void DrawTail(ref PlayerDrawSet drawInfo, List<TailSegment> tailSegments) {
 		int dataCount = drawInfo.DrawDataCache.Count;
@@ -128,6 +145,10 @@ public sealed class Tail_Layer : PlayerDrawLayer {
 }
 public class TailSegment {
 	public Vector2 position;
+	/// <summary>
+	/// Only used when dead by default
+	/// </summary>
+	public Vector2 velocity;
 	public SpriteEffects effects;
 	public float rotation;
 }

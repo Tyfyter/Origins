@@ -593,6 +593,7 @@ namespace Origins {
 			UpdateRoboTailLifeTracker();
 			roboTailHurtCount = 0;
 			roboTailHealCount = 0;
+			vanityTail?.UpdateTailDead(Player, vanityTailSegments);
 		}
 		public override void ModifyMaxStats(out StatModifier health, out StatModifier mana) {
 			base.ModifyMaxStats(out health, out mana);
@@ -729,6 +730,7 @@ namespace Origins {
 					}
 				}
 			}
+			vanityTail?.OnKilled(Player, vanityTailSegments, damageSource, damage, hitDirection, pvp);
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet) {
 			releaseTriggerSetBonus = !controlTriggerSetBonus;

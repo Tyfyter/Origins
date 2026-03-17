@@ -62,7 +62,7 @@ namespace Origins.Items.Vanity.Dev.PlagueTexan {
 				tailTexture,
 				segment.position - Main.screenPosition,
 				frame,
-				Lighting.GetColor(segment.position.ToTileCoordinates()),
+				drawInfo.drawPlayer.GetImmuneAlphaPure(Lighting.GetColor(segment.position.ToTileCoordinates()), 0),
 				segment.rotation + MathHelper.PiOver2,
 				frame.Size() * 0.5f,
 				1,
@@ -73,7 +73,7 @@ namespace Origins.Items.Vanity.Dev.PlagueTexan {
 			drawInfo.DrawDataCache.Add(data);
 			if (colors.cTailGlow is int cTailGlow) data.shader = cTailGlow;
 			data.texture = tailGlowTexture;
-			data.color = Color.White;
+			data.color = drawInfo.drawPlayer.GetImmuneAlphaPure(Color.White, 0);
 			drawInfo.DrawDataCache.Add(data);
 		}
 		public override void UpdateItemDye(Player player, int dye, bool hideVisual) {
