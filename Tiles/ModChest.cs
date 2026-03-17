@@ -161,7 +161,7 @@ namespace Origins.Tiles {
 			if (tile.TileFrameY != 0) top--;
 		}
 	}
-	public abstract class ModSpecialChest : ModTile {
+	public abstract class ModSpecialChest : ModTile, ICustomTELocation {
 		public abstract ChestData CreateChestData();
 		public virtual bool IsMultitile => true;
 		public sealed override void SetStaticDefaults() {
@@ -196,12 +196,15 @@ namespace Origins.Tiles {
 		public virtual void ModifyTileData() { }
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 		public override void PlaceInWorld(int i, int j, Item item) {
-			if (TileObjectData.GetTileData(Main.tile[i, j]) is TileObjectData objectData) TileUtils.GetMultiTileTopLeft(i, j, objectData, out i, out j);
-			new Set_Special_Chest_Action(new(i, j), CreateChestData()).Perform();
+			int x = i, y = j;
+			if (TileObjectData.GetTileData(Main.tile[i, j]) is TileObjectData objectData) TileUtils.GetMultiTileTopLeft(i, j, objectData, out x, out y);
+			ModifyTELocation(ref x, ref y, i, j);
+			new Set_Special_Chest_Action(new(x, y), CreateChestData()).Perform();
 		}
 		public override bool RightClick(int i, int j) {
 			SpecialChest.OpenChest(i, j);
 			return true;
 		}
+		public virtual void ModifyTELocation(ref int x, ref int y, int originalX, int originalY) { }
 	}
 }

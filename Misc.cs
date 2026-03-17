@@ -1994,6 +1994,11 @@ namespace Origins {
 			}
 			return o;
 		}
+		public static T[] BuildFullArray<T>(int length) where T : new() {
+			T[] o = new T[length];
+			for (int i = 0; i < o.Length; i++) o[i] = new T();
+			return o;
+		}
 		public static bool Contains<TSource>(this IEnumerable<TSource> source, IEnumerable<TSource> value) {
 			foreach (TSource element in value) {
 				if (source.Contains(element)) return true;

@@ -122,6 +122,13 @@ namespace Origins.Core {
 		static void IL_TileObject_CanPlace(ILContext il) {
 			ILCursor c = new(il);
 			List<(int x, int y)> coordinateSets = [];
+			int alternateData = -1;
+			c.GotoNext(
+				i => i.MatchLdloc(out _),
+				i => i.MatchCall<TileObjectData>(nameof(TileObjectData.GetTileData)),
+				i => i.MatchStloc(out alternateData)
+			);
+			c.Index = 0;
 			//IL_001a: ldarg.0
 			//IL_001b: ldloc.0
 			//IL_001c: callvirt instance valuetype Terraria.DataStructures.Point16 Terraria.ObjectData.TileObjectData::get_Origin()
@@ -205,8 +212,9 @@ namespace Origins.Core {
 			c.EmitLdloc(coordinateSets[correctIndex].x);
 			c.EmitLdloc(coordinateSets[correctIndex].y);
 			c.EmitLdarg3();
-			c.EmitDelegate((int tileType, Tile tile, int left, int top, int style) => {
-				return TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile && !multiTypeMultiTile.CanBlockPlacement(tile, left, top, style);
+			c.EmitLdloc(alternateData);
+			c.EmitDelegate((int tileType, Tile tile, int left, int top, int style, TileObjectData alternateData) => {
+				return TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile && !multiTypeMultiTile.CanBlockPlacement(tile, left, top, alternateData.Style + style);
 			});
 			c.EmitBrtrue(label);
 		}

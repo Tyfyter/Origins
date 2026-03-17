@@ -32,8 +32,10 @@ namespace Origins.Core {
 		public static void AddSlotVisualModifier(SlotDrawData.Modifier modifier) => slotVisualModifiers.Add(modifier);
 		public static ChestData CurrentChest { get; internal set; }
 		public static void OpenChest(int x, int y) {
+			int originalX = x, originalY = y;
 			Tile tile = Main.tile[x, y];
 			if (TileObjectData.GetTileData(tile) is TileObjectData objectData) TileUtils.GetMultiTileTopLeft(x, y, objectData, out x, out y);
+			if (TileLoader.GetTile(tile.TileType) is ICustomTELocation customTELocation) customTELocation.ModifyTELocation(ref x, ref y, originalX, originalY);
 			Player player = Main.LocalPlayer;
 			if (player.chest == chestID && player.chestX == x && player.chestY == y) {
 				player.chest = -1;
@@ -258,6 +260,7 @@ namespace Origins.Core {
 			protected abstract ChestData LoadData(TagCompound tag);
 			protected internal abstract bool IsValidSpot(Point position);
 			public virtual void UpdateUI(SpecialChestUI.SpecialChestElement ui) { }
+			public virtual void UpdateChest(Point16 position) { }
 			public virtual int ItemCount => Items().Length;
 			public virtual string GivenName => "";
 			public virtual void HandleBeingInChestRange(Player player) {
@@ -287,6 +290,7 @@ namespace Origins.Core {
 				ItemSlot.MouseHover(ref item, ItemSlot.Context.ChestItem);
 				return didSomething;
 			}
+			public virtual void ModifySlotPosition(Item item, int slot, ref int xPos, ref int yPos) { }
 			public static void ApplySlotVisualModifiers(Item item, ref SlotDrawData data) {
 				SlotDrawData original = data;
 				for (int i = 0; i < slotVisualModifiers.Count; i++) slotVisualModifiers[i](item, ref data, original);
@@ -311,7 +315,7 @@ namespace Origins.Core {
 			public virtual bool OverrideHover(Item[] inv, int context, int slot) => false;
 			public virtual bool OverrideLeftClick(Item[] inv, int context, int slot) => false;
 			public virtual Item ReceiveNearbyQuickStack(Point16 chestPosition, Item item, Vector2 playerPosition) => item;
-			public virtual IEnumerable<SpecialChestButton> Buttons { get; }
+			public virtual IEnumerable<SpecialChestButton> Buttons => [];
 			public delegate void ItemTransferHandler(Item item, int countTransfered);
 			public Item ReceiveQuickStack(Item item, ItemTransferHandler onTransfer) {
 				Item[] items = Items();
@@ -588,7 +592,10 @@ namespace Origins.Core {
 				}
 				netDirtyChests.Clear();
 			}
-			public override void PreUpdateEntities() => ConsumeNetDirtyChests();
+			public override void PreUpdateEntities() {
+				foreach ((Point16 pos, ChestData data) in tileEntities) data.UpdateChest(pos);
+				ConsumeNetDirtyChests();
+			}
 			public override void PostUpdateInput() {
 				if (SpecialChestUI.InputtingText) PlayerInput.WritingText = true;
 			}
@@ -622,6 +629,9 @@ namespace Origins.Core {
 			public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem) {
 				new Destroy_Special_Chest_Action(new(i, j)).Perform();
 			}
+		}
+		public interface ICustomTELocation {
+			void ModifyTELocation(ref int x, ref int y, int originalX, int originalY);
 		}
 		public record class Set_Special_Chest_Action(Point16 Position, ChestData Data) : SyncedAction {
 			public Set_Special_Chest_Action() : this(default, default) { }
@@ -809,6 +819,7 @@ namespace Origins.Core {
 							int xPos = (int)(73f + (i * 56) * Main.inventoryScale);
 							int yPos = (int)(Main.instance.invBottom + (j * 56) * Main.inventoryScale);
 							Item item = slot >= items.Length ? new() : items[slot].Clone();
+							CurrentChest.ModifySlotPosition(item, slot, ref xPos, ref yPos);
 							if (!PlayerInput.IgnoreMouseInterface && Utils.FloatIntersect(Main.mouseX, Main.mouseY, 0f, 0f, xPos, yPos, TextureAssets.InventoryBack.Width() * Main.inventoryScale, TextureAssets.InventoryBack.Height() * Main.inventoryScale)) {
 								player.mouseInterface = true;
 								didAnything |= CurrentChest.InteractWithItem(item, slot);
