@@ -36,6 +36,7 @@ namespace Origins.Tiles.Defiled {
 			//SetModTree(Defiled_Tree.Instance);
 			AddDefiledTile();
 			DustType = Defiled_Wastelands.DefaultTileDust;
+			RegisterItemDrop(ItemID.DirtBlock);
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && (!effectOnly || WorldGen.genRand.NextBool(3))) {
@@ -105,7 +106,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(180, 180, 180));
 			//SetModTree(Defiled_Tree.Instance);
-			AddDefiledTile();
+			RegisterItemDrop(ItemID.MudBlock);
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {

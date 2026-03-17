@@ -35,6 +35,7 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(0, 100, 160));
 			//SetModTree(Defiled_Tree.Instance);
 			DustType = Riven_Hive.DefaultTileDust;
+			RegisterItemDrop(ItemID.DirtBlock);
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			yield return new TileMergeOverlay(typeof(Amoeba_Fluid).GetDefaultTMLName() + "_Spug_Overlay", ModContent.TileType<Spug_Flesh>());
@@ -82,7 +83,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(0, 100, 160));
-			//SetModTree(Defiled_Tree.Instance);
+			RegisterItemDrop(ItemID.MudBlock);
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			if (fail && !effectOnly) {
