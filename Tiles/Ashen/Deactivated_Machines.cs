@@ -66,14 +66,14 @@ namespace Origins.Tiles.Ashen {
 				return false;
 			}
 			if (tile.TileFrameY >= (Shape.GetLength(2) - 1) * 18) {
-				Tile anchor = Main.tile[i, j + 1];
-				if (!anchor.HasTile || !Main.tileSolid[anchor.TileType] || Main.tileSolidTop[anchor.TileType] || Main.tileNoAttach[anchor.TileType]) {
+				if (!IsValidAnchor(Main.tile[i, j + 1])) {
 					WorldGen.KillTile(i, j);
 					return false;
 				}
 			}
 			return true;
 		}
+		public static bool IsValidAnchor(Tile anchor) => anchor.HasTile && (Main.tileSolid[anchor.TileType] || Main.tileSolidTop[anchor.TileType]) && !Main.tileNoAttach[anchor.TileType];
 		public static bool IsPart(int i, int j, int style) {
 			return Shape[style, i, j];
 		}
@@ -88,10 +88,12 @@ namespace Origins.Tiles.Ashen {
 			}
 			return true;
 		}
-		public bool CanBlockPlacement(Tile tile, int left, int top, int style) {
-			if (!tile.HasTile) return false;
+		public bool ShouldBlockPlacement(Tile tile, int left, int top, int style) {
 			Point pos = tile.GetTilePosition();
-			return IsPart(pos.X - left, pos.Y - top, style);
+			int j = pos.Y - top;
+			if (!IsPart(pos.X - left, j, style)) return false;
+			if (j == 8 && !IsValidAnchor(Main.tile[pos.X, pos.Y + 1])) return true;
+			return MultiTypeMultiTile.NormallyBlocksPlacement(tile);
 		}
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => IsPart(x - left, y - top, style);
 	}
@@ -160,10 +162,10 @@ namespace Origins.Tiles.Ashen {
 			}
 			return true;
 		}
-		public bool CanBlockPlacement(Tile tile, int left, int top, int style) {
-			if (!tile.HasTile) return false;
+		public bool ShouldBlockPlacement(Tile tile, int left, int top, int style) {
 			Point pos = tile.GetTilePosition();
-			return IsPart(pos.X - left, pos.Y - top, style);
+			if (!IsPart(pos.X - left, pos.Y - top, style)) return false;
+			return MultiTypeMultiTile.NormallyBlocksPlacement(tile);
 		}
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => IsPart(x - left, y - top, style);
 	}
@@ -261,10 +263,10 @@ namespace Origins.Tiles.Ashen {
 			}
 			return true;
 		}
-		public bool CanBlockPlacement(Tile tile, int left, int top, int style) {
-			if (!tile.HasTile) return false;
+		public bool ShouldBlockPlacement(Tile tile, int left, int top, int style) {
 			Point pos = tile.GetTilePosition();
-			return IsPart(pos.X - left, pos.Y - top, style);
+			if (!IsPart(pos.X - left, pos.Y - top, style)) return false;
+			return MultiTypeMultiTile.NormallyBlocksPlacement(tile);
 		}
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => IsPart(x - left, y - top, style);
 	}

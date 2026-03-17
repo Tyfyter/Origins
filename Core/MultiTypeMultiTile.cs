@@ -13,7 +13,7 @@ namespace Origins.Core {
 	//TODO: move to PegasusLib
 	public interface IMultiTypeMultiTile {
 		public bool IsValidTile(Tile tile, int left, int top, int style);
-		public bool CanBlockPlacement(Tile tile, int left, int top, int style) => tile.HasTile;
+		public bool ShouldBlockPlacement(Tile tile, int left, int top, int style) => MultiTypeMultiTile.NormallyBlocksPlacement(tile);
 		/// <summary>
 		/// Called for each tile of the multitile's type in the area of the multitile when it's broken
 		/// Return false to prevent the tile being broken
@@ -118,7 +118,7 @@ namespace Origins.Core {
 			MultiTypeMultiTile.toBePlaced = toBePlaced;
 			return orig(toBePlaced);
 		}
-
+		public static bool NormallyBlocksPlacement(Tile tile) => tile.HasTile && (!Main.tileCut[tile.TileType] || tile.TileType == TileID.RollingCactus || tile.TileType == TileID.TNTBarrel) && !TileID.Sets.BreakableWhenPlacing[tile.TileType];
 		static void IL_TileObject_CanPlace(ILContext il) {
 			ILCursor c = new(il);
 			List<(int x, int y)> coordinateSets = [];
@@ -168,7 +168,9 @@ namespace Origins.Core {
 			//IL_05ce: brfalse.s IL_05ee
 			ILLabel label = default;
 			int tile = -1;
+			int shouldBlock = -1;
 			c.GotoNext(MoveType.AfterLabel,
+				i => i.MatchStloc(out shouldBlock),
 				i => i.MatchLdloca(out tile),
 				i => i.MatchCall<Tile>($"active"),
 				i => i.MatchBrfalse(out label),
@@ -207,16 +209,21 @@ namespace Origins.Core {
 				i => i.MatchCall<Framing>(nameof(Framing.GetTileSafely)),
 				i => i.MatchStloc(tile)
 			);
+			c.GotoLabel(label, MoveType.AfterLabel);
+			c.EmitLdloca(shouldBlock);
 			c.EmitLdarg2();
 			c.EmitLdloc(tile);
 			c.EmitLdloc(coordinateSets[correctIndex].x);
 			c.EmitLdloc(coordinateSets[correctIndex].y);
 			c.EmitLdarg3();
 			c.EmitLdloc(alternateData);
-			c.EmitDelegate((int tileType, Tile tile, int left, int top, int style, TileObjectData alternateData) => {
-				return TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile && !multiTypeMultiTile.CanBlockPlacement(tile, left, top, alternateData.Style + style);
+			c.EmitLdarg(8);
+			c.EmitDelegate((ref bool shouldBlock, int tileType, Tile tile, int left, int top, int style, TileObjectData alternateData, bool checkStay) => {
+				if (checkStay) return;
+				if (TileLoader.GetTile(tileType) is IMultiTypeMultiTile multiTypeMultiTile) {
+					shouldBlock = multiTypeMultiTile.ShouldBlockPlacement(tile, left, top, alternateData.Style + style);
+				}
 			});
-			c.EmitBrtrue(label);
 		}
 
 		static void IL_TileLoader_CheckModTile(ILContext il) {

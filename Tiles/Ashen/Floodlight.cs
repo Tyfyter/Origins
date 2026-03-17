@@ -141,10 +141,10 @@ namespace Origins.Tiles.Ashen {
 			}
 			return true;
 		}
-		public bool CanBlockPlacement(Tile tile, int left, int top, int style) {
-			if (!tile.HasTile) return false;
+		public bool ShouldBlockPlacement(Tile tile, int left, int top, int style) {
 			Point pos = tile.GetTilePosition();
-			return IsPart(pos.X - left, pos.Y - top, style);
+			if (!IsPart(pos.X - left, pos.Y - top, style)) return false;
+			return MultiTypeMultiTile.NormallyBlocksPlacement(tile);
 		}
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => IsPart(x - left, y - top, style);
 	}
