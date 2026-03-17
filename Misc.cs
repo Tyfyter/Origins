@@ -4053,6 +4053,150 @@ namespace Origins {
 			}
 			return output;
 		}
+		public static int GeometricBounce(this Entity entity, int steps = 1) {
+			Vector2 normalVelocity = entity.velocity.Normalized(out float speed);
+			float stepSpeed = speed / steps;
+			entity.velocity = normalVelocity * stepSpeed;
+			int bounces = 0;
+			for (int i = 0; i < steps; i++) {
+				Vector2 bounceNormal = GeometricBounceStep(entity, normalVelocity);
+				if (bounceNormal != default) {
+					normalVelocity = entity.velocity / stepSpeed;
+					bounces++;
+				} else {
+					entity.position += entity.velocity;
+				}
+			}
+			entity.velocity *= steps;
+			entity.position -= entity.velocity;
+			return bounces;
+		}
+		public delegate void OnBounce(Entity entity, Vector2 normal);
+		public static OnBounce MultiplyTangentNormal(float tangent = 1, float normal = 1) {
+			return (entity, surfaceNormal) => {
+				Vector2 normalComponent = Vector2.Dot(entity.velocity, surfaceNormal) * surfaceNormal;
+				Vector2 tangentComponent = entity.velocity - normalComponent;
+				entity.velocity = tangentComponent * tangent + normalComponent * normal;
+			};
+		}
+		public static int GeometricBounce(this Entity entity, OnBounce onBounce, int steps = 1) {
+			Vector2 normalVelocity = entity.velocity.Normalized(out _);
+			entity.velocity /= steps;
+			int bounces = 0;
+			for (int i = 0; i < steps; i++) {
+				Vector2 bounceNormal = GeometricBounceStep(entity, normalVelocity);
+				if (bounceNormal != default) {
+					onBounce(entity, bounceNormal);
+					normalVelocity = entity.velocity.Normalized(out _);
+					bounces++;
+				} else {
+					entity.position += entity.velocity;
+				}
+			}
+			entity.velocity *= steps;
+			entity.position -= entity.velocity;
+			return bounces;
+		}
+		static Vector2 GeometricBounceStep(Entity entity, Vector2 normalVelocity) {
+			const float SQRT2 = 1.4142135623731f;
+			const float IVSQRT2 = 1 / SQRT2;
+			Vector2 entityVelocity = entity.velocity;
+			Rectangle entityHitbox = entity.Hitbox;
+			Rectangle hitbox = new() {
+				X = (int)(entity.position.X + entityVelocity.X),
+				Y = (int)(entity.position.Y + entityVelocity.Y),
+				Width = entity.width,
+				Height = entity.height
+			};
+			if (hitbox.OverlapsAnyTiles(out List<Point> positions)) {
+				Vector2 entityCenter = entity.Center;
+				Rectangle tileHitbox = new() {
+					Width = 16,
+					Height = 16,
+				};
+				float weight = float.PositiveInfinity;
+				Vector2 targetVel = entityVelocity;
+				Vector2 targetNormal = default;
+				Vector2 bounceNormal = default;
+				for (int i = 0; i < positions.Count; i++) {
+					entity.velocity = entityVelocity;
+					Point position = positions[i];
+					Vector2 tileCenter = position.ToWorldCoordinates();
+					Tile tile = Main.tile[position];
+					tileHitbox.X = position.X * 16;
+					tileHitbox.Y = position.Y * 16;
+					tileHitbox.Height = 16;
+					Vector2 entityComparePos;
+					Vector2 tileComparePos;
+					switch (tile.BlockType) {
+						case BlockType.Solid:
+						entityComparePos = tileCenter.Clamp(entityHitbox);
+						tileComparePos = entityComparePos.Clamp(tileHitbox);
+						bounceNormal.X = entityComparePos.X.CompareTo(tileComparePos.X);
+						bounceNormal.Y = entityComparePos.Y.CompareTo(tileComparePos.Y);
+						if (Math.Sign(bounceNormal.X) == Math.Sign(entityVelocity.X)) bounceNormal.X = 0;
+						if (Math.Sign(bounceNormal.Y) == Math.Sign(entityVelocity.Y)) bounceNormal.Y = 0;
+						if (bounceNormal == default) {
+							bounceNormal.X = entityCenter.X.CompareTo(tileComparePos.X);
+							bounceNormal.Y = entityCenter.Y.CompareTo(tileComparePos.Y);
+						}
+						float xDiff = Math.Abs(tileComparePos.X - entityComparePos.X);
+						float yDiff = Math.Abs(tileComparePos.Y - entityComparePos.Y);
+						if (bounceNormal.X != 0 && bounceNormal.Y != 0) {
+							if (xDiff > yDiff) bounceNormal.Y = 0;
+							else bounceNormal.X = 0;
+						}
+						if (bounceNormal.X != 0) entity.velocity.X = -entityVelocity.X;
+						if (bounceNormal.Y != 0) entity.velocity.Y = -entityVelocity.Y;
+						break;
+
+						case BlockType.HalfBlock:
+						tileCenter.Y += 4;
+						tileHitbox.Y += 8;
+						tileHitbox.Height = 8;
+						goto case BlockType.Solid;
+
+						case BlockType.SlopeDownLeft:
+						if (SlopeCollision(new(IVSQRT2, -IVSQRT2))) goto case BlockType.Solid;
+						break;
+
+						case BlockType.SlopeDownRight:
+						if (SlopeCollision(new(-IVSQRT2, -IVSQRT2))) goto case BlockType.Solid;
+						break;
+
+						case BlockType.SlopeUpLeft:
+						if (SlopeCollision(new(IVSQRT2, -IVSQRT2))) goto case BlockType.Solid;
+						break;
+
+						case BlockType.SlopeUpRight:
+						if (SlopeCollision(new(-IVSQRT2, IVSQRT2))) goto case BlockType.Solid;
+						break;
+
+						default:
+						continue;
+					}
+					if (Minimize(ref weight, tileCenter.DistanceSQ(entityCenter))) {
+						targetVel = entity.velocity;
+						targetNormal = bounceNormal;
+					}
+					bool SlopeCollision(Vector2 normal) {
+						tileComparePos = entityCenter.Clamp(tileHitbox);
+						if (tileComparePos.X == tileCenter.X - 8 * Math.Sign(normal.X)) return true;
+						if (tileComparePos.Y == tileCenter.Y - 8 * Math.Sign(normal.Y)) return true;
+						float dot = Vector2.Dot(normalVelocity, normal);
+						if (dot < 0) {
+							entity.velocity = entityVelocity - 2 * Vector2.Dot(entityVelocity, normal) * normal;
+							bounceNormal = normal;
+							return false;
+						}
+						return true;
+					}
+				}
+				entity.velocity = targetVel;
+				if (float.IsFinite(weight)) return targetNormal.Normalized(out _);
+			}
+			return default;
+		}
 		public static N Mul<N>(this bool flag, N value) where N : System.Numerics.INumber<N> {
 			return flag ? value : N.Zero;
 		}

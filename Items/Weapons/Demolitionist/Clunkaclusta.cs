@@ -112,21 +112,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 				StoppedChanneling = 1;
 			}
 		}
-		public override bool OnTileCollide(Vector2 oldVelocity) {
-			float gravMult = Projectile.GetGlobalProjectile<CanisterGlobalProjectile>().gravityMultiplier;
-			float bounce = 1f - gravMult * 0.4f;
-			Vector2 friction = Vector2.One;
-			if (Projectile.velocity.X != oldVelocity.X) {
-				Projectile.velocity.X = oldVelocity.X * -bounce;
-				friction.Y *= 0.9f;
-			}
-			if (Projectile.velocity.Y != oldVelocity.Y) {
-				Projectile.velocity.Y = oldVelocity.Y * -bounce;
-				friction.X *= 0.9f;
-			}
-			Projectile.velocity *= friction;
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			Projectile.GeometricBounce(CollisionExtensions.MultiplyTangentNormal(0.9f, 1));
 			return false;
 		}
+		public override bool OnTileCollide(Vector2 oldVelocity) => false;
 		public override void OnKill(int timeLeft) {
 			CanisterGlobalProjectile.DefaultExplosion(Projectile, false, DustID.Torch, 96);
 			int t = ModContent.ProjectileType<Clunkaclusta_Mini_P>();
