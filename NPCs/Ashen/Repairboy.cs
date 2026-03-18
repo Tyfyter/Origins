@@ -9,6 +9,9 @@ using Origins.Projectiles;
 using Origins.World.BiomeData;
 using ReLogic.Utilities;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Runtime.CompilerServices;
@@ -93,6 +96,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.direction = targetDir.X < 0 ? -1 : 1;
 		}
 		public void TargetClosest(bool resetTarget = true, bool faceTarget = true) {
+			Tile? oldTargetPos = target.TargetTile;
 			AdvancedTargetSearchResults searchResults = NPC.SearchForTarget(
 				new Rectangle(0, 0, 1920 * 2, 1080 * 2).Recentered(NPC.Center),
 				TargetSearchTypes.All,
@@ -103,6 +107,10 @@ namespace Origins.NPCs.Ashen {
 			if (searchResults.HasTarget || resetTarget) target = searchResults;
 			NPC.targetRect = target.TargetRect;
 			if (faceTarget) NPC.FaceTarget();
+			if (target.TargetTile != oldTargetPos) {
+				ReduceTargetingCount(oldTargetPos);
+				IncreaseTargetingCount(target.TargetTile);
+			}
 		}
 		static float? NPCSearcher(NPC target, Rectangle area, NPC searcher, ref Rectangle hitbox) {
 			if (target.ModNPC is IReparable reparable) {
@@ -135,7 +143,7 @@ namespace Origins.NPCs.Ashen {
 					Tile tile = Main.tile[i, j];
 					if (!tile.HasTile || TileLoader.GetTile(tile.TileType) is not IReparableTile reparableTile || TileObjectData.GetTileData(tile) is not TileObjectData data) continue;
 					TileUtils.GetMultiTileTopLeft(i, j, data, out hitbox.X, out hitbox.Y);
-					if (i != hitbox.X || j != hitbox.Y) continue;
+					if (i != hitbox.X || j != hitbox.Y || repairboysTargeting.Count(new(i, j), npc => !npc.active) >= 3) continue;
 					hitbox.X *= 16;
 					hitbox.Y *= 16;
 					hitbox.Width = data.Width * 16;
@@ -301,6 +309,13 @@ namespace Origins.NPCs.Ashen {
 			repairProgress[pos] = 0;
 		}
 		internal static FungibleSet<Point16> repairProgress;
+		internal static MultiSet<Point, NPC> repairboysTargeting = new();
+		protected void ReduceTargetingCount(Tile? tile) {
+			if (tile.HasValue) repairboysTargeting.Remove(tile.Value.GetTilePosition(), NPC);
+		}
+		protected void IncreaseTargetingCount(Tile? tile) {
+			if (tile.HasValue) repairboysTargeting.Add(tile.Value.GetTilePosition(), NPC);
+		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
 				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore1");
@@ -310,6 +325,28 @@ namespace Origins.NPCs.Ashen {
 				for (int i = 0; i < 5; i++) {
 					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
 				}
+			}
+		}
+		public class MultiSet<TKey, TValue>(IEqualityComparer<TKey> comparer = null, IEqualityComparer<TValue> valueComparer = null) {
+			readonly Dictionary<TKey, HashSet<TValue>> inner = new(comparer);
+			public void Add(TKey key, TValue value) {
+				if (!inner.TryGetValue(key, out HashSet<TValue> set)) inner[key] = set = new(valueComparer);
+				set.Add(value);
+			}
+			public bool Remove(TKey key, TValue value) {
+				if (!inner.TryGetValue(key, out HashSet<TValue> set)) return false;
+				bool retVal = set.Remove(value);
+				if (set.Count <= 0) inner.Remove(key);
+				return retVal;
+			}
+			public int Count(TKey key) {
+				if (!inner.TryGetValue(key, out HashSet<TValue> set)) return 0;
+				return set.Count;
+			}
+			public int Count(TKey key, Predicate<TValue> removeWhere) {
+				if (!inner.TryGetValue(key, out HashSet<TValue> set)) return 0;
+				set.RemoveWhere(removeWhere);
+				return set.Count;
 			}
 		}
 	}
