@@ -123,7 +123,7 @@ namespace Origins.World.BiomeData {
 		public class Fiberglass_Undergrowth_Fishing_Loot : FishingLootPool {
 			public override bool IsActive(Player player, FishingAttempt attempt) => player.InModBiome<Fiberglass_Undergrowth>();
 			public override void SetStaticDefaults() {
-				Uncommon.Add(FishingCatch.QuestFish(ModContent.ItemType<Fiberbass>()));
+				AddQuestFish(ModContent.ItemType<Fiberbass>());
 			}
 		}
 	}

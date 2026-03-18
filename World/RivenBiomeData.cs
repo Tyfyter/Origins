@@ -1246,7 +1246,7 @@ namespace Origins.World.BiomeData {
 					FishingCatch.Item(ItemType<Scabcoral_Lyre>(), (player, attempt) => Main.hardMode && Main.rand.NextBool(2))
 				));
 				Rare.Add(FishingCatch.Item(ItemType<Ocotoral_Bud>()));
-				Uncommon.Add(FishingCatch.QuestFish(ItemType<Bonehead_Jellyfish>()));
+				AddQuestFish(ItemType<Bonehead_Jellyfish>());
 			}
 		}
 	}

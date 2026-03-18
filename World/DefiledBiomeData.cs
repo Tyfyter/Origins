@@ -997,10 +997,8 @@ namespace Origins.World.BiomeData {
 					FishingCatch.Item(ItemType<Knee_Slapper>(), (player, attempt) => Main.hardMode && Main.rand.NextBool(2))
 				));
 				Rare.Add(FishingCatch.Item(ItemType<Manasynk>()));
-				Uncommon.Add(new SequentialCatches(
-					FishingCatch.QuestFish(ItemType<Prikish>()),
-					FishingCatch.Item(ItemType<Bilemouth>())
-				));
+				AddQuestFish(ItemType<Prikish>());
+				Uncommon.Add(FishingCatch.Item(ItemType<Bilemouth>()));
 			}
 		}
 	}

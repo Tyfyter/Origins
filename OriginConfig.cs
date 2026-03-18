@@ -617,6 +617,7 @@ namespace Origins {
 						if (content is ILoadExtraTextures extras) {
 							extras.LoadTextures();
 						}
+#if DEBUG
 						foreach (FieldInfo field in content.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
 							if (field.FieldType.IsConstructedGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(AutoLoadingAsset<>)) {
 								Type assetType = field.FieldType.GenericTypeArguments[0];
@@ -624,7 +625,9 @@ namespace Origins {
 								load.Invoke(null, [field.GetValue(content)]);
 							}
 						}
+#endif
 					}
+#if DEBUG
 					foreach (Type type in AssemblyManager.GetLoadableTypes(Origins.instance.Code)) {
 						if (type.Name.Contains('<')) continue;
 						foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
@@ -635,6 +638,7 @@ namespace Origins {
 							}
 						}
 					}
+#endif
 
 					foreach (Accessory_Glow_Layer glowLayer in Origins.instance.GetContent<Accessory_Glow_Layer>()) {
 						glowLayer.LoadAllTextures();

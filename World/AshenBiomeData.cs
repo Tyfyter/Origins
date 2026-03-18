@@ -804,10 +804,8 @@ namespace Origins.World.BiomeData {
 					FishingCatch.Item(ItemID.ScalyTruffle, (player, attempt) => Main.hardMode && player.ZoneSnow && attempt.heightLevel == 3 && !Main.rand.NextBool(3))
 				));
 				Rare.Add(FishingCatch.Item(ItemType<Internal_Combustionfish>()));
-				Uncommon.Add(new SequentialCatches(
-					FishingCatch.QuestFish(ItemType<Scrapfish>()),
-					FishingCatch.Item(ItemType<Polyeel>())
-				));
+				AddQuestFish(ItemType<Scrapfish>());
+				Uncommon.Add(FishingCatch.Item(ItemType<Polyeel>()));
 			}
 		}
 	}
