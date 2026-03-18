@@ -174,6 +174,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				}
 				return;
 			}
+			Projectile.damage /= 2;
 			Vector2[] oldPos = [..Projectile.oldPos];
 			float[] oldRot = [..Projectile.oldRot];
 			for (int i = 0; i < oldPos.Length; i++) {
