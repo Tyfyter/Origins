@@ -61,6 +61,7 @@ public abstract class ATail : ModItem {
 		for (int i = dataCount; i < drawInfo.DrawDataCache.Count; i++) {
 			DrawData data = drawInfo.DrawDataCache[i];
 			data.rotation -= drawInfo.rotation;
+			data.position += (drawInfo.Position - drawInfo.drawPlayer.position);
 			data.position = data.position.RotatedBy(-drawInfo.rotation, drawInfo.Position + drawInfo.rotationOrigin - Main.screenPosition);
 			drawInfo.DrawDataCache[i] = data;
 		}
