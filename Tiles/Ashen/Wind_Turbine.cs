@@ -109,7 +109,16 @@ namespace Origins.Tiles.Ashen {
 			public override void LoadWorldData(TagCompound tag) {
 				base.LoadWorldData(tag);
 				animations ??= [];
-				foreach (Point16 pos in tileEntityLocations) GetAnimation(pos).Update(pos, true);
+				int turbine = ModContent.TileType<Wind_Turbine>();
+				for (int i = 0; i < tileEntityLocations.Count; i++) {
+					Point16 pos = tileEntityLocations[i];
+					Tile tile = Main.tile[pos];
+					if (tile.HasTile && tile.TileType == turbine) {
+						GetAnimation(pos).Update(pos, true);
+					} else {
+						tileEntityLocations.RemoveAt(i--);
+					}
+				}
 			}
 			public class Turbine_Animation {
 				public int frame = 0;

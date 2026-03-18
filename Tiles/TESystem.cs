@@ -46,6 +46,7 @@ namespace Origins.Tiles {
 		public override void LoadWorldData(TagCompound tag) {
 			tileEntityLocations = tag.Get<List<Point16>>(nameof(tileEntityLocations));
 		}
+		public override void ClearWorld() => tileEntityLocations = [];
 		public static void SyncAllToPlayer(int player) {
 			foreach (TESystem system in TESystems) system.SyncToPlayer(player);
 		}
