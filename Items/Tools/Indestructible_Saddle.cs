@@ -3,7 +3,7 @@ using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Dusts;
 using Origins.Projectiles;
-using PegasusLib;
+using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,6 +94,9 @@ namespace Origins.Items.Tools {
 			player.mount._frameExtraCounter = GetControlDir(player, true);
 			player.mount._abilityCooldown = MountData.abilityCooldown;
 		}
+
+		static Vector2 GetCenter(Player player) => (player.MountedCenter + new Vector2(0, 22)).RotatedBy(player.fullRotation, player.position + player.fullRotationOrigin - new Vector2(0, 10));
+		static Vector2 GetOffset(Player player) => new Vector2(16 * player.direction, 0).RotatedBy(player.fullRotation);
 		public override void UpdateEffects(Player player) {
 			player.velocity *= 0.935f;
 			player.velocity += GeometryUtils.Vec2FromPolar(2, player.direction * (MathHelper.PiOver2 + player.mount._frameExtraCounter) - MathHelper.PiOver2);
@@ -106,8 +109,8 @@ namespace Origins.Items.Tools {
 				control_speed
 			);
 			Rectangle hitbox = new(0, 0, 12, 12);
-			Vector2 position = (player.MountedCenter + new Vector2(0, 22)).RotatedBy(player.fullRotation, player.position + player.fullRotationOrigin - new Vector2(0, 10));//player.RotatedRelativePointOld(player.MountedCenter + new Vector2(0, 16).RotatedBy(player.fullRotation));
-			Vector2 move = new Vector2(16 * player.direction, 0).RotatedBy(player.fullRotation);
+			Vector2 position = GetCenter(player);//player.RotatedRelativePointOld(player.MountedCenter + new Vector2(0, 16).RotatedBy(player.fullRotation));
+			Vector2 move = GetOffset(player);
 			Item item = player.miscEquips[3].type == Indestructible_Saddle.ID ? player.miscEquips[3] : ContentSamples.ItemsByType[Indestructible_Saddle.ID];
 			void Explode() {
 				Projectile.NewProjectile(
@@ -151,6 +154,7 @@ namespace Origins.Items.Tools {
 					}
 				}
 			}
+			(thrusterSound ??= new()).Start(player);
 			player.GoingDownWithGrapple = true;
 			bool doDismount = false;
 			Vector2 dismountVelocity = player.velocity;
@@ -184,6 +188,7 @@ namespace Origins.Items.Tools {
 			}
 			//Dust.NewDustPerfect(player.position + player.fullRotationOrigin - new Vector2(0, 10), 27, Vector2.Zero).noGravity = true;
 		}
+
 		public override void Dismount(Player player, ref bool skipDust) {
 			int timeLeft = player.mount._abilityCooldown;
 			player.AddBuff(ModContent.BuffType<Indestructible_Saddle_Mount_Cooldown>(), 60 + (timeLeft > 0 ? 30 : 0) + (int)(timeLeft * 1.5f));
@@ -204,6 +209,51 @@ namespace Origins.Items.Tools {
 			drawOrigin.X += 8 * drawPlayer.direction;
 			return true;
 		}
+		SoundInstance thrusterSound = new();
+		public SoundInstance TakeThrusterSoundSlot(Entity attachTo) {
+			SoundInstance sound = thrusterSound;
+			thrusterSound = new();
+			sound?.Attach(attachTo);
+			return sound;
+		}
+		public class SoundInstance() {
+			SlotId thrusterSound;
+			Entity attached;
+			int type;
+			public void Start(Entity attachTo) {
+				bool started = false;
+				thrusterSound.PlaySoundIfInactive(Origins.Sounds.ThrusterLoop, attachTo.Center, sound => {
+					if (Update(this.attached, type, ref sound.Position)) return false;
+					if (started.TrySet(true)) sound.Volume = 0;
+					MathUtils.LinearSmoothing(ref sound.Volume, 1, 1f / 20);
+					return true;
+				});
+				Attach(attachTo);
+			}
+			public void Attach(Entity attachTo) {
+				switch (attached = attachTo) {
+					case Player player:
+					type = player.mount.Type;
+					break;
+					case Projectile projectile:
+					type = projectile.type;
+					break;
+				}
+			}
+			static bool Update(Entity attached, int type, ref Vector2? position) {
+				switch (attached) {
+					case Player player:
+					if (!player.mount.Active || player.mount.Type != type) return true;
+					position = GetCenter(player) - GetOffset(player) * 2;
+					return false;
+					case Projectile projectile:
+					if (!projectile.active || projectile.type != type) return true;
+					position = projectile.Center - Indestructible_Saddle_Projectile.GetHitboxMovement(projectile) * 2;
+					return false;
+				}
+				return true;
+			}
+		}
 	}
 	public class Indestructible_Saddle_Projectile : ModProjectile {
 		public override string Texture => "Origins/Items/Tools/Indestructible_Saddle_Mount_Back";
@@ -216,7 +266,10 @@ namespace Origins.Items.Tools {
 			Projectile.appliesImmunityTimeOnSingleHits = true;
 			Projectile.friendly = true;
 		}
-		Vector2 HitboxMovement => new Vector2(16 * Projectile.ai[1], 0).RotatedBy(Projectile.ai[1] * Projectile.ai[0]);
+		Vector2 HitboxMovement => GetHitboxMovement(Projectile);
+		public static Vector2 GetHitboxMovement(Projectile projectile) => new Vector2(16 * projectile.ai[1], 0).RotatedBy(projectile.ai[1] * projectile.ai[0]);
+
+		Indestructible_Saddle_Mount.SoundInstance thrusterSound;
 		public override void AI() {
 			if (Projectile.ai[2].Cooldown()) {
 				Projectile.Kill();
@@ -227,6 +280,10 @@ namespace Origins.Items.Tools {
 			Player owner = Main.player[Projectile.owner];
 			Rectangle hitbox = new(0, 0, 12, 12);
 			Vector2 move = HitboxMovement;
+			if (thrusterSound is null) {
+				if (owner.mount?._data?.ModMount is not null) thrusterSound = (owner.mount._data.ModMount as Indestructible_Saddle_Mount).TakeThrusterSoundSlot(Projectile);
+				if (thrusterSound is null) (thrusterSound = new()).Start(Projectile);
+			}
 			for (int i = 3; i > 0; i--) {
 				hitbox.X = (int)(Projectile.position.X + move.X * i - 6);
 				hitbox.Y = (int)(Projectile.position.Y + move.Y * i - 6);
@@ -276,7 +333,7 @@ namespace Origins.Items.Tools {
 				Projectile.ai[1] * Projectile.ai[0],
 				new(48, 16),
 				1,
-				Projectile.ai[1] == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally 
+				Projectile.ai[1] == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally
 			);
 			return false;
 		}
