@@ -418,6 +418,10 @@ namespace Origins {
 		public bool[] sceneYMKWingsNaturalColor = new bool[3];
 		[AutoReset] public ATail vanityTail;
 		public List<TailSegment> vanityTailSegments = [];
+		public bool isFlying;
+		public SoundStyle? loopedWingSound;
+		public Action<ActiveSound> loopedWingSoundUpdate;
+		SlotId loopedWingSoundSlot;
 		#endregion
 
 		#region explosive stats

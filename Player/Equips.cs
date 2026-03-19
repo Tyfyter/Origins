@@ -916,6 +916,26 @@ namespace Origins {
 		public int GetMimicSetChoice(int level) {
 			return (mimicSetChoices >> level * 2) & 3;
 		}
+		internal void UpdateLoopedWingSounds() {
+			bool rightSoundActive = SoundEngine.TryGetActiveSound(loopedWingSoundSlot, out ActiveSound sound);
+			SoundStyle targetSound = loopedWingSound ?? default;
+			if (!isFlying || !loopedWingSound.HasValue) {
+				rightSoundActive = false;
+				targetSound = default;
+			} else if (rightSoundActive && sound.Style != loopedWingSound) {
+				rightSoundActive = false;
+			}
+			if (!rightSoundActive) {
+				sound?.Stop();
+				if (targetSound != default) loopedWingSoundSlot = SoundEngine.PlaySound(targetSound, Player.Center);
+			}
+			if (SoundEngine.TryGetActiveSound(loopedWingSoundSlot, out sound)) {
+				sound.Position = Player.Center;
+				loopedWingSoundUpdate?.Invoke(sound);
+			}
+			loopedWingSound = null;
+			loopedWingSoundUpdate = null;
+		}
 	}
 	public static class SetActiveAbility {
 		public const int blast_armor = 4;

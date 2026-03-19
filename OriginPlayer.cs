@@ -43,6 +43,7 @@ namespace Origins {
 		public static OriginPlayer LocalOriginPlayer { get; internal set; }
 		public override void PreUpdateMovement() {
 			Debugging.LogFirstRun(PreUpdateMovement);
+			UpdateLoopedWingSounds();
 			realControlUseItem = Player.controlUseItem;
 			Origins.hurtCollisionCrimsonVine = false;
 			if (riptideLegs && Player.wet) {

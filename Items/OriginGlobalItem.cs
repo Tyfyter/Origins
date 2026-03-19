@@ -13,6 +13,7 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -504,7 +505,10 @@ namespace Origins.Items {
 		public override void HoldItem(Item item, Player player) {
 			player.OriginPlayer().lastItemCheckNotSkipped = true;
 		}
-
+		public override void VerticalWingSpeeds(Item item, Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend) {
+			player.OriginPlayer().isFlying = true;
+		}
+		[Obsolete("Will be removed in favor of sets", true)]
 		public static ushort GetItemElement(Item item) {
 			if (item.ModItem is null) {
 				return Origins.VanillaElements[item.type];

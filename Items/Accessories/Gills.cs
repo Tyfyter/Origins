@@ -18,6 +18,9 @@ public class Gills : ModItem {
 		Item.rare = ItemRarityID.Blue;
 		Item.value = Item.sellPrice(silver: 6);
 	}
+	public override void UpdateVisibleAccessory(Player player, bool hideVisual) {
+		player.OriginPlayer().loopedWingSound = Origins.Sounds.ThrusterLoop;
+	}
 	public static bool ForceHover(Player player) => player.wingTime <= (player.wingTimeMax + (player.rocketBoots != 0 ? 6 * 6 : 0)) * 0.3f + 25;
 	public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend) {
 		const float braking_factor = 0.97f;
