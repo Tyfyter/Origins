@@ -3599,7 +3599,7 @@ Achievements: {
 
 	Auto_Immune_Disease: {
 		FriendlyName: Auto-Immune Disease
-		Description: Obtain 20 [itemname:Origins/Defiled_Banner_NPC_Banner_Item].
+		Description: Obtain 20 [itemname:Origins/Defiled_Banner_NPC_Banner_Item]s.
 	}
 
 	Cheat_Code: {
@@ -3649,7 +3649,7 @@ Achievements: {
 
 	Slow_Loading_Bar: {
 		FriendlyName: Slow Loading Bar
-		Description: Walk a total of 1,000 tiles while afflicted by Rastorized.
+		Description: Walk a total of 1,000 tiles while afflicted by Rasterized.
 	}
 
 	Cracked: {

@@ -1395,7 +1395,7 @@ TILES:
 (X) Mushroom Dungeon Chest
 (X) Nova Monolith
 (X) Ocean Dungeon Chest
-(#2, ^2) Oil Derrick !!!
+(^) Oil Derrick
 (^) Pocket Dimension Monolith
 (X) Qube Generator
 (X) Ravel Lock: Builder
