@@ -419,6 +419,7 @@ namespace Origins {
 		[AutoReset] public ATail vanityTail;
 		public List<TailSegment> vanityTailSegments = [];
 		public bool isFlying;
+		public bool isFlyingOrGliding;
 		public SoundStyle? loopedWingSound;
 		public Action<ActiveSound> loopedWingSoundUpdate;
 		SlotId loopedWingSoundSlot;

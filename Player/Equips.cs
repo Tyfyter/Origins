@@ -919,7 +919,7 @@ namespace Origins {
 		internal void UpdateLoopedWingSounds() {
 			bool rightSoundActive = SoundEngine.TryGetActiveSound(loopedWingSoundSlot, out ActiveSound sound);
 			SoundStyle targetSound = loopedWingSound ?? default;
-			if (!isFlying || !loopedWingSound.HasValue) {
+			if (!isFlyingOrGliding || !loopedWingSound.HasValue) {
 				rightSoundActive = false;
 				targetSound = default;
 			} else if (rightSoundActive && sound.Style != loopedWingSound) {

@@ -185,6 +185,7 @@ namespace Origins {
 				}
 			}
 			isFlying = false;
+			isFlyingOrGliding = false;
 		}
 		public override void ModifyZoom(ref float zoom) {
 			if (Main.mouseRight && Player.HeldItem?.ModItem is Shimmershot or Laser_Target_Locator) {

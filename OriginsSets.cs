@@ -60,6 +60,8 @@ namespace Origins {
 				ItemID.TissueSample,
 				ItemID.Ichor
 			);
+			public static bool[] Fiberglass { get; } = ItemID.Sets.Factory.CreateNamedSet(nameof(Fiberglass))
+			.Description("Items which should trigger interactions involving fiberglass").RegisterBoolSet(ItemID.FiberglassFishingPole);
 			internal static bool[] InfoAccessorySlots_IsAMechanicalAccessory { get; } = ItemID.Sets.Factory.CreateNamedSet("InfoAccessorySlots", "IsAMechanicalAccessory").RegisterBoolSet();
 		}
 		[ReinitializeDuringResizeArrays]
@@ -362,6 +364,8 @@ namespace Origins {
 				ProjectileID.ShadowFlameArrow,
 				ProjectileID.ShadowFlameKnife
 			);
+			public static bool[] Fiberglass { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(Fiberglass))
+			.Description("Projectiles which should trigger interactions involving fiberglass").RegisterBoolSet(ProjectileID.BobberFiberglass);
 			public static bool[] Apostasy_AnimalMinions { get; } = ProjectileID.Sets.Factory.CreateNamedSet("Apostasy", "AnimalMinions").RegisterBoolSet();
 			static Projectiles() {
 				foreach (KeyValuePair<int, Projectile> proj in ContentSamples.ProjectilesByType) {

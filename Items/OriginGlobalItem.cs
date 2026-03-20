@@ -505,17 +505,23 @@ namespace Origins.Items {
 		public override void HoldItem(Item item, Player player) {
 			player.OriginPlayer().lastItemCheckNotSkipped = true;
 		}
-		public override void VerticalWingSpeeds(Item item, Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend) {
-			player.OriginPlayer().isFlying = true;
+		public override bool WingUpdate(int wings, Player player, bool inUse) {
+			OriginPlayer originPlayer = player.OriginPlayer();
+			originPlayer.isFlying = inUse;
+			originPlayer.isFlyingOrGliding = inUse || (player.wingsLogic > 0 && player.controlJump && player.velocity.Y != 0);
+			return base.WingUpdate(wings, player, inUse);
 		}
 		[Obsolete("Will be removed in favor of sets", true)]
 		public static ushort GetItemElement(Item item) {
+			ushort element = 0;
+			if (OriginsSets.Items.Fiberglass[item.type]) element |= Elements.Fire;
+			if (OriginsSets.Items.Fiberglass[item.type]) element |= Elements.Fiberglass;
 			if (item.ModItem is null) {
-				return Origins.VanillaElements[item.type];
+				return (ushort)(Origins.VanillaElements[item.type] | element);
 			} else if (item.ModItem is IElementalItem elementalItem) {
-				return elementalItem.Element;
+				return (ushort)(elementalItem.Element | element);
 			}
-			return 0;
+			return element;
 		}
 	}
 }
