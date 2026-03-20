@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
+using Origins.Core;
 using Origins.Dusts;
 using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
@@ -74,6 +75,11 @@ namespace Origins.NPCs.Ashen.Boss {
 			} catch (Exception e) {
 				if (Origins.LogLoadingILError(nameof(Trenchmaker_DropSpecialHearts), e)) throw;
 			}
+			if (Main.dedServ) return;
+			AprilFoolsAssetSwitcher<AutoLoadingTexture>.Add(() => ref calfTexture, "Origins/NPCs/Ashen/Boss/AF/Trenchmaker_Calf_AF");
+			AprilFoolsAssetSwitcher<AutoLoadingTexture>.Add(() => ref thighTexture, "Origins/NPCs/Ashen/Boss/AF/Trenchmaker_Thigh_AF");
+			AprilFoolsAssetSwitcher<AutoLoadingTexture>.Add(() => ref footTexture, "Origins/NPCs/Ashen/Boss/AF/Trenchmaker_Foot_AF");
+			AprilFoolsAssetSwitcher<AutoLoadingTexture>.Add(() => ref pistonTexture, Asset<Texture2D>.Empty);
 		}
 
 		static void Trenchmaker_DropSpecialHearts(ILContext il) {
