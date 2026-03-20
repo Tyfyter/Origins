@@ -87,7 +87,7 @@ namespace Origins.NPCs.Riven {
 					0.5f
 				);
 				if (current.type == tailType) break;
-				NPC next = Main.npc[(int)current.ai[0]];
+				if (Main.npc.GetIfInRange((int)current.ai[0]) is not NPC next) break;
 				velocity = next.DirectionTo(current.Center) * speed;
 				current = next;
 			}
