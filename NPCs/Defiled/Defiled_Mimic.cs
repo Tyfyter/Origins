@@ -4,6 +4,7 @@ using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
+using Origins.World;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -68,8 +69,7 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		public override void OnKill() {
-			Boss_Tracker.Instance.downedDefiledMimic = true;
-			NetMessage.SendData(MessageID.WorldData);
+			ProgressFlags.DownedDefiledMimic.Set();
 		}
 	}
 }

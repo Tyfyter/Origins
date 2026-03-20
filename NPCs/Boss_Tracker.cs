@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Origins.World;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,6 +11,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.NPCs {
+	[Obsolete("Superseded by ProgressFlags", true)]
 	public class Boss_Tracker : ModSystem {
 		public static Boss_Tracker Instance => ModContent.GetInstance<Boss_Tracker>();
 		public bool downedFiberglassWeaver;
@@ -57,50 +59,6 @@ namespace Origins.NPCs {
 				loadData = _loadData.CreateDelegate<Action<TagCompound, Boss_Tracker>>();
 			}
 			{
-				DynamicMethod _netSend = new("netSend", typeof(void), [typeof(BinaryWriter), typeof(Boss_Tracker)], true);
-				DynamicMethod _netReceive = new("netReceive", typeof(void), [typeof(BinaryReader), typeof(Boss_Tracker)], true);
-				ILGenerator _netSendGen = _netSend.GetILGenerator();
-				ILGenerator _netReceiveGen = _netReceive.GetILGenerator();
-				MethodInfo writeFlags = typeof(BinaryIO).GetMethod(nameof(BinaryIO.WriteFlags));
-				MethodInfo readFlags = typeof(BinaryIO).GetMethod(nameof(BinaryIO.ReadFlags), [typeof(BinaryReader), .. Enumerable.Repeat(typeof(bool).MakeByRefType(), 8)]);
-				int index = 0;
-				foreach (FieldInfo field in GetType().GetFields()) {
-					if (field.IsStatic) continue;
-					if (field.FieldType == typeof(bool)) {
-						if (index == 0) {
-							_netSendGen.Emit(OpCodes.Ldarg_0);
-							_netReceiveGen.Emit(OpCodes.Ldarg_0);
-						}
-						_netSendGen.Emit(OpCodes.Ldarg_1);
-						_netSendGen.Emit(OpCodes.Ldfld, field);
-
-						_netReceiveGen.Emit(OpCodes.Ldarg_1);
-						_netReceiveGen.Emit(OpCodes.Ldflda, field);
-						index = (index + 1) % 8;
-						if (index == 0) {
-							_netSendGen.Emit(OpCodes.Callvirt, writeFlags);
-							_netReceiveGen.Emit(OpCodes.Callvirt, readFlags);
-						}
-					}
-				}
-				if (index != 0) {
-					FieldInfo dummyField = GetType().GetField(nameof(dummy), BindingFlags.NonPublic | BindingFlags.Static);
-					while (index != 0) {
-						_netSendGen.Emit(OpCodes.Ldc_I4_0);
-						_netReceiveGen.Emit(OpCodes.Ldsflda, dummyField);
-						index = (index + 1) % 8;
-						if (index == 0) {
-							_netSendGen.Emit(OpCodes.Call, writeFlags);
-							_netReceiveGen.Emit(OpCodes.Call, readFlags);
-						}
-					}
-				}
-				_netSendGen.Emit(OpCodes.Ret);
-				_netReceiveGen.Emit(OpCodes.Ret);
-				netSend = _netSend.CreateDelegate<Action<BinaryWriter, Boss_Tracker>>();
-				netReceive = _netReceive.CreateDelegate<Action<BinaryReader, Boss_Tracker>>();
-			}
-			{
 				DynamicMethod _clearWorld = new("clearWorld", typeof(void), [typeof(Boss_Tracker)], true);
 				ILGenerator _clearWorldGen = _clearWorld.GetILGenerator();
 				foreach (FieldInfo field in GetType().GetFields()) {
@@ -114,34 +72,34 @@ namespace Origins.NPCs {
 				_clearWorldGen.Emit(OpCodes.Ret);
 				clearWorld = _clearWorld.CreateDelegate<Action<Boss_Tracker>>();
 			}
-			foreach (FieldInfo field in GetType().GetFields()) {
-				if (field.FieldType == typeof(bool) && !field.IsStatic) {
-					DynamicMethod get = new("get_" + field.Name, typeof(bool), []);
-					get.GetILGenerator().Emit(OpCodes.Call, GetType().GetProperty(nameof(Instance)).GetGetMethod());
-					get.GetILGenerator().Emit(OpCodes.Ldfld, field);
-					get.GetILGenerator().Emit(OpCodes.Ret);
-					Conditions.Add(field.Name, new(Language.GetOrRegister("Mods.Origins.Conditions." + field.Name.Replace("downed", "Downed")), get.CreateDelegate<Func<bool>>()));
-				}
-			}
 		}
 		public override void Unload() {
 			foreach (FieldInfo field in GetType().GetFields()) {
 				if (field.IsStatic && field.FieldType.IsClass) field.SetValue(null, null);
 			}
 		}
+		public override void OnModLoad() {
+			foreach (PropertyInfo property in typeof(ProgressFlags).GetProperties()) {
+				if (property.PropertyType == typeof(ProgressFlag)) {
+					Conditions.Add(property.Name[..1].ToLower() + property.Name[1..], (ProgressFlag)property.GetValue(null));
+				}
+			}
+		}
 		public static Dictionary<string, Condition> Conditions { get; private set; } = [];
 		static Action<TagCompound, Boss_Tracker> saveData;
 		static Action<TagCompound, Boss_Tracker> loadData;
-		static Action<BinaryWriter, Boss_Tracker> netSend;
-		static Action<BinaryReader, Boss_Tracker> netReceive;
 		static Action<Boss_Tracker> clearWorld;
-#pragma warning disable CS0649 // Field is never assigned to
-		static bool dummy;
-#pragma warning restore CS0649 // Field is never assigned to
-		public override void SaveWorldData(TagCompound tag) => saveData?.Invoke(tag, this);
-		public override void LoadWorldData(TagCompound tag) => loadData?.Invoke(tag, this);
-		public override void NetSend(BinaryWriter writer) => netSend(writer, this);
-		public override void NetReceive(BinaryReader reader) => netReceive(reader, this);
+		public override void SaveWorldData(TagCompound tag) { }
+		public override void LoadWorldData(TagCompound tag) {
+			loadData?.Invoke(tag, this);
+			if (downedFiberglassWeaver) ProgressFlags.DownedFiberglassWeaver.Set(true);
+			if (downedLostDiver) ProgressFlags.DownedLostDiver.Set(true);
+			if (downedShimmerConstruct) ProgressFlags.DownedShimmerConstruct.Set(true);
+			if (downedChambersiteSentinel) ProgressFlags.DownedChambersiteSentinel.Set(true);
+			if (downedDefiledMimic) ProgressFlags.DownedDefiledMimic.Set(true);
+			if (downedRivenMimic) ProgressFlags.DownedRivenMimic.Set(true);
+			if (downedTrashCompactorMimic) ProgressFlags.DownedTrashCompactorMimic.Set(true);
+		}
 		public override void ClearWorld() => clearWorld(this);
 	}
 }

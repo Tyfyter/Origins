@@ -9,6 +9,7 @@ using Origins.Journal;
 using Origins.Questing;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.MusicBoxes;
+using Origins.World;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System.Collections.Generic;
@@ -126,9 +127,9 @@ namespace Origins.NPCs.TownNPCs {
 			.Add<Greasy_Broth>()
 			.Add<Savory_Broth>()
 			.Add<Spicy_Broth>()
-			.Add<Insubstantial_Broth>(Boss_Tracker.Conditions[nameof(Boss_Tracker.downedShimmerConstruct)])
-			.Add<Astringent_Broth>() // add condition for Miscreant defeated when added
-			.Add<Metallic_Broth>() // add condition for Crimson King defeated when added
+			.Add<Insubstantial_Broth>(ProgressFlags.DownedShimmerConstruct)
+			.Add<Astringent_Broth>(ProgressFlags.SolarEclipseOccurred) // add condition for Miscreant defeated when added
+			.Add<Metallic_Broth>(ProgressFlags.SolarEclipseOccurred) // add condition for Crimson King defeated when added
 			.Add<Bitter_Broth>(Defiled_Heart_TE_System.No_Defiled_Hearts)
 			.Add<Minishark_Broth>(OriginsModIntegrations.AprilFools)
 			.Add<Akaliegis>(Quest.QuestCondition<Alkaliegis_Quest>())
@@ -174,7 +175,7 @@ namespace Origins.NPCs.TownNPCs {
 
 		public override List<string> SetNPCNameList() => this.GetGivenName().ToList();
 		public override bool CanGoToStatue(bool toKingStatue) => !toKingStatue;
-		public override bool CanTownNPCSpawn(int numTownNPCs) => Boss_Tracker.Instance.downedLostDiver;
+		public override bool CanTownNPCSpawn(int numTownNPCs) => ProgressFlags.DownedLostDiver.IsSet;
 
 		public override void SetChatButtons(ref string button, ref string button2) { // What the chat buttons are when you open up the chat UI
 			button = Language.GetTextValue("LegacyInterface.28");

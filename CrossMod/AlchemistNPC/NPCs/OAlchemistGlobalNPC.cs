@@ -20,7 +20,7 @@ using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.NPCs.Boss_Tracker;
+using static Origins.World.ProgressFlags;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.CrossMod.AlchemistNPC.NPCs {
@@ -72,7 +72,7 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.Add(new Item(ItemType<Sanguinite_Ore_Item>()) { shopCustomPrice = 1500 });
 						shop.Add(new Item(ItemType<NE8>()) { shopCustomPrice = 10000 });
 						shop.Add(new Item(ItemType<Biocomponent10>()) { shopCustomPrice = 10000 });
-						shop.Add(new Item(ItemType<Aetherite_Ore_Item>()) { shopCustomPrice = 1500 }, Conditions[nameof(Boss_Tracker.downedShimmerConstruct)]);
+						shop.Add(new Item(ItemType<Aetherite_Ore_Item>()) { shopCustomPrice = 1500 }, DownedShimmerConstruct);
 						shop.Add(new Item(ItemType<Nova_Fragment>()) { shopCustomPrice = 100000 }, Condition.DownedMoonLord);
 						break;
 
@@ -80,9 +80,9 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.Add(new Item(ItemType<Defiled_Amalgamation_Bag>()) { shopCustomPrice = 500000 }, Condition.DownedEowOrBoc.And(Condition.InExpertMode));
 						shop.Add(new Item(ItemType<World_Cracker_Bag>()) { shopCustomPrice = 500000 }, Condition.DownedEowOrBoc.And(Condition.InExpertMode));
 						shop.Add(new Item(ItemType<Trenchmaker_Bag>()) { shopCustomPrice = 500000 }, Condition.DownedEowOrBoc.And(Condition.InExpertMode)); // for ashen update
-						shop.Add(new Item(ItemType<Fiberglass_Weaver_Bag>()) { shopCustomPrice = 1000000 }, Conditions[nameof(Boss_Tracker.downedFiberglassWeaver)]);
-						shop.Add(new Item(ItemType<Shimmer_Construct_Bag>()) { shopCustomPrice = 1650000 }, Conditions[nameof(Boss_Tracker.downedShimmerConstruct)]);
-						shop.Add(new Item(ItemType<Lost_Diver_Bag>()) { shopCustomPrice = 1500000 }, Conditions[nameof(Boss_Tracker.downedLostDiver)]);
+						shop.Add(new Item(ItemType<Fiberglass_Weaver_Bag>()) { shopCustomPrice = 1000000 }, DownedFiberglassWeaver);
+						shop.Add(new Item(ItemType<Shimmer_Construct_Bag>()) { shopCustomPrice = 1650000 }, DownedShimmerConstruct);
+						shop.Add(new Item(ItemType<Lost_Diver_Bag>()) { shopCustomPrice = 1500000 }, DownedLostDiver);
 						break;
 					}
 					break;
@@ -171,7 +171,7 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 					if (shop.Name == "Other") {
 						shop.InsertAfter(ItemID.BandofStarpower, new Item(ItemType<Dim_Starlight>()) { shopCustomPrice = 30000 }, Condition.DownedEowOrBoc);
 						shop.InsertAfter(ItemID.BandofRegeneration, new Item(ItemType<Bomb_Charm>()) { shopCustomPrice = 50000 }, Condition.DownedEowOrBoc);
-						shop.InsertAfter(ItemType<Bomb_Charm>(), new Item(ItemType<Lightning_Ring>()) { shopCustomPrice = 55000 }, Conditions[nameof(Boss_Tracker.downedShimmerConstruct)]);
+						shop.InsertAfter(ItemType<Bomb_Charm>(), new Item(ItemType<Lightning_Ring>()) { shopCustomPrice = 55000 }, DownedShimmerConstruct);
 						shop.InsertAfter(ItemID.Diamond, new Item(ItemType<Chambersite_Item>()) { shopCustomPrice = 9000 }, Condition.Hardmode);
 					}
 					if (shop.Name == "Arena") {
@@ -218,9 +218,9 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.InsertAfter(ItemID.TitanGlove, new Item(ItemType<Resizing_Glove>()) { shopCustomPrice = 250000 }, Condition.Hardmode);
 						shop.InsertAfter(ItemID.MagmaStone, new Item(ItemType<Messy_Leech>()) { shopCustomPrice = 150000 }, Condition.DownedQueenBee);
 						shop.InsertAfter(ItemType<Messy_Leech>(), new Item(ItemType<Symbiote_Skull>()) { shopCustomPrice = 50000 }, Condition.DownedEowOrBoc);
-						shop.InsertAfter(ItemType<Symbiote_Skull>(), new Item(ItemType<Venom_Fang>()) { shopCustomPrice = 15000 }, Conditions[nameof(Boss_Tracker.downedLostDiver)]);
+						shop.InsertAfter(ItemType<Symbiote_Skull>(), new Item(ItemType<Venom_Fang>()) { shopCustomPrice = 15000 }, DownedLostDiver);
 						shop.InsertAfter(ItemID.NecromanticScroll, new Item(ItemType<Priority_Mail>()) { stack = 2, shopCustomPrice = 100000 }, Condition.Hardmode);
-						shop.Add(new Item(ItemType<Mildew_Heart>()) { shopCustomPrice = 200000 }, Conditions[nameof(Boss_Tracker.downedLostDiver)]);
+						shop.Add(new Item(ItemType<Mildew_Heart>()) { shopCustomPrice = 200000 }, DownedLostDiver);
 					}
 					break;
 				}

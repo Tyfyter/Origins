@@ -14,6 +14,7 @@ using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.MiscE;
 using Origins.Tiles.BossDrops;
+using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib;
 using System;
@@ -336,8 +337,7 @@ namespace Origins.NPCs.Fiberglass {
 			}
 		}
 		public override void OnKill() {
-			Boss_Tracker.Instance.downedFiberglassWeaver = true;
-			NetMessage.SendData(MessageID.WorldData);
+			ProgressFlags.DownedFiberglassWeaver.Set();
 		}
 	}
 	public class Fiberglass_Thread : ModProjectile {

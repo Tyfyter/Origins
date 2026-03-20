@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Magic;
 using Origins.Tiles.Other;
+using Origins.World;
 using PegasusLib;
 using ReLogic.Utilities;
 using System.Collections.Generic;
@@ -40,8 +41,7 @@ namespace Origins.NPCs.MiscB {
 			);
 		}
 		public override void OnKill() {
-			Boss_Tracker.Instance.downedChambersiteSentinel = true;
-			NetMessage.SendData(MessageID.WorldData);
+			ProgressFlags.DownedChambersiteSentinel.Set();
 		}
 		Aim[] aims;
 		Aim[] decayingAims;

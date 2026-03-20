@@ -18,6 +18,7 @@ using Origins.Music;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.MusicBoxes;
 using Origins.Tiles.Other;
+using Origins.World;
 using PegasusLib;
 using PegasusLib.Graphics;
 using PegasusLib.Networking;
@@ -703,8 +704,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			//Origins.instance.Logger.Info(stringBuilder.ToString());
 		}
 		public override void OnKill() {
-			Boss_Tracker.Instance.downedShimmerConstruct = true;
-			NetMessage.SendData(MessageID.WorldData);
+			ProgressFlags.DownedShimmerConstruct.Set();
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
 			writer.Write((byte)NPC.aiAction);

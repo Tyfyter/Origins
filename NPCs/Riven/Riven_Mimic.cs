@@ -4,6 +4,7 @@ using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
+using Origins.World;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -70,8 +71,7 @@ namespace Origins.NPCs.Riven {
             }
 		}
 		public override void OnKill() {
-			Boss_Tracker.Instance.downedRivenMimic = true;
-			NetMessage.SendData(MessageID.WorldData);
+			ProgressFlags.DownedRivenMimic.Set();
 		}
 	}
 }

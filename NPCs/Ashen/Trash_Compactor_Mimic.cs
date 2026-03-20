@@ -4,6 +4,7 @@ using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs.Defiled;
+using Origins.World;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -66,8 +67,7 @@ namespace Origins.NPCs.Ashen {
 			}
 		}
 		public override void OnKill() {
-			Boss_Tracker.Instance.downedTrashCompactorMimic = true;
-			NetMessage.SendData(MessageID.WorldData);
+			ProgressFlags.DownedTrashCompactorMimic.Set();
 		}
 	}
 }

@@ -7,6 +7,7 @@ using Origins.Tiles.Ashen;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
+using Origins.World;
 using System;
 using System.Linq;
 using Terraria;
@@ -28,7 +29,7 @@ namespace Origins.CrossMod.Fargos.NPCs {
 			}
 			if (shop.NpcType == ModContent.NPCType<Deviantt>() && shop.TryGetEntry(ModContent.ItemType<CorruptChest>(), out NPCShop.Entry corruptChest) && shop.TryGetEntry(ModContent.ItemType<HallowChest>(), out NPCShop.Entry hallowChest)) {
 				Func<bool> predicate = corruptChest.Conditions.FirstOrDefault()?.Predicate ?? (() => true);
-				bool evilMimicCon() => predicate() || Boss_Tracker.Instance.downedDefiledMimic || Boss_Tracker.Instance.downedRivenMimic || Boss_Tracker.Instance.downedTrashCompactorMimic;
+				bool evilMimicCon() => predicate() || ProgressFlags.DownedDefiledMimic.IsSet || ProgressFlags.DownedRivenMimic.IsSet || ProgressFlags.DownedTrashCompactorMimic.IsSet;
 				corruptChest.Disable();
 				shop.GetEntry(ModContent.ItemType<CrimsonChest>()).Disable();
 

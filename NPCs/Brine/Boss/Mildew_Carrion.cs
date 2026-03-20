@@ -18,6 +18,7 @@ using Origins.Journal;
 using Origins.Misc;
 using Origins.Music;
 using Origins.Tiles.BossDrops;
+using Origins.World;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -425,8 +426,7 @@ namespace Origins.NPCs.Brine.Boss {
 			}
 		}
 		public override void OnKill() {
-			Boss_Tracker.Instance.downedLostDiver = true;
-			NetMessage.SendData(MessageID.WorldData);
+			ProgressFlags.DownedLostDiver.Set();
 		}
 		public enum AIModes {
 			Idle,

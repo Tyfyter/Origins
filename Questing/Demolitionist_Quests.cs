@@ -73,9 +73,9 @@ namespace Origins.Questing {
 			yield return new ShopItem<Trash_Lid>(160);
 			yield return new ShopItem(ItemID.Beenade, 170, [OriginGlobalNPC.PeatSoldCondition(170), Condition.NotTheBeesWorld]);
 			yield return new ShopItem<Impact_Dynamite>(180, Condition.Hardmode);
-			yield return new ShopItem<Alkaline_Grenade>(200, Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
-			yield return new ShopItem<Alkaline_Bomb>(230, Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
-			yield return new ShopItem<Sonar_Dynamite>(230, Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
+			yield return new ShopItem<Alkaline_Grenade>(200, ProgressFlags.DownedLostDiver);
+			yield return new ShopItem<Alkaline_Bomb>(230, ProgressFlags.DownedLostDiver);
+			yield return new ShopItem<Sonar_Dynamite>(230, ProgressFlags.DownedLostDiver);
 			yield return new ShopItem<Indestructible_Saddle>(250, Condition.DownedMechBossAny);
 			yield return new ShopItem<Absorption_Potion>(350);
 			yield return new ShopItem<Petes_Peat_Slugger>(500, Condition.DownedPlantera);

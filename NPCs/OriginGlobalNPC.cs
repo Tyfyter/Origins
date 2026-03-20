@@ -23,6 +23,7 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
+using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib.UI;
 using System;
@@ -75,7 +76,7 @@ namespace Origins.NPCs {
 				case NPCID.Merchant: {
 					shop.Add<Blue_Bovine>(Quest.QuestCondition<Blue_Bovine_Quest>());
 					shop.Add<Lottery_Ticket>(Quest.QuestCondition<Lottery_Ticket_Quest>());
-					shop.Add<Spearmint_Tea>(Boss_Tracker.Conditions[nameof(Boss_Tracker.downedLostDiver)]);
+					shop.Add<Spearmint_Tea>(ProgressFlags.DownedLostDiver);
 					break;
 				}
 				case NPCID.Demolitionist: {

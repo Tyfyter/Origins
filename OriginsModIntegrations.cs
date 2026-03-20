@@ -49,6 +49,7 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
+using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib.Graphics;
 using ReLogic.Content;
@@ -385,7 +386,7 @@ namespace Origins {
 					mod,
 					nameof(Fiberglass_Weaver).Replace("_", ""),
 					4.7f,
-					() => Boss_Tracker.Instance.downedFiberglassWeaver,
+					() => ProgressFlags.DownedFiberglassWeaver.IsSet,
 					NPCType<Fiberglass_Weaver>(),
 					new Dictionary<string, object> {
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Fiberglass_Weaver.BossChecklistIntegration.SpawnCondition"),
@@ -414,7 +415,7 @@ namespace Origins {
 					mod,
 					nameof(Lost_Diver).Replace("_", ""),
 					7.3f,
-					() => Boss_Tracker.Instance.downedLostDiver,
+					() => ProgressFlags.DownedLostDiver.IsSet,
 					new List<int> {
 						NPCType<Lost_Diver>(),
 						NPCType<Lost_Diver_Transformation>(),
@@ -448,7 +449,7 @@ namespace Origins {
 					mod,
 					nameof(Shimmer_Construct).Replace("_", ""),
 					6.91f,
-					() => Boss_Tracker.Instance.downedShimmerConstruct,
+					() => ProgressFlags.DownedShimmerConstruct.IsSet,
 					NPCType<Shimmer_Construct>(),
 					new Dictionary<string, object> {
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Shimmer_Construct.BossChecklistIntegration.SpawnCondition"),
@@ -480,7 +481,7 @@ namespace Origins {
 					mod,
 					nameof(Chambersite_Sentinel).Replace("_", ""),
 					7.2f,
-					() => Boss_Tracker.Instance.downedChambersiteSentinel,
+					() => ProgressFlags.DownedChambersiteSentinel.IsSet,
 					NPCType<Chambersite_Sentinel>(),
 					new Dictionary<string, object> {
 						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Chambersite_Sentinel.BossChecklistIntegration.SpawnCondition"),
@@ -506,9 +507,9 @@ namespace Origins {
 				FargosMutant.Call("AddSummon", 3, ItemType<Distress_Beacon>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
 				FargosMutant.Call("AddSummon", 3, ItemType<Nerve_Impulse_Manipulator>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
 				FargosMutant.Call("AddSummon", 3, ItemType<Sus_Ice_Cream>(), () => NPC.downedBoss2, Item.buyPrice(gold: 10));
-				FargosMutant.Call("AddSummon", 4.7, ItemType<Shaped_Glass>(), () => Boss_Tracker.Instance.downedFiberglassWeaver, Item.buyPrice(gold: 15));
-				FargosMutant.Call("AddSummon", 7.3, ItemType<Lost_Picture_Frame>(), () => Boss_Tracker.Instance.downedLostDiver, Item.buyPrice(gold: 22));
-				FargosMutant.Call("AddSummon", 6.8, ItemType<Aether_Orb>(), () => Boss_Tracker.Instance.downedShimmerConstruct, Item.buyPrice(gold: 18));
+				FargosMutant.Call("AddSummon", 4.7, ItemType<Shaped_Glass>(), () => ProgressFlags.DownedFiberglassWeaver.IsSet, Item.buyPrice(gold: 15));
+				FargosMutant.Call("AddSummon", 7.3, ItemType<Lost_Picture_Frame>(), () => ProgressFlags.DownedLostDiver.IsSet, Item.buyPrice(gold: 22));
+				FargosMutant.Call("AddSummon", 6.8, ItemType<Aether_Orb>(), () => ProgressFlags.DownedShimmerConstruct.IsSet, Item.buyPrice(gold: 18));
 			}
 
 			void AddModdedNPCAssimilation<TDebuff>(string name, AssimilationAmount assimilationAmount, HashSet<int> set = null) where TDebuff : AssimilationDebuff {

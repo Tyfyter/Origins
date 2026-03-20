@@ -37,6 +37,7 @@ Conditions: {
 	WithoutScavengerSet: Without a full set of Scavenger Armor
 	WithScavengerSet: With a full set of Scavenger Armor
 	NoDefiledHearts: No Defiled Hearts are left in the world
+	SolarEclipseOccurred: After surviving a solar eclipse
 }
 
 ModMenu: {
