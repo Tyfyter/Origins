@@ -9,6 +9,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Fiberglass_Shard : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
+		public override void SetStaticDefaults() {
+			OriginsSets.Items.Fiberglass[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);
 			Item.width = 12;

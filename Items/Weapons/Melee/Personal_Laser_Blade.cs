@@ -77,6 +77,7 @@ namespace Origins.Items.Weapons.Melee {
 			base.SetStaticDefaults();
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = trail_length * 2;
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
 			ID = Type;
 		}
 		protected const int HitboxSteps = 5;

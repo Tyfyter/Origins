@@ -13,6 +13,7 @@ namespace Origins.Items.Weapons.Melee {
 		];
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			OriginsSets.Items.Fiberglass[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.damage = 18;
@@ -44,6 +45,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override string Texture => typeof(Fiberglass_Sword).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+			OriginsSets.Projectiles.Fiberglass[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThornChakram);

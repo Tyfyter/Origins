@@ -29,6 +29,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Main.RegisterItemAnimation(Item.type, animation);
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+			OriginsSets.Items.Fiberglass[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.damage = 17;

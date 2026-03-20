@@ -14,6 +14,9 @@ namespace Origins.Items.Weapons.Melee {
 			WikiCategories.Sword
 		];
 		public ushort Element => Elements.Fiberglass;
+		public override void SetStaticDefaults() {
+			OriginsSets.Items.Fiberglass[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.damage = 18;
 			Item.DamageType = DamageClass.Melee;
@@ -36,7 +39,9 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Broken_Fiberglass_Sword_Stab : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Broken_Fiberglass_Sword";
-
+		public override void SetStaticDefaults() {
+			OriginsSets.Projectiles.Fiberglass[Type] = true;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
 			Projectile.timeLeft = 3600;

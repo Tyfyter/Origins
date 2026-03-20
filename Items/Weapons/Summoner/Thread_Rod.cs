@@ -15,6 +15,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [Slow_Debuff.ID];
+			OriginsSets.Items.Fiberglass[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
@@ -111,6 +112,7 @@ namespace Origins.Items.Weapons.Summoner {
 		Thread[] threads;
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 1024 * 2;
+			OriginsSets.Projectiles.Fiberglass[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;

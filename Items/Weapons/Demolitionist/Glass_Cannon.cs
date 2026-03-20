@@ -10,7 +10,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Glass_Cannon : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
-			//Origins.FlatDamageMultiplier[Type] = 1.5f;
+			OriginsSets.Items.Fiberglass[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Glass_Cannon_P>(2, 28, 7.5f, 48, 32);
@@ -46,6 +46,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 40;
 			Origins.MagicTripwireDetonationStyle[Type] = 2;
+			OriginsSets.Projectiles.Fiberglass[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
