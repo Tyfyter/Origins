@@ -1,9 +1,6 @@
-Area_Denial
-ASH_Attack_Relay: [Seal of Cinders]
 Background_Door_Item
 Burning_Oil_Bucket
 Corona
-Decorative_Ashes: [A.S.H. Attack Relay]
 Dirt_Chest_Natural_Item
 Exo_Arm
 Exo_Legs
@@ -30,7 +27,6 @@ PEE_Breastplate
 PEE_Greaves
 PEE_Helmet
 Room_Socket_Marker_Item
-Seal_Of_Cinders
 Shadow_Flare: [Corona]
 Small_Scrap1_Item
 Small_Scrap2_Item

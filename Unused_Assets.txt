@@ -13,31 +13,9 @@ Buffs/Sugar_Crash_Debuff
 Buffs/Sugar_Rush_Debuff
 Buffs/Sugarcoat_Debuff
 
-CrossMod/Fargos/Items/Aether_Orb
-CrossMod/Fargos/Items/AshenRenewal
-CrossMod/Fargos/Items/AshenSupremeRenewal
-CrossMod/Fargos/Items/Defiled_Chest
-CrossMod/Fargos/Items/DefiledRenewal
-CrossMod/Fargos/Items/DefiledSupremeRenewal
 CrossMod/Fargos/Items/High_Powered_Green_Laser
 CrossMod/Fargos/Items/Mech_Figurine
-CrossMod/Fargos/Items/Riven_Chest
-CrossMod/Fargos/Items/RivenRenewal
-CrossMod/Fargos/Items/RivenSupremeRenewal
 
-CrossMod/MagicStorage/Tiles/Defiled_Storage_Unit_Glow
-CrossMod/MagicStorage/Tiles/Encrusted_Storage_Unit_Glow
-CrossMod/MagicStorage/Tiles/Sanguinite_Storage_Unit_Glow
-
-CrossMod/Thorium/Items/Accessories/Chambersite_Ring
-
-CrossMod/WaasephisFishingPlus/Items/Consumables/Ashen_Lock_Box
-CrossMod/WaasephisFishingPlus/Items/Consumables/Brine_Lock_Box
-CrossMod/WaasephisFishingPlus/Items/Consumables/Defiled_Lock_Box
-CrossMod/WaasephisFishingPlus/Items/Consumables/Riven_Lock_Box
-
-Gores/NPCs/Amoebeye2_Gore
-Gores/NPCs/Amoebeye3_Gore
 Gores/Brine_Drip
 
 Hair/HairSource/ExampleHair
@@ -122,6 +100,7 @@ Items/Armor/Myth/Wings_46
 
 Items/Armor/Ruby/ArmorTemplate_v1
 Items/Armor/Ruby/Item_178
+Items/Armor/index
 
 Items/Materials/Tangela_Bud_Glow
 Items/Materials/Valkyrum_Bar_WIP
@@ -369,9 +348,6 @@ NPCs/Ashen/HA_24_Mode_Switch
 NPCs/Ashen/HA_24_Mode_Switch_Glow
 NPCs/Ashen/HA_24_Mode_Switch2
 NPCs/Ashen/HA_24_Mode_Switch2_Glow
-NPCs/Ashen/Hammerhand_Glow
-NPCs/Ashen/Oil_Ghoul
-NPCs/Ashen/Oil_Ghoul_Glow
 NPCs/Ashen/Packhunter
 NPCs/Ashen/Packhunter_Glow
 NPCs/Ashen/Packhunter_Head
@@ -386,11 +362,9 @@ NPCs/Ashen/Reject2
 NPCs/Ashen/Reject2_Glow
 NPCs/Ashen/Reject3
 NPCs/Ashen/Reject3_Glow
-NPCs/Ashen/Robot_Penguin
-NPCs/Ashen/Robot_Penguin_Glow
-NPCs/Ashen/Scraptooth
-NPCs/Ashen/Scraptooth_Glow
-NPCs/Ashen/Scrapyard_Stryder_WIP
+NPCs/Ashen/Scrapyard_Stryder
+NPCs/Ashen/Scrapyard_Stryder_Glow
+NPCs/Ashen/Springjumper
 NPCs/Ashen/Wind_Pail1
 NPCs/Ashen/Wind_Pail1_Glow
 NPCs/Ashen/Wind_Pail2
@@ -461,7 +435,6 @@ NPCs/Riven/World_Cracker/World_Cracker_Jelly
 NPCs/Riven/World_Cracker/World_Cracker_Tail_Glow
 NPCs/Riven/Amoebeye_AF
 NPCs/Riven/Amoebeye_AF_Glow
-NPCs/Riven/Barnacle_Mound_Glow
 NPCs/Riven/Riven_Fighter_AF
 NPCs/Riven/Riven_Fighter_AF_Glow
 
@@ -523,14 +496,11 @@ Sounds/Custom/Bonk
 Sounds/Custom/BubblyBlast
 Sounds/Custom/BurstCannon
 Sounds/Custom/ChainZap
-Sounds/Custom/ChargedUp
 Sounds/Custom/ChargedUpSmol
 Sounds/Custom/ChorusRoar
 Sounds/Custom/DeepBoom
 Sounds/Custom/Defiled_Hurt1
 Sounds/Custom/Defiled_Hurt2
-Sounds/Custom/Defiled_Idle2
-Sounds/Custom/Defiled_Idle3
 Sounds/Custom/Defiled_Kill1
 Sounds/Custom/Defiled_Sample
 Sounds/Custom/DefiledWave
@@ -581,8 +551,6 @@ Sounds/Custom/SonarPing
 Sounds/Custom/ThrusterChargeUp
 Sounds/Custom/ThrusterLoop
 Sounds/Custom/ThunderShot
-Sounds/Custom/WCHit
-Sounds/Custom/WCIdle
 Sounds/Custom/WCScream
 Sounds/Custom/WeldingTorch
 Sounds/Custom/WeldingTorchCancel
@@ -621,8 +589,6 @@ Tiles/Ashen/Unused/Tainted_Stone_Ash
 Tiles/Ashen/Unused/Tainted_Stone_Mud
 Tiles/Ashen/Unused/Tainted_Stone_Murk
 Tiles/Ashen/Unused/thatcoolthingiwantedtosave
-Tiles/Ashen/Artifiber_Tree
-Tiles/Ashen/Artifiber_Tree_Tops
 Tiles/Ashen/Artifiber_Tree_Tops_Glow
 Tiles/Ashen/Ashen_Cactus
 Tiles/Ashen/Ashen_Cactus_Fruit
@@ -630,17 +596,11 @@ Tiles/Ashen/Ashen_Campfire_Flame
 Tiles/Ashen/Ashen_Icicle
 Tiles/Ashen/Beacon_Light_Glow
 Tiles/Ashen/Cargo_Elevator_Door_Backend
-Tiles/Ashen/Deactivated_Repairboy
-Tiles/Ashen/Deactivated_Repairboy_Item
-Tiles/Ashen/Deactivated_Trenchmaker
-Tiles/Ashen/Deactivated_Trenchmaker_Item
-Tiles/Ashen/Deactivated_Trenchmaker_Side
 Tiles/Ashen/Fortified_Steel_WIPs
 Tiles/Ashen/Gas_Generator
 Tiles/Ashen/Gas_Generator_Glow
 Tiles/Ashen/Gas_Generator_Item
 Tiles/Ashen/Mechanical_Key_Node_State_Glow
-Tiles/Ashen/Oil_Derrick_Highlight
 Tiles/Ashen/Purple_Mechanical_Switch
 Tiles/Ashen/Purple_Mechanical_Switch_Glow
 Tiles/Ashen/Solar_Battery
@@ -771,14 +731,11 @@ Tiles/Overlays/Merge/Tainted_Overlay
 
 Tiles/Riven/Calcified_Spug_Flesh
 Tiles/Riven/Calcified_Spug_Flesh_Jelly
-Tiles/Riven/Exoskeletal_Tree
-Tiles/Riven/Exoskeletal_Tree_Branches
 Tiles/Riven/Primordial_Permafrost_Icicle
 Tiles/Riven/Riven_Cactus
 Tiles/Riven/Riven_Cactus_Fruit
 Tiles/Riven/Riven_Campfire_Flame
 
-UI/Logos/Defiled_Terraria
 UI/Logos/ExampleLogo
 UI/Logos/Neutral_Origins
 UI/Logos/Shimmer_Terraria
@@ -793,9 +750,7 @@ UI/MapBGs/Defiled_Wastelands_Desert
 UI/MapBGs/Eutrophic_Sea
 UI/MapBGs/Fiberglass_Caverns
 UI/MapBGs/Riven_Desert
-UI/MapBGs/Riven_Hive_Caverns
 UI/MapBGs/Riven_Snow
-UI/MapBGs/Riven_Surface
 
 UI/WorldGen/IconDefiledCrimson
 UI/WorldGen/IconDefiledHallow
@@ -810,15 +765,11 @@ UI/WorldGen/PreviewEvilDefiled
 UI/WorldGen/PreviewEvilRiven
 UI/Bestiary_Stat_Background
 UI/Brine_Serpent
-UI/Cleaver_Preview
 UI/Defiled_Digger_Preview
 UI/Floppy_Disk
 UI/Quakemaker
-UI/Rivenator_Preview
-UI/Savage_Whip_Preview
 UI/Slime_Worm_Preview
 UI/Ticking_Explosives_UI
-UI/World_Cracker_Preview
 
 Walls/Overlays/Chambersite/Chambersite_Ore_Wall_Item_Chunk
 Walls/Overlays/Chambersite/Chambersite_Ore_Wall_Item_Flesh
@@ -829,5 +780,3 @@ Walls/Unused/Chambersite_Riven_Flesh_Wall
 Walls/Unused/Chambersite_Riven_Flesh_Wall_Item
 Walls/Unused/Chambersite_Tainted_Stone_Wall
 Walls/Unused/Chambersite_Tainted_Stone_Wall_Item
-Walls/Fortified_Steel_Wall3_BG
-Walls/Molten_Steel_Wall_BG

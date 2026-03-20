@@ -34,7 +34,7 @@
 		  <HintPath>..\ModAssemblies\ModLiquidLib_v2025.12.0.0.dll</HintPath>
 		</Reference>
 		<Reference Include="PegasusLib">
-			<HintPath>..\ModAssemblies\PegasusLib_v1.1.4.1.dll</HintPath>
+		  <HintPath>..\ModAssemblies\PegasusLib_v1.1.4.1.dll</HintPath>
 		</Reference>
 		<Reference Include="StructureHelper">
 		  <HintPath>..\ModAssemblies\StructureHelper.dll</HintPath>
