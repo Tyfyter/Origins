@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader;
 using static PegasusLib.FishingLootPool;
 using static Terraria.ModLoader.ModContent;
@@ -62,20 +61,9 @@ namespace Origins.Liquids {
 	}
 	#endregion
 	#region Misc
-	//TODO: Add to JunkLootPool's Any instead once we use newer PegasusLib.
-	public class Trash_Fishing_Loot : FishingLootPool {
-		public override bool IsActive(Player player, FishingAttempt attempt) => attempt.rolledItemDrop >= ItemID.OldShoe && attempt.rolledItemDrop <= ItemID.TinCan;
+	public class Trash_Fishing_Loot : JunkLootPool {
 		public override void SetStaticDefaults() {
-			List<FishingCatch> trash = [
-				FishingCatch.Item(ItemType<Tire>()),
-				new FallthroughFishingCatch(weight: 4)
-			];
-			Crate.AddRange(trash);
-			Legendary.AddRange(trash);
-			VeryRare.AddRange(trash);
-			Rare.AddRange(trash);
-			Uncommon.AddRange(trash);
-			Common.AddRange(trash);
+			Any.Add(FishingCatch.Item(ItemType<Tire>()));
 		}
 	}
 	#endregion
