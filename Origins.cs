@@ -961,11 +961,13 @@ namespace Origins {
 		public static void LogLoadingWarning(LocalizedText message) {
 			PegasusLib.PegasusLib.LogLoadingWarning(message);
 		}
-		public static void DoILEdit(Delegate method, ILContext.Manipulator edit, params (Type exceptionType, string modName, Version modVersion)[] expect) {
+		public static void DoILEdit(Delegate method, ILContext.Manipulator edit, params (Type exceptionType, string modName, Version modVersion)[] expect)
+			=> DoILEdit(method.Method, edit, expect);
+		public static void DoILEdit(MethodInfo method, ILContext.Manipulator edit, params (Type exceptionType, string modName, Version modVersion)[] expect) {
 			try {
-				MonoModHooks.Modify(method.Method, edit);
+				MonoModHooks.Modify(method, edit);
 			} catch (Exception e) {
-				if (LogLoadingILError(edit.Method.Name, e, expect)) throw;
+				if (LogLoadingILError($"{method.Name}: {edit.Method.Name}", e, expect)) throw;
 			}
 		}
 		public static bool LogLoadingILError(string methodName, Exception exception) => LogLoadingILError(methodName, exception, []);
