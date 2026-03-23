@@ -99,7 +99,7 @@ namespace Origins.Tiles.Ashen {
 				} else if (!downRight.HasTile && (!TileID.Sets.Platforms[downRight.TileType] || downRight.Slope == SlopeType.SlopeDownRight)) {
 					if (!leftTile.HasTile && (!TileID.Sets.Platforms[upLeft.TileType] || upLeft.Slope != SlopeType.SlopeDownLeft)) {
 						platformFrame = 432;
-					} else if (rightTile.HasTile && Catwalks[right] && rightTile.BlockType is BlockType.HalfBlock or BlockType.SlopeDownRight) {
+					} else if (Catwalks.GetIfInRange(right) && rightTile.BlockType is BlockType.HalfBlock or BlockType.SlopeDownRight) {
 						platformFrame = 504;
 					} else {
 						platformFrame = 360;
@@ -115,7 +115,7 @@ namespace Origins.Tiles.Ashen {
 				} else if (!downLeft.HasTile && (!TileID.Sets.Platforms[downLeft.TileType] || downLeft.Slope == SlopeType.SlopeDownLeft)) {
 					if (!rightTile.HasTile && (!TileID.Sets.Platforms[upRight.TileType] || upRight.Slope != SlopeType.SlopeDownRight)) {
 						platformFrame = 414;
-					} else if (leftTile.HasTile && Catwalks[left] && leftTile.BlockType is BlockType.HalfBlock or BlockType.SlopeDownLeft) {
+					} else if (Catwalks.GetIfInRange(left) && leftTile.BlockType is BlockType.HalfBlock or BlockType.SlopeDownLeft) {
 						platformFrame = 486;
 					} else {
 						platformFrame = 342;
