@@ -12,16 +12,19 @@ using Terraria.ModLoader;
 
 namespace Origins.Backgrounds {
 	public class Ashen_Surface_Background : ModSurfaceBackgroundStyle {
+		int? far;
+		int? mid;
+		int? near;
 		public override int ChooseFarTexture() {
-			return BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background3");
+			return far ??= BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background3");
 		}
 
 		public override int ChooseMiddleTexture() {
-			return BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background2");
+			return mid ??= BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background2");
 		}
 
 		public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b) {
-			return BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background");
+			return near ??= BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background");
 		}
 
 		public override void ModifyFarFades(float[] fades, float transitionSpeed) {
@@ -33,6 +36,8 @@ namespace Origins.Backgrounds {
 		bool isActive;
 		Vector2 position;
 		string IBrokenContent.BrokenReason => "Temp Y parallax behavior, instead use a position chosen in worldgen";
+		int? fog;
+		int? sky;
 		public override void Activate(Vector2 position, params object[] args) {
 			if (isActive.TrySet(true)) Opacity = 0;
 			this.position = position;
@@ -47,7 +52,7 @@ namespace Origins.Backgrounds {
 			Rectangle destinationRectangle = new(0, (SkyColor.bgTopY + 60) * 4, Main.screenWidth, Math.Max(Main.screenHeight, 1400));
 			Min(ref destinationRectangle.Y, 0);
 			destinationRectangle.Height /= 2;
-			Texture2D smogOverlay = TextureAssets.Background[BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background_Sky_Fog")].Value;
+			Texture2D smogOverlay = TextureAssets.Background[fog ??= BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background_Sky_Fog")].Value;
 			MiscShaderData shaderData = GameShaders.Misc["Origins:Muddle"];
 			shaderData.UseSamplerState(SamplerState.LinearClamp);
 			shaderData.UseImage1(perlin);
@@ -55,7 +60,7 @@ namespace Origins.Backgrounds {
 			shaderData.Shader.Parameters["uTargetPosition"]?.SetValue(new Vector2(0, 16 / (float)destinationRectangle.Height));
 			shaderData.Shader.Parameters["uScale"]?.SetValue(0.1f);
 			shaderData.Shader.Parameters["uScaleY"]?.SetValue(0.1f);
-			shaderData.Shader.Parameters["uWorldPosition"]?.SetValue(Main.screenPosition * 0.1f + position * 0.1f + new Vector2(0, Main.GlobalTimeWrappedHourly * 5f));
+			shaderData.Shader.Parameters["uWorldPosition"]?.SetValue(Main.screenPosition * 0.1f + position * 0.1f - new Vector2(0, Main.GlobalTimeWrappedHourly * 5f));
 			shaderData.Apply();
 			Main.spriteBatch.Draw(smogOverlay, destinationRectangle, Main.ColorOfTheSkies * Opacity);
 
@@ -82,7 +87,7 @@ namespace Origins.Backgrounds {
 				}
 			}
 			spriteBatch.Restart(state);
-			SkyColor.Activate(BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background_Sky"));
+			SkyColor.Activate(sky ??= BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background_Sky"));
 		}
 		public override void Reset() { }
 		public override Color OnTileColor(Color inColor) => Color.Lerp(inColor, inColor.MultiplyRGB(new(112, 50, 18)), Opacity);
