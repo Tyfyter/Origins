@@ -173,7 +173,6 @@ namespace Origins {
 				}
 				return orig(projectile);
 			};
-			On_TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;
 			IL_WorldGen.PlantAlch += WorldGen_PlantAlchIL;
 			On_WorldGen.ShakeTree += WorldGen_ShakeTree;
 			MonoModHooks.Add(
@@ -1810,16 +1809,6 @@ namespace Origins {
 			return index == -1;
 		}
 		#endregion
-		private void TileLightScanner_GetTileLight(On_TileLightScanner.orig_GetTileLight orig, TileLightScanner self, int x, int y, out Vector3 outputColor) {
-			orig(self, x, y, out outputColor);
-			try {
-				Tile tile = Framing.GetTileSafely(x, y);
-
-				if (tile.LiquidType == LiquidID.Water && LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle) is IGlowingWaterStyle glowingWaterStyle) {
-					glowingWaterStyle.AddLight(ref outputColor, tile.LiquidAmount);
-				}
-			} catch (Exception) { }
-		}
 
 		static string lastBiomeNameKey;
 		#region drop rules

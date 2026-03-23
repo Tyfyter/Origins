@@ -755,6 +755,7 @@ namespace Origins {
 	public interface IElementalProjectile {
 		ushort Element { get; }
 	}
+	[Obsolete("Removed", true)]
 	public interface IGlowingWaterStyle {
 		public void AddLight(ref Vector3 color, byte liquidAmount);
 	}

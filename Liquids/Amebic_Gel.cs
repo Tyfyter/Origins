@@ -59,14 +59,13 @@ namespace Origins.Liquids {
 		}
 		public override void ModifyLightMaskMode(int index, ref float r, ref float g, ref float b) {
 			float glowValue = GlowValue;
-			r = 0.1f * glowValue;
-			g = 1.05f * glowValue;
-			b = 1f * glowValue;
+			r = 0.096f * glowValue;
+			g = 1.005f * glowValue;
+			b = 0.957f * glowValue;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			byte liquidAmount = Main.tile[i, j].LiquidAmount;
-			float mult = (liquidAmount > 200 ? 1 : liquidAmount / 200) * Riven_Hive.NormalGlowValue.GetValue();
-
+			float mult = (liquidAmount > 200 ? 1 : liquidAmount / 200f) * Riven_Hive.NormalGlowValue.GetValue();
 			g += 0.9f * mult;
 			b += 1f * mult;
 		}
