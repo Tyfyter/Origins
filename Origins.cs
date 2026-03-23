@@ -501,6 +501,9 @@ namespace Origins {
 				GameShaders.Misc["Origins:Beam"] = new MiscShaderData(Assets.Request<Effect>("Effects/Beam"), "Beam")
 				.UseSamplerState(SamplerState.PointClamp);
 
+				GameShaders.Misc["Origins:Muddle"] = new MiscShaderData(Assets.Request<Effect>("Effects/Misc"), "Muddle")
+				.UseSamplerState(SamplerState.LinearClamp);
+
 				journalDrawingShader = new ArmorShaderData(Assets.Request<Effect>("Effects/Journal"), "Drawing");
 
 				journalTransparentShader = new ArmorShaderData(Assets.Request<Effect>("Effects/Journal"), "LightnessToTransparency");

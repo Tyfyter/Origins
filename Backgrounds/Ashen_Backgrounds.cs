@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Reflection;
 using PegasusLib.Graphics;
+using ReLogic.Content;
 using System;
 using System.Linq;
 using Terraria;
@@ -42,29 +43,46 @@ namespace Origins.Backgrounds {
 		public override bool IsActive() => Opacity > 0;
 		public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth) {
 			SpriteBatchState state = spriteBatch.GetState();
-			spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
+			spriteBatch.Restart(state, SpriteSortMode.Immediate, samplerState: SamplerState.LinearClamp);
+			Rectangle destinationRectangle = new(0, (SkyColor.bgTopY + 60) * 4, Main.screenWidth, Math.Max(Main.screenHeight, 1400));
+			Min(ref destinationRectangle.Y, 0);
+			destinationRectangle.Height /= 2;
+			Texture2D smogOverlay = TextureAssets.Background[BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background_Sky_Fog")].Value;
+			MiscShaderData shaderData = GameShaders.Misc["Origins:Muddle"];
+			shaderData.UseSamplerState(SamplerState.LinearClamp);
+			shaderData.UseImage1(perlin);
+			shaderData.Shader.Parameters["uOffset"]?.SetValue(new Vector2(Main.screenWidth / (float)perlin.Value.Width, destinationRectangle.Height / (float)perlin.Value.Height));
+			shaderData.Shader.Parameters["uTargetPosition"]?.SetValue(new Vector2(0, 16 / (float)destinationRectangle.Height));
+			shaderData.Shader.Parameters["uScale"]?.SetValue(0.1f);
+			shaderData.Shader.Parameters["uScaleY"]?.SetValue(0.1f);
+			shaderData.Shader.Parameters["uWorldPosition"]?.SetValue(Main.screenPosition * 0.1f + position * 0.1f + new Vector2(0, Main.GlobalTimeWrappedHourly * 5f));
+			shaderData.Apply();
+			Main.spriteBatch.Draw(smogOverlay, destinationRectangle, Main.ColorOfTheSkies * Opacity);
+
 			Vector2 pos = default;
 			double space = Main.worldSurface * 0.35 * 16;
 			double surface = position.Y;
+			Max(ref surface, space + 60 * 16);
 			float parallaxYBase = (float)Utils.GetLerpValue(surface, space, Main.screenPosition.Y, false);
 			Color color = Main.ColorOfTheSkies * Opacity * Opacity;
+			shaderData.Shader.Parameters["uOffset"]?.SetValue(new Vector2(clouds[0].Value.Width / (float)perlin.Value.Width, clouds[0].Value.Height / (float)perlin.Value.Height));
+			shaderData.Shader.Parameters["uTargetPosition"]?.SetValue(new Vector2(4) / clouds[0].Value.Size());
+			shaderData.Shader.Parameters["uScale"]?.SetValue(0.2f);
+			shaderData.Shader.Parameters["uScaleY"]?.SetValue(0.2f);
+			shaderData.Apply();
 			for (int i = clouds.Length - 1; i >= 0; i--) {
 				Vector2 size = clouds[i].Value.Size();
 				float parallaxX = 0.10f * (i + 1);
 				float parallaxY = float.Lerp(parallaxYBase, 0.5f, i / 6f);
 				pos.Y = parallaxY * Main.screenHeight - size.Y * 0.5f;
-				for (pos.X = -(Main.screenPosition.X * parallaxX + position.X / (1 + i)) % size.X; pos.X < Main.screenWidth; pos.X += size.X) {
+				pos.X = -(Main.screenPosition.X * parallaxX + position.X / (1 + i)) % size.X;
+				while (pos.X > 0) pos.X -= clouds[i].Value.Width;
+				for (; pos.X < Main.screenWidth; pos.X += size.X) {
 					spriteBatch.Draw(clouds[i], pos, color);
 				}
 			}
-			SkyColor.Activate(BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background_Sky"));
-			Rectangle destinationRectangle = new(MainReflection.Instance_bgStartX, SkyColor.bgTopY, MainReflection.Instance_bgLoops * 48, Math.Max(Main.screenHeight, 1400));
-			if (destinationRectangle.Bottom < 1400) {
-				destinationRectangle.Height += 1400 - destinationRectangle.Bottom;
-			}
-			destinationRectangle.Height /= 2;
-			Main.spriteBatch.Draw(TextureAssets.Background[BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background_Sky_Fog")].Value, destinationRectangle, Main.ColorOfTheSkies * Opacity);
 			spriteBatch.Restart(state);
+			SkyColor.Activate(BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background_Sky"));
 		}
 		public override void Reset() { }
 		public override Color OnTileColor(Color inColor) => Color.Lerp(inColor, inColor.MultiplyRGB(new(112, 50, 18)), Opacity);
@@ -73,9 +91,12 @@ namespace Origins.Backgrounds {
 			position.X += Main.windSpeedCurrent * 5;
 		}
 		public void Load(Mod mod) {
+			if (Main.dedServ) return;
 			SkyManager.Instance["Origins:ZoneAshen"] = this;
 			On_Main.DrawStarsInBackground += On_Main_DrawStarsInBackground;
+			perlin = ModContent.Request<Texture2D>("Terraria/Images/Misc/Perlin");
 		}
+		static Asset<Texture2D> perlin;
 		void On_Main_DrawStarsInBackground(On_Main.orig_DrawStarsInBackground orig, Main self, Main.SceneArea sceneArea, bool artificial) {
 			if (Opacity >= 1) return;
 			float graveyardIntensity = Main.GraveyardVisualIntensity;

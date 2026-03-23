@@ -14,6 +14,7 @@ float2 uImageSize0;
 float2 uImageSize1;
 float2 uOffset;
 float uScale;
+float uScaleY;
 float2 uTargetPosition;
 float4 uLegacyArmorSourceRect;
 float2 uLegacyArmorSheetSize;
@@ -72,6 +73,17 @@ float4 Erase(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	return value;
 }
 
+float4 Muddle(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	float2 muddleMapCoords = fmod(fmod(coords * uOffset + uWorldPosition / uImageSize1, float2(1, 1)) + float2(1, 1), float2(1, 1));
+	
+	float xOffset = tex2D(uImage1, muddleMapCoords).r;
+	float2 offset = xOffset * float2(sin(xOffset + uTime * uScale), sin(xOffset + uTime * uScaleY));
+	float step2 = tex2D(uImage1, muddleMapCoords + float2(offset.x, 0)).r;
+	float step3 = tex2D(uImage1, muddleMapCoords + float2(0, offset.y)).r;
+	//return float4(xOffset, step2, step3, 1);
+	return tex2D(uImage0, coords + float2(step2, step3) * uTargetPosition);
+}
+
 technique Technique1 {
 	pass MultiplyRGBA {
 		PixelShader = compile ps_2_0 MultiplyRGBA();
@@ -84,5 +96,8 @@ technique Technique1 {
 	}
 	pass Erase {
 		PixelShader = compile ps_2_0 Erase();
+	}
+	pass Muddle {
+		PixelShader = compile ps_2_0 Muddle();
 	}
 }

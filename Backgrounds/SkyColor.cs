@@ -33,8 +33,9 @@ namespace Origins.Backgrounds {
 		}
 		public static int bgTopY;
 		public static void Draw() {
-			if (layers.Count <= 0) return;
+			if (MainReflection.bgTopY is null) return;
 			bgTopY = MainReflection.Instance_bgTopY;
+			if (layers.Count <= 0) return;
 			Rectangle destinationRectangle = new(MainReflection.Instance_bgStartX, bgTopY, MainReflection.Instance_bgLoops * 48, Math.Max(Main.screenHeight, 1400));
 			if (destinationRectangle.Bottom < 1400) {
 				destinationRectangle.Height += 1400 - destinationRectangle.Bottom;

@@ -16,8 +16,6 @@ namespace Origins.Events {
 		const string biomeName = "Origins:SmogStorm";
 		public override int Music => Origins.Music.SmogStorm;
 		public override SceneEffectPriority Priority => SceneEffectPriority.Event;
-		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Riven_Surface_Background>();
-		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => OriginExtensions.BiomeUGBackground<Riven_Underground_Background>();
 		public override void SetStaticDefaults() {
 			SkyManager.Instance.Bind(biomeName, sky);
 			try {
