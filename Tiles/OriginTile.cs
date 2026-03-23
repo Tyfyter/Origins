@@ -47,9 +47,15 @@ namespace Origins.Tiles {
 		}
 	}
 	//temp solution
-	public interface IDefiledTile { }
-	public interface IRivenTile { }
-	public interface IAshenTile { }
+	public interface IDefiledTile {
+		public bool CountsForSpawns(NPCSpawnInfo spawnInfo) => true;
+	}
+	public interface IRivenTile {
+		public bool CountsForSpawns(NPCSpawnInfo spawnInfo) => true;
+	}
+	public interface IAshenTile {
+		public bool CountsForSpawns(NPCSpawnInfo spawnInfo) => true;
+	}
 	/// <summary>
 	/// exists solely to let a class override SetStaticDefaults without replacing base functionality provided by ComplexFrameTile
 	/// </summary>

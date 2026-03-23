@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using Origins.Dev;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -7,7 +8,8 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
-	public class Sanguinite_Ore : OriginTile, IComplexMineDamageTile {
+	public class Sanguinite_Ore : OriginTile, IComplexMineDamageTile, IAshenTile {
+		bool IAshenTile.CountsForSpawns(NPCSpawnInfo spawnInfo) => spawnInfo.Player.InModBiome<Ashen_Biome>();
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;

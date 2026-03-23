@@ -10,7 +10,8 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-	public class Encrusted_Ore : OriginTile, IComplexMineDamageTile {
+	public class Encrusted_Ore : OriginTile, IComplexMineDamageTile, IRivenTile {
+		bool IRivenTile.CountsForSpawns(NPCSpawnInfo spawnInfo) => spawnInfo.Player.InModBiome<Riven_Hive>();
 		public static float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;

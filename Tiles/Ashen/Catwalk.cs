@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ranged;
+using Origins.World.BiomeData;
 using PegasusLib.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -12,7 +13,8 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Ashen {
 	[ReinitializeDuringResizeArrays]
-	public class Catwalk : Platform_Tile, ISpecialFrameTile {
+	public class Catwalk : Platform_Tile, ISpecialFrameTile, IAshenTile {
+		bool IAshenTile.CountsForSpawns(NPCSpawnInfo spawnInfo) => spawnInfo.Player.InModBiome<Ashen_Biome>();
 		public static bool[] Catwalks = TileID.Sets.Factory.CreateBoolSet();
 		public override void OnLoad() {
 			Item.OnAddRecipes += item => {

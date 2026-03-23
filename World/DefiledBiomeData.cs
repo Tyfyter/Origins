@@ -158,7 +158,7 @@ namespace Origins.World.BiomeData {
 			}
 
 			public override bool IsActive(NPCSpawnInfo spawnInfo) {
-				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile || (spawnInfo.Player.InModBiome<Defiled_Wastelands>() && spawnInfo.SpawnTileType == TileType<Lost_Ore>()) || forcedBiomeActive;
+				return (TileLoader.GetTile(spawnInfo.SpawnTileType) is IDefiledTile defiledTile && defiledTile.CountsForSpawns(spawnInfo)) || forcedBiomeActive;
 			}
 		}
 		public static class Gen {

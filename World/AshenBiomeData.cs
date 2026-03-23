@@ -132,7 +132,7 @@ namespace Origins.World.BiomeData {
 				return LandEnemyRate(spawnInfo, hardmode);
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) {
-				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IAshenTile || (spawnInfo.Player.InModBiome<Ashen_Biome>() && spawnInfo.SpawnTileType == TileType<Sanguinite_Ore>()) || forcedBiomeActive;
+				return (TileLoader.GetTile(spawnInfo.SpawnTileType) is IAshenTile ashenTile && ashenTile.CountsForSpawns(spawnInfo)) || forcedBiomeActive;
 			}
 		}
 		public static class Gen {

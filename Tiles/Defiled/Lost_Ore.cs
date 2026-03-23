@@ -2,6 +2,7 @@
 using Origins.Dev;
 using Origins.Journal;
 using Origins.Tiles.Riven;
+using Origins.World.BiomeData;
 using PegasusLib;
 using Terraria;
 using Terraria.ID;
@@ -11,8 +12,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
 	[LegacyName("Defiled_Ore")]
-    public class Lost_Ore : OriginTile, IComplexMineDamageTile {
-        public override void SetStaticDefaults() {
+    public class Lost_Ore : OriginTile, IComplexMineDamageTile, IDefiledTile {
+		bool IDefiledTile.CountsForSpawns(NPCSpawnInfo spawnInfo) => spawnInfo.Player.InModBiome<Defiled_Wastelands>();
+		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;

@@ -148,7 +148,7 @@ namespace Origins.World.BiomeData {
 				return LandEnemyRate(spawnInfo, hardmode);
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) {
-				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == TileType<Encrusted_Ore>()) || forcedBiomeActive;
+				return (TileLoader.GetTile(spawnInfo.SpawnTileType) is IRivenTile rivenTile && rivenTile.CountsForSpawns(spawnInfo)) || forcedBiomeActive;
 			}
 		}
 		public static class Gen {
