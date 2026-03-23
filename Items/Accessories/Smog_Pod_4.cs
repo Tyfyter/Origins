@@ -99,6 +99,10 @@ public class Smog_Pod_4_Rocket : ModProjectile {
 		dustVel *= 0.5f;
 		dustVel -= Projectile.velocity * 0.25f * Math.Min(++Projectile.ai[2] / 15f, 1);
 	}
+	public override bool OnTileCollide(Vector2 oldVelocity) {
+		if (Projectile.velocity.Y > oldVelocity.Y) Projectile.localAI[0] = 1;
+		return base.OnTileCollide(oldVelocity);
+	}
 	public override void OnKill(int timeLeft) {
 		ExplosiveGlobalProjectile.DoExplosion(Projectile, 48, false, SoundID.Item14);
 		Projectile.SpawnProjectile(
@@ -107,7 +111,8 @@ public class Smog_Pod_4_Rocket : ModProjectile {
 			default,
 			ModContent.ProjectileType<Smog_Pod_4_Rod>(),
 			Projectile.damage,
-			Projectile.knockBack
+			Projectile.knockBack,
+			Projectile.localAI[0]
 		);
 	}
 }
@@ -124,14 +129,19 @@ public class Smog_Pod_4_Rod : ModProjectile {
 		Projectile.penetrate = -1;
 		Projectile.Opacity = 0;
 		Projectile.tileCollide = false;
+		Projectile.hide = true;
 	}
 	public override void OnSpawn(IEntitySource source) {
-		Projectile.Bottom = Projectile.Center + Vector2.UnitY * CollisionExt.Raymarch(Projectile.Center, Vector2.UnitY, Projectile.height);
+		float dirMult = (Projectile.ai[0] == 0).ToDirectionInt();
+		Projectile.Center += (Vector2.UnitY * CollisionExt.Raymarch(Projectile.Center, Vector2.UnitY * dirMult, Projectile.height) - Vector2.UnitY * (Projectile.height * 0.5f - 4)) * dirMult;
 		Projectile.netUpdate = true;
+	}
+	public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+		behindNPCsAndTiles.Add(index);
 	}
 	public override void AI() {
 		float mult = Projectile.Opacity;
-		Lighting.AddLight(Projectile.Top, 3 * mult, 1.86f * mult, 0.3f * mult);
+		Lighting.AddLight(Projectile.ai[0] == 0 ? Projectile.Top : Projectile.Bottom, 3 * mult, 1.86f * mult, 0.3f * mult);
 		Player player = Main.player[Projectile.owner];
 
 		foreach (Player healee in Main.ActivePlayers) {
@@ -141,6 +151,7 @@ public class Smog_Pod_4_Rod : ModProjectile {
 				if (distSQ < 16 * 16 * 15 * 15) Min(ref player.OriginPlayer().nearestSmogPod, distSQ);
 			}
 		}
+		Projectile.rotation = Projectile.ai[0] * MathHelper.Pi;
 
 		Projectile.alpha.Cooldown(0, 85);
 		Max(ref Projectile.alpha, 255 - Projectile.timeLeft);
