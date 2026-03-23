@@ -41,6 +41,7 @@ namespace Origins.Tiles {
 			_ = DefaultContainerName(0, 0);
 		}
 		public virtual void ModifyTileData() { }
+		public override bool Slope(int i, int j) => false;
 		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX < 36 ? 0 : 1);
 
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
@@ -194,6 +195,7 @@ namespace Origins.Tiles {
 			_ = DefaultContainerName(0, 0);
 		}
 		public virtual void ModifyTileData() { }
+		public override bool Slope(int i, int j) => false;
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 		public override void PlaceInWorld(int i, int j, Item item) {
 			int x = i, y = j;

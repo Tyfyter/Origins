@@ -44,6 +44,7 @@ namespace Origins.Tiles.Other {
 			Main.tileShine[Type] = 0;
 			Main.tileOreFinderPriority[Type] = 0;
 		}
+		public override bool Slope(int i, int j) => true;
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 		public override void MouseOver(int i, int j) => SpecialChest.MouseOver(i, j);
 		public override void MouseOverFar(int i, int j) {
