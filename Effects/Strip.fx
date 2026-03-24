@@ -19,6 +19,7 @@ float4 uSourceRect0;
 float4 uSourceRect1;
 float4 uAlphaMatrix0;
 float4 uAlphaMatrix1;
+float2x3 uUVMatrix0;
 
 float4 SapphireAura(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 	float upi = uv.x * 3.14159265359 * 2;
@@ -31,6 +32,10 @@ float4 SapphireAura(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 
 float4 ApplyAlphaMatrix(float4 color, float4 _matrix) {
 	return float4(color.r, color.g, color.b, min(color.r * _matrix.r + color.g * _matrix.g + color.b * _matrix.b + color.a * _matrix.a, 1));
+}
+
+float2 ApplyUVMatrix(float2 uv, float2x3 _matrix) {
+	return float2(dot(uv, _matrix._11_21), dot(uv, _matrix._12_22)) + _matrix._13_23;
 }
 
 float4 Framed(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
@@ -51,7 +56,11 @@ float2 ApplySourceRect(float2 uv, float4 sourceRect) {
 }
 
 float4 Identity(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
-	return color * ApplyAlphaMatrix(tex2D(uImage0, ApplySourceRect(uv, uSourceRect0)), uAlphaMatrix0) * uOpacity;
+	//if (uv.y * 3 < 1) return float4(uUVMatrix0._11_21, 1, 1);
+	//if (uv.y * 3 < 2) return float4(uUVMatrix0._12_22, 0, 1);
+	//if (uv.y * 3 < 3) return float4(uUVMatrix0._13_23, 0, 1);
+	//return float4(ApplyUVMatrix(uv, uUVMatrix0), 0, 1);
+	return color * ApplyAlphaMatrix(tex2D(uImage0, ApplySourceRect(ApplyUVMatrix(uv, uUVMatrix0), uSourceRect0)), uAlphaMatrix0) * uOpacity;
 }
 
 technique Technique1 {

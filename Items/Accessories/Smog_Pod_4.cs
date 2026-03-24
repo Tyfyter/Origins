@@ -1,12 +1,18 @@
-﻿using Origins.Layers;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Layers;
 using Origins.Projectiles;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using static log4net.Appender.ColoredConsoleAppender;
 
 namespace Origins.Items.Accessories;
 [AutoloadEquip(EquipType.Back)]
@@ -134,15 +140,32 @@ public class Smog_Pod_4_Rod : ModProjectile {
 	}
 	public override void OnSpawn(IEntitySource source) {
 		float dirMult = (Projectile.ai[0] == 0).ToDirectionInt();
-		Projectile.Center += (Vector2.UnitY * CollisionExt.Raymarch(Projectile.Center, Vector2.UnitY * dirMult, Projectile.height) - Vector2.UnitY * (Projectile.height * 0.5f - 4)) * dirMult;
+		Projectile.Center += Vector2.UnitY * (CollisionExt.Raymarch(Projectile.Center, Vector2.UnitY * dirMult, Projectile.height) + 4) * dirMult;
+		(Projectile.ai[1], Projectile.ai[2]) = Projectile.Center;
+		Projectile.position -= Vector2.UnitY * (Projectile.height * 0.5f) * dirMult;
 		Projectile.netUpdate = true;
 	}
 	public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 		behindNPCsAndTiles.Add(index);
 	}
+	Arm[] arms;
+	Arm[] Arms {
+		get {
+			if (arms is null) {
+				float dirMult = (Projectile.ai[0] == 0).ToDirectionInt();
+				arms = new Arm[7];
+				Vector2 pos = new(Projectile.ai[1], Projectile.ai[2]);
+				for (int i = 0; i < arms.Length; i++) {
+					arms[i] = new() { start = pos };
+					pos -= Vector2.UnitY * dirMult * Projectile.height / arms.Length;
+					arms[i].end = pos;
+				}
+			}
+			return arms;
+		}
+	}
 	public override void AI() {
 		float mult = Projectile.Opacity;
-		Lighting.AddLight(Projectile.ai[0] == 0 ? Projectile.Top : Projectile.Bottom, 3 * mult, 1.86f * mult, 0.3f * mult);
 		Player player = Main.player[Projectile.owner];
 
 		foreach (Player healee in Main.ActivePlayers) {
@@ -152,11 +175,82 @@ public class Smog_Pod_4_Rod : ModProjectile {
 				if (distSQ < 16 * 16 * 15 * 15) Min(ref player.OriginPlayer().nearestSmogPod, distSQ);
 			}
 		}
-		Projectile.rotation = Projectile.ai[0] * MathHelper.Pi;
+		Projectile.rotation = Projectile.ai[0] * MathHelper.Pi - MathHelper.PiOver2;
 
 		Projectile.alpha.Cooldown(0, 85);
 		Max(ref Projectile.alpha, 255 - Projectile.timeLeft);
 		if (Projectile.alpha > 0) return;
 		if (Projectile.frame < Main.projFrames[Type] - 1 && Projectile.frameCounter.CycleUp(5)) Projectile.frame.Warmup(Main.projFrames[Type]);
+		for (int i = 1; i < Arms.Length; i++) {
+			arms[i].MoveByStart(arms[i - 1].end);
+			float dot = Math.Abs(Vector2.Dot((arms[i].end - arms[i].start).Normalized(out _), Vector2.UnitY));
+			arms[i].end = arms[i].end.RotatedBy(Main.windSpeedCurrent * -0.005f * (i * 0.5f + 1) * dot, arms[i].start);
+		}
+
+		for (int i = 0; i < arms.Length; i++) {
+			float targetRotation = i <= 0 ? Projectile.rotation : (arms[i - 1].end - arms[i - 1].start).ToRotation();
+			float angleDiff = GeometryUtils.AngleDif((arms[i].end - arms[i].start).ToRotation(), targetRotation, out int dir);
+			arms[i].end = arms[i].end.RotatedBy(Math.Min(angleDiff * 0.05f + 0.05f, angleDiff * 0.1f) * dir, arms[i].start);
+		}
+		Lighting.AddLight(arms[^1].end, 3 * mult, 1.86f * mult, 0.3f * mult);
+	}
+	private static VertexStrip _vertexStrip = new();
+	float[] rot;
+	Vector2[] pos;
+	Color[] colors;
+	public override bool PreDraw(ref Color lightColor) {
+		MiscShaderData miscShaderData = GameShaders.Misc["Origins:Identity"];
+		miscShaderData.Shader.Parameters["uUVMatrix0"].SetValue([
+			Vector2.UnitX,
+				Vector2.UnitY,
+				Vector2.Zero
+		]);
+		rot ??= new float[Arms.Length + 1];
+		pos ??= new Vector2[arms.Length + 1];
+		colors ??= new Color[arms.Length + 1];
+		for (int i = 0; i < arms.Length; i++) {
+			rot[i] = (arms[i].end - arms[i].start).ToRotation();
+			pos[i] = arms[i].start;
+			colors[i] = Lighting.GetColor(arms[i].start.ToTileCoordinates()) * Projectile.Opacity;
+		}
+		rot[^1] = rot[^2];
+		pos[^1] = arms[^1].end;
+		colors[^1] = Lighting.GetColor(arms[^1].start.ToTileCoordinates()) * Projectile.Opacity;
+		miscShaderData.UseImage0(TextureAssets.Projectile[Type]);
+		miscShaderData.UseOpacity(1);
+		miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
+		miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, Projectile.frame / (float)Main.projFrames[Type], 1, 1f / Main.projFrames[Type]));
+		miscShaderData.Shader.Parameters["uUVMatrix0"].SetValue([
+			Vector2.UnitY,
+			-Vector2.UnitX,
+			Vector2.UnitY
+		]);
+		miscShaderData.Apply();
+		_vertexStrip.PrepareStrip(pos, rot, StripColors, _ => Projectile.width * 0.5f, -Main.screenPosition, arms.Length + 1, includeBacksides: true);
+		_vertexStrip.DrawTrail();
+		Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+		return false;
+	}
+	private Color StripColors(float progressOnStrip) => colors[(int)(progressOnStrip * arms.Length)];
+	public class Arm {
+		public Vector2 start;
+		public Vector2 end;
+		public void MoveByStart(Vector2 target) {
+			Vector2 diff = target - start;
+			start += diff;
+			end += diff;
+		}
+		public void MoveByEnd(Vector2 target) {
+			Vector2 diff = target - end;
+			start += diff;
+			end += diff;
+		}
+		public void DoIKMove(Vector2 target, float maxSpeed) {
+			Vector2 diff = target - end;
+			Vector2 newPos = end + diff.WithMaxLength(maxSpeed);
+			float angleDiff = GeometryUtils.AngleDif((end - start).ToRotation(), (target - start).ToRotation(), out int dir);
+			end = end.RotatedBy(angleDiff * dir, start);
+			MoveByEnd(newPos);
+		}
 	}
 }

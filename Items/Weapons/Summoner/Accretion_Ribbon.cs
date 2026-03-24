@@ -168,6 +168,11 @@ namespace Origins.Items.Weapons.Summoner {
 		static void DrawTrail(Projectile projectile, float size) {
 
 			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Identity"];
+			miscShaderData.Shader.Parameters["uUVMatrix0"].SetValue([
+				Vector2.UnitX,
+				Vector2.UnitY,
+				Vector2.Zero
+			]);
 			miscShaderData.UseImage0(TextureAssets.MagicPixel);
 			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
 			miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 0, 1, 1));
