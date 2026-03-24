@@ -670,7 +670,7 @@ ACCESSORIES:
 (^) Lunatic's Rune
 (^) Mysterious Spray
 (#3, ^2) Retool Arm !!!
-(#3, ^2) Robo-tail !!!
+(#3?, ^2) Robo-tail !!!
 (^) Scribe of the Meat God
 (#2, ^2) Space Pirate's Eye !!!
 (^) Stack of Shraps
@@ -1411,7 +1411,7 @@ TILES:
 (#2, ^2) Transistor !!! (needs obtain method)
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)
-(#2, ^2) Wind Turbine !!!
+(#2?, ^2) Wind Turbine !!!
 (X) Wrycoral Planter Box
 
 (X) Elderforge
