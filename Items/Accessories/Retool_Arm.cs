@@ -162,12 +162,13 @@ public class Retool_Arm_Cannon : Retool_Arm {
 		int frameNum = int.Clamp((originPlayer.retoolArmTimer - 4) * 4 / Item.useTime + (originPlayer.retoolArmTimer >= 4).ToInt(), 0, 3);
 		SpriteEffects effects = drawInfo.playerEffect.Transpose();
 		Rectangle frame = armTexture.Value.Frame(verticalFrames: 4, frameY: frameNum);
+		Vector2 flip = new(1, -drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically).ToDirectionInt());
 		DrawData data = new(
 			armTexture,
-			Retool_Arm_Layer.GetShoulder(player, drawInfo.Position).Floor() + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength).Floor() - Main.screenPosition,
+			Retool_Arm_Layer.GetShoulder(player, drawInfo.Position, true).Floor() + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * flip * ArmBaseLength).Floor() - Main.screenPosition,
 			frame,
 			drawInfo.colorArmorHead,
-			originPlayer.retoolArmRotation,
+			originPlayer.retoolArmRotation + (drawInfo.drawPlayer.gravDir - 1) * MathHelper.PiOver2,
 			new Vector2(5, 13).Apply(effects, frame.Size()),
 			Item.scale,
 			effects
@@ -311,12 +312,13 @@ public class Retool_Arm_Laser : Retool_Arm {
 		OriginPlayer originPlayer = player.OriginPlayer();
 		SpriteEffects effects = drawInfo.playerEffect.Transpose();
 		Rectangle frame = armTexture.Value.Frame();
+		Vector2 flip = new(1, -drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically).ToDirectionInt());
 		DrawData data = new(
 			armTexture,
-			Retool_Arm_Layer.GetShoulder(player, drawInfo.Position).Floor() + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength).Floor() - Main.screenPosition,
+			Retool_Arm_Layer.GetShoulder(player, drawInfo.Position, true).Floor() + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * flip * ArmBaseLength).Floor() - Main.screenPosition,
 			frame,
 			drawInfo.colorArmorHead,
-			originPlayer.retoolArmRotation,
+			originPlayer.retoolArmRotation + (drawInfo.drawPlayer.gravDir - 1) * MathHelper.PiOver2,
 			new Vector2(5, 9).Apply(effects, frame.Size()),
 			Item.scale,
 			effects
@@ -493,10 +495,10 @@ public class Retool_Arm_Saw : Retool_Arm {
 	public override void UpdateArm(Player player) {
 		OriginPlayer originPlayer = player.OriginPlayer();
 		bool hit = originPlayer.retoolArmTimer.CycleUp(Item.useTime) && !originPlayer.retoolArmVanity;
-		arm.start = Retool_Arm_Layer.GetShoulder(player, player.position);
+		arm.start = Retool_Arm_Layer.GetShoulder(player, player.position, true);
 		arm.bone0.R = ArmBaseLength;
 		arm.bone1.R = 18f * Item.scale;
-		Vector2 targetPos = arm.start + new Vector2(16f * player.direction, -20f);
+		Vector2 targetPos = arm.start + new Vector2(16f * player.direction, player.gravDir  * - 20f);
 		float maxDist = 16 * 16 * 4 * 4;
 		bool hasTarget = !originPlayer.retoolArmVanity && player.DoHoming((target) => {
 			Vector2 currentPos = arm.start.Clamp(target.Hitbox);
@@ -518,13 +520,15 @@ public class Retool_Arm_Saw : Retool_Arm {
 				targetPos = new(Player.tileTargetX * 16, Player.tileTargetY * 16);
 			}
 		}
+		if (player.gravDir < 0) targetPos.Y -= (targetPos.Y - arm.start.Y) * 2;
 		float[] rotations = arm.GetTargetAngles(targetPos, targetPos.X < arm.start.X);
 		if (!float.IsNaN(rotations[0]) && !float.IsNaN(rotations[1])) {
 			GeometryUtils.AngularSmoothing(ref originPlayer.retoolArmBaseRotation, rotations[0], 0.2f);
 			GeometryUtils.AngularSmoothing(ref originPlayer.retoolArmRotation, rotations[0] + rotations[1] + MathHelper.PiOver2 - MathHelper.PiOver2 * player.direction, 0.2f);
 		}
-
-		hitbox = hitbox.Recentered(arm.start + originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength + originPlayer.retoolArmRotation.ToRotationVector2() * 18f * Item.scale * player.direction);
+		Vector2 hitboxOffset = originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength + originPlayer.retoolArmRotation.ToRotationVector2() * 18f * Item.scale * player.direction;
+		hitboxOffset.Y *= player.gravDir;
+		hitbox = hitbox.Recentered(arm.start + hitboxOffset);
 		//hitbox.DrawDebugOutline();
 
 		Rectangle itemRectangle = PlayerMethods.ItemCheck_EmitUseVisuals(player, Item, hitbox);
@@ -542,8 +546,10 @@ public class Retool_Arm_Saw : Retool_Arm {
 			}
 		}
 		if (spin) {
+			useSoundTime = 5;
 			loopedUseSound.PlaySoundIfInactive(Origins.Sounds.SmallSaw, player.MountedCenter, sound => {
 				sound.Position = player.MountedCenter;
+				if (--useSoundTime <= 0) spin = false;
 				return spin;
 			});
 		} else {
@@ -561,6 +567,7 @@ public class Retool_Arm_Saw : Retool_Arm {
 		spin = false;
 	}
 	SlotId loopedUseSound = SlotId.Invalid;
+	int useSoundTime = 0;
 	private static void DoChop(Player player, int x, int y) {
 		Tile tile = Main.tile[x, y];
 		if (!Main.tileAxe[tile.TileType]) return;
@@ -602,13 +609,15 @@ public class Retool_Arm_Saw : Retool_Arm {
 		OriginPlayer originPlayer = player.OriginPlayer();
 		SpriteEffects effects = drawInfo.playerEffect;
 		Rectangle frame = armTexture.Value.Frame(verticalFrames: 4);
+		Vector2 flip = new(1, player.gravDir);
+		Vector2 position = Retool_Arm_Layer.GetShoulder(player, drawInfo.Position, true).Floor() + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * flip * ArmBaseLength).Floor();
 		drawInfo.DrawDataCache.Add(new(
 			armTexture,
-			Retool_Arm_Layer.GetShoulder(player, drawInfo.Position).Floor() + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength).Floor() - Main.screenPosition,
+			position - Main.screenPosition,
 			armTexture.Value.Frame(verticalFrames: 6, frameY: spin ? (player.miscCounter % 4) + 1 : 0),
 			drawInfo.colorArmorHead,
-			originPlayer.retoolArmRotation,
-			new Vector2(5, 13).Apply(effects, frame.Size()),
+			originPlayer.retoolArmRotation * player.gravDir,
+			new Vector2(5, 13 + (player.gravDir < 0 ? 13 : 0)).Apply(effects, frame.Size()),
 			Item.scale,
 			effects
 			) {
@@ -638,10 +647,10 @@ public class Retool_Arm_Vice : Retool_Arm {
 	[CloneByReference] Entity targetEntity;
 	public override void UpdateArm(Player player) {
 		OriginPlayer originPlayer = player.OriginPlayer();
-		arm.start = Retool_Arm_Layer.GetShoulder(player, player.position);
+		arm.start = Retool_Arm_Layer.GetShoulder(player, player.position, true);
 		arm.bone0.R = ArmBaseLength;
 		arm.bone1.R = 31 * Item.scale;
-		Vector2 targetPos = arm.start + new Vector2(16f * player.direction, -20f);
+		Vector2 targetPos = arm.start + new Vector2(16f * player.direction, player.gravDir * -20f);
 		float maxDist = ArmBaseLength + 31 * Item.scale;
 		maxDist *= maxDist;
 		if (originPlayer.retoolArmTimer < Item.useTime) {
@@ -662,13 +671,16 @@ public class Retool_Arm_Vice : Retool_Arm {
 		} else if (targetEntity is not null) {
 			targetPos = arm.start.Clamp(targetEntity.Hitbox);
 		}
+		if (player.gravDir < 0) targetPos.Y -= (targetPos.Y - arm.start.Y) * 2;
 		float[] rotations = arm.GetTargetAngles(targetPos, targetPos.X < arm.start.X);
 		if (!float.IsNaN(rotations[0]) && !float.IsNaN(rotations[1])) {
 			GeometryUtils.AngularSmoothing(ref originPlayer.retoolArmBaseRotation, rotations[0], 0.2f);
 			GeometryUtils.AngularSmoothing(ref originPlayer.retoolArmRotation, rotations[0] + rotations[1] + MathHelper.PiOver2 - MathHelper.PiOver2 * player.direction, 0.2f);
 		}
 
-		hitbox = hitbox.Recentered(arm.start + originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength + originPlayer.retoolArmRotation.ToRotationVector2() * 31f * Item.scale * player.direction);
+		Vector2 hitboxOffset = originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength + originPlayer.retoolArmRotation.ToRotationVector2() * 31f * Item.scale * player.direction;
+		hitboxOffset.Y *= player.gravDir;
+		hitbox = hitbox.Recentered(arm.start + hitboxOffset);
 		//hitbox.DrawDebugOutline();
 
 		Rectangle itemRectangle = PlayerMethods.ItemCheck_EmitUseVisuals(player, Item, hitbox);
@@ -698,12 +710,13 @@ public class Retool_Arm_Vice : Retool_Arm {
 		}
 		SpriteEffects effects = drawInfo.playerEffect;
 		Rectangle frame = armTexture.Value.Frame(verticalFrames: 3, frameY: frameNum);
+		Vector2 flip = new(1, -drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically).ToDirectionInt());
 		DrawData data = new(
 			armTexture,
-			Retool_Arm_Layer.GetShoulder(player, drawInfo.Position).Floor() + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * ArmBaseLength).Floor() - Main.screenPosition,
+			Retool_Arm_Layer.GetShoulder(player, drawInfo.Position, true).Floor() + (originPlayer.retoolArmBaseRotation.ToRotationVector2() * flip * ArmBaseLength).Floor() - Main.screenPosition,
 			frame,
 			drawInfo.colorArmorHead,
-			originPlayer.retoolArmRotation,
+			originPlayer.retoolArmRotation * player.gravDir,
 			new Vector2(5, 13).Apply(effects, frame.Size()),
 			Item.scale,
 			effects
