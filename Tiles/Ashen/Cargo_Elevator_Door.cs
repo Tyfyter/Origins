@@ -54,7 +54,13 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
 			DustType = Ashen_Biome.DefaultTileDust;
-			MineResist = 8;
+		}
+		public void MinePower(int i, int j, int minePower, ref int damage) {
+			if (minePower < 65) {
+				damage = 0;
+				return;
+			}
+			damage = (int)((float.Pow((minePower - 55) / 172f, 7) + 0.099f + (minePower - 60) / 10000f) * 100);
 		}
 		public static bool IsSolid(int i, int j) {
 			Tile tile = Main.tile[i, j];
@@ -135,6 +141,30 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			tileFrameX %= 18 * 11;
+		}
+		public override bool CanPlace(int i, int j) {
+			static bool IsValidAnchor(Tile tile) => tile.WallType != WallID.None
+				|| (tile.HasTile && (Main.tileSolid[tile.TileType] || TileID.Sets.IsBeam[tile.TileType] || Main.tileRope[tile.TileType] || tile.TileType == TileID.MinecartTrack));
+			TileObjectData data = TileObjectData.GetTileData(Type, 0);
+			int width = data.Width;
+			int height = data.Height;
+			i -= data.Origin.X;
+			j -= data.Origin.Y;
+			for (int x = 0; x < width; x++) {
+				for (int y = 0; y < height; y++) {
+					if (BlockedTiles.Get(i + x, j + y)) return false;
+				}
+			}
+			for (int y = 0; y < height; y++) {
+				if (IsValidAnchor(Main.tile[i - 1, j + y]) || IsValidAnchor(Main.tile[i + width, j + y])) return true;
+			}
+			for (int x = 0; x < width; x++) {
+				if (IsValidAnchor(Main.tile[i + x, j - 1]) || IsValidAnchor(Main.tile[i + x, j + height])) return true;
+				for (int y = 0; y < height; y++) {
+					if (Main.tile[i + x, j + y].WallType != WallID.None) return true;
+				}
+			}
+			return false;
 		}
 	}
 	public class Cargo_Elevator_Door_Open : Cargo_Elevator_Door {
