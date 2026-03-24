@@ -114,6 +114,7 @@ public class Smog_Pod_4_Rocket : ModProjectile {
 			Projectile.knockBack,
 			Projectile.localAI[0]
 		);
+		OriginExtensions.FadeOutOldProjectilesAtLimit([ModContent.ProjectileType<Smog_Pod_4_Rod>()], 20, 255);
 	}
 }
 public class Smog_Pod_4_Rod : ModProjectile {
