@@ -81,7 +81,7 @@ float4 Muddle(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	float step2 = tex2D(uImage1, muddleMapCoords + float2(offset.x, 0)).r;
 	float step3 = tex2D(uImage1, muddleMapCoords + float2(0, offset.y)).r;
 	//return float4(xOffset, step2, step3, 1);
-	return tex2D(uImage0, coords + float2(step2, step3) * uTargetPosition);
+	return tex2D(uImage0, coords + float2(step2, step3) * uTargetPosition) * sampleColor;
 }
 
 technique Technique1 {
