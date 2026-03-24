@@ -758,6 +758,7 @@ namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands_Desert : ModBiome {
 		public override int Music => Origins.Music.Defiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<Defiled_Desert_Background>();
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Desert";
 		public override string BestiaryIcon => "Origins/UI/IconDesertDefiled";
 		public override string MapBackground => BackgroundPath;

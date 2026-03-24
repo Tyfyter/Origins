@@ -31,6 +31,26 @@ namespace Origins.Backgrounds {
 			}
 		}
 	}
+	public class Defiled_Desert_Background : ModSurfaceBackgroundStyle {
+		int? far;
+		int? mid;
+		int? near;
+		public override int ChooseFarTexture() {
+			return far ??= BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Defiled_Desert_Background3");
+		}
+
+		public override int ChooseMiddleTexture() {
+			return mid ??= BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Defiled_Desert_Background2");
+		}
+
+		public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b) {
+			return near ??= BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Defiled_Desert_Background");
+		}
+
+		public override void ModifyFarFades(float[] fades, float transitionSpeed) {
+			for (int i = 0; i < fades.Length; i++) MathUtils.LinearSmoothing(ref fades[i], (i == Slot).ToInt(), transitionSpeed);
+		}
+	}
 	public class Defiled_Underground_Background : ModUndergroundBackgroundStyle {
 		public override void FillTextureArray(int[] textureSlots) {
 			for (int i = 0; i < 4; i++) {

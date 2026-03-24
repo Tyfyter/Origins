@@ -1040,6 +1040,7 @@ namespace Origins.World.BiomeData {
 	public class Riven_Hive_Desert : ModBiome {
 		public override int Music => Origins.Music.Riven;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<Riven_Desert_Background>();
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Desert";
 		public override string BestiaryIcon => "Origins/UI/IconDesertRiven";
 		public override string MapBackground => BackgroundPath;
