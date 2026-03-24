@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -185,15 +186,27 @@ namespace Origins.Tiles.Ashen {
 			return true;
 		}
 		public static bool TryGetPlacement(Point pos, out IEnumerable<(Point pos, Point frame)> placement) {
-			Vector2 diff = Main.MouseWorld - pos.ToWorldCoordinates();
-			if (diff == default || diff.HasNaNs()) diff = -Vector2.UnitY;
-			Point direction;
-			if (Math.Abs(diff.X) >= Math.Abs(diff.Y)) {
-				direction = new(Math.Sign(diff.X), 0);
-			} else {
-				direction = new(0, Math.Sign(diff.Y));
+			int mouseX = Main.mouseX;
+			int mouseY = Main.mouseY;
+			int lastMouseX = Main.lastMouseX;
+			int lastMouseY = Main.lastMouseY;
+			try {
+				PlayerInput.SetZoom_MouseInWorld();
+				Vector2 diff = Main.MouseWorld - pos.ToWorldCoordinates();
+				if (diff == default || diff.HasNaNs()) diff = -Vector2.UnitY;
+				Point direction;
+				if (Math.Abs(diff.X) >= Math.Abs(diff.Y)) {
+					direction = new(Math.Sign(diff.X), 0);
+				} else {
+					direction = new(0, Math.Sign(diff.Y));
+				}
+				placement = GetPlacement(pos, direction);
+			} finally {
+				Main.mouseX = mouseX;
+				Main.mouseY = mouseY;
+				Main.lastMouseX = lastMouseX;
+				Main.lastMouseY = lastMouseY;
 			}
-			placement = GetPlacement(pos, direction);
 			return true;
 		}
 		public static IEnumerable<(Point pos, Point frame)> GetPlacement(Point pos, Point direction) {
