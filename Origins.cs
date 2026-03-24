@@ -1081,4 +1081,9 @@ namespace Origins {
 	internal interface IBrokenContent : ILoadable {
 		public string BrokenReason { get; }
 	}
+	internal interface IDebugFlag : ILoadable, IBrokenContent {
+		string IBrokenContent.BrokenReason => "Debugging flag enabled";
+		void ILoadable.Load(Mod mod) { }
+		void ILoadable.Unload() { }
+	}
 }

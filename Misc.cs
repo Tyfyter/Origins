@@ -3001,11 +3001,11 @@ namespace Origins {
 		}
 		public static IBestiaryInfoElement GetBestiaryFlavorText(this ModNPC npc, bool better = false, bool alt = false) {
 			string key = $"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}";
-			Language.GetOrRegister(key, () => "bestiary text here");
+			Language.GetOrRegister(key, () => "<PH> bestiary text here");
 			if (better || alt) {
 				if (alt) {
 					string altKey = key + "_Alt";
-					Language.GetOrRegister(altKey, () => "alt bestiary text here");
+					Language.GetOrRegister(altKey, () => "<PH> alt bestiary text here");
 					return new GaslightingFlavorTextBestiaryInfoElement(key, altKey);
 				} else return new BetterFlavorTextBestiaryInfoElement(key);
 			}
@@ -3218,7 +3218,7 @@ namespace Origins {
 		}
 		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			Vector2 pos = area.TopLeft() + offset;
-			float amt = 20; // as to try to not spawn to many dusts
+			float amt = 10; // as to try to not spawn to many dusts
 			for (float c = 0; c < area.Width; c += area.Width / amt) {
 				Dust.NewDustPerfect(pos + new Vector2(c, 0), dustType, Vector2.Zero, newColor: color).noGravity = true;
 			}

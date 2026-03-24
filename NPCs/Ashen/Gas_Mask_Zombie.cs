@@ -1,4 +1,5 @@
-﻿using AltLibrary.Common.Systems;
+﻿//#define DebugVariants // uncomment this line to check the stats of all variants
+using AltLibrary.Common.Systems;
 using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Accessories;
@@ -30,8 +31,11 @@ namespace Origins.NPCs.Ashen {
 		bool IAshenEnemy.IsRobotic => false;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = Main.npcFrameCount[variant.VanillaVariant];
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft; // uncomment this line and comment the line underneath this line to check the stats of all variants
-			//NPCID.Sets.NPCBestiaryDrawOffset[Type] = scale == 1f ? NPCID.Sets.NPCBestiaryDrawOffset[variant.VanillaVariant] : NPCExtensions.HideInBestiary;
+#if DebugVariants
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+#else
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = scale == 1f ? NPCID.Sets.NPCBestiaryDrawOffset[variant.VanillaVariant] : NPCExtensions.HideInBestiary;
+#endif
 			/*NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			OriginsSets.NPCs.CustomExpertScaling[Type] = npc => {
 				if (Main.hardMode) {
@@ -170,5 +174,8 @@ namespace Origins.NPCs.Ashen {
 			public override bool HasScaledVariants => false;
 			public override bool CanSpawn(NPCSpawnInfo spawnInfo) => Main.halloween;
 		}
+#if DebugVariants
+		class Gas_Mask_Zombie_Debug_Flag : IDebugFlag { }
+#endif
 	}
 }
