@@ -110,7 +110,9 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
-				this.GetBestiaryFlavorText()
+				this.GetBestiaryFlavorText(),
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.BloodMoon,
+				new SearchAliasInfoElement("bunny")
 			);
 		}
 		public override void FindFrame(int frameHeight) {
@@ -180,6 +182,9 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void PostAI() {
 			NPC.velocity.X *= SpeedMultiplier;
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(new CopyNPCDropRule(NPCID.Bunny)); // for compat with mods giving bunnies drops
 		}
 		public override void AddShops() {
 			ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type] = ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPCID.Bunny];

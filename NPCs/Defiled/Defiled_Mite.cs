@@ -2,6 +2,7 @@
 using Origins.Dev;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Other.Consumables;
+using Origins.NPCs.Ashen;
 using Origins.World.BiomeData;
 using System;
 using System.IO;
@@ -28,6 +29,7 @@ namespace Origins.NPCs.Defiled {
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.BunnySlimed, Type);
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.BunnyXmas, Type);
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.PartyBunny, Type);
+			DefiledGlobalNPC.NPCTransformations.Add(ModContent.NPCType<Scared_Bunny>(), Type);
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
@@ -81,7 +83,8 @@ namespace Origins.NPCs.Defiled {
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText(),
-				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.BloodMoon
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.BloodMoon,
+				new SearchAliasInfoElement("bunny")
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

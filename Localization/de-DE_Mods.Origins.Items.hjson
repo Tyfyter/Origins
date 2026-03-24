@@ -5137,7 +5137,7 @@ Hydrolantern: {
 		'''
 		Non-consumable
 		Floats in the water and follows movement
-		<right> to despawn all but 1 hrydrolantern
+		<right> to despawn all but 1 hydrolantern
 		''' */
 }
 
