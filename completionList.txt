@@ -671,7 +671,7 @@ ACCESSORIES:
 (^) Mysterious Spray
 (^) Retool Arm
 (^) Robo-tail
-(^) Scribe of the Meat God
+(#3, ^2) Scribe of the Meat God
 (#2, ^2) Space Pirate's Eye !!!
 (^) Stack of Shraps
 (^) Strange Tooth
@@ -785,7 +785,7 @@ TOOLS:
 (^) Snatcher
 (^) Stabsmash
 (^) Strainer
-(^) The Enchiridion
+(#3, ^2) The Enchiridion
 
 (^) Acrid Drill
 (^) Acrid Hamaxe
@@ -1408,7 +1408,7 @@ TILES:
 (^) Small Storage Container
 (#, ^2) Solar Battery !!!
 (#, ^5) Surveysprout Planter Box (tML #4061)
-(#2, ^2) Transistor !!! (needs obtain method)
+(#2/3, ^2) Transistor !!! (needs obtain method)
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)
 (#2?, ^2) Wind Turbine !!!
@@ -1428,7 +1428,7 @@ TILES:
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
 (^) Background Door
-(#2, ^2) Beacon Light !!! (probably doesn't need power mechanics)
+(#2/3, ^2) Beacon Light !!! (probably doesn't need power mechanics)
 (^) Brineglow Vine
 (^) Defiled Altar
 (^) Defiled Foliage
@@ -1446,7 +1446,7 @@ TILES:
 (^) Hanging Scrap
 (^) Heat Vent
 (^) Hydrothermal Vent
-(^) Industrial Work Bench
+(#3, ^2) Industrial Work Bench
 (^) Lathe
 (^) Limestone Rubble
 (^) Marrowick Coral
