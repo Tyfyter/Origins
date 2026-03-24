@@ -145,7 +145,7 @@ namespace Origins.Tiles.Ashen {
 				for (int i = 0; i < tileEntityLocations.Count; i++) {
 					Point16 tilePos = tileEntityLocations[i];
 					Tile tile = Main.tile[tilePos];
-					if (tile.TileFrameX >= 18 * 2) continue;
+					if (!tile.HasTile || tile.TileFrameX >= 18 * 2) continue;
 					Vector2 pos = tilePos.ToWorldCoordinates(0, 0);
 					float obscureFactor = 1f;
 					foreach (Player player in Main.ActivePlayers) {
