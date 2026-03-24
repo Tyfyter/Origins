@@ -159,7 +159,4 @@ public class Smog_Pod_4_Rod : ModProjectile {
 		if (Projectile.alpha > 0) return;
 		if (Projectile.frame < Main.projFrames[Type] - 1 && Projectile.frameCounter.CycleUp(5)) Projectile.frame.Warmup(Main.projFrames[Type]);
 	}
-	public override void OnKill(int timeLeft) {
-		OriginExtensions.FadeOutOldProjectilesAtLimit([ModContent.ProjectileType<Smog_Pod_4_Rod>()], 20, 60);
-	}
 }

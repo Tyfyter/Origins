@@ -105,25 +105,25 @@ Chambersite_Squirrel: "{$Bestiary_FlavorText.npc_GemSquirrelAmethyst}"
 // Creme_Filled_Bat_Alt: They break their bones every time they flap, and yet they're somehow intact to break again next flap.
 // Shimmer_Chunk1: Be advised: not ideal for use as laundry detergent or any consumption related challenges.
 // Shimmer_Drone: Mindless drones summoned from the Shimmer Construct, brought forth to protect their master by any means necessary.
-// Trash_Compactor_Mimic: Mimics don’t normally appear in the Ashen as it is not a magical place. This Trash Compactor is just quite spiteful and was likely made the way it is from isolation of the broadcasted signals.
-// BlotopusNPC: Feisty and smart. They’ll fire their sharp teeth and impale prey and predators alike in the water. Definitely don’t want to be swimming with one of these guys in the water.
+// Trash_Compactor_Mimic: Mimics don't normally appear in the Ashen as it is not a magical place. This Trash Compactor is just quite spiteful and was likely made the way it is from isolation of the broadcasted signals.
+// BlotopusNPC: Feisty and smart. They'll fire their sharp teeth and impale prey and predators alike in the water. Definitely don't want to be swimming with one of these guys in the water.
 // Hyrax: Feisty little creatures, but so cute! They climb up walls and prefer to live in dugouts in the limestone caves. Very territorial though!
 // Power_Suit_Zombie: He was hanging out in the suit locker the whole time, waiting for unsuspecting scavengers to come and eat their brains. But, no one came, so he left home in search of friends. But, no one wanted to be his friend.
 // Pinwheel: A saw blade made of Demonite, forged by an unknown force. They scour the corrupt wastelands to protect it.
 // Trenchmaker: The oldest man-made machination still manufactured by the Ashen Factory. It was not only the first war engine, but also the first creation to utilize both an internal combustion engine and phoenum power generator. The Trenchmaker was a fearsome sight on the battlefield before it was turned against its very own creators.
 // Fearmaker: "'Putting the fear in everyone since 1XXX'"
 // Fearmaker_Alt: "'Fish fear me, robots love me'"
-// Repairboy: Named after the mechanics and electricians responsible for repairs in the Mechanicus. They didn’t fully replace them until one day they just did…
-// Gas_Mask_Zombie1: He woke up one night in the Scrapyard wondering how he got there, but he hasn’t had time to ponder being too busy making mud angels in the murky mud.
+// Repairboy: Named after the mechanics and electricians responsible for repairs in the Mechanicus. They didn't fully replace them until one day they just did…
+// Gas_Mask_Zombie1: He woke up one night in the Scrapyard wondering how he got there, but he hasn't had time to ponder being too busy making mud angels in the murky mud.
 // Gas_Mask_ZombieBald1: "{$Gas_Mask_Zombie1}"
 // Gas_Mask_ZombiePincushion1: "{$Gas_Mask_Zombie1}"
 // Gas_Mask_ZombieSwamp1: "{$Gas_Mask_Zombie1}"
 // Gas_Mask_ZombieTwiggy1: "{$Gas_Mask_Zombie1}"
-// Gas_Mask_ZombieFemale1: She woke up one night in the Scrapyard wondering how she got there, but she hasn’t had time to ponder being too busy making mud angels in the murky mud.
-// Gas_Mask_ZombieTorch1: The poor soul just needed to get through the Scrapyard to get to the next town, but they got lost and ended up in the middle of the Ashen. They’ve been trying to find their way out ever since.
+// Gas_Mask_ZombieFemale1: She woke up one night in the Scrapyard wondering how she got there, but she hasn't had time to ponder being too busy making mud angels in the murky mud.
+// Gas_Mask_ZombieTorch1: The poor soul just needed to get through the Scrapyard to get to the next town, but they got lost and ended up in the middle of the Ashen. They've been trying to find their way out ever since.
 // Gas_Mask_ZombieDoctor1: Remarkably, her dress uniform is still in mint condition despite exposure to the elements. As to why there is a zombified nurse wearing a gas mask runnng about is anyone's guess.
-// Hammerhand: A faithful application of the Mechanicus Sovereignty’s approach to efficiency in making all of its machines combat and utility-focused. The Hammerhand can knock anybody’s lights out at only 20% of its maximum force exertion.
+// Hammerhand: A faithful application of the Mechanicus Sovereignty's approach to efficiency in making all of its machines combat and utility-focused. The Hammerhand can knock anybody's lights out at only 20% of its maximum force exertion.
 // Scraptooth: Goldfish evolve to the pollution and become savage when exposed to a Blood Moon, the mixture is the scraptooth species that swims in the Ashen's murky waters.
 // Robot_Penguin: During a Blood Moon, the normally docile penguins cower away to the mechanical Toy Penguins that become savage.
 // Oil_Ghoul: Ghouls polluted by the Ashen leak oil from their mouths, making foes susceptible to fire.
-// Springjumper: <PH> bestiary text here
+// Springjumper: Bunnies are normally not this metallic or large, but during Blood Moon the Ashen likes to stuff living bunnies into these mechanized suits for some unknown purpose.
