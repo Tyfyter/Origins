@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -237,6 +238,8 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Transistor>());
+			Item.placeStyle = Item.createTile;
+			Item.createTile = -1;
 			Item.mech = true;
 		}
 		public override void AddRecipes() {
@@ -248,11 +251,13 @@ namespace Origins.Tiles.Ashen {
 			.Register();
 		}
 		public override bool? UseItem(Player player) {
-			if (player.whoAmI != Main.myPlayer || !player.ItemAnimationJustStarted || TileLoader.GetTile(Item.createTile) is not Transistor transistor) return false;
-			return transistor.TryPlace(Player.tileTargetX, Player.tileTargetY);
+			if (player.whoAmI != Main.myPlayer || !player.ItemAnimationJustStarted || TileLoader.GetTile(Item.placeStyle) is not Transistor transistor) return false;
+			if (!transistor.TryPlace(Player.tileTargetX, Player.tileTargetY)) return false;
+			SoundEngine.PlaySound(SoundID.Dig, new Vector2(Player.tileTargetX * 16 + 8, Player.tileTargetY * 16 + 8));
+			return true;
 		}
 		public void DrawPreview() {
-			if (Item.createTile == -1) return;
+			if (Item.placeStyle == -1) return;
 			if (!Transistor.TryGetPlacement(new(Player.tileTargetX, Player.tileTargetY), out IEnumerable<(Point pos, Point frame)> placement)) return;
 			Color color = Color.White;
 			foreach ((Point pos, _) in placement) {
@@ -263,7 +268,7 @@ namespace Origins.Tiles.Ashen {
 				}
 			}
 			color *= 0.5f;
-			Texture2D texture = TextureAssets.Tile[Item.createTile].Value;
+			Texture2D texture = TextureAssets.Tile[Item.placeStyle].Value;
 			foreach ((Point pos, Point frame) in placement) {
 				Main.spriteBatch.Draw(
 					texture,
