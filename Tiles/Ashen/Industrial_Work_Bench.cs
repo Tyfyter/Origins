@@ -13,6 +13,7 @@ namespace Origins.Tiles.Ashen {
 		public static int ID { get; private set; }
 		public override void Load() {
 			new TileItem(this)
+			.WithExtraStaticDefaults(this.DropTileItem)
 			.WithExtraDefaults(item => {
 				item.CloneDefaults(ItemID.HeavyWorkBench);
 				item.createTile = Type;

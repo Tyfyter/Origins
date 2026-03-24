@@ -17,6 +17,7 @@ namespace Origins.Tiles.Ashen {
 		Sound ambientSound = EnvironmentSounds.Register<Sound>();
 		public override void Load() {
 			new TileItem(this)
+			.WithExtraStaticDefaults(this.DropTileItem)
 			.WithOnAddRecipes(item => {
 				Recipe.Create(item.type)
 				.AddIngredient(ItemID.Wire, 8)
