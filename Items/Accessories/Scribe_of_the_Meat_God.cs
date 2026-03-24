@@ -174,6 +174,8 @@ namespace Origins.Items.Accessories {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			SpriteBatchState state = Main.spriteBatch.GetState();
+			SpriteEffects effects = Projectile.velocity.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+			if (Main.player[Projectile.owner].gravDir < 0) effects ^= SpriteEffects.FlipVertically;
 			Texture2D projTexture = TextureAssets.Projectile[Projectile.type].Value;
 			Vector2 dirVect = new(Math.Sign(Projectile.velocity.X), 1);
 			int Jankify(int a, int b, float c) {
@@ -223,7 +225,7 @@ namespace Origins.Items.Accessories {
 					Projectile.rotation + rotation,
 					origin ?? ((frame?.Size() ?? texture.Size()) * 0.5f),
 					Projectile.scale,
-					Projectile.velocity.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+					effects,
 				0);
 			}
 			Main.spriteBatch.Restart(state);
