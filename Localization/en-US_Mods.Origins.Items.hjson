@@ -1509,7 +1509,7 @@ Alkahest: {
 
 Bark.DisplayName: Bark
 Bat_Hide.DisplayName: Bat Hide
-Biocomponent10.DisplayName: Biocomponent 10
+Biocomponent10.DisplayName: Robot Guts
 
 Black_Bile: {
 	DisplayName: Black Bile
@@ -7585,7 +7585,7 @@ Adjusto_Hook: {
 }
 
 Gills: {
-	DisplayName: Gills
+	DisplayName: CE10 'Gills'
 	Tooltip: Allows flight and slow fall
 }
 
@@ -7874,7 +7874,15 @@ Mechanical_Key_Yellow: {
 
 Smog_Pod_4: {
 	DisplayName: Smog Pod-4
-	Tooltip: ""
+	Tooltip:
+		'''
+		Press <key> to launch 4 rockets that turn into smog markers
+		Smog markers provide the following effects:
+		 - Immunity to [buffhint:Darkness], [buffhint:Obstructed] and [buffhint:WindPushed]
+		 - Boosts life regen to all nearby players, and an even greater boost when stood under
+		 - Reduces the damage recieved from [buffhint:Suffocation] and [buffhint:Origins/Miasma_Debuff]
+		5s cooldown
+		'''
 }
 
 Scrap_Dart: {

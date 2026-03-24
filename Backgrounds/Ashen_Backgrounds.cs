@@ -72,8 +72,8 @@ namespace Origins.Backgrounds {
 			Color color = Main.ColorOfTheSkies * Opacity * Opacity;
 			shaderData.Shader.Parameters["uOffset"]?.SetValue(new Vector2(clouds[0].Value.Width / (float)perlin.Value.Width, clouds[0].Value.Height / (float)perlin.Value.Height));
 			shaderData.Shader.Parameters["uTargetPosition"]?.SetValue(new Vector2(4) / clouds[0].Value.Size());
-			shaderData.Shader.Parameters["uScale"]?.SetValue(0.2f);
-			shaderData.Shader.Parameters["uScaleY"]?.SetValue(0.2f);
+			shaderData.Shader.Parameters["uScale"]?.SetValue(0.5f);
+			shaderData.Shader.Parameters["uScaleY"]?.SetValue(0.5f);
 			shaderData.Apply();
 			for (int i = clouds.Length - 1; i >= 0; i--) {
 				Vector2 size = clouds[i].Value.Size();
