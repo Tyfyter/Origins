@@ -126,7 +126,7 @@ public class Smog_Pod_4_Rod : ModProjectile {
 		Projectile.width = 18;
 		Projectile.height = 182;
 		Projectile.aiStyle = -1;
-		Projectile.timeLeft = 60 * 10;
+		Projectile.timeLeft = 60 * 60;
 		Projectile.penetrate = -1;
 		Projectile.Opacity = 0;
 		Projectile.tileCollide = false;
@@ -160,5 +160,6 @@ public class Smog_Pod_4_Rod : ModProjectile {
 		if (Projectile.frame < Main.projFrames[Type] - 1 && Projectile.frameCounter.CycleUp(5)) Projectile.frame.Warmup(Main.projFrames[Type]);
 	}
 	public override void OnKill(int timeLeft) {
+		OriginExtensions.FadeOutOldProjectilesAtLimit([ModContent.ProjectileType<Smog_Pod_4_Rod>()], 20, 60);
 	}
 }

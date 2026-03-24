@@ -623,7 +623,7 @@ ACCESSORIES:
 (^) Shotgun Glove
 (^) Slag Bucket (Cursed)
 (^) Slag Bucket (Uncursed)
-(#, ^2) Smog Pod-4 !!!
+(#2, ^2) Smog Pod-4 !!!
 (^) Sniper's Mark
 (^) Solar Panel
 (^) Sonar Visor
@@ -669,8 +669,8 @@ ACCESSORIES:
 (#3, ^2) Glitter Glue !!!
 (^) Lunatic's Rune
 (^) Mysterious Spray
-(#3, ^2) Retool Arm !!!
-(#3?, ^2) Robo-tail !!!
+(^) Retool Arm
+(^) Robo-tail
 (^) Scribe of the Meat God
 (#2, ^2) Space Pirate's Eye !!!
 (^) Stack of Shraps
@@ -750,7 +750,7 @@ UTILITIES:
 
 WINGS:
 |---
-(^) Gills
+(^) CE10 'Gills'
 
 (^) Acrid Beam Thrusters
 (X) Marrowick Mantle
@@ -899,7 +899,7 @@ RANGED WEAPONS:
 (^) Fiberglass Pistol
 (^) Fiberglass Shard
 (^) Gelled Knife
-(†) Grease Gun !!!
+(^) Grease Gun
 (^) Harpoon Gun
 (^) Longbone
 (^) Magma Grappler
@@ -910,7 +910,7 @@ RANGED WEAPONS:
 (^) Shimmershot
 (^) Sleetfire
 (^) Sunflower Seed Shooter
-(†) Tactical SMG !!!
+(^) Tactical SMG
 (^) Tendon Tear
 (^) The Kruncher
 (^) Threemoepeater
@@ -1343,7 +1343,7 @@ TILES:
 (^) Cicada 3301 Cage
 (^) Deactivated Repairboy
 (X) Deactivated Stryder !!!
-(#3, ^2) Deactivated Trenchmaker !!!
+(^) Deactivated Trenchmaker
 (^) Defiled Torch
 (^) Defiled Water Fountain
 (^) Endowood Furniture
@@ -1359,7 +1359,7 @@ TILES:
 (^) Riven Torch
 (^) Riven Water Fountain
 (X) Ruined Portal
-(#3, ^2) Scrap Railing
+(^) Scrap Railing
 (^) Shadow Torch
 (^) Strange Plant (Stardust)
 (^) Traffic Cone
@@ -1384,7 +1384,7 @@ TILES:
 (^) Fire Extinguisher Holder
 (#, ^2) Gas Generator !!!
 (^) Industrial Door
-(#3, ^2) Large Storage Container
+(^) Large Storage Container
 (^) Laser Tag Console
 (^) Liquid Sensor (Amebic Gel)
 (^) Liquid Sensor (Brine)
@@ -1549,7 +1549,6 @@ MATERIALS:
 (^) Ashen Seeds
 (^) Bark
 (^) Bat Hide
-(^) Biocomponent 10
 (^) Bud Barnacle
 (^) Carburite
 (^) Defiled Bar
@@ -1563,6 +1562,7 @@ MATERIALS:
 (^) Parasitic Powder
 (^) Riven Carapace
 (^) Riven Seeds
+(@4, #2) Robot Guts !!!
 (^) Rubber
 (^) Sanguinite Bar
 (^) Silicon Bar
@@ -1609,6 +1609,7 @@ MISCELLANEOUS ITEMS:
 (^) Armor+ Power-Up
 (^) Defiled Mana
 (^) Large Chambersite
+(X) RAM Chip !!!
 (^) Worn Paper: Famine
 (^) Worn Paper: Loose Wheel
 (^) Worn Paper: Mean Baby

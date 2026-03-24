@@ -9,23 +9,23 @@ namespace Origins.Items.Accessories;
 [AutoloadEquip(EquipType.Wings)]
 public class Gills : ModItem {
 	public override void SetStaticDefaults() {
-		ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new(60, 3.25f, hasHoldDownHoverFeatures: true);
+		ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new(50, 5f, 5f, hasHoldDownHoverFeatures: true);
 		Origins.AddGlowMask(this);
 		Accessory_Glow_Layer.AddGlowMasks(Item, EquipType.Wings);
 	}
 	public override void SetDefaults() {
 		Item.DefaultToAccessory();
 		Item.rare = ItemRarityID.Blue;
-		Item.value = Item.sellPrice(silver: 6);
+		Item.value = Item.sellPrice(silver: 10);
 	}
 	public static bool ForceHover(Player player) => player.wingTime <= (player.wingTimeMax + (player.rocketBoots != 0 ? 6 * 6 : 0)) * 0.3f + 25;
 	public override void VerticalWingSpeeds(Player player, ref float ascentWhenFalling, ref float ascentWhenRising, ref float maxCanAscendMultiplier, ref float maxAscentMultiplier, ref float constantAscend) {
-		const float braking_factor = 0.97f;
+		const float braking_factor = 0.98f;
 		if (player.TryingToHoverDown || ForceHover(player)) {
 			player.velocity.Y *= braking_factor;
 			player.wingTime += 0.5f;
-			ascentWhenFalling = player.gravity + player.velocity.Y * 0.05f * player.gravDir;
-			ascentWhenRising = -(player.gravity + player.velocity.Y * 0.05f * player.gravDir);
+			ascentWhenFalling = player.gravity + player.velocity.Y * 0.1f * player.gravDir;
+			ascentWhenRising = -(player.gravity + player.velocity.Y * 0.1f * player.gravDir);
 			constantAscend = -player.gravity;
 		}
 	}
