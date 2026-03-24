@@ -8,10 +8,10 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Other {
-	public class Living_Bile : OriginTile, ICustomCanPlaceTile {
-
+	public class Living_Bile : OriginTile {
 		public override void SetStaticDefaults() {
 			Main.tileLighted[Type] = true;
+			TileID.Sets.CanPlaceNextToNonSolidTile[Type] = true;
 			AddMapEntry(new(45, 40, 50));
 			DustType = DustID.Wraith;
 		}
@@ -26,10 +26,6 @@ namespace Origins.Tiles.Other {
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
 			frame = Main.tileFrame[TileID.LivingCursedFire];
-		}
-		public void CanPlace(Player self, Tile targetTile, Item sItem, ref int tileToCreate, ref int previewPlaceStyle, ref bool? overrideCanPlace, ref int? forcedRandom) {
-			static bool IsValidDirection(int x, int y) => Main.tile[Player.tileTargetX + x, Player.tileTargetY + y].HasTile || Main.tile[Player.tileTargetX + x, Player.tileTargetY + y].WallType > WallID.None;
-			if (IsValidDirection(1, 0) || IsValidDirection(-1, 0) || IsValidDirection(0, 1) || IsValidDirection(0, -1)) overrideCanPlace = true;
 		}
 	}
 	public class Living_Bile_Item : ModItem {
