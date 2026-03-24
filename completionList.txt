@@ -259,7 +259,7 @@ ENEMY NPCS:
 (^) Slime Worm (Slorm)
 (^) Spider Amoeba
 (X) Spiteful Flesh
-(#, ^2) Springjumper !!!
+(☻) Springjumper !!!
 (X) Tubefish
 (#, ^2) Wind Pail !!!
 

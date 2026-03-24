@@ -692,7 +692,7 @@ namespace Origins.World.BiomeData {
 
 			MimicType = NPCType<Trash_Compactor_Mimic>();
 
-			BloodBunny = NPCType<Defiled_Mite>();
+			BloodBunny = NPCType<Springjumper>();
 			BloodPenguin = NPCType<Robot_Penguin>();
 			BloodGoldfish = NPCType<Scraptooth>();
 
