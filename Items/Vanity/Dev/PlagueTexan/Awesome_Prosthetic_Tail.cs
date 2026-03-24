@@ -66,7 +66,7 @@ namespace Origins.Items.Vanity.Dev.PlagueTexan {
 				segment.rotation + MathHelper.PiOver2,
 				frame.Size() * 0.5f,
 				1,
-				segment.effects
+				segment.effects ^ (drawInfo.playerEffect & SpriteEffects.FlipVertically)
 			) {
 				shader = colors.cTail
 			};
