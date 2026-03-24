@@ -31,6 +31,26 @@ namespace Origins.Backgrounds {
 			for (int i = 0; i < fades.Length; i++) MathUtils.LinearSmoothing(ref fades[i], (i == Slot).ToInt(), transitionSpeed);
 		}
 	}
+	public class Ashen_Desert_Background : ModSurfaceBackgroundStyle {
+		int? far;
+		int? mid;
+		int? near;
+		public override int ChooseFarTexture() {
+			return far ??= BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Desert_Background3");
+		}
+
+		public override int ChooseMiddleTexture() {
+			return mid ??= BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Desert_Background2");
+		}
+
+		public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b) {
+			return near ??= BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Desert_Background");
+		}
+
+		public override void ModifyFarFades(float[] fades, float transitionSpeed) {
+			for (int i = 0; i < fades.Length; i++) MathUtils.LinearSmoothing(ref fades[i], (i == Slot).ToInt(), transitionSpeed);
+		}
+	}
 	public class Ashen_Sky : CustomSky, ILoadable, IBrokenContent {
 		readonly AutoLoadingTexture[] clouds = Enumerable.Repeat(1, 3).Select<int, AutoLoadingTexture>((o, i) => "Origins/Backgrounds/Ashen_Background_Clouds" + (o + i)).ToArray();
 		bool isActive;

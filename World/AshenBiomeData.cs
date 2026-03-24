@@ -601,6 +601,7 @@ namespace Origins.World.BiomeData {
 	public class Ashen_Desert : ModBiome {
 		public override int Music => Origins.Music.AshenScrapyard;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<Ashen_Desert_Background>();
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
 		public override string MapBackground => BackgroundPath;
