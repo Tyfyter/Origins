@@ -253,6 +253,4 @@ public class Smog_Pod_4_Rod : ModProjectile {
 			MoveByEnd(newPos);
 		}
 	}
-	public override void OnKill(int timeLeft) {
-	}
 }
