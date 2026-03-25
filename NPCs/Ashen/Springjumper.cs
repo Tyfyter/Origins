@@ -8,6 +8,7 @@ using Origins.LootConditions;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -29,7 +30,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.width = 50;
 			NPC.height = 30;
 			NPC.value = Item.buyPrice(0, 0, 2);
-			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
+			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-0.6f);
 			NPC.DeathSound = SoundID.NPCDeath44;
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.knockBackResist = 0.5f;
@@ -52,6 +53,7 @@ namespace Origins.NPCs.Ashen {
 					if (!NPC.collideY && NPC.velocity.Y > 0) break;
 					hitbox.Y += 8;
 					if (hitbox.OverlapsAnyTiles(false)) {
+						SoundEngine.PlaySound(SoundID.Item174.WithPitch(1f), NPC.Center);
 						Min(ref NPC.velocity.Y, 0);
 						NPC.velocity.Y -= 8;
 						if (Math.Sign(NPC.velocity.X) == -NPC.direction) {

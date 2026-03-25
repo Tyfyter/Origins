@@ -250,8 +250,8 @@ ENEMY NPCS:
 (^) Riven Penguin
 (^) Riven Protoform
 (X) Rivenpotamus
-(☻) Robot Penguin !!!
-(☻) Scraptooth !!!
+(^) Robot Penguin
+(^) Scraptooth
 (^) Shattered Goldfish
 (^) Shimmer Drone
 (X) Shooter Creeper
@@ -259,7 +259,7 @@ ENEMY NPCS:
 (^) Slime Worm (Slorm)
 (^) Spider Amoeba
 (X) Spiteful Flesh
-(☻) Springjumper !!!
+(^) Springjumper
 (X) Tubefish
 (#, ^2) Wind Pail !!!
 

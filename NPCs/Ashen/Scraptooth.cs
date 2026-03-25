@@ -27,7 +27,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.height = 26;
 			NPC.frame.Height = 28;
 			NPC.value = 500;
-			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
+			NPC.HitSound = SoundID.NPCHit4;
 			NPC.DeathSound = SoundID.NPCDeath44;
 			AnimationType = NPCID.CorruptGoldfish;
 		}
