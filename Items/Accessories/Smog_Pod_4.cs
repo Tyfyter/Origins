@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Layers;
 using Origins.Projectiles;
 using ReLogic.Content;
@@ -176,11 +177,6 @@ public class Smog_Pod_4_Rod : ModProjectile {
 			}
 		}
 		Projectile.rotation = Projectile.ai[0] * MathHelper.Pi - MathHelper.PiOver2;
-
-		Projectile.alpha.Cooldown(0, 85);
-		Max(ref Projectile.alpha, 255 - Projectile.timeLeft);
-		if (Projectile.alpha > 0) return;
-		if (Projectile.frame < Main.projFrames[Type] - 1 && Projectile.frameCounter.CycleUp(5)) Projectile.frame.Warmup(Main.projFrames[Type]);
 		for (int i = 1; i < Arms.Length; i++) {
 			arms[i].MoveByStart(arms[i - 1].end);
 			float dot = Math.Abs(Vector2.Dot((arms[i].end - arms[i].start).Normalized(out _), Vector2.UnitY));
@@ -193,18 +189,22 @@ public class Smog_Pod_4_Rod : ModProjectile {
 			arms[i].end = arms[i].end.RotatedBy(Math.Min(angleDiff * 0.05f + 0.05f, angleDiff * 0.1f) * dir, arms[i].start);
 		}
 		Lighting.AddLight(arms[^1].end, 3 * mult, 1.86f * mult, 0.3f * mult);
+
+		Projectile.alpha.Cooldown(0, 85);
+		Max(ref Projectile.alpha, 255 - Projectile.timeLeft);
+		if (Projectile.alpha > 0) return;
+		if (Projectile.frame < Main.projFrames[Type] - 1 && Projectile.frameCounter.CycleUp(5)) Projectile.frame.Warmup(Main.projFrames[Type]);
 	}
 	private static VertexStrip _vertexStrip = new();
 	float[] rot;
 	Vector2[] pos;
 	Color[] colors;
+	static Vector2[] uvMatrix = [
+		Vector2.UnitY,
+		-Vector2.UnitX,
+		Vector2.UnitY
+	];
 	public override bool PreDraw(ref Color lightColor) {
-		MiscShaderData miscShaderData = GameShaders.Misc["Origins:Identity"];
-		miscShaderData.Shader.Parameters["uUVMatrix0"].SetValue([
-			Vector2.UnitX,
-				Vector2.UnitY,
-				Vector2.Zero
-		]);
 		rot ??= new float[Arms.Length + 1];
 		pos ??= new Vector2[arms.Length + 1];
 		colors ??= new Color[arms.Length + 1];
@@ -216,16 +216,11 @@ public class Smog_Pod_4_Rod : ModProjectile {
 		rot[^1] = rot[^2];
 		pos[^1] = arms[^1].end;
 		colors[^1] = Lighting.GetColor(arms[^1].start.ToTileCoordinates()) * Projectile.Opacity;
-		miscShaderData.UseImage0(TextureAssets.Projectile[Type]);
-		miscShaderData.UseOpacity(1);
-		miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
-		miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, Projectile.frame / (float)Main.projFrames[Type], 1, 1f / Main.projFrames[Type]));
-		miscShaderData.Shader.Parameters["uUVMatrix0"].SetValue([
-			Vector2.UnitY,
-			-Vector2.UnitX,
-			Vector2.UnitY
-		]);
-		miscShaderData.Apply();
+		GameShaders.Misc["Origins:Identity"].UseImage0(TextureAssets.Projectile[Type])
+		.Apply(null,
+			new("uSourceRect0", new Vector4(0, Projectile.frame / (float)Main.projFrames[Type], 1, 1f / Main.projFrames[Type])),
+			new("uUVMatrix0", Vector2.UnitY, -Vector2.UnitX, Vector2.UnitY)
+		);
 		_vertexStrip.PrepareStrip(pos, rot, StripColors, _ => Projectile.width * 0.5f, -Main.screenPosition, arms.Length + 1, includeBacksides: true);
 		_vertexStrip.DrawTrail();
 		Main.pixelShader.CurrentTechnique.Passes[0].Apply();

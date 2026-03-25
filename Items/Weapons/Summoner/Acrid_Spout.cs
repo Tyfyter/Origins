@@ -107,22 +107,15 @@ namespace Origins.Items.Weapons.Summoner {
 			List<Vector2> list = [];
 			Projectile.FillWhipControlPoints(Projectile, list);
 
-			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Identity"];
-			miscShaderData.Shader.Parameters["uUVMatrix0"].SetValue([
-				Vector2.UnitX,
-				Vector2.UnitY,
-				Vector2.Zero
-			]);
-			miscShaderData.UseImage0(TextureAssets.MagicPixel);
-			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
-			miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 0, 1, 1));
+			GameShaders.Misc["Origins:Identity"]
+			.UseImage0(TextureAssets.MagicPixel)
+			.Apply();
 			float[] oldRot;
 			oldRot = new float[list.Count];
 			for (int i = 0; i < list.Count; i++) {
 				oldRot[i] = i == 0 ? 0 : (list[i] - list[i - 1]).ToRotation();
 			}
 			oldRot[0] = oldRot[1];
-			miscShaderData.Apply();
 			_vertexStrip.PrepareStrip(list.ToArray(), oldRot, (GetLightColor) => new(80, 225, 120), _ => 1, -Main.screenPosition, list.Count, includeBacksides: true);
 			_vertexStrip.DrawTrail();
 

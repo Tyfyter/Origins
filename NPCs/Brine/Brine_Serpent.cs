@@ -2,6 +2,7 @@
 using ModLiquidLib.ID;
 using ModLiquidLib.Utils;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
@@ -197,21 +198,15 @@ namespace Origins.NPCs.Brine {
 				count = NPCs.Count;
 			}
 			SpriteEffects effects = SpriteEffects.None;
-			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Identity"];
-			miscShaderData.Shader.Parameters["uUVMatrix0"].SetValue([
-				Vector2.UnitX,
-				Vector2.UnitY,
-				Vector2.Zero
-			]);
-			miscShaderData.UseImage0(TextureAssets.Npc[BodyType]);
-			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
+			Vector4 frame = new(0, 0, 1, 1);
 			if (Math.Sin(NPC.rotation) > 0) {
-				miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 0, 1, 1));
 				effects = SpriteEffects.FlipVertically;
 			} else {
-				miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 1, 1, -1));
+				frame = new Vector4(0, 1, 1, -1);
 			}
-			miscShaderData.Apply();
+			GameShaders.Misc["Origins:Identity"]
+			.UseImage0(TextureAssets.Npc[BodyType])
+			.Apply(null, [new("uSourceRect0", frame)]);
 			_vertexStrip.PrepareStrip(oldPos, oldRot, GetLightColor, _ => 14, -screenPos, count, includeBacksides: true);
 			_vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();

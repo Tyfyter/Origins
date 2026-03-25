@@ -166,16 +166,9 @@ namespace Origins.Items.Weapons.Summoner {
 
 		private static VertexStrip _vertexStrip = new();
 		static void DrawTrail(Projectile projectile, float size) {
-
-			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Identity"];
-			miscShaderData.Shader.Parameters["uUVMatrix0"].SetValue([
-				Vector2.UnitX,
-				Vector2.UnitY,
-				Vector2.Zero
-			]);
-			miscShaderData.UseImage0(TextureAssets.MagicPixel);
-			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
-			miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 0, 1, 1));
+			GameShaders.Misc["Origins:Identity"]
+			.UseImage0(TextureAssets.MagicPixel)
+			.Apply();
 			float[] oldRot;
 			oldRot = new float[projectile.oldPos.Length];
 			for (int i = 1; i < projectile.oldPos.Length; i++) {
@@ -185,7 +178,6 @@ namespace Origins.Items.Weapons.Summoner {
 			if (GeometryUtils.AngleDif(oldRot[1], projectile.rotation, out _) > GeometryUtils.AngleDif(oldRot[1], projectile.rotation  + MathHelper.Pi, out _)) {
 				oldRot[0] = projectile.rotation + MathHelper.Pi;
 			}
-			miscShaderData.Apply();
 			_vertexStrip.PrepareStrip(projectile.oldPos, oldRot, _ => Color.White, _ => size, -Main.screenPosition, projectile.oldPos.Length, includeBacksides: true);
 			_vertexStrip.DrawTrail();
 		}

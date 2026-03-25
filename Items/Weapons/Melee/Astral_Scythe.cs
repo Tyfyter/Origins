@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Summoner;
@@ -385,21 +386,14 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		private readonly static VertexStrip _vertexStrip = new();
 		public void DrawPath(float size) {
-			MiscShaderData miscShaderData = GameShaders.Misc["Origins:Identity"];
-			miscShaderData.Shader.Parameters["uUVMatrix0"].SetValue([
-				Vector2.UnitX,
-				Vector2.UnitY,
-				Vector2.Zero
-			]);
-			miscShaderData.UseImage0(TextureAssets.MagicPixel);
-			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(0, 0, 0, 1));
-			miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(0, 0, 1, 1));
+			GameShaders.Misc["Origins:Identity"]
+			.UseImage0(TextureAssets.MagicPixel)
+			.Apply(null);
 			float[] oldRot = new float[Projectile.WhipPointsForCollision.Count];
 			for (int i = 0; i < Projectile.WhipPointsForCollision.Count - 1; i++) {
 				oldRot[i] = (Projectile.WhipPointsForCollision[i + 1] - Projectile.WhipPointsForCollision[i]).ToRotation();
 			}
 			oldRot[^1] = Projectile.rotation;
-			miscShaderData.Apply();
 			_vertexStrip.PrepareStrip(Projectile.WhipPointsForCollision.ToArray(), oldRot, _ => Color.White, _ => size, -Main.screenPosition, Projectile.WhipPointsForCollision.Count, includeBacksides: true);
 			_vertexStrip.DrawTrail();
 		}

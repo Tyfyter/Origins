@@ -483,7 +483,12 @@ namespace Origins {
 				GameShaders.Misc["Origins:Framed"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "Framed");
 				GameShaders.Misc["Origins:AnimatedTrail"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "AnimatedTrail").UseSamplerState(SamplerState.PointWrap);
 				GameShaders.Misc["Origins:LaserBlade"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "LaserBlade").UseSamplerState(SamplerState.PointWrap);
-				GameShaders.Misc["Origins:Identity"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "Identity")
+				GameShaders.Misc["Origins:Identity"] = new AdvancedMiscShaderData(Assets.Request<Effect>("Effects/Strip"), "Identity", [
+					new("uUVMatrix0", Vector2.UnitX, Vector2.UnitY, Vector2.Zero),
+					new("uAlphaMatrix0", new Vector4(0, 0, 0, 1)),
+					new("uSourceRect0", new Vector4(0, 0, 1, 1)),
+				])
+				.UseOpacity(1)
 				.UseSamplerState(SamplerState.PointClamp);
 				GameShaders.Misc["Origins:Matrix3DRaymarch"] = new MiscShaderData(Assets.Request<Effect>("Effects/Matrix3DRaymarch"), "EscapeTheMatrix");
 				GameShaders.Misc["Origins:DefiledIndicator"] = new MiscShaderData(Assets.Request<Effect>("Effects/DefiledIndicator"), "DefiledIndicator");
