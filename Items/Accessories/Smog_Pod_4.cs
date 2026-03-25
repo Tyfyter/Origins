@@ -254,6 +254,5 @@ public class Smog_Pod_4_Rod : ModProjectile {
 		}
 	}
 	public override void OnKill(int timeLeft) {
-		OriginExtensions.FadeOutOldProjectilesAtLimit([ModContent.ProjectileType<Smog_Pod_4_Rod>()], 20, 255);
 	}
 }
