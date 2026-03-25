@@ -126,6 +126,9 @@ namespace Origins {
 				TileEntity.UpdateEnd();
 			}
 		}
+		public override void PostUpdateNPCs() {
+			Repairboy.repairboysTargetingNPCs.Prune(npc => !npc.active);
+		}
 		public override void PostUpdateEverything() {
 			Debugging.LogFirstRun(PostUpdateEverything);
 			for (int i = 0; i < Origins.tickers.Count; i++) {
