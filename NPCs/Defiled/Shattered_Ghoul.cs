@@ -32,14 +32,13 @@ namespace Origins.NPCs.Defiled {
 			NPC.defense = 30;
 			NPC.knockBackResist = 0.5f;
 			NPC.damage = 60;
-			NPC.width = 20;
-			NPC.height = 44;
 			NPC.value = 700;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = Item.buyPrice(silver: 6, copper: 50);
 			Banner = Item.NPCtoBanner(NPCID.DesertGhoul);
+			AIType = NPCID.DesertGhoulCorruption;
 			AnimationType = NPCID.DesertGhoulCorruption;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Defiled_Wastelands_Underground_Desert>().Type
@@ -78,10 +77,6 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);
-			NPC.TargetClosest();
-			if (NPC.HasPlayerTarget) {
-				NPC.spriteDirection = NPC.direction;
-			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			//spawn gore if npc is dead after being hit

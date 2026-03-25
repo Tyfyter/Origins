@@ -30,12 +30,11 @@ namespace Origins.NPCs.Riven {
 			NPC.defense = 24;
 			NPC.knockBackResist = 0.6f;
 			NPC.damage = 70;
-			NPC.width = 20;
-			NPC.height = 44;
 			NPC.value = 700;
 			NPC.friendly = false;
 			NPC.value = Item.buyPrice(silver: 6, copper: 50);
 			Banner = Item.NPCtoBanner(NPCID.DesertGhoul);
+			AIType = NPCID.DesertGhoulCorruption;
 			AnimationType = NPCID.DesertGhoulCorruption;
 			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive_Underground_Desert>().Type
@@ -59,12 +58,6 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ItemID.AncientCloth, 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Alkahest>(), 3));
 			npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 15));
-		}
-		public override void AI() {
-			NPC.TargetClosest();
-			if (NPC.HasPlayerTarget) {
-				NPC.spriteDirection = NPC.direction;
-			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			//spawn gore if npc is dead after being hit
