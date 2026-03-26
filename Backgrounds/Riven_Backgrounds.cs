@@ -139,4 +139,5 @@ namespace Origins.Backgrounds {
 			textureSlots[4] = 128 + Main.hellBackStyle;
 		}
 	}
+	public class Riven_Ice_Background : IceBackground { }
 }

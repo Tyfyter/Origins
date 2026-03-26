@@ -788,6 +788,7 @@ namespace Origins.World.BiomeData {
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Snow";
 		public override string BestiaryIcon => "Origins/UI/IconSnowDefiled";
 		public override string MapBackground => BackgroundPath;
+		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => GetInstance<Defiled_Ice_Background>();
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneRockLayerHeight && player.ZoneSnow && player.InModBiome<Defiled_Wastelands>();
 		}

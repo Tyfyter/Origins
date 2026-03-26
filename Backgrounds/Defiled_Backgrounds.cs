@@ -59,4 +59,5 @@ namespace Origins.Backgrounds {
 			textureSlots[4] = 128 + Main.hellBackStyle;
 		}
 	}
+	public class Defiled_Ice_Background : IceBackground { }
 }

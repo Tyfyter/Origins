@@ -1070,6 +1070,7 @@ namespace Origins.World.BiomeData {
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Snow";
 		public override string BestiaryIcon => "Origins/UI/IconSnowRiven";
 		public override string MapBackground => BackgroundPath;
+		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => GetInstance<Riven_Ice_Background>();
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneRockLayerHeight && player.ZoneSnow && Riven_Hive.IsActive;
 		}
