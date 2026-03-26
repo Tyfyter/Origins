@@ -1,14 +1,15 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
 using Origins.Core;
-using Origins.Dev;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Layers;
 using Origins.Reflection;
-using Origins.UI;
 using System;
-using System.Buffers;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,26 +23,11 @@ namespace Origins.Items.Accessories {
 			Origins.AddGlowMask(this);
 			Accessory_Glow_Layer.AddGlowMask(EquipType.Face, Item.faceSlot,
 				$"{Texture}_{EquipType.Face}_Glow",
-				player => Colors.GetIfInRange(player.OriginPlayer().spacePirateEyeSelection).Color
+				player => Colors.GetIfInRange(player.OriginPlayer().spacePirateEyeSelection)?.Color ?? (Main.timeForVisualEffects % 30 < 15 ? Color.Black : Color.Magenta)
 			);
 			ArmorIDs.Face.Sets.DrawInFaceUnderHairLayer[Item.faceSlot] = true;
 
-			AddColor(0xff0060, new(ProjectileID.MiniRetinaLaser), 60, (v, t) => v.Normalized(out _) * 8);//#ff0060
-			AddColor(0x80ff00, new(ProjectileID.CursedDartFlame), 60, (v, t) => v.Normalized(out _) * 8);//#80ff00
-			AddColor(0xff0000, new(ProjectileID.SharpTears), 60, (v, t) => v.Normalized(out _) * 8);//#ff0000
-			AddColor(0xff6000, new(ProjectileID.Flamelash), 60, (v, t) => v.Normalized(out _) * 8);//#ff6000
-			AddColor(0xffbf00, new(ProjectileID.IchorSplash), 60, (v, t) => v.Normalized(out _) * 8);//#ffbf00
-			AddColor(0xdfff00, new(1), 60, (v, t) => v.Normalized(out _) * 8);//#dfff00
-			AddColor(0x00ff9f, new(ProjectileID.PoisonFang), 60, (v, t) => v.Normalized(out _) * 8);//#00ff9f
-			AddColor(0x00ffff, new(ModContent.ProjectileType<Magnus_P>()), 60, (v, t) => v.Normalized(out _) * 8);//#00ffff
-			AddColor(0x009fff, new(ProjectileID.FrostBoltStaff), 60, (v, t) => v.Normalized(out _) * 8);//#009fff
-			AddColor(0x2000ff, new(ProjectileID.WaterStream, 0.15f, 0.15f), 6, (v, t) => v.Normalized(out _) * 8);//#2000ff
-			AddColor(0x8000ff, new(1), 60, (v, t) => v.Normalized(out _) * 8);//#8000ff
-			AddColor(0xdf00ff, new(1), 60, (v, t) => v.Normalized(out _) * 8);//#df00ff
-			AddColor(0xff00bf, new(1), 60, (v, t) => v.Normalized(out _) * 8);//#ff00bf
-			AddColor(0xff9ae9, new(1), 60, (v, t) => v.Normalized(out _) * 8);//#ff9ae9
-			AddColor(0x009700, new(1), 60, (v, t) => v.Normalized(out _) * 8);//#009700
-			AddColor(0xa74d00, new(ProjectileID.WoodenArrowFriendly), 60, (v, t) => v.Normalized(out _) * 8);//#a74d00
+			Colors.Sort();
 			Array.Resize(ref counts, Colors.Count);
 		}
 		public override void SetDefaults() {
@@ -72,34 +58,20 @@ namespace Origins.Items.Accessories {
 
 			if (originPlayer.spacePirateEyeCooldown > 0) return;
 			Vector2 position = player.Center + new Vector2(2 * player.direction, (12 - player.height * 0.5f) * player.gravDir);
-			Vector2 targetPos = position;
-			Entity targetEntity = null;
-			float maxDist = 16 * 25;
-			maxDist *= maxDist;
-			bool FindTarget(Entity target) {
-				Vector2 currentPos = position.Clamp(target.Hitbox);
-				if (Math.Sign(position.X - currentPos.X) == player.direction) return false;
-				float dist = currentPos.DistanceSQ(position);
-				if (dist < maxDist) {
-					maxDist = dist;
-					targetEntity = target;
-					targetPos = currentPos;
-					return true;
-				}
-				return false;
-			}
-			if (player.DoHoming(FindTarget)) {
-				(_, SpecialAttackStats stats, originPlayer.spacePirateEyeCooldown, Func<Vector2, Entity, Vector2> vel) = Colors[mode];
+			PirateEyeMode eyeMode = Colors[mode];
+			if (eyeMode.FindTarget(player, position, out Vector2 targetPos, out Entity targetEntity)) {
+				originPlayer.spacePirateEyeCooldown = eyeMode.Cooldown;
 				int damage = originPlayer.spacePirateEye.damage;
 				float knockback = originPlayer.spacePirateEye.knockBack;
 				try {
-					originPlayer.spacePirateEye.damage = (int)(damage * stats.DamageMult);
-					originPlayer.spacePirateEye.knockBack *= stats.KnockbackMult;
-					player.SpawnProjectile(
+					originPlayer.spacePirateEye.damage = (int)(damage * eyeMode.DamageMult);
+					originPlayer.spacePirateEye.knockBack *= eyeMode.KnockbackMult;
+					eyeMode.Shoot(player,
+						targetEntity,
 						player.GetSource_Accessory(originPlayer.spacePirateEye),
 						position,
-						vel(targetPos - position, targetEntity),
-						stats.ProjectileType,
+						eyeMode.GetVelocity(player, targetPos - position, targetEntity),
+						eyeMode.Type,
 						player.GetWeaponDamage(originPlayer.spacePirateEye),
 						player.GetWeaponKnockback(originPlayer.spacePirateEye)
 					);
@@ -126,14 +98,7 @@ namespace Origins.Items.Accessories {
 			counts[(int)(Main.timeForVisualEffects / 30) % counts.Length] = 1; //just to demo what it looks like when a color is taken
 			return lowest;
 		}
-		static void AddColor(uint hexColor, SpecialAttackStats stats, int cooldown, Func<Vector2, Entity, Vector2> velocity) {
-			Colors.Add(new(hexColor, stats, cooldown, velocity));
-		}
-		public record struct SpecialAttackStats(int ProjectileType, float DamageMult = 1, float KnockbackMult = 1);
-		public record struct PirateEyeMode(Color Color, SpecialAttackStats Stats, int Cooldown, Func<Vector2, Entity, Vector2> Velocity) {
-			public PirateEyeMode(uint hexColor, SpecialAttackStats stats, int cooldown, Func<Vector2, Entity, Vector2> velocity) : this(FromHexRGB(hexColor), stats, cooldown, velocity) { }
-		}
-		public bool CanRightClickAccessory(Item[] inv, int context, int slot) => true;
+		public bool CanRightClickAccessory(Item[] inv, int context, int slot) => Math.Abs(context) != ItemSlot.Context.EquipAccessoryVanity;
 		public bool RightClickAccessory(Item[] inv, int context, int slot) {
 			OriginSystem.Instance.SpacePirateEyeUI.Activate();
 			/*Player player = Main.LocalPlayer;
@@ -167,6 +132,134 @@ namespace Origins.Items.Accessories {
 				}
 			}*/
 			return false;
+		}
+		public abstract class PirateEyeMode : ModProjectile, IComparable<PirateEyeMode> {
+			public sealed override void Load() {
+				Colors.Add(this);
+				OnLoad();
+			}
+			public virtual void OnLoad() { }
+			public abstract Color Color { get; }
+			public virtual float DamageMult => 1;
+			public virtual float KnockbackMult => 1;
+			public abstract int Cooldown { get; }
+			public virtual float Order => Main.rgbToHsl(Color).X;
+			public virtual Vector2 GetVelocity(Player player, Vector2 difference, Entity target) => difference.Normalized(out _) * 8;
+			public virtual void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+				player.SpawnProjectile(source, position, velocity, type, damage, knockback);
+			}
+			public virtual bool FindTarget(Player player, Vector2 position, out Vector2 targetPos, out Entity targetEntity) => DefaultFindTarget(player, position, out targetPos, out targetEntity);
+			protected static bool DefaultFindTarget(Player player, Vector2 position, out Vector2 targetPos, out Entity targetEntity, float maxDist = 16 * 25) {
+				Vector2 _targetPos = position;
+				Entity _targetEntity = null;
+				maxDist *= maxDist;
+
+				bool result = player.DoHoming(FindTarget);
+				targetEntity = _targetEntity;
+				targetPos = _targetPos;
+				return result;
+				bool FindTarget(Entity target) {
+					Vector2 currentPos = position.Clamp(target.Hitbox);
+					if (Math.Sign(position.X - currentPos.X) == player.direction) return false;
+					float dist = currentPos.DistanceSQ(position);
+					if (dist < maxDist) {
+						maxDist = dist;
+						_targetEntity = target;
+						_targetPos = currentPos;
+						return true;
+					}
+					return false;
+				}
+			}
+			int IComparable<PirateEyeMode>.CompareTo(PirateEyeMode other) => Order.CompareTo(other.Order);
+		}
+		//AddColor(0xdfff00, new(1), 60);//#dfff00
+		//AddColor(0x00ff9f, new(ProjectileID.PoisonFang), 60);//#00ff9f
+		//AddColor(0x00ffff, new(ModContent.ProjectileType<Magnus_P>()), 60);//#00ffff
+		//AddColor(0x009fff, new(ProjectileID.FrostBoltStaff), 60);//#009fff
+		//AddColor(0x2000ff, new(ProjectileID.WaterStream, 0.15f, 0.15f), 6);//#2000ff
+		//AddColor(0x8000ff, new(1), 60);//#8000ff
+		//AddColor(0xdf00ff, new(1), 60);//#df00ff
+		//AddColor(0xff00bf, new(1), 60);//#ff00bf
+		//AddColor(0xff9ae9, new(1), 60);//#ff9ae9
+		//AddColor(0x009700, new(1), 60);//#009700
+		//AddColor(0xa74d00, new(ProjectileID.WoodenArrowFriendly), 60);//#a74d00
+		public class Laser : PirateEyeMode {
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.MiniRetinaLaser}";
+			public override Color Color => FromHexRGB(0xff0060);//#ff0060
+			public override float Order => -2;
+			public override int Cooldown => 60;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.MiniRetinaLaser);
+				Projectile.DamageType = DamageClass.Magic;
+				AIType = ProjectileID.MiniRetinaLaser;
+			}
+		}
+		public class Cursed_Flames : PirateEyeMode {
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.CursedFlameHostile}";
+			public override Color Color => FromHexRGB(0x80ff00);//#80ff00
+			public override float Order => -1;
+			public override int Cooldown => 60;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.CursedFlameFriendly);
+				AIType = ProjectileID.CursedFlameHostile;
+			}
+			public override void AI() {
+				base.AI();
+			}
+			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.CursedInferno, Main.rand.Next(120, 301));
+		}
+		public class _Temp_Red : PirateEyeMode {
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.SharpTears}";
+			public override Color Color => FromHexRGB(0xff0000);
+			public override int Cooldown => 60;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.SharpTears);
+				AIType = ProjectileID.SharpTears;
+			}
+		}
+		public class _Temp_Orange : PirateEyeMode {
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.Flamelash}";
+			public override Color Color => FromHexRGB(0xff6000);
+			public override int Cooldown => 60;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.Flamelash);
+				AIType = ProjectileID.Flamelash;
+			}
+		}
+		public class Ichor_Spray : PirateEyeMode {
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.IchorSplash}";
+			public override Color Color => FromHexRGB(0xffbf00);
+			public override int Cooldown => 60;
+			public override void SetDefaults() {
+				Projectile.DamageType = DamageClass.Magic;
+				Projectile.width = 10;
+				Projectile.height = 10;
+				Projectile.friendly = true;
+				Projectile.alpha = 255;
+				Projectile.penetrate = 5;
+				Projectile.ignoreWater = true;
+				Projectile.extraUpdates = 2;
+				Projectile.usesIDStaticNPCImmunity = true;
+				Projectile.idStaticNPCHitCooldown = 10;
+				Projectile.timeLeft = 20;
+			}
+			public override void AI() {
+				for (float i = 0; i < 1; i += 1f / 2) {
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Ichor, 0f, 0f, 100);
+					dust.position = (dust.position + Projectile.Center) / 2f + Projectile.velocity * i;
+					dust.noGravity = true;
+					dust.velocity *= 0.1f;
+					dust.scale *= (800f - Projectile.ai[0]) / 800f + 0.1f;
+				}
+			}
+			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.Ichor, Main.rand.Next(60, 181));
+			public override bool FindTarget(Player player, Vector2 position, out Vector2 targetPos, out Entity targetEntity) {
+				return DefaultFindTarget(player, position, out targetPos, out targetEntity, 16 * 10);
+			}
+			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+				for (int i = 0; i < 6; i++) player.SpawnProjectile(source, position, velocity + Main.rand.NextVector2Circular(2, 2), type, damage, knockback);
+			}
 		}
 	}
 	public class SpacePirateEyeInterface : UserInterface {

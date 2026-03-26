@@ -2227,6 +2227,7 @@ Projectiles: {
 	// Laser_Target_Locator_P.DisplayName: Laser Target Locator
 	// Laser_Target_Locator_Marker.DisplayName: Laser Target Locator Marker
 	// Laser_Target_Locator_Missile.DisplayName: Laser Target Locator Missile
+	// Laser.DisplayName: Laser
 	// Pike_Of_Deepneus_Stuck.DisplayName: Pike of Deepneus
 	// Homing_Rocket_I_Grenade.DisplayName: Homing Grenade I
 	// Homing_Rocket_I_Mine.DisplayName: Homing Mine I
@@ -2288,6 +2289,11 @@ Projectiles: {
 	// Vampire_Sunflower_P.DisplayName: Vampire Sunflower
 	// Clunkaclusta_P.DisplayName: "[fool:Items.Clunkaclusta.DisplayName]"
 	// Clunkaclusta_Mini_P.DisplayName: "[fool:Items.Clunkaclusta.DisplayName]"
+	// CursedFlames.DisplayName: Cursed Flames
+	// _Temp_Red.DisplayName: " Temp Red"
+	// Cursed_Flames.DisplayName: Cursed Flames
+	// _Temp_Orange.DisplayName: " Temp Orange"
+	// Ichor_Spray.DisplayName: Ichor Spray
 }
 
 Prefixes: {
