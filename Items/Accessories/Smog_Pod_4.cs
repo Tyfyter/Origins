@@ -182,7 +182,7 @@ public class Smog_Pod_4_Rod : ModProjectile {
 				arms[i].MoveByStart(arms[i - 1].end);
 				float dot = Math.Abs(Vector2.Dot((arms[i].end - arms[i].start).Normalized(out _), Vector2.UnitY));
 				float windFactor = Main.instance.TilesRenderer.GetWindCycle((int)arms[i].start.X / 16, (int)arms[i].start.Y / 16, Main.instance.TilesRenderer._treeWindCounter);
-				arms[i].end = arms[i].end.RotatedBy(windFactor * 0.005f * (i * 0.5f + 1) * dot, arms[i].start);
+				arms[i].end = arms[i].end.RotatedBy(windFactor * 0.001f * (i * 0.5f + 1) * dot, arms[i].start);
 			}
 		}
 
