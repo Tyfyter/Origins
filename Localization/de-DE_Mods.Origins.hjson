@@ -2294,6 +2294,8 @@ Projectiles: {
 	// Cursed_Flames.DisplayName: Cursed Flames
 	// _Temp_Orange.DisplayName: " Temp Orange"
 	// Ichor_Spray.DisplayName: Ichor Spray
+	// _Temp_Turquoise.DisplayName: " Temp Turquoise"
+	// _Temp_Yellow.DisplayName: " Temp Yellow"
 }
 
 Prefixes: {

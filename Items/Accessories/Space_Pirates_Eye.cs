@@ -8,12 +8,15 @@ using Origins.Layers;
 using Origins.Reflection;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
+using static Origins.OriginExtensions;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
@@ -173,8 +176,6 @@ namespace Origins.Items.Accessories {
 			}
 			int IComparable<PirateEyeMode>.CompareTo(PirateEyeMode other) => Order.CompareTo(other.Order);
 		}
-		//AddColor(0xdfff00, new(1), 60);//#dfff00
-		//AddColor(0x00ff9f, new(ProjectileID.PoisonFang), 60);//#00ff9f
 		//AddColor(0x00ffff, new(ModContent.ProjectileType<Magnus_P>()), 60);//#00ffff
 		//AddColor(0x009fff, new(ProjectileID.FrostBoltStaff), 60);//#009fff
 		//AddColor(0x2000ff, new(ProjectileID.WaterStream, 0.15f, 0.15f), 6);//#2000ff
@@ -259,6 +260,73 @@ namespace Origins.Items.Accessories {
 			}
 			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 				for (int i = 0; i < 6; i++) player.SpawnProjectile(source, position, velocity + Main.rand.NextVector2Circular(2, 2), type, damage, knockback);
+			}
+		}
+		public class _Temp_Yellow : PirateEyeMode {
+			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MedusaHeadRay;
+			public override Color Color => FromHexRGB(0xdfff00);
+			public override int Cooldown => 60;
+			public override void SetDefaults() {
+				Projectile.DamageType = DamageClass.Magic;
+				Projectile.width = 0;
+				Projectile.height = 0;
+				Projectile.timeLeft = 30;
+				Projectile.penetrate = -1;
+				Projectile.friendly = true;
+				Projectile.tileCollide = false;
+			}
+			public override bool ShouldUpdatePosition() => false;
+			Triangle hitTri;
+			public override void AI() {
+				Player player = Main.player[Projectile.owner];
+				Projectile.position = player.Center + new Vector2(2 * player.direction, (12 - player.height * 0.5f) * player.gravDir);
+				Vector2 perp = Projectile.velocity.Perpendicular() * 0.5f;
+				hitTri = new(
+					Projectile.position,
+					Projectile.position + Projectile.velocity + perp,
+					Projectile.position + Projectile.velocity - perp
+				);
+			}
+			public override Vector2 GetVelocity(Player player, Vector2 difference, Entity target) => difference.Normalized(out _) * 16 * 15;
+			public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => hitTri.Intersects(targetHitbox);
+			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.Midas, Main.rand.Next(180, 481));
+			private readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[3];
+			public override bool PreDraw(ref Color lightColor) {
+
+				vertices[0].TextureCoordinate = new Vector2(0, 1);
+				vertices[1].TextureCoordinate = new Vector2(0, 0);
+				vertices[2].TextureCoordinate = new Vector2(1, 1);
+													  
+				Color color = Color * Projectile.Opacity * 0.05f;
+				vertices[0].Color = color;
+				vertices[1].Color = color;
+				vertices[2].Color = color;
+
+				short[] dices = [0, 1, 2];
+				GameShaders.Misc["Origins:Identity"]
+				.UseImage0(TextureAssets.MagicPixel)//Extra[ExtrasID.LightDisc]
+				.UseSamplerState(SamplerState.LinearClamp)
+				.Apply();
+				const int count = 5;
+				Vector2 perp = Projectile.velocity.Perpendicular().Normalized(out _);
+				for (int i = -count; i <= count; i++) {
+
+					vertices[0].Position = new Vector3(hitTri.a + perp * i + Main.rand.NextVector2Circular(4, 4) - Main.screenPosition, 0);//
+					vertices[1].Position = new Vector3(hitTri.b + perp * i + Main.rand.NextVector2Circular(4, 4) - Main.screenPosition, 0);//
+					vertices[2].Position = new Vector3(hitTri.c + perp * i + Main.rand.NextVector2Circular(4, 4) - Main.screenPosition, 0);//
+
+					Main.instance.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, 3, dices, 0, 2);
+				}
+				return false;
+			}
+		}
+		public class _Temp_Turquoise : PirateEyeMode {
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.PoisonFang}";
+			public override Color Color => FromHexRGB(0x00ff9f);
+			public override int Cooldown => 60;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.PoisonFang);
+				AIType = ProjectileID.PoisonFang;
 			}
 		}
 	}
