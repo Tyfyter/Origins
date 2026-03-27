@@ -480,8 +480,16 @@ namespace Origins.Dev {
 	[ReinitializeDuringResizeArrays]
 	public static class ItemCategories {
 		public static string[][] Categories { get; } = ItemID.Sets.Factory.CreateCustomSet<string[]>(null);
+		static HashSet<int> craftingStations;
 		internal static void Initialize() {
+			craftingStations = [];
+			for (int i = 0; i < Main.recipe.Length; i++) {
+				Recipe recipe = Main.recipe[i];
+				if (recipe.Disabled) continue;
+				for (int j = 0; j < recipe.requiredTile.Count; j++) craftingStations.Add(recipe.requiredTile[j]);
+			}
 			for (int i = 0; i < ItemLoader.ItemCount; i++) Categories[i] = GetTags(new(i));
+			craftingStations = null;
 		}
 		static string[] GetTags(Item item) {
 			HashSet<string> types = [];
@@ -579,7 +587,9 @@ namespace Origins.Dev {
 				if (TileID.Sets.Grass[item.createTile]) types.Add(WikiCategories.Grass);
 				if (TileLoader.GetTile(item.createTile) is ModTile modTile) {
 					if (modTile is Bar_Tile) types.Add(WikiCategories.Bar);
+					if (modTile.AdjTiles?.Any(craftingStations.Contains) ?? false) types.Add(WikiCategories.CraftingStation);
 				}
+				if (craftingStations.Contains(item.createTile)) types.Add(WikiCategories.CraftingStation);
 			}
 			if (!string.IsNullOrWhiteSpace(OriginsSets.Items.JournalEntries[item.type])) types.Add(WikiCategories.Lore);
 			return types.Count > 0 ? types.ToArray() : null;

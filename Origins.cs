@@ -815,7 +815,6 @@ namespace Origins {
 			}
 			MC.GetInstance<Explosive_Weapons_Entry>().AddEntryToItems();
 			ForcedDialectCompatibility.PostSetupContent();
-			ItemCategories.Initialize();
 		}
 		private static void FixedDrawBreath(On_Main.orig_DrawInterface_Resources_Breath orig) {
 			Player localPlayer = Main.LocalPlayer;

@@ -49,6 +49,9 @@ namespace Origins.CrossMod {
 			}));
 			itemSourceHelper.Call("AddItemTagProvider", (Func<Item, IEnumerable<string>>)(item => (ItemCategories.Categories[item.type] ?? []).Where(IsWikiCategoryTagFriendly)));
 		}
+		/// <summary>
+		/// Categories which are already a filter or would otherwise be pointless to include
+		/// </summary>
 		static bool IsWikiCategoryTagFriendly(string tag) => tag switch {
 			WikiCategories.Item => false,
 			WikiCategories.Potion => false,
@@ -80,6 +83,7 @@ namespace Origins.CrossMod {
 			WikiCategories.Master => false,
 			WikiCategories.ReworkExpected => false,
 			WikiCategories.PostMLArmorSet => false,
+			WikiCategories.UsesBookcase => false,
 			nameof(WeaponTypes.Spear) => false,
 			nameof(WeaponTypes.Gun) => false,
 			nameof(WeaponTypes.HarpoonGun) => false,

@@ -1,4 +1,5 @@
-﻿using Origins.Items.Materials;
+﻿using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Other.Consumables.Medicine;
 using Origins.Items.Tools.Liquids;
@@ -417,6 +418,7 @@ namespace Origins {
 			}
 
 			OriginsModIntegrations.PostAddRecipes();
+			ItemCategories.Initialize();
 		}
 	}
 	public static class CraftingCallbacks {

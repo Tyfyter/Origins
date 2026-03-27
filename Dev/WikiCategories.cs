@@ -42,21 +42,21 @@ public static class WikiCategories {
 	public const string SummmonBoostGear = "SummmonBoostGear";
 	public const string ExplosiveBoostGear = "ExplosiveBoostGear";
 	public const string SummonBoostGear = "SummonBoostGear";
-	public const string MagicBoostGear = "MagicBoostGear"; 
-	public const string MeleeBoostGear = "MeleeBoostGear"; 
-	public const string RangedBoostGear = "RangedBoostGear"; 
+	public const string MagicBoostGear = "MagicBoostGear";
+	public const string MeleeBoostGear = "MeleeBoostGear";
+	public const string RangedBoostGear = "RangedBoostGear";
 
 	// Tiles
 	public const string Tile = "Tile";
-	public const string Plant = "Plant"; 
-	public const string Furniture = "Furniture"; 
-	public const string CraftingStation = "CraftingStation"; 
-	public const string Brick = "Brick"; 
-	public const string OtherBlock = "OtherBlock"; 
-	public const string Stone = "Stone"; 
-	public const string Grass = "Grass"; 
-	public const string WaterFountain = "WaterFountain"; 
-	public const string PlanterBox = "PlanterBox"; 
+	public const string Plant = "Plant";
+	public const string Furniture = "Furniture";
+	public const string CraftingStation = "CraftingStation";
+	public const string Brick = "Brick";
+	public const string OtherBlock = "OtherBlock";
+	public const string Stone = "Stone";
+	public const string Grass = "Grass";
+	public const string WaterFountain = "WaterFountain";
+	public const string PlanterBox = "PlanterBox";
 
 	// Walls
 	public const string Wall = "Wall";
@@ -70,15 +70,15 @@ public static class WikiCategories {
 	public const string Misc = "Misc";
 
 	// Accessories Boosts
-	public const string MagicBoostAcc = "MagicBoostAcc"; 
-	public const string ExplosiveBoostAcc = "ExplosiveBoostAcc"; 
-	public const string GenericBoostAcc = "GenericBoostAcc"; 
-	public const string SummonBoostAcc = "SummonBoostAcc"; 
-	public const string RangedBoostAcc = "RangedBoostAcc"; 
-	public const string MeleeBoostAcc = "MeleeBoostAcc"; 
+	public const string MagicBoostAcc = "MagicBoostAcc";
+	public const string ExplosiveBoostAcc = "ExplosiveBoostAcc";
+	public const string GenericBoostAcc = "GenericBoostAcc";
+	public const string SummonBoostAcc = "SummonBoostAcc";
+	public const string RangedBoostAcc = "RangedBoostAcc";
+	public const string MeleeBoostAcc = "MeleeBoostAcc";
 
 	// Ammo
-	public const string Ammo = "Ammo"; 
+	public const string Ammo = "Ammo";
 	public const string Arrow = "Arrow";
 	public const string Bullet = "Bullet";
 	public const string Dart = "Dart";
@@ -91,16 +91,16 @@ public static class WikiCategories {
 	public const string Mount = "Mount";
 
 	// Buffs/Debuffs
-	public const string Buff = "Buff"; 
-	public const string Debuff = "Debuff"; 
+	public const string Buff = "Buff";
+	public const string Debuff = "Debuff";
 	public const string RasterSource = "RasterSource";
 	public const string ToxicSource = "ToxicSource";
-	public const string Torn = "Torn"; 
-	public const string TornSource = "TornSource"; 
+	public const string Torn = "Torn";
+	public const string TornSource = "TornSource";
 
 	// Buff Boosts
-	public const string GenericBoostBuff = "GenericBoostBuff"; 
-	public const string ExplosiveBoostBuff = "ExplosiveBoostBuff"; 
+	public const string GenericBoostBuff = "GenericBoostBuff";
+	public const string ExplosiveBoostBuff = "ExplosiveBoostBuff";
 
 	// Pets
 	public const string Pet = "Pet";
@@ -112,22 +112,22 @@ public static class WikiCategories {
 	public const string Master = "Master";
 
 	// NPCs
-	public const string NPC = "NPC"; 
-	public const string Boss = "Boss"; 
+	public const string NPC = "NPC";
+	public const string Boss = "Boss";
 
 	// Effects
-	public const string SelfDamageProtek = "SelfDamageProtek"; 
-	public const string ManaShielding = "ManaShielding"; 
-	public const string Explosive = "Explosive"; 
+	public const string SelfDamageProtek = "SelfDamageProtection";
+	public const string ManaShielding = "ManaShielding";
+	public const string Explosive = "Explosive";
 
 	// Other
-	public const string Lore = "Lore"; 
-	public const string Cursed = "Cursed"; 
-	public const string Hidden = "Hidden"; 
+	public const string Lore = "Lore";
+	public const string Cursed = "Cursed";
+	public const string Hidden = "Hidden";
 	public const string UsesBookcase = "UsesBookcase";
 
 	// Dev
-	public const string DeveloperItem = "DeveloperItem"; 
-	public const string ReworkExpected = "ReworkExpected"; 
-	public const string DoesntBelongInOrigins = "DoesntBelongInOrigins"; 
+	public const string DeveloperItem = "DeveloperItem";
+	public const string ReworkExpected = "ReworkExpected";
+	public const string DoesntBelongInOrigins = "DoesntBelongInOrigins";
 }

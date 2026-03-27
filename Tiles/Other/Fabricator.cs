@@ -49,8 +49,7 @@ namespace Origins.Tiles.Other {
 	}
 	public class Fabricator_Item : ModItem, ICustomWikiStat {
 		public string[] Categories => [
-			WikiCategories.Furniture,
-			WikiCategories.CraftingStation
+			WikiCategories.Furniture
 		];
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Fabricator>());
