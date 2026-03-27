@@ -419,12 +419,12 @@ ACHIEVEMENTS:
 (^) Killimanjaro
 (^) Martyrdom
 (^) Now You're the One Lying Broken
-(@, ^3) Peat Obsession !!!
-(@, ^3) RIVEN WORMS !!!
+(^) Peat Obsession
+(^) RIVEN WORMS
 (@, ^3) Slow Loading Bar !!!
 (々) The Signal, it's Calling !!!
 (^) There's Something in There!
-(@, ^3) 'Till Death Mildew Us Part !!!
+(^) 'Till Death Mildew Us Part
 (^) Whismical!
 (^) Whole Blend Evil
 ---

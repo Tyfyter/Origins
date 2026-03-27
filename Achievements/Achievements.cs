@@ -44,7 +44,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class Mildew_Death : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomFlagCondition Condition { get; private set; }
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Challenger);
@@ -52,7 +51,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class Peat_Obsession : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomFlagCondition Condition { get; private set; }
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Challenger);
@@ -149,7 +147,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class RIVEN_WORMS : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomFlagCondition Condition { get; private set; }
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Challenger);
