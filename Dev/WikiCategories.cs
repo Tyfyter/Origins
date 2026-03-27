@@ -121,8 +121,7 @@ public static class WikiCategories {
 	public const string Explosive = "Explosive"; 
 
 	// Other
-	public const string LoreItem = "LoreItem"; 
-	public const string Lore = "Lore";
+	public const string Lore = "Lore"; 
 	public const string Cursed = "Cursed"; 
 	public const string Hidden = "Hidden"; 
 	public const string UsesBookcase = "UsesBookcase";

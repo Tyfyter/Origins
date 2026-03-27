@@ -1,22 +1,17 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Magic;
 using Origins.Layers;
 using Origins.Reflection;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameInput;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static Origins.OriginExtensions;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
@@ -99,6 +94,7 @@ namespace Origins.Items.Accessories {
 				Min(ref lowest, counts[i]);
 			}
 			counts[(int)(Main.timeForVisualEffects / 30) % counts.Length] = 1; //just to demo what it looks like when a color is taken
+			counts[(int)(Main.timeForVisualEffects / 30 + counts.Length / 2) % counts.Length] = 1; //just to demo what it looks like when a color is taken
 			return lowest;
 		}
 		public bool CanRightClickAccessory(Item[] inv, int context, int slot) => Math.Abs(context) != ItemSlot.Context.EquipAccessoryVanity;
@@ -342,14 +338,14 @@ namespace Origins.Items.Accessories {
 				delegate {
 					lowest = Space_Pirates_Eye.GetPlayerCounts(Main.LocalPlayer);
 					EnsureButtons();
+					if (PlayerInput.IgnoreMouseInterface) return true;
+					if (!GetBox().Contains(Main.MouseScreen)) return true;
+					Main.LocalPlayer.mouseInterface = true;
+					IgnoreRemainingInterface.Activate();
 					for (int i = 0; i < buttons.Length; i++) {
-						if (GetButton(i).Contains(Main.MouseScreen)) {
-							Main.LocalPlayer.mouseInterface = true;
-							IgnoreRemainingInterface.Activate();
-							if (Main.mouseLeft && Main.mouseLeftRelease && Space_Pirates_Eye.counts[i] == lowest) {
-								Main.LocalPlayer.OriginPlayer().spacePirateEyeSelection = i;
-								isActive = false;
-							}
+						if (GetButton(i).Contains(Main.MouseScreen) && Main.mouseLeft && Main.mouseLeftRelease && Space_Pirates_Eye.counts[i] == lowest) {
+							Main.LocalPlayer.OriginPlayer().spacePirateEyeSelection = i;
+							isActive = false;
 						}
 					}
 					return true;
@@ -361,6 +357,7 @@ namespace Origins.Items.Accessories {
 				delegate {
 					EnsureButtons();
 					Texture2D texture = TextureAssets.MagicPixel.Value;
+					Main.spriteBatch.Draw(TextureAssets.InventoryBack.Value, GetBox(), Color.Gainsboro);
 					for (int i = 0; i < buttons.Length; i++) {
 						Rectangle button = GetButton(i);
 						Color color = Space_Pirates_Eye.Colors[i].Color;
@@ -385,24 +382,44 @@ namespace Origins.Items.Accessories {
 			);
 		}
 		Rectangle[] buttons;
+		Rectangle entireBox;
 		void EnsureButtons() {
+			const int button_size = 14;
+			const int padded_size = button_size + 2;
 			if (buttons is not null) return;
 			buttons = new Rectangle[Space_Pirates_Eye.Colors.Count];
-			Vector2 pos = position - new Vector2(16);
+			Vector2 pos = position - new Vector2(padded_size);
+			Vector2 min = new(float.PositiveInfinity);
+			Vector2 max = new(float.NegativeInfinity);
 			for (int i = 0; i < buttons.Length; i++) {
-				buttons[i] = new((int)pos.X, (int)pos.Y, 14, 14);
-				pos.X += 16;
+				Min(ref min.X, pos.X);
+				Min(ref min.Y, pos.Y);
+				Max(ref max.X, pos.X + button_size);
+				Max(ref max.Y, pos.Y + button_size);
+				buttons[i] = new((int)pos.X, (int)pos.Y, button_size, button_size);
+				pos.X += padded_size;
 				if (i % 8 == 7) {
-					pos.X = position.X - 16;
-					pos.Y += 16;
+					pos.X = position.X - padded_size;
+					pos.Y += padded_size;
 				}
 			}
+			const int box_padding = 4;
+			entireBox.X = (int)min.X - box_padding;
+			entireBox.Y = (int)min.Y - box_padding;
+			entireBox.Width = (int)(max.X - min.X) + box_padding * 2;
+			entireBox.Height = (int)(max.Y - min.Y) + box_padding * 2;
 		}
 		Rectangle GetButton(int i) {
 			Rectangle button = buttons[i];
-			button.X += Math.Min(Main.screenWidth - buttons[^1].Right, 0);
+			button.X += Math.Min(Main.screenWidth - entireBox.Right, 0);
 			button.Y += MainReflection.currentMapHeight.Value;
 			return button;
+		}
+		Rectangle GetBox() {
+			Rectangle box = entireBox;
+			box.X += Math.Min(Main.screenWidth - entireBox.Right, 0);
+			box.Y += MainReflection.currentMapHeight.Value;
+			return box;
 		}
 		public void Activate() {
 			isActive = true;

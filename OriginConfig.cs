@@ -289,7 +289,7 @@ namespace Origins {
 
 		[DefaultValue(false)]
 		public bool ForceAprilFools = false;
-		#region exporting
+		#region wiki exporting
 		public string StatJSONPath { get; set; }
 		public bool ExportAllItemStatsJSON {
 			get => false;

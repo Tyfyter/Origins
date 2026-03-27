@@ -58,6 +58,7 @@ using Terraria.UI.Chat;
 using static Origins.OriginsSets.Items;
 using MC = Terraria.ModLoader.ModContent;
 using Origins.Liquids;
+using Origins.Dev;
 
 namespace Origins {
 	public sealed partial class Origins : Mod {
@@ -814,6 +815,7 @@ namespace Origins {
 			}
 			MC.GetInstance<Explosive_Weapons_Entry>().AddEntryToItems();
 			ForcedDialectCompatibility.PostSetupContent();
+			ItemCategories.Initialize();
 		}
 		private static void FixedDrawBreath(On_Main.orig_DrawInterface_Resources_Breath orig) {
 			Player localPlayer = Main.LocalPlayer;

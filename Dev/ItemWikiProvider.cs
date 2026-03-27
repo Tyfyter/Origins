@@ -330,100 +330,11 @@ namespace Origins.Dev {
 			data["Image"] = customStat?.CustomSpritePath ?? WikiPageExporter.GetWikiItemImagePath(modItem);
 			data["Name"] = WikiPageExporter.ProcessTags(item.Name);
 			JArray types = new(WikiCategories.Item);
-			if (modItem is IJournalEntrySource) types.Add(WikiCategories.Lore);
-			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
+			if (ItemCategories.Categories[item.type] is string[] cats) foreach (string cat in cats) types.Add(cat);
+			if (customStat is not null) foreach (string cat in customStat.Categories) if (!types.Contains(cat)) types.Add(cat);
 			if (item.pick != 0 || item.axe != 0 || item.hammer != 0 || item.fishingPole != 0 || item.bait != 0) types.Add(WikiCategories.Tool);
 			if (item.accessory) types.Add(WikiCategories.Accessory);
 			if (ItemID.Sets.SortingPriorityBossSpawns[item.type] != -1) types.Add(WikiCategories.BossSummon);
-			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None && (!types.Any(t => t.ToString() == WikiCategories.Tool) || types.Any(t => t.ToString() == WikiCategories.ToolWeapon))) {
-				types.Add(WikiCategories.Weapon);
-				WeaponTypes weaponType = WeaponTypes.None;
-				for (int i = 0; i < types.Count; i++) {
-					if (Enum.TryParse(types[i].ToString(), out WeaponTypes type)) {
-						weaponType = type;
-						break;
-					}
-				}
-				if (weaponType == WeaponTypes.None) {
-					if (item.CountsAsClass(DamageClasses.Explosive)) {
-						if (item.useAmmo == ModContent.ItemType<Resizable_Mine_Wood>()) {
-							weaponType = WeaponTypes.CanisterLauncher;
-						} else if (item.CountsAsClass(DamageClasses.ThrownExplosive)) {
-							weaponType = WeaponTypes.ThrownExplosive;
-						} else {
-							weaponType = WeaponTypes.OtherExplosive;
-						}
-					}
-					if (ItemID.Sets.Spears[item.type]) {
-						weaponType = WeaponTypes.Spear;
-					}
-					if (weaponType == WeaponTypes.None && item.shoot > ProjectileID.None) {
-						switch (ContentSamples.ProjectilesByType[item.shoot].aiStyle) {
-							case ProjAIStyleID.Boomerang:
-							weaponType = WeaponTypes.Boomerang;
-							break;
-
-							case ProjAIStyleID.Yoyo:
-							weaponType = WeaponTypes.Yoyo;
-							break;
-						}
-
-						if (item.CountsAsClass(DamageClass.Summon) && !types.Any(t => t.ToString() == nameof(WeaponTypes.Incantation))) {
-							if (Origins.ArtifactMinion[item.shoot]) weaponType = WeaponTypes.Artifact;
-							if (ProjectileID.Sets.IsAWhip[item.shoot]) {
-								weaponType = WeaponTypes.Whip;
-							} else if (item.CountsAsClass<Incantation>()) {
-								weaponType = WeaponTypes.Incantation;
-							} else {
-								Projectile proj = ContentSamples.ProjectilesByType[item.shoot];
-								if (proj.minion) weaponType = WeaponTypes.Minion;
-								else if (proj.sentry) weaponType = WeaponTypes.Sentry;
-								else weaponType = WeaponTypes.OtherSummon;
-							}
-						}
-					}
-					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClass.Magic)) {
-						if (Item.staff[item.type]) weaponType = WeaponTypes.Wand;
-						else weaponType = WeaponTypes.OtherMagic;
-					}
-					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClass.Melee)) weaponType = WeaponTypes.OtherMelee;
-					if (weaponType == WeaponTypes.None) {
-						switch (item.useAmmo) {
-							case ItemID.WoodenArrow:
-							weaponType = WeaponTypes.Bow;
-							break;
-							case ItemID.MusketBall:
-							weaponType = WeaponTypes.Gun;
-							break;
-							case ItemID.Gel:
-							weaponType = WeaponTypes.Flamethrower;
-							break;
-							case ItemID.Seed:
-							weaponType = WeaponTypes.DartLauncher;
-							break;
-
-							default:
-							if (item.IsAGun()) goto case ItemID.MusketBall;
-							if (item.useAmmo == ModContent.ItemType<Metal_Slug>()) {
-								weaponType = WeaponTypes.Handcannon;
-							} else if (item.useAmmo == ModContent.ItemType<Harpoon>()) {
-								weaponType = WeaponTypes.HarpoonGun;
-							} else if (item.useAmmo == AmmoID.Rocket) {
-								weaponType = WeaponTypes.RocketLauncher;
-							} else if (item.useAmmo == ModContent.ItemType<Resizable_Mine_Wood>()) {
-								weaponType = WeaponTypes.CanisterLauncher;
-							}
-							break;
-						}
-					}
-					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClass.Ranged)) {
-						weaponType = WeaponTypes.OtherRanged;
-					}
-					if (weaponType == WeaponTypes.None && !item.noMelee && item.useStyle == ItemUseStyleID.Swing) weaponType = WeaponTypes.Sword;
-				}
-				if (weaponType != WeaponTypes.None && !types.Any(t => t.ToString() == weaponType.ToString())) types.Add(weaponType.ToString());
-				if (weaponType != WeaponTypes.None && item.consumable) types.Add(WikiCategories.ExpendableWeapon);
-			}
 			switch (item.ammo) {
 				case ItemID.WoodenArrow:
 				types.Add(WikiCategories.Arrow);
@@ -462,21 +373,10 @@ namespace Origins.Dev {
 
 			if (item.ammo != 0 && item.ammo != ItemID.CopperOre) types.Add(WikiCategories.Ammo);
 			if (item.headSlot != -1 || item.bodySlot != -1 || item.legSlot != -1) types.Add(WikiCategories.Armor);
-			if (item.createTile != -1) {
-				types.Add(WikiCategories.Tile);
-				if (TileID.Sets.Torch[item.createTile]) types.Add(WikiCategories.Torch);
-				if (TileID.Sets.Ore[item.createTile]) types.Add(WikiCategories.Ore);
-				if (TileID.Sets.Stone[item.createTile]) types.Add(WikiCategories.Stone);
-				if (TileID.Sets.Grass[item.createTile]) types.Add(WikiCategories.Grass);
-				if (TileLoader.GetTile(item.createTile) is ModTile modTile) {
-					if (modTile is Bar_Tile) types.Add(WikiCategories.Bar);
-				}
-			}
 			if (modItem is ITornSource) {
 				types.Add(WikiCategories.Torn);
 				types.Add(WikiCategories.TornSource);
 			}
-			if (!string.IsNullOrWhiteSpace(OriginsSets.Items.JournalEntries[item.type])) types.Add(WikiCategories.LoreItem);
 			if (item.expert) types.Add(WikiCategories.Expert);
 			if (item.master) types.Add(WikiCategories.Master);
 			data.Add("Types", types);
@@ -575,6 +475,114 @@ namespace Origins.Dev {
 				yield return (WikiPageExporter.GetWikiName(value), SpriteGenerator.GenerateAnimationSprite(TextureAssets.Item[value.Type].Value, animation));
 			}
 			yield break;
+		}
+	}
+	[ReinitializeDuringResizeArrays]
+	public static class ItemCategories {
+		public static string[][] Categories { get; } = ItemID.Sets.Factory.CreateCustomSet<string[]>(null);
+		internal static void Initialize() {
+			for (int i = 0; i < ItemLoader.ItemCount; i++) Categories[i] = GetTags(new(i));
+		}
+		static string[] GetTags(Item item) {
+			HashSet<string> types = [];
+			if (item.ModItem is ICustomWikiStat customStat) foreach (string cat in customStat.Categories) types.Add(cat);
+			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None && (!types.Any(t => t.ToString() == WikiCategories.Tool) || types.Any(t => t.ToString() == WikiCategories.ToolWeapon))) {
+				types.Add(WikiCategories.Weapon);
+				WeaponTypes weaponType = WeaponTypes.None;
+				if (!types.Any(t => Enum.TryParse(t, out weaponType))) weaponType = WeaponTypes.None;
+				if (weaponType == WeaponTypes.None) {
+					if (item.CountsAsClass(DamageClasses.Explosive)) {
+						if (item.useAmmo == ModContent.ItemType<Resizable_Mine_Wood>()) {
+							weaponType = WeaponTypes.CanisterLauncher;
+						} else if (item.CountsAsClass(DamageClasses.ThrownExplosive)) {
+							weaponType = WeaponTypes.ThrownExplosive;
+						} else {
+							weaponType = WeaponTypes.OtherExplosive;
+						}
+					}
+					if (ItemID.Sets.Spears[item.type]) {
+						weaponType = WeaponTypes.Spear;
+					}
+					if (weaponType == WeaponTypes.None && item.shoot > ProjectileID.None) {
+						switch (ContentSamples.ProjectilesByType[item.shoot].aiStyle) {
+							case ProjAIStyleID.Boomerang:
+							weaponType = WeaponTypes.Boomerang;
+							break;
+
+							case ProjAIStyleID.Yoyo:
+							weaponType = WeaponTypes.Yoyo;
+							break;
+						}
+
+						if (item.CountsAsClass(DamageClass.Summon) && !types.Any(t => t.ToString() == nameof(WeaponTypes.Incantation))) {
+							if (Origins.ArtifactMinion[item.shoot]) weaponType = WeaponTypes.Artifact;
+							if (ProjectileID.Sets.IsAWhip[item.shoot]) {
+								weaponType = WeaponTypes.Whip;
+							} else if (item.CountsAsClass<Incantation>()) {
+								weaponType = WeaponTypes.Incantation;
+							} else {
+								Projectile proj = ContentSamples.ProjectilesByType[item.shoot];
+								if (proj.minion) weaponType = WeaponTypes.Minion;
+								else if (proj.sentry) weaponType = WeaponTypes.Sentry;
+								else weaponType = WeaponTypes.OtherSummon;
+							}
+						}
+					}
+					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClass.Magic)) {
+						if (Item.staff[item.type]) weaponType = WeaponTypes.Wand;
+						else weaponType = WeaponTypes.OtherMagic;
+					}
+					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClass.Melee)) weaponType = WeaponTypes.OtherMelee;
+					if (weaponType == WeaponTypes.None) {
+						switch (item.useAmmo) {
+							case ItemID.WoodenArrow:
+							weaponType = WeaponTypes.Bow;
+							break;
+							case ItemID.MusketBall:
+							weaponType = WeaponTypes.Gun;
+							break;
+							case ItemID.Gel:
+							weaponType = WeaponTypes.Flamethrower;
+							break;
+							case ItemID.Seed:
+							weaponType = WeaponTypes.DartLauncher;
+							break;
+
+							default:
+							if (item.IsAGun()) goto case ItemID.MusketBall;
+							if (item.useAmmo == ModContent.ItemType<Metal_Slug>()) {
+								weaponType = WeaponTypes.Handcannon;
+							} else if (item.useAmmo == ModContent.ItemType<Harpoon>()) {
+								weaponType = WeaponTypes.HarpoonGun;
+							} else if (item.useAmmo == AmmoID.Rocket) {
+								weaponType = WeaponTypes.RocketLauncher;
+							} else if (item.useAmmo == ModContent.ItemType<Resizable_Mine_Wood>()) {
+								weaponType = WeaponTypes.CanisterLauncher;
+							}
+							break;
+						}
+					}
+					if (weaponType == WeaponTypes.None && item.CountsAsClass(DamageClass.Ranged)) {
+						weaponType = WeaponTypes.OtherRanged;
+					}
+					if (weaponType == WeaponTypes.None && !item.noMelee && item.useStyle == ItemUseStyleID.Swing) weaponType = WeaponTypes.Sword;
+				}
+				if (weaponType != WeaponTypes.None && !types.Any(t => t.ToString() == weaponType.ToString())) types.Add(weaponType.ToString());
+				if (weaponType != WeaponTypes.None && item.consumable) types.Add(WikiCategories.ExpendableWeapon);
+			}
+
+			if (item.createTile != -1) {
+				types.Add(WikiCategories.Tile);
+				if (TileID.Sets.Torch[item.createTile]) types.Add(WikiCategories.Torch);
+				if (TileID.Sets.Ore[item.createTile]) types.Add(WikiCategories.Ore);
+				if (TileID.Sets.Stone[item.createTile]) types.Add(WikiCategories.Stone);
+				if (TileID.Sets.Grass[item.createTile]) types.Add(WikiCategories.Grass);
+				if (TileLoader.GetTile(item.createTile) is ModTile modTile) {
+					if (modTile is Bar_Tile) types.Add(WikiCategories.Bar);
+				}
+			}
+			if (!string.IsNullOrWhiteSpace(OriginsSets.Items.JournalEntries[item.type])) types.Add(WikiCategories.Lore);
+			return types.Count > 0 ? types.ToArray() : null;
 		}
 	}
 	public enum WeaponTypes {

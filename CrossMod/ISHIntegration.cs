@@ -1,11 +1,11 @@
 ﻿using Origins.Core;
+using Origins.Dev;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -47,6 +47,47 @@ namespace Origins.CrossMod {
 				}
 				return versionTags.TrySelect<(string name, HashSet<string> items), string>(DoSelect);
 			}));
+			itemSourceHelper.Call("AddItemTagProvider", (Func<Item, IEnumerable<string>>)(item => (ItemCategories.Categories[item.type] ?? []).Where(IsWikiCategoryTagFriendly)));
 		}
+		static bool IsWikiCategoryTagFriendly(string tag) => tag switch {
+			WikiCategories.Item => false,
+			WikiCategories.Potion => false,
+			WikiCategories.Food => false,
+			WikiCategories.BossSummon => false,
+			WikiCategories.Weapon => false,
+			WikiCategories.Tool => false,
+			WikiCategories.ArmorSet => false,
+			WikiCategories.Armor => false,
+			WikiCategories.Tile => false,
+			WikiCategories.Wall => false,
+			WikiCategories.Accessory => false,
+			WikiCategories.Ammo => false,
+			WikiCategories.Arrow => false,
+			WikiCategories.Bullet => false,
+			WikiCategories.Dart => false,
+			WikiCategories.Canistah => false,
+			WikiCategories.Rocket => false,
+			WikiCategories.Slug => false,
+			WikiCategories.Harpoon => false,
+			WikiCategories.RasterSource => false,
+			WikiCategories.ToxicSource => false,
+			WikiCategories.Torn => false,
+			WikiCategories.TornSource => false,
+			WikiCategories.Pet => false,
+			WikiCategories.LightPet => false,
+			WikiCategories.Hardmode => false,
+			WikiCategories.Expert => false,
+			WikiCategories.Master => false,
+			WikiCategories.ReworkExpected => false,
+			WikiCategories.PostMLArmorSet => false,
+			nameof(WeaponTypes.Spear) => false,
+			nameof(WeaponTypes.Gun) => false,
+			nameof(WeaponTypes.HarpoonGun) => false,
+			nameof(WeaponTypes.DartLauncher) => false,
+			nameof(WeaponTypes.Handcannon) => false,
+			nameof(WeaponTypes.RocketLauncher) => false,
+			nameof(WeaponTypes.CanisterLauncher) => false,
+			_ => true
+		};
 	}
 }
