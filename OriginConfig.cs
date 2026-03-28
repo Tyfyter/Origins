@@ -700,7 +700,6 @@ namespace Origins {
 			static bool ShouldBeUnobtainable(ModItem item) => ItemID.Sets.IsAPickup[item.Type] || ItemID.Sets.Deprecated[item.Type] || item is IExpectToBeUnobtainable;
 			HashSet<int> obtainableItems = [];
 			void AddObtainableItem(int type) {
-				if (ItemLoader.GetItem(type) is Formium_Bar) ;
 				obtainableItems.Add(type);
 			}
 			List<(int, List<int>)> recipeResultItems = [];

@@ -15,7 +15,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Liquids {
 	#region Vanilla
 	public class FishingLoot : ILoadable, IItemObtainabilityProvider {
-		public IEnumerable<int> ProvideItemObtainability() => GetContent<FishingLootPool>().SelectMany(p => p.Crate.Concat(p.Legendary.Concat(p.VeryRare.Concat(p.Rare.Concat(p.Uncommon.Concat(p.Common.Concat(p.QuestFish.Concat(p.Any))))))).SelectMany(f => f.ReportDrops()));
+		public IEnumerable<int> ProvideItemObtainability() => GetContent<FishingLootPool>().SelectMany(p => p.ReportDrops());
 		public static void AddToVanillaPools() {
 			GetInstance<CrimsonAltBiome.CrimsonFishingPool>().Rare.Add(FishingCatch.Item(ItemType<Blotopus>()));
 		}
