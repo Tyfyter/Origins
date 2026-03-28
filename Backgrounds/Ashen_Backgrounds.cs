@@ -76,13 +76,13 @@ namespace Origins.Backgrounds {
 			MiscShaderData shaderData = GameShaders.Misc["Origins:Muddle"]
 			.UseSamplerState(SamplerState.LinearClamp)
 			.UseImage1(perlin);
-			shaderData.Apply(null, [
+			shaderData.Apply(null, 
 				new("uOffset", new Vector2(Main.screenWidth / (float)perlin.Value.Width, destinationRectangle.Height / (float)perlin.Value.Height)),
 				new("uTargetPosition", new Vector2(0, 16 / (float)destinationRectangle.Height)),
 				new("uScale", 0.1f),
 				new("uScaleY", 0.1f),
 				new("uWorldPosition", Main.screenPosition * 0.1f + position * 0.1f - new Vector2(0, Main.GlobalTimeWrappedHourly * 5f))
-			]);
+			);
 			Main.spriteBatch.Draw(smogOverlay, destinationRectangle, Main.ColorOfTheSkies * Opacity);
 
 			Vector2 pos = default;
@@ -91,12 +91,12 @@ namespace Origins.Backgrounds {
 			Max(ref surface, space + 60 * 16);
 			float parallaxYBase = (float)Utils.GetLerpValue(surface, space, Main.screenPosition.Y, false);
 			Color color = Main.ColorOfTheSkies * Opacity * Opacity;
-			shaderData.Apply(null, [
+			shaderData.Apply(null, 
 				new("uOffset", new Vector2(clouds[0].Value.Width / (float)perlin.Value.Width, clouds[0].Value.Height / (float)perlin.Value.Height)),
 				new("uTargetPosition", new Vector2(4) / clouds[0].Value.Size()),
 				new("uScale", 0.5f),
 				new("uScaleY", 0.5f)
-			]);
+			);
 			for (int i = clouds.Length - 1; i >= 0; i--) {
 				Vector2 size = clouds[i].Value.Size();
 				float parallaxX = 0.10f * (i + 1);
