@@ -9,6 +9,7 @@ using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -315,10 +316,8 @@ namespace Origins {
 			RottenChunkRecipeGroupID = ALRecipeGroups.RottenChunks.RegisteredId;
 			ShadowScaleRecipeGroupID = ALRecipeGroups.ShadowScales.RegisteredId;
 			CursedFlameRecipeGroupID = ALRecipeGroups.CursedFlames.RegisteredId;
-			static void AddItemsToGroup(RecipeGroup group, params int[] items) {
-				for (int i = 0; i < items.Length; i++) {
-					group.ValidItems.Add(items[i]);
-				}
+			static void AddItemsToGroup(RecipeGroup group, params Span<int> items) {
+				for (int i = 0; i < items.Length; i++) group.ValidItems.Add(items[i]);
 			}
 			AddItemsToGroup(RecipeGroup.recipeGroups[RecipeGroupID.Sand],
 				ModContent.ItemType<Hardened_Defiled_Sand_Item>(),

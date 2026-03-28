@@ -136,7 +136,7 @@ namespace Origins.Core {
 		}
 	}
 	public static class ShaderExtensions {
-		public static void Apply(this MiscShaderData shaderData, DrawData? drawData = null, params AdvancedMiscShaderData.Parameter[] parameters) {
+		public static void Apply(this MiscShaderData shaderData, DrawData? drawData = null, params Span<AdvancedMiscShaderData.Parameter> parameters) {
 			using (SkipShaderApply _ = new()) shaderData.Apply(drawData);
 			for (int i = 0; i < parameters.Length; i++) parameters[i].Apply(shaderData.Shader.Parameters);
 			((ShaderData)shaderData).Apply();

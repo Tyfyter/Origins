@@ -542,7 +542,7 @@ namespace Origins {
 			public static implicit operator SlowdownPercent(float value) => new(value);
 			public static implicit operator float(SlowdownPercent value) => value.value;
 		}
-		private static void SetValues<T>(this T[] set, T value, params int[] indices) {
+		private static void SetValues<T>(this T[] set, T value, params Span<int> indices) {
 			for (int i = 0; i < indices.Length; i++) {
 				if (indices[i] != -1) set[indices[i]] = value;
 			}
