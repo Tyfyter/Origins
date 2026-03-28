@@ -7319,7 +7319,11 @@ Molten_Steel_Wall_Placed_Unsafe_Item: {
 
 Bark_Shield: {
 	// DisplayName: Bark Shield
-	// Tooltip: "{0}/{1} durability"
+	/* Tooltip:
+		'''
+		Releases damaging thorns upon taking damage
+		{0}/{1} durability
+		''' */
 }
 
 Armor_Power_Up: {

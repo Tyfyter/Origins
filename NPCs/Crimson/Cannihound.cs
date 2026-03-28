@@ -44,7 +44,7 @@ namespace Origins.NPCs.Crimson {
 			NPC.height = 50;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit1;
-			NPC.DeathSound = SoundID.NPCDeath1;
+			NPC.DeathSound = SoundID.NPCDeath38.WithPitch(2f);
 			NPC.knockBackResist = 0.3f;
 			NPC.value = 75;
 		}
@@ -84,6 +84,10 @@ namespace Origins.NPCs.Crimson {
 		}
 		public override bool? CanFallThroughPlatforms() => NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
 		public override void AI() {
+			if (Main.rand.NextBool(500)) {
+				SoundEngine.PlaySound(SoundID.Zombie8.WithPitch(1.5f).WithVolume(0.3f), NPC.Center);
+				SoundEngine.PlaySound(SoundID.Zombie40.WithPitch(1.2f).WithVolume(0.5f), NPC.Center);
+			}
 			NPC.TargetClosest(false);
 			NPCAimedTarget target = NPC.GetTargetData();
 			if (projTarget is not null && (!projTarget.active || projTarget.ModProjectile is not GoreProjectile)) projTarget = null;
