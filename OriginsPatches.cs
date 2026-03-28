@@ -7,6 +7,7 @@ using MonoMod.Cil;
 using Origins.Achievements;
 using Origins.Backgrounds;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Mounts;
@@ -474,6 +475,14 @@ namespace Origins {
 			On_TileLightScanner.ApplyHellLight += On_TileLightScanner_ApplyHellLight;
 			On_Main.DrawBlack += On_Main_DrawBlack;
 			On_Item.CloneDefaults += On_Item_CloneDefaults;
+			// do nothing if it's redundant
+			if (typeof(NPC).GetMethod(nameof(NPC.SetDefaultsKeepPlayerInteraction), [typeof(int), typeof(NPCSpawnParams)]) is null) {
+				On_NPC.CloneDefaults += On_NPC_CloneDefaults;
+			} else {
+#if DEBUG		// except in debug builds, where it'll notify us
+				throw new Exception($"Hey, this is redundant now, just delete this whole if/else block, {nameof(On_NPC_CloneDefaults)}, and {nameof(_currentGameModeInfo)}");
+#endif
+			}
 			On_Lighting.AddLight_int_int_float_float_float += On_Lighting_AddLight_int_int_float_float_float;
 			On_Dust.NewDust += On_Dust_NewDust;
 			On_Gore.NewGore_IEntitySource_Vector2_Vector2_int_float += On_Gore_NewGore_IEntitySource_Vector2_Vector2_int_float;
@@ -1181,6 +1190,11 @@ namespace Origins {
 			} finally {
 				OriginGlobalItem.isOriginsItemCloningDefaults = false;
 			}
+		}
+		static FastStaticFieldInfo<Main, GameModeData> _currentGameModeInfo = "_currentGameModeInfo";
+		static void On_NPC_CloneDefaults(On_NPC.orig_CloneDefaults orig, NPC self, int Type) {
+			using ScopedOverride<GameModeData> _ = new(ref _currentGameModeInfo.Value, GameModeData.NormalMode);
+			orig(self, Type);
 		}
 
 		private void FixWrongWaterfallAlpha_IL(ILContext il) {
