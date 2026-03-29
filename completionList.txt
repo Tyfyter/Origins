@@ -237,7 +237,7 @@ ENEMY NPCS:
 (^) Gas Mask Zombie
 (^) Goo Wall
 (^) Graveshield Zombie
-(^) Hammerhand
+(#2, ^2) Hammerhand !!!
 (X) Limestone Creeper
 (^) Optiphage
 (#, ^2) Packhunter !!!
@@ -421,7 +421,7 @@ ACHIEVEMENTS:
 (^) Now You're the One Lying Broken
 (^) Peat Obsession
 (^) RIVEN WORMS
-(@, ^3) Slow Loading Bar !!!
+(^) Slow Loading Bar
 (々) The Signal, it's Calling !!!
 (^) There's Something in There!
 (^) 'Till Death Mildew Us Part
@@ -1562,7 +1562,7 @@ MATERIALS:
 (^) Parasitic Powder
 (^) Riven Carapace
 (^) Riven Seeds
-(@4, #2) Robot Guts !!!
+(#2, ^2) Robot Guts !!!
 (^) Rubber
 (^) Sanguinite Bar
 (^) Silicon Bar
@@ -1952,9 +1952,12 @@ CROSS-MOD CONTENT:
 
 UI:
 |---
+(#, ^2) Ashen Desert Icon !!!
 (^) Ashen Icon
 (X) Ashen Map/Bestiary Backdrop !!!
-(X) Ashen Mines Icon !!!
+(#, ^2) Ashen Mines Icon !!!
+(#, ^2) Ashen Snow Icon !!!
+(#, ^2) Ashen Underground Desert Icon !!!
 (^) Brine Icon
 (^) Brine Map/Bestiary Backdrop
 (X) Cosmos Map/Bestiary Backdrop
@@ -1980,7 +1983,7 @@ UI:
 (^) Riven Map/Bestiary Backdrop
 (^) Riven Snow Icon
 (^) Riven Underground Desert Icon
-(X) Underground Ashen Background !!!
+(#, ^2) Underground Ashen Background !!!
 (^) Underground Defiled Background
 (@4) Underground Fiberglass Background
 (^) Underground Riven Background

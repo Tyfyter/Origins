@@ -184,7 +184,6 @@ namespace Origins.Achievements {
 		}
 	}
 	public class Slow_Loading_Bar : ModAchievement {
-		public override string TextureName => "Origins/Achievements/Template"; // temp, remove when has sprite
 		public CustomFloatCondition Condition { get; private set; }
 		public override void SetStaticDefaults() {
 			Achievement.SetCategory(AchievementCategory.Challenger);
