@@ -752,7 +752,7 @@ Mechanicus_Sovereignty: {
 		// Name: "{$Items.Biocomponent10.DisplayName}"
 		/* Text:
 			'''
-			[header:Biocomponent 10 (1/{$SeriesLength})]
+			[header:Robot Guts (1/{$SeriesLength})]
 			[jimage/sc3d:Origins/Items/Materials/Biocomponent10]
 
 

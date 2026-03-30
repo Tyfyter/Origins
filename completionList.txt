@@ -1954,7 +1954,7 @@ UI:
 |---
 (#, ^2) Ashen Desert Icon !!!
 (^) Ashen Icon
-(X) Ashen Map/Bestiary Backdrop !!!
+(#, ^2) Ashen Map/Bestiary Backdrop !!!
 (#, ^2) Ashen Mines Icon !!!
 (#, ^2) Ashen Snow Icon !!!
 (#, ^2) Ashen Underground Desert Icon !!!
