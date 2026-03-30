@@ -518,6 +518,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			dust.velocity *= 0.5f;
 			dust.noGravity = true;
 		}
-		public override Color? GetAlpha(Color lightColor) => new(255, 255, 255, 100);
+		public override Color? GetAlpha(Color lightColor) => new Color(255, 255, 255, 100) * Projectile.Opacity;
 	}
 }

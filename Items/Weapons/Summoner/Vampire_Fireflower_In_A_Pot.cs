@@ -100,7 +100,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 	}
 	public class Vampire_Sunflower_P : Sunflower_Sunny_P {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Sunflower_Sunny_P";
-		public override Color? GetAlpha(Color lightColor) => new(255, 80, 0, 100);
+		public override Color? GetAlpha(Color lightColor) => new Color(255, 80, 0, 100) * Projectile.Opacity;
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.MinionShot[Type] = true;
 		}
