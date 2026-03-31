@@ -3,6 +3,7 @@ using Origins.Core;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -12,8 +13,8 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
-	public class Deactivated_Trenchmaker : OriginTile, IMultiTypeMultiTile {
-		public static int ID { get; private set; }
+	public class Deactivated_Trenchmaker : OriginTile, IMultiTypeMultiTile, IStyleSelectingTile {
+		int IStyleSelectingTile.StyleCount => 3;
 		public static bool[,,] Shape = MultiTypeMultiTile.GenerateShapeMap(
 			"     XX  |XXXX XX  |XXXX XX  ",
 			"XXXXXXXXX|XXXXXXXX |XXXXXXXXX",
@@ -46,7 +47,6 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
-			ID = Type;
 			RegisterItemDrop(ModContent.ItemType<Deactivated_Trenchmaker_Item>(), -1);
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
@@ -96,8 +96,8 @@ namespace Origins.Tiles.Ashen {
 		}
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => IsPart(x - left, y - top, style);
 	}
-	public class Deactivated_Trenchmaker_Side : OriginTile, IMultiTypeMultiTile {
-		public static int ID { get; private set; }
+	public class Deactivated_Trenchmaker_Side : OriginTile, IMultiTypeMultiTile, IStyleSelectingTile {
+		int IStyleSelectingTile.StyleCount => 3;
 		public static bool[,,] Shape = MultiTypeMultiTile.GenerateShapeMap(
 			"  XXX XX|  XXX XX|        |XX XXX  |XX XXX  |        ",
 			"XXXXXXXX|XXXXXXXX|XXXXXXX |XXXXXXXX|XXXXXXXX| XXXXXXX",
@@ -134,7 +134,6 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newAlternate.AnchorBottom = new(AnchorType.SolidTile, 4, 3);
 			TileObjectData.addAlternate(3);
 			TileObjectData.addTile(Type);
-			ID = Type;
 			RegisterItemDrop(ModContent.ItemType<Deactivated_Trenchmaker_Item>(), -1);
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
@@ -167,22 +166,19 @@ namespace Origins.Tiles.Ashen {
 		}
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => IsPart(x - left, y - top, style);
 	}
-	public class Deactivated_Trenchmaker_Item : ModItem {
-		public override void SetStaticDefaults() {
+	public class Deactivated_Trenchmaker_Item : StyleSelectingTileItem {
+		public override void OnSetStaticDefaults() {
 			Item.ResearchUnlockCount = 25;
 		}
-		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(Deactivated_Trenchmaker.ID);
+		public override void OnSetDefaults() {
 			Item.width = 14;
 			Item.height = 28;
 			Item.value = 150;
 		}
-		public override void HoldItem(Player player) {
-			if ((PlayerInput.Triggers.JustPressed.Up && Item.placeStyle.CycleUp(3)) || (PlayerInput.Triggers.JustPressed.Down && Item.placeStyle.CycleDownWithZero(3))) {
-				if (Item.createTile == Deactivated_Trenchmaker.ID) Item.createTile = Deactivated_Trenchmaker_Side.ID;
-				else Item.createTile = Deactivated_Trenchmaker.ID;
-			}
-		}
+		protected override IEnumerable<StyleSelectingTile> SetupTiles() => [
+			Tile<Deactivated_Trenchmaker>(),
+			Tile<Deactivated_Trenchmaker_Side>(),
+		];
 		public override void AddRecipes() {
 			CreateRecipe()
 			.AddIngredient<Biocomponent10>(15)
