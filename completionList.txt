@@ -1393,6 +1393,7 @@ TILES:
 (^) Medium Storage Container
 (^) Modular Bunk
 (X) Mushroom Dungeon Chest
+(X) Nerve Field Block !!!
 (X) Nova Monolith
 (X) Ocean Dungeon Chest
 (^) Oil Derrick
@@ -1673,6 +1674,7 @@ CONSUMABLES:
 
 (†, 々) Astringent Broth
 (^) Bitter Broth
+(X) Chalky Broth !!!
 (^) Foul Broth
 (^) Greasy Broth
 (^) Hearty Broth
@@ -1681,6 +1683,7 @@ CONSUMABLES:
 (†, 々) Metallic Broth
 (^) Minishark Broth
 (^) Minty Broth
+(X) Mushy Broth !!!
 (^) Plain Broth
 (^) Savory Broth
 (^) Sharp Broth

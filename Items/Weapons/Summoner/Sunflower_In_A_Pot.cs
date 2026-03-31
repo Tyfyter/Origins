@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void SetDefaults() {
 			Item.damage = 9;
-			Item.knockBack = 1f;
+			Item.knockBack = 0;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 14;
 			Item.shootSpeed = 9f;

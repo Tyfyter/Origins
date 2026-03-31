@@ -61,6 +61,7 @@ namespace Origins.Questing {
 			yield return new ShopItem<Flashbang>(25);
 			yield return new ShopItem<IWTPA_Standard>(35);
 			yield return new ShopItem<Impact_Grenade>(40);
+			yield return new ShopItem<Eyenade>(48, Condition.DownedEyeOfCthulhu);
 			yield return new ShopItem<Defiled_Spirit>(50, OriginGlobalNPC.WorldEvilBossCondition<Defiled_Wastelands_Alt_Biome>("Mods.Origins.Conditions.DownedDefiledAmalgamation"));
 			yield return new ShopItem<Ameballoon>(60, OriginGlobalNPC.WorldEvilBossCondition<Riven_Hive_Alt_Biome>("Mods.Origins.Conditions.DownedWorldCracker"));
 			yield return new ShopItem<Impact_Bomb>(70);
