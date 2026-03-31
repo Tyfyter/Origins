@@ -534,7 +534,7 @@ namespace Origins.Core {
 			}
 		}
 		public static void SyncToPlayer(int player) => ModContent.GetInstance<SpecialChestSystem>().SyncToPlayer(player);
-		class SpecialChestSystem : ModSystem {
+		public class SpecialChestSystem : ModSystem {
 			public UserInterface chestUI = new();
 			public override void UpdateUI(GameTime gameTime) {
 				if (chestUI.CurrentState is not null && (!Main.playerInventory || Main.LocalPlayer.chest != chestID)) {

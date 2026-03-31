@@ -194,14 +194,17 @@ namespace Origins.Tiles.Ashen {
 			internal override void NetSend(BinaryWriter writer) {
 				writer.WriteCompressedItemArray(Inventory);
 			}
-			public override void ModifySlotPosition(Item item, int slot, ref int xPos, ref int yPos) => xPos += (int)(slot * 56 * Main.inventoryScale);
+			public override void ModifySlotPosition(Item item, int slot, ref int xPos, ref int yPos) {
+				Vector2 offset = new Vector2(3.5f, 1.5f) * 56 * Main.inventoryScale;
+				xPos += (int)(slot * 56 * Main.inventoryScale) + (int)offset.X;
+				yPos += (int)offset.Y;
+			}
 			public override void DrawItemSlot(SpriteBatch spriteBatch, Vector2 position, Item item, int slot) {
 				if (slot > 1) return;
 				Item air = new();
 				Item icon = item;
 				Color itemColor = default;
 				Vector2 offset = new Vector2(3.5f, 1.5f) * 56 * Main.inventoryScale;
-				position += offset;
 				if (slot == 0) {
 					spriteBatch.Draw(
 						bgTexture,
@@ -247,6 +250,29 @@ namespace Origins.Tiles.Ashen {
 				return false;
 			}
 			protected internal override bool IsValidSpot(Point position) => Main.tile[position].TileIsType(ModContent.TileType<Oil_Derrick>());
+			public override bool OverrideHover(Item[] inv, int context, int slot) {
+				switch (context) {
+					case ItemSlot.Context.InventoryItem:
+					case ItemSlot.Context.InventoryCoin:
+					case ItemSlot.Context.InventoryAmmo:
+					if (ItemSlot.ShiftInUse) {
+						if (inv[slot].type != ItemID.EmptyBucket) return true;
+						if (TryPlacingInChest(inv[slot], true, Items().AsSpan(0, 1))) Main.cursorOverride = CursorOverrideID.InventoryToChest;
+						return true;
+					}
+					break;
+				}
+				return false;
+			}
+			public override bool OverrideLeftClick(Item[] inv, int context, int slot) {
+				if (ItemSlot.ShiftInUse && PlayerLoader.ShiftClickSlot(Main.LocalPlayer, inv, context, slot)) return true;
+				if (Main.cursorOverride == 9) {
+					TryPlacingInChest(inv[slot], false, Items().AsSpan(0, 1));
+					ModContent.GetInstance<SpecialChestSystem>().ConsumeNetDirtyChests();
+					return true;
+				}
+				return false;
+			}
 			public class LootAllButton : SpecialChestButton {
 				public override LocalizedText Text => Language.GetText("LegacyInterface.29");
 				public override bool Click() {
