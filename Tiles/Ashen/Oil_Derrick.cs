@@ -4,6 +4,7 @@ using Origins.Core;
 using Origins.Items.Tools.Liquids;
 using Origins.World.BiomeData;
 using ReLogic.Utilities;
+using System;
 using System.IO;
 using System.Linq;
 using Terraria;
@@ -153,6 +154,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override SpecialChest.ChestData CreateChestData() => new Oil_Derrick_Container_Data();
 		public record class Oil_Derrick_Container_Data() : ChestData() {
+			static AutoLoadingTexture uiTexture = "Origins/UI/Oil_Derrick_UI";
 			public static int TimePerBucket => 60 * 10;
 			public Item[] Inventory { get; init; } = OriginExtensions.BuildFullArray<Item>(2);
 			public int oilTime;
@@ -162,7 +164,7 @@ namespace Origins.Tiles.Ashen {
 			public override Item[] Items(bool forCrafting = false) => Inventory;
 			public override void UpdateChest(Point16 position) {
 				Item output = Inventory[1];
-				if (output.stack >= output.maxStack) return;
+				if (!output.IsAir && output.stack >= output.maxStack) return;
 				if (++oilTime >= TimePerBucket) {
 					Item input = Inventory[0];
 					if (input.IsAir) return;
@@ -202,9 +204,14 @@ namespace Origins.Tiles.Ashen {
 						icon = new(ModContent.ItemType<Oil_Bucket>());
 						itemColor = new(110, 128, 54, 100);
 					}
-					air.SetDefaults(ItemID.ArrowSign);
-					float brightness = 1 - oilTime / (float)TimePerBucket;
-					ItemSlot.Draw(spriteBatch, ref air, ItemSlot.Context.ChatItem, position - Vector2.UnitX * 56 * Main.inventoryScale, new(brightness, brightness, brightness, 1));
+					const int frames = 11;
+					Rectangle frame = uiTexture.Frame(verticalFrames: frames + 1, frameY: Math.Min((oilTime * frames) / TimePerBucket, frames));
+					spriteBatch.Draw(
+						uiTexture,
+						position - frame.Size() * 0.5f + (Vector2.One * 0.5f - Vector2.UnitX) * 56 * Main.inventoryScale,
+						frame,
+						Color.White
+					);
 				}
 				ItemSlot.Draw(spriteBatch, ref icon, ItemSlot.Context.ChatItem, position, itemColor);
 			}
