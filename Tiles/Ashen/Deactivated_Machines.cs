@@ -44,7 +44,6 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
 			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart);
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
-			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
 			ID = Type;
@@ -129,7 +128,6 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.Direction = TileObjectDirection.PlaceRight;
 			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart);
 			TileObjectData.newTile.AnchorBottom = new(AnchorType.SolidTile, 4, 1);
-			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
 			TileObjectData.newAlternate.Direction = TileObjectDirection.PlaceLeft;
@@ -180,7 +178,7 @@ namespace Origins.Tiles.Ashen {
 			Item.value = 150;
 		}
 		public override void HoldItem(Player player) {
-			if (PlayerInput.Triggers.JustPressed.Up || PlayerInput.Triggers.JustPressed.Down) {
+			if ((PlayerInput.Triggers.JustPressed.Up && Item.placeStyle.CycleUp(3)) || (PlayerInput.Triggers.JustPressed.Down && Item.placeStyle.CycleDownWithZero(3))) {
 				if (Item.createTile == Deactivated_Trenchmaker.ID) Item.createTile = Deactivated_Trenchmaker_Side.ID;
 				else Item.createTile = Deactivated_Trenchmaker.ID;
 			}

@@ -3216,6 +3216,16 @@ namespace Origins {
 			}
 			return false;
 		}
+		public static bool CycleDownWithZero(ref this float value, float from, float rate = 1) => value.CycleDownWithZero<float>(from, rate);
+		public static bool CycleDownWithZero(ref this int value, int from, int rate = 1) => value.CycleDownWithZero<int>(from, rate);
+		public static bool CycleDownWithZero<N>(ref this N value, N from, N rate) where N : struct, INumber<N> {
+			value -= rate;
+			if (value < N.Zero) {
+				value += from;
+				return true;
+			}
+			return false;
+		}
 		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			Vector2 pos = area.TopLeft() + offset;
 			float amt = 10; // as to try to not spawn to many dusts
