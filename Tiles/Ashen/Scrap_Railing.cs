@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Ashen {
 	public class Scrap_Railing : Platform_Tile {
+		public static int ID { get; private set; }
 		public override void OnLoad() {
 			Item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type, 4)
@@ -17,6 +18,7 @@ namespace Origins.Tiles.Ashen {
 			};
 		}
 		public override void SetStaticDefaults() {
+			ID = Type;
 			base.SetStaticDefaults();
 			TileID.Sets.Platforms[Type] = false;
 			TileID.Sets.CanPlaceNextToNonSolidTile[Type] = true;
