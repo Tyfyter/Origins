@@ -930,7 +930,7 @@ namespace Origins.Tiles {
 			Item.DefaultToPlaceableTile(Tile.Type);
 			Item.width = 14;
 			Item.height = 28;
-			if (!IsDebug) Item.value = 150;
+			if (!IsDebug && Tile is FurnitureBase) Item.value = 150;
 			ExtraDefaults?.Invoke(Item);
 		}
 		public override void AddRecipes() {

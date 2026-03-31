@@ -15,7 +15,6 @@ namespace Origins.Tiles.Defiled {
 		public override void Load() {
 			Mod.AddContent(Item = new TileItem(this).WithExtraStaticDefaults(static item => {
 				item.ResearchUnlockCount = 100;
-				item.value = 0;
 				ItemTrader.ChlorophyteExtractinator.AddOption_FromAny(ItemID.StoneBlock, item.type);
 			}));
 			Chambersite_Ore.Create(this, Item, () => Defiled_Wastelands.DefaultTileDust, hitSound: () => Origins.Sounds.DefiledIdle);
