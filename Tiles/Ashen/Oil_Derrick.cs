@@ -5,6 +5,7 @@ using Origins.Items.Tools.Liquids;
 using Origins.World.BiomeData;
 using ReLogic.Utilities;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
@@ -13,6 +14,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
@@ -154,10 +156,16 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override SpecialChest.ChestData CreateChestData() => new Oil_Derrick_Container_Data();
 		public record class Oil_Derrick_Container_Data() : ChestData() {
+			static AutoLoadingTexture bgTexture = "Origins/UI/Oil_Derrick_BG";
 			static AutoLoadingTexture uiTexture = "Origins/UI/Oil_Derrick_UI";
 			public static int TimePerBucket => 60 * 10;
 			public Item[] Inventory { get; init; } = OriginExtensions.BuildFullArray<Item>(2);
 			public int oilTime;
+			public override IEnumerable<SpecialChestButton> Buttons => [
+				ModContent.GetInstance<LootAllButton>(),
+				ModContent.GetInstance<DepositAllButton>()
+			];
+			public override string GivenName => Language.GetTextValue("Mods.Origins.Items.Oil_Derrick_Item.DisplayName");
 			public override bool CanReceiveNearbyQuickStack(int x, int y) {
 				return false;
 			}
@@ -192,7 +200,19 @@ namespace Origins.Tiles.Ashen {
 				Item air = new();
 				Item icon = item;
 				Color itemColor = default;
+				Vector2 offset = new Vector2(3.5f, 1.5f) * 56 * Main.inventoryScale;
+				position += offset;
 				if (slot == 0) {
+					spriteBatch.Draw(
+						bgTexture,
+						position - offset,
+						null,
+						Color.White,
+						0,
+						Vector2.Zero,
+						Main.inventoryScale,
+						SpriteEffects.None,
+					0);
 					ItemSlot.Draw(spriteBatch, ref air, ItemSlot.Context.ChestItem, position);
 					if (item.IsAir) {
 						icon = new(ItemID.EmptyBucket);
@@ -208,7 +228,7 @@ namespace Origins.Tiles.Ashen {
 					Rectangle frame = uiTexture.Frame(verticalFrames: frames + 1, frameY: Math.Min((oilTime * frames) / TimePerBucket, frames));
 					spriteBatch.Draw(
 						uiTexture,
-						position - frame.Size() * 0.5f + (Vector2.One * 0.5f - Vector2.UnitX) * 56 * Main.inventoryScale,
+						position - new Vector2(17, 17) + (Vector2.One * 0.5f - Vector2.UnitX) * 56 * Main.inventoryScale,
 						frame,
 						Color.White
 					);
@@ -227,6 +247,30 @@ namespace Origins.Tiles.Ashen {
 				return false;
 			}
 			protected internal override bool IsValidSpot(Point position) => Main.tile[position].TileIsType(ModContent.TileType<Oil_Derrick>());
+			public class LootAllButton : SpecialChestButton {
+				public override LocalizedText Text => Language.GetText("LegacyInterface.29");
+				public override bool Click() {
+					Item[] items = CurrentChest.Items();
+					if (items[1].IsAir) return false;
+					GetItemSettings lootAllSettingsRegularChest = GetItemSettings.LootAllSettingsRegularChest;
+					items[1].position = Main.LocalPlayer.Center;
+					items[1] = Main.LocalPlayer.GetItem(Main.myPlayer, items[1], lootAllSettingsRegularChest);
+					return true;
+				}
+			}
+			public class DepositAllButton : SpecialChestButton {
+				public override LocalizedText Text => Language.GetText("LegacyInterface.30");
+				public override bool Click() {
+					bool didAnything = false;
+					Span<Item> input = CurrentChest.Items().AsSpan(0, 1);
+					for (int i = 10; i < Main.InventoryItemSlotsCount; i++) {
+						Item item = Main.LocalPlayer.inventory[i];
+						if (item.favorited || item.type != ItemID.EmptyBucket) continue;
+						didAnything |= TryPlacingInChest(item, false, input);
+					}
+					return didAnything;
+				}
+			}
 		}
 	}
 }

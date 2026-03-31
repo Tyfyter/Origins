@@ -346,8 +346,8 @@ namespace Origins.Core {
 				}
 				return item;
 			}
-			public bool TryPlacingInChest(Item item, bool justCheck) {
-				Item[] items = Items();
+			public bool TryPlacingInChest(Item item, bool justCheck) => TryPlacingInChest(item, justCheck, Items().AsSpan());
+			public static bool TryPlacingInChest(Item item, bool justCheck, Span<Item> items) {
 				bool sync = false;
 				bool success = false;
 				for (int i = 0; i < items.Length; i++) {
@@ -398,6 +398,7 @@ namespace Origins.Core {
 				}
 				return success;
 			}
+
 			public sealed record class Invalid : ChestData {
 				protected internal override bool IsValidSpot(Point position) => false;
 				public override Item[] Items(bool forCrafting = false) => [];
