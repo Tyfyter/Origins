@@ -346,14 +346,16 @@ namespace Origins.Core {
 				}
 				return item;
 			}
+			public virtual bool CanAcceptQuickMove(Item item, Span<Item> items, int index) => true;
 			public bool TryPlacingInChest(Item item, bool justCheck) => TryPlacingInChest(item, justCheck, Items().AsSpan());
-			public static bool TryPlacingInChest(Item item, bool justCheck, Span<Item> items) {
+			public bool TryPlacingInChest(Item item, bool justCheck, Span<Item> items) {
 				bool sync = false;
 				bool success = false;
 				for (int i = 0; i < items.Length; i++) {
-					if (items[i].stack >= items[i].maxStack || item.type != items[i].type || !ItemLoader.CanStack(items[i], item)) {
+					if (!items[i].IsAir && (items[i].stack >= items[i].maxStack || item.type != items[i].type || !ItemLoader.CanStack(items[i], item))) {
 						continue;
 					}
+					if (!CanAcceptQuickMove(item, items, i)) continue;
 					int depositedCount = item.stack;
 					if (item.stack + items[i].stack > items[i].maxStack) {
 						depositedCount = items[i].maxStack - items[i].stack;
@@ -380,6 +382,7 @@ namespace Origins.Core {
 						if (items[i].stack != 0) {
 							continue;
 						}
+						if (!CanAcceptQuickMove(item, items, i)) continue;
 						if (justCheck) {
 							success = true;
 							break;

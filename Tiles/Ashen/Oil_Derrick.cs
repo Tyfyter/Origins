@@ -257,7 +257,7 @@ namespace Origins.Tiles.Ashen {
 					case ItemSlot.Context.InventoryAmmo:
 					if (ItemSlot.ShiftInUse) {
 						if (inv[slot].type != ItemID.EmptyBucket) return true;
-						if (TryPlacingInChest(inv[slot], true, Items().AsSpan(0, 1))) Main.cursorOverride = CursorOverrideID.InventoryToChest;
+						if (TryPlacingInChest(inv[slot], true)) Main.cursorOverride = CursorOverrideID.InventoryToChest;
 						return true;
 					}
 					break;
@@ -267,12 +267,13 @@ namespace Origins.Tiles.Ashen {
 			public override bool OverrideLeftClick(Item[] inv, int context, int slot) {
 				if (ItemSlot.ShiftInUse && PlayerLoader.ShiftClickSlot(Main.LocalPlayer, inv, context, slot)) return true;
 				if (Main.cursorOverride == 9) {
-					TryPlacingInChest(inv[slot], false, Items().AsSpan(0, 1));
+					TryPlacingInChest(inv[slot], false);
 					ModContent.GetInstance<SpecialChestSystem>().ConsumeNetDirtyChests();
 					return true;
 				}
 				return false;
 			}
+			public override bool CanAcceptQuickMove(Item item, Span<Item> items, int index) => index == 0 && item.type == ItemID.EmptyBucket;
 			public class LootAllButton : SpecialChestButton {
 				public override LocalizedText Text => Language.GetText("LegacyInterface.29");
 				public override bool Click() {
@@ -288,11 +289,10 @@ namespace Origins.Tiles.Ashen {
 				public override LocalizedText Text => Language.GetText("LegacyInterface.30");
 				public override bool Click() {
 					bool didAnything = false;
-					Span<Item> input = CurrentChest.Items().AsSpan(0, 1);
 					for (int i = 10; i < Main.InventoryItemSlotsCount; i++) {
 						Item item = Main.LocalPlayer.inventory[i];
-						if (item.favorited || item.type != ItemID.EmptyBucket) continue;
-						didAnything |= TryPlacingInChest(item, false, input);
+						if (item.favorited) continue;
+						didAnything |= CurrentChest.TryPlacingInChest(item, false);
 					}
 					return didAnything;
 				}
