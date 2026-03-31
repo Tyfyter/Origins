@@ -53,7 +53,7 @@ namespace Origins.Core.Structures {
 			StructureInstance instance;
 			while (start.TryPop(out ARoom startRoom)) {
 				bool canGenerate = false;
-				int tries = 100000;
+				int tries = 10;
 				do {
 					instance = new(this);
 					if (!instance.TryAdd(new(startRoom, new Point(i, j) - startRoom.GetOrigin(startRoom.StartPos)), out instance)) break;
@@ -232,7 +232,7 @@ namespace Origins.Core.Structures {
 		public override string ToString() => string.Join('+', Parts ?? [nameof(Void)]);
 		public static TileDescriptor operator +(TileDescriptor a, TileDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Action + b.Action, CombineParts(a, b), a.Ignore && b.Ignore);
 	}
-	public record class RoomSocket(string Key, Direction Direction, bool Optional = false) {
+	public record class RoomSocket(string Key, Direction Direction, bool Optional = false, bool Offset = true) {
 		public class RoomSocketConverter : JsonConverter {
 			public override bool CanConvert(Type objectType) {
 				ArgumentNullException.ThrowIfNull(objectType, nameof(objectType));
@@ -247,6 +247,7 @@ namespace Origins.Core.Structures {
 				string Key = null;
 				Direction? Direction = null;
 				bool Optional = false;
+				bool Offset = true;
 				while (reader.Read()) {
 					switch (reader.TokenType) {
 						case JsonToken.Comment: break;
@@ -263,6 +264,10 @@ namespace Origins.Core.Structures {
 							case nameof(Optional):
 							Optional = reader.ReadAsBoolean().Value;
 							break;
+
+							case nameof(Offset):
+							Offset = reader.ReadAsBoolean().Value;
+							break;
 							
 							default:
 							throw new FormatException($"{reader.Value} is not a valid property name of {nameof(RoomSocket)}");
@@ -271,7 +276,7 @@ namespace Origins.Core.Structures {
 						case JsonToken.EndObject:
 						if (Key is null) throw new FormatException($"{nameof(Key)} must be specified");
 						if (Direction is null) throw new FormatException($"{nameof(Direction)} must be specified");
-						return new RoomSocket(Key, Direction.Value, Optional);
+						return new RoomSocket(Key, Direction.Value, Optional, Offset);
 						default:
 						throw new FormatException();
 					}
@@ -346,20 +351,7 @@ namespace Origins.Core.Structures {
 
 				Direction direction = socket.Direction;
 				Point pos = new(x, y);
-				switch (direction) {
-					case Direction.Right:
-					pos.X++;
-					break;
-					case Direction.Left:
-					pos.X--;
-					break;
-					case Direction.Up:
-					pos.Y--;
-					break;
-					case Direction.Down:
-					pos.Y++;
-					break;
-				}
+				if (socket.Offset) direction.Nudge(ref pos.X, ref pos.Y);
 				foreach ((ARoom room, char entrance) in lookup[socket.Key][direction.Index()]) {
 					float weight = room.GetWeight(new(this, pos, fromRoom, socket.Key));
 					if (weight <= 0) continue;
@@ -374,7 +366,7 @@ namespace Origins.Core.Structures {
 			}
 		}
 		public bool CanGenerate() {
-			if (socketTracker.RequiredCount > 0) return false;
+			//if (socketTracker.RequiredCount > 0) return false;
 			if (!structure.IsValidLayout(this)) return false;
 			if (!rooms.CanGenerate()) return false;
 			return true;
@@ -448,9 +440,10 @@ namespace Origins.Core.Structures {
 					for (int x = 0; x < map[y].Length; x++) {
 						int posIndex = i + x + (j + y) * Main.maxTilesX;
 						char currentTile = map[y][x];
+						bool hasSocket = Room.SocketKey.TryGetValue(currentTile, out RoomSocket socket);
+						if (hasSocket) socketTracker.Add(socket, Room, i + x, j + y);
 						if (Room.Key[currentTile].Ignore) continue;
-						if (Room.SocketKey.TryGetValue(currentTile, out RoomSocket socket)) socketTracker.Add(socket, Room, i + x, j + y, socket.Optional);
-						else if (socketTracker.IsImportant(i + x, j + y)) return false;
+						if (!hasSocket && socketTracker.IsImportant(i + x, j + y)) return false;
 						Tile existing = Main.tile[i + x, j + y];
 						if (existing.HasTile && !TileID.Sets.CanBeClearedDuringGeneration[existing.TileType]) return false;
 						if (GenVars.structures is not null) {
@@ -490,35 +483,38 @@ namespace Origins.Core.Structures {
 		}
 	}
 	public class SocketTracker {
-		readonly List<int> requiredSockets = [];
+		List<int> RequiredSockets { get; init; } = [];
 		public List<TrackedSocket> sockets = [];
-		public int RequiredCount => requiredSockets.Count;
-		public void Add(RoomSocket socket, ARoom fromRoom, int i, int j, bool optional) {
+		public int RequiredCount => RequiredSockets.Count;
+		public void Add(RoomSocket socket, ARoom fromRoom, int i, int j) {
 			int x = i;
 			int y = j;
-			socket.Direction.Nudge(ref x, ref y);
+			if (socket.Offset) socket.Direction.Nudge(ref x, ref y);
 			for (int k = 0; k < sockets.Count; k++) {
 				(RoomSocket socket2, _, int i2, int j2) = sockets[k];
 				if (i2 == x && j2 == y) {
 					if (socket.Direction.IsInverse(socket2.Direction)) {
-						requiredSockets.Remove(k);
+						RequiredSockets.Remove(k);
 						sockets.RemoveAt(k);
 					}
 					return;
 				}
 			}
-			if (!optional) requiredSockets.Add(sockets.Count);
+			if (!socket.Optional) RequiredSockets.Add(sockets.Count);
 			sockets.Add(new(socket, fromRoom, i, j));
 		}
 		public bool IsImportant(int i, int j) {
 			for (int k = 0; k < sockets.Count; k++) {
-				(RoomSocket socket, _, int i2, int j2) = sockets[k];
-				socket.Direction.Nudge(ref i2, ref j2);
-				if (i2 == i && j2 == j) return true;
+				(RoomSocket socket, _, int x, int y) = sockets[k];
+				if (socket.Offset) socket.Direction.Nudge(ref x, ref y);
+				if (x == i && y == j) return true;
 			}
 			return false;
 		}
-		public SocketTracker Clone() => new() { sockets = sockets.ToList() };
+		public SocketTracker Clone() => new() {
+			RequiredSockets = RequiredSockets.ToList(),
+			sockets = sockets.ToList()
+		};
 		public record struct TrackedSocket(RoomSocket Socket, ARoom FromRoom, int I, int J) {
 			public readonly bool Matches(RoomSocket socket, int i, int j) => socket == Socket && i == I && j == J;
 		}

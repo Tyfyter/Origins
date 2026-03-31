@@ -1,20 +1,20 @@
 {
 	"TileDescriptors": {
 		"C": "Empty",
-		"O": "Empty",
-		"L": "Empty",
-		"R": "Empty",
+		"O": "Void",
+		"L": "Void",
+		"R": "Void",
+		".": "Void",
 		"X": "PlaceTile(Grass)+PaintTile(Red)",
 		"Y": "PlaceTile(Grass)+PaintTile(Blue)",
 		"_": "PlaceTile(Grass)+PaintTile(Blue)+SlopeTile(HalfBlock)",
 		"V": "PlaceSpecialTile(Origins/Heat_Vent)"
 	},
 	"BreakCondition": "MaxRoomCount(15)",
-	"ValidLayoutCheck": "RequireRoom(Required_Hallway)",
 	"Rooms": {
 		"Hallway": {
 			"Map": [
-				"XXXXX",
+				"XXXX.",
 				"OOOOO",
 				"OOOOO",
 				"OOOOO",
@@ -22,16 +22,18 @@
 				"OOOOO",
 				"OOOOO",
 				"LOCOR",
-				"XXXXX"
+				".XXXX"
 			],
 			"SocketKey": {
 				"L": {
 					"Key": "Hallway",
-					"Direction": "Left"
+					"Direction": "Left",
+					"Offset": false
 				},
 				"R": {
 					"Key": "Hallway",
-					"Direction": "Right"
+					"Direction": "Right",
+					"Offset": false
 				}
 			},
 			"RepetitionRange": "0..1",
@@ -39,7 +41,7 @@
 		},
 		"Required_Hallway": {
 			"Map": [
-				"ooooo",
+				"oooo.",
 				"hhhhh",
 				"hhhhh",
 				"hhhhh",
@@ -47,7 +49,7 @@
 				"wwwww",
 				"wwwww",
 				"LcwwR",
-				"ooooo"
+				".oooo"
 			],
 			"Key": {
 				" ": "Empty",
@@ -62,24 +64,26 @@
 			"SocketKey": {
 				"L": {
 					"Key": "Hallway",
-					"Direction": "Left"
+					"Direction": "Left",
+					"Offset": false
 				},
 				"R": {
 					"Key": "Hallway",
-					"Direction": "Right"
+					"Direction": "Right",
+					"Offset": false
 				}
 			}
 		},
 		"Hallway_End_Left": {
 			"Map": [
-				"XXXXX",
+				"XXXX.",
 				"XOOOO",
 				"XOOOO",
 				"XOOOO",
 				"XOOOO",
 				"OOOOO",
 				"DOOOO",
-				"LOCOR",
+				"OOCOR",
 				"XXXXX"
 			],
 			"Key": {
@@ -88,11 +92,8 @@
 			"SocketKey": {
 				"R": {
 					"Key": "Hallway",
-					"Direction": "Right"
-				},
-				"L": {
-					"Key": "ClosetLeft",
-					"Direction": "Left"
+					"Direction": "Right",
+					"Offset": false
 				}
 			},
 			"StartPos": "C"
@@ -106,8 +107,8 @@
 				"OOOOX",
 				"OOOOO",
 				"OOOOD",
-				"LOCOR",
-				"XXXXX"
+				"LOCOO",
+				".XXXX"
 			],
 			"Key": {
 				"D": "PlaceSpecialTile(ClosedDoor,48)"
@@ -115,44 +116,11 @@
 			"SocketKey": {
 				"L": {
 					"Key": "Hallway",
-					"Direction": "Left"
-				},
-				"R": {
-					"Key": "ClosetRight",
-					"Direction": "Right"
+					"Direction": "Left",
+					"Offset": false
 				}
 			},
 			"StartPos": "C"
-		},
-		"Closet_Left": {
-			"Map": [
-				"XXX",
-				"XOO",
-				"XOO",
-				"XOR",
-				"XXX"
-			],
-			"SocketKey": {
-				"R": {
-					"Key": "ClosetLeft",
-					"Direction": "Right"
-				}
-			}
-		},
-		"Closet_Right": {
-			"Map": [
-				"XXX",
-				"OOX",
-				"OOX",
-				"LOX",
-				"XXX"
-			],
-			"SocketKey": {
-				"L": {
-					"Key": "ClosetRight",
-					"Direction": "Left"
-				}
-			}
 		}
 	}
 }
