@@ -31,6 +31,14 @@ namespace Origins.Tiles.Ashen {
 				AMRSL_Skewer.AmmoProjectile[Type] = ModContent.ProjectileType<AMRSL_Skewer_Sabot_Scrap>();
 			};
 		}
+		public static bool CanRailingAttachTo(int i, int j) {
+			if (IsCatwalk(Main.tile[i, j + 2])) return true;
+			Tile tile = Main.tile[i, j];
+			if (!tile.HasTile) return false;
+			if (tile.HasFullSolidTile()) return true;
+			if (tile.TileType == Scrap_Railing.ID) return true;
+			return !Main.tileNoAttach[tile.TileType];
+		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Catwalks[Type] = true;
@@ -160,19 +168,18 @@ namespace Origins.Tiles.Ashen {
 			} else {
 				platformFrame = 90;
 			}
-			if (Main.tile[i, j - 1] != null && Main.tileRope[Main.tile[i, j - 1].TileType]) {
+			if (Main.tileRope[Main.tile[i, j - 1].TileType]) {
 				WorldGen.TileFrame(i, j - 1);
 			}
-			if (Main.tile[i, j + 1] != null && Main.tileRope[Main.tile[i, j + 1].TileType]) {
+			if (Main.tileRope[Main.tile[i, j + 1].TileType]) {
 				WorldGen.TileFrame(i, j + 1);
 			}
 		}
 		static bool IsCatwalk(Tile tile) => tile.HasTile && Catwalks[tile.TileType];
 		public static void UpdateRailingFrame(int i, int j) {
 			static bool IsNonCatwalkTile(Tile tile) => tile.HasTile && !Catwalks[tile.TileType] && TileLoader.GetTile(tile.TileType) is not Industrial_Door;
-			static bool BlocksConnection(Tile tile) => IsNonCatwalkTile(tile) && (!Main.tileSolid[tile.TileType] || Main.tileNoAttach[tile.TileType]);
-			bool canConnectLeft = !BlocksConnection(Main.tile[i - 1, j - 2]);
-			bool canConnectRight = !BlocksConnection(Main.tile[i + 1, j - 2]);
+			bool canConnectLeft = CanRailingAttachTo(i - 1, j - 2);
+			bool canConnectRight = CanRailingAttachTo(i + 1, j - 2);
 			Tile tile = Main.tile[i, j];
 			ref byte railingFrame = ref tile.Get<ExtraFrameData>().value;
 			byte oldRailingFrame = railingFrame;

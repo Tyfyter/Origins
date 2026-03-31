@@ -300,7 +300,7 @@ namespace Origins.NPCs.Ashen {
 			Point16 pos = new(tile.GetTilePosition());
 			if ((repairProgress[pos] += amount) >= TileRepairTime) {
 				reparableTile.Repair(pos.X, pos.Y);
-				repairProgress[pos] = 0;
+				repairProgress[pos] -= (int)TileRepairTime;
 			}
 			float _ = 0;
 			if (reparableTile.NeedsRepair(pos.X, pos.Y, ref _, ref hitbox)) return true;

@@ -615,6 +615,7 @@ namespace Origins.Core {
 						if (Main.tileContainer[tile.TileType]) return false;
 						style = TileObjectData.GetTileStyle(tile);
 						if (style < 0) continue;
+						if (TileObjectData.TopLeft(i + k, j - 1) == TileObjectData.TopLeft(i, j)) continue;
 						TileObjectData aboveData = TileObjectData.GetTileData(tile.TileType, style);
 						if (aboveData is not null && aboveData.AnchorBottom != AnchorData.Empty) {
 							TileUtils.GetMultiTileTopLeft(i + k, j - 1, aboveData, out int x, out _);

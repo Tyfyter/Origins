@@ -47,6 +47,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		static Fire_Extinguisher HeldExtinguisher => Main.LocalPlayer?.HeldItem?.ModItem as Fire_Extinguisher;
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.tile[i, j].TileFrameX != 0 || HeldExtinguisher is not null;
+		public override bool CanKillTile(int i, int j, ref bool blockDamaged) => Main.tile[i, j].TileFrameX != 0;
 		public override bool RightClick(int i, int j) {
 			Tile tile = Main.tile[i, j];
 			short targetFrame = 0;

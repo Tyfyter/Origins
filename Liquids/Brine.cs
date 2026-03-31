@@ -81,6 +81,7 @@ namespace Origins.Liquids {
 		public override bool PreLiquidMerge(int liquidX, int liquidY, int tileX, int tileY, int otherLiquid) {
 			if (otherLiquid == LiquidID.Water) {
 				// convert water to brine?
+				UpdateLiquids(liquidX, liquidY, tileX, tileY, otherLiquid);
 				return false;
 			}
 			return true;
