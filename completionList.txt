@@ -1364,6 +1364,11 @@ TILES:
 (^) Strange Plant (Stardust)
 (^) Traffic Cone
 
+(#, ^2) Advanced Logic Gate (AND) !!!
+(#, ^2) Advanced Logic Gate (NAND) !!!
+(#, ^2) Advanced Logic Gate (NOT) !!!
+(#, ^2) Advanced Logic Gate (OR) !!!
+(#, ^2) Advanced Logic Gate (XOR) !!!
 (^) Ashen Campfire
 (^) Ashen Dungeon Chest
 (^) Ashen Wire
@@ -1379,6 +1384,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
+(#, ^2) Delay Component !!!
 (^) Dirt Chest
 (^) Edge Detector
 (^) Fire Extinguisher Holder
@@ -1399,6 +1405,7 @@ TILES:
 (^) Oil Derrick
 (^) Pocket Dimension Monolith
 (X) Qube Generator
+(#, ^2) Radio Component !!!
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Snake
 (X) Ravel Lock: Stacker
