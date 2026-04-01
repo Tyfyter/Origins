@@ -3226,6 +3226,7 @@ namespace Origins {
 			}
 			return false;
 		}
+		public static ScopedOverride<T> ScopedOverride<T>(ref this T variable, T value) where T : struct => new(ref variable, value);
 		public static void DrawDebugOutline(this Rectangle area, Vector2 offset = default, int dustType = DustID.Torch, Color color = default) {
 			Vector2 pos = area.TopLeft() + offset;
 			float amt = 10; // as to try to not spawn to many dusts

@@ -4,13 +4,16 @@ using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
 using PegasusLib.Networking;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Items.Tools.Wiring.Ashen_Wire_Data;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
@@ -56,6 +59,10 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void HitWire(int i, int j) {
 			if (Ashen_Wire_Data.HittingAshenWires) UpdatePowerState(i, j, IsPowered(i, j));
+			else if (propagatingToggleStates.Count > 0 && !propagatingToggleStates.Contains(new(i, j))) {
+				Tile progenitor = Main.tile[propagatingToggleStates.First()];
+				if (Type == progenitor.TileType) new Mechanical_Switch_Action(new(i, j), progenitor.TileFrameY != 0).Perform();
+			}
 		}
 		public bool IsPowered(int i, int j) {
 			Tile tile = Main.tile[i, j];
@@ -85,7 +92,7 @@ namespace Origins.Tiles.Ashen {
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => HasKey(settings.player);
 		public override bool RightClick(int i, int j) {
 			if (!HasKey(Main.LocalPlayer)) return false;
-			new Mechanical_Switch_Action(new(i, j)).Perform();
+			new Mechanical_Switch_Action(new(i, j), Main.tile[i, j].TileFrameY == 0).Perform();
 			return true;
 		}
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
@@ -96,20 +103,29 @@ namespace Origins.Tiles.Ashen {
 		public override void PlaceInWorld(int i, int j, Item item) {
 			new Sync_Mechanical_Switch_Action(i, j).Perform();
 		}
-		public record class Mechanical_Switch_Action(Point16 Pos) : SyncedAction {
+		static HashSet<Point16> propagatingToggleStates = [];
+		public record class Mechanical_Switch_Action(Point16 Pos, bool On) : AutoSyncedAction {
 			public override bool ServerOnly => true;
-			public Mechanical_Switch_Action() : this(Point16.Zero) { }
-			public override SyncedAction NetReceive(BinaryReader reader) => this with {
-				Pos = new(reader.ReadInt16(), reader.ReadInt16())
-			};
-			public override void NetSend(BinaryWriter writer) {
-				writer.Write((short)Pos.X);
-				writer.Write((short)Pos.Y);
-			}
-			protected override void Perform() {
-				if (TileLoader.GetTile(Main.tile[Pos].TileType) is Mechanical_Key_Node) {
+			protected override bool ShouldPerform {
+				get {
 					Tile tile = Main.tile[Pos];
-					tile.TileFrameY ^= 18;
+					return TileLoader.GetTile(tile.TileType) is Mechanical_Key_Node && tile.TileFrameY != On.Mul<short>(18);
+				}
+			}
+			public Mechanical_Switch_Action() : this(default, default) { }
+			protected override void Perform() {
+				Tile tile = Main.tile[Pos];
+				if (TileLoader.GetTile(tile.TileType) is Mechanical_Key_Node) {
+					tile.TileFrameY = On.Mul<short>(18);
+					using (HittingWiresOverride _0 = new(false)) {
+						using WireOverride _1 = WireOverride.New;
+						try {
+							propagatingToggleStates.Add(Pos);
+							Wiring.TripWire(Pos.X, Pos.Y, 1, 1);
+						} finally {
+							propagatingToggleStates.Remove(Pos);
+						}
+					}
 					bool inputPower = tile.TileFrameX != 0 && tile.TileFrameY != 0;
 					using (IAshenPowerConduitTile.WalkedConduitOutput _ = new(Pos.ToPoint())) {
 						if (inputPower) inputPower = IAshenPowerConduitTile.FindValidPowerSource(Pos.ToPoint(), 0)
@@ -118,6 +134,54 @@ namespace Origins.Tiles.Ashen {
 					}
 					Ashen_Wire_Data.SetTilePowered(Pos.X, Pos.Y, inputPower);
 					NetMessage.SendData(MessageID.TileSquare, Main.myPlayer, -1, null, Pos.X, Pos.Y, 1, 1);
+				}
+			}
+			ref struct WireOverride {
+				ScopedOverride<bool> running;
+				ScopedOverride<DoubleStack<Point16>> _wireList;
+				ScopedOverride<DoubleStack<byte>> _wireDirectionList;
+				ScopedOverride<Dictionary<Point16, byte>> _toProcess;
+				ScopedOverride<Queue<Point16>> _LampsToCheck;
+				ScopedOverride<Queue<Point16>> _GatesNext;
+				ScopedOverride<Vector2[]> _teleport;
+				ScopedOverride<int[]> _inPumpX;
+				ScopedOverride<int[]> _inPumpY;
+				ScopedOverride<int> _numInPump;
+				ScopedOverride<int[]> _outPumpX;
+				ScopedOverride<int[]> _outPumpY;
+				ScopedOverride<int> _numOutPump;
+				ScopedOverride<int> _currentWireColor;
+				public static WireOverride New => new() {
+					running = new(ref Wiring.running, false),
+					_wireList = new(ref Wiring._wireList, new()),
+					_wireDirectionList = new(ref Wiring._wireDirectionList, new()),
+					_toProcess = new(ref Wiring._toProcess, new()),
+					_LampsToCheck = new(ref Wiring._LampsToCheck, new()),
+					_GatesNext = new(ref Wiring._GatesNext, new()),
+					_teleport = new(ref Wiring._teleport, new Vector2[2]),
+					_inPumpX = new(ref Wiring._inPumpX, new int[20]),
+					_inPumpY = new(ref Wiring._inPumpY, new int[20]),
+					_numInPump = new(ref Wiring._numInPump, 0),
+					_outPumpX = new(ref Wiring._outPumpX, new int[20]),
+					_outPumpY = new(ref Wiring._outPumpY, new int[20]),
+					_numOutPump = new(ref Wiring._numOutPump, 0),
+					_currentWireColor = new(ref Wiring._currentWireColor, 0)
+				};
+				public void Dispose() {
+					using var _running = running;
+					using var __wireList = _wireList;
+					using var __wireDirectionList = _wireDirectionList;
+					using var __toProcess = _toProcess;
+					using var __LampsToCheck = _LampsToCheck;
+					using var __GatesNext = _GatesNext;
+					using var __teleport = _teleport;
+					using var __inPumpX = _inPumpX;
+					using var __inPumpY = _inPumpY;
+					using var __numInPump = _numInPump;
+					using var __outPumpX = _outPumpX;
+					using var __outPumpY = _outPumpY;
+					using var __numOutPump = _numOutPump;
+					using var __currentWireColor = _currentWireColor;
 				}
 			}
 		}
