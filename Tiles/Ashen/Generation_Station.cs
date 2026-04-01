@@ -69,7 +69,7 @@ namespace Origins.Tiles.Ashen {
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
 			if (++frameCounter >= 20) {
 				frameCounter = 0;
-				frame = ++frame % 2;
+				frame = ++frame % 4;
 			}
 		}
 		public override bool RightClick(int i, int j) {
