@@ -4665,7 +4665,7 @@ Plague_Texan_Set: {
 }
 
 Chee_Set: {
-	// DisplayName: Chee Set
+	// DisplayName: Lee Set
 	// Tooltip: ""
 }
 
@@ -6856,7 +6856,7 @@ Five_Evils_Item: {
 	// DisplayName: There's Five of Them Now
 	/* Tooltip:
 		'''
-		'X. Chee'
+		'X. Lee'
 		'The welcoming of the fifth evil'
 		''' */
 }

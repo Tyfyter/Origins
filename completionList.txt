@@ -836,6 +836,7 @@ MELEE WEAPONS:
 (^) Orbital Saw
 (^) Ripper Lance
 (^) Riverang
+(#, ^2) Shuckatana
 (^) Silicon Sword
 (^) Snapthrow
 (^) Soldering Iron
@@ -943,7 +944,7 @@ RANGED WEAPONS:
 (X) Organ Donor
 (^) Orichalcum Harpoon Gun
 (^) Palladium Harpoon Gun
-(X) Ritualmaker
+(#, ^2) Ritualmaker
 (^) Spray 'N Pray
 (^) Tiny Sniper
 (^) Titanium Harpoon Gun
@@ -1111,7 +1112,7 @@ EXPLOSIVE WEAPONS:
 (^) Bombardment
 (^) Bomb Launcher
 (^) Brainade
-(☻) Clunkaclusta !!!
+(^) Clunkaclusta
 (^) Cold Snap
 (^) Defiled Spirit
 (^) Eruption
@@ -1324,6 +1325,7 @@ TILES:
 (^) Spug Flesh Wall
 (X) Spug Flesh Brick Wall
 (^) Tainted Stone Wall
+(#, ^2) Truss Wall !!!
 (^) Type-I Fortified Steel Wall
 (^) Type-III Fortified Steel Wall
 
@@ -1342,7 +1344,6 @@ TILES:
 (^) Chambersite Squirrel Cage
 (^) Cicada 3301 Cage
 (^) Deactivated Repairboy
-(X) Deactivated Stryder !!!
 (^) Deactivated Trenchmaker
 (^) Defiled Torch
 (^) Defiled Water Fountain
@@ -1419,7 +1420,7 @@ TILES:
 (#2/3, ^2) Transistor !!! (needs obtain method)
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)
-(#2?, ^2) Wind Turbine !!!
+(^) Wind Turbine
 (X) Wrycoral Planter Box
 
 (X) Elderforge
@@ -1436,7 +1437,7 @@ TILES:
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
 (^) Background Door
-(#2/3, ^2) Beacon Light !!! (probably doesn't need power mechanics)
+(#2/3, ^2) Beacon Light !!!
 (^) Brineglow Vine
 (^) Defiled Altar
 (^) Defiled Foliage
@@ -1449,8 +1450,8 @@ TILES:
 (^) Fungarust
 (^) Fuzzvine
 (^) Gel Blister
-(#2, ^2) Generation Station !!! (still needs other anim frames)
-(X) Half-baked Standing Refinery !!!
+(^) Generation Station
+(#, ^2) Half-baked Standing Refinery !!!
 (^) Hanging Scrap
 (^) Heat Vent
 (^) Hydrothermal Vent
@@ -1659,6 +1660,7 @@ CONSUMABLES:
 (^) Mojo Injection
 (X) Mother's Ward
 (^) Quantum Injector
+(X) Screwdriver Upgrade: Logic Gate !!!
 (^) Screwdriver Upgrade: White Wire
 (%2) The Defiled Will
 
@@ -1799,7 +1801,7 @@ MOUNTS, PETS AND TRANSFORMATIONS:
 (^) Blockus Tube (Juvenile Amalgamation)
 (^) Fleshy Globe (Self-Contained Universe)
 (^) Jawbreaker (Stellar Spark)
-(@2) Robot Toy Controller (Toy Trenchmaker) !!!
+(#, ^2) Robot Toy Controller (Toy Trenchmaker) !!!
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
 
@@ -1966,6 +1968,7 @@ UI:
 (^) Ashen Icon
 (#, ^2) Ashen Map/Bestiary Backdrop !!!
 (#, ^2) Ashen Mines Icon !!!
+(#, ^2) Ashen Refinery Background !!!
 (#, ^2) Ashen Snow Icon !!!
 (#, ^2) Ashen Underground Desert Icon !!!
 (^) Brine Icon
