@@ -21,7 +21,7 @@ namespace Origins.Items.Accessories {
 			Origins.AddGlowMask(this);
 			Accessory_Glow_Layer.AddGlowMask(EquipType.Face, Item.faceSlot,
 				$"{Texture}_{EquipType.Face}_Glow",
-				player => Colors.GetIfInRange(player.OriginPlayer().spacePirateEyeSelection)?.Color ?? (Main.timeForVisualEffects % 30 < 15 ? Color.Black : Color.Magenta)
+				player =>  Colors.GetIfInRange(player.OriginPlayer().SpacePirateEyeVisualSelection)?.Color ?? Color.Transparent//(Main.timeForVisualEffects % 30 < 15 ? Color.Black : Color.Magenta)
 			);
 			ArmorIDs.Face.Sets.DrawInFaceUnderHairLayer[Item.faceSlot] = true;
 
@@ -46,12 +46,19 @@ namespace Origins.Items.Accessories {
 			if (originPlayer.spacePirateEye is null) return;
 			if (mode < 0) {
 				int lowest = GetPlayerCounts(player);
-				for (int i = 0; i < counts.Length; i++) {
+				if (originPlayer.spacePirateEyePreference > -2) {
+					if (originPlayer.spacePirateEyePreference == -1 || counts[originPlayer.spacePirateEyePreference] == lowest) {
+						originPlayer.spacePirateEyeSelection = originPlayer.spacePirateEyePreference;
+					}
+					if (originPlayer.spacePirateEyeSelection == -1) return;
+				}
+				for (int i = 0; i < counts.Length && originPlayer.spacePirateEyeSelection < 0; i++) {
 					if (counts[i] == lowest) {
-						originPlayer.spacePirateEyeSelection = mode = i;
+						originPlayer.spacePirateEyeSelection = i;
 						break;
 					}
 				}
+				mode = originPlayer.spacePirateEyeSelection;
 			}
 
 			if (originPlayer.spacePirateEyeCooldown > 0) return;
@@ -94,7 +101,6 @@ namespace Origins.Items.Accessories {
 				Min(ref lowest, counts[i]);
 			}
 			counts[(int)(Main.timeForVisualEffects / 30) % counts.Length] = 1; //just to demo what it looks like when a color is taken
-			counts[(int)(Main.timeForVisualEffects / 30 + counts.Length / 2) % counts.Length] = 1; //just to demo what it looks like when a color is taken
 			return lowest;
 		}
 		public bool CanRightClickAccessory(Item[] inv, int context, int slot) => Math.Abs(context) != ItemSlot.Context.EquipAccessoryVanity;

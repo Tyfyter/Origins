@@ -381,7 +381,9 @@ namespace Origins {
 		public int roboTailHurtCount = 0;
 		public int roboTailHealCount = 0;
 		public Item spacePirateEye = null;
+		public int SpacePirateEyeVisualSelection => spacePirateEyeSelection == -2 ? spacePirateEyePreference : spacePirateEyeSelection;
 		public int spacePirateEyeSelection = -2;
+		public int spacePirateEyePreference = -2;
 		public int spacePirateEyeCooldown = -2;
 		public Item glitterGlue = null;
 		public int glitterGlueTimer = 0;

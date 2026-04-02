@@ -863,6 +863,7 @@ namespace Origins {
 			for (int i = 0; i < sceneYMKWingsNaturalColor.Length; i++) {
 				if (sceneYMKWingsNaturalColor[i]) tag.Add($"{nameof(sceneYMKWingsNaturalColor)}{i}", true);
 			}
+			tag.Add(nameof(spacePirateEyePreference), SpacePirateEyeVisualSelection);
 		}
 		public override void LoadData(TagCompound tag) {
 			if (tag.SafeGet<Item>("EyndumCore") is Item eyndumCoreItem) {
@@ -917,6 +918,7 @@ namespace Origins {
 			for (int i = 0; i < sceneYMKWingsNaturalColor.Length; i++) {
 				tag.TryGet($"{nameof(sceneYMKWingsNaturalColor)}{i}", out sceneYMKWingsNaturalColor[i]);
 			}
+			spacePirateEyePreference = tag.SafeGet<int>(nameof(spacePirateEyePreference), -2);
 		}
 		TagCompound questsTag;
 		public override void OnEnterWorld() {
