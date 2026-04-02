@@ -1096,7 +1096,7 @@ SUMMONER WEAPONS:
 (X) Technomancer 4000
 (^) Terratotem
 (X) Tonal Resonator
-(#2, ^2) Vampire Fireflower in a Pot !!!
+(†) Vampire Fireflower in a Pot !!!
 
 NO POST-ML CONTENT YET.
 ---

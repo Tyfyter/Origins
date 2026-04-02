@@ -66,6 +66,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool DiesHorriblyInLava => false;
 		public override int ProjectileType => ModContent.ProjectileType<Vampire_Sunflower_P>();
 		public override int ProjectileTime => 9;
+		public override float FlySpeed => 16;
 		public override int BuffToCheck => Vampire_Sunflower_Buff.ID;
 		public static new int ID { get; private set; }
 		public override bool PreDraw(ref Color lightColor) {

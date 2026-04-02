@@ -73,6 +73,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public virtual bool DiesHorriblyInLava => true;
 		public virtual int ProjectileType => ModContent.ProjectileType<Sunflower_Sunny_P>();
 		public virtual int ProjectileTime => 9;
+		public virtual float FlySpeed => 9;
 		public virtual int BuffToCheck => Sunny_Sunflower_Buff.ID;
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
@@ -181,7 +182,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			if (Projectile.ai[2] == 1) {
 				Projectile.localAI[1] = 300;
-				float speed = 8f * SpeedModifier;
+				float speed = FlySpeed * SpeedModifier;
 				float inertia = 12f;
 				Vector2 direction = directionToIdlePosition * speed;
 				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
