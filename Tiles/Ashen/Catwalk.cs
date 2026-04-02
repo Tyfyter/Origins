@@ -32,11 +32,14 @@ namespace Origins.Tiles.Ashen {
 			};
 		}
 		public static bool CanRailingAttachTo(int i, int j) {
-			if (IsCatwalk(Main.tile[i, j + 2])) return true;
 			Tile tile = Main.tile[i, j];
-			if (!tile.HasTile) return false;
-			if (tile.HasFullSolidTile()) return true;
 			if (tile.TileType == Scrap_Railing.ID) return true;
+			if (!IsCatwalk(Main.tile[i, j + 2])) {
+				Tile stairsUp = Main.tile[i, j + 1];
+				if (!IsCatwalk(stairsUp) || !stairsUp.TopSlope) return false;
+			}
+			if (!tile.HasTile) return true;
+			if (tile.HasFullSolidTile()) return true;
 			return !Main.tileNoAttach[tile.TileType];
 		}
 		public override void SetStaticDefaults() {

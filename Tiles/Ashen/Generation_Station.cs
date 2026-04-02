@@ -67,10 +67,7 @@ namespace Origins.Tiles.Ashen {
 			this.DrawTileGlow(i, j, spriteBatch);
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
-			if (++frameCounter >= 20) {
-				frameCounter = 0;
-				frame = ++frame % 4;
-			}
+			if (frameCounter.CycleUp(20)) frame.CycleUp(4);
 		}
 		public override bool RightClick(int i, int j) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);

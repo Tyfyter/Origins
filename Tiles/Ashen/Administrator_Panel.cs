@@ -45,7 +45,7 @@ namespace Origins.Tiles.Ashen {
 			// Properties
 			TileID.Sets.CanBeSloped[Type] = false;
 			Main.tileFrameImportant[Type] = true;
-			Main.tileNoAttach[Type] = true;
+			Main.tileNoAttach[Type] = false;
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.HasOutlines[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
