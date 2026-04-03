@@ -10,8 +10,6 @@ namespace Origins.Dev {
 	public static class WikiImageExporter {
 		static UInt32[] CRCTable;
 		static bool crc_table_computed = false;
-		static string currentCRCText = "";
-		static int currentCRCLength = 0;
 		static void make_crc_table() {
 			CRCTable = new uint[256];
 			uint c;
@@ -32,11 +30,6 @@ namespace Origins.Dev {
 		static void FinalizeCRC(uint crc32, MemoryStream stream) {
 			crc32 ^= 0xFFFFFFFFu;
 			stream.Write(ToBytes((uint)crc32));
-#if DEBUG
-			Origins.instance.Logger.Info(currentCRCLength - 4 + ":" + currentCRCText);
-			currentCRCText = "";
-			currentCRCLength = 0;
-#endif
 		}
 		static uint ReadUInt(byte[] data, int position) {
 			return ((uint)data[position + 0] << 8 * 3) | ((uint)data[position + 1] << 8 * 2) | ((uint)data[position + 2] << 8 * 1) | ((uint)data[position + 3] << 8 * 0);
@@ -68,27 +61,12 @@ namespace Origins.Dev {
 			return cursor;
 		}
 		static void WriteAndAdvanceCRC(Stream stream, ref uint crc, byte[] buffer, int offset = 0, int length = -1, string name = "") {
-#if DEBUG
-			currentCRCText += $"\n{name} :";
-#endif
 			if (!crc_table_computed) make_crc_table();
 			if (length == -1) length = buffer.Length - offset;
 			stream.Write(buffer, offset, length);
 			for (int i = 0; i < length; i++) {
 				crc = CRCTable[(crc ^ buffer[i + offset]) & 0xff] ^ (crc >> 8);
-				if (currentCRCText.Length < 4) {
-					currentCRCText += (char)buffer[i + offset];
-				} else {
-					string h = buffer[i + offset].ToString("X");
-					currentCRCText += " " + (h.Length == 1 ? "0" + h : h);
-				}
-#if DEBUG
-				currentCRCLength++;
-#endif
 			}
-#if DEBUG
-			currentCRCText += "|";
-#endif
 		}
 		public static void ExportImage(string name, Texture2D texture) {
 			string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, name) + ".png";

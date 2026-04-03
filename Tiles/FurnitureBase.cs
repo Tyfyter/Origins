@@ -905,7 +905,7 @@ namespace Origins.Tiles {
 		[field: CloneByReference] public event ModifySorting OnModifyResearchSorting;
 		protected override bool CloneNewInstances => true;
 #if !DEBUG
-		public override bool IsLoadingEnabled(Mod mod) => !debug || DebugConfig.Instance.ForceEnableDebugItems;
+		public override bool IsLoadingEnabled(Mod mod) => !IsDebug || DebugConfig.Instance.ForceEnableDebugItems;
 #endif
 		public sealed override void Load() => itemsByTile.Add(Tile, this);
 		public override void SetStaticDefaults() {

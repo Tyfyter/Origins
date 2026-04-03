@@ -3557,6 +3557,7 @@ BuilderToggle: {
 	Brown_Wire_Toggle: Brown Wires
 	Black_Wire_Toggle: Black Wires
 	White_Wire_Toggle: White Wires
+	Logic_Gate_Toggle: Mods.Origins.BuilderToggle.Logic_Gate_Toggle
 }
 
 NoveltyWatchTime: {

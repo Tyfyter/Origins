@@ -349,6 +349,7 @@ namespace Origins {
 		static Stack<Point> queuedSpecialTileFrames = new();
 		static Stack<Point> workingQueuedSpecialTileFrames = new();
 		static readonly WorkingStack<Point> queuedTripWires = new();
+		static readonly WorkingHashSet<Point> queuedEdgeDetectors = new();
 		static bool isFramingQueuedTiles = false;
 		public static void QueueTileFrames(int i, int j) {
 			if (!isFramingQueuedTiles) QueuedTileFrames.Push(new(i, j));
@@ -357,6 +358,7 @@ namespace Origins {
 			workingQueuedSpecialTileFrames.Push(new(i, j));
 		}
 		public static void QueueTripWire(int i, int j) => queuedTripWires.Push(new(i, j));
+		public static void QueueEdgeDetector(int i, int j) => queuedEdgeDetectors.Add(new(i, j));
 		public override void PostUpdatePlayers() {
 			try {
 				isFramingQueuedTiles = true;
@@ -372,6 +374,14 @@ namespace Origins {
 			}
 			queuedTripWires.Finish();
 			while (queuedTripWires.TryPop(out Point pos)) Wiring.TripWire(pos.X, pos.Y, 1, 1);
+			queuedEdgeDetectors.Finish();
+			foreach (Point pos in queuedEdgeDetectors) {
+				Tile tile = Main.tile[pos];
+				if (tile.TileColor != 0) {
+					Main.NewText($"{PegasusLib.PegasusLib.GameTickCount} {tile}");
+				}
+				if (tile.TileFrameY.TrySet(tile.TileFrameX)) Wiring.TripWire(pos.X, pos.Y, 1, 1);
+			}
 		}
 		public override void PreUpdateNPCs() {
 			Debugging.LogFirstRun(PreUpdateNPCs);

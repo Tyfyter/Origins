@@ -41,10 +41,10 @@ namespace Origins.Tiles.Ashen {
 			if (HittingAshenWires) UpdatePowerState(i, j, IsPowered(i, j));
 		}
 		public bool IsPowered(int i, int j) => Main.tile[i, j].Get<Ashen_Wire_Data>().AnyPower;
+		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) => tileFrameY = 0;
 		public void UpdatePowerState(int i, int j, bool powered) {
 			if (Main.tile[i, j].TileFrameX.TrySet(powered.Mul<short>(18))) {
-				using HittingWiresOverride _ = new(false);
-				OriginSystem.QueueTripWire(i, j);
+				OriginSystem.QueueEdgeDetector(i, j);
 				NetMessage.SendData(MessageID.TileSquare, Main.myPlayer, -1, null, i, j, 1, 1);
 			}
 		}

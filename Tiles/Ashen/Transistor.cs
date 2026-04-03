@@ -182,6 +182,8 @@ namespace Origins.Tiles.Ashen {
 				NetSyncTile(pos.X, pos.Y);
 				first ??= pos;
 			}
+			(int i, int j) = first.Value;
+			UpdatePowerState(i, j, IsPowered(i, j));
 			UpdateTransistor(first.Value);
 			return true;
 		}

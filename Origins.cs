@@ -990,8 +990,10 @@ namespace Origins {
 			}
 			return true;
 #endif
+#pragma warning disable CS0164 // This label has not been referenced
 			expected:
 			Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings." + key).WithFormatArgs(methodName));
+#pragma warning restore CS0164 // This label has not been referenced
 			return false;
 		}
 		// for DevHelper
