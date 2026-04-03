@@ -377,9 +377,6 @@ namespace Origins {
 			queuedEdgeDetectors.Finish();
 			foreach (Point pos in queuedEdgeDetectors) {
 				Tile tile = Main.tile[pos];
-				if (tile.TileColor != 0) {
-					Main.NewText($"{PegasusLib.PegasusLib.GameTickCount} {tile}");
-				}
 				if (tile.TileFrameY.TrySet(tile.TileFrameX)) Wiring.TripWire(pos.X, pos.Y, 1, 1);
 			}
 		}

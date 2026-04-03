@@ -289,7 +289,11 @@ namespace Origins.Items.Tools.Wiring {
 				if (data.IsTilePowered && TileLoader.GetTile(tile.TileType) is IAshenPowerConduitTile conduitTile && !conduitTile.ShouldCountAsPowerSource(analysis.Counted[^1], wireType)) return false;
 				return data.IsTilePowered;
 			}
-			if (!AreaAnalysis.March(i, j, AreaAnalysis.Orthogonals, Counter, Breaker).Broke) PropegatePowerState(i, j, wireType, false);
+			AreaAnalysis analysis = AreaAnalysis.March(i, j, AreaAnalysis.Orthogonals, Counter, Breaker);
+			if (!analysis.Broke) {
+				IReadOnlyList<Point> tiles = analysis.Counted;
+				for (int k = 0; k < tiles.Count; k++) SetPowered(tiles[k].X, tiles[k].Y, wireType, false);
+			}
 		}
 		static void PropegatePowerState(int i, int j, int wireType, bool value) {
 			bool Counter(Point position) {
