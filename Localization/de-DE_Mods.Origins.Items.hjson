@@ -8250,3 +8250,8 @@ Deactivated_Trenchmaker_Item: {
 	// DisplayName: Deactivated Trenchmaker
 	// Tooltip: <up> or <down> to cycle tile to place.
 }
+
+AndLogicGate: {
+	// DisplayName: And Logic Gate
+	// Tooltip: ""
+}
