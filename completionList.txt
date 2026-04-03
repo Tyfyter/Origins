@@ -803,7 +803,7 @@ TOOLS:
 (X) Perihelion Pickaxe
 
 (␡) Amebic Gel Absorbant Sponge !!!
-(@, ^3) Bottomless Amebic Gel Bucket !!!
+(^) Bottomless Amebic Gel Bucket !!!
 (^) Bottomless Brine Bucket
 (^) Bottomless Oil Bucket
 (^) Brine Absorbant Sponge
