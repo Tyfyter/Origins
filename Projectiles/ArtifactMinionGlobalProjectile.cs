@@ -50,6 +50,7 @@ namespace Origins.Projectiles {
 			}
 			if (projectile.ModProjectile is IArtifactMinion artifact) {
 				if (prefix is ArtifactMinionPrefix artifactPrefix) artifact.MaxLife = (int)artifactPrefix.MaxLifeModifier.ApplyTo(artifact.MaxLife);
+				artifact.PostApplyLifePrefixes(source);
 				artifact.Life = artifact.MaxLife;
 			}
 		}
@@ -117,11 +118,13 @@ namespace Origins.Projectiles {
 		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
 			if (projectile.ModProjectile is IArtifactMinion artifact) {
+				binaryWriter.Write(artifact.MaxLife);
 				binaryWriter.Write(artifact.Life);
 			}
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			if (projectile.ModProjectile is IArtifactMinion artifact) {
+				artifact.MaxLife = binaryReader.ReadInt32();
 				artifact.Life = binaryReader.ReadSingle();
 			}
 		}
@@ -300,6 +303,7 @@ namespace Origins.Projectiles {
 			}
 			return true;
 		}
+		void PostApplyLifePrefixes(IEntitySource source) { }
 	}
 	public interface IArtifactDamageSource { }
 	public record struct NPCDamageSource(NPC NPC) : IArtifactDamageSource { }

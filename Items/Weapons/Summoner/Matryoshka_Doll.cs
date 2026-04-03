@@ -1,4 +1,5 @@
 ﻿using CalamityMod.NPCs.TownNPCs;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil;
 using Origins.Buffs;
@@ -60,6 +61,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 	}
 	[ReinitializeDuringResizeArrays]
 	public class Matryoshka_Doll_Minion : MinionBase, IArtifactMinion, ISkipInMinionIndex {
+		public static float Gravity => 0.2f;
+		public static float Drag => 0.98f;
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
 		public static int ID { get; private set; }
@@ -84,6 +87,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			return true;
 		}
+		public float SacrificeAvoidance => (Life / MaxLife) * (Projectile?.minionSlots ?? 1) + Size / 6f;
 		public override Rectangle RestRegion => base.RestRegion.Modified(-8, (int)(Flying + 1) * 16, 16, (int)(Flying + 1) * -16);
 		bool ISkipInMinionIndex.Skip => Parent != -1;
 		public ref float Size => ref Projectile.ai[0];
@@ -103,7 +107,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
 			ID = Type;
 		}
-		Vector2 HitboxSize => Size switch {
+		Point HitboxSize => Size switch {
 			0 => new(8, 12),
 			1 => new(10, 14),
 			2 => new(14, 16),
@@ -146,6 +150,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 			}
 		}
+		public void PostApplyLifePrefixes(IEntitySource source) => MaxLife = (int)(MaxLife * float.Pow(1.468f, Size));
 		protected override void BasicAI() {
 			Projectile.hide = true;
 			if (Parent >= 0) {
@@ -159,13 +164,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					return;
 				}
 			}
+			Vector2 bottom = Projectile.Bottom;
+			(Projectile.width, Projectile.height) = HitboxSize;
+			Projectile.Bottom = bottom;
 			Projectile.hide = false;
-			Projectile.velocity *= 0.97f;
+			Projectile.velocity *= Drag;
 			if (Flying == 0) {
 				Projectile.tileCollide = true;
 				base.BasicAI();
-				Projectile.rotation = Projectile.direction * Projectile.velocity.Y * -0.1f;
-				Projectile.velocity.Y += 0.2f;
+				Projectile.rotation = Math.Clamp(Projectile.direction * Projectile.velocity.Y * -0.1f, -0.5f, 0.5f);
+				Projectile.velocity.Y += Gravity;
 			} else {
 				Projectile.tileCollide = false;
 				targetingData.TargetID = -1;
@@ -204,11 +212,23 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				return; 
 			}
 			if (Projectile.velocity.Y == 0) {
-				Projectile.velocity.Y -= 4;
-				Projectile.velocity.X += 4 * Projectile.direction;
+				Projectile.velocity.Y -= Math.Abs(targetPos.X - Projectile.Center.X) > 64 ? 4 : JumpHeight(Projectile.Bottom.Y - targetHitbox.Y);
+				if (targetPos.X >= Projectile.TopLeft.X && targetPos.X <= Projectile.TopRight.X) Projectile.velocity.X += 4 * Projectile.direction;
 			} else {
 				Projectile.velocity.X += 0.1f * Projectile.direction;
 			}
+		}
+		public static float JumpHeight(float targetHeight) {
+			if (targetHeight <= 0) return 0;
+			Max(ref targetHeight, 28);
+			Min(ref targetHeight, 1080);
+			float currentSpeed = 0;
+			while (targetHeight > 0) {
+				currentSpeed += Gravity;
+				currentSpeed /= Drag;
+				targetHeight -= currentSpeed;
+			}
+			return currentSpeed;
 		}
 		public override ref bool HasBuff(Player player) => ref player.OriginPlayer().matryoshkaDoll;
 		public override bool? CanCutTiles() => false;
@@ -229,20 +249,11 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 			}
 		}
+		public void ModifyHurt(ref int damage, bool fromDoT) {
+			if (!fromDoT) damage = (int)(damage - Size);
+		}
 		public void OnHurt(int damage, bool fromDoT) {
-			SoundEngine.PlaySound(SoundID.NPCHit3.WithPitch(1f).WithVolume(0.25f), Projectile.Center);
-		}
-		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-			(width, height) = HitboxSize.ToPoint();
-			hitboxCenterFrac = new(0.5f, 1f);
-			return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
-		}
-		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-			if (Parent == -1) {
-				(hitbox.Width, hitbox.Height) = HitboxSize.ToPoint();
-				hitbox.X -= hitbox.Width / 2;
-				hitbox.Y -= hitbox.Height;
-			} else hitbox = default;
+			if (!fromDoT) SoundEngine.PlaySound(SoundID.NPCHit3.WithPitch(1f - Size / 3f).WithVolume(1f), Projectile.Center);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
