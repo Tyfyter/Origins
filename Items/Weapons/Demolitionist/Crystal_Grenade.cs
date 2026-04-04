@@ -66,7 +66,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		#endregion
 	}
 	public class Crystal_Grenade_P : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Crystal_Grenade_Purple";
+		public override string Texture => "Origins/Items/Weapons/Demolitionist/Crystal_Grenade";
+		//public override string Texture => "Origins/Items/Weapons/Demolitionist/Crystal_Grenade_Purple";
 		public static BlendState blendState => new() {
 			ColorSourceBlend = Blend.SourceAlpha,
 			AlphaSourceBlend = Blend.One,
@@ -103,6 +104,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vec2FromPolar(rot * i, 6) + Main.rand.NextVector2Unit()) + (Projectile.velocity / 12), t, Projectile.damage / 12, 6, Projectile.owner);
 			}
 		}
+		public override Color? GetAlpha(Color lightColor) {
+			lightColor.A -= (byte)(lightColor.A / 4);
+			return lightColor;
+		}
+		/*
 		public override void PostDraw(Color lightColor) {
 			Texture2D lightMap = new(Main.spriteBatch.GraphicsDevice, 10, 10);
 			Color[] lightData = new Color[100];
@@ -113,30 +119,33 @@ namespace Origins.Items.Weapons.Demolitionist {
 				for (int y = 0; y < 10; y++) {
 					pos.Y += 2;
 					col = Lighting.GetSubLight(pos);
-					lightData[(y * 10) + x] = new Color(((col.X + col.Y + col.Z) / 1.5f - 0.66f) * Min(Projectile.timeLeft / 85f, 1), 0, 0);
+					lightData[(y * 10) + x] = new Color(((col.X + col.Y + col.Z) / 1.5f - 0.66f), 0, 0);// * Min(Projectile.timeLeft / 85f, 1)
 				}
 				pos.Y -= 20;
 			}
 			lightMap.SetData(lightData);
 			Main.spriteBatch.Restart(SpriteSortMode.Immediate);
-			DrawData data2 = new(Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Crystal_Grenade_Blue").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255, 255, 255, 255), Projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
-			Origins.perlinFade0.Shader.Parameters["uOffset"].SetValue(Projectile.position);
-			Origins.perlinFade0.Shader.Parameters["uRotation"].SetValue(-Projectile.rotation);
 			Main.graphics.GraphicsDevice.Textures[1] = lightMap;
-			Origins.perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0f);
-			Origins.perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.25f);
-			Origins.perlinFade0.Apply(data2);
-
-			DrawData data = new(Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Crystal_Grenade_Pink").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255, 255, 255, 255), Projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
-			Origins.perlinFade0.Shader.Parameters["uOffset"].SetValue(Projectile.position);
-			Origins.perlinFade0.Shader.Parameters["uRotation"].SetValue(Projectile.rotation);
-			Main.graphics.GraphicsDevice.Textures[1] = lightMap;
-			Origins.perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.5f);
-			Origins.perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.75f);
-			Origins.perlinFade0.Apply(data);
+			DrawData data = new(
+				Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Crystal_Grenade_Pink").Value,
+				Projectile.Center - Main.screenPosition,
+				new Rectangle(0, 0, 14, 20),
+				Lighting.GetColor(Projectile.Center.ToTileCoordinates()) * 0.5f,
+				Projectile.rotation,
+				new Vector2(7, 7),
+				Vector2.One,
+				SpriteEffects.None
+			);
+			Origins.perlinFade0.Apply(data,
+				new("uOffset", Projectile.position),
+				new("uRotation", Projectile.rotation),
+				new("uThreshold0", 0.5f),
+				new("uThreshold1", 0.75f)
+			);
 			Main.EntitySpriteDraw(data);
 			Main.spriteBatch.Restart();
 		}
+		*/
 	}
 	public class Crystal_Grenade_Shard : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Pixel";
