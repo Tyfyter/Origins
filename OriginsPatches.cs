@@ -224,7 +224,6 @@ namespace Origins {
 			On_Player.RollLuck += Player_RollLuck;
 			On_TileDrawing.Draw += TileDrawing_Draw;
 			On_TileDrawing.DrawTiles_GetLightOverride += TileDrawing_DrawTiles_GetLightOverride;
-			On_Player.KillMe += Player_KillMe;// should have no effect, but is necessary for custom death text somehow
 			On_WorldGen.PlacePot += WorldGen_PlacePot;
 			On_WorldGen.PlaceSmallPile += WorldGen_PlaceSmallPile;
 			On_Projectile.ExplodeTiles += Projectile_ExplodeTiles;
@@ -1544,10 +1543,6 @@ namespace Origins {
 				value = (int)(value * mult);
 			}
 			return value;
-		}
-
-		private void Player_KillMe(On_Player.orig_KillMe orig, Player self, PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp) {
-			orig(self, damageSource, dmg, hitDirection, pvp);
 		}
 
 		#region combat
