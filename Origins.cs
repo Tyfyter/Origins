@@ -59,6 +59,7 @@ using static Origins.OriginsSets.Items;
 using MC = Terraria.ModLoader.ModContent;
 using Origins.Liquids;
 using Origins.Dev;
+using System.Threading.Tasks;
 
 namespace Origins {
 	public sealed partial class Origins : Mod {
@@ -409,10 +410,10 @@ namespace Origins {
 			OriginExtensions.InitExt();
 			if (!Main.dedServ) {
 				//OriginExtensions.drawPlayerItemPos = (Func<float, int, Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float, int, Vector2>), Main.instance);
-				perlinFade0 = new MiscShaderData(Assets.Request<Effect>("Effects/PerlinFade", AssetRequestMode.ImmediateLoad), "RedFade");
-				//perlinFade0.UseImage("Images/Misc/Perlin");
-				perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.6f);
-				perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.6f);
+				perlinFade0 = new AdvancedMiscShaderData(Assets.Request<Effect>("Effects/PerlinFade"), "RedFade",
+					new("uThreshold0", 0.6f),
+					new("uThreshold1", 0.6f)
+				);
 				blackHoleShade = new MiscShaderData(Assets.Request<Effect>("Effects/BlackHole"), "BlackHole");
 
 				Filters.Scene["Origins:TestingShader"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/TestingShader"), "TestingShader"), EffectPriority.VeryHigh);
@@ -472,11 +473,14 @@ namespace Origins {
 				GameShaders.Armor.BindShader(MC.ItemType<Defiled_Altar_Item>(), transparencyFilter);
 				transparencyFilterID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Defiled_Altar_Item>());
 
-				tileOutlineShader = new ArmorShaderData(Assets.Request<Effect>("Effects/TileOutline", AssetRequestMode.ImmediateLoad), "TileOutline");
+				Asset<Effect> tileOutline = Assets.Request<Effect>("Effects/TileOutline");
+				tileOutlineShader = new ArmorShaderData(tileOutline, "TileOutline");
 				GameShaders.Armor.BindShader(MC.ItemType<High_Contrast_Dye>(), tileOutlineShader);
-				tileOutlineShader.Shader.Parameters["uImageSize0"].SetValue(Main.ScreenSize.ToVector2());
-				tileOutlineShader.Shader.Parameters["uScale"].SetValue(2);
-				tileOutlineShader.Shader.Parameters["uColor"].SetValue(new Vector3(1f, 1f, 1f));
+				Task.Run(tileOutline.Wait).ContinueWith(static _ => {
+					tileOutlineShader.Shader.Parameters["uImageSize0"].SetValue(Main.ScreenSize.ToVector2());
+					tileOutlineShader.Shader.Parameters["uScale"].SetValue(2);
+					tileOutlineShader.Shader.Parameters["uColor"].SetValue(new Vector3(1f, 1f, 1f));
+				});
 
 				GameShaders.Misc["Origins:SapphireAura"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "SapphireAura")
 				.UseImage0(TextureAssets.Extra[ExtrasID.MagicMissileTrailShape]);
