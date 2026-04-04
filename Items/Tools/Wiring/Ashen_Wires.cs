@@ -3,6 +3,7 @@ using MonoMod.Cil;
 using Origins.Reflection;
 using Origins.Tiles.Ashen;
 using Origins.World;
+using PegasusLib.Content;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace Origins.Items.Tools.Wiring {
 		AutoLoadingAsset<Texture2D> back = "Origins/Items/Tools/Wiring/Ashen_Wires_BG";
 		public override Color? WireKiteColor => Color.Chocolate;
 		public override void SetupSets() {
-			Sets.AshenWires[Type] = true;
+			OriginsSets.WireModes.AshenWires[Type] = true;
 		}
 		public override bool GetWire(int x, int y) => Main.tile[x, y].Get<Ashen_Wire_Data>().HasBrownWire;
 		public override bool SetWire(int x, int y, bool value) {
@@ -45,7 +46,7 @@ namespace Origins.Items.Tools.Wiring {
 		AutoLoadingAsset<Texture2D> back = "Origins/Items/Tools/Wiring/Ashen_Wires_BG";
 		public override Color? WireKiteColor => Color.Black;
 		public override void SetupSets() {
-			Sets.AshenWires[Type] = true;
+			OriginsSets.WireModes.AshenWires[Type] = true;
 		}
 		public override bool GetWire(int x, int y) => Main.tile[x, y].Get<Ashen_Wire_Data>().HasBlackWire;
 		public override bool SetWire(int x, int y, bool value) {
@@ -67,7 +68,7 @@ namespace Origins.Items.Tools.Wiring {
 		AutoLoadingAsset<Texture2D> back = "Origins/Items/Tools/Wiring/Ashen_Wires_BG";
 		public override Color? WireKiteColor => Color.White;
 		public override void SetupSets() {
-			Sets.GreaterAshenWires[Type] = true;
+			OriginsSets.WireModes.GreaterAshenWires[Type] = true;
 		}
 		public override bool GetWire(int x, int y) => Main.tile[x, y].Get<Ashen_Wire_Data>().HasWhiteWire;
 		public override bool SetWire(int x, int y, bool value) {

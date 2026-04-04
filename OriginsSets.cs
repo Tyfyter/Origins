@@ -13,6 +13,7 @@ using OMI = Origins.OriginsModIntegrations;
 using System.Linq;
 using static Terraria.ModLoader.ModContent;
 using Terraria.Audio;
+using PegasusLib.Content;
 
 namespace Origins {
 	public static class OriginsSets {
@@ -490,6 +491,11 @@ namespace Origins {
 					if (Origins.LogLoadingILError(nameof(GeneratesLiquid), e)) throw;
 				}
 			}
+		}
+		[ReinitializeDuringResizeArrays]
+		public static class WireModes {
+			public static bool[] AshenWires = WireMode.Sets.Factory.CreateNamedSet(nameof(AshenWires)).RegisterBoolSet();
+			public static bool[] GreaterAshenWires = WireMode.Sets.Factory.CreateNamedSet(nameof(GreaterAshenWires)).RegisterBoolSet();
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Prefixes {

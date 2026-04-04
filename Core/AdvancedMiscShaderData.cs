@@ -32,6 +32,7 @@ namespace Origins.Core {
 			public override bool Equals(object obj) => obj is Parameter parameter && name == parameter.name;
 			public static bool operator ==(Parameter left, Parameter right) => left.Equals(right);
 			public static bool operator !=(Parameter left, Parameter right) => !(left == right);
+			//Replace with union once C# gets them
 			public readonly struct Value {
 				object InnerValue { get; init; }
 				public void Apply(EffectParameter parameter) {

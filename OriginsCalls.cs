@@ -15,7 +15,6 @@ namespace Origins {
 		public enum CallType {
 			GetExplosiveClassesDict,
 			AddBasicColorDyeShaderPass,
-			AddWireMode,
 			AddBottomlessBucketMode,
 			AddChambersiteOre,
 			GetChambersiteOre
@@ -39,20 +38,6 @@ namespace Origins {
 				} catch (NullReferenceException) {
 					throw new Exception("Cannot add Basic Color Dye Shader Pass after AddRecipes");
 				}
-				case CallType.AddWireMode:
-				return WireModeLoader.AddCallWireMode(
-					(Mod)args[1],
-					((Delegate)args[2]).CastDelegate<Func<int, int, bool>>(),
-					((Delegate)args[3]).CastDelegate<Action<int, int, bool>>(),
-					(string)args[4],
-					(Color)args[5],
-					(Color?)args[6],
-					(IEnumerable<string>)args.GetIfInRange(7) ?? [],
-					(IEnumerable<string>)args.GetIfInRange(8) ?? [],
-					(args.GetIfInRange(9, null) as ModItem, args.GetIfInRange(9, null) is int type ? type : ItemID.Wire),
-					(bool)args.GetIfInRange(10, false),
-					(string)args.GetIfInRange(11)
-				);
 				case CallType.AddBottomlessBucketMode: {
 					ModBucketMode modBucketMode = new(
 						(ModItem)args[2],

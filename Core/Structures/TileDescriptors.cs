@@ -2,6 +2,7 @@
 using Origins.Items.Tools.Wiring;
 using Origins.Tiles.Dev;
 using PegasusLib;
+using PegasusLib.Content;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

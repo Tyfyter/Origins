@@ -176,8 +176,8 @@ namespace Origins.Items.Tools.Wiring {
 			public static bool operator ==(LogicGateTruthTable left, LogicGateTruthTable right) => left.Equals(right);
 			public static bool operator !=(LogicGateTruthTable left, LogicGateTruthTable right) => !(left == right);
 		}
-		public readonly struct LogicGateWires {
-			readonly byte value;
+		public readonly struct LogicGateWires(byte value) {
+			readonly byte value = (byte)(value & wires_mask);
 			const int a_mask = 0b0011;
 			const int b_mask = 0b0100;
 			const int o_mask = 0b1000;

@@ -2296,6 +2296,7 @@ Projectiles: {
 	// Ichor_Spray.DisplayName: Ichor Spray
 	// _Temp_Turquoise.DisplayName: " Temp Turquoise"
 	// _Temp_Yellow.DisplayName: " Temp Yellow"
+	// ModWireChannel.DisplayName: Mod Wire Channel
 }
 
 Prefixes: {
