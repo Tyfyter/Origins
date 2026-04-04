@@ -286,6 +286,7 @@ ENEMY NPCS:
 (X) Hive Mind
 (^) Leaf Snapper
 (X) Madman
+(#, ^2) Malfunctioning Missile !!!
 (X) Molten Aberration
 (#, ^2) Oil Ghoul !!!
 (^) King Crab
@@ -311,7 +312,7 @@ ENEMY NPCS:
 (^) Torn Ghoul
 (@, ^3) Trash Compactor Mimic !!!
 (^) Trijaw Shark
-(@2, #) VV-13 !!!
+(#, ^2) VV-13 !!!
 
 (X) Clockwork
 (@2/3, #) Electromancer
@@ -803,7 +804,7 @@ TOOLS:
 (X) Perihelion Pickaxe
 
 (␡) Amebic Gel Absorbant Sponge !!!
-(^) Bottomless Amebic Gel Bucket !!!
+(^) Bottomless Amebic Gel Bucket
 (^) Bottomless Brine Bucket
 (^) Bottomless Oil Bucket
 (^) Brine Absorbant Sponge
