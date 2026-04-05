@@ -310,7 +310,7 @@ ENEMY NPCS:
 (X) Tendon Terror
 (X) Terrogator
 (^) Torn Ghoul
-(@, ^3) Trash Compactor Mimic !!!
+(#2, ^2) Trash Compactor Mimic !!!
 (^) Trijaw Shark
 (#, ^2) VV-13 !!!
 
@@ -1519,7 +1519,7 @@ TILES:
 (X) Crimson King Trophy
 (^) Defiled Amalgamation Relic
 (^) Defiled Amalgamation Trophy
-(@, #2) Enemy Banners !!!
+(#2, ^2) Enemy Banners !!!
 (^) Fiberglass Weaver Relic
 (^) Fiberglass Weaver Trophy
 (^) Lost Diver Relic
