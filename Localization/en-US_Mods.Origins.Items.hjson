@@ -8251,7 +8251,21 @@ Deactivated_Trenchmaker_Item: {
 	Tooltip: <up> or <down> to cycle tile to place.
 }
 
-AndLogicGate: {
-	DisplayName: And Logic Gate
-	Tooltip: ""
+Logic_Gate: {
+	DisplayName: Logic Gate {0}
+	TableData: ",B,¬B|A,{0},{1}|¬A,{2},0"
+	Tooltip:
+		'''
+		[ttable/line0:{$TableData}]
+		[ttable/line1:{$TableData}]
+		[ttable/line2:{$TableData}]
+		'''
+	Statement: "{0}{1}{2}⇔{3}"
+
+	LogicSymbols: {
+		AND: ∧
+		OR: ∨
+		XOR: ≠
+		NIMPLY: ⇒
+	}
 }

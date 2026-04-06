@@ -1,43 +1,57 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
-using Origins.Reflection;
+using Origins.UI.Snippets;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools.Wiring {
-	public abstract class LogicGate : ModItem {
-		static readonly Dictionary<Logic_Gate_Data.LogicGateTruthTable, LogicGate> gates = new() {
+	public class Logic_Gate(Logic_Gate_Data.LogicGateTruthTable truthTable, string name) : ModItem {
+		static readonly Dictionary<Logic_Gate_Data.LogicGateTruthTable, Logic_Gate> gates = new() {
 			[new(0)] = null
 		};
-		public abstract Logic_Gate_Data.LogicGateTruthTable TruthTable { get; }
+		Logic_Gate() : this(default, default) { }
+		public readonly string name = name;
+		public static string GetName(Logic_Gate_Data.LogicGateTruthTable table) => gates[table].name;
+		public override string Name => $"{base.Name}_{name}";
+		public Logic_Gate_Data.LogicGateTruthTable TruthTable { get; } = truthTable;
+		protected override bool CloneNewInstances => true;
 		public override string Texture => Logic_Gate_Data.texture_path;
+		public static LocalizedText GetLocalization(string suffix) => Language.GetText($"Mods.Origins.Items.Logic_Gate.{suffix}");
+		public override LocalizedText DisplayName => GetLocalization("DisplayName").WithFormatArgs(name);
+		public override LocalizedText Tooltip => GetLocalization("Tooltip").WithFormatArgs(TruthTable[1, 1], TruthTable[1, 0], TruthTable[0, 1]);
 		public override void SetStaticDefaults() => Main.RegisterItemAnimation(Item.type, new DrawAnimationManual(0b111 + 1) { Frame = TruthTable.value });
 		public override void SetDefaults() => Item.CloneDefaults(ItemID.Actuator);
-		public override bool IsLoadingEnabled(Mod mod) => gates.TryAdd(TruthTable, this);
+		public override bool IsLoadingEnabled(Mod mod) {
+			if (TruthTable.IsEmpty) {
+				Logic_Gate_Data.Load();
+				mod.AddContent(new Logic_Gate(0b100, "AND"));
+				mod.AddContent(new Logic_Gate(0b111, "OR"));
+				mod.AddContent(new Logic_Gate(0b011, "XOR"));
+				mod.AddContent(new Logic_Gate(0b001, "NIMPLY"));
+				//mod.AddContent(new Logic_Gate(0b010, "NIMPLIED"));
+				return false;
+			}
+			return gates.TryAdd(TruthTable, this);
+		}
 		public override bool? UseItem(Player player) {
 			if (Main.tile[Player.tileTargetX, Player.tileTargetY].Get<Logic_Gate_Data>().TruthTable.IsEmpty) {
 				SoundEngine.PlaySound(SoundID.Dig, new(Player.tileTargetX * 16, Player.tileTargetY * 16));
 				Logic_Gate_Data.SetTruthTable(new(Player.tileTargetX, Player.tileTargetY), TruthTable);
-				var aaaaaaa = Main.tile[Player.tileTargetX, Player.tileTargetY].Get<Logic_Gate_Data>().TruthTable;
 				//AutopounderSystem.SendAutopounderData(Player.tileTargetX, Player.tileTargetY, Main.myPlayer);
 				return true;
 			}
 
 			return false;
-		}
-	}
-	public class AndLogicGate : LogicGate {
-		public override Logic_Gate_Data.LogicGateTruthTable TruthTable => new(0b100);
-		public override void Load() {
-			Logic_Gate_Data.Load();
 		}
 	}
 	public struct Logic_Gate_Data : ITileData {
@@ -112,7 +126,11 @@ namespace Origins.Items.Tools.Wiring {
 			update(tile);
 			data.PostUpdate(position, oldOutput);
 		}
-		public static void SetTruthTable(Point position, LogicGateTruthTable table) => Update(position, tile => tile.Get<Logic_Gate_Data>().TruthTable = table);
+		public static void SetTruthTable(Point position, LogicGateTruthTable table) => Update(position, tile => {
+			tile.Get<Logic_Gate_Data>().TruthTable = table;
+			tile.Get<Logic_Gate_Data>().Wires = new(0b10000000);
+			Main.NewText(tile.Get<Logic_Gate_Data>().GetStatement());
+		});
 		public static void SetWires(Point position, LogicGateWires wires) => Update(position, tile => tile.Get<Logic_Gate_Data>().Wires = wires);
 
 		internal static Asset<Texture2D> texture;
@@ -160,7 +178,24 @@ namespace Origins.Items.Tools.Wiring {
 			IL_Main.DrawWires += IL_Main_DrawWires;
 			texture = ModContent.Request<Texture2D>(texture_path);
 		}
-
+		public readonly LocalizedText GetStatement() {
+			Wires.GetWires(out int a, out int b, out int output);
+			static string GetName(int value) => value switch {
+				0 => "Origins/Brown_Wire_Mode",
+				1 => "Origins/Black_Wire_Mode",
+				2 => "Origins/White_Wire_Mode",
+				3 => "Vanilla",
+				_ => throw new NotImplementedException()
+			};
+			string Get(int value) => true ? $"[wireblock:{GetName(value)}]" : GetName(value);
+			return Logic_Gate.GetLocalization("Statement").WithFormatArgs(
+				Get(a),
+				Logic_Gate.GetLocalization("LogicSymbols." + Logic_Gate.GetName(TruthTable)),
+				Get(b),
+				Get(output)
+			);
+		}
+		[DebuggerDisplay("{value:B}")]
 		public readonly struct LogicGateTruthTable(byte value) : IEquatable<LogicGateTruthTable> {
 			public readonly byte value = (byte)(value & truth_mask);
 			public readonly bool IsEmpty => (value & truth_mask) == 0;
@@ -170,11 +205,18 @@ namespace Origins.Items.Tools.Wiring {
 					return (value & (1 << index - 1)) != 0;
 				}
 			}
+			public readonly int this[int a, int b] => this[a != 0, b != 0].ToInt();
 			public override bool Equals(object obj) => obj is LogicGateTruthTable other && Equals(other);
-			public bool Equals(LogicGateTruthTable other) => other.value == value;
-			public override int GetHashCode() => value;
+			public bool Equals(LogicGateTruthTable other) => (other.value & truth_mask) == (value & truth_mask);
+			public override int GetHashCode() => value & truth_mask;
 			public static bool operator ==(LogicGateTruthTable left, LogicGateTruthTable right) => left.Equals(right);
 			public static bool operator !=(LogicGateTruthTable left, LogicGateTruthTable right) => !(left == right);
+			public static implicit operator LogicGateTruthTable(byte value) => new(value);
+			public static implicit operator LogicGateTruthTable(int value) => (byte)value;
+			public override string ToString() => 
+				$"   B ¬B\n" +
+				$" A {this[1, 1]}  {this[1, 0]}\n" +
+				$"¬A {this[0, 1]}  0";
 		}
 		public readonly struct LogicGateWires(byte value) {
 			readonly byte value = (byte)(value & wires_mask);
@@ -184,9 +226,27 @@ namespace Origins.Items.Tools.Wiring {
 			public void GetWires(out int a, out int b, out int output) {
 				int v = value >> 4;
 				a = (v & a_mask) % a_mask;
-				b = (a + 1 + (v & b_mask >> 2)) % a_mask;
-				output = 3 - (a + b) * (v & o_mask >> 3);
+				b = (a + 1 + ((v & b_mask) >> 2)) % a_mask;
+				output = 3 - (a + b) * ((v & o_mask) >> 3);
 			}
+			public override string ToString() {
+				GetWires(out int a, out int b, out int output);
+				static string Get(int value) => value switch {
+					0 => "Brown",
+					1 => "Black",
+					2 => "White",
+					3 => "Vanilla",
+					_ => throw new NotImplementedException()
+				};
+				return $"{Get(a)}, {Get(b)} => {Get(output)}";
+			}
+			public override bool Equals(object obj) => obj is LogicGateWires other && Equals(other);
+			public bool Equals(LogicGateWires other) => (other.value & wires_mask) == (value & wires_mask);
+			public override int GetHashCode() => value & wires_mask;
+			public static bool operator ==(LogicGateWires left, LogicGateWires right) => left.Equals(right);
+			public static bool operator !=(LogicGateWires left, LogicGateWires right) => !(left == right);
+			public static implicit operator LogicGateWires(byte value) => new(value);
+			public static implicit operator LogicGateWires(int value) => (byte)value;
 		}
 		public readonly ref struct WalkedLogicOutput : IDisposable {
 			public readonly Point position;

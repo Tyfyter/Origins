@@ -3684,6 +3684,12 @@ AdvancedTextSnippet: {
 		// Option_cl: Clack
 		// Option_g: Glow
 	}
+
+	Table_Handler: {
+		// Option_sp: Spacing
+		// Option_c: Color
+		// Option_line: Line Number
+	}
 }
 
 World_Sizes: {
