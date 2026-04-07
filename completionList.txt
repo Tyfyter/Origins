@@ -624,7 +624,7 @@ ACCESSORIES:
 (^) Shotgun Glove
 (^) Slag Bucket (Cursed)
 (^) Slag Bucket (Uncursed)
-(#2, ^2) Smog Pod-4 !!!
+(☻) Smog Pod-4 !!!
 (^) Sniper's Mark
 (^) Solar Panel
 (^) Sonar Visor

@@ -1,4 +1,5 @@
 ﻿using Origins.Buffs;
+using Origins.Events;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
@@ -517,19 +518,22 @@ namespace Origins {
 				Player.lifeRegen -= Tetanus_Debuff.DPS;
 			}
 			if (miasma) {
+				bool smogStorm = Player.InModBiome<Smog_Storm>();
 				if (Player.breath <= 0) {
 					Player.lifeRegenTime = 0f;
 					Player.breath = 0;
-					if (Main.rand.NextBool(10)) Player.statLife -= 1;
+					if (Main.rand.NextBool(5 + smogPodStrength - smogStorm.Mul(4))) Min(ref Player.lifeRegen, 0);
+					if (Main.rand.NextBool(10 + smogPodStrength * 3 - smogStorm.Mul(5))) Player.statLife -= 1;
 					if (Player.statLife <= 0) {
 						Player.statLife = 0;
 						Player.KillMe(PlayerDeathReason.ByCustomReason(TextUtils.LanguageTree.Find("Mods.Origins.DeathMessage.Miasma").SelectFrom(Player.name).ToNetworkText()), 10.0, 0);
 					}
-				} else if (Player.breathCD.Warmup(Player.breathCDMax + Player.breathCDMax / 2)) {
+				} else if (Player.breathCD.Warmup((smogStorm ? 0 : Player.breathCDMax) + Player.breathCDMax / 2 + smogPodStrength * 2)) {
 					Player.breathCD = 0;
 					Player.breath--;
 				}
 			}
+			if (Player.suffocating) Player.lifeRegen += smogPodStrength * 10;
 
 			if (staticShock || miniStaticShock || staticShockDamage) {
 				if (Player.lifeRegen > 0) {
