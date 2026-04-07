@@ -1546,7 +1546,7 @@ TILES:
 LIQUIDS:
 |---
 (#2, ^2) Amebic Gel !!!
-(^) Brine !!! (spreads to water)
+(^) Brine
 (^) Oil
 ---
 

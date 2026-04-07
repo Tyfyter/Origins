@@ -75,7 +75,7 @@ namespace Origins.Liquids {
 		}
 		//Secondly, we apply the 2nd tier of Well Fed for 30 seconds
 		public override void OnPlayerCollision(Player player) {
-			player.AddBuff(ModContent.BuffType<Oiled_Debuff>(), 3 * 60);
+			player.AddBuff(ModContent.BuffType<Oiled_Debuff>(), 15 * 60);
 		}
 		public override void OnProjectileCollision(Projectile proj) {
 			if (OriginsSets.Projectiles.FireProjectiles[proj.type]) {
