@@ -405,6 +405,7 @@ namespace Origins {
 		public Item smogPod = null;
 		public int smogPodTimer = 0;
 		public float nearestSmogPod = float.PositiveInfinity;
+		[AutoReset] public int smogPodStrength = 0;
 
 		public bool laserTagVest = false;
 		public bool laserTagVestActive = false;

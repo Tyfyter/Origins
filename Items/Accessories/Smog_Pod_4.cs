@@ -1,8 +1,6 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Core;
+﻿using Origins.Core;
 using Origins.Layers;
 using Origins.Projectiles;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -13,7 +11,6 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using static log4net.Appender.ColoredConsoleAppender;
 
 namespace Origins.Items.Accessories;
 [AutoloadEquip(EquipType.Back)]
@@ -57,6 +54,7 @@ public class Smog_Pod_4 : ModItem {
 	}
 	public static void BuffPlayer(Player player, float distance) {
 		bool reallyClose = distance <= 16 * 5;
+		player.OriginPlayer().smogPodStrength = reallyClose ? 2 : 1;
 		for (int i = reallyClose ? 2 : 1; i > 0; i--) {
 			Dust dust = Dust.NewDustDirect(
 				player.position,
@@ -72,6 +70,9 @@ public class Smog_Pod_4 : ModItem {
 		// temp code:
 		player.lifeRegen += reallyClose ? 40 : 10;
 
+		player.buffImmune[BuffID.Darkness] = true;
+		player.buffImmune[BuffID.Obstructed] = true;
+		player.buffImmune[BuffID.WindPushed] = true;
 		//player.AddBuff(reallyClose ? ModContent.BuffType<>() : ModContent.BuffType<>(), 5);
 	}
 }
