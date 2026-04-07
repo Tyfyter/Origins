@@ -8269,3 +8269,8 @@ Logic_Gate: {
 		// NIMPLY: ⇏
 	}
 }
+
+Delay_Component_Item: {
+	// DisplayName: Delay Component
+	// Tooltip: ""
+}

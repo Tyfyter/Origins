@@ -291,18 +291,21 @@ namespace Origins.Items.Tools.Wiring {
 			bool Counter(Point position) {
 				return Framing.GetTileSafely(position).Get<Ashen_Wire_Data>().GetWire(wireType);
 			}
+			bool powered = false;
 			bool Breaker(AreaAnalysis analysis) {
 				Point position = analysis.Counted[^1];
 				Tile tile = Framing.GetTileSafely(position);
-				if (tile.Get<Logic_Gate_Data>().ShouldCountAsPowerSource(position, wireType)) return true;
+				if (tile.Get<Logic_Gate_Data>().ShouldCountAsPowerSource(position, wireType)) powered = true;
 				ref Ashen_Wire_Data data = ref tile.Get<Ashen_Wire_Data>();
 				if (data.IsTilePowered && TileLoader.GetTile(tile.TileType) is IAshenPowerConduitTile conduitTile && !conduitTile.ShouldCountAsPowerSource(analysis.Counted[^1], wireType)) return false;
-				return data.IsTilePowered;
+				powered = data.IsTilePowered;
+				return false;
 			}
 			AreaAnalysis analysis = AreaAnalysis.March(i, j, AreaAnalysis.Orthogonals, Counter, Breaker);
-			if (!analysis.Broke) {
-				IReadOnlyList<Point> tiles = analysis.Counted;
-				for (int k = 0; k < tiles.Count; k++) SetPowered(tiles[k].X, tiles[k].Y, wireType, false);
+			IReadOnlyList<Point> tiles = analysis.Counted;
+			for (int k = 0; k < tiles.Count; k++) {
+				if (!powered) SetPowered(tiles[k].X, tiles[k].Y, wireType, false);
+				if (TileLoader.GetTile(Framing.GetTileSafely(tiles[k]).TileType) is IAshenPowerConduitTile conduitTile) conduitTile.Poke(tiles[k], wireType);
 			}
 		}
 		public static void PropegatePowerState(int i, int j, int wireType, bool value) {
@@ -311,7 +314,10 @@ namespace Origins.Items.Tools.Wiring {
 			}
 			bool Breaker(AreaAnalysis analysis) => false;
 			IReadOnlyList<Point> tiles = AreaAnalysis.March(i, j, AreaAnalysis.Orthogonals, Counter, Breaker).Counted;
-			for (int k = 0; k < tiles.Count; k++) SetPowered(tiles[k].X, tiles[k].Y, wireType, value);
+			for (int k = 0; k < tiles.Count; k++) {
+				SetPowered(tiles[k].X, tiles[k].Y, wireType, value);
+				if (TileLoader.GetTile(Framing.GetTileSafely(tiles[k]).TileType) is IAshenPowerConduitTile conduitTile) conduitTile.Poke(tiles[k], wireType);
+			}
 		}
 		public readonly void DrawWires(int i, int j) {
 			DrawWire<Brown_Wire_Toggle>(i, j, 0);
@@ -476,6 +482,7 @@ namespace Origins.Items.Tools.Wiring {
 	public interface IAshenPowerConduitTile {
 		static readonly FungibleSet<Point> walkedConduitOutputs = [];
 		public bool ShouldCountAsPowerSource(Point position, int forWireType);
+		public void Poke(Point position, int fromWireType) { }
 		public static bool FindValidPowerSource(Point position, int wireType) {
 			bool Counter(Point position) {
 				return Framing.GetTileSafely(position).Get<Ashen_Wire_Data>().GetWire(wireType);
