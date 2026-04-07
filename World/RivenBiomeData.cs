@@ -1,4 +1,5 @@
-﻿using AltLibrary.Common.AltBiomes;
+﻿using AltLibrary.Common;
+using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Systems;
 using AltLibrary.Core.Generation;
 using Origins.Backgrounds;
@@ -1098,14 +1099,18 @@ namespace Origins.World.BiomeData {
 			//Description.SetDefault(Language.GetTextValue("A flourishing and beautiful ecosystem soon to replace the status quo dominated by a now sentient amoeba."));
 			//GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
 
-			AddTileConversion(ModContent.TileType<Riven_Grass>(), TileID.Grass);
-			AddTileConversion(ModContent.TileType<Riven_Jungle_Grass>(), TileID.JungleGrass);
-			AddTileConversion(ModContent.TileType<Spug_Flesh>(), TileID.Stone);
-			AddTileConversion(ModContent.TileType<Calcified_Riven_Flesh>(), ModContent.TileType<Calcified_Riven_Flesh>());
-			AddTileConversion(ModContent.TileType<Silica>(), TileID.Sand);
-			AddTileConversion(ModContent.TileType<Quartz>(), TileID.Sandstone);
-			AddTileConversion(ModContent.TileType<Brittle_Quartz>(), TileID.HardenedSand);
-			AddTileConversion(ModContent.TileType<Primordial_Permafrost>(), TileID.IceBlock);
+			AddTileConversion(TileType<Riven_Grass>(), TileID.Grass);
+			AddTileConversion(TileType<Riven_Jungle_Grass>(), TileID.JungleGrass);
+			AddTileConversion(TileType<Spug_Flesh>(), TileID.Stone);
+			SpreadingTiles.Add(TileType<Calcified_Riven_Flesh>());
+			TileSets.BiomeSightColors[TileType<Calcified_Riven_Flesh>()] = BiomeSightColor;
+			TileSets.OwnedByBiomeID[TileType<Calcified_Riven_Flesh>()] = Type;
+			TileLoader.RegisterConversionFallback(TileType<Calcified_Riven_Flesh>(), TileType<Spug_Flesh>(), ConversionType);
+
+			AddTileConversion(TileType<Silica>(), TileID.Sand);
+			AddTileConversion(TileType<Quartz>(), TileID.Sandstone);
+			AddTileConversion(TileType<Brittle_Quartz>(), TileID.HardenedSand);
+			AddTileConversion(TileType<Primordial_Permafrost>(), TileID.IceBlock);
 
 			AddTileConversion(ModContent.TileType<Amoeba_Fluid>(), TileID.ClayBlock);
 
@@ -1131,8 +1136,8 @@ namespace Origins.World.BiomeData {
 			BloodPenguin = ModContent.NPCType<Riven_Penguin>();
 			BloodGoldfish = ModContent.NPCType<Bottomfeeder>();
 
-			AddWallConversions(OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural), OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural));
-			
+			WallLoader.RegisterConversionFallback(OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural), OriginsWall.GetWallID<Riven_Flesh_Wall>(WallVersion.Natural), ConversionType);
+
 			AddWallConversions(OriginsWall.GetWallID<Barnacle_Wall>(WallVersion.Natural),
 				WallID.RocksUnsafe1,
 				WallID.Rocks1Echo
