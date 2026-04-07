@@ -54,7 +54,7 @@ namespace Origins.Items.Other.Fish {
 		#endregion jungle
 		);
 		public IEnumerable<int> ProvideItemObtainability() => Pool.ReportDrops()
-			.Concat(GetContent<FishingLootPool>().SelectMany(p => p.Crate.Concat(p.Legendary.Concat(p.VeryRare.Concat(p.Rare.Concat(p.Uncommon.Concat(p.Common))))).SelectMany(f => f.ReportDrops())));
+			.Concat(GetContent<FishingLootPool>().SelectMany(p => p.ReportDrops()));
 		public static void AddToVanillaPools() {
 			GetInstance<CrimsonAltBiome.CrimsonFishingPool>().Rare.Add(FishingCatch.Item(ItemType<Blotopus>()));
 		}

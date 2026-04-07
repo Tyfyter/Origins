@@ -1136,7 +1136,7 @@ namespace Origins.World.BiomeData {
 			BloodPenguin = ModContent.NPCType<Riven_Penguin>();
 			BloodGoldfish = ModContent.NPCType<Bottomfeeder>();
 
-			WallLoader.RegisterConversionFallback(OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural), OriginsWall.GetWallID<Riven_Flesh_Wall>(WallVersion.Natural), ConversionType);
+			WallLoader.RegisterConversionFallback(OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural), WallType<Riven_Flesh_Wall>(), ConversionType);
 
 			AddWallConversions(OriginsWall.GetWallID<Barnacle_Wall>(WallVersion.Natural),
 				WallID.RocksUnsafe1,
@@ -1247,10 +1247,8 @@ namespace Origins.World.BiomeData {
 					FishingCatch.Item(ItemType<Scabcoral_Lyre>(), (player, attempt) => Main.hardMode && Main.rand.NextBool(2))
 				));
 				Rare.Add(FishingCatch.Item(ItemType<Scabcoral_Lyre>()));
-				Uncommon.Add(new SequentialCatches(
-					FishingCatch.QuestFish(ItemType<Bonehead_Jellyfish>()),
-					FishingCatch.Item(ItemType<Tearracuda>())
-				));
+				AddQuestFish(ItemType<Bonehead_Jellyfish>());
+				Uncommon.Add(FishingCatch.Item(ItemType<Tearracuda>()));
 			}
 		}
 	}
