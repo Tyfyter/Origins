@@ -222,9 +222,24 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);
 		public override bool Hardmode => false;
+		public int variant = 0;
+		static DrawAnimationManual animation;
+		public DrawAnimation Animation {
+			get {
+				animation.Frame = variant;
+				return animation;
+			}
+		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
+			Origins.AddGlowMask(this);
 			OriginsSets.Items.EvilMaterialAchievement[Type] = true;
+			animation = new DrawAnimationManual(4);
+			Main.RegisterItemAnimation(Item.type, animation);
+		}
+		public override void SetDefaults() {
+			base.SetDefaults();
+			variant = Main.rand.Next(animation?.FrameCount ?? 1);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(ItemID.UnholyArrow, 5)
@@ -232,6 +247,25 @@ namespace Origins.Items.Materials {
 			.AddIngredient(Type)
 			.AddTile(TileID.Anvils)
 			.Register();
+		}
+		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+			Texture2D texture = TextureAssets.Item[Item.type].Value;
+			spriteBatch.Draw(texture, position, Animation.GetFrame(texture), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(TextureAssets.GlowMask[Item.glowMask].Value, position, Animation.GetFrame(texture), Color.White, 0f, origin, scale, SpriteEffects.None, 0f);
+			return false;
+		}
+		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
+			Texture2D texture = TextureAssets.Item[Item.type].Value;
+			Rectangle frame = Animation.GetFrame(texture);
+			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, 0f, frame.Size() * 0.5f, scale, SpriteEffects.None, 0f);
+			spriteBatch.Draw(TextureAssets.GlowMask[Item.glowMask].Value, Item.Center - Main.screenPosition, frame, Color.White, 0f, frame.Size() * 0.5f, scale, SpriteEffects.None, 0f);
+			return false;
+		}
+		public override void NetSend(BinaryWriter writer) {
+			writer.Write((byte)variant);
+		}
+		public override void NetReceive(BinaryReader reader) {
+			variant = reader.ReadByte();
 		}
 	}
 	public class Black_Bile : MaterialItem, IJournalEntrySource {

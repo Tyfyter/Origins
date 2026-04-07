@@ -1546,7 +1546,7 @@ TILES:
 LIQUIDS:
 |---
 (#2, ^2) Amebic Gel !!!
-(#2, ^2) Brine !!! (still needs to spread to water)
+(^) Brine !!! (spreads to water)
 (^) Oil
 ---
 
@@ -1572,7 +1572,7 @@ MATERIALS:
 (^) Parasitic Powder
 (^) Riven Carapace
 (^) Riven Seeds
-(#2, ^2) Robot Guts !!!
+(☻) Robot Guts !!!
 (^) Rubber
 (^) Sanguinite Bar
 (^) Silicon Bar
