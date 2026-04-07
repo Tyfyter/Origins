@@ -1401,7 +1401,7 @@ TILES:
 (^) Medium Storage Container
 (^) Modular Bunk
 (X) Mushroom Dungeon Chest
-(X) Nerve Field Block !!!
+(X) Nerve Field Block
 (X) Nova Monolith
 (X) Ocean Dungeon Chest
 (^) Oil Derrick
@@ -2051,8 +2051,8 @@ VOLUME I MUSIC:
 (X) Defiled Invasion
 (X) Laser Tag Event
 (X) Riven Invasion
-(#, ^4) Smog Storm !!!
+(^) Smog Storm
 (X) Test of Ancients
 
-($2) Revelation !!!
+(^) Revelation
 ---
