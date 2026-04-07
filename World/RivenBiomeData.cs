@@ -1,4 +1,5 @@
-﻿using AltLibrary.Common.AltBiomes;
+﻿using AltLibrary.Common;
+using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Systems;
 using AltLibrary.Core.Generation;
 using Origins.Backgrounds;
@@ -1106,7 +1107,11 @@ namespace Origins.World.BiomeData {
 			AddTileConversion(TileType<Riven_Grass>(), TileID.Grass);
 			AddTileConversion(TileType<Riven_Jungle_Grass>(), TileID.JungleGrass);
 			AddTileConversion(TileType<Spug_Flesh>(), TileID.Stone);
-			AddTileConversion(TileType<Calcified_Riven_Flesh>(), TileType<Calcified_Riven_Flesh>());
+			SpreadingTiles.Add(TileType<Calcified_Riven_Flesh>());
+			TileSets.BiomeSightColors[TileType<Calcified_Riven_Flesh>()] = BiomeSightColor;
+			TileSets.OwnedByBiomeID[TileType<Calcified_Riven_Flesh>()] = Type;
+			TileLoader.RegisterConversionFallback(TileType<Calcified_Riven_Flesh>(), TileType<Spug_Flesh>(), ConversionType);
+
 			AddTileConversion(TileType<Silica>(), TileID.Sand);
 			AddTileConversion(TileType<Quartz>(), TileID.Sandstone);
 			AddTileConversion(TileType<Brittle_Quartz>(), TileID.HardenedSand);
@@ -1136,8 +1141,8 @@ namespace Origins.World.BiomeData {
 			BloodPenguin = NPCType<Riven_Penguin>();
 			BloodGoldfish = NPCType<Bottomfeeder>();
 
-			AddWallConversions(OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural), OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural));
-			
+			WallLoader.RegisterConversionFallback(OriginsWall.GetWallID<Calcified_Riven_Flesh_Wall>(WallVersion.Natural), OriginsWall.GetWallID<Riven_Flesh_Wall>(WallVersion.Natural), ConversionType);
+
 			AddWallConversions(OriginsWall.GetWallID<Barnacle_Wall>(WallVersion.Natural),
 				WallID.RocksUnsafe1,
 				WallID.Rocks1Echo
@@ -1249,6 +1254,7 @@ namespace Origins.World.BiomeData {
 				));
 				Rare.Add(FishingCatch.Item(ItemType<Ocotoral_Bud>()));
 				AddQuestFish(ItemType<Bonehead_Jellyfish>());
+				Uncommon.Add(FishingCatch.Item(ItemType<Tearracuda>()));
 			}
 		}
 	}

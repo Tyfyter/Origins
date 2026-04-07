@@ -579,6 +579,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 						if (Framing.GetTileSafely(pos.X + i, pos.Y + j).LiquidType == LiquidID.Shimmer) {
 							Tile above = Framing.GetTileSafely(pos.X + i, pos.Y + j - 1);
 							if (above.LiquidAmount > 0 && above.LiquidType == LiquidID.Shimmer) continue;
+							if (above.HasTile && Main.tileSolid[above.TileType] && !Main.tileSolidTop[above.TileType]) continue;
 							averageShimmerSurfacePosition.X += pos.X + i;
 							averageShimmerSurfacePosition.Y += pos.Y + j;
 							shimmerCount++;
@@ -701,7 +702,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				}
 			}
 			stringBuilder.Append(']');
-			//Origins.instance.Logger.Info(stringBuilder.ToString());
+			Origins.instance.Logger.Info(stringBuilder.ToString());
 		}
 		public override void OnKill() {
 			ProgressFlags.DownedShimmerConstruct.Set();

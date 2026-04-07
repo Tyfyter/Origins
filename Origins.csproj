@@ -37,9 +37,6 @@
 		<Reference Include="PegasusLib">
 		  <HintPath>..\ModAssemblies\PegasusLib_v1.1.4.3.dll</HintPath>
 		</Reference>
-		<Reference Include="StructureHelper">
-		  <HintPath>..\ModAssemblies\StructureHelper.dll</HintPath>
-		</Reference>
 		<Reference Include="SubworldLibrary">
 		  <HintPath>..\ModAssemblies\SubworldLibrary.dll</HintPath>
 		</Reference>
