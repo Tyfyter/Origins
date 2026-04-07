@@ -2,13 +2,16 @@
 using MonoMod.Cil;
 using Origins.UI.Snippets;
 using ReLogic.Content;
+using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.Localization;
@@ -30,7 +33,10 @@ namespace Origins.Items.Tools.Wiring {
 		public override LocalizedText DisplayName => GetLocalization("DisplayName").WithFormatArgs(name);
 		public override LocalizedText Tooltip => GetLocalization("Tooltip").WithFormatArgs(TruthTable[1, 1], TruthTable[1, 0], TruthTable[0, 1]);
 		public override void SetStaticDefaults() => Main.RegisterItemAnimation(Item.type, new DrawAnimationManual(0b111 + 1) { Frame = TruthTable.value });
-		public override void SetDefaults() => Item.CloneDefaults(ItemID.Actuator);
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.Actuator);
+			Item.consumable = true;
+		}
 		public override bool IsLoadingEnabled(Mod mod) {
 			if (TruthTable.IsEmpty) {
 				Logic_Gate_Data.Load();
@@ -39,11 +45,29 @@ namespace Origins.Items.Tools.Wiring {
 				mod.AddContent(new Logic_Gate(0b011, "XOR"));
 				mod.AddContent(new Logic_Gate(0b001, "NIMPLY"));
 				//mod.AddContent(new Logic_Gate(0b010, "NIMPLIED"));
+				FixNIMPLY();
 				return false;
 			}
 			return gates.TryAdd(TruthTable, this);
 		}
+		static void FixNIMPLY() {
+			DynamicSpriteFont font = FontAssets.MouseText.Value;
+			DynamicSpriteFont.SpriteCharacterData badArrow = font.SpriteCharacters['⇏'];
+			if (badArrow.Glyph != new Rectangle(92, 45, 13, 12)) return;
+			if (badArrow.Kerning != new Vector3(1, 13, 1)) return;
+			if (badArrow.Padding != new Rectangle(0, 3, 13, 29)) return;
+			if (!ModContent.RequestIfExists("Origins/Textures/Chars/Mouse_Text_NIMPLY", out Asset<Texture2D> asset)) return;
+			Task.Run(asset.Wait).ContinueWith(_ => {
+				font.SpriteCharacters['⇏'] = new(
+					asset.Value,
+					asset.Value.Bounds,
+					new(0, 3, 18, 29),
+					new(1, 18, 1)
+				);
+			});
+		}
 		public override bool? UseItem(Player player) {
+			if (!player.controlUseItem) return false;
 			if (Main.tile[Player.tileTargetX, Player.tileTargetY].Get<Logic_Gate_Data>().TruthTable.IsEmpty) {
 				SoundEngine.PlaySound(SoundID.Dig, new(Player.tileTargetX * 16, Player.tileTargetY * 16));
 				Logic_Gate_Data.SetTruthTable(new(Player.tileTargetX, Player.tileTargetY), TruthTable);

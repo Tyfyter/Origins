@@ -48,18 +48,16 @@ namespace Origins.UI.Snippets {
 		}
 		void ILoadable.Load(Mod mod) {
 			Load(mod);
-			if (Main.dedServ) return;
+			if (!Main.dedServ) FixBlocks();
+		}
+
+		static void FixBlocks() {
 			DynamicSpriteFont font = FontAssets.MouseText.Value;
 			DynamicSpriteFont.SpriteCharacterData badBlock = font.SpriteCharacters['█'];
 			if (badBlock.Glyph != new Rectangle(124, 230, 15, 22)) return;
 			if (badBlock.Kerning != new Vector3(1, 15, 1)) return;
 			if (badBlock.Padding != new Rectangle(0, -2, 15, 29)) return;
-			FixBlocks();
-		}
-
-		public static void FixBlocks() {
 			if (!ModContent.RequestIfExists("Origins/Textures/Chars/Mouse_Text_Blocks", out Asset<Texture2D> asset)) return;
-			DynamicSpriteFont font = FontAssets.MouseText.Value;
 			Task.Run(asset.Wait).ContinueWith(_ => {
 				DynamicSpriteFont.SpriteCharacterData GoodBlock(int x = 0, int y = 0) => new(
 					asset.Value,

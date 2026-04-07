@@ -8252,7 +8252,7 @@ Deactivated_Trenchmaker_Item: {
 }
 
 Logic_Gate: {
-	DisplayName: Logic Gate {0}
+	DisplayName: Logic Gate ({0})
 	TableData: ",B,¬B|A,{0},{1}|¬A,{2},0"
 	Tooltip:
 		'''
@@ -8266,6 +8266,6 @@ Logic_Gate: {
 		AND: ∧
 		OR: ∨
 		XOR: ≠
-		NIMPLY: ⇒
+		NIMPLY: ⇏
 	}
 }
