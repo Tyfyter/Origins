@@ -115,7 +115,7 @@ namespace Origins.Backgrounds {
 		public override Color OnTileColor(Color inColor) => Color.Lerp(inColor, inColor.MultiplyRGB(new(112, 50, 18)), Opacity);
 		public override void Update(GameTime gameTime) {
 			MathUtils.LinearSmoothing(ref Opacity, isActive.ToInt(), 1f / 60);
-			position.X += Main.windSpeedCurrent * 5;
+			position.X -= Main.windSpeedCurrent * 5;
 		}
 		public void Load(Mod mod) {
 			if (Main.dedServ) return;
