@@ -79,9 +79,6 @@ public abstract class Retool_Arm : ModItem, IItemObtainabilityProvider {
 	public sealed override void UpdateItemDye(Player player, int dye, bool hideVisual) {
 		player.OriginPlayer().retoolArmDye = dye;
 	}
-	public override void ModifyTooltips(List<TooltipLine> tooltips) {
-		tooltips.SubstituteKeybind(Keybindings.RetoolArm);
-	}
 	public override bool MagicPrefix() => true;
 	public override bool MeleePrefix() => true;
 	public override bool RangedPrefix() => true;

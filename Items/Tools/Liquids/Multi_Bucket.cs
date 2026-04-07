@@ -35,9 +35,6 @@ namespace Origins.Items.Tools.Liquids {
 			}
 			recipe.Register();
 		}
-		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			tooltips.SubstituteKeybind(Keybindings.MultiBucket);
-		}
 		public override void HoldItem(Player player) {
 			if (!player.JustDroppedAnItem)//make sure the player hasn't just dropped an item recently
 			{

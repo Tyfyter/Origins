@@ -49,9 +49,6 @@ public class Smog_Pod_4 : ModItem {
 	public override int ChoosePrefix(UnifiedRandom rand) {
 		return OriginExtensions.GetAllPrefixes(Item, rand, (PrefixCategory.AnyWeapon, 1), (PrefixCategory.Accessory, 2));
 	}
-	public override void ModifyTooltips(List<TooltipLine> tooltips) {
-		tooltips.SubstituteKeybind(Keybindings.SmogPod);
-	}
 	public static void BuffPlayer(Player player, float distance) {
 		bool reallyClose = distance <= 16 * 5;
 		player.OriginPlayer().smogPodStrength = reallyClose ? 2 : 1;

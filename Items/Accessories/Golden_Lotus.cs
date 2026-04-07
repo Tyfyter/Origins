@@ -37,9 +37,6 @@ namespace Origins.Items.Accessories {
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}
-		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			tooltips.SubstituteKeybind(Keybindings.GoldenLotus);
-		}
 	}
 	public class Golden_Lotus_Fairy : ModProjectile, IChestSyncRecipient {
 		public const float max_range = 16 * 35;

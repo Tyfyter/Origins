@@ -23,9 +23,6 @@ namespace Origins.Items.Accessories {
 			player.OriginPlayer().wishingGlassVisible = true;
 		}
 		public override void UpdateItemDye(Player player, int dye, bool hideVisual) => player.OriginPlayer().wishingGlassDye = dye;
-		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			tooltips.SubstituteKeybind(Keybindings.WishingGlass);
-		}
 	}
 	public class Wishing_Glass_Buff : ModBuff {
 		public override string Texture => "Origins/Buffs/Wishing_Glass_Buff";

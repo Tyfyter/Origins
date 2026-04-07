@@ -3849,7 +3849,7 @@ Forbidden_Voice: {
 	// DisplayName: Forbidden Voice
 	/* Tooltip:
 		'''
-		You are [buffhint/self:Silenced], press <key> to [buffhint/dnsilence:Origins/Silenced_Debuff] everyone else too
+		You are [buffhint/self:Silenced], press [key:Origins/Forbidden Voice] to [buffhint/dnsilence:Origins/Silenced_Debuff] everyone else too
 		Gain up to 10% damage resistance over time by not speaking
 		''' */
 }
@@ -5396,7 +5396,7 @@ Liars_Tongue: {
 	// DisplayName: Liar's Tongue
 	/* Tooltip:
 		'''
-		You are [buffhint/self:Silenced], press <key> to [buffhint/dnsilence:Origins/Silenced_Debuff] everyone else too
+		You are [buffhint/self:Silenced], press [key:Origins/Forbidden Voice] to [buffhint/dnsilence:Origins/Silenced_Debuff] everyone else too
 		Gain up to 27% damage resistance over time by not speaking
 		''' */
 }
@@ -5609,8 +5609,8 @@ Golden_Lotus: {
 	/* Tooltip:
 		'''
 		Increases pickup range for items
-		Press <key> to enable/disable loot search
-		Press <key> over discovered loot to have a golden fairy bring it to you
+		Press [key:Origins/GoldenLotus] to enable/disable loot search
+		Press [key:Origins/GoldenLotus] over discovered loot to have a golden fairy bring it to you
 		''' */
 }
 
@@ -5654,8 +5654,8 @@ Power_Lotus: {
 		Enables auto swing for melee weapons
 		Increases the size of melee weapons
 		Increases pickup range for items
-		Press <key> to enable/disable loot search
-		Press <key> over discovered loot to have a power fairy bring it to you
+		Press [key:Origins/GoldenLotus] to enable/disable loot search
+		Press [key:Origins/GoldenLotus] over discovered loot to have a power fairy bring it to you
 		''' */
 }
 
@@ -6086,7 +6086,7 @@ Wishing_Glass: {
 	// DisplayName: Wishing Glass
 	/* Tooltip:
 		'''
-		Press <key> for 8 seconds of infinite ammo and mana, and insanely fast use time
+		Press [key:Origins/WishingGlass] for 8 seconds of infinite ammo and mana, and insanely fast use time
 		10 second cooldown
 		''' */
 }
@@ -7450,7 +7450,7 @@ Stress_Ball: {
 	/* Tooltip:
 		'''
 		A pop-up meter will randomly appear
-		Press <key> when pop-up appears to de-stress
+		Press [key:Origins/StressBall] when pop-up appears to de-stress
 		Grants up to a 40% damage boost for 7 seconds when fully-charged
 		''' */
 }
@@ -7574,7 +7574,7 @@ Lunatics_Rune: {
 	// DisplayName: Lunatic's Rune
 	/* Tooltip:
 		'''
-		Hold <key> to conduct a ritual
+		Hold [key:Origins/LunaticsRune] to conduct a ritual
 		The ritual will temporarily grant you a random effect
 		Conducting the ritual repeatedly extends the duration
 		''' */
@@ -7600,7 +7600,7 @@ Retool_Arm_Cannon: {
 	/* Tooltip:
 		'''
 		Does extra damage on direct hits
-		Press <key> to switch mode
+		Press [key:Origins/RetoolArm] to switch mode
 		''' */
 }
 
@@ -7609,7 +7609,7 @@ Retool_Arm_Laser: {
 	/* Tooltip:
 		'''
 		Hold <right> to fire a powerful laser
-		Press <key> to switch mode
+		Press [key:Origins/RetoolArm] to switch mode
 		''' */
 }
 
@@ -7618,7 +7618,7 @@ Retool_Arm_Saw: {
 	/* Tooltip:
 		'''
 		Chops down trees with you
-		Press <key> to switch mode
+		Press [key:Origins/RetoolArm] to switch mode
 		''' */
 }
 
@@ -7627,7 +7627,7 @@ Retool_Arm_Vice: {
 	/* Tooltip:
 		'''
 		Press and hold <right> on enemies to manipulate them
-		Press <key> to switch mode
+		Press [key:Origins/RetoolArm] to switch mode
 		''' */
 }
 
@@ -7880,7 +7880,7 @@ Smog_Pod_4: {
 	// DisplayName: Smog Pod-4
 	/* Tooltip:
 		'''
-		Press <key> to launch 4 rockets that turn into smog markers
+		Press [key:Origins/SmogPod] to launch 4 rockets that turn into smog markers
 		Smog markers provide the following effects:
 		 - Immunity to [buffhint:Darkness], [buffhint:Obstructed] and [buffhint:WindPushed]
 		 - Boosts life regen to all nearby players, and an even greater boost when stood under
@@ -8132,7 +8132,7 @@ Multi_Bucket: {
 	/* Tooltip:
 		'''
 		Contains an endless amount of any liquid
-		Press <key> to choose liquid
+		Press [key:Origins/MultiBucket] to choose liquid
 		Right Click to place a 3x3 area of liquid
 		''' */
 	// Shimmer: Shimmer

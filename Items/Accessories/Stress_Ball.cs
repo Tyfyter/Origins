@@ -76,9 +76,6 @@ namespace Origins.Items.Accessories {
 				}
 			}
 		}
-		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			tooltips.SubstituteKeybind(Keybindings.StressBall);
-		}
 	}
 	public class Stress_Ball_UI : SwitchableUIState {
 		public AutoLoadingAsset<Texture2D> baseTexture = typeof(Stress_Ball_UI).GetDefaultTMLName();

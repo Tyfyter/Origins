@@ -122,9 +122,6 @@ namespace Origins.Items.Accessories {
 				charge = 0;
 			}
 		}
-		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			tooltips.SubstituteKeybind(Keybindings.LunaticsRune);
-		}
 		public override void UpdateItemDye(Player player, int dye, bool hideVisual) => player.OriginPlayer().lunaticsRuneDye = dye;
 		public class Attacks : BuffOption {
 			public override int BuffType => ModContent.BuffType<Lunatics_Rune_Attacks_Buff>();

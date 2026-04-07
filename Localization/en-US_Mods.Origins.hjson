@@ -1172,7 +1172,7 @@ Buffs: {
 	}
 
 	Silenced_Debuff: {
-		DisplayName: Silenced Debuff
+		DisplayName: Silenced
 		Description: Mods.Origins.Buffs.Silenced_Debuff.Description
 		EffectDescription:
 			'''

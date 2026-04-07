@@ -102,9 +102,6 @@ namespace Origins.Items.Accessories {
 			.AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}
-		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			tooltips.SubstituteKeybind(Keybindings.GoldenLotus);
-		}
 	}
 	public class Power_Lotus_Seeker_Fairy : Golden_Lotus_Fairy, IShadedProjectile {
 		public override string Texture => typeof(Golden_Lotus_Fairy).GetDefaultTMLName();
