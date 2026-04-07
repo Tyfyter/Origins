@@ -13,6 +13,7 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.Layers;
 using Origins.Questing;
+using Origins.Tiles.Ashen;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -258,6 +259,7 @@ namespace Origins {
 
 				if (Player.trashItem?.IsAir != true && ModLargeGem.GemTextures[Player.trashItem.type] is not null) Player.trashItem.SetDefaults();
 			}
+			Administrator_Panel.Nuke_Launch_Program.UpdateMusic();
 		}
 		public void UpdateStatShare() {
 			if (statSharePercent != 0f) {

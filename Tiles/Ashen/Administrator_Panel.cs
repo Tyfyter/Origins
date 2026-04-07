@@ -3,6 +3,7 @@ using Origins.Graphics;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using PegasusLib.Networking;
+using System;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
@@ -107,22 +108,16 @@ namespace Origins.Tiles.Ashen {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
 
-		public record class Nuke_Launch_Program(Player Player) : SyncedAction {
+		public record class Nuke_Launch_Program(Player Player) : AutoSyncedAction {
 			private static int Countdown = 0;
-			private static int CountdownStage = 0;
+			private static Stage CountdownStage = Stage.Inactive;
 			const string base_key = "Mods.Origins.Status_Messages.Nuke_Launch_Program.";
 			public Nuke_Launch_Program() : this(default(Player)) { }
-			public override SyncedAction NetReceive(BinaryReader reader) => this with {
-				Player = Main.player[reader.ReadByte()]
-			};
-			public override void NetSend(BinaryWriter writer) {
-				writer.Write((byte)Player.whoAmI);
-			}
-			protected override bool ShouldPerform => Countdown == 0;
+			protected override bool ShouldPerform => CountdownStage == Stage.Inactive;
 			/// <summary>
 			/// <paramref name="delayAfter"/> is ignored if <paramref name="typeOut"/> is false
 			/// </summary>
-			static void DisplayMessage(string message, bool typeOut = true, int delayAfter = 15) {
+			static void DisplayMessage(string message, bool typeOut = true, int delayAfter = 30) {
 				if (typeOut) {
 					const int delay = 2;
 					const int speed = 1;
@@ -132,37 +127,38 @@ namespace Origins.Tiles.Ashen {
 				Main.NewText(GetText("Cursor") + message, FromHexRGB(0xFFB18C));
 			}
 			static string GetText(string key, params object[] substitutions) => Language.GetTextValue(base_key + key, substitutions);
+			public enum Stage {
+				Inactive,
+				InputDestination,
+				SayWorldName,
+				InitializeCountdown,
+				Countdown,
+				JustMusic,
+			}
 			public static void Update() {
-				if (Countdown == 0) return;
-
 				switch (CountdownStage) {
-					case 0:
-					if (--Countdown == 0) {
-						++CountdownStage;
+					case Stage.InputDestination:
+					if (--Countdown <= 0) {
+						CountdownStage = CountdownStage.NextEnum();
 						DisplayMessage(GetText("Destination"));
 					}
 					break;
-					case 1:
-					if (--Countdown == 0) {
-						++CountdownStage;
+					case Stage.SayWorldName:
+					if (--Countdown <= 0) {
+						CountdownStage = CountdownStage.NextEnum();
 						DisplayMessage(Main.worldName);
 					}
 					break;
-					case 2:
-					if (--Countdown == 0) {
-						++CountdownStage;
+					case Stage.InitializeCountdown:
+					if (--Countdown <= 0) {
+						CountdownStage = CountdownStage.NextEnum();
 						DisplayMessage(GetText("InitCD"));
+						Countdown += 300;
 					}
 					break;
-					case 3:
-					if (--Countdown == 0) {
-						++CountdownStage;
-						Countdown = 300;
-						DisplayMessage("5", false);
-					}
-					break;
-					case 4:
+					case Stage.Countdown:
 					switch (--Countdown) {
+						case 300:
 						case 240:
 						case 180:
 						case 120:
@@ -170,12 +166,28 @@ namespace Origins.Tiles.Ashen {
 						DisplayMessage((Countdown / 60).ToString(), false);
 						break;
 					}
+					if (Countdown <= 0) CountdownStage = CountdownStage.NextEnum();
+					break;
+					case Stage.JustMusic:
+					if (Origins.Music.OhFuckTheBombsAreDroppingThisIsTheEndWeAreAllGoingToDie == -1) CountdownStage = Stage.Inactive;
 					break;
 				}
 			}
 			protected override void Perform() {
-				CountdownStage = 0;
+				CountdownStage = Stage.InputDestination;
 				DisplayMessage(GetText("Start", Player.name));
+			}
+			public static void UpdateMusic() {
+				if (CountdownStage != Stage.JustMusic) return;
+				if (Origins.Music.OhFuckTheBombsAreDroppingThisIsTheEndWeAreAllGoingToDie == -1) {
+					EndMusic();
+					return;
+				}
+				Main.musicBox2 = Origins.Music.OhFuckTheBombsAreDroppingThisIsTheEndWeAreAllGoingToDie;
+			}
+			public static void EndMusic() {
+				if (CountdownStage != Stage.JustMusic) return;
+				CountdownStage = Stage.Inactive;
 			}
 		}
 	}

@@ -40,6 +40,7 @@ namespace Origins {
 			public static int AncientAshen;
 
 			public static int TheDive;
+			public static int OhFuckTheBombsAreDroppingThisIsTheEndWeAreAllGoingToDie = -1;
 		}
 		public static class Sounds {
 			public static SoundStyle MuffledHitMale = new("Origins/Sounds/Custom/ModifiedPlayer/Male_Hit_Mask", 3, SoundType.Sound);
