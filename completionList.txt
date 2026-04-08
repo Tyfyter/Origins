@@ -624,7 +624,7 @@ ACCESSORIES:
 (^) Shotgun Glove
 (^) Slag Bucket (Cursed)
 (^) Slag Bucket (Uncursed)
-(☻) Smog Pod-4 !!!
+(^) Smog Pod-4
 (^) Sniper's Mark
 (^) Solar Panel
 (^) Sonar Visor
@@ -1619,7 +1619,7 @@ MISCELLANEOUS ITEMS:
 (^) Armor+ Power-Up
 (^) Defiled Mana
 (^) Large Chambersite
-(X) RAM Chip !!!
+(#, ^2) RAM Chip !!!
 (^) Worn Paper: Famine
 (^) Worn Paper: Loose Wheel
 (^) Worn Paper: Mean Baby
@@ -1655,7 +1655,7 @@ CRITTERS AND FISH:
 
 CONSUMABLES:
 |---
-(X) Classified Blueprint !!!
+(#, ^2) Classified Blueprint !!!
 (^) Crown Jewel
 (X) Evil DNA
 (^) Mojo Injection
@@ -1684,7 +1684,7 @@ CONSUMABLES:
 
 (†, 々) Astringent Broth
 (^) Bitter Broth
-(X) Chalky Broth !!!
+(#, ^2) Chalky Broth !!!
 (^) Foul Broth
 (^) Greasy Broth
 (^) Hearty Broth
@@ -1693,7 +1693,7 @@ CONSUMABLES:
 (†, 々) Metallic Broth
 (^) Minishark Broth
 (^) Minty Broth
-(X) Mushy Broth !!!
+(#, ^2) Mushy Broth !!!
 (^) Plain Broth
 (^) Savory Broth
 (^) Sharp Broth
@@ -1949,7 +1949,7 @@ CROSS-MOD CONTENT:
 (^) Riven "Fake" Altar
 (^) Sanguinite Storage Unit
 (^) Sanguinite Storage Upgrade
-(@, ^3) Suspicious Trash Compactor !!!
+(#2, ^2) Suspicious Trash Compactor !!!
 (^) Watered-down Keytar
 (#, ^2) Wave Energy Converter !!!
 
