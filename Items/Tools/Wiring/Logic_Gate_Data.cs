@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using MonoMod.Cil;
-using Origins.UI.Snippets;
 using ReLogic.Content;
 using ReLogic.Graphics;
 using System;
@@ -13,10 +13,13 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using static Origins.Core.AdvancedMiscShaderData.Parameter;
+using static Origins.Items.Tools.Wiring.Logic_Gate_Data;
 
 namespace Origins.Items.Tools.Wiring {
 	public class Logic_Gate(Logic_Gate_Data.LogicGateTruthTable truthTable, string name) : ModItem {
@@ -44,7 +47,6 @@ namespace Origins.Items.Tools.Wiring {
 		}
 		public override bool IsLoadingEnabled(Mod mod) {
 			if (TruthTable.IsEmpty) {
-				Logic_Gate_Data.Load();
 				mod.AddContent(new Logic_Gate(0b100, "AND"));
 				mod.AddContent(new Logic_Gate(0b111, "OR"));
 				mod.AddContent(new Logic_Gate(0b011, "XOR"));
@@ -88,6 +90,33 @@ namespace Origins.Items.Tools.Wiring {
 			}
 
 			return false;
+		}
+		public readonly record struct UI(int I, int J) : Logic_Gate_System.IComponentUI {
+			public bool ShouldClose => !Logic_Gate_System.LocalPlayerIsInInteractionRange(I, J);
+			public void Deactivate() {
+
+			}
+
+			public void Initialize(UIElement root) {
+				if (Main.LocalPlayer.controlDown) {
+					root.Append(new UIImageFramed(Logic_Gate_System.Textures, new(2, 154, 240, 150)) {
+						IgnoresMouseInteraction = false
+					});
+				}
+			}
+			bool Logic_Gate_System.IComponentUI.Equals(Logic_Gate_System.IComponentUI other) => other is UI otherUI && this == otherUI;
+		}
+		class Logic_Gate_Interaction : GlobalTile {
+			public override void Load() {
+				On_Player.TileInteractionsCheck += On_Player_TileInteractionsCheck;
+			}
+			static void On_Player_TileInteractionsCheck(On_Player.orig_TileInteractionsCheck orig, Player self, int myX, int myY) {
+				if (WiresUI.Settings.DrawWires && !WiresUI.Settings.HideWires && !Main.tile[myX, myY].Get<Logic_Gate_Data>().TruthTable.IsEmpty) {
+					if (self.controlUseTile && self.releaseUseTile) Logic_Gate_System.SetComponentUI(new UI(myX, myY));
+					return;
+				}
+				orig(self, myX, myY);
+			}
 		}
 	}
 	public struct Logic_Gate_Data : ITileData {
@@ -164,7 +193,7 @@ namespace Origins.Items.Tools.Wiring {
 		}
 		public static void SetTruthTable(Point position, LogicGateTruthTable table) => Update(position, tile => {
 			tile.Get<Logic_Gate_Data>().TruthTable = table;
-			tile.Get<Logic_Gate_Data>().Wires = new(0b10000000);
+			tile.Get<Logic_Gate_Data>().Wires = 0b1000;
 			Main.NewText(tile.Get<Logic_Gate_Data>().GetStatement());
 		});
 		public static void SetWires(Point position, LogicGateWires wires) => Update(position, tile => tile.Get<Logic_Gate_Data>().Wires = wires);
@@ -275,6 +304,18 @@ namespace Origins.Items.Tools.Wiring {
 				b = (a + 1 + ((v & b_mask) >> 2)) % a_mask;
 				output = 3 - (a + b) * ((v & o_mask) >> 3);
 			}
+			public static LogicGateWires Create(int a, int b, int output) {
+				if (a < 0 || a >= 3) throw new ArgumentException($"{a} was not in range [0, 3[", nameof(a));
+				if (b < 0 || b >= 3) throw new ArgumentException($"{b} was not in range [0, 3[", nameof(b));
+				if (output < 0 || output > 3) throw new ArgumentException($"{output} was not in range [0, 3]", nameof(output));
+				if (a == b) throw new ArgumentException($"{nameof(a)} and {nameof(b)} cannot be equal");
+				if (a == output) throw new ArgumentException($"{nameof(a)} and {nameof(output)} cannot be equal");
+				if (b == output) throw new ArgumentException($"{nameof(b)} and {nameof(output)} cannot be equal");
+				int result = a;
+				if ((b - a + 3) % 3 != 1) result |= b_mask;
+				if (output != 3) result |= o_mask;
+				return result;
+			}
 			public override string ToString() {
 				GetWires(out int a, out int b, out int output);
 				static string Get(int value) => value switch {
@@ -291,8 +332,7 @@ namespace Origins.Items.Tools.Wiring {
 			public override int GetHashCode() => value & wires_mask;
 			public static bool operator ==(LogicGateWires left, LogicGateWires right) => left.Equals(right);
 			public static bool operator !=(LogicGateWires left, LogicGateWires right) => !(left == right);
-			public static implicit operator LogicGateWires(byte value) => new(value);
-			public static implicit operator LogicGateWires(int value) => (byte)value;
+			public static implicit operator LogicGateWires(int value) => new((byte)(value << 4));
 		}
 		public readonly ref struct WalkedLogicOutput : IDisposable {
 			public readonly Point position;
@@ -311,6 +351,72 @@ namespace Origins.Items.Tools.Wiring {
 			drawParams.Frame.X = 40;
 			drawParams.Frame.Width = 14;
 			return base.Draw(spriteBatch, ref drawParams);
+		}
+	}
+	public class Logic_Gate_System : ModSystem {
+		public static Asset<Texture2D> Textures { get; private set; }
+		public override void Load() {
+			Logic_Gate_Data.Load();
+			if (Main.dedServ) return;
+			Textures = ModContent.Request<Texture2D>("Origins/UI/Logic_Components_Resource");
+		}
+		static readonly UserInterface componentUI = new();
+		public override void UpdateUI(GameTime gameTime) {
+			if (componentUI.CurrentState is not ComponentUI ui || ui.ShouldClose) {
+				componentUI.SetState(null);
+			}
+			componentUI.Update(gameTime);
+		}
+		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
+			int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
+			if (inventoryIndex != -1) {//error prevention & null check
+				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
+					"Origins: Special Chest UI",
+					delegate {
+						componentUI?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
+						return true;
+					},
+					InterfaceScaleType.UI) { Active = Main.playerInventory }
+				);
+			}
+		}
+		public interface IComponentUI {
+			public bool ShouldClose { get; }
+			void Initialize(UIElement root);
+			void Deactivate();
+			public bool Equals(IComponentUI other);
+		}
+		public class ComponentUI : UIState {
+			IComponentUI uiSource;
+			public bool ShouldClose => uiSource?.ShouldClose ?? true;
+			public override void OnInitialize() {
+				RemoveAllChildren();
+				UIImageFramed root = new(Textures, new(2, 2, 240, 150));
+				uiSource?.Initialize(root);
+				Append(root);
+			}
+			public override void OnDeactivate() => uiSource?.Deactivate();
+			public void SetUISource(IComponentUI newSource) {
+				if (uiSource?.Equals(newSource) ?? false) return;
+				uiSource?.Deactivate();
+				uiSource = newSource;
+				OnInitialize();
+			}
+			public ComponentUI(IComponentUI uiSource) => SetUISource(uiSource);
+		}
+		public static void SetComponentUI(IComponentUI newSource) {
+			if (componentUI.CurrentState is ComponentUI ui) ui.SetUISource(newSource);
+			else componentUI.SetState(new ComponentUI(newSource));
+		}
+		public static bool LocalPlayerIsInInteractionRange(int i, int j, int width = 1, int height = 1) {
+			Player player = Main.LocalPlayer;
+			int playerCenterX = (int)((player.position.X + player.width * 0.5f) / 16);
+			int playerCenterY = (int)((player.position.Y + player.height * 0.5f) / 16);
+			Rectangle r = new(i * 16, j * 16, width * 16, height * 16);
+			r.Inflate(-1, -1);
+			Point point = r.ClosestPointInRect(player.Center).ToTileCoordinates();
+			return playerCenterX >= point.X - Player.tileRangeX && playerCenterX <= point.X + Player.tileRangeX + 1
+				&& playerCenterY >= point.Y - Player.tileRangeY && playerCenterY <= point.Y + Player.tileRangeY + 1;
 		}
 	}
 }
