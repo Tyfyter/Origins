@@ -29,7 +29,7 @@ namespace Origins.UI.Snippets {
 			}
 			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default, Color color = default, float scale = 1) {
 				DynamicSpriteFont font = FontAssets.MouseText.Value;
-				size = new(width.Sum(), data.GetLength(1) * font.LineSpacing);
+				size = new(width.Sum(), font.LineSpacing);
 				size *= Scale;
 				if (justCheckingString || spriteBatch is null) return true;
 				for (int i = 0; i < data.GetLength(0); i++) {

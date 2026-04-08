@@ -16,6 +16,7 @@ using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.UI;
 
 namespace Origins.Items.Tools.Wiring {
 	public class Logic_Gate(Logic_Gate_Data.LogicGateTruthTable truthTable, string name) : ModItem {
@@ -30,8 +31,9 @@ namespace Origins.Items.Tools.Wiring {
 		protected override bool CloneNewInstances => true;
 		public override string Texture => Logic_Gate_Data.texture_path;
 		public static LocalizedText GetLocalization(string suffix) => Language.GetText($"Mods.Origins.Items.Logic_Gate.{suffix}");
-		public override LocalizedText DisplayName => GetLocalization("DisplayName").WithFormatArgs(name);
-		public override LocalizedText Tooltip => GetLocalization("Tooltip").WithFormatArgs(TruthTable[1, 1], TruthTable[1, 0], TruthTable[0, 1]);
+		public static LocalizedText TryGetLocalization(string suffix) => TextUtils.LanguageTree.Find($"Mods.Origins.Items.Logic_Gate.{suffix}")?.value;
+		public override LocalizedText DisplayName => GetLocalization("DisplayName").WithFormatArgs(TryGetLocalization($"Name.{name}")?.Value ?? name);
+		public override LocalizedText Tooltip => TruthTable.GetStatement("A", "B", GetLocalization("Output"));
 		public override void SetStaticDefaults() => Main.RegisterItemAnimation(Item.type, new DrawAnimationManual(0b111 + 1) { Frame = TruthTable.value });
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Actuator);
@@ -44,6 +46,7 @@ namespace Origins.Items.Tools.Wiring {
 				mod.AddContent(new Logic_Gate(0b111, "OR"));
 				mod.AddContent(new Logic_Gate(0b011, "XOR"));
 				mod.AddContent(new Logic_Gate(0b001, "NIMPLY"));
+				mod.AddContent(new Logic_Gate(0b101, "Diode"));
 				//mod.AddContent(new Logic_Gate(0b010, "NIMPLIED"));
 				FixNIMPLY();
 				return false;
@@ -65,6 +68,12 @@ namespace Origins.Items.Tools.Wiring {
 					new(1, 18, 1)
 				);
 			});
+		}
+		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			LocalizedText text = ItemSlot.ShiftInUse ? 
+				GetLocalization("Table").WithFormatArgs(TruthTable[1, 1], TruthTable[1, 0], TruthTable[0, 1])
+				: GetLocalization("HoldShiftForTruthTable");
+			tooltips.Add("TruthTable", text);
 		}
 		public override bool? UseItem(Player player) {
 			if (!player.controlUseItem) return false;
@@ -211,10 +220,9 @@ namespace Origins.Items.Tools.Wiring {
 				3 => "Vanilla",
 				_ => throw new NotImplementedException()
 			};
-			string Get(int value) => true ? $"[wireblock:{GetName(value)}]" : GetName(value);
-			return Logic_Gate.GetLocalization("Statement").WithFormatArgs(
+			static string Get(int value) => true ? $"[wireblock:{GetName(value)}]" : GetName(value);
+			return TruthTable.GetStatement(
 				Get(a),
-				Logic_Gate.GetLocalization("LogicSymbols." + Logic_Gate.GetName(TruthTable)),
 				Get(b),
 				Get(output)
 			);
@@ -237,6 +245,15 @@ namespace Origins.Items.Tools.Wiring {
 			public static bool operator !=(LogicGateTruthTable left, LogicGateTruthTable right) => !(left == right);
 			public static implicit operator LogicGateTruthTable(byte value) => new(value);
 			public static implicit operator LogicGateTruthTable(int value) => (byte)value;
+			public readonly LocalizedText GetStatement(object a, object b, object output) {
+				string name = Logic_Gate.GetName(this);
+				return (Logic_Gate.TryGetLocalization("Statement." + name) ?? Logic_Gate.GetLocalization("Statement")).WithFormatArgs(
+					a,
+					Logic_Gate.GetLocalization("LogicSymbols." + name),
+					b,
+					output
+				);
+			}
 			public override string ToString() => 
 				$"   B ¬B\n" +
 				$" A {this[1, 1]}  {this[1, 0]}\n" +

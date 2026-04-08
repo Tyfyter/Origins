@@ -4391,11 +4391,13 @@ namespace Origins {
 			self.consumable = true;
 		}
 		public static void Insert(this List<TooltipLine> tooltips, string target, string textKey, string name = null, bool after = true) {
-			string text = Language.GetOrRegister(textKey).Value;
-			if (string.IsNullOrWhiteSpace(text)) return;
+			tooltips.Insert(target, Language.GetOrRegister(textKey), name, after);
+		}
+		public static void Insert(this List<TooltipLine> tooltips, string target, LocalizedText text, string name = null, bool after = true) {
+			if (string.IsNullOrWhiteSpace(text.Value)) return;
 			if (string.IsNullOrEmpty(name)) name = target;
 			int index = tooltips.FindIndex(line => line.Name == target);
-			TooltipLine line = new(Origins.instance, name, text);
+			TooltipLine line = new(Origins.instance, name, text.Value);
 			if (index == -1) {
 				tooltips.Add(line);
 				return;
@@ -4403,10 +4405,12 @@ namespace Origins {
 			tooltips.Insert(index + after.ToInt(), line);
 		}
 		public static void Add(this List<TooltipLine> tooltips, string name, string textKey) {
-			string text = Language.GetOrRegister(textKey).Value;
-			if (string.IsNullOrWhiteSpace(text)) return;
+			tooltips.Add(name, Language.GetOrRegister(textKey));
+		}
+		public static void Add(this List<TooltipLine> tooltips, string name, LocalizedText text) {
+			if (string.IsNullOrWhiteSpace(text.Value)) return;
 			int index = tooltips.FindLastIndex(line => line.Name.StartsWith("Tooltip"));
-			TooltipLine line = new(Origins.instance, name, text);
+			TooltipLine line = new(Origins.instance, name, text.Value);
 			if (index == -1) {
 				tooltips.Add(line);
 				return;

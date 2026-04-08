@@ -1366,11 +1366,11 @@ TILES:
 (^) Strange Plant (Stardust)
 (^) Traffic Cone
 
-(#, ^2) Advanced Logic Gate (AND) !!!
-(#, ^2) Advanced Logic Gate (NAND) !!!
-(#, ^2) Advanced Logic Gate (NOT) !!!
-(#, ^2) Advanced Logic Gate (OR) !!!
-(#, ^2) Advanced Logic Gate (XOR) !!!
+(#2, ^2) Logic Component (AND) !!!
+(#2, ^2) Logic Component (OR) !!!
+(#2, ^2) Logic Component (XOR) !!!
+(#2, ^2) Logic Component (NIMPLY) !!!
+(#2, ^2) Logic Component (Diode) !!!
 (^) Ashen Campfire
 (^) Ashen Dungeon Chest
 (^) Ashen Wire

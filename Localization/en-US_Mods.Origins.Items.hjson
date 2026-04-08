@@ -8252,21 +8252,30 @@ Deactivated_Trenchmaker_Item: {
 }
 
 Logic_Gate: {
-	DisplayName: Logic Gate ({0})
+	DisplayName: Logic Component ({0})
 	TableData: ",B,¬B|A,{0},{1}|¬A,{2},0"
-	Tooltip:
+	Table:
 		'''
 		[ttable/line0:{$TableData}]
 		[ttable/line1:{$TableData}]
 		[ttable/line2:{$TableData}]
 		'''
-	Statement: "{0}{1}{2}⇔{3}"
+	HoldShiftForTruthTable: Hold shift for truth table
+	Output: Output
+
+	Statement: {
+		$parentVal: "{0} {1}{2}⇔{3}"
+		Diode: "{0} {1}{3}"
+	}
+
+	Name.Diode: Diode
 
 	LogicSymbols: {
 		AND: ∧
 		OR: ∨
 		XOR: ≠
 		NIMPLY: ⇏
+		Diode: ⇒
 	}
 }
 
