@@ -1366,11 +1366,6 @@ TILES:
 (^) Strange Plant (Stardust)
 (^) Traffic Cone
 
-(#2, ^2) Logic Component (Diode) !!!
-(#2, ^2) Logic Component (AND) !!!
-(#2, ^2) Logic Component (OR) !!!
-(#2, ^2) Logic Component (XOR) !!!
-(#2, ^2) Logic Component (NIMPLY) !!!
 (^) Ashen Campfire
 (^) Ashen Dungeon Chest
 (^) Ashen Wire
@@ -1387,6 +1382,7 @@ TILES:
 (^) Defiled Monolith
 (X) Defiled Pylon
 (#, ^2) Delay Component !!!
+(#2, ^2) Diode Component !!!
 (^) Dirt Chest
 (^) Edge Detector
 (^) Fire Extinguisher Holder
@@ -1397,6 +1393,10 @@ TILES:
 (^) Liquid Sensor (Amebic Gel)
 (^) Liquid Sensor (Brine)
 (^) Liquid Sensor (Oil)
+(#2, ^2) Logic Component (AND) !!!
+(#2, ^2) Logic Component (OR) !!!
+(#2, ^2) Logic Component (XOR) !!!
+(#2, ^2) Logic Component (NIMPLY) !!!
 (^) Mechanical Key Node
 (^) Medium Storage Container
 (^) Modular Bunk
@@ -1572,7 +1572,7 @@ MATERIALS:
 (^) Parasitic Powder
 (^) Riven Carapace
 (^) Riven Seeds
-(☻) Robot Guts !!!
+(^) Robot Guts
 (^) Rubber
 (^) Sanguinite Bar
 (^) Silicon Bar
@@ -1661,7 +1661,7 @@ CONSUMABLES:
 (^) Mojo Injection
 (X) Mother's Ward
 (^) Quantum Injector
-(X) Screwdriver Upgrade: Logic Gate !!!
+(#, ^2) Screwdriver Upgrade: Logic Component !!!
 (^) Screwdriver Upgrade: White Wire
 (%2) The Defiled Will
 
