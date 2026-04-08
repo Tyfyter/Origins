@@ -316,7 +316,7 @@ namespace Origins.Items {
 			if (PrefixLoader.GetPrefix(item.prefix) is IModifyTooltipsPrefix modifyTooltipsPrefix) {
 				modifyTooltipsPrefix.ModifyTooltips(item, tooltips);
 			}
-			if (item.createTile > -1 && TileLoader.GetTile(item.createTile) is IAshenWireTile) {
+			if (OriginsSets.Items.AshenWireable[item.type]) {
 				for (int i = tooltips.Count - 1; i >= 0; i--) {
 					switch (tooltips[i].Name) {
 						case "Placeable":

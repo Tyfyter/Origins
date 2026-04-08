@@ -60,6 +60,7 @@ using MC = Terraria.ModLoader.ModContent;
 using Origins.Liquids;
 using Origins.Dev;
 using System.Threading.Tasks;
+using Origins.Tiles.Ashen;
 
 namespace Origins {
 	public sealed partial class Origins : Mod {
@@ -935,6 +936,10 @@ namespace Origins {
 			MeleeGlobalProjectile.applyScaleToProjectile = ItemID.Sets.Factory.CreateBoolSet();
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
+			for (int i = 0; i < ItemLoader.ItemCount; i++) {
+				Item item = new(i);
+				OriginsSets.Items.AshenWireable[i] = item.createTile > -1 && TileLoader.GetTile(item.createTile) is IAshenWireTile;
+			}
 		}
 		static void LoadCloudBottoms() {
 			CloudBottoms = new Texture2D[TextureAssets.Cloud.Length];

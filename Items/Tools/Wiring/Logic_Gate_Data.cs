@@ -34,7 +34,10 @@ namespace Origins.Items.Tools.Wiring {
 		public static LocalizedText TryGetLocalization(string suffix) => TextUtils.LanguageTree.Find($"Mods.Origins.Items.Logic_Gate.{suffix}")?.value;
 		public override LocalizedText DisplayName => GetLocalization("DisplayName").WithFormatArgs(TryGetLocalization($"Name.{name}")?.Value ?? name);
 		public override LocalizedText Tooltip => TruthTable.GetStatement("A", "B", GetLocalization("Output"));
-		public override void SetStaticDefaults() => Main.RegisterItemAnimation(Item.type, new DrawAnimationManual(0b111 + 1) { Frame = TruthTable.value });
+		public override void SetStaticDefaults() {
+			Main.RegisterItemAnimation(Type, new DrawAnimationManual(0b111 + 1) { Frame = TruthTable.Value });
+			OriginsSets.Items.AshenWireable[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Actuator);
 			Item.consumable = true;
@@ -95,7 +98,7 @@ namespace Origins.Items.Tools.Wiring {
 		const byte wires_mask = 0b11110000;
 		public LogicGateTruthTable TruthTable {
 			readonly get => Unsafe.BitCast<byte, LogicGateTruthTable>(data);
-			private set => data = (byte)((data & ~truth_mask) | (value.value & truth_mask));
+			private set => data = (byte)((data & ~truth_mask) | value.Value);
 		}
 		public bool Powered {
 			readonly get => GetBits(data, power_mask);
@@ -229,8 +232,10 @@ namespace Origins.Items.Tools.Wiring {
 		}
 		[DebuggerDisplay("{value:B}")]
 		public readonly struct LogicGateTruthTable(byte value) : IEquatable<LogicGateTruthTable> {
-			public readonly byte value = (byte)(value & truth_mask);
-			public readonly bool IsEmpty => (value & truth_mask) == 0;
+			readonly byte value = (byte)(value & truth_mask);
+			public readonly byte Value => (byte)(value & truth_mask);
+			public readonly bool IsEmpty => Value == 0;
+			public readonly bool IsDiode => Value is 0b101 or 0b110;
 			public readonly bool this[bool a, bool b] {
 				get {
 					int index = a.ToInt() + b.Mul(2);
@@ -239,8 +244,8 @@ namespace Origins.Items.Tools.Wiring {
 			}
 			public readonly int this[int a, int b] => this[a != 0, b != 0].ToInt();
 			public override bool Equals(object obj) => obj is LogicGateTruthTable other && Equals(other);
-			public bool Equals(LogicGateTruthTable other) => (other.value & truth_mask) == (value & truth_mask);
-			public override int GetHashCode() => value & truth_mask;
+			public bool Equals(LogicGateTruthTable other) => other.Value == Value;
+			public override int GetHashCode() => Value;
 			public static bool operator ==(LogicGateTruthTable left, LogicGateTruthTable right) => left.Equals(right);
 			public static bool operator !=(LogicGateTruthTable left, LogicGateTruthTable right) => !(left == right);
 			public static implicit operator LogicGateTruthTable(byte value) => new(value);

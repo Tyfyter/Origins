@@ -23,6 +23,7 @@ namespace Origins {
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Items {
+			public static bool[] AshenWireable { get; } = ItemID.Sets.Factory.CreateBoolSet();
 			// not named because it controls a change to vanilla mechanics only present in TO, likely to be moved to PegasusLib
 			public static bool[] ItemsThatAllowRemoteRightClick { get; } = ItemID.Sets.Factory.CreateBoolSet();
 			// not named because it controls a change to vanilla mechanics only present in TO, likely to be moved to PegasusLib
