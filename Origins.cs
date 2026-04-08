@@ -937,6 +937,7 @@ namespace Origins {
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
 			for (int i = 0; i < ItemLoader.ItemCount; i++) {
+				if (ItemLoader.GetItem(i)?.Mod?.Name == "SpiritReforged") continue;
 				Item item = new(i);
 				OriginsSets.Items.AshenWireable[i] = item.createTile > -1 && TileLoader.GetTile(item.createTile) is IAshenWireTile;
 			}
