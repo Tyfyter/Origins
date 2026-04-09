@@ -1,11 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
+using Origins.Buffs;
 using Origins.UI;
 using ReLogic.Content;
 using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Terraria;
@@ -19,6 +21,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
+using static Origins.Items.Tools.Wiring.Logic_Gate_System;
 
 namespace Origins.Items.Tools.Wiring {
 	public class Logic_Gate(Logic_Gate_Data.LogicGateTruthTable truthTable, string name) : ModItem {
@@ -90,33 +93,51 @@ namespace Origins.Items.Tools.Wiring {
 
 			return false;
 		}
-		public readonly record struct UI(int I, int J) : Logic_Gate_System.IComponentUI {
-			public bool ShouldClose => !Logic_Gate_System.LocalPlayerIsInInteractionRange(I, J);
-			public Vector2 StartPosition => new Vector2(I * 16 + 8, J * 16 + 16).ToScreenPosition();
-			public ref Logic_Gate_Data Data => ref Main.tile[I, J].Get<Logic_Gate_Data>();
-			public void Deactivate() {
-
-			}
-
-			public void Initialize(UIElement root) {
+		public record class UI(Point Position) : IComponentUI {
+			public UI(int i, int j) : this(new Point(i, j)) { }
+			public bool ShouldClose => !LocalPlayerIsInInteractionRange(Position);
+			public Vector2 StartPosition => Position.ToWorldCoordinates(autoAddY: 16).ToScreenPosition();
+			public ref Logic_Gate_Data Data => ref Main.tile[Position].Get<Logic_Gate_Data>();
+			public Action Initialize(UIElement root) {
 				switch (Data.TruthTable.Value) {
 					case 0b100:
 					case 0b111:
 					case 0b011:
 					case 0b001:
-
-					break;
+					return Setup(root,
+						wires => Data.Wires.GetWires(out wires[0], out wires[1], out wires[2]),
+						wires => {
+							if (wires.Contains(-1)) return false;
+							Logic_Gate_Data.SetWires(Position, Logic_Gate_Data.LogicGateWires.Create(wires[0], wires[1], wires[2]));
+							return true;
+						},
+						new(18, 36),
+						new(18, 94),
+						new(184, 62)
+					);
 
 					case 0b101:
-					break;
+					return Setup(root,
+						wires => Data.Wires.GetWires(out wires[0], out _, out wires[1]),
+						wires => {
+							if (wires.Contains(-1)) return false;
+							Logic_Gate_Data.SetWires(Position, Logic_Gate_Data.LogicGateWires.Create(wires[0], -1, wires[1]));
+							return true;
+						},
+						new(16, 62),
+						new(184, 62)
+					);
 				}
-				if (Main.LocalPlayer.controlDown) {
-					root.Append(new UIImageFramed(Logic_Gate_System.Textures, new(2, 154, 240, 150)) {
-						IgnoresMouseInteraction = false
-					});
-				}
+				return null;
 			}
-			bool Logic_Gate_System.IComponentUI.Equals(Logic_Gate_System.IComponentUI other) => other is UI otherUI && this == otherUI;
+			Action Setup(UIElement root, Action<int[]> setup, ComponentUI.ApplySockets apply, params Span<Vector2> sockets) => ComponentUI.Initialize(
+				root,
+				setup,
+				apply,
+				Position.ToWorldCoordinates(),
+				sockets
+			);
+			bool IComponentUI.Equals(IComponentUI other) => other is UI otherUI && this == otherUI;
 		}
 		class Logic_Gate_Interaction : GlobalTile {
 			public override void Load() {
@@ -124,7 +145,7 @@ namespace Origins.Items.Tools.Wiring {
 			}
 			static void On_Player_TileInteractionsCheck(On_Player.orig_TileInteractionsCheck orig, Player self, int myX, int myY) {
 				if (WiresUI.Settings.DrawWires && !WiresUI.Settings.HideWires && !Main.tile[myX, myY].Get<Logic_Gate_Data>().TruthTable.IsEmpty) {
-					if (self.controlUseTile && self.releaseUseTile) Logic_Gate_System.SetComponentUI(new UI(myX, myY));
+					if (self.controlUseTile && self.releaseUseTile) SetComponentUI(new UI(myX, myY));
 					return;
 				}
 				orig(self, myX, myY);
@@ -318,6 +339,10 @@ namespace Origins.Items.Tools.Wiring {
 			}
 			public static LogicGateWires Create(int a, int b, int output) {
 				if (a < 0 || a >= 3) throw new ArgumentException($"{a} was not in range [0, 3[", nameof(a));
+				if (b == -1) {
+					if (output == 3) b = (a + 1) % 3;
+					else b = (3 - (a + output)) % 3;
+				}
 				if (b < 0 || b >= 3) throw new ArgumentException($"{b} was not in range [0, 3[", nameof(b));
 				if (output < 0 || output > 3) throw new ArgumentException($"{output} was not in range [0, 3]", nameof(output));
 				if (a == b) throw new ArgumentException($"{nameof(a)} and {nameof(b)} cannot be equal");
@@ -366,11 +391,10 @@ namespace Origins.Items.Tools.Wiring {
 		}
 	}
 	public class Logic_Gate_System : ModSystem {
-		public static Asset<Texture2D> Textures { get; private set; }
 		public override void Load() {
 			Logic_Gate_Data.Load();
 			if (Main.dedServ) return;
-			Textures = ModContent.Request<Texture2D>("Origins/UI/Logic_Components_Resource");
+			ComponentUI.Textures = ModContent.Request<Texture2D>("Origins/UI/Logic_Components_Resource");
 		}
 		static readonly UserInterface componentUI = new();
 		public override void UpdateUI(GameTime gameTime) {
@@ -395,12 +419,13 @@ namespace Origins.Items.Tools.Wiring {
 		public interface IComponentUI {
 			public bool ShouldClose { get; }
 			public Vector2 StartPosition { get; }
-			void Initialize(UIElement root);
-			void Deactivate();
+			Action Initialize(UIElement root);
 			public bool Equals(IComponentUI other);
 		}
 		public class ComponentUI : UIState {
+			public static Asset<Texture2D> Textures { get; set; }
 			IComponentUI uiSource;
+			Action onDeactivate;
 			public bool ShouldClose => uiSource?.ShouldClose ?? true;
 			public override void OnInitialize() {
 				RemoveAllChildren();
@@ -409,30 +434,70 @@ namespace Origins.Items.Tools.Wiring {
 					new UIImageFramed(Textures, new(2, 2, 240, 150)) {
 						HAlign = 0.5f
 					}
-					.MoveTo(uiSource.StartPosition)
+					.MoveTo(uiSource.StartPosition - new Vector2(Main.screenWidth * 0.5f, 0))
 					.Execute(UIDragController.Attach(offset => offset.Y <= 10))
 					.StopClickThrough()
-					.Execute(uiSource.Initialize)
+					.Execute(uiSource.Initialize, ref onDeactivate)
+					.Execute(Lockout)
 				);
 			}
-			public override void OnDeactivate() => uiSource?.Deactivate();
+			static void Lockout(UIElement root) {
+				if (!Main.LocalPlayer.controlDown) return;
+				root.Append(new UIImageFramed(Textures, new(2, 154, 240, 150)) {
+					IgnoresMouseInteraction = false
+				});
+			}
+			public override void OnDeactivate() => onDeactivate?.Invoke();
 			public void SetUISource(IComponentUI newSource) {
-				if (uiSource?.Equals(newSource) ?? false) return;
-				uiSource?.Deactivate();
+				onDeactivate?.Invoke();
+				if (uiSource?.Equals(newSource) ?? false) {
+					uiSource = null;
+					return;
+				}
 				uiSource = newSource;
 				OnInitialize();
 			}
 			public ComponentUI(IComponentUI uiSource) => SetUISource(uiSource);
+			public delegate bool ApplySockets(int[] wires);
+			public static Action Initialize(UIElement root, Action<int[]> setup, ApplySockets apply, Vector2? worldPosition = default, params Span<Vector2> sockets) {
+				Socket[] _sockets = new Socket[sockets.Length];
+				for (int i = 0; i < sockets.Length; i++) {
+					root.Append(_sockets[i] = new Socket(sockets[i]));
+				}
+				int[] wires = new int[sockets.Length];
+				setup(wires);
+				return () => {
+					if (!apply(wires)) ShockPlayer();
+				};
+				void ShockPlayer() {
+					Player player = Main.LocalPlayer;
+					int dir = worldPosition.HasValue ? Math.Sign(player.Center.X - worldPosition.Value.X) : 0;
+					player.Hurt(
+						PlayerDeathReason.ByCustomReason(NetworkText.FromKey("Mods.Origins.DeathMessage.BadElectrician")),
+						5,
+						dir,
+						cooldownCounter: ImmunityCooldownID.TileContactDamage
+					);
+					player.AddBuff(Static_Shock_Debuff.ID, 60);
+				}
+			}
+			public class Socket : UIImageFramed {
+				public Socket(Vector2 position) : this(position.X, position.Y) { }
+				public Socket(float x, float y) : base(Textures, new(2, 306, 40, 38)) {
+					Left.Set(x, 0);
+					Top.Set(y, 0);
+				}
+			}
 		}
 		public static void SetComponentUI(IComponentUI newSource) {
 			if (componentUI.CurrentState is ComponentUI ui) ui.SetUISource(newSource);
 			else componentUI.SetState(new ComponentUI(newSource));
 		}
-		public static bool LocalPlayerIsInInteractionRange(int i, int j, int width = 1, int height = 1) {
+		public static bool LocalPlayerIsInInteractionRange(Point position, int width = 1, int height = 1) {
 			Player player = Main.LocalPlayer;
 			int playerCenterX = (int)((player.position.X + player.width * 0.5f) / 16);
 			int playerCenterY = (int)((player.position.Y + player.height * 0.5f) / 16);
-			Rectangle r = new(i * 16, j * 16, width * 16, height * 16);
+			Rectangle r = new(position.X * 16, position.Y * 16, width * 16, height * 16);
 			r.Inflate(-1, -1);
 			Point point = r.ClosestPointInRect(player.Center).ToTileCoordinates();
 			return playerCenterX >= point.X - Player.tileRangeX && playerCenterX <= point.X + Player.tileRangeX + 1

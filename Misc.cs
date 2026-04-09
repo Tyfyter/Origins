@@ -3623,6 +3623,10 @@ namespace Origins {
 			action?.Invoke(item);
 			return item;
 		}
+		public static T Execute<T, TResult>(this T item, Func<T, TResult> action, ref TResult result) where T : UIElement {
+			if (action is not null) result = action(item);
+			return item;
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>

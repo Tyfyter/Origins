@@ -466,6 +466,7 @@ DeathMessage: {
 	Self_Damage_5: "{0} committed insurance fraud."
 	Confection_Assimilation: "{0} had too many sweets."
 	Contagion_Assimilation: "{0} couldn't stop picking their boogers."
+	BadElectrician: "{0} had a low electrician level"
 
 	Torn: {
 		0: "{0} watched their body dissolve."

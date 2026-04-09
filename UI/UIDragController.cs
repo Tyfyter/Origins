@@ -7,10 +7,11 @@ namespace Origins.UI {
 		static string IBroken.BrokenReason => "Move to PegasusLib";
 		bool dragging;
 		Vector2 offset;
-		public void Update() {
+		public void Update(Action drop = null) {
 			if (dragging) {
 				if (!Main.mouseLeft) {
 					dragging = false;
+					drop?.Invoke();
 					return;
 				}
 				element.Left.Pixels = Main.MouseScreen.X + offset.X;
@@ -21,18 +22,19 @@ namespace Origins.UI {
 			dragging = true;
 			offset = new Vector2(element.Left.Pixels, element.Top.Pixels) - Main.MouseScreen;
 		}
-		public static Action<UIElement> Attach(Predicate<Vector2> shouldDrag = null, bool clamp = true, bool stopClickThrough = false) {
-			return element => Attach(element, shouldDrag, clamp, stopClickThrough);
+		public static Action<UIElement> Attach(Predicate<Vector2> shouldDrag = null, Action pickUp = null, Action drop = null, bool clamp = true, bool stopClickThrough = false) {
+			return element => Attach(element, shouldDrag, pickUp, drop, clamp, stopClickThrough);
 		}
-		public static void Attach(UIElement element, Predicate<Vector2> shouldDrag = null, bool clamp = true, bool stopClickThrough = false) {
+		public static void Attach(UIElement element, Predicate<Vector2> shouldDrag = null, Action pickUp = null, Action drop = null, bool clamp = true, bool stopClickThrough = false) {
 			UIDragController dragController = new(element);
 			shouldDrag ??= _ => true;
 			element.OnLeftMouseDown += (evt, _) => {
-				if (shouldDrag(Main.MouseScreen - new Vector2(element.Left.Pixels, element.Top.Pixels))) dragController.Click();
+				if (!dragController.dragging && shouldDrag(Main.MouseScreen - new Vector2(element.Left.Pixels, element.Top.Pixels))) {
+					pickUp?.Invoke();
+					dragController.Click();
+				}
 			};
-			element.OnUpdate += _ => {
-				dragController.Update();
-			};
+			element.OnUpdate += _ => dragController.Update(drop);
 			if (clamp) element.OnUpdate += _ => {
 				CalculatedStyle dimensions = element.GetOuterDimensions();
 				CalculatedStyle parentDimensions = element.Parent?.GetDimensions() ?? new(0, 0, Main.screenWidth, Main.screenHeight);
