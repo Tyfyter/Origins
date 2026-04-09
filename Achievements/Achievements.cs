@@ -205,6 +205,16 @@ namespace Origins.Achievements {
 			Condition = AddCondition();
 		}
 	}
+	public class TheyLookLikeGoodStrongHands : ModAchievement, IBrokenContent {
+		string IBrokenContent.BrokenReason => "Temp sprite";
+		public override string TextureName => "Origins/Achievements/Template";
+		public CustomFlagCondition Condition { get; private set; }
+		public override bool Hidden => !Condition.IsCompleted;
+		public override void SetStaticDefaults() {
+			Achievement.SetCategory(AchievementCategory.Challenger);
+			Condition = AddCondition();
+		}
+	}
 	public class CustomIntCondition(string name, int maxValue) : Terraria.GameContent.Achievements.CustomIntCondition(name, maxValue) {
 		/// <inheritdoc cref="Terraria.GameContent.Achievements.CustomIntCondition"/>
 		public static CustomIntCondition AddIntCondition(int maxValue) => new("Condition", maxValue);

@@ -425,6 +425,7 @@ ACHIEVEMENTS:
 (^) Slow Loading Bar
 (々) The Signal, it's Calling !!!
 (^) There's Something in There!
+(@, ^3) They Look Like Good, Strong Hands, Don't They?
 (^) 'Till Death Mildew Us Part
 (^) Whismical!
 (^) Whole Blend Evil

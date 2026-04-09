@@ -13,6 +13,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
+using Origins.NPCs.Defiled;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.NPCs.MiscE;
 using Origins.Projectiles.Weapons;
@@ -539,6 +540,9 @@ namespace Origins.Projectiles {
 						PositionInWorld = Main.rand.NextVector2FromRectangle(target.Hitbox)
 					}
 				);
+			}
+			if (!NetmodeActive.Server && target.life <= 0 && target.TryGetGlobalNPC(out DefiledGlobalNPC defiledNPC) && defiledNPC.broadcasterHoldingThisNPC is not null) {
+				ModContent.GetInstance<TheyLookLikeGoodStrongHands>().Condition.Complete();
 			}
 		}
 		public override bool? CanHitNPC(Projectile projectile, NPC target) {

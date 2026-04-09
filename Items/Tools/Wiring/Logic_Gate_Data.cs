@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
 using MonoMod.Cil;
 using ReLogic.Content;
 using ReLogic.Graphics;
@@ -18,8 +17,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
-using static Origins.Core.AdvancedMiscShaderData.Parameter;
-using static Origins.Items.Tools.Wiring.Logic_Gate_Data;
 
 namespace Origins.Items.Tools.Wiring {
 	public class Logic_Gate(Logic_Gate_Data.LogicGateTruthTable truthTable, string name) : ModItem {

@@ -3671,6 +3671,11 @@ Achievements: {
 		// FriendlyName: Martyrdom
 		// Description: Kill a boss with Self-Destruct after death.
 	}
+
+	TheyLookLikeGoodStrongHands: {
+		// FriendlyName: They Look Like Good, Strong Hands, Don't They?
+		// Description: Kill an enemy being held by a {§Mods.Origins.NPCs.Defiled_Broadcaster}
+	}
 }
 
 AdvancedTextSnippet: {
