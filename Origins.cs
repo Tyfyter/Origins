@@ -1051,6 +1051,10 @@ namespace Origins {
 					AddReason($"{item.GetType().Name}: {item.BrokenReason}");
 					WarnHang("broken content");
 				}
+				foreach (string item in IBroken.BrokenReasons) {
+					AddReason(item);
+					WarnHang("broken content (IBroken)");
+				}
 				stopwatch.Stop();
 				instance.Logger.Info($"Finished querying broken content in {stopwatch.Elapsed}");
 
@@ -1098,6 +1102,19 @@ namespace Origins {
 	}
 	internal interface IBrokenContent : ILoadable {
 		public string BrokenReason { get; }
+	}
+	internal interface IBroken : IAutoload<IBroken.AutoloadImpl> {
+		public static abstract string BrokenReason { get; }
+		public static List<string> BrokenReasons;
+		class AutoloadImpl : IAutoloader {
+			static MethodInfo invoke;
+			public static void Autoload(Mod mod, Type type) {
+				if (!Directory.Exists(Path.Combine(Program.SavePathShared, "ModSources", "Origins"))) return;
+				invoke ??= typeof(AutoloadImpl).GetMethod(nameof(Invoke));
+				(BrokenReasons ??= []).Add($"{type.Name}: {(string)invoke.MakeGenericMethod(type).Invoke(null, [])}");
+			}
+			public static string Invoke<T>() where T : IBroken => T.BrokenReason;
+		}
 	}
 	internal interface IDebugFlag : ILoadable, IBrokenContent {
 		string IBrokenContent.BrokenReason => "Debugging flag enabled";

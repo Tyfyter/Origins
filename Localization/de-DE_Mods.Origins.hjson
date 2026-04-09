@@ -3674,7 +3674,7 @@ Achievements: {
 
 	TheyLookLikeGoodStrongHands: {
 		// FriendlyName: They Look Like Good, Strong Hands, Don't They?
-		// Description: Kill an enemy being held by a {§Mods.Origins.NPCs.Defiled_Broadcaster}
+		// Description: Kill an enemy being held by a {§Mods.Origins.NPCs.Defiled_Broadcaster.DisplayName}
 	}
 }
 

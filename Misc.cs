@@ -1,4 +1,5 @@
 ﻿using AltLibrary.Common.AltBiomes;
+using Humanizer;
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.Hooks;
 using ModLiquidLib.ModLoader;
@@ -47,6 +48,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Exceptions;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
+using Terraria.UI;
 using Terraria.UI.Chat;
 using Terraria.Utilities;
 using SetsTiles = Origins.OriginsSets.Tiles;
@@ -3605,6 +3607,21 @@ namespace Origins {
 			drawInfo.colorMount = drawInfo.colorMount.MultiplyRGBA(tint);
 			drawInfo.colorArmorLegs = drawInfo.colorArmorLegs.MultiplyRGBA(tint);
 			drawInfo.floatingTubeColor = drawInfo.floatingTubeColor.MultiplyRGBA(tint);
+		}
+		public static UIElement StopClickThrough(this UIElement element) {
+			element.OnUpdate += _ => {
+				if (element.IsMouseHovering) Main.LocalPlayer.mouseInterface = true;
+			};
+			return element;
+		}
+		public static UIElement MoveTo(this UIElement element, Vector2 position) {
+			element.Left = new(position.X - 240 * 0.5f, 0);
+			element.Top = new(position.Y, 0);
+			return element;
+		}
+		public static T Execute<T>(this T item, Action<T> action) where T : UIElement {
+			action?.Invoke(item);
+			return item;
 		}
 	}
 	public static class ShopExtensions {

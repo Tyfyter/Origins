@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
+using Origins.UI;
 using ReLogic.Content;
 using ReLogic.Graphics;
 using System;
@@ -13,6 +14,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
 using Terraria.GameContent.UI.Elements;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -90,11 +92,24 @@ namespace Origins.Items.Tools.Wiring {
 		}
 		public readonly record struct UI(int I, int J) : Logic_Gate_System.IComponentUI {
 			public bool ShouldClose => !Logic_Gate_System.LocalPlayerIsInInteractionRange(I, J);
+			public Vector2 StartPosition => new Vector2(I * 16 + 8, J * 16 + 16).ToScreenPosition();
+			public ref Logic_Gate_Data Data => ref Main.tile[I, J].Get<Logic_Gate_Data>();
 			public void Deactivate() {
 
 			}
 
 			public void Initialize(UIElement root) {
+				switch (Data.TruthTable.Value) {
+					case 0b100:
+					case 0b111:
+					case 0b011:
+					case 0b001:
+
+					break;
+
+					case 0b101:
+					break;
+				}
 				if (Main.LocalPlayer.controlDown) {
 					root.Append(new UIImageFramed(Logic_Gate_System.Textures, new(2, 154, 240, 150)) {
 						IgnoresMouseInteraction = false
@@ -373,12 +388,13 @@ namespace Origins.Items.Tools.Wiring {
 						componentUI?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
 						return true;
 					},
-					InterfaceScaleType.UI) { Active = Main.playerInventory }
+					InterfaceScaleType.UI)
 				);
 			}
 		}
 		public interface IComponentUI {
 			public bool ShouldClose { get; }
+			public Vector2 StartPosition { get; }
 			void Initialize(UIElement root);
 			void Deactivate();
 			public bool Equals(IComponentUI other);
@@ -388,9 +404,16 @@ namespace Origins.Items.Tools.Wiring {
 			public bool ShouldClose => uiSource?.ShouldClose ?? true;
 			public override void OnInitialize() {
 				RemoveAllChildren();
-				UIImageFramed root = new(Textures, new(2, 2, 240, 150));
-				uiSource?.Initialize(root);
-				Append(root);
+				if (uiSource is null) return;
+				Append(
+					new UIImageFramed(Textures, new(2, 2, 240, 150)) {
+						HAlign = 0.5f
+					}
+					.MoveTo(uiSource.StartPosition)
+					.Execute(UIDragController.Attach(offset => offset.Y <= 10))
+					.StopClickThrough()
+					.Execute(uiSource.Initialize)
+				);
 			}
 			public override void OnDeactivate() => uiSource?.Deactivate();
 			public void SetUISource(IComponentUI newSource) {
