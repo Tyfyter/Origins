@@ -313,7 +313,7 @@ namespace Origins.Items.Accessories {
 				Vector2 perp = Projectile.velocity.Perpendicular().Normalized(out _);
 				for (int i = -count; i <= count; i++) {
 
-					vertices[0].Position = new Vector3(hitTri.a + perp * i + Main.rand.NextVector2Circular(4, 4) - Main.screenPosition, 0);//
+					vertices[0].Position = new Vector3(hitTri.a + perp * i - Main.screenPosition, 0);//
 					vertices[1].Position = new Vector3(hitTri.b + perp * i + Main.rand.NextVector2Circular(4, 4) - Main.screenPosition, 0);//
 					vertices[2].Position = new Vector3(hitTri.c + perp * i + Main.rand.NextVector2Circular(4, 4) - Main.screenPosition, 0);//
 
