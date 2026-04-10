@@ -540,7 +540,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				);
 			}
 			if (npc.ai[1] >= MaxCount + 1) {
-				npc.velocity.Y = -0.1f;
+				//npc.velocity.Y = -0.1f;
 				//Min(ref npc.velocity.Y, 1);
 			}
 		}
