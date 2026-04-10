@@ -106,19 +106,10 @@ namespace Origins.Items.Tools.Wiring {
 					case 0b111:
 					case 0b011:
 					case 0b001:
-					return SetupWires(root,
-						wires => Data.Wires.GetWires(out wires[0], out wires[1], out wires[2]),
-						wires => {
-							if (wires.Contains(-1)) return false;
-							Logic_Gate_Data.SetWires(Position, Logic_Gate_Data.LogicGateWires.Create(wires[0], wires[1], wires[2]));
-							return true;
-						},
-						new(24, 36),
-						new(24, 94),
-						new(176, 62, true)
-					);
+					return TwoInputs(root);
 
 					case 0b101:
+					root.Append(new UIImageFramed(ComponentUI.Textures, new(486, 154, 240, 150)));
 					return SetupWires(root,
 						wires => Data.Wires.GetWires(out wires[0], out _, out wires[1]),
 						wires => {
@@ -131,6 +122,20 @@ namespace Origins.Items.Tools.Wiring {
 					);
 				}
 				return null;
+
+				Action TwoInputs(UIElement root) {
+					return SetupWires(root,
+						wires => Data.Wires.GetWires(out wires[0], out wires[1], out wires[2]),
+						wires => {
+							if (wires.Contains(-1)) return false;
+							Logic_Gate_Data.SetWires(Position, Logic_Gate_Data.LogicGateWires.Create(wires[0], wires[1], wires[2]));
+							return true;
+						},
+						new(24, 36),
+						new(24, 94),
+						new(176, 62, true)
+					);
+				}
 			}
 		}
 		class Logic_Gate_Interaction : GlobalTile {
@@ -434,6 +439,7 @@ namespace Origins.Items.Tools.Wiring {
 		}
 		public interface IComponentUI {
 			public bool ShouldClose { get; }
+			public bool Locked => Main.LocalPlayer.OriginPlayer().InfoAccMechModifyComponents;
 			public Vector2 StartPosition { get; }
 			Action Initialize(UIElement root);
 			public bool Equals(IComponentUI other);
@@ -467,7 +473,7 @@ namespace Origins.Items.Tools.Wiring {
 						HAlign = 0.5f
 					}
 					.MoveTo(uiSource.StartPosition - new Vector2(Main.screenWidth * 0.5f, 0))
-					.Execute(UIDragController.Attach(_ => border.IsMouseHovering))
+					.Execute(UIDragController.Attach(new(_ => border.IsMouseHovering)))
 					.StopClickThrough()
 					.Execute(uiSource.Initialize, ref onDeactivate)
 					.Execute(root => root.Append(border))
@@ -482,8 +488,8 @@ namespace Origins.Items.Tools.Wiring {
 					return !dimensions.Contains(point);
 				}
 			}
-			static void Lockout(UIElement root) {
-				if (!Main.LocalPlayer.controlDown) return;
+			void Lockout(UIElement root) {
+				if (uiSource.Locked) return;
 				root.Append(new UIImageFramed(Textures, new(2, 154, 240, 150)) {
 					IgnoresMouseInteraction = false
 				});
@@ -536,7 +542,6 @@ namespace Origins.Items.Tools.Wiring {
 			public class DraggableWire : UIElement {
 				readonly int wireType;
 				readonly Socket[] sockets;
-				readonly int[] wires;
 				readonly Func<bool> isDragging;
 				int connectedTo = -1;
 				Vector2? disconnectedPosition;
@@ -544,7 +549,6 @@ namespace Origins.Items.Tools.Wiring {
 				public DraggableWire(int wireType, Socket[] sockets, int[] wires, ApplySockets apply, Action shockPlayer) {
 					this.wireType = wireType;
 					this.sockets = sockets;
-					this.wires = wires;
 					Width.Set(10, 0);
 					Height.Set(10, 0);
 					for (int i = 0; i < sockets.Length; i++) {
@@ -553,12 +557,13 @@ namespace Origins.Items.Tools.Wiring {
 							break;
 						}
 					}
-					isDragging = UIDragController.Attach(this,
-						pickUp: () => {
+					isDragging = UIDragController.Attach(this, new(
+						PickUp: () => {
 							if (connectedTo >= 0) wires[connectedTo] = -1;
 							connectedTo = -1;
 						},
-						drop: () => {
+						ModifyOffset: (ref Vector2 position) => position += Main.MouseScreen - GetDimensions().Center(),
+						Drop: () => {
 							Vector2 center = GetDimensions().Center();
 							for (int i = 0; i < sockets.Length; i++) {
 								if (sockets[i].ContainsPoint(center)) {
@@ -582,9 +587,7 @@ namespace Origins.Items.Tools.Wiring {
 							}
 							SetToRestPos();
 						}
-					);
-				}
-				public override void OnInitialize() {
+					));
 				}
 				public override void OnActivate() {
 					CalculatedStyle parent = Parent.GetDimensions();

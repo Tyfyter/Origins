@@ -22,20 +22,22 @@ namespace Origins.UI {
 			dragging = true;
 			offset = new Vector2(element.Left.Pixels, element.Top.Pixels) - Main.MouseScreen;
 		}
-		public static Action<UIElement> Attach(Predicate<Vector2> shouldDrag = null, Action pickUp = null, Action drop = null, bool clamp = true, bool stopClickThrough = false) {
-			return element => Attach(element, shouldDrag, pickUp, drop, clamp, stopClickThrough);
+		public delegate void Modify<T>(ref T value);
+		public static Action<UIElement> Attach(AttachParameters parameters) {
+			return element => Attach(element, parameters);
 		}
-		public static Func<bool> Attach(UIElement element, Predicate<Vector2> shouldDrag = null, Action pickUp = null, Action drop = null, bool clamp = true, bool stopClickThrough = false) {
+		public static Func<bool> Attach(UIElement element, AttachParameters parameters) {
 			UIDragController dragController = new(element);
-			shouldDrag ??= _ => true;
+			parameters.ShouldDrag ??= _ => true;
 			element.OnLeftMouseDown += (evt, _) => {
-				if (!dragController.dragging && shouldDrag(Main.MouseScreen - new Vector2(element.Left.Pixels, element.Top.Pixels))) {
-					pickUp?.Invoke();
+				if (!dragController.dragging && parameters.ShouldDrag(Main.MouseScreen - new Vector2(element.Left.Pixels, element.Top.Pixels))) {
+					parameters.PickUp?.Invoke();
 					dragController.Click();
+					parameters.ModifyOffset(ref dragController.offset);
 				}
 			};
-			element.OnUpdate += _ => dragController.Update(drop);
-			if (clamp) element.OnUpdate += _ => {
+			element.OnUpdate += _ => dragController.Update(parameters.Drop);
+			if (parameters.Clamp) element.OnUpdate += _ => {
 				CalculatedStyle dimensions = element.GetOuterDimensions();
 				CalculatedStyle parentDimensions = element.Parent?.GetDimensions() ?? new(0, 0, Main.screenWidth, Main.screenHeight);
 				float maxX = parentDimensions.X + parentDimensions.Width - dimensions.Width;
@@ -45,10 +47,18 @@ namespace Origins.UI {
 				Clamp(ref element.Left.Pixels, offsetX, maxX + offsetX);
 				Clamp(ref element.Top.Pixels, offsetY, maxY + offsetY);
 			};
-			if (stopClickThrough) element.OnUpdate += _ => {
-				if (element.IsMouseHovering && shouldDrag(Main.MouseScreen - new Vector2(element.Left.Pixels, element.Top.Pixels))) Main.LocalPlayer.mouseInterface = true;
+			if (parameters.StopClickThrough) element.OnUpdate += _ => {
+				if (element.IsMouseHovering && parameters.ShouldDrag(Main.MouseScreen - new Vector2(element.Left.Pixels, element.Top.Pixels))) Main.LocalPlayer.mouseInterface = true;
 			};
 			return () => dragController.dragging;
 		}
+		public record struct AttachParameters(
+			Predicate<Vector2> ShouldDrag = null,
+			Action PickUp = null,
+			Modify<Vector2> ModifyOffset = null,
+			Action Drop = null,
+			bool Clamp = true,
+			bool StopClickThrough = false
+		);
 	}
 }

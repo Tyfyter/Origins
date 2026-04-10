@@ -567,6 +567,7 @@ namespace Origins {
 		public Vector2? dreamcatcherWorldPosition = null;
 		public bool pocketDimensionMonolithActive = false;
 		public bool InfoAccMechShowAshenWires = false;
+		[AutoReset] public bool InfoAccMechModifyComponents = false;
 		public int blastFurnaceCharges = 0;
 		public List<int> unlockedPlantModes = [];
 		List<ItemDefinition> unloadedPlantModes = [];

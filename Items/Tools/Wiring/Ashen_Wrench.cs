@@ -53,6 +53,7 @@ namespace Origins.Items.Tools.Wiring {
 			player.rulerLine = true;
 			player.rulerGrid = true;
 			player.OriginPlayer().InfoAccMechShowAshenWires = true;
+			player.OriginPlayer().InfoAccMechModifyComponents = true;
 		}
 		public override void AddRecipes() => CreateRecipe()
 			.AddIngredient(ItemID.WireKite)
