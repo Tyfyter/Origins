@@ -8,8 +8,11 @@ using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
@@ -17,10 +20,10 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
 using Terraria.GameContent.UI.Elements;
-using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.UI;
 using static Origins.Items.Tools.Wiring.Logic_Gate_System;
 
@@ -96,6 +99,7 @@ namespace Origins.Items.Tools.Wiring {
 		}
 		public record class UI(Point Position) : AComponentUI(Position) {
 			public UI(int i, int j) : this(new Point(i, j)) { }
+			public override bool ShouldClose => base.ShouldClose || Main.tile[Position].Get<Logic_Gate_Data>().TruthTable.IsEmpty;
 			public override Action Initialize(UIElement root) {
 				switch (Data.TruthTable.Value) {
 					case 0b100:
@@ -142,9 +146,10 @@ namespace Origins.Items.Tools.Wiring {
 			}
 		}
 	}
-	public struct Logic_Gate_Data : ITileData {
+	public struct Logic_Gate_Data : ITileData, IBroken {
+		static string IBroken.BrokenReason => "Sync changes";
 		public const string texture_path = "Origins/Items/Tools/Wiring/Ashen_Logic_Gates";
-		internal byte data;
+		private byte data;
 		const byte truth_mask = 0b00000111;
 		const byte power_mask = 0b00001000;
 		const byte wires_mask = 0b11110000;
@@ -514,7 +519,7 @@ namespace Origins.Items.Tools.Wiring {
 						5,
 						dir,
 						cooldownCounter: ImmunityCooldownID.TileContactDamage,
-						knockback: 1
+						knockback: 3
 					);
 					player.AddBuff(Static_Shock_Debuff.ID, 60);
 				}
@@ -698,6 +703,39 @@ namespace Origins.Items.Tools.Wiring {
 			Point point = r.ClosestPointInRect(player.Center).ToTileCoordinates();
 			return playerCenterX >= point.X - Player.tileRangeX && playerCenterX <= point.X + Player.tileRangeX + 1
 				&& playerCenterY >= point.Y - Player.tileRangeY && playerCenterY <= point.Y + Player.tileRangeY + 1;
+		}
+
+		public override void SaveWorldData(TagCompound tag) {
+			using MemoryStream data = new(Main.maxTilesX);
+			using (BinaryWriter writer = new(data, Encoding.UTF8)) {
+				writer.Write((byte)0); // version just in case 
+									   // if MyTileData is updated, update this 'version' number 
+									   // and add handling logic in LoadWorldData for backwards compat
+				writer.Write(checked((ushort)Main.maxTilesX));
+				writer.Write(checked((ushort)Main.maxTilesY));
+				writer.Write(MemoryMarshal.Cast<Logic_Gate_Data, byte>(Main.tile.GetData<Logic_Gate_Data>()));
+			}
+			tag["LogicComponents"] = data.ToArray();
+		}
+		public override void LoadWorldData(TagCompound tag) {
+			if (tag.TryGet("LogicComponents", out byte[] data)) {
+				using BinaryReader reader = new(new MemoryStream(data), Encoding.UTF8);
+				switch (reader.ReadByte()) {
+					case 0:
+					int width = reader.ReadUInt16();
+					int height = reader.ReadUInt16();
+					if (width != Main.maxTilesX || height != Main.maxTilesY) {
+						// the world was somehow resized
+						// up to you what to do here 
+						throw new NotImplementedException("World size was changed");
+					} else {
+						reader.Read(MemoryMarshal.Cast<Logic_Gate_Data, byte>(Main.tile.GetData<Logic_Gate_Data>().AsSpan()));
+					}
+					break;
+					default:
+					throw new Exception("Unknown world data saved version");
+				}
+			}
 		}
 	}
 }
