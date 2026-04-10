@@ -25,7 +25,7 @@ namespace Origins.UI {
 		public static Action<UIElement> Attach(Predicate<Vector2> shouldDrag = null, Action pickUp = null, Action drop = null, bool clamp = true, bool stopClickThrough = false) {
 			return element => Attach(element, shouldDrag, pickUp, drop, clamp, stopClickThrough);
 		}
-		public static void Attach(UIElement element, Predicate<Vector2> shouldDrag = null, Action pickUp = null, Action drop = null, bool clamp = true, bool stopClickThrough = false) {
+		public static Func<bool> Attach(UIElement element, Predicate<Vector2> shouldDrag = null, Action pickUp = null, Action drop = null, bool clamp = true, bool stopClickThrough = false) {
 			UIDragController dragController = new(element);
 			shouldDrag ??= _ => true;
 			element.OnLeftMouseDown += (evt, _) => {
@@ -48,6 +48,7 @@ namespace Origins.UI {
 			if (stopClickThrough) element.OnUpdate += _ => {
 				if (element.IsMouseHovering && shouldDrag(Main.MouseScreen - new Vector2(element.Left.Pixels, element.Top.Pixels))) Main.LocalPlayer.mouseInterface = true;
 			};
+			return () => dragController.dragging;
 		}
 	}
 }

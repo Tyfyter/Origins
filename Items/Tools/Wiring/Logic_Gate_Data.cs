@@ -93,51 +93,40 @@ namespace Origins.Items.Tools.Wiring {
 
 			return false;
 		}
-		public record class UI(Point Position) : IComponentUI {
+		public record class UI(Point Position) : AComponentUI(Position) {
 			public UI(int i, int j) : this(new Point(i, j)) { }
-			public bool ShouldClose => !LocalPlayerIsInInteractionRange(Position);
-			public Vector2 StartPosition => Position.ToWorldCoordinates(autoAddY: 16).ToScreenPosition();
-			public ref Logic_Gate_Data Data => ref Main.tile[Position].Get<Logic_Gate_Data>();
-			public Action Initialize(UIElement root) {
+			public override Action Initialize(UIElement root) {
 				switch (Data.TruthTable.Value) {
 					case 0b100:
 					case 0b111:
 					case 0b011:
 					case 0b001:
-					return Setup(root,
+					return SetupWires(root,
 						wires => Data.Wires.GetWires(out wires[0], out wires[1], out wires[2]),
 						wires => {
 							if (wires.Contains(-1)) return false;
 							Logic_Gate_Data.SetWires(Position, Logic_Gate_Data.LogicGateWires.Create(wires[0], wires[1], wires[2]));
 							return true;
 						},
-						new(18, 36),
-						new(18, 94),
-						new(184, 62)
+						new(24, 36),
+						new(24, 94),
+						new(176, 62, true)
 					);
 
 					case 0b101:
-					return Setup(root,
+					return SetupWires(root,
 						wires => Data.Wires.GetWires(out wires[0], out _, out wires[1]),
 						wires => {
 							if (wires.Contains(-1)) return false;
 							Logic_Gate_Data.SetWires(Position, Logic_Gate_Data.LogicGateWires.Create(wires[0], -1, wires[1]));
 							return true;
 						},
-						new(16, 62),
-						new(184, 62)
+						new(24, 62),
+						new(176, 62, true)
 					);
 				}
 				return null;
 			}
-			Action Setup(UIElement root, Action<int[]> setup, ComponentUI.ApplySockets apply, params Span<Vector2> sockets) => ComponentUI.Initialize(
-				root,
-				setup,
-				apply,
-				Position.ToWorldCoordinates(),
-				sockets
-			);
-			bool IComponentUI.Equals(IComponentUI other) => other is UI otherUI && this == otherUI;
 		}
 		class Logic_Gate_Interaction : GlobalTile {
 			public override void Load() {
@@ -223,6 +212,7 @@ namespace Origins.Items.Tools.Wiring {
 			data.Wires.GetWires(out _, out _, out int oldOutput);
 			update(tile);
 			data.PostUpdate(position, oldOutput);
+
 		}
 		public static void SetTruthTable(Point position, LogicGateTruthTable table) => Update(position, tile => {
 			tile.Get<Logic_Gate_Data>().TruthTable = table;
@@ -230,7 +220,6 @@ namespace Origins.Items.Tools.Wiring {
 			Main.NewText(tile.Get<Logic_Gate_Data>().GetStatement());
 		});
 		public static void SetWires(Point position, LogicGateWires wires) => Update(position, tile => tile.Get<Logic_Gate_Data>().Wires = wires);
-
 		internal static Asset<Texture2D> texture;
 		static void IL_Main_DrawWires(ILContext il) {
 			ILCursor c = new(il);
@@ -422,6 +411,21 @@ namespace Origins.Items.Tools.Wiring {
 			Action Initialize(UIElement root);
 			public bool Equals(IComponentUI other);
 		}
+		public abstract record class AComponentUI(Point Position) : IComponentUI {
+			public AComponentUI(int i, int j) : this(new Point(i, j)) { }
+			public virtual bool ShouldClose => !LocalPlayerIsInInteractionRange(Position);
+			public virtual Vector2 StartPosition => Position.ToWorldCoordinates(autoAddY: 16).ToScreenPosition();
+			public ref Logic_Gate_Data Data => ref Main.tile[Position].Get<Logic_Gate_Data>();
+			public abstract Action Initialize(UIElement root);
+			protected Action SetupWires(UIElement root, Action<int[]> setup, ComponentUI.ApplySockets apply, params Span<ComponentUI.Socket> sockets) => ComponentUI.SetupWires(
+				root,
+				setup,
+				apply,
+				Position.ToWorldCoordinates(),
+				sockets
+			);
+			bool IComponentUI.Equals(IComponentUI other) => other is AComponentUI otherUI && this == otherUI;
+		}
 		public class ComponentUI : UIState {
 			public static Asset<Texture2D> Textures { get; set; }
 			IComponentUI uiSource;
@@ -430,16 +434,26 @@ namespace Origins.Items.Tools.Wiring {
 			public override void OnInitialize() {
 				RemoveAllChildren();
 				if (uiSource is null) return;
+				UIBorder border = new();
 				Append(
 					new UIImageFramed(Textures, new(2, 2, 240, 150)) {
 						HAlign = 0.5f
 					}
 					.MoveTo(uiSource.StartPosition - new Vector2(Main.screenWidth * 0.5f, 0))
-					.Execute(UIDragController.Attach(offset => offset.Y <= 10))
+					.Execute(UIDragController.Attach(_ => border.IsMouseHovering))
 					.StopClickThrough()
 					.Execute(uiSource.Initialize, ref onDeactivate)
+					.Execute(root => root.Append(border))
 					.Execute(Lockout)
 				);
+			}
+			class UIBorder() : UIImageFramed(Textures, new(244, 2, 240, 150)) {
+				public override bool ContainsPoint(Vector2 point) {
+					Rectangle dimensions = GetDimensions().ToRectangle();
+					if (!dimensions.Contains(point)) return false;
+					dimensions.Inflate(-12, -12);
+					return !dimensions.Contains(point);
+				}
 			}
 			static void Lockout(UIElement root) {
 				if (!Main.LocalPlayer.controlDown) return;
@@ -459,13 +473,14 @@ namespace Origins.Items.Tools.Wiring {
 			}
 			public ComponentUI(IComponentUI uiSource) => SetUISource(uiSource);
 			public delegate bool ApplySockets(int[] wires);
-			public static Action Initialize(UIElement root, Action<int[]> setup, ApplySockets apply, Vector2? worldPosition = default, params Span<Vector2> sockets) {
+			public static Action SetupWires(UIElement root, Action<int[]> setup, ApplySockets apply, Vector2? worldPosition = default, params Span<Socket> sockets) {
 				Socket[] _sockets = new Socket[sockets.Length];
 				for (int i = 0; i < sockets.Length; i++) {
-					root.Append(_sockets[i] = new Socket(sockets[i]));
+					root.Append(_sockets[i] = sockets[i]);
 				}
 				int[] wires = new int[sockets.Length];
 				setup(wires);
+				for (int i = 0; i <= 3; i++) root.Append(new DraggableWire(i, _sockets, wires, apply, ShockPlayer));
 				return () => {
 					if (!apply(wires)) ShockPlayer();
 				};
@@ -476,16 +491,175 @@ namespace Origins.Items.Tools.Wiring {
 						PlayerDeathReason.ByCustomReason(NetworkText.FromKey("Mods.Origins.DeathMessage.BadElectrician")),
 						5,
 						dir,
-						cooldownCounter: ImmunityCooldownID.TileContactDamage
+						cooldownCounter: ImmunityCooldownID.TileContactDamage,
+						knockback: 1
 					);
 					player.AddBuff(Static_Shock_Debuff.ID, 60);
 				}
 			}
 			public class Socket : UIImageFramed {
-				public Socket(Vector2 position) : this(position.X, position.Y) { }
-				public Socket(float x, float y) : base(Textures, new(2, 306, 40, 38)) {
+				public readonly bool output;
+				public Socket(Vector2 position, bool output = false) : this(position.X, position.Y, output) { }
+				public Socket(float x, float y, bool output = false) : base(Textures, new(2, 306, 40, 38)) {
 					Left.Set(x, 0);
 					Top.Set(y, 0);
+					this.output = output;
+				}
+			}
+			public class DraggableWire : UIElement {
+				readonly int wireType;
+				readonly Socket[] sockets;
+				readonly int[] wires;
+				readonly Func<bool> isDragging;
+				int connectedTo = -1;
+				Vector2? disconnectedPosition;
+				Vector2 edgePosition;
+				public DraggableWire(int wireType, Socket[] sockets, int[] wires, ApplySockets apply, Action shockPlayer) {
+					this.wireType = wireType;
+					this.sockets = sockets;
+					this.wires = wires;
+					Width.Set(10, 0);
+					Height.Set(10, 0);
+					for (int i = 0; i < sockets.Length; i++) {
+						if (wires[i] == wireType) {
+							connectedTo = i;
+							break;
+						}
+					}
+					isDragging = UIDragController.Attach(this,
+						pickUp: () => {
+							if (connectedTo >= 0) wires[connectedTo] = -1;
+							connectedTo = -1;
+						},
+						drop: () => {
+							Vector2 center = GetDimensions().Center();
+							for (int i = 0; i < sockets.Length; i++) {
+								if (sockets[i].ContainsPoint(center)) {
+									if (wireType == 3 && !sockets[i].output) {
+										shockPlayer();
+										break;
+									}
+									if (wires[i] != -1) {
+										shockPlayer();
+										break;
+									}
+									connectedTo = i;
+									wires[connectedTo] = wireType;
+									if (!wires.Contains(-1) && !apply(wires)) {
+										shockPlayer();
+										wires[connectedTo] = -1;
+										connectedTo = -1;
+									}
+									break;
+								}
+							}
+							SetToRestPos();
+						}
+					);
+				}
+				public override void OnInitialize() {
+				}
+				public override void OnActivate() {
+					CalculatedStyle parent = Parent.GetDimensions();
+					switch (wireType) {
+						case 0:
+						disconnectedPosition = new(parent.Width * 0.25f - 2, parent.Height - 8);
+						break;
+						case 1:
+						disconnectedPosition = new(parent.Width * 0.5f - 2, parent.Height - 8);
+						break;
+						case 2:
+						disconnectedPosition = new(parent.Width * 0.75f - 2, parent.Height - 8);
+						break;
+						case 3:
+						disconnectedPosition = new(parent.Width - 8, parent.Height * 0.5f - 16);
+						break;
+					}
+					SetToRestPos();
+				}
+				void SetToRestPos() {
+					if (connectedTo != -1) {
+						CalculatedStyle parent = Parent.GetDimensions();
+						CalculatedStyle socket = sockets[connectedTo].GetDimensions();
+						edgePosition = new(sockets[connectedTo].output ? (parent.Width - 8) : 8, socket.Center().Y - parent.Y);
+
+						Left.Set(Math.Clamp(edgePosition.X + parent.X, socket.X, socket.X + socket.Width - 8) - parent.X - 2.5f, 0);
+						Top.Set(edgePosition.Y - 5, 0);
+						return;
+					}
+					edgePosition = disconnectedPosition.Value;
+					Left.Set(edgePosition.X - 5, 0);
+					Top.Set(edgePosition.Y - 5, 0);
+					switch (wireType) {
+						case 0:
+						case 1:
+						case 2:
+						Top.Pixels -= 12;
+						break;
+						case 3:
+						Left.Pixels -= 12;
+						break;
+					}
+				}
+				public override bool ContainsPoint(Vector2 point) {
+					if (base.ContainsPoint(point)) return true;
+					return Collision.CheckAABBvLineCollision(
+						point - new Vector2(5),
+						new Vector2(10),
+						GetDimensions().Center(),
+						edgePosition + Parent.GetDimensions().Position()
+					);
+				}
+				protected override void DrawSelf(SpriteBatch spriteBatch) {
+					Vector2 edge = edgePosition + Parent.GetDimensions().Position();
+					Vector2 center = GetDimensions().Center();
+					Vector2 diff = (center - edge).Normalized(out float dist);
+					Vector2 current = center - diff * 5;
+					bool highlight = IsMouseHovering || isDragging();
+					for (; dist > 0; dist -= 14) {
+						int amount = Math.Min((int)dist, 14);
+						if (highlight) spriteBatch.Draw(
+							Textures.Value,
+							current,
+							new Rectangle(132 + (14 - amount), 306, amount, 12),
+							Main.OurFavoriteColor,
+							diff.ToRotation(),
+							new Vector2(amount, 6),
+							1,
+							SpriteEffects.None,
+						0);
+						spriteBatch.Draw(
+							Textures.Value,
+							current,
+							new Rectangle(80 + (14 - amount), 306 + 10 * wireType, amount, 8),
+							Color.White,
+							diff.ToRotation(),
+							new Vector2(amount, 4),
+							1,
+							SpriteEffects.None,
+						0);
+						current -= diff * 14;
+					}
+					if (highlight) spriteBatch.Draw(
+						Textures.Value,
+						center,
+						new Rectangle(156, 306, 12, 12),
+						Main.OurFavoriteColor,
+						diff.ToRotation(),
+						new Vector2(5, 6),
+						1,
+						SpriteEffects.None,
+					0);
+					spriteBatch.Draw(
+						Textures.Value,
+						center,
+						new Rectangle(120, 306 + 10 * wireType, 10, 8),
+						Color.White,
+						diff.ToRotation(),
+						new Vector2(5, 4),
+						1,
+						SpriteEffects.None,
+					0);
 				}
 			}
 		}
