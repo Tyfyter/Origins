@@ -4,7 +4,7 @@ using Terraria.UI;
 
 namespace Origins.UI {
 	public struct UIDragController(UIElement element) : IBroken {
-		static string IBroken.BrokenReason => "Move to PegasusLib";
+		static string IBroken.BrokenReason => "Remove, moved to PegasusLib";
 		bool dragging;
 		Vector2 offset;
 		public void Update(Action drop = null) {

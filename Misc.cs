@@ -2512,6 +2512,7 @@ namespace Origins {
 			return rule;
 		}
 
+		//TODO: remove, moved to PegasusLib
 		public static ItemDropAttemptResult ResolveRule(IItemDropRule rule, DropAttemptInfo info) {
 			if (!rule.CanDrop(info)) {
 				ItemDropAttemptResult itemDropAttemptResult = default;

@@ -8,8 +8,8 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Tiles; 
-//TODO: move to PegasusLib
+namespace Origins.Tiles;
+//TODO: remove, moved to PegasusLib
 public abstract class StyleSelectingTileItem : ModItem {
 	protected override bool CloneNewInstances => true;
 	[CloneByReference]

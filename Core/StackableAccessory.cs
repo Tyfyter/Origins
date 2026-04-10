@@ -13,7 +13,7 @@ using Terraria.UI;
 using ThoriumMod.NPCs;
 
 namespace Origins.Core {
-	//TODO: move to PegasusLib
+	//TODO: remove, moved to PegasusLib
 	class StackableAccessory : GlobalItem {
 		static LocalizedText Tooltip; 
 		public override void Load() {

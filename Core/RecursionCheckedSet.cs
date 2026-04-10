@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Origins.Core; 
+namespace Origins.Core;
+//TODO: remove, moved to PegasusLib
 public class RecursionCheckedSet<T>(IEqualityComparer<T> comparer = null) {
 	readonly HashSet<T> values = new(comparer);
 	public IDisposable TryAdd(T value) {

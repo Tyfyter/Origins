@@ -331,7 +331,7 @@ namespace Origins.LootConditions {
 			return result;
 		}
 	}
-	//TODO: move to PegasusLib
+	//TODO: remove, moved to PegasusLib
 	public class CopyNPCDropRule(int type) : IItemDropRule {
 		static readonly RecursionCheckedSet<int> recursionBlocker = new();
 		public List<IItemDropRuleChainAttempt> ChainedRules { get; } = [];
