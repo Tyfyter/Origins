@@ -140,7 +140,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				ModContent.GetInstance<Ashen_Biome>().Type
 			];
 			this.SetAIState(StateIndex<PhaseOneIdleState>());
-			GunType = Main.rand.Next(2);
+			GunType = Main.rand.Next(4);
 		}
 		public override void ModifyTypeName(ref string typeName) {
 			typeName = string.Format(typeName, GunType);
@@ -395,7 +395,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			spriteBatch.Draw(
 				armTexture,
 				GunPos - screenPos,
-				armTexture.Frame(verticalFrames: 2, frameY: GunType),
+				armTexture.Frame(verticalFrames: 4, frameY: GunType),
 				NPC.GetTintColor(drawColor),
 				NPC.rotation + (effects.HasFlag(SpriteEffects.FlipHorizontally) ? 0 : MathHelper.Pi),
 				new Vector2(47, 15).Apply(effects, armTexture.Value.Size()),
