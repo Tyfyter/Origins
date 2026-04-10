@@ -497,6 +497,7 @@ namespace Origins {
 		public static class WireModes {
 			public static bool[] AshenWires = WireMode.Sets.Factory.CreateNamedSet(nameof(AshenWires)).RegisterBoolSet();
 			public static bool[] GreaterAshenWires = WireMode.Sets.Factory.CreateNamedSet(nameof(GreaterAshenWires)).RegisterBoolSet();
+			public static bool[] LogicUpgrade = WireMode.Sets.Factory.CreateNamedSet(nameof(LogicUpgrade)).RegisterBoolSet();
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Prefixes {

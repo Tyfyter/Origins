@@ -2,6 +2,7 @@
 using MonoMod.Cil;
 using Origins.Buffs;
 using Origins.UI;
+using PegasusLib.Content;
 using ReLogic.Content;
 using ReLogic.Graphics;
 using System;
@@ -214,11 +215,7 @@ namespace Origins.Items.Tools.Wiring {
 			data.PostUpdate(position, oldOutput);
 
 		}
-		public static void SetTruthTable(Point position, LogicGateTruthTable table) => Update(position, tile => {
-			tile.Get<Logic_Gate_Data>().TruthTable = table;
-			tile.Get<Logic_Gate_Data>().Wires = 0b1000;
-			Main.NewText(tile.Get<Logic_Gate_Data>().GetStatement());
-		});
+		public static void SetTruthTable(Point position, LogicGateTruthTable table) => Update(position, tile => tile.Get<Logic_Gate_Data>().TruthTable = table);
 		public static void SetWires(Point position, LogicGateWires wires) => Update(position, tile => tile.Get<Logic_Gate_Data>().Wires = wires);
 		internal static Asset<Texture2D> texture;
 		static void IL_Main_DrawWires(ILContext il) {
@@ -369,6 +366,31 @@ namespace Origins.Items.Tools.Wiring {
 			public void Dispose() => walkedLogicOutputs[position]--;
 		}
 		static readonly FungibleSet<Point> walkedLogicOutputs = [];
+	}
+	public class Logic_Component_Mode : WireMode, IBroken {
+		static string IBroken.BrokenReason => "Needs PegaLib update for GetItemType and Visible";
+		AutoLoadingAsset<Texture2D> back = "Origins/Items/Tools/Wiring/Ashen_Wires_BG";
+		public override Color? WireKiteColor => new Color(179, 58, 0);
+		public override bool IsExtra => true;
+		public override void SetupSets() {
+			OriginsSets.WireModes.LogicUpgrade[Type] = true;
+		}
+		public override bool GetWire(int x, int y) => !Main.tile[x, y].Get<Logic_Gate_Data>().TruthTable.IsEmpty;
+		public override bool SetWire(int x, int y, bool value) {
+			if (value) return false;
+			if (!Main.tile[x, y].Get<Logic_Gate_Data>().TruthTable.IsEmpty) {
+				Logic_Gate_Data.SetTruthTable(new(x, y), 0);
+				return true;
+			}
+			return false;
+		}
+		public override void Draw(Vector2 position, bool hovered, WirePetalData data) {
+			GetTints(hovered, data.HasFlag(WirePetalData.Enabled), out Color backTint, out Color iconTint);
+			DrawIcon(TextureAssets.WireUi[hovered.ToInt() + data.HasFlag(WirePetalData.Cutter).ToInt() * 8].Value, position, backTint);
+			if (!data.HasFlag(WirePetalData.Cutter)) DrawIcon(back, position, backTint);
+			DrawIcon(Texture2D.Value, position, iconTint);
+		}
+		public override IEnumerable<WireMode> SortAfter() => [ModContent.GetInstance<White_Wire_Mode>()];
 	}
 	public class Logic_Gate_Toggle : WireBuilderToggle {
 		public override string Texture => $"{GetType().Namespace.Replace('.', '/')}/Ashen_Wire_Builder_Icons";

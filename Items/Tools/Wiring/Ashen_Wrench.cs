@@ -43,7 +43,10 @@ namespace Origins.Items.Tools.Wiring {
 			.Register();
 	}
 	public class Ashen_Grand_Design : WireTool {
-		public override IEnumerable<WireMode> Modes => WireModeLoader.GetSorted(WireMode.Sets.NormalWires).Concat(WireModeLoader.GetSorted(OriginsSets.WireModes.AshenWires));
+		public override IEnumerable<WireMode> Modes => [
+			..WireModeLoader.GetSorted(WireMode.Sets.NormalWires),
+			..WireModeLoader.GetSorted(OriginsSets.WireModes.AshenWires)
+		];
 		public override int Rarity => ItemRarityID.Orange;
 		public override void UpdateInventory(Player player) {
 			player.InfoAccMechShowWires = true;
@@ -58,7 +61,12 @@ namespace Origins.Items.Tools.Wiring {
 			.Register();
 	}
 	public class Ashen_Grand_Design_White : Ashen_Grand_Design {
-		public override IEnumerable<WireMode> Modes => base.Modes.Concat(WireModeLoader.GetSorted(OriginsSets.WireModes.GreaterAshenWires));
+		public override IEnumerable<WireMode> Modes => [
+			..WireModeLoader.GetSorted(WireMode.Sets.NormalWires),
+			..WireModeLoader.GetSorted(OriginsSets.WireModes.AshenWires),
+			..WireModeLoader.GetSorted(OriginsSets.WireModes.GreaterAshenWires),
+			..WireModeLoader.GetSorted(OriginsSets.WireModes.LogicUpgrade)
+		];
 		public override int Rarity => ItemRarityID.Yellow;
 		public override LocalizedText DisplayName => Mod.GetLocalization($"Items.{nameof(Ashen_Grand_Design)}.DisplayName");
 		public override LocalizedText Tooltip => OriginExtensions.CombineTooltips(
