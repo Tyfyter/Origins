@@ -8281,5 +8281,5 @@ Logic_Gate: {
 
 Delay_Component_Item: {
 	DisplayName: Delay Component
-	Tooltip: ""
+	Tooltip: Sends a signal after a set delay
 }
