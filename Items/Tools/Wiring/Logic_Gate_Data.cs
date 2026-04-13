@@ -528,6 +528,7 @@ namespace Origins.Items.Tools.Wiring {
 						knockback: 3
 					);
 					player.AddBuff(Static_Shock_Debuff.ID, 60);
+					//could put a sound here too
 				}
 			}
 			public class Socket : UIImageFramed {
