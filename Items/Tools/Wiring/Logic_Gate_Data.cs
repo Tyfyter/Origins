@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Buffs;
+using Origins.Tiles.Ashen;
 using Origins.UI;
 using PegasusLib.Content;
 using ReLogic.Content;
@@ -469,16 +470,25 @@ namespace Origins.Items.Tools.Wiring {
 				if (uiSource is null) return;
 				UIBorder border = new();
 				Append(
-					new UIImageFramed(Textures, new(2, 2, 240, 150)) {
+					new UIImageFramedExpandable(Textures, new(2, 2, 240, 150)) {
 						HAlign = 0.5f
 					}
-					.MoveTo(uiSource.StartPosition - new Vector2(Main.screenWidth * 0.5f, 0))
+					.MoveTo(uiSource.StartPosition - new Vector2(Main.screenWidth * 0.5f - 240 * 0.5f, 0))
 					.Execute(UIDragController.Attach(new(_ => border.IsMouseHovering)))
 					.StopClickThrough()
 					.Execute(uiSource.Initialize, ref onDeactivate)
 					.Execute(root => root.Append(border))
 					.Execute(Lockout)
 				);
+			}
+			class UIImageFramedExpandable(Asset<Texture2D> texture, Rectangle frame) : UIImageFramed(texture, frame) {
+				public override bool ContainsPoint(Vector2 point) {
+					if (base.ContainsPoint(point)) return true;
+					for (int i = 0; i < Elements.Count; i++) {
+						if (Elements[i].ContainsPoint(point)) return true;
+					}
+					return false;
+				}
 			}
 			class UIBorder() : UIImageFramed(Textures, new(244, 2, 240, 150)) {
 				public override bool ContainsPoint(Vector2 point) {
@@ -698,6 +708,36 @@ namespace Origins.Items.Tools.Wiring {
 						1,
 						SpriteEffects.None,
 					0);
+				}
+			}
+			public class ReframingButton(Action click, Func<Rectangle> getFrame) : UIElement {
+				Rectangle frame = getFrame();
+				public static ReframingButton States(Func<int> getState, params (Action click, Rectangle frame)[] states) {
+					return new(
+						() => states[getState()].click?.Invoke(),
+						() => states[getState()].frame
+					);
+				}
+				public static ReframingButton Disableable(Func<bool> isDisabled, Action click, Rectangle frame, Rectangle disabledFrame) {
+					return new(
+						() => {
+							if (!isDisabled()) click();
+						},
+						() => isDisabled() ? disabledFrame : frame
+					);
+				}
+				public override void LeftClick(UIMouseEvent evt) {
+					click();
+					SetFrame(getFrame());
+				}
+				public void SetFrame(Rectangle frame) {
+					if (this.frame.TrySet(frame)) return;
+					Width.Set(frame.Width, 0f);
+					Height.Set(frame.Height, 0f);
+				}
+				public override void Update(GameTime gameTime) => SetFrame(getFrame());
+				protected override void DrawSelf(SpriteBatch spriteBatch) {
+					spriteBatch.Draw(position: GetDimensions().Position(), texture: Textures.Value, sourceRectangle: frame, color: Color.White);
 				}
 			}
 		}

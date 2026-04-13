@@ -3616,7 +3616,7 @@ namespace Origins {
 			return element;
 		}
 		public static UIElement MoveTo(this UIElement element, Vector2 position) {
-			element.Left = new(position.X - 240 * 0.5f, 0);
+			element.Left = new(position.X, 0);
 			element.Top = new(position.Y, 0);
 			return element;
 		}
