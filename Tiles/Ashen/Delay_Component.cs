@@ -17,6 +17,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI;
 using Terraria.UI.Chat;
@@ -175,6 +176,8 @@ namespace Origins.Tiles.Ashen {
 			if (x < 0 || y < 0) return false;
 			return Main.tile[x, y].TileIsType(ModContent.TileType<Delay_Component>());
 		}
+		public override void SaveData(TagCompound tag) => tag[nameof(Delay)] = Delay;
+		public override void LoadData(TagCompound tag) => Delay = tag.SafeGet(nameof(Delay), Delay);
 		public record class Set_Delay_Action(int I, int J, int Delay) : AutoSyncedAction {
 			protected override bool ShouldPerform => TryGet<Delay_Component_TE>(I, J, out _);
 			protected override void Perform() {
