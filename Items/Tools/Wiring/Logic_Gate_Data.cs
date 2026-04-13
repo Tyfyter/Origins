@@ -82,7 +82,7 @@ namespace Origins.Items.Tools.Wiring {
 			});
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			LocalizedText text = ItemSlot.ShiftInUse ? 
+			LocalizedText text = ItemSlot.ShiftInUse ?
 				GetLocalization("Table").WithFormatArgs(TruthTable[1, 1], TruthTable[1, 0], TruthTable[0, 1])
 				: GetLocalization("HoldShiftForTruthTable");
 			tooltips.Add("TruthTable", text);
@@ -318,7 +318,7 @@ namespace Origins.Items.Tools.Wiring {
 					output
 				);
 			}
-			public override string ToString() => 
+			public override string ToString() =>
 				$"   B ¬B\n" +
 				$" A {this[1, 1]}  {this[1, 0]}\n" +
 				$"¬A {this[0, 1]}  0";
@@ -710,8 +710,9 @@ namespace Origins.Items.Tools.Wiring {
 					0);
 				}
 			}
-			public class ReframingButton(Action click, Func<Rectangle> getFrame) : UIElement {
+			public class ReframingButton(Action click, Func<Rectangle> getFrame, Func<Color> color = null) : UIElement {
 				Rectangle frame = getFrame();
+				Func<Color> Tint { get; set; } = color ?? (() => Color.White);
 				public static ReframingButton States(Func<int> getState, params (Action click, Rectangle frame)[] states) {
 					return new(
 						() => states[getState()].click?.Invoke(),
@@ -719,12 +720,14 @@ namespace Origins.Items.Tools.Wiring {
 					);
 				}
 				public static ReframingButton Disableable(Func<bool> isDisabled, Action click, Rectangle frame, Rectangle disabledFrame) {
-					return new(
+					ReframingButton reframingButton = new(
 						() => {
 							if (!isDisabled()) click();
 						},
 						() => isDisabled() ? disabledFrame : frame
 					);
+					reframingButton.Tint = () => reframingButton.IsMouseHovering && !isDisabled() ? new Color(255, 255, 255, 200) : Color.White;
+					return reframingButton;
 				}
 				public override void LeftClick(UIMouseEvent evt) {
 					click();
@@ -737,7 +740,7 @@ namespace Origins.Items.Tools.Wiring {
 				}
 				public override void Update(GameTime gameTime) => SetFrame(getFrame());
 				protected override void DrawSelf(SpriteBatch spriteBatch) {
-					spriteBatch.Draw(position: GetDimensions().Position(), texture: Textures.Value, sourceRectangle: frame, color: Color.White);
+					spriteBatch.Draw(position: GetDimensions().Position(), texture: Textures.Value, sourceRectangle: frame, color: Tint());
 				}
 			}
 		}

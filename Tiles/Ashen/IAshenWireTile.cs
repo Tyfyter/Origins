@@ -11,10 +11,10 @@ namespace Origins.Tiles.Ashen {
 	public static class AshenWireTile {
 		public static bool DefaultIsPowered(int i, int j) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
-			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
-			for (int x = 0; x < data.Width; x++) {
-				for (int y = 0; y < data.Height; y++) {
-					if (Main.tile[left + x, top + y].Get<Ashen_Wire_Data>().AnyPower) return true;
+			if (data is not null) TileUtils.GetMultiTileTopLeft(i, j, data, out i, out j);
+			for (int x = 0; x < (data?.Width ?? 1); x++) {
+				for (int y = 0; y < (data?.Height ?? 1); y++) {
+					if (Main.tile[i + x, j + y].Get<Ashen_Wire_Data>().AnyPower) return true;
 				}
 			}
 			return false;
@@ -25,14 +25,14 @@ namespace Origins.Tiles.Ashen {
 			powered ^= invertOrder;
 			if (powered == wasPowered) return;
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
-			TileUtils.GetMultiTileTopLeft(i, j, data, out int left, out int top);
-			for (int x = 0; x < data.Width; x++) {
-				for (int y = 0; y < data.Height; y++) {
-					ref short useFrame = ref frame(Main.tile[left + x, top + y]);
+			if (data is not null) TileUtils.GetMultiTileTopLeft(i, j, data, out i, out j);
+			for (int x = 0; x < (data?.Width ?? 1); x++) {
+				for (int y = 0; y < (data?.Height ?? 1); y++) {
+					ref short useFrame = ref frame(Main.tile[i + x, j + y]);
 					useFrame = (short)(useFrame % frameSize + (powered ? frameSize : 0));
 				}
 			}
-			if (!NetmodeActive.SinglePlayer && !quiet) NetMessage.SendTileSquare(-1, left, top, data.Width, data.Height);
+			if (!NetmodeActive.SinglePlayer && !quiet) NetMessage.SendTileSquare(-1, i, j, data.Width, data.Height);
 		}
 	}
 }

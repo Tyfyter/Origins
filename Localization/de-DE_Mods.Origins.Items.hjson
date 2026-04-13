@@ -8284,3 +8284,8 @@ Delay_Component_Item: {
 	// Tooltip: Sends a signal after a set delay
 	// Time: $60!:{0:0.##}$
 }
+
+Radio_Component_Item: {
+	// DisplayName: Radio Component
+	// Tooltip: ""
+}
