@@ -559,7 +559,12 @@ namespace Origins.Items.Tools.Wiring {
 					}
 					isDragging = UIDragController.Attach(this, new(
 						PickUp: () => {
-							if (connectedTo >= 0) wires[connectedTo] = -1;
+							if (connectedTo >= 0) {
+								wires[connectedTo] = -1;
+								//play detach sound here
+							} else {
+								//play pick-up sound here
+							}
 							connectedTo = -1;
 						},
 						ModifyOffset: (ref Vector2 position) => position += Main.MouseScreen - GetDimensions().Center(),
@@ -581,7 +586,9 @@ namespace Origins.Items.Tools.Wiring {
 										shockPlayer();
 										wires[connectedTo] = -1;
 										connectedTo = -1;
+										break;
 									}
+									//play attach sound here
 									break;
 								}
 							}
