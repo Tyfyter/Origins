@@ -106,9 +106,16 @@ namespace Origins.Items.Tools.Wiring {
 			public override Action Initialize(UIElement root) {
 				switch (Data.TruthTable.Value) {
 					case 0b100:
+					root.Append(new UIImageFramed(ComponentUI.Textures, new(728, 154, 240, 150)));
+					return TwoInputs(root);
 					case 0b111:
+					root.Append(new UIImageFramed(ComponentUI.Textures, new(970, 154, 240, 150)));
+					return TwoInputs(root);
 					case 0b011:
+					root.Append(new UIImageFramed(ComponentUI.Textures, new(1212, 154, 240, 150)));
+					return TwoInputs(root);
 					case 0b001:
+					root.Append(new UIImageFramed(ComponentUI.Textures, new(970, 2, 240, 150)));
 					return TwoInputs(root);
 
 					case 0b101:
