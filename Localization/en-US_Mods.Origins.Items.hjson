@@ -8289,3 +8289,13 @@ Radio_Component_Item: {
 	DisplayName: Radio Component
 	Tooltip: ""
 }
+
+Truss_Wall_Safe_Item: {
+	DisplayName: Truss Wall
+	Tooltip: ""
+}
+
+Truss_Wall_Placed_Unsafe_Item: {
+	DisplayName: Registered Truss Wall
+	Tooltip: ""
+}
