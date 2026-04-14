@@ -1,29 +1,23 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
+using Origins.Items.Accessories;
 using Origins.Items.Tools.Wiring;
-using Origins.NPCs.Ashen;
-using Origins.UI;
 using Origins.World.BiomeData;
 using PegasusLib.Networking;
-using ReLogic.Graphics;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI;
-using Terraria.UI.Chat;
 using static Origins.Items.Tools.Wiring.Logic_Gate_System;
 
 namespace Origins.Tiles.Ashen {
-	public class Radio_Component : OriginTile, IComplexMineDamageTile, IAshenWireTile {
+	public class Radio_Component : OriginTile, IComplexMineDamageTile, IAshenWireTile, IAshenPowerConduitTile {
 		public static int ID { get; private set; }
 		public override void Load() {
 			new TileItem(this, textureOverride: Texture)
@@ -53,12 +47,26 @@ namespace Origins.Tiles.Ashen {
 			ID = Type;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
-		public void UpdatePowerState(int i, int j, bool powered) {
-			if (TileEntity.TryGet(i, j, out Radio_Component_TE te)) te.TriggerAshen(powered);
-		}
-		public void Poke(Point position, int fromWireType) => UpdatePowerState(position.X, position.Y, AshenWireTile.DefaultIsPowered(position.X, position.Y));
+		public void UpdatePowerState(int i, int j, bool powered) { }
 		public override void HitWire(int i, int j) {
 			if (!Ashen_Wire_Data.HittingAshenWires && TileEntity.TryGet(i, j, out Radio_Component_TE te)) te.TriggerVanilla();
+		}
+		public void Poke(Point position, int fromWireType) {
+			if (!TileEntity.TryGet(position.X, position.Y, out Radio_Component_TE te) || te.Mode != Mode.Receive) return;
+			te.GetReceiveWires(out int input, out _);
+			if (fromWireType == input) Ashen_Wire_Data.SetTilePowered(position.X, position.Y, false);// && !IsPowered(position.X, position.Y)
+		}
+		public bool IsPowered(int i, int j) {
+			if (!TileEntity.TryGet(i, j, out Radio_Component_TE te) || te.Mode != Mode.Receive) return AshenWireTile.DefaultIsPowered(i, j);
+			te.GetReceiveWires(out int input, out _);
+			using IAshenPowerConduitTile.WalkedConduitOutput __ = new(new(i, j));
+			return Ashen_Wire_Data.GetPower(i, j, input) && IAshenPowerConduitTile.FindValidPowerSource(new(i, j), input);
+		}
+		public bool ShouldCountAsPowerSource(Point position, int forWireType) {
+			if (!TileEntity.TryGet(position.X, position.Y, out Radio_Component_TE te) || te.Mode != Mode.Receive) return false;
+			using IAshenPowerConduitTile.WalkedConduitOutput _ = new(position);
+			te.GetReceiveWires(out int input, out int output);
+			return forWireType == output && IAshenPowerConduitTile.FindValidPowerSource(position, input);
 		}
 		public override bool RightClick(int i, int j) {
 			SetComponentUI(new UI(i, j));
@@ -72,15 +80,78 @@ namespace Origins.Tiles.Ashen {
 			public UI(int i, int j) : this(new Point(i, j)) { }
 			public override bool ShouldClose => base.ShouldClose || !GetTE(out _);
 			bool GetTE(out Radio_Component_TE tileEntity) => TileEntity.TryGet(new(Position), out tileEntity);
+			UIElement wireRoot;
+			Action deactivate;
 			public override Action Initialize(UIElement root) {
 				root.Append(new UIImageFramed(ComponentUI.Textures, new(486, 2, 240, 150)));
-				root.Append(new Delay_Element(new(Position)) {
+				root.Append(new Radio_Element(new(Position), this) {
 					Left = new(2, 0),
 					Top = new(0, 1)
 				});
-				return () => {};
+				wireRoot = new() {
+					Width = new(root.Width.Pixels, 0),
+					Height = new(root.Height.Pixels, 0)
+				};
+				InitializeHooks();
+				root.Append(wireRoot);
+				return () => deactivate?.Invoke();
 			}
-			public class Delay_Element(Point16 position) : UIImageFramed(ComponentUI.Textures, new(244, 154, 130, 24)) {
+			void InitializeHooks() {
+				deactivate = null;
+				wireRoot?.RemoveAllChildren();
+				if (!GetTE(out Radio_Component_TE tileEntity)) return;
+				switch (tileEntity.Mode) {
+					case Mode.Send:
+					deactivate = SetupWires(new(wireRoot,
+						wires => {
+							for (int i = 0; i < 3; i++) {
+								if ((tileEntity.Wires & (1 << i)) != 0) wires[i] = i;
+							}
+						},
+						wires => {
+							byte attached = 0;
+							for (int i = 0; i < 3; i++) attached |= (byte)(1 << wires[i]);
+							new Radio_Component_TE.Set_Wires_Action(Position.X, Position.Y, attached).Perform();
+							return true;
+						},
+						new(32, 18),
+						new(32, 58),
+						new(32, 98)
+					) {
+						CanUpdate = _ => true,
+						ModifyWires = wire => {
+							if (wire.wireType == 3) {
+								wire.connectedTo = -2;
+							} else {
+								wire.disconnectedPosition = new(8, wire.Parent.Height.Pixels * 0.25f * (wire.wireType + 1) - 2);
+							}
+						}
+					});
+					break;
+
+					case Mode.Receive:
+					const int a_mask = 0b0011;
+					const int b_mask = 0b0100;
+					deactivate = SetupWires(new(wireRoot,
+						wires => tileEntity.GetReceiveWires(out wires[0], out wires[1]),
+						wires => {
+							if (wires.Contains(-1)) return false;
+							int result = wires[0];
+							if ((wires[1] - wires[0] + 3) % 3 != 1) result |= b_mask;
+							return true;
+						},
+						new(24, 62),
+						new(176, 62, true)
+					) {
+						ModifyWires = wire => {
+							if (wire.wireType == 3) wire.connectedTo = -2;
+						}
+					});
+					break;
+				}
+				wireRoot.Activate();
+			}
+			public class Radio_Element(Point16 position, UI parentUI) : UIImageFramed(ComponentUI.Textures, new(244, 154, 130, 24)) {
 				bool GetTE(out Radio_Component_TE tileEntity) => TileEntity.TryGet(position, out tileEntity);
 				public override void OnInitialize() {
 					if (!GetTE(out Radio_Component_TE tileEntity)) return;
@@ -102,7 +173,10 @@ namespace Origins.Tiles.Ashen {
 						Mode mode = (Mode)i;
 						Append(ComponentUI.ReframingButton.Disableable(
 							() => tileEntity.Mode == mode,
-							() => new Radio_Component_TE.Set_Mode_Action(position.X, position.Y, mode).Perform(),
+							() => {
+								new Radio_Component_TE.Set_Mode_Action(position.X, position.Y, mode).Perform();
+								parentUI.InitializeHooks();
+							},
 							new(374 + i * 18, 180, 18, 18),
 							new(318 + i * 18, 180, 18, 18)
 						).MoveTo(pos));
@@ -120,6 +194,8 @@ namespace Origins.Tiles.Ashen {
 					);
 				}
 			}
+			public override int GetHashCode() => Position.GetHashCode();
+			public virtual bool Equals(UI other) => base.Equals(other);
 		}
 		public enum Mode : byte {
 			Send,
@@ -132,19 +208,32 @@ namespace Origins.Tiles.Ashen {
 		public const int max = count - 1;
 		static readonly bool[] powered = new bool[count];
 		public int Channel { get; private set; } = 0;
+		public byte Wires { get; private set; } = 0;
 		public Radio_Component.Mode Mode { get; private set; }
+		public void GetReceiveWires(out int input, out int output) {
+			const int a_mask = 0b0011;
+			const int b_mask = 0b0100;
+			input = (Wires & a_mask) % a_mask;
+			output = (input + 1 + ((Wires & b_mask) >> 2)) % a_mask;
+		}
 		public override void NetSend(BinaryWriter writer) {
 			writer.Write(Channel);
-			writer.Write(Channel);
+			writer.Write(Wires);
+			writer.Write((byte)Mode);
 		}
 		public override void NetReceive(BinaryReader reader) {
 			Channel = reader.ReadInt32();
+			Wires = reader.ReadByte();
+			Mode = (Radio_Component.Mode)reader.ReadByte();
 		}
 		public override void PreGlobalUpdate() {
 			Array.Clear(powered);
 			foreach ((Point16 position, TileEntity te) in ByPosition) {
 				if (te is not Radio_Component_TE component || component.Mode != Radio_Component.Mode.Send || powered[component.Channel]) continue;
-				powered[component.Channel] = AshenWireTile.DefaultIsPowered(position.X, position.Y);
+				Ashen_Wire_Data data = Main.tile[position].Get<Ashen_Wire_Data>();
+				if ((component.Wires & (1 << 0)) != 0) powered[component.Channel] = data.BrownWirePowered;
+				if ((component.Wires & (1 << 1)) != 0) powered[component.Channel] |= data.BlackWirePowered;
+				if ((component.Wires & (1 << 2)) != 0) powered[component.Channel] |= data.WhiteWirePowered;
 			}
 		}
 		public override void Update() {
@@ -153,17 +242,24 @@ namespace Origins.Tiles.Ashen {
 				return;
 			}
 			if (Mode == Radio_Component.Mode.Receive) {
-
+				Ashen_Wire_Data.SetTilePowered(Position.X, Position.Y, powered[Channel]);
 			}
 		}
 		public void TriggerVanilla() {
 		}
-		public void TriggerAshen(bool powered) {
-			if (powered == Radio_Component_TE.powered[Channel]) return;
-		}
 		public override bool IsTileValidForEntity(int x, int y) {
 			if (x < 0 || y < 0) return false;
 			return Main.tile[x, y].TileIsType(ModContent.TileType<Radio_Component>());
+		}
+		public override void SaveData(TagCompound tag) {
+			tag[nameof(Channel)] = Channel;
+			tag[nameof(Wires)] = Wires;
+			tag[nameof(Mode)] = Mode.ToString();
+		}
+		public override void LoadData(TagCompound tag) {
+			Channel = tag.SafeGet(nameof(Channel), Channel);
+			Wires = tag.SafeGet(nameof(Wires), Wires);
+			Mode = Enum.TryParse(tag.SafeGet(nameof(Mode), Mode.ToString()), out Radio_Component.Mode mode) ? mode : Mode;
 		}
 		public record class Set_Channel_Action(int I, int J, int Channel) : AutoSyncedAction {
 			protected override bool ShouldPerform => TryGet<Radio_Component_TE>(I, J, out _);
@@ -172,7 +268,8 @@ namespace Origins.Tiles.Ashen {
 				te.Channel = Channel;
 			}
 		}
-		public record class Set_Mode_Action(int I, int J, Radio_Component.Mode Mode) : AutoSyncedAction {
+		public record class Set_Mode_Action(int I, int J, Radio_Component.Mode Mode) : AutoSyncedAction, IBroken {
+			static string IBroken.BrokenReason => "Enum support added in incoming PegasusLib update";
 			protected override bool ShouldPerform => TryGet<Radio_Component_TE>(I, J, out _);
 			protected override void Perform() {
 				if (!TryGet(I, J, out Radio_Component_TE te)) return;
@@ -182,6 +279,13 @@ namespace Origins.Tiles.Ashen {
 			static void WriteMode(BinaryWriter writer, Radio_Component.Mode mode) => writer.Write((byte)mode);
 			[AutoSyncReceive<Radio_Component.Mode>]
 			static Radio_Component.Mode ReadMode(BinaryReader reader) => (Radio_Component.Mode)reader.ReadByte();
+		}
+		public record class Set_Wires_Action(int I, int J, byte Wires) : AutoSyncedAction {
+			protected override bool ShouldPerform => TryGet<Radio_Component_TE>(I, J, out _);
+			protected override void Perform() {
+				if (!TryGet(I, J, out Radio_Component_TE te)) return;
+				te.Wires = Wires;
+			}
 		}
 	}
 }

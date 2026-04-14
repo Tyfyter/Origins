@@ -102,6 +102,7 @@ namespace Origins.Items.Tools.Wiring {
 		public record class UI(Point Position) : AComponentUI(Position) {
 			public UI(int i, int j) : this(new Point(i, j)) { }
 			public override bool ShouldClose => base.ShouldClose || Main.tile[Position].Get<Logic_Gate_Data>().TruthTable.IsEmpty;
+			public ref Logic_Gate_Data Data => ref Main.tile[Position].Get<Logic_Gate_Data>();
 			public override Action Initialize(UIElement root) {
 				switch (Data.TruthTable.Value) {
 					case 0b100:
@@ -112,7 +113,7 @@ namespace Origins.Items.Tools.Wiring {
 
 					case 0b101:
 					root.Append(new UIImageFramed(ComponentUI.Textures, new(486, 154, 240, 150)));
-					return SetupWires(root,
+					return SetupWires(new(root,
 						wires => Data.Wires.GetWires(out wires[0], out _, out wires[1]),
 						wires => {
 							if (wires.Contains(-1)) return false;
@@ -121,12 +122,12 @@ namespace Origins.Items.Tools.Wiring {
 						},
 						new(24, 62),
 						new(176, 62, true)
-					);
+					));
 				}
 				return null;
 
 				Action TwoInputs(UIElement root) {
-					return SetupWires(root,
+					return SetupWires(new(root,
 						wires => Data.Wires.GetWires(out wires[0], out wires[1], out wires[2]),
 						wires => {
 							if (wires.Contains(-1)) return false;
@@ -136,7 +137,7 @@ namespace Origins.Items.Tools.Wiring {
 						new(24, 36),
 						new(24, 94),
 						new(176, 62, true)
-					);
+					));
 				}
 			}
 		}
@@ -450,15 +451,10 @@ namespace Origins.Items.Tools.Wiring {
 			public AComponentUI(int i, int j) : this(new Point(i, j)) { }
 			public virtual bool ShouldClose => !LocalPlayerIsInInteractionRange(Position);
 			public virtual Vector2 StartPosition => Position.ToWorldCoordinates(autoAddY: 16).ToScreenPosition();
-			public ref Logic_Gate_Data Data => ref Main.tile[Position].Get<Logic_Gate_Data>();
 			public abstract Action Initialize(UIElement root);
-			protected Action SetupWires(UIElement root, Action<int[]> setup, ComponentUI.ApplySockets apply, params Span<ComponentUI.Socket> sockets) => ComponentUI.SetupWires(
-				root,
-				setup,
-				apply,
-				Position.ToWorldCoordinates(),
-				sockets
-			);
+			protected Action SetupWires(ComponentUI.WireSetupData setupData) => ComponentUI.SetupWires(setupData with { WorldPosition = Position.ToWorldCoordinates() });
+			public override int GetHashCode() => Position.GetHashCode();
+			public virtual bool Equals(AComponentUI other) => EqualityContract == other?.EqualityContract && Position == other.Position;
 			bool IComponentUI.Equals(IComponentUI other) => other is AComponentUI otherUI && this == otherUI;
 		}
 		public class ComponentUI : UIState {
@@ -481,6 +477,7 @@ namespace Origins.Items.Tools.Wiring {
 					.Execute(root => root.Append(border))
 					.Execute(Lockout)
 				);
+				Elements[0].Activate();
 			}
 			class UIImageFramedExpandable(Asset<Texture2D> texture, Rectangle frame) : UIImageFramed(texture, frame) {
 				public override bool ContainsPoint(Vector2 point) {
@@ -517,14 +514,30 @@ namespace Origins.Items.Tools.Wiring {
 			}
 			public ComponentUI(IComponentUI uiSource) => SetUISource(uiSource);
 			public delegate bool ApplySockets(int[] wires);
-			public static Action SetupWires(UIElement root, Action<int[]> setup, ApplySockets apply, Vector2? worldPosition = default, params Span<Socket> sockets) {
+			public record struct WireSetupData(UIElement Root, Action<int[]> Setup, ApplySockets Apply, params Socket[] Sockets) {
+				public Action<DraggableWire> ModifyWires { get; set; }
+				public Predicate<int[]> CanUpdate { get; set; } = DefaultCanUpdate;
+				public Vector2? WorldPosition { get; set; }
+				static bool DefaultCanUpdate(int[] wires) => !wires.Contains(-1);
+			}
+			public static Action SetupWires(WireSetupData setupData) {
+				(UIElement root, Action<int[]> setup, ApplySockets apply, Socket[] sockets) = setupData;
+				Action<DraggableWire> modifyWires = setupData.ModifyWires;
+				Predicate<int[]> canUpdate = setupData.CanUpdate;
+				Vector2? worldPosition = setupData.WorldPosition;
 				Socket[] _sockets = new Socket[sockets.Length];
 				for (int i = 0; i < sockets.Length; i++) {
 					root.Append(_sockets[i] = sockets[i]);
+					sockets[i].Recalculate();
 				}
 				int[] wires = new int[sockets.Length];
+				Array.Fill(wires, -1);
 				setup(wires);
-				for (int i = 0; i <= 3; i++) root.Append(new DraggableWire(i, _sockets, wires, apply, ShockPlayer));
+				for (int i = 0; i <= 3; i++) {
+					DraggableWire wire = new(i, _sockets, wires, apply, ShockPlayer, canUpdate);
+					root.Append(wire);
+					modifyWires?.Invoke(wire);
+				}
 				return () => {
 					if (!apply(wires)) ShockPlayer();
 				};
@@ -552,13 +565,13 @@ namespace Origins.Items.Tools.Wiring {
 				}
 			}
 			public class DraggableWire : UIElement {
-				readonly int wireType;
+				public readonly int wireType;
 				readonly Socket[] sockets;
 				readonly Func<bool> isDragging;
-				int connectedTo = -1;
-				Vector2? disconnectedPosition;
+				public int connectedTo = -1;
+				public Vector2? disconnectedPosition;
 				Vector2 edgePosition;
-				public DraggableWire(int wireType, Socket[] sockets, int[] wires, ApplySockets apply, Action shockPlayer) {
+				public DraggableWire(int wireType, Socket[] sockets, int[] wires, ApplySockets apply, Action shockPlayer, Predicate<int[]> canUpdate) {
 					this.wireType = wireType;
 					this.sockets = sockets;
 					Width.Set(10, 0);
@@ -594,7 +607,7 @@ namespace Origins.Items.Tools.Wiring {
 									}
 									connectedTo = i;
 									wires[connectedTo] = wireType;
-									if (!wires.Contains(-1) && !apply(wires)) {
+									if (canUpdate(wires) && !apply(wires)) {
 										shockPlayer();
 										wires[connectedTo] = -1;
 										connectedTo = -1;
@@ -612,45 +625,41 @@ namespace Origins.Items.Tools.Wiring {
 					CalculatedStyle parent = Parent.GetDimensions();
 					switch (wireType) {
 						case 0:
-						disconnectedPosition = new(parent.Width * 0.25f - 2, parent.Height - 8);
+						disconnectedPosition ??= new(parent.Width * 0.25f - 2, parent.Height - 8);
 						break;
 						case 1:
-						disconnectedPosition = new(parent.Width * 0.5f - 2, parent.Height - 8);
+						disconnectedPosition ??= new(parent.Width * 0.5f - 2, parent.Height - 8);
 						break;
 						case 2:
-						disconnectedPosition = new(parent.Width * 0.75f - 2, parent.Height - 8);
+						disconnectedPosition ??= new(parent.Width * 0.75f - 2, parent.Height - 8);
 						break;
 						case 3:
-						disconnectedPosition = new(parent.Width - 8, parent.Height * 0.5f - 16);
+						disconnectedPosition ??= new(parent.Width - 8, parent.Height * 0.5f - 16);
 						break;
 					}
 					SetToRestPos();
 				}
 				void SetToRestPos() {
+					if (connectedTo == -2) return;
+					CalculatedStyle parent = Parent.GetDimensions();
 					if (connectedTo != -1) {
-						CalculatedStyle parent = Parent.GetDimensions();
-						CalculatedStyle socket = sockets[connectedTo].GetDimensions();
-						edgePosition = new(sockets[connectedTo].output ? (parent.Width - 8) : 8, socket.Center().Y - parent.Y);
+						Socket socket = sockets[connectedTo];
+						edgePosition = new(sockets[connectedTo].output ? (parent.Width - 8) : 8, socket.Top.Pixels + socket.Height.Pixels * 0.5f);
 
-						Left.Set(Math.Clamp(edgePosition.X + parent.X, socket.X, socket.X + socket.Width - 8) - parent.X - 2.5f, 0);
+						Left.Set(Math.Clamp(edgePosition.X, socket.Left.Pixels, socket.Left.Pixels + socket.Width.Pixels - 8) - 2.5f, 0);
 						Top.Set(edgePosition.Y - 5, 0);
 						return;
 					}
 					edgePosition = disconnectedPosition.Value;
 					Left.Set(edgePosition.X - 5, 0);
 					Top.Set(edgePosition.Y - 5, 0);
-					switch (wireType) {
-						case 0:
-						case 1:
-						case 2:
-						Top.Pixels -= 12;
-						break;
-						case 3:
-						Left.Pixels -= 12;
-						break;
-					}
+					if (edgePosition.X <= 8) Left.Pixels += 12;
+					else if (edgePosition.X >= parent.Width - 8) Left.Pixels -= 12;
+					if (edgePosition.Y <= 8) Top.Pixels += 12;
+					else if (edgePosition.Y >= parent.Height - 8) Top.Pixels -= 12;
 				}
 				public override bool ContainsPoint(Vector2 point) {
+					if (connectedTo == -2) return false;
 					if (base.ContainsPoint(point)) return true;
 					return Collision.CheckAABBvLineCollision(
 						point - new Vector2(5),
@@ -660,6 +669,7 @@ namespace Origins.Items.Tools.Wiring {
 					);
 				}
 				protected override void DrawSelf(SpriteBatch spriteBatch) {
+					if (connectedTo == -2) return;
 					Vector2 edge = edgePosition + Parent.GetDimensions().Position();
 					Vector2 center = GetDimensions().Center();
 					Vector2 diff = (center - edge).Normalized(out float dist);
