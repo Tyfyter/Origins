@@ -179,8 +179,7 @@ namespace Origins.Items.Tools.Wiring {
 				return output;
 			}
 		}
-		static bool GetBits(int bits, int mask)
-			=> (bits & mask) != 0;
+		static bool GetBits(int bits, int mask) => (bits & mask) != 0;
 		static void SetBits(bool value, ref byte bits, byte mask) {
 			if (value) bits |= mask;
 			else bits &= (byte)~mask;
@@ -538,6 +537,12 @@ namespace Origins.Items.Tools.Wiring {
 					root.Append(wire);
 					modifyWires?.Invoke(wire);
 				}
+				for (int i = 0; i < sockets.Length; i++) {
+					if (sockets[i].locked) root.Append(new UIImageFramed(Textures, new(174, 306, 40, 38)) {
+						Left = sockets[i].Left,
+						Top = sockets[i].Top
+					});
+				}
 				return () => {
 					if (!apply(wires)) ShockPlayer();
 				};
@@ -557,11 +562,13 @@ namespace Origins.Items.Tools.Wiring {
 			}
 			public class Socket : UIImageFramed {
 				public readonly bool output;
-				public Socket(Vector2 position, bool output = false) : this(position.X, position.Y, output) { }
-				public Socket(float x, float y, bool output = false) : base(Textures, new(2, 306, 40, 38)) {
+				public readonly bool locked;
+				public Socket(Vector2 position, bool output = false, bool locked = false) : this(position.X, position.Y, output, locked) { }
+				public Socket(float x, float y, bool output = false, bool locked = false) : base(Textures, new(2, 306, 40, 38)) {
 					Left.Set(x, 0);
 					Top.Set(y, 0);
 					this.output = output;
+					this.locked = locked;
 				}
 			}
 			public class DraggableWire : UIElement {
@@ -582,7 +589,9 @@ namespace Origins.Items.Tools.Wiring {
 							break;
 						}
 					}
+					if (sockets.All(s => s.locked)) return;
 					isDragging = UIDragController.Attach(this, new(
+						ShouldDrag: _ => !(sockets.GetIfInRange(connectedTo)?.locked ?? false),
 						PickUp: () => {
 							if (connectedTo >= 0) {
 								wires[connectedTo] = -1;
@@ -597,6 +606,10 @@ namespace Origins.Items.Tools.Wiring {
 							Vector2 center = GetDimensions().Center();
 							for (int i = 0; i < sockets.Length; i++) {
 								if (sockets[i].ContainsPoint(center)) {
+									if (sockets[i].locked) {
+										shockPlayer();
+										break;
+									}
 									if (wireType == 3 && !sockets[i].output) {
 										shockPlayer();
 										break;
@@ -674,7 +687,7 @@ namespace Origins.Items.Tools.Wiring {
 					Vector2 center = GetDimensions().Center();
 					Vector2 diff = (center - edge).Normalized(out float dist);
 					Vector2 current = center - diff * 5;
-					bool highlight = IsMouseHovering || isDragging();
+					bool highlight = isDragging is not null && (IsMouseHovering || isDragging());
 					for (; dist > 0; dist -= 14) {
 						int amount = Math.Min((int)dist, 14);
 						if (highlight) spriteBatch.Draw(

@@ -148,6 +148,26 @@ namespace Origins.Tiles.Ashen {
 						}
 					});
 					break;
+
+					case Mode.Signal:
+					static void HideNonVanilla(ComponentUI.DraggableWire wire) {
+						if (wire.wireType != 3) wire.connectedTo = -2;
+					}
+					SetupWires(new(wireRoot,
+						wires => wires[0] = 3,
+						_ => true,
+						new ComponentUI.Socket(24, 62, locked: true)
+					) {
+						ModifyWires = HideNonVanilla
+					});
+					SetupWires(new(wireRoot,
+						wires => wires[0] = 3,
+						_ => true,
+						new ComponentUI.Socket(176, 62, true, true)
+					) {
+						ModifyWires = HideNonVanilla
+					});
+					break;
 				}
 				wireRoot.Activate();
 			}
@@ -207,9 +227,12 @@ namespace Origins.Tiles.Ashen {
 		public const int count = 8;
 		public const int max = count - 1;
 		static readonly bool[] powered = new bool[count];
+		static readonly bool[] triggered = new bool[count];
+		static readonly bool[] nextTriggered = new bool[count];
 		public int Channel { get; private set; } = 0;
 		public byte Wires { get; private set; } = 0;
 		public Radio_Component.Mode Mode { get; private set; }
+		bool sentThisTick;
 		public void GetReceiveWires(out int input, out int output) {
 			const int a_mask = 0b0011;
 			const int b_mask = 0b0100;
@@ -235,17 +258,29 @@ namespace Origins.Tiles.Ashen {
 				if ((component.Wires & (1 << 1)) != 0) powered[component.Channel] |= data.BlackWirePowered;
 				if ((component.Wires & (1 << 2)) != 0) powered[component.Channel] |= data.WhiteWirePowered;
 			}
+			nextTriggered.CopyTo(triggered.AsSpan());
+			Array.Clear(nextTriggered);
 		}
 		public override void Update() {
 			if (!IsTileValidForEntity(Position.X, Position.Y)) {
 				Kill(Position.X, Position.Y);
 				return;
 			}
-			if (Mode == Radio_Component.Mode.Receive) {
+			switch (Mode) {
+				case Radio_Component.Mode.Receive:
 				Ashen_Wire_Data.SetTilePowered(Position.X, Position.Y, powered[Channel]);
+				break;
+				case Radio_Component.Mode.Signal:
+				if (sentThisTick.TrySet(false)) break;
+				if (triggered[Channel]) Wiring.TripWire(Position.X, Position.Y, 1, 1);
+				break;
 			}
 		}
 		public void TriggerVanilla() {
+			if (Mode == Radio_Component.Mode.Signal) {
+				nextTriggered[Channel] = true;
+				sentThisTick = true;
+			}
 		}
 		public override bool IsTileValidForEntity(int x, int y) {
 			if (x < 0 || y < 0) return false;
