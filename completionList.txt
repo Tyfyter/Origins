@@ -1382,8 +1382,8 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(#, ^2) Delay Component !!!
-(#2, ^2) Diode Component !!!
+(☻) Delay Component !!!
+(☻) Diode Component !!!
 (^) Dirt Chest
 (^) Edge Detector
 (^) Fire Extinguisher Holder
