@@ -42,7 +42,7 @@ namespace Origins.Walls {
 		public override WallVersion WallVersions => WallVersion.Natural | WallVersion.Safe | WallVersion.Placed_Unsafe;
 		public override Color MapColor => new(28, 22, 31);
 		public override bool CanBeReplacedByWallSpread => false;
-		public override int TileItem => ModContent.ItemType<Batholith_Item>();
+		public override int TileItemType => ModContent.ItemType<Batholith_Item>();
 		public override int DustType => DustID.t_Granite;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -53,7 +53,7 @@ namespace Origins.Walls {
 		public override WallVersion WallVersions => WallVersion.Safe;
 		public override Color MapColor => new(49, 184, 191);
 		public override bool CanBeReplacedByWallSpread => false;
-		public override int TileItem => ModContent.ItemType<Chambersite_Gemspark_Item>();
+		public override int TileItemType => ModContent.ItemType<Chambersite_Gemspark_Item>();
 		public override int DustType => DustID.GemEmerald;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
@@ -71,7 +71,7 @@ namespace Origins.Walls {
 		public override WallVersion WallVersions => WallVersion.Safe;
 		public override Color MapColor => new(15, 67, 69);
 		public override bool CanBeReplacedByWallSpread => false;
-		public override int TileItem => ModContent.ItemType<Chambersite_Gemspark_Item>();
+		public override int TileItemType => ModContent.ItemType<Chambersite_Gemspark_Item>();
 		public override int DustType => DustID.GemEmerald;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

@@ -19,7 +19,7 @@ namespace Origins.Walls {
 		public abstract WallVersion WallVersions { get; }
 		public abstract Color MapColor { get; }
 		public virtual bool CanBeReplacedByWallSpread => true;
-		public virtual int TileItem => -1;
+		public virtual int TileItemType => -1;
 		public OriginsWallItem Item { get; protected set; }
 		public Dictionary<WallVersion, OriginsWall> Versions { get; private set; }
 		public OriginsWall GetWall(WallVersion version) => Versions[version];
@@ -110,13 +110,13 @@ namespace Origins.Walls {
 			Item.DefaultToPlaceableWall(Wall.Type);
 		}
 		public override void AddRecipes() {
-			if (Wall.WallVersion == WallVersion.Safe && Wall.TileItem >= 0) {
+			if (Wall.WallVersion == WallVersion.Safe && Wall.TileItemType >= 0) {
 				Recipe.Create(Type, 4)
-				.AddIngredient(Wall.TileItem)
+				.AddIngredient(Wall.TileItemType)
 				.AddTile(TileID.WorkBenches)
 				.Register();
 
-				Recipe.Create(Wall.TileItem)
+				Recipe.Create(Wall.TileItemType)
 				.AddIngredient(Type, 4)
 				.AddTile(TileID.WorkBenches)
 				.Register();

@@ -20,7 +20,7 @@ namespace Origins.Walls {
 		}
 		public override WallVersion WallVersions => WallVersion.Natural | WallVersion.Safe | WallVersion.Placed_Unsafe;
 		public override Color MapColor => new(0, 160, 160);
-		public override int TileItem => ItemType<Amoeba_Fluid_Item>();
+		public override int TileItemType => ItemType<Amoeba_Fluid_Item>();
 		public override int DustType => DustID.GemEmerald;
 		public override SoundStyle? HitSound => SoundID.NPCHit13;
 		public override void SetStaticDefaults() {

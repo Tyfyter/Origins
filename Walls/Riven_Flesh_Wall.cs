@@ -15,7 +15,7 @@ namespace Origins.Walls {
 		public override Color MapColor => new(40, 140, 200);
 		public override int DustType => Riven_Hive.DefaultTileDust;
 		public override bool CanBeReplacedByWallSpread => false;
-		public override int TileItem => OriginTile.TileItem<Spug_Flesh>();
+		public override int TileItemType => OriginTile.TileItem<Spug_Flesh>();
 		public override string Name => WallVersion == WallVersion.Natural ? base.Name.Replace("_Natural", "") : base.Name;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

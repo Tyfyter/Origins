@@ -12,7 +12,7 @@ namespace Origins.Walls {
 		public override Color MapColor => new(150, 150, 150);
 		public override int DustType => Defiled_Wastelands.DefaultTileDust;
 		public override bool CanBeReplacedByWallSpread => false;
-		public override int TileItem => OriginTile.TileItem<Defiled_Stone>();
+		public override int TileItemType => OriginTile.TileItem<Defiled_Stone>();
 		public override string Name => WallVersion == WallVersion.Natural ? base.Name.Replace("_Natural", "") : base.Name;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

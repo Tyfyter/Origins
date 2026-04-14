@@ -1327,7 +1327,7 @@ TILES:
 (^) Spug Flesh Wall
 (X) Spug Flesh Brick Wall
 (^) Tainted Stone Wall
-(#, ^2) Truss Wall !!!
+(^) Truss Wall !!!
 (^) Type-I Fortified Steel Wall
 (^) Type-III Fortified Steel Wall
 

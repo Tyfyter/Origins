@@ -11,7 +11,7 @@ namespace Origins.Walls {
 		public override Color MapColor => new(73, 42, 22);
 		public override int DustType => Ashen_Biome.DefaultTileDust;
 		public override bool CanBeReplacedByWallSpread => false;
-		public override int TileItem => OriginTile.TileItem<Tainted_Stone>();
+		public override int TileItemType => OriginTile.TileItem<Tainted_Stone>();
 		public override string Name => WallVersion == WallVersion.Natural ? base.Name.Replace("_Natural", "") : base.Name;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
