@@ -48,10 +48,11 @@ namespace Origins.UI.Snippets {
 		}
 		void ILoadable.Load(Mod mod) {
 			Load(mod);
-			if (!Main.dedServ) FixBlocks();
+			FixBlocks();
 		}
 
 		static void FixBlocks() {
+			if (Main.dedServ) return;
 			DynamicSpriteFont font = FontAssets.MouseText.Value;
 			DynamicSpriteFont.SpriteCharacterData badBlock = font.SpriteCharacters['█'];
 			if (badBlock.Glyph != new Rectangle(124, 230, 15, 22)) return;

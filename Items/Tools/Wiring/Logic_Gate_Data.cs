@@ -66,6 +66,7 @@ namespace Origins.Items.Tools.Wiring {
 			return gates.TryAdd(TruthTable, this);
 		}
 		static void FixNIMPLY() {
+			if (Main.dedServ) return;
 			DynamicSpriteFont font = FontAssets.MouseText.Value;
 			DynamicSpriteFont.SpriteCharacterData badArrow = font.SpriteCharacters['⇏'];
 			if (badArrow.Glyph != new Rectangle(92, 45, 13, 12)) return;
