@@ -48,6 +48,6 @@
 	  <Folder Include="Walls\Overlays\" />
 	</ItemGroup>
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="cd $(ProjectDir)\effects&#xD;&#xA;CheckFXCompile.exe" />
+		<Exec Command="cd $(ProjectDir)\effects&#xD;&#xA;EasyXNB.exe" />
 	</Target>
 </Project>
