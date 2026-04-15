@@ -34,6 +34,7 @@ namespace Origins.Core {
 			public static void UpdateSounds() {
 				for (int i = 0; i < positions.Length; i++) {
 					if (positions[i] is Vector2 pos) Sounds[i].UpdateSound(pos);
+					else Sounds[i].UpdateSoundInactive();
 				}
 				ResetSounds(false);
 			}
@@ -57,5 +58,6 @@ namespace Origins.Core {
 		public Vector2? GetPosition() => EnvironmentSounds.SoundPositions.GetNearest(this) ?? EnvironmentSounds.SoundPositions.GetOldNearest(this);
 		public bool IsPlaying() => GetPosition().HasValue;
 		public abstract void UpdateSound(Vector2 position);
+		public virtual void UpdateSoundInactive() { }
 	}
 }

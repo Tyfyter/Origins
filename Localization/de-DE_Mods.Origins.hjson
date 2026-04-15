@@ -2298,6 +2298,8 @@ Projectiles: {
 	// _Temp_Turquoise.DisplayName: " Temp Turquoise"
 	// _Temp_Yellow.DisplayName: " Temp Yellow"
 	// ModWireChannel.DisplayName: Mod Wire Channel
+	// Quasar_P.DisplayName: Quasar P
+	// Quasar_Offshoot_P.DisplayName: Quasar Offshoot P
 }
 
 Prefixes: {

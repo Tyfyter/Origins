@@ -8299,3 +8299,8 @@ Truss_Wall_Placed_Unsafe_Item: {
 	DisplayName: Registered Truss Wall
 	Tooltip: ""
 }
+
+Quasar: {
+	DisplayName: Quasar
+	Tooltip: ""
+}

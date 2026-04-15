@@ -33,8 +33,15 @@ float4 Overbrighten(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : CO
 	return color + float4(brightness, brightness, brightness, 0);
 }
 
-technique Technique1{
+float4 Quasar(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	return Overbrighten(sampleColor, coords);
+}
+
+technique Technique1 {
 	pass Overbrighten {
 		PixelShader = compile ps_2_0 Overbrighten();
+	}
+	pass Quasar {
+		PixelShader = compile ps_3_0 Quasar();
 	}
 }
