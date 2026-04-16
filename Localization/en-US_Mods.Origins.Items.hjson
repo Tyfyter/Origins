@@ -7445,6 +7445,33 @@ Exo_Arm: {
 		'''
 }
 
+Exo_Weapon_Mount: {
+	DisplayName: Exo-Weapon Mount
+	Tooltip:
+		'''
+		+15% generic velocity
+		25% increased damage for 1s after swapping weapons
+		'''
+}
+
+Exo_Legs: {
+	DisplayName: Exo-Legs
+	Tooltip: Greatly increased movement speed and jump height
+}
+
+Exo_Suit: {
+	DisplayName: Exo-Suit
+	Tooltip:
+		'''
+		+40% generic velocity
+		Increases mining speed by 20%
+		Increases melee and explosive speed by 10%
+		Increases melee knockback by 10%.
+		Greatly increased movement speed and jump height
+		20% increased damage for 1s after swapping weapons
+		'''
+}
+
 Stress_Ball: {
 	DisplayName: Stress Ball
 	Tooltip:
@@ -7717,15 +7744,6 @@ Robo_Tail: {
 		'''
 }
 
-Exo_Weapon_Mount: {
-	DisplayName: Exo-Weapon Mount
-	Tooltip:
-		'''
-		+15% generic velocity
-		25% increased damage for 1s after swapping weapons
-		'''
-}
-
 Tool_Rack_Item: {
 	DisplayName: Tool Rack
 	Tooltip: ""
@@ -7744,24 +7762,6 @@ Table_Saw_Item: {
 Lathe_Item: {
 	DisplayName: Lathe
 	Tooltip: ""
-}
-
-Exo_Legs: {
-	DisplayName: Exo-Legs
-	Tooltip: Greatly increased movement speed and jump height
-}
-
-Exo_Suit: {
-	DisplayName: Exo-Suit
-	Tooltip:
-		'''
-		+40% generic velocity
-		Increases mining speed by 20%
-		Increases melee and explosive speed by 10%
-		Increases melee knockback by 10%.
-		Greatly increased movement speed and jump height
-		20% increased damage for 1s after swapping weapons
-		'''
 }
 
 Bomb_Rack: {

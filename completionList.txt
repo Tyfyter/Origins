@@ -668,7 +668,7 @@ ACCESSORIES:
 (^) Fiberglass Dagger
 (^) Forbidden Voice (Cursed)
 (^) Forbidden Voice (Uncursed)
-(#3, ^2) Glitter Glue !!!
+(†) Glitter Glue !!!
 (^) Lunatic's Rune
 (^) Mysterious Spray
 (^) Retool Arm
