@@ -3,6 +3,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
+using Origins.LootConditions;
 using Origins.NPCs.Defiled;
 using Origins.World;
 using Origins.World.BiomeData;
@@ -59,6 +60,7 @@ namespace Origins.NPCs.Ashen {
 			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
+			npcLoot.Add(ScavengerBonus.RAM());
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {

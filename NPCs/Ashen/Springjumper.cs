@@ -1,9 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Core;
-using Origins.Dev;
-using Origins.Items.Armor.Ashen;
-using Origins.Items.Materials;
-using Origins.Items.Other.Consumables.Food;
 using Origins.LootConditions;
 using Origins.World.BiomeData;
 using System;
@@ -11,7 +6,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -29,7 +23,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.damage = 24;
 			NPC.width = 50;
 			NPC.height = 30;
-			NPC.value = Item.buyPrice(0, 0, 2);
+			NPC.value = Item.buyPrice(silver: 2);
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-0.6f);
 			NPC.DeathSound = SoundID.NPCDeath44;
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
@@ -121,7 +115,8 @@ namespace Origins.NPCs.Ashen {
 			NPC.frame.Y = 70 * (int)NPC.ai[0];
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ScavengerBonus.Scrap(1, 1, 2, 5));
+			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 2, amountDroppedMaximum: 5));
+			npcLoot.Add(ScavengerBonus.RAM());
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {

@@ -1408,7 +1408,7 @@ TILES:
 (^) Oil Derrick
 (^) Pocket Dimension Monolith
 (X) Qube Generator
-(#, ^2) Radio Component !!!
+(☻, @4 (locked socket UI sprite)) Radio Component !!!
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Snake
 (X) Ravel Lock: Stacker
@@ -1620,7 +1620,7 @@ MISCELLANEOUS ITEMS:
 (^) Armor+ Power-Up
 (^) Defiled Mana
 (^) Large Chambersite
-(#, ^2) RAM Chip !!!
+(☻) RAM Chip !!!
 (^) Worn Paper: Famine
 (^) Worn Paper: Loose Wheel
 (^) Worn Paper: Mean Baby

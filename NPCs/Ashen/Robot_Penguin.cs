@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.LootConditions;
 using Origins.Projectiles;
 using PegasusLib.Networking;
 using System.IO;
@@ -67,6 +68,7 @@ namespace Origins.NPCs.Ashen {
 			npcLoot.Add(ItemDropRule.Common(ItemID.PedguinHat, 150));
 			npcLoot.Add(ItemDropRule.Common(ItemID.PedguinShirt, 150));
 			npcLoot.Add(ItemDropRule.Common(ItemID.PedguinPants, 150));
+			npcLoot.Add(ScavengerBonus.RAM());
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {

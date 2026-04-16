@@ -34,8 +34,8 @@ Conditions: {
 	HarpoonCondition: When the player has a Harpoon Gun in their inventory
 	JournalEntry: While you do have the journal and don't have the '{0}' journal entry
 	NoDuplicates: When the player doesn't already have the item
-	WithoutScavengerSet: Without a full set of Scavenger Armor
-	WithScavengerSet: With a full set of Scavenger Armor
+	WithoutScavengerSet: Drop rate can be increased by Scavenger Armor
+	WithScavengerSet: Drop rate increased by Scavenger Armor
 	NoDefiledHearts: No Defiled Hearts are left in the world
 	SolarEclipseOccurred: After surviving a solar eclipse
 }

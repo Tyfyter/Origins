@@ -5,15 +5,11 @@ using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Ranged;
 using Origins.LootConditions;
-using Origins.Projectiles;
 using Origins.World.BiomeData;
 using ReLogic.Utilities;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.IO.Compression;
 using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Audio;
@@ -28,7 +24,8 @@ using static Origins.NPCExtensions;
 using static Origins.NPCs.Ashen.Repairboy;
 
 namespace Origins.NPCs.Ashen {
-	public class Repairboy : ModNPC, IAshenEnemy {
+	public class Repairboy : ModNPC, IAshenEnemy, IBroken {
+		static string IBroken.BrokenReason => "Set value";
 		static float TargetDistMin => 24;
 		static float TargetDistMax => 48;
 		static float AttackDist => TargetDistMax + 16;
@@ -56,17 +53,19 @@ namespace Origins.NPCs.Ashen {
 			NPC.noGravity = true;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1f);
 			NPC.DeathSound = SoundID.NPCDeath44;
+			NPC.value = Item.buyPrice();
 			SpawnModBiomes = [
 				ModContent.GetInstance<Ashen_Biome>().Type,
 			];
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(new CommonDrop(ModContent.ItemType<Biocomponent10>(), 1, 1, 3));
-			npcLoot.Add(ScavengerBonus.Scrap(1, 1, 1, 3));
+			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 1, amountDroppedMaximum: 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BBQ_Skewer>(), 19));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Helmet>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Breastplate>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ashen2_Greaves>(), 525));
+			npcLoot.Add(ScavengerBonus.RAM());
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(

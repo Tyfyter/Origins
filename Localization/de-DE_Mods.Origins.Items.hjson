@@ -8304,3 +8304,8 @@ Quasar: {
 	// DisplayName: Quasar
 	// Tooltip: ""
 }
+
+RAM_Chip: {
+	// DisplayName: RAM Chip
+	// Tooltip: "'Truly a work of its time.'"
+}
