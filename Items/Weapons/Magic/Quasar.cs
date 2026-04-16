@@ -316,6 +316,7 @@ namespace Origins.Items.Weapons.Magic {
 				writer.Write(waves[i].Amplitude);
 				writer.Write(waves[i].Phase);
 			}
+			attachment.Write(writer);
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			originalDirection = reader.ReadVector2();
@@ -324,6 +325,7 @@ namespace Origins.Items.Weapons.Magic {
 			for (int i = 0; i < waves.Length; i++) {
 				waves[i] = new Wave(reader.ReadSingle(), reader.ReadSingle(), reader.ReadSingle());
 			}
+			attachment.Read(reader);
 		}
 		(Vector2 start, Vector2 end)[] polygonCache;
 		private void SetHitboxCache() {
@@ -378,13 +380,18 @@ namespace Origins.Items.Weapons.Magic {
 		public virtual Color BladeSecondaryColors(float progressOnStrip) => new Color(182, 32, 218, 0) * Projectile.Opacity;
 		public virtual int BladeWidth => 12;
 		record struct Attachment(Projectile Projectile, float Dist) {
-			public readonly void NetSend(BinaryWriter writer) {
+			public readonly void Write(BinaryWriter writer) {
+				if (Projectile is null) {
+					writer.Write((byte)Main.maxPlayers);
+					return;
+				}
 				writer.Write((byte)Projectile.owner);
 				writer.Write((ushort)Projectile.identity);
 				writer.Write(Dist);
 			}
 			public void Read(BinaryReader reader) {
 				byte owner = reader.ReadByte();
+				if (owner == Main.maxPlayers) return;
 				ushort identity = reader.ReadUInt16();
 				foreach (Projectile projectile in Main.ActiveProjectiles) {
 					if (projectile.owner == owner && projectile.identity == identity) {
