@@ -1,10 +1,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Items.Accessories;
-using Origins.Items.Other.Dyes;
 using Origins.NPCs;
 using PegasusLib.Graphics;
-using PegasusLib.Networking;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
@@ -26,12 +24,12 @@ namespace Origins.Items.Weapons.Magic {
 			GameShaders.Armor.BindShader(Type, new ArmorShaderData(
 				Mod.Assets.Request<Effect>("Effects/Overbrighten"),
 				"Quasar"
-			)).UseOpacity(2);
+			)).UseOpacity(4);
 			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
-			Item.damage = 28;
+			Item.damage = 60;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
 			Item.width = 44;
@@ -47,6 +45,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.UseSound = SoundID.Item67;
 			Item.autoReuse = false;
 			Item.channel = true;
+			Item.ArmorPenetration = 60;
 		}
 	}
 	public class Quasar_P : ModProjectile, IShadedProjectile {
@@ -149,6 +148,9 @@ namespace Origins.Items.Weapons.Magic {
 			float collisionPoint = 1;
 			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.position, TargetPos, 64, ref collisionPoint);
 		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.Daybreak, Main.rand.Next(60, 181));
+		}
 		public override void OnKill(int timeLeft) { }
 		public override bool PreDraw(ref Color lightColor) {
 			sound.TrySetNearest(Projectile.position);
@@ -204,7 +206,7 @@ namespace Origins.Items.Weapons.Magic {
 					} else if (MathUtils.LinearSmoothing(ref volume, 0, 1f / 15)) {
 						return false;
 					}
-					drownOutMultiplier = Utils.Remap(volume, 0, 2, 1, 1f / 4);
+					drownOutMultiplier = Utils.Remap(volume, 0, 2, 1, 1f / 6);
 					playingSound.Volume = volume / drownOutMultiplier;
 					return true;
 				});
@@ -234,7 +236,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.friendly = true;
 			Projectile.tileCollide = false;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = -1;
+			Projectile.localNPCHitCooldown = 0;
 		}
 		public override bool ShouldUpdatePosition() => false;
 		public record struct Wave(float Frequency, float Amplitude, float Phase) {
@@ -253,6 +255,7 @@ namespace Origins.Items.Weapons.Magic {
 			if (source is EntitySource_Parent { Entity: Projectile parent }) {
 				attachment.Projectile = parent;
 				attachment.Dist = Projectile.ai[0];
+				attachment.Rot = parent.rotation;
 			}
 			Projectile.ai[0] = 0;
 			waves = new Wave[Main.rand.Next(13, 21)];
@@ -264,8 +267,7 @@ namespace Origins.Items.Weapons.Magic {
 			distanceFromTarget *= distanceFromTarget;
 			foreach (NPC npc in Main.ActiveNPCs) {
 				if (npc.CanBeChasedBy()) {
-					Vector2 pos = Main.MouseWorld;
-					float between = pos.Clamp(npc.Hitbox).DistanceSQ(pos);
+					float between = Projectile.position.Clamp(npc.Hitbox).DistanceSQ(Projectile.position);
 					if (distanceFromTarget > between) {
 						distanceFromTarget = between;
 						target = npc;
@@ -275,7 +277,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void AI() {
 			Projectile.Opacity = Projectile.timeLeft / FadeFrames;
-			attachment.Apply(Projectile);
+			attachment.Apply(this);
 			if (++Projectile.ai[2] >= Projectile.oldPos.Length) return;
 			Projectile.ai[0] += Projectile.velocity.X;
 			Projectile.ai[1] += Projectile.velocity.Y;
@@ -284,7 +286,8 @@ namespace Origins.Items.Weapons.Magic {
 			for (int i = 0; i < waves.Length; i++) value += waves[i].Sample(Projectile.ai[2]);
 			Projectile.velocity = Projectile.velocity.RotatedBy(value);
 			if (target is not null) {
-				if (Projectile.localNPCImmunity[target.whoAmI] != 0 || !target.CanBeChasedBy(Projectile)) target = null;
+				if (attachment.Projectile is null) target = null;
+				else if (attachment.Projectile.localNPCImmunity[target.whoAmI] != 0 || !target.CanBeChasedBy(Projectile)) target = null;
 			}
 			float speed = Projectile.velocity.Length();
 			Vector2? targetDir = target?.DirectionFrom(Projectile.position + HeadOffset);
@@ -304,7 +307,16 @@ namespace Origins.Items.Weapons.Magic {
 			targetHitbox.Offset((-Projectile.position).ToPoint());
 			return CollisionExtensions.PolygonIntersectsRect(polygonCache, targetHitbox);
 		}
+		public override bool? CanHitNPC(NPC target) {
+			if (attachment.Projectile is not null) {
+				if (attachment.Projectile.localNPCImmunity[target.whoAmI] != 0) return false;
+				return null;
+			}
+			Projectile.localNPCHitCooldown = -1;
+			return base.CanHitNPC(target);
+		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			if (attachment.Projectile is not null) attachment.Projectile.localNPCImmunity[target.whoAmI] = attachment.Projectile.localNPCHitCooldown;
 			target.AddBuff(BuffID.Daybreak, Main.rand.Next(60, 181));
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
@@ -352,34 +364,32 @@ namespace Origins.Items.Weapons.Magic {
 			polygonCache[lineIndex++] = (nextPos0, nextPos1);
 		}
 		private static readonly VertexStrip _vertexStrip = new();
+		static MiscShaderData overbrightenLaserBlade;
 		public override bool PreDraw(ref Color lightColor) {
 			Vector2[] oldPos = new Vector2[int.Min((int)Projectile.ai[2], Projectile.oldPos.Length)];
 			for (int i = 0; i < oldPos.Length; i++) {
 				oldPos[i] = Projectile.oldPos[i] + Projectile.position;
 			}
-			MiscShaderData miscShaderData = GameShaders.Misc["Origins:LaserBlade"];
-			miscShaderData.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]);
-			miscShaderData.UseImage0(TextureAssets.Extra[ExtrasID.FlameLashTrailShape]);
-			miscShaderData.Shader.Parameters["uAlphaMatrix0"].SetValue(new Vector4(1, 1, 1, 0));
-			miscShaderData.UseSaturation(-1);
-			miscShaderData.UseOpacity(2);
-			miscShaderData.Apply();
-			_vertexStrip.PrepareStripWithProceduralPadding(oldPos, Projectile.oldRot, BladeSecondaryColors, BladeWidth, -Main.screenPosition, true);
+			overbrightenLaserBlade ??= ((AdvancedMiscShaderData)GameShaders.Misc["Origins:OverbrightenLaserBlade"]).Clone(
+				new("uAlphaMatrix0", new Vector4(1, 1, 1, 0)),
+				new("uSaturation", -1),
+				new("uOpacity", 16)
+			).UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion])
+			.UseImage0(TextureAssets.Extra[ExtrasID.FlameLashTrailShape]);
+			overbrightenLaserBlade.Apply();
+			_vertexStrip.PrepareStripWithProceduralPadding(oldPos, Projectile.oldRot, BladeColors, BladeWidth, -Main.screenPosition, true);
 			_vertexStrip.DrawTrail();
-			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
-			miscShaderData.UseSaturation(0.5f);
-			miscShaderData.Apply();
+			overbrightenLaserBlade.Apply(null, [new("uSaturation", 0.5f)]);
 			_vertexStrip.PrepareStripWithProceduralPadding(oldPos, Projectile.oldRot, BladeColors, BladeWidth, -Main.screenPosition, true);
 			_vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			float BladeWidth(float progressOnStrip) => this.BladeWidth;
 			return false;
 		}
-		public virtual Color BladeColors(float progressOnStrip) => new Color(56, 0, 255, 0) * Projectile.Opacity;
-		public virtual Color BladeSecondaryColors(float progressOnStrip) => new Color(182, 32, 218, 0) * Projectile.Opacity;
+		public virtual Color BladeColors(float progressOnStrip) => new Color(80, 0, 255, 0) * Projectile.Opacity;
 		public virtual int BladeWidth => 12;
-		record struct Attachment(Projectile Projectile, float Dist) {
+		record struct Attachment(Projectile Projectile, float Dist, float Rot) {
 			public readonly void Write(BinaryWriter writer) {
 				if (Projectile is null) {
 					writer.Write((byte)Main.maxPlayers);
@@ -388,23 +398,43 @@ namespace Origins.Items.Weapons.Magic {
 				writer.Write((byte)Projectile.owner);
 				writer.Write((ushort)Projectile.identity);
 				writer.Write(Dist);
+				writer.Write(Rot);
 			}
 			public void Read(BinaryReader reader) {
 				byte owner = reader.ReadByte();
 				if (owner == Main.maxPlayers) return;
 				ushort identity = reader.ReadUInt16();
-				foreach (Projectile projectile in Main.ActiveProjectiles) {
-					if (projectile.owner == owner && projectile.identity == identity) {
-						Projectile = projectile;
-						break;
+				Projectile = OriginExtensions.GetProjectile(owner, identity);
+				Dist = reader.ReadSingle();
+				Rot = reader.ReadSingle();
+			}
+			public void Apply(Quasar_Offshoot_P applyTo) {
+				if (Projectile?.active == false) Projectile = null;
+				if (Projectile is null) {
+					applyTo.Projectile.timeLeft -= 9;
+					return;
+				}
+				applyTo.Projectile.position = Projectile.position + Projectile.velocity * Dist;
+				if (applyTo.polygonCache is not null) {
+					float rotDiff = GeometryUtils.AngleDif(Rot, Projectile.rotation, out int dir);
+					if (rotDiff >= MathHelper.Pi / 100) {
+						Rot = Projectile.rotation;
+						rotDiff *= dir;
+						Vector2 x = new(MathF.Cos(rotDiff), -MathF.Sin(rotDiff));
+						Vector2 y = new(-x.Y, x.X);
+						for (int i = 0; i < applyTo.Projectile.oldPos.Length; i++) {
+							applyTo.Projectile.oldPos[i] = applyTo.Projectile.oldPos[i].MatrixMult(x, y);
+							applyTo.Projectile.oldRot[i] += rotDiff;
+						}
+						for (int i = 0; i < applyTo.polygonCache.Length; i++) {
+							applyTo.polygonCache[i] = (
+								applyTo.polygonCache[i].start.MatrixMult(x, y),
+								applyTo.polygonCache[i].end.MatrixMult(x, y)
+							);
+						}
 					}
 				}
-				Dist = reader.ReadSingle();
-			}
-			public readonly void Apply(Projectile applyTo) {
-				if (Projectile is null) return;
-				applyTo.position = Projectile.position + Projectile.velocity * Dist;
-				if (Dist > Projectile.ai[1]) applyTo.timeLeft -= 2;
+				if (Dist > Projectile.ai[1]) applyTo.Projectile.timeLeft -= 4;
 			}
 		}
 	}

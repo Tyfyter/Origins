@@ -63,6 +63,19 @@ float4 Identity(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 	return color * ApplyAlphaMatrix(tex2D(uImage0, ApplySourceRect(ApplyUVMatrix(uv, uUVMatrix0), uSourceRect0)), uAlphaMatrix0) * uOpacity;
 }
 
+float4 OverbrightenLaserBlade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	float4 color = LaserBlade(sampleColor, coords);
+	float brightness = 0;
+	if (color.r > 1)
+		brightness += color.r - 1;
+	if (color.g > 1)
+		brightness += color.g - 1;
+	if (color.b > 1)
+		brightness += color.b - 1;
+	
+	return color + float4(brightness * uColor, 0);
+}
+
 technique Technique1 {
 	pass SapphireAura {
 		PixelShader = compile ps_2_0 SapphireAura();
@@ -75,6 +88,9 @@ technique Technique1 {
 	}
 	pass LaserBlade {
 		PixelShader = compile ps_2_0 LaserBlade();
+	}
+	pass OverbrightenLaserBlade {
+		PixelShader = compile ps_3_0 OverbrightenLaserBlade();
 	}
 	pass Identity {
 		PixelShader = compile ps_2_0 Identity();

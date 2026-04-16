@@ -3,30 +3,35 @@ using MonoMod.Cil;
 using Origins.Reflection;
 using ReLogic.Content;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 
 namespace Origins.Core {
+#pragma warning disable CS9107 //unavoidable w/o changes to vanilla
 	public class AdvancedMiscShaderData(Asset<Effect> shader, string passName, params AdvancedMiscShaderData.Parameter[] parameters) : MiscShaderData(shader, passName) {
+#pragma warning restore CS9107
 		public override void Apply(DrawData? drawData = null) {
 			using (SkipShaderApply _ = new()) base.Apply(drawData);
 			for (int i = 0; i < parameters.Length; i++) parameters[i].Apply(Shader.Parameters);
 			((ShaderData)this).Apply();
 		}
+		public AdvancedMiscShaderData Clone(params Parameter[] newParameters) => new(shader, passName, newParameters.Union(parameters).ToArray());
 		public readonly struct Parameter(string name, Parameter.Value value) : IEquatable<Parameter> {
 			public readonly string name = name;
-			readonly Value value = value;
-			public Parameter(string name, params bool[] value) : this(name, (Value)value) { }
-			public Parameter(string name, params int[] value) : this(name, (Value)value) { }
-			public Parameter(string name, params Matrix[] value) : this(name, (Value)value) { }
-			public Parameter(string name, params Quaternion[] value) : this(name, (Value)value) { }
-			public Parameter(string name, params float[] value) : this(name, (Value)value) { }
-			public Parameter(string name, params Vector2[] value) : this(name, (Value)value) { }
-			public Parameter(string name, params Vector3[] value) : this(name, (Value)value) { }
-			public Parameter(string name, params Vector4[] value) : this(name, (Value)value) { }
-			public void Apply(EffectParameterCollection parameters) => value.Apply(parameters[name]);
+			readonly Value ParameterValue = value;
+			readonly Ref<EffectParameter> cachedParameter = new();
+			public Parameter(string name, params bool[] value) : this(name, value.Length == 1 ? (Value)value[0] : (Value)value) { }
+			public Parameter(string name, params int[] value) : this(name, value.Length == 1 ? (Value)value[0] : (Value)value) { }
+			public Parameter(string name, params Matrix[] value) : this(name, value.Length == 1 ? (Value)value[0] : (Value)value) { }
+			public Parameter(string name, params Quaternion[] value) : this(name, value.Length == 1 ? (Value)value[0] : (Value)value) { }
+			public Parameter(string name, params float[] value) : this(name, value.Length == 1 ? (Value)value[0] : (Value)value) { }
+			public Parameter(string name, params Vector2[] value) : this(name, value.Length == 1 ? (Value)value[0] : (Value)value) { }
+			public Parameter(string name, params Vector3[] value) : this(name, value.Length == 1 ? (Value)value[0] : (Value)value) { }
+			public Parameter(string name, params Vector4[] value) : this(name, value.Length == 1 ? (Value)value[0] : (Value)value) { }
+			public void Apply(EffectParameterCollection parameters) => ParameterValue.Apply(cachedParameter.Value ??= parameters[name]);
 			public override int GetHashCode() => name.GetHashCode();
 			bool IEquatable<Parameter>.Equals(Parameter other) => name == other.name;
 			public override bool Equals(object obj) => obj is Parameter parameter && name == parameter.name;

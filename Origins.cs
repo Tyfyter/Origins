@@ -489,6 +489,9 @@ namespace Origins {
 				GameShaders.Misc["Origins:Framed"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "Framed");
 				GameShaders.Misc["Origins:AnimatedTrail"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "AnimatedTrail").UseSamplerState(SamplerState.PointWrap);
 				GameShaders.Misc["Origins:LaserBlade"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "LaserBlade").UseSamplerState(SamplerState.PointWrap);
+				GameShaders.Misc["Origins:OverbrightenLaserBlade"] = new AdvancedMiscShaderData(Assets.Request<Effect>("Effects/Strip"), "OverbrightenLaserBlade", [
+					new("uColor", Vector3.One)
+				]).UseSamplerState(SamplerState.PointWrap);
 				GameShaders.Misc["Origins:Identity"] = new AdvancedMiscShaderData(Assets.Request<Effect>("Effects/Strip"), "Identity", [
 					new("uUVMatrix0", Vector2.UnitX, Vector2.UnitY, Vector2.Zero),
 					new("uAlphaMatrix0", new Vector4(0, 0, 0, 1)),
