@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useAnimation = 37;
 			Item.shoot = ModContent.ProjectileType<Quasar_P>();
 			Item.shootSpeed = 1f;
-			Item.mana = 8;
+			Item.mana = 24;
 			Item.knockBack = 3f;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
@@ -59,7 +59,6 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 1600 + 64;
 			Origins.HomingEffectivenessMultiplier[Type] = 10;
-			On_Main.UpdateAudio += sound.On_SoundPlayer_Update;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Magic;
@@ -153,7 +152,10 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void OnKill(int timeLeft) { }
 		public override bool PreDraw(ref Color lightColor) {
-			sound.TrySetNearest(Projectile.position);
+			float progress = Projectile.ai[2] / ChargeTime;
+			Min(ref progress, 1);
+			Vector2 soundPos = Projectile.position + Projectile.velocity * Math.Min(Vector2.Dot(Projectile.velocity, Main.LocalPlayer.MountedCenter - Projectile.position), Projectile.ai[1]);
+			sound.TrySetNearest(soundPos);
 			if (!Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
 			SpriteBatchState state = Main.spriteBatch.GetState();
 			Main.spriteBatch.Restart(state, samplerState: SamplerState.LinearWrap);
@@ -164,8 +166,7 @@ namespace Origins.Items.Weapons.Magic {
 			float dist = diff.Length();
 			const float scale = 1f / 256f;
 			Color color = new(80, 0, 255, 0);
-			float progress = Projectile.ai[2] / ChargeTime;
-			Min(ref progress, 1);
+			color *= progress;
 			Rectangle frame = new(256 - (int)((Projectile.ai[2] * 24) % 256), 0, (int)(dist), 256);
 			DrawData data = new(
 				TextureAssets.Extra[ExtrasID.RainbowRodTrailErosion].Value,
@@ -191,32 +192,29 @@ namespace Origins.Items.Weapons.Magic {
 			Main.spriteBatch.Restart(state);
 			return false;
 		}
+		static float soundVolume;
 		class Sound : AEnvironmentSound {
 			SlotId droning;
 			SoundStyle sound = new("Origins/Sounds/Custom/Black_Hole", SoundType.Sound) {
 				IsLooped = true
 			};
-			float drownOutMultiplier = 1;
 			public override void UpdateSound(Vector2 position) {
 				float volume = 0;
-				droning.PlaySoundIfInactive(sound, position, playingSound => {
+				int reset = 0;
+				Maximize(ref soundVolume, 2f / float.Max(position.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1));
+				droning.PlaySoundIfInactive(sound, null, playingSound => {
 					if (GetPosition() is Vector2 pos) {
-						playingSound.Position = pos;
-						MathUtils.LinearSmoothing(ref volume, 2f / float.Max(pos.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1), 1f / 30);
+						MathUtils.LinearSmoothing(ref volume, soundVolume, 1f / 60);
+						reset = 0;
 					} else if (MathUtils.LinearSmoothing(ref volume, 0, 1f / 15)) {
+						soundVolume = 0;
 						return false;
 					}
-					drownOutMultiplier = Utils.Remap(volume, 0, 2, 1, 1f / 6);
-					playingSound.Volume = volume / drownOutMultiplier;
+					playingSound.Volume = volume;
+					DrownOut.ApplyNext(playingSound, Utils.Remap(volume, 0, 2, 1, 1f / 6));
+					if (++reset > 5) soundVolume = 0;
 					return true;
 				});
-			}
-			public override void UpdateSoundInactive() => drownOutMultiplier = 1;
-			internal void On_SoundPlayer_Update(On_Main.orig_UpdateAudio orig, Main self) {
-				using ScopedOverride<float> s = Main.soundVolume.ScopedOverride(Main.soundVolume * drownOutMultiplier);
-				using ScopedOverride<float> a = Main.ambientVolume.ScopedOverride(Main.ambientVolume * drownOutMultiplier);
-				using ScopedOverride<float> m = Main.musicVolume.ScopedOverride(Main.musicVolume * drownOutMultiplier);
-				orig(self);
 			}
 		}
 	}

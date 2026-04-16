@@ -1114,10 +1114,20 @@ namespace Origins {
 			public static void Autoload(Mod mod, Type type) {
 				if (!Directory.Exists(Path.Combine(Program.SavePathShared, "ModSources", "Origins"))) return;
 				invoke ??= typeof(AutoloadImpl).GetMethod(nameof(Invoke));
-				(BrokenReasons ??= []).Add($"{type.Name}: {(string)invoke.MakeGenericMethod(type).Invoke(null, [])}");
+				(BrokenReasons ??= []).Add($"{GetTypeName(type)}: {(string)invoke.MakeGenericMethod(type).Invoke(null, [])}");
+			}
+			static string GetTypeName(Type type) {
+				if (type.DeclaringType is not null) {
+					if (type.Name == "Flag" || type.IsAssignableTo(typeof(IMoveToPegFlag))) return GetTypeName(type.DeclaringType);
+					return $"{GetTypeName(type.DeclaringType)}.{type.Name}";
+				}
+				return type.Name;
 			}
 			public static string Invoke<T>() where T : IBroken => T.BrokenReason;
 		}
+	}
+	internal interface IMoveToPegFlag : IBroken {
+		static string IBroken.BrokenReason => "Move to PegasusLib";
 	}
 	internal interface IDebugFlag : ILoadable, IBrokenContent {
 		string IBrokenContent.BrokenReason => "Debugging flag enabled";
