@@ -2,15 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
-using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
-using Origins.Items.Pets;
-using Origins.Items.Weapons.Magic;
-using Origins.Items.Weapons.Melee;
-using Origins.Items.Weapons.Ranged;
-using Origins.Items.Weapons.Summoner;
 using Origins.Tiles;
 using Origins.Tiles.Brine;
 using Origins.World.BiomeData;
@@ -18,7 +12,6 @@ using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
@@ -26,149 +19,52 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using static Origins.Core.AdvancedMiscShaderData.Parameter;
 using static Origins.Items.Other.Fish.Fishing_Crate_Item;
 using static Terraria.ID.ItemID;
 using static Terraria.ModLoader.ModContent;
 
+#pragma warning disable CS8524 // The switch expression does not handle some values of its input type (it is not exhaustive) involving an unnamed enum value.
 namespace Origins.Items.Other.Fish {
-	#region chunky crate
-	public class Chunky_Crate : Fishing_Crate_Item {
-		public override Color MapColor => new(200, 200, 200);
-		public override void ModifyItemLoot(ItemLoot itemLoot) {
-			IItemDropRule[] defiled = [
-				new OneFromRulesRule(1,
-					ItemDropRule.NotScalingWithLuck(ItemType<Kruncher>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Dim_Starlight>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Monolith_Rod>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Krakram>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Suspicious_Looking_Pebble>())
-				),
-				BiomeChest_GoldCoin,
-				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
-					new OneFromRulesRule(5, Ores),
-					new OneFromRulesRule(3, 2, Bars)),
-				new OneFromRulesRule(3, Potions)
-			];
-			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(defiled));
-			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
-			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
-		}
-	}
-	#endregion
-	#region bilious crate
-	public class Bilious_Crate : Fishing_Crate_Item {
-		public override Color MapColor => new(100, 100, 100);
-		public override bool Hardmode => true;
-		public override int ShimmerResult => ItemType<Chunky_Crate>();
-		public override void ModifyItemLoot(ItemLoot itemLoot) {
-			IItemDropRule[] defiled = [
-				new OneFromRulesRule(1,
-					ItemDropRule.NotScalingWithLuck(ItemType<Kruncher>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Dim_Starlight>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Monolith_Rod>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Krakram>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Suspicious_Looking_Pebble>())
-				),
-				BiomeChest_GoldCoin,
-				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
-					new OneFromRulesRule(5, [..Ores, ..HardmodeOres]),
-					new OneFromRulesRule(3, 2, [..Bars, ..HardmodeBars])),
-				new OneFromRulesRule(3, Potions),
-				BiomeCrate_SoulOfNight,
-				ItemDropRule.NotScalingWithLuck(ItemType<Black_Bile>(), 2, 2, 5)
-			];
-			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(defiled));
-			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
-			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
-		}
-	}
-	#endregion
-	#region crusty crate
-	public class Crusty_Crate : Fishing_Crate_Item {
-		public override Color MapColor => new(0, 125, 165);
-		public override Color TileGlowColor => new(0.394f, 0.879f, 0.912f);
-		static short glowmask;
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			glowmask = Origins.AddGlowMask(this);
-		}
-		public override void SetDefaults() {
-			base.SetDefaults();
-			Item.glowMask = glowmask;
-		}
-		public override void ModifyItemLoot(ItemLoot itemLoot) {
-			IItemDropRule[] riven = [
-				new OneFromRulesRule(1,
-					ItemDropRule.NotScalingWithLuck(ItemType<Riven_Splitter>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Amebolize_Incantation>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Splitsplash>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Riverang>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Amoeba_Toy>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Primordial_Soup>())
-				),
-				BiomeChest_GoldCoin,
-				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
-					new OneFromRulesRule(5, Ores),
-					new OneFromRulesRule(3, 2, Bars)),
-				new OneFromRulesRule(3, Potions)
-			];
-			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(riven));
-			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
-			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
-		}
-	}
-	#endregion
-	#region festering crate
-	public class Festering_Crate : Fishing_Crate_Item {
-		public override Color MapColor => new(100, 100, 100);
-		public override Color TileGlowColor => new(0.394f, 0.879f, 0.912f);
-		public override int ShimmerResult => ItemType<Crusty_Crate>();
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			Origins.AddGlowMask(this);
-		}
-		public override bool Hardmode => true;
-		public override void ModifyItemLoot(ItemLoot itemLoot) {
-			IItemDropRule[] riven = [
-				new OneFromRulesRule(1,
-					ItemDropRule.NotScalingWithLuck(ItemType<Riven_Splitter>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Amebolize_Incantation>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Splitsplash>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Riverang>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Amoeba_Toy>()),
-					ItemDropRule.NotScalingWithLuck(ItemType<Primordial_Soup>())
-				),
-				BiomeChest_GoldCoin,
-				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
-					new OneFromRulesRule(5, [..Ores, ..HardmodeOres]),
-					new OneFromRulesRule(3, 2, [..Bars, ..HardmodeBars])),
-				new OneFromRulesRule(3, Potions),
-				BiomeCrate_SoulOfNight,
-				ItemDropRule.NotScalingWithLuck(ItemType<Alkahest>(), 2, 2, 5)
-			];
-			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(riven));
-			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
-			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
-		}
-	}
-	#endregion
-	public class Ashen_Crates : Fishing_Crate_Set<HardmodeVariant> {
-		public override Color GetMapColor(HardmodeVariant option) => option switch {
-			HardmodeVariant.Normal => new Color(70, 0, 19),
-			HardmodeVariant.Hardmode => new Color(206, 149, 0),
-			_ => throw new NotImplementedException(),
+	public class Defiled_Crates : Fishing_Crate_Set<HardmodeVariant> {
+		public override string GetName(HardmodeVariant option) => option switch {
+			HardmodeVariant.Normal => "Chunky_Crate",
+			HardmodeVariant.Hardmode => "Bilious_Crate"
 		};
 
-		public override string GetName(HardmodeVariant option) => option switch {
-			HardmodeVariant.Normal => "Waste_Crate",
-			HardmodeVariant.Hardmode => "Hazardous_Waste_Crate",
-			_ => throw new NotImplementedException(),
+		public override Color GetMapColor(HardmodeVariant option) => option switch {
+			HardmodeVariant.Normal => new Color(200, 200, 200),
+			HardmodeVariant.Hardmode => new Color(100, 100, 100)
 		};
 
 		public override IEnumerable<IItemDropRule> GetRules(HardmodeVariant option) {
 			yield return ItemDropRule.AlwaysAtleastOneSuccess([
-				Ashen_Biome.OrbDropRule,
+				Defiled_Wastelands.FissureDropRule,
+				BiomeChest_GoldCoin,
+				option.OresAndBars(),
+				new OneFromRulesRule(3, Potions),
+				..option.SoulsOfNight(),
+				..option.OnlyHardmode(ItemDropRule.NotScalingWithLuck(ItemType<Black_Bile>(), 2, 2, 5))
+			]);
+			yield return new OneFromRulesRule(2, BiomeCrate_ExtraPotions);
+			yield return ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait);
+		}
+	}
+	public class Riven_Crates : Fishing_Crate_Set<HardmodeVariant> {
+		public override string GetName(HardmodeVariant option) => option switch {
+			HardmodeVariant.Normal => "Crusty_Crate",
+			HardmodeVariant.Hardmode => "Festering_Crate"
+		};
+
+		public override Color GetMapColor(HardmodeVariant option) => option switch {
+			HardmodeVariant.Normal => new Color(0, 125, 165),
+			HardmodeVariant.Hardmode => new Color(108, 200, 255)
+		};
+
+		public override Color GetGlowColor(HardmodeVariant option) => new(0.394f, 0.879f, 0.912f);
+
+		public override IEnumerable<IItemDropRule> GetRules(HardmodeVariant option) {
+			yield return ItemDropRule.AlwaysAtleastOneSuccess([
+				Riven_Hive.LesionDropRule,
 				BiomeChest_GoldCoin,
 				option.OresAndBars(),
 				new OneFromRulesRule(3, Potions),
@@ -179,67 +75,65 @@ namespace Origins.Items.Other.Fish {
 			yield return ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait);
 		}
 	}
-	#region residual crate
-	public class Residual_Crate : Fishing_Crate_Item {
-		public override Color MapColor => new(0, 100, 102);
-		public override void ModifyItemLoot(ItemLoot itemLoot) {
-			IItemDropRule[] brine = [
-				new OneFromRulesRule(1,
-					ItemDropRule.NotScalingWithLuck(ItemType<Brineglow_Item>(), 1, 5, 16),
-					ItemDropRule.NotScalingWithLuck(ItemType<Peat_Moss_Item>(), 1, 5, 16)
-				),
+	public class Ashen_Crates : Fishing_Crate_Set<HardmodeVariant> {
+		public override string GetName(HardmodeVariant option) => option switch {
+			HardmodeVariant.Normal => "Waste_Crate",
+			HardmodeVariant.Hardmode => "Hazardous_Waste_Crate"
+		};
+
+		public override Color GetMapColor(HardmodeVariant option) => option switch {
+			HardmodeVariant.Normal => new Color(70, 0, 19),
+			HardmodeVariant.Hardmode => new Color(206, 149, 0)
+		};
+
+		public override IEnumerable<IItemDropRule> GetRules(HardmodeVariant option) {
+			yield return ItemDropRule.AlwaysAtleastOneSuccess([
+				Ashen_Biome.OrbDropRule,
 				BiomeChest_GoldCoin,
-				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
-					new OneFromRulesRule(5, Ores),
-					new OneFromRulesRule(3, 2, Bars)),
-				new OneFromRulesRule(3, Potions)
-			];
-			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(brine));
-			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
-			itemLoot.Add(new OneFromRulesRule(2,
-				ItemDropRule.NotScalingWithLuck(ItemType<Focus_Potion>(), 1, 1, 3),
-				ItemDropRule.NotScalingWithLuck(ItemType<Antisolve_Potion>(), 1, 1, 3)
-			));
-			itemLoot.Add(ItemDropRule.OneFromOptions(4,
-				ItemType<Sour_Apple>(),
-				ItemType<Caeser_Salad>()
-			));
-			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
+				option.OresAndBars(),
+				new OneFromRulesRule(3, Potions),
+				..option.SoulsOfNight(),
+				..option.OnlyHardmode(ItemDropRule.NotScalingWithLuck(ItemType<Phoenum>(), 2, 2, 5))
+			]);
+			yield return new OneFromRulesRule(2, BiomeCrate_ExtraPotions);
+			yield return ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait);
 		}
 	}
-	#endregion
-	#region basic crate
-	public class Basic_Crate : Fishing_Crate_Item {
-		public override Color MapColor => new(0, 62, 64);
-		public override bool Hardmode => true;
-		public override int ShimmerResult => ItemType<Residual_Crate>();
-		public override void ModifyItemLoot(ItemLoot itemLoot) {
-			IItemDropRule[] brine = [
-				new OneFromRulesRule(1,
+	public class Brine_Crates : Fishing_Crate_Set<HardmodeVariant> {
+		public override string GetName(HardmodeVariant option) => option switch {
+			HardmodeVariant.Normal => "Residual_Crate",
+			HardmodeVariant.Hardmode => "Basic_Crate"
+		};
+
+		public override Color GetMapColor(HardmodeVariant option) => option switch {
+			HardmodeVariant.Normal => new Color(0, 100, 102),
+			HardmodeVariant.Hardmode => new Color(0, 62, 64)
+		};
+
+		public override IEnumerable<IItemDropRule> GetRules(HardmodeVariant option) {
+			yield return ItemDropRule.AlwaysAtleastOneSuccess([
+				new OneFromRulesRule(1, [
 					ItemDropRule.NotScalingWithLuck(ItemType<Brineglow_Item>(), 1, 5, 16),
 					ItemDropRule.NotScalingWithLuck(ItemType<Peat_Moss_Item>(), 1, 5, 16),
-					ItemDropRule.NotScalingWithLuck(ItemType<Geothermal_Sludge>(), 1, 5, 16)
-				),
+					..option.OnlyHardmode(ItemDropRule.NotScalingWithLuck(ItemType<Geothermal_Sludge>(), 1, 5, 16))
+				]),
 				BiomeChest_GoldCoin,
-				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
-					new OneFromRulesRule(5, [.. Ores, .. HardmodeOres]),
-					new OneFromRulesRule(3, 2, [.. Bars, .. HardmodeBars])),
-				new OneFromRulesRule(3, Potions)
-			];
-			itemLoot.Add(ItemDropRule.AlwaysAtleastOneSuccess(brine));
-			itemLoot.Add(new OneFromRulesRule(2, BiomeCrate_ExtraPotions));
-			itemLoot.Add(new OneFromRulesRule(2,
+				option.OresAndBars(),
+				new OneFromRulesRule(3, Potions),
+				..option.OnlyHardmode(ItemDropRule.NotScalingWithLuck(ItemType<Phoenum>(), 2, 2, 5))
+			]);
+			yield return new OneFromRulesRule(2, BiomeCrate_ExtraPotions);
+			yield return new OneFromRulesRule(2,
 				ItemDropRule.NotScalingWithLuck(ItemType<Focus_Potion>(), 1, 1, 3),
 				ItemDropRule.NotScalingWithLuck(ItemType<Antisolve_Potion>(), 1, 1, 3)
-			));
-			itemLoot.Add(ItemDropRule.OneFromOptions(4,
+			);
+			yield return ItemDropRule.OneFromOptions(4,
 				ItemType<Sour_Apple>(),
 				ItemType<Caeser_Salad>()
-			));
-			itemLoot.Add(ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait));
+			);
+			yield return ItemDropRule.SequentialRulesNotScalingWithLuck(2, BiomeCrate_ExtraBait);
 		}
 	}
-	#endregion
 	public abstract class Fishing_Crate_Item : ModItem, ICustomWikiStat {
 		string[] ICustomWikiStat.Categories {
 			get {
@@ -377,8 +271,12 @@ namespace Origins.Items.Other.Fish {
 	abstract class FishingCrateOptionsAttribute<TOptions> : Attribute where TOptions : struct, Enum {
 		public abstract void SetupShimmer(Dictionary<TOptions, Fishing_Crate_Set<TOptions>.Set_Crate> items);
 		public abstract bool IsHardmode(TOptions option);
+		public abstract void Add(FishingLootPool pool, Dictionary<TOptions, Fishing_Crate_Set<TOptions>.Set_Crate> items);
 	}
-	public abstract class Fishing_Crate_Set<TOptions> : ILoadable where TOptions : struct, Enum {
+	public interface IFishingCrateSet {
+		public IEnumerable<ModItem> GetItems();
+	}
+	public abstract class Fishing_Crate_Set<TOptions> : ILoadable, IFishingCrateSet where TOptions : struct, Enum {
 		public abstract string GetName(TOptions option);
 		public abstract Color GetMapColor(TOptions option);
 		public virtual Color GetGlowColor(TOptions option) => Color.Black;
@@ -386,6 +284,9 @@ namespace Origins.Items.Other.Fish {
 		public abstract IEnumerable<IItemDropRule> GetRules(TOptions option);
 		FishingCrateOptionsAttribute<TOptions> handler;
 		readonly Dictionary<TOptions, Set_Crate> items = [];
+		public IEnumerable<ModItem> GetItems() => items.Values;
+		public ModItem GetItem(TOptions option) => items[option];
+		public void Add(FishingLootPool pool) => handler.Add(pool, items);
 		Set_Crate first;
 		void ILoadable.Load(Mod mod) {
 			if (typeof(TOptions).GetAttribute<FishingCrateOptionsAttribute<TOptions>>() is not FishingCrateOptionsAttribute<TOptions> attribute) throw new NotSupportedException($"{nameof(TOptions)} does not have a FishingCrateOptions attribute");
@@ -447,6 +348,10 @@ namespace Origins.Items.Other.Fish {
 		public override void SetupShimmer(Dictionary<HardmodeVariant, Fishing_Crate_Set<HardmodeVariant>.Set_Crate> items) {
 			Sets.ShimmerTransformToItem[items[HardmodeVariant.Hardmode].Type] = items[HardmodeVariant.Normal].Type;
 		}
+		public override void Add(FishingLootPool pool, Dictionary<HardmodeVariant, Fishing_Crate_Set<HardmodeVariant>.Set_Crate> items) {
+			pool.AddCrates(items[HardmodeVariant.Normal].Type, items[HardmodeVariant.Hardmode].Type);
+		}
+
 	}
 	[Impl_HardmodeVariant]
 	public enum HardmodeVariant {

@@ -673,8 +673,8 @@ namespace Origins.World.BiomeData {
 			public override bool IsActive(Player player, FishingAttempt attempt) => player.InModBiome<Brine_Pool>() || attempt.BobberInLiquid<Brine>();
 			public override void SetStaticDefaults() {
 				Crate.AddRange([
-					FishingCatch.Item(ItemType<Residual_Crate>(), (player, attempt) => Main.hardMode == false && ShouldDropBiomeCrate(player, attempt) && player.InModBiome<Brine_Pool>()),
-					FishingCatch.Item(ItemType<Basic_Crate>(), (player, attempt) => Main.hardMode == true && ShouldDropBiomeCrate(player, attempt) && player.InModBiome<Brine_Pool>())
+					FishingCatch.Item(GetInstance<Brine_Crates>().GetItem(HardmodeVariant.Normal).Type, (player, attempt) => !Main.hardMode && ShouldDropBiomeCrate(player, attempt) && player.InModBiome<Brine_Pool>()),
+					FishingCatch.Item(GetInstance<Brine_Crates>().GetItem(HardmodeVariant.Hardmode).Type, (player, attempt) => Main.hardMode && ShouldDropBiomeCrate(player, attempt) && player.InModBiome<Brine_Pool>())
 				]);
 				Legendary.AddRange([
 					FishingCatch.Item(ItemType<Brine_Bottomless_Bucket>()),

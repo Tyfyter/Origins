@@ -95,7 +95,7 @@ namespace Origins.World.BiomeData {
 		}
 		public override void Load() {
 			FirstFissureDropRule = ItemDropRule.Common(ItemType<Kruncher>());
-			FirstFissureDropRule.OnSuccess(ItemDropRule.Common(ItemID.MusketBall, 1, 100, 100));
+			FirstFissureDropRule.OnSuccess(ItemDropRule.ByCondition(DropConditions.NotFromItems, ItemID.MusketBall, 1, 100, 100));
 
 			FissureDropRule = new OneFromRulesRule(1,
 				FirstFissureDropRule,
@@ -993,7 +993,7 @@ namespace Origins.World.BiomeData {
 		}
 		public class Defiled_Wastelands_Fishing_Pool : FishingLootPool<Defiled_Wastelands_Alt_Biome> {
 			public override void SetStaticDefaults() {
-				AddCrates(ItemType<Chunky_Crate>(), ItemType<Bilious_Crate>());
+				GetInstance<Defiled_Crates>().Add(this);
 				Legendary.Add(new SequentialCatches(
 					FishingCatch.Item(ItemID.ScalyTruffle, (player, attempt) => Main.hardMode && player.ZoneSnow && attempt.heightLevel == 3 && !Main.rand.NextBool(3)),
 					FishingCatch.Item(ItemType<Knee_Slapper>(), (player, attempt) => Main.hardMode && Main.rand.NextBool(2))

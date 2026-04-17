@@ -1120,27 +1120,6 @@ namespace Origins {
 				.Register();
 			#endregion
 			#region Crate Recipes
-			static void CrateRecipe(int result, int resultAmount = 1, int crate = 0, int crateHard = 0, int crateAmount = 1, int extraItem = 0, params Condition[] conditions) {
-				if (crate > 0) {
-					Recipe r = Recipe.Create(result, resultAmount)
-					.AddIngredient(crate, crateAmount);
-					if (extraItem > 0) r.AddIngredient(extraItem);
-					r.AddTile(TileID.WorkBenches);
-					foreach (Condition con in conditions) r.AddCondition(con);
-					r.DisableDecraft()
-					.Register();
-				}
-				if (crateHard > 0) {
-					Recipe r = Recipe.Create(result, resultAmount)
-					.AddIngredient(crateHard, crateAmount);
-					if (extraItem > 0) r.AddIngredient(extraItem);
-					r.AddTile(TileID.WorkBenches);
-					foreach (Condition con in conditions) r.AddCondition(con);
-					r.DisableDecraft()
-					.Register();
-				}
-			}
-
 			CrateRecipe(ItemType<Cyah_Nara>(), crate: ItemID.WoodenCrate, crateHard: ItemID.WoodenCrateHard, crateAmount: 3);
 			CrateRecipe(ItemType<Bang_Snap>(), 50, ItemID.WoodenCrate, ItemID.WoodenCrateHard);
 			CrateRecipe(ItemType<Woodsprite_Staff>(), crate: ItemID.WoodenCrate, crateHard: ItemID.WoodenCrateHard, crateAmount: 3);
@@ -1170,24 +1149,24 @@ namespace Origins {
 
 			CrateRecipe(ItemType<Stone_Mask>(), crate: ItemID.OceanCrate, crateHard: ItemID.OceanCrateHard);
 
-			CrateRecipe(ItemType<Huff_Puffer_Bait>(), crate: ItemType<Residual_Crate>(), crateHard: ItemType<Basic_Crate>(), crateAmount: 3);
+			CrateRecipe(GetInstance<Brine_Crates>(), ItemType<Huff_Puffer_Bait>(), crateAmount: 3);
 
-			CrateRecipe(ItemType<Knee_Slapper>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
-			CrateRecipe(ItemType<Manasynk>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
-			CrateRecipe(ItemType<Kruncher>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
-			CrateRecipe(ItemType<Dim_Starlight>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
-			CrateRecipe(ItemType<Monolith_Rod>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
-			CrateRecipe(ItemType<Krakram>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
-			CrateRecipe(ItemType<Suspicious_Looking_Pebble>(), crate: ItemType<Chunky_Crate>(), crateHard: ItemType<Bilious_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Knee_Slapper>(), crateHard: GetInstance<Defiled_Crates>().GetItem(HardmodeVariant.Hardmode).Type, crateAmount: 3);
+			CrateRecipe(GetInstance<Defiled_Crates>(), ItemType<Manasynk>(), crateAmount: 3);
+			CrateRecipe(GetInstance<Defiled_Crates>(), ItemType<Kruncher>(), crateAmount: 3);
+			CrateRecipe(GetInstance<Defiled_Crates>(), ItemType<Dim_Starlight>(), crateAmount: 3);
+			CrateRecipe(GetInstance<Defiled_Crates>(), ItemType<Monolith_Rod>(), crateAmount: 3);
+			CrateRecipe(GetInstance<Defiled_Crates>(), ItemType<Krakram>(), crateAmount: 3);
+			CrateRecipe(GetInstance<Defiled_Crates>(), ItemType<Suspicious_Looking_Pebble>(), crateAmount: 3);
 
-			CrateRecipe(ItemType<Scabcoral_Lyre>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
-			CrateRecipe(ItemType<Ocotoral_Bud>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
-			CrateRecipe(ItemType<Riven_Splitter>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
-			CrateRecipe(ItemType<Amebolize_Incantation>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
-			CrateRecipe(ItemType<Splitsplash>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
-			CrateRecipe(ItemType<Riverang>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
-			CrateRecipe(ItemType<Amoeba_Toy>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
-			CrateRecipe(ItemType<Primordial_Soup>(), crate: ItemType<Crusty_Crate>(), crateHard: ItemType<Festering_Crate>(), crateAmount: 3);
+			CrateRecipe(ItemType<Scabcoral_Lyre>(), crateHard: GetInstance<Riven_Crates>().GetItem(HardmodeVariant.Hardmode).Type, crateAmount: 3);
+			CrateRecipe(GetInstance<Riven_Crates>(), ItemType<Ocotoral_Bud>(), crateAmount: 3);
+			CrateRecipe(GetInstance<Riven_Crates>(), ItemType<Riven_Splitter>(), crateAmount: 3);
+			CrateRecipe(GetInstance<Riven_Crates>(), ItemType<Amebolize_Incantation>(), crateAmount: 3);
+			CrateRecipe(GetInstance<Riven_Crates>(), ItemType<Splitsplash>(), crateAmount: 3);
+			CrateRecipe(GetInstance<Riven_Crates>(), ItemType<Riverang>(), crateAmount: 3);
+			CrateRecipe(GetInstance<Riven_Crates>(), ItemType<Amoeba_Toy>(), crateAmount: 3);
+			CrateRecipe(GetInstance<Riven_Crates>(), ItemType<Primordial_Soup>(), crateAmount: 3);
 			#endregion
 			#region Misc
 			Recipe.Create(ItemType<Surveysprout_Item>(), 5)
@@ -1214,6 +1193,37 @@ namespace Origins {
 			#endregion
 
 			SetFargosStaticDefaults();
+		}
+		static void CrateRecipe(int result, int resultAmount = 1, int crate = 0, int crateHard = 0, int crateAmount = 1, int extraItem = 0, params Condition[] conditions) {
+			if (crate > 0) {
+				Recipe r = Recipe.Create(result, resultAmount)
+				.AddIngredient(crate, crateAmount);
+				if (extraItem > 0) r.AddIngredient(extraItem);
+				r.AddTile(TileID.WorkBenches);
+				foreach (Condition con in conditions) r.AddCondition(con);
+				r.DisableDecraft()
+				.Register();
+			}
+			if (crateHard > 0) {
+				Recipe r = Recipe.Create(result, resultAmount)
+				.AddIngredient(crateHard, crateAmount);
+				if (extraItem > 0) r.AddIngredient(extraItem);
+				r.AddTile(TileID.WorkBenches);
+				foreach (Condition con in conditions) r.AddCondition(con);
+				r.DisableDecraft()
+				.Register();
+			}
+		}
+		static void CrateRecipe(IFishingCrateSet crateSet, int result, int resultAmount = 1, int crateAmount = 1, int extraItem = 0, params Condition[] conditions) {
+			foreach (ModItem item in crateSet.GetItems()) {
+				Recipe r = Recipe.Create(result, resultAmount)
+				.AddIngredient(item, crateAmount);
+				if (extraItem > 0) r.AddIngredient(extraItem);
+				r.AddTile(TileID.WorkBenches);
+				foreach (Condition con in conditions) r.AddCondition(con);
+				r.DisableDecraft()
+				.Register();
+			}
 		}
 		public static void AddItemsToGroup(RecipeGroup group, params bool[] items) {
 			for (int i = 0; i < items.Length; i++) {

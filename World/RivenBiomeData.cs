@@ -78,7 +78,7 @@ namespace Origins.World.BiomeData {
 		}
 		public override void Load() {
 			FirstLesionDropRule = ItemDropRule.NotScalingWithLuck(ItemType<Riven_Splitter>())
-				.WithOnSuccess(ItemDropRule.NotScalingWithLuck(ItemType<Harpoon>(), 1, 99, 99));
+				.WithOnSuccess(ItemDropRule.ByCondition(DropConditions.NotFromItems, ItemType<Harpoon>(), 1, 99, 99));
 
 			LesionDropRule = new OneFromRulesRule(1,
 				FirstLesionDropRule,
@@ -1247,7 +1247,7 @@ namespace Origins.World.BiomeData {
 		public class Riven_Hive_Fishing_Pool : FishingLootPool<Riven_Hive_Alt_Biome> {
 			public override bool IsActive(Player player, FishingAttempt attempt) => base.IsActive(player, attempt) && (attempt.BobberInLiquid(LiquidID.Water) || attempt.BobberInLiquid<Amebic_Gel>());
 			public override void SetStaticDefaults() {
-				AddCrates(ItemType<Crusty_Crate>(), ItemType<Festering_Crate>());
+				GetInstance<Riven_Crates>().Add(this);
 				Legendary.Add(new SequentialCatches(
 					FishingCatch.Item(ItemID.ScalyTruffle, (player, attempt) => Main.hardMode && player.ZoneSnow && attempt.heightLevel == 3 && !Main.rand.NextBool(3)),
 					FishingCatch.Item(ItemType<Scabcoral_Lyre>(), (player, attempt) => Main.hardMode && Main.rand.NextBool(2))
