@@ -8309,3 +8309,6 @@ RAM_Chip: {
 	DisplayName: RAM Chip
 	Tooltip: "'Truly a work of its time.'"
 }
+
+Waste_Crate.DisplayName: Waste Crate
+Hazardous_Waste_Crate.DisplayName: Hazardous Waste Crate

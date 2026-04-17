@@ -33,8 +33,14 @@ namespace Origins {
 			public bool CanShowItemDropInUI() => true;
 			public string GetConditionDescription() => Language.GetOrRegister("Mods.Origins.Conditions.HardmodeBossBag").Value;
 		}
+		public readonly struct NotFromItemsCondition : IItemDropRuleCondition {
+			public readonly bool CanDrop(DropAttemptInfo info) => info.item <= ItemID.None;
+			public readonly bool CanShowItemDropInUI() => false;
+			public readonly string GetConditionDescription() => null;
+		}
 		public static IItemDropRuleCondition PlayerInteraction { get; private set; } = new PlayerInteractionCondition();
 		public static IItemDropRuleCondition HardmodeBossBag { get; private set; } = new HardmodeBossBagCondition();
+		public static NotFromItemsCondition NotFromItems => default;
 		public void Load(Mod mod) { }
 		public void Unload() {
 			foreach (FieldInfo item in GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {

@@ -78,10 +78,10 @@ namespace Origins.World.BiomeData {
 		}
 		public override void Load() {
 			FirstOrbDropRule = ItemDropRule.Common(ItemType<Neural_Network>());
-			FirstOrbDropRule.OnSuccess(ItemDropRule.Common(ItemID.MusketBall, 1, 100, 100));
+			FirstOrbDropRule.OnSuccess(ItemDropRule.ByCondition(DropConditions.NotFromItems, ItemID.MusketBall, 1, 100, 100));
 
 			IItemDropRule AceShrapnelRule = ItemDropRule.NotScalingWithLuck(ItemType<Ace_Shrapnel>());
-			AceShrapnelRule.OnSuccess(ItemDropRule.Common(ItemType<Scrap>(), 1, 200, 200));
+			AceShrapnelRule.OnSuccess(ItemDropRule.ByCondition(DropConditions.NotFromItems, ItemType<Scrap>(), 1, 200, 200));
 
 			OrbDropRule = new OneFromRulesRule(1,
 				FirstOrbDropRule,

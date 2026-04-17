@@ -618,11 +618,11 @@ namespace Origins {
 							extras.LoadTextures();
 						}
 #if DEBUG
-						foreach (FieldInfo field in content.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
-							if (field.FieldType.IsConstructedGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(AutoLoadingAsset<>)) {
-								Type assetType = field.FieldType.GenericTypeArguments[0];
+						foreach (FieldInfo @field in content.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
+							if (@field.FieldType.IsConstructedGenericType && @field.FieldType.GetGenericTypeDefinition() == typeof(AutoLoadingAsset<>)) {
+								Type assetType = @field.FieldType.GenericTypeArguments[0];
 								if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
-								load.Invoke(null, [field.GetValue(content)]);
+								load.Invoke(null, [@field.GetValue(content)]);
 							}
 						}
 #endif
@@ -630,11 +630,11 @@ namespace Origins {
 #if DEBUG
 					foreach (Type type in AssemblyManager.GetLoadableTypes(Origins.instance.Code)) {
 						if (type.Name.Contains('<')) continue;
-						foreach (FieldInfo field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
-							if (field.FieldType.IsConstructedGenericType && field.FieldType.GetGenericTypeDefinition() == typeof(AutoLoadingAsset<>)) {
-								Type assetType = field.FieldType.GenericTypeArguments[0];
+						foreach (FieldInfo @field in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {
+							if (@field.FieldType.IsConstructedGenericType && @field.FieldType.GetGenericTypeDefinition() == typeof(AutoLoadingAsset<>)) {
+								Type assetType = @field.FieldType.GenericTypeArguments[0];
 								if (!loads.TryGetValue(assetType, out MethodInfo load)) loads[assetType] = load = doLoad.MakeGenericMethod(assetType);
-								load.Invoke(null, [field.GetValue(null)]);
+								load.Invoke(null, [@field.GetValue(null)]);
 							}
 						}
 					}

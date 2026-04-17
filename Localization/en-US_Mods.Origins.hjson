@@ -2565,10 +2565,6 @@ Tiles: {
 	Music_Box_RH: Music Box ({§Riven_Hive})
 	Brineglow_Vine.MapEntry: Brineglow Vine
 	Brineglow.MapEntry: Brineglow
-	Bilious_Crate_Tile.MapEntry: Bilious Crate
-	Chunky_Crate_Tile.MapEntry: Chunky Crate
-	Crusty_Crate_Tile.MapEntry: Crusty Crate
-	Festering_Crate_Tile.MapEntry: Festering Crate
 	Cleansing_Station.MapEntry: Cleansing Station
 	Potato_Mine_Tile.MapEntry: Potato Mine
 	Stone_Mask_Tile.MapEntry: Stone Mask
@@ -2597,7 +2593,6 @@ Tiles: {
 	Defiled_Relay.MapEntry: "{§Defiled} Relay"
 	Hydrothermal_Vent.MapEntry: Hydrothermal Vent
 	Ocotillo.DisplayName: Ocotillo
-	Basic_Crate_Tile.MapEntry: Basic Crate
 	Ancient_Music_Box_BP: Ancient Music Box (Brine Pool)
 	Music_Box_BP: Music Box (Brine Pool)
 	Brine_Dungeon_Chest.MapEntry: Brine Chest
@@ -2608,7 +2603,6 @@ Tiles: {
 	Music_Box_FU: Music Box (Fiberglass Undergrowth)
 	Hydrothermal_Vent_Goopy.MapEntry: Goopy Hydrothermal Vent
 	Lucky_Hat_Tile.MapEntry: Lucky Hat
-	Residual_Crate_Tile.MapEntry: Residual Crate
 	Chambersite_Gem_Lock.MapEntry: Chambersite Gem Lock
 	Aetherite_Ore.MapEntry: Aetherite
 	Limestone_Chest.MapEntry: Limestone Chest
