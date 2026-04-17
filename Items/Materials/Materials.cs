@@ -651,6 +651,13 @@ public class Screwdriver_Upgrade_White : MaterialItem {
 	public override int Rare => ItemRarityID.Yellow;
 	public override bool Hardmode => true;
 }
+public class Screwdriver_Upgrade_Logic : MaterialItem {
+	public override string Texture => typeof(Screwdriver_Upgrade_White).GetDefaultTMLName();
+	public override bool HasTooltip => true;
+	public override int Value => Item.sellPrice(gold: 1);
+	public override int Rare => ItemRarityID.Yellow;
+	public override bool Hardmode => true;
+}
 
 #region biome keys
 public abstract class Key_Base<TChest> : Key_Base where TChest : ModItem {

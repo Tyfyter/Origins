@@ -1662,7 +1662,7 @@ CONSUMABLES:
 (^) Mojo Injection
 (X) Mother's Ward
 (^) Quantum Injector
-(#, ^2) Screwdriver Upgrade: Logic Component !!!
+(☻) Screwdriver Upgrade: Logic Component !!!
 (^) Screwdriver Upgrade: White Wire
 (%2) The Defiled Will
 

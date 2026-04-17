@@ -136,7 +136,7 @@ namespace Origins.Tiles.Ashen {
 						wires => tileEntity.GetReceiveWires(out wires[0], out wires[1]),
 						wires => {
 							if (wires.Contains(-1)) return false;
-							int result = wires[0];
+							int result = wires[0] & a_mask;
 							if ((wires[1] - wires[0] + 3) % 3 != 1) result |= b_mask;
 							return true;
 						},

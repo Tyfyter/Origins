@@ -8210,6 +8210,12 @@ Screwdriver_Upgrade_White: {
 	// UpgradeTooltip: Can place {$Greater_Ashen_Wires}
 }
 
+Screwdriver_Upgrade_Logic: {
+	// DisplayName: Logical Screwdriver Upgrade
+	// Tooltip: Combined into the Screwdriver
+	// UpgradeTooltip: Can modify and remove components
+}
+
 Matryoshka_Doll: {
 	// DisplayName: Matryoshka Doll
 	// Tooltip: ""

@@ -3628,6 +3628,15 @@ namespace Origins {
 			if (action is not null) result = action(item);
 			return item;
 		}
+		public static IEnumerable<IEnumerable<T>> Subsets<T>(this IList<T> items, int index = 0) {
+			if (index >= items.Count) return [[]];
+			IEnumerable<T> AddCurrent(IEnumerable<T> enumerable) => [items[index], ..enumerable];
+			return [
+				..items.Subsets(index + 1).Select(AddCurrent),
+				..items.Subsets(index + 1)
+			];
+		}
+		public static T Get<T>(this T[] array, int index) => array[index];
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
@@ -5980,6 +5989,41 @@ namespace Origins {
 					}
 				}
 			}
+		}
+		public static void CreateCombinationRecipes<T>(Dictionary<T, int> items, int craftingStation = TileID.TinkerersWorkbench) where T : struct, Enum {
+			T[] keys = items.Keys.ToArray();
+			foreach (IEnumerable<T> subset in keys.Subsets()) {
+				T[] current = subset.ToArray();
+				if (current.Length <= 1) continue;
+				T sum = default;
+				for (int i = 0; i < current.Length; i++) {
+					if (!sum.AND(current[i]).EQUALS(default)) goto fail;
+					sum = sum.OR(current[i]);
+				}
+				if (!items.TryGetValue(sum, out int result)) continue;
+				Recipe recipe = Recipe.Create(result);
+				for (int i = 0; i < current.Length; i++) recipe.AddIngredient(items[current[i]]);
+				recipe.AddTile(craftingStation);
+				recipe.Register();
+				Origins.instance.Logger.Info($"Adding {string.Join('+', current.Select(i => ItemID.Search.GetName(items[i])))} = {ItemID.Search.GetName(result)}");
+				fail:;
+			}
+		}
+		static TEnum AND<TEnum>(this TEnum a, TEnum b) where TEnum : struct, Enum {
+			Type underlyingType = Enum.GetUnderlyingType(typeof(TEnum));
+			if (underlyingType == typeof(sbyte) || underlyingType == typeof(byte)) return Unsafe.BitCast<byte, TEnum>((byte)(Unsafe.BitCast<TEnum, byte>(a) & Unsafe.BitCast<TEnum, byte>(b)));
+			else if (underlyingType == typeof(short) || underlyingType == typeof(ushort)) return Unsafe.BitCast<ushort, TEnum>((ushort)(Unsafe.BitCast<TEnum, ushort>(a) & Unsafe.BitCast<TEnum, ushort>(b)));
+			else if (underlyingType == typeof(int) || underlyingType == typeof(uint)) return Unsafe.BitCast<uint, TEnum>((Unsafe.BitCast<TEnum, uint>(a) & Unsafe.BitCast<TEnum, uint>(b)));
+			else if (underlyingType == typeof(long) || underlyingType == typeof(ulong)) return Unsafe.BitCast<ulong, TEnum>((Unsafe.BitCast<TEnum, ulong>(a) & Unsafe.BitCast<TEnum, ulong>(b)));
+			else throw new InvalidOperationException($"Unsupported enum underlying type: {underlyingType}");
+		}
+		static bool EQUALS<TEnum>(this TEnum a, TEnum b) where TEnum : struct, Enum {
+			Type underlyingType = Enum.GetUnderlyingType(typeof(TEnum));
+			if (underlyingType == typeof(sbyte) || underlyingType == typeof(byte)) return Unsafe.BitCast<TEnum, byte>(a) == Unsafe.BitCast<TEnum, byte>(b);
+			else if (underlyingType == typeof(short) || underlyingType == typeof(ushort)) return Unsafe.BitCast<TEnum, ushort>(a) == Unsafe.BitCast<TEnum, ushort>(b);
+			else if (underlyingType == typeof(int) || underlyingType == typeof(uint)) return Unsafe.BitCast<TEnum, uint>(a) == Unsafe.BitCast<TEnum, uint>(b);
+			else if (underlyingType == typeof(long) || underlyingType == typeof(ulong)) return Unsafe.BitCast<TEnum, ulong>(a) == Unsafe.BitCast<TEnum, ulong>(b);
+			else throw new InvalidOperationException($"Unsupported enum underlying type: {underlyingType}");
 		}
 	}
 	public static class NetmodeActive {
