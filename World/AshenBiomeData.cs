@@ -800,7 +800,7 @@ namespace Origins.World.BiomeData {
 		public class Ashen_Fishing_Pool : FishingLootPool<Ashen_Alt_Biome> {
 			public override bool IsActive(Player player, FishingAttempt attempt) => base.IsActive(player, attempt) && (attempt.BobberInLiquid(LiquidID.Water) || attempt.BobberInLiquid<Oil>());
 			public override void SetStaticDefaults() {
-				//AddCrates(ItemType<Crate>(), ItemType<Really_Crate>());
+				GetInstance<Ashen_Crates>().Add(this);
 				Legendary.Add(new SequentialCatches(
 					FishingCatch.Item(ItemID.ScalyTruffle, (player, attempt) => Main.hardMode && player.ZoneSnow && attempt.heightLevel == 3 && !Main.rand.NextBool(3))
 				));
