@@ -168,14 +168,14 @@ Defiled_Effigy: {
 		
 		LikeNPC: "{NPCName} is decent. Desire the feeling was... mutual."
 		# LikeNPC_Guide: "{NPCName} shares similar origins. {NPCName} understands."
-		# LikeNPC_WitchDoctor: "{NPCName} has explored the dark arts of Terraria. I value this."
+		# LikeNPC_WitchDoctor: "{NPCName} has explored the dark arts of Terraria. We value this."
 		
 		DislikeNPC: "{NPCName} is interesting... but, we do not take hostilities well."
 		# DislikeNPC_Truffle: "{NPCName}'s existence is obstacle to growth. We must take care of matter."
 		
 		HateNPC: "{NPCName} is our mortal enemy. She desires a world exempt of us."
-		LikeNPC_Princess: I like {NPCName}.
-		Princess_LovesNPC: I like {NPCName}.
+		LikeNPC_Princess: We like {NPCName}.
+		Princess_LovesNPC: We like {NPCName}.
 	}
 
 	Dialogue: {
