@@ -1453,7 +1453,7 @@ TILES:
 (^) Fuzzvine
 (^) Gel Blister
 (^) Generation Station
-(#, ^2) Half-baked Standing Refinery !!!
+(☻) Half-baked Standing Refinery !!!
 (^) Hanging Scrap
 (^) Heat Vent
 (^) Hydrothermal Vent

@@ -11,11 +11,12 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
+using static Origins.Core.MultiTypeMultiTile;
 
 namespace Origins.Tiles.Ashen {
 	public class Deactivated_Trenchmaker : OriginTile, IMultiTypeMultiTile, IStyleSelectingTile {
 		int IStyleSelectingTile.StyleCount => 3;
-		public static bool[,,] Shape = MultiTypeMultiTile.GenerateShapeMap(
+		public static ShapeMapTile[,,] Shape = MultiTypeMultiTile.GenerateShapeMap(
 			"     XX  |XXXX XX  |XXXX XX  ",
 			"XXXXXXXXX|XXXXXXXX |XXXXXXXXX",
 			"XXXXXXXXX|XXXXXXXXX|XXXXXXXXX",
@@ -43,7 +44,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.SetHeight(9);
 			TileObjectData.newTile.SetOriginBottomCenter();
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
-			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart);
+			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart, Type);
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.addTile(Type);
@@ -98,7 +99,7 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Deactivated_Trenchmaker_Side : OriginTile, IMultiTypeMultiTile, IStyleSelectingTile {
 		int IStyleSelectingTile.StyleCount => 3;
-		public static bool[,,] Shape = MultiTypeMultiTile.GenerateShapeMap(
+		public static ShapeMapTile[,,] Shape = MultiTypeMultiTile.GenerateShapeMap(
 			"  XXX XX|  XXX XX|        |XX XXX  |XX XXX  |        ",
 			"XXXXXXXX|XXXXXXXX|XXXXXXX |XXXXXXXX|XXXXXXXX| XXXXXXX",
 			"XXXXXXXX|XXXXXXXX|XXXXXXX |XXXXXXXX|XXXXXXXX| XXXXXXX",
@@ -126,7 +127,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.SetHeight(9);
 			TileObjectData.newTile.SetOriginBottomCenter();
 			TileObjectData.newTile.Direction = TileObjectDirection.PlaceRight;
-			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart);
+			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart, Type);
 			TileObjectData.newTile.AnchorBottom = new(AnchorType.SolidTile, 4, 1);
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
@@ -189,7 +190,7 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Deactivated_Repairboy : OriginTile, IMultiTypeMultiTile {
 		public static int ID { get; private set; }
-		public static bool[,,] Shape = MultiTypeMultiTile.GenerateShapeMap(
+		public static ShapeMapTile[,,] Shape = MultiTypeMultiTile.GenerateShapeMap(
 			"  X|  X|  X|X  |X  |X  ",
 			"XXX|XXX|XXX|XXX|XXX|XXX",
 			"XXX|XXX|XXX|XXX|XXX|XXX"
@@ -224,7 +225,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.SetHeight(3);
 			TileObjectData.newTile.SetOriginBottomCenter();
 			TileObjectData.newTile.Direction = TileObjectDirection.PlaceRight;
-			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart);
+			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart, Type);
 			TileObjectData.newTile.AnchorBottom = new(AnchorType.SolidTile | AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);
 			TileObjectData.newTile.RandomStyleRange = 3;
 			TileObjectData.newTile.FlattenAnchors = true;

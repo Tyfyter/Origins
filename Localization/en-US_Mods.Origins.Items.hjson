@@ -8318,3 +8318,8 @@ RAM_Chip: {
 
 Waste_Crate.DisplayName: Waste Crate
 Hazardous_Waste_Crate.DisplayName: Hazardous Waste Crate
+
+Incomplete_Standing_Refinery_Item: {
+	DisplayName: Incomplete Standing Refinery
+	Tooltip: ""
+}

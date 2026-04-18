@@ -35,7 +35,7 @@ namespace Origins.Tiles.Ashen {
 			TileObjectData.newTile.SetHeight(7);
 			TileObjectData.newTile.SetOriginBottomCenter();
 			TileObjectData.newTile.Direction = TileObjectDirection.PlaceRight;
-			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart);
+			TileObjectData.newTile.HookPlaceOverride = MultiTypeMultiTile.PlaceWhereTrue(IsPart, Type);
 			TileObjectData.newTile.AnchorBottom = new(AnchorType.SolidTile, TileObjectData.newTile.Width - 1, 1);
 			TileObjectData.newTile.FlattenAnchors = true;
 			TileObjectData.newTile.StyleHorizontal = true;

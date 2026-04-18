@@ -2,11 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Emit;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Core;
 using Terraria.ObjectData;
 
 namespace Origins.Core {
@@ -21,8 +22,20 @@ namespace Origins.Core {
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => true;
 	}
 	public class MultiTypeMultiTile : ILoadable {
-		public delegate bool PlacePartCheck(int i, int j, int style);
-		public static PlacementHook PlaceWhereTrue(PlacePartCheck placeCheck) => new((x, y, type, style, _, alternate) => {
+		public delegate bool ShouldPlacePartCheck(int i, int j, int style);
+		public delegate ushort? PlacePartCheck(int i, int j, int style);
+		public static PlacementHook PlaceWhereTrue(ShouldPlacePartCheck placeCheck, ushort type) => Place((i, j, style) => placeCheck(i, j, style) ? type : null);
+		public static PlacementHook Place(ShapeMapTile[,,] shapeMap, Dictionary<char, ushort?> key) {
+			ArgumentNullException.ThrowIfNull(shapeMap);
+			ArgumentNullException.ThrowIfNull(key);
+			HashSet<ShapeMapTile> chars = [..shapeMap];
+			key.Add(' ', null);
+			LoaderUtils.ForEachAndAggregateExceptions(chars, @char => {
+				if (!key.ContainsKey(@char)) throw new ArgumentException($"{nameof(key)} must contain all characters present in {nameof(shapeMap)} except ' ', missing {@char.Value}");
+			});
+			return Place((i, j, style) => key[shapeMap[style, i, j]]);
+		}
+		public static PlacementHook Place(PlacePartCheck placeCheck) => new((x, y, type, style, _, alternate) => {
 			int num2 = 0;
 			int num3 = 0;
 			TileObjectData tileData = TileObjectData.GetTileData(type, style, alternate);
@@ -41,7 +54,7 @@ namespace Origins.Core {
 			}
 			for (int i = 0; i < tileData.Width; i++) {
 				for (int j = 0; j < tileData.Height; j++) {
-					if (!placeCheck(i, j, style)) continue;
+					if (placeCheck(i, j, style) is null) continue;
 					Tile tileSafely = Framing.GetTileSafely(x + i, y + j);
 					if (tileSafely.HasTile && tileSafely.TileType != TileID.RollingCactus && (Main.tileCut[tileSafely.TileType] || TileID.Sets.BreakableWhenPlacing[tileSafely.TileType])) {
 						WorldGen.KillTile(x + i, y + j);
@@ -51,25 +64,78 @@ namespace Origins.Core {
 					}
 				}
 			}
+			bool[,] toFrame = new bool[tileData.Width, tileData.Height];
 			for (int i = 0; i < tileData.Width; i++) {
 				int num8 = num2 + i * (tileData.CoordinateWidth + tileData.CoordinatePadding);
 				int num9 = num3;
 				for (int j = 0; j < tileData.Height; j++) {
-					if (placeCheck(i, j, style)) {
+					if (placeCheck(i, j, style) is ushort tileType) {
 						Tile tile = Framing.GetTileSafely(x + i, y + j);
 						if (!tile.HasTile) {
 							tile.SetActive(true);
 							tile.TileFrameX = (short)num8;
 							tile.TileFrameY = (short)num9;
-							tile.TileType = (ushort)type;
+							if (!Main.tileFrameImportant[tileType]) toFrame[i, j] = true;
+							tile.TileType = tileType;
 						}
 					}
 					num9 += tileData.CoordinateHeights[j] + tileData.CoordinatePadding;
 				}
 			}
+			for (int i = 0; i < tileData.Width; i++) {
+				for (int j = 0; j < tileData.Height; j++) {
+					if (toFrame[i, j] && !Main.tileFrameImportant[Framing.GetTileSafely(x + i, y + j).TileType]) WorldGen.TileFrame(x + i, y + j);
+				}
+			}
 			return 0;
 		}, -1, 0, true);
-		public static bool[,,] GenerateShapeMap(params string[] map) {
+		public record struct ShapeMapTile(char Value) {
+			public static implicit operator ShapeMapTile(char value) => new(value);
+			public static implicit operator char(ShapeMapTile value) => value.Value;
+			public static implicit operator bool(ShapeMapTile value) => value.Value != ' ';
+			public readonly bool Equals(char other) => other == Value;
+			public readonly override int GetHashCode() => Value;
+			public static bool operator ==(ShapeMapTile left, char right) => left.Equals(right);
+			public static bool operator !=(ShapeMapTile left, char right) => !(left == right);
+			public static bool operator ==(char left,  ShapeMapTile right) => left.Equals(right);
+			public static bool operator !=(char left,  ShapeMapTile right) => !(left == right);
+		}
+		public readonly struct ShapeMap {
+			private readonly Dictionary<char, ushort?> key;
+			private readonly ShapeMapTile[,,] shape;
+			public readonly ShapeMapTile this[int i, int j, int style] => shape[style, i, j];
+			public ShapeMap(Dictionary<char, ushort?> key, ShapeMapTile[,,] shape) {
+				if (key.ContainsValue(0)) return;
+				this.shape = shape;
+				this.key = key;
+			}
+			public ShapeMap(Dictionary<char, ushort?> key, params string[] map) {
+				if (key.ContainsValue(0)) return;
+				try {
+					shape = GenerateShapeMap(map);
+				} catch (ArgumentException) {
+					shape = null;
+					return;
+				}
+				this.key = key;
+			}
+			readonly bool IsValid => shape is not null && key is not null;
+			public readonly PlacementHook Place => Place(shape, key);
+			public readonly bool Matches(Tile tile, int left, int top, int style) {
+				(int i, int j) = tile.GetTilePosition();
+				i -= left;
+				j -= top;
+				ushort? expected = key[shape[style, i, j]];
+				if (!expected.HasValue) return true;
+				if (expected.Value != tile.TileType) return false;
+				if (!Main.tileFrameImportant[expected.Value]) return true;
+				return tile.TileFrameX == style * shape.GetLength(1) + i * 18 && tile.TileFrameY == j * 18;
+			}
+			public static bool operator true(ShapeMap x) => x.IsValid;
+			public static bool operator false(ShapeMap x) => !x.IsValid;
+			public static ShapeMap operator |(ShapeMap left, ShapeMap right) => left.IsValid ? left : right;
+		}
+		public static ShapeMapTile[,,] GenerateShapeMap(params string[] map) {
 			int height = map.Length;
 			int width = map[0].Length;
 			for (int i = 0; i < height; i++) {
@@ -82,7 +148,7 @@ namespace Origins.Core {
 					break;
 				}
 			}
-			bool[,,] shapes = new bool[width / styleWidth, styleWidth, height];
+			ShapeMapTile[,,] shapes = new ShapeMapTile[width / styleWidth, styleWidth, height];
 			for (int y = 0; y < height; y++) {
 				int style = 0;
 				int inStyleIndex = 0;
@@ -93,7 +159,7 @@ namespace Origins.Core {
 						inStyleIndex = 0;
 						style++;
 					} else {
-						shapes[style, inStyleIndex, y] = map[y][x] != ' ';
+						shapes[style, inStyleIndex, y] = map[y][x];
 						inStyleIndex++;
 					}
 				}
