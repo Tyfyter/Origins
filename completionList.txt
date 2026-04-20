@@ -1694,7 +1694,7 @@ CONSUMABLES:
 (†, 々) Metallic Broth
 (^) Minishark Broth
 (^) Minty Broth
-(#, ^2) Mushy Broth !!!
+(☻) Mushy Broth !!!
 (^) Plain Broth
 (^) Savory Broth
 (^) Sharp Broth

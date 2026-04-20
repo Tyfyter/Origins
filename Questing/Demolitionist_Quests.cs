@@ -72,7 +72,7 @@ namespace Origins.Questing {
 			yield return new ShopItem<Magic_Tripwire>(135);
 			yield return new ShopItem<Bomb_Artifact>(145);
 			yield return new ShopItem<Trash_Lid>(160);
-			yield return new ShopItem(ItemID.Beenade, 170, [OriginGlobalNPC.PeatSoldCondition(170), Condition.NotTheBeesWorld]);
+			yield return new ShopItem(ItemID.Beenade, 170, Condition.NotTheBeesWorld);
 			yield return new ShopItem<Impact_Dynamite>(180, Condition.Hardmode);
 			yield return new ShopItem<Alkaline_Grenade>(200, ProgressFlags.DownedLostDiver);
 			yield return new ShopItem<Alkaline_Bomb>(230, ProgressFlags.DownedLostDiver);
@@ -144,6 +144,6 @@ namespace Origins.Questing {
 				}
 			}
 		}
-		public record class ShopItem<TItem>(int PeatAmount, params Condition[] Conditions) : ShopItem(ModContent.ItemType<TItem>(), PeatAmount, [OriginGlobalNPC.PeatSoldCondition(PeatAmount), .. (Conditions ?? [])]) where TItem : ModItem;
+		public record class ShopItem<TItem>(int PeatAmount, params Condition[] Conditions) : ShopItem(ModContent.ItemType<TItem>(), PeatAmount, [OriginGlobalNPC.PeatSoldCondition(PeatAmount), ..(Conditions ?? [])]) where TItem : ModItem;
 	}
 }

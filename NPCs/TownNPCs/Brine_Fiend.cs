@@ -131,6 +131,7 @@ namespace Origins.NPCs.TownNPCs {
 			.Add<Astringent_Broth>(ProgressFlags.SolarEclipseOccurred) // add condition for Miscreant defeated when added
 			.Add<Metallic_Broth>(ProgressFlags.SolarEclipseOccurred) // add condition for Crimson King defeated when added
 			.Add<Bitter_Broth>(Defiled_Heart_TE_System.No_Defiled_Hearts)
+			.Add<Mushy_Broth>(OriginGlobalNPC.PeatSoldCondition(999))
 			.Add<Minishark_Broth>(OriginsModIntegrations.AprilFools)
 			.Add<Akaliegis>(Quest.QuestCondition<Alkaliegis_Quest>())
 			.Add(Music_Box.ItemType<Ancient_Music_Box_BP>(), Quest.QuestCondition<Old_Brine_Music_Box_Quest>())

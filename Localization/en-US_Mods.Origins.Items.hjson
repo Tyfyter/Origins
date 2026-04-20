@@ -8323,3 +8323,12 @@ Incomplete_Standing_Refinery_Item: {
 	DisplayName: Incomplete Standing Refinery
 	Tooltip: ""
 }
+
+Mushy_Broth: {
+	DisplayName: Mushy Broth
+	Tooltip:
+		'''
+		All minion attacks cause explosions
+		Artifact minion attacks cause bigger and stronger explosions
+		'''
+}
