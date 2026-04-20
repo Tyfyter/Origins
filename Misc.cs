@@ -1797,6 +1797,8 @@ namespace Origins {
 			signs = new(Math.Sign(vector.X), Math.Sign(vector.Y));
 			return vector * signs;
 		}
+		public static float Min(this Vector2 vector) => Math.Min(vector.X, vector.Y);
+		public static float Max(this Vector2 vector) => Math.Max(vector.X, vector.Y);
 		public static float Average(this Vector2 vector) {
 			return (vector.X + vector.Y) * 0.5f;
 		}

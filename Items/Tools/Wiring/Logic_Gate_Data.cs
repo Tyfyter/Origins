@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Buffs;
-using Origins.Tiles.Ashen;
 using Origins.UI;
 using PegasusLib.Content;
 using ReLogic.Content;
@@ -26,6 +25,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
+using Terraria.UI.Chat;
 using static Origins.Items.Tools.Wiring.Logic_Gate_System;
 
 namespace Origins.Items.Tools.Wiring {
@@ -35,7 +35,7 @@ namespace Origins.Items.Tools.Wiring {
 		};
 		Logic_Gate() : this(default, default) { }
 		public readonly string name = name;
-		public static string GetName(Logic_Gate_Data.LogicGateTruthTable table) => gates[table].name;
+		public static Logic_Gate Get(Logic_Gate_Data.LogicGateTruthTable table) => gates[table];
 		public override string Name => $"{base.Name}_{name}";
 		public Logic_Gate_Data.LogicGateTruthTable TruthTable { get; } = truthTable;
 		protected override bool CloneNewInstances => true;
@@ -103,6 +103,7 @@ namespace Origins.Items.Tools.Wiring {
 			public UI(int i, int j) : this(new Point(i, j)) { }
 			public override bool ShouldClose => base.ShouldClose || Main.tile[Position].Get<Logic_Gate_Data>().TruthTable.IsEmpty;
 			public ref Logic_Gate_Data Data => ref Main.tile[Position].Get<Logic_Gate_Data>();
+			public override LocalizedText Title => Get(Data.TruthTable).DisplayName;
 			public override Action Initialize(UIElement root) {
 				switch (Data.TruthTable.Value) {
 					case 0b100:
@@ -318,7 +319,7 @@ namespace Origins.Items.Tools.Wiring {
 			public static implicit operator LogicGateTruthTable(byte value) => new(value);
 			public static implicit operator LogicGateTruthTable(int value) => (byte)value;
 			public readonly LocalizedText GetStatement(object a, object b, object output) {
-				string name = Logic_Gate.GetName(this);
+				string name = Logic_Gate.Get(this).name;
 				return (Logic_Gate.TryGetLocalization("Statement." + name) ?? Logic_Gate.GetLocalization("Statement")).WithFormatArgs(
 					a,
 					Logic_Gate.GetLocalization("LogicSymbols." + name),
@@ -450,6 +451,7 @@ namespace Origins.Items.Tools.Wiring {
 			public bool ShouldClose { get; }
 			public bool Locked => Main.LocalPlayer.OriginPlayer().InfoAccMechModifyComponents;
 			public Vector2 StartPosition { get; }
+			public LocalizedText Title { get; }
 			Action Initialize(UIElement root);
 			public bool Equals(IComponentUI other);
 		}
@@ -457,6 +459,7 @@ namespace Origins.Items.Tools.Wiring {
 			public AComponentUI(int i, int j) : this(new Point(i, j)) { }
 			public virtual bool ShouldClose => !LocalPlayerIsInInteractionRange(Position);
 			public virtual Vector2 StartPosition => Position.ToWorldCoordinates(autoAddY: 16).ToScreenPosition();
+			public abstract LocalizedText Title { get; }
 			public abstract Action Initialize(UIElement root);
 			protected Action SetupWires(ComponentUI.WireSetupData setupData) => ComponentUI.SetupWires(setupData with { WorldPosition = Position.ToWorldCoordinates() });
 			public override int GetHashCode() => Position.GetHashCode();
@@ -480,10 +483,42 @@ namespace Origins.Items.Tools.Wiring {
 					.Execute(UIDragController.Attach(new(_ => border.IsMouseHovering)))
 					.StopClickThrough()
 					.Execute(uiSource.Initialize, ref onDeactivate)
-					.Execute(root => root.Append(border))
+					.Execute(root => {
+						root.Append(new UITitleText(uiSource.Title) {
+							Width = new(0, 0.75f)
+						});
+						root.Append(border);
+					})
 					.Execute(Lockout)
 				);
 				Elements[0].Activate();
+			}
+			class UITitleText : UIElement {
+				public LocalizedText Text { get; }
+				public Vector2 Origin { get; init; }
+				public new StyleDimension Width { get; set; } = new(0, 1);
+				public new StyleDimension Height { get; set; } = new(40, 0);
+				public UITitleText(LocalizedText text) : base() {
+					Text = text;
+					HAlign = 0.5f;
+					Origin = new(0.5f, 0.75f);
+					IgnoresMouseInteraction = true;
+				}
+				public override bool ContainsPoint(Vector2 point) => false;
+				protected override void DrawSelf(SpriteBatch spriteBatch) {
+					CalculatedStyle parentStyle = Parent.GetDimensions();
+
+					string text = Text.Value;
+					DynamicSpriteFont value = FontAssets.MouseText.Value;
+					Vector2 size = value.MeasureString(text);
+					Vector2 baseScale = Vector2.One * (new Vector2(Width.GetValue(parentStyle.Width), Height.GetValue(parentStyle.Height)) / size).Min();
+					Vector2 position = GetDimensions().Position() - Origin * size * baseScale;
+
+					TextSnippet[] snippets = ChatManager.ParseMessage(text, Color.White).ToArray();
+					ChatManager.ConvertNormalSnippets(snippets);
+					ChatManager.DrawColorCodedStringShadow(spriteBatch, value, snippets, position, Color.Black, 0f, default, baseScale, -1f, 1.5f);
+					ChatManager.DrawColorCodedString(spriteBatch, value, snippets, position, Color.White, 0f, default, baseScale, out _, -1f);
+				}
 			}
 			class UIImageFramedExpandable(Asset<Texture2D> texture, Rectangle frame) : UIImageFramed(texture, frame) {
 				public override bool ContainsPoint(Vector2 point) {

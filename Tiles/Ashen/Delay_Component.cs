@@ -88,6 +88,7 @@ namespace Origins.Tiles.Ashen {
 			public UI(int i, int j) : this(new Point(i, j)) { }
 			public override bool ShouldClose => base.ShouldClose || !GetTE(out _);
 			bool GetTE(out Delay_Component_TE tileEntity) => TileEntity.TryGet(new(Position), out tileEntity);
+			public override LocalizedText Title => Language.GetOrRegister("Mods.Origins.Items.Delay_Component_Item.DisplayName");
 			public override Action Initialize(UIElement root) {
 				root.Append(new UIImageFramed(ComponentUI.Textures, new(728, 2, 240, 150)));
 				root.Append(new Delay_Element(new(Position)) {

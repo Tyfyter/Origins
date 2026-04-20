@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
@@ -80,6 +81,7 @@ namespace Origins.Tiles.Ashen {
 			public UI(int i, int j) : this(new Point(i, j)) { }
 			public override bool ShouldClose => base.ShouldClose || !GetTE(out _);
 			bool GetTE(out Radio_Component_TE tileEntity) => TileEntity.TryGet(new(Position), out tileEntity);
+			public override LocalizedText Title => Language.GetOrRegister("Mods.Origins.Items.Radio_Component_Item.DisplayName");
 			UIElement wireRoot;
 			Action deactivate;
 			public override Action Initialize(UIElement root) {
