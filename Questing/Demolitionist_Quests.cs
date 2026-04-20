@@ -134,7 +134,11 @@ namespace Origins.Questing {
 		public static void SetupItems() {
 			Rewards = GetItems().ToArray();
 		}
-		public record class ShopItem(int ItemID, int PeatAmount, params Condition[] Conditions) {
+		public record class ShopItem(int ItemID, int PeatAmount) {
+			public Condition[] Conditions { get; } = [OriginGlobalNPC.PeatSoldCondition(PeatAmount)];
+			public ShopItem(int itemID, int peatAmount, params Condition[] conditions) : this(itemID, peatAmount) {
+				Conditions = [..Conditions, ..(conditions ?? [])];
+			}
 			public bool AllConditionsMet {
 				get {
 					for (int i = 0; i < Conditions.Length; i++) {
@@ -144,6 +148,6 @@ namespace Origins.Questing {
 				}
 			}
 		}
-		public record class ShopItem<TItem>(int PeatAmount, params Condition[] Conditions) : ShopItem(ModContent.ItemType<TItem>(), PeatAmount, [OriginGlobalNPC.PeatSoldCondition(PeatAmount), ..(Conditions ?? [])]) where TItem : ModItem;
+		public record class ShopItem<TItem>(int PeatAmount, params Condition[] Conditions) : ShopItem(ModContent.ItemType<TItem>(), PeatAmount, Conditions) where TItem : ModItem;
 	}
 }
