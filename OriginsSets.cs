@@ -368,6 +368,12 @@ namespace Origins {
 			);
 			public static bool[] Fiberglass { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(Fiberglass))
 			.Description("Projectiles which should trigger interactions involving fiberglass").RegisterBoolSet(ProjectileID.BobberFiberglass);
+			public static float[] ReducedDeathEffectChance { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(ReducedDeathEffectChance))
+			.Description("Minion projectiles which should not always trigger death effects for balance reasons")
+			.RegisterFloatSet(1);
+			public static float[] ReducedDeathHealEffectChance { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(ReducedDeathHealEffectChance))
+			.Description($"Minion projectiles which should not always trigger healing-related death effects for balance reasons, stacks multiplicatively with {nameof(ReducedDeathEffectChance)}")
+			.RegisterFloatSet(1);
 			public static bool[] Apostasy_AnimalMinions { get; } = ProjectileID.Sets.Factory.CreateNamedSet("Apostasy", "AnimalMinions").RegisterBoolSet();
 			static Projectiles() {
 				foreach (KeyValuePair<int, Projectile> proj in ContentSamples.ProjectilesByType) {

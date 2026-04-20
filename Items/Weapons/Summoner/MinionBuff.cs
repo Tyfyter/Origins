@@ -1,18 +1,13 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Weapons.Summoner.Minions;
 using Origins.Projectiles;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 using Terraria;
 using System.Reflection;
-using static System.Net.Mime.MediaTypeNames;
 using Terraria.GameContent;
 using ReLogic.Graphics;
+using System.Linq;
 
 namespace Origins.Items.Weapons.Summoner {
 	public abstract class MinionBuff : ModBuff {
@@ -41,6 +36,19 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 		}
 		protected virtual void SetBuffFlag(Player player) { }
+		public override bool RightClick(int buffIndex) {
+			HashSet<int> toKill = ProjectileTypes().ToHashSet();
+			try {
+				ArtifactMinionSystem.IsDismissingMinion = false;
+				foreach (Projectile other in Main.ActiveProjectiles) {
+					if (!other.IsLocallyOwned() || !toKill.Contains(other.type)) continue;
+					other.Kill();
+				}
+			} finally {
+				ArtifactMinionSystem.IsDismissingMinion = false;
+			}
+			return true;
+		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			if (DrawHealthBars && OriginClientConfig.Instance.ArtifactMinionHealthbarStyle != ArtifactMinionHealthbarStyles.UnderMinion) {
 				float startY = drawParams.TextPosition.Y;

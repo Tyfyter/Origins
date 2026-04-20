@@ -551,6 +551,7 @@ namespace Origins.Items {
 			manaMult *= 1.05f;
 		}
 		public override void OnKill(Projectile projectile) {
+			if (Main.rand.NextFloat() >= OriginsSets.Projectiles.ReducedDeathHealEffectChance[projectile.type]) return;
 			if (projectile.owner == Main.myPlayer) {
 				if ((projectile.ModProjectile is not IArtifactMinion artifact || artifact.Life > 0) && projectile.GetEffectTimer<Wholesome_Sacrifice_Timer>() < 150) return;
 				int item = Item.NewItem(

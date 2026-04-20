@@ -20,6 +20,7 @@ using Terraria.WorldBuilding;
 using ThoriumMod.Empowerments;
 using Tyfyter.Utils;
 using static Origins.Core.SpecialChest.SlotDrawData;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Origins.Projectiles {
 	//separate global for organization, might also make non-artifact projectiles less laggy than the alternative
@@ -85,13 +86,14 @@ namespace Origins.Projectiles {
 			return !isRespawned && Main.player[projectile.owner].GetModPlayer<OriginPlayer>().spiritShard;
 		}
 		public override void OnKill(Projectile projectile, int timeLeft) {
+			Player player = Main.player[projectile.owner];
 			if (projectile.ModProjectile is ICustomRespawnArtifact customRespawnArtifact) {
 				customRespawnArtifact.Respawn();
 			} else {
 				if (CanRespawn(projectile)) {
 					//basically just stops the old one from counting for one frame
 					//done this way since maxMinions is the only thing that's always read for minion slot code
-					Main.player[projectile.owner].maxMinions += (int)projectile.minionSlots + 1;
+					player.maxMinions += (int)projectile.minionSlots + 1;
 					Projectile proj = projectile.SpawnProjectile(
 						projectile.GetSource_Death(),
 						projectile.Center,
@@ -106,9 +108,11 @@ namespace Origins.Projectiles {
 					}
 				}
 			}
+			if (Main.rand.NextFloat() >= OriginsSets.Projectiles.ReducedDeathEffectChance[projectile.type]) return;
 			if (projectile.TryGetGlobalProjectile(out OriginGlobalProj self) && self.prefix is ArtifactMinionPrefix artifactPrefix) {
 				artifactPrefix.OnKill(projectile);
 			}
+			player.OriginPlayer()?.broth?.OnKill(projectile);
 		}
 		public override Color? GetAlpha(Projectile projectile, Color lightColor) {
 			if (isRespawned) return new Color(175, 225, 255, 128);
@@ -239,7 +243,7 @@ namespace Origins.Projectiles {
 			}
 			IsDismissingMinion = false;
 		}
-		public static bool IsDismissingMinion { get; private set; }
+		public static bool IsDismissingMinion { get; internal set; }
 		public static bool IsSacrificingMinions { get; private set; }
 		private static void On_Player_FreeUpPetsAndMinions(On_Player.orig_FreeUpPetsAndMinions orig, Player self, Item sItem) {
 			IsSacrificingMinions = true;
@@ -305,11 +309,21 @@ namespace Origins.Projectiles {
 		}
 		void PostApplyLifePrefixes(IEntitySource source) { }
 	}
-	public interface IArtifactDamageSource { }
-	public record struct NPCDamageSource(NPC NPC) : IArtifactDamageSource { }
-	public record struct ProjectileDamageSource(Projectile Projectile) : IArtifactDamageSource { }
-	public record struct TileDamageSource() : IArtifactDamageSource { }
-	public record struct PrefixDamageSource(ModPrefix Prefix) : IArtifactDamageSource { }
+	public interface IArtifactDamageSource {
+		public Entity Entity { get; }
+	}
+	public record struct NPCDamageSource(NPC NPC) : IArtifactDamageSource {
+		readonly Entity IArtifactDamageSource.Entity => NPC;
+	}
+	public record struct ProjectileDamageSource(Projectile Projectile) : IArtifactDamageSource {
+		readonly Entity IArtifactDamageSource.Entity => Projectile;
+	}
+	public record struct TileDamageSource() : IArtifactDamageSource {
+		readonly Entity IArtifactDamageSource.Entity => null;
+	}
+	public record struct PrefixDamageSource(ModPrefix Prefix) : IArtifactDamageSource {
+		readonly Entity IArtifactDamageSource.Entity => null;
+	}
 	public static class ArtifactMinionExtensions {
 		[Obsolete("Use the overload with a IArtifactDamageSource", true)]
 		public static void DamageArtifactMinion(this IArtifactMinion minion, int damage, bool fromDoT = false, bool noCombatText = false) {

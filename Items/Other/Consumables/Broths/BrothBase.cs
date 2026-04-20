@@ -48,6 +48,7 @@ namespace Origins.Items.Other.Consumables.Broths {
 		public virtual void OnHurt(Projectile minion, int damage, bool fromDoT) { }
 		public virtual void OnHurt(Projectile minion, int damage, bool fromDoT, IArtifactDamageSource damageSource) => OnHurt(minion, damage, fromDoT);
 #pragma warning restore CS0618 // Type or member is obsolete
+		public virtual void OnKill(Projectile minion) { }
 		public virtual void PostDrawMinion(Projectile minion, Color lightColor) { }
 		/// <summary>
 		/// Runs when the broth a minion is affected by changes, including when a new minion is spawned

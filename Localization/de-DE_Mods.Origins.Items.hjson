@@ -8332,3 +8332,12 @@ Mushy_Broth: {
 		Artifact minion attacks cause bigger and stronger explosions
 		''' */
 }
+
+Chalky_Broth: {
+	// DisplayName: Chalky Broth
+	/* Tooltip:
+		'''
+		All minions inflict [buffhint:Origins/Impeding_Shrapnel_Debuff]
+		Artifact minions emit shrapnel when hurt or killed
+		''' */
+}
