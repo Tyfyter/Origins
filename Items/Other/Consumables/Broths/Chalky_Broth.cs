@@ -3,7 +3,6 @@ using Origins.NPCs;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Broths {
 	public class Chalky_Broth : BrothBase {

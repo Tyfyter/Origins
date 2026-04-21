@@ -14,6 +14,7 @@ using Origins.LootConditions;
 using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Reflection;
+using Origins.Tiles;
 using Origins.UI;
 using Origins.UI.Event;
 using PegasusLib;
@@ -284,6 +285,8 @@ namespace Origins {
 		[DefaultValue(false)]
 #if DEBUG
 		[TooltipKey("$Mods.Origins.Configs.DebugConfig.ForceEnableDebugItems.DebugBuildTooltip")]
+#else
+		[ReloadRequired]
 #endif
 		public bool ForceEnableDebugItems = false;
 
@@ -594,9 +597,7 @@ namespace Origins {
 		public string WikiPagePath { get; set; }
 		#endregion
 		static readonly Dictionary<Type, MethodInfo> loads = [];
-		static void LoadAsset<T>(AutoLoadingAsset<T> asset) where T : class {
-			asset.LoadAsset();
-		}
+		static void LoadAsset<T>(AutoLoadingAsset<T> asset) where T : class => asset.LoadAsset();
 		public bool CheckTextureUsage {
 			get => default;
 			set {
@@ -697,7 +698,7 @@ namespace Origins {
 			}
 		}
 		public static List<string> GetUnobtainableItems(bool includeExpected = false) {
-			static bool ShouldBeUnobtainable(ModItem item) => ItemID.Sets.IsAPickup[item.Type] || ItemID.Sets.Deprecated[item.Type] || item is IExpectToBeUnobtainable;
+			static bool ShouldBeUnobtainable(ModItem item) => ItemID.Sets.IsAPickup[item.Type] || ItemID.Sets.Deprecated[item.Type] || item is IExpectToBeUnobtainable || item is TileItem { IsDebug: true };
 			HashSet<int> obtainableItems = [];
 			void AddObtainableItem(int type) {
 				obtainableItems.Add(type);

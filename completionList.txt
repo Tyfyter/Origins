@@ -1685,7 +1685,7 @@ CONSUMABLES:
 
 (†, 々) Astringent Broth
 (^) Bitter Broth
-(#, ^2) Chalky Broth !!!
+(☻) Chalky Broth !!!
 (^) Foul Broth
 (^) Greasy Broth
 (^) Hearty Broth

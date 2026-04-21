@@ -127,6 +127,7 @@ namespace Origins.NPCs.TownNPCs {
 			.Add<Greasy_Broth>()
 			.Add<Savory_Broth>()
 			.Add<Spicy_Broth>()
+			//.Add<Chalky_Broth>(ProgressFlags.)
 			.Add<Insubstantial_Broth>(ProgressFlags.DownedShimmerConstruct)
 			.Add<Astringent_Broth>(ProgressFlags.SolarEclipseOccurred) // add condition for Miscreant defeated when added
 			.Add<Metallic_Broth>(ProgressFlags.SolarEclipseOccurred) // add condition for Crimson King defeated when added

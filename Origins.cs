@@ -467,12 +467,10 @@ namespace Origins {
 				amebicProtectionHairShaderID = GameShaders.Hair.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
 
 				coordinateMaskFilter = new ArmorShaderData(Assets.Request<Effect>("Effects/CoordinateMaskFilter"), "CoordinateMask");
-				GameShaders.Armor.BindShader(MC.ItemType<Tainted_Flesh>(), coordinateMaskFilter);
-				coordinateMaskFilterID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Tainted_Flesh>());
+				coordinateMaskFilterID = ShaderDataMethods.RegisterArmorShader(coordinateMaskFilter);
 
 				ArmorShaderData transparencyFilter = new(Assets.Request<Effect>("Effects/CoordinateMaskFilter"), "Transparency");
-				GameShaders.Armor.BindShader(MC.ItemType<Defiled_Altar_Item>(), transparencyFilter);
-				transparencyFilterID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Defiled_Altar_Item>());
+				transparencyFilterID = ShaderDataMethods.RegisterArmorShader(transparencyFilter);
 
 				Asset<Effect> tileOutline = Assets.Request<Effect>("Effects/TileOutline");
 				tileOutlineShader = new ArmorShaderData(tileOutline, "TileOutline");
