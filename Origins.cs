@@ -447,6 +447,8 @@ namespace Origins {
 
 				Filters.Scene["Origins:MaskedTornFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedTornFilter"), "MaskedTornFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:MaskedTornFilter"].GetShader().UseImage(Assets.Request<Texture2D>("Textures/Torn_Texture"), 0, SamplerState.PointWrap);
+
+				Filters.Scene["Origins:SmogStorm"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/LineOfSight"), "SmogStorm"), EffectPriority.VeryHigh);
 				//Filters.Scene["Origins:ZoneRiven"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade").Value), "RivenShade"), EffectPriority.High);
 
 				solventShader = new ArmorShaderData(Assets.Request<Effect>("Effects/Solvent"), "Dissolve");

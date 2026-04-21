@@ -3901,7 +3901,11 @@ namespace Origins {
 							factor,
 							tileSlope * factor + tileIntercept
 						);
-						length += (float)(16 * endPoint.Distance(tileSubPos));
+						if (endPoint.HasNaNs()) {
+							length += 16;
+						} else {
+							length += (float)(16 * endPoint.Distance(tileSubPos));
+						}
 					}
 				}
 				if (doBreak) break;

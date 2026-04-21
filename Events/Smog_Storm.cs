@@ -4,7 +4,9 @@ using Origins.Backgrounds;
 using Origins.Core;
 using Origins.Tiles;
 using Origins.World.BiomeData;
+using ReLogic.Threading;
 using System;
+using System.Diagnostics;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Light;
@@ -52,18 +54,72 @@ namespace Origins.Events {
 		}
 		public override bool IsBiomeActive(Player player) => Main.WindyEnoughForKiteDrops && Main.LocalPlayer.InModBiome<Ashen_Biome>();
 		public override void SpecialVisuals(Player player, bool isActive) {
-			if (SkyManager.Instance[biomeName] is Smog_Storm_Sky sky && isActive != sky.IsActive()) {
-				if (isActive) {
-					SkyManager.Instance.Activate(biomeName);
-				} else {
-					SkyManager.Instance.Deactivate(biomeName);
-				}
+			player.ManageSpecialBiomeVisuals(biomeName, isActive, player.MountedCenter);
+			if (isActive) Filters.Scene["Origins:SmogStorm"].GetShader().UseImage(LineOfSight.Texture.Value, 1);
+		}
+		class LineOfSight : ILoadable {
+			const int resolutionResolution = 5;
+			const int minResolution = resolutionResolution <= 20 ? 20 : resolutionResolution;
+			static Texture2D texture;
+			static readonly float[] buffer = new float[400];
+			static int targetResolution = 100;
+			static Texture2D[] textures = new Texture2D[buffer.Length / resolutionResolution];
+			void ILoadable.Load(Mod mod) {
+				Main.QueueMainThreadAction(ReinitializeTexture);
 			}
-			if (Overlays.Scene[biomeName] is Overlay overlay && isActive != overlay.IsVisible()) {
-				if (isActive) {
-					Overlays.Scene.Activate(biomeName);
-				} else {
-					Overlays.Scene.Deactivate(biomeName);
+			void ILoadable.Unload() {
+				for (int i = 0; i < textures.Length; i++) textures[i].Dispose();
+				texture = null;
+				textures = null;
+			}
+
+			static bool? IgnoreGlass(Tile tile) {
+				if (!tile.HasTile || !Main.tileBlockLight[tile.TileType]) return true;
+				return null;
+			}
+			static void ReinitializeTexture() {
+				textures[targetResolution / resolutionResolution - 1] ??= new(Main.graphics.GraphicsDevice, targetResolution, 1, false, SurfaceFormat.Single);
+				texture = textures[targetResolution / resolutionResolution - 1];
+			}
+			static readonly TimeSpan targetTimeSpan = new(0, 0, 0, 0, 2);
+			public static FrameCachedValue<Texture2D> Texture = new(() => {
+				int resolution = targetResolution;
+				if (Main.gameMenu) return texture;
+				if (texture?.Width != targetResolution) ReinitializeTexture();
+				dynamicResolution.Start();
+				FastParallel.For(0, resolution, (min, max, _) => {
+					for (int i = min; i < max; i++) {
+						try {
+							Vector2 dir = (i * MathHelper.TwoPi / targetResolution).ToRotationVector2();
+							Vector2 position = Main.LocalPlayer.MountedCenter;
+							buffer[i] = CollisionExtensions.Raymarch(position, dir, IgnoreGlass, 16 * 20);
+						} finally { }
+					}
+				});
+				dynamicResolution.Finish(targetTimeSpan, ref targetResolution);
+				texture.SetData(0, new Rectangle(0, 0, resolution, 1), buffer, 0, resolution);
+				return texture;
+			});
+			static Benchmarker dynamicResolution;
+			struct Benchmarker {
+				Stopwatch stopwatch;
+				TimeSpan[] times;
+				int index;
+				public void Start() {
+					stopwatch ??= new();
+					stopwatch.Restart();
+					times ??= new TimeSpan[20];
+				}
+				public void Finish(TimeSpan target, ref int targetResolution) {
+					stopwatch.Stop();
+					times[index++ % times.Length] = stopwatch.Elapsed;
+					TimeSpan total = default;
+					for (int i = 0; i < times.Length; i++) total += times[i];
+					if (targetResolution > minResolution && total > target * (times.Length * 1.25f)) {
+						targetResolution -= resolutionResolution;
+					} else if (targetResolution < buffer.Length && total <= target * (times.Length * 0.75f)) {
+						targetResolution += resolutionResolution;
+					}
 				}
 			}
 		}

@@ -288,7 +288,7 @@ ENEMY NPCS:
 (X) Madman
 (#, ^2) Malfunctioning Missile !!!
 (X) Molten Aberration
-(#, ^2) Oil Ghoul !!!
+(☻) Oil Ghoul !!!
 (^) King Crab
 (^) Mildew Creeper
 (^) Mitoworm

@@ -1,5 +1,4 @@
-﻿using Humanizer;
-using MonoMod.Cil;
+﻿using MonoMod.Cil;
 using ReLogic.Threading;
 using System;
 using Terraria;

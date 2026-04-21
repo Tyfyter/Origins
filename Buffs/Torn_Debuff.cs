@@ -15,6 +15,7 @@ using Origins.Items.Accessories;
 using PegasusLib;
 using PegasusLib.Graphics;
 using PegasusLib.UI;
+using Origins.Core;
 
 namespace Origins.Buffs {
 	public class Torn_Debuff : ModBuff {
