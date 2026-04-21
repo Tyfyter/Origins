@@ -2,6 +2,7 @@
 using AltLibrary.Common.AltBiomes;
 using AltLibrary.Common.Systems;
 using AltLibrary.Core.Generation;
+using ModLiquidLib.ModLoader;
 using Origins.Backgrounds;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
@@ -1236,6 +1237,9 @@ namespace Origins.World.BiomeData {
 						AltLibrary.Core.ALConvert.Convert(biome, i, j);
 						if (tile.TileType == TileID.Dirt && (!Framing.GetTileSafely(i - 1, j).HasTile || !Framing.GetTileSafely(i + 1, j).HasTile || !Framing.GetTileSafely(i, j - 1).HasTile || !Framing.GetTileSafely(i, j + 1).HasTile)) {
 							tile.TileType = grass;
+						}
+						if (tile.LiquidType == LiquidID.Water && OriginsSets.Walls.RivenWalls[tile.WallType]) {
+							tile.LiquidType = LiquidLoader.LiquidType<Amebic_Gel>();
 						}
 					}
 				}
