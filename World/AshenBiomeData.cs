@@ -46,7 +46,7 @@ namespace Origins.World.BiomeData {
 		public override int Music => Origins.Music.AshenScrapyard;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
-		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
+		public override string BackgroundPath => "Origins/UI/MapBGs/Ashen_Scrapyard";
 		public override string MapBackground => BackgroundPath;
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<Ashen_Surface_Background>();
 		public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => BiomeUGBackground<Riven_Underground_Background>();
@@ -587,8 +587,8 @@ namespace Origins.World.BiomeData {
 	#region variations
 	public class Underground_Ashen_Biome : ModBiome {
 		public override int Music => Origins.Music.AshenMines;
-		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
-		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
+		public override string BackgroundPath => "Origins/UI/MapBGs/Ashen_Mines";
+		public override string BestiaryIcon => "Origins/UI/IconStonerAshen";
 		public override string MapBackground => BackgroundPath;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override bool IsBiomeActive(Player player) {
@@ -602,8 +602,8 @@ namespace Origins.World.BiomeData {
 		public override int Music => Origins.Music.AshenScrapyard;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => GetInstance<Ashen_Desert_Background>();
-		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
-		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
+		public override string BackgroundPath => "Origins/UI/MapBGs/Ashen_Desert";
+		public override string BestiaryIcon => "Origins/UI/IconDesertAshen";
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneDesert && Ashen_Biome.IsActive;
@@ -615,8 +615,8 @@ namespace Origins.World.BiomeData {
 	public class Ashen_Underground_Desert : ModBiome {
 		public override int Music => Origins.Music.AshenMines;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
-		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
+		public override string BackgroundPath => "Origins/UI/MapBGs/Ashen_Desert";
+		public override string BestiaryIcon => "Origins/UI/IconCatacombsAshen";
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneRockLayerHeight && player.ZoneDesert && Ashen_Biome.IsActive;
@@ -628,8 +628,8 @@ namespace Origins.World.BiomeData {
 	public class Ashen_Ice_Biome : ModBiome {
 		public override int Music => Origins.Music.AshenMines;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
-		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
+		public override string BackgroundPath => "Origins/UI/MapBGs/Ashen_Snow";
+		public override string BestiaryIcon => "Origins/UI/IconSnowAshen";
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneRockLayerHeight && player.ZoneSnow && Ashen_Biome.IsActive;
@@ -641,7 +641,7 @@ namespace Origins.World.BiomeData {
 	public class Ashen_Ocean : ModBiome {
 		public override int Music => Origins.Music.AshenScrapyard;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
+		public override string BackgroundPath => "Origins/UI/MapBGs/Ashen_Scrapyard";
 		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
@@ -653,8 +653,8 @@ namespace Origins.World.BiomeData {
 	}
 	#endregion variations
 	public class Ashen_Alt_Biome : AltBiome {
-		public override string WorldIcon => "Origins/UI/WorldGen/IconDefiled";
-		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Defiled";
+		public override string WorldIcon => "Origins/UI/WorldGen/IconAshen";
+		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Ashen";
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilAshen";
 		public override Color OuterColor => new(255, 170, 170);
 		public override Color NameColor => new(255, 100, 100);

@@ -19,6 +19,8 @@ using Terraria.WorldBuilding;
 namespace Origins.World {
 	public class Limestone_Cave : ModBiome {
 		public override int Music => -1;
+		public override string BackgroundPath => "Origins/UI/MapBGs/Limestone_Cave";
+		public override string MapBackground => BackgroundPath;
 		public override void Load() {
 			On_DesertBiome.Place += On_DesertBiome_Place;
 			On_AnthillEntrance.PlaceAt += On_AnthillEntrance_PlaceAt;
