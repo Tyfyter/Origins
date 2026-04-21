@@ -135,44 +135,47 @@ namespace Origins.Tiles.Ashen {
 					Overlays.Scene[biome_name].Deactivate();
 			}
 		}
+		public static void DrawBeacons(float scale = 5) {
+			List<Point16> tileEntityLocations = ModContent.GetInstance<Beacon_Light_TE_System>().tileEntityLocations;
+			Color color = new(255, 123, 72);
+			const float range = 16 * 2640; // a mile
+			for (int i = 0; i < tileEntityLocations.Count; i++) {
+				Point16 tilePos = tileEntityLocations[i];
+				Tile tile = Main.tile[tilePos];
+				if (!tile.HasTile || tile.TileFrameX >= 18 * 2) continue;
+				Vector2 pos = tilePos.ToWorldCoordinates(0, 0);
+				float obscureFactor = 1f;
+				foreach (Player player in Main.ActivePlayers) {
+					Rectangle rect = player.Hitbox;
+					rect.Inflate(-4, -4);
+					float distSQ = pos.Clamp(rect).DistanceSQ(pos);
+					if (distSQ <= 0) {
+						obscureFactor = 0;
+						break;
+					}
+					if (distSQ < 4 * 4) {
+						obscureFactor = Math.Min(float.Sqrt(distSQ) / 4, obscureFactor);
+					}
+				}
+				if (obscureFactor <= 0) continue;
+				float scaleFactor = float.Pow(1 - pos.Distance(pos.Clamp(Main.Camera.ScaledPosition, Main.Camera.ScaledPosition + Main.Camera.ScaledSize)) / range, 1.5f);
+				if (scaleFactor < 0.5f) scaleFactor *= scaleFactor + 0.5f;
+				if (scaleFactor < 0.1f) continue;
+				if (scaleFactor > 1) scaleFactor = 1;
+				scaleFactor *= obscureFactor;
+				Color currentColor = color * scaleFactor;
+				Flare_Launcher_Glow_P.DrawGlow(
+					pos,
+					currentColor,
+					scale: scale * scaleFactor
+				);
+			}
+		}
 		public class Beacon_Light_Overlay() : Overlay(EffectPriority.High, RenderLayers.ForegroundWater) {
 			public override void Draw(SpriteBatch spriteBatch) {
-				List<Point16> tileEntityLocations = ModContent.GetInstance<Beacon_Light_TE_System>().tileEntityLocations;
 				SpriteBatchState state = spriteBatch.GetState();
 				spriteBatch.Restart(state, samplerState: SamplerState.LinearClamp);
-				Color color = new(255, 123, 72);
-				const float range = 16 * 2640; // a mile
-				for (int i = 0; i < tileEntityLocations.Count; i++) {
-					Point16 tilePos = tileEntityLocations[i];
-					Tile tile = Main.tile[tilePos];
-					if (!tile.HasTile || tile.TileFrameX >= 18 * 2) continue;
-					Vector2 pos = tilePos.ToWorldCoordinates(0, 0);
-					float obscureFactor = 1f;
-					foreach (Player player in Main.ActivePlayers) {
-						Rectangle rect = player.Hitbox;
-						rect.Inflate(-4, -4);
-						float distSQ = pos.Clamp(rect).DistanceSQ(pos);
-						if (distSQ <= 0) {
-							obscureFactor = 0;
-							break;
-						}
-						if (distSQ < 4 * 4) {
-							obscureFactor = Math.Min(float.Sqrt(distSQ) / 4, obscureFactor);
-						}
-					}
-					if (obscureFactor <= 0) continue;
-					float scaleFactor = float.Pow(1 - pos.Distance(pos.Clamp(Main.Camera.ScaledPosition, Main.Camera.ScaledPosition + Main.Camera.ScaledSize)) / range, 1.5f);
-					if (scaleFactor < 0.5f) scaleFactor *= scaleFactor + 0.5f;
-					if (scaleFactor < 0.1f) continue;
-					if (scaleFactor > 1) scaleFactor = 1;
-					scaleFactor *= obscureFactor;
-					Color currentColor = color * scaleFactor;
-					Flare_Launcher_Glow_P.DrawGlow(
-						pos,
-						currentColor,
-						scale: 5 * scaleFactor
-					);
-				}
+				
 				spriteBatch.Restart(state);
 			}
 			public override void Update(GameTime gameTime) { }

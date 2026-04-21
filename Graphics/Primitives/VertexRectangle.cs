@@ -53,5 +53,26 @@ namespace Origins.Graphics.Primitives {
 			short[] dices = [0, 1, 2, 3, 1, 2];
 			GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, vertices.Length, dices, 0, 2);
 		}
+		public void Draw(Rectangle rectangle, Color color, bool tileCoords = false) {
+			if (tileCoords) rectangle = rectangle.Scaled(16);
+			
+			vertices[0].Position = new(rectangle.TopLeft() - Main.screenPosition, 0);
+			vertices[1].Position = new(rectangle.TopRight() - Main.screenPosition, 0);
+			vertices[2].Position = new(rectangle.BottomLeft() - Main.screenPosition, 0);
+			vertices[3].Position = new(rectangle.BottomRight() - Main.screenPosition, 0);
+
+			vertices[0].TextureCoordinate = Vector2.Zero;
+			vertices[1].TextureCoordinate = new Vector2(1, 0);
+			vertices[2].TextureCoordinate = new Vector2(0, 1);
+			vertices[3].TextureCoordinate = Vector2.One;
+
+			vertices[0].Color = color;
+			vertices[1].Color = color;
+			vertices[2].Color = color;
+			vertices[3].Color = color;
+
+			short[] dices = [0, 1, 2, 3, 1, 2];
+			GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, vertices.Length, dices, 0, 2);
+		}
 	}
 }
