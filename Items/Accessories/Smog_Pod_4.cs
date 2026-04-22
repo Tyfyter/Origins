@@ -1,4 +1,6 @@
 ﻿using Origins.Core;
+using Origins.Events;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Layers;
 using Origins.Projectiles;
 using System;
@@ -125,6 +127,7 @@ public class Smog_Pod_4_Rocket : ModProjectile {
 public class Smog_Pod_4_Rod : ModProjectile {
 	public override void SetStaticDefaults() {
 		Main.projFrames[Type] = 11;
+		Smog_Storm.CutThroughSmogStorm[Type] = ClearSmog;
 	}
 	public override void SetDefaults() {
 		Projectile.DamageType = DamageClass.Generic;
@@ -195,6 +198,14 @@ public class Smog_Pod_4_Rod : ModProjectile {
 		Max(ref Projectile.alpha, 255 - Projectile.timeLeft);
 		if (Projectile.alpha > 0) return;
 		if (Projectile.frame < Main.projFrames[Type] - 1 && Projectile.frameCounter.CycleUp(5)) Projectile.frame.Warmup(Main.projFrames[Type]);
+	}
+	public static void ClearSmog(Projectile projectile) {
+		if (projectile.ModProjectile is not Smog_Pod_4_Rod rod || rod.arms is null) return;
+		Flare_Launcher_Glow_P.DrawGlow(
+			rod.arms[^1].end,
+			Color.White * projectile.Opacity,
+			scale: 10 * projectile.Opacity
+		);
 	}
 	private static VertexStrip _vertexStrip = new();
 	float[] rot;
