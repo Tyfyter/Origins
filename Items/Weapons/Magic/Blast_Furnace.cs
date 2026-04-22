@@ -152,6 +152,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void AI() {
 			float brightnessMult = 1;
 			if (Projectile.ai[2] != 0) brightnessMult = Utils.GetLerpValue(0f, Lifetime, Projectile.ai[0]);
+			Max(ref brightnessMult, 0);
 			Lighting.AddLight(Projectile.Center, 0.85f * brightnessMult, 0.4f * brightnessMult, 0f);
 			if (Projectile.ai[2] != 0) {
 				Projectile.velocity *= 0.9f;

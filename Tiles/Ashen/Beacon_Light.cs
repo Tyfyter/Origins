@@ -175,7 +175,7 @@ namespace Origins.Tiles.Ashen {
 			public override void Draw(SpriteBatch spriteBatch) {
 				SpriteBatchState state = spriteBatch.GetState();
 				spriteBatch.Restart(state, samplerState: SamplerState.LinearClamp);
-				
+				DrawBeacons();
 				spriteBatch.Restart(state);
 			}
 			public override void Update(GameTime gameTime) { }

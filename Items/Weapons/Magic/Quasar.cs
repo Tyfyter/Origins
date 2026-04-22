@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
+using Origins.Events;
 using Origins.Items.Accessories;
 using Origins.NPCs;
 using PegasusLib.Graphics;
@@ -59,6 +60,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 1600 + 64;
 			Origins.HomingEffectivenessMultiplier[Type] = 10;
+			Smog_Storm.CutThroughSmogStorm[Type] = proj => ((Quasar_P)proj.ModProjectile).Draw(true);
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Magic;
@@ -152,11 +154,17 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void OnKill(int timeLeft) { }
 		public override bool PreDraw(ref Color lightColor) {
+			Draw();
+			return false;
+		}
+		void Draw(bool forSmog = false) {
 			float progress = Projectile.ai[2] / ChargeTime;
 			Min(ref progress, 1);
-			Vector2 soundPos = Projectile.position + Projectile.velocity * Math.Min(Vector2.Dot(Projectile.velocity, Main.LocalPlayer.MountedCenter - Projectile.position), Projectile.ai[1]);
-			sound.TrySetNearest(soundPos);
-			if (!Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
+			if (!forSmog) {
+				Vector2 soundPos = Projectile.position + Projectile.velocity * Math.Min(Vector2.Dot(Projectile.velocity, Main.LocalPlayer.MountedCenter - Projectile.position), Projectile.ai[1]);
+				sound.TrySetNearest(soundPos);
+			}
+			if (!Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return;
 			SpriteBatchState state = Main.spriteBatch.GetState();
 			Main.spriteBatch.Restart(state, samplerState: SamplerState.LinearWrap);
 			Vector2 diff = TargetPos - Projectile.position;
@@ -164,10 +172,10 @@ namespace Origins.Items.Weapons.Magic {
 			position -= Main.screenPosition;
 			float rotation = diff.ToRotation();
 			float dist = diff.Length();
-			const float scale = 1f / 256f;
+			float scale = (1f + forSmog.ToInt()) / 256f;
 			Color color = new(80, 0, 255, 0);
 			color *= progress;
-			Rectangle frame = new(256 - (int)((Projectile.ai[2] * 24) % 256), 0, (int)(dist), 256);
+			Rectangle frame = new(256 - (int)((Projectile.ai[2] * 24) % 256), 0, (int)dist, 256);
 			DrawData data = new(
 				TextureAssets.Extra[ExtrasID.RainbowRodTrailErosion].Value,
 				position,
@@ -190,7 +198,6 @@ namespace Origins.Items.Weapons.Magic {
 			data.sourceRect = frame;
 			Main.EntitySpriteDraw(data);
 			Main.spriteBatch.Restart(state);
-			return false;
 		}
 		static float soundVolume;
 		class Sound : AEnvironmentSound {
@@ -223,6 +230,7 @@ namespace Origins.Items.Weapons.Magic {
 		public virtual float FadeFrames => 20f;
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.TrailCacheLength[Type] = 15;
+			Smog_Storm.CutThroughSmogStorm[Type] = proj => ((Quasar_Offshoot_P)proj.ModProjectile).Draw(true);
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Magic;
@@ -364,6 +372,11 @@ namespace Origins.Items.Weapons.Magic {
 		private static readonly VertexStrip _vertexStrip = new();
 		static MiscShaderData overbrightenLaserBlade;
 		public override bool PreDraw(ref Color lightColor) {
+			Draw();
+			return false;
+		}
+		void Draw(bool forSmog = false) {
+			float bladeWidth = this.BladeWidth * (1 + forSmog.ToInt());
 			Vector2[] oldPos = new Vector2[int.Min((int)Projectile.ai[2], Projectile.oldPos.Length)];
 			for (int i = 0; i < oldPos.Length; i++) {
 				oldPos[i] = Projectile.oldPos[i] + Projectile.position;
@@ -382,8 +395,7 @@ namespace Origins.Items.Weapons.Magic {
 			_vertexStrip.PrepareStripWithProceduralPadding(oldPos, Projectile.oldRot, BladeColors, BladeWidth, -Main.screenPosition, true);
 			_vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-			float BladeWidth(float progressOnStrip) => this.BladeWidth;
-			return false;
+			float BladeWidth(float progressOnStrip) => bladeWidth;
 		}
 		public virtual Color BladeColors(float progressOnStrip) => new Color(80, 0, 255, 0) * Projectile.Opacity;
 		public virtual int BladeWidth => 12;

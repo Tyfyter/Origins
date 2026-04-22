@@ -20,7 +20,7 @@ using OpCodes = System.Reflection.Emit.OpCodes;
 namespace Origins.Graphics.Unlighting {
 	[ReinitializeDuringResizeArrays]
 	public class Anti_LightingEngine : ILoadable {
-		readonly LightingEngine unlightingEngine = new();
+		readonly The_Engine unlightingEngine = new();
 		public void Load(Mod mod) {
 			unlightingEngine.Rebuild();
 			On_LightingEngine.ProcessScan += On_LightingEngine_ProcessScan;
@@ -217,5 +217,6 @@ namespace Origins.Graphics.Unlighting {
 		FrameCachedValue<ILightingEngine> lightingEngine;
 		FrameCachedValue<TileLightScanner> tileScanner;
 		public void Unload() { }
+		public class The_Engine : LightingEngine { }
 	}
 }

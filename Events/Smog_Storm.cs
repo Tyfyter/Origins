@@ -1,11 +1,12 @@
-﻿using CalamityMod.NPCs.TownNPCs;
+﻿using CalamityMod.NPCs.Yharon;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
-using Origins.Backgrounds;
-using Origins.Core;
 using Origins.Graphics.Primitives;
+using Origins.Graphics.Unlighting;
+using Origins.Items.Accessories;
+using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Magic;
 using Origins.Reflection;
-using Origins.Tiles;
 using Origins.Tiles.Ashen;
 using Origins.World.BiomeData;
 using PegasusLib.Graphics;
@@ -15,14 +16,17 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Light;
+using Terraria.ID;
 using Terraria.ModLoader;
-using static Terraria.GameContent.TextureAssets;
 
 namespace Origins.Events {
+	[ReinitializeDuringResizeArrays]
 	public class Smog_Storm : ModBiome {
+		public static Action<Projectile>[] CutThroughSmogStorm = ProjectileID.Sets.Factory.CreateNamedSet(nameof(CutThroughSmogStorm))
+		.Description("The provided action will be called while drawing into the brightness mask during a smog storm")
+		.RegisterCustomSet<Action<Projectile>>(null);
 		static readonly Smog_Storm_Sky sky = new();
 		const string biomeName = "Origins:SmogStorm";
 		public override int Music => Origins.Music.SmogStorm;
@@ -35,7 +39,26 @@ namespace Origins.Events {
 			} catch (Exception e) {
 				if (Origins.LogLoadingILError(nameof(ModifyLightingBrightness), e)) throw;
 			}
-
+			Action<Projectile> normalDraw = Main.instance.DrawProjDirect;
+			Span<int> toNormalDraw = [
+				ProjectileID.MagnetSphereBall,
+				ProjectileID.TerraBlade2,
+				ProjectileID.TerraBlade2Shot,
+				ProjectileID.LastPrismLaser,
+				ProjectileID.PhantasmalDeathray,
+				ProjectileID.FairyQueenHymn,
+				ProjectileID.FairyQueenLance,
+				ProjectileID.FairyQueenSunDance,
+				ProjectileID.HallowBossLastingRainbow,
+				ProjectileID.HallowBossRainbowStreak,
+				ProjectileID.HallowBossDeathAurora,
+				ProjectileID.HallowBossSplitShotCore,
+				ModContent.ProjectileType<Laser_Target_Locator_Marker>(),
+				ModContent.ProjectileType<Retool_Arm_Laser_Beam>(),
+				ModContent.ProjectileType<Third_Eye_Deathray>(),
+				ModContent.ProjectileType<Flare_Launcher_Glow_P>(),
+			];
+			foreach (int type in toNormalDraw) CutThroughSmogStorm[type] = normalDraw;
 		}
 		void IL_LightMap_BlurLine(ILContext il) {
 			ILCursor c = new(il);
@@ -64,12 +87,39 @@ namespace Origins.Events {
 		public override bool IsBiomeActive(Player player) => Main.WindyEnoughForKiteDrops && Main.LocalPlayer.InModBiome<Ashen_Biome>();
 		public override void SpecialVisuals(Player player, bool isActive) {
 			player.ManageSpecialBiomeVisuals(biomeName, isActive, player.MountedCenter);
-			if (isActive) {
+			active = sky.Opacity != 0;
+			if (active) Filters.Scene["Origins:SmogStorm"].GetShader().UseOpacity(sky.Opacity);
+		}
+		public static void DrawLightMap(Color color) {
+			Main.graphics.GraphicsDevice.Textures[0] = lightBufferTexture;
+			Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+			lightMapStamp.Draw(activeLightTileArea, color, true);
+		}
+		static bool active;
+		static readonly VertexRectangle lightMapStamp = new();
+		static RenderTarget2D lightBufferTarget;
+		static RenderTarget2D lightBufferTarget2;
+		static Texture2D lightBufferTexture;
+		static Rectangle activeLightTileArea;
+		static Vector2 activeLightPosition;
+		static Rectangle workingLightTileArea;
+		static Vector2 workingLightPosition;
+		class SmogEffect : ModSystem, IBroken {
+			static string IBroken.BrokenReason => "TODO: mask EoL";
+			const int resolutionResolution = 5;
+			const int minResolution = resolutionResolution <= 20 ? 20 : resolutionResolution;
+			static Texture2D texture;
+			static readonly float[] buffer = new float[400];
+			static int targetResolution = 100;
+			static Texture2D[] textures = new Texture2D[buffer.Length / resolutionResolution];
+			public override void PostUpdateEverything() {
+				if (!active) return;
 				activeLightTileArea = workingLightTileArea;
 				activeLightPosition = workingLightPosition;
 				Terraria.Graphics.Shaders.ScreenShaderData shader = Filters.Scene["Origins:SmogStorm"].GetShader();
 				//shader.UseImage(LineOfSight.Texture.Value, 1);
-				shader.Shader.Parameters["uTexture"].SetValue(LineOfSight.Texture.Value);
+				shader.Shader.Parameters["uTexture"].SetValue(SmogEffect.Texture.Value);
 				//shader.Shader.Parameters["uLightRegion"].SetValue(new Vector4(activeLightTileArea.TopLeft() * 16, activeLightTileArea.Width * 16, activeLightTileArea.Height * 16));
 				//Vector2 zoomCompensation = Main.ScreenSize.ToVector2() * 0.5f * (Vector2.One - Vector2.One / Main.GameViewMatrix.Zoom);
 				//shader.Shader.Parameters["uLightOffset"].SetValue(activeLightPosition + zoomCompensation - new Vector2(Main.offScreenRange, Main.offScreenRange));
@@ -78,43 +128,35 @@ namespace Origins.Events {
 					lightBufferTarget?.Dispose();
 					lightBufferTarget = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, mipMap: false, preferredFormat: SurfaceFormat.Vector4, preferredDepthFormat: DepthFormat.None);
 				}
+
+				if (lightBufferTarget2?.Width != Main.screenWidth || lightBufferTarget2.Height != Main.screenHeight) {
+					lightBufferTarget2?.Dispose();
+					lightBufferTarget2 = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, mipMap: false, preferredFormat: SurfaceFormat.Vector4, preferredDepthFormat: DepthFormat.None);
+				}
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 				Main.graphics.GraphicsDevice.SetRenderTarget(lightBufferTarget);
 				DrawLightMap(Color.White);
 				Beacon_Light_TE_System.DrawBeacons(5);
+				Main.spriteBatch.Restart(Main.spriteBatch.GetState());
+				Main.graphics.GraphicsDevice.SetRenderTarget(lightBufferTarget2);
+				DrawLightMap(Color.White);
+				using ScopedOverride<int> _ = Main.CurrentDrawnEntityShader.ScopedOverride(Retool_Arm_Laser.ShaderID);
+				Beacon_Light_TE_System.DrawBeacons(10);
+				foreach (Projectile proj in Main.ActiveProjectiles) CutThroughSmogStorm[proj.type]?.Invoke(proj);
 				Main.spriteBatch.End();
 				Main.graphics.GraphicsDevice.UseOldRenderTargets(oldRenderTargets);
 				shader.UseImage(lightBufferTarget, 0);
+				shader.UseImage(lightBufferTarget2, 1);
 			}
-		}
-		public static void DrawLightMap(Color color) {
-			Main.graphics.GraphicsDevice.Textures[0] = lightBufferTexture;
-			Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
-			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-			lightMapStamp.Draw(activeLightTileArea, color, true);
-		}
-		static readonly VertexRectangle lightMapStamp = new();
-		static RenderTarget2D lightBufferTarget;
-		static Texture2D lightBufferTexture;
-		static Rectangle activeLightTileArea;
-		static Vector2 activeLightPosition;
-		static Rectangle workingLightTileArea;
-		static Vector2 workingLightPosition;
-		class LineOfSight : ILoadable {
-			const int resolutionResolution = 5;
-			const int minResolution = resolutionResolution <= 20 ? 20 : resolutionResolution;
-			static Texture2D texture;
-			static readonly float[] buffer = new float[400];
-			static int targetResolution = 100;
-			static Texture2D[] textures = new Texture2D[buffer.Length / resolutionResolution];
-			void ILoadable.Load(Mod mod) {
+			public override void Load() {
 				Main.QueueMainThreadAction(ReinitializeTexture);
 				On_LightingEngine.Present += On_LightingEngine_Present;
 			}
 			static void On_LightingEngine_Present(On_LightingEngine.orig_Present orig, LightingEngine self) {
 				orig(self);
-				workingLightTileArea= LightingMethods._activeProcessedArea.GetValue(self);
+				if (self is Anti_LightingEngine.The_Engine) return;
+				workingLightTileArea = LightingMethods._activeProcessedArea.GetValue(self);
 				workingLightTileArea.Width++;
 				workingLightTileArea.Height++;
 
@@ -122,19 +164,16 @@ namespace Origins.Events {
 					lightBufferTexture?.Dispose();
 					lightBufferTexture = InitBufferTexture(workingLightTileArea.Width, workingLightTileArea.Height);
 				}
-				unsafe {
-					Vector3[] _colors = LightingMethods._colors.GetValue(LightingMethods._activeLightMap.GetValue(self));
-					if (_colors.All(c => c == default)) return;
-					Vector4[] colors = new Vector4[_colors.Length];
-					for (int i = 0; i < workingLightTileArea.Width; i++) {
-						for (int j = 0; j < workingLightTileArea.Height; j++) {
-							colors[i + j * workingLightTileArea.Width] = new(_colors[i * (workingLightTileArea.Height - 1) + j], 1);
-						}
+				Vector3[] _colors = LightingMethods._colors.GetValue(LightingMethods._activeLightMap.GetValue(self));
+				if (_colors.All(c => c == default)) return;
+				Vector4[] colors = new Vector4[_colors.Length];
+				for (int i = 0; i < workingLightTileArea.Width; i++) {
+					for (int j = 0; j < workingLightTileArea.Height; j++) {
+						colors[i + j * workingLightTileArea.Width] = new(_colors[i * (workingLightTileArea.Height - 1) + j], 1);
 					}
-					lightBufferTexture.SetData(colors);
-					workingLightPosition = Main.screenPosition;
-					//skipUpdate = 1;
 				}
+				lightBufferTexture.SetData(colors);
+				workingLightPosition = Main.screenPosition;
 			}
 			private static Texture2D InitBufferTexture(int width, int height) {
 				if (!AssetRepository.IsMainThread) {
@@ -143,7 +182,7 @@ namespace Origins.Events {
 
 				return new Texture2D(Main.instance.GraphicsDevice, width, height, mipMap: false, format: SurfaceFormat.Vector4);
 			}
-			void ILoadable.Unload() {
+			public override void Unload() {
 				for (int i = 0; i < textures.Length; i++) textures[i]?.Dispose();
 				texture = null;
 				textures = null;
@@ -210,7 +249,8 @@ namespace Origins.Events {
 		}
 		public override bool IsActive() => Opacity > 0;
 		public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth) {
-			Smog_Storm.DrawLightMap(Color.White * 0.75f);
+			if (Main.gameMenu) Opacity = 0;
+			Smog_Storm.DrawLightMap(Color.White * Opacity * 0.75f);
 		}
 		public override void Reset() { }
 		public override Color OnTileColor(Color inColor) => Color.Lerp(inColor, new(inColor.R / 5, 1, 1), Opacity);

@@ -41,7 +41,12 @@ float4 SmogStorm(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR
 	float2 worldCoords = coords * uScreenResolution + uScreenPosition;
 	float2 diff = uTargetPosition - worldCoords;
 	float dist = length(diff);
-	float losDist = tex1D(tex, atan2(coords.y - diff.y, coords.x - diff.x) / twopi).r;
+	float losDist = (tex1D(tex, atan2(coords.y - diff.y, coords.x - diff.x) / twopi).r
+	+ tex1D(tex, (atan2(coords.y - diff.y, coords.x - diff.x) + 0.03) / twopi).r
+	+ tex1D(tex, (atan2(coords.y - diff.y, coords.x - diff.x) - 0.03) / twopi).r
+	+ tex1D(tex, (atan2(coords.y - diff.y, coords.x - diff.x) + 0.01) / twopi).r
+	+ tex1D(tex, (atan2(coords.y - diff.y, coords.x - diff.x) - 0.01) / twopi).r
+	) / (5 * uOpacity);
 	float4 color = float4(0, 0, 0, 0);
 	float dx = 2 / uScreenResolution.x;
 	float dy = 2 / uScreenResolution.y;
@@ -50,16 +55,17 @@ float4 SmogStorm(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR
 			color += gauss[i + 1][j + 1] * tex2D(uImage0, float2(coords.x + dx * i, coords.y + dy * j));
 		}
 	}
-	float4 light = tex2D(uImage1, coords);
-	float brightness = max(max(light.r, light.g), light.b);
+	float4 light = tex2D(uImage1, coords) * uOpacity;
+	float4 light2 = tex2D(uImage2, coords);
+	float brightness = max(max(light2.r, light2.g), light2.b);
 	return lerp(
 		tex2D(uImage0, coords),
 		lerp(
 			color,
 			light,
-			smoothstep(0, 16 * 60 * brightness * max(brightness * brightness, 1), dist - losDist)
+			smoothstep(0, 16 * 60 * brightness * max(brightness * brightness, 1), dist - losDist) * uOpacity
 		),
-		smoothstep(0, 128, dist - losDist) * 0.65 + 0.35
+		(smoothstep(0, 128, dist - losDist) * 0.65 + 0.35) * uOpacity
 	);
 	// * lerp(
 	//float4(1, 1, 1, 1),
