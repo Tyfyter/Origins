@@ -16,6 +16,8 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Light;
 using Terraria.ID;
@@ -59,6 +61,28 @@ namespace Origins.Events {
 				ModContent.ProjectileType<Flare_Launcher_Glow_P>(),
 			];
 			foreach (int type in toNormalDraw) CutThroughSmogStorm[type] = normalDraw;
+			CutThroughSmogStorm[ProjectileID.DD2SquireSonicBoom] = DrawWave;
+		}
+		public static void DrawWave(Projectile projectile) {
+			Main.instance.PrepareDrawnEntityDrawing(projectile, Retool_Arm_Laser.ShaderID, null);
+			Texture2D texture = TextureAssets.Projectile[ProjectileID.DD2SquireSonicBoom].Value;
+			Vector2 diff = (projectile.rotation - MathHelper.PiOver2).ToRotationVector2() * 14;
+			Color color = new(255, 255, 255, 0);
+			DrawData data = new(texture,
+				projectile.Center - Main.screenPosition,
+				null,
+				color,
+				projectile.rotation,
+				texture.Size() * new Vector2(0.5f, 0.25f),
+				2,
+				SpriteEffects.None
+			);
+			const float count = 10;
+			for (int i = 0; i < count; i++) {
+				data.color = color * (1 - MathF.Pow(i / count, 0.5f));
+				Main.EntitySpriteDraw(data);
+				data.position -= diff;
+			}
 		}
 		void IL_LightMap_BlurLine(ILContext il) {
 			ILCursor c = new(il);
