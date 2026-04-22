@@ -144,7 +144,7 @@ namespace Origins.Events {
 				return new Texture2D(Main.instance.GraphicsDevice, width, height, mipMap: false, format: SurfaceFormat.Vector4);
 			}
 			void ILoadable.Unload() {
-				for (int i = 0; i < textures.Length; i++) textures[i].Dispose();
+				for (int i = 0; i < textures.Length; i++) textures[i]?.Dispose();
 				texture = null;
 				textures = null;
 			}
