@@ -1,0 +1,8343 @@
+GenericTooltip: {
+	// MinuteCooldown: "{0} minute cooldown"
+	// SecondCooldown: "{0} second cooldown"
+	// TornSeverity: +{0}% applied [buffhint:Origins/Torn_Debuff] severity
+	// ArtifactTag: "[c/ffb300:-Artifact Minion-]"
+	// ConceptBy: Concept by {0}
+	// ConceptAndSpriteBy: Concept and art by {0}
+	// Extractinator: For use with the Extractinator
+	// AltAttack: <right> while holding for an alternate attack
+	// HealStamina: Restores {0} stamina
+	// IncreasedPotionSickness: Increased potion cooldown
+	// GreatlyIncreasedPotionSickness: Greatly increased potion cooldown
+	// DecreasedPotionSickness: Reduced potion cooldown
+	// GreatlyDecreasedPotionSickness: Greatly reduced potion cooldown
+	// AshenWireable: Powerable
+
+	HealDebuffs: {
+		// Base: "Cleanses and grants immunity to "
+		// 1: "{$Base}{n}"
+		// 2: "{$Base}{n} and {n}"
+		// Any: "{$Base}[{n}, ]{n}[ox:,] and {n}"
+	}
+}
+
+// Ashen_Wires: brown and black wires
+// Greater_Ashen_Wires: white wires
+
+Krunch_Mix: {
+	// DisplayName: Krunch Mix
+	/* Tooltip:
+		'''
+		{$CommonItemTooltip.MinorStats} and further increased regeneration
+		'Taste the graynbow'
+		''' */
+}
+
+ACME_Crate: {
+	// DisplayName: ACME Crate
+	/* Tooltip:
+		'''
+		40% increased explosive blast radius
+		Explosives will detonate near enemies
+		''' */
+}
+
+Advanced_Imaging: {
+	// DisplayName: Advanced Imaging
+	/* Tooltip:
+		'''
+		Increased projectile speed
+		10% increased critical strike chance
+		20% increased explosive blast radius
+		Grants immunity to [buffhint/self:Confused]
+		''' */
+}
+
+Air_Tank: {
+	// DisplayName: Air Tank
+	/* Tooltip:
+		'''
+		Extends underwater breathing
+		Grants immunity to [buffhint/self:Suffocation]
+		''' */
+}
+
+Amebic_Vial: {
+	// DisplayName: Amebic Vial
+	// Tooltip: Amebic tentacles will protect you from projectiles
+}
+
+Asylum_Whistle: {
+	// DisplayName: Asylum Whistle
+	/* Tooltip:
+		'''
+		Summons can target two enemies at once
+		Increases minion damage by 10%
+		''' */
+}
+
+ATACS: {
+	// DisplayName: ATACS
+	/* Tooltip:
+		'''
+		10% increased critical strike chance
+		Displays the trajectory of projectiles from your selected item
+		''' */
+}
+
+Automated_Returns_Handler: {
+	// DisplayName: Automated Returns Handler
+	/* Tooltip:
+		'''
+		Increases movement speed and acceleration
+		Provides light when worn
+		Allows the ability to climb walls and dash
+		Greatly increased return speed for grapple hooks and harpoon guns
+		Gives a 10% chance to dodge attacks
+		''' */
+}
+
+Blast_Resistant_Plate: {
+	// DisplayName: Blast-Resistant Plate
+	// Tooltip: Reduces explosive self-damage by 20%
+}
+
+Bomb_Charm: {
+	// DisplayName: Bomb Charm
+	// Tooltip: Reduces explosive self-damage by 20%
+}
+
+Bomb_Handling_Device: {
+	// DisplayName: Bomb Handling Device
+	/* Tooltip:
+		'''
+		25% increased explosive throwing velocity
+		Also commonly referred to as the 'Bomb Yeeter'
+		''' */
+}
+
+Boomerang_Magnet: {
+	// DisplayName: Boomerang Magnet
+	/* Tooltip:
+		'''
+		Increased return speed for boomerangs and harpoon guns
+		Increases pickup range for items
+		''' */
+}
+
+Brine_Leafed_Clover: {
+	// DisplayName: Brine-Leafed Clover
+	// DisplayNameStem: Brine-Covered Stem
+	/* Tooltip:
+		'''
+		Increases the likelihood of favorable outcomes based on how many leaves it has
+		A leaf will fall out if it causes something exceptionally rare
+		''' */
+	/* TooltipStem:
+		'''
+		Does nothing
+		'Better luck next time!'
+		''' */
+	// Luck: A leaf from {0} ({1}) withers
+}
+
+Celestial_Stone_Mask: {
+	// DisplayName: Celestial Stone Mask
+	/* Tooltip:
+		'''
+		Increase to damage, melee speed, critical strike chance,
+		life regeneration, defense, mining speed[ox:,] and minion knockback,
+		but your movement is hindered
+		''' */
+}
+
+Celestial_Starlight: {
+	// DisplayName: Celestial Starlight
+	/* Tooltip:
+		'''
+		Increases pickup range for mana stars
+		Chance for mana stars to fall from critical hits
+		''' */
+}
+
+CFHES: {
+	// DisplayName: C.F.H.E.S.
+	/* Tooltip:
+		'''
+		All explosives inflict [buffhint:OnFire] and have a reduced fuse time
+		60% increased explosive blast radius
+		Explosives will detonate near enemies
+		''' */
+}
+
+Cirrhosis_Abhorrence: {
+	// DisplayName: Cirrhosis' Abhorrence
+	/* Tooltip:
+		'''
+		All attacks inflict [buffhint:Bleeding] and [buffhint/dnset enemies ablaze:OnFire3]
+		The four nearest enemies will be afflicted with [buffhint:Bleeding], [buffhint/On Fire:OnFire][ox:,] and [buffhint:Origins/Rasterized_Debuff]
+		''' */
+}
+
+Comb: {
+	// DisplayName: Comb
+	// Tooltip: 5% increased damage
+}
+
+Coologne: {
+	// DisplayName: Coologne
+	/* Tooltip:
+		'''
+		{$Mods.Origins.Items.Mysterious_Spray.EffectTooltip}
+		{$ItemTooltip.FrozenTurtleShell}
+		'20% cooler than competing brands!'
+		''' */
+}
+
+Danger_Barrel: {
+	// DisplayName: Danger Barrel
+	// Tooltip: All explosives inflict [buffhint:OnFire] and have a reduced fuse time
+}
+
+Dash_Ravel: {
+	// DisplayName: Dash Ravel
+	/* Tooltip:
+		'''
+		Use the mount key to transform into a small, rolling ball that damages enemies as it moves
+		Double tap a direction to dash and instantly morph
+		''' */
+}
+
+Venom_Fang: {
+	// DisplayName: Venom Fang
+	/* Tooltip:
+		'''
+		Attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
+		Effects are stronger while {§Acrid} Armor is equipped
+		''' */
+}
+
+Depth_Ravel: {
+	// DisplayName: Depth Ravel
+	/* Tooltip:
+		'''
+		Use the mount key to transform into a small, rolling ball
+		Grants extreme underwater capabilities
+		''' */
+}
+
+Destructive_Claws: {
+	// DisplayName: Destructive Claws
+	/* Tooltip:
+		'''
+		25% increased explosive throwing velocity
+		Increases attack speed of thrown explosives
+		Enables autouse for all explosive weapons
+		''' */
+}
+
+Dim_Starlight: {
+	// DisplayName: Dim Starlight
+	// Tooltip: Chance for mana stars to fall from critical hits
+}
+
+Donor_Wristband: {
+	// DisplayName: Donor Wristband
+	/* Tooltip:
+		'''
+		Increased life regeneration
+		Debuff durations reduced by 30%
+		''' */
+}
+
+Dryads_Inheritance: {
+	// DisplayName: Dryad's Inheritance
+	/* Tooltip:
+		'''
+		5% increased damage
+		Increases damage, movement speed[ox:,] and length of invincibility after taking damage
+		Emit a [buffhint/dndamaging aura:DryadsWardDebuff]
+		Summons spores over time that will damage enemies
+		''' */
+}
+
+Eccentric_Stone: {
+	// DisplayName: Eccentric Stone
+	// Tooltip: +1 minion slot
+}
+
+Entangled_Energy: {
+	// DisplayName: Entangled Energy
+	/* Tooltip:
+		'''
+		Your attacks deal additional damage based on missing health
+		Potion Sickness is reduced when you strike an enemy
+		-25% potion healing
+		''' */
+}
+
+Exploder_Emblem: {
+	// DisplayName: Exploder Emblem
+	/* Tooltip:
+		'''
+		15% increased explosive damage
+		Reduces armor penetration by 3
+		''' */
+}
+
+Explosive_Artery: {
+	// DisplayName: Explosive Artery
+	/* Tooltip:
+		'''
+		Nearby [buffhint:Bleeding] enemies occasionally explode
+		'Explosions happen near me 'cause I'm that cool!'
+		''' */
+}
+
+Agility_Core: {
+	// DisplayName: Agility Core
+	// Tooltip: Grants massive boosts in maneuverability
+}
+
+Combat_Core: {
+	// DisplayName: Combat Core
+	// Tooltip: Grants impressive boosts in combat capability
+}
+
+Construction_Core: {
+	// DisplayName: Construction Core
+	// Tooltip: Allows incredible construction abilities
+}
+
+Fishing_Core: {
+	// DisplayName: Fishing Core
+	// Tooltip: Facilitates flawless fishing
+}
+
+Lifeforce_Core: {
+	// DisplayName: Vitality Core
+	/* Tooltip:
+		'''
+		Provides extreme boosts in health
+		'Get a life'
+		''' */
+}
+
+Magic_Core: {
+	// DisplayName: Magic Core
+	// Tooltip: Graces one with true magic power
+}
+
+Fiberglass_Dagger: {
+	// DisplayName: Fiberglass Dagger
+	// Tooltip: Increases weapon damage by 8, but reduces defense by 8
+}
+
+Fleshy_Figurine: {
+	// DisplayName: Fleshy Figurine
+	/* Tooltip:
+		'''
+		Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+		+20% [buffhint:Origins/Torn_Debuff] severity
+		''' */
+}
+
+Focus_Crystal: {
+	// DisplayName: Focus Crystal
+	/* Tooltip:
+		'''
+		Life regeneration is boosted from dealing damage
+		Critical strike chance is increased by 15% of weapon damage
+		Base damage increased while standing still
+		''' */
+}
+
+Grave_Danger: {
+	// DisplayName: Grave Danger
+	// Tooltip: "{$Mods.Origins.Doubles.GraveDangerDesc}"
+}
+
+Grenade_Tube: {
+	// DisplayName: Grenade Tube
+	// Tooltip: Randomly launches a grenade while using a ranged weapon
+}
+
+Gun_Glove: {
+	// DisplayName: Gun Glove
+	/* Tooltip:
+		'''
+		Shoots as you swing
+		'Ammo not included'
+		''' */
+}
+
+Haggard_Artery: {
+	// DisplayName: Haggard Artery
+	/* Tooltip:
+		'''
+		All attacks inflict [buffhint:Bleeding]
+		Nearby [buffhint:Bleeding] enemies occasionally explode
+		''' */
+}
+
+Handy_Helper: {
+	// DisplayName: Handy Helper
+	/* Tooltip:
+		'''
+		Amebic tentacles will protect you from projectiles and enemies
+		Increases melee knockback
+		12% increased melee speed
+		Enables auto swing for melee weapons
+		Increases the size of melee weapons
+		''' */
+}
+
+Hazard_Charm: {
+	// DisplayName: Hazard Charm
+	/* Tooltip:
+		'''
+		{$Mods.Origins.Items.Bomb_Charm.Tooltip}
+		{$Mods.Origins.Items.Trap_Charm.Tooltip}
+		{$ItemTooltip.LavaCharm}
+		''' */
+}
+
+Headphones: {
+	// DisplayName: Headphones
+	/* Tooltip:
+		'''
+		Tagging an enemy increases the chance of a critical strike by 25% on next hit
+		Applies to teammates
+		'Callouts guys!'
+		''' */
+}
+
+Helium_Tank: {
+	// DisplayName: Helium Tank
+	/* Tooltip:
+		'''
+		Extends underwater breathing
+		Grants immunity to [buffhint/self:Suffocation]
+		'Don't laugh'
+		''' */
+}
+
+IWTPA_Standard: {
+	// DisplayName: I-WTPA Standard
+	// Tooltip: Reduces explosive fuse time
+}
+
+Keepsake_Remains: {
+	// DisplayName: Keepsake Remains
+	// Tooltip: Increases armor penetration by 5 and attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+}
+
+Last_Descendant: {
+	// DisplayName: Last Descendant
+	/* Tooltip:
+		'''
+		5% increased damage
+		Increases damage, movement speed, and length of invincibility after taking damage
+		Additionally causes stars to fall after taking damage
+		''' */
+}
+
+Lazy_Cloak: {
+	// DisplayName: Lazy Cloak
+	/* Tooltip:
+		'''
+		Chases after tagged enemies
+		Slams enemies when close
+		'It just doesn't want to do all the work'
+		''' */
+}
+
+Locket_Necklace: {
+	// DisplayName: Locket Necklace
+	/* Tooltip:
+		'''
+		5% increased damage
+		Increases damage and movement speed after taking damage
+		''' */
+}
+
+Lousy_Liver: {
+	// DisplayName: Lousy Liver
+	// Tooltip: The nearest three enemies will be afflicted with [buffhint:Origins/Lousy_Liver_Debuff]
+}
+
+Lovers_Leap: {
+	// DisplayName: Lover's Leap
+	/* Tooltip:
+		'''
+		5% increased damage
+		Allows flight, super fast running
+		Increases damage and movement speed after taking damage
+		Allows the player to dash into the enemy
+		Double tap a direction
+		''' */
+}
+
+Magic_Glove: {
+	// DisplayName: Magic Glove
+	/* Tooltip:
+		'''
+		8% reduced mana usage
+		Automatically use mana potions when needed
+		Shoots random magic as you swing
+		'May require a prowess in magicks'
+		''' */
+}
+
+Magic_Tripwire: {
+	// DisplayName: Magic Tripwire
+	/* Tooltip:
+		'''
+		Explosives will detonate near enemies
+		'Uses Bluetooth'
+		''' */
+}
+
+Makeover_Choker: {
+	// DisplayName: Makeover Choker
+	/* Tooltip:
+		'''
+		{$Mods.Origins.Items.Mysterious_Spray.EffectTooltip}
+		{$ItemTooltip.CrossNecklace}
+		'You look like a mess, let's get that taken care of'
+		''' */
+}
+
+Mana_Drive: {
+	// DisplayName: Mana Drive
+	// Tooltip: Mana regenerates faster with higher speeds
+}
+
+Messy_Leech: {
+	// DisplayName: Messy Leech
+	// Tooltip: All attacks inflict [buffhint:Bleeding]
+}
+
+Messy_Magma_Leech: {
+	// DisplayName: Messy Magma Leech
+	// Tooltip: All attacks inflict [buffhint:Bleeding] and [buffhint/dnset enemies ablaze:OnFire3]
+}
+
+Missile_Armcannon: {
+	// DisplayName: Missile Armcannon
+	/* Tooltip:
+		'''
+		25% increased explosive throwing velocity
+		20% increased explosive knockback
+		15% increased explosive blast radius
+		Increases explosive attack speed
+		Enables autouse for all explosive weapons
+		Shoots rockets as you swing
+		'Payload not included'
+		''' */
+}
+
+Salty_Seed: {
+	// DisplayName: Salty Seed
+	/* Tooltip:
+		'''
+		Takes the place of a hook, using the same hotkey
+		The seed promotes rapid growth of the parasite, duplicating projectiles that pass through
+		''' */
+}
+
+Mojo_Injection: {
+	// DisplayName: Mojo Injection
+	// Tooltip: Slowly reduces assimilation
+	// Toggle_On: "{$Mods.Origins.Items.Mojo_Injection.DisplayName} on"
+	// Toggle_Off: "{$Mods.Origins.Items.Mojo_Injection.DisplayName} off"
+}
+
+Mysterious_Spray: {
+	// DisplayName: Mysterious Spray
+	// EffectTooltip: Increases life regeneration at low health
+	/* Tooltip:
+		'''
+		{$Mods.Origins.Items.Mysterious_Spray.EffectTooltip}
+		'The perfect ailment to attack your senses'
+		''' */
+}
+
+Ninja_Ravel: {
+	// DisplayName: Ninja Ravel
+	/* Tooltip:
+		'''
+		Use the mount key to transform into a small, rolling ball
+		You may cling to walls and ceilings when raveled
+		Enemies are less likely to target you while raveled
+		''' */
+}
+
+Nitro_Crate: {
+	// DisplayName: Nitro Crate
+	// Tooltip: Increases explosive blast radius by 20%
+}
+
+No_U_Card: {
+	// DisplayName: No U Card
+	/* Tooltip:
+		'''
+		Attackers receive all incoming damage and debuffs regardless of immunity
+		Immune to most debuffs
+		''' */
+}
+
+Olid_Organ: {
+	// DisplayName: Olid Organ
+	/* Tooltip:
+		'''
+		5% increased damage and critical strike chance
+		All attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
+		Enemies are less likely to target you
+		''' */
+}
+
+Parasitic_Influence: {
+	// DisplayName: Parasitic Influence
+	// Tooltip: Chance to randomly strike nearby enemies
+}
+
+Pincushion: {
+	// DisplayName: Pincushion
+	// BaseTooltip: Prevents tile destruction from explosives when pinned
+	/* Tooltip:
+		'''
+		{$Mods.Origins.Items.Pincushion.BaseTooltip}
+		<right> to unpin
+		''' */
+}
+
+Pincushion_Inactive: {
+	// DisplayName: Pinless Cushion
+	/* Tooltip:
+		'''
+		{$Mods.Origins.Items.Pincushion.BaseTooltip}
+		<right> to pin
+		''' */
+}
+
+Plasma_Bag: {
+	// DisplayName: Plasma Bag
+	/* Tooltip:
+		'''
+		Slightly increased regeneration
+		Debuff durations reduced by 30%
+		Does not affect Potion Sickness
+		Rapidly lose life when [buffhint/self:Bleeding]
+		''' */
+}
+
+Potato_Battery: {
+	// DisplayName: Potato Battery
+	/* Tooltip:
+		'''
+		Magic projectiles slightly home towards targets
+		'How are you holding up? BECAUSE I'M A POTATO'
+		''' */
+}
+
+Powerflower: {
+	// DisplayName: Powerflower
+	/* Tooltip:
+		'''
+		Chance for mana stars to fall from critical hits
+		8% reduced mana cost
+		Automatically use mana potions when needed
+		''' */
+}
+
+Priority_Mail: {
+	// DisplayName: Priority Mail
+	/* Tooltip:
+		'''
+		Enemies recently struck by a teammate or minion receive 18% more damage
+		Summons can target two enemies at once
+		Increases minion damage by 10%
+		''' */
+}
+
+Protomind: {
+	// DisplayName: Protomind
+	/* Tooltip:
+		'''
+		Has a chance to create illusions and dodge an attack
+		Temporarily increase critical chance after a dodge
+		May [buffhint/dnconfuse:Confused] nearby enemies after being struck
+		Magic projectiles slightly home towards targets
+		''' */
+}
+
+Protozoa_Food: {
+	// DisplayName: Protozoa Food
+	/* Tooltip:
+		'''
+		+1 minion slot
+		Summons an amoeba pellet to chase after enemies and [buffhint:Origins/Slow_Debuff] them down for every minion slot you have
+		''' */
+}
+
+Ravel: {
+	// DisplayName: Ravel
+	// Tooltip: Use the mount key to transform into a small, rolling ball
+}
+
+Razorwire: {
+	// DisplayName: Razorwire
+	// Tooltip: All damage received is reflected to 3 nearby enemies
+}
+
+Rebreather: {
+	// DisplayName: Rebreather
+	// Tooltip: Gain more breath as you move in water
+}
+
+Refactoring_Pieces: {
+	// DisplayName: Refactoring Pieces
+	/* Tooltip:
+		'''
+		Increases mana shielding and damage reduction by 10%
+		Grants a dash that allows you to glitch through {§Defiled} blocks
+		''' */
+}
+
+Resin_Shield: {
+	// DisplayName: Resin Shield
+	/* Tooltip:
+		'''
+		Grants immunity to knockback and fire blocks
+		Blocks all self-damage on next hit
+		3.3 second cooldown
+		'A shield to withstand the test of time'
+		''' */
+}
+
+Return_To_Sender: {
+	// DisplayName: Return To Sender
+	// Tooltip: Attackers receive all damage inflicted on the user
+}
+
+Rope_Of_Sharing: {
+	// DisplayName: Rope of Sharing
+	// Tooltip: All stats, afflictions[ox:,] and other effects are shared with another connected player
+}
+
+Ruby_Reticle: {
+	// DisplayName: Ruby Reticle
+	// Tooltip: Critical strike chance is increased by 15% of weapon damage
+}
+
+Scavenger_Bag: {
+	// DisplayName: Scavenger Bag
+	/* Tooltip:
+		'''
+		Increases armor penetration by 5 and attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+		Increases your max number of minions by 1
+		Increases your summon damage by 15% and the knockback of your minions
+		''' */
+}
+
+Scribe_of_the_Meat_God: {
+	// DisplayName: Scribe of the Meat God
+	/* Tooltip:
+		'''
+		Transform into a miniature wall of flesh during a dash
+		'You're made of meat'
+		''' */
+}
+
+Solar_Panel: {
+	// DisplayName: Solar Panel
+	/* Tooltip:
+		'''
+		Sunlight exposure increases mana regeneration
+		'Don't worry, mana was always renewable!'
+		''' */
+}
+
+Sonar_Visor: {
+	// DisplayName: Sonar Visor
+	/* Tooltip:
+		'''
+		Increased projectile speed
+		10% increased critical strike chance
+		20% increased explosive blast radius
+		Grants immunity to [buffhint/self:Confused]
+		Highlights the outermost layer of tiles
+		''' */
+}
+
+Sonic_Radar: {
+	// DisplayName: Sonic Radar
+	/* Tooltip:
+		'''
+		Allows the detection of traps, enemies, and[ox:,] valuables
+		Emits a small aura of light
+		''' */
+}
+
+Shrap_Stack: {
+	// DisplayName: Stack of Shraps
+	/* Tooltip:
+		'''
+		Explosives have a chance to be duplicated
+		'Double the gunpowder, double the fun.'
+		''' */
+}
+
+Speed_Ravel: {
+	// DisplayName: Speed Ravel
+	// Tooltip: Use the mount key to transform into a small, rolling ball that moves very fast
+}
+
+Spider_Ravel: {
+	// DisplayName: Spider Ravel
+	/* Tooltip:
+		'''
+		Use the mount key to transform into a small, rolling ball
+		You may cling to walls and ceilings when raveled
+		''' */
+}
+
+Spirit_Shard: {
+	// DisplayName: Spirit Shard
+	/* Tooltip:
+		'''
+		Artifact minions turn into ghosts of their former selves upon death
+		10% increased summon damage
+		+1 minion slot
+		''' */
+}
+
+Stealth_Ravel: {
+	// DisplayName: Stealth Ravel
+	/* Tooltip:
+		'''
+		Use the mount key to transform into a small, rolling ball
+		Enemies are much less likely to target you when raveled
+		''' */
+}
+
+Stone_Mask: {
+	// DisplayName: Stone Mask
+	// Tooltip: Increases defense by 8, but your movement is hindered
+}
+
+Strange_Computer: {
+	// DisplayName: Strange Computer
+	/* Tooltip:
+		'''
+		This tooltip is a message... and part of a system of messages... pay attention to it!
+
+		Sending this message was important to us. We considered ourselves to be a powerful culture.
+
+		This item is not an item of honor... no highly esteemed functionality is commemorated here... nothing valued is here.
+
+		What is here was dangerous and repulsive to us. This message is a warning about danger.
+
+		The danger is in a particular item... it increases towards a center... the center of danger is here... of a particular size and shape, and below your cursor.
+
+		The danger is still present, in your time, as it was in ours.
+
+		The danger is to the game, and it can crash.
+
+		The form of the danger is an emanation of projectiles.
+
+		The danger is unleashed only if you substantially disturb this item physically. This item is best shunned and left unequipped.
+
+		Side effects include universal instability, eternalism, sticky fingers, hallucination[ox:,] and premature ejaculation
+		''' */
+}
+
+Super_Turbo_Reel: {
+	// DisplayName: Super Turbo Reel
+	/* Tooltip:
+		'''
+		Increases movement speed and acceleration
+		Provides light when worn
+		Greatly increased return speed for harpoon guns
+		''' */
+}
+
+Superjump_Cape: {
+	// DisplayName: Superjump Cape
+	// Tooltip: Allows for a super high jump and negates fall damage
+}
+
+Symbiote_Skull: {
+	// DisplayName: Symbiote Skull
+	// Tooltip: Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+}
+
+Tainted_Flesh: {
+	// DisplayName: Tainted Flesh
+	// Tooltip: +10% [buffhint:Origins/Torn_Debuff] severity
+}
+
+Third_Eye: {
+	// DisplayName: Third Eye
+	/* Tooltip:
+		'''
+		Your third eye will fire a phantasmal death ray when enemies are nearby
+		'I am the cosmos'
+		''' */
+}
+
+Trap_Charm: {
+	// DisplayName: Trap Charm
+	// Tooltip: Reduces damage received from traps
+}
+
+Tripod_Nip: {
+	// DisplayName: Tripod Nip
+	/* Tooltip:
+		'''
+		Reduces enemy aggression and spawn rates
+		{§Mods.Origins.NPCs.Defiled_Tripod.DisplayName}s become friendly
+		''' */
+}
+
+Pneumatic_Bomb_Thrower: {
+	// DisplayName: Pneumatic Bomb Thrower
+	/* Tooltip:
+		'''
+		50% increased explosive throwing velocity
+		Also commonly referred to as the 'True Bomb Yeeter'
+		''' */
+}
+
+Turbo_Reel: {
+	// DisplayName: Turbo Reel
+	// Tooltip: Increased return speed for harpoon guns
+}
+
+Unsought_Organ: {
+	// DisplayName: Unsought Organ
+	/* Tooltip:
+		'''
+		All damage received is reflected to 3 nearby enemies
+		5% increased damage and critical strike chance
+		All attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
+		Enemies are less likely to target you
+		''' */
+}
+
+Abysswalker_Cloak: {
+	// DisplayName: Abysswalker's Cloak
+	// Tooltip: Increased life regeneration
+}
+
+Abysswalker_Greaves: {
+	// DisplayName: Abysswalker's Greaves
+	// Tooltip: Increased movement speed
+}
+
+Abysswalker_Hood: {
+	// DisplayName: Abysswalker's Hood
+	// Tooltip: +20 max life
+}
+
+Acrid_Breastplate: {
+	// DisplayName: "{§Acrid} Breastplate"
+	// Tooltip: Increased life regeneration
+}
+
+Acrid_Dome: {
+	// DisplayName: "{§Acrid} Dome"
+	/* Tooltip:
+		'''
+		10% increased explosive critical chance and throwing velocity
+		Effect stronger when submerged
+		Emit a small aura of light
+		''' */
+}
+
+Acrid_Greaves: {
+	// DisplayName: "{§Acrid} Greaves"
+	// Tooltip: Grants the ability to swim
+}
+
+Acrid_Headgear: {
+	// DisplayName: "{§Acrid} Headgear"
+	/* Tooltip:
+		'''
+		10% increased magic damage and 25% reduced mana cost
+		Effect stronger when submerged
+		Emit a small aura of light
+		''' */
+}
+
+Acrid_Helm: {
+	// DisplayName: "{§Acrid} Helm"
+	/* Tooltip:
+		'''
+		10% increased melee damage and speed
+		Effect stronger when submerged
+		Emit a small aura of light
+		''' */
+}
+
+Acrid_Mask: {
+	// DisplayName: "{§Acrid} Mask"
+	/* Tooltip:
+		'''
+		10% increased summoning damage
+		+2 minion slots
+		Effects stronger when submerged
+		Emit a small aura of light
+		''' */
+}
+
+Acrid_Visor: {
+	// DisplayName: "{§Acrid} Visor"
+	/* Tooltip:
+		'''
+		20% increased ranged attack speed
+		Effect stronger when submerged
+		Emit a small aura of light
+		''' */
+}
+
+Amber_Breastplate: {
+	// DisplayName: Amber Exploder Resin
+	// Tooltip: -34% self-damage
+}
+
+Amber_Greaves: {
+	// DisplayName: Amber Exploder Guards
+	// Tooltip: Increased movement speed
+}
+
+Amber_Helmet: {
+	// DisplayName: Amber Exploder Goggles
+	// Tooltip: ""
+}
+
+Chromtain_Breastplate: {
+	// DisplayName: Chromtain Breastplate
+	// Tooltip: +20 max life
+}
+
+Chromtain_Greaves: {
+	// DisplayName: Chromtain Greaves
+	// Tooltip: ""
+}
+
+Chromtain_Helmet: {
+	// DisplayName: Chromtain Helmet
+	// Tooltip: ""
+}
+
+Cryosten_Helmet: {
+	// DisplayName: Cryosten Helmet
+	/* Tooltip:
+		'''
+		+20% explosive blast radius
+		Increased life regeneration
+		''' */
+}
+
+Cryosten_Breastplate: {
+	// DisplayName: Cryosten Breastplate
+	/* Tooltip:
+		'''
+		+20% explosive blast radius
+		8% increased maximum life
+		''' */
+}
+
+Cryosten_Greaves: {
+	// DisplayName: Cryosten Greaves
+	/* Tooltip:
+		'''
+		10% increased movement speed
+		Increased movement speed on ice
+		''' */
+}
+
+Ashen_Breastplate: {
+	// DisplayName: "{§Ashen} Breastplate"
+	// Tooltip: +8% weapon speed
+}
+
+Ashen_Greaves: {
+	// DisplayName: "{§Ashen} Greaves"
+	// Tooltip: +8% increased critical strike chance
+}
+
+Ashen_Helmet: {
+	// DisplayName: "{§Ashen} Helmet"
+	// Tooltip: 8% increased damage
+}
+
+Defiled_Breastplate: {
+	// DisplayName: "{§Defiled} Breastplate"
+	// Tooltip: 3% increased damage
+}
+
+Defiled_Greaves: {
+	// DisplayName: "{§Defiled} Greaves"
+	// Tooltip: 3% increased damage
+}
+
+Defiled_Helmet: {
+	// DisplayName: "{§Defiled} Helmet"
+	// Tooltip: 5% increased critical strike chance
+}
+
+Defiled2_Helmet: {
+	// DisplayName: Ancient {§Defiled} Helmet
+	// Tooltip: 5% increased critical strike chance
+}
+
+Defiled2_Breastplate: {
+	// DisplayName: Ancient {§Defiled} Breastplate
+	// Tooltip: 3% increased damage
+}
+
+Defiled2_Greaves: {
+	// DisplayName: Ancient {§Defiled} Greaves
+	// Tooltip: 3% increased damage
+}
+
+Encrusted_Coat: {
+	// DisplayName: Encrusted Coat
+	// Tooltip: Increases your max number of minions by 1
+}
+
+Encrusted_Mask: {
+	// DisplayName: Encrusted Mask
+	// Tooltip: Increases summon damage by 10%
+}
+
+Encrusted_Pants: {
+	// DisplayName: Encrusted Pants
+	// Tooltip: Increases jump height
+}
+
+Scavenger_Breastplate: {
+	// DisplayName: Scavenger Body Armor
+	// Tooltip: -25% self-damage
+}
+
+Scavenger_Helmet: {
+	// DisplayName: Scavenger Goggles
+	// Tooltip: +8% explosive critical strike chance
+}
+
+Scavenger_Greaves: {
+	// DisplayName: Scavenger Greaves
+	// Tooltip: +15% explosive velocity
+}
+
+Eyndum_Breastplate: {
+	// DisplayName: Eyndum Mantle
+	// Tooltip: ""
+}
+
+Eyndum_Greaves: {
+	// DisplayName: Eyndum Greaves
+	// Tooltip: ""
+}
+
+Eyndum_Helmet: {
+	// DisplayName: Eyndum Helmet
+	// Tooltip: ""
+}
+
+Felnum_Breastplate: {
+	// DisplayName: Felnum Breastplate
+	/* Tooltip:
+		'''
+		5% increased damage
+		5% increased movement speed
+		''' */
+}
+
+Felnum_Greaves: {
+	// DisplayName: Felnum Greaves
+	// Tooltip: 10% increased movement speed
+}
+
+Felnum_Helmet: {
+	// DisplayName: Felnum Helmet
+	// Tooltip: 5% increased damage
+}
+
+Fiberglass_Body: {
+	// DisplayName: Fiberglass Pauldrons
+	/* Tooltip:
+		'''
+		Weapon damage increased by 2
+		'These don't seem very protective'
+		''' */
+}
+
+Fiberglass_Helmet: {
+	// DisplayName: Fiberglass Helmet
+	/* Tooltip:
+		'''
+		Critical damage increased by 10
+		'This doesn't seem very protective'
+		''' */
+}
+
+Fiberglass_Legs: {
+	// DisplayName: Fiberglass Boots
+	/* Tooltip:
+		'''
+		10% increased movement speed
+		'These don't seem very protective'
+		''' */
+}
+
+Lost_Breastplate: {
+	// DisplayName: Lost Cloak
+	// Tooltip: 15% increased magic speed
+}
+
+Lost_Helm: {
+	// DisplayName: Lost Monocle
+	// Tooltip: Increased mana regeneration rate
+}
+
+Lost_Pants: {
+	// DisplayName: Lost Pants
+	// Tooltip: +5% movement speed
+}
+
+Mythic_Leggings: {
+	// DisplayName: Mythic Leggings
+	// Tooltip: +20% movement speed
+}
+
+Mythic_Shell: {
+	// DisplayName: Mythic Shell
+	// Tooltip: +45% jump speed
+}
+
+Mythic_Skull: {
+	// DisplayName: Mythic Skull
+	/* Tooltip:
+		'''
+		+15% explosive velocity
+		'Skull ON'
+		''' */
+}
+
+Necromancer_Breastplate: {
+	// DisplayName: Necromancer Breastplate
+	/* Tooltip:
+		'''
+		15% increased summoning attack speed
+		+1 minion slot
+		''' */
+}
+
+Necromancer_Greaves: {
+	// DisplayName: Necromancer Greaves
+	// Tooltip: 25% increased artifact minion damage
+}
+
+Necromancer_Helmet: {
+	// DisplayName: Necromancer Crown
+	// Tooltip: 25% increased summoning damage
+}
+
+Nova_Breastplate: {
+	// DisplayName: Nova Vest
+	/* Tooltip:
+		'''
+		4% increased explosive damage and critical strike chance
+		-60% explosive self-damage
+		''' */
+}
+
+Nova_Greaves: {
+	// DisplayName: Nova Leggings
+	/* Tooltip:
+		'''
+		4% increased explosive damage and critical strike chance
+		25% increased movement speed
+		''' */
+}
+
+Nova_Helmet: {
+	// DisplayName: Nova Faceshield
+	/* Tooltip:
+		'''
+		4% increased explosive damage and critical strike chance
+		50% increased explosive velocity
+		''' */
+}
+
+Ancient_Hallowed_Visage: {
+	// DisplayName: Ancient Hallowed Visage
+	/* Tooltip:
+		'''
+		+15% explosive velocity
+		+15% explosive critical strike chance
+		''' */
+}
+
+Chlorophyte_Crown: {
+	// DisplayName: Chlorophyte Crown
+	/* Tooltip:
+		'''
+		Increases summon damage by 12%
+		Increases artifact minion damage by 15%
+		Increases your max number of minions by 1
+		''' */
+}
+
+Chlorophyte_Visage: {
+	// DisplayName: Chlorophyte Visage
+	/* Tooltip:
+		'''
+		+35% explosive blast radius
+		-25% explosive fuse time
+		''' */
+}
+
+Hallowed_Visage: {
+	// DisplayName: Hallowed Visage
+	/* Tooltip:
+		'''
+		+15% explosive velocity
+		+15% explosive critical strike chance
+		''' */
+}
+
+Bleeding_Obsidian_Breastplate: {
+	// DisplayName: Bleeding Obsidian Trenchcoat
+	// Tooltip: -25% self-damage
+}
+
+Bleeding_Obsidian_Greaves: {
+	// DisplayName: Bleeding Obsidian Chaps
+	// Tooltip: 15% increased movement speed
+}
+
+Bleeding_Obsidian_Helmet: {
+	// DisplayName: Bleeding Obsidian Hardee
+	// Tooltip: 20% increased explosive velocity
+}
+
+Riptide_Breastplate: {
+	// DisplayName: Riptide Breastplate
+	/* Tooltip:
+		'''
+		Emit a small aura of light
+		+40 mana capacity
+		''' */
+}
+
+Riptide_Greaves: {
+	// DisplayName: Riptide Leggings
+	/* Tooltip:
+		'''
+		5% increased magic damage
+		Grants the ability to swim and provides increased movement speed in water
+		''' */
+}
+
+Riptide_Helmet: {
+	// DisplayName: Riptide Helm
+	/* Tooltip:
+		'''
+		5% increased magic damage
+		Slightly increased underwater breathing
+		''' */
+}
+
+Riven_Coat: {
+	// DisplayName: "{§Riven} Coat"
+	// Tooltip: 6% increased weapon speed
+}
+
+Riven_Mask: {
+	// DisplayName: "{§Riven} Mask"
+	// Tooltip: 6% increased weapon speed
+}
+
+Riven_Pants: {
+	// DisplayName: "{§Riven} Pants"
+	// Tooltip: 6% increased weapon speed
+}
+
+Riven2_Mask: {
+	// DisplayName: Ancient {§Riven} Mask
+	// Tooltip: 6% increased weapon speed
+}
+
+Riven2_Coat: {
+	// DisplayName: Ancient {§Riven} Coat
+	// Tooltip: 6% increased weapon speed
+}
+
+Riven2_Pants: {
+	// DisplayName: Ancient {§Riven} Pants
+	// Tooltip: 6% increased weapon speed
+}
+
+Sapphire_Hood: {
+	// DisplayName: Sapphire Mediator Hood
+	/* Tooltip:
+		'''
+		-40 mana
+		Increased mana regeneration
+		''' */
+}
+
+Sapphire_Tights: {
+	// DisplayName: Sapphire Mediator Tights
+	/* Tooltip:
+		'''
+		+20% movement speed
+		15% reduced mana cost
+		''' */
+}
+
+Sapphire_Vest: {
+	// DisplayName: Sapphire Mediator Vest
+	// Tooltip: +20% magic attack speed
+}
+
+Soulhide_Coat: {
+	// DisplayName: Soulhide Coat
+	// Tooltip: +12% melee attack speed
+}
+
+Soulhide_Guards: {
+	// DisplayName: Soulhide Guards
+	// Tooltip: +14% weapon knockback
+}
+
+Soulhide_Helmet: {
+	// DisplayName: Soulhide Helmet
+	// Tooltip: +10% melee weapon size
+}
+
+Tendon_Helmet: {
+	// DisplayName: Tendon Helmet
+	// Tooltip: +10% ranged damage
+}
+
+Tendon_Pants: {
+	// DisplayName: Tendon Pants
+	// Tooltip: +20% ammo conservation
+}
+
+Tendon_Shirt: {
+	// DisplayName: Tendon Shirt
+	// Tooltip: +6% critical strike chance
+}
+
+// Defiled_Amalgamation_Mask.DisplayName: "{§Defiled} Amalgamation Mask"
+// Fiberglass_Weaver_Head.DisplayName: Fiberglass Weaver Head
+// World_Cracker_Mask.DisplayName: World Cracker Mask
+// TODev: "'Great for impersonating Origins devs!'"
+// DioSet: "'You thought it was a dev set, but it was me, Dio!'"
+
+Plague_Texan_Jacket: {
+	// DisplayName: Plague Texan's Surprisingly Affordable Style
+	/* Tooltip:
+		'''
+		{$TODev}
+
+		''' */
+}
+
+Plague_Texan_Jeans: {
+	// DisplayName: Plague Texan's Jeans
+	/* Tooltip:
+		'''
+		{$TODev}
+
+		''' */
+}
+
+Plague_Texan_Mask: {
+	// DisplayName: Plague Texan's Visage
+	/* Tooltip:
+		'''
+		{$TODev}
+
+		''' */
+}
+
+SceneYMK_Wings: {
+	// DisplayName: Moonlight Glint's Excessively Dyed Wings
+	/* Tooltip:
+		'''
+		{$TODev}
+		{$CommonItemTooltip.FlightAndSlowfall}
+
+		''' */
+}
+
+Plague_Texan_Sight: {
+	// DisplayName: Plague Texan's Gift
+	/* Tooltip:
+		'''
+		{$TODev}
+		Foresight is '20/20'
+		''' */
+}
+
+Cranivore_Beanie: {
+	// DisplayName: Cranivore Beanie
+	// Tooltip: ""
+}
+
+Sunflower_Sandal: {
+	// DisplayName: Sunflower Sandals
+	// Tooltip: Quite fashionable
+}
+
+// Adhesive_Wrap.DisplayName: Adhesive Wrap
+
+Alkahest: {
+	// DisplayName: Alkahest
+	// Tooltip: "'Don't touch it'"
+}
+
+// Bark.DisplayName: Bark
+// Bat_Hide.DisplayName: Bat Hide
+// Biocomponent10.DisplayName: Robot Guts
+
+Black_Bile: {
+	// DisplayName: Black Bile
+	// Tooltip: "'So depressing it makes the party girl cry'"
+}
+
+Bleeding_Obsidian_Shard: {
+	// DisplayName: Bleeding Obsidian Shard
+	// Tooltip: "'Weakens those who touch it'"
+}
+
+// Alkaliphiliac_Tissue.DisplayName: Alkaliphiliac Tissue
+
+Brineglow_Item: {
+	// DisplayName: Brineglow
+	// Tooltip: ""
+}
+
+// Brineglow.DisplayName: Brineglow
+// Bud_Barnacle.DisplayName: Bud Barnacle
+// Busted_Servo.DisplayName: Busted Servo
+
+Chambersite: {
+	// DisplayName: Chambersite
+	// Tooltip: "'Loses all of its color when exposed to light'"
+}
+
+// Chromtain_Bar.DisplayName: Chromtain Bar
+// Defiled_Bar.DisplayName: "{§Defiled} Bar"
+
+Defiled_Key: {
+	// DisplayName: "{§Defiled} Key"
+	// Tooltip: Unlocks a {§Defiled} Chest in the Dungeon
+}
+
+Dreadful_Powder: {
+	// DisplayName: Dreadful Powder
+	// Tooltip: Spreads {§the_Defiled_Wastelands}
+}
+
+Eitrite_Bar: {
+	// DisplayName: Eitrite Bar
+	// Tooltip: "'So alkaline-concentrated it could be used as a power source'"
+}
+
+// Element36_Bundle.DisplayName: Material-36 Bundle
+// Encrusted_Bar.DisplayName: Encrusted Bar
+
+Eyndum_Bar: {
+	// DisplayName: Eyndum Bar
+	// Tooltip: '''"Half-life" means nothing when used in the same sentence'''
+}
+
+// Felnum_Bar.DisplayName: Felnum Bar
+// Fibron_Plating.DisplayName: Fibron Plating
+// Formium_Bar.DisplayName: Formium Bar
+// Formium_Scrap.DisplayName: Formium Scrap
+
+FragmentNova: {
+	// DisplayName: Nova Fragment
+	// Tooltip: "'The essence of a dying star in its final moments...'"
+}
+
+Hell_Key: {
+	// DisplayName: Hell Key
+	// Tooltip: Unlocks a Hell Chest in the Dungeon
+}
+
+Lunar_Token: {
+	// DisplayName: Lunar Token
+	// Tooltip: "'Valuable to the demented'"
+}
+
+Magic_Hair_Spray: {
+	// DisplayName: Magic Hair Spray
+	// Tooltip: "'Keeps your hair in perfect form!'"
+}
+
+Mushroom_Key: {
+	// DisplayName: Mushroom Key
+	// Tooltip: Unlocks a Mushroom Chest in the Dungeon
+}
+
+// NE9.DisplayName: NE9
+
+Ocean_Key: {
+	// DisplayName: Ocean Key
+	// Tooltip: Unlocks a Ocean Chest in the Dungeon
+}
+
+Peat_Moss: {
+	// DisplayName: Peat Moss
+	// Tooltip: The Demolitionist might find this interesting...
+}
+
+// Power_Core.DisplayName: Power Core
+
+Qube: {
+	// DisplayName: Qube
+	// Tooltip: "'Physical information, like everything else in the world'"
+}
+
+Phoenum: {
+	// DisplayName: Phoenum
+	// Tooltip: "'A molten willpower'"
+}
+
+// Riven_Carapace.DisplayName: "{§Riven} Carapace"
+
+Riven_Key: {
+	// DisplayName: "{§Riven} Key"
+	// Tooltip: Unlocks a {§Riven} Chest in the Dungeon
+}
+
+// Rotor.DisplayName: Rotor
+// Rubber.DisplayName: Rubber
+
+Sanguinite_Bar: {
+	// DisplayName: Sanguinite Bar
+	// Tooltip: A rare mineral that grows more powerful with heat
+}
+
+Sentient_Powder: {
+	// DisplayName: Parasitic Powder
+	// Tooltip: Spreads the {§Riven_Hive}
+}
+
+Ash_Urn: {
+	// DisplayName: Urn of Ashes
+	// Tooltip: The day of Verdict will come...
+}
+
+Strange_String: {
+	// DisplayName: Strange String
+	// Tooltip: "'Involuntary neurectomy'"
+}
+
+// Tree_Sap.DisplayName: Tree Sap
+// Undead_Chunk.DisplayName: Undead Chunk
+// Valkyrum_Bar.DisplayName: Valkyrum Bar
+
+Fungarust: {
+	// DisplayName: Fungarust
+	// Tooltip: Thrives off of rusted metal
+}
+
+Wilting_Rose_Item: {
+	// DisplayName: Wilting Rose
+	// Tooltip: ""
+}
+
+Wrycoral_Item: {
+	// DisplayName: Wrycoral
+	// Tooltip: ""
+}
+
+Absorption_Potion: {
+	// DisplayName: Absorption Potion
+	// Tooltip: Full protection from explosive self-damage
+}
+
+Antisolve_Potion: {
+	// DisplayName: Antisolve Potion
+	// Tooltip: Grants immunity to [buffhint/self:Origins/Toxic_Shock_Debuff] and [buffhint/self:Origins/Torn_Debuff]
+}
+
+Bile_Flask: {
+	// DisplayName: Flask of Black Bile
+	// Tooltip: Melee and Whip attacks [buffhint/dnstun:Origins/Rasterized_Debuff] enemies
+}
+
+Blue_Bovine: {
+	// DisplayName: Blue Bovine
+	// Tooltip: "'Blue Bovine allows flight and slow fall!'"
+}
+
+Clubs_Ace: {
+	// DisplayName: Ace in the Hole
+	/* Tooltip:
+		'''
+		Developer item
+		'It's my ace in the hole!'
+		''' */
+}
+
+Distress_Beacon: {
+	// DisplayName: Distress Beacon
+	// Tooltip: Summons the Trenchmaker
+}
+
+Fervor_Potion: {
+	// DisplayName: Fervor Potion
+	// Tooltip: Increases attack speed by 10%
+}
+
+Focus_Potion: {
+	// DisplayName: Focus Potion
+	// Tooltip: Mana is used to increase damage
+}
+
+Bileberry: {
+	// DisplayName: Bileberry
+	// Tooltip: "{$CommonItemTooltip.MinorStats}"
+}
+
+Bread: {
+	// DisplayName: Bread
+	/* Tooltip:
+		'''
+		{$CommonItemTooltip.MinorStats}
+		'Let's get this bread!'
+		''' */
+}
+
+Brine_Cheese: {
+	// DisplayName: Brine Cheese
+	/* Tooltip:
+		'''
+		{$CommonItemTooltip.MajorStats}
+		'But, there's a catch...'
+		''' */
+}
+
+Honey_Wheat_Bread: {
+	// DisplayName: Honey Wheat Bread
+	/* Tooltip:
+		'''
+		{$CommonItemTooltip.MajorStats}
+		'Let's get this bread!'
+		''' */
+}
+
+Irish_Cheddar: {
+	// DisplayName: Irish Cheddar
+	/* Tooltip:
+		'''
+		{$CommonItemTooltip.MinorStats} and +8% critical strike chance
+		'Certainly a little sharp'
+		''' */
+}
+
+Jam_Sandwich: {
+	// DisplayName: Jam Sandwich
+	/* Tooltip:
+		'''
+		{$CommonItemTooltip.MediumStats}
+		'What kind of jam is this?'
+		''' */
+}
+
+Jelly_Schnapps: {
+	// DisplayName: Jelly Schnapps
+	/* Tooltip:
+		'''
+		{$CommonItemTooltip.MinorStats}
+		'Schnapp. Crackle. Schplit apart'
+		''' */
+}
+
+Pawpaw: {
+	// DisplayName: Pawpaw
+	// Tooltip: "{$CommonItemTooltip.MinorStats}"
+}
+
+Periven: {
+	// DisplayName: Periven
+	// Tooltip: "{$CommonItemTooltip.MinorStats}"
+}
+
+Potato: {
+	// DisplayName: Potato
+	/* Tooltip:
+		'''
+		{$CommonItemTooltip.MinorStats}
+		It's a potato...
+		''' */
+}
+
+Prickly_Pear: {
+	// DisplayName: Prickly Pear
+	// Tooltip: "{$CommonItemTooltip.MinorStats}"
+}
+
+Shattered_Stout: {
+	// DisplayName: Shattered Stout
+	// Tooltip: "{$CommonItemTooltip.MinorStats}"
+}
+
+Soul_Spaghetti: {
+	// DisplayName: Soul Spaghetti
+	/* Tooltip:
+		'''
+		{$CommonItemTooltip.MediumStats}
+		'Tastes like noodle with hairs and meats'
+		''' */
+}
+
+Tasty_Vanilla_Shake: {
+	// DisplayName: Vanilla Shake
+	// Tooltip: "{$CommonItemTooltip.MediumStats}"
+}
+
+Gooey_Water: {
+	// DisplayName: Gooey Water
+	// Tooltip: Spreads the {§Riven_Hive} to some blocks
+}
+
+Holiday_Hair_Dye: {
+	// DisplayName: Holiday Hair Dye
+	// Tooltip: Hair appearance changes depending on the current holiday
+}
+
+Invisible_Ink: {
+	// DisplayName: Invisible Ink
+	// Tooltip: Allows you to draw with ink that can only be seen under a black light
+}
+
+Lottery_Ticket: {
+	// DisplayName: Lottery Ticket
+	/* Tooltip:
+		'''
+		Randomly provides incredible luck while in your inventory
+		Gets consumed when it works
+		''' */
+	// Luck: "{$DisplayName} was a winner!"
+}
+
+Magic_Brine_Dropper: {
+	// DisplayName: Magic Brine Dropper
+	// Tooltip: ""
+}
+
+Mojo_Flask: {
+	// DisplayName: Mojo Flask
+	// UseCount: "{FlaskUseCount} uses"
+	// CureAmount: Reduces all assimilation by {FlaskCureAmount}% each
+	// RestoresUses: All uses are restored when you use a {$Mods.Origins.Items.Cleansing_Station_Item.DisplayName}
+	/* Tooltip:
+		'''
+		{$UseCount}
+		{$CureAmount}
+		{$RestoresUses}
+		''' */
+}
+
+Nerve_Impulse_Manipulator: {
+	// DisplayName: Nerve Impulse Manipulator
+	// Tooltip: Summons the {§Defiled} Amalgamation
+}
+
+Nullification_Potion: {
+	// DisplayName: Nullification Potion
+	// Tooltip: Cures all debuffs
+}
+
+Protean_Potion: {
+	// DisplayName: Protean Potion
+	// Tooltip: Half of any weapon boosts are shared across all classes
+}
+
+Purification_Potion: {
+	// DisplayName: Purification Potion
+	// Tooltip: Grants immunity to being assimilated by world evils
+}
+
+Quantum_Cell: {
+	// DisplayName: Quantum Cell
+	// Tooltip: Used at the Cubekon Altar
+}
+
+Quantum_Injector: {
+	// DisplayName: Quantum Injector
+	// Tooltip: Permanently increases maximum mana by 40
+}
+
+Riven_Loot_Box: {
+	// DisplayName: "{§Riven} Loot Box"
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Salt_Flask: {
+	// DisplayName: Flask of Alkahest
+	// Tooltip: Melee and Whip attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+}
+
+Sus_Ice_Cream: {
+	// DisplayName: Suspicious Looking Ice Cream
+	/* Tooltip:
+		'''
+		Summons the World Cracker
+		'This ice cream will eat YOU'
+		''' */
+}
+
+The_Button: {
+	// DisplayName: The Button
+	// Tooltip: Summons an I.C.A.R.U.S. unit
+}
+
+The_Defiled_Will: {
+	// DisplayName: The {§Defiled} Will
+	// Tooltip: Will you continue the legacy?
+}
+
+Void_Lock: {
+	// DisplayName: Void Lock
+	// Tooltip: Can be used to lock some chests only unlockable by you
+}
+
+Voidsight_Potion: {
+	// DisplayName: Voidsight Potion
+	// Tooltip: Significantly increases visibility
+}
+
+White_Water: {
+	// DisplayName: White Water
+	// Tooltip: Spreads {§the_Defiled_Wastelands} to some blocks
+}
+
+High_Contrast_Dye: {
+	// DisplayName: High-Contrast Dye
+	// Tooltip: ""
+}
+
+Amoeba_Buggy_Item: {
+	// DisplayName: Amoeba Buggy
+	// Tooltip: Amoeba very buggy
+}
+
+Bilemouth: {
+	// DisplayName: Bilemouth
+	// Tooltip: ""
+}
+
+Bonehead_Jellyfish: {
+	// DisplayName: Bonehead Jellyfish
+	// Tooltip: ""
+}
+
+Bug_Item: {
+	// DisplayName: Bug
+	// Tooltip: "'Don't try to smash it, it'll make more problems'"
+}
+
+Chunky_Crate: {
+	// DisplayName: Chunky Crate
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Cicada_3301_Item: {
+	// DisplayName: Cicada 3301
+	// Tooltip: Very cryptic. What does this mean?
+}
+
+Crusty_Crate: {
+	// DisplayName: Crusty Crate
+	/* Tooltip:
+		'''
+		{$CommonItemTooltip.RightClickToOpen}
+		'No, this is Patrick.'
+		''' */
+}
+
+Prikish: {
+	// DisplayName: Prikish
+	// Tooltip: ""
+}
+
+Tearracuda: {
+	// DisplayName: Tearracuda
+	// Tooltip: ""
+}
+
+Tire: {
+	// DisplayName: Tire
+	// Tooltip: "{$Mods.Origins.Items.GenericTooltip.Extractinator}"
+}
+
+Journal_Item: {
+	// DisplayName: "{§Journal}"
+	// Tooltip: ""
+}
+
+Defiled_Amalgamation_Bag: {
+	// DisplayName: Treasure Bag ({§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName})
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Fiberglass_Weaver_Bag: {
+	// DisplayName: Treasure Bag (Fiberglass Weaver)
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+World_Cracker_Bag: {
+	// DisplayName: Treasure Bag (World Cracker)
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Blood_Mushroom_Soup: {
+	// DisplayName: Worldgen Testing Item
+	// Tooltip: ""
+}
+
+Chocolate_Bar: {
+	// DisplayName: Animation Testing Item
+	// Tooltip: ""
+}
+
+NPC_Spawner: {
+	// DisplayName: NPC Spawner
+	// Tooltip: ""
+}
+
+Amoeba_Toy: {
+	// DisplayName: Amoeba Toy
+	// Tooltip: Summons a Meberoid to light up the day
+}
+
+Chromatic_Scale: {
+	// DisplayName: Chromatic Scale
+	// Tooltip: Summons a rainbow pangolin
+}
+
+Rusty_Cross_Necklace: {
+	// DisplayName: Rusty Cross Necklace
+	/* Tooltip:
+		'''
+		Summons a Guardian Angel to watch after you
+		'Be not afraid'
+		''' */
+}
+
+Strange_Power_Up: {
+	// DisplayName: Strange Power-Up
+	// Tooltip: The very first sprite.
+}
+
+Suspicious_Looking_Pebble: {
+	// DisplayName: Suspicious Looking Pebble
+	// Tooltip: Summons a {§Defiled} blight to light your way
+}
+
+Acrid_Drill: {
+	// DisplayName: "{§Acrid} Drill"
+	// Tooltip: Increased mining speed when submerged
+}
+
+Acrid_Hamaxe: {
+	// DisplayName: "{§Acrid} Hamaxe"
+	// Tooltip: Increased mining speed when submerged
+}
+
+Acrid_Pickaxe: {
+	// DisplayName: "{§Acrid} Pickaxe"
+	// Tooltip: Increased mining speed when submerged
+}
+
+Amoeba_Hook: {
+	// DisplayName: Amoeba Hook
+	// Tooltip: "'Wibbly wobbly, time-y, wimey'"
+}
+
+Brick_Breaker: {
+	// DisplayName: Brick Breaker
+	// Tooltip: "'Very pointy'"
+}
+
+Dismantler: {
+	// DisplayName: Dismantler
+	/* Tooltip:
+		'''
+		Able to mine Hellstone
+		'Very pointy'
+		''' */
+}
+
+Dissector: {
+	// DisplayName: Dissector
+	// Tooltip: ""
+}
+
+Felnum_Hamaxe: {
+	// DisplayName: Felnum Hamaxe
+	/* Tooltip:
+		'''
+		<right> to throw
+		Receives 50% higher damage bonuses
+		'Its strikes sound like thunder'
+		''' */
+}
+
+Felnum_Pickaxe: {
+	// DisplayName: Felnum Pickaxe
+	/* Tooltip:
+		'''
+		Able to mine Hellstone
+		Receives 50% higher damage bonuses
+		'Its strikes sound like thunder'
+		''' */
+}
+
+Lightning_Rod: {
+	// DisplayName: Lightning Rod
+	// Tooltip: ""
+}
+
+Parasitic_Manipulator: {
+	// DisplayName: Parasitic Manipulator
+	// Tooltip: ""
+}
+
+Rivenator: {
+	// DisplayName: "{§Riven}ator"
+	// Tooltip: Able to mine Hellstone
+}
+
+Snatcher: {
+	// DisplayName: Snatcher
+	// Tooltip: ""
+}
+
+Strainer: {
+	// DisplayName: Strainer
+	// Tooltip: Able to mine Hellstone
+}
+
+Alkahest_Arrow: {
+	// DisplayName: Alkahest Arrow
+	// Tooltip: Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]
+}
+
+Alkahest_Bullet: {
+	// DisplayName: Alkahest Bullet
+	// Tooltip: Attacks inflict [buffhint:Origins/Torn_Debuff]
+}
+
+Alkaline_Harpoon: {
+	// DisplayName: Alkaline Harpoon
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Inflicts [buffhint:Venom]
+		''' */
+}
+
+Bile_Arrow: {
+	// DisplayName: Bile Arrow
+	// Tooltip: "[buffhint/dnStuns:Origins/Rasterized_Debuff] the target"
+}
+
+Bile_Bullet: {
+	// DisplayName: Bile Bullet
+	// Tooltip: "[buffhint/dnStuns:Origins/Rasterized_Debuff] the target"
+}
+
+Bile_Dart: {
+	// DisplayName: Bile Dart
+	// Tooltip: "[buffhint/dnStuns:Origins/Rasterized_Debuff] the target"
+}
+
+Bouncy_Harpoon: {
+	// DisplayName: Bouncy Harpoon
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Bouncy!
+		''' */
+}
+
+Cursed_Harpoon: {
+	// DisplayName: Cursed Harpoon
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Inflicts [buffhint:CursedInferno]
+		''' */
+}
+
+Explosive_Harpoon: {
+	// DisplayName: Explosive Harpoon
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Might explode
+		''' */
+}
+
+Flammable_Harpoon: {
+	// DisplayName: Flammable Harpoon
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Sets enemies [buffhint/dnablaze:OnFire]
+		''' */
+}
+
+Metal_Slug: {
+	// DisplayName: Metal Slug
+	/* Tooltip:
+		'''
+		Used as ammo for handcannons
+		"'Great ammo for a really BIG gun'"
+		''' */
+}
+
+Harpoon: {
+	// DisplayName: Harpoon
+	// Tooltip: Used as ammo for harpoon guns
+}
+
+Resizable_Mine_Wood: {
+	// DisplayName: Resizable Mine I
+	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Resizable_Mine_Iron: {
+	// DisplayName: Resizable Mine II
+	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Resizable_Mine_Evil: {
+	// DisplayName: Resizable Mine III
+	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Resizable_Mine_Hellstone: {
+	// DisplayName: Resizable Mine IV
+	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Resizable_Mine_Bleeding_Obsidian: {
+	// DisplayName: Resizable Mine V
+	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Resizable_Mine_Chlorophyte: {
+	// DisplayName: Resizable Mine VI
+	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Resizable_Mine_Luminite: {
+	// DisplayName: Resizable Mine VII
+	// Tooltip: "'Compatible with your garden-variety mine launchers!'"
+}
+
+Scrap: {
+	// DisplayName: Scrap
+	// Tooltip: ""
+}
+
+Starfuze: {
+	// DisplayName: Starfuze
+	// Tooltip: ""
+}
+
+Teal_Solution: {
+	// DisplayName: Teal Solution
+	// Tooltip: Spreads the {§Riven_Hive}
+}
+
+Gray_Solution: {
+	// DisplayName: Gray Solution
+	// Tooltip: Spreads {§the_Defiled_Wastelands}
+}
+
+Abrasion_Blaster: {
+	// DisplayName: Abrasion Blaster
+	/* Tooltip:
+		'''
+		Charged shots can destroy tiles
+		Uses scrap as ammo
+		''' */
+}
+
+Ace_Shrapnel: {
+	// DisplayName: Ace Shrapnel
+	// Tooltip: Uses scrap as ammo
+}
+
+Ace_Shrapnel_Old: {
+	// DisplayName: Ancient Fragthrower
+	// Tooltip: What do we do with it?
+}
+
+Alkaline_Bomb: {
+	// DisplayName: Alkaline Bomb
+	// Tooltip: Explodes into [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff]
+}
+
+Alkaline_Grenade: {
+	// DisplayName: Alkaline Grenade
+	// Tooltip: Explodes into [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff]
+}
+
+Ameballoon: {
+	// DisplayName: Ameballoon
+	// Tooltip: "'Arguably worse than lava balloons'"
+}
+
+Bang_Snap: {
+	// DisplayName: Bang Snap
+	// Tooltip: The Party Girl loves these
+}
+
+Black_Hole_Bomb: {
+	// DisplayName: Black Hole Bomb
+	// Tooltip: "'Implode. Explode'"
+}
+
+Bloombomb: {
+	// DisplayName: Bloombomb
+	// Tooltip: Explodes into seeds
+}
+
+Bomb_Launcher: {
+	// DisplayName: Bomb Launcher
+	// Tooltip: "{$GenericTooltip.AltAttack}"
+}
+
+Bombardment: {
+	// DisplayName: Bombardment
+	/* Tooltip:
+		'''
+		Fires a barrage of floating mines
+		50% chance not to consume ammo
+		''' */
+}
+
+Bomboomstick: {
+	// DisplayName: Bomboomstick
+	// Tooltip: Fires a cluster of three to five grenades
+}
+
+Boomphracken: {
+	// DisplayName: Boomphracken
+	/* Tooltip:
+		'''
+		Uses slugs as ammo
+		Allows you to quickly throw explosives in your inventory after use
+		<right> to throw your first explosive from your inventory
+		'He works his work, I work mine'
+		''' */
+}
+
+Bouncy_Explosive_Golf_Ball: {
+	// DisplayName: Bouncy Explosive Golf Ball
+	// Tooltip: ""
+}
+
+Brainade: {
+	// DisplayName: Brainade
+	/* Tooltip:
+		'''
+		Explodes into a bloody mess
+		'Mind blown'
+		''' */
+}
+
+Caustica: {
+	// DisplayName: Caustica
+	/* Tooltip:
+		'''
+		Releases a flurry of chaotic sparkles
+		Developer item
+		''' */
+}
+
+Chlorodynamite: {
+	// DisplayName: Chlorodynamite
+	// Tooltip: Will pull in and stun any nearby enemies
+}
+
+Crystal_Bomb: {
+	// DisplayName: Crystal Bomb
+	// Tooltip: Explodes into several crystal shards
+}
+
+Crystal_Grenade: {
+	// DisplayName: Crystal Grenade
+	// Tooltip: Explodes into several crystal shards
+}
+
+Defiled_Spirit: {
+	// DisplayName: "{§Defiled} Spirit"
+	// Tooltip: ""
+}
+
+Dreikan: {
+	// DisplayName: Dreikan
+	/* Tooltip:
+		'''
+		Converts [itemname:MusketBall]s into [buffhint/dn{$Projectiles.Dreikan_Shot.DisplayName}:Daybreak].
+		Pronounced exactly how it looks: auf Deutsch
+		''' */
+}
+
+Explosive_Golf_Ball: {
+	// DisplayName: Explosive Golf Ball
+	// Tooltip: ""
+}
+
+Felnum_Shock_Grenade: {
+	// DisplayName: Felnum Shock Grenade
+	/* Tooltip:
+		'''
+		Receives 50% higher damage bonuses
+		'Quite shocking'
+		''' */
+}
+
+Flakjack: {
+	// DisplayName: Flakjack
+	// Tooltip: Uses slugs as ammo
+}
+
+Flashbang: {
+	// DisplayName: Flashbang
+	// Tooltip: "[buffhint/dnDazes:Origins/Blind_Debuff] enemies upon detonation"
+}
+
+Floaty_Bomb: {
+	// DisplayName: Floaty Bomb
+	// Tooltip: Somewhat unaffected by gravity
+}
+
+Grenado: {
+	// DisplayName: Grenado
+	// Tooltip: Uses grenades for ammo
+}
+
+Hand_Grenade_Launcher: {
+	// DisplayName: Hand Grenade Launcher
+	/* Tooltip:
+		'''
+		{$GenericTooltip.AltAttack}
+		'Doesn't this defeat the purpose of a hand grenade?'
+		''' */
+}
+
+Happy_Bomb: {
+	// DisplayName: Happy Bomb
+	// Tooltip: This one is giggly.
+}
+
+Hellfire_Bomb: {
+	// DisplayName: Hellfire Bomb
+	// Tooltip: Explodes into a [buffhint/dnlingering fire:OnFire3]
+}
+
+Hellfire_Grenade: {
+	// DisplayName: Hellfire Grenade
+	// Tooltip: Explodes into a [buffhint/dnlingering fire:OnFire3]
+}
+
+Impact_Bomb: {
+	// DisplayName: Impact Bomb
+	// Tooltip: "'Be careful, it's not a book'"
+}
+
+Impact_Dynamite: {
+	// DisplayName: Impact Dynamite
+	// Tooltip: "'Be careful, it's not a book'"
+}
+
+Impact_Golf_Ball: {
+	// DisplayName: Impact Golf Ball
+	// Tooltip: ""
+}
+
+Impact_Grenade: {
+	// DisplayName: Impact Grenade
+	// Tooltip: "'Be careful, it's not a book'"
+}
+
+Mine_Flayer: {
+	// DisplayName: Mine Flayer
+	/* Tooltip:
+		'''
+		Releases a barrage of canisters when swung
+		60% chance not to consume ammo
+		''' */
+}
+
+Nuclear_Arm: {
+	// DisplayName: Nuclear Arm
+	// Tooltip: "'Like nuclear arms? Well now you can have nuclear arms on your... arms'"
+}
+
+Omnidirectional_Claymore: {
+	// DisplayName: Omni-directional Claymore
+	/* Tooltip:
+		'''
+		Explodes when enemies cross its laser
+		Can aim in different directions
+		''' */
+}
+
+Outbreak_Bomb: {
+	// DisplayName: Outbreak Bomb
+	// Tooltip: Struck enemies contract a contagious effect
+}
+
+Peatball: {
+	// DisplayName: Peatball
+	// Tooltip: ""
+}
+
+Potato_Mine: {
+	// DisplayName: Potato Mine
+	/* Tooltip:
+		'''
+		Explodes when stepped on
+		'SPUDOW!'
+		''' */
+}
+
+Remote_Golf_Ball: {
+	// DisplayName: Remote Golf Ball
+	// Tooltip: ""
+}
+
+Rocodile: {
+	// DisplayName: Rocodile
+	/* Tooltip:
+		'''
+		Uses rockets as ammo
+		'Older cousin of the minishark'
+		''' */
+}
+
+Shrapnel_Bomb: {
+	// DisplayName: Shrapnel Bomb
+	// Tooltip: Explodes into shrapnel
+}
+
+Sonorous_Shredder: {
+	// DisplayName: Sonorous Shredder
+	// Tooltip: "'Split apart, lost one'"
+	// UnloadedTooltip: Unloaded, relies on Thorium Mod
+}
+
+Thermite_Launcher: {
+	// DisplayName: Thermite Launcher
+	/* Tooltip:
+		'''
+		Uses canisters as ordnance
+		[buffhint/dnBurn.:OnFire3]
+		''' */
+}
+
+Dragons_Breath: {
+	// DisplayName: Dragon's Breath
+	// Tooltip: Uses fireblossoms as ammo
+}
+
+Felnum_Golf_Ball: {
+	// DisplayName: Felnum Golf Ball
+	// Tooltip: ""
+}
+
+Fiberglass_Shard: {
+	// DisplayName: Fiberglass Shard
+	// Tooltip: "'Be careful, it's sharp'"
+}
+
+Fragarach: {
+	// DisplayName: Fragarach
+	// Tooltip: Needs to be put in ROTP when it gets devving
+}
+
+Amber_Of_Embers: {
+	// DisplayName: Amber of Embers
+	// Tooltip: ""
+}
+
+Beginners_Tome: {
+	// DisplayName: Beginner's Tome
+	// Tooltip: "'Be careful, it's book'"
+}
+
+Bled_Out_Staff: {
+	// DisplayName: Bled Out Staff
+	// Tooltip: ""
+}
+
+Chemical_Laser: {
+	// DisplayName: Chemical Laser
+	// Tooltip: Splits into [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff] on impact
+}
+
+Cryostrike: {
+	// DisplayName: Cryostrike
+	// Tooltip: Shoots a piercing icicle that inflicts [buffhint:Frostburn]
+}
+
+Dismay: {
+	// DisplayName: Dismay
+	// Tooltip: "'Very pointy for a book'"
+}
+
+Eternabrite: {
+	// DisplayName: Eternabrite
+	// Tooltip: Casts a forceful [buffhint/dnflame:OnFire]
+}
+
+Haunted_Vase: {
+	// DisplayName: Haunted Vase
+	// Tooltip: "'Try not to disturb the spirits within'"
+}
+
+Hivateinn: {
+	// DisplayName: Hævateinn
+	// Tooltip: Receives 50% higher damage bonuses
+}
+
+Hot_Potato: {
+	// DisplayName: Hot Potato
+	// Tooltip: "'Be careful, it's [buffhint/dnhot:OnFire]'"
+}
+
+Infusion: {
+	// DisplayName: Infusion
+	// Tooltip: Rapidly fires spikes that will detonate when the target is implanted with enough
+}
+
+Innermost_Manifest: {
+	// DisplayName: Innermost Manifest
+	// Tooltip: Attacks inflict [buffhint:Origins/Torn_Debuff]
+}
+
+Laser_Tag_Gun: {
+	// DisplayName: Laser Tag Gun
+	// Tooltip: Defective to some, glory to others
+}
+
+Low_Signal: {
+	// DisplayName: Low Signal
+	// Tooltip: ""
+}
+
+Magnus: {
+	// DisplayName: Magnus
+	// Tooltip: Receives 50% higher damage bonuses
+}
+
+Manasynk: {
+	// DisplayName: Manasynk
+	// Tooltip: ""
+}
+
+Manasynk_Pickup: {
+	// DisplayName: Mana
+	// Tooltip: ""
+}
+
+Missing_File: {
+	// DisplayName: Missing File
+	/* Tooltip:
+		'''
+		Click on the portrait of the targeted enemy for a damage bonus
+		'Let's demake some code...'
+		''' */
+}
+
+Pike_Of_Deepneus: {
+	// DisplayName: Pike of Deepneus
+	/* Tooltip:
+		'''
+		Time your throws for more powerful blows
+		'Like so deep dude'
+		''' */
+}
+
+Rigged_Cubix: {
+	// DisplayName: Rigged Cubix
+	// Tooltip: "'Infinite ammo, infinite wisdom'"
+}
+
+Seam_Beam: {
+	// DisplayName: Seam Beam
+	// Tooltip: Attacks inflict [buffhint:Origins/Torn_Debuff]
+}
+
+Splitsplash: {
+	// DisplayName: Splitsplash
+	// Tooltip: Casts amoeba bubbles that split on contact
+}
+
+Splashid: {
+	// DisplayName: Splashid
+	// Tooltip: Shoots a flurry of [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff]
+}
+
+Startillery: {
+	// DisplayName: Startillery
+	// Tooltip: Fires an arcing star-shot that explodes on impact
+}
+
+Tones_Of_Agony: {
+	// DisplayName: Tones of Agony
+	// Tooltip: "'Cries of the suffering'"
+}
+
+Amenonuhoko: {
+	// DisplayName: Amenonuhoko
+	// Tooltip: ""
+}
+
+Baseball_Bat: {
+	// DisplayName: Baseball Bat
+	// Tooltip: ""
+}
+
+Broken_Fiberglass_Sword: {
+	// DisplayName: Broken Fiberglass Sword
+	// Tooltip: "'It's even sharper now'"
+}
+
+Crystal_Cutters: {
+	// DisplayName: Crystal Cutters
+	// Tooltip: ""
+}
+
+Cyah_Nara: {
+	// DisplayName: Cyah Nara
+	// Tooltip: ""
+}
+
+Decimator: {
+	// DisplayName: Decimator
+	// Tooltip: ""
+}
+
+Depth_Charge: {
+	// DisplayName: Depth Charge
+	// Tooltip: "{$GenericTooltip.AltAttack}"
+}
+
+Eyndum_Scar: {
+	// DisplayName: Eyndum Scar
+	// Tooltip: A very lame end-game sword
+}
+
+Felnum_Boar_Spear: {
+	// DisplayName: Felnum Boar Spear
+	// Tooltip: Receives 50% higher damage bonuses
+}
+
+Fiberglass_Sword: {
+	// DisplayName: Fiberglass Sword
+	/* Tooltip:
+		'''
+		<right> to throw
+		'Be careful, it's sharp'
+		''' */
+}
+
+Knee_Slapper: {
+	// DisplayName: Knee Slapper
+	// Tooltip: "'Fish have feelings too'"
+}
+
+Krakram: {
+	// DisplayName: Krakram
+	/* Tooltip:
+		'''
+		Double backs on enemies
+		'Very pointy'
+		''' */
+}
+
+Nematoclaw: {
+	// DisplayName: Nematoclaw
+	// Tooltip: Inflicts [buffhint:Origins/Toxic_Shock_Debuff]
+}
+
+Nineball: {
+	// DisplayName: Nineball
+	// Tooltip: "'Target verified, commencing hostilities!'"
+}
+
+Personal_Laser_Blade: {
+	// DisplayName: Personal Laser Blade
+	/* Tooltip:
+		'''
+		Charge your swings for more powerful blows
+		'Be careful, it's hot'
+		''' */
+}
+
+Ripper_Lance: {
+	// DisplayName: Ripper Lance
+	// Tooltip: "'Very pointy'"
+}
+
+Riverang: {
+	// DisplayName: Riverang
+	// Tooltip: "'Very hydrodynamic'"
+}
+
+Spiker_Sword: {
+	// DisplayName: Spiker Sword
+	// Tooltip: "'Very pointy'"
+}
+
+Telephone_Pole: {
+	// DisplayName: Telephone Pole
+	// Tooltip: "'We already have Cellphones'"
+}
+
+The_Bird: {
+	// DisplayName: The Bird
+	/* Tooltip:
+		'''
+		Perfectly time your swings to deal incredible damage
+		{$GenericTooltip.AltAttack}
+		Developer item
+		'How's being 96000/r in the air going for yah? Thought so'
+		''' */
+}
+
+Tyrfing: {
+	// DisplayName: Tyrfing
+	/* Tooltip:
+		'''
+		Receives 50% higher damage bonuses
+		{$GenericTooltip.AltAttack}
+		''' */
+}
+
+Vorpal_Sword: {
+	// DisplayName: Vorpal Sword
+	// Tooltip: Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]
+}
+
+Vorpal_Sword_Cursed: {
+	// DisplayName: Vorpal Sword
+	/* Tooltip:
+		'''
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
+		Will attack for you if in your inventory
+		''' */
+}
+
+Potato_Launcher: {
+	// DisplayName: Potato Launcher
+	/* Tooltip:
+		'''
+		Uses potatoes for ammo
+		'Time to make some mash...'
+		''' */
+}
+
+Acrid_Impaler: {
+	// DisplayName: "{§Acrid} Impaler"
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		85.7% chance not to consume ammo
+		''' */
+}
+
+Ancient_Kruncher: {
+	// DisplayName: Ancient Kruncher
+	// Tooltip: Wh3re did you f!nd this?
+}
+
+Astoxo: {
+	// DisplayName: Astoxo
+	// Tooltip: Receives 50% higher damage bonuses
+}
+
+Bleeding_Obsidian_Kunai: {
+	// DisplayName: Bleeding Obsidian Kunai
+	/* Tooltip:
+		'''
+
+		Inflicts [bufftip:CursedInferno], [bufftip:Ichor], [bufftip:Origins/Rasterized_Debuff][ox:,] and [bufftip:Origins/Torn_Debuff]
+		'Be careful, it's sharp'
+		''' */
+}
+
+Bloodletter: {
+	// DisplayName: Bloodletter
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		80% chance not to consume ammo
+		''' */
+}
+
+Blotopus: {
+	// DisplayName: Blotopus
+	/* Tooltip:
+		'''
+		Fires a stream of needles that inflict [buffhint:Bleeding]
+		20% chance not consume ammo
+		''' */
+}
+
+Boat_Rocker: {
+	// DisplayName: Boat Rocker
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		<right> while a line is cast to use it as a whip
+		75% chance not to consume ammo
+		''' */
+}
+
+Boiler: {
+	// DisplayName: Boiler
+	// Tooltip: Uses fireblossoms as ammo
+}
+
+Bolt_Gun: {
+	// DisplayName: Bolt Gun
+	// Tooltip: "'Get boned'"
+}
+
+Broken_Fiberglass_Bow: {
+	// DisplayName: Unstrung Fiberglass Bow
+	/* Tooltip:
+		'''
+		Not very useful without a bowstring
+		Maybe you could find something to replace it
+		<right> to string it with vines
+		''' */
+}
+
+Felnum_Longbow: {
+	// DisplayName: Felnum Longbow
+	// Tooltip: Receives 50% higher damage bonuses
+}
+
+Fiberglass_Bow: {
+	// DisplayName: Fiberglass Bow
+	// Tooltip: "'Be careful, it's sharp'"
+}
+
+Fiberglass_Pistol: {
+	// DisplayName: Fiberglass Pistol
+	// Tooltip: "'Be careful, it's sharp'"
+}
+
+Firespit: {
+	// DisplayName: Firespit
+	// Tooltip: Uses fireblossoms as ammo
+}
+
+Hallowed_Cleaver: {
+	// DisplayName: Hallowed Cleaver
+	// Tooltip: "'Crude and dangerous'"
+}
+
+Harpoon_Gun: {
+	// DisplayName: Harpoon Gun
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		85.7% chance not to consume ammo
+		'Harpoons not included'
+		''' */
+	// VanillaTooltip: "'Harpoons included'"
+}
+
+Incision: {
+	// DisplayName: Incision
+	// Tooltip: "'Very pointy'"
+}
+
+Kruncher: {
+	// DisplayName: The Kruncher
+	// Tooltip: "'Very pointy'"
+}
+
+Longbone: {
+	// DisplayName: Longbone
+	// Tooltip: Turns most arrows into splitting bone arrows
+}
+
+Magma_Grappler: {
+	// DisplayName: Magma Grappler
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		80% chance not to consume ammo
+		''' */
+}
+
+Riven_Splitter: {
+	// DisplayName: "{§Riven} Splitter"
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		87.5% chance not to consume ammo
+		''' */
+}
+
+Shardcannon: {
+	// DisplayName: Shardcannon
+	// Tooltip: ""
+}
+
+Shotty_x2: {
+	// DisplayName: 2-in-1 Shotty
+	// Tooltip: ""
+}
+
+Shotty_x3: {
+	// DisplayName: 3-in-1 Shotty
+	// Tooltip: ""
+}
+
+Sleetfire: {
+	// DisplayName: Sleetfire
+	// Tooltip: Uses gel as ammo
+}
+
+Tendon_Tear: {
+	// DisplayName: Tendon Tear
+	// Tooltip: "'Snap. Crackle. Pop'"
+}
+
+Threemoepeater: {
+	// DisplayName: Threemoepeater
+	// Tooltip: ""
+}
+
+Tiny_Sniper: {
+	// DisplayName: Tiny Sniper
+	// Tooltip: "'Comically small, comically powerful'"
+}
+
+Tolruk: {
+	// DisplayName: Tolruk
+	/* Tooltip:
+		'''
+		Receives 50% higher damage bonuses
+		[tɵlɹɘk]
+		''' */
+}
+
+Viper_Rifle: {
+	// DisplayName: HNO-3 "Viper"
+	/* Tooltip:
+		'''
+		Has a chance to inflict [buffhint:Origins/Toxic_Shock_Debuff]
+		Critically strikes on otherwise afflicted enemies
+		''' */
+}
+
+Amebolize_Incantation: {
+	// DisplayName: Amebolize Incantation
+	/* Tooltip:
+		'''
+		5 summon tag damage
+		{$CommonItemTooltip.Whips}
+		''' */
+}
+
+Bomb_Artifact: {
+	// DisplayName: Bomb Artifact
+	// Tooltip: Summons a friendly bomb to fight for you
+}
+
+Bone_Latcher: {
+	// DisplayName: Bone Latcher
+	// Tooltip: Beckons distant enemies toward you
+}
+
+Brainy_Staff: {
+	// DisplayName: Brainy Staff
+	// Tooltip: Summons a mini crimbrain to fight for you
+}
+
+Eyeball_Staff: {
+	// DisplayName: Eyeball Staff
+	// Tooltip: Summons a demon eye to fight for you
+}
+
+Flagellash: {
+	// DisplayName: Flagellash
+	/* Tooltip:
+		'''
+		2⅔ summon tag damage per whip
+		{$CommonItemTooltip.Whips}
+		'Three ends are better than one'
+		''' */
+}
+
+Maelstrom_Incantation: {
+	// DisplayName: Maelstrom Incantation
+	/* Tooltip:
+		'''
+		5 summon tag damage
+		Directly struck enemies will shock nearby enemies when hit by minions
+		{$CommonItemTooltip.Whips}
+		Receives 50% higher damage bonuses
+		''' */
+}
+
+Rotting_Worm_Staff: {
+	// DisplayName: Rotting Worm Staff
+	// Tooltip: Summons a mini Eater of Worlds to fight for you
+}
+
+SMART_Wrench: {
+	// DisplayName: SMART Wrench
+	// Tooltip: Summons a SMART Turret to rip apart your enemies
+}
+
+Teardown: {
+	// DisplayName: Teardown
+	/* Tooltip:
+		'''
+		Summons a Flying Exoskeleton to fight for you
+		Ignores some enemy defense
+		''' */
+}
+
+Woodsprite_Staff: {
+	// DisplayName: Woodsprite Staff
+	// Tooltip: Summons a woodsprite to fight for you
+}
+
+Sanguinite_Ore_Item: {
+	// DisplayName: Sanguinite Ore
+	// Tooltip: A rare mineral that grows more powerful with heat.
+}
+
+Eitrite_Ore_Item: {
+	// DisplayName: Eitrite Ore
+	// Tooltip: "'So alkaline-concentrated it could be used as a power source'"
+}
+
+Baryte_Item: {
+	// DisplayName: Baryte
+	// Tooltip: ""
+}
+
+Defiled_Altar_Item: {
+	// DisplayName: "{§Defiled} Altar (Debugging Item)"
+	// Tooltip: ""
+}
+
+Defiled_Dungeon_Chest_Item: {
+	// DisplayName: "{§Defiled} Chest"
+	// Tooltip: ""
+}
+
+Defiled_Fissure_Item: {
+	// DisplayName: "{§Defiled} Fissure (Debugging Item)"
+	// Tooltip: ""
+}
+
+Defiled_Grass_Seeds: {
+	// DisplayName: "{§Defiled} Seeds"
+	// Tooltip: ""
+}
+
+Defiled_Heart_Item: {
+	// DisplayName: "{§Defiled} Heart (Debugging Item)"
+	// Tooltip: ""
+}
+
+Defiled_Ice_Item: {
+	// DisplayName: Gray Ice
+	// Tooltip: ""
+}
+
+Lost_Ore_Item: {
+	// DisplayName: Lost Ore
+	// Tooltip: A strange metal warped to the curiosity of {§the_Defiled_Wastelands}
+}
+
+Defiled_Pot_Item: {
+	// DisplayName: "{§Defiled} Pot (Debugging Item)"
+	// Tooltip: ""
+}
+
+Defiled_Sand_Item: {
+	// DisplayName: "{§Defiled} Sand"
+	// Tooltip: ""
+}
+
+Defiled_Sandstone_Item: {
+	// DisplayName: "{§Defiled} Sandstone"
+	// Tooltip: ""
+}
+
+Defiled_Stone_Item: {
+	// DisplayName: "{§Defiled} Stone"
+	// Tooltip: ""
+}
+
+Hardened_Defiled_Sand_Item: {
+	// DisplayName: Hardened {§Defiled} Sand
+	// Tooltip: ""
+}
+
+Locked_Defiled_Dungeon_Chest_Item: {
+	// DisplayName: "{§Defiled} Chest (locked)"
+	// Tooltip: ""
+}
+
+Soulspore_Item: {
+	// DisplayName: Soulspore
+	// Tooltip: ""
+}
+
+Bleeding_Obsidian_Item: {
+	// DisplayName: Bleeding Obsidian
+	// Tooltip: "'Weakens those who touch it'"
+}
+
+Dusk_Light_Item: {
+	// DisplayName: "{§Dusk}light"
+	// Tooltip: ""
+}
+
+Dusk_Stone_Item: {
+	// DisplayName: Twilith
+	// Tooltip: ""
+}
+
+A_Perfect_World_Item: {
+	// DisplayName: A Perfect World
+	// Tooltip: "'The {§Defiled}'"
+}
+
+Batholith_Item: {
+	// DisplayName: Batholith
+	// Tooltip: "'Patiently awaiting its unearthing...'"
+}
+
+Carburite_Item: {
+	// DisplayName: Carburite
+	// Tooltip: "'An organic mineral that reacts to compounds'"
+}
+
+Cleansing_Station_Item: {
+	// DisplayName: Cleansing Station
+	// Tooltip: Use to cleanse all assimilation while not in an evil biome
+}
+
+Felnum_Ore_Item: {
+	// DisplayName: Felnum Ore
+	// Tooltip: ""
+}
+
+// Felnum.DisplayName: Mods.Origins.Items.Felnum.DisplayName
+
+Fiberglass_Item: {
+	// DisplayName: Fiberglass Block
+	// Tooltip: ""
+}
+
+Laser_Tag_Console_Item: {
+	// DisplayName: Laser Tag Console
+	// Tooltip: Used to set up laser tag matches
+}
+
+Traffic_Cone_Item: {
+	// DisplayName: Traffic Cone
+	// Tooltip: "[buffhint/dnSlows:Origins/Slow_Debuff] enemies when placed"
+}
+
+Acetabularia_Item: {
+	// DisplayName: Acetabularia
+	// Tooltip: ""
+}
+
+Amoeba_Fluid_Item: {
+	// DisplayName: Amoeba Fluid
+	// Tooltip: Bouncy! Bouncy! Bouncy!
+}
+
+Encrusted_Ore_Item: {
+	// DisplayName: Encrusted Ore
+	// Tooltip: ""
+}
+
+Primordial_Permafrost_Item: {
+	// DisplayName: Primordial Permafrost
+	// Tooltip: A dangerous single-celled organism frozen...
+}
+
+Riven_Dungeon_Chest_Item: {
+	// DisplayName: "{§Riven} Chest"
+	// Tooltip: ""
+}
+
+Riven_Flesh_Item: {
+	// DisplayName: "{§Spug} Flesh"
+	// Tooltip: ""
+}
+
+Riven_Grass_Seeds: {
+	// DisplayName: "{§Riven} Seeds"
+	// Tooltip: ""
+}
+
+Riven_Pot_Item: {
+	// DisplayName: "{§Riven} Pot (Debugging Item)"
+	// Tooltip: ""
+}
+
+Chambersite_Stone_Wall_Item: {
+	// DisplayName: Chambersite Stone Wall
+	// Tooltip: ""
+}
+
+Defiled_Sandstone_Wall_Item: {
+	// DisplayName: "{§Defiled} Sandstone Wall"
+	// Tooltip: ""
+}
+
+Defiled_Stone_Wall_Item: {
+	// DisplayName: "{§Defiled} Stone Wall"
+	// Tooltip: ""
+}
+
+Eden_Wood_Wall_Item: {
+	// DisplayName: Eden Wood Wall
+	// Tooltip: ""
+}
+
+Fiberglass_Wall_Item: {
+	// DisplayName: Fiberglass Wall
+	// Tooltip: ""
+}
+
+Hardened_Defiled_Sand_Wall_Item: {
+	// DisplayName: Hardened {§Defiled} Sand Wall
+	// Tooltip: ""
+}
+
+Harmony_Brick_Wall_Item: {
+	// DisplayName: Harmony Brick Wall
+	// Tooltip: ""
+}
+
+Riven_Flesh_Wall_Item: {
+	// DisplayName: "{§Spug} Flesh Wall"
+	// Tooltip: ""
+}
+
+Baryte_Wall_Item: {
+	// DisplayName: Baryte Wall
+	// Tooltip: ""
+}
+
+Defiled_Dungeon_Chest_Placeholder_Item: {
+	// DisplayName: "{§Defiled} Dungeon Chest Placeholder Item"
+	// Tooltip: ""
+}
+
+Riven_Dungeon_Chest_Placeholder_Item: {
+	// DisplayName: "{§Riven} Dungeon Chest Placeholder Item"
+	// Tooltip: ""
+}
+
+Defiled_Torch: {
+	// DisplayName: "{§Defiled} Torch"
+	// Tooltip: ""
+}
+
+Riven_Torch: {
+	// DisplayName: "{§Riven} Torch"
+	// Tooltip: ""
+}
+
+Bile_Torch: {
+	// DisplayName: Bile Torch
+	// Tooltip: Can be placed in water
+}
+
+Alkahest_Torch: {
+	// DisplayName: Alkahest Torch
+	// Tooltip: Can be placed in water
+}
+
+// Surveysprout.DisplayName: Surveysprout
+// NE8.DisplayName: NE-8
+// Nova_Fragment.DisplayName: Nova Fragment
+
+Polyeel: {
+	// DisplayName: Polyeel
+	// Tooltip: ""
+}
+
+Snapthrow: {
+	// DisplayName: Snapthrow
+	// Tooltip: ""
+}
+
+Outreach: {
+	// DisplayName: Piston Rod
+	// Tooltip: ""
+}
+
+Piledriver: {
+	// DisplayName: Piledriver
+	// Tooltip: <right> to mine a larger area
+}
+
+Seal_Of_Cinders: {
+	// DisplayName: Seal of Cinders
+	// Tooltip: Motes of dust will combust after taking damage
+}
+
+Miter_Saw: {
+	// DisplayName: Miter Saw
+	// Tooltip: "{$GenericTooltip.AltAttack}"
+}
+
+C6_Jackhammer: {
+	// DisplayName: C6 Jackhammer
+	// Tooltip: <right> to mine a larger area
+}
+
+Brineglow_Debug_Item: {
+	// DisplayName: Brineglow (Debugging Item)
+	// Tooltip: ""
+}
+
+Silica_Item: {
+	// DisplayName: Silica
+	// Tooltip: ""
+}
+
+Bilious_Crate: {
+	// DisplayName: Bilious Crate
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Festering_Crate: {
+	// DisplayName: Festering Crate
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Chambersite_Gemspark_Item: {
+	// DisplayName: Chambersite Gemspark
+	// Tooltip: ""
+}
+
+Ambition_Potion: {
+	// DisplayName: Ambition Potion
+	// Tooltip: Increases armor penetration by 5
+}
+
+// Defiled_Amalgamation_Relic_Item.DisplayName: "{§Defiled} Amalgamation Relic"
+// Defiled_Amalgamation_Trophy_Item.DisplayName: "{§Defiled} Amalgamation Trophy"
+
+Triple_Threat: {
+	// DisplayName: Triple Threat
+	// Tooltip: ""
+}
+
+Ocotoral_Bud: {
+	// DisplayName: Ocotoral Bud
+	/* Tooltip:
+		'''
+		Summons a mobile barnacle turret to fight for you
+		Attacks [buffhint/dnRavage targets' health:Origins/Torn_Debuff]
+		''' */
+}
+
+// World_Cracker_Relic_Item.DisplayName: World Cracker Relic
+// World_Cracker_Trophy_Item.DisplayName: World Cracker Trophy
+
+Riven_Cactus_Item: {
+	// DisplayName: Cactus (Debugging Item)
+	// Tooltip: ""
+}
+
+Riven_Campfire_Item: {
+	// DisplayName: "{§Riven} Campfire"
+	// Tooltip: ""
+}
+
+Defiled_Campfire_Item: {
+	// DisplayName: "{§Defiled} Campfire"
+	// Tooltip: ""
+}
+
+Riven_Fountain_Item: {
+	// DisplayName: "{§Riven} Water Fountain"
+	// Tooltip: ""
+}
+
+Defiled_Fountain_Item: {
+	// DisplayName: "{§Defiled} Water Fountain"
+	// Tooltip: ""
+}
+
+Gel_Blister_Item: {
+	// DisplayName: Gel Blister (Debugging Item)
+	// Tooltip: ""
+}
+
+Orbital_Saw: {
+	// DisplayName: Orbital Saw
+	// Tooltip: ""
+}
+
+Neural_Network: {
+	// DisplayName: Neural Network
+	// Tooltip: Repeatedly striking enemies increases its fire rate
+}
+
+Eruption: {
+	// DisplayName: Eruption
+	// Tooltip: At the end of the projectile's time creates a geyser of [buffhint/dnflames:OnFire]
+}
+
+Weakpoint_Analyzer: {
+	// DisplayName: Weakpoint Analyzer
+	/* Tooltip:
+		'''
+		Creates two illusory copies of your ranged projectiles
+		Illusions have an 8% chance to deal damage
+		8% chance to save ammo
+		''' */
+}
+
+Vanilla_Shake: {
+	// DisplayName: Vanilla Shake
+	// Tooltip: ""
+}
+
+Surveysprout_Item: {
+	// DisplayName: Surveysprout
+	// Tooltip: ""
+}
+
+Peat_Moss_Item: {
+	// DisplayName: Peat Moss
+	// Tooltip: The Demolitionist might find this interesting...
+}
+
+Qube_Item: {
+	// DisplayName: Qube
+	// Tooltip: "'Physical information, like everything else in the world'"
+}
+
+Stone_Mask_Item: {
+	// DisplayName: Stone Mask
+	// Tooltip: Increases defense by 8, but your movement is hindered
+}
+
+Fungarust_Item: {
+	// DisplayName: Fungarust
+	// Tooltip: Catalyst of rusting metal
+}
+
+Chambersite_Item: {
+	// DisplayName: Chambersite
+	// Tooltip: "'Loses all of its color when exposed to light'"
+}
+
+Dysfunctional_Endless_Explosives_Bag: {
+	// DisplayName: Dysfunctional Endless Explosives Bag
+	/* Tooltip:
+		'''
+		15% chance not to consume thrown explosives or explosive ammo
+		'Where's a bomb when you need it?!'
+		''' */
+}
+
+Shield_of_Retribution: {
+	// DisplayName: Shield of Retribution
+	/* Tooltip:
+		'''
+		Grants immunity to knockback and fire blocks
+		All damage received is reflected to 3 nearby enemies
+		''' */
+}
+
+Stack_of_Shraps: {
+	// DisplayName: Stack of Shraps
+	// Tooltip: Double the gunpowder, double the fun.
+}
+
+Binding_Book: {
+	// DisplayName: Binding Book
+	/* Tooltip:
+		'''
+		Increases pickup range for mana stars
+		Increases maximum mana by 20
+		Restores mana when damaged
+		Increases mana shielding and damage reduction by 10%
+		Grants a dash that allows you to glitch through {§Defiled} blocks
+		''' */
+}
+
+Brittle_Quartz_Item: {
+	// DisplayName: Brittle Quartz
+	// Tooltip: ""
+}
+
+Quartz_Item: {
+	// DisplayName: Quartz
+	// Tooltip: ""
+}
+
+Brittle_Quartz_Wall_Item: {
+	// DisplayName: Brittle Quartz Wall
+	// Tooltip: ""
+}
+
+Quartz_Wall_Item: {
+	// DisplayName: Quartz Wall
+	// Tooltip: ""
+}
+
+Shaped_Glass: {
+	// DisplayName: Shaped Glass
+	// Tooltip: Summons the Fiberglass Weaver
+}
+
+Batholith_Wall_Safe_Item: {
+	// DisplayName: Batholith Wall
+	// Tooltip: ""
+}
+
+Batholith_Wall_Placed_Unsafe_Item: {
+	// DisplayName: Batholith Firewall
+	// Tooltip: ""
+}
+
+Riven_Grass_Wall_Safe_Item: {
+	// DisplayName: "{§Riven} Grass Wall"
+	// Tooltip: ""
+}
+
+Riven_Grass_Wall_Placed_Unsafe_Item: {
+	// DisplayName: Infested {§Riven} Grass Wall
+	// Tooltip: ""
+}
+
+Emergency_Bee_Canister: {
+	// DisplayName: Emergency Bee Canister
+	/* Tooltip:
+		'''
+		All bees become friendly
+		All bees have a chance to be duplicated
+		The player can move freely through honey
+		'In case of emergency, break glass for bees'
+		''' */
+}
+
+Blizzardwalkers_Jacket: {
+	// DisplayName: Blizzardwalker's Jacket
+	// Tooltip: Become immune after some time away from enemies
+}
+
+Cursed_Crown: {
+	// DisplayName: Cursed Crown
+	/* Tooltip:
+		'''
+		The player adopts the consistency of a slime
+		Reduced movement speed and acceleration
+		Significantly increased jump speed
+		+30% damage reduction
+		''' */
+}
+
+Strange_Tooth: {
+	// DisplayName: Strange Tooth
+	/* Tooltip:
+		'''
+		Summons miniature servants to chase after enemies for every minion slot you have
+		Servants have a chance to drop hearts when the player is low on health
+		''' */
+}
+
+Sunflower_Seed_Shooter: {
+	// DisplayName: Sunflower Seed Shooter
+	/* Tooltip:
+		'''
+		Uses sunflowers as ammo
+		80% chance not to consume ammo
+		''' */
+}
+
+Magic_Pain_Glove: {
+	// DisplayName: Magic Pain Glove
+	/* Tooltip:
+		'''
+		12% increased melee speed
+		8% reduced mana usage
+		Enables auto swing for melee weapons
+		Automatically use mana potions when needed
+		Shoots random magic as you swing
+		''' */
+}
+
+Joint_Pop: {
+	// DisplayName: Joint Pop
+	/* Tooltip:
+		'''
+		Striking with the tip will cause it to explode
+		The explosion will briefly [buffhint:Origins/Slow_Debuff] enemies
+		3 summon tag damage
+		{$CommonItemTooltip.Whips}
+		''' */
+}
+
+Cold_Snap: {
+	// DisplayName: Cold Snap
+	/* Tooltip:
+		'''
+		Inflicts [buffhint:Frostburn] to struck enemies
+		Uses canisters as ordnance
+		''' */
+}
+
+Control_Locus: {
+	// DisplayName: Control Locus
+	/* Tooltip:
+		'''
+		Creates two illusory copies of your ranged and explosive projectiles
+		Illusions have an 12% chance to deal damage
+		12% chance not to consume ammo
+		''' */
+}
+
+Terrarian_Voodoo_Doll: {
+	// DisplayName: Terrarian Voodoo Doll
+	// Tooltip: ""
+	// TooltipPlayer: It looks kind of like {0}...
+	// TooltipYouDoNotRecognizeTheBodiesInTheWater: It doesn't look familiar...
+	// WhyDontYouExist: It doesn't look familiar, but somehow you get the feeling that you don't either...
+}
+
+Avulsion: {
+	// DisplayName: Avulsion
+	/* Tooltip:
+		'''
+		Fires medium-range pulses
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
+		''' */
+}
+
+Primordial_Soup: {
+	// DisplayName: Primordial Soup
+	// Tooltip: Increased life regeneration based on the [buffhint/self:Origins/Torn_Debuff] severity you're affected by
+}
+
+Bug_Trapper: {
+	// DisplayName: Bug Trapper
+	// Tooltip: Increased life regeneration and defense based on the [buffhint/self:Origins/Torn_Debuff] severity you're affected by
+}
+
+Playtimes_Over: {
+	// DisplayName: Playtime's Over
+	/* Tooltip:
+		'''
+		Attacks [buffhint/dntenderize:Origins/Torn_Debuff] targets
+		+20% applied [buffhint:Origins/Torn_Debuff] severity
+		Increased life regeneration, defense[ox:,] and applied [buffhint/self:Origins/Torn_Debuff] severity based on the severity you're affected by
+		''' */
+}
+
+Bomb_Charm_of_Regeneration: {
+	// DisplayName: Bomb Charm of Regeneration
+	/* Tooltip:
+		'''
+		-20% self-damage
+		Rapidly regenerate life after taking self-damage
+		''' */
+}
+
+Petrified_Prickly_Pear: {
+	// DisplayName: Petrified Prickly Pear
+	// Tooltip: "{$CommonItemTooltip.MinorStats} and 25% increased mana shielding"
+}
+
+Endowood_Item: {
+	// DisplayName: Endowood
+	// Tooltip: ""
+}
+
+Marrowick_Item: {
+	// DisplayName: Marrowick
+	// Tooltip: Feels waxy to the touch.
+}
+
+Marrowick_Wall_Item: {
+	// DisplayName: Marrowick Wall
+	// Tooltip: Feels waxy to the touch.
+}
+
+Endowood_Hammer: {
+	// DisplayName: Endowood Hammer
+	// Tooltip: ""
+}
+
+Marrowick_Hammer: {
+	// DisplayName: Marrowick Hammer
+	// Tooltip: ""
+}
+
+Stabsmash: {
+	// DisplayName: Stabsmash
+	// Tooltip: "'Hammer and nail in one package'"
+}
+
+Endowood_Sword: {
+	// DisplayName: Endowood Sword
+	// Tooltip: ""
+}
+
+Marrowick_Sword: {
+	// DisplayName: Marrowick Sword
+	// Tooltip: ""
+}
+
+Endowood_Bow: {
+	// DisplayName: Endowood Bow
+	// Tooltip: ""
+}
+
+Marrowick_Bow: {
+	// DisplayName: Marrowick Bow
+	// Tooltip: ""
+}
+
+Gelled_Knife: {
+	// DisplayName: Gelled Knife
+	// Tooltip: Applies progressively higher [buffhint:Origins/Torn_Debuff] severities after every successful strike
+}
+
+Forbidden_Voice: {
+	// DisplayName: Forbidden Voice
+	/* Tooltip:
+		'''
+		You are [buffhint/self:Silenced], press [key:Origins/Forbidden Voice] to [buffhint/dnsilence:Origins/Silenced_Debuff] everyone else too
+		Gain up to 10% damage resistance over time by not speaking
+		''' */
+}
+
+Snipers_Mark: {
+	// DisplayName: Sniper's Mark
+	/* Tooltip:
+		'''
+		+15% ranged damage
+		Increased critical strike chance by 15% of the weapon's base damage
+		''' */
+}
+
+Area_Denial: {
+	// DisplayName: Area Denial
+	/* Tooltip:
+		'''
+		Launches a probe to bombard the targeted area with explosions
+		<right> to despawn the probe
+		''' */
+}
+
+Endowood_Wall_Item: {
+	// DisplayName: Endowood Wall
+	// Tooltip: ""
+}
+
+Endowood_Door_Item: {
+	// DisplayName: Endowood Door
+	// Tooltip: ""
+}
+
+Endowood_Chair_Item: {
+	// DisplayName: Endowood Chair
+	// Tooltip: ""
+}
+
+Endowood_Toilet_Item: {
+	// DisplayName: Endowood Toilet
+	// Tooltip: ""
+}
+
+Endowood_Grandfather_Clock_Item: {
+	// DisplayName: Endowood Clock
+	// Tooltip: ""
+}
+
+Endowood_Chest_Item: {
+	// DisplayName: Endowood Chest
+	// Tooltip: ""
+}
+
+Marrowick_Chair_Item: {
+	// DisplayName: Marrowick Chair
+	// Tooltip: ""
+}
+
+Marrowick_Chest_Item: {
+	// DisplayName: Marrowick Chest
+	// Tooltip: ""
+}
+
+Marrowick_Door_Item: {
+	// DisplayName: Marrowick Door
+	// Tooltip: ""
+}
+
+Marrowick_Grandfather_Clock_Item: {
+	// DisplayName: Marrowick Grandfather Clock
+	// Tooltip: ""
+}
+
+Marrowick_Toilet_Item: {
+	// DisplayName: Marrowick Toilet
+	// Tooltip: ""
+}
+
+Endowood_Bathtub_Item: {
+	// DisplayName: Endowood Bathtub
+	// Tooltip: ""
+}
+
+Endowood_Bookcase_Item: {
+	// DisplayName: Endowood Bookcase
+	// Tooltip: ""
+}
+
+Endowood_Piano_Item: {
+	// DisplayName: Endowood Piano
+	// Tooltip: ""
+}
+
+Endowood_Table_Item: {
+	// DisplayName: Endowood Table
+	// Tooltip: ""
+}
+
+Endowood_Work_Bench_Item: {
+	// DisplayName: Endowood Work Bench
+	// Tooltip: ""
+}
+
+Meteor: {
+	// DisplayName: Meteor
+	// Tooltip: Launches meteorites in a high arc
+}
+
+Self_Destruct: {
+	// DisplayName: Self-Destruct
+	// Tooltip: Deal impressive damage for a massive area
+}
+
+CORE_Generator: {
+	// DisplayName: CORE Generator
+	/* Tooltip:
+		'''
+		25% increased explosive throwing velocity
+		20% increased explosive knockback
+		15% increased explosive blast radius
+		Increases damage, movement speed[ox:,] and length of invincibility after taking damage
+		Increases explosive attack speed
+		Enables autouse for all explosive weapons
+		Shoots rockets as you swing
+		Additionally causes stars to fall and canisters from your inventory to release after taking damage
+		'Entropy really is a good alternative to coffee'
+		''' */
+}
+
+Napalm_Canister: {
+	// DisplayName: Napalm Canister
+	// Tooltip: Releases [buffhint/dnnapalm:OnFire] after landing
+}
+
+Futurephones: {
+	// DisplayName: Futurephones
+	/* Tooltip:
+		'''
+		All non-minion attacks can tag enemies
+		Non-minion attacks deal 5% increased damage and 10% critical strike chance against tagged enemies
+		''' */
+}
+
+Blockus_Tube: {
+	// DisplayName: Blockus Tube
+	// Tooltip: Summons a Juvenile Amalgamation to watch over your nasal cavity
+}
+
+Endowood_Candelabra_Item: {
+	// DisplayName: Endowood Candelabra
+	// Tooltip: ""
+}
+
+Endowood_Candle_Item: {
+	// DisplayName: Endowood Candle
+	// Tooltip: ""
+}
+
+Endowood_Chandelier_Item: {
+	// DisplayName: Endowood Chandelier
+	// Tooltip: ""
+}
+
+Endowood_Lamp_Item: {
+	// DisplayName: Endowood Lamp
+	// Tooltip: ""
+}
+
+Endowood_Sofa_Item: {
+	// DisplayName: Endowood Sofa
+	// Tooltip: ""
+}
+
+Endowood_Lantern_Item: {
+	// DisplayName: Endowood Lantern
+	// Tooltip: ""
+}
+
+Endowood_Bed_Item: {
+	// DisplayName: Endowood Bed
+	// Tooltip: ""
+}
+
+Endowood_Dresser_Item: {
+	// DisplayName: Endowood Dresser
+	// Tooltip: ""
+}
+
+Nova_Cascade: {
+	// DisplayName: Nova Cascade
+	/* Tooltip:
+		'''
+		Uses slugs as ammo
+		Causes an explosion after piercing enemies
+		''' */
+}
+
+Switchblade_Broadsword: {
+	// DisplayName: Switchblade
+	// Tooltip: <right> to retract
+}
+
+Switchblade_Shortsword: {
+	// DisplayName: Switchblade
+	// Tooltip: <right> to extend
+}
+
+Amber_Dye: {
+	// DisplayName: Amber Dye
+	// Tooltip: ""
+}
+
+Marrowick_Bathtub_Item: {
+	// DisplayName: Marrowick Bathtub
+	// Tooltip: ""
+}
+
+Marrowick_Bed_Item: {
+	// DisplayName: Marrowick Bed
+	// Tooltip: ""
+}
+
+Marrowick_Bookcase_Item: {
+	// DisplayName: Marrowick Bookcase
+	// Tooltip: ""
+}
+
+Marrowick_Candelabra_Item: {
+	// DisplayName: Marrowick Candelabra
+	// Tooltip: ""
+}
+
+Marrowick_Candle_Item: {
+	// DisplayName: Marrowick Candle
+	// Tooltip: ""
+}
+
+Marrowick_Chandelier_Item: {
+	// DisplayName: Marrowick Chandelier
+	// Tooltip: ""
+}
+
+Marrowick_Dresser_Item: {
+	// DisplayName: Marrowick Dresser
+	// Tooltip: ""
+}
+
+Marrowick_Lamp_Item: {
+	// DisplayName: Marrowick Lamp
+	// Tooltip: ""
+}
+
+Marrowick_Lantern_Item: {
+	// DisplayName: Marrowick Lantern
+	// Tooltip: ""
+}
+
+Marrowick_Piano_Item: {
+	// DisplayName: Marrowick Piano
+	// Tooltip: ""
+}
+
+Marrowick_Sofa_Item: {
+	// DisplayName: Marrowick Sofa
+	// Tooltip: ""
+}
+
+Marrowick_Table_Item: {
+	// DisplayName: Marrowick Table
+	// Tooltip: ""
+}
+
+Marrowick_Work_Bench_Item: {
+	// DisplayName: Marrowick Work Bench
+	// Tooltip: ""
+}
+
+Endowood_Sink_Item: {
+	// DisplayName: Endowood Sink
+	// Tooltip: ""
+}
+
+Marrowick_Sink_Item: {
+	// DisplayName: Marrowick Sink
+	// Tooltip: ""
+}
+
+Blast_Breastplate: {
+	// DisplayName: Blast Plate
+	/* Tooltip:
+		'''
+		Immune to knockback
+		-10% self-damage
+		''' */
+}
+
+Blast_Greaves: {
+	// DisplayName: Blast Guards
+	/* Tooltip:
+		'''
+		+25% movement speed
+		+2% acceleration
+		Increased jump speed
+		-10% self-damage
+		''' */
+}
+
+Blast_Helmet: {
+	// DisplayName: Blast Helmet
+	/* Tooltip:
+		'''
+		+16% generic critical strike chance
+		-10% self-damage
+		''' */
+}
+
+Defiled_Grass_Wall_Safe_Item: {
+	// DisplayName: "{§Defiled} Grass Wall"
+	// Tooltip: ""
+}
+
+Defiled_Grass_Wall_Placed_Unsafe_Item: {
+	// DisplayName: Infested {§Defiled} Grass Wall
+	// Tooltip: ""
+}
+
+Acrid_Handcannon: {
+	// DisplayName: "{§Acrid} Handcannon"
+	/* Tooltip:
+		'''
+		Uses slugs as ammo
+		Releases [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff] upon slug detonation
+		''' */
+}
+
+Newsboy_Cap: {
+	// DisplayName: Newsboy Cap
+	// Tooltip: ""
+}
+
+Abyssal_Anchor: {
+	// DisplayName: Abyssal Anchor
+	/* Tooltip:
+		'''
+		Increase to damage, melee speed, mana,
+		critical strike chance, life regeneration,
+		defense, mining speed, damage reduction 
+		and minion knockback
+		+25% mana shielding
+		Increased pick-up range for stars
+		-25% movement speed and -40% jump speed
+		Allows you to fall faster through liquids
+		Grants a dash that allows you to glitch through {§Defiled} blocks
+		''' */
+}
+
+Rasterized_Dye: {
+	// DisplayName: Rasterized Dye
+	// Tooltip: ""
+}
+
+Marrowick_Breastplate: {
+	// DisplayName: Marrowick Coat
+	// Tooltip: ""
+}
+
+Marrowick_Greaves: {
+	// DisplayName: Marrowick Greaves
+	// Tooltip: ""
+}
+
+Marrowick_Helmet: {
+	// DisplayName: Marrowick Cove
+	// Tooltip: ""
+}
+
+Endowood_Breastplate: {
+	// DisplayName: Endowood Breastplate
+	// Tooltip: ""
+}
+
+Endowood_Greaves: {
+	// DisplayName: Endowood Greaves
+	// Tooltip: ""
+}
+
+Endowood_Helmet: {
+	// DisplayName: Endowood Helmet
+	// Tooltip: ""
+}
+
+Nova_Swarm: {
+	// DisplayName: Nova Swarm
+	/* Tooltip:
+		'''
+		Rapidly fires homing rockets
+		'Light 'em up'
+		''' */
+}
+
+Counter_Offensive_Scarf: {
+	// DisplayName: Counter Offensive Scarf
+	/* Tooltip:
+		'''
+		Reduces damage you take by up to 20% when enemies gain distance from you
+		Increases damage you deal by up to 10% when enemies draw near
+		''' */
+}
+
+Dart_Crossbow: {
+	// DisplayName: Dart Crossbow
+	// Tooltip: ""
+}
+
+Acrid_Dye: {
+	// DisplayName: "{§Acrid} Dye"
+	// Tooltip: ""
+}
+
+Shimmer_Rod: {
+	// DisplayName: Shimmer Rod
+	/* Tooltip:
+		'''
+		Summons a rotatable cloud to rain in any direction
+		Click and hold the Use item key to rotate the cloud
+		<right> to despawn shimmer clouds
+		''' */
+}
+
+Shimmer_Dye: {
+	// DisplayName: Shimmer Dye
+	// Tooltip: Makes things look quite shimmery
+}
+
+Coolant_Canister: {
+	// DisplayName: Coolant Canister
+	// Tooltip: Inflicts [buffhint:Frostburn] to anything nearby upon impact
+}
+
+Cursed_Canister: {
+	// DisplayName: Cursed Canister
+	// Tooltip: Releases a lingering [buffhint:CursedInferno] in its wake
+}
+
+Bile_Canister: {
+	// DisplayName: Bile Canister
+	// Tooltip: Inflicts [buffhint:Origins/Rasterized_Debuff] to anything nearby upon impact
+}
+
+Flare_Launcher: {
+	// DisplayName: Flare Launcher
+	// Tooltip: Can fire flares and canisters
+}
+
+Ichor_Canister: {
+	// DisplayName: Ichor Canister
+	// Tooltip: Inflicts [buffhint:Ichor] to anything nearby upon impact
+}
+
+Alkahest_Canister: {
+	// DisplayName: Alkahest Canister
+	/* Tooltip:
+		'''
+		Releases alkahest drops upon impact
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
+		''' */
+}
+
+Alkaline_Canister: {
+	// DisplayName: Alkaline Canister
+	// Tooltip: Releases [buffhint/dnbrine droplets:Origins/Toxic_Shock_Debuff] upon impact
+}
+
+Banner_Item: {
+	// DisplayName: "{0} Banner"
+	// Tooltip: "{$CommonItemTooltip.BannerBonus}{0}"
+}
+
+Defiled_Banner_NPC_Banner_Item: {
+	// DisplayName: "{§Mods.Origins.Generic.Defiled_Antibody} Banner"
+	// Tooltip: Nearby players get a bonus against {§Mods.Origins.Generic.Defiled_Antibodies}
+}
+
+Link_Grenade: {
+	// DisplayName: Link Grenade
+	/* Tooltip:
+		'''
+		Only explodes when another explosive detonates nearby or when its fuse runs out
+		Damage adds up when exploding nearby other Link Grenades
+		''' */
+}
+
+Sticky_Link_Grenade: {
+	// DisplayName: Sticky Link Grenade
+	/* Tooltip:
+		'''
+		{$Mods.Origins.Items.Link_Grenade.Tooltip}
+		Can stick to enemies and tiles
+		''' */
+}
+
+Hemorang: {
+	// DisplayName: Hemorang
+	// Tooltip: Releases blood drops when thrown
+}
+
+Endowood_Platform_Item: {
+	// DisplayName: Endowood Platform
+	// Tooltip: ""
+}
+
+Dark_Spiral: {
+	// DisplayName: Dark Spiral
+	// Tooltip: Releases shadow scales on hit
+}
+
+Waning_Crescent: {
+	// DisplayName: Waning Crescent
+	// Tooltip: ""
+}
+
+True_Light_Disc: {
+	// DisplayName: True Light Disc
+	// Tooltip: ""
+}
+
+Plasma_Cutter: {
+	// DisplayName: Plasma Cutter
+	/* Tooltip:
+		'''
+		[buffhint/dnTenderizes:Origins/Torn_Debuff] the target
+		[buffhint:Origins/Torn_Debuff] is twice as effective for this weapon
+		''' */
+}
+
+Ziptie: {
+	// DisplayName: Ziptie
+	// Tooltip: Striking three or more enemies at the same time briefly inflicts [buffhint:Origins/Rasterized_Debuff] and increases attack speed
+}
+
+Communion: {
+	// DisplayName: Communion
+	// Tooltip: Fires a spark that bounces from enemies and pulls them towards you
+}
+
+Forbidden_Voice_Uncursed: {
+	// DisplayName: Forbidden Voice
+	/* Tooltip:
+		'''
+		10% increased melee damage
+		Increases the size of melee weapons
+		Your attacks [buffhint/dnweaken:Origins/Soulhide_Weakened_Debuff] enemies
+		''' */
+}
+
+Breach: {
+	// DisplayName: Breach
+	/* Tooltip:
+		'''
+		Casts a spirit-bound mass of black bile that explodes into miniature wisps
+		Enemies struck by this weapon recieve a brief [buffhint/dnraster:Origins/Rasterized_Debuff]
+		Self-damage recieved from this weapon replenishes mana
+		''' */
+}
+
+Encrusted_Brick_Item: {
+	// DisplayName: Encrusted Brick
+	// Tooltip: ""
+}
+
+Lost_Brick_Item: {
+	// DisplayName: Lost Brick
+	// Tooltip: ""
+}
+
+Bee_Afraid_Incantation: {
+	// DisplayName: Bee Afraid Incantation
+	/* Tooltip:
+		'''
+		Summons a swarm of bees to your cursor
+		6 summon tag damage
+		{$CommonItemTooltip.Whips}
+		''' */
+}
+
+True_Waning_Crescent: {
+	// DisplayName: True Waning Crescent
+	// Tooltip: ""
+}
+
+Terrarang: {
+	// DisplayName: Terrarang
+	// Tooltip: ""
+}
+
+Internal_Combustionfish: {
+	// DisplayName: Internal Combustionfish
+	// Tooltip: Remains attached to the target until multiple enemies are nearby
+}
+
+Amoebash: {
+	// DisplayName: Amoebash
+	// Tooltip: Slamming into the ground releases damaging amebic droplets
+}
+
+Smiths_Hammer: {
+	// DisplayName: Smith's Hammer
+	/* Tooltip:
+		'''
+		Summons a Walking Furnace to light your way
+		'He must be worried sick!'
+		''' */
+}
+
+Fleshy_Globe: {
+	// DisplayName: Fleshy Globe
+	// Tooltip: Summons a Self Contained Universe to light your way
+}
+
+Speed_Booster: {
+	// DisplayName: Speed Booster
+	/* Tooltip:
+		'''
+		5% increased damage
+		Allows flight, super fast running[ox:,] and increased acceleration
+		Increases damage and movement speed after taking damage
+		Provides light when worn
+		Allows the user to climb walls and dash into enemies
+		Greatly increased return speed for grapple hooks and harpoon guns
+		Gives a 10% chance to dodge attacks
+		Running fast for extended periods of time generates a charge for a powerful dash
+		''' */
+}
+
+Alkahest_Dart: {
+	// DisplayName: Alkahest Dart
+	/* Tooltip:
+		'''
+		Leaves a trail of alkahest behind it
+		Attacks inflict [buffhint:Origins/Torn_Debuff]
+		''' */
+}
+
+Chew_Toy: {
+	// DisplayName: Chew Toy
+	// Tooltip: Summons  w o r m
+}
+
+The_Calibrator: {
+	// DisplayName: The Calibrator
+	// Tooltip: Fires trackers that prompt a laser to fire upon colliding
+}
+
+Chambersite_Gemspark_Wall_Off_Safe_Item: {
+	// DisplayName: Offline Chambersite Gemspark Wall
+	// Tooltip: ""
+}
+
+Chambersite_Gemspark_Wall_On_Safe_Item: {
+	// DisplayName: Chambersite Gemspark Wall
+	// Tooltip: ""
+}
+
+Dew_Justice: {
+	// DisplayName: Dew Justice
+	// Tooltip: Amebic gel particulates rise from nearby surfaces to bombard your target
+}
+
+Impactaxe: {
+	// DisplayName: Impactaxe
+	/* Tooltip:
+		'''
+		Explodes when struck, destroying tiles nearby
+		'Self-damage resistance not included!'
+		''' */
+}
+
+Scrap_Compactor: {
+	// DisplayName: Scrap Compactor
+	/* Tooltip:
+		'''
+		Your explosives will explode into frenzied shrapnel
+		Nearby enemies below 40% and bosses below 10% of their max life whilst inflicted with [buffhint:Origins/Impeding_Shrapnel_Debuff] will rapidly lose life
+		''' */
+}
+
+Marrowick_Platform_Item: {
+	// DisplayName: Marrowick Platform
+	// Tooltip: ""
+}
+
+Wilting_Rose_Planter_Box_Item: {
+	// DisplayName: Wilting Rose Planter Box
+	// Tooltip: ""
+}
+
+Riven_Altar_Item: {
+	// DisplayName: "{§Riven} Altar (Debugging Item)"
+	// Tooltip: ""
+}
+
+Living_Bile_Item: {
+	// DisplayName: Living Bile Block
+	// Tooltip: ""
+}
+
+Living_Alkahest_Item: {
+	// DisplayName: Living Alkahest Block
+	// Tooltip: ""
+}
+
+Matrix: {
+	// DisplayName: Matrix
+	// Tooltip: Fires an array of explosive nodes that explode simultaneously when one of the links are broken
+}
+
+Phantom_Fury: {
+	// DisplayName: Phantom Fury
+	// Tooltip: ""
+}
+
+ASH_Attack_Relay: {
+	// DisplayName: A.S.H. Attack Relay
+	/* Tooltip:
+		'''
+		+5% damage
+		Releases explosive ashes that home towards your aggressors upon taking damage
+		''' */
+}
+
+Indestructible_Saddle: {
+	// DisplayName: Indestructible Saddle
+	// Tooltip: Saddle up for one wild ride
+}
+
+Swarm_Statue_Item: {
+	// DisplayName: Swarm Statue
+	// Tooltip: Increases enemy spawn rates when placed
+}
+
+Fabricator_Item: {
+	// DisplayName: Fabricator
+	// Tooltip: Used to craft high-tech items from mech components
+}
+
+Scrap_Barrier: {
+	// DisplayName: Scrap Barrier
+	/* Tooltip:
+		'''
+		50% damage reduction while above 90% of maximum life
+		All life regeneration has a 3-second buffer period before it is applied after getting hit while above half life
+		''' */
+}
+
+Scrap_Barrier_Uncursed: {
+	// DisplayName: Scrap Barrier
+	// Tooltip: 15% damage reduction and increased life regeneration
+}
+
+Laser_Tag_Vest: {
+	// DisplayName: Laser Tag Vest
+	// Tooltip: Allows you to participate in Laser Tag events
+}
+
+Trash_Lid: {
+	// DisplayName: Impenetrable Trashcan Lid
+	// Tooltip: Knocks you back from your explosions instead of taking damage
+}
+
+Desert_Crown: {
+	// DisplayName: Desert Crown
+	// Tooltip: Summons a sand elemental to fight for you
+}
+
+Scabcoral_Lyre: {
+	// DisplayName: Scabcoral Lyre
+	/* Tooltip:
+		'''
+		Summons a vein of scabcoral that attacks nearby enemies
+		Must be placed directly on a block
+		''' */
+}
+
+Laser_Tag_Base_Console_Item: {
+	// DisplayName: Laser Tag Base Console
+	// Tooltip: Used as a base marker for teams in Laser Tag
+}
+
+Generic_Weapon: {
+	// DisplayName: Generic Weapon
+	// Tooltip: Perfect. Too perfect
+}
+
+Hemoptysis: {
+	// DisplayName: Hemoptysis
+	// Tooltip: Launch bloody phlegm that damages, [buffhint:Origins/Slow_Debuff][ox:,] and [buffhint/dnbleeds:Bleeding] enemies
+}
+
+Eaterboros: {
+	// DisplayName: Eaterboros
+	/* Tooltip:
+		'''
+		Charge your attack to grow the chain
+		Eaters struck in the chain release adjacent segments
+		{$GenericTooltip.AltAttack}
+		''' */
+}
+
+// Lost_Ore.DisplayName: Mods.Origins.Items.Lost_Ore.DisplayName
+
+Plague_Texan_Set: {
+	// DisplayName: Plague Texan Set
+	// Tooltip: ""
+}
+
+Chee_Set: {
+	// DisplayName: Lee Set
+	// Tooltip: ""
+}
+
+Slag_Bucket: {
+	// DisplayName: Slag Bucket
+	/* Tooltip:
+		'''
+		40% damage reduction while above 80% of maximum life
+		All life regeneration has a 4-second buffer period before it is applied after getting hit while above half life
+		Grants immunity to knockback, fire blocks[ox:,] and [buffhint/self:Origins/Impeding_Shrapnel_Debuff]
+		All damage received is reflected to 3 nearby enemies
+		You regenerate life while [buffhint/dnon fire|self:OnFire]
+		''' */
+}
+
+Slag_Bucket_Uncursed: {
+	// DisplayName: Slag Bucket
+	/* Tooltip:
+		'''
+		15% damage reduction and increased life regeneration
+		Grants immunity to knockback, fire blocks[ox:,] and [buffhint/self:Origins/Impeding_Shrapnel_Debuff]
+		All damage received is reflected to 3 nearby enemies
+		You regenerate life while [buffhint/dnon fire|self:OnFire]
+		''' */
+}
+
+Fresh_Meat_Artifact: {
+	// DisplayName: Fresh Meat Artifact
+	// Tooltip: The Meat Dog will viciously protect its food
+}
+
+Sixth_Spline: {
+	// DisplayName: Fifth Spline
+	// Tooltip: Go nuts! This thing is really nutty firing all those nuts and bolts
+}
+
+Spray_N_Pray: {
+	// DisplayName: Spray 'N Pray
+	// Tooltip: Uses paint as ammo
+}
+
+Amebic_Gel_Wall_Safe_Item: {
+	// DisplayName: Amebic Gel Wall
+	// Tooltip: ""
+}
+
+Amebic_Gel_Wall_Placed_Unsafe_Item: {
+	// DisplayName: Moist Amebic Gel Wall
+	// Tooltip: ""
+}
+
+Broken_Terratotem: {
+	// DisplayName: Broken Terratotem
+	/* Tooltip:
+		'''
+		Summons totems to fight for you
+		Higher totems have stronger attacks and bring valuable items to you
+		''' */
+}
+
+Terratotem: {
+	// DisplayName: Terratotem
+	/* Tooltip:
+		'''
+		Summons totems to fight for you
+		Higher totems have stronger attacks and bring valuable items to you
+		''' */
+}
+
+Inanimate_Zombie_Hand: {
+	// DisplayName: Inanimate Zombie Hand
+	// Tooltip: Summons a friendly zombie to fight for you
+}
+
+TileEntityDebugger: {
+	// DisplayName: Tile Entity Debugger
+	// Tooltip: ""
+}
+
+Hibernal_Incantation: {
+	// DisplayName: Hibernal Incantation
+	/* Tooltip:
+		'''
+		4 summon tag damage
+		{$CommonItemTooltip.Whips}
+		''' */
+}
+
+Silicon_Ore_Item: {
+	// DisplayName: Silicon Ore
+	// Tooltip: ""
+}
+
+// Silicon_Bar.DisplayName: Silicon Bar
+
+Thread_Rod: {
+	// DisplayName: Thread Rod
+	/* Tooltip:
+		'''
+		Summons fiberglass threads that cut enemies that cross them
+		<right> to despawn your threads
+		Works best in enclosed spaces
+		''' */
+}
+
+Glass_Cannon: {
+	// DisplayName: Glass Cannon
+	// Tooltip: Fires a cluster of canisters
+}
+
+// Royal_Gel_Buff: Summons a baby slime prince to fight for you
+// Volatile_Gelatin_Buff: Struck enemies will detonate when struck by explosions or lit on fire
+
+Sour_Broth: {
+	// DisplayName: Sour Broth
+	/* Tooltip:
+		'''
+		Increases minion critical strike chance by 10%
+		Artifact minions gain an additional 15% critical strike chance
+		''' */
+}
+
+Foul_Broth: {
+	// DisplayName: Foul Broth
+	/* Tooltip:
+		'''
+		Increases minion damage by 100%
+		Reduces minion speed by 50%
+		''' */
+}
+
+Hearty_Broth: {
+	// DisplayName: Hearty Broth
+	/* Tooltip:
+		'''
+		Increases minion speed by 10%
+		Increases artifact minion health by 20%
+		''' */
+}
+
+Partybringer: {
+	// DisplayName: Partybringer
+	// Tooltip: Fires presents that bring pleasant surprises
+}
+
+The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction: {
+	// DisplayName: T.U.D.F.L.O.M.D.
+	// Tooltip: ""
+}
+
+Eternanite: {
+	// DisplayName: Eternanite
+	// Tooltip: Casts a forceful cloud of gaseous [buffhint/dnblack bile:Origins/Rasterized_Debuff]
+}
+
+Cobalt_Harpoon_Gun: {
+	// DisplayName: Cobalt Harpoon Gun
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		87.5% chance not to consume ammo
+		''' */
+}
+
+Palladium_Harpoon_Gun: {
+	// DisplayName: Palladium Harpoon Gun
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		85.7% chance not to consume ammo
+		''' */
+}
+
+Adamantite_Harpoon_Gun: {
+	// DisplayName: Adamantite Harpoon Gun
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		83.3% chance not to consume ammo
+		''' */
+}
+
+Mythril_Harpoon_Gun: {
+	// DisplayName: Mythril Harpoon Gun
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		87.5% chance not to consume ammo
+		''' */
+}
+
+Orichalcum_Harpoon_Gun: {
+	// DisplayName: Orichalcum Harpoon Gun
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		83.3% chance not to consume ammo
+		''' */
+}
+
+Titanium_Harpoon_Gun: {
+	// DisplayName: Titanium Harpoon Gun
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		83.3% chance not to consume ammo
+		''' */
+}
+
+Harpoon_Burst_Rifle: {
+	// DisplayName: Harpoon Burst Rifle
+	/* Tooltip:
+		'''
+		Uses harpoons as ammo
+		83.3% chance not to consume ammo
+		''' */
+}
+
+Unmisfire: {
+	// DisplayName: Unmisfire
+	// Tooltip: Still hits near-misses
+}
+
+Mildew_Whip: {
+	// DisplayName: Mildew Whip
+	/* Tooltip:
+		'''
+		Has a chance to inflict [buffhint:Origins/Toxic_Shock_Debuff]
+		7 summon tag damage
+		{$CommonItemTooltip.Whips}
+		''' */
+}
+
+Defiled_Relay_Item: {
+	// DisplayName: "{§Defiled} Relay (Debugging Item)"
+	// Tooltip: ""
+}
+
+Eyenade: {
+	// DisplayName: Eyenade
+	// Tooltip: Flies towards nearby enemies
+}
+
+Brine_Fountain_Item: {
+	// DisplayName: Brine Fountain
+	// Tooltip: ""
+}
+
+Chipper_Knife: {
+	// DisplayName: Chipper Knife
+	// Tooltip: Briefly [buffhint/dnrasterizes:Origins/Rasterized_Debuff] enemies
+}
+
+Ancient_Felnum_Breastplate: {
+	// DisplayName: Ancient Felnum Breastplate
+	// Tooltip: ""
+}
+
+Ancient_Felnum_Greaves: {
+	// DisplayName: Ancient Felnum Greaves
+	// Tooltip: ""
+}
+
+Ancient_Felnum_Helmet: {
+	// DisplayName: Ancient Felnum Helmet
+	// Tooltip: ""
+}
+
+Gun_Magazine: {
+	// DisplayName: Gun Magazine
+	// Tooltip: +{0:P0} gun attack speed
+}
+
+Eitrite_Gun_Magazine: {
+	// DisplayName: Eitrite Gun Magazine
+	// Tooltip: Burst guns fire an extra round
+}
+
+// Crimtane_Gun_Magazine.DisplayName: Crimtane Gun Magazine
+// Defiled_Gun_Magazine.DisplayName: "{§Defiled} Gun Magazine"
+// Demonite_Gun_Magazine.DisplayName: Demonite Gun Magazine
+// Encrusted_Gun_Magazine.DisplayName: Encrusted Gun Magazine
+// Molten_Gun_Magazine.DisplayName: Molten Gun Magazine
+// Sanguinite_Gun_Magazine.DisplayName: Sanguinite Gun Magazine
+
+Bee_Canister: {
+	// DisplayName: Bee Canister
+	// Tooltip: Releases bees in its wake
+}
+
+Discharge_Canister: {
+	// DisplayName: Discharge Canister
+	// Tooltip: Inflicts [buffhint:Origins/Static_Shock_Debuff] to enemies in its blast
+}
+
+// MiningHelmet.BuffTooltip: 3% increased explosive critical strike chance
+// MiningShirt.BuffTooltip: 5% increased explosive damage
+/* RainCoat.BuffTooltip:
+	'''
+	5% increased damage
+	2% increased damage during rain
+	''' */
+/* RainHat.BuffTooltip:
+	'''
+	5% increased damage
+	2% increased damage during rain
+	''' */
+
+Hydrothermal_Vent_Item: {
+	// DisplayName: Hydrothermal Vent Item
+	// Tooltip: ""
+}
+
+Replacement_Wall_Item: {
+	// DisplayName: Replacement Wall Item
+	// Tooltip: ""
+}
+
+Lightning_Ring: {
+	// DisplayName: Lightning Ring
+	// Tooltip: All attacks inflict [buffhint:Origins/Mini_Static_Shock_Debuff]
+}
+
+/* CombineTooltips:
+	'''
+	{0}
+	{1}
+	''' */
+// Shock_Collar.DisplayName: Shock Collar
+
+Felnum_Sword: {
+	// DisplayName: Thunderbolt
+	/* Tooltip:
+		'''
+		Inflicts [buffhint:Origins/Static_Shock_Debuff]
+		<right> to stab
+		Receives 50% higher damage bonuses
+		''' */
+}
+
+Rubber_Dynamite: {
+	// DisplayName: Rubber Dynamite
+	// Tooltip: "'Dynamite for babies.'"
+}
+
+Felnum_Shock_Glasses: {
+	// DisplayName: Felnum Shock Glasses
+	// Tooltip: Felnum enemies become friendly when worn
+}
+
+// Sparking_Flame_Barrel.DisplayName: Sparking Flame Barrel
+
+Fairy_Lotus: {
+	// DisplayName: Fairy Lotus
+	// Tooltip: Attracts helpful fairies and makes them glow brighter
+}
+
+Rubber_Breastplate: {
+	// DisplayName: Rubber Breastplate
+	// Tooltip: +10% damage reduction
+}
+
+Rubber_Greaves: {
+	// DisplayName: Rubber Greaves
+	// Tooltip: 5% increased damage
+}
+
+Rubber_Helmet: {
+	// DisplayName: Rubber Helmet
+	// Tooltip: 5% increased critical strike chance
+}
+
+Pink_Cryosten_Helmet: {
+	// DisplayName: Pink {$Mods.Origins.Items.Cryosten_Helmet.DisplayName}
+	// Tooltip: "{$Mods.Origins.Items.Cryosten_Helmet.Tooltip}"
+}
+
+Pink_Cryosten_Breastplate: {
+	// DisplayName: Pink {$Mods.Origins.Items.Cryosten_Breastplate.DisplayName}
+	// Tooltip: "{$Mods.Origins.Items.Cryosten_Breastplate.Tooltip}"
+}
+
+Pink_Cryosten_Greaves: {
+	// DisplayName: Pink {$Mods.Origins.Items.Cryosten_Greaves.DisplayName}
+	// Tooltip: "{$Mods.Origins.Items.Cryosten_Greaves.Tooltip}"
+}
+
+Bobbit_Worm: {
+	// DisplayName: Bobbit Worm
+	// Tooltip: ""
+}
+
+Toadfish: {
+	// DisplayName: Toadfish
+	// Tooltip: ""
+}
+
+Framing_Tester: {
+	// DisplayName: Framing Tester
+	// Tooltip: ""
+}
+
+Defective_Mortar_Shell: {
+	// DisplayName: Defective Mortar Shell
+	// Tooltip: Summons a mortar turret to fight for you
+}
+
+Sour_Apple: {
+	// DisplayName: Sour Apple
+	// Tooltip: "{$CommonItemTooltip.MediumStats}"
+}
+
+Ocotillo_Item: {
+	// DisplayName: Ocotillo Item
+	// Tooltip: ""
+}
+
+Ocotillo_Finger: {
+	// DisplayName: Ocotillo Finger
+	/* Tooltip:
+		'''
+		Has a chance to inflict [buffhint:Bleeding]
+		2 summon tag damage
+		{$CommonItemTooltip.Whips}
+		''' */
+}
+
+Brine_Convergence_Incantation: {
+	// DisplayName: Brine Convergence Incantation
+	/* Tooltip:
+		'''
+		Inflicts [buffhint:Origins/Toxic_Shock_Debuff]
+		6 summon tag damage
+		{$CommonItemTooltip.Whips}
+		''' */
+}
+
+Monolith_Rod: {
+	// DisplayName: Relay Rod
+	// Tooltip: Summons a {§Defiled} Relay to boost you and your minions
+	// StrengthTooltip: "{0:P0} strength"
+	// StrengthPrefixTooltip: "{0} strength"
+	// CritTooltip: "{0:P0} critical chance"
+}
+
+Peat_Moss_Debug_Item: {
+	// DisplayName: "[fool:Items.Peat_Moss.DisplayName] (Debugging Item)"
+	// Tooltip: ""
+}
+
+Crawdaddys_Revenge: {
+	// DisplayName: Crawdaddy's Revenge
+	// Tooltip: Enemies repeatedly struck get clawed
+}
+
+Acrid_Laser_Rod: {
+	// DisplayName: "{§Acrid} Laser Rod"
+	// Tooltip: The bobber will light up the area around it
+}
+
+Acrid_Beam_Thrusters: {
+	// DisplayName: "{§Acrid} Beam Thrusters"
+	// Tooltip: "{$CommonItemTooltip.FlightAndSlowfall}"
+}
+
+Hydrolantern: {
+	// DisplayName: Hydrolantern
+	/* Tooltip:
+		'''
+		Non-consumable
+		Floats in the water and follows movement
+		<right> to despawn all but 1 hydrolantern
+		''' */
+}
+
+Mildew_Heart: {
+	// DisplayName: Mildew Heart
+	/* Tooltip:
+		'''
+		Up to 65% of your max life is gradually converted into mildew health
+		Mildew health regenerates faster than regular health
+		Your death is delayed for as long as your max mildew health decays
+		''' */
+}
+
+Party_Ring_Balloon: {
+	// DisplayName: Party Ring Balloon
+	/* Tooltip:
+		'''
+		{$Mods.Origins.Items.Donor_Wristband.Tooltip}
+		{$ItemTooltip.BalloonHorseshoeHoney}
+		''' */
+}
+
+// Rockstar_Choker.DisplayName: Rockstar Choker
+
+Necromancer_Crown: {
+	// DisplayName: Necromancer Mask
+	// Tooltip: +15% summon attack speed
+}
+
+Lost_Diver_Bag: {
+	// DisplayName: Treasure Bag (Lost Diver)
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Torpedo_Tube: {
+	// DisplayName: Torpedo Tube
+	/* Tooltip:
+		'''
+		Inflicts [buffhint:Origins/Cavitation_Debuff]
+		Fires a torpedo that seeks enemies while submerged
+		''' */
+}
+
+Faith_Beads: {
+	// DisplayName: Faith Beads
+	/* Tooltip:
+		'''
+		Grants immunity to [buffhint/self:Suffocation] and reduces damage from loss of breath
+		Grants the ability to swim and easy movement through liquids
+		All of your attacks inflict [buffhint:Origins/Cavitation_Debuff], [buffhint:Wet][ox:,] and have a chance to cause explosions underwater
+		+40% explosive blast radius
+		'Only through struggle do we find ourselves'
+		''' */
+}
+
+Wet_Wood: {
+	// DisplayName: Wet Wood
+	// Tooltip: Summons a Mildew Blob to blob around
+}
+
+Watered_Down_Keytar: {
+	// DisplayName: Watered-down Keytar
+	/* Tooltip:
+		'''
+		<left> for a [buffhint:Origins/Toxic_Shock_Debuff]-inflicting synth
+		<right> for a [buffhint/dncavitating:Origins/Cavitation_Debuff] bass
+		''' */
+}
+
+Lost_Diver_Chest: {
+	// DisplayName: Lost Diver Chest
+	// Tooltip: ""
+}
+
+Lost_Diver_Greaves: {
+	// DisplayName: Lost Diver Greaves
+	// Tooltip: ""
+}
+
+Lost_Diver_Helmet: {
+	// DisplayName: Lost Diver Helmet
+	// Tooltip: It's smelly in here...
+}
+
+Crown_Jewel: {
+	// DisplayName: Crown Jewel
+	// EffectTooltip: Increases your damage, crit chance[ox:,] and self-damage resistance by 1% for every Hardmode boss you've defeated
+	/* Tooltip:
+		'''
+		{$Mods.Origins.Items.Crown_Jewel.EffectTooltip}
+		'Many heroes have died for this, and yet you are the one to wield its power'
+		''' */
+	// Toggle_On: "{$Mods.Origins.Items.Crown_Jewel.DisplayName} enabled"
+	// Toggle_Off: "{$Mods.Origins.Items.Crown_Jewel.DisplayName} disabled"
+	/* ScaledEffectTooltip:
+		'''
+		+{0}% damage,
+		+{0}% crit chance
+		-{0}% explosive self-damage
+		''' */
+	// BossesSlain: "{0} bosses slain"
+}
+
+Retaliatory_Tendril: {
+	// DisplayName: Retaliatory Tendril
+	// Tooltip: Increases your attack speed as you take damage until you deal 500 damage
+}
+
+First_Dream: {
+	// DisplayName: First Dream
+	/* Tooltip:
+		'''
+		<right> to change your appearance!
+		Makes you look like one of Origins' spriters!
+		''' */
+	// Mode_Chrersis: Chrersis
+	// Mode_Diver: Diver
+	// Mode_ByteLoss: "[glitch:ByteLoss]"
+}
+
+Tender_Flesh_Heart: {
+	// DisplayName: Tender Flesh Heart
+	/* Tooltip:
+		'''
+		Up to 65% of your max life is gradually converted into mildew health
+		Mildew health regenerates faster than regular health
+		Your death is delayed for as long as your max mildew health decays
+		Increased life regeneration, defense and mildew health conversion based on the [buffhint/self:Origins/Torn_Debuff] severity you're affected by
+		''' */
+}
+
+Torpedo_Tube_Alt: {
+	// DisplayName: "{$Mods.Origins.Items.Torpedo_Tube.DisplayName}"
+	// Tooltip: "{$Mods.Origins.Items.Torpedo_Tube.Tooltip}"
+}
+
+Boat_Rocker_Alt: {
+	// DisplayName: "{$Mods.Origins.Items.Boat_Rocker.DisplayName}"
+	// Tooltip: "{$Mods.Origins.Items.Boat_Rocker.Tooltip}"
+}
+
+Feathery_Crest: {
+	// DisplayName: Feathery Crest
+	/* Tooltip:
+		'''
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		''' */
+}
+
+Feather_Cape: {
+	// DisplayName: Feather Cape
+	/* Tooltip:
+		'''
+		Allows for a super high jump and negates fall damage
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		''' */
+}
+
+Harpy_Horseshoe_Balloon: {
+	// DisplayName: Harpy Horseshoe Balloon
+	/* Tooltip:
+		'''
+		Allows the holder to double jump
+		Increases jump height and negates fall damage
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		''' */
+}
+
+Soldering_Iron: {
+	// DisplayName: Soldering Iron
+	// Tooltip: Release your input right as it strikes for a critical hit
+}
+
+Old_Brine_Rock: {
+	// DisplayName: Old Brine Rock
+	// Tooltip: Summons an [buffhint/dnarmed:Origins/Toxic_Shock_Debuff] leaf snapper to fight for you
+}
+
+// Rebreather_Gear.DisplayName: Rebreather Gear
+// Sunder_Gut.DisplayName: Sunder Gut
+
+Laser_Line_Bow: {
+	// DisplayName: Laser Line Bow
+	// Tooltip: Fired arrows release [buffhint/dnbrine rain:Origins/Toxic_Shock_Debuff] in their wake
+}
+
+Guardian_Rod: {
+	// DisplayName: Guardian Rod
+	// Tooltip: Summons a miniature Felnum Guardian to fight for you
+}
+
+Heartache_Dynamite: {
+	// DisplayName: Heartache Dynamite
+	// Tooltip: Enemies slain are more likely to drop healing hearts
+}
+
+Sonar_Dynamite: {
+	// DisplayName: Sonar Dynamite
+	// Tooltip: Explodes when enemies are pinged by it
+}
+
+Brine_Key: {
+	// DisplayName: Brine Key
+	// Tooltip: Unlocks a Brine Chest in the Dungeon
+}
+
+Mildew_Item: {
+	// DisplayName: Mildew Block
+	// Tooltip: "'Gross. Just gross'"
+}
+
+Basic_Crate: {
+	// DisplayName: Basic Crate
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+The_Jungles_Window_Item: {
+	// DisplayName: The Jungle's Window
+	// Tooltip: "'Albert Kiln'"
+}
+
+Defiled_Monolith_Item: {
+	// DisplayName: "{§Defiled} Monolith"
+	// Tooltip: "'Harness a fraction of the {§Defiled}'s ability to break the 4th wall'"
+}
+
+Charm_Of_Naivety: {
+	// DisplayName: Charm of Naivety
+	// Tooltip: ""
+}
+
+Unsuspicious_Bush_Item: {
+	// DisplayName: Unsuspicious Bush
+	// Tooltip: "'Does absolutely nothing'"
+}
+
+Explosive_Barrel: {
+	// DisplayName: Explosive Barrel
+	// Tooltip: ""
+}
+
+Acrid_Spout: {
+	// DisplayName: "{§Acrid} Spout"
+	/* Tooltip:
+		'''
+		Spews droplets of brine
+		6 summon tag damage
+		{$CommonItemTooltip.Whips}
+		''' */
+}
+
+Liars_Tongue: {
+	// DisplayName: Liar's Tongue
+	/* Tooltip:
+		'''
+		You are [buffhint/self:Silenced], press [key:Origins/Forbidden Voice] to [buffhint/dnsilence:Origins/Silenced_Debuff] everyone else too
+		Gain up to 27% damage resistance over time by not speaking
+		''' */
+}
+
+Caeser_Salad: {
+	// DisplayName: Caeser Salad
+	// Tooltip: "{$CommonItemTooltip.MediumStats}"
+}
+
+// Fiberglass_Weaver_Relic_Item.DisplayName: Fiberglass Weaver Relic
+// Fiberglass_Weaver_Trophy_Item.DisplayName: Fiberglass Weaver Trophy
+
+Mithrafin: {
+	// DisplayName: Mithrafin
+	/* Tooltip:
+		'''
+		Extends any [buffhint/dnPoison:Poisoned], [buffhint:Venom], or [buffhint:Origins/Toxic_Shock_Debuff] inflicted onto enemies
+		Reduces the duration of these effects when applied to you
+		''' */
+}
+
+// Noxious_Mithrafin.DisplayName: Noxious Mithrafin
+// Ornamental_Keepsake.DisplayName: Ornamental Keepsake
+
+Boomboom: {
+	// DisplayName: Boomboom
+	// Tooltip: "'She loves her toys, especially the deadly ones!'"
+}
+
+Fumethrower: {
+	// DisplayName: Fumethrower
+	// Tooltip: Spits colorful flames
+}
+
+Lost_Picture_Frame: {
+	// DisplayName: Lost Picture Frame
+	// Tooltip: Summons the Lost Diver
+}
+
+// Lost_Diver_Relic_Item.DisplayName: Lost Diver Relic
+// Lost_Diver_Trophy_Item.DisplayName: Lost Diver Trophy
+
+Extremophile_Breastplate: {
+	// DisplayName: Extremophile Breastplate
+	/* Tooltip:
+		'''
+		+15% generic damage
+		+10% generic attack speed
+		''' */
+}
+
+Extremophile_Greaves: {
+	// DisplayName: Extremophile Greaves
+	/* Tooltip:
+		'''
+		+25% movement speed
+		10% increased speed when submerged
+		Grants the ability to swim
+		''' */
+}
+
+Extremophile_Helmet: {
+	// DisplayName: Extremophile Helmet
+	// Tooltip: +15% generic velocity
+}
+
+Bomb_Trap_Item: {
+	// DisplayName: Bomb Trap
+	// Tooltip: ""
+}
+
+Limestone_Item: {
+	// DisplayName: Limestone
+	// Tooltip: ""
+}
+
+Brine_Dungeon_Chest_Item: {
+	// DisplayName: Brine Chest
+	// Tooltip: ""
+}
+
+Locked_Brine_Dungeon_Chest_Item: {
+	// DisplayName: Brine Dungeon Chest (locked)
+	// Tooltip: ""
+}
+
+Soulslasher: {
+	// DisplayName: Soulslasher
+	// Tooltip: ""
+}
+
+Latchkey: {
+	// DisplayName: Latchkey
+	// Tooltip: Use to glitch through {§Defiled} blocks
+}
+
+Sharp_Broth: {
+	// DisplayName: Sharp Broth
+	/* Tooltip:
+		'''
+		Artifact minions inflict [buffhint:Origins/Electrified_Debuff]
+		All minions inflict [buffhint:Origins/Static_Shock_Debuff]
+		''' */
+}
+
+Minty_Broth: {
+	// DisplayName: Minty Broth
+	/* Tooltip:
+		'''
+		All minions inflict [buffhint:Frostburn2] in a small area around them
+		Artifact minions deal damage to nearby enemies when hurt
+		''' */
+}
+
+Full_Send: {
+	// DisplayName: Full Send
+	/* Tooltip:
+		'''
+		Allows the holder to perform a glitchy double jump
+		Increases jump height but doesn't negate fall damage
+		86% of fall damage is instead directed towards three nearby enemies
+		''' */
+}
+
+Akaliegis: {
+	// DisplayName: Alkaliegis
+	/* Tooltip:
+		'''
+		15% damage reduction while an artifact minion is active
+		Artifact minions heal while at max life
+		''' */
+}
+
+The_Foot: {
+	// DisplayName: The Foot
+	/* Tooltip:
+		'''
+		Inflicts [buffhint:Origins/Toxic_Shock_Debuff]
+		Releases an akaline aura when striking the ground
+		Hold <right> to use it like a flail
+		<right> and release to use it as an anchor
+		''' */
+}
+
+Terlet_Paper: {
+	// DisplayName: Terlet Paper
+	// Tooltip: Summons a kawaii spooder
+}
+
+Shotgun_Glove: {
+	// DisplayName: Shotgun Glove
+	// Tooltip: Shoots as you swing
+}
+
+Wilting_Rose_Seeds: {
+	// DisplayName: Wilting Rose Seeds
+	// Tooltip: ""
+}
+
+Grenade_Lawnchair: {
+	// DisplayName: Grenade Lawnchair
+	// Tooltip: Releases grenades in your inventory as you swing
+}
+
+Fiberbass: {
+	// DisplayName: Fiberbass
+	// Tooltip: ""
+}
+
+Regurgitator_Of_Souls: {
+	// DisplayName: Regurgitator of Souls
+	// Tooltip: Inflicts [buffhint:Origins/Shadefire_Debuff]
+}
+
+Venom_Shield: {
+	// DisplayName: Venom Shield
+	/* Tooltip:
+		'''
+		Attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
+		Effects are stronger while {§Acrid} Armor is equipped
+		Grants immunity to knockback and fire blocks
+		All damage received is reflected to 3 nearby enemies
+		Allows the player to dash into the enemy
+		Double tap a direction
+		''' */
+}
+
+Sunflower_In_A_Pot: {
+	// DisplayName: Sunflower in a Pot
+	/* Tooltip:
+		'''
+		Summons a sunny sunflower to fight for you
+		Heals you and slightly increases your speed during the day
+		''' */
+}
+
+// Tiki_Buckler.DisplayName: Tiki Buckler
+
+Fallacious_Vase: {
+	// DisplayName: Fallacious Vase
+	/* Tooltip:
+		'''
+		Grants a quick dash
+		Increases dash speed by 20%
+		''' */
+}
+
+Golden_Lotus: {
+	// DisplayName: Golden Lotus
+	/* Tooltip:
+		'''
+		Increases pickup range for items
+		Press [key:Origins/GoldenLotus] to enable/disable loot search
+		Press [key:Origins/GoldenLotus] over discovered loot to have a golden fairy bring it to you
+		''' */
+}
+
+DefiledRenewal: {
+	// DisplayName: "{§Defiled} Renewal"
+	// Tooltip: "{§Defiled_Wastelands} a large radius"
+}
+
+DefiledSupremeRenewal: {
+	// DisplayName: "{§Defiled} Renewal Supreme"
+	// Tooltip: "{§Defiled_Wastelands} the entire world"
+}
+
+RivenRenewal: {
+	// DisplayName: "{§Riven} Renewal"
+	// Tooltip: "{§Riven_Hive}s a large radius"
+}
+
+RivenSupremeRenewal: {
+	// DisplayName: "{§Riven} Renewal Supreme"
+	// Tooltip: "{§Riven_Hive}s the entire world"
+}
+
+AshenRenewal: {
+	// DisplayName: "{§Ashen} Renewal"
+	// Tooltip: Pollutes a large radius
+}
+
+AshenSupremeRenewal: {
+	// DisplayName: "{§Ashen} Renewal Supreme"
+	// Tooltip: Pollutes the entire world
+}
+
+Power_Lotus: {
+	// DisplayName: Power Lotus
+	/* Tooltip:
+		'''
+		Power fairies will protect you from projectiles and enemies
+		Increases melee knockback
+		12% increased melee speed
+		Enables auto swing for melee weapons
+		Increases the size of melee weapons
+		Increases pickup range for items
+		Press [key:Origins/GoldenLotus] to enable/disable loot search
+		Press [key:Origins/GoldenLotus] over discovered loot to have a power fairy bring it to you
+		''' */
+}
+
+Defiled_Storage_Upgrade: {
+	// DisplayName: "{§Defiled} Storage Upgrade"
+	/* Tooltip:
+		'''
+		Upgrades Storage Unit to 80 capacity
+		<right> a Storage Unit to use
+		''' */
+}
+
+Defiled_Storage_Unit_Item: {
+	// DisplayName: "{§Defiled} Storage Unit"
+	/* Tooltip:
+		'''
+		A component for storing items in a Magic Storage storage system
+		Can store up to 80 items
+		''' */
+}
+
+Encrusted_Storage_Upgrade: {
+	// DisplayName: Encrusted Storage Upgrade
+	/* Tooltip:
+		'''
+		Upgrades Storage Unit to 80 capacity
+		<right> a Storage Unit to use
+		''' */
+}
+
+Encrusted_Storage_Unit_Item: {
+	// DisplayName: Encrusted Storage Unit
+	/* Tooltip:
+		'''
+		A component for storing items in a Magic Storage storage system
+		Can store up to 80 items
+		''' */
+}
+
+Sanguinite_Storage_Upgrade: {
+	// DisplayName: Sanguinite Storage Upgrade
+	/* Tooltip:
+		'''
+		Upgrades Storage Unit to 80 capacity
+		<right> a Storage Unit to use
+		''' */
+}
+
+Sanguinite_Storage_Unit_Item: {
+	// DisplayName: Sanguinite Storage Unit
+	/* Tooltip:
+		'''
+		A component for storing items in a Magic Storage storage system
+		Can store up to 80 items
+		''' */
+}
+
+Light_Broth: {
+	// DisplayName: Light Broth
+	// Tooltip: Artifact minions receive 25% less damage
+}
+
+Keytar: {
+	// DisplayName: Keytar
+	// Tooltip: <right> to alternate between different instruments!
+
+	Modes: {
+		// 0: Synth inflicts [buffhint:Venom] and [buffhint:Origins/Toxic_Shock_Debuff]
+		// 1: Bass inflicts [buffhint:Origins/Cavitation_Debuff]
+		// 2: Lead is 3x likely to deal critical hits
+	}
+
+	// Mode0: Synth Mode
+	// Mode1: Bass Mode
+	// Mode2: Lead Mode
+}
+
+Nerve_Flan: {
+	// DisplayName: Nerve Flan
+	// Tooltip: "'Putting the soul in fan-dancing'"
+}
+
+Defiled_Chest: {
+	// DisplayName: "{§Defiled} Chest"
+	// Tooltip: Summons {§Defiled} Mimic
+}
+
+Riven_Chest: {
+	// DisplayName: "{§Riven} Chest"
+	// Tooltip: Summons {§Riven} Mimic
+}
+
+Suspicious_Trash_Compactor: {
+	// DisplayName: Suspicious Trash Compactor
+	// Tooltip: Summons Trash Compactor Mimic
+}
+
+Greater_Summoning_Potion: {
+	// DisplayName: Greater Summoning Potion
+	// Tooltip: Increases your max number of minions by 2
+}
+
+Greater_Summoning_Potato: {
+	// DisplayName: Greater Summoning Potato
+	// Tooltip: Increases your max number of minions by 2
+}
+
+Fake_Defiled_Altar_Item: {
+	// DisplayName: "{§Defiled} Altar"
+	// Tooltip: A placeable {§Defiled} Altar. Cannot be mined to get hardmode ores
+}
+
+Fake_Riven_Altar_Item: {
+	// DisplayName: "{§Riven} Altar"
+	// Tooltip: A placeable {§Riven} Altar. Cannot be mined to get hardmode ores
+}
+
+Fake_Ashen_Altar_Item: {
+	// DisplayName: "{§Ashen} Altar"
+	// Tooltip: A placeable {§Ashen} Altar. Cannot be mined to get hardmode ores
+}
+
+Impetus: {
+	// DisplayName: Impetus
+	// Tooltip: Projectiles split apart until there's no more splitting apart to be done
+}
+
+Sweet_Broth: {
+	// DisplayName: Sweet Broth
+	/* Tooltip:
+		'''
+		15% increased minion attack speed
+		10% increased artifact minion damage
+		''' */
+}
+
+Rocket_Rifle: {
+	// DisplayName: Rocket Rifle
+	/* Tooltip:
+		'''
+		Uses canisters and rockets as ammo
+		Using canisters as ammo has limited fuel
+		''' */
+}
+
+Ocotillo_Flower: {
+	// DisplayName: Ocotillo Flower
+	// Tooltip: ""
+}
+
+Geothermal_Sludge: {
+	// DisplayName: Geothermal Sludge
+	// Tooltip: "{$Mods.Origins.Items.GenericTooltip.Extractinator}"
+}
+
+Inject_Incantation: {
+	// DisplayName: Inject Incantation
+	/* Tooltip:
+		'''
+		6 summon tag damage
+		{$CommonItemTooltip.Whips}
+		''' */
+}
+
+Huff_Puffer_Bait: {
+	// DisplayName: Huff Puffer Bait
+	// Tooltip: ""
+}
+
+Umami_Broth: {
+	// DisplayName: Umami Broth
+	/* Tooltip:
+		'''
+		All minions inflict [buffhint:Venom]
+		Artifact minions also inflict [buffhint:Origins/Toxic_Shock_Debuff]
+		''' */
+}
+
+Mildew_Incantation: {
+	// DisplayName: Mildew Incantation
+	// Tooltip: Cast mildew spores that summon miniature creepers on tiles
+}
+
+Lucky_Hat: {
+	// DisplayName: Lucky Hat
+	/* Tooltip:
+		'''
+		+8% ranged and explosive critical strike chance
+		'The Western look goes well with anything you wear!'
+		''' */
+}
+
+Eye_Of_Aether: {
+	// DisplayName: Spyglass
+	// Tooltip: Locates the Aether
+}
+
+Soul_Snatcher: {
+	// DisplayName: Soul Snatcher
+	/* Tooltip:
+		'''
+		Hold <right> to spin it around
+		Becomes empowered after striking enemies, inflicting [buffhint:Origins/Shadefire_Debuff]
+		Pressing <left> while empowered and holding <right> launches it
+		''' */
+}
+
+Tangela_Tether: {
+	// DisplayName: "{§Tangela} Tether"
+	// Tooltip: ""
+}
+
+Mildew_Breastplate: {
+	// DisplayName: Mildew Wrap
+	/* Tooltip:
+		'''
+		+10% generic velocity
+		+10% summon damage and +10% additional artifact damage
+		''' */
+}
+
+Mildew_Greaves: {
+	// DisplayName: Mildew Pants
+	// Tooltip: Increases your max number of minions by 2
+}
+
+Mildew_Helmet: {
+	// DisplayName: Mildew Wreath
+	/* Tooltip:
+		'''
+		Incantations slightly home to targets
+		+10% summon damage and +10% additional artifact damage
+		''' */
+}
+
+Plain_Broth: {
+	// DisplayName: Plain Broth
+	// Tooltip: Increases minion size by 25%
+}
+
+Greasy_Broth: {
+	// DisplayName: Greasy Broth
+	/* Tooltip:
+		'''
+		All minions inflict [buffhint:Oiled]
+		Artifact minions release greasy gas that [buffhint/dnburns enemies:OnFire]
+		''' */
+}
+
+Savory_Broth: {
+	// DisplayName: Savory Broth
+	/* Tooltip:
+		'''
+		Increases debuff duration from minions by 20%
+		Artifact minions [buffhint/dntenderize:Origins/Torn_Debuff] targets
+		''' */
+}
+
+// Super_Mojo_Flask.DisplayName: Super Mojo Flask
+
+Spicy_Broth: {
+	// DisplayName: Spicy Broth
+	// Tooltip: Minions [buffhint/dnengulf enemies in flames:OnFire3]
+}
+
+Tangela_Dye: {
+	// DisplayName: "{§Tangela} Dye"
+	// Tooltip: Makes things intangible to your computer
+}
+
+Tangela_Bramble_Item: {
+	// DisplayName: "{§Tangela} Bramble"
+	// Tooltip: ""
+}
+
+Tangela_Bud: {
+	// DisplayName: "{§Tangela} Bud"
+	/* Tooltip:
+		'''
+		Used to make {§Tangela} Dye
+		'Ooooh, preeeetty'
+		''' */
+}
+
+Venus_Coral_Debug_Item: {
+	// DisplayName: Venus Coral (Debugging Item)
+	// Tooltip: ""
+}
+
+Defiled_Regolith_Item: {
+	// DisplayName: "{§Defiled} Regolith"
+	// Tooltip: ""
+}
+
+Brine_Fiend_Item: {
+	// DisplayName: "{$Mods.Origins.NPCs.Brine_Fiend.DisplayName}"
+	// Tooltip: "{$Mods.Origins.NPCs.Brine_Fiend.Dialogue.Standard3}"
+}
+
+Defiled_Effigy_Item: {
+	// DisplayName: "{$Mods.Origins.NPCs.Defiled_Effigy.DisplayName}"
+	// Tooltip: "{$Mods.Origins.NPCs.Defiled_Effigy.TownNPCMood.Content}"
+}
+
+Residual_Crate: {
+	// DisplayName: Residual Crate
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Brine_Haze: {
+	// DisplayName: Brine Haze
+	// Tooltip: Releases [buffhint/dnclouds of brine:Origins/Toxic_Shock_Debuff] that linger
+}
+
+Enchanted_Fiberglass_Wall_Item: {
+	// DisplayName: Enchanted Fiberglass Wall
+	// Tooltip: ""
+}
+
+Anti_Gray_Dye: {
+	// DisplayName: Anti-Gray Dye
+	// Tooltip: ""
+}
+
+Encrusted_Brick_Wall_Item: {
+	// DisplayName: Encrusted Brick Wall
+	// Tooltip: ""
+}
+
+Lost_Brick_Wall_Item: {
+	// DisplayName: Lost Brick Wall
+	// Tooltip: ""
+}
+
+// Nerve_Flan_Food.Tooltip: "{$Buffs.Nerve_Flan_Food_Buff.Description}"
+
+Aether_Bullet: {
+	// DisplayName: Aether Bullet
+	// Tooltip: Fires behind you as well
+}
+
+Aether_Canister: {
+	// DisplayName: Aether Canister
+	// Tooltip: Floats in air and releases aether stars
+}
+
+Chambersite_Bunny_Cage_Item: {
+	// DisplayName: Chambersite Bunny Cage
+	// Tooltip: ""
+}
+
+Chambersite_Squirrel_Cage_Item: {
+	// DisplayName: Chambersite Squirrel Cage
+	// Tooltip: ""
+}
+
+Chambersite_Bunny_Item: {
+	// DisplayName: Chambersite Bunny
+	// Tooltip: ""
+}
+
+Chambersite_Squirrel_Item: {
+	// DisplayName: Chambersite Squirrel
+	// Tooltip: ""
+}
+
+Silicon_Sword: {
+	// DisplayName: Silicon Sword
+	// Tooltip: "'TO will never exist'"
+}
+
+Chambersite_Minigun: {
+	// DisplayName: Chambersite Minigun
+	// Tooltip: Fires in a spread before ramping up
+}
+
+Aetherite_Bar: {
+	// Tooltip: "'It's smooth, but that's not what it feels like'"
+	// DisplayName: Aetherite Bar
+}
+
+Shimmerstar_Staff: {
+	// DisplayName: Shimmerstar Staff
+	/* Tooltip:
+		'''
+		Releases empowered aether stars to track down enemies
+		{$GenericTooltip.AltAttack}
+		'Oh hey... this is the area I was in charge of for three seconds'
+		''' */
+}
+
+Aether_Opal: {
+	// DisplayName: Aether Opal
+	// Tooltip: Summons a Shimmer Guardian to fight for you
+}
+
+Aether_Orb: {
+	// DisplayName: Aether Orb
+	// Tooltip: Throw into the Shimmer to summon the {$Mods.Origins.NPCs.Shimmer_Construct.DisplayName}
+}
+
+Chambersite_Hook: {
+	// DisplayName: Chambersite Hook
+	// Tooltip: ""
+}
+
+Chambersite_Robe: {
+	// DisplayName: Chambersite Robe
+	/* Tooltip:
+		'''
+		80% reduced mana cost
+		Reduces maximum mana by 80
+		Maximum mana cannot go below 20 
+		''' */
+}
+
+Resizing_Glove: {
+	// DisplayName: Resizing Glove
+	/* Tooltip:
+		'''
+		Swung melee weapons will be a random size every swing
+		Enables auto swing for melee weapons
+		'Resizing Glove, huh? Why do they only come in small?'
+		''' */
+}
+
+Wishing_Glass: {
+	// DisplayName: Wishing Glass
+	/* Tooltip:
+		'''
+		Press [key:Origins/WishingGlass] for 8 seconds of infinite ammo and mana, and insanely fast use time
+		10 second cooldown
+		''' */
+}
+
+Shimmer_Shield: {
+	// DisplayName: Shield of Shimmer
+	/* Tooltip:
+		'''
+		+9% damage reduction
+		Allows the player to dash into and reflect enemy projectiles
+		Double tap a direction
+		''' */
+}
+
+Large_Chambersite: {
+	// DisplayName: Large Chambersite
+	// Tooltip: For Capture the Gem. It drops when you die
+}
+
+Chambersite_Gem_Lock_Item: {
+	// DisplayName: Chambersite Gem Lock
+	// Tooltip: <right> to place or remove {$Large_Chambersite.DisplayName}s
+}
+
+Chambersite_Mine_Launcher: {
+	// DisplayName: Chambersite Mine Launcher
+	// Tooltip: Fully benefits from generic boosts
+}
+
+Cool_Sword: {
+	// DisplayName: Cool Sword
+	// Tooltip: Releases aether stars
+}
+
+Chambersite_Minecart_Item: {
+	// DisplayName: Chambersite Minecart
+	// Tooltip: ""
+}
+
+Shimmer_Dynamite: {
+	// DisplayName: Shimmer Dynamite
+	/* Tooltip:
+		'''
+		Non-consumable
+		Shimmers things
+		''' */
+}
+
+Chambersite_Phasesaber: {
+	// DisplayName: Chambersite Phasesaber
+	// Tooltip: <right> to throw, but it doesn't glow!
+}
+
+Bile_Harpoon: {
+	// DisplayName: Bile Harpoon
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		[buffhint/dnStuns:Origins/Rasterized_Debuff] the target
+		''' */
+}
+
+Aetherite_Robe: {
+	// DisplayName: Aether Robes
+	/* Tooltip:
+		'''
+		+24% generic attack speed
+		Increased jump speed and slower fall
+		''' */
+}
+
+Aetherite_Wreath: {
+	// DisplayName: Aether Wreath
+	/* Tooltip:
+		'''
+		+15% generic velocity
+		+15% melee weapon size
+		''' */
+}
+
+Gaming_Glove: {
+	// DisplayName: Gaming Glove
+	/* Tooltip:
+		'''
+		Increases melee knockback
+		12% increased melee speed
+		Enables auto swing for melee weapons
+		Swung melee weapons will be a random size every swing
+		''' */
+}
+
+Shinedown: {
+	// DisplayName: Shinedown
+	// PerSecond: "{0} per second"
+	// ManaPerSecond: Uses {0:.#} mana per second, plus {1:.#} per target
+	// StatusChance: "{0} status effect chance"
+
+	StatusEffects: {
+		// 1: "{0} status effect"
+		// Default: "{0} status effects"
+	}
+
+	// Tooltip: Hold it out to cast shadows on enemies
+}
+
+Chambersite_Breastplate: {
+	// DisplayName: Chambersite Breastplate
+	/* Tooltip:
+		'''
+		+12% critical strike chance
+		+8% damage reduction
+		+60 max mana
+		10% reduced mana cost
+		''' */
+}
+
+Chambersite_Greaves: {
+	// DisplayName: Chambersite Greaves
+	/* Tooltip:
+		'''
+		+10% faster weapon use time
+		+20% movement speed
+		''' */
+}
+
+Chambersite_Helmet: {
+	// DisplayName: Chambersite Helmet
+	/* Tooltip:
+		'''
+		+12% weapon damage and velocity
+		Increases your max number of minions by 1
+		''' */
+}
+
+Shimmer_Construct_Bag: {
+	// DisplayName: Treasure Bag (Shimmer Construct)
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+// Shimmer_Construct_Relic_Item.DisplayName: Shimmer Construct Relic
+// Shimmer_Construct_Trophy_Item.DisplayName: Shimmer Construct Trophy
+// Shimmer_Construct_Mask.DisplayName: Shimmer Construct Mask
+
+Alkahest_Harpoon: {
+	// DisplayName: Alkahest Harpoon
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Attacks [buffhint/dnRavage the target's health:Origins/Torn_Debuff]
+		''' */
+}
+
+Amnestic_Rose: {
+	// DisplayName: Amnestic Rose
+	/* Tooltip:
+		'''
+		Launches a rose that [buffhint/dnslows targets:Origins/Amnestic_Rose_Buff]
+		Steals mana from enemies struck by the rosebud
+		'A Rose, But for whom?'
+		''' */
+}
+
+Otherworldly_Cloak: {
+	// DisplayName: Otherworldly Cloak
+	/* Tooltip:
+		'''
+		Chases after tagged enemies
+		Slams enemies when close
+		Allows for a super high jump and negates fall damage
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		''' */
+}
+
+Master_Magician_Cloak: {
+	// DisplayName: Master Magician's Cloak
+	/* Tooltip:
+		'''
+		8% reduced mana cost
+		Automatically use mana potions when needed
+		Causes stars to fall after taking damage
+		Stars restore mana when collected
+		Chases after tagged enemies
+		Slams enemies when close
+		Allows for a super high jump and negates fall damage
+		Your gravity while jumping is reduced
+		Holding down increases your falling acceleration
+		''' */
+}
+
+Constellation: {
+	// DisplayName: Constellation
+	// Tooltip: ""
+}
+
+Voltefuse: {
+	// DisplayName: Voltefuse
+	/* Tooltip:
+		'''
+		Explodes into a cluster of stars, in reverse
+		'Deja vu...'
+		''' */
+}
+
+Ichor_Harpoon: {
+	// DisplayName: Ichor Harpoon
+	/* Tooltip:
+		'''
+		Used as ammo for harpoon guns
+		Inflicts [buffhint:Ichor]
+		''' */
+}
+
+Gelatin_Bloom_Brooch: {
+	// DisplayName: Gelatin Bloom Brooch
+	/* Tooltip:
+		'''
+		Summons a gelatinous aspect to light the way
+		'Many thanks from the folks over in [c/b8e843:Salvature]'
+		''' */
+}
+
+Shadow_Torch: {
+	// DisplayName: Shadow Torch
+	// Tooltip: Darkens the area around it
+}
+
+Amoeba_Buggy_Cage_Item: {
+	// DisplayName: Amoeba Buggy Cage
+	// Tooltip: ""
+}
+
+Bug_Cage_Item: {
+	// DisplayName: Bug Cage
+	// Tooltip: ""
+}
+
+Cicada_3301_Cage_Item: {
+	// DisplayName: Cicada 3301 Cage
+	// Tooltip: ""
+}
+
+Jawbreaker: {
+	// DisplayName: Jawbreaker
+	/* Tooltip:
+		'''
+		Summons a stellar spark
+		'NOT RECOMMENDED FOR CONSUMPTION'
+		''' */
+}
+
+Aetherite_Ore_Item: {
+	// DisplayName: Aetherite Ore
+	// Tooltip: "'It's smooth, but that's not what it feels like'"
+}
+
+Kono_Dio_Da_Set: {
+	// DisplayName: Dio Set
+	// Tooltip: "{$DioSet}"
+}
+
+Kono_Dio_Da_Wings: {
+	// DisplayName: Dio's Scarf
+	/* Tooltip:
+		'''
+		{$DioSet}
+		{$TODev}
+		Inexplicably allows flight and slow fall
+		''' */
+}
+
+Dio_Breastplate: {
+	// DisplayName: Dio's Ornate Shirt
+	/* Tooltip:
+		'''
+		{$DioSet}
+		{$TODev}
+		''' */
+}
+
+Dio_Greaves: {
+	// DisplayName: Dio's Eccentric Breeches
+	/* Tooltip:
+		'''
+		{$DioSet}
+		{$TODev}
+		''' */
+}
+
+Dio_Helmet: {
+	// DisplayName: Dio's Hair
+	/* Tooltip:
+		'''
+		{$DioSet}
+		{$TODev}
+		''' */
+}
+
+Calcified_Riven_Flesh_Item: {
+	// DisplayName: Calcified {§Spug} Flesh
+	// Tooltip: ""
+}
+
+Calcified_Riven_Flesh_Wall_Safe_Item: {
+	// DisplayName: Calcified {§Spug} Flesh Wall
+	// Tooltip: ""
+}
+
+Deceptive_Beauty_Item: {
+	// DisplayName: Deceptive Beauty
+	// Tooltip: "'B. Lobster'"
+}
+
+Barnacle_Wall_Safe_Item: {
+	// DisplayName: Barnacle Wall
+	// Tooltip: ""
+}
+
+Limestone_Platform_Item: {
+	// DisplayName: Limestone Platform
+	// Tooltip: ""
+}
+
+Limestone_Door_Item: {
+	// DisplayName: Limestone Door
+	// Tooltip: ""
+}
+
+Limestone_Grandfather_Clock_Item: {
+	// DisplayName: Limestone Grandfather Clock
+	// Tooltip: ""
+}
+
+Limestone_Chair_Item: {
+	// DisplayName: Limestone Chair
+	// Tooltip: ""
+}
+
+Limestone_Toilet_Item: {
+	// DisplayName: Limestone Toilet
+	// Tooltip: ""
+}
+
+Limestone_Sofa_Item: {
+	// DisplayName: Limestone Sofa
+	// Tooltip: ""
+}
+
+Limestone_Bathtub_Item: {
+	// DisplayName: Limestone Bathtub
+	// Tooltip: ""
+}
+
+Limestone_Sink_Item: {
+	// DisplayName: Limestone Sink
+	// Tooltip: ""
+}
+
+Limestone_Candle_Item: {
+	// DisplayName: Limestone Candle
+	// Tooltip: ""
+}
+
+Limestone_Candelabra_Item: {
+	// DisplayName: Limestone Candelabra
+	// Tooltip: ""
+}
+
+Limestone_Lamp_Item: {
+	// DisplayName: Limestone Lamp
+	// Tooltip: ""
+}
+
+Limestone_Lantern_Item: {
+	// DisplayName: Limestone Lantern
+	// Tooltip: ""
+}
+
+Limestone_Bookcase_Item: {
+	// DisplayName: Limestone Bookcase
+	// Tooltip: ""
+}
+
+Limestone_Piano_Item: {
+	// DisplayName: Limestone Piano
+	// Tooltip: ""
+}
+
+Limestone_Table_Item: {
+	// DisplayName: Limestone Table
+	// Tooltip: ""
+}
+
+Limestone_Work_Bench_Item: {
+	// DisplayName: Limestone Work Bench
+	// Tooltip: ""
+}
+
+Limestone_Dresser_Item: {
+	// DisplayName: Limestone Dresser
+	// Tooltip: ""
+}
+
+Limestone_Bed_Item: {
+	// DisplayName: Limestone Bed
+	// Tooltip: ""
+}
+
+Limestone_Chest_Item: {
+	// DisplayName: Limestone Chest
+	// Tooltip: ""
+}
+
+Limestone_Chandelier_Item: {
+	// DisplayName: Limestone Chandelier
+	// Tooltip: ""
+}
+
+Shimmershot: {
+	// DisplayName: Shimmershot
+	// Tooltip: Hold <right> to zoom and charge your shots
+}
+
+Lotusy_Dye: {
+	// DisplayName: Lotusy Dye
+	// Tooltip: ""
+}
+
+Hand_Cannon: {
+	// DisplayName: Hand Cannon
+	// Tooltip: Summons canisters from your hand
+}
+
+Accretion_Ribbon: {
+	// DisplayName: Accretion Ribbon
+	/* Tooltip:
+		'''
+		Waves around a damaging ribbon
+		Hold <right> to do fancy aerobic tricks
+		Hold <left> and <right> for speen
+		6 summon tag damage
+		{$CommonItemTooltip.Whips}
+		'I don't know. Wave it around or something!'
+		''' */
+}
+
+Shelf_Coral_Item: {
+	// DisplayName: Shelf Coral
+	// Tooltip: ""
+}
+
+Shimmershotgun: {
+	// DisplayName: Shimmershotgun
+	// Tooltip: "'The best designated marksman shotgun not on the market'"
+}
+
+// Defiled_Storage_Core.DisplayName: "{§Defiled} Storage Core"
+// Encrusted_Storage_Core.DisplayName: Encrusted Storage Core
+// Sanguinite_Storage_Core.DisplayName: Sanguinite Storage Core
+
+Procedural_Sprite_Generator: {
+	// DisplayName: Procedural Sprite Generator
+	// Tooltip: ""
+}
+
+Astral_Scythe: {
+	// DisplayName: Astral Scythe
+	/* Tooltip:
+		'''
+		Upon 3 successful hits the blade of the scythe detatches to form a flail
+		<right> to explode the blade to release star mines around you, damage and range varying based on successful scythe hits
+		{§Mods.Origins.Items.Astral_Scythe.Debuff}
+		''' */
+	// Debuff: While the blade regenerates the scythe is unusable
+}
+
+Pocket_Dimension_Monolith_Item: {
+	// DisplayName: Pocket Dimension Monolith
+	/* Tooltip:
+		'''
+		'Unveil the hiding place of a powerful sorceress'
+		Can be used to open/close a portal to a pocket dimension
+		''' */
+}
+
+Dream_Catcher: {
+	// DisplayName: Dream Catcher
+	/* Tooltip:
+		'''
+		Rapidly fires shards and vines that pull enemies
+		<right> to deploy the dream catcher to the cursor
+		''' */
+}
+
+Willy_Aftershave: {
+	// DisplayName: Willy Aftershave
+	// Tooltip: ""
+}
+
+Chambersite_Ring: {
+	// DisplayName: Chambersite Ring
+	// Tooltip: Increases explosive damage by {0}
+}
+
+Tainted_Stone_Wall_Item: {
+	// DisplayName: Tainted Stone Wall
+	// Tooltip: ""
+}
+
+Soot_Sandstone_Wall_Item: {
+	// DisplayName: Soot Sandstone Wall
+	// Tooltip: ""
+}
+
+Hardened_Sootsand_Wall_Item: {
+	// DisplayName: Hardened Sootsand Wall
+	// Tooltip: ""
+}
+
+Ashen_Grass_Wall_Placed_Unsafe_Item: {
+	// DisplayName: Infested {§Ashen} Grass Wall
+	// Tooltip: ""
+}
+
+Ashen_Grass_Wall_Safe_Item: {
+	// DisplayName: "{§Ashen} Grass Wall"
+	// Tooltip: ""
+}
+
+Artifiber_Chest_Item: {
+	// DisplayName: Artifiber Chest
+	// Tooltip: ""
+}
+
+Artifiber_Bed_Item: {
+	// DisplayName: Artifiber Bed
+	// Tooltip: ""
+}
+
+Artifiber_Dresser_Item: {
+	// DisplayName: Artifiber Dresser
+	// Tooltip: ""
+}
+
+Artifiber_Work_Bench_Item: {
+	// DisplayName: Artifiber Work Bench
+	// Tooltip: ""
+}
+
+Artifiber_Table_Item: {
+	// DisplayName: Artifiber Table
+	// Tooltip: ""
+}
+
+Artifiber_Piano_Item: {
+	// DisplayName: Artifiber Piano
+	// Tooltip: ""
+}
+
+Artifiber_Bookcase_Item: {
+	// DisplayName: Artifiber Bookcase
+	// Tooltip: ""
+}
+
+Artifiber_Lantern_Item: {
+	// DisplayName: Artifiber Lantern
+	// Tooltip: ""
+}
+
+Artifiber_Lamp_Item: {
+	// DisplayName: Artifiber Lamp
+	// Tooltip: ""
+}
+
+Artifiber_Chandelier_Item: {
+	// DisplayName: Artifiber Chandelier
+	// Tooltip: ""
+}
+
+Artifiber_Candelabra_Item: {
+	// DisplayName: Artifiber Candelabra
+	// Tooltip: ""
+}
+
+Artifiber_Candle_Item: {
+	// DisplayName: Artifiber Candle
+	// Tooltip: ""
+}
+
+Artifiber_Sink_Item: {
+	// DisplayName: Artifiber Sink
+	// Tooltip: ""
+}
+
+Artifiber_Bathtub_Item: {
+	// DisplayName: Artifiber Bathtub
+	// Tooltip: ""
+}
+
+Artifiber_Sofa_Item: {
+	// DisplayName: Artifiber Sofa
+	// Tooltip: ""
+}
+
+Artifiber_Toilet_Item: {
+	// DisplayName: Artifiber Toilet
+	// Tooltip: ""
+}
+
+Artifiber_Chair_Item: {
+	// DisplayName: Artifiber Chair
+	// Tooltip: ""
+}
+
+Artifiber_Grandfather_Clock_Item: {
+	// DisplayName: Artifiber Grandfather Clock
+	// Tooltip: ""
+}
+
+Artifiber_Door_Item: {
+	// DisplayName: Artifiber Door
+	// Tooltip: ""
+}
+
+Artifiber_Platform_Item: {
+	// DisplayName: Artifiber Platform
+	// Tooltip: ""
+}
+
+Sanguinite_Brick_Item: {
+	// DisplayName: Sanguinite Brick
+	// Tooltip: ""
+}
+
+Artifiber_Item: {
+	// DisplayName: Artifiber
+	// Tooltip: "'The trees speak Vietnamese.'"
+}
+
+Tainted_Stone_Item: {
+	// DisplayName: Tainted Stone
+	// Tooltip: ""
+}
+
+Sootsand_Item: {
+	// DisplayName: Sootsand
+	// Tooltip: ""
+}
+
+Soot_Sandstone_Item: {
+	// DisplayName: Soot Sandstone
+	// Tooltip: ""
+}
+
+Phoenum_Torch: {
+	// DisplayName: Phoenum Torch
+	// Tooltip: Can be placed in water
+}
+
+Locked_Ashen_Dungeon_Chest_Item: {
+	// DisplayName: "{§Ashen} Dungeon Chest (Locked)"
+	// Tooltip: ""
+}
+
+Hardened_Sootsand_Item: {
+	// DisplayName: Hardened Sootsand
+	// Tooltip: ""
+}
+
+Brown_Ice_Item: {
+	// DisplayName: Brown Ice
+	// Tooltip: ""
+}
+
+Ashen_Torch: {
+	// DisplayName: "{§Ashen} Torch"
+	// Tooltip: ""
+}
+
+Ashen_Pot_Item: {
+	// DisplayName: "{§Ashen} Pot (Debugging Item)"
+	// Tooltip: ""
+}
+
+Ashen_Grass_Seeds: {
+	// DisplayName: "{§Ashen} Seeds"
+	// Tooltip: ""
+}
+
+Ashen_Dungeon_Chest_Item: {
+	// DisplayName: "{§Ashen} Chest"
+	// Tooltip: ""
+}
+
+Ashen_Campfire_Item: {
+	// DisplayName: "{§Ashen} Campfire"
+	// Tooltip: ""
+}
+
+Ashen_Altar_Item: {
+	// DisplayName: "{§Ashen} Altar (Debugging Item)"
+	// Tooltip: ""
+}
+
+Orange_Solution: {
+	// DisplayName: Orange Solution
+	// Tooltip: Spreads the {§Ashen}
+}
+
+Scrapfish: {
+	// DisplayName: Scrapfish
+	// Tooltip: ""
+}
+
+Peppered_Moth_Item: {
+	// DisplayName: Peppered Moth
+	// Tooltip: ""
+}
+
+Ashen_Key: {
+	// DisplayName: "{§Ashen} Key"
+	// Tooltip: Unlocks an {§Ashen} Chest in the Dungeon
+}
+
+Catwalk_Item: {
+	// DisplayName: Catwalk
+	// Tooltip: "'Now with safety rails!'"
+}
+
+Broken_Catwalk_Item: {
+	// DisplayName: Broken Catwalk
+	// Tooltip: "'Watch your step!'"
+}
+
+// Surveysprout_Seeds.DisplayName: Surveysprout Seeds
+
+Surveysprout_Planter_Box_Item: {
+	// DisplayName: Surveysprout Planter Box
+	// Tooltip: ""
+}
+
+Fortified_Steel_Block1_Item: {
+	// DisplayName: Type-I Fortified Steel Block
+	// Tooltip: ""
+}
+
+Fortified_Steel_Block2_Item: {
+	// DisplayName: Type-II Fortified Steel Block
+	// Tooltip: ""
+}
+
+Fortified_Steel_Block3_Item: {
+	// DisplayName: Type-III Fortified Steel Block
+	// Tooltip: ""
+}
+
+Trenchmaker_Bag: {
+	// DisplayName: Trenchmaker Bag
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+// Trenchmaker_Mask.DisplayName: Trenchmaker Mask
+// Trenchmaker_Relic_Item.DisplayName: Trenchmaker Relic
+// Trenchmaker_Trophy_Item.DisplayName: Trenchmaker Trophy
+
+Five_Evils_Item: {
+	// DisplayName: There's Five of Them Now
+	/* Tooltip:
+		'''
+		'X. Lee'
+		'The welcoming of the fifth evil'
+		''' */
+}
+
+Modular_Light_Fixture_Item: {
+	// DisplayName: Modular Light Fixture
+	// Tooltip: ""
+}
+
+Beacon_Light_Item: {
+	// DisplayName: Beacon Light
+	// Tooltip: ""
+}
+
+Suit_Locker_Item: {
+	// DisplayName: Suit Locker
+	// Tooltip: ""
+}
+
+Tank_Rifle: {
+	// DisplayName: Tank Rifle
+	// Tooltip: "'Tank beats everything!'"
+}
+
+Rattlesnake: {
+	// DisplayName: Rattlesnake
+	/* Tooltip:
+		'''
+		Gain a damage boost after not firing for 3 seconds
+		+15% more damage while mounted
+		''' */
+}
+
+Felnum_Bullet: {
+	// DisplayName: Felnum Bullet
+	// Tooltip: ""
+}
+
+Valkyrum_Bullet: {
+	// DisplayName: Valkyrum Bullet
+	// Tooltip: ""
+}
+
+// Assimilation_Potion.Tooltip: Inflicts {0}% [buffhint/self:{1}]
+// Bad_Juju_Stone.DisplayName: Bad Juju Stone
+// Contaminated_Infusion.DisplayName: Contaminated Infusion
+// Edible_Hair_Gel.DisplayName: Edible Hair Gel
+// Pen_Ink.DisplayName: Pen Ink
+
+Rusty_Piping_Item: {
+	// DisplayName: Rusty Piping
+	// Tooltip: ""
+}
+
+Hyrax_Cage_Item: {
+	// DisplayName: Hyrax Cage
+	// Tooltip: ""
+}
+
+Hyrax_Item: {
+	// DisplayName: Hyrax
+	// Tooltip: "'WAWA!'"
+}
+
+Ashen_Fountain_Item: {
+	// DisplayName: "{§Ashen} Fountain"
+	// Tooltip: ""
+}
+
+Heat_Vent_Item: {
+	// DisplayName: Heat Vent (Debugging Item)
+	// Tooltip: ""
+}
+
+Steel_Support_Beam_Item: {
+	// DisplayName: Steel Support Beam
+	// Tooltip: Not quite as 'stainless'
+}
+
+Artifiber_Wall_Item: {
+	// DisplayName: Artifiber Wall
+	// Tooltip: ""
+}
+
+Welding_Torch: {
+	// DisplayName: Welding Torch
+	/* Tooltip:
+		'''
+		Uses gel for ammo
+		Ignores 25 Defense
+		Inflicts hellfire
+		Hold <right> at allied artifact minions to heal them
+		''' */
+}
+
+Ashen2_Breastplate: {
+	// DisplayName: Ancient Ashen Breastplate
+	// Tooltip: "{$Ashen_Breastplate.Tooltip}"
+}
+
+Ashen2_Greaves: {
+	// DisplayName: Ancient Ashen Greaves
+	// Tooltip: "{$Ashen_Greaves.Tooltip}"
+}
+
+Ashen2_Helmet: {
+	// DisplayName: Ancient Ashen Helmet
+	// Tooltip: "{$Ashen_Helmet.Tooltip}"
+}
+
+Adrenaline: {
+	// DisplayName: Adrenaline
+	// Tooltip: ""
+}
+
+Brightsee: {
+	// DisplayName: Brightsee
+	// Tooltip: "{$ItemTooltip.NightOwlPotion}"
+}
+
+Bottomless_Multimed: {
+	// DisplayName: Bottomless Multimed
+	// ImmunityListOverride: all debuffs
+	// Tooltip: ""
+}
+
+Multimed: {
+	// DisplayName: Multimed
+	// ImmunityListOverride: all debuffs
+	// Tooltip: ""
+}
+
+Blood_Pack: {
+	// DisplayName: Blood Pack
+	// Tooltip: ""
+}
+
+Fire_Band: {
+	// DisplayName: Fire Band
+	// unused until there's a shared set for that
+	// ImmunityListOverride: fire debuffs
+	// Tooltip: ""
+}
+
+Medicinal_Acid: {
+	// DisplayName: Medicinal Acid
+	// Tooltip: Limits maximum [buffhint/self:Origins/Torn_Debuff] severity to {0:P0}
+}
+
+Morphine: {
+	// DisplayName: Morphine
+	// Tooltip: Increases life regeneration while you have [buffhint/self:PotionSickness]
+}
+
+Rasterwrap: {
+	// DisplayName: Rasterwrap
+	// Tooltip: ""
+}
+
+Sanguis_Pack: {
+	// DisplayName: Sanguis Pack
+	// Tooltip: "{$ItemTooltip.WarmthPotion}"
+}
+
+Unmarked_Antidote: {
+	// DisplayName: Unmarked Antidote
+	// Tooltip: ""
+}
+
+// Worn_Paper_Loose_Wheel.DisplayName: Worn Paper: Loose Wheel
+// Worn_Paper_Self_Preservation.DisplayName: Worn Paper: Self-Preservation
+// Worn_Paper_Smog_Test.DisplayName: Worn Paper: Smog Test
+// Worn_Paper_The_Packing_Slip.DisplayName: Worn Paper: The Packing Slip
+// Worn_Paper_They_Found_Us.DisplayName: Worn Paper: They Found Us
+// Worn_Paper_Mean_Baby.DisplayName: Worn Paper: Mean Baby
+// Worn_Paper_Workplace_Safety_Concern.DisplayName: Worn Paper: Workplace Safety Concern
+// Worn_Paper_Famine.DisplayName: Worn Paper: Famine
+
+Minishark_Broth: {
+	// DisplayName: Minishark Broth
+	// Tooltip: ""
+}
+
+Spearmint_Tea: {
+	// DisplayName: Spearmint Tea
+	// Tooltip: "'The quintessential hug in a cup.'"
+}
+
+Murky_Sludge_Item: {
+	// DisplayName: Murky Sludge
+	// Tooltip: ""
+}
+
+Floodlight_Item: {
+	// DisplayName: Floodlight
+	// Tooltip: ""
+}
+
+Ticking_Bomb: {
+	// DisplayName: Ticking Bomb
+	// Tooltip: "{0:0.##} second fuse time ({1:0.0}x damage)"
+}
+
+Ticking_Dynamite: {
+	// DisplayName: Ticking Dynamite
+	// Tooltip: "{0:0.##} second fuse time ({1:0.0}x damage)"
+}
+
+Ticking_Grenade: {
+	// DisplayName: Ticking Grenade
+	// Tooltip: "{0:0.##} second fuse time ({1:0.0}x damage)"
+}
+
+Background_Door_Item: {
+	// DisplayName: Background Door (Debugging Item)
+	// Tooltip: ""
+}
+
+Small_Storage_Container_Item: {
+	// DisplayName: Small Storage Container
+	// Tooltip: ""
+}
+
+Screwdriver: {
+	// DisplayName: Screwdriver
+	/* Tooltip:
+		'''
+		<right> while holding to edit wire settings
+		Can place {$Ashen_Wires}
+		''' */
+}
+
+Ashen_Grand_Design: {
+	// DisplayName: The Enchiridion
+	/* Tooltip:
+		'''
+		Allows ultimate control over wires!
+		<right> while holding to edit wire settings
+		Can place {$Ashen_Wires}
+		''' */
+}
+
+Generation_Station_Item: {
+	// DisplayName: Generation Station (Debugging Item)
+	// Tooltip: ""
+}
+
+Sharknade_O: {
+	// DisplayName: Sharknade-o
+	/* Tooltip:
+		'''
+		Inflicts Wet
+		Explodes into a mini-sharknado
+		''' */
+}
+
+Peppered_Moth_Lamp_Item: {
+	// DisplayName: Peppered Moth Lamp
+	// Tooltip: Attracts peppered moths!
+}
+
+Scrap_Heap_Item: {
+	// DisplayName: Scrap Heap
+	// Tooltip: ""
+}
+
+Truss_Block_Item: {
+	// DisplayName: Truss Block
+	// Tooltip: ""
+}
+
+Industrial_Door_Item: {
+	// DisplayName: Industrial Door
+	// Tooltip: ""
+}
+
+Transistor_Item: {
+	// DisplayName: Transistor
+	// Tooltip: ""
+}
+
+Cargo_Elevator_Door_Item: {
+	// DisplayName: Cargo Elevator Door
+	// Tooltip: ""
+}
+
+Modular_Bunk_Item: {
+	// DisplayName: Modular Bunk
+	// Tooltip: ""
+}
+
+Shimmer_Construct_Controller: {
+	// DisplayName: Shimmer Construct Controller
+	// Tooltip: ""
+}
+
+PEE_Breastplate: {
+	// DisplayName: Pernicious Enterprise Employee Jacket
+	// Tooltip: ""
+}
+
+PEE_Greaves: {
+	// DisplayName: Pernicious Enterprise Employee Trousers
+	// Tooltip: ""
+}
+
+PEE_Helmet: {
+	// DisplayName: Pernicious Enterprise Employee Mask
+	// Tooltip: ""
+}
+
+Trenchmaker_Controller: {
+	// DisplayName: Trenchmaker Controller
+	// Tooltip: ""
+}
+
+Fearmaker_Controller: {
+	// DisplayName: Fearmaker Controller
+	// Tooltip: ""
+}
+
+Fuel_Rod_Ball: {
+	// DisplayName: Fuel Rod Ball
+	/* Tooltip:
+		'''
+		<left> to throw
+		Hold <right> to excite the fuel for a more powerful detonation
+		Press <right> while active for it to return
+		Excited fuel rod balls will explode instead
+		''' */
+}
+
+Large_Scrap1_Item: {
+	// DisplayName: Large Hanging Scrap
+	// Tooltip: ""
+}
+
+Large_Scrap2_Item: {
+	// DisplayName: Large Hanging Scrap
+	// Tooltip: ""
+}
+
+Large_Scrap3_Item: {
+	// DisplayName: Large Hanging Scrap
+	// Tooltip: ""
+}
+
+Large_Scrap4_Item: {
+	// DisplayName: Large Hanging Scrap
+	// Tooltip: ""
+}
+
+Large_Scrap5_Item: {
+	// DisplayName: Large Hanging Scrap
+	// Tooltip: ""
+}
+
+Large_Scrap6_Item: {
+	// DisplayName: Large Hanging Scrap
+	// Tooltip: ""
+}
+
+Small_Scrap1_Item: {
+	// DisplayName: Small Hanging Scrap
+	// Tooltip: ""
+}
+
+Small_Scrap2_Item: {
+	// DisplayName: Small Hanging Scrap
+	// Tooltip: ""
+}
+
+Small_Scrap3_Item: {
+	// DisplayName: Small Hanging Scrap
+	// Tooltip: ""
+}
+
+Scrap_Railing_Item: {
+	// DisplayName: Scrap Railing
+	// Tooltip: ""
+}
+
+Rusty_Locker_Item: {
+	// DisplayName: Rusty Locker
+	// Tooltip: ""
+}
+
+Eitrite_Watch: {
+	// DisplayName: Eitrite Watch
+	// Tooltip: Tells the time
+}
+
+Chambersite_Ore_Item: {
+	// DisplayName: Chambersite Stone Block
+	// Tooltip: ""
+}
+
+Structure_Helper_Item: {
+	// DisplayName: Convenient Cyanotype
+	// Tooltip: Use right and left mouse buttons to set opposite corners, right click the item in your inventory to open the UI
+}
+
+Locked_Riven_Dungeon_Chest_Item: {
+	// DisplayName: "{§Riven} Chest (locked)"
+	// Tooltip: ""
+}
+
+Room_Socket_Marker_Item: {
+	// DisplayName: Room Socket Marker
+	// Tooltip: ""
+}
+
+Medicine_Fabricator_Item: {
+	// DisplayName: Medicine Fabricator
+	/* Tooltip:
+		'''
+		Can be used to craft advanced medicine
+		33% chance to not consume potion or medicine crafting ingredients
+		''' */
+}
+
+Metal_Presser_Item: {
+	// DisplayName: Metal Presser
+	/* Tooltip:
+		'''
+		Used to make safe Ashen tiles
+		Also functions as a {$ItemName.HeavyWorkBench}
+		''' */
+}
+
+Fortified_Steel_Wall1_Safe_Item: {
+	// DisplayName: Type-I Fortified Steel Wall
+	// Tooltip: ""
+}
+
+Fortified_Steel_Wall1_Placed_Unsafe_Item: {
+	// DisplayName: Registered Type-I Fortified Steel Wall
+	// Tooltip: "'Neat, it has a built-in AshTag'"
+}
+
+Fortified_Steel_Wall3_Safe_Item: {
+	// DisplayName: Type-III Fortified Steel Wall
+	// Tooltip: ""
+}
+
+Fortified_Steel_Wall3_Placed_Unsafe_Item: {
+	// DisplayName: Registered Type-III Fortified Steel Wall
+	// Tooltip: "'Neat, it has a built-in AshTag'"
+}
+
+Molten_Steel_Wall_Safe_Item: {
+	// DisplayName: Molten Steel Wall
+	// Tooltip: ""
+}
+
+Molten_Steel_Wall_Placed_Unsafe_Item: {
+	// DisplayName: Registered Molten Steel Wall
+	// Tooltip: "'Neat, it has a built-in AshTag'"
+}
+
+Bark_Shield: {
+	// DisplayName: Bark Shield
+	/* Tooltip:
+		'''
+		Releases damaging thorns upon taking damage
+		{0}/{1} durability
+		''' */
+}
+
+Armor_Power_Up: {
+	// DisplayName: Armor+ Power-Up
+	// Tooltip: ""
+}
+
+Gas_Mask: {
+	// DisplayName: Gas Mask
+	/* Tooltip:
+		'''
+		Slightly reduces vision
+		Debuff durations are reduced by 30%
+		Grants immunity to [buffhint/self:Stinky] and [buffhint/self:Origins/Miasma_Debuff]
+		''' */
+}
+
+Filter_Breather: {
+	// DisplayName: Filter Breather
+	/* Tooltip:
+		'''
+		{$Gas_Mask.Tooltip}
+		{$Rebreather.Tooltip}
+		''' */
+}
+
+Breathing_Unit: {
+	// DisplayName: Breathing Unit
+	/* Tooltip:
+		'''
+		Slightly reduces vision
+		Extends underwater breathing
+		Debuff durations are reduced by 30%
+		Grants immunity to [buffhint/self:Suffocation], [buffhint/self:Stinky][ox:,] and [buffhint/self:Origins/Miasma_Debuff]
+		''' */
+}
+
+Flak_Jacket: {
+	// DisplayName: Flak Jacket
+	/* Tooltip:
+		'''
+		Reduces incoming damage by 5%
+		Explodes into flak upon taking damage
+		''' */
+}
+
+Crystal_Heart: {
+	// DisplayName: Crystal Heart
+	/* Tooltip:
+		'''
+		Releases slime guardians to fight for you as you take damage
+		Allows flight and slow fall below half health
+		''' */
+}
+
+Armor_Piercing_Bullet: {
+	// DisplayName: Armor-Piercing Bullet
+	/* Tooltip:
+		'''
+		Increased armor penetration
+		Pierces enemies once
+		''' */
+}
+
+Pacemaker: {
+	// DisplayName: Pacemaker
+	/* Tooltip:
+		'''
+		Multiplies all regeneration by a factor of 5
+		Delays all regeneration for 5 seconds after getting hit
+		''' */
+}
+
+Super_Generic_Weapon: {
+	// DisplayName: Super Generic Weapon
+	// Tooltip: Sucks
+}
+
+Blast_Furnace: {
+	// DisplayName: Blast Furnace
+	/* Tooltip:
+		'''
+		Fires a powerful flame
+		Hold <right> to charge up for more powerful attacks
+		''' */
+}
+
+The_Plant: {
+	// DisplayName: The P.L.A.N.T.
+	/* Tooltip:
+		'''
+		Fabricates ammo that learns from bullet types in your inventory
+		Fabricated ammo may behave differently from copied bullet type
+		''' */
+
+	Description: {
+		// Venom_Bullet: Inflicts [buffhint:Origins/Tetanus_Debuff]
+		// Nano_Bullet: Inflicts [buffhint:Origins/Choice_Paralysis_Debuff] and bounces towards enemies
+	}
+}
+
+Corona: {
+	// DisplayName: Corona
+	// Tooltip: ""
+}
+
+Shadow_Flare: {
+	// DisplayName: Shadow Flare
+	// Tooltip: ""
+}
+
+Exo_Arm: {
+	// DisplayName: Exo-Arm
+	/* Tooltip:
+		'''
+		Increases throwing velocity and mining speed by 20%
+		Increases melee and explosive speed by 10%
+		Increases melee knockback by 10%.
+		''' */
+}
+
+Exo_Weapon_Mount: {
+	// DisplayName: Exo-Weapon Mount
+	/* Tooltip:
+		'''
+		+15% generic velocity
+		25% increased damage for 1s after swapping weapons
+		''' */
+}
+
+Exo_Legs: {
+	// DisplayName: Exo-Legs
+	// Tooltip: Greatly increased movement speed and jump height
+}
+
+Exo_Suit: {
+	// DisplayName: Exo-Suit
+	/* Tooltip:
+		'''
+		+40% generic velocity
+		Increases mining speed by 20%
+		Increases melee and explosive speed by 10%
+		Increases melee knockback by 10%.
+		Greatly increased movement speed and jump height
+		20% increased damage for 1s after swapping weapons
+		''' */
+}
+
+Stress_Ball: {
+	// DisplayName: Stress Ball
+	/* Tooltip:
+		'''
+		A pop-up meter will randomly appear
+		Press [key:Origins/StressBall] when pop-up appears to de-stress
+		Grants up to a 40% damage boost for 7 seconds when fully-charged
+		''' */
+}
+
+Fire_Extinguisher: {
+	// DisplayName: Fire Extinguisher
+	/* Tooltip:
+		'''
+		Can be used to put out fires on allies
+		Slightly propels you backwards from where you aim submerged in water
+		Can temporarily disable the flamethrower of some Ashen enemies
+		{0}/{1}
+		''' */
+}
+
+Empty_Fire_Extinguisher: {
+	// DisplayName: Empty Fire Extinguisher
+	// Tooltip: ""
+}
+
+Laser_Target_Locator: {
+	// DisplayName: Laser Target Locator
+	/* Tooltip:
+		'''
+		Point at a location long enough to call in a missile bombardment
+		<right> to zoom
+		''' */
+}
+
+Nightsky_Cloak: {
+	// DisplayName: Nightsky Cloak
+	/* Tooltip:
+		'''
+		8% reduced mana cost
+		Automatically use mana potions when needed
+		Causes stars to fall after taking damage
+		Stars restore mana when collected
+		Increases pickup range for mana stars
+		Chance for mana stars to fall from critical hits
+		''' */
+}
+
+Homing_Rocket_I: {
+	// DisplayName: Homing Rocket I
+	// Tooltip: Will not destroy tiles
+}
+
+Homing_Rocket_II: {
+	// DisplayName: Homing Rocket II
+	// Tooltip: Will destroy tiles
+}
+
+Sheet_Metal_Item: {
+	// DisplayName: Sheet Metal
+	// Tooltip: ""
+}
+
+Fire_Extinguisher_Holder_Item: {
+	// DisplayName: Fire Extinguisher Holder
+	// Tooltip: ""
+}
+
+Air_Vent_Item: {
+	// DisplayName: Air Vent
+	// Tooltip: ""
+}
+
+// Chambersite_Ore.DisplayName: "{$Chambersite.DisplayName} {0}"
+// Chambersite_Ore_Wall.DisplayName: "{$Chambersite.DisplayName} {0} Wall"
+
+Spug_Flesh_Item: {
+	// DisplayName: Spug Flesh
+	// Tooltip: ""
+}
+
+AMRSL_Skewer: {
+	// DisplayName: A.M.R.S.L. 'Skewer'
+	/* Tooltip:
+		'''
+		<right> to select from available ammo types
+		Uses pretty much anything made of iron, lead or scrap as ammo
+		Ammo types generate different yields
+		''' */
+	// PrefixAmmo: "{0:+0;-0} capacity"
+}
+
+Purple_Mechanical_Switch_Item: {
+	// DisplayName: Purple Mechanical Switch Item
+	// Tooltip: ""
+}
+
+BBQ_Skewer: {
+	// DisplayName: BBQ Skewer
+	// Tooltip: "{$CommonItemTooltip.MajorStats}"
+}
+
+Crockin_Sprocks: {
+	// DisplayName: Crockin' Sprocks
+	/* Tooltip:
+		'''
+		{$CommonItemTooltip.MediumStats} and further increased regeneration
+		'Crankin' for Crockin' Sprocks!'
+		''' */
+}
+
+Chlorophyte_Handcannon: {
+	// DisplayName: Chlorophyte Handcannon
+	/* Tooltip:
+		'''
+		Uses slugs as ammo
+		Slugs release damaging cells as they fly
+		''' */
+}
+
+Ocean_Amulet: {
+	// DisplayName: Ocean Amulet
+	// Tooltip: Summons a school of fish to fight for you
+}
+
+Lunatics_Rune: {
+	// DisplayName: Lunatic's Rune
+	/* Tooltip:
+		'''
+		Hold [key:Origins/LunaticsRune] to conduct a ritual
+		The ritual will temporarily grant you a random effect
+		Conducting the ritual repeatedly extends the duration
+		''' */
+}
+
+Adjusto_Hook: {
+	// DisplayName: Adjust-o-Hook
+	// Tooltip: ControlsOnThisLine
+	// ControlTootlipDefault: ""
+	// ControlTootlipInverted: ""
+	// ControlTootlipWorld: ""
+}
+
+Gills: {
+	// DisplayName: CE10 'Gills'
+	// Tooltip: Allows flight and slow fall
+}
+
+// Retool_Arm.DisplayName: Retool Arm
+
+Retool_Arm_Cannon: {
+	// DisplayName: "{$Retool_Arm.DisplayName} (Cannon)"
+	/* Tooltip:
+		'''
+		Does extra damage on direct hits
+		Press [key:Origins/RetoolArm] to switch mode
+		''' */
+}
+
+Retool_Arm_Laser: {
+	// DisplayName: "{$Retool_Arm.DisplayName} (Laser)"
+	/* Tooltip:
+		'''
+		Hold <right> to fire a powerful laser
+		Press [key:Origins/RetoolArm] to switch mode
+		''' */
+}
+
+Retool_Arm_Saw: {
+	// DisplayName: "{$Retool_Arm.DisplayName} (Saw)"
+	/* Tooltip:
+		'''
+		Chops down trees with you
+		Press [key:Origins/RetoolArm] to switch mode
+		''' */
+}
+
+Retool_Arm_Vice: {
+	// DisplayName: "{$Retool_Arm.DisplayName} (Vice)"
+	/* Tooltip:
+		'''
+		Press and hold <right> on enemies to manipulate them
+		Press [key:Origins/RetoolArm] to switch mode
+		''' */
+}
+
+Defiled_Stone_Wall_Safe_Item: {
+	// DisplayName: Defiled Stone Wall
+	// Tooltip: ""
+}
+
+Riven_Flesh_Wall_Safe_Item: {
+	// DisplayName: Riven Flesh Wall
+	// Tooltip: ""
+}
+
+Tainted_Stone_Wall_Safe_Item: {
+	// DisplayName: Tainted Stone Wall
+	// Tooltip: ""
+}
+
+Chambersite_Defiled_Stone_Wall_Item: {
+	// DisplayName: Chambersite Defiled Stone Wall
+	// Tooltip: ""
+}
+
+Chambersite_Riven_Flesh_Wall_Item: {
+	// DisplayName: Chambersite Riven Flesh Wall
+	// Tooltip: ""
+}
+
+Chambersite_Tainted_Stone_Wall_Item: {
+	// DisplayName: Chambersite Tainted Stone Wall
+	// Tooltip: ""
+}
+
+Chambersite_Crimstone_Wall_Item: {
+	// DisplayName: Chambersite Crimstone Wall
+	// Tooltip: ""
+}
+
+Chambersite_Ebonstone_Wall_Item: {
+	// DisplayName: Chambersite Ebonstone Wall
+	// Tooltip: ""
+}
+
+Artifiber_Breastplate: {
+	// DisplayName: Artifiber Breastplate
+	// Tooltip: ""
+}
+
+Artifiber_Greaves: {
+	// DisplayName: Artifiber Greaves
+	// Tooltip: ""
+}
+
+Artifiber_Helmet: {
+	// DisplayName: Artifiber Helmet
+	// Tooltip: ""
+}
+
+Holy_Hand_Grenade: {
+	// DisplayName: Holy Hand Grenade
+	// Tooltip: The Lord's chosen weapon
+}
+
+The_Muffler: {
+	// DisplayName: The Muffler
+	/* Tooltip:
+		'''
+		Revs up with a killstreak
+		Inflicts Miasma to the user with revs
+		''' */
+	// PrefixEfficiency: "{0:+0;-0}% efficiency"
+}
+
+Glitter_Glue: {
+	// DisplayName: Glitter Glue
+	// Tooltip: ""
+}
+
+Robo_Tail: {
+	// DisplayName: Robo-Tail
+	/* Tooltip:
+		'''
+		A robotic tail follows you
+		Segment amount depends on minion slots you have
+		Segments will fire lasers and release probes on hit
+		Probes will come back as you regenerate
+		''' */
+}
+
+Tool_Rack_Item: {
+	// DisplayName: Tool Rack
+	// Tooltip: ""
+}
+
+Industrial_Work_Bench_Item: {
+	// DisplayName: Industrial Work Bench
+	// Tooltip: ""
+}
+
+Table_Saw_Item: {
+	// DisplayName: Table Saw
+	// Tooltip: ""
+}
+
+Lathe_Item: {
+	// DisplayName: Lathe
+	// Tooltip: ""
+}
+
+Bomb_Rack: {
+	// DisplayName: Bomb Rack
+	/* Tooltip:
+		'''
+		Allows flight
+		Releases carpet bombs as you fly
+		''' */
+}
+
+Decorative_Ashes: {
+	// DisplayName: Decorative A.S.H.E.S.
+	/* Tooltip:
+		'''
+		Generates homing missiles that launch when enemies are near
+		Launches missiles regardless of magazine upon getting hit
+		''' */
+}
+
+Petes_Peat_Slugger: {
+	// DisplayName: Pete's Peat Slugger
+	/* Tooltip:
+		'''
+		It releases a lot of peat.
+		A LOT!
+		''' */
+}
+
+Space_Pirates_Eye: {
+	// DisplayName: Space Pirate's Eye
+	// Tooltip: <right> to select a color
+}
+
+Laborer_Breastplate: {
+	// DisplayName: Laborer Shirt
+	// Tooltip: +8% explosive attack speed
+}
+
+Laborer_Greaves: {
+	// DisplayName: Laborer Overalls
+	// Tooltip: +8% explosive attack speed
+}
+
+Laborer_Helmet: {
+	// DisplayName: Laborer Helmet
+	/* Tooltip:
+		'''
+		{$ItemTooltip.MiningHelmet}
+		+5% generic velocity
+		''' */
+}
+
+Blastberry: {
+	// DisplayName: Blastberry
+	// Tooltip: "{$CommonItemTooltip.MinorStats}"
+}
+
+Cognac: {
+	// DisplayName: Cognac
+	// Tooltip: "{$CommonItemTooltip.MinorStats}"
+}
+
+Tangerine: {
+	// DisplayName: Tangerine
+	// Tooltip: "{$CommonItemTooltip.MinorStats}"
+}
+
+Autohandcannon: {
+	// DisplayName: Autohandcannon
+	/* Tooltip:
+		'''
+		Can doubletap for faster fire rate in between shots
+		Doubletapping has a chance to jam the weapon
+		<right> while jammed to unjam the weapon
+		''' */
+	// JammedText: Jammed!
+}
+
+Medium_Storage_Container_Item: {
+	// DisplayName: Medium Storage Container
+	// Tooltip: ""
+}
+
+Large_Storage_Container_Item: {
+	// DisplayName: Large Storage Container
+	// Tooltip: ""
+}
+
+Mechanical_Key_Purple: {
+	// DisplayName: Purple Mechanical Key
+	// Tooltip: Can be used with purple mechanical key nodes
+}
+
+Mechanical_Key_Blue: {
+	// DisplayName: Blue Mechanical Key
+	// Tooltip: Can be used with blue mechanical key nodes
+}
+
+Mechanical_Key_Green: {
+	// DisplayName: Green Mechanical Key
+	// Tooltip: Can be used with green mechanical key nodes
+}
+
+Mechanical_Key_Orange: {
+	// DisplayName: Orange Mechanical Key
+	// Tooltip: Can be used with orange mechanical key nodes
+}
+
+Mechanical_Key_Yellow: {
+	// DisplayName: Yellow Mechanical Key
+	// Tooltip: Can be used with yellow mechanical key nodes
+}
+
+Smog_Pod_4: {
+	// DisplayName: Smog Pod-4
+	/* Tooltip:
+		'''
+		Press [key:Origins/SmogPod] to launch 4 rockets that turn into smog markers
+		Smog markers provide the following effects:
+		 - Immunity to [buffhint:Darkness], [buffhint:Obstructed] and [buffhint:WindPushed]
+		 - Boosts life regen to all nearby players, and an even greater boost when stood under
+		 - Reduces the damage recieved from [buffhint:Suffocation] and [buffhint:Origins/Miasma_Debuff]
+		5s cooldown
+		''' */
+}
+
+Scrap_Dart: {
+	// DisplayName: Scrap Dart
+	/* Tooltip:
+		'''
+		Inflicts [buffhint:Origins/Impeding_Shrapnel_Debuff]
+		Releases frenzied shrapnel in flight
+		''' */
+}
+
+Ashen_Lock_Box: {
+	// DisplayName: Ashen Lock Box
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Brine_Lock_Box: {
+	// DisplayName: Brine Lock Box
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Defiled_Lock_Box: {
+	// DisplayName: Defiled Lock Box
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Riven_Lock_Box: {
+	// DisplayName: Riven Lock Box
+	// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
+}
+
+Dirt_Chest_Item: {
+	// DisplayName: Dirtiest Dirt Chest
+	// Tooltip: "'[c/976B4B:Who dirtied my dirt chest?]'"
+}
+
+Dirt_Chest_Natural_Item: {
+	// DisplayName: "{$ItemName.DirtBlock}"
+	// Tooltip: "{$Dirt_Chest_Item.DisplayName} (Debugging Item)"
+}
+
+Bitter_Broth: {
+	// DisplayName: Bitter Broth
+	/* Tooltip:
+		'''
+		All minions inflict [buffhint:Origins/Weak_Debuff] and a chance to inflict [buffhint:Origins/Broken_Armor_Debuff]
+		Longer debuff duration for artifact minions
+		''' */
+}
+
+Astringent_Broth: {
+	// DisplayName: Astringent Broth
+	/* Tooltip:
+		'''
+		All minions inflict [buffhint:CursedInferno]
+		Artifact minions also inflict [buffhint:ShadowFlame]
+		''' */
+}
+
+Metallic_Broth: {
+	// DisplayName: Metallic Broth
+	/* Tooltip:
+		'''
+		All minions inflict [buffhint:Ichor]
+		Artifact minions also inflict [buffhint:Bleeding] and heal when hitting bleeding enemies
+		''' */
+}
+
+Structure_Void_Marker_Item: {
+	// DisplayName: Structure Void Marker
+	// Tooltip: ""
+}
+
+Administrator_Panel_Item: {
+	// DisplayName: Administrator Panel
+	// Tooltip: ""
+}
+
+Oil_Bottomless_Bucket: {
+	// DisplayName: Bottomless Oil Bucket
+	/* Tooltip:
+		'''
+		Contains an endless amount of oil
+		'More oil for your oil!'
+		''' */
+	// LiquidName: Oil
+}
+
+Oil_Bucket: {
+	// DisplayName: Oil Bucket
+	// Tooltip: ""
+}
+
+Mechanical_Key_Node_Blue_Item: {
+	// DisplayName: Blue Mechanical Key Node
+	// Tooltip: ""
+}
+
+Mechanical_Key_Node_Green_Item: {
+	// DisplayName: Green Mechanical Key Node
+	// Tooltip: ""
+}
+
+Mechanical_Key_Node_Orange_Item: {
+	// DisplayName: Orange Mechanical Key Node
+	// Tooltip: ""
+}
+
+Mechanical_Key_Node_Purple_Item: {
+	// DisplayName: Purple Mechanical Key Node
+	// Tooltip: ""
+}
+
+Mechanical_Key_Node_Yellow_Item: {
+	// DisplayName: Yellow Mechanical Key Node
+	// Tooltip: ""
+}
+
+Oil_Rocket: {
+	// DisplayName: Oil Rocket
+	// Tooltip: Spreads oil on impact
+}
+
+Oil_Bomb: {
+	// DisplayName: Oil Bomb
+	// Tooltip: A small explosion that will spread oil
+}
+
+Magic_Dropper_Oil_Item: {
+	// DisplayName: Magic Oil Dropper
+	// Tooltip: ""
+}
+
+Liquid_Sensor_Oil_Item: {
+	// DisplayName: Liquid Sensor (Oil)
+	// Tooltip: Signals when oil starts or stops touching it
+}
+
+Power_Box_Item: {
+	// DisplayName: Power Box
+	// Tooltip: ""
+}
+
+Power_Box_Wide_Item: {
+	// DisplayName: Power Box (Wide)
+	// Tooltip: ""
+}
+
+Radio_Broadcaster_Item: {
+	// DisplayName: Radio Broadcaster
+	// Tooltip: ""
+}
+
+Edge_Detector_Item: {
+	// DisplayName: Edge Detector
+	// Tooltip: ""
+}
+
+Polluted_Water: {
+	// DisplayName: Polluted Water
+	// Tooltip: Spreads the {§Ashen} to some blocks
+}
+
+Oil_Sponge: {
+	// DisplayName: Oil Absorbant Sponge
+	// Tooltip: Capable of soaking up endless amount of oil
+}
+
+Super_Sludge_Item: {
+	// DisplayName: Super Sludge
+	// Tooltip: Sludge from the heavens.
+}
+
+Pharaohs_Turquoise: {
+	// DisplayName: Pharaoh's Turquoise
+	/* Tooltip:
+		'''
+		Fires a burst of sun pulses
+		Pressing and holding <right> then firing will suspend pulses until released
+		Pulses that hit enemies after being suspended benefit from bonus damage
+		''' */
+	// CantGetBonus: "{$DisplayName} has default stats which would prevent it from behaving properly, its stats may have been modified by another mod"
+}
+
+Brine_Bottomless_Bucket: {
+	// DisplayName: Bottomless Brine Bucket
+	// Tooltip: Contains an endless amount of brine
+	// LiquidName: Brine
+}
+
+Brine_Bucket: {
+	// DisplayName: Brine Bucket
+	// Tooltip: ""
+}
+
+Brine_Sponge: {
+	// DisplayName: Brine Absorbant Sponge
+	// Tooltip: Capable of soaking up endless amount of brine
+}
+
+Brine_Rocket: {
+	// DisplayName: Brine Rocket
+	// Tooltip: Spreads brine on impact
+}
+
+Brine_Bomb: {
+	// DisplayName: Brine Bomb
+	// Tooltip: A small explosion that will spread brine
+}
+
+Liquid_Sensor_Brine_Item: {
+	// DisplayName: Liquid Sensor (Brine)
+	// Tooltip: Signals when brine starts or stops touching it
+}
+
+Magic_Dropper_Brine_Item: {
+	// DisplayName: Magic Brine Dropper
+	// Tooltip: ""
+}
+
+Insubstantial_Broth: {
+	// DisplayName: Insubstantial Broth
+	/* Tooltip:
+		'''
+		All minions have a chance to shimmer enemies into the ground
+		Artifact minions also inflict [buffhint:Confused]
+		You feel like there's supposed to be a distinct flavor here, but can't make it out.
+		''' */
+}
+
+Mojo_Harvest: {
+	// DisplayName: Mojo Harvest
+	// Tooltip: "{$Mojo_Flask.CureAmount}"
+}
+
+Vampire_Grenade: {
+	// DisplayName: Vampire Grenade
+	// Tooltip: Explosions leave lifestealing rings in their wake
+}
+
+Multi_Bucket: {
+	// DisplayName: Multi-Bucket
+	/* Tooltip:
+		'''
+		Contains an endless amount of any liquid
+		Press [key:Origins/MultiBucket] to choose liquid
+		Right Click to place a 3x3 area of liquid
+		''' */
+	// Shimmer: Shimmer
+}
+
+Amebic_Bucket: {
+	// DisplayName: Amebic Gel Bucket (Debug)
+	// Tooltip: Contains an endless amount of amebic gel
+	// LiquidName: Amebic Gel
+}
+
+Amebic_Gel_Sponge: {
+	// DisplayName: Amebic Gel Absorbant Sponge
+	// Tooltip: Capable of soaking up endless amount of amebic gel
+}
+
+Burning_Oil_Bucket: {
+	// DisplayName: Burning Oil Bucket (Debug)
+	// LiquidName: Burning Oil
+	// Tooltip: Contains an endless amount of burning oil
+}
+
+Liquid_Sensor_Amebic_Gel_Item: {
+	// DisplayName: Liquid Sensor (Amebic Gel)
+	// Tooltip: Signals when amebic gel starts or stops touching it
+}
+
+Magic_Dropper_Amebic_Gel_Item: {
+	// DisplayName: Magic Amebic Gel Dropper
+	// Tooltip: ""
+}
+
+Awesome_Prosthetic_Tail: {
+	// DisplayName: Awesome Prosthetic Tail
+	// Tooltip: "'Magic prosthetics are so cool! You didn't have a tail at all and we can still fix that!'"
+}
+
+Grease_Gun: {
+	// DisplayName: Grease Gun
+	// Tooltip: ""
+}
+
+DMR: {
+	// DisplayName: DMR
+	// Tooltip: ""
+}
+
+Tactical_SMG: {
+	// DisplayName: Tactical SMG
+	// Tooltip: ""
+}
+
+Oil_Derrick_Item: {
+	// DisplayName: Oil Derrick
+	/* Tooltip:
+		'''
+		Harvests Oil from the ground
+		Can be used to fill buckets with Oil
+		''' */
+}
+
+Wind_Turbine_Item: {
+	// DisplayName: Wind Turbine
+	// Tooltip: Generates power from wind
+}
+
+Stardust_Strange_Plant_Item: {
+	// DisplayName: Strange Plant
+	// Tooltip: "{$ItemTooltip.StrangePlant1}"
+}
+
+Screwdriver_Upgrade_White: {
+	// DisplayName: White Screwdriver Upgrade
+	// Tooltip: Combined into the Screwdriver
+	// UpgradeTooltip: Can place {$Greater_Ashen_Wires}
+}
+
+Screwdriver_Upgrade_Logic: {
+	// DisplayName: Logical Screwdriver Upgrade
+	// Tooltip: Combined into the Screwdriver
+	// UpgradeTooltip: Can modify and remove components
+}
+
+Matryoshka_Doll: {
+	// DisplayName: Matryoshka Doll
+	// Tooltip: ""
+}
+
+Vampire_Fireflower_In_A_Pot: {
+	// DisplayName: Vampire Fireflower in a Pot
+	/* Tooltip:
+		'''
+		Summons a vampire fireflower to fight for you
+		Inflicts [buffhint:OnFire3]
+		Heals you and slightly increases your speed during the day
+		Heals herself from her attacks and you while at full health herself
+		''' */
+}
+
+Amebic_Gel_Bottomless_Bucket: {
+	// DisplayName: Bottomless Amebic Gel Bucket
+	// Tooltip: Contains an endless amount of amebic gel
+	// LiquidName: Amebic Gel
+}
+
+Clunkaclusta: {
+	// DisplayName: Clunkaclusta
+	/* Tooltip:
+		'''
+		Press and hold <left> to manually detonate projectile upon release
+		Releases cluster bombs on detonation
+		''' */
+}
+
+Deactivated_Repairboy_Item: {
+	// DisplayName: Deactivated Repairboy
+	// Tooltip: ""
+}
+
+Deactivated_Trenchmaker_Item: {
+	// DisplayName: Deactivated Trenchmaker
+	// Tooltip: <up> or <down> to cycle tile to place.
+}
+
+Logic_Gate: {
+	// DisplayName: Logic Component ({0})
+	// TableData: ",B,¬B|A,{0},{1}|¬A,{2},0"
+	/* Table:
+		'''
+		[ttable/line0:{$TableData}]
+		[ttable/line1:{$TableData}]
+		[ttable/line2:{$TableData}]
+		''' */
+	// HoldShiftForTruthTable: Hold shift for truth table
+	// Output: Output
+
+	Statement: {
+		// $parentVal: "{0} {1}{2}⇔{3}"
+		// Diode: "{0} {1}{3}"
+	}
+
+	// Name.Diode: Diode
+
+	LogicSymbols: {
+		// AND: ∧
+		// OR: ∨
+		// XOR: ≠
+		// NIMPLY: ⇏
+		// Diode: ⇒
+	}
+}
+
+Delay_Component_Item: {
+	// DisplayName: Delay Component
+	// Tooltip: Sends a signal after a set delay
+	// Time: $60!:{0:0.##}$
+}
+
+Radio_Component_Item: {
+	// DisplayName: Radio Component
+	// Tooltip: ""
+}
+
+Truss_Wall_Safe_Item: {
+	// DisplayName: Truss Wall
+	// Tooltip: ""
+}
+
+Truss_Wall_Placed_Unsafe_Item: {
+	// DisplayName: Registered Truss Wall
+	// Tooltip: ""
+}
+
+Quasar: {
+	// DisplayName: Quasar
+	// Tooltip: ""
+}
+
+RAM_Chip: {
+	// DisplayName: RAM Chip
+	// Tooltip: "'Truly a work of its time.'"
+}
+
+// Waste_Crate.DisplayName: Waste Crate
+// Hazardous_Waste_Crate.DisplayName: Hazardous Waste Crate
+
+Incomplete_Standing_Refinery_Item: {
+	// DisplayName: Incomplete Standing Refinery
+	// Tooltip: ""
+}
+
+Mushy_Broth: {
+	// DisplayName: Mushy Broth
+	/* Tooltip:
+		'''
+		All minion attacks cause explosions
+		Artifact minion attacks cause bigger and stronger explosions
+		''' */
+}
+
+Chalky_Broth: {
+	// DisplayName: Chalky Broth
+	/* Tooltip:
+		'''
+		All minions inflict [buffhint:Origins/Impeding_Shrapnel_Debuff]
+		Artifact minions emit shrapnel when hurt or killed
+		''' */
+}

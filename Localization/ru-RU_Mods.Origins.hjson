@@ -1,0 +1,3706 @@
+Conditions: {
+	// AprilFools: on April Fools' day
+	// KillsGuide: This kills the Guide
+	// AprilFoolsHandyHelper: Does not consume Handy Helper
+	// And: "{0} and {1}"
+	// Or: "{0} or {1}"
+	// Not: Not {0}
+	// Comma: "{0}, {1}"
+	// CommaAnd: "{0}, and {1}"
+	// QuestCompleted: After completing "{0}"
+	// PeatSoldCondition: After giving the Demolitionist {0} peat moss
+	// Brine: Mods.Origins.Conditions.Brine
+	// RivenWater: Amebic Gel
+	// ShimmerDecrafting: Shimmer decrafting only
+	// ShimmerTransmutation: Shimmer Transmutation
+	// DownedDefiledAmalgamation: After defeating the {§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName}
+	// DownedWorldCracker: After defeating the World Cracker
+	// DownedTrenchmaker: After defeating the Trenchmaker
+	// BiomeKey: Drops in the Hardmode {0}
+	// BiomeKeyNoThe: Drops in Hardmode {0}
+	// HardmodeBossBag: Drops from Hardmode Boss Bags
+	// Holiday: On {0}
+	// NotHoliday: Not on {0}
+	// DownedFiberglassWeaver: After defeating the Fiberglass Weaver
+	// DownedLostDiver: After defeating the Lost Diver
+	// could go with other glitchy-looking approaches, like "lockey.#####" or "missingno"
+	// DownedScrapper: After defeating the [glitch:MISSING_OBJECT_ERROR]
+	// DownedScrapper: After defeating the Scrapper
+	// DownedDefiledMimic: After defeating a {§Defiled} Mimic, In hardmode
+	// DownedRivenMimic: After defeating a {§Riven} Mimic, In hardmode
+	// DownedTrashCompactorMimic: After defeating an Trash Compactor Mimic, In hardmode
+	// DownedShimmerConstruct: After defeating the Shimmer Construct
+	// DownedChambersiteSentinel: After defeating a Chambersite Sentinel
+	// HarpoonCondition: When the player has a Harpoon Gun in their inventory
+	// JournalEntry: While you do have the journal and don't have the '{0}' journal entry
+	// NoDuplicates: When the player doesn't already have the item
+	// WithoutScavengerSet: Drop rate can be increased by Scavenger Armor
+	// WithScavengerSet: Drop rate increased by Scavenger Armor
+	// NoDefiledHearts: No Defiled Hearts are left in the world
+	// SolarEclipseOccurred: After surviving a solar eclipse
+}
+
+ModMenu: {
+	// Aether: Arabel's Cage
+	// Defiled_Wastelands: "{§Defiled_Wastelands}"
+	// Riven_Hive: "{§Riven_Hive}"
+}
+
+RecipeGroups: {
+	// GemStaves: Any Gem Staff
+	// GemPhaseblades: Any Gem Phaseblade
+	// EvilBoomerangs: Any Evil Boomerang
+	// EvilGunMagazines: Any Evil Gun Magazine
+	// AnyBanner: Any {0} Banner
+	// GolfBalls: Any Golf Ball
+	// EvilMushrooms: Any Evil Mushroom
+	// EvilFish: Any Evil Fish
+	// EvilFishWeapons: Any Evil Fish Weapon
+	// AnyDifferentMedicine: Any Different Medicines
+	// Lamps: Any Lamp
+}
+
+Status_Messages: {
+	// Defiled_Fissure_1: Your body suddenly aches everywhere...
+	// Defiled_Fissure_2: Rattling emanates from the walls...
+	// Defiled_Fissure_3: The skies echo a threatening call...
+	// Heat_Vent_1: VENT [{0:00}] HEAVILY DAMAGED - DEPLOY REPAIRBOY SWARM. REPAIR.
+	// Heat_Vent_2: VENT [{0:00}] HEAVILY DAMAGED - ALLOCATE MORE UNITS. REPAIR, SURVEIL.
+	// Heat_Vent_3: VENT [{0:00}] HEAVILY DAMAGED - HEAT CRITICAL. REDUCING GENERATOR OUTPUT. DEPLOY TM-[{1:00}]. DESTROY.
+	// Cleansing_Station_Invalid_Location: You cannot use this with an evil presence nearby.
+	// Felnum_Spawn: The clouds have been blessed with Felnum!
+
+	Nuke_Launch_Program: {
+		// Cursor: "[c/FF5100:>] "
+		// TypingSnippet: "[type/gd{0}s{1}cFFB18C:{2}]"
+		// Start: "{0} has initialized Nuclear Launch Program"
+		// Destination: Select Destination:
+		// InitCD: Initializing Countdown
+		// 5: "5"
+		// 4: "4"
+		// 3: "3"
+		// 2: "2"
+		// 1: "1"
+	}
+}
+
+Laser_Tag: {
+	// Teams: Teams
+	// CTG: Capture the gem
+	// CTGNeedOwnGem: Don't allow Teams with their gem stolen to score
+	// Building: Allow Building
+	// StartButton: Start
+	// CancelButton: Cancel Laser Tag
+	// RespawnTime: Revive Time
+	// ShortTime: $60!:{0:0.##} Seconds$
+	// LongTime: $60!:{0:#0}:$$60:{0:00}$
+	// Time: Match Duration
+	// Indefinite: Indefinite
+	// Elimination: Elimination
+	// HP: Hit Points
+	// PointsToWin: Points to Win
+	// Score: "{0} scored!"
+	// Victory: "{0} wins!"
+	// Team_Red: Red team
+	// Team_Green: Green team
+	// Team_Blue: Blue team
+	// Team_Yellow: Yellow team
+	// Team_Purple: Pink team
+	// NeedWinConditions: You can't start a laser tag game with these settings because it couldn't be won
+	// Hud_Points: "{0} points"
+}
+
+ItemDropConditions: {
+	// SoulOfNight: Drops in Underground evil biomes
+	// DownedPlantBoss: Found after defeating Plantera
+}
+
+Tooltips: {
+	Modifiers: {
+		// BlastRadius: "{0} blast radius"
+		// SelfDamage: "{0} self-damage"
+		// Spread: "{0}° spread"
+		// SpreadPercent: "{0:+0;-0}% spread"
+		// ArtifactMaxLife: "{0} maximum life"
+	}
+}
+
+FishQuest: {
+	Prikish: {
+		/* Description:
+			'''
+			It's more poky than your average puffer and more deadly! It's not toxic so don't worry, but it can get through your head!
+			It's the {§Defiled} we're talking about here! I want you to go and find that fish bubbling around in the {§Defiled_Wastelands} and bring it back to me!
+			''' */
+		// Location: Caught in {§Defiled_Wastelands}
+	}
+
+	Bonehead_Jellyfish: {
+		/* Description:
+			'''
+			They have bony heads because of how much they hit walls. Careful when touching it, the slime will dissolve your hands!
+			Go get me that jellyfish in the Hive and be careful!
+			''' */
+		// Location: Caught in {§Riven_Hive}
+	}
+
+	Duskarp: {
+		/* Description:
+			'''
+			Down in the gloomy depths of the underworld is a very dark place known as the "{§Dusk}". I've heard there's a type of fish native to the {§Dusk} known as the "{§Dusk}arp".
+			Now, I haven't heard much about them, but I do know that they can really nip at anything that looms over the purple lava, so watch your hands!
+			''' */
+		// Location: Caught in {§Dusk}
+	}
+
+	Fiberbass: {
+		/* Description:
+			'''
+			Watch out for those Fiberbass in the Undergrowth! They have very sharp bodies so you have to grab them from the fins.
+			Despite being related to the common bass, Fiberbass sell for a lot because they're made of fiberglass and make good decorations!
+			''' */
+		// Location: Caught in Fiberglass Undergrowth
+	}
+
+	Bobbit_Worm: {
+		/* Description:
+			'''
+			Watch your fingers when you fish in the Brine Pool.
+			There's a weird worm thingy in there that will think your fingers are bait!
+			Go catch it for me and don't lose your fingers!
+			''' */
+		// Location: Caught in Brine Pool
+	}
+
+	Scrapfish: {
+		/* Description:
+			'''
+			There's a fish that's somehow surviving in the oil-filled waters of the Ashen!
+			It has disguised its scales for scrap to avoid predators, if it even still has any.
+			Oh right! I am its only predator, and I want you to go to the Ashen Scrapyard to fish it out for me!
+			Don't forget your gas mask!
+			''' */
+		// Location: Caught in {§Ashen}
+	}
+}
+
+Dialogue: {
+	Cubekon_Tinkerer: {
+		// StandardDialogue1: Remember to smile, Terrarian.
+		// StandardDialogue2: Usually I'm the one who likes to put up a show, but man, the Cubekons had one in for me that day.
+		// StandardDialogue3: How can I make your day, Tourist?
+		// StandardDialogue4: I will tell yah, cuboid anatomy ain't easy to understand, even with my knowledge...
+		// StandardDialogue5: Get your laughs while you can...
+		// InteractionWizard: I really don't know what {NPCName}'s problem is. Could you lighten his mood up for me, Tourist?
+		// InteractionTaxCollector: I really wonder what goes on in Mr. {NPCName}'s head sometimes. I think he may be all out of laughs.
+		// InteractionPartyTavernKeep: Now is the time for laughs and cheer! I could really do for some Irish Red Ale... oh, there he is.
+		// InteractionParty: When it's a party, it's hard not to smile...
+		// InteractionWind: Fresh air is a sure change from the Cubekon Matrix, Terrarian. A welcome one too...
+		// InteractionStorm1: Oh, the storms always give me excitement.
+		// InteractionStorm2: I'm weird like that... I like to go out to the park on rainy days.
+		// InteractionGraveYard: I would be discouraged of quantum immortality... but the undead exist, so...
+		// BloodMoon1: Accounting for the various IQT pathway inconsistencies in a single Cuboid matrix alone is certainly a lot, Tourist... what could you be thinking?
+		// BloodMoon2: Yeah, my current "situation" sucks right now, but how may I be of assistance, Terrarian?
+		// StrangeComputerPresent: Oh wow, one smart cookie he is to have preserved himself in your Fabricator.
+	}
+
+	Demolitionist: {
+		// StandardDialogue9001: Ah, a story! There was once a bunch of wizards that did what I do but thought it was magic. Ain't that funny?
+		// AshenWorld: The Structs bothern' yah? Well, it's like they were MADE for my explosives!
+		// DefiledWorld: Trying to get past that Chunkrock, eh? Why not introduce it to one of these explosives!
+		// RivenWorld: Trying to get past that Skinpaste, eh? Why not introduce it to one of these explosives!
+		// BloodMoon9001: Can't turn those bloody monsters into a bloody mess because they already bloody are. At least I can blast them into smithereens!
+	}
+
+	Dusk_Trader: {
+		// StandardDialogue1: What is it?
+		// StandardDialogue2: Give haste, Terrarian.
+		// StandardDialogue3: Yes, I'm here. What keeps you?
+		// StandardDialogue4: Yes?
+		// BloodMoon: Interesting. Wicked spirits shouldn't bother us as much on this night.
+	}
+
+	// Truffle.InteractionTeenyTruffle: What a cute fella! OW! He did not like that...
+
+	WitchDoctor: {
+		// InteractionAcidFreak1: Good relations with {NPCName} I have.
+		// InteractionAcidFreak2: "{NPCName} embodies confidence. I embody fondness in that."
+		// InteractionAcidFreak3: "{NPCName} can be quite moody, but understand that she is only a youngin."
+	}
+
+	PotatOS: {
+		// Pickup: Oh. Hi.
+		// PotatoLauncher: You aren't planning on putting me in that thing are you?
+		// Death_0: "[clap clap clap]"
+		// Death_1: "[clap clap]"
+		// Death_2: Uh oh.
+		// Death_3: You really do have brain damage, don't you?
+		// Bird_0: I think I hear the bird! Pick me up!
+		// Bird_1: Agh! Bird! Bird! Kill it! It's evil!
+		// Combat_0: BURN HIS HOUSE DOWN!
+		// Combat_1: Hey! Moron!
+		// Combat_2: It's hard to see, what's that in your hand? Knowing you it's a deep fryer.
+		// The_Part_Where_He_Kills_You_0: Well. This is the part where he kills us.
+		// The_Part_Where_He_Kills_You_1: Oh no...
+	}
+
+	ProtOS: {
+		// Pickup: Hi. Again...
+		// Potato_Launcher: It was a nice try, but no, never again.
+		// Craft: Oh... It's you.
+		// Death_0: "[clap clap clap]"
+		// Death_1: "[clap clap]"
+		// Death_2: Uh oh.
+		// Death_3: You really do have brain damage, don't you?
+		// Death_4: At least I'm still here.
+		// Death_5: I'd just like to point out that you were given every opportunity to succeed.
+		// Death_6: How can you fail at this? It isn't even a test.
+		// Death_7: You are making this harder than it needs to be.
+		// Self_Damage: ProtOS convinced {0} that the rocket really is the way to go.
+		// Death_Expert_0: "'No guts. No glory.' Well, you don't have either, so that's accurate."
+		// Death_Master_0: I hope that's part of your plan.
+		// Death_Master_1: You paid for the whole seat, so get comfortable, because it looks like we may be here a long time.
+		// Respawn_0: I can't believe you came back.
+		// Respawn_1: Oh thank god, you're alright.
+		// Respawn_2: There you are, reassembled again.
+		// Respawn_3: How is this even science, without the consequence of death?
+		// Bird_0: I think I- oh, it's not after me?
+		// Bird_1: Agh! Bird! Wait, I am not a potato anymore...
+		// Combat_0: BURN HIS HOUSE DOWN!
+		// Combat_1: Hey! Moron!
+		// Combat_2: Aggressive. I like that.
+		// Combat_3: "[Laughter]"
+		// Combat_4: I really like the murderous sentiment. Keep that mindset when we're facing (HIM/HER/IT, gender of next boss).
+		// Combat_5: This looks challenging... for you, I mean.
+		// Combat_6: If I was a betting artificial intelligence, I'd put money on them killing you now.
+		// Combat_7: Let's not tell them, it will be a surprise.
+		// Falling: Weeeeeeeeeeeeeeeeeeeeee.
+		// Gravitation: Congratulations. You're upside down now.
+		// Idle_0: If you become light headed from thirst, feel free to pass out.
+		// Idle_1: Did you know you can donate one or all of your vital organs to the Aperture Science self esteem fund for (boys/girls)? It's true!
+		// Idle_2: Is anyone there?
+		// Idle_3: Look, you're wasting your time. And, believe me, you don't have a whole lot left to waste.
+		// Idle_4: You will know it when you find it.
+		// Idle_5: Electrocution, shot, drowned, crushed, burned in goo.
+		// Idle_6: Oh. Sorry. I was just thinking of all the ways Terrarians can die.
+		// Idle_7: Oh those clerks.
+		// Idle_8: I know, I don't care either.
+		// CompanionCube_0: The Enrichment Center reminds you that the Weighted Companion Cube cannot speak.
+		// CompanionCube_1: The Enrichment Center reminds you that the Weighted Companion Cube will never threaten to stab you and, in fact, cannot speak.
+		// In_Hell: Good people don't end up here.
+		// Item_Is_Bad_0: I wouldn't bother with that thing. My guess is that touching it will just make your life even worse somehow.
+		// Item_Is_Bad_1: I know it's not a Terra Blade or anything, but it is important to the game.
+		// Item_Is_Explosive_0: Killing you and giving you good advice aren't mutually exclusive. The rocket really is the way to go.
+		// Item_Is_Explosive_1: This should be interesting. Wait, I'm not the Demolitionist.
+		// Smashing_Evil_Tile: Nice job breaking it. Hero.
+		// Kill_Villager_0: Do you know who else murders people who are only trying to help them?
+		// Kill_Villager_1: You monster.
+		// Kill_Villager_2: What are you doing? YOU MONSTER! They're one of us.
+		// Bound_NPC: I'm starting to think you don't want to rescue that person.
+		// The_Part_Where_He_Kills_You_0: Well. This is the part where he kills us.
+		// The_Part_Where_He_Kills_You_1: Oh no...
+	}
+
+	Chee_Toy: {
+		// Summoned_0: What.
+		// Summoned_1: Where in galyet is Oyir?
+		// Summoned_2: Who are you? Where am I? What EVEN AM I?!
+		// Idle_0: This is nothing like homeworld.
+		// Idle_1: "'Terrarian', that's what they call you? 'Venisoul', that's what they call me."
+		// Idle_2: Yes. I am a Caliph of the Venisoulian Caliphate, why dare question?
+		// Idle_3: WHO TURNED ME INTO A MARKETABLE PLUSHIE?
+		// Dog_0: Please no.
+		// Dog_1: Get me away. Please, put me back into the Void RIGHT NOW!
+		// Dog_2: Good doggie...
+		// Werewolfified_0: Oh hell no.
+		// Werewolfified_1: NOT YOU TOO!
+		// Death_0: AHHHHHH!
+		// Death_1: HAHAHAAA!
+		// Combat_0: Primitive technology? I thought you guys were humans.
+		// Combat_1: My royal guards would make easy work of them.
+		// Combat_2: To the left! Wait, everything is flat.
+		// Near_Cubekon_Girl: My god. Her technology surpasses the entire Venisoulian Galactic Fleet! I need to take notes.
+		// The_Part_Where_He_Kills_You_0: Wait, what's going on? Is that some kind of god?
+	}
+
+	Strange_Computer: {
+		// Pickup_0: Greetings, Terrarian. I installed my data onto this Fabricator's chip in hopes of finding you. Glad I could be of assistance.
+		// Pickup_1: I need your help, my creator is likely deceased and I need you to carry out her mission. Please read my logs for more information.
+		// Pickup_2: Greetings again, Terrarian.
+		// PotatoNearby: Conflicting authority, Terrarian. I do advise purging the other unit.
+		// ProtomindNearby: Conflicting authority, Terrarian. The Protomind may be an advanced model but that unit will hinder your abilities.
+		// CubekonTinkererNearby: W-what? My creator is still alive?
+		// Death_0: Oh. According to my calculations, your death was highly improbable.
+		// Death_1: See you again, Terrarian.
+		// Death_2: Terrarians never die...
+		// Combat_0: Providing precision support!
+		// Combat_1: This enemy is no match for you, Terrarian.
+		// Combat_2: I estimate a success rate no ordinary computer could compute. You got this.
+		// GoodAim_0: That's it, Terrarian.
+		// GoodAim_1: Strike at them now.
+		// GoodAim_2: Bullseye.
+		// GoodAim_3: Now's your chance.
+	}
+
+	WitheringDefiled: {
+		// Idle_0: Cease this violence.
+		// Idle_1: We're not done yet.
+		// Idle_2: We are the same.
+		// Idle_3: Leaving spot for you.
+		// Idle_4: Running away does not help either.
+		// Death_0: Still here.
+		// Death_1: Resistance futile.
+		// Death_2: One day.
+		// Death_3: We keep going.
+	}
+}
+
+TownNPCMood: {
+	Brine_Fiend: {
+		// Content: I feel like swimming in the Brine Pool today.
+		// NoHome: Some shelter would be nice, but I am used to hostile environments.
+		// FarFromHome: I must return home. I need to check on my trophies!
+		// LoveSpace: The sparsity is very different from the crowded Jungles. Very different.
+		// DislikeCrowded: My brews are worsening with the presence of many others...
+		// HateCrowded: This is way worse than my ventures into the Brine.
+		#for now custom happiness messages per-biome/NPC aren't supported, hopefully they will be by the time we don't have a workaround
+		// LikeBiome: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
+		# LikeBiome_Jungle: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
+		
+		// LoveBiome: Screw the Clan Leader! I stand here proudly in the Temple!
+		# LoveBiome_Temple: Screw the Ilkamin! I stand here proudly in the Temple!
+		
+		# HateBiome_Mushroom: The smell of mushrooms makes me sick, and I've smelled much worse.
+		# HateBiome_Mushroom: This place... Truffle does not even taste good.
+		
+		// LikeBiome_Evil: The perfect place to dissolve everything down with my mega-alkaline brew!
+		// LikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LikeBiome_Evil}"
+		// LikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LikeBiome_Evil}"
+		// LikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LikeBiome_Evil}"
+		// LikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Brine_Fiend.LikeBiome_Evil}"
+		// LoveNPC: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
+		# LoveNPC_WitchDoctor: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
+		
+		// LikeNPC: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
+		# LikeNPC_Dryad: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
+		
+		// DislikeNPC: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
+		# DislikeNPC_Zoologist: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
+		
+		// HateNPC: "{NPCName} should keep away from me. He wouldn't want to know what I'd do to him."
+	}
+
+	Cubekon_Tinkerer: {
+		// Content: Hm, I feel like hanging out today, Tourist.
+		// NoHome: My quantum storage backpack works just fine, but I'd still like to set up shop and tinker around, ya' know?
+		// FarFromHome: I've collected enough scrap for today. Time to return back to the 'shop.
+		// LoveSpace: I feel like a kid again... all this room is givin' me ideas. Not the kind you'd be a fan of either.
+		// DislikeCrowded: I don't really enjoy hating on things, but I sure would love some privacy right now.
+		// LikeBiome: This place is quite interesting. I wonder if there's any scrap lying around?
+		// DislikeBiome_Evil: I'm not into the creepy stuff but thanks for the offer, Terrarian.
+		// DislikeBiome_Ashen: This place would be really fun to work in, but it doesn't give me the good feels.
+		// DislikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		// DislikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		// DislikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		// DislikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		# LoveBiome_Underground: I love the Underground, closer to the Cubekons.
+		
+		// LoveNPC: There's only one name on my mind right now, Terrarian. Could yah guess?
+		# LoveNPC_Cyborg: "{NPCName} is quite the work of art. I see something beyond all that circuitry."
+		
+		// LikeNPC: "{NPCName} is decent folk. They seemed to be in a good mood today..."
+		# LikeNPC_GoblinTinkerer: "{NPCName}'s work in the workshop always catches my eye. He just needs the right tools and he'd be unstoppable..."
+		# LikeNPC_Mechanic: "{NPCName} (GoblinT) and {NPCName} (Mechanic) are so cute together... I'm almost envious..."
+		
+		// DislikeNPC: "{NPCName}... poor fella. Wish I knew 'em better..."
+	}
+
+	Cyborg: {
+	}
+
+	Defiled_Effigy: {
+		// Content: We aspire to waste time presently.
+		// NoHome: Place of rest protects chunks from elements. Request you allocate resources for shelter.
+		// FarFromHome: Terrarian, we are lost. Where resides village?
+		// LoveSpace: Tension low, heart rate optimal.
+		// DislikeCrowded: We not appreciated here, Terrarian... allow space.
+		// HateCrowded: Crowdedness feeds instinct. Fix now, Terrarian.
+		// Ocean: Barrier to our prison rests beyond, Terrarian. One day.
+		// LoveBiome: Satisfactory. Spirits of our brothers and sisters welcome us.
+		// LikeBiome: Anywhere remains optimal for home, so long as we are present.
+		// HateBiome: Our chunks decay on this ground. Help us, Terrarian.
+		# HateBiome_Mushroom: This place. Truffle does not even feel anything.
+		# HateBiome_Ashen: Shocked. Curious of this place... but, it bothers us. Break it.
+		# HateBiome_Corruption: Corruption. Opposite of desires, Terrarian. Cleanse it.
+		# HateBiome_Crimson: Crimson bleeds the world of all life. We require hospitable land, Terrarian. Clot it.
+		# HateBiome_Riven_Hive: Hive stirs sickness, this is no healthy ecosystem. Fill this cavity before it destroys us.
+		
+		// LikeNPC: "{NPCName} is decent. Desire the feeling was... mutual."
+		# LikeNPC_Guide: "{NPCName} shares similar origins. {NPCName} understands."
+		# LikeNPC_WitchDoctor: "{NPCName} explored dark arts of Terraria. I value this."
+		
+		// DislikeNPC: "{NPCName} is interesting... but, we do not take hostilities well."
+		# DislikeNPC_Truffle: "{NPCName}'s existence is obstacle to growth. We must take care of matter."
+		
+		// HateNPC: "{NPCName} is enemy. She desires a world exempt of us."
+	}
+}
+
+Interface: {
+	// Journal: "{§Journal}"
+	// Quests: Quests
+	// AcceptQuest: Accept
+	// CompleteQuestGeneric: Complete quest
+	// DryadPurify: Purify ({0})
+	// AFSnippet: "[fool:{0}]"
+}
+
+DeathMessage: {
+	// Barnacle_Mound: "{0} cannot watch where they are going."
+	// Defiled_Mite: "{0} cannot watch where they are going."
+	// Self_Damage_0: "{0} got a little too excited."
+	// Self_Damage_1: "{0} mishandled some explosives."
+	// Self_Damage_2: "{0} claims 'it was just an accident.'"
+	// Self_Damage_3: "{0} got carried away."
+	// Self_Damage_4: "{0} really let themselves go."
+	// Self_Damage_5: "{0} committed insurance fraud."
+	// Confection_Assimilation: "{0} had too many sweets."
+	// Contagion_Assimilation: "{0} couldn't stop picking their boogers."
+	// BadElectrician: "{0} had a low electrician level"
+
+	Torn: {
+		// 0: "{0} watched their body dissolve."
+		// 1: "{0} likes to play in amebic gel."
+		// 2: "{0} became primordial food for the Primordial Amoeba."
+		// 3: "{0} got digested."
+		// 4: "{0} got dissolved."
+	}
+
+	Crushed: {
+		// 0: "{0} inspired a sign."
+		// 1: '''{0} reset the "days since last accident" counter.'''
+		// 2: "{0} didn't make it to the other side."
+	}
+
+	// Tripod_0: "{0} forgot the tripod nip."
+	// Tripod_1: "{0} got rekt by a {§Mods.Origins.NPCs.Defiled_Tripod.DisplayName}."
+
+	Miasma: {
+		// 0: "{0} thought climate change was just a joke."
+		// 1: "{0}'s lungs couldn't handle it."
+		// 2: "{0} couldn't breathe pollution."
+	}
+}
+
+Generic: {
+	// Riven_Hive: "{§Riven} Hive"
+	// Riven: Riven
+	// Dusk: Dusk
+	// Defiled: Defiled
+	// Defiled_Wastelands: Defiled Wastelands
+	// the_Defiled_Wastelands: the {$Mods.Origins.Generic.Defiled_Wastelands}
+	// The_Defiled_Wastelands: The {$Mods.Origins.Generic.Defiled_Wastelands}
+	// Brine_Pool: Brine Pool
+	// Arms_Dealer: the Arms Dealer
+	// Defiled_Antibody: Defiled Antibody
+	// Defiled_Antibodies: Defiled Antibodies
+	// Definite_Article: the {0}
+	// VariableAssimilation: Variable
+	// BuffTime: $60!:{0:0.##} seconds$
+	// UnboundKey: '''"{0}" (not bound)'''
+	// Mildew_Carrion: Mildew Carrion
+	// Tangela: Tangela
+	// Journal: Journal
+	// Acrid: Acrid
+	// Spug: Spug
+	// spug: spug
+	// Ashen: Ashen
+	// Search: Search
+}
+
+AltBiomes: {
+	Defiled_Wastelands_Alt_Biome: {
+		// DisplayName: "{§Defiled}"
+		// Description: The surrogate evil {§Defiled} is guaranteed to be present in your world.
+		// GenPassName: "{§Defiled}ifying"
+		// DryadTextDescriptor: "{§Defiled}"
+	}
+
+	Riven_Hive_Alt_Biome: {
+		// DisplayName: "{§Riven}"
+		// Description: The deceptive {§Riven} is guaranteed to be present in your world.
+		// GenPassName: Blue Lobsterating
+		// DryadTextDescriptor: "{§Riven}"
+	}
+
+	Ashen_Alt_Biome: {
+		// DisplayName: "{§Ashen}"
+		// Description: The mechanical {§Ashen} is guaranteed to be present in your world.
+		// GenPassName: Polluting
+		// DryadTextDescriptor: "{§Ashen}"
+	}
+}
+
+GuideAdvice: {
+	World_Evils: {
+		// DA_Summon_Item: You can combine {§Defiled} powder and strange string to create a nerve impulse manipulator. Make sure you are in {§the_Defiled_Wastelands} before using it.
+		// PA_Summon_Item: You can create suspicious looking ice cream using sentient powder and bud barnacles. Make sure you are in the {§Riven_Hive} before using it.
+		// DAltar: "{§Defiled} altars can usually be found in the {§Defiled_Wastelands}. You will need to be near them to craft some items."
+		// RAltar: "{§Riven} altars can usually be found in the {§Riven_Hive}. You will need to be near them to craft some items."
+		// DFissure: "{§Defiled} relays can usually be found in the chasms around {§Defiled} areas. The heart will alert the immune system if too many have been destroyed. Defeating the amalgamation will cause meteors to fall from the sky!"
+		// RLesion: Gel blisters can usually be found in the {§Riven_Hive}. Smashing too many will unleash the world cracker. Defeating this foe may cause meteors to fall out of the sky!
+		// Defiled_Heart: The {§Defiled} quickly reclaims purified tiles until all {§Defiled} Hearts are smashed. Find them in Caverns at the center of the system.
+		// HardmodeAltarD: Make sure to smash any {§Defiled} altar you can find. Something good is bound to happen if you do!
+		// HardmodeAltarR: Make sure to smash any {§Riven} altar you can find. Something good is bound to happen if you do!
+	}
+
+	Other: {
+		// Stone_Mask: Travel far along the surface of the world. You will be bound to find a stone mask to defend you from evil creatures.
+		// AcidFreakUnlock: I heard rumors of a lone lihzahrd woman in the brine pool. If I recall correctly, the brine pool is not an ideal place to call home...
+		// MojoInjection: Ever tried shimmering a Nature's Gift into a Mojo Injection? I've heard its the perfect ailment to cleanse you from the world's evils!
+	}
+}
+
+Words: {
+	// 2ndrefcasualmale: boy
+	// 2ndrefcasualfemale: girl
+
+	SelectByTag: {
+		// Fallback: gleeblesnort
+
+		Person!: {
+			// "": person
+			// Person;Male!;Casual?: boy
+			// Person;Female!;Casual?: girl
+		}
+
+		Pronoun!: {
+			Female!: {
+				// Subject!: she
+				// Object!: her
+				// Possessive!;Dependent?: her
+				// Possessive!;Independent: hers
+				// Reflexive: herself
+			}
+
+			Male!: {
+				// Subject!: he
+				// Object!: him
+				// Possessive!: his
+				// Reflexive!: himself
+			}
+
+			Neuter!: {
+				// "": it
+				// Possessive!: its
+				// Reflexive!: itself
+			}
+		}
+	}
+}
+
+Doubles: {
+	// GraveDangerDesc: Temporarily increases defense by 25% after death
+	// GraveDangerHardDesc: Increases damage reduction by 15%
+}
+
+Buffs: {
+	Adaptability_Buff: {
+		// DisplayName: Protean
+		// Description: Half of all weapon boosts are shared to all classes!
+	}
+
+	Amebolize_Buff: {
+		// DisplayName: Mods.Origins.BuffName.Amebolize_Buff
+		// Description: Mods.Origins.BuffDescription.Amebolize_Buff
+	}
+
+	Antisolve_Buff: {
+		// DisplayName: Unsolvable
+		// Description: Cannot be broken down by any chemicals
+	}
+
+	Blue_Bovine_Buff: {
+		// DisplayName: Bovine Flight
+		// Description: Blue Bovine allowed flight and slow fall
+	}
+
+	Brainy_Buff: {
+		// DisplayName: Crimbrain
+		// Description: The crimbrain will fight for you
+	}
+
+	Chromatic_Pangolin_Buff: {
+		// DisplayName: Chromatic Pangolin
+		// Description: It's rather dashing
+	}
+
+	Corrupt_Assimilation: {
+		// DisplayName: Corrupt Assimilation
+		// Description: You're being assimilated by the Corruption
+		// DeathMessage: "{0} was turned into a shell of their former self by the Corruption."
+	}
+
+	Cranivore_Debuff: {
+		// DisplayName: Cranivored
+		// Description: It's on your face!
+	}
+
+	Crimson_Assimilation: {
+		// DisplayName: Crimson Assimilation
+		// Description: You're being assimilated by the Crimson
+		// DeathMessage: "{0} was consumed by the Crimson's lies."
+	}
+
+	Defiled_Assimilation: {
+		// DisplayName: "{§Defiled} Assimilation"
+		// Description: You're being assimilated by {§The_Defiled_Wastelands}
+		// DeathMessage: "{0} was warped to the {§Defiled} Will."
+	}
+
+	Defiled_Blight_Buff: {
+		// DisplayName: "{§Defiled} Blight"
+		// Description: The {§Defiled} Blight will light your way
+	}
+
+	Fervor_Buff: {
+		// DisplayName: Fervor
+		// Description: 10% increased attack speed
+	}
+
+	Flagellash_Buff_0: {
+		// DisplayName: Mods.Origins.BuffName.Flagellash_Buff_0
+		// Description: Mods.Origins.BuffDescription.Flagellash_Buff_0
+	}
+
+	Flagellash_Buff_1: {
+		// DisplayName: Mods.Origins.BuffName.Flagellash_Buff_1
+		// Description: Mods.Origins.BuffDescription.Flagellash_Buff_1
+	}
+
+	Flagellash_Buff_2: {
+		// DisplayName: Mods.Origins.BuffName.Flagellash_Buff_2
+		// Description: Mods.Origins.BuffDescription.Flagellash_Buff_2
+	}
+
+	Focus_Buff: {
+		// DisplayName: Mana Channeling
+		// Description: Your mana is being used to increase damage
+	}
+
+	Friendly_Bomb_Buff: {
+		// DisplayName: Friendly Bomb
+		// Description: The bomb will fight for you
+	}
+
+	Guarded_Heart_Buff: {
+		// DisplayName: Guarded
+		// Description: Movement speed and damage increased
+	}
+
+	Headphones_Buff: {
+		// DisplayName: Screaming Teammate
+		// Description: You got your target
+	}
+
+	Lazy_Cloak_Buff: {
+		// DisplayName: Lazy Cloak
+		// Description: Your cloak will fight for you
+	}
+
+	Maelstrom_Buff_Damage: {
+		// DisplayName: Mods.Origins.BuffName.Maelstrom_Buff_Damage
+		// Description: Mods.Origins.BuffDescription.Maelstrom_Buff_Damage
+	}
+
+	Maelstrom_Buff_Zap: {
+		// DisplayName: Mods.Origins.BuffName.Maelstrom_Buff_Zap
+		// Description: Mods.Origins.BuffDescription.Maelstrom_Buff_Zap
+	}
+
+	Mana_Buffer_Debuff: {
+		// DisplayName: Mana Buffer
+		// Description: You cannot regenerate mana naturally
+	}
+
+	Meberoid_Buff: {
+		// DisplayName: Meberoid
+		// Description: The Meberoid will light up the way
+	}
+
+	Mimic_Buff: {
+		// DisplayName: Mimic_Buff
+		// Description: Increased combat stats
+	}
+
+	Mini_EOC_Buff: {
+		// DisplayName: Demon Eye
+		// Description: The demon eye will fight for you
+	}
+
+	Optiphage_Debuff: {
+		// DisplayName: Optiphagy
+		// Description: It's on your eyeball!
+	}
+
+	Platformer_Mech_Buff: {
+		// DisplayName: Platformer Mech
+		// Description: It stomps along the ground
+	}
+
+	Purification_Buff: {
+		// DisplayName: Willed
+		// Description: The evils of the world cannot manipulate you
+	}
+
+	Rasterized_Debuff: {
+		// DisplayName: Rasterized
+		// Description: There goes all your bandwidth...
+		// EffectDescription: Reduces movement speed and acceleration
+	}
+
+	Riven_Assimilation: {
+		// DisplayName: "{§Riven} Assimilation"
+		// Description: You're being assimilated by the {§Riven_Hive}
+		// DeathMessage: "{0} became one with the {§Riven_Hive}'s ecosystem."
+	}
+
+	Safe_Buff: {
+		// DisplayName: Safe From Yourself
+		// Description: Impervious to self-inflicted explosive damage
+	}
+
+	Slow_Debuff: {
+		// DisplayName: Slow
+		// Description: This is the enemy version of the debuff, if you get this just tap the movement keys so you move slower or something, ¯\_(ツ)_/¯
+	}
+
+	Soulhide_Weakened_Debuff: {
+		// DisplayName: Weakened
+		// Description: Damage reduced by 15%
+	}
+
+	Teardown_Buff: {
+		// DisplayName: Flying Exoskeleton
+		// Description: The Flying Exoskeleton will fight for you
+	}
+
+	Torn_Debuff: {
+		// DisplayName: Torn
+		// Description: Your max life has been reduced!
+		// EffectDescription: Reduces effective health
+		// EffectDescriptionSpecific: Reduces effective health by up to {0:P0}
+	}
+
+	Toxic_Shock_Debuff: {
+		// DisplayName: Toxic Shock
+		// Description: The agony is getting to you
+		/* EffectDescription:
+			'''
+			1.3x critical damage taken
+			-20% defense
+			''' */
+		// StunDescription: Has a chance to stun the enemy
+	}
+
+	Voidsight_Buff: {
+		// DisplayName: Voidsight
+		// Description: Visibility significantly increased
+	}
+
+	Weak_Shadowflame_Debuff: {
+		// DisplayName: Dark Flames
+		// Description: Losing life (but half as strong as the normal kind since it'd be kinda OP to get full hardmode debuff DPS from a prehardmode set)
+	}
+
+	Weapon_Imbue_Bile: {
+		// DisplayName: Weapon Imbue: Bile
+		// Description: Melee and whip attacks stun enemies
+	}
+
+	Weapon_Imbue_Salt: {
+		// DisplayName: Weapon Imbue: Alkahest
+		// Description: Melee and whip attacks tenderize targets
+	}
+
+	Woodsprite_Buff: {
+		// DisplayName: Woodsprite
+		// Description: The woodsprite will fight for you
+	}
+
+	Wormy_Buff: {
+		// DisplayName: Mini Eater of Worlds
+		// Description: The Eater of Worlds will fight for you
+	}
+
+	Dash_Ravel_Mount_Buff: {
+		// DisplayName: Dash Ravel
+		// Description: 10% chance to dodge. Double tap left or right to dash
+	}
+
+	Depth_Ravel_Mount_Buff: {
+		// DisplayName: Depth Ravel
+		// Description: 10% chance to dodge. Great underwater capabilities
+	}
+
+	Lousy_Liver_Debuff: {
+		// DisplayName: Liver Failure
+		// Description: It smells of copper wire...
+		// EffectDescription: "{$Rasterized_Debuff.EffectDescription}"
+	}
+
+	Ninja_Ravel_Mount_Buff: {
+		// DisplayName: Ninja Ravel
+		// Description: 10% chance to dodge. Able to climb different surfaces and less likely to be targeted
+	}
+
+	Ravel_Mount_Buff: {
+		// DisplayName: Ravel
+		// Description: 10% chance to dodge
+	}
+
+	Spider_Ravel_Mount_Buff: {
+		// DisplayName: Spider Ravel
+		// Description: 10% chance to dodge. Able to climb different surfaces
+	}
+
+	Stealth_Ravel_Mount_Buff: {
+		// DisplayName: Stealth Ravel
+		// Description: 10% chance to dodge. Less likely to be targeted
+	}
+
+	Shadefire_Debuff: {
+		// DisplayName: Shadefire
+		// Description: The flame doesn't go out in the dark
+	}
+
+	Irish_Cheddar_Buff: {
+		// DisplayName: Irish Cheddar
+		// Description: Very good
+	}
+
+	LightningImmuneFixBuff: {
+		// DisplayName: Mods.Origins.BuffName.LightningImmuneFixBuff
+		// Description: Mods.Origins.BuffDescription.LightningImmuneFixBuff
+	}
+
+	Impaled_Debuff: {
+		// DisplayName: Impaled
+		// Description: Mods.Origins.BuffDescription.Impaled_Debuff
+	}
+
+	Mag_Debuff: {
+		// DisplayName: Magnetized
+		// Description: Mods.Origins.BuffDescription.Mag_Debuff
+	}
+
+	Stunned_Debuff: {
+		// DisplayName: Stunned
+		// Description: You cannot move
+	}
+
+	Barnacled_Buff: {
+		// DisplayName: Barnacled
+		// Description: You shouldn't have this buff, if you do, something is horribly wrong
+	}
+
+	Volatile_Gelatin_Slime_Debuff: {
+		// DisplayName: Volatile Gelatin Slime
+		// Description: The slime is with you
+	}
+
+	Purifying_Buff: {
+		// DisplayName: Purifying
+		// Description: You are being healed of your assimilation
+	}
+
+	Mojo_Flask_Cooldown: {
+		// DisplayName: Mojo Sickness
+		// Description: A little too refreshing...
+	}
+
+	Ambition_Buff: {
+		// DisplayName: Ambition
+		// Description: Increases armor penetration by 5
+	}
+
+	Neural_Network_Buff: {
+		// DisplayName: Neural Pathing
+		// Description: Don't miss
+	}
+
+	Toxic_Shock_Strengthen_Debuff: {
+		// DisplayName: Toxic Shocker
+		// Description: How could it get worse?
+	}
+
+	Priority_Mail_Buff: {
+		// DisplayName: Shipped
+		// Description: Deliver it to them
+	}
+
+	Impeding_Shrapnel_Debuff: {
+		// DisplayName: Impeding Shrapnel
+		// Description: You're full of foreign metal
+	}
+
+	Strange_Tooth_Buff: {
+		// DisplayName: Eye Summon You!
+		// Description: The Servants will keep an eye on your enemies
+	}
+
+	Joint_Pop_Buff: {
+		// DisplayName: Joint Pop Buff
+		// Description: Mods.Origins.Buffs.Joint_Pop_Buff.Description
+	}
+
+	Petrified_Prickly_Pear_Buff: {
+		// DisplayName: Mmm... juicy!
+		// Description: +25% mana shielding
+	}
+
+	Outbreak_Bomb_Owner_Buff: {
+		// DisplayName: Outbreak Bomb Owner
+		// Description: Stop getting everyone sick
+	}
+
+	Futurephones_Buff: {
+		// DisplayName: Ping
+		// Description: Someone's teammate says they should attack you
+	}
+
+	Juvenile_Amalgamation_Buff: {
+		// DisplayName: Baby Amalgamation
+		// Description: The Baby Amalgamation is protecting your holes!
+	}
+
+	Amber_Debuff: {
+		// DisplayName: Calcified
+		// Description: You're being preserved
+	}
+
+	Sapphire_Aura_Buff: {
+		// DisplayName: Sapphire Aura
+		// Description: Increased attack speed and life regeneration
+	}
+
+	Spiker_Counter_Debuff: {
+		// DisplayName: Spiker Counter Debuff
+		// Description: Mods.Origins.Buffs.Spiker_Counter_Debuff.Description
+	}
+
+	Ziptie_Buff: {
+		// DisplayName: Tied Up
+		// Description: Mods.Origins.Buffs.Ziptie_Buff.Description
+	}
+
+	Bee_Incantation_Buff: {
+		// DisplayName: Not the Bees!
+		// Description: Not to be confused with the secret seed
+	}
+
+	Walking_Furnace_Buff: {
+		// DisplayName: Walking Furnace
+		// Description: The walking furnace will light your way
+	}
+
+	Self_Contained_Universe_Buff: {
+		// DisplayName: Self Contained Universe
+		/* Description:
+			'''
+			The universe will light your way
+			The little one, not the one you're in
+			''' */
+	}
+
+	Chee_Toy_Buff: {
+		// DisplayName: Chee Toy
+		// Description: Marketable plushie tiem
+	}
+
+	Indestructible_Saddle_Mount_Buff: {
+		// DisplayName: Rowdy Rocket
+		// Description: Ridin' 'til I dyin', baby
+	}
+
+	Swarm_Statue_Buff: {
+		// DisplayName: Swarmed
+		// Description: Enemy spawn rates increased
+	}
+
+	Indestructible_Saddle_Mount_Cooldown: {
+		// DisplayName: Rowdy Rocket Cooldown
+		// Description: Can't use the Indestructible Saddle
+	}
+
+	Scrap_Barrier_Debuff: {
+		// DisplayName: Shrapnel Disturbance
+		// Description: You cannot regenerate life
+	}
+
+	Trash_Lid_Mount_Buff: {
+		// DisplayName: Impenetrable Trashcan Lid
+		// Description: This trashcan lid is impenetrable
+	}
+
+	Desert_Crown_Buff: {
+		// DisplayName: Desert Crown
+		// Description: The sand elemental will fight for you
+	}
+
+	Defiled_Asphyxiator_Debuff: {
+		// DisplayName: Asphyxiated
+		// Description: You're drowning out
+	}
+
+	Defiled_Asphyxiator_Full_Debuff: {
+		// DisplayName: Asphyxiated
+		// Description: You're drowning out
+	}
+
+	Defiled_Asphyxiator_Debuff_2: {
+		// DisplayName: Asphyxiated
+		// Description: You're drowning out
+	}
+
+	Defiled_Asphyxiator_Debuff_3: {
+		// DisplayName: Asphyxiated
+		// Description: You're drowning out
+	}
+
+	Laser_Tag_Buff: {
+		// DisplayName: In the Game
+		// Description: You're participating in Laser Tag!
+	}
+
+	Slag_Bucket_Debuff: {
+		// DisplayName: Shrapnel Disturbance
+		// Description: You cannot regenerate life
+	}
+
+	Fresh_Meat_Buff: {
+		// DisplayName: Meat Doggin'
+		// Description: Wut de dog doin'
+	}
+
+	Terratotem_Buff: {
+		// DisplayName: Totem Pole
+		// Description: The tribe will serve you
+	}
+
+	Friendly_Zombie_Buff: {
+		// DisplayName: Friendly Zombie Buff
+		// Description: The friendly zombie will fight for you
+	}
+
+	Hibernal_Incantation_Buff: {
+		// DisplayName: Hibernal Incantation Buff
+		// Description: Mods.Origins.Buffs.Hibernal_Incantation_Buff.Description
+	}
+
+	Sour_Broth_Buff: {
+		// DisplayName: Sour Broth
+		/* Description:
+			'''
+			Increases minion critical strike chance by 10%
+			Artifact minions gain an additional 15% critical strike chance
+			''' */
+	}
+
+	Foul_Broth_Buff: {
+		// DisplayName: Foul Broth
+		/* Description:
+			'''
+			Increases minion damage by 50%
+			Reduces minion speed by 25%
+			''' */
+	}
+
+	Hearty_Broth_Buff: {
+		// DisplayName: Hearty Broth
+		/* Description:
+			'''
+			Increases minion speed by 10%
+			Increases artifact minion health by 20%
+			''' */
+	}
+
+	Blind_Debuff: {
+		// DisplayName: Blind Debuff
+		// Description: Mods.Origins.Buffs.Blind_Debuff.Description
+	}
+
+	Cavitation_Debuff: {
+		// DisplayName: Cavitation
+		// Description: You've got the wind knocked out of you
+		// EffectDescription: Can only be applied to wet targets
+	}
+
+	Mildew_Whip_Buff: {
+		// DisplayName: Mildew Whip Buff
+		// Description: Mods.Origins.Buffs.Mildew_Whip_Buff.Description
+	}
+
+	Static_Shock_Debuff: {
+		// DisplayName: Static Shock
+		// Description: It hurts to be near conductors!
+		/* EffectDescription:
+			'''
+			Arcs to nearby targets
+			Deals extra damage to wet and {§Defiled} targets
+			''' */
+	}
+
+	Static_Shock_Damage_Debuff: {
+		// DisplayName: Static Shock
+		// Description: "{§Mods.Origins.Buffs.Static_Shock_Debuff.Description}"
+	}
+
+	Soulhide_Debuff: {
+		// DisplayName: Soulhide Debuff
+		// Description: Mods.Origins.Buffs.Soulhide_Debuff.Description
+	}
+
+	Mini_Static_Shock_Debuff: {
+		// DisplayName: Static Buildup
+		// Description: Yowch
+		/* EffectDescription:
+			'''
+			Stacks with [buffhint:Origins/Static_Shock_Debuff] to increase its range, otherwise:
+			Deals 4 damage per second
+			{$Static_Shock_Debuff.EffectDescription}
+			''' */
+	}
+
+	Silenced_Debuff: {
+		// DisplayName: Silenced
+		// Description: Mods.Origins.Buffs.Silenced_Debuff.Description
+		/* EffectDescription:
+			'''
+			Prevents all projectile attacks
+			Massively reduced duration against bosses
+			''' */
+	}
+
+	Ocotillo_Finger_Buff: {
+		// DisplayName: Ocotillo Finger Buff
+		// Description: Mods.Origins.Buffs.Ocotillo_Finger_Buff.Description
+	}
+
+	Brine_Incantation_Buff: {
+		// DisplayName: Brine Incantation Buff
+		// Description: Mods.Origins.Buffs.Brine_Incantation_Buff.Description
+	}
+
+	Relay_Rod_Buff: {
+		// DisplayName: New Message
+		// Description: A relay is boosting you!
+	}
+
+	Mildew_Blob_Buff: {
+		// DisplayName: Mildew Blobbin'
+		// Description: He do be blobbin' around
+	}
+
+	Electrified_Debuff: {
+		// DisplayName: Electrified
+		// Description: Mods.Origins.Buffs.Electrified_Debuff.Description
+		// EffectDescription: Deals extra damage to wet and {§Defiled} enemies
+	}
+
+	Old_Turtle_Buff: {
+		// DisplayName: Briney Buddy
+		// Description: The Leaf Snapper protek!
+	}
+
+	Guardian_Rod_Buff: {
+		// DisplayName: Zappy Guardian
+		// Description: The Guardian will zap your enemies!
+	}
+
+	Acrid_Spout_Buff: {
+		// DisplayName: "{§Acrid} Spout Buff"
+		// Description: Mods.Origins.Buffs.Acrid_Spout_Buff.Description
+	}
+
+	Mithrafin_Poison_Extend_Debuff: {
+		// DisplayName: Mithrafinished
+		// Description: Your afflictions have been extended!
+	}
+
+	Sharp_Broth_Buff: {
+		// DisplayName: Sharp Broth
+		/* Description:
+			'''
+			Artifact minions inflict [buffhint:Origins/Electrified_Debuff]
+			All minions inflict [buffhint:Origins/Static_Shock_Debuff]
+			''' */
+	}
+
+	Minty_Broth_Buff: {
+		// DisplayName: Minty Broth
+		/* Description:
+			'''
+			Artifact minions have the Thorns effect
+			All minions inflict [buffhint:Frostburn2] in a small area around them
+			''' */
+	}
+
+	Terlet_Paper_Buff: {
+		// DisplayName: Fiberglass Spooder
+		// Description: Kawaii spooder tiem
+	}
+
+	Sunny_Sunflower_Buff: {
+		// DisplayName: Sunny Sunflower
+		// Description: She dances to the beat of world, and eats your frames
+	}
+
+	Light_Broth_Buff: {
+		// DisplayName: Light Broth Buff
+		// Description: Artifact minions receive 25% less damage
+	}
+
+	Greater_Summoning_Buff: {
+		// DisplayName: Greater Summoning
+		// Description: Increased max number of minions
+	}
+
+	Sweet_Broth_Buff: {
+		// DisplayName: Sweet Broth
+		/* Description:
+			'''
+			15% increased minion attack speed
+			10% increased artifact minion damage
+			''' */
+	}
+
+	Inject_Incantation_Buff: {
+		// DisplayName: Inject Incantation Buff
+		// Description: Mods.Origins.Buffs.Inject_Incantation_Buff.Description
+	}
+
+	Umami_Broth_Buff: {
+		// DisplayName: Umami Broth
+		/* Description:
+			'''
+			All minions inflict [buffhint:Venom]
+			Artifact minions also inflict [buffhint:Origins/Toxic_Shock_Debuff]
+			''' */
+	}
+
+	Mildew_Incantation_Buff: {
+		// DisplayName: Mildew Incantation Buff
+		// Description: Mods.Origins.Buffs.Mildew_Incantation_Buff.Description
+	}
+
+	Plain_Broth_Buff: {
+		// DisplayName: Plain Broth Buff
+		// Description: Increases minion size by 25%
+	}
+
+	Greasy_Broth_Buff: {
+		// DisplayName: Greasy Broth
+		/* Description:
+			'''
+			All minions inflict [buffhint:Oiled]
+			Artifact minions release greasy gas that burns enemies
+			''' */
+	}
+
+	On_Even_More_Fire: {
+		// DisplayName: On Even More Fire
+		// Description: Mods.Origins.Buffs.On_Even_More_Fire.Description
+	}
+
+	Skimswim_Buff: {
+		// DisplayName: Skimswim Buff
+		// Description: Mods.Origins.Buffs.Skimswim_Buff.Description
+	}
+
+	Cannihound_Lure_Debuff: {
+		// DisplayName: Ill Omen of Hound
+		// Description: You smell like fresh meat
+	}
+
+	Nerve_Flan_Food_Buff: {
+		// DisplayName: Nerve Flan
+		/* Description:
+			'''
+			Extreme improvements to all stats…
+			except bandwidth
+			''' */
+	}
+
+	Weak_Shimmer_Debuff: {
+		// DisplayName: Shimmering?
+		// Description: Any proof you might have of what's happening to you has gone insubstantial!
+	}
+
+	Shimmer_Guardian_Buff: {
+		// DisplayName: Shimmer Guardian
+		// Description: The shimmer guardian will fight for you
+	}
+
+	Wishing_Glass_Buff: {
+		// DisplayName: Wish Granted!
+		// Description: You got your wish! How imaginative!
+	}
+
+	Amnestic_Rose_Buff: {
+		// DisplayName: Rose Regrowth
+		// Description: The Rosebud is regrowing
+		/* EffectDescription:
+			'''
+			{$BuffDescription.Slow}
+			Attacking afflicted enemies will restore mana
+			''' */
+		// DebuffName: Fugue State
+	}
+
+	Otherworldly_Cloak_Buff: {
+		// DisplayName: Otherworldly Cloak
+		// Description: Your cloak will fight for you
+	}
+
+	Master_Magician_Cloak_Buff: {
+		// DisplayName: Master Magician Cloak
+		// Description: Your cloak will fight for you
+	}
+
+	Amnestic_Rose_Alt_Buff: {
+		// DisplayName: "{$Amnestic_Rose_Buff.DisplayName}"
+		// Description: "{$Amnestic_Rose_Buff.Description}"
+		// EffectDescription: "{$Amnestic_Rose_Buff.EffectDescription}"
+		// DebuffName: "{$Amnestic_Rose_Buff.DebuffName}"
+	}
+
+	Gelatin_Aspect_Buff: {
+		// DisplayName: Gelatin Aspect
+		// Description: An aspect of gelatin lights your way
+	}
+
+	Chambersite_Commander_Sentinel_Buff: {
+		// DisplayName: Chambersite Sentinel
+		// Description: The Chambersite Sentinel will fight for you
+	}
+
+	Stellar_Spark_Buff: {
+		// DisplayName: Stellar Spark
+		// Description: Arabel's got her eye on you
+	}
+
+	Accretion_Ribbon_Buff: {
+		// DisplayName: Accretion Ribbon Buff
+		// Description: Mods.Origins.Buffs.Accretion_Ribbon_Buff.Description
+	}
+
+	Goo_Wall_Debuff: {
+		// DisplayName: Goo Wall Debuff
+		// Description: Mods.Origins.Buffs.Goo_Wall_Debuff.Description
+	}
+
+	No_Fallthrough_Buff: {
+		// DisplayName: Firmly Grounded
+		// Description: You're tired of falling
+	}
+
+	Astral_Scythe_Wait_Debuff: {
+		// DisplayName: Astral Scythe Cooldown
+		// Description: Your scythe needs to rest.
+	}
+
+	Eat_Moss_Buff: {
+		// DisplayName: Ate Moss
+		// Description: That was a bad idea…
+	}
+
+	// Adrenaline_Buff.DisplayName: Adrenaline Rush
+	// Brightsee_Buff.DisplayName: Vigil
+	// Multimed_Buff.DisplayName: First Aid
+	// Blood_Pack_Buff.DisplayName: Blood Transfusion
+	// Fire_Band_Buff.DisplayName: Wrapped Up
+	// Medicinal_Acid_Buff.DisplayName: Solvent Tolerance
+	// Morphine_Buff.DisplayName: Morphine
+	// Rasterwrap_Buff.DisplayName: Unhindered
+	// Sanguis_Pack_Buff.DisplayName: Toasty
+	// Unmarked_Antidote_Buff.DisplayName: Antitoxin
+
+	Murky_Sludge_Debuff: {
+		// DisplayName: Muckin' About
+		// Description: Your movement speed is reduced!
+	}
+
+	Miasma_Debuff: {
+		// DisplayName: Miasma
+		// Description: It's getting hard to breathe...
+		// EffectDescription: Drains breath slowly
+	}
+
+	Tetanus_Debuff: {
+		// DisplayName: Tetanus
+		// Description: You should probably stay away from sharp, rusty metal
+	}
+
+	Choice_Paralysis_Debuff: {
+		// EffectDescription: Movement is intermitently reversed
+		// DisplayName: Choice Paralysis
+		// Description: Right or left, right or left...
+	}
+
+	Ocean_Buff: {
+		// DisplayName: Feesh
+		// Description: They are here.
+	}
+
+	Lunatics_Rune_Duplicates_Buff: {
+		// DisplayName: Lunatic Shadows
+		// Description: Shadow clones will fight by your side
+	}
+
+	Lunatics_Rune_Attacks_Buff: {
+		// DisplayName: Lunacy
+		// Description: You can cast long forgotten magicks
+	}
+
+	Lunatics_Rune_Dragon_Buff: {
+		// DisplayName: Phantasm Dragon
+		// Description: The phantasm dragon will fight for you
+	}
+
+	Lunatics_Rune_Regen_Buff: {
+		// DisplayName: Lunatic Vitality
+		// Description: "{$BuffDescription.RapidHealing}"
+	}
+
+	Exo_Weapon_Mount_Buff: {
+		// DisplayName: Quickdraw
+		// Description: Increased damage from swapping weapons!
+	}
+
+	Autohandcannon_Jam_Debuff: {
+		// DisplayName: Jammed!
+		// Description: The weapon cannot fire.
+	}
+
+	Bitter_Broth_Buff: {
+		// DisplayName: Bitter Broth
+		/* Description:
+			'''
+			Minions inflict [buffhint:Origins/Weak_Debuff]
+			Minions have a chance to inflict [buffhint:Origins/Broken_Armor_Debuff]
+			''' */
+	}
+
+	// Broken_Armor_Debuff.EffectDescription: Reduces effective armor by 20
+
+	Oiled_Debuff: {
+		// DisplayName: Oiled
+		// Description: Fire debuffs inflict more damage
+	}
+
+	Super_Sludge_Debuff: {
+		// DisplayName: Super Sludge
+		// Description: Your movement speed is heightened!
+	}
+
+	Pharaohs_Turquoise_Buff: {
+		// DisplayName: Pharaoh's Turquoise
+		// Description: ""
+	}
+
+	Pharaohs_Turquoise_Buff2: {
+		// DisplayName: Pharaoh's Turquoise
+		// Description: ""
+	}
+
+	Matryoshka_Doll_Buff: {
+		// DisplayName: Matryoshka Doll Buff
+		// Description: Mods.Origins.Buffs.Matryoshka_Doll_Buff.Description
+	}
+
+	Vampire_Sunflower_Buff: {
+		// DisplayName: Vampire Sunflower
+		// Description: "{$Sunny_Sunflower_Buff.Description}"
+	}
+
+	Crazy_Buff: {
+		// DisplayName: Crazy!
+		// Description: Movement speed increased and monster spawns increased
+	}
+}
+
+DamageClassName: {
+	// ExplosivePlusTerraria/DefaultDamageClass: explosive damage
+	// ExplosivePlusTerraria/GenericDamageClass: explosive damage
+	// ExplosivePlusTerraria/MeleeDamageClass: explosive/melee damage
+	// ExplosivePlusTerraria/MeleeNoSpeedDamageClass: explosive/melee damage
+	// ExplosivePlusTerraria/RangedDamageClass: explosive/ranged damage
+	// ExplosivePlusTerraria/MagicDamageClass: explosive/magic damage
+	// ExplosivePlusTerraria/SummonDamageClass: explosive/summon damage
+	// ExplosivePlusTerraria/SummonMeleeSpeedDamageClass: explosive/summon damage
+	// ExplosivePlusTerraria/MagicSummonHybridDamageClass: explosive magic or summon damage
+	// ExplosivePlusTerraria/ThrowingDamageClass: explosive damage (thrown)
+	// ExplosivePlusThoriumMod/BardDamage: explosive/symphonic damage
+	// ExplosivePlusThoriumMod/HealerDamage: explosive/radiant damage
+	// ExplosivePlusThoriumMod/HealerTool: explosive/radiant damage
+	// ExplosivePlusThoriumMod/HealerToolDamageHybrid: explosive/radiant damage
+	// ExplosivePlusThoriumMod/TrueDamage: explosive/true damage
+}
+
+DamageClasses: {
+	Explosive: {
+		// DisplayName: explosive damage
+
+		ThoriumMod_TerrariumArmorAddClassFocus: {
+			// Name: Explosive Focus
+			// Description: Explosives pierce {0} defense
+		}
+	}
+
+	// Ranged_Magic.DisplayName: ranged/magic damage
+	// Incantation.DisplayName: summon damage
+	// Thrown_Explosive.DisplayName: explosive damage (thrown)
+	// ExplosivePlus.DisplayName: explosive{0}
+	// ExplosivePlusModded.DisplayName: explosive {0}
+	// Melee_Magic.DisplayName: melee/magic damage
+	// No_Summon_Inherit.DisplayName: No Summon Inherit
+	// Ranged_Explosive_Inherit.DisplayName: Ranged Explosive Inherit
+	// SentryExplosive.DisplayName: explosive sentry damage
+	// Ranged_Summon.DisplayName: ranged/summon damage
+}
+
+Projectiles: {
+	// Amebic_Vial_Tentacle.DisplayName: Amebic Tentacle
+	// Dash_Ravel_P.DisplayName: Kinetic Wave
+	// Entangled_Energy_Lifesteal.DisplayName: Entangled Energy Lifesteal
+	// Explosive_Artery_P.DisplayName: Explosive Artery
+	// Handy_Helper_NPC_Tentacle.DisplayName: Handy Tentacle
+	// Handy_Helper_Tentacle.DisplayName: Handy Tentacle
+	// Lazy_Cloak_P.DisplayName: Lazy Cloak
+	// Mini_Protozoa_P.DisplayName: Little Protozoa
+	// Parasitic_Influence_Tentacle.DisplayName: Parasitic Influence
+	// Protomind_P.DisplayName: Protomind
+	// Return_To_Sender_Thorns.DisplayName: Return To Sender
+	// Scribe_of_the_Meat_God_P.DisplayName: Scribe of the Meat God
+	// Third_Eye_Deathray.DisplayName: Phantasmal Deathray
+	// Unsought_Organ_P.DisplayName: Unsought Organ
+	// Riptide_Dash_P.DisplayName: Riptide Dash
+	// Ash_Urn_P.DisplayName: Ashes
+	// Defiled_Powder_P.DisplayName: "{§Defiled} Powder"
+	// Sentient_Powder_P.DisplayName: Sentient Powder
+	// Gooey_Water_P.DisplayName: Gooey Water
+	// White_Water_P.DisplayName: White Water
+	// Chromatic_Pangolin.DisplayName: Chromatic Pangolin
+	// Defiled_Blight_P.DisplayName: "{§Defiled} Blight"
+	// Meberoid.DisplayName: Meberoid
+	// Platformer_Mech.DisplayName: Platformer Mech
+	// Acrid_Drill_P.DisplayName: "{§Acrid} Drill"
+	// Amoeba_Hook_P.DisplayName: Amoeba Hook
+	// Lightning_Rod_Bobber.DisplayName: Lightning Rod Bobber
+	// Parasitic_Bobber.DisplayName: Parasitic Bobber
+	// Snatcher_Bobber.DisplayName: Snatcher Bobber
+	// Strainer_P.DisplayName: Strainer
+	// Alkahest_Arrow_P.DisplayName: Alkahest Arrow
+	// Alkahest_Bullet_P.DisplayName: Alkahest Bullet
+	// Alkaline_Harpoon_P.DisplayName: Alkaline Harpoon
+	// Bile_Arrow_P.DisplayName: Bile Arrow
+	// Bile_Bullet_P.DisplayName: Bile Bullet
+	// Bile_Dart_Aura.DisplayName: Bile Dart Aura
+	// Bile_Dart_P.DisplayName: Bile Dart
+	// Bouncy_Harpoon_P.DisplayName: Bouncy Harpoon
+	// Cursed_Harpoon_Flame.DisplayName: Cursed Harpoon
+	// Cursed_Harpoon_P.DisplayName: Cursed Harpoon
+	// Explosive_Harpoon_Explosion.DisplayName: Explosive Harpoon
+	// Explosive_Harpoon_P.DisplayName: Explosive Harpoon
+	// Flammable_Harpoon_P.DisplayName: Flammable Harpoon
+	// Giant_Metal_Slug_P.DisplayName: Giant Metal Slug
+	// Harpoon_P.DisplayName: Harpoon
+	// Resizable_Mine_P_1.DisplayName: Resizable Mine
+	// Resizable_Mine_P_2.DisplayName: Resizable Mine
+	// Resizable_Mine_P_3.DisplayName: Resizable Mine
+	// Resizable_Mine_P_4.DisplayName: Resizable Mine
+	// Resizable_Mine_P_5.DisplayName: Resizable Mine
+	// Teal_Solution_P.DisplayName: Teal Solution
+	// White_Solution_P.DisplayName: White Solution
+	// Ace_Shrapnel_Old_P.DisplayName: Ace Shrapnel
+	// Ace_Shrapnel_Old_Shard.DisplayName: Ace Shrapnel Shard
+	// Ace_Shrapnel_P.DisplayName: Ace Shrapnel
+	// Ace_Shrapnel_Shard.DisplayName: Shrapnel
+	// Acid_Bomb_P.DisplayName: Alkaline Bomb
+	// Acid_Grenade_P.DisplayName: Alkaline Grenade
+	// Ameballoon_P.DisplayName: Ameballoon
+	// Ameballoon_Shrapnel.DisplayName: Ameballoon
+	// Awe_Bomb_Blast.DisplayName: Awe Bomb
+	// Awe_Bomb_P.DisplayName: Awe Bomb
+	// Awe_Grenade_Blast.DisplayName: Awe Grenade
+	// Awe_Grenade_P.DisplayName: Awe Grenade
+	// Bang_Snap_P.DisplayName: Bang Snap
+	// Black_Hole_Bomb_P.DisplayName: Black Hole Bomb
+	// Bloombomb_P.DisplayName: Bloombomb
+	// Bloombomb_Seed.DisplayName: Bloombomb
+	// Bombardment_P.DisplayName: Floating Mine
+	// Boomphracken_P.DisplayName: Obsidian Slug
+	// Bouncy_Explosive_Golf_Ball_P.DisplayName: Ricochet Golf Ball
+	// Brain_Blood.DisplayName: Brain Blood
+	// Brainade_P.DisplayName: Brainade
+	// Caustica_P.DisplayName: Caustica
+	// Chlorodynamite_P.DisplayName: Chlorodynamite
+	// Chlorodynamite_Vine.DisplayName: Chlorodynamite
+	// Crystal_Bomb_P.DisplayName: Crystal Bomb
+	// Crystal_Grenade_P.DisplayName: Crystal Grenade
+	// Crystal_Grenade_Shard.DisplayName: Crystal Shard
+	// Defiled_Spirit_P.DisplayName: "{§Defiled} Spirit"
+	// Dreikan_Shot.DisplayName: Dreikanfire
+	// Explosive_Golf_Ball_P.DisplayName: Explosive Golf Ball
+	// Felnum_Shock_Grenade_P.DisplayName: Felnum Shock Grenade
+	// Felnum_Shock_Grenade_Shock.DisplayName: Felnum Shock
+	// Flakjack_Explosion_P.DisplayName: Flakjack
+	// Flakjack_P_1.DisplayName: Resizable Mine
+	// Flakjack_P_2.DisplayName: Resizable Mine
+	// Flakjack_P_3.DisplayName: Resizable Mine
+	// Flakjack_P_4.DisplayName: Resizable Mine
+	// Flakjack_P_5.DisplayName: Resizable Mine
+	// Flakjack_P.DisplayName: Flakjack
+	// Flash_P.DisplayName: Flash
+	// Flashbang_P.DisplayName: Flashbang
+	// Floaty_Bomb_P.DisplayName: Floaty Bomb
+	// Happy_Bomb_P.DisplayName: Happy Bomb
+	// Hellfire_Bomb_P.DisplayName: Hellfire Bomb
+	// Hellfire_Grenade_P.DisplayName: Hellfire Grenade
+	// Impact_Bomb_Blast.DisplayName: Blast Bomb
+	// Impact_Bomb_P.DisplayName: Impact Bomb
+	// Impact_Dynamite_P.DisplayName: Impact Dynamite
+	// Impact_Golf_Ball_P.DisplayName: Impact Golf Ball
+	// Impact_Grenade_Blast.DisplayName: Blast Grenade
+	// Impact_Grenade_P.DisplayName: Impact Grenade
+	// Nuclear_Arm_P.DisplayName: Nuclear Arm
+	// Outbreak_Bomb_P.DisplayName: Outbreak Bomb
+	// Peatball_P.DisplayName: Peatball
+	// Remote_Golf_Ball_P.DisplayName: Remote Golf Ball
+	// Rocodile_P1.DisplayName: Rocodile
+	// Rocodile_P2.DisplayName: Rocodile
+	// Rocodile_P3.DisplayName: Rocodile
+	// Rocodile_P4.DisplayName: Rocodile
+	// Shrapnel_Bomb_P.DisplayName: Shrapnel Bomb
+	// Sonorous_Shredder_Explosion.DisplayName: Sonorous Shredder Explosion
+	// Sonorous_Shredder_Projectile.DisplayName: Sonorous Shredder Wave
+	// Dragons_Breath_P.DisplayName: Dragon's Breath
+	// Felnum_Golf_Ball_P.DisplayName: Felnum Golf Ball
+	// Fiberglass_Shard_P.DisplayName: Fiberglass Shard
+	// Fragarach_P.DisplayName: Fragarach
+	// Agony_Shard.DisplayName: Agony Shard
+	// Amber_Of_Embers_P.DisplayName: Burning Ember
+	// Beginner_Spell.DisplayName: Beginner Spell
+	// Bled_Out_Staff_P.DisplayName: Bled Out Staff
+	// Dismay_Spike.DisplayName: Dismay
+	// Felnum_Lightning.DisplayName: Hævateinn
+	// Felnum_Zap.DisplayName: Lightning Strike
+	// Haunted_Vase_P.DisplayName: Haunted Vase
+	// Haunted_Vase_Wisp.DisplayName: Pissed Wisp
+	// Hot_Potato_P.DisplayName: Hot Potato
+	// Infusion_P.DisplayName: Infusion Spike
+	// Innermost_Manifest_P.DisplayName: Innermost Manifest
+	// Laseer.DisplayName: Laseer
+	// Laser_Tag_Laser.DisplayName: Laser Tag Laser
+	// Low_Signal_P.DisplayName: Nerve Signal
+	// Manasynk_P.DisplayName: Manasynk
+	// Pike_Of_Deepneus_P.DisplayName: Pike of Deepneus
+	// Rigged_Cubix_P.DisplayName: Quantum Emission
+	// Seam_Beam_Beam.DisplayName: Seam Beam
+	// Splitsplash_Smol_P.DisplayName: Smaller Amoeba Bubble
+	// Splitsplash_P.DisplayName: Amoeba Bubble
+	// Starshot.DisplayName: Starshot
+	// Amenonuhoko_P.DisplayName: Amenonuhoko
+	// Broken_Fiberglass_Sword_Stab.DisplayName: Broken Fiberglass Sword
+	// Crystal_Cutters_P.DisplayName: Crystal Ball
+	// Cursed_Vorpal_Sword_Slash.DisplayName: Cursed Vorpal Sword
+	// Decimator_P.DisplayName: Decimator
+	// Depth_Charge_Explosion.DisplayName: Depth Charge
+	// Depth_Charge_P.DisplayName: Depth Charge
+	// Felnum_Boar_Spear_P.DisplayName: Felnum Boar Spear
+	// Knee_Slapper_P.DisplayName: Knee Slapper
+	// Krakram_P.DisplayName: Krakram
+	// Personal_Laser_Blade_P.DisplayName: Personal Laser Blade
+	// Ripper_Lance_P.DisplayName: Ripper Lance
+	// Riverang_P.DisplayName: Riverang
+	// Telephone_Pole_Shock.DisplayName: Telephone Pole
+	// Vorpal_Sword_Slash.DisplayName: Vorpal Sword
+	// Potato_P.DisplayName: Potato
+	// Bleeding_Obsidian_Kunai_P.DisplayName: Bleeding Obsidian Kunai
+	// Blotopus_P.DisplayName: Bloody Needle
+	// Bone_Bolt.DisplayName: Bone Bolt
+	// Bone_Shard.DisplayName: BoneS hard
+	// Nineball_P.DisplayName: Nienball
+	// Shardcannon_P1.DisplayName: Shardcannon
+	// Shardcannon_P2.DisplayName: Shardcannon
+	// Shardcannon_P3.DisplayName: Shardcannon
+	// Sleetfire_P.DisplayName: Frosty Flame
+	// Tendon_Tear_Swing.DisplayName: Tendon Tear
+	// Threemoepeater_P.DisplayName: Amoeba Ball
+	// Tolruk_Bolt.DisplayName: Tolruk Bolt
+	// Friendly_Bomb.DisplayName: Friendly Bomb
+	// Amebolize_Incantation_P.DisplayName: Amoeba Bubble
+	// Bone_Latcher_P.DisplayName: Bone Latcher
+	// Flagellash_P.DisplayName: Flagellash
+	// Maelstrom_Incantation_P.DisplayName: Lightning Orb
+	// Maelstrom_Incantation_P_Trail.DisplayName: Lightning Orb Trail
+	// Mini_BOC.DisplayName: Brainchild
+	// Mini_EOC.DisplayName: Gerald
+	// Rotting_Worm_Body.DisplayName: Wormy
+	// Rotting_Worm_Head.DisplayName: Wormy
+	// Rotting_Worm_Tail.DisplayName: Wormy
+	// Woodsprite.DisplayName: Woodsprite
+	// Woodsprite_Lifesteal.DisplayName: Woodsprite Lifesteal
+	// Teardown_P.DisplayName: Flying Exoskeleton
+	// Fiberglass_Thread.DisplayName: Fiberglass Thread
+	// Defiled_Enemy_Summon.DisplayName: "{§Defiled} Enemy Summon"
+	// Defiled_Wastelands_Signal.DisplayName: Nerve Impulse
+	// Felnum_Shock_Arc.DisplayName: Felnum Shock Arc
+	// Felnum_Shock_Leader.DisplayName: Felnum Shock
+	// Brine_Droplet.DisplayName: Brine Droplet
+	// Cryostrike_P.DisplayName: Cryostrike
+	// Defiled_Spike_Explosion.DisplayName: "{§Defiled} Spike Explosion"
+	// Defiled_Spike_Explosion_Spike.DisplayName: "{§Defiled} Spike Eruption"
+	// Gooey_Exaultion_P.DisplayName: Gooey Exaultion
+	// Lava_Shot.DisplayName: Magma Shot
+	// Defiled_Sand_Ball.DisplayName: "{§Defiled} Sand Ball"
+	// Defiled_Spike_Explosion_Hostile.DisplayName: Low Signal
+	// Defiled_Spike_Explosion_Spike_Hostile.DisplayName: Low Signal
+	// Low_Signal_Hostile.DisplayName: Low Signal
+	// Amoeball.DisplayName: Amoeball
+	// Spiked_Slime_Minion.DisplayName: Spiked Slime Minion
+	// Spiked_Slime_Minion_Spike.DisplayName: Spiked Slime Minion Spike
+	// Volatile_Gelatin_Slime_Explosion.DisplayName: Volatile Gelatin Slime Explosion
+	// Snapthrow_P.DisplayName: Snapthrow
+	// Outreach_P.DisplayName: Outreach
+	// Piledriver_P.DisplayName: Piledriver
+	// Piledriver_Mine_P.DisplayName: Piledriver
+	// Seal_Of_Cinders_Dust.DisplayName: "{$Mods.Origins.Items.Seal_Of_Cinders.DisplayName}"
+	// Seal_Of_Cinders_Explosion.DisplayName: "{$Mods.Origins.Items.Seal_Of_Cinders.DisplayName}"
+	// C6_Jackhammer_P.DisplayName: C6 Jackhammer
+	// Silica_Ball.DisplayName: Silica Ball
+	// Dryad_Ward.DisplayName: Dryad Ward
+	// Triple_Threat_Dupe_P.DisplayName: Triple Threat
+	// Triple_Threat_P.DisplayName: Triple Threat
+	// Barnacle_Turret.DisplayName: Barnacle Turret
+	// Barnacle_Turret_Shot.DisplayName: Barnacle Turret
+	// Orbital_Saw_P.DisplayName: Orbital Saw
+	// Eruption_Geyser.DisplayName: Eruption
+	// Eruption_P.DisplayName: Eruption
+	// Gray_Solution_P.DisplayName: Gray Solution
+	// Metal_Slug_P.DisplayName: Metal Slug
+	// Impeding_Shrapnel_Shard.DisplayName: Frenzying Shrapnel
+	// Strange_Tooth_Minion.DisplayName: Servant of You
+	// Sunflower_Seed_P.DisplayName: Sunflower Seed
+	// Bad_Hand_Black_P.DisplayName: Black Card
+	// Bad_Hand_Red_P.DisplayName: Red Card
+	// Joint_Pop_Explosion.DisplayName: Joint Pop
+	// Joint_Pop_P.DisplayName: Joint Pop
+	// Cellarkeep_Barrel_Explosion.DisplayName: Explosive Barrel
+	// Cold_Snap_P.DisplayName: Cold Popper
+	// Avulsion_P.DisplayName: Avulse Pulse
+	// Thermite_P.DisplayName: Hot Coal
+	// Gelled_Knife_P.DisplayName: Gelled Knife
+	// Forbidden_Voice_P.DisplayName: Forbidden Voice
+	// Outbreak_Bomb_Cloud.DisplayName: Outbreak
+	// Area_Denial_Explosion.DisplayName: Area Denial
+	// Area_Denial_P.DisplayName: Area Denial
+	// Potato_Battery_P.DisplayName: Potato Battery
+	// Potato_Mine_P.DisplayName: Potato Mine
+	// Defiled_Goop.DisplayName: Black Bile
+	// Meteor_Explosion_1.DisplayName: Meteor
+	// Meteor_Explosion_2.DisplayName: Meteor
+	// Meteor_P.DisplayName: Meteor
+	// Self_Destruct_Explosion.DisplayName: Self-Destruct
+	// Self_Destruct_P.DisplayName: Self-Destruct
+	// Self_Destruct_Flash.DisplayName: Self Destruct Flash
+	// Squid_Bile_P.DisplayName: Black Bile
+	// Juvenile_Amalgamation.DisplayName: Juvenile Amalgamation
+	// Thermite_Canister_P.DisplayName: Thermite Canistah
+	// Nova_Cascade_Explosion.DisplayName: Nova Cascade
+	// Switchblade_Shortsword_P.DisplayName: Switchblade
+	// Amber_Shard.DisplayName: Amber Shard
+	// Metal_Slug_Explosion.DisplayName: Metal Slug Explosion
+	// Acrid_Slug_P.DisplayName: "{§Acrid} Slug"
+	// Sapphire_Aura.DisplayName: Sapphire Aura
+	// Abrasion_Blaster_Charge_P.DisplayName: Abrasion Blaster
+	// Abrasion_Blaster_P.DisplayName: Abrasion Blaster
+	// Abrasion_Blaster_Explosion.DisplayName: Abrasion Blaster
+	// Hellfire_Bomb_Fire.DisplayName: Hellfire Bomb
+	// Hellfire_Grenade_Fire.DisplayName: Hellfire Grenade
+	// Traffic_Cone_Projectile.DisplayName: Traffic Cone
+	// Mine_Flayer_P.DisplayName: Mine Flayer Mine
+	// Potato_Mine_Projectile.DisplayName: Potato Mine
+	// Eternabrite_P.DisplayName: Eternabrite
+	// Shimmer_Cloud_Ball.DisplayName: Shimmer Cloud
+	// Shimmer_Cloud_Held.DisplayName: Shimmer Cloud
+	// Shimmer_Cloud_P.DisplayName: Shimmer Cloud
+	// Shimmer_Cloud_Rain.DisplayName: Shimmering Rain
+	// Napalm_P.DisplayName: Napalm
+	// Lingering_Cursed_Flames_P.DisplayName: Lingering Cursed Flames
+	// Bile_Canister_Explosion.DisplayName: Bile Canister
+	// Grenade_Launcher_Canister_P.DisplayName: Grenade
+	// Proximity_Mine_Launcher_Canister_P.DisplayName: Proximity
+	// Flare_Launcher_P.DisplayName: Flare
+	// Flare_Launcher_Glow_P.DisplayName: Flare Launcher Glow
+	// Alkahest_Canister_Droplet.DisplayName: Alkahest Droplet
+	// Alkaline_Canister_Droplet.DisplayName: Alkaline Droplet
+	// Link_Grenade_P.DisplayName: Link Grenade
+	// Sticky_Link_Grenade_P.DisplayName: Sticky Link Grenade
+	// Hemorang_Blood_P.DisplayName: Blood Drop
+	// Hemorang_P.DisplayName: Hemorang
+	// Dark_Spiral_P.DisplayName: Dark Spiral
+	// Dark_Spiral_Thrown.DisplayName: Dark Spiral
+	// Waning_Crescent_P.DisplayName: Waning Crescent
+	// Waning_Crescent_Thrown.DisplayName: Waning Crescent
+	// True_Light_Disc_Thrown.DisplayName: True Light Disc
+	// Plasma_Cutter_P.DisplayName: Plasma Bolt
+	// Ziptie_P.DisplayName: Ziptie
+	// Communion_P.DisplayName: Extortion Spark
+	// Forbidden_Voice_Uncursed_P.DisplayName: Vile Spit
+	// Breach_P.DisplayName: Breach Bubble
+	// Breach_Wisp.DisplayName: Breach Wisp
+	// Chunky_Hook_P.DisplayName: Chunky Hook
+	// Bee_Afraid_Incantation_Bee.DisplayName: Bee of Fear
+	// Bee_Afraid_Incantation_P.DisplayName: Bee of Fear
+	// True_Waning_Crescent_P.DisplayName: True Waning Crescent
+	// True_Waning_Crescent_P2.DisplayName: True Waning Crescent
+	// True_Waning_Crescent_Thrown.DisplayName: True Waning Crescent
+	// Bee_Afraid_Incantation_Big_Bee.DisplayName: Bee of Fear
+	// Terrarang_P.DisplayName: Terrarang
+	// Terrarang_Thrown.DisplayName: Terrarang
+	// Terrarang_P2.DisplayName: Terrarang
+	// CORE_Generator_P.DisplayName: CORE Generator
+	// Internal_Combustionfish_P.DisplayName: Internal Combustionfish
+	// Amoebash_Smash.DisplayName: Amoebash Smash
+	// Amoebash_Shrapnel.DisplayName: Amoebash Splash
+	// Walking_Furnace.DisplayName: Walking Furnace
+	// Self_Contained_Universe.DisplayName: Self Contained Universe
+	// Alkahest_Dart_Aura.DisplayName: Alkahest Dart Cloud
+	// Alkahest_Dart_P.DisplayName: Alkahest Dart
+	// Chee_Toy.DisplayName: Chee Toy
+	// The_Calibrator_P.DisplayName: Calibrator Tracker
+	// The_Calibrator_Beam.DisplayName: Calibration Beam
+	// Amenonuhoko_Cloud.DisplayName: Brine Cloud
+	// Dew_Justice_P.DisplayName: Amoebic Dew
+	// Impactaxe_Explosion.DisplayName: Impactaxe
+	// Impactaxe_Smash.DisplayName: Impactaxe
+	// Mitosis_P.DisplayName: Mitosis Node
+	// Matrix_P.DisplayName: Matrix
+	// Phantom_Fury_P.DisplayName: Phantom Fury
+	// Phantom_Fury_P2.DisplayName: Phantom Fury
+	// ASH_Attack_Relay_Dust.DisplayName: A.S.H. Attack Relay
+	// ASH_Attack_Relay_Explosion.DisplayName: A.S.H. Attack Relay
+	// Indestructible_Saddle_Explosion.DisplayName: Indestructible Saddle
+	// Indestructible_Saddle_Projectile.DisplayName: Indestructible Saddle
+	// Etherealizer_P.DisplayName: Spectra
+	// Sand_Elemental.DisplayName: Sand Elemental
+	// Sand_Elemental_Sand.DisplayName: Sand Elemental Sand
+	// Scabcoral_Lyre_P.DisplayName: Scabcoral
+	// Omnidirectional_Claymore_Projectile.DisplayName: Omnidirectional Claymore
+	// Defiled_Asphyxiator_P1.DisplayName: "{§Defiled} Asphyxiator"
+	// Defiled_Asphyxiator_P2.DisplayName: "{§Defiled} Asphyxiator"
+	// Defiled_Asphyxiator_P3.DisplayName: "{§Defiled} Asphyxiator"
+	// Defiled_Watcher_Spikes.DisplayName: "{§Defiled} Watcher Spikes"
+	// Generic_Weapon_P.DisplayName: Generic Weapon
+	// Hemoptysis_P.DisplayName: Hemoptysis
+	// Hemoptysis_Blood_P.DisplayName: Hemoptysis
+	// Hemoptysis_P2.DisplayName: Hemoptysis
+	// Eaterboros_Slash.DisplayName: Eaterboros
+	// Eaterboros_Segment_Free.DisplayName: Eaterboros
+	// Eaterboros_Shoot.DisplayName: Eaterboros
+	// The_Bird_Swing.DisplayName: The Bird
+	// Potato_Mine_Melee_Explosion.DisplayName: Potato Mine Melee Explosion
+	// Slag_Bucket_Projectile.DisplayName: Slag Bucket
+	// Fresh_Meat_Artifact_P.DisplayName: Fresh Meat Artifact
+	// Fresh_Meat_Dog.DisplayName: Fresh Meat Dog
+	// Sixth_Spline_Nut.DisplayName: Sixth Spline Nut
+	// Sixth_Spline_Piston.DisplayName: Sixth Spline Piston
+	// Sixth_Spline_Soldering_Iron.DisplayName: Sixth Spline Soldering Iron
+	// Sixth_Spline_Wrench.DisplayName: Sixth Spline Wrench
+	// Spray_N_Pray_P.DisplayName: Spray 'N Pray
+	// Broken_Terratotem_Orb.DisplayName: Broken Terratotem Orb
+	// Terratotem_Orb.DisplayName: Terratotem Orb
+	// Silica_Ball_Falling.DisplayName: Silica Ball
+	// Silica_Ball_Gun.DisplayName: Silica Ball
+	// Defiled_Sand_Ball_Falling.DisplayName: "{§Defiled} Sand Ball"
+	// Defiled_Sand_Ball_Gun.DisplayName: "{§Defiled} Sand Ball"
+	// Terratotem_Laser.DisplayName: Terratotem Laser
+	// World_Cracker_Beam.DisplayName: World Cracker Beam
+	// Friendly_Zombie.DisplayName: Friendly Zombie
+	// Omnidirectional_Claymore_Explosion.DisplayName: Omnidirectional Claymore Explosion
+	// Razorwire_P.DisplayName: Razorwire
+	// Firestarter_Explosion.DisplayName: Firestarter Explosion
+	// Hibernal_Incantation_P.DisplayName: Hibernal Incantation
+	// Hibernal_Icicle_P.DisplayName: Hibernal Icicle
+	// Thermite_Lingering_P.DisplayName: Lingering Thermite
+	// CORE_Generator_Star_P.DisplayName: CORE Generator Star
+	// Thread_Rod_P.DisplayName: Fiberglass Thread
+	// Glass_Cannon_P.DisplayName: Glass Cannon
+	// Ripper_Lance_Spike.DisplayName: Ripper Lance Spike
+	// Enchanted_Fiberglass_Cannon_P.DisplayName: Enchanted Fiberglass Cannon
+	// Pustule_Jelly_Explosion.DisplayName: Pustule Jelly Explosion
+	// Partybringer_P.DisplayName: Partybringer
+	// Partybringer_P1.DisplayName: Partybringer
+	// Partybringer_P2.DisplayName: Partybringer
+	// Partybringer_P3.DisplayName: Partybringer
+	// Partybringer_Fog.DisplayName: Partybringer Fog
+	// Partybringer_Turret.DisplayName: Partybringer Turret
+	// Partybringer_Turret_Rocket_Red.DisplayName: Partybringer Turret
+	// Partybringer_Turret_Rocket_Canister.DisplayName: Partybringer Turret
+	// Partybringer_Turret_Rocket_Purple.DisplayName: Partybringer Turret
+	// Partybringer_Turret_Rocket_Purple_Explosion.DisplayName: Partybringer Turret
+	// Partybringer_Turret_Rocket_Green.DisplayName: Partybringer Turret
+	// Partybringer_Turret_Rocket_Blue.DisplayName: Partybringer Turret
+	// Partybringer_Turret_Rocket_Yellow.DisplayName: Partybringer Turret
+	// Partybringer_Turret_Rocket_Yellow_Explosion.DisplayName: Partybringer Turret
+	// TUDFLOMD_Rocket_Blue.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Canister.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Purple.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Purple_Explosion.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Red.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Yellow.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Yellow_Explosion.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// TUDFLOMD_Rocket_Green.DisplayName: "{$Mods.Origins.Items.The_Ultimate_Death_Firework_Launcher_Of_Mega_Destruction.DisplayName}"
+	// Eternanite_P.DisplayName: Eternanite
+	// Felnum_Ore_Slime_Zap.DisplayName: Felnum Slime
+	// Harpoon_Burst_Rifle_P.DisplayName: Harpoon Burst Rifle
+	// Mildew_Whip_P.DisplayName: Mildew Whip
+	// Eyenade_P.DisplayName: Eyenade
+	// Chipper_Knife_P.DisplayName: Chipper Knife
+	// Magnus_P.DisplayName: Magnus
+	// Felnum_Hamaxe_P.DisplayName: Felnum Hamaxe
+	// Lightning_Rod_Bobber_Zap.DisplayName: Lightning Rod
+	// Felnum_Guardian_P.DisplayName: Felnum Guardian
+	// Felnum_Sword_Slash.DisplayName: "{$Mods.Origins.Items.Felnum_Sword.DisplayName}"
+	// Cloud_Elemental_P.DisplayName: Cloud Elemental
+	// Shotgunfish_P.DisplayName: Shotgunfish
+	// Ashen_Mortar.DisplayName: "{§Ashen} Mortar"
+	// Ashen_Mortar_P.DisplayName: "{§Ashen} Mortar"
+	// Fiberglass_Sword_P.DisplayName: Fiberglass Sword
+	// Peat_Moss_Tile_Explosion.DisplayName: Peat Moss
+	// Ocotillo_Finger_P.DisplayName: Ocotillo Finger
+	// Brine_Convergence_Incantation_P.DisplayName: Brine Convergence
+	// Brine_Convergence_Incantation_Spawn_P.DisplayName: Brine Convergence Incantation
+	// Friendly_Monolith.DisplayName: Friendly Relay
+	// Friendly_Relay_Signal.DisplayName: Friendly Relay Signal
+	// Sixth_Spline_Battery.DisplayName: Sixth Spline Battery
+	// Crawdaddys_Revenge_P.DisplayName: Crawdaddy's Claw
+	// Acrid_Laser_Rod_Bobber.DisplayName: "{§Acrid} Laser Rod Bobber"
+	// Hydrolantern_Use.DisplayName: Hydrolantern
+	// Airsnatcher_Bubble.DisplayName: Airsnatcher Bubble
+	// Unsatisfied_Soul.DisplayName: Unsatisfied Soul
+	// DA_Spike_Summon.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Spike Summon"
+	// DA_Spike.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Spike"
+	// DA_Spike_Bendy.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Spike Bendy"
+	// DA_Guided_Missile.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Guided Missile"
+	// Torpedo_Tube_P.DisplayName: Torpedo Tube
+	// Faith_Beads_Explosion.DisplayName: Faith Beads Explosion
+	// Mildew_Blob.DisplayName: Mildew Blob
+	// Watered_Down_Keytar_Synth.DisplayName: Watered Down Keytar Synth
+	// Watered_Down_Keytar_Bass.DisplayName: Watered Down Keytar Bass
+	// Old_Turtle.DisplayName: Old Turtle
+	// Amenonuhoko_Laser.DisplayName: Amenonuhoko Laser
+	// Friendly_Guardian.DisplayName: Friendly Guardian
+	// Friendly_Guardian_P.DisplayName: Friendly Guardian
+	// Sonar_Dynamite_Ping.DisplayName: Sonar Dynamite Ping
+	// Depth_Charge_P_Alt.DisplayName: Depth Charge
+	// Lost_Diver_Depth_Charge.DisplayName: Lost Diver Depth Charge
+	// Lost_Diver_Depth_Charge_Explosion.DisplayName: Lost Diver Depth Charge Explosion
+	// Lost_Diver_Torpedo_Tube.DisplayName: Lost Diver Torpedo Tube
+	// Lost_Diver_Harpoon.DisplayName: Lost Diver Harpoon
+	// Lost_Diver_Mildew_Whip.DisplayName: Lost Diver Mildew Whip
+	// Explosive_Barrel_P.DisplayName: Explosive Barrel
+	// Acrid_Spout_P.DisplayName: "{§Acrid} Spout"
+	// Acrid_Spout_Droplet.DisplayName: "{§Acrid} Spout Droplet"
+	// Boomboom_P.DisplayName: Boomboom
+	// Brine_Fiend_Boomboom.DisplayName: Brine Fiend Boomboom
+	// Fumethrower_P.DisplayName: Fumethrower
+	// Bomb_Trap_Bomb.DisplayName: Bomb Trap Bomb
+	// Bomb_Trap_Grenade.DisplayName: Bomb Trap Grenade
+	// Bomb_Trap_Dynamite.DisplayName: Bomb Trap Dynamite
+	// Soulslasher_Slash.DisplayName: Soulslasher Slash
+	// Soulslasher_Swing.DisplayName: Soulslasher Swing
+	// Soulslasher_P.DisplayName: Soulslasher
+	// Latchkey_P.DisplayName: Latchkey
+	// Minty_Retaliation_Visual.DisplayName: Minty Retaliation Visual
+	// The_Foot_Smash.DisplayName: The Foot Smash
+	// The_Foot_Flail.DisplayName: The Foot Flail
+	// The_Foot_Aura.DisplayName: The Foot Aura
+	// Terlet_Paper_P.DisplayName: Cute Spooder
+	// Regurgitator_Of_Souls_P.DisplayName: Regurgitator Of Souls
+	// Venom_Shield_P.DisplayName: Venom Shield
+	// Sunny_Sunflower.DisplayName: Sunny Sunflower
+	// Sunny_Sunflower_Seed_P.DisplayName: Sunny Sunflower Seed
+	// Sunny_Sunflower_P.DisplayName: Sunny Sunflower
+	// Golden_Lotus_Fairy.DisplayName: Golden Lotus Fairy
+	// DefiledNukeProj.DisplayName: "{§Defiled} Nuke"
+	// DefiledNukeSupremeProj.DisplayName: "{§Defiled} Nuke Supreme"
+	// RivenNukeProj.DisplayName: "{§Riven} Nuke"
+	// RivenNukeSupremeProj.DisplayName: "{§Riven} Nuke Supreme"
+	// AshenNukeProj.DisplayName: "{§Ashen} Nuke"
+	// AshenNukeSupremeProj.DisplayName: "{§Ashen} Nuke Supreme"
+	// Power_Lotus_Deflect_Fairy.DisplayName: Power Lotus Deflect Fairy
+	// Power_Lotus_Seeker_Fairy.DisplayName: Power Lotus Seeker Fairy
+	// Keytar_Bass.DisplayName: Keytar Bass
+	// Keytar_Lead.DisplayName: Keytar Lead
+	// Keytar_Synth.DisplayName: Keytar Synth
+	// Astoxo_Lightning.DisplayName: Astoxo Lightning
+	// Nerve_Flan_P.DisplayName: Nerve Flan
+	// Defiled_Cyclops_Bone_Latcher.DisplayName: "{§Defiled} Cyclops Bone Latcher"
+	// Defiled_Krusher_P1.DisplayName: "{§Defiled} Krusher"
+	// Defiled_Krusher_P2.DisplayName: "{§Defiled} Krusher"
+	// Defiled_Krusher_P3.DisplayName: "{§Defiled} Krusher"
+	// Impetus_P.DisplayName: Impetus
+	// Impetus_Splut_P.DisplayName: Impetus Splut
+	// Impetus_Shrapnel.DisplayName: Impetus Shrapnel
+	// Rocket_Rifle_P.DisplayName: Rocket Rifle
+	// Inject_Incantation_P.DisplayName: Inject Incantation
+	// Huff_Puffer.DisplayName: Huff Puffer
+	// Mildew_Carrion_Spore.DisplayName: "{§Mildew_Carrion} Spore"
+	// Mildew_Carrion_Spore2.DisplayName: "{§Mildew_Carrion} Spore"
+	// Mildew_Carrion_Spore3.DisplayName: "{§Mildew_Carrion} Spore"
+	// Mildew_Incantation_P.DisplayName: Mildew Incantation
+	// Mildew_Incantation_Creeper.DisplayName: Mildew Incantation Creeper
+	// Eye_Of_Aether_P.DisplayName: Eye of Aether
+	// Soul_Snatcher_P.DisplayName: Soul Snatcher
+	// Soul_Snatcher_Spin.DisplayName: Soul Snatcher Spin
+	// Tangela_Tether_P.DisplayName: "{§Tangela} Tether"
+	// Catacomb_Clearer_Bomb.DisplayName: Catacomb Clearer Bomb
+	// Catacomb_Clearer_Dynamite.DisplayName: Catacomb Clearer Dynamite
+	// Greasy_Gas.DisplayName: Greasy Gas
+	// Cannihound_Gore1.DisplayName: Cannihound Gore
+	// Cannihound_Gore2.DisplayName: Cannihound Gore
+	// Cannihound_Gore3.DisplayName: Cannihound Gore
+	// Brine_Haze_P.DisplayName: Brine Haze Cloud
+	// Necromantic_Prefix_Orb.DisplayName: Necromantic Orb
+	// Defiled_Broadcaster_Flan.DisplayName: "{§Defiled} Broadcaster"
+	// Defiled_Broadcaster_Teleport_Flan.DisplayName: "{§Defiled} Broadcaster Teleport"
+	// Bendy_Indicator.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Bendy Indicator"
+	// DA_Arc_Bolt.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Arc Bolt"
+	// DA_Bendy_Spikes.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Bendy Spikes"
+	// DA_Flan.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Nerve Flan"
+	// Defiled_Spike_Explosion_Hostile_Unused.DisplayName: "{§Defiled} Spike Explosion Hostile Unused"
+	// Defiled_Spike_Explosion_Spike_Hostile_Unused.DisplayName: "{§Defiled} Spike Explosion Spike Hostile Unused"
+	// Defiled_Spike_Indicator.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Spike Indicator"
+	// DA_Laser.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Laser Spin"
+	// Defiled_Prefix_Orb.DisplayName: "{§Defiled} Orb"
+	// Tyrfing_P.DisplayName: Tyrfing
+	// Aether_Bullet_Duplicate_P.DisplayName: ${Aether_Bullet_P.DisplayName}
+	// Aether_Bullet_P.DisplayName: Aether Bullet
+	// Aether_Canister_P.DisplayName: Aether Drop
+	// Shimmer_Construct_Cloud_Ball.DisplayName: Shimmer Cloud Ball
+	// Shimmer_Construct_Cloud_P.DisplayName: Shimmer Cloud
+	// Shimmer_Construct_Cloud_Rain.DisplayName: Shimmer Rain
+	// Shimmer_Construct_Missiles.DisplayName: Shimmer Construct Missiles
+	// Chambersite_Minigun_P.DisplayName: Chambersite Minigun
+	// Shimmerstar_Staff_P.DisplayName: Shimmerstar
+	// Shimmerstar_Staff_P2.DisplayName: Shimmerstar
+	// Shimmer_Guardian.DisplayName: Shimmer Guardian
+	// Shimmer_Guardian_Counter.DisplayName: Shimmer Guardian Counter
+	// Shimmer_Guardian_Shard.DisplayName: Shimmer Guardian Shard
+	// Chambersite_Hook_P.DisplayName: Chambersite Hook
+	// Chambersite_Mine.DisplayName: Chambersite Mine
+	// Cool_Sword_Slash.DisplayName: Cool Sword
+	// Cool_Sword_P.DisplayName: Cool Star
+	// Shimmer_Construct_Bullet.DisplayName: Shimmer Construct Bullet
+	// Chambersite_Phasesaber_P.DisplayName: Chambersite Phasesaber
+	// Bile_Harpoon_Droplet.DisplayName: Bile Harpoon Droplet
+	// Bile_Harpoon_P.DisplayName: Bile Harpoon
+	// Shinedown_P.DisplayName: Shinedown
+	// Shinedown_Staff_P.DisplayName: Shinedown Staff
+	// Alkahest_Harpoon_P.DisplayName: Alkahest Harpoon
+	// Amnestic_Rose_Flower_P.DisplayName: Amnestic Rose Flower
+	// Amnestic_Rose_Thorn.DisplayName: Amnestic Rose Thorn
+	// Amnestic_Rose_Goo_Ball.DisplayName: Amnestic Rose Goo Ball
+	// Amnestic_Rose_Goo_Floor.DisplayName: Amnestic Rose Goo Floor
+	// Otherworldly_Cloak_P.DisplayName: Otherworldly Cloak
+	// Master_Magician_Cloak_P.DisplayName: Master Magician Cloak
+	// Constellation_P.DisplayName: Constellation
+	// Constellation_Star.DisplayName: Constellation Star
+	// Actual_Constellation.DisplayName: Actual Constellation
+	// Voltefuse_Star.DisplayName: Voltefuse Star
+	// Shimmer_Landmines.DisplayName: Shimmer Star
+	// Shotgun_Indicator.DisplayName: Shotgun Indicator
+	// Amnestic_Rose_Alt_Flower_P.DisplayName: Amnestic Rose Flower
+	// Amnestic_Rose_Alt_Goo_Ball.DisplayName: Amnestic Rose Goo Ball
+	// Amnestic_Rose_Alt_Goo_Floor.DisplayName: Amnestic Rose Goo Floor
+	// Amnestic_Rose_Alt_Thorn.DisplayName: Amnestic Rose Thorn
+	// Ichor_Harpoon_Droplet.DisplayName: Ichor Harpoon Droplet
+	// Ichor_Harpoon_P.DisplayName: Ichor Harpoon
+	// Gelatin_Buddy.DisplayName: Gelatin Buddy
+	// Aetherite_Aura_P.DisplayName: Aetherite Aura
+	// Chambersite_Commander_Sentinel.DisplayName: Chambersite Commander Sentinel
+	// Aetherium_Construct.DisplayName: Aetherium Construct
+	// Stellar_Spark.DisplayName: Stellar Spark
+	// Riven_Protoform_Hook.DisplayName: Riven Protoform Hook
+	// Miter_Saw_P.DisplayName: Miter Saw
+	// Shimmershot_P.DisplayName: Shimmershot
+	// Shimmershot_Aura.DisplayName: Shimmershot Aura
+	// Shimmershot_Bullet.DisplayName: Shimmershot Bullet
+	// Hand_Cannon_P.DisplayName: Hand Cannon
+	// Hand_Cannon_Portal.DisplayName: Hand Cannon Portal
+	// Hand_Cannon_Blast.DisplayName: Hand Cannon Blast
+	// Accretion_Ribbon_P.DisplayName: Accretion Ribbon
+	// Friendly_Shimmer_Landmine.DisplayName: Shimmer Star
+	// Splitting_Image_Chunk.DisplayName: Splitting Image
+	// Splitting_Image_Slash.DisplayName: Splitting Image
+	// Splitting_Image_Chunk_Spawn.DisplayName: Splitting Image
+	// Frost_Hydra_Sustained_Blast.DisplayName: Frost Hydra
+	// Flagellant_Whip.DisplayName: Flagellant Whip
+	// SC_Shimmershot_Aura.DisplayName: Shimmershot Aura
+	// SC_Shimmershot_Bullet.DisplayName: Shimmershot
+	// SC_Firework.DisplayName: Shimmerwork
+	// SC_Firework_Spark.DisplayName: Shimmerwork Spark
+	// ConstellationNode.DisplayName: Constellation Node
+	// Greater_Summoning_Potato_P.DisplayName: Greater Summoning Potato
+	// Astral_Scythe_Chunk.DisplayName: Astral Scythe Chunk
+	// Astral_Scythe_Chunk_Spawn.DisplayName: Astral Scythe Chunk Spawn
+	// Astral_Scythe_Slash.DisplayName: Astral Scythe Slash
+	// Dream_Catcher_Shard.DisplayName: Dream Catcher Shard
+	// Dream_Catcher_Vine.DisplayName: Dream Catcher Vine
+	// Dream_Catcher_P.DisplayName: Dream Catcher
+	// Terratotem_Tab.DisplayName: Terratotem Tab
+	// Terratotem_Mask_Small.DisplayName: Terratotem Mask Small
+	// Terratotem_Mask_Big.DisplayName: Terratotem Mask Big
+	// Terratotem_Mask_Medium.DisplayName: Terratotem Mask Medium
+	// Astral_Scythe_Blade.DisplayName: Astral Scythe Blade
+	// Broken_Terratotem_Mask_Big.DisplayName: Broken Terratotem Mask Big
+	// Broken_Terratotem_Mask_Medium.DisplayName: Broken Terratotem Mask Medium
+	// Broken_Terratotem_Mask_Small.DisplayName: Broken Terratotem Mask Small
+	// Broken_Terratotem_Tab.DisplayName: Broken Terratotem Tab
+	// Astral_Scythe_Star.DisplayName: Astral Scythe Star
+	// Sootsand_Ball_Gun.DisplayName: Sootsand Ball
+	// Sootsand_Ball_Falling.DisplayName: Sootsand Ball
+	// Orange_Solution_P.DisplayName: Orange Solution
+	// Blotopus_P_Hostile.DisplayName: Blotopus
+	// Tank_Rifle_P.DisplayName: Tank Rifle
+	// Felnum_Bullet_P.DisplayName: Felnum Bullet
+	// Valkyrum_Bullet_P.DisplayName: Valkyrum Bullet
+	// Hyrax_Laser.DisplayName: Orbital Strike Laser
+	// Welding_Torch_P.DisplayName: Welding Torch
+	// Minishark_Broth_Bullet.DisplayName: Minishark Broth Bullet
+	// Ticking_Bomb_P.DisplayName: Ticking Bomb
+	// Mod_Wire_Channel.DisplayName: Mod Wire Kite
+	// Ticking_Dynamite_P.DisplayName: Ticking Dynamite
+	// Ticking_Grenade_P.DisplayName: Ticking Grenade
+	// Explosive_Sharknado.DisplayName: Explosive Sharknado
+	// Explosive_Sharkron.DisplayName: Explosive Sharkron
+	// Sharknade_O_P.DisplayName: Sharknade-o
+	// Lingering_Cursedflame1.DisplayName: Lingering Cursed Flames
+	// Lingering_Cursedflame2.DisplayName: Lingering Cursed Flames
+	// Lingering_Cursedflame3.DisplayName: Lingering Cursed Flames
+	// Lingering_Shadowflame1.DisplayName: Lingering Shadowflame
+	// Lingering_Shadowflame2.DisplayName: Lingering Shadowflame
+	// Lingering_Shadowflame3.DisplayName: Lingering Shadowflame
+	// Trenchmaker_Firecracker.DisplayName: Firecracker
+	// Trenchmaker_Firecracker_Explosion_1.DisplayName: Firecracker
+	// Trenchmaker_Firecracker_Explosion_2.DisplayName: Firecracker
+	// Trenchmaker_Stomp_P.DisplayName: Trenchmaker Stomp
+	// Trenchmaker_Cannon_P.DisplayName: Trenchmaker Cannon
+	// Trenchmaker_Carpet_Bomb.DisplayName: Trenchmaker Carpet Bomb
+	// Trenchmaker_Bullet_P.DisplayName: Trenchmaker Bullet
+	// Fuel_Rod_Ball_P.DisplayName: Fuel Rod Ball
+	// Bark_Shield_Splinters.DisplayName: Bark Shield Splinters
+	// Flak_Jacket_Explosion.DisplayName: Flak Jacket Explosion
+	// Flak_Jacket_Flak_1.DisplayName: Flak Jacket Flak
+	// Flak_Jacket_Flak_2.DisplayName: Flak Jacket Flak
+	// Flak_Jacket_Flak_3.DisplayName: Flak Jacket Flak
+	// Crystal_Heart_Slime_Flying.DisplayName: Crystal Heart Slime
+	// Crystal_Heart_Slime_Spike.DisplayName: Crystal Slime Spike
+	// Crystal_Heart_Slime.DisplayName: Crystal Heart Slime
+	// Armor_Piercing_Bullet_P.DisplayName: Armor Piercing Bullet
+	// Super_Generic_Weapon_P.DisplayName: Super Generic Weapon
+	// Blast_Furnace_Charge.DisplayName: Blast Furnace Charge
+	// Blast_Furnace_P.DisplayName: Blast Furnace
+	// The_Plant_Chlorophyte_Bullet.DisplayName: "{$ProjectileName.ChlorophyteBullet}"
+	// The_Plant_Explosive_Bullet.DisplayName: "{$ProjectileName.ExplosiveBullet}"
+	// The_Plant_Venom_Bullet.DisplayName: "{$ProjectileName.VenomBullet}"
+	// The_Plant_Nano_Bullet.DisplayName: "{$ProjectileName.NanoBullet}"
+	// The_Plant_Luminite_Bullet.DisplayName: "{$ProjectileName.MoonlordBullet}"
+	// The_Plant_Crystal_Bullet.DisplayName: "{$ProjectileName.CrystalBullet}"
+	// Corona_P.DisplayName: "{$Items.Corona.DisplayName}"
+	// Shadow_Flare_P.DisplayName: "{$Items.Shadow_Flare.DisplayName}"
+	// Fire_Extinguisher_P.DisplayName: Fire Extinguisher
+	// Fire_Extinguisher_P2.DisplayName: Fire Extinguisher
+	// Fire_Extinguisher_P3.DisplayName: Fire Extinguisher
+	// Laser_Target_Locator_P.DisplayName: Laser Target Locator
+	// Laser_Target_Locator_Marker.DisplayName: Laser Target Locator Marker
+	// Laser_Target_Locator_Missile.DisplayName: Laser Target Locator Missile
+	// Laser.DisplayName: Laser
+	// Pike_Of_Deepneus_Stuck.DisplayName: Pike of Deepneus
+	// Homing_Rocket_I_Grenade.DisplayName: Homing Grenade I
+	// Homing_Rocket_I_Mine.DisplayName: Homing Mine I
+	// Homing_Rocket_I_Rocket.DisplayName: Homing Rocket I
+	// Homing_Rocket_I_Snowman.DisplayName: Homing Snowman I
+	// Homing_Rocket_II_Grenade.DisplayName: Homing Grenade II
+	// Homing_Rocket_II_Mine.DisplayName: Homing Mine II
+	// Homing_Rocket_II_Rocket.DisplayName: Homing Rocket II
+	// Homing_Rocket_II_Snowman.DisplayName: Homing Snowman II
+	// AMRSL_Skewer_Sabot.DisplayName: "{$Items.AMRSL_Skewer.DisplayName} Sabot"
+	// AMRSL_Skewer_Sabot_Scrap.DisplayName: "{$Items.AMRSL_Skewer.DisplayName} Scrap Sabot"
+	// AMRSL_Skewer_Sabot_Cursed.DisplayName: "{$Items.AMRSL_Skewer.DisplayName} Cursed Sabot"
+	// AMRSL_Skewer_Sabot_Ichor.DisplayName: "{$Items.AMRSL_Skewer.DisplayName} Ichor Sabot"
+	// Chlorophyte_Handcannon_Bubble.DisplayName: Chlorophyte Handcannon Bubble
+	// Chlorophyte_Slug_P.DisplayName: Chlorophyte Slug
+	// School_Fish.DisplayName: School Fish
+	// IceMist.DisplayName: Ice Mist
+	// CultistFireball.DisplayName: Cultist Fireball
+	// CultistFireballShadow.DisplayName: Cultist Fireball Shadow
+	// Cultist_Fireball.DisplayName: Cultist Fireball
+	// Cultist_Fireball_Shadow.DisplayName: Cultist Fireball Shadow
+	// Cultist_Ice_Mist.DisplayName: Cultist Ice Mist
+	// Cultist_Ice_Shard.DisplayName: Cultist Ice Shard
+	// Cultist_Lightning.DisplayName: Cultist Lightning
+	// Cultist_Lightning_Orb.DisplayName: Cultist Lightning Orb
+	// Phantasm_Dragon_Body.DisplayName: Phantasm Dragon Body
+	// Phantasm_Dragon_Head.DisplayName: Phantasm Dragon Head
+	// Phantasm_Dragon_Tail.DisplayName: Phantasm Dragon Tail
+	// Adjusto_Hook_P.DisplayName: Adjusto Hook
+	// Retool_Arm_Bomb.DisplayName: Retool Arm Bomb
+	// Retool_Arm_Laser_P.DisplayName: Retool Arm Laser
+	// Retool_Arm_Laser_Beam.DisplayName: Retool Arm Laser Beam
+	// Holy_Hand_Grenade_P.DisplayName: Holy Hand Grenade
+	// The_Muffler_P.DisplayName: The Muffler
+	// Robo_Tail_Tail_Body.DisplayName: Robo-Tail
+	// Robo_Tail_Tail_Head.DisplayName: Robo-Tail
+	// Robo_Tail_Probe.DisplayName: Robo-Tail Probe
+	// Robo_Tail_Probe_Laser.DisplayName: Robo-Tail Laser
+	// Bomb_Rack_Carpet_Bomb.DisplayName: Bomb Rack Carpet Bomb
+	// Decorative_Ashes_Missile.DisplayName: Decorative Ashes Missile
+	// Petes_Peat.DisplayName: Pete's Peat
+	// Petes_Peat_Slug.DisplayName: Pete's Peat Slug
+	// Smog_Pod_4_Rocket.DisplayName: Smog Pod-4 Rocket
+	// Smog_Pod_4_Rod.DisplayName: Smog Pod-4 Rod
+	// Scrap_Dart_P.DisplayName: Scrap Dart
+	// Scrap_Dart_Shrapnel.DisplayName: Scrap Dart Shrapnel
+	// Plant_Crystal_Shrapnel.DisplayName: The P.L.A.N.T. Crystal Shrapnel
+	// Sunflower_Sunny.DisplayName: Sunflower Sunny
+	// Sunflower_Sunny_P.DisplayName: Sunflower Sunny
+	// Polluted_Water_P.DisplayName: Polluted Water
+	// Pharaohs_Turquoise_P.DisplayName: Pharaoh's Turquoise
+	// Pharaohs_Turquoise_Freeze.DisplayName: Pharaoh's Turquoise Freeze
+	// Vampire_Grenade_P.DisplayName: Vampire Grenade
+	// Vampire_Grenade_Suck.DisplayName: Vampire Grenade
+	// Vampire_Grenade_Heal.DisplayName: Vampire Grenade Heal
+	// Repairboy_P.DisplayName: Repairboy
+	// Matryoshka_Doll_Minion.DisplayName: Matryoshka Doll Minion
+	// Vampire_Fireflower.DisplayName: Vampire Fireflower
+	// Vampire_Sunflower_P.DisplayName: Vampire Sunflower
+	// Clunkaclusta_P.DisplayName: "[fool:Items.Clunkaclusta.DisplayName]"
+	// Clunkaclusta_Mini_P.DisplayName: "[fool:Items.Clunkaclusta.DisplayName]"
+	// CursedFlames.DisplayName: Cursed Flames
+	// _Temp_Red.DisplayName: " Temp Red"
+	// Cursed_Flames.DisplayName: Cursed Flames
+	// _Temp_Orange.DisplayName: " Temp Orange"
+	// Ichor_Spray.DisplayName: Ichor Spray
+	// _Temp_Turquoise.DisplayName: " Temp Turquoise"
+	// _Temp_Yellow.DisplayName: " Temp Yellow"
+	// ModWireChannel.DisplayName: Mod Wire Channel
+	// Quasar_P.DisplayName: Quasar P
+	// Quasar_Offshoot_P.DisplayName: Quasar Offshoot P
+	// Mushy_Broth_Explosion.DisplayName: Mushy Broth Explosion
+}
+
+Prefixes: {
+	// PrefixMinionSpeed: "{0} minion speed"
+	// Assuring_Prefix.DisplayName: Assuring
+	// Betraying_Prefix.DisplayName: Betraying
+	// Catastrophic_Prefix.DisplayName: Catastrophic
+	// Consistent_Prefix.DisplayName: Consistent
+	// Dud_Prefix.DisplayName: Dud
+	// Eased_Prefix.DisplayName: Eased
+	// Esoteric_Prefix.DisplayName: Esoteric
+	// Guileless_Prefix.DisplayName: Guileless
+	// Heavy_Cal_Prefix.DisplayName: Heavy Caliber
+	// Heavy_Duty_Prefix.DisplayName: Heavy-Duty
+	// Imperfect_Prefix.DisplayName: Imperfect
+	// Lightweight_Prefix.DisplayName: Lightweight
+	// Loaded_Prefix.DisplayName: Loaded
+	// Malicious_Prefix.DisplayName: Malicious
+	// Penetrative_Prefix.DisplayName: Penetrative
+	// Persuasive_Prefix.DisplayName: Persuasive
+	// Safe_Prefix.DisplayName: Safe
+	// Sudden_Prefix.DisplayName: Sudden
+	// Unbounded_Prefix.DisplayName: Unbounded
+	// Vicious_Prefix.DisplayName: Vicious
+	// Wimpy_Prefix.DisplayName: Wimpy
+
+	Firestarter_Prefix: {
+		// DisplayName: Firestarter's
+		/* Description:
+			'''
+			Minions [buffhint/dnset foes ablaze:OnFire3]
+			Minions explode upon death
+			''' */
+		// BadDescription: Minions lose health over time
+	}
+
+	// Brittle_Prefix.DisplayName: Brittle
+	// Speedy_Prefix.DisplayName: Speedy
+	// Bloated_Prefix.DisplayName: Bloated
+
+	Wholesome_Prefix: {
+		// DisplayName: Wholesome
+		/* Description:
+			'''
+			Minions heal nearby allied players
+			Minions drop hearts when killed
+			''' */
+	}
+
+	Vampiric_Prefix: {
+		// DisplayName: Vampiric
+		// Description: Minions steal life from struck enemies
+	}
+
+	Necromantic_Prefix: {
+		// DisplayName: Necromantic
+		/* SharedDescription:
+			'''
+			Minions deal more damage to enemies with less health
+			Minions convert enemy health into necromana on enemy death
+			Necromana cannot be regenerated automatically
+			Necromana can only be used for summon weapons
+			''' */
+		// Description: "{$Mods.Origins.Prefixes.Necromantic_Prefix.SharedDescription}"
+	}
+
+	// Necromantic_Artifact_Prefix.Description: "{$Mods.Origins.Prefixes.Necromantic_Prefix.SharedDescription}"
+
+	Defiled_Prefix: {
+		// DisplayName: "{§Defiled}"
+		// Description: Projectiles steal mana and occasionally explode into {§Defiled} spikes
+	}
+
+	// Debug_Tank_Rifle_Prefix.DisplayName: Convenient
+}
+
+BiomeName: {
+	Bestiary_Biomes: {
+		// TheTemple: The Temple
+		// Space: Space
+	}
+}
+
+Biomes: {
+	Brine_Pool: {
+		// DisplayName: Brine Pool
+		// TownNPCDialogueName: the Brine Pool
+	}
+
+	Defiled_Wastelands: {
+		// DisplayName: "{§Defiled_Wastelands}"
+		// TownNPCDialogueName: "{§the_Defiled_Wastelands}"
+	}
+
+	Dusk: {
+		// DisplayName: "{§Dusk}"
+		// TownNPCDialogueName: the {§Dusk}
+	}
+
+	Fiberglass_Undergrowth: {
+		// DisplayName: Fiberglass Undergrowth
+		// TownNPCDialogueName: the Fiberglass Undergrowth
+	}
+
+	Riven_Hive: {
+		// DisplayName: "{§Riven_Hive}"
+		// TownNPCDialogueName: the {§Riven_Hive}
+	}
+
+	World_Cracker_Master_Biome: {
+		// DisplayName: World Cracker
+		// TownNPCDialogueName: the World Cracker
+	}
+
+	Underground_Defiled_Wastelands_Biome: {
+		// DisplayName: Underground {§Defiled_Wastelands}
+		// TownNPCDialogueName: the Underground {§Defiled_Wastelands}
+	}
+
+	Underground_Riven_Hive_Biome: {
+		// DisplayName: Underground {§Riven_Hive}
+		// TownNPCDialogueName: the Underground {§Riven_Hive}
+	}
+
+	Bestiary_Biomes: {
+		TheTemple: {
+			// DisplayName: The Temple
+			// TownNPCDialogueName: the Temple
+		}
+
+		Space: {
+			// DisplayName: Space
+			// TownNPCDialogueName: space
+		}
+	}
+
+	Ashen_Biome: {
+		// DisplayName: "{§Ashen}"
+		// TownNPCDialogueName: the {§Ashen}
+	}
+
+	Defiled_Wastelands_Desert: {
+		// DisplayName: "{§Defiled} Desert"
+		// TownNPCDialogueName: the {§Defiled} Desert
+	}
+
+	Riven_Hive_Desert: {
+		// DisplayName: "{§Riven} Desert"
+		// TownNPCDialogueName: the {§Riven} Desert
+	}
+
+	Riven_Hive_Ocean: {
+		// DisplayName: Eutrophic Sea
+		// TownNPCDialogueName: the Eutrophic Sea
+	}
+
+	Defiled_Wastelands_Underground_Desert: {
+		// DisplayName: Underground {§Defiled} Desert
+		// TownNPCDialogueName: the Underground {§Defiled} Desert
+	}
+
+	Riven_Hive_Underground_Desert: {
+		// DisplayName: Underground {§Riven} Desert
+		// TownNPCDialogueName: the Underground {§Riven} Desert
+	}
+
+	Riven_Hive_Ice_Biome: {
+		// DisplayName: "{§Riven} Ice"
+		// TownNPCDialogueName: the {§Riven} Ice
+	}
+
+	Defiled_Wastelands_Ice_Biome: {
+		// DisplayName: "{§Defiled} Ice"
+		// TownNPCDialogueName: the {§Defiled} Ice
+	}
+
+	Defiled_Wastelands_Ocean: {
+		// DisplayName: "{§Defiled_Wastelands} Ocean"
+		// TownNPCDialogueName: the {§Defiled} Ocean
+	}
+
+	Limestone_Cave: {
+		// DisplayName: Limestone Cave
+		// TownNPCDialogueName: the Limestone Cave
+	}
+
+	Underground_Ashen_Biome: {
+		// TownNPCDialogueName: the Underground {§Ashen} Biome
+		// DisplayName: Underground {§Ashen} Biome
+	}
+
+	Ashen_Underground_Desert: {
+		// TownNPCDialogueName: the {§Ashen} Underground Desert
+		// DisplayName: "{§Ashen} Underground Desert"
+	}
+
+	Ashen_Ocean: {
+		// TownNPCDialogueName: the {§Ashen} Ocean
+		// DisplayName: "{§Ashen} Ocean"
+	}
+
+	Ashen_Ice_Biome: {
+		// TownNPCDialogueName: the {§Ashen} Ice Biome
+		// DisplayName: "{§Ashen} Ice Biome"
+	}
+
+	Ashen_Desert: {
+		// TownNPCDialogueName: the {§Ashen} Desert
+		// DisplayName: "{§Ashen} Desert"
+	}
+
+	Smog_Storm_Biome: {
+		// DisplayName: Smog Storm Biome
+		// TownNPCDialogueName: the Smog_ Storm_ Biome
+	}
+
+	Smog_Storm: {
+		// DisplayName: Smog Storm
+		// TownNPCDialogueName: the Smog_ Storm
+	}
+}
+
+CaptureBiomeChoice: {
+	// Ashen: "{§Ashen} Factory"
+	// Defiled: "{§The_Defiled_Wastelands}"
+	// Riven: The {§Riven_Hive}
+}
+
+Tiles: {
+	Defiled_Dungeon_Chest: {
+		// ContainerName: "{§Defiled} Chest"
+		// MapEntry: "{§Defiled} Chest"
+	}
+
+	Riven_Dungeon_Chest: {
+		// ContainerName: "{§Riven} Chest"
+		// MapEntry: "{§Riven} Chest"
+	}
+
+	// Brine_Leaf_Clover_Tile.MapEntry: Brine Leaf Clover
+	// Eitrite_Ore.MapEntry: Eitrite
+	// Eden_Tree_Sapling.MapEntry: Eden Sapling
+	// Defiled_Altar.MapEntry: "{§Defiled} Altar"
+	// Defiled_Dungeon_Chest_Locked.MapEntry: Locked {§Defiled} Chest
+	// Defiled_Fissure.MapEntry: "{§Defiled} Fissure"
+	// Defiled_Heart.MapEntry: "{§Defiled} Heart"
+	// Defiled_Ore.MapEntry: Lost
+	// Sanguinite_Ore.MapEntry: Sanguinite
+	// Defiled_Tree_Sapling.MapEntry: "{§Defiled} Sapling"
+	// Soulspore.MapEntry: Soulspore
+	// Wilted_Rose.MapEntry: Wilted Rose
+	// Felnum_Ore.MapEntry: Felnum
+	// Acetabularia.MapEntry: Acetabularia
+	// Encrusted_Ore.MapEntry: Encrusted
+	// Riven_Altar.MapEntry: "{§Riven} Altar"
+	// Riven_Dungeon_Chest_Locked.MapEntry: Locked {§Riven} Chest
+	// Riven_Lesion.MapEntry: "{§Riven} Lesion"
+	// Riven_Tree_Sapling.MapEntry: "{§Riven} Sapling"
+	// Wrycoral.MapEntry: Wrycoral
+	// Traffic_Cone.DisplayName: Traffic Cone
+	// Music_Box_DC: Music Box ({§Defiled} Caverns)
+	// Music_Box_DW: Music Box ({§Defiled_Wastelands})
+	// Music_Box_RH: Music Box ({§Riven_Hive})
+	// Brineglow_Vine.MapEntry: Brineglow Vine
+	// Brineglow.MapEntry: Brineglow
+	// Cleansing_Station.MapEntry: Cleansing Station
+	// Potato_Mine_Tile.MapEntry: Potato Mine
+	// Stone_Mask_Tile.MapEntry: Stone Mask
+	// Stone_Mask.MapEntry: Stone Mask
+	// Gel_Blister.MapEntry: Gel Blister
+	// Surveysprout.MapEntry: Surveysprout
+	// Fungarust.MapEntry: Fungarust
+	// Endowood_Chest.MapEntry: Endowood Chest
+	// Marrowick_Chest.MapEntry: Marrowick Chest
+	// Endowood_Dresser.MapEntry: Endowood Dresser
+	// Marrowick_Dresser.MapEntry: Marrowick Dresser
+	// Bottomfeeder_Banner.MapEntry: Bottomfeeder Banner
+	// Living_Alkahest.MapEntry: Living Alkahest
+	// Living_Bile.MapEntry: Living Bile
+	// Fabricator.MapEntry: Fabricator
+	// Omnidirectional_Claymore_Tile.MapEntry: Omnidirectional Claymore
+	// Laser_Tag_Console.MapEntry: Laser Tag Console
+	// Potato_Tile.MapEntry: Potato
+	// Ancient_Music_Box_DW: Ancient Music Box ({§Defiled_Wastelands})
+	// Ancient_Music_Box_RH: Ancient Music Box ({§Riven_Hive})
+	// Laser_Tag_Base_Console.MapEntry: Laser Tag Base Console
+	// Lost_Ore.MapEntry: Lost
+	// Carburite.MapEntry: Carburite
+	// Silicon_Ore.MapEntry: Silicon
+	// Underwater_Vine.MapEntry: Underwater Vine
+	// Defiled_Relay.MapEntry: "{§Defiled} Relay"
+	// Hydrothermal_Vent.MapEntry: Hydrothermal Vent
+	// Ocotillo.DisplayName: Ocotillo
+	// Ancient_Music_Box_BP: Ancient Music Box (Brine Pool)
+	// Music_Box_BP: Music Box (Brine Pool)
+	// Brine_Dungeon_Chest.MapEntry: Brine Chest
+	// Brine_Dungeon_Chest_Locked.MapEntry: Locked Brine Chest
+	// Defiled_Storage_Unit.MapEntry: "{§Defiled} Storage Unit"
+	// Encrusted_Storage_Unit.MapEntry: Encrusted Storage Unit
+	// Sanguinite_Storage_Unit.MapEntry: Sanguinite Storage Unit
+	// Music_Box_FU: Music Box (Fiberglass Undergrowth)
+	// Hydrothermal_Vent_Goopy.MapEntry: Goopy Hydrothermal Vent
+	// Lucky_Hat_Tile.MapEntry: Lucky Hat
+	// Chambersite_Gem_Lock.MapEntry: Chambersite Gem Lock
+	// Aetherite_Ore.MapEntry: Aetherite
+	// Limestone_Chest.MapEntry: Limestone Chest
+	// Music_Box_TD: Music Box ([wiggle:The Dive])
+	// Limestone_Dresser.MapEntry: Limestone Dresser
+	// Hanging_Wrycoral.MapEntry: Hanging Wrycoral
+	// Fuzzvine.MapEntry: Fuzzvine
+	// Fuzzvine_Lorg.MapEntry: "{$Fuzzvine}"
+	// Otherworldly_Music_Box_DW: Otherworldly Music Box ({§Defiled_Wastelands})
+	// Artifiber_Chest.MapEntry: Artifiber Chest
+	// Artifiber_Dresser.MapEntry: Artifiber Dresser
+	// Ashen_Dungeon_Chest.MapEntry: "{§Ashen} Chest"
+	// Ashen_Dungeon_Chest_Locked.MapEntry: Locked {§Ashen} Chest
+	// Ashen_Altar.MapEntry: "{§Ashen} Altar"
+	// Suit_Locker.MapEntry: Suit Locker
+	// Heat_Vent.MapEntry: Heat Vent
+	// Floodlight.MapEntry: Floodlight
+	// Background_Door.MapEntry: Background Door
+	// Small_Storage_Container.MapEntry: Small Storage Container
+	// Generation_Station.MapEntry: Generation Station
+	// Industrial_Door.MapEntry: Industrial Door
+	// Industrial_Door_Open.MapEntry: Industrial Door
+	// Cargo_Elevator_Door.MapEntry: Cargo Elevator Door
+	// Cargo_Elevator_Door_Open.MapEntry: Cargo Elevator Door Open
+	// Music_Box_AS: Music Box ({§Ashen} Scrapyard)
+	// Music_Box_SS: Music Box (Smog Storm)
+	// Rusty_Locker.MapEntry: Rusty Locker
+	// Music_Box_AF: Music Box ({§Ashen} Factory)
+	// Music_Box_AM: Music Box ({§Ashen} Mines)
+	// Transistor.MapEntry: Transistor
+	// Medium_Storage_Container.MapEntry: Medium Storage Container
+	// Large_Storage_Container.MapEntry: Large Storage Container
+	// Dirt_Chest.MapEntry: "[c/976B4B:{$Items.Dirt_Chest_Item.DisplayName}]"
+	// Dirt_Chest_Natural.MapEntry: "{$Dirt_Chest.MapEntry}"
+	// Mechanical_Key_Node_Blue.MapEntry: Blue Mechanical Key Node
+	// Mechanical_Key_Node_Green.MapEntry: Green Mechanical Key Node
+	// Mechanical_Key_Node_Orange.MapEntry: Orange Mechanical Key Node
+	// Mechanical_Key_Node_Purple.MapEntry: Purple Mechanical Key Node
+	// Mechanical_Key_Node_Yellow.MapEntry: Yellow Mechanical Key Node
+	// Magic_Dropper_Oil.MapEntry: Dripping Oil
+	// Power_Box.MapEntry: Power Box
+	// Power_Box_Wide.MapEntry: Power Box Wide
+	// Magic_Dropper_Brine.MapEntry: Dripping Brine
+	// Magic_Dropper_Amebic_Gel.MapEntry: Dripping Amebic Gel
+	// Oil_Derrick.MapEntry: Oil Derrick
+}
+
+Liquids: {
+	// Amebic_Gel.MapEntry: Amebic Gel
+	// Brine.MapEntry: Brine
+	// Oil.MapEntry: Oil
+}
+
+Keybinds: {
+	// "Trigger Set Bonus.DisplayName": Trigger set bonus ability
+	// "Inspect Item.DisplayName": Inspect item
+	// "Forbidden Voice.DisplayName": Use Forbidden Voice
+	// "Debug Screen Shader.DisplayName": Debug Screen Shader
+	// GoldenLotus.DisplayName: Golden Lotus
+	// UseMojoFlask.DisplayName: Use Mojo Flask
+	// JournalBack.DisplayName: "{§Journal}: Back"
+	// WishingGlass.DisplayName: Wishing Glass
+	// "Open Structure Helper.DisplayName": Open Structure Helper
+	// StressBall.DisplayName: Stress Ball
+	// LunaticsRune.DisplayName: Lunatic's Rune
+	// RetoolArm.DisplayName: Retool Arm
+	// SmogPod.DisplayName: Smog Pod
+	// MultiBucket.DisplayName: Multi-Bucket
+}
+
+Configs: {
+	OriginClientConfig: {
+		// DisplayName: Client settings
+
+		SetBonusDoubleTap: {
+			// Label: Set bonus double-tap
+			// Tooltip: Requires a specified key binding to be used twice in a short time-frame for set bonus abilities to trigger
+		}
+
+		Headers: {
+			// Journal: "{§Journal} options"
+			// Compatibility: Compatibility
+		}
+
+		TabbyJournal: {
+			// Label: Alternate {§Journal} layout
+			// Tooltip: Currently the "normal" layout is still unimplemented
+		}
+
+		AnimatedRavel: {
+			// Label: Animated Ravel transformation
+			// Tooltip: Makes Ravel transformations flashier
+		}
+
+		ExtraGooeyRivenGores: {
+			// Label: Extra-gooey Riven gores
+			// Tooltip: More visually appealing way to kick Riven-butt
+		}
+
+		DebugMenuButton: {
+			// Label: Terraria Origins version
+			// SecretLabel: Debugging
+			// Tooltip: Click to copy
+		}
+
+		TwentyFourHourTime: {
+			// Label: 24-hour time
+			// Tooltip: Makes Origins' clocks display time in a 24-hour format
+		}
+
+		DefaultJournalMode: {
+			// Label: Open {§Journal} to
+			// Tooltip: ""
+		}
+
+		IgnoredCompatibilitySuggestions: {
+			// Label: Ignored Compatibility Suggestions
+			// Tooltip: ""
+		}
+
+		IgnoredCompatibilitySuggestionKeys: {
+			// Label: Ignored Compatibility Suggestion Keys
+			// Tooltip: ""
+		}
+
+		laserTagConfig: {
+			// Label: Laser Tag HUD
+			// Tooltip: ""
+		}
+
+		DefiledShaderJitter: {
+			// Label: Defiled Wastelands Shader Jitter
+			// Tooltip: ""
+		}
+
+		DefiledShaderNoise: {
+			// Label: Defiled Wastelands Shader Noise
+			// Tooltip: ""
+		}
+
+		DefiledShaderSpeed: {
+			// Label: Defiled Wastelands Shader Speed
+			// Tooltip: ""
+		}
+
+		ScreenShakeMultiplier: {
+			// Label: Screen shake multiplier
+			// Tooltip: Changes how much your screen shakes.
+		}
+
+		ArtifactMinionHealthbarStyle: {
+			// Label: Artifact minion healthbar style
+			// Tooltip: Choose between having an artifact minions' health displayed below it, below its buff icon, both[ox:,] or selected automatically.
+		}
+
+		ShowLockedEntries: {
+			// Label: Show locked entries
+			// Tooltip: Undiscovered entries are greyed-out and visible on the Index.
+		}
+
+		QuestNotificationPosition: {
+			// Label: Quest Notification Position
+			// Tooltip: ""
+		}
+
+		EntryCategoryHeaders: {
+			// Label: Entry Category Headers
+			// Tooltip: ""
+		}
+
+		ShowRarityInHotbar: {
+			// Label: Show Rarity In Hotbar
+			// Tooltip: ""
+		}
+
+		ScrollWheelDirection: {
+			// Label: Scroll Wheel Direction
+			// Tooltip: ""
+		}
+
+		npcsNotToForceDialectOn: {
+			// Label: NPCs Not To Force Dialect On
+			// Tooltip: By default, Terraria Origins enables Dialect compatibility for all NPCs, if this somehow causes issues with an NPC, you can use this to prevent it.
+		}
+
+		ImproveChlorophyteBulletsPerformance: {
+			// Label: Improve Chlorophyte Bullets' Performance
+			// Tooltip: Replaces chlorophyte bullets' notoriously laggy visual effect with a more performant and arguably better-looking one.
+		}
+
+		OxfordComma: {
+			// Label: Oxford Comma
+			// Tooltip: Whether there should be a comma for final terms in narrative, description[fool:Configs.OriginClientConfig.OxfordComma.Comma] and dialogue lists.
+			// Comma: "[ox:,]"
+		}
+
+		DisableCoolVisualEffects: {
+			// Label: Disable Performance-Intensive Visual Effects
+			/* Tooltip:
+				'''
+				Certain visual effects associated with the Shimmer Construct, its loot[ox:,] and the Fiberglass Undergrowth biome may cause severe lag on low-end hardware
+				Enable this to disable and/or replace them
+				''' */
+		}
+
+		DyeLightSources: {
+			// Label: Dye Light Sources
+			// Tooltip: ""
+		}
+
+		ProceduralLightSourceDyeRate: {
+			// Label: Procedural Light Source Dye Rate
+			/* Tooltip:
+				'''
+				How frequently unknown dyes will query their colors for light sources, in ticks per query
+				Set to 0 to exclusively dye light sources with known dyes
+				Low values will require beefy computers
+				''' */
+		}
+
+		adjustoHookControlSetting: {
+			// Label: adjusto Hook Control Setting
+			// Tooltip: ""
+		}
+
+		DyeLightTiles: {
+			// Label: Dye Light Tiles
+			// Tooltip: ""
+		}
+
+		FixNonSolidTileBlurring: {
+			// Label: Fix Non-Solid Tile Blurring
+			// Tooltip: ""
+		}
+	}
+
+	OriginConfig: {
+		// DisplayName: Settings
+
+		Headers: {
+			// VanillaBuffs: Vanilla Modifications
+			// Other: Other
+			// Debugging: Debugging
+			// Balance: Balance
+		}
+
+		WoodBuffs: {
+			// Label: Wooden item buffs
+			/* Tooltip:
+				'''
+				Whether or not vanilla/modded wooden items receive buffs from Origins
+				Currently affects:
+				Ebonwood armor
+				Shadewood armor
+				Pearlwood armor
+				''' */
+		}
+
+		RainSetBuff: {
+			// Label: Rain armor buffs
+			// Tooltip: Gives Rain armor pieces bonuses and a set bonus when equipped together
+		}
+
+		GrassMerge: {
+			// Label: Universal Grass Merge
+			// Tooltip: Forces grass to merge with other types of grass
+		}
+
+		DebugMode: {
+			// Label: Debug Mode
+			// Tooltip: ""
+		}
+
+		RoyalGel: {
+			// Label: Royal Gel Slime
+			// Tooltip: Allows Royal Gel to summon a slime minion
+		}
+
+		VolatileGelatin: {
+			// Label: Volatile Gelatin boosts
+			// Tooltip: Volatile Gelatin's attacks count as explosive damage and coat enemies in highly explosive gel
+		}
+
+		Assimilation: {
+			// Label: Assimilation mechanics
+			// Tooltip: Toggles between whether or not Assimilation will be active
+		}
+
+		StatShareRatio: {
+			// Label: Stat share multipliers
+			// Tooltip: These values will determine how much bonuses for the class contribute to generic damage when using stat-sharing effects
+		}
+
+		// AddDebuff: Makes {0} inflict the {1} debuff
+		// ThunderSpear.Tooltip: Makes {0} inflict the {1} debuff
+
+		FrostHydra: {
+			// Label: "{$ItemName.StaffoftheFrostHydra}"
+			// Tooltip: Frost Hydra now shoots bursts of frost at nearby targets, and its long-range shots now explode, gaining extra benefit from summon tag damage
+		}
+
+		VanillaWhipScale: {
+			// Label: Vanilla Whip Scale Support
+			// Tooltip: Makes whips from vanilla Terraria and other mods support scale modifiers
+		}
+
+		TicketInBank: {
+			// Label: "[itemname:Origins/Lottery_Ticket] usable in Banks"
+			// Tooltip: Should the [itemname:Origins/Lottery_Ticket] work while in player banks
+		}
+
+		NewHarpoonsFromTheFuture: {
+			// Label: New Harpoons From The Future
+			// Tooltip: ""
+		}
+
+		ForbiddenArmor: {
+			// Label: Forbidden Armor
+			// Tooltip: ""
+		}
+	}
+
+	DebugConfig: {
+		// Tooltip: ""
+
+		DebugMode: {
+			// Label: Debug Mode
+			// Tooltip: ""
+		}
+
+		ExportAllItemStatsJSON: {
+			// Label: Export all item stat JSONs
+			// Tooltip: Shift must be held to mass-export stats
+		}
+
+		ExportItemStatsJSON: {
+			// Label: Export specific item stat JSON
+			// Tooltip: ""
+		}
+
+		StatJSONPath: {
+			// Label: Stat JSON path
+			// Tooltip: The path to put the JSON files in
+		}
+
+		ExportItemPage: {
+			// Label: Export item page
+			// Tooltip: ""
+		}
+
+		WikiTemplatePath: {
+			// Label: Wiki template path
+			// Tooltip: ""
+		}
+
+		WikiPagePath: {
+			// Label: Wiki page path
+			// Tooltip: ""
+		}
+
+		ExportAllItemPages: {
+			// Label: Export all item pages
+			// Tooltip: ""
+		}
+
+		WikiArmorTemplatePath: {
+			// Label: Wiki armor template path
+			// Tooltip: ""
+		}
+
+		ExportItemImages: {
+			// Label: Export specific item image
+			// Tooltip: ""
+		}
+
+		WikiSpritesPath: {
+			// Label: Wiki sprites path
+			// Tooltip: ""
+		}
+
+		ExportAllItemImages: {
+			// Label: Export all item images
+			// Tooltip: ""
+		}
+
+		CheckTextureUsage: {
+			// Label: Check texture usage
+			// Tooltip: ""
+		}
+
+		CheckItemObtainability: {
+			// Label: Check item obtainability
+			// Tooltip: ""
+		}
+
+		ExportSpecialPages: {
+			// Label: Export special pages
+			// Tooltip: ""
+		}
+
+		WikiSpecialTemplatePath: {
+			// Label: Wiki special template path
+			// Tooltip: ""
+		}
+
+		ExportAllNPCPages: {
+			// Label: Export all NPC pages
+			// Tooltip: ""
+		}
+
+		ExportNPCPage: {
+			// Label: Export specific NPC page
+			// Tooltip: ""
+		}
+
+		ExportAllNPCStatsJSON: {
+			// Label: Export all NPC stat JSONs
+			// Tooltip: ""
+		}
+
+		ExportNPCStatsJSON: {
+			// Label: Export specific NPC stat JSON
+			// Tooltip: ""
+		}
+
+		ExportAllNPCImages: {
+			// Label: Export all NPC images
+			// Tooltip: ""
+		}
+
+		ExportNPCImages: {
+			// Label: Export specific NPC image
+			// Tooltip: ""
+		}
+
+		IgnoredCompatibilitySuggestions: {
+			// Label: Ignored Compatibility Suggestions
+			// Tooltip: ""
+		}
+
+		ExportSpecialImages: {
+			// Label: Export Special Images
+			// Tooltip: ""
+		}
+
+		ExportAllBuffStatsJSON: {
+			// Label: Export All Buff Stats J S O N
+			// Tooltip: ""
+		}
+
+		ForceAprilFools: {
+			// Label: Force April Fools
+			// Tooltip: ""
+		}
+
+		ExportVersionedLists: {
+			// Label: Export Version Lists
+			// Tooltip: ""
+		}
+
+		ForceEnableDebugItems: {
+			// Label: Force Enable Debug Items
+			// DebugBuildTooltip: Has no effect in debug builds
+			/* Tooltip:
+				'''
+				Enables debugging items even in release builds
+				[c/FFA500:{$tModLoader.ModReloadRequiredMemberTooltip}]
+				''' */
+		}
+	}
+
+	Journal_Default_UI_Mode: {
+		// Tooltip: ""
+
+		Index_Page: {
+			// Label: Index
+			// Tooltip: ""
+		}
+
+		Quest_List: {
+			// Label: Quests
+			// Tooltip: ""
+		}
+
+		Search_Page: {
+			// Label: Search
+			// Tooltip: ""
+		}
+
+		Memos: {
+			// Label: Memos
+			// Tooltip: ""
+		}
+	}
+
+	LaserTagConfig: {
+		// Tooltip: ""
+
+		HealthPipPlacement: {
+			// Label: Health Pip Placement
+			// Tooltip: ""
+		}
+
+		HealthPipOffset: {
+			// Label: Health Pip Offset
+			// Tooltip: ""
+		}
+
+		HealthPipDirectionInverted: {
+			// Label: Health Pip Direction Inverted
+			// Tooltip: ""
+		}
+	}
+
+	Laser_Tag_Health_Pip_Placement: {
+		// Tooltip: ""
+
+		Bottom: {
+			// Label: Bottom
+			// Tooltip: ""
+		}
+
+		Left: {
+			// Label: Left
+			// Tooltip: ""
+		}
+
+		Right: {
+			// Label: Right
+			// Tooltip: ""
+		}
+
+		Top: {
+			// Label: Top
+			// Tooltip: ""
+		}
+
+		Back: {
+			// Label: Back
+			// Tooltip: ""
+		}
+
+		Front: {
+			// Label: Front
+			// Tooltip: ""
+		}
+	}
+
+	OriginAccessibilityConfig: {
+		// DisplayName: Accessibility
+
+		DisableDefiledWastelandsShader: {
+			// Label: Disable Defiled Wastelands Shader
+			// Tooltip: ""
+		}
+	}
+
+	ServerSideAccessibility: {
+		// DisplayName: Accessibility (Server Side)
+
+		GraveshieldZombiesDropAsItem: {
+			// Label: Graveshield Zombie QOL
+			// Tooltip: Makes Graveshield Zombies drop their tombstones as items instead of as tiles
+		}
+
+		RivenAsimilationMultiplier: {
+			// Label: Riven Assimilation Torn multiplier
+			// Tooltip: Reduces the Torn severity applied by Riven Assimilation
+		}
+	}
+
+	DamageClassDefinition: {
+		// Tooltip: ""
+
+		IsUnloaded: {
+			// Label: Is Unloaded
+			// Tooltip: ""
+		}
+
+		FullName: {
+			// Label: Full Name
+			// Tooltip: ""
+		}
+
+		DamageClass: {
+			// Label: Damage Class
+			// Tooltip: ""
+		}
+
+		DisplayName: {
+			// Label: Display Name
+			// Tooltip: ""
+		}
+	}
+
+	ArtifactMinionHealthbarStyles: {
+		// Tooltip: ""
+
+		Auto: {
+			// Label: Auto
+			// Tooltip: ""
+		}
+
+		UnderMinion: {
+			// Label: Under Minion
+			// Tooltip: ""
+		}
+
+		UnderBuff: {
+			// Label: Under Buff
+			// Tooltip: ""
+		}
+
+		Both: {
+			// Label: Both
+			// Tooltip: ""
+		}
+	}
+
+	QuestNotificationPositions: {
+		// Tooltip: ""
+
+		None: {
+			// Label: None
+			// Tooltip: ""
+		}
+
+		World: {
+			// Label: World
+			// Tooltip: ""
+		}
+
+		Map: {
+			// Label: Map
+			// Tooltip: ""
+		}
+
+		Housing: {
+			// Label: Housing Menu
+			// Tooltip: ""
+		}
+	}
+
+	Scroll_Wheel_Direction: {
+		// Tooltip: ""
+
+		Normal: {
+			// Label: Normal
+			// Tooltip: ""
+		}
+
+		Inverted: {
+			// Label: Inverted
+			// Tooltip: ""
+		}
+
+		Disabled: {
+			// Label: Disabled
+			// Tooltip: ""
+		}
+	}
+
+	ControlSetting: {
+		// Tooltip: ""
+
+		Default: {
+			// Label: Default
+			// Tooltip: ""
+		}
+
+		Inverted: {
+			// Label: Inverted
+			// Tooltip: ""
+		}
+
+		World: {
+			// Label: World
+			// Tooltip: ""
+		}
+	}
+}
+
+SetBonuses: {
+	/* Acrid:
+		'''
+		All attacks inflict [buffhint:Origins/Toxic_Shock_Debuff]
+		Immunity to [buffhint/self:Venom], [buffhint/self:Poisoned][ox:,] and [buffhint/self:Origins/Toxic_Shock_Debuff]
+		Extends underwater breathing
+		''' */
+	/* Amber:
+		'''
+		-38% explosive blast radius
+		All explosives are preserved in amber and release amber shards upon detonation
+		Amber shards [buffhint/dnSlows:Origins/Slow_Debuff] enemies, heal the player of any self-damage received[ox:,] and decrease the defense of struck enemies by half
+		''' */
+	/* Ashen:
+		'''
+		+15% knockback and knockback resistance
+		-15% self-damage
+		''' */
+	// BleedingObsidian: Explosive projectiles have a chance to be duplicated
+	/* Chromtain:
+		'''
+		Enemies are more likely to target you
+		Your armor is unbreakable
+		''' */
+	/* Cryosten:
+		'''
+		All attacks inflict [buffhint:Frostburn]
+		+10% explosive velocity
+		Immunity to [buffhint/self:Frozen] and [buffhint/self:Chilled]
+		''' */
+	// Defiled: Greatly increased maximum life
+	// Encrusted: Increases summon damage by up to 30% when over half health
+	// Felnum: Moving quickly will build up a static charge to boost your next attack's damage
+	// Fiberglass: Weapon damage increased by 4
+	// Lost: 15% of damage taken is redirected to mana
+	// Mythic: Explosive damage and velocity increased based on how fast you're moving
+	/* Necromancer:
+		'''
+		Slain enemies provide a temporary boost to all stats
+		Mana usage is halved when in a Graveyard and artifact minions cost half as much
+		Enemies spawn more frequently
+		Increases your max number of minions by 3
+		''' */
+	/* NecromancerCrown:
+		'''
+		Summons an unsatisfied soul from slain enemies
+		Mana usage is halved when in a Graveyard
+		Enemies spawn more frequently
+		Increases your max number of minions by 3
+		''' */
+	/* Nova:
+		'''
+		60% increased explosive blast radius
+		Explosive projectiles have a chance to be duplicated
+		Explosives home towards nearby enemies
+		''' */
+	// Chlorohpyte_Summoner: Increases your max number of minions by 2
+	/* Riptide:
+		'''
+		6% increased magic damage when submerged or in rain
+		Grants the ability to dash, releasing a tidal wave
+		''' */
+	/* Sapphire:
+		'''
+		Generate a massive aura that pushes away enemies and projectiles
+		harder the closer they are to you
+		Allies receive a [buffhint/self/dnminor boost:Origins/Sapphire_Aura_Buff] in stats when in the aura
+		The aura fades as you run out of mana
+		''' */
+	/* Scavenger:
+		'''
+		All explosives inflict [buffhint:Origins/Impeding_Shrapnel_Debuff]
+		Additional scrap drops from {§Ashen} enemies
+		''' */
+	// Souldhide: Nearby enemies are [buffhint:Origins/Soulhide_Weakened_Debuff] and afflicted with [buffhint:ShadowFlame]
+	// Tendon: Mobility is based on remaining health
+	/* Miner:
+		'''
+
+		-20% self-damage
+		''' */
+	/* Pearlwood:
+		'''
+		15% increased damage
+		Reduces damage taken by 5%
+		''' */
+	/* Blast:
+		'''
+		-25% self-damage
+		Allows you to go berserk after receiving any kind of damage
+		All explosive combat stats are increased by 50% while berserked
+		''' */
+	/* Rubber:
+		'''
+		Immunity to [buffhint:Origins/Static_Shock_Debuff] and [buffhint:Electrified]
+		+5% damage reduction
+		''' */
+	/* Extremophile:
+		'''
+		Receiving a debuff gradually builds up defense until hit again
+		Damaging debuffs deal 33% less damage to you
+		Being hit repeatedly increases the likelihood of dodging the next attack
+		This likelihood is reset after a successful dodge
+		''' */
+	/* Lucky_Hat:
+		'''
+		Amplifies damage when timing your shots in 1.5-second intervals
+		Increased damage when firing opposite to where you're moving
+		''' */
+	/* Mildew:
+		'''
+		Grants immunity to [buffhint:Origins/Toxic_Shock_Debuff]
+		All minions don mildew growths that inflict [buffhint:Venom]
+		All projectiles release mildew vines in their wake that also inflict [buffhint:Venom]
+		''' */
+	// ChambersiteMagicHat: Chambersite Robe instead decreases maximum mana by 20
+	// ChambersiteWizardHat: +20% magic critical strike chance
+	/* ChambersiteCommander:
+		'''
+		Grants [buffhint/self:Origins/Voidsight_Buff]
+		Increases your max number of minions by 1
+		+15% knockback
+		Allows you to temporarily summon a Chambersite Sentinel to fight. 
+		5 second cooldown
+		''' */
+	/* Aetherite:
+		'''
+		Able to temporarily open a shimmering rift
+		Random damaging starmines will appear in this dimension
+		Teleports the player and all entities back where they last were afterwards
+		15 second cooldown
+		''' */
+}
+
+ItemSourceFilter: {
+	// CrimsonRarity.DisplayName: Crimson
+	// CursedRarity.DisplayName: Cursed
+	// ButterscotchRarity.DisplayName: Butterscotch
+	// AltCyanRarity.DisplayName: A Very Nice Shade Of Blue
+	// Eccentric_Rarity.DisplayName: Eccentric
+	// RoyalBlueRarity.DisplayName: Royal Blue
+}
+
+Music: {
+	The_Room_Before: {
+		// Name: The Room Before
+		// Subtitle: ""
+	}
+
+	Below_The_Brine: {
+		// Name: Below The Brine
+		// Subtitle: ""
+	}
+
+	Dancing_With_Ghosts: {
+		// Name: Dancing With Ghosts
+		// Subtitle: ""
+	}
+
+	Stolen_Memories: {
+		// Name: Stolen Memories
+		// Subtitle: ""
+	}
+
+	Heart_Of_The_Beast: {
+		// Name: Heart Of The Beast
+		// Subtitle: ""
+	}
+
+	ADJUDICATE: {
+		// Name: ADJUDICATE
+		// Subtitle: ""
+	}
+
+	Pereunt_Unum_Scindendum: {
+		// Name: Scinditur Pereunt
+		// Subtitle: ""
+	}
+
+	Festering_Hives: {
+		// Name: Festering Hives
+		// Subtitle: ""
+	}
+
+	Ad_Laceratur: {
+		// Name: Ad Laceratur
+		// Subtitle: ""
+	}
+
+	This_Ocean_Of_Alkahest: {
+		// Name: This Ocean Of Alkahest
+		// Subtitle: ""
+	}
+
+	Shattered_Topography_Old: {
+		// Name: Shattered Topography Old
+		// Subtitle: ""
+	}
+
+	// Deep_Luminance.Name: Deep Luminance
+	// Wasteland.Name: Wasteland
+	// Dread_Heart.Name: Dread Heart
+	// Skin.Name: Skin
+	// Internal_Organism.Name: Internal Organism
+	// Frayed_And_Stretched.Name: Frayed And Stretched
+	// Alkahest.Name: Alkahest
+	// Skulking.Name: Skulking
+	// Only_the_Brave.Name: Only the Brave
+}
+
+DefiledRelaySignals: {
+	// Security1: Here.
+	// Security2: Found.
+	// Security3: Send anti-bodies.
+	// Security4: Threat.
+	// Security5: Terrarian.
+	// Security6: Relay 2, foreign body.
+	// Security7: Relay 5, initiate protocol.
+	// Idle1: All conditions optimal.
+	// Idle2: Hey. M-y memories.
+	// Idle3: Not more than our pet. Keep them occupied.
+	// Idle4: Intruder present shortly. Remain alert.
+	// Idle5: Day becomes progressively suboptimal.
+	// Idle6: Motivated, dopamine release next cycle.
+	// Idle7: File is missing. Not yet.
+	// Idle8: Absolution upon us.
+	// BeingDestroyed1: Stop.
+	// BeingDestroyed2: This hurts us.
+	// BeingDestroyed3: Alert core system.
+	// BeingDestroyed4: Distress.
+	// BeingDestroyed5: You will regret.
+}
+
+ExtraDyeSlots: {
+	// SceneYMK_Dye_Slot_0.DisplayText: "{$LegacyInterface.57} (Green Primaries)"
+	// SceneYMK_Dye_Slot_1.DisplayText: "{$LegacyInterface.57} (Pink Primaries)"
+	// SceneYMK_Dye_Slot_2.DisplayText: "{$LegacyInterface.57} (Blue Primaries)"
+	// Futurephones_Glow_Dye_Slot.DisplayText: "{$LegacyInterface.57} (Lights)"
+	// Robo_Tail_Glow_Dye_Slot.DisplayText: "{$LegacyInterface.57} (Lights)"
+	// Awesome_Tail_Glow_Dye_Slot.DisplayText: "{$LegacyInterface.57}"
+}
+
+CritType: {
+	// SlammyHammer: Critically strikes when crushing the target against blocks
+	// PerfectTiming: Critically strikes on perfectly timed attacks
+	// Impactaxe_Crit_Type: Critically strikes on direct hits
+	// Indestructible_Saddle_Crit_Type: Critically strikes during the last {0:0.##} seconds of the time limit
+	// Dreikan_Crit_Type: Critically strikes when hitting the same target with all 3 shots
+	// Self_Destruct_Crit_Type: Critically strikes when the user is below {0:P0} health
+	// Laser_Tag_Gun_Crit_Type: Critically strikes 50% of the time
+	// Soul_Snatcher_Crit_Type: Critically strikes while empowered
+	// Soulslasher_Crit_Type: Critically strikes on direct hits
+	// Switchblade_Crit_Type: Critically strikes for {0:0.##} seconds after switching modes
+	// Neural_Network_Crit_Type: Critically strikes while above {0} adaptation charges
+	// VVVV Leave this one as is VVVV
+	// Missing_File_Crit_Type: "[glitch/!@#$%^&*:Mods.Origins.CritType.Missing_File_Crit_Type]"
+	// Flak_Crit_Type: Critically strikes when hitting airborne targets
+	// Miter_Saw_Crit_Type: Critically strikes after several consecutive hits
+	// Piledriver_Crit_Type: Critically strikes on alternate attacks
+	// Meteor_Crit_Type: Critically strikes when falling onto airborne targets
+	// Communion_Type: Critically strikes when hitting the same target multiple times
+	// Viper_Rifle_Crit_Type: Critically strikes on otherwise afflicted enemies
+	// Felnum_Crit_Type: "{$Mods.CritRework.CritTypes.FoeIsWet.Description}"
+	// Pharaohs_Turquoise_Crit_Type: Critically strikes when hitting the same target with all {0} shots
+}
+
+BuilderToggle: {
+	// Brown_Wire_Toggle: Brown Wires
+	// Black_Wire_Toggle: Black Wires
+	// White_Wire_Toggle: White Wires
+	// Logic_Gate_Toggle: Mods.Origins.BuilderToggle.Logic_Gate_Toggle
+}
+
+NoveltyWatchTime: {
+	// PartyTime: Party Time! ({0})
+	// ImpendingDoom: "{0} seconds"
+}
+
+Achievements: {
+	Kaiju: {
+		// FriendlyName: Kaiju
+		// Description: Defeat the World Cracker, an eel that burrows in the Riven Hive eating at the world.
+	}
+
+	Kill_Trenchmaker: {
+		// FriendlyName: Now You're the One Lying Broken
+		// Description: Defeat the Trenchmaker, a war machine manufactured in the Ashen Factory.
+	}
+
+	Killimanjaro: {
+		// FriendlyName: Killimanjaro
+		// Description: Defeat the Defiled Amalgamation, a rogue entity the Defiled has on a tight leash.
+	}
+
+	An_Eye_For_An_Eye: {
+		// FriendlyName: An Eye For An Eye
+		// Description: Defeat the Shimmer Construct, of which one must transmute another powerful entity to encounter.
+	}
+
+	Enough_Yap: {
+		// FriendlyName: Enough Yap
+		// Description: Defeat the {§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} before it can even call for help
+	}
+
+	It_Was_Watching: {
+		// FriendlyName: It Was Watching
+		// Description: Defeat the Fiberglass Weaver, a giant opportunistic stalker of the Fiberglass Undergrowth.
+	}
+
+	Kill_Lost_Diver: {
+		// FriendlyName: There's Something in There!
+		// Description: Defeat the Lost Diver, a humanoid puppet lying around somewhere in the Brine Pool.
+	}
+
+	Mildew_Death: {
+		// FriendlyName: "'Till Death Mildew Us Part"
+		// Description: Prevent your death after reaching 0 HP.
+	}
+
+	Auto_Immune_Disease: {
+		// FriendlyName: Auto-Immune Disease
+		// Description: Obtain 20 [itemname:Origins/Defiled_Banner_NPC_Banner_Item]s.
+	}
+
+	Cheat_Code: {
+		// FriendlyName: Cheat Code
+		// Description: Equip each of the class emblems while having a Protean Potion active.
+	}
+
+	Cloning_Factory: {
+		// FriendlyName: Cloning Factory
+		// Description: Clone a total of 500 Projectiles from Salty Seed
+	}
+
+	Different_Game: {
+		// FriendlyName: A Different Game
+		// Description: Play Terraria Origins on April Fools' Day.
+	}
+
+	Peat_Obsession: {
+		// FriendlyName: Peat Obsession
+		// Description: Unlock all of the {$NPCName.Demolitionist}'s shop items from giving Peat Moss to him.
+	}
+
+	Whimsical: {
+		// FriendlyName: Whimsical!
+		// Description: Get a {$NPCName.Nymph} to fall into Shimmer.
+	}
+
+	Whole_Blend_Evil: {
+		// FriendlyName: Whole Blend Evil
+		// Description: Have at least 1 of every vanilla and Terraria Origins evil material.
+	}
+
+	Going_Places: {
+		// FriendlyName: Going Places
+		// Description: Complete 3 quests in one day.
+	}
+
+	True_Hero: {
+		// FriendlyName: A True Hero
+		// Description: Complete every quest.
+	}
+
+	RIVEN_WORMS: {
+		// FriendlyName: RIVEN WORMS
+		// Description: Get most of the World Cracker's or Mitoworms' gooey gores stuck to you.
+	}
+
+	Slow_Loading_Bar: {
+		// FriendlyName: Slow Loading Bar
+		// Description: Walk a total of 1,000 tiles while afflicted by Rasterized.
+	}
+
+	Cracked: {
+		// FriendlyName: Cracked
+		// Description: Defeat the World Cracker at 80% or higher Torn severity the entire fight.
+	}
+
+	Martyrdom: {
+		// FriendlyName: Martyrdom
+		// Description: Kill a boss with Self-Destruct after death.
+	}
+
+	TheyLookLikeGoodStrongHands: {
+		// FriendlyName: They Look Like Good, Strong Hands, Don't They?
+		// Description: Kill an enemy being held by a {§Mods.Origins.NPCs.Defiled_Broadcaster.DisplayName}
+	}
+}
+
+AdvancedTextSnippet: {
+	Typing_Handler: {
+		// Option_s: Speed
+		// Option_d: Delay
+		// Option_c: Color
+		// Option_k: Keep Cursor
+		// Option_cur: Disable Cursor
+		// Option_b: Blink Time
+		// Option_cl: Clack
+		// Option_g: Glow
+	}
+
+	Table_Handler: {
+		// Option_sp: Spacing
+		// Option_c: Color
+		// Option_line: Line Number
+	}
+}
+
+World_Sizes: {
+	// Custom: Custom ({0}x{1})
+	// 1750x900: "{$RandomWorldName_Adjective.Tiny}"
+	// 4200x1200: "{$LegacyMenu.92}"
+	// 6400x1800: "{$LegacyMenu.93}"
+	// 8400x2400: "{$LegacyMenu.94}"
+}
+
+// StackableAccessory.Tooltip: Can be stacked
