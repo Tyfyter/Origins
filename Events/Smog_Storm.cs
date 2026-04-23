@@ -6,7 +6,10 @@ using Origins.Graphics.Unlighting;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
+using Origins.NPCs.Ashen;
+using Origins.NPCs.Defiled;
 using Origins.Reflection;
+using Origins.Tiles;
 using Origins.Tiles.Ashen;
 using Origins.World.BiomeData;
 using PegasusLib.Graphics;
@@ -62,7 +65,24 @@ namespace Origins.Events {
 			];
 			foreach (int type in toNormalDraw) CutThroughSmogStorm[type] = normalDraw;
 			CutThroughSmogStorm[ProjectileID.DD2SquireSonicBoom] = DrawWave;
+			CutThroughSmogStorm[ProjectileID.MagicLantern] = ClearSmog(5);
+			CutThroughSmogStorm[ProjectileID.Wisp] = ClearSmog(7);
+			CutThroughSmogStorm[ProjectileID.DD2PetGhost] = ClearSmog(10);
+			CutThroughSmogStorm[ProjectileID.FairyQueenPet] = ClearSmog(11);
 		}
+		public static Action<Projectile> ClearSmog(float scale, bool useOpacity = true) => projectile => {
+			float opacity = useOpacity ? projectile.Opacity : 1;
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Flare_Launcher_Glow_P.ID].Value,
+				projectile.Center - Main.screenPosition,
+				null,
+				new Color(255, 255, 255, 0) * opacity,
+				0,
+				new Vector2(45, 45),
+				scale * opacity,
+				SpriteEffects.None
+			);
+		};
 		public static void DrawWave(Projectile projectile) {
 			Main.instance.PrepareDrawnEntityDrawing(projectile, Retool_Arm_Laser.ShaderID, null);
 			Texture2D texture = TextureAssets.Projectile[ProjectileID.DD2SquireSonicBoom].Value;
@@ -260,6 +280,16 @@ namespace Origins.Events {
 						targetResolution += resolutionResolution;
 					}
 				}
+			}
+		}
+		public class SpawnRates : SpawnPool {
+			public override string Name => $"{nameof(Smog_Storm)}_{base.Name}";
+			public override void SetStaticDefaults() {
+				Priority = SpawnPoolPriority.Event;
+			}
+			public override bool IsActive(NPCSpawnInfo spawnInfo) {
+				if (!Main.WindyEnoughForKiteDrops) return false;
+				return TileLoader.GetTile(spawnInfo.SpawnTileType) is IAshenTile ashenTile && ashenTile.CountsForSpawns(spawnInfo);
 			}
 		}
 	}

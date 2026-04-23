@@ -1,10 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Origins.Dev;
 using Origins.Dusts;
+using Origins.Events;
 using Origins.Items.Weapons.Ammo.Canisters;
-using Origins.Misc;
-using PegasusLib;
 using PegasusLib.Graphics;
 using System;
 using Terraria;
@@ -121,6 +118,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Origins.MagicTripwireRange[Type] = 24;
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 512 * 16;
 			ID = Type;
+			Smog_Storm.CutThroughSmogStorm[Type] = Flare_Launcher_Glow_P.ClearSmog(false);
 		}
 		//bool initialized = false;
 		public override void SetDefaults() {
@@ -237,6 +235,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ProjectileID.Sets.NeedsUUID[Type] = true;
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 512 * 16;
 			ID = Type;
+			Smog_Storm.CutThroughSmogStorm[Type] = ClearSmog(true);
 		}
 		public override void SetDefaults() {
 			Projectile.timeLeft = 11;
@@ -265,6 +264,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public static void DrawGlow(Projectile projectile, float alpha, bool isAfterEffect) {
 			CanisterData canisterData = projectile.TryGetGlobalProjectile(out CanisterGlobalProjectile canister) ? canister.CanisterData : projectile.GetGlobalProjectile<CanisterChildGlobalProjectile>().CanisterData;
 			if (canisterData is null) return;
+			DrawGlow(projectile, canisterData, alpha, isAfterEffect, projectile.scale);
+		}
+		public static void DrawGlow(Projectile projectile, CanisterData canisterData, float alpha, bool isAfterEffect, float scale) {
 			Vector2 center = projectile.Center;
 			float boomFactor = 1f;
 			Color glowColor = canisterData.InnerColor * alpha;
@@ -277,7 +279,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 			SpriteBatchState state = Main.spriteBatch.GetState();
 			Main.spriteBatch.Restart(state, samplerState: SamplerState.LinearClamp);
-			DrawGlow(center, glowColor, boomFactor, projectile.rotation, projectile.scale);
+			DrawGlow(center, glowColor, boomFactor, projectile.rotation, scale);
 			Main.spriteBatch.Restart(state);
 		}
 		public static void DrawGlow(Vector2 center, Color glowColor, float boomFactor = 1, float rotation = 0, float scale = 1) {
@@ -316,6 +318,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 				SpriteEffects.None
 			);
 		}
+		public static Action<Projectile> ClearSmog(bool isAfterEffect) => projectile => {
+			CanisterData canisterData = projectile.TryGetGlobalProjectile(out CanisterGlobalProjectile canister) ? canister.CanisterData : projectile.GetGlobalProjectile<CanisterChildGlobalProjectile>().CanisterData;
+			if (canisterData is null) return;
+
+			DrawGlow(projectile, canisterData, 1, isAfterEffect, canisterData.Ammo is Flare_Dummy_Canister ? 3 : 1.15f);
+		};
 		public override bool PreKill(int timeLeft) => false;
 		public override bool PreDraw(ref Color lightColor) {
 			DrawGlow(Projectile, lightColor.A / 255f, true);

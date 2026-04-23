@@ -340,7 +340,7 @@ ENEMY NPCS:
 
 EVENTS:
 |---
-(#) Smog Storm !!!
+(☻) Smog Storm !!!
 
 (X) Ashen Invasion
 (#, %2) Corruption Invasion

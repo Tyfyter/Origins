@@ -132,6 +132,7 @@ namespace Origins.World.BiomeData {
 				return LandEnemyRate(spawnInfo, hardmode);
 			}
 			public override bool IsActive(NPCSpawnInfo spawnInfo) {
+				if (Main.WindyEnoughForKiteDrops) return false;
 				return (TileLoader.GetTile(spawnInfo.SpawnTileType) is IAshenTile ashenTile && ashenTile.CountsForSpawns(spawnInfo)) || forcedBiomeActive;
 			}
 		}

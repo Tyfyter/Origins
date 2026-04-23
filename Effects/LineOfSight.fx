@@ -55,7 +55,7 @@ float4 SmogStorm(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR
 			color += gauss[i + 1][j + 1] * tex2D(uImage0, float2(coords.x + dx * i, coords.y + dy * j));
 		}
 	}
-	float4 light = tex2D(uImage1, coords) * uOpacity;
+	float4 light = tex2D(uImage1, coords) * pow(uOpacity, 1.5);
 	float4 light2 = tex2D(uImage2, coords);
 	float brightness = max(max(light2.r, light2.g), light2.b);
 	return lerp(
@@ -63,9 +63,9 @@ float4 SmogStorm(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR
 		lerp(
 			color,
 			light,
-			smoothstep(0, 16 * 60 * brightness * max(brightness * brightness, 1), dist - losDist) * uOpacity
+			smoothstep(0, 16 * 60 * brightness * max(brightness * brightness, 1), dist - losDist)
 		),
-		(smoothstep(0, 128, dist - losDist) * 0.65 + 0.35) * uOpacity
+		(smoothstep(0, 128, dist - losDist) * 0.65 + 0.35)
 	);
 	// * lerp(
 	//float4(1, 1, 1, 1),
