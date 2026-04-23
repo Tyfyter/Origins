@@ -283,6 +283,7 @@ namespace Origins.Events {
 			}
 		}
 		public class SpawnRates : SpawnPool {
+			public const float WindPail = 0.8f;
 			public override string Name => $"{nameof(Smog_Storm)}_{base.Name}";
 			public override void SetStaticDefaults() {
 				Priority = SpawnPoolPriority.Event;

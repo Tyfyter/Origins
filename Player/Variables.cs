@@ -505,6 +505,8 @@ namespace Origins {
 		public int lunaticDuplicateOpacity = 0;
 		[AutoReset] public bool oiled = false;
 		[AutoReset] public bool superSludge = false;
+		[AutoReset] public bool windPailPushed = false;
+		public float windPailPosition;
 
 		public bool DisableBreathRestore => toxicShock || miasma;
 		public bool sendBuffs = false;

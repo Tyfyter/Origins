@@ -261,7 +261,7 @@ ENEMY NPCS:
 (X) Spiteful Flesh
 (^) Springjumper
 (X) Tubefish
-(#, ^2) Wind Pail !!!
+(☻) Wind Pail !!!
 
 (^) Airsnatcher
 (^) Amoebeye
