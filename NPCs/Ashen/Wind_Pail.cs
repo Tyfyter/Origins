@@ -21,7 +21,7 @@ namespace Origins.NPCs.Ashen {
 			GetInstance<Smog_Storm.SpawnRates>().AddSpawn(Type, BiomeSpawnChance);
 		}
 		public override void SetDefaults() {
-			NPC.lifeMax = 80;
+			NPC.lifeMax = 240;
 			NPC.defense = 22;
 			NPC.damage = 34;
 			NPC.width = 40;
@@ -29,7 +29,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.value = Item.buyPrice(0, 0, 2);
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
 			NPC.DeathSound = SoundID.NPCDeath44;
-			NPC.knockBackResist = 0f;
+			NPC.knockBackResist = 0.5f;
 			SpawnModBiomes = [
 				GetInstance<Smog_Storm>().Type,
 			];
@@ -48,9 +48,15 @@ namespace Origins.NPCs.Ashen {
 			}
 			Rectangle attackHitbox = NPC.Hitbox;
 			attackHitbox.Width += attack_range;
+			NPC.velocity = Vector2.UnitY * 4;
 			if (NPC.direction < 0) attackHitbox.X -= attack_range;
 			switch (NPC.aiAction) {
 				case 1:
+				if (NPC.ai[2] >= 6) NPC.target = -1;
+				if (!NPC.HasValidTarget) {
+					NPC.aiAction = 2;
+					return;
+				}
 				if (LinearSmoothing(ref NPC.ai[0], 1, 1f / 15)) {
 					Player target = Main.player[NPC.target];
 					target.AddBuff(ModContent.BuffType<Wind_Pail_Debuff>(), 15);
@@ -84,6 +90,7 @@ namespace Origins.NPCs.Ashen {
 				default: {
 					if (!LinearSmoothing(ref NPC.ai[1], 0, 1)) break;
 					if (attackHitbox.Intersects(Main.player[NPC.target].Hitbox)) {
+						NPC.ai[2] = 0;
 						SoundEngine.PlaySound(SoundID.Item15.WithPitch(-1).WithPitchVarience(0) with { MaxInstances = 0 }, NPC.Center);
 						SoundEngine.PlaySound(SoundID.Item15.WithPitch(0).WithPitchVarience(0) with { MaxInstances = 0 }, NPC.Center);
 						NPC.aiAction = 1;
@@ -128,13 +135,36 @@ namespace Origins.NPCs.Ashen {
 				int tries = 0;
 				while (++tries < 100) {
 					Vector2 testPos = player.Center + new Vector2(GetDist(), GetDist() * 0.5f);
-					if (posIsValidTiles(testPos) && posIsValidPlayers(testPos)) return testPos;
+					bool wasBurried = false;
+					bool wasAirborne = false;
+					retry:
+					hitbox.X = (int)(testPos.X - (float)hitbox.Width * 0.5f);
+					hitbox.Y = (int)testPos.Y - hitbox.Height;
+					bool notInGround = !hitbox.OverlapsAnyTiles();
+					bool nearGround = hitbox.Add(Vector2.UnitY * 16).OverlapsAnyTiles();
+					if (notInGround && nearGround && posIsValidPlayers(testPos)) return testPos;
+					if (!notInGround) {
+						testPos.Y -= 16;
+						wasBurried = true;
+						if (wasAirborne) continue;
+						goto retry;
+					}
+					if (!nearGround) {
+						testPos.Y += 16;
+						wasAirborne = true;
+						if (wasBurried) continue;
+						goto retry;
+					}
 				}
 				return null;
 			}
 		}
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot) => IsOpaqueEnoughToAttack;
 		public override bool CanHitNPC(NPC target) => IsOpaqueEnoughToAttack;
+		public override void HitEffect(NPC.HitInfo hit) {
+			NPC.ai[2] += hit.Knockback;
+			NPC.velocity = default;
+		}
 		//Temp
 		static bool LinearSmoothing<T>(ref T smoothed, T target, T rate) where T : INumberBase<T>, IComparisonOperators<T, T, bool> {
 			if (target != smoothed) {
@@ -160,10 +190,7 @@ namespace Origins.NPCs.Ashen {
 			);
 		}
 		public override void DrawBehind(int index) {
-			if (NPC.setFrameSize.TrySet(false)) {
-				NPC.frame.X = 94 * Main.rand.Next(3);
-				NPC.frame.Width = 92;
-			}
+			if (NPC.frame.Width.TrySet(92)) NPC.frame.X = 94 * Main.rand.Next(3);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);

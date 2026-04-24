@@ -32,6 +32,7 @@ namespace Origins.Reflection {
 		public static Action<Projectile> DrawProj_Flamethrower { get; private set; }
 		public static Action<NPC, int, Color, float> DrawNPC_SlimeItem { get; private set; }
 		public static Action DrawDust { get; private set; }
+		public static Action<bool> DrawNPCs { get; private set; }
 		public void Load(Mod mod) {
 			bgLoops = new("bgLoops", BindingFlags.NonPublic);
 			bgStartX = new("bgStartX", BindingFlags.NonPublic);
@@ -46,6 +47,7 @@ namespace Origins.Reflection {
 			DrawProj_Flamethrower = typeof(Main).GetMethod(nameof(DrawProj_Flamethrower), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).CreateDelegate<Action<Projectile>>();
 			DrawDust = typeof(Main).GetMethod(nameof(DrawDust), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).CreateDelegate<Action>(Main.instance);
 			DrawNPC_SlimeItem = typeof(Main).GetMethod(nameof(DrawNPC_SlimeItem), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static).CreateDelegate<Action<NPC, int, Color, float>>();
+			DrawNPCs = typeof(Main).GetMethod(nameof(DrawNPCs), BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).CreateDelegate<Action<bool>>(Main.instance);
 			currentMapHeight = "mH";
 		}
 		public void Unload() {

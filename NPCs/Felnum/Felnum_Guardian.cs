@@ -181,6 +181,7 @@ namespace Origins.NPCs.Felnum {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ancient_Felnum_Greaves>(), 66));
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 			Vector2 origin = new(22, 39);
 			SpriteEffects spriteEffects = SpriteEffects.None;

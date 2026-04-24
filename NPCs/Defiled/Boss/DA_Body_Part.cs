@@ -375,6 +375,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.frame.Y = currentFrame * ((this.frameHeight * (maxFrames - 1)) / (maxFrames - 1));
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			Texture2D texture = torsoPath;
 			Texture2D glowTexture = torsoGlowPath;
 			switch (PartType) {

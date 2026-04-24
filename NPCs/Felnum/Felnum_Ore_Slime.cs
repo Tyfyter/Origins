@@ -99,6 +99,7 @@ namespace Origins.NPCs.Felnum {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ancient_Felnum_Greaves>(), 66));
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			MainReflection.DrawNPC_SlimeItem(NPC, NPC.type, drawColor, 0);
 			return true;
 		}

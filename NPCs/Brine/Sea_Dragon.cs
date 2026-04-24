@@ -245,6 +245,7 @@ namespace Origins.NPCs.Brine {
 		}
 		[CloneByReference] Physics.Chain[] chains;
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
 			if (NPC.spriteDirection == 1) {
 				spriteEffects |= SpriteEffects.FlipVertically;
@@ -279,7 +280,7 @@ namespace Origins.NPCs.Brine {
 						strandTexture,
 						chain.links[j].position - screenPos,
 						strandTexture.Value.Frame(5, frameX: j + frameOffset),
-						NPC.IsABestiaryIconDummy ? Color.White : new Color(Lighting.GetSubLight(chain.links[j].position)),
+						NPC.GetTintColor(NPC.IsABestiaryIconDummy ? Color.White : new Color(Lighting.GetSubLight(chain.links[j].position))),
 						(chain.links[j].position - startPoint).ToRotation(),
 						origin,
 						1,

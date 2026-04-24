@@ -142,6 +142,7 @@ namespace Origins.NPCs.Ashen {
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			spriteBatch.Draw(
 				TextureAssets.Npc[Type].Value,
 				NPC.position - screenPos,

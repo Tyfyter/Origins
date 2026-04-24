@@ -980,7 +980,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			bool dir = NPC.spriteDirection == 1;
 			Rectangle armsFrame = new(0, armFrame * 96, 30, 94);
 			outlineData =

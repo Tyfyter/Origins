@@ -573,6 +573,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			return false;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			if (OriginsModIntegrations.CheckAprilFools()) {
 				NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCID.Sets.NPCBestiaryDrawOffset[Type] with {
 					PortraitPositionYOverride = 5,

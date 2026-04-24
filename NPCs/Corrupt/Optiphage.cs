@@ -96,6 +96,7 @@ namespace Origins.NPCs.Corrupt {
 					NPC.aiStyle = NPCAIStyleID.Demon_Eye;
 					return true;
 				}
+				drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 				Player targetPlayer = Main.player[NPC.target];
 				Main.EntitySpriteDraw(
 					HeadTexture,

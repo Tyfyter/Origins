@@ -250,6 +250,7 @@ namespace Origins.NPCs.Defiled {
 		public int? TangelaSeed { get; set; }
 		public AutoLoadingAsset<Texture2D> tangelaTexture = typeof(Defiled_Flyer).GetDefaultTMLName() + "_Tangela";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
 			if (NPC.spriteDirection == -1) {
 				spriteEffects |= SpriteEffects.FlipVertically;

@@ -200,6 +200,7 @@ namespace Origins.NPCs.Crimson {
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 			SpriteEffects effect = NPC.directionY == -1 ? SpriteEffects.FlipVertically : SpriteEffects.None;
 			if (NPC.IsABestiaryIconDummy) effect ^= SpriteEffects.FlipHorizontally;

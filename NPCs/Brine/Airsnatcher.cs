@@ -157,6 +157,7 @@ namespace Origins.NPCs.Brine {
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			int frame = NPC.frame.Y / 44;
 			if (NPC.ai[1] == 0 && frame != Main.npcFrameCount[Type] - 1) {
 				Texture2D texture = TextureAssets.Projectile[ModContent.ProjectileType<Airsnatcher_Bubble>()].Value;

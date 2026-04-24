@@ -76,6 +76,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.frame.Y = NPC.direction == 1 ? 0 : frameHeight;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			spriteBatch.Draw(
 				TextureAssets.Npc[Type].Value,
 				NPC.position - screenPos,

@@ -389,6 +389,7 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 		public static AutoLoadingAsset<Texture2D> normalTexture = typeof(Shimmer_Construct).GetDefaultTMLName();
 		public static AutoLoadingAsset<Texture2D> afTexture = typeof(Shimmer_Construct).GetDefaultTMLName() + "_AF";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			Vector2 position = NPC.Center + NPC.netOffset;
 			if (IsInPhase3 || (deathAnimationTime > 100)) {
 				default(ShimmerConstructSDF).Draw(position - screenPos, NPC.rotation, new Vector2(256, 256));

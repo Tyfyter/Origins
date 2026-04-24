@@ -11,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Corrupt {
-    public class Cranivore : ModNPC, IWikiNPC {
+	public class Cranivore : ModNPC, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 18, 34);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
@@ -63,7 +63,7 @@ namespace Origins.NPCs.Corrupt {
 				NPC.hide = true;
 				if (NPC.ai[0] == 0f) {
 					NPC.aiStyle = NPCAIStyleID.Demon_Eye;
-				}else if (NPC.ai[0] == 1f) {
+				} else if (NPC.ai[0] == 1f) {
 					Player targetPlayer = Main.player[NPC.target];
 					NPC.Top = targetPlayer.Top;
 					targetPlayer.AddBuff(Buffs.Cranivore_Debuff.ID, 5);
@@ -99,15 +99,16 @@ namespace Origins.NPCs.Corrupt {
 					NPC.aiStyle = NPCAIStyleID.Demon_Eye;
 					return true;
 				}
+				drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 				Player targetPlayer = Main.player[NPC.target];
 				Main.EntitySpriteDraw(
-				HeadTexture,
-				(targetPlayer.Top.Floor() + new Vector2(0, targetPlayer.gfxOffY - 2) + Main.OffsetsPlayerHeadgear[targetPlayer.bodyFrame.Y / targetPlayer.bodyFrame.Height]) - screenPos,
-				null,
-				drawColor,
-				targetPlayer.headRotation,
-				new Vector2(11 - targetPlayer.direction * 4, 2),
-				NPC.scale,
+					HeadTexture,
+					(targetPlayer.Top.Floor() + new Vector2(0, targetPlayer.gfxOffY - 2) + Main.OffsetsPlayerHeadgear[targetPlayer.bodyFrame.Y / targetPlayer.bodyFrame.Height]) - screenPos,
+					null,
+					drawColor,
+					targetPlayer.headRotation,
+					new Vector2(11 - targetPlayer.direction * 4, 2),
+					NPC.scale,
 					targetPlayer.direction == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 				0);
 				return false;

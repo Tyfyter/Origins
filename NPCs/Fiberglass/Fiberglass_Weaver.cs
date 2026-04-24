@@ -300,6 +300,7 @@ namespace Origins.NPCs.Fiberglass {
 			npcLoot.Add(new LeadingConditionRule(new Conditions.IsMasterMode()).WithOnSuccess(weaponDropRule));
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			float rotation = NPC.rotation;
 			float scale = 1;
 			SpriteEffects effect = SpriteEffects.None;

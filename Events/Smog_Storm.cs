@@ -58,6 +58,8 @@ namespace Origins.Events {
 				ProjectileID.HallowBossRainbowStreak,
 				ProjectileID.HallowBossDeathAurora,
 				ProjectileID.HallowBossSplitShotCore,
+				ProjectileID.FairyQueenRangedItemShot,
+				ProjectileID.FairyQueenMagicItemShot,
 				ModContent.ProjectileType<Laser_Target_Locator_Marker>(),
 				ModContent.ProjectileType<Retool_Arm_Laser_Beam>(),
 				ModContent.ProjectileType<Third_Eye_Deathray>(),
@@ -132,7 +134,12 @@ namespace Origins.Events {
 		public override void SpecialVisuals(Player player, bool isActive) {
 			player.ManageSpecialBiomeVisuals(biomeName, isActive, player.MountedCenter);
 			active = sky.Opacity != 0;
-			if (active) Filters.Scene["Origins:SmogStorm"].GetShader().UseOpacity(sky.Opacity);
+			if (active) {
+				Filters.Scene["Origins:SmogStorm"].GetShader().UseOpacity(sky.Opacity);
+				SkyManager.Instance["Sandstorm"].Opacity = 0;
+				Filters.Scene["Sandstorm"].Opacity = 0;
+				Overlays.Scene["Sandstorm"].Opacity = 0;
+			}
 		}
 		public static void DrawLightMap(Color color) {
 			Main.graphics.GraphicsDevice.Textures[0] = lightBufferTexture;
@@ -180,11 +187,16 @@ namespace Origins.Events {
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
 				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 				Main.graphics.GraphicsDevice.SetRenderTarget(lightBufferTarget);
-				DrawLightMap(Color.White);
+				DrawLightMap(Color.Wheat);
 				Beacon_Light_TE_System.DrawBeacons(5);
 				Main.spriteBatch.Restart(Main.spriteBatch.GetState());
 				Main.graphics.GraphicsDevice.SetRenderTarget(lightBufferTarget2);
 				DrawLightMap(Color.White);
+				if (Main.LocalPlayer.detectCreature) {
+					MainReflection.DrawNPCs(true);
+					MainReflection.DrawNPCs(false);
+				}
+				DrawLightMap(Color.White * 0.5f);
 				using ScopedOverride<int> _ = Main.CurrentDrawnEntityShader.ScopedOverride(Retool_Arm_Laser.ShaderID);
 				Beacon_Light_TE_System.DrawBeacons(10);
 				foreach (Projectile proj in Main.ActiveProjectiles) CutThroughSmogStorm[proj.type]?.Invoke(proj);
@@ -305,7 +317,7 @@ namespace Origins.Events {
 		public override bool IsActive() => Opacity > 0;
 		public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth) {
 			if (Main.gameMenu) Opacity = 0;
-			Smog_Storm.DrawLightMap(Color.White * Opacity * 0.75f);
+			Smog_Storm.DrawLightMap(Color.Wheat * Opacity * 0.75f);
 		}
 		public override void Reset() { }
 		public override Color OnTileColor(Color inColor) => Color.Lerp(inColor, new(inColor.R / 5, 1, 1), Opacity);

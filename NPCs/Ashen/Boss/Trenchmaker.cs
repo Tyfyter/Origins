@@ -346,6 +346,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			spriteBatch.Restart(state);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			if (NPC.IsABestiaryIconDummy) NPC.rotation = MathHelper.Pi;
 			SpriteEffects effects = SpriteEffects;
 			int i = legs.Length - 1;
@@ -359,7 +360,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				hipGlowTexture,
 				NPC.Center - screenPos,
 				null,
-				NPC.GetTintColor(drawColor),
+				drawColor,
 				NPC.GetTintColor(Color.White),
 				0,
 				new Vector2(33, -29).Apply(effects, hipTexture.Value.Size()),
@@ -370,7 +371,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				exhaustTexture,
 				NPC.Center + Main.rand.NextVector2Circular(1, 1) - screenPos,
 				null,
-				NPC.GetTintColor(drawColor),
+				drawColor,
 				0,
 				new Vector2(10 + 46 * NPC.direction, 40 - 5).Apply(effects, NPC.frame.Size()),
 				1,
@@ -381,7 +382,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				glowTexture,
 				NPC.Center - screenPos,
 				NPC.frame,
-				NPC.GetTintColor(drawColor),
+				drawColor,
 				NPC.GetTintColor(Color.White),
 				0,
 				new Vector2(52, 37).Apply(effects, NPC.frame.Size()),
@@ -396,7 +397,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				armTexture,
 				GunPos - screenPos,
 				armTexture.Frame(verticalFrames: 4, frameY: GunType),
-				NPC.GetTintColor(drawColor),
+				drawColor,
 				NPC.rotation + (effects.HasFlag(SpriteEffects.FlipHorizontally) ? 0 : MathHelper.Pi),
 				new Vector2(47, 15).Apply(effects, armTexture.Value.Size()),
 				1,

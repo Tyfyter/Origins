@@ -148,6 +148,7 @@ namespace Origins.NPCs.Corrupt {
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 			Vector2 offset = new(0, NPC.localAI[1]);
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			if (NPC.IsABestiaryIconDummy) {
 				offset.Y = NPC.frame.Size().Y / 16;
 				drawColor = Color.White;

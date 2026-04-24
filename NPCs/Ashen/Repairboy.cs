@@ -247,7 +247,7 @@ namespace Origins.NPCs.Ashen {
 		public override bool? CanFallThroughPlatforms() => true;
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			SpriteEffects effects = NPC.direction < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-			drawColor = NPC.GetTintColor(drawColor);
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			DrawData data = new(TextureAssets.Npc[Type].Value,
 				NPC.Center - screenPos,
 				NPC.frame,

@@ -113,6 +113,7 @@ namespace Origins.NPCs.Fiberglass {
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			Rectangle frame = NPC.frame;
 			Color glassColor = Color.Lerp(Color.White, new(18, 36, 44), NPC.hide ? 0 : 0.3f);
 			for (int i = NPC.oldPos.Length - 1; i > 0; i--) {

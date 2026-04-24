@@ -118,6 +118,7 @@ namespace Origins.NPCs.Fiberglass {
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			for (int i = NPC.oldPos.Length - 1; i > 0; i--) {
 				spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.oldPos[i] + new Vector2(13.5f, 19) - Main.screenPosition, new Rectangle(0, 0, 38, 22), oldColor[i].MultiplyRGBA(new Color(new Vector4(1 - i / 10f))), NPC.oldRot[i], new Vector2(19, 11), 1f, oldDir[i] != 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 1f);
 				oldDir[i] = oldDir[i - 1];

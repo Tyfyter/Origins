@@ -208,6 +208,7 @@ namespace Origins.NPCs.Brine {
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
 			if (NPC.spriteDirection != 1) {
 				spriteEffects |= SpriteEffects.FlipVertically;

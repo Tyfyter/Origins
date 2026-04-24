@@ -226,6 +226,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public AutoLoadingAsset<Texture2D> afTexture = $"{typeof(Shotgunfish).GetDefaultTMLName()}_AF";
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			SpriteEffects spriteEffects = SpriteEffects.FlipHorizontally;
 			if (NPC.spriteDirection != 1) {
 				spriteEffects |= SpriteEffects.FlipVertically;

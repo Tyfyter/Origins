@@ -251,6 +251,7 @@ namespace Origins.NPCs.Dungeon {
 			SoundEngine.PlaySound((hit.Damage > NPC.lifeMax / 2 ? SoundID.NPCDeath63.WithPitchRange(0.6f, 1.0f) : SoundID.NPCHit3.WithVolumeScale(1.5f).WithPitchRange(-0.4f, 0.0f)), NPC.Center);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			SpriteEffects effects = SpriteEffects.None;
 			if (NPC.spriteDirection == -1) effects |= SpriteEffects.FlipHorizontally;
 			if (NPC.directionY == -1) effects |= SpriteEffects.FlipVertically;
