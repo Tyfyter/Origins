@@ -450,3 +450,6 @@ Scared_Bunny.DisplayName: Scared Bunny
 Springjumper.DisplayName: Springjumper
 Trenchmaker_Turret.DisplayName: Trenchmaker Turret
 Wind_Pail.DisplayName: Wind Pail
+Cartwheeler_Large.DisplayName: Cartwheeler
+Cartwheeler_Medium.DisplayName: "{$Cartwheeler_Large.DisplayName}"
+Cartwheeler_Small.DisplayName: "{$Cartwheeler_Large.DisplayName}"

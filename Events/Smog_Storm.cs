@@ -36,6 +36,7 @@ namespace Origins.Events {
 		const string biomeName = "Origins:SmogStorm";
 		public override int Music => Origins.Music.SmogStorm;
 		public override SceneEffectPriority Priority => SceneEffectPriority.Event;
+		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
 		public override void SetStaticDefaults() {
 			SkyManager.Instance.Bind(biomeName, sky);
 			try {
@@ -296,6 +297,9 @@ namespace Origins.Events {
 		}
 		public class SpawnRates : SpawnPool {
 			public const float WindPail = 0.8f;
+			public const float Cartwheeler_Large = 0.26f;
+			public const float Cartwheeler_Medium = 0.27f;
+			public const float Cartwheeler_Small = 0.27f;
 			public override string Name => $"{nameof(Smog_Storm)}_{base.Name}";
 			public override void SetStaticDefaults() {
 				Priority = SpawnPoolPriority.Event;

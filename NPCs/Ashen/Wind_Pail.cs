@@ -23,7 +23,7 @@ namespace Origins.NPCs.Ashen {
 		public override void SetDefaults() {
 			NPC.lifeMax = 240;
 			NPC.defense = 22;
-			NPC.damage = 34;
+			NPC.damage = 46;
 			NPC.width = 40;
 			NPC.height = 184;
 			NPC.value = Item.buyPrice(0, 0, 2);
@@ -120,11 +120,6 @@ namespace Origins.NPCs.Ashen {
 			NPC.targetRect = Main.player[NPC.target].Hitbox;
 			NPC.Bottom = targetPos.Value;
 			NPC.FaceTarget();
-			bool posIsValidTiles(Vector2 pos) {
-				hitbox.X = (int)(pos.X - (float)hitbox.Width * 0.5f);
-				hitbox.Y = (int)pos.Y - hitbox.Height;
-				return !hitbox.OverlapsAnyTiles() && hitbox.Add(Vector2.UnitY * 16).OverlapsAnyTiles();
-			}
 			bool posIsValidPlayers(Vector2 pos) {
 				foreach (Player player in Main.ActivePlayers) {
 					if (pos.WithinRange(player.Center, min_dist)) return false;

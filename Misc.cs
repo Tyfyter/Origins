@@ -5688,8 +5688,8 @@ namespace Origins {
 				.Where(text => text.CanFormatWith(format))
 			.ToArray())
 			.FormatWith(format);
-		public static void AddBanner(this ModNPC self, int killsRequired = 50) {
-			self.Mod.AddContent(new Banner(self, killsRequired));
+		public static void AddBanner(this ModNPC self, int killsRequired = 50, string nameOverride = null) {
+			self.Mod.AddContent(new Banner(self, killsRequired, nameOverride));
 			BannerGlobalNPC.NPCTypesWithBanners.Add(self.GetType());
 		}
 		public static Dictionary<Type, Func<IItemDropRule, IEnumerable<IItemDropRule>>> ruleChildFinders = new() {

@@ -1041,9 +1041,10 @@ namespace Origins {
 				stopwatch.Stop();
 				instance.Logger.Info($"Finished querying unobtainable items in {stopwatch.Elapsed}");
 
+				Regex locIssue = new Regex("<(PH|SIC)>", RegexOptions.Compiled);
 				RestartStopwatch();
 				foreach (LanguageTree branch in TextUtils.LanguageTree.Find("Mods.Origins").GetDescendants()) {
-					if (branch.TextValue.Contains("<PH>")) AddReason($"{branch.value.Key.Replace("Mods.Origins.", "")}: {branch.TextValue}");
+					if (locIssue.IsMatch(branch.TextValue)) AddReason($"{branch.value.Key.Replace("Mods.Origins.", "")}: {branch.TextValue}");
 					WarnHang("placeholder text");
 				}
 				stopwatch.Stop();

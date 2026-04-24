@@ -16,10 +16,10 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Banners {
 	[Autoload(false)]
-	public class Banner(ModNPC npc, int killsRequired = 50) : ModTile {
+	public class Banner(ModNPC npc, int killsRequired = 50, string nameOverride = null) : ModTile {
 		public ModNPC NPC => npc;
 		internal int killsRequired = killsRequired;
-		public override string Name => npc.Name + "_Banner";
+		public override string Name => (nameOverride ?? npc.Name) + "_Banner";
 		public override void Load() {
 			Mod.AddContent(new Banner_Item(this));
 		}

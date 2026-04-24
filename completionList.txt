@@ -201,7 +201,7 @@ ENEMY NPCS:
 (^) Boulder Mimic
 (^) Buckethead Zombie
 (^) Cannihound
-(#, ^2) Cartwheeler !!!
+(☻) Cartwheeler !!!
 (^) Catacomb Clearer
 (^) Cellarkeep
 (^) Cleaver
