@@ -717,37 +717,44 @@ namespace Origins {
 			try {
 				Type smoothLightingType = fancyLighting.GetType().Assembly.GetType("FancyLighting.SmoothLighting");
 				//MethodInfo[] methods = smoothLightingType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
-				MonoModHooks.Add(
-					smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Static),
-					(hook_TileShine)((orig_TileShine orig, ref Vector3 color, Tile tile) => {
-						orig(ref color, tile);
-						if (tile.HasTile) {
-							if (TileLoader.GetTile(tile.TileType) is IGlowingModTile glowingTile) glowingTile.FancyLightingGlowColor(tile, ref color);
-							switch (tile.TileType) {
-								case TileID.DyePlants:
-								if (tile.TileFrameX == 204 || tile.TileFrameX == 202) goto case TileID.Cactus;
-								break;
-								case TileID.Cactus: {
-									Point pos = tile.GetTilePosition();
-									WorldGen.GetCactusType(pos.X, pos.Y, tile.TileFrameX, tile.TileFrameY, out int sandType);
-									if (PlantLoader.Get<ModCactus>(80, sandType) is IGlowingModPlant glowingPlant) {
-										glowingPlant.FancyLightingGlowColor(tile, ref color);
-									}
-									break;
+				static void TileShine_Impl(ref Vector3 color, Tile tile) {
+					if (tile.HasTile) {
+						if (TileLoader.GetTile(tile.TileType) is IGlowingModTile glowingTile) glowingTile.FancyLightingGlowColor(tile, ref color);
+						switch (tile.TileType) {
+							case TileID.DyePlants:
+							if (tile.TileFrameX == 204 || tile.TileFrameX == 202) goto case TileID.Cactus;
+							break;
+							case TileID.Cactus: {
+								Point pos = tile.GetTilePosition();
+								WorldGen.GetCactusType(pos.X, pos.Y, tile.TileFrameX, tile.TileFrameY, out int sandType);
+								if (PlantLoader.Get<ModCactus>(80, sandType) is IGlowingModPlant glowingPlant) {
+									glowingPlant.FancyLightingGlowColor(tile, ref color);
 								}
-								case TileID.VanityTreeSakura:
-								case TileID.VanityTreeYellowWillow:
 								break;
-								default: {
-									if (OriginExtensions.GetTreeType(tile) is IGlowingModTile glowingTree) {
-										glowingTree.FancyLightingGlowColor(tile, ref color);
-									}
-									break;
+							}
+							case TileID.VanityTreeSakura:
+							case TileID.VanityTreeYellowWillow:
+							break;
+							default: {
+								if (OriginExtensions.GetTreeType(tile) is IGlowingModTile glowingTree) {
+									glowingTree.FancyLightingGlowColor(tile, ref color);
 								}
+								break;
 							}
 						}
-					})
-				);
+					}
+				}
+				if (ModLoader.TryGetMod("FancyLighting", out Mod mod) && mod.Version >= new Version(1, 1)) {
+					MonoModHooks.Add(smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Static), (hook_TileShine_1_1_0)((orig, ref color, tile, shimmerAlpha) => {
+						orig(ref color, tile, shimmerAlpha);
+						TileShine_Impl(ref color, tile);
+					}));
+				} else {
+					MonoModHooks.Add(smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Static), (hook_TileShine_1_0_2)((orig, ref color, tile) => {
+						orig(ref color, tile);
+						TileShine_Impl(ref color, tile);
+					}));
+				}
 				/*
 				int wallShineCount = 0;
 				foreach (var item in smoothLightingType.GetNestedTypes(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static)) {
@@ -809,8 +816,10 @@ namespace Origins {
 				}
 			}*/
 		}
-		delegate void orig_TileShine(ref Vector3 color, Tile tile);
-		delegate void hook_TileShine(orig_TileShine orig, ref Vector3 color, Tile tile);
+		delegate void orig_TileShine_1_0_2(ref Vector3 color, Tile tile);
+		delegate void hook_TileShine_1_0_2(orig_TileShine_1_0_2 orig, ref Vector3 color, Tile tile);
+		delegate void orig_TileShine_1_1_0(ref Vector3 color, Tile tile, float shimmerAlpha);
+		delegate void hook_TileShine_1_1_0(orig_TileShine_1_1_0 orig, ref Vector3 color, Tile tile, float shimmerAlpha);
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void LoadThorium() {
 			MonoModHooks.Add(
