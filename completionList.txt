@@ -55,7 +55,7 @@ BOSSES AND MINI-BOSSES:
 |---
 (^) Chambersite Sentinel
 (X) CM-17 'Watcher' !!!
-(X) D2L2 'Warsaw' !!!
+(#, ^2) D2L2 'Warsaw' !!!
 (#, ^2) HA-24 'Hawken' !!!
 (X, ^2) Ichor Storm
 (X) Zombie Paladin
