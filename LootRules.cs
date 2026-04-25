@@ -318,7 +318,7 @@ public class DropAsSetRule(int iconicItem) : IItemDropRule {
 }
 //TODO: remove, moved to PegasusLib
 public class CopyNPCDropRule(int type) : IItemDropRule {
-	static readonly RecursionCheckedSet<int> recursionBlocker = new();
+	static readonly Core.RecursionCheckedSet<int> recursionBlocker = new();
 	public List<IItemDropRuleChainAttempt> ChainedRules { get; } = [];
 	public bool CanDrop(DropAttemptInfo info) => true;
 	public void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
