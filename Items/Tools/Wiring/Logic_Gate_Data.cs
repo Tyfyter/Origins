@@ -599,7 +599,8 @@ namespace Origins.Items.Tools.Wiring {
 						knockback: 3
 					);
 					player.AddBuff(Static_Shock_Debuff.ID, 60);
-					//could put a sound here too
+					SoundEngine.PlaySound(Origins.Sounds.LittleZap);
+					SoundEngine.PlaySound(SoundID.Item94.WithPitch(2f).WithVolume(0.5f));
 				}
 			}
 			public class Socket : UIImageFramed {
@@ -637,9 +638,9 @@ namespace Origins.Items.Tools.Wiring {
 						PickUp: () => {
 							if (connectedTo >= 0) {
 								wires[connectedTo] = -1;
-								//play detach sound here
+								SoundEngine.PlaySound(SoundID.Unlock.WithPitch(0.5f));
 							} else {
-								//play pick-up sound here
+								SoundEngine.PlaySound(SoundID.Item98.WithPitch(2f).WithVolume(0.8f));
 							}
 							connectedTo = -1;
 						},
@@ -668,7 +669,8 @@ namespace Origins.Items.Tools.Wiring {
 										connectedTo = -1;
 										break;
 									}
-									//play attach sound here
+									SoundEngine.PlaySound(SoundID.Unlock.WithPitch(1.5f));
+									SoundEngine.PlaySound(SoundID.Zombie58.WithPitch(1.5f));
 									break;
 								}
 							}

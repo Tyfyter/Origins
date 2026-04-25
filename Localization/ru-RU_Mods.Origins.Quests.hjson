@@ -1,601 +1,601 @@
 Common: {
 	Quest_Menu: {
-		// 0: Whatch want?
-		// 1: Need something?
-		// 2: Looking for something?
-		// 3: What is it?
-		// 4: Are you hurt? Do you need help?
-		// 5: Hello?
+		0: Чё надо?
+		1: Нужно что-нибудь?
+		2: Ты что-то ищешь?
+		3: В чём дело?
+		4: Ты ранен? Нужна помощь?
+		5: Привет?
 	}
 
 	GivenConfetti: {
-		// 0: Thanks for the {$ItemName.Confetti}.
-		// 1: Ay {$ItemName.Confetti}! Gotta ask [npcname:PartyGirl] when's the party.
-		// 2: So you're the new confetti delivery [word:Person!;{LocalPlayerGender}!;Casual?] for [npcname:PartyGirl]? Thanks a bunch.
+		0: Спасибо за {$ItemName.Confetti}.
+		1: Оу, {$ItemName.Confetti}! [npcname:PartyGirl] должна знать, когда будет вечеринка.
+		2: Так значит ты устроился новым доставщиком конфетти [word:Person!;{LocalPlayerGender}!;Casual?] для Тусовщицы? Прими благодарность.
 	}
 }
 
 Squirrel: {
-	// Quest_Menu: *questioning squeak*
-	// GivenConfetti: *happy squeak about {$ItemName.Confetti}*
+	Quest_Menu: *вопросительный писк*
+	GivenConfetti: *счастливый писк о {$ItemName.Confetti}*
 }
 
 LumberJack: {
-	// Quest_Menu: Here for some wood, [player:_]?
-	// GivenConfetti: I remember what tree this pile of {$ItemName.Confetti} came from, was a good day when I chopped that tree down.
+	Quest_Menu: Ты здесь ради дерева, [player:_]?
+	GivenConfetti: Я помню дерево, с которого свалилась эта куча {$ItemName.Confetti}. День, в который я срубил его, был по-настоящему хорошим.
 }
 
 Guide: {
-	// Quest_Menu: Need some advice?
-	// GivenConfetti: Oh, hey! Can't wait to celebrate!
+	Quest_Menu: Нужны советы?
+	GivenConfetti: О, эй! Я дождаться не могу, чтобы провести праздник!
 
 	Quest_Quest: {
-		// Name: Get Questing!
-		/* Journal:
+		Name: Получи-ка задание!
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Guide]
+			Заказчик: [npcname:Guide]
 
 			'{$Inquire}'
 
-			- [qs{0}:Complete a quest]
-			''' */
-		// Inquire: "[player:_], are you having trouble keeping track of your quests? Maybe you should get something to write them down in. I happen to have a Journal on hand for you! Accept my quest if you want it."
-		// Start: You did it! Here, have this.
+			- [qs{0}:Завершите задание]
+			'''
+		Inquire: У тебя есть проблемы с отслеживанием заданий, [player:_]? Быть может, тебе стоит куда-нибудь их записывать? У меня как раз завалялся дневник специально для тебя! Прими моё задание, если хочешь его.
+		Start: Ты справился! Вот, возьми.
 	}
 
 	Assimilation_Quest: {
-		// Name: Troubling Trouble
-		/* Journal:
+		Name: Ужасная незадача
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Guide]
+			Заказчик: [npcname:Guide]
 
 			'{$Inquire}'
 
-			[npcname:Guide] said to find a [itemhint/NaturesGift:magical flower] in the Jungle and bring it to a place he called "the Aether"
+			[npcname:Guide] попросил найти [itemhint/NaturesGift:волшебный цветок] в Джунглях и принести его в место под названием «Эфир»
 
-			- [qs/completed:Be assimilated by the <evil:_>]
-			- [qs/completed:Ask the guide for help curing yourself]
-			Reward: [i:SpelunkerPotion] x5, [i:Origins/Eye_Of_Aether] x5
-			''' */
-		// Inquire: That isn't good, it looks like the [evil:_] has started spreading to you! If you can find a Dryad she'll be able to cure you, but if you can't, I have some things that should help you make a cure for yourself.
-		// Start: Here, you'll need to find a [itemhint/NaturesGift:magical flower] in the Jungle and bring it to the Aether, these should help you find both.
+			- [qs/completed:Испытайте на себе ассимиляцию мирового зла]
+			- [qs/completed:Попросите Гида о помощи с исцелением]
+			Награда: [i:SpelunkerPotion] x5, [i:Origins/Eye_Of_Aether] x5
+			'''
+		Inquire: Это нехорошо, похоже, что [evil:_] начало распространяться прям на тебе! Если ты сможешь найти Дриаду, то она сможет помочь, но если что-то пойдёт не так, то у меня есть кое-что, что поможет тебе вылечиться самостоятельно.
+		Start: Вот, тебе нужно будет найти [itemhint/NaturesGift:волшебный цветок] и принести его к Эфиру. Это поможет тебе убить двух зайцев одним выстрелом.
 	}
 }
 
 Merchant: {
-	// Quest_Menu: Got time to go on a little quest for me?
-	// GivenConfetti: What is this for? Oh, a party? I'll be ready.
+	Quest_Menu: У тебя не найдётся времени на одно маленькое задание?
+	GivenConfetti: Это для чего? А, для вечеринки. Я буду готовиться к ней!
 
 	Blue_Bovine: {
-		// Name: To the Skies!
-		/* Journal:
+		Name: К звёздам!
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Merchant]
+			Заказчик: [npcname:Merchant]
 
 			'{$Inquire}'
 
-			- [qs{3}:Slay {2} Harpies ({1}/{2})]
-			Unlocks: [i:Origins/Blue_Bovine]
-			''' */
-		// Inquire: Hey {0}, I've had a bit of a vendetta against those harpies. Go and get twelve of 'em for me eh? I'll give you a nice reward if you do!
-		// Start: Great! Bring me back a chicken nugget if you can.
-		// ReadyToComplete: Oh goodness, I take it being covered in blue feathers is a sure sign you've completed my quest?
-		// Complete: Thank you. Those feather-ridden sky-folk were disrupting me from getting an important commodity! I'll offer you this new item at a discounted price for your services!
+			- [qs{3}:Убейте {2} гарпий ({1}/{2})]
+			Открывает: [i:Origins/Blue_Bovine]	
+			'''
+		Inquire: Эй, {0}, ты знал, что у меня есть давняя неприязнь к гарпиям? Не мог ли бы ты прикончить штук так 12 ради меня? Я в долгу не останусь!
+		Start: Отлично! По пути обратно захвати куриный наггетс, если сможешь.
+		ReadyToComplete: О божечки, я так понимаю, то, что ты весь покрыт этими синими перьями, — это знак того, что ты закончил с моим заданием?
+		Complete: Спасибо тебе. Эти пернатые бестии мешали мне достать важный товар! В качестве благодарности прими от меня скидку на мой новый товар.
 	}
 
 	Lottery_Ticket: {
-		// Name: The Greatest Sin of All, Gambling
-		/* Journal:
+		Name: Величайший грех из всех — азарт
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Merchant]
+			Заказчик: [npcname:Merchant]
 
 			'{$Inquire}'
 
-			- [qs{2}:Slay {1} rare enemies ({0}/{1})]
-			Unlocks: [i:Origins/Lottery_Ticket]
-			''' */
-		// Inquire: Do you know why I'm not allowed to sell lottery tickets? Neither do I. Maybe you can convince the gods of fortune to shine a brighter light on us by killing some rare enemies, eh?
-		// Start: Say "hi" to Tim for me before you kill him. It's been a while.
-		// ReadyToComplete: Did you manage to say "hi" to Tim before you put his lights out?
-		// Complete: No? Anyway, we can gamble now because of you! I'm gonna be rich, you'll see me on the TerraTrillions!
+			- [qs{2}:Убейте {1} редких врагов ({0}/{1})]
+			Открывает: [i:Origins/Lottery_Ticket]
+			'''
+		Inquire: Знаешь, почему мне нельзя продавать лотерейные билеты? Вот и я не знаю. Может, ты сможешь помочь мне убедить богов удачи, убив каких-нибудь редких врагов?
+		Start: Прежде чем ты разделаешься с Тимом, передай ему от меня привет. Мы давно с ним не виделись.
+		ReadyToComplete: Ты же не забыл передать привет Тиму?
+		Complete: Нет? Ну да ладно, зато благодаря тебе мы можем заложить всё в азартные игры! Совсем скоро я стану богатым, и ты увидишь меня на «Терра Триллионах»!
 	}
 }
 
 PartyGirl: {
-	// Quest_Menu: Hiya! You wanna party?! Me too!
-	// GivenConfetti: Confetti for me?! I'm already good to go, haha!
+	Quest_Menu: Приветик! Хочешь вечеринки?! Я тоже!
+	GivenConfetti: Конфетти для меня?! Этого мне хватит, чтобы всё организовать!
 
 	Happy_Grenade: {
-		// Name: Confetti Fun
-		/* Journal:
+		Name: Веселье с конфетти
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:PartyGirl]
+			Заказчица: [npcname:PartyGirl]
 
 			'{$Inquire}'
 
-			- [qs{3}:Give any {1} Town NPCs {2} Confetti ({0}/{1})]
-			- [qs{4}:Tell the client that everyone has {$ItemName.Confetti}]
-			Unlocks: [i:PartyGirlGrenade]
-			''' */
-		// Inquire: HI! So, I would like to prepare for a party sometime soon and nobody else seems to be prepared for it. Can you give everyone some confetti? Someone’s got to throw the confetti so I figured everyone can!
-		// Start: Sweet!
-		// ReadyToComplete: All good to go?
-		// Complete: Haha! Now everyone’s forced to participate in the fun! Quite the role model!
-		// RequestConfettiGiving: Give {0} {$ItemName.Confetti}
+			- [qs{3}:Дайте {1} любым городским НИПам {2} конфетти ({0}/{1})]
+			- [qs{4}:Сообщите заказчице, что у всех есть {$ItemName.Confetti}]
+			Открывает: [i:PartyGirlGrenade]
+			'''
+		Inquire: ХЭЙ! В общем, я хотела бы провести вечеринку в ближайшие дни, но похоже, что все остальные совершенно к ней не готовы. Не мог ли бы ты раздать им конфетти? Кому-нибудь всё равно пришлось бы их разбрасывать, а так это могут делать все!
+		Start: Прелестно!
+		ReadyToComplete: Всё готово?
+		Complete: Ха-ха! Теперь никто не отвертится от веселья! Отличный пример для подражания!
+		RequestConfettiGiving: Раздайте {0} {$ItemName.Confetti}
 	}
 
 	Tax_Collector_Hat: {
-		// Name: Livin' Up the Party
-		/* Journal:
+		Name: Отрыв на вечеринке
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:PartyGirl]
+			Заказчица: [npcname:PartyGirl]
 
 			'{$Inquire}'
 
-			- [qs{0}:Get <npcname:TaxCollector> to wear a party hat]
-			Unlocks: [i:Origins/Partybringer]
-			''' */
-		// Inquire: The party is ready and everything is set in place! But, something is missing... it's that old miser again. Try and cheer him up with a party hat, maybe that'll make him happy.
-		// Start: Yay! Thank you for this, Terrarian! You're the best!
-		// ReadyToComplete: I think I see him with the hat on..!
-		// Complete: Thank you so much, [player:_]! We can now have the best party ever thanks to you cheering that old man up!
-		// RequestHatWearing: "{$ItemName.PartyHat}"
+			- [qs{0}:Вынудите <npcname:TaxCollector> надеть праздничный колпак]
+			Открывает: [i:Origins/Partybringer]
+			'''
+		Inquire: Всё готово к проведению вечеринки! Но чего-то не хватает... Опять этот старый пень. Попробуй обрадовать его праздничным колпаком, может быть это его развеселит.
+		Start: Ура! Спасибо тебе, террарианец! Ты лучший!
+		ReadyToComplete: Надеюсь, я таки увижу его в этом колпаке..!
+		Complete: Спасибо тебе огромное, [player:_]! Благодаря тому, что ты смог развеселить этого старика, мы сможем провести лучшую вечеринку!
+		RequestHatWearing: "{$ItemName.PartyHat}"
 	}
 }
 
 GoblinTinkerer: {
-	// Quest_Menu: Oh, Terrarian! Good to see you. There is much work to be done.
-	// Generic.Mechanic: the Mechanic
-	// GivenConfetti: Confetti wasn't on my list of materials... but it does bring me some good ideas!
+	Quest_Menu: А, террарианец! Рад тебя видеть. У нас с тобой много работы.
+	Generic.Mechanic: Механик
+	GivenConfetti: Конфетти не было в моём списке запчастей... Но оно натолкнуло меня на парочку хороших идей!
 
 	Turbo_Reel: {
-		// Name: Reel In the Goods
-		/* Journal:
+		Name: Намотать добро на леску
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:GoblinTinkerer]
+			Заказчик: [npcname:GoblinTinkerer]
 
 			'{$Inquire}'
 
-			- [qs{2}:Collect {1} <itemhint/IronBar:Iron> or <itemhint/LeadBar:Lead> Bars ({0}/{1})]
-			- [qs{5}:Collect {4} <itemhint/Chain:Chains> ({3}/{4})]
-			- [qs{8}:Collect {7} <itemname:Origins/Adhesive_Wrap> ({6}/{7})]
-			- [qs{9}:Collect <itemname:GoldWatch> or <itemname:PlatinumWatch>]
-			Unlocks: [i:Origins/Turbo_Reel]
-			''' */
-		// Inquire: Hey, Terrarian! I was wondering if you could possibly fetch me five [itemhint/IronBar:iron] or [itemhint/LeadBar:lead] bars, two [itemhint/Chain:chains,] some [itemhint/Origins/Adhesive_Wrap:adhesive][ox:,] and a [itemhint/GoldWatch:watch]? I have a project I'm working on that you might want to join in on!
-		// Start: Excellent! Now go reel in those goods and you won't be disappointed by the result!
-		// ReadyToComplete: How was your adventure, Terrarian? Do you have the supplies?
-		// Complete: Sweet! With your hard work I have invented the turbo reel! You can use it to make things return to you faster!
+			- [qs{2}:Соберите {1} <itemhint/IronBar:железных> или <itemhint/LeadBar:свинцовых> слитков ({0}/{1})]
+			- [qs{5}:Соберите {4} <itemhint/Chain:цепи> ({3}/{4})]
+			- [qs{8}:Соберите {7} клейких лент ({6}/{7})]
+			- [qs{9}:Соберите <itemname:GoldWatch> или <itemname:PlatinumWatch>]
+			Открывает: [i:Origins/Turbo_Reel]
+			'''
+		Inquire: Здравствуй, террарианец! Не мог ли бы ты, пожалуйста, достать мне пять [itemhint/IronBar:железных] или [itemhint/LeadBar:свинцовых] слитков, две [itemhint/Chain:цепи,] немного [itemhint/Origins/Adhesive_Wrap:клейкой ленты] и [itemhint/GoldWatch:карманные часы]? Я работаю над одним проектом, который мог бы тебя заинтересовать!
+		Start: Замечательно! Тащи все эти вещи сюда, и я не разочарую тебя результатом!
+		ReadyToComplete: Террарианец, как всё прошло? Припасы у тебя?
+		Complete: Отлично! Благодаря тебе я смог изобрести механическую катушку! Она будет полезной, когда тебе надо по-быстрому собрать все свои вещи с земли!
 	}
 
 	Gun_Glove: {
-		// Name: Lend a Hand?
-		/* Journal:
+		Name: Рука помощи
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:GoblinTinkerer]
+			Заказчик: [npcname:GoblinTinkerer]
 
 			'{$Inquire}'
 
-			- [qs{2}:Collect {1} <itemname:Leather> ({0}/{1})]
-			- [qs{3}:Collect <itemname:FlintlockPistol>]
-			- [qs{4}:Collect <itemname:ZombieArm>]
-			Unlocks: [i:Origins/Gun_Glove]
-			''' */
-		// Inquire: So, same deal as last time but different materials. Could you get me two leather, a flintlock pistol from [npcname:ArmsDealer][ox:,] and a zombie arm. What? I just need it, it's important!
-		// Start: Thank you! I'll be here whenever you have the supplies.
-		// ReadyToComplete: All of the supplies, even the zombie arm?
-		// Complete: Oh, good. I needed it to test out my new gun glove creation! You can use it to shoot bullets as you move your arm around! Pretty cool right?
+			- [qs{2}:Соберите {1} кожи ({0}/{1})]
+			- [qs{3}:Соберите <itemname:FlintlockPistol>]
+			- [qs{4}:Соберите руку зомби]
+			Открывает: [i:Origins/Gun_Glove]
+			'''
+		Inquire: Итак, у меня к тебе просьба, похожая на предыдущую: можешь принести мне две кожи, кремниевый пистолет, которым торгует [npcname:ArmsDealer], и руку зомби. Что? Оно мне просто надо, ты увидишь, почему оно так важно!
+		Start: Спасибо! Как соберёшь всё, что надо, приходи сюда.
+		ReadyToComplete: Ты всё собрал? Даже руку зомби?
+		Complete: Ох, отлично. Мне это всё нужно было для того, чтобы собрать мою новую оружейную перчатку! Тебе больше не придётся держать в руках пушку, чтобы стрелять, достаточно будет просто надеть эту перчатку! Круто, да?
 	}
 
 	Rocket_Boosted_Minecart: {
-		// Name: Explosive Result
-		/* Journal:
+		Name: Взрывной результат
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:GoblinTinkerer]
+			Заказчик: [npcname:GoblinTinkerer]
 
 			'{$Inquire}'
 
-			- [qs{0}:Collect Minecart]
-			- [qs{3}:Collect {2} Rocket I ({1}/{2})]
-			- [qs{6}:Collect {5} Adhesive Wrap ({4}/{5})]
-			- [qs{9}:Collect {8} Adamantite Bars ({7}/{8})]
-			Unlocks: [i:Origins/Rocket_Boosted_Minecart]
-			''' */
-		// Inquire: I just thought of another idea! This'll surely impress [npcname:Mechanic]... can you get me a minecart, fifty rockets, eighty adhesives[ox:,] and fifteen Adamantite or Titanium Bars? Don't worry, my laboratory is explosive-proof!
-		// Start: Thank you in advance! The thought of finishing this project is surely exhilarating!
-		// ReadyToComplete: All good to go?
-		// Complete: Yes! Introducing the world's fastest ticket to space, the rocket-boosted minecart! With this thing you will be anywhere you need before you even need to think about it!
+			- [qs{0}:Соберите вагонетку]
+			- [qs{3}:Соберите {2} ракеты I ({1}/{2})]
+			- [qs{6}:Соберите {5} клейких лент ({4}/{5})]
+			- [qs{9}:Соберите {8} адамантитовых слитков ({7}/{8})]
+			Открывает: [i:Origins/Rocket_Boosted_Minecart]
+			'''
+		Inquire: Ко мне в голову только что пришла ещё одна идея! [npcname:Mechanic] точно от неё удивится... Можешь достать для меня вагонетку, восемнадцать рулонов клейкой ленты, пятьдесят ракет и пятнадцать слитков адамантита или титана? Не волнуйся, моя лаборатория взрывоустойчива!
+		Start: Огромное спасибо! Мысль о том, что я наконец-то закончу работу над этим проектом, меня дико воодушевляет!
+		ReadyToComplete: У тебя всё готово?
+		Complete: Да! Представляю тебе быстрейший способ попасть в космос, реактивную вагонетку! С этой штукой ты окажешься в любом месте, в котором захочешь, даже не успев об этом подумать!
 	}
 }
 
 ArmsDealer: {
-	// Quest_Menu: What's up? You ready to make holes in some enemies?
-	// GivenConfetti: What can I even use confetti for? Party Bullets?
+	Quest_Menu: Чё как? Готов проделать пару лишних дыр во врагах?
+	GivenConfetti: Что бы я мог сделать с этими конфетти? Праздничные пули?
 
 	Shardcannon: {
-		// Name: Live Fire
-		/* Journal:
+		Name: Демонстрация огня
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:ArmsDealer]
+			Заказчик: [npcname:ArmsDealer]
 
 			'{$Inquire}'
 
-			- [qs{2}:Slay {1} Enemies with the <imperfect:Origins/Shardcannon> ({0}/{1})]
-			Unlocks: [i:Origins/Shardcannon]
-			''' */
-		// Inquire: Hey buddy, I've been workin' on a little something that needs someone who knows how to handle a gun. Now, that makes two of us, but I'm sure my neighbors wouldn't like holes in their wall. Care to fit it out for me?
-		// Start: Thanks, buddy. Go shred up some zombies!
-		// ReadyToComplete: All done? Not too bad?
-		// Complete: Thanks for the info. I'll fix the imperfections, but otherwise sounds like it will sell big. If you liked it a lot, be sure to check out my wares.
-		// WhereGun: Where the gun at, bud?
-		// YouLostThatGunIGaveYou: HEY! I can't just make these things poof outta thin air. You're lucky I have a back-up!
-		// ILostThatGunYouGaveMe: Lost Gun
+			- [qs{2}:Убейте {1} врагов, используя <imperfect:Origins/Shardcannon> ({0}/{1})]
+			Открывает: [i:Origins/Shardcannon]
+			'''
+		Inquire: Привет, приятель, я тут немного работал кое-над чем, что требует умения обращаться с огнестрелом. Я мог бы и сам опробовать свой прототип, но не думаю, что мои соседи оценят дыры в их стенах. Поможешь мне?
+		Start: Спасибо, дружище. Иди-ка и разберись с парочкой зомби.
+		ReadyToComplete: Ты всё? Неплохое оружие?
+		Complete: Спасибо за пробу. Я исправлю оставшиеся недостатки, но в остальном, похоже, что товар будет хорошо продаваться. Если тебе прям очень понравилось, то можешь посмотреть и другие вещи с моего ассортимента.
+		WhereGun: А где пушка, приятель?
+		YouLostThatGunIGaveYou: ЭЙ! Я не клепаю подобное из воздуха, знаешь ли. Тебе повезло, что у меня есть ещё в запасе!
+		ILostThatGunYouGaveMe: Потерял оружие
 	}
 
 	Harpoon_Burst_Rifle: {
-		// Name: Three Times the Charm
-		/* Journal:
+		Name: Трижды удачно
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:ArmsDealer]
+			Заказчик: [npcname:ArmsDealer]
 
 			'{$Inquire}'
 
-			- [qs{2}:Slay {1} Enemies with the <imperfect:Origins/Harpoon_Burst_Rifle> ({0}/{1})]
-			Unlocks: [i:Origins/Harpoon_Burst_Rifle]
-			''' */
-		// Inquire: I'll be honest, [player:_], I've been pretty successful since I started selling the Shardcannon. Thanks to you, I've had time to go on vacation. But, vacation is over and I have a new prototype I need yah to test out. This one'll be fun.
-		// Start: Sick. Should be a piece of cake from the kind of shot you are!
-		// ReadyToComplete: Welcome back. You got the deets for me?
-		// Complete: Don't worry. This is why I ask you to try my new stuff out. That spread will be fixed, I assure you!
-		// WhereGun: Where the gun at, bud?
-		// YouLostThatGunIGaveYou: HEY! I can't just make these things poof outta thin air. You're lucky I have a back-up!
-		// ILostThatGunYouGaveMe: Lost Gun
+			- [qs{2}:Убейте {1} врагов, используя <imperfect:Origins/Harpoon_Burst_Rifle> ({0}/{1})]
+			Открывает: [i:Origins/Harpoon_Burst_Rifle]
+			'''
+		Inquire: Буду с тобой честен, [player:_], я обрёл некоторый успех за счёт продаж осколкомёта. Благодаря тебе, у меня даже появилось время съездить в отпуск, однако мой отпуск закончился, и у меня для тебя есть ещё один прототип, который не мешало бы опробовать. Этот будет очень весёлым.
+		Start: Отлично. Для стрелка вроде тебя это будет проще пареной репы!
+		ReadyToComplete: С возвращением. У тебя есть сведения для меня?
+		Complete: Не волнуйся, как из-за этого я прошу тебя опробовать штуки вроде этой. Я решу эту проблему, можешь не сомневаться!
+		WhereGun: А где пушка, приятель?
+		YouLostThatGunIGaveYou: ЭЙ! Я не клепаю подобное из воздуха, знаешь ли. Тебе повезло, что у меня есть ещё в запасе!
+		ILostThatGunYouGaveMe: Потерял оружие
 	}
 }
 
 Zoologist: {
-	// Quest_Menu: Heyyy! You interested to save some critters, yah?
-	// GivenConfetti: Hwow! It's confetti! Thasss so kewl!
+	Quest_Menu: Приве-е-ет! Ты же не прочь спасти пару зверюшек, да?
+	GivenConfetti: Вау, да это же конфетти! Это тя-я-як мило!
 
 	Discount_1_Quest: {
-		// Name: Save the Critters!
-		/* Journal:
+		Name: Спасти зверушек!
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:BestiaryGirl]
+			Заказчица: [npcname:BestiaryGirl]
 
 			'{$Inquire}'
 
-			- [qs{2}:Obtain any {1} critters ({0}/{1})]
-			- [qs{3}:Give critters to <npcname:BestiaryGirl>]
-			Reward: 3% discount
-			''' */
-		// Inquire: Heya! Can you do me a favor? Could yah get any ten critters and bring 'em back to me? Yah? Thank yah, hun! Oh and I'll give you some discounts for being nice!
-		// Start: YEE! Yes! Thank you, friend!
-		// ReadyToComplete: You save some critters, ya?
-		// Complete: Awww, you picked some good ones, friend! Thank you for da help!
+			- [qs{2}:Соберите {1} любых животных ({0}/{1})]
+			- [qs{3}:Передайте животных Зоологу]
+			Награда: Скидка 3%
+			'''
+		Inquire: Привет! Можешь мне помочь с кое-чем? Не мог ли бы ты собрать 10 любых зверушек для меня? Да? Спасибо, дорогуша! О, и конечно, за твою доброту я сделаю скидку!
+		Start: Е-е-е! Да! Спасибо тебе, друг!
+		ReadyToComplete: Ты спас животных, да?
+		Complete: У-у-у, ты выбрал хорошеньких, приятель! Спасибо за помощь!
 	}
 
 	Discount_2_Quest: {
-		// Name: Not Au-some…
-		/* Journal:
+		Name: Не такое уж и золотце…
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:BestiaryGirl]
+			Заказчица: [npcname:BestiaryGirl]
 
 			'{$Inquire}'
 
-			- [qs{0}:Catch a <itemname:SquirrelGold>]
-			- [qs{1}:Give the squirrel to <npcname:BestiaryGirl>]
-			Reward: 3% discount
-			''' */
-		// Inquire: This is gettin' out of hand! I've been hearin' that [itemhint/SquirrelGold:{$ItemName.SquirrelGold}s] sell big and are even bein' a part of people's meals 'round here! Put an end to this and retrieve me one!
-		// Start: Yes, just one!
-		// ReadyToComplete: Yah find a beauty now?
-		// Complete: Oh, bless ya heart! Because of you, I can have a little piece o' mind. Of course, saving one ain't gonna change much, but I'm just glad I can trust yah! Da hero we all need!
+			- [qs{0}:Поймайте золотую белку]
+			- [qs{1}:Передайте белку Зоологу]
+			Награда: Скидка 3% 
+			'''
+		Inquire: Ситуация выходит из-под контроля! До меня доходили слухи, что продажи [itemhint/SquirrelGold:золотых белок] достигли небывалых ранее высот, а некоторые даже употребляют их в пищу! Положи этому конец и принеси мне одну!
+		Start: Да, только одну!
+		ReadyToComplete: Ну что, нашёл красотку?
+		Complete: Ох, огромнейшее спасибо! Благодаря тебе, у меня теперь есть спокойствие на душе. Конечно, спасение всего лишь одной мало на что повлияет, однако я рада, что могу тебе доверять! Герой, которого мы заслужили!
 	}
 
 	Eccentric_Stone_Quest: {
-		// Name: Under the Starlight
-		/* Journal:
+		Name: Под светом звёзд
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:BestiaryGirl]
+			Заказчица: [npcname:BestiaryGirl]
 
 			'{$Inquire}'
 
-			- [qs{2}:Obtain {1} <itemname:EnchantedNightcrawler>s ({0}/{1})]
-			- [qs{3}:Give <itemname:EnchantedNightcrawler>s to <npcname:BestiaryGirl>]
-			Reward: [i:Origins/Eccentric_Stone]
-			''' */
-		// Inquire: Heyyy! I've been rather peeved by that angler kid lately, but that's a whole 'nother can 'o worms. Get it? Can 'o worms? Can you please give me ten [itemhint/EnchantedNightcrawler:{$ItemName.EnchantedNightcrawler}s]? They make for great bait, but they living creatures too!
-		// Start: Thank ya again, hun!
-		// ReadyToComplete: Got some pretty glowin' worms for me?
-		// Complete: You really are a cool {0}! Well, I figure for all dat trouble, I'll give yah this cool looking rock I don't know how I got! Hope you like it!
+			- [qs{2}:Соберите {1} звёздных червей ({0}/{1})]
+			- [qs{3}:Передайте червей Зоологу]
+			Награда: [i:Origins/Eccentric_Stone]
+			'''
+		Inquire: Приветик! Этот мальчишка-рыбак в последнее время всё больше меня бесит: копошится тут, как червь в банке. Понимаешь, к чему я? Банка червей? Не мог ли бы ты собрать мне десяток [itemhint/EnchantedNightcrawler:звёздных червяков]? Они, конечно, отличная наживка, но они же тоже живые!
+		Start: Спасибо ещё раз, дорогуша!
+		ReadyToComplete: Уже собрал для меня этих сияющих червячков?
+		Complete: Ты и вправду крутой {0}! Ну, я решила, что за все твои сегодняшние труды я вознагражу тебя этим классным камнем, который я понятия не имею откуда взялся! Надеюсь, тебе он понравится!
 	}
 }
 
 Dryad: {
-	// Quest_Menu: As this world's righteous guardian, the responsibility of cleansing the evils is up to you. What will you do, Terrarian?
-	// GivenConfetti: Thanks, but this isn't my style of partying. I prefer dancing around effigies and singing hymns, personally.
+	Quest_Menu: Как полноправному защитнику этого мира, задача отчистки его от зла возлагается на тебя. Как ты поступишь, террарианец?
+	GivenConfetti: Спасибо, конечно, но это не в моём стиле. Я лично больше предпочитаю танцевать вокруг чучел и воспевать гимны.
 
 	Cleansing_Station: {
-		// Name: I'll Give You a Deal
-		/* Journal:
+		Name: Давай совершим сделку
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Dryad]
+			Заказчица: [npcname:Dryad]
 
 			'{$Inquire}'
 
-			- [qs{2}:Cleanse {1} blocks ({0}/{1})]
-			Unlocks: [i:Origins/Cleansing_Station_Item]
-			''' */
-		// Inquire: Hey [player:_], look. I know you've probably been busy lately, but can I take some time off you to cleanse some of the [evil:world]? If you follow through, I'll reward you with access to something I've been hiding for a while now.
-		// Start: Thanks. The [evil:world] has been spreading quite slow lately. A little bit of cleansing shouldn't be that hard.
-		// ReadyToComplete: Hold on. Let me turn on my Dryad-instincts to see if you're lying...
-		// Complete: Oh good, you've made some progress, but it's not enough. The [evil:world] grows stronger everyday and we must take more decisive blows if we want it to be entirely wiped. For now, get some rest, Terrarian.
+			- [qs{2}:Очистите {1} блоков ({0}/{1})]
+			Открывает: [i:Origins/Cleansing_Station_Item]
+			'''
+		Inquire: Эй, [player:_], послушай-ка. Я знаю, что мог быть очень занят в последнее время, однако [evil:world] не прекращает разрастаться. Не хотел ли бы ты слегка избавить мир от этой дряни? Если согласишься, то я вознагражу тебя доступом к кое-чему, что я раньше скрывала.
+		Start: Спасибо. [evil:world] распространяется довольно медленно в последнее время, так что небольшая отчистка не должна доставить много бед.
+		ReadyToComplete: Погоди, дай мне убедиться, что ты не врёшь, при помощи моих инстинктов Дриады...
+		Complete: О, замечательно, ты сделал определённый прогресс, но этого всё ещё мало. [evil:world] становится сильнее с каждым днём, так что нам придётся наносить более решительные удары для того, чтобы покончить с этим раз и навсегда. А пока отдохни, террарианец.
 	}
 
 	Bloombomb: {
-		// Name: Clearing the Way
-		/* Journal:
+		Name: Расчищая путь
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Dryad]
+			Заказчица: [npcname:Dryad]
 
 			'{$Inquire}'
 
 			- [qs{2}:Cleanse {1} blocks ({0}/{1})]
-			Unlocks: [i:Origins/Bloombomb]
-			''' */
-		// Inquire: Hello again, [player:_]. Ready for some more cleansing today? I have another task for you to cleanse a decent amount of the [evil:world] for me. I've got some [itemname:Origins/Bloombomb]s for cheap if you could help!
-		// Start: Oh. I didn't think you'd be dying to cleanse the [evil:world] over some [itemname:Origins/Bloombomb]s to be all that honest. Thanks anyway.
-		// ReadyToComplete: Great work, Terrarian. You did good. However, I am unable to offer you [itemname:Origins/Bloombomb]s until you click that button above me.
-		// Complete: Now. For your reward...
+			Открывает: [i:Origins/Bloombomb]
+			'''
+		Inquire: Здравствуй ещё раз, [player:_]. Готов к очередной отчистке сегодня? У меня для тебя ещё одно задание по отчистке мира от мирового зла. Если преуспеешь, то узнаешь, что такое [itemname:Origins/Bloombomb]!
+		Start: Ой, я и не думала, что ты так рьяно будешь искоренять мировое зло ради каких-то там цветущих бомб. Спасибо в любом случае.
+		ReadyToComplete: Отличная работа, террарианец. Ты справился на все сто. Однако, я не смогу продать тебе цветущие бомбы, пока ты не нажмёшь ту кнопку подо мной.
+		Complete: А теперь обсудим твою награду...
 	}
 }
 
 Stylist: {
-	// Quest_Menu: You here for a cut? No? You want to help..? Who even goes out of their way to thank a barber... I suppose I can have some help.
-	// GivenConfetti: I suppose I can look into tied hairstyles, but wouldn't we need something more tolerant to water, Terrarian?
+	Quest_Menu: Ты подстричься? Нет? Хочешь помочь..? Кто вообще удосуживается благодарить парикмахера за его работу... Ты мог бы кое-чем мне помочь, полагаю.
+	GivenConfetti: Я могла бы подобрать тебе варианты причёсок с собранными волосами, но разве для них не нужно что-то более устойчивое к воде?
 
 	Magic_Hair_Spray: {
-		// Name: Running Dry
-		/* Journal:
+		Name: Пробежка всухую
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Stylist]
+			Заказчица: [npcname:Stylist]
 
 			'{$Inquire}'
 
-			- [qs{2}:Obtain {1} <itemname:Origins/Magic_Hair_Spray> ({0}/{1})]
-			- [qs{3}:Give <itemname:Origins/Magic_Hair_Spray> to <npcname:Stylist>]
-			Unlocks: 4 new hairstyles
-			''' */
-		// Inquire: Ever since I was captured by those spiders I've run out of my special hair stuff. Could you go get me some magic hair spray please? Pretty please?
-		// Start: Looking sharp, Terrarian.
-		// ReadyToComplete: Do you have the special stuff for me?
-		// Complete: Mmm! Wonderful! Oh, I can do some more daring styles with this stuff again.
+			- [qs{2}:Соберите {1} волшебных лаков для волос ({0}/{1})]
+			- [qs{3}:Передайте лаки Стилисту]
+			Открывает: 4 новые стрижки
+			'''
+		Inquire: С тех пор, как меня поймали те пауки, у меня закончился специальный лак для волос. Не мог ли бы ты раздобыть для меня немного волшебного лака для волос, пожалуйста? Пожалуйста-пожалуйста?
+		Start: Выглядишь стильно, террарианец.
+		ReadyToComplete: Достал для меня что-нибудь особенное?
+		Complete: М-м-м! Чудесно! Ох, я снова могу делать определённые смелые стили благодаря этому.
 	}
 
 	Comb: {
-		// Name: Slick Styling
-		/* Journal:
+		Name: Ловкий стиль
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Stylist]
+			Заказчица: [npcname:Stylist]
 
 			'{$Inquire}'
 
-			- [qs{0}:Obtain a <itemname:Origins/Comb>]
-			- [qs{1}:Give <itemname:Origins/Comb> to <npcname:Stylist>]
-			Unlocks: 2 new hairstyles
-			''' */
-		// Inquire: Hey [player:_]. I've been needing a [itemhint/Origins/Comb:comb] so I can properly cut some hair since my other one broke. Yes, I pulled a lot of hair out last Blood Moon, but anyway, yeah could you do that for me?
-		// Start: Thank you. I'll try not to rip my hair out this time.
-		// ReadyToComplete: Ah yes! Do you have a comb?
-		// Complete: Slick moves, Terrarian. I really appreciate it. I've come up with two new styles since we last saw each other that you might be interested in!
+			- [qs{0}:Соберите <itemname:Origins/Comb>]
+			- [qs{1}:Передайте <itemname:Origins/Comb> Стилисту]
+			Открывает: 2 новые стрижки
+			'''
+		Inquire: Привет, [player:_]. Я уже долгое время нуждаюсь в [itemhint/Origins/Comb:гребне] для того, чтобы я могла правильно стричь волосы. Мой прошлый сломался. Да, я вырвала себе немалое число волос во время прошлой кровавой луны, но он всё ещё мне нужен. Поможешь?
+		Start: Спасибо. В следующий раз попытаюсь не вырывать себе волосы.
+		ReadyToComplete: О да! Гребень у тебя?
+		Complete: Стильная работа, террарианец. Я правда ценю твою помощь. С момента нашей последней встречи я разработала два новых стиля, которые, возможно, тебя заинтересуют!
 	}
 
 	Holiday_Hair_Dye: {
-		// Name: To Be Crystal Clear…
-		/* Journal:
+		Name: Кристальная чистота
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Stylist]
+			Заказчица: [npcname:Stylist]
 
 			'{$Inquire}'
 
-			- [qs{0}:Obtain <itemname:Origins/Crystal_Cutters>]
-			- [qs{1}:Give <itemname:Origins/Crystal_Cutters> to <npcname:Stylist>]
-			Unlocks: [i:Origins/Holiday_Hair_Dye]
-			''' */
-		// Inquire: Heyo [player:_]. I have another favor to ask of you. My customers have been complaining that it hurts whenever I use my old scissors and frankly, the blades are going bad. So, naturally I'd need new scissors... well, I've been talking it up with [npcname:Wizard] and he's told me there's crystal-bladed scissors out there... you see my point? GET THEM PLEASE.
-		// Start: YOU'RE AWESOME! ...sorry, I'm just excited.
-		// ReadyToComplete: Oh my goodness, oh my goodness, oh my goodness.
-		// Complete: YES! Mm! Mua! You are the absolute best! In return, [npcname:Wizard] and I made a new hair dye that I'll give you for cheap!
+			- [qs{0}:Соберите <itemname:Origins/Crystal_Cutters>]
+			- [qs{1}:Передайте <itemname:Origins/Crystal_Cutters> Стилисту]
+			Открывает: [i:Origins/Holiday_Hair_Dye]
+			'''
+		Inquire: Привет, [player:_]. У меня к тебе ещё одна просьба. Мои клиенты жалуются на то, что мои ножницы доставляют им боль во время стрижки, да и честно говоря, лезвия и правда затупились. Так что мне и правда не помешали бы новые ножницы... [npcname:Wizard] сказал мне, что где-то в округе существуют ножницы из чистого кристалла... понимаешь намёк? ПРИНЕСИ ИХ МНЕ, ПОЖАЛУЙСТА.
+		Start: ТЫ ПРОСТО ЧУДЕСЕН! ...прости, я просто слишком взволнованна.
+		ReadyToComplete: О боже, о боже, о боже.
+		Complete: ДА! М-м! Муа! Ты просто лучший! В награду [npcname:Wizard] и я сделали новую краску для волос, которую я отдам за сущие гроши!
 	}
 }
 
 Cyborg: {
-	// Quest_Menu: There are some tasks I've assigned to an adventurer like yourself. Confirm or deny?
-	// GivenConfetti: Confetti-- processing request. Recieving confetti was entirely off my calculations, but it is promising evidence of universal alterations. Satisfactory. One must be unpredictable to truly alter outcomes.
+	Quest_Menu: У меня имеются несколько заданий для искателя приключений вроде тебя. Примешь или откажешься?
+	GivenConfetti: Конфетти -- обрабатываю запрос. Конфетти в подарок находится вне моих вычислений, но это есть многообещающие свидетельство грядущих изменений текущей реальности. Удовлетворён. Для того, чтобы действительно изменить будущее, нужно быть непредсказуемым.
 
 	Advanced_Imaging: {
-		// Name: Sensor Upgrade
-		/* Journal:
+		Name: Обновление сенсоров
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Cyborg]
+			Заказчик: [npcname:Cyborg]
 
 			'{$Inquire}'
 
-			- [qs{1}:Investigate the electronic presence]
-			- [qs{2}:Return to <npcname:Cyborg>]
-			Unlocks: [i:Origins/Advanced_Imaging]
-			''' */
-		// Inquire: Terrarian, my sensors indicate there is an electronic presence in the skies of {0}. The signal is coming from the ocean. Investigate, this information could improve my systems.
-		// Start: Process-start. Task 1 of 1.
-		// ReadyToComplete: Please import the data medium into my built-in USB port located on my neck.
-		// Complete: Sufficient. Thank you, Terrarian. I have comprised a blueprint that may benefit your combat prowess.
+			- [qs{1}:Расследуйте электронное присутствие]
+			- [qs{2}:Вернитесь к Киборгу]
+			Открывает: [i:Origins/Advanced_Imaging]
+			'''
+		Inquire: Террарианец, мои сенсоры засекли электронное присутствие в небесах {0}. Сигнал идёт со стороны океана. Выясни что это, за счёт этой информации я смогу улучшить свои сенсоры.
+		Start: Статус: начало. Задача 1 из 1.
+		ReadyToComplete: Пожалуйста, вставьте носитель информации в мой USB-порт, расположенный на шее.
+		Complete: Удовлетворительно. Спасибо, террарианец. Я разработал план, который поможет повысить твои боевые навыки.
 	}
 }
 
 TaxCollector: {
-	// Quest_Menu: What.
-	// GivenConfetti: Do you even know who I am? Scram!
+	Quest_Menu: Чего?
+	GivenConfetti: Да ты хоть знаешь кто я? Катись отсюда!
 
 	Tax_Collector_Ghosts_Quest: {
-		// Name: A Night of Uninterrupted Sleep
-		/* Journal:
+		Name: Ночь непрерванного сна
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:TaxCollector]
+			Заказчик: [npcname:TaxCollector]
 
 			'{$Inquire}'
-			He said the first spirit told him of the others: "Expect the first tonight, when the bell tolls one, expect the second on the stroke of two, The third, more mercurial, shall appear in his own good time."
+			Он сказал, что первый дух рассказал ему о пришествии остальных: «Первого жди сегодня ночью, когда прозвонит колокол, второго — на отметке в два, а третий, более непостоянный есть, появится в своё время».
 
-			- [qs{1}:Vanquish the spirits ({0}/4)]
-			- [qs{2}:Return to <npcname:TaxCollector>]
-			''' */
-		// Request: I shan't give something for nothing, if you want me to wear one of those ridiculous hats you'd best do something for me.
-		// Inquire: Dreadful apparitions have been haunting me night after night, spouting humbug about "the common welfare" and "reclamation"; They haven't even the courtesy to all come at once and have it over swiftly; Rid me of them and I'll wear your frivolous hat.
-		// Start: Good, now, if you will go about your business and allow me to go about mine.
-		// ReadyToComplete: Well? Are the spirits gone?
-		// Complete: Thank you, now I suppose it's time to hold up my end of the bargain.
+			- [qs{1}:Изгоните духов ({0}/4)]
+			- [qs{2}:Вернитесь к Налогосборщику]
+			'''
+		Request: Я не собираюсь ничего делать просто так. Если хочешь, чтобы я надел эту дурацкую шляпу, то ты должен сделать кое-что взамен.
+		Inquire: Каждую ночь меня преследуют ужасные духи, изрекающие чепуху об «общем благополучии» и «исправлении»; у них даже нет достаточного этикета, чтобы прийти всем сразу и быстро со мною покончить; избавь меня от них, и я, так уж и быть, надену твой бессмысленный колпак.
+		Start: Отлично. А теперь, будь так добр, займись своим делом и не мешай мне заниматься моим.
+		ReadyToComplete: Ну? Все призраки ушли?
+		Complete: Благодарю. Теперь, полагаю, время и мне выполнить свою часть сделки.
 	}
 }
 
 Painter: {
-	// Quest_Menu: Ay? You wanna sit still and let me make a portrait?
-	// GivenConfetti: Such bright colors! It inspires me to do something brilliant! Thank you!
+	Quest_Menu: Эгэй? Ты не хочешь посидеть ровно и дать мне закончить твой портрет?
+	GivenConfetti: Такие яркие цвета! Они вдохновляют меня на что-то по-настоящему изумительное! Спасибо тебе большое!
 
 	Spray_N_Pray_Quest: {
-		// Name: Painter Apprentice
-		/* Journal:
+		Name: Ученик художника
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Painter]
+			Заказчик: [npcname:Painter]
 
 			'{$Inquire}'
 
-			- [qs{2}:Obtain {1} of any painting ({0}/{1})]
-			- [qs{3}:Give {1} paintings to <npcname:Painter>]
-			Unlocks: [i:Origins/Spray_N_Pray]
-			''' */
-		// Inquire: Ay! I've been looking for paintings across the world, but some skeletons keep telling me they've only been able to find them underground. Why are they underground? I don't know but I want them. Gimme some of them and I'll let you in on a little secret to absolutely wreck havoc in paint ball. You in?
-		// Start: Great! You won't regret it! Though, just don't sell them to me, aight? Things you sell to me just magically disappear once you leave!
-		// ReadyToComplete: Ay, you got the goods?
-		// Complete: Oh, goodie! You got {0} of them as requested. So, for my part of the deal I present to you the "{$Mods.Origins.Items.Spray_N_Pray.DisplayName}"! She's a beauty ain't she? She uses paint buckets for ammo 'cause she's really messy! Oh yeah!
+			- [qs{2}:Соберите {1} любых картин ({0}/{1})]
+			- [qs{3}:Передайте {1} картин Маляру]
+			Открывает: [i:Origins/Spray_N_Pray]
+			'''
+		Inquire: Эй! Я долгое время занимался тем, что искал картины по всему миру, но некоторые скелеты продолжают настойчиво доказывать мне то, что они находили картины под землёй. Что вообще картины могли забыть под землёй? Я этого не знаю, но хотел бы на них взглянуть. Раздобудь для меня парочку, и я расскажу тебе небольшой секрет о том, как устроить настоящий хаос в пейнтболле. По рукам?
+		Start: Отлично, ты не пожалеешь! Только не продавай их мне, ладно? Вещи, которые ты мне продаёшь, обладают магическим свойством куда-то испаряться каждый раз, как ты уходишь!
+		ReadyToComplete: Эй, ну что, раздобыл добра?
+		Complete: Ох, прелестно! Ты достал {0}, как я и просил. Как и договаривались, я познакомлю тебя с "{$Mods.Origins.Items.Spray_N_Pray.DisplayName}"! Красотка, не правда ли? Она использует вёдра с краской в качестве боеприпасов, потому что она очень неряшлива! Оу да!
 	}
 }
 
 Brine_Fiend: {
-	// Quest_Menu: Yeah, what? Oh, you wanna help with something? I got work for yah.
-	// GivenConfetti: A party, huh? Since she's just giving away confetti does that mean I can bring fog juice this time? I swear I made it to where it won't melt your house down.
+	Quest_Menu: Да, что? А, ты хочешь помочь мне? Ну, у меня есть для тебя работёнка.
+	GivenConfetti: Вечеринка, а? Раз уж она раздаёт всем подряд конфетти, это значит что я наконец смогу принести с собой туманный сок? Я сделала его так, чтобы он не иссушил весь дом, клянусь.
 
 	Alkaliegis: {
-		// Name: Basic Brewery
-		/* Journal:
+		Name: Основы варки
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Origins/Brine_Fiend]
+			Заказчица: [npcname:Origins/Brine_Fiend]
 
 			'{$Inquire}'
 
-			- [qs{1}:Collect <itemname:TeleportationPotion>]
-			- [qs{0}:Collect <itemname:Origins/Greater_Summoning_Potion>]
-			- [qs{2}:Collect <itemname:TitanPotion>]
-			- [qs{1}:Give items to <npcname:Origins/Brine_Fiend>]
-			Unlocks: [i:Origins/Akaliegis]
-			''' */
-		// Inquire: "[player:_], I'm in the mood for something 'experimental', but I don't know how to get my hands on the ingredients I need, so something artificial will do. It's simple. I need a [itemname:TeleportationPotion], [itemname:Origins/Greater_Summoning_Potion][ox:,] and [itemname:TitanPotion]. Can you get those for me so I can make some new brews with chemicals I haven't tried yet?"
-		// Start: Sick. Now go away, I'm busy.
-		// ReadyToComplete: Well, that wasn't long.
-		// Complete: Sorry for shoo-ing you, I wasn't in the mood at that time. As the old man likes the say, "I embody appreciation." Anyhoo, I have some weird shield-thingy I found in the Brine Pool the other day. I'd give it to you for free, but let's be honest, you're the only person keeping Terraria's economy running these days.
+			- [qs{1}:Соберите <itemname:TeleportationPotion>]
+			- [qs{0}:Соберите <itemname:Origins/Greater_Summoning_Potion>]
+			- [qs{2}:Соберите <itemname:TitanPotion>]
+			- [qs{1}:Передайте зелья Солёному демону]
+			Открывает: [i:Origins/Akaliegis]
+			'''
+		Inquire: "[player:_], у меня сейчас в настроении на эксперименты, но я не знаю, где можно достать определённые ингредиенты, так что мне подойдёт и что-нибудь искусственное. Всё просто. Мне нужно [itemname:TeleportationPotion], [itemname:Origins/Greater_Summoning_Potion] и [itemname:TitanPotion]. Сможешь раздобыть это всё для меня и моих гипотетических новых напитков, состоящих из ещё неопробованных мной химикатов?"
+		Start: Отлично. А теперь иди давай, я занята.
+		ReadyToComplete: Ну, не так уж и много времени тебе это заняло.
+		Complete: Прости за грубость с моей стороны, я была не в настроении. Как любит говорить старик: «Я сама благодарность». В общем, у меня есть штуковина, похожая на щит, которую я на днях нашла в Солёном пруду. Я бы отдала тебе её и бесплатно, но давай будем честны: ты единственный, кто поддерживает экономику Террарии в наши дни.
 	}
 
 	Ancient_Brine_Music_Box: {
-		// Name: Get Freaky
-		/* Journal:
+		Name: Сойти с ума
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Origins/Brine_Fiend]
+			Заказчица: [npcname:Origins/Brine_Fiend]
 
 			'{$Inquire}'
 
-			- [qs{0}:Collect <itemname:Origins/Fervor_Potion>]
-			- [qs{1}:Collect <itemname:LovePotion>]
-			- [qs{2}:Collect <itemname:MagicPowerPotion>]
-			- [qs{1}:Give items to <npcname:Origins/Brine_Fiend>]
-			Unlocks: [i:Origins/Ancient_Music_Box_BP_Item]
-			''' */
-		// Inquire: Oh, [player:_]. Man/woman of the hour, I need you to go play fetch for me again. This time around I need a [itemname:Origins/Fervor_Potion], [itemname:LovePotion][ox:,] and [itemname:MagicPowerPotion]. Get those and I think I can conjure up something fun for [npcname:PartyGirl]'s birthday coming up. It'll be a surprise!
-		// Start: Great! She likes surprises, right?
-		// ReadyToComplete: You have the ingredients I need, Terrarian?
-		// Complete: Thank you. I wanted to do something special since she always does so for us. I found an interesting plastic thing in the Brine the other day. Had to tussle with a pack of sea dragons for it, so you better enjoy it.
+			- [qs{0}:Соберите <itemname:Origins/Fervor_Potion>]
+			- [qs{1}:Соберите <itemname:LovePotion>]
+			- [qs{2}:Соберите <itemname:MagicPowerPotion>]
+			- [qs{1}:Передайте зелья Солёному демону]
+			Открывает: [i:Origins/Ancient_Music_Box_BP_Item]
+			'''
+		Inquire: А, [player:_]. Герой дня, мне снова нужно, чтобы ты побыл для меня мальчиком на побегушках. В этот раз мне нужны: [itemname:Origins/Fervor_Potion], [itemname:LovePotion] и [itemname:MagicPowerPotion]. Если сможешь всё это достать, то я смогу сделать кое-что особенное ко дню рождения [npcname:PartyGirl]. Это будет сюрприз!
+		Start: Славно! Она же любит сюрпризы, да?
+		ReadyToComplete: У тебя есть нужные мне ингредиенты, террарианец?
+		Complete: Спасибо. Я хотела сделать ей что-нибудь особенное, как она постоянно делает сюрпризы нам. Недавно я нашла интересную пластиковую вещицу в Солёном пруду. Пришлось побороться за неё с морскими драконами, так что надеюсь, что тебе понравится.
 	}
 }
 
-// Nurse.GivenConfetti: If it's not important please don't bother me. No, you can't even use confetti as a tourniquet. Just keep drinking your potions.
-// DyeTrader.GivenConfetti: Marvelous! I am excited for the party! This confetti will do well for bringing excitement!
-// Golfer.GivenConfetti: A club? Wait what? You said "club". Ohhhh, you meant that kind of club. I guess that explains what the confetti is for.
-// Angler.GivenConfetti: Confetti?! I love confetti! It makes me excited because it always means there's cake and steamed grouper nearby!
+Nurse.GivenConfetti: Если это не что-то важное, то пожалуйста, не беспокой меня. Нет, конфетти нельзя использовать в качестве жгута. Просто продолжай и дальше пить свои зелья.
+DyeTrader.GivenConfetti: Изумительно! Я жду не дождусь вечеринки! Эти конфетти отлично подойдут для создания праздничной атмосферы!
+Golfer.GivenConfetti: Клуб? Погоди, что? Ты упомянул клуб. А-а-а, ты об этом типе клубов. Полагаю, это объясняет нужду в конфетти.
+Angler.GivenConfetti: Конфетти?! Я люблю конфетти! Меня это очень радует, потому что это всегда означает, что где-то поблизости есть торт и приготовленный к столу окунь!
 
 Demolitionist: {
-	// GivenConfetti: Confetti? It'd be an excellent fuze if it wasn't so fragile. Oh, it's for the party. Well, I'll be ready to make it a blast then!
+	GivenConfetti: Конфетти? Из них мог бы выйти превосходный фитиль, если бы они не были такими хрупкими. А, это для вечеринки. Хорошо, тогда я буду неподалёку для того, чтобы задать там по-настоящему взрывное настроение!
 
 	Peat_Moss: {
-		// Name: Re-peat Customer
-		/* Journal:
+		Name: Повторфный покупатель
+		Journal:
 			'''
 			{$Name}
-			Client: [npcname:Demolitionist]
+			Заказчик: [npcname:Demolitionist]
 
 			'{$Inquire}'
 
-			- [qs{0}:Give <npcname:Demolitionist> <itemname:Origins/Peat_Moss_Item> ({1}/{2})]
-			Unlocks:
+			- [qs{0}:Передайте Подрывнику <itemname:Origins/Peat_Moss_Item> ({1}/{2})]
+			Открывает:
 			{3}
-			''' */
-		// Inquire: Hey, you wanna know my favorite pastime? Just goin' to some Jungle pond, rippin' up peat moss and throwin' it around. I loved the stuff since I was a wee-lad, and now I'm feelin' a little nostalgic.
-		// Start: So, why don't you get some for me and I'll offer you some fine explosive stuffs I've been collecting durin' my excavations. Sound like a deal?
-		// GiveMoss: Give {§Mods.Origins.Items.Peat_Moss_Item.DisplayName}
-		// GaveMoss: Oh hoho, it was! How kind of yah! Thank yah.
-		// GaveMossUnlocked: "{$GaveMoss} Don't forget to check out my shop for some new items, now would yah?"
-		// ReadyToComplete: unneeded
-		// Complete: unneeded
+			'''
+		Inquire: Эй, хочешь узнать, чем я люблю заниматься в свободное время? Я люблю пройтись к какому-нибудь озерцу в Джунглях, сорвать торфяной мох и разбрасывать его по округе. Обожал это с самого детства, а теперь меня что-то охватила ностальгия.
+		Start: Так вот, почему бы тебе не принести мне мха, а я, взамен, награжу тебя различными взрывными штуками, которые я собрал во время своих раскопок. Согласен?
+		GiveMoss: Дать {§Mods.Origins.Items.Peat_Moss_Item.DisplayName}
+		GaveMoss: Ох-хо-хо, это было здорово! Как мило с твоей стороны! Спасибо.
+		GaveMossUnlocked: "{$GaveMoss} Не забудь проверить мой магазин на наличие новых предметов, лады?"
+		ReadyToComplete: unneeded
+		Complete: unneeded
 	}
 }
 
-// Tavernkeep.GivenConfetti: Confetti. It'll be nice to have in my bar.
-// WitchDoctor.GivenConfetti: This will be nice to have. Even when not in a party setting, I can still use it for my ornaments. Thank you.
-// Clothier.GivenConfetti: Oh, how vivacious! I'll make good use of it.
-// Mechanic.GivenConfetti: It all comes in the same variety as the wire I have. Maybe you should give it around instead!
-// Pirate.GivenConfetti: Ah! What a surprise! Now I'll be the one ready to give a surprise when it's party time!
-// Truffle.GivenConfetti: This confetti stuff likes to stick to me for some reason. You best keep it. Even if I tried throwing it, it wouldn't get off my hands. Thanks anyway.
-// Wizard.GivenConfetti: Oh, how nifty.
-// Steampunker.GivenConfetti: Great! Now we just need the fog machines and firework cannons!
-// Santa.GivenConfetti: Hoho! Giving gifts is supposed to be my pleasure!
+Tavernkeep.GivenConfetti: Конфетти. Они будут хорошо смотреться в моём баре.
+WitchDoctor.GivenConfetti: Всегда хорошо, когда у тебя есть конфетти. Даже когда в ближайшее время не намечается вечеринки, я могу использовать их для своих орнаментов. Спасибо.
+Clothier.GivenConfetti: Ох, как это по-живому! Я найду им хорошее применение.
+Mechanic.GivenConfetti: Да они почти такие же, как и проводка в моём ассортименте. Может, лучше пойдёшь раздавать её?
+Pirate.GivenConfetti: Агх! Ну и сюрприз! Теперь я смогу всех удивить, когда дело дойдёт до вечеринки!
+Truffle.GivenConfetti: Эти конфетти постоянно прилипают ко мне по какой-то причине. Лучше оставь их себе. Даже если я попытаюсь отлепить их, они прилипнут к моим рукам. Но всё равно спасибо.
+Wizard.GivenConfetti: Ох, как классно.
+Steampunker.GivenConfetti: Супер! Теперь нам нужны ещё дым-машины и пушки с фейерверком!
+Santa.GivenConfetti: Хо-хо! Раздавать подарки — это вообще-то по моей части!
 
 Princess: {
-	// GivenConfetti: Aww~! Confetti! I'll be ready for any party that comes my way thanks to you, my loyal subject!
-	// BrineFiendNearby: "[npcname:Origins/Brine_Fiend]> is so cool and is so good at brewing! It's so fun to hang out with her!"
-	// CubekonTinkerer: "[npcname:Origins/Cubekon_Tinkerer] is so smart and laid-back! I'm grateful we can come to terms despite our differences!"
-	// DefiledEffigyNearby: I'm sad for them, but I couldn't seem to understand what they were all about before they tried infecting me! I'd rather keep my distance as much as my heart aches for them.
+	GivenConfetti: У-у-у~! Конфетти! Теперь я буду готова к любой предстоящей вечеринке, и всё благодаря тебе, мой верный подданый!
+	BrineFiendNearby: "[npcname:Origins/Brine_Fiend]> такая крутая, а ещё она хороша в варке! С ней так весело проводить время!"
+	CubekonTinkerer: "[npcname:Origins/Cubekon_Tinkerer] такой умный и спокойный! Я счастлива, что несмотря на все наши различия, мы всё ещё можем найти общий язык!"
+	DefiledEffigyNearby: Мне жаль их, но я понимаю, с чего бы им пытаться меня заразить! Лучше уж я буду держаться от них настолько далеко, насколько моё сердце обливается болеет за них.
 }
 
-// TravellingMerchant.GivenConfetti: Oh, what is this? I haven't seen this before. This will make a fine addition to my collection.
-// SkeletonMerchant.GivenConfetti: Sorry, but what party will I be throwing all alone down here?
+TravellingMerchant.GivenConfetti: Оу, что это? Я раньше не встречал подобного. Это станет отличным дополнением к моей коллекции.
+SkeletonMerchant.GivenConfetti: Прости конечно, но участником какой вечеринки я буду тут внизу?

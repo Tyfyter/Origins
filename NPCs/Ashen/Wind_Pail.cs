@@ -1,15 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Events;
+using Origins.Items.Armor.Ashen;
+using Origins.Items.Other.Consumables.Food;
+using Origins.LootConditions;
 using System.Numerics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
-using ThoriumMod.Projectiles;
-using static Origins.Core.AdvancedMiscShaderData.Parameter;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.Ashen {
@@ -22,8 +23,8 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void SetDefaults() {
 			NPC.lifeMax = 240;
-			NPC.defense = 22;
-			NPC.damage = 46;
+			NPC.defense = 6;
+			NPC.damage = 54;
 			NPC.width = 40;
 			NPC.height = 184;
 			NPC.value = Item.buyPrice(0, 0, 2);
@@ -35,6 +36,13 @@ namespace Origins.NPCs.Ashen {
 			];
 			NPC.alpha = 255;
 			NPC.setFrameSize = true;
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
+			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 26, amountDroppedMaximum: 52));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Greaves>(), 525));
 		}
 		public override void AI() {
 			const int attack_range = 16 * 15;

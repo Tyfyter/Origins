@@ -6,6 +6,7 @@ using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
@@ -90,6 +91,7 @@ public class Smog_Pod_4_Rocket : ModProjectile {
 		Projectile.Opacity = 0;
 	}
 	public override void AI() {
+		SoundEngine.SoundPlayer.Play(SoundID.Item92.WithPitch(-1.2f).WithPitchVarience(1f).WithVolume(0.2f));
 		Vector2 targetPos = new(Projectile.ai[0], Projectile.ai[1]);
 		if (Projectile.alpha <= 0) {
 			Vector2 targetVelocity = (targetPos - Projectile.Center).Normalized(out _);

@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Events;
+using Origins.Items.Armor.Ashen;
+using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
+using Origins.LootConditions;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -35,6 +38,10 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
+			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 9, amountDroppedMaximum: 17));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Greaves>(), 525));
 		}
 		public override void AI() {
 			const int min_turnaround_time = 30;
