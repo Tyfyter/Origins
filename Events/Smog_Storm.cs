@@ -1,13 +1,10 @@
-﻿using CalamityMod.NPCs.Yharon;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Graphics.Primitives;
 using Origins.Graphics.Unlighting;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
-using Origins.NPCs.Ashen;
-using Origins.NPCs.Defiled;
 using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Ashen;
@@ -146,7 +143,11 @@ namespace Origins.Events {
 			Main.graphics.GraphicsDevice.Textures[0] = lightBufferTexture;
 			Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-			lightMapStamp.Draw(activeLightTileArea, color, true);
+			if (borrowedLightmap) {
+				lightMapStamp.DrawWeirdFancyLighting(activeLightTileArea, color, activeLightMatrix, true);
+			} else {
+				lightMapStamp.Draw(activeLightTileArea, color, activeLightMatrix, true);
+			}
 		}
 		static bool active;
 		static readonly VertexRectangle lightMapStamp = new();
@@ -154,9 +155,10 @@ namespace Origins.Events {
 		static RenderTarget2D lightBufferTarget2;
 		static Texture2D lightBufferTexture;
 		static Rectangle activeLightTileArea;
-		static Vector2 activeLightPosition;
 		static Rectangle workingLightTileArea;
-		static Vector2 workingLightPosition;
+		static Matrix activeLightMatrix;
+		static Matrix workingLightMatrix = Matrix.Identity;
+		static bool borrowedLightmap = false;
 		class SmogEffect : ModSystem, IBroken {
 			static string IBroken.BrokenReason => "TODO: mask EoL";
 			const int resolutionResolution = 5;
@@ -168,13 +170,9 @@ namespace Origins.Events {
 			public override void PostUpdateEverything() {
 				if (!active) return;
 				activeLightTileArea = workingLightTileArea;
-				activeLightPosition = workingLightPosition;
+				activeLightMatrix = workingLightMatrix;
 				Terraria.Graphics.Shaders.ScreenShaderData shader = Filters.Scene["Origins:SmogStorm"].GetShader();
-				//shader.UseImage(LineOfSight.Texture.Value, 1);
 				shader.Shader.Parameters["uTexture"].SetValue(SmogEffect.Texture.Value);
-				//shader.Shader.Parameters["uLightRegion"].SetValue(new Vector4(activeLightTileArea.TopLeft() * 16, activeLightTileArea.Width * 16, activeLightTileArea.Height * 16));
-				//Vector2 zoomCompensation = Main.ScreenSize.ToVector2() * 0.5f * (Vector2.One - Vector2.One / Main.GameViewMatrix.Zoom);
-				//shader.Shader.Parameters["uLightOffset"].SetValue(activeLightPosition + zoomCompensation - new Vector2(Main.offScreenRange, Main.offScreenRange));
 
 				if (lightBufferTarget?.Width != Main.screenWidth || lightBufferTarget.Height != Main.screenHeight) {
 					lightBufferTarget?.Dispose();
@@ -209,17 +207,31 @@ namespace Origins.Events {
 			public override void Load() {
 				Main.QueueMainThreadAction(ReinitializeTexture);
 				On_LightingEngine.Present += On_LightingEngine_Present;
+				if (ModLoader.TryGetMod("FancyLighting", out Mod mod) && mod.Version >= new Version(1, 1)) Origins.TryHookEvent("FancyLighting", "FancyLighting.SmoothLighting", "PostUpdateLightMap", PostUpdateLightMap);
+			}
+			static int skipVanilla = 0;
+			static void PostUpdateLightMap(Texture2D lightMapTexture, Matrix samplingTransformation, Rectangle lightMapArea) {
+				skipVanilla = 2;
+				workingLightTileArea = lightMapArea;
+				workingLightMatrix = samplingTransformation;
+				lightBufferTexture = lightMapTexture;
+				borrowedLightmap = true;
 			}
 			static void On_LightingEngine_Present(On_LightingEngine.orig_Present orig, LightingEngine self) {
 				orig(self);
 				if (self is Anti_LightingEngine.The_Engine) return;
+				if (skipVanilla > 0) {
+					if (--skipVanilla <= 0) workingLightMatrix = Matrix.Identity;
+					return;
+				}
 				workingLightTileArea = LightingMethods._activeProcessedArea.GetValue(self);
 				workingLightTileArea.Width++;
 				workingLightTileArea.Height++;
 
-				if (lightBufferTexture?.Width != workingLightTileArea.Width || lightBufferTexture.Height != workingLightTileArea.Height) {
+				if (borrowedLightmap || lightBufferTexture?.Width != workingLightTileArea.Width || lightBufferTexture.Height != workingLightTileArea.Height) {
 					lightBufferTexture?.Dispose();
 					lightBufferTexture = InitBufferTexture(workingLightTileArea.Width, workingLightTileArea.Height);
+					borrowedLightmap = false;
 				}
 				Vector3[] _colors = LightingMethods._colors.GetValue(LightingMethods._activeLightMap.GetValue(self));
 				if (_colors.All(c => c == default)) return;
@@ -230,7 +242,6 @@ namespace Origins.Events {
 					}
 				}
 				lightBufferTexture.SetData(colors);
-				workingLightPosition = Main.screenPosition;
 			}
 			private static Texture2D InitBufferTexture(int width, int height) {
 				if (!AssetRepository.IsMainThread) {

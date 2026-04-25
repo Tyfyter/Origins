@@ -1,9 +1,6 @@
-﻿using CalamityMod.NPCs.TownNPCs;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Events;
-using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables.Food;
-using Origins.LootConditions;
 using System;
 using Terraria;
 using Terraria.Audio;

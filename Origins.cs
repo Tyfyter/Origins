@@ -7,6 +7,7 @@ global using Rectangle = Microsoft.Xna.Framework.Rectangle;
 global using Vector2 = Microsoft.Xna.Framework.Vector2;
 global using Vector3 = Microsoft.Xna.Framework.Vector3;
 global using Vector4 = Microsoft.Xna.Framework.Vector4;
+global using Matrix = Microsoft.Xna.Framework.Matrix;
 global using AltLib = AltLibrary.AltLibrary;
 global using AutoLoadingTexture = PegasusLib.AutoLoadingAsset<Microsoft.Xna.Framework.Graphics.Texture2D>;
 using AltLibrary;
@@ -61,6 +62,7 @@ using Origins.Liquids;
 using Origins.Dev;
 using System.Threading.Tasks;
 using Origins.Tiles.Ashen;
+using MonoMod.Utils;
 
 namespace Origins {
 	public sealed partial class Origins : Mod {
@@ -996,6 +998,7 @@ namespace Origins {
 		public static bool LogLoadingILError(string methodName, Exception exception, params (Type exceptionType, string modName, Version modVersion)[] expect) {
 			return LogLoadingError("ILEditException", methodName, exception, expect);
 		}
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "Not unnecessary")]
 		public static bool LogLoadingError(string key, string methodName, Exception exception, params (Type exceptionType, string modName, Version modVersion)[] expect) {
 #if DEBUG
 			for (int i = 0; i < expect.Length; i++) {
@@ -1008,6 +1011,12 @@ namespace Origins {
 			Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings." + key).WithFormatArgs(methodName));
 #pragma warning restore CS0164 // This label has not been referenced
 			return false;
+		}
+		public static void TryHookEvent(string modName, string className, string eventName, Delegate hook) {
+			if (!ModLoader.TryGetMod(modName, out Mod mod)) return;
+			Type type = mod.Code.GetType(className, true);
+			EventInfo @event = type.GetEvent(eventName) ?? throw new KeyNotFoundException($"Could not find event {eventName} in type {type}");
+			@event.AddEventHandler(null, hook.CastDelegate(@event.EventHandlerType));
 		}
 		// for DevHelper
 		static string DevHelpBrokenReason {

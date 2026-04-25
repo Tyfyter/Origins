@@ -109,7 +109,19 @@ namespace Origins.Backgrounds {
 				}
 			}
 			spriteBatch.Restart(state);
-			SkyColor.Activate(sky ??= BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background_Sky"));
+			if (!sky.HasValue) {
+				sky = BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Ashen_Background_Sky");
+				SkyColor.AddFancyColors(sky.Value, new SkyColor.InterpolatedFancySkyColors(
+					new(new(0, 24)) {
+						new(12, new Color(90, 40, 14)),
+						new(0, new Color(23, 11, 4))
+					}, new(new(0, 24)) {
+						new(12, new Color(144, 51, 8)),
+						new(0, new Color(45, 18, 5))
+					}
+				));
+			}
+			SkyColor.Activate(sky.Value);
 		}
 		public override void Reset() { }
 		public override Color OnTileColor(Color inColor) => Color.Lerp(inColor, inColor.MultiplyRGB(new(112, 50, 18)), Opacity);

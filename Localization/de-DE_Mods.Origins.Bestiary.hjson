@@ -128,6 +128,6 @@ Chambersite_Squirrel: "{$Bestiary_FlavorText.npc_GemSquirrelAmethyst}"
 // Oil_Ghoul: Ghouls polluted by the Ashen leak oil from their mouths, making foes susceptible to fire.
 // Springjumper: Bunnies are normally not this metallic or large, but during Blood Moon the Ashen likes to stuff living bunnies into these mechanized suits for some unknown purpose.
 // Wind_Pail: The wind pails are not a normal construct you'd casually find in the Ashen Scrapyard as they were not built by any man. It is believed that they are the many soldiers who lost their lives in the Great War haunting their graves.
-// Cartwheeler_Large: <PH> bestiary text here
-// Cartwheeler_Medium: <PH> bestiary text here
-// Cartwheeler_Small: <PH> bestiary text here
+// Cartwheeler_Large: A worthy investment into guided projectile technology, but it failed. These cartwheelers use the boost of the wind to dot<SIC> around.
+// Cartwheeler_Medium: "{$Cartwheeler_Large}"
+// Cartwheeler_Small: "{$Cartwheeler_Large}"
