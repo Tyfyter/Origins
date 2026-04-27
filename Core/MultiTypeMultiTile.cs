@@ -20,6 +20,11 @@ namespace Origins.Core {
 		/// Return false to prevent the tile being broken
 		/// </summary>
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => true;
+		/// <summary>
+		/// Controls which part of a multitile handles things which should only happen for one tile in the multitile
+		/// Defaults to <see cref="TileObjectData.IsTopLeft"/>
+		/// </summary>
+		public bool IsMainTile(int i, int j) => TileObjectData.IsTopLeft(i, j);
 	}
 	public class MultiTypeMultiTile : ILoadable {
 		public delegate bool ShouldPlacePartCheck(int i, int j, int style);
@@ -103,7 +108,9 @@ namespace Origins.Core {
 		public readonly struct ShapeMap {
 			private readonly Dictionary<char, ushort?> key;
 			private readonly ShapeMapTile[,,] shape;
-			public readonly ShapeMapTile this[int i, int j, int style] => shape[style, i, j];
+			public readonly ShapeMapTile this[int i, int j, int style] => shape.IndexInRange(style, i, j) ? shape[style, i, j] : ' ';
+			public readonly ushort? GetType(int i, int j, int style) => GetType(this[style, i, j]);
+			public readonly ushort? GetType(ShapeMapTile tile) => key[tile.Value];
 			public ShapeMap(Dictionary<char, ushort?> key, ShapeMapTile[,,] shape) {
 				if (key.ContainsValue(0)) return;
 				this.shape = shape;
@@ -291,7 +298,11 @@ namespace Origins.Core {
 				}
 			});
 		}
-
+		public static bool IsMainTile(int i, int j) {
+			Tile tile = Main.tile[i, j];
+			if (!tile.HasTile) return false;
+			return TileLoader.GetTile(tile.TileType) is IMultiTypeMultiTile multiTile ? multiTile.IsMainTile(i, j) : TileObjectData.IsTopLeft(i, j);
+		}
 		static void IL_TileLoader_CheckModTile(ILContext il) {
 			ILCursor c = new(il);
 			ILLabel label = default;

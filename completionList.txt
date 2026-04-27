@@ -261,7 +261,7 @@ ENEMY NPCS:
 (X) Spiteful Flesh
 (^) Springjumper
 (X) Tubefish
-(#2, $2, ^2) Wind Pail !!! (just needs SFX when attacking you)
+(#2, $2, ^2) Wind Pail !!! (just needs SFX [special effects or sound effects? {Odio las siglas}] when attacking you)
 
 (^) Airsnatcher
 (^) Amoebeye
@@ -1456,7 +1456,7 @@ TILES:
 (^) Hanging Scrap
 (^) Heat Vent
 (^) Hydrothermal Vent
-(#2, ^2) Incomplete Standing Refinery !!! (needs pulsing glows and Repairboys building it)
+(☻) Incomplete Standing Refinery !!!
 (#3, ^2) Industrial Work Bench
 (^) Lathe
 (^) Limestone Rubble

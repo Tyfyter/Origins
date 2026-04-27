@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Dusts;
 using Origins.Items.Armor.Ashen;
 using Origins.Items.Materials;
@@ -143,9 +144,11 @@ namespace Origins.NPCs.Ashen {
 			for (int j = low.Y; j < high.Y; j++) {
 				for (int i = low.X; i < high.X; i++) {
 					Tile tile = Main.tile[i, j];
-					if (!tile.HasTile || TileLoader.GetTile(tile.TileType) is not IReparableTile reparableTile || TileObjectData.GetTileData(tile) is not TileObjectData data) continue;
+					if (!tile.HasTile) continue;
+					if (TileLoader.GetTile(tile.TileType) is not IReparableTile reparableTile) continue;
+					if (!MultiTypeMultiTile.IsMainTile(i, j)) continue;
+					if (TileObjectData.GetTileData(tile) is not TileObjectData data) continue;
 					TileUtils.GetMultiTileTopLeft(i, j, data, out hitbox.X, out hitbox.Y);
-					if (i != hitbox.X || j != hitbox.Y) continue;
 					if (repairboysTargeting.Count(new(i, j), npc => !npc.active) >= reparableTile.RepairboyLimit) continue;
 					hitbox.X *= 16;
 					hitbox.Y *= 16;

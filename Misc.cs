@@ -2440,6 +2440,14 @@ namespace Origins {
 				&& i < array.GetLength(0)
 				&& j < array.GetLength(1);
 		}
+		public static bool IndexInRange<T>(this T[,,] array, int i, int j, int k) {
+			return i >= 0
+				&& j >= 0
+				&& k >= 0
+				&& i < array.GetLength(0)
+				&& j < array.GetLength(1)
+				&& k < array.GetLength(2);
+		}
 		public static T GetIfInRange<T>(this List<T> array, int index, T fallback = default) {
 			if (!array.IndexInRange(index)) return fallback;
 			return array[index];

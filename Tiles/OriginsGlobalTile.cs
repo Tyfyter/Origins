@@ -195,7 +195,7 @@ namespace Origins.Tiles {
 		}
 		public override void NearbyEffects(int i, int j, int type, bool closer) {
 			if (!closer) {
-				if (TileObjectData.IsTopLeft(i, j)) {
+				if (MultiTypeMultiTile.IsMainTile(i, j)) {
 					if (TileLoader.GetTile(type) is IReparableTile reparableTile) {
 						float cost = default;
 						Rectangle hitbox = default;

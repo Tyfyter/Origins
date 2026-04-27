@@ -1,7 +1,11 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Humanizer;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
+using Origins.Graphics;
+using Origins.NPCs.Ashen;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,11 +13,13 @@ using Terraria.ObjectData;
 using static Origins.Core.MultiTypeMultiTile;
 
 namespace Origins.Tiles.Ashen {
-	public class Incomplete_Standing_Refinery : OriginTile, IMultiTypeMultiTile {
+	public class Incomplete_Standing_Refinery : OriginTile, IMultiTypeMultiTile, Repairboy.IReparableTile, IGlowingModTile {
 		public static int ID { get; private set; }
+		public Color GlowColor => Color.White;
 		public static ShapeMap Shape => field = field || new ShapeMap(
 			new() {
 				['X'] = (ushort)ModContent.TileType<Incomplete_Standing_Refinery>(),
+				['S'] = (ushort)ModContent.TileType<Incomplete_Standing_Refinery>(),
 				['+'] = (ushort)ModContent.TileType<Truss_Block>()
 			},
 			" + XX+XX XXX     |     XXX XX+XX + ",
@@ -21,8 +27,8 @@ namespace Origins.Tiles.Ashen {
 			" +  X+XXX+XX     |     XX+XXX+X  + ",
 			"+++++++++++++X   |   X+++++++++++++",
 			" +   +XXX+XXXXXX | XXXXXX+XXX+   + ",
-			" +XXX+XXX+XXXXXXX|XXXXXXX+XXX+XXX+ ",
-			" +XXX+XXX+XXX+XXX|XXX+XXX+XXX+XXX+ ",
+			" +SXX+XXX+XXXXXXX|XXXXXXX+XXX+XXS+ ",
+			" +SXX+XXX+XXX+XXX|XXX+XXX+XXX+XXS+ ",
 			" + XX+XXX+XXX+XX | XX+XXX+XXX+XX + ",
 			"+++++++++++++++  |  +++++++++++++++",
 			" +XXX+XXX+XXXX   |   XXXX+XXX+XXX+ ",
@@ -34,9 +40,9 @@ namespace Origins.Tiles.Ashen {
 			"  XXXXXXXXXXXXX  |  XXXXXXXXXXXXX  ",
 			"   XXXXXXXXXXXX  |  XXXXXXXXXXXX   ",
 			"   XXXXXXXXXXXX  |  XXXXXXXXXXXX   ",
-			"   XXXXXXXXXXXX  |  XXXXXXXXXXXX   ",
-			"   XXXXXXXXXXXX  |  XXXXXXXXXXXX   ",
-			"   XXXXXXXXXXXX  |  XXXXXXXXXXXX   ",
+			"X XXXXXXXXXXXXX  |  XXXXXXXXXXXXX X",
+			"XXXXXXXXXXXXXXX  |  XXXXXXXXXXXXXXX",
+			"XXXXXXXXXXXXXXX  |  XXXXXXXXXXXXXXX",
 			"   XXXXXXXXXXXX  |  XXXXXXXXXXXX   ",
 			"   XXXXXXXXXXXX  |  XXXXXXXXXXXX   ",
 			"   XXXXXXXXXXXX  |  XXXXXXXXXXXX   ",
@@ -46,7 +52,55 @@ namespace Origins.Tiles.Ashen {
 			"XXXXXXXXXXXXXXX  |  XXXXXXXXXXXXXXX",
 			"XXXXXXXXXXXXXXXXX|XXXXXXXXXXXXXXXXX"
 		);
-		public override void Load() => new TileItem(this, true).RegisterItem();
+		public static ShapeMap GlowShape => field = field || new ShapeMap(
+			new() {
+				['1'] = 1
+			},
+			"         11      |      11         ",
+			"                 |                 ",
+			"                 |                 ",
+			"                 |                 ",
+			"                 |                 ",
+			"      11   11    |    11   11      ",
+			"                 |                 ",
+			"                 |                 ",
+			"                 |                 ",
+			"                 |                 ",
+			"                 |                 ",
+			"                 |                 ",
+			"                 |                 ",
+			"                 |                 ",
+			"                 |                 ",
+			"                 |                 ",
+			"      11         |         11      ",
+			"           1111  |  1111           ",
+			"                 |                 ",
+			"                 |                 ",
+			"    11           |           11    ",
+			"       1         |         1       ",
+			"      11         |         11      ",
+			"      11         |         11      ",
+			"       1         |         1       ",
+			"           1111  |  1111           ",
+			"                 |                 ",
+			"                 |                 ",
+			"                 |                 "
+		);
+		public override void Load() {
+			new TileItem(this, true).RegisterItem();
+			this.SetupGlowKeys();
+		}
+		void IGlowingModTile.FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			Point16 pos = new(tile.GetTilePosition());
+			int style = 0;
+			int style2 = 0;
+			TileObjectData.GetTileInfo(tile, ref style, ref style2);
+			style = style * TileObjectData.GetTileData(tile).StyleMultiplier + style2;
+			pos -= TileObjectData.TopLeft(pos);
+
+			if (!GlowShape[pos.X, pos.Y, style]) return;
+			color.DoFancyGlow(GlowColor.ToVector3() * new Vector3(1, 0.32f, 0), tile.TileColor);
+		}
 		public override void SetStaticDefaults() {
 			// Properties
 			TileID.Sets.CanBeSloped[Type] = false;
@@ -75,12 +129,38 @@ namespace Origins.Tiles.Ashen {
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
 		}
-		public bool IsValidTile(Tile tile, int left, int top, int style) => Shape.Matches(tile, left, top, style);
+		public bool IsValidTile(Tile tile, int left, int top, int style) {
+			if (Shape.Matches(tile, left, top, style)) return true;
+			(int x, int y) = tile.GetTilePosition();
+			x -= left;
+			y -= top;
+			return Shape[x, y, style] == '+'
+				&& Shape[x + 1, y, style] != 'X'
+				&& Shape[x - 1, y, style] != 'X'
+				&& Shape[x, y + 1, style] != 'X'
+				&& Shape[x, y - 1, style] != 'X';
+		}
+
 		public bool ShouldBlockPlacement(Tile tile, int left, int top, int style) {
 			Point pos = tile.GetTilePosition();
 			if (!Shape[pos.X - left, pos.Y - top, style]) return false;
 			return MultiTypeMultiTile.NormallyBlocksPlacement(tile);
 		}
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => Shape[x - left, y - top, style];
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) => this.DrawTileGlow(i, j, spriteBatch);
+		int Repairboy.IReparableTile.RepairboyLimit => 7;
+		bool Repairboy.IReparableTile.NeedsRepair(int i, int j, ref float cost, ref Rectangle hitbox) => true;
+		void Repairboy.IReparableTile.Repair(int i, int j) { }
+		public bool IsMainTile(int i, int j) {
+			Tile tile = Main.tile[i, j];
+			if (!tile.HasTile) return false;
+			TileObjectData tileData = TileObjectData.GetTileData(tile);
+			if (tileData == null) return false;
+			int partFrameX = tile.TileFrameX % tileData.CoordinateFullWidth;
+			int partFrameY = tile.TileFrameY % tileData.CoordinateFullHeight;
+			return partFrameX == 18 * 8 && partFrameY == 18 * 9;
+		}
+		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 	}
 }
