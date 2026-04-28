@@ -1394,10 +1394,10 @@ TILES:
 (^) Liquid Sensor (Amebic Gel)
 (^) Liquid Sensor (Brine)
 (^) Liquid Sensor (Oil)
-(#2, ^2) Logic Component (AND) !!!
-(#2, ^2) Logic Component (OR) !!!
-(#2, ^2) Logic Component (XOR) !!!
-(#2, ^2) Logic Component (NIMPLY) !!!
+(☻) Logic Component (AND) !!!
+(☻) Logic Component (OR) !!!
+(☻) Logic Component (XOR) !!!
+(☻) Logic Component (NIMPLY) !!!
 (^) Mechanical Key Node
 (^) Medium Storage Container
 (^) Modular Bunk
