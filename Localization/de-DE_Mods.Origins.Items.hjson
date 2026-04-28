@@ -8341,3 +8341,8 @@ Chalky_Broth: {
 		Artifact minions emit shrapnel when hurt or killed
 		''' */
 }
+
+Classified_Blueprint: {
+	// DisplayName: Classified Blueprint
+	// RecipeCondition: After reading the {$DisplayName}
+}

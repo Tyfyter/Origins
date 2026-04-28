@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
@@ -185,6 +186,7 @@ namespace Origins.Tiles.Ashen {
 			.AddIngredient<Biocomponent10>(15)
 			.AddIngredient<Scrap>(45)
 			.AddTile<Metal_Presser>()
+			.AddCondition(Classified_Blueprint.Condition)
 			.Register();
 		}
 	}
@@ -205,6 +207,7 @@ namespace Origins.Tiles.Ashen {
 				.AddIngredient<Biocomponent10>(3)
 				.AddIngredient<Scrap>(8)
 				.AddTile<Metal_Presser>()
+				.AddCondition(Classified_Blueprint.Condition)
 				.Register();
 			}).RegisterItem();
 		}

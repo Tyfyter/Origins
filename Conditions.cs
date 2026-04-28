@@ -1,10 +1,7 @@
-﻿using Origins.World.BiomeData;
+﻿using Origins.Journal;
+using Origins.World.BiomeData;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -15,6 +12,13 @@ namespace Origins {
 	public class RecipeConditions : ILoadable {
 		public static Condition ShimmerTransmutation { get; private set; } = new Condition(Language.GetOrRegister("Mods.Origins.Conditions.ShimmerTransmutation"), () => false);
 		public static Condition RivenWater { get; private set; } = new Condition(Language.GetOrRegister("Mods.Origins.Conditions.RivenWater"), () => Main.LocalPlayer.adjWater && Main.LocalPlayer.InModBiome<Riven_Hive>());
+		public static Condition WithJournalEntry<TProvider>(string textKey = "Mods.Origins.Conditions.WithJournalEntry") where TProvider : class, IJournalEntrySource, ILoadable {
+			return WithJournalEntry(ModContent.GetInstance<TProvider>().EntryName, textKey);
+		}
+		public static Condition WithJournalEntry(string entryName, string textKey = "Mods.Origins.Conditions.WithJournalEntry") {
+			if (!Journal_Registry.Entries.TryGetValue(entryName, out JournalEntry entry)) throw new ArgumentException($"Entry name must be the full internal name of a journal entry, {entryName} is not", nameof(entryName));
+			return new(Language.GetOrRegister(textKey).WithFormatArgs(entry.DisplayName), () => Main.LocalPlayer.OriginPlayer().unlockedJournalEntries.Contains(entry.FullName));
+		}
 		public void Load(Mod mod) { }
 		public void Unload() {
 			foreach (FieldInfo item in GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {

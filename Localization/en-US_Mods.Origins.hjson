@@ -38,6 +38,7 @@ Conditions: {
 	WithScavengerSet: Drop rate increased by Scavenger Armor
 	NoDefiledHearts: No Defiled Hearts are left in the world
 	SolarEclipseOccurred: After surviving a solar eclipse
+	WithJournalEntry: After transcribing "{0}"
 }
 
 ModMenu: {
