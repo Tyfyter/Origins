@@ -803,6 +803,9 @@ namespace Origins {
 				modifiers.FinalDamage *= 0.5f;
 			}
 		}
+		struct ImproveManaShielding : IBroken {
+			static string IBroken.BrokenReason => "Replace mana shielding impl w/ Origins.Core.Mana_Shielding";
+		}
 		public static bool CalculateManaShielding(Player player, double damage) {
 			float manaShielding = player.OriginPlayer().manaShielding;
 			if (manaShielding > 0) {
