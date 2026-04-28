@@ -757,6 +757,39 @@ namespace Origins {
 				orig(player, ref zoom);
 				if (Main.mouseRight) player?.OriginPlayer()?.SetUsingScope();
 			});
+			IL_Player.Hurt_HurtInfo_bool += IL_Player_Hurt_HurtInfo_bool;
+		}
+		static void IL_Player_Hurt_HurtInfo_bool(ILContext il) {
+			ILCursor c = new(il);
+			int damage = -1;
+			c.GotoNext(MoveType.After,
+				static i => i.MatchLdarga(1),
+				static i => i.MatchCall<Player.HurtInfo>("get_" + nameof(Player.HurtInfo.Damage)),
+				static i => i.MatchConvR8(),
+				i => i.MatchStloc(out damage)
+			);
+			c.GotoNext(MoveType.After,
+				i => i.MatchCall<CombatText>(nameof(CombatText.NewText)),
+				i => i.MatchPop()
+			);
+			ILLabel label = c.MarkLabel();
+			c.Index--;
+			MonoFuckery.SkipPrevArgument(c);
+			c.EmitLdarg0();
+			c.EmitLdloc(damage);
+			c.EmitCall(((Delegate)OriginPlayer.CalculateManaShielding).Method);
+			c.EmitBrfalse(label);
+
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdloc(out _),
+				i => i.MatchLdloc(damage)
+			);
+			c.EmitCall(((Delegate)OriginPlayer.ApplyManaShielding).Method);
+			c.GotoNext(MoveType.After,
+				static i => i.MatchLdfld<Player>(nameof(Player.statLife)),
+				i => i.MatchLdloc(damage)
+			);
+			c.EmitCall(((Delegate)OriginPlayer.ApplyManaShielding).Method);
 		}
 		public delegate void orig_ModifyZoom(Player player, ref float zoom);
 		public delegate void hook_ModifyZoom(orig_ModifyZoom orig, Player player, ref float zoom);

@@ -641,7 +641,7 @@ namespace Origins {
 		public List<Vector2> oldVelocities = [];
 		public Guid guid = Guid.Empty;
 		public Item voodooDoll = null;
-		public float manaShielding = 0f;
+		[AutoReset] public float manaShielding = 0f;
 		public int doubleTapDownTimer = 0;
 		public bool doubleTapDown = false;
 		public bool forceDrown = false;
@@ -1171,8 +1171,6 @@ namespace Origins {
 			if (blastFurnaceCharges > 0 && Player.HeldItem.ModItem is not Blast_Furnace) blastFurnaceCharges = 0;
 			hasThePlant = false;
 			autohandcannonJammed = false;
-
-			manaShielding = 0f;
 
 			foreach (AssimilationInfo info in IterateAssimilation()) {
 				info.ResetEffects();

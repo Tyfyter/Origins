@@ -23,6 +23,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -709,12 +710,6 @@ namespace Origins {
 			}
 		}
 		public override bool FreeDodge(Player.HurtInfo info) {
-			if (allManaDamage) {
-				Player.CheckMana(manaDamageToTake, true);
-				Player.AddBuff(ModContent.BuffType<Mana_Buffer_Debuff>(), 192);
-				PlayerLoader.PostHurt(Player, info);
-				return true;
-			}
 			if (Player.whoAmI == Main.myPlayer && !(protomindItem?.IsAir ?? true)) {
 				for (int i = 0; i < 200; i++) {
 					if (!Main.npc[i].active || Main.npc[i].friendly) {
@@ -784,39 +779,12 @@ namespace Origins {
 			}
 			return false;
 		}
-		bool allManaDamage = false;
-		int manaDamageToTake = 0;
 		public override void ModifyHurt(ref Player.HurtModifiers modifiers) {
 			if (fullSend && modifiers.DamageSource.SourceOtherIndex == OtherDeathReasonID.Fall) {
 				modifiers.FinalDamage *= 0.14f - fullSendHorseshoeBonus.Mul(0.07f);
 			}
 			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(Player.HasBuff(Toxic_Shock_Strengthen_Debuff.ID) ? 6 : 12) < 3) {
 				modifiers.FinalDamage *= 1.5f;
-			}
-			allManaDamage = false;
-			manaDamageToTake = 0;
-			if (manaShielding > 0) {
-				if (manaShielding > 1) manaShielding = 1;
-				modifiers.ModifyHurtInfo += (ref Player.HurtInfo info) => {
-					float manaDamage = info.Damage;
-					float costMult = 3;
-					float costMult3 = (float)Math.Pow(manaShielding, Player.manaCost);
-					if (Player.magicCuffs) {
-						costMult = 1;
-						Player.magicCuffs = false;
-					}
-					if (Player.statMana < manaDamage * costMult * manaShielding) {
-						manaDamage = Player.statMana / (costMult * manaShielding);
-					}
-					if (manaDamage * costMult * manaShielding >= 1f) {
-						Player.ManaEffect((int)-(manaDamage * costMult * manaShielding));
-					}
-					int damage = (int)(info.Damage - (manaDamage * costMult3));
-					if (damage <= 0) allManaDamage = true;
-					info.Damage = damage;
-					info.Dodgeable = true;
-					manaDamageToTake = (int)Math.Floor(manaDamage * costMult * manaShielding);
-				};
 			}
 			if (refactoringPieces) {
 				modifiers.SourceDamage *= 0.9f;
@@ -835,6 +803,31 @@ namespace Origins {
 				modifiers.FinalDamage *= 0.5f;
 			}
 		}
+		public static bool CalculateManaShielding(Player player, double damage) {
+			float manaShielding = player.OriginPlayer().manaShielding;
+			if (manaShielding > 0) {
+				if (manaShielding > 1) manaShielding = 1;
+				double manaDamage = damage;
+				float costMult = 3;
+				float costMult3 = (float)Math.Pow(manaShielding, player.manaCost);
+				if (player.magicCuffs) {
+					costMult = 1;
+					player.magicCuffs = false;
+				}
+				if (player.statMana < manaDamage * costMult * manaShielding) {
+					manaDamage = player.statMana / (costMult * manaShielding);
+				}
+				int finalManaDamage = (int)Math.Floor(manaDamage * costMult * manaShielding);
+				if (finalManaDamage >= 1f) DoCustomCombatText(player.Hitbox, new Color(160, 71, 202), finalManaDamage);
+				damage -= manaDamage * costMult3;
+				player.CheckMana(finalManaDamage, true);
+				player.AddBuff(ModContent.BuffType<Mana_Buffer_Debuff>(), 192);
+			}
+			manaShieldedDamage = damage;
+			return damage > 0;
+		}
+		static double manaShieldedDamage;
+		public static double ApplyManaShielding(double damage) => manaShieldedDamage;
 		public override void OnHurt(Player.HurtInfo info) {
 			if (crystalHeart) crystalHeartCounter += info.Damage;
 		}
@@ -844,10 +837,6 @@ namespace Origins {
 			pacemakerTime = 0;
 			if (extremophileSet) extremophileSetHits++;
 			extremophileSetTime = 0;
-			if (manaDamageToTake > 0) {
-				Player.CheckMana(manaDamageToTake, true);
-				Player.AddBuff(ModContent.BuffType<Mana_Buffer_Debuff>(), 50);
-			}
 			bool isSelfDamage = false;
 			if (info.DamageSource.SourcePlayerIndex == Player.whoAmI) {
 				isSelfDamage = true;
