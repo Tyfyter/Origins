@@ -310,7 +310,7 @@ ENEMY NPCS:
 (X) Tendon Terror
 (X) Terrogator
 (^) Torn Ghoul
-(#2, ^2) Trash Compactor Mimic !!!
+(☻) Trash Compactor Mimic !!!
 (^) Trijaw Shark
 (#, ^2) VV-13 !!!
 

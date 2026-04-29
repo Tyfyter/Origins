@@ -9,14 +9,13 @@ namespace Origins.NPCs {
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		public virtual Color GetGlowColor(Color drawColor) => Color.White;
 		//public virtual bool DrawOverTiles => false;
-		private Asset<Texture2D> _glowTexture;
-		private Asset<Texture2D> glowTexture {
+		private Asset<Texture2D> _GlowTexture {
 			get {
-				if (_glowTexture is null && !ModContent.RequestIfExists(GlowTexturePath, out _glowTexture)) _glowTexture = Asset<Texture2D>.Empty;
-				return _glowTexture;
+				if (field is null && !ModContent.RequestIfExists(GlowTexturePath, out field)) field = Asset<Texture2D>.Empty;
+				return field;
 			}
 		}
-		public virtual Texture2D GlowTexture => glowTexture.Value;
+		public virtual Texture2D GlowTexture => _GlowTexture.Value;
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			DrawGlow(spriteBatch, screenPos, GlowTexture, NPC, GetGlowColor(drawColor));
 		}

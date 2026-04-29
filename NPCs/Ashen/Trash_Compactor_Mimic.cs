@@ -14,8 +14,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Ashen {
-	public class Trash_Compactor_Mimic : ModNPC, IAshenEnemy, IWikiNPC, ICustomWikiStat {
-		public override string Texture => typeof(Defiled_Mimic).GetDefaultTMLName();
+	public class Trash_Compactor_Mimic : Glowing_Mod_NPC, IAshenEnemy, IWikiNPC, ICustomWikiStat {
 		public Rectangle DrawRect => new(0, 0, 60, 50);
 		public int AnimationFrames => 1;
 		public int FrameDuration => 1;
@@ -48,19 +47,17 @@ namespace Origins.NPCs.Ashen {
 				this.GetBestiaryFlavorText()
 			);
 		}
-		public bool ForceSyncMana => false;
-		public float Mana { get; set; }
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.OneFromOptions(1,
-				ModContent.ItemType<Pacemaker>(),
+				//ModContent.ItemType<Melee_Weapon>(),
 				ModContent.ItemType<Laser_Target_Locator>(),
 				ModContent.ItemType<AMRSL_Skewer>(),
-				//ModContent.ItemType<Ravel>(),
+				ModContent.ItemType<Pacemaker>(),
 				ModContent.ItemType<Adjusto_Hook>()
 			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
-			npcLoot.Add(ScavengerBonus.RAM());
+			npcLoot.Add(ScavengerBonus.RAM(5, 15, amountDroppedMaximum: 2));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
