@@ -69,6 +69,11 @@ namespace Origins.Tiles.Riven {
 			}
 			return false;
 		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (Main.tile[i, j].Slope != SlopeType.Solid) return true;
+			DrawVertexLit(i, j);
+			return false;
+		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
 			base.PostDraw(i, j, spriteBatch);
