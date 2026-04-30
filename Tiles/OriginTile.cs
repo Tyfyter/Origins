@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
-using Origins.Tiles.Ashen;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -82,6 +81,149 @@ namespace Origins.Tiles {
 			yield break;
 		}
 		public new virtual void SetStaticDefaults() { }
+		public static void DrawVertexLit(int i, int j) {
+			Tile tileCache = Main.tile[i, j];
+			ushort typeCache = tileCache.TileType;
+			bool IsSameHalfBlock(Tile tile) => tile.HasTile && tile.IsHalfBlock && tile.TileType == typeCache;
+			bool IsSameBottom(Tile tile) => tile.HasTile && tile.TileType == typeCache && !tile.BottomSlope;
+			short tileFrameX = tileCache.TileFrameX;
+			short tileFrameY = tileCache.TileFrameY;
+			int tileTop = 0;
+			int tileWidth = 16;
+			int tileHeight = 16;
+			int addFrY = Main.tileFrame[typeCache] * 38;
+			int addFrX = 0;
+			SpriteEffects tileSpriteEffect = SpriteEffects.None;
+			TileLoader.SetSpriteEffects(i, j, typeCache, ref tileSpriteEffect);
+			TileLoader.SetDrawPositions(i, j, ref tileWidth, ref tileTop, ref tileHeight, ref tileFrameX, ref tileFrameY);
+			TileLoader.SetAnimationFrame(typeCache, i, j, ref addFrX, ref addFrY);
+			if (tileCache.BlockType == BlockType.Solid && !TileID.Sets.Platforms[typeCache] && !TileID.Sets.IgnoresNearbyHalfbricksWhenDrawn[typeCache] && Main.tileSolid[typeCache] && !TileID.Sets.NotReallySolid[typeCache]) {
+				bool left = IsSameHalfBlock(Main.tile[i - 1, j]);
+				bool right = IsSameHalfBlock(Main.tile[i + 1, j]);
+				if (left || right) {
+					Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
+					if (!Main.drawToScreen) {
+						pos.X += Main.offScreenRange;
+						pos.Y += Main.offScreenRange;
+					}
+					Texture2D texture = Main.instance.TilesRenderer.GetTileDrawTexture(tileCache, i, j);
+					Lighting.GetCornerColors(i, j, out VertexColors vertices);
+					BlockType blockType = tileCache.BlockType;
+					DrawVertexLit(blockType, texture, new(IsSameBottom(Main.tile[i, j - 1]) ? 90 : 126 + addFrX, addFrY, tileWidth, 8), new(pos, tileWidth, 8), vertices);
+					pos.Y += 8;
+					tileFrameY += 8;
+					DrawVertexLit(blockType, texture, new(tileFrameX + addFrX, tileFrameY + addFrY, tileWidth, 8), new(pos, tileWidth, 8), vertices);
+					return;
+				}
+			}
+			DrawVertexLit(i, j, Main.instance.TilesRenderer.GetTileDrawTexture(tileCache, i, j), new(tileFrameX + addFrX, tileFrameY + addFrY, tileWidth, tileHeight), tileWidth, tileHeight);
+		}
+		public static void DrawVertexLit(int i, int j, Texture2D texture, Rectangle frame, float width = 16, float height = 16) {
+			Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
+			if (!Main.drawToScreen) {
+				pos.X += Main.offScreenRange;
+				pos.Y += Main.offScreenRange;
+			}
+			Lighting.GetCornerColors(i, j, out VertexColors vertices);
+			DrawVertexLit(Main.tile[i, j].BlockType, texture, frame, new(pos, width, height), vertices);
+		}
+		public static void DrawVertexLit(BlockType blockType, Texture2D texture, Rectangle frame, Vector4 destination, VertexColors vertices) {
+			switch (blockType) {
+				case BlockType.Solid:
+				Main.tileBatch.Draw(
+					texture,
+					destination,
+					frame,
+					vertices
+				);
+				break;
+				case BlockType.HalfBlock:
+				frame.Height -= 12;
+				destination.Y += 8;
+				destination.W -= 12;
+				Main.tileBatch.Draw(
+					texture,
+					destination,
+					frame,
+					vertices
+				);
+				frame.Y += 8;
+				destination.Y += 4;
+				Main.tileBatch.Draw(
+					texture,
+					destination,
+					frame,
+					vertices
+				);
+				break;
+				case BlockType.SlopeDownLeft:
+				DrawSlope(false, true);
+				break;
+				case BlockType.SlopeDownRight:
+				DrawSlope(true, true);
+				break;
+				case BlockType.SlopeUpLeft:
+				DrawSlope(false, false);
+				break;
+				case BlockType.SlopeUpRight:
+				DrawSlope(true, false);
+				break;
+			}
+			void Cull(int left = 0, int right = 0, int top = 0, int bottom = 0) {
+				destination.X += left;
+				destination.Z -= left;
+				frame.X += left;
+				frame.Width -= left;
+
+				destination.Z -= right;
+				frame.Width -= right;
+
+				destination.Y += top;
+				destination.W -= top;
+				frame.Y += top;
+				frame.Height -= top;
+
+				destination.W -= bottom;
+				frame.Height -= bottom;
+
+				(vertices.TopLeftColor, vertices.TopRightColor, vertices.BottomLeftColor, vertices.BottomRightColor) = (
+					Color.Lerp(vertices.TopLeftColor, vertices.TopRightColor, left / 16f),
+					Color.Lerp(vertices.TopRightColor, vertices.TopLeftColor, right / 16f),
+					Color.Lerp(vertices.BottomLeftColor, vertices.BottomRightColor, left / 16f),
+					Color.Lerp(vertices.BottomRightColor, vertices.BottomLeftColor, right / 16f)
+				);
+
+				(vertices.TopLeftColor, vertices.BottomLeftColor, vertices.TopRightColor, vertices.BottomRightColor) = (
+					Color.Lerp(vertices.TopLeftColor, vertices.BottomLeftColor, top / 16f),
+					Color.Lerp(vertices.BottomLeftColor, vertices.TopLeftColor, bottom / 16f),
+					Color.Lerp(vertices.TopRightColor, vertices.BottomRightColor, top / 16f),
+					Color.Lerp(vertices.BottomRightColor, vertices.TopRightColor, bottom / 16f)
+				);
+			}
+			void DrawSlope(bool right, bool bottom) {
+				VertexColors _vertices = vertices;
+				Vector4 _destination = destination;
+				Rectangle _source = frame;
+				for (int i = 2; i <= 12; i += 2) {
+					vertices = _vertices;
+					destination = _destination;
+					frame = _source;
+					int _left = (right ? 16 - i : i) - 2;
+					int _right = right ? i - 2 : 16 - i;
+					int _top = bottom ? i : 0;
+					int _bottom = bottom ? 0 : i;
+					if (bottom) _top = int.Max(_top, 4);
+					else _bottom = int.Max(_bottom, 4);
+					Cull(_left, _right, _top, _bottom);
+					Main.tileBatch.Draw(
+						texture,
+						destination,
+						frame,
+						vertices
+					);
+				}
+			}
+		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			Tile tile = Framing.GetTileSafely(i, j);
 			if (!TileDrawing.IsVisible(tile)) return;

@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Mono.Cecil;
-using Origins.Dev;
 using Origins.Journal;
 using Origins.Tiles.Other;
 using Origins.World.BiomeData;
@@ -79,6 +77,11 @@ namespace Origins.Tiles.Riven {
 			if (Main.tile[i, j - 1].TileIsType(Type) && Main.tile[i, j - 1].TileFrameY > 270) {
 				return true;
 			}
+			return false;
+		}
+		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+			if (Main.tile[i, j].Slope != SlopeType.Solid) return true;
+			DrawVertexLit(i, j);
 			return false;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
