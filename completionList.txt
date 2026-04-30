@@ -1988,7 +1988,8 @@ UI:
 (^) Fiberglass Icon
 (^) Fiberglass Map/Bestiary Backdrop
 (X) Fractured Isles Icon
-(#, ^2) Limestone Map/Bestiary Backdrop
+(X) Limestone Icon !!!
+(^) Limestone Map/Bestiary Backdrop
 (X) Repentance Icon
 (X) Repentance Map/Bestiary Backdrop
 (^) Riven Caverns Icon
