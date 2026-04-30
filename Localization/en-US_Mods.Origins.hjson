@@ -2692,6 +2692,7 @@ Configs: {
 		Headers: {
 			Journal: "{§Journal} options"
 			Compatibility: Compatibility
+			Performance: Performance
 		}
 
 		TabbyJournal: {

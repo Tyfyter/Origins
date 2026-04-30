@@ -1,20 +1,24 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Terraria.Audio;
+using Origins.Core;
+using Origins.Reflection;
+using ReLogic.Content;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System.Diagnostics.CodeAnalysis;
-using Origins.Core;
 
 namespace Origins.Items.Vanity.Dev.PlagueTexan;
 [AutoloadEquip(EquipType.Wings)]
 public class SceneYMK_Wings : ModItem, IRightClickableAccessory {
 	public static int WingsID { get; private set; }
-
 	public override void SetStaticDefaults() {
 		ArmorIDs.Wing.Sets.Stats[Item.wingSlot] = new(150, 7f, hasHoldDownHoverFeatures: true);
+		TextureSwitcher.Add(() => ref TextureAssets.Item[Type], (AutoLoadingTexture)(typeof(SceneYMK_Wings).GetDefaultTMLName() + "_Undyed"));
 	}
 	public override void SetDefaults() {
 		Item.DefaultToAccessory();
@@ -74,6 +78,32 @@ public class SceneYMK_Wings : ModItem, IRightClickableAccessory {
 		originPlayer.SyncPlayer(-1, Main.myPlayer, false, 0, PlayerVisualSyncDatas.NaturalMoonlightWings);
 		return false;
 	}
+	public override void UpdateInventory(Player player) => UpdateName();
+	public override void UpdateEquip(Player player) => UpdateName();
+	public override void UpdateVanity(Player player) => UpdateName();
+	public override void Update(ref float gravity, ref float maxFallSpeed) => UpdateName();
+	public void UpdateName() {
+		bool natural = Main.LocalPlayer.OriginPlayer().sceneYMKWingsNaturalColor[Main.LocalPlayer.CurrentLoadoutIndex];
+		if (natural) Item.SetNameOverride(this.GetLocalization("AltDisplayName").Value);
+		else Item.ClearNameOverride();
+	}
+
+	public class TextureSwitcher : IPreDrawAnything {
+		static readonly List<(RefGet<Asset<Texture2D>> slot, Asset<Texture2D> natural, Asset<Texture2D> dyed)> options = [];
+		static bool lastNatural = false;
+		public static void Add(RefGet<Asset<Texture2D>> slot, Asset<Texture2D> natural) {
+			if (Main.dedServ) return;
+			options.Add((slot, natural, slot()));
+		}
+		static TextureSwitcher() => OriginSystem.assetSwitchers.Add(new TextureSwitcher());
+		void IPreDrawAnything.PreDrawAnything() {
+			if (!lastNatural.TrySet(Main.LocalPlayer.OriginPlayer().sceneYMKWingsNaturalColor[Main.LocalPlayer.CurrentLoadoutIndex])) return;
+			for (int i = 0; i < options.Count; i++) {
+				(RefGet<Asset<Texture2D>> slot, Asset<Texture2D> natural, Asset<Texture2D> dyed) = options[i];
+				slot() = lastNatural ? natural : dyed;
+			}
+		}
+	}
 }
 public abstract class SceneYMK_Dye_Slot(SceneYMK_Dye_Slot.GetDye dyeGetter) : ExtraDyeSlot {
 	public delegate ref int? GetDye(OriginsDyeSlots player);
@@ -91,10 +121,14 @@ public class SceneYMK_Dye_Slot_0() : SceneYMK_Dye_Slot(player => ref player.cSce
 public class SceneYMK_Dye_Slot_1() : SceneYMK_Dye_Slot(player => ref player.cSceneMYKDye1) { }
 public class SceneYMK_Dye_Slot_2() : SceneYMK_Dye_Slot(player => ref player.cSceneMYKDye2) { }
 public class SceneYMK_Wings_Layer : PlayerDrawLayer {
-	AutoLoadingAsset<Texture2D> undyed = typeof(SceneYMK_Wings).GetDefaultTMLName() + "_Undyed";
+	AutoLoadingAsset<Texture2D> undyed = typeof(SceneYMK_Wings).GetDefaultTMLName() + "_Wings_Undyed";
 	AutoLoadingAsset<Texture2D> feathers0 = typeof(SceneYMK_Wings).GetDefaultTMLName() + "_Feathers_0";
 	AutoLoadingAsset<Texture2D> feathers1 = typeof(SceneYMK_Wings).GetDefaultTMLName() + "_Feathers_1";
 	AutoLoadingAsset<Texture2D> feathers2 = typeof(SceneYMK_Wings).GetDefaultTMLName() + "_Feathers_2";
+	static int letMeBeClear = -1;
+	public override void SetStaticDefaults() {
+		letMeBeClear = ShaderDataMethods.RegisterArmorShader(new ArmorShaderData(Mod.Assets.Request<Effect>("Effects/Misc"), "Transparency"));
+	}
 	public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) => drawInfo.drawPlayer.wings == SceneYMK_Wings.WingsID;
 	public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Wings);
 	protected override void Draw(ref PlayerDrawSet drawInfo) {
@@ -105,6 +139,9 @@ public class SceneYMK_Wings_Layer : PlayerDrawLayer {
 				if (drawInfo.drawPlayer.OriginPlayer().sceneYMKWingsNaturalColor[drawInfo.drawPlayer.CurrentLoadoutIndex]) {
 					data.texture = undyed;
 					drawInfo.DrawDataCache[i] = data;
+					dyes.cSceneMYKDye0 ??= letMeBeClear;
+					dyes.cSceneMYKDye1 ??= letMeBeClear;
+					dyes.cSceneMYKDye2 ??= letMeBeClear;
 				}
 				data.texture = feathers0;
 				data.shader = dyes.cSceneMYKDye0 ?? drawInfo.cWings;

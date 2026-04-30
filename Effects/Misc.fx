@@ -84,6 +84,10 @@ float4 Muddle(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	return tex2D(uImage0, coords + float2(step2, step3) * uTargetPosition) * sampleColor;
 }
 
+float4 Transparency(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	return float4(0, 0, 0, 0);
+}
+
 technique Technique1 {
 	pass MultiplyRGBA {
 		PixelShader = compile ps_2_0 MultiplyRGBA();
@@ -99,5 +103,8 @@ technique Technique1 {
 	}
 	pass Muddle {
 		PixelShader = compile ps_2_0 Muddle();
+	}
+	pass Transparency {
+		PixelShader = compile ps_2_0 Transparency();
 	}
 }
