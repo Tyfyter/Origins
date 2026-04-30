@@ -80,6 +80,7 @@ namespace Origins.Tiles.Riven {
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = g = b = 0;
+			if (OriginClientConfig.Instance.DisableCoolVisualEffects) return;
 			Tile tile = Main.tile[i, j];
 			if (OriginsModIntegrations.FancyLighting is not null && HasScar(tile)) {
 				r = 0.02f * GlowValue;
@@ -105,7 +106,7 @@ namespace Origins.Tiles.Riven {
 		"__X__X       ___";
 		static bool HasScar(Tile tile) {
 			if (tile.TileFrameY < 270) return false;
-			return scar_layout[tile.TileFrameX / 18 + ((tile.TileFrameY % 270) / 18) * 16] == 'X';
+			return scar_layout[tile.TileFrameX / 18 + ((tile.TileFrameY - 270) / 18) * 16] == 'X';
 		}
 		public override void RandomUpdate(int i, int j) {
 			int wrycoral = TileType<Hanging_Wrycoral>();
