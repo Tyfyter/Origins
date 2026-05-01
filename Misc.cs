@@ -251,7 +251,10 @@ namespace Origins {
 		public override void Update() { }
 
 		public override Rectangle GetFrame(Texture2D texture, int frameCounterOverride = -1) {
-			if (TicksPerFrame == -1) FrameCounter = 0;
+			if (TicksPerFrame == -1) {
+				FrameCounter = 0;
+				frameCounterOverride = -1;
+			}
 			if (frameCounterOverride != -1) {
 				return texture.Frame(FrameCount, 1, (frameCounterOverride / TicksPerFrame) % FrameCount, 0);
 			}

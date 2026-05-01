@@ -237,8 +237,7 @@ public class Biocomponent10 : MaterialItem, IJournalEntrySource {
 		animation = new DrawAnimationManual(4);
 		Main.RegisterItemAnimation(Item.type, animation);
 	}
-	public override void SetDefaults() {
-		base.SetDefaults();
+	public override void OnSpawn(IEntitySource source) {
 		variant = Main.rand.Next(animation?.FrameCount ?? 1);
 	}
 	public override void AddRecipes() {
