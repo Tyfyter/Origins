@@ -250,11 +250,11 @@ namespace Origins.Events {
 
 				return new Texture2D(Main.instance.GraphicsDevice, width, height, mipMap: false, format: SurfaceFormat.Vector4);
 			}
-			public override void Unload() {
+			public override void Unload() => Main.QueueMainThreadAction(() => {
 				for (int i = 0; i < textures.Length; i++) textures[i]?.Dispose();
 				texture = null;
 				textures = null;
-			}
+			});
 
 			static bool? IgnoreGlass(Tile tile) {
 				if (!tile.HasTile || !Main.tileBlockLight[tile.TileType]) return true;
