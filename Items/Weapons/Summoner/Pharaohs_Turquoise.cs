@@ -23,13 +23,8 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void SetDefaults() {
 			Item.damage = 50;
-			Item.DamageType = DamageClasses.Incantation;
-			Item.noMelee = true;
-			Item.width = 22;
-			Item.height = 34;
-			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.useTime = 7;
-			Item.useAnimation = 21;
+			Item.DefaultToIncantation(7);
+			Item.useAnimation *= HitsForBonus;
 			Item.shoot = ModContent.ProjectileType<Pharaohs_Turquoise_P>();
 			Item.shootSpeed = 16f;
 			Item.mana = 14;
@@ -37,7 +32,6 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = null;
-			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 			Item.useLimitPerAnimation = HitsForBonus;
 			Item.reuseDelay = 9;
 		}

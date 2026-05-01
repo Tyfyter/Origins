@@ -23,13 +23,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void SetDefaults() {
 			Item.damage = 17;
-			Item.DamageType = DamageClasses.Incantation;
-			Item.noMelee = true;
-			Item.width = 22;
-			Item.height = 34;
-			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.useTime = 26;
-			Item.useAnimation = 26;
+			Item.DefaultToIncantation(26);
 			Item.shoot = ModContent.ProjectileType<Amebolize_Incantation_P>();
 			Item.shootSpeed = 9.75f;
 			Item.mana = 14;
@@ -39,7 +33,6 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.UseSound = SoundID.Item8;
 			Item.glowMask = glowmask;
 			Item.channel = true;
-			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

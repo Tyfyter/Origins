@@ -3,6 +3,7 @@ using Humanizer;
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.Hooks;
 using ModLiquidLib.ModLoader;
+using Origins.CrossMod;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
 using Origins.Reflection;
@@ -4465,6 +4466,7 @@ namespace Origins {
 			}
 			tooltips.Insert(index + 1, line);
 		}
+		public static void ForceEnableCrit(this Item item) => CritType.ForceEnableCrit(item);
 	}
 	public static class NPCExtensions {
 		public static void CopyBanner<TOther>(this ModNPC self) where TOther : ModNPC {

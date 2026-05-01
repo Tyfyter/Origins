@@ -25,13 +25,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void SetDefaults() {
 			Item.damage = 50;
-			Item.DamageType = DamageClasses.Incantation;
-			Item.noMelee = true;
-			Item.width = 22;
-			Item.height = 34;
-			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.useTime = 26;
-			Item.useAnimation = 26;
+			Item.DefaultToIncantation(26);
 			Item.shoot = ModContent.ProjectileType<Mildew_Incantation_P>();
 			Item.shootSpeed = 10f;
 			Item.mana = 14;
@@ -39,7 +33,6 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item8;
-			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 		}
 		public override void UseItemFrame(Player player) => Incantations.HoldItemFrame(player);
 		public override void HoldItemFrame(Player player) => Incantations.HoldItemFrame(player);

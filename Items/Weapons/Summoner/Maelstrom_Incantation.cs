@@ -22,25 +22,19 @@ namespace Origins.Items.Weapons.Summoner {
 			OriginsSets.Items.FelnumItem[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.useStyle = ItemUseStyleID.Shoot;
+			Item.damage = 19;
+			Item.DefaultToIncantation(26);
 			Item.width = 26;
 			Item.height = 28;
-			Item.value = Item.sellPrice(0, 8);
 			Item.autoReuse = true;
-			Item.damage = 19;
-			Item.DamageType = DamageClasses.Incantation;
-			Item.noMelee = true;
 			Item.knockBack = 4;
 			Item.shoot = ModContent.ProjectileType<Maelstrom_Incantation_P>();
 			Item.noUseGraphic = true;
 			Item.shootSpeed = 16f;
 			Item.UseSound = null;
 			Item.mana = 16;
-			Item.useTime = 26;
-			Item.useAnimation = 26;
 			Item.rare = ItemRarityID.Green;
 			Item.value = Item.sellPrice(silver: 60);
-			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 			Item.UseSound = SoundID.Item8;
 		}
 		public override void AddRecipes() {

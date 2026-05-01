@@ -20,13 +20,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void SetDefaults() {
 			Item.damage = 12;
-			Item.DamageType = DamageClasses.Incantation;
-			Item.noMelee = true;
-			Item.width = 22;
-			Item.height = 34;
-			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.useTime = 36;
-			Item.useAnimation = 36;
+			Item.DefaultToIncantation(36);
 			Item.shoot = ModContent.ProjectileType<Bee_Afraid_Incantation_P>();
 			Item.shootSpeed = 0f;
 			Item.mana = 18;
@@ -35,7 +29,6 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.rare = ItemRarityID.Orange;
 			Item.UseSound = SoundID.Item97;
 			Item.channel = true;
-			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

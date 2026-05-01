@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Tools;
+using PegasusLib.Content;
 using ReLogic.Content;
 using System;
 using Terraria;
@@ -47,6 +48,16 @@ namespace Origins.Items.Weapons.Summoner {
 				data.color = smallGlowColor ?? Color.White;
 				drawInfo.DrawDataCache.Add(data);
 			}
+		}
+		public static void DefaultToIncantation(this Item item, int useTime) {
+			item.DamageType = DamageClasses.Incantation;
+			item.noMelee = true;
+			item.width = 22;
+			item.height = 34;
+			item.useStyle = ItemUseStyleID.Shoot;
+			item.useTime = useTime;
+			item.useAnimation = useTime;
+			item.holdStyle = ItemHoldStyleID.HoldLamp;
 		}
 	}
 }

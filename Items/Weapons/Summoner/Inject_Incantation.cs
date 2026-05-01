@@ -19,13 +19,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
 		public override void SetDefaults() {
 			Item.damage = 10;
-			Item.DamageType = DamageClasses.Incantation;
-			Item.noMelee = true;
-			Item.width = 22;
-			Item.height = 34;
-			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.useTime = 26;
-			Item.useAnimation = 26;
+			Item.DefaultToIncantation(26);
 			Item.shoot = ModContent.ProjectileType<Inject_Incantation_P>();
 			Item.shootSpeed = 10f;
 			Item.mana = 14;
@@ -34,7 +28,6 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item8;
 			Item.channel = true;
-			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

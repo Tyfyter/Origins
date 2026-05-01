@@ -22,19 +22,15 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
 			Item.damage = 35;
-			Item.DamageType = DamageClasses.Incantation;
-			Item.noMelee = true;
+			Item.DefaultToIncantation(38);
 			Item.knockBack = 3;
 			Item.shoot = ModContent.ProjectileType<Brine_Convergence_Incantation_Spawn_P>();
 			Item.noUseGraphic = true;
 			Item.shootSpeed = 8f;
 			Item.UseSound = null;
 			Item.mana = 20;
-			Item.useTime = 38;
-			Item.useAnimation = 38;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 1);
-			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 			Item.UseSound = SoundID.Item8;
 		}
 		public override void AddRecipes() {

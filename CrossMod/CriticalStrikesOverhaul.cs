@@ -3,6 +3,7 @@ using Origins.Items.Tools;
 using PegasusLib;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -17,6 +18,7 @@ namespace Origins.CrossMod {
 		}
 		protected static CritType[] ForcedCritTypes = ItemID.Sets.Factory.CreateCustomSet<CritType>(null);
 		class CriticalStrikesOverhaul : ModSystem {
+			public static Action<Item> ForceEnableCrit { get; private set; }
 			public const string mod_name = "CritRework";
 			public static List<CritType> critTypes = [];
 			public override bool IsLoadingEnabled(Mod mod) => ModEnabled;
@@ -48,10 +50,22 @@ namespace Origins.CrossMod {
 					}
 				}
 			}
+			public override void Load() {
+				Type CritItem = CritMod.Code.GetType("CritRework.Common.Globals.CritItem");
+				ForceEnableCrit = PegasusLib.PegasusLib.Compile<Action<Item>>(nameof(ForceEnableCrit),
+					(OpCodes.Ldarg_0, null),
+					(OpCodes.Callvirt, typeof(Item).GetMethod(nameof(Item.GetGlobalItem), []).MakeGenericMethod(CritItem)),
+					(OpCodes.Ldc_I4_1, null),
+					(OpCodes.Stfld, CritItem.GetField("forceCanCrit")),
+					(OpCodes.Ret, null)
+				);
+			}
 			public override void Unload() {
+				ForceEnableCrit = null;
 				critTypes = null;
 			}
 		}
+		public static void ForceEnableCrit(Item item) => CriticalStrikesOverhaul.ForceEnableCrit?.Invoke(item);
 		public virtual bool InRandomPool => false;
 		static Mod critMod;
 		public static Mod CritMod => critMod ??= ModLoader.GetMod(CriticalStrikesOverhaul.mod_name);
