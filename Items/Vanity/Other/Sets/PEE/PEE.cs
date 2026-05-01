@@ -10,6 +10,7 @@ namespace Origins.Items.Vanity.Other.Sets.PEE {
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(copper: 60);
 			Item.rare = ItemRarityID.Blue;
+			Item.vanity = true;
 		}
 		public string ArmorSetName => "PEE_Armor";
 		public int HeadItemID => Type;
@@ -21,6 +22,7 @@ namespace Origins.Items.Vanity.Other.Sets.PEE {
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(silver: 1, copper: 50);
 			Item.rare = ItemRarityID.Blue;
+			Item.vanity = true;
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -28,6 +30,7 @@ namespace Origins.Items.Vanity.Other.Sets.PEE {
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(copper: 90);
 			Item.rare = ItemRarityID.Blue;
+			Item.vanity = true;
 		}
 	}
 }
