@@ -217,6 +217,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Laser_Target_Locator_Missile : ModProjectile {
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 3;
+			OriginsSets.Projectiles.AllowAboveWorld[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];

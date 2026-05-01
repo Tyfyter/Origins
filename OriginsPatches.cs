@@ -758,7 +758,20 @@ namespace Origins {
 				if (Main.mouseRight) player?.OriginPlayer()?.SetUsingScope();
 			});
 			IL_Player.Hurt_HurtInfo_bool += IL_Player_Hurt_HurtInfo_bool;
+			try {
+				IL_Projectile.Update += AllowProjAboveWorld;
+			} catch (Exception e) {
+				if (LogLoadingILError(nameof(AllowProjAboveWorld), e)) throw;
+			}
 		}
+
+		static void AllowProjAboveWorld(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchLdsfld<Main>(nameof(Main.topWorld)));
+			c.EmitLdarg0();
+			c.EmitDelegate(static (float top, Projectile proj) => OriginsSets.Projectiles.AllowAboveWorld[proj.type] ? float.NaN : top);
+		}
+
 		static void IL_Player_Hurt_HurtInfo_bool(ILContext il) {
 			ILCursor c = new(il);
 			int damage = -1;

@@ -94,6 +94,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
+			OriginsSets.Projectiles.AllowAboveWorld[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);

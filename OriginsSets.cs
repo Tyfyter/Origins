@@ -259,6 +259,7 @@ namespace Origins {
 			.Description("If a projectile has an entry in this set, copies from Weakpoint Analyzer will use before their AI, if it returns false, it will prevent the normal AI running")
 			.RegisterCustomSet<Func<Projectile, bool>>(null,
 				ProjectileID.ChlorophyteBullet, (Projectile projectile) => {
+					if (OriginClientConfig.Instance.ImproveChlorophyteBulletsPerformance) return true;
 					float distSQ = projectile.DistanceSQ(projectile.GetGlobalProjectile<OriginGlobalProj>().weakpointAnalyzerTarget.Value);
 					const float range = 128;
 					const float rangeSQ = range * range;
@@ -374,6 +375,7 @@ namespace Origins {
 			public static float[] ReducedDeathHealEffectChance { get; } = ProjectileID.Sets.Factory.CreateNamedSet(nameof(ReducedDeathHealEffectChance))
 			.Description($"Minion projectiles which should not always trigger healing-related death effects for balance reasons, stacks multiplicatively with {nameof(ReducedDeathEffectChance)}")
 			.RegisterFloatSet(1);
+			public static bool[] AllowAboveWorld { get; } = ProjectileID.Sets.Factory.CreateBoolSet();
 			public static bool[] Apostasy_AnimalMinions { get; } = ProjectileID.Sets.Factory.CreateNamedSet("Apostasy", "AnimalMinions").RegisterBoolSet();
 			static Projectiles() {
 				foreach (KeyValuePair<int, Projectile> proj in ContentSamples.ProjectilesByType) {
