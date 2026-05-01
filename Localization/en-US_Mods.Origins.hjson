@@ -2307,6 +2307,7 @@ Projectiles: {
 	Quasar_P.DisplayName: Quasar P
 	Quasar_Offshoot_P.DisplayName: Quasar Offshoot P
 	Mushy_Broth_Explosion.DisplayName: Mushy Broth Explosion
+	Big_Bang_P.DisplayName: Big Bang P
 }
 
 Prefixes: {

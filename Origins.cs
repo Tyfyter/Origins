@@ -145,6 +145,7 @@ namespace Origins {
 		public override uint ExtraPlayerBuffSlots => 4;
 		public Origins() {
 			instance = this;
+			_ = Shaders.Overbrighten;
 			celestineBoosters = new int[3];
 			List<LocalizedText> loadingWarnings = [];
 			this.MusicAutoloadingEnabled = false;
@@ -287,6 +288,7 @@ namespace Origins {
 			DyedLight.Initialize();
 		}
 		public override void Load() {
+			LoadShaders();
 			AssimilationLoader.Load();
 			OriginsSets.Initialize();
 			LocalizationMethods.BindArgs(Language.GetOrRegister("Riven", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Riven"));

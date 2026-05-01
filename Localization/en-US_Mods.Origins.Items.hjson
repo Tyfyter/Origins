@@ -8347,3 +8347,8 @@ Classified_Blueprint: {
 	DisplayName: Classified Blueprint
 	RecipeCondition: After reading the {$DisplayName}
 }
+
+Big_Bang: {
+	DisplayName: Big Bang
+	Tooltip: ""
+}

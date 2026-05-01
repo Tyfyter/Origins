@@ -1,6 +1,6 @@
 sampler uImage0 : register(s0);
 sampler uImage1 : register(s1);
-float3 uColor;
+float3 uColor = float3(1, 1, 1);
 float3 uSecondaryColor;
 float uOpacity;
 float uSaturation;
@@ -30,7 +30,7 @@ float4 Overbrighten(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : CO
 	if (color.b > 1)
 		brightness += color.b - 1;
 	
-	return color + float4(brightness, brightness, brightness, 0);
+	return color + float4(uColor * brightness, 0);
 }
 
 float4 Quasar(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
