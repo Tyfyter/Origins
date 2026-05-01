@@ -19,8 +19,11 @@ namespace Origins.NPCs.Ashen {
 		public int AnimationFrames => 6;
 		public int FrameDuration => 8;
 		public override void Load() => this.AddBanner();
+		public static int FallFullRecoveryTime => 60;
+		public static int FallRecoveryTime => 30;
+		public static float HeavyFallThreshold => 3;
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 6;
+			Main.npcFrameCount[NPC.type] = 10;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			/*NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			OriginsSets.NPCs.CustomExpertScaling[Type] = npc => {
@@ -52,14 +55,34 @@ namespace Origins.NPCs.Ashen {
 			NPC.DeathSound = SoundID.NPCDeath44;
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			NPC.knockBackResist = 0.1f;
-			AIType = NPCID.Mummy;
+			AIType = NPCID.AnomuraFungus;
 			SpawnModBiomes = [
 				GetInstance<Ashen_Biome>().Type,
 			];
 		}
 		public override bool PreAI() {
-			float acc = 0.25f; // left as a variable for balance testing
-			if (NPC.collideY && !NPC.collideX) NPC.velocity.X += acc * NPC.direction;
+			const float acc = 0f; // you can change const locals with hot reload
+			if (NPC.collideY && NPC.oldVelocity.Y >= HeavyFallThreshold) {
+				NPC.localAI[2] = FallRecoveryTime;
+			}
+			if (NPC.localAI[2] > 0) {
+				NPC.localAI[2]--;
+				if (NPC.collideY) {
+					NPC.velocity.X *= 0.93f;
+				} else {
+					NPC.localAI[2] = FallRecoveryTime;
+				}
+				return false;
+			}
+			if (NPC.velocity.Y == 0 && !NPC.collideX) {
+				if (NPC.localAI[2] > -FallFullRecoveryTime) NPC.localAI[2]--;
+				float speedMult = -(NPC.localAI[2] / FallFullRecoveryTime);
+				NPC.velocity.X = float.Lerp(
+					float.Lerp(NPC.velocity.X * 0.85f, NPC.velocity.X * 0.93f, speedMult),
+					NPC.velocity.X * 0.93f,
+					speedMult
+				);
+			}
 			NPC.spriteDirection = NPC.direction;
 			return true;
 		}
@@ -73,8 +96,21 @@ namespace Origins.NPCs.Ashen {
 			);
 		}
 		public override void FindFrame(int frameHeight) {
-			NPC.DoFrames(5, Math.Abs(NPC.velocity.X));
-			if (!NPC.collideY && !NPC.IsABestiaryIconDummy && Math.Abs(NPC.velocity.Y) != 0) NPC.DoFrames(1, 0..1);
+			if (NPC.localAI[2] > 0) {
+				NPC.frameCounter = 0;
+				if (NPC.collideY) {
+					float progress = Utils.PingPongFrom01To010(NPC.localAI[2] / FallRecoveryTime);
+					if (NPC.localAI[2] > FallRecoveryTime * 0.5f) progress = 1 - float.Pow(1 - progress, 3);
+					NPC.frame.Y = frameHeight * (int)(9 - float.Round(2 * progress));
+				} else {
+					NPC.frame.Y = frameHeight * 6;
+				}
+			} else if (!NPC.collideY && !NPC.IsABestiaryIconDummy && Math.Abs(NPC.velocity.Y) != 0) {
+				NPC.frameCounter = 0;
+				NPC.frame.Y = NPC.velocity.Y > HeavyFallThreshold ? frameHeight * 6 : 0;
+			} else {
+				NPC.DoFrames(5, 0..6, Math.Abs(NPC.velocity.X));
+			}
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(new CommonDrop(ItemType<Biocomponent10>(), 1, 1, 3));
