@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Journal;
@@ -25,6 +26,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool HasOwnTexture => true;
 		public override void SetStaticDefaults() {
 			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;
+			CritType.SetCritType<Vorpal_Crit_Type>(Type);
 		}
 		public override void SetDefaults() {
 			Item.damage = 28;
