@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Terraria;
 
 namespace Origins.Core {
-	public readonly ref struct NaNGuard(Entity entity) : IDisposable {
+	public readonly ref struct NaNGuard(Entity entity) {
 		readonly Vector2 position = entity.position;
 		readonly Vector2 velocity = entity.velocity;
 		public void Dispose() {
@@ -19,7 +19,7 @@ namespace Origins.Core {
 #endif
 		}
 	}
-	public readonly ref struct SingleNaNGuard(ref float variable) : IDisposable {
+	public readonly ref struct SingleNaNGuard(ref float variable) {
 		readonly ref float variable = ref variable;
 		readonly float value = variable;
 		public void Dispose() {
