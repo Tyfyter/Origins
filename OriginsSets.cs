@@ -36,6 +36,7 @@ namespace Origins {
 			public static bool[] PaintingsNotFromVendor { get; } = ItemID.Sets.Factory.CreateBoolSet();
 			public static bool[] InvalidForDefiledPrefix { get; } = ItemID.Sets.Factory.CreateNamedSet(nameof(InvalidForDefiledPrefix))
 			.RegisterBoolSet();
+			internal static bool[] InfoAccessorySlots_IsAMechanicalAccessory { get; } = ItemID.Sets.Factory.CreateNamedSet("InfoAccessorySlots", "IsAMechanicalAccessory").RegisterBoolSet();
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Projectiles {

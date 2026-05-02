@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 

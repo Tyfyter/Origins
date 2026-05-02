@@ -745,12 +745,12 @@ namespace Origins {
 					}
 				}
 				if (ModLoader.TryGetMod("FancyLighting", out Mod mod) && mod.Version >= new Version(1, 1)) {
-					MonoModHooks.Add(smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Static), (hook_TileShine_1_1_0)((orig, ref color, tile, shimmerAlpha) => {
+					MonoModHooks.Add(smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Static), (hook_TileShine_1_1_0)((orig_TileShine_1_1_0 orig, ref Vector3 color, Tile tile, float shimmerAlpha) => {
 						orig(ref color, tile, shimmerAlpha);
 						TileShine_Impl(ref color, tile);
 					}));
 				} else {
-					MonoModHooks.Add(smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Static), (hook_TileShine_1_0_2)((orig, ref color, tile) => {
+					MonoModHooks.Add(smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Static), (hook_TileShine_1_0_2)((orig_TileShine_1_0_2 orig, ref Vector3 color, Tile tile) => {
 						orig(ref color, tile);
 						TileShine_Impl(ref color, tile);
 					}));
