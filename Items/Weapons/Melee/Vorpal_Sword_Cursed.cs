@@ -2,6 +2,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Buffs;
+using Origins.Core;
+using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Journal;
 using Origins.NPCs;
@@ -40,6 +42,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetStaticDefaults() {
 			OriginsSets.Items.SwungNoMeleeMelees[Type] = true;
 			glowmask = Origins.AddGlowMask(this);
+			OriginsSets.Items.InfoAccessorySlots_IsAMechanicalAccessory[Type] = false;
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
@@ -61,7 +64,6 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = SoundID.Item1;
 			Item.ArmorPenetration = 9999;
 			Item.UseSound = null;
-			Item.glowMask = glowmask;
 		}
 		static int textIndex = -1;
 		static int delayTime = 0;
@@ -97,7 +99,7 @@ namespace Origins.Items.Weapons.Melee {
 				text = "He took his vorpal sword in hand:";
 				break;
 				case 9:
-				text = "  Long time the manxome foe he soughtÑ";
+				text = "  Long time the manxome foe he soughtï¿½";
 				break;
 				case 10:
 				text = "So rested he by the Tumtum tree,";
@@ -200,16 +202,15 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void UpdateInventory(Player player) {
 			if (times == 0 && Main.rand.NextBool(60)) {
-				NPC npc;
-				for (int n = 0; n < Main.maxNPCs; n++) {
-					npc = Main.npc[n];
-					if (npc.DistanceSQ(player.MountedCenter) < 128 * 128 && npc.CanBeChasedBy()) {
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.CanBeChasedBy() && npc.WithinRange(player.MountedCenter, 128)) {
 						for (int i = 0; i < Main.InventoryItemSlotsCount; i++) {
 							if (player.inventory[i].ModItem == this) {
 								switchbackSlot = player.selectedItem;
 								player.selectedItem = i;
 								player.controlUseItem = true;
 								dir = (npc.Center - player.MountedCenter).ToRotation();
+								if (float.IsNaN(dir)) dir = 0;
 								times = 2;
 								return;
 							}
@@ -243,6 +244,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			using NaNGuard p = player.NaNGuard();
 			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
 			Projectile.rotation = MathHelper.Lerp(-2.75f, 2f, swingFactor) * Projectile.ai[1];
 			switch ((int)Projectile.ai[0]) {

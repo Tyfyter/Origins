@@ -104,4 +104,13 @@ namespace Origins.CrossMod {
 			return npc.collideY;
 		}
 	}
+	public class Vorpal_Crit_Type : CritType {
+		public override bool InRandomPool => true;
+		public override LocalizedText Description => base.Description;
+		public override float CritMultiplier(Player Player, Item Item) => 10f;
+		public override bool CritCondition(Player player, Item item, Projectile projectile, NPC target, NPC.HitModifiers modifiers) {
+			float chance = Main.masterMode ? 0.05f : 0.01f;
+			return Main.rand.NextFloat() <= chance + player.luck * chance;
+		}
+	}
 }
