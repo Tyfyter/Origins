@@ -97,7 +97,7 @@ namespace Origins.Items.Weapons.Melee {
 				text = "He took his vorpal sword in hand:";
 				break;
 				case 9:
-				text = "  Long time the manxome foe he soughtÑ";
+				text = "  Long time the manxome foe he soughtï¿½";
 				break;
 				case 10:
 				text = "So rested he by the Tumtum tree,";
