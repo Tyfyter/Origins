@@ -131,3 +131,4 @@ Chambersite_Squirrel: "{$Bestiary_FlavorText.npc_GemSquirrelAmethyst}"
 // Cartwheeler_Large: A worthy investment into guided projectile technology, but it failed. These cartwheelers use the boost of the wind to dot<SIC> around.
 // Cartwheeler_Medium: "{$Cartwheeler_Large}"
 // Cartwheeler_Small: "{$Cartwheeler_Large}"
+// Defensive_Turret: <PH> bestiary text here

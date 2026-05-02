@@ -453,3 +453,4 @@ Wind_Pail.DisplayName: Wind Pail
 Cartwheeler_Large.DisplayName: Cartwheeler
 Cartwheeler_Medium.DisplayName: "{$Cartwheeler_Large.DisplayName}"
 Cartwheeler_Small.DisplayName: "{$Cartwheeler_Large.DisplayName}"
+Defensive_Turret.DisplayName: Defensive Turret

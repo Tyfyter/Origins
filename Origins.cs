@@ -143,12 +143,14 @@ namespace Origins {
 		public static List<LocalizedText> loadingWarnings = [];
 		internal static List<LateLoadable> lateLoadables = [];
 		public override uint ExtraPlayerBuffSlots => 4;
+		internal static bool HasDevBuild { get; private set; }
 		public Origins() {
 			instance = this;
 			_ = Shaders.Overbrighten;
 			celestineBoosters = new int[3];
 			List<LocalizedText> loadingWarnings = [];
 			this.MusicAutoloadingEnabled = false;
+			HasDevBuild = File.Exists(Path.Combine(Program.SavePathShared, "Mods", GetType().Name + ".tmod"));
 #if DEBUG
 			try {
 				MethodInfo meth = typeof(ModType).GetMethod(nameof(ModType.PrettyPrintName));

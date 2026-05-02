@@ -397,7 +397,10 @@ namespace Origins.NPCs.Ashen {
 				if (other.ModNPC is Repairboy) continue;
 				if (other.life < other.lifeMax && Projectile.Colliding(hitbox, other.Hitbox)) {
 					doSound = true;
-					if (other.ModNPC is IReparable reparable && reparable.Repair(Projectile.damage)) continue;
+					if (other.ModNPC is IReparable reparable && reparable.Repair(Projectile.damage)) {
+						healCooldown[other.whoAmI] = 20;
+						continue;
+					}
 					if (other.ModNPC is IAshenEnemy { CanBeRepaired: true }) {
 						float oldHealth = other.life;
 						other.life += Main.rand.RandomRound(Projectile.damage * 0.15f);

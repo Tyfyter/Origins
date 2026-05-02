@@ -62,6 +62,22 @@ namespace Origins.Tiles.Banners {
 			// We must return false here to prevent the normal tile drawing code from drawing the default static tile. Without this a duplicate tile will be drawn.
 			return false;
 		}
+		[Autoload(false)]
+		class MissingBanner(Banner banner) : IBrokenContent {
+			public string BrokenReason => $"Missing banner: {banner.NPC}";
+			public void Load(Mod mod) => Origins.LogLoadingWarning(Language.GetText($"Missing banner: {banner.NPC}"));
+			public void Unload() { }
+		}
+		static HashSet<string> fileNames;
+		public override bool IsLoadingEnabled(Mod mod) {
+			if (!Origins.HasDevBuild) return true;
+			fileNames ??= [..mod.GetFileNames().Select(f => $"{nameof(Origins)}/{f}")];
+			if (!fileNames.Contains(Texture + ".rawimg") || !fileNames.Contains(Texture + "_Item.rawimg")) {
+				mod.AddContent(new MissingBanner(this));
+				return false;
+			}
+			return true;
+		}
 	}
 	public class Banner_Item(Banner tile) : ModItem {
 		[CloneByReference] readonly Banner tile = tile;

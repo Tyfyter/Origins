@@ -177,6 +177,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				}
 			}
 			public override void OnKill(int timeLeft) {
+				ExplosiveGlobalProjectile.DoExplosion(Projectile, 80, sound: SoundID.Item62, hostile: true);
 				if (NetmodeActive.Server) return;
 				if (Projectile.owner != Main.myPlayer) {
 					if (!Projectile.hide) {
@@ -192,7 +193,6 @@ namespace Origins.NPCs.Ashen.Boss {
 					}
 					return;
 				}
-				ExplosiveGlobalProjectile.DoExplosion(Projectile, 80, sound: SoundID.Item62, hostile: true);
 				Vector2[] oldPos = [.. Projectile.oldPos];
 				float[] oldRot = [.. Projectile.oldRot];
 				for (int i = 0; i < oldPos.Length; i++) {

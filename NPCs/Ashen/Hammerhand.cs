@@ -61,7 +61,6 @@ namespace Origins.NPCs.Ashen {
 			];
 		}
 		public override bool PreAI() {
-			const float acc = 0f; // you can change const locals with hot reload
 			if (NPC.collideY && NPC.oldVelocity.Y >= HeavyFallThreshold) {
 				NPC.localAI[2] = FallRecoveryTime;
 			}
