@@ -210,7 +210,7 @@ namespace Origins.Events {
 				if (ModLoader.TryGetMod("FancyLighting", out Mod mod) && mod.Version >= new Version(1, 1)) Origins.TryHookEvent("FancyLighting", "FancyLighting.SmoothLighting", "PostUpdateLightMap", PostUpdateLightMap);
 			}
 			static int skipVanilla = 0;
-			static void PostUpdateLightMap(Texture2D lightMapTexture, Matrix samplingTransformation, Rectangle lightMapArea) {
+			static void PostUpdateLightMap(Texture2D lightMapTexture, Matrix samplingTransformation, Rectangle lightMapArea, bool cameraMode) {
 				skipVanilla = 2;
 				workingLightTileArea = lightMapArea;
 				workingLightMatrix = samplingTransformation;
