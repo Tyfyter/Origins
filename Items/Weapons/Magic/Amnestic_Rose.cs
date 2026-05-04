@@ -51,18 +51,16 @@ namespace Origins.Items.Weapons.Magic {
 					//IL_1c84: conv.r8
 					//IL_1c85: ldc.r8 1.3
 					//IL_1c8e: mul
-					c.GotoNext(MoveType.After,
+					c.GotoNext(MoveType.Before, i => i.MatchLdcR8(1.3));
+					c.GotoPrev(MoveType.After,
 						i => i.MatchLdarg0(),
 						i => i.MatchLdflda<Entity>(nameof(Player.velocity)),
 						i => i.MatchLdfld<Vector2>(nameof(Vector2.X)),
-						i => i.MatchCall(typeof(Math), nameof(Math.Abs)),
-						i => i.MatchConvR8(),
-						i => i.MatchLdcR8(1.3),
-						i => i.MatchMul()
+						i => i.MatchCall(typeof(Math), nameof(Math.Abs))
 					);
 					c.EmitLdarg0();
 					c.EmitDelegate((float orig, Player player) => {
-						return Math.Abs(orig) * (player.direction * Math.Sign(player.velocity.X));
+						return orig * (player.direction * Math.Sign(player.velocity.X));
 					});
 					//IL_1b04: ldarg.0
 					//IL_1b05: ldfld float64 Terraria.Player::legFrameCounter
