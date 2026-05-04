@@ -38,7 +38,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
 			NPC.DeathSound = SoundID.NPCDeath44;
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
-			NPC.knockBackResist = float.Epsilon;
+			NPC.knockBackResist = float.Epsilon;// 0 completely disables knockback, which would prevent us from using it to spawn gores
 			SpawnModBiomes = [
 				GetInstance<Ashen_Biome>().Type,
 			];
@@ -185,6 +185,7 @@ namespace Origins.NPCs.Ashen {
 		}
 		public bool? NeedsRepair(NPC repairboy, ref float cost, ref Rectangle hitbox) => IsDeactivated ? true : null;
 		public bool Repair(int repairAmount) {
+			if (!IsDeactivated) return false;
 			NPC.life += Main.rand.RandomRound(repairAmount * 0.05f);
 			if (NPC.life >= NPC.lifeMax) {
 				NPC.life = NPC.lifeMax;
