@@ -21,7 +21,7 @@ namespace Origins.Items.Accessories {
 			Origins.AddGlowMask(this);
 			Accessory_Glow_Layer.AddGlowMask(EquipType.Face, Item.faceSlot,
 				$"{Texture}_{EquipType.Face}_Glow",
-				player =>  Colors.GetIfInRange(player.OriginPlayer().SpacePirateEyeVisualSelection)?.Color ?? Color.Transparent//(Main.timeForVisualEffects % 30 < 15 ? Color.Black : Color.Magenta)
+				player => Colors.GetIfInRange(player.OriginPlayer().SpacePirateEyeVisualSelection)?.Color ?? Color.Transparent//(Main.timeForVisualEffects % 30 < 15 ? Color.Black : Color.Magenta)
 			);
 			ArmorIDs.Face.Sets.DrawInFaceUnderHairLayer[Item.faceSlot] = true;
 

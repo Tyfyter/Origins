@@ -62,6 +62,9 @@ namespace Origins.Events {
 				ModContent.ProjectileType<Retool_Arm_Laser_Beam>(),
 				ModContent.ProjectileType<Third_Eye_Deathray>(),
 				ModContent.ProjectileType<Flare_Launcher_Glow_P>(),
+				ModContent.ProjectileType<Big_Bang_P>(),
+				ModContent.ProjectileType<Tank_Rifle_P>(),
+				ModContent.ProjectileType<NPCs.Ashen.Boss.Fire_Cannons_State.Trenchmaker_Cannon_P>(),
 			];
 			foreach (int type in toNormalDraw) CutThroughSmogStorm[type] = normalDraw;
 			CutThroughSmogStorm[ProjectileID.DD2SquireSonicBoom] = DrawWave;
