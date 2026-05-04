@@ -1,6 +1,7 @@
 ﻿using MagicStorage.CrossMod;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.World.BiomeData;
+using PegasusLib;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -19,7 +20,6 @@ namespace Origins.NPCs.Ashen {
 		static AutoLoadingTexture armTexture = typeof(Defensive_Turret).GetDefaultTMLName("_Arm");
 		static AutoLoadingTexture gunTexture = typeof(Defensive_Turret).GetDefaultTMLName("_Gun");
 		static AutoLoadingTexture gunGlowTexture = typeof(Defensive_Turret).GetDefaultTMLName("_Gun_Glow");
-		public override void Load() => this.AddBanner();
 		public bool IsDeactivated {
 			get => NPC.ai[2] != 0;
 			set => NPC.ai[2] = value.ToInt();
@@ -29,19 +29,23 @@ namespace Origins.NPCs.Ashen {
 		}
 		Vector2 GunOrigin => NPC.Top - new Vector2(NPC.spriteDirection * 10, 4);
 		public override void SetDefaults() {
-			NPC.lifeMax = 80;
+			NPC.lifeMax = 160;
 			NPC.defense = 22;
-			NPC.damage = 10;
+			NPC.damage = 10;// contact damage, not shot damage
 			NPC.width = 68;
 			NPC.height = 68;
 			NPC.value = Item.buyPrice(0, 0, 2);
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
 			NPC.DeathSound = SoundID.NPCDeath44;
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
-			NPC.knockBackResist = 0f;
+			NPC.knockBackResist = float.Epsilon;
 			SpawnModBiomes = [
 				GetInstance<Ashen_Biome>().Type,
 			];
+		}
+		public override bool PreAI() {
+			NPC.velocity = default;
+			return base.PreAI();
 		}
 		public override void AI() {
 			NPC.velocity = default;
@@ -54,9 +58,11 @@ namespace Origins.NPCs.Ashen {
 			float angle = diff.ToRotation();
 			GeometryUtils.AngularSmoothing(ref NPC.rotation, angle, 0.05f);
 			NPC.spriteDirection = diff.X < 0 ? -1 : 1;
+			if (NPC.frame.Y != 0 && NPC.frameCounter.CycleUp(4, 1)) NPC.frame.Y.CycleUp(4);
 			if (NPC.HasValidTarget) {
 				NPC.ai[0]++;
 				if (GeometryUtils.AngleDif(NPC.rotation, angle, out _) < 0.5f) {
+					if (!CollisionExt.CanHitRay(GunOrigin, NPC.targetRect.Center())) Min(ref NPC.ai[0], 45);
 					if (NPC.ai[0] > 60) {
 						NPC.ai[0] = 0;
 						SoundEngine.PlaySound(Origins.Sounds.HeavyCannon.WithPitch(-0.5f), NPC.Top);
@@ -68,6 +74,7 @@ namespace Origins.NPCs.Ashen {
 							ShotDamage,
 							1
 						);
+						NPC.frame.Y++;
 					}
 				} else {
 					Min(ref NPC.ai[0], 30);
@@ -104,20 +111,25 @@ namespace Origins.NPCs.Ashen {
 				this.GetBestiaryFlavorText()
 			);
 		}
+		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers) {
+			modifiers.Knockback = StatModifier.Default;// purely visual
+		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
+			Vector2 velocity = hit.GetKnockbackFromHit();
 			if (NPC.life <= 0) {
-				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore1");
-				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore2");
-				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore3");
-				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore4");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), velocity, "Gores/NPCs/Ashen_Gore1");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), velocity, "Gores/NPCs/Ashen_Gore2");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), velocity, "Gores/NPCs/Ashen_Gore3");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), velocity, "Gores/NPCs/Ashen_Gore4");
 				for (int i = 0; i < 7; i++) {
-					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
 				}
 			} else if (Main.rand.NextBool(5)) {
-				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
 			}
+			NPC.velocity = default;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			if (!IsDeactivated) {
@@ -171,7 +183,7 @@ namespace Origins.NPCs.Ashen {
 			tag.TryGet(nameof(IsDeactivated), out NPC.ai[0]);
 			if (IsDeactivated) NPC.life = 1;
 		}
-		public bool? NeedsRepair(NPC repairboy, ref float cost, ref Rectangle hitbox) => IsDeactivated;
+		public bool? NeedsRepair(NPC repairboy, ref float cost, ref Rectangle hitbox) => IsDeactivated ? true : null;
 		public bool Repair(int repairAmount) {
 			NPC.life += Main.rand.RandomRound(repairAmount * 0.05f);
 			if (NPC.life >= NPC.lifeMax) {
