@@ -239,6 +239,9 @@ csharp_style_prefer_null_check_over_type_check = true:suggestion
 dotnet_diagnostic.CA1707.severity = none
 csharp_style_prefer_implicitly_typed_lambda_expression = true:suggestion
 
+# CA1806: Do not ignore method results
+dotnet_diagnostic.CA1806.severity = warning
+
 [*.{cs,vb}]
 dotnet_style_coalesce_expression = true:suggestion
 dotnet_style_null_propagation = true:suggestion

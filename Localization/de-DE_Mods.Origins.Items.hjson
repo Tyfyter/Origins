@@ -8352,3 +8352,8 @@ Big_Bang: {
 	// DisplayName: Big Bang
 	// Tooltip: ""
 }
+
+Gas_Generator_Item: {
+	// DisplayName: Gas Generator
+	// Tooltip: ""
+}

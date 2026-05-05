@@ -15,6 +15,7 @@ using static Origins.PlayerVisualSyncDatas;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
+		public static event Action<int> SyncToNewPlayer;
 		bool dummyInitialize = false;
 		bool netInitialized = false;
 		void NetInit() {
@@ -33,6 +34,7 @@ namespace Origins {
 					packet.Write((short)OriginSystem.Instance.peatSold);
 					packet.Send(Player.whoAmI);
 					TESystem.SyncAllToPlayer(Player.whoAmI);
+					SyncToNewPlayer.Invoke(Player.whoAmI);
 					
 					packet = Mod.GetPacket();
 					packet.Write(Origins.NetMessageType.sync_void_locks);
