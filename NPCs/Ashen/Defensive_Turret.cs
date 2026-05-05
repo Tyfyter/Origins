@@ -51,7 +51,12 @@ namespace Origins.NPCs.Ashen {
 			NPC.velocity = default;
 			NPC.dontTakeDamage = IsDeactivated;
 			NPC.damage = NPC.dontTakeDamage ? 0 : NPC.defDamage;
-			if (NPC.dontTakeDamage) return;
+			if (NPC.dontTakeDamage) {
+				NPC.frame.Y = 5;
+				return;
+			} else if (NPC.frame.Y == 5) {
+				NPC.frame.Y = 0;
+			}
 			UpdateTarget();
 
 			Vector2 diff = NPC.targetRect.Center() - NPC.Top;
@@ -143,7 +148,7 @@ namespace Origins.NPCs.Ashen {
 					gunTexture,
 					gunGlowTexture,
 					GunOrigin - screenPos,
-					gunTexture.Frame(verticalFrames: 4, frameY: NPC.frame.Y),
+					gunTexture.Frame(verticalFrames: 5, frameY: NPC.frame.Y),
 					drawColor,
 					Color.White,
 					rotation,
@@ -166,7 +171,7 @@ namespace Origins.NPCs.Ashen {
 				TextureAssets.Npc[Type].Value,
 				glowTexture,
 				NPC.Bottom - screenPos,
-				null,
+				TextureAssets.Npc[Type].Frame(verticalFrames: 2, frameY: IsDeactivated.ToInt()),
 				drawColor,
 				Color.White,
 				0,
