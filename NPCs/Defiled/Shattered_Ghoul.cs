@@ -70,10 +70,11 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.AncientCloth, 10));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 3, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 15));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Latchkey>(), 5, 3, 7));
+			//npcLoot.Add(ItemDropRule.Common(ItemID.PaintingEaterOfLife, 200));
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);

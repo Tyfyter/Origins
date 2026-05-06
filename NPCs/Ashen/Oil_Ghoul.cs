@@ -55,8 +55,9 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.AncientCloth, 10));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Phoenum>(), 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Phoenum>(), 3, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 15));
+			//npcLoot.Add(ItemDropRule.Common(ItemID.PaintingEaterOfLife, 200));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {/*
 			//spawn gore if npc is dead after being hit

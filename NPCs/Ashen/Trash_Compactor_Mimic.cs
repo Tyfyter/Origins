@@ -49,7 +49,7 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.OneFromOptions(1,
-				//ModContent.ItemType<Melee_Weapon>(),
+				//ModContent.ItemType<The_Claw>(),
 				ModContent.ItemType<Laser_Target_Locator>(),
 				ModContent.ItemType<AMRSL_Skewer>(),
 				ModContent.ItemType<Pacemaker>(),

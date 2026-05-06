@@ -201,7 +201,7 @@ ENEMY NPCS:
 (^) Boulder Mimic
 (^) Buckethead Zombie
 (^) Cannihound
-(☻) Cartwheeler !!!
+(^) Cartwheeler
 (^) Catacomb Clearer
 (^) Cellarkeep
 (^) Cleaver
@@ -237,7 +237,7 @@ ENEMY NPCS:
 (^) Gas Mask Zombie
 (^) Goo Wall
 (^) Graveshield Zombie
-(☻) Hammerhand !!!
+(^) Hammerhand
 (X) Limestone Creeper
 (^) Optiphage
 (#, ^2) Packhunter !!!
@@ -288,7 +288,7 @@ ENEMY NPCS:
 (X) Madman
 (#, ^2) Malfunctioning Missile !!!
 (X) Molten Aberration
-(☻) Oil Ghoul !!!
+(^) Oil Ghoul
 (^) King Crab
 (^) Mildew Creeper
 (^) Mitoworm
@@ -310,7 +310,7 @@ ENEMY NPCS:
 (X) Tendon Terror
 (X) Terrogator
 (^) Torn Ghoul
-(☻) Trash Compactor Mimic !!!
+(^) Trash Compactor Mimic
 (^) Trijaw Shark
 (#, ^2) VV-13 !!!
 
@@ -340,7 +340,7 @@ ENEMY NPCS:
 
 EVENTS:
 |---
-(☻) Smog Storm !!!
+(^) Smog Storm
 
 (X) Ashen Invasion
 (#, %2) Corruption Invasion
@@ -1382,8 +1382,8 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(☻) Delay Component !!!
-(☻) Diode Component !!!
+(#2, ^2) Delay Component !!! (needs shift faster-increments feature)
+(^) Diode Component
 (^) Dirt Chest
 (^) Edge Detector
 (^) Fire Extinguisher Holder
@@ -1394,10 +1394,10 @@ TILES:
 (^) Liquid Sensor (Amebic Gel)
 (^) Liquid Sensor (Brine)
 (^) Liquid Sensor (Oil)
-(☻) Logic Component (AND) !!!
-(☻) Logic Component (OR) !!!
-(☻) Logic Component (XOR) !!!
-(☻) Logic Component (NIMPLY) !!!
+(^) Logic Component (AND)
+(^) Logic Component (OR)
+(^) Logic Component (XOR)
+(^) Logic Component (NIMPLY)
 (^) Mechanical Key Node
 (^) Medium Storage Container
 (^) Modular Bunk
@@ -1408,7 +1408,7 @@ TILES:
 (^) Oil Derrick
 (^) Pocket Dimension Monolith
 (X) Qube Generator
-(☻, @4 (locked socket UI sprite)) Radio Component !!!
+(#2, ^2) Radio Component !!! (see coding channel)
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Snake
 (X) Ravel Lock: Stacker
@@ -1456,7 +1456,7 @@ TILES:
 (^) Hanging Scrap
 (^) Heat Vent
 (^) Hydrothermal Vent
-(☻) Incomplete Standing Refinery !!!
+(#2, ^2) Incomplete Standing Refinery !!! (still needs glow)
 (#3, ^2) Industrial Work Bench
 (^) Lathe
 (^) Limestone Rubble
@@ -1620,7 +1620,7 @@ MISCELLANEOUS ITEMS:
 (^) Armor+ Power-Up
 (^) Defiled Mana
 (^) Large Chambersite
-(☻) RAM Chip !!!
+(^) RAM Chip
 (^) Worn Paper: Famine
 (^) Worn Paper: Loose Wheel
 (^) Worn Paper: Mean Baby
@@ -1662,7 +1662,7 @@ CONSUMABLES:
 (^) Mojo Injection
 (X) Mother's Ward
 (^) Quantum Injector
-(☻) Screwdriver Upgrade: Logic Component !!!
+(^) Screwdriver Upgrade: Logic Component
 (^) Screwdriver Upgrade: White Wire
 (%2) The Defiled Will
 
@@ -1685,7 +1685,7 @@ CONSUMABLES:
 
 (†, 々) Astringent Broth
 (^) Bitter Broth
-(☻) Chalky Broth !!!
+(^) Chalky Broth
 (^) Foul Broth
 (^) Greasy Broth
 (^) Hearty Broth
@@ -1694,7 +1694,7 @@ CONSUMABLES:
 (†, 々) Metallic Broth
 (^) Minishark Broth
 (^) Minty Broth
-(☻) Mushy Broth !!!
+(^) Mushy Broth
 (^) Plain Broth
 (^) Savory Broth
 (^) Sharp Broth
@@ -1762,10 +1762,10 @@ CONSUMABLES:
 (^) Bilious Crate
 (^) Crusty Crate
 (^) Festering Crate
-(☻) Hazardous Waste Crate !!!
+(^) Hazardous Waste Crate
 (^) Pointy Crate
 (^) Residual Crate
-(☻) Waste Crate !!!
+(^) Waste Crate
 
 (^) Fire Extinguisher
 (^) Gooey Water
