@@ -155,7 +155,10 @@ namespace Origins.Items.Tools.Wiring {
 			}
 			static void On_Player_TileInteractionsCheck(On_Player.orig_TileInteractionsCheck orig, Player self, int myX, int myY) {
 				if (WiresUI.Settings.DrawWires && !WiresUI.Settings.HideWires && !Main.tile[myX, myY].Get<Logic_Gate_Data>().TruthTable.IsEmpty) {
-					if (self.controlUseTile && self.releaseUseTile) SetComponentUI(new UI(myX, myY));
+					if (self.controlUseTile && self.releaseUseTile) {
+						SetComponentUI(new UI(myX, myY));
+						self.tileInteractionHappened = true;
+					}
 					return;
 				}
 				orig(self, myX, myY);

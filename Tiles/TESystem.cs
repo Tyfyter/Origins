@@ -89,7 +89,7 @@ namespace Origins.Tiles {
 			if (ModContent.GetInstance<PlaceComplexTEAction>() is null) Mod.AddContent(new PlaceComplexTEAction());
 		}
 		void RegisterAction_Future(Type isyncedAction) {
-			isyncedAction.GetNestedType("Loading").GetMethod("EnsureLoaded").Invoke(null, [Mod, typeof(PlaceComplexTEAction)]);
+			isyncedAction.GetNestedType("Loading").GetMethod("EnsureLoaded", [typeof(Mod), typeof(Type)]).Invoke(null, [Mod, typeof(PlaceComplexTEAction)]);
 		}
 		public void AddTileEntity(Point16 pos, T value) => new PlaceComplexTEAction(CTESystemType, pos, value).Perform();
 		public sealed override void SaveWorldData(TagCompound tag) {
