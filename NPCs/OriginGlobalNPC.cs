@@ -552,6 +552,7 @@ namespace Origins.NPCs {
 				}
 			);
 		}
+		[Obsolete("Use ProgressFlags instead", true)]
 		public static Condition WorldEvilBossCondition<TEvil>(string key) where TEvil : AltBiome {
 			Condition evil = ShopConditions.GetWorldEvilCondition<TEvil>();
 			return new Condition(

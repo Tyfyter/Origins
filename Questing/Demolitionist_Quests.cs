@@ -62,13 +62,13 @@ namespace Origins.Questing {
 			yield return new ShopItem<IWTPA_Standard>(35);
 			yield return new ShopItem<Impact_Grenade>(40);
 			yield return new ShopItem<Eyenade>(48, Condition.DownedEyeOfCthulhu);
-			yield return new ShopItem<Defiled_Spirit>(50, OriginGlobalNPC.WorldEvilBossCondition<Defiled_Wastelands_Alt_Biome>("Mods.Origins.Conditions.DownedDefiledAmalgamation"));
-			yield return new ShopItem<Ameballoon>(60, OriginGlobalNPC.WorldEvilBossCondition<Riven_Hive_Alt_Biome>("Mods.Origins.Conditions.DownedWorldCracker"));
+			yield return new ShopItem<Defiled_Spirit>(50, ProgressFlags.DownedDefiledAmalgamation);
+			yield return new ShopItem<Ameballoon>(60, ProgressFlags.DownedWorldCracker);
 			yield return new ShopItem<Impact_Bomb>(70);
-			yield return new ShopItem<Brainade>(81, Condition.DownedBrainOfCthulhu);
+			yield return new ShopItem<Brainade>(81, ProgressFlags.DownedBrainOfCthulhu);
 			yield return new ShopItem<Link_Grenade>(85, ShopConditions.GetWorldEvilCondition<Ashen_Alt_Biome>());
 			yield return new ShopItem<Nitro_Crate>(100);
-			yield return new ShopItem<Shrapnel_Bomb>(125, OriginGlobalNPC.WorldEvilBossCondition<Ashen_Alt_Biome>("Mods.Origins.Conditions.DownedScrapper"));
+			yield return new ShopItem<Shrapnel_Bomb>(125, ProgressFlags.DownedTrenchmaker);
 			yield return new ShopItem<Magic_Tripwire>(135);
 			yield return new ShopItem<Bomb_Artifact>(145);
 			yield return new ShopItem<Trash_Lid>(160);

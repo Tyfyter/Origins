@@ -17,6 +17,7 @@ using Origins.Music;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.BossDrops;
 using Origins.UI;
+using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib.Graphics;
 using PegasusLib.Networking;
@@ -220,8 +221,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			hoikOffset = default;
 		}
 		public override void OnKill() {
-			if (!NPC.downedBoss2 || Main.rand.NextBool(2)) WorldGen.spawnMeteor = true;
-			NPC.SetEventFlagCleared(ref NPC.downedBoss2, GameEventClearedID.DefeatedEaterOfWorldsOrBrainOfChtulu);
+			ProgressFlags.DownedTrenchmaker.Set();
 		}
 		public Vector2 stuckPos = default;
 		public int stuckCount = default;

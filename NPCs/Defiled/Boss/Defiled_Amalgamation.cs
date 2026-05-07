@@ -18,6 +18,7 @@ using Origins.Projectiles.Enemies;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Defiled;
 using Origins.Walls;
+using Origins.World;
 using Origins.World.BiomeData;
 using PegasusLib;
 using PegasusLib.Graphics;
@@ -833,8 +834,7 @@ namespace Origins.NPCs.Defiled.Boss {
 				NPC.frame = new Rectangle(0, 0, 80, 240 / 4);
 		}
 		public override void OnKill() {
-			if (!NPC.downedBoss2 || Main.rand.NextBool(2)) WorldGen.spawnMeteor = true;
-			NPC.SetEventFlagCleared(ref NPC.downedBoss2, GameEventClearedID.DefeatedEaterOfWorldsOrBrainOfChtulu);
+			ProgressFlags.DownedDefiledAmalgamation.Set();
 			if (roars == 0) {
 				Enough_Yap_Action action = new();
 				switch (Main.netMode) {

@@ -16,8 +16,8 @@ using Origins.LootConditions;
 using Origins.Music;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Riven;
+using Origins.World;
 using Origins.World.BiomeData;
-using PegasusLib;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -465,8 +465,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			armorBreakDropRule.OnSuccess(new CommonDrop(ModContent.ItemType<Riven_Carapace>(), 2, 2, 5, 3));
 		}
 		public override bool SpecialOnKill() {
-			if (!NPC.downedBoss2 || Main.rand.NextBool(2)) WorldGen.spawnMeteor = true;
-			NPC.SetEventFlagCleared(ref NPC.downedBoss2, GameEventClearedID.DefeatedEaterOfWorldsOrBrainOfChtulu);
+			ProgressFlags.DownedWorldCracker.Set();
 			Mod.Logger.Info($"SpecialOnKill on {Main.netMode}, life: {NPC.life}");
 			int bodyType = BodyType;
 			float dist = float.PositiveInfinity;
