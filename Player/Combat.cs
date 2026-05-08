@@ -40,6 +40,10 @@ namespace Origins {
 			float speed = 1f;
 			if (item.IsAGun()) speed += gunSpeedBonus;
 			if (item.damage > 0 && retaliatoryTendrilStrength > 0) speed += retaliatoryTendrilStrength;
+			if (item.CountsAsClass(DamageClass.Melee) || item.CountsAsClass(DamageClass.SummonMeleeSpeed)) {
+				//resizingGloveScale = 0.75f;
+				if (resizingGlove && resizingGloveScale < 1) speed += 1 / (resizingGloveScale * resizingGloveScale) - 1;
+			}
 			return speed;
 		}
 		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {

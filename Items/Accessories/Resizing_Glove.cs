@@ -18,13 +18,14 @@ namespace Origins.Items.Accessories {
 			On_Player.ItemCheck_StartActualUse += On_Player_ItemCheck_StartActualUse;
 		}
 		static void On_Player_ItemCheck_StartActualUse(On_Player.orig_ItemCheck_StartActualUse orig, Player self, Item sItem) {
-			orig(self, sItem);
-			if (self.whoAmI != Main.myPlayer) return;
-			OriginPlayer originPlayer = self.OriginPlayer();
-			if (originPlayer.resizingGlove) {
-				const float strength = 2f;
-				new Resizing_Glove_Action(self, Math.Clamp(Main.rand.NextFloat(1 / strength, float.BitIncrement(strength)), 0.75f, 2)).Perform();
+			if (self.IsLocallyOwned()) {
+				OriginPlayer originPlayer = self.OriginPlayer();
+				if (originPlayer.resizingGlove) {
+					const float strength = 2f;
+					new Resizing_Glove_Action(self, Math.Clamp(Main.rand.NextFloat(1 / strength, float.BitIncrement(strength)), 0.75f, 2)).Perform();
+				}
 			}
+			orig(self, sItem);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 26);
