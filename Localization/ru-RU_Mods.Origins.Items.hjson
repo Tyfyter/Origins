@@ -8363,3 +8363,8 @@ Gas_Generator_Item: {
 	// DisplayName: Gas Generator
 	// Tooltip: ""
 }
+
+Solar_Battery_Item: {
+	// DisplayName: Solar Battery
+	// Tooltip: ""
+}

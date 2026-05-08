@@ -1417,7 +1417,7 @@ TILES:
 (^) Riven Dungeon Chest
 (^) Rusty Locker
 (^) Small Storage Container
-(#, ^2) Solar Battery !!!
+(☻) Solar Battery !!!
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (#2/3, ^2) Transistor !!! (needs obtain method)
 (^) Unsuspicious Bush

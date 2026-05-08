@@ -23,6 +23,7 @@ namespace Origins.Tiles.Defiled {
 			mergeID = TileID.IceBlock;
 			DustType = Defiled_Wastelands.DefaultTileDust;
 			HitSound = SoundID.Item50;
+			OriginsSets.Tiles.DefiledBiomeTiles.Add(Type);
 		}
 		public override void FloorVisuals(Player player) {
 			base.FloorVisuals(player);

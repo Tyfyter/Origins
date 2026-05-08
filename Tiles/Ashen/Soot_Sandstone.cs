@@ -26,6 +26,7 @@ namespace Origins.Tiles.Ashen {
 			AddMapEntry(FromHexRGB(0x8772a6));
 			mergeID = TileID.Sandstone;
 			DustType = Ashen_Biome.DefaultTileDust;
+			OriginsSets.Tiles.AshenBiomeTiles.Add(Type);
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			yield return new TileMergeOverlay(merge + "Sootsand_Overlay", TileType<Sootsand>());

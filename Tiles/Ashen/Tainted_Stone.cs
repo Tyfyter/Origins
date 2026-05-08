@@ -41,6 +41,7 @@ namespace Origins.Tiles.Ashen {
 			MineResist = 2;
 			HitSound = SoundID.Tink;
 			DustType = Ashen_Biome.DefaultTileDust;
+			OriginsSets.Tiles.AshenBiomeTiles.Add(Type);
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			//Add/Remove a slash below to switch between the two

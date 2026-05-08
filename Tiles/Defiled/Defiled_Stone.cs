@@ -44,6 +44,7 @@ namespace Origins.Tiles.Defiled {
 			MineResist = 2;
 			HitSound = Origins.Sounds.DefiledIdle;
 			DustType = Defiled_Wastelands.DefaultTileDust;
+			OriginsSets.Tiles.DefiledBiomeTiles.Add(Type);
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			yield return new TileMergeOverlay(merge + "Mud_Overlay", TileID.Sets.Mud);

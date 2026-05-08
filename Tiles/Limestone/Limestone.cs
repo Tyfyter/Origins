@@ -42,6 +42,7 @@ namespace Origins.Tiles.Limestone {
 			AddMapEntry(new Color(180, 172, 134));
 			DustType = DustID.Sand;
 			HitSound = SoundID.Tink;
+			OriginsSets.Tiles.LimestoneBiomeTiles.Add(Type);
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			yield return new TileMergeOverlay(merge + "Sand_Overlay", TileID.Sand);

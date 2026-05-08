@@ -19,6 +19,7 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(200, 200, 200));
 			mergeID = TileID.Sandstone;
 			DustType = DustID.Ghost;
+			OriginsSets.Tiles.RivenBiomeTiles.Add(Type);
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			yield return new TileMergeOverlay(merge + "Silica_Overlay", TileType<Silica>());

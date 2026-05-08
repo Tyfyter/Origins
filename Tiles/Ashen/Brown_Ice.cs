@@ -22,6 +22,7 @@ namespace Origins.Tiles.Ashen {
 			mergeID = TileID.IceBlock;
 			DustType = Ashen_Biome.DefaultTileDust;
 			HitSound = SoundID.Item50;
+			OriginsSets.Tiles.AshenBiomeTiles.Add(Type);
 		}
 		public override void FloorVisuals(Player player) {
 			base.FloorVisuals(player);

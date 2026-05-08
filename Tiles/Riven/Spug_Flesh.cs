@@ -54,6 +54,7 @@ namespace Origins.Tiles.Riven {
 			MinPick = 65;
 			MineResist = 1.5f;
 			DustType = Riven_Hive.DefaultTileDust;
+			OriginsSets.Tiles.RivenBiomeTiles.Add(Type);
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			yield return new TileMergeOverlay(merge + "Spug_Calcified_Overlay", TileType<Calcified_Riven_Flesh>());

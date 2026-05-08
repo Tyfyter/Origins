@@ -1,19 +1,21 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
 using Origins.Projectiles;
+using PegasusLib.Content;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumTiles = ThoriumMod.Tiles;
-using OMI = Origins.OriginsModIntegrations;
-using System.Linq;
+using static Origins.Core.Shaders.Parameter;
 using static Terraria.ModLoader.ModContent;
-using Terraria.Audio;
-using PegasusLib.Content;
+using OMI = Origins.OriginsModIntegrations;
+using ThoriumTiles = ThoriumMod.Tiles;
 
 namespace Origins {
 	public static class OriginsSets {
@@ -436,6 +438,10 @@ namespace Origins {
 			public static bool[] DisableHoiking { get; } = TileID.Sets.Factory.CreateBoolSet(false);
 			public static bool[] StructureSerializer_PlaceAsObject { get; } = TileID.Sets.Factory.CreateBoolSet();
 			public static (SoundStyle open, SoundStyle close)[] ChestSoundOverride { get; } = TileID.Sets.Factory.CreateCustomSet<(SoundStyle, SoundStyle)>(default);
+			public static TileBoolSetWithIndexes DefiledBiomeTiles = TileID.Sets.Factory.CreateBoolSet();
+			public static TileBoolSetWithIndexes RivenBiomeTiles = TileID.Sets.Factory.CreateBoolSet();
+			public static TileBoolSetWithIndexes AshenBiomeTiles = TileID.Sets.Factory.CreateBoolSet();
+			public static TileBoolSetWithIndexes LimestoneBiomeTiles = TileID.Sets.Factory.CreateBoolSet();
 			public static bool[] GemTilesToChambersite { get; } = TileID.Sets.Factory.CreateNamedSet($"{nameof(Tiles)}_{nameof(GemTilesToChambersite)}")
 				.Description("Gem ores in this set can be corrupted into chambersite ores")
 				.RegisterBoolSet(
@@ -477,6 +483,33 @@ namespace Origins {
 			}
 			public static int GetModContent(Mod mod, string name) {
 				return mod.GetContent<ModTile>().First(content => content.Name == name).Type;
+			}
+			public readonly struct TileBoolSetWithIndexes : IEnumerable<int> {
+				bool[] Values { get; init; }
+				List<int> Indexes { get; init; }
+				public bool this[int index] {
+					get => Values[index];
+					set {
+						if (!Values[index].TrySet(value)) return;
+						if (value) Indexes.Add(index);
+						else Indexes.Remove(index);
+					}
+				}
+				public readonly void Add(int type) => this[type] = true;
+				public readonly void Remove(int type) => this[type] = false;
+				public static implicit operator TileBoolSetWithIndexes(bool[] value) => new() {
+					Values = value,
+					Indexes = value.GetTrueIndexes()
+				};
+				readonly IEnumerator<int> IEnumerable<int>.GetEnumerator() => Indexes.GetEnumerator();
+				readonly IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)Indexes).GetEnumerator();
+				public readonly int Sum(ReadOnlySpan<int> tileCounts) {
+					int result = 0;
+					for (int i = 0; i < Indexes.Count; i++) {
+						result += tileCounts[Indexes[i]];
+					}
+					return result;
+				}
 			}
 		}
 		public delegate void MultitileCollisionOffsetter(Tile tile, ref float y, ref int height);

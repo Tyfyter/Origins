@@ -269,39 +269,15 @@ namespace Origins {
 		public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts) {
 			voidTiles = tileCounts[ModContent.TileType<Dusk_Stone>()];
 
-			defiledTiles = tileCounts[ModContent.TileType<Defiled_Stone>()]
-				+ tileCounts[ModContent.TileType<Defiled_Grass>()]
-				+ tileCounts[ModContent.TileType<Defiled_Jungle_Grass>()]
-				+ tileCounts[ModContent.TileType<Defiled_Sand>()]
-				+ tileCounts[ModContent.TileType<Defiled_Sandstone>()]
-				+ tileCounts[ModContent.TileType<Hardened_Defiled_Sand>()]
-				+ tileCounts[ModContent.TileType<Defiled_Ice>()];
-
-			rivenTiles = tileCounts[ModContent.TileType<Spug_Flesh>()]
-				+ tileCounts[ModContent.TileType<Riven_Grass>()]
-				+ tileCounts[ModContent.TileType<Riven_Jungle_Grass>()]
-				+ tileCounts[ModContent.TileType<Silica>()]
-				+ tileCounts[ModContent.TileType<Brittle_Quartz>()]
-				+ tileCounts[ModContent.TileType<Quartz>()]
-				+ tileCounts[ModContent.TileType<Primordial_Permafrost>()];
-
-			ashenTiles = tileCounts[ModContent.TileType<Tainted_Stone>()]
-				+ tileCounts[ModContent.TileType<Ashen_Grass>()]
-				+ tileCounts[ModContent.TileType<Ashen_Jungle_Grass>()]
-				+ tileCounts[ModContent.TileType<Ashen_Murky_Sludge_Grass>()]
-				+ tileCounts[ModContent.TileType<Sootsand>()]
-				+ tileCounts[ModContent.TileType<Soot_Sandstone>()]
-				+ tileCounts[ModContent.TileType<Hardened_Sootsand>()]
-				+ tileCounts[ModContent.TileType<Brown_Ice>()];
+			defiledTiles = OriginsSets.Tiles.DefiledBiomeTiles.Sum(tileCounts);
+			rivenTiles = OriginsSets.Tiles.RivenBiomeTiles.Sum(tileCounts);
+			ashenTiles = OriginsSets.Tiles.AshenBiomeTiles.Sum(tileCounts);
 
 			brineTiles = tileCounts[ModContent.TileType<Baryte>()];
 
 			fiberglassTiles = tileCounts[ModContent.TileType<Fiberglass_Tile>()];
 
-			limestoneTiles = tileCounts[ModContent.TileType<Limestone>()]
-				+ tileCounts[ModContent.TileType<Limestone_Stalactite>()]
-				+ tileCounts[ModContent.TileType<Limestone_Stalagmite>()]
-				+ tileCounts[ModContent.TileType<Limestone_Pile_Medium>()];
+			limestoneTiles = OriginsSets.Tiles.LimestoneBiomeTiles.Sum(tileCounts);
 
 			chambersiteTiles = tileCounts[ModContent.TileType<Chambersite>()];
 			for (int i = 0; i < Chambersite_Ore.chambersiteTiles.Count; i++) {

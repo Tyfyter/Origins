@@ -23,6 +23,7 @@ namespace Origins.Tiles.Limestone {
 			TileObjectData.addTile(Type);
 
 			DustType = DustID.Sand;
+			OriginsSets.Tiles.LimestoneBiomeTiles.Add(Type);
 		}
 		public override bool CanDrop(int i, int j) => true;
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {

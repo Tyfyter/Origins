@@ -26,6 +26,7 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(150, 150, 150));
 			mergeID = TileID.Sandstone;
 			DustType = Defiled_Wastelands.DefaultTileDust;
+			OriginsSets.Tiles.DefiledBiomeTiles.Add(Type);
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			yield return new TileMergeOverlay(merge + "Defiled_Sand_Overlay", TileType<Defiled_Sand>());

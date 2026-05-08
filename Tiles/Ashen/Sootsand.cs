@@ -39,6 +39,7 @@ namespace Origins.Tiles.Ashen {
 			MineResist = 0.5f; // Sand tile typically require half as many hits to mine.
 			DustType = Ashen_Biome.DefaultTileDust;
 			AddMapEntry(FromHexRGB(0x817691));
+			OriginsSets.Tiles.AshenBiomeTiles.Add(Type);
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			yield return new TileMergeOverlay(merge + "Dirt_Overlay", TileID.Dirt);

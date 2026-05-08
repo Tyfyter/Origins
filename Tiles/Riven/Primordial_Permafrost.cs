@@ -22,6 +22,7 @@ namespace Origins.Tiles.Riven {
 			mergeID = TileID.IceBlock;
 			DustType = DustID.Water_Snow;
 			HitSound = SoundID.Item50;
+			OriginsSets.Tiles.RivenBiomeTiles.Add(Type);
 		}
 		public override void FloorVisuals(Player player) {
 			base.FloorVisuals(player);

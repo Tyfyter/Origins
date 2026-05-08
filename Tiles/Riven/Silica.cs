@@ -40,6 +40,7 @@ namespace Origins.Tiles.Riven {
 			MineResist = 0.5f; // Sand tile typically require half as many hits to mine.
 			AddMapEntry(new Color(194, 200, 200));
 			DustType = DustID.Ghost;
+			OriginsSets.Tiles.RivenBiomeTiles.Add(Type);
 		}
 
 		public override bool HasWalkDust() {

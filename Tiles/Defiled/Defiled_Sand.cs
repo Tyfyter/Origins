@@ -41,6 +41,7 @@ namespace Origins.Tiles.Defiled {
 			MineResist = 0.5f; // Sand tile typically require half as many hits to mine.
 			DustType = Defiled_Wastelands.DefaultTileDust;
 			AddMapEntry(new Color(175, 175, 175));
+			OriginsSets.Tiles.DefiledBiomeTiles.Add(Type);
 		}
 		protected override IEnumerable<TileOverlay> GetOverlays() {
 			yield return new TileMergeOverlay(merge + "Dirt_Overlay", TileID.Dirt);

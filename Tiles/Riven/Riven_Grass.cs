@@ -30,6 +30,7 @@ namespace Origins.Tiles.Riven {
 			DustType = Riven_Hive.DefaultTileDust;
 			Riven_Grass_Seeds.TileAssociations[TileID.Dirt] = Type;
 			RegisterItemDrop(ItemID.DirtBlock);
+			OriginsSets.Tiles.RivenBiomeTiles.Add(Type);
 		}
 		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != TileID.Dirt;
 		protected override IEnumerable<TileOverlay> GetOverlays() {
@@ -83,6 +84,7 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(0, 100, 160));
 			Riven_Grass_Seeds.TileAssociations[TileID.Mud] = Type;
 			RegisterItemDrop(ItemID.MudBlock);
+			OriginsSets.Tiles.RivenBiomeTiles.Add(Type);
 		}
 		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != TileID.Mud;
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {

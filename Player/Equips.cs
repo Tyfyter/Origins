@@ -108,99 +108,14 @@ namespace Origins {
 				explosiveArteryCount = -1;
 			}
 			if (solarPanel) {
-				static Vector3 DoTileCalcs(int x, int top, Vector3 sunLight, Vector3 waterFactor) {
-					for (int y = top; y > 0; y--) {
-						Tile tile = Framing.GetTileSafely(x, y);
-						if (tile.HasUnactuatedTile && Main.tileBlockLight[tile.TileType]) {
-							sunLight = Vector3.Zero;
-						} else if (tile.LiquidAmount > 0) {
-							switch (tile.LiquidType) {
-								case LiquidID.Water:
-								sunLight *= waterFactor;
-								sunLight -= waterFactor * 0.01f;
-								break;
-								case LiquidID.Lava:
-								sunLight = Vector3.Zero;
-								break;
-								case LiquidID.Honey:
-								sunLight *= new Vector3(0.25f, 0.25f, 0f);
-								sunLight -= new Vector3(0.0025f, 0.0025f, 0f);
-								break;
-							}
-						} else if (y > Main.worldSurface) {
-							sunLight *= new Vector3(0.999f, 0.999f, 0.999f);
-							sunLight -= new Vector3(0.001f, 0.001f, 0.001f);
-						}
-						if (sunLight.X < 0) {
-							sunLight.X = 0;
-						}
-						if (sunLight.Y < 0) {
-							sunLight.Y = 0;
-						}
-						if (sunLight.Z < 0) {
-							sunLight.Z = 0;
-						}
-						if (sunLight == Vector3.Zero) {
-							break;
-						}
-					}
-					return sunLight;
-				}
-				Vector3 sunLight = new(1f, 1f, 0.67f);
-				float sunFactor = 0;
+
 				int top = (int)Player.TopLeft.Y / 16;
-				Vector3 waterFactor = Vector3.One;
-				switch (Main.waterStyle) {
-					case WaterStyleID.Purity:
-					case WaterStyleID.Lava:
-					case WaterStyleID.Underground:
-					case WaterStyleID.Cavern:
-					waterFactor = new Vector3(0.88f, 0.96f, 1.015f);
-					break;
 
-					case WaterStyleID.Corrupt:
-					waterFactor = new Vector3(0.94f, 0.85f, 1.01f) * 0.91f;
-					break;
-					case WaterStyleID.Jungle:
-					waterFactor = new Vector3(0.84f, 0.95f, 1.015f) * 0.91f;
-					break;
-					case WaterStyleID.Hallow:
-					waterFactor = new Vector3(0.90f, 0.86f, 1.01f) * 0.91f;
-					break;
-					case WaterStyleID.Snow:
-					waterFactor = new Vector3(0.64f, 0.99f, 1.01f) * 0.91f;
-					break;
-					case WaterStyleID.Desert:
-					waterFactor = new Vector3(0.93f, 0.83f, 0.98f) * 0.91f;
-					break;
-					case WaterStyleID.Bloodmoon:
-					waterFactor = new Vector3(1f, 0.88f, 0.84f) * 0.91f;
-					break;
-					case WaterStyleID.Crimson:
-					waterFactor = new Vector3(0.83f, 1f, 1f) * 0.91f;
-					break;
-					case WaterStyleID.UndergroundDesert:
-					waterFactor = new Vector3(0.95f, 0.98f, 0.85f) * 0.91f;
-					break;
-					case 13:
-					waterFactor = new Vector3(0.9f, 1f, 1.02f) * 0.91f;
-					break;
-
-					case WaterStyleID.Honey:
-					waterFactor = new Vector3(0f);
-					break;
-
-					default:
-					if (LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle) is ModWaterStyle waterStyle) waterStyle.LightColorMultiplier(ref waterFactor.X, ref waterFactor.Y, ref waterFactor.Z);
-					break;
-				}
-				waterFactor /= 1.015f;
-
-				sunFactor += DoTileCalcs((int)(Player.TopLeft.X + 1) / 16, top, sunLight, waterFactor).Length() / 1.56f;
-				sunFactor += DoTileCalcs((int)Player.Top.X / 16, top, sunLight, waterFactor).Length() / 1.56f;
-				sunFactor += DoTileCalcs((int)(Player.TopRight.X - 1) / 16, top, sunLight, waterFactor).Length() / 1.56f;
-
-				Player.manaRegenCount += (int)(sunFactor * 12);
+				Player.manaRegenCount += (int)(Solar_Panel.GetSunlightFactor(Main.waterStyle,
+					((int)(Player.TopLeft.X + 1) / 16, top),
+					((int)Player.Top.X / 16, top),
+					((int)(Player.TopRight.X - 1) / 16, top)
+				) * 12);
 				//Player.chatOverhead.NewMessage("" + (int)(sunFactor * 12), 5);
 			}
 			if (blizzardwalkerJacket) {

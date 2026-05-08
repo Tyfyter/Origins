@@ -60,7 +60,7 @@ namespace Origins.World.BiomeData {
 
 			return IsActive;
 		}
-		public static bool IsActive => OriginSystem.ashenTiles > NeededTiles;
+		public static bool IsActive => OriginSystem.ashenTiles >= NeededTiles;
 		public override void SpecialVisuals(Player player, bool isActive) {
 			//OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			//Filters.Scene["Origins:ZoneAshen"].GetShader().UseProgress(originPlayer.ZoneAshenProgressSmoothed);

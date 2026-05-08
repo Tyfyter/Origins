@@ -28,6 +28,7 @@ namespace Origins.Tiles.Ashen {
 			DustType = DustID.Demonite;
 			Ashen_Grass_Seeds.TileAssociations[TileID.Dirt] = Type;
 			RegisterItemDrop(ItemID.DirtBlock);
+			OriginsSets.Tiles.AshenBiomeTiles.Add(Type);
 		}
 		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != TileID.Dirt;
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
@@ -67,6 +68,7 @@ namespace Origins.Tiles.Ashen {
 			DustType = DustID.Demonite;
 			Ashen_Grass_Seeds.TileAssociations[TileID.Mud] = Type;
 			RegisterItemDrop(ItemID.MudBlock);
+			OriginsSets.Tiles.AshenBiomeTiles.Add(Type);
 		}
 		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != TileID.Mud;
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
@@ -104,6 +106,7 @@ namespace Origins.Tiles.Ashen {
 			TileLoader.RegisterConversion(Type, BiomeConversionID.Chlorophyte, ModContent.TileType<Murky_Sludge>());
 			Ashen_Grass_Seeds.TileAssociations[ModContent.TileType<Murky_Sludge>()] = Type;
 			RegisterItemDrop(ModContent.ItemType<Murky_Sludge_Item>());
+			OriginsSets.Tiles.AshenBiomeTiles.Add(Type);
 		}
 		public override bool CanReplace(int i, int j, int tileTypeBeingPlaced) => tileTypeBeingPlaced != ModContent.TileType<Murky_Sludge>();
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
