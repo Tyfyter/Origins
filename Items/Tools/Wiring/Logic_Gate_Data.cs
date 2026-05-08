@@ -24,6 +24,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 using Terraria.UI.Chat;
 using static Origins.Items.Tools.Wiring.Logic_Gate_System;
@@ -542,9 +543,10 @@ namespace Origins.Items.Tools.Wiring {
 			}
 			void Lockout(UIElement root) {
 				if (uiSource.Locked) return;
-				root.Append(new UIImageFramed(Textures, new(2, 154, 240, 150)) {
-					IgnoresMouseInteraction = false
-				});
+				root.Append(new UIImageFramed(Textures, new(2, 154, 240, 150)));
+				foreach (UIElement item in root.Children) {
+					if (item is not UIBorder) item.IgnoresMouseInteraction = true;
+				}
 			}
 			public override void OnDeactivate() => onDeactivate?.Invoke();
 			public void SetUISource(IComponentUI newSource) {
@@ -781,7 +783,8 @@ namespace Origins.Items.Tools.Wiring {
 					0);
 				}
 			}
-			public class ReframingButton(Action click, Func<Rectangle> getFrame, Func<Color> color = null) : UIElement {
+			public class ReframingButton(Action click, Func<Rectangle> getFrame, Func<Color> color = null, LocalizedText tooltip = null) : UIElement {
+				public LocalizedText Tooltip { get; init; } = tooltip;
 				Rectangle frame = getFrame();
 				Func<Color> Tint { get; set; } = color ?? (() => Color.White);
 				public static ReframingButton States(Func<int> getState, params (Action click, Rectangle frame)[] states) {
@@ -790,12 +793,13 @@ namespace Origins.Items.Tools.Wiring {
 						() => states[getState()].frame
 					);
 				}
-				public static ReframingButton Disableable(Func<bool> isDisabled, Action click, Rectangle frame, Rectangle disabledFrame) {
+				public static ReframingButton Disableable(Func<bool> isDisabled, Action click, Rectangle frame, Rectangle disabledFrame, LocalizedText tooltip = null) {
 					ReframingButton reframingButton = new(
 						() => {
 							if (!isDisabled()) click();
 						},
-						() => isDisabled() ? disabledFrame : frame
+						() => isDisabled() ? disabledFrame : frame,
+						tooltip: tooltip
 					);
 					reframingButton.Tint = () => reframingButton.IsMouseHovering && !isDisabled() ? new Color(255, 255, 255, 200) : Color.White;
 					return reframingButton;
@@ -809,7 +813,11 @@ namespace Origins.Items.Tools.Wiring {
 					Width.Set(frame.Width, 0f);
 					Height.Set(frame.Height, 0f);
 				}
-				public override void Update(GameTime gameTime) => SetFrame(getFrame());
+				public override void Update(GameTime gameTime) {
+					SetFrame(getFrame());
+					if (IsMouseHovering) UICommon.TooltipMouseText(Tooltip.Value);
+				}
+
 				protected override void DrawSelf(SpriteBatch spriteBatch) {
 					spriteBatch.Draw(position: GetDimensions().Position(), texture: Textures.Value, sourceRectangle: frame, color: Tint());
 				}
