@@ -28,7 +28,8 @@ namespace Origins.CrossMod.Fargos.Items {
 	}
 	public class Defiled_Chest : TOSummons<Defiled_Mimic> { }
 	public class Riven_Chest : TOSummons<Riven_Mimic> { }
-	public class Suspicious_Trash_Compactor : TOSummons<Trash_Compactor_Mimic> {
+	public class Suspicious_Trash_Compactor : TOSummons<Trash_Compactor_Mimic>, IBroken {
+		static string IBroken.BrokenReason => "Needs texture";
 		public override string Texture => typeof(Defiled_Chest).GetDefaultTMLName();
 	}
 

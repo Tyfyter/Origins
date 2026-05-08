@@ -261,7 +261,7 @@ ENEMY NPCS:
 (X) Spiteful Flesh
 (^) Springjumper
 (X) Tubefish
-(#2, $2, ^2) Wind Pail !!! (just needs SFX [special effects or sound effects? {Odio las siglas}] when attacking you)
+(☻) Wind Pail !!! (added sound-like effects for attacks)
 
 (^) Airsnatcher
 (^) Amoebeye
@@ -1382,7 +1382,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(#2, ^2) Delay Component !!! (needs shift faster-increments feature)
+(☻) Delay Component !!!
 (^) Diode Component
 (^) Dirt Chest
 (^) Edge Detector

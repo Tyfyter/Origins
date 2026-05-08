@@ -104,13 +104,13 @@ namespace Origins.Tiles.Ashen {
 					if (!GetTE(out Delay_Component_TE tileEntity)) return;
 					Append(ComponentUI.ReframingButton.Disableable(
 						() => tileEntity.Delay <= Delay_Component_TE.increment,
-						() => new Delay_Component_TE.Set_Delay_Action(position.X, position.Y, tileEntity.Delay - Delay_Component_TE.increment).Perform(),
+						() => new Delay_Component_TE.Set_Delay_Action(position.X, position.Y, tileEntity.Delay - Delay_Component_TE.CurrentIncrement).Perform(),
 						new(248, 180, 18, 18),
 						new(248, 200, 18, 18)
 					).MoveTo(new(4, 2)));
 					Append(ComponentUI.ReframingButton.Disableable(
 						() => tileEntity.Delay >= Delay_Component_TE.max,
-						() => new Delay_Component_TE.Set_Delay_Action(position.X, position.Y, tileEntity.Delay + Delay_Component_TE.increment).Perform(),
+						() => new Delay_Component_TE.Set_Delay_Action(position.X, position.Y, tileEntity.Delay + Delay_Component_TE.CurrentIncrement).Perform(),
 						new(292, 180, 18, 18),
 						new(292, 200, 18, 18)
 					).MoveTo(new(22, 2)));
@@ -140,6 +140,7 @@ namespace Origins.Tiles.Ashen {
 		private bool targetPowered;
 		public const int increment = 6;
 		public const int max = increment * 10 * 10;
+		public static int CurrentIncrement => ItemSlot.ShiftInUse ? (increment * 10) : increment;
 		public int Delay { get; private set; } = 60;
 		public override void NetSend(BinaryWriter writer) {
 			for (int i = 0; i < timer.Length; i++) writer.Write(timer[i]);
@@ -183,7 +184,7 @@ namespace Origins.Tiles.Ashen {
 			protected override bool ShouldPerform => TryGet<Delay_Component_TE>(I, J, out _);
 			protected override void Perform() {
 				if (!TryGet(I, J, out Delay_Component_TE te)) return;
-				te.Delay = Delay;
+				te.Delay = int.Clamp(Delay, increment, max);
 			}
 		}
 	}
