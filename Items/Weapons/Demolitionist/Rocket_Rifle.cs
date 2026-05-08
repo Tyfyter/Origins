@@ -4,6 +4,7 @@ using Origins.Dusts;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.NPCs.Ashen;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.DataStructures;
@@ -48,6 +49,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 40;
 			ProjectileID.Sets.IsARocketThatDealsDoubleDamageToPrimaryEnemy[Type] = true;
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.RocketI);

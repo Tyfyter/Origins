@@ -4,6 +4,7 @@ using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Items.Weapons.Melee;
+using Origins.NPCs.Ashen;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -95,6 +96,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
 			OriginsSets.Projectiles.AllowAboveWorld[Type] = true;
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
@@ -108,6 +110,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.localNPCHitCooldown = 60;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.friendly = true;
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Weapons.Ranged;
+using Origins.NPCs.Ashen;
 using Origins.NPCs.Dungeon;
 using Origins.Projectiles;
 using PegasusLib;

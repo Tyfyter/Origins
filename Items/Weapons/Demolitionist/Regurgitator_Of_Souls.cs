@@ -2,6 +2,7 @@
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.NPCs.Ashen;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
@@ -60,6 +61,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 40;
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.width = 14;

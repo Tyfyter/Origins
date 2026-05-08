@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.NPCs.Ashen;
 using Origins.Tiles.Other;
 using PegasusLib;
 using Terraria;
@@ -52,6 +53,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 40;
 			Origins.MagicTripwireDetonationStyle[Type] = 2;
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.width = 14;

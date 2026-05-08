@@ -4,6 +4,7 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Tools;
 using Origins.NPCs;
+using Origins.NPCs.Ashen;
 using Origins.Projectiles;
 using PegasusLib;
 using System;
@@ -47,6 +48,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ProjectileID.Sets.Explosive[Type] = true;
 			ProjectileID.Sets.NeedsUUID[Type] = true;
 			Hydrolantern_Force_Global.ProjectileTypes.Add(Type);
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Dynamite);

@@ -4,6 +4,7 @@ using Origins.Core;
 using Origins.Dusts;
 using Origins.Graphics;
 using Origins.Liquids;
+using Origins.NPCs.Ashen;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -69,6 +70,7 @@ namespace Origins.Items.Weapons.Ammo {
 		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher].Add(Item.Type, Type);
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.DryRocket);
@@ -156,6 +158,7 @@ namespace Origins.Items.Weapons.Ammo {
 		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.GrenadeLauncher].Add(Item.Type, Type);
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.DryGrenade);
@@ -177,6 +180,7 @@ namespace Origins.Items.Weapons.Ammo {
 		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.ProximityMineLauncher].Add(Item.Type, Type);
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.DryMine);
@@ -197,6 +201,7 @@ namespace Origins.Items.Weapons.Ammo {
 		protected override bool CloneNewInstances => true;
 		public override void SetStaticDefaults() {
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.SnowmanCannon].Add(Item.Type, Type);
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.DrySnowmanRocket);

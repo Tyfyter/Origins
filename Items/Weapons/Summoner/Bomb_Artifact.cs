@@ -2,6 +2,7 @@
 using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Summoner;
+using Origins.NPCs.Ashen;
 using Origins.NPCs.MiscE;
 using Origins.Projectiles;
 using System;
@@ -94,6 +95,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
 			Origins.ForceFelnumShockOnShoot[Type] = true;
 			OriginsSets.Projectiles.NoMultishot[Type] = true;
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 
 		public override void SetDefaults() {

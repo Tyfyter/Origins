@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.NPCs.Ashen;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using PegasusLib;
 using System;
@@ -51,6 +52,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;
 			ID = Type;
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);

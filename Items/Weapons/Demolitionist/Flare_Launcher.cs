@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dusts;
 using Origins.Events;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.NPCs.Ashen;
 using PegasusLib.Graphics;
 using System;
 using Terraria;
@@ -119,6 +120,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 512 * 16;
 			ID = Type;
 			Smog_Storm.CutThroughSmogStorm[Type] = Flare_Launcher_Glow_P.ClearSmog(false);
+			Defensive_Turret.OohShiny[Type] = true;
 		}
 		//bool initialized = false;
 		public override void SetDefaults() {

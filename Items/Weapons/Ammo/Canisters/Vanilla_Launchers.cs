@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.NPCs.Ashen;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
 		public override void SetStaticDefaults() {
 			CanisterGlobalItem.RegisterForLauncher(ItemID.GrenadeLauncher, Type);
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.GrenadeI);
@@ -63,6 +65,7 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override void SetStaticDefaults() {
 			CanisterGlobalItem.RegisterForLauncher(ItemID.ProximityMineLauncher, Type);
 			ProjectileID.Sets.IsAMineThatDealsTripleDamageWhenStationary[Type] = true;
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);

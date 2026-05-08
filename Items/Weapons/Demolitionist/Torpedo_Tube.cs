@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Journal;
+using Origins.NPCs.Ashen;
 using Origins.Tiles.Brine;
 using PegasusLib;
 using Terraria;
@@ -56,6 +57,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 3;
 			Origins.MagicTripwireRange[Type] = 40;
+			Defensive_Turret.TargetProjectilesLow[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);

@@ -195,20 +195,21 @@ namespace Origins.NPCs.Ashen.Boss {
 				}
 				Vector2[] oldPos = [.. Projectile.oldPos];
 				float[] oldRot = [.. Projectile.oldRot];
+				Vector2 halfSize = new(14);
 				for (int i = 0; i < oldPos.Length; i++) {
 					if (oldPos[i] == default) {
 						Array.Resize(ref oldPos, i);
 						Array.Resize(ref oldRot, i);
 						break;
 					}
-					oldPos[i] += Projectile.Size * 0.5f;
+					oldPos[i] += halfSize;
 					oldRot[i] += MathHelper.PiOver2;
 				}
 				Dust.NewDustPerfect(
 					Main.LocalPlayer.Center,
 					ModContent.DustType<Vertex_Trail_Dust>(),
 					Vector2.Zero
-				).customData = new Vertex_Trail_Dust.TrailData(oldPos, oldRot, StripColors(Color.Goldenrod), StripWidth, 2);
+				).customData = new Vertex_Trail_Dust.TrailData(oldPos, oldRot, StripColors(Color.Goldenrod), StripWidth, 4);
 			}
 			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 				modifiers.ScalingArmorPenetration += 0.75f;

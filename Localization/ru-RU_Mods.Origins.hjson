@@ -2306,10 +2306,11 @@ Projectiles: {
 	// _Temp_Turquoise.DisplayName: " Temp Turquoise"
 	// _Temp_Yellow.DisplayName: " Temp Yellow"
 	// ModWireChannel.DisplayName: Mod Wire Channel
-	// Quasar_P.DisplayName: Quasar P
-	// Quasar_Offshoot_P.DisplayName: Quasar Offshoot P
+	// Quasar_P.DisplayName: Quasar
+	// Quasar_Offshoot_P.DisplayName: Quasar Offshoot
 	// Mushy_Broth_Explosion.DisplayName: Mushy Broth Explosion
-	// Big_Bang_P.DisplayName: Big Bang P
+	// Big_Bang_P.DisplayName: Big Bang
+	// Defensive_Turret_P.DisplayName: Defensive Turret
 }
 
 Prefixes: {
