@@ -52,9 +52,9 @@ namespace Origins.NPCs.Ashen {
 			NPC.dontTakeDamage = IsDeactivated;
 			NPC.damage = NPC.dontTakeDamage ? 0 : NPC.defDamage;
 			if (NPC.dontTakeDamage) {
-				NPC.frame.Y = 5;
+				NPC.frame.Y = 4;
 				return;
-			} else if (NPC.frame.Y == 5) {
+			} else if (NPC.frame.Y == 4) {
 				NPC.frame.Y = 0;
 			}
 			UpdateTarget();
@@ -137,45 +137,44 @@ namespace Origins.NPCs.Ashen {
 			NPC.velocity = default;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (!IsDeactivated) {
-				SpriteEffects effects = SpriteEffects.None;
-				float rotation = NPC.rotation + MathHelper.Pi;
-				if (NPC.spriteDirection == 1) {
-					effects = SpriteEffects.FlipHorizontally;
-					rotation -= MathHelper.Pi;
-				}
-				spriteBatch.DrawGlowingNPCPart(
-					gunTexture,
-					gunGlowTexture,
-					GunOrigin - screenPos,
-					gunTexture.Frame(verticalFrames: 5, frameY: NPC.frame.Y),
-					drawColor,
-					Color.White,
-					rotation,
-					new Vector2(80, 23).Apply(effects, gunTexture.Value.Size()),
-					NPC.scale,
-					effects
-				);
-				spriteBatch.Draw(
-					armTexture,
-					NPC.Bottom - screenPos,
-					null,
-					drawColor,
-					0,
-					new Vector2(-2, 93).Apply(effects, armTexture.Value.Size()),
-					NPC.scale,
-					effects,
-				0);
+			SpriteEffects effects = SpriteEffects.None;
+			float rotation = NPC.rotation + MathHelper.Pi;
+			if (NPC.spriteDirection == 1) {
+				effects = SpriteEffects.FlipHorizontally;
+				rotation -= MathHelper.Pi;
 			}
+			spriteBatch.DrawGlowingNPCPart(
+				gunTexture,
+				gunGlowTexture,
+				GunOrigin - screenPos,
+				gunTexture.Frame(verticalFrames: 5, frameY: NPC.frame.Y),
+				drawColor,
+				Color.White,
+				rotation,
+				new Vector2(80, 23).Apply(effects, gunTexture.Value.Size()),
+				NPC.scale,
+				effects
+			);
+			spriteBatch.Draw(
+				armTexture,
+				NPC.Bottom - screenPos,
+				null,
+				drawColor,
+				0,
+				new Vector2(-2, 93).Apply(effects, armTexture.Value.Size()),
+				NPC.scale,
+				effects,
+			0);
+			Rectangle frame = TextureAssets.Npc[Type].Frame(verticalFrames: 2, frameY: IsDeactivated.ToInt());
 			spriteBatch.DrawGlowingNPCPart(
 				TextureAssets.Npc[Type].Value,
 				glowTexture,
 				NPC.Bottom - screenPos,
-				TextureAssets.Npc[Type].Frame(verticalFrames: 2, frameY: IsDeactivated.ToInt()),
+				frame,
 				drawColor,
 				Color.White,
 				0,
-				glowTexture.Value.Size() * new Vector2(0.5f, 1),
+				frame.Size() * new Vector2(0.5f, 1),
 				NPC.scale,
 				SpriteEffects.None
 			);
