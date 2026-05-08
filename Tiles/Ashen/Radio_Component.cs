@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Accessories;
 using Origins.Items.Tools.Wiring;
 using Origins.World.BiomeData;
 using PegasusLib.Networking;
@@ -180,13 +179,13 @@ namespace Origins.Tiles.Ashen {
 					if (!GetTE(out Radio_Component_TE tileEntity)) return;
 					Append(ComponentUI.ReframingButton.Disableable(
 						() => tileEntity.Channel <= 0,
-						() => new Radio_Component_TE.Set_Channel_Action(position.X, position.Y, tileEntity.Channel - 1).Perform(),
+						() => new Radio_Component_TE.Set_Channel_Action(position.X, position.Y, tileEntity.Channel - Radio_Component_TE.CurrentIncrement).Perform(),
 						new(248, 180, 18, 18),
 						new(248, 200, 18, 18)
 					).MoveTo(new(4, 2)));
 					Append(ComponentUI.ReframingButton.Disableable(
 						() => tileEntity.Channel >= Radio_Component_TE.Max,
-						() => new Radio_Component_TE.Set_Channel_Action(position.X, position.Y, tileEntity.Channel + 1).Perform(),
+						() => new Radio_Component_TE.Set_Channel_Action(position.X, position.Y, tileEntity.Channel + Radio_Component_TE.CurrentIncrement).Perform(),
 						new(292, 180, 18, 18),
 						new(292, 200, 18, 18)
 					).MoveTo(new(48, 2)));
@@ -236,7 +235,9 @@ namespace Origins.Tiles.Ashen {
 			new(81, 81, 81),
 			new(255, 255, 255)
 		];
-		public static int Count => Colors.Length * 8;
+		public const int count_per_color = 8;
+		public static int CurrentIncrement => ItemSlot.ShiftInUse ? count_per_color : 1;
+		public static int Count => Colors.Length * count_per_color;
 		public static int Max => Count - 1;
 		static readonly bool[] powered = new bool[Count];
 		static readonly bool[] triggered = new bool[Count];
@@ -312,7 +313,7 @@ namespace Origins.Tiles.Ashen {
 			protected override bool ShouldPerform => TryGet<Radio_Component_TE>(I, J, out _);
 			protected override void Perform() {
 				if (!TryGet(I, J, out Radio_Component_TE te)) return;
-				te.Channel = Channel;
+				te.Channel = int.Clamp(Channel, 0, Max);
 			}
 		}
 		public record class Set_Mode_Action(int I, int J, Radio_Component.Mode Mode) : AutoSyncedAction, IBroken {
