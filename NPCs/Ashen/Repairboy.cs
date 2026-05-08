@@ -121,7 +121,7 @@ namespace Origins.NPCs.Ashen {
 				return null;
 			}
 			if (target.ModNPC is not IAshenEnemy { CanBeRepaired: true }) {
-				if (target.friendly || target.CountsAsACritter) return searcher.Distance(target.Center);
+				if (target.friendly || target.CountsAsACritter) return searcher.Distance(target.Center) + 800;
 				return null;
 			}
 			if (target.type == searcher.type || target.life >= target.lifeMax) return null;
