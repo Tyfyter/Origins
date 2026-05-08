@@ -815,11 +815,11 @@ namespace Origins.Items.Tools.Wiring {
 				}
 				public override void Update(GameTime gameTime) {
 					SetFrame(getFrame());
-					if (IsMouseHovering) UICommon.TooltipMouseText(Tooltip.Value);
 				}
 
 				protected override void DrawSelf(SpriteBatch spriteBatch) {
 					spriteBatch.Draw(position: GetDimensions().Position(), texture: Textures.Value, sourceRectangle: frame, color: Tint());
+					if (IsMouseHovering && Tooltip is not null) UICommon.TooltipMouseText(Tooltip.Value);
 				}
 			}
 		}

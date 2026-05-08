@@ -24,6 +24,7 @@ namespace Origins.Tiles.Ashen {
 			new TileItem(this, textureOverride: Texture)
 			.WithExtraStaticDefaults(this.DropTileItem)
 			.RegisterItem();
+			foreach (Mode mode in Enum.GetValues<Mode>()) Language.GetOrRegister("Mods.Origins.Items.Radio_Component_Item.ModeTooltip." + mode);
 		}
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -184,7 +185,7 @@ namespace Origins.Tiles.Ashen {
 						new(248, 200, 18, 18)
 					).MoveTo(new(4, 2)));
 					Append(ComponentUI.ReframingButton.Disableable(
-						() => tileEntity.Channel >= Radio_Component_TE.max,
+						() => tileEntity.Channel >= Radio_Component_TE.Max,
 						() => new Radio_Component_TE.Set_Channel_Action(position.X, position.Y, tileEntity.Channel + 1).Perform(),
 						new(292, 180, 18, 18),
 						new(292, 200, 18, 18)
@@ -200,7 +201,8 @@ namespace Origins.Tiles.Ashen {
 								parentUI.InitializeHooks();
 							},
 							new(374 + i * 18, 180, 18, 18),
-							new(318 + i * 18, 180, 18, 18)
+							new(318 + i * 18, 180, 18, 18),
+							Language.GetOrRegister("Mods.Origins.Items.Radio_Component_Item.ModeTooltip." + mode)
 						).MoveTo(pos));
 						pos.X += 16;
 					}
@@ -211,8 +213,8 @@ namespace Origins.Tiles.Ashen {
 					spriteBatch.Draw(
 						ComponentUI.Textures.Value,
 						new Rectangle(22, 4, 26, 14).Add(GetDimensions().Position()),
-						new Rectangle(266, 180 + 16 * tileEntity.Channel, 26, 14),
-						Color.White
+						new Rectangle(266, 180 + 16 * (tileEntity.Channel % 8), 26, 14),
+						Radio_Component_TE.Colors[tileEntity.Channel / 8]
 					);
 				}
 			}
@@ -226,11 +228,19 @@ namespace Origins.Tiles.Ashen {
 		}
 	}
 	public class Radio_Component_TE : ModTileEntity {
-		public const int count = 8;
-		public const int max = count - 1;
-		static readonly bool[] powered = new bool[count];
-		static readonly bool[] triggered = new bool[count];
-		static readonly bool[] nextTriggered = new bool[count];
+		public static Color[] Colors = [
+			new(255, 81, 0),
+			new(0, 255, 0),
+			new(81, 0, 255),
+			new(255, 0, 130),
+			new(81, 81, 81),
+			new(255, 255, 255)
+		];
+		public static int Count => Colors.Length * 8;
+		public static int Max => Count - 1;
+		static readonly bool[] powered = new bool[Count];
+		static readonly bool[] triggered = new bool[Count];
+		static readonly bool[] nextTriggered = new bool[Count];
 		public int Channel { get; private set; } = 0;
 		public byte Wires { get; private set; } = 0;
 		public Radio_Component.Mode Mode { get; private set; }
