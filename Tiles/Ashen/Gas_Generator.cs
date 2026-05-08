@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Humanizer;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
 using Origins.Items.Tools.Liquids;
 using Origins.Items.Tools.Wiring;
@@ -8,16 +9,17 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
+using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen; 
-public class Gas_Generator : ModTile, IGlowingModTile {
+public class Gas_Generator : ModTile {
 	public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Gas_Generator).GetDefaultTMLName() + "_Glow";
-	public Color GlowColor => Color.White;
-	AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
 	public static int FuelFrameCount => 6;
 	public static int MaxFuel => 60 * 60 * 10;
 	public static int FuelPerBucket => 60 * 60 * 5;
@@ -36,13 +38,7 @@ public class Gas_Generator : ModTile, IGlowingModTile {
 			.AddTile<Metal_Presser>()
 			.Register();
 		}).RegisterItem();
-		this.SetupGlowKeys();
-	}
-	public void FancyLightingGlowColor(Tile tile, ref Vector3 color) { }
-	public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
-		drawData.glowTexture = GlowTexture;
-		drawData.glowSourceRect = new Rectangle(drawData.tileFrameX, drawData.tileFrameY + drawData.addFrY, 16, 16);
-		drawData.glowColor = GlowColor;
+		GlowPaintKey = CustomTilePaintLoader.CreateKey();
 	}
 	public override void SetStaticDefaults() {
 		Main.tileFrameImportant[Type] = true;
@@ -88,10 +84,49 @@ public class Gas_Generator : ModTile, IGlowingModTile {
 	}
 	public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 		offsetY = 2;
-		TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
-		if (ModContent.GetInstance<Gas_Generator_TE>().tileEntities[new(left, top)].Fuel > 0) {
-			offsetY -= Main.rand.Next(3); // very bad temp 
+	}
+	public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) {
+		Tile tile = Main.tile[i, j];
+		Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
+		if (!Main.drawToScreen) pos += new Vector2(Main.offScreenRange);
+		if (ModContent.GetInstance<Gas_Generator_TE>().tileEntities[new(i, j)].Fuel > 0) {
+			pos += Main.rand.NextVector2Circular(1, 2); // very bad temp 
 		}
+		pos = pos.Floor();
+		short tileFrameX = tile.TileFrameX;
+		short tileFrameY = tile.TileFrameY;
+		Main.instance.TilesRenderer.GetTileDrawData(i, j, tile, Type, ref tileFrameX, ref tileFrameY, out _, out _, out int tileTop, out _, out int addFrX, out int addFrY, out _, out _, out _, out _);
+		tileFrameX += (short)addFrX;
+		tileFrameY += (short)addFrY;
+		pos.Y += tileTop;
+		VertexColors glow = new(Color.White);
+		Vector4 destination = new(0, 0, 16, 16);
+		Rectangle frame = new(0, 0, 16, 16);
+		for (int x = 0; x < 3; x++) {
+			destination.X = pos.X + x * 16;
+			frame.X = tileFrameX + x * 18;
+			for (int y = 0; y < 2; y++) {
+				destination.Y = pos.Y + y * 16;
+				frame.Y = tileFrameY + y * 18;
+				Lighting.GetCornerColors(i + x, j + y, out VertexColors vertices);
+				Main.tileBatch.Draw(
+					TextureAssets.Tile[Type].Value,
+					destination,
+					frame,
+					vertices
+				);
+				Main.tileBatch.Draw(
+					GlowTexture,
+					destination,
+					frame,
+					glow
+				);
+			}
+		}
+	}
+	public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+		if (TileObjectData.IsTopLeft(i, j)) Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
+		return false;
 	}
 	class Gas_Generator_TE : TESystem<Gas_Generator_TE.Data> {
 		public static Data GetData(Point16 position) {
