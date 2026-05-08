@@ -39,8 +39,8 @@ Conditions: {
 	// NoDefiledHearts: No Defiled Hearts are left in the world
 	// SolarEclipseOccurred: After surviving a solar eclipse
 	// WithJournalEntry: After transcribing "{0}"
-	// DownedEaterOfWorlds: Mods.Origins.Conditions.DownedEaterOfWorlds
-	// DownedBrainOfCthulhu: Mods.Origins.Conditions.DownedBrainOfCthulhu
+	// DownedEaterOfWorlds: "{$Conditions.DownedEaterOfWorlds}"
+	// DownedBrainOfCthulhu: "{$Conditions.DownedBrainOfCthulhu}"
 }
 
 ModMenu: {
