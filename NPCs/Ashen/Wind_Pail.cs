@@ -3,6 +3,7 @@ using Origins.Events;
 using Origins.Items.Armor.Ashen;
 using Origins.Items.Other.Consumables.Food;
 using Origins.LootConditions;
+using ReLogic.Utilities;
 using System.Numerics;
 using Terraria;
 using Terraria.Audio;
@@ -17,9 +18,15 @@ namespace Origins.NPCs.Ashen {
 	public class Wind_Pail : Glowing_Mod_NPC, IAshenEnemy {
 		public bool IsOpaqueEnoughToAttack => NPC.Opacity > 0.5f;
 		public override void Load() => this.AddBanner();
+		static SoundStyle attackSoundStyle;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 1;
 			GetInstance<Smog_Storm.SpawnRates>().AddSpawn(Type, BiomeSpawnChance);
+			attackSoundStyle = SoundID.Zombie4 with {
+				MaxInstances = 0,
+				Pitch = -2,
+				PitchVariance = 1
+			};
 		}
 		public override void SetDefaults() {
 			NPC.lifeMax = 240;
@@ -44,7 +51,13 @@ namespace Origins.NPCs.Ashen {
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Greaves>(), 525));
 		}
+		SlotId attackSound;
 		public override void AI() {
+			attackSoundStyle = SoundID.Zombie4 with {
+				MaxInstances = 0,
+				Pitch = -1.5f,
+				PitchVariance = 1
+			};
 			const int attack_range = 16 * 15;
 			if (!NPC.HasValidTarget || (Main.player[NPC.target].Center.X - NPC.Center.X) * NPC.direction < 1) {
 				NPC.target = -1;
@@ -69,23 +82,27 @@ namespace Origins.NPCs.Ashen {
 					Player target = Main.player[NPC.target];
 					target.AddBuff(ModContent.BuffType<Wind_Pail_Debuff>(), 15);
 					target.OriginPlayer().windPailPosition = NPC.Center.X;
+					Rectangle dustHitbox = attackHitbox;
+					dustHitbox.X += NPC.direction * 16 * 4;
 					for (int i = 0; i < 2; i++) {
 						//todo: custom dust with alpha fade-in
 						Dust dust = Dust.NewDustDirect(
-							attackHitbox.TopLeft(),
-							attackHitbox.Width,
-							attackHitbox.Height,
-							DustID.Silt
+							dustHitbox.TopLeft(),
+							dustHitbox.Width,
+							dustHitbox.Height,
+							ModContent.DustType<Wind_Pail_Dust>(),
+							Alpha: 255
 						);
 						dust.velocity.Y = 2f + Main.rand.NextFloat() * 0.2f;
 						dust.velocity.Y *= dust.scale;
 						dust.velocity.Y *= 0.35f;
 						dust.velocity.X = NPC.direction * -5f + Main.rand.NextFloat();
 						dust.velocity.X += NPC.direction * 0.7f * -10f;
-						dust.fadeIn += 0.7f * 0.2f;
+						dust.fadeIn += 25;
 						dust.velocity *= 1f + 0.35f * 0.5f;
 						dust.velocity *= 1f + 0.35f;
 					}
+					attackSound.PlaySoundIfInactive(attackSoundStyle, NPC.Center);
 					if (!attackHitbox.Intersects(Main.player[NPC.target].Hitbox)) NPC.aiAction = 2;
 				}
 				break;
@@ -99,8 +116,7 @@ namespace Origins.NPCs.Ashen {
 					if (!LinearSmoothing(ref NPC.ai[1], 0, 1)) break;
 					if (attackHitbox.Intersects(Main.player[NPC.target].Hitbox)) {
 						NPC.ai[2] = 0;
-						SoundEngine.PlaySound(SoundID.Item15.WithPitch(-1).WithPitchVarience(0) with { MaxInstances = 0 }, NPC.Center);
-						SoundEngine.PlaySound(SoundID.Item15.WithPitch(0).WithPitchVarience(0) with { MaxInstances = 0 }, NPC.Center);
+						attackSound = SoundEngine.PlaySound(attackSoundStyle, NPC.Center);
 						NPC.aiAction = 1;
 					}
 					break;
@@ -234,6 +250,31 @@ namespace Origins.NPCs.Ashen {
 		public override void Update(Player player, ref int buffIndex) {
 			player.windPushed = true;
 			player.OriginPlayer().windPailPushed = true;
+		}
+	}
+	public class Wind_Pail_Dust : ModDust {
+		public override string Texture => "Terraria/Images/Dust";
+		public override void OnSpawn(Dust dust) {
+			dust.frame.X = 10 * DustID.Silt;
+			dust.frame.Y = 10 * Main.rand.Next(3);
+			dust.frame.Width = 8;
+			dust.frame.Height = 8;
+		}
+		public override bool Update(Dust dust) {
+			dust.position += dust.velocity;
+			if (!dust.noGravity) dust.velocity.Y += 0.1f;
+			dust.velocity.X *= 0.99f;
+			dust.rotation += dust.velocity.X * 0.5f;
+			if (dust.fadeIn > 0f && dust.alpha > 0) {
+				if (dust.alpha.Cooldown(0, Main.rand.RandomRound(dust.fadeIn))) dust.fadeIn = 0;
+			} else if (dust.noGravity) {
+				dust.velocity *= 0.92f;
+				if (dust.fadeIn == 0f) dust.scale -= 0.04f;
+			}
+			if (dust.position.Y > Main.screenPosition.Y + Main.screenHeight) {
+				dust.active = false;
+			}
+			return false;
 		}
 	}
 }
