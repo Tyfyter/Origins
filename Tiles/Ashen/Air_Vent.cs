@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
+using PegasusLib.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -52,27 +54,39 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) {
 			Tile tile = Main.tile[i, j];
+			using Graphics.GraphicsExt.TilebatchOverride @override = Main.tileBatch.OverrideState(samplerState: SamplerState.PointClamp, transformMatrix: Main.Transform);
 			Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
-			Lighting.GetCornerColors(i, j - 1, out VertexColors vertices);
 			short tileFrameX = tile.TileFrameX;
 			short tileFrameY = tile.TileFrameY;
 			Main.instance.TilesRenderer.GetTileDrawData(i, j, tile, Type, ref tileFrameX, ref tileFrameY, out _, out _, out int tileTop, out _, out int addFrX, out int addFrY, out _, out _, out _, out _);
 			tileFrameX += (short)addFrX;
 			tileFrameY += (short)addFrY;
+			pos = pos.Floor();
 			pos.Y += tileTop;
-			Main.tileBatch.Draw(
-				TextureAssets.Tile[Type].Value,
-				new Vector4(pos.X, pos.Y, 16.3f, 16.3f),
-				new Rectangle(tileFrameX, tileFrameY, 16, 16),
-				vertices
-			);
-			vertices = new(Color.White);
-			Main.tileBatch.Draw(
-				glowTexture,
-				new Vector4(pos.X, pos.Y, 16.3f, 16.3f),
-				new Rectangle(tileFrameX, tileFrameY, 16, 16),
-				vertices
-			);
+			VertexColors glow = new(Color.White);
+			Vector4 destination = new(0, 0, 16, 16);
+			Rectangle frame = new(0, 0, 16, 16);
+			for (int x = 0; x < 2; x++) {
+				destination.X = (int)pos.X + x * 16;
+				frame.X = tileFrameX + x * 18;
+				for (int y = 0; y < 2; y++) {
+					destination.Y = (int)pos.Y + y * 16;
+					frame.Y = tileFrameY + y * 18;
+					Lighting.GetCornerColors(i + x, j + y, out VertexColors vertices);
+					Main.tileBatch.Draw(
+						TextureAssets.Tile[Type].Value,
+						destination,
+						frame,
+						vertices
+					);
+					Main.tileBatch.Draw(
+						glowTexture,
+						destination,
+						frame,
+						glow
+					);
+				}
+			}
 		}
 		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
 			Tile tile = Main.tile[i, j];
@@ -85,7 +99,7 @@ namespace Origins.Tiles.Ashen {
 			AshenWireTile.DefaultUpdatePowerState(i, j, powered, tile => ref tile.TileFrameY, 18 * 2);
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
-			Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomNonSolid);
+			if (TileObjectData.IsTopLeft(i, j)) Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.CustomNonSolid);
 			return false;
 		}
 		public override void NearbyEffects(int i, int j, bool closer) {

@@ -2706,6 +2706,12 @@ namespace Origins {
 		public static Vector2 NextVectorIn(this UnifiedRandom random, Rectangle area) {
 			return area.TopLeft() + new Vector2(random.Next(area.Width), random.Next(area.Height));
 		}
+		public static Vector2 NextVector2Square(ref this FastRandom r, float min, float max) => new Vector2((max - min) * (float)r.NextDouble() + min, (max - min) * (float)r.NextDouble() + min);
+		public static Vector2 NextVector2FromRectangle(ref this FastRandom r, Rectangle rect) => new Vector2((float)rect.X + r.NextFloat() * (float)rect.Width, (float)rect.Y + r.NextFloat() * (float)rect.Height);
+		public static Vector2 NextVector2Unit(ref this FastRandom r, float startRotation = 0f, float rotationRange = MathHelper.TwoPi) => (startRotation + rotationRange * r.NextFloat()).ToRotationVector2();
+		public static Vector2 NextVector2Circular(ref this FastRandom r, float circleHalfWidth, float circleHalfHeight) => r.NextVector2Unit() * new Vector2(circleHalfWidth, circleHalfHeight) * r.NextFloat();
+		public static Vector2 NextVector2CircularEdge(ref this FastRandom r, float circleHalfWidth, float circleHalfHeight) => r.NextVector2Unit() * new Vector2(circleHalfWidth, circleHalfHeight);
+
 		#region tiles
 		public static void SetActive(this Tile tile, bool active) {
 			tile.HasTile = active;

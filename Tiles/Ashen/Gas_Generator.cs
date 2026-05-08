@@ -11,11 +11,13 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
+using Terraria.GameContent.UI;
 using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
+using Terraria.Utilities;
 
 namespace Origins.Tiles.Ashen; 
 public class Gas_Generator : ModTile {
@@ -90,7 +92,9 @@ public class Gas_Generator : ModTile {
 		Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
 		if (!Main.drawToScreen) pos += new Vector2(Main.offScreenRange);
 		if (ModContent.GetInstance<Gas_Generator_TE>().tileEntities[new(i, j)].Fuel > 0) {
-			pos += Main.rand.NextVector2Circular(1, 2); // very bad temp 
+			FastRandom rand = new FastRandom(Origins.gameFrameCount).WithModifier(i, j);
+			rand.Next(1);
+			pos += rand.NextVector2Circular(1, 2); 
 		}
 		pos = pos.Floor();
 		short tileFrameX = tile.TileFrameX;
@@ -102,6 +106,10 @@ public class Gas_Generator : ModTile {
 		VertexColors glow = new(Color.White);
 		Vector4 destination = new(0, 0, 16, 16);
 		Rectangle frame = new(0, 0, 16, 16);
+		bool isPowered = WiresUI.Settings.DrawWires && Main.tile[i, j].Get<Ashen_Wire_Data>().IsTilePowered;
+		Color poweredColor = new(255, 113, 0);
+		float pulse = Ashen_Wire_Data.pulse.Value * 0.8f;
+		ApplyPowered(ref glow);
 		for (int x = 0; x < 3; x++) {
 			destination.X = pos.X + x * 16;
 			frame.X = tileFrameX + x * 18;
@@ -109,6 +117,7 @@ public class Gas_Generator : ModTile {
 				destination.Y = pos.Y + y * 16;
 				frame.Y = tileFrameY + y * 18;
 				Lighting.GetCornerColors(i + x, j + y, out VertexColors vertices);
+				ApplyPowered(ref vertices);
 				Main.tileBatch.Draw(
 					TextureAssets.Tile[Type].Value,
 					destination,
@@ -122,6 +131,13 @@ public class Gas_Generator : ModTile {
 					glow
 				);
 			}
+		}
+		void ApplyPowered(ref VertexColors vertices) {
+			if (!isPowered) return;
+			vertices.TopLeftColor = Color.Lerp(vertices.TopLeftColor, poweredColor, pulse);
+			vertices.TopRightColor = Color.Lerp(vertices.TopRightColor, poweredColor, pulse);
+			vertices.BottomLeftColor = Color.Lerp(vertices.BottomLeftColor, poweredColor, pulse);
+			vertices.BottomRightColor = Color.Lerp(vertices.BottomRightColor, poweredColor, pulse);
 		}
 	}
 	public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
