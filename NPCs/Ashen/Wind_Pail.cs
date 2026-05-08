@@ -24,7 +24,7 @@ namespace Origins.NPCs.Ashen {
 			GetInstance<Smog_Storm.SpawnRates>().AddSpawn(Type, BiomeSpawnChance);
 			attackSoundStyle = SoundID.Zombie4 with {
 				MaxInstances = 0,
-				Pitch = -2,
+				Pitch = -1.5f,
 				PitchVariance = 1
 			};
 		}
@@ -53,11 +53,6 @@ namespace Origins.NPCs.Ashen {
 		}
 		SlotId attackSound;
 		public override void AI() {
-			attackSoundStyle = SoundID.Zombie4 with {
-				MaxInstances = 0,
-				Pitch = -1.5f,
-				PitchVariance = 1
-			};
 			const int attack_range = 16 * 15;
 			if (!NPC.HasValidTarget || (Main.player[NPC.target].Center.X - NPC.Center.X) * NPC.direction < 1) {
 				NPC.target = -1;
@@ -85,7 +80,6 @@ namespace Origins.NPCs.Ashen {
 					Rectangle dustHitbox = attackHitbox;
 					dustHitbox.X += NPC.direction * 16 * 4;
 					for (int i = 0; i < 2; i++) {
-						//todo: custom dust with alpha fade-in
 						Dust dust = Dust.NewDustDirect(
 							dustHitbox.TopLeft(),
 							dustHitbox.Width,
