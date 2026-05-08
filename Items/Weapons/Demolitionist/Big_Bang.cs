@@ -17,12 +17,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Big_Bang : ModItem {
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Big_Bang_P>(38, 28, 7.5f, 48, 32);
+			Item.DefaultToCanisterLauncher<Big_Bang_P>(70, 34, 7.5f, 48, 32);
 			Item.knockBack = 4f;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.UseSound = SoundID.Item62.WithPitch(0.4f);
-			Item.reuseDelay = 50;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
