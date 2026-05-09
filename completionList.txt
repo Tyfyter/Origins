@@ -55,15 +55,15 @@ BOSSES AND MINI-BOSSES:
 |---
 (^) Chambersite Sentinel
 (X) CM-17 'Watcher' !!!
-(#, ^2) D2L2 'Warsaw' !!!
-(#, ^2) HA-24 'Hawken' !!!
+(#, $2, ^2) D2L2 'Warsaw' !!!
+(#, $2, ^2) HA-24 'Hawken' !!!
 (X, ^2) Ichor Storm
 (X) Zombie Paladin
 
 (^) Defiled Amalgamation
-($, #2 ^2) Fiberglass Weaver !!!
+(#2, $, ^2) Fiberglass Weaver !!!
 (^) Shimmer Construct
-(#2, ^2) Trenchmaker !!!
+(#2, $2, ^2) Trenchmaker !!!
 (^) World Cracker
 
 (^) Lost Diver/Mildew Carrion
@@ -182,6 +182,7 @@ OTHER:
 (^) Quest System General
 (X) Quirky World Evil Spread mechanics !!!
 (X) NPC Portraits
+(#, $2, ^2) Sprockey Power Wiring Assisstant !!!
 (^) Summoner Plus Modifiers
 ---
 
@@ -240,12 +241,12 @@ ENEMY NPCS:
 (^) Hammerhand
 (X) Limestone Creeper
 (^) Optiphage
-(#, ^2) Packhunter !!!
+(#, $2, ^2) Packhunter !!!
 (#3, ^2) Pinwheel (randomly gets stuck on walls, idk how to fix)
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
 (#, ^2) QM-76 'Quakemaker' !!!
-(#2, ^2) Reject !!!
+(#2, $2, ^2) Reject !!!
 (#2, $2, ^2) Repairboy !!! (cool repair torch effect)
 (^) Riven Penguin
 (^) Riven Protoform
@@ -259,9 +260,9 @@ ENEMY NPCS:
 (^) Slime Worm (Slorm)
 (^) Spider Amoeba
 (X) Spiteful Flesh
-(^) Springjumper
+($2, ^2/3) Springjumper !!!
 (X) Tubefish
-($2, ^2/3) Wind Pail !!! (added sound-like effects for attacks)
+($2, ^2/3) Wind Pail !!!
 
 (^) Airsnatcher
 (^) Amoebeye
@@ -312,7 +313,7 @@ ENEMY NPCS:
 (^) Torn Ghoul
 (^) Trash Compactor Mimic
 (^) Trijaw Shark
-(#, ^2) VV-13 !!!
+(#, $2, ^2) VV-13 !!!
 
 (X) Clockwork
 (@2/3, #) Electromancer
@@ -1332,7 +1333,7 @@ TILES:
 (#, ^2) Type-II Fortified Steel Wall !!!
 (^) Type-III Fortified Steel Wall
 
-(^) Air Vent
+($2, ^2/3) Air Vent !!!
 (^) Alkahest Torch
 (^) Amoeba Buggy Cage
 (^) Artifiber Furniture
@@ -1457,7 +1458,7 @@ TILES:
 (^) Hanging Scrap
 (^) Heat Vent
 (^) Hydrothermal Vent
-(#2, ^2) Incomplete Standing Refinery !!! (still needs glow)
+(#2, $2, ^2) Incomplete Standing Refinery !!! (still needs glow and ambience)
 (#3, ^2) Industrial Work Bench
 (^) Lathe
 (^) Limestone Rubble
@@ -1804,7 +1805,7 @@ MOUNTS, PETS AND TRANSFORMATIONS:
 (^) Blockus Tube (Juvenile Amalgamation)
 (^) Fleshy Globe (Self-Contained Universe)
 (^) Jawbreaker (Stellar Spark)
-(#, ^2) Robot Toy Controller (Toy Trenchmaker) !!!
+(#, $2, ^2) Robot Toy Controller (Toy Trenchmaker) !!!
 (^) Terlet Paper (Kawaii Fiberglass Weaver)
 (^) Wet Wood (Mildew Blob)
 
