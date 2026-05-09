@@ -2,11 +2,13 @@
 using Origins.Items.Accessories;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
+using Origins.UI;
 using Origins.World.BiomeData;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
@@ -44,9 +46,18 @@ public class Solar_Battery : ModTile {
 		TileObjectData.addTile(Type);
 		AddMapEntry(new Color(40, 30, 18), this.GetTileItem().DisplayName);
 		DustType = Ashen_Biome.DefaultTileDust;
+		displayRadices = Time_Radix.ParseRadices(Language.GetOrRegister("Mods.Origins.Laser_Tag.LongTime").Value);
 	}
 	public override void NumDust(int i, int j, bool fail, ref int num) {
 		num = fail ? 1 : 3;
+	}
+	Time_Radix[] displayRadices;
+	public override bool RightClick(int i, int j) {
+		TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out i, out j);
+		string text = displayRadices.FormatTime((int)Solar_Battery_TE.GetData(new(i, j)).Power);
+		if (string.IsNullOrWhiteSpace(text)) text = "0:00";
+		Main.NewText(text);
+		return true;
 	}
 	public override void PlaceInWorld(int i, int j, Item item) {
 		TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out int left, out int top);
@@ -69,6 +80,7 @@ public class Solar_Battery : ModTile {
 			float power;
 			float currentPowerPerTick;
 			int checkPowerTimer;
+			public float Power => power;
 			public void Update(Point16 position) {
 				if (checkPowerTimer.CycleUp(60)) {
 					currentPowerPerTick = 0;
