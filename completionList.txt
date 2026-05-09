@@ -245,7 +245,7 @@ ENEMY NPCS:
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
 (#, ^2) QM-76 'Quakemaker' !!!
-(#, ^2) Reject !!!
+(☻) Reject !!!
 (#2, ^2) Repairboy !!! (cool repair torch effect)
 (^) Riven Penguin
 (^) Riven Protoform
@@ -1327,7 +1327,7 @@ TILES:
 (^) Spug Flesh Wall
 (X) Spug Flesh Brick Wall
 (^) Tainted Stone Wall
-(^) Truss Wall !!!
+(^) Truss Wall
 (^) Type-I Fortified Steel Wall
 (^) Type-III Fortified Steel Wall
 
