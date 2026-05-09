@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
+using Origins.Core;
 using Origins.Graphics.Primitives;
 using Origins.Graphics.Unlighting;
 using Origins.Items.Accessories;
@@ -77,7 +78,7 @@ namespace Origins.Events {
 		}
 		static bool On_NPC_CanBeChasedBy(On_NPC.orig_CanBeChasedBy orig, NPC self, object attacker, bool ignoreDontTakeDamage) {
 			Player player;
-			attacker ??= CurrentProjectile.Projectile;
+			attacker ??= CurrentEntity.Entity;
 			switch (attacker) {
 				case Player _player:
 				player = _player;

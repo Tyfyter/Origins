@@ -1270,7 +1270,7 @@ namespace Origins {
 				asylumWhistleTarget = -1;
 			} else if (asylumWhistleTarget > -1) {
 				NPC possibleTarget = Main.npc[asylumWhistleTarget];
-				if (!possibleTarget.CanBeChasedBy() || possibleTarget.Hitbox.Distance(Player.Center) > 3000f) {
+				if (!possibleTarget.CanBeChasedBy(Player) || possibleTarget.Hitbox.Distance(Player.Center) > 3000f) {
 					asylumWhistleTarget = -1;
 				} else if (Player.whoAmI == Main.myPlayer && Player.HeldItem.CountsAsClass(DamageClass.Summon)) {
 					Vector2 center = possibleTarget.Center;

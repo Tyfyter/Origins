@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.ai[0] = -1;
 			float maxDist = 256 * 256;
 			foreach (NPC currentTarget in Main.ActiveNPCs) {
-				if (!currentTarget.CanBeChasedBy()) continue;
+				if (!currentTarget.CanBeChasedBy(Projectile)) continue;
 
 				float currentDist = currentTarget.Center.DistanceSQ(Projectile.Center);
 

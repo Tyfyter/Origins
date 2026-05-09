@@ -31,7 +31,7 @@ namespace Origins.Items.Accessories {
 			float bestDist = max_distance * max_distance;
 			Vector2 center = player.MountedCenter;
 			foreach (NPC npc in Main.ActiveNPCs) {
-				if (!npc.CanBeChasedBy()) continue;
+				if (!npc.CanBeChasedBy(player)) continue;
 				float currentDist = npc.DistanceSQ(center);
 				if (currentDist < bestDist) {
 					bestDist = currentDist;

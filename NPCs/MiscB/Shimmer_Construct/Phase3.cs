@@ -576,7 +576,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (Origins.LogLoadingILError(nameof(IL_Projectile_HandleMovement), ex)) throw;
 			}
 			On_Projectile.Update += [DebuggerStepThrough](orig, self, i) => {
-				using CurrentProjectile cur = new(self);
 				isUpdatingShimmeryThing = (self.TryGetGlobalProjectile(out OriginGlobalProj proj) && proj.weakShimmer);
 				try {
 					orig(self, i);

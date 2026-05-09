@@ -3,6 +3,7 @@ using Humanizer;
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.Hooks;
 using ModLiquidLib.ModLoader;
+using Origins.Core;
 using Origins.CrossMod;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
@@ -3448,8 +3449,9 @@ namespace Origins {
 		public static SyncedKeybinds SyncedKeybinds(this Player player) => player.GetModPlayer<SyncedKeybinds>();
 		public static bool DoHoming(this Player player, Func<Entity, bool> selector, bool canPvP = true) {
 			bool foundTarget = false;
+			Entity chaser = (CurrentEntity.Entity as Projectile) ?? (Entity)player;
 			foreach (NPC target in Main.ActiveNPCs) {
-				if (target.CanBeChasedBy(player)) {
+				if (target.CanBeChasedBy(chaser)) {
 					foundTarget |= selector(target);
 				}
 			}
@@ -5064,6 +5066,13 @@ namespace Origins {
 			if (npc.IsABestiaryIconDummy) return baseColor;
 			NPCLoader.DrawEffects(npc, ref baseColor);
 			return npc.GetNPCColorTintedByBuffs(baseColor);
+		}
+
+		public static bool CanBeAfflicted(this NPC npc, bool ignoreDontTakeDamage = false) {
+			if (npc.active && npc.lifeMax > 5 && (!npc.dontTakeDamage || ignoreDontTakeDamage) && !npc.friendly)
+				return !npc.immortal;
+
+			return false;
 		}
 		[Flags]
 		public enum TargetSearchTypes : byte {

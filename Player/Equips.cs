@@ -54,7 +54,7 @@ namespace Origins {
 				const float maxDistTiles2 = 15f * 16;
 				for (int i = 0; i < Main.maxNPCs; i++) {
 					NPC currentTarget = Main.npc[i];
-					if (currentTarget.CanBeChasedBy()) {
+					if (currentTarget.CanBeChasedBy(Player)) {
 						float distSquared = (currentTarget.Center - Player.MountedCenter).LengthSquared();
 						if (distSquared < maxDistTiles * maxDistTiles) {
 							currentTarget.AddBuff(Shadefire_Debuff.ID, 5);
@@ -87,7 +87,7 @@ namespace Origins {
 				List<(NPC target, float dist)> targets = new(lousyLiverCount);
 				for (int i = 0; i < Main.maxNPCs; i++) {
 					NPC currentTarget = Main.npc[i];
-					if (currentTarget.CanBeChasedBy()) {
+					if (currentTarget.CanBeChasedBy(Player)) {
 						float dist = (currentTarget.Center - Player.MountedCenter).LengthSquared();
 						if (dist < maxDist) {
 							int index = Math.Min(targets.Count, lousyLiverCount) + 1;
@@ -251,7 +251,7 @@ namespace Origins {
 					for (int i = 0; i < Main.maxNPCs; i++) {
 						NPC currentTarget = Main.npc[i];
 						if (Main.rand.NextBool(explosiveArteryItem.useAnimation, explosiveArteryItem.reuseDelay)) {
-							if (currentTarget.CanBeChasedBy() && currentTarget.HasBuff(BuffID.Bleeding)) {
+							if (currentTarget.CanBeChasedBy(Player) && currentTarget.HasBuff(BuffID.Bleeding)) {
 								Vector2 diff = currentTarget.Center - Player.MountedCenter;
 								if (diff.LengthSquared() < maxDist) {
 									Projectile.NewProjectileDirect(

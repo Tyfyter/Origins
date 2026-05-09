@@ -429,7 +429,7 @@ namespace Origins.NPCs {
 					bool first = true;
 					for (int i = 0; i < Main.maxNPCs; i++) {
 						NPC currentTarget = Main.npc[i];
-						if (i == npc.whoAmI || !currentTarget.CanBeChasedBy()) continue;
+						if (i == npc.whoAmI || !currentTarget.CanBeAfflicted()) continue;
 
 						Vector2 currentStart = currentTarget.Center.Clamp(npc.Hitbox);
 						Vector2 currentEnd = npc.Center.Clamp(currentTarget.Hitbox);

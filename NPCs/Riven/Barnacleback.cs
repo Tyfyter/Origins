@@ -75,7 +75,7 @@ namespace Origins.NPCs.Riven {
 			const float maxDistTiles2 = 60f * 16;
 			for (int i = 0; i < Main.maxNPCs; i++) {
 				NPC currentTarget = Main.npc[i];
-				if (currentTarget.CanBeChasedBy() && currentTarget.ModNPC is IRivenEnemy) {
+				if (currentTarget.active && currentTarget.lifeMax > 5 && !currentTarget.friendly && currentTarget.ModNPC is IRivenEnemy) {
 					float distSquared = (currentTarget.Center - NPC.Center).LengthSquared();
 					if (distSquared < maxDistTiles2 * maxDistTiles2) {
 						currentTarget.AddBuff(Barnacled_Buff.ID, 5);

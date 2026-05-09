@@ -272,7 +272,7 @@ namespace Origins.Items.Weapons.Magic {
 			float distanceFromTarget = 16 * 5f;
 			distanceFromTarget *= distanceFromTarget;
 			foreach (NPC npc in Main.ActiveNPCs) {
-				if (npc.CanBeChasedBy()) {
+				if (npc.CanBeChasedBy(Projectile)) {
 					float between = Projectile.position.Clamp(npc.Hitbox).DistanceSQ(Projectile.position);
 					if (distanceFromTarget > between) {
 						distanceFromTarget = between;

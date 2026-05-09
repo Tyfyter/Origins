@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons {
 		}
 		public override void AI() {
 			foreach (NPC target in Main.ActiveNPCs) {
-				if ((target.CanBeChasedBy() || (target.lifeMax == 1 && !target.dontTakeDamage))) {
+				if ((target.CanBeAfflicted() || (target.lifeMax == 1 && !target.dontTakeDamage))) {
 					Vector2 direction = (target.Center - Projectile.Center).Normalized(out float dist);
 					float distSQ = float.Pow(dist / 16, 1.5f);
 					float force = (2 / distSQ) * (1 - (1 - target.knockBackResist) * 0.95f);

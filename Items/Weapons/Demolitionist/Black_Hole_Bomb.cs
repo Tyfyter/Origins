@@ -82,7 +82,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			for (int i = 0; i < Main.npc.Length; i++) {
 				target = Main.npc[i];
 				kbrs = knockbackResistanceSignificance * (target.defense / 50f);
-				if ((target.CanBeChasedBy() || (target.lifeMax == 1 && !target.dontTakeDamage)) && !(target.type == NPCID.MoonLordFreeEye || target.type == NPCID.MoonLordHand || target.type == NPCID.MoonLordHead || target.type == NPCID.MoonLordCore)) {
+				if ((target.CanBeAfflicted() || (target.lifeMax == 1 && !target.dontTakeDamage)) && !(target.type == NPCID.MoonLordFreeEye || target.type == NPCID.MoonLordHand || target.type == NPCID.MoonLordHead || target.type == NPCID.MoonLordCore)) {
 					float dist = (target.Center - Projectile.Center).Length() / 16f;
 					float distSQ = (float)Math.Pow(dist, distExp);
 					float force = strength / distSQ;

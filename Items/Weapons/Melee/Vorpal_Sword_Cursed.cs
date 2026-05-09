@@ -201,7 +201,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void UpdateInventory(Player player) {
 			if (times == 0 && Main.rand.NextBool(60)) {
 				foreach (NPC npc in Main.ActiveNPCs) {
-					if (npc.CanBeChasedBy() && npc.WithinRange(player.MountedCenter, 128)) {
+					if (npc.CanBeChasedBy(player) && npc.WithinRange(player.MountedCenter, 128)) {
 						for (int i = 0; i < Main.InventoryItemSlotsCount; i++) {
 							if (player.inventory[i].ModItem == this) {
 								switchbackSlot = player.selectedItem;

@@ -64,7 +64,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			float distanceFromTarget = 16 * 17.5f;
 			int target = -1;
 			foreach (NPC npc in Main.ActiveNPCs) {
-				if (npc.CanBeChasedBy()) {
+				if (npc.CanBeChasedBy(player)) {
 					Vector2 pos = Main.MouseWorld;
 					float between = Vector2.Distance(pos.Clamp(npc.Hitbox), pos);
 					if (distanceFromTarget > between) {
