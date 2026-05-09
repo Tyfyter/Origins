@@ -16,6 +16,7 @@ namespace Origins.Tiles.Ashen {
 	public class Catwalk : Platform_Tile, ISpecialFrameTile, IAshenTile {
 		bool IAshenTile.CountsForSpawns(NPCSpawnInfo spawnInfo) => spawnInfo.Player.InModBiome<Ashen_Biome>();
 		public static bool[] Catwalks = TileID.Sets.Factory.CreateBoolSet();
+		public static bool?[] OverrideTileNoAttach = TileID.Sets.Factory.CreateCustomSet<bool?>(null);
 		public override void OnLoad() {
 			Item.OnAddRecipes += item => {
 				Recipe.Create(item.type, 2)
@@ -40,7 +41,8 @@ namespace Origins.Tiles.Ashen {
 			}
 			if (!tile.HasTile) return true;
 			if (tile.HasFullSolidTile()) return true;
-			return !Main.tileNoAttach[tile.TileType];
+			if (OverrideTileNoAttach[tile.TileType].HasValue) return !OverrideTileNoAttach[tile.TileType].Value;
+			return Main.tileSolid[tile.TileType] && !Main.tileNoAttach[tile.TileType];
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

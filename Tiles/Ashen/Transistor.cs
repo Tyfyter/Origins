@@ -32,6 +32,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileSolid[Type] = false;
 			Main.tileBlockLight[Type] = false;
 			Main.tileMergeDirt[Type] = false;
+			Catwalk.OverrideTileNoAttach[Type] = false;
 			TileID.Sets.DrawTileInSolidLayer[Type] = true;
 			AddMapEntry(MapColor, CreateMapEntryName());
 

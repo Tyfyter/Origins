@@ -34,6 +34,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
+			Catwalk.OverrideTileNoAttach[Type] = false;
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.HasOutlines[Type] = false;
 			TileID.Sets.DisableSmartCursor[Type] = true;

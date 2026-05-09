@@ -40,6 +40,7 @@ namespace Origins.Tiles.Ashen {
 			Main.tileLighted[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
+			Catwalk.OverrideTileNoAttach[Type] = false;
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
@@ -81,8 +82,8 @@ namespace Origins.Tiles.Ashen {
 			FrameSurrounding(i, j, out int left, out int top);
 			ModContent.GetInstance<Industrial_Door_TE_System>().AddTileEntity(new(left, top));
 		}
-		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			this.DrawTileGlow(i, j, spriteBatch);
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			this.ApplyTileGlow(i, j, ref drawData);
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }

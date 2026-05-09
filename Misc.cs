@@ -2760,6 +2760,21 @@ namespace Origins {
 		public static T SafeGet<T>(this TagCompound self, string key, T fallback = default) {
 			return self.TryGet(key, out T output) ? output : fallback;
 		}
+		public static void ApplyTileGlow(this IGlowingModTile self, int i, int j, ref TileDrawInfo drawData) {
+			if (self.GlowTexture.Value is null) {
+				return;
+			}
+			Tile tile = Main.tile[i, j];
+			if (!TileDrawing.IsVisible(tile)) return;
+			drawData.glowTexture = self.GlowTexture;
+			drawData.glowColor = self.GlowColor;
+			drawData.glowSourceRect = new Rectangle(0, 0, 16, 16);
+			short tileFrameX = tile.TileFrameX;
+			short tileFrameY = tile.TileFrameY;
+			Main.instance.TilesRenderer.GetTileDrawData(i, j, tile, tile.TileType, ref tileFrameX, ref tileFrameY, out _, out _, out _, out _, out int addFrX, out int addFrY, out _, out _, out _, out _);
+			drawData.glowSourceRect.X += tileFrameX + addFrX;
+			drawData.glowSourceRect.Y += tileFrameY + addFrY;
+		}
 		public static void DrawTileGlow(this IGlowingModTile self, int i, int j, SpriteBatch spriteBatch) {
 			if (self.GlowTexture.Value is null) {
 				return;
