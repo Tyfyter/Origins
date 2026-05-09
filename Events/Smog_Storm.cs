@@ -341,7 +341,10 @@ namespace Origins.Events {
 			public const float Cartwheeler_Large = 0.26f;
 			public const float Cartwheeler_Medium = 0.27f;
 			public const float Cartwheeler_Small = 0.27f;
-			public const float Reject_2 = 0.8f;
+			public const float Rejects = 0.8f;
+			public const float Reject_1 = Rejects / 3;
+			public const float Reject_2 = Rejects / 3;
+			public const float Reject_3 = Rejects / 3;
 			public override string Name => $"{nameof(Smog_Storm)}_{base.Name}";
 			public override void SetStaticDefaults() {
 				Priority = SpawnPoolPriority.Event;
