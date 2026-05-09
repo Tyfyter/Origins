@@ -1,7 +1,9 @@
 ﻿using Origins.Core;
 using Origins.Dev;
 using Origins.Events;
+using Origins.Items.Armor.Ashen;
 using Origins.Items.Other.Consumables.Food;
+using Origins.LootConditions;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -24,8 +26,8 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Fighter;
-			NPC.lifeMax = 175;
-			NPC.defense = 12;
+			NPC.lifeMax = 80;
+			NPC.defense = 6;
 			NPC.damage = 12;
 			NPC.width = 50;
 			NPC.height = 50;
@@ -33,7 +35,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.knockBackResist = 0.5f;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
 			NPC.DeathSound = SoundID.NPCDeath44;
-			AIType = NPCID.Crab;
+			AIType = NPCID.GiantWalkingAntlion;
 			SpawnModBiomes = [
 				GetInstance<Smog_Storm>().Type,
 			];
@@ -75,7 +77,11 @@ namespace Origins.NPCs.Ashen {
 			NPC.DoFrames(4, 2.., NPC.velocity.X * NPC.direction);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 4, amountDroppedMaximum: 9));
 			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Greaves>(), 525));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 		}

@@ -6078,6 +6078,7 @@ Resizing_Glove: {
 	/* Tooltip:
 		'''
 		Swung melee weapons will be a random size every swing
+		Smaller sizes will speed up attack speed
 		Enables auto swing for melee weapons
 		'Resizing Glove, huh? Why do they only come in small?'
 		''' */
@@ -6176,6 +6177,7 @@ Gaming_Glove: {
 		12% increased melee speed
 		Enables auto swing for melee weapons
 		Swung melee weapons will be a random size every swing
+		Smaller sizes will speed up attack speed
 		''' */
 }
 
@@ -8297,9 +8299,9 @@ Radio_Component_Item: {
 	// Tooltip: ""
 
 	ModeTooltip: {
-		// Send: Send
-		// Receive: Receive
-		// Signal: Signal
+		// Send: Broadcast Mode
+		// Receive: Signal Mode
+		// Signal: Receiver Mode
 	}
 }
 
@@ -8361,10 +8363,10 @@ Big_Bang: {
 
 Gas_Generator_Item: {
 	// DisplayName: Gas Generator
-	// Tooltip: ""
+	// Tooltip: Generates power with fuel from Oil Buckets
 }
 
 Solar_Battery_Item: {
 	// DisplayName: Solar Battery
-	// Tooltip: ""
+	// Tooltip: Generates power from sunlight
 }

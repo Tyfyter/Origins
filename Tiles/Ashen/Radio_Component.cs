@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
@@ -312,6 +313,8 @@ namespace Origins.Tiles.Ashen {
 		public record class Set_Channel_Action(int I, int J, int Channel) : AutoSyncedAction {
 			protected override bool ShouldPerform => TryGet<Radio_Component_TE>(I, J, out _);
 			protected override void Perform() {
+				SoundEngine.PlaySound(SoundID.Item50.WithPitch(1.5f).WithVolume(0.2f));
+				SoundEngine.PlaySound(SoundID.Item51.WithPitch(2f).WithVolume(0.2f));
 				if (!TryGet(I, J, out Radio_Component_TE te)) return;
 				te.Channel = int.Clamp(Channel, 0, Max);
 			}
@@ -320,6 +323,8 @@ namespace Origins.Tiles.Ashen {
 			static string IBroken.BrokenReason => "Enum support added in incoming PegasusLib update";
 			protected override bool ShouldPerform => TryGet<Radio_Component_TE>(I, J, out _);
 			protected override void Perform() {
+				SoundEngine.PlaySound(SoundID.Item50.WithPitch(1.5f).WithVolume(0.2f));
+				SoundEngine.PlaySound(SoundID.Item51.WithPitch(2f).WithVolume(0.2f));
 				if (!TryGet(I, J, out Radio_Component_TE te)) return;
 				te.Mode = Mode;
 			}

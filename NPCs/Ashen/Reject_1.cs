@@ -1,7 +1,10 @@
 ﻿using Origins.Core;
 using Origins.Dev;
 using Origins.Events;
+using Origins.Items.Armor.Ashen;
+using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
+using Origins.LootConditions;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -75,7 +78,11 @@ namespace Origins.NPCs.Ashen {
 			NPC.DoFrames(4, 3.., NPC.velocity.X * NPC.direction);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 4, amountDroppedMaximum: 9));
 			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Helmet>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Breastplate>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Ashen2_Greaves>(), 525));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 		}

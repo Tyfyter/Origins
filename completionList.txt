@@ -212,7 +212,7 @@ ENEMY NPCS:
 (🤡) Creme-filled Bat
 (^) Crimbrain
 (X) Crying Creeper
-(#, ^2) Defensive Turret !!!
+(#2, ^2) Defensive Turret !!!
 (^) Defiled Broadcaster
 (^) Defiled Cyclops
 (^) Defiled Digger
@@ -245,8 +245,8 @@ ENEMY NPCS:
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
 (#, ^2) QM-76 'Quakemaker' !!!
-(☻) Reject !!!
-(#2, ^2) Repairboy !!! (cool repair torch effect)
+(#2, ^2) Reject !!!
+(#2, $2, ^2) Repairboy !!! (cool repair torch effect)
 (^) Riven Penguin
 (^) Riven Protoform
 (X) Rivenpotamus
@@ -261,7 +261,7 @@ ENEMY NPCS:
 (X) Spiteful Flesh
 (^) Springjumper
 (X) Tubefish
-(☻) Wind Pail !!! (added sound-like effects for attacks)
+($2, ^2/3) Wind Pail !!! (added sound-like effects for attacks)
 
 (^) Airsnatcher
 (^) Amoebeye
@@ -1328,7 +1328,8 @@ TILES:
 (X) Spug Flesh Brick Wall
 (^) Tainted Stone Wall
 (^) Truss Wall
-(^) Type-I Fortified Steel Wall
+(@4, ^3) Type-I Fortified Steel Wall !!!
+(#, ^2) Type-II Fortified Steel Wall !!!
 (^) Type-III Fortified Steel Wall
 
 (^) Air Vent
@@ -1382,7 +1383,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(☻) Delay Component !!!
+(#2, ^2) Delay Component !!! (sounds need to be moved to correct spot, im too lazy sorry)
 (^) Diode Component
 (^) Dirt Chest
 (^) Edge Detector

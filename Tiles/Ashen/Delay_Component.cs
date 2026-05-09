@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
@@ -183,6 +184,8 @@ namespace Origins.Tiles.Ashen {
 		public record class Set_Delay_Action(int I, int J, int Delay) : AutoSyncedAction {
 			protected override bool ShouldPerform => TryGet<Delay_Component_TE>(I, J, out _);
 			protected override void Perform() {
+				SoundEngine.PlaySound(SoundID.Item50.WithPitch(1.5f).WithVolume(0.2f));
+				SoundEngine.PlaySound(SoundID.Item51.WithPitch(2f).WithVolume(0.2f));
 				if (!TryGet(I, J, out Delay_Component_TE te)) return;
 				te.Delay = int.Clamp(Delay, increment, max);
 			}

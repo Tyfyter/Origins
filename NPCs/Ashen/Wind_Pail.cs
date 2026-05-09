@@ -18,15 +18,9 @@ namespace Origins.NPCs.Ashen {
 	public class Wind_Pail : Glowing_Mod_NPC, IAshenEnemy {
 		public bool IsOpaqueEnoughToAttack => NPC.Opacity > 0.5f;
 		public override void Load() => this.AddBanner();
-		static SoundStyle attackSoundStyle;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 1;
 			GetInstance<Smog_Storm.SpawnRates>().AddSpawn(Type, BiomeSpawnChance);
-			attackSoundStyle = SoundID.Zombie4 with {
-				MaxInstances = 0,
-				Pitch = -1.5f,
-				PitchVariance = 1
-			};
 		}
 		public override void SetDefaults() {
 			NPC.lifeMax = 240;
@@ -96,7 +90,7 @@ namespace Origins.NPCs.Ashen {
 						dust.velocity *= 1f + 0.35f * 0.5f;
 						dust.velocity *= 1f + 0.35f;
 					}
-					attackSound.PlaySoundIfInactive(attackSoundStyle, NPC.Center);
+					attackSound.PlaySoundIfInactive(SoundID.Zombie4.WithPitch(-1.5f).WithPitchVarience(1).WithVolume(5f), NPC.Center);
 					if (!attackHitbox.Intersects(Main.player[NPC.target].Hitbox)) NPC.aiAction = 2;
 				}
 				break;
@@ -110,7 +104,7 @@ namespace Origins.NPCs.Ashen {
 					if (!LinearSmoothing(ref NPC.ai[1], 0, 1)) break;
 					if (attackHitbox.Intersects(Main.player[NPC.target].Hitbox)) {
 						NPC.ai[2] = 0;
-						attackSound = SoundEngine.PlaySound(attackSoundStyle, NPC.Center);
+						attackSound = SoundEngine.PlaySound(SoundID.Zombie4.WithPitch(-1.5f).WithPitchVarience(1).WithVolume(5f), NPC.Center);
 						NPC.aiAction = 1;
 					}
 					break;
