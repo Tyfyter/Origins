@@ -141,7 +141,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			NPC target = null;
 			PlayerInput.SetZoom_MouseInWorld();
 			foreach (NPC npc in Main.ActiveNPCs) {
-				if (npc.CanBeChasedBy()) {
+				if (npc.CanBeChasedBy(Main.LocalPlayer)) {
 					Vector2 pos = Main.MouseWorld;
 					float between = Vector2.Distance(pos.Clamp(npc.Hitbox), pos);
 					if (distanceFromTarget > between) {

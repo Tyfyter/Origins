@@ -73,6 +73,30 @@ namespace Origins.Events {
 			CutThroughSmogStorm[ProjectileID.Wisp] = ClearSmog(7);
 			CutThroughSmogStorm[ProjectileID.DD2PetGhost] = ClearSmog(10);
 			CutThroughSmogStorm[ProjectileID.FairyQueenPet] = ClearSmog(11);
+			On_NPC.CanBeChasedBy += On_NPC_CanBeChasedBy;
+		}
+		static bool On_NPC_CanBeChasedBy(On_NPC.orig_CanBeChasedBy orig, NPC self, object attacker, bool ignoreDontTakeDamage) {
+			Player player;
+			attacker ??= CurrentProjectile.Projectile;
+			switch (attacker) {
+				case Player _player:
+				player = _player;
+				break;
+				case ModPlayer _player:
+				player = _player.Player;
+				break;
+				case Projectile projectile:
+				if (!projectile.friendly || !projectile.TryGetOwner(out player)) player = null;
+				break;
+				case ModProjectile proj:
+				if (!proj.Projectile.friendly || !proj.Projectile.TryGetOwner(out player)) player = null;
+				break;
+				default:
+				player = null;
+				break;
+			}
+			if ((player?.InModBiome<Smog_Storm>() ?? false) && !self.Hitbox.IsWithin(player.MountedCenter, 16 * (player.detectCreature ? 35 : 16))) return false;
+			return orig(self, attacker, ignoreDontTakeDamage);
 		}
 
 		public static Action<Projectile> ClearSmog(float scale, bool useOpacity = true) => projectile => {

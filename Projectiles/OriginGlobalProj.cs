@@ -798,4 +798,13 @@ namespace Origins.Projectiles {
 		}
 	}
 	public record OwnerMinionKey(int Type, int Owner, int Identity);
+	public ref struct CurrentProjectile {
+		public static Projectile Projectile { get; private set; }
+		readonly Projectile prev;
+		public CurrentProjectile(Projectile projectile) {
+			prev = Projectile;
+			Projectile = projectile;
+		}
+		public readonly void Dispose() => Projectile = prev;
+	}
 }
