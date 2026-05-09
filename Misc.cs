@@ -2336,6 +2336,9 @@ namespace Origins {
 			if (self.frameCounter >= counterMax) {
 				self.frame.Y += heightEtBuffer;
 				self.frameCounter = 0;
+			} else if (self.frameCounter <= -counterMax) {
+				self.frame.Y -= heightEtBuffer;
+				self.frameCounter = 0;
 			}
 			int frameCount = Main.npcFrameCount[self.type];
 			if (self.frame.Y >= heightEtBuffer * frames.End.GetOffset(frameCount)) {

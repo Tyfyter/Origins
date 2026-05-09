@@ -132,3 +132,4 @@ Chambersite_Squirrel: "{$Bestiary_FlavorText.npc_GemSquirrelAmethyst}"
 // Cartwheeler_Medium: "{$Cartwheeler_Large}"
 // Cartwheeler_Small: "{$Cartwheeler_Large}"
 // Defensive_Turret: A defensive turret constructed to defend the Outposts. As to why it is designed as an autocannon leaves more questions than answers for figuring out just who they were meant for.
+// Reject_2: <PH> bestiary text here

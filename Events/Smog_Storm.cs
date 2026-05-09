@@ -5,6 +5,7 @@ using Origins.Graphics.Unlighting;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
+using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Ashen;
@@ -73,6 +74,7 @@ namespace Origins.Events {
 			CutThroughSmogStorm[ProjectileID.DD2PetGhost] = ClearSmog(10);
 			CutThroughSmogStorm[ProjectileID.FairyQueenPet] = ClearSmog(11);
 		}
+
 		public static Action<Projectile> ClearSmog(float scale, bool useOpacity = true) => projectile => {
 			float opacity = useOpacity ? projectile.Opacity : 1;
 			Main.EntitySpriteDraw(
@@ -314,6 +316,7 @@ namespace Origins.Events {
 			public const float Cartwheeler_Large = 0.26f;
 			public const float Cartwheeler_Medium = 0.27f;
 			public const float Cartwheeler_Small = 0.27f;
+			public const float Reject_2 = 0.8f;
 			public override string Name => $"{nameof(Smog_Storm)}_{base.Name}";
 			public override void SetStaticDefaults() {
 				Priority = SpawnPoolPriority.Event;
