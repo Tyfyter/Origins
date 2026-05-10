@@ -89,7 +89,7 @@ TOWN NPCs:
 (ᗢ) Defiled Effigy
 
 (X) Arabel
-(X) Mother Unit !!!
+(ᗢ, #2, ^2) Mother Unit !!! (leave it with just "ᗢ" once done)
 (%2, X) The Author
 
 (%2, X) Cubekon Tinkerer
@@ -400,7 +400,7 @@ NPC DIALOGUE:
 (^) Acid Freak
 (^) Cubekon Tinkerer
 (^) Defiled Effigy
-(X) Mother Unit !!!
+(#2) Mother Unit
 (X) The Author
 ---
 
@@ -1329,7 +1329,7 @@ TILES:
 (X) Spug Flesh Brick Wall
 (^) Tainted Stone Wall
 (^) Truss Wall
-(@4, ^3) Type-I Fortified Steel Wall !!!
+(#2, ^2) Type-I Fortified Steel Wall !!!
 (#, ^2) Type-II Fortified Steel Wall !!!
 (^) Type-III Fortified Steel Wall
 
