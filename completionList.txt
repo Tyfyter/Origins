@@ -1499,6 +1499,7 @@ TILES:
 ($2, ^2/3) Music Box (Ashen Factory) !!!
 ($, ^2/3) Music Box (Ashen Mines) !!!
 ($2, ^2/3) Music Box (Ashen Scrapyard) !!!
+(#, @, $2) Music Box (Beep Boop Bop)
 (^) Music Box (Brine Pool)
 (^) Music Box (Defiled Caverns)
 (X) Music Box (Defiled Egregocide Route)
@@ -1829,7 +1830,7 @@ MOUNTS, PETS AND TRANSFORMATIONS:
 (^) Ninja Ravel
 (^) Ravel
 (^) Spider Ravel
-(X) SS-22 'Star Soldier' !!!
+(#, ^2) SS-22 'Star Soldier' !!!
 (^) Stealth Ravel
 (X) Sunflower Veil
 (X) Thrust Ravel
