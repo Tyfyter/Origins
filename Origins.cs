@@ -821,7 +821,7 @@ namespace Origins {
 						}
 					}
 				} else {
-					Logger.Error($"NPCID {i} ({(NPCID.Search.TryGetName(i, out string name) ? name : "unregistered NPC")}) has null {nameof(SpecificDebuffImmunity)}");
+					Logger.Error($"NPCID {i} ({(NPCID.Search.TryGetName(i, out string name) ? name : "unregistered NPC")}) has null {nameof(NPCID.Sets.SpecificDebuffImmunity)}");
 				}
 			}
 			foreach (ModItem item in MC.GetContent<ModItem>()) {
