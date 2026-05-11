@@ -205,7 +205,7 @@ namespace Origins.Tiles.Ashen {
 		public override void Load() => paintKey = CustomTilePaintLoader.CreateKey();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			MinPick = 100;
+			MinPick = 110;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
 			DrawTilePattern(i, j, CustomTilePaintLoader.TryGetTileAndRequestIfNotReady(paintKey, Main.tile[i, j].TileColor, patternTexture));

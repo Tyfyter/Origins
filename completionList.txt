@@ -1329,8 +1329,8 @@ TILES:
 (X) Spug Flesh Brick Wall
 (^) Tainted Stone Wall
 (^) Truss Wall
-(#2, ^2) Type-I Fortified Steel Wall !!!
-(#, ^2) Type-II Fortified Steel Wall !!!
+(☻) Type-I Fortified Steel Wall !!!
+(☻) Type-II Fortified Steel Wall !!!
 (^) Type-III Fortified Steel Wall
 
 ($2, ^2/3) Air Vent !!!
