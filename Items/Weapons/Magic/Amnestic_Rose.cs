@@ -432,7 +432,7 @@ namespace Origins.Items.Weapons.Magic {
 			OriginGlobalNPC originGlobalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
 			originGlobalNPC.amnesticRose = true;
 			originGlobalNPC.amnesticRoseGooProj = projType;
-			if (!npc.boss) originGlobalNPC.slowDebuff = true;
+			if (!npc.boss && !npc.buffImmune[Slow_Debuff.ID]) originGlobalNPC.slowDebuff = true;
 			if (Main.rand.NextBool(3)) Dust.NewDust(npc.position, npc.width, npc.height, ModContent.DustType<Rose_Dust>());
 		}
 		public override void Update(Player player, ref int buffIndex) {
