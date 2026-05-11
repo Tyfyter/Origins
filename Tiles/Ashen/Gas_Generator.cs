@@ -1,10 +1,11 @@
-﻿using Humanizer;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Graphics;
 using Origins.Items.Tools.Liquids;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
+using ReLogic.Utilities;
 using System;
 using System.IO;
 using Terraria;
@@ -22,6 +23,7 @@ using Terraria.Utilities;
 
 namespace Origins.Tiles.Ashen; 
 public class Gas_Generator : ModTile {
+	readonly Sound activeSound = EnvironmentSounds.Register<Sound>();
 	public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Gas_Generator).GetDefaultTMLName() + "_Glow";
 	public static int FuelFrameCount => 6;
 	public static int MaxFuel => 60 * 60 * 10;
@@ -144,6 +146,17 @@ public class Gas_Generator : ModTile {
 	public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
 		if (TileObjectData.IsTopLeft(i, j)) Main.instance.TilesRenderer.AddSpecialLegacyPoint(i, j);
 		return false;
+	}
+	public override void NearbyEffects(int i, int j, bool closer) {
+		if (closer) return;
+		TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out i, out j);
+		if (Gas_Generator_TE.GetData(new(i, j)).Fuel <= 0) return;
+		activeSound.TrySetNearest(new(i * 16 + 8, j * 16 + 8));
+	}
+	class Sound : AEnvironmentSound {
+		SlotId usePlaySoundIfInactiveForLoopedSounds;
+		public override void UpdateSound(Vector2 position) {
+		}
 	}
 	class Gas_Generator_TE : TESystem<Gas_Generator_TE.Data> {
 		public static Data GetData(Point16 position) {
