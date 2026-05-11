@@ -10,11 +10,14 @@ namespace Origins.Buffs {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
+			BuffID.Sets.GrantImmunityWith[Type] = [
+				BuffID.Slow
+			];
 			Buff_Hint_Handler.ModifyTip(Type, 0, "BuffDescription.Slow");
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
-			if (!npc.boss) npc.GetGlobalNPC<OriginGlobalNPC>().slowDebuff = true;
+			npc.GetGlobalNPC<OriginGlobalNPC>().slowDebuff = true;
 		}
 	}
 }

@@ -785,7 +785,10 @@ namespace Origins {
 			for (int i = 0; i < NPCID.Sets.SpecificDebuffImmunity.Length; i++) {
 				bool?[] immunityData = NPCID.Sets.SpecificDebuffImmunity[i];
 				if (immunityData is not null) {
-					if (NPCID.Sets.ShouldBeCountedAsBoss[i] || ContentSamples.NpcsByNetId[i].boss) immunityData[Blind_Debuff.ID] = true;
+					if (NPCID.Sets.ShouldBeCountedAsBoss[i] || ContentSamples.NpcsByNetId[i].boss) {
+						immunityData[Blind_Debuff.ID] = true;
+						immunityData[Slow_Debuff.ID] = true;
+					}
 					if ((immunityData[BuffID.Confused] ?? false) && !RasterizeAdjustment.ContainsKey(i)) {
 						switch (i) {
 							case NPCID.KingSlime:
@@ -817,6 +820,8 @@ namespace Origins {
 							break;
 						}
 					}
+				} else {
+					Logger.Error($"NPCID {i} ({(NPCID.Search.TryGetName(i, out string name) ? name : "unregistered NPC")}) has null {nameof(SpecificDebuffImmunity)}");
 				}
 			}
 			foreach (ModItem item in MC.GetContent<ModItem>()) {

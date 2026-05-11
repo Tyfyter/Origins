@@ -1,10 +1,4 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,6 +9,10 @@ namespace Origins.Buffs {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.debuff[Type] = true;
+			BuffID.Sets.GrantImmunityWith[Type] = [
+				BuffID.Darkness,
+				BuffID.Obstructed
+			];
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
