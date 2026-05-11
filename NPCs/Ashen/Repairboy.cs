@@ -53,7 +53,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.height = 26;
 			NPC.noGravity = true;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1f);
-			NPC.DeathSound = SoundID.NPCDeath44;
+			NPC.DeathSound = Origins.Sounds.RepairboyDeath;
 			NPC.value = Item.buyPrice();
 			SpawnModBiomes = [
 				ModContent.GetInstance<Ashen_Biome>().Type,
@@ -166,6 +166,7 @@ namespace Origins.NPCs.Ashen {
 			return (bestCost, Unsafe.BitCast<Tile, int>(bestTile), bestHitbox);
 		}
 		public override void AI() {
+			if (Main.rand.NextBool(700)) SoundEngine.PlaySound(Origins.Sounds.RepairboyIdle.WithVolume(0.5f), NPC.Center);
 			const float strafe_accel = 0.05f;
 			if (!target.HasTarget || NPC.life < NPC.lifeMax || target.TargetType == TargetSearchTypes.Players) TargetClosest();
 			if (target.HasTarget) {

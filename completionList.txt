@@ -63,7 +63,7 @@ BOSSES AND MINI-BOSSES:
 (^) Defiled Amalgamation
 (#2, $, ^2) Fiberglass Weaver !!!
 (^) Shimmer Construct
-(#2, $2, ^2) Trenchmaker !!!
+(#2, ^2) Trenchmaker !!!
 (^) World Cracker
 
 (^) Lost Diver/Mildew Carrion
@@ -246,8 +246,8 @@ ENEMY NPCS:
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
 (#, ^2) QM-76 'Quakemaker' !!!
-(#2, $2, ^2) Reject !!!
-(#2, $2, ^2) Repairboy !!! (cool repair torch effect)
+(#2?, $2, ^2) Reject !!! (No sounds have ever been mentioned to be for Rejects, nor do any sounds contain Reject in their names)
+(#2, ^2) Repairboy !!! (design/describe cool repair torch effect)
 (^) Riven Penguin
 (^) Riven Protoform
 (X) Rivenpotamus
@@ -260,9 +260,9 @@ ENEMY NPCS:
 (^) Slime Worm (Slorm)
 (^) Spider Amoeba
 (X) Spiteful Flesh
-($2, ^2/3) Springjumper !!!
+(☻) Springjumper !!!
 (X) Tubefish
-($2, ^2/3) Wind Pail !!!
+(☻) Wind Pail !!!
 
 (^) Airsnatcher
 (^) Amoebeye
@@ -920,7 +920,7 @@ RANGED WEAPONS:
 (^) Threemoepeater
 (^) Unmisfire
 (^) Unstrung Fiberglass Bow
-(#2, ^2) Welding Torch !!! (cool repair visual effect)
+(#2, ^2) Welding Torch !!! (design/describe cool repair visual effect)
 (^) 2-in-1 Shotty
 
 (^) Acrid Impaler

@@ -62,7 +62,11 @@ namespace Origins.NPCs.Ashen.Boss {
 	}
 	public class Walk_Animation_2 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
-			if (leg.WasStanding || (leg.ThighRot == 0f && PistonLength(npc, leg) >= 36)) return ModContent.GetInstance<Walk_Animation_3>();
+			if (leg.WasStanding) {
+				SoundEngine.PlaySound(Origins.Sounds.PowerStomp, npc.GetFootHitbox(leg).Bottom());
+				return ModContent.GetInstance<Walk_Animation_3>();
+			}
+			if (leg.ThighRot == 0f && PistonLength(npc, leg) >= 36) return ModContent.GetInstance<Walk_Animation_3>();
 			return this;
 		}
 

@@ -53,6 +53,7 @@ namespace Origins.NPCs.Ashen {
 		SlotId attackSound;
 		public override void AI() {
 			NPC.dontTakeDamage = NPC.Opacity <= 0;
+			if (Main.rand.NextBool(7000)) SoundEngine.PlaySound(Origins.Sounds.WindPail.WithVolume(0.5f), Vector2.Lerp(NPC.Center, Main.Camera.Center, 0.5f));
 			const int attack_range = 16 * 15;
 			if (!NPC.HasValidTarget || (Main.player[NPC.target].Center.X - NPC.Center.X) * NPC.direction < 1 || !Main.player[NPC.target].InModBiome<Smog_Storm>()) {
 				NPC.target = -1;
@@ -113,6 +114,7 @@ namespace Origins.NPCs.Ashen {
 					if (attackHitbox.Intersects(Main.player[NPC.target].Hitbox)) {
 						NPC.ai[2] = 0;
 						attackSound = SoundEngine.PlaySound(SoundID.Zombie4.WithPitch(-1.5f).WithPitchVarience(1).WithVolume(5f), NPC.Center);
+						SoundEngine.PlaySound(Origins.Sounds.WindPail, NPC.Center);
 						NPC.aiAction = 1;
 					}
 					break;

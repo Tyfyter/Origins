@@ -79,6 +79,7 @@ namespace Origins {
 			public static SoundStyle WCHit = SoundID.ForceRoar;
 			public static SoundStyle WCIdle = SoundID.ForceRoar;
 			public static SoundStyle WCScream = SoundID.ForceRoar;
+			public static SoundStyle TrenchmakerStep = new("Origins/Sounds/Custom/MechStompies", 3);
 			public static SoundStyle PowerStompCharge = new("Origins/Sounds/Custom/PowerStompCharge");
 			public static SoundStyle PowerStomp = new("Origins/Sounds/Custom/PowerStomp");
 			public static SoundStyle ThrusterChargeUp = new("Origins/Sounds/Custom/ThrusterChargeUp");
@@ -89,6 +90,10 @@ namespace Origins {
 			public static SoundStyle HyraxIdle = new("Origins/Sounds/Custom/Hyrax_Idle", 2);
 			public static SoundStyle HyraxKill = new("Origins/Sounds/Custom/Hyrax_Kill", 2);
 			public static SoundStyle HyraxWawa = new("Origins/Sounds/Custom/Hyrax_Wawa", 2);
+			public static SoundStyle SpringjumperIdle = new("Origins/Sounds/Custom/Springjumper_Idle", 3);
+			public static SoundStyle RepairboyIdle = new("Origins/Sounds/Custom/Repairboy_Idle", 3);
+			public static SoundStyle RepairboyDeath = new("Origins/Sounds/Custom/Repairboy_Death", 2);
+			public static SoundStyle WindPail = new("Origins/Sounds/Custom/WindPail", 3);
 
 			public static SoundStyle MaskedZombieAmbient = new("Origins/Sounds/Custom/MaskedZombie", 3) {
 				Identifier = "Terraria/ZombieMoan",

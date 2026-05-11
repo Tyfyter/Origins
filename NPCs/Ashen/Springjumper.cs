@@ -33,6 +33,7 @@ namespace Origins.NPCs.Ashen {
 			];
 		}
 		public override void AI() {
+			if (Main.rand.NextBool(700)) SoundEngine.PlaySound(Origins.Sounds.SpringjumperIdle.WithVolume(0.5f), NPC.Center);
 			void SetFrame(int frame) {
 				NPC.ai[0] = frame;
 				NPC.ai[1] = 0;
