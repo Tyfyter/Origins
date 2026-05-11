@@ -3851,7 +3851,7 @@ namespace Origins {
 		/// <param name="direction"></param>
 		/// <param name="maxLength"></param>
 		/// <returns>The distance traveled before a tile was reached, or <paramref name="maxLength"/> if the distance would exceed it</returns>
-		/// <exception cref="ArgumentException"></exception>
+		/// <exception cref="ArgumentException"/>
 		public static float Raymarch(Vector2 position, Vector2 direction, Func<Tile, bool?> extraCheck, float maxLength = float.PositiveInfinity) {
 			if (direction == Vector2.Zero) throw new ArgumentException($"{nameof(direction)} may not be zero");
 			float length = 0;
@@ -3882,8 +3882,6 @@ namespace Origins {
 				if (next == tileSubPos) break;
 				Tile tile = Framing.GetTileSafely(tilePos);
 				bool doBreak = !WorldGen.InWorld(tilePos.X, tilePos.Y);
-				Vector2 diff = next - tileSubPos;
-				float dist = diff.Length();
 				bool? extraControl = extraCheck(tile);
 				if (extraControl == false) break;
 				if (!extraControl.HasValue && tile.HasFullSolidTile()) {
@@ -3941,12 +3939,15 @@ namespace Origins {
 						);
 						if (endPoint.HasNaNs()) {
 							length += 16;
-						} else {
+						} else if (endPoint.X >= 0 && endPoint.Y >= 0 && endPoint.X <= 1 && endPoint.Y <= 1) {
 							length += (float)(16 * endPoint.Distance(tileSubPos));
+						} else {
+							doBreak = false;
 						}
 					}
 				}
 				if (doBreak) break;
+				float dist = (next - tileSubPos).Length();
 				length += dist * 16;
 				//Dust.NewDustPerfect(tilePos.ToWorldCoordinates(0, 0) + next * 16, 6, Vector2.Zero).noGravity = true;
 				DoLoopyThing(next.X, out next.X, tilePos.X, out tilePos.X, cos);
