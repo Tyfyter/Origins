@@ -301,10 +301,10 @@ namespace Origins.Events {
 				if (texture?.Width != targetResolution) ReinitializeTexture();
 				dynamicResolution.Start();
 				FastParallel.For(0, resolution, (min, max, _) => {
+					Vector2 position = Main.LocalPlayer.MountedCenter;
 					for (int i = min; i < max; i++) {
 						try {
 							Vector2 dir = (i * MathHelper.TwoPi / targetResolution).ToRotationVector2();
-							Vector2 position = Main.LocalPlayer.MountedCenter;
 							buffer[i] = CollisionExtensions.Raymarch(position, dir, IgnoreGlass, 16 * 10);
 						} finally { }
 					}
