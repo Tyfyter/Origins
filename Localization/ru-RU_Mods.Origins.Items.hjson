@@ -8300,8 +8300,8 @@ Radio_Component_Item: {
 
 	ModeTooltip: {
 		// Send: Broadcast Mode
-		// Receive: Signal Mode
-		// Signal: Receiver Mode
+		// Receive: Receiver Mode
+		// Signal: Signal Mode
 	}
 }
 

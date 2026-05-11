@@ -180,13 +180,21 @@ namespace Origins.Tiles.Ashen {
 					if (!GetTE(out Radio_Component_TE tileEntity)) return;
 					Append(ComponentUI.ReframingButton.Disableable(
 						() => tileEntity.Channel <= 0,
-						() => new Radio_Component_TE.Set_Channel_Action(position.X, position.Y, tileEntity.Channel - Radio_Component_TE.CurrentIncrement).Perform(),
+						() => {
+							new Radio_Component_TE.Set_Channel_Action(position.X, position.Y, tileEntity.Channel - Radio_Component_TE.CurrentIncrement).Perform();
+							SoundEngine.PlaySound(SoundID.Item50.WithPitch(1.5f).WithVolume(0.2f));
+							SoundEngine.PlaySound(SoundID.Item51.WithPitch(2f).WithVolume(0.2f));
+						},
 						new(248, 180, 18, 18),
 						new(248, 200, 18, 18)
 					).MoveTo(new(4, 2)));
 					Append(ComponentUI.ReframingButton.Disableable(
 						() => tileEntity.Channel >= Radio_Component_TE.Max,
-						() => new Radio_Component_TE.Set_Channel_Action(position.X, position.Y, tileEntity.Channel + Radio_Component_TE.CurrentIncrement).Perform(),
+						() => {
+							new Radio_Component_TE.Set_Channel_Action(position.X, position.Y, tileEntity.Channel + Radio_Component_TE.CurrentIncrement).Perform();
+							SoundEngine.PlaySound(SoundID.Item50.WithPitch(1.5f).WithVolume(0.2f));
+							SoundEngine.PlaySound(SoundID.Item51.WithPitch(2f).WithVolume(0.2f));
+						},
 						new(292, 180, 18, 18),
 						new(292, 200, 18, 18)
 					).MoveTo(new(48, 2)));
@@ -199,6 +207,8 @@ namespace Origins.Tiles.Ashen {
 							() => {
 								new Radio_Component_TE.Set_Mode_Action(position.X, position.Y, mode).Perform();
 								parentUI.InitializeHooks();
+								SoundEngine.PlaySound(SoundID.Item50.WithPitch(1.5f).WithVolume(0.2f));
+								SoundEngine.PlaySound(SoundID.Item51.WithPitch(2f).WithVolume(0.2f));
 							},
 							new(374 + i * 18, 180, 18, 18),
 							new(318 + i * 18, 180, 18, 18),
@@ -313,8 +323,6 @@ namespace Origins.Tiles.Ashen {
 		public record class Set_Channel_Action(int I, int J, int Channel) : AutoSyncedAction {
 			protected override bool ShouldPerform => TryGet<Radio_Component_TE>(I, J, out _);
 			protected override void Perform() {
-				SoundEngine.PlaySound(SoundID.Item50.WithPitch(1.5f).WithVolume(0.2f));
-				SoundEngine.PlaySound(SoundID.Item51.WithPitch(2f).WithVolume(0.2f));
 				if (!TryGet(I, J, out Radio_Component_TE te)) return;
 				te.Channel = int.Clamp(Channel, 0, Max);
 			}
@@ -323,8 +331,6 @@ namespace Origins.Tiles.Ashen {
 			static string IBroken.BrokenReason => "Enum support added in incoming PegasusLib update";
 			protected override bool ShouldPerform => TryGet<Radio_Component_TE>(I, J, out _);
 			protected override void Perform() {
-				SoundEngine.PlaySound(SoundID.Item50.WithPitch(1.5f).WithVolume(0.2f));
-				SoundEngine.PlaySound(SoundID.Item51.WithPitch(2f).WithVolume(0.2f));
 				if (!TryGet(I, J, out Radio_Component_TE te)) return;
 				te.Mode = Mode;
 			}
