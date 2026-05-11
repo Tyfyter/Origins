@@ -134,11 +134,8 @@ namespace Origins.NPCs.Ashen {
 		}
 		public void DoTargeting() {
 			foreach (Projectile target in Main.ActiveProjectiles) {
-				if (OohShiny[target.type] && CanTargetProjectile(target)) {
+				if (OohShiny[target.type] && SetTargetRect(target)) {
 					ProjectileTarget = target;
-					NPC.targetRect = target.Hitbox;
-					Utils.ChaseResults chase = Utils.GetChaseResults(GunOrigin, ShotVelocity, target.Center, target.velocity * target.MaxUpdates);
-					if (chase.InterceptionHappens) NPC.targetRect = NPC.targetRect.Recentered(chase.InterceptionPosition);
 					return;
 				}
 			}
@@ -158,11 +155,8 @@ namespace Origins.NPCs.Ashen {
 				NPC.targetRect = searchResults.NearestTargetHitbox;
 			} else {
 				foreach (Projectile target in Main.ActiveProjectiles) {
-					if (TargetProjectilesLow[target.type] && CanTargetProjectile(target)) {
+					if (TargetProjectilesLow[target.type] && SetTargetRect(target)) {
 						ProjectileTarget = target;
-						NPC.targetRect = target.Hitbox;
-						Utils.ChaseResults chase = Utils.GetChaseResults(GunOrigin, ShotVelocity, target.Center, target.velocity * target.MaxUpdates);
-						if (chase.InterceptionHappens) NPC.targetRect = NPC.targetRect.Recentered(chase.InterceptionPosition);
 						return;
 					}
 				}
@@ -171,15 +165,7 @@ namespace Origins.NPCs.Ashen {
 			}
 		}
 		public void UpdateTarget() {
-			if (ProjectileTarget.HasTarget) {
-				Projectile target = ProjectileTarget.GetProjectile();
-				if (CanTargetProjectile(target)) {
-					NPC.targetRect = target.Hitbox;
-					Utils.ChaseResults chase = Utils.GetChaseResults(GunOrigin, ShotVelocity * 3, target.Center, target.velocity * target.MaxUpdates);
-					if (chase.InterceptionHappens) NPC.targetRect = NPC.targetRect.Recentered(chase.InterceptionPosition);
-					return;
-				}
-			}
+			if (ProjectileTarget.HasTarget && SetTargetRect(ProjectileTarget.GetProjectile())) return;
 			if (!NPC.HasValidTarget || NPC.ai[0] == 0 || NPC.ai[1] >= 45 || NPC.justHit || !NPC.Center.WithinRange(NPC.targetRect.Center(), MaxTargetDist)) {
 				NPC.ai[1] = 0;
 				DoTargeting();
@@ -187,8 +173,16 @@ namespace Origins.NPCs.Ashen {
 			}
 			NPC.targetRect = NPC.GetTargetData().Hitbox;
 		}
+		bool SetTargetRect(Projectile target) {
+			if (CanTargetProjectile(target)) return false;
+			NPC.targetRect = target.Hitbox;
+			float updateCount = (target.ModProjectile?.ShouldUpdatePosition() ?? true) ? target.MaxUpdates : 0;
+			Utils.ChaseResults chase = Utils.GetChaseResults(GunOrigin, ShotVelocity * 3, target.Center, target.velocity * updateCount);
+			if (chase.InterceptionHappens) NPC.targetRect = NPC.targetRect.Recentered(chase.InterceptionPosition);
+			return true;
+		}
 		bool CanTargetProjectile(Projectile target) {
-			if (!target.active || (!OohShiny[target.type] && !TargetProjectilesLow[target.type])) return false;
+			if (target is null || !target.active || (!OohShiny[target.type] && !TargetProjectilesLow[target.type])) return false;
 			Vector2 center = NPC.Center;
 			Vector2 targetPos = center.Clamp(target.Hitbox);
 			return center.WithinRange(targetPos, MaxTargetDist) && CollisionExt.CanHitRay(center, targetPos);
