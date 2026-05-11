@@ -2089,8 +2089,6 @@ Projectiles: {
 	DA_Arc_Bolt.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Arc Bolt"
 	DA_Bendy_Spikes.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Bendy Spikes"
 	DA_Flan.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Nerve Flan"
-	Defiled_Spike_Explosion_Hostile_Unused.DisplayName: "{§Defiled} Spike Explosion Hostile Unused"
-	Defiled_Spike_Explosion_Spike_Hostile_Unused.DisplayName: "{§Defiled} Spike Explosion Spike Hostile Unused"
 	Defiled_Spike_Indicator.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Spike Indicator"
 	DA_Laser.DisplayName: "{$Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} Laser Spin"
 	Defiled_Prefix_Orb.DisplayName: "{§Defiled} Orb"
