@@ -5234,6 +5234,19 @@ namespace Origins {
 
 			return new AdvancedTargetSearchResults(targetType, targetIndex, cost, targetRect);
 		}
+		static FastStaticFieldInfo<NPC, bool> noSpawnCycle = "noSpawnCycle";
+		public static void Despawn(this NPC npc) {
+			if (!NetmodeActive.MultiplayerClient && !NPCLoader.SavesAndLoads(npc)) {
+				noSpawnCycle.Value = true;
+				npc.active = false;
+				if (NetmodeActive.Server) {
+					npc.netSkip = -1;
+					npc.life = 0;
+					NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
+				}
+				if (npc.extraValue > 0) NPC.RevengeManager.CacheEnemy(npc);
+			}
+		}
 	}
 	public static class TileExtenstions {
 		public static bool IsBrokenBottomAnchor(int i, int j) {

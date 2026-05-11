@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Events;
 using Origins.Items.Armor.Ashen;
 using Origins.Items.Other.Consumables.Food;
 using Origins.LootConditions;
 using ReLogic.Utilities;
+using System;
 using System.Numerics;
 using Terraria;
 using Terraria.Audio;
@@ -19,8 +21,11 @@ namespace Origins.NPCs.Ashen {
 		public bool IsOpaqueEnoughToAttack => NPC.Opacity > 0.5f;
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 1;
+			Main.npcFrameCount[Type] = 1;
+			NPCID.Sets.DoesntDespawnToInactivityAndCountsNPCSlots[Type] = true;
 			GetInstance<Smog_Storm.SpawnRates>().AddSpawn(Type, BiomeSpawnChance);
+			NPCID.Sets.SpecificDebuffImmunity[Type][Slow_Debuff.ID] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][Blind_Debuff.ID] = true;
 		}
 		public override void SetDefaults() {
 			NPC.lifeMax = 240;
@@ -47,9 +52,12 @@ namespace Origins.NPCs.Ashen {
 		}
 		SlotId attackSound;
 		public override void AI() {
+			NPC.dontTakeDamage = NPC.Opacity <= 0;
 			const int attack_range = 16 * 15;
-			if (!NPC.HasValidTarget || (Main.player[NPC.target].Center.X - NPC.Center.X) * NPC.direction < 1) {
+			if (!NPC.HasValidTarget || (Main.player[NPC.target].Center.X - NPC.Center.X) * NPC.direction < 1 || !Main.player[NPC.target].InModBiome<Smog_Storm>()) {
 				NPC.target = -1;
+				NPC.ai[1] = 60;
+				NPC.aiAction = 0;
 				if (LinearSmoothing(ref NPC.alpha, 255, 255 / 60)) AI_TryTeleport();
 				return;
 			} else {
@@ -111,6 +119,14 @@ namespace Origins.NPCs.Ashen {
 				}
 			}
 		}
+		public override bool CheckActive() {
+			if (NPC.dontTakeDamage) {
+				if (--NPC.timeLeft <= 0) NPC.Despawn();
+			} else {
+				NPC.timeLeft = NPC.activeTime;
+			}
+			return base.CheckActive();
+		}
 		public void AI_TryTeleport() {
 			const float min_dist = 16 * 15;
 			const float max_dist = 16 * 40;
@@ -121,7 +137,7 @@ namespace Origins.NPCs.Ashen {
 			int targetIndex = 0;
 			foreach (Player player in Main.ActivePlayers) {
 				float currentDistSQ = player.DistanceSQ(NPC.Bottom);
-				if (/*player.InModBiome<Smog_Storm>() &&*/ distSQ > currentDistSQ && TryGetPosition(player) is Vector2 pos) {
+				if (player.InModBiome<Smog_Storm>() && distSQ > currentDistSQ && TryGetPosition(player) is Vector2 pos) {
 					distSQ = currentDistSQ;
 					targetPos = pos;
 					targetIndex = player.whoAmI;
