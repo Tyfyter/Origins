@@ -96,7 +96,11 @@ namespace Origins.Events {
 				player = null;
 				break;
 			}
-			if ((player?.InModBiome<Smog_Storm>() ?? false) && !self.Hitbox.IsWithin(player.MountedCenter, 16 * (player.detectCreature ? 35 : 16))) return false;
+			if ((player?.InModBiome<Smog_Storm>() ?? false)) {
+				float range = player.detectCreature ? 35 : 16;
+				if (self.BottomLeft.Y / 16 > Main.UnderworldLayer) range *= 2f;
+				if (!self.Hitbox.IsWithin(player.MountedCenter, 16 * range)) return false;
+			}
 			return orig(self, attacker, ignoreDontTakeDamage);
 		}
 
