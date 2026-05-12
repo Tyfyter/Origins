@@ -185,6 +185,12 @@ namespace Origins.NPCs.Ashen {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(new CopyNPCDropRule(NPCID.Bunny)); // for compat with mods giving bunnies drops
 		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life < 0) {
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, 76);
+				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, 77);
+			}
+		}
 		public override void AddShops() {
 			ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[Type] = ContentSamples.NpcBestiaryCreditIdsByNpcNetIds[NPCID.Bunny];
 		}
