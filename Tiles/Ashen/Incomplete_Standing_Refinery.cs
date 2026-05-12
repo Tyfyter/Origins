@@ -4,7 +4,9 @@ using Origins.Core;
 using Origins.Graphics;
 using Origins.NPCs.Ashen;
 using Origins.World.BiomeData;
+using ReLogic.Utilities;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
@@ -14,8 +16,11 @@ using static Origins.Core.MultiTypeMultiTile;
 
 namespace Origins.Tiles.Ashen {
 	public class Incomplete_Standing_Refinery : OriginTile, IMultiTypeMultiTile, Repairboy.IReparableTile, IGlowingModTile {
+		readonly Sound ambientSound = EnvironmentSounds.Register<Sound>();
 		public static int ID { get; private set; }
+		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Incomplete_Standing_Refinery).GetDefaultTMLName() + "_Glow";
 		public Color GlowColor => Color.White;
+		AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
 		public static ShapeMap Shape => field = field || new ShapeMap(
 			new() {
 				['X'] = (ushort)ModContent.TileType<Incomplete_Standing_Refinery>(),
@@ -148,6 +153,22 @@ namespace Origins.Tiles.Ashen {
 		}
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => Shape[x - left, y - top, style];
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) => this.DrawTileGlow(i, j, spriteBatch);
+		public override void NearbyEffects(int i, int j, bool closer) {
+			if (closer) return;
+			ambientSound.TrySetNearest(new(i * 16 + 8, j * 16 + 8));
+		}
+		class Sound : AEnvironmentSound {
+			SlotId droning;
+			public override void UpdateSound(Vector2 position) {
+				int type = ModContent.TileType<Oil_Derrick>();
+				float mult = 1 / float.Max(position.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1);
+				droning.PlaySoundIfInactive(Origins.Sounds.StandingRefinery, position, playingSound => {
+					if (GetPosition() is not Vector2 pos) return false;
+					playingSound.Volume = 1f / float.Max(pos.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1);
+					return true;
+				});
+			}
+		}
 		int Repairboy.IReparableTile.RepairboyLimit => 7;
 		bool Repairboy.IReparableTile.NeedsRepair(int i, int j, ref float cost, ref Rectangle hitbox) => true;
 		void Repairboy.IReparableTile.Repair(int i, int j) { }
@@ -161,6 +182,5 @@ namespace Origins.Tiles.Ashen {
 			return partFrameX == 18 * 8 && partFrameY == 18 * 9;
 		}
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
-		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 	}
 }

@@ -117,6 +117,9 @@ namespace Origins {
 			public static SoundStyle RadioBroadcaster = new SoundStyle("Origins/Sounds/Custom/HawkenThrusterDistant", SoundType.Ambient) {
 				IsLooped = true
 			}.WithPitch(2.5f);
+			public static SoundStyle StandingRefinery = new SoundStyle("Origins/Sounds/Custom/Generator", SoundType.Ambient) {
+				IsLooped = true
+			};
 			public static SoundStyle ShimmerConstructAmbienceIntro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_Start", SoundType.Ambient);
 			public static SoundStyle ShimmerConstructAmbienceLoop = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_Mid", SoundType.Ambient);
 			public static SoundStyle ShimmerConstructAmbienceOutro = new("Origins/Sounds/Custom/Ambience/SCP3_Ambience_End", SoundType.Ambient);
