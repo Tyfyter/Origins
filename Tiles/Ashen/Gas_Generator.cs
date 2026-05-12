@@ -120,7 +120,9 @@ public class Gas_Generator : ModTile {
 				destination.Y = pos.Y + y * 16;
 				frame.Y = tileFrameY + y * 18;
 				Lighting.GetCornerColors(i + x, j + y, out VertexColors vertices);
+				CheckTransparent(in vertices);
 				ApplyPowered(ref vertices);
+				CheckTransparent(in vertices);
 				Main.tileBatch.Draw(
 					TextureAssets.Tile[Type].Value,
 					destination,
@@ -141,6 +143,12 @@ public class Gas_Generator : ModTile {
 			vertices.TopRightColor = Color.Lerp(vertices.TopRightColor, poweredColor, pulse);
 			vertices.BottomLeftColor = Color.Lerp(vertices.BottomLeftColor, poweredColor, pulse);
 			vertices.BottomRightColor = Color.Lerp(vertices.BottomRightColor, poweredColor, pulse);
+		}
+		static void CheckTransparent(in VertexColors vertices) {
+#if DEBUG
+			static bool IsZero(in VertexColors a) => System.Runtime.CompilerServices.Unsafe.BitCast<VertexColors, UInt128>(a) == default;
+			if (IsZero(in vertices)) throw new Exception("If you see this, you have important information for resolving the \"Gas Generator visuals are glitchy\" bug");
+#endif
 		}
 	}
 	public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
