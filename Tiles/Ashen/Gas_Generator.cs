@@ -155,7 +155,12 @@ public class Gas_Generator : ModTile {
 	}
 	class Sound : AEnvironmentSound {
 		SlotId usePlaySoundIfInactiveForLoopedSounds;
+		public int NoisyGenerator = 0;
 		public override void UpdateSound(Vector2 position) {
+			if (NoisyGenerator.CycleUp(8)) {
+				SoundEngine.PlaySound(SoundID.Item22.WithVolume(0.7f), position);
+				SoundEngine.PlaySound(SoundID.Item69.WithVolume(0.2f).WithPitch(1.5f), position);
+			}
 		}
 	}
 	class Gas_Generator_TE : TESystem<Gas_Generator_TE.Data> {

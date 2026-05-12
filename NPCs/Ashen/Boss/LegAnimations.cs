@@ -1,4 +1,6 @@
-﻿using Origins.Tiles;
+﻿using Origins.Items.Accessories;
+using Origins.Items.Weapons.Melee;
+using Origins.Tiles;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -9,7 +11,7 @@ using static Origins.NPCs.Ashen.Boss.Trenchmaker;
 using static Origins.NPCs.StateBossMethods<Origins.NPCs.Ashen.Boss.Trenchmaker>;
 
 namespace Origins.NPCs.Ashen.Boss {
-	//todo: force chee to become an animator
+	//todo: force lee to become an animator, no
 	public class Standing_Animation : LegAnimation {
 		public override void Load() {
 			defaultLegAnimation = this;
@@ -63,7 +65,8 @@ namespace Origins.NPCs.Ashen.Boss {
 	public class Walk_Animation_2 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 			if (leg.WasStanding) {
-				SoundEngine.PlaySound(Origins.Sounds.PowerStomp, npc.GetFootHitbox(leg).Bottom());
+				SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithVolume(2f), npc.GetFootHitbox(leg).Bottom());
+				SoundEngine.PlaySound(SoundID.Item70.WithVolume(2f), npc.GetFootHitbox(leg).Bottom());
 				return ModContent.GetInstance<Walk_Animation_3>();
 			}
 			if (leg.ThighRot == 0f && PistonLength(npc, leg) >= 36) return ModContent.GetInstance<Walk_Animation_3>();
@@ -71,6 +74,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
+			//Main.instance.CameraModifiers.Add(new CameraShakeModifier(default, 5f, 3f, 12, 500f, -1f, nameof(Trenchmaker)));
 			leg.RotateThigh(0f, 0.03f);
 			PistonTo(npc, ref leg, 38, 0.2f);
 		}
