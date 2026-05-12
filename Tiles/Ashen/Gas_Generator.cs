@@ -154,7 +154,6 @@ public class Gas_Generator : ModTile {
 		activeSound.TrySetNearest(new(i * 16 + 8, j * 16 + 8));
 	}
 	class Sound : AEnvironmentSound {
-		SlotId usePlaySoundIfInactiveForLoopedSounds;
 		public int NoisyGenerator = 0;
 		public override void UpdateSound(Vector2 position) {
 			if (NoisyGenerator.CycleUp(8)) {

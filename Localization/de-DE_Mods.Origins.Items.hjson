@@ -8369,6 +8369,7 @@ Gas_Generator_Item: {
 Solar_Battery_Item: {
 	// DisplayName: Solar Battery
 	// Tooltip: Generates power from sunlight
+	// Time: $60!:{0:#0}:$$60!:{0:00}$ ({0:P0}) remaining
 }
 
 Fortified_Steel_Wall2_Safe_Item: {

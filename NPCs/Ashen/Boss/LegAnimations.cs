@@ -65,8 +65,10 @@ namespace Origins.NPCs.Ashen.Boss {
 	public class Walk_Animation_2 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 			if (leg.WasStanding) {
-				SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithVolume(2f), npc.GetFootHitbox(leg).Bottom());
-				SoundEngine.PlaySound(SoundID.Item70.WithVolume(2f), npc.GetFootHitbox(leg).Bottom());
+				Vector2 position = npc.GetFootHitbox(leg).Bottom();
+				SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithVolume(2f), position);
+				SoundEngine.PlaySound(SoundID.Item70.WithVolume(2f), position);
+				Main.instance.CameraModifiers.Add(new CameraShakeModifier(position, 2.5f, 3f, 12, 350f, -1f, nameof(Trenchmaker)));
 				return ModContent.GetInstance<Walk_Animation_3>();
 			}
 			if (leg.ThighRot == 0f && PistonLength(npc, leg) >= 36) return ModContent.GetInstance<Walk_Animation_3>();
@@ -74,7 +76,6 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
-			//Main.instance.CameraModifiers.Add(new CameraShakeModifier(default, 5f, 3f, 12, 500f, -1f, nameof(Trenchmaker)));
 			leg.RotateThigh(0f, 0.03f);
 			PistonTo(npc, ref leg, 38, 0.2f);
 		}
@@ -260,8 +261,11 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void AI() {
 			float num = 15f;
-			if (Projectile.ai[0] == 0) SoundEngine.PlaySound(Origins.Sounds.PowerStomp, Projectile.Center);
-			Projectile.ai[0] += 1f;
+			if (Projectile.ai[0] == 0) {
+				SoundEngine.PlaySound(Origins.Sounds.PowerStomp, Projectile.Center);
+				Main.instance.CameraModifiers.Add(new CameraShakeModifier(Projectile.Center, 7.5f, 3f, 18, 750f, -1f, nameof(Trenchmaker)));
+			}
+				Projectile.ai[0] += 1f;
 			if (Projectile.ai[0] > 9f) {
 				Projectile.Kill();
 				return;

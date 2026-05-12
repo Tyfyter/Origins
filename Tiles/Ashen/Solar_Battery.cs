@@ -46,17 +46,16 @@ public class Solar_Battery : ModTile {
 		TileObjectData.addTile(Type);
 		AddMapEntry(new Color(40, 30, 18), this.GetTileItem().DisplayName);
 		DustType = Ashen_Biome.DefaultTileDust;
-		displayRadices = Time_Radix.ParseRadices(Language.GetOrRegister("Mods.Origins.Laser_Tag.LongTime").Value);
+		displayRadices = new(this.GetTileItem().GetLocalization("Time"));
 	}
 	public override void NumDust(int i, int j, bool fail, ref int num) {
 		num = fail ? 1 : 3;
 	}
-	Time_Radix[] displayRadices;
+	Time_Radices displayRadices;
 	public override bool RightClick(int i, int j) {
 		TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out i, out j);
-		string text = displayRadices.FormatTime((int)Solar_Battery_TE.GetData(new(i, j)).Power);
-		if (string.IsNullOrWhiteSpace(text)) text = "0:00";
-		Main.NewText(text);
+		float power = (int)Solar_Battery_TE.GetData(new(i, j)).Power;
+		Main.NewText(string.Format(displayRadices.FormatTime((int)power), power / MaxPower));
 		return true;
 	}
 	public override void PlaceInWorld(int i, int j, Item item) {

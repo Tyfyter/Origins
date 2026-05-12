@@ -128,7 +128,7 @@ Robot_Penguin: Во время кровавой луны безобидные п
 Oil_Ghoul: Загрязнённые Пепелищем упыри испускают из своих ртов масло, делая врагов уязвимыми для огня.
 Springjumper: Обычно кролики не бывают настолько металлическими или большими, но во время кровавой луны Пепелище любит запихивать живых кроликов в эти механизированные костюмы с неизвестной целью.
 // Wind_Pail: The wind pails are not a normal construct you'd casually find in the Ashen Scrapyard as they were not built by any man. It is believed that they are the many soldiers who lost their lives in the Great War haunting their graves.
-// Cartwheeler_Large: A worthy investment into guided projectile technology, but it failed. These cartwheelers use the boost of the wind to dot<SIC> around.
+// Cartwheeler_Large: A worthy investment into guided projectile technology, but it failed. These cartwheelers use the boost of the wind to dot<SIC>(show definition) around.
 // Cartwheeler_Medium: "{$Cartwheeler_Large}"
 // Cartwheeler_Small: "{$Cartwheeler_Large}"
 // Defensive_Turret: A defensive turret constructed to defend the Outposts. As to why it is designed as an autocannon leaves more questions than answers for figuring out just who they were meant for.

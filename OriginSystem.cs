@@ -259,7 +259,6 @@ namespace Origins {
 					subMatch = substitutionRegex.Match(text.Value.Value);
 				}
 			}
-			Time_Radices.Refresh();
 		}
 		public static Projectile[,] projectilesByOwnerAndID = new Projectile[Main.maxPlayers + 1, Main.maxProjectiles];
 		public override void PreUpdateProjectiles() {
