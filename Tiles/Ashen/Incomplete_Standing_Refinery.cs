@@ -165,6 +165,7 @@ namespace Origins.Tiles.Ashen {
 				droning.PlaySoundIfInactive(Origins.Sounds.StandingRefinery, position, playingSound => {
 					if (GetPosition() is not Vector2 pos) return false;
 					playingSound.Volume = 1f / float.Max(pos.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1);
+					DrownOut.ApplyNext(playingSound, Utils.Remap(playingSound.Volume, 0, 2, 1, 1f / 6), SoundType.Music);
 					return true;
 				});
 			}
