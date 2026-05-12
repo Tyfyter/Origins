@@ -263,11 +263,11 @@ namespace Origins.NPCs.Ashen {
 			return false;
 		}
 		public override void SaveData(TagCompound tag) {
-			tag[nameof(IsDeactivated)] = NPC.ai[0];
+			tag[nameof(IsDeactivated)] = NPC.ai[2];
 			tag[nameof(NPC.direction)] = NPC.direction;
 		}
 		public override void LoadData(TagCompound tag) {
-			tag.TryGet(nameof(IsDeactivated), out NPC.ai[0]);
+			tag.TryGet(nameof(IsDeactivated), out NPC.ai[2]);
 			tag.TryGet(nameof(NPC.direction), out NPC.direction);
 			if (IsDeactivated) NPC.life = 1;
 		}
