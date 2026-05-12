@@ -27,15 +27,15 @@ namespace Origins.Walls {
 				}
 			}
 		}
+		protected static FastRandom GetRand(int x, int y) => new((ulong)(y + 2654435769u + ((long)x << 6)) + ((ulong)x >> 2));
+		public virtual int SelectPattern(int x, int y) => GetRand(x, y).Next(BGCount);
 		public abstract int BGCount { get; }
 		// Way simpler than for tiles since walls can't be sloped and the edges cover everything that's supposed to be covered outside of the 16x16 area
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
 			AutoLoadingTexture patternTexture;
 			CustomTilePaintLoader.CustomTileVariationKey paintKey;
 			if (BGCount > 1) {
-				int x = (i * 16) / patternTextures[0].Value.Width;
-				int y = (j * 16) / patternTextures[0].Value.Height;
-				int rand = new FastRandom((ulong)(x + 2654435769u + ((long)y << 6)) + ((ulong)y >> 2)).Next(BGCount);
+				int rand = SelectPattern((i * 16) / patternTextures[0].Value.Width, (j * 16) / patternTextures[0].Value.Height);
 				patternTexture = patternTextures[rand];
 				paintKey = paintKeys[rand];
 			} else {
@@ -78,6 +78,14 @@ namespace Origins.Walls {
 		public override SoundStyle? HitSound => SoundID.Tink;
 		public override int BGCount => 3;
 		public override bool CanMineNatural(Player self, Item item, int i, int j) => NPC.downedBoss2;
+		public override int SelectPattern(int x, int y) {
+			FastRandom rand = GetRand(x, y);
+			int value = rand.Next(BGCount);
+			if (value == 1) return 1;
+			rand.NextSeed();
+			if (rand.NextFloat() <= 0.75f) return 1;
+			return value;
+		}
 	}
 	public class Fortified_Steel_Wall2 : Fortified_Steel_Wall {
 		public override Color MapColor => FromHexRGB(0x170c0f);

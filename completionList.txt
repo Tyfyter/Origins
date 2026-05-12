@@ -1458,7 +1458,7 @@ TILES:
 (^) Hanging Scrap
 (^) Heat Vent
 (^) Hydrothermal Vent
-(#2, $2, ^2) Incomplete Standing Refinery !!! (still needs glow and ambience)
+(☻) Incomplete Standing Refinery !!!
 (#3, ^2) Industrial Work Bench
 (^) Lathe
 (^) Limestone Rubble
