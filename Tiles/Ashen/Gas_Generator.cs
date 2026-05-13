@@ -164,6 +164,7 @@ public class Gas_Generator : ModTile {
 	class Sound : AEnvironmentSound {
 		public int NoisyGenerator = 0;
 		public override void UpdateSound(Vector2 position) {
+			Dust.NewDust(position, 0, 0, DustID.Smoke, 0, -2, 125, new Color(0, 0, 0));
 			if (NoisyGenerator.CycleUp(8)) {
 				SoundEngine.PlaySound(SoundID.Item22.WithVolume(0.7f), position);
 				SoundEngine.PlaySound(SoundID.Item69.WithVolume(0.2f).WithPitch(1.5f), position);
