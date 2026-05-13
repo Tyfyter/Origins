@@ -28,6 +28,7 @@ namespace Origins.Core {
 		public AdvancedArmorShaderData(Asset<Effect> shader, string passName, params Parameter[] parameters) : base(shader, passName) {
 			if (shader is null) return;
 			this.parameters = parameters;
+			if (Main.dedServ) return;
 			loadTask = Task.Run(shader.Wait).ContinueWith(_ => {
 				for (int i = 0; i < parameters.Length; i++) parameters[i].Bind(this);
 			});
@@ -158,6 +159,7 @@ namespace Origins.Core {
 				Value.Apply(cachedParameter.Value ??= parameters[name]);
 			}
 			public Parameter For(ShaderData shader, Val value) {
+				if (Main.dedServ) return this;
 				if (Value == value && Fits(shader.Shader.Parameters)) return this;
 				if (Fits(shader.Shader.Parameters)) {
 					if (shader.Shader.Parameters[name] is null) throw new KeyNotFoundException($"Shader {shader} does not contain parameter {name}");
@@ -170,6 +172,7 @@ namespace Origins.Core {
 				return param;
 			}
 			public void Bind(ShaderData shader) {
+				if (Main.dedServ) return;
 				if (collection.Value is null) {
 					this.shader.Value = shader;
 					collection.Value = shader.Shader.Parameters;

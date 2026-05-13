@@ -193,6 +193,7 @@ namespace Origins.Events {
 		static Matrix activeLightMatrix;
 		static Matrix workingLightMatrix = Matrix.Identity;
 		static bool borrowedLightmap = false;
+		[Autoload(Side = ModSide.Client)]
 		class SmogEffect : ModSystem, IBroken {
 			static string IBroken.BrokenReason => "TODO: mask EoL";
 			const int resolutionResolution = 5;
