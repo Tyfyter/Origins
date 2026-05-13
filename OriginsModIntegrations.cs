@@ -749,6 +749,7 @@ namespace Origins {
 						PaintingsNotFromVendor[itm.Type] = true;
 				}
 			}
+			if (ModLoader.HasMod("HighFPSSupport")) compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.HighFPSSupport"));
 			if (ModLoader.HasMod("ferventarms")) compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.FerventArms"));
 			if (ModLoader.TryGetMod("Munchies", out Mod munchies)) {
 				munchies.Call("AddSingleConsumable",

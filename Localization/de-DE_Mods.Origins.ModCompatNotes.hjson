@@ -4,3 +4,4 @@
 // ClearAll: Right click to ignore all suggestions
 // ToManyItems: Some npcs may run out of space in their shops so it would be best to have Shop Extender to be able to buy every item from each npc
 // ToManyItemsAlch: Some npcs may run out of space in their shops, especially so with AlchemistNPC so it would be best to have Shop Extender to be able to buy every item from each npc
+// HighFPSSupport: High FPS Support is fundamentally impossible without completely rewriting all projectile, npc, and player behavior

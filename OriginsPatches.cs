@@ -1077,6 +1077,7 @@ namespace Origins {
 						) + ignoreAll);
 						if (Main.mouseRight && Main.mouseRightRelease) {
 							for (int j = 0; j < OriginsModIntegrations.compatRecommendations.Count; j++) {
+								if (OriginsModIntegrations.compatRecommendations[j].Key == "Mods.Origins.ModCompatNotes.HighFPSSupport") continue;
 								DebugConfig.Instance.IgnoredCompatibilitySuggestions.Add(OriginsModIntegrations.compatRecommendations[j].Key);
 							}
 							for (int j = 0; j < OriginsModIntegrations.conditionalCompatRecommendations.Count; j++) {
