@@ -67,7 +67,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				Vector2 position = npc.GetFootHitbox(leg).Bottom();
 				SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithVolume(2f), position);
 				SoundEngine.PlaySound(SoundID.Item70.WithVolume(2f), position);
-				Main.instance.CameraModifiers.Add(new CameraShakeModifier(position, 50f, 3f, 50, 500f, -1f, nameof(Trenchmaker)));
+				Main.instance.CameraModifiers.Add(new CameraShakeModifier(position, 2.5f, 3f, 12, 350f, -1f, nameof(Trenchmaker)));
 				return ModContent.GetInstance<Walk_Animation_3>();
 			}
 			if (leg.ThighRot == 0f && PistonLength(npc, leg) >= 36) return ModContent.GetInstance<Walk_Animation_3>();
@@ -262,7 +262,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			float num = 15f;
 			if (Projectile.ai[0] == 0) {
 				SoundEngine.PlaySound(Origins.Sounds.PowerStomp, Projectile.Center);
-				Main.instance.CameraModifiers.Add(new CameraShakeModifier(Projectile.Center, 15f, 3f, 50, 100f, -1f, nameof(Trenchmaker)));
+				Main.instance.CameraModifiers.Add(new CameraShakeModifier(Projectile.Center, 7.5f, 3f, 18, 750f, -1f, nameof(Trenchmaker)));
 			}
 				Projectile.ai[0] += 1f;
 			if (Projectile.ai[0] > 9f) {

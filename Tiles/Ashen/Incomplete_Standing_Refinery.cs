@@ -155,7 +155,7 @@ namespace Origins.Tiles.Ashen {
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) => this.DrawTileGlow(i, j, spriteBatch);
 		public override void NearbyEffects(int i, int j, bool closer) {
 			if (closer) return;
-			ambientSound.TrySetNearest(new(i * 16 + 14, j * 16 + 14));
+			ambientSound.TrySetNearest(new(i * 16 + 8, j * 16 + 8));
 		}
 		class Sound : AEnvironmentSound {
 			SlotId droning;
