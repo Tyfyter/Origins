@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Core {
 	public static class EnvironmentSounds {
+		struct Flag : IMoveToPegFlag { }
 		public static int SoundCount => Sounds.Count;
 		static readonly List<AEnvironmentSound> Sounds = [];
 		public static TSound Register<TSound>() where TSound : AEnvironmentSound, new() {
@@ -37,6 +38,7 @@ namespace Origins.Core {
 					else Sounds[i].UpdateSoundInactive();
 				}
 				ResetSounds(false);
+				if (Main.gameMenu) ResetSounds(true);
 			}
 			public static void ResetSounds(bool forTiles) {
 				for (int i = 0; i < positions.Length; i++) {

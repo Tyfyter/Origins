@@ -2746,6 +2746,8 @@ namespace Origins {
 		public static bool TileIsType(this Tile self, int type) {
 			return self.HasTile && self.TileType == type;
 		}
+		/// <inheritdoc cref="TileIsType(Tile, int)"/>
+		public static bool TileIsType<TTile>(this Tile self) where TTile : ModTile => self.TileIsType(ModContent.TileType<TTile>());
 		public static void SetupRubblemakerClone<TItem>(this FlexibleTileWand wand, ModTile tile, params int[] variants) where TItem : ModItem {
 			TileObjectData tileObjectData = TileObjectData.GetTileData(tile.Type, 0, 0);
 			tileObjectData.RandomStyleRange = 0;

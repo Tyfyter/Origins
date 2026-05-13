@@ -182,7 +182,7 @@ public class Gas_Generator : ModTile {
 				get => fuel;
 				set => IsDirty |= fuel.TrySet(Math.Min(value, MaxFuel));
 			}
-			public int Frame => fuel > 0 ? (int)(1 + (fuel / (float)MaxFuel) * FuelFrameCount) : 0;
+			public int Frame => fuel > 0 ? (int)(1 + (fuel / (float)(MaxFuel + 1)) * FuelFrameCount) : 0;
 			public void Update(Point16 position) {
 				bool shouldGenerate = fuel > 0;
 				if (Main.tile[position].Get<Ashen_Wire_Data>().IsTilePowered == shouldGenerate) goto consume;
@@ -208,9 +208,11 @@ public class Gas_Generator : ModTile {
 			void ITileEntityData.NetSend(BinaryWriter writer) {
 				writer.Write(fuel);
 			}
-			static Data ITileEntityData.NetReceive(BinaryReader reader) => new() {
-				fuel = reader.ReadInt32()
-			};
+			static Data ITileEntityData.NetReceive(BinaryReader reader, Data existing) {
+				existing ??= new Data();
+				existing.fuel = reader.ReadInt32();
+				return existing;
+			}
 			public bool IsDirty { get; set; }
 		}
 	}

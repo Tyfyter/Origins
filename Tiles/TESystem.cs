@@ -139,7 +139,7 @@ namespace Origins.Tiles {
 				}
 			}
 			void NetSend(BinaryWriter writer);
-			static abstract T NetReceive(BinaryReader reader);
+			static abstract T NetReceive(BinaryReader reader, T existing);
 			void SaveTE(TagCompound tag);
 			static abstract T LoadTE(TagCompound tag);
 		}
@@ -148,7 +148,7 @@ namespace Origins.Tiles {
 			public override SyncedAction NetReceive(BinaryReader reader) => this with {
 				CTESystemType = reader.ReadUInt16(),
 				Position = ReadPoint16(reader),
-				Value = T.NetReceive(reader)
+				Value = T.NetReceive(reader, ComplexTESystems[CTESystemType].tileEntities.TryGetValue(Position, out T val) ? val : default)
 			};
 			public override void NetSend(BinaryWriter writer) {
 				writer.Write((ushort)CTESystemType);

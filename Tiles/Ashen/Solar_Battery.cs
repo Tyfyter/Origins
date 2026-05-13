@@ -132,9 +132,12 @@ public class Solar_Battery : ModTile {
 			void ITileEntityData.NetSend(BinaryWriter writer) {
 				writer.Write(power);
 			}
-			static Data ITileEntityData.NetReceive(BinaryReader reader) => new() {
-				power = reader.ReadInt32()
-			};
+			static Data ITileEntityData.NetReceive(BinaryReader reader, Data existing) {
+				existing ??= new Data();
+				existing.power = reader.ReadInt32();
+				return existing;
+			}
+
 			public bool IsDirty { get; set; }
 		}
 	}

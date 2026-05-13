@@ -118,12 +118,6 @@ namespace Origins {
 		private Dictionary<Point, Guid> _voidLocks;
 		public Dictionary<Point, Guid> VoidLocks => _voidLocks ??= [];
 		public Vector2? shimmerPosition;
-		public Vector2? nearestFanSound = null;
-		SlotId fanSoundInstance;
-		FrameCachedValue<float> FanSoundVolume { get; } = new(() => {
-			if (Instance?.nearestFanSound is not Vector2 nearestFanSound) return 0;
-			return 2 / float.Max(nearestFanSound.DistanceSQ(Main.LocalPlayer.Center) / (16 * 20 * 16 * 20), 1);
-		});
 		public override void OnWorldUnload() {
 			forceThunderstorm = false;
 		}
@@ -259,8 +253,6 @@ namespace Origins {
 			chambersiteWalls = 0;
 			Array.Clear(Chambersite_Stone_Wall.wallCounts);
 
-			nearestFanSound = null;
-
 			SC_Scene_Effect.monolithTileActive = false;
 			Defiled_Wastelands.monolithActive = false;
 			EnvironmentSounds.SoundPositions.ResetSounds(true);
@@ -296,13 +288,6 @@ namespace Origins {
 						break;
 					}
 				}
-			}
-			if (!Main.dedServ && nearestFanSound.HasValue && (!fanSoundInstance.IsValid || !SoundEngine.TryGetActiveSound(fanSoundInstance, out _))) {
-				fanSoundInstance = SoundEngine.PlaySound(Origins.Sounds.ThrusterLoop.WithPitch(-0.5f).WithVolume(0.1f), nearestFanSound.Value, sound => {
-					sound.Position = nearestFanSound;
-					sound.Volume = FanSoundVolume.Value;
-					return nearestFanSound.HasValue && sound.Volume > 0.001f;
-				});
 			}
 		}
 		public bool TryAddVoidLock(Point position, Guid owner, bool fromNet = false, int netOwner = -1) {

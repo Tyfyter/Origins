@@ -1,19 +1,32 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.Items.Weapons.Ammo;
 using Origins.World.BiomeData;
-using PegasusLib.Graphics;
+using ReLogic.Utilities;
+using System.Collections.Generic;
+using System.IO;
+using System.Runtime.CompilerServices;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.Graphics;
 using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Air_Vent : OriginTile, IAshenWireTile {
+		readonly IReadOnlyList<AEnvironmentSound> sounds = [
+			EnvironmentSounds.Register<NormalSound>(),
+			EnvironmentSounds.Register<BrokenSound>(),
+			EnvironmentSounds.Register<ScreamingSound>(),
+			EnvironmentSounds.Register<AlternateSound>()
+		];
 		public override void Load() {
 			new TileItem(this)
 			.WithExtraStaticDefaults(this.DropTileItem)
@@ -25,7 +38,7 @@ namespace Origins.Tiles.Ashen {
 				.Register();
 			}).RegisterItem();
 		}
-		AutoLoadingAsset<Texture2D> glowTexture = typeof(Air_Vent).GetDefaultTMLName("_Glow");
+		AutoLoadingTexture glowTexture = typeof(Air_Vent).GetDefaultTMLName("_Glow");
 		public override void SetStaticDefaults() {
 			// Properties
 			TileID.Sets.CanBeSloped[Type] = false;
@@ -54,7 +67,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch) {
 			Tile tile = Main.tile[i, j];
-			using Graphics.GraphicsExt.TilebatchOverride @override = Main.tileBatch.OverrideState(samplerState: SamplerState.PointClamp, transformMatrix: Main.Transform);
+			using GraphicsExt.TilebatchOverride @override = Main.tileBatch.OverrideState(samplerState: SamplerState.PointClamp, transformMatrix: Main.Transform);
 			Vector2 pos = new Vector2(i * 16, j * 16) - Main.screenPosition;
 			short tileFrameX = tile.TileFrameX;
 			short tileFrameY = tile.TileFrameY;
@@ -105,11 +118,72 @@ namespace Origins.Tiles.Ashen {
 		public override void NearbyEffects(int i, int j, bool closer) {
 			if (closer) return;
 			if (Main.tile[i, j].TileFrameY < 18 * 2) return;
-			Vector2 targetPoint = Main.LocalPlayer.Center;
-			Vector2 fanPoint = new(i * 16, j * 16);
-			OriginSystem instance = OriginSystem.Instance;
-			if (!instance.nearestFanSound.HasValue || targetPoint.DistanceSQ(fanPoint) < targetPoint.DistanceSQ(instance.nearestFanSound.Value)) {
-				instance.nearestFanSound = fanPoint;
+			sounds[GetSound(i, j)].TrySetNearest(new(i * 16 + 8, j * 16 + 8));
+		}
+		public override void PlaceInWorld(int i, int j, Item item) {
+			Air_Vent_TE.SometimesCreate(new(i, j));
+		}
+		static int GetSound(int i, int j) {
+			if (Main.tile[i, j].TileFrameX / 18 >= 6) return 1;
+			if (Air_Vent_TE.GetData(TileObjectData.TopLeft(i, j), out Air_Vent_TE.Data data)) return data.SoundIndex;
+			return 0;
+		}
+		abstract class AFanSound : AEnvironmentSound {
+			public abstract SoundStyle Sound { get; }
+			protected SlotId droning;
+			public sealed override void UpdateSound(Vector2 position) {
+				droning.PlaySoundIfInactive(Sound, null, sound => {
+					if (GetPosition() is not Vector2 pos) {
+						sound.Volume = 0;
+						return false;
+					}
+					sound.Position = pos;
+					sound.Volume = 1.25f / float.Max(pos.DistanceSQ(Main.LocalPlayer.Center) / (16 * 30 * 16 * 30), 1);
+					return true;
+				});
+			}
+		}
+		class NormalSound : AFanSound {
+			public override SoundStyle Sound { get; } = new("Origins/Sounds/Custom/Air_Vent1") {
+				IsLooped = true
+			};
+		}
+		class BrokenSound : AFanSound {
+			public override SoundStyle Sound { get; } = new ("Origins/Sounds/Custom/Air_Vent2") {
+				IsLooped = true
+			};
+		}
+		class ScreamingSound : AFanSound {
+			public override SoundStyle Sound { get; } = new ("Origins/Sounds/Custom/Air_Vent3") {
+				IsLooped = true
+			};
+		}
+		class AlternateSound : AFanSound {
+			public override SoundStyle Sound { get; } = new ("Origins/Sounds/Custom/Air_Vent4") {
+				IsLooped = true
+			};
+		}
+		class Air_Vent_TE : TESystem<Air_Vent_TE.Data> {
+			protected override bool IsValidTile(Tile tile) => tile.TileIsType<Air_Vent>();
+			public static bool GetData(Point16 position, out Data data) {
+				position = TileObjectData.TopLeft(position);
+				return ModContent.GetInstance<Air_Vent_TE>().tileEntities.TryGetValue(position, out data);
+			}
+			public static void SometimesCreate(Point16 position) {
+				if (Main.tile[position].TileFrameX / 18 >= 6) return;
+				if (!Main.rand.NextBool(3)) return;
+				
+				ModContent.GetInstance<Air_Vent_TE>().AddTileEntity(TileObjectData.TopLeft(position), Unsafe.BitCast<byte, Data>(Main.rand.NextBool(3) ? (byte)0 : (byte)1));
+			}
+			public readonly struct Data() : ITileEntityData {
+				public byte Value { get; init; }
+				public byte SoundIndex => (byte)(2 + Value);
+				bool ITileEntityData.IsDirty { get => false; set {} }
+				void ITileEntityData.NetSend(BinaryWriter writer) => writer.Write(Value);
+				static Data ITileEntityData.NetReceive(BinaryReader reader, Data data) => Unsafe.BitCast<byte, Data>(reader.ReadByte());
+				void ITileEntityData.SaveTE(TagCompound tag) => tag[nameof(Value)] = Value;
+				static Data ITileEntityData.LoadTE(TagCompound tag) => new() { Value = tag.SafeGet<byte>(nameof(Value)) };
+				void ITileEntityData.Update(Point16 position) { }
 			}
 		}
 	}
