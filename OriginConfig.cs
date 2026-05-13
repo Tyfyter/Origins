@@ -155,7 +155,7 @@ namespace Origins {
 		[DefaultValue(10), Range(0f, 30f), Increment(0.5f)]
 		public float DefiledShaderSpeed = 10;
 
-		[DefaultValue(1f), Range(0, 2), Increment(0.1f)]
+		[DefaultValue(1f), Range(0, 4), Increment(0.1f)]
 		public float ScreenShakeMultiplier = 1f;
 
 		[DefaultValue(true)]
