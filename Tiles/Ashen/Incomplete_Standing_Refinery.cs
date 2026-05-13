@@ -160,11 +160,10 @@ namespace Origins.Tiles.Ashen {
 		class Sound : AEnvironmentSound {
 			SlotId droning;
 			public override void UpdateSound(Vector2 position) {
-				int type = ModContent.TileType<Oil_Derrick>();
-				float mult = 1 / float.Max(position.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1);
 				droning.PlaySoundIfInactive(Origins.Sounds.StandingRefinery, position, playingSound => {
 					if (GetPosition() is not Vector2 pos) return false;
-					playingSound.Volume = 1f / float.Max(pos.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1);
+					const float extra_falloff_start = 16 * 20;
+					playingSound.Volume = 1f / float.Max(pos.DistanceSQ(Main.Camera.Center) / (extra_falloff_start * extra_falloff_start), 1);
 					DrownOut.ApplyNext(playingSound, Utils.Remap(playingSound.Volume, 0, 2, 1, 1f / 6), SoundType.Music);
 					return true;
 				});
