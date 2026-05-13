@@ -172,15 +172,9 @@ namespace Origins.Tiles.Ashen {
 		int Repairboy.IReparableTile.RepairboyLimit => 7;
 		bool Repairboy.IReparableTile.NeedsRepair(int i, int j, ref float cost, ref Rectangle hitbox) => true;
 		void Repairboy.IReparableTile.Repair(int i, int j) { }
-		public bool IsMainTile(int i, int j) {
-			Tile tile = Main.tile[i, j];
-			if (!tile.HasTile) return false;
-			TileObjectData tileData = TileObjectData.GetTileData(tile);
-			if (tileData == null) return false;
-			int partFrameX = tile.TileFrameX % tileData.CoordinateFullWidth;
-			int partFrameY = tile.TileFrameY % tileData.CoordinateFullHeight;
-			return partFrameX == 18 * 8 && partFrameY == 18 * 9;
-		}
+		bool Repairboy.IReparableTile.ShouldAlwaysHaveRepairboys => true;
+		public Point MainTileOffset => new(8, 9);
 		public CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
+
 	}
 }

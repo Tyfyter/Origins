@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using Origins.Core;
 using Origins.Dusts;
 using Origins.Items.Armor.Ashen;
@@ -281,6 +282,9 @@ namespace Origins.NPCs.Ashen {
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			target = AdvancedTargetSearchResults.Read(reader);
 		}
+		public override bool CheckActive() {
+			return !(target.TargetTile?.TileIsInterface(out IReparableTile reparable) ?? false) || !reparable.ShouldAlwaysHaveRepairboys;
+		}
 		public interface IReparable {
 			public int RepairboyLimit => 3;
 			public bool? NeedsRepair(NPC repairboy, ref float cost, ref Rectangle hitbox);
@@ -293,6 +297,22 @@ namespace Origins.NPCs.Ashen {
 			public int RepairboyLimit => 3;
 			public bool NeedsRepair(int i, int j, ref float cost, ref Rectangle hitbox);
 			public void Repair(int i, int j);
+			public bool ShouldAlwaysHaveRepairboys => false;
+		}
+		public static void SpawnOnTile(IEntitySource source, Point pos) {
+			if (NPC.NewNPCDirect(source, pos.X * 16, pos.Y * 16, ModContent.NPCType<Repairboy>()).ModNPC is Repairboy repairboy) {
+				Tile tile = Main.tile[pos];
+				if (TileLoader.GetTile(tile.TileType) is not IReparableTile reparableTile) return;
+				if (TileObjectData.GetTileData(tile) is not TileObjectData data) return;
+				float weight = default;
+				Rectangle hitbox = new(0, 0, data.Width * 16, data.Height * 16);
+				TileUtils.GetMultiTileTopLeft(pos.X, pos.Y, data, out hitbox.X, out hitbox.Y);
+				hitbox.X *= 16;
+				hitbox.Y *= 16;
+				reparableTile.NeedsRepair(pos.X, pos.Y, ref weight, ref hitbox);
+				repairboy.target = new(TargetSearchTypes.Tiles, Unsafe.BitCast<Tile, int>(tile), 0, hitbox);
+				repairboy.NPC.velocity = Main.rand.NextVector2CircularEdge(4, 4);
+			}
 		}
 		public SlotId weldingTorchSound;
 		public int weldingTorchSoundTime = 0;

@@ -2748,6 +2748,19 @@ namespace Origins {
 		}
 		/// <inheritdoc cref="TileIsType(Tile, int)"/>
 		public static bool TileIsType<TTile>(this Tile self) where TTile : ModTile => self.TileIsType(ModContent.TileType<TTile>());
+		public static bool TileIsInterface<TInterface>(this Tile self, out TInterface @interface) {
+			if (!typeof(TInterface).IsInterface) throw new ArgumentException($"TInterface must be an interface, {typeof(TInterface)} is not an interface", nameof(TInterface));
+			if (!self.HasTile) {
+				@interface = default;
+				return false;
+			}
+			if (TileLoader.GetTile(self.TileType) is TInterface @int) {
+				@interface = @int;
+				return true;
+			}
+			@interface = default;
+			return false;
+		}
 		public static void SetupRubblemakerClone<TItem>(this FlexibleTileWand wand, ModTile tile, params int[] variants) where TItem : ModItem {
 			TileObjectData tileObjectData = TileObjectData.GetTileData(tile.Type, 0, 0);
 			tileObjectData.RandomStyleRange = 0;

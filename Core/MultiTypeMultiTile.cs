@@ -22,9 +22,9 @@ namespace Origins.Core {
 		public bool ShouldBreak(int x, int y, int left, int top, int style) => true;
 		/// <summary>
 		/// Controls which part of a multitile handles things which should only happen for one tile in the multitile
-		/// Defaults to <see cref="TileObjectData.IsTopLeft"/>
+		/// Defaults to 0, 0, which means that <see cref="MultiTypeMultiTile.IsMainTile"/> will function identically to <see cref="TileObjectData.IsTopLeft"/>
 		/// </summary>
-		public bool IsMainTile(int i, int j) => TileObjectData.IsTopLeft(i, j);
+		public Point MainTileOffset => default;
 	}
 	public class MultiTypeMultiTile : ILoadable {
 		public delegate bool ShouldPlacePartCheck(int i, int j, int style);
@@ -301,7 +301,12 @@ namespace Origins.Core {
 		public static bool IsMainTile(int i, int j) {
 			Tile tile = Main.tile[i, j];
 			if (!tile.HasTile) return false;
-			return TileLoader.GetTile(tile.TileType) is IMultiTypeMultiTile multiTile ? multiTile.IsMainTile(i, j) : TileObjectData.IsTopLeft(i, j);
+			TileObjectData tileData = TileObjectData.GetTileData(tile);
+			if (tileData == null) return false;
+			int partFrameX = tile.TileFrameX % tileData.CoordinateFullWidth;
+			int partFrameY = tile.TileFrameY % tileData.CoordinateFullHeight;
+			Point mainTile = TileLoader.GetTile(tile.TileType) is IMultiTypeMultiTile multiTile ? multiTile.MainTileOffset : default;
+			return partFrameX == mainTile.X * 18 && partFrameY == mainTile.Y * 18;
 		}
 		static void IL_TileLoader_CheckModTile(ILContext il) {
 			ILCursor c = new(il);

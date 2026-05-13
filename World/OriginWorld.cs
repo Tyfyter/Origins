@@ -22,13 +22,16 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.ObjectData;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 using Tyfyter.Utils;
+using static Origins.NPCs.Ashen.Repairboy;
 using static Tyfyter.Utils.ChestLootCache;
 using static Tyfyter.Utils.ChestLootCache.LootQueueAction;
 using static Tyfyter.Utils.ChestLootCache.LootQueueMode;
@@ -179,6 +182,7 @@ namespace Origins {
 		}
 		public override void PostWorldLoad() {
 			if (Main.numClouds > Main.maxClouds) Main.numClouds = Main.maxClouds;
+			HashSet<Point> spawnRepairboys = [];
 			for (int i = 0; i < Main.maxTilesX; i++) {
 				for (int j = 0; j < Main.maxTilesY; j++) {
 					Tile tile = Main.tile[i, j];
@@ -187,7 +191,21 @@ namespace Origins {
 						tile.LiquidType = generateType;
 						tile.LiquidAmount = 255;
 					}
+					if (tile.TileIsType<Incomplete_Standing_Refinery>()) ;
+					if (tile.TileIsInterface(out IReparableTile reparable) && reparable.ShouldAlwaysHaveRepairboys) {
+						Point pos = new(i, j);
+						if (TileObjectData.GetTileData(tile) is TileObjectData data) {
+							TileUtils.GetMultiTileTopLeft(pos.X, pos.Y, data, out pos.X, out pos.Y);
+							if (reparable is IMultiTypeMultiTile multiType) pos += multiType.MainTileOffset;
+						}
+						spawnRepairboys.Add(pos);
+					}
 				}
+			}
+			EntitySource_Misc source = new("SpawnFromTile");
+			foreach (Point pos in spawnRepairboys) {
+				IReparableTile reparable = (IReparableTile)TileLoader.GetTile(Main.tile[pos].TileType);
+				for (int i = reparable.RepairboyLimit; i > 0; i--) SpawnOnTile(source, pos);
 			}
 		}
 		internal TagCompound questsTag;
