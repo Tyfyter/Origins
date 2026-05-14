@@ -1384,7 +1384,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(#2, ^2) Delay Component !!! (sounds need to be moved to correct spot, im too lazy sorry)
+(☻) Delay Component !!!
 (^) Diode Component
 (^) Dirt Chest
 (^) Edge Detector
@@ -1659,7 +1659,7 @@ CRITTERS AND FISH:
 
 CONSUMABLES:
 |---
-(#, ^2) Classified Blueprint !!!
+(@2, ^3) Classified Blueprint !!!
 (^) Crown Jewel
 (X) Evil DNA
 (^) Mojo Injection
