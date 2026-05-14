@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.DefaultToCanisterLauncher<Big_Bang_P>(70, 34, 7.5f, 48, 32);
 			Item.knockBack = 4f;
 			Item.rare = ItemRarityID.LightRed;
-			Item.value = Item.sellPrice(gold: 2);
+			Item.value = Item.sellPrice(gold: 10);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
