@@ -30,6 +30,7 @@ using System.Numerics;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
 using Terraria;
 using Terraria.Audio;
@@ -2456,6 +2457,8 @@ namespace Origins {
 				&& j < array.GetLength(1)
 				&& k < array.GetLength(2);
 		}
+		public static Span<T> AsSpan<T>(this T[,] array) => MemoryMarshal.CreateSpan(ref Unsafe.As<byte, T>(ref MemoryMarshal.GetArrayDataReference(array)), array.Length);
+		public static Span<T> AsSpan<T>(this T[,,] array) => MemoryMarshal.CreateSpan(ref Unsafe.As<byte, T>(ref MemoryMarshal.GetArrayDataReference(array)), array.Length);
 		public static T GetIfInRange<T>(this List<T> array, int index, T fallback = default) {
 			if (!array.IndexInRange(index)) return fallback;
 			return array[index];

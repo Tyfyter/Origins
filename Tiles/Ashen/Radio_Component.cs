@@ -223,8 +223,8 @@ namespace Origins.Tiles.Ashen {
 					spriteBatch.Draw(
 						ComponentUI.Textures.Value,
 						new Rectangle(22, 4, 26, 14).Add(GetDimensions().Position()),
-						new Rectangle(266, 180 + 16 * (tileEntity.Channel % 8), 26, 14),
-						Radio_Component_TE.Colors[tileEntity.Channel / 8]
+						new Rectangle(266, 180 + 16 * (tileEntity.Channel % Radio_Component_TE.count_per_color), 26, 14),
+						Radio_Component_TE.Colors[tileEntity.Channel / Radio_Component_TE.count_per_color]
 					);
 				}
 			}
@@ -246,7 +246,7 @@ namespace Origins.Tiles.Ashen {
 			new(81, 81, 81),
 			new(255, 255, 255)
 		];
-		public const int count_per_color = 8;
+		public const int count_per_color = 12;
 		public static int CurrentIncrement => ItemSlot.ShiftInUse ? count_per_color : 1;
 		public static int Count => Colors.Length * count_per_color;
 		public static int Max => Count - 1;
