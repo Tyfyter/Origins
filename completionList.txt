@@ -247,7 +247,7 @@ ENEMY NPCS:
 (^) Pustule Jellyfish
 (#, ^2) QM-76 'Quakemaker' !!!
 (#2?, $2, ^2) Reject !!! (No sounds have ever been mentioned to be for Rejects, nor do any sounds contain Reject in their names)
-(#2, ^2) Repairboy !!! (design/describe cool repair torch effect)
+(☻) Repairboy !!! (design/describe cool repair torch effect)
 (^) Riven Penguin
 (^) Riven Protoform
 (X) Rivenpotamus
@@ -920,7 +920,7 @@ RANGED WEAPONS:
 (^) Threemoepeater
 (^) Unmisfire
 (^) Unstrung Fiberglass Bow
-(#2, ^2) Welding Torch !!! (design/describe cool repair visual effect)
+(☻) Welding Torch !!! (design/describe cool repair visual effect)
 (^) 2-in-1 Shotty
 
 (^) Acrid Impaler

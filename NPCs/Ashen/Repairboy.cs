@@ -8,6 +8,7 @@ using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Ranged;
 using Origins.LootConditions;
 using Origins.World.BiomeData;
+using PegasusLib;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
@@ -202,7 +203,12 @@ namespace Origins.NPCs.Ashen {
 									torchDir * 4,
 									ModContent.ProjectileType<Repairboy_P>(),
 									Main.rand.RandomRound(11 * ContentExtensions.DifficultyDamageMultiplier),
-									0.425f
+									0.425f,
+									ai1: target.TargetType switch {
+										TargetSearchTypes.Players => 0,
+										TargetSearchTypes.NPCs => target.TargetNPC.ModNPC is IReparable or IAshenEnemy ? 2 : 0,
+										_ => 2,
+									}
 								);
 								if (target.TargetType == TargetSearchTypes.Tiles) {
 									bool canKeepTarget = false;
@@ -408,8 +414,8 @@ namespace Origins.NPCs.Ashen {
 			Projectile.hostile = true;
 		}
 		public override void OnSpawn(IEntitySource source) {
-			Projectile.ai[1] = -1;
-			if (source is EntitySource_Parent { Entity: NPC parentNPC } && parentNPC.ModNPC is Repairboy) Projectile.ai[1] = parentNPC.whoAmI;
+			Projectile.ai[2] = -1;
+			if (source is EntitySource_Parent { Entity: NPC parentNPC } && parentNPC.ModNPC is Repairboy) Projectile.ai[2] = parentNPC.whoAmI;
 		}
 		public override void DoHealing(Rectangle hitbox) {
 			bool doSound = false;
@@ -431,7 +437,7 @@ namespace Origins.NPCs.Ashen {
 					}
 				}
 			}
-			if (doSound && Main.npc.GetIfInRange((int)Projectile.ai[1])?.ModNPC is Repairboy repairboy) {
+			if (doSound && Main.npc.GetIfInRange((int)Projectile.ai[2])?.ModNPC is Repairboy repairboy) {
 				repairboy.PlayWeldingSound(10);
 			}
 		}

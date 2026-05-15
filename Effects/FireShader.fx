@@ -38,19 +38,19 @@ float4 FireShader(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLO
 	float offset = uShaderSpecificData.y;
 	float4 noise = tex2D(uImage1, coords * 2 + offset + float2(0, uTime) * 0.78);
 	float4 noiseMask = tex2D(uImage1, Rotate(coords, 3.1415) + offset + float2(0.25, 0.25) - float2(0, uTime) * 0.2);
-	float3 smokeColor = uSecondaryColor;
+	float4 smokeColor = float4(uSecondaryColor, uOpacity);
 	float progress = uShaderSpecificData.x;
 	float d = length(uv);
 	float noiseAlphaFade = smoothstep(0.6 * lerp(1, 0, uFadeAmount), 0.0, d);
     
     // Fire Shader Slop
-	float3 fireCol = tex2D(uImage2, float2(pow(1 - progress, uShaderSpecificData.z), pow(noiseMask.r, uShaderSpecificData.w)));
+	float4 fireCol = tex2D(uImage2, float2(pow(1 - progress, uShaderSpecificData.z), pow(noiseMask.r, uShaderSpecificData.w)));
 
     
 	noise.a = noiseMask.r;
 	noise *= noiseAlphaFade;
     
-	noise.rgb *= lerp(fireCol, smokeColor, uSmokeAmount);
+	noise *= lerp(fireCol, smokeColor, uSmokeAmount);
     
 	noise.a *= uAlphaMultiplier;
     

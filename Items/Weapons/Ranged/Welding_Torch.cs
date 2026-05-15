@@ -76,14 +76,13 @@ namespace Origins.Items.Weapons.Ranged {
 			for (int i = 0; i < Projectile.oldPos.Length; i++)
 				Projectile.oldRot[i] = Main.rand.NextFloatDirection();
 		}
-		float Size => Projectile.ai[2] != 0 ? 10 : Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize, MaxSize);
+		float Size => Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize, MaxSize);
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_Parent { Entity: Player player }) Projectile.ai[1] = player.altFunctionUse;
 		}
 		public override void AI() {
 			Projectile.localAI[0] += 1f;
 			Lighting.AddLight(Projectile.Center, 0.85f, 0.4f, 0f);
-			//Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.FrostStaff);
 			Projectile.ai[0]++;
 			for (int i = sizes.Length - 1; i > 0; i--) {
 				sizes[i] = sizes[i - 1];
@@ -130,20 +129,19 @@ namespace Origins.Items.Weapons.Ranged {
 		protected int[] healCooldown;
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
 			int scale = (int)((Size - hitbox.Width) / 2);
-			if (Projectile.ai[2] != 0) scale = 2;
 			hitbox.Inflate(scale, scale);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire3, hit.Crit ? 360 : 180);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			bool healing = false;// Projectile.ai[2] != 0;
+			bool healing = Projectile.ai[1] != 0;
 			float progress = (Projectile.ai[0] / Lifetime);
 			Flamethrower_Drawer.Draw(
 				Projectile,
-				float.Pow(1 - progress, 2f),
+				float.Pow(1 - progress, 0.5f),
 				healing ? altTexture : TextureAssets.Projectile[Type].Value,
-				healing ? Color.Transparent : Color.Black,
+				Color.Black,
 				sizes,
 				brightnessColorExponent: 1.75f,
 				smokeAmount: 0,
