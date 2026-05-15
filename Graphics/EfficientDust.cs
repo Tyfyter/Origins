@@ -30,18 +30,7 @@ namespace Origins.Graphics {
 			for (int i = 0; i < UpdateDustCallback.Length; i++) {
 				ModDust modDust = DustLoader.GetDust(i);
 				if (modDust is null) {
-					DustDrawFuncs[i] = (dust) => {
-						Color lightColor = Lighting.GetColor((int)(dust.position.X + 4f) / 16, (int)(dust.position.Y + 4f) / 16);
-						lightColor = dust.GetAlpha(lightColor);
-						if (lightColor == Color.Black) return;
-						Main.spriteBatch.Draw(TextureAssets.Dust.Value, dust.position - Main.screenPosition, dust.frame, lightColor, dust.GetVisualRotation(), new Vector2(4f, 4f), dust.scale, SpriteEffects.None, 0f);
-						if (dust.color.PackedValue != 0) {
-							lightColor = dust.GetColor(lightColor);
-							if (lightColor.PackedValue != 0) {
-								Main.spriteBatch.Draw(TextureAssets.Dust.Value, dust.position - Main.screenPosition, dust.frame, lightColor, dust.GetVisualRotation(), new Vector2(4f, 4f), dust.scale, SpriteEffects.None, 0f);
-							}
-						}
-					};
+					DustDrawFuncs[i] = DefaultDrawVanillaDust;
 				} else {
 					UpdateDustCallback[i] ??= dust => modDust.Update(dust);
 					DustDrawFuncs[i] ??= (dust) => {
@@ -71,6 +60,11 @@ namespace Origins.Graphics {
 			UpdateDustCallback[DustID.DesertWater2] = Water;
 			UpdateDustCallback[DustID.Lava] = Lava;
 			UpdateDustCallback[DustID.Honey] = Honey;
+			UpdateDustCallback[DustID.Blood] = Blood;
+			SpawnDustCallback[DustID.Blood] = dust => dust.noLightEmittence = true;
+			DustDrawFuncs[DustID.Blood] = dust => {
+				if (dust.fadeIn <= 0) DefaultDrawVanillaDust(dust);
+			};
 
 			SpawnDustCallback[DustID.Water] = SpawnWater;
 			SpawnDustCallback[DustID.UnholyWater] = SpawnWater;
@@ -83,6 +77,18 @@ namespace Origins.Graphics {
 			SpawnDustCallback[DustID.Water_Space] = SpawnWater;
 			SpawnDustCallback[DustID.Water_Cavern] = SpawnWater;
 			SpawnDustCallback[DustID.Water_BloodMoon] = SpawnWater;
+		}
+		public static void DefaultDrawVanillaDust(Dust dust) {
+			Color lightColor = Lighting.GetColor((int)(dust.position.X + 4f) / 16, (int)(dust.position.Y + 4f) / 16);
+			lightColor = dust.GetAlpha(lightColor);
+			if (lightColor == Color.Black) return;
+			Main.spriteBatch.Draw(TextureAssets.Dust.Value, dust.position - Main.screenPosition, dust.frame, lightColor, dust.GetVisualRotation(), new Vector2(4f, 4f), dust.scale, SpriteEffects.None, 0f);
+			if (dust.color.PackedValue != 0) {
+				lightColor = dust.GetColor(lightColor);
+				if (lightColor.PackedValue != 0) {
+					Main.spriteBatch.Draw(TextureAssets.Dust.Value, dust.position - Main.screenPosition, dust.frame, lightColor, dust.GetVisualRotation(), new Vector2(4f, 4f), dust.scale, SpriteEffects.None, 0f);
+				}
+			}
 		}
 		static void Smoke(Dust dust) {
 			dust.position += dust.velocity;
@@ -221,6 +227,25 @@ namespace Origins.Graphics {
 			dust.velocity *= 0.92f;
 			dust.scale -= 0.05f;
 		}
+		static void Blood(Dust dust) {
+			if (dust.fadeIn > 0) {
+				dust.fadeIn--;
+				return;
+			}
+			dust.position += dust.velocity;
+			if (!dust.noGravity) dust.velocity.Y += 0.1f;
+			dust.scale -= 0.04f;
+			dust.velocity.X *= 0.99f;
+			dust.rotation += dust.velocity.X * 0.5f;
+			if (dust.noGravity) {
+				dust.velocity *= 0.92f;
+				dust.scale -= 0.04f;
+			}
+			if (dust.position.Y > Main.screenPosition.Y + Main.screenHeight) {
+				dust.active = false;
+			}
+			if (!dust.noLightEmittence) Lighting.AddLight(dust.position, dust.color.ToVector3() * dust.scale);
+		}
 		static void DrawDust() {
 			if (NetmodeActive.Server) return;
 			Rectangle rectangle = new((int)Main.screenPosition.X - 500 - 4, (int)Main.screenPosition.Y - 50 - 4, Main.screenWidth + 1000, Main.screenHeight + 100);
@@ -273,6 +298,7 @@ namespace Origins.Graphics {
 			if (!rectangle.Intersects(new((int)Position.X, (int)Position.Y, Width, Height))) return fakeDust;
 			if (Width < 5) Width = 5;
 			if (Height < 5) Height = 5;
+			if (!ChildSafety.Disabled && !ChildSafety.SafeDust[Type]) Type = DustID.Smoke;
 			for (int i = 0; i < dust.Length; i++) {
 				Dust dust = EfficientDust.dust[i];
 				if (!dust.active) {
@@ -285,8 +311,8 @@ namespace Origins.Graphics {
 					dust.position.X = Position.X + Main.rand.Next(Width - 4);
 					dust.position.Y = Position.Y + Main.rand.Next(Height - 4);
 					if (perfect) {
-						dust.velocity.X = 0;
-						dust.velocity.Y = 0;
+						dust.velocity.X = SpeedX;
+						dust.velocity.Y = SpeedY;
 					} else {
 						dust.velocity.X = Main.rand.Next(-20, 21) * 0.1f + SpeedX;
 						dust.velocity.Y = Main.rand.Next(-20, 21) * 0.1f + SpeedY;

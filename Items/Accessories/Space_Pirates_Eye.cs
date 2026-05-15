@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
+using Origins.Graphics;
 using Origins.Layers;
 using Origins.Reflection;
 using System;
@@ -36,6 +37,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.LightRed;
 			Item.master = true;
 			Item.value = Item.sellPrice(gold: 1);
+			Item.ForceEnableCrit();
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.OriginPlayer().spacePirateEye = Item;
@@ -62,7 +64,7 @@ namespace Origins.Items.Accessories {
 			}
 
 			if (originPlayer.spacePirateEyeCooldown > 0) return;
-			Vector2 position = player.Center + new Vector2(2 * player.direction, (12 - player.height * 0.5f) * player.gravDir);
+			Vector2 position = EyePosition(player);
 			PirateEyeMode eyeMode = Colors[mode];
 			if (eyeMode.FindTarget(player, position, out Vector2 targetPos, out Entity targetEntity)) {
 				originPlayer.spacePirateEyeCooldown = eyeMode.Cooldown;
@@ -86,6 +88,11 @@ namespace Origins.Items.Accessories {
 				}
 			}
 		}
+
+		private static Vector2 EyePosition(Player player) {
+			return player.Center + new Vector2(2 * player.direction, (12 - player.height * 0.5f) * player.gravDir);
+		}
+
 		internal static int[] counts = [];
 		/// <returns>the lowest count</returns>
 		public static int GetPlayerCounts(Player forPlayer) {
@@ -215,10 +222,156 @@ namespace Origins.Items.Accessories {
 		public class _Temp_Red : PirateEyeMode {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.SharpTears}";
 			public override Color Color => FromHexRGB(0xff0000);
-			public override int Cooldown => 60;
+			public override int Cooldown => 120;
 			public override void SetDefaults() {
 				Projectile.CloneDefaults(ProjectileID.SharpTears);
+				Projectile.hide = true;
+				ProjectileID.Sets.DontAttachHideToAlpha[Type] = true;
 				AIType = ProjectileID.SharpTears;
+			}
+			public override Vector2 GetVelocity(Player player, Vector2 difference, Entity target) => difference.Normalized(out _);
+			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (npc.TryGetGlobalNPC(out Blood_Thorn_Global global) && global.damage <= damage) {
+						Vector2 diff = (position.Clamp(npc.Hitbox) - position).Normalized(out float dist);
+						if (dist > 16 * 25 || Vector2.Dot(diff, velocity) < 0.5f) continue;
+						for (float i = 0f; i < dist; i += 8f) {
+							Vector2 speed = Main.rand.NextVector2Circular(2, 2);
+							Dust dust = EfficientDust.NewDustDirect(
+								position + i * diff,
+								0,
+								0,
+								DustID.Blood,
+								speed.X,
+								speed.Y,
+								Alpha: 100,
+								newColor: new(128, 0, 0, 0)
+							);
+							if (!ChildSafety.Disabled) continue;
+							dust.scale = 0.85f;
+							dust.fadeIn = i / 32;
+							dust.noLightEmittence = false;
+						}
+						global.time = Cooldown - 30;
+						global.damage = damage;
+						global.knockback = knockback;
+						global.source = source;
+					}
+				}
+			}
+			class Blood_Thorn_Global : GlobalNPC {
+				public int time;
+				public int damage;
+				public float knockback;
+				public IEntitySource source;
+				public override bool InstancePerEntity => true;
+				public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => !entity.friendly;
+				public override void ResetEffects(NPC npc) {
+					if (time.Cooldown()) {
+						Projectile.NewProjectile(
+							source,
+							npc.Bottom,
+							Vector2.UnitY * -32,
+							ModContent.ProjectileType<_Temp_Red>(),
+							damage / 2,
+							knockback / 2,
+							ai1: Main.rand.NextFloat() * 0.375f + 0.45f
+						);
+						damage = 0;
+						source = null;
+					}
+				}
+				void Trigger(NPC npc) {
+					if (time > 0) {
+						Projectile.NewProjectile(
+							source,
+							npc.Bottom,
+							Vector2.UnitY * -32,
+							ModContent.ProjectileType<_Temp_Red>(),
+							damage,
+							knockback,
+							ai1: Main.rand.NextFloat() * 0.5f + 0.6f
+						);
+						time = 0;
+						damage = 0;
+						source = null;
+					}
+				}
+				public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone) => Trigger(npc);
+				public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone) => Trigger(npc);
+				public override void AI(NPC npc) {
+					if (time <= 0) return;
+					Dust dust = Dust.NewDustDirect(
+						npc.position,
+						npc.width,
+						npc.height,
+						DustID.Blood,
+						Alpha: 100
+					);
+					dust.velocity.Y -= 0.3f;
+					dust.velocity += npc.velocity * 0.2f;
+					dust.scale = 1f;
+					dust.color = new(128, 0, 0, 0);
+					dust.noLightEmittence = false;
+				}
+			}
+			public override bool ShouldUpdatePosition() => false;
+			public override void AI() {
+				base.AI();
+				Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0.1f, 0.1f) * Projectile.scale);
+			}
+			public override void CutTiles() {
+				Utils.PlotTileLine(Projectile.Center, Projectile.Center + Vector2.UnitY * -200f * Projectile.scale, 22f * Projectile.scale, DelegateMethods.CutTiles);
+			}
+			public override bool? Colliding(Rectangle projHitbox, Rectangle targetRect) {
+				float collisionPoint16 = 0f;
+				if (Collision.CheckAABBvLineCollision(targetRect.TopLeft(), targetRect.Size(), Projectile.Center, Projectile.Center + Vector2.UnitY * -200f * Projectile.scale, 22f * Projectile.scale, ref collisionPoint16))
+					return true;
+
+				return false;
+			}
+			public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+				behindNPCsAndTiles.Add(index);
+			}
+			public override Color? GetAlpha(Color lightColor) => Color.Lerp(lightColor, Color.Black, 0.25f);
+			public override bool PreDraw(ref Color lightColor) {
+				SpriteEffects dir = Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+				Main.EntitySpriteDraw(
+					TextureAssets.Extra[ExtrasID.SharpTears].Value,
+					Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY) - Projectile.velocity * Projectile.scale * 0.5f,
+					null,
+					Projectile.GetAlpha(lightColor.MultiplyRGBA(new Color(67, 17, 17))),
+					Projectile.rotation + MathHelper.PiOver2,
+					TextureAssets.Extra[ExtrasID.SharpTears].Value.Size() / 2f,
+					Projectile.scale * 0.9f,
+					dir
+				);
+				Texture2D texture = TextureAssets.Projectile[Type].Value;
+				Rectangle frame = texture.Frame(1, 6, 0, Projectile.frame);
+				Main.EntitySpriteDraw(
+					texture,
+					Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY),
+					frame,
+					Projectile.GetAlpha(lightColor),
+					Projectile.rotation,
+					new(16f, frame.Height / 2),
+					new Vector2(Projectile.scale, Projectile.scale * Utils.GetLerpValue(35f, 35f - 5f, Projectile.ai[0], true)),
+					dir
+				);
+				return false;
+			}
+			public override void OnKill(int timeLeft) {
+				for (float i = 0f; i < 1f; i += 0.025f) {
+					Dust dust = Dust.NewDustPerfect(
+						Projectile.Center + Main.rand.NextVector2Circular(16f, 16f) * Projectile.scale + Projectile.velocity.SafeNormalize(Vector2.UnitY) * i * 200f * Projectile.scale,
+						DustID.Blood,
+						Main.rand.NextVector2Circular(3f, 3f),
+						Alpha: 100
+					);
+					dust.velocity.Y -= 0.3f;
+					dust.velocity += Projectile.velocity * 0.2f;
+					dust.scale = 1f;
+				}
 			}
 		}
 		public class _Temp_Orange : PirateEyeMode {
