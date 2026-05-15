@@ -2309,6 +2309,15 @@ Projectiles: {
 	// Mushy_Broth_Explosion.DisplayName: Mushy Broth Explosion
 	// Big_Bang_P.DisplayName: Big Bang
 	// Defensive_Turret_P.DisplayName: Defensive Turret
+	// _Temp_Blue.DisplayName: " Temp Blue"
+	// _Temp_Brown.DisplayName: " Temp Brown"
+	// _Temp_Cyan.DisplayName: " Temp Cyan"
+	// _Temp_Green.DisplayName: " Temp Green"
+	// _Temp_Hot_Pink.DisplayName: " Temp Hot Pink"
+	// _Temp_Light_Blue.DisplayName: " Temp Light Blue"
+	// _Temp_Magenta.DisplayName: " Temp Magenta"
+	// _Temp_Pink.DisplayName: " Temp Pink"
+	// _Temp_Purple.DisplayName: " Temp Purple"
 }
 
 Prefixes: {

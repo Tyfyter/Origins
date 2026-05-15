@@ -12,6 +12,7 @@ using Terraria.GameInput;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace Origins.Items.Accessories {
@@ -145,6 +146,7 @@ namespace Origins.Items.Accessories {
 			}*/
 			return false;
 		}
+		#region attacks
 		public abstract class PirateEyeMode : ModProjectile, IComparable<PirateEyeMode> {
 			public sealed override void Load() {
 				Colors.Add(this);
@@ -185,15 +187,6 @@ namespace Origins.Items.Accessories {
 			}
 			int IComparable<PirateEyeMode>.CompareTo(PirateEyeMode other) => Order.CompareTo(other.Order);
 		}
-		//AddColor(0x00ffff, new(ModContent.ProjectileType<Magnus_P>()), 60);//#00ffff
-		//AddColor(0x009fff, new(ProjectileID.FrostBoltStaff), 60);//#009fff
-		//AddColor(0x2000ff, new(ProjectileID.WaterStream, 0.15f, 0.15f), 6);//#2000ff
-		//AddColor(0x8000ff, new(1), 60);//#8000ff
-		//AddColor(0xdf00ff, new(1), 60);//#df00ff
-		//AddColor(0xff00bf, new(1), 60);//#ff00bf
-		//AddColor(0xff9ae9, new(1), 60);//#ff9ae9
-		//AddColor(0x009700, new(1), 60);//#009700
-		//AddColor(0xa74d00, new(ProjectileID.WoodenArrowFriendly), 60);//#a74d00
 		public class Laser : PirateEyeMode {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.MiniRetinaLaser}";
 			public override Color Color => FromHexRGB(0xff0060);//#ff0060
@@ -219,7 +212,8 @@ namespace Origins.Items.Accessories {
 			}
 			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.CursedInferno, Main.rand.Next(120, 301));
 		}
-		public class _Temp_Red : PirateEyeMode {
+		public class _Temp_Red : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Needs review";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.SharpTears}";
 			public override Color Color => FromHexRGB(0xff0000);
 			public override int Cooldown => 120;
@@ -374,7 +368,8 @@ namespace Origins.Items.Accessories {
 				}
 			}
 		}
-		public class _Temp_Orange : PirateEyeMode {
+		public class _Temp_Orange : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.Flamelash}";
 			public override Color Color => FromHexRGB(0xff6000);
 			public override int Cooldown => 60;
@@ -417,7 +412,8 @@ namespace Origins.Items.Accessories {
 				for (int i = 0; i < 6; i++) player.SpawnProjectile(source, position, velocity + Main.rand.NextVector2Circular(2, 2), type, damage, knockback);
 			}
 		}
-		public class _Temp_Yellow : PirateEyeMode {
+		public class _Temp_Yellow : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MedusaHeadRay;
 			public override Color Color => FromHexRGB(0xdfff00);
 			public override int Cooldown => 60;
@@ -475,7 +471,8 @@ namespace Origins.Items.Accessories {
 				return false;
 			}
 		}
-		public class _Temp_Turquoise : PirateEyeMode {
+		public class _Temp_Turquoise : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.PoisonFang}";
 			public override Color Color => FromHexRGB(0x00ff9f);
 			public override int Cooldown => 60;
@@ -484,6 +481,102 @@ namespace Origins.Items.Accessories {
 				AIType = ProjectileID.PoisonFang;
 			}
 		}
+		public class _Temp_Cyan : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Needs idea";
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.ElectrosphereMissile}";
+			public override Color Color => FromHexRGB(0x00ffff);
+			public override int Cooldown => 60;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.ElectrosphereMissile);
+				AIType = ProjectileID.ElectrosphereMissile;
+			}
+		}
+		public class _Temp_Light_Blue : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Needs idea";
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.FrostBoltStaff}";
+			public override Color Color => FromHexRGB(0x009fff);
+			public override int Cooldown => 60;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.FrostBoltStaff);
+				AIType = ProjectileID.FrostBoltStaff;
+			}
+		}
+		public class _Temp_Blue : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Needs idea";
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.WaterStream}";
+			public override Color Color => FromHexRGB(0x2000ff);
+			public override float DamageMult => 0.15f;
+			public override float KnockbackMult => 0.15f;
+			public override int Cooldown => 6;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.WaterStream);
+				AIType = ProjectileID.WaterStream;
+			}
+		}
+		public class _Temp_Purple : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Needs idea";
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
+			public override Color Color => FromHexRGB(0x8000ff);
+			public override int Cooldown => 60;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.BeeArrow);
+				AIType = ProjectileID.BeeArrow;
+			}
+		}
+		public class _Temp_Magenta : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Needs idea";
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
+			public override Color Color => FromHexRGB(0xdf00ff);
+			public override int Cooldown => 60;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.BeeArrow);
+				AIType = ProjectileID.BeeArrow;
+			}
+		}
+		public class _Temp_Hot_Pink : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Needs idea";
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
+			public override Color Color => FromHexRGB(0xff00bf);
+			public override int Cooldown => 60;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.BeeArrow);
+				AIType = ProjectileID.BeeArrow;
+			}
+		}
+		public class _Temp_Pink : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Needs idea";
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
+			public override Color Color => FromHexRGB(0xff9ae9);
+			public override int Cooldown => 60;
+			public override float Order => 1.01f;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.BeeArrow);
+				AIType = ProjectileID.BeeArrow;
+			}
+		}
+		public class _Temp_Green : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Needs idea";
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
+			public override Color Color => FromHexRGB(0x009700);
+			public override int Cooldown => 60;
+			public override float Order => 1.02f;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.BeeArrow);
+				AIType = ProjectileID.BeeArrow;
+			}
+		}
+		public class _Temp_Brown : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Needs idea";
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
+			public override Color Color => FromHexRGB(0xa74d00);
+			public override int Cooldown => 60;
+			public override float Order => 1.03f;
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.BeeArrow);
+				AIType = ProjectileID.BeeArrow;
+			}
+		}
+		#endregion
 	}
 	public class SpacePirateEyeInterface : UserInterface {
 		readonly LegacyGameInterfaceLayer interactionLayer;
@@ -507,6 +600,15 @@ namespace Origins.Items.Accessories {
 							isActive = false;
 						}
 					}
+					{
+						if (CloseButton.Contains(Main.MouseScreen) && Main.mouseLeft && Main.mouseLeftRelease) isActive = false;
+					}
+					{
+						if (NoneButton.Contains(Main.MouseScreen) && Main.mouseLeft && Main.mouseLeftRelease) {
+							Main.LocalPlayer.OriginPlayer().spacePirateEyeSelection = -1;
+							isActive = false;
+						}
+					}
 					return true;
 				},
 				InterfaceScaleType.UI
@@ -516,7 +618,7 @@ namespace Origins.Items.Accessories {
 				delegate {
 					EnsureButtons();
 					Texture2D texture = TextureAssets.MagicPixel.Value;
-					Main.spriteBatch.Draw(TextureAssets.InventoryBack.Value, GetBox(), Color.Gainsboro);
+					DrawRoundedRetangle(Main.spriteBatch, GetBox(), Color.Gray);
 					for (int i = 0; i < buttons.Length; i++) {
 						Rectangle button = GetButton(i);
 						Color color = Space_Pirates_Eye.Colors[i].Color;
@@ -528,12 +630,24 @@ namespace Origins.Items.Accessories {
 						}
 						Main.spriteBatch.Draw(texture, button, color);
 						if (Space_Pirates_Eye.counts[i] != lowest) {
-							color = color.Desaturate(0f) * 0.5f;
-							color.A = 255;
 							color = Color.Black;
 							button.Inflate(-3, -3);
 							Main.spriteBatch.Draw(texture, button, color);
 						}
+					}
+					{
+						Rectangle button = CloseButton;
+						Color color = Color.White * 0.5f;
+						if (button.Contains(Main.MouseScreen)) color = Color.White;
+						Main.spriteBatch.Draw(TextureAssets.Cd.Value, button, color);
+					}
+					{
+						Rectangle button = NoneButton;
+						Color color = Color.Black * 0.5f;
+						if (button.Contains(Main.MouseScreen)) color = Color.Black;
+						Main.spriteBatch.Draw(texture, button, color);
+						button.Inflate(-3, -3);
+						Main.spriteBatch.Draw(texture, button, Color.Gray);
 					}
 					return true;
 				},
@@ -542,6 +656,20 @@ namespace Origins.Items.Accessories {
 		}
 		Rectangle[] buttons;
 		Rectangle entireBox;
+		Rectangle CloseButton {
+			get {
+				Rectangle button = GetButton(0);
+				button.X = GetBox().Right - (button.Width + 6);
+				return button;
+			}
+		}
+		Rectangle NoneButton {
+			get {
+				Rectangle button = GetButton(Space_Pirates_Eye.Colors.Count - 1);
+				button.X = GetBox().Right - (button.Width + 6);
+				return button;
+			}
+		}
 		void EnsureButtons() {
 			const int button_size = 14;
 			const int padded_size = button_size + 2;
@@ -562,10 +690,10 @@ namespace Origins.Items.Accessories {
 					pos.Y += padded_size;
 				}
 			}
-			const int box_padding = 4;
+			const int box_padding = 6;
 			entireBox.X = (int)min.X - box_padding;
 			entireBox.Y = (int)min.Y - box_padding;
-			entireBox.Width = (int)(max.X - min.X) + box_padding * 2;
+			entireBox.Width = (int)(max.X - min.X) + box_padding * 2 + padded_size;
 			entireBox.Height = (int)(max.Y - min.Y) + box_padding * 2;
 		}
 		Rectangle GetButton(int i) {
@@ -598,5 +726,43 @@ namespace Origins.Items.Accessories {
 				layers.Insert(inventoryIndex, interactionLayer);
 			}
 		}
+		static void DrawRoundedRetangle(SpriteBatch spriteBatch, Rectangle rectangle, Color color, Texture2D texture = null) {
+			texture ??= TextureAssets.InventoryBack13.Value;
+			Rectangle textureBounds = texture.Bounds;
+			foreach (StretchSegment segment in RectangleSegments) {
+				spriteBatch.Draw(
+					texture,
+					segment.GetBounds(rectangle),
+					segment.GetBounds(textureBounds),
+					color
+				);
+			}
+		}
+		struct StretchLength(float PositionFactor, float SizeFactor, float Flat) {
+			public static StretchLength Position = new(1, 0, 0);
+			public readonly float GetValue(float position, float size) => position * PositionFactor + size * SizeFactor + Flat;
+		}
+		record struct StretchSegment(StretchLength Left, StretchLength Top, StretchLength Width, StretchLength Height) {
+			public readonly Rectangle GetBounds(Rectangle parent) => new(
+				(int)Left.GetValue(parent.X, parent.Width),
+				(int)Top.GetValue(parent.Y, parent.Height),
+				(int)Width.GetValue(parent.X, parent.Width),
+				(int)Height.GetValue(parent.Y, parent.Height)
+			);
+		}
+		static StretchSegment[] RectangleSegments { get; set; } = [
+			new(StretchLength.Position, StretchLength.Position, new(0, 0, 10), new(0, 0, 10)),
+			new(StretchLength.Position, new(1, 1, -10), new(0, 0, 10), new(0, 0, 10)),
+			new(new(1, 1, -10), StretchLength.Position, new(0, 0, 10), new(0, 0, 10)),
+			new(new(1, 1, -10), new(1, 1, -10), new(0, 0, 10), new(0, 0, 10)),
+
+			new(new(1, 0, 10), StretchLength.Position, new(0, 1, -10 * 2), new(0, 0, 10)),
+			new(new(1, 0, 10), new(1, 1, -10), new(0, 1, -10 * 2), new(0, 0, 10)),
+
+			new(StretchLength.Position, new(1, 0, 10), new(0, 0, 10), new(0, 1, -10 * 2)),
+			new(new(1, 1, -10), new(1, 0, 10), new(0, 0, 10), new(0, 1, -10 * 2)),
+
+			new(new(1, 0, 10), new(1, 0, 10), new(0, 1, -10 * 2), new(0, 1, -10 * 2))
+		];
 	}
 }
