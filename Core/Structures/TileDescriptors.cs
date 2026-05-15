@@ -83,6 +83,7 @@ namespace Origins.Core.Structures {
 				);
 			}
 		}
+		public override bool CanOverlap(string[] parameters, SerializableTileDescriptor otherSource, string[] otherParameters) => true;
 	}
 	public class ConditionalTile : PlaceTile {
 		public override void Load() { }
@@ -159,6 +160,11 @@ namespace Origins.Core.Structures {
 				new(9 * 18, 3 * 18, 16, 16),
 				color
 			);
+		}
+		public override bool CanOverlap(string[] parameters, SerializableTileDescriptor otherSource, string[] otherParameters) {
+			if (otherSource is Empty) return false;
+			if (otherSource is PlaceTile && otherSource != this) return false;
+			return base.CanOverlap(parameters, otherSource, otherParameters);
 		}
 	}
 	public class PlaceFramedTile : PlaceTile {
@@ -373,6 +379,10 @@ namespace Origins.Core.Structures {
 				tile.BlockType = blockType;
 			}, Parts: [originalText]);
 		}
+		public override bool CanOverlap(string[] parameters, SerializableTileDescriptor otherSource, string[] otherParameters) {
+			if (otherSource is Empty) return false;
+			return base.CanOverlap(parameters, otherSource, otherParameters);
+		}
 	}
 	public class Void : SerializableTileDescriptor {
 		readonly TileDescriptor descriptor = new(null, null, Ignore: true);
@@ -380,6 +390,7 @@ namespace Origins.Core.Structures {
 			AddSerializer(tile => Structure_Void_Marker.IsVoid(tile) ? nameof(Void) : null);
 		}
 		protected override TileDescriptor Create(string[] parameters, string originalText) => descriptor;
+		public override bool CanOverlap(string[] parameters, SerializableTileDescriptor otherSource, string[] otherParameters) => true;
 	}
 	public class Empty : SerializableTileDescriptor {
 		readonly TileDescriptor descriptor = new((_, _, i, j) => {

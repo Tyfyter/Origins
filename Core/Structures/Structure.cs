@@ -1,18 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
-using Origins.NPCs;
 using PegasusLib.Reflection;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Net.Sockets;
-using System.Numerics;
-using System.Text;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,11 +15,15 @@ using static Origins.Core.Structures.DeserializedStructure;
 namespace Origins.Core.Structures {
 	public abstract class Structure {
 		public Mod Mod { get; private set; }
+		public abstract string Name { get; }
 		protected readonly List<ARoom> rooms = [];
 		public IReadOnlyList<ARoom> Rooms => rooms;
-		public Structure(Mod mod, string fileName) {
+		public Structure(Mod mod) {
 			Mod = mod;
 			Load();
+			ValidateSocketsResolvable();
+		}
+		public void ValidateSocketsResolvable() {
 			KeyValuePair<string, List<(ARoom room, char entrance)>[]>[] lookup = rooms.GenerateConnectionLookup().ToArray();
 			List<string> irresolvableSockets = [];
 			for (int i = 0; i < lookup.Length; i++) {
@@ -40,7 +36,7 @@ namespace Origins.Core.Structures {
 				bool down = forKey[Direction.Down.Index()].Count > 0;
 				if (up != down) irresolvableSockets.Add($"{name}_{(down ? Direction.Up : Direction.Down)}");
 			}
-			if (irresolvableSockets.Count > 0) throw new FormatException($"{fileName} has irresolvable sockets: [{string.Join(", ", irresolvableSockets)}]");
+			if (irresolvableSockets.Count > 0) throw new FormatException($"{Name} has irresolvable sockets: [{string.Join(", ", irresolvableSockets)}]");
 		}
 		public virtual bool IsValidLayout(StructureInstance instance) => true;
 		public virtual bool Break(StructureInstance instance) => instance.rooms.Length > 25;
@@ -229,6 +225,21 @@ namespace Origins.Core.Structures {
 			b.Parts.CopyTo(parts, a.Parts.Length);
 			return parts;
 		}
+		public bool CanOverlap(Mod mod, TileDescriptor other) {
+			(SerializableTileDescriptor source, string[] parameters)[] parts = new (SerializableTileDescriptor source, string[] parameters)[Parts.Length];
+			(SerializableTileDescriptor source, string[] parameters)[] otherParts = new (SerializableTileDescriptor source, string[] parameters)[other.Parts.Length];
+			for (int i = 0; i < parts.Length; i++) SerializableTileDescriptor.TryGet(mod, Parts[i], out parts[i].source, out parts[i].parameters);
+			for (int i = 0; i < otherParts.Length; i++) SerializableTileDescriptor.TryGet(mod, other.Parts[i], out otherParts[i].source, out otherParts[i].parameters);
+			for (int i = 0; i < parts.Length; i++) {
+				(SerializableTileDescriptor source, string[] parameters) = parts[i];
+				for (int j = 0; j < otherParts.Length; j++) {
+					(SerializableTileDescriptor otherSource, string[] otherParameters) = otherParts[j];
+					if (!source.CanOverlap(parameters, otherSource, otherParameters)) return false;
+					if (!otherSource.CanOverlap(otherParameters, source, parameters)) return false;
+				}
+			}
+			return true;
+		}
 		public override string ToString() => string.Join('+', Parts ?? [nameof(Void)]);
 		public static TileDescriptor operator +(TileDescriptor a, TileDescriptor b) => (a is null || b is null) ? (a ?? b) : new(a.Action + b.Action, CombineParts(a, b), a.Ignore && b.Ignore);
 	}
@@ -294,34 +305,37 @@ namespace Origins.Core.Structures {
 	}
 	public class StructureInstance {
 		public readonly RoomInstance[] rooms;
-		readonly BitArray overlapTracker;
+		readonly StructureOverlapTracker overlapTracker;
 		readonly SocketTracker socketTracker;
 		readonly Structure structure;
 		public StructureInstance(Structure structure) : this(structure, []) { }
-		StructureInstance(Structure structure, RoomInstance[] rooms, BitArray overlapTracker = null, SocketTracker requiredConnectionTracker = null) {
+		StructureInstance(Structure structure, RoomInstance[] rooms, StructureOverlapTracker overlapTracker = null, SocketTracker requiredConnectionTracker = null) {
 			this.structure = structure;
 			this.rooms = rooms;
-			this.overlapTracker = overlapTracker ?? new(Main.maxTilesX * Main.maxTilesY);
+			this.overlapTracker = overlapTracker ?? new();
 			socketTracker = requiredConnectionTracker ?? new();
 		}
 		public bool CanAdd(RoomInstance room) {
-			BitArray newOverlap = new(overlapTracker);
 			SocketTracker newSockets = socketTracker.Clone();
-			return room.CheckPosition(newOverlap, newSockets);
+			return room.CheckPosition(structure.Mod, rooms, overlapTracker, newSockets, false);
 		}
 		public bool TryAdd(RoomInstance room, out StructureInstance result) {
-			BitArray newOverlap = new(overlapTracker);
-			SocketTracker newSockets = socketTracker.Clone();
-			if (!room.CheckPosition(newOverlap, newSockets)) {
+			if (!CheckOverlap(structure.Mod, room, out SocketTracker newSockets)) {
 				result = this;
 				return false;
 			}
 			RoomInstance[] newRooms = new RoomInstance[rooms.Length + 1];
 			rooms.CopyTo(newRooms, 0);
 			newRooms[^1] = room;
-			StructureInstance structureInstance = new(structure, newRooms, newOverlap, newSockets);
+			StructureInstance structureInstance = new(structure, newRooms, overlapTracker, newSockets);
 			result = structureInstance;
 			return true;
+		}
+		public bool CheckOverlap(Mod mod, RoomInstance room, out SocketTracker newSockets) {
+			newSockets = socketTracker.Clone();
+			if (room.CheckPosition(mod, rooms, overlapTracker, newSockets)) return true;
+			overlapTracker.RemoveAtOrOver(rooms.Length);
+			return false;
 		}
 		public StructureInstance Sprawl(Dictionary<string, List<(ARoom room, char entrance)>[]> lookup) {
 			if (structure.Break(this)) return this;
@@ -376,7 +390,7 @@ namespace Origins.Core.Structures {
 		public bool CanGenerate() {
 			if (socketTracker.RequiredCount > 0) return false;
 			if (!structure.IsValidLayout(this)) return false;
-			if (!rooms.CanGenerate()) return false;
+			//if (!rooms.CanGenerate()) return false;
 			return true;
 		}
 		public void Generate() {
@@ -438,7 +452,7 @@ namespace Origins.Core.Structures {
 			} while (reps.Repeat(ref i, ref j, map[0].Length, map.Length));
 			return true;
 		}
-		public bool CheckPosition(BitArray overlapTracker, SocketTracker socketTracker) {
+		public bool CheckPosition(Mod mod, RoomInstance[] rooms, StructureOverlapTracker overlapTracker, SocketTracker socketTracker, bool addOverlap = true) {
 			string[] map = Room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
 			Position.Deconstruct(out int i, out int j);
 			RepetitionData reps = Repetitions;
@@ -446,11 +460,10 @@ namespace Origins.Core.Structures {
 			do {
 				for (int y = 0; y < map.Length; y++) {
 					for (int x = 0; x < map[y].Length; x++) {
-						int posIndex = i + x + (j + y) * Main.maxTilesX;
 						char currentTile = map[y][x];
 						if (Room.Key[currentTile].Ignore) continue;
 						if (Room.SocketKey.TryGetValue(currentTile, out RoomSocket socket)) socketTracker.Add(socket, Room, i + x, j + y, socket.Optional);
-						else if (socketTracker.IsImportant(i + x, j + y)) return false;
+						//else if (socketTracker.IsImportant(i + x, j + y)) return false;
 						Tile existing = Main.tile[i + x, j + y];
 						if (existing.HasTile && !TileID.Sets.CanBeClearedDuringGeneration[existing.TileType]) return false;
 						if (GenVars.structures is not null) {
@@ -458,12 +471,25 @@ namespace Origins.Core.Structures {
 							tileRect.Y = j + y;
 							if (!GenVars.structures.CanPlace(tileRect)) return false;
 						}
-						if (overlapTracker[posIndex]) return false;
-						overlapTracker[posIndex] = true;
+						if (!overlapTracker.TryAdd(mod, rooms, i + x, j + y, this, addOverlap)) return false;
 					}
 				}
 			} while (reps.Repeat(ref i, ref j, map[0].Length, map.Length));
 			return true;
+		}
+		public char? GetTile(int x, int y) {
+			string[] map = Room.Map.Split('\n', StringSplitOptions.RemoveEmptyEntries);
+			Position.Deconstruct(out int i, out int j);
+			RepetitionData reps = Repetitions;
+			Rectangle tileRect = new(0, 0, 1, 1);
+			do {
+				if (x >= i && y >= j && x <= i + map.Length && y <= j + map[0].Length) {
+					char currentTile = map[y - j][x - i];
+					if (Room.Key[currentTile].Ignore) return null;
+					return currentTile;
+				}
+			} while (reps.Repeat(ref i, ref j, map[0].Length, map.Length));
+			return null;
 		}
 	}
 	public record struct RepetitionData(Direction Direction, int Count) {
@@ -527,6 +553,45 @@ namespace Origins.Core.Structures {
 				if (sockets[k].Matches(socket, i, j)) return true;
 			}
 			return false;
+		}
+	}
+	public class StructureOverlapTracker {
+		readonly List<int>[,] values = new List<int>[Main.maxTilesX, Main.maxTilesY];
+		public void Clear() {
+			Array.Clear(values);
+		}
+		public bool TryAdd(Mod mod, RoomInstance[] rooms, int i, int j, RoomInstance newRoom, bool addOverlap = true) {
+			if (newRoom.GetTile(i, j) is not char newTile) return true;
+			int depth = rooms.Length;
+			if (values[i, j] is null) {
+				if (addOverlap) values[i, j] = [depth];
+				return true;
+			}
+			List<int> depths = values[i, j];
+			if (depths.Count > 0) {
+				TileDescriptor newDescriptor = newRoom.Room.Key[newTile];
+				List<char> chars = [];
+				for (int k = 0; k < depths.Count; k++) {
+					if (rooms[depths[k]].GetTile(i, j) is char c) {
+						if (!newDescriptor.CanOverlap(mod, rooms[depths[k]].Room.Key[c])) return false;
+					}
+				}
+			}
+			if (addOverlap) depths.Add(depth);
+			return true;
+		}
+		public void RemoveAtOrOver(int depth) {
+			Span<List<int>> values = this.values.AsSpan();
+			for (int i = 0; i < values.Length; i++) {
+				List<int> list = values[i];
+				if (list is null) continue;
+				for (int j = list.Count - 1; j >= 0; j--) {
+					if (list[j] >= depth) {
+						list.RemoveRange(j, list.Count - j);
+						break;
+					}
+				}
+			}
 		}
 	}
 	/*public class TestStructure() : Structure(ModContent.GetInstance<Origins>()) {

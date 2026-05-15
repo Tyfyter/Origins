@@ -41,6 +41,7 @@ namespace Origins.Core.Structures {
 				color
 			);
 		}
+		public virtual bool CanOverlap(string[] parameters, SerializableTileDescriptor otherSource, string[] otherParameters) => otherSource != this || otherParameters.SequenceEqual(parameters);
 		public static new TileDescriptor Create(Mod mod, string data) {
 			string[] descriptors = data.Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 			TileDescriptor descriptor = null;
@@ -221,7 +222,8 @@ namespace Origins.Core.Structures {
 		public override string ExportWeight() => weight?.ToString();
 	}
 	[Autoload(false)]
-	public class DeserializedStructure(Mod mod, string fileName, string data) : Structure(mod, fileName) {
+	public class DeserializedStructure(Mod mod, string fileName, string data) : Structure(mod) {
+		public override string Name => fileName;
 		public static JsonSerializerSettings SerializerSettings { get; } = new() {
 			Formatting = Formatting.Indented,
 			DefaultValueHandling = DefaultValueHandling.IgnoreAndPopulate,
@@ -236,6 +238,7 @@ namespace Origins.Core.Structures {
 			if (descriptor.BreakCondition is not null) breakCondition = BreakDescriptor.Create(Mod, descriptor.BreakCondition);
 			if (descriptor.ValidLayoutCheck is not null) isValidLayout = CheckDescriptor.Create(Mod, descriptor.ValidLayoutCheck);
 			descriptor.TileDescriptors ??= [];
+			descriptor.Rooms ??= [];
 			RoomDescriptor[] rooms = new RoomDescriptor[descriptor.Rooms.Count];
 			int i = 0;
 			foreach ((string identifier, RoomDescriptor room) in descriptor.Rooms) {

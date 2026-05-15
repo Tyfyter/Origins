@@ -1,0 +1,48 @@
+{
+	"Rooms": {
+		"Top": {
+			"Map": [
+				"SSSSSSSSSSS",
+				"WSSWWWWWSSW",
+				"WWSSWDWSSWW",
+				"WWWSWWWSWWW"
+			],
+			"Key": {
+				"D": "Empty+PlaceWall(RocksUnsafe3)"
+			},
+			"SocketKey": {
+				"D": {
+					"Key": "Mid",
+					"Direction": "Down"
+				}
+			},
+			"StartPos": "D",
+			"Tags": []
+		},
+		"Bottom": {
+			"Map": [
+				"WWWSWWWSWWW",
+				"WWSSWUWSSWW",
+				"WSSWWWWWSSW",
+				"SSSSSSSSSSS"
+			],
+			"Key": {
+				"U": "Empty+PlaceWall(RocksUnsafe3)"
+			},
+			"SocketKey": {
+				"U": {
+					"Key": "Mid",
+					"Direction": "Up"
+				}
+			},
+			"Tags": []
+		}
+	},
+	"TileDescriptors": {
+		" ": "Empty",
+		".": "Void",
+		"S": "PlaceTile(Stone)+PlaceWall(RocksUnsafe3)",
+		"W": "PlaceWall(RocksUnsafe3)"
+	},
+	"BreakCondition": "MaxRoomCount(1000)"
+}
