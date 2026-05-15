@@ -125,6 +125,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			AddBrothVisuals<Foul_Broth>("Sleepy");
 			AddBrothVisuals<Metallic_Broth>("Vampy");
 			AddBrothVisuals<Minishark_Broth>("Minisharky");
+			AddBrothVisuals<Chalky_Broth>("Scrappy", "Scrappy_Glow");
+			AddBrothVisuals<Mushy_Broth>("Peaty");
 		}
 
 		public override void SetDefaults() {
