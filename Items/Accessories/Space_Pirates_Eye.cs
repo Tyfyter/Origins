@@ -10,6 +10,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameInput;
@@ -678,6 +679,7 @@ namespace Origins.Items.Accessories {
 			}
 			public override bool? CanHitNPC(NPC target) => Projectile.ai[0] == target.whoAmI;
 			public override void AI() {
+				SoundEngine.PlaySound(Origins.Sounds.LittleZap);
 				NPC target = Main.npc.GetIfInRange((int)Projectile.ai[0]);
 				if (target?.CanBeChasedBy(Projectile) != true) goto die;
 				Player player = Main.player[Projectile.owner];

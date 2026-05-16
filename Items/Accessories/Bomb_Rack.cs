@@ -1,7 +1,5 @@
-﻿using Origins.Dusts;
-using Origins.Projectiles;
+﻿using Origins.Projectiles;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -17,7 +15,7 @@ public class Bomb_Rack : ModItem {
 	public override void SetDefaults() {
 		Item.DefaultToAccessory();
 		Item.DamageType = DamageClasses.Explosive;
-		Item.damage = 30;
+		Item.damage = 48;
 		Item.useTime = 12;
 		Item.shoot = ModContent.ProjectileType<Bomb_Rack_Carpet_Bomb>();
 		Item.knockBack = 3;

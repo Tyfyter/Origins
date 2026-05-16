@@ -35,7 +35,7 @@ public class Smog_Pod_4 : ModItem {
 	public override void SetDefaults() {
 		Item.DefaultToAccessory();
 		Item.rare = ItemRarityID.Yellow;
-		Item.damage = 60;
+		Item.damage = 128;
 		Item.DamageType = DamageClass.Generic;
 		Item.shoot = ModContent.ProjectileType<Smog_Pod_4_Rocket>();
 		Item.knockBack = 1;
@@ -113,7 +113,7 @@ public class Smog_Pod_4_Rocket : ModProjectile {
 		return base.OnTileCollide(oldVelocity);
 	}
 	public override void OnKill(int timeLeft) {
-		ExplosiveGlobalProjectile.DoExplosion(Projectile, 48, false, SoundID.Item14);
+		ExplosiveGlobalProjectile.DoExplosion(Projectile, 96, false, SoundID.Item14);
 		Projectile.SpawnProjectile(
 			Projectile.GetSource_Death(),
 			Projectile.Center,

@@ -17,10 +17,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Big_Bang : ModItem {
 		public static int BarrelLength => 64;
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Big_Bang_P>(70, 34, 7.5f, 48, 32);
+			Item.DefaultToCanisterLauncher<Big_Bang_P>(81, 34, 7.5f, 48, 32);
 			Item.knockBack = 4f;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 10);
+			Item.UseSound = SoundID.Item92;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -34,6 +35,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			Vector2 unit = velocity.Normalized(out _);
 			position += unit * 8 + unit.Perpendicular(player.direction) * 10;
+			SoundEngine.PlaySound(Origins.Sounds.Lightning.WithPitch(1.2f));
 		}
 	}
 	public class Big_Bang_P : ModProjectile, ICanisterProjectile, IShadedProjectile {
@@ -73,6 +75,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (Projectile.velocity != default) Projectile.ai[1] = MathF.Round(Big_Bang.BarrelLength / Projectile.velocity.Length());
 		}
 		public override void AI() {
+			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.Firework_Red, 0, 0, 200);
+			dust.noGravity = true;
+			dust.velocity *= 3f;
+
 			if (Projectile.ai[1] > 0) {
 				Projectile.ai[1]--;
 				Projectile.numUpdates++;
@@ -207,6 +213,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			data.Draw(Main.spriteBatch);
 		}
 		public override void OnKill(int timeLeft) {
+			SoundEngine.PlaySound(Origins.Sounds.Bonk, Projectile.Center);
+			SoundEngine.PlaySound(Origins.Sounds.Lightning.WithVolume(0.6f), Projectile.Center);
 			if (!Projectile.IsLocallyOwned() || Projectile.ai[0] != 0) return;
 			int count = 3 + Main.rand.Next(3);
 			Vector2 center = Projectile.Center;

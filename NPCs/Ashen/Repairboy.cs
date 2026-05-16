@@ -54,6 +54,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.width = 32;
 			NPC.height = 26;
 			NPC.noGravity = true;
+			NPC.noTileCollide = true;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1f);
 			NPC.DeathSound = Origins.Sounds.RepairboyDeath;
 			NPC.value = Item.buyPrice();

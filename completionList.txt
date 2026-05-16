@@ -1099,7 +1099,7 @@ SUMMONER WEAPONS:
 (X) Technomancer 4000
 (^) Terratotem
 (X) Tonal Resonator
-(†) Vampire Fireflower in a Pot !!!
+(#3, ^2) Vampire Fireflower in a Pot !!!
 
 NO POST-ML CONTENT YET.
 ---
@@ -1419,7 +1419,7 @@ TILES:
 (^) Riven Dungeon Chest
 (^) Rusty Locker
 (^) Small Storage Container
-(#2, ^2) Solar Battery !!! (text context and highlights)
+(#2, ^2) Solar Battery !!! (just highlights)
 (#, ^5) Surveysprout Planter Box (tML #4061)
 (#2/3, ^2) Transistor !!! (needs obtain method)
 (^) Unsuspicious Bush
