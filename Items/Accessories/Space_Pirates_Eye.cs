@@ -3,6 +3,7 @@ using Origins.Core;
 using Origins.Graphics;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Layers;
+using Origins.Projectiles;
 using Origins.Reflection;
 using ReLogic.Content;
 using System;
@@ -18,6 +19,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
+using static Origins.Projectiles.MinionBase;
+using static Origins.Projectiles.WormMinion;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
@@ -483,10 +486,150 @@ namespace Origins.Items.Accessories {
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.ElectrosphereMissile}";
 			public override Color Color => FromHexRGB(0x00ffff);
-			public override int Cooldown => 60;
+			public override int Cooldown => 120;
 			public override void SetDefaults() {
 				Projectile.CloneDefaults(ProjectileID.ElectrosphereMissile);
 				AIType = ProjectileID.ElectrosphereMissile;
+			}
+			public override Vector2 GetVelocity(Player player, Vector2 difference, Entity target) => difference.Normalized(out _) * 8;
+			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+				if (player.ownedProjectileCounts[ModContent.ProjectileType<Friendly_Cleaver_Head>()] > 0) {
+					player.OriginPlayer().spacePirateEyeCooldown = 5;
+					return;
+				}
+				if (source is EntitySource_ItemUse { Item: Item item }) damage = item.damage;
+				player.SpawnProjectile(null,
+					position,
+					velocity,
+					ModContent.ProjectileType<Friendly_Cleaver_Head>(),
+					damage,
+					knockback
+				).originalDamage = damage;
+				for (int i = 0; i < 3; i++) {
+					player.SpawnProjectile(null,
+						position,
+						default,
+						ModContent.ProjectileType<Friendly_Cleaver_Body>(),
+						damage,
+						knockback
+					).originalDamage = damage;
+				}
+				player.SpawnProjectile(null,
+					position,
+					default,
+					ModContent.ProjectileType<Friendly_Cleaver_Tail>(),
+					damage,
+					knockback
+				).originalDamage = damage;
+			}
+			[ReinitializeDuringResizeArrays]
+			public abstract class Friendly_Cleaver_Base : WormMinion {
+				static readonly bool[] SegmentTypes = ProjectileID.Sets.Factory.CreateBoolSet();
+				public override string Texture => $"Origins/NPCs/Riven/Cleaver_{Part}";
+				public override float ChildDistance => 16;
+				public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.SourceDamage *= 1f;// use this to adjust damage
+				public override void SetStaticDefaults() {
+					base.SetStaticDefaults();
+					SegmentTypes[Type] = true;
+					Main.projPet[Projectile.type] = true;
+				}
+				public override void SetDefaults() {
+					Projectile.DamageType = DamageClass.Summon;
+					Projectile.minion = true;
+					Projectile.width = 20;
+					Projectile.height = 20;
+					Projectile.penetrate = -1;
+					Projectile.timeLeft *= 5;
+					Projectile.friendly = true;
+					Projectile.ignoreWater = true;
+					Projectile.tileCollide = false;
+					Projectile.netImportant = true;
+					Projectile.ContinuouslyUpdateDamageStats = true;
+					Projectile.usesLocalNPCImmunity = true;
+					Projectile.localNPCHitCooldown = 10;
+				}
+				public override bool MinionContactDamage() => true;
+				public override void MoveTowardsTarget() {
+					bool foundTarget = targetingData.TargetID != -1;
+					Rectangle targetHitbox = foundTarget ? targetingData.targetHitbox : RestRegion;
+					if (foundTarget) targetHitbox.Inflate(-targetHitbox.Width / 8, -targetHitbox.Height / 8);
+
+					Vector2 targetPos = Projectile.Center.Clamp(targetHitbox);
+					Vector2 direction = (targetPos - Projectile.Center).Normalized(out float distance);
+					if (foundTarget) {
+						if (Projectile.Hitbox.OverlapsAnyTiles(false)) {
+							float speed = 1.2f * SpeedModifier;
+							Projectile.velocity += direction * speed;
+							Projectile.velocity = Projectile.velocity.Normalized(out float currentSpeed);
+							Min(ref currentSpeed, 12);
+							Projectile.velocity *= currentSpeed;
+						} else {
+							Gravity();
+						}
+					} else {
+						float speed = distance switch {
+							< 300f => 0.1f,
+							< 600f => 0.2f,
+							_ => 0.3f
+						};
+						Projectile.velocity += direction * speed;
+						if (Vector2.Dot(Projectile.velocity.Normalized(out _), direction) < 0.25f)
+							Projectile.velocity *= 0.8f;
+
+						Projectile.velocity = Projectile.velocity.Normalized(out speed);
+						if (speed > 2) speed *= 0.96f;
+						Projectile.velocity *= Math.Min(speed, 15);
+					}
+				}
+				public override void AI() {
+					if (Projectile.ai[0] != 0) {
+						Gravity();
+						Projectile.timeLeft = 2;
+						Projectile.rotation += Projectile.velocity.X * 0.01f;
+						return;
+					}
+					base.AI();
+				}
+				public void Gravity() {
+					Projectile.velocity.Y += 0.3f;
+				}
+				public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+					if (Part == BodyPart.Head || Projectile.ai[0] != 0) {
+						Projectile.Kill();
+					}
+				}
+				public override void OnKill(int timeLeft) {
+					if (Part != BodyPart.Head) return;
+					foreach (Projectile segment in WalkWorm()) {
+						segment.ai[0] = 1;
+						segment.velocity = Projectile.velocity.RotatedBy(segment.rotation - Projectile.rotation);
+					}
+				}
+				bool hasEye = true;
+				public override ref bool HasBuff(Player player) {
+					OriginPlayer originPlayer = Main.player[Projectile.owner].OriginPlayer();
+					if (originPlayer.spacePirateEye is null || Colors[originPlayer.spacePirateEyeSelection] is not _Temp_Cyan) hasEye = false;
+					return ref hasEye;
+				}
+				public override bool IsValidParent(Projectile segment) => SegmentTypes[segment.type];
+				public override Color? GetAlpha(Color lightColor) {
+					lightColor = Color.Lerp(lightColor, Color.White, 0.4f);
+					lightColor.A = 150;
+					lightColor *= (lightColor.A - Projectile.alpha) / 255f;
+					return lightColor;
+				}
+			}
+			public class Friendly_Cleaver_Head : Friendly_Cleaver_Base {
+				public override BodyPart Part => BodyPart.Head;
+				public override bool CanInsert(Projectile parent, Projectile child) => false;
+			}
+			public class Friendly_Cleaver_Body : Friendly_Cleaver_Base {
+				public override BodyPart Part => BodyPart.Body;
+				public override bool CanInsert(Projectile parent, Projectile child) => parent.type == ModContent.ProjectileType<Friendly_Cleaver_Head>();
+			}
+			public class Friendly_Cleaver_Tail : Friendly_Cleaver_Base {
+				public override BodyPart Part => BodyPart.Tail;
+				public override bool CanInsert(Projectile parent, Projectile child) => child is null;
 			}
 		}
 		public class _Temp_Light_Blue : PirateEyeMode, IBroken {
@@ -538,7 +681,7 @@ namespace Origins.Items.Accessories {
 				NPC target = Main.npc.GetIfInRange((int)Projectile.ai[0]);
 				if (target?.CanBeChasedBy(Projectile) != true) goto die;
 				Player player = Main.player[Projectile.owner];
-				if (player.OriginPlayer().spacePirateEye is not Item spacePirateEye) goto die;
+				if (player.OriginPlayer().spacePirateEye is not Item spacePirateEye || Colors[player.OriginPlayer().spacePirateEyeSelection] is not _Temp_Purple) goto die;
 				Vector2 eyePosition = EyePosition(player);
 				Projectile.position = target.Center;
 				if (Projectile.position.DistanceSQ(eyePosition) > Range * Range) goto die;

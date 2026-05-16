@@ -209,6 +209,8 @@ namespace Origins.Projectiles {
 				readonly get => child - 1;
 				set => child = value + 1;
 			}
+			public readonly Projectile GetParent(Projectile projectile) => OriginExtensions.GetProjectile(projectile.owner, Parent);
+			public readonly Projectile GetChild(Projectile projectile) => OriginExtensions.GetProjectile(projectile.owner, Child);
 			public readonly void Send(BinaryWriter writer) {
 				writer.Write((short)Parent);
 				writer.Write((short)Child);

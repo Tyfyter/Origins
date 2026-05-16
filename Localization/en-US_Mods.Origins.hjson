@@ -2318,6 +2318,9 @@ Projectiles: {
 	_Temp_Magenta.DisplayName: " Temp Magenta"
 	_Temp_Pink.DisplayName: " Temp Pink"
 	_Temp_Purple.DisplayName: " Temp Purple"
+	Friendly_Cleaver_Body.DisplayName: Friendly Cleaver Body
+	Friendly_Cleaver_Head.DisplayName: Friendly Cleaver Head
+	Friendly_Cleaver_Tail.DisplayName: Friendly Cleaver Tail
 }
 
 Prefixes: {
