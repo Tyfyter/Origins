@@ -538,13 +538,14 @@ namespace Origins.Items.Accessories {
 				NPC target = Main.npc.GetIfInRange((int)Projectile.ai[0]);
 				if (target?.CanBeChasedBy(Projectile) != true) goto die;
 				Player player = Main.player[Projectile.owner];
+				if (player.OriginPlayer().spacePirateEye is not Item spacePirateEye) goto die;
 				Vector2 eyePosition = EyePosition(player);
 				Projectile.position = target.Center;
 				if (Projectile.position.DistanceSQ(eyePosition) > Range * Range) goto die;
 				if (!CollisionExt.CanHitRay(Projectile.position, eyePosition)) goto die;
 
-				Projectile.localNPCHitCooldown = CombinedHooks.TotalUseTime(Cooldown, player, player.OriginPlayer().spacePirateEye) * 2;
-
+				Projectile.localNPCHitCooldown = CombinedHooks.TotalUseTime(Cooldown, player, spacePirateEye) * 2;
+				Projectile.timeLeft = 60;
 				return;
 				die:
 				Min(ref Projectile.timeLeft, 7);
