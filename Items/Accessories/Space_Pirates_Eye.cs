@@ -1,14 +1,18 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Graphics;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Layers;
 using Origins.Reflection;
+using ReLogic.Content;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameInput;
+using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -46,7 +50,8 @@ namespace Origins.Items.Accessories {
 		public static void UpdateEye(Player player, int mode) {
 			if (mode == -1) return;
 			OriginPlayer originPlayer = player.OriginPlayer();
-			if (originPlayer.spacePirateEye is null) return;
+			Item spacePirateEye = originPlayer.spacePirateEye;
+			if (spacePirateEye is null) return;
 			if (mode < 0) {
 				int lowest = GetPlayerCounts(player);
 				if (originPlayer.spacePirateEyePreference > -2) {
@@ -68,25 +73,18 @@ namespace Origins.Items.Accessories {
 			Vector2 position = EyePosition(player);
 			PirateEyeMode eyeMode = Colors[mode];
 			if (eyeMode.FindTarget(player, position, out Vector2 targetPos, out Entity targetEntity)) {
-				originPlayer.spacePirateEyeCooldown = eyeMode.Cooldown;
-				int damage = originPlayer.spacePirateEye.damage;
-				float knockback = originPlayer.spacePirateEye.knockBack;
-				try {
-					originPlayer.spacePirateEye.damage = (int)(damage * eyeMode.DamageMult);
-					originPlayer.spacePirateEye.knockBack *= eyeMode.KnockbackMult;
-					eyeMode.Shoot(player,
-						targetEntity,
-						player.GetSource_Accessory(originPlayer.spacePirateEye),
-						position,
-						eyeMode.GetVelocity(player, targetPos - position, targetEntity),
-						eyeMode.Type,
-						player.GetWeaponDamage(originPlayer.spacePirateEye),
-						player.GetWeaponKnockback(originPlayer.spacePirateEye)
-					);
-				} finally {
-					originPlayer.spacePirateEye.damage = damage;
-					originPlayer.spacePirateEye.knockBack = knockback;
-				}
+				originPlayer.spacePirateEyeCooldown = CombinedHooks.TotalUseTime(eyeMode.Cooldown, player, spacePirateEye);
+				using ScopedOverride<int> dmg = spacePirateEye.damage.ScopedOverride((int)(spacePirateEye.damage * eyeMode.DamageMult));
+				using ScopedOverride<float> kb = spacePirateEye.knockBack.ScopedOverride(spacePirateEye.knockBack * eyeMode.KnockbackMult);
+				eyeMode.Shoot(player,
+					targetEntity,
+					player.GetSource_Accessory(spacePirateEye),
+					position,
+					eyeMode.GetVelocity(player, targetPos - position, targetEntity),
+					eyeMode.Type,
+					player.GetWeaponDamage(spacePirateEye),
+					player.GetWeaponKnockback(spacePirateEye)
+				);
 			}
 		}
 
@@ -517,10 +515,110 @@ namespace Origins.Items.Accessories {
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
 			public override Color Color => FromHexRGB(0x8000ff);
-			public override int Cooldown => 60;
+			public override int Cooldown => 20;
+			public static float Range => 16 * 45;
 			public override void SetDefaults() {
-				Projectile.CloneDefaults(ProjectileID.BeeArrow);
-				AIType = ProjectileID.BeeArrow;
+				Projectile.DamageType = DamageClass.Magic;
+				Projectile.width = 1;
+				Projectile.height = 1;
+				Projectile.friendly = true;
+				Projectile.penetrate = -1;
+				Projectile.usesLocalNPCImmunity = true;
+				Projectile.localNPCHitCooldown = Cooldown * 2;
+				Projectile.tileCollide = false;
+			}
+			public override void OnSpawn(IEntitySource source) {
+				NPC target = Main.npc.GetIfInRange((int)Projectile.ai[0]);
+				if (target?.CanBeChasedBy(Projectile) != true) Projectile.ai[0] = -1;
+				Player player = Main.player[Projectile.owner];
+				Projectile.localNPCHitCooldown = CombinedHooks.TotalUseTime(Cooldown, player, player.OriginPlayer().spacePirateEye) * 2;
+			}
+			public override bool? CanHitNPC(NPC target) => Projectile.ai[0] == target.whoAmI;
+			public override void AI() {
+				NPC target = Main.npc.GetIfInRange((int)Projectile.ai[0]);
+				if (target?.CanBeChasedBy(Projectile) != true) goto die;
+				Player player = Main.player[Projectile.owner];
+				Vector2 eyePosition = EyePosition(player);
+				Projectile.position = target.Center;
+				if (Projectile.position.DistanceSQ(eyePosition) > Range * Range) goto die;
+				if (!CollisionExt.CanHitRay(Projectile.position, eyePosition)) goto die;
+
+				Projectile.localNPCHitCooldown = CombinedHooks.TotalUseTime(Cooldown, player, player.OriginPlayer().spacePirateEye) * 2;
+
+				return;
+				die:
+				Min(ref Projectile.timeLeft, 7);
+			}
+			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+				player.SpawnProjectile(source, position, default, type, damage, knockback, target.whoAmI);
+			}
+			public override bool FindTarget(Player player, Vector2 position, out Vector2 targetPos, out Entity targetEntity) {
+				Vector2 _targetPos = position;
+				Entity _targetEntity = null;
+				float maxDist = Range;
+				maxDist *= maxDist;
+				BitArray targets = new(Main.maxNPCs);
+				foreach (Projectile projectile in Main.ActiveProjectiles) {
+					if (projectile.owner == player.whoAmI && projectile.type == Type) targets[(int)projectile.ai[0]] = true;
+				}
+
+				bool result = player.DoHoming(FindTarget);
+				targetEntity = _targetEntity;
+				targetPos = _targetPos;
+				return result;
+				bool FindTarget(Entity target) {
+					if (targets[target.whoAmI]) return false;
+					Vector2 currentPos = position.Clamp(target.Hitbox);
+					if (Math.Sign(position.X - currentPos.X) == player.direction) return false;
+					if (!CollisionExt.CanHitRay(target.Center, position)) return false;
+					float dist = currentPos.DistanceSQ(position);
+					if (dist < maxDist) {
+						maxDist = dist;
+						_targetEntity = target;
+						_targetPos = currentPos;
+						return true;
+					}
+					return false;
+				}
+			}
+			public override bool PreDraw(ref Color lightColor) {
+				Witch_Bolt_Drawer.Draw(Projectile);
+				return false;
+			}
+			public readonly struct Witch_Bolt_Drawer {
+				private static readonly VertexStrip _vertexStrip = new();
+				public static void Draw(Projectile proj) {
+					MiscShaderData miscShaderData = GameShaders.Misc["Origins:Framed"];
+					float uTime = (float)Main.timeForVisualEffects / 44;
+					const float normal_dist = 16;
+					Vector2 diff = (proj.position - EyePosition(Main.player[proj.owner])).Normalized(out float dist);
+					int length = (int)float.Ceiling(dist / normal_dist);
+					dist /= length;
+					length++;
+					float[] rot = new float[length];
+					Vector2[] pos = new Vector2[length];
+					Array.Fill(rot, diff.ToRotation());
+					Vector2 cur = proj.position;
+					for (int i = 0; i < length; i++) {
+						pos[i] = cur + GeometryUtils.Vec2FromPolar(Main.rand.NextFloat(-6, 6), rot[i] + MathHelper.PiOver2);
+						Lighting.AddLight(pos[i], 0.75f, 0.1f, 1f);
+						cur -= diff * dist;
+					}
+					Asset<Texture2D> texture = TextureAssets.Extra[ExtrasID.MagicMissileTrailShape];
+					miscShaderData.UseImage0(texture);
+					//miscShaderData.UseShaderSpecificData(new Vector4(Main.rand.NextFloat(1), 0, 1, 1));
+					miscShaderData.Shader.Parameters["uAlphaMatrix0"]?.SetValue(new Vector4(1, 1, 1, 0));
+					miscShaderData.Shader.Parameters["uSourceRect0"]?.SetValue(new Vector4(Main.rand.NextFloat(1), 0, 1, 1));
+					miscShaderData.Apply();
+					_vertexStrip.PrepareStrip(pos, rot, _ => new Color(0.75f, 0.1f, 1f, 0.4f), _ => 12, -Main.screenPosition, length, includeBacksides: true);
+					_vertexStrip.DrawTrail();
+					for (int i = 0; i < length / 2; i++) {
+						pos[i] = pos[i] + GeometryUtils.Vec2FromPolar(Main.rand.NextFloat(-6, 6), rot[i] + MathHelper.PiOver2);
+					}
+					_vertexStrip.PrepareStrip(pos, rot, _ => new Color(0.95f, 0.3f, 1f, 0f), _ => 9, -Main.screenPosition, length, includeBacksides: true);
+					_vertexStrip.DrawTrail();
+					Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+				}
 			}
 		}
 		public class _Temp_Magenta : PirateEyeMode, IBroken {
