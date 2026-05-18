@@ -31,7 +31,7 @@ public class ProgressFlags : ProgressFlagSystem, IBroken {
 	public override void PostWorldLoad() {
 		base.PostWorldLoad();
 		MethodInfo set = typeof(ProgressFlag).GetProperty(nameof(ProgressFlag.IsSet)).SetMethod;// to avoid triggering events
-		if (lastSaveVersion < 1 && NPC.downedBoss2) {
+		if (NPC.downedBoss2 && (lastSaveVersion < 1 || !(DownedEaterOfWorlds || DownedBrainOfCthulhu || DownedDefiledAmalgamation || DownedWorldCracker))) {
 			switch (WorldBiomeManager.GetWorldEvil()) {
 				case CorruptionAltBiome:
 				set.Invoke(DownedEaterOfWorlds, [true]);
