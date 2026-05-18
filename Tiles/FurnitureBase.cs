@@ -969,5 +969,6 @@ namespace Origins.Tiles {
 
 		public static TileItem Get(ModTile tile) => itemsByTile.TryGetValue(tile, out TileItem item) ? item : null;
 		public static TileItem Get<TTile>() where TTile : ModTile => Get(ModContent.GetInstance<TTile>());
+		public static int ItemType<TTile>() where TTile : ModTile => Get<TTile>().Type;
 	}
 }
