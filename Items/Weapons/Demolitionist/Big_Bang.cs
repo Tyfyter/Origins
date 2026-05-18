@@ -31,11 +31,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
+		public override bool? UseItem(Player player) {
+			SoundEngine.PlaySound(Origins.Sounds.Lightning.WithPitch(1.2f));
+			return base.UseItem(player);
+		}
 		public override Vector2? HoldoutOffset() => new(-14f, -6);
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			Vector2 unit = velocity.Normalized(out _);
 			position += unit * 8 + unit.Perpendicular(player.direction) * 10;
-			SoundEngine.PlaySound(Origins.Sounds.Lightning.WithPitch(1.2f));
 		}
 	}
 	public class Big_Bang_P : ModProjectile, ICanisterProjectile, IShadedProjectile {
