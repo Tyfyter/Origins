@@ -7,6 +7,7 @@ using Origins.World.BiomeData;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -37,6 +38,7 @@ public class Solar_Battery : ModTile {
 	public override void SetStaticDefaults() {
 		Main.tileFrameImportant[Type] = true;
 		Main.tileNoAttach[Type] = true;
+		TileID.Sets.HasOutlines[Type] = true;
 		TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 		TileObjectData.newTile.Width = 3;
 		TileObjectData.newTile.SetHeight(2);
@@ -48,6 +50,7 @@ public class Solar_Battery : ModTile {
 		DustType = Ashen_Biome.DefaultTileDust;
 		displayRadices = new(this.GetTileItem().GetLocalization("Time"));
 	}
+	public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 	public override void NumDust(int i, int j, bool fail, ref int num) {
 		num = fail ? 1 : 3;
 	}
