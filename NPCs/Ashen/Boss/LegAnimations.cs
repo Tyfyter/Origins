@@ -284,51 +284,51 @@ namespace Origins.NPCs.Ashen.Boss {
 					}
 				}
 			}
-			Point point = Projectile.TopLeft.ToTileCoordinates();
-			Point point2 = Projectile.BottomRight.ToTileCoordinates();
-			int num2 = point.X / 2 + point2.X / 2;
-			int num3 = Projectile.width / 2;
+			Point topLeft = Projectile.TopLeft.ToTileCoordinates();
+			Point bottomRight = Projectile.BottomRight.ToTileCoordinates();
+			int tileCenter = (topLeft.X + bottomRight.X) / 2;
+			int radius = Projectile.width / 2;
 			if ((int)Projectile.ai[0] % 3 != 0)
 				return;
 
-			int num4 = (int)Projectile.ai[0] / 3;
-			for (int i = point.X; i <= point2.X; i++) {
-				for (int j = point.Y; j <= point2.Y; j++) {
-					if (Vector2.Distance(Projectile.Center, new Vector2(i * 16, j * 16)) > (float)num3)
+			int dustSpawnCount = (int)Projectile.ai[0] / 3;
+			for (int i = topLeft.X; i <= bottomRight.X; i++) {
+				for (int j = topLeft.Y; j <= bottomRight.Y; j++) {
+					if (!Projectile.Center.WithinRange(new(i * 16, j * 16), radius * radius))
 						continue;
 
-					Tile tileSafely = Framing.GetTileSafely(i, j);
-					if (!tileSafely.HasTile || !Main.tileSolid[tileSafely.TileType] || Main.tileSolidTop[tileSafely.TileType] || Main.tileFrameImportant[tileSafely.TileType])
+					Tile tile = Framing.GetTileSafely(i, j);
+					if (!tile.HasTile || !Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType] || Main.tileFrameImportant[tile.TileType])
 						continue;
 
-					Tile tileSafely2 = Framing.GetTileSafely(i, j - 1);
-					if (tileSafely2.HasTile && Main.tileSolid[tileSafely2.TileType] && !Main.tileSolidTop[tileSafely2.TileType])
+					Tile tileAbove = Framing.GetTileSafely(i, j - 1);
+					if (tileAbove.HasTile && Main.tileSolid[tileAbove.TileType] && !Main.tileSolidTop[tileAbove.TileType])
 						continue;
 
-					int num5 = WorldGen.KillTile_GetTileDustAmount(fail: true, tileSafely, i, j);
-					for (int k = 0; k < num5; k++) {
-						Dust obj = Main.dust[WorldGen.KillTile_MakeTileDust(i, j, tileSafely)];
-						obj.velocity.Y -= 3f + (float)num4 * 1.5f;
+					int dustAmount = WorldGen.KillTile_GetTileDustAmount(fail: true, tile, i, j);
+					for (int k = 0; k < dustAmount; k++) {
+						Dust obj = Main.dust[WorldGen.KillTile_MakeTileDust(i, j, tile)];
+						obj.velocity.Y -= 3f + dustSpawnCount * 1.5f;
 						obj.velocity.Y *= Main.rand.NextFloat();
 						obj.velocity.Y *= 0.75f;
-						obj.scale += (float)num4 * 0.03f;
+						obj.scale += dustSpawnCount * 0.03f;
 					}
 
-					if (num4 >= 2) {
-						for (int m = 0; m < num5 - 1; m++) {
-							Dust obj2 = Main.dust[WorldGen.KillTile_MakeTileDust(i, j, tileSafely)];
-							obj2.velocity.Y -= 1f + (float)num4;
+					if (dustSpawnCount >= 2) {
+						for (int k = 0; k < dustAmount - 1; k++) {
+							Dust obj2 = Main.dust[WorldGen.KillTile_MakeTileDust(i, j, tile)];
+							obj2.velocity.Y -= 1f + dustSpawnCount;
 							obj2.velocity.Y *= Main.rand.NextFloat();
 							obj2.velocity.Y *= 0.75f;
 						}
 					}
 
-					if (num5 <= 0 || Main.rand.Next(3) == 0)
+					if (dustAmount <= 0 || Main.rand.NextBool(3))
 						continue;
 
-					float num7 = (float)Math.Abs(num2 - i) / (num / 2f);
-					Gore gore = Gore.NewGoreDirect(Projectile.GetSource_FromThis(), Projectile.position, Vector2.Zero, 61 + Main.rand.Next(3), 1f - (float)num4 * 0.15f + num7 * 0.5f);
-					gore.velocity.Y -= 0.1f + (float)num4 * 0.5f + num7 * (float)num4 * 1f;
+					float flyUp = Math.Abs(tileCenter - i) / (num / 2f);
+					Gore gore = Gore.NewGoreDirect(Projectile.GetSource_FromThis(), Projectile.position, Vector2.Zero, 61 + Main.rand.Next(3), 1f - dustSpawnCount * 0.15f + flyUp * 0.5f);
+					gore.velocity.Y -= 0.1f + dustSpawnCount * (0.5f + flyUp);
 					gore.velocity.Y *= Main.rand.NextFloat();
 					gore.position = new Vector2(i * 16 + 20, j * 16 + 20);
 				}
