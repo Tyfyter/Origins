@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -524,6 +525,12 @@ namespace Origins.NPCs.Ashen.Boss {
 				float dif = PistonLength(npc, leg) - targetLength;
 				//Min(ref dif, 1);
 				leg.CalfRot += dif * 0.01f * speedMult;
+			}
+			public static void SmallStepEffect(Trenchmaker npc, Leg leg) {
+				Vector2 position = npc.GetFootHitbox(leg).Bottom();
+				SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithVolume(2f), position);
+				SoundEngine.PlaySound(SoundID.Item70.WithVolume(2f), position);
+				Main.instance.CameraModifiers.Add(new CameraShakeModifier(position, 2.5f, 3f, 12, 350f, -1f, nameof(Trenchmaker)));
 			}
 		}
 	}

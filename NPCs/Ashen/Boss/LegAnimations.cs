@@ -64,10 +64,7 @@ namespace Origins.NPCs.Ashen.Boss {
 	public class Walk_Animation_2 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 			if (leg.WasStanding) {
-				Vector2 position = npc.GetFootHitbox(leg).Bottom();
-				SoundEngine.PlaySound(Origins.Sounds.TrenchmakerStep.WithVolume(2f), position);
-				SoundEngine.PlaySound(SoundID.Item70.WithVolume(2f), position);
-				Main.instance.CameraModifiers.Add(new CameraShakeModifier(position, 2.5f, 3f, 12, 350f, -1f, nameof(Trenchmaker)));
+				SmallStepEffect(npc, leg);
 				return ModContent.GetInstance<Walk_Animation_3>();
 			}
 			if (leg.ThighRot == 0f && PistonLength(npc, leg) >= 36) return ModContent.GetInstance<Walk_Animation_3>();
@@ -377,7 +374,10 @@ namespace Origins.NPCs.Ashen.Boss {
 	}
 	public class Jump_Air_Animation : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
-			if (Math.Abs(PistonLength(npc, leg) - 24) < 2 && (leg.WasStanding || otherLeg.WasStanding)) return ModContent.GetInstance<Standing_Animation>();
+			if (Math.Abs(PistonLength(npc, leg) - 24) < 2 && (leg.WasStanding || otherLeg.WasStanding)) {
+				SmallStepEffect(npc, leg);
+				return ModContent.GetInstance<Standing_Animation>();
+			}
 			return this;
 		}
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
