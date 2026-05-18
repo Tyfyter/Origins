@@ -47,7 +47,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useTime = 34;
 			Item.useAnimation = 34;
 			Item.shoot = ModContent.ProjectileType<Amoebash_Smash>();
-			Item.shootSpeed = 12;
+			Item.shootSpeed = 15;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 12f;
 			Item.useTurn = false;

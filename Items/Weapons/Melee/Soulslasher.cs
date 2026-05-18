@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useTime = 27;
 			Item.useAnimation = 27;
 			Item.shoot = ModContent.ProjectileType<Soulslasher_Swing>();
-			Item.shootSpeed = 10;
+			Item.shootSpeed = 12.5f;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 6f;
 			Item.useTurn = false;
@@ -114,8 +114,8 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			Rectangle hitbox;
 			Vector2 offset = Vector2.Zero;
-			Vector2 velocity = Vector2.UnitY * 8;
-			for (int n = 0; n < 4; n++) {
+			Vector2 velocity = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 8;
+			for (int n = 0; n < 3; n++) {
 				offset += velocity;
 				hitbox = projHitbox;
 				hitbox.Offset(offset.ToPoint());

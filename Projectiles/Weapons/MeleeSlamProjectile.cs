@@ -29,6 +29,7 @@ namespace Origins.Projectiles.Weapons {
 		}
 		public override void SetStaticDefaults() {
 			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
+			ProjectileID.Sets.NoMeleeSpeedVelocityScaling[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PiercingStarlight);

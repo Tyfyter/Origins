@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useTime = 40;
 			Item.useAnimation = 40;
 			Item.shoot = ModContent.ProjectileType<The_Foot_Smash>();
-			Item.shootSpeed = 12;
+			Item.shootSpeed = 15;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 12f;
 			Item.useTurn = false;
