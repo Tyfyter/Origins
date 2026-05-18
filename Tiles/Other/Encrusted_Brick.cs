@@ -27,7 +27,7 @@ namespace Origins.Tiles.Other {
 		}
 		public override void AddRecipes() {
 			CreateRecipe(5)
-			.AddIngredient(OriginTile.TileItem<Spug_Flesh>(), 5)
+			.AddIngredient(TileItem.ItemType<Spug_Flesh>(), 5)
 			.AddIngredient<Encrusted_Ore_Item>()
 			.AddTile(TileID.Furnaces)
 			.Register();

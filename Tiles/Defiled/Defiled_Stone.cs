@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-	public class Defiled_Stone : ComplexFrameTile, IDefiledTile, ITileWithItem {
+	public class Defiled_Stone : ComplexFrameTile, IDefiledTile {
 		public ModItem Item { get; private set; }
 		public override void Load() {
 			Mod.AddContent(Item = new TileItem(this).WithExtraStaticDefaults(static item => {

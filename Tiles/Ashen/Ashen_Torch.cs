@@ -161,7 +161,7 @@ namespace Origins.Tiles.Ashen {
 
 			CreateRecipe(3)
 			.AddIngredient(ItemID.Torch, 3)
-			.AddIngredient(OriginTile.TileItem<Tainted_Stone>())
+			.AddIngredient(TileItem.ItemType<Tainted_Stone>())
 			.SortAfterFirstRecipesOf(ItemID.Torch)
 			.Register();
 

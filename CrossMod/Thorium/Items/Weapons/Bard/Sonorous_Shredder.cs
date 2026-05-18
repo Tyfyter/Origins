@@ -43,7 +43,7 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.SoulofNight, 15)
 			.AddIngredient<Alkahest>(25)
-			.AddIngredient(OriginTile.TileItem<Spug_Flesh>(), 30)
+			.AddIngredient(TileItem.ItemType<Spug_Flesh>(), 30)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
@@ -162,7 +162,7 @@ namespace Origins.CrossMod.Thorium.Items.Weapons.Bard {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.SoulofNight, 15)
 			.AddIngredient<Alkahest>(25)
-			.AddIngredient(OriginTile.TileItem<Spug_Flesh>(), 30)
+			.AddIngredient(TileItem.ItemType<Spug_Flesh>(), 30)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		}

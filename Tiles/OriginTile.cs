@@ -34,7 +34,6 @@ namespace Origins.Tiles {
 				}
 			}
 		}
-		public static int TileItem<TTile>() where TTile : ModTile, ITileWithItem => ModContent.GetInstance<TTile>().Item.Type;
 		public static void FrameSurrounding(int i, int j, out int left, out int top) {
 			TileObjectData data = TileObjectData.GetTileData(Main.tile[i, j]);
 			TileUtils.GetMultiTileTopLeft(i, j, data, out left, out top);
@@ -633,8 +632,5 @@ namespace Origins.Tiles {
 				overlays[k].Draw(i, j, tile, spriteBatch);
 			}
 		}
-	}
-	public interface ITileWithItem {
-		public ModItem Item { get; }
 	}
 }

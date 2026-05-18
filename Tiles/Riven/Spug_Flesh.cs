@@ -12,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
 	[LegacyName("Riven_Flesh")]
-	public class Spug_Flesh : ComplexFrameTile, IRivenTile, IGlowingModTile, ITileWithItem {
+	public class Spug_Flesh : ComplexFrameTile, IRivenTile, IGlowingModTile {
 		public ModItem Item { get; private set; }
 		public class Spug_Flesh_Entry : JournalEntry {
 			public override string TextKey => "Spug_Flesh";

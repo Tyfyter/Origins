@@ -92,9 +92,9 @@ namespace Origins.CrossMod.AlchemistNPC.NPCs {
 						shop.InsertAfter(ItemID.Shadewood, new Item(ItemType<Endowood_Item>()) { shopCustomPrice = 10 });
 						shop.InsertAfter(ItemType<Endowood_Item>(), new Item(ItemType<Marrowick_Item>()) { shopCustomPrice = 10 });
 						shop.InsertAfter(ItemType<Marrowick_Item>(), new Item(ItemType<Artifiber_Item>()) { shopCustomPrice = 10 }); // the wood of the ashen
-						shop.InsertAfter(ItemID.CrimstoneBlock, new Item(OriginTile.TileItem<Defiled_Stone>()) { shopCustomPrice = 5 });
-						shop.InsertAfter(OriginTile.TileItem<Defiled_Stone>(), new Item(OriginTile.TileItem<Spug_Flesh>()) { shopCustomPrice = 5 });
-						shop.InsertAfter(OriginTile.TileItem<Spug_Flesh>(), new Item(OriginTile.TileItem<Tainted_Stone>()) { shopCustomPrice = 5 }); // the stone of the ashen
+						shop.InsertAfter(ItemID.CrimstoneBlock, new Item(TileItem.ItemType<Defiled_Stone>()) { shopCustomPrice = 5 });
+						shop.InsertAfter(TileItem.ItemType<Defiled_Stone>(), new Item(TileItem.ItemType<Spug_Flesh>()) { shopCustomPrice = 5 });
+						shop.InsertAfter(TileItem.ItemType<Spug_Flesh>(), new Item(TileItem.ItemType<Tainted_Stone>()) { shopCustomPrice = 5 }); // the stone of the ashen
 						shop.InsertAfter(ItemID.CrimsandBlock, new Item(ItemType<Defiled_Sand_Item>()) { shopCustomPrice = 5 });
 						shop.InsertAfter(ItemType<Defiled_Sand_Item>(), new Item(ItemType<Silica_Item>()) { shopCustomPrice = 5 });
 						shop.InsertAfter(ItemType<Silica_Item>(), new Item(ItemType<Sootsand_Item>()) { shopCustomPrice = 5 }); // the sand of the ashen
