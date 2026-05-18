@@ -82,7 +82,11 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AI() {
 			Projectile.localAI[0] += 1f;
-			Lighting.AddLight(Projectile.Center, 0.85f, 0.4f, 0f);
+			if (Projectile.ai[1] != 0) {
+				Lighting.AddLight(Projectile.Center, 0.1f, 0f, 0.85f);
+			} else {
+				Lighting.AddLight(Projectile.Center, 0.85f, 0.4f, 0f);
+			}
 			Projectile.ai[0]++;
 			for (int i = sizes.Length - 1; i > 0; i--) {
 				sizes[i] = sizes[i - 1];
