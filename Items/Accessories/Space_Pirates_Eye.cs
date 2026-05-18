@@ -671,6 +671,7 @@ namespace Origins.Items.Accessories {
 				Projectile.localNPCHitCooldown = Cooldown * 2;
 				Projectile.tileCollide = false;
 			}
+			public override bool ShouldUpdatePosition() => false;
 			public override void OnSpawn(IEntitySource source) {
 				NPC target = Main.npc.GetIfInRange((int)Projectile.ai[0]);
 				if (target?.CanBeChasedBy(Projectile) != true) Projectile.ai[0] = -1;
@@ -679,10 +680,9 @@ namespace Origins.Items.Accessories {
 			}
 			public override bool? CanHitNPC(NPC target) => Projectile.ai[0] == target.whoAmI;
 			public override void AI() {
-				SoundEngine.PlaySound(Origins.Sounds.LittleZap);
 				NPC target = Main.npc.GetIfInRange((int)Projectile.ai[0]);
-				if (target?.CanBeChasedBy(Projectile) != true) goto die;
 				Player player = Main.player[Projectile.owner];
+				if (target?.CanBeChasedBy(Projectile) != true) goto die;
 				if (player.OriginPlayer().spacePirateEye is not Item spacePirateEye || Colors[player.OriginPlayer().spacePirateEyeSelection] is not _Temp_Purple) goto die;
 				Vector2 eyePosition = EyePosition(player);
 				Projectile.position = target.Center;
@@ -691,9 +691,12 @@ namespace Origins.Items.Accessories {
 
 				Projectile.localNPCHitCooldown = CombinedHooks.TotalUseTime(Cooldown, player, spacePirateEye) * 2;
 				Projectile.timeLeft = 60;
-				return;
+				goto sound;
 				die:
 				Min(ref Projectile.timeLeft, 7);
+				sound:
+				Vector2 soundPosition = Main.Camera.Center.SnapToLine(Projectile.position, EyePosition(player));
+				SoundEngine.PlaySound(Origins.Sounds.LittleZap, soundPosition);
 			}
 			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 				player.SpawnProjectile(source, position, default, type, damage, knockback, target.whoAmI);

@@ -1949,6 +1949,14 @@ namespace Origins {
 		public static Vector2 Clamp(this Vector2 value, Rectangle area) {
 			return new Vector2(MathHelper.Clamp(value.X, area.X, area.Right), MathHelper.Clamp(value.Y, area.Y, area.Bottom));
 		}
+		public static Vector2 SnapToLine(this Vector2 value, Vector2 a, Vector2 b, bool clamp = true, float radius = 0) {
+			Vector2 diff = (b - a).Normalized(out float dist);
+			float progress = Vector2.Dot(diff, value - a);
+			if (clamp) progress = float.Clamp(progress, 0, dist);
+			Vector2 pos = a + diff * progress;
+			if (radius > 0) pos += (value - pos).WithMaxLength(radius);
+			return pos;
+		}
 		public static Vector2 Apply(this Vector2 value, SpriteEffects spriteEffects, Vector2 bounds) {
 			if (spriteEffects.HasFlag(SpriteEffects.FlipHorizontally)) value.X = bounds.X - value.X;
 			if (spriteEffects.HasFlag(SpriteEffects.FlipVertically)) value.Y = bounds.Y - value.Y;

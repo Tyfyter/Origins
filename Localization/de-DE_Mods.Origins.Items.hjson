@@ -7773,6 +7773,7 @@ Bomb_Rack: {
 		'''
 		Allows flight
 		Releases carpet bombs as you fly
+		Inflicts [buffhint:Origins/Impeding_Shrapnel_Debuff]
 		''' */
 }
 
@@ -8358,7 +8359,7 @@ Classified_Blueprint: {
 
 Big_Bang: {
 	// DisplayName: Big Bang
-	// Tooltip: ""
+	// Tooltip: Fires miniature unstable stars that split into smaller stars
 }
 
 Gas_Generator_Item: {

@@ -161,8 +161,11 @@ namespace Origins.Items.Weapons.Magic {
 			float progress = Projectile.ai[2] / ChargeTime;
 			Min(ref progress, 1);
 			if (!forSmog) {
-				Vector2 soundPos = Projectile.position + Projectile.velocity * Math.Min(Vector2.Dot(Projectile.velocity, Main.LocalPlayer.MountedCenter - Projectile.position), Projectile.ai[1]);
-				sound.TrySetNearest(soundPos);
+				sound.TrySetNearest(Main.Camera.Center.SnapToLine(
+					Projectile.position,
+					Projectile.position + Projectile.velocity * Projectile.ai[1],
+					radius: 16
+				));
 			}
 			if (!Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return;
 			SpriteBatchState state = Main.spriteBatch.GetState();
