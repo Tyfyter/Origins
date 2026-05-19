@@ -78,13 +78,13 @@ namespace Origins.NPCs.Ashen.Boss {
 	}
 	public class Walk_Animation_3 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
-			if (leg.ThighRot == 1.1f && PistonLength(npc, leg) >= 36) return ModContent.GetInstance<Standing_Animation>();
+			if (leg.ThighRot == 1.15f && PistonLength(npc, leg) >= 32) return ModContent.GetInstance<Standing_Animation>();
 			return this;
 		}
 
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
-			leg.RotateThigh(1.1f, 0.04f);
-			PistonTo(npc, ref leg, 38, 0.2f);
+			leg.RotateThigh(1.15f, 0.04f);
+			PistonTo(npc, ref leg, 34, 0.2f);
 		}
 	}
 	public class Step_Down_Crouch_Animation : LegAnimation {
@@ -94,18 +94,13 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 
 		public override void Update(Trenchmaker npc, ref Leg leg, Leg otherLeg) {
-			if (leg.TimeInAnimation > 5 * 60) {
-				if (leg.TimeInAnimation > 15 * 60 && npc.GetState() is PhaseOneIdleState) {
-					npc.SetAIState(StateIndex<Carpet_Bomb_State>());
-					leg.CurrentAnimation = ModContent.GetInstance<Standing_Animation>();
-					leg.CurrentAnimation.Reset();
-					leg.TimeInAnimation = 0;
-					leg.NetUpdate = true;
-					npc.NPC.netUpdate = true;
-					return;
-				}
-				leg.ThighRot += 0.07f * (leg.TimeInAnimation % 16 < 8).ToDirectionInt();
-				leg.CalfRot += 0.07f * (leg.TimeInAnimation % 16 < 8).ToDirectionInt();
+			if (leg.TimeInAnimation > 6 * 60 && npc.GetState() is PhaseOneIdleState) {
+				npc.SetAIState(StateIndex<Carpet_Bomb_State>());
+				leg.CurrentAnimation = ModContent.GetInstance<Standing_Animation>();
+				leg.CurrentAnimation.Reset();
+				leg.TimeInAnimation = 0;
+				leg.NetUpdate = true;
+				npc.NPC.netUpdate = true;
 				return;
 			}
 			if (leg.ThighRot == 2) {
@@ -116,6 +111,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				PistonTo(npc, ref leg, 0, 0.4f);
 			}
 		}
+		public override void ShouldFallThrough(Trenchmaker npc, Leg leg, ref bool fallThrough) => fallThrough |= leg.TimeInAnimation > 2 * 60;
 	}
 	#endregion
 	#region running

@@ -245,6 +245,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				Vector2 newFootPos = oldFootPos;
 				Vector2 footOffset = newFootPos - NPC.position;
 				bool shouldFallThrough = newFootPos.Y < NPC.targetRect.Y - 480;
+				legs[index].CurrentAnimation.ShouldFallThrough(this, legs[index], ref shouldFallThrough);
 				DoCollision(ref newFootPos, ref footVelocity, 54, 22, shouldFallThrough);
 				standing = Math.Abs(footVelocity.Y - oldFootVelocity.Y) > 0.05f;
 				if (standing) footVelocity.X = 0;//*= 1f / float.Pi;
@@ -504,6 +505,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			public virtual void Reset() { }
 			public virtual bool HasHitbox(Trenchmaker npc, Leg leg) => false;
 			public virtual bool TileCollide(Trenchmaker npc, Leg leg) => true;
+			public virtual void ShouldFallThrough(Trenchmaker npc, Leg leg, ref bool fallThrough) { }
 			public static LegAnimation Get(int type) => animations[type];
 			public void Load(Mod mod) {
 				Type = animations.Count;
