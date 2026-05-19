@@ -1014,11 +1014,9 @@ namespace Origins {
 				if (exception.GetType() == expect[i].exceptionType && ModLoader.TryGetMod(expect[i].modName, out Mod mod) && mod.Version == expect[i].modVersion) goto expected;
 			}
 			return true;
-#endif
-#pragma warning disable CS0164 // This label has not been referenced
 			expected:
+#endif
 			Origins.LogLoadingWarning(Language.GetOrRegister("Mods.Origins.Warnings." + key).WithFormatArgs(methodName));
-#pragma warning restore CS0164 // This label has not been referenced
 			return false;
 		}
 		public static void TryHookEvent(string modName, string className, string eventName, Delegate hook) {

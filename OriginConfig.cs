@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using Origins.Core;
 using Origins.CrossMod;
 using Origins.Dev;
 using Origins.Items.Accessories;
@@ -186,6 +187,7 @@ namespace Origins {
 		public LaserTagConfig laserTagConfig = new();
 
 		[DefaultValue(true)]
+		[LanguageSpecific(GameCulture.CultureName.English)]
 		public bool OxfordComma = true;
 
 		[Header("Journal")]
