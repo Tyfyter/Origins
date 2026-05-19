@@ -177,7 +177,7 @@ namespace Origins.NPCs.Ashen {
 				Vector2 targetPos = NPC.Center.Clamp(NPC.targetRect);
 				MoveTowards(targetPos, out Vector2 targetDir, out float dist);
 				if (target.TargetType != TargetSearchTypes.Tiles) NPC.ai[1] = 0;
-				if (dist <= AttackDist && (target.TargetType == TargetSearchTypes.Tiles || CollisionExt.CanHitRay(NPC.Center, targetPos))) {
+				if (dist <= AttackDist) {// && (target.TargetType == TargetSearchTypes.Tiles || CollisionExt.CanHitRay(NPC.Center, targetPos))
 					targetPos = WeldingTorchPos.Clamp(NPC.targetRect);
 					Vector2 torchDir = targetDir;
 					if (targetPos != WeldingTorchPos) torchDir = WeldingTorchPos.DirectionTo(targetPos);
@@ -413,6 +413,7 @@ namespace Origins.NPCs.Ashen {
 			base.SetDefaults();
 			Projectile.friendly = false;
 			Projectile.hostile = true;
+			Projectile.tileCollide = false;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.ai[2] = -1;
