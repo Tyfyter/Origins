@@ -81,24 +81,22 @@ namespace Origins.Items.Weapons.Ranged {
 			if (source is EntitySource_Parent { Entity: Player player }) Projectile.ai[1] = player.altFunctionUse;
 		}
 		public override void AI() {
-			Projectile.localAI[0] += 1f;
 			if (Projectile.ai[1] != 0) {
 				Lighting.AddLight(Projectile.Center, 0.1f, 0f, 0.85f);
 			} else {
 				Lighting.AddLight(Projectile.Center, 0.85f, 0.4f, 0f);
 			}
 			Projectile.ai[0]++;
+			if (Projectile.velocity == default) Projectile.ai[0]++;
 			for (int i = sizes.Length - 1; i > 0; i--) {
 				sizes[i] = sizes[i - 1];
 			}
 			sizes[0] = Size;
 			Projectile.scale = Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize / 96f, MaxSize / 96f);
-			Projectile.alpha = (int)(200 * (1 - (Projectile.localAI[0] / Lifetime)));
+			Projectile.alpha = (int)(200 * (1 - (Projectile.ai[0] / Lifetime)));
 			Projectile.rotation += 0.3f * Projectile.direction;
 			Projectile.velocity *= 0.97f;
-			if (Projectile.ai[0] > Lifetime) {
-				Projectile.Kill();
-			}
+			if (Projectile.ai[0] > Lifetime) Projectile.Kill();
 			for (int i = 0; i < healCooldown.Length; i++) {
 				if (healCooldown[i] > 0) healCooldown[i]--;
 			}
@@ -152,47 +150,6 @@ namespace Origins.Items.Weapons.Ranged {
 				sizeProgressOverride: _ => progress * 0.5f
 			);
 			return false;
-			/*Color color1 = new(255, 160, 80, 200);
-			Color color2 = new(255, 120, 30, 200);
-			Color color3 = new(255, 120, 30, 93);
-			Color color4 = new(30, 30, 30, 100);
-			const float num = 60f;
-			const float num2 = 12f;
-			const float fromMax = num + num2;
-			Texture2D value = TextureAssets.Projectile[Type].Value;
-			float num3 = 0.35f;
-			float num4 = 0.7f;
-			float num5 = 0.85f;
-			float num6 = ((Projectile.localAI[0] > num - 10f) ? 0.175f : 0.2f);
-			int verticalFrames = 7;
-			float num9 = Utils.Remap(Projectile.localAI[0], num, fromMax, 1f, 0f);
-			float num10 = Math.Min(Projectile.localAI[0], 20f);
-			float num11 = Utils.Remap(Projectile.localAI[0], 0f, fromMax, 0f, 1f);
-			Rectangle rectangle = value.Frame(1, verticalFrames, 0, 3);
-			if (num11 >= 1f) return false;
-			for (int i = 0; i < 2; i++) {
-				for (float num13 = 1f; num13 >= 0f; num13 -= num6) {
-					Color obj = ((num11 < 0.1f) ? Color.Lerp(Color.Transparent, color1, Utils.GetLerpValue(0f, 0.1f, num11, clamped: true)) : ((num11 < 0.2f) ? Color.Lerp(color1, color2, Utils.GetLerpValue(0.1f, 0.2f, num11, clamped: true)) : ((num11 < num3) ? color2 : ((num11 < num4) ? Color.Lerp(color2, color3, Utils.GetLerpValue(num3, num4, num11, clamped: true)) : ((num11 < num5) ? Color.Lerp(color3, color4, Utils.GetLerpValue(num4, num5, num11, clamped: true)) : ((!(num11 < 1f)) ? Color.Transparent : Color.Lerp(color4, Color.Transparent, Utils.GetLerpValue(num5, 1f, num11, clamped: true))))))));
-					float num14 = (1f - num13) * Utils.Remap(num11, 0f, 0.2f, 0f, 1f);
-					Vector2 vector = Projectile.Center - Main.screenPosition + Projectile.velocity * (0f - num10) * num13;
-					Color color5 = obj * num14;
-					float num15 = 1f / num6 * (num13 + 1f);
-					float num16 = Projectile.rotation + num13 * MathHelper.PiOver2 + Main.GlobalTimeWrappedHourly * num15 * 2f;
-					float num17 = Projectile.rotation - num13 * MathHelper.PiOver2 - Main.GlobalTimeWrappedHourly * num15 * 2f;
-					switch (i) {
-						case 0:
-						Main.EntitySpriteDraw(value, vector + Projectile.velocity * (0f - num10) * num6 * 0.5f, rectangle, color5 * num9 * 0.25f, num16 + (float)Math.PI / 4f, rectangle.Size() / 2f, Projectile.scale, SpriteEffects.None);
-						Main.EntitySpriteDraw(value, vector, rectangle, color5 * num9, num17, rectangle.Size() / 2f, Projectile.scale, SpriteEffects.None);
-						break;
-						case 1:
-						color5.A = 0;
-						Main.EntitySpriteDraw(value, vector + Projectile.velocity * (0f - num10) * num6 * 0.2f, rectangle, color5 * num9 * 0.25f, num16 + (float)Math.PI / 2f, rectangle.Size() / 2f, 0.75f * Projectile.scale, SpriteEffects.None);
-						Main.EntitySpriteDraw(value, vector, rectangle, color5 * num9, num17 + (float)Math.PI / 2f, rectangle.Size() / 2f, 0.75f * Projectile.scale, SpriteEffects.None);
-						break;
-					}
-				}
-			}
-			return false;*/
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.velocity = Vector2.Zero;

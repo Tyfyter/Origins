@@ -6950,7 +6950,7 @@ Welding_Torch: {
 		'''
 		Uses gel for ammo
 		Ignores 25 Defense
-		Inflicts hellfire
+		Inflicts [buffhint:OnFire3]
 		Hold <right> at allied artifact minions to heal them
 		''' */
 }
