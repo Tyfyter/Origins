@@ -2321,6 +2321,9 @@ Projectiles: {
 	Friendly_Cleaver_Body.DisplayName: Friendly Cleaver Body
 	Friendly_Cleaver_Head.DisplayName: Friendly Cleaver Head
 	Friendly_Cleaver_Tail.DisplayName: Friendly Cleaver Tail
+	TM_Cannon_P.DisplayName: Cannon Turret
+	TM_Flamer_P.DisplayName: Flamer Turret
+	TM_Launcher_P.DisplayName: Launcher Turret
 }
 
 Prefixes: {

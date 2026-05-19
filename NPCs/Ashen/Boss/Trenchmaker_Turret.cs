@@ -1,7 +1,10 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Graphics;
+using Origins.Items.Weapons.Ranged;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -10,13 +13,18 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Ashen.Boss {
 	public class Trenchmaker_Turret : ModNPC {
 		static AutoLoadingTexture[] gunTextures;
+		static AutoLoadingTexture[] gunGlowTextures;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 2;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
 			// That comic by market pliers' brother?
 			TurretKind[] turretKinds = Enum.GetValues<TurretKind>();
 			gunTextures = new AutoLoadingTexture[turretKinds.Length];
-			for (int i = 0; i < turretKinds.Length; i++) gunTextures[(int)turretKinds[i]] = $"{Texture}_{turretKinds[i]}";
+			gunGlowTextures = new AutoLoadingTexture[turretKinds.Length];
+			for (int i = 0; i < turretKinds.Length; i++) {
+				gunTextures[(int)turretKinds[i]] = $"{Texture}_{turretKinds[i]}";
+				gunGlowTextures[(int)turretKinds[i]] = $"{Texture}_{turretKinds[i]}_Glow";
+			}
 		}
 		public TurretKind GunType { get; private set; }
 		public Vector2 GunPos => NPC.position + new Vector2(19, 11) * NPC.scale;
@@ -46,7 +54,7 @@ namespace Origins.NPCs.Ashen.Boss {
 						NPC.SpawnProjectile(null,
 							GunPos,
 							NPC.rotation.ToRotationVector2() * 12,
-							ModContent.ProjectileType<Fire_Guns_State.Trenchmaker_Bullet_P>(),
+							ModContent.ProjectileType<TM_Cannon_P>(),
 							(int)(18 * ContentExtensions.DifficultyDamageMultiplier),
 							1
 						);
@@ -61,11 +69,58 @@ namespace Origins.NPCs.Ashen.Boss {
 						NPC.SpawnProjectile(null,
 							GunPos,
 							NPC.rotation.ToRotationVector2() * 12,
-							ModContent.ProjectileType<Fire_Cannons_State.Trenchmaker_Cannon_P>(),
+							ModContent.ProjectileType<TM_Launcher_P>(),
 							(int)(25 * ContentExtensions.DifficultyDamageMultiplier),
 							1
 						);
 						NPC.ai[1] = 120;
+					}
+					break;
+				}
+				case TurretKind.Flamer: {
+					NPC.ai[1].Cooldown();
+					switch (NPC.ai[0]) {
+						case 0:
+						TargetAngle(diff.ToRotation());
+						if (NPC.ai[1] == 0) {
+							NPC.ai[0] = 1;
+							NPC.ai[1] = 10;
+							for (int i = 0; i < 2; i++) {
+								Vector2 dir = NPC.rotation.ToRotationVector2();
+								Dust.NewDustPerfect(GunPos + dir * 16 + 8 * Main.rand.NextFloatDirection() * dir.Perpendicular(), DustID.Torch).velocity += dir * 2;
+							}
+							SoundEngine.PlaySound(SoundID.Camera.WithPitchOffset(1.5f), GunPos);
+						}
+						break;
+						case 1: {
+							if (Main.rand.NextBool(3)) {
+								Vector2 dir = NPC.rotation.ToRotationVector2();
+								Dust.NewDustPerfect(GunPos + dir * 16 + 8 * Main.rand.NextFloatDirection() * dir.Perpendicular(), DustID.Torch).velocity += dir * 2;
+							}
+							if (NPC.ai[1] == 0) {
+								NPC.ai[0] = 2;
+								NPC.ai[1] = 60;
+							}
+							break;
+						}
+						case 2:
+						GeometryUtils.AngularSmoothing(ref NPC.rotation, diff.ToRotation(), 0.03f);
+						if (NPC.ai[1] % 5 == 0) {
+							SoundEngine.PlaySound(SoundID.Item34, GunPos);
+							Vector2 dir = NPC.rotation.ToRotationVector2();
+							NPC.SpawnProjectile(null,
+								GunPos + dir * 16,
+								dir * 8,
+								ModContent.ProjectileType<TM_Flamer_P>(),
+								(int)(25 * ContentExtensions.DifficultyDamageMultiplier),
+								1
+							);
+						}
+						if (NPC.ai[1] == 0) {
+							NPC.ai[0] = 0;
+							NPC.ai[1] = 120;
+						}
+						break;
 					}
 					break;
 				}
@@ -93,6 +148,38 @@ namespace Origins.NPCs.Ashen.Boss {
 				NPC.scale,
 				SpriteEffects.None,
 			0);
+			if (gunGlowTextures[(int)GunType].Exists) {
+				switch (GunType) {
+					case TurretKind.Flamer: {
+						float glowFactor = 0.75f;
+						if (NPC.ai[0] == 1) glowFactor += Utils.PingPongFrom01To010(NPC.ai[1] / 10) * 0.25f;
+						spriteBatch.Draw(
+							gunGlowTextures[(int)GunType],
+							GunPos - screenPos,
+							null,
+							Color.White * glowFactor,
+							NPC.rotation + MathHelper.Pi,
+							new Vector2(35, 11),
+							NPC.scale,
+							SpriteEffects.None,
+						0);
+						break;
+					}
+					default: {
+						spriteBatch.Draw(
+							gunGlowTextures[(int)GunType],
+							GunPos - screenPos,
+							null,
+							Color.White,
+							NPC.rotation + MathHelper.Pi,
+							new Vector2(35, 11),
+							NPC.scale,
+							SpriteEffects.None,
+						0);
+						break;
+					}
+				}
+			}
 			return false;
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
@@ -103,7 +190,82 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public enum TurretKind {
 			Cannon,
-			Launcher
+			Launcher,
+			Flamer,
+			Laser,
+		}
+		public class TM_Cannon_P : ModProjectile {
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BulletDeadeye}";
+			public override void SetDefaults() {
+				Projectile.CloneDefaults(ProjectileID.BulletDeadeye);
+				AIType = ProjectileID.BulletDeadeye;
+			}
+		}
+		public class TM_Launcher_P : Fire_Cannons_State.Trenchmaker_Cannon_P { }
+		public class TM_Flamer_P : ModProjectile {
+			public override string Texture =>typeof(Welding_Torch_P).GetDefaultTMLName();
+			public static float Lifetime => 60f;
+			public static float MinSize => 24f;
+			public static float MaxSize => 48f;
+			private readonly float[] sizes = new float[21];
+			public override void SetStaticDefaults() {
+				Main.projFrames[Type] = 7;
+				ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
+				ProjectileID.Sets.TrailCacheLength[Projectile.type] = 21;
+				OriginsSets.Projectiles.FireProjectiles[Type] = true;
+			}
+			public override void SetDefaults() {
+				Projectile.DamageType = DamageClass.Ranged;
+				Projectile.width = Projectile.height = 0;
+				Projectile.penetrate = 4;
+				Projectile.hostile = true;
+				Projectile.alpha = 255;
+				Projectile.extraUpdates = 3;
+				Projectile.usesLocalNPCImmunity = true;
+				Projectile.localNPCHitCooldown = -1;
+				for (int i = 0; i < Projectile.oldPos.Length; i++)
+					Projectile.oldRot[i] = Main.rand.NextFloatDirection();
+			}
+			float Size => Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize, MaxSize);
+			public override void AI() {
+				Lighting.AddLight(Projectile.Center, 0.85f, 0.4f, 0f);
+				Projectile.ai[0]++;
+				if (Projectile.velocity == default) Projectile.ai[0]++;
+				for (int i = sizes.Length - 1; i > 0; i--) {
+					sizes[i] = sizes[i - 1];
+				}
+				sizes[0] = Size;
+				Projectile.scale = Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize / 96f, MaxSize / 96f);
+				Projectile.alpha = (int)(200 * (1 - (Projectile.ai[0] / Lifetime)));
+				Projectile.rotation += 0.3f * Projectile.direction;
+				Projectile.velocity *= 0.97f;
+				if (Projectile.ai[0] > Lifetime) Projectile.Kill();
+			}
+			public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+				int scale = (int)((Size - hitbox.Width) / 2);
+				hitbox.Inflate(scale, scale);
+			}
+			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+				target.AddBuff(BuffID.OnFire3, hit.Crit ? 360 : 180);
+			}
+			public override bool PreDraw(ref Color lightColor) {
+				float progress = Projectile.ai[0] / Lifetime;
+				Flamethrower_Drawer.Draw(
+					Projectile,
+					float.Pow(1 - progress, 0.5f),
+					TextureAssets.Projectile[Type].Value,
+					Color.Black,
+					sizes,
+					//brightnessColorExponent: 1.75f,
+					//smokeAmount: 0,
+					sizeProgressOverride: _ => 0
+				);
+				return false;
+			}
+			public override bool OnTileCollide(Vector2 oldVelocity) {
+				Projectile.velocity = Vector2.Zero;
+				return false;
+			}
 		}
 	}
 }

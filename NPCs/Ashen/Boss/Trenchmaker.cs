@@ -46,15 +46,15 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static AIList<Trenchmaker> AIStates { get; } = [];
 		public int[] PreviousStates { get; } = new int[6];
 		internal static IItemDropRule normalDropRule;
-		protected static AutoLoadingAsset<Texture2D> glowTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Glow";
-		protected static AutoLoadingAsset<Texture2D> armTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Arm";
-		protected static AutoLoadingAsset<Texture2D> pistonTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Leg_Piston";
-		protected static AutoLoadingAsset<Texture2D> hipTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Hip";
-		protected static AutoLoadingAsset<Texture2D> hipGlowTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Hip_Glow";
-		protected static AutoLoadingAsset<Texture2D> thighTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Thigh";
-		protected static AutoLoadingAsset<Texture2D> calfTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Calf";
-		protected static AutoLoadingAsset<Texture2D> footTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Foot";
-		protected static AutoLoadingAsset<Texture2D> exhaustTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Exhaust";
+		protected static AutoLoadingTexture glowTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Glow";
+		protected static AutoLoadingTexture armTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Arm";
+		protected static AutoLoadingTexture pistonTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Leg_Piston";
+		protected static AutoLoadingTexture hipTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Hip";
+		protected static AutoLoadingTexture hipGlowTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Hip_Glow";
+		protected static AutoLoadingTexture thighTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Thigh";
+		protected static AutoLoadingTexture calfTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Calf";
+		protected static AutoLoadingTexture footTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Foot";
+		protected static AutoLoadingTexture exhaustTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Exhaust";
 		protected SpriteEffects SpriteEffects => NPC.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 		public Vector2 GunPos => NPC.Center + new Vector2(19, -4).Apply(SpriteEffects, default);
 		public float DistToTarget {
@@ -466,7 +466,12 @@ namespace Origins.NPCs.Ashen.Boss {
 		public abstract class AIState : AIState<Trenchmaker> {
 			public virtual float WalkDist => 10 * 16;
 			public virtual bool CanHaveThrustersActive => false;
+			public virtual int ForGunType => -1;
 			public virtual LegAnimation ForceAnimation(Trenchmaker npc, Leg leg, Leg otherLeg) => null;
+			public override double GetWeight(Trenchmaker boss, int[] previousStates) {
+				if (ForGunType != -1 && boss.GunType != ForGunType) return 0;
+				return base.GetWeight(boss, previousStates);
+			}
 		}
 		public record struct Leg(float ThighRot, float CalfRot, LegAnimation CurrentAnimation, bool WasStanding = false, int TimeStanding = 0, int TimeInAnimation = 0, bool NetUpdate = true) {
 			LegAnimation currentAnimation = CurrentAnimation;

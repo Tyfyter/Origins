@@ -56,6 +56,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static int Duration => 45;
 		#endregion stats
 		public override bool Ranged => true;
+		public override int ForGunType => 0;
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 		}
@@ -81,7 +82,6 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC npc = boss.NPC;
 			npc.ai[3] = ShotRate;
 		}
-		public override double GetWeight(Trenchmaker boss, int[] previousStates) => boss.GunType == 0 ? base.GetWeight(boss, previousStates) : 0;
 		public class Trenchmaker_Bullet_P : ModProjectile {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BulletDeadeye}";
 			public override void SetDefaults() {
@@ -98,6 +98,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static int Duration => 40;
 		#endregion stats
 		public override bool Ranged => true;
+		public override int ForGunType => 1;
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 		}
@@ -123,7 +124,6 @@ namespace Origins.NPCs.Ashen.Boss {
 			npc.ai[3] = ShotRate;
 		}
 		public override double GetWeight(Trenchmaker boss, int[] previousStates) {
-			if (boss.GunType != 1) return 0;
 			if (boss.NPC.targetRect.Center().WithinRange(boss.NPC.Bottom + Vector2.UnitY * 16 * 4, 16 * 10)) return 0;
 			return base.GetWeight(boss, previousStates);
 		}
@@ -219,29 +219,8 @@ namespace Origins.NPCs.Ashen.Boss {
 				Min(ref Projectile.timeLeft, 1);
 			}
 			public override bool PreDraw(ref Color lightColor) {
-				//Vector2 origin = outerTexture.Value.Size() * 0.5f;
 				SpriteEffects spriteEffects = SpriteEffects.None;
 				if (Projectile.spriteDirection == -1) spriteEffects |= SpriteEffects.FlipHorizontally;
-				/*Main.EntitySpriteDraw(
-					innerTexture,
-					Projectile.Center - Main.screenPosition,
-					null,
-					Color.Goldenrod,
-					Projectile.rotation,
-					origin,
-					Projectile.scale,
-					spriteEffects
-				);
-				Main.EntitySpriteDraw(
-					outerTexture,
-					Projectile.Center - Main.screenPosition,
-					null,
-					Color.DarkGray.MultiplyRGBA(lightColor),
-					Projectile.rotation,
-					origin,
-					Projectile.scale,
-					spriteEffects
-				);*/
 
 				MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
 				Vector2[] oldPos = [.. Projectile.oldPos];
@@ -289,6 +268,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static float TanExplosionSpread => 0.5f;
 		#endregion stats
 		public override bool Ranged => true;
+		public override int ForGunType => 1;
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 		}
@@ -496,6 +476,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static float ChargeSoundVolume => 1;
 		public static float ChargeSoundFadeTime => 30;
 		public override bool CanHaveThrustersActive => true;
+		public override int ForGunType => 0;
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 			iconTexture = typeof(Trenchmaker_Carpet_Bomb).GetDefaultTMLName();
