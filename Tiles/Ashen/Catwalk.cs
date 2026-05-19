@@ -343,6 +343,7 @@ namespace Origins.Tiles.Ashen {
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
 			Tile tile = Main.tile[i, j];
+			if (Main.instance.TilesRenderer.GetTileDrawTexture(tile, i, j) is not Texture2D texture) return true;
 			Vector2 pos = new Vector2(i * 16, (j - 2) * 16) - Main.screenPosition;
 			if (!Main.drawToScreen) {
 				pos.X += Main.offScreenRange;
@@ -375,14 +376,14 @@ namespace Origins.Tiles.Ashen {
 			}
 			Lighting.GetCornerColors(i, j - 1, out VertexColors vertices);
 			Main.tileBatch.Draw(
-				TextureAssets.Tile[Type].Value,
+				texture,
 				new Vector4(pos.X, pos.Y + 16, 16, 16),
 				new Rectangle(railingFrame * 18, 4 * 18, 16, 16),
 				vertices
 			);
 			Lighting.GetCornerColors(i, j - 2, out vertices);
 			Main.tileBatch.Draw(
-				TextureAssets.Tile[Type].Value,
+				texture,
 				new Vector4(pos, 16, 16),
 				topFrame,
 				vertices
