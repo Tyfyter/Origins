@@ -9,7 +9,7 @@ using Terraria.ModLoader.Config.UI;
 using Terraria.UI;
 
 namespace Origins.Core {
-	[AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
+	[AttributeUsage(AttributeTargets.Field | AttributeTargets.Property)]
 	public sealed class LanguageSpecificAttribute(params IEnumerable<string> cultures) : Attribute, IMoveToPegFlag {
 		static readonly Dictionary<string, string> languageRedirects;
 		static LanguageSpecificAttribute() {
