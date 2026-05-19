@@ -19,9 +19,9 @@ namespace Origins.Core {
 				if (ModLoader.HasMod(modName)) languageRedirects[GameCulture.FromCultureName(vanillaCulture).Name] = modCulture;
 			}
 		}
-		readonly HashSet<string> showIn = cultures.Select(culture => languageRedirects.TryGetValue(culture, out string newCulture) ? newCulture : culture).ToHashSet();
+		readonly HashSet<string> showIn = cultures.ToHashSet();
 		public LanguageSpecificAttribute(params GameCulture.CultureName[] cultures) : this(cultures.Select(GameCulture.FromCultureName).Select(culture => culture.Name)) { }
-		public bool Hide => !showIn.Contains(Language.ActiveCulture.Name);
+		public bool Hide => !showIn.Contains(languageRedirects.TryGetValue(Language.ActiveCulture.Name, out string newCulture) ? newCulture : Language.ActiveCulture.Name);
 		class Loader : ILoadable {
 			delegate Tuple<UIElement, UIElement> orig_WrapIt(UIElement parent, ref int top, PropertyFieldWrapper memberInfo, object item, int order, object list = null, Type arrayType = null, int index = -1);
 			delegate Tuple<UIElement, UIElement> hook_WrapIt(orig_WrapIt orig, UIElement parent, ref int top, PropertyFieldWrapper memberInfo, object item, int order, object list = null, Type arrayType = null, int index = -1);
