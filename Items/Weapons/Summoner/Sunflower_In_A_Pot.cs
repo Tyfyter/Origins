@@ -483,16 +483,17 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			ProjectileID.Sets.MinionShot[Type] = true;
 		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.light = 0.5f;
+			Projectile.scale = 1.2f;
+			Projectile.extraUpdates = 1;
 			Projectile.aiStyle = 0;
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 6;
-			Projectile.height = 4;
+			Projectile.height = 6;
 			Projectile.friendly = true;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 300;
 			Projectile.Opacity = 0;
-			Projectile.extraUpdates = 1;
 			Projectile.ArmorPenetration += 5;
 		}
 		public override void AI() {

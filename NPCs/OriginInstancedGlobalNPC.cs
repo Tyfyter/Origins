@@ -85,8 +85,9 @@ namespace Origins.NPCs {
 		/// <summary>
 		/// Do not sync
 		/// </summary>
-		public int vampireFireflowerTime = 0;
+		public int[] vampireFireflowerTimes;
 		public override void ResetEffects(NPC npc) {
+			vampireFireflowerTimes ??= new int[Main.maxProjectiles];
 			autoReset(this);
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
@@ -154,11 +155,27 @@ namespace Origins.NPCs {
 			lazyCloakShimmer = false;
 			amnesticRose = false;
 			tetanus = false;
-			if (vampireFireflowerTime > 0) {
-				vampireFireflowerTime--;
-				if (!npc.HasBuff(BuffID.OnFire3)) vampireFireflowerTime = 0;
-				Vampire_Fireflower.UpdateDOTLifesteal();
+
+			bool anyFullHealth = false;
+			for (int i = 0; i < vampireFireflowerTimes.Length; i++) {
+				ref int vampireFireflowerTime = ref vampireFireflowerTimes[i];
+				if (vampireFireflowerTime > 0) {
+					if (!npc.HasBuff(BuffID.OnFire3)) {
+						Array.Clear(vampireFireflowerTimes);
+						break;
+					}
+					vampireFireflowerTime--;
+					Projectile ownerFlower = Main.projectile[i];
+					if (!ownerFlower.active || ownerFlower.ModProjectile is not Vampire_Fireflower fireflower) {
+						vampireFireflowerTime = 0;
+						continue;
+					}
+					if (fireflower.Life < fireflower.MaxLife) fireflower.UpdateDOTLifestealSelf();
+					else anyFullHealth = true;
+				}
 			}
+
+			if (anyFullHealth) Vampire_Fireflower.UpdateDOTLifesteal();
 		}
 		public override void DrawEffects(NPC npc, ref Color drawColor) {
 			if (priorityMailTime > 0) {

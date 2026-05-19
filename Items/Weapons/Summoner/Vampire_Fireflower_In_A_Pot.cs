@@ -63,6 +63,7 @@ namespace Origins.Buffs {
 }
 namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Vampire_Fireflower : Sunflower_Sunny {
+		public static int HealOver2Secs => 5;
 		public override bool DiesHorriblyInLava => false;
 		public override int ProjectileType => ModContent.ProjectileType<Vampire_Sunflower_P>();
 		public override int ProjectileTime => 9;
@@ -95,8 +96,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 			}
 		}
+		internal void UpdateDOTLifestealSelf() => Life += HealOver2Secs / 120f;
 		internal static void UpdateDOTLifesteal() {
-			if (Main.LocalPlayer is not null) Main.LocalPlayer.lifeRegenCount += 5;
+			if (Main.LocalPlayer is not null) Main.LocalPlayer.lifeRegenCount += HealOver2Secs;
 		}
 	}
 	public class Vampire_Sunflower_P : Sunflower_Sunny_P {
@@ -105,21 +107,33 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void SetStaticDefaults() {
 			ProjectileID.Sets.MinionShot[Type] = true;
 		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_Parent { Entity: Projectile parent } && parent.ModProjectile is Vampire_Fireflower) Projectile.ai[0] = parent.whoAmI;
+		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.light = 0.5f;
+			Projectile.scale = 1.2f;
+			Projectile.extraUpdates = 1;
 			Projectile.aiStyle = 0;
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 6;
-			Projectile.height = 4;
+			Projectile.height = 6;
 			Projectile.friendly = true;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 300;
 			Projectile.Opacity = 0;
 		}
+		public override void AI() {
+			base.AI();
+			if (Projectile.ai[0] == -1) return;
+			Projectile ownerFlower = Main.projectile[(int)Projectile.ai[0]];
+			if (!ownerFlower.active || ownerFlower.ModProjectile is not Vampire_Fireflower) Projectile.ai[0] = -1;
+		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			int time = 60 * Main.rand.Next(3, 6);
 			target.AddBuff(BuffID.OnFire3, time);
-			Max(ref target.GetGlobalNPC<OriginGlobalNPC>().vampireFireflowerTime, time);
+			if (Projectile.ai[0] == -1) return;
+			Max(ref target.GetGlobalNPC<OriginGlobalNPC>().vampireFireflowerTimes[(int)Projectile.ai[0]], time);
 		}
 	}
 	public class Crazy_Buff : ModBuff {
