@@ -2324,6 +2324,7 @@ Projectiles: {
 	TM_Cannon_P.DisplayName: Cannon Turret
 	TM_Flamer_P.DisplayName: Flamer Turret
 	TM_Launcher_P.DisplayName: Launcher Turret
+	TM_Laser_P.DisplayName: Laser Turret
 }
 
 Prefixes: {

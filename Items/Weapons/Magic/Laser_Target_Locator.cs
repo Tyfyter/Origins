@@ -1,18 +1,14 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Accessories;
-using Origins.Items.Tools;
-using Origins.Items.Weapons.Melee;
 using Origins.Projectiles;
-using PegasusLib;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using ThoriumMod.Empowerments;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Laser_Target_Locator : ModItem {
@@ -117,7 +113,12 @@ namespace Origins.Items.Weapons.Magic {
 				}
 			}
 		}
-		public override void OnKill(int timeLeft) { }
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write((float)Projectile.localAI[0]);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			Projectile.localAI[0] = reader.ReadSingle();
+		}
 		public override bool PreDraw(ref Color lightColor) {
 			if (!Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
 			Vector2 diff = TargetPos - Projectile.position;

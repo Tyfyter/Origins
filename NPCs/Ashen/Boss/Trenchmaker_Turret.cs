@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using System;
 using System.IO;
@@ -25,6 +26,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				gunTextures[(int)turretKinds[i]] = $"{Texture}_{turretKinds[i]}";
 				gunGlowTextures[(int)turretKinds[i]] = $"{Texture}_{turretKinds[i]}_Glow";
 			}
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Slow] = true;
 		}
 		public TurretKind GunType { get; private set; }
 		public Vector2 GunPos => NPC.position + new Vector2(19, 11) * NPC.scale;
@@ -121,6 +123,42 @@ namespace Origins.NPCs.Ashen.Boss {
 							NPC.ai[1] = 120;
 						}
 						break;
+					}
+					break;
+				}
+				case TurretKind.Laser: {
+					NPC.ai[1].Cooldown();
+					switch (NPC.ai[0]) {
+						case 0: {
+							if (TargetAngle(diff.ToRotation()) && NPC.ai[1] == 0) {
+								Vector2 dir = NPC.rotation.ToRotationVector2();
+								NPC.SpawnProjectile(null,
+									GunPos + dir * 16,
+									dir,
+									ModContent.ProjectileType<TM_Laser_P>(),
+									(int)(15 * ContentExtensions.DifficultyDamageMultiplier),
+									1
+								);
+								NPC.ai[0] = 1;
+								NPC.ai[1] = TM_Laser_P.ChargeTime;
+							}
+							break;
+						}
+						case 1: {
+							GeometryUtils.AngularSmoothing(ref NPC.rotation, diff.ToRotation(), 0.05f * NPC.ai[1] / TM_Laser_P.ChargeTime);
+							if (NPC.ai[1] == 0) {
+								NPC.ai[0] = 2;
+								NPC.ai[1] = TM_Laser_P.ActiveTime;
+							}
+							break;
+						}
+						case 2: {
+							if (NPC.ai[1] == 0) {
+								NPC.ai[0] = 0;
+								NPC.ai[1] = 120; //time between attacks
+							}
+							break;
+						}
 					}
 					break;
 				}
@@ -265,6 +303,125 @@ namespace Origins.NPCs.Ashen.Boss {
 			public override bool OnTileCollide(Vector2 oldVelocity) {
 				Projectile.velocity = Vector2.Zero;
 				return false;
+			}
+		}
+		public class TM_Laser_P : ModProjectile {
+			public static int ChargeTime => 30;
+			public static int ActiveTime => 15;
+			public override string Texture => typeof(Laser_Target_Locator).GetDefaultTMLName();
+			public override void SetStaticDefaults() {
+				ProjectileID.Sets.DrawScreenCheckFluff[Type] = 1600 + 64;
+			}
+			public override void SetDefaults() {
+				Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
+				Projectile.width = 0;
+				Projectile.height = 0;
+				Projectile.hostile = true;
+				Projectile.tileCollide = false;
+				Projectile.usesLocalNPCImmunity = true;
+				Projectile.localNPCHitCooldown = 5;
+			}
+			public override bool ShouldUpdatePosition() => false;
+			public Vector2 TargetPos {
+				get => new(Projectile.ai[0], Projectile.ai[1]);
+				set => (Projectile.ai[0], Projectile.ai[1]) = value;
+			}
+			bool IsActive {
+				get => Projectile.localAI[0] != 0;
+				set => Projectile.localAI[0] = value.ToInt();
+			}
+			public override void OnSpawn(IEntitySource source) {
+				Projectile.ai[2] = -1;
+				if (source is EntitySource_Parent { Entity: NPC owner }) Projectile.ai[2] = owner.whoAmI;
+			}
+			public override void AI() {
+				if (Main.npc.GetIfInRange((int)Projectile.ai[2]) is not NPC { active: true } owner || owner.ai[0] == 0 || owner.ModNPC is not Trenchmaker_Turret turret) {
+					Projectile.Kill();
+					return;
+				}
+				IsActive = owner.ai[0] == 2;
+				Vector2 gunPos = turret.GunPos;
+				float pitchFactor = IsActive ? 1 : (1 - owner.ai[1] / ChargeTime);
+				SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(pitchFactor).WithVolume(0.8f), gunPos);
+				Projectile.velocity = owner.rotation.ToRotationVector2();
+				Projectile.position = gunPos + Projectile.velocity * 24;
+				Vector2 targetPos = Projectile.position + Projectile.velocity * Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64);
+				if (IsActive) {
+					Dust.NewDust(targetPos - Vector2.One * 2, 4, 4, DustID.AmberBolt);
+				}
+				TargetPos = targetPos;
+			}
+			public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+				if (!IsActive) return false;
+				return targetHitbox.Contains(targetHitbox.Center().SnapToLine(Projectile.position, TargetPos, radius: 4));
+			}
+			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+				if (!target.immune) modifiers = modifiers with { CooldownCounter = -2 };
+				modifiers.Knockback *= 0.85f;
+			}
+			public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+				if (info.CooldownCounter == -2) {
+					target.immune = true;
+					target.immuneTime = target.longInvince ? 15 : 7;
+				}
+			}
+			public override bool PreDraw(ref Color lightColor) {
+				if (!Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
+				if (Main.npc.GetIfInRange((int)Projectile.ai[2]) is not NPC { active: true } owner || owner.ModNPC is not Trenchmaker_Turret turret) {
+					Projectile.Kill();
+					return false;
+				}
+				Vector2 diff = TargetPos - Projectile.position;
+				Vector2 position = Projectile.position;
+				position -= Main.screenPosition;
+				float rotation = diff.ToRotation();
+				float dist = diff.Length();
+				const float scale = 1f / 256f;
+				DrawData data = new(
+					TextureAssets.Extra[ExtrasID.RainbowRodTrailShape].Value,//TextureAssets.MagicPixel.Value,
+					position,
+					null,
+					new Color(255, IsActive ? 40 : 100, 0, 0),
+					rotation,
+					Vector2.UnitY * 128,
+					new Vector2(dist * scale, 8 * scale),
+					0
+				);
+				data.Draw(Main.spriteBatch);
+				float progress = 1 - owner.ai[1] / ChargeTime;
+				progress *= progress;
+				if (IsActive) progress = 1;
+				Min(ref progress, 1);
+				data.color *= progress;
+				Vector2 offset = (rotation + MathHelper.PiOver2).ToRotationVector2() * (1 - progress) * 8;
+				data.position = position + offset;
+				data.scale.X = Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist * 1.15f + 16) * scale;
+				data.Draw(Main.spriteBatch);
+				data.position = position - offset;
+				data.scale.X = Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist * 1.15f + 16) * scale;
+				data.Draw(Main.spriteBatch);
+				return false;
+			}
+			public static float Raymarch(Vector2 position, Vector2 direction, float maxLength = float.PositiveInfinity) {
+				float dist = CollisionExt.Raymarch(position, direction, maxLength);
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (dist < 16) return dist;
+					if (!npc.friendly) continue;
+					if (position.Clamp(npc.Hitbox).DistanceSQ(position) >= dist * dist) continue;
+					float collisionPoint = 1;
+					if (Collision.CheckAABBvLineCollision(npc.position, npc.Size, position, position + direction * dist, 1, ref collisionPoint)) {
+						Min(ref dist, collisionPoint);
+					}
+				}
+				foreach (Player player in Main.ActivePlayers) {
+					if (dist < 16) return dist;
+					if (position.Clamp(player.Hitbox).DistanceSQ(position) >= dist * dist) continue;
+					float collisionPoint = 1;
+					if (Collision.CheckAABBvLineCollision(player.position, player.Size, position, position + direction * dist, 1, ref collisionPoint)) {
+						Min(ref dist, collisionPoint);
+					}
+				}
+				return dist;
 			}
 		}
 	}
