@@ -209,8 +209,8 @@ namespace Origins.NPCs.Ashen.Boss {
 					footPos,
 					Vector2.Zero,
 					ModContent.ProjectileType<Trenchmaker_Stomp_P>(),
-					20,
-					0,
+					45,
+					8f,
 					ai1: npc.NPC.direction
 				);
 				return ModContent.GetInstance<Stomp_Animation_3>();
@@ -371,6 +371,7 @@ namespace Origins.NPCs.Ashen.Boss {
 	public class Jump_Air_Animation : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
 			if (Math.Abs(PistonLength(npc, leg) - 24) < 2 && (leg.WasStanding || otherLeg.WasStanding)) {
+				SoundEngine.PlaySound(Origins.Sounds.PowerStomp);
 				SmallStepEffect(npc, leg);
 				return ModContent.GetInstance<Standing_Animation>();
 			}

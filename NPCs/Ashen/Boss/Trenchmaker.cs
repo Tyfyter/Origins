@@ -464,7 +464,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public class AutomaticIdleState : AutomaticIdleState<Trenchmaker> { }
 		public abstract class AIState : AIState<Trenchmaker> {
-			public virtual float WalkDist => 10 * 16;
+			public virtual float WalkDist => 2 * 16;
 			public virtual bool CanHaveThrustersActive => false;
 			public virtual int ForGunType => -1;
 			public virtual LegAnimation ForceAnimation(Trenchmaker npc, Leg leg, Leg otherLeg) => null;
