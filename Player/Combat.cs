@@ -251,10 +251,7 @@ namespace Origins {
 			}
 		}
 		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) {
-			if (proj.IsMinionOrSentryRelated) {
-				if (rivenSet) modifiers.SourceDamage *= rivenMult;
-				broth?.ModifyMinionHit(proj, target, ref modifiers);
-			}
+			if (proj.IsMinionOrSentryRelated) broth?.ModifyMinionHit(proj, target, ref modifiers);
 		}
 		public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (entangledEnergy && Player.potionDelay > 0) {

@@ -10,14 +10,14 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Encrusted {
 	[AutoloadEquip(EquipType.Head)]
 	public class Encrusted_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-        public string[] Categories => [
-            WikiCategories.ArmorSet,
-            WikiCategories.SummmonBoostGear
-        ];
-        public const float lightMagnitude = 0.3f;
+		public string[] SetCategories => [
+			WikiCategories.ArmorSet,
+			WikiCategories.SummmonBoostGear
+		];
+		public const float lightMagnitude = 0.3f;
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			GlowMask = Origins.AddGlowMask(Texture+"_Head_Glow");
+			GlowMask = Origins.AddGlowMask(Texture + "_Head_Glow");
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
@@ -26,7 +26,7 @@ namespace Origins.Items.Armor.Encrusted {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetDamage(DamageClass.Summon) += 0.1f;
+			player.GetDamage(DamageClass.Summon) += 0.08f;
 		}
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
 			glowMask = GlowMask;
@@ -37,7 +37,12 @@ namespace Origins.Items.Armor.Encrusted {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Encrusted");
-			player.GetDamage(DamageClass.Summon) *= player.GetModPlayer<OriginPlayer>().rivenMult;
+			player.GetDamage(DamageClass.Summon) += Utils.Remap(player.statLife / (float)player.statLifeMax2,
+				0.5f, //health for min bonus
+				1f, //health for max bonus
+				0, //min bonus
+				0.2f //max bonus
+			);
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
@@ -84,7 +89,7 @@ namespace Origins.Items.Armor.Encrusted {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Encrusted_Pants : ModItem, INoSeperateWikiPage {
-		
+
 		public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);

@@ -1112,7 +1112,7 @@ Encrusted_Coat: {
 
 Encrusted_Mask: {
 	DisplayName: Encrusted Mask
-	Tooltip: Increases summon damage by 10%
+	Tooltip: Increases summon damage by 8%
 }
 
 Encrusted_Pants: {

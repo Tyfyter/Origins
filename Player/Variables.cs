@@ -32,8 +32,6 @@ namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
 		public override void Load() => autoReset = AutoResetAttribute.GenerateReset<OriginPlayer>();
 		static Action<OriginPlayer> autoReset;
-		public const float rivenMaxMult = 0.3f;
-		public float rivenMult => (1f - rivenMaxMult) + Math.Max((Player.statLife / (float)Player.statLifeMax2) * (rivenMaxMult * 2), rivenMaxMult);
 
 		#region assimilation
 		public const float assimilation_max = 1f;
