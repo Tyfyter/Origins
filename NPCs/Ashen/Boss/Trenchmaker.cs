@@ -218,6 +218,20 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.velocity.Y += 0.4f * NPC.GravityMultiplier.Value;
 			//DoCollision(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, true);
 			for (int i = 0; i < legs.Length; i++) UpdateLeg(i);
+			if (NPC.velocity.Y > 0) {
+				for (int i = 0; i < legs.Length; i++) {
+					GetLegPositions(legs[i], out _, out _, out Vector2 footPos);
+					Rectangle pos = new((int)footPos.X - 27, (int)footPos.Y, 54, 14);
+					if (Main.LocalPlayer.controlDown) pos.DrawDebugOutline();
+					float origY = footPos.Y;
+					while (pos.OverlapsAnyTiles()) {
+						footPos.Y = float.Ceiling(footPos.Y) - 1;
+						pos.Y = (int)footPos.Y;
+					}
+					NPC.position.Y += footPos.Y - origY;
+					if (footPos.Y - origY != 0) Min(ref NPC.velocity.Y, Math.Max(footPos.Y - origY, -1));
+				}
+			}
 			NPC.position += hoikOffset;
 			hoikOffset = default;
 		}
