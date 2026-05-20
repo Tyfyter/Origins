@@ -29,6 +29,7 @@ namespace Origins.Items.Weapons.Ranged {
 			.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 9)
 			.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 3)
 			.AddTile(TileID.Anvils)
+			.AddDecraftCondition(Condition.DownedEowOrBoc)
 			.Register();
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);

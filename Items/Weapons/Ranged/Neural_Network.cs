@@ -36,6 +36,7 @@ namespace Origins.Items.Weapons.Ranged {
 			.AddIngredient<NE8>(10)
 			.AddIngredient<Sanguinite_Bar>(15)
 			.AddTile(TileID.Anvils)
+			.AddDecraftCondition(Condition.DownedEowOrBoc)
 			.Register();
 		}
 	}

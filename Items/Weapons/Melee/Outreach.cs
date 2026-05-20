@@ -13,7 +13,8 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	[LegacyName("Outreach")]
-	public class Soldering_Iron : ModItem, ICustomWikiStat {
+	public class Soldering_Iron : ModItem, ICustomWikiStat, IBroken {
+		static string IBroken.BrokenReason => "Make sure you can't decraft it pre-TM";
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			ItemID.Sets.Spears[Type] = true;

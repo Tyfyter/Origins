@@ -12,7 +12,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class Defective_Mortar_Shell : ModItem, ICustomWikiStat, IJournalEntrySource {
+	public class Defective_Mortar_Shell : ModItem, ICustomWikiStat, IJournalEntrySource, IBroken {
+		static string IBroken.BrokenReason => "Make sure you can't decraft it pre-TM";
 		public string EntryName => "Origins/" + typeof(Defective_Mortar_Shell_Entry).Name;
 		public class Defective_Mortar_Shell_Entry : JournalEntry {
 			public override string TextKey => "Defective_Mortar_Shell";

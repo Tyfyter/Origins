@@ -11,7 +11,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Clunkaclusta : ModItem, ICustomDrawItem {
+	public class Clunkaclusta : ModItem, ICustomDrawItem, IBroken {
+		static string IBroken.BrokenReason => "Make sure you can't decraft it pre-TM";
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 11));

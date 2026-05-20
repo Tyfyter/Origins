@@ -34,6 +34,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10)
 			.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 15)
 			.AddTile(TileID.Anvils)
+			.AddDecraftCondition(Condition.DownedEowOrBoc)
 			.Register();
 		}
 		public override bool CanConsumeAmmo(Item ammo, Player player) {

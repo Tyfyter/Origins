@@ -34,6 +34,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AddRecipes() => CreateRecipe()
 			.AddIngredient(ModContent.ItemType<NE8>(), 10)
 			.AddIngredient(ModContent.ItemType<Scrap>(), 15)
+			.AddDecraftCondition(Condition.DownedEowOrBoc)
 			.AddTile(TileID.Anvils).Register();
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-18, -7);

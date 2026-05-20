@@ -54,6 +54,7 @@ namespace Origins.Items.Weapons.Magic {
 			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 8)
 			.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 6)
 			.AddTile(TileID.Anvils)
+			.AddDecraftCondition(Condition.DownedEowOrBoc)
 			.Register();
 		}
 		public override Vector2? HoldoutOffset() {

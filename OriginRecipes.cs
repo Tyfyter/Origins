@@ -95,12 +95,14 @@ namespace Origins {
 			.AddIngredient(ItemID.DemoniteBar, 6)
 			.AddIngredient(ItemID.ShadowScale, 4)
 			.AddTile(TileID.Anvils)
+			.AddDecraftCondition(Condition.DownedEowOrBoc)
 			.Register();
 
 			Recipe.Create(ItemID.BallOHurt)
 			.AddIngredient(ItemID.DemoniteBar, 10)
 			.AddIngredient(ItemID.ShadowScale, 5)
 			.AddTile(TileID.Anvils)
+			.AddDecraftCondition(Condition.DownedEowOrBoc)
 			.Register();
 
 			Recipe.Create(ItemID.Vilethorn)
@@ -108,6 +110,7 @@ namespace Origins {
 			.AddIngredient(ItemID.DemoniteBar, 10)
 			.AddIngredient(ItemID.ShadowScale, 6)
 			.AddTile(TileID.Anvils)
+			.AddDecraftCondition(Condition.DownedEowOrBoc)
 			.Register();
 			#endregion
 			#region Crimson
@@ -115,12 +118,14 @@ namespace Origins {
 			.AddIngredient(ItemID.CrimtaneBar, 6)
 			.AddIngredient(ItemID.TissueSample, 4)
 			.AddTile(TileID.Anvils)
+			.AddDecraftCondition(Condition.DownedEowOrBoc)
 			.Register();
 
 			Recipe.Create(ItemID.TheRottedFork)
 			.AddIngredient(ItemID.CrimtaneBar, 9)
 			.AddIngredient(ItemID.TissueSample, 5)
 			.AddTile(TileID.Anvils)
+			.AddDecraftCondition(Condition.DownedEowOrBoc)
 			.Register();
 
 			Recipe.Create(ItemID.CrimsonRod)
@@ -128,6 +133,7 @@ namespace Origins {
 			.AddIngredient(ItemID.CrimtaneBar, 10)
 			.AddIngredient(ItemID.TissueSample, 6)
 			.AddTile(TileID.Anvils)
+			.AddDecraftCondition(Condition.DownedEowOrBoc)
 			.Register();
 			#endregion
 			#endregion

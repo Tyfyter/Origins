@@ -44,6 +44,7 @@ namespace Origins.Items.Weapons.Ranged {
 			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 6)
 			.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 3)
 			.AddTile(TileID.Anvils)
+			.AddDecraftCondition(Condition.DownedEowOrBoc)
 			.Register();
 		}
 	}
