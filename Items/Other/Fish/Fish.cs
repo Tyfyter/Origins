@@ -69,9 +69,7 @@ namespace Origins.Items.Other.Fish {
 		public override void SetDefaults() {
 			Item.DefaultToQuestFish();
 		}
-		public override bool IsAnglerQuestAvailable() {
-			return Main.hardMode;
-		}
+		public override bool IsAnglerQuestAvailable() => Main.hardMode;
 		public override bool IsQuestFish() => true;
 		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
 			description = Language.GetTextValue("Mods.Origins.FishQuest.Bobbit_Worm.Description");

@@ -670,7 +670,7 @@ namespace Origins.World.BiomeData {
 			}
 		}
 		public class Brine_Pool_Fishing_Loot : FishingLootPool {
-			public override bool IsActive(Player player, FishingAttempt attempt) => player.InModBiome<Brine_Pool>() || attempt.BobberInLiquid<Brine>();
+			public override bool IsActive(Player player, FishingAttempt attempt) => Main.hardMode && (player.InModBiome<Brine_Pool>() || attempt.BobberInLiquid<Brine>());
 			public override void SetStaticDefaults() {
 				Crate.AddRange([
 					FishingCatch.Item(GetInstance<Brine_Crates>().GetItem(HardmodeVariant.Normal).Type, (player, attempt) => !Main.hardMode && ShouldDropBiomeCrate(player, attempt) && player.InModBiome<Brine_Pool>()),
@@ -681,8 +681,8 @@ namespace Origins.World.BiomeData {
 					FishingCatch.Item(ItemType<Brine_Sponge>())
 				]);
 				Rare.Add(FishingCatch.Item(ItemType<Huff_Puffer_Bait>(), (player, attempt) => player.InModBiome<Brine_Pool>()));
+				AddQuestFish(ItemType<Bobbit_Worm>(), (player, attempt) => player.InModBiome<Brine_Pool>());
 				Uncommon.AddRange([
-					FishingCatch.Item(ItemType<Bobbit_Worm>(), (player, attempt) => player.InModBiome<Brine_Pool>() && attempt.questFish == ItemType<Bobbit_Worm>()),
 					FishingCatch.Item(ItemType<Mithrafin>()),
 					FishingCatch.Item(ItemType<Toadfish>(), weight: 9),
 					new FallthroughFishingCatch((player, _) => !player.InModBiome<Brine_Pool>(), 40)
