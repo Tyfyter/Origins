@@ -108,7 +108,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			} else if (PistonLength(npc, leg) < 3) {
 				leg.RotateThigh(2, 0.02f);
 			} else {
-				PistonTo(npc, ref leg, 0, 0.4f);
+				PistonTo(npc, ref leg, 0, 0.2f);
 			}
 		}
 		public override void ShouldFallThrough(Trenchmaker npc, Leg leg, ref bool fallThrough) => fallThrough |= leg.TimeInAnimation > 2 * 60;
@@ -222,7 +222,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			leg.RotateCalf(-MathHelper.PiOver4, 0.2f);
 		}
 		public override bool TileCollide(Trenchmaker npc, Leg leg) => false;
-		public override bool HasHitbox(Trenchmaker npc, Leg leg) => true;
+		public override bool HasHitbox(Trenchmaker npc, Leg leg) => false;
 	}
 	public class Stomp_Animation_3 : LegAnimation {
 		public override LegAnimation Continue(Trenchmaker npc, Leg leg, Leg otherLeg, Vector2 movement) {
