@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.Contracts;
 using Terraria;
 using Terraria.UI;
 
@@ -14,8 +15,7 @@ namespace Origins.UI {
 					drop?.Invoke();
 					return;
 				}
-				element.Left.Pixels = Main.MouseScreen.X + offset.X;
-				element.Top.Pixels = Main.MouseScreen.Y + offset.Y;
+				(element.Left.Pixels, element.Top.Pixels) = Main.MouseScreen + offset;
 			}
 		}
 		public void Click() {
@@ -23,6 +23,7 @@ namespace Origins.UI {
 			offset = new Vector2(element.Left.Pixels, element.Top.Pixels) - Main.MouseScreen;
 		}
 		public delegate void Modify<T>(ref T value);
+		[Pure]
 		public static Action<UIElement> Attach(AttachParameters parameters) {
 			return element => Attach(element, parameters);
 		}
@@ -37,6 +38,9 @@ namespace Origins.UI {
 				}
 			};
 			element.OnUpdate += _ => dragController.Update(parameters.Drop);
+			if (parameters.ConstantlyUpdate) element.OnUpdate += _ => {
+				if (dragController.dragging) element.Recalculate();
+			};
 			if (parameters.Clamp) element.OnUpdate += _ => {
 				CalculatedStyle dimensions = element.GetOuterDimensions();
 				CalculatedStyle parentDimensions = element.Parent?.GetDimensions() ?? new(0, 0, Main.screenWidth, Main.screenHeight);
@@ -58,7 +62,8 @@ namespace Origins.UI {
 			Modify<Vector2> ModifyOffset = null,
 			Action Drop = null,
 			bool Clamp = true,
-			bool StopClickThrough = false
+			bool StopClickThrough = false,
+			bool ConstantlyUpdate = false
 		);
 	}
 }
