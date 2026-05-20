@@ -48,40 +48,94 @@ namespace Origins {
 				}
 			}
 		}
+		delegate void CombineStats<T>(Player player, DamageClass from, StatInheritanceData inheritance, ref T value);
 		public static void Patch() {
 			static StatInheritanceData GenericInherit(DamageClass damageClass) {
 				return damageClass.GetModifierInheritance(DamageClass.Generic);
 			}
+			static void ApplyStatShare<T>(Player player, DamageClass forClass, ref T value, CombineStats<T> applyShare) {
+				float statShareStr = player.OriginPlayer().statSharePercent;
+				if (statShareStr > 0) {
+					foreach (DamageClass other in new StatShareEnumerator(forClass)) {
+						StatInheritanceData inheritance = StatShare(forClass, other, statShareStr);
+						if (inheritance.damageInheritance  == 0 &&
+							inheritance.critChanceInheritance == 0 &&
+							inheritance.attackSpeedInheritance == 0 &&
+							inheritance.armorPenInheritance == 0 &&
+							inheritance.knockbackInheritance == 0
+						) continue;
+						applyShare(player, other, inheritance, ref value);
+					}
+				}
+			}
+			static StatInheritanceData StatShare(DamageClass forClass, DamageClass fromClass, float strength) {
+				return Scale(Subtract(forClass.GetModifierInheritance(DamageClass.Generic), forClass.GetModifierInheritance(fromClass)), strength);
+			}
+			static StatInheritanceData Subtract(StatInheritanceData a, StatInheritanceData b) => new(
+				a.damageInheritance - b.damageInheritance,
+				a.critChanceInheritance - b.critChanceInheritance,
+				a.attackSpeedInheritance - b.attackSpeedInheritance,
+				a.armorPenInheritance - b.armorPenInheritance,
+				a.knockbackInheritance - b.knockbackInheritance
+			);
+			static StatInheritanceData Scale(StatInheritanceData a, float b) => new(
+				a.damageInheritance * b,
+				a.critChanceInheritance * b,
+				a.attackSpeedInheritance * b,
+				a.armorPenInheritance * b,
+				a.knockbackInheritance * b
+			);
 			On_Player.GetTotalDamage += (orig, self, damageClass) => {
 				StatModifier stat = orig(self, damageClass);
 				if (damageClass == DamageClass.Ranged) stat = stat.CombineWith(self.GetDamage(RangedExplosiveInherit));
 				if (damageClass != DamageClass.Summon) stat = stat.CombineWith(self.GetDamage(NoSummonInherit).Scale(GenericInherit(damageClass).damageInheritance));
+				ApplyStatShare(self, damageClass, ref stat, StatShare);
 				return stat;
+				static void StatShare(Player player, DamageClass from, StatInheritanceData inheritance, ref StatModifier stat) {
+					stat = stat.CombineWith(player.GetDamage(from).Scale(inheritance.damageInheritance));
+				}
 			};
 			On_Player.GetTotalKnockback += (orig, self, damageClass) => {
 				StatModifier stat = orig(self, damageClass);
 				if (damageClass == DamageClass.Ranged) stat = stat.CombineWith(self.GetKnockback(RangedExplosiveInherit));
 				if (damageClass != DamageClass.Summon) stat = stat.CombineWith(self.GetKnockback(NoSummonInherit).Scale(GenericInherit(damageClass).knockbackInheritance));
+				ApplyStatShare(self, damageClass, ref stat, StatShare);
 				return stat;
+				static void StatShare(Player player, DamageClass from, StatInheritanceData inheritance, ref StatModifier stat) {
+					stat = stat.CombineWith(player.GetKnockback(from).Scale(inheritance.knockbackInheritance));
+				}
 			};
 			On_Player.GetTotalCritChance += (orig, self, damageClass) => {
 				float stat = orig(self, damageClass);
 				if (damageClass == DamageClass.Ranged) stat += self.GetCritChance(RangedExplosiveInherit);
 				if (damageClass != DamageClass.Summon) stat += self.GetCritChance(NoSummonInherit) * GenericInherit(damageClass).critChanceInheritance;
+				ApplyStatShare(self, damageClass, ref stat, StatShare);
 				return stat;
+				static void StatShare(Player player, DamageClass from, StatInheritanceData inheritance, ref float stat) {
+					stat += player.GetCritChance(from) * inheritance.critChanceInheritance;
+				}
 			};
 			On_Player.GetTotalArmorPenetration += (orig, self, damageClass) => {
 				float stat = orig(self, damageClass);
 				if (damageClass == DamageClass.Ranged) stat += self.GetArmorPenetration(RangedExplosiveInherit);
 				if (damageClass != DamageClass.Summon) stat += self.GetArmorPenetration(NoSummonInherit) * GenericInherit(damageClass).armorPenInheritance;
+				ApplyStatShare(self, damageClass, ref stat, StatShare);
 				return stat;
+				static void StatShare(Player player, DamageClass from, StatInheritanceData inheritance, ref float stat) {
+					stat += player.GetArmorPenetration(from) * inheritance.armorPenInheritance;
+				}
 			};
 			On_Player.GetTotalAttackSpeed += (orig, self, damageClass) => {
 				float stat = orig(self, damageClass);
 				if (damageClass == DamageClass.Ranged) stat += self.GetAttackSpeed(RangedExplosiveInherit) - 1f;
 				if (damageClass != DamageClass.Summon) stat += (self.GetAttackSpeed(NoSummonInherit) - 1f) * GenericInherit(damageClass).attackSpeedInheritance;
+				ApplyStatShare(self, damageClass, ref stat, StatShare);
 				return stat;
+				static void StatShare(Player player, DamageClass from, StatInheritanceData inheritance, ref float stat) {
+					stat += (player.GetAttackSpeed(from) - 1f) * inheritance.attackSpeedInheritance;
+				}
 			};
+
 			/*
 			HashSet<MethodInfo> patched = [];
 			foreach (DamageClass damageClass in All) {
@@ -101,6 +155,22 @@ namespace Origins {
 					field.SetValue(null, null);
 				}
 			}
+		}
+
+		ref struct StatShareEnumerator(DamageClass forClass) {
+			public readonly DamageClass Current => DamageClassLoader.GetDamageClass(index);
+			int index;
+			public bool MoveNext() {
+				loop:
+				if (++index >= DamageClassLoader.DamageClassCount) return false;
+				if (forClass == DamageClass.Ranged && Current == RangedExplosiveInherit) goto loop;
+				if (Current == NoSummonInherit) goto loop;
+				if (Current == DamageClass.Default) goto loop;
+				if (Current == forClass) goto loop;
+				return true;
+			}
+			public void Reset() => index = 0;
+			public readonly StatShareEnumerator GetEnumerator() => this;
 		}
 	}
 	public readonly struct DamageClassList : IList<DamageClass> {
