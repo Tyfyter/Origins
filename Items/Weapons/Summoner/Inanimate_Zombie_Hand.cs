@@ -65,8 +65,17 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Friendly_Zombie : ModProjectile, IArtifactMinion {
 		public static int ID { get; private set; }
 		public int MaxLife { get; set; }
-		public float Life { get; set; }
-		public bool CanDie => ++Projectile.ai[2] >= 60 * 5;
+		public float Life {
+			get;
+			set {
+				if (field >= 0) field = value;
+				if (field <= 0) {
+					field = -1;
+					Projectile.localNPCHitCooldown = 20;
+				}
+			}
+		}
+		public bool CanDie => ++Projectile.ai[2] >= 60 * 3;
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 3;
 			// Sets the amount of frames this minion has on its spritesheet
