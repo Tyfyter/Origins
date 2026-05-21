@@ -47,7 +47,7 @@ Advanced_Imaging: {
 	DisplayName: Advanced Imaging
 	Tooltip:
 		'''
-		Increased projectile speed
+		38% increased projectile speed
 		10% increased critical strike chance
 		20% increased explosive blast radius
 		Grants immunity to [buffhint/self:Confused]
@@ -7452,7 +7452,7 @@ Exo_Weapon_Mount: {
 	DisplayName: Exo-Weapon Mount
 	Tooltip:
 		'''
-		+15% generic velocity
+		15% increased projectile velocity
 		25% increased damage for 1s after swapping weapons
 		'''
 }
@@ -7466,7 +7466,8 @@ Exo_Suit: {
 	DisplayName: Exo-Suit
 	Tooltip:
 		'''
-		+40% generic velocity
+		+20% throwing velocity
+		12% increased projectile velocity
 		Increases mining speed by 20%
 		Increases melee and explosive speed by 10%
 		Increases melee knockback by 10%.

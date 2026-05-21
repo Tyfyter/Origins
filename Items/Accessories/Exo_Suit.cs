@@ -21,7 +21,7 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.OriginPlayer();
 			Max(ref originPlayer.exoArmMult, 1);
 			ModContent.GetInstance<Exo_Legs>().UpdateAccessory(player, hideVisual);
-			Exo_Weapon_Mount.ProcessEffect(player, 1);
+			Exo_Weapon_Mount.SetStrength(player, 0.8f);
 		}
 		public override void AddRecipes() => CreateRecipe()
 			.AddIngredient<Exo_Arm>()

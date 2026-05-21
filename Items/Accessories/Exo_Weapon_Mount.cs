@@ -20,34 +20,36 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.LightRed;
 		}
-		public override void UpdateAccessory(Player player, bool hideVisual) {
-			ProcessEffect(player, 1);
-		}
-		public static void ProcessEffect(Player player, float multiplier) {
-			OriginPlayer originPlayer = player.OriginPlayer();
-			Max(ref player.OriginPlayer().exoWeaponMountMult, 1);
-			int oldSelected = originPlayer.exoWeaponMountCurrentWeapon;
-			if (originPlayer.exoWeaponMountCurrentWeapon.TrySet(player.selectedItem)) {
-				int buff = ModContent.BuffType<Exo_Weapon_Mount_Buff>();
-				if (originPlayer.exoWeaponMountCanCancel && originPlayer.exoWeaponMountCurrentWeapon == originPlayer.exoWeaponMountLastWeapon) {
-					int buffIndex = player.FindBuffIndex(buff);
-					if (buffIndex != -1) {
-						player.DelBuff(buffIndex);
-						return;
+		public override void UpdateAccessory(Player player, bool hideVisual) => SetStrength(player, 1);
+		public static void SetStrength(Player player, float multiplier) => Max(ref player.OriginPlayer().exoWeaponMountMult, multiplier);
+		public static void ProcessEffect(OriginPlayer originPlayer) {
+			Player player = originPlayer.Player;
+			if (originPlayer.exoWeaponMountMult != 0) {
+				originPlayer.projectileSpeedBoost += 0.15f * originPlayer.exoWeaponMountMult;
+				int oldSelected = originPlayer.exoWeaponMountCurrentWeapon;
+				if (originPlayer.exoWeaponMountCurrentWeapon.TrySet(player.selectedItem)) {
+					int buff = ModContent.BuffType<Exo_Weapon_Mount_Buff>();
+					if (originPlayer.exoWeaponMountCanCancel && originPlayer.exoWeaponMountCurrentWeapon == originPlayer.exoWeaponMountLastWeapon) {
+						int buffIndex = player.FindBuffIndex(buff);
+						if (buffIndex != -1) {
+							player.DelBuff(buffIndex);
+							return;
+						}
 					}
+					SoundEngine.PlaySound(SoundID.Item127.WithVolume(0.5f));
+					SoundEngine.PlaySound(SoundID.Item113.WithPitch(2f).WithVolume(0.5f));
+					SoundEngine.PlaySound(SoundID.Item89.WithVolume(0.5f));
+					for (int i = 0; i < 4; i++) {
+						Dust dust = Dust.NewDustPerfect(player.MountedCenter - new Vector2(player.direction * 12, player.gravDir * 4), ModContent.DustType<Spark_Dust>());
+						dust.velocity *= 0.5f;
+						dust.velocity.X -= player.direction * 1;
+						dust.velocity.Y -= player.gravDir * 1;
+					}
+					player.AddBuff(buff, BuffTime);
+					originPlayer.exoWeaponMountLastWeapon = oldSelected;
+					originPlayer.exoWeaponMountCanCancel = true;
+					originPlayer.exoWeaponMountBuff = true;
 				}
-				SoundEngine.PlaySound(SoundID.Item127.WithVolume(0.5f));
-				SoundEngine.PlaySound(SoundID.Item113.WithPitch(2f).WithVolume(0.5f));
-				SoundEngine.PlaySound(SoundID.Item89.WithVolume(0.5f));
-				for (int i = 0; i < 4; i++) {
-					Dust dust = Dust.NewDustPerfect(player.MountedCenter - new Vector2(player.direction * 12, player.gravDir * 4), ModContent.DustType<Spark_Dust>());
-					dust.velocity *= 0.5f;
-					dust.velocity.X -= player.direction * 1;
-					dust.velocity.Y -= player.gravDir * 1;
-				}
-				player.AddBuff(buff, BuffTime);
-				originPlayer.exoWeaponMountLastWeapon = oldSelected;
-				originPlayer.exoWeaponMountCanCancel = true;
 			}
 			if (player.ItemAnimationJustStarted) originPlayer.exoWeaponMountCanCancel = false;
 		}
