@@ -75,6 +75,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public virtual int ProjectileTime => 9;
 		public virtual float FlySpeed => 9;
 		public virtual int BuffToCheck => Sunny_Sunflower_Buff.ID;
+		public virtual float ForceFlyDist => HasTarget ? 600 : 400;// 600 with a target, 400 without one
+		public virtual bool CanRunAndGun => false;
+		public bool HasTarget => Projectile.ai[0] != -2;
 		public int MaxLife { get; set; }
 		public float Life { get; set; }
 		public static int ID { get; private set; }
@@ -171,7 +174,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (vectorToIdlePosition.HasNaNs()) vectorToIdlePosition = default;
 			Vector2 directionToIdlePosition = vectorToIdlePosition.Normalized(out float distanceToIdlePosition);
 			if (Main.myPlayer == player.whoAmI) {
-				if (distanceToIdlePosition > 400) {
+				if (distanceToIdlePosition > ForceFlyDist) {
 					if (distanceToIdlePosition > 2000) {
 						Projectile.position = idlePosition;
 						Projectile.velocity *= 0.1f;
@@ -258,6 +261,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			const float walkSpeed = 0.5f;
 			const float walkDrag = 0.95f;
 			if (foundTarget) {
+				Projectile.ai[0] = target;
 				Vector2 diff = targetCenter - Projectile.Center;
 				Projectile.direction = Math.Sign(diff.X);
 				if (bestTargetIsVisible) {
@@ -276,6 +280,9 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 						);
 						Projectile.ai[0] = -1;
 					}
+					if (CanRunAndGun && Math.Sign(diff.X) == Math.Sign(vectorToIdlePosition.X) && distanceToIdlePosition > ForceFlyDist * 0.5f) {
+						Projectile.velocity.X += walkSpeed * Math.Sign(diff.X);
+					}
 				} else {
 					Projectile.velocity.X += walkSpeed * Math.Sign(diff.X);
 				}
@@ -286,6 +293,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 				Projectile.velocity.X *= walkDrag;
 				OriginExtensions.AngularSmoothing(ref Projectile.rotation, MathHelper.PiOver2 - 1.6f * Math.Sign(vectorToIdlePosition.X), 0.05f);
+				Projectile.ai[0] = -2;
 			}
 			/*if (Projectile.velocity.Y < 0.8f && Projectile.velocity.Y >= 0f && !CanWalkOnto(Projectile.position + Projectile.velocity, Projectile.direction)) {
 				Projectile.velocity.X = 0;
@@ -322,6 +330,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (Projectile.velocity.Y != 0) {
 				Projectile.frameCounter = 0;
 				Projectile.frame = 9;
+				if (++Projectile.localAI[0] > 60) {
+					Projectile.ai[2] = 1;
+					Projectile.netUpdate = true;
+				}
+			} else {
+				Projectile.localAI[0] = 0;
 			}
 			if (Projectile.velocity.Y == 0 && vectorToIdlePosition.Y < 16 * 2) {
 				Rectangle floorbox = Projectile.Hitbox;

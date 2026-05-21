@@ -63,13 +63,19 @@ namespace Origins.Buffs {
 }
 namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Vampire_Fireflower : Sunflower_Sunny {
-		public static int HealOver2Secs => 5;
+		public static int HealOver2Secs => 15;
 		public override bool DiesHorriblyInLava => false;
 		public override int ProjectileType => ModContent.ProjectileType<Vampire_Sunflower_P>();
 		public override int ProjectileTime => 9;
 		public override float FlySpeed => 16;
 		public override int BuffToCheck => Vampire_Sunflower_Buff.ID;
+		public override bool CanRunAndGun => true;
+		public override float ForceFlyDist => base.ForceFlyDist;// just overridden so an override can be applied via hot reload, in case it should be changed for balance
 		public static new int ID { get; private set; }
+		public override void SetDefaults() {
+			base.SetDefaults();
+			MaxLife = 400;
+		}
 		public override bool PreDraw(ref Color lightColor) {
 			Main.instance.LoadProjectile(ProjectileID.DandelionSeed);
 			Texture2D wingTexture = TextureAssets.Projectile[ProjectileID.DandelionSeed].Value;

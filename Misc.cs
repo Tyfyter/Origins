@@ -1803,6 +1803,10 @@ namespace Origins {
 			signs = new(Math.Sign(vector.X), Math.Sign(vector.Y));
 			return vector * signs;
 		}
+		public static T Abs<T>(this T value, out int sign) where T : INumber<T> {
+			sign = T.Sign(value);
+			return T.Abs(value);
+		}
 		public static float Min(this Vector2 vector) => Math.Min(vector.X, vector.Y);
 		public static float Max(this Vector2 vector) => Math.Max(vector.X, vector.Y);
 		public static float Average(this Vector2 vector) {
