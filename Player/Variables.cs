@@ -677,6 +677,7 @@ namespace Origins {
 		float murkySludgeTouchTimer = 0;
 		[AutoReset] public float spawnRateMultiplier = 1f;
 		[AutoReset] public float maxSpawnsMultiplier = 1f;
+		public int iFramesFromHurt = 0;
 		internal void SetUsingScope() => willBeUsingScope = true;
 		internal void UpdateUsingScope() {
 			isUsingScope = willBeUsingScope;
@@ -686,6 +687,7 @@ namespace Origins {
 		public bool isUsingScope;
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
+			iFramesFromHurt.Cooldown();
 			if (vanityTail is null) vanityTailSegments.Clear();
 			autoReset(this);
 			oldBonuses = 0;
@@ -854,7 +856,7 @@ namespace Origins {
 			taintedFlesh2 = false;
 			tornStrengthBoost = StatModifier.Default;
 			endlessExplosives = false;
-			if (!Player.immune) cinderSealCount = cinderSealItem?.useAnimation ?? 4;
+			if (iFramesFromHurt <= 0) cinderSealCount = cinderSealItem?.useAnimation ?? 4;
 			cinderSealItem = null;
 			toxicShock = false;
 			gunGlove = false;

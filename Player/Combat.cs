@@ -1166,6 +1166,15 @@ namespace Origins {
 			}
 
 			if (dangerTime < maxDangerTime) dangerTime = maxDangerTime;
+			switch (info.CooldownCounter) {
+				case -1:
+				Max(ref iFramesFromHurt, Player.immuneTime);
+				break;
+				default:
+				if (!Player.hurtCooldowns.IndexInRange(info.CooldownCounter)) break;
+				Max(ref iFramesFromHurt, Player.hurtCooldowns[info.CooldownCounter]);
+				break;
+			}
 		}
 		#endregion
 		/// <param name="target">the potential target</param>

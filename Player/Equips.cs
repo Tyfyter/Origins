@@ -542,11 +542,11 @@ namespace Origins {
 				Protomind.PlayRandomMessage(Protomind.QuoteType.Respawn, protOSQuoteCooldown, Player.Top);
 			}
 
-			if (cinderSealItem?.ModItem is not null && cinderSealCount > 0 && Player.immuneTime > 0) {
+			if (cinderSealItem?.ModItem is not null && cinderSealCount > 0 && iFramesFromHurt > 0) {
 				for (int i = 0; i < cinderSealCount; i++) {
 					Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash).noGravity = true;
 				}
-				if (Player.immuneTime % cinderSealItem.useTime == 1) {
+				if (iFramesFromHurt % cinderSealItem.useTime == 1) {
 					cinderSealCount--;
 					cinderSealItem.ModItem.Shoot(
 						Player,

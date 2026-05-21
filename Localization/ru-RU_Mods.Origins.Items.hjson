@@ -475,7 +475,7 @@ Lovers_Leap: {
 		Allows flight, super fast running
 		Increases damage and movement speed after taking damage
 		Allows the player to dash into the enemy
-		Double tap a direction
+		Double tap a direction to dash while grounded
 		''' */
 }
 
