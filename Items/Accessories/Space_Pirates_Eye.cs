@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Graphics;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Layers;
 using Origins.Projectiles;
 using Origins.Reflection;
@@ -18,10 +17,7 @@ using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.UI;
 using Terraria.UI;
-using static Origins.Projectiles.MinionBase;
-using static Origins.Projectiles.WormMinion;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
@@ -150,6 +146,7 @@ namespace Origins.Items.Accessories {
 		}
 		#region attacks
 		public abstract class PirateEyeMode : ModProjectile, IComparable<PirateEyeMode> {
+			public override string Name => "Pirate_Eye_" + base.Name;
 			public sealed override void Load() {
 				Colors.Add(this);
 				OnLoad();
@@ -214,7 +211,7 @@ namespace Origins.Items.Accessories {
 			}
 			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.CursedInferno, Main.rand.Next(120, 301));
 		}
-		public class _Temp_Red : PirateEyeMode, IBroken {
+		public class Sharp_Tears : PirateEyeMode, IBroken {
 			static string IBroken.BrokenReason => "Needs review";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.SharpTears}";
 			public override Color Color => FromHexRGB(0xff0000);
@@ -268,7 +265,7 @@ namespace Origins.Items.Accessories {
 							source,
 							npc.Bottom,
 							Vector2.UnitY * -32,
-							ModContent.ProjectileType<_Temp_Red>(),
+							ModContent.ProjectileType<Sharp_Tears>(),
 							damage / 2,
 							knockback / 2,
 							ai1: Main.rand.NextFloat() * 0.375f + 0.45f
@@ -283,7 +280,7 @@ namespace Origins.Items.Accessories {
 							source,
 							npc.Bottom,
 							Vector2.UnitY * -32,
-							ModContent.ProjectileType<_Temp_Red>(),
+							ModContent.ProjectileType<Sharp_Tears>(),
 							damage,
 							knockback,
 							ai1: Main.rand.NextFloat() * 0.5f + 0.6f
@@ -483,7 +480,7 @@ namespace Origins.Items.Accessories {
 				AIType = ProjectileID.PoisonFang;
 			}
 		}
-		public class _Temp_Cyan : PirateEyeMode, IBroken {
+		public class Worms : PirateEyeMode, IBroken {
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.ElectrosphereMissile}";
 			public override Color Color => FromHexRGB(0x00ffff);
@@ -609,7 +606,7 @@ namespace Origins.Items.Accessories {
 				bool hasEye = true;
 				public override ref bool HasBuff(Player player) {
 					OriginPlayer originPlayer = Main.player[Projectile.owner].OriginPlayer();
-					if (originPlayer.spacePirateEye is null || Colors[originPlayer.spacePirateEyeSelection] is not _Temp_Cyan) hasEye = false;
+					if (originPlayer.spacePirateEye is null || Colors[originPlayer.spacePirateEyeSelection] is not Worms) hasEye = false;
 					return ref hasEye;
 				}
 				public override bool IsValidParent(Projectile segment) => SegmentTypes[segment.type];
@@ -655,8 +652,7 @@ namespace Origins.Items.Accessories {
 				AIType = ProjectileID.WaterStream;
 			}
 		}
-		public class _Temp_Purple : PirateEyeMode, IBroken {
-			static string IBroken.BrokenReason => "Needs idea";
+		public class Witch_Bolt : PirateEyeMode {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
 			public override Color Color => FromHexRGB(0x8000ff);
 			public override int Cooldown => 20;
@@ -683,7 +679,7 @@ namespace Origins.Items.Accessories {
 				NPC target = Main.npc.GetIfInRange((int)Projectile.ai[0]);
 				Player player = Main.player[Projectile.owner];
 				if (target?.CanBeChasedBy(Projectile) != true) goto die;
-				if (player.OriginPlayer().spacePirateEye is not Item spacePirateEye || Colors[player.OriginPlayer().spacePirateEyeSelection] is not _Temp_Purple) goto die;
+				if (player.OriginPlayer().spacePirateEye is not Item spacePirateEye || Colors[player.OriginPlayer().spacePirateEyeSelection] is not Witch_Bolt) goto die;
 				Vector2 eyePosition = EyePosition(player);
 				Projectile.position = target.Center;
 				if (Projectile.position.DistanceSQ(eyePosition) > Range * Range) goto die;

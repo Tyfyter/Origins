@@ -2234,7 +2234,6 @@ Projectiles: {
 	// Laser_Target_Locator_P.DisplayName: Laser Target Locator
 	// Laser_Target_Locator_Marker.DisplayName: Laser Target Locator Marker
 	// Laser_Target_Locator_Missile.DisplayName: Laser Target Locator Missile
-	// Laser.DisplayName: Laser
 	// Pike_Of_Deepneus_Stuck.DisplayName: Pike of Deepneus
 	// Homing_Rocket_I_Grenade.DisplayName: Homing Grenade I
 	// Homing_Rocket_I_Mine.DisplayName: Homing Mine I
@@ -2296,28 +2295,12 @@ Projectiles: {
 	// Vampire_Sunflower_P.DisplayName: Vampire Sunflower
 	// Clunkaclusta_P.DisplayName: "[fool:Items.Clunkaclusta.DisplayName]"
 	// Clunkaclusta_Mini_P.DisplayName: "[fool:Items.Clunkaclusta.DisplayName]"
-	// CursedFlames.DisplayName: Cursed Flames
-	// _Temp_Red.DisplayName: " Temp Red"
-	// Cursed_Flames.DisplayName: Cursed Flames
-	// _Temp_Orange.DisplayName: " Temp Orange"
-	// Ichor_Spray.DisplayName: Ichor Spray
-	// _Temp_Turquoise.DisplayName: " Temp Turquoise"
-	// _Temp_Yellow.DisplayName: " Temp Yellow"
 	// ModWireChannel.DisplayName: Mod Wire Channel
 	// Quasar_P.DisplayName: Quasar
 	// Quasar_Offshoot_P.DisplayName: Quasar Offshoot
 	// Mushy_Broth_Explosion.DisplayName: Mushy Broth Explosion
 	// Big_Bang_P.DisplayName: Big Bang
 	// Defensive_Turret_P.DisplayName: Defensive Turret
-	// _Temp_Blue.DisplayName: " Temp Blue"
-	// _Temp_Brown.DisplayName: " Temp Brown"
-	// _Temp_Cyan.DisplayName: " Temp Cyan"
-	// _Temp_Green.DisplayName: " Temp Green"
-	// _Temp_Hot_Pink.DisplayName: " Temp Hot Pink"
-	// _Temp_Light_Blue.DisplayName: " Temp Light Blue"
-	// _Temp_Magenta.DisplayName: " Temp Magenta"
-	// _Temp_Pink.DisplayName: " Temp Pink"
-	// _Temp_Purple.DisplayName: " Temp Purple"
 	// Friendly_Cleaver_Body.DisplayName: Friendly Cleaver Body
 	// Friendly_Cleaver_Head.DisplayName: Friendly Cleaver Head
 	// Friendly_Cleaver_Tail.DisplayName: Friendly Cleaver Tail
@@ -2325,6 +2308,22 @@ Projectiles: {
 	// TM_Flamer_P.DisplayName: Flamer Turret
 	// TM_Launcher_P.DisplayName: Launcher Turret
 	// TM_Laser_P.DisplayName: Laser Turret
+	// Pirate_Eye__Temp_Blue.DisplayName: Pirate Eye_ Temp Blue
+	// Pirate_Eye__Temp_Brown.DisplayName: Pirate Eye_ Temp Brown
+	// Pirate_Eye__Temp_Green.DisplayName: Pirate Eye_ Temp Green
+	// Pirate_Eye__Temp_Hot_Pink.DisplayName: Pirate Eye_ Temp Hot Pink
+	// Pirate_Eye__Temp_Light_Blue.DisplayName: Pirate Eye_ Temp Light Blue
+	// Pirate_Eye__Temp_Magenta.DisplayName: Pirate Eye_ Temp Magenta
+	// Pirate_Eye__Temp_Orange.DisplayName: Pirate Eye_ Temp Orange
+	// Pirate_Eye__Temp_Pink.DisplayName: Pirate Eye_ Temp Pink
+	// Pirate_Eye__Temp_Turquoise.DisplayName: Pirate Eye_ Temp Turquoise
+	// Pirate_Eye__Temp_Yellow.DisplayName: Pirate Eye_ Temp Yellow
+	// Pirate_Eye_Cursed_Flames.DisplayName: Cursed Flames
+	// Pirate_Eye_Ichor_Spray.DisplayName: Ichor Spray
+	// Pirate_Eye_Laser.DisplayName: Eye Laser
+	// Pirate_Eye_Sharp_Tears.DisplayName: Sharp Tears
+	// Pirate_Eye_Witch_Bolt.DisplayName: Witch Bolt
+	// Pirate_Eye_Worms.DisplayName: Pirate Eye Worms
 }
 
 Prefixes: {
