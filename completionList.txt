@@ -246,7 +246,7 @@ ENEMY NPCS:
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
 (#, ^2) QM-76 'Quakemaker' !!!
-(#2?, $2, ^2) Reject !!! (No sounds have ever been mentioned to be for Rejects, nor do any sounds contain Reject in their names)
+(☻) Reject !!!
 (☻) Repairboy !!! (design/describe cool repair torch effect)
 (^) Riven Penguin
 (^) Riven Protoform

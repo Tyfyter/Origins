@@ -94,6 +94,7 @@ namespace Origins {
 			public static SoundStyle RepairboyIdle = new("Origins/Sounds/Custom/Repairboy_Idle", 3);
 			public static SoundStyle RepairboyDeath = new("Origins/Sounds/Custom/Repairboy_Death", 2);
 			public static SoundStyle WindPail = new("Origins/Sounds/Custom/WindPail", 3);
+			public static SoundStyle RejectIdle = new("Origins/Sounds/Custom/Withered_Idle", 3);
 
 			public static SoundStyle MaskedZombieAmbient = new("Origins/Sounds/Custom/MaskedZombie", 3) {
 				Identifier = "Terraria/ZombieMoan",

@@ -88,8 +88,9 @@ namespace Origins.NPCs.Ashen {
 		}
 
 		public bool PlaySound() {
-			if (Main.rand.NextBool(500)) SoundEngine.PlaySound(SoundID.Zombie99 with { Pitch = -0.1f }, NPC.Center);
-			else if (Main.rand.NextBool(500)) SoundEngine.PlaySound(SoundID.Zombie124 with { Pitch = -1 }, NPC.Center);
+			if (Main.rand.NextBool(750)) SoundEngine.PlaySound(SoundID.Zombie99 with { Pitch = -0.1f }, NPC.Center);
+			else if (Main.rand.NextBool(750)) SoundEngine.PlaySound(SoundID.Zombie124 with { Pitch = -1 }, NPC.Center, _ => NPC.active);
+			else if (Main.rand.NextBool(750)) SoundEngine.PlaySound(Origins.Sounds.RejectIdle, NPC.Center);
 			return true;
 		}
 	}
