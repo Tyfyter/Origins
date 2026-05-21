@@ -91,9 +91,16 @@ namespace Origins.NPCs.Ashen {
 			NPC.damage = NPC.dontTakeDamage ? 0 : NPC.defDamage;
 			if (NPC.dontTakeDamage) {
 				NPC.frame.Y = 4;
+				NPC.spriteDirection = NPC.direction;
 				return;
 			} else if (NPC.frame.Y == 4) {
 				NPC.frame.Y = 0;
+			}
+			if (NPC.frame.Y == 1) {
+				Lighting.AddLight(
+					GunOrigin + NPC.rotation.ToRotationVector2() * 20,
+					Color.Orange.ToVector3()
+				);
 			}
 			UpdateTarget();
 
@@ -161,7 +168,7 @@ namespace Origins.NPCs.Ashen {
 					}
 				}
 				NPC.target = -1;
-				NPC.targetRect = NPC.Hitbox.Add(128 * NPC.direction * Vector2.UnitX);
+				NPC.targetRect = NPC.Hitbox.Recentered(NPC.Top + 128 * NPC.direction * Vector2.UnitX);
 			}
 		}
 		public void UpdateTarget() {
@@ -219,11 +226,11 @@ namespace Origins.NPCs.Ashen {
 			NPC.velocity = default;
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			SpriteEffects effects = SpriteEffects.None;
-			float rotation = NPC.rotation + MathHelper.Pi;
-			if (NPC.spriteDirection == 1) {
-				effects = SpriteEffects.FlipHorizontally;
-				rotation -= MathHelper.Pi;
+			SpriteEffects effects = SpriteEffects.FlipHorizontally;
+			float rotation = NPC.rotation;
+			if (MathHelper.WrapAngle(NPC.rotation) is < -MathHelper.PiOver2 or >= MathHelper.PiOver2) {
+				effects = SpriteEffects.None;
+				rotation += MathHelper.Pi;
 			}
 			spriteBatch.DrawGlowingNPCPart(
 				gunTexture,
@@ -270,6 +277,7 @@ namespace Origins.NPCs.Ashen {
 			tag.TryGet(nameof(IsDeactivated), out NPC.ai[2]);
 			tag.TryGet(nameof(NPC.direction), out NPC.direction);
 			if (IsDeactivated) NPC.life = 1;
+			NPC.rotation = MathHelper.PiOver2 * (1 - NPC.direction);
 		}
 		public bool? NeedsRepair(NPC repairboy, ref float cost, ref Rectangle hitbox) => IsDeactivated ? true : null;
 		public bool Repair(int repairAmount) {

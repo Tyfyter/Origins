@@ -106,42 +106,12 @@ namespace Origins.Items.Accessories {
 			for (int i = 0; i < counts.Length; i++) {
 				Min(ref lowest, counts[i]);
 			}
-			counts[(int)(Main.timeForVisualEffects / 30) % counts.Length] = 1; //just to demo what it looks like when a color is taken
+			//counts[(int)(Main.timeForVisualEffects / 30) % counts.Length] = 1; //just to demo what it looks like when a color is taken
 			return lowest;
 		}
 		public bool CanRightClickAccessory(Item[] inv, int context, int slot) => Math.Abs(context) != ItemSlot.Context.EquipAccessoryVanity;
 		public bool RightClickAccessory(Item[] inv, int context, int slot) {
 			OriginSystem.Instance.SpacePirateEyeUI.Activate();
-			/*Player player = Main.LocalPlayer;
-			OriginPlayer originPlayer = player.OriginPlayer();
-			int lowest = GetPlayerCounts(player);
-			if (ItemSlot.ShiftInUse) {
-				for (int i = originPlayer.spacePirateEyeSelection - 1; i >= 0; i--) {
-					if (counts[i] == lowest) {
-						originPlayer.spacePirateEyeSelection = i;
-						return false;
-					}
-				}
-				for (int i = counts.Length - 1; i > originPlayer.spacePirateEyeSelection; i++) {
-					if (counts[i] == lowest) {
-						originPlayer.spacePirateEyeSelection = i;
-						return false;
-					}
-				}
-				return false;
-			}
-			for (int i = originPlayer.spacePirateEyeSelection + 1; i < counts.Length; i++) {
-				if (counts[i] == lowest) {
-					originPlayer.spacePirateEyeSelection = i;
-					return false;
-				}
-			}
-			for (int i = 0; i < originPlayer.spacePirateEyeSelection; i++) {
-				if (counts[i] == lowest) {
-					originPlayer.spacePirateEyeSelection = i;
-					return false;
-				}
-			}*/
 			return false;
 		}
 		#region attacks

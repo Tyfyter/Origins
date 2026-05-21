@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Weapons.Ammo.Canisters;
 using Origins.Projectiles;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -20,6 +18,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 5));
+			On_Player.PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool += On_Player_PickAmmo;
+		}
+		void On_Player_PickAmmo(On_Player.orig_PickAmmo_Item_refInt32_refSingle_refBoolean_refInt32_refSingle_refInt32_bool orig, Player self, Item sItem, ref int projToShoot, ref float speed, ref bool canShoot, ref int totalDamage, ref float KnockBack, out int usedAmmoItemId, bool dontConsume) {
+			orig(self, sItem, ref projToShoot, ref speed, ref canShoot, ref totalDamage, ref KnockBack, out usedAmmoItemId, dontConsume);
+			if (sItem.type == Type && sItem.shootSpeed > 0 && sItem.shootSpeed <= 1) Max(ref speed, sItem.shootSpeed);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToCanisterLauncher<Tank_Rifle_P>(120, 80, 8, 156, 38);

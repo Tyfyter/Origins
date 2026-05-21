@@ -213,7 +213,7 @@ ENEMY NPCS:
 (🤡) Creme-filled Bat
 (^) Crimbrain
 (X) Crying Creeper
-(#2, ^2) Defensive Turret !!!
+(☻) Defensive Turret !!!
 (^) Defiled Broadcaster
 (^) Defiled Cyclops
 (^) Defiled Digger
