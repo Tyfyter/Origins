@@ -39,10 +39,10 @@ namespace Origins.Projectiles {
 			/// </summary>
 			public float distanceFromTarget;
 			public int TargetID {
-				readonly get => targetID;
+				readonly get => field;
 				set {
-					targetID = value;
-					if (Main.npc.GetIfInRange(targetID) is NPC npc) {
+					field = value;
+					if (Main.npc.GetIfInRange(field) is NPC npc) {
 						targetHitbox = npc.Hitbox;
 						targetVelocity = npc.velocity;
 						switch (npc.aiStyle) {
@@ -56,7 +56,7 @@ namespace Origins.Projectiles {
 					}
 				}
 			}
-			int targetID;
+			public readonly bool HasTarget => TargetID != -1;
 			public int lastTargetID;
 			public readonly bool IsLastTarget(NPC npc) => npc.whoAmI == lastTargetID;
 			public readonly float KeepTargetOrDistance(Projectile projectile, NPC npc) {
@@ -78,20 +78,17 @@ namespace Origins.Projectiles {
 				}
 			}
 			public readonly void Send(BinaryWriter writer) {
-				writer.Write((short)targetID);
+				writer.Write((short)TargetID);
 			}
 			public void Receive(BinaryReader reader) {
 				TargetID = reader.ReadInt16();
 			}
 		}
-		public virtual Rectangle RestRegion {
-			get {
-				Player player = Main.player[Projectile.owner];
-				return player.Hitbox.Add(Vector2.UnitX * player.direction * -48 * (Projectile.minionPos + 1));
-			}
-		}
+		public virtual Rectangle RestRegion => Owner.Hitbox.Add(Vector2.UnitX * Owner.direction * -48 * (Projectile.minionPos + 1));
 		public virtual float MaxPriorityRange => 1000;
 		public virtual float MaxNonPriorityRange => 700;
+		public virtual bool AutomaticRotationAndDirection => true;
+		public Player Owner => Main.player[Projectile.owner];
 		public virtual void ResetTargetingData() {
 			targetingData.targetHitbox = Projectile.Hitbox;
 			targetingData.distanceFromTarget = MaxPriorityRange * MaxPriorityRange;
@@ -137,35 +134,37 @@ namespace Origins.Projectiles {
 		}
 		public override void AI() => BasicAI();
 		protected virtual void BasicAI() {
-			Player player = Main.player[Projectile.owner];
 			if ((int)Main.timeForVisualEffects % 120 == 0)
 				Projectile.netUpdate = true;
 			DoActiveCheck();
 			if (!Projectile.active) return;
 
-			Vector2 center = player.Center;
+			Vector2 center = Owner.Center;
 			if (Projectile.Distance(center) > 2000f) {
 				Projectile.Center = center;
 				Projectile.netUpdate = true;
 			}
 
 			ResetTargetingData();
-			player.OriginPlayer().GetMinionTarget(TargetingAlgorithm);
+			Owner.OriginPlayer().GetMinionTarget(TargetingAlgorithm);
 
+			int oldDirection = Projectile.direction;
 			MoveTowardsTarget();
 
-			if (Projectile.velocity != default) Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
-			int oldDirection = Projectile.direction;
-			Projectile.direction = (Projectile.spriteDirection = ((Projectile.velocity.X > 0f) ? 1 : (-1)));
+			if (AutomaticRotationAndDirection) {
+				if (Projectile.velocity != default) Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+				Projectile.direction = Projectile.velocity.X > 0f ? 1 : -1;
+				Projectile.spriteDirection = Projectile.direction;
+			}
 			if (oldDirection != Projectile.direction)
 				Projectile.netUpdate = true;
 
-			Projectile.position.X = MathHelper.Clamp(Projectile.position.X, 160f, Main.maxTilesX * 16 - 160);
-			Projectile.position.Y = MathHelper.Clamp(Projectile.position.Y, 160f, Main.maxTilesY * 16 - 160);
+			Clamp(ref Projectile.position.X, 160f, Main.maxTilesX * 16 - 160);
+			Clamp(ref Projectile.position.Y, 160f, Main.maxTilesY * 16 - 160);
 		}
 
 		public void DoActiveCheck() {
-			Player player = Main.player[Projectile.owner];
+			Player player = Owner;
 			if (!player.active) {
 				Projectile.active = false;
 				return;
@@ -186,12 +185,7 @@ namespace Origins.Projectiles {
 		}
 	}
 	public abstract class WormMinion : MinionBase {
-		public override Rectangle RestRegion {
-			get {
-				Player player = Main.player[Projectile.owner];
-				return player.Hitbox.Add(Vector2.UnitX * player.direction * -48);
-			}
-		}
+		public override Rectangle RestRegion => Owner.Hitbox.Add(Vector2.UnitX * Owner.direction * -48);
 		public enum BodyPart {
 			Invalid,
 			Head,
@@ -258,20 +252,9 @@ namespace Origins.Projectiles {
 				Projectile.localAI[1] = 0;
 			} else {
 				if (Part == BodyPart.Tail) Projectile.localAI[0] = 0;
-				Player player = Main.player[Projectile.owner];
 				if ((int)Main.timeForVisualEffects % 120 == 0)
 					Projectile.netUpdate = true;
-
-				if (!player.active) {
-					Projectile.active = false;
-					return;
-				}
-
-				ref bool hasBuff = ref HasBuff(player);
-				if (player.dead) hasBuff = false;
-
-				if (hasBuff) Projectile.timeLeft = 2;
-				else if (Projectile.IsLocallyOwned()) Min(ref Projectile.timeLeft, 2);
+				DoActiveCheck();
 
 				bool hasValidParent = false;
 				Vector2 parentCenter = Vector2.Zero;

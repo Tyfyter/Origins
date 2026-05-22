@@ -1536,6 +1536,11 @@ Buffs: {
 		DisplayName: Зловещий Ветер
 		// Description: Mods.Origins.Buffs.Wind_Pail_Debuff.Description
 	}
+
+	Smart_Turret_Buff: {
+		// DisplayName: Smart Turret Buff
+		// Description: Mods.Origins.Buffs.Smart_Turret_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -2324,6 +2329,8 @@ Projectiles: {
 	// Pirate_Eye_Sharp_Tears.DisplayName: Sharp Tears
 	// Pirate_Eye_Witch_Bolt.DisplayName: Witch Bolt
 	// Pirate_Eye_Worms.DisplayName: Pirate Eye Worms
+	// Smart_Turret.DisplayName: Smart Turret
+	// Smart_Turret_Counter.DisplayName: Smart Turret Counter
 }
 
 Prefixes: {

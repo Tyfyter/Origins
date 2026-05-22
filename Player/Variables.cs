@@ -577,6 +577,7 @@ namespace Origins {
 		public int weldingTorchSoundTime = 0;
 		public bool autohandcannonJammed = false;
 		[AutoReset] public bool matryoshkaDoll;
+		[AutoReset] public bool smartTurret;
 		#endregion
 
 		#region visuals
