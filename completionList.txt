@@ -540,7 +540,7 @@ ACCESSORIES:
 (^) Evil Bar Gun Magazines
 (^) Exo-Arm
 (^) Exo-Legs
-(☻) Exo-Suit !!!
+(^) Exo-Suit
 (^) Exo-Weapon Mount
 (^) Exploder Emblem
 (^) Explosive Artery
@@ -1384,7 +1384,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(☻) Delay Component !!!
+(#2, ^2) Delay Component !!! (visual indicator)
 (^) Diode Component
 (^) Dirt Chest
 (^) Edge Detector

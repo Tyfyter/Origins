@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
@@ -94,6 +95,8 @@ namespace Origins.Tiles.Ashen {
 			Door_Animation animation = Industrial_Door_TE_System.GetAnimation(new(left, top));
 			if (animation.IsAnimating) return false;
 			if (actuallyDo) new Industrial_Door_Action(new(left, top), !animation.TargetOpen).Perform();
+			SoundEngine.PlaySound(Origins.Sounds.MetalBoxOpen.WithPitch(-0.4f), default);
+			SoundEngine.PlaySound(SoundID.NPCHit52, default);
 			return true;
 		}
 	}
