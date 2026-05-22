@@ -213,7 +213,7 @@ ENEMY NPCS:
 (🤡) Creme-filled Bat
 (^) Crimbrain
 (X) Crying Creeper
-(☻) Defensive Turret !!!
+(^) Defensive Turret
 (^) Defiled Broadcaster
 (^) Defiled Cyclops
 (^) Defiled Digger
@@ -246,8 +246,8 @@ ENEMY NPCS:
 (^) Power Suit Zombie
 (^) Pustule Jellyfish
 (#, ^2) QM-76 'Quakemaker' !!!
-(☻) Reject !!!
-(☻) Repairboy !!! (design/describe cool repair torch effect)
+(^) Reject
+(^) Repairboy
 (^) Riven Penguin
 (^) Riven Protoform
 (X) Rivenpotamus
@@ -540,7 +540,7 @@ ACCESSORIES:
 (^) Evil Bar Gun Magazines
 (^) Exo-Arm
 (^) Exo-Legs
-(☻) Exo-Suit !!!
+(#2, ^2) Exo-Suit !!! (just needs the extra acc visual for head and torso)
 (^) Exo-Weapon Mount
 (^) Exploder Emblem
 (^) Explosive Artery
@@ -920,7 +920,7 @@ RANGED WEAPONS:
 (^) Threemoepeater
 (^) Unmisfire
 (^) Unstrung Fiberglass Bow
-(☻) Welding Torch !!! (design/describe cool repair visual effect)
+(#2, ^2) Welding Torch !!!
 (^) 2-in-1 Shotty
 
 (^) Acrid Impaler
