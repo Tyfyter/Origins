@@ -38,7 +38,7 @@ namespace Origins.Items.Accessories {
 			if (hideVisual) return;
 			player.head = HeadID;
 			player.body = BodyID;
-		}				  
+		}
 		public override void AddRecipes() => CreateRecipe()
 			.AddIngredient<Exo_Arm>()
 			.AddIngredient<Exo_Legs>()

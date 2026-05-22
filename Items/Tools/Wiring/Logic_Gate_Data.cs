@@ -198,7 +198,7 @@ namespace Origins.Items.Tools.Wiring {
 		}
 		public readonly bool ShouldCountAsPowerSource(Point position, int forWireType, bool skipWalked = false) {
 			if (skipWalked && walkedLogicOutputs[position] > 0) return false;
-			return OutputWire != forWireType && PowersWire(position, out _);
+			return OutputWire == forWireType && PowersWire(position, out _);
 		}
 		public readonly bool PowersWire(Point position, out int output) {
 			Wires.GetWires(out int a, out int b, out output);
