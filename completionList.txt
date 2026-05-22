@@ -540,7 +540,7 @@ ACCESSORIES:
 (^) Evil Bar Gun Magazines
 (^) Exo-Arm
 (^) Exo-Legs
-(#2, ^2) Exo-Suit !!! (just needs the extra acc visual for head and torso)
+(☻) Exo-Suit !!!
 (^) Exo-Weapon Mount
 (^) Exploder Emblem
 (^) Explosive Artery
