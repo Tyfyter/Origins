@@ -4,6 +4,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner;
 using Origins.Items.Weapons.Summoner.Minions;
 using Origins.NPCs;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -77,9 +78,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			MaxLife = 400;
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Main.instance.LoadProjectile(ProjectileID.DandelionSeed);
-			Texture2D wingTexture = TextureAssets.Projectile[ProjectileID.DandelionSeed].Value;
-			Draw(lightColor, TextureAssets.Projectile[Type].Value, null, wingTexture);
+			Draw(lightColor, TextureAssets.Projectile[Type].Value, null);
 			return false;
 		}
 		protected override void BuffAllies(int team) {
@@ -100,6 +99,35 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					dust.velocity *= 0.5f;
 					dust.noGravity = true;
 				}
+			}
+		}
+		public override void DrawWings(Color lightColor, int baseTextureWidth) {
+			Main.instance.LoadProjectile(ProjectileID.Bat);
+			Texture2D wingTexture = TextureAssets.Projectile[ProjectileID.Bat].Value;
+			Vector2 gfxOffset = new(0, Projectile.gfxOffY);
+			SpriteEffects baseEffects = Projectile.direction == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+			for (int i = -1; i <= 1; i++) {
+				int frameNum = ((Projectile.frameCounter / 5) + i + 1) % 4;
+				Rectangle wingFrame = wingTexture.Frame(verticalFrames: 4, frameY: frameNum);
+				Vector2 wingOrigin = wingFrame.Size() * new Vector2(0.5f, 1);
+				switch (frameNum) {
+					case 1:
+					wingOrigin.X += 2 * Projectile.direction;
+					break;
+					case 3:
+					wingOrigin.X -= 2 * Projectile.direction;
+					break;
+				}
+				Main.EntitySpriteDraw(
+					wingTexture,
+					Projectile.Top + new Vector2(((baseTextureWidth - 8) / 2) * i, 2 + Math.Abs(i) * 6) + gfxOffset - Main.screenPosition,
+					wingFrame,
+					lightColor,
+					0,
+					wingOrigin,
+					Projectile.scale,
+					baseEffects
+				);
 			}
 		}
 		internal void UpdateDOTLifestealSelf() => Life += HealOver2Secs / 120f;

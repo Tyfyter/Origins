@@ -75,7 +75,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public virtual int ProjectileTime => 9;
 		public virtual float FlySpeed => 9;
 		public virtual int BuffToCheck => Sunny_Sunflower_Buff.ID;
-		public virtual float ForceFlyDist => HasTarget ? 600 : 400;// 600 with a target, 400 without one
+		public virtual float ForceFlyDist => HasTarget ? 600 : 300;// 600 with a target, 400 without one
 		public virtual bool CanRunAndGun => false;
 		public bool HasTarget => Projectile.ai[0] != -2;
 		public int MaxLife { get; set; }
@@ -167,7 +167,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 
 			#region General behavior
-			Vector2 idlePosition = player.Bottom - new Vector2(player.direction * (Projectile.minionPos + 1) * 32, Projectile.height * 0.5f);
+			Vector2 idlePosition = player.Bottom - new Vector2(player.direction * (Projectile.minionPos + 1.5f) * 32, Projectile.height * 0.5f);
 
 			// die if distance is too big
 			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
@@ -189,17 +189,21 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.localAI[1] = 300;
 				float speed = FlySpeed * SpeedModifier;
 				float inertia = 12f;
+				Min(ref speed, distanceToIdlePosition);
 				Vector2 direction = directionToIdlePosition * speed;
 				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
+				if (Math.Abs(vectorToIdlePosition.X) > 1) Projectile.direction = Math.Sign(vectorToIdlePosition.X);
+				else Projectile.direction = player.direction;
 				Projectile.tileCollide = false;
-				if (vectorToIdlePosition.X != 0) Projectile.direction = Math.Sign(vectorToIdlePosition.X);
 				if (++Projectile.frameCounter >= 20) Projectile.frameCounter = 0;
 				Projectile.frame = 9;
 				if (distanceToIdlePosition > 64 || Projectile.Hitbox.OverlapsAnyTiles()) return;
-				Rectangle floorbox = Projectile.Hitbox;
-				floorbox.Offset(0, Projectile.height);
-				floorbox.Height = 16 * 4;
-				if (!floorbox.OverlapsAnyTiles(false)) return;
+				if (!Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height + 16)) {
+					Rectangle floorbox = Projectile.Hitbox;
+					floorbox.Offset(0, Projectile.height);
+					floorbox.Height = 16 * 4;
+					if (!floorbox.OverlapsAnyTiles(false)) return;
+				}
 				Projectile.ai[2] = 0;
 				Projectile.netUpdate = true;
 			}
@@ -435,12 +439,39 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			textureAsset ??= TextureAssets.Projectile[Type];
 			Texture2D baseTexture = textureAsset.Value;
-			Main.instance.LoadProjectile(ProjectileID.DandelionSeed);
-			Texture2D wingTexture = TextureAssets.Projectile[ProjectileID.DandelionSeed].Value;
-			Draw(lightColor, baseTexture, glowTexture, wingTexture);
+			Draw(lightColor, baseTexture, glowTexture);
 			return false;
 		}
-		public void Draw(Color lightColor, Texture2D baseTexture, Asset<Texture2D> glowTexture, Texture2D wingTexture) {
+		public virtual void DrawWings(Color lightColor, int baseTextureWidth) {
+			Main.instance.LoadProjectile(ProjectileID.DandelionSeed);
+			Texture2D wingTexture = TextureAssets.Projectile[ProjectileID.DandelionSeed].Value;
+			Vector2 gfxOffset = new(0, Projectile.gfxOffY);
+			SpriteEffects baseEffects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			for (int i = -1; i <= 1; i++) {
+				int frameNum = ((Projectile.frameCounter / 5) + i + 1) % 4;
+				Rectangle wingFrame = wingTexture.Frame(horizontalFrames: 4, frameX: frameNum);
+				Vector2 wingOrigin = wingFrame.Size() * new Vector2(0.5f, 1);
+				switch (frameNum) {
+					case 1:
+					wingOrigin.X += 2 * Projectile.direction;
+					break;
+					case 3:
+					wingOrigin.X -= 2 * Projectile.direction;
+					break;
+				}
+				Main.EntitySpriteDraw(
+					wingTexture,
+					Projectile.Top + new Vector2(((baseTextureWidth - 8) / 2) * i, 2 + Math.Abs(i) * 6) + gfxOffset - Main.screenPosition,
+					wingFrame,
+					lightColor,
+					0,
+					wingOrigin,
+					Projectile.scale,
+					baseEffects
+				);
+			}
+		}
+		public void Draw(Color lightColor, Texture2D baseTexture, Asset<Texture2D> glowTexture) {
 			Rectangle baseFrame = baseTexture.Frame(verticalFrames: Main.projFrames[Projectile.type], frameY: Projectile.frame);
 			SpriteEffects baseEffects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 			Vector2 offset = Vector2.UnitY * 2;
@@ -448,31 +479,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				lightColor *= 0.3f;
 			}
 			Vector2 gfxOffset = new(0, Projectile.gfxOffY);
-			if (Projectile.ai[2] == 1) {
-				for (int i = -1; i <= 1; i++) {
-					int frameNum = ((Projectile.frameCounter / 5) + i + 1) % 4;
-					Rectangle wingFrame = wingTexture.Frame(horizontalFrames: 4, frameX: frameNum);
-					Vector2 wingOrigin = wingFrame.Size() * new Vector2(0.5f, 1);
-					switch (frameNum) {
-						case 1:
-						wingOrigin.X += 2 * Projectile.direction;
-						break;
-						case 3:
-						wingOrigin.X -= 2 * Projectile.direction;
-						break;
-					}
-					Main.EntitySpriteDraw(
-						wingTexture,
-						Projectile.Top + new Vector2(((baseFrame.Width - 8) / 2) * i, 2 + Math.Abs(i) * 6) + gfxOffset - Main.screenPosition,
-						wingFrame,
-						lightColor,
-						0,
-						wingOrigin,
-						Projectile.scale,
-						baseEffects
-					);
-				}
-			}
+			if (Projectile.ai[2] == 1) DrawWings(lightColor, baseTexture.Width);
 			DrawData data = new(
 				baseTexture,
 				Projectile.Bottom + offset + gfxOffset - Main.screenPosition,

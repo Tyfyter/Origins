@@ -1173,7 +1173,7 @@ EXPLOSIVE WEAPONS:
 (^) Torpedo Tube
 
 (^) Autohandcannon
-(#, ^2) Big Bang !!!
+(☻) Big Bang !!!
 (^) Bomboomstick
 (^) Chlorodynamite
 (^) Chlorophyte Handcannon
