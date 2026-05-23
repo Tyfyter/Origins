@@ -22,7 +22,7 @@ namespace Origins.Items.Accessories {
 		];
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[Type] = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher];
+			AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[Type] = ItemID.RocketLauncher;
 			IL_Player.Hurt_HurtInfo_bool += IL_Player_Hurt_HurtInfo_bool;
 			ID = Type;
 		}

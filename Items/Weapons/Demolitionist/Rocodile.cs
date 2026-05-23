@@ -7,7 +7,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		static short glowmask;
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
-			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[Type] = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher];
+			AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[Type] = ItemID.RocketLauncher;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);

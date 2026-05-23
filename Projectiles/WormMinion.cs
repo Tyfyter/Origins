@@ -34,6 +34,7 @@ namespace Origins.Projectiles {
 		public struct TargetingData {
 			public Rectangle targetHitbox;
 			public Vector2 targetVelocity;
+			public readonly Vector2 Center => targetHitbox.Center();
 			/// <summary>
 			/// the distance from the target squared, or the maximum distance squared if no target is found
 			/// </summary>

@@ -2331,6 +2331,7 @@ Projectiles: {
 	// Pirate_Eye_Worms.DisplayName: Pirate Eye Worms
 	// Smart_Turret.DisplayName: Smart Turret
 	// Smart_Turret_Counter.DisplayName: Smart Turret Counter
+	// Smart_Turret_Canister_P.DisplayName: Smart Turret Canister P
 }
 
 Prefixes: {

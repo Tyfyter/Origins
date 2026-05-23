@@ -10,8 +10,8 @@ namespace Origins.Items.Accessories {
 			WikiCategories.ExplosiveBoostAcc
 		];
 		public override void SetStaticDefaults() {
-			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[Type] = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher];
-            glowmask = Origins.AddGlowMask(this);
+			AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[Type] = ItemID.RocketLauncher;
+			glowmask = Origins.AddGlowMask(this);
         }
         static short glowmask;
         public override void SetDefaults() {

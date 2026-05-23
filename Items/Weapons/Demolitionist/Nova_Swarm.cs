@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (!Main.dedServ) {
 				UseTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Nova_Swarm_Use");
 			}
-			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[Type] = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher];
+			AmmoID.Sets.SpecificLauncherAmmoProjectileFallback[Type] = ItemID.RocketLauncher;
 			ID = Type;
 		}
 		public override void SetDefaults() {

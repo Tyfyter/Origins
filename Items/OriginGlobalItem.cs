@@ -319,7 +319,7 @@ namespace Origins.Items {
 			if (OriginsSets.Items.AshenWireable[item.type]) {
 				for (int i = tooltips.Count - 1; i >= 0; i--) {
 					switch (tooltips[i].Name) {
-						case "Placeable":
+						case "Placeable"://[sic]
 						case "Ammo":
 						case "Consumable":
 						case "Material":
@@ -331,7 +331,7 @@ namespace Origins.Items {
 				}
 			}
 		}
-		public override bool CanReforge(Item item)/* tModPorter Note: Use CanReforge instead for logic determining if a reforge can happen. */ {
+		public override bool CanReforge(Item item) {
 			if (PrefixLoader.GetPrefix(item.prefix) is ICanReforgePrefix canReforgePrefix) {
 				return canReforgePrefix.CanReforge(item);
 			}

@@ -20,10 +20,11 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			}
 		}
 	}
+	public interface ISometimesUseCanisters { }
 	public class RocketsAsCanisters : GlobalItem {
-		public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.useAmmo == ModContent.ItemType<Resizable_Mine_Wood>();
+		public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.useAmmo == ModContent.ItemType<Resizable_Mine_Wood>() || entity.ModItem is ISometimesUseCanisters;
 		public override bool? CanChooseAmmo(Item weapon, Item ammo, Player player) {
-			if (ammo.ammo == AmmoID.Rocket) {
+			if (ammo.ammo == AmmoID.Rocket && weapon.useAmmo == ModContent.ItemType<Resizable_Mine_Wood>()) {
 				return CanisterGlobalItem.ItemToCanisterID.ContainsKey(ammo.type);
 			}
 			return null;

@@ -83,10 +83,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Mine_Flayer_P : ModProjectile, ICanisterProjectile {
 		public override string Texture => "Terraria/Images/Item_1";
-		public static AutoLoadingAsset<Texture2D> outerTexture = ICanisterProjectile.base_texture_path + "Resizable_Mine_Outer";
-		public static AutoLoadingAsset<Texture2D> innerTexture = ICanisterProjectile.base_texture_path + "Resizable_Mine_Inner";
-		public AutoLoadingAsset<Texture2D> OuterTexture => outerTexture;
-		public AutoLoadingAsset<Texture2D> InnerTexture => innerTexture;
+		public static AutoLoadingTexture outerTexture = ICanisterProjectile.base_texture_path + "Resizable_Mine_Outer";
+		public static AutoLoadingTexture innerTexture = ICanisterProjectile.base_texture_path + "Resizable_Mine_Inner";
+		public AutoLoadingTexture OuterTexture => outerTexture;
+		public AutoLoadingTexture InnerTexture => innerTexture;
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 40;
 		}
