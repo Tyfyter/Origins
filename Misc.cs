@@ -1783,6 +1783,8 @@ namespace Origins {
 		public static Rectangle Frame(this AutoLoadingAsset<Texture2D> asset, int horizontalFrames = 1, int verticalFrames = 1, int frameX = 0, int frameY = 0, int sizeOffsetX = 0, int sizeOffsetY = 0) {
 			return asset.Value.Frame(horizontalFrames, verticalFrames, frameX, frameY, sizeOffsetX, sizeOffsetY);
 		}
+		public static Rectangle Frame(this Texture2D texture, Projectile projectile, int horizontalFrames = 1, int frameX = 0, int sizeOffsetX = 0, int sizeOffsetY = 0) =>
+			texture.Frame(horizontalFrames, Main.projFrames[projectile.type], frameX, projectile.frame, sizeOffsetX, sizeOffsetY);
 		public static Vector2 RotatedByRandom(this Vector2 vec, double maxRadians, UnifiedRandom rand) {
 			return vec.RotatedBy(rand.NextDouble() * maxRadians - rand.NextDouble() * maxRadians);
 		}

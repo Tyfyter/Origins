@@ -13,6 +13,7 @@ using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -86,12 +87,47 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			public int ShootTime => 9;
 			public int BaseVelocity => 8;
 			public int UseAmmo => AmmoID.Bullet;
+			static readonly AutoLoadingTexture texture = typeof(Smart_Turret).GetDefaultTMLName("_Head");
+			public void Draw(Projectile turret, Vector2 pivot, Color lightColor, SpriteEffects effects) {
+				Rectangle frame = texture.Frame(
+					verticalFrames: 8,
+					frameY: (int)((turret.ai[1] / ShootTime + (turret.localAI[2] % 2)) * 4) % 8
+				);
+				Main.EntitySpriteDraw(
+					texture,
+					pivot,
+					frame,
+					lightColor,
+					turret.rotation,
+					effects.ApplyToOrigin(new(14, 8), frame),
+					turret.scale,
+					effects
+				);
+			}
 		}
 		public readonly struct Canisters : IFiringMode {
 			float IFiringMode.SortIndex => 1;
 			public int ShootTime => 30;
 			public int BaseVelocity => 8;
 			public int UseAmmo => ModContent.ItemType<Resizable_Mine_Wood>();
+			static readonly AutoLoadingTexture texture = typeof(Smart_Turret).GetDefaultTMLName("_Head_Misil");
+			static readonly AutoLoadingTexture glowTexture = typeof(Smart_Turret).GetDefaultTMLName("_Head_Misil_Glow");
+			public void Draw(Projectile turret, Vector2 pivot, Color lightColor, SpriteEffects effects) {
+				DrawData data = new(
+					texture,
+					pivot,
+					null,
+					lightColor,
+					turret.rotation,
+					effects.ApplyToOrigin(new(10, 18), texture.Value.Bounds),
+					turret.scale,
+					effects
+				);
+				Main.EntitySpriteDraw(data);
+				data.texture = glowTexture;
+				data.color = Color.White;
+				Main.EntitySpriteDraw(data);
+			}
 			public bool Fire(Player owner, Projectile turret, Item fromItem, in TargetingData target) {
 				if (IFiringMode.IsBlocked(turret, in target)) return false;
 				if (!owner.PickAmmo(fromItem, out _, out float speed, out int damage, out float knockBack, out int usedAmmo)) return false;
@@ -112,6 +148,24 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			public int ShootTime => 20;
 			public int BaseVelocity => 8;
 			public int UseAmmo => AmmoID.Rocket;
+			static readonly AutoLoadingTexture texture = typeof(Smart_Turret).GetDefaultTMLName("_Head_Misil");
+			static readonly AutoLoadingTexture glowTexture = typeof(Smart_Turret).GetDefaultTMLName("_Head_Misil_Glow");
+			public void Draw(Projectile turret, Vector2 pivot, Color lightColor, SpriteEffects effects) {
+				DrawData data = new(
+					texture,
+					pivot,
+					null,
+					lightColor,
+					turret.rotation,
+					effects.ApplyToOrigin(new(10, 18), texture.Value.Bounds),
+					turret.scale,
+					effects
+				);
+				Main.EntitySpriteDraw(data);
+				data.texture = glowTexture;
+				data.color = Color.White;
+				Main.EntitySpriteDraw(data);
+			}
 		}
 		public static int UseAmmoType(Player player) => firingModes[GetUpgradeCount(player)].UseAmmo;
 		public static int GetUpgradeCount(Player player) => player.ownedProjectileCounts[Smart_Turret_Counter.ID];
@@ -126,7 +180,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 46;
-			Projectile.height = 56;
+			Projectile.height = 48;
 			Projectile.tileCollide = true;
 			Projectile.friendly = true;
 			Projectile.minion = true;
@@ -154,53 +208,77 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (targetingData.HasTarget) {
 				Vector2 diff = target.Center() - Projectile.Center;
 				Projectile.direction = Math.Sign(diff.X);
-				if (Projectile.ai[1].CycleDown(FiringMode.ShootTime, SpeedModifier) && Projectile.IsLocallyOwned()) {
+				diff += new Vector2(9 * Projectile.direction, 20);
+				if (OriginExtensions.AngularSmoothing(ref Projectile.rotation, diff.ToRotation(), 0.15f) && Projectile.ai[1].CycleDown(FiringMode.ShootTime, SpeedModifier) && Projectile.IsLocallyOwned()) {
 					using ScopedOverride<int> _a = fromItem.useAmmo.ScopedOverride(FiringMode.UseAmmo);
 					using ScopedOverride<int> _s = fromItem.shoot.ScopedOverride(ProjectileID.None);
 					using ScopedOverride<float> _ = fromItem.shootSpeed.ScopedOverride(fromItem.shootSpeed * FiringMode.BaseVelocity);
-					if (!FiringMode.Fire(Owner, Projectile, fromItem, in targetingData)) Projectile.ai[1] = 0;
+					if (FiringMode.Fire(Owner, Projectile, fromItem, in targetingData)) {
+						Projectile.localAI[2]++;
+					} else {
+						Projectile.ai[1] = 0;
+					}
 				}
 			} else {
 				target = RestRegion;
 				target.Inflate(0, 16 * 100);
 				Projectile.direction = Math.Sign(target.Center().X - Projectile.Center.X);
-				target.DrawDebugOutline();
 				shouldWalk = !target.Intersects(Projectile.Hitbox);
-				OriginExtensions.AngularSmoothing(ref Projectile.rotation, 0, 0.05f);//MathHelper.PiOver2 - 1.6f * Projectile.direction
+				OriginExtensions.AngularSmoothing(ref Projectile.rotation, MathHelper.PiOver2 - 1.6f * Projectile.direction, 0.05f);
 				Projectile.ai[0] = -2;
 			}
 			if (shouldWalk) {
-				Projectile.velocity.X += walkSpeed * Projectile.direction;
 				float dir = Projectile.velocity.X * Projectile.direction;
 				if (dir > 0) {
 					if (Projectile.localAI[0].CycleUp(6, dir)) Projectile.frame = (Projectile.frame + 1) % Main.projFrames[Type];
 				} else if (dir < 0) {
 					if (Projectile.localAI[0].CycleDown(6, dir)) Projectile.frame = (Projectile.frame + Main.projFrames[Type] - 1) % Main.projFrames[Type];
 				}
+				Projectile.velocity.X += walkSpeed * Projectile.direction;
 			} else if (Projectile.frame is not 0 and not 6 && Projectile.localAI[0].CycleUp(8)) Projectile.frame = (Projectile.frame + 1) % Main.projFrames[Type];
-				Projectile.velocity.X *= walkDrag;
+			Projectile.velocity.X *= walkDrag;
 			Projectile.velocity.Y += 0.4f;
 			Projectile.spriteDirection = Projectile.direction;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			if (Projectile.velocity.X != oldVelocity.X) {
-				Vector2 pos = Projectile.position;
-				Collision.StepDown(ref Projectile.position, ref oldVelocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
-				Collision.StepUp(ref Projectile.position, ref oldVelocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
-
-				if (Projectile.position == pos) {
-					int dir = Math.Sign(oldVelocity.X);
-					Vector2 collisionPos = (Projectile.Bottom + new Vector2(18 * dir, 0));
-					if (Framing.GetTileSafely(collisionPos.ToTileCoordinates()).HasFullSolidTile() && !Framing.GetTileSafely((collisionPos - new Vector2(0, 12)).ToTileCoordinates()).HasFullSolidTile()) {
-						Projectile.velocity.Y = -5;
-					}
+				int dir = Math.Sign(oldVelocity.X);
+				Vector2 collisionPos = (Projectile.Bottom + new Vector2(18 * dir, 0));
+				if (Framing.GetTileSafely(collisionPos.ToTileCoordinates()).HasFullSolidTile() && !Framing.GetTileSafely((collisionPos - new Vector2(0, 12)).ToTileCoordinates()).HasFullSolidTile()) {
+					Projectile.velocity.Y = -5;
 				}
 			}
 			return false;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			Collision.StepDown(ref Projectile.position, ref Projectile.velocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
+			Collision.StepUp(ref Projectile.position, ref Projectile.velocity, Projectile.width, Projectile.height, ref Projectile.stepSpeed, ref Projectile.gfxOffY);
 			fallThrough = targetingData.targetHitbox.Y > Projectile.BottomLeft.Y && (!targetingData.HasTarget || !CollisionExt.CanHitRay(Projectile.Center, targetingData.targetHitbox.Center()));
+			width = 38;
+			height = 36;
+			hitboxCenterFrac = new(0.5f + 2f * Projectile.direction / width, 0.5f - 6f / height);
 			return base.TileCollideStyle(ref width, ref height, ref fallThrough, ref hitboxCenterFrac);
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			SpriteEffects spriteEffects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+			Rectangle frame = texture.Frame(Projectile);
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.Center - Main.screenPosition,
+				frame,
+				lightColor,
+				0,
+				frame.Size() * 0.5f,
+				Projectile.scale,
+				spriteEffects
+			);
+
+			FiringMode.Draw(Projectile, Projectile.Center - Main.screenPosition - new Vector2(9 * Projectile.direction, 20), lightColor, spriteEffects switch {
+				SpriteEffects.FlipHorizontally => SpriteEffects.FlipVertically,
+				_ => SpriteEffects.None,
+			});
+			return false;
 		}
 		public override ref bool HasBuff(Player player) => ref player.OriginPlayer().smartTurret;
 		static readonly ClampedList<IFiringMode> firingModes = [];
@@ -211,16 +289,18 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			int UseAmmo { get; }
 			int IComparable<IFiringMode>.CompareTo(IFiringMode other) => SortIndex.CompareTo(other.SortIndex);
 			public sealed static bool IsBlocked(Projectile turret, in TargetingData target) => !CollisionExt.CanHitRay(turret.Center, target.Center);
+			void Draw(Projectile turret, Vector2 pivot, Color lightColor, SpriteEffects effects);
 			bool Fire(Player owner, Projectile turret, Item fromItem, in TargetingData target) {
 				if (IsBlocked(turret, in target)) return false;
 				if (!owner.PickAmmo(fromItem, out int projType, out float speed, out int damage, out float knockBack, out int usedAmmo)) return false;
-				SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1f).WithVolume(0.25f), turret.Center);
-				SoundEngine.PlaySound(SoundID.Item26.WithPitchRange(1.2f, 1.28f).WithVolume(0.1f), turret.Center);
-				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.2f, 0.3f).WithVolume(0.2f), turret.Center);
+				Vector2 gunPos = turret.Center - new Vector2(9 * turret.direction, 20);
+				SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(1f).WithVolume(0.25f), gunPos);
+				SoundEngine.PlaySound(SoundID.Item26.WithPitchRange(1.2f, 1.28f).WithVolume(0.1f), gunPos);
+				SoundEngine.PlaySound(SoundID.Item35.WithPitchRange(0.2f, 0.3f).WithVolume(0.2f), gunPos);
 				turret.SpawnProjectile(
 					new EntitySource_ItemUse_WithAmmo(owner, fromItem, usedAmmo),
-					turret.Center,
-					(target.Center - turret.Center).Normalized(out _) * speed,
+					gunPos,
+					(target.Center - gunPos).Normalized(out _) * speed,
 					projType,
 					damage,
 					knockBack
@@ -228,9 +308,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				return true;
 			}
 			struct LoadImpl : IAutoloader {
-				public static void Autoload(Mod mod, Type type) {
-					firingModes.InsertOrdered((IFiringMode)Activator.CreateInstance(type));
-				}
+				public static void Autoload(Mod mod, Type type) => firingModes.InsertOrdered((IFiringMode)Activator.CreateInstance(type));
 			}
 		}
 		readonly struct ClampedList<T>(IList<T> list) : IList<T> {
