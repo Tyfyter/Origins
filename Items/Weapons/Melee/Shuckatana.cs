@@ -95,15 +95,18 @@ namespace Origins.Items.Weapons.Melee {
 			Texture2D texture = TextureAssets.Item[Type].Value;
 			int frameY = 0;
 			frame = texture.Frame(verticalFrames: 7, frameY: frameY);
-			spriteBatch.Draw(texture, position, frame, drawColor, 0, origin, scale, SpriteEffects.None, 0);
+			spriteBatch.Draw(texture, position, frame, drawColor, 0, origin, scale * 1.4f, SpriteEffects.None, 0);
 			return false;
 		}
-		public override void AddRecipes() {
-			CreateRecipe()
-			.AddIngredient(ItemID.DirtBlock, 1)
-			.AddTile(TileID.Anvils)
-			.Register();
+		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
+			Texture2D texture = TextureAssets.Item[Type].Value;
+			Rectangle frame = texture.Frame(verticalFrames: 7, frameY: 0);
+			Vector2 origin = frame.Size() * 0.5f;
+			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
+			return false;
 		}
+		
+
 	}
 	public class Shuckatana_Slash : ModProjectile {
 		public override string Texture => typeof(Shuckatana).GetDefaultTMLName();
@@ -135,7 +138,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			Projectile.velocity = new Vector2(player.direction, 0);
 			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
-			Projectile.rotation = MathHelper.Lerp(-2f, 1.3f, swingFactor) * player.direction;
+			Projectile.rotation = MathHelper.Lerp(-2.8f, 1.3f, swingFactor) * player.direction;
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
 			Projectile.timeLeft = player.itemTime * Projectile.MaxUpdates + 2;
 			player.heldProj = Projectile.whoAmI;
@@ -155,11 +158,15 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			Player player = Main.player[Projectile.owner];
-			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * 2.2f;
+			Vector2 vel = Projectile.velocity.RotatedBy(Projectile.rotation) * Projectile.width * 0.7f;
 			vel.Y *= player.gravDir;
-			Rectangle hitbox = projHitbox;
-			hitbox.Offset((int)(vel.X * 0.5f), (int)(vel.Y * 0.5f));
-			return hitbox.Intersects(targetHitbox);
+			for (int j = 0; j <= 1; j++) {
+				Rectangle hitbox = projHitbox;
+				Vector2 offset = vel * (j + 0.5f);
+				hitbox.Offset((int)offset.X, (int)offset.Y);
+				if (hitbox.Intersects(targetHitbox)) return true;
+			}
+			return false;
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Player player = Main.player[Projectile.owner];
@@ -222,7 +229,7 @@ public class Shuckatana_P : ModProjectile {
 			if (Projectile.ai[0] > 0) {
 				NPC target = Main.npc[(int)Projectile.ai[0] - 1];
 				if (target.active) {
-					Projectile.Center = target.Center;
+					Projectile.Center = target.Center + new Vector2(Projectile.localAI[0], Projectile.localAI[1]);
 				} else {
 					Projectile.active = false;
 				}
@@ -240,12 +247,14 @@ public class Shuckatana_P : ModProjectile {
 		Projectile.penetrate = -1;
 		Projectile.velocity = Vector2.Zero;
 		Projectile.ai[0] = target.whoAmI + 1;
+		Projectile.localAI[0] = Projectile.Center.X - target.Center.X;
+		Projectile.localAI[1] = Projectile.Center.Y - target.Center.Y;
 		SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
 	}
 	public override bool PreDraw(ref Color lightColor) {
 		Texture2D texture = TextureAssets.Projectile[Type].Value;
 		Rectangle frame = texture.Frame(verticalFrames: 4, frameY: Projectile.frame);
-		Vector2 origin = new Vector2(frame.Width * 0.9f, frame.Height * 0.5f);
+		Vector2 origin = new Vector2(frame.Width * 0.75f, frame.Height * 0.5f);
 		if (!Lingering) {
 			for (int i = 0; i < Projectile.oldPos.Length; i++) {
 				float opacity = (1f - i / (float)Projectile.oldPos.Length) * 0.5f;
