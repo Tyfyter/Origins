@@ -15,6 +15,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public virtual bool IsArtifact => false;
 		public virtual bool DrawHealthBars => IsArtifact;
 		public virtual bool ShowCount => true;
+		public override string Texture => ModContent.HasAsset(base.Texture) ? base.Texture : base.Texture.Replace("Items/Weapons/Summoner", "Buffs");
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

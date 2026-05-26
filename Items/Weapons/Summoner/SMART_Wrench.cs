@@ -10,6 +10,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -24,11 +25,13 @@ namespace Origins.Items.Weapons.Summoner {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				if (proj.TryGetGlobalProjectile(out FriendlyGlobalProjectile friendlyGlobal)) {
 					friendlyGlobal.DamageTypeOverride = proj.CountsAsClass(DamageClasses.Explosive) ? DamageClasses.ExplosiveVersion[DamageClass.Summon] : DamageClass.Summon;
+					friendlyGlobal.forceMinionShot = true;
 				}
 			});
 		}
 		public override void SetDefaults() {
 			Item.damage = 40;
+			Item.knockBack = 1;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 18;
 			Item.width = 32;
@@ -52,11 +55,13 @@ namespace Origins.Items.Weapons.Summoner {
 			.Register();
 		public override bool CanUseItem(Player player) {
 			Item.useAmmo = AmmoID.None;
-			return base.CanUseItem(player);
+			if (player.ownedProjectileCounts[Item.shoot] < 2) return true;
+			ProjectileID.Sets.MinionCannotBeFreed[Item.shoot] = true;
+			return true;
 		}
 		public override bool CanShoot(Player player) {
 			Item.useAmmo = AmmoID.None;
-			return base.CanShoot(player);
+			return true;
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			Item.useAmmo = Smart_Turret.UseAmmoType(Main.LocalPlayer);
@@ -110,8 +115,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			public int ShootTime => 30;
 			public int BaseVelocity => 8;
 			public int UseAmmo => ModContent.ItemType<Resizable_Mine_Wood>();
-			static readonly AutoLoadingTexture texture = typeof(Smart_Turret).GetDefaultTMLName("_Head_Misil");
-			static readonly AutoLoadingTexture glowTexture = typeof(Smart_Turret).GetDefaultTMLName("_Head_Misil_Glow");
+			static readonly AutoLoadingTexture texture = typeof(Smart_Turret).GetDefaultTMLName("_Head_Canista");
+			static readonly AutoLoadingTexture glowTexture = typeof(Smart_Turret).GetDefaultTMLName("_Head_Canista_Glow");
 			public void Draw(Projectile turret, Vector2 pivot, Color lightColor, SpriteEffects effects) {
 				DrawData data = new(
 					texture,
@@ -119,7 +124,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					null,
 					lightColor,
 					turret.rotation,
-					effects.ApplyToOrigin(new(10, 18), texture.Value.Bounds),
+					effects.ApplyToOrigin(new(10, 8), texture.Value.Bounds),
 					turret.scale,
 					effects
 				);
@@ -131,11 +136,12 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			public bool Fire(Player owner, Projectile turret, Item fromItem, in TargetingData target) {
 				if (IFiringMode.IsBlocked(turret, in target)) return false;
 				if (!owner.PickAmmo(fromItem, out _, out float speed, out int damage, out float knockBack, out int usedAmmo)) return false;
-				SoundEngine.PlaySound(SoundID.Item61, turret.Center);
+				Vector2 gunPos = turret.Center - new Vector2(9 * turret.direction, 20);
+				SoundEngine.PlaySound(SoundID.Item61, gunPos);
 				turret.SpawnProjectile(
 					new EntitySource_ItemUse_WithAmmo(owner, fromItem, usedAmmo),
-					turret.Center,
-					(target.Center - turret.Center).Normalized(out _) * speed,
+					gunPos,
+					(target.Center - gunPos).Normalized(out _) * speed,
 					ModContent.ProjectileType<Smart_Turret_Canister_P>(),
 					damage,
 					knockBack
@@ -176,6 +182,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.projFrames[Type] = 12;
+			Origins.tickers.Add(new SetCanBeFreed(Type));
+		}
+		readonly struct SetCanBeFreed(int type) : ITicker {
+			void ITicker.Tick() => ProjectileID.Sets.MinionCannotBeFreed[type] = false;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
@@ -313,7 +323,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		readonly struct ClampedList<T>(IList<T> list) : IList<T> {
 			public ClampedList() : this([]) { }
-			public T this[int index] { get => list[int.Clamp(index, 0, Count)]; set => list[int.Clamp(index, 0, Count)] = value; }
+			public T this[int index] { get => list[int.Clamp(index, 0, Count - 1)]; set => list[int.Clamp(index, 0, Count - 1)] = value; }
 			public int Count => list.Count;
 			public bool IsReadOnly => list.IsReadOnly;
 			public void Add(T item) => list.Add(item);
