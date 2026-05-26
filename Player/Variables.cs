@@ -665,6 +665,8 @@ namespace Origins {
 		public const int scytheBladeDetachCombo = 3;
 		public const int maxScytheCombo = 10;
 		public int scytheHitCombo = 0;
+		public float shuckatanaDecay = 0;
+		public int shuckatanaDecayLingerTimer = 0;
 		public const int maxDangerTime = 5 * 60;
 		public int dangerTime = 0;
 		internal bool[] activeShadows = new bool[ShadowType.ShadowTypeCount];

@@ -8387,4 +8387,7 @@ Fortified_Steel_Wall2_Placed_Unsafe_Item: {
 CSTAA_Jacket: {
 	DisplayName: C S T A A Jacket
 	Tooltip: ""
+Shuckatana: {
+	Tooltip: ""
+	DisplayName: Shuckatana
 }
