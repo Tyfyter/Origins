@@ -246,8 +246,8 @@ namespace Origins.Projectiles {
 			return false;
 		}
 		protected override void BasicAI() {
-			if (wormData.Parent != -1 && GetParent()?.ModProjectile is not WormMinion) wormData.Parent = -1;
-			if (wormData.Child != -1 && GetChild()?.ModProjectile is not WormMinion) wormData.Child = -1;
+			if (wormData.Parent != -1 && GetParent()?.ModProjectile is not WormMinion { Projectile.active: true }) wormData.Parent = -1;
+			if (wormData.Child != -1 && GetChild()?.ModProjectile is not WormMinion { Projectile.active: true }) wormData.Child = -1;
 			if (Part == BodyPart.Head) {
 				base.BasicAI();
 				Projectile.localAI[1] = 0;
@@ -262,6 +262,7 @@ namespace Origins.Projectiles {
 				float parentRotation = 0f;
 				float parentDistance = 0f;
 
+				Projectile.localAI[1] = 0;
 				if (OriginExtensions.GetProjectile(Projectile.owner, wormData.Parent) is Projectile parent) {
 					if (parent.active && parent.ModProjectile is WormMinion parentSegment && parentSegment.Part.CanHaveChild() && IsValidParent(parent)) {
 						hasValidParent = true;

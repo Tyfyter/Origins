@@ -496,6 +496,15 @@ namespace Origins.Items.Accessories {
 				public override string Texture => $"Origins/NPCs/Riven/Cleaver_{Part}";
 				public override float ChildDistance => 16;
 				public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) => modifiers.SourceDamage *= 1f;// use this to adjust damage
+				public override Rectangle RestRegion {
+					get {
+						Rectangle hitbox = Owner.Hitbox.Add(Vector2.UnitX * Owner.direction * -80);
+						if (Owner.direction == -1) hitbox.X -= hitbox.Height - hitbox.Width;
+						hitbox.Width = hitbox.Height;
+						hitbox.Inflate(16, 16);
+						return hitbox;
+					}
+				}
 				public override void SetStaticDefaults() {
 					base.SetStaticDefaults();
 					SegmentTypes[Type] = true;
@@ -535,28 +544,53 @@ namespace Origins.Items.Accessories {
 							Gravity();
 						}
 					} else {
-						float speed = distance switch {
-							< 300f => 0.1f,
-							< 600f => 0.2f,
-							_ => 0.3f
-						};
-						Projectile.velocity += direction * speed;
-						if (Vector2.Dot(Projectile.velocity.Normalized(out _), direction) < 0.25f)
-							Projectile.velocity *= 0.8f;
+						if (Projectile.Hitbox.OverlapsAnyTiles(false)) {
+							float speed = distance switch {
+								< 300f => 0.3f,
+								< 600f => 0.6f,
+								_ => 0.9f
+							};
 
-						Projectile.velocity = Projectile.velocity.Normalized(out speed);
-						if (speed > 2) speed *= 0.96f;
-						Projectile.velocity *= Math.Min(speed, 15);
+							if (direction == default) {
+								if (!targetHitbox.Contains(Projectile.oldPosition)) {
+									Projectile.rotation += Main.rand.NextFloatDirection() * 1f;
+									speed *= 10;
+								}
+								direction = (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2();
+								speed *= 0.1f;
+							}
+
+							Projectile.velocity += direction * speed;
+							if (Vector2.Dot(Projectile.velocity.Normalized(out _), direction) < 0.25f)
+								Projectile.velocity *= 0.8f;
+
+							Projectile.velocity = Projectile.velocity.Normalized(out speed);
+							if (speed > 2) speed *= 0.96f;
+							Projectile.velocity *= Math.Min(speed, 15);
+						} else {
+							Gravity();
+						}
 					}
 				}
 				public override void AI() {
 					if (Projectile.ai[0] != 0) {
-						Gravity();
 						Projectile.timeLeft = 2;
+						if (Projectile.velocity == default) {
+							Projectile.localAI[2]++;
+							if (Projectile.localAI[2] > 5) Projectile.Kill();
+						} else {
+							Projectile.localAI[2] = 0;
+						}
+						Gravity();
 						Projectile.rotation += Projectile.velocity.X * 0.01f;
+						if (Projectile.alpha < 127 && !Projectile.Hitbox.OverlapsAnyTiles()) Projectile.tileCollide = true;
+						if (Projectile.tileCollide) Projectile.alpha = 0;
+						else if ((Projectile.alpha += Projectile.alpha >= 127 ? 15 : 5) >= 255) Projectile.Kill();
 						return;
 					}
+					bool hasParent = wormData.Parent != -1;
 					base.AI();
+					if (Part != BodyPart.Head && hasParent && Projectile.localAI[1] == 0) Projectile.ai[0] = 1;
 				}
 				public void Gravity() {
 					Projectile.velocity.Y += 0.3f;
@@ -566,7 +600,23 @@ namespace Origins.Items.Accessories {
 						Projectile.Kill();
 					}
 				}
+				public override bool OnTileCollide(Vector2 oldVelocity) {
+					Projectile.velocity = oldVelocity;
+					Projectile.Kill();
+					return false;
+				}
 				public override void OnKill(int timeLeft) {
+					if (Projectile.alpha < 127) OriginExtensions.LerpEquals(
+						ref Gore.NewGoreDirect(
+							Projectile.GetSource_Death(),
+							Projectile.position,
+							Projectile.velocity,
+							Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
+						).velocity,
+						Projectile.velocity,
+						0.5f
+					);
+
 					if (Part != BodyPart.Head) return;
 					foreach (Projectile segment in WalkWorm()) {
 						segment.ai[0] = 1;
@@ -575,6 +625,10 @@ namespace Origins.Items.Accessories {
 				}
 				bool hasEye = true;
 				public override ref bool HasBuff(Player player) {
+					if (Projectile.ai[0] != 0) {
+						hasEye = true;
+						return ref hasEye;
+					}
 					OriginPlayer originPlayer = Main.player[Projectile.owner].OriginPlayer();
 					if (originPlayer.spacePirateEye is null || Colors[originPlayer.spacePirateEyeSelection] is not Worms) hasEye = false;
 					return ref hasEye;
