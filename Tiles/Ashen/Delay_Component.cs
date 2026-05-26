@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Graphics;
 using Origins.Items.Tools.Wiring;
 using Origins.NPCs.Ashen;
 using Origins.UI;
@@ -27,6 +28,7 @@ using static Origins.Items.Tools.Wiring.Logic_Gate_System;
 namespace Origins.Tiles.Ashen {
 	public class Delay_Component : OriginTile, IComplexMineDamageTile, IAshenWireTile, IAshenPowerConduitTile {
 		public static int ID { get; private set; }
+		AutoLoadingTexture dotsTexture = typeof(Delay_Component).GetDefaultTMLName("_Dots");
 		public override void Load() {
 			new TileItem(this, textureOverride: Texture)
 			.WithExtraStaticDefaults(this.DropTileItem)
@@ -84,6 +86,13 @@ namespace Origins.Tiles.Ashen {
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			tileFrameX = 0;
 			tileFrameY = 0;
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			if (TileEntity.TryGet(i, j, out Delay_Component_TE te)) {
+				drawData.glowTexture = dotsTexture;
+				drawData.glowColor = Color.White;
+				drawData.glowSourceRect = new(0, 18 * te.Frame, 16, 16);
+			}
 		}
 		public record class UI(Point Position) : AComponentUI(Position) {
 			public UI(int i, int j) : this(new Point(i, j)) { }
@@ -151,6 +160,8 @@ namespace Origins.Tiles.Ashen {
 		public const int max = increment * 10 * 10;
 		public static int CurrentIncrement => ItemSlot.ShiftInUse ? (increment * 10) : increment;
 		public int Delay { get; private set; } = 60;
+		public int Frame => (timer[0] * 3) / Delay + (targetPowered ^ (timer[0] != 0)).Mul(3);
+
 		public override void NetSend(BinaryWriter writer) {
 			for (int i = 0; i < timer.Length; i++) writer.Write(timer[i]);
 			writer.Write(Delay);
