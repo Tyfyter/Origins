@@ -965,6 +965,7 @@ namespace Origins {
 					knockback
 				);
 			}
+			if (flakDashJacketItem is not null) flakDashJacketHit = info.DamageSource;
 			if (fullSend && info.DamageSource.SourceOtherIndex == OtherDeathReasonID.Fall) {
 				const float maxDist = 240 * 240;
 				double totalDamage = info.SourceDamage * (0.86 + fullSendHorseshoeBonus.Mul(0.07f));

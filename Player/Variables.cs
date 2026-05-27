@@ -19,6 +19,8 @@ using Origins.Projectiles.Misc;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using Terraria;
@@ -27,6 +29,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
+using static Tyfyter.Utils.WaveFunctionCollapse;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
@@ -154,6 +157,8 @@ namespace Origins {
 		public Item retributionShieldItem = null;
 		public Item barkShieldItem = null;
 		public Item flakJacketItem = null;
+		[AutoReset] public Item flakDashJacketItem = null;
+		public PlayerDeathReason flakDashJacketHit = null;
 		public bool unsoughtOrgan = false;
 		public Item unsoughtOrganItem = null;
 		public bool spiritShard = false;
@@ -690,6 +695,7 @@ namespace Origins {
 			Debugging.LogFirstRun(ResetEffects);
 			iFramesFromHurt.Cooldown();
 			if (vanityTail is null) vanityTailSegments.Clear();
+			if (flakDashJacketItem is null) flakDashJacketHit = null;
 			autoReset(this);
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
@@ -1443,6 +1449,34 @@ namespace Origins {
 	}
 	[AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
 	public sealed class AutoResetAttribute : Attribute {
+		public static Action<TEntity> GenerateSingle<TEntity>(string name) where TEntity : class {
+			DynamicMethod method = new("AutoReset", typeof(void), [typeof(TEntity)], true);
+			ILGenerator gen = method.GetILGenerator();
+			LocalBuilder @default = gen.DeclareLocal(typeof(TEntity));
+
+			gen.Emit(OpCodes.Call, ((Delegate)ModContent.GetInstance<TEntity>).Method);
+			gen.Emit(OpCodes.Stloc, @default);
+
+			FieldInfo field = typeof(TEntity).GetField(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+			Action generate = () => CopyField(gen);
+			foreach (AutoResetIfAttribute item in field.GetCustomAttributes<AutoResetIfAttribute>()) {
+				if (!item.IsValidOnType(typeof(TEntity))) throw new InvalidOperationException($"{item} is not valid on type {typeof(TEntity)}");
+				generate = Nest(item, generate);
+			}
+			generate();
+			void CopyField(ILGenerator gen) {
+				gen.Emit(OpCodes.Ldarg_0);
+				gen.Emit(OpCodes.Ldloc, @default);
+				gen.Emit(OpCodes.Ldfld, field);
+				gen.Emit(OpCodes.Stfld, field);
+			}
+
+			gen.Emit(OpCodes.Ret);
+
+			return method.CreateDelegate<Action<TEntity>>();
+			Action Nest(AutoResetIfAttribute item, Action generate) =>
+				() => item.Generate(gen, generate);
+		}
 		public static Action<TEntity> GenerateReset<TEntity>() where TEntity : class {
 			DynamicMethod method = new("AutoReset", typeof(void), [typeof(TEntity)], true);
 			ILGenerator gen = method.GetILGenerator();
@@ -1453,15 +1487,51 @@ namespace Origins {
 
 			foreach (FieldInfo field in typeof(TEntity).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
 				if (field.GetCustomAttribute<AutoResetAttribute>() is null) continue;
-				gen.Emit(OpCodes.Ldarg_0);
-				gen.Emit(OpCodes.Ldloc, @default);
-				gen.Emit(OpCodes.Ldfld, field);
-				gen.Emit(OpCodes.Stfld, field);
+				Action generate = () => CopyField(gen);
+				foreach (AutoResetIfAttribute item in field.GetCustomAttributes<AutoResetIfAttribute>()) {
+					if (!item.IsValidOnType(typeof(TEntity))) throw new InvalidOperationException($"{item} is not valid on type {typeof(TEntity)}");
+					generate = Nest(item, generate);
+				}
+				generate();
+				void CopyField(ILGenerator gen) {
+					gen.Emit(OpCodes.Ldarg_0);
+					gen.Emit(OpCodes.Ldloc, @default);
+					gen.Emit(OpCodes.Ldfld, field);
+					gen.Emit(OpCodes.Stfld, field);
+				}
 			}
 
 			gen.Emit(OpCodes.Ret);
 
 			return method.CreateDelegate<Action<TEntity>>();
+			Action Nest(AutoResetIfAttribute item, Action generate) =>
+				() => item.Generate(gen, generate);
 		}
+	}
+	[AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = true)]
+	public abstract class AutoResetIfAttribute : Attribute {
+		public abstract void Generate(ILGenerator gen, Action nextLayer);
+		public virtual bool IsValidOnType(Type type) => true;
+	}
+	public abstract class AutoResetIfAttribute<TEntity> : AutoResetIfAttribute {
+		static readonly List<AutoResetIfAttribute<TEntity>> attributes = [];
+		public sealed override void Generate(ILGenerator gen, Action nextLayer) {
+			Label label = gen.DefineLabel();
+			gen.Emit(OpCodes.Ldsfld, typeof(AutoResetIfAttribute<TEntity>).GetField(nameof(attributes), BindingFlags.NonPublic | BindingFlags.Static));
+			gen.Emit(OpCodes.Ldc_I4, attributes.Count);
+			attributes.Add(this);
+			gen.Emit(OpCodes.Callvirt, typeof(List<AutoResetIfAttribute<TEntity>>).GetMethod("get_Item"));
+			gen.Emit(OpCodes.Ldarg_0);
+			gen.Emit(OpCodes.Callvirt, typeof(AutoResetIfAttribute<TEntity>).GetMethod(nameof(ShouldReset)));
+			gen.Emit(OpCodes.Brfalse, label);
+			GenerateBaseCall(gen, nextLayer);
+			gen.MarkLabel(label);
+		}
+		public virtual void GenerateBaseCall(ILGenerator gen, Action nextLayer) => nextLayer();
+		public abstract bool ShouldReset(TEntity entity);
+		public override bool IsValidOnType(Type type) => type.IsAssignableTo(typeof(TEntity));
+	}
+	public class NotHoldingItemAttribute<TItem> : AutoResetIfAttribute<ModPlayer> where TItem : ModItem {
+		public override bool ShouldReset(ModPlayer entity) => entity.Player.HeldItem?.type != ModContent.ItemType<TItem>();
 	}
 }

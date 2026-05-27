@@ -8383,3 +8383,8 @@ Fortified_Steel_Wall2_Placed_Unsafe_Item: {
 	DisplayName: Registered Type-II Fortified Steel Wall
 	Tooltip: "'Neat, it has a built-in AshTag'"
 }
+
+CSTAA_Jacket: {
+	DisplayName: C S T A A Jacket
+	Tooltip: ""
+}

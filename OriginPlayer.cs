@@ -380,6 +380,20 @@ namespace Origins {
 				vaseDashDirection = 0;
 				dashVaseVisual = false;
 			}
+			if (Player.dashDelay > 12 && flakDashJacketItem is not null) {
+				if (Player.dashDelay % flakDashJacketItem.useTime == 0 && flakDashJacketHit is not null) {
+					Player.SpawnProjectile(
+						Player.GetSource_Accessory_OnHurt(flakDashJacketItem, flakDashJacketHit),
+						Player.MountedCenter,
+						Vector2.Zero,
+						flakDashJacketItem.shoot,
+						Player.GetWeaponDamage(flakDashJacketItem),
+						Player.GetWeaponKnockback(flakDashJacketItem)
+					);
+				}
+			} else {
+				flakDashJacketHit = null;
+			}
 			if (rebreather && Player.breath < Player.breathMax) {
 				if (Player.breathCD == 0 || rebreatherCounting) {
 					rebreatherCounting = true;

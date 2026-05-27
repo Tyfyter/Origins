@@ -863,7 +863,7 @@ MELEE WEAPONS:
 (^) Nematoclaw
 (X) Origins Biome Keybrands
 (X) Soulfire Saw
-(#, ^2) The Claw !!!
+(⛥) The Claw !!!
 (^) The Foot
 (^) The Muffler
 (X) Unicorn Lance
@@ -1384,7 +1384,7 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(@4, ^3) Delay Component !!! (visual indicator not currently visible in light)
+(☻) Delay Component !!!
 (^) Diode Component
 (^) Dirt Chest
 (^) Edge Detector
@@ -1441,7 +1441,7 @@ TILES:
 (^) Ashen Altar
 (^) Ashen Sootgrass Foliage
 (^) Background Door
-(#2/3, ^2) Beacon Light !!!
+(#2/3?, ^2) Beacon Light !!!
 (^) Brineglow Vine
 (^) Defiled Altar
 (^) Defiled Foliage
