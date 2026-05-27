@@ -358,97 +358,6 @@ Dialogue: {
 	}
 }
 
-TownNPCMood: {
-	Brine_Fiend: {
-		Content: Я была бы не против сегодня искупаться в Солёном пруду.
-		NoHome: Было бы неплохо иметь какое-нибудь укрытие, но я уже привыкла к враждебной среде.
-		FarFromHome: Я должна вернуться домой. Мне нужно проверить свои трофеи!
-		LoveSpace: Здесь очень малолюдно, в отличие от переполненных жизнью джунглей. И эта разница ощущается.
-		DislikeCrowded: Чем больше людей, тем хуже мои напитки...
-		HateCrowded: Я чувствую себя ещё хуже, чем во времена моих походов к Солёному пруду.
-		#for now custom happiness messages per-biome/NPC aren't supported, hopefully they will be by the time we don't have a workaround
-		LikeBiome: Мне по душе джунгли. Я рядом со своим домом и тем давно пропавшим ядовитым лабиринтом!
-		# LikeBiome_Jungle: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
-		
-		LoveBiome: К чёрту вождя клана! Я с гордостью останусь здесь, в Храме!
-		# LoveBiome_Temple: Screw the Ilkamin! I stand here proudly in the Temple!
-		
-		# HateBiome_Mushroom: The smell of mushrooms makes me sick, and I've smelled much worse.
-		# HateBiome_Mushroom: This place... Truffle does not even taste good.
-		
-		LikeBiome_Evil: Идеальное место для того, чтобы опробовать мою мегащелочную кислоту!
-		LikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		LikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		LikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		LikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		LoveNPC: "{NPC Name} явно имеет талант к искусству. Интересно, какие напитки мы могли бы приготовить вместе?"
-		# LoveNPC_WitchDoctor: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
-		
-		LikeNPC: "{NPCName} любит природу также, как и я. Я очень уважаю её за это."
-		# LikeNPC_Dryad: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
-		
-		DislikeNPC: "{NPCName} позволяет своим животным носиться туда-сюда, что меня очень раздражает. Она портит мне всю работу."
-		# DislikeNPC_Zoologist: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
-		
-		HateNPC: "{NPCName} следовало бы держаться от меня подальше, или ему не понравится то, что я с ним сделаю."
-	}
-
-	Cubekon_Tinkerer: {
-		Content: Хм, я был бы не против пройтись сегодня, турист.
-		NoHome: Мой рюкзак для квантового хранения работает идеально, но я бы всё равно хотел обустроить мастерскую и поэкспериментировать, смекаешь?
-		FarFromHome: Я собрал достаточно металлолома на сегодня. Пора бы и в мастерскую.
-		LoveSpace: Я будто снова стал ребёнком... Эта комната наводит меня на определённые мысли, но тебе не понять.
-		DislikeCrowded: Мне не очень нравится что-либо критиковать, но я хотел бы побыть наедине с собой.
-		LikeBiome: Это место довольно интересное. Интересно, тут неподалёку есть металлолом?
-		DislikeBiome_Evil: Я не любитель всякой жути, но спасибо тебе за предложение, террарианец.
-		DislikeBiome_Ashen: В этом месте было бы весело работать, однако оно мне не очень-то и нравится.
-		DislikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		DislikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		DislikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		DislikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		# LoveBiome_Underground: I love the Underground, closer to the Cubekons.
-		
-		LoveNPC: Сейчас у меня на уме только одно имя, террарианец. Угадаешь, кто это?
-		# LoveNPC_Cyborg: "{NPCName} is quite the work of art. I see something beyond all that circuitry."
-		
-		LikeNPC: "{NPCName} — порядочный человек, который, вероятно, сейчас в хорошем настроении..."
-		# LikeNPC_GoblinTinkerer: "{NPCName}'s work in the workshop always catches my eye. He just needs the right tools and he'd be unstoppable..."
-		# LikeNPC_Mechanic: "{NPCName} (GoblinT) and {NPCName} (Mechanic) are so cute together... I'm almost envious..."
-		
-		DislikeNPC: "{NPCName}... бедняга, которого мне хотелось бы знать получше..."
-	}
-
-	Cyborg: {
-	}
-
-	Defiled_Effigy: {
-		Content: Мы стремимся тратить время в настоящем.
-		NoHome: Убежище способно защитить нашу материю от стихий. Просим ваших ресурсов на построение убежища.
-		FarFromHome: Террарианец, мы заблудились. В какой стороне находится поселение?
-		LoveSpace: Низкое напряжение, здоровый пульс.
-		DislikeCrowded: Нас здесь не уважают, Террарианец... Дай нам больше пространства.
-		HateCrowded: Перенаселение пробуждает инстинкты. Исправь это немедленно, террарианец.
-		Ocean: Граница нашей клетки лежит пред нами, террарианец.
-		LoveBiome: Удовлетворительно. Духи наших братьев и сестёр приветствуют нас.
-		LikeBiome: Любое место сгодится для дома, если там есть мы.
-		HateBiome: Наши тела разлагаются на этих землях. Помоги нам, террарианец.
-		# HateBiome_Mushroom: This place. Truffle does not even feel anything.
-		# HateBiome_Ashen: Shocked. Curious of this place... but, it bothers us. Break it.
-		# HateBiome_Corruption: Corruption. Opposite of desires, Terrarian. Cleanse it.
-		# HateBiome_Crimson: Crimson bleeds the world of all life. We require hospitable land, Terrarian. Clot it.
-		# HateBiome_Riven_Hive: Hive stirs sickness, this is no healthy ecosystem. Fill this cavity before it destroys us.
-		
-		LikeNPC: "{NPCName} не надоедает нам. Полагаем, что наши желания... переплетаются."
-		# LikeNPC_Guide: "{NPCName} shares similar origins. {NPCName} understands."
-		# LikeNPC_WitchDoctor: "{NPCName} explored dark arts of Terraria. I value this."
-		
-		DislikeNPC: "{NPCName} представляет интерес... Однако, мы не переносим враждебности к нам."
-		# DislikeNPC_Truffle: "{NPCName}'s existence is obstacle to growth. We must take care of matter."
-		
-		HateNPC: "{NPCName} — наш заклятый враг. Она желает мира, в котором нет нас."
-	}
-}
-
 Interface: {
 	Journal: "{§Journal}"
 	Quests: Задания
@@ -3508,7 +3417,7 @@ Music: {
 	}
 
 	Shattered_Topography_Old: {
-		Name: Shattered Topography Old
+		Name: Shattered Topography (Old)
 		Subtitle: ""
 	}
 
