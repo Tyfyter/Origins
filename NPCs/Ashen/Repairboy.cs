@@ -250,7 +250,7 @@ namespace Origins.NPCs.Ashen {
 			}
 		}
 		public void PlayWeldingSound(int duration) {
-			weldingTorchSound.PlaySoundIfInactive(Origins.Sounds.WeldingTorch, NPC.Center, sound => {
+			weldingTorchSound.PlaySoundIfInactive(Origins.Sounds.WeldingTorch.WithVolumeScale(0.5f), NPC.Center, sound => {
 				sound.Position = NPC.Center;
 				return NPC.active && Main.npc[NPC.whoAmI] == NPC;
 			});

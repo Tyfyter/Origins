@@ -2,24 +2,24 @@ Amoeba_Buggy.DisplayName: Жучок-амёба
 Bug.DisplayName: Жук
 Cicada_3301.DisplayName: Цикада 3301
 Ancient_Defiled_Cyclops.DisplayName: Древний осквернённый циклоп
-Chunky_Slime.DisplayName: Плотный слизень
+Chunky_Slime.DisplayName: Коренастый слизень
 
 Defiled_Amalgamation: {
-	DisplayName: Осквернённое Слияние
+	DisplayName: "Осквернённое Слияние"
 	BossChecklistIntegration.SpawnCondition: Используйте [i:Origins/Nerve_Impulse_Manipulator] или сломайте 3 осквернённые трещины в пропасти Осквернённых_пустошей.
 }
 
-Defiled_Brute.DisplayName: Осквернённый крушитель
-Defiled_Cyclops.DisplayName: Осквернённый циклоп
-Defiled_Digger_Body.DisplayName: Осквернённая землеройка
-Defiled_Digger_Head.DisplayName: Осквернённая землеройка
-Defiled_Digger_Tail.DisplayName: Осквернённая землеройка
-Defiled_Flyer.DisplayName: Осквернённый фантом
-Defiled_Mimic.DisplayName: Осквернённый мимик
-Defiled_Mite.DisplayName: Осквернённый клещ
-Defiled_Swarmer.DisplayName: Осквернённый роевик
-Defiled_Tripod.DisplayName: Осквернённая тренога
-Defiled_Wisp.DisplayName: Осквернённый дух
+Defiled_Brute.DisplayName: "Осквернённый крушитель"
+Defiled_Cyclops.DisplayName: "Осквернённый циклоп"
+Defiled_Digger_Body.DisplayName: "Осквернённая землеройка"
+Defiled_Digger_Head.DisplayName: "Осквернённая землеройка"
+Defiled_Digger_Tail.DisplayName: "Осквернённая землеройка"
+Defiled_Flyer.DisplayName: "Осквернённый фантом"
+Defiled_Mimic.DisplayName: "Осквернённый мимик"
+Defiled_Mite.DisplayName: "Осквернённый клещ"
+Defiled_Swarmer.DisplayName: "Осквернённый роевик"
+Defiled_Tripod.DisplayName: "Осквернённая тренога"
+Defiled_Wisp.DisplayName: "Осквернённый дух"
 Enchanted_Trident.DisplayName: Проклятый двузубец
 Shattered_Goldfish.DisplayName: Разбитая золотая рыбка
 Shattered_Mummy.DisplayName: Разбитая мумия
@@ -33,7 +33,7 @@ Fiberglass_Weaver: {
 }
 
 Swarmer.DisplayName: Роевик
-Buckethead_Zombie.DisplayName: Ведроголовый зомби
+Buckethead_Zombie.DisplayName: Ведроголовый зомби 
 Conehead_Zombie.DisplayName: Конусоголовый зомби
 Cranivore.DisplayName: Черепоед
 Crimbrain.DisplayName: Багромозг
@@ -48,7 +48,7 @@ Cleaver_Tail.DisplayName: Кливер
 Flagellant.DisplayName: Флагеллянт
 Measly_Moeba.DisplayName: Микроамёба
 Pustule_Jelly.DisplayName: Гнойная медуза
-Riven_Fighter.DisplayName: Праформа {§Riven}а
+Riven_Fighter.DisplayName: "Праформа {§Riven}а"
 Ancient_Riven_Fighter.DisplayName: Древняя праформа {§Riven}а
 Riven_Mimic.DisplayName: "{§Riven}анный мимик"
 Riven_Mummy.DisplayName: Амёбная мумия
@@ -56,18 +56,18 @@ Rivenator_Body.DisplayName: Миточервь
 Rivenator_Head.DisplayName: Миточервь
 Rivenator_Tail.DisplayName: Миточервь
 Single_Cellular_Nautilus.DisplayName: Одноклеточный наутилус
-World_Cracker_Body.DisplayName: Разрушитель миров
+World_Cracker_Body.DisplayName: Содрогатель миров
 
 World_Cracker_Head: {
-	DisplayName: Разрушитель миров
+	DisplayName: Содрогатель миров
 
 	BossChecklistIntegration: {
-		EntryName: Разрушитель миров
-		SpawnCondition: Используйте [i:Origins/Sus_Ice_Cream] или сломайте 3 гелевые опухоли в пропасти Разрезанного улья.
+		EntryName: Содрогатель миров
+		SpawnCondition: Используйте [i:Origins/Sus_Ice_Cream] или сломайте 3 гелиевые опухоли в пропасти Разрезанного улья.
 	}
 }
 
-World_Cracker_Tail.DisplayName: Разрушитель миров
+World_Cracker_Tail.DisplayName: Содрогатель миров
 Bottomfeeder.DisplayName: Кормилец глубин
 Spider_Amoeba.DisplayName: Паук-амёба
 Spider_Amoeba_Wall.DisplayName: "{$Mods.Origins.NPCs.Spider_Amoeba.DisplayName}"
@@ -88,13 +88,13 @@ Brine_Fiend: {
 		HateCrowded: Я чувствую себя ещё хуже, чем во времена моих походов к Солёному пруду.
 		#for now custom happiness messages per-biome/NPC aren't supported, hopefully they will be by the time we don't have a workaround
 		LikeBiome: Мне по душе джунгли. Я рядом со своим домом и тем давно пропавшим ядовитым лабиринтом!
-		# LikeBiome_Jungle: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
+		# LikeBiome_Jungle: Мне по душе джунгли. Я рядом со своим домом и тем давно пропавшим ядовитым лабиринтом!
 		
 		LoveBiome: К чёрту вождя клана! Я с гордостью останусь здесь, в Храме!
-		# LoveBiome_Temple: Screw the Ilkamin! I stand here proudly in the Temple!
+		# LoveBiome_Temple: К чёрту Илькамина! Я с гордостью останусь здесь, в Храме!
 		
-		# HateBiome_Mushroom: The smell of mushrooms makes me sick, and I've smelled much worse.
-		# HateBiome_Mushroom: This place... Truffle does not even taste good.
+		# HateBiome_Mushroom: Меня тошнит от запаха грибов, и поверь мне, я имела дело с запахами гораздо похуже.
+		# HateBiome_Mushroom: Это место... Да Трюффель противен даже на вкус.
 		
 		LikeBiome_Evil: Идеальное место для того, чтобы опробовать мою мегащелочную кислоту!
 		LikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
@@ -102,13 +102,13 @@ Brine_Fiend: {
 		LikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
 		LikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
 		LoveNPC: "{NPC Name} явно имеет талант к искусству. Интересно, какие напитки мы могли бы приготовить вместе?"
-		# LoveNPC_WitchDoctor: "{NPCName}'s arts are so impressive. I wonder what kind of brew we can make together?"
+		# LoveNPC_WitchDoctor: "{NPC Name} явно имеет талант к искусству. Интересно, какие напитки мы могли бы приготовить вместе?"
 		
 		LikeNPC: "{NPCName} любит природу также, как и я. Я очень уважаю её за это."
-		# LikeNPC_Dryad: "{NPCName} enjoys nature as much as I do. I consider her with high regard."
+		# LikeNPC_Dryad: "{NPCName} любит природу также, как и я. Я очень уважаю её за это."
 		
 		DislikeNPC: "{NPCName} позволяет своим животным носиться туда-сюда, что меня очень раздражает. Она портит мне всю работу."
-		# DislikeNPC_Zoologist: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
+		# DislikeNPC_Zoologist: "{NPCName} позволяет своим животным носиться туда-сюда, что меня очень раздражает. Она портит мне всю работу."
 		
 		HateNPC: "{NPCName} следовало бы держаться от меня подальше, или ему не понравится то, что я с ним сделаю."
 		HateBiome: Я ненавижу {BiomeName}.
@@ -117,7 +117,7 @@ Brine_Fiend: {
 	}
 
 	Dialogue: {
-		Standard1: Мои товары обычно довольно соленоваты, поосторожнее, [player:_].
+		Standard1: Мои товары обычно довольно солоноваты, поосторожнее, [player:_].
 		Standard2: Нет, я не делаю возвраты из-за того, что наш договор растворило солью.
 		Standard3: Во мне нет ничего странного, совершенно ничего...
 		Standard4: В целях следующего эксперимента, я опробую свои смеси на живых организмах.
@@ -147,7 +147,7 @@ Brine_Fiend: {
 }
 
 Defiled_Effigy: {
-	DisplayName: Осквернённая статуя
+	DisplayName: "Осквернённая статуя"
 
 	TownNPCMood: {
 		Content: Мы стремимся тратить время в настоящем.
@@ -160,18 +160,18 @@ Defiled_Effigy: {
 		LoveBiome: Удовлетворительно. Духи наших братьев и сестёр приветствуют нас.
 		LikeBiome: Любое место сгодится для дома, если там есть мы.
 		HateBiome: Наши тела разлагаются на этих землях. Помоги нам, террарианец.
-		# HateBiome_Mushroom: This place. Truffle does not even feel anything.
-		# HateBiome_Ashen: Shocked. We are curious of this place... but, it bothers us. Break it.
-		# HateBiome_Corruption: Corruption. Opposite of our desires, Terrarian. Cleanse it.
-		# HateBiome_Crimson: The Crimson bleeds the world of all life. We require hospitable land, Terrarian. Clot it.
-		# HateBiome_Riven_Hive: Hive stirs sickness, this is no healthy ecosystem. Fill this cavity before it destroys us.
+		# HateBiome_Mushroom: Это место. Трюффель даже ничего не чувствует.
+		# HateBiome_Ashen: Шокированы. Нам любопытно это место... Однако оно нас беспокоит. Унитожь его.
+		# HateBiome_Corruption: Порча. Она есть противоположность нашим желаниям, террарианец. Очисти её.
+		# HateBiome_Crimson: Багрянец вынуждает живой мир кровоточить. Нам нужна гостеприимная земля, террарианец. Выкопай его.
+		# HateBiome_Riven_Hive: Улей порождает болезни, это нездоровая экосистема. Затопи его прежде, чем он нас уничтожит.
 		
 		LikeNPC: "{NPCName} не надоедает нам. Полагаем, что наши желания... переплетаются."
-		# LikeNPC_Guide: "{NPCName} shares similar origins. {NPCName} understands."
-		# LikeNPC_WitchDoctor: "{NPCName} has explored the dark arts of Terraria. We value this."
+		# LikeNPC_Guide: "{NPCName} имеет схожее происхождение. {NPCName} понимает."
+		# LikeNPC_WitchDoctor: "{NPCName} изучил тёмные искусства Террарии. Мы ценим это."
 		
 		DislikeNPC: "{NPCName} представляет интерес... Однако, мы не переносим враждебности к нам."
-		# DislikeNPC_Truffle: "{NPCName}'s existence is obstacle to growth. We must take care of matter."
+		# DislikeNPC_Truffle: "Существование такого существа, как {NPCName} мешает нашему росту. Мы должны беречь материю."
 		
 		HateNPC: "{NPCName} — наш заклятый враг. Она желает мира, в котором нет нас."
 		LikeNPC_Princess: Нам нравится {NPCName}.
@@ -185,10 +185,10 @@ Defiled_Effigy: {
 		Standard3: Что именно ищется тобою? Предметы, знания или что-то иное?
 		Standard4: Выживание — это необходимость, желание — это второстепенность. Ты выживаешь или желаешь?
 		Standard5: Мир без нас — это ошибочный мир. Цель наша — порядок и единство, не так ли?
-		DefiledNotPresent: Обеспокоины. Ты-.. Мы не понимаем...
+		DefiledNotPresent: Обеспокоены. Ты-.. Мы не понимаем...
 		Guide1: "[npcname:Guide] не очень-то и много говорит о своём прошлом, так ведь?"
-		Guide2: "[npcname:Guide] обладает собственной куклой, которая есть у демонов. Ты никогда не задумывался, для чего она? Мы знаем..."
-		Dryad1: Род, из которого происходит [npcname:Dryad], пытался уничтожить нас во младенчестве. Ты такой же, как и она, не так ли?
+		Guide2: [npcname:Guide] обладает собственной куклой, которая есть у демонов. Ты никогда не задумывался, для чего она? Мы знаем...
+		Dryad1: "Род, из которого происходит [npcname:Dryad], пытался уничтожить нас во младенчестве. Ты такой же, как и она, не так ли?"
 		Dryad2: "[npcname:Dryad] за весь свой примитивный цикл жизни не прервёт наш. Запомни это."
 		Party: Слишком грустны для вечеринок. [npcname:PartyGirl] поймёт...
 		Wind: *Дышит чрезмерно часто...* Просим прощения, мы не любим пыльцу...
@@ -223,14 +223,14 @@ Cubekon_Tinkerer: {
 		DislikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
 		DislikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
 		DislikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		# LoveBiome_Underground: I love the Underground, closer to the Cubekons.
+		# LoveBiome_Underground: Мне нравится подземелье, оно ближе к Кубикону.
 		
 		LoveNPC: Сейчас у меня на уме только одно имя, террарианец. Угадаешь, кто это?
-		# LoveNPC_Cyborg: "{NPCName} is quite the work of art. I see something beyond all that circuitry."
+		# LoveNPC_Cyborg: "{NPCName} — это настоящее произведение искусства. Я вижу нечто большее, чем просто набор электросхем."
 		
 		LikeNPC: "{NPCName} — порядочный человек, который, вероятно, сейчас в хорошем настроении..."
-		# LikeNPC_GoblinTinkerer: "{NPCName}'s work in the workshop always catches my eye. He just needs the right tools and he'd be unstoppable..."
-		# LikeNPC_Mechanic: "{NPCName} (GoblinT) and {NPCName} (Mechanic) are so cute together... I'm almost envious..."
+		# LikeNPC_GoblinTinkerer: "То, как {NPCName} работает в своей мастерской, всегда меня привлекало. Ему просто нужны правильные инструменты, и его будет не остановить."
+		# LikeNPC_Mechanic: "{NPCName} (GoblinT) и {NPCName} (Mechanic) так мило смотрятся вместе... Я почти завидую..."
 		
 		DislikeNPC: "{NPCName}... бедняга, которого мне хотелось бы знать получше..."
 	}
@@ -242,7 +242,7 @@ Mother-Unit: {
 }
 
 PartyGirl.TownNPCMood_PartyGirl.LoveBiome_Space: Я наконец-то попала в космос!!!
-Defiled_Squid.DisplayName: Осквернённый кальмар
+Defiled_Squid.DisplayName: "Осквернённый кальмар"
 Savage_Whip.DisplayName: Дикий хлыст
 Savage_Whip_Segment.DisplayName: Дикий хлыст
 Traffic_Cone_NPC.DisplayName: Дорожный конус
@@ -252,10 +252,10 @@ Riven_Pigron.DisplayName: Свинокрыл
 Defiled_Pigron.DisplayName: Свинокрыл
 Amoebeye.DisplayName: Амёглаз
 Amoebeye_P.DisplayName: Пузырёк амёглаза
-Defiled_Asphyxiator.DisplayName: Осквернённый терзатель
+Defiled_Asphyxiator.DisplayName: "Осквернённый терзатель"
 Etherealizer.DisplayName: Эфиризатор
 Etherealizer_P.DisplayName: Дух эфиризатора
-Defiled_Watcher.DisplayName: Осквернённый смотритель
+Defiled_Watcher.DisplayName: "Осквернённый смотритель"
 Graveshield_Zombie.DisplayName: Зомби с надгробием
 Enchanted_Fiberglass_Cannon.DisplayName: Зачарованная стекловолоконная пушка
 Ancient_Defiled_Flyer.DisplayName: Древний осквернённый фантом
@@ -265,12 +265,12 @@ Dryad: {
 	CorruptWorld: Порча стремится превратить этот мир в безлюдную пустошь! Ты должен искоренить эту заразу.
 	CrimsonWorld: Багрянец заливает чистоту этого мира кровью. Ты должен излечить мир от этой раны.
 	DefiledWorld1: Мой род едва изгнал Скверну в {§Dusk}. Теперь она возвратилась и стала сильнее, чем прежде...
-	DefiledWorld2: "{§Defiled} живёт за счёт своих ресурсов, но даже это уже слишком для этого мира..."
+	DefiledWorld2: {§Defiled} живёт за счёт своих ресурсов, но даже это уже слишком для этого мира...
 	WindyDefiled: В Осквернённых пустошах никогда не бывает ветров, это дыхание...
 	DefiledHeartDown: На этом для Скверны настал конец. Прикончи её.
 	BeforeDefeatS: Ты пробовал использовать очищающий порошок на... погоди-ка...
 	BeforeDefeatDA: Ты пробовал использовать очищающий порошок на осквернённом камене?
-	BeforeDefeatWC: Ты пробовал использовать очищающий порошок на сгустке плоти?
+	BeforeDefeatWC: Ты пробовал использовать очищающий порошок на сгустке плоти?	
 
 	PurifySuccess: {
 		0: Я благодарна тебе за то, что ты не поддался злу. Надеюсь, это поможет тебе не терять дух.
@@ -346,34 +346,34 @@ Brine_Serpent_Head.DisplayName: Солёный змей
 Brine_Serpent_Tail.DisplayName: Солёный змей
 
 Lost_Diver: {
-	DisplayName: Потерянный дайвер
+	DisplayName: Потерянный Дайвер
 
 	BossChecklistIntegration: {
 		SpawnCondition: Используйте [i:Origins/Lost_Picture_Frame] в Солёных прудах или убейте {$Mods.Origins.NPCs.Rock_Bottom.DisplayName}
-		EntryName: Потерянный дайвер
+		EntryName: Потерянный Дайвер
 	}
 }
 
-Lost_Diver_Transformation.DisplayName: Трансформация Потерянного дайвера
+Lost_Diver_Transformation.DisplayName: Трансформация Потерянного Дайвера
 Mildew_Carrion.DisplayName: "{§Mildew_Carrion}"
 Trijaw_Shark_Feesh.DisplayName: Рыба трёхчелюстной акулы
-Lost_Diver_Spawn.DisplayName: Выводок Потерянного дайвера
+Lost_Diver_Spawn.DisplayName: Выводок Потерянного Дайвера
 Rock_Bottom.DisplayName: Каменистое дно
 Boulder_Mimic.DisplayName: Мимик валуна
 Catacomb_Clearer.DisplayName: Очиститель катакомб
-Mildew_Carrion_Tentacle.DisplayName: Тентакль заплесневелой гнили
-Mildew_Carrion_Mildew_Creeper.DisplayName: Ползун заплесневелой гнили
-Mildew_Carrion_Tendril.DisplayName: Усик заплесневелой гнили
+Mildew_Carrion_Tentacle.DisplayName: "Тентакль заплесневелой гнили"
+Mildew_Carrion_Mildew_Creeper.DisplayName: "Ползун заплесневелой гнили"
+Mildew_Carrion_Tendril.DisplayName: "Усик заплесневелой гнили"
 Cannihound.DisplayName: Гончая-каннибал
 Aqueoua.DisplayName: Аквеоа
 Shelly_Aqueoua.DisplayName: Чешуйчатая аквеоа
-Defiled_Chrysalis.DisplayName: Осквернённая куколка
+Defiled_Chrysalis.DisplayName: "Осквернённая куколка"
 Defiled_Chrysalis_Nearby_Spawn.DisplayName: "{§Defiled} Chrysalis Nearby Spawn"
 Abandoned_Bomb.DisplayName: Брошенная бомба
-Defiled_Broadcaster.DisplayName: Осквернённый вещатель
+Defiled_Broadcaster.DisplayName: "Осквернённый вещатель"
 
 DA_Body_Part: {
-	DisplayName: Часть тела {§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName}
+	DisplayName: "Часть тела {§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName}"
 	DisplayNameFormattable: "{0} {§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName}"
 	torso: Тело
 	arm: Рука
@@ -384,7 +384,7 @@ DA_Body_Part: {
 
 Enchanted_Fiberglass_Slime.DisplayName: Зачарованный стекловолоконный слизень
 
-Shimmer_Construct: {
+Shimmer_	: {
 	DisplayName: Конструкт Мерцания
 	BossChecklistIntegration.SpawnCondition: Окуните {$NPCName.EyeofCthulhu} в Мерцание
 }
@@ -410,7 +410,7 @@ Debug_Shoot_NPC: {
 	DisplayName: Debug_ Shoot_ N P C
 
 	TownNPCMood: {
-		Content: Мне всё нравится.
+	        Content: Мне всё нравится.
 		NoHome: Я ненавижу, когда у меня нет дома.
 		FarFromHome: Я слишком далеко от дома.
 		LoveSpace: Мне нравится, когда у меня так много места.
@@ -418,6 +418,7 @@ Debug_Shoot_NPC: {
 		HateCrowded: Я ненавижу, что вокруг настолько много людей.
 		LikeNPC_Princess: Мне нравится {NPCName}.
 		Princess_LovesNPC: Мне нравится {NPCName}.
+
 	}
 }
 
@@ -449,11 +450,3 @@ Oil_Ghoul.DisplayName: Нефтяной упырь
 Scared_Bunny.DisplayName: Напуганный кролик
 Springjumper.DisplayName: Пружинник
 Trenchmaker_Turret.DisplayName: Турель окопника
-// Wind_Pail.DisplayName: Wind Pail
-// Cartwheeler_Large.DisplayName: Cartwheeler
-// Cartwheeler_Medium.DisplayName: "{$Cartwheeler_Large.DisplayName}"
-// Cartwheeler_Small.DisplayName: "{$Cartwheeler_Large.DisplayName}"
-// Defensive_Turret.DisplayName: Defensive Turret
-// Reject_2.DisplayName: Reject
-// Reject_1.DisplayName: Reject
-// Reject_3.DisplayName: Reject

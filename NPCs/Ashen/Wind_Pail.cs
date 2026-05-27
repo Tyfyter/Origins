@@ -5,7 +5,6 @@ using Origins.Items.Armor.Ashen;
 using Origins.Items.Other.Consumables.Food;
 using Origins.LootConditions;
 using ReLogic.Utilities;
-using System;
 using System.Numerics;
 using Terraria;
 using Terraria.Audio;

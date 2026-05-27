@@ -1,13 +1,12 @@
-// WarningPrefaceText: Some errors were encountered during mod loading, these may be the result of incompatibility with other mods
-// MissingDropRule: "{0} drop rule not present in {1}"
-// FancyLightingWallShineDelegateMissing: Could not find the method responsible for Fancy Lighting's wall lighting
-// ToxicShockILEditFail: Could not make Toxic Shock prevent breath regeneration
-// ILEditException: Error while applying IL edit {0}, some functionality may not work as intended, see client.log for more details
-// DetourBindFail: Error while applying detour {0}, some functionality may not work as intended, see client.log for more details
-// AvalonPotatoMine: Due to tModLoader not supporting custom pressure plates, Potato Mines are disabled with Exxo Avalon Origins enabled, as they cannot coexist with the pressure plate it adds, I have submitted a solution to this issue to tModLoader.
+WarningPrefaceText: Во время загрузки модификации были обнаружены ошибки. Вероятна несовместимость с другими активными модами
+MissingDropRule: "{0} правило удаления отсутствует в {1}"
+FancyLightingWallShineDelegateMissing: Не удалось найти способ, отвечающий за освещение стен Fancy Lightning
+ToxicShockILEditFail: Не удалось предотвратить регенерацию дыхания токсическим шоком
+ILEditException: Произошла ошибка во время применения IL {0}, некоторые функции могут работать не так, как задумано. См. client.log для больших подробностей 
+AvalonPotatoMine: В связи с тем, что tModLoader не поддерживает пользовательские нажимные плиты, картофельные мины не работают с включённым Exxo Avalon Origins, поскольку они не совместимы с добавляемой модификацией пользовательской нажимной плитой. Мы предложили решение этой проблемы в сам tML.
 
 DropRuleType: {
-	// Main: Main
-	// Emblem: Emblem
-	// Weapon: Weapon
+	Main: Основное
+	Emblem: Эмблема
+	Weapon: Оружие
 }
