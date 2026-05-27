@@ -22,6 +22,7 @@ namespace Origins.Tiles.Other {
 				item.autoReuse = true;
 				item.consumable = true;
 			}).WithSet(() => ItemID.Sets.ExoticPlantsForDyeTrade).WithExtraStaticDefaults(item => {
+				item.ResearchUnlockCount = 3;
 				Main.RegisterItemAnimation(item.type, new DrawAnimationDelegated(_ => new(4, 6, 26, 32)));
 			}).RegisterItem();
 			Origins.DoILEdit(WorldGen.plantDye, BlockNewStrangePlants);
