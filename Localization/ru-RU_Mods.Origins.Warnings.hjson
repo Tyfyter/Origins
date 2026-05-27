@@ -2,7 +2,8 @@ WarningPrefaceText: Во время загрузки модификации бы
 MissingDropRule: "{0} правило удаления отсутствует в {1}"
 FancyLightingWallShineDelegateMissing: Не удалось найти способ, отвечающий за освещение стен Fancy Lightning
 ToxicShockILEditFail: Не удалось предотвратить регенерацию дыхания токсическим шоком
-ILEditException: Произошла ошибка во время применения IL {0}, некоторые функции могут работать не так, как задумано. См. client.log для больших подробностей 
+ILEditException: Произошла ошибка во время применения IL {0}, некоторые функции могут работать не так, как задумано. См. client.log для больших подробностей
+// DetourBindFail: Error while applying detour {0}, some functionality may not work as intended, see client.log for more details
 AvalonPotatoMine: В связи с тем, что tModLoader не поддерживает пользовательские нажимные плиты, картофельные мины не работают с включённым Exxo Avalon Origins, поскольку они не совместимы с добавляемой модификацией пользовательской нажимной плитой. Мы предложили решение этой проблемы в сам tML.
 
 DropRuleType: {
