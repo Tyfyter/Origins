@@ -1410,7 +1410,7 @@ TILES:
 (^) Oil Derrick
 (^) Pocket Dimension Monolith
 (X) Qube Generator
-(#2, ^2) Radio Component !!! (see coding channel)
+(☻) Radio Component !!!
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Snake
 (X) Ravel Lock: Stacker
