@@ -95,8 +95,8 @@ namespace Origins.Tiles.Ashen {
 					Width = new(root.Width.Pixels, 0),
 					Height = new(root.Height.Pixels, 0)
 				};
-				InitializeHooks();
 				root.Append(wireRoot);
+				InitializeHooks();
 				return () => deactivate?.Invoke();
 			}
 			void InitializeHooks() {
@@ -141,6 +141,7 @@ namespace Origins.Tiles.Ashen {
 							if (wires.Contains(-1)) return false;
 							int result = wires[0] & a_mask;
 							if ((wires[1] - wires[0] + 3) % 3 != 1) result |= b_mask;
+							new Radio_Component_TE.Set_Wires_Action(Position.X, Position.Y, (byte)result).Perform();
 							return true;
 						},
 						new(24, 62),
