@@ -685,6 +685,7 @@ namespace Origins.Items.Tools.Wiring {
 				}
 				public override void OnActivate() {
 					CalculatedStyle parent = Parent.GetDimensions();
+					if (parent.Width == 0 || parent.Height == 0) return;
 					switch (wireType) {
 						case 0:
 						disconnectedPosition ??= new(parent.Width * 0.25f - 2, parent.Height - 8);
