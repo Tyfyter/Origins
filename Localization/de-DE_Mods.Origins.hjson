@@ -2248,6 +2248,8 @@ Projectiles: {
 	// Shuckatana_P.DisplayName: Shuckatana_ P
 	// Shuckatana_Swing.DisplayName: Shuckatana_ Swing
 	// Shuckatana_Slash.DisplayName: Shuckatana_ Slash
+	// Shuckatana_ShootAnim.DisplayName: Shuckatana_ Shoot Anim
+	// Shuckatana_ShootAnimation.DisplayName: Shuckatana_ Shoot Animation
 }
 
 Prefixes: {
