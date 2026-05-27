@@ -87,6 +87,7 @@ namespace Origins.Items.Weapons.Summoner {
 }
 namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Smart_Turret : MinionBase {
+		static readonly AutoLoadingTexture skateTexture = typeof(Smart_Turret).GetDefaultTMLName("_Skate");
 		public readonly struct Bullets : IFiringMode {
 			float IFiringMode.SortIndex => 0;
 			public int ShootTime => 9;
@@ -210,6 +211,42 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				Projectile.Kill();
 				return;
 			}
+			Vector2 directionToIdlePosition = (Projectile.Center.Clamp(RestRegion) - Projectile.Center).Normalized(out float distanceToIdlePosition);
+			if (Projectile.IsLocallyOwned()) {
+				if (distanceToIdlePosition > 600) {
+					if (distanceToIdlePosition > 2000) {
+						Projectile.Center = RestRegion.Center();
+						Projectile.velocity *= 0.1f;
+						Projectile.netUpdate = true;
+					} else {
+						Projectile.ai[2] = 1;
+						Projectile.netUpdate = true;
+					}
+				}
+			}
+			if (Projectile.ai[2] == 1) {
+				Projectile.localAI[1] = 300;
+				float speed = 16 * SpeedModifier;
+				float inertia = 12f;
+				Min(ref speed, distanceToIdlePosition);
+				Vector2 direction = directionToIdlePosition * speed;
+				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
+				if (Math.Abs(directionToIdlePosition.X * distanceToIdlePosition) > 1) Projectile.direction = Math.Sign(directionToIdlePosition.X);
+				else Projectile.direction = Owner.direction;
+				Projectile.tileCollide = false;
+				if (Projectile.localAI[0].CycleUp(6, 1)) Projectile.frame = (Projectile.frame + 1) % 18;
+				if (distanceToIdlePosition > 64 || Projectile.Hitbox.OverlapsAnyTiles()) return;
+				if (!Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height + 16)) {
+					Rectangle floorbox = Projectile.Hitbox;
+					floorbox.Offset(0, Projectile.height);
+					floorbox.Height = 16 * 4;
+					if (!floorbox.OverlapsAnyTiles(false)) return;
+				}
+				Projectile.ai[2] = 0;
+				Projectile.netUpdate = true;
+				Projectile.frame = 0;
+			}
+			Projectile.tileCollide = true;
 			float walkSpeed = 0.1f * SpeedModifier;
 			const float walkDrag = 0.95f;
 			Projectile.minionSlots = UpgradeCount > 0 ? float.BitDecrement(1) : 1;
@@ -271,15 +308,20 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			int frameCount = Main.projFrames[Type];
+			if (Projectile.ai[2] != 0) {
+				texture = skateTexture;
+				frameCount = 18;
+			}
 			SpriteEffects spriteEffects = Projectile.direction == 1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-			Rectangle frame = texture.Frame(Projectile);
+			Rectangle frame = texture.Frame(verticalFrames: frameCount, frameY: Projectile.frame);
 			Main.EntitySpriteDraw(
 				texture,
 				Projectile.Center - Main.screenPosition,
 				frame,
 				lightColor,
 				0,
-				frame.Size() * 0.5f,
+				(spriteEffects ^ SpriteEffects.FlipHorizontally).ApplyToOrigin(new(23, 29), frame),
 				Projectile.scale,
 				spriteEffects
 			);
