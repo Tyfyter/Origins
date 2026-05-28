@@ -2246,9 +2246,7 @@ Projectiles: {
 	// CSTAA_Jacket_Flak_2.DisplayName: C S T A A Jacket Flak_2
 	// CSTAA_Jacket_Flak_3.DisplayName: C S T A A Jacket Flak_3
 	// Shuckatana_P.DisplayName: Shuckatana_ P
-	// Shuckatana_Swing.DisplayName: Shuckatana_ Swing
 	// Shuckatana_Slash.DisplayName: Shuckatana_ Slash
-	// Shuckatana_ShootAnim.DisplayName: Shuckatana_ Shoot Anim
 	// Shuckatana_ShootAnimation.DisplayName: Shuckatana_ Shoot Animation
 }
 

@@ -11,8 +11,8 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Shuckatana : ModItem {
-		public const int MaxDecayFrames = 3;
-		public const float DecayDuration = 4f * 60f;
+		public static int MaxDecayFrames = 3;
+		public static float DecayDuration = 4f * 60f;
 
 		public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Type] = true;
@@ -234,8 +234,8 @@ public class Shuckatana_ShootAnimation : ModProjectile {
 	}
 }
 	public class Shuckatana_P : ModProjectile {
-		public const int LingerTime = 180;
-		public const int CrumbleFrames = 3;
+		public static int LingerTime = 180;
+		public static int CrumbleFrames = 3;
 		bool Lingering {
 			get => Projectile.ai[1] == 1f;
 			set => Projectile.ai[1] = value ? 1f : 0f;
