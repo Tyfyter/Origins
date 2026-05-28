@@ -222,12 +222,13 @@ namespace Origins.NPCs.Ashen.Boss {
 				for (int i = 0; i < legs.Length; i++) {
 					GetLegPositions(legs[i], out _, out _, out Vector2 footPos);
 					Rectangle pos = new((int)footPos.X - 27, (int)footPos.Y, 54, 14);
-					if (Main.LocalPlayer.controlDown) pos.DrawDebugOutline();
 					float origY = footPos.Y;
 					while (pos.OverlapsAnyTiles()) {
 						footPos.Y = float.Ceiling(footPos.Y) - 1;
 						pos.Y = (int)footPos.Y;
+						if (Math.Abs(footPos.Y - origY) > 16) break;
 					}
+					if (Math.Abs(footPos.Y - origY) > 16) continue;
 					NPC.position.Y += footPos.Y - origY;
 					if (footPos.Y - origY != 0) Min(ref NPC.velocity.Y, Math.Max(footPos.Y - origY, -1));
 				}
@@ -559,7 +560,6 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override int Music => Origins.Music.AshenBoss;
 	}
 	public class ScrewdriverRule(int itemId, int chanceDenominator, int chanceNumerator = 1) : CommonDrop(itemId, chanceDenominator, chanceNumerator: chanceNumerator) {
-		static bool IsScrewdriver(Item item) => item.ModItem is Screwdriver or Ashen_Grand_Design;
 		public override void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
 			float num = chanceNumerator / (float)chanceDenominator;
 			float dropRate = num * ratesInfo.parentDroprateChance;
@@ -579,12 +579,12 @@ namespace Origins.NPCs.Ashen.Boss {
 				int item = Item.NewItem(info.npc.GetSource_Loot(), info.npc.position, info.npc.Size, itemId, 1, noBroadcast: true, -1);
 				Main.timeItemSlotCannotBeReusedFor[item] = 54000;
 				for (int i = 0; i < 255; i++) {
-					if (Main.player[i].active && info.npc.playerInteraction[i] && !Main.player[i].HasItemInAnyInventory(IsScrewdriver)) {
+					if (Main.player[i].active && info.npc.playerInteraction[i] && !Main.player[i].HasItemInAnyInventory(AshenWireTool.IsScrewdriver)) {
 						NetMessage.SendData(MessageID.InstancedItem, i, -1, null, item);
 					}
 				}
 				Main.item[item].active = false;
-			} else if (!info.player.HasItemInAnyInventory(IsScrewdriver)) {
+			} else if (!info.player.HasItemInAnyInventory(AshenWireTool.IsScrewdriver)) {
 				CommonCode.DropItem(info, itemId, 1);
 			}
 			result = default;
@@ -592,7 +592,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			return result;
 		}
 		public class Condition : IItemDropRuleCondition {
-			public bool CanDrop(DropAttemptInfo info) => !info.player.HasItemInAnyInventory(IsScrewdriver);
+			public bool CanDrop(DropAttemptInfo info) => !info.player.HasItemInAnyInventory(AshenWireTool.IsScrewdriver);
 			public bool CanShowItemDropInUI() => true;
 			public string GetConditionDescription() => Language.GetTextValue("Mods.Origins.Conditions.NoDuplicates");
 		}

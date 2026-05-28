@@ -1642,24 +1642,44 @@ namespace Origins {
 		public static void EnableShadow<TShadow>(this Player player) where TShadow : ShadowType {
 			player.OriginPlayer().activeShadows[ModContent.GetInstance<TShadow>().Type] = true;
 		}
-		public static bool HasItem(this Item[] collection, Predicate<Item> item) {
-			for (int i = 0; i < collection.Length; i++) {
-				if ((collection[i]?.stack ?? 0) > 0 && item(collection[i])) return true;
-			}
-			return false;
-		}
-
+		struct HasItemPegFlag : IMovedToPegFlag { }
+		[Obsolete("Moved to PegasusLib for extensibility purposes")]
 		public static bool HasItemInAnyInventory(this Player player, Predicate<Item> item) {
-			if (player.inventory.HasItem(item)) return true;
-			if (player.armor.HasItem(item)) return true;
-			if (player.dye.HasItem(item)) return true;
-			if (player.miscEquips.HasItem(item)) return true;
-			if (player.miscDyes.HasItem(item)) return true;
-			if (player.bank.item.HasItem(item)) return true;
-			if (player.bank2.item.HasItem(item)) return true;
-			if (player.bank3.item.HasItem(item)) return true;
-			if (player.bank4.item.HasItem(item)) return true;
+			if (HasItem(player.inventory, item)) return true;
+			if (HasItem(player.armor, item)) return true;
+			if (HasItem(player.dye, item)) return true;
+			if (HasItem(player.miscEquips, item)) return true;
+			if (HasItem(player.miscDyes, item)) return true;
+			if (HasItem(player.bank.item, item)) return true;
+			if (HasItem(player.bank2.item, item)) return true;
+			if (HasItem(player.bank3.item, item)) return true;
+			if (HasItem(player.bank4.item, item)) return true;
 			return false;
+			static bool HasItem(Item[] collection, Predicate<Item> item) {
+				for (int i = 0; i < collection.Length; i++) {
+					if ((collection[i]?.stack ?? 0) > 0 && item(collection[i])) return true;
+				}
+				return false;
+			}
+		}
+		[Obsolete("Moved to PegasusLib for extensibility purposes")]
+		public static bool HasItemInAnyInventory(this Player player, bool[] itemSet) {
+			if (player.HasItem(itemSet)) return true;
+			if (HasItem(player.armor, itemSet)) return true;
+			if (HasItem(player.dye, itemSet)) return true;
+			if (HasItem(player.miscEquips, itemSet)) return true;
+			if (HasItem(player.miscDyes, itemSet)) return true;
+			if (HasItem(player.bank.item, itemSet)) return true;
+			if (HasItem(player.bank2.item, itemSet)) return true;
+			if (HasItem(player.bank3.item, itemSet)) return true;
+			if (HasItem(player.bank4.item, itemSet)) return true;
+			return false;
+			static bool HasItem(Item[] collection, bool[] itemSet) {
+				for (int i = 0; i < collection.Length; i++) {
+					if ((collection[i]?.stack ?? 0) > 0 && itemSet[collection[i].type]) return true;
+				}
+				return false;
+			}
 		}
 		public static int CountItem(this Player player, int type, Item[] inventory, int stopCountingAt = 0) {
 			int num = 0;

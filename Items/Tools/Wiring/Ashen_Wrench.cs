@@ -43,7 +43,9 @@ public class Ashen_Grand_Design_White_Logic : Ashen_Grand_Design {
 	public override int Rarity => ItemRarityID.Yellow;
 	public override void AddRecipes() => AddAllRecipes();
 }
+[ReinitializeDuringResizeArrays]
 public abstract class AshenWireTool : WireTool {
+	public static bool[] IsScrewdriver = ItemID.Sets.Factory.CreateBoolSet();
 	protected abstract Upgrades Parts { get; }
 	[Flags]
 	protected enum Upgrades {
@@ -69,6 +71,7 @@ public abstract class AshenWireTool : WireTool {
 			..GetIf(Upgrades.Logic, Language.GetOrRegister($"Mods.Origins.Items.{nameof(Screwdriver_Upgrade_Logic)}.UpgradeTooltip"))
 		]);
 	public override void SetStaticDefaults() {
+		IsScrewdriver[Type] = Parts.Has(Upgrades.Screwdriver);
 		Item.staff[Type] = true;
 	}
 	public override void UpdateInventory(Player player) {

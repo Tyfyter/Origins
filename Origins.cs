@@ -1145,6 +1145,9 @@ namespace Origins {
 	internal interface IMoveToPegFlag : IBroken {
 		static string IBroken.BrokenReason => "Move to PegasusLib";
 	}
+	internal interface IMovedToPegFlag : IBroken {
+		static string IBroken.BrokenReason => "Moved to PegasusLib";
+	}
 	internal interface IDebugFlag : ILoadable, IBrokenContent {
 		string IBrokenContent.BrokenReason => "Debugging flag enabled";
 		void ILoadable.Load(Mod mod) { }
