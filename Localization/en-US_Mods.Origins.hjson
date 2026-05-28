@@ -2240,12 +2240,12 @@ Projectiles: {
 	Pirate_Eye_Worms.DisplayName: Pirate Eye Worms
 	Smart_Turret.DisplayName: Smart Turret
 	Smart_Turret_Counter.DisplayName: Smart Turret Counter
-	Smart_Turret_Canister_P.DisplayName: Smart Turret Canister P
-	CSTAA_Jacket_Explosion.DisplayName: C S T A A Jacket Explosion
-	CSTAA_Jacket_Flak_1.DisplayName: C S T A A Jacket Flak_1
-	CSTAA_Jacket_Flak_2.DisplayName: C S T A A Jacket Flak_2
-	CSTAA_Jacket_Flak_3.DisplayName: C S T A A Jacket Flak_3
-	Shuckatana_P.DisplayName: Shuckatana decay
+	Smart_Turret_Canister_P.DisplayName: Smart Turret Canister
+	CSTAA_Jacket_Explosion.DisplayName: C.S.T.A.A. JacketExplosion
+	CSTAA_Jacket_Flak_1.DisplayName: C.S.T.A.A. Jacket Flak
+	CSTAA_Jacket_Flak_2.DisplayName: C.S.T.A.A. Jacket Flak
+	CSTAA_Jacket_Flak_3.DisplayName: C.S.T.A.A. Jacket Flak
+	Shuckatana_P.DisplayName: Shuckatana Decay
 	Shuckatana_Slash.DisplayName: Shuckatana Slash Animation
 	Shuckatana_ShootAnimation.DisplayName: Shuckatana Shoot Animation
 }
