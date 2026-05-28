@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using Origins.Projectiles;
 using PegasusLib;
 using System;
 using Terraria;
@@ -38,9 +39,6 @@ namespace Origins.Items.Weapons.Melee {
 			Item.autoReuse = false;
 		}
 		public override bool AltFunctionUse(Player player) => player.OriginPlayer().shuckatanaDecay >= MaxDecayFrames;
-		public override bool CanUseItem(Player player) {
-			return true;
-		}
 		public override bool? UseItem(Player player) {
 			if (player.altFunctionUse == 2) SoundEngine.PlaySound(SoundID.Item1, player.MountedCenter);
 			else SoundEngine.PlaySound(SoundID.Item1.WithPitch(-0.3f), player.MountedCenter);
@@ -64,7 +62,7 @@ namespace Origins.Items.Weapons.Melee {
 				return false;
 			}
 			foreach (Projectile p in Main.ActiveProjectiles) {
-				if (p.owner == player.whoAmI && p.type == ModContent.ProjectileType<Shuckatana_Slash>()) {
+				if (p.owner == player.whoAmI && p.type == Item.shoot) {
 					p.active = false;
 					break;
 				}
@@ -83,7 +81,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
 			Texture2D texture = TextureAssets.Item[Type].Value;
-			OriginPlayer op = Main.player[Main.myPlayer].OriginPlayer();
+			OriginPlayer op = Main.LocalPlayer.OriginPlayer();
 			int frameY;
 			if (op.shuckatanaShootAnimationTimer > 0) {
 				frameY = 4 + (int)((18 - op.shuckatanaShootAnimationTimer) / 6f);
@@ -101,11 +99,13 @@ namespace Origins.Items.Weapons.Melee {
 			spriteBatch.Draw(texture, Item.Center - Main.screenPosition, frame, lightColor, rotation, origin, scale, SpriteEffects.None, 0f);
 			return false;
 		}
+		public override bool MeleePrefix() => true;
 	}
 	public class Shuckatana_Slash : ModProjectile {
 		public override string Texture => typeof(Shuckatana).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 7;
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Melee;
@@ -182,57 +182,58 @@ namespace Origins.Items.Weapons.Melee {
 			return false;
 		}
 	}
-public class Shuckatana_ShootAnimation : ModProjectile {
-	public override string Texture => typeof(Shuckatana).GetDefaultTMLName();
-	public override void SetStaticDefaults() {
-		Main.projFrames[Type] = 7;
-	}
-	public override void SetDefaults() {
-		Projectile.DamageType = DamageClass.Melee;
-		Projectile.friendly = false;
-		Projectile.width = 1;
-		Projectile.height = 1;
-		Projectile.aiStyle = 0;
-		Projectile.penetrate = -1;
-		Projectile.tileCollide = false;
-		Projectile.ignoreWater = true;
-		Projectile.timeLeft = 18;
-	}
-	public override bool ShouldUpdatePosition() => false;
-	public override void AI() {
-		Player player = Main.player[Projectile.owner];
-		if (player.dead || player.CCed || player.HeldItem.type != ModContent.ItemType<Shuckatana>()) {
-			Projectile.active = false;
-			return;
+	public class Shuckatana_ShootAnimation : ModProjectile {
+		public override string Texture => typeof(Shuckatana).GetDefaultTMLName();
+		public override void SetStaticDefaults() {
+			Main.projFrames[Type] = 7;
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 		}
-		player.heldProj = Projectile.whoAmI;
-		Projectile.velocity = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.UnitX * player.direction);
-		Projectile.rotation = Projectile.velocity.ToRotation();
-		float realRotation = Projectile.rotation;
-		player.SetCompositeArmFront(false, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
-		Projectile.Center = player.GetCompositeArmPosition(false);
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClass.Melee;
+			Projectile.friendly = false;
+			Projectile.width = 1;
+			Projectile.height = 1;
+			Projectile.aiStyle = 0;
+			Projectile.penetrate = -1;
+			Projectile.tileCollide = false;
+			Projectile.ignoreWater = true;
+			Projectile.timeLeft = 18;
+		}
+		public override bool ShouldUpdatePosition() => false;
+		public override void AI() {
+			Player player = Main.player[Projectile.owner];
+			if (player.dead || player.CCed || player.HeldItem.type != ModContent.ItemType<Shuckatana>()) {
+				Projectile.active = false;
+				return;
+			}
+			player.heldProj = Projectile.whoAmI;
+			Projectile.velocity = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.UnitX * player.direction);
+			Projectile.rotation = Projectile.velocity.ToRotation();
+			float realRotation = Projectile.rotation;
+			player.SetCompositeArmFront(false, Player.CompositeArmStretchAmount.Full, realRotation - MathHelper.PiOver2);
+			Projectile.Center = player.GetCompositeArmPosition(false);
+		}
+		public override bool? CanHitNPC(NPC target) => false;
+		public override bool PreDraw(ref Color lightColor) {
+			Player player = Main.player[Projectile.owner];
+			SpriteEffects effects = player.direction * player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+			if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally;
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			int frameY = Math.Clamp(4 + (int)((18 - Projectile.timeLeft) / 6f), 4, 6);
+			Rectangle frame = texture.Frame(verticalFrames: 7, frameY: frameY);
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.Center - Main.screenPosition,
+				frame,
+				lightColor,
+				Projectile.rotation + (0.25f * player.direction) + (MathHelper.PiOver4 * player.direction * player.gravDir) - (player.gravDir < 0).Mul(MathHelper.PiOver2 * player.direction),
+				new Vector2(8, 6).Apply(effects ^ SpriteEffects.FlipVertically, texture.Size() / new Vector2(1, 7)),
+				Projectile.scale,
+				effects
+			);
+			return false;
+		}
 	}
-	public override bool? CanHitNPC(NPC target) => false;
-	public override bool PreDraw(ref Color lightColor) {
-		Player player = Main.player[Projectile.owner];
-		SpriteEffects effects = player.direction * player.gravDir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
-		if (player.gravDir < 0) effects ^= SpriteEffects.FlipVertically | SpriteEffects.FlipHorizontally;
-		Texture2D texture = TextureAssets.Projectile[Type].Value;
-		int frameY = Math.Clamp(4 + (int)((18 - Projectile.timeLeft) / 6f), 4, 6);
-		Rectangle frame = texture.Frame(verticalFrames: 7, frameY: frameY);
-		Main.EntitySpriteDraw(
-			texture,
-			Projectile.Center - Main.screenPosition,
-			frame,
-			lightColor,
-			Projectile.rotation + (0.25f * player.direction) + (MathHelper.PiOver4 * player.direction * player.gravDir) - (player.gravDir < 0).Mul(MathHelper.PiOver2 * player.direction),
-			new Vector2(8, 6).Apply(effects ^ SpriteEffects.FlipVertically, texture.Size() / new Vector2(1, 7)),
-			Projectile.scale,
-			effects
-		);
-		return false;
-	}
-}
 	public class Shuckatana_P : ModProjectile {
 		public static int LingerTime => 180;
 		public static int CrumbleFrames => 3;
@@ -244,6 +245,7 @@ public class Shuckatana_ShootAnimation : ModProjectile {
 			Main.projFrames[Type] = 4;
 			ProjectileID.Sets.TrailingMode[Type] = 2;
 			ProjectileID.Sets.TrailCacheLength[Type] = 6;
+			MeleeGlobalProjectile.ApplyScaleToProjectile[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Melee;

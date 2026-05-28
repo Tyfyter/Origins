@@ -947,7 +947,6 @@ namespace Origins {
 			tileTransformsOnKill = TileID.Sets.Factory.CreateBoolSet(false);
 			tileBlocksMinecartTracks = TileID.Sets.Factory.CreateBoolSet(false);
 			wallBlocksMinecartTracks = WallID.Sets.Factory.CreateBoolSet(false);
-			MeleeGlobalProjectile.applyScaleToProjectile = ItemID.Sets.Factory.CreateBoolSet();
 			BannerGlobalNPC.BuildBannerCache();
 			Array.Resize(ref itemGlowmasks, ItemLoader.ItemCount);
 			for (int i = 0; i < ItemLoader.ItemCount; i++) {

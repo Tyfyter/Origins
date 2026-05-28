@@ -5,13 +5,12 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Tyfyter.Utils;
 
 namespace Origins.Projectiles {
 	//separate global for organization
+	[ReinitializeDuringResizeArrays]
 	public class MeleeGlobalProjectile : GlobalProjectile {
-		internal static bool[] applyScaleToProjectile;
-		public static bool[] ApplyScaleToProjectile { get => applyScaleToProjectile; }
+		public static bool[] ApplyScaleToProjectile { get; } = ItemID.Sets.Factory.CreateBoolSet();
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		float scaleModifier = 1f;
