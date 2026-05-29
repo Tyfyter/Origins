@@ -23,7 +23,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.DefaultToIncantation(25);
 			Item.shoot = ModContent.ProjectileType<Neutron_Soup_P>();
 			Item.shootSpeed = 10f;
-			Item.mana = 18;
+			Item.mana = 24;
 			Item.knockBack = 1f;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
