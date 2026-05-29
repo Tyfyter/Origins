@@ -19,11 +19,11 @@ namespace Origins.Items.Weapons.Summoner {
 			OriginsSets.Items.ItemsThatCanChannelWithRightClick[Type] = true;
 		}
 		public override void SetDefaults() {
-			Item.damage = 10;
-			Item.DefaultToIncantation(26);
+			Item.damage = 80;
+			Item.DefaultToIncantation(25);
 			Item.shoot = ModContent.ProjectileType<Neutron_Soup_P>();
 			Item.shootSpeed = 10f;
-			Item.mana = 14;
+			Item.mana = 18;
 			Item.knockBack = 1f;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
@@ -35,7 +35,12 @@ namespace Origins.Items.Weapons.Summoner {
 			.AddIngredient(ItemID.FragmentStardust, 18)
 			.AddTile(TileID.LunarCraftingStation)
 			.Register();
-		public override void UseItemFrame(Player player) => Incantations.HoldItemFrame(player);
+		public override void UseItemFrame(Player player) {
+			Incantations.HoldItemFrame(player);
+			OriginPlayer originPlayer = player.OriginPlayer();
+			originPlayer.neutronSoupOffset += originPlayer.neutronSoupSpeed;
+			originPlayer.neutronSoupOffset -= originPlayer.neutronSoupOffset * 0.01f;
+		}
 		public override void HoldItemFrame(Player player) => Incantations.HoldItemFrame(player);
 		public bool BackHand => true;
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) => Incantations.DrawInHand(
@@ -45,14 +50,27 @@ namespace Origins.Items.Weapons.Summoner {
 		);
 		public override bool AltFunctionUse(Player player) => true;
 		public override float UseTimeMultiplier(Player player) {
-			if (player.altFunctionUse == 2) return 0.25f;
+			if (player.altFunctionUse == 2) return 0.2f;
 			return 1;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (player.altFunctionUse == 2) {
 				type = ModContent.ProjectileType<Neutron_Soup_Flames>();
-				velocity *= 0.5f;
+				OriginPlayer originPlayer = player.OriginPlayer();
+				if (player.ItemUsesThisAnimation == 1) originPlayer.neutronSoupSpeed = Main.rand.NextFloat(0.02f, 0.025f) * Main.rand.NextBool().ToDirectionInt();
+				velocity = velocity.RotatedBy(originPlayer.neutronSoupOffset) * 0.5f;
 			}
+		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (player.altFunctionUse == 2) {
+				Vector2 shootDir = velocity.Normalized(out _);
+				Vector2 moveDir = new(player.controlRight.ToInt() - player.controlLeft.ToInt(), player.controlDown.ToInt() - player.controlUp.ToInt());
+				if (moveDir.LengthSquared() > 1) moveDir.Normalize();
+				player.velocity -= velocity * 0.2f
+					* Utils.GetLerpValue(-16, 0, Vector2.Dot(player.velocity, shootDir), true)
+					* Utils.Remap(Vector2.Dot(moveDir, shootDir), 0, 1, 1, 0.25f);
+			}
+			return true;
 		}
 	}
 	public class Neutron_Soup_P : ModProjectile {
@@ -98,7 +116,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.friendly = true;
 			Projectile.alpha = 255;
 			Projectile.extraUpdates = 2;
-			Projectile.DamageType = DamageClass.Ranged;
+			Projectile.DamageType = DamageClasses.Incantation;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
 			for (int i = 0; i < Projectile.oldPos.Length; i++)

@@ -1,5 +1,4 @@
-﻿using Newtonsoft.Json.Linq;
-using Origins.Achievements;
+﻿using Origins.Achievements;
 using Origins.Buffs;
 using Origins.Dusts;
 using Origins.Items.Accessories;
@@ -19,8 +18,6 @@ using Origins.Projectiles.Misc;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using Terraria;
@@ -29,7 +26,6 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
-using static Tyfyter.Utils.WaveFunctionCollapse;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
@@ -583,6 +579,8 @@ namespace Origins {
 		public bool autohandcannonJammed = false;
 		[AutoReset] public bool matryoshkaDoll;
 		[AutoReset] public bool smartTurret;
+		[LinearReset(0.001f)] public float neutronSoupSpeed;
+		[LinearReset(0.005f)] public float neutronSoupOffset;
 		#endregion
 
 		#region visuals
@@ -1450,7 +1448,7 @@ namespace Origins {
 		public override void OnRefreshed(Player player) => player.OriginPlayer().OnMovementAbilitiesRefreshed();
 	}
 	[AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-	public sealed class AutoResetAttribute : Attribute {
+	public class AutoResetAttribute : Attribute {
 		public static Action<TEntity> GenerateSingle<TEntity>(string name) where TEntity : class {
 			DynamicMethod method = new("AutoReset", typeof(void), [typeof(TEntity)], true);
 			ILGenerator gen = method.GetILGenerator();
@@ -1488,19 +1486,13 @@ namespace Origins {
 			gen.Emit(OpCodes.Stloc, @default);
 
 			foreach (FieldInfo field in typeof(TEntity).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)) {
-				if (field.GetCustomAttribute<AutoResetAttribute>() is null) continue;
-				Action generate = () => CopyField(gen);
+				if (field.GetCustomAttribute<AutoResetAttribute>() is not AutoResetAttribute resetAttribute) continue;
+				Action generate = () => resetAttribute.EmitReset(gen, field, @default);
 				foreach (AutoResetIfAttribute item in field.GetCustomAttributes<AutoResetIfAttribute>()) {
 					if (!item.IsValidOnType(typeof(TEntity))) throw new InvalidOperationException($"{item} is not valid on type {typeof(TEntity)}");
 					generate = Nest(item, generate);
 				}
 				generate();
-				void CopyField(ILGenerator gen) {
-					gen.Emit(OpCodes.Ldarg_0);
-					gen.Emit(OpCodes.Ldloc, @default);
-					gen.Emit(OpCodes.Ldfld, field);
-					gen.Emit(OpCodes.Stfld, field);
-				}
 			}
 
 			gen.Emit(OpCodes.Ret);
@@ -1509,6 +1501,13 @@ namespace Origins {
 			Action Nest(AutoResetIfAttribute item, Action generate) =>
 				() => item.Generate(gen, generate);
 		}
+		public virtual void EmitReset(ILGenerator gen, FieldInfo field, LocalBuilder defaultInstance) {
+			gen.Emit(OpCodes.Ldarg_0);
+			gen.Emit(OpCodes.Ldloc, defaultInstance);
+			gen.Emit(OpCodes.Ldfld, field);
+			gen.Emit(OpCodes.Stfld, field);
+		}
+		public virtual bool IsValidOnField(FieldInfo field) => true;
 	}
 	[AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = true)]
 	public abstract class AutoResetIfAttribute : Attribute {
@@ -1535,5 +1534,17 @@ namespace Origins {
 	}
 	public class NotHoldingItemAttribute<TItem> : AutoResetIfAttribute<ModPlayer> where TItem : ModItem {
 		public override bool ShouldReset(ModPlayer entity) => entity.Player.HeldItem?.type != ModContent.ItemType<TItem>();
+	}
+	public class LinearResetAttribute(float resetSpeed) : AutoResetAttribute {
+		public override void EmitReset(ILGenerator gen, FieldInfo field, LocalBuilder defaultInstance) {
+			gen.Emit(OpCodes.Ldarg_0);
+			gen.Emit(OpCodes.Ldflda, field);
+			gen.Emit(OpCodes.Ldloc, defaultInstance);
+			gen.Emit(OpCodes.Ldfld, field);
+			gen.Emit(OpCodes.Ldc_R4, resetSpeed);
+			gen.Emit(OpCodes.Call, typeof(MathUtils).GetMethod(nameof(MathUtils.LinearSmoothing), [field.FieldType.MakeByRefType(), field.FieldType, typeof(float)]));
+			gen.Emit(OpCodes.Pop);
+		}
+		public override bool IsValidOnField(FieldInfo field) => field.FieldType == typeof(float) || field.FieldType == typeof(Vector2);
 	}
 }
