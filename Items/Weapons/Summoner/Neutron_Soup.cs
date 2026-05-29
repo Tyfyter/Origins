@@ -1,17 +1,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Graphics;
-using Origins.Items.Materials;
 using Origins.NPCs;
-using Origins.Projectiles.Weapons;
 using ReLogic.Content;
 using System;
-using System.IO;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -36,22 +31,18 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.autoReuse = true;
 			Item.channel = true;
 		}
-		public override void AddRecipes() {
-			Recipe.Create(Type)
+		public override void AddRecipes() => Recipe.Create(Type)
 			.AddIngredient(ItemID.FragmentStardust, 18)
 			.AddTile(TileID.LunarCraftingStation)
 			.Register();
-		}
 		public override void UseItemFrame(Player player) => Incantations.HoldItemFrame(player);
 		public override void HoldItemFrame(Player player) => Incantations.HoldItemFrame(player);
 		public bool BackHand => true;
-		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
-			Incantations.DrawInHand(
-				SmolTexture,
-				ref drawInfo,
-				lightColor
-			);
-		}
+		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) => Incantations.DrawInHand(
+			SmolTexture,
+			ref drawInfo,
+			lightColor
+		);
 		public override bool AltFunctionUse(Player player) => true;
 		public override float UseTimeMultiplier(Player player) {
 			if (player.altFunctionUse == 2) return 0.25f;
@@ -90,7 +81,10 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 	}
 	public class Neutron_Soup_Flames : ModProjectile {
+		static AutoLoadingTexture starsTexture = typeof(Neutron_Soup_Flames).GetDefaultTMLName("_Stars");
+		static AutoLoadingTexture starsColormap = typeof(Neutron_Soup_Flames).GetDefaultTMLName("_Stars_Colormap");
 		public static float Lifetime => 108f;
+		public static float FadeTime => 15f;
 		public static float MinSize => 16f;
 		public static float MaxSize => 66f;
 		private readonly float[] sizes = new float[32];
@@ -112,9 +106,6 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		float Size => Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize, MaxSize);
 		public override void AI() {
-			if (Projectile.localAI[2] == 0) {
-				Projectile.localAI[2] = 1 + Projectile.wet.ToInt();
-			}
 			Projectile.localAI[0] += 1f;
 			for (int i = sizes.Length - 1; i > 0; i--) {
 				sizes[i] = sizes[i - 1];
@@ -128,8 +119,8 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.scale = Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize / 96f, MaxSize / 96f);
 			Projectile.alpha = (int)(200 * (1 - (Projectile.localAI[0] / Lifetime)));
 			Projectile.rotation += 0.3f * Projectile.direction;
-			if (Projectile.ai[0] > Lifetime) {
-				Projectile.Kill();
+			if (Projectile.ai[0] > Lifetime - FadeTime) {
+				if (++Projectile.localAI[2] > FadeTime) Projectile.Kill();
 			}
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
@@ -140,22 +131,32 @@ namespace Origins.Items.Weapons.Summoner {
 			target.AddBuff(Neutron_Soup_Buff.ID, 240);
 			if (target.life > 0) Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 		}
-		static AutoLoadingTexture dstNoise = "Origins/Textures/DSTNoise";
 		public override bool PreDraw(ref Color lightColor) {
 			//dstNoise = "Origins/Textures/SC_Mask";
 			float progress = Projectile.ai[0] / Lifetime;
+			float alphaMult = 1 - (Projectile.localAI[2] / FadeTime);
 			Flamethrower_Drawer.Draw(Projectile,
 				1 - progress,
 				TextureAssets.Projectile[Type].Value,
-				Color.DarkCyan,
+				new Color(40, 60, 128),
+				sizes,
+				0,
+				smokeAmount: progress,
+				sizeProgressOverride: i => Math.Min(1 - ((Projectile.ai[0] - i) / Lifetime), 1) * 0.25f,
+				alphaMultiplier: 0.55f * alphaMult,
+				tint: i => new Color(0, 80, 128) * alphaMult
+			);
+			Flamethrower_Drawer.Draw(Projectile,
+				1 - progress,
+				starsColormap,
+				Color.Black,
 				sizes,
 				8,
-				//brightnessColorExponent: 0.25f,
-				smokeAmount: (Projectile.localAI[2] - 1) * 0.5f + progress * 0.5f,
+				smokeAmount: 0.15f,
 				sizeProgressOverride: i => Math.Min(1 - ((Projectile.ai[0] - i) / Lifetime), 1) * 0.25f,
-				alphaMultiplier: Projectile.localAI[2] * 0.55f
-				//tint: i => Color.White * (1 - float.Pow(progress, 1 - i / 32)),
-				//pattern: dstNoise
+				alphaMultiplier: 0.5f * alphaMult,
+				tint: i => new Color(255, 255, 255, 128) * alphaMult,
+				pattern: starsTexture
 			);
 			return false;
 		}
