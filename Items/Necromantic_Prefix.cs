@@ -13,7 +13,7 @@ using Terraria.ID;
 
 namespace Origins.Items {
 	public class Necromantic_Prefix : MinionPrefix, IOnHitNPCPrefix, IModifyHitNPCPrefix {
-		public static float MaxManaMultiplier => 4;
+		public static float MaxManaMultiplier => 2;
 		public override bool HasDescription => true;
 		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public override void SetStaticDefaults() {
@@ -104,8 +104,9 @@ namespace Origins.Items {
 			float dist = direction.LengthSquared();
 			if (dist < 50f && Projectile.Hitbox.Intersects(player.Hitbox)) {
 				if (Projectile.owner == Main.myPlayer) {
-					CombatText.NewText(player.Hitbox, new(0, 88, 110), Main.rand.RandomRound(Projectile.ai[0]));
-					player.OriginPlayer().necromancyPrefixMana += Projectile.ai[0];
+					OriginPlayer originPlayer = player.OriginPlayer();
+					CombatText.NewText(player.Hitbox, new(0, 88, 110), Main.rand.RandomRound(Math.Min(Projectile.ai[0], player.statManaMax2 * Necromantic_Prefix.MaxManaMultiplier - originPlayer.necromancyPrefixMana)));
+					originPlayer.necromancyPrefixMana += Projectile.ai[0];
 				}
 				Projectile.Kill();
 			} else {
