@@ -413,6 +413,23 @@ namespace Origins {
 			public static bool[] TargetDummies { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(TargetDummies)}")
 			.Description("Used to prevent exploits from some on-hit effects")
 			.RegisterBoolSet(NPCID.TargetDummy);
+			public static bool[] Eyes { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(Eyes)}")
+			.RegisterBoolSet(
+				NPCID.EyeballFlyingFish,
+				NPCID.EyeofCthulhu,
+				NPCID.Eyezor,
+				NPCID.CataractEye,
+				NPCID.DemonEye,
+				NPCID.DemonEyeOwl,
+				NPCID.DemonEyeSpaceship,
+				NPCID.DialatedEye,
+				NPCID.GreenEye,
+				NPCID.MoonLordFreeEye,
+				NPCID.PurpleEye,
+				NPCID.SleepyEye,
+				NPCID.WallofFleshEye,
+				NPCID.WanderingEye
+			);
 			public static Action<NPC>[] CustomExpertScaling { get; } = NPCID.Sets.Factory.CreateCustomSet<Action<NPC>>(null);
 			public static Predicate<NPC>[] CustomGroundedCheck { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(PegasusLib)}/{nameof(CustomGroundedCheck)}")
 			.RegisterCustomSet<Predicate<NPC>>(null);

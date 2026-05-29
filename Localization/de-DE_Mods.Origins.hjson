@@ -2218,10 +2218,10 @@ Projectiles: {
 	// Friendly_Cleaver_Body.DisplayName: Friendly Cleaver Body
 	// Friendly_Cleaver_Head.DisplayName: Friendly Cleaver Head
 	// Friendly_Cleaver_Tail.DisplayName: Friendly Cleaver Tail
-	// TM_Cannon_P.DisplayName: Cannon Turret
-	// TM_Flamer_P.DisplayName: Flamer Turret
-	// TM_Launcher_P.DisplayName: Launcher Turret
-	// TM_Laser_P.DisplayName: Laser Turret
+	// TM_Turret_Cannon_P.DisplayName: Cannon Turret
+	// TM_Turret_Flamer_P.DisplayName: Flamer Turret
+	// TM_Turret_Launcher_P.DisplayName: Launcher Turret
+	// TM_Turret_Laser_P.DisplayName: Laser Turret
 	// Pirate_Eye__Temp_Blue.DisplayName: Pirate Eye_ Temp Blue
 	// Pirate_Eye__Temp_Brown.DisplayName: Pirate Eye_ Temp Brown
 	// Pirate_Eye__Temp_Green.DisplayName: Pirate Eye_ Temp Green
@@ -2234,6 +2234,7 @@ Projectiles: {
 	// Pirate_Eye__Temp_Yellow.DisplayName: Pirate Eye_ Temp Yellow
 	// Pirate_Eye_Cursed_Flames.DisplayName: Cursed Flames
 	// Pirate_Eye_Ichor_Spray.DisplayName: Ichor Spray
+	// Pirate_Eye_Scrap_Laser.DisplayName: Scrap Laser
 	// Pirate_Eye_Laser.DisplayName: Eye Laser
 	// Pirate_Eye_Sharp_Tears.DisplayName: Sharp Tears
 	// Pirate_Eye_Witch_Bolt.DisplayName: Witch Bolt

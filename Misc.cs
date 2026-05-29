@@ -844,6 +844,12 @@ namespace Origins {
 		public const ushort Ice = 8;
 		public const ushort Fiberglass = 16;
 	}
+	public interface IEntitySourceWithTarget {
+		public Entity Target { get; }
+	}
+	public class EntitySource_ItemUse_WithTarget(Player player, Item item, Entity target, string context = null) : EntitySource_ItemUse(player, item, context), IEntitySourceWithTarget {
+		public Entity Target { get; } = target;
+	}
 	public static class SlopeID {
 		public const byte None = 0;
 		public const byte BottomLeft = 1;

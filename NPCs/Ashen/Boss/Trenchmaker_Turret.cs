@@ -56,7 +56,7 @@ namespace Origins.NPCs.Ashen.Boss {
 						NPC.SpawnProjectile(null,
 							GunPos,
 							NPC.rotation.ToRotationVector2() * 12,
-							ModContent.ProjectileType<TM_Cannon_P>(),
+							ModContent.ProjectileType<TM_Turret_Cannon_P>(),
 							(int)(18 * ContentExtensions.DifficultyDamageMultiplier),
 							1
 						);
@@ -71,7 +71,7 @@ namespace Origins.NPCs.Ashen.Boss {
 						NPC.SpawnProjectile(null,
 							GunPos,
 							NPC.rotation.ToRotationVector2() * 12,
-							ModContent.ProjectileType<TM_Launcher_P>(),
+							ModContent.ProjectileType<TM_Turret_Launcher_P>(),
 							(int)(25 * ContentExtensions.DifficultyDamageMultiplier),
 							1
 						);
@@ -113,7 +113,7 @@ namespace Origins.NPCs.Ashen.Boss {
 							NPC.SpawnProjectile(null,
 								GunPos + dir * 16,
 								dir * 8,
-								ModContent.ProjectileType<TM_Flamer_P>(),
+								ModContent.ProjectileType<TM_Turret_Flamer_P>(),
 								(int)(25 * ContentExtensions.DifficultyDamageMultiplier),
 								1
 							);
@@ -135,20 +135,20 @@ namespace Origins.NPCs.Ashen.Boss {
 								NPC.SpawnProjectile(null,
 									GunPos + dir * 16,
 									dir,
-									ModContent.ProjectileType<TM_Laser_P>(),
+									ModContent.ProjectileType<TM_Turret_Laser_P>(),
 									(int)(15 * ContentExtensions.DifficultyDamageMultiplier),
 									1
 								);
 								NPC.ai[0] = 1;
-								NPC.ai[1] = TM_Laser_P.ChargeTime;
+								NPC.ai[1] = TM_Turret_Laser_P.ChargeTime;
 							}
 							break;
 						}
 						case 1: {
-							GeometryUtils.AngularSmoothing(ref NPC.rotation, diff.ToRotation(), 0.05f * NPC.ai[1] / TM_Laser_P.ChargeTime);
+							GeometryUtils.AngularSmoothing(ref NPC.rotation, diff.ToRotation(), 0.05f * NPC.ai[1] / TM_Turret_Laser_P.ChargeTime);
 							if (NPC.ai[1] == 0) {
 								NPC.ai[0] = 2;
-								NPC.ai[1] = TM_Laser_P.ActiveTime;
+								NPC.ai[1] = TM_Turret_Laser_P.ActiveTime;
 							}
 							break;
 						}
@@ -232,15 +232,15 @@ namespace Origins.NPCs.Ashen.Boss {
 			Flamer,
 			Laser,
 		}
-		public class TM_Cannon_P : ModProjectile {
+		public class TM_Turret_Cannon_P : ModProjectile {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BulletDeadeye}";
 			public override void SetDefaults() {
 				Projectile.CloneDefaults(ProjectileID.BulletDeadeye);
 				AIType = ProjectileID.BulletDeadeye;
 			}
 		}
-		public class TM_Launcher_P : Fire_Cannons_State.Trenchmaker_Cannon_P { }
-		public class TM_Flamer_P : ModProjectile {
+		public class TM_Turret_Launcher_P : Fire_Cannons_State.Trenchmaker_Cannon_P { }
+		public class TM_Turret_Flamer_P : ModProjectile {
 			public override string Texture =>typeof(Welding_Torch_P).GetDefaultTMLName();
 			public static float Lifetime => 60f;
 			public static float MinSize => 24f;
@@ -305,7 +305,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				return false;
 			}
 		}
-		public class TM_Laser_P : ModProjectile {
+		public class TM_Turret_Laser_P : ModProjectile {
 			public static int ChargeTime => 30;
 			public static int ActiveTime => 15;
 			public override string Texture => typeof(Laser_Target_Locator).GetDefaultTMLName();

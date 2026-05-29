@@ -2,12 +2,14 @@
 using Origins.Core;
 using Origins.Graphics;
 using Origins.Layers;
+using Origins.NPCs;
 using Origins.Projectiles;
 using Origins.Reflection;
 using ReLogic.Content;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -78,7 +80,7 @@ namespace Origins.Items.Accessories {
 				using ScopedOverride<float> kb = spacePirateEye.knockBack.ScopedOverride(spacePirateEye.knockBack * eyeMode.KnockbackMult);
 				eyeMode.Shoot(player,
 					targetEntity,
-					player.GetSource_Accessory(spacePirateEye),
+					new EntitySource_ItemUse_WithTarget(player, spacePirateEye, targetEntity),
 					position,
 					eyeMode.GetVelocity(player, targetPos - position, targetEntity),
 					eyeMode.Type,
@@ -337,14 +339,191 @@ namespace Origins.Items.Accessories {
 				}
 			}
 		}
-		public class _Temp_Orange : PirateEyeMode, IBroken {
-			static string IBroken.BrokenReason => "Needs idea";
-			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.Flamelash}";
+		public class Scrap_Laser : PirateEyeMode {
 			public override Color Color => FromHexRGB(0xff6000);
 			public override int Cooldown => 60;
+			public static int ChargeTime => 30;
+			public static int ActiveTime => 15;
+			public override string Texture => "Terraria/Images/Extra_" + ExtrasID.RainbowRodTrailShape;
+			public override void SetStaticDefaults() {
+				ProjectileID.Sets.DrawScreenCheckFluff[Type] = 1600 + 64;
+			}
+			public override Vector2 GetVelocity(Player player, Vector2 difference, Entity target) => difference.Normalized(out _);
 			public override void SetDefaults() {
-				Projectile.CloneDefaults(ProjectileID.Flamelash);
-				AIType = ProjectileID.Flamelash;
+				Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
+				Projectile.width = 0;
+				Projectile.height = 0;
+				Projectile.penetrate = -1;
+				Projectile.friendly = true;
+				Projectile.tileCollide = false;
+				Projectile.usesLocalNPCImmunity = true;
+				Projectile.localNPCHitCooldown = 5;
+			}
+			public override bool ShouldUpdatePosition() => false;
+			public Vector2 TargetPos {
+				get => new(Projectile.ai[0], Projectile.ai[1]);
+				set => (Projectile.ai[0], Projectile.ai[1]) = value;
+			}
+			bool IsActive {
+				get => Projectile.localAI[0] != 0;
+				set => Projectile.localAI[0] = value.ToInt();
+			}
+			Entity target = null;
+			public override void OnSpawn(IEntitySource source) {
+				if (source is IEntitySourceWithTarget sourceWithTarget) {
+					target = sourceWithTarget.Target;
+				}
+				Projectile.rotation = Projectile.velocity.ToRotation();
+			}
+			public override void AI() {
+				Player player = Main.player[Projectile.owner];
+				IsActive = ++Projectile.ai[2] >= ChargeTime;
+				if (Projectile.ai[2] >= ChargeTime + ActiveTime) {
+					Projectile.Kill();
+					return;
+				}
+				Vector2 gunPos = EyePosition(player);
+				float pitchFactor = IsActive ? 1 : (1 - Projectile.ai[2] / ChargeTime);
+				//SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(pitchFactor).WithVolume(0.8f), gunPos);
+				if (Math.Abs(1 - Projectile.velocity.LengthSquared()) > 0.01f) Projectile.velocity = Projectile.rotation.ToRotationVector2();
+				if (target is not null && (target.Center.X - gunPos.X) * player.direction < 0) target = null;
+				if (target is not null) {
+					float direction = (target.Center - gunPos).ToRotation();
+					if (IsActive) {
+						GeometryUtils.AngularSmoothing(ref Projectile.rotation, direction, 0.03f + 0.02f * (Projectile.ai[2] - ChargeTime) / ActiveTime);
+					} else {
+						GeometryUtils.AngularSmoothing(ref Projectile.rotation, direction, 0.05f);
+					}
+					Projectile.velocity = Projectile.rotation.ToRotationVector2();
+					if (!target.active || (target is NPC npcTarget && !npcTarget.CanBeChasedBy(Projectile))) target = null;
+				}
+				Projectile.position = gunPos;
+				Vector2 targetPos = Projectile.position + Projectile.velocity * Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64);
+				if (IsActive) Dust.NewDust(targetPos - Vector2.One * 2, 4, 4, DustID.AmberBolt);
+				TargetPos = targetPos;
+			}
+			public override bool? CanHitNPC(NPC target) {
+				if (!IsActive) {
+					if (OriginsSets.NPCs.Eyes[target.type] || NPCID.Sets.DemonEyes[target.type]) return null;
+					switch (target.type) {
+						case NPCID.Spazmatism:
+						case NPCID.Retinazer:
+						if (target.ai[0] >= 3) return false;
+						return null;
+						case NPCID.MoonLordHand:
+						case NPCID.MoonLordHead:
+						return null;
+					}
+					return false;
+				}
+				return null;
+			}
+			public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+				return targetHitbox.Contains(targetHitbox.Center().SnapToLine(Projectile.position, TargetPos, radius: 4));
+			}
+			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+				OriginGlobalNPC.InflictImpedingShrapnel(target, 300);
+			}
+			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+				if (!target.immune) modifiers = modifiers with { CooldownCounter = -2 };
+				modifiers.Knockback *= 0.85f;
+			}
+			public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+				if (info.CooldownCounter == -2) {
+					target.immune = true;
+					target.immuneTime = target.longInvince ? 15 : 7;
+				}
+			}
+			public override void SendExtraAI(BinaryWriter writer) {
+				writer.Write(Projectile.rotation);
+				switch (target) {
+					case null:
+					writer.Write((sbyte)-1);
+					break;
+					case NPC:
+					writer.Write((sbyte)0);
+					writer.Write((ushort)target.whoAmI);
+					break;
+					case Player:
+					writer.Write((sbyte)1);
+					writer.Write((ushort)target.whoAmI);
+					break;
+				}
+			}
+			public override void ReceiveExtraAI(BinaryReader reader) {
+				Projectile.rotation = reader.ReadSingle();
+				switch (reader.ReadSByte()) {
+					case -1:
+					target = null;
+					break;
+					case 0:
+					target = Main.npc[reader.ReadUInt16()];
+					break;
+					case 1:
+					target = Main.player[reader.ReadUInt16()];
+					break;
+				}
+			}
+			public override bool PreDraw(ref Color lightColor) {
+				if (!Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
+				Vector2 diff = TargetPos - Projectile.position;
+				Vector2 position = Projectile.position;
+				position -= Main.screenPosition;
+				float rotation = diff.ToRotation();
+				float dist = diff.Length();
+				const float scale = 1f / 256f;
+				DrawData data = new(
+					TextureAssets.Projectile[Type].Value,
+					position,
+					null,
+					new Color(255, IsActive ? 40 : 100, 0, 0),
+					rotation,
+					Vector2.UnitY * 128,
+					new Vector2(dist * scale, 8 * scale),
+					0
+				);
+				data.Draw(Main.spriteBatch);
+				float progress = Projectile.ai[2] / ChargeTime;
+				progress *= progress;
+				if (IsActive) progress = 1;
+				Min(ref progress, 1);
+				data.color *= progress;
+				Vector2 offset = (rotation + MathHelper.PiOver2).ToRotationVector2() * (1 - progress) * 8;
+				data.position = position + offset;
+				data.scale.X = Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist * 1.15f + 16) * scale;
+				data.Draw(Main.spriteBatch);
+				data.position = position - offset;
+				data.scale.X = Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist * 1.15f + 16) * scale;
+				data.Draw(Main.spriteBatch);
+				return false;
+			}
+			public float Raymarch(Vector2 position, Vector2 direction, float maxLength = float.PositiveInfinity) {
+				float dist = CollisionExt.Raymarch(position, direction, maxLength);
+				foreach (NPC npc in Main.ActiveNPCs) {
+					if (dist < 16) return dist;
+					if (npc.friendly) continue;
+					if (position.Clamp(npc.Hitbox).DistanceSQ(position) >= dist * dist) continue;
+					float collisionPoint = 1;
+					if (Collision.CheckAABBvLineCollision(npc.position, npc.Size, position, position + direction * dist, 1, ref collisionPoint)) {
+						Min(ref dist, collisionPoint);
+					}
+				}
+				Player owner = Main.player[Projectile.owner];
+				if (owner.hostile) {
+					int team = owner.team;
+					if (team == 0) team = -1;
+					foreach (Player player in Main.ActivePlayers) {
+						if (dist < 16) return dist;
+						if (player.whoAmI == Projectile.owner) continue;
+						if (!player.hostile || player.team == team) continue;
+						if (position.Clamp(player.Hitbox).DistanceSQ(position) >= dist * dist) continue;
+						float collisionPoint = 1;
+						if (Collision.CheckAABBvLineCollision(player.position, player.Size, position, position + direction * dist, 1, ref collisionPoint)) {
+							Min(ref dist, collisionPoint);
+						}
+					}
+				}
+				return dist;
 			}
 		}
 		public class Ichor_Spray : PirateEyeMode {
