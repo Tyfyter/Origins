@@ -14,6 +14,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.UI;
 using static Origins.Core.Structures.ARoom;
 using static Origins.Core.Structures.DeserializedStructure;
 
@@ -86,9 +87,11 @@ namespace Origins.Core.Structures {
 		public abstract class Kind : SerializableDescriptor<Kind, BreakDescriptor> {
 			protected sealed override BreakDescriptor Create(string[] parameters, string originalText) => new(Create(parameters), [originalText]);
 			protected abstract Accumulator<StructureInstance, bool> Create(string[] parameters);
+			protected virtual IEnumerable<DescriptorParameter.Instance> Parameters => [];
 			protected sealed override void Register() {
 				ModTypeLookup<Kind>.Register(this);
 			}
+			protected static DescriptorParameter.Instance Param<T>(string name) where T : DescriptorParameter => new(name, ModContent.GetInstance<T>());
 		}
 	}
 	public record class CheckDescriptor(Accumulator<StructureInstance, bool> Accumulator, string[] Parts) : ISummable<CheckDescriptor>, IAccumulator<StructureInstance, bool> {
@@ -106,9 +109,11 @@ namespace Origins.Core.Structures {
 		public abstract class Kind : SerializableDescriptor<Kind, CheckDescriptor> {
 			protected sealed override CheckDescriptor Create(string[] parameters, string originalText) => new(Create(parameters), [originalText]);
 			protected abstract Accumulator<StructureInstance, bool> Create(string[] parameters);
+			protected virtual IEnumerable<DescriptorParameter.Instance> Parameters => [];
 			protected sealed override void Register() {
 				ModTypeLookup<Kind>.Register(this);
 			}
+			protected static DescriptorParameter.Instance Param<T>(string name) where T : DescriptorParameter => new(name, ModContent.GetInstance<T>());
 		}
 	}
 	public record class WeightDescriptor(Accumulator<WeightParameters, float> Accumulator, string[] Parts) : ISummable<WeightDescriptor>, IAccumulator<WeightParameters, float> {
@@ -129,6 +134,7 @@ namespace Origins.Core.Structures {
 			}
 			protected sealed override WeightDescriptor Create(string[] parameters, string originalText) => new(Create(parameters), [originalText]);
 			protected abstract Accumulator<WeightParameters, float> Create(string[] parameters);
+			public virtual IEnumerable<DescriptorParameter.Instance> Parameters => [];
 			public static new WeightDescriptor Create(Mod mod, string data) {
 				if (string.IsNullOrWhiteSpace(data)) return null;
 				string[] descriptors = data.Split('*', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
@@ -142,6 +148,21 @@ namespace Origins.Core.Structures {
 				}
 				return descriptor;
 			}
+			protected static DescriptorParameter.Instance Param<T>(string name) where T : DescriptorParameter => new(name, ModContent.GetInstance<T>());
+		}
+	}
+	public abstract class DescriptorParameter : ILoadable {
+		public abstract ParameterElement CreateElement(Structure structure, string value);
+		void ILoadable.Load(Mod mod) {}
+		public virtual bool IsLoadingEnabled(Mod mod) => true;
+		void ILoadable.Unload() {}
+		public abstract class ParameterElement {
+			public abstract string GetParameterValue();
+			public abstract void Draw(SpriteBatch spriteBatch, Rectangle dimensions);
+		}
+		public readonly struct Instance(string name, DescriptorParameter parameter) {
+			public string Name { get; } = name;
+			public DescriptorParameter Parameter { get; } = parameter;
 		}
 	}
 	public abstract class SerializableDescriptor<TSelf, T> : ModType where TSelf : SerializableDescriptor<TSelf, T> where T : IAdditionOperators<T, T, T> {
@@ -188,9 +209,9 @@ namespace Origins.Core.Structures {
 	}
 	[Autoload(false)]
 	public class DeserializedRoom : ARoom {
-		readonly PostGenerateDescriptor postGenerate;
-		readonly WeightDescriptor weight;
-		readonly HashSet<string> tags;
+		public readonly PostGenerateDescriptor postGenerate;
+		public readonly WeightDescriptor weight;
+		public readonly HashSet<string> tags;
 		public DeserializedRoom(Mod mod, RoomDescriptor descriptor) {
 			Identifier = descriptor.Identifier;
 			Map = string.Join('\n', descriptor.Map);

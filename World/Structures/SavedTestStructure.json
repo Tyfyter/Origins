@@ -23,7 +23,8 @@
 				}
 			},
 			"RepetitionRange": "0..1",
-			"StartPos": "C"
+			"StartPos": "C",
+			"Tags": []
 		},
 		"Required_Hallway": {
 			"Map": [
@@ -55,7 +56,8 @@
 					"Direction": "Right"
 				}
 			},
-			"Weight": "0.1*WithoutRoom(Required_Hallway)"
+			"Weight": "0.1*WithoutRoom(Required_Hallway)",
+			"Tags": []
 		},
 		"Hallway_End_Left": {
 			"Map": [
@@ -79,7 +81,8 @@
 					"Direction": "Left"
 				}
 			},
-			"StartPos": "C"
+			"StartPos": "C",
+			"Tags": []
 		},
 		"Hallway_End_Right": {
 			"Map": [
@@ -103,7 +106,8 @@
 					"Direction": "Right"
 				}
 			},
-			"StartPos": "C"
+			"StartPos": "C",
+			"Tags": []
 		},
 		"Closet_Left": {
 			"Map": [
@@ -118,7 +122,8 @@
 					"Key": "ClosetLeft",
 					"Direction": "Right"
 				}
-			}
+			},
+			"Tags": []
 		},
 		"Closet_Right": {
 			"Map": [
@@ -133,7 +138,8 @@
 					"Key": "ClosetRight",
 					"Direction": "Left"
 				}
-			}
+			},
+			"Tags": []
 		},
 		"Test": {
 			"Map": [
@@ -153,7 +159,8 @@
 					"Key": "Hallway",
 					"Direction": "Right"
 				}
-			}
+			},
+			"Tags": []
 		},
 		"Chairs": {
 			"Map": [
@@ -177,7 +184,8 @@
 					"Key": "Hallway",
 					"Direction": "Right"
 				}
-			}
+			},
+			"Tags": []
 		}
 	},
 	"TileDescriptors": {
