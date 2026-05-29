@@ -1173,7 +1173,7 @@ EXPLOSIVE WEAPONS:
 (^) Torpedo Tube
 
 (^) Autohandcannon
-(☻) Big Bang !!!
+(^) Big Bang
 (^) Bomboomstick
 (^) Chlorodynamite
 (^) Chlorophyte Handcannon
@@ -1384,12 +1384,12 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(☻) Delay Component !!!
+(#2, ^2) Delay Component !!! (missing ticking for visual indicator)
 (^) Diode Component
 (^) Dirt Chest
 (^) Edge Detector
 (^) Fire Extinguisher Holder
-(^) Gas Generator
+(#2, ^2) Gas Generator !!! (needs highlights)
 (^) Industrial Door
 (^) Large Storage Container
 (^) Laser Tag Console
@@ -1410,7 +1410,7 @@ TILES:
 (^) Oil Derrick
 (^) Pocket Dimension Monolith
 (X) Qube Generator
-(☻) Radio Component !!!
+(^) Radio Component
 (X) Ravel Lock: Builder
 (X) Ravel Lock: Snake
 (X) Ravel Lock: Stacker
@@ -1458,7 +1458,7 @@ TILES:
 (^) Hanging Scrap
 (^) Heat Vent
 (^) Hydrothermal Vent
-(☻) Incomplete Standing Refinery
+(^) Incomplete Standing Refinery
 (#3, ^2) Industrial Work Bench
 (^) Lathe
 (^) Limestone Rubble

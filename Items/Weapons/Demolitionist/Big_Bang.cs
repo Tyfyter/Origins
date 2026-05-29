@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Big_Bang : ModItem {
 		public static int BarrelLength => 64;
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Big_Bang_P>(81, 34, 7.5f, 48, 32);
+			Item.DefaultToCanisterLauncher<Big_Bang_P>(128, 34, 7.5f, 48, 32);
 			Item.knockBack = 4f;
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 10);

@@ -193,7 +193,7 @@ namespace Origins.NPCs.Ashen {
 					}
 					if (NPC.ai[1] == 0 && MathUtils.LinearSmoothing(ref NPC.localAI[0], 3, 1 / 5f)) {
 						if (NPC.ai[2].CycleUp(20)) {
-							SoundEngine.PlaySound(SoundID.Item34.WithPitch(0.5f).WithVolume(0.75f), WeldingTorchPos);
+							SoundEngine.PlaySound(SoundID.Item34.WithPitch(0.5f).WithVolume(0.75f).WithVolumeScale(0.5f), WeldingTorchPos);
 							if (NPC.life >= NPC.lifeMax) TargetClosest();
 						}
 						switch (NPC.ai[2] % 5) {
@@ -246,7 +246,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.DoFrames(4);
 			if (weldingTorchSoundTime.Cooldown()) {
 				weldingTorchSound.GetSound()?.Stop();
-				SoundEngine.PlaySound(Origins.Sounds.WeldingTorchCancel, NPC.Center);
+				SoundEngine.PlaySound(Origins.Sounds.WeldingTorchCancel.WithVolumeScale(0.5f), NPC.Center);
 			}
 		}
 		public void PlayWeldingSound(int duration) {
