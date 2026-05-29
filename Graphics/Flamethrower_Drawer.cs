@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics.Primitives;
+using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -9,11 +10,11 @@ using Terraria.ID;
 namespace Origins.Graphics {
 	public static class Flamethrower_Drawer {
 		private readonly static VertexRectangle rect = new();
-		public static void Draw(Projectile projectile, float progress, Texture2D colorMap, Color smokeColor, float[] sizes, float progressColorExponent = 1, float brightnessColorExponent = 1, float? smokeAmount = null, Func<int, float> sizeProgressOverride = null, float alphaMultiplier = 0.5f, Func<int, Color> tint = null) {
+		public static void Draw(Projectile projectile, float progress, Texture2D colorMap, Color smokeColor, float[] sizes, float progressColorExponent = 1, float brightnessColorExponent = 1, float? smokeAmount = null, Func<int, float> sizeProgressOverride = null, float alphaMultiplier = 0.5f, Func<int, Color> tint = null, Asset<Texture2D> pattern = null) {
 			tint ??= _ => Color.White;
 			MiscShaderData shaderData = GameShaders.Misc["Origins:FireShader"];
 			shaderData.UseSecondaryColor(smokeColor);
-			shaderData.UseImage1(TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]);
+			shaderData.UseImage1(pattern ?? TextureAssets.Extra[ExtrasID.MagicMissileTrailErosion]);
 			Main.graphics.GraphicsDevice.Textures[2] = colorMap;
 			Main.graphics.GraphicsDevice.SamplerStates[2] = SamplerState.LinearClamp;
 			shaderData.Shader.Parameters["uImageSize2"]?.SetValue(new Vector2(colorMap.Width, colorMap.Height));

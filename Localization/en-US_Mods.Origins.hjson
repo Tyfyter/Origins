@@ -1450,6 +1450,11 @@ Buffs: {
 		DisplayName: Smart Turret Buff
 		Description: Mods.Origins.Buffs.Smart_Turret_Buff.Description
 	}
+
+	Neutron_Soup_Buff: {
+		DisplayName: Neutron Soup Buff
+		Description: Mods.Origins.Buffs.Neutron_Soup_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -2249,6 +2254,8 @@ Projectiles: {
 	Shuckatana_P.DisplayName: Shuckatana Decay
 	Shuckatana_Slash.DisplayName: Shuckatana Slash Animation
 	Shuckatana_ShootAnimation.DisplayName: Shuckatana Shoot Animation
+	Neutron_Soup_Flames.DisplayName: Neutron Soup Flames
+	Neutron_Soup_P.DisplayName: Neutron Soup P
 }
 
 Prefixes: {

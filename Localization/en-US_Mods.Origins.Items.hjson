@@ -8393,3 +8393,8 @@ Shuckatana: {
 	Tooltip: ""
 	DisplayName: Shuckatana
 }
+
+Neutron_Soup: {
+	DisplayName: Neutron Soup
+	Tooltip: ""
+}

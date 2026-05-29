@@ -39,6 +39,7 @@ namespace Origins.NPCs {
 		internal bool mildewIncantationDebuff = false;
 		[AutoReset] internal bool forbiddenIncantationDebuff = false;
 		[AutoReset] internal bool forbiddenIncantationDebuffStrengthen = false;
+		[AutoReset] internal bool neutronSoupDebuff = false;
 		public bool tornDebuff = false;
 		public float tornCurrentSeverity = 0;
 		public float tornSeverityRate = 0.3f / 180;
