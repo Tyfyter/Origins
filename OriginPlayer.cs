@@ -1154,13 +1154,14 @@ namespace Origins {
 			if (!Player.controlDown) {
 				Vector2 playerDiff = Player.position - Player.oldPosition;
 				if (playerDiff.Y == 0) playerDiff.Y = Player.gravity;
+				Vector2 playerPos = Player.BottomLeft - playerDiff;
 				if (standingOnNPC is not null && standingOnNPC.position.Y > standingOnNPC.oldPosition.Y) playerDiff.Y += standingOnNPC.position.Y - standingOnNPC.oldPosition.Y;
 				float minCollisionTime = float.PositiveInfinity;
 				foreach (NPC npc in Main.ActiveNPCs) {
 					Vector2 npcDiff = npc.position - npc.oldPosition;
 					if (npcDiff.Y > playerDiff.Y) continue;
 					if (npc.ModNPC is not IPlatformNPC strider) continue;
-					if (CollisionExtensions.CheckMovingAALines(Player.BottomLeft - playerDiff, Player.width, playerDiff, npc.oldPosition + strider.PlatformOffset, strider.PlatformWidth, npcDiff) is not float collisionTime) continue;
+					if (CollisionExtensions.CheckMovingAALines(playerPos, Player.width, playerDiff, npc.oldPosition + strider.PlatformOffset, strider.PlatformWidth, npcDiff) is not float collisionTime) continue;
 					if (Minimize(ref minCollisionTime, collisionTime)) standOnNPC = npc;
 				}
 				if (standOnNPC is not null && standOnNPC != standingOnNPC) {
