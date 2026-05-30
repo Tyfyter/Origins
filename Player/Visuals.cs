@@ -251,7 +251,6 @@ namespace Origins {
 			}
 			ShadowType.Draw(camera, Player);
 		}
-
 		internal void UpdateMurkySludgeSounds() {
 			Rectangle hitbox = Player.Hitbox;
 			hitbox.Inflate(1, 1);

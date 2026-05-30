@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using MonoMod.Cil;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Other.Dyes;
@@ -19,7 +20,30 @@ namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
 		protected override bool CloneNewInstances => true;
 		public override bool InstancePerEntity => true;
-		public override void Load() => autoReset = AutoResetAttribute.GenerateReset<OriginGlobalNPC>();
+		public override void Load() {
+			autoReset = AutoResetAttribute.GenerateReset<OriginGlobalNPC>();
+			try {
+				IL_NPC.UpdateNPC_Inner += IL_NPC_UpdateNPC_Inner;
+			} catch (Exception e) {
+				if (Origins.LogLoadingILError(nameof(IL_NPC_UpdateNPC_Inner), e)) throw;
+			}
+			On_NPC.UpdateCollision += On_NPC_UpdateCollision;
+		}
+		static void IL_NPC_UpdateNPC_Inner(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchCallOrCallvirt<NPC>("UpdateCollision"));
+			c.GotoNext(MoveType.After, i => i.MatchLdfld<Entity>(nameof(Entity.velocity)));
+			c.EmitLdarg0();
+			c.EmitCall(((Delegate)ModifyMovement).Method);
+		}
+		private void On_NPC_UpdateCollision(On_NPC.orig_UpdateCollision orig, NPC self) {
+			Vector2 originalVelocity = self.velocity;
+			Vector2 modifiedVelocity = self.velocity = ModifyMovement(self.velocity, self);
+			orig(self);
+			if (self.velocity.X == modifiedVelocity.X) self.velocity.X = originalVelocity.X;
+			if (self.velocity.Y == modifiedVelocity.Y) self.velocity.Y = originalVelocity.Y;
+		}
+
 		static Action<OriginGlobalNPC> autoReset;
 		internal int shockTime = 0;
 		internal int rasterizedTime = 0;
@@ -199,6 +223,38 @@ namespace Origins.NPCs {
 				dust10.velocity.Y += 0.5f;
 				dust10.velocity *= 0.25f;
 			}
+		}
+		public override void FindFrame(NPC npc, int frameHeight) {
+			if (rasterizedTime > 0) {
+				if (Math.Abs(npc.velocity.Y) < 0.001f) {
+					switch (npc.aiStyle) {
+						case NPCAIStyleID.Slime:
+						case NPCAIStyleID.King_Slime:
+						case NPCAIStyleID.Queen_Slime:
+						npc.oldVelocity.Y = 0;
+						break;
+					}
+				}
+				float accelerationFactor = 1;
+				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out (int maxLevel, float accelerationFactor, float velocityFactor) adjustment)) {
+					accelerationFactor = adjustment.accelerationFactor;
+				}
+				npc.velocity = Vector2.Lerp(npc.velocity, npc.oldVelocity, rasterizedTime * 0.0625f * 0.5f * accelerationFactor);
+			}
+		}
+
+		static Vector2 ModifyMovement(Vector2 velocity, NPC npc) {
+			OriginGlobalNPC global = npc.GetGlobalNPC<OriginGlobalNPC>();
+			if (global.rasterizedTime > 0 && npc.oldPosition != default) {
+				float velocityFactor = 1;
+				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out (int maxLevel, float accelerationFactor, float velocityFactor) adjustment)) {
+					velocityFactor = adjustment.velocityFactor;
+				}
+				velocity *= 1 - (global.rasterizedTime * 0.0625f * 0.5f * velocityFactor);
+			}
+			if (global.slowDebuff) velocity *= 0.7f;
+			if (global.barnacleBuff) velocity *= 1.2f;
+			return velocity;
 		}
 		public override void ModifyHitPlayer(NPC npc, Player target, ref Player.HurtModifiers modifiers) {
 			if (soulhideWeakenedDebuff && !weakenedOnSpawn) {

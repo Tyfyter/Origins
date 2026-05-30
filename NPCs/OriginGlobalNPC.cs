@@ -188,32 +188,6 @@ namespace Origins.NPCs {
 				}
 				return false;
 			}
-			if (rasterizedTime > 0 && npc.oldPosition != default) {
-				if (Math.Abs(npc.velocity.Y) < 0.001f) {
-					switch (npc.aiStyle) {
-						case NPCAIStyleID.Slime:
-						case NPCAIStyleID.King_Slime:
-						case NPCAIStyleID.Queen_Slime:
-						npc.oldVelocity.Y = 0;
-						break;
-					}
-				}
-				float accelerationFactor = 1;
-				float velocityFactor = 1;
-				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out (int maxLevel, float accelerationFactor, float velocityFactor) adjustment)) {
-					accelerationFactor = adjustment.accelerationFactor;
-					velocityFactor = adjustment.velocityFactor;
-				}
-				npc.velocity = Vector2.Lerp(npc.velocity, npc.oldVelocity, rasterizedTime * 0.0625f * 0.5f * accelerationFactor);
-				npc.position = Vector2.Lerp(npc.position, npc.oldPosition, rasterizedTime * 0.0625f * 0.5f * velocityFactor);
-			}
-			if (slowDebuff) {
-				npc.position = Vector2.Lerp(npc.oldPosition, npc.position, 0.7f);
-			}
-			if (barnacleBuff) {
-				Vector2 vel = (npc.velocity * 0.2f).WithMaxLength(8);
-				npc.position += npc.noTileCollide ? vel : Collision.AnyCollision(npc.position, vel, npc.width, npc.height);
-			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				if (toxicShockStunTime > 0) {
 					toxicShockStunTime--;

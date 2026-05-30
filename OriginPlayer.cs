@@ -15,6 +15,7 @@ using Origins.Items.Pets;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Melee;
 using Origins.Liquids;
+using Origins.NPCs.Ashen;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
@@ -34,6 +35,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.IO;
+using static Origins.Misc.Physics;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -1139,6 +1141,47 @@ namespace Origins {
 			laserTagHits = 0;
 			laserTagHP = 0;
 			Laser_Tag_Console.LaserTagTimeLeft = -1;
+		}
+		Vector2 platformVelocity;
+		NPC standingOnNPC;
+		float oldYOffset;
+		internal void UpdateNPCPlatforms() {
+			Vector2 oldPos = Player.position;
+			if (standingOnNPC?.active != true) {
+				Player.velocity += platformVelocity;
+			}
+			NPC standOnNPC = null;
+			if (!Player.controlDown) {
+				Vector2 playerDiff = Player.position - Player.oldPosition;
+				if (playerDiff.Y == 0) playerDiff.Y = Player.gravity;
+				if (standingOnNPC is not null && standingOnNPC.position.Y > standingOnNPC.oldPosition.Y) playerDiff.Y += standingOnNPC.position.Y - standingOnNPC.oldPosition.Y;
+				float minCollisionTime = float.PositiveInfinity;
+				foreach (NPC npc in Main.ActiveNPCs) {
+					Vector2 npcDiff = npc.position - npc.oldPosition;
+					if (npcDiff.Y > playerDiff.Y) continue;
+					if (npc.ModNPC is not IPlatformNPC strider) continue;
+					if (CollisionExtensions.CheckMovingAALines(Player.BottomLeft - playerDiff, Player.width, playerDiff, npc.oldPosition + strider.PlatformOffset, strider.PlatformWidth, npcDiff) is not float collisionTime) continue;
+					if (Minimize(ref minCollisionTime, collisionTime)) standOnNPC = npc;
+				}
+				if (standOnNPC is not null && standOnNPC != standingOnNPC) {
+					Player.velocity -= standOnNPC.velocity - (standingOnNPC?.velocity ?? Vector2.Zero);
+					Player.gfxOffY -= standOnNPC.gfxOffY - ((standingOnNPC?.ModNPC as IPlatformNPC)?.OldYOffset ?? 0);
+				}
+				if (!float.IsPositiveInfinity(minCollisionTime)) {
+					Player.position = Player.oldPosition + playerDiff * minCollisionTime;
+					Vector2 npcDiff = standOnNPC.position - standOnNPC.oldPosition;
+					using (Player.velocity.ScopedOverride((playerDiff * Vector2.UnitX + npcDiff) * (1 - minCollisionTime))) {
+						Player.DryCollision(false, false);
+					}
+					if (standOnNPC == standingOnNPC) Player.gfxOffY += standOnNPC.gfxOffY - ((IPlatformNPC)standOnNPC.ModNPC).OldYOffset;
+				}
+			}
+			standingOnNPC = standOnNPC;
+			if (standingOnNPC is not null) {
+				Min(ref Player.velocity.Y, 0);
+			}
+			platformVelocity = Player.position - oldPos;
+			oldYOffset = Player.gfxOffY;
 		}
 	}
 }

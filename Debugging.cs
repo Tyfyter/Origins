@@ -16,7 +16,7 @@ namespace Origins {
 #endif
 		}
 		internal static void ChatOverhead(object message, int duration = 5) {
-			ChatOverhead(message.ToString(), duration);
+			ChatOverhead(message?.ToString() ?? "", duration);
 		}
 		internal static void ChatMessage(string message, bool all = false) {
 #if DEBUG

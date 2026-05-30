@@ -381,6 +381,9 @@ namespace Origins {
 		}
 		public override void PreUpdateNPCs() {
 			Debugging.LogFirstRun(PreUpdateNPCs);
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc.ModNPC is IPlatformNPC strider) strider.OldYOffset = npc.gfxOffY;
+			}
 		}
 		public override void PreUpdateGores() {
 			Debugging.LogFirstRun(PreUpdateGores);

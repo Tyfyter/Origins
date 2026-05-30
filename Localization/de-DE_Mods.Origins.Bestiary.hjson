@@ -135,3 +135,4 @@ Chambersite_Squirrel: "{$Bestiary_FlavorText.npc_GemSquirrelAmethyst}"
 // Reject_2: The Rejected are the many machines cast out into the Scrapyard to eventually be incinerated into something more useful. The reason why they’re possessed is a horror waiting to be realized, however.
 // Reject_1: "{$Reject_1}"
 // Reject_3: "{$Reject_1}"
+// Scrapyard_Stryder: <PH> bestiary text here

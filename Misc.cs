@@ -850,6 +850,11 @@ namespace Origins {
 	public class EntitySource_ItemUse_WithTarget(Player player, Item item, Entity target, string context = null) : EntitySource_ItemUse(player, item, context), IEntitySourceWithTarget {
 		public Entity Target { get; } = target;
 	}
+	public interface IPlatformNPC {
+		public Vector2 PlatformOffset { get; }
+		public float PlatformWidth { get; }
+		public float OldYOffset { get; set; }
+	}
 	public static class SlopeID {
 		public const byte None = 0;
 		public const byte BottomLeft = 1;
@@ -4473,6 +4478,17 @@ namespace Origins {
 			public bool closed;
 			public bool opened;
 			public PathfindingNode parent;
+		}
+		public static float? CheckStripeVAALine(Vector2 stripePosition, float stripeWidth, Vector2 stripeDirection, Vector2 linePosition, float lineWidth) {
+			float progress = (linePosition.Y - stripePosition.Y) / stripeDirection.Y;
+			if (linePosition.X + lineWidth < stripePosition.X + stripeDirection.X * progress) return null;
+			if (linePosition.X > stripePosition.X + stripeWidth + stripeDirection.X * progress) return null;
+			return progress;
+		}
+		public static float? CheckMovingAALines(Vector2 positionA, float widthA, Vector2 velocityA, Vector2 positionB, float widthB, Vector2 velocityB) {
+			if (CheckStripeVAALine(positionA, widthA, velocityA + velocityB, positionB, widthB) is not float progress) return null;
+			if (progress < 0 || progress > 1) return null;
+			return progress;
 		}
 	}
 	public static class ItemExtensions {

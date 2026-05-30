@@ -732,8 +732,10 @@ namespace Origins {
 			};
 			On_PressurePlateHelper.UpdatePlayerPosition += (orig, self) => {
 				Debugging.LogFirstRun(PressurePlateHelper.UpdatePlayerPosition);
-				self.OriginPlayer().UpdateMurkySludgeSounds();
-				if (self.OriginPlayer().weakShimmer) return;
+				OriginPlayer originPlayer = self.OriginPlayer();
+				originPlayer.UpdateNPCPlatforms();
+				originPlayer.UpdateMurkySludgeSounds();
+				if (originPlayer.weakShimmer) return;
 				orig(self);
 			};
 			try {
