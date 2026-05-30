@@ -839,7 +839,7 @@ MELEE WEAPONS:
 (^) Orbital Saw
 (^) Ripper Lance
 (^) Riverang
-(#, ^2) Shuckatana
+(^) Shuckatana
 (^) Silicon Sword
 (^) Snapthrow
 (^) Soldering Iron
@@ -1390,6 +1390,7 @@ TILES:
 (^) Edge Detector
 (^) Fire Extinguisher Holder
 (#2, ^2) Gas Generator !!! (needs highlights)
+(X) Incinerator Pit !!!
 (^) Industrial Door
 (^) Large Storage Container
 (^) Laser Tag Console

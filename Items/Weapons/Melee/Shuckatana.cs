@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Origins.Projectiles;
-using PegasusLib;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -21,27 +20,34 @@ namespace Origins.Items.Weapons.Melee {
 			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(int.MaxValue, 7));
 		}
 		public override void SetDefaults() {
-			Item.damage = 55;
+			Item.damage = 37;
 			Item.DamageType = DamageClass.Melee;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
 			Item.width = 60;
 			Item.height = 60;
-			Item.useTime = 32;
-			Item.useAnimation = 32;
+			Item.useTime = 21;
+			Item.useAnimation = 21;
 			Item.shoot = ModContent.ProjectileType<Shuckatana_Slash>();
 			Item.shootSpeed = 1;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 5;
 			Item.useTurn = false;
 			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = ItemRarityID.Orange;
+			Item.rare = ItemRarityID.Blue;
 			Item.autoReuse = false;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.RottenChunk, 18)
+			.AddIngredient<Cyah_Nara>()
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 		public override bool AltFunctionUse(Player player) => player.OriginPlayer().shuckatanaDecay >= MaxDecayFrames;
 		public override bool? UseItem(Player player) {
-			if (player.altFunctionUse == 2) SoundEngine.PlaySound(SoundID.Item1, player.MountedCenter);
-			else SoundEngine.PlaySound(SoundID.Item1.WithPitch(-0.3f), player.MountedCenter);
+			if (player.altFunctionUse == 2) SoundEngine.PlaySound(SoundID.NPCDeath19, player.MountedCenter);
+			else SoundEngine.PlaySound(SoundID.Item71.WithPitch(-0.3f), player.MountedCenter);
 			return base.UseItem(player);
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
@@ -235,7 +241,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 	}
 	public class Shuckatana_P : ModProjectile {
-		public static int LingerTime => 180;
+		public static int LingerTime => 10;
 		public static int CrumbleFrames => 3;
 		bool Lingering {
 			get => Projectile.ai[1] == 1f;
@@ -260,6 +266,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.localNPCHitCooldown = 60;
 		}
 		public override void AI() {
+			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.ScourgeOfTheCorruptor);
 			if (!Lingering) {
 				Projectile.velocity.Y += 0.05f;
 				Projectile.rotation = Projectile.velocity.ToRotation();
@@ -268,10 +275,11 @@ namespace Origins.Items.Weapons.Melee {
 					Projectile.timeLeft = LingerTime + CrumbleFrames * 6;
 					Projectile.penetrate = -1;
 					Projectile.velocity = Vector2.Zero;
-					SoundEngine.PlaySound(SoundID.Item10, Projectile.Center);
+					SoundEngine.PlaySound(SoundID.NPCHit1, Projectile.Center);
 				}
 			}
 			if (Lingering) {
+				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.CorruptGibs);
 				Projectile.velocity = Vector2.Zero;
 				if (Projectile.ai[0] > 0) {
 					NPC target = Main.npc[(int)Projectile.ai[0] - 1];

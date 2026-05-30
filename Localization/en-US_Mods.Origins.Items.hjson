@@ -8390,8 +8390,12 @@ CSTAA_Jacket: {
 }
 
 Shuckatana: {
-	Tooltip: ""
 	DisplayName: Shuckatana
+	Tooltip:
+		'''
+		Sheds layers of skin over time
+		<right> to shuck shed skin layer as a projectile
+		'''
 }
 
 Neutron_Soup: {
