@@ -691,6 +691,8 @@ namespace Origins {
 		}
 		bool willBeUsingScope;
 		public bool isUsingScope;
+		public Vector2 platformDismountVelocity;
+		public NPC standingOnPlatformNPC;
 		public override void ResetEffects() {
 			Debugging.LogFirstRun(ResetEffects);
 			iFramesFromHurt.Cooldown();

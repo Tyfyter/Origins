@@ -100,14 +100,14 @@ namespace Origins.Tiles {
 					Recipe.FindRecipes();
 					SoundEngine.PlaySound(SoundID.MenuClose);
 				} else {
-					NetMessage.SendData(MessageID.RequestChestOpen, -1, -1, null, left, (float)top, 0f, 0f, 0, 0, 0);
+					NetMessage.SendData(MessageID.RequestChestOpen, -1, -1, null, left, top, 0f, 0f, 0, 0, 0);
 					Main.stackSplit = 600;
 				}
 			} else {
 				if (isLocked) {
 					if (CanUnlockChest(left, top) && player.ConsumeItem(keyItem) && Chest.Unlock(left, top)) {
 						if (Main.netMode == NetmodeID.MultiplayerClient) {
-							NetMessage.SendData(MessageID.LockAndUnlock, -1, -1, null, player.whoAmI, 1f, (float)left, (float)top);
+							NetMessage.SendData(MessageID.LockAndUnlock, -1, -1, null, player.whoAmI, 1f, left, top);
 						}
 					}
 				} else {

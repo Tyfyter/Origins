@@ -18,7 +18,7 @@ namespace Origins.NPCs.Ashen {
 		public static int PowerUpTime => 18;
 		Vector2 IPlatformNPC.PlatformOffset => new(NPC.direction == 1 ? -14 : 0, -12);
 		float IPlatformNPC.PlatformWidth => 134;
-		float IPlatformNPC.OldYOffset { get; set; }
+		Vector2 IPlatformNPC.OldPlatformPosition { get; set; }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;

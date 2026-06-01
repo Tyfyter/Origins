@@ -378,12 +378,12 @@ namespace Origins {
 				Tile tile = Main.tile[pos];
 				if (tile.TileFrameY.TrySet(tile.TileFrameX)) Wiring.TripWire(pos.X, pos.Y, 1, 1);
 			}
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc.ModNPC is IPlatformNPC strider) strider.OldPlatformPosition = strider.GetPlatformPos();
+			}
 		}
 		public override void PreUpdateNPCs() {
 			Debugging.LogFirstRun(PreUpdateNPCs);
-			foreach (NPC npc in Main.ActiveNPCs) {
-				if (npc.ModNPC is IPlatformNPC strider) strider.OldYOffset = npc.gfxOffY;
-			}
 		}
 		public override void PreUpdateGores() {
 			Debugging.LogFirstRun(PreUpdateGores);

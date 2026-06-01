@@ -1,5 +1,4 @@
 ﻿using AltLibrary.Common.AltBiomes;
-using Humanizer;
 using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.Hooks;
 using ModLiquidLib.ModLoader;
@@ -853,7 +852,14 @@ namespace Origins {
 	public interface IPlatformNPC {
 		public Vector2 PlatformOffset { get; }
 		public float PlatformWidth { get; }
-		public float OldYOffset { get; set; }
+		public float PlatformGrip => 1f;
+		public float PlatformStickyness => 0f;
+		public bool CanStandOnPlatform(Player player) => true;
+		public Vector2 OldPlatformPosition { get; set; }
+		public sealed Vector2 GetPlatformPos() {
+			if (this is not ModNPC modNPC) throw new NotSupportedException($"Type {this.GetType()} is not supported, IPlatformNPC must be implemented by a ModNPC");
+			return modNPC.NPC.position + PlatformOffset + Vector2.UnitY * modNPC.NPC.gfxOffY;
+		}
 	}
 	public static class SlopeID {
 		public const byte None = 0;
@@ -3733,7 +3739,7 @@ namespace Origins {
 		}
 		public static IEnumerable<IEnumerable<T>> Subsets<T>(this IList<T> items, int index = 0) {
 			if (index >= items.Count) return [[]];
-			IEnumerable<T> AddCurrent(IEnumerable<T> enumerable) => [items[index], ..enumerable];
+			IEnumerable<T> AddCurrent(IEnumerable<T> enumerable) => [items[index], .. enumerable];
 			return [
 				..items.Subsets(index + 1).Select(AddCurrent),
 				..items.Subsets(index + 1)

@@ -675,6 +675,7 @@ namespace Origins {
 			}
 		}
 		public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot) {
+			if (npc == standingOnPlatformNPC) return false;
 			if (shimmerShieldDashTime != 0 && NPCID.Sets.ProjectileNPC[npc.type]) {
 				if (npc.immune[Player.whoAmI] == 0) {
 					npc.SimpleStrikeNPC(1, Player.direction);
