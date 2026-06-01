@@ -1,4 +1,6 @@
-﻿using Origins.Dev;
+﻿//#define DRAWPLATFORM //uncomment this to see where the platform is
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Melee;
 using Origins.LootConditions;
@@ -16,11 +18,11 @@ namespace Origins.NPCs.Ashen {
 		public int AnimationFrames => 3;
 		public int FrameDuration => 3;
 		public static int PowerUpTime => 18;
-		Vector2 IPlatformNPC.PlatformOffset => new(NPC.direction == 1 ? -14 : 0, -12);
-		float IPlatformNPC.PlatformWidth => 134;
+		public Vector2 PlatformOffset => new(NPC.direction == 1 ? -14 : 0, -16);
+		public float PlatformWidth => 134;
 		Vector2 IPlatformNPC.OldPlatformPosition { get; set; }
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 6;
+			Main.npcFrameCount[Type] = 6;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, Ashen_Biome.SpawnRates.ScrapyardStryder);
 		}
@@ -61,5 +63,12 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 		}
+#if DRAWPLATFORM
+		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			Vector2 platformStart = NPC.position + PlatformOffset - screenPos;
+			OriginExtensions.DrawDebugLineSprite(platformStart, platformStart + PlatformWidth * Vector2.UnitX, Color.Red);
+		}
+		struct DebugFlag : IDebugFlag;
+#endif
 	}
 }
