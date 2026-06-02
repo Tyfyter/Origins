@@ -651,7 +651,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				Vector2 diff = npc.targetRect.Center() - npc.Center;
 				diff.X = Math.Max(Math.Abs(diff.X) - h_distance, 0);
 				if (diff.Y > diff.X) {
-					npc.velocity.Y -= 0.33f;
+					npc.velocity.Y -= Main.masterMode ? 0.33f : 0.39f;
 				} else {
 					npc.GravityMultiplier *= 0;
 					if (diff.Y < 0) npc.velocity.Y -= 0.1f;
