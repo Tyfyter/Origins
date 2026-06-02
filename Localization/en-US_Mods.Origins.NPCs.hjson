@@ -411,7 +411,7 @@ Hyrax.DisplayName: Hyrax
 Power_Suit_Zombie.DisplayName: Power Suit Zombie
 
 Trenchmaker: {
-	DisplayName: "{$DisplayNameGeneric}-[{0:00}]"
+	DisplayName: "{$DisplayNameGeneric}-[{0:b2}]"
 	DisplayNameGeneric: Trenchmaker
 
 	BossChecklistIntegration: {

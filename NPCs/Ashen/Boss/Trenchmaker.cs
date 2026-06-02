@@ -159,7 +159,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override LocalizedText DeathMessage => Language.GetText("Announcement.HasBeenDefeated_Single");
 		public override bool ModifyDeathMessage(ref NetworkText customText, ref Color color) {
-			customText = DeathMessage.WithFormatArgs(DisplayName.WithFormatArgs(GunType.ToString("b2"))).ToNetworkText();
+			customText = DeathMessage.WithFormatArgs(DisplayName.WithFormatArgs((int)GunType)).ToNetworkText();
 			Mod.Logger.Debug(customText);
 			return true;
 		}

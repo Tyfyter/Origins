@@ -411,7 +411,7 @@ Hyrax.DisplayName: Гиракс
 Power_Suit_Zombie.DisplayName: Зомби в силовом костюме
 
 Trenchmaker: {
-	DisplayName: "{$DisplayNameGeneric}-[{0:00}]"
+	DisplayName: "{$DisplayNameGeneric}-[{0:b2}]"
 	DisplayNameGeneric: Окопник
 
 	BossChecklistIntegration: {
