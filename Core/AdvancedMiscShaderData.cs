@@ -6,6 +6,7 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
@@ -13,14 +14,31 @@ using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 
 namespace Origins.Core { 
-	public class AdvancedMiscShaderData(Asset<Effect> shader, string passName, params Parameter[] parameters) : MiscShaderData(shader, passName), IAdvancedShaderData<AdvancedMiscShaderData> {
-		Parameter[] IAdvancedShaderData<AdvancedMiscShaderData>.Parameters => parameters;
+	public class AdvancedMiscShaderData : MiscShaderData, IAdvancedShaderData<AdvancedMiscShaderData> {
+		private readonly Parameter[] parameters;
+		readonly Task loadTask;
+		public AdvancedMiscShaderData(Asset<Effect> shader, string passName, params Parameter[] parameters) : base(shader, passName) {
+			if (shader is null) return;
+			this.parameters = parameters;
+			if (Main.dedServ) return;
+			loadTask = Task.Run(shader.Wait).ContinueWith(_ => {
+				for (int i = 0; i < parameters.Length; i++) parameters[i].Bind(this);
+			});
+		}
+
+		Parameter[] IAdvancedShaderData<AdvancedMiscShaderData>.Parameters {
+			get {
+				loadTask.Wait();
+				return parameters;
+			}
+		}
 		public override void Apply(DrawData? drawData = null) {
 			using (SkipShaderApply _ = new()) base.Apply(drawData);
 			this.ApplyParameters();
 			((ShaderData)this).Apply();
 		}
 		public AdvancedMiscShaderData Clone(params Parameter[] newParameters) => new(ShaderDataMethods._asset.GetValue(this), ShaderDataMethods._passName.GetValue(this), newParameters.Union(parameters).ToArray());
+		public void LoadThen(Action action) => loadTask.ContinueWith(_ => action());
 	}
 	public class AdvancedArmorShaderData : ArmorShaderData, IAdvancedShaderData<AdvancedArmorShaderData> {
 		private readonly Parameter[] parameters;
@@ -54,6 +72,7 @@ namespace Origins.Core {
 			this.ApplyParameters();
 			Apply();
 		}
+		public sealed override void Apply() => base.Apply();
 		public AdvancedArmorShaderData Clone(params Parameter[] newParameters) => new(ShaderDataMethods._asset.GetValue(this), ShaderDataMethods._passName.GetValue(this), newParameters.Union(parameters).ToArray());
 		[ThreadStatic]
 		static bool registering;
@@ -70,6 +89,7 @@ namespace Origins.Core {
 				}
 			}
 		}
+		public void LoadThen(Action action) => loadTask.ContinueWith(_ => action());
 	}
 	public interface IAdvancedShaderData<T> where T : IAdvancedShaderData<T> {
 		Parameter[] Parameters { get; }
@@ -271,9 +291,23 @@ namespace Origins.Core {
 				public static implicit operator Val(Vector4[] value) => new() { InnerValue = value };
 				public override string ToString() => InnerValue.ToString();
 				public override int GetHashCode() => InnerValue.GetHashCode() ^ 1;
-				public override bool Equals(object obj) => obj is Val other && InnerValue.Equals(other.InnerValue);
+				public override bool Equals(object obj) {
+					switch (obj) {
+						case Val other:
+						if (InnerValue is null) return other.InnerValue is null;
+						return InnerValue.Equals(other.InnerValue);
+						case null:
+						return InnerValue is null;
+						default:
+						return InnerValue.Equals(obj);
+					}
+				}
 				public static bool operator ==(Val left, Val right) => left.Equals(right);
 				public static bool operator !=(Val left, Val right) => !(left == right);
+				public static bool operator ==(Val left, object right) => left.InnerValue is null ? right is null : left.InnerValue.Equals(right);
+				public static bool operator !=(Val left, object right) => !(left == right);
+				public static bool operator ==(object left, Val right) => left.Equals(right.InnerValue);
+				public static bool operator !=(object left, Val right) => !(left == right);
 			}
 		}
 	}

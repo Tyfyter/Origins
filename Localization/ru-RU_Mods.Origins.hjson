@@ -2255,7 +2255,8 @@ Projectiles: {
 	// Shuckatana_Slash.DisplayName: Shuckatana Slash Animation
 	// Shuckatana_ShootAnimation.DisplayName: Shuckatana Shoot Animation
 	// Neutron_Soup_Flames.DisplayName: Neutron Soup Flames
-	// Neutron_Soup_P.DisplayName: Neutron Soup P
+	// Neutron_Soup_P.DisplayName: Neutron Soup
+	// Trenchmaker_Laser_P.DisplayName: Trenchmaker Laser
 }
 
 Prefixes: {

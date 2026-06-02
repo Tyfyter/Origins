@@ -188,9 +188,10 @@ namespace Origins.NPCs.Ashen.Boss {
 			UpdateTarget();
 			Vector2 diff = NPC.targetRect.Center() - GunPos;
 			Vector2 direction = diff.SafeNormalize(Vector2.UnitY);
-			GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.05f);
-			this.GetState().DoAIState(this);
-			if (!(this.GetState() as AIState).CanHaveThrustersActive) {
+			AIState state = (AIState)this.GetState();
+			if (state.ShouldRotateGuns(this)) GeometryUtils.AngularSmoothing(ref NPC.rotation, direction.ToRotation(), 0.05f);
+			state.DoAIState(this);
+			if (!state.CanHaveThrustersActive) {
 				NPC.frame.Y = 0;
 				NPC.frameCounter = 0;
 			}

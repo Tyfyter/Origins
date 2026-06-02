@@ -10,11 +10,14 @@ namespace Origins.Reflection {
 		public static FastFieldInfo<ShaderData, Asset<Effect>> _asset;
 		public static FastFieldInfo<ArmorShaderDataSet, List<ArmorShaderData>> _shaderData;
 		public static FastFieldInfo<ArmorShaderDataSet, int> _shaderDataCount;
+		static readonly object _lock = new();
 		public static int RegisterArmorShader(ArmorShaderData shaderData) {
-			_shaderDataCount.SetValue(GameShaders.Armor, _shaderDataCount.GetValue(GameShaders.Armor) + 1);
-			List<ArmorShaderData> armorShaderDatas = _shaderData.GetValue(GameShaders.Armor);
-			lock (armorShaderDatas) armorShaderDatas.Add(shaderData);
-			return _shaderDataCount.GetValue(GameShaders.Armor);
+			lock (_lock) {
+				_shaderDataCount.SetValue(GameShaders.Armor, _shaderDataCount.GetValue(GameShaders.Armor) + 1);
+				List<ArmorShaderData> armorShaderDatas = _shaderData.GetValue(GameShaders.Armor);
+				lock (armorShaderDatas) armorShaderDatas.Add(shaderData);
+				return _shaderDataCount.GetValue(GameShaders.Armor);
+			}
 		}
 	}
 }

@@ -87,6 +87,7 @@ namespace Origins.NPCs {
 		public virtual void SetStaticDefaults() { }
 		public abstract void DoAIState(TBoss boss);
 		public virtual void StartAIState(TBoss boss) { }
+		public virtual bool ShouldRotateGuns(TBoss boss) => true;
 		public virtual double GetWeight(TBoss boss, int[] previousStates) {
 			int index = Array.IndexOf(previousStates, Index);
 			if (index == -1) index = previousStates.Length;
