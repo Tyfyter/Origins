@@ -10,6 +10,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using TurretKind = Origins.NPCs.Ashen.Boss.Trenchmaker.GunKind;
 
 namespace Origins.NPCs.Ashen.Boss {
 	public class Trenchmaker_Turret : ModNPC {
@@ -225,12 +226,6 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			GunType = (TurretKind)reader.ReadByte();
-		}
-		public enum TurretKind {
-			Cannon,
-			Launcher,
-			Flamer,
-			Laser,
 		}
 		public class TM_Turret_Cannon_P : ModProjectile {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BulletDeadeye}";

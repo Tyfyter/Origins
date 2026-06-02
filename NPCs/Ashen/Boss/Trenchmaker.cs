@@ -29,6 +29,7 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -43,6 +44,12 @@ using static Terraria.Utilities.NPCUtils;
 namespace Origins.NPCs.Ashen.Boss {
 	[AutoloadBossHead]
 	public class Trenchmaker : ModNPC, IStateBoss<Trenchmaker>, IAshenEnemy {
+		public enum GunKind : byte {
+			Cannon,
+			Launcher,
+			Flamer,
+			Laser,
+		}
 		public static AIList<Trenchmaker> AIStates { get; } = [];
 		public int[] PreviousStates { get; } = new int[6];
 		internal static IItemDropRule normalDropRule;
@@ -122,7 +129,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			this.SetupStates();
 		}
-		public int GunType { get; private set; }
+		public GunKind GunType { get; private set; }
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.width = 104;
@@ -142,14 +149,17 @@ namespace Origins.NPCs.Ashen.Boss {
 				ModContent.GetInstance<Ashen_Biome>().Type
 			];
 			this.SetAIState(StateIndex<PhaseOneIdleState>());
-			GunType = Main.rand.Next(4);
+		}
+		public override void OnSpawn(IEntitySource source) {
+			GunType = Main.rand.Next(Enum.GetValues<GunKind>());
+			NPC.netUpdate = true;
 		}
 		public override void ModifyTypeName(ref string typeName) {
-			typeName = string.Format(typeName, GunType);
+			typeName = string.Format(typeName, (int)GunType);
 		}
 		public override LocalizedText DeathMessage => Language.GetText("Announcement.HasBeenDefeated_Single");
 		public override bool ModifyDeathMessage(ref NetworkText customText, ref Color color) {
-			customText = DeathMessage.WithFormatArgs(DisplayName.WithFormatArgs(GunType.ToString("00"))).ToNetworkText();
+			customText = DeathMessage.WithFormatArgs(DisplayName.WithFormatArgs(GunType.ToString("b2"))).ToNetworkText();
 			Mod.Logger.Debug(customText);
 			return true;
 		}
@@ -413,7 +423,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			spriteBatch.Draw(
 				armTexture,
 				GunPos - screenPos,
-				armTexture.Frame(verticalFrames: 4, frameY: GunType),
+				armTexture.Frame(verticalFrames: 4, frameY: (int)GunType),
 				drawColor,
 				NPC.rotation + (effects.HasFlag(SpriteEffects.FlipHorizontally) ? 0 : MathHelper.Pi),
 				new Vector2(47, 15).Apply(effects, armTexture.Value.Size()),
@@ -472,7 +482,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public override void ReceiveExtraAI(BinaryReader reader) {
 			NPC.aiAction = reader.ReadByte();
-			GunType = reader.ReadByte();
+			GunType = (GunKind)reader.ReadByte();
 			for (int i = 0; i < legs.Length; i++) {
 				if (reader.ReadBoolean()) legs[i].Read(reader);
 			}
@@ -481,10 +491,10 @@ namespace Origins.NPCs.Ashen.Boss {
 		public abstract class AIState : AIState<Trenchmaker> {
 			public virtual float WalkDist => 2 * 16;
 			public virtual bool CanHaveThrustersActive => false;
-			public virtual int ForGunType => -1;
+			public virtual GunKind? ForGunType => null;
 			public virtual LegAnimation ForceAnimation(Trenchmaker npc, Leg leg, Leg otherLeg) => null;
 			public override double GetWeight(Trenchmaker boss, int[] previousStates) {
-				if (ForGunType != -1 && boss.GunType != ForGunType) return 0;
+				if (ForGunType.HasValue && boss.GunType != ForGunType) return 0;
 				return base.GetWeight(boss, previousStates);
 			}
 		}

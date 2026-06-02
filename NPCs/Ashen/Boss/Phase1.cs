@@ -56,7 +56,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static int Duration => 45;
 		#endregion stats
 		public override bool Ranged => true;
-		public override int ForGunType => 0;
+		public override GunKind? ForGunType => GunKind.Cannon;
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 		}
@@ -98,7 +98,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static int Duration => 40;
 		#endregion stats
 		public override bool Ranged => true;
-		public override int ForGunType => 1;
+		public override GunKind? ForGunType => GunKind.Launcher;
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 		}
@@ -268,7 +268,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static float TanExplosionSpread => 0.5f;
 		#endregion stats
 		public override bool Ranged => true;
-		public override int ForGunType => 1;
+		public override GunKind? ForGunType => GunKind.Launcher;
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 		}
@@ -476,7 +476,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		public static float ChargeSoundVolume => 1;
 		public static float ChargeSoundFadeTime => 30;
 		public override bool CanHaveThrustersActive => true;
-		public override int ForGunType => 0;
+		public override GunKind? ForGunType => GunKind.Cannon;
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
 			iconTexture = typeof(Trenchmaker_Carpet_Bomb).GetDefaultTMLName();
