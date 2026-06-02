@@ -852,14 +852,15 @@ namespace Origins {
 	public interface IPlatformNPC {
 		public Vector2 PlatformOffset { get; }
 		public float PlatformWidth { get; }
-		public float PlatformGrip => 1f;
-		public float PlatformStickyness => 0f;
+		public float PlatformGrip(Player player) => 1f;
+		public float PlatformStickyness(Player player) => 0f;
 		public bool CanStandOnPlatform(Player player) => true;
 		public Vector2 OldPlatformPosition { get; set; }
 		public sealed Vector2 GetPlatformPos() {
 			if (this is not ModNPC modNPC) throw new NotSupportedException($"Type {this.GetType()} is not supported, IPlatformNPC must be implemented by a ModNPC");
 			return modNPC.NPC.position + PlatformOffset + Vector2.UnitY * modNPC.NPC.gfxOffY;
 		}
+		struct MoveToPegFlag : IMoveToPegFlag;
 	}
 	public static class SlopeID {
 		public const byte None = 0;

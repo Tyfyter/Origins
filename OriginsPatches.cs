@@ -734,9 +734,8 @@ namespace Origins {
 				Debugging.LogFirstRun(PressurePlateHelper.UpdatePlayerPosition);
 				OriginPlayer originPlayer = self.OriginPlayer();
 				originPlayer.UpdateNPCPlatforms();
+				if (originPlayer.weakShimmer) orig(self);
 				originPlayer.UpdateMurkySludgeSounds();
-				if (originPlayer.weakShimmer) return;
-				orig(self);
 			};
 			try {
 				IL_Collision.TileCollision += IL_Collision_TileCollision_OffsetBookcases;

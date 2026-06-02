@@ -1170,7 +1170,9 @@ namespace Origins {
 				if (!float.IsPositiveInfinity(minCollisionTime) && standOnNPC.ModNPC is IPlatformNPC platform) {
 					Player.position = Player.oldPosition + playerDiff * minCollisionTime;
 					Vector2 npcDiff = platform.GetPlatformPos() - platform.OldPlatformPosition;
-					using (Player.velocity.ScopedOverride((playerDiff * new Vector2(1 - platform.PlatformStickyness, 0) + npcDiff * new Vector2(platform.PlatformGrip, 1)) * (1 - minCollisionTime))) {
+					Vector2 playerMovementMult = new(1 - platform.PlatformStickyness(Player), 0);
+					Vector2 platformMovementMult = new(platform.PlatformGrip(Player), 1);
+					using (Player.velocity.ScopedOverride((playerDiff * playerMovementMult + npcDiff * platformMovementMult) * (1 - minCollisionTime))) {
 						Player.DryCollision(false, false);
 					}
 				}
