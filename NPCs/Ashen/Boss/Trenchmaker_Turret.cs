@@ -1,17 +1,20 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Graphics;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
+using Origins.Tiles.Ashen;
 using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using TurretKind = Origins.NPCs.Ashen.Boss.Trenchmaker.GunKind;
 using static Origins.NPCs.Ashen.Boss.Trenchmaker;
+using TurretKind = Origins.NPCs.Ashen.Boss.Trenchmaker.GunKind;
 
 namespace Origins.NPCs.Ashen.Boss {
 	public class Spawn_Turret_State : AIState {
@@ -213,6 +216,11 @@ namespace Origins.NPCs.Ashen.Boss {
 				}
 			}
 			bool TargetAngle(float direction) => GeometryUtils.AngularSmoothing(ref NPC.rotation, direction, 0.05f);
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NE8>(), 2, 1, 2));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Sanguinite_Ore_Item>(), 2, 2, 4));
+			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.PlayerNeedsHealing(), ItemID.Heart, 2));
 		}
 		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
 			if (NPC.ai[0] == -0x100) damageMultiplier *= 0.5f;
