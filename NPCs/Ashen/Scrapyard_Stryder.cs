@@ -28,9 +28,9 @@ namespace Origins.NPCs.Ashen {
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.Unicorn;
-			NPC.lifeMax = 140;
-			NPC.defense = 7;
-			NPC.damage = 12;
+			NPC.lifeMax = 475;
+			NPC.defense = 24;
+			NPC.damage = 48;
 			NPC.width = 120;
 			NPC.height = 70;
 			NPC.value = 230;
