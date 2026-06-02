@@ -11,8 +11,34 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using TurretKind = Origins.NPCs.Ashen.Boss.Trenchmaker.GunKind;
+using static Origins.NPCs.Ashen.Boss.Trenchmaker;
 
 namespace Origins.NPCs.Ashen.Boss {
+	public class Spawn_Turret_State : AIState {
+		public static int StateDuration => 90;
+		public static int MaxCount => 4;
+		public override bool Ranged => true;
+		public override void Load() {
+			PhaseOneIdleState.aiStates.Add(this);
+		}
+		public override void DoAIState(Trenchmaker boss) {
+			if (++boss.NPC.ai[0] > StateDuration) boss.StartIdle();
+		}
+		public override void StartAIState(Trenchmaker boss) {
+			NPC npc = boss.NPC;
+			npc.SpawnNPC(
+				null,
+				(int)npc.Center.X,
+				(int)npc.Center.Y,
+				ModContent.NPCType<Trenchmaker_Turret>(),
+				ai0: -0x100
+			);
+		}
+		public override double GetWeight(Trenchmaker boss, int[] previousStates) {
+			if (NPC.CountNPCS(ModContent.NPCType<Trenchmaker_Turret>()) >= MaxCount) return 0;
+			return base.GetWeight(boss, previousStates);
+		}
+	}
 	public class Trenchmaker_Turret : ModNPC {
 		static AutoLoadingTexture[] gunTextures;
 		static AutoLoadingTexture[] gunGlowTextures;
@@ -40,13 +66,35 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.defense = 6;
 			NPC.npcSlots = 0;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-2f);
-			NPC.knockBackResist = 0;
-			GunType = Main.rand.Next(Enum.GetValues<TurretKind>());
+			NPC.knockBackResist = 0.5f;
 		}
 		public override void OnSpawn(IEntitySource source) {
-			base.OnSpawn(source);
+			NPC.ai[0] = -0x100;
+			GunType = Main.rand.Next(Enum.GetValues<TurretKind>());
+			if (source is EntitySource_Parent { Entity: Entity parent }) {
+				NPC.Center = parent.Center;
+				NPC.velocity = Vector2.UnitX * parent.direction * 14;
+				if (parent is NPC { ModNPC: Trenchmaker trenchmaker }) GunType = trenchmaker.GunType;
+			}
+			NPC.netUpdate = true;
 		}
 		public override void AI() {
+			if (NPC.ai[0] == -0x100) {
+				NPC.velocity.X *= 0.98f;
+				foreach (NPC other in Main.ActiveNPCs) {
+					if (other.type != Type || other.whoAmI == NPC.whoAmI || !other.Hitbox.Intersects(NPC.Hitbox)) continue;
+					Vector2 bounceDir = NPC.Center - other.Center;
+					if (bounceDir.X == 0) bounceDir.X = -other.direction;
+					bounceDir = bounceDir.Normalized(out _);
+					NPC.velocity -= bounceDir * Math.Min(Vector2.Dot(NPC.velocity, bounceDir) * 2, -1);
+				}
+				if (NPC.collideY) {
+					NPC.velocity = default;
+					NPC.ai[0] = 0;
+				}
+				return;
+			}
+			NPC.knockBackResist = 0;
 			NPC.TargetClosest();
 			if (NPC.HasValidTarget) NPC.targetRect = NPC.GetTargetData().Hitbox;
 			Vector2 diff = NPC.targetRect.Center() - GunPos;
@@ -165,6 +213,10 @@ namespace Origins.NPCs.Ashen.Boss {
 				}
 			}
 			bool TargetAngle(float direction) => GeometryUtils.AngularSmoothing(ref NPC.rotation, direction, 0.05f);
+		}
+		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
+			if (NPC.ai[0] == -0x100) damageMultiplier *= 0.5f;
+			return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.frame.Y = NPC.direction == 1 ? 0 : frameHeight;
