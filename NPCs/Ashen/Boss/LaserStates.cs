@@ -190,11 +190,11 @@ public class Fire_Lasers_State : AIState {
 			data.color *= progress;
 			Vector2 offset = (rotation + MathHelper.PiOver2).ToRotationVector2() * (1 - progress) * 24;
 			data.position = position + offset;
-			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16);
+			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
 			data.sourceRect = frame;
 			data.Draw(Main.spriteBatch);
 			data.position = position - offset;
-			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16);
+			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
 			data.sourceRect = frame;
 			data.Draw(Main.spriteBatch);
 			return false;
@@ -352,11 +352,11 @@ public class Laser_Target_Locator_State : AIState {
 			data.color *= progress;
 			Vector2 offset = (rotation + MathHelper.PiOver2).ToRotationVector2() * (1 - progress) * 16;
 			data.position = position + offset;
-			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 1.15f + 16);
+			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
 			data.sourceRect = frame;
 			data.Draw(Main.spriteBatch);
 			data.position = position - offset;
-			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 1.15f + 16);
+			frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
 			data.sourceRect = frame;
 			data.Draw(Main.spriteBatch);
 			return false;

@@ -6223,5 +6223,9 @@ namespace Origins {
 			while (!T.IsZero(a)) (b, a) = (a, b % a);
 			return b;
 		}
+		public static T OrXIf<T>(this T value, T condition, T result) {
+			if (Equals(value, condition)) return result;
+			return value;
+		}
 	}
 }

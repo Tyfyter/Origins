@@ -214,7 +214,7 @@ namespace Origins.NPCs.Ashen.Boss {
 							if (Experiments.Laser_Sway) 
 								DoGunSway(ref NPC.rotation, ref NPC.ai[2], diff.ToRotation(), 0.05f, 0.005f + 0.005f * NPC.ai[1] / TM_Turret_Laser_P.ChargeTime);
 							else 
-								GeometryUtils.AngularSmoothing(ref NPC.rotation, diff.ToRotation(), 0.05f * float.Pow(NPC.ai[1] / TM_Turret_Laser_P.ChargeTime, 2));
+								GeometryUtils.AngularSmoothing(ref NPC.rotation, diff.ToRotation(), 0.03f * float.Pow(NPC.ai[1] / TM_Turret_Laser_P.ChargeTime, 2));
 							if (NPC.ai[1] == 0) {
 								NPC.ai[0] = 2;
 								NPC.ai[1] = TM_Turret_Laser_P.ActiveTime;
@@ -403,7 +403,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			}
 		}
 		public class TM_Turret_Laser_P : ModProjectile {
-			public static int ChargeTime => 30;
+			public static int ChargeTime => 45;
 			public static int ActiveTime => Experiments.Pulse_Laser ? 50 : 15;
 			public override string Texture => typeof(Laser_Target_Locator).GetDefaultTMLName();
 			public override void SetStaticDefaults() {
@@ -477,14 +477,15 @@ namespace Origins.NPCs.Ashen.Boss {
 				float rotation = diff.ToRotation();
 				float dist = diff.Length();
 				const float scale = 1f / 256f;
+				Rectangle frame = new(0, 0, (int)dist, 256);
 				DrawData data = new(
 					TextureAssets.Extra[ExtrasID.RainbowRodTrailShape].Value,//TextureAssets.MagicPixel.Value,
 					position,
-					null,
+					frame,
 					new Color(255, IsActive ? 40 : 100, 0, 0),
 					rotation,
 					Vector2.UnitY * 128,
-					new Vector2(dist * scale, 8 * scale),
+					new Vector2(1, 8 * scale),
 					0
 				);
 				data.Draw(Main.spriteBatch);
@@ -495,10 +496,12 @@ namespace Origins.NPCs.Ashen.Boss {
 				data.color *= progress;
 				Vector2 offset = (rotation + MathHelper.PiOver2).ToRotationVector2() * (1 - progress) * 8;
 				data.position = position + offset;
-				data.scale.X = Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist * 1.15f + 16) * scale;
+				frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
+				data.sourceRect = frame;
 				data.Draw(Main.spriteBatch);
 				data.position = position - offset;
-				data.scale.X = Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist * 1.15f + 16) * scale;
+				frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
+				data.sourceRect = frame;
 				data.Draw(Main.spriteBatch);
 				return false;
 			}
