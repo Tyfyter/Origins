@@ -205,6 +205,7 @@ namespace Origins.Tiles.Ashen {
 				Item icon = item;
 				Color itemColor = default;
 				Vector2 offset = new Vector2(3.5f, 1.5f) * 56 * Main.inventoryScale;
+				if (item.IsAir) itemColor = new(151, 145, 117, 150);
 				if (slot == 0) {
 					spriteBatch.Draw(
 						bgTexture,
@@ -216,25 +217,21 @@ namespace Origins.Tiles.Ashen {
 						Main.inventoryScale,
 						SpriteEffects.None,
 					0);
-					ItemSlot.Draw(spriteBatch, ref air, ItemSlot.Context.ChestItem, position);
-					if (item.IsAir) {
-						icon = new(ItemID.EmptyBucket);
-						itemColor = new(130, 62, 102, 100);
-					}
+					if (item.IsAir) icon = new(ItemID.EmptyBucket);
 				} else {
-					ItemSlot.Draw(spriteBatch, ref air, ItemSlot.Context.ShopItem, position);
-					if (item.IsAir) {
-						icon = new(ModContent.ItemType<Oil_Bucket>());
-						itemColor = new(110, 128, 54, 100);
-					}
+					if (item.IsAir) icon = new(ModContent.ItemType<Oil_Bucket>());
 					const int frames = 11;
 					Rectangle frame = uiTexture.Frame(verticalFrames: frames + 1, frameY: Math.Min((oilTime * frames) / TimePerBucket, frames));
 					spriteBatch.Draw(
 						uiTexture,
-						position - new Vector2(17, 17) + (Vector2.One * 0.5f - Vector2.UnitX) * 56 * Main.inventoryScale,
+						position - Vector2.UnitX * (slot + 1) * 56 * Main.inventoryScale - offset + new Vector2(262, 96) * Main.inventoryScale,
 						frame,
-						Color.White
-					);
+						Color.White,
+						0,
+						default,
+						Main.inventoryScale,
+						SpriteEffects.None,
+					0);
 				}
 				ItemSlot.Draw(spriteBatch, ref icon, ItemSlot.Context.ChatItem, position, itemColor);
 			}
