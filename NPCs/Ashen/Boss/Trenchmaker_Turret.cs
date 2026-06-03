@@ -19,7 +19,7 @@ using TurretKind = Origins.NPCs.Ashen.Boss.Trenchmaker.GunKind;
 namespace Origins.NPCs.Ashen.Boss {
 	public class Spawn_Turret_State : AIState {
 		public static int StateDuration => 90;
-		public static int MaxCount => 4;
+		public static int MaxCount => 2;
 		public override bool Ranged => true;
 		public override void Load() {
 			PhaseOneIdleState.aiStates.Add(this);
@@ -64,14 +64,16 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
 			NPC.width = 38;
 			NPC.height = 30;
-			NPC.lifeMax = 600;
-			NPC.damage = 27;
-			NPC.defense = 6;
+			NPC.lifeMax = 400;
+			NPC.damage = 27;;
 			NPC.npcSlots = 0;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-2f);
 			NPC.knockBackResist = 0.5f;
 		}
 		public override void OnSpawn(IEntitySource source) {
+			SoundEngine.PlaySound(SoundID.Item61.WithPitch(-0.5f), NPC.Center);
+			SoundEngine.PlaySound(SoundID.NPCDeath56, NPC.Center);
+			SoundEngine.PlaySound(Origins.Sounds.MetalBoxOpen, NPC.Center);
 			NPC.ai[0] = -0x100;
 			GunType = Main.rand.Next(Enum.GetValues<TurretKind>());
 			if (source is EntitySource_Parent { Entity: Entity parent }) {
@@ -216,6 +218,19 @@ namespace Origins.NPCs.Ashen.Boss {
 				}
 			}
 			bool TargetAngle(float direction) => GeometryUtils.AngularSmoothing(ref NPC.rotation, direction, 0.05f);
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			if (NPC.life <= 0) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore1");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore2");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore3");
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore4");
+				for (int i = 0; i < 7; i++) {
+					Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+				}
+			} else if (Main.rand.NextBool(5)) {
+				Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVector2FromRectangle(NPC.Hitbox), NPC.velocity, "Gores/NPCs/Ashen_Gore" + Main.rand.Next(1, 5));
+			}
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NE8>(), 2, 1, 2));

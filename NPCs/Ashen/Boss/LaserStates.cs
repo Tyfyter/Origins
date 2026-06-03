@@ -18,8 +18,8 @@ namespace Origins.NPCs.Ashen.Boss;
 public class Fire_Lasers_State : AIState {
 	#region stats
 	public static int ShotDamage => (int)(25 * DifficultyMult);
-	public static int ChargeTime => 60;
-	public static int ActiveTime => 30;
+	public static int ChargeTime => 120;
+	public static int ActiveTime => 70;
 	#endregion stats
 	public override bool Ranged => true;
 	public override GunKind? ForGunType => GunKind.Laser;
@@ -114,10 +114,14 @@ public class Fire_Lasers_State : AIState {
 			Projectile.position = gunPos + Projectile.velocity * 24;
 			Vector2 targetPos = Projectile.position + Projectile.velocity * Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64);
 			if (IsActive) {
+				SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(2.7f).WithVolume(0.5f), Projectile.Center);
+				SoundEngine.SoundPlayer.Play(SoundID.Item72.WithVolume(0.8f), Projectile.Center);
 				Dust.NewDust(targetPos - Vector2.One * 2, 4, 4, DustID.AmberBolt);
 			}
 			Projectile.localAI[2] += 1f / 60;
 			TargetPos = targetPos;
+			SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(++owner.ai[3] / 10).WithVolume(0.8f), Projectile.Center);
+			SoundEngine.SoundPlayer.Play(Origins.Sounds.RivenBass.WithPitch(owner.ai[3] / 20).WithVolume(0.8f), Projectile.Center);
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			if (!IsActive) return false;
@@ -305,6 +309,8 @@ public class Laser_Target_Locator_State : AIState {
 			owner.ai[1] -= float.Pow(Projectile.ai[0] - newTarget.X, 2) * 0.01f;
 			Max(ref owner.ai[1], 0);
 			TargetPos = newTarget;
+			SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(++owner.ai[3] / 10).WithVolume(0.8f), Projectile.Center);
+			SoundEngine.SoundPlayer.Play(SoundID.Item67.WithPitch(owner.ai[3] / 20).WithVolume(0.8f), Projectile.Center);
 			if (++owner.ai[1] >= ChargeTime) {
 				owner.ai[0] = 2;
 				owner.ai[1] = 0;
