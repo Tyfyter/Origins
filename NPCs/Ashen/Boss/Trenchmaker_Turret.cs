@@ -17,6 +17,11 @@ using static Origins.NPCs.Ashen.Boss.Trenchmaker;
 using TurretKind = Origins.NPCs.Ashen.Boss.Trenchmaker.GunKind;
 
 namespace Origins.NPCs.Ashen.Boss {
+	file static class Experiments {
+		public static bool Laser_Sway => false;
+		public static bool Pulse_Laser => false;
+		struct ExpirementFlag : IDebugFlag;
+	}
 	public class Spawn_Turret_State : AIState {
 		public static int StateDuration => 90;
 		public static int MaxCount => 2;
@@ -184,7 +189,14 @@ namespace Origins.NPCs.Ashen.Boss {
 					NPC.ai[1].Cooldown();
 					switch (NPC.ai[0]) {
 						case 0: {
-							if (TargetAngle(diff.ToRotation()) && NPC.ai[1] == 0) {
+							bool shouldStartFiring;
+							if (Experiments.Laser_Sway) {
+								DoGunSway(ref NPC.rotation, ref NPC.ai[2], diff.ToRotation(), 0.05f, 0.01f);
+								shouldStartFiring = GeometryUtils.AngleDif(NPC.rotation, diff.ToRotation(), out _) < 0.1f;
+							} else {
+								shouldStartFiring = GeometryUtils.AngularSmoothing(ref NPC.rotation, diff.ToRotation(), 0.05f);
+							}
+							if (shouldStartFiring && NPC.ai[1] == 0) {
 								Vector2 dir = NPC.rotation.ToRotationVector2();
 								NPC.SpawnProjectile(null,
 									GunPos + dir * 16,
@@ -199,7 +211,10 @@ namespace Origins.NPCs.Ashen.Boss {
 							break;
 						}
 						case 1: {
-							GeometryUtils.AngularSmoothing(ref NPC.rotation, diff.ToRotation(), 0.05f * NPC.ai[1] / TM_Turret_Laser_P.ChargeTime);
+							if (Experiments.Laser_Sway) 
+								DoGunSway(ref NPC.rotation, ref NPC.ai[2], diff.ToRotation(), 0.05f, 0.005f + 0.005f * NPC.ai[1] / TM_Turret_Laser_P.ChargeTime);
+							else 
+								GeometryUtils.AngularSmoothing(ref NPC.rotation, diff.ToRotation(), 0.05f * NPC.ai[1] / TM_Turret_Laser_P.ChargeTime);
 							if (NPC.ai[1] == 0) {
 								NPC.ai[0] = 2;
 								NPC.ai[1] = TM_Turret_Laser_P.ActiveTime;
@@ -207,6 +222,7 @@ namespace Origins.NPCs.Ashen.Boss {
 							break;
 						}
 						case 2: {
+							if (Experiments.Laser_Sway) DoGunSway(ref NPC.rotation, ref NPC.ai[2], diff.ToRotation(), 0.05f, 0.005f);
 							if (NPC.ai[1] == 0) {
 								NPC.ai[0] = 0;
 								NPC.ai[1] = 120; //time between attacks
@@ -218,6 +234,17 @@ namespace Origins.NPCs.Ashen.Boss {
 				}
 			}
 			bool TargetAngle(float direction) => GeometryUtils.AngularSmoothing(ref NPC.rotation, direction, 0.05f);
+			static void DoGunSway(ref float rotation, ref float rotationSpeed, float targetRotation, float targetSpeed, float acceleration) {
+				float eventualRotation = rotation - (rotationSpeed * rotationSpeed) / (2 * acceleration);
+				float diff = GeometryUtils.AngleDif(eventualRotation, targetRotation, out int dir);
+				if (float.Abs(rotationSpeed) <= acceleration * 2 && diff <= acceleration) {
+					rotationSpeed = 0;
+					rotation = targetRotation;
+					return;
+				}
+				MathUtils.LinearSmoothing(ref rotationSpeed, targetSpeed * dir, acceleration);
+				rotation += rotationSpeed;
+			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
@@ -377,7 +404,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		}
 		public class TM_Turret_Laser_P : ModProjectile {
 			public static int ChargeTime => 30;
-			public static int ActiveTime => 15;
+			public static int ActiveTime => Experiments.Pulse_Laser ? 50 : 15;
 			public override string Texture => typeof(Laser_Target_Locator).GetDefaultTMLName();
 			public override void SetStaticDefaults() {
 				ProjectileID.Sets.DrawScreenCheckFluff[Type] = 1600 + 64;
@@ -410,6 +437,7 @@ namespace Origins.NPCs.Ashen.Boss {
 					return;
 				}
 				IsActive = owner.ai[0] == 2;
+				if (Experiments.Pulse_Laser && IsActive && ++Projectile.localAI[2] % 20 > 5) return;
 				Vector2 gunPos = turret.GunPos;
 				float pitchFactor = IsActive ? 1 : (1 - owner.ai[1] / ChargeTime);
 				SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(pitchFactor).WithVolume(0.8f), gunPos);
@@ -423,6 +451,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			}
 			public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 				if (!IsActive) return false;
+				if (Experiments.Pulse_Laser && Projectile.localAI[2] % 20 > 5) return false;
 				return targetHitbox.Contains(targetHitbox.Center().SnapToLine(Projectile.position, TargetPos, radius: 4));
 			}
 			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
@@ -436,6 +465,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				}
 			}
 			public override bool PreDraw(ref Color lightColor) {
+				if (Experiments.Pulse_Laser && IsActive && Projectile.localAI[2] % 20 > 5) return false;
 				if (!Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return false;
 				if (Main.npc.GetIfInRange((int)Projectile.ai[2]) is not NPC { active: true } owner || owner.ModNPC is not Trenchmaker_Turret turret) {
 					Projectile.Kill();
