@@ -472,14 +472,15 @@ namespace Origins.Items.Accessories {
 				float rotation = diff.ToRotation();
 				float dist = diff.Length();
 				const float scale = 1f / 256f;
+				Rectangle frame = new(0, 0, (int)dist, 256);
 				DrawData data = new(
 					TextureAssets.Projectile[Type].Value,
 					position,
-					null,
+					frame,
 					new Color(255, IsActive ? 40 : 100, 0, 0),
 					rotation,
 					Vector2.UnitY * 128,
-					new Vector2(dist * scale, 8 * scale),
+					new Vector2(1, 8 * scale),
 					0
 				);
 				data.Draw(Main.spriteBatch);
@@ -490,10 +491,12 @@ namespace Origins.Items.Accessories {
 				data.color *= progress;
 				Vector2 offset = (rotation + MathHelper.PiOver2).ToRotationVector2() * (1 - progress) * 8;
 				data.position = position + offset;
-				data.scale.X = Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist * 1.15f + 16) * scale;
+				frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
+				data.sourceRect = frame;
 				data.Draw(Main.spriteBatch);
 				data.position = position - offset;
-				data.scale.X = Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist * 1.15f + 16) * scale;
+				frame.Width = (int)Raymarch(data.position + Main.screenPosition, Projectile.velocity, dist + 16).OrXIf(dist + 16, dist);
+				data.sourceRect = frame;
 				data.Draw(Main.spriteBatch);
 				return false;
 			}

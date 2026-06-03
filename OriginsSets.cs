@@ -417,6 +417,7 @@ namespace Origins {
 			.RegisterBoolSet(
 				NPCID.EyeballFlyingFish,
 				NPCID.EyeofCthulhu,
+				NPCID.ServantofCthulhu,
 				NPCID.Eyezor,
 				NPCID.CataractEye,
 				NPCID.DemonEye,
@@ -428,7 +429,8 @@ namespace Origins {
 				NPCID.PurpleEye,
 				NPCID.SleepyEye,
 				NPCID.WallofFleshEye,
-				NPCID.WanderingEye
+				NPCID.WanderingEye,
+				NPCID.Creeper
 			);
 			public static Action<NPC>[] CustomExpertScaling { get; } = NPCID.Sets.Factory.CreateCustomSet<Action<NPC>>(null);
 			public static Predicate<NPC>[] CustomGroundedCheck { get; } = NPCID.Sets.Factory.CreateNamedSet($"{nameof(PegasusLib)}/{nameof(CustomGroundedCheck)}")
