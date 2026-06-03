@@ -1422,7 +1422,7 @@ TILES:
 (^) Small Storage Container
 (^) Solar Battery
 (#, ^5) Surveysprout Planter Box (tML #4061)
-(#2/3, ^2) Transistor !!! (needs obtain method)
+(^) Transistor
 (^) Unsuspicious Bush
 (#, ^5) Wilting Rose Planter Box (tML #4061)
 (^) Wind Turbine
