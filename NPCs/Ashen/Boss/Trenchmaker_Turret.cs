@@ -214,7 +214,7 @@ namespace Origins.NPCs.Ashen.Boss {
 							if (Experiments.Laser_Sway) 
 								DoGunSway(ref NPC.rotation, ref NPC.ai[2], diff.ToRotation(), 0.05f, 0.005f + 0.005f * NPC.ai[1] / TM_Turret_Laser_P.ChargeTime);
 							else 
-								GeometryUtils.AngularSmoothing(ref NPC.rotation, diff.ToRotation(), 0.05f * NPC.ai[1] / TM_Turret_Laser_P.ChargeTime);
+								GeometryUtils.AngularSmoothing(ref NPC.rotation, diff.ToRotation(), 0.05f * float.Pow(NPC.ai[1] / TM_Turret_Laser_P.ChargeTime, 2));
 							if (NPC.ai[1] == 0) {
 								NPC.ai[0] = 2;
 								NPC.ai[1] = TM_Turret_Laser_P.ActiveTime;

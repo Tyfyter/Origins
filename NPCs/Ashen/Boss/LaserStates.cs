@@ -46,7 +46,7 @@ public class Fire_Lasers_State : AIState {
 				break;
 			}
 			case 1: {
-				GeometryUtils.AngularSmoothing(ref npc.rotation, diff.ToRotation(), 0.04f * npc.ai[1] / ChargeTime + 2 / diff.Length());
+				GeometryUtils.AngularSmoothing(ref npc.rotation, diff.ToRotation(), 0.04f * float.Pow(npc.ai[1] / ChargeTime, 2) + 2 / diff.Length());
 				if (npc.ai[1] == 0) {
 					npc.ai[0] = 2;
 					npc.ai[1] = ActiveTime;
