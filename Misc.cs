@@ -5269,7 +5269,7 @@ namespace Origins {
 				return results;
 			}
 		}
-		public delegate float? Searcher<T>(T target, Rectangle area, NPC searcher, ref Rectangle hitbox);
+		public delegate float? Searcher<in T>(T target, Rectangle area, NPC searcher, ref Rectangle hitbox);
 		public delegate (float cost, int id, Rectangle hitbox)? Searcher(Rectangle area, NPC searcher);
 		public static AdvancedTargetSearchResults SearchForTarget(this NPC searcher, Rectangle area, TargetSearchTypes flags = TargetSearchTypes.Players | TargetSearchTypes.NPCs, Searcher<Player> playerSearcher = null, Searcher<NPC> npcSearcher = null, Searcher tileSearcher = null) {
 			playerSearcher ??= static (Player player, Rectangle area, NPC searcher, ref Rectangle hitbox) => searcher.Distance(player.Center) - player.aggro;

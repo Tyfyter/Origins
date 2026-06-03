@@ -11,6 +11,7 @@ namespace Origins.Graphics.Primitives {
 	public class VertexRectangle {
 
 		private VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[4];
+		static readonly short[] dices = [0, 1, 2, 3, 1, 2];
 		private static GraphicsDevice GraphicsDevice => Main.instance.GraphicsDevice;
 		
 		public void Draw(Vector2 position, Color color = default, Vector2 size = default, float rotation = 0, Vector2 rotationCenter = default) {
@@ -29,7 +30,6 @@ namespace Origins.Graphics.Primitives {
 			vertices[2].Color = color;
 			vertices[3].Color = color;
 
-			short[] dices = [0, 1, 2, 3, 1, 2];
 			GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, vertices.Length, dices, 0, 2);
 		}
 		public void DrawLit(Vector2 screenPos, Vector2 pos0, Vector2 pos1, Vector2 pos2, Vector2 pos3, Func<Vector2, Color> lighting = null) {
@@ -50,7 +50,6 @@ namespace Origins.Graphics.Primitives {
 			vertices[3].TextureCoordinate = Vector2.One;
 
 
-			short[] dices = [0, 1, 2, 3, 1, 2];
 			GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, vertices.Length, dices, 0, 2);
 		}
 		public void Draw(Rectangle rectangle, Color color, Matrix matrix, bool tileCoords = false) {
@@ -71,7 +70,6 @@ namespace Origins.Graphics.Primitives {
 			vertices[2].Color = color;
 			vertices[3].Color = color;
 
-			short[] dices = [0, 1, 2, 3, 1, 2];
 			GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, vertices.Length, dices, 0, 2);
 		}
 		public void DrawWeirdFancyLighting(Rectangle rectangle, Color color, Matrix matrix, bool tileCoords = false) {
@@ -92,7 +90,6 @@ namespace Origins.Graphics.Primitives {
 			vertices[2].Color = color;
 			vertices[3].Color = color;
 
-			short[] dices = [0, 1, 2, 3, 1, 2];
 			GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, vertices.Length, dices, 0, 2);
 		}
 	}
