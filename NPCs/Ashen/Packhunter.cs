@@ -1,34 +1,24 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
 using Origins.Core;
 using Origins.Dev;
-using Origins.Gores.NPCs;
-using Origins.Items.Weapons.Summoner;
-using PegasusLib;
+using Origins.World.BiomeData;
 using System;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.NPCs.Ashen.Packhunter;
 using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Ashen {
-	public class Packhunter : ModNPC, IWikiNPC, IAshenEnemy, ISpecialTargetingNPC {
-		public Rectangle DrawRect => new(0, 0, 82, 50);
-		public int AnimationFrames => 120;
-		public int FrameDuration => 1;
-		public NPCExportType ImageExportType => NPCExportType.Bestiary;
-		public bool wasHit;
-		public bool turning;
-		public int turnDirection;
-		public int turnTime;
+	public class Packhunter : ModNPC, IAshenEnemy, ISpecialTargetingNPC {
+		static AutoLoadingTexture glowTexture = typeof(Packhunter).GetDefaultTMLName("_Glow");
+		static AutoLoadingTexture headTexture = typeof(Packhunter).GetDefaultTMLName("_Head");
+		static AutoLoadingTexture headGlowTexture = typeof(Packhunter).GetDefaultTMLName("_Head_Glow");
+		Vector2 NeckPosition => NPC.Center + new Vector2(NPC.direction * (NPC.width * 0.5f - 16), 0);
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 9;
@@ -41,23 +31,20 @@ namespace Origins.NPCs.Ashen {
 			NPC.defense = 6;
 			NPC.damage = 25;
 			NPC.width = 54;
-			NPC.height = 50;
+			NPC.height = 40;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit1;
 			NPC.DeathSound = SoundID.NPCDeath38.WithPitch(2f);
 			NPC.knockBackResist = 0.3f;
 			NPC.value = 75;
-		}
-		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			if (Main.rand.NextBool()) target.AddBuff(BuffID.Bleeding, 20);
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit) {
-			if (Main.rand.NextBool()) target.AddBuff(BuffID.Bleeding, 20);
+			NPC.target = Main.maxPlayers;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Ashen_Biome>().Type,
+			];
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
-				this.GetBestiaryFlavorText(),
-				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCrimson
+				this.GetBestiaryFlavorText()
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
@@ -65,21 +52,37 @@ namespace Origins.NPCs.Ashen {
 		public override bool? CanFallThroughPlatforms() => NPC.targetRect.Bottom > NPC.position.Y + NPC.height + NPC.velocity.Y;
 		public void TargetClosest(bool faceTarget = true, Vector2? checkPosition = null) {
 			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.Players, SearchFilter);
+			seesTarget = searchResults.FoundTarget;
 			if (searchResults.FoundTarget) {
 				NPC.target = searchResults.NearestTargetIndex;
 				NPC.targetRect = searchResults.NearestTargetHitbox;
 				if (faceTarget && NPC.ShouldFaceTarget(ref searchResults)) NPC.FaceTarget();
 			}
 		}
-		bool SearchFilter(Player player) => viewTriangle.Intersects(player.Hitbox);
-		Triangle viewTriangle;
-		void SetViewTriangle(Vector2 head, Vector2 direction) {
-			const float view_dist = 16 * 25;
+		float GetPlayerAggro(Player player) {
+			float aggro = player.aggro;
+			switch (NPC.aiAction) {
+				case 1:
+				if (player.whoAmI == NPC.target) aggro += 600;
+				else aggro -= 300;
+				break;
+				case 2:
+				if (player.whoAmI == NPC.target) aggro += 300;
+				break;
+			}
+			return aggro;
+		}
+		bool SearchFilter(Player player) => GetViewTriangle(GetPlayerAggro(player)).Intersects(player.Hitbox);
+		Vector2 viewPos;
+		Vector2 viewDirection;
+		bool seesTarget;
+		Triangle GetViewTriangle(float aggro) {
+			float view_dist = 16 * 25 + aggro * 0.5f;
 			const float sqrt_half = 0.5f;
-			viewTriangle = new(
-				head,
-				head + (direction + direction.Perpendicular(1) * sqrt_half) * view_dist,
-				head + (direction + direction.Perpendicular(-1) * sqrt_half) * view_dist
+			return new(
+				viewPos,
+				viewPos + (viewDirection + viewDirection.Perpendicular(1) * sqrt_half) * view_dist,
+				viewPos + (viewDirection + viewDirection.Perpendicular(-1) * sqrt_half) * view_dist
 			);
 		}
 		public override void AI() {
@@ -89,27 +92,62 @@ namespace Origins.NPCs.Ashen {
 			if (!NPC.collideY && NPC.velocity.Y == 0) {
 				NPC.collideY = Collision.GetTilesIn(NPC.BottomLeft + Vector2.UnitY, NPC.BottomRight + Vector2.UnitY * 16).Any(pos => Framing.GetTileSafely(pos).HasSolidTile());
 			}
-			float distanceFromTarget = NPC.targetRect.Center().Clamp(NPC.Hitbox).Distance(NPC.Center.Clamp(NPC.targetRect));
+			Vector2 diffFromTarget = NPC.Center.Clamp(NPC.targetRect) - NPC.targetRect.Center().Clamp(NPC.Hitbox);
 
 			bool targetInvalid = NPC.GetTargetData().Invalid;
-			int currentMoveDirection = (NPC.velocity.X >= 0).ToDirectionInt();
-			int targetMoveDirection = targetInvalid ? NPC.direction : (NPC.DirectionTo(NPC.targetRect.Center()).X >= 0).ToDirectionInt();
+			Vector2 targetDirection = targetInvalid ? default : NPC.DirectionTo(NPC.targetRect.Center()); 
+			int currentMoveDirection = float.Sign(NPC.velocity.X);
+			if (NPC.direction == 0) NPC.direction = -1;
+			int targetMoveDirection = targetInvalid ? NPC.direction : float.Sign(targetDirection.X);
 
 			float acceleration = 0.15f;
 			switch (NPC.aiAction) {
-				case 0:
-				break;
-				case 1:
-				acceleration = 0.4f;
-				break;
-			}
-			if (currentMoveDirection != targetMoveDirection) {
-				if (turnDirection != targetMoveDirection) {
-					turnDirection = targetMoveDirection;
-					turnTime = 0;
+				case 0:// walking
+				GeometryUtils.AngularSmoothing(ref NPC.rotation, 1.57f * NPC.direction - MathHelper.PiOver2, 0.05f);
+				if (targetInvalid) {
+					if (NPC.collideX) {
+						NPC.direction *= -1;
+						targetMoveDirection = NPC.direction;
+					}
+				} else {
+					if (Math.Abs(diffFromTarget.X) < 16 * 5) {
+						NPC.aiAction = 2;
+						NPC.ai[0] = 0;
+						NPC.netUpdate = true;
+					}
 				}
-				acceleration *= 0.25f;
+				break;
+				case 1:// running
+				if (targetInvalid) {
+					NPC.aiAction = 0;
+					NPC.netUpdate = true;
+					goto case 0;
+				}
+				acceleration = 0.4f;
+				GeometryUtils.AngularSmoothing(ref NPC.rotation, targetDirection.ToRotation(), 0.05f);
+				break;
+				case 2:// looking
+				acceleration = 0f;
+				GeometryUtils.AngularSmoothing(ref NPC.rotation, targetDirection.ToRotation(), 0.05f);
+				if (seesTarget) {
+					NPC.ai[0]++;
+					NPC.ai[1] = 0;
+				} else {
+					NPC.ai[1]++;
+				}
+				if (NPC.ai[0] > 60) {
+					NPC.aiAction = 1;
+					NPC.ai[0] = 0;
+					NPC.netUpdate = true;
+				} else if (NPC.ai[1] > 90) {
+					NPC.target = Main.maxPlayers;
+					NPC.aiAction = 0;
+					NPC.ai[0] = 0;
+					NPC.netUpdate = true;
+				}
+				break;
 			}
+			if (currentMoveDirection != targetMoveDirection) acceleration *= 0.25f;
 			if (!NPC.collideY) acceleration *= 0.25f;
 
 			NPC.velocity.X += acceleration * targetMoveDirection;
@@ -122,16 +160,24 @@ namespace Origins.NPCs.Ashen {
 				Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
 			}
 
-			if (++turnTime >= 6 * 2) {
-				NPC.direction = targetMoveDirection;
+			if (NPC.direction.TrySet(targetMoveDirection)) {
+				switch (NPC.aiAction) {
+					case 0:
+					NPC.rotation = MathHelper.PiOver2 - 1.57f * NPC.direction;
+					break;
+				}
 			}
-			SetViewTriangle(NPC.Center + new Vector2(NPC.direction * NPC.width * 0.5f, 4), new Vector2(NPC.direction, 0));
 			NPC.spriteDirection = NPC.direction;
+			viewDirection = NPC.rotation.ToRotationVector2();
+			viewPos = NeckPosition + viewDirection * 16;
 		}
 		public override void FindFrame(int frameHeight) {
-			if (turnTime < 6 * 2 && !NPC.IsABestiaryIconDummy) {
+			switch (NPC.aiAction) {
+				case 2:
 				NPC.frame.Y = NPC.frame.Height * 8;
-			} else if (NPC.collideY) {
+				return;
+			}
+			if (NPC.collideY) {
 				float speed = Math.Abs(NPC.velocity.X);
 				switch (NPC.aiAction) {
 					case 0:
@@ -149,12 +195,50 @@ namespace Origins.NPCs.Ashen {
 		}
 		static readonly VertexPositionColorTexture[] vertices = new VertexPositionColorTexture[3];
 		static readonly short[] dices = [0, 1, 2];
+		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
+			Color glowColor = Color.White;
+			using (NPC.oiled.ScopedOverride(false)) {
+				NPCLoader.DrawEffects(NPC, ref glowColor);
+				glowColor = NPC.GetNPCColorTintedByBuffs(glowColor);
+			}
+			spriteBatch.DrawGlowingNPCPart(
+				TextureAssets.Npc[Type].Value,
+				glowTexture,
+				NPC.Bottom + Vector2.UnitY * 4 - screenPos,
+				NPC.frame,
+				drawColor,
+				glowColor,
+				0,
+				NPC.frame.Size() * new Vector2(0.5f, 1),
+				NPC.scale,
+				NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
+			);
+			if (NPC.frame.Y == NPC.frame.Height * 8) {
+				spriteBatch.DrawGlowingNPCPart(
+					headTexture,
+					headGlowTexture,
+					NeckPosition - screenPos,
+					null,
+					drawColor,
+					glowColor,
+					NPC.rotation + MathHelper.Pi,
+					headTexture.Value.Size() * new Vector2(1, 0.5f),
+					NPC.scale,
+					NPC.spriteDirection == 1 ? SpriteEffects.FlipVertically : SpriteEffects.None
+				);
+			}
+			return false;
+		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			GameShaders.Misc["Origins:Identity"]
 			.UseImage0(TextureAssets.MagicPixel)
 			.UseSamplerState(SamplerState.LinearClamp)
 			.Apply();
-			for (int i = 0; i < vertices.Length; i++) vertices[i].Color = Color.Yellow;
+			Triangle viewTriangle = GetViewTriangle(GetPlayerAggro(Main.LocalPlayer));
+			vertices[0].Color = new Color(128, 96, 64, 0);
+			vertices[1].Color = new Color(0, 0, 0, 0);
+			vertices[2].Color = new Color(0, 0, 0, 0);
 			vertices[0].Position = new(viewTriangle.a - screenPos, 0);
 			vertices[1].Position = new(viewTriangle.b - screenPos, 0);
 			vertices[2].Position = new(viewTriangle.c - screenPos, 0);
