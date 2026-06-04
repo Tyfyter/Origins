@@ -76,6 +76,20 @@ float4 OverbrightenLaserBlade(float4 sampleColor : COLOR0, float2 coords : TEXCO
 	return color + float4(brightness * uColor, 0);
 }
 
+float4 UV(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
+	return float4(uv, 0, 1);
+}
+
+float4 ViewTriangle(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
+	float rad = length(uImageSize0) / uImageSize0.y;
+	//uv.y = uv.y * 2 - 1;
+	//uv.y = (cos(asin(uv.y / rad)) * rad);
+	float dist = (cos(asin((uv.x * 2 - 1) / rad)) * rad);
+	uv.x = lerp(0.5, uv.x, pow(uv.y, -1));
+	return color * step(uv.y / dist, tex2D(uImage0, uv).r / length(uImageSize0));
+	//float4(uv, 0, 1);
+}
+
 technique Technique1 {
 	pass SapphireAura {
 		PixelShader = compile ps_2_0 SapphireAura();
@@ -94,5 +108,11 @@ technique Technique1 {
 	}
 	pass Identity {
 		PixelShader = compile ps_2_0 Identity();
+	}
+	pass UV {
+		PixelShader = compile ps_2_0 UV();
+	}
+	pass ViewTriangle {
+		PixelShader = compile ps_3_0 ViewTriangle();
 	}
 }

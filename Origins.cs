@@ -505,6 +505,7 @@ namespace Origins {
 				])
 				.UseOpacity(1)
 				.UseSamplerState(SamplerState.PointClamp);
+				GameShaders.Misc["Origins:UV"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "UV");
 				GameShaders.Misc["Origins:Matrix3DRaymarch"] = new MiscShaderData(Assets.Request<Effect>("Effects/Matrix3DRaymarch"), "EscapeTheMatrix");
 				GameShaders.Misc["Origins:DefiledIndicator"] = new MiscShaderData(Assets.Request<Effect>("Effects/DefiledIndicator"), "DefiledIndicator");
 				GameShaders.Misc["Origins:DefiledSpike"] = new MiscShaderData(Assets.Request<Effect>("Effects/DefiledSpike"), "DefiledSpike");
