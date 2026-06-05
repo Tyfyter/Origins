@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using MonoMod.Cil;
+using Origins.Buffs;
 using Origins.Core;
 using Origins.Graphics.Primitives;
 using Origins.Graphics.Unlighting;
@@ -223,6 +224,7 @@ namespace Origins.Events {
 				Main.graphics.GraphicsDevice.SetRenderTarget(lightBufferTarget);
 				DrawLightMap(Color.Wheat);
 				Beacon_Light_TE_System.DrawBeacons(5);
+				ModContent.GetInstance<Flashbang_Overlay>().DrawOverlay(Main.spriteBatch);
 				Main.spriteBatch.Restart(Main.spriteBatch.GetState());
 				Main.graphics.GraphicsDevice.SetRenderTarget(lightBufferTarget2);
 				DrawLightMap(Color.White);

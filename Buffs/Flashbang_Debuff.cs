@@ -23,17 +23,23 @@ public class Flashbang_Debuff : ModBuff {
 	}
 }
 internal class Flashbang_Overlay() : Overlay(EffectPriority.VeryHigh, RenderLayers.All), ILoadable {
+	float realOpacity;
 	public override void Draw(SpriteBatch spriteBatch) {
 		int index = Main.LocalPlayer.FindBuffIndex(Flashbang_Debuff.ID);
 		if (index < 0) {
-			Opacity = 0;
+			realOpacity = 0;
 			Flashbang_Debuff.descriptionOverride = null;
 			return;
 		}
 		float str = float.Min(Main.LocalPlayer.buffTime[index] / 45f, 1);
-		MathUtils.LinearSmoothing(ref Opacity, float.Pow(str, str + 0.5f), 0.25f);
-		spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), OriginClientConfig.Instance.FlashbangColor with { A = 255 } * Opacity);
+		MathUtils.LinearSmoothing(ref realOpacity, float.Pow(str, str + 0.5f), 0.25f);
+		DrawOverlay(spriteBatch);
 	}
+
+	public void DrawOverlay(SpriteBatch spriteBatch) {
+		spriteBatch.Draw(TextureAssets.MagicPixel.Value, new Rectangle(0, 0, Main.screenWidth, Main.screenHeight), OriginClientConfig.Instance.FlashbangColor with { A = 255 } * realOpacity);
+	}
+
 	public override void Update(GameTime gameTime) { }
 	public override void Activate(Vector2 position, params object[] args) {
 		Mode = OverlayMode.Active;
