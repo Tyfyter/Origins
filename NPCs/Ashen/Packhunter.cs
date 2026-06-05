@@ -18,7 +18,7 @@ namespace Origins.NPCs.Ashen {
 		static AutoLoadingTexture glowTexture = typeof(Packhunter).GetDefaultTMLName("_Glow");
 		static AutoLoadingTexture headTexture = typeof(Packhunter).GetDefaultTMLName("_Head");
 		static AutoLoadingTexture headGlowTexture = typeof(Packhunter).GetDefaultTMLName("_Head_Glow");
-		Vector2 NeckPosition => NPC.Center + new Vector2(NPC.direction * (NPC.width * 0.5f - 16), 0);
+		Vector2 NeckPosition => NPC.Center + new Vector2(NPC.direction * (NPC.width * 0.5f - 16), -2);
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 9;
@@ -67,6 +67,7 @@ namespace Origins.NPCs.Ashen {
 				else aggro -= 300;
 				break;
 				case 2:
+				case 3:
 				if (player.whoAmI == NPC.target) aggro += 300;
 				break;
 			}
@@ -77,15 +78,16 @@ namespace Origins.NPCs.Ashen {
 		Vector2 viewDirection;
 		bool seesTarget;
 		Triangle GetViewTriangle(float aggro) {
-			float view_dist = 16 * 25 + aggro * 0.5f;
-			const float sqrt_half = 0.5f;
+			float viewDist = 16 * 25 + aggro * 0.5f;
+			float baseRatio = 0.5f + NPC.ai[2];
 			return new(
 				viewPos,
-				viewPos + (viewDirection + viewDirection.Perpendicular(1) * sqrt_half) * view_dist,
-				viewPos + (viewDirection + viewDirection.Perpendicular(-1) * sqrt_half) * view_dist
+				viewPos + (viewDirection + viewDirection.Perpendicular(1) * baseRatio) * viewDist,
+				viewPos + (viewDirection + viewDirection.Perpendicular(-1) * baseRatio) * viewDist
 			);
 		}
 		public override void AI() {
+			viewPos = NeckPosition + viewDirection * 16;
 			NPC.TargetClosest(false);
 			NPCAimedTarget target = NPC.GetTargetData();
 
@@ -97,18 +99,13 @@ namespace Origins.NPCs.Ashen {
 			bool targetInvalid = NPC.GetTargetData().Invalid;
 			Vector2 targetDirection = targetInvalid ? default : NPC.DirectionTo(NPC.targetRect.Center()); 
 			int currentMoveDirection = float.Sign(NPC.velocity.X);
-			if (NPC.direction == 0) NPC.direction = -1;
-			int targetMoveDirection = targetInvalid ? NPC.direction : float.Sign(targetDirection.X);
 
 			float acceleration = 0.15f;
 			switch (NPC.aiAction) {
 				case 0:// walking
 				GeometryUtils.AngularSmoothing(ref NPC.rotation, 1.57f * NPC.direction - MathHelper.PiOver2, 0.05f);
 				if (targetInvalid) {
-					if (NPC.collideX) {
-						NPC.direction *= -1;
-						targetMoveDirection = NPC.direction;
-					}
+					if (NPC.collideX) NPC.direction *= -1;
 				} else {
 					if (Math.Abs(diffFromTarget.X) < 16 * 5) {
 						NPC.aiAction = 2;
@@ -122,6 +119,11 @@ namespace Origins.NPCs.Ashen {
 					NPC.aiAction = 0;
 					NPC.netUpdate = true;
 					goto case 0;
+				}
+				if (!seesTarget) {
+					NPC.aiAction = 3;
+					NPC.netUpdate = true;
+					break;
 				}
 				acceleration = 0.4f;
 				GeometryUtils.AngularSmoothing(ref NPC.rotation, targetDirection.ToRotation(), 0.05f);
@@ -146,7 +148,29 @@ namespace Origins.NPCs.Ashen {
 					NPC.netUpdate = true;
 				}
 				break;
+				case 3:// searching for lost target
+				GeometryUtils.AngularSmoothing(ref NPC.rotation, 1.57f * NPC.direction - MathHelper.PiOver2, 0.05f);
+				acceleration = 0.18f;
+				if (seesTarget) {
+					NPC.aiAction = 1;
+					NPC.ai[0] = 0;
+					NPC.netUpdate = true;
+					break;
+				}
+				if (NPC.collideX) NPC.direction *= -1;
+				if (targetInvalid || ++NPC.ai[0] > 60 * 10) {
+					NPC.target = Main.maxPlayers;
+					NPC.aiAction = 0;
+					NPC.ai[0] = 0;
+					NPC.netUpdate = true;
+				}
+				targetInvalid = true;
+				break;
 			}
+			MathUtils.LinearSmoothing(ref NPC.ai[2], (NPC.aiAction == 3).Mul(0.5f), 0.01f + NPC.ai[2] * 0.1f);
+			if (NPC.direction == 0) NPC.direction = -1;
+			int targetMoveDirection = targetInvalid ? NPC.direction : float.Sign(targetDirection.X);
+
 			if (currentMoveDirection != targetMoveDirection) acceleration *= 0.25f;
 			if (!NPC.collideY) acceleration *= 0.25f;
 
@@ -163,13 +187,13 @@ namespace Origins.NPCs.Ashen {
 			if (NPC.direction.TrySet(targetMoveDirection)) {
 				switch (NPC.aiAction) {
 					case 0:
+					case 3:
 					NPC.rotation = MathHelper.PiOver2 - 1.57f * NPC.direction;
 					break;
 				}
 			}
 			NPC.spriteDirection = NPC.direction;
 			viewDirection = NPC.rotation.ToRotationVector2();
-			viewPos = NeckPosition + viewDirection * 16;
 		}
 		public override void FindFrame(int frameHeight) {
 			switch (NPC.aiAction) {
@@ -181,6 +205,7 @@ namespace Origins.NPCs.Ashen {
 				float speed = Math.Abs(NPC.velocity.X);
 				switch (NPC.aiAction) {
 					case 0:
+					case 3:
 					NPC.DoFrames(9, 0..4, speed);
 					break;
 					case 1:
@@ -231,12 +256,21 @@ namespace Origins.NPCs.Ashen {
 			return false;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (NPC.aiAction == 1) return;
 			GameShaders.Misc["Origins:Identity"]
 			.UseImage0(TextureAssets.MagicPixel)
 			.UseSamplerState(SamplerState.LinearClamp)
 			.Apply();
 			Triangle viewTriangle = GetViewTriangle(GetPlayerAggro(Main.LocalPlayer));
-			vertices[0].Color = new Color(128, 96, 64, 0);
+			//screenPos.Y -= NPC.gfxOffY;
+			switch (NPC.frame.Y / NPC.frame.Height) {
+				case 2:
+				case 3:
+				case 6:
+				screenPos.Y -= 2;
+				break;
+			}
+			vertices[0].Color = new Color(96, 72, 48, 0);
 			vertices[1].Color = new Color(0, 0, 0, 0);
 			vertices[2].Color = new Color(0, 0, 0, 0);
 			vertices[0].Position = new(viewTriangle.a - screenPos, 0);
