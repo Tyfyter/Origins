@@ -4,10 +4,16 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Vanity.Other; 
+namespace Origins.Items.Vanity.Other;
+[ReinitializeDuringResizeArrays]
 public abstract class ATail : ModItem {
+	public static Vector2[] TailOffsets = MountID.Sets.Factory.CreateNamedSet(nameof(TailOffsets))
+	.RegisterCustomSet<Vector2>(default,
+		MountID.Wolf, new Vector2(-2, -14)
+	);
 	public Tail_Layer DrawInLayer { get; private set; }
 	public virtual int Length => 10;
 	public override ModItem NewInstance(Item entity) {
@@ -62,6 +68,11 @@ public abstract class ATail : ModItem {
 			DrawData data = drawInfo.DrawDataCache[i];
 			data.rotation -= drawInfo.rotation;
 			data.position += (drawInfo.Position - drawInfo.drawPlayer.position);
+			if (drawInfo.drawPlayer.mount.Active) {
+				data.position.Y += drawInfo.drawPlayer.mount.PlayerOffset;
+				(float xOff, float yOff) = TailOffsets[drawInfo.drawPlayer.mount.Type];
+				data.position += drawInfo.drawPlayer.Directions(xOff, yOff);
+			}
 			data.position = data.position.RotatedBy(-drawInfo.rotation, drawInfo.Position + drawInfo.rotationOrigin - Main.screenPosition);
 			drawInfo.DrawDataCache[i] = data;
 		}
