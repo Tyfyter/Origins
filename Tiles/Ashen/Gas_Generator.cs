@@ -13,6 +13,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.GameContent.UI;
 using Terraria.Graphics;
 using Terraria.ID;
@@ -48,6 +49,7 @@ public class Gas_Generator : ModTile {
 	public override void SetStaticDefaults() {
 		Main.tileFrameImportant[Type] = true;
 		Main.tileNoAttach[Type] = true;
+		TileID.Sets.HasOutlines[Type] = true;
 		TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 		TileObjectData.newTile.Width = 3;
 		TileObjectData.newTile.SetHeight(2);
@@ -57,6 +59,7 @@ public class Gas_Generator : ModTile {
 		AddMapEntry(new Color(40, 30, 18), this.GetTileItem().DisplayName);
 		DustType = Ashen_Biome.DefaultTileDust;
 	}
+	public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => Main.LocalPlayer.HeldItem?.ModItem is Oil_Bucket or Oil_Bottomless_Bucket;
 	public override void NumDust(int i, int j, bool fail, ref int num) {
 		num = fail ? 1 : 3;
 	}
@@ -70,9 +73,10 @@ public class Gas_Generator : ModTile {
 	}
 	public override bool RightClick(int i, int j) {
 		Item heldItem = Main.LocalPlayer.HeldItem;
-		if (heldItem.type == ModContent.ItemType<Oil_Bucket>()) {
+		if (heldItem?.ModItem is Oil_Bucket or Oil_Bottomless_Bucket) {
 			TileUtils.GetMultiTileTopLeft(i, j, TileObjectData.GetTileData(Main.tile[i, j]), out i, out j);
 			ModContent.GetInstance<Gas_Generator_TE>().tileEntities[new(i, j)].Fuel += FuelPerBucket;
+			if (heldItem?.ModItem is Oil_Bottomless_Bucket) return true;
 			if (heldItem.stack > 1) {
 				Main.LocalPlayer.GetItem(Main.myPlayer, new(ItemID.EmptyBucket), GetItemSettings.ItemCreatedFromItemUsage);
 				heldItem.stack--;
@@ -113,6 +117,9 @@ public class Gas_Generator : ModTile {
 		Color poweredColor = new(255, 113, 0);
 		float pulse = Ashen_Wire_Data.pulse.Value * 0.8f;
 		ApplyPowered(ref glow);
+		Color lightColor = default;
+		Texture2D outlineTexture = default;
+		Color outlineColor = default;
 		for (int x = 0; x < 3; x++) {
 			destination.X = pos.X + x * 16;
 			frame.X = tileFrameX + x * 18;
@@ -135,6 +142,18 @@ public class Gas_Generator : ModTile {
 					frame,
 					glow
 				);
+				outlineColor = default;
+				lightColor = Lighting.GetColor(i + x, j + y);
+				Main.instance.TilesRenderer.GetTileOutlineInfo(i + x, j + y, Type, ref lightColor, ref outlineTexture, ref outlineColor);
+				if (outlineColor != default) {
+					vertices = outlineColor;
+					Main.tileBatch.Draw(
+						outlineTexture,
+						destination,
+						frame,
+						vertices
+					);
+				}
 			}
 		}
 		void ApplyPowered(ref VertexColors vertices) {
