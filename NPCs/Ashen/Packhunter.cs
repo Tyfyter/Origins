@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Core;
 using Origins.Dev;
 using Origins.World.BiomeData;
@@ -33,8 +34,8 @@ namespace Origins.NPCs.Ashen {
 			NPC.width = 54;
 			NPC.height = 40;
 			NPC.friendly = false;
-			NPC.HitSound = SoundID.NPCHit1;
-			NPC.DeathSound = SoundID.NPCDeath38.WithPitch(2f);
+			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
+			NPC.DeathSound = SoundID.NPCDeath44;
 			NPC.knockBackResist = 0.3f;
 			NPC.value = 75;
 			NPC.target = Main.maxPlayers;
@@ -70,10 +71,17 @@ namespace Origins.NPCs.Ashen {
 				case 3:
 				if (player.whoAmI == NPC.target) aggro += 300;
 				break;
+				case 4:
+				aggro = 0;
+				break;
 			}
 			return aggro;
 		}
-		bool SearchFilter(Player player) => GetViewTriangle(GetPlayerAggro(player)).Intersects(player.Hitbox);
+		bool SearchFilter(Player player) {
+			Rectangle playerHitbox = player.Hitbox;
+			return NPC.Hitbox.Intersects(playerHitbox) || GetViewTriangle(GetPlayerAggro(player)).Intersects(playerHitbox);
+		}
+
 		Vector2 viewPos;
 		Vector2 viewDirection;
 		bool seesTarget;
@@ -126,7 +134,7 @@ namespace Origins.NPCs.Ashen {
 					break;
 				}
 				acceleration = 0.4f;
-				GeometryUtils.AngularSmoothing(ref NPC.rotation, targetDirection.ToRotation(), 0.05f);
+				NPC.rotation = targetDirection.ToRotation();
 				break;
 				case 2:// looking
 				acceleration = 0f;
@@ -138,7 +146,7 @@ namespace Origins.NPCs.Ashen {
 					NPC.ai[1]++;
 				}
 				if (NPC.ai[0] > 60) {
-					NPC.aiAction = 1;
+					NPC.aiAction = 4;
 					NPC.ai[0] = 0;
 					NPC.netUpdate = true;
 				} else if (NPC.ai[1] > 90) {
@@ -165,6 +173,23 @@ namespace Origins.NPCs.Ashen {
 					NPC.netUpdate = true;
 				}
 				targetInvalid = true;
+				break;
+				case 4:// flashing
+				acceleration = 0f;
+				GeometryUtils.AngularSmoothing(ref NPC.rotation, targetDirection.ToRotation(), 0.05f);
+				if (++NPC.ai[0] > 15) {
+					foreach (Player player in Main.ActivePlayers) {
+						if (GetViewTriangle(GetPlayerAggro(player)).Intersects(player.Hitbox)) {
+							player.AddBuff(Flashbang_Debuff.ID, 65);
+							if (player.whoAmI == Main.myPlayer && OriginsModIntegrations.CheckAprilFools() && TextUtils.LanguageTree.Find("Mods.Origins.AprilFools.Buffs.Flashbang_Debuff.DogDescription") is LanguageTree desc) {
+								Flashbang_Debuff.descriptionOverride = desc.value;
+							}
+						}
+					}
+					NPC.aiAction = 1;
+					NPC.ai[0] = 0;
+					NPC.netUpdate = true;
+				}
 				break;
 			}
 			MathUtils.LinearSmoothing(ref NPC.ai[2], (NPC.aiAction == 3).Mul(0.5f), 0.01f + NPC.ai[2] * 0.1f);
@@ -270,7 +295,17 @@ namespace Origins.NPCs.Ashen {
 				screenPos.Y -= 2;
 				break;
 			}
-			vertices[0].Color = new Color(96, 72, 48, 0);
+			Color color = new Color(96, 72, 48, 0);
+			switch (NPC.aiAction) {
+				case 4:
+				if (NPC.ai[0] < 10) {
+					color *= (1f - NPC.ai[0] * 0.03f);
+				} else {
+					color *= 1 + NPC.ai[0] * 0.2f;
+				}
+				break;
+			}
+			vertices[0].Color = color;
 			vertices[1].Color = new Color(0, 0, 0, 0);
 			vertices[2].Color = new Color(0, 0, 0, 0);
 			vertices[0].Position = new(viewTriangle.a - screenPos, 0);

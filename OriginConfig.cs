@@ -170,6 +170,8 @@ namespace Origins {
 
 		[DefaultValue(true)]
 		public bool ImproveChlorophyteBulletsPerformance = true;
+		[DefaultValue(typeof(Color), "255, 255, 255, 255"), ColorNoAlpha]
+		public Color FlashbangColor = Color.White;
 
 		[DefaultValue(true)]
 		public bool DyeLightSources = true;

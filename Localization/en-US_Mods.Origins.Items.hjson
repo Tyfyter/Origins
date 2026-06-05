@@ -2428,7 +2428,7 @@ Flakjack: {
 
 Flashbang: {
 	DisplayName: Flashbang
-	Tooltip: "[buffhint/dnDazes:Origins/Blind_Debuff] enemies upon detonation"
+	Tooltip: "[buffhint/dnBlinds:Origins/Blind_Debuff] or [buffhint/dndazes:Confused] enemies upon detonation"
 }
 
 Floaty_Bomb: {

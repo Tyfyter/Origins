@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn[Type] = true;
 			Item.ResearchUnlockCount = 99;
-			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Confused, BuffID.Slow, BuffID.Darkness];
+			PegasusLib.Sets.ItemSets.InflictsExtraDebuffs[Type] = [BuffID.Slow];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
@@ -65,6 +65,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 			target.AddBuff(BuffID.Slow, 300);
 			target.AddBuff(BuffID.Darkness, 120);
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			target.AddBuff(Flashbang_Debuff.ID, 60);
 		}
 	}
 	public class Flash_P : ModProjectile {

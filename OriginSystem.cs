@@ -1,4 +1,5 @@
-﻿using Origins.Core;
+﻿using Origins.Buffs;
+using Origins.Core;
 using Origins.Core.Structures;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
@@ -422,6 +423,7 @@ namespace Origins {
 			Players_Behind_Tiles_Overlay.ForceActive();
 			Hanging_Scrap_Overlay.ForceActive();
 			Gas_Mask_Overlay.ForceActive();
+			Flashbang_Overlay.ForceActive();
 		}
 	}
 	public class TempleBiome : ModBiome {

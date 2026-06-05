@@ -180,6 +180,7 @@ Buffs: {
 		[italic:But ye shall B O N K].
 		''' */
 	// Rasterwrap_Buff.DisplayName: Unbothered. Moisturized. Happy. In My Lane. Focused. Flourishing.
+	// Flashbang_Debuff.DogDescription: Why would a robot dog even… never mind, I'd rather not know.
 }
 
 DefiledRelaySignals: {

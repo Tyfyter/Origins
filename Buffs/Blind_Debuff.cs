@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using PegasusLib.UI;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,6 +14,7 @@ namespace Origins.Buffs {
 				BuffID.Darkness,
 				BuffID.Obstructed
 			];
+			Buff_Hint_Handler.ModifyTip(Type, 0, this.GetLocalization("EffectDescription").Key);
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {

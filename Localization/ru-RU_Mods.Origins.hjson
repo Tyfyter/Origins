@@ -1040,6 +1040,7 @@ Buffs: {
 	Blind_Debuff: {
 		DisplayName: Слепой
 		Description: Mods.Origins.Buffs.Blind_Debuff.Description
+		// EffectDescription: Prevents the target from seeing
 	}
 
 	Cavitation_Debuff: {
@@ -1454,6 +1455,11 @@ Buffs: {
 	Neutron_Soup_Buff: {
 		// DisplayName: Neutron Soup Buff
 		// Description: Mods.Origins.Buffs.Neutron_Soup_Buff.Description
+	}
+
+	Flashbang_Debuff: {
+		// DisplayName: Flashed!
+		// Description: It's either really bright or really dark. Ow.
 	}
 }
 
@@ -2792,6 +2798,11 @@ Configs: {
 		FixNonSolidTileBlurring: {
 			Label: Исправить размытие нецельных тайлов
 			Tooltip: ""
+		}
+
+		FlashbangColor: {
+			// Label: Flashbang Color
+			// Tooltip: ""
 		}
 	}
 
