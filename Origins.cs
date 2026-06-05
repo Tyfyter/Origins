@@ -719,21 +719,6 @@ namespace Origins {
 			PegasusLib.PegasusLib.Require(this, LibFeature.IDrawNPCEffect, LibFeature.IComplexMineDamageTile_Hammer, LibFeature.WrappingTextSnippet);
 			ApplyPatches();
 
-			for (int i = 1372; i < 1376; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 1433; i < 1444; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 1474; i < 1481; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 1495; i < 1503; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 1538; i < 1543; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 1573; i < 1578; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 1846; i < 1851; i++) PaintingsNotFromVendor[i] = true;
-			PaintingsNotFromVendor[ItemID.PillaginMePixels] = true;
-			PaintingsNotFromVendor[ItemID.SparkyPainting] = true;
-			for (int i = 4626; i < 4640; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 5218; i < 5275; i++) {
-				if (i != 5222 && i != 5225 && i != 5228 && i != 5229 && (i !>= 5231 && i !<= 5233) && (i !>= 5241 && i !<= 5245) && i != 5251 && i != 5253 && i != 5257 && i != 5266) PaintingsNotFromVendor[i] = true;
-			}
-			PaintingsNotFromVendor[ItemID.SunOrnament] = true;
-
 			if (ModLoader.TryGetMod("Fargowiltas", out Mod FargosMutant)) {
 				FargosMutant.Call("AddCaughtNPC", "Brine_Fiend_Item", MC.NPCType<Brine_Fiend>(), Name);
 				FargosMutant.Call("AddCaughtNPC", "Defiled_Effigy_Item", MC.NPCType<Defiled_Effigy>(), Name);
