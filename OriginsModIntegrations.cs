@@ -995,6 +995,14 @@ namespace Origins {
 					Paintings[itm.Type] = true;
 			}
 			Paintings[ItemType<GrayDPaintingItem>()] = true;
+
+		}
+		[JITWhenModsEnabled("ThoriumMod")]
+		static void AddThoriumRecipes() {
+			ModLargeGem.AddCrossModLargeGem(GetInstance<LargeOpal>(), "ThoriumMod/Items/Misc/LargeOpal_Glow");
+			ModLargeGem.AddCrossModLargeGem(GetInstance<LargeAquamarine>(), "ThoriumMod/Items/Misc/LargeAquamarine_Glow");
+			ModLargeGem.AddCrossModLargeGem(GetInstance<LargePrismite>(), "ThoriumMod/Items/Misc/LargePrismite_Glow");
+
 			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.Aquamarine>()] = TileType<ThoriumTiles.Opal>();
 			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.Opal>()] = TileType<ThoriumTiles.Aquamarine>();
 			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsAquamarine>()] = TileType<ThoriumTiles.DepthsOpal>();
