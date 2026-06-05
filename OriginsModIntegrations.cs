@@ -884,10 +884,6 @@ namespace Origins {
 					Origins.LogError($"Could not find npc \"{name}\" in Thorium");
 				}
 			}
-			///it's fine to use content IDs from mods that are guaranteed to be loaded before the one the code's in from <see cref="ILoadable.Load(Mod)"/> as long as
-			///you can guarantee that whatever you're affecting won't later be reset
-			///and you're not using it as an index in something that has to be resized
-			Shimmer_Dynamite_Action.StartingGemItems.Add(ItemType<Opal>());
 		}
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void SetThoriumStaticDefaults() {
@@ -900,15 +896,6 @@ namespace Origins {
 					Paintings[itm.Type] = true;
 			}
 			Paintings[ItemType<GrayDPaintingItem>()] = true;
-			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.Aquamarine>()] = TileType<ThoriumTiles.Opal>();
-			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.Opal>()] = TileType<ThoriumTiles.Aquamarine>();
-			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsAquamarine>()] = TileType<ThoriumTiles.DepthsOpal>();
-			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsOpal>()] = TileType<ThoriumTiles.DepthsAquamarine>();
-			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsTopaz>()] = TileType<ThoriumTiles.DepthsAmethyst>();
-			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsSapphire>()] = TileType<ThoriumTiles.DepthsTopaz>();
-			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsEmerald>()] = TileType<ThoriumTiles.DepthsSapphire>();
-			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsRuby>()] = TileType<ThoriumTiles.DepthsEmerald>();
-			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsDiamond>()] = TileType<ThoriumTiles.DepthsRuby>();
 
 		}
 		[JITWhenModsEnabled("ThoriumMod")]
