@@ -655,7 +655,7 @@ namespace Origins {
 
 				foreach (ModItem itm in aequus.GetContent<ModItem>()) {
 					if (itm.GetType().Namespace == "Aequus.Content.Tiles.Paintings")
-						PaintingsNotFromVendor[itm.Type] = true;
+						Paintings[itm.Type] = true;
 				}
 			}
 			if (ModLoader.TryGetMod("SpiritMod", out Mod spiritMod)) {
@@ -668,7 +668,7 @@ namespace Origins {
 
 				foreach (ModItem itm in spiritMod.GetContent<ModItem>()) {
 					if (itm.GetType().Namespace == "SpiritMod.Items.Placeable.Furniture.Paintings")
-						PaintingsNotFromVendor[itm.Type] = true;
+						Paintings[itm.Type] = true;
 				}
 			}
 			if (ModLoader.HasMod("ferventarms")) compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.FerventArms"));
@@ -884,6 +884,32 @@ namespace Origins {
 					Origins.LogError($"Could not find npc \"{name}\" in Thorium");
 				}
 			}
+			///it's fine to use content IDs from mods that are guaranteed to be loaded before the one the code's in from <see cref="ILoadable.Load(Mod)"/> as long as
+			///you can guarantee that whatever you're affecting won't later be reset
+			///and you're not using it as an index in something that has to be resized
+			Shimmer_Dynamite_Action.StartingGemItems.Add(ItemType<Opal>());
+		}
+		[JITWhenModsEnabled("ThoriumMod")]
+		static void SetThoriumStaticDefaults() {
+			ModLargeGem.AddCrossModLargeGem(GetInstance<LargeOpal>(), "ThoriumMod/Items/Misc/LargeOpal_Glow");
+			ModLargeGem.AddCrossModLargeGem(GetInstance<LargeAquamarine>(), "ThoriumMod/Items/Misc/LargeAquamarine_Glow");
+			ModLargeGem.AddCrossModLargeGem(GetInstance<LargePrismite>(), "ThoriumMod/Items/Misc/LargePrismite_Glow");
+
+			foreach (ModItem itm in instance.thorium.GetContent<ModItem>()) {
+				if (itm is not BlankPainting && itm.GetType().Namespace == "ThoriumMod.Items.Painting")
+					Paintings[itm.Type] = true;
+			}
+			Paintings[ItemType<GrayDPaintingItem>()] = true;
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.Aquamarine>()] = TileType<ThoriumTiles.Opal>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.Opal>()] = TileType<ThoriumTiles.Aquamarine>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsAquamarine>()] = TileType<ThoriumTiles.DepthsOpal>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsOpal>()] = TileType<ThoriumTiles.DepthsAquamarine>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsTopaz>()] = TileType<ThoriumTiles.DepthsAmethyst>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsSapphire>()] = TileType<ThoriumTiles.DepthsTopaz>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsEmerald>()] = TileType<ThoriumTiles.DepthsSapphire>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsRuby>()] = TileType<ThoriumTiles.DepthsEmerald>();
+			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsDiamond>()] = TileType<ThoriumTiles.DepthsRuby>();
+
 		}
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void AddThoriumRecipes() {
@@ -933,8 +959,8 @@ namespace Origins {
 		static void SetFargosStaticDefaults() {
 			OriginsSets.NPCs.TargetDummies[NPCType<Fargowiltas.NPCs.SuperDummy>()] = true;
 
-			PaintingsNotFromVendor[ItemType<EchPainting>()] = true;
-			PaintingsNotFromVendor[ItemType<WiresPainting>()] = true;
+			Paintings[ItemType<EchPainting>()] = true;
+			Paintings[ItemType<WiresPainting>()] = true;
 		}
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosRecipes() {

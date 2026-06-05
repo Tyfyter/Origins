@@ -25,7 +25,7 @@ namespace Origins.Tiles.Decoration {
 	}
 	public class Deceptive_Beauty_Item : ModItem {
 		public override void SetStaticDefaults() {
-			OriginsSets.Items.PaintingsNotFromVendor[Type] = true;
+			OriginsSets.Items.Paintings[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Deceptive_Beauty>());

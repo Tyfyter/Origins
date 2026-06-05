@@ -33,6 +33,8 @@ namespace Origins {
 				ItemID.TheHorsemansBlade
 			);
 			public static bool[] ItemsThatCanChannelWithRightClick { get; } = ItemID.Sets.Factory.CreateBoolSet();
+			public static bool[] Paintings { get; } = ItemID.Sets.Factory.CreateNamedSet(nameof(Terraria), nameof(Paintings))
+			.RegisterBoolSet();
 			public static bool[] PaintingsNotFromVendor { get; } = ItemID.Sets.Factory.CreateBoolSet();
 			public static bool[] InvalidForDefiledPrefix { get; } = ItemID.Sets.Factory.CreateNamedSet(nameof(InvalidForDefiledPrefix))
 			.RegisterBoolSet();

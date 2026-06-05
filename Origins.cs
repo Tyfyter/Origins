@@ -1222,4 +1222,47 @@ namespace Origins {
 	internal interface IBrokenContent : ILoadable {
 		public string BrokenReason { get; }
 	}
+	internal interface IBroken : IAutoload<IBroken.AutoloadImpl> {
+		public static abstract string BrokenReason { get; }
+		public static List<string> BrokenReasons;
+		class AutoloadImpl : IAutoloader {
+			static MethodInfo invoke;
+			public static void Autoload(Mod mod, Type type) {
+				if (!Directory.Exists(Path.Combine(Program.SavePathShared, "ModSources", "Origins"))) return;
+				invoke ??= typeof(AutoloadImpl).GetMethod(nameof(Invoke));
+				string brokenReason = (string)invoke.MakeGenericMethod(type).Invoke(null, []);
+				if (brokenReason is not null) (BrokenReasons ??= []).Add($"{GetTypeName(type)}: {brokenReason}");
+			}
+			public static string GetTypeName(Type type) {
+				if (type.DeclaringType is not null) {
+					if (type.Name == "Flag" || type.IsAssignableTo(typeof(IMoveToPegFlag))) return GetTypeName(type.DeclaringType);
+					return $"{GetTypeName(type.DeclaringType)}.{type.Name}";
+				}
+				return type.Name;
+			}
+			public static string Invoke<T>() where T : IBroken => T.BrokenReason;
+		}
+		internal interface IUpdateFlag : IAutoload<IUpdateFlag.AutoloadImpl> {
+			class AutoloadImpl : IAutoloader {
+				static bool? isPassed = null;
+				public static void Autoload(Mod mod, Type type) {
+					isPassed ??= new Version(Main.assemblyVersionNumber) >= new Version(1, 4, 5);
+					if (isPassed == false) return;
+					(BrokenReasons ??= []).Add($"{IBroken.AutoloadImpl.GetTypeName(type)}: Must be updated");
+				}
+			}
+		}
+	}
+	internal interface IMoveToPegFlag : IBroken {
+		static string IBroken.BrokenReason => "Move to PegasusLib";
+	}
+	internal interface IMovedToPegFlag : IBroken {
+		static string IBroken.BrokenReason => "Moved to PegasusLib";
+	}
+	internal interface IUpdateIn145 : IBroken.IUpdateFlag { }
+	internal interface IDebugFlag : ILoadable, IBrokenContent {
+		string IBrokenContent.BrokenReason => "Debugging flag enabled";
+		void ILoadable.Load(Mod mod) { }
+		void ILoadable.Unload() { }
+	}
 }
