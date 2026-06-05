@@ -1,4 +1,5 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Extensions.Primitives;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Other.Consumables.Medicine;
@@ -12,6 +13,7 @@ using Origins.Tiles.Riven;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -417,30 +419,54 @@ namespace Origins {
 
 			}
 
-			for (int i = 1372; i < 1376; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 1433; i < 1444; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 1474; i < 1481; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 1495; i < 1503; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 1538; i < 1543; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 1573; i < 1578; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 1846; i < 1851; i++) PaintingsNotFromVendor[i] = true;
-			PaintingsNotFromVendor[ItemID.PillaginMePixels] = true;
-			PaintingsNotFromVendor[ItemID.SparkyPainting] = true;
-			for (int i = 4626; i < 4640; i++) PaintingsNotFromVendor[i] = true;
-			for (int i = 5218; i < 5275; i++) {
-				if (i != 5222 && i != 5225 && i != 5228 && i != 5229 && (i! >= 5231 && i! <= 5233) && (i! >= 5241 && i! <= 5245) && i != 5251 && i != 5253 && i != 5257 && i != 5266) PaintingsNotFromVendor[i] = true;
-			}
-			PaintingsNotFromVendor[ItemID.SunOrnament] = true;
+			for (int i = ItemID.BloodMoonRising; i < ItemID.BoneWarp; i++) Paintings[i] = true;
+			for (int i = ItemID.SkellingtonJSkellingsworth; i < ItemID.TerrarianGothic; i++) Paintings[i] = true;
+			for (int i = ItemID.Impact; i < ItemID.NurseLisa; i++) Paintings[i] = true;
+			for (int i = ItemID.Waldo; i < ItemID.TrioSuperHeroes; i++) Paintings[i] = true;
+			for (int i = ItemID.ImpFace; i < ItemID.FlowingMagma; i++) Paintings[i] = true;
+			for (int i = ItemID.TheCreationoftheGuide; i < ItemID.GloriousNight; i++) Paintings[i] = true;
+			for (int i = ItemID.JackingSkeletron; i < ItemID.MorbidCuriosity; i++) Paintings[i] = true;
+			for (int i = ItemID.PaintingCastleMarsberg; i < ItemID.PaintingTheTruthIsUpThere; i++) Paintings[i] = true;
+			for (int i = ItemID.PaintingAcorns; i < ItemID.PaintingTheSeason; i++) Paintings[i] = true;
+			for (int i = ItemID.AndrewSphinx; i < ItemID.DivineEye; i++) Paintings[i] = true;
+			for (int i = ItemID.GolfPainting1; i < ItemID.GolfPainting4; i++) Paintings[i] = true;
+			for (int i = ItemID.Nevermore; i < ItemID.StillLife; i++) Paintings[i] = true;
+			for (int i = ItemID.Princess64; i < ItemID.DarkSideHallow; i++) Paintings[i] = true;
+			for (int i = ItemID.PaintingWilson; i < ItemID.PaintingWolfgang; i++) Paintings[i] = true;
+			for (int i = ItemID.Outcast; i < ItemID.LadyOfTheLake; i++) Paintings[i] = true;
+			for (int i = ItemID.SunOrnament; i < ItemID.HoplitePizza; i++) Paintings[i] = true;
+			
+			Paintings[ItemID.PillaginMePixels] = true;
+			Paintings[ItemID.SparkyPainting] = true;
+			Paintings[ItemID.MoonLordPainting] = true;
+			Paintings[ItemID.PlacePainting] = true;
+			Paintings[ItemID.PrincessStyle] = true;
+			/*
+			for (int i = ItemID.TheSeaOfSilence; i < ItemID.WinterAtVaringskollen; i++) Paintings[i] = true;
+			for (int i = ItemID.OfSeaAndDreams; i < ItemID.CozyWindow; i++) Paintings[i] = true;
+			for (int i = ItemID.PaintingRPlace2023; i < ItemID.PaintingGermanBeer; i++) Paintings[i] = true;
+			Paintings[ItemID.QueenOfBees] = true;
+			Paintings[ItemID.PaintingRemix] = true;
+			*/
+			for (int i = 0; i < PaintingsNotFromVendor.Length; i++) PaintingsNotFromVendor[i] |= Paintings[i];
 
 			foreach (AbstractNPCShop shop in NPCShopDatabase.AllShops) {
 				if (shop is NPCShop npcShop) {
 					foreach (NPCShop.Entry item in npcShop.Entries) PaintingsNotFromVendor[item.Item.type] = false;
 				}
 			}
-
+			StringBuilder paintings = new();
+			for (int i = 0; i < Paintings.Length; i++) {
+				if (!Paintings[i] || !ItemID.Search.TryGetName(i, out string name)) continue;
+				if (paintings.Length > 0) paintings.Append(", ");
+				paintings.Append(name);
+				if (!PaintingsNotFromVendor[i]) paintings.Append("(Vendor)");
+			}
+			Mod.Logger.Info($"Paintings: {paintings}");
 			OriginsModIntegrations.PostAddRecipes();
 			ItemCategories.Initialize();
 		}
+		struct NewPaintings : IUpdateIn145;
 	}
 	public static class CraftingCallbacks {
 		public static void BucketCrafting<TBucket>(Recipe recipe, Item item, List<Item> consumedItems, Item destinationStack) where TBucket : ModItem {

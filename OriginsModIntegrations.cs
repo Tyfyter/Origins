@@ -733,7 +733,7 @@ namespace Origins {
 
 				foreach (ModItem itm in aequus.GetContent<ModItem>()) {
 					if (itm.GetType().Namespace == "Aequus.Content.Tiles.Paintings")
-						PaintingsNotFromVendor[itm.Type] = true;
+						Paintings[itm.Type] = true;
 				}
 			}
 			if (ModLoader.TryGetMod("SpiritMod", out Mod spiritMod)) {
@@ -746,7 +746,7 @@ namespace Origins {
 
 				foreach (ModItem itm in spiritMod.GetContent<ModItem>()) {
 					if (itm.GetType().Namespace == "SpiritMod.Items.Placeable.Furniture.Paintings")
-						PaintingsNotFromVendor[itm.Type] = true;
+						Paintings[itm.Type] = true;
 				}
 			}
 			if (ModLoader.HasMod("HighFPSSupport")) compatRecommendations.Add(Language.GetText("Mods.Origins.ModCompatNotes.HighFPSSupport"));
@@ -992,9 +992,9 @@ namespace Origins {
 
 			foreach (ModItem itm in instance.thorium.GetContent<ModItem>()) {
 				if (itm is not BlankPainting && itm.GetType().Namespace == "ThoriumMod.Items.Painting")
-					PaintingsNotFromVendor[itm.Type] = true;
+					Paintings[itm.Type] = true;
 			}
-			PaintingsNotFromVendor[ItemType<GrayDPaintingItem>()] = true;
+			Paintings[ItemType<GrayDPaintingItem>()] = true;
 			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.Aquamarine>()] = TileType<ThoriumTiles.Opal>();
 			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.Opal>()] = TileType<ThoriumTiles.Aquamarine>();
 			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsAquamarine>()] = TileType<ThoriumTiles.DepthsOpal>();
@@ -1053,8 +1053,8 @@ namespace Origins {
 		static void SetFargosStaticDefaults() {
 			OriginsSets.NPCs.TargetDummies[NPCType<Fargowiltas.NPCs.SuperDummy>()] = true;
 
-			PaintingsNotFromVendor[ItemType<EchPainting>()] = true;
-			PaintingsNotFromVendor[ItemType<WiresPainting>()] = true;
+			Paintings[ItemType<EchPainting>()] = true;
+			Paintings[ItemType<WiresPainting>()] = true;
 		}
 		[JITWhenModsEnabled(nameof(Fargowiltas))]
 		static void AddFargosRecipes() {

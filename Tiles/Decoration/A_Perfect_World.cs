@@ -26,7 +26,7 @@ namespace Origins.Tiles.Decoration {
 	}
 	public class A_Perfect_World_Item : ModItem {
 		public override void SetStaticDefaults() {
-			OriginsSets.Items.PaintingsNotFromVendor[Type] = true;
+			OriginsSets.Items.Paintings[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<A_Perfect_World>());
