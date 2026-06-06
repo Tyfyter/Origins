@@ -228,7 +228,7 @@ namespace Origins.NPCs.Ashen {
 				return;
 			}
 			if (!NPC.collideY && NPC.velocity.Y == 0) {
-				if (OriginsModIntegrations.CheckAprilFools() || true) {
+				if (OriginsModIntegrations.CheckAprilFools()) {
 					DrawOffsetY = 16;
 				} else {
 					NPC.collideY = Collision.GetTilesIn(NPC.BottomLeft + Vector2.UnitY, NPC.BottomRight + Vector2.UnitY * 16).Any(pos => Framing.GetTileSafely(pos).HasSolidTile());
