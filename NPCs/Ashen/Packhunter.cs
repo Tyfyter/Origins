@@ -19,7 +19,7 @@ namespace Origins.NPCs.Ashen {
 		static AutoLoadingTexture glowTexture = typeof(Packhunter).GetDefaultTMLName("_Glow");
 		static AutoLoadingTexture headTexture = typeof(Packhunter).GetDefaultTMLName("_Head");
 		static AutoLoadingTexture headGlowTexture = typeof(Packhunter).GetDefaultTMLName("_Head_Glow");
-		Vector2 NeckPosition => NPC.Center + new Vector2(NPC.direction * (NPC.width * 0.5f - 16), -2);
+		Vector2 NeckPosition => NPC.Center + new Vector2(NPC.direction * (NPC.width * 0.5f - 16), DrawOffsetY - 2);
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 9;
@@ -221,10 +221,18 @@ namespace Origins.NPCs.Ashen {
 			viewDirection = NPC.rotation.ToRotationVector2();
 		}
 		public override void FindFrame(int frameHeight) {
+			DrawOffsetY = 0;
 			switch (NPC.aiAction) {
 				case 2:
 				NPC.frame.Y = NPC.frame.Height * 8;
 				return;
+			}
+			if (!NPC.collideY && NPC.velocity.Y == 0) {
+				if (OriginsModIntegrations.CheckAprilFools() || true) {
+					DrawOffsetY = 16;
+				} else {
+					NPC.collideY = Collision.GetTilesIn(NPC.BottomLeft + Vector2.UnitY, NPC.BottomRight + Vector2.UnitY * 16).Any(pos => Framing.GetTileSafely(pos).HasSolidTile());
+				}
 			}
 			if (NPC.collideY) {
 				float speed = Math.Abs(NPC.velocity.X);
@@ -255,7 +263,7 @@ namespace Origins.NPCs.Ashen {
 			spriteBatch.DrawGlowingNPCPart(
 				TextureAssets.Npc[Type].Value,
 				glowTexture,
-				NPC.Bottom + Vector2.UnitY * 4 - screenPos,
+				NPC.Bottom + Vector2.UnitY * (4 + DrawOffsetY) - screenPos,
 				NPC.frame,
 				drawColor,
 				glowColor,
