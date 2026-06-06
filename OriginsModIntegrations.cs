@@ -147,7 +147,7 @@ namespace Origins {
 			ModLoader.TryGetMod("Avalon", out instance.avalon);
 		}
 		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
-		static bool DefaultCheckAprilFools() => (DateTime.Today.Month == 4 && DateTime.Today.Day == 1) || Instance.ForceAF;
+		static bool DefaultCheckAprilFools() => (DateTime.Today.Month == 4 && DateTime.Today.Day == 1) || (Instance?.ForceAF ?? false);
 		static class BCSpriteConstructor {
 			public static List<(int part, Vector2 pos, float rot, SpriteEffects effects)> parts = [];
 			public static int partNum = 0;
