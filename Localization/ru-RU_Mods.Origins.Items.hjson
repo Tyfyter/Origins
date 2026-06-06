@@ -8385,8 +8385,8 @@ Fortified_Steel_Wall2_Placed_Unsafe_Item: {
 }
 
 CSTAA_Jacket: {
-	// DisplayName: C S T A A Jacket
-	// Tooltip: ""
+	// DisplayName: Ceramic-Shrapnel Tempered-Alloy Armor
+	// Tooltip: "'also known as CSTAA Jacket'"
 }
 
 Shuckatana: {

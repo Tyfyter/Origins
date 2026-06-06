@@ -89,7 +89,6 @@ namespace Origins.Buffs {
 		public override void Update(Player player, ref int buffIndex) {
 			int oldBuffIndex = buffIndex;
 			base.Update(player, ref buffIndex);
-			player.OriginPlayer().shimmerGuardianMinion = buffIndex == oldBuffIndex;
 			if (player.whoAmI == Main.myPlayer) {
 				int actualMinionType = Shimmer_Guardian.ID;
 				if (buffIndex != oldBuffIndex) {
@@ -125,6 +124,7 @@ namespace Origins.Buffs {
 				}
 			}
 		}
+		protected override void SetBuffFlag(Player player) => player.OriginPlayer().shimmerGuardianMinion = true;
 	}
 }
 

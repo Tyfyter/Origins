@@ -22,19 +22,14 @@ namespace Origins.Items.Weapons.Summoner {
 			if (GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, Type);
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			bool foundAny = false;
 			foreach (int proj in ProjectileTypes()) {
 				if (player.ownedProjectileCounts[proj] > 0) {
 					player.buffTime[buffIndex] = 18000;
-					foundAny = true;
 					SetBuffFlag(player);
-					break;
+					return;
 				}
 			}
-			if (!foundAny) {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
+			player.DelBuff(buffIndex--);
 		}
 		protected virtual void SetBuffFlag(Player player) { }
 		public override bool RightClick(int buffIndex) {
