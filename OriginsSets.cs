@@ -567,6 +567,13 @@ namespace Origins {
 			.Description("Denotes prefixes which have effects other than stat changes")
 			.RegisterBoolSet(false);
 		}
+		[ReinitializeDuringResizeArrays]
+		public static class Mounts {
+			public static Vector2[] EyeOffsets = MountID.Sets.Factory.CreateNamedSet(nameof(EyeOffsets))
+			.RegisterCustomSet<Vector2>(default,
+				MountID.Wolf, new Vector2(16, -4)
+			);
+		}
 		public static class Armor {
 			[ReinitializeDuringResizeArrays]
 			public static class Front {

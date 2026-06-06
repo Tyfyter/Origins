@@ -108,6 +108,7 @@ namespace Origins.Items.Mounts {
 			TransformTexture = null;
 		}
 		public override void SetStaticDefaults() {
+			OriginsSets.Mounts.EyeOffsets[Type] = new(-2, -20);
 			// Movement
 			MountData.jumpHeight = 8; // How high the mount can jump.
 			MountData.acceleration = 0.19f; // The rate at which the mount speeds up.

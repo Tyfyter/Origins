@@ -120,7 +120,12 @@ namespace Origins.Items.Accessories {
 		}
 
 		private static Vector2 EyePosition(Player player) {
-			return player.Center + new Vector2(2 * player.direction, (12 - player.height * 0.5f) * player.gravDir);
+			Vector2 position = player.MountedCenter + player.Directions(2, 12 - player.height * 0.5f);
+			if (player.mount.Active) {
+				(float xOff, float yOff) = OriginsSets.Mounts.EyeOffsets[player.mount.Type];
+				position += player.Directions(xOff, yOff);
+			}
+			return position; //return player.MountedCenter + new Vector2((2 + player.MountXOffset) * player.direction, (12 - player.height * 0.5f) * player.gravDir);
 		}
 
 		internal static int[] counts = [];
