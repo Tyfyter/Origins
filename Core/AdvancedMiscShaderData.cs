@@ -38,7 +38,7 @@ namespace Origins.Core {
 			((ShaderData)this).Apply();
 		}
 		public AdvancedMiscShaderData Clone(params Parameter[] newParameters) => new(ShaderDataMethods._asset.GetValue(this), ShaderDataMethods._passName.GetValue(this), newParameters.Union(parameters).ToArray());
-		public void LoadThen(Action action) => loadTask.ContinueWith(_ => action());
+		public void LoadThen(Action action) => loadTask?.ContinueWith(_ => action());
 	}
 	public class AdvancedArmorShaderData : ArmorShaderData, IAdvancedShaderData<AdvancedArmorShaderData> {
 		private readonly Parameter[] parameters;
