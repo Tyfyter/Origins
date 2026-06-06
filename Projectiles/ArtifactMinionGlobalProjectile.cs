@@ -291,9 +291,14 @@ namespace Origins.Projectiles {
 					(int)Life,
 					MaxLife,
 					light,
-					0.85f
+					0.85f,
+					inBuffList
 				);
 			} else {
+				if (!inBuffList && Main.LocalPlayer.gravDir == -1f) {
+					position.Y -= Main.screenPosition.Y;
+					position.Y = Main.screenPosition.Y + (float)Main.screenHeight - position.Y;
+				}
 				Main.spriteBatch.Draw(
 					TextureAssets.Hb2.Value,
 					position - Main.screenPosition,
