@@ -1039,8 +1039,11 @@ namespace Origins.Items.Accessories {
 				delegate {
 					lowest = Space_Pirates_Eye.GetPlayerCounts(Main.LocalPlayer);
 					EnsureButtons();
+					if (!GetBox().Contains(Main.MouseScreen)) {
+						if (Main.mouseLeft && Main.mouseLeftRelease) isActive = false;
+						return true;
+					}
 					if (PlayerInput.IgnoreMouseInterface) return true;
-					if (!GetBox().Contains(Main.MouseScreen)) return true;
 					Main.LocalPlayer.mouseInterface = true;
 					IgnoreRemainingInterface.Activate();
 					for (int i = 0; i < buttons.Length; i++) {
