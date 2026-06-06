@@ -7,6 +7,7 @@ using Origins.Graphics.Unlighting;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.Tiles;
@@ -68,6 +69,10 @@ namespace Origins.Events {
 				ModContent.ProjectileType<Big_Bang_P>(),
 				ModContent.ProjectileType<Tank_Rifle_P>(),
 				ModContent.ProjectileType<NPCs.Ashen.Boss.Fire_Cannons_State.Trenchmaker_Cannon_P>(),
+				ModContent.ProjectileType<Shimmerstar_Staff_P>(),
+				ModContent.ProjectileType<Shimmerstar_Staff_P2>(),
+				ModContent.ProjectileType<Shimmershot_Aura>(),
+				ModContent.ProjectileType<Voltefuse_Star>(),
 			];
 			foreach (int type in toNormalDraw) CutThroughSmogStorm[type] = normalDraw;
 			CutThroughSmogStorm[ProjectileID.DD2SquireSonicBoom] = DrawWave;
@@ -174,14 +179,14 @@ namespace Origins.Events {
 				Overlays.Scene["Sandstorm"].Opacity = 0;
 			}
 		}
-		public static void DrawLightMap(Color color) {
+		public static void DrawLightMap(Color color, in Matrix displayMatrix) {
 			Main.graphics.GraphicsDevice.Textures[0] = lightBufferTexture;
 			Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.LinearWrap;
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 			if (borrowedLightmap) {
-				lightMapStamp.DrawWeirdFancyLighting(activeLightTileArea, color, activeLightMatrix, true);
+				lightMapStamp.DrawWeirdFancyLighting(activeLightTileArea, color, in activeLightMatrix, in displayMatrix, true);
 			} else {
-				lightMapStamp.Draw(activeLightTileArea, color, activeLightMatrix, true);
+				lightMapStamp.Draw(activeLightTileArea, color, in displayMatrix, true);
 			}
 		}
 		static bool active;
@@ -220,19 +225,19 @@ namespace Origins.Events {
 					lightBufferTarget2 = new RenderTarget2D(Main.instance.GraphicsDevice, Main.screenWidth, Main.screenHeight, mipMap: false, preferredFormat: SurfaceFormat.Vector4, preferredDepthFormat: DepthFormat.None);
 				}
 				RenderTargetBinding[] oldRenderTargets = Main.graphics.GraphicsDevice.GetRenderTargets();
-				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+				Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 				Main.graphics.GraphicsDevice.SetRenderTarget(lightBufferTarget);
-				DrawLightMap(Color.Wheat);
+				DrawLightMap(Color.Wheat, Matrix.Identity);
 				Beacon_Light_TE_System.DrawBeacons(5);
 				ModContent.GetInstance<Flashbang_Overlay>().DrawOverlay(Main.spriteBatch);
 				Main.spriteBatch.Restart(Main.spriteBatch.GetState());
 				Main.graphics.GraphicsDevice.SetRenderTarget(lightBufferTarget2);
-				DrawLightMap(Color.White);
+				DrawLightMap(Color.White, Matrix.Identity);
 				if (Main.LocalPlayer.detectCreature) {
 					MainReflection.DrawNPCs(true);
 					MainReflection.DrawNPCs(false);
 				}
-				DrawLightMap(Color.White * 0.5f);
+				DrawLightMap(Color.White * 0.5f, Matrix.Identity);
 				using ScopedOverride<int> _ = Main.CurrentDrawnEntityShader.ScopedOverride(Retool_Arm_Laser.ShaderID);
 				Beacon_Light_TE_System.DrawBeacons(10);
 				foreach (Projectile proj in Main.ActiveProjectiles) CutThroughSmogStorm[proj.type]?.Invoke(proj);
@@ -373,7 +378,7 @@ namespace Origins.Events {
 		public override bool IsActive() => Opacity > 0;
 		public override void Draw(SpriteBatch spriteBatch, float minDepth, float maxDepth) {
 			if (Main.gameMenu) Opacity = 0;
-			Smog_Storm.DrawLightMap(Color.Wheat * Opacity * 0.75f);
+			Smog_Storm.DrawLightMap(Color.Wheat * Opacity * 0.75f, Main.GameViewMatrix.ZoomMatrix);
 		}
 		public override void Reset() { }
 		public override Color OnTileColor(Color inColor) => Color.Lerp(inColor, new(inColor.R / 5, 1, 1), Opacity);

@@ -576,14 +576,9 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				if (Origins.LogLoadingILError(nameof(IL_Projectile_HandleMovement), ex)) throw;
 			}
 			On_Projectile.Update += [DebuggerStepThrough](orig, self, i) => {
-				isUpdatingShimmeryThing = (self.TryGetGlobalProjectile(out OriginGlobalProj proj) && proj.weakShimmer);
-				try {
+				using (isUpdatingShimmeryThing.ScopedOverride(self.TryGetGlobalProjectile(out OriginGlobalProj proj) && proj.weakShimmer)) {
 					orig(self, i);
-				} catch {
-					isUpdatingShimmeryThing = false;
-					throw;
 				}
-				isUpdatingShimmeryThing = false;
 			};
 			On_Collision.CanHitLine += (orig, Position1, Width1, Height1, Position2, Width2, Height2) => isUpdatingShimmeryThing || orig(Position1, Width1, Height1, Position2, Width2, Height2);
 			On_Collision.CanHitWithCheck += (orig, Position1, Width1, Height1, Position2, Width2, Height2, check) => isUpdatingShimmeryThing || orig(Position1, Width1, Height1, Position2, Width2, Height2, check);
