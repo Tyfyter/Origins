@@ -19,7 +19,7 @@ namespace Origins.NPCs.Ashen {
 		static AutoLoadingTexture glowTexture = typeof(Packhunter).GetDefaultTMLName("_Glow");
 		static AutoLoadingTexture headTexture = typeof(Packhunter).GetDefaultTMLName("_Head");
 		static AutoLoadingTexture headGlowTexture = typeof(Packhunter).GetDefaultTMLName("_Head_Glow");
-		Vector2 NeckPosition => NPC.Center + new Vector2(NPC.direction * (NPC.width * 0.5f - 16), DrawOffsetY - 2);
+		Vector2 NeckPosition => NPC.Center + new Vector2(NPC.direction * (NPC.width * 0.5f - 12), DrawOffsetY - 7);
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 9;
@@ -31,8 +31,8 @@ namespace Origins.NPCs.Ashen {
 			NPC.lifeMax = 40;
 			NPC.defense = 6;
 			NPC.damage = 25;
-			NPC.width = 54;
-			NPC.height = 40;
+			NPC.width = 44;
+			NPC.height = 30;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-1.2f);
 			NPC.DeathSound = SoundID.NPCDeath44;
@@ -107,7 +107,7 @@ namespace Origins.NPCs.Ashen {
 			bool targetInvalid = NPC.GetTargetData().Invalid;
 			Vector2 targetDirection = targetInvalid ? default : NPC.DirectionTo(NPC.targetRect.Center()); 
 			int currentMoveDirection = float.Sign(NPC.velocity.X);
-
+			
 			float acceleration = 0.15f;
 			switch (NPC.aiAction) {
 				case 0:// walking
