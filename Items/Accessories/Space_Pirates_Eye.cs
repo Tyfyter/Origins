@@ -24,7 +24,8 @@ using Terraria.UI;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Space_Pirates_Eye : ModItem, IRightClickableAccessory {
-		public static List<PirateEyeMode> Colors { get; } = [];
+        static AutoLoadingTexture irisTexture = typeof(Space_Pirates_Eye).GetDefaultTMLName("_Iris");
+        public static List<PirateEyeMode> Colors { get; } = [];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			Accessory_Glow_Layer.AddGlowMask(EquipType.Face, Item.faceSlot,
@@ -49,6 +50,34 @@ namespace Origins.Items.Accessories {
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.OriginPlayer().spacePirateEye = Item;
 		}
+		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+            Color irisColor = Colors.GetIfInRange(Main.LocalPlayer.OriginPlayer().SpacePirateEyeVisualSelection)?.Color ?? Color.Transparent;
+            spriteBatch.Draw(
+                irisTexture,
+                position,
+                null,
+                drawColor.MultiplyRGB(irisColor),
+                0,
+                origin,
+                scale,
+                SpriteEffects.None,
+                0
+            );
+		}
+		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
+            Color irisColor = Colors.GetIfInRange(Main.LocalPlayer.OriginPlayer().SpacePirateEyeVisualSelection)?.Color ?? Color.Transparent;
+            spriteBatch.Draw(
+                irisTexture,
+                Item.Center - Main.screenPosition,
+                null,
+                lightColor.MultiplyRGB(irisColor),
+                rotation,
+                Item.Size * 0.5f,
+                scale,
+                SpriteEffects.None,
+                0
+            );
+        }
 		public static void UpdateEye(Player player, int mode) {
 			if (mode == -1) return;
 			OriginPlayer originPlayer = player.OriginPlayer();
@@ -499,6 +528,9 @@ namespace Origins.Items.Accessories {
 				data.sourceRect = frame;
 				data.Draw(Main.spriteBatch);
 				return false;
+			}
+			public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+				overPlayers.Add(index);
 			}
 			public float Raymarch(Vector2 position, Vector2 direction, float maxLength = float.PositiveInfinity) {
 				float dist = CollisionExt.Raymarch(position, direction, maxLength);
