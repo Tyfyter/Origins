@@ -24,7 +24,7 @@ namespace Origins.NPCs.Ashen {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 9;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Position = new Vector2(7, 0)};
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Position = new Vector2(2, 0) };
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = NPCAIStyleID.ActuallyNone;
@@ -105,9 +105,9 @@ namespace Origins.NPCs.Ashen {
 			Vector2 diffFromTarget = NPC.Center.Clamp(NPC.targetRect) - NPC.targetRect.Center().Clamp(NPC.Hitbox);
 
 			bool targetInvalid = NPC.GetTargetData().Invalid;
-			Vector2 targetDirection = targetInvalid ? default : NPC.DirectionTo(NPC.targetRect.Center()); 
+			Vector2 targetDirection = targetInvalid ? default : NPC.DirectionTo(NPC.targetRect.Center());
 			int currentMoveDirection = float.Sign(NPC.velocity.X);
-			
+
 			float acceleration = 0.15f;
 			switch (NPC.aiAction) {
 				case 0:// walking
@@ -246,7 +246,7 @@ namespace Origins.NPCs.Ashen {
 					NPC.collideY = Collision.GetTilesIn(NPC.BottomLeft + Vector2.UnitY, NPC.BottomRight + Vector2.UnitY * 16).Any(pos => Framing.GetTileSafely(pos).HasSolidTile());
 				}
 			}
-			if (NPC.collideY) {
+			if (NPC.collideY || NPC.IsABestiaryIconDummy) {
 				float speed = Math.Abs(NPC.velocity.X);
 				switch (NPC.aiAction) {
 					case 0:
