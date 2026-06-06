@@ -113,7 +113,10 @@ namespace Origins.NPCs.Ashen {
 				case 0:// walking
 				GeometryUtils.AngularSmoothing(ref NPC.rotation, 1.57f * NPC.direction - MathHelper.PiOver2, 0.05f);
 				if (targetInvalid) {
-					if (NPC.collideX) NPC.direction *= -1;
+					if (NPC.ai[3] >= 60) {
+						NPC.direction *= -1;
+						NPC.ai[3] = 0;
+					}
 				} else {
 					if (Math.Abs(diffFromTarget.X) < 16 * 5) {
 						NPC.aiAction = 2;
@@ -215,6 +218,15 @@ namespace Origins.NPCs.Ashen {
 					case 3:
 					NPC.rotation = MathHelper.PiOver2 - 1.57f * NPC.direction;
 					break;
+				}
+			}
+			if (NPC.collideX && targetInvalid) {
+				if (!NPC.collideY || NPC.ai[3] > 0) NPC.ai[3]++;
+			} else NPC.ai[3] = 0;
+			if (NPC.collideY && Math.Abs(NPC.velocity.Y) == 0) {
+				if ((Math.Abs(NPC.Center.Y - target.Center.Y) <= 8.5f * 16 && Math.Abs(NPC.Center.X - target.Center.X) <= 4 && !targetInvalid) || NPC.collideX) {
+					NPC.velocity.Y -= 20 * 0.4f;
+					NPC.velocity.X *= 0.2f;
 				}
 			}
 			NPC.spriteDirection = NPC.direction;
