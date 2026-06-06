@@ -5,6 +5,7 @@ using ModLiquidLib.ModLoader;
 using Origins.Core;
 using Origins.CrossMod;
 using Origins.Items.Weapons.Ammo.Canisters;
+using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
 using Origins.Reflection;
 using Origins.Tiles;
@@ -3923,6 +3924,7 @@ namespace Origins {
 		/// <returns>The distance traveled before a tile was reached, or <paramref name="maxLength"/> if the distance would exceed it</returns>
 		/// <exception cref="ArgumentException"/>
 		public static float Raymarch(Vector2 position, Vector2 direction, Func<Tile, bool?> extraCheck, float maxLength = float.PositiveInfinity) {
+			if (Weak_Shimmer_Debuff.isUpdatingShimmeryThing) return maxLength;
 			if (direction == Vector2.Zero) throw new ArgumentException($"{nameof(direction)} may not be zero");
 			float length = 0;
 			Point tilePos = position.ToTileCoordinates();

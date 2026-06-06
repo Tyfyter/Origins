@@ -311,17 +311,21 @@ namespace Origins.Events {
 				int resolution = targetResolution;
 				if (Main.gameMenu) return texture;
 				if (texture?.Width != targetResolution) ReinitializeTexture();
-				dynamicResolution.Start();
-				FastParallel.For(0, resolution, (min, max, _) => {
-					Vector2 position = Main.LocalPlayer.MountedCenter;
-					for (int i = min; i < max; i++) {
-						try {
-							Vector2 dir = (i * MathHelper.TwoPi / targetResolution).ToRotationVector2();
-							buffer[i] = CollisionExtensions.Raymarch(position, dir, IgnoreGlass, 16 * 10);
-						} finally { }
-					}
-				});
-				dynamicResolution.Finish(targetTimeSpan, ref targetResolution);
+				if (OriginPlayer.LocalOriginPlayer?.weakShimmer ?? false) {
+					Array.Fill(buffer, 16 * 10);
+				} else {
+					dynamicResolution.Start();
+					FastParallel.For(0, resolution, (min, max, _) => {
+						Vector2 position = Main.LocalPlayer.MountedCenter;
+						for (int i = min; i < max; i++) {
+							try {
+								Vector2 dir = (i * MathHelper.TwoPi / targetResolution).ToRotationVector2();
+								buffer[i] = CollisionExtensions.Raymarch(position, dir, IgnoreGlass, 16 * 10);
+							} finally { }
+						}
+					});
+					dynamicResolution.Finish(targetTimeSpan, ref targetResolution);
+				}
 				texture.SetData(0, new Rectangle(0, 0, resolution, 1), buffer, 0, resolution);
 				return texture;
 			});
