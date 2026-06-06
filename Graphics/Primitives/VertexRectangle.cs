@@ -52,13 +52,13 @@ namespace Origins.Graphics.Primitives {
 
 			GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, vertices.Length, dices, 0, 2);
 		}
-		public void Draw(Rectangle rectangle, Color color, Matrix matrix, bool tileCoords = false) {
+		public void Draw(Rectangle rectangle, Color color, in Matrix drawMatrix, bool tileCoords = false) {
 			if (tileCoords) rectangle = rectangle.Scaled(16);
 			
-			vertices[0].Position = new(rectangle.TopLeft() - Main.screenPosition, 0);
-			vertices[1].Position = new(rectangle.TopRight() - Main.screenPosition, 0);
-			vertices[2].Position = new(rectangle.BottomLeft() - Main.screenPosition, 0);
-			vertices[3].Position = new(rectangle.BottomRight() - Main.screenPosition, 0);
+			vertices[0].Position = new(Vector2.Transform(rectangle.TopLeft() - Main.screenPosition, drawMatrix), 0);
+			vertices[1].Position = new(Vector2.Transform(rectangle.TopRight() - Main.screenPosition, drawMatrix), 0);
+			vertices[2].Position = new(Vector2.Transform(rectangle.BottomLeft() - Main.screenPosition, drawMatrix), 0);
+			vertices[3].Position = new(Vector2.Transform(rectangle.BottomRight() - Main.screenPosition, drawMatrix), 0);
 
 			vertices[0].TextureCoordinate = Vector2.Zero;
 			vertices[1].TextureCoordinate = new Vector2(1, 0);
@@ -72,13 +72,13 @@ namespace Origins.Graphics.Primitives {
 
 			GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleStrip, vertices, 0, vertices.Length, dices, 0, 2);
 		}
-		public void DrawWeirdFancyLighting(Rectangle rectangle, Color color, Matrix matrix, bool tileCoords = false) {
+		public void DrawWeirdFancyLighting(Rectangle rectangle, Color color, in Matrix matrix, in Matrix drawMatrix, bool tileCoords = false) {
 			if (tileCoords) rectangle = rectangle.Scaled(16);
 
-			vertices[0].Position = new(rectangle.TopLeft() - Main.screenPosition, 0);
-			vertices[1].Position = new(rectangle.TopRight() - Main.screenPosition, 0);
-			vertices[2].Position = new(rectangle.BottomLeft() - Main.screenPosition, 0);
-			vertices[3].Position = new(rectangle.BottomRight() - Main.screenPosition, 0);
+			vertices[0].Position = new(Vector2.Transform(rectangle.TopLeft() - Main.screenPosition, drawMatrix), 0);
+			vertices[1].Position = new(Vector2.Transform(rectangle.TopRight() - Main.screenPosition, drawMatrix), 0);
+			vertices[2].Position = new(Vector2.Transform(rectangle.BottomLeft() - Main.screenPosition, drawMatrix), 0);
+			vertices[3].Position = new(Vector2.Transform(rectangle.BottomRight() - Main.screenPosition, drawMatrix), 0);
 
 			vertices[0].TextureCoordinate = Vector2.Transform(rectangle.TopLeft(), matrix);
 			vertices[1].TextureCoordinate = Vector2.Transform(rectangle.TopRight(), matrix);

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dusts;
+using Origins.Events;
 using Origins.Items.Materials;
 using Origins.NPCs.MiscB.Shimmer_Construct;
 using Origins.Projectiles;
@@ -298,6 +299,7 @@ namespace Origins.Items.Weapons.Ranged {
 			ProjectileID.Sets.TrailCacheLength[Type] = 30;
 			ProjectileID.Sets.TrailingMode[Type] = -1;
 			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 16 * 400;
+			Smog_Storm.CutThroughSmogStorm[Type] = proj => ((Shimmershot_Aura)proj.ModProjectile).DrawTrailMask(48);
 			if (GetType().GetProperty("ID", BindingFlags.Static | BindingFlags.Public) is PropertyInfo id && id.PropertyType == typeof(int)) id.SetValue(null, Type);
 		}
 		public override void SetDefaults() {
@@ -374,8 +376,25 @@ namespace Origins.Items.Weapons.Ranged {
 				return false;
 			}
 			Origins.shaderOroboros.Capture();
-			MiscShaderData miscShaderData = GameShaders.Misc["Origins:AnimatedTrail"];
+			DrawTrailMask();
+			Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
+			Origins.shaderOroboros.Reset(default);
+			Vector2 center = renderTarget.Size() * 0.5f;
+			SC_Phase_Three_Midlay.DrawDatas.Add(new(
+				renderTarget,
+				center,
+				null,
+				Color.White,
+				0,
+				center,
+				Vector2.One / Main.GameViewMatrix.Zoom,
+				SpriteEffects.None
+			));
+			return false;
+		}
 
+		private void DrawTrailMask(float width = 24) {
+			MiscShaderData miscShaderData = GameShaders.Misc["Origins:AnimatedTrail"];
 			Vector2[] positions = new Vector2[Projectile.oldPos.Length - 1];
 			float[] rotations = new float[Projectile.oldPos.Length - 1];
 			int count = 0;
@@ -394,30 +413,16 @@ namespace Origins.Items.Weapons.Ranged {
 			miscShaderData.Shader.Parameters["uSourceRect0"].SetValue(new Vector4(frameStart, 0, 1 - frameStart, 1));
 			miscShaderData.Shader.Parameters["uSourceRect1"].SetValue(new Vector4(frameStart, MathF.Sin((float)Main.timeForVisualEffects * 0.1f) * 0.2f, 1 - frameStart, 1));
 			miscShaderData.Apply();
-			_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (_) => Color.White, (_) => 24, -Main.screenPosition, true);
+			_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, _ => Color.White, _ => width, -Main.screenPosition, true);
 			_vertexStrip.DrawTrail();
-			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 
 			miscShaderData.Shader.Parameters["uSourceRect1"].SetValue(new Vector4(frameStart, (float)Main.timeForVisualEffects * -0.1f, 1 - frameStart, 1));
 			miscShaderData.Apply();
-			_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, (_) => Color.White, (_) => 24, -Main.screenPosition, true);
+			_vertexStrip.PrepareStripWithProceduralPadding(positions, rotations, _ => Color.White, _ => width, -Main.screenPosition, true);
 			_vertexStrip.DrawTrail();
 			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-			Origins.shaderOroboros.DrawContents(renderTarget, Color.White, Main.GameViewMatrix.EffectMatrix);
-			Origins.shaderOroboros.Reset(default);
-			Vector2 center = renderTarget.Size() * 0.5f;
-			SC_Phase_Three_Midlay.DrawDatas.Add(new(
-				renderTarget,
-				center,
-				null,
-				Color.White,
-				0,
-				center,
-				Vector2.One / Main.GameViewMatrix.Zoom,
-				SpriteEffects.None
-			));
-			return false;
 		}
+
 		public override void OnKill(int timeLeft) {
 			if (renderTarget is not null) {
 				SC_Phase_Three_Overlay.SendRenderTargetForDisposal(ref renderTarget);

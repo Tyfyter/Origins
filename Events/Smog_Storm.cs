@@ -69,6 +69,10 @@ namespace Origins.Events {
 				ModContent.ProjectileType<Big_Bang_P>(),
 				ModContent.ProjectileType<Tank_Rifle_P>(),
 				ModContent.ProjectileType<NPCs.Ashen.Boss.Fire_Cannons_State.Trenchmaker_Cannon_P>(),
+				ModContent.ProjectileType<Shimmerstar_Staff_P>(),
+				ModContent.ProjectileType<Shimmerstar_Staff_P2>(),
+				ModContent.ProjectileType<Shimmershot_Aura>(),
+				ModContent.ProjectileType<Voltefuse_Star>(),
 			];
 			foreach (int type in toNormalDraw) CutThroughSmogStorm[type] = normalDraw;
 			CutThroughSmogStorm[ProjectileID.DD2SquireSonicBoom] = DrawWave;
