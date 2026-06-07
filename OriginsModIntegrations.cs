@@ -69,6 +69,7 @@ using ThoriumMod.Items.Donate;
 using ThoriumMod.Items.MeleeItems;
 using ThoriumMod.Items.Misc;
 using ThoriumMod.Items.Painting;
+using ThoriumMod.Mounts;
 using ThoriumMod.Projectiles.Bard;
 using static Origins.OriginsSets.Items;
 using static Origins.OriginSystem;
@@ -1006,6 +1007,14 @@ namespace Origins {
 			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsRuby>()] = TileType<ThoriumTiles.DepthsEmerald>();
 			SetsTiles.ShimmerTransformToTile[TileType<ThoriumTiles.DepthsDiamond>()] = TileType<ThoriumTiles.DepthsRuby>();
 
+			OriginsSets.Mounts.EyeOffsets[MountType<CyberneticSphereMount>()] = new(-2, 8);
+			OriginsSets.Mounts.EyeOffsets[MountType<VampireCatalystMount>()] = new(1, 12);
+			OriginsSets.Mounts.EyeOffsets[MountType<MagmaCharmMount>()] = new(13, 4);
+			OriginsSets.Mounts.EyeOffsets[MountType<GoldenScaleMount>()] = new(3, 2);
+			OriginsSets.Mounts.EyeOffsets[MountType<FakeCoinMount>()] = new(-2, 10);
+			OriginsSets.Mounts.EyeOffsets[MountType<AmphibianEggMount>()] = new(0, 11);
+			OriginsSets.Mounts.EyeOffsets[MountType<ColeopteraKeepsakeMount>()] = new(10, 13);
+			OriginsSets.Mounts.EyeOffsets[MountType<SinisterAcornMount>()] = new(12, 10);
 		}
 		[JITWhenModsEnabled("ThoriumMod")]
 		static void AddThoriumRecipes() {
