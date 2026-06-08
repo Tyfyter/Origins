@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Graphics;
+using Origins.Items.Weapons.Magic;
 using Origins.Layers;
 using Origins.NPCs;
 using Origins.Projectiles;
@@ -24,8 +25,8 @@ using Terraria.UI;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Space_Pirates_Eye : ModItem, IRightClickableAccessory {
-        static AutoLoadingTexture irisTexture = typeof(Space_Pirates_Eye).GetDefaultTMLName("_Iris");
-        public static List<PirateEyeMode> Colors { get; } = [];
+		static AutoLoadingTexture irisTexture = typeof(Space_Pirates_Eye).GetDefaultTMLName("_Iris");
+		public static List<PirateEyeMode> Colors { get; } = [];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			Accessory_Glow_Layer.AddGlowMask(EquipType.Face, Item.faceSlot,
@@ -51,33 +52,33 @@ namespace Origins.Items.Accessories {
 			player.OriginPlayer().spacePirateEye = Item;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-            Color irisColor = Colors.GetIfInRange(Main.LocalPlayer.OriginPlayer().SpacePirateEyeVisualSelection)?.Color ?? Color.Transparent;
-            spriteBatch.Draw(
-                irisTexture,
-                position,
-                null,
-                drawColor.MultiplyRGB(irisColor),
-                0,
-                origin,
-                scale,
-                SpriteEffects.None,
-                0
-            );
+			Color irisColor = Colors.GetIfInRange(Main.LocalPlayer.OriginPlayer().SpacePirateEyeVisualSelection)?.Color ?? Color.Transparent;
+			spriteBatch.Draw(
+				irisTexture,
+				position,
+				null,
+				drawColor.MultiplyRGB(irisColor),
+				0,
+				origin,
+				scale,
+				SpriteEffects.None,
+				0
+			);
 		}
 		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
-            Color irisColor = Colors.GetIfInRange(Main.LocalPlayer.OriginPlayer().SpacePirateEyeVisualSelection)?.Color ?? Color.Transparent;
-            spriteBatch.Draw(
-                irisTexture,
-                Item.Center - Main.screenPosition,
-                null,
-                lightColor.MultiplyRGB(irisColor),
-                rotation,
-                Item.Size * 0.5f,
-                scale,
-                SpriteEffects.None,
-                0
-            );
-        }
+			Color irisColor = Colors.GetIfInRange(Main.LocalPlayer.OriginPlayer().SpacePirateEyeVisualSelection)?.Color ?? Color.Transparent;
+			spriteBatch.Draw(
+				irisTexture,
+				Item.Center - Main.screenPosition,
+				null,
+				lightColor.MultiplyRGB(irisColor),
+				rotation,
+				Item.Size * 0.5f,
+				scale,
+				SpriteEffects.None,
+				0
+			);
+		}
 		public static void UpdateEye(Player player, int mode) {
 			if (mode == -1) return;
 			OriginPlayer originPlayer = player.OriginPlayer();
@@ -895,6 +896,74 @@ namespace Origins.Items.Accessories {
 				AIType = ProjectileID.WaterStream;
 			}
 		}
+		public class Shimmer_Mines : PirateEyeMode {
+			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainbowRodBullet;
+			public override Color Color => FromHexRGB(0x6f66ff);
+			public override int Cooldown => 15;
+			public override float Order => base.Order + 0.02f;// technically out of hue order, but by as little as 4
+			public override void SetStaticDefaults() {
+				ProjectileID.Sets.TrailingMode[Type] = 3;
+				ProjectileID.Sets.TrailCacheLength[Type] = 30;
+				ProjectileID.Sets.NoLiquidDistortion[Type] = true;
+			}
+			public override void SetDefaults() {
+				Projectile.DamageType = DamageClass.Generic;
+				Projectile.friendly = true;
+				Projectile.timeLeft = 60 * 5;
+				Projectile.aiStyle = 0;
+				Projectile.penetrate = 9;
+				Projectile.width = 24;
+				Projectile.height = 24;
+				Projectile.tileCollide = false;
+				Projectile.scale = 0.85f;
+				Projectile.idStaticNPCHitCooldown = 10;
+				Projectile.usesIDStaticNPCImmunity = true;
+			}
+			public override Vector2 GetVelocity(Player player, Vector2 difference, Entity target) => difference;
+			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+				player.SpawnProjectile(
+					source,
+					position + velocity.Normalized(out float dist).RotatedByRandom(0.4f) * float.Lerp(float.Pow(Main.rand.NextFloat(), 0.5f) * 16 * 25, dist, 0.2f),
+					default,
+					type,
+					damage,
+					knockback
+				);
+				OriginExtensions.FadeOutOldProjectilesAtLimit([Type], 15, 15);
+			}
+			public override void AI() {
+				float smoothSpeed = 0.1f;
+				if (Projectile.localAI[0] == 0) {
+					smoothSpeed = 1f;
+					Projectile.localAI[0] = 1;
+					Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+					Vector2 pos = EyePosition(Main.player[Projectile.owner]);
+					float rotation = (pos - Projectile.position).ToRotation();
+					for (int i = 0; i < Projectile.oldPos.Length; i++) {
+						Projectile.oldPos[i] = Vector2.Lerp(Projectile.position, pos, i / (float)Projectile.oldPos.Length);
+						Projectile.oldRot[i] = rotation;
+					}
+				}
+				if (Projectile.timeLeft < 15) {
+					Projectile.Opacity = Projectile.timeLeft / 15f;
+				} else {
+					float opacity = Projectile.Opacity;
+					MathUtils.LinearSmoothing(ref opacity, 1, smoothSpeed);
+					Projectile.Opacity = opacity;
+				}
+			}
+			public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+				int direction = Math.Sign(target.Center.X - Projectile.Center.X);
+				if (direction == 0) direction = Main.rand.NextBool().ToDirectionInt();
+				modifiers.HitDirectionOverride = direction;
+				modifiers.KnockbackImmunityEffectiveness *= 0.8f;
+				modifiers.Knockback.Base += 6;
+			}
+			public override bool PreDraw(ref Color lightColor) {
+				Shimmerstar_Staff_P.DrawShimmerstar(Projectile);
+				return false;
+			}
+		}
 		public class Witch_Bolt : PirateEyeMode {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
 			public override Color Color => FromHexRGB(0x8000ff);
@@ -1013,16 +1082,6 @@ namespace Origins.Items.Accessories {
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
 			public override Color Color => FromHexRGB(0xdf00ff);
-			public override int Cooldown => 60;
-			public override void SetDefaults() {
-				Projectile.CloneDefaults(ProjectileID.BeeArrow);
-				AIType = ProjectileID.BeeArrow;
-			}
-		}
-		public class _Temp_Hot_Pink : PirateEyeMode, IBroken {
-			static string IBroken.BrokenReason => "Needs idea";
-			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
-			public override Color Color => FromHexRGB(0xff00bf);
 			public override int Cooldown => 60;
 			public override void SetDefaults() {
 				Projectile.CloneDefaults(ProjectileID.BeeArrow);

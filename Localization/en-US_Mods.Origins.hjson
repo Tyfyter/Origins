@@ -2266,6 +2266,7 @@ Projectiles: {
 	Trenchmaker_Laser_Target_Locator.DisplayName: Trenchmaker Laser Target Locator
 	Trenchmaker_Laser_Target_Locator_Marker.DisplayName: Trenchmaker Laser Target Locator Marker
 	Trenchmaker_Laser_Target_Locator_Missile.DisplayName: Trenchmaker Laser Target Locator Missile
+	Pirate_Eye_Shimmer_Mines.DisplayName: Pirate Eye Shimmer Mines
 }
 
 Prefixes: {
