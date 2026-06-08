@@ -205,8 +205,9 @@ namespace Origins.NPCs.Ashen {
 			NPC.velocity.X += acceleration * targetMoveDirection;
 
 			if (NPC.collideY) NPC.velocity.X *= 0.97f;
-			if (currentMoveDirection == targetMoveDirection) NPC.velocity.X *= 0.93f;
+			if (currentMoveDirection == targetMoveDirection) NPC.velocity.X *= NPC.collideY ? 0.93f : 0.98f;
 
+			float preStepOffY = NPC.gfxOffY;
 			if (NPC.collideY) {
 				Collision.StepDown(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
 				Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
@@ -220,14 +221,21 @@ namespace Origins.NPCs.Ashen {
 					break;
 				}
 			}
-			if (NPC.collideX && targetInvalid) {
-				if (!NPC.collideY || NPC.ai[3] > 0) NPC.ai[3]++;
+			if ((NPC.collideX || Math.Abs(NPC.velocity.X) < 0.05f) && targetInvalid) {
+				if (NPC.collideY || NPC.ai[3] > 0) NPC.ai[3]++;
 			} else NPC.ai[3] = 0;
 			if (NPC.collideY && Math.Abs(NPC.velocity.Y) == 0) {
-				if ((Math.Abs(NPC.Center.Y - target.Center.Y) <= 8.5f * 16 && Math.Abs(NPC.Center.X - target.Center.X) <= 4 && !targetInvalid) || NPC.collideX) {
-					NPC.velocity.Y -= 20 * 0.4f;
-					NPC.velocity.X *= 0.2f;
+				bool shouldJump = false;
+				if (NPC.collideX && preStepOffY == NPC.gfxOffY) shouldJump = true;
+				else if (!targetInvalid) {
+					if (Math.Abs(NPC.Center.Y - target.Center.Y) <= 8.5f * 16 && Math.Abs(NPC.Center.X - target.Center.X) <= 4) {
+						NPC.velocity.X *= 0.2f;
+						shouldJump = true;
+					} else if (target.Position.Y + target.Height < NPC.position.Y && !NPC.Hitbox.Add(new Vector2(NPC.width * 0.5f, 16)).OverlapsAnyTiles(false)) {
+						shouldJump = true;
+					}
 				}
+				if (shouldJump) NPC.velocity.Y -= 8;
 			}
 			NPC.spriteDirection = NPC.direction;
 			viewDirection = NPC.rotation.ToRotationVector2();
