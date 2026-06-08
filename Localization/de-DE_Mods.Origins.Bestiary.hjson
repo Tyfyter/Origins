@@ -133,7 +133,7 @@ Chambersite_Squirrel: "{$Bestiary_FlavorText.npc_GemSquirrelAmethyst}"
 // Cartwheeler_Small: "{$Cartwheeler_Large}"
 // Defensive_Turret: A defensive turret constructed to defend the Outposts. As to why it is designed as an autocannon leaves more questions than answers for figuring out just who they were meant for.
 // Reject_2: The Rejected are the many machines cast out into the Scrapyard to eventually be incinerated into something more useful. The reason why they’re possessed is a horror waiting to be realized, however.
-// Reject_1: "{$Reject_1}"
-// Reject_3: "{$Reject_1}"
+// Reject_1: "{$Reject_2}"
+// Reject_3: "{$Reject_2}"
 // Scrapyard_Stryder: The blueprints for the Stryder were hidden away until the Mother Unit could find a use for it. Originally designed as a personal transport vehicle, the Stryder has been adapted to fit an autonomous controlling unit instead; changing out the ICE for a PG, and gaining a phoenum cannon as a result.
 // Packhunter: Security bots designed exactly for getting around the rough, scrap-filled terrain of the Scrapyard. Features a hook bar on its back for easy transportation within the Factory as well.
