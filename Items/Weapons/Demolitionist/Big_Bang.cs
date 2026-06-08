@@ -23,14 +23,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 10);
 			Item.UseSound = SoundID.Item92;
 		}
-		public override void AddRecipes() {
-			Recipe.Create(Type)
-			.AddIngredient(ItemID.SoulofNight, 16)
-			.AddIngredient<Carburite_Item>(22)
-			.AddIngredient<Chambersite_Item>(10)
-			.AddTile(TileID.MythrilAnvil)
-			.Register();
-		}
 		public override bool? UseItem(Player player) {
 			SoundEngine.PlaySound(Origins.Sounds.Lightning.WithPitch(1.2f));
 			return base.UseItem(player);
