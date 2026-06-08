@@ -1,38 +1,33 @@
-﻿using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
-using Terraria.Localization;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
-using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
 
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Dungeon_Chest : ModChest, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
+		protected override bool CanBeLocked => true;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			color.DoFancyGlow(new(0.394f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {
-			if (!Main.dedServ) {
-				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
-			}
+			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
 			base.SetStaticDefaults();
 			Main.tileLighted[Type] = true;
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("{$Defiled} Chest");
-			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
-			name = Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.{Name}_Locked.MapEntry"));
-			// name.SetDefault("Locked {$Defiled} Chest");
-			AddMapEntry(new Color(140, 140, 140), name, MapChestName);
-			//disableSmartCursor = true;
+			AddMapEntry(new Color(165, 165, 165), CreateMapEntryName(), MapChestName);
+			AddMapEntry(new Color(165, 165, 165), Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.{Name}_Locked.MapEntry")), MapChestName);
 			AdjTiles = [TileID.Containers];
 			keyItem = ModContent.ItemType<Defiled_Key>();
 			DustType = Defiled_Wastelands.DefaultTileDust;
+			RegisterItemDrop(ModContent.ItemType<Defiled_Dungeon_Chest_Item>());
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 		public override bool CanUnlockChest(int i, int j) => NPC.downedPlantBoss;
+		public override bool LockChest(int i, int j, ref short frameXAdjustment, ref bool manual) => NPC.downedPlantBoss && base.LockChest(i, j, ref frameXAdjustment, ref manual);
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = g = b = 0.01f;
 		}
@@ -46,7 +41,7 @@ namespace Origins.Tiles.Defiled {
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.useTurn = true;
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
@@ -59,14 +54,9 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Locked_Defiled_Dungeon_Chest_Item : Defiled_Dungeon_Chest_Item {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Dungeon_Chest_Item";
-		
-
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.placeStyle = 1;
 		}
 	}
-	/*public class Defiled_Dungeon_Chest_Placeholder_Item : ModItem {
-		public override string Texture => "Origins/Tiles/Defiled/Defiled_Dungeon_Chest_Item";
-	}*/
 }

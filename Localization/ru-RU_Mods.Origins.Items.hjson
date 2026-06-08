@@ -3364,16 +3364,6 @@ Baryte_Wall_Item: {
 	// Tooltip: ""
 }
 
-Defiled_Dungeon_Chest_Placeholder_Item: {
-	// DisplayName: "{§Defiled} Dungeon Chest Placeholder Item"
-	// Tooltip: ""
-}
-
-Riven_Dungeon_Chest_Placeholder_Item: {
-	// DisplayName: "{§Riven} Dungeon Chest Placeholder Item"
-	// Tooltip: ""
-}
-
 Defiled_Torch: {
 	// DisplayName: "{§Defiled} Torch"
 	// Tooltip: ""
@@ -7263,7 +7253,7 @@ Structure_Helper_Item: {
 }
 
 Locked_Riven_Dungeon_Chest_Item: {
-	// DisplayName: "{§Riven} Chest (locked)"
+	// DisplayName: "{§Riven} Dungeon Chest (locked)"
 	// Tooltip: ""
 }
 

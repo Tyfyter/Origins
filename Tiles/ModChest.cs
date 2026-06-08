@@ -15,30 +15,40 @@ using static Origins.Core.SpecialChest;
 namespace Origins.Tiles {
 	public abstract class ModChest : ModTile {
 		public int keyItem { get; protected set; } = -1;
+		protected virtual bool CanBeLocked => false;
 		public override void SetStaticDefaults() {
 			Main.tileSpelunker[Type] = true;
 			Main.tileContainer[Type] = true;
-			TileID.Sets.IsAContainer[Type] = true;
-			TileID.Sets.BasicChest[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 1200;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileOreFinderPriority[Type] = 500;
 			TileID.Sets.HasOutlines[Type] = true;
+			TileID.Sets.IsAContainer[Type] = true;
+			TileID.Sets.BasicChest[Type] = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.AvoidedByNPCs[Type] = true;
+			TileID.Sets.InteractibleByNPCs[Type] = true;
+			TileID.Sets.FriendlyFairyCanLureTo[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.CoordinateHeights = [16, 18];
 			TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(new Func<int, int, int, int, int, int, int>(Chest.FindEmptyChest), -1, 0, true);
 			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(new Func<int, int, int, int, int, int, int>(Chest.AfterPlacement_Hook), -1, 0, false);
-			TileObjectData.newTile.AnchorInvalidTiles = [TileID.MagicalIceBlock];
+			TileObjectData.newTile.AnchorInvalidTiles = [
+				TileID.MagicalIceBlock,
+				TileID.Boulder,
+				TileID.BouncyBoulder,
+				TileID.LifeCrystalBoulder,
+				TileID.RollingCactus
+			];
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			ModifyTileData();
 			TileObjectData.addTile(Type);
 			DustType = Defiled_Wastelands.DefaultTileDust;
-			_ = DefaultContainerName(0, 0);
 		}
 		public virtual void ModifyTileData() { }
 		public override bool Slope(int i, int j) => false;
@@ -53,6 +63,14 @@ namespace Origins.Tiles {
 		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual) {
 			dustType = this.DustType;
 			return true;
+		}
+
+		public override bool LockChest(int i, int j, ref short frameXAdjustment, ref bool manual) {
+			int style = TileObjectData.GetTileStyle(Main.tile[i, j]);
+			if (style == 0 && CanBeLocked) {
+				return true;
+			}
+			return false;
 		}
 
 		public string MapChestName(string name, int i, int j) {
@@ -173,13 +191,23 @@ namespace Origins.Tiles {
 			Main.tileNoAttach[Type] = true;
 			Main.tileOreFinderPriority[Type] = 500;
 			TileID.Sets.HasOutlines[Type] = true;
+			TileID.Sets.DisableSmartCursor[Type] = true;
+			TileID.Sets.AvoidedByNPCs[Type] = true;
+			TileID.Sets.InteractibleByNPCs[Type] = true;
+			TileID.Sets.FriendlyFairyCanLureTo[Type] = true;
 			AdjTiles = [TileID.Containers];
 			if (IsMultitile) {
 				TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 				TileObjectData.newTile.Origin = new Point16(1, 3);
 				TileObjectData.newTile.Width = 4;
 				TileObjectData.newTile.SetHeight(4);
-				TileObjectData.newTile.AnchorInvalidTiles = [TileID.MagicalIceBlock];
+				TileObjectData.newTile.AnchorInvalidTiles = [
+					TileID.MagicalIceBlock,
+					TileID.Boulder,
+					TileID.BouncyBoulder,
+					TileID.LifeCrystalBoulder,
+					TileID.RollingCactus
+				];
 				TileObjectData.newTile.StyleHorizontal = true;
 				TileObjectData.newTile.LavaDeath = false;
 				TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);

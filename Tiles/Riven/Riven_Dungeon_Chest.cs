@@ -10,28 +10,24 @@ namespace Origins.Tiles.Riven {
 	public class Riven_Dungeon_Chest : ModChest, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
+		protected override bool CanBeLocked => true;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			color.DoFancyGlow(new Vector3(0f, 0.25f, 0.5f), tile.TileColor);
 		}
 		public override void SetStaticDefaults() {
-			if (!Main.dedServ) {
-				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Dungeon_Chest_Glow");
-			}
+			if (!Main.dedServ) GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
 			base.SetStaticDefaults();
 			Main.tileLighted[Type] = true;
-			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Riven Chest");
-			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
-			name = Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.{Name}_Locked.MapEntry"));
-			// name.SetDefault("Locked Riven Chest");
-			AddMapEntry(new Color(140, 140, 140), name, MapChestName);
-			//disableSmartCursor = true;
+			AddMapEntry(new Color(75, 96, 161), CreateMapEntryName(), MapChestName);
+			AddMapEntry(new Color(75, 96, 161), Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.{Name}_Locked.MapEntry")), MapChestName);
 			AdjTiles = [TileID.Containers];
 			keyItem = ModContent.ItemType<Riven_Key>();
 			DustType = Riven_Hive.DefaultTileDust;
+			RegisterItemDrop(ModContent.ItemType<Riven_Dungeon_Chest_Item>());
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 		public override bool CanUnlockChest(int i, int j) => NPC.downedPlantBoss;
+		public override bool LockChest(int i, int j, ref short frameXAdjustment, ref bool manual) => NPC.downedPlantBoss && base.LockChest(i, j, ref frameXAdjustment, ref manual);
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawChestGlow(i, j, spriteBatch);
 		}
@@ -52,7 +48,7 @@ namespace Origins.Tiles.Riven {
 		public override void SetDefaults() {
 			Item.width = 32;
 			Item.height = 32;
-			Item.maxStack = 9999;
+			Item.maxStack = Item.CommonMaxStack;
 			Item.useTurn = true;
 			Item.autoReuse = true;
 			Item.useAnimation = 15;
