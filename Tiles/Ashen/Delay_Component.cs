@@ -74,7 +74,16 @@ namespace Origins.Tiles.Ashen {
 			}
 			return inputPower;
 		}
-		public bool ShouldCountAsPowerSource(Point position, int forWireType) => !isProcessingDelayComponent;
+		static readonly HashSet<Point> steppedForPower = [];
+		public bool ShouldCountAsPowerSource(Point position, int forWireType) {
+			if (!isProcessingDelayComponent) return true;
+			if (!steppedForPower.Add(position)) return false;
+			try {
+				return IsPowered(position.X, position.Y);
+			} finally {
+				steppedForPower.Remove(position);
+			}
+		}
 		public void Poke(Point position, int fromWireType) => UpdatePowerState(position.X, position.Y, IsPowered(position.X, position.Y));
 		public override void HitWire(int i, int j) {
 			if (!Ashen_Wire_Data.HittingAshenWires && TileEntity.TryGet(i, j, out Delay_Component_TE te)) te.TriggerVanilla();

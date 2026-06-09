@@ -195,6 +195,7 @@ namespace Origins.Items.Tools.Wiring {
 		}
 		public readonly bool AnyWire => HasBrownWire || HasBlackWire || HasWhiteWire;
 		public readonly bool AnyPower => BrownWirePowered || BlackWirePowered || WhiteWirePowered;
+		public readonly bool WirePowered(int kind) => GetBit(data, 1 + kind * 2);
 		public bool IsTilePowered {
 			readonly get => GetBit(data, 7);
 			private set => SetBit(value, ref data, 7);
@@ -325,6 +326,27 @@ namespace Origins.Items.Tools.Wiring {
 			for (int k = 0; k < tiles.Count; k++) {
 				SetPowered(tiles[k].X, tiles[k].Y, wireType, value);
 				if (TileLoader.GetTile(Framing.GetTileSafely(tiles[k]).TileType) is IAshenPowerConduitTile conduitTile) conduitTile.Poke(tiles[k], wireType);
+			}
+		}
+		static readonly HashSet<Point> poked = [];
+		public static void PokeConnected(Point position, int exceptWire) {
+			if (!poked.Add(position)) return;
+			try {
+				for (int i = 0; i < 3; i++) {
+					if (i != exceptWire) PokeKind(position.X, position.Y, i);
+				}
+			} finally {
+				poked.Remove(position);
+			}
+			static void PokeKind(int i, int j, int wireType) {
+				bool Counter(Point position) {
+					return Framing.GetTileSafely(position).Get<Ashen_Wire_Data>().GetWire(wireType);
+				}
+				static bool Breaker(AreaAnalysis analysis) => false;
+				IReadOnlyList<Point> tiles = AreaAnalysis.March(i, j, AreaAnalysis.Orthogonals, Counter, Breaker).Counted;
+				for (int k = 0; k < tiles.Count; k++) {
+					if (TileLoader.GetTile(Framing.GetTileSafely(tiles[k]).TileType) is IAshenPowerConduitTile conduitTile) conduitTile.Poke(tiles[k], wireType);
+				}
 			}
 		}
 		public readonly void DrawWires(int i, int j) {
@@ -490,7 +512,7 @@ namespace Origins.Items.Tools.Wiring {
 	public interface IAshenPowerConduitTile {
 		static readonly FungibleSet<Point> walkedConduitOutputs = [];
 		public bool ShouldCountAsPowerSource(Point position, int forWireType);
-		public void Poke(Point position, int fromWireType) { }
+		public void Poke(Point position, int fromWireType) => Ashen_Wire_Data.PokeConnected(position, fromWireType);
 		public static bool FindValidPowerSource(Point position, int wireType) {
 			bool Counter(Point position) {
 				return Framing.GetTileSafely(position).Get<Ashen_Wire_Data>().GetWire(wireType);
