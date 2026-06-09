@@ -1429,7 +1429,7 @@ Buffs: {
 
 	Matryoshka_Doll_Buff: {
 		// DisplayName: Matryoshka Doll Buff
-		// Description: Mods.Origins.Buffs.Matryoshka_Doll_Buff.Description
+		// Description: Layers upon layers!
 	}
 
 	Vampire_Sunflower_Buff: {
@@ -1444,17 +1444,17 @@ Buffs: {
 
 	Wind_Pail_Debuff: {
 		DisplayName: Unheilböen
-		// Description: Mods.Origins.Buffs.Wind_Pail_Debuff.Description
+		// Description: Creepy...
 	}
 
 	Smart_Turret_Buff: {
-		// DisplayName: Smart Turret Buff
-		// Description: Mods.Origins.Buffs.Smart_Turret_Buff.Description
+		// DisplayName: Smart Turret
+		// Description: Not too smart.
 	}
 
 	Neutron_Soup_Buff: {
-		// DisplayName: Neutron Soup Buff
-		// Description: Mods.Origins.Buffs.Neutron_Soup_Buff.Description
+		// DisplayName: Neutron Soup
+		// Description: The power of a neutron star in your hands.
 	}
 
 	Flashbang_Debuff: {

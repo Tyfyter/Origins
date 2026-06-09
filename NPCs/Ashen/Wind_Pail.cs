@@ -22,6 +22,10 @@ namespace Origins.NPCs.Ashen {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 1;
 			NPCID.Sets.DoesntDespawnToInactivityAndCountsNPCSlots[Type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
+				Position = new(0, 128.8f),
+				PortraitPositionYOverride = 73.6f
+			};
 			GetInstance<Smog_Storm.SpawnRates>().AddSpawn(Type, BiomeSpawnChance);
 			NPCID.Sets.SpecificDebuffImmunity[Type][Slow_Debuff.ID] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][Blind_Debuff.ID] = true;
@@ -219,6 +223,11 @@ namespace Origins.NPCs.Ashen {
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			SpriteEffects spriteEffects = NPC.spriteDirection == 1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+			if (NPC.IsABestiaryIconDummy) {
+				NPC.Opacity = 1;
+				NPC.frame.Width = 92;
+				NPC.frame.X = 94;
+			}
 			spriteBatch.DrawGlowingNPCPart(
 				TextureAssets.Npc[Type].Value,
 				GlowTexture,

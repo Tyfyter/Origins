@@ -4879,6 +4879,127 @@ namespace Origins {
 				return providedInfo.UnlockState > BestiaryEntryUnlockState.NotKnownAtAll_0;
 			}
 		}
+		public class RotatingUnlockableNPCEntryIcon : IEntryIcon {
+			private readonly int _npcNetId;
+
+			private readonly NPC _npcCache;
+
+			private readonly float _npcRotationSpeed;
+
+			private bool _firstUpdateDone;
+
+			private Vector2 _positionOffsetCache;
+
+			private readonly string _overrideNameKey;
+
+			public RotatingUnlockableNPCEntryIcon(int npcNetId, string overrideNameKey = null, float rotationSpeed = 1) : this(npcNetId, rotationSpeed) {
+				_overrideNameKey = overrideNameKey;
+			}
+			public RotatingUnlockableNPCEntryIcon(int npcNetId, float rotationSpeed) {
+				_npcNetId = npcNetId;
+				_npcRotationSpeed = rotationSpeed;
+				_npcCache = new NPC {
+					IsABestiaryIconDummy = true
+				};
+				_npcCache.SetDefaults(_npcNetId);
+				_firstUpdateDone = false;
+			}
+
+			public IEntryIcon CreateClone() {
+				return new RotatingUnlockableNPCEntryIcon(_npcNetId, _overrideNameKey, _npcRotationSpeed);
+			}
+
+			public void Update(BestiaryUICollectionInfo providedInfo, Rectangle hitbox, EntryIconDrawSettings settings) {
+				Vector2 positionOffsetCache = default;
+				int? frame = null;
+				int? direction = null;
+				int? spriteDirection = null;
+				bool wet = false;
+				float velocityX = 0f;
+				NPC npc = _npcCache;
+				if (NPCID.Sets.NPCBestiaryDrawOffset.TryGetValue(_npcNetId, out NPCID.Sets.NPCBestiaryDrawModifiers value)) {
+					if (!_firstUpdateDone) npc.rotation = value.Rotation;
+					npc.scale = value.Scale;
+					if (value.PortraitScale.HasValue && settings.IsPortrait) {
+						npc.scale = value.PortraitScale.Value;
+					}
+					positionOffsetCache = value.Position;
+					frame = value.Frame;
+					direction = value.Direction;
+					spriteDirection = value.SpriteDirection;
+					velocityX = value.Velocity;
+					wet = value.IsWet;
+					if (value.PortraitPositionXOverride.HasValue && settings.IsPortrait) {
+						positionOffsetCache.X = value.PortraitPositionXOverride.Value;
+					}
+					if (value.PortraitPositionYOverride.HasValue && settings.IsPortrait) {
+						positionOffsetCache.Y = value.PortraitPositionYOverride.Value;
+					}
+				}
+				_positionOffsetCache = positionOffsetCache;
+				UpdatePosition(settings);
+				if (NPCID.Sets.TrailingMode[npc.type] != -1) {
+					for (int i = 0; i < npc.oldPos.Length; i++) {
+						npc.oldPos[i] = npc.position;
+					}
+				}
+				npc.direction = npc.spriteDirection = direction ?? -1;
+				if (spriteDirection.HasValue) {
+					npc.spriteDirection = spriteDirection.Value;
+				}
+				npc.wet = wet;
+				SimulateFirstHover(velocityX);
+				if (!frame.HasValue && (settings.IsPortrait || settings.IsHovered)) {
+					npc.velocity.X = npc.direction * velocityX;
+					npc.rotation += npc.velocity.X * _npcRotationSpeed;
+					npc.FindFrame();
+				} else if (frame.HasValue) {
+					npc.FindFrame();
+					npc.frame.Y = npc.frame.Height * frame.Value;
+				}
+			}
+
+			private void UpdatePosition(EntryIconDrawSettings settings) {
+				NPC npc = _npcCache;
+				if (npc.noGravity) {
+					npc.Center = settings.iconbox.Center.ToVector2() + _positionOffsetCache;
+				} else {
+					npc.Bottom = settings.iconbox.TopLeft() + settings.iconbox.Size() * new Vector2(0.5f, 1f) + new Vector2(0f, -8f) + _positionOffsetCache;
+				}
+				npc.position = npc.position.Floor();
+			}
+
+			private void SimulateFirstHover(float velocity) {
+				if (!_firstUpdateDone) {
+					_firstUpdateDone = true;
+					NPC npc = _npcCache;
+					npc.SetFrameSize();
+					npc.velocity.X = npc.direction * velocity;
+					npc.FindFrame();
+				}
+			}
+
+			public void Draw(BestiaryUICollectionInfo providedInfo, SpriteBatch spriteBatch, EntryIconDrawSettings settings) {
+				UpdatePosition(settings);
+				NPC npc = _npcCache;
+				Main.instance.DrawNPCDirect(spriteBatch, npc, npc.behindTiles, Vector2.Zero);
+			}
+
+			public string GetHoverText(BestiaryUICollectionInfo providedInfo) {
+				string result = Lang.GetNPCNameValue(_npcNetId);
+				if (!string.IsNullOrWhiteSpace(_overrideNameKey)) {
+					result = Language.GetTextValue(_overrideNameKey);
+				}
+				if (GetUnlockState(providedInfo)) {
+					return result;
+				}
+				return "???";
+			}
+
+			public bool GetUnlockState(BestiaryUICollectionInfo providedInfo) {
+				return providedInfo.UnlockState > BestiaryEntryUnlockState.NotKnownAtAll_0;
+			}
+		}
 		/// <summary>
 		/// returns true if the entity tried to jump
 		/// </summary>
@@ -5816,7 +5937,7 @@ namespace Origins {
 	}
 	public static class ContentExtensions {
 		public static T[] RegisterSet<T>(this SetFactory.NamedSetKey set, T defaultState, params (int index, T value)[] inputs) => set.RegisterCustomSet<T>(defaultState,
-			[..inputs.SelectMany(i => (IEnumerable<object>)[i.index, i.value])]
+			[.. inputs.SelectMany(i => (IEnumerable<object>)[i.index, i.value])]
 		);
 		public static LocalizedText[] GetChildren(this LanguageTree languageTree) => languageTree.Values.Select(tree => tree.value).ToArray();
 		public static IEnumerable<LanguageTree> GetDescendants(this LanguageTree languageTree, bool includeSelf = false) {

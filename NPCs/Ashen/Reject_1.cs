@@ -66,7 +66,7 @@ namespace Origins.NPCs.Ashen {
 			);
 		}
 		public override void FindFrame(int frameHeight) {
-			if (NPC.ai[2] < PowerUpTime) {
+			if (NPC.ai[2] < PowerUpTime && !NPC.IsABestiaryIconDummy) {
 				NPC.frame.Y = NPC.frame.Height * ((int)(NPC.ai[2] * 3) / PowerUpTime);
 				return;
 			}

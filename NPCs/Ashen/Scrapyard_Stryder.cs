@@ -27,7 +27,7 @@ namespace Origins.NPCs.Ashen {
 		Vector2 IPlatformNPC.OldPlatformPosition { get; set; }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 6;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Position = new(15, 45), PortraitPositionXOverride = -5, PortraitPositionYOverride = 0 };
 			GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, Ashen_Biome.SpawnRates.ScrapyardStryder);
 		}
 		public override void SetDefaults() {
@@ -66,7 +66,8 @@ namespace Origins.NPCs.Ashen {
 				NPC.frameCounter = 0;
 				return;
 			}
-			NPC.DoFrames(16, (NPC.position.X - NPC.oldPosition.X) * NPC.direction);
+			if (NPC.IsABestiaryIconDummy) NPC.DoFrames(16, 6);
+			else NPC.DoFrames(16, (NPC.position.X - NPC.oldPosition.X) * NPC.direction);
 			NPC.spriteDirection = NPC.direction;
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

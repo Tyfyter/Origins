@@ -53,7 +53,12 @@ namespace Origins.NPCs.Ashen {
 			set => NPC.target = value + 500;
 		}
 		public override void SetStaticDefaults() {
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
+				Rotation = MathHelper.Pi,
+				Position = new(10, 50),
+				PortraitPositionXOverride = 0,
+				PortraitPositionYOverride = 10
+			};
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			for (int i = ProjectileID.GrenadeI; i <= ProjectileID.ProximityMineIV; i++) TargetProjectilesLow[i] = true;
 			for (int i = ProjectileID.ClusterRocketI; i <= ProjectileID.MiniNukeMineII; i++) TargetProjectilesLow[i] = true;

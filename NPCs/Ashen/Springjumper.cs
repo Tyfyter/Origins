@@ -12,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.Ashen {
 	public class Springjumper : Glowing_Mod_NPC, IAshenEnemy {
-		//public override void Load() => this.AddBanner();
+		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;

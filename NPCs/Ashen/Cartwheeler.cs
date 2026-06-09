@@ -25,6 +25,7 @@ namespace Origins.NPCs.Ashen {
 		ref float TurnaroundTimer => ref NPC.ai[3];
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 1;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Direction = 1 };
 			GetInstance<Smog_Storm.SpawnRates>().AddSpawn(Type, BiomeSpawnChance(SpawnRate));
 		}
 		public override void SetDefaults() {
@@ -167,6 +168,7 @@ namespace Origins.NPCs.Ashen {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);
+			bestiaryEntry.Icon = new NPCExtensions.RotatingUnlockableNPCEntryIcon(Type, -(Acceleration * 5));
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
@@ -191,6 +193,15 @@ namespace Origins.NPCs.Ashen {
 		protected override float SpawnRate => Smog_Storm.SpawnRates.Cartwheeler_Large;
 		public override float Speed => base.Speed;
 		public override float Acceleration => 0.03f;
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
+				Direction = 1,
+				Position = new(10),
+				PortraitPositionXOverride = 0,
+				PortraitPositionYOverride = 0
+			};
+		}
 		public override void SetDefaults() {
 			base.SetDefaults();
 			NPC.lifeMax = 160;
@@ -213,6 +224,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.value = Item.buyPrice(0, 0, 2);
 			NPC.width = NPC.height = 52;
 			NPC.knockBackResist = 0.6f;
+			this.CopyBanner<Cartwheeler_Large>();
 		}
 	}
 	public class Cartwheeler_Small : Cartwheeler {
@@ -227,6 +239,7 @@ namespace Origins.NPCs.Ashen {
 			NPC.value = Item.buyPrice(0, 0, 2);
 			NPC.width = NPC.height = 46;
 			NPC.knockBackResist = 0.8f;
+			this.CopyBanner<Cartwheeler_Large>();
 		}
 	}
 }

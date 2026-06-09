@@ -44,6 +44,7 @@ namespace Origins.NPCs.Ashen {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			ModContent.GetInstance<Ashen_Biome.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
@@ -243,11 +244,13 @@ namespace Origins.NPCs.Ashen {
 				}
 			}
 			NPC.velocity *= 0.97f;
-			NPC.DoFrames(4);
 			if (weldingTorchSoundTime.Cooldown()) {
 				weldingTorchSound.GetSound()?.Stop();
 				SoundEngine.PlaySound(Origins.Sounds.WeldingTorchCancel.WithVolumeScale(0.5f), NPC.Center);
 			}
+		}
+		public override void FindFrame(int frameHeight) {
+			NPC.DoFrames(4);
 		}
 		public void PlayWeldingSound(int duration) {
 			weldingTorchSound.PlaySoundIfInactive(Origins.Sounds.WeldingTorch.WithVolumeScale(0.5f), NPC.Center, sound => {

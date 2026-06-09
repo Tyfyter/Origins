@@ -3120,7 +3120,7 @@ Rotting_Worm_Staff: {
 
 SMART_Wrench: {
 	// DisplayName: SMART Wrench
-	// Tooltip: Summons a SMART Turret to rip apart your enemies
+	// Tooltip: Summons a SMART Turret to fight for you
 }
 
 Teardown: {
