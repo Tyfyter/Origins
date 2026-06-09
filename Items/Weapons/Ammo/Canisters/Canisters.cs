@@ -4,6 +4,7 @@ using Origins.Dev;
 using Origins.Graphics;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Liquids;
 using Origins.Misc;
 using Origins.NPCs;
 using Origins.Projectiles;
@@ -891,6 +892,114 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 		public override Color? GetAlpha(Color lightColor) {
 			float v = 0.75f + (float)(0.125f * (Math.Sin(Projectile.timeLeft / 5f) + 2 * Math.Sin(Projectile.timeLeft / 60f)));
 			return new(Projectile.localAI[0] * v, Projectile.localAI[1] * v, Projectile.localAI[2] * v, Projectile.alpha * v / 255f);
+		}
+	}
+	public class Oil_Canister_I : ModItem, ICanisterAmmo, ICustomWikiStat {
+		public CanisterData GetCanisterData => new(new Color(159, 77, 31), new Color(79, 68, 59));
+		public bool? Hardmode => false;
+		static Utils.TileActionAttempt spreadOil;
+		public override void SetStaticDefaults() {
+			Origins.AddGlowMask(this);
+			Item.ResearchUnlockCount = 199;
+			spreadOil = BaseLiquidRocketP.SpreadLiquid<Oil>(Oil_Rocket.GetDustType, Oil_Rocket.GetDustColor);
+		}
+		public override void SetDefaults() {
+			Item.DefaultToCanister(26);
+			Item.value = Item.sellPrice(silver: 3, copper: 2);
+			Item.rare = ItemRarityID.Orange;
+			Item.ArmorPenetration += 3;
+		}
+		public void OnKill(Projectile projectile, bool child) {
+			if (child) return;
+			if (projectile.ModProjectile is ICanisterProjectile canister) {
+				canister.DefaultExplosion(projectile);
+			} else {
+				ExplosiveGlobalProjectile.DoExplosion(projectile, 48);
+			}
+			SoundEngine.PlaySound(SoundID.Item14, projectile.Center);
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				Point pos = projectile.Center.ToTileCoordinates();
+				Tile tile = Main.tile[pos.X, pos.Y];
+				if (tile != null && tile.HasTile && tile.BlockType == BlockType.Solid) {
+					Vector2 offsetCenter = projectile.Center;
+					if (projectile.velocity == Vector2.Zero) {
+						while (tile != null && tile.HasTile && tile.BlockType == BlockType.Solid) {
+							Point offsetPos = offsetCenter.ToTileCoordinates();
+							tile = Main.tile[pos.X, pos.Y];
+							offsetCenter += GeometryUtils.Vec2FromPolar(4, projectile.rotation + MathHelper.PiOver2);
+							pos = offsetPos;
+						}
+					} else {
+						offsetCenter -= projectile.velocity;
+						pos = offsetCenter.ToTileCoordinates();
+					}
+				}
+				float liquidRadius = projectile.GetBlastRadius().ApplyTo(3 * 16) / 16;
+				projectile.Kill_DirtAndFluidProjectiles_RunDelegateMethodPushUpForHalfBricks(pos, liquidRadius, spreadOil);
+			}
+			(int x, int y) = projectile.Center.ToTileCoordinates();
+			for (int i = 0; i < 8; i++) {
+				byte liquidAmount = Main.tile[x, y - i].LiquidAmount;
+				if (liquidAmount >= 255) continue;
+				break;
+				projectile.SpawnProjectile(
+					projectile.GetSource_Death(),
+					new Vector2(projectile.Center.X, (y - i) * 16 + (256 - liquidAmount) / 16f - 16),
+					Main.rand.NextVector2Circular(2, 2) - Vector2.UnitY * 4,
+					ModContent.ProjectileType<Oil_Canister_Spark>(),
+					projectile.damage / 5,
+					projectile.knockBack / 5
+				);
+				break;
+			}
+		}
+		public void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone, bool child) {
+			target.AddBuff(BuffID.Oiled, 180);
+		}
+	}
+	public class Oil_Canister_II : Oil_Canister_I, ICustomWikiStat {
+		public new bool? Hardmode => true;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			// Put differences here
+		}
+	}
+	public class Oil_Canister_Spark : ModProjectile, ICanisterChildProjectile {
+		public override string Texture => "Origins/Projectiles/Ammo/Aether_Star";
+		public override void SetStaticDefaults() {
+			OriginsSets.Projectiles.FireProjectiles[Type] = true;
+		}
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Projectile.friendly = true;
+			Projectile.width = 6;
+			Projectile.height = 6;
+			Projectile.aiStyle = -1;
+			Projectile.penetrate = 25;
+			Projectile.alpha = Main.rand.Next(180, 256);
+			Projectile.timeLeft = Main.rand.Next(300, 451);
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 15;
+		}
+		public override void AI() {
+			float v = 0.75f + (float)(0.125f * (Math.Sin(Projectile.timeLeft / 5f) + 2 * Math.Sin(Projectile.timeLeft / 60f)));
+			Lighting.AddLight(Projectile.Center, v, 0.75f * v, 0);
+			Projectile.velocity.Y += 0.1f;
+			Projectile.velocity *= 0.997f;
+			Projectile.ai[0]++;
+		}
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			width = height = 2;
+			fallThrough = true;
+			return true;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.OnFire, 90);
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) => Projectile.ai[0] > 10;
+		public override Color? GetAlpha(Color lightColor) {
+			float v = 0.75f + (float)(0.125f * (Math.Sin(Projectile.timeLeft / 5f) + 2 * Math.Sin(Projectile.timeLeft / 60f)));
+			return new(v, 0.75f * v, 0, Projectile.alpha * v / 255f);
 		}
 	}
 }
