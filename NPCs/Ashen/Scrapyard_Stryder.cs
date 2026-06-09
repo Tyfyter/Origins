@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Melee;
 using Origins.LootConditions;
@@ -71,6 +72,7 @@ namespace Origins.NPCs.Ashen {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ScavengerBonus.Scrap(amountDroppedMinimum: 5, amountDroppedMaximum: 11));
 			npcLoot.Add(ItemDropRule.Common(ItemType<BBQ_Skewer>(), 19));
+			npcLoot.Add(ItemDropRule.Common(ItemType<Phoenum>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ItemType<The_Muffler>(), 80));
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {

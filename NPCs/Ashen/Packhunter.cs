@@ -6,6 +6,7 @@ using Origins.World.BiomeData;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
@@ -86,7 +87,7 @@ namespace Origins.NPCs.Ashen {
 		Vector2 viewDirection;
 		bool seesTarget;
 		Triangle GetViewTriangle(float aggro) {
-			float viewDist = 16 * 25 + aggro * 0.5f;
+			float viewDist = 16 * 18 + aggro * 0.5f;
 			float baseRatio = 0.5f + NPC.ai[2];
 			return new(
 				viewPos,
@@ -145,6 +146,7 @@ namespace Origins.NPCs.Ashen {
 				if (seesTarget) {
 					NPC.ai[0]++;
 					NPC.ai[1] = 0;
+					SoundEngine.SoundPlayer.Play(Origins.Sounds.defiledKill.WithPitch(NPC.ai[0]/8).WithVolume(0.5f), NPC.Center);
 				} else {
 					NPC.ai[1]++;
 				}
@@ -183,6 +185,9 @@ namespace Origins.NPCs.Ashen {
 				if (++NPC.ai[0] > 15) {
 					foreach (Player player in Main.ActivePlayers) {
 						if (GetViewTriangle(GetPlayerAggro(player)).Intersects(player.Hitbox)) {
+							SoundEngine.PlaySound(SoundID.Camera, NPC.Center);
+							SoundEngine.PlaySound(SoundID.ScaryScream.WithPitch(2f), NPC.Center);
+							SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(2f), NPC.Center);
 							player.AddBuff(Flashbang_Debuff.ID, 65);
 							if (player.whoAmI == Main.myPlayer && OriginsModIntegrations.CheckAprilFools() && TextUtils.LanguageTree.Find("Mods.Origins.AprilFools.Buffs.Flashbang_Debuff.DogDescription") is LanguageTree desc) {
 								Flashbang_Debuff.descriptionOverride = desc.value;

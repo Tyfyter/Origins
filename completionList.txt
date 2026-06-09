@@ -303,7 +303,7 @@ ENEMY NPCS:
 (^) Rock Bottom
 (X) Rotting Husk
 (^) Savage Whip
-(☻) Scrapyard Stryder !!!
+(#2, ^2) Scrapyard Stryder !!!
 (^) Sea Dragon
 (^) Shattered Ghoul
 (^) Shattered Mummy
@@ -1094,7 +1094,7 @@ SUMMONER WEAPONS:
 (#, ^2) Neutron Soup !!!
 (X) Probe Controller
 (X) Ribatar
-(☻) SMART Wrench !!!
+(#2, ^2R) SMART Wrench !!!
 (#, ^2) Star Harvest !!!
 (X) Technomancer 4000
 (^) Terratotem
@@ -1364,7 +1364,7 @@ TILES:
 (^) Riven Torch
 (^) Riven Water Fountain
 (X) Ruined Portal
-(^2, #3) Scrap Railing !!!
+(#3, ^2) Scrap Railing !!!
 (^) Shadow Torch
 (^) Strange Plant (Stardust)
 (^) Traffic Cone
@@ -1384,12 +1384,12 @@ TILES:
 (^) Defiled Dungeon Chest
 (^) Defiled Monolith
 (X) Defiled Pylon
-(#2, ^2) Delay Component !!! (missing ticking(?) for visual indicator)
+(#2, ^2) Delay Component !!! (missing ticking for visual indicator)
 (^) Diode Component
 (^) Dirt Chest
 (^) Edge Detector
 (^) Fire Extinguisher Holder
-(☻) Gas Generator !!! (has highlights)
+(^) Gas Generator
 (X) Incinerator Pit !!!
 (^) Industrial Door
 (^) Large Storage Container
@@ -1408,7 +1408,7 @@ TILES:
 (X) Nerve Field Block
 (X) Nova Monolith
 (X) Ocean Dungeon Chest
-(^) Oil Derrick
+(#3, ^2) Oil Derrick !!!
 (^) Pocket Dimension Monolith
 (X) Qube Generator
 (^) Radio Component

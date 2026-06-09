@@ -77,7 +77,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 	}
 	public class Smart_Turret_Buff : MinionBuff {
-		public override string Texture => typeof(SMART_Wrench).GetDefaultTMLName();
+		public override string Texture => "Origins/Buffs/Smart_Turret_Buff";
 		public override IEnumerable<int> ProjectileTypes() => [
 			ModContent.ProjectileType<Smart_Turret>(),
 			ModContent.ProjectileType<Smart_Turret_Counter>()
@@ -114,7 +114,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public readonly struct Canisters : IFiringMode {
 			float IFiringMode.SortIndex => 1;
 			public int ShootTime => 30;
-			public int BaseVelocity => 8;
+			public int BaseVelocity => 14;
 			public int UseAmmo => ModContent.ItemType<Resizable_Mine_Wood>();
 			static readonly AutoLoadingTexture texture = typeof(Smart_Turret).GetDefaultTMLName("_Head_Canista");
 			static readonly AutoLoadingTexture glowTexture = typeof(Smart_Turret).GetDefaultTMLName("_Head_Canista_Glow");
