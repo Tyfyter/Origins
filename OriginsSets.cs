@@ -569,10 +569,13 @@ namespace Origins {
 		}
 		[ReinitializeDuringResizeArrays]
 		public static class Mounts {
-			public static Vector2[] EyeOffsets = MountID.Sets.Factory.CreateNamedSet(nameof(EyeOffsets))
-			.RegisterCustomSet<Vector2>(default,
-				MountID.Wolf, new Vector2(16, -4)
+			public static Func<Player, Vector2>[] EyePosition = MountID.Sets.Factory.CreateNamedSet(nameof(EyePosition))
+			.RegisterSet(default,
+				(MountID.Wolf, Create.SimpleEyePosition(16, -4))
 			);
+			public static class Create {
+				public static Func<Player, Vector2> SimpleEyePosition(int xOffset, int yOffset) => player => player.MountedCenter + player.Directions(2 + xOffset, 12 - player.height * 0.5f + yOffset);
+			}
 		}
 		public static class Armor {
 			[ReinitializeDuringResizeArrays]

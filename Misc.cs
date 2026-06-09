@@ -5815,6 +5815,9 @@ namespace Origins {
 		public static bool IsType<TProj>(this Projectile proj) where TProj : ModProjectile => proj.type == ModContent.ProjectileType<TProj>();
 	}
 	public static class ContentExtensions {
+		public static T[] RegisterSet<T>(this SetFactory.NamedSetKey set, T defaultState, params (int index, T value)[] inputs) => set.RegisterCustomSet<T>(defaultState,
+			[..inputs.SelectMany(i => (IEnumerable<object>)[i.index, i.value])]
+		);
 		public static LocalizedText[] GetChildren(this LanguageTree languageTree) => languageTree.Values.Select(tree => tree.value).ToArray();
 		public static IEnumerable<LanguageTree> GetDescendants(this LanguageTree languageTree, bool includeSelf = false) {
 			if (includeSelf && languageTree.value.Key != languageTree.value.Value) yield return languageTree;
