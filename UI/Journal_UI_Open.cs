@@ -32,6 +32,7 @@ namespace Origins.UI {
 		public static AutoLoadingAsset<Texture2D> ArrowsTexture = "Origins/UI/Lore/Journal_Arrows";
 		UIElement baseElement;
 		List<List<TextSnippet>> pages;
+		List<float> pageScale;
 		float yMargin;
 		float xMarginOuter;
 		float xMarginInner;
@@ -43,6 +44,8 @@ namespace Origins.UI {
 		Journal_UI_Mode mode = Journal_UI_Mode.Normal_Page;
 		ArmorShaderData currentEffect = null;
 		Color inkColor;
+		Rectangle bounds;
+		float scale;
 		int scrollWheelValue = 0;
 		public override void OnInitialize() {
 			this.RemoveAllChildren();
@@ -55,17 +58,31 @@ namespace Origins.UI {
 			baseElement.VAlign = 0.65f;
 			Append(baseElement);
 			Recalculate();
-			xMarginOuter = baseElement.GetDimensions().Width * 0.06f;
-			xMarginInner = xMarginOuter * 0.5f;
-			yMargin = baseElement.GetDimensions().Height * 0.1f;
+			CalculateMargins();
 			//SetText(loremIpsum);
 			SwitchMode((Journal_UI_Mode)OriginClientConfig.Instance.DefaultJournalMode, "");
 		}
+		void CalculateMargins() {// Makes sure journal itself is at the same x & y scale, so that things which would be more visibly stretched aren't
+			CalculatedStyle calculatedStyle = baseElement.GetDimensions();
+			bounds = calculatedStyle.ToRectangle();
+			int width = BackTexture.Value.Width;
+			int height = BackTexture.Value.Height;
+			scale = bounds.Width / (float)width;
+			Min(ref scale, bounds.Height / (float)height);
+			bounds.Width = (int)(BackTexture.Value.Width * scale);
+			bounds.Height = (int)(BackTexture.Value.Height * scale);
+			bounds = bounds.Recentered(calculatedStyle.Center());
+			UpdateMargins(BackTexture.Value.Width * scale, BackTexture.Value.Height * scale);
+		}
+		void UpdateMargins(float width, float height) {
+			xMarginOuter = width * 0.06f;
+			xMarginInner = xMarginOuter * 0.5f;
+			yMargin = height * 0.1f;
+		}
 		public void SetText(string text) => SetText(text, Color.Black);
 		public void SetText(string text, Color baseColor) {
-			CalculatedStyle bounds = baseElement.GetDimensions();
-			bounds.Width = bounds.Width * 0.5f - XMarginTotal;
-			bounds.Height -= yMargin * 2.5f;
+			float width = bounds.Width * 0.5f - XMarginTotal;
+			float height = bounds.Height - yMargin * 2.5f;
 			DynamicSpriteFont font = FontAssets.MouseText.Value;
 			Vector2 cursor = Vector2.Zero;
 			Vector2 result = cursor;
@@ -73,16 +90,17 @@ namespace Origins.UI {
 			float x = font.MeasureString(" ").X;
 			float snippetScale;
 			List<TextSnippet> snippets = ChatManager.ParseMessage(text, baseColor);
-
 			List<List<TextSnippet>> snippetPages = [];
 			StringBuilder currentText = new();
 			List<TextSnippet> currentPage = [];
+			pageScale = [];
 			int minNewLines = 0;
 			void finishPage() {
 				cursor = Vector2.Zero;
 				currentPage.Add(new TextSnippet(currentText.ToString(), baseColor));
 				currentText.Clear();
 				snippetPages.Add(currentPage.ToList());
+				pageScale.Add(1);
 				currentPage.Clear();
 				minNewLines = 0;
 			}
@@ -98,11 +116,20 @@ namespace Origins.UI {
 			}
 			for (int i = 0; i < snippets.Count; i++) {
 				TextSnippet textSnippet = snippets[i];
-				if (textSnippet is Journal_Series_Header_Handler.Journal_Series_Header_Snippet && cursor.Y + font.LineSpacing * baseScale.Y > bounds.Height) {
+				if (textSnippet is Journal_Series_Header_Handler.Journal_Series_Header_Snippet && cursor.Y + font.LineSpacing * baseScale.Y > height) {
 					finishPage();
 				}
 				if (textSnippet is Journal_Control_Handler.Journal_Control_Snippet ctrl) {
-					ctrl.Process(new(this, finishPage, ref i, ref telemetryLength, (int)(bounds.Height / lineSpace), (int)bounds.Width));
+					ctrl.Process(new(this, finishPage, ref i, ref telemetryLength, (int)(height / lineSpace), (int)width));
+					continue;
+				}
+				if (textSnippet is Image_Handler.Image_Snippet { options.TwoPage: true }) {
+					if (currentText.Length > 0 || currentText.Length > 0) finishPage();
+					if (snippetPages.Count % 2 != 0) finishPage();
+					currentPage.Add(textSnippet);
+					finishPage();
+					pageScale[^1] = scale;
+					finishPage();
 					continue;
 				}
 				textSnippet.Update();
@@ -114,9 +141,9 @@ namespace Origins.UI {
 					minNewLines = Math.Max(minNewLines, (int)Math.Round(size.Y / lineSpace));
 					if (minNewLines == 1) minNewLines = 0;
 					float minCursorY = cursor.Y + lineSpace * minNewLines;
-					while (cursor.X > bounds.Width) {
+					while (cursor.X > width) {
 						cursor.Y += lineSpace;
-						cursor.X -= bounds.Width;
+						cursor.X -= width;
 						currentPage.Add(new TextSnippet("\n"));
 					}
 					if (cursor.Y < minCursorY) cursor.Y = minCursorY;
@@ -126,10 +153,10 @@ namespace Origins.UI {
 				telemetryLength += font.MeasureString(textSnippet.Text).X * baseScale.X * snippetScale;
 				if (textSnippet.GetType() != typeof(TextSnippet)) {
 					cursor.X += font.MeasureString(textSnippet.Text).X * baseScale.X * snippetScale;
-					if (cursor.X > bounds.Width) {
+					if (cursor.X > width) {
 						cursor.Y += font.LineSpacing * baseScale.Y;
 						cursor.X = 0f;
-						if (cursor.Y > bounds.Height) {
+						if (cursor.Y > width) {
 							finishPage();
 						} else {
 							currentPage.Add(new TextSnippet("\n"));
@@ -158,7 +185,7 @@ namespace Origins.UI {
 							cursor.X = 0f;
 							currentPage.Add(new TextSnippet("\n"));
 						}
-						if (cursor.Y > bounds.Height) {
+						if (cursor.Y > height) {
 							finishPage();
 							//snippetPages.Add(currentPage.ToArray());
 							//currentPage.Clear();
@@ -173,11 +200,11 @@ namespace Origins.UI {
 							cursor.X += x * baseScale.X * snippetScale;
 						}
 						float currentWordWidth = font.MeasureString(words[j]).X * baseScale.X * snippetScale;
-						if (cursor.X - 0f + currentWordWidth > bounds.Width) {
+						if (cursor.X - 0f + currentWordWidth > width) {
 							cursor.X = 0f;
 							cursor.Y += lineSpace;
 							//result.Y = Math.Max(result.Y, cursor.Y);
-							if (cursor.Y > bounds.Height) {
+							if (cursor.Y > height) {
 								finishPage();
 								//snippetPages.Add(currentPage.ToArray());
 								//currentPage.Clear();
@@ -207,7 +234,7 @@ namespace Origins.UI {
 							cursor.Y += lineSpace;
 							cursor.X = 0f;
 						}
-						if (cursor.Y > bounds.Height) {
+						if (cursor.Y > height) {
 							finishPage();
 							//snippetPages.Add(currentPage.ToArray());
 							//currentPage.Clear();
@@ -217,6 +244,7 @@ namespace Origins.UI {
 				}
 			}
 			finishPage();
+			if (snippetPages.Count % 2 != 0) finishPage();
 			pages = snippetPages.ToList();
 		}
 		public void SwitchMode(Journal_UI_Mode newMode, string key, bool resetPageNumber = true) {
@@ -416,7 +444,6 @@ namespace Origins.UI {
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			SpriteBatchState spriteBatchState = spriteBatch.GetState();
 			spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp);
-			Rectangle bounds = baseElement.GetDimensions().ToRectangle();
 			spriteBatch.Draw(BackTexture, bounds, Color.White);
 			{ // block to put position out of scope everywhere else because I didn't want to have to fix the name conflict some other way
 				Vector2 position = default;
@@ -504,7 +531,7 @@ namespace Origins.UI {
 							Color.White,
 							0,
 							Vector2.Zero,
-							Vector2.One,
+							Vector2.One * pageScale[i + pageOffset],
 							out int hoveredSnippet,
 							bounds.Width * 0.5f - XMarginTotal
 						);

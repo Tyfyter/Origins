@@ -15,7 +15,7 @@ namespace Origins.UI.Snippets {
 		internal static ShaderLayerTargetHandler shaderOroboros = new();
 		public class Image_Snippet : TextSnippet {
 			Asset<Texture2D> image;
-			Options options;
+			public readonly Options options;
 			public Image_Snippet(string text, Options options) : base(text, options.Color ?? Color.White, options.Scale) {
 				this.options = options;
 				if (ModContent.RequestIfExists(text, out image)) Text = "";
@@ -50,7 +50,7 @@ namespace Origins.UI.Snippets {
 				return true;
 			}
 		}
-		public record struct Options(JournalImageShader Shader = JournalImageShader.None, float Sharpness = 1, Color? Color = null, float Scale = 1f, Rectangle? Frame = null) {
+		public record struct Options(JournalImageShader Shader = JournalImageShader.None, float Sharpness = 1, Color? Color = null, float Scale = 1f, Rectangle? Frame = null, bool TwoPage = false) {
 			public readonly bool Sketch => Shader == JournalImageShader.Sketch;
 		}
 		record struct SnippetOption(string Name, [StringSyntax(StringSyntaxAttribute.Regex)] string Data, Action<string> Action) {
@@ -92,6 +92,7 @@ namespace Origins.UI.Snippets {
 		public TextSnippet Parse(string text, Color baseColor = default, string options = null) {
 			Options settings = new(Color: baseColor);
 			ParseOptions(options,
+				new SnippetOption("2x", "", match => settings.TwoPage = true),
 				new SnippetOption("sc", "[\\d\\.]+", match => settings.Scale = float.Parse(match)),
 				new SnippetOption("fr", "(?:\\d+,){3}\\d+", match => { string[] args = match.Split(','); settings.Frame = new(int.Parse(args[0]), int.Parse(args[1]), int.Parse(args[2]), int.Parse(args[3])); }),
 				new SnippetOption("s", "[\\d\\.]+", match => settings.Sharpness = float.Parse(match)),
