@@ -67,7 +67,7 @@ namespace Origins.NPCs.Ashen {
 					for (; i < 4; i++) {
 						hitbox.Y += 8;
 						if (hitbox.OverlapsAnyTiles(false)) {
-							if (i == 0 && NPC.ai[1] > 5) SetFrame(0);
+							if (i == 0 && NPC.ai[1] > 5 && NPC.velocity.Y >= 0) SetFrame(0);
 							break;
 						}
 					}
@@ -78,10 +78,12 @@ namespace Origins.NPCs.Ashen {
 				case 2: {
 					NPC.ai[1]++;
 					int i = 0;
-					for (; i < 4; i++) {
-						hitbox.Y += 8;
-						if (hitbox.OverlapsAnyTiles(false)) break;
-					}
+					if (NPC.velocity.Y >= 0) {
+						for (; i < 4; i++) {
+							hitbox.Y += 8;
+							if (hitbox.OverlapsAnyTiles(false)) break;
+						}
+					} else i = 4;
 					if (i != 4 || NPC.ai[1] > 6) SetFrame(3);
 					break;
 				}
@@ -89,16 +91,19 @@ namespace Origins.NPCs.Ashen {
 				case 3: {
 					NPC.ai[1]++;
 					int i = 0;
-					for (; i < 2; i++) {
-						hitbox.Y += 8;
-						if (hitbox.OverlapsAnyTiles(false)) break;
-					}
+					if (NPC.velocity.Y >= 0) {
+						for (; i < 2; i++) {
+							hitbox.Y += 8;
+							if (hitbox.OverlapsAnyTiles(false)) break;
+						}
+					} else i = 2;
 					if (i != 2 || NPC.ai[1] > 6) SetFrame(4);
 					break;
 				}
 
 				case 4: {
 					NPC.ai[1]++;
+					if (NPC.velocity.Y < 0) break;
 					hitbox.Y += 8;
 					if (NPC.ai[1] > 6 && hitbox.OverlapsAnyTiles(false)) SetFrame(0);
 					break;
