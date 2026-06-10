@@ -152,7 +152,6 @@ namespace Origins.Items.Weapons.Magic {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Daybreak, Main.rand.Next(60, 181));
 		}
-		public override void OnKill(int timeLeft) { }
 		public override bool PreDraw(ref Color lightColor) {
 			Draw();
 			return false;

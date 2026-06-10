@@ -579,6 +579,7 @@ namespace Origins {
 		public bool autohandcannonJammed = false;
 		[AutoReset] public bool matryoshkaDoll;
 		[AutoReset] public bool smartTurret;
+		[LinearReset(0.0001f)] public float neutronSoupAcceleration;
 		[LinearReset(0.001f)] public float neutronSoupSpeed;
 		[LinearReset(0.005f)] public float neutronSoupOffset;
 		#endregion

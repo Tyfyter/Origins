@@ -1,10 +1,18 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Dev;
+using Origins.Events;
 using Origins.Graphics;
+using Origins.Items.Accessories;
+using Origins.Items.Weapons.Magic;
 using Origins.NPCs;
+using PegasusLib.Graphics;
 using ReLogic.Content;
+using ReLogic.Utilities;
 using System;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -22,14 +30,13 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.damage = 80;
 			Item.DefaultToIncantation(25);
 			Item.shoot = ModContent.ProjectileType<Neutron_Soup_P>();
-			Item.shootSpeed = 10f;
+			Item.shootSpeed = 1f;
 			Item.mana = 24;
 			Item.knockBack = 1f;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item8;
 			Item.autoReuse = true;
-			Item.channel = true;
 		}
 		public override void AddRecipes() => Recipe.Create(Type)
 			.AddIngredient(ItemID.FragmentStardust, 18)
@@ -38,8 +45,10 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void UseItemFrame(Player player) {
 			Incantations.HoldItemFrame(player);
 			OriginPlayer originPlayer = player.OriginPlayer();
+			originPlayer.neutronSoupSpeed += originPlayer.neutronSoupAcceleration;
+			if (float.Sign(originPlayer.neutronSoupSpeed) == float.Sign(originPlayer.neutronSoupOffset)) originPlayer.neutronSoupSpeed -= originPlayer.neutronSoupOffset * 0.03f;
 			originPlayer.neutronSoupOffset += originPlayer.neutronSoupSpeed;
-			originPlayer.neutronSoupOffset -= originPlayer.neutronSoupOffset * 0.01f;
+			originPlayer.neutronSoupOffset -= originPlayer.neutronSoupOffset * 0.1f;
 		}
 		public override void HoldItemFrame(Player player) => Incantations.HoldItemFrame(player);
 		public bool BackHand => true;
@@ -49,16 +58,13 @@ namespace Origins.Items.Weapons.Summoner {
 			lightColor
 		);
 		public override bool AltFunctionUse(Player player) => true;
-		public override float UseTimeMultiplier(Player player) {
-			if (player.altFunctionUse == 2) return 0.2f;
-			return 1;
-		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (player.altFunctionUse == 2) {
-				type = ModContent.ProjectileType<Neutron_Soup_Flames>();
-				OriginPlayer originPlayer = player.OriginPlayer();
-				if (player.ItemUsesThisAnimation == 1) originPlayer.neutronSoupSpeed = Main.rand.NextFloat(0.02f, 0.025f) * Main.rand.NextBool().ToDirectionInt();
-				velocity = velocity.RotatedBy(originPlayer.neutronSoupOffset) * 0.5f;
+				type = ModContent.ProjectileType<Neutron_Soup_Beam>();
+				//OriginPlayer originPlayer = player.OriginPlayer();
+				//if (player.ItemUsesThisAnimation == 1) originPlayer.neutronSoupSpeed = Main.rand.NextFloat(0.02f, 0.025f) * Main.rand.NextBool().ToDirectionInt();
+				//velocity = velocity.RotatedBy(originPlayer.neutronSoupOffset);
+				player.StartChanneling(type);
 			}
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
@@ -66,7 +72,7 @@ namespace Origins.Items.Weapons.Summoner {
 				Vector2 shootDir = velocity.Normalized(out _);
 				Vector2 moveDir = new(player.controlRight.ToInt() - player.controlLeft.ToInt(), player.controlDown.ToInt() - player.controlUp.ToInt());
 				if (moveDir.LengthSquared() > 1) moveDir.Normalize();
-				player.velocity -= velocity * 0.2f
+				player.velocity -= velocity * 0.1f
 					* Utils.GetLerpValue(-16, 0, Vector2.Dot(player.velocity, shootDir), true)
 					* Utils.Remap(Vector2.Dot(moveDir, shootDir), 0, 1, 1, 0.25f);
 			}
@@ -98,89 +104,172 @@ namespace Origins.Items.Weapons.Summoner {
 			if (target.life > 0) Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 		}
 	}
-	public class Neutron_Soup_Flames : ModProjectile {
-		static AutoLoadingTexture starsTexture = typeof(Neutron_Soup_Flames).GetDefaultTMLName("_Stars");
-		static AutoLoadingTexture starsColormap = typeof(Neutron_Soup_Flames).GetDefaultTMLName("_Stars_Colormap");
-		public static float Lifetime => 108f;
-		public static float FadeTime => 15f;
-		public static float MinSize => 16f;
-		public static float MaxSize => 66f;
-		private readonly float[] sizes = new float[32];
+	public class Neutron_Soup_Beam : ModProjectile, IShadedProjectile {
+		readonly static Sound sound = EnvironmentSounds.Register<Sound>();
+		public override string Texture => $"Terraria/Images/NPC_0";
+		public float ManaMultiplier => 1;
+		public float ChargeTime => Projectile.ai[0];
+		public float ChargeFactor => float.Min(Projectile.ai[2], ChargeTime);
+		public bool Charged => Projectile.ai[2] >= ChargeTime;
+		public int Shader => Quasar.ShaderID;
+		Neutron_Soup_Beam() : base() => _ = sound;
 		public override void SetStaticDefaults() {
-			ProjectileID.Sets.TrailingMode[Projectile.type] = 0;
-			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 32;
+			ProjectileID.Sets.DrawScreenCheckFluff[Type] = 1600 + 64;
+			Origins.HomingEffectivenessMultiplier[Type] = 25;
+			Smog_Storm.CutThroughSmogStorm[Type] = proj => ((Neutron_Soup_Beam)proj.ModProjectile).Draw(true);
 		}
 		public override void SetDefaults() {
-			Projectile.width = Projectile.height = 6;
-			Projectile.penetrate = 4;
-			Projectile.friendly = true;
-			Projectile.alpha = 255;
-			Projectile.extraUpdates = 2;
 			Projectile.DamageType = DamageClasses.Incantation;
+			Projectile.width = 0;
+			Projectile.height = 0;
+			Projectile.penetrate = -1;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;
+			Projectile.localNPCHitCooldown = 10;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = -1;
-			for (int i = 0; i < Projectile.oldPos.Length; i++)
-				Projectile.oldRot[i] = Main.rand.NextFloatDirection();
 		}
-		float Size => Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize, MaxSize);
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_ItemUse { Player: Player player }) Projectile.ai[0] = player.itemTimeMax;
+			Projectile.velocity = Projectile.velocity.Normalized(out _);
+		}
+		public override bool ShouldUpdatePosition() => false;
+		public Vector2 TargetPos {
+			get => new(Projectile.localAI[0], Projectile.localAI[1]);
+			set => (Projectile.localAI[0], Projectile.localAI[1]) = value;
+		}
+
 		public override void AI() {
-			Projectile.localAI[0] += 1f;
-			for (int i = sizes.Length - 1; i > 0; i--) {
-				sizes[i] = sizes[i - 1];
+			Player player = Main.player[Projectile.owner];
+			OriginPlayer originPlayer = player.OriginPlayer();
+			if (!Lunatics_Rune.CheckMana(player, player.HeldItem, ManaMultiplier / 60f, pay: true)) {
+				Projectile.Kill();
+				return;
 			}
-			sizes[0] = Size;
-			if (Projectile.localAI[2] == 1) {
-				Lighting.AddLight(Projectile.Center, 0f, 0.85f, 0.4f);
+			if (Projectile.velocity.X != 0) player.ChangeDir(Math.Sign(Projectile.velocity.X));
+
+			//SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(Projectile.ai[2] / 10).WithVolume(0.24f), player.position);
+			//SoundEngine.SoundPlayer.Play(SoundID.Item132.WithPitch(Projectile.ai[2] / 10).WithVolume(0.24f), player.position);
+			Projectile.position = Main.GetPlayerArmPosition(Projectile);
+			if (player.mount?.Active ?? false) Projectile.position.Y -= player.mount.PlayerOffset;
+			Projectile.position = player.RotatedRelativePoint(Projectile.position);
+			if (Projectile.IsLocallyOwned()) {
+				if (Projectile.localAI[2].CycleUp(ChargeTime * 0.5f)) originPlayer.neutronSoupAcceleration += Main.rand.NextFloat(0.002f, 0.0025f) * Main.rand.NextBool().ToDirectionInt();
+				if (!player.channel) {
+					Projectile.Kill();
+					return;
+				}
+				Vector2 position = Projectile.position;
+				Vector2 direction = Main.MouseWorld - position;
+
+				Vector2 velocity = Vector2.Normalize(direction);
+				if (velocity.HasNaNs()) velocity = -Vector2.UnitY;
+				velocity = velocity.RotatedBy(originPlayer.neutronSoupOffset);
+				if (Projectile.velocity != velocity) {
+					float diff = GeometryUtils.AngleDif(Projectile.velocity.ToRotation(), velocity.ToRotation(), out int dir);
+					if (diff > 0) {
+						Min(ref diff, 0.02f);
+						Projectile.velocity = Projectile.velocity.RotatedBy(diff * dir);
+						Projectile.netUpdate = true;
+					}
+				}
 			}
-			//Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.FrostStaff);
-			Projectile.ai[0]++;
-			Projectile.scale = Utils.Remap(Projectile.ai[0], 0f, Lifetime, MinSize / 96f, MaxSize / 96f);
-			Projectile.alpha = (int)(200 * (1 - (Projectile.localAI[0] / Lifetime)));
-			Projectile.rotation += 0.3f * Projectile.direction;
-			if (Projectile.ai[0] > Lifetime - FadeTime) {
-				if (++Projectile.localAI[2] > FadeTime) Projectile.Kill();
-			}
+			player.ChangeDir(Projectile.direction); // Change the player's direction based on the projectile's own
+			player.heldProj = Projectile.whoAmI; // We tell the player that the drill is the held projectile, so it will draw in their hand
+			player.SetDummyItemTime(2); // Make sure the player's item time does not change while the projectile is out
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			player.itemRotation = (Projectile.velocity * Projectile.direction).ToRotation();
+
+			float dist = CollisionExt.Raymarch(Projectile.position, Projectile.velocity, ProjectileID.Sets.DrawScreenCheckFluff[Type] - 64) + 24;
+			Vector2 newTarget = Projectile.position + Projectile.velocity * dist;
+			TargetPos = newTarget;
+			Projectile.ai[2]++;
+			Vector2 shootDir = Projectile.velocity.Normalized(out _);
+			Vector2 moveDir = new(player.controlRight.ToInt() - player.controlLeft.ToInt(), player.controlDown.ToInt() - player.controlUp.ToInt());
+			if (moveDir.LengthSquared() > 1) moveDir.Normalize();
+			player.velocity -= Projectile.velocity * 0.3f * (25 / Projectile.ai[0])
+				* Utils.GetLerpValue(-16, 0, Vector2.Dot(player.velocity, shootDir), true)
+				* Utils.Remap(Vector2.Dot(moveDir, shootDir), 0, 1, 1, 0.25f);
+			if (Projectile.localAI[1].CycleUp(ChargeTime)) Projectile.ai[0] = CombinedHooks.TotalUseTime(player.HeldItem.useTime, player, player.HeldItem);
 		}
-		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-			int scale = (int)(Size / 2) - hitbox.Width;
-			hitbox.Inflate(scale, scale);
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.SourceDamage *= float.Lerp(0.1f, 1f, ChargeFactor);
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.SourceDamage *= float.Lerp(0.1f, 1f, ChargeFactor);
+		}
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+			overPlayers.Add(index);
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			float collisionPoint = 1;
+			return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.position, TargetPos, 16, ref collisionPoint);
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Draw();
+			return false;
+		}
+		void Draw(bool forSmog = false) {
+			float progress = Projectile.ai[2] / ChargeTime;
+			Min(ref progress, 1);
+			if (!forSmog) {
+				sound.TrySetNearest(Main.Camera.Center.SnapToLine(
+					Projectile.position,
+					Projectile.position + Projectile.velocity * Projectile.ai[1],
+					radius: 16
+				));
+			}
+			if (!Collision.CheckAABBvLineCollision(Main.screenPosition, Main.ScreenSize.ToVector2(), Projectile.position, TargetPos)) return;
+			SpriteBatchState state = Main.spriteBatch.GetState();
+			Main.spriteBatch.Restart(state, samplerState: SamplerState.LinearWrap);
+			Vector2 diff = TargetPos - Projectile.position;
+			Vector2 position = Projectile.position;
+			position -= Main.screenPosition;
+			float rotation = diff.ToRotation();
+			float dist = diff.Length();
+			float scale = (1f + forSmog.ToInt()) / 256f;
+			Color color = new(100, 180, 255, 0);
+			color *= progress;
+			Rectangle frame = new(256 - (int)((Projectile.ai[2] * 32) % 256), 0, (int)dist, 256);
+			DrawData data = new(
+				TextureAssets.Extra[ExtrasID.RainbowRodTrailErosion].Value,
+				position,
+				frame,
+				color * progress,
+				rotation,
+				Vector2.UnitY * 128,
+				new Vector2(1, 64 * scale),
+				0
+			);
+			Main.EntitySpriteDraw(data);
+		}
+		static float soundVolume;
+		class Sound : AEnvironmentSound {
+			SlotId droning;
+			SoundStyle sound = new("Terraria/Sounds/Item_104", SoundType.Sound) {
+				IsLooped = true,
+				PitchRange = (-1.2f, -0.8f)
+			};
+			public override void UpdateSound(Vector2 position) {
+				float volume = 0;
+				int reset = 0;
+				Maximize(ref soundVolume, 2f / float.Max(position.DistanceSQ(Main.Camera.Center) / (16 * 20 * 16 * 20), 1));
+				droning.PlaySoundIfInactive(sound, null, playingSound => {
+					if (GetPosition() is Vector2 pos) {
+						MathUtils.LinearSmoothing(ref volume, soundVolume, 1f / 60);
+						reset = 0;
+					} else if (MathUtils.LinearSmoothing(ref volume, 0, 1f / 15)) {
+						soundVolume = 0;
+						return false;
+					}
+					playingSound.Volume = volume;
+					if (++reset > 5) soundVolume = 0;
+					return true;
+				});
+			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Neutron_Soup_Buff.ID, 240);
 			if (target.life > 0) Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
-		}
-		public override bool PreDraw(ref Color lightColor) {
-			//dstNoise = "Origins/Textures/SC_Mask";
-			float progress = Projectile.ai[0] / Lifetime;
-			float alphaMult = 1 - (Projectile.localAI[2] / FadeTime);
-			Flamethrower_Drawer.Draw(Projectile,
-				1 - progress,
-				TextureAssets.Projectile[Type].Value,
-				new Color(40, 60, 128),
-				sizes,
-				0,
-				smokeAmount: progress,
-				sizeProgressOverride: i => Math.Min(1 - ((Projectile.ai[0] - i) / Lifetime), 1) * 0.25f,
-				alphaMultiplier: 0.55f * alphaMult,
-				tint: i => new Color(0, 80, 128) * alphaMult
-			);
-			Flamethrower_Drawer.Draw(Projectile,
-				1 - progress,
-				starsColormap,
-				Color.Black,
-				sizes,
-				8,
-				smokeAmount: 0.15f,
-				sizeProgressOverride: i => Math.Min(1 - ((Projectile.ai[0] - i) / Lifetime), 1) * 0.25f,
-				alphaMultiplier: 0.5f * alphaMult,
-				tint: i => new Color(255, 255, 255, 128) * alphaMult,
-				pattern: starsTexture
-			);
-			return false;
-		}
-		public override bool OnTileCollide(Vector2 oldVelocity) {
-			Projectile.velocity = Vector2.Zero;
-			return false;
 		}
 	}
 	public class Neutron_Soup_Buff : ModBuff, ICustomWikiStat {

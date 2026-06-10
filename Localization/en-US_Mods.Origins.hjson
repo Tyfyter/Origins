@@ -2269,6 +2269,7 @@ Projectiles: {
 	Pirate_Eye_Shimmer_Mines.DisplayName: Pirate Eye Shimmer Mines
 	Oil_Canister_Spark.DisplayName: Oil Canister Spark
 	Awesome_Flames.DisplayName: Awesome Flames
+	Neutron_Soup_Beam.DisplayName: Neutron Soup Beam
 }
 
 Prefixes: {

@@ -24,6 +24,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -3531,7 +3532,9 @@ namespace Origins {
 			top = j - frameJ;
 			left = i - frameI;
 		}
+		[Pure]
 		public static OriginPlayer OriginPlayer(this Player player) => player.GetModPlayer<OriginPlayer>();
+		[Pure]
 		public static SyncedKeybinds SyncedKeybinds(this Player player) => player.GetModPlayer<SyncedKeybinds>();
 		public static bool DoHoming(this Player player, Func<Entity, bool> selector, bool canPvP = true) {
 			bool foundTarget = false;
