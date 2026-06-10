@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Dev;
 using Origins.Events;
-using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Magic;
 using Origins.NPCs;
@@ -30,7 +29,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.damage = 80;
 			Item.DefaultToIncantation(25);
 			Item.shoot = ModContent.ProjectileType<Neutron_Soup_P>();
-			Item.shootSpeed = 1f;
+			Item.shootSpeed = 10f;
 			Item.mana = 24;
 			Item.knockBack = 1f;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
@@ -61,9 +60,6 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (player.altFunctionUse == 2) {
 				type = ModContent.ProjectileType<Neutron_Soup_Beam>();
-				//OriginPlayer originPlayer = player.OriginPlayer();
-				//if (player.ItemUsesThisAnimation == 1) originPlayer.neutronSoupSpeed = Main.rand.NextFloat(0.02f, 0.025f) * Main.rand.NextBool().ToDirectionInt();
-				//velocity = velocity.RotatedBy(originPlayer.neutronSoupOffset);
 				player.StartChanneling(type);
 			}
 		}

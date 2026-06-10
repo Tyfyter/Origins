@@ -8402,3 +8402,8 @@ Oil_Canister_II: {
 	// DisplayName: Oil Canister I I
 	// Tooltip: ""
 }
+
+Mother_Unit_Item: {
+	// DisplayName: Mother Unit
+	// Tooltip: ""
+}

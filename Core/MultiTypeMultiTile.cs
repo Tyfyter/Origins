@@ -108,6 +108,9 @@ namespace Origins.Core {
 		public readonly struct ShapeMap {
 			private readonly Dictionary<char, ushort?> key;
 			private readonly ShapeMapTile[,,] shape;
+			public readonly int Styles => shape.GetLength(0);
+			public readonly int Width => shape.GetLength(1);
+			public readonly int Height => shape.GetLength(2);
 			public readonly ShapeMapTile this[int i, int j, int style] => shape.IndexInRange(style, i, j) ? shape[style, i, j] : ' ';
 			public readonly ushort? GetType(int i, int j, int style) => GetType(this[style, i, j]);
 			public readonly ushort? GetType(ShapeMapTile tile) => key[tile.Value];
