@@ -20,11 +20,10 @@ namespace Origins.NPCs.Defiled {
 		public float ZapWeakness => 0.5f;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Position = new(28, 0),
-				PortraitPositionXOverride = 0,
-				PortraitPositionYOverride = -28,
-				Velocity = 1f
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
+				Position = new(40, 0),
+				PortraitPositionXOverride = 10,
+				PortraitPositionYOverride = -18
 			};
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}

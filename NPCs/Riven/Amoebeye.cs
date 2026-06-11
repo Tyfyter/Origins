@@ -136,6 +136,7 @@ namespace Origins.NPCs.Riven {
 			if (NPC.aiStyle == NPCAIStyleID.Hovering) NPC.spriteDirection = NPC.direction;
 		}
 		public override void FindFrame(int frameHeight) {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Position = new(0, 15) };
 			if (++NPC.frameCounter > 7) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 98) % 392, 70, 96);
 				NPC.frameCounter = 0;

@@ -251,6 +251,7 @@ namespace Origins.NPCs.Fiberglass {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			NPCID.Sets.TrailingMode[NPC.type] = 3;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Direction = 1 };
 		}
 		public override void SetDefaults() {
 			NPC.damage = 10;

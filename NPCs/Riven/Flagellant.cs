@@ -32,6 +32,10 @@ namespace Origins.NPCs.Riven {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 5;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
+				Position = new(0, 15),
+				PortraitPositionYOverride = 0
+			};
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {

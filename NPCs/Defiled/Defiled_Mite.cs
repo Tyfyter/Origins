@@ -127,9 +127,12 @@ namespace Origins.NPCs.Defiled {
 			return NPC.aiStyle != NPCAIStyleID.None;
 		}
 		public override void FindFrame(int frameHeight) {
-			if (NPC.aiStyle == NPCAIStyleID.None) {
+			if (NPC.aiStyle == NPCAIStyleID.None && !NPC.IsABestiaryIconDummy) {
 				NPC.frame.Y = NPC.frame.Height * 4;
 			} else {
+				if (NPC.IsABestiaryIconDummy) {
+					frame = (byte)((frame + 1) & 15);
+				}
 				NPC.frame = new Rectangle(0, 28 * (frame & 12) / 4, 32, 28);
 			}
 		}

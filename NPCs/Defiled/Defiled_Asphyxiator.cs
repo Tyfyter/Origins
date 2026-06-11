@@ -23,7 +23,10 @@ namespace Origins.NPCs.Defiled {
 		//bool attacking = false;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 9;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
+				Position = new(5, 0),
+				PortraitPositionXOverride = 0
+			};
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public bool? Hardmode => true;

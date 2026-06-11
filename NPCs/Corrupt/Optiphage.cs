@@ -10,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Corrupt {
-    public class Optiphage : ModNPC, IWikiNPC {
+	public class Optiphage : ModNPC, IWikiNPC {
 		public Rectangle DrawRect => new(0, 0, 16, 30);
 		public int AnimationFrames => 2;
 		public int FrameDuration => 8;
@@ -18,9 +18,8 @@ namespace Origins.NPCs.Corrupt {
 		public static new AutoCastingAsset<Texture2D> HeadTexture { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 2;
-			if (!Main.dedServ) {
-				HeadTexture = Mod.Assets.Request<Texture2D>("NPCs/Corrupt/Optiphage_Head");
-			}
+			if (!Main.dedServ) HeadTexture = Mod.Assets.Request<Texture2D>("NPCs/Corrupt/Optiphage_Head");
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Rotation = -MathHelper.PiOver2, Position = new(0, 7) };
 			CorruptGlobalNPC.NPCTypes.Add(Type);
 			AssimilationLoader.AddNPCAssimilation<Corrupt_Assimilation>(Type, 0.02f);
 		}
@@ -60,7 +59,7 @@ namespace Origins.NPCs.Corrupt {
 				NPC.hide = true;
 				if (NPC.ai[0] == 0f) {
 					NPC.aiStyle = NPCAIStyleID.Demon_Eye;
-				}else if (NPC.ai[0] == 1f) {
+				} else if (NPC.ai[0] == 1f) {
 					Player targetPlayer = Main.player[NPC.target];
 					NPC.BottomRight = targetPlayer.Center;
 					targetPlayer.AddBuff(Optiphage_Debuff.ID, 5);
@@ -89,6 +88,9 @@ namespace Origins.NPCs.Corrupt {
 		}
 		public override void DrawBehind(int index) {
 			if (NPC.aiStyle == NPCAIStyleID.Star_Cell) Main.instance.DrawCacheNPCsOverPlayers.Add(index);
+		}
+		public override void FindFrame(int frameHeight) {
+			NPC.DoFrames(5);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			if (NPC.aiStyle == NPCAIStyleID.Star_Cell) {

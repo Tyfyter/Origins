@@ -19,9 +19,8 @@ namespace Origins.NPCs.Corrupt {
 		public static new AutoCastingAsset<Texture2D> HeadTexture { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 2;
-			if (!Main.dedServ) {
-				HeadTexture = Mod.Assets.Request<Texture2D>("NPCs/Corrupt/Cranivore_Head");
-			}
+			if (!Main.dedServ) HeadTexture = Mod.Assets.Request<Texture2D>("NPCs/Corrupt/Cranivore_Head");
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Rotation = -MathHelper.PiOver2 };
 			CorruptGlobalNPC.NPCTypes.Add(Type);
 			AssimilationLoader.AddNPCAssimilation<Corrupt_Assimilation>(Type, 0.03f);
 		}
@@ -92,6 +91,9 @@ namespace Origins.NPCs.Corrupt {
 		}
 		public override void DrawBehind(int index) {
 			if (NPC.aiStyle == NPCAIStyleID.Star_Cell) Main.instance.DrawCacheNPCsOverPlayers.Add(index);
+		}
+		public override void FindFrame(int frameHeight) {
+			NPC.DoFrames(5);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			if (NPC.aiStyle == NPCAIStyleID.Star_Cell) {

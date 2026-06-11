@@ -19,8 +19,9 @@ namespace Origins.NPCs.Brine {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 9;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Velocity = 1f
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
+				Position = new(-8, 12),
+				PortraitPositionYOverride = 32
 			};
 			TargetNPCTypes.Add(ModContent.NPCType<Shotgunfish>());
 			PredatorNPCTypes.Add(ModContent.NPCType<Shotgunfish>());
@@ -233,8 +234,15 @@ namespace Origins.NPCs.Brine {
 			}
 
 			NPC.rotation = 0f;
+			NPC.velocity.Y += 0.4f;
+			if (NPC.velocity.Y > 10f) {
+				NPC.velocity.Y = 10f;
+			}
+			if (NPC.direction != 0) NPC.spriteDirection = NPC.direction;
+		}
+		public override void FindFrame(int frameHeight) {
 			if (NPC.ai[1] > 0) {
-				Frame = 6 + (int)(AttackTime * 3);
+				Frame = 6 + (int)(AttackTime * 2.9f);
 			} else if (NPC.velocity.Y >= 0f && NPC.velocity.Y <= 0.8) {
 				if (NPC.position.X == NPC.oldPosition.X) {
 					Frame = 0;
@@ -257,11 +265,6 @@ namespace Origins.NPCs.Brine {
 				NPC.frameCounter = 0;
 				Frame = 2;
 			}
-			NPC.velocity.Y += 0.4f;
-			if (NPC.velocity.Y > 10f) {
-				NPC.velocity.Y = 10f;
-			}
-			if (NPC.direction != 0) NPC.spriteDirection = NPC.direction;
 		}
 		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
 			float attackTime = AttackTime;

@@ -25,9 +25,7 @@ namespace Origins.NPCs.Brine {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 16;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Velocity = 1f
-			};
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { PortraitPositionXOverride = -15 };
 			TargetNPCTypes.Add(ModContent.NPCType<King_Crab>());
 			TargetNPCTypes.Add(ModContent.NPCType<Sea_Dragon>());
 		}

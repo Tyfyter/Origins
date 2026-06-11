@@ -38,9 +38,7 @@ namespace Origins.NPCs.Brine {
 			Main.npcFrameCount[NPC.type] = 7;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Venom] = true;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Velocity = 1f
-			};
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { PortraitPositionXOverride = -20 };
 			TargetNPCTypes.Add(ModContent.NPCType<Carpalfish>());
 			TargetNPCTypes.Add(ModContent.NPCType<Brine_Latcher>());
 			PredatorNPCTypes.Add(ModContent.NPCType<Carpalfish>());

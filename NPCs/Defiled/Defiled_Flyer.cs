@@ -29,10 +29,9 @@ namespace Origins.NPCs.Defiled {
 		public NPCExportType ImageExportType => NPCExportType.Bestiary;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
 				Position = Vector2.UnitY,
-				PortraitPositionXOverride = -25,
-				Velocity = 1f
+				PortraitPositionXOverride = -25
 			};
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Crimera, Type);
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
@@ -212,7 +211,7 @@ namespace Origins.NPCs.Defiled {
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
 			float frame = (NPC.IsABestiaryIconDummy ? (float)++NPC.frameCounter : NPC.ai[0]) / 60;
-			if (NPC.frameCounter > 1) NPC.frameCounter = 0;
+			if (NPC.frameCounter > 60) NPC.frameCounter = 0;
 			NPC.frame = new Rectangle(0, (38 * (int)(frame * frame * Main.npcFrameCount[Type] + 2)) % 152, 104, 36);
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {

@@ -1,5 +1,4 @@
-﻿using Humanizer;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Core;
 using Origins.Dusts;
@@ -19,7 +18,6 @@ using Origins.Tiles.BossDrops;
 using Origins.Tiles.MusicBoxes;
 using Origins.Tiles.Other;
 using Origins.World;
-using PegasusLib;
 using PegasusLib.Graphics;
 using PegasusLib.Networking;
 using ReLogic.Content;
@@ -28,6 +26,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using Terraria;
 using Terraria.Audio;
@@ -39,7 +38,6 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
@@ -111,6 +109,18 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 			};
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			AprilFoolsTextures.AddNPC(this);
+			AprilFoolsAssetSwitcher<NPCID.Sets.NPCBestiaryDrawModifiers>.Add(
+				() => ref CollectionsMarshal.GetValueRefOrNullRef(NPCID.Sets.NPCBestiaryDrawOffset, Type),
+				new() { // Influences how the NPC looks in the Bestiary
+					Position = new Vector2(0, 42),
+					PortraitPositionXOverride = 2,
+					PortraitPositionYOverride = 70,
+					Rotation = MathHelper.Pi,
+					Scale = 1.2f,
+					PortraitScale = 2,
+					Frame = 0
+				}
+			);
 			this.SetupStates();
 		}
 		public override void SetDefaults() {
@@ -416,23 +426,6 @@ namespace Origins.NPCs.MiscB.Shimmer_Construct {
 				position += Main.rand.NextVector2Circular(1, 1) * (Main.rand.NextFloat(0.5f, 1f) * MathF.Pow(deathAnimationTime / shattertime, 1.5f) * 12);
 			}
 
-			if (OriginsModIntegrations.CheckAprilFools()) {
-				NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
-					Position = new Vector2(0, 42),
-					PortraitPositionXOverride = 2,
-					PortraitPositionYOverride = 70,
-					Rotation = MathHelper.Pi,
-					Scale = 1.2f,
-					PortraitScale = 2,
-					Frame = 0
-				};
-			} else {
-				NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
-					Position = new Vector2(25, -30),
-					Rotation = 0.7f,
-					Frame = 6
-				};
-			}
 			Texture2D texture = TextureAssets.Npc[Type].Value;
 
 			Vector2 origin = new(67, 82);

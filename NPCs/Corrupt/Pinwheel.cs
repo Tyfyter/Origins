@@ -51,6 +51,7 @@ namespace Origins.NPCs.Corrupt {
 				this.GetBestiaryFlavorText(),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.TheCorruption
 			);
+			bestiaryEntry.Icon = new NPCExtensions.RotatingUnlockableNPCEntryIcon(Type, 0.2f);
 		}
 		public float DigTime = 60 * 0.5f;
 		public override void OnSpawn(IEntitySource source) {
@@ -163,14 +164,6 @@ namespace Origins.NPCs.Corrupt {
 				NPC.scale,
 				SpriteEffects.None
 			);
-			/*string debugText = ""; // debugging code
-			if (NPC.IsABestiaryIconDummy) {
-				debugText = $"Color: {drawColor}\n       Offset: {offset}\n            Rot: {NPC.rotation}";
-			} else {
-				debugText = $"AI: {NPC.aiStyle}, {AIType}, S/Dir: {NPC.spriteDirection}, {NPC.direction}\nOffset: {offset}\nVel: {NPC.velocity}, {Math.Abs(NPC.velocity.X)}, {Math.Abs(NPC.velocity.Y)}\nWasCollideY: {wasCollideY}\nTarget: {NPC.HasValidTarget}, {NPC.GetTargetData().Invalid}, {NPC.GetTargetData().Type}\nAI: {NPC.ai[0]}, {NPC.ai[1]}, {NPC.ai[2]}, {NPC.ai[3]}\nLAI: {NPC.localAI[0]}, {NPC.localAI[1]}, {NPC.localAI[2]}, {NPC.localAI[3]}";
-			}
-			OriginExtensions.DrawDebugTextAbove(spriteBatch, debugText, NPC.Top + offset - screenPos);*/
-			//NPC.Hitbox.DrawDebugOutlineSprite(Color.White, -screenPos, false);
 			return false;
 		}
 	}

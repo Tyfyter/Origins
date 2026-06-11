@@ -81,6 +81,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			NPCID.Sets.DoesntDespawnToInactivityAndCountsNPCSlots[Type] = true;
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			//NPCID.Sets.SpecificDebuffImmunity[Type][ModContent.BuffType<Rasterized_Debuff>()] = true;
 			Origins.RasterizeAdjustment[Type] = (8, 0.05f, 0f);
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Riven_Hive>());
@@ -137,7 +138,6 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			};
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);

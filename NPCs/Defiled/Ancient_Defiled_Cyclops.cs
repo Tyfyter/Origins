@@ -70,15 +70,24 @@ namespace Origins.NPCs.Defiled {
 		public override void AI() {
 			NPC.TargetClosest();
 			if (NPC.Hitbox.Intersects(NPC.targetRect)) {
-				if (!attacking) {
-					NPC.frame = new Rectangle(0, 120 * 4, 96, 120);
-					NPC.frameCounter = 0;
-					NPC.velocity.X *= 0.25f;
-				}
+				if (!attacking) NPC.velocity.X *= 0.25f;
 				attacking = true;
 			}
 			if (NPC.HasPlayerTarget) {
 				NPC.spriteDirection = NPC.direction;
+			}
+			if (!attacking) {
+				if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X /= speedMult;
+			}
+		}
+		public override void PostAI() {
+			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X *= speedMult;
+		}
+		public override void FindFrame(int frameHeight) {
+			if (NPC.Hitbox.Intersects(NPC.targetRect) && !attacking) {
+				NPC.frame = new Rectangle(0, 120 * 4, 96, 120);
+				NPC.frameCounter = 0;
+				NPC.velocity.X *= 0.25f;
 			}
 			if (attacking) {
 				if (++NPC.frameCounter > 7) {
@@ -95,7 +104,6 @@ namespace Origins.NPCs.Defiled {
 					}
 				}
 			} else {
-				if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X /= speedMult;
 				if (++NPC.frameCounter > 7) {
 					//add frame height to frame y position and modulo by frame height multiplied by walking frame count
 					NPC.frame = new Rectangle(0, (NPC.frame.Y + 120) % (840 - 120 * 3), 96, 120);
@@ -103,10 +111,6 @@ namespace Origins.NPCs.Defiled {
 				}
 			}
 		}
-		public override void PostAI() {
-			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X *= speedMult;
-		}
-
 		public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {
 			if (attacking) {
 				if (NPC.frame.Y >= 720) {

@@ -23,7 +23,8 @@ namespace Origins.NPCs.Defiled {
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Position = new(0, -16),
-				PortraitPositionYOverride = -32
+				PortraitPositionYOverride = -32,
+				Rotation = -MathHelper.PiOver2
 			};
 		}
 		public override void SetDefaults() {

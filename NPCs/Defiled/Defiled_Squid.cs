@@ -28,7 +28,8 @@ namespace Origins.NPCs.Defiled {
 			Main.npcFrameCount[Type] = 4;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Position = new(0, 16)
+				Position = new(0, 10),
+				IsWet = true
 			};
 			DefiledGlobalNPC.NPCTransformations.Add(NPCID.Squid, Type);
 			BiomeNPCGlobals.assimilationDisplayOverrides.Add(Type, new() {
@@ -102,7 +103,6 @@ namespace Origins.NPCs.Defiled {
 							const float small_range = 2 * 16;
 							if (distanceSQ <= small_range * small_range) {
 								if (Mana >= 4f) {
-									NPC.DoFrames(1);
 									NPC.velocity = (NPC.Center - results.NearestNPC.Center).SafeNormalize(NPC.velocity / 8) * 8;
 									Mana -= 4f;
 									Projectile.NewProjectile(
@@ -122,7 +122,6 @@ namespace Origins.NPCs.Defiled {
 							NPC.velocity *= 0.98f;
 							const float small_range = 2 * 16;
 							if (tooSlow || distanceSQ <= small_range * small_range) {
-								NPC.DoFrames(1);
 								NPC.velocity = (NPC.Center - results.NearestTargetHitbox.Center.ToVector2()).SafeNormalize(NPC.velocity / 8) * 8;
 								if (Mana >= 4f) {
 									Mana -= 4f;
@@ -139,16 +138,31 @@ namespace Origins.NPCs.Defiled {
 								}
 							}
 						}
-						NPC.DoFrames(7);
 						return false;
-					} else {
-						NPC.DoFrames(13);
 					}
 				}
 				NPC.target = -1;
-				NPC.DoFrames(13);
 			}
 			return true;
+		}
+		public override void FindFrame(int frameHeight) {
+			if (NPC.wet) {
+				if (NPC.HasValidTarget) {
+					float distanceSQ = NPC.DistanceSQ(NPC.Center.Clamp(NPC.GetTargetData().Hitbox));
+					bool tooSlow = NPC.velocity.LengthSquared() < 1;
+					const float range = 10 * 16;
+					if (distanceSQ <= range * range) {
+						const float small_range = 2 * 16;
+						if (tooSlow || distanceSQ <= small_range * small_range) {
+							NPC.DoFrames(1);
+							return;
+						}
+						NPC.DoFrames(7);
+						return;
+					}
+				}
+				NPC.DoFrames(NPC.IsABestiaryIconDummy ? 7 : 13);
+			}
 		}
 		public override void PostAI() {
 			NPC.friendly = false;

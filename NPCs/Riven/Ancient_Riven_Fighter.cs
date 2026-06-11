@@ -8,8 +8,8 @@ using Origins.Items.Other.Consumables.Food;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System.IO;
+using System.Runtime.InteropServices;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -33,6 +33,12 @@ namespace Origins.NPCs.Riven {
 			AprilFoolsTextures.AddNPC(this);
 			AprilFoolsTextures.Create(() => ref glowTexture, Texture + "_Glow");
 			AprilFoolsAssetSwitcher<int>.Add(() => ref FrameHeight, 768);
+			AprilFoolsAssetSwitcher<NPCID.Sets.NPCBestiaryDrawModifiers>.Add(
+				() => ref CollectionsMarshal.GetValueRefOrNullRef(NPCID.Sets.NPCBestiaryDrawOffset, Type),
+				NPCExtensions.BestiaryWalkLeft with {
+					PortraitScale = 0.5f
+				}
+			);
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);

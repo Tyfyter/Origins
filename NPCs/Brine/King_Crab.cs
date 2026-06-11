@@ -25,8 +25,10 @@ namespace Origins.NPCs.Brine {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 5;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Velocity = 1f
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
+				Position = new(0, 20),
+				PortraitPositionXOverride = 0,
+				PortraitPositionYOverride = 0
 			};
 			TargetNPCTypes.Add(ModContent.NPCType<Mildew_Creeper>());
 			TargetNPCTypes.Add(ModContent.NPCType<Carpalfish>());
@@ -231,28 +233,6 @@ namespace Origins.NPCs.Brine {
 			}
 
 			NPC.rotation = 0f;
-			if (NPC.velocity.Y >= 0f && NPC.velocity.Y <= 0.8) {
-				if (NPC.position.X == NPC.oldPosition.X) {
-					Frame = 0;
-					NPC.frameCounter = 0;
-				} else if (NPC.velocity.X < -0.8 || NPC.velocity.X > 0.8) {
-					//NPC.frameCounter++;
-					NPC.frameCounter += Math.Abs((int)NPC.velocity.X);
-					if (NPC.frameCounter > 5) {
-						Frame++;
-						NPC.frameCounter = 0;
-					}
-					if (Frame >= Main.npcFrameCount[Type]) {
-						Frame = 0;
-					}
-				} else {
-					Frame = 0;
-					NPC.frameCounter = 0;
-				}
-			} else {
-				NPC.frameCounter = 0;
-				Frame = 2;
-			}
 			NPC.velocity.Y += 0.4f;
 			if (NPC.velocity.Y > 10f) {
 				NPC.velocity.Y = 10f;
@@ -282,7 +262,28 @@ namespace Origins.NPCs.Brine {
 			return true;
 		}
 		public override void FindFrame(int frameHeight) {
-
+			if (NPC.velocity.Y >= 0f && NPC.velocity.Y <= 0.8) {
+				if (NPC.position.X == NPC.oldPosition.X) {
+					Frame = 0;
+					NPC.frameCounter = 0;
+				} else if (NPC.velocity.X < -0.8 || NPC.velocity.X > 0.8) {
+					//NPC.frameCounter++;
+					NPC.frameCounter += Math.Abs((int)NPC.velocity.X);
+					if (NPC.frameCounter > 5) {
+						Frame++;
+						NPC.frameCounter = 0;
+					}
+					if (Frame >= Main.npcFrameCount[Type]) {
+						Frame = 0;
+					}
+				} else {
+					Frame = 0;
+					NPC.frameCounter = 0;
+				}
+			} else {
+				NPC.frameCounter = 0;
+				Frame = 2;
+			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {

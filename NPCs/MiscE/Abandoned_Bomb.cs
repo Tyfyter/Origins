@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Projectiles;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,9 +47,6 @@ namespace Origins.NPCs.MiscE {
 				NPC.targetRect = searchResults.NearestTargetHitbox;
 				if (NPC.ShouldFaceTarget(ref searchResults)) NPC.FaceTarget();
 			}
-
-
-			//projectile.friendly = foundTarget;
 			#endregion
 
 			#region Movement
@@ -98,9 +94,7 @@ namespace Origins.NPCs.MiscE {
 			#region Animation and visuals
 			if (target.Invalid) {
 				NPC.velocity.X *= 0.93f;
-				Frame = 11;
 			} else if(NPC.ai[0] > 0) {
-				Frame = 7 + (int)(NPC.ai[0] / 9f);
 				if (++NPC.ai[0] > 36) {
 					Rectangle npcHitbox = NPC.Hitbox;
 					npcHitbox.X += npcHitbox.Width / 2;
@@ -114,9 +108,27 @@ namespace Origins.NPCs.MiscE {
 				}
 			} else if (NPC.collideY) {
 				NPC.localAI[1]--;
-				const int frameSpeed = 4;
 				if (Math.Abs(NPC.velocity.X) < 0.01f) NPC.velocity.X = 0f;
 				if (NPC.velocity.X != 0 ^ NPC.oldVelocity.X != 0) NPC.frameCounter = 0;
+				Collision.StepDown(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
+				Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
+			}
+
+			// Some visuals here
+			if (Frame > 11) {
+				Lighting.AddLight(NPC.Center, Color.CornflowerBlue.ToVector3() * 0.18f);
+			} else if (Frame < 9) {
+				Lighting.AddLight(NPC.Center, Color.Red.ToVector3() * 0.24f);
+			}
+			#endregion
+		}
+		public override void FindFrame(int frameHeight) {
+			if (!NPC.HasValidTarget && !NPC.IsABestiaryIconDummy) {
+				Frame = 11;
+			} else if (NPC.ai[0] > 0) {
+				Frame = 7 + (int)(NPC.ai[0] / 9f);
+			} else if (NPC.collideY || NPC.IsABestiaryIconDummy) {
+				const int frameSpeed = 4;
 				if (NPC.velocity.X != 0) {
 					NPC.frameCounter++;
 					if (NPC.frameCounter >= frameSpeed) {
@@ -131,19 +143,9 @@ namespace Origins.NPCs.MiscE {
 						Frame = 0;
 					}
 				}
-				Collision.StepDown(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
-				Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
 			} else if (Frame > 6) {
 				Frame = 1;
 			}
-
-			// Some visuals here
-			if (Frame > 11) {
-				Lighting.AddLight(NPC.Center, Color.CornflowerBlue.ToVector3() * 0.18f);
-			} else if (Frame < 9) {
-				Lighting.AddLight(NPC.Center, Color.Red.ToVector3() * 0.24f);
-			}
-			#endregion
 		}
 		public override bool NeedSaving() => true;
 		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {

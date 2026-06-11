@@ -287,7 +287,7 @@ namespace Origins.NPCs.Critters {
 			}
 		}
 		public override void FindFrame(int frameHeight) {
-			if (NPC.ai[0] == 1) {
+			if (NPC.ai[0] == 1 || NPC.IsABestiaryIconDummy) {
 				NPC.DoFrames(6, 1..6);
 			} else {
 				NPC.frame.Y = 0;

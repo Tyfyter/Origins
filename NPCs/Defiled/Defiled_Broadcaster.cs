@@ -26,10 +26,9 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 5;
 			NPCID.Sets.UsesNewTargetting[Type] = true;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
 				Position = new(-5, -5),
-				PortraitPositionYOverride = -10,
-				Velocity = 1f
+				PortraitPositionYOverride = -10
 			};
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}

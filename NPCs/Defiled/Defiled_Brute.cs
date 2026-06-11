@@ -37,7 +37,10 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 14;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
+				Position = new(15, 20),
+				PortraitPositionYOverride = 0
+			};
 			ModContent.GetInstance<Defiled_Wastelands.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {

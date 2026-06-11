@@ -49,10 +49,7 @@ namespace Origins.NPCs.Brine {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 6;
 			NPCID.Sets.SpawnFromLastEmptySlot[Type] = true;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Velocity = 1f,
-				IsWet = true
-			};
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Position = new(0, 10) };
 			TargetNPCTypes.Add(ModContent.NPCType<Airsnatcher>());
 			//TargetNPCTypes.Add(ModContent.NPCType<Mildew_Creeper>());
 			PreyNPCTypes.Add(ModContent.NPCType<Airsnatcher>());
@@ -158,7 +155,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
-			if (NPC.GetWet(Liquids.Brine.ID)) NPC.DoFrames(6);
+			if (NPC.GetWet(Liquids.Brine.ID) || NPC.IsABestiaryIconDummy) NPC.DoFrames(6);
 		}
 		public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox) {
 			if (NPC.ai[0] > 0) {

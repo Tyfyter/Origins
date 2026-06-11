@@ -23,6 +23,7 @@ namespace Origins.NPCs.Riven {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft;
 			ModContent.GetInstance<Riven_Hive.SpawnRates>().AddSpawn(Type, SpawnChance);
 		}
 		public override void SetDefaults() {
@@ -53,6 +54,7 @@ namespace Origins.NPCs.Riven {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);
+			bestiaryEntry.Icon = new NPCExtensions.RotatingUnlockableNPCEntryIcon(Type, 0.25f);
 		}
         public new static float SpawnChance(NPCSpawnInfo spawnInfo) {
             return spawnInfo.SpawnTileY < Main.worldSurface ? 0 : Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Seashell;

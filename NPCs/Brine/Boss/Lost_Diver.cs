@@ -152,6 +152,7 @@ namespace Origins.NPCs.Brine.Boss {
 		public override float RippleTargetWeight(float magnitude, float distance) => 0;
 		public override bool? CanFallThroughPlatforms() => NPC.GetWet(Liquids.Brine.ID) || NPC.targetRect.Bottom > NPC.BottomLeft.Y;
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			NPC.KillsCountTowardsNPC<Mildew_Carrion>(bestiaryEntry);
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);

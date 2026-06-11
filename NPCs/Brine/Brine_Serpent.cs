@@ -38,7 +38,7 @@ namespace Origins.NPCs.Brine {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[Type] = 9;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
-				Position = new Vector2(-28f, 8f),
+				Position = new Vector2(-28f, 2f),
 				PortraitPositionXOverride = -96f
 			};
 			NPCID.Sets.UsesNewTargetting[Type] = true;

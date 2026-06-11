@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ranged;
-using PegasusLib;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -17,6 +16,11 @@ namespace Origins.NPCs.Crimson {
 		public override void Load() => this.AddBanner();
 		public override void SetStaticDefaults() {
 			CrimsonGlobalNPC.NPCTypes.Add(Type);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with {
+				Position = new(15, 5),
+				PortraitPositionXOverride = 0,
+				PortraitPositionYOverride = 0
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Shark);

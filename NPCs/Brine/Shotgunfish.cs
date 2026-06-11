@@ -24,9 +24,7 @@ namespace Origins.NPCs.Brine {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			Main.npcFrameCount[NPC.type] = 8;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
-				Velocity = 1f
-			};
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { PortraitPositionXOverride = -15 };
 			TargetNPCTypes.Add(ModContent.NPCType<Nasty_Crawdad>());
 			TargetNPCTypes.Add(ModContent.NPCType<Mildew_Creeper>());
 			PreyNPCTypes.Add(ModContent.NPCType<Nasty_Crawdad>());
@@ -200,7 +198,7 @@ namespace Origins.NPCs.Brine {
 		}
 		public override bool? CanFallThroughPlatforms() => true;
 		public override void FindFrame(int frameHeight) {
-			if (NPC.GetWet(Liquids.Brine.ID)) NPC.DoFrames(6);
+            if (NPC.GetWet(Liquids.Brine.ID) || NPC.IsABestiaryIconDummy) NPC.DoFrames(6);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life <= 0) {
