@@ -263,6 +263,7 @@ namespace Origins.Core {
 			public virtual void UpdateChest(Point16 position) { }
 			public virtual int ItemCount => Items().Length;
 			public virtual string GivenName => "";
+			public virtual bool DropsItemsWhenDestroyed => true;
 			public virtual void HandleBeingInChestRange(Player player) {
 				if (!player.IsInInteractionRange(2, 2)) {
 					if (player.chest != -1) {
@@ -306,7 +307,7 @@ namespace Origins.Core {
 			/// Remember to call <see cref="MarkConsumedItem"/> if the item being consumed should produce changes visible to other players, such as if this is a container
 			/// </summary>
 			public virtual void CraftWithItem(Item item, int index) => MarkConsumedItem();
-			public virtual bool CanDestroy() => true;
+			public virtual bool CanDestroy() => Items().All(i => i?.IsAir ?? true);
 			public virtual bool CanBeOpened(int x, int y) => true;
 			public abstract bool CanReceiveNearbyQuickStack(int x, int y);
 			/// <summary>
@@ -611,6 +612,7 @@ namespace Origins.Core {
 
 				TileObjectData data = style >= 0 ? TileObjectData.GetTileData(tile.TileType, style) : null;
 				if (style >= 0) TileUtils.GetMultiTileTopLeft(i, j, data, out i, out j);
+				if (TileLoader.GetTile(tile.TileType) is ICustomTELocation customTELocation) customTELocation.ModifyTELocation(ref i, ref j, i, j);
 				if (!(TryGetChest(i, j)?.CanDestroy() ?? true)) return false;
 				if (!Main.tileNoAttach[type]) {
 					for (int k = 0; k < (data?.Width ?? 1); k++) {
@@ -673,6 +675,14 @@ namespace Origins.Core {
 				Dictionary<Point16, ChestData> tileEntities = ModContent.GetInstance<SpecialChestSystem>().tileEntities;
 				if (!tileEntities.TryGetValue(Position, out ChestData chest)) return;
 				if (!chest.CanDestroy()) {
+					foreach (Item item in chest.Items()) {
+						if (item?.IsAir ?? true) continue;
+						Item.NewItem(
+							WorldGen.GetItemSource_FromTileBreak(Position.X, Position.Y),
+							Position.ToWorldCoordinates(),
+							item
+						);
+					}
 					ModContent.GetInstance<Origins>().Logger.Warn($"Attempted to destroy Special Chest {chest} at position {Position}, but it cannot be destroyed");
 					return;
 				}
