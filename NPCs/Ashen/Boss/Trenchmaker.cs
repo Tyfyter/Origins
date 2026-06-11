@@ -210,7 +210,7 @@ namespace Origins.NPCs.Ashen.Boss {
 			if (!state.CanHaveThrustersActive) {
 				NPC.frame.Y = 0;
 				NPC.frameCounter = 0;
-			}/*
+			}
 			if (!Main.dedServ && NPC.frame.Y != 0) {
 				int type = Type;
 				thrusterSound.PlaySoundIfInactive(Origins.Sounds.ThrusterLoop, NPC.Center, sound => {
@@ -221,7 +221,7 @@ namespace Origins.NPCs.Ashen.Boss {
 				for (int i = 0; i < 2; i++) {
 					Dust.NewDust(NPC.Bottom - new Vector2((NPC.width * 0.5f - 16) * NPC.direction, 16), 8, 8, ModContent.DustType<Black_Smoke_Dust>(), NPC.direction * -4, 4);
 				}
-			}*/
+			}
 		}
 		public void DoTargeting() {
 			TargetSearchResults searchResults = SearchForTarget(NPC, TargetSearchFlag.Players);
