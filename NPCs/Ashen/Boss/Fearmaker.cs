@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Core;
 using Origins.Items.Materials;
 using Origins.Journal;
 using Origins.LootConditions;
@@ -7,6 +8,7 @@ using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
@@ -29,7 +31,12 @@ namespace Origins.NPCs.Ashen.Boss {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 8;
 			Origins.NPCOnlyTargetInBiome.Add(Type, ModContent.GetInstance<Ashen_Biome>());
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.BestiaryWalkLeft with { Position = new(20, 0), PortraitPositionXOverride = 0 };
 			ContentSamples.NpcBestiaryRarityStars[Type] = 4;
+			AprilFoolsAssetSwitcher<NPCID.Sets.NPCBestiaryDrawModifiers>.Add(
+				() => ref CollectionsMarshal.GetValueRefOrNullRef(NPCID.Sets.NPCBestiaryDrawOffset, Type),
+				new() { Position = new Vector2(0, -5) }
+			);
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
