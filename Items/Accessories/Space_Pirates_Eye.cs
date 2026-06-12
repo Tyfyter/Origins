@@ -217,8 +217,7 @@ namespace Origins.Items.Accessories {
 			}
 			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) => target.AddBuff(BuffID.CursedInferno, Main.rand.Next(120, 301));
 		}
-		public class Sharp_Tears : PirateEyeMode, IBroken {
-			static string IBroken.BrokenReason => "Needs review";
+		public class Sharp_Tears : PirateEyeMode {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.SharpTears}";
 			public override Color Color => FromHexRGB(0xff0000);
 			public override int Cooldown => 120;
@@ -669,8 +668,7 @@ namespace Origins.Items.Accessories {
 				AIType = ProjectileID.PoisonFang;
 			}
 		}
-		public class Worms : PirateEyeMode, IBroken {
-			static string IBroken.BrokenReason => "Needs idea";
+		public class Worms : PirateEyeMode {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.ElectrosphereMissile}";
 			public override Color Color => FromHexRGB(0x00ffff);
 			public override int Cooldown => 120;
