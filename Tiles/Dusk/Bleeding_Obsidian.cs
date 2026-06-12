@@ -24,6 +24,7 @@ namespace Origins.Tiles.Dusk {
 			MineResist = 8;
 			DustType = DustID.ShimmerTorch;
 		}
+		public override bool CanExplode(int i, int j) => false;
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {
 			yield return new Item(ItemType<Bleeding_Obsidian_Shard>(), Main.rand.Next(4, 7));
 		}
