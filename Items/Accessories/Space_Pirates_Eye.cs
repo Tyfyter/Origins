@@ -25,6 +25,7 @@ using Terraria.UI;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Space_Pirates_Eye : ModItem, IRightClickableAccessory {
+		#region item
 		static AutoLoadingTexture irisTexture = typeof(Space_Pirates_Eye).GetDefaultTMLName("_Iris");
 		public static List<PirateEyeMode> Colors { get; } = [];
 		public override void SetStaticDefaults() {
@@ -148,6 +149,7 @@ namespace Origins.Items.Accessories {
 			OriginSystem.Instance.SpacePirateEyeUI.Activate();
 			return false;
 		}
+		#endregion
 		#region attacks
 		public abstract class PirateEyeMode : ModProjectile, IComparable<PirateEyeMode> {
 			public override string Name => "Pirate_Eye_" + base.Name;
