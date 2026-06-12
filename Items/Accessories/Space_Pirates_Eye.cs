@@ -1075,14 +1075,60 @@ namespace Origins.Items.Accessories {
 				}
 			}
 		}
-		public class _Temp_Magenta : PirateEyeMode, IBroken {
-			static string IBroken.BrokenReason => "Needs idea";
-			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
+		public class _Temp_Magenta : PirateEyeMode {
+			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.VenomFang}";
 			public override Color Color => FromHexRGB(0xdf00ff);
 			public override int Cooldown => 60;
 			public override void SetDefaults() {
-				Projectile.CloneDefaults(ProjectileID.BeeArrow);
-				AIType = ProjectileID.BeeArrow;
+				Projectile.width = 12;
+				Projectile.height = 12;
+				Projectile.aiStyle = ProjAIStyleID.Arrow;
+				Projectile.alpha = 255;
+				Projectile.friendly = true;
+				Projectile.DamageType = DamageClass.Magic;
+				Projectile.penetrate = 5;
+				Projectile.usesLocalNPCImmunity = true;
+				Projectile.localNPCHitCooldown = 10;
+				Projectile.timeLeft = 58;
+			}
+			public override void AI() {
+				if (Projectile.ai[1] == 0 && Projectile.ai[2].CycleUp(15)) {
+					Projectile.SpawnProjectile(null,// defaults to self.GetSource_FromAI() if null
+						Projectile.Center,
+						default,
+						Type,
+						Projectile.damage / 2,
+						Projectile.knockBack / 2,
+						ai1: 1
+					);
+				}
+				if (Projectile.alpha > 0)
+					Projectile.alpha -= 50;
+				if (Projectile.alpha < 0)
+					Projectile.alpha = 0;
+
+				if (Projectile.alpha == 0) {
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.VenomStaff, Projectile.velocity.X, Projectile.velocity.Y, 100, default, 1.2f);
+					dust.noGravity = true;
+					dust.velocity *= 0.3f;
+					dust.velocity -= Projectile.velocity * 0.4f;
+				}
+			}
+			public override Color? GetAlpha(Color lightColor) {
+				if (Projectile.alpha > 0) return Color.Transparent;
+
+				return new Color(255, 255, 255, 0);
+			}
+			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+				target.AddBuff(BuffID.Venom, 1800);
+			}
+			public override void OnKill(int timeLeft) {
+				for (int i = 0; i < 15; i++) {
+					Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.VenomStaff, 0f, 0f, 100, default, 1.2f);
+					dust.noGravity = true;
+					dust.velocity *= 1.2f;
+					dust.velocity -= Projectile.oldVelocity * 0.3f;
+				}
 			}
 		}
 		public class _Temp_Pink : PirateEyeMode, IBroken {
