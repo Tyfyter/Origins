@@ -198,6 +198,7 @@ public class Ashen_Supplies : LootPool {
 	}
 	public override void SetStaticDefaults() {
 		AddRule(new DropLootPoolRule<Rarer>());
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Adjusto_Hook>(), 20));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<C6_Jackhammer>(), 10, 1, 5));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Miter_Saw>(), 10, 1, 5));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Piledriver>(), 10, 1, 5));
@@ -398,10 +399,11 @@ public class Ashen_Lab : LootPool {
 	}*/
 	public override void SetStaticDefaults() {
 		//AddRule(new DropLootPoolRule<Rarer>());
-		//AddRule(ItemDropRule.Common(ModContent.ItemType<Classified_Blueprint>(), 3));
-		//AddRule(ItemDropRule.Common(ModContent.ItemType<Solar_Battery_Item>(), 5));
-		//AddRule(ItemDropRule.Common(ModContent.ItemType<Gas_Generator_Item>(), 5));
-		//AddRule(ItemDropRule.Common(ModContent.ItemType<Wave_Energy_Converter_Item>(), 5));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Classified_Blueprint>(), 3));
+		AddRule(ItemDropRule.Common(TileItem.ItemType<Solar_Battery>(), 5));
+		AddRule(ItemDropRule.Common(TileItem.ItemType<Gas_Generator>(), 5));
+		//AddRule(ItemDropRule.Common(TileItem.ItemType<Wave_Energy_Converter>(), 5));
+		AddRule(ItemDropRule.Common(ModContent.ItemType<Adjusto_Hook>(), 5));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Screwdriver>(), 2, 1, 3));
 		AddRule(ItemDropRule.Common(ModContent.ItemType<Fire_Band>(), 3, 15, 30));
 		AddRule(ItemDropRule.Common(ItemID.Wire, 3, 15, 60));

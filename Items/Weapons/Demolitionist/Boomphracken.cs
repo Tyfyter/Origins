@@ -54,7 +54,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.IllegalGunParts, 2)
+			.AddIngredient(ItemID.IllegalGunParts)
 			.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 8)
 			.AddIngredient(ModContent.ItemType<Hallowed_Cleaver>())
 			.AddTile(TileID.MythrilAnvil)

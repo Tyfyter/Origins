@@ -1,6 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
-using Origins.Items.Materials;
+﻿using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Origins.Projectiles;
 using Terraria;
@@ -40,7 +38,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.IllegalGunParts, 2)
 			.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 18)
 			.AddTile(TileID.LunarCraftingStation)
 			.Register();

@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useAmmo = ModContent.ItemType<Metal_Slug>();
 			Item.knockBack = 8f;
 			Item.shootSpeed = 12f;
-			Item.value = Item.buyPrice(gold: 30);
+			Item.value = Item.buyPrice(gold: 8);
 			Item.rare = ItemRarityID.Lime;
 			Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.25f);
 			Item.autoReuse = true;

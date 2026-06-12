@@ -1391,7 +1391,7 @@ TILES:
 (^) Fire Extinguisher Holder
 (^) Gas Generator
 (X) Incinerator Pit !!!
-(^) Industrial Door
+(#2, ^2) Industrial Door !!!
 (^) Large Storage Container
 (^) Laser Tag Console
 (^) Liquid Sensor (Amebic Gel)
@@ -1853,7 +1853,7 @@ AMMO:
 (^) Flammable Harpoon
 (X) Foolean Canister
 (^) Harpoon
-(#, ^2) Oil Canister I !!!
+(^) Oil Canister
 (^) Peatball
 (^) Resizable Mine I
 (^) Resizable Mine II
@@ -1880,7 +1880,6 @@ AMMO:
 (^) Ichor Canister
 (^) Ichor Harpoon
 (^) Metal Slug
-(#, ^2) Oil Canister II !!!
 (^) Resizable Mine V
 (^) Scrap Dart
 

@@ -8394,13 +8394,8 @@ Neutron_Soup: {
 }
 
 Oil_Canister_I: {
-	DisplayName: Oil Canister I
-	Tooltip: ""
-}
-
-Oil_Canister_II: {
-	DisplayName: Oil Canister I I
-	Tooltip: ""
+	DisplayName: Oil Canister
+	Tooltip: Spreads oil on impact
 }
 
 Mother_Unit_Item: {

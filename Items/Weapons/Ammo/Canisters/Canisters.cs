@@ -957,13 +957,6 @@ namespace Origins.Items.Weapons.Ammo.Canisters {
 			target.AddBuff(BuffID.Oiled, 180);
 		}
 	}
-	public class Oil_Canister_II : Oil_Canister_I, ICustomWikiStat {
-		public new bool? Hardmode => true;
-		public override void SetDefaults() {
-			base.SetDefaults();
-			// Put differences here
-		}
-	}
 	public class Oil_Canister_Spark : ModProjectile, ICanisterChildProjectile {
 		public override string Texture => "Origins/Projectiles/Ammo/Aether_Star";
 		public override void SetStaticDefaults() {

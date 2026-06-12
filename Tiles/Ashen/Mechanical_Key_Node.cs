@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ObjectInteractions;
@@ -92,6 +93,7 @@ namespace Origins.Tiles.Ashen {
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => HasKey(settings.player);
 		public override bool RightClick(int i, int j) {
 			if (!HasKey(Main.LocalPlayer)) return false;
+			SoundEngine.PlaySound(SoundID.Unlock.WithPitch(-0.5f));
 			new Mechanical_Switch_Action(new(i, j), Main.tile[i, j].TileFrameY == 0).Perform();
 			return true;
 		}

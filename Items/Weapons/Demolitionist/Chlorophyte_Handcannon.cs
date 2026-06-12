@@ -1,5 +1,4 @@
 using Origins.Items.Weapons.Ammo;
-using PegasusLib;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,7 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useAmmo = ModContent.ItemType<Metal_Slug>();
 			Item.knockBack = 4f;
 			Item.shootSpeed = 9f;
-			Item.value = Item.sellPrice(gold: 10);
+			Item.value = Item.sellPrice(gold: 8);
 			Item.rare = ItemRarityID.Lime;
 			Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.25f);
 			Item.autoReuse = true;
@@ -32,7 +31,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override Vector2? HoldoutOffset() => Vector2.Zero;
 		public override void AddRecipes() => Recipe.Create(Type)
 			.AddIngredient(ItemID.ChlorophyteBar, 18)
-			.AddIngredient(ItemID.IllegalGunParts, 2)
+			.AddIngredient(ItemID.IllegalGunParts)
 			.AddTile(TileID.MythrilAnvil)
 			.Register();
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
