@@ -64,13 +64,16 @@ namespace Origins.NPCs.Ashen.Boss {
 		protected static AutoLoadingTexture footTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Foot";
 		protected static AutoLoadingTexture exhaustTexture = typeof(Trenchmaker).GetDefaultTMLName() + "_Exhaust";
 		protected static AutoLoadingTexture frontTexture = "Origins/NPCs/Ashen/Boss/Front/Trenchmaker_Front";
+		protected static AutoLoadingTexture hipFrontTexture = "Origins/NPCs/Ashen/Boss/Front/Trenchmaker_Hip_Front";
 		protected static AutoLoadingTexture lArmFrontTexture = "Origins/NPCs/Ashen/Boss/Front/Trenchmaker_LArm_Front";
 		protected static AutoLoadingTexture rArmFrontTexture = "Origins/NPCs/Ashen/Boss/Front/Trenchmaker_RArm_Front";
 		protected static AutoLoadingTexture lExhaustFrontTexture = "Origins/NPCs/Ashen/Boss/Front/Trenchmaker_LExhaust_Front";
 		protected static AutoLoadingTexture rExhaustFrontTexture = "Origins/NPCs/Ashen/Boss/Front/Trenchmaker_RExhaust_Front";
 		protected static AutoLoadingTexture lThighFrontTexture = "Origins/NPCs/Ashen/Boss/Front/Trenchmaker_LThigh_Front";
 		protected static AutoLoadingTexture rThighFrontTexture = "Origins/NPCs/Ashen/Boss/Front/Trenchmaker_RThigh_Front";
-		protected static AutoLoadingTexture hipFrontTexture = "Origins/NPCs/Ashen/Boss/Front/Trenchmaker_Hip_Front";
+		protected static AutoLoadingTexture lCalfFrontTexture = "Origins/NPCs/Ashen/Boss/Front/Trenchmaker_LCalf_Front";
+		protected static AutoLoadingTexture rCalfFrontTexture = "Origins/NPCs/Ashen/Boss/Front/Trenchmaker_RCalf_Front";
+		protected static AutoLoadingTexture footFrontTexture = "Origins/NPCs/Ashen/Boss/Front/Trenchmaker_Foot_Front";
 		protected SpriteEffects SpriteEffects => NPC.direction == -1 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 		public Vector2 GunPos => NPC.Center + new Vector2(19, -4).Apply(SpriteEffects, default);
 		public float DistToTarget {
@@ -100,6 +103,9 @@ namespace Origins.NPCs.Ashen.Boss {
 			AprilFoolsAssetSwitcher<AutoLoadingTexture>.Add(() => ref pistonTexture, Asset<Texture2D>.Empty);
 			AprilFoolsAssetSwitcher<AutoLoadingTexture>.Add(() => ref lThighFrontTexture, "Origins/NPCs/Ashen/Boss/AF/Trenchmaker_LThigh_Front_AF");
 			AprilFoolsAssetSwitcher<AutoLoadingTexture>.Add(() => ref rThighFrontTexture, "Origins/NPCs/Ashen/Boss/AF/Trenchmaker_RThigh_Front_AF");
+			AprilFoolsAssetSwitcher<AutoLoadingTexture>.Add(() => ref lCalfFrontTexture, "Origins/NPCs/Ashen/Boss/AF/Trenchmaker_LCalf_Front_AF");
+			AprilFoolsAssetSwitcher<AutoLoadingTexture>.Add(() => ref rCalfFrontTexture, "Origins/NPCs/Ashen/Boss/AF/Trenchmaker_RCalf_Front_AF");
+			AprilFoolsAssetSwitcher<AutoLoadingTexture>.Add(() => ref footFrontTexture, "Origins/NPCs/Ashen/Boss/AF/Trenchmaker_Foot_Front_AF");
 		}
 
 		static void Trenchmaker_DropSpecialHearts(ILContext il) {
@@ -392,27 +398,31 @@ namespace Origins.NPCs.Ashen.Boss {
 		private Rectangle armFrame = new(0, 62, 130, 310);
 		public int ArmFrame {
 			get {
-				return (armFrame.X / armFrame.Width) % 5;
+				return (armFrame.X / armFrame.Width) % 4;
 			}
 			set => armFrame.X = armFrame.Width * value;
 		}
 		public override void FindFrame(int frameHeight) {
-			if (NPC.frameCounter++ >= 30) {
-				ArmFrame++;
-				NPC.frameCounter = 0;
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				if (NPC.frameCounter++ >= 30) {
+					ArmFrame++;
+					NPC.frameCounter = 0;
+				}
+			} else {
+				ArmFrame = (int)GunType;
 			}
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			//spriteBatch.DrawDebugTextAbove($"ArmFrame: {ArmFrame}, {armFrame.X}, {armFrame.Y}, {armFrame.Width}, {armFrame.Height}", NPC.Top - screenPos);
 			drawColor = NPC.GetNPCColorTintedByBuffs(drawColor);
 			SpriteEffects effects = SpriteEffects;
-			//using (NPC.IsABestiaryIconDummy.ScopedOverride(true)) {
-				if (NPC.IsABestiaryIconDummy && (OriginsModIntegrations.CheckAprilFools() || this is not Fearmaker) && (!OriginsModIntegrations.CheckAprilFools() || this is Fearmaker)) {
-					Vector2 pos = new(0, frontTexture.Value.Height * 0.68f);
-					Vector2 offset = NPC.Center /*+ (Vector2.UnitX * 120) */- screenPos;
+			if (NPC.IsABestiaryIconDummy) {
+				NPC.rotation = MathHelper.Pi;
+				if ((OriginsModIntegrations.CheckAprilFools() || this is not Fearmaker) && (!OriginsModIntegrations.CheckAprilFools() || this is Fearmaker)) {
+					Vector2 offset = NPC.Center /*+ (Vector2.UnitX * 120)*/ - screenPos;
+					Vector2 hipPos = offset + new Vector2(0, frontTexture.Value.Height * 0.68f);
 					DrawData data = new(
 						hipFrontTexture,
-						(offset + pos),
+						hipPos,
 						null,
 						drawColor,
 						0,
@@ -424,11 +434,31 @@ namespace Origins.NPCs.Ashen.Boss {
 
 					data.texture = lThighFrontTexture;
 					data.origin = lThighFrontTexture.Value.Size() * 0.5f;
-					data.position = offset + pos - new Vector2(hipFrontTexture.Value.Width * 0.685f, -4.5f);
+					data.position = hipPos - new Vector2(hipFrontTexture.Value.Width * 0.63f, -4.5f);
 					data.Draw(spriteBatch);
 					data.texture = rThighFrontTexture;
 					data.origin = rThighFrontTexture.Value.Size() * 0.5f;
-					data.position = offset + pos + new Vector2(hipFrontTexture.Value.Width * 0.685f, 4.5f);
+					data.position = hipPos + new Vector2(hipFrontTexture.Value.Width * 0.63f, 4.5f);
+					data.Draw(spriteBatch);
+
+					data.texture = lCalfFrontTexture;
+					data.origin = lCalfFrontTexture.Value.Size() * 0.5f;
+					data.position = hipPos - new Vector2(hipFrontTexture.Value.Width * 0.59f, -3.5f - lThighFrontTexture.Value.Height);
+					data.Draw(spriteBatch);
+					data.texture = footFrontTexture;
+					data.origin = footFrontTexture.Value.Size() * 0.5f;
+					data.position += new Vector2(0, lCalfFrontTexture.Value.Height * 0.77f);
+					data.effect = SpriteEffects.FlipHorizontally;
+					data.Draw(spriteBatch);
+
+					data.texture = rCalfFrontTexture;
+					data.origin = rCalfFrontTexture.Value.Size() * 0.5f;
+					data.position = hipPos + new Vector2(hipFrontTexture.Value.Width * 0.59f, 3.5f + rThighFrontTexture.Value.Height);
+					data.effect = SpriteEffects.None;
+					data.Draw(spriteBatch);
+					data.texture = footFrontTexture;
+					data.origin = footFrontTexture.Value.Size() * 0.5f;
+					data.position += new Vector2(0, rCalfFrontTexture.Value.Height * 0.77f);
 					data.Draw(spriteBatch);
 
 					data.texture = lExhaustFrontTexture;
@@ -449,22 +479,20 @@ namespace Origins.NPCs.Ashen.Boss {
 					data.Draw(spriteBatch);
 					data.color = drawColor;
 					Rectangle FrameArm = lArmFrontTexture.Frame(5, 5, ArmFrame % 5, 3);
-					//if (ArmFrame >= 4) {
-						data.texture = lArmFrontTexture;
-						data.origin = FrameArm.Size() * 0.5f;
-						data.sourceRect = FrameArm;
-						data.position = offset - new Vector2(frontTexture.Value.Width * 0.456f, 0);
-						data.Draw(spriteBatch);
-					//} else {
-						data.texture = rArmFrontTexture;
-						data.origin = FrameArm.Size() * 0.5f;
-						data.sourceRect = FrameArm;
-						data.position = offset + new Vector2(frontTexture.Value.Width * 0.456f, 0);
-						data.Draw(spriteBatch);
-					//}
+
+					data.texture = lArmFrontTexture;
+					data.origin = FrameArm.Size() * 0.5f;
+					data.sourceRect = FrameArm;
+					data.position = offset - new Vector2(frontTexture.Value.Width * 0.456f, 0);
+					data.Draw(spriteBatch);
+
+					data.texture = rArmFrontTexture;
+					data.position = offset + new Vector2(frontTexture.Value.Width * 0.456f, 0);
+					data.Draw(spriteBatch);
+
 					return false;
+				}
 			}
-			//}
 			int i = legs.Length - 1;
 			int halfLegs = legs.Length / 2;
 			for (; i >= halfLegs; i--) {
