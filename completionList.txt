@@ -1408,7 +1408,7 @@ TILES:
 (X) Nerve Field Block
 (X) Nova Monolith
 (X) Ocean Dungeon Chest
-(#3, ^2) Oil Derrick !!!
+(^) Oil Derrick
 (^) Pocket Dimension Monolith
 (X) Qube Generator
 (^) Radio Component

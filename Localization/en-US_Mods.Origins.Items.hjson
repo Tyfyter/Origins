@@ -7788,7 +7788,12 @@ Petes_Peat_Slugger: {
 
 Space_Pirates_Eye: {
 	DisplayName: Space Pirate's Eye
-	Tooltip: <right> to select a color
+	Tooltip:
+		'''
+		Automatically attacks enemies in front of you
+		Each eye color has a unique pattern
+		<right> to select a color
+		'''
 }
 
 Laborer_Breastplate: {

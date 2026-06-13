@@ -381,6 +381,8 @@ namespace Origins.Items.Accessories {
 				Projectile.rotation = Projectile.velocity.ToRotation();
 			}
 			public override void AI() {
+				SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(Projectile.ai[2] / 30).WithVolume(0.24f), Projectile.Center);
+				SoundEngine.SoundPlayer.Play(SoundID.Item132.WithPitch(Projectile.ai[2] / 30).WithVolume(0.24f), Projectile.Center);
 				Player player = Main.player[Projectile.owner];
 				IsActive = ++Projectile.ai[2] >= ChargeTime;
 				if (Projectile.ai[2] >= ChargeTime + ActiveTime) {
@@ -927,6 +929,8 @@ namespace Origins.Items.Accessories {
 			public override void AI() {
 				float smoothSpeed = 0.1f;
 				if (Projectile.localAI[0] == 0) {
+					SoundEngine.PlaySound(SoundID.Item88.WithVolume(0.25f), Projectile.Center);
+					SoundEngine.PlaySound(SoundID.Item91.WithPitchRange(1.65f, 1.8f).WithVolume(0.45f), Projectile.Center);
 					smoothSpeed = 1f;
 					Projectile.localAI[0] = 1;
 					Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
@@ -1071,7 +1075,7 @@ namespace Origins.Items.Accessories {
 				}
 			}
 		}
-		public class _Temp_Magenta : PirateEyeMode {
+		public class Venom_Dropper : PirateEyeMode {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.VenomFang}";
 			public override Color Color => FromHexRGB(0xdf00ff);//#DF00FF
             public override int Cooldown => 60;
@@ -1087,8 +1091,12 @@ namespace Origins.Items.Accessories {
 				Projectile.localNPCHitCooldown = 10;
 				Projectile.timeLeft = 58;
 			}
+			public override void OnSpawn(IEntitySource source) {
+				SoundEngine.PlaySound(SoundID.Item42, Projectile.Center);
+			}
 			public override void AI() {
 				if (Projectile.ai[1] == 0 && Projectile.ai[2].CycleUp(15)) {
+					SoundEngine.PlaySound(SoundID.Item8, Projectile.Center);
 					Projectile.SpawnProjectile(null,// defaults to self.GetSource_FromAI() if null
 						Projectile.Center,
 						default,

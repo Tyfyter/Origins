@@ -143,8 +143,8 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 			if (Projectile.velocity.X != 0) player.ChangeDir(Math.Sign(Projectile.velocity.X));
 
-			//SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(Projectile.ai[2] / 10).WithVolume(0.24f), player.position);
-			//SoundEngine.SoundPlayer.Play(SoundID.Item132.WithPitch(Projectile.ai[2] / 10).WithVolume(0.24f), player.position);
+			SoundEngine.SoundPlayer.Play(SoundID.Item158.WithPitch(Projectile.ai[2] / 30).WithVolume(0.24f), player.position);
+			SoundEngine.SoundPlayer.Play(SoundID.Item132.WithPitch(Projectile.ai[2] / 30).WithVolume(0.24f), player.position);
 			Projectile.position = Main.GetPlayerArmPosition(Projectile);
 			if (player.mount?.Active ?? false) Projectile.position.Y -= player.mount.PlayerOffset;
 			Projectile.position = player.RotatedRelativePoint(Projectile.position);
@@ -163,7 +163,7 @@ namespace Origins.Items.Weapons.Summoner {
 				if (Projectile.velocity != velocity) {
 					float diff = GeometryUtils.AngleDif(Projectile.velocity.ToRotation(), velocity.ToRotation(), out int dir);
 					if (diff > 0) {
-						Min(ref diff, 0.02f);
+						Min(ref diff, 0.03f);
 						Projectile.velocity = Projectile.velocity.RotatedBy(diff * dir);
 						Projectile.netUpdate = true;
 					}
