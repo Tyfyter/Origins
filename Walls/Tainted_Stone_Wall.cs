@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Walls {
     public class Tainted_Stone_Wall : OriginsWall {
 		public override WallVersion WallVersions => WallVersion.Natural | WallVersion.Safe;
-		public override Color MapColor => new(73, 42, 22);
+		public override Color MapColor => new(46,40,37);
 		public override int DustType => Ashen_Biome.DefaultTileDust;
 		public override bool CanBeReplacedByWallSpread => false;
 		public override int TileItemType => TileItem.ItemType<Tainted_Stone>();
