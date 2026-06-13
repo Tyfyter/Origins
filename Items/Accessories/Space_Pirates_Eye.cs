@@ -27,7 +27,6 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Space_Pirates_Eye : ModItem, IRightClickableAccessory {
 		#region item
-		static AutoLoadingTexture irisTexture = typeof(Space_Pirates_Eye).GetDefaultTMLName("_Iris");
 		public static List<PirateEyeMode> Colors { get; } = [];
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
@@ -52,34 +51,6 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.OriginPlayer().spacePirateEye = Item;
-		}
-		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-			Color irisColor = Colors.GetIfInRange(Main.LocalPlayer.OriginPlayer().SpacePirateEyeVisualSelection)?.Color ?? Color.Transparent;
-			spriteBatch.Draw(
-				irisTexture,
-				position,
-				null,
-				drawColor.MultiplyRGB(irisColor),
-				0,
-				origin,
-				scale,
-				SpriteEffects.None,
-				0
-			);
-		}
-		public override void PostDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, float rotation, float scale, int whoAmI) {
-			Color irisColor = Colors.GetIfInRange(Main.LocalPlayer.OriginPlayer().SpacePirateEyeVisualSelection)?.Color ?? Color.Transparent;
-			spriteBatch.Draw(
-				irisTexture,
-				Item.Center - Main.screenPosition,
-				null,
-				lightColor.MultiplyRGB(irisColor),
-				rotation,
-				Item.Size * 0.5f,
-				scale,
-				SpriteEffects.None,
-				0
-			);
 		}
 		public static void UpdateEye(Player player, int mode) {
 			if (mode == -1) return;
@@ -122,8 +93,8 @@ namespace Origins.Items.Accessories {
 		}
 
 		private static Vector2 EyePosition(Player player) {
-			if (player.mount.Active && OriginsSets.Mounts.EyePosition[player.mount.Type] is Func<Player, Vector2> eyePosFinder) return eyePosFinder(player);
-			Vector2 position = player.MountedCenter + player.Directions(2, 12 - player.height * 0.5f);
+			if (player.mount.Active && OriginsSets.Mounts.EyePosition[player.mount.Type] is Func<Player, Vector2> eyePosFinder) return eyePosFinder(player) + new Vector2(0, player.gfxOffY);
+			Vector2 position = player.MountedCenter + player.Directions(2, (12 - player.height * 0.5f) + player.gfxOffY);
 			return position.RotatedBy(player.fullRotation, player.position + player.fullRotationOrigin);
 		}
 
@@ -220,7 +191,7 @@ namespace Origins.Items.Accessories {
 		}
 		public class Sharp_Tears : PirateEyeMode {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.SharpTears}";
-			public override Color Color => FromHexRGB(0xff0000);
+			public override Color Color => FromHexRGB(0xff0000);//#FF0000
 			public override int Cooldown => 120;
 			public override void SetDefaults() {
 				Projectile.CloneDefaults(ProjectileID.SharpTears);
@@ -374,7 +345,7 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public class Scrap_Laser : PirateEyeMode {
-			public override Color Color => FromHexRGB(0xff6000);
+			public override Color Color => FromHexRGB(0xff6000);//#FF6000
 			public override int Cooldown => 60;
 			public static int ChargeTime => 30;
 			public static int ActiveTime => 15;
@@ -568,7 +539,7 @@ namespace Origins.Items.Accessories {
 		}
 		public class Ichor_Spray : PirateEyeMode {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.IchorSplash}";
-			public override Color Color => FromHexRGB(0xffbf00);
+			public override Color Color => FromHexRGB(0xffbf00);//#FFBF00
 			public override int Cooldown => 60;
 			public override void SetDefaults() {
 				Projectile.DamageType = DamageClass.Magic;
@@ -603,7 +574,7 @@ namespace Origins.Items.Accessories {
 		public class _Temp_Yellow : PirateEyeMode, IBroken {
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.MedusaHeadRay;
-			public override Color Color => FromHexRGB(0xdfff00);
+			public override Color Color => FromHexRGB(0xdfff00);//#DFFF00
 			public override int Cooldown => 60;
 			public override void SetDefaults() {
 				Projectile.DamageType = DamageClass.Magic;
@@ -662,7 +633,7 @@ namespace Origins.Items.Accessories {
 		public class _Temp_Turquoise : PirateEyeMode, IBroken {
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.PoisonFang}";
-			public override Color Color => FromHexRGB(0x00ff9f);
+			public override Color Color => FromHexRGB(0x00ff9f);//#00FF9F
 			public override int Cooldown => 60;
 			public override void SetDefaults() {
 				Projectile.CloneDefaults(ProjectileID.PoisonFang);
@@ -671,7 +642,7 @@ namespace Origins.Items.Accessories {
 		}
 		public class Worms : PirateEyeMode {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.ElectrosphereMissile}";
-			public override Color Color => FromHexRGB(0x00ffff);
+			public override Color Color => FromHexRGB(0x00ffff);//#00FFFF
 			public override int Cooldown => 120;
 			public override void SetDefaults() {
 				Projectile.CloneDefaults(ProjectileID.ElectrosphereMissile);
@@ -873,10 +844,10 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public class _Temp_Light_Blue : PirateEyeMode, IBroken {
-			static string IBroken.BrokenReason => "Definitely not balanced"
+			static string IBroken.BrokenReason => "Definitely not balanced";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.FrostBoltStaff}";
-			public override Color Color => FromHexRGB(0x009fff);
-			public override float DamageMult => 0.5f;
+			public override Color Color => FromHexRGB(0x009fff);//#009FFF
+            public override float DamageMult => 0.5f;
 			public override int Cooldown => 12;
 			public override Vector2 GetVelocity(Player player, Vector2 difference, Entity target) => difference.Normalized(out _) * 8;
 			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int damage, float knockback) {
@@ -909,7 +880,7 @@ namespace Origins.Items.Accessories {
 		public class _Temp_Blue : PirateEyeMode, IBroken {
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.WaterStream}";
-			public override Color Color => FromHexRGB(0x2000ff);
+			public override Color Color => FromHexRGB(0x2000ff);//#2000FF
 			public override float DamageMult => 0.15f;
 			public override float KnockbackMult => 0.15f;
 			public override int Cooldown => 6;
@@ -920,7 +891,7 @@ namespace Origins.Items.Accessories {
 		}
 		public class Shimmer_Mines : PirateEyeMode {
 			public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RainbowRodBullet;
-			public override Color Color => FromHexRGB(0x6f66ff);
+			public override Color Color => FromHexRGB(0x6f66ff);//#6F66FF
 			public override int Cooldown => 15;
 			public override float Order => base.Order + 0.02f;// technically out of hue order, but by as little as 4
 			public override void SetStaticDefaults() {
@@ -988,7 +959,7 @@ namespace Origins.Items.Accessories {
 		}
 		public class Witch_Bolt : PirateEyeMode {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
-			public override Color Color => FromHexRGB(0x8000ff);
+			public override Color Color => FromHexRGB(0x8000ff);//#8000FF
 			public override int Cooldown => 20;
 			public static float Range => 16 * 45;
 			public override void SetDefaults() {
@@ -1102,8 +1073,8 @@ namespace Origins.Items.Accessories {
 		}
 		public class _Temp_Magenta : PirateEyeMode {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.VenomFang}";
-			public override Color Color => FromHexRGB(0xdf00ff);
-			public override int Cooldown => 60;
+			public override Color Color => FromHexRGB(0xdf00ff);//#DF00FF
+            public override int Cooldown => 60;
 			public override void SetDefaults() {
 				Projectile.width = 12;
 				Projectile.height = 12;
@@ -1159,7 +1130,7 @@ namespace Origins.Items.Accessories {
 		public class _Temp_Pink : PirateEyeMode, IBroken {
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
-			public override Color Color => FromHexRGB(0xff9ae9);
+			public override Color Color => FromHexRGB(0xff9ae9);//#FF9AE9
 			public override int Cooldown => 60;
 			public override float Order => 1.01f;
 			public override void SetDefaults() {
@@ -1170,7 +1141,7 @@ namespace Origins.Items.Accessories {
 		public class _Temp_Green : PirateEyeMode, IBroken {
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
-			public override Color Color => FromHexRGB(0x009700);
+			public override Color Color => FromHexRGB(0x009700);//#009700
 			public override int Cooldown => 60;
 			public override float Order => 1.02f;
 			public override void SetDefaults() {
@@ -1181,7 +1152,7 @@ namespace Origins.Items.Accessories {
 		public class _Temp_Brown : PirateEyeMode, IBroken {
 			static string IBroken.BrokenReason => "Needs idea";
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.BeeArrow}";
-			public override Color Color => FromHexRGB(0xa74d00);
+			public override Color Color => FromHexRGB(0xa74d00);//#A74D00
 			public override int Cooldown => 60;
 			public override float Order => 1.03f;
 			public override void SetDefaults() {
