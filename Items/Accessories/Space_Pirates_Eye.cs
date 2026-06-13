@@ -114,7 +114,6 @@ namespace Origins.Items.Accessories {
 					new EntitySource_ItemUse_WithTarget(player, spacePirateEye, targetEntity),
 					position,
 					eyeMode.GetVelocity(player, targetPos - position, targetEntity),
-					eyeMode.Type,
 					player.GetWeaponDamage(spacePirateEye),
 					player.GetWeaponKnockback(spacePirateEye)
 				);
@@ -164,9 +163,10 @@ namespace Origins.Items.Accessories {
 			public abstract int Cooldown { get; }
 			public virtual float Order => Main.rgbToHsl(Color).X;
 			public virtual Vector2 GetVelocity(Player player, Vector2 difference, Entity target) => difference.Normalized(out _) * 8;
-			public virtual void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-				player.SpawnProjectile(source, position, velocity, type, damage, knockback);
+			public virtual void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int damage, float knockback) {
+				player.SpawnProjectile(source, position, velocity, Type, damage, knockback);
 			}
+			public virtual void ShootEffects(Player player, Entity target, Vector2 position, Vector2 velocity) { }
 			public virtual bool FindTarget(Player player, Vector2 position, out Vector2 targetPos, out Entity targetEntity) => DefaultFindTarget(player, position, out targetPos, out targetEntity);
 			protected static bool DefaultFindTarget(Player player, Vector2 position, out Vector2 targetPos, out Entity targetEntity, float maxDist = 16 * 25) {
 				Vector2 _targetPos = position;
@@ -228,7 +228,7 @@ namespace Origins.Items.Accessories {
 				AIType = ProjectileID.SharpTears;
 			}
 			public override Vector2 GetVelocity(Player player, Vector2 difference, Entity target) => difference.Normalized(out _);
-			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int damage, float knockback) {
 				foreach (NPC npc in Main.ActiveNPCs) {
 					if (npc.TryGetGlobalNPC(out Blood_Thorn_Global global) && global.damage <= damage) {
 						Vector2 diff = (position.Clamp(npc.Hitbox) - position).Normalized(out float dist);
@@ -595,8 +595,8 @@ namespace Origins.Items.Accessories {
 			public override bool FindTarget(Player player, Vector2 position, out Vector2 targetPos, out Entity targetEntity) {
 				return DefaultFindTarget(player, position, out targetPos, out targetEntity, 16 * 10);
 			}
-			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-				for (int i = 0; i < 6; i++) player.SpawnProjectile(source, position, velocity + Main.rand.NextVector2Circular(2, 2), type, damage, knockback);
+			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int damage, float knockback) {
+				for (int i = 0; i < 6; i++) player.SpawnProjectile(source, position, velocity + Main.rand.NextVector2Circular(2, 2), Type, damage, knockback);
 			}
 		}
 		public class _Temp_Yellow : PirateEyeMode, IBroken {
@@ -677,7 +677,7 @@ namespace Origins.Items.Accessories {
 				AIType = ProjectileID.ElectrosphereMissile;
 			}
 			public override Vector2 GetVelocity(Player player, Vector2 difference, Entity target) => difference.Normalized(out _) * 8;
-			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int damage, float knockback) {
 				if (player.ownedProjectileCounts[ModContent.ProjectileType<Friendly_Cleaver_Head>()] > 0) {
 					player.OriginPlayer().spacePirateEyeCooldown = 5;
 					return;
@@ -871,14 +871,38 @@ namespace Origins.Items.Accessories {
 				public override bool CanInsert(Projectile parent, Projectile child) => child is null;
 			}
 		}
-		public class _Temp_Light_Blue : PirateEyeMode, IBroken {
-			static string IBroken.BrokenReason => "Needs idea";
+		public class _Temp_Light_Blue : PirateEyeMode {
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.FrostBoltStaff}";
 			public override Color Color => FromHexRGB(0x009fff);
-			public override int Cooldown => 60;
+			public override float DamageMult => 0.5f;
+			public override int Cooldown => 12;
+			public override Vector2 GetVelocity(Player player, Vector2 difference, Entity target) => difference.Normalized(out _) * 8;
+			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int damage, float knockback) {
+				for (int i = 0; i < 3; i++) player.SpawnProjectile(source, position, velocity + Main.rand.NextVector2Circular(2, 2), Type, damage, knockback);
+			}
 			public override void SetDefaults() {
-				Projectile.CloneDefaults(ProjectileID.FrostBoltStaff);
-				AIType = ProjectileID.FrostBoltStaff;
+				Projectile.width = 14;
+				Projectile.height = 14;
+				Projectile.aiStyle = 28;
+				Projectile.alpha = 255;
+				Projectile.DamageType = DamageClass.Magic;
+				Projectile.penetrate = 2;
+				Projectile.friendly = true;
+				Projectile.coldDamage = true;
+				Projectile.idStaticNPCHitCooldown = 10;
+				Projectile.usesIDStaticNPCImmunity = true;
+			}
+			public override void AI() {
+				Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.SnowSpray, 0f, 0f, 100, Scale: 0.5f).velocity *= 0.25f;
+				Projectile.velocity *= 0.97f;
+				if (Projectile.velocity.LengthSquared() < 1) Projectile.Kill();
+			}
+			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+				///TODO: actual slow/freeze debuff
+				target.AddBuff(BuffID.Chilled, 60);
+				Projectile.velocity *= 0.75f;
+				Projectile.damage = (int)(Projectile.damage * 0.85f);
+				Projectile.netUpdate = true;
 			}
 		}
 		public class _Temp_Blue : PirateEyeMode, IBroken {
@@ -917,12 +941,12 @@ namespace Origins.Items.Accessories {
 				Projectile.usesIDStaticNPCImmunity = true;
 			}
 			public override Vector2 GetVelocity(Player player, Vector2 difference, Entity target) => difference;
-			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int damage, float knockback) {
 				player.SpawnProjectile(
 					source,
 					position + velocity.Normalized(out float dist).RotatedByRandom(0.4f) * float.Lerp(float.Pow(Main.rand.NextFloat(), 0.5f) * 16 * 25, dist, 0.2f),
 					default,
-					type,
+					Type,
 					damage,
 					knockback
 				);
@@ -1003,8 +1027,8 @@ namespace Origins.Items.Accessories {
 				Vector2 soundPosition = Main.Camera.Center.SnapToLine(Projectile.position, EyePosition(player));
 				SoundEngine.PlaySound(Origins.Sounds.LittleZap, soundPosition);
 			}
-			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-				player.SpawnProjectile(source, position, default, type, damage, knockback, target.whoAmI);
+			public override void Shoot(Player player, Entity target, IEntitySource source, Vector2 position, Vector2 velocity, int damage, float knockback) {
+				player.SpawnProjectile(source, position, default, Type, damage, knockback, target.whoAmI);
 			}
 			public override bool FindTarget(Player player, Vector2 position, out Vector2 targetPos, out Entity targetEntity) {
 				Vector2 _targetPos = position;
