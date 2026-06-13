@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Core;
 using Origins.Graphics;
 using Origins.Items.Weapons.Magic;
@@ -871,7 +872,8 @@ namespace Origins.Items.Accessories {
 				public override bool CanInsert(Projectile parent, Projectile child) => child is null;
 			}
 		}
-		public class _Temp_Light_Blue : PirateEyeMode {
+		public class _Temp_Light_Blue : PirateEyeMode, IBroken {
+			static string IBroken.BrokenReason => "Definitely not balanced"
 			public override string Texture => $"Terraria/Images/Projectile_{ProjectileID.FrostBoltStaff}";
 			public override Color Color => FromHexRGB(0x009fff);
 			public override float DamageMult => 0.5f;
@@ -898,8 +900,7 @@ namespace Origins.Items.Accessories {
 				if (Projectile.velocity.LengthSquared() < 1) Projectile.Kill();
 			}
 			public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-				///TODO: actual slow/freeze debuff
-				target.AddBuff(BuffID.Chilled, 60);
+				target.AddBuff(Chilled_Debuff.ID, 60);
 				Projectile.velocity *= 0.75f;
 				Projectile.damage = (int)(Projectile.damage * 0.85f);
 				Projectile.netUpdate = true;

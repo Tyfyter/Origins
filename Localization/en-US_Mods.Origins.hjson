@@ -1461,6 +1461,16 @@ Buffs: {
 		DisplayName: Flashed!
 		Description: It's either really bright or really dark. Ow.
 	}
+
+	Chilled_Debuff: {
+		DisplayName: Chilled Debuff
+		Description: Mods.Origins.Buffs.Chilled_Debuff.Description
+	}
+
+	Frozen_Debuff: {
+		DisplayName: Frozen Debuff
+		Description: Mods.Origins.Buffs.Frozen_Debuff.Description
+	}
 }
 
 DamageClassName: {

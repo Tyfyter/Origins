@@ -71,6 +71,7 @@ namespace Origins.NPCs {
 		public float tornTarget = 0.7f;
 		public Vector2 tornOffset = default;
 		public bool slowDebuff = false;
+		[AutoReset] public bool frozenDebuff = false;
 		public bool silencedDebuff = false;
 		public bool weakDebuff = false;
 		public const float weakDebuffAmount = 0.5f;
@@ -245,6 +246,7 @@ namespace Origins.NPCs {
 
 		static Vector2 ModifyMovement(Vector2 velocity, NPC npc) {
 			OriginGlobalNPC global = npc.GetGlobalNPC<OriginGlobalNPC>();
+			if (global.frozenDebuff) return default;
 			if (global.rasterizedTime > 0 && npc.oldPosition != default) {
 				float velocityFactor = 1;
 				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out (int maxLevel, float accelerationFactor, float velocityFactor) adjustment)) {
@@ -254,6 +256,8 @@ namespace Origins.NPCs {
 			}
 			if (global.slowDebuff) velocity *= 0.7f;
 			if (global.barnacleBuff) velocity *= 1.2f;
+			int chilledIndex = npc.FindBuffIndex(Chilled_Debuff.ID);
+			if (chilledIndex >= 0) velocity *= Chilled_Debuff.CalculateSlow(npc.buffTime[chilledIndex]);
 			return velocity;
 		}
 		public override void ModifyHitPlayer(NPC npc, Player target, ref Player.HurtModifiers modifiers) {
