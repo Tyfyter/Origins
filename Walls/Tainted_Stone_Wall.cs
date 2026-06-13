@@ -21,7 +21,7 @@ namespace Origins.Walls {
 		}
 		public override void Load() {
 			if (WallVersion == WallVersion.Natural) {
-				Mod.AddContent(new Auto_Chambersite_Wall(this, new(73, 42, 22), ModContent.GetInstance<Ashen_Alt_Biome>));
+				Mod.AddContent(new Auto_Chambersite_Wall(this, MapColor, ModContent.GetInstance<Ashen_Alt_Biome>));
 			}
 		}
 	}
