@@ -1,5 +1,6 @@
 ﻿using Origins.Dev;
 using Origins.Items.Materials;
+using Origins.NPCs.Defiled.Boss;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using System;
@@ -21,11 +22,13 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new NPCID.Sets.NPCBestiaryDrawModifiers() {
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
 				Position = new(0, -16),
 				PortraitPositionYOverride = -32,
 				Rotation = -MathHelper.PiOver2
 			};
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
+			Defiled_Amalgamation.Minions.Add(Type);
 		}
 		public override void SetDefaults() {
 			//NPC.aiStyle = NPCAIStyleID.Duke_Fishron;
