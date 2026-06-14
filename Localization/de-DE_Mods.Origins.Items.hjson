@@ -8407,3 +8407,18 @@ Mother_Unit_Item: {
 	// DisplayName: Mother Unit
 	// Tooltip: ""
 }
+
+Artifiber_Hammer: {
+	// DisplayName: Artifiber Hammer
+	// Tooltip: ""
+}
+
+Artifiber_Sword: {
+	// DisplayName: Artifiber Sword
+	// Tooltip: ""
+}
+
+Artifiber_Bow: {
+	// DisplayName: Artifiber Bow
+	// Tooltip: ""
+}
