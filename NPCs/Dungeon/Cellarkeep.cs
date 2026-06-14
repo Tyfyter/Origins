@@ -97,7 +97,7 @@ namespace Origins.NPCs.Dungeon {
 				if (frame / timePerFrame > 2) {
 					NPC.localAI[0] = 0;
 					NPC.aiAction = 0;
-					NPC.frame = new Rectangle(6, 0, 32, 56);
+					NPC.frame = new Rectangle(0, 0, 40, 56);
 					DrawOffsetY = 0;
 					return true;
 				}
@@ -116,7 +116,7 @@ namespace Origins.NPCs.Dungeon {
 		}
 		public override void FindFrame(int frameHeight) {
 			if (NPC.aiAction != 1 && NPC.velocity.Y == 0 && ++NPC.frameCounter > 7) {
-				NPC.frame = new Rectangle(6, (NPC.frame.Y + 58) % 870, 32, 56);
+				NPC.frame = new Rectangle(0, (NPC.frame.Y + 58) % 870, 40, 56);
 				NPC.frameCounter = 0;
 			}
 		}
