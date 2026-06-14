@@ -170,7 +170,10 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override void Load() { }
 		public override void SafeSetStaticDefaults() {
 			World_Cracker_Summon_Bubble.MakeWorldCrackerMinion(this);
-			NPCID.Sets.NPCBestiaryDrawOffset.Remove(Type);
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() {
+				Position = new(-10, 3),
+				PortraitPositionXOverride = -8
+			};
 		}
 		public override void SetDefaults() {
 			base.SetDefaults();
