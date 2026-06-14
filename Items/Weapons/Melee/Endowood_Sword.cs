@@ -3,6 +3,7 @@ using Origins.Tiles.Defiled;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Melee {
 	public class Endowood_Sword : ModItem, ICustomWikiStat {
         public string[] Categories => [

@@ -5,9 +5,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
 	public class Endowood_Hammer : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodHammer);
 			Item.damage = 8;

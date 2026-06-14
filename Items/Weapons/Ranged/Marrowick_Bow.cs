@@ -1,9 +1,8 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
-using Origins.Tiles.Riven;
+﻿using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+
 namespace Origins.Items.Weapons.Ranged {
 	public class Marrowick_Bow : ModItem {
         public override void SetDefaults() {

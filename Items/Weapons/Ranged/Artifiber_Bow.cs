@@ -1,11 +1,12 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Tiles.Defiled;
+using Origins.Tiles.Ashen;
 
 namespace Origins.Items.Weapons.Ranged {
-    public class Endowood_Bow : ModItem {
-        public override void SetDefaults() {
+    public class Artifiber_Bow : ModItem {
+		public override void SetStaticDefaults() => Origins.AddGlowMask(this);
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodBow);
 			Item.damage = 8;
 			Item.width = 24;
@@ -17,7 +18,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ModContent.ItemType<Endowood_Item>(), 10)
+			.AddIngredient(ModContent.ItemType<Artifiber_Item>(), 10)
 			.AddTile(TileID.WorkBenches)
 			.Register();
 		}
