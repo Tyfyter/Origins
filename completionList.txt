@@ -54,7 +54,7 @@ X: No progress
 BOSSES AND MINI-BOSSES:
 |---
 (^) Chambersite Sentinel
-(X) CM-17 'Watcher' !!!
+(#, $2, ^2) CM-17 'Watcher' !!!
 (#, $2, ^2) D2L2 'Warsaw' !!!
 (#, $2, ^2) HA-24 'Hawken' !!!
 (X, ^2) Ichor Storm
@@ -1390,7 +1390,7 @@ TILES:
 (^) Edge Detector
 (^) Fire Extinguisher Holder
 (^) Gas Generator
-(X) Incinerator Pit !!!
+(@3, #) Incinerator Pit !!!
 (#2, ^2) Industrial Door !!!
 (^) Large Storage Container
 (^) Laser Tag Console
@@ -1501,7 +1501,9 @@ TILES:
 ($, ^2/3) Music Box (Ashen Mines) !!!
 ($2, ^2/3) Music Box (Ashen Scrapyard) !!!
 (#, @, $2) Music Box (Beep Boop Bop)
+(X) Music Box (Ashen Mini-boss)
 (^) Music Box (Brine Pool)
+(X) Music Box (Defiled Amalgamation)
 (^) Music Box (Defiled Caverns)
 (X) Music Box (Defiled Egregocide Route)
 (X) Music Box (Defiled Egregore)
@@ -1509,11 +1511,17 @@ TILES:
 (^) Music Box (Defiled Wastelands)
 (@, #, $2) Music Box (Eutrophic Sea)
 (^) Music Box (Fiberglass Undergrowth)
+(X) Music Box (Fiberglass Weaver)
+(X) Music Box (Lost Diver)
+(X) Music Box (Mildew Carrion)
 (X) Music Box (Repentance)
 (X) Music Box (Rivenran)
 (^) Music Box (Riven Hive)
+(X) Music Box (Shimmer Construct)
 ($2, ^2/3) Music Box (Smog Storm) !!!
 (^) Music Box (The Dive)
+(X) Music Box (Trenchmaker)
+(X) Music Box (World Cracker)
 (^) Otherworldly Music Box (Defiled Wastelands)
 
 (X) Arabel Relic
