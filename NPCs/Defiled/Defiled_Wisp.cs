@@ -1,4 +1,5 @@
-﻿using Origins.Dev;
+﻿using Origins.Core;
+using Origins.Dev;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using System;
@@ -43,6 +44,7 @@ namespace Origins.NPCs.Defiled {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);
+			AprilFoolsAssetSwitcher<IEntryIcon>.Add(() => ref bestiaryEntry.Icon, new NPCExtensions.RotatingUnlockableNPCEntryIcon(Type, 0.4f));
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 1, 1, 2));

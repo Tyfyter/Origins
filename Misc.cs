@@ -4955,8 +4955,9 @@ namespace Origins {
 				npc.wet = wet;
 				SimulateFirstHover(velocityX);
 				if (!frame.HasValue && (settings.IsPortrait || settings.IsHovered)) {
-					npc.velocity.X = npc.direction * velocityX;
-					npc.rotation += npc.velocity.X * _npcRotationSpeed;
+					float vel = npc.direction * velocityX;
+					npc.velocity.X = vel;
+					npc.rotation += (vel == 0 ? -1 : vel) * _npcRotationSpeed;
 					npc.FindFrame();
 				} else if (frame.HasValue) {
 					npc.FindFrame();
