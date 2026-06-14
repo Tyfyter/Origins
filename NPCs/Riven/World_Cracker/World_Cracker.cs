@@ -6,6 +6,7 @@ using Origins.Dev;
 using Origins.Dusts;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
 using Origins.Items.Vanity.BossMasks;
@@ -30,11 +31,12 @@ using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
 namespace Origins.NPCs.Riven.World_Cracker {
-	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy, ICustomWikiStat, IDrawWCArmor, IMinions {
+	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy, ICustomWikiStat, IDrawWCArmor, IMinions, IBossChecklistEntry {
 		public AssimilationAmount? Assimilation => 0.08f;
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
@@ -58,6 +60,125 @@ namespace Origins.NPCs.Riven.World_Cracker {
 
 		public static List<int> Minions = [];
 		List<int> IMinions.BossMinions => Minions;
+		public string BossName => "WorldCracker";
+		public float EntryPosition => 3f;
+		public bool DownedCondition => NPC.downedBoss2;
+		public List<int> EnemyTypes => new() { Type, ModContent.NPCType<World_Cracker_Body>(), ModContent.NPCType<World_Cracker_Tail>() };
+		public Dictionary<string, object> EntryInfo => new() {
+			["availability"] = OriginsModIntegrations.IfEvil<Riven_Hive_Alt_Biome>(),
+			["spawnItems"] = ModContent.ItemType<Sus_Ice_Cream>(),
+			["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.World_Cracker_Head.BossChecklistIntegration.SpawnCondition"),
+			["collectibles"] = new List<int> {
+				RelicTileBase.ItemType<World_Cracker_Relic>(),
+				TrophyTileBase.ItemType<World_Cracker_Trophy>(),
+				ModContent.ItemType<World_Cracker_Mask>(),
+				ModContent.ItemType<Fleshy_Globe>(),
+			},
+			["overrideHeadTextures"] = BossHeadTexture + 0,
+			["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
+				Vector2 center = area.Center();
+				Texture2D head = TextureAssets.Npc[Type].Value;
+				Texture2D body = TextureAssets.Npc[ModContent.NPCType<World_Cracker_Body>()].Value;
+				Texture2D tail = TextureAssets.Npc[ModContent.NPCType<World_Cracker_Tail>()].Value;
+				if (OriginsModIntegrations.CheckAprilFools()) {
+					void DrawSegment(Rectangle frame, Vector2 position, Texture2D baseTexture, int @switch) {
+						switch (@switch) {
+							case 0:
+							spriteBatch.Draw(
+								baseTexture,
+								position,
+								null,
+								color,
+								MathHelper.PiOver2,
+								baseTexture.Size() * 0.5f,
+								1,
+								0,
+							0);
+							break;
+							case 1:
+							Vector2 halfSize = frame.Size() / 2;
+							spriteBatch.Draw(
+								World_Cracker_Body.ArmorTexture.Value,
+								position,
+								frame,
+								color,
+								MathHelper.PiOver2,
+								halfSize,
+								1,
+								0,
+							0);
+							break;
+						}
+					}
+					Vector2 diff = new(0, 48);
+					for (int j = 0; j < 2; j++) {
+						DrawSegment(new Rectangle(168, 0, 52, 56), center + diff * 3, tail, j);
+						for (int i = 3; i-- > -2;) {
+							DrawSegment(new Rectangle(104, 60 * Math.Abs(i % 2), 62, 58), center + diff * i, body, j);
+						}
+						DrawSegment(new Rectangle(0, 0, 102, 58), center + diff * -3, head, j);
+					}
+					return;
+				}
+				DrawData MakeData(int part, Vector2 pos, float rot, SpriteEffects effects = SpriteEffects.None) {
+					Texture2D texture;
+					Rectangle? frame = null;
+					switch (part) {
+						case 0:
+						texture = TextureAssets.Npc[Type].Value;
+						frame = texture.Frame(verticalFrames: 4);
+						break;
+
+						case 1 or 2 or 3:
+						texture = body;
+						frame = texture.Frame(3, frameX: part - 1);
+						break;
+
+						case 4:
+						texture = tail;
+						break;
+
+						default:
+						return default;
+					}
+					Vector2 origin = texture.Size() * 0.5f;
+					if (frame.HasValue) origin = frame.Value.Size() * 0.5f;
+					return new DrawData(texture, pos, frame, color, rot, origin, 1, effects);
+				}
+				/*
+				BCSpriteConstructor.SetupArrangement(4, center);
+				DrawData[] datas = [
+					..BCSpriteConstructor.parts.Select(d => MakeData(d.part, d.pos, d.rot, d.effects)),
+					MakeData(BCSpriteConstructor.partNum, BCSpriteConstructor.partPos, BCSpriteConstructor.partRot, BCSpriteConstructor.partEffects)
+				];/*/
+				DrawData[] datas = [
+					MakeData(0, new Vector2(-71, -122) + center, -0.120000005f, SpriteEffects.None),
+					MakeData(1, new Vector2(22, -119) + center, 0.36f, SpriteEffects.None),
+					MakeData(2, new Vector2(88, -66) + center, 1.08f, SpriteEffects.None),
+					MakeData(1, new Vector2(114, 19) + center, 1.5600001f, SpriteEffects.None),
+					MakeData(2, new Vector2(84, 95) + center, 2.2799997f, SpriteEffects.None),
+					MakeData(3, new Vector2(8, 145) + center, 2.7599993f, SpriteEffects.None),
+					MakeData(4, new Vector2(-84, 158) + center, 3.119999f, SpriteEffects.None)
+				];//*/
+				for (int i = 0; i < datas.Length; i++) {
+					datas[i].Draw(spriteBatch);
+				}
+				for (int i = 0; i < datas.Length; i++) {
+					if (datas[i].texture == head) {
+						datas[i].texture = ArmorTexture.Value;
+						Rectangle frame = ArmorTexture.Value.Frame(4, 3);
+						datas[i].sourceRect = frame;
+						datas[i].origin = frame.Size() * 0.5f + new Vector2(15, 8).Apply(datas[i].effect, default);
+					} else if (datas[i].texture == body) {
+						datas[i].texture = World_Cracker_Body.ArmorTexture.Value;
+						Rectangle frame = World_Cracker_Body.ArmorTexture.Value.Frame(3, 3, frameX: datas[i].sourceRect.Value.X / World_Cracker_Body.ArmorTexture.Value.Frame(3).Width);
+						datas[i].sourceRect = frame;
+						datas[i].origin = frame.Size() * 0.5f;
+					} else continue;
+					datas[i].Draw(spriteBatch);
+				}
+			}
+		};
 
 		static int[] bossHeads = new int[4];
 		public override void Load() {

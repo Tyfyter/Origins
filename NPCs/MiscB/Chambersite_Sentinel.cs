@@ -2,7 +2,6 @@
 using Origins.Items.Weapons.Magic;
 using Origins.Tiles.Other;
 using Origins.World;
-using PegasusLib;
 using ReLogic.Utilities;
 using System.Collections.Generic;
 using Terraria;
@@ -12,10 +11,19 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscB {
-	public class Chambersite_Sentinel : ModNPC {
+	public class Chambersite_Sentinel : ModNPC, IBossChecklistEntry {
+		public string BossName => nameof(Chambersite_Sentinel);
+		public float EntryPosition => 7.2f;
+		public EntryType EntryType => EntryType.MiniBoss;
+		public bool DownedCondition => ProgressFlags.DownedChambersiteSentinel.IsSet;
+		public Dictionary<string, object> EntryInfo => new() {
+			["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Chambersite_Sentinel.BossChecklistIntegration.SpawnCondition"),
+			["overrideHeadTextures"] = "Origins/Textures/EmptySprite"
+		};
 		public override void Load() => this.AddBanner(25);
 		public override void SetStaticDefaults() {
 			ContentSamples.NpcBestiaryRarityStars[Type] = 4;

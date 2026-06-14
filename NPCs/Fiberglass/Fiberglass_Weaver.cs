@@ -1,9 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Core;
 using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Fiberglass;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
 using Origins.Items.Vanity.BossMasks;
@@ -12,15 +12,15 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
-using Origins.NPCs.MiscE;
 using Origins.Tiles.BossDrops;
 using Origins.World;
 using Origins.World.BiomeData;
-using PegasusLib;
+using PegasusLib.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
@@ -30,16 +30,17 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 using static Origins.OriginExtensions;
 using static Tyfyter.Utils.KinematicUtils;
 
 namespace Origins.NPCs.Fiberglass {
 	[AutoloadBossHead]
-	public class Fiberglass_Weaver : ModNPC, IMeleeCollisionDataNPC, ICustomWikiStat {
-		static AutoLoadingAsset<Texture2D> UpperLegTexture = "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Leg_Upper";
-		static AutoLoadingAsset<Texture2D> LowerLegTexture = "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Leg_Lower";
+	public class Fiberglass_Weaver : ModNPC, IMeleeCollisionDataNPC, ICustomWikiStat, IBossChecklistEntry {
+		static AutoLoadingTexture UpperLegTexture = "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Leg_Upper";
+		static AutoLoadingTexture LowerLegTexture = "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Leg_Lower";
+		static AutoLoadingTexture fwPortrait = "Origins/UI/Fiberglass_Weaver_Preview";
 		Arm[] legs;
 		Vector2[] legTargets;
 		internal static IItemDropRule armorDropRule;
@@ -50,18 +51,48 @@ namespace Origins.NPCs.Fiberglass {
 		Vector2? spawnPosition = null;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		string ICustomWikiStat.CustomSpritePath => WikiPageExporter.GetWikiImagePath("UI/Fiberglass_Weaver_Preview");
+		public string BossName => nameof(Fiberglass_Weaver);
+		public float EntryPosition => 4.7f;
+		public bool DownedCondition => ProgressFlags.DownedFiberglassWeaver.IsSet;
+		public Dictionary<string, object> EntryInfo => new() {
+			["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Fiberglass_Weaver.BossChecklistIntegration.SpawnCondition"),
+			["spawnItems"] = ModContent.ItemType<Shaped_Glass>(),
+			["collectibles"] = new List<int> {
+				RelicTileBase.ItemType<Fiberglass_Weaver_Relic>(),
+				TrophyTileBase.ItemType<Fiberglass_Weaver_Trophy>(),
+				ModContent.ItemType<Fiberglass_Weaver_Head>(),
+				ModContent.ItemType<Terlet_Paper>()
+			},
+			["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
+				SpriteBatchState state = spriteBatch.GetState();
+				spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
+				try {
+					Texture2D tex = fwPortrait.Value;
+					if (OriginsModIntegrations.CheckAprilFools()) tex = TextureAssets.Npc[Type].Value;
+
+					spriteBatch.Draw(tex, area.Center(), null, color, 0, tex.Size() * 0.5f, 2, SpriteEffects.None, 0);
+				} finally {
+					spriteBatch.Restart(state);
+				}
+			}
+		};
+
 		public override void SetStaticDefaults() {
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			NPCID.Sets.MPAllowedEnemies[Type] = true;
 			OriginsSets.NPCs.CustomGroundedCheck[Type] = _ => true;
 			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { // Influences how the NPC looks in the Bestiary
 				CustomTexturePath = "Origins/UI/Fiberglass_Weaver_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
-				Position = new Vector2(0f, -32f),
-				PortraitPositionXOverride = 0f,
-				PortraitPositionYOverride = -32f
+				Position = new Vector2(0f, -32f)
 			};
 			NPCID.Sets.BossBestiaryPriority.Add(Type);
 			AprilFoolsTextures.AddNPC(this);
+			AprilFoolsAssetSwitcher<NPCID.Sets.NPCBestiaryDrawModifiers>.Add(
+				() => ref CollectionsMarshal.GetValueRefOrNullRef(NPCID.Sets.NPCBestiaryDrawOffset, Type),
+				new() {
+					CustomTexturePath = typeof(Fiberglass_Weaver).GetDefaultTMLName() + "_AF"
+				}
+			);
 		}
 		public override void Unload() {
 			armorDropRule = null;

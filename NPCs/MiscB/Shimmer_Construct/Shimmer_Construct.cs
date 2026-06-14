@@ -37,14 +37,44 @@ using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.NPCs.MiscB.Shimmer_Construct {
 	[AutoloadBossHead]
-	public class Shimmer_Construct : ModNPC, IStateBoss<Shimmer_Construct>, IJournalEntrySource, IMinions {
+	public class Shimmer_Construct : ModNPC, IStateBoss<Shimmer_Construct>, IJournalEntrySource, IMinions, IBossChecklistEntry {
 		internal static ArmorShaderData MatrixCombine { get; set; }
 		internal static ArmorShaderData SmoothShimmer { get; set; }
+		public string BossName => nameof(Shimmer_Construct);
+		public float EntryPosition => 6.91f;
+		public bool DownedCondition => ProgressFlags.DownedShimmerConstruct.IsSet;
+		public Dictionary<string, object> EntryInfo => new() {
+			["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Shimmer_Construct.BossChecklistIntegration.SpawnCondition"),
+			["collectibles"] = new List<int> {
+				RelicTileBase.ItemType<Shimmer_Construct_Relic>(),
+				TrophyTileBase.ItemType<Shimmer_Construct_Trophy>(),
+				ItemType<Shimmer_Construct_Mask>(),
+				ItemType<Jawbreaker>()
+			},
+			["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
+				SpriteBatchState state = spriteBatch.GetState();
+				spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
+				try {
+					Texture2D tex = TextureAssets.Npc[Type].Value;
+					Rectangle frame = new(0, 996, 134, 166);
+					float rot = 0;
+					if (OriginsModIntegrations.CheckAprilFools()) {
+						frame = new(0, 0, 134, 166);
+						rot = MathHelper.Pi;
+					}
+
+					spriteBatch.Draw(tex, area.Center(), frame, color, rot, frame.Size() * 0.5f, 1, SpriteEffects.None, 0);
+				} finally {
+					spriteBatch.Restart(state);
+				}
+			}
+		};
 		public string EntryName => "Origins/" + typeof(Shimmer_Construct_Entry).Name;
 		public class Shimmer_Construct_Entry : JournalEntry {
 			public override string TextKey => "Shimmer_Construct";

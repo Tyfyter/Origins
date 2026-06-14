@@ -1,12 +1,19 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using ModLiquidLib.Utils;
 using Origins.Graphics;
+using Origins.Items.Other.Consumables;
+using Origins.Items.Pets;
+using Origins.Items.Vanity.BossMasks;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
 using Origins.Music;
+using Origins.Tiles.BossDrops;
+using Origins.World;
 using Origins.World.BiomeData;
+using PegasusLib.Graphics;
 using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
@@ -14,6 +21,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
@@ -81,7 +89,8 @@ namespace Origins.NPCs.Brine.Boss {
 		}
 	}
 	[AutoloadBossHead]
-	public class Lost_Diver : Brine_Pool_NPC {
+	public class Lost_Diver : Brine_Pool_NPC, IBossChecklistEntry {
+		protected static AutoLoadingTexture ldTexture = "Origins/NPCs/Brine/Boss/Rock_Bottom";
 		public static int HeadID { get; private set; } = -1;
 		public override bool AggressivePathfinding => true;
 		public override void SetStaticDefaults() {
@@ -136,6 +145,33 @@ namespace Origins.NPCs.Brine.Boss {
 			get => (AIModes)(int)NPC.localAI[3];
 			set => NPC.localAI[3] = (int)value;
 		}
+		public string BossName => nameof(Lost_Diver);
+		public float EntryPosition => 7.3f;
+		public bool DownedCondition => ProgressFlags.DownedLostDiver.IsSet;
+		public bool HasEntry => Type == ModContent.NPCType<Lost_Diver>();
+		public List<int> EnemyTypes => new() { Type, ModContent.NPCType<Lost_Diver_Transformation>(), ModContent.NPCType<Mildew_Carrion>() };
+		public Dictionary<string, object> EntryInfo => new() {
+			["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Lost_Diver.BossChecklistIntegration.SpawnCondition"),
+			["spawnItems"] = ModContent.ItemType<Lost_Picture_Frame>(),
+			["collectibles"] = new List<int> {
+				RelicTileBase.ItemType<Lost_Diver_Relic>(),
+				TrophyTileBase.ItemType<Lost_Diver_Trophy>(),
+				ModContent.ItemType<Lost_Diver_Helmet>(),
+				ModContent.ItemType<Lost_Diver_Chest>(),
+				ModContent.ItemType<Lost_Diver_Greaves>(),
+				ModContent.ItemType<Wet_Wood>()
+			},
+			["overrideHeadTextures"] = BossHeadTexture,
+			["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
+				SpriteBatchState state = spriteBatch.GetState();
+				spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
+				try {
+					spriteBatch.Draw(ldTexture.Value, area.Center(), ldTexture.Value.Frame(1, 15, 0, 4), color, 0, ldTexture.Value.Frame(1, 15, 0, 4).Size() * 0.5f, 2, SpriteEffects.None, 0);
+				} finally {
+					spriteBatch.Restart(state);
+				}
+			}
+		};
 		public override bool CanTargetPlayer(Player player) => NPC.WithinRange(player.MountedCenter, 16 * 400);
 		public override bool CanTargetNPC(NPC other) => !OriginsSets.NPCs.TargetDummies[other.type] && NPC.WithinRange(other.Center, 16 * 400) && CanHitNPC(other);
 		public override bool CanHitNPC(NPC target) => !Mildew_Creeper.FriendlyNPCTypes.Contains(target.type);

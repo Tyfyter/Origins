@@ -7,6 +7,7 @@ using Origins.Graphics;
 using Origins.Graphics.Primitives;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Pets;
 using Origins.Items.Vanity.BossMasks;
@@ -20,7 +21,6 @@ using Origins.Tiles.Defiled;
 using Origins.Walls;
 using Origins.World;
 using Origins.World.BiomeData;
-using PegasusLib;
 using PegasusLib.Graphics;
 using PegasusLib.Networking;
 using ReLogic.Content;
@@ -46,13 +46,38 @@ using static Origins.NPCs.Defiled.Boss.Defiled_Spike_Indicator;
 
 namespace Origins.NPCs.Defiled.Boss {
 	[AutoloadBossHead]
-	public class Defiled_Amalgamation : Glowing_Mod_NPC, IDefiledEnemy, ICustomWikiStat, IJournalEntrySource, IOutlineDrawer, IMinions {
-		static AutoLoadingAsset<Texture2D> RightArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm";
-		static AutoLoadingAsset<Texture2D> RightArmGlowTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm_Glow";
-		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
-		static AutoLoadingAsset<Texture2D> LeftArmGlowTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm_Glow";
-		static PegasusLib.AutoLoadingAsset<Texture2D> torsoPath = bodyPartsPath + "Torso";
+	public class Defiled_Amalgamation : Glowing_Mod_NPC, IDefiledEnemy, ICustomWikiStat, IJournalEntrySource, IOutlineDrawer, IMinions, IBossChecklistEntry {
+		static AutoLoadingTexture bossCheckPortrait = typeof(Defiled_Amalgamation).GetDefaultTMLName() + "_Boss_Checklist";
+		static AutoLoadingTexture RightArmTexture = typeof(Defiled_Amalgamation).GetDefaultTMLName() + "_Right_Arm";
+		static AutoLoadingTexture RightArmGlowTexture = typeof(Defiled_Amalgamation).GetDefaultTMLName() + "_Right_Arm_Glow";
+		static AutoLoadingTexture LeftArmTexture = typeof(Defiled_Amalgamation).GetDefaultTMLName() + "_Left_Arm";
+		static AutoLoadingTexture LeftArmGlowTexture = typeof(Defiled_Amalgamation).GetDefaultTMLName() + "_Left_Arm_Glow";
+		static AutoLoadingTexture torsoPath = bodyPartsPath + "Torso";
 		const string bodyPartsPath = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Split_";
+		public string BossName => nameof(Defiled_Amalgamation);
+		public float EntryPosition => 3f;
+		public bool DownedCondition => NPC.downedBoss2;
+		public Dictionary<string, object> EntryInfo => new() {
+			["availability"] = OriginsModIntegrations.IfEvil<Defiled_Wastelands_Alt_Biome>(),
+			["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Defiled_Amalgamation.BossChecklistIntegration.SpawnCondition"),
+			["spawnItems"] = ModContent.ItemType<Nerve_Impulse_Manipulator>(),
+			["collectibles"] = new List<int> {
+				RelicTileBase.ItemType<Defiled_Amalgamation_Relic>(),
+				TrophyTileBase.ItemType<Defiled_Amalgamation_Trophy>(),
+				ModContent.ItemType<Defiled_Amalgamation_Mask>(),
+				ModContent.ItemType<Blockus_Tube>(),
+			},
+			["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
+				SpriteBatchState state = spriteBatch.GetState();
+				spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
+				try {
+					Texture2D tex = bossCheckPortrait.Value;
+					spriteBatch.Draw(tex, area.Center(), null, color, 0, tex.Size() * 0.5f, 1, SpriteEffects.None, 0);
+				} finally {
+					spriteBatch.Restart(state);
+				}
+			}
+		};
 
 		public string CustomSpritePath => "DefiledAmalg";
 		public AssimilationAmount? Assimilation => 0.05f;
@@ -1034,7 +1059,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
 			return Asset<Texture2D>.Empty;
 		}
-		AutoLoadingAsset<Texture2D> tickTexture = typeof(Boss_Bar_DA).GetDefaultTMLName() + "_Tick";
+		AutoLoadingTexture tickTexture = typeof(Boss_Bar_DA).GetDefaultTMLName() + "_Tick";
 		public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float life, ref float lifeMax, ref float shield, ref float shieldMax) {
 			NPC owner = Main.npc[info.npcIndexToAimAt];
 			if (owner.type != Defiled_Amalgamation.ID || (lastTickPercent < 0 && isDead)) return false;

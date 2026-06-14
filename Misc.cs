@@ -3400,14 +3400,16 @@ namespace Origins {
 				0,
 			0);
 		}
-		public static Vector2 DrawDebugTextAbove(this SpriteBatch spritebatch, object obj, Vector2 position, Vector2? origin = null, Color? color = null) {
+		public static Vector2 DrawDebugTextAbove(this SpriteBatch spritebatch, object obj, Vector2 position, Vector2? origin = null, Color? color = null, Vector2? scale = null) {
 			string text = obj.ToString();
 			DynamicSpriteFont font = FontAssets.ItemStack.Value;
 			Vector2 spacing = font.MeasureString(text) / 2;
 			Vector2 orig = origin ?? Vector2.Zero;
+			scale = scale ?? Vector2.One;
 			orig.Y += spacing.Y;
-			return ChatManager.DrawColorCodedStringWithShadow(spritebatch, font, text, position - spacing, color ?? Color.White, 0, orig, Vector2.One);
+			return ChatManager.DrawColorCodedStringWithShadow(spritebatch, font, text, position - (spacing * (scale.Value * 0.5f)), color ?? Color.White, 0, orig, scale.Value);
 		}
+		public static Vector2 DrawDebugTextAbove(this SpriteBatch spritebatch, object obj, Vector2 position, Vector2? origin = null, Color? color = null, float scale = 1) => DrawDebugTextAbove(spritebatch, obj, position, origin, color, new Vector2(scale));
 		public static void DrawConstellationLine(SpriteBatch spriteBatch, Vector2 start, Vector2 end, float width = 20, float distort = 20) {
 			MiscShaderData shader = GameShaders.Misc["Origins:Constellation"];
 			shader.UseSaturation(width);

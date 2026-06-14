@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoMod.Cil;
 using Origins.Buffs;
+using Origins.Core;
 using Origins.CrossMod.Fargos.Items;
 using Origins.Dev;
 using Origins.Items;
@@ -59,6 +60,7 @@ using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -206,289 +208,36 @@ namespace Origins {
 				return mod.GetContent<ModWall>().First(content => content.Name == name).Type;
 			}
 		}
+		public static Func<bool> IfEvil<T>() where T : AltBiome {
+			AltBiome biome = GetInstance<T>();
+			return () => Main.drunkWorld || WorldBiomeManager.GetWorldEvil(true) == biome || ModLoader.HasMod("BothEvils");
+		}
 		public static void PostSetupContent(Mod mod) {
 			if (ModLoader.TryGetMod("BossChecklist", out Mod bossChecklist)) {
-				static Func<bool> IfEvil<T>() where T : AltBiome {
-					AltBiome biome = GetInstance<T>();
-					return () => Main.drunkWorld || WorldBiomeManager.GetWorldEvil(true) == biome || ModLoader.HasMod("BothEvils");
+				for (int i = NPCID.Count; i < NPCLoader.NPCCount; i++) {
+					if (NPCLoader.GetNPC(i) is IBossChecklistEntry entry && entry.HasEntry) {
+						string CallType() {
+							switch (entry.EntryType) {
+								case EntryType.Boss:
+								return "LogBoss";
+								case EntryType.MiniBoss:
+								return "LogMiniBoss";
+								case EntryType.Invasion:
+								return "LogEvent";
+								default:
+								return string.Empty;
+							}
+						}
+						bossChecklist.Call(CallType(),
+							mod,
+							entry.BossName.Replace("_", ""),
+							entry.EntryPosition,
+							() => entry.DownedCondition,
+							entry.EnemyTypes[0] == 0 ? i : entry.EnemyTypes,
+							entry.EntryInfo
+						);
+					}
 				}
-				/*Asset<Texture2D> glowTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Glow");
-				Asset<Texture2D> armTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Arm");
-				Asset<Texture2D> pistonTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Leg_Piston");
-				Asset<Texture2D> hipTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Hip");
-				Asset<Texture2D> hipGlowTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Hip_Glow");
-				Asset<Texture2D> thighTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Thigh");
-				Asset<Texture2D> calfTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Calf");
-				Asset<Texture2D> footTexture = Request<Texture2D>(typeof(Trenchmaker).GetDefaultTMLName() + "_Foot");*/
-				bossChecklist.Call("LogBoss",
-					mod,
-					"Trenchmaker",
-					3f,
-					() => NPC.downedBoss2,
-					new List<int> { NPCType<Trenchmaker>(), NPCType<Fearmaker>() },
-					new Dictionary<string, object> {
-						["availability"] = IfEvil<Ashen_Alt_Biome>(),
-						["spawnItems"] = ItemType<Distress_Beacon>(),
-						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Trenchmaker.BossChecklistIntegration.SpawnCondition"),
-						["collectibles"] = new List<int> {
-							RelicTileBase.ItemType<Trenchmaker_Relic>(),
-							TrophyTileBase.ItemType<Trenchmaker_Trophy>(),
-							ItemType<Trenchmaker_Mask>(),
-							//ItemType<Fleshy_Globe>(),
-						}/*,
-						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
-						}*/
-					}
-				);
-				bossChecklist.Call("LogBoss",
-					mod,
-					nameof(Defiled_Amalgamation).Replace("_", ""),
-					3f,
-					() => NPC.downedBoss2,
-					NPCType<Defiled_Amalgamation>(),
-					new Dictionary<string, object> {
-						["availability"] = IfEvil<Defiled_Wastelands_Alt_Biome>(),
-						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Defiled_Amalgamation.BossChecklistIntegration.SpawnCondition"),
-						["spawnItems"] = ItemType<Nerve_Impulse_Manipulator>(),
-						["collectibles"] = new List<int> {
-							RelicTileBase.ItemType<Defiled_Amalgamation_Relic>(),
-							TrophyTileBase.ItemType<Defiled_Amalgamation_Trophy>(),
-							ItemType<Defiled_Amalgamation_Mask>(),
-							ItemType<Blockus_Tube>(),
-						}
-					}
-				);
-				Asset<Texture2D> wcHeadTexture = Request<Texture2D>(typeof(World_Cracker_Head).GetDefaultTMLName());
-				Asset<Texture2D> wcBodyTexture = Request<Texture2D>(typeof(World_Cracker_Body).GetDefaultTMLName());
-				Asset<Texture2D> wcTailTexture = Request<Texture2D>(typeof(World_Cracker_Tail).GetDefaultTMLName());
-				Asset<Texture2D> wcHeadArmorTexture = Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Head_Armor");
-				Asset<Texture2D> wcArmorTexture = Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
-				bossChecklist.Call("LogBoss",
-					mod,
-					"WorldCracker",
-					3f,
-					() => NPC.downedBoss2,
-					new List<int> { NPCType<World_Cracker_Head>(), NPCType<World_Cracker_Body>(), NPCType<World_Cracker_Tail>() },
-					new Dictionary<string, object> {
-						["availability"] = IfEvil<Riven_Hive_Alt_Biome>(),
-						["spawnItems"] = ItemType<Sus_Ice_Cream>(),
-						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.World_Cracker_Head.BossChecklistIntegration.SpawnCondition"),
-						["collectibles"] = new List<int> {
-							RelicTileBase.ItemType<World_Cracker_Relic>(),
-							TrophyTileBase.ItemType<World_Cracker_Trophy>(),
-							ItemType<World_Cracker_Mask>(),
-							ItemType<Fleshy_Globe>(),
-						},
-						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
-							Vector2 center = area.Center();
-							if (CheckAprilFools()) {
-								void DrawSegment(Rectangle frame, Vector2 position, Texture2D baseTexture, int @switch) {
-									switch (@switch) {
-										case 0:
-										spriteBatch.Draw(
-											baseTexture,
-											position,
-											null,
-											color,
-											MathHelper.PiOver2,
-											baseTexture.Size() * 0.5f,
-											1,
-											0,
-										0);
-										break;
-										case 1:
-										Vector2 halfSize = frame.Size() / 2;
-										spriteBatch.Draw(
-											wcArmorTexture.Value,
-											position,
-											frame,
-											color,
-											MathHelper.PiOver2,
-											halfSize,
-											1,
-											0,
-										0);
-										break;
-									}
-								}
-								Vector2 diff = new(0, 48);
-								for (int j = 0; j < 2; j++) {
-									DrawSegment(new Rectangle(168, 0, 52, 56), center + diff * 3, wcTailTexture.Value, j);
-									for (int i = 3; i-- > -2;) {
-										DrawSegment(new Rectangle(104, 60 * Math.Abs(i % 2), 62, 58), center + diff * i, wcBodyTexture.Value, j);
-									}
-									DrawSegment(new Rectangle(0, 0, 102, 58), center + diff * -3, wcHeadTexture.Value, j);
-								}
-								return;
-							}
-							DrawData MakeData(int part, Vector2 pos, float rot, SpriteEffects effects = SpriteEffects.None) {
-								Texture2D texture;
-								Rectangle? frame = null;
-								switch (part) {
-									case 0:
-									texture = wcHeadTexture.Value;
-									frame = texture.Frame(verticalFrames: 4);
-									break;
-
-									case 1 or 2 or 3:
-									texture = wcBodyTexture.Value;
-									frame = texture.Frame(3, frameX: part - 1);
-									break;
-
-									case 4:
-									texture = wcTailTexture.Value;
-									break;
-
-									default:
-									return default;
-								}
-								Vector2 origin = texture.Size() * 0.5f;
-								if (frame.HasValue) origin = frame.Value.Size() * 0.5f;
-								return new DrawData(texture, pos, frame, Color.White, rot, origin, 1, effects);
-							}
-							/*
-							BCSpriteConstructor.SetupArrangement(4, center);
-							DrawData[] datas = [
-								..BCSpriteConstructor.parts.Select(d => MakeData(d.part, d.pos, d.rot, d.effects)),
-								MakeData(BCSpriteConstructor.partNum, BCSpriteConstructor.partPos, BCSpriteConstructor.partRot, BCSpriteConstructor.partEffects)
-							];/*/
-							DrawData[] datas = [
-								MakeData(0, new Vector2(-91, -142) + center, -0.120000005f, SpriteEffects.None),
-								MakeData(1, new Vector2(2, -139) + center, 0.36f, SpriteEffects.None),
-								MakeData(2, new Vector2(68, -86) + center, 1.08f, SpriteEffects.None),
-								MakeData(1, new Vector2(94, -1) + center, 1.5600001f, SpriteEffects.None),
-								MakeData(2, new Vector2(64, 75) + center, 2.2799997f, SpriteEffects.None),
-								MakeData(3, new Vector2(-12, 125) + center, 2.7599993f, SpriteEffects.None),
-								MakeData(4, new Vector2(-104, 138) + center, 3.119999f, SpriteEffects.None)
-							];//*/
-							for (int i = 0; i < datas.Length; i++) {
-								datas[i].Draw(spriteBatch);
-							}
-							for (int i = 0; i < datas.Length; i++) {
-								if (datas[i].texture == wcHeadTexture.Value) {
-									datas[i].texture = wcHeadArmorTexture.Value;
-									Rectangle frame = wcHeadArmorTexture.Frame(4, 3);
-									datas[i].sourceRect = frame;
-									datas[i].origin = frame.Size() * 0.5f + new Vector2(15, 8).Apply(datas[i].effect, default);
-								} else if (datas[i].texture == wcBodyTexture.Value) {
-									datas[i].texture = wcArmorTexture.Value;
-									Rectangle frame = wcArmorTexture.Frame(3, 3, frameX: datas[i].sourceRect.Value.X / wcBodyTexture.Frame(3).Width);
-									datas[i].sourceRect = frame;
-									datas[i].origin = frame.Size() * 0.5f;
-								} else continue;
-								datas[i].Draw(spriteBatch);
-							}
-						}
-					}
-				);
-				Asset<Texture2D> fwTexture = Request<Texture2D>("Origins/UI/Fiberglass_Weaver_Preview");
-				Asset<Texture2D> fwAFTexture = Request<Texture2D>(typeof(Fiberglass_Weaver).GetDefaultTMLName() + "_AF");
-				bossChecklist.Call("LogBoss",
-					mod,
-					nameof(Fiberglass_Weaver).Replace("_", ""),
-					4.7f,
-					() => ProgressFlags.DownedFiberglassWeaver.IsSet,
-					NPCType<Fiberglass_Weaver>(),
-					new Dictionary<string, object> {
-						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Fiberglass_Weaver.BossChecklistIntegration.SpawnCondition"),
-						["spawnItems"] = ItemType<Shaped_Glass>(),
-						["collectibles"] = new List<int> {
-							RelicTileBase.ItemType<Fiberglass_Weaver_Relic>(),
-							TrophyTileBase.ItemType<Fiberglass_Weaver_Trophy>(),
-							ItemType<Fiberglass_Weaver_Head>()
-						},
-						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
-							SpriteBatchState state = spriteBatch.GetState();
-							spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
-							try {
-								Texture2D tex = fwTexture.Value;
-								if (CheckAprilFools()) tex = fwAFTexture.Value;
-
-								spriteBatch.Draw(tex, area.Center(), null, color, 0, tex.Size() * 0.5f, 2, SpriteEffects.None, 0);
-							} finally {
-								spriteBatch.Restart(state);
-							}
-						}
-					}
-				);
-				Asset<Texture2D> ldTexture = Request<Texture2D>("Origins/NPCs/Brine/Boss/Rock_Bottom");
-				bossChecklist.Call("LogBoss",
-					mod,
-					nameof(Lost_Diver).Replace("_", ""),
-					7.3f,
-					() => ProgressFlags.DownedLostDiver.IsSet,
-					new List<int> {
-						NPCType<Lost_Diver>(),
-						NPCType<Lost_Diver_Transformation>(),
-						NPCType<Mildew_Carrion>()
-					},
-					new Dictionary<string, object> {
-						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Lost_Diver.BossChecklistIntegration.SpawnCondition"),
-						["spawnItems"] = ItemType<Lost_Picture_Frame>(),
-						["collectibles"] = new List<int> {
-							RelicTileBase.ItemType<Lost_Diver_Relic>(),
-							TrophyTileBase.ItemType<Lost_Diver_Trophy>(),
-							ItemType<Lost_Diver_Helmet>(),
-							ItemType<Lost_Diver_Chest>(),
-							ItemType<Lost_Diver_Greaves>()
-						},
-						["overrideHeadTextures"] = GetInstance<Lost_Diver>().BossHeadTexture,
-						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
-							SpriteBatchState state = spriteBatch.GetState();
-							spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
-							try {
-								spriteBatch.Draw(ldTexture.Value, area.Center(), ldTexture.Value.Frame(1, 15, 0, 4), color, 0, ldTexture.Value.Frame(1, 15, 0, 4).Size() * 0.5f, 2, SpriteEffects.None, 0);
-							} finally {
-								spriteBatch.Restart(state);
-							}
-						}
-					}
-				);
-				Asset<Texture2D> scTexture = Request<Texture2D>(typeof(Shimmer_Construct).GetDefaultTMLName());
-				Asset<Texture2D> scAFTexture = Request<Texture2D>(typeof(Shimmer_Construct).GetDefaultTMLName() + "_AF");
-				bossChecklist.Call("LogBoss",
-					mod,
-					nameof(Shimmer_Construct).Replace("_", ""),
-					6.91f,
-					() => ProgressFlags.DownedShimmerConstruct.IsSet,
-					NPCType<Shimmer_Construct>(),
-					new Dictionary<string, object> {
-						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Shimmer_Construct.BossChecklistIntegration.SpawnCondition"),
-						["collectibles"] = new List<int> {
-							RelicTileBase.ItemType<Shimmer_Construct_Relic>(),
-							TrophyTileBase.ItemType<Shimmer_Construct_Trophy>()
-						},
-						["customPortrait"] = (SpriteBatch spriteBatch, Rectangle area, Color color) => {
-							SpriteBatchState state = spriteBatch.GetState();
-							spriteBatch.Restart(state, samplerState: SamplerState.PointClamp);
-							try {
-								Texture2D tex = scTexture.Value;
-								Rectangle frame = new(0, 996, 134, 166);
-								float rot = 0;
-								if (CheckAprilFools()) {
-									tex = scAFTexture.Value;
-									frame = new(0, 0, 134, 166);
-									rot = MathHelper.Pi;
-								}
-
-								spriteBatch.Draw(tex, area.Center(), frame, color, rot, frame.Size() * 0.5f, 1, SpriteEffects.None, 0);
-							} finally {
-								spriteBatch.Restart(state);
-							}
-						}
-					}
-				);
-				bossChecklist.Call("LogMiniBoss",
-					mod,
-					nameof(Chambersite_Sentinel).Replace("_", ""),
-					7.2f,
-					() => ProgressFlags.DownedChambersiteSentinel.IsSet,
-					NPCType<Chambersite_Sentinel>(),
-					new Dictionary<string, object> {
-						["spawnInfo"] = Language.GetOrRegister("Mods.Origins.NPCs.Chambersite_Sentinel.BossChecklistIntegration.SpawnCondition"),
-						["overrideHeadTextures"] = "Origins/Textures/EmptySprite"
-					}
-				);
 			}
 			if (ModLoader.TryGetMod("Fargowiltas", out instance.fargosMutant)) {
 				FargosMutant.Call("AddIndestructibleTileType", TileType<Fortified_Steel_Block1>());
@@ -1362,6 +1111,22 @@ namespace Origins {
 	}
 	public interface IBardDamageClassOverride {
 		DamageClass DamageType { get; }
+	}
+	public enum EntryType {
+		Boss,
+		MiniBoss,
+		Invasion
+	}
+	public interface IBossChecklistEntry {
+		string BossName { get; }
+		bool HasEntry { get => true; }
+		float EntryPosition { get; }
+		EntryType EntryType { get => EntryType.Boss; }
+		bool DownedCondition { get; }
+		int EnemyType { get => 0; }
+		List<int> EnemyTypes { get => new() { EnemyType }; }
+		Dictionary<string, object> EntryInfo { get; }
+
 	}
 	[ReinitializeDuringResizeArrays]
 	public class ModCompatSets {
