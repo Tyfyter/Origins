@@ -45,7 +45,7 @@ using static Terraria.Utilities.NPCUtils;
 
 namespace Origins.NPCs.Ashen.Boss {
 	[AutoloadBossHead]
-	public class Trenchmaker : ModNPC, IStateBoss<Trenchmaker>, IAshenEnemy, IBossChecklistEntry {
+	public class Trenchmaker : ModNPC, IStateBoss<Trenchmaker>, IAshenEnemy, IBossChecklistEntry, IMinions {
 		public enum GunKind : byte {
 			Cannon,
 			Launcher,
@@ -437,6 +437,8 @@ namespace Origins.NPCs.Ashen.Boss {
 				}
 			}
 		};
+		public static List<int> Minions = [];
+		public List<int> BossMinions => Minions;
 		public override void FindFrame(int frameHeight) {
 			if (OriginsModIntegrations.CheckAprilFools()) {
 				if (NPC.frameCounter++ >= 30) {

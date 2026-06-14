@@ -4,12 +4,14 @@ using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.Tiles.Ashen;
+using Origins.World.BiomeData;
 using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -52,7 +54,7 @@ namespace Origins.NPCs.Ashen.Boss {
 		static AutoLoadingTexture[] gunGlowTextures;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 2;
-			NPCID.Sets.NPCBestiaryDrawOffset[Type] = NPCExtensions.HideInBestiary;
+			NPCID.Sets.NPCBestiaryDrawOffset[Type] = new() { Rotation = MathHelper.Pi };
 			// That comic by market pliers' brother?
 			TurretKind[] turretKinds = Enum.GetValues<TurretKind>();
 			gunTextures = new AutoLoadingTexture[turretKinds.Length];
@@ -62,6 +64,8 @@ namespace Origins.NPCs.Ashen.Boss {
 				gunGlowTextures[(int)turretKinds[i]] = $"{Texture}_{turretKinds[i]}_Glow";
 			}
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Slow] = true;
+			ContentSamples.NpcBestiaryRarityStars[Type] = 3;
+			Minions.Add(Type);
 		}
 		public TurretKind GunType { get; private set; }
 		public Vector2 GunPos => NPC.position + new Vector2(19, 11) * NPC.scale;
@@ -74,6 +78,9 @@ namespace Origins.NPCs.Ashen.Boss {
 			NPC.npcSlots = 0;
 			NPC.HitSound = SoundID.NPCHit4.WithPitchOffset(-2f);
 			NPC.knockBackResist = 0.5f;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Ashen_Biome>().Type
+			];
 		}
 		public override void OnSpawn(IEntitySource source) {
 			SoundEngine.PlaySound(SoundID.Item61.WithPitch(-0.5f), NPC.Center);
@@ -87,6 +94,11 @@ namespace Origins.NPCs.Ashen.Boss {
 				if (parent is NPC { ModNPC: Trenchmaker trenchmaker }) GunType = trenchmaker.GunType;
 			}
 			NPC.netUpdate = true;
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void AI() {
 			if (NPC.ai[0] == -0x100) {
