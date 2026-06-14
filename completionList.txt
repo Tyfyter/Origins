@@ -771,6 +771,7 @@ WINGS:
 
 TOOLS:
 |---
+(X) Artifiber Hammer !!!
 (^) Brick Breaker
 (^) C6 Jackhammer
 (^) Dismantler
@@ -805,7 +806,7 @@ TOOLS:
 (X) Perihelion Jackhammer
 (X) Perihelion Pickaxe
 
-(␡) Amebic Gel Absorbant Sponge !!!
+(␡) Amebic Gel Absorbant Sponge
 (^) Bottomless Amebic Gel Bucket
 (^) Bottomless Brine Bucket
 (^) Bottomless Oil Bucket
@@ -820,6 +821,7 @@ TOOLS:
 
 MELEE WEAPONS:
 |---
+(#, ^2) Artifiber Sword !!!
 (^) Astral Scythe
 (X) Autoscopy
 (^) Baseball Bat
@@ -863,7 +865,7 @@ MELEE WEAPONS:
 (^) Nematoclaw
 (X) Origins Biome Keybrands
 (X) Soulfire Saw
-(⛥) The Claw !!!
+(#, ^2) The Claw !!!
 (^) The Foot
 (^) The Muffler
 (X) Unicorn Lance
@@ -891,6 +893,7 @@ MELEE WEAPONS:
 RANGED WEAPONS:
 |---
 (^) Ancient Kruncher
+(#, ^2) Artifiber Bow !!!
 (^) Bloodletter
 (^) Blotopus
 (^) Bolt Gun
