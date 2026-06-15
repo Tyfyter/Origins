@@ -840,7 +840,6 @@ namespace Origins {
 					}
 				})
 			);
-			if (typeof(ThoriumPlayer).GetField(nameof(ThoriumPlayer.breathOverMax)) is not null) OriginExtensions.OnIncreaseMaxBreath += [JITWhenModsEnabled("ThoriumMod")] (player, _) => player.GetModPlayer<ThoriumPlayer>().breathOverMax = true;
 			(string name, float? assimilation)[] thoriumNPCs = [
 				("TheInnocent", 0.02f),
 				("FrostWormHead", null),
