@@ -21,6 +21,7 @@ using Origins.UI.Event;
 using PegasusLib;
 using ReLogic.OS;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -702,6 +703,22 @@ namespace Origins {
 				}*/
 			}
 		}
+		readonly struct TileDropsIterator<T>(IEnumerator<T> enumerator) : IEnumerable<T>, IEnumerator<T> {
+			public TileDropsIterator(IEnumerable<T> enumerable) : this(enumerable.GetEnumerator()) { }
+			readonly T IEnumerator<T>.Current => enumerator.Current;
+			readonly object IEnumerator.Current => enumerator.Current;
+			readonly bool IEnumerator.MoveNext() {
+				try {
+					return enumerator.MoveNext();
+				} catch (Exception) {
+					return false;
+				}
+			}
+			readonly void IEnumerator.Reset() => enumerator.Reset();
+			readonly IEnumerator<T> IEnumerable<T>.GetEnumerator() => this;
+			readonly IEnumerator IEnumerable.GetEnumerator() => this;
+			readonly void IDisposable.Dispose() { }
+		}
 		public static List<string> GetUnobtainableItems(bool includeExpected = false) {
 			static bool ShouldBeUnobtainable(ModItem item) => ItemID.Sets.IsAPickup[item.Type] || ItemID.Sets.Deprecated[item.Type] || item is IExpectToBeUnobtainable || item is TileItem { IsDebug: true };
 			HashSet<int> obtainableItems = [];
@@ -730,7 +747,7 @@ namespace Origins {
 			foreach (var item in TileLoaderMethods.tileTypeAndTileStyleToItemType.GetValue()) {
 				AddObtainableItem(item.Value);
 			}
-			foreach (var item in TileLoaderMethods.tiles.GetValue().SelectMany(l => l.GetItemDrops(0, 0))) {
+			foreach (var item in TileLoaderMethods.tiles.GetValue().SelectMany(l => new TileDropsIterator<Item>(l.GetItemDrops(0, 0)))) {
 				AddObtainableItem(item.type);
 			}
 			Dye_Item.dyeItems.ForEach(dye => AddObtainableItem(dye.Type));
