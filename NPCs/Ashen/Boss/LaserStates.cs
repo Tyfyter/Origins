@@ -342,7 +342,7 @@ public class Laser_Target_Locator_State : AIState {
 				new Color(0, 255, 0, 0),
 				rotation,
 				Vector2.UnitY * 128,
-				new Vector2(1, 16 * scale),
+				new Vector2(1, 8 * scale),
 				0
 			);
 			data.Draw(Main.spriteBatch);
