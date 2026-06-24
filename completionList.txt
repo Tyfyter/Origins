@@ -1166,6 +1166,7 @@ EXPLOSIVE WEAPONS:
 (^) Chambersite Mine Launcher
 (^) Crystal Bomb
 (^) Crystal Grenade
+(#, ^2) Cupid's Arrow !!! 
 (^) Grenade Lawnchair
 (^) Happy Bomb
 (^) Rattlesnake

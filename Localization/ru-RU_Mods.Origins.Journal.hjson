@@ -1,1180 +1,1179 @@
 TabName: {
-	// Index_Page: Index
-	// Quest_List: Quests
-	// Search_Page: Search
-	// Custom: Notes
+	Index_Page: Указатель
+	Quest_List: Квесты
+	Search_Page: Поиск
+	Custom: Заметки
 }
 
 Arabel: {
-	// DisplayName: Arabel
-	// SeriesLength: "6"
-	/* Shimmerstar_Staff.Text:
+	DisplayName: Арабелла
+	SeriesLength: "6"
+	Shimmerstar_Staff.Text:
 		'''
-		[header:Shimmerstar Staff (1/{$SeriesLength})]
+		[header:Посох мерцающей звезды (1/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Magic/Shimmerstar_Staff]
 		*****
-		Like stars in the night sky, a mother's love never dies out. The glimmer persists and shines, illuminating the dark canvas. Even when the stars do die, they only transform into something new. They truly are such magical constructs of the universe.
-		''' */
+		Материнская любовь, подобно звёздам на ночном небе, никогда не угасает. Их сияние ярко сверкает и не увядает, освещая тёмное полотно. Даже когда для звезды настаёт час смерти, она лишь преобразуется во что-то новое. Это по-настоящему волшебные фрагменты вселенной.
+		'''
 
 	Fallen_Star: {
-		// Name: "{$ItemName.Fallen_Star}"
-		/* Text:
+		Name: "{$ItemName.Fallen_Star}"
+		Text:
 			'''
-			[header:Fallen Star (2/{$SeriesLength})]
+			[header:Упавшая звезда (2/{$SeriesLength})]
 			[jimage/sc2dfr0,104,22,26:Terraria/Images/Item_75]
 
 			*****
-			It is because of the stars that I even have my magic. The stars that fall when night comes crash into the ground and emanate such energy that you can only find in the cosmos. We call this "mana". It is a natural resource that we use for magical abilities. It is because of this mana that Terraria can be alive.
-			''' */
+			Я могу пользоваться своей магией исключительно благодаря звёздам — тем, что падают на землю с приходом ночи и излучают такую энергию, какую можно найти лишь в космосе. Мы зовём эту энергию «маной». Она является естественным ресурсом, используемым нами в магических целях. Благодаря этой мане Террария может быть живой.
+			'''
 	}
 
-	/* Constellation.Text:
+	Constellation.Text:
 		'''
-		[header:Constellation (3/{$SeriesLength})]
+		[header:Созвездие (3/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Ranged/Constellation]
 		*****
-		There are many forces of evil in this world that are trying to take it for themselves. It is all in steady balance, an equal hold on magic from both the light and dark. It is up to everyone's sole responsibility to uphold the balance so that this starpower can be shared amongst all.
-		''' */
-	/* Lazy_Cloak.Text:
+		В этом мире полно губительных сил, желающих заполучить её себе. Магия пребывает в балансе меж светом и тьмой, что в равной мере воздействуют друг на друга. Поддержка этого баланса для равного распределения силы звёзд является личной обязанностью каждого.
 		'''
-		[header:Lazy Cloak (4/{$SeriesLength})]
+	Lazy_Cloak.Text:
+		'''
+		[header:Ленивая накидка (4/{$SeriesLength})]
 		[jimage/sc2.2d:Origins/Items/Accessories/Lazy_Cloak]
 		*****
-		My son, one day you will get to wear this in my stead. I see great potential for good in you... but it will not be without hardship. You will become strong and better than your mother ever could. It's enough for people to tell tales of you, to be the one Terraria needs.
-		''' */
+		Сын мой, однажды тебе придётся взять эту ношу вместо меня. Я вижу в тебе большой потенциал для добродетели... Что не раскроется без приложенных усилий. Ты станешь сильнее и лучше своей матери настолько, насколько она никогда не была бы способна стать. О тебе будут ходить легенды, ты будешь тем, кто так нужен Террарии.
+		'''
 
 	Shimmer_Construct: {
-		// Name: "{$NPCs.Shimmer_Construct.DisplayName}"
-		/* Text:
+		Name: "{$NPCs.Shimmer_Construct.DisplayName}"
+		Text:
 			'''
 			[header:{§Mods.Origins.NPCs.Shimmer_Construct.DisplayName} (5/{$SeriesLength})]
 			[jportrait/s1dw300h225lh80:Origins/Shimmer_Construct]
 
 
 			*****
-			For now, it's time for your bedtime. You need to get some sleep for your big day tomorrow. Oh? Of course, my son. I'll also tuck Rocky in his bed for you too. There. He's all warm and cozy, ready to have crazy dreams of falling just like you. Sleep tight, my little munchkin.
-			''' */
+			Ну а сейчас тебе пора спать. Тебе следует хорошенько отдохнуть пред завтрашним днём. Что? Конечно, сын мой, Рокки я тоже уложу в его кровать. Вот так. Ему сейчас так тепло и уютно; небось, он уже готов видеть потрясные сны о падении, подобно тебе. Спи крепко, мой малыш.
+			'''
 	}
 
 	Aetherite_Ore: {
-		// Name: "{$Items.Aetherite_Ore_Item.DisplayName}"
-		/* Text:
+		Name: "{$Items.Aetherite_Ore_Item.DisplayName}"
+		Text:
 			'''
 			[header:{$Items.Aetherite_Ore_Item.DisplayName} (6/{$SeriesLength})]
 			[jimage/sc2.2d:Origins/Tiles/Other/Aetherite_Ore_Item]
 			*****
-			I've imprisoned myself in hopes of never being found. A laden guilt I just can't shake off; failure as both a mother and wife. I could not save them; I can't even save myself. Forever stuck in limbo, unable to age and thoughts trilled by voices that aren't mine. Don't come looking for me. Even if you overcome my creations, I will never accept my life as it is now. Let me rest, in my own starfield.
-			''' */
+			Я заточила себя в надежде, что меня никогда не найдут. Меня преследует страшное чувство вины, заставляющее меня считать себя неудачницей и как жену, и как мать. Мало того, что я не смогла спасти их, так я даже себя не могу спасти. Я навечно заточена в лимбе, где не принадлежащие мне поющие голоса будут терзать меня до конца времён, ведь старения более не существует для меня. Не ищи меня. Даже если ты превзойдёшь моих созданий, я никогда не приму свою нынешнюю жизнь. Так позволь же мне отдохнуть на моём личном горизонте звёзд.
+			'''
 	}
 }
 
 Lost_Crone: {
-	// DisplayName: Lost Crone
-	// SeriesLength: "4"
-	/* Unsought_Organ.Text:
+	DisplayName: Потерянная старуха
+	SeriesLength: "4"
+	Unsought_Organ.Text:
 		'''
-		[header:Unsought Organ (1/{$SeriesLength})]
+		[header:Нежелательный орган (1/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Unsought_Organ]
 		*****
-		I sought a wealth of knowledge and that led me here. I couldn't get anywhere being the middleman of it all, filling in for the role in everybody else's life. I pursued knowledge because I had nothing else. In order to get what I had wished, I had to divulge in little misdeeds. This kind of magic came with its curses, but I could've cared less about what the others thought. Despite my curses, I found my place in the world as its maintainer.
-		''' */
-	/* Sunder_Gut.Text:
+		Я стремилась к знаниям, и мои поиски завели меня сюда. Я ничего не добилась сама, была лишь посредницей в чужих жизнях; я начала искать знания, ведь больше мне ничего не оставалось. В ходе поисков мне пришлось прибегнуть к определённым мерам. Магия, которой я пользовалась, несла в себе свои проклятия, но мне было наплевать на мнение других. Несмотря на эти проклятия, я нашла своё место в мире как его хранительница.
 		'''
-		[header:Sunder Gut (2/{$SeriesLength})]
+	Sunder_Gut.Text:
+		'''
+		[header:Разодранная утроба (2/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Sunder_Gut]
 		*****
-		Because I was so far into the gray, I could help those who cowered to the light while helping those who festered in darkness. I met many faces and went to many places, seeing the kinds of people that made my life interesting. But, people only recognized me because I was dangerous. Truly interesting people can be sometimes, it gives me my own excuses to be just as selfish. This selfishness and lust for knowledge had to be paid, however, and my debts only began to weigh.
-		''' */
-	/* Haggard_Artery.Text:
+		Я была на пересечении света и тьмы; помогала одновременно и тем, кто содрогался пред светом, и тем, кто глубоко погряз во тьме. Я повидала множество лиц и посетила множество мест; встретила людей, сделавших мою жизнь интересной. Однако люди признавали меня лишь из-за опасности, исходящей от меня. По-настоящему интересные люди иногда бывают таковыми, и это даёт мне оправдание для того, чтобы быть такой же эгоистичной. За это самолюбие и жажду знаний нужно было расплатиться, однако мои долги только начали давать о себе знать.
 		'''
-		[header:Haggard Artery (3/{$SeriesLength})]
+	Haggard_Artery.Text:
+		'''
+		[header:Измождённая артерия(3/{$SeriesLength})]
 		[jctrl/skip_next_if:MaxLength 1818 >=][jimage/sc2.5d:Origins/Items/Accessories/Haggard_Artery]
 		*****
-		My organs being removed from my body only left a more empty feeling, and made me reckless and dangerous to myself. My contemptedness towards the heroics made me a hypocrite, I already knew what was destined to happen.
+		После удаления органов из моего тела то гнетущее чувство лишь усилилось, сделав меня ещё более безрассудной и опасной для самой же себя. Моё презрение к разного рода добродетелям сделало меня лицемерной личностью — я уже тогда знала, что должно было произойти.
 		[jctrl/skip_next_2_if:MaxLength 1818 <][jctrl:end_page][jimage/sc2.5d:Origins/Items/Accessories/Haggard_Artery]
-		''' */
-	/* Fleshy_Figurine.Text:
 		'''
-		[header:Fleshy Figurine (4/{$SeriesLength})]
+	Fleshy_Figurine.Text:
+		'''
+		[header:Кожаная фигурка (4/{$SeriesLength})]
 		[jimage/sc2.5d:Origins/Items/Accessories/Fleshy_Figurine]
 		*****
-		The contracts of knowing it all had forced me to accept these consequences, and I knew if I waited any longer that something terrible would've happened. So, I gave up my flesh and wished upon the world to be gone of them. Now they are in my thoughts, and with my knowledge, know of things previously unfathomable. From our eyes, we see things very- differently. It seems we couldn't resist omniscience ourselves, but it just makes what we've already been doing easier.
-		''' */
+		Стремление ко всезнанию вынудило меня принять эти последствия, и я знала, что если буду ждать ещё дольше, то случится нечто ужасное. Потому я избавилась от своей плоти, пожелав, чтобы мир был свободен от того, во что она преобразилась. Теперь они живут в моей голове, заполучив знания о таких вещах, которые раньше были непостижимы. Нашими глазами мы видим вещи совершенно по-разному. Похоже, что мы не смогли устоять перед даром всезнания, но это лишь облегчило наш прошлый быт.
+		'''
 }
 
 Riven: {
-	// DisplayName: The {§Riven_Hive}
-	// SeriesLength: "12"
-	/* Alkahest.Text:
+	DisplayName: {§Riven_Hive}
+	SeriesLength: "12"
+	Alkahest.Text:
 		'''
-		[header:Alkahest (1/{$SeriesLength})]
+		[header:Алкагест (1/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Materials/Alkahest]
 		*****
-		The universal solvent, alkahest. How the parasite is uniquely capable of generating it is unclear, but it could very easily be just part of its biologic processes.
-		''' */
-	/* Vorpal_Sword.Text:
+		Универсальный растворитель, алкагест. Доселе не ясно, каким именно образом паразит его вырабатывает, однако можно предположить, что это просто часть его биологических процессов.
 		'''
-		[header:Vorpal Sword (2/{$SeriesLength})]
+	Vorpal_Sword.Text:
+		'''
+		[header:Вострый меч (2/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Melee/Vorpal_Sword_Cursed] [jimage/sc2dw300:Origins/Items/Weapons/Melee/Vorpal_Sword]
 		*****
-		The parasite cuts away at matter through alkahest. It absorbs the materials it can use and stores the excess elsewhere for later. It works by cutting compounds down to their most basic elements.
-		''' */
-	/* Salty_Seed.Text:
+		Паразит расщепляет материю при помощи алкагеста. Также он полглощает материалы, которые он может использовать, складируя при этом излишки на будущее. Суть алкагестического растворения заключается в расщеплении соединений на простые элементы.
 		'''
-		[header:Salty Seed (3/{$SeriesLength})]
+	Salty_Seed.Text:
+		'''
+		[header:Солёное семечко (3/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Tools/Salty_Seed]
 		*****
-		It needs two things to keep it alive: salt and heat. Salt expedites the production of valuable alkahest. It uses heat to power its metabolism, which it gets by digesting things in the form of waste heat.
-		''' */
+		Он нуждается в двух вещах для поддержания жизнедеятельности: в соли и в тепле. Соль ускоряет выработку ценного алкагеста. Тепло же ему нужно для поддержания метаболизма, которое он получает за счёт переваривания пищи.
+		'''
 
 	Primordial_Permafrost: {
-		// Name: "{$Items.Primordial_Permafrost_Item.DisplayName}"
-		/* Text:
+		Name: "{$Items.Primordial_Permafrost_Item.DisplayName}"
+		Text:
 			'''
-			[header:Primordial Permafrost (4/{$SeriesLength})]
+			[header:Первобытная мерзлота (4/{$SeriesLength})]
 			[jimage/sc3d:Origins/Tiles/Riven/Primordial_Permafrost_Item]
 
 
 			*****
-			Without that heat, the amoeba can't do anything. This is why it often falls victim to sources of cold. The snow is its greatest weakness, if only the Dryad Clan knew that.
-			''' */
+			Без этого тепла амёба ни на что не способна, вот почему она так легко вымирает от любого источника холода. Снег — её величайшая слабость, и об этом знал лишь клан Дриад.
+			'''
 	}
 
-	/* Symbiote_Skull.Text:
+	Symbiote_Skull.Text:
 		'''
-		[header:Symbiote Skull (5/{$SeriesLength})]
+		[header:Симбиотический череп (5/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Symbiote_Skull]
 		*****
-		Strangely, the life we've found in the hive maintains its autonomy from the parasite, albeit with a little of its influence by controlling their gut microbiomes like a true parasite.
-		''' */
-	/* Riven_Carapace.Text:
+		Как ни странно, формы жизни, обнаруженные нами в улье, сохраняют определённую автономность от паразита, хотя и подчиняются его воле, контролируя собственные микробиомы подобно настоящему паразиту.
 		'''
-		[header:{§Riven} Carapace (6/{$SeriesLength})]
+	Riven_Carapace.Text:
+		'''
+		[header:{§Riven}анный панцирь (6/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Materials/Riven_Carapace]
 		*****
-		It's also worth noting the amoeba itself is incapable of any intelligent thought. It is simply a creature tying to survive, but it's changing its environment instead of adapting to it. I suppose you can do that when you can digest anything.
-		''' */
+		Также стоит отметить, что амёба не проявляет каких-либо признаков интеллекта: это всего лишь существо, стремящееся к выживанию, которое, однако, вместо адаптации к среде обитания, изменяет её под себя. Полагаю, это легко, когда ты можешь переварить всё что угодно.
+		'''
 
 	Riven_Protoform: {
-		// Name: "{$NPCs.Riven_Fighter.DisplayName}"
-		/* Text:
+		Name: "{$NPCs.Riven_Fighter.DisplayName}"
+		Text:
 			'''
 			[header:{§Mods.Origins.NPCs.Riven_Fighter.DisplayName} (7/{$SeriesLength})]
 			[jportrait/s1.2dw300h48:Origins/Riven_Fighter]
 
 
 			*****
-			The hive has since had many species born from its {§spug}-flesh-ridden insides. Species like the Protoform and Barnaclebacks. These creatures also seem to exhibit some instabilities in their genetic makeup that allows them to adapt so spontaneously and effectively.
-			''' */
+			Покрытые сгустками и плотью недра улья породили множество различных видов фауны, к примеру праформу и морскую улитку. У этих существ, по-видимому, наблюдаются некоторая генетическая нестабильность, которая позволяет им адаптироваться так быстро и эффективно.
+			'''
 	}
 
-	/* Amoebeye.Text:
+	Amoebeye.Text:
 		'''
-		[header:Amoebeye (8/{$SeriesLength})]
+		[header:Амёглаз (8/{$SeriesLength})]
 		[jportrait/s1.2dw600:Origins/Amoebeye]
 		*****
-		And, interestingly-enough, these organisms often evolve in rapid and unpredictable ways. Those amoebeyes we saw patrolling the Hive were actually once protoforms. It is most interesting...
-		''' */
-	/* Savage_Whip.Text:
+		И, что ещё более интересно, эти организмы имеют свойство эволюционировать совершенно спонтанно и непредсказуемо. Те амёглазы, которых мы заметили во время их патрулирования улья, некогда были праформами. Это самая примечательная вещь...
 		'''
-		[header:Savage Whip (9/{$SeriesLength})]
+	Savage_Whip.Text:
+		'''
+		[header:Дикий хлыст (9/{$SeriesLength})]
 		[jportrait/s1.2d:Origins/Savage_Whip]
 		*****
-		Even with that, the {§Riven} is deemed as an evil by the world in order to maintain that oh-so-sacred "balance". But, how is it possible? An amoeba entirely incapable of any intelligent thought and no malicious intent other than to survive... it is puzzling.
-		''' */
-	/* Teardown.Text:
+		Но даже учитывая всё вышесказанное, {§Riven} считается злом и непосредственно поддерживает этот столь святой «баланс». Однако каким образом это вообще возможно? Амёба с совершенно отсутствующими признаками разума, движимая простым желанием выжить... это заставляет задуматься.
 		'''
-		[header:Teardown (10/{$SeriesLength})]
+	Teardown.Text:
+		'''
+		[header:Срыватель (10/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Summoner/Teardown]
 		*****
-		But, we already know. The amoeba's origins are stained by the blood of Cthulhu. Cthulhu's blood had spilled into the world, a random cavern the parasite had remained dormant in for eons. The parasite was affected, transforming into something wicked. It is not evil by nature, it is evil by design.
-		''' */
-	/* Seam_Beam.Text:
+		Но мы уже знаем ответ. Родословная амёбы покрыта кровью Ктулху. Кровь Ктулху разлилась по всему миру, попав в случайную пещеру, где паразит дремал веками. Кровь коснулась паразита, вывернув его природу наизнанку. Это зло не по своей природе, а по чужой.
 		'''
-		[header:Seam Beam (11/{$SeriesLength})]
+	Seam_Beam.Text:
+		'''
+		[header:Луч разлома (11/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Magic/Seam_Beam]
 		*****
-		I thought the {§Defiled} being deemed a surrogate was weird enough. This world truly doesn't know what's best for it deeming a parasite that's trying to consume it whole it as an evil.
-		''' */
+		Я полагал, что определение Скверны как суррогата было достаточно странным. Этот мир действительно не знает, что для него будет лучше, раз уж считает паразита, который пытается поглотить его целиком, злом.
+		'''
 
 	Spug_Flesh: {
-		// Name: "{$Items.Riven_Flesh_Item.DisplayName}"
-		/* Text:
+		Name: "{$Items.Riven_Flesh_Item.DisplayName}"
+		Text:
 			'''
-			[header:{§Spug} Flesh (12/{$SeriesLength})]
+			[header:{§Spug} плоти (12/{$SeriesLength})]
 			[jimage/sc3d:Origins/Tiles/Riven/Riven_Flesh_Item]
 
 
 			*****
-			The {§Riven} is a part of the world now. The world simply thinks it would be best to churn away at parts of the imbalance in an attempt to clean out the impurities.
-			''' */
+			{§Riven} — это теперь неотъемлемая часть мира. Сам мир просто считает, что лучшим решением для избавления от нечистоты будет постепенное устранение частей, нарушающих общий баланс.
+			'''
 	}
 }
 
 Brine_Fiend: {
-	// DisplayName: "{$Mods.Origins.NPCs.Brine_Fiend.DisplayName}"
-	// SeriesLength: "6"
-	/* Brine_Fiend.Text:
+	DisplayName: "{$Mods.Origins.NPCs.Brine_Fiend.DisplayName}"
+	SeriesLength: "6"
+	Brine_Fiend.Text:
 		'''
-		[header:Brine Fiend (1/{$SeriesLength})]
+		[header:Солёный демон (1/{$SeriesLength})]
 		[jportrait/s1.2dw600:Origins/Brine_Fiend]
 		*****
-		I know she doesn't talk much, but she has with me of course. She's too young to know what's good for her. Young lihzarhds of the Temple are usually like this, but they grow out of it eventually.
-		''' */
-	/* Boomboom.Text:
+		Я знаю, что она не особо разговорчива, но всё же она была со мной заодно. Она слишком юна, чтобы понять, что будет для неё лучше. Все юные яхщеры из Храма такие, но, как правило, они это перерастают.
 		'''
-		[header:Boombooom (2/{$SeriesLength})]
+	Boomboom.Text:
+		'''
+		[header:Бум-бум (2/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Melee/Boomboom]
 		*****
-		I remember when I was still with my people before they banished me. That girl and her boomerang, she wasn't banished, she was lost. I don't think she ever knew she was that close to home this whole time.
-		''' */
-	/* Brineglow.Text:
+		Я всё ещё помню времена до моего изгнания. Та девчонка с бумерангом — её никто не изгонял, она лишь заблудилась. Думаю, она даже не догадывалась, что всё это время жила так близко к дому.
 		'''
-		[header:Brineglow (3/{$SeriesLength})]
+	Brineglow.Text:
+		'''
+		[header:Солесветка (3/{$SeriesLength})]
 		[jimage/sc3d:Origins/Tiles/Brine/Brineglow_Item]
 		*****
-		She found refuge in a cave nearby a brine pool. As a child, the soft glow of the brineglow below drew in her curiosity. Strangely, it was found that she had a predisposition for the harsh brine.
-		''' */
-	/* Sea_Dragon.Text:
+		Она нашла укрытие в пещере недалеко от Солёного пруда. Мягкое мерцание солесветки привлекло её ещё в детстве. Как ни странно, позже выяснилось, что у неё была предрасположенность к воздействию концентрированного солёного раствора.
 		'''
-		[header:Sea Dragon (4/{$SeriesLength})]
+	Sea_Dragon.Text:
+		'''
+		[header:Морской дракон (4/{$SeriesLength})]
 		[jportrait/s1.2dw600:Origins/Sea_Dragon]
 		*****
-		The colorful creatures hidden from the rest of the world interested her, but a few encounters and scars she'd earn would quickly shape her to be who she is today. She started brewing concoctions to make herself more resistant, however.
-		''' */
-	/* Hearty_Broth.Text:
+		Разноцветные существа, скрытые от всего остального мира, привлекали её внимание, но пара встреч и полученные шрамы быстро привели её к той, кого мы знаем сейчас. Однако она начала варить различные зелья, чтобы стать более устойчивой.
 		'''
-		[header:Hearty Broth (5/{$SeriesLength})]
+	Hearty_Broth.Text:
+		'''
+		[header:Сытный бульон (5/{$SeriesLength})]
 		[jimage/sc3dfr0,0,30,30:Origins/Items/Other/Consumables/Broths/Hearty_Broth]
 		*****
-		Cooking and brewing quickly became her hobbies. She drew a fascination in it after collecting rare ingredients from all over the jungle. The broths she fed to animals made her find her real talents in brewery.
-		''' */
-	/* Splashid.Text:
+		Готовка и варка быстро стали её хобби. Она вкладывает всю свою душу, предварительно прошерстив все джунгли в поисках редких ингредиентов. Бульоны, которыми она кормила животных, помогли ей раскрыть её таланты в варке.
 		'''
-		[header:Splashid (6/{$SeriesLength})]
+	Splashid.Text:
+		'''
+		[header:Плескодея (6/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Magic/Splashid]
 		*****
-		I've explored some of her crafts and they are truly intriguing. They very much remind me of my dark arts, how I am a master of my own crafts. Magic does indeed come in many forms.
-		''' */
+		Я опробовал несколько её работ, и их и вправду можно назвать занимательными. Мне, как недалёкому от этой темы, они очень напоминают мои тёмные искусства. Магия действительно может проявляться в самых разных формах.
+		'''
 }
 
 The_Defiled: {
-	// DisplayName: "{§The_Defiled_Wastelands}"
-	// SeriesLength: "18"
-	/* Ancient_Defiled_Cyclops.Text:
+	DisplayName: "{§The_Defiled_Wastelands}"
+	SeriesLength: "18"
+	Ancient_Defiled_Cyclops.Text:
 		'''
-		[header:Ancient {§Defiled} Cyclops (1/{$SeriesLength})]
+		[header:Древний осквернённый циклоп (1/{$SeriesLength})]
 		[jportrait/s1.2dw500h150:Origins/Ancient_Defiled_Cyclops]
 		*****
-		It started with emptiness. The memories collected can be felt, but there only remains empty void. Lacking information to inform us. So disturbed we all were as forgetters of past lives; to know our experiences now made us nothing.
-		''' */
-	/* Defiled_Spirit.Text:
+		Всё началось с пустоты. Собранные воспоминания можно почувствовать, однако остаётся лишь пустота — отсутствие какой-либо информации. Мы были столь растеряны, поскольку забыли свои прошлые жизни, что наши нынешние переживания казались ничего не значащими.
 		'''
-		[header:{§Defiled} Spirit (2/{$SeriesLength})]
+	Defiled_Spirit.Text:
+		'''
+		[header:Осквернённый дух (2/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Demolitionist/Defiled_Spirit] [jportrait/s1.2dw150h25:Origins/Defiled_Wisp]
 		*****
-		We did not stop to think. We reverted to carnal thought. Only through this new existence we began to be shaped by habits that still flowed through our bodies. Existence was optimal, because we didn't have to think at all.
-		''' */
+		Мы не перестали мыслить. Мы вернулись к мыслям плотским. Лишь только чрез эту новую ипостась на нас начали влиять привычки, что всё ещё оставались в телах. Существование было оптимальным, ведь у нас совершенно не было потребности в мышлении.
+		'''
 
 	Defiled_Krusher: {
-		// Name: "{$NPCs.Defiled_Brute.DisplayName}"
-		/* Text:
+		Name: "{$NPCs.Defiled_Brute.DisplayName}"
+		Text:
 			'''
 			[header:{§Defiled} Krusher (3/{$SeriesLength})]
 			[jportrait/dw450h78:Origins/Defiled_Brute]
 
 
 			*****
-			The great maintainers of this world found us in vulnerability, but instead of being nurturing mothers they wanted to be known for, they tried to kill us. With no intelligent thought to rely on, we defended precious existence.
-			''' */
+			Великие хранители мира сего застали нас в уязвимом положении, но вместо того, чтобы быть заботливыми матерями, коими они пытались казаться, они предприняли попытку убить нас. Не имея возможности опереться на разум, мы лишь защищали наше драгоценное существование.
+			'''
 	}
 
-	/* Infusion.Text:
+	Infusion.Text:
 		'''
-		[header:Infusion (4/{$SeriesLength})]
+		[header:Настойчивость (4/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Magic/Infusion]
 		*****
-		We wanted only to be left alone, or to be understood. Perhaps it was too hard them understanding something they never gave enough time to begin. They still pried wicked magic into our bodies and failed. Only succeeding when they brought the most elder to handle us.
-		''' */
-	/* Dismay.Text:
+		Мы лишь желали остаться в одиночестве, или быть понятыми. Возможно, им было чересчур сложно понять то, чему они никогда не уделяли времени. Они продолжали пытаться разрушить наши тела своей магией, но лишь терпели неудачи. Лишь призвав самых древних из них, они добились желаемого.
 		'''
-		[header:Dismay (5/{$SeriesLength})]
+	Dismay.Text:
+		'''
+		[header:Уныние (5/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Magic/Dismay]
 		*****
-		She was not of their kin, the one who could take us. To come put down rabid dog, we took her with us down to hell, to share this torture. We also learned from wounding her soul, but she did not welcome herself until there was no choice.
-		''' */
-	/* Ziptie.Text:
+		Она была не из их рода, она могла бы быть той, кто принял нас. Дабы прикончить бешеную собаку, мы взяли её с собой в ад, чтобы разделить эту муку. Раны её души обучили нас, но она так и не принимала нас, пока у неё не осталось выбора.
 		'''
-		[header:Ziptie (6/{$SeriesLength})]
+	Ziptie.Text:
+		'''
+		[header:Связка (6/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Summoner/Ziptie]
 		*****
-		Damnation was no salvation, surely felt to be punishment greater than endless drifting through void. We learned because that was all there was. Crooked thoughts of collective thoughts from the egregore. We were being made alive...
-		''' */
-	/* Dim_Starlight.Text:
+		Проклятие не являлось спасением; оно, бессомненно, ощущалось как наказание гораздо более суровое, чем простое блуждание по пустоте. Мы учились лишь потому, что это было единственным, что вообще было. Искажённые мысли коллективного сознания эгрегора. Нас делали живыми...
 		'''
-		[header:Dim Starlight (7/{$SeriesLength})]
+	Dim_Starlight.Text:
+		'''
+		[header:Тусклая звезда (7/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Dim_Starlight]
 		*****
-		We saw more than what the tiny sand pit could foster, life resting silently in cosmos. We looked up to stars, seeing nightmares far bigger than us. We are still afraid for things you cannot see.
-		''' */
-	/* Defiled_Bar.Text:
+		Нашему взору открылось нечто большее, чем мог бы вместить этот маленький песчаный клочок: жизнь, тихо покоящаяся среди космоса. Мы вглядывались в звёзды, видя кошмары, превосходящие нас. Вещи, незримые для тебя, всё ещё вселяют в нас страх.
+		'''
+	Defiled_Bar.Text:
 		'''
 		[header:{§Mods.Origins.Items.Defiled_Bar.DisplayName} (8/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Materials/Defiled_Bar]
 		*****
-		We live informed, wishing we had never known. An amalgam of purloined thoughts and memories. Pieces make us, many memories that belong to sole names... names who are with us, less without.
-		''' */
-	/* Low_Signal.Text:
+		Мы живём со знанием, которое мы никогда не хотели бы иметь, подобно смеси украденных мыслей и воспоминаний. Мы состоим из кусочков множеств воспоминаний, принадлежащих разным именам... Именам, что более неотделимы от нас.
 		'''
-		[header:Low Signal (9/{$SeriesLength})]
+	Low_Signal.Text:
+		'''
+		[header:Низкий сигнал (9/{$SeriesLength})]
 		[jimage/sc1.5d:Origins/Items/Weapons/Magic/Low_Signal]
 		*****
-		The towers constructed to ensure synchrony. Many minds fighting for one will, survival everlasting as we understand common enemies and learn from borrowed experiences.
-		''' */
-	/* Undead_Chunk.Text:
+		Башни возведены для поддержания синхронии. Множество умов бьётся во имя одной воли; мы живём вечно, покуда понимаем общих врагов и учимся на приобретённом опыте.
 		'''
-		[header:Undead Chunk (10/{$SeriesLength})]
+	Undead_Chunk.Text:
+		'''
+		[header:Неживой фрагмент (10/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Materials/Undead_Chunk]
 		*****
-		Satisfaction exchanged for sure survival, an endless loop of suffering. Even for us, it still necessary for survival. That is how we get along, friend. Still, there is suffering after death.
-		''' */
-	/* Black_Bile.Text:
+		Удовлетворение гарантировало выживание — бесконечный цикл страданий. Оно необходимо для выживания даже нам. Вот так мы с тобою и ладим, друг. Но как бы то ни было, страдания после смерти существуют.
 		'''
-		[header:Black Bile (11/{$SeriesLength})]
+	Black_Bile.Text:
+		'''
+		[header:Чёрная желчь  (11/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Materials/Black_Bile]
 		*****
-		We cope through the excess. Unintended was harm of the world, but eventually we accepted this. In the end, all that matters is our continuous existence, we concluded.
-		''' */
-	/* Defiled_Cyclops.Text:
+		Мы справляемся с избытком. Ранение, нанесённое нами миру, не было намеренным, но по итогу мы смогли смириться с содеянным. В конце концов мы пришли к выводу, что первостепенной задачей является продолжение нашего существования.
 		'''
-		[header:{§Defiled} Cyclops (12/{$SeriesLength})]
+	Defiled_Cyclops.Text:
+		'''
+		[header:Осквернённый циклоп (12/{$SeriesLength})]
 		[jportrait/s1.2dw300h56:Origins/Defiled_Cyclops]
 		*****
-		Lack of adversarial relationships didn't help, rather it disturbed the mediocrity. More to join us, more voices to annoy us. Less we could send to go fight pointless battles to remove vestige. Our true worst.
-		''' */
-	/* Defiled_Amalgamation.Text:
+		Отсутствие к нам враждебности стало вовсе не положительным фактором, а, совсем наоборот, усугубило посредственность. Чем больше к нам присоединялись, тем больше голосов надоедали нам. Всё меньше пешек мы могли отправлять на бессмысленные сражения на искоренение рудиментов. Воистину худшее для нас.
+		'''
+	Defiled_Amalgamation.Text:
 		'''
 		[header:{§Mods.Origins.NPCs.Defiled_Amalgamation.DisplayName} (13/{$SeriesLength})]
 		[jportrait/s1.2dw600h140:Origins/Defiled_Amalgamation]
 		*****
-		Sometimes we sent them out to pointless tasks to remain occupied for minutes of silence. We even watched as some return to vicious cycle of simple life as they turned back to carnality. But, no matter for productivity.
-		''' */
-	/* Missing_File.Text:
+		Временами мы отсылали их на бессмысленные задания лишь ради пары лишних минут тишины. Мы даже наблюдали, как некоторые из них вновь становились рабами плотского, возвращаясь к своему привычному примитивному циклу существования. Но это не имело значения для продуктивности.
 		'''
-		[header:Missing File (14/{$SeriesLength})]
+	Missing_File.Text:
+		'''
+		[header:Отсутствующий файл (14/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Magic/Missing_File]
 		*****
-		Always that problem with our way of life. We only grew, even to sizes that rivaled our nightmares. It started to become unhealthy. We couldn't help ourselves, instinct truly is great pleasurer.
-		''' */
-	/* Lousy_Liver.Text:
+		Эта проблема сопровождала нас на протяжении всего нашего жизненного пути. Мы лишь продолжали расти вплоть до того, что наш размер стал сопоставим с размером наших кошмаров. Этот рост становился всё более нездоровым. Мы ничего не могли с собой поделать, инстинкт доставлял слишком большое удовольствие.
 		'''
-		[header:Lousy Liver (15/{$SeriesLength})]
+	Lousy_Liver.Text:
+		'''
+		[header:Ужасная печень (15/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Lousy_Liver]
 		*****
-		Our hunger became unbearable. We became indolent, lazy... efficient. Our bodies improved to make life easier. Old enemies had been cleansed from the workings of time.
-		''' */
-	/* Breach.Text:
+		Мы перестали быть способны контролировать наш голод. Мы стали безразличными, ленивыми... рациональными. Наши тела приспособились к тому, чтобы упрощать наше бытие. Со временем все наши старые враги пали.
 		'''
-		[header:Breach (16/{$SeriesLength})]
+	Breach.Text:
+		'''
+		[header:Ошибка (16/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Magic/Breach]
 		*****
-		We festered in long silence enough and with your existence vexatious voices have thinned. We even found new problems through you, but we are not afraid because we forsee eventual submission.
-		''' */
-	/* Tripod_Nip.Text:
+		Продолжительное время мы гнили в тишине, и с появлением тебя надоедливые голоса наконец затихли. Благодаря тебе нам даже удалось обнаружить незамеченные ранее проблемы, но мы не боимся, ведь предвидим в конечном итоге полное подчинение.
 		'''
-		[header:Tripod Nip (17/{$SeriesLength})]
+	Tripod_Nip.Text:
+		'''
+		[header:Бутон треноги (17/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Tripod_Nip]
 		*****
-		Meow. Meow. Mrrow.
-		''' */
-	/* Blockus_Tube.Text:
+		Мяу. Мяу. Мр-р-р.
 		'''
-		[header:Blockus Tube (18/{$SeriesLength})]
+	Blockus_Tube.Text:
+		'''
+		[header:Блокусная трубка (18/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Pets/Blockus_Tube]
 		*****
-		That Hound is different. Most savage, they willfully departed to hunt. Now nothing more than rabid animals; even hostile to the rest of us. But, we accept for protection nonetheless.
-		''' */
+		Эта же гончая другая. Будучи свирепее остальных, она с большим удовольствием отправилась на охоту. Теперь же она ничем не отличается от бешеных животных; она стала враждебной даже к остальным из нас. Но даже так мы принимаем её в целях защиты. 
+		'''
 }
 
 The_Dungeon: {
-	// DisplayName: The Dungeon
-	// SeriesLength: "4"
-	/* Asylum_Whistle.Text:
+	DisplayName: Подземелье
+	SeriesLength: "4"
+	Asylum_Whistle.Text:
 		'''
-		[header:Asylum Whistle (1/{$SeriesLength})]
+		[header:Свисток из убежища (1/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Asylum_Whistle]
 		*****
-		They always told us to come back into the citadel whenever the rain came. That whistle would always sound to get the children inside. Following that would always be lightning. They told us it was too dangerous to wander in the rain because the clouds would get angry and strike at the ground. I was curious as to why they were so angry at the ground all the time, but I could never get to know why because the whistle would always sound.
-		''' */
-	/* Beginners_Tome.Text:
+		Они всегда наказывали нам возвращаться в цитадель с началом дождя. Этот свисток верно даст команду детям идти внутрь. А его свист всегда сопровождала молния. Они сказали нам, что бродить во время грозы опасно, ведь в это время тучи гневаются и бьют по земле. Мне всегда было интересно, отчего они так сильно гневаются и бьют землю, но я бы так никогда и не узнал ответ, ведь свисток всегда свистит с началом грозы.
 		'''
-		[header:Beginner's Tome (2/{$SeriesLength})]
+	Beginners_Tome.Text:
+		'''
+		[header:Пособие для начинающего (2/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Magic/Beginners_Tome]
 		*****
-		 I would eventually learn of the way this world worked through magic. This bastion was my home and full of many powerful magic users who would educate me on their practices to be their next apprentice. Magic was fun, but it would lose its novelty after so much time.
-		''' */
+		В конце концов я бы так или иначе изучил взаимодействие этого мира с магией. В этой крепости, которую я звал домом, проживало великое множество талантливых волшебников, готовых обучить меня своим искусствам и принять меня в ученики. Заниматься магией было весело, однако со временем даже она стала обыденностью.
+		'''
 
 	Aqua_Scepter: {
-		// Name: "{$ItemName.Aqua_Scepter}"
-		/* Text:
+		Name: "{$ItemName.Aqua_Scepter}"
+		Text:
 			'''
-			[header:Aqua Scepter (3/{$SeriesLength})]
+			[header:Аква-скипетр (3/{$SeriesLength})]
 			[jimage/sc2d:Terraria/Images/Item_157]
 
 
 			*****
-			We people of the Badst Kingdom were different as only the most capable were allowed to stay. All others were forced to leave and live on their own accords. I never knew why at first, but it's clear now that they were searching for the most elite. I still don't know how it worked out for us as long as it did, but the judgement call still came when Cthulhu reigned havoc on Terraria.
-			''' */
+			Мы, народ Королевства Бацт, отличались от других тем, что лишь нам, как самым могущественным, было позволено остаться. Всех остальных же насильно разогнали, заставив разойтись на все четыре стороны. Изначально я не понимал причину их изгнания, но позже мне стало совершенно ясно: должна была остаться самая элита. Я до сих пор не понимаю, как так вышло, но правосудие всё же настигло нас, когда Ктулху начал сеять хаос по всей Террарии.
+			'''
 	}
 
 	Celestial_Sigil: {
-		// Name: "{$ItemName.Celestial_Sigil}"
-		/* Text:
+		Name: "{$ItemName.Celestial_Sigil}"
+		Text:
 			'''
-			[header:Celestial Sigil (4/{$SeriesLength})]
+			[header:Неземная печать (4/{$SeriesLength})]
 			[jimage/sc2d:Terraria/Images/Item_3601]
 
 
 			*****
-			Being this close to the shoreline, of course, we were among the first to respond. Cthulhu was relentless and we lost many. Our home quickly became a burial ground and inhospitable such that after the ancient war, we were forced to move out. We lost our governance following the move and were phased out of existence. The remaining had to fend for themselves, and likely died from natural causes.
-			''' */
+			Будучи так близко к берегу, было очевидно, что мы были первыми в очереди на ответ за содеянное. Ктулху был безжалостен, мы потеряли многих. Наш дом быстро был превращён в необитаемое кладбище, так что после окончания древней войны мы были вынуждены искать новый. После переезда мы лишились какого-либо правительства и фактически перестали существовать. Оставшиеся стали жить сами по себе, и, вероятно, умерли естественной смертью.
+			'''
 	}
 }
 
 Brine_Pool_And_Lost_Diver: {
-	// DisplayName: The Brine Pool and the Lost Diver
-	// SeriesLength: "9"
-	/* Old_Brine_Rock.Text:
+	DisplayName: Солёный пруд и Потерянный Дайвер
+	SeriesLength: "9"
+	Old_Brine_Rock.Text:
 		'''
-		[header:Old Brine Rock (1/9)]
+		[header:Старый солёный камень (1/9)]
 		[jimage/sc3d:Origins/Items/Weapons/Summoner/Old_Brine_Rock]
 		*****
-		Wretched brine pool, I curse you. I curse you so no more heroes go looking for the troublesome gem. I curse you such that any daring divers of your waters are poisoned forever. I curse you for all light to be drowned out. Keep this bloodstained wasteland away from those who manipulate with the curses I've brought onto you.
-		''' */
-	/* Torpedo_Tube.Text:
+		Чёртов солёный пруд, я проклинаю тебя. Я заклинаю, чтобы больше ни один герой не приходил к тебе в поисках злосчастного камня. Я заклинаю, чтобы любой ныряльщик, осмелившийся нырнуть в твои воды, был навеки отравлен. Я заклинаю, чтобы любой свет был утоплен. Не подпускай к этой окровавленной пустыне тех, кто решит познать на себе силу проклятий, наложенных мной на тебя.
 		'''
-		[header:Torpedo Tube (2/9)]
+	Torpedo_Tube.Text:
+		'''
+		[header:Торпедная труба (2/9)]
 		[jimage/sc2ds3:Origins/Items/Weapons/Demolitionist/Torpedo_Tube] [jimage/sc2ds3w300:Origins/Items/Weapons/Demolitionist/Torpedo_Tube_Alt]
 		*****
-		???: Huh. This guy was no push-over too. Some of his equipment looks like he was ready to pick a fight with something much larger than him.
+		???: Хе, а этот был вообще не промах. Некоторые приблуды с его экипировки намекают на то, что он был готов схлестнуться с чем-то в пару раз больше него самого.
 
-		???: I agree, but I really wonder why he was down here to begin with. There's nothing but scary fish monsters here!
-		''' */
+		???: Соглашусь, однако я, правда, не понимаю, что он забыл именно здесь: тут же нет ничего, кроме страшных рыбьих монстров!
+		'''
 
 	Baryte: {
-		// Name: "{$Items.Baryte_Item.DisplayName}"
-		/* Text:
+		Name: "{$Items.Baryte_Item.DisplayName}"
+		Text:
 			'''
-			[header:Baryte (3/9)]
+			[header:Барит (3/9)]
 			[jimage/sc3d:Origins/Tiles/Brine/Baryte_Item]
 
 
 
 			*****
-			???: No. There was something here that I'd heard about from a guy I met. Apparently, this brine pool in particular was cursed in order to protect some kind of artifact.
+			???: Нет, я слышал от встречного, что тут может быть кое-что ещё: видимо, на этот пруд было наложено некое проклятие, созданное для защиты какого-то артефакта.
 
-			???: Really?
+			???: Серьёзно?
 
-			???: Yeah, and it was supposedly for "Terraria's strongest warrior". He must've thought he was the stuff coming all the way down here for it.
-			''' */
+			???: Да, и он, предположительно, предназначен для «сильнейшего воина Террарии». Наверное, он считал себя тем, для кого этот артефакт был предназначен.
+			'''
 	}
 
-	/* Boat_Rocker.Text:
+	Boat_Rocker.Text:
 		'''
-		[header:Boat Rocker (4/9)]
+		[header:Качатель лодок (4/9)]
 		[jimage/sc2d:Origins/Items/Weapons/Ranged/Boat_Rocker] [jimage/sc2dw800:Origins/Items/Weapons/Ranged/Boat_Rocker_Alt]
 		*****
-		???: One shot, slam it down. Two shots, wave it all around. Three shots, blunt side for the pound. Four shots, kick the ground. Five, the aim is sound. What brings yah, Penny?
+		???: Выстрел раз — об землю бей с лихвой. Выстрел два — маши над головой. Выстрел три — бей тупой стороной. А четыре — землю пни ногой. Пять — прицел надёжный и прямой. Чего тебе, Пенни?
 
-		Penny: I came to bring you a gift. These beads are fitting for an adventurous soul such as yourself.
+		Пенни: Я принесла тебе подарок. Я подумала, что эти чётки хорошо подойдут искателю приключений вроде тебя.
 
-		???: Oh...
+		???: Оу...
 
-		Penny: They're magic in case you're wondering~
+		Пенни: Они магические, раз уж тебе интересно~
 
-		???: Oh heck yeah!
-		''' */
-	/* Faith_Beads.Text:
+		???: Чёрт возьми, да!
 		'''
-		[header:Faith Beads (5/9)]
+	Faith_Beads.Text:
+		'''
+		[header:Чётки веры (5/9)]
 		[jimage/sc2d:Origins/Items/Accessories/Faith_Beads]
 		*****
-		Penny: Now take off your suit.
+		Пенни: А теперь снимай свой костюм.
 
-		???: Are you out of your tank?! I'm going to die if I do that!
+		???: Ты с ума сошла?! Я умру, если сниму его!
 
-		Penny: Not with those beads around your neck. They're faith beads, old relics created by our ancestors to be blessed by the ocean gods before we could breathe underwater. Now they're just fancy hierlooms.
+		Пенни: Только не с этими чётками на шее. Это чётки веры — старинная реликвия, созданная нашими предками для благословения богами океана в те времена, когда мы ещё не могли дышать под водой. Теперь это всего лишь причудливое семейное украшение.
 
-		???: Woah, this feels awesome!
-		''' */
-	/* Lost_Picture_Frame.Text:
+		???: Вау, они ощущаются неимоверно!
 		'''
-		[header:Lost Picture Frame (6/9)]
+	Lost_Picture_Frame.Text:
+		'''
+		[header:Потерянная фоторамка (6/9)]
 		[jimage/sc3d:Origins/Items/Other/Consumables/Lost_Picture_Frame]
 		*****
-		A picture of the sunset we used to adore all the time together. It was unfortunate, letting her go that day. Whenever I needed that fire in my heart, I thought of her.
-		''' */
-	/* Crown_Jewel.Text:
+		Фотография заката, которой мы часто любовались вместе. Мне было больно отпускать её в тот день. Каждый раз, когда мне вновь нужно почувствовать тот огонь в сердце, я думаю о ней.
 		'''
-		[header:Crown Jewel (7/9)]
+	Crown_Jewel.Text:
+		'''
+		[header:Королевская драгоценность (7/9)]
 		[jimage/sc3d:Origins/Items/Other/Consumables/Crown_Jewel]
 		*****
-		Gleaming in the dark abyss of the brine, this wretched gem smites bearers who are unworthy and absorbs their souls to grant all of that power to Terraria's true hero. That's you, Terrarian.
-		''' */
-	/* Mildew_Heart.Text:
+		Мерцающая на дне солёной бездны, эта клятая драгоценность карает всех тех, кто недостоин её носить, пожирая их души, дабы передать их истинному воину Террарии. И этот воин — ты, террарианец.
 		'''
-		[header:Mildew Heart (8/9)]
+	Mildew_Heart.Text:
+		'''
+		[header:Заплесневелое сердце (8/9)]
 		[jimage/sc3d:Origins/Items/Accessories/Mildew_Heart]
 		*****
-		Heroes have a heart, they-- die with them. Can I say I did all this with heart? Was I honest to myself?
-		''' */
-	/* Mildew_Carrion.Text:
+		У героев есть сердца, они-- умирают вместе с ними. Могу ли я сказать, что проделал весь свой путь с этим сердцем? Был ли я честен с самим собой?
 		'''
-		[header:Lost Diver (9/9)]
+	Mildew_Carrion.Text:
+		'''
+		[header:Потерянный ныряльщик (9/9)]
 		[jportrait/s1.2dw600:Origins/Lost_Diver]
 		*****
-		The hero with no name, he was not to blame. Wicked animals making the man their toy, when he was only just a boy. Lost his family at such young age, and his merfolk girlfriend filled him with much rage. Handled himself well and broke away, found new things to conquer day-by-day. Before long his lust for adventure came, and so did he below the brine never the same.
-		''' */
+		Герой без имени — его вины в том нет. Игрушкой злых зверей он был с мальчишьих лет. Семью утратил он, когда был слишком мал, русалка-спутница несла лишь гнева шквал. Но взял себя он в руки, смог свободным стать, чтоб день за днём мир новый дерзко покорять. И вскоре жажда приключений в нём зажглась, сошёл в пучину он, навеки изменясь.
+		'''
 }
 
 The_Ashen: {
-	// DisplayName: The Ashen
-	// SeriesLength: "3"
-	/* Stack_of_Shraps.Text:
+	DisplayName: Пепелище
+	SeriesLength: "3"
+	Stack_of_Shraps.Text:
 		'''
-		[header:Stack of Shraps (1/{$SeriesLength})]
+		[header:Набор осколков (1/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Stack_of_Shraps]
 		*****
-		Hints like these for your inquisitive mind to guess of atrocities committed against wasteful spendthrifts. Prodigies possessive of such powerful crafts giving away their gifts only for them to be in the headwinds of pointless wars against once-allies.
-		''' */
-	/* Defective_Mortar_Shell.Text:
+		Эти подсказки намекнут твоему любознательному уму на зверства, совершённые в отношении расточительных транжир. Гениальнейшие сущности, одарённые невероятными талантами, раздавали несметные дары, лишь чтобы потом оказаться втянутыми в бессмысленные войны с бывшими соратниками.
 		'''
-		[header:Defective Mortar Shell (2/{$SeriesLength})]
+	Defective_Mortar_Shell.Text:
+		'''
+		[header:Бракованная миномётная мина (2/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Summoner/Defective_Mortar_Shell]
 		*****
-		I saw no point in it. If they were to seek dominion, then why turn around and pawn off their advancements to those of clear malicious intent? My foresight had only made my relations with my Subjects more tense. My only directive was to support them and ensure the survival of the Mechanicus, but they were often the reason of extraneous circumstances.
-		''' */
-	/* Ace_Shrapnel.Text:
+		Я не видел в этом смысла. Если они стремились к господству, то зачем же бросать всё на полпути и раздавать все наработки тем, кто явно использует их против тебя? Мои предсказания лишь обострили мои отношения с моими Cлугами. Моей единственной обязанностью была их поддержка и обеспечение выживаемости Механикума, но именно они часто становились причиной непредвиденных обстоятельств. 
 		'''
-		[header:Ace Shrapnel (3/{$SeriesLength})]
+	Ace_Shrapnel.Text:
+		'''
+		[header:Мастерская шрапнель (3/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Demolitionist/Ace_Shrapnel]
 		*****
-		My Subjects, no, they were mentally competent. It was merely their greed; that much had made sense to me. A strong economy relies on effective trade, but it couldn't have worked with my Creator MT. Neferly, their leader. He would never heed my advice for he felt he knew better. Maybe of his kin, but... I suppose he underestimated me.
-		''' */
+		Мои Слуги... Нет, они были вполне разумны. Всему виной их жадность; по крайней мере, для меня это объяснение звучало логично. Для формирования сильной экономики необходима эффективная торговля, но с моим создателем, МИ, она была невозможна. Неферли, их лидер. Он никогда не слушал мои советы; он считал, что сам понимает обстоятельства гораздо лучше меня. Быть может, он прислушивался к кому-то из своего рода... Но меня, как я полагаю, он явно недооценил.
+		'''
 }
 
 The_Crimson: {
-	// DisplayName: The Crimson
-	// SeriesLength: "13"
+	DisplayName: Багрянец
+	SeriesLength: "13"
 
 	Bladetongue: {
-		// Name: "{$ItemName.Bladetongue}"
-		/* Text:
+		Name: "{$ItemName.Bladetongue}"
+		Text:
 			'''
-			[header:Bladetongue (1/{$SeriesLength})]
+			[header:Язык-лезвие (1/{$SeriesLength})]
 			[jimage/sc2d:Terraria/Images/Item_3211]
 
 
 			*****
-			Beguilers who seek its destruction, heed this. The Crimson was always meant to be a part of this world. It was deemed necessary for the balance of Terraria. 
-			''' */
+			Лжецы, что желают его смерти, примите к сведению: Багрянец изначально задумывался как неотъемлемая часть мира сего. Его сочли необходимым для баланса Террарии. 
+			'''
 	}
 
 	Vicious_Mushroom: {
-		// Name: "{$ItemName.ViciousMushroom}"
-		/* Text:
+		Name: "{$ItemName.ViciousMushroom}"
+		Text:
 			'''
-			[header:Vicious Mushroom (2/{$SeriesLength})]
+			[header:Порочный гриб (2/{$SeriesLength})]
 			[jimage/sc2d:Terraria/Images/Item_2887]
 
 
 			*****
-			Those who wish to cleanse it, must be fully prepared to bear the responsibility of maintaining good order, but first must understand the Crimson's long history in this world.
-			''' */
+			Те, кто желает отчистить его, должны основательно подготовиться к поддержанию порядка. Но до того должны понять долгую историю существования Багрянца в этом мире.
+			'''
 	}
 
 	The_Rotted_Fork: {
-		// Name: "{$ItemName.TheRottedFork}"
-		/* Text:
+		Name: "{$ItemName.TheRottedFork}"
+		Text:
 			'''
-			[header:The Rotted Fork (3/{$SeriesLength})]
+			[header:Гнилая вилка (3/{$SeriesLength})]
 			[jimage/sc2.2d:Terraria/Images/Item_802]
 
 
 			*****
-			It became a tradition written in blood. The king must drink from the blood of the giant beast their first had slain. Sacred ichor, instead the deemer of righteous king. The forks of these kings would be there for the pouring. The forks were used to prod at the king's breast, have blood poured onto it and the chalice to mix in with the ichor. Imbued blood from multiple sources, the past king, inheritor and ancient beast.
-			''' */
+			Король обязан был испить крови гигантского зверя, сражённого их первым правителем. Священный ихор взамен порицаний праведного короля. Вилы этих королей были предназначены для смешивания: ими пронзали грудь царя, смешивая его кровь с ихором в чаше. Получалась кровь, пропитанная силой самых разных происхождений: умершего короля, его наследника и древнего зверя. Это стало традицией, записанной кровью.
+			'''
 	}
 
 	Crimson_Heart: {
-		// Name: "{$ItemName.CrimsonHeart}"
-		/* Text:
+		Name: "{$ItemName.CrimsonHeart}"
+		Text:
 			'''
-			[header:Crimson Heart (4/{$SeriesLength})]
+			[header:Багряное сердце (4/{$SeriesLength})]
 			[jimage/sc3d:Terraria/Images/Item_3062]
 
 
 			*****
-			The heart would also be removed and locked away, protected by the most devout. It was merely a festive tradition to honor the inheritor, a tradition to mark the initiation of a Crimson King.
-			''' */
+			Сердце также вынимали и отдавали под бдительную службу самых доверенных. Это была всего лишь излишняя традиция для восславления наследника, традиция, призванная отметить коронацию нового Багрового Короля.
+			'''
 	}
 
 	The_Undertaker: {
-		// Name: "{$ItemName.TheUndertaker}"
-		/* Text:
+		Name: "{$ItemName.TheUndertaker}"
+		Text:
 			'''
-			[header:The Undertaker (5/{$SeriesLength})]
+			[header:Гробовщик (5/{$SeriesLength})]
 			[jimage/sc3d:Terraria/Images/Item_800]
 
 
 			*****
-			It was an undertaking established the first Crimson King; a man known for his brutish leadership. All of his people were equally as barbaric and unhinged and, overtime, would become further strained from reality through indulgence.
-			''' */
+			Так свой статус обрёл и первый Багровый Король — человек, известный своим жестоким вплоть до гроба правлением. Все его подданные были в равной степени сбродом варварским и кровожадным, со временем становившимся всё более оторванным от реальности.
+			'''
 	}
 
 	Crimson_Rod: {
-		// Name: "{$ItemName.CrimsonRod}"
-		/* Text:
+		Name: "{$ItemName.CrimsonRod}"
+		Text:
 			'''
-			[header:Crimson Rod (6/{$SeriesLength})]
+			[header:Багряный жезл (6/{$SeriesLength})]
 			[jimage/sc3d:Terraria/Images/Item_1256]
 
 
 			*****
-			Even in present time, the beast's blood rains and continues to satiate the blood-thirsty, deranged denizens of this horrible place. They hardly resemble any kind of civilization anymore.
-			''' */
+			Даже в наше время кровь зверя продолжает идти дождём и насыщать кровожадных, безумных обитателей этого ужасающего места. Их нынешних почти невозможно называть какой-либо «цивилизацией».
+			'''
 	}
 
 	Panic_Necklace: {
-		// Name: "{$ItemName.PanicNecklace}"
-		/* Text:
+		Name: "{$ItemName.PanicNecklace}"
+		Text:
 			'''
-			[header:Panic Necklace (7/{$SeriesLength})]
+			[header:Ожерелье паники (7/{$SeriesLength})]
 			[jimage/sc3d:Terraria/Images/Item_1290]
 
 
 			*****
-			The drake instilled fear upon the first King's people, but he was naive and unwise enough to face off against the beast. It was a calculated strike at its throat where blood would violently rain down upon the people.
-			''' */
+			Змий вселял ужас в народ первого Короля, но тот был достаточно наивным и недальнозорким, чтобы нанести по тому удар. Этот удар заключался в тщательно спланированном ударом в горло, из которого впоследствии ливнем хлынула кровь прямо на его людей.
+			'''
 	}
 
 	Bone_Rattle: {
-		// Name: "{$ItemName.BoneRattle}"
-		/* Text:
+		Name: "{$ItemName.BoneRattle}"
+		Text:
 			'''
-			[header:Bone Rattle (8/{$SeriesLength})]
+			[header:Костяная погремушка (8/{$SeriesLength})]
 			[jimage/sc3d:Terraria/Images/Item_3060]
 
 
 			*****
-			Their king was loved by his people. He drank from the blood with no care to celebrate his trophy, but only found it to empower him. So, he made sure his inheritors would also drink from the same chalice.
-			''' */
+			Их король стал возлюблен народом. Он испил кровь вовсе не для того, чтобы отпраздновать свой триумф; он искал лишь силы. Так он позаботился о том, чтобы и каждый из его наследников испил из той же чаши.
+			'''
 	}
 
 	Tissue_Sample: {
-		// Name: "{$ItemName.TissueSample}"
-		/* Text:
+		Name: "{$ItemName.TissueSample}"
+		Text:
 			'''
-			[header:Tissue Sample (9/{$SeriesLength})]
+			[header:Образец ткани (9/{$SeriesLength})]
 			[jimage/sc2.5d:Terraria/Images/Item_1329]
 
 
 			*****
-			But, it was too late before the last sane of the populous began to realize his evil plots... even from hundreds of years after his death. These cultists wanted to restore their old king from the heart.
-			''' */
+			Однако, когда его последние здравомыслящие подданные стали осознавать всё его безумство, было уже слишком поздно... Даже спустя сотни лет после его смерти. Эти культисты хотели воскресить их старого короля при помощи сердца.
+			'''
 	}
 
-	/* Tendon_Tear.Text:
+	Tendon_Tear.Text:
 		'''
-		[header:Tendon Tear (10/{$SeriesLength})]
+		[header:Слеза плоти (10/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Ranged/Tendon_Tear]
 		*****
-		They were initially unsuccessful, but eventually made it work through ritual. An incomplete version, but their king nonetheless.
-		''' */
-	/* Weakpoint_Analyzer.Text:
+		Они долгое время терпели неудачи, но в итоге добились некоего прогресса в ритуале. Пусть они получили и неидеальный результат, но всё же это был тот самый король.
 		'''
-		[header:Weakpoint Analyzer (11/{$SeriesLength})]
+	Weakpoint_Analyzer.Text:
+		'''
+		[header:Анализатор уязвимостей (11/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Accessories/Weakpoint_Analyzer]
 		*****
-		The Crimson King would be divided by his entrails, each part of the kingdom possessing a part of him. This made it easier to manage.
-		''' */
-	/* Ichor.Text:
+		Багровый Король был поделён на внутренности, каждая правила своим участком королевства. Это значительно упростило правление.
 		'''
-		[header:Ichor (12/{$SeriesLength})]
+	Ichor.Text:
+		'''
+		[header:Ихор (12/{$SeriesLength})]
 		[jimage/sc2d:Terraria/Images/Item_1332]
 		*****
-		The Crimson, despite the dryads' best efforts, could not be stopped. They began to understand that it was necessary for this world unless a hero could step up to the rite of keeping the balance themselves.
-		''' */
+		Багрянец, несмотря на все усилия дриад, было невозможно остановить. Они начали осознавать, что Багрянец был необходим этому миру; лишь появление героя, способного принять обязанность поддержания баланса, могло бы изменить положение дел.
+		'''
 
 	Brain_Of_Cthulhu: {
-		// Name: "{$NPCName.BrainofCthulhu}"
-		/* Text:
+		Name: "{$NPCName.BrainofCthulhu}"
+		Text:
 			'''
-			[header:Brain of Cthulhu (13/{$SeriesLength})]
+			[header:Мозг Ктулху (13/{$SeriesLength})]
 			[jportrait/s1.2dw300h220:BrainofCthulhu]
 			*****
-			As long as the Crimson bleeds, there will always be evil. Making it bleed more makes it worse for all. These are the tricky tactics it uses to confuse and halt its enemies. But, all it takes is a decided one to see through its lies.
-			''' */
+			До тех пор, пока Багрянец не прекратит изливаться кровью, в мире всегда будет зло. Заставишь его истекать ещё большим количеством крови — сделаешь всем только хуже. Он использует эти хитроумные приёмы дабы запутать и остановить своих врагов. Однако для того, чтобы разглядеть ложь, достаточно лишь решимости.
+			'''
 	}
 }
 
 Ashen_Armor: {
-	// DisplayName: Ashen Armor
-	// SeriesLength: "3"
-	/* Ashen_Helmet.Text:
+	DisplayName: Пепельная броня
+	SeriesLength: "3"
+	Ashen_Helmet.Text:
 		'''
-		[header:Ashen Helmet (1/{$SeriesLength})]
+		[header:Пепельный шлем (1/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Armor/Ashen/Ashen_Helmet]
 		*****
-		Visionaries would wear this armor. The helmet in particular was the most important piece as it gave tinkerers who wore it advantages over the naked eye. Lifelike blueprints could be realized and the best of ideas could be documented. Material references could be brought into question in mere seconds.
-		''' */
-	/* Ashen_Breastplate.Text:
+		Эта броня пришлась бы по вкусу визионерам. Шлем, в частности, был главным элементом брони, дававший инженерам преимущества, недоступные обычным глазам. С его помощью можно было начертить самые реалистичные чертежи и задокументировать наилучшие идеи. Разного рода физические объекты подвергались сомнению за долю секунды.
 		'''
-		[header:Ashen Breastplate (2/{$SeriesLength})]
+	Ashen_Breastplate.Text:
+		'''
+		[header:Пепельный нагрудник (2/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Armor/Ashen/Ashen_Breastplate]
 		*****
-		The breastplate of the tinkerer's armor was built for unparalleled utility and combat. At the time the tinkerer suit was invented, the Sovereignty was a warring nation and so tinkerers had to be resourceful. It was this very resourcefulness that made them successful and allowed many of these suits to created. The suit was not the best quality, but it was capable for what little it had.
-		''' */
-	/* Ashen_Greaves.Text:
+		Нагрудник брони инженеров даровал носителям непревзойдённые преимущества и помощь в боевых столкновениях. Во времена разработки костюма инженера Суверенное Государство часто находилось в состоянии войны, так что инженерам приходилось проявлять изобретательность. Именно изобретательность позволила им так преуспеть и произвести огромное количество костюмов. Костюм был не самого лучшего качества, но со своими задачами более чем справлялся.
 		'''
-		[header:Ashen Greaves (3/{$SeriesLength})]
+	Ashen_Greaves.Text:
+		'''
+		[header:Пепельные поножи (3/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Armor/Ashen/Ashen_Greaves]
 		*****
-		The leggings were certainly impressive. Lightweight and originally capable of increasing a tinkerer's maneuverability. The newer models don't have such enhancements as they weren't really needed during the golden age. At the very least, the suit charges itself from friction exerted by the user walking in it. Being one of the few technologies to utilize a PG, this was huge for warming it up whenever necessary.
-		''' */
+		Нижние элементы брони были воистину поразительными. Нетяжёлые по весу, они были задуманы для повышения мобильности инженеров. У новейших моделей отсутствует часть функционала, ведь в нём не было нужды в золотую эпоху. Зарядка костюма происходит за счёт силы трения, вырабатываемой носителем при ходьбе. Поскольку это одна из немногих технологий, использующих в себе ФГ, это сыграло огромную роль при возникновении потребности в отоплении.
+		'''
 }
 
 Mechanicus_Sovereignty: {
-	// DisplayName: The Mechanicus Sovereignty
-	// SeriesLength: "11"
+	DisplayName: Суверенное Государство Механикум
+	SeriesLength: "11"
 
 	Biocomponent_10: {
-		// Name: "{$Items.Biocomponent10.DisplayName}"
-		/* Text:
+		Name: "{$Items.Biocomponent10.DisplayName}"
+		Text:
 			'''
-			[header:Robot Guts (1/{$SeriesLength})]
+			[header:Внутренности робота (1/{$SeriesLength})]
 			[jimage/sc3d:Origins/Items/Materials/Biocomponent10]
 
 
 
 			*****
-			One of the surprisingly smaller castes of the Mechanicus Sovereignty, the Laborers, often worked alongside the worker machines in menial tasks, but not quite to the level of an Apprentice. Laborer quality of life was the worst due to how valuable one's intelligence was in their society, but compared to most other ancient civilizations there's was up there. There are no notable figures in the Laborer caste.
-			''' */
+			Одна из на удивление немногочисленных каст Механикума, рабочие, часто работала рука об руку с машинами, выполняя несложные задания, о которые ученики не марают руки. Качество жизни рабочих было очень плохим, особенно если учесть, как ценился интеллект в обществе, в котором те проживали, но, сравнивая с качеством жизни других цивилизаций, те ещё жили припеваючи. Примечательных личностей из касты рабочих нет.
+			'''
 	}
 
-	/* Nineball.Text:
+	Nineball.Text:
 		'''
-		[header:Nineball (2/{$SeriesLength})]
+		[header:Мяч-девятка (2/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Weapons/Melee/Nineball]
 		*****
-		The next one up were the aforementioned Apprentinces, those either too young for higher education or at an average level of intellect. This was the most populous caste of the Mechanicus Sovereignty and didn't have anyone of notable history. The Apprentice caste is treated as a beginner-level caste where the primary objective is to expand upon information. Apprentices don't get their specialties until they become Craftsmen.
-		''' */
+		Следующими после вышеупомянутых в иерархической системе шли ученики — они либо были слишком юны для получения высшего образования, либо их интеллект оставался на среднем уровне. Будучи самой многочисленной кастой Суверенного Государства, она не подарила истории ни одной примечательной личности. К касте учеников относились как к неофитам, главной целью которых было постижение всё больших объёмов информации. Ученики не способны получить специальность до посвящения в ремесленники.
+		'''
 
 	NE_8: {
-		// Name: "{$Items.NE8.DisplayName}"
-		/* Text:
+		Name: "{$Items.NE8.DisplayName}"
+		Text:
 			'''
-			[header:NE-8 (3/{$SeriesLength})]
+			[header:НЭ	-8 (3/{$SeriesLength})]
 			[jimage/sc3d:Origins/Items/Materials/NE8]
 
 
 
 			*****
-			Craftsmen and women are either young adults pursuing a college-level education or satisfied with their particular line of work. Craftsmen work in specific jobs that Laborers can't really do without pre-requisite knowledge and understanding. Typical jobs like woodwork and trade electricians would be covered by this caste, which is to include notable figures like who you know as the Mechanic.
-			''' */
+			Ремесленники и ремесленницы — это либо те, кто занимается получением высшего образования, либо те, кто уже получил его и трудится на желаемой работе. Ремесленники выполняют особую работу, которую ученики неспособны выполнить без предварительных инструкций и подготовки. Эту касту составляют представители типичных профессий вроде столяров и электриков; в самой же касте встречаются и именитые личности, как, например, Механик. 
+			'''
 	}
 
-	/* Internal_Combustionfish.Text:
+	Internal_Combustionfish.Text:
 		'''
-		[header:Internal Combustionfish (4/{$SeriesLength})]
+		[header:Рыба внутреннего сгорания (4/{$SeriesLength})]
 		[jimage/sc2d:Origins/Items/Weapons/Demolitionist/Internal_Combustionfish]
 		*****
-		Going into the Tinkerer caste, we start to see higher-level organization take place. Tinkerers are essentially just Craftsmen who are able to teach their jobs on a surface level. Tinkerers are of high emotional and intellectual intelligence as they must be tactful and able to express themselves. Some jobs performed by Tinkerers include maintenance technicians and systems work as they begin to understand pre-existing schematics.
-		''' */
-	/* C6_Jackhammer.Text:
+		Рассматривая касту инженеров, мы всё чаще будем сталкиваться с организацией гораздо более высокого уровня. Инженеры, по большей части, это ремесленники, способные на поверхностном уровне обучить своему делу. Поскольку инженерам необходимо соблюдать тактичность и обладать умением выражать свои мысли, они должны владеть высоким эмоциональным и техническим интеллектом. Они выполняют работу по техобслуживанию систем, так как они уже начинают понимать и разбираться в существующих чертежах.
 		'''
-		[header:C6 Jackhammer (5/{$SeriesLength})]
+	C6_Jackhammer.Text:
+		'''
+		[header:C6 Дробитель (5/{$SeriesLength})]
 		[jimage/sc3d:Origins/Items/Tools/C6_Jackhammer]
 		*****
-		Next is the Scope Tinkerer caste, able to begin learning beyond their area of expertise, but not quite capable of making product to drive forward society. They take on manager roles in the general workforce, able to educate the lower castes while pursuing their own studies with higher-ups on a more personal level. Being exalted to any castes above Scope is an arduous journey as knowledge becomes increasingly harder to acquire.
-		''' */
+		Следующей идёт каста инженеров-смотрителей. Они уже могут начать постигать информацию вне их основной квалификации, но всё ещё не способны производить качественный продукт напрямую для общества. Они занимают руководящие основной рабочей силой места, обучая представителей нижестоящих каст. Помимо этого, они проводят и собственные исследования под надзором вышестоящих личностей. Получение должности выше смотрительской — трудоёмкий путь: получать новые знания становится всё сложнее.
+		'''
 
 	Fifth_Spline: {
-		// Name: "{$Items.Sixth_Spline.DisplayName}"
-		/* Text:
+		Name: "{$Items.Sixth_Spline.DisplayName}"
+		Text:
 			'''
-			[header:Fifth Spline (6/{$SeriesLength})]
+			[header:Пятый шлиц (6/{$SeriesLength})]
 			[jimage/sc3d:Origins/Items/Weapons/Ranged/Sixth_Spline]
 
 
 			*****
-			Above Scope Tinkerers are Senior Tinkerers. They make up the second smallest caste by population and live more luxurious lives. Senior Tinkerers act as teachers for Scope Tinkerers while primarily pursuing ways to actively improve Mechanicus society through technology or policy. The one-on-one nature of working with Scope Tinkerers below them grants them a lot of time to balance their lives.
-			''' */
+			Выше инженеров-смотрителей стоят старшие инженеры. Они образуют вторую по немногочисленности касту, проживая гораздо более роскошную жизнь. Старшие инженеры выступают в роли наставников для инженеров-смотрителей, параллельно уделяя большую часть времени поиску способов улучшения общества Механикума посредством технологий или политики. Индивидуальный подход к совместной работе со смотрителями позволяет старшим инженерам уделять всё больше времени на личную жизнь.
+			'''
 	}
 }
 
 Birth_Of_The_Gods: {
-	// DisplayName: Birth Of The Gods
-	// SeriesLength: "3"
+	DisplayName: Рождение Богов
+	SeriesLength: "3"
 
 	Life_Fruit: {
-		// Name: "{$ItemName.LifeFruit}"
-		/* Text:
+		Name: "{$ItemName.LifeFruit}"
+		Text:
 			'''
-			[header:Life Fruit (1/{$SeriesLength})]
+			[header:Фрукт жизни (1/{$SeriesLength})]
 			[jimage/sc3d:Terraria/Images/Item_1291]
 
 			*****
-			Terraria's Dryads were its true keepers, bringing about life and acting on behalf of the world. The Dryads' responsibility was to cultivate the Forbidden Fruit among many of their other plants like Life Fruit or Mojoleaves. The Forbidden Fruit are Terraria's form of entrusted responsibility on the individuals they are provided to, but only the Dryads know of how to cultivate these plants.
-			''' */
+			Дриады Террарии были её настоящими хранителями — дарили жизнь и действовали на благо мира. В обязанности Дриад входило выращивание запретного плода среди многих других растений, вроде фрукта жизни или листьев моджо. Запретный плод является способом самой Террарии возложения ответственности на тех, кому тот достанется, но только лишь Дриады обладают знанием о том, как выращивать это растение.
+			'''
 	}
 
 	Broken_Hero_Sword: {
-		// Name: "{$ItemName.BrokenHeroSword}"
-		/* Text:
+		Name: "{$ItemName.BrokenHeroSword}"
+		Text:
 			'''
-			[header:Broken Hero Sword (2/{$SeriesLength})]
+			[header:Сломанный меч героя (2/{$SeriesLength})]
 			[jimage/sc3d:Terraria/Images/Item_1570]
 
 			*****
-			Some possessed this knowledge and hunted the Dryadkin for their Forbidden Fruit. The Dryad Clan had become jaded and lost trust in any outsiders who previously knew them. But, 16 of these fruits still remained whether protected by them or already outside of their control.
-			''' */
+			Некоторые узнали о секрете Дриад и начали охоту на их род с целью заполучить запретный плод. Клан Дриад был истерзан и лишился всякого доверия со стороны чужаков, знавших их до этих событий. Однако 16 фруктов всё ещё существовали в этом мире: часть — под их покровительством, другая же была ими утеряна.
+			'''
 	}
 
 	Luminite: {
-		// Name: "{$ItemName.LunarOre}"
-		/* Text:
+		Name: "{$ItemName.LunarOre}"
+		Text:
 			'''
-			[header:Luminite (3/{$SeriesLength})]
+			[header:Люминит (3/{$SeriesLength})]
 			[jimage/sc3d:Terraria/Images/Item_3460]
 
 			*****
-			And, there were those who ruined it for all, like that of Cthulhu's war against Terraria, which resulted in the death of all but one dryad who ran away. The search for godhood became a lost dream that day, but it gave way for the world to finally find balance. Terrarians exist to help with this and remove all gods for good.
-			''' */
+			И были те, кто разрушил всё до конца; в результате войны Ктулху против Террарии из всего рода выжила лишь одна сбежавшая дриада. В тот день поиск божественного покровительства казался чем-то невыполнимым, но всё же мир смог прийти к балансу. Террарианцы существуют чтобы помочь с убийством богов во имя всего благого.
+			'''
 	}
 }
 
 Ocean_Tribe: {
-	// DisplayName: The Ocean Tribe
-	// SeriesLength: "5"
+	DisplayName: Племя Океана
+	SeriesLength: "5"
 
 	Neptunes_Shell: {
-		// Name: "{$ItemName.NeptunesShell}"
-		/* Text:
+		Name: "{$ItemName.NeptunesShell}"
+		Text:
 			'''
-			[header:Neptune's Shell (1/{$SeriesLength})]
+			[header:Ракушка Нептуна (1/{$SeriesLength})]
 			[jimage/sc3d:Terraria/Images/Item_497]
 
 			*****
-			Neptune was a benevolent leader of the merkin of Aqi. He was no ordinary habitant of Terraria as he was one of its gods. Neptune had eaten from the Fruit of Flow, granting him command over Terraria's vast seas. His avatar wasn't warped by any external desire as he chose not to alienate himself from his people. Using his power for good, he established Aqi and with it the nation of Bathylmus in the ocean. With his people to worship him and grant him more power, he protected the merkin from outside dangers. Bathylmus was quite isolated from the rest of the world, and encountered different evils that no other ancient society would face. The merkin were the first to vie Cthulhu's wrath and Neptune was as ready as he could've been, but, it was still a slaughter.
-			''' */
+			Нептун был добродушным лидером мерфолков Аки. Он входил в число богов, так что был далеко не типичным обитателем Террарии. Нептун вкусил фрукт потока, получив власть над огромными морями Террарии. Его аватар не нуждался во внешних желаниях: тот выбрал не дистанцироваться от своего народа. Используя свои силы во благо, Нептун заложил Аки, а вместе с ним и океаническую нацию Батильм. Он черпал силы из поддержки своего народа, защищая меркинов от внешних угроз. Батильм был довольно изолирован от остального мира, и ему пришлось столкнуться с совершенно иным видом зла, с которым другие древние цивилизации никогда не имели контактов. Мерфолки были первыми, кто познал на себе гнев Ктулху; хоть Нептун и был готов защищать их как никогда, резня всё же случилась.
+			'''
 	}
 
-	/* Shark.Text:
+	Shark.Text:
 		'''
-		[header:Shark (2/{$SeriesLength})]
+		[header:Акула (2/{$SeriesLength})]
 		[jportrait/s1.2dw600:Shark]
 		*****
-		The merfolk's battle against Cthulhu was quick and violent. Neptune commanding the initial cavalry was a tactical failure that lead to his demise. Despite the unduly circumstances he put himself through, he managed to keep Cthulhu at bay to give his sorcerers plenty of time to construct R'yleh as fast as they could. Inevitably, however, Neptune was consumed by Cthulhu, which made Cthulhu even more powerful.
-		''' */
+		Битва мерфолков с Ктулху была быстрой и жестокой. Решение Нептуна командовать кавалерией в авангарде было тактической неудачей, приведшей его к поражению. Несмотря на все неблагоприятные обстоятельства, в которых тот увяз, он умудрялся сдерживать Ктулху в заливе, давая своим чародеям время на то, чтобы сконструировать Р'ильех настолько быстро, насколько они могли. Однако поглощение Нептуна Ктулху стало неизбежным событием, сделавшим Ктулху ещё могущественнее.
+		'''
 
 	Shell_Pile: {
-		// Name: "{$ItemName.ShellPileBlock}"
-		/* Text:
+		Name: "{$ItemName.ShellPileBlock}"
+		Text:
 			'''
-			[header:Shell Pile (3/{$SeriesLength})]
+			[header:Куча лепестков (3/{$SeriesLength})]
 			[jimage/sc3d:Terraria/Images/Item_4090]
 
 			*****
-			Although heavy casualties were sustained, merfolk sorcerers successfully managed to trap and contain him in R'yleh. Cthulhu would await his release from R'yleh in the darkness of the abyss.
-			''' */
+			Несмотря на колоссальные потери, чародеи морского народа смогли успешно пленить и заточить его в Р'ильех. Ктлуху ожидает своего высвобождения из тьмы бездны Р'ильеха.
+			'''
 	}
 
 	Deep_Ocean_Pearl: {
-		// Name: Deep Ocean Pearl
-		/* Text:
+		Name: Глубоководная жемчужина
+		Text:
 			'''
-			[header:Deep Ocean Pearl (4/{$SeriesLength})]
+			[header:Глубоководная жемчужина (4/{$SeriesLength})]
 			[jimage/sc3d:Origins/Items/Weapons/Summoner/Deep_Ocean_Pearl]
 
 			*****
-			The tainted merkin of Bathylmus were few after narrowly avoiding catastrophe from his havoc. There was a reform attempted by Neptune's closest but without their idol to give them guidance, the dream began to fade as people fled. I was just a merling at that time, which helped me fail to understand how awful life in Aqi was.
-			''' */
+			Искалеченных мерфолков Батильма осталось очень немного после чудом пережитого ими бедствия. Ближайшие к Нептуну пытались провести реформы, но народ, лишённый идола для наставления, начал спешно покидать родные земли, и мечта о счастливом будущем начала меркнуть. В те времена я была всего лишь детёнышем и не понимала, насколько ужасной была жизнь в Аки. 
+			'''
 	}
 
 	Diving_Helmet: {
-		// Name: "{$ItemName.DivingHelmet}"
-		/* Text:
+		Name: "{$ItemName.DivingHelmet}"
+		Text:
 			'''
-			[header:Diving Helmet (5/{$SeriesLength})]
+			[header:Водолазный шлем (5/{$SeriesLength})]
 			[jimage/sc3d:Terraria/Images/Item_268]
 
 			*****
-			I instead found joy infatuated by a naive diver who entertained himself by taking on whatever sea monster he came across. I would always watch him in his battles and would wonder how he did it. You Terrarians are quite durable and persistent. I remember him, his face, his eyes. But, his name? Something has made me forget, even though we had shared love for a long time. 
-			''' */
+			Вместо неё я нашла себе развлечение в наблюдении за наивным дайвером, развлекавшим себя сражениями с попадающимися ему морскими монстрами. Я бы так и продолжила наблюдать за ним в его битвах, удивляясь его превозмоганиям. Вы, террарианцы, довольно крепки и настойчивы. Я помню его, его лицо, но его имя? Что-то заставило меня позабыть, хоть мы и имели продолжительную взаимную любовь. 
+			'''
 	}
 }
 
 Trenchmaker: {
-	// Name: Trenchmaker
-	/* Text:
+	Name: Окопник
+	Text:
 		'''
 		[header:Trenchmaker]
 		[jimage/s1d:Origins/NPCs/Ashen/Boss/Trenchmaker]
 		*****
-		It was like any other Wednesday morning. I went outside my post after devising plans to improve the security, but it was the sunrise that made it all worth it. Whenever the sun came up and the dew came to gently lay on the scrap piles, I knew my day would be over and would immediately feel relief and satisfaction. Do not get me wrong, the work was long and arduous, and due to the unfavorable working hours I would seldom see my son and wife. But, they have been known to visit, at least my son has. He always comes to visit his father, and it warms my heart. Ever since Lauren sent him over for donuts, I've been blessed. But, that one Wednesday was different and shaped the nature of my work greatly. See, I wasn't originally a part of the department of robotics, I specialized in security and defense systems. My son came to me and asked me, "Daddy, why can't robot soldiers be built so real people don't have to die?" My heart instantly melted, and I cried hugging him. Ever since that moment I've been inspired by my son's ideas, at first expressing my skepticism but eventually opening up to realize our society can support his ideas. I took action to cross-specialize immediately so I could make my son happy, not realizing that this would be the worst mistake of my life. I changed shops and got demoted to a craftsman, beginning a new line of work that would hopefully make my son happy. I didn't care about the benefits it would provide me, no, I was just fueled by a father's love. I worked through the castes fast thanks to pre-requisite knowledge and became a senior with a specialization in warfare mechanics. My first project was arguably my most-successful, you may know it as the "Trenchmaker". That was its given name, but after what took place they're all referred to by their model numbers. The TM-22S was the first design I made to serve as a "war engine" as the MT himself would classify, a term he created just for it and that would be reused for future warfighting machinery. It was prestigious, but the best part was my son's reaction to the TM-22S. He fell in love with it and wanted to play with it often, of course, I had to watch him to make sure he didn't get into the circuitry and accidentally blow something up but he had a blast riding on it nonetheless. The TM-S and TM-M lines would prove successful in our wars against our rivals, but it got ugly really fast after we killed those cultists. I had told my son and wife to run away as fast as they could the moment I saw the fires in the sky, this time it wasn't a factory blowout. Before I could get to the control room to assist the other network engineers, there were already war engines positioned outside and killing everyone. One of them was my very own creation aiming right at me and opening fire. Fortunately, I survived the initial attack from quick reflexes, but this time I wasn't having to quickly shut off a hydraulic valve from overloaded flexitubes. Everytime I recall the old memories it just makes it all more sour. My machines killed everyone and I can't forgive myself for it. I promised myself to never leave until the "Ashen" is powered off for good, so here I am.
-		''' */
+		Это было обычное утро среды. Я покинул свой пост, закончив разрабатывать план по улучшению защиты и с восходом солнца мои труды дали свои плоды. Каждый раз, когда всходило солнце, а роса нежно ложилась на груды металлолома, я чувствовал неимоверное облегчение и удовлетворение, ведь мой день наконец подошёл к концу. Не пойми меня неправильно, моя работа трудна и изнурительна, а из-за ужасного графика я редко виделся с сыном и женой. Однако они всё же навещали меня, по крайней мере мой сын. Он всегда приходил проведать своего отца, и это греет мне сердце. С тех пор как Лорен стала посылать его за пончиками, я был несказанно счастлив. Однако конкретно эта среда стала особенной: она кардинально изменила суть моих работ. Видишь ли, изначально я не был частью отделения робототехники, я специализировался на охране и защитных системах. Мой сын как-то спросил меня: «Папочка, почему никто не может сделать солдатов-роботов, чтобы настоящим людям не приходилось умирать?» — моё сердце мгновенно растаяло, и я расплакался, обнимая его. С той поры идеи сына вдохновляли меня; хоть я и был изначально скептичен к его идеям, но позже я понял, что наше общество может их поддержать. Я незамедлительно принял меры по расширению своей специальности, дабы обрадовать своего сына. Тогда я ещё не осознавал, что совершаю худшую ошибку в своей жизни. Я сменил мастерскую и понизился до ремесленника, начав трудиться на новой работе, которая, как я надеялся, сделает моего сына счастливым. Меня не интересовали возможные амбиции на новой работе, нет, меня питала лишь отцовская любовь. Благодаря имеющимся знаниям я быстро поднялся по кастам вплоть до старшего инженера со специализацией на военной механике. Мой первый проект, вероятно, был самым успешным, ты знаешь его как «Окопник». Таковым было его первоначальное название, но после произошедшего они начали называть его своими модельными номерами. О-22С был первым созданным мной прототипом — «военная машина», как бы классифицировал его сам МИ новосозданным термином, который в будущем будет использован для военных машин. Вклад в появление нового термина был престижной заслугой, но больше всего меня порадовала реакция сына на О-22С. Он буквально влюбился в него и часто хотел с ним играть. Конечно, мне приходилось следить за тем, чтобы он наслаждался катанием на нём, но случайно не залез во внутренности и ничего не подорвал. Модели О-22С и О-15Р показали бы себя успешными в войнах с нашими врагами, но после расправы с теми культистами всё пошло не так, как было задумано. Когда я увидел огни в небе, я сказал жене с сыном бежать как можно быстрее: это не было похоже на обычный взрыв на фабрике. До того как я успел добраться до комнаты управления и помочь другим системным инженерам, военные машины уже стояли на позициях, убивая всех без разбора. Один из них, плод моего собственного труда, прицелился в меня и открыл огонь. К счастью, благодаря рефлексам я пережил первую атаку, но тогда я вовсе не перекрывал гидравлический клапан из-за перегрузки труб. Каждый раз, когда я вспоминаю эти события, мне становится всё болезненнее от пережитого опыта. Мои машины всех убили. Я не могу простить себя за это. Я пообещал себе никогда не покидать обесточенное во благо «Пепелище», так что вот он я.
+		'''
 }
 
 Worn_Paper: {
-	// DisplayName: Worn Paper
-	/* Loose_Wheel.Text:
+	DisplayName: Пожелтевший клочок
+	Loose_Wheel.Text:
 		'''
-		'I got my certificate of admission into the Smokesite Scrapper Apprenticeship 3 months ago.
-		Just a few years in the mines, a few learning lessons here ‘n there and then I’m free.
-		Still laborious work, but it is fun.
-		I get to go to many abandoned facilities and take back home the important stuff, and sometimes meet with strange anomalies.
-		They say magic isn’t real, but we get to see it.
-		Don’t know a soul that would engineer these kinds of things;
-		not even the MT’s can figure it out.
-		As long as I stick with my new work group, I’ll be fine. They’re really old because our job has no prospects for advancement, they can carry me forward until I get the hang of things.
-		Maybe one day I’ll also get to be unfazed by a random mannequin doing a handstand charge straight at me, but certainly not now.'
-		''' */
-	/* Self_Preservation.Text:
+		'3 месяца назад я получил справку об одобрении о зачисления на обучение на специалиста по металлолому в условиях завесы.
+		Ещё пару лет в шахтах, немного учёбы тут да там, и я наконец свободен.
+		Работа всё такая же трудная, но хоть весёлая.
+		Я должен ходить по заброшенным зданиям и доставать оттуда важные вещи, иногда встречаясь с аномалиями.
+		Они говорят, что магии не существует, но мы видели её.
+		Я не знаю никого, кто занимается разработкой подобных вещей;
+		даже МИ не может ничего об этом узнать.
+		Пока я состою в своей новой рабочей группе, я буду в порядке. Её участники довольно немолоды, наша работа не даёт возможности карьерного роста, поэтому с их помощью мне будет легче освоиться.
+		Быть может, когда-нибудь я тоже смогу не обращать внимания на случайный оживший манекен, бросающийся на меня после выполнения стойки на руках.'
 		'''
-		I was quite lucky.
-		By the time the war engines turned on us I was out on a scrap run at AT-BSQ2, the facility was an old comms tower connecting the 9th and 2nd quadrants.
-		We managed to get the comms array working again, which was powerful enough to relay messages that were being sent directly from the Mother Unit.
-		The facility having no power was the reason why the other smokesites in the surrounding area were inactive, but after we powered it back on and intercepted the Mother Unit’s orders, we had chills run down our spines.
-		If it weren’t for my cowardice, I’d be dead because Cath, Ron and Heggins agreed to heed my warnings.
-		We’ve been camped out here and brought in the buggy in-case we need a fast escape.
-		Seeing the birds in the sky and the daddy long legs out isn’t an assuring sight, though.
-		''' */
-	/* Smog_Test.Text:
+	Self_Preservation.Text:
 		'''
-		Pat: Hey Bill, when's the last time you got a smog test?
-
-		Bill: Is this another one of your dumb jokes again?
-
-		Pat: Nah, I'm serious. I've seen you come here on your motorized bicycle. Everyone with a motor's gotta do it by the year.
-
-		Bill: Got mine last fall, why?
-
-		Pat: Well, you just let a big one out in this damn shaft in my face, and it smells absolutely vile. What are you puttin' in there dude?
-
-		Bill: Oh, didn't know you were a smog tester. Got a good look at the undercarriage there? Nothing too rusty?
-
-		Pat: Well. You're surely smelly, but good at the comebacks. Good one.
-
-		Matt: Can you two shut the hell up?"
-
-		Pat: What? Can't have a lil fun to pass the time?
-
-		Matt: I can't let my Apprenticeship to becoming a scrapper be ruined by you pigs. Try not to make a war engine think we're slacking off, would yah?
-
-		Bill: Fair's fair, but I'll screw up more if you make this about you and your stupid Apprenticeship BS.
-		''' */
-	/* The_Packing_Slip.Text:
+		Мне довольно повезло.
+		Когда военные машины восстали против нас, я был на свалке в АБ-БСК2. Здание представляло собой старую телекоммуникационную вышку, связывающую 9-й и 2-й квадраты.
+		Нам удалось заставить систему связи вновь работать. Ей хватало мощности передавать сообщения, посланные напрямую от Материнского Модуля. 
+		Отсутствие электричества в здании являлось причиной отсутствия активности в остальных областях с завесами, но после того, как мы перезапустили подачу электроэнергии и услышали приказы Материнского Модуля, по нашим спинам пробежал холодный пот.
+		Если бы не моя трусость, я уже был бы мёртв, ведь Кэт, Рон и Хеггинс решили прислушаться к моим предупреждениям.
+		Мы разбили лагерь и захватили с собой багги на случай, если нам придётся быстро уехать.
+		Однако наблюдать за птицами и пауками-сенокосцами — зрелище, не внушающее оптимизма.
 		'''
-		Manager: I checked it multiple times. The amount is not just wrong, the shipment itself is not what we ordered.
-
-		Worker: I have no idea about this, LGT. I explicitly remember putting it into the message to V-FSQ3 that we needed a shipment of fresh food stocks. The invoice number lines up too.
-
-		Manager: Instead, we got 18 tons of military technology. Could the message have gotten intercepted and changed in transit?
-
-		Worker: It’s entirely possible. Not the first comms station we’ve had become a smokesite. Guess that’s why we use the radio towers now, huh?
-
-		Manager: I will reach out to LGST about this, no worries. Just let LGST Avens know to update the supplies list.
-
-		Worker: Yes, LGT.
-		''' */
-	/* They_Found_Us.Text:
+	Smog_Test.Text:
 		'''
-		We were compromised when a pack of packhunters came in and searched the place.
-		We almost escaped but they were alerted by the buggy’s engine.
-		We drove about 8km before an HA-24 stopped us.
-		I ran to this replenishment facility and found a power suit still in here.
-		It’s a really good hiding place when you lock up in fear all the time.
-		I can’t leave, but I can’t just starve myself.
-		I’m just living off of whatever I can find
-		''' */
-	/* Mean_Baby.Text:
+		Пэт: Эй, Билл, когда ты в последний раз проходил тест на смог?
+
+		Билл: Это твоя очередная тупая шутка?
+
+		Пэт: Не, я серьёзно. Я видел, как ты приехал на велосипеде с мотором. Все, у кого есть мотор, должны проходить его раз в году.
+
+		Билл: Проходил прошлой осенью, тебе-то что?
+
+		Пэт: Ну, ты газанул мне прям в лицо, и эта дрянь пахла просто отвратительно. Что ты туда заливаешь, чувак?
+
+		Билл: А я и не знал, что ты в прошлом проводил тесты на смог. Проверь-ка внутренности, не слишком ли там ржаво?
+
+		Пэт: Ну-у-у. От тебя явно несёт, но ты хорош в ответах. Неплохо.
+
+		Мэтт: Вы двое там заткнётесь?"
+
+		Пэт: Ой, да ладно тебе. Разве я не могу чутка повеселиться, чтоб скоротать время?
+
+		Мэтт: Я не могу позволить вам, свиньям, испортить мне обучение и сделать из меня мусорщика. Постарайтесь не заставить военную машину думать, что мы тут расслабились, ладно?
+
+		Билл: Ладно-ладно, но я буду надоедать тебе ещё больше, если ты и дальше продолжишь нести чушь про себя и про своё обучение.
 		'''
-		It's just a big baby.
-		Who in their right mind made it this way?
-		Here we are just trying to keep the stupid thing asleep, and such is an impossible task.
-		The thing wakes up for a solid few minutes, we have to get near it and shock it with these tasers which supposedly calms it, and then sing it lullabies.
-		For some reason, the lullabies actually work.
-		Jace and I saw the end of not doing that... whoever the hell thought making the powerplant of the world a war machine, let alone with this much spite, deserves to be put in the pool of sanguinite we're having to sweat through everyday doing this crap.
-		''' */
-	/* Workplace_Safety_Concern.Text:
+	The_Packing_Slip.Text:
 		'''
-		Has anyone stopped to seriously consider how much of a safety risk this place is?
-		Just look at the table saw placed under the stairwell in sector 4B.
-		Tell me the possibility of someone falling off of the catwalk, onto that and then being minced to bits isn’t likely to happen.
-		Tell me that the doors with a crushing force of 5 elephants per square inch with no safety lever isn’t a concern mere feet away from the laborers’ bunks.
-		Who thought of any of this?
-		I get why the layout of the facility is so wacky because it’s bits-and-pieces, but that doesn’t mean we can’t reinstall and update our equipment.
-		And, he wonders why I burn through so much morphine and fire bands.
-		''' */
-	/* Famine.Text:
+		Менеджер: Я перепроверил всё несколько раз. Тут не просто неверное количество, но в самой посылке содержится совсем не то, что мы заказывали.
+
+		Рабочий: Я ничего не знаю об этом, ИЛ. Я отчётливо помню, что в сообщении для Ф-ФСК3 говорилось о необходимости поставки свежих продуктов. Номер счёта-фактуры тоже совпадает.
+
+		Менеджер: Но вместо них мы получили 18 тонн военных технологий. Могло ли сообщение исказиться в пути?
+
+		Рабочий: Вполне возможно. Вы — не первая станция, ставшая завесой. Полагаю, теперь поэтому мы пользуемся радиовышками, да?
+
+		Менеджер: Я доложу ИСЛ об этом, не волнуйтесь. Просто дайте ИСЛ Авенс знать о том, что нужно обновить список припасов.
+
+		Рабочий: Да, ИЛ.
 		'''
-		Sir, no matter what we try to do our crops always die out.
-		We’ve even cleaned out the entirety of hydroponics over and over again, but none of the plants are surviving.
-		The water supply is poisoned and it seems no amount of plumbing work will fix that.
-		We can’t rely on our own food production facilities anymore unless you plan on replacing the entire laborer caste with war engines.
-		I hope you have that deal with for them to make food for us.
-		We’re going to need it.
-		''' */
+	They_Found_Us.Text:
+		'''
+		Нас нашли после того, как прибывшая свора стайников осмотрела местность.
+		Нам почти удалось сбежать, но их привлёк шум мотора багги.
+		Мы проехали примерно 8 километров, перед тем как нас остановил УА-24.
+		Я забежал на этот склад и нашёл оставленный силовой костюм.
+		Это отличное место, чтобы спрятаться, будучи терзаемым страхом.
+		Я не могу отсюда уйти, но и не могу помереть с голода.
+		Я просто выживаю при помощи всего, что могу найти.
+		'''
+	Mean_Baby.Text:
+		'''
+		Это просто огромный ребёнок.
+		Кто в здравом уме мог такое сделать?
+		Мы пытаемся удерживать эту тварь в спящем состоянии, но это практически невозможная задача.
+		Оно просыпается на несколько минут, нам приходится дежурить возле него, бить током из шокеров, который, что, его успокаивает, а затем петь ему колыбельные.
+		По какой-то причине колыбельные и правда работают.
+		Джейс и я видели, что будет, если этого не делать... Тот, кто, чёрт возьми, додумался превратить электростанцию в военную машину, заслуживает быть помещённым в бассейн сангвинита. Мы ежедневно занимаемся этой ерундой, обливаясь потом.
+		'''
+	Workplace_Safety_Concern.Text:
+		'''
+		Кто-нибудь всерьёз задумывался о том, насколько это место небезопасно?
+		Только взгляните на эту пилу под лестницей в секторе 4Б.
+		Разве вероятность того, что кто-то на неё упадёт и будет раздроблен на куски настолько мала?
+		Разве двери в паре дюймов от коек рабочих без предохранителя, способные раздавить 5 слонов за раз, безопасны?
+		Хоть кто-нибудь об этом думал?
+		Я понимаю, что планировка здания такая странная из-за того, что оно делится на сектора и подсектора, но это не значит, что мы не можем переустановить и обновить наше оборудование.
+		И потом он ещё удивляется, почему я принимаю столько морфия и огненных связок.
+		'''
+	Famine.Text:
+		'''
+		Сэр, что бы мы ни делали, наши саженцы постоянно погибают.
+		Мы даже очищали наши гидропонные установки несколько раз, но это не увеличило выживаемость растений.
+		Вода отравлена, и, похоже, сантехнические работы не смогут это исправить.
+		Мы больше не можем полагаться на собственные производственные мощности, если только вы не планируете заменить всю касту рабочих военными машинами.
+		Надеюсь, вам удалось заключить договорённость с ними о производстве еды.
+		Она нам понадобится.
+		'''
 }
 
 µTutorial: {
-	// DisplayName: Mechanics
+	DisplayName: Механики
 
 	Explosive_Weapons: {
-		// Name: Explosive Weapons
-		/* Text:
+		Name: Взрывное оружие
+		Text:
 			'''
-			Ah, I see you've got your hands on an "explosive" item. Explosive weapons deal high damage, but receive reduced damage bonuses and are greatly affected by defense. They also tend to be more expensive and rely heavily on your aim because of their often-slow velocities. Fortunately, this reality of Terraria has some possible explosive equipment that could be manifested, but even the equipment is generally the lowest in terms of defense (as to permit flexibility and mobility). All of this and to mention that you could blow yourself up along with the world. Don't get caught in the blast radius of your own explosives!
+			А, похоже, что ты заполучил в свои руки «взрывной» предмет. Взрывное оружие наносит огромный урон, но получает уменьшенные бонусы к урону и сильно зависит от защиты цели. Оно также будет стоить в разы дороже иного вооружения, при этом из-за низкой скорости полёта будет требовать высокой меткости. К счастью, в Террарии возможно создавать и взрывное снаряжение, но даже оно обычно даёт мало защиты (в угоду гибкости и мобильности). Всё это к тому, что ты можешь случайно подорвать себя вместе с миром. Не попади под собственный взрыв!
 
-			It's not all that bad to run with the rockets, however, it just requires a different level of play that running other classes might not have. Fortunately, some explosive weapons are safe to the user, but if they aren't there are plenty of items to provide you with "self-damage" protection. Not to mention, your explosives will only deal self-damage according to your own defense too!
+			Ракеты — не такая уж и бесполезная вещь, просто для них может понадобиться совершенно другой стиль игры, непривычный для других классов. К твоему счастью, некоторое взрывное оружие безвредно для его носителя, однако на иные случаи существует достаточное число предметов, способных дать защиту от урона по себе, не говоря уже о том, что урон твоей же взрывчатки по тебе тоже зависит от защиты.
 
-			Being a "demolitionist", as they're called, makes you a literal 'glass cannon'. You have minimal defenses, but your offensive capabilities are off the charts. The blast radius of all explosives allows you to attack multiple enemies at once and even hit them indirectly if you're a bad shot.
+			Если решишь стать так называемым «подрывником», то станешь «стеклянной пушкой». У тебя минимальная защита, но зато непостижимые возможности для атаки. Радиус взрыва позволит тебе нанести урон по нескольким врагам сразу. Даже если ты плохой стрелок, то всё равно можешь задеть за счёт радиуса.
 
-			Oh, and one more thing: grenades are good for crowd-control, dynamite is good for single targets and bombs are an in-between. Yes, dynamite and bombs can be used offensively despite blowing up the world. That's just what a Pincushion from the Clothier is for. Also, look for any armor penetration bonuses to make them ignore defense and deal more damage!
-			''' */
+			О, ещё кое-что: гранаты хорошо подойдут для толпы, динамит — для единичных целей, бомбы же где-то посередине. Да, динамит и бомбы можно использовать в качестве оружия, несмотря на разрушение мира, Портной пользуется игольницей по такому же принципу. Также не забывай искать способы увеличить пробиваемость брони, ведь игнорирование брони — это повышение наносимого тобой урона!
+			'''
 	}
 
 	TutorialJournalEntry: {
-		// Text: Mods.Origins.Journal.µTutorial.TutorialJournalEntry.Text
-		// Name: Tutorial Journal Entry
+		Text: Mods.Origins.Journal.µTutorial.TutorialJournalEntry.Text
+		Name: Обучающая статья журнала
 	}
 }
 
 µUncategorized: {
-	// DisplayName: Uncategorized
+	DisplayName: Без категории
 
 	Cubekon_Tinkerer: {
-		// Name: Cubekon Tinkerer
-		/* Text:
+		Name: Инженер Кубекона
+		Text:
 			'''
-			Overview:
-				- is the mentor of the mechanic before she discovered the Cubekons where she was promptly captured by Quantux. Spent her seemingly 'forever' time inside the Cubekon Matrix, learning about everything they know and taking notes about the most important things. She became the Cubekon Tinkerer after she was released now full of ideas. responsible for ICARUS, and created it to be the final line of defense just before she was captured
+			Общее:
+				- являлась наставницей Механика до того, как узнала о существовании кубеконов, после чего была сразу похищена Квантуксом. Провела, по всей видимости, «вечность» внутри матрицы кубеконцев, изучая всё, что было известно им, записывая самые важные детали. После своего освобождения стала Инженером Кубекона, полным идей. Ответственна за создание ИКАРА в качестве последней линии обороны незадолго до похищения
 								
-			Origins:
-				- cubekon tinkerer's origins are unknown other than that she resided in the same kingdom as the Mechanic
+			Происхождение:
+				- происхождение инженера кубекона неизвестно за исключением того, что она проживала в том же королевстве, что и Механик
 
-			Contributions:
-				- aiding the Terrarian, ICARUS, mech bosses (aid)
-			''' */
+			Вклад:
+				- содействие Террарианцу, ИКАР, механические боссы 
+			'''
 	}
 
-	/* Eccentric_Stone.Text:
+	Eccentric_Stone.Text:
 		'''
-		[header:Eccentric Stone]
+		[header:Эксцентричный камень]
 		[jimage/sc2d:Origins/Items/Accessories/Eccentric_Stone]
 		*****
-		This was the doing of that masked fool. This was one of the last atrocities my friends could tolerate, but yet weren't able to free me from. I remain within the crystal watching my daughter who was also affected by his wrath. I confronted the fool in one of his devious acts when walking with my daughter, but I hadn't expected him to react so spontaneously. He crossed the line ensnaring me to the necklace that my daughter made for me, but wishing random witchcraft upon my daughter so carelessly is unforgivable.
-		''' */
+		Это работа того глупца в маске. Одна из последних выходок, которую мои друзья смогли вытерпеть, но из которой меня не смогли осовободить. Я смотрю сквозь кристалл на свою дочь, которая тоже пострадала от его гнева. Я застал глупца за совершением его очередной выходки во время прогулки с дочерью, но я не ожидал от него такой спонтанной реакции. Он и так перешёл черту, заточив меня в ожерелье, сделанное моей же дочерью, но я никогда не прощу его за то, что он применил подобное колдовство на мою дочь столь небрежно.
+		'''
 
 	Felnum: {
-		// Name: Felnum
-		/* Text:
+		Name: Фелий
+		Text:
 			'''
-			[header:Felnum]
+			[header:Фелий]
 			[jimage/sc3d:Origins/Tiles/Other/Felnum_Ore_Item] [jimage/sc3dw800:Origins/Items/Materials/Felnum_Bar]
 
 			*****
 
-			Overview: 
-				- Felnum is mostly known for its "electrical greed" in that it builds up a crystalline material known as "felnum crust" to trap electrons that try to escape despite already having a strong negative charge. Felnum can be found in the floating isles of Terraria where it saps the static electricity culminating in the clouds. It is said that lightning would strike all the time during thunderstorms if it weren't for felnum.
+			Общее: 
+				- По большей части, фелий известен своей «электрической прожорливостью» — феноменом, существующим из-за кристаллического материала, известного как «фелиевая кора». Этот феномен представляет собой процесс удерживания сильно заряженных отрицательных электронов корой. Фелий можно найти на парящих островах Террарии, где он поглощает статическое электричество, формирующееся в облаках. Поговаривают, что если бы не фелий, то молнии появлялись бы при каждой грозе.
 							
-			Characteristics: 
-				- Felnum in its unrefined state adopts a similar appearance to that of copper ore, and then fades into a desaturated gold-brown color when hardened. It has a very prominent luster, isn't too malleable, and possesses a worse thermal conductivity than its copper equivalent.
+			Характеристика: 
+				- Фелий в чистом виде похож на медную руду, а после затвердевания приобретает характерный тусклый коричнево-золотой цвет. Обладает заметным блеском, не слишком пластичен, а также не так теплопроводен, как его медный аналог.
 							
-			Origins: 
-				- Felnum's development on Terraria is due to a high presence of mana throughout the world. It manifests due the high presence of mana particles in conjunction with the appropriate elements in the area. The greatest way to manifest Felnum is to transmute Copper Ore [i:CopperOre] by blessing it at a Crystal Ball [i:CrystalBall].
+			Происхождение: 
+				- Возникновение фелия в Террарии объясняется высокой концентрацией маны по всему миру. Фелий образуется в результате взаимодействия высокого числа частиц маны с окружающими элементами. Лучший способ получить фелий — трансформировать медную руду [i:CopperOre] при помощи хрустального шара [i:CrystalBall].
 							
-			Chemistry:
-				- Felnum is mostly used as a capacitor when it is not being combined with other materials. It can be used best in battery-technology applications where a power source is necessary. Aside from its applications, Felnum can be further blessed into Valkyrum [i:Origins/Valkyrum_Bar] by combining it with Ectoplasm [i:Ectoplasm] released by Dungeon Spirits and Aetherite [i:Origins/Aetherite_Bar] dropped by a mysterious-yet-powerful guardian of the Aether. Based on early analysis, Felnum could likely be used in applications of providing energy in the form of electrolytes.
+			Химическое описание:
+				- Фелий, из-за нейтральности в реакциях, часто используется в качестве конденсатора. Лучшей сферой применения считаются аккумоляторные технологии, где тот выступает источником энергии. Помимо этого, фелий может быть благословлён в валькирий [i:Origins/Valkyrum_Bar] за счёт соединения эктоплазмы [i:Ectoplasm], выпускаемой призраками подземелья, и эфирита [i:Origins/Aetherite_Bar], производимого загадочным и могущественным стражем Мерцания. Согласно ранним исследованиям, фелий может быть использован в качестве электролита для получения энергии.
 							
-			History: 
-				- Felnum is an artificial metal material conjured by the wizards of the Bastille (dungeon). Its sole purpose was to prevent lightning strikes from rapidly striking the lands of Terraria during thunderstorms to allow for the development of villages. Felnum's presence can greatly harm Terraria if not applied carefully as thunderstorms are just a way for Terraria to naturally combat manifested evils on the surface.
+			История: 
+				- Фелий — это металл искусственного происхождения, выведенный магами Бастилии (подземелья). Его единственное предназначение — предотвращать регулярные удары молний по суше Террарии, давая возможность развития для поселений. Фелий может быть использован во вред Террарии при неосторожном использовании, поскольку грозы — естественный способ борьбы Террарии со злом на её поверхности.
 							
-			Symbolism:
-				- Felnum is seen as blessing or a curse depending on who you ask due to its history. To the Order of Dryads that once lived in Terraria, it is seen as a grave mistake to restoring balance in the world. To the settlers of the surface, it can be seen as a blessing shielding them from the destructive thunderstorms.
-			''' */
+			Символизм:
+				- Из-за истории своего происхождения, некоторые воспринимают фелий как благословление, некоторые как проклятие. Орден Дриад, некогда живший на землях Террарии, воспринимал его как ужасную ошибку, мешающую миру восстановить его баланс. Жители поверхности, в свою очередь, считают фелий неким «спасением» от разрушительных гроз.
+			'''
 	}
 
-	/* Forbidden_Voice.Text:
+	Forbidden_Voice.Text:
 		'''
-		[header:Forbidden Voice]
+		[header:Запретный глас]
 		[jimage/sc3:Origins/Items/Accessories/Forbidden_Voice] [jimage/sc3w300:Origins/Items/Accessories/Forbidden_Voice_Uncursed]
 		*****
-		Everywhere I went, silence would follow. I didn't look like some freaks after dancing in the rain, nor did I ever utter a single word; my curse was already enough. I had that stupid mask cover my face, they couldn't even see it melting away. "Promises" of fortune, to get my wits on better things. I've found that man to be a liar, nothing he offers brings you joy in life. Maybe it's just a me-problem of not knowing what joy feels like or maybe I've spoken too much on behalf of the gods. I don't blame them, but they could be a little more honest about what's to come.
-		''' */
-	/* Stone_Mask.Text:
+		Куда бы я не пошёл, тишина последует за мной. Я не выглядел как некоторые придурки после танцев под дождём. Я не произнёс ни слова, достаточно лишь моего проклятья. На моём лице была эта чёртова маска — они даже не видели, как она тает. Мне обещали удачу, дабы я отвлёкся на что-то получше. Я понял, что тот мужчина был лжецом: ничего из предложенного им не привнесло радости в мою жизнь. Может быть, конечно, это моя вина, что я не знаю, как ощущается радость. Может быть, я слишком часто говорил от имени богов. Я ни в чём не виню его, но он мог бы быть и честнее в отношении будущего.
 		'''
-		[header:Stone Mask]
+	Stone_Mask.Text:
+		'''
+		[header:Каменная маска]
 		[jimage/sc3d:Origins/Items/Accessories/Stone_Mask]
 		*****
-		Ah, I know of this mask, from history of torn-away pages. This mask teaches us the dangers of festering, of giving ourselves no voice. A foolish solitaire's finest work before spiraling into insanity. The mask had wished evil upon him feeding off of his pent-up tension from only being able to muster contemptedness in everyone he crossed. The mask has no more power now for its curse has been lifted by a benevolent entity. It remained on the ground where you found it, this relic of ancient times.
-		''' */
+		Ах, я знаю эту маску, страницы истории которой были вырваны. Эта маска учит нас об опасности гниения, о том, к чему приводит утрата собственного голоса. Лучшее творение безумного отшельника до того, как тот окончательно сошёл с ума. Сама маска желала ему зла, питаясь его призрением ко всем, кого он видел. Теперь же маска лишилась своей силы: её проклятье сняла доброжелательная сущность. Всё это время она пролежала в том же месте, где ты её нашёл. Это реликвия из древних времён.
+		'''
 
 	Captured_Mojo: {
-		// Name: Mojo
-		/* Text:
+		Name: Моджо
+		Text:
 			'''
-			[header:Mojo]
+			[header:Моджо]
 			[i:Origins/Captured_Mojo]
 
-			Overview: 
-				- only a rare type of plant is capable of capturing Mojo that randomly wanders the world. The Dryad doesn't speak much of this rare plant, likely for good reason. Touching Mojo feels extremely refreshing and saturating as it is said to make you younger. Could possibly explain why the Dryad is so old! 
+			Общее: 
+				- лишь редкий вид растений способен собирать в себя случайно образующийся по всему миру моджо. Дриада не часто говорила об этом растении, на то была явная причина — прикосновение к моджо позволяет прочувствовать невероятное облегчение и удовлетворение; некоторые поговаривают, что оно омолаживает. В какой-то мере объясняет возраст Дриады.
 								
-			Characteristics: 
-				- Contrary to the bright blue-green coloration of the Primordial Amoeba, Alkahest takes on a bright, almost straw-colored yellow color. Alkahest also has almost no viscosity as well and is very reflective.
+			Характеристика: 
+				- В отличие от ярко-сине-зелёного цвета Амёбы-прародителя, алкагест обладает ярким, почти что соломенно-жёлтым цветом. Алкагест также почти не обладает вязкостью и имеет очень высокую отражающую способность.
 								
-			Origins: 
-				- As previously mentioned, Alkahest first appeared on Terraria due to the Primordial Amoeba that naturally synthesizes it to digest all matter for nutrition. There is no known way to synthesize Alkahest artificially.
+			Происхождение: 
+				- Как ранее упоминалось, впервые алкагест появился в Террарии из-за Амёбы-прародителя, которая вырабатывает его для расщепления материи и получения из неё питательных веществ. На данный момент способа искусственного получения алкагеста нет.
 								
-			Chemistry:
-				- Alkahest has a wide range of applications including general waste removal, energy generation, heat generation[ox:,] and other purposes. Alkahest is most commonly used for combat and alchemy, due to how easily capable of dissolving matter it is.
+			Химическое описание:
+				- Алкагест обладает широким списком способов применения, включая очистку отходов, выработку тепла и прочее. По большей части алкагест применяется в боевых и алхимических целях в связи с его способностью растворять материю. 
 								
-			History: 
-				- Alkahest is a relatively newer material that has sprouted into the mix thanks to some early Terrarian history. Before the Primordial Amoeba became a keystone species for the {§Riven_Hive}, it was like any other single-cellular organism. When Cthulhu's invasion on Terraria's inhabitants came to a conclusion after his lower half was severed, his blood was said to spill into the caverns of the world, corrupting the very pool of water that the Primordial Amoeba resided. As part of its prompted, rapid evolution, the Amoeba gained the ability for Alkahest synthesis and used it to shape the surrounding environment.
-			''' */
+			История: 
+				- Алкагест — относительно новый материал, появившийся в мире в связи с некоторыми событиями ранней истории Террарии. До того, как Амёба-прародитель стала основой Разрезанного Улья, она была обычным одноклеточным организмом. Когда вторжение Ктулху подошло к концу и нижняя часть его тела была отсечена, его кровь пролилась по всем пещерам мира, осквернив пруд, в котором обитала Амёба-прародитель. В рамках своей стремительной эволюции она получила возможность производить алкагест для воздействия на окружающую среду. 
+			'''
 	}
 
-	/* Lost_Page.Text:
+	Lost_Page.Text:
 		'''
-		I think they're still discovering- OKAY, so I totally just got sent to some kind of pocket dimension, so I'm going to try and write as much as I can on this piece of paper. I can see a lot of their data now that I'm in this weird realm, which I could only presume is some kind of prison. Their civilization is trying to become a singularity and combine all of their consciousnesses into one. It's really crazy, and I didn't think they were that far, but I am really discovering a lot of secrets right now. When I get out of here I'm going to really have to experiment…
+		Я думаю, что они всё ещё исследуют- ЛАДНО. Похоже, что меня отправили в некое подобие карманного измерения, так что я постараюсь записать всё, что смогу на этом клочке бумаги. Я вижу большой пласт их информации в этом странном измерении, который, судя по всему, является своего рода тюрьмой. Их цивилизация пытается достичь сингулярности путём соединения всех их сознаний в одно. Это и вправду какое-то безумие, но они очень далеко; всё это для меня было непостижимо. Когда я выберусь отсюда, мне придётся поэкспериментировать над многим.
 
-		Crap, I'm running out of space. Basically, if I don't forget what I learned from all this (still trying to process what I just saw) I have a lot of awesome projects in mind…
-		''' */
-	/* Timbre_of_Hell.Text:
+		Дерьмо, у меня заканчивается место. В общем, если я не забуду всё то, что узнала из всего этого (я всё ещё пытаюсь понять, что я только что видела), то у меня на уме есть несколько хороших проектов…
 		'''
-		To those who were banished to the depths, the cities of Hell were the closest thing to home. The cities of Hell always stood strong against the wild creatures that lived there until chaos ensued. There were loud crashing noises and unearthly screams coming from a faraway horizon as the wilderness grew rampant and even more violent. The cities were eventually overwhelmed by the creatures of Hell as they became more powerful and populous.
-
-		What's left are only the constructs of the inhabitants that once lived there. Some are said to still roam along the ashen ground of the underworld to this day.
-		''' */
-	/* Tinkerers_Handy_Guide.Text:
+	Timbre_of_Hell.Text:
 		'''
-		So, they call themselves the Cuboids, but they're a part of the Cubekon race, just to clarify… after looking into their data, they seem to be from another world and are somehow trapped here for some reason. My question is, with this wealth of technological advance, why haven't they gotten out of here yet? Not even I know that. What I do know is what's inside of them.
+		Для изгнанных в глубины города ада стали лучшей вещью, которую они могли бы назвать домом. Города ада были непреступны для диких существ, живших там до воцарения хаоса. Сдали послышались звуки разрушения и нечеловеческие крики, пока дикая природа вокруг свирепела и разрасталась всё бурнее и бурнее. В конце концов, города пали под натиском существ ада, что становились всё более могущественными и многочисленными.
 
-		The Cuboids seem to be entirely mechanical in nature with a brain made out of these weird green cubes, which I'll just call 'qubes' for now. These 'qubes' act like a power source and data storage membrane in one. How I know that is because they make branch out in a very symmetric way all over the body of these Cuboids. There's also a lot of other machinery in here that I can only assume allows these things to move since I recently discovered that they have a consciousness, but that's a bit complicated…
-		''' */
-	/* Zoologist.Text:
+		Всё, что осталось — руины зданий, некогда живших здесь обитателей ада. Говорят, некоторые из них до сих пор бродят по пепельной земле подземного мира.
 		'''
-		"Well, long ago my dad was this kinda wizard who knew Severus, and I remember he was really upset about how evil he became so he took it upon himself to end the chaos... but, he disappeared. I've been looking for him ever since I was a little girl. I wish I could help out with Severus, but I am just not cut out for that kinda thing. Especially since he could just curse me more."
+	Tinkerers_Handy_Guide.Text:
+		'''
+		Итак, они называют себя кубоидами, но при этом относятся к расе кубеконов… изучив их данные, я пришла к выводу, что они происходят из другого мира и по какой-то причине оказались здесь. Я не понимаю, почему при всём их высоком технологическом развитии они до сих не выбрались отсюда? Даже я не могу дать на это ответ, но могу дать ответ на то, что находится внутри них.
 
-		Overview:
+		Похоже, что кубоиды обладают полностью механической природой. Их мозг состоит из странных зелёных кубов, которых я в дальнейшем буду записывать их как «qубы», дабы не путаться в терминах. Эти «qубы», повидимо, служат одновременно и источниками энергии, и мембранчатыми носителями информации. Насколько я знаю, они симметрично расставлены по всему телу кубоидов. Также существует множество различных приспособлений, которые, как я думаю, позволяют этим существам ходить. Они также обладают сознанием, но это уже немного сложнее…
+		'''
+	Zoologist.Text:
+		'''
+		«Ну, много лет тому назад мой отец был магом, знавшим Северуса и, насколько я помню, он был очень разочарован, когда узнал, каким тот стал злым. Поэтому он и поклялся положить конец хаосу... Но он пропал. Я искала его ещё с детства, хотела помочь ему с Северусом, но я совершенно не подхожу для такого. Тем более он мог бы проклясть меня ещё сильнее».
+
+		Общее:
 			- 
 							
-		Origins:
-			- golfer and Zoologist are related. Her parents are name of wizard related to severus and the mother is unknown. The wizard loved their mother so much, but something bad happened.
+		Происхождение:
+			- гольфист и Зоолог являются родственниками. Маг, связанный с северусом, и неизвестная женщина являются её родителями. Маг очень любил их мать, но приключилось нечто ужасное.
 
-		Contributions:
-			- aiding the Terrarian
-		''' */
-	// Classified_Blueprint.Text: "[jimage/2xcfff:Origins/UI/Lore/Journal_Use_Back]<PH> put actual blueprint image(s) here instead"
+		Вклад:
+			- помощь Террарианцу
+		'''
 }

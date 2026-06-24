@@ -53,7 +53,7 @@ namespace Origins.NPCs.Ashen {
 				ModContent.ItemType<Laser_Target_Locator>(),
 				ModContent.ItemType<AMRSL_Skewer>(),
 				ModContent.ItemType<Pacemaker>()/*,
-				ModContent.ItemType<Demoweaponhere>()*/
+				ModContent.ItemType<Cupids_Arrow>()*/
 			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
