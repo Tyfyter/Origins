@@ -25,7 +25,7 @@ Conditions: {
 	DownedLostDiver: После победы над Потерянным Дайвером
 	// could go with other glitchy-looking approaches, like "lockey.#####" or "missingno"
 	DownedScrapper: После победы над [glitch:ОШИБКА:_ОБЪЕКТ_ОТСУТСТВУЕТ]
-	// DownedScrapper: После победы над Очистителем
+	// DownedScrapper: After defeating the Scrapper
 	DownedDefiledMimic: После победы над осквернённым мимиком в Хардмоде
 	DownedRivenMimic: После победы над {§Riven}анным мимиком в Хардмоде
 	DownedTrashCompactorMimic: После победы над мимиком-мусорщиком в Хардмоде
@@ -38,6 +38,9 @@ Conditions: {
 	WithScavengerSet: С полным набором брони мусорщика
 	NoDefiledHearts: В мире больше не осталось сердец Скверны
 	SolarEclipseOccurred: После пережитого солнечного затмения
+	// WithJournalEntry: After transcribing "{0}"
+	// DownedEaterOfWorlds: "{$Conditions.DownedEaterOfWorlds}"
+	// DownedBrainOfCthulhu: "{$Conditions.DownedBrainOfCthulhu}"
 }
 
 ModMenu: {
@@ -119,8 +122,8 @@ Tooltips: {
 	Modifiers: {
 		BlastRadius: "{0} радиус взрыва"
 		SelfDamage: "{0} урона по себе"
-		Spread: "Распространение на {0}°"
-		SpreadPercent: "Распространение на {0:+0;-0}%"
+		Spread: Распространение на {0}°
+		SpreadPercent: Распространение на {0:+0;-0}%
 		ArtifactMaxLife: "{0} максимального здоровья"
 	}
 }
@@ -257,7 +260,7 @@ Dialogue: {
 		Death_6: Как ты умудряешься тут проваливаться? Это же даже не тест.
 		Death_7: Ты только всё усложняешь.
 		Self_Damage: ПротОС убедил {0} в том, что ракета — это действительно выход.
-		Death_Expert_0: "«Нет мужества — нет и славы» — ну, у тебя нет ни того, ни этого, так что это верно."
+		Death_Expert_0: «Нет мужества — нет и славы» — ну, у тебя нет ни того, ни этого, так что это верно.
 		Death_Master_0: Я надеюсь, что это была часть твоего плана.
 		Death_Master_1: Ты заплатил за это место, так что устраивайся поудобнее — мы здесь надолго.
 		Respawn_0: Не могу поверить, что ты вернулся.
@@ -270,13 +273,13 @@ Dialogue: {
 		Combat_1: Эй! Придурок!
 		Combat_2: Агрессивно. Мне нравится.
 		Combat_3: "[Смешок]"
-		Combat_4: Мне нравится твой настрой, сбереги его до встречи со следующим противником.	
+		Combat_4: Мне нравится твой настрой, сбереги его до встречи со следующим противником.
 		Combat_5: Выглядит угрожающе... для тебя.
 		Combat_6: Если бы я был искусственным интеллектом, делающим ставки, то я бы поставил на то, что они убьют тебя прямо сейчас.
 		Combat_7: Давай не будем им говорить, это будет сюрпризом.
 		Falling: Уи-и-и-и-и-и-и-и-и-и-и-и-и-и.
 		Gravitation: Мои поздравления. Теперь ты вверх тормашками.
-		Idle_0: Если от обезвоживания у тебя начнёт кружиться голова, то можешь смело откисать. 
+		Idle_0: Если от обезвоживания у тебя начнёт кружиться голова, то можешь смело откисать.
 		Idle_1: А знал ли ты, что ты можешь пожертвовать один или все свои жизненно важные органы в фонд повышения самооценки? Это правда!
 		Idle_2: Тут кто-нибудь есть?
 		Idle_3: Послушай, что просто тратишь своё время. И поверь мне, у тебя осталось не так уж и много для трат.
@@ -306,7 +309,7 @@ Dialogue: {
 		Summoned_1: Где, чёрт возьми, Ойир?
 		Summoned_2: Кто ты? Где я? Что Я ВООБЩЕ?!
 		Idle_0: Это место вообще не похоже на дом.
-		Idle_1: "Тебя называют «террарианцем»? Меня называют «венисольцем»."
+		Idle_1: Тебя называют «террарианцем»? Меня называют «венисольцем».
 		Idle_2: Да. Я халиф Венисольского Халифата, чего спрашивать?
 		Idle_3: КТО ПРЕВРАТИЛ МЕНЯ В ПЛЮШКУ ДЛЯ ПРОДАЖИ?
 		Dog_0: Пожалуйста, нет.
@@ -317,7 +320,7 @@ Dialogue: {
 		Death_0: АГХ-Х-Х-Х-Х!
 		Death_1: ХА-ХА-ХА-А-А-А!
 		Combat_0: Примитивная технология? Я думал, что вы, ребята, люди.
-		Combat_1: Моя королевская стража о них позаботится. 
+		Combat_1: Моя королевская стража о них позаботится.
 		Combat_2: Налево! Подожди, всё же плоское.
 		Near_Cubekon_Girl: О боже. Её технологии первосходят весь венесольский космический флот! Мне нужно сделать заметки.
 		The_Part_Where_He_Kills_You_0: Подожди, что происходит? Это некое подобие бога?
@@ -328,7 +331,7 @@ Dialogue: {
 		Pickup_1: Мне нужна твоя помощь: моя создательница, вероятно, умерла; мне нужно, чтобы ты выполнил её миссию. Пожалуйста, ознакомься с моими записями для большей информации.
 		Pickup_2: Снова приветствую тебя, террарианец.
 		PotatoNearby: Я засёк противоречие во мнениях, террарианец. Я советую уничтожить иную единицу.
-		ProtomindNearby:  засёк противоречие во мнениях, террарианец. Проторазум может и более продвинутая модель, но он всё ещё будет ограничивать твои способности.
+		ProtomindNearby: засёк противоречие во мнениях, террарианец. Проторазум может и более продвинутая модель, но он всё ещё будет ограничивать твои способности.
 		CubekonTinkererNearby: Ч-что? Моя создательница всё ещё жива?
 		Death_0: Оу. Согласно моим вычислениям, твоя смерть была очень маловероятной.
 		Death_1: Ещё увидимся, террарианец.
@@ -352,97 +355,6 @@ Dialogue: {
 		Death_1: Сопротивление было бесполезно.
 		Death_2: Один день.
 		Death_3: Давай продолжим.
-	}
-}
-
-TownNPCMood: {
-	Brine_Fiend: {
-		Content: Я была бы не против сегодня искупаться в Солёном пруду.
-		NoHome: Было бы неплохо иметь какое-нибудь укрытие, но я уже привыкла к враждебной среде.
-		FarFromHome: Я должна вернуться домой. Мне нужно проверить свои трофеи!
-		LoveSpace: Здесь очень малолюдно, в отличие от переполненных жизнью джунглей. И эта разница ощущается.
-		DislikeCrowded: Чем больше людей, тем хуже мои напитки...
-		HateCrowded: Я чувствую себя ещё хуже, чем во времена моих походов к Солёному пруду.
-		#for now custom happiness messages per-biome/NPC aren't supported, hopefully they will be by the time we don't have a workaround
-		LikeBiome: Мне по душе джунгли. Я рядом со своим домом и тем давно пропавшим ядовитым лабиринтом!
-		# LikeBiome_Jungle: Мне по душе джунгли. Я рядом со своим домом и тем давно пропавшим ядовитым лабиринтом!
-		
-		LoveBiome: К чёрту вождя клана! Я с гордостью останусь здесь, в Храме!
-		# LoveBiome_Temple: К чёрту Илькамина! Я с гордостью останусь здесь, в Храме!
-		
-		# HateBiome_Mushroom: Меня тошнит от запаха грибов, и поверь мне, я имела дело с запахами гораздо похуже.
-		# HateBiome_Mushroom: Это место... Да Трюффель противен даже на вкус.
-		
-		LikeBiome_Evil: Идеальное место для того, чтобы опробовать мою мегащелочную кислоту!
-		LikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		LikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		LikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		LikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
-		LoveNPC: "{NPC Name} явно имеет талант к искусству. Интересно, какие напитки мы могли бы приготовить вместе?"
-		# LoveNPC_WitchDoctor: "{NPC Name} явно имеет талант к искусству. Интересно, какие напитки мы могли бы приготовить вместе?"
-		
-		LikeNPC: "{NPCName} любит природу также, как и я. Я очень уважаю её за это."
-		# LikeNPC_Dryad: "{NPCName} любит природу также, как и я. Я очень уважаю её за это."
-		
-		DislikeNPC: "{NPCName} позволяет своим животным носиться туда-сюда, что меня очень раздражает. Она портит мне всю работу."
-		# DislikeNPC_Zoologist: "{NPCName} позволяет своим животным носиться туда-сюда, что меня очень раздражает. Она портит мне всю работу."
-		
-		HateNPC: "{NPCName} следовало бы держаться от меня подальше, или ему не понравится то, что я с ним сделаю."
-	}
-
-	Cubekon_Tinkerer: {
-		Content: Хм, я была бы не против пройтись сегодня, турист.
-		NoHome: Мой рюкзак для квантового хранения работает идеально, но я бы всё равно хотела обустроить мастерскую и поэкспериментировать, смекаешь?
-		FarFromHome: Я собрала достаточно металлолома на сегодня. Пора бы и в мастерскую.
-		LoveSpace: Я будто снова стала ребёнком... Эта комната наводит меня на определённые мысли, но тебе не их понять.
-		DislikeCrowded: Мне не очень нравится возмущаться на что-либо, но я хотела бы побыть наедине с собой.
-		LikeBiome: Это место довольно занимательно. Интересно, тут неподалёку есть металлолом?
-		DislikeBiome_Evil: Я не любительница всякой жути, но спасибо тебе за предложение, террарианец.
-		DislikeBiome_Ashen: В этом месте было бы весело работать, однако оно мне не очень-то и нравится.
-		DislikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		DislikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		DislikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		DislikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		# LoveBiome_Underground: Мне нравится подземелье, оно ближе к Кубекону.
-		
-		LoveNPC: Сейчас у меня на уме только одно имя, террарианец. Угадаешь, кто это?
-		# LoveNPC_Cyborg: "{NPCName} — это настоящее произведение искусства. Я вижу нечто большее, чем просто набор электросхем."
-		
-		LikeNPC: "{NPCName} — порядочный человек, который, вероятно, сейчас в хорошем настроении..."
-		# LikeNPC_GoblinTinkerer: "То, как {NPCName} работает в своей мастерской, всегда меня привлекало. Ему просто нужны правильные инструменты, и его будет не остановить."
-		# LikeNPC_Mechanic: "{NPCName} (GoblinT) и {NPCName} (Mechanic) так мило смотрятся вместе... Я почти завидую..."
-		
-		DislikeNPC: "{NPCName}... бедняга, которого мне хотелось бы знать получше..."
-	}
-
-	Cyborg: {
-	}
-
-	Defiled_Effigy: {
-		Content: Мы стремимся тратить время в настоящем.
-		NoHome: Убежище способно защитить нашу материю от стихий. Просим ваших ресурсов на построение убежища.
-		FarFromHome: Террарианец, мы заблудились. В какой стороне находится поселение?
-		LoveSpace: Низкое напряжение, здоровый пульс.
-		DislikeCrowded: Нас здесь не уважают, Террарианец... Дай нам больше пространства.
-		HateCrowded: Перенаселение пробуждает инстинкты. Исправь это немедленно, террарианец.
-		Ocean: Граница нашей клетки лежит пред нами, террарианец.
-		LoveBiome: Удовлетворительно. Духи наших братьев и сестёр приветствуют нас.
-		LikeBiome: Любое место сгодится для дома, если там есть мы.
-		HateBiome: Наши тела разлагаются на этих землях. Помоги нам, террарианец.
-		# HateBiome_Mushroom: Это место. Трюффель даже ничего не чувствует.
-		# HateBiome_Ashen: Шокированы. Нам любопытно это место... Однако оно нас беспокоит. Унитожь его.
-		# HateBiome_Corruption: Порча. Она есть противоположность нашим желаниям, террарианец. Очисти её.
-		# HateBiome_Crimson: Багрянец вынуждает живой мир кровоточить. Нам нужна гостеприимная земля, террарианец. Выкопай его.
-		# HateBiome_Riven_Hive: Улей порождает болезни, это нездоровая экосистема. Затопи его прежде, чем он нас уничтожит.
-		
-		LikeNPC: "{NPCName} не надоедает нам. Полагаем, что наши желания... переплетаются."
-		# LikeNPC_Guide: "{NPCName} имеет схожее происхождение. {NPCName} понимает."
-		# LikeNPC_WitchDoctor: "{NPCName} изучил тёмные искусства Террарии. Мы ценим это."
-		
-		DislikeNPC: "{NPCName} представляет интерес... Однако, мы не переносим враждебности к нам."
-		# DislikeNPC_Truffle: "Существование такого существа, как {NPCName} мешает нашему росту. Мы должны беречь материю."
-		
-		HateNPC: "{NPCName} — наш заклятый враг. Она желает мира, в котором нет нас."
 	}
 }
 
@@ -478,7 +390,7 @@ DeathMessage: {
 
 	Crushed: {
 		0: "{0} вдохновился(-лась) вывеской."
-		1: '''{0} сбросил(а) счётчик «дней без происшествий» до нуля.'''
+		1: "{0} сбросил(а) счётчик «дней без происшествий» до нуля."
 		2: "{0} не добрался(-лась) до другой стороны."
 	}
 
@@ -487,7 +399,7 @@ DeathMessage: {
 
 	Miasma: {
 		0: "{0} думал(а), что смена климата — это просто шутка."
-		1: "Лёгкие {0} не смогли этого выдержать."
+		1: Лёгкие {0} не смогли этого выдержать.
 		2: "{0} не умеет дышать загрязнённым воздухом."
 	}
 }
@@ -522,7 +434,7 @@ AltBiomes: {
 	Defiled_Wastelands_Alt_Biome: {
 		DisplayName: "{§Defiled}"
 		Description: В вашем мире обязательно будет вытесняющая собой все биомы {§Defiled}.
-		GenPassName: "Оскверняем"
+		GenPassName: Оскверняем
 		DryadTextDescriptor: "{§Defiled}"
 	}
 
@@ -545,9 +457,9 @@ GuideAdvice: {
 	World_Evils: {
 		DA_Summon_Item: Вы можете создать манипулятор нервных импульсов из осквернённого порошка и странных нитей. Убедитесь, что вы находитесь в Осквернённых Пустошах перед использованием.
 		PA_Summon_Item: Вы можете создать подозрительно выглядящее мороженое из живого порошка и морских ракообразных. Убедитесь, что находитесь в Разрезанном Улье перед использованием.
-		DAltar: "Осквернённые алтари обычно можно найти в Осквернённых Пустошах. Рядом с ними можно создавать некоторые вещи."
-		RAltar: "Разрезанные алтари обычно можно найти в Разрезанном Улье. Рядом с ними можно создавать некоторые вещи."
-		DFissure: "Осквернённые реле обычно можно найти в пропастях на землях Скверны. Сердце подаст сигнал иммунной системе, если будет уничтожено слишком много передатчиков. Победа над слиянием позволит метеоритам падать с небес!"
+		DAltar: Осквернённые алтари обычно можно найти в Осквернённых Пустошах. Рядом с ними можно создавать некоторые вещи.
+		RAltar: Разрезанные алтари обычно можно найти в Разрезанном Улье. Рядом с ними можно создавать некоторые вещи.
+		DFissure: Осквернённые реле обычно можно найти в пропастях на землях Скверны. Сердце подаст сигнал иммунной системе, если будет уничтожено слишком много передатчиков. Победа над слиянием позволит метеоритам падать с небес!
 		RLesion: Гелиевые опухоли обычно можно найти в Разрезанном Улье. Если вы раздавите определённое число, то это пробудит Содрогателя Миров. Победа над этим врагом позволит метеоритам падать с небес!
 		Defiled_Heart: Пока вы не разрушите осквернённые сердца, {§Defiled} так и будет поглощать все очищенные участки. Ищите их в пещерах ближе к центру системы.
 		HardmodeAltarD: Постарайтесь разрушить все найденные осквернённые алтари. Если вы это сделаете, может случиться нечто удивительное!
@@ -638,7 +550,7 @@ Buffs: {
 	Corrupt_Assimilation: {
 		DisplayName: Ассимиляция Порчей
 		Description: Вас ассимилирует Порча
-		DeathMessage: "Порча превратила {0} в бездушную оболочку самого(-ой) себя."
+		DeathMessage: Порча превратила {0} в бездушную оболочку самого(-ой) себя.
 	}
 
 	Cranivore_Debuff: {
@@ -653,13 +565,13 @@ Buffs: {
 	}
 
 	Defiled_Assimilation: {
-		DisplayName: "Ассимиляция Скверной"
+		DisplayName: Ассимиляция Скверной
 		Description: Вас ассимилируют Осквернённые Пустоши
 		DeathMessage: "{0} был(а) деформирован(а) волей Скверны."
 	}
 
 	Defiled_Blight_Buff: {
-		DisplayName: "Осквернённая опухоль"
+		DisplayName: Осквернённая опухоль
 		Description: Ваш путь освещает осквернённая опухоль
 	}
 
@@ -760,7 +672,7 @@ Buffs: {
 	}
 
 	Riven_Assimilation: {
-		DisplayName: "Ассимиляция {§Riven}ом"
+		DisplayName: Ассимиляция {§Riven}ом
 		Description: Вас ассимилирует Разрезанный Улей
 		DeathMessage: "{0} стал(а) частью экосистемы Улья."
 	}
@@ -1128,6 +1040,7 @@ Buffs: {
 	Blind_Debuff: {
 		DisplayName: Слепой
 		Description: Mods.Origins.Buffs.Blind_Debuff.Description
+		// EffectDescription: Prevents the target from seeing
 	}
 
 	Cavitation_Debuff: {
@@ -1198,7 +1111,7 @@ Buffs: {
 	}
 
 	Mildew_Blob_Buff: {
-		DisplayName: Плесневая клякса 
+		DisplayName: Плесневая клякса
 		Description: Он прыгает по кругу
 	}
 
@@ -1528,6 +1441,36 @@ Buffs: {
 		DisplayName: Безумен!
 		Description: Увеличены скорость движения и скорость появления монстров
 	}
+
+	Wind_Pail_Debuff: {
+		// DisplayName: Ominous Wind
+		// Description: Creepy...
+	}
+
+	Smart_Turret_Buff: {
+		// DisplayName: Smart Turret
+		// Description: Not too smart.
+	}
+
+	Neutron_Soup_Buff: {
+		// DisplayName: Neutron Soup
+		// Description: The power of a neutron star in your hands.
+	}
+
+	Flashbang_Debuff: {
+		// DisplayName: Flashed!
+		// Description: It's either really bright or really dark. Ow.
+	}
+
+	Chilled_Debuff: {
+		// DisplayName: Chilled Debuff
+		// Description: Mods.Origins.Buffs.Chilled_Debuff.Description
+	}
+
+	Frozen_Debuff: {
+		// DisplayName: Frozen Debuff
+		// Description: Mods.Origins.Buffs.Frozen_Debuff.Description
+	}
 }
 
 DamageClassName: {
@@ -1587,12 +1530,12 @@ Projectiles: {
 	Unsought_Organ_P.DisplayName: Нежелательный орган
 	Riptide_Dash_P.DisplayName: Разрывное течение
 	Ash_Urn_P.DisplayName: Пепел
-	Defiled_Powder_P.DisplayName: "Осквернённый порошок"
+	Defiled_Powder_P.DisplayName: Осквернённый порошок
 	Sentient_Powder_P.DisplayName: Живой порошок
 	Gooey_Water_P.DisplayName: Липкая вода
 	White_Water_P.DisplayName: Белая вода
 	Chromatic_Pangolin.DisplayName: Радужный панголин
-	Defiled_Blight_P.DisplayName: "Осквернённая опухоль"
+	Defiled_Blight_P.DisplayName: Осквернённая опухоль
 	Meberoid.DisplayName: Мёбороид
 	Platformer_Mech.DisplayName: Платформерный мех
 	Acrid_Drill_P.DisplayName: "{§Acrid} бур"
@@ -1623,7 +1566,7 @@ Projectiles: {
 	Resizable_Mine_P_5.DisplayName: Малоразмерная мина
 	Teal_Solution_P.DisplayName: Бирюзовый раствор
 	White_Solution_P.DisplayName: Белый раствор
-	_Shrapnel_Old_P.DisplayName: Мастерская шрапнель
+	// Ace_Shrapnel_Old_P.DisplayName: Ace Shrapnel
 	Ace_Shrapnel_Old_Shard.DisplayName: Осколок от мастерской шрапнели
 	Ace_Shrapnel_P.DisplayName: Мастерская шрапнель
 	Ace_Shrapnel_Shard.DisplayName: Шрапнель
@@ -1650,7 +1593,7 @@ Projectiles: {
 	Crystal_Bomb_P.DisplayName: Кристальная бомба
 	Crystal_Grenade_P.DisplayName: Кристальная граната
 	Crystal_Grenade_Shard.DisplayName: Осколок кристалла
-	Defiled_Spirit_P.DisplayName: "Осквернённый призрак"
+	Defiled_Spirit_P.DisplayName: Осквернённый призрак
 	Dreikan_Shot.DisplayName: Драконье пламя
 	Explosive_Golf_Ball_P.DisplayName: Взрывной мяч для гольфа
 	Felnum_Shock_Grenade_P.DisplayName: Фелиевая шок-граната
@@ -1678,7 +1621,7 @@ Projectiles: {
 	Outbreak_Bomb_P.DisplayName: Светошумовая бомба
 	Peatball_P.DisplayName: Торфяной мячик
 	Remote_Golf_Ball_P.DisplayName: Дистанционный мяч для гольфа
-	Rocodile_P1.DisplayName: Рокедил 
+	Rocodile_P1.DisplayName: Рокедил
 	Rocodile_P2.DisplayName: Рокедил
 	Rocodile_P3.DisplayName: Рокедил
 	Rocodile_P4.DisplayName: Рокедил
@@ -1754,17 +1697,17 @@ Projectiles: {
 	Woodsprite_Lifesteal.DisplayName: Хищение жизни древесного эльфа
 	Teardown_P.DisplayName: Летающий экзоскелет
 	Fiberglass_Thread.DisplayName: Стекловолоконная нить
-	Defiled_Enemy_Summon.DisplayName: "Призыв осквернённого врага"
+	Defiled_Enemy_Summon.DisplayName: Призыв осквернённого врага
 	Defiled_Wastelands_Signal.DisplayName: Нервный импульс
 	Felnum_Shock_Arc.DisplayName: Фелиевая шоковая дуга
 	Felnum_Shock_Leader.DisplayName: Фелиевый шок
 	Brine_Droplet.DisplayName: Капля рассола
 	Cryostrike_P.DisplayName: Криоудар
-	Defiled_Spike_Explosion.DisplayName: "Взрыв осквернённых шипов"
-	Defiled_Spike_Explosion_Spike.DisplayName: "Извержение осквернённых шипов"
+	Defiled_Spike_Explosion.DisplayName: Взрыв осквернённых шипов
+	Defiled_Spike_Explosion_Spike.DisplayName: Извержение осквернённых шипов
 	Gooey_Exaultion_P.DisplayName: Липкая экзальтация
 	Lava_Shot.DisplayName: Выстрел магмы
-	Defiled_Sand_Ball.DisplayName: "Осквернённый песчаный шар"
+	Defiled_Sand_Ball.DisplayName: Осквернённый песчаный шар
 	Defiled_Spike_Explosion_Hostile.DisplayName: Низкий сигнал
 	Defiled_Spike_Explosion_Spike_Hostile.DisplayName: Низкий сигнал
 	Low_Signal_Hostile.DisplayName: Низкий сигнал
@@ -1899,10 +1842,10 @@ Projectiles: {
 	Sand_Elemental_Sand.DisplayName: Песок песчаного элементаля
 	Scabcoral_Lyre_P.DisplayName: Гнойный коралл
 	Omnidirectional_Claymore_Projectile.DisplayName: Всенаправленная клеймор
-	Defiled_Asphyxiator_P1.DisplayName: "Осквернённый терзатель"
-	Defiled_Asphyxiator_P2.DisplayName: "Осквернённый терзатель"
-	Defiled_Asphyxiator_P3.DisplayName: "Осквернённый терзатель"
-	Defiled_Watcher_Spikes.DisplayName: "Шипы осквернённого смотрителя"
+	Defiled_Asphyxiator_P1.DisplayName: Осквернённый терзатель
+	Defiled_Asphyxiator_P2.DisplayName: Осквернённый терзатель
+	Defiled_Asphyxiator_P3.DisplayName: Осквернённый терзатель
+	Defiled_Watcher_Spikes.DisplayName: Шипы осквернённого смотрителя
 	Generic_Weapon_P.DisplayName: Обыкновенное оружие
 	Hemoptysis_P.DisplayName: Кровохаркание
 	Hemoptysis_Blood_P.DisplayName: Кровохаркание
@@ -1924,8 +1867,8 @@ Projectiles: {
 	Terratotem_Orb.DisplayName: Шар терратотема
 	Silica_Ball_Falling.DisplayName: Кремниевый шар
 	Silica_Ball_Gun.DisplayName: Кремниевый шар
-	Defiled_Sand_Ball_Falling.DisplayName: "Шар осквернённого песка"
-	Defiled_Sand_Ball_Gun.DisplayName: "Шар осквернённого песка"
+	Defiled_Sand_Ball_Falling.DisplayName: Шар осквернённого песка
+	Defiled_Sand_Ball_Gun.DisplayName: Шар осквернённого песка
 	Terratotem_Laser.DisplayName: Лазер терратотема
 	World_Cracker_Beam.DisplayName: Луч Содрогателя Миров
 	Friendly_Zombie.DisplayName: Дружелюбный зомби
@@ -1976,8 +1919,8 @@ Projectiles: {
 	Felnum_Sword_Slash.DisplayName: "{$Mods.Origins.Items.Felnum_Sword.DisplayName}"
 	Cloud_Elemental_P.DisplayName: Облачный элементаль
 	Shotgunfish_P.DisplayName: Рыба-дробовик
-	Ashen_Mortar.DisplayName: "Пепельная мортира"
-	Ashen_Mortar_P.DisplayName: "Пепельная мортира"
+	Ashen_Mortar.DisplayName: Пепельная мортира
+	Ashen_Mortar_P.DisplayName: Пепельная мортира
 	Fiberglass_Sword_P.DisplayName: Стекловолоконный меч
 	Peat_Moss_Tile_Explosion.DisplayName: Торфяной мох
 	Ocotillo_Finger_P.DisplayName: Палец окотилло
@@ -1987,14 +1930,14 @@ Projectiles: {
 	Friendly_Relay_Signal.DisplayName: Сигнал дружелюбного реле
 	Sixth_Spline_Battery.DisplayName: Шестая шлицевая батарея
 	Crawdaddys_Revenge_P.DisplayName: Коготь рачка
-	Acrid_Laser_Rod_Bobber.DisplayName: "Поплавок едкой лазерной удочки"
+	Acrid_Laser_Rod_Bobber.DisplayName: Поплавок едкой лазерной удочки
 	Hydrolantern_Use.DisplayName: Гидрофонарь
 	Airsnatcher_Bubble.DisplayName: Пузырь воздухосборника
 	Unsatisfied_Soul.DisplayName: Неупокоенная душа
-	DA_Spike_Summon.DisplayName: "Призыв шипов Осквернённого Слияния"
-	DA_Spike.DisplayName: "Шип Осквернённого Слияния"
-	DA_Spike_Bendy.DisplayName: "Извивающийся шип Осквернённого Слияния"
-	DA_Guided_Missile.DisplayName: "Направленный снаряд Осквернённого Слияния"
+	DA_Spike_Summon.DisplayName: Призыв шипов Осквернённого Слияния
+	DA_Spike.DisplayName: Шип Осквернённого Слияния
+	DA_Spike_Bendy.DisplayName: Извивающийся шип Осквернённого Слияния
+	DA_Guided_Missile.DisplayName: Направленный снаряд Осквернённого Слияния
 	Torpedo_Tube_P.DisplayName: Торпедная труба
 	Faith_Beads_Explosion.DisplayName: Взрыв чёток веры
 	Mildew_Blob.DisplayName: Сгусток плесени
@@ -2013,7 +1956,7 @@ Projectiles: {
 	Lost_Diver_Mildew_Whip.DisplayName: Заплесневелый хлыст Потерянного Дайвера
 	Explosive_Barrel_P.DisplayName: Взрывная бочка
 	Acrid_Spout_P.DisplayName: "{§Acrid} поток"
-	Acrid_Spout_Droplet.DisplayName: "Капля едкого потока"
+	Acrid_Spout_Droplet.DisplayName: Капля едкого потока
 	Boomboom_P.DisplayName: Бум-бум
 	Brine_Fiend_Boomboom.DisplayName: Бум-бум Солёного демона
 	Fumethrower_P.DisplayName: Дымомёт
@@ -2028,19 +1971,19 @@ Projectiles: {
 	The_Foot_Smash.DisplayName: Удар стопы
 	The_Foot_Flail.DisplayName: Цеп стопы
 	The_Foot_Aura.DisplayName: Аура стопы
-	Terlet_Paper_P.DisplayName: Милый 
+	Terlet_Paper_P.DisplayName: Милый
 	Regurgitator_Of_Souls_P.DisplayName: Извергатель душ
 	Venom_Shield_P.DisplayName: Кислотный щит
 	Sunny_Sunflower.DisplayName: Солнечный подсолнух
 	Sunny_Sunflower_Seed_P.DisplayName: Семечко солнечного подсолнуха
 	Sunny_Sunflower_P.DisplayName: Солнечный подсолнух
-	Golden_Lotus_Fairy.DisplayName: Фея золотого лотоса 
-	DefiledNukeProj.DisplayName: "Взрыв Скверны"
-	DefiledNukeSupremeProj.DisplayName: "Сверхвзрыв Скверны"
-	RivenNukeProj.DisplayName: "Взрыв Разреза"
-	RivenNukeSupremeProj.DisplayName: "Сверхвзрыв Разреза"
-	AshenNukeProj.DisplayName: "Взрыв Пепелища"
-	AshenNukeSupremeProj.DisplayName: "Сверхвзрыв Пепелища"
+	Golden_Lotus_Fairy.DisplayName: Фея золотого лотоса
+	DefiledNukeProj.DisplayName: Взрыв Скверны
+	DefiledNukeSupremeProj.DisplayName: Сверхвзрыв Скверны
+	RivenNukeProj.DisplayName: Взрыв Разреза
+	RivenNukeSupremeProj.DisplayName: Сверхвзрыв Разреза
+	AshenNukeProj.DisplayName: Взрыв Пепелища
+	AshenNukeSupremeProj.DisplayName: Сверхвзрыв Пепелища
 	Power_Lotus_Deflect_Fairy.DisplayName: Отражающая фея лотоса силы
 	Power_Lotus_Seeker_Fairy.DisplayName: Ищущая фея лотоса силы
 	Keytar_Bass.DisplayName: Басс кейтара
@@ -2048,25 +1991,25 @@ Projectiles: {
 	Keytar_Synth.DisplayName: Синтезатор кейтара
 	Astoxo_Lightning.DisplayName: Молния Астоксо
 	Nerve_Flan_P.DisplayName: Нервный флан
-	Defiled_Cyclops_Bone_Latcher.DisplayName: "Костехват осквернённого циклопа"
-	Defiled_Krusher_P1.DisplayName: "Осквернённый крушитель"
-	Defiled_Krusher_P2.DisplayName: "Осквернённый крушитель"
-	Defiled_Krusher_P3.DisplayName: "Осквернённый крушитель"
+	Defiled_Cyclops_Bone_Latcher.DisplayName: Костехват осквернённого циклопа
+	Defiled_Krusher_P1.DisplayName: Осквернённый крушитель
+	Defiled_Krusher_P2.DisplayName: Осквернённый крушитель
+	Defiled_Krusher_P3.DisplayName: Осквернённый крушитель
 	Impetus_P.DisplayName: Импульс
 	Impetus_Splut_P.DisplayName: Всплеск импульса
 	Impetus_Shrapnel.DisplayName: Шрапнель импульса
 	Rocket_Rifle_P.DisplayName: Ракетная винтовка
 	Inject_Incantation_P.DisplayName: Инъекционные чары
 	Huff_Puffer.DisplayName: Пыхальщик
-	Mildew_Carrion_Spore.DisplayName: "Спора заплесневелой падали"
-	Mildew_Carrion_Spore2.DisplayName: "Спора заплесневелой падали"
-	Mildew_Carrion_Spore3.DisplayName: "Спора заплесневелой падали"
+	Mildew_Carrion_Spore.DisplayName: Спора заплесневелой падали
+	Mildew_Carrion_Spore2.DisplayName: Спора заплесневелой падали
+	Mildew_Carrion_Spore3.DisplayName: Спора заплесневелой падали
 	Mildew_Incantation_P.DisplayName: Чары плесени
 	Mildew_Incantation_Creeper.DisplayName: Чары заплесневелого ползуна
 	Eye_Of_Aether_P.DisplayName: Око эфира
 	Soul_Snatcher_P.DisplayName: Похититель душ
 	Soul_Snatcher_Spin.DisplayName: Вращение похитителя душ
-	Tangela_Tether_P.DisplayName: "Связка танжелы"
+	Tangela_Tether_P.DisplayName: Связка танжелы
 	Catacomb_Clearer_Bomb.DisplayName: Бомба очистителя катакомб
 	Catacomb_Clearer_Dynamite.DisplayName: Динамит очистителя катакомб
 	Greasy_Gas.DisplayName: Отвратный газ
@@ -2075,17 +2018,15 @@ Projectiles: {
 	Cannihound_Gore3.DisplayName: Плоть гончей-каннибала
 	Brine_Haze_P.DisplayName: Облако солёного тумана
 	Necromantic_Prefix_Orb.DisplayName: Некромантический шар
-	Defiled_Broadcaster_Flan.DisplayName: "Осквернённый вещатель"
-	Defiled_Broadcaster_Teleport_Flan.DisplayName: "Телепорт осквернённого вещателя"
-	Bendy_Indicator.DisplayName: "Извивающийся указатель Осквернённого Слияния"
-	DA_Arc_Bolt.DisplayName: "Дуговой разряд Осквернённого Слияния"
-	DA_Bendy_Spikes.DisplayName: "Извивающиеся шипы Осквернённого Слияния"
-	DA_Flan.DisplayName: "Нервный флан Осквернённого Слияния"
-	Defiled_Spike_Explosion_Hostile_Unused.DisplayName: "{§Defiled} Spike Explosion Hostile Unused"
-	Defiled_Spike_Explosion_Spike_Hostile_Unused.DisplayName: "{§Defiled} Spike Explosion Spike Hostile Unused"
-	Defiled_Spike_Indicator.DisplayName: "Шипастый указатель Осквернённого Слияния"
-	DA_Laser.DisplayName: "Вращение лазера Осквернённого Слияния"
-	Defiled_Prefix_Orb.DisplayName: "Осквернённый шар"
+	Defiled_Broadcaster_Flan.DisplayName: Осквернённый вещатель
+	Defiled_Broadcaster_Teleport_Flan.DisplayName: Телепорт осквернённого вещателя
+	Bendy_Indicator.DisplayName: Извивающийся указатель Осквернённого Слияния
+	DA_Arc_Bolt.DisplayName: Дуговой разряд Осквернённого Слияния
+	DA_Bendy_Spikes.DisplayName: Извивающиеся шипы Осквернённого Слияния
+	DA_Flan.DisplayName: Нервный флан Осквернённого Слияния
+	Defiled_Spike_Indicator.DisplayName: Шипастый указатель Осквернённого Слияния
+	DA_Laser.DisplayName: Вращение лазера Осквернённого Слияния
+	Defiled_Prefix_Orb.DisplayName: Осквернённый шар
 	Tyrfing_P.DisplayName: Тюрфинг
 	Aether_Bullet_Duplicate_P.DisplayName: ${Aether_Bullet_P.DisplayName}
 	Aether_Bullet_P.DisplayName: Эфирная пуля
@@ -2148,7 +2089,7 @@ Projectiles: {
 	Splitting_Image_Slash.DisplayName: Расщеплённый образ
 	Splitting_Image_Chunk_Spawn.DisplayName: Расщеплённый образ
 	Frost_Hydra_Sustained_Blast.DisplayName: Ледяная гидра
-	Flagellant_Whip.DisplayName: Хлыст флагеллянта 
+	Flagellant_Whip.DisplayName: Хлыст флагеллянта
 	SC_Shimmershot_Aura.DisplayName: Аура мерцестрела
 	SC_Shimmershot_Bullet.DisplayName: Мерцестрел
 	SC_Firework.DisplayName: Мерцеверк
@@ -2162,7 +2103,7 @@ Projectiles: {
 	Dream_Catcher_Vine.DisplayName: Лоза ловца снов
 	Dream_Catcher_P.DisplayName: Ловец снов
 	Terratotem_Tab.DisplayName: Табличка терратотетма
-	Terratotem_Mask_Small.DisplayName: Маленькая маска терратотема 
+	Terratotem_Mask_Small.DisplayName: Маленькая маска терратотема
 	Terratotem_Mask_Big.DisplayName: Большая маска терратотема
 	Terratotem_Mask_Medium.DisplayName: Средняя маска терратотема
 	Astral_Scythe_Blade.DisplayName: Лезвие астральной косы
@@ -2228,7 +2169,6 @@ Projectiles: {
 	Laser_Target_Locator_P.DisplayName: Лазерный обнаружитель целей
 	Laser_Target_Locator_Marker.DisplayName: Метка лазерного обнаружителя
 	Laser_Target_Locator_Missile.DisplayName: Снаряд лазерного обнаружителя
-	Laser.DisplayName: Лазер
 	Pike_Of_Deepneus_Stuck.DisplayName: Пика Дипнина
 	Homing_Rocket_I_Grenade.DisplayName: Самонаводящаяся граната I
 	Homing_Rocket_I_Mine.DisplayName: Самонаводящаяся мина I
@@ -2238,10 +2178,10 @@ Projectiles: {
 	Homing_Rocket_II_Mine.DisplayName: Самонаводящаяся мина II
 	Homing_Rocket_II_Rocket.DisplayName: Самонаводящаяся ракета II
 	Homing_Rocket_II_Snowman.DisplayName: Самонаводящийся снеговик II
-	AMRSL_Skewer_Sabot.DisplayName: "Поддон АПММП «Шпаги»"
-	AMRSL_Skewer_Sabot_Scrap.DisplayName: "Металлический поддон АПММП «Шпаги»"
-	AMRSL_Skewer_Sabot_Cursed.DisplayName: "Проклятый поддон АПММП «Шпаги»"
-	AMRSL_Skewer_Sabot_Ichor.DisplayName: "Ихорный поддон АПММП «Шпаги»"
+	AMRSL_Skewer_Sabot.DisplayName: Поддон АПММП «Шпаги»
+	AMRSL_Skewer_Sabot_Scrap.DisplayName: Металлический поддон АПММП «Шпаги»
+	AMRSL_Skewer_Sabot_Cursed.DisplayName: Проклятый поддон АПММП «Шпаги»
+	AMRSL_Skewer_Sabot_Ichor.DisplayName: Ихорный поддон АПММП «Шпаги»
 	Chlorophyte_Handcannon_Bubble.DisplayName: Пузырь хлорофитовой пушки
 	Chlorophyte_Slug_P.DisplayName: Хлорофитовый жакан
 	School_Fish.DisplayName: Стая рыб
@@ -2290,16 +2230,58 @@ Projectiles: {
 	Vampire_Sunflower_P.DisplayName: Вампирский подсолнух
 	Clunkaclusta_P.DisplayName: "[fool:Items.Clunkaclusta.DisplayName]"
 	Clunkaclusta_Mini_P.DisplayName: "[fool:Items.Clunkaclusta.DisplayName]"
-	CursedFlames.DisplayName: Проклятые огни
-	_Temp_Red.DisplayName: " Красная температура"
-	Cursed_Flames.DisplayName: Проклятые огни
-	_Temp_Orange.DisplayName: " Оранжевая температура"
-	Ichor_Spray.DisplayName: Спрей ихора
-	_Temp_Turquoise.DisplayName: " Бирюзовая температура"
-	_Temp_Yellow.DisplayName: " Жёлтая температура"
 	ModWireChannel.DisplayName: Модифицированный проводной канал
 	Quasar_P.DisplayName: Квазар П
 	Quasar_Offshoot_P.DisplayName: Ответвление квазара П
+	// Mushy_Broth_Explosion.DisplayName: Mushy Broth Explosion
+	// Big_Bang_P.DisplayName: Big Bang
+	// Defensive_Turret_P.DisplayName: Defensive Turret
+	// Friendly_Cleaver_Body.DisplayName: Friendly Cleaver Body
+	// Friendly_Cleaver_Head.DisplayName: Friendly Cleaver Head
+	// Friendly_Cleaver_Tail.DisplayName: Friendly Cleaver Tail
+	// TM_Turret_Cannon_P.DisplayName: Cannon Turret
+	// TM_Turret_Flamer_P.DisplayName: Flamer Turret
+	// TM_Turret_Launcher_P.DisplayName: Launcher Turret
+	// TM_Turret_Laser_P.DisplayName: Laser Turret
+	// Pirate_Eye__Temp_Blue.DisplayName: Pirate Eye_ Temp Blue
+	// Pirate_Eye__Temp_Brown.DisplayName: Pirate Eye_ Temp Brown
+	// Pirate_Eye__Temp_Green.DisplayName: Pirate Eye_ Temp Green
+	// Pirate_Eye__Temp_Hot_Pink.DisplayName: Pirate Eye_ Temp Hot Pink
+	// Pirate_Eye__Temp_Light_Blue.DisplayName: Pirate Eye_ Temp Light Blue
+	// Pirate_Eye__Temp_Magenta.DisplayName: Pirate Eye_ Temp Magenta
+	// Pirate_Eye__Temp_Orange.DisplayName: Pirate Eye_ Temp Orange
+	// Pirate_Eye__Temp_Pink.DisplayName: Pirate Eye_ Temp Pink
+	// Pirate_Eye__Temp_Turquoise.DisplayName: Pirate Eye_ Temp Turquoise
+	// Pirate_Eye__Temp_Yellow.DisplayName: Pirate Eye_ Temp Yellow
+	// Pirate_Eye_Cursed_Flames.DisplayName: Cursed Flames
+	// Pirate_Eye_Ichor_Spray.DisplayName: Ichor Spray
+	// Pirate_Eye_Scrap_Laser.DisplayName: Scrap Laser
+	// Pirate_Eye_Laser.DisplayName: Eye Laser
+	// Pirate_Eye_Sharp_Tears.DisplayName: Sharp Tears
+	// Pirate_Eye_Witch_Bolt.DisplayName: Witch Bolt
+	// Pirate_Eye_Worms.DisplayName: Pirate Eye Worms
+	// Smart_Turret.DisplayName: Smart Turret
+	// Smart_Turret_Counter.DisplayName: Smart Turret Counter
+	// Smart_Turret_Canister_P.DisplayName: Smart Turret Canister
+	// CSTAA_Jacket_Explosion.DisplayName: C.S.T.A.A. JacketExplosion
+	// CSTAA_Jacket_Flak_1.DisplayName: C.S.T.A.A. Jacket Flak
+	// CSTAA_Jacket_Flak_2.DisplayName: C.S.T.A.A. Jacket Flak
+	// CSTAA_Jacket_Flak_3.DisplayName: C.S.T.A.A. Jacket Flak
+	// Shuckatana_P.DisplayName: Shuckatana Decay
+	// Shuckatana_Slash.DisplayName: Shuckatana Slash Animation
+	// Shuckatana_ShootAnimation.DisplayName: Shuckatana Shoot Animation
+	// Neutron_Soup_Flames.DisplayName: Neutron Soup Flames
+	// Neutron_Soup_P.DisplayName: Neutron Soup
+	// Trenchmaker_Laser_P.DisplayName: Trenchmaker Laser
+	// Trenchmaker_Laser_Target_Locator.DisplayName: Trenchmaker Laser Target Locator
+	// Trenchmaker_Laser_Target_Locator_Marker.DisplayName: Trenchmaker Laser Target Locator Marker
+	// Trenchmaker_Laser_Target_Locator_Missile.DisplayName: Trenchmaker Laser Target Locator Missile
+	// Pirate_Eye_Shimmer_Mines.DisplayName: Pirate Eye Shimmer Mines
+	// Oil_Canister_Spark.DisplayName: Oil Canister Spark
+	// Awesome_Flames.DisplayName: Awesome Flames
+	// Neutron_Soup_Beam.DisplayName: Neutron Soup Beam
+	// Pirate_Eye_Venom_Dropper.DisplayName: Pirate Eye Venom
+	// Cupids_Arrow_P.DisplayName: Cupids Arrow
 }
 
 Prefixes: {
@@ -2369,7 +2351,7 @@ Prefixes: {
 	Necromantic_Artifact_Prefix.Description: "{$Mods.Origins.Prefixes.Necromantic_Prefix.SharedDescription}"
 
 	Defiled_Prefix: {
-		DisplayName: "Осквернённый"
+		DisplayName: Осквернённый
 		Description: Снаряды крадут ману их носителю, а также иногда могут распадаться на осквернённые шипы
 	}
 
@@ -2442,12 +2424,12 @@ Biomes: {
 	}
 
 	Defiled_Wastelands_Desert: {
-		DisplayName: "Осквернённая пустыня"
+		DisplayName: Осквернённая пустыня
 		TownNPCDialogueName: Осквернённая пустыня
 	}
 
 	Riven_Hive_Desert: {
-		DisplayName: "Разрезанная пустыня"
+		DisplayName: Разрезанная пустыня
 		TownNPCDialogueName: "{§Riven}анная пустыня"
 	}
 
@@ -2457,7 +2439,7 @@ Biomes: {
 	}
 
 	Defiled_Wastelands_Underground_Desert: {
-		DisplayName: Подземелье осквернённой пустыни	
+		DisplayName: Подземелье осквернённой пустыни
 		TownNPCDialogueName: Подземелье осквернённой пустыни
 	}
 
@@ -2467,17 +2449,17 @@ Biomes: {
 	}
 
 	Riven_Hive_Ice_Biome: {
-		DisplayName: "Разрезанный лёд"
+		DisplayName: Разрезанный лёд
 		TownNPCDialogueName: Разрезанный лёд
 	}
 
 	Defiled_Wastelands_Ice_Biome: {
-		DisplayName: "Осквернённый лёд"
+		DisplayName: Осквернённый лёд
 		TownNPCDialogueName: Осквернённый лёд
 	}
 
 	Defiled_Wastelands_Ocean: {
-		DisplayName: "Океан Осквернённых Пустошей"
+		DisplayName: Океан Осквернённых Пустошей
 		TownNPCDialogueName: Осквернённый океан
 	}
 
@@ -2493,27 +2475,22 @@ Biomes: {
 
 	Ashen_Underground_Desert: {
 		TownNPCDialogueName: Подземная пепельная пустыня
-		DisplayName: "Подземная пепельная пустыня"
+		DisplayName: Подземная пепельная пустыня
 	}
 
 	Ashen_Ocean: {
 		TownNPCDialogueName: Пепельный океан
-		DisplayName: "Пепельный океан"
+		DisplayName: Пепельный океан
 	}
 
 	Ashen_Ice_Biome: {
 		TownNPCDialogueName: Пепельный лёд
-		DisplayName: "Пепельный лёд"
+		DisplayName: Пепельный лёд
 	}
 
 	Ashen_Desert: {
 		TownNPCDialogueName: Пепельная пустыня
-		DisplayName: "Пепельная пустыня"
-	}
-
-	Smog_Storm_Biome: {
-		DisplayName: Биом Смоговой бури 
-		TownNPCDialogueName: the Smog_ Storm_ Biome
+		DisplayName: Пепельная пустыня
 	}
 
 	Smog_Storm: {
@@ -2523,32 +2500,32 @@ Biomes: {
 }
 
 CaptureBiomeChoice: {
-	Ashen: "Пепельная фабрика"
+	Ashen: Пепельная фабрика
 	Defiled: "{§The_Defiled_Wastelands}"
 	Riven: "{§Riven_Hive}"
 }
 
 Tiles: {
 	Defiled_Dungeon_Chest: {
-		ContainerName: "Осквернённый сундук"
-		MapEntry: "Осквернённый сундук"
+		ContainerName: Осквернённый сундук
+		MapEntry: Осквернённый сундук
 	}
 
 	Riven_Dungeon_Chest: {
-		ContainerName: "Разрезанный сундук"
-		MapEntry: "Разрезанный сундук"
+		ContainerName: Разрезанный сундук
+		MapEntry: Разрезанный сундук
 	}
 
 	Brine_Leaf_Clover_Tile.MapEntry: Солёный клевер
 	Eitrite_Ore.MapEntry: Эйтрит
 	Eden_Tree_Sapling.MapEntry: Эдемский саженец
-	Defiled_Altar.MapEntry: "Осквернённый алтарь"
+	Defiled_Altar.MapEntry: Осквернённый алтарь
 	Defiled_Dungeon_Chest_Locked.MapEntry: Запертый осквернённый сундук
-	Defiled_Fissure.MapEntry: "Осквернённая трещина"
-	Defiled_Heart.MapEntry: "Сердце Скверны"
+	Defiled_Fissure.MapEntry: Осквернённая трещина
+	Defiled_Heart.MapEntry: Сердце Скверны
 	Defiled_Ore.MapEntry: Потерянная руда
 	Sanguinite_Ore.MapEntry: Сангвинит
-	Defiled_Tree_Sapling.MapEntry: "Осквернённый саженец"
+	Defiled_Tree_Sapling.MapEntry: Осквернённый саженец
 	Soulspore.MapEntry: Спородуша
 	Wilted_Rose.MapEntry: Увядшая роза
 	Felnum_Ore.MapEntry: Фелий
@@ -2556,19 +2533,15 @@ Tiles: {
 	Encrusted_Ore.MapEntry: Обросшая руда
 	Riven_Altar.MapEntry: "{§Riven}анный алтарь"
 	Riven_Dungeon_Chest_Locked.MapEntry: Закрытый {§Riven}анный сундук
-	Riven_Lesion.MapEntry: "Язва {§Riven}а"
+	Riven_Lesion.MapEntry: Язва {§Riven}а
 	Riven_Tree_Sapling.MapEntry: "{§Riven}анный саженец"
 	Wrycoral.MapEntry: Кривой коралл
-	Traffic_Cone.DisplayName: Дорожный конус	
+	Traffic_Cone.DisplayName: Дорожный конус
 	Music_Box_DC: Музыкальная шкатулка (Осквернённые пещеры)
 	Music_Box_DW: Музыкальная шкатулка ({§Defiled_Wastelands})
 	Music_Box_RH: Музыкальная шкатулка ({§Riven_Hive})
 	Brineglow_Vine.MapEntry: Лоза солесветки
 	Brineglow.MapEntry: Солесветка
-	Bilious_Crate_Tile.MapEntry: Желчный ящик
-	Chunky_Crate_Tile.MapEntry: Коренастый ящик
-	Crusty_Crate_Tile.MapEntry: Помойный ящик
-	Festering_Crate_Tile.MapEntry: Гнойный ящик
 	Cleansing_Station.MapEntry: Станция отчистки
 	Potato_Mine_Tile.MapEntry: Картофельная мина
 	Stone_Mask_Tile.MapEntry: Каменная маска
@@ -2594,25 +2567,23 @@ Tiles: {
 	Carburite.MapEntry: Углеродит
 	Silicon_Ore.MapEntry: Силикон
 	Underwater_Vine.MapEntry: Подводная лоза
-	Defiled_Relay.MapEntry: "Осквернённое реле"
+	Defiled_Relay.MapEntry: Осквернённое реле
 	Hydrothermal_Vent.MapEntry: Гидротермический источник
 	Ocotillo.DisplayName: Окотилло
-	Basic_Crate_Tile.MapEntry: Базовый ящик
 	Ancient_Music_Box_BP: Древняя музыкальная шкатулка (Солёный пруд)
 	Music_Box_BP: Музыкальная шкатулка (Солёный пруд)
 	Brine_Dungeon_Chest.MapEntry: Солёный сундук
 	Brine_Dungeon_Chest_Locked.MapEntry: Закрытый солёный сундук
-	Defiled_Storage_Unit.MapEntry: "Осквернённая ячейка хранилища"
+	Defiled_Storage_Unit.MapEntry: Осквернённая ячейка хранилища
 	Encrusted_Storage_Unit.MapEntry: Обросшая ячейка хранилища
 	Sanguinite_Storage_Unit.MapEntry: Сангвинитовая ячейка хранилища
 	Music_Box_FU: Музыкальная шкатулка (Стеклянная роща)
 	Hydrothermal_Vent_Goopy.MapEntry: Слизистый гидротермический источник
 	Lucky_Hat_Tile.MapEntry: Счастливая шляпа
-	Residual_Crate_Tile.MapEntry: Оставленный ящик
 	Chambersite_Gem_Lock.MapEntry: Чемберситовая форма
 	Aetherite_Ore.MapEntry: Эфирит
 	Limestone_Chest.MapEntry: Известняковый сундук
-	Music_Box_TD: Музыкальная шкатулка ([wiggle:Погружение]) 
+	Music_Box_TD: Музыкальная шкатулка ([wiggle:Погружение])
 	Limestone_Dresser.MapEntry: Известняковый комод
 	Hanging_Wrycoral.MapEntry: Висящий кривой коралл
 	Fuzzvine.MapEntry: Плеснелоза
@@ -2620,9 +2591,9 @@ Tiles: {
 	Otherworldly_Music_Box_DW: Альтернативная музыкальная шкатулка ({§Defiled_Wastelands})
 	Artifiber_Chest.MapEntry: Сундук из артифибры
 	Artifiber_Dresser.MapEntry: Комод из артифибры
-	Ashen_Dungeon_Chest.MapEntry: "Пепельный сундук"
+	Ashen_Dungeon_Chest.MapEntry: Пепельный сундук
 	Ashen_Dungeon_Chest_Locked.MapEntry: Закрытый пепельный сундук
-	Ashen_Altar.MapEntry: "Пепельный алтарь"
+	Ashen_Altar.MapEntry: Пепельный алтарь
 	Suit_Locker.MapEntry: Шкафчик для костюмов
 	Heat_Vent.MapEntry: Термовыход
 	Floodlight.MapEntry: Прожектор
@@ -2646,7 +2617,7 @@ Tiles: {
 	Mechanical_Key_Node_Blue.MapEntry: Синий механический ключ-узел
 	Mechanical_Key_Node_Green.MapEntry: Зелёный механический ключ-узел
 	Mechanical_Key_Node_Orange.MapEntry: Оранжевый механический ключ-узел
-	Mechanical_Key_Node_Purple.MapEntry: Фиолетовый механический ключ-узел	
+	Mechanical_Key_Node_Purple.MapEntry: Фиолетовый механический ключ-узел
 	Mechanical_Key_Node_Yellow.MapEntry: Жёлтый механический ключ-узел
 	Magic_Dropper_Oil.MapEntry: Капающая нефть
 	Power_Box.MapEntry: Блок питания
@@ -2689,8 +2660,9 @@ Configs: {
 		}
 
 		Headers: {
-			Journal: "Настройки {§Journal}а"
+			Journal: Настройки {§Journal}а
 			Compatibility: Совместимость
+			// Performance: Performance
 		}
 
 		TabbyJournal: {
@@ -2843,6 +2815,11 @@ Configs: {
 			Label: Исправить размытие нецельных тайлов
 			Tooltip: ""
 		}
+
+		FlashbangColor: {
+			// Label: Flashbang Color
+			// Tooltip: ""
+		}
 	}
 
 	OriginConfig: {
@@ -2941,7 +2918,7 @@ Configs: {
 
 		ExportAllItemStatsJSON: {
 			Label: Экспортировать JSON-файл статистики всех предметов
-			Tooltip: Удерживайте Shift для массового экспорта 
+			Tooltip: Удерживайте Shift для массового экспорта
 		}
 
 		ExportItemStatsJSON: {
@@ -3392,7 +3369,7 @@ SetBonuses: {
 		'''
 		Получение дебаффа постепенно увеличивает значение защиты до следующего удара
 		Наносящие урон дебаффы ослабевают на 33% при воздействии на вас
-	    Дальнейшее получение ударов увеличивают вероятность уклонения от последующей атаки
+		   Дальнейшее получение ударов увеличивают вероятность уклонения от последующей атаки
 		Значение этой вероятности сбрасывается после успешного уклонения
 		'''
 	Lucky_Hat:
@@ -3410,7 +3387,7 @@ SetBonuses: {
 	ChambersiteWizardHat: +20% к вероятности критического удара магией
 	ChambersiteCommander:
 		'''
-	    Накладывает [buffhint/self:Origins/Voidsight_Buff]
+		   Накладывает [buffhint/self:Origins/Voidsight_Buff]
 		Увеличивает максимальное число миньонов на 1
 		+15% к отталкиванию
 		Разрешает временно призвать на помощь в битву Стража чемберсита.
@@ -3437,88 +3414,68 @@ ItemSourceFilter: {
 Music: {
 	The_Room_Before: {
 		Name: The Room Before
-		// Комната до
 		Subtitle: ""
 	}
 
 	Below_The_Brine: {
 		Name: Below The Brine
-		// Под рассолом
 		Subtitle: ""
 	}
 
 	Dancing_With_Ghosts: {
 		Name: Dancing With Ghosts
-		// Танцуя с призраками
 		Subtitle: ""
 	}
 
 	Stolen_Memories: {
 		Name: Stolen Memories
-		// Украденные воспоминания
 		Subtitle: ""
 	}
 
 	Heart_Of_The_Beast: {
 		Name: Heart Of The Beast
-		// Звериное сердце (or maybe even «Собачье сердце» (lit. Heart Of The Dog) what reffers to the name of famous Bulgakov's poem)
 		Subtitle: ""
 	}
 
 	ADJUDICATE: {
 		Name: ADJUDICATE
-		// ВЫНЕСТИ ВЕРДИКТ
 		Subtitle: ""
 	}
 
 	Pereunt_Unum_Scindendum: {
 		Name: Scinditur Pereunt
-		// Разделённые погибают
 		Subtitle: ""
 	}
 
 	Festering_Hives: {
 		Name: Festering Hives
-		// Гниющие ульи
 		Subtitle: ""
 	}
 
 	Ad_Laceratur: {
 		Name: Ad Laceratur
-		// К растерзанию
 		Subtitle: ""
 	}
 
 	This_Ocean_Of_Alkahest: {
 		Name: This Ocean Of Alkahest
-		// Этот океан алкагеста
 		Subtitle: ""
 	}
 
 	Shattered_Topography_Old: {
 		Name: Shattered Topography Old
-		// Разрушенная топография (старая)
 		Subtitle: ""
 	}
 
-	Deep_Luminance.Name: Deep Luminance 
-	// ^^^ Глубинное свечение
+	Deep_Luminance.Name: Deep Luminance
 	Wasteland.Name: Wasteland
-	// ^^^ Пустошь  
 	Dread_Heart.Name: Dread Heart
-	// ^^^ Ужасающее сердце
 	Skin.Name: Skin
-	// ^^^ Кожа
 	Internal_Organism.Name: Internal Organism
-	// ^^^ Внутренний организм
 	Frayed_And_Stretched.Name: Frayed And Stretched
-	// ^^^ Изношенный и растянутый
 	Alkahest.Name: Alkahest
-	// ^^^ Алкагест
 	Skulking.Name: Skulking
-	// ^^^ Крадущийся
 	Only_the_Brave.Name: Only the Brave
-	// ^^^ Только храбрец
 }
 
 DefiledRelaySignals: {
@@ -3575,6 +3532,7 @@ CritType: {
 	Viper_Rifle_Crit_Type: Наносит критический урон по ослабленным иным способом врагам
 	Felnum_Crit_Type: "{$Mods.CritRework.CritTypes.FoeIsWet.Description}"
 	Pharaohs_Turquoise_Crit_Type: Наносит критический урон при попадании по одной цели всеми {0} выстрелами
+	// Vorpal_Crit_Type: Critically strikes [diffselect:1|1|5]% of the time
 }
 
 BuilderToggle: {
@@ -3626,7 +3584,7 @@ Achievements: {
 	}
 
 	Mildew_Death: {
-		FriendlyName: "И пока плесень не разлучит нас"
+		FriendlyName: И пока плесень не разлучит нас
 		Description: Предотвратите свою смерть после того, как ваше здоровье достигнет 0.
 	}
 

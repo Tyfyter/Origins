@@ -8422,3 +8422,8 @@ Artifiber_Bow: {
 	// DisplayName: Artifiber Bow
 	// Tooltip: ""
 }
+
+Cupids_Arrow: {
+	// DisplayName: Cupids Arrow
+	// Tooltip: ""
+}

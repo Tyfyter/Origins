@@ -1176,4 +1176,5 @@ Worn_Paper: {
 		Вклад:
 			- помощь Террарианцу
 		'''
+	// Classified_Blueprint.Text: "[jimage/2xcfff:Origins/UI/Lore/Journal_Use_Back]<PH> put actual blueprint image(s) here instead"
 }

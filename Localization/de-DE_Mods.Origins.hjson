@@ -2280,7 +2280,8 @@ Projectiles: {
 	// Oil_Canister_Spark.DisplayName: Oil Canister Spark
 	// Awesome_Flames.DisplayName: Awesome Flames
 	// Neutron_Soup_Beam.DisplayName: Neutron Soup Beam
-	// Pirate_Eye_Venom_Dropper.DisplayName: Pirate Eye Venom Dropper
+	// Pirate_Eye_Venom_Dropper.DisplayName: Pirate Eye Venom
+	// Cupids_Arrow_P.DisplayName: Cupids Arrow
 }
 
 Prefixes: {
