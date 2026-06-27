@@ -103,7 +103,7 @@ Lost_Crone: {
 }
 
 Riven: {
-	DisplayName: {§Riven_Hive}
+	DisplayName: "{§Riven_Hive}"
 	SeriesLength: "12"
 	Alkahest.Text:
 		'''
