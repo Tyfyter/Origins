@@ -498,13 +498,13 @@ Generic: {
 	Dusk: Сумерки
 	Defiled: Скверна
 	Defiled_Wastelands: Осквернённые Пустоши
-	the_Defiled_Wastelands: {$Mods.Origins.Generic.Defiled_Wastelands}
-	The_Defiled_Wastelands: {$Mods.Origins.Generic.Defiled_Wastelands}
+	the_Defiled_Wastelands: "{$Mods.Origins.Generic.Defiled_Wastelands}"
+	The_Defiled_Wastelands: "{$Mods.Origins.Generic.Defiled_Wastelands}"
 	Brine_Pool: Солёный пруд
 	Arms_Dealer: Оружейник
 	Defiled_Antibody: Осквернённое Антитело
 	Defiled_Antibodies: Осквернённые Антитела
-	Definite_Article: {0}
+	Definite_Article: "{0}"
 	VariableAssimilation: Переменная
 	BuffTime: $60!:{0:0.##} секунд$
 	UnboundKey: '''"{0}" (не связан)'''
