@@ -1623,8 +1623,7 @@ Projectiles: {
 	Resizable_Mine_P_5.DisplayName: Малоразмерная мина
 	Teal_Solution_P.DisplayName: Бирюзовый раствор
 	White_Solution_P.DisplayName: Белый раствор
-	Viel Glück
-_Shrapnel_Old_P.DisplayName: Мастерская шрапнель
+	_Shrapnel_Old_P.DisplayName: Мастерская шрапнель
 	Ace_Shrapnel_Old_Shard.DisplayName: Осколок от мастерской шрапнели
 	Ace_Shrapnel_P.DisplayName: Мастерская шрапнель
 	Ace_Shrapnel_Shard.DisplayName: Шрапнель
