@@ -5,6 +5,7 @@ using Origins.NPCs.Ashen;
 using Origins.Projectiles;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -14,10 +15,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Cupids_Arrow : ModItem, ICustomDrawItem {
 		public override void SetStaticDefaults() => Origins.AddGlowMask(this);
 		public override void SetDefaults() {
-			Item.DefaultToCanisterLauncher<Cupids_Arrow_P>(50, 16, 8, 60, 24, true);
-			Item.useAnimation *= 4;
+			Item.DefaultToCanisterLauncher<Cupids_Arrow_P>(36, 2, 8, 60, 24, true);
+			Item.useAnimation *= 42;
 			Item.useLimitPerAnimation = 3;
-			Item.value = Item.sellPrice(gold: 7);
+			Item.value = Item.sellPrice(gold: 8);
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item11;
 			Item.useStyle = ItemUseStyleID.Shoot;
@@ -30,6 +31,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void UseStyle(Player player, Rectangle heldItemFrame) => player.itemLocation = player.MountedCenter + player.Directions(-7, -3);
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			position += velocity.SafeNormalize(default).RotatedBy(player.direction * MathHelper.PiOver2) * -6 * player.gravDir;
+			velocity = velocity.RotatedByRandom(0.15f);
 		}
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
 			DrawData data = new(
@@ -38,7 +40,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				null,
 				lightColor,
 				drawInfo.drawPlayer.itemRotation,
-				drawInfo.itemEffect.ApplyToOrigin(new(8, 18), itemTexture.Bounds),
+				drawInfo.itemEffect.ApplyToOrigin(new(24, 16), itemTexture.Bounds),
 				drawInfo.drawPlayer.GetAdjustedItemScale(Item),
 				drawInfo.itemEffect
 			);
@@ -75,6 +77,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnSpawn(IEntitySource source) {
 			if (Projectile.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) global.projectileBlastRadius *= 1.5f;
+			SoundEngine.PlaySound(SoundID.Item61.WithPitch(2.2f).WithVolume(0.6f), Projectile.Center);
 		}
 		public override void AI() {
 			if (++Projectile.localAI[0] < 7) return;
@@ -142,6 +145,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				});
 
 				if (foundTarget) {
+					SoundEngine.PlaySound(SoundID.NPCHit51.WithPitch(1.7f).WithVolume(0.05f), Projectile.Center);
 					float scaleFactor = 16f * fuelMult;
 					float lerpValue = 0.083333336f * Origins.HomingEffectivenessMultiplier[Projectile.type] * fuelMult;
 

@@ -1,6 +1,7 @@
 ﻿using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Tools;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.LootConditions;
@@ -52,8 +53,8 @@ namespace Origins.NPCs.Ashen {
 				//ModContent.ItemType<The_Claw>(),
 				ModContent.ItemType<Laser_Target_Locator>(),
 				ModContent.ItemType<AMRSL_Skewer>(),
-				ModContent.ItemType<Pacemaker>()/*,
-				ModContent.ItemType<Cupids_Arrow>()*/
+				ModContent.ItemType<Pacemaker>(),
+				ModContent.ItemType<Cupids_Arrow>()
 			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
