@@ -33,7 +33,7 @@ namespace Origins.Tiles {
 				}).WithExtraDefaults(SetDefaults)
 				.WithOnAddRecipes(AddRecipes)
 				.RegisterItem().Texture;
-			if (CanBeLocked) new TileItem(this, true, texture, $"Locked_{Name}")
+			if (CanBeLocked) new TileItem(this, true, texture, $"Locked_{Name}_Item")
 				.WithExtraStaticDefaults(SetStaticDefaults)
 				.WithExtraDefaults(item => {
 					SetDefaults(item);

@@ -893,6 +893,7 @@ namespace Origins.Tiles {
 	[Autoload(false)]
 	public class TileItem(ModTile tile, bool debug = false, string textureOverride = null, string nameOverride = null) : ModItem() {
 		private static readonly Dictionary<ModTile, TileItem> itemsByTile = [];
+		private static readonly Dictionary<ModTile, TileItem> debugItemsByTile = [];
 		[field: CloneByReference]
 		public ModTile Tile { get; } = tile;
 		public bool IsDebug { get; } = debug;
@@ -907,7 +908,11 @@ namespace Origins.Tiles {
 #if !DEBUG
 		public override bool IsLoadingEnabled(Mod mod) => !IsDebug || DebugConfig.Instance.ForceEnableDebugItems;
 #endif
-		public sealed override void Load() => itemsByTile.Add(Tile, this);
+		public sealed override void Load() {
+			if (IsDebug) debugItemsByTile.Add(Tile, this);
+			else itemsByTile.Add(Tile, this);
+		}
+
 		public override void SetStaticDefaults() {
 			Origins.AddGlowMask(this);
 			if (IsDebug) {
@@ -970,8 +975,11 @@ namespace Origins.Tiles {
 			return this;
 		}
 
-		public static TileItem Get(ModTile tile) => itemsByTile.TryGetValue(tile, out TileItem item) ? item : null;
-		public static TileItem Get<TTile>() where TTile : ModTile => Get(ModContent.GetInstance<TTile>());
-		public static int ItemType<TTile>() where TTile : ModTile => Get<TTile>().Type;
+		public static TileItem Get(ModTile tile, bool debug = false) {
+			if (debug) return debugItemsByTile.TryGetValue(tile, out TileItem item) ? item : null;
+			return itemsByTile.TryGetValue(tile, out TileItem item1) ? item1 : debugItemsByTile.TryGetValue(tile, out item1) ? item1 : null;
+		}
+		public static TileItem Get<TTile>(bool debug = false) where TTile : ModTile => Get(ModContent.GetInstance<TTile>(), debug);
+		public static int ItemType<TTile>(bool debug = false) where TTile : ModTile => Get<TTile>(debug).Type;
 	}
 }
