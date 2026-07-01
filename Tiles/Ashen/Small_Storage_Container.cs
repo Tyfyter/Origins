@@ -10,16 +10,15 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
 	public class Small_Storage_Container : ModChest {
+		public override void AddRecipes(Item item) {
+			Recipe.Create(item.type)
+			.AddRecipeGroup(RecipeGroupID.IronBar, 2)
+			.AddIngredient<Scrap>(8)
+			.AddTile<Metal_Presser>()
+			.Register();
+		}
 		public override void Load() {
-			new TileItem(this)
-			.WithExtraStaticDefaults(this.DropTileItem)
-			.WithOnAddRecipes(item => {
-				Recipe.Create(item.type)
-				.AddRecipeGroup(RecipeGroupID.IronBar, 2)
-				.AddIngredient<Scrap>(8)
-				.AddTile<Metal_Presser>()
-				.Register();
-			}).RegisterItem();
+			base.Load();
 			On_WorldGen.WouldTileReplacementWork += On_WorldGen_WouldTileReplacementWork;
 		}
 		bool On_WorldGen_WouldTileReplacementWork(On_WorldGen.orig_WouldTileReplacementWork orig, ushort attemptingToReplaceWith, int x, int y) {

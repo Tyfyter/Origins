@@ -16,7 +16,6 @@ namespace Origins.Tiles.Brine {
 			AdjTiles = [TileID.Containers];
 			keyItem = ModContent.ItemType<Brine_Key>();
 			DustType = DustID.GreenMoss;
-			RegisterItemDrop(ModContent.ItemType<Brine_Dungeon_Chest_Item>());
 			ModLoader.GetMod(nameof(AltLibrary)).Call("adddungeonchest",
 				Type,
 				ModContent.ItemType<The_Foot>(),
@@ -27,30 +26,5 @@ namespace Origins.Tiles.Brine {
 		public override bool CanUnlockChest(int i, int j) => NPC.downedPlantBoss;
 		public override bool LockChest(int i, int j, ref short frameXAdjustment, ref bool manual) => NPC.downedPlantBoss && base.LockChest(i, j, ref frameXAdjustment, ref manual);
 		IEnumerable<int> IItemObtainabilityProvider.ProvideItemObtainability() => [ModContent.ItemType<The_Foot>()];
-	}
-	public class Brine_Dungeon_Chest_Item : ModItem {
-		public override void SetStaticDefaults() {
-			ModCompatSets.AnyChests[Type] = true;
-		}
-		public override void SetDefaults() {
-			Item.width = 26;
-			Item.height = 22;
-			Item.maxStack = Item.CommonMaxStack;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.consumable = true;
-			Item.value = 500;
-			Item.createTile = ModContent.TileType<Brine_Dungeon_Chest>();
-		}
-	}
-	public class Locked_Brine_Dungeon_Chest_Item : Brine_Dungeon_Chest_Item {
-		public override string Texture => "Origins/Tiles/Brine/Brine_Dungeon_Chest_Item";
-		public override void SetDefaults() {
-			base.SetDefaults();
-			Item.placeStyle = 1;
-		}
 	}
 }

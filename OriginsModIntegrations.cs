@@ -777,25 +777,25 @@ namespace Origins {
 			.AddTile(TileID.Anvils)
 			.Register();
 
-			Recipe.Create(ItemType<Ashen_Dungeon_Chest_Item>(), 10)
+			Recipe.Create(TileItem.ItemType<Ashen_Dungeon_Chest>(), 10)
 			.AddIngredient<Ashen_Key>()
 			.AddIngredient(ItemID.Chest, 10)
 			.AddTile(TileID.Anvils)
 			.Register();
 
-			Recipe.Create(ItemType<Brine_Dungeon_Chest_Item>(), 10)
+			Recipe.Create(TileItem.ItemType<Brine_Dungeon_Chest>(), 10)
 			.AddIngredient<Brine_Key>()
 			.AddIngredient(ItemID.Chest, 10)
 			.AddTile(TileID.Anvils)
 			.Register();
 
-			Recipe.Create(ItemType<Defiled_Dungeon_Chest_Item>(), 10)
+			Recipe.Create(TileItem.ItemType<Defiled_Dungeon_Chest>(), 10)
 			.AddIngredient<Defiled_Key>()
 			.AddIngredient(ItemID.Chest, 10)
 			.AddTile(TileID.Anvils)
 			.Register();
 
-			Recipe.Create(ItemType<Riven_Dungeon_Chest_Item>(), 10)
+			Recipe.Create(TileItem.ItemType<Riven_Dungeon_Chest>(), 10)
 			.AddIngredient<Riven_Key>()
 			.AddIngredient(ItemID.Chest, 10)
 			.AddTile(TileID.Anvils)

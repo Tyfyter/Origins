@@ -16,6 +16,31 @@ namespace Origins.Tiles {
 	public abstract class ModChest : ModTile {
 		public int keyItem { get; protected set; } = -1;
 		protected virtual bool CanBeLocked => false;
+		public virtual void SetStaticDefaults(Item item) {
+		}
+		public virtual void SetDefaults(Item item) {
+			item.width = 26;
+			item.height = 22;
+			item.value = 500;
+		}
+		public virtual void AddRecipes(Item item) { }
+		public override void Load() {
+			string texture = new TileItem(this)
+				.WithExtraStaticDefaults(item => {
+					this.DropTileItem(item);
+					ModCompatSets.AnyChests[Type] = true;
+					SetStaticDefaults(item);
+				}).WithExtraDefaults(SetDefaults)
+				.WithOnAddRecipes(AddRecipes)
+				.RegisterItem().Texture;
+			if (CanBeLocked) new TileItem(this, true, texture, $"Locked_{Name}")
+				.WithExtraStaticDefaults(SetStaticDefaults)
+				.WithExtraDefaults(item => {
+					SetDefaults(item);
+					item.placeStyle = 1;
+					item.value = 0;
+				}).RegisterItem();
+		}
 		public override void SetStaticDefaults() {
 			Main.tileSpelunker[Type] = true;
 			Main.tileContainer[Type] = true;

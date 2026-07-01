@@ -14,15 +14,12 @@ namespace Origins.Tiles.Ashen {
 	public class Rusty_Locker : ModChest, ICustomSizeContainer {
 		public int Width { get; } = 2;
 		public int Height { get; } = 3;
-		public override void Load() {
-			new TileItem(this)
-			.WithOnAddRecipes(item => {
-				Recipe.Create(item.type)
-				.AddRecipeGroup(ALRecipeGroups.SilverBars)
-				.AddIngredient<Scrap>(10)
-				.AddTile<Metal_Presser>()
-				.Register();
-			}).RegisterItem();
+		public override void AddRecipes(Item item) {
+			Recipe.Create(item.type)
+			.AddRecipeGroup(ALRecipeGroups.SilverBars)
+			.AddIngredient<Scrap>(10)
+			.AddTile<Metal_Presser>()
+			.Register();
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Journal;
+using Origins.Tiles;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
@@ -675,15 +676,21 @@ public abstract class Key_Base : MaterialItem {
 		if (Chest != -1) ItemID.Sets.ShimmerTransformToItem[Type] = Chest;
 	}
 }
-public class Ashen_Key : Key_Base<Ashen_Dungeon_Chest_Item> {
+public class Ashen_Key : Key_Base {
+	public override int Chest => TileItem.ItemType<Ashen_Dungeon_Chest>();
 	public override bool HasGlowmask => true;
 }
-public class Defiled_Key : Key_Base<Defiled_Dungeon_Chest_Item> { }
+public class Defiled_Key : Key_Base {
+	public override int Chest => TileItem.ItemType<Defiled_Dungeon_Chest>();
+}
 public class Hell_Key : Key_Base { }
 public class Mushroom_Key : Key_Base { }
 public class Ocean_Key : Key_Base { }
-public class Riven_Key : Key_Base<Riven_Dungeon_Chest_Item> {
+public class Riven_Key : Key_Base {
+	public override int Chest => TileItem.ItemType<Riven_Dungeon_Chest>();
 	public override bool HasGlowmask => true;
 }
-public class Brine_Key : Key_Base<Brine_Dungeon_Chest_Item> { }
+public class Brine_Key : Key_Base {
+	public override int Chest => TileItem.ItemType<Brine_Dungeon_Chest>();
+}
 #endregion

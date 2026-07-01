@@ -715,17 +715,10 @@ namespace Origins.Tiles {
 		public override string Texture => chest.Texture + "_Item";
 		public override void SetStaticDefaults() => ModCompatSets.AnyChests[Type] = true;
 		public override void SetDefaults() {
+			Item.DefaultToPlaceableTile(chest.Type);
 			Item.width = 26;
 			Item.height = 22;
-			Item.maxStack = 9999;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.consumable = true;
 			Item.value = 500;
-			Item.createTile = chest.Type;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)

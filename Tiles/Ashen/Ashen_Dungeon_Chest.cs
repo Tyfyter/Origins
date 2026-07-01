@@ -23,7 +23,6 @@ namespace Origins.Tiles.Ashen {
 			AdjTiles = [TileID.Containers];
 			keyItem = ModContent.ItemType<Ashen_Key>();
 			DustType = Ashen_Biome.DefaultTileDust;
-			RegisterItemDrop(ModContent.ItemType<Ashen_Dungeon_Chest_Item>());
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 		public override bool CanUnlockChest(int i, int j) => NPC.downedPlantBoss;
@@ -31,32 +30,10 @@ namespace Origins.Tiles.Ashen {
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = g = b = 0.01f;
 		}
-		public override void Load() => this.SetupGlowKeys();
+		public override void Load() {
+			base.Load();
+			this.SetupGlowKeys();
+		}
 		public Graphics.CustomTilePaintLoader.CustomTileVariationKey GlowPaintKey { get; set; }
-	}
-	public class Ashen_Dungeon_Chest_Item : ModItem {
-		public override void SetStaticDefaults() {
-			ModCompatSets.AnyChests[Type] = true;
-		}
-		public override void SetDefaults() {
-			Item.width = 26;
-			Item.height = 22;
-			Item.maxStack = Item.CommonMaxStack;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.consumable = true;
-			Item.value = 500;
-			Item.createTile = ModContent.TileType<Ashen_Dungeon_Chest>();
-		}
-	}
-	public class Locked_Ashen_Dungeon_Chest_Item : Ashen_Dungeon_Chest_Item {
-		public override string Texture => "Origins/Tiles/Ashen/Ashen_Dungeon_Chest_Item";
-		public override void SetDefaults() {
-			base.SetDefaults();
-			Item.placeStyle = 1;
-		}
 	}
 }

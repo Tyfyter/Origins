@@ -891,12 +891,12 @@ namespace Origins.Tiles {
 		}
 	}
 	[Autoload(false)]
-	public class TileItem(ModTile tile, bool debug = false, string textureOverride = null) : ModItem() {
+	public class TileItem(ModTile tile, bool debug = false, string textureOverride = null, string nameOverride = null) : ModItem() {
 		private static readonly Dictionary<ModTile, TileItem> itemsByTile = [];
 		[field: CloneByReference]
 		public ModTile Tile { get; } = tile;
 		public bool IsDebug { get; } = debug;
-		public override string Name => Tile.Name + "_Item";
+		public override string Name => nameOverride ?? Tile.Name + "_Item";
 		public override string Texture => textureOverride ?? (IsDebug ? Tile.Texture : (Tile.Texture + "_Item"));
 		public override LocalizedText DisplayName => this.GetLocalization(nameof(DisplayName), Tile.PrettyPrintName);
 		[field: CloneByReference] public event Action<Item> ExtraStaticDefaults;
@@ -909,17 +909,20 @@ namespace Origins.Tiles {
 #endif
 		public sealed override void Load() => itemsByTile.Add(Tile, this);
 		public override void SetStaticDefaults() {
-			if (IsDebug) ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
-			if (TileID.Sets.BasicChest[Tile.Type]) ModCompatSets.AnyChests[Type] = true;
-			if (Tile is FurnitureBase furniture) {
-				switch (furniture.BaseTileID) {
-					case TileID.Lamps:
-					OriginSystem.LampRecipeGroup.ValidItems.Add(Type);
-					break;
+			Origins.AddGlowMask(this);
+			if (IsDebug) {
+				ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
+				Item.ResearchUnlockCount = 0;
+			} else {
+				if (TileID.Sets.BasicChest[Tile.Type]) ModCompatSets.AnyChests[Type] = true;
+				if (Tile is FurnitureBase furniture) {
+					switch (furniture.BaseTileID) {
+						case TileID.Lamps:
+						OriginSystem.LampRecipeGroup.ValidItems.Add(Type);
+						break;
+					}
 				}
 			}
-			Origins.AddGlowMask(this);
-			if (IsDebug) Item.ResearchUnlockCount = 0;
 			if (ExtraStaticDefaults is not null) {
 				ExtraStaticDefaults(Item);
 				ExtraStaticDefaults = null;
