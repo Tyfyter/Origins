@@ -79,6 +79,8 @@ namespace Origins {
 		public bool Assimilation = true;
 		[DefaultValue(true)]
 		public bool NewHarpoonsFromTheFuture = true;
+		[DefaultValue(true)]
+		public bool QuirkyEvilSpread = true;
 
 		[Header("Balance")]
 

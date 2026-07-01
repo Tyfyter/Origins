@@ -2906,6 +2906,11 @@ Configs: {
 			Label: Запретная броня
 			Tooltip: ""
 		}
+
+		QuirkyEvilSpread: {
+			// Label: Quirky Evil Spread
+			// Tooltip: Allows evil biomes spread in unique ways
+		}
 	}
 
 	DebugConfig: {

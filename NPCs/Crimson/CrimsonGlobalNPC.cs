@@ -1,4 +1,5 @@
-﻿using Origins.Buffs;
+﻿using AltLibrary.Common.AltBiomes;
+using Origins.Buffs;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -99,6 +100,16 @@ namespace Origins.NPCs.Crimson {
 				int totalDPS = Main.rand.RandomRound(baseDPS * BiomeNPCGlobals.CalcDryadDPSMult());
 				npc.lifeRegen -= 2 * totalDPS;
 				damage += totalDPS / 3;
+			}
+		}
+		public override void OnHitByItem(NPC npc, Player player, Item item, NPC.HitInfo hit, int damageDone) {
+			if (OriginConfig.Instance.QuirkyEvilSpread && npc.life <= 0 && player.ZoneCrimson) {
+				AltLibrary.Core.ALConvert.Convert<CrimsonAltBiome>((int)npc.Center.X / 16, (int)npc.Center.Y / 16, 2);
+			}
+		}
+		public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone) {
+			if (OriginConfig.Instance.QuirkyEvilSpread && projectile.friendly && projectile.TryGetOwner(out Player owner) && owner.ZoneCrimson && npc.life <= 0) {
+				AltLibrary.Core.ALConvert.Convert<CrimsonAltBiome>((int)npc.Center.X / 16, (int)npc.Center.Y / 16, 2);
 			}
 		}
 	}

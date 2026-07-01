@@ -8425,7 +8425,7 @@ Artifiber_Bow: {
 
 Cupids_Arrow: {
 	DisplayName: Cupid's Arrow
-	Tooltip: 
+	Tooltip:
 		'''
 		Deals more damage at close range
 		Uses canisters and rockets as ammo

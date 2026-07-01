@@ -1,4 +1,5 @@
-﻿using Origins.Buffs;
+﻿using AltLibrary.Common.AltBiomes;
+using Origins.Buffs;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -104,6 +105,13 @@ namespace Origins.NPCs.Corrupt {
 				int totalDPS = Main.rand.RandomRound(baseDPS * BiomeNPCGlobals.CalcDryadDPSMult());
 				npc.lifeRegen -= 2 * totalDPS;
 				damage += totalDPS / 3;
+			}
+		}
+		public override void OnKill(NPC npc) {
+			if (OriginConfig.Instance.QuirkyEvilSpread) {
+				if (npc.type == NPCID.VileSpit) {
+					AltLibrary.Core.ALConvert.Convert<CorruptionAltBiome>((int)npc.Center.X / 16, (int)npc.Center.Y / 16, 1);
+				}
 			}
 		}
 	}
