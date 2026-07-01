@@ -10,8 +10,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other {
 	public class Armor_Power_Up : ModItem {
 		public override void SetStaticDefaults() {
+			ItemID.Sets.ItemsThatShouldNotBeInInventory[Type] = true;
 			ItemID.Sets.IgnoresEncumberingStone[Type] = true;
 			ItemID.Sets.IsAPickup[Type] = true;
+			ItemID.Sets.ItemSpawnDecaySpeed[Type] = 4;
+			ItemID.Sets.SortingPriorityMaterials[Type] = 19;
 			Item.ResearchUnlockCount = 0;
 		}
 		public override void SetDefaults() {
