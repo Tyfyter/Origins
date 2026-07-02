@@ -8432,3 +8432,19 @@ Cupids_Arrow: {
 		Using canisters as ammo has limited fuel
 		''' */
 }
+
+Arc_Flame_Arm_Blades: {
+	// DisplayName: Arc-Flame Arm Blades
+	/* Tooltip:
+		'''
+		Inflicts various flame debuffs
+		Cannot critically strike normally
+		''' */
+	// CritTooltip: "{0:P0} flame debuff chance"
+	// CritPrefixTooltip: "{0} flame debuff chance"
+}
+
+Rei_Set: {
+	// DisplayName: Plasma Knight Set
+	// Tooltip: ""
+}

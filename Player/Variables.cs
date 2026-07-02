@@ -506,6 +506,7 @@ namespace Origins {
 		[AutoReset] public bool superSludge = false;
 		[AutoReset] public bool windPailPushed = false;
 		public float windPailPosition;
+		[AutoReset] public bool arcBurn = false;
 
 		public bool DisableBreathRestore => toxicShock || miasma;
 		public bool sendBuffs = false;
@@ -665,7 +666,7 @@ namespace Origins {
 		public const int maxScytheCombo = 10;
 		public int scytheHitCombo = 0;
 		public float shuckatanaDecay = 0;
-		public int shuckatanaShootAnimationTimer  = 0;
+		public int shuckatanaShootAnimationTimer = 0;
 		public const int maxDangerTime = 5 * 60;
 		public int dangerTime = 0;
 		internal bool[] activeShadows = new bool[ShadowType.ShadowTypeCount];

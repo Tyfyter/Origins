@@ -883,6 +883,7 @@ MELEE WEAPONS:
 (^) Tyrfing
 (X) Xeyah Laeta
 
+(@, #2) Arc-Flame Arm Blades
 (X) Chromakama
 (X) Chromtain Smasher
 (X) Eyndum Scar

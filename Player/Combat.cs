@@ -535,6 +535,7 @@ namespace Origins {
 				}
 			}
 			if (Player.suffocating) Player.lifeRegen += smogPodStrength * 10;
+			if (arcBurn) Player.lifeRegen -= 30;
 
 			if (staticShock || miniStaticShock || staticShockDamage) {
 				if (Player.lifeRegen > 0) {

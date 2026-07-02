@@ -1,8 +1,7 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
+﻿using Humanizer;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Projectiles;
 using Origins.Tiles.Defiled;
-using PegasusLib;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,13 +45,17 @@ namespace Origins.Items.Weapons.Summoner {
 						tooltips[i] = new TooltipLine(Mod, "Strength", this.GetLocalization("StrengthTooltip").Format(strength * 0.01f));
 					}
 					int realCrit = Main.LocalPlayer.GetWeaponCrit(Item);
-					if (realCrit > 0) tooltips.Insert(i + 1, new TooltipLine(Mod, "CritChance", this.GetLocalization("CritTooltip").Format(realCrit / 100f)));
+					// critical strikes overhaul auto removes "CritChance" lines no matter what mod it's from
+					if (realCrit > 0) tooltips.Insert(i + 1, new TooltipLine(Mod, "CritTooltip", this.GetLocalization("CritTooltip").Format(realCrit / 100f)));
 					break;
 					case "PrefixDamage":
 					tooltips[i] = new TooltipLine(Mod, "Strength", this.GetLocalization("StrengthPrefixTooltip").Format(tooltips[i].Text.Split(' ')[0])) {
 						IsModifier = true,
 						IsModifierBad = tooltips[i].IsModifierBad
 					};
+					break;
+					case "PrefixCritChance":
+					tooltips[i].Text = this.GetLocalizedValue("CritPrefixTooltip").FormatWith(tooltips[i].Text.Split(' ')[0]);
 					break;
 					case "Knockback":
 					tooltips.RemoveAt(i);

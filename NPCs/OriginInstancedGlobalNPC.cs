@@ -112,6 +112,7 @@ namespace Origins.NPCs {
 		/// Do not sync
 		/// </summary>
 		public int[] vampireFireflowerTimes;
+		[AutoReset] public bool arcBurn = false;
 		public override void ResetEffects(NPC npc) {
 			vampireFireflowerTimes ??= new int[Main.maxProjectiles];
 			autoReset(this);
@@ -387,6 +388,13 @@ namespace Origins.NPCs {
 				if (damage < displayedDamage) damage = displayedDamage;
 				npc.lifeRegenCount -= sentinelDamage * 4;
 				sentinelDamage = 0;
+			}
+			if (arcBurn) {
+				if (npc.lifeRegen > 0) {
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 30;
+				damage += 6;
 			}
 		}
 		public static void AddInfusionSpike(NPC npc, int projectileID) {

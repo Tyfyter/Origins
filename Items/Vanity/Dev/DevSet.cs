@@ -1,12 +1,7 @@
-﻿using Origins.Items.Pets;
-using Origins.LootConditions;
-using Origins.NPCs;
-using PegasusLib;
-using System;
+﻿using Origins.LootConditions;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -18,7 +13,7 @@ namespace Origins.Items.Vanity.Dev {
 		public abstract IEnumerable<ItemTypeDropRuleWrapper> GetDrops();
 		public override void SetStaticDefaults() {
 			IItemDropRule rule = new DropAsSetRule(Type);
-			foreach (ItemTypeDropRuleWrapper drop in GetDrops()) 				rule.WithOnSuccess(drop.Rule);
+			foreach (ItemTypeDropRuleWrapper drop in GetDrops()) rule.WithOnSuccess(drop.Rule);
 			OriginGlobalItem.OriginsDevSetRule.options = OriginGlobalItem.OriginsDevSetRule.options.Concat([
 				rule
 			]).ToArray();

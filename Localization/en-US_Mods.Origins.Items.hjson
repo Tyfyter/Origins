@@ -5100,6 +5100,7 @@ Monolith_Rod: {
 	StrengthTooltip: "{0:P0} strength"
 	StrengthPrefixTooltip: "{0} strength"
 	CritTooltip: "{0:P0} critical chance"
+	CritPrefixTooltip: "{0} critical chance"
 }
 
 Peat_Moss_Debug_Item: {
@@ -8431,4 +8432,19 @@ Cupids_Arrow: {
 		Uses canisters and rockets as ammo
 		Using canisters as ammo has limited fuel
 		'''
+}
+
+Arc_Flame_Arm_Blades: {
+	DisplayName: Arc-Flame Arm Blades
+	Tooltip:
+		'''
+		Inflicts various flame debuffs
+		Cannot critically strike normally
+		'''
+	CritTooltip: "{0} flame debuff chance"
+}
+
+Rei_Set: {
+	DisplayName: Plasma Knight Set
+	Tooltip: ""
 }

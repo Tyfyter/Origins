@@ -1471,6 +1471,12 @@ Buffs: {
 		DisplayName: Frozen Debuff
 		Description: Mods.Origins.Buffs.Frozen_Debuff.Description
 	}
+
+	Arc_Burn: {
+		DisplayName: Arc Burn
+		Description: Plasma is melding your flesh
+		EffectDescription: Losing 15 life a second
+	}
 }
 
 DamageClassName: {
@@ -2282,6 +2288,7 @@ Projectiles: {
 	Neutron_Soup_Beam.DisplayName: Neutron Soup Beam
 	Pirate_Eye_Venom_Dropper.DisplayName: Pirate Eye Venom
 	Cupids_Arrow_P.DisplayName: Cupid's Arrow
+	Arc_Flame_Arm_Blades_Slash.DisplayName: "{§Mods.Origins.Items.Arc_Flame_Arm_Blades}"
 }
 
 Prefixes: {
@@ -3538,6 +3545,7 @@ CritType: {
 	Felnum_Crit_Type: "{$Mods.CritRework.CritTypes.FoeIsWet.Description}"
 	Pharaohs_Turquoise_Crit_Type: Critically strikes when hitting the same target with all {0} shots
 	Vorpal_Crit_Type: Critically strikes [diffselect:1|1|5]% of the time
+	Arc_Flame_Arm_Blades_Crit_Type: Critically strikes when the target is inflicted with {§Mods.Origins.Buffs.Arc_Burn.DisplayName}
 }
 
 BuilderToggle: {
