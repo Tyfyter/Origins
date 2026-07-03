@@ -8438,7 +8438,7 @@ Arc_Flame_Arm_Blades: {
 	DisplayName: Arc-Flame Arm Blades
 	Tooltip:
 		'''
-		Inflicts various [buffhint/dnflame debuffs:Origins/Arc_Burn]
+		Inflicts various [buffhint/dnflame and plasma debuffs:Origins/Arc_Burn]
 		Cannot critically strike normally
 		'''
 	CritTooltip: "{0} flame debuff chance"
